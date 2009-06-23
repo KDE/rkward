@@ -17,6 +17,14 @@ setClass ("RKTest",
 		}
 	)
 
+setClass ("RKTestResult",
+		representation (id = "character", code_match = "logical", output_match = "logical", message_match = "logical", error="logical", passed="logical"),
+		prototype(character(0), id = character (0), code_match = NA, output_match = NA, message_match = NA, error = NA, passed=FALSE),
+		validity=function (object) {
+			return (all.equal (length (object@id), length (object@code_match), length (object@output_match), length (object@message_match), length (object@error), length (object@passed)))
+		}
+	)
+
 setMethod ("show", "RKTestResult", function (object) {
 	stopifnot (inherits (object, "RKTestResult"))
 
@@ -38,14 +46,6 @@ setMethod ("show", "RKTestResult", function (object) {
 		cat ("\n")
 	}
 })
-
-setClass ("RKTestResult",
-		representation (id = "character", code_match = "logical", output_match = "logical", message_match = "logical", error="logical", passed="logical"),
-		prototype(character(0), id = character (0), code_match = NA, output_match = NA, message_match = NA, error = NA, passed=FALSE),
-		validity=function (object) {
-			return (all.equal (length (object@id), length (object@code_match), length (object@output_match), length (object@message_match), length (object@error), length (object@passed)))
-		}
-	)
 
 rktest.appendTestResults <- function (objecta, objectb) {
 	stopifnot (inherits (objecta, "RKTestResult") && validObject (objecta))

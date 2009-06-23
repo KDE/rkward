@@ -76,11 +76,12 @@ int RK_Debug_CommandStep = 0;
 static KCmdLineOptions options;
 
 int main(int argc, char *argv[]) {
-	options.add ("+[File]", ki18n ("file to open"), 0);
+	options.add ("evaluate <Rcode>", ki18n ("After starting (and after loading the specified workspace, if applicable), evaluate the given R code."), 0);
 	options.add ("debug-level <level>", ki18n ("Verbosity of debug messages (0-5)"), "2");
 	options.add ("debug-flags <flags>", ki18n ("Mask for components to debug (see debug.h)"), "8191");
 	options.add ("debugger <command>", ki18n ("Debugger (enclose any debugger arguments in single quotes ('') together with the command)"), "");
 	options.add ("disable-stack-check", ki18n ("Disable R C stack checking"), 0);
+	options.add ("+[File]", ki18n ("R workspace file to open"), 0);
 
 	KAboutData aboutData("rkward", QByteArray (), ki18n ("RKWard"), VERSION, ki18n ("Frontend to the R statistics language"), KAboutData::License_GPL, ki18n ("(c) 2002, 2004, 2005, 2006, 2007, 2008, 2009"), KLocalizedString (), "http://rkward.sf.net", "rkward-devel@lists.sourceforge.net");
 	aboutData.addAuthor (ki18n ("%1").subs ("Thomas Friedrichsmeier"), ki18n ("Project leader / main developer"));
@@ -126,6 +127,7 @@ int main(int argc, char *argv[]) {
 		stoptions->initial_url = KUrl (args->makeURL (args->arg (0).toLatin1()));
 	}
 	stoptions->no_stack_check = args->isSet ("disable-stack-check");
+	stoptions->evaluate = args->getOption ("evaluate");
 
 	RKWardApplication app;
 	if (app.isSessionRestored ()) {

@@ -1,4 +1,5 @@
 TODO: add notice on differing licences/copyrights in subdirs
+- New command line option "--evaluate <Rcode>" mostly for the purpose of automated testing
 - Remove support for R 2.6.x and earlier		TODO: clean up more (RData?), adjust debian control
 - Add basic checks for a correct installation of the RKWard resource files
 - Remove "What to expect" dialog at startup

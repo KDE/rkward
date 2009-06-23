@@ -203,6 +203,7 @@ void RKWardMainWindow::doPostInit () {
 
 	// startup options will be deleted from the R thread (TODO correct this!), so we need to copy the initial_url here, or run into race conditions
 	KUrl open_url = startup_options->initial_url;
+	QString evaluate_code = startup_options->evaluate;
 	startR ();
 	
 	initPlugins ();
@@ -251,6 +252,8 @@ void RKWardMainWindow::doPostInit () {
 	if (RKSettingsModuleGeneral::showHelpOnStartup ()) {
 		toplevel_actions->showRKWardHelp ();
 	}
+
+	if (!evaluate_code.isEmpty ()) RKConsole::pipeUserCommand (evaluate_code);
 
 	setCaption (QString ());	// our version of setCaption takes care of creating a correct caption, so we do not need to provide it here
 }

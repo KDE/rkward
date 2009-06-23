@@ -22,5 +22,6 @@ LINK_DIRECTORIES(${KDE4_LIB_DIR})
 ADD_SUBDIRECTORY(rkward)
 ADD_SUBDIRECTORY(po)
 ADD_SUBDIRECTORY(doc)
+ADD_SUBDIRECTORY(tests)
 
 # TODO: figure out how to make source distributions (with REAMDE files, etc.)

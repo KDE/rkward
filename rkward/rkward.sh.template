@@ -1,24 +1,6 @@
 #!/bin/sh
 # Shell wrapper for rkward executable.
 
-## make sure, we always run in a tty. Otherwise R would go into non-interactive mode and behaves strangely.
-## this can be removed later. For R versions 2.3.0 and greater, we set R_Interactive from C
-if tty -s; then
-  :
-else
-  # not on a tty? Try to invoke a suitable xterm
-  if [ -z $RKWARD_NORECURSE ]; then
-    for xtrm in konsole x-terminal-emulator xterm
-    do
-      xtrmc=`which $xtrm`
-      if [ ! -z $xtrmc -a -x $xtrmc ]; then
-        RKWARD_NORECURSE=y $xtrmc -e $0 "$@"
-        exit
-      fi
-    done
-  fi
-fi
-
 export R_binary="@R_EXECUTABLE@"
 
 ## Location of R may have moved, so check
@@ -48,24 +30,19 @@ error () {
 }
 
 debugger=
-args=
-while test -n "${1}"; do
-  case ${1} in
-    --debugger)
-      if test -n "`echo ${2} | sed 's/^-.*//'`"; then
-        debugger="${2}"; shift
-      else
-        error "option '${1}' requires an argument"
-      fi
-      ;;
-    *)
-      args="${args} ${1}" ;;
-  esac
-  shift
+for i in `seq $#`
+do
+  arg=$(eval echo \$\{`echo ${i}`\})
+  if [ "${arg}" = "--debugger" ]; then
+    debugger=$(eval echo \$\{`echo $((i+1))`\})
+    if test -z "`echo ${debugger} | sed 's/^-.*//'`"; then
+      error "option '${arg}' requires an argument"
+    fi
+  fi
 done
 
 ## set LC_NUMERIC to "C"
 export LC_NUMERIC="C"
 
 ## Start rkward. Running through R CMD to set all the relevant R enviroment variables
-exec $R_binary CMD $debugger $0.bin ${args}
+exec $R_binary CMD $debugger $0.bin "$@"

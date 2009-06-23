@@ -44,6 +44,7 @@ class KSqueezedTextLabel;
 struct RKWardStartupOptions {
 	KUrl initial_url;	/**< The workspace file to load on startup. If empty, show a dialog asking what to do. **/
 	bool no_stack_check;	/**< Disable R C stack checking */
+	QString evaluate;	/**< R code to run after startup */
 };
 
 /**
