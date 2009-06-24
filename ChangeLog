@@ -13,8 +13,8 @@ TODO: add notice on differing licences/copyrights in subdirs
 - Add convenience function "makeHeaderCode()" for use inside plugins	TODO: document, adjust for tests (->rk.describe.alternative())
 - Adjust some icons
 - Plugins can be invoked from R code (mostly for internal purposes)
-- Add "Run again" link for plugin generated output		TODO: revisit plugins without header
-- Fixed: All objects in .Globalenv would be revisited if a single object was added / removed		TODO: backport? (r2466, 2473)
+- Add "Run again" link for plugin generated output
+- Fixed: All objects in .Globalenv would be revisited if a single object was added / removed
 - Fixed: Screen device in rkward was not seen as interactive by R
 
 --- Version 0.5.0d - May-10-2009

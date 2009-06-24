@@ -2,7 +2,7 @@
                           robject  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -162,6 +162,8 @@ public:
 /** Returns a canonified name given a non-canoified name. Warning! This is not (necessarily) suitable for submission to
 R, only for internal lookup. For submission to R, always use RObject::getFullName (), as it will apply more complicated (and correct) rules depending on object type */
 	static QString canonifyName (const QString &from);
+/** Tests whether the given name is "irregular", i.e. contains spaces, quotes, operators, or the like. @see RContainerObject::validizeName () */
+	static bool irregularShortName (const QString &name);
 /** Function for code completion: given the partial name, find all objects matching this partial name
 @param partial_name The partial name to look up
 @param current_list A pointer to a valid (but probably initially empty) RObjectMap. Matches will be added to this list

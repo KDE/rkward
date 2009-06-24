@@ -2,7 +2,7 @@
                           rcontainerobject  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -281,7 +281,7 @@ void RContainerObject::findObjectsMatching (const QString &partial_name, RObject
 			RObject* child = childmap[i];
 			if (child->getShortName ().startsWith (current_level)) {
 				QString base_name = child->getBaseName ();
-				if (current_list->contains (base_name)) {
+				if (current_list->contains (base_name) || irregularShortName (base_name)) {
 					current_list->insert (child->getFullName (), child);
 				} else {
 					current_list->insert (base_name, child);
@@ -302,7 +302,6 @@ RObject *RContainerObject::createPendingChild (const QString &name, int position
 	RObject *ret;
 	if (container) {
 		ret = new RContainerObject (this, name);
-		ret->type = Container;
 		if (data_frame) {
 			ret->type |= DataFrame | List | Array | Matrix;
 		}

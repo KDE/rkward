@@ -2,7 +2,7 @@
                           robject  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -51,6 +51,12 @@ RObject::~RObject () {
 
 	delete [] dimensions;
 	delete [] classnames;
+}
+
+bool RObject::irregularShortName (const QString &name) {
+	// no trace
+	static const QRegExp invalidChars ("[^a-zA-z0-9\\._]");
+	return (name.contains (invalidChars));
 }
 
 QString RObject::getFullName () const {

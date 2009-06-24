@@ -28,4 +28,4 @@ suite <- new ("RKTestSuite", id="import_export_plugins",
 
 y <- rktest.runRKTestSuite (suite)
 
-y
+print (y)
