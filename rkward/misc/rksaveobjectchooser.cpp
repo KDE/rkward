@@ -81,7 +81,6 @@ void RKSaveObjectChooser::nameEditChanged (const QString &) {
 
 	RObject *object = RObjectList::getGlobalEnv ()->findObject (validizedSelectedObjectName ());
 	if (object) {
-qDebug ("exists: %s", qPrintable (object->getFullName ()));
 		object_exists = true;
 		overwrite_confirm->setText (i18n ("Overwrite? (The given object name already exists)"));
 		overwrite_confirm->setEnabled (true);

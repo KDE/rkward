@@ -1,8 +1,12 @@
+## intro
 # This should be the first line in each test suite file: Include the
-# test framework, multiple inclusion should do no harm
-source ("test.R")
+# test framework, unless already included (multiple inclusion would not
+# really do any harm either, though
+if (!isClass ("RKTestSuite")) source ("test_framework.R")
 
+## definition of the test suite
 suite <- new ("RKTestSuite", id="import_export_plugins",
+	# initCalls are run *before* any tests. Use this to set up the environment
 	initCalls = list (
 		function () {
 			library ("R2HTML")
@@ -16,6 +20,7 @@ suite <- new ("RKTestSuite", id="import_export_plugins",
 
 			suppressWarnings (rm ("women"))
 		}
+	## the tests
 	), tests = list (
 		new ("RKTest", id="load_r_object", call=function () {
 			rk.call.plugin ("rkward::load_r_object", file.selection="women.RData", other_env.state="0", submit.mode="submit")
@@ -34,9 +39,9 @@ suite <- new ("RKTestSuite", id="import_export_plugins",
 			# this one is expected to fail, as it would overwrite the existing "women" in globalenv()
 			rk.call.plugin ("rkward::import_csv", file.selection="women.csv", name.selection="women", submit.mode="submit")
 		}, expect_error=TRUE)
-	), postCalls = list ()
+	), postCalls = list ()	# like initCalls: run after all tests to clean up. Empty in this case.
 )
 
-y <- rktest.runRKTestSuite (suite)
-
-print (y)
+## always store the result in "results" and print it
+results <- rktest.runRKTestSuite (suite)
+print (results)
