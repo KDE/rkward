@@ -118,7 +118,12 @@ void RKAbstractOptionSelector::propertyChanged (RKComponentPropertyBase *propert
 		RK_ASSERT (false);
 	}
 	if (new_id < 0) {
-		RK_DO (qDebug ("no such option"), PLUGIN, DL_ERROR);
+		RK_DO (qDebug ("option selector '%s' has no such option:", qPrintable (getIdInParent ())), PLUGIN, DL_ERROR);
+		if (property == string) {
+			RK_DO (qDebug ("'%s'", qPrintable (string->value ())), PLUGIN, DL_ERROR);
+		} else {
+			RK_DO (qDebug ("index %d", number->intValue ()), PLUGIN, DL_ERROR);
+		}
 		return;
 	}
 
@@ -164,7 +169,7 @@ void RKAbstractOptionSelector::ItemPropertyChanged (RKComponentPropertyBase *pro
 				}
 			}
 			if (settable_opt >= 0) itemSelected (settable_opt);
-			else RK_DO (qDebug ("No option left enabled. Disable the entire component, instead!"), PLUGIN, DL_ERROR);
+			else RK_DO (qDebug ("No option left enabled. Disable the entire component '%s', instead!", qPrintable (getIdInParent ())), PLUGIN, DL_ERROR);
 		}
 	}
 

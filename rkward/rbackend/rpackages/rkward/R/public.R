@@ -337,7 +337,11 @@
 	callstrings[2] <- match.arg (submit.mode)
 	if (length (settings) > 0) {
 		for (i in 1:length(settings)) {
-			callstrings[i+2] = paste (names(settings)[i], settings[i], sep="=")
+			# properly passing on escaped characters is a pain. This seems to work.
+			deparsed <- deparse (settings[[i]])
+			deparsed_unquoted <- substr (deparsed, 2, nchar (deparsed) - 1)
+			callstrings[i + 2] <- paste(names(settings)[i], deparsed_unquoted, 
+			sep = "=")
 		}
 	}
 

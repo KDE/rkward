@@ -49,19 +49,17 @@ void RKComponentBase::fetchPropertyValuesRecursive (QMap<QString, QString> *list
 	RK_TRACE (PLUGIN);
 
 	for (QHash<QString, RKComponentBase*>::const_iterator it = child_map.constBegin (); it != child_map.constEnd (); ++it) {
-		if (it.key () != "#noid#") {
-			if (it.value ()->isProperty ()) {
-				if (include_top_level) {
-					RKComponentPropertyBase *p = static_cast<RKComponentPropertyBase*> (it.value ());
-					if (!p->isInternal ()) {
-						list->insert (prefix + it.key (), it.value ()->value ());
-					}
-				}
-			} else {
-				RK_ASSERT (it.value ()->isComponent ());
-				if (!static_cast<RKComponent *> (it.value ())->isEnabled ()) continue;
-				it.value ()->fetchPropertyValuesRecursive (list, true, prefix + it.key () + '.');
+		if (it.key () == "#noid#") continue;
+		if (it.value ()->isInternal ()) continue;
+
+		if (it.value ()->isProperty ()) {
+			if (include_top_level) {
+				list->insert (prefix + it.key (), static_cast<RKComponentPropertyBase*> (it.value ())->value ());
 			}
+		} else {
+			RK_ASSERT (it.value ()->isComponent ());
+			if (!static_cast<RKComponent *> (it.value ())->isEnabled ()) continue;
+			it.value ()->fetchPropertyValuesRecursive (list, true, prefix + it.key () + '.');
 		}
 	}
 }
@@ -276,18 +274,18 @@ void RKComponent::removeFromParent () {
 
 	if (!parentComponent ()) return;
 
-	for (QHash<QString, RKComponentBase*>::const_iterator it = parentComponent ()->child_map.constBegin (); it != parentComponent ()->child_map.constEnd (); ++it) {
-		if (it.value () == this) {
-			QString key = it.key ();
 	// unfortunately, several items might hvae the same key, and there seems to be no way to selectively remove the current item only.
 	// however, this function should only ever be called in cases of emergency and to prevent crashes. So we make extra sure to remove the child,
 	// even if we remove a little more than necessary along the way.
-			while (parentComponent ()->child_map.remove (key)) {;}
-			return;
-		}
-	}
+	QString key = getIdInParent ();
+	while (parentComponent ()->child_map.remove (key)) {;}
+}
 
-	RK_ASSERT (false);
+QString RKComponent::getIdInParent () const {
+	RK_TRACE (PLUGIN);
+
+	if (!parentComponent ()) return QString ();
+	return (parentComponent ()->child_map.key (const_cast<RKComponent*> (this)));
 }
 
 #include "rkcomponent.moc"

@@ -209,7 +209,7 @@ rktest.setSuiteStandards <- function (suite, basedir=getwd ()) {
 	.rk.cat.output ("rk.call.plugin (\"")
 	.rk.cat.output (plugin)
 	.rk.cat.output ("\", ")
-	.rk.cat.output (gsub ("=", "=\"", gsub ("\n", "\", ", gsub ("\"", "\\\"", settings))))
+	.rk.cat.output (gsub ("^\"", "", gsub ("=", "=\"", gsub ("\n", "\", ", settings))))
 	.rk.cat.output ("\", submit.mode=\"submit\")</pre>")
 }
 

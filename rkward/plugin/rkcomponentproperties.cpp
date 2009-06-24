@@ -101,7 +101,6 @@ RKComponentPropertyBase::RKComponentPropertyBase (QObject *parent, bool required
 	RK_TRACE (PLUGIN);
 	RKComponentPropertyBase::required = required;
 	is_valid = true;
-	is_internal = false;
 }
 
 RKComponentPropertyBase::~RKComponentPropertyBase () {
