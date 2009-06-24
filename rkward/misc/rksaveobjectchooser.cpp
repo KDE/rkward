@@ -2,7 +2,7 @@
                           rksaveobjectchooser  -  description
                              -------------------
     begin                : Mon Nov 27 2006
-    copyright            : (C) 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -79,8 +79,9 @@ bool RKSaveObjectChooser::isOk () const {
 void RKSaveObjectChooser::nameEditChanged (const QString &) {
 	RK_TRACE (MISC);
 
-	RObject *object = RObjectList::getObjectList ()->findObject (validizedSelectedObjectName ());
+	RObject *object = RObjectList::getGlobalEnv ()->findObject (validizedSelectedObjectName ());
 	if (object) {
+qDebug ("exists: %s", qPrintable (object->getFullName ()));
 		object_exists = true;
 		overwrite_confirm->setText (i18n ("Overwrite? (The given object name already exists)"));
 		overwrite_confirm->setEnabled (true);

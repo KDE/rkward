@@ -21,17 +21,19 @@ suite <- new ("RKTestSuite", id="import_export_plugins",
 			rk.call.plugin ("rkward::load_r_object", file.selection="women.RData", other_env.state="0", submit.mode="submit")
 
 			stopifnot (all.equal (women, datasets::women))
-
-			# always clean up after the test!
-			suppressWarnings (rm ("women"))
 		}),
 		new ("RKTest", id="import_csv", call=function () {
-			rk.call.plugin ("rkward::import_csv", allow_escapes.state="", blanklinesskip.state="TRUE", checkname.state="TRUE", colclass.string="", colname.string="", dec.string="'.'", doedit.state="0", file.selection="women.csv", flush.state="", isrow.state="false", na.text="NA", name.selection="women", nrows.text="-1", quick.string="csv", quote.string="'\\\"'", sep.string="','", skip.text="0", strings_as_factors.string="", stripwhite.state="FALSE", submit.mode="auto")
+			rk.call.plugin ("rkward::import_csv", allow_escapes.state="", blanklinesskip.state="TRUE", checkname.state="TRUE", colclass.string="", colname.string="", dec.string="'.'", doedit.state="0", file.selection="women.csv", flush.state="", isrow.state="false", na.text="NA", name.selection="women", nrows.text="-1", quick.string="csv", quote.string="'\\\"'", sep.string="','", skip.text="0", strings_as_factors.string="", stripwhite.state="FALSE", submit.mode="submit")
 
 			stopifnot (all.equal (women, datasets::women))
+		}),
+		new ("RKTest", id="import_csv_overwrite", call=function () {
+			assign ("women", datasets::women, envir=globalenv ())
+			rk.sync.global ()
 
-			suppressWarnings (rm ("women"))
-		})
+			# this one is expected to fail, as it would overwrite the existing "women" in globalenv()
+			rk.call.plugin ("rkward::import_csv", file.selection="women.csv", name.selection="women", submit.mode="submit")
+		}, expect_error=TRUE)
 	), postCalls = list ()
 )
 

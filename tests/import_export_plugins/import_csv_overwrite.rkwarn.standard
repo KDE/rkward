@@ -1,0 +1,3 @@
+Error in rk.call.plugin("rkward::import_csv", file.selection = "women.csv",  : 
+  
+The plugin could not be auto-submitted with these settings.

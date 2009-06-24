@@ -101,11 +101,21 @@ rktest.runRKTest.internal <- function (test, output_file, code_file, message_fil
 	rk.record.commands (code_file)
 	on.exit (rk.record.commands (NULL), add=TRUE)
 
+	old.symbols <- ls (envir=globalenv (), all.names=TRUE)
+	on.exit ({
+			# clean up any new objects created by the test
+			new.symbols <- ls (envir=globalenv (), all.names=TRUE)
+			new.symbols <- new.symbols[!(new.symbols %in% old.symbols)]
+			rm (list=new.symbols, envir=globalenv ())
+			rk.sync.global ()
+		}, add=TRUE)
+
 	failed <- TRUE
 	try ({
 		test@call ()
 		failed <- FALSE
 	})
+
 	return (failed)
 }
 
@@ -155,7 +165,6 @@ rktest.runRKTestSuite <- function (suite, basedir=getwd ()) {
 	# clean any old results
 	rktest.cleanRKTestSuite (suite, basedir)
 
-	system (paste ("tar -xzf", suite@id, ".tar.gz", sep=""))
 	oldwd = getwd ()
 	on.exit (setwd (oldwd))
 	setwd (paste (basedir, suite@id, sep="/"))
@@ -193,12 +202,7 @@ rktest.setSuiteStandards <- function (suite, basedir=getwd ()) {
 
 	# clean anything that is *not* a standard file
 	rktest.cleanRKTestSuite (suite, basedir)
-
-	# create package
-	setwd (basedir)
-	system (paste ("tar -czf ", suite@id, ".tar.gz ", suite@id, sep=""))
 }
-
 
 # You can use this to temporarily replace .rk.rerun.plugin.link.
 # This way, after running a plugin, you are shown the call needed to run this

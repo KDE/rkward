@@ -90,9 +90,15 @@
 	}
 }
 
+# should this really be public?
 "rk.sync" <- function (x) {
 	object <- deparse (substitute (x))
 	.rk.do.call ("sync", object)
+}
+
+# should this really be public?
+"rk.sync.global" <- function () {
+	.rk.do.call("syncglobal", ls (envir=globalenv (), all.names=TRUE))
 }
 
 "rk.edit" <- function (x) {
