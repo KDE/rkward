@@ -32,9 +32,15 @@ ENDIF(NOT R_HOME)
 
 MESSAGE(STATUS "Looking for R include files")
 IF(NOT R_INCLUDEDIR)
-	EXECUTE_PROCESS(
-		COMMAND ${R_EXECUTABLE} "--slave" "--no-save" "-e" "cat(R.home('include'))"
-		OUTPUT_VARIABLE R_INCLUDEDIR)
+	IF(WIN32)	# This version of the test will not work with R < 2.9.0, but the other version (in the else part) will not work on windows (and on windows the paths are generally standard, anyway).
+		EXECUTE_PROCESS(
+			COMMAND ${R_EXECUTABLE} "--slave" "--no-save" "-e" "cat(R.home('include'))"
+			OUTPUT_VARIABLE R_INCLUDEDIR)
+	ELSE(WIN32)
+		EXECUTE_PROCESS(
+			COMMAND ${R_EXECUTABLE} CMD sh -c "echo -n $R_INCLUDE_DIR"
+			OUTPUT_VARIABLE R_INCLUDEDIR)
+	ENDIF(WIN32)
 ELSE(NOT R_INCLUDEDIR)
 	MESSAGE(STATUS "Location specified by user")
 ENDIF(NOT R_INCLUDEDIR)
