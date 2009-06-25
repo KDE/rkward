@@ -1,0 +1,7 @@
+<h1>Import text / csv data</h1>
+<h2>Parameters</h2>
+<ul><li>File: women.csv</li>
+<li>Import as: women</li>
+</ul>
+DATE<br>
+<a href="rkward://runplugin/rkward::import_csv/allow_escapes.state=%0ablanklinesskip.state=TRUE%0acheckname.state=TRUE%0acolclass.string=%0acolname.string=%0adec.string='.'%0adoedit.state=0%0afile.selection=women.csv%0aflush.state=%0aisrow.state=true%0ana.text=NA%0aname.selection=women%0anomrow.text=1%0anrows.text=-1%0aquick.string=csv%0aquote.string='%5c%5c%5c%22'%0arowname.string=rowcol%0asep.string=','%0askip.text=0%0astrings_as_factors.string=%0astripwhite.state=FALSE">Run again</a><hr>

@@ -24,7 +24,7 @@ function calculate () {
 		$tableOptions = "";
 	}
 // Other method is to use read.table and show all the options - more transparent
-getRK("name"); ?> <<- read.<? echo ($quick); ?> (file="<? getRK("file"); ?>"<? echo ($tableOptions); ?>, <? # doing row names (what a pity...) 
+?>imported <<- read.<? echo ($quick); ?> (file="<? getRK("file"); ?>"<? echo ($tableOptions); ?>, <? # doing row names (what a pity...) 
 	if (getRK_val("rowname")!="NULL") {
 		echo( "row.names = ");
 		if (getRK_val("rowname")=="rowcol") echo (getRK("nomrow") . ",");
@@ -36,6 +36,9 @@ getRK("name"); ?> <<- read.<? echo ($quick); ?> (file="<? getRK("file"); ?>"<? e
 	if (getRK_val("colclass") == "custoClass") echo( "colClasses = " . getRK_val ("custoClasses") . ",");
 	#doing what is left
 ?> na.strings = "<? getRK("na")  ?>", nrows = <? getRK("nrows") ; ?>, skip = <? getRK("skip") ; ?>, check.names = <? getRK("checkname") ; ?>, strip.white = <? getRK("stripwhite") ; ?>, blank.lines.skip = <? getRK("blanklinesskip") ; ?><? getRK("allow_escapes"); ?><? getRK("flush"); ?><? getRK("strings_as_factors"); ?>)
+
+# copy from the local environment to globalenv()
+assign("<? getRK("name"); ?>", imported, envir=globalenv())
 <?	if (getRK_val ("doedit")) { ?>
 
 rk.edit (<? getRK ("name"); ?>)

@@ -25,12 +25,12 @@ suite <- new ("RKTestSuite", id="import_export_plugins",
 		new ("RKTest", id="load_r_object", call=function () {
 			rk.call.plugin ("rkward::load_r_object", file.selection="women.RData", other_env.state="0", submit.mode="submit")
 
-			stopifnot (all.equal (women, datasets::women))
+			stopifnot (all.equal (.GlobalEnv$women, datasets::women))
 		}),
 		new ("RKTest", id="import_csv", call=function () {
-			rk.call.plugin ("rkward::import_csv", allow_escapes.state="", blanklinesskip.state="TRUE", checkname.state="TRUE", colclass.string="", colname.string="", dec.string="'.'", doedit.state="0", file.selection="women.csv", flush.state="", isrow.state="false", na.text="NA", name.selection="women", nrows.text="-1", quick.string="csv", quote.string="'\\\"'", sep.string="','", skip.text="0", strings_as_factors.string="", stripwhite.state="FALSE", submit.mode="submit")
+			rk.call.plugin ("rkward::import_csv", allow_escapes.state="", blanklinesskip.state="TRUE", checkname.state="TRUE", colclass.string="", colname.string="", dec.string="'.'", doedit.state="0", file.selection="women.csv", flush.state="", isrow.state="true", na.text="NA", name.selection="women", nrows.text="-1", quick.string="csv", quote.string="'\\\"'", sep.string="','", skip.text="0", strings_as_factors.string="", stripwhite.state="FALSE", rowname.string="rowcol", nomrow.text="1", submit.mode="submit")
 
-			stopifnot (all.equal (women, datasets::women))
+			stopifnot (all.equal (.GlobalEnv$women, datasets::women))
 		}),
 		new ("RKTest", id="import_csv_overwrite", call=function () {
 			assign ("women", datasets::women, envir=globalenv ())

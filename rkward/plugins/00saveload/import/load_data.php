@@ -13,7 +13,7 @@ function calculate () {
 	}
 
 	if ($other_env) { ?>
-<? echo ($envir); ?> <<- new.env (parent=globalenv())
+assign ("<? echo ($envir); ?>, new.env (parent=globalenv()), envir=globalenv())
 <?	} ?>
 load (file="<? getRK("file"); ?>", envir=<? echo ($envir); ?>)
 <?

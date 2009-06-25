@@ -70,7 +70,7 @@ rktest.file <- function (id, extension) {
 
 # returns true, if file corresponds to standard.
 rktest.compare.against.standard <- function (file) {
-	standard_file <- paste (file, ".standard", sep="")
+	standard_file <- gsub ("^(.*\\/)([^\\/]*)$", "\\1RKTestStandard\\.\\2", file)
 	if (!file.exists (file)) {
 		# if neither exists, that means both files are empty
 		if (!file.exists (standard_file)) return (TRUE)
@@ -127,8 +127,8 @@ rktest.runRKTest <- function (test) {
 	if (!validObject (test)) return (result)
 
 	output_file <- rktest.file (test@id, ".rkout")
-	code_file <- rktest.file (test@id, ".rkcom")
-	message_file <- rktest.file (test@id, ".rkwarn")
+	code_file <- rktest.file (test@id, ".rkcommands.R")
+	message_file <- rktest.file (test@id, ".messages.txt")
 
 	# the essence of the test:
 	result@error <- rktest.runRKTest.internal (test, output_file, code_file, message_file)
@@ -149,7 +149,7 @@ rktest.cleanRKTestSuite <- function (suite, basedir=getwd ()) {
 
 	files <- list.files ()
 	# do not delete the standards!
-	files <- grep (".*\\.standard$", files, value=TRUE, invert=TRUE)
+	files <- grep ("^RKTestStandard\\..*\\.(messages.txt|rkcommands.R|rkout)$", files, value=TRUE, invert=TRUE)
 
 	file.remove (files)
 
@@ -197,8 +197,9 @@ rktest.setSuiteStandards <- function (suite, basedir=getwd ()) {
 	setwd (paste (basedir, suite@id, sep="/"))
 
 	files <- list.files ()
-	files <- grep (".*\\.(rkwarn|rkcom|rkout)$", files, value=TRUE)
-	file.copy (files, paste (files, ".standard", sep=""), overwrite=TRUE)
+	files <- grep ("\\.(messages.txt|rkcommands.R|rkout)$", files, value=TRUE)
+	files <- grep ("^RKTestStandard", files, value=TRUE, invert=TRUE)
+	file.copy (files, paste ("RKTestStandard.", files, sep=""), overwrite=TRUE)
 
 	# clean anything that is *not* a standard file
 	rktest.cleanRKTestSuite (suite, basedir)
