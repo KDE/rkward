@@ -2,7 +2,7 @@
                           rkreadlinedialog  -  description
                              -------------------
     begin                : Fri Sep 15 2006
-    copyright            : (C) 2006, 2007, 2008 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007, 2008, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -23,6 +23,7 @@
 #include <qapplication.h>
 #include <qdesktopwidget.h>
 #include <QScrollBar>
+#include <QTimer>
 
 #include <klocale.h>
 #include <kvbox.h>
@@ -87,6 +88,7 @@ bool RKReadLineDialog::readLine (QWidget *parent, const QString &caption, const 
 
 	RKReadLineDialog *dialog = new RKReadLineDialog (parent, caption, prompt, command);
 	if (!stored_geom.isNull ()) dialog->setGeometry (stored_geom);
+	QTimer::singleShot (0, dialog->input, SLOT(setFocus()));
 	int res = dialog->exec ();
 	*result = dialog->input->text ();
 	stored_geom = dialog->frameGeometry ();
