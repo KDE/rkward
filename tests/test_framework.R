@@ -18,8 +18,8 @@ setClass ("RKTest",
 	)
 
 setClass ("RKTestResult",
-		representation (id = "character", code_match = "logical", output_match = "logical", message_match = "logical", error="logical", passed="logical"),
-		prototype(character(0), id = character (0), code_match = NA, output_match = NA, message_match = NA, error = NA, passed=FALSE),
+		representation (id = "character", code_match = "character", output_match = "character", message_match = "character", error="character", passed="logical"),
+		prototype(character(0), id = character (0), code_match = character (0), output_match = character (0), message_match = character (0), error = character (0), passed=FALSE),
 		validity=function (object) {
 			return (all.equal (length (object@id), length (object@code_match), length (object@output_match), length (object@message_match), length (object@error), length (object@passed)))
 		}
@@ -38,10 +38,10 @@ setMethod ("show", "RKTestResult", function (object) {
 
 	for (i in 1:length (object@id)) {
 		cat (format (object@id[i], width=20))
-		cat (format (if (object@code_match[i]) "true" else "FALSE", width=15))
-		cat (format (if (object@output_match[i]) "true" else "FALSE", width=15))
-		cat (format (if (object@message_match[i]) "true" else "FALSE", width=15))
-		cat (format (if (object@error[i]) "TRUE" else "false", width=15))
+		cat (format (object@code_match[i], width=15))
+		cat (format (object@output_match[i], width=15))
+		cat (format (object@message_match[i], width=15))
+		cat (format (object@error[i], width=15))
 		cat (format (if (object@passed[i]) "pass" else "FAIL", width=15))
 		cat ("\n")
 	}
@@ -69,7 +69,7 @@ rktest.file <- function (id, extension) {
 }
 
 # returns true, if file corresponds to standard.
-rktest.compare.against.standard <- function (file) {
+rktest.compare.against.standard <- function (file, fuzzy=FALSE) {
 	standard_file <- gsub ("^(.*\\/)([^\\/]*)$", "\\1RKTestStandard\\.\\2", file)
 	if (file.exists (file)) {
 		# purge empty files
@@ -78,16 +78,26 @@ rktest.compare.against.standard <- function (file) {
 	}
 	if (!file.exists (file)) {
 		# if neither exists, that means both files are empty
-		if (!file.exists (standard_file)) return (TRUE)
+		if (!file.exists (standard_file)) return ("match (empty)")
 	}
 
 	output.diff <- system(paste("diff", shQuote(file), shQuote(standard_file), "2>&1"), intern=TRUE)
-	if (!length (output.diff)) return (TRUE)
-	if ((length (output.diff) == 1) && (!nzchar (output.diff))) return (TRUE)
+	if (!length (output.diff)) return ("match")
+	if ((length (output.diff) == 1) && (!nzchar (output.diff))) return ("match")
+
+	# below: there are *some* differences
+	if (fuzzy) {
+		size <- if (file.exists (file)) file.info (file)$size[1] else 0
+		s_size <- if (file.exists (standard_file)) file.info (standard_file)$size[1] else 0
+
+		# crude test: files should at least have a similar size
+		if ((size < (s_size + 20)) && (size > (s_size - 20))) return ("fuzzy match")
+	}
 
 	print (paste ("Differences between", file, "and", standard_file, ":"))
 	print (output.diff)
-	return (FALSE)
+
+	return ("MISMATCH")
 }
 
 rktest.runRKTest.internal <- function (test, output_file, code_file, message_file) {
@@ -136,14 +146,25 @@ rktest.runRKTest <- function (test) {
 	message_file <- rktest.file (test@id, ".messages.txt")
 
 	# the essence of the test:
-	result@error <- rktest.runRKTest.internal (test, output_file, code_file, message_file)
+	res.error <- rktest.runRKTest.internal (test, output_file, code_file, message_file)
+	passed <- (res.error == test@expect_error)
+	if (res.error) {
+		if (test@expect_error) result@error <- "expected error"
+		else result@error <- "ERROR"
+	} else {
+		if (test@expect_error) result@error <- "MISSING ERROR"
+		else result@error <- "no"
+	}
 
-	result@output_match = rktest.compare.against.standard (output_file)
+	result@output_match = rktest.compare.against.standard (output_file, test@fuzzy_output)
+	if (result@output_match == "MISMATCH") passed <- FALSE
 	result@message_match = rktest.compare.against.standard (message_file)
+	if (result@message_match == "MISMATCH") passed <- FALSE
 	result@code_match = rktest.compare.against.standard (code_file)
+	if (result@code_match == "MISMATCH") passed <- FALSE
 
-	if ((result@error == test@expect_error) && (result@output_match || test@fuzzy_output) && result@code_match && result@message_match) result@passed = TRUE
-	
+	result@passed <- passed
+
 	result
 }
 
