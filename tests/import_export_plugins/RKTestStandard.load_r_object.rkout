@@ -4,4 +4,3 @@
 <li>Import to environment: globalenv()</li>
 </ul>
 DATE<br>
-<a href="rkward://runplugin/rkward::load_r_object/file.selection=women.RData%0aother_env.state=0">Run again</a><hr>

@@ -71,6 +71,11 @@ rktest.file <- function (id, extension) {
 # returns true, if file corresponds to standard.
 rktest.compare.against.standard <- function (file) {
 	standard_file <- gsub ("^(.*\\/)([^\\/]*)$", "\\1RKTestStandard\\.\\2", file)
+	if (file.exists (file)) {
+		# purge empty files
+		info <- file.info (file)
+		if (info$size[1] == 0) file.remove (file)
+	}
 	if (!file.exists (file)) {
 		# if neither exists, that means both files are empty
 		if (!file.exists (standard_file)) return (TRUE)
@@ -218,8 +223,16 @@ rktest.setSuiteStandards <- function (suite, basedir=getwd ()) {
 	.rk.cat.output ("\", submit.mode=\"submit\")</pre>")
 }
 
+## Initialize test environment
+# By default .rk.rerun.plugin.link() and .rk.make.hr() are silenced during the test runs
+.rk.rerun.plugin.link <- .rk.make.hr <- function (...) { list (...) }
+
 # HACK: Override date, so we don't get a difference for each call of rk.header ()
 # TODO: implement a clean solution inside rk.header()
 date <- function () {
 	return ("DATE")
 }
+
+# Make sure i18n does not get in the way
+invisible (Sys.setenv (LANGUAGE="C"))
+invisible (Sys.setlocale ("LC_MESSAGES", "C"))
