@@ -28,16 +28,16 @@ setClass ("RKTestResult",
 setMethod ("show", "RKTestResult", function (object) {
 	stopifnot (inherits (object, "RKTestResult"))
 
-	cat (format ("ID", width=20))
+	cat (format ("ID", width=30))
 	cat (format ("code match", width=15))
 	cat (format ("output match", width=15))
 	cat (format ("message match", width=15))
 	cat (format ("error", width=15))
 	cat (format ("result", width=15))
-	cat ("\n")
+	cat ("\n", rep ("-", 96), "\n", sep="")
 
 	for (i in 1:length (object@id)) {
-		cat (format (object@id[i], width=20))
+		cat (format (object@id[i], width=30))
 		cat (format (object@code_match[i], width=15))
 		cat (format (object@output_match[i], width=15))
 		cat (format (object@message_match[i], width=15))
@@ -45,6 +45,9 @@ setMethod ("show", "RKTestResult", function (object) {
 		cat (format (if (object@passed[i]) "pass" else "FAIL", width=15))
 		cat ("\n")
 	}
+
+	cat (rep ("-", 96), "\n", sep="")
+	cat (as.character (sum (object@passed)), " / ", as.character (length (object@passed)), " tests passed\n");
 })
 
 rktest.appendTestResults <- function (objecta, objectb) {
@@ -247,6 +250,9 @@ rktest.setSuiteStandards <- function (suite, basedir=getwd ()) {
 ## Initialize test environment
 # By default .rk.rerun.plugin.link() and .rk.make.hr() are silenced during the test runs
 .rk.rerun.plugin.link <- .rk.make.hr <- function (...) { list (...) }
+
+# This should make the output of rk.graph.on() fixed
+rk.get.tempfile.name <- function (prefix, extension) paste (prefix, extension, sep="")
 
 # HACK: Override date, so we don't get a difference for each call of rk.header ()
 # TODO: implement a clean solution inside rk.header()
