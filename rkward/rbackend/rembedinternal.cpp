@@ -720,6 +720,12 @@ SEXP doGetStructure (SEXP toplevel, SEXP name, SEXP envlevel, SEXP namespacename
 	return R_MakeExternalPtr (ret, RKWard_RData_Tag, R_NilValue);
 }
 
+SEXP doGetGlobalEnvStructure (SEXP name, SEXP envlevel, SEXP namespacename) {
+	RK_TRACE (RBACKEND);
+
+	return doGetStructure (findVar (Rf_install (CHAR (STRING_ELT (name, 0))), R_GlobalEnv), name, envlevel, namespacename);
+}
+
 /** copy a symbol without touching it (esp. not forcing any promises) */
 SEXP doCopyNoEval (SEXP name, SEXP fromenv, SEXP toenv) {
 	RK_TRACE (RBACKEND);
@@ -799,6 +805,7 @@ bool REmbedInternal::startR (int argc, char** argv, bool stack_check) {
 		{ "rk.do.command", (DL_FUNC) &doSubstackCall, 1 },
 		{ "rk.update.locale", (DL_FUNC) &doUpdateLocale, 0 },
 		{ "rk.get.structure", (DL_FUNC) &doGetStructure, 4 },
+		{ "rk.get.structure.global", (DL_FUNC) &doGetGlobalEnvStructure, 3 },
 		{ "rk.copy.no.eval", (DL_FUNC) &doCopyNoEval, 3 },
 		{ "rk.edit.files", (DL_FUNC) &doEditFiles, 3 },
 		{ "rk.show.files", (DL_FUNC) &doShowFiles, 4 },

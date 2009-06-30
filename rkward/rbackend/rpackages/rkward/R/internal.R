@@ -290,6 +290,10 @@ if (base::.Platform$OS.type == "windows") {
 
 ".rk.get.structure" <- .rk.get.structure.new
 
+".rk.get.structure.global" <- function (name, envlevel=0, namespacename=NULL) {
+	.Call ("rk.get.structure.global", as.character (name), as.integer (envlevel), namespacename)
+}
+
 ".rk.get.formals" <- function (x) 
 {
     f <- formals (x)

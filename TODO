@@ -201,6 +201,8 @@ Internal stuff:
 	- When saving workplace layout, save it relative to the workspace file. Allows to move the workspace, easier
 		- KURL::relativeUrl()
 		- How to deal with workplaces saved in the config (and not bound to a workspace file?)
+	- all RKComponents:
+		- in the documentation we call the return value of value() the "default property". Why not simply define a "default property" for each component, instead of reimplementing value()?
 
 General code:
 	- use constBegin (), constEnd ()
