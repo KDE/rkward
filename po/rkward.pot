@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
 "group_id=50231&atid=459007\n"
-"POT-Creation-Date: 2009-05-29 18:52+0200\n"
+"POT-Creation-Date: 2009-06-30 21:47+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -78,7 +78,7 @@ msgid ""
 "filename?"
 msgstr ""
 
-#: agents/showedittextfileagent.cpp:57 misc/rkprogresscontrol.cpp:305
+#: agents/showedittextfileagent.cpp:57 misc/rkprogresscontrol.cpp:301
 #: plugin/rkstandardcomponentgui.cpp:374
 msgid "Done"
 msgstr ""
@@ -97,29 +97,29 @@ msgid ""
 "\n"
 msgstr ""
 
-#: agents/showedittextfileagent.cpp:88
+#: agents/showedittextfileagent.cpp:90
 msgid "Showing file(s)"
 msgstr ""
 
-#: agents/showedittextfileagent.cpp:89
+#: agents/showedittextfileagent.cpp:91
 msgid ""
 "A command running in the R-engine wants you to see one or more file(s). "
 "RKWard can not determine, whether it is safe to continue processing R "
 "commands, before you have read the file(s) in question."
 msgstr ""
 
-#: agents/showedittextfileagent.cpp:101
+#: agents/showedittextfileagent.cpp:93
 msgid "Edit file(s)"
 msgstr ""
 
-#: agents/showedittextfileagent.cpp:102
+#: agents/showedittextfileagent.cpp:94
 msgid ""
 "A command running in the R-engine wants you to edit one or more file(s). "
 "RKWard can not determine, whether it is safe to continue processing R "
 "commands, before you have read/edited (and saved) the file(s) in question."
 msgstr ""
 
-#: agents/showedittextfileagent.cpp:117
+#: agents/showedittextfileagent.cpp:119
 msgid ""
 "\n"
 "\n"
@@ -128,7 +128,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: core/renvironmentobject.cpp:92
+#: core/renvironmentobject.cpp:97
 msgid ""
 "The package '%1' (probably you just loaded it) is currently blacklisted for "
 "retrieving structure information. Practically this means, the objects in "
@@ -140,7 +140,7 @@ msgid ""
 ">Configure RKWard->Workspace."
 msgstr ""
 
-#: core/renvironmentobject.cpp:92
+#: core/renvironmentobject.cpp:97
 msgid "Package blacklisted"
 msgstr ""
 
@@ -171,8 +171,8 @@ msgid ""
 msgstr ""
 
 #: core/rkmodificationtracker.cpp:331 dataeditor/rkvareditmodel.cpp:571
-#: dialogs/rkloadlibsdialog.cpp:288 dialogs/rkloadlibsdialog.cpp:304
-#: dialogs/rkloadlibsdialog.cpp:474 dialogs/rkloadlibsdialog.cpp:634
+#: dialogs/rkloadlibsdialog.cpp:300 dialogs/rkloadlibsdialog.cpp:316
+#: dialogs/rkloadlibsdialog.cpp:486 dialogs/rkloadlibsdialog.cpp:646
 #: plugin/rkformula.cpp:81 plugin/rkvarslot.cpp:55
 msgid "Name"
 msgstr ""
@@ -191,63 +191,63 @@ msgstr ""
 msgid "Class"
 msgstr ""
 
-#: core/robject.cpp:110
+#: core/robject.cpp:116
 msgid "Full location:"
 msgstr ""
 
-#: core/robject.cpp:112
+#: core/robject.cpp:118
 msgid "Label:"
 msgstr ""
 
-#: core/robject.cpp:113
+#: core/robject.cpp:119
 msgid "Type:"
 msgstr ""
 
-#: core/robject.cpp:116
+#: core/robject.cpp:122
 msgid "Function"
 msgstr ""
 
-#: core/robject.cpp:117
+#: core/robject.cpp:123
 msgid "Usage: "
 msgstr ""
 
-#: core/robject.cpp:119
+#: core/robject.cpp:125
 msgid "Data frame"
 msgstr ""
 
-#: core/robject.cpp:121
+#: core/robject.cpp:127
 msgid "Array"
 msgstr ""
 
-#: core/robject.cpp:123
+#: core/robject.cpp:129
 msgid "Matrix"
 msgstr ""
 
-#: core/robject.cpp:125
+#: core/robject.cpp:131
 msgid "List"
 msgstr ""
 
-#: core/robject.cpp:127
+#: core/robject.cpp:133
 msgid "Variable"
 msgstr ""
 
-#: core/robject.cpp:128
+#: core/robject.cpp:134
 msgid "Data Type:"
 msgstr ""
 
-#: core/robject.cpp:130
+#: core/robject.cpp:136
 msgid "Environment"
 msgstr ""
 
-#: core/robject.cpp:135
+#: core/robject.cpp:141
 msgid "Length: "
 msgstr ""
 
-#: core/robject.cpp:137
+#: core/robject.cpp:143
 msgid "Dimensions: "
 msgstr ""
 
-#: core/robject.cpp:145
+#: core/robject.cpp:151
 msgid "Class(es):"
 msgstr ""
 
@@ -420,7 +420,7 @@ msgstr ""
 msgid "All Files"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:58 rkward.cpp:366
+#: dialogs/rkloadlibsdialog.cpp:58 rkward.cpp:355
 msgid "Configure Packages"
 msgstr ""
 
@@ -441,106 +441,106 @@ msgstr ""
 msgid "Configure Repositories"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:213
+#: dialogs/rkloadlibsdialog.cpp:225
 msgid "Please stand by while installing selected packages"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:213
+#: dialogs/rkloadlibsdialog.cpp:225
 msgid "Installing packages"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:251
+#: dialogs/rkloadlibsdialog.cpp:263
 msgid "Installation process died with exit code %1"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:269
+#: dialogs/rkloadlibsdialog.cpp:281
 msgid ""
 "There are no safeguards against removing essential packages. For example, "
 "unloading \"rkward\" will prevent this application from running properly. "
 "Please be careful about the packages you unload."
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:286
+#: dialogs/rkloadlibsdialog.cpp:298
 msgid "Installed packages"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:288 windows/rkhelpsearchwindow.cpp:93
-#: windows/rkhelpsearchwindow.cpp:307
+#: dialogs/rkloadlibsdialog.cpp:300 windows/rkhelpsearchwindow.cpp:93
+#: windows/rkhelpsearchwindow.cpp:313
 msgid "Title"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:288 dialogs/rkloadlibsdialog.cpp:634
+#: dialogs/rkloadlibsdialog.cpp:300 dialogs/rkloadlibsdialog.cpp:646
 msgid "Version"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:288 dialogs/rkloadlibsdialog.cpp:474
+#: dialogs/rkloadlibsdialog.cpp:300 dialogs/rkloadlibsdialog.cpp:486
 msgid "Location"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:293
+#: dialogs/rkloadlibsdialog.cpp:305
 msgid "Load"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:295
+#: dialogs/rkloadlibsdialog.cpp:307
 msgid "Unload"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:302
+#: dialogs/rkloadlibsdialog.cpp:314
 msgid "Loaded packages"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:417
+#: dialogs/rkloadlibsdialog.cpp:429
 msgid ""
 "There has been an error while trying to load / unload packages. See "
 "transcript below for details"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:417
+#: dialogs/rkloadlibsdialog.cpp:429
 msgid "Error while handling packages"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:465
+#: dialogs/rkloadlibsdialog.cpp:477
 msgid ""
 "In order to find out, which of your installed packaged have an update "
 "available, click \"Fetch List\". This feature requires a working internet "
 "connection."
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:474
+#: dialogs/rkloadlibsdialog.cpp:486
 msgid "Local Version"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:474
+#: dialogs/rkloadlibsdialog.cpp:486
 msgid "Online Version"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:481 dialogs/rkloadlibsdialog.cpp:641
+#: dialogs/rkloadlibsdialog.cpp:493 dialogs/rkloadlibsdialog.cpp:653
 msgid "Fetch list"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:483
+#: dialogs/rkloadlibsdialog.cpp:495
 msgid "Update Selected"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:485
+#: dialogs/rkloadlibsdialog.cpp:497
 msgid "Update All"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:548
+#: dialogs/rkloadlibsdialog.cpp:560
 msgid "[No updates available]"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:599
+#: dialogs/rkloadlibsdialog.cpp:611
 msgid ""
 "Please stand by while determining, which packages have an update available "
 "online."
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:599 dialogs/rkloadlibsdialog.cpp:738
+#: dialogs/rkloadlibsdialog.cpp:611 dialogs/rkloadlibsdialog.cpp:750
 msgid "Fetching list"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:626
+#: dialogs/rkloadlibsdialog.cpp:638
 msgid ""
 "Many packages are available on CRAN (Comprehensive R Archive Network), and "
 "other repositories (click \"Configure Repositories\" to add more sources). "
@@ -548,61 +548,73 @@ msgid ""
 "requires a working internet connection."
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:643
+#: dialogs/rkloadlibsdialog.cpp:655
 msgid "Install Selected"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:698
+#: dialogs/rkloadlibsdialog.cpp:710
 msgid "[No packages available]"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:738
+#: dialogs/rkloadlibsdialog.cpp:750
 msgid "Please stand by while downloading the list of available packages."
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:749
+#: dialogs/rkloadlibsdialog.cpp:761
 msgid ""
 "The package requested by the backend (\"%1\") was not found in the package "
 "repositories. Maybe the package name was mis-spelled. Or maybe you need to "
 "add additional repositories via the \"Configure Repositories\"-button."
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:749
+#: dialogs/rkloadlibsdialog.cpp:761
 msgid "Package not available"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:778
+#: dialogs/rkloadlibsdialog.cpp:790
 msgid "Install packages to:"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:783
+#: dialogs/rkloadlibsdialog.cpp:795
 msgid "Include dependencies"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:815
-msgid ""
-"The directory you are trying to install to (%1) is not writable with your "
-"current user permissions. If you are the adminitstrator of this machine, you "
-"can try to install the packages as root (you'll be prompted for the root "
-"password). Otherwise you'll have to chose a different library location to "
-"install to (if none are writable, you will probably want to use the "
-"\"Configure Repositories\"-button to set up a writable directory to install "
-"packages to)."
-msgstr ""
-
-#: dialogs/rkloadlibsdialog.cpp:815
+#: dialogs/rkloadlibsdialog.cpp:827
 msgid "Selected library location not writable"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:815
+#: dialogs/rkloadlibsdialog.cpp:828
+msgid ""
+"The directory you are trying to install to (%1) is not writable with your "
+"current user permissions. You can chose a different library location to "
+"install to (if none are wirtable, you will probably want to use the "
+"\"Configure Repositories\"-button to set up a writable directory to install "
+"package to).\n"
+msgstr ""
+
+#: dialogs/rkloadlibsdialog.cpp:832
+msgid ""
+"If have access to an administrator account on this machine, you can use that "
+"to install the package(s), or you could change the permissions of '%1'. "
+"Sorry, automatic switching to Administrator is not yet supported in RKWard "
+"on Windows"
+msgstr ""
+
+#: dialogs/rkloadlibsdialog.cpp:834
+msgid "Attempt installation, anyway"
+msgstr ""
+
+#: dialogs/rkloadlibsdialog.cpp:837
+msgid ""
+"If you are the adminitstrator of this machine, you can try to install the "
+"packages as root (you'll be prompted for the root password)."
+msgstr ""
+
+#: dialogs/rkloadlibsdialog.cpp:838
 msgid "Become root"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:815
-msgid "&Cancel"
-msgstr ""
-
-#: dialogs/rkreadlinedialog.cpp:54
+#: dialogs/rkreadlinedialog.cpp:55
 msgid "Context:"
 msgstr ""
 
@@ -630,119 +642,125 @@ msgstr ""
 msgid "Always do this on startup"
 msgstr ""
 
-#: main.cpp:73
-msgid "file to open"
+#: main.cpp:79
+msgid ""
+"After starting (and after loading the specified workspace, if applicable), "
+"evaluate the given R code."
 msgstr ""
 
-#: main.cpp:74
+#: main.cpp:80
 msgid "Verbosity of debug messages (0-5)"
 msgstr ""
 
-#: main.cpp:75
+#: main.cpp:81
 msgid "Mask for components to debug (see debug.h)"
 msgstr ""
 
-#: main.cpp:76
+#: main.cpp:82
 msgid ""
 "Debugger (enclose any debugger arguments in single quotes ('') together with "
 "the command)"
 msgstr ""
 
-#: main.cpp:77
+#: main.cpp:83
 msgid "Disable R C stack checking"
 msgstr ""
 
-#: main.cpp:79
-msgid "RKWard"
-msgstr ""
-
-#: main.cpp:79
-msgid "Frontend to the R statistics language"
-msgstr ""
-
-#: main.cpp:79
-msgid "(c) 2002, 2004, 2005, 2006, 2007, 2008, 2009"
-msgstr ""
-
-#: main.cpp:80 main.cpp:81 main.cpp:82 main.cpp:83 main.cpp:85 main.cpp:86
-#: main.cpp:87 main.cpp:88 main.cpp:89 main.cpp:90 main.cpp:91 main.cpp:92
-#: main.cpp:93 main.cpp:94 main.cpp:95 main.cpp:96 main.cpp:97
-msgid "%1"
-msgstr ""
-
-#: main.cpp:80
-msgid "Project leader / main developer"
-msgstr ""
-
-#: main.cpp:81
-msgid "C++ coder since 0.2.9"
-msgstr ""
-
-#: main.cpp:82
-msgid "Many plugins, suggestions, marketing, translations"
-msgstr ""
-
-#: main.cpp:83 main.cpp:97
-msgid "Many plugins, suggestions"
-msgstr ""
-
 #: main.cpp:84
-msgid "Contributors in alphabetical order"
-msgstr ""
-
-#: main.cpp:85
-msgid "Several helpful comments and discussions"
+msgid "R workspace file to open"
 msgstr ""
 
 #: main.cpp:86
-msgid "Plugins and patches"
+msgid "RKWard"
+msgstr ""
+
+#: main.cpp:86
+msgid "Frontend to the R statistics language"
+msgstr ""
+
+#: main.cpp:86
+msgid "(c) 2002, 2004, 2005, 2006, 2007, 2008, 2009"
+msgstr ""
+
+#: main.cpp:87 main.cpp:88 main.cpp:89 main.cpp:90 main.cpp:92 main.cpp:93
+#: main.cpp:94 main.cpp:95 main.cpp:96 main.cpp:97 main.cpp:98 main.cpp:99
+#: main.cpp:100 main.cpp:101 main.cpp:102 main.cpp:103 main.cpp:104
+msgid "%1"
 msgstr ""
 
 #: main.cpp:87
-msgid "New website"
+msgid "Project leader / main developer"
 msgstr ""
 
 #: main.cpp:88
-msgid "HP filter plugin, spanish translation"
+msgid "C++ coder since 0.2.9"
 msgstr ""
 
 #: main.cpp:89
-msgid "A cool icon"
+msgid "Many plugins, suggestions, marketing, translations"
 msgstr ""
 
-#: main.cpp:90
-msgid "RKWard logo, many suggestions, help on wording"
+#: main.cpp:90 main.cpp:104
+msgid "Many plugins, suggestions"
 msgstr ""
 
 #: main.cpp:91
-msgid "Several valuable comments, hints and patches"
+msgid "Contributors in alphabetical order"
 msgstr ""
 
 #: main.cpp:92
-msgid "Translation, Suggestions, plugins"
+msgid "Several helpful comments and discussions"
 msgstr ""
 
 #: main.cpp:93
-msgid "Many comments, useful suggestions, and bug reports"
+msgid "Plugins and patches"
 msgstr ""
 
 #: main.cpp:94
-msgid "German Translation, bug reports"
+msgid "New website"
 msgstr ""
 
 #: main.cpp:95
-msgid "Some patches"
+msgid "HP filter plugin, spanish translation"
 msgstr ""
 
 #: main.cpp:96
+msgid "A cool icon"
+msgstr ""
+
+#: main.cpp:97
+msgid "RKWard logo, many suggestions, help on wording"
+msgstr ""
+
+#: main.cpp:98
+msgid "Several valuable comments, hints and patches"
+msgstr ""
+
+#: main.cpp:99
+msgid "Translation, Suggestions, plugins"
+msgstr ""
+
+#: main.cpp:100
+msgid "Many comments, useful suggestions, and bug reports"
+msgstr ""
+
+#: main.cpp:101
+msgid "German Translation, bug reports"
+msgstr ""
+
+#: main.cpp:102
+msgid "Some patches"
+msgstr ""
+
+#: main.cpp:103
 msgid "patches and helpful comments"
 msgstr ""
 
-#: main.cpp:98
+#: main.cpp:105
 msgid "Many more people on rkward-devel@lists.sourceforge.net"
 msgstr ""
 
-#: main.cpp:98
+#: main.cpp:105
 msgid "Sorry, if we forgot to list you. Please contact us to get added"
 msgstr ""
 
@@ -819,7 +837,7 @@ msgstr ""
 msgid "Errors / Warnings:"
 msgstr ""
 
-#: misc/rkprogresscontrol.cpp:250 plugin/rkstandardcomponentgui.cpp:294
+#: misc/rkprogresscontrol.cpp:246 plugin/rkstandardcomponentgui.cpp:294
 #: rkconsole.cpp:844 robjectviewer.cpp:170
 msgid "Cancel"
 msgstr ""
@@ -894,7 +912,7 @@ msgstr ""
 msgid "XML-parsing '%1' "
 msgstr ""
 
-#: plugin/rkcomponentmap.cpp:105 plugin/rkcomponentmap.cpp:337
+#: plugin/rkcomponentmap.cpp:105 plugin/rkcomponentmap.cpp:343
 msgid "(no label)"
 msgstr ""
 
@@ -929,13 +947,13 @@ msgstr ""
 msgid "Not all settings applied"
 msgstr ""
 
-#: plugin/rkcomponentmap.cpp:274
+#: plugin/rkcomponentmap.cpp:280
 msgid ""
 "\n"
 "The plugin could not be auto-submitted with these settings."
 msgstr ""
 
-#: plugin/rkcomponentmap.cpp:276
+#: plugin/rkcomponentmap.cpp:282
 msgid "Could not submit"
 msgstr ""
 
@@ -983,7 +1001,7 @@ msgstr ""
 msgid "Select"
 msgstr ""
 
-#: plugin/rkpluginsaveobject.cpp:42 rkward.cpp:256
+#: plugin/rkpluginsaveobject.cpp:42 rkward.cpp:243
 msgid "my.data"
 msgstr ""
 
@@ -1015,13 +1033,13 @@ msgstr ""
 msgid "Preview not (yet) possible"
 msgstr ""
 
-#: plugin/rkstandardcomponent.cpp:76
+#: plugin/rkstandardcomponent.cpp:77
 msgid ""
 "There has been an error while trying to parse the description of this plugin "
 "('%1'). Please refer to stdout for details."
 msgstr ""
 
-#: plugin/rkstandardcomponent.cpp:76
+#: plugin/rkstandardcomponent.cpp:77
 msgid "Could not create plugin"
 msgstr ""
 
@@ -1111,27 +1129,27 @@ msgstr ""
 msgid "Description"
 msgstr ""
 
-#: rbackend/rembedinternal.cpp:119
+#: rbackend/rembedinternal.cpp:135
 msgid ""
 "The R engine has encountered a fatal error:\n"
 "%1"
 msgstr ""
 
-#: rbackend/rembedinternal.cpp:206
+#: rbackend/rembedinternal.cpp:242
 msgid "The R engine has shut down with status: %1"
 msgstr ""
 
-#: rbackend/rinterface.cpp:86
+#: rbackend/rinterface.cpp:87
 msgid "R Startup"
 msgstr ""
 
-#: rbackend/rinterface.cpp:207
+#: rbackend/rinterface.cpp:216
 msgid ""
 "<p>There was a problem starting the R backend. The following error(s) "
 "occurred:</p>\n"
 msgstr ""
 
-#: rbackend/rinterface.cpp:209
+#: rbackend/rinterface.cpp:218
 msgid ""
 "</p>\t- The 'rkward' R-library either could not be loaded at all, or not in "
 "the correct version. This may lead to all sorts of errors, from single "
@@ -1143,7 +1161,7 @@ msgid ""
 "p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</p>\n"
 msgstr ""
 
-#: rbackend/rinterface.cpp:213
+#: rbackend/rinterface.cpp:222
 msgid ""
 "<p>\t-There was a problem opening the files needed for communication with R. "
 "Most likely this is due to an incorrect setting for the location of these "
@@ -1151,17 +1169,17 @@ msgid ""
 "files (Settings->Configure Settings->Logfiles) and restart RKWard.</p>\n"
 msgstr ""
 
-#: rbackend/rinterface.cpp:216
+#: rbackend/rinterface.cpp:225
 msgid ""
 "<p>\t-An unspecified error occurred that is not yet handled by RKWard. "
 "Likely RKWard will not function properly. Please check your setup.</p>\n"
 msgstr ""
 
-#: rbackend/rinterface.cpp:224
+#: rbackend/rinterface.cpp:233
 msgid "Error starting R"
 msgstr ""
 
-#: rbackend/rinterface.cpp:350
+#: rbackend/rinterface.cpp:359
 msgid ""
 "The R-backend has indicated that in order to carry out the current task it "
 "needs the package '%1', which is not currently installed. We will open the "
@@ -1169,11 +1187,11 @@ msgid ""
 "needed package."
 msgstr ""
 
-#: rbackend/rinterface.cpp:350
+#: rbackend/rinterface.cpp:359
 msgid "Require package '%1'"
 msgstr ""
 
-#: rbackend/rinterface.cpp:379
+#: rbackend/rinterface.cpp:388
 msgid ""
 "A command in the R backend is trying to change the character encoding. While "
 "RKWard offers support for this, and will try to adjust to the new locale, "
@@ -1186,19 +1204,23 @@ msgid ""
 "windows, save, and retry."
 msgstr ""
 
-#: rbackend/rinterface.cpp:379
+#: rbackend/rinterface.cpp:388
 msgid "Locale change"
 msgstr ""
 
-#: rbackend/rinterface.cpp:416
+#: rbackend/rinterface.cpp:457
+msgid "Question from the R backend"
+msgstr ""
+
+#: rbackend/rinterface.cpp:462
 msgid "Message from the R backend"
 msgstr ""
 
-#: rbackend/rinterface.cpp:420
+#: rbackend/rinterface.cpp:467
 msgid "R backend requests information"
 msgstr ""
 
-#: rbackend/rinterface.cpp:437
+#: rbackend/rinterface.cpp:484
 msgid ""
 "\n"
 "It will be shut down immediately. This means, you can not use any more "
@@ -1211,7 +1233,7 @@ msgid ""
 "happened. Sorry!"
 msgstr ""
 
-#: rbackend/rinterface.cpp:438
+#: rbackend/rinterface.cpp:485
 msgid "R engine has died"
 msgstr ""
 
@@ -1255,7 +1277,7 @@ msgstr ""
 msgid "Bypass console"
 msgstr ""
 
-#: rkward.cpp:205
+#: rkward.cpp:187
 msgid ""
 "<p>RKWard either could not find its resource files at all, or only an old "
 "version of those files. The most likely cause is that the last installation "
@@ -1266,173 +1288,185 @@ msgid ""
 "rkward/compiling</a>.</p>"
 msgstr ""
 
-#: rkward.cpp:205
+#: rkward.cpp:187
 msgid "Broken installation"
 msgstr ""
 
-#: rkward.cpp:224 settings/rksettingsmoduleobjectbrowser.cpp:128
+#: rkward.cpp:191
+msgid ""
+"<p>Please note that RKWard on is not well tested on Windows, yet.</"
+"p><p>There are all sorts of known issues, and issues yet to be reported. If "
+"you'd like to help: <a href=\"http://p.sf.net/rkward/contact\">http://p.sf."
+"net/rkward/contact</a>.</p>"
+msgstr ""
+
+#: rkward.cpp:191
+msgid "RKWard on Windows"
+msgstr ""
+
+#: rkward.cpp:211 settings/rksettingsmoduleobjectbrowser.cpp:128
 msgid "Workspace"
 msgstr ""
 
-#: rkward.cpp:228
+#: rkward.cpp:215
 msgid "Files"
 msgstr ""
 
-#: rkward.cpp:232
+#: rkward.cpp:219
 msgid "Pending Jobs"
 msgstr ""
 
-#: rkward.cpp:274
+#: rkward.cpp:263
 msgid "Setting up plugins..."
 msgstr ""
 
-#: rkward.cpp:286
+#: rkward.cpp:275
 msgid ""
 "Plugins are needed: you may manage these through \"Settings->Configure RKWard"
 "\".\n"
 msgstr ""
 
-#: rkward.cpp:286
+#: rkward.cpp:275
 msgid "No (valid) plugins found"
 msgstr ""
 
-#: rkward.cpp:328
+#: rkward.cpp:317
 msgid "Dataset"
 msgstr ""
 
-#: rkward.cpp:330
+#: rkward.cpp:319
 msgid "Creates new empty dataset and opens it for editing"
 msgstr ""
 
-#: rkward.cpp:333
+#: rkward.cpp:322
 msgid "Script File"
 msgstr ""
 
-#: rkward.cpp:337
+#: rkward.cpp:326
 msgid "Open R Script File"
 msgstr ""
 
-#: rkward.cpp:342
+#: rkward.cpp:331
 msgid "Import Data"
 msgstr ""
 
-#: rkward.cpp:343
+#: rkward.cpp:332
 msgid "Import data from a variety of file formats"
 msgstr ""
 
-#: rkward.cpp:346
+#: rkward.cpp:335
 msgid "Open Workspace"
 msgstr ""
 
-#: rkward.cpp:348
+#: rkward.cpp:337
 msgid "Opens an existing document"
 msgstr ""
 
-#: rkward.cpp:351
+#: rkward.cpp:340
 msgid "Opens a recently used file"
 msgstr ""
 
-#: rkward.cpp:354
+#: rkward.cpp:343
 msgid "Save Workspace"
 msgstr ""
 
-#: rkward.cpp:356
+#: rkward.cpp:345
 msgid "Saves the actual document"
 msgstr ""
 
-#: rkward.cpp:359
+#: rkward.cpp:348
 msgid "Save Workspace As"
 msgstr ""
 
-#: rkward.cpp:360
+#: rkward.cpp:349
 msgid "Saves the actual document as..."
 msgstr ""
 
-#: rkward.cpp:363
+#: rkward.cpp:352
 msgid "Quits the application"
 msgstr ""
 
-#: rkward.cpp:372
+#: rkward.cpp:361
 msgid "Close All Data"
 msgstr ""
 
-#: rkward.cpp:373
+#: rkward.cpp:362
 msgid "Closes all open data editors"
 msgstr ""
 
-#: rkward.cpp:378
+#: rkward.cpp:367
 msgid "Close All"
 msgstr ""
 
-#: rkward.cpp:382 windows/rktoolwindowbar.cpp:274
+#: rkward.cpp:371 windows/rktoolwindowbar.cpp:274
 msgid "Detach"
 msgstr ""
 
-#: rkward.cpp:385
+#: rkward.cpp:374
 msgid "Configure RKWard"
 msgstr ""
 
-#: rkward.cpp:388
+#: rkward.cpp:377
 msgid "[No actions available for current view]"
 msgstr ""
 
-#: rkward.cpp:419
+#: rkward.cpp:408
 msgid "Ready."
 msgstr ""
 
-#: rkward.cpp:492
+#: rkward.cpp:481
 msgid "Exiting..."
 msgstr ""
 
-#: rkward.cpp:500
+#: rkward.cpp:489
 msgid "Quitting RKWard: Do you want to save the workspace?"
 msgstr ""
 
-#: rkward.cpp:500 rkward.cpp:554
+#: rkward.cpp:489 rkward.cpp:549
 msgid "Save Workspace?"
 msgstr ""
 
-#: rkward.cpp:500
+#: rkward.cpp:489
 msgid "Don't quit"
 msgstr ""
 
-#: rkward.cpp:525
+#: rkward.cpp:514
 msgid "New dataset"
 msgstr ""
 
-#: rkward.cpp:525
+#: rkward.cpp:514
 msgid "Enter name for the new dataset"
 msgstr ""
 
-#: rkward.cpp:535
+#: rkward.cpp:524
 msgid "Opening workspace..."
 msgstr ""
 
-#: rkward.cpp:538
+#: rkward.cpp:530 rkward.cpp:532
 msgid "*|All files"
 msgstr ""
 
-#: rkward.cpp:538
+#: rkward.cpp:530 rkward.cpp:532
 msgid "Open File..."
 msgstr ""
 
-#: rkward.cpp:554
+#: rkward.cpp:549
 msgid "Do you want to save the current workspace?"
 msgstr ""
 
-#: rkward.cpp:638
+#: rkward.cpp:633
 msgid "R engine busy"
 msgstr ""
 
-#: rkward.cpp:641
+#: rkward.cpp:636
 msgid "R engine idle"
 msgstr ""
 
-#: rkward.cpp:644
+#: rkward.cpp:639
 msgid "R engine starting"
 msgstr ""
 
-#: rkward.cpp:678
+#: rkward.cpp:676 rkward.cpp:678
 msgid "Open command file(s)"
 msgstr ""
 
@@ -1554,7 +1588,7 @@ msgid ""
 msgstr ""
 
 #: scriptbackends/phpbackend.cpp:66 scriptbackends/phpbackend.cpp:170
-#: scriptbackends/phpbackend.cpp:200 scriptbackends/phpbackend.cpp:218
+#: scriptbackends/phpbackend.cpp:204 scriptbackends/phpbackend.cpp:222
 msgid "PHP-Error"
 msgstr ""
 
@@ -1567,7 +1601,7 @@ msgid ""
 "(Settings->Configure Settings->PHP backend) and try again."
 msgstr ""
 
-#: scriptbackends/phpbackend.cpp:200
+#: scriptbackends/phpbackend.cpp:204
 msgid ""
 "The PHP-backend has reported an error\n"
 "(\"%1\")\n"
@@ -1576,21 +1610,21 @@ msgid ""
 "it works with different settings."
 msgstr ""
 
-#: scriptbackends/phpbackend.cpp:218
+#: scriptbackends/phpbackend.cpp:222
 msgid ""
 "The PHP backend could not be started. Check whether you have correctly "
 "configured the location of the PHP-binary (Settings->Configure Settings->PHP "
 "backend)"
 msgstr ""
 
-#: scriptbackends/phpbackend.cpp:220
+#: scriptbackends/phpbackend.cpp:224
 msgid ""
 "The PHP-backend has died unexpectedly. The current output buffer is shown "
 "below:\n"
 "%1"
 msgstr ""
 
-#: scriptbackends/phpbackend.cpp:220
+#: scriptbackends/phpbackend.cpp:224
 msgid "PHP Process exited"
 msgstr ""
 
@@ -1881,129 +1915,133 @@ msgstr ""
 msgid "Plugins"
 msgstr ""
 
-#: settings/rksettingsmoduler.cpp:61
+#: settings/rksettingsmoduler.cpp:62
 msgid ""
 "The following settings mostly affect R behavior in the console. It is "
 "generally safe to keep these unchanged."
 msgstr ""
 
-#: settings/rksettingsmoduler.cpp:70
+#: settings/rksettingsmoduler.cpp:71
 msgid "Display warnings"
 msgstr ""
 
-#: settings/rksettingsmoduler.cpp:73
+#: settings/rksettingsmoduler.cpp:74
 msgid "Suppress warnings"
 msgstr ""
 
-#: settings/rksettingsmoduler.cpp:74
+#: settings/rksettingsmoduler.cpp:75
 msgid "Print warnings later (default)"
 msgstr ""
 
-#: settings/rksettingsmoduler.cpp:75
+#: settings/rksettingsmoduler.cpp:76
 msgid "Print warnings immediately"
 msgstr ""
 
-#: settings/rksettingsmoduler.cpp:76
+#: settings/rksettingsmoduler.cpp:77
 msgid "Convert warnings to errors"
 msgstr ""
 
-#: settings/rksettingsmoduler.cpp:82
+#: settings/rksettingsmoduler.cpp:83
 msgid "Decimal character (only for printing)"
 msgstr ""
 
-#: settings/rksettingsmoduler.cpp:89
+#: settings/rksettingsmoduler.cpp:90
 msgid "Output width (characters)"
 msgstr ""
 
-#: settings/rksettingsmoduler.cpp:95
+#: settings/rksettingsmoduler.cpp:96
 msgid "Maximum number of elements shown in print"
 msgstr ""
 
-#: settings/rksettingsmoduler.cpp:101
+#: settings/rksettingsmoduler.cpp:102
 msgid "Maximum length of warnings/errors to print"
 msgstr ""
 
-#: settings/rksettingsmoduler.cpp:107
+#: settings/rksettingsmoduler.cpp:108
 msgid "Keep comments in functions"
 msgstr ""
 
-#: settings/rksettingsmoduler.cpp:110
+#: settings/rksettingsmoduler.cpp:111
 msgid "TRUE (default)"
 msgstr ""
 
-#: settings/rksettingsmoduler.cpp:111
+#: settings/rksettingsmoduler.cpp:112
 msgid "FALSE"
 msgstr ""
 
-#: settings/rksettingsmoduler.cpp:117
+#: settings/rksettingsmoduler.cpp:118
 msgid "Keep comments in packages"
 msgstr ""
 
-#: settings/rksettingsmoduler.cpp:120 settings/rksettingsmoduler.cpp:142
+#: settings/rksettingsmoduler.cpp:121 settings/rksettingsmoduler.cpp:143
 msgid "TRUE"
 msgstr ""
 
-#: settings/rksettingsmoduler.cpp:121 settings/rksettingsmoduler.cpp:143
+#: settings/rksettingsmoduler.cpp:122 settings/rksettingsmoduler.cpp:144
 msgid "FALSE (default)"
 msgstr ""
 
-#: settings/rksettingsmoduler.cpp:127
+#: settings/rksettingsmoduler.cpp:128
 msgid "Maximum level of nested expressions"
 msgstr ""
 
-#: settings/rksettingsmoduler.cpp:133
+#: settings/rksettingsmoduler.cpp:134
 msgid "Default decimal precision in print ()"
 msgstr ""
 
-#: settings/rksettingsmoduler.cpp:139
+#: settings/rksettingsmoduler.cpp:140
 msgid "Check vector bounds (warn)"
 msgstr ""
 
-#: settings/rksettingsmoduler.cpp:148
+#: settings/rksettingsmoduler.cpp:149
 msgid "Command used to send files to printer"
 msgstr ""
 
-#: settings/rksettingsmoduler.cpp:153
+#: settings/rksettingsmoduler.cpp:154
 msgid "Editor command"
 msgstr ""
 
-#: settings/rksettingsmoduler.cpp:188
+#: settings/rksettingsmoduler.cpp:165
+msgid "Pager command"
+msgstr ""
+
+#: settings/rksettingsmoduler.cpp:200
 msgid "R-Backend"
 msgstr ""
 
-#: settings/rksettingsmoduler.cpp:308
+#: settings/rksettingsmoduler.cpp:327
 msgid "Package repositories (where libraries are downloaded from)"
 msgstr ""
 
-#: settings/rksettingsmoduler.cpp:314
+#: settings/rksettingsmoduler.cpp:333
 msgid "Archive downloaded packages"
 msgstr ""
 
-#: settings/rksettingsmoduler.cpp:321
+#: settings/rksettingsmoduler.cpp:340
 msgid "R Library locations  (where libraries get installed to, locally)"
 msgstr ""
 
-#: settings/rksettingsmoduler.cpp:326
+#: settings/rksettingsmoduler.cpp:345
 msgid ""
 "Note: The startup defaults will always be used in addition to the locations "
 "you specify in this list"
 msgstr ""
 
-#: settings/rksettingsmoduler.cpp:348
+#: settings/rksettingsmoduler.cpp:367
 msgid "Add R Library Directory"
 msgstr ""
 
-#: settings/rksettingsmoduler.cpp:356
+#: settings/rksettingsmoduler.cpp:375
 msgid "Add repository"
 msgstr ""
 
-#: settings/rksettingsmoduler.cpp:356
+#: settings/rksettingsmoduler.cpp:375
 msgid ""
 "Add URL of new repository\n"
 "(Enter \"@CRAN@\" for the standard CRAN-mirror)"
 msgstr ""
 
-#: settings/rksettingsmoduler.cpp:362
+#: settings/rksettingsmoduler.cpp:381
 msgid "R-Packages"
 msgstr ""
 
@@ -2184,26 +2222,26 @@ msgstr ""
 msgid "Help search"
 msgstr ""
 
-#: windows/rkhelpsearchwindow.cpp:201
-msgid "Show help for %1 in package %2"
+#: windows/rkhelpsearchwindow.cpp:159
+msgid "Find HTML help for %1"
 msgstr ""
 
-#: windows/rkhelpsearchwindow.cpp:226
+#: windows/rkhelpsearchwindow.cpp:232
 msgid ""
 "No help found on '%1'. Maybe the corresponding package is not installed/"
 "loaded, or maybe you mistyped the command. Try using Help->Search R Help for "
 "more options."
 msgstr ""
 
-#: windows/rkhelpsearchwindow.cpp:226
+#: windows/rkhelpsearchwindow.cpp:232
 msgid "No help found"
 msgstr ""
 
-#: windows/rkhelpsearchwindow.cpp:306
+#: windows/rkhelpsearchwindow.cpp:312
 msgid "Topic"
 msgstr ""
 
-#: windows/rkhelpsearchwindow.cpp:308
+#: windows/rkhelpsearchwindow.cpp:314
 msgid "Package"
 msgstr ""
 
@@ -2396,9 +2434,12 @@ msgstr ""
 
 #: windows/rktoplevelwindowgui.cpp:150
 msgid ""
-"Please submit your bug reports or wishes at http://sourceforge.net/tracker/?"
-"group_id=50231&atid=459007 or send email to rkward-devel@lists.sourceforge."
-"net"
+"<p>Please submit your bug reports or wishes at <a href=\"%1\">%1</a> or send "
+"email to <a href=\"mailto:%2\">%2</a>.</p>"
+msgstr ""
+
+#: windows/rktoplevelwindowgui.cpp:152
+msgid "Reporting bugs in RKWard"
 msgstr ""
 
 #: windows/rkwindowcatcher.cpp:57
@@ -2420,83 +2461,83 @@ msgstr ""
 msgid "Could not embed R X11 window"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:93
+#: windows/rkwindowcatcher.cpp:98
 msgid "An error occurred"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:205
+#: windows/rkwindowcatcher.cpp:242
 msgid "Specify fixed size"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:211
+#: windows/rkwindowcatcher.cpp:248
 msgid "Width"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:215
+#: windows/rkwindowcatcher.cpp:252
 msgid "Height"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:233
+#: windows/rkwindowcatcher.cpp:270
 msgid "Activate graphics device number %1"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:239
+#: windows/rkwindowcatcher.cpp:276
 msgid "Copy contents of graphics device number %1 to output"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:245
+#: windows/rkwindowcatcher.cpp:282
 msgid "Print contents of graphics device number %1"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:254
+#: windows/rkwindowcatcher.cpp:291
 msgid "Specify R object"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:259
+#: windows/rkwindowcatcher.cpp:296
 msgid "Specify the R object name, you want to save the graph to"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:270
+#: windows/rkwindowcatcher.cpp:307
 msgid "Save contents of graphics device number %1 to object '%2'"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:279
+#: windows/rkwindowcatcher.cpp:316
 msgid "Duplicate graphics device number %1"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:298
+#: windows/rkwindowcatcher.cpp:335
 msgid "Draw area follows size of window"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:304
+#: windows/rkwindowcatcher.cpp:341
 msgid "Set fixed size 500x500"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:306
+#: windows/rkwindowcatcher.cpp:343
 msgid "Set fixed size 1000x1000"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:308
+#: windows/rkwindowcatcher.cpp:345
 msgid "Set fixed size 2000x2000"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:310
+#: windows/rkwindowcatcher.cpp:347
 msgid "Set specified fixed size..."
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:313
+#: windows/rkwindowcatcher.cpp:350
 msgid "Make active"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:315
+#: windows/rkwindowcatcher.cpp:352
 msgid "Copy to output"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:318
+#: windows/rkwindowcatcher.cpp:355
 msgid "Store as R object..."
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:320
+#: windows/rkwindowcatcher.cpp:357
 msgid "Duplicate"
 msgstr ""
 
