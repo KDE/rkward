@@ -1,0 +1,3 @@
+delayed assign
+after sync
+delayed assign

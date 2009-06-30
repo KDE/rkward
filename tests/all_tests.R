@@ -1,7 +1,7 @@
 if (!isClass ("RKTestSuite")) source ("test_framework.R")
 
 ## add your test suite files, to this vector:
-testsuites <- c ("import_export_plugins.R")
+testsuites <- c ("rkward_application_tests.R", "import_export_plugins.R")
 
 allresults <- new ("RKTestResult")
 for (testsuite in testsuites) {
