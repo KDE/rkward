@@ -14,7 +14,7 @@ cp -a AUTHORS CMakeLists.txt COPYING ChangeLog TODO INSTALL NOTES README configu
 mkdir $DISTDIR/doc
 mkdir $DISTDIR/po
 mkdir $DISTDIR/rkward
-mkdir $DISTDIR/rkward
+mkdir $DISTDIR/tests
 
 rsync -a --exclude '*~' --exclude '*.svn*' $EXCLUDES $BASEDIR/doc/* $DISTDIR/doc
 rsync -a --exclude '*~' --exclude '*.svn*' $EXCLUDES $BASEDIR/po/* $DISTDIR/po
