@@ -383,7 +383,7 @@ void RKHTMLWindow::useMode (WindowMode new_mode) {
 		setXMLFile ("rkoutputwindow.rc");
 		run_selection->setVisible (false);
 
-		khtmlpart->removeChildClient (this);
+		if (parentClient ()) khtmlpart->removeChildClient (this);
 		khtmlpart->insertChildClient (this);
 	} else {
 		RK_ASSERT (new_mode == HTMLHelpWindow);
@@ -399,7 +399,7 @@ void RKHTMLWindow::useMode (WindowMode new_mode) {
 		setXMLFile ("rkhelpwindow.rc");
 		run_selection->setVisible (true);
 
-		khtmlpart->removeChildClient (this);
+		if (parentClient ()) khtmlpart->removeChildClient (this);
 		khtmlpart->insertChildClient (this);
 	}
 
