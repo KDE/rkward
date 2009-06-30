@@ -267,8 +267,14 @@ bool RKComponentMap::invokeComponent (const QString &component_id, const QString
 
 	// Auto-Submit
 	if (submit_mode != ManualSubmit) {
+#ifndef Q_OS_WIN
 		// if the plugin takes longer than 5 seconds to settle, than that really is sort of buggy...
 		bool submit_ok = component->submit (5000, in_chain);
+#else
+#warning Temporary workaround. Remove this.
+		// (yet on windows, the PHP backend is *real* slow. We give it a bit longer as long as we still use it...
+		bool submit_ok = component->submit (50000, in_chain);
+#endif
 		if (submit_ok || (submit_mode == AutoSubmitOrFail)) component->close ();
 		if (!submit_ok) {
 			_message.append (i18n ("\nThe plugin could not be auto-submitted with these settings."));

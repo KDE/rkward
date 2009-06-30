@@ -186,7 +186,11 @@ void PHPBackend::gotOutput () {
 		if (request == "requesting code") {
 			startup_done = true;
 			RK_DO (qDebug ("got type: %d, stack %d", current_type, command_stack.count ()), PHP, DL_DEBUG);
+#ifdef Q_OS_WIN
+			commandFinished (_output.replace ("\r\n", "\n"));
+#else
 			commandFinished (_output);
+#endif
 			_output = QString::null;
 		} else if (request.startsWith ("requesting data:")) {
 			QString requested_object = request.remove ("requesting data:");

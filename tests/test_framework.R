@@ -84,7 +84,7 @@ rktest.compare.against.standard <- function (file, fuzzy=FALSE) {
 		if (!file.exists (standard_file)) return ("match (empty)")
 	}
 
-	output.diff <- system(paste("diff", shQuote(file), shQuote(standard_file), "2>&1"), intern=TRUE)
+	output.diff <- system(paste("diff", shQuote(file), shQuote(standard_file), "--strip-trailing-cr", "--new-file"), intern=TRUE)
 	if (!length (output.diff)) return ("match")
 	if ((length (output.diff) == 1) && (!nzchar (output.diff))) return ("match")
 
@@ -262,4 +262,4 @@ date <- function () {
 
 # Make sure i18n does not get in the way
 invisible (Sys.setenv (LANGUAGE="C"))
-invisible (Sys.setlocale ("LC_MESSAGES", "C"))
+if (.Platform$OS.type == "unix") invisible (Sys.setlocale ("LC_MESSAGES", "C"))
