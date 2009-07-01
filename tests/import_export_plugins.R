@@ -10,6 +10,8 @@ suite <- new ("RKTestSuite", id="import_export_plugins",
 	initCalls = list (
 		function () {
 			library ("R2HTML")
+			library ("datasets")
+			library ("foreign")
 		},
 		function () {
 			# prepare some different files for loading
@@ -38,7 +40,18 @@ suite <- new ("RKTestSuite", id="import_export_plugins",
 
 			# this one is expected to fail, as it would overwrite the existing "women" in globalenv()
 			rk.call.plugin ("rkward::import_csv", file.selection="women.csv", name.selection="women", submit.mode="submit")
-		}, expect_error=TRUE)
+		}, expect_error=TRUE),
+		new ("RKTest", id="setworkdir", call=function () {
+			oldwd <- getwd ()
+			on.exit (setwd (oldwd))
+
+			# we can only use relative paths, here, to make sure the tests produce identical commands on all systems
+			rk.call.plugin ("rkward::setworkdir", dir.selection="..", submit.mode="submit")
+			stopifnot (oldwd != getwd ())
+
+			rk.call.plugin ("rkward::setworkdir", dir.selection="import_export_plugins", submit.mode="submit")
+			stopifnot (oldwd == getwd ())
+		})
 	), postCalls = list ()	# like initCalls: run after all tests to clean up. Empty in this case.
 )
 
