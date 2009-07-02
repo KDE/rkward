@@ -257,12 +257,12 @@ bool RKHTMLWindow::openURL (const KUrl &url) {
 			RK_ASSERT (false);
 			return false;
 		}
-	}
-
-	// this also means, that we bail out on almost all non-local files.
-	if (!KMimeType::findByUrl (url)->is ("text/html")) {
-		RKWorkplace::mainWorkplace ()->openAnyUrl (url);
-		return true;
+	} else {
+		// this also means, that we bail out on almost all non-local files.
+		if (!KMimeType::findByUrl (url)->is ("text/html")) {
+			RKWorkplace::mainWorkplace ()->openAnyUrl (url);
+			return true;
+		}
 	}
 
 	QFileInfo out_file (url.path ());
@@ -382,9 +382,6 @@ void RKHTMLWindow::useMode (WindowMode new_mode) {
 
 		setXMLFile ("rkoutputwindow.rc");
 		run_selection->setVisible (false);
-
-		if (parentClient ()) khtmlpart->removeChildClient (this);
-		khtmlpart->insertChildClient (this);
 	} else {
 		RK_ASSERT (new_mode == HTMLHelpWindow);
 
@@ -398,10 +395,10 @@ void RKHTMLWindow::useMode (WindowMode new_mode) {
 
 		setXMLFile ("rkhelpwindow.rc");
 		run_selection->setVisible (true);
-
-		if (parentClient ()) khtmlpart->removeChildClient (this);
-		khtmlpart->insertChildClient (this);
 	}
+
+	if (parentClient ()) khtmlpart->removeChildClient (this);
+	khtmlpart->insertChildClient (this);
 
 	updateCaption (current_url);
 	window_mode = new_mode;

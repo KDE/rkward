@@ -1,3 +1,4 @@
+TODO: clean up the tests-dir in makedist.sh
 TODO: add notice on differing licences/copyrights in subdirs
 - New command line option "--evaluate <Rcode>" mostly for the purpose of automated testing
 - Remove support for R 2.6.x and earlier		TODO: clean up more (RData?), adjust debian control
