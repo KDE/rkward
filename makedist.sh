@@ -21,10 +21,14 @@ rsync -a --exclude '*~' --exclude '*.svn*' $EXCLUDES $BASEDIR/po/* $DISTDIR/po
 rsync -a --exclude '*~' --exclude '*.svn*' --exclude 'templates' $EXCLUDES $BASEDIR/rkward/* $DISTDIR/rkward
 rsync -a --exclude '*~' --exclude '*.svn*' $EXCLUDES $BASEDIR/tests/* $DISTDIR/tests
 
+# make messages
 cd $DISTDIR/po
 ./Messages.sh
-cd $BASEDIR/disttemp
+# clean up test-results
+cd $DISTDIR/tests
+find . -mindepth 2 -name 'RKTestStandard.*' -o -exec rm {} \;
 
+cd $BASEDIR/disttemp
 tar -czf rkward-$VERSION.tar.gz $DISTDIRREL
 mv rkward-$VERSION.tar.gz $BASEDIR/
 
