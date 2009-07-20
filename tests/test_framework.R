@@ -201,6 +201,7 @@ rktest.runRKTestSuite <- function (suite, basedir=getwd ()) {
 	if (length (suite@initCalls) > 0) {
 		for (i in 1:length (suite@initCalls)) try (suite@initCalls[[i]]())
 	}
+	rk.sync.global ()	# objects might have been added/changed in the init calls
 
 	for (i in 1:length (suite@tests)) {
 		try (res <- rktest.runRKTest(suite@tests[[i]]))
