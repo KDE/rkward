@@ -446,7 +446,7 @@ void RKCommandEditorWindow::setWDToScript () {
 	RK_TRACE (COMMANDEDITOR);
 
 	RK_ASSERT (!url ().isEmpty ());
-	QString dir = url.directory ();
+	QString dir = url ().directory ();
 #ifdef Q_OS_WIN
 	// KURL::directory () returns a leading slash on windows as of KDElibs 4.3
 	while (dir.startsWith ('/')) dir.remove (0, 1);
