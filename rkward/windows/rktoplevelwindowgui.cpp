@@ -121,13 +121,6 @@ void RKTopLevelWindowGUI::configureShortcuts () {
 	}
 	dlg.addCollection (RKComponentMap::getMap ()->actionCollection (), i18n ("RKWard Plugins"));
 	dlg.configure (true);
-
-	// we need to update all MDI windows, even if they are not currently in the factory.
-	// (they may share some or all shortcuts of the currently active window)
-	QList<RKMDIWindow*> list = RKWorkplace::mainWorkplace ()->getObjectList ();
-	for (int i = 0; i < list.count (); ++i) {
-		list[i]->fixupPartGUI (true);
-	}
 }
 
 void RKTopLevelWindowGUI::invokeRHelp () {

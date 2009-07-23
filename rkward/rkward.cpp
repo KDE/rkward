@@ -387,6 +387,20 @@ void RKWardMainWindow::initActions()
 void RKWardMainWindow::partChanged (KParts::Part *part) {
 	RK_TRACE (APP);
 
+	/* Changes in shortcut-settings are not automatically synced between all action collections. Therefore, if we change between parts with the same actions, the new part simply does not have any changes that happend while the other part was active.
+	Reliably detecting such changes seems impossible (QAction::changed() gets emitted all the time for all sorts of non-interesting changes as well). So what we do is simply make sure we sync the KXMLGUI-files each time we switch to a new part. Fortunately, the performance impact appears to be small. */
+
+	// first: find out, which window is about to be activated
+	if (part) {
+		QList<RKMDIWindow*> list = RKWorkplace::mainWorkplace ()->getObjectList ();
+		for (int i = 0; i < list.count (); ++i) {
+			if (list[i]->getPart () == part) {
+				// now reload XML and apply customizations
+				list[i]->fixupPartGUI (true);
+				break;
+			}
+		}
+	}
 	createGUI (part);
 
 	if (!guiFactory ()) {
