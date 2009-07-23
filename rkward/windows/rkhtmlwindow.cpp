@@ -258,14 +258,13 @@ bool RKHTMLWindow::openURL (const KUrl &url) {
 			return false;
 		}
 	} else {
-		// this also means, that we bail out on almost all non-local files.
-		if (!KMimeType::findByUrl (url)->is ("text/html")) {
+		if (!(url.isLocalFile () && KMimeType::findByUrl (url)->is ("text/html"))) {
 			RKWorkplace::mainWorkplace ()->openAnyUrl (url);
 			return true;
 		}
 	}
 
-	QFileInfo out_file (url.path ());
+	QFileInfo out_file (url.toLocalFile ());
 	bool ok = out_file.exists();
 	if (ok)  {
 		khtmlpart->openUrl (url);
