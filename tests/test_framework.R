@@ -261,6 +261,9 @@ date <- function () {
 	return ("DATE")
 }
 
+# numerical precision is often a problem. To work around this in many places, reduce default printed precision to 5 digits
+options (digits=5)
+
 # Make sure i18n does not get in the way
 invisible (Sys.setenv (LANGUAGE="C"))
 if (.Platform$OS.type == "unix") invisible (Sys.setlocale ("LC_MESSAGES", "C"))
