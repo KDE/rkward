@@ -2,7 +2,7 @@
                           detachedwindowcontainer  -  description
                              -------------------
     begin                : Wed Oct 21 2005
-    copyright            : (C) 2005 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -22,6 +22,7 @@
 #include <kparts/mainwindow.h>
 
 class RKMDIWindow;
+class RKTopLevelWindowGUI;
 class QCloseEvent;
 
 /** This class is used to host a (KPart enabled) window detached from the main window. @see RKWorkplace::detachWindow ().
@@ -47,8 +48,11 @@ public slots:
 protected:
 /** when receiving a close event, dispatch to the embedded window */
 	void closeEvent (QCloseEvent *e);
+/** may need to reload embedded window's XMLGUI definition */
+	void changeEvent (QEvent *e);
 private:
 	RKMDIWindow *captured;
+	RKTopLevelWindowGUI *toplevel_actions;
 };
 
 #endif

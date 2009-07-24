@@ -384,6 +384,17 @@ void RKWardMainWindow::initActions()
 	run_menu_dummy->setEnabled (false);
 }
 
+void RKWardMainWindow::changeEvent (QEvent *e) {
+	RK_TRACE (APP);
+
+	// see RKWardMainWindow::partChanged() for a detailed comment
+	if ((e->type () == QEvent::ActivationChange) && isActiveWindow () && isVisible ()) {
+		if (factory ()) factory ()->refreshActionProperties ();
+	}
+
+	KParts::MainWindow::changeEvent (e);
+}
+
 void RKWardMainWindow::partChanged (KParts::Part *part) {
 	RK_TRACE (APP);
 

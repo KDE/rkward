@@ -21,6 +21,7 @@
 #include <kactioncollection.h>
 #include <kstatusbar.h>
 #include <ktoolbar.h>
+#include <kxmlguifactory.h>
 
 #include <qlayout.h>
 #include <qwidget.h>
@@ -40,16 +41,15 @@ DetachedWindowContainer::DetachedWindowContainer (RKMDIWindow *widget_to_capture
 	setHelpMenuEnabled (false);
 // create own GUI
 	setXMLFile ("detachedwindowcontainer.rc");
+	insertChildClient (toplevel_actions = new RKTopLevelWindowGUI (this));
+	statusBar ()->hide ();
+	createShellGUI ();
+
 	actionCollection ()->addAction (KStandardAction::Close, "dwindow_close", this, SLOT(close()));
 
 	QAction *reattach = actionCollection ()->addAction ("dwindow_attach", this, SLOT(slotReattach()));
 	reattach->setText (i18n ("Attach to main window"));
 	reattach->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionAttachWindow));
-
-	RKTopLevelWindowGUI *toplevel_actions = new RKTopLevelWindowGUI (this);
-	insertChildClient (toplevel_actions);
-	statusBar ()->hide ();
-	createShellGUI ();
 
 // copy main window toolbar settings
 	QMap<QString, Qt::ToolButtonStyle> main_window_toolbar_styles;
@@ -123,6 +123,19 @@ void DetachedWindowContainer::closeEvent (QCloseEvent *e) {
 	} else {
 		e->ignore ();
 	}
+}
+
+void DetachedWindowContainer::changeEvent (QEvent *e) {
+	RK_TRACE (APP);
+
+	// see RKWardMainWindow::partChanged() for a detailed comment
+	if ((e->type () == QEvent::ActivationChange) && isActiveWindow () && isVisible ()) {
+		// why do we need both in this place? No idea, but without the first line, the shortcut is not refreshed, when it was changed via RMB from this window, and without the second line, the shortcut is not refreshed, when it was changed elsewhere.
+		captured->fixupPartGUI (true);
+		if (factory ()) factory ()->refreshActionProperties ();
+	}
+
+	KParts::MainWindow::changeEvent (e);
 }
 
 #include "detachedwindowcontainer.moc"

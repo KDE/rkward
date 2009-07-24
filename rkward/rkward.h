@@ -95,6 +95,8 @@ protected:
 	void initStatusBar();
 	/** reimplemented from KMainWindow to call our doQueryClose (), and then (if quitting was not cancelled), invoke an RKQuitAgent to wait for the R-backend to finish up before actually quitting. */
 	virtual void closeEvent (QCloseEvent *e);
+/** may need to reload the active window's XMLGUI definition */
+	void changeEvent (QEvent *);
 signals:
 	void aboutToQuitRKWard ();
 public slots:
