@@ -489,6 +489,8 @@ void processX11EventsWorker (void *) {
 		if (what == NULL) break;
 		R_runHandlers(R_InputHandlers, what);
 	}
+	/* This seems to be needed to make Rcmdr react to events. Has this always been the case? It was commented out for a long time, without anybody noticing. */
+	R_PolledEvents ();
 #else
 #warning TODO: correct?
 	R_ProcessEvents();
