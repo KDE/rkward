@@ -5,13 +5,28 @@
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
+# Determine the installed distribution and release number
+# Will be used to determine if certain tweaks are needed, see below
+DISTRO = $(shell lsb_release -s -i -r)
+
+# Ubuntu 8.04 uses a different PATH for KDE 4 apps and needs some patching
+ifeq ("$(DISTRO)","Ubuntu 8.04")
+export PATH := $(PATH):/usr/lib/kde4/bin
+# If the following variables are set, patches are applied
+PATCHTARGET = patch-ubuntu804
+UNPATCHTARGET = unpatch
+endif
+
+
 # These are used for cross-compiling and for saving the configure script
 # from having to guess our platform (since we know it already)
 DEB_HOST_GNU_TYPE   ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
 DEB_BUILD_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
 
 #we need to know the R version
-RVERS = $(shell dpkg-query -W --showformat='$${Version}' r-base-core) 
+RVERS = $(shell dpkg-query -W --showformat='$${Version}' r-base-core)
+RMAJOR = $(shell echo $(RVERS) | awk -F. '{print $$1}')
+RMINOR = $(shell echo $(RVERS) | awk -F. '{print $$2}')
 
 CFLAGS = -Wall -g
 
@@ -21,7 +36,7 @@ else
 	CFLAGS += -O2
 endif
 
-config.status:
+config.status: $(PATCHTARGET) # Will only be called if set, see above
 	dh_testdir
 
 	mkdir -p $(CURDIR)/build
@@ -51,7 +66,7 @@ config.status:
 
 build: build-stamp
 
-build-stamp:  config.status
+build-stamp: config.status
 	dh_testdir
 
 	# Add here commands to compile the package.
@@ -59,7 +74,7 @@ build-stamp:  config.status
 
 	touch build-stamp
 
-clean:
+clean: $(UNPATCHTARGET) # Will only be called if set, see above
 	dh_testdir
 	dh_testroot
 	rm -f build-stamp
@@ -108,22 +123,26 @@ binary-arch: build install
 	dh_installdeb
 	dh_shlibdeps
 	# unfortunately, the r-base-core dependency can not be found by dh_shlibdeps, so we need to get at the version manually
-	@if [ "$(RVERS)" '>' "2.4.9" ] ; then \
-		echo "rvers=r-base-core (>= 2.4.9)" >> $(CURDIR)/debian/rkward.substvars ; \
+	@if [ "$(RMAJOR)" -eq "2" ] && [ "$(RMINOR)" -ge "9" ] ; then \
+		echo "rvers=r-base-core (>= 2.9.0)" >> $(CURDIR)/debian/rkward.substvars ; \
 	else \
-		if [ "$(RVERS)" '>' "2.3.9" ] ; then \
-			echo "rvers=r-base-core (<= 2.4.9), r-base-core (>= 2.3.9)" >> $(CURDIR)/debian/rkward.substvars ; \
-		else \
-			if [ "$(RVERS)" '>' "2.2.1.svn37823" ] ; then \
-				echo "rvers=r-base-core (<= 2.3.9), r-base-core (>= 2.3.0)" >> $(CURDIR)/debian/rkward.substvars ; \
-			else \
-				echo "rvers=r-base-core (<= 2.2.1-6), r-base-core (>= 2.1.0)" >> $(CURDIR)/debian/rkward.substvars ; \
-			fi \
-		fi \
-	fi
+		if [ "$(RMAJOR)" -eq "2" ] && [ "$(RMINOR)" -ge "8" ] ; then \
+		echo "rvers=r-base-core (<< 2.9.0), r-base-core (>= 2.8.0)" >> $(CURDIR)/debian/rkward.substvars ; \
+	else \
+		if [ "$(RMAJOR)" -eq "2" ] && [ "$(RMINOR)" -ge "7" ] ; then \
+		echo "rvers=r-base-core (<< 2.8.0), r-base-core (>= 2.7.0)" >> $(CURDIR)/debian/rkward.substvars ; \
+	fi ; fi ; fi
 	dh_gencontrol
 	dh_md5sums
 	dh_builddeb
 
+patch-ubuntu804:
+	dpatch apply 10_hardy_menu
+	dpatch cat-all >patch-stamp
+ 
+unpatch:
+	dpatch deapply-all
+	rm -rf patch-stamp debian/patched
+
 binary: binary-indep binary-arch
-.PHONY: build clean binary-indep binary-arch binary install 
+.PHONY: build clean binary-indep binary-arch binary install patch-ubuntu804 unpatch

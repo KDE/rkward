@@ -4,7 +4,10 @@ Tue, 26 Apr 2005 00:00:33 +0200.
 It was downloaded from http://rkward.sourceforge.net
 
 Copyright: 2002 - 2009 Thomas Friedrichsmeier and the RKWard team
-
 License:
 You are free to distribute this software under the terms of the GNU General Public License.
 On Debian systems, the complete text of the GNU General Public License can be found in the file `/usr/share/common-licenses/GPL'.
+
+Files: rkward/qwinhost.cpp.orig rkward/qwinhost.cpp rkward/qwinhost.h.orig rkward/qwinhost.h
+Copyright: (c) 2009 Nokia Corporation and/or its subsidiary(-ies).
+License: LPGL-2.1
