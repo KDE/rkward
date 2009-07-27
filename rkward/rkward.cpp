@@ -387,10 +387,12 @@ void RKWardMainWindow::initActions()
 void RKWardMainWindow::changeEvent (QEvent *e) {
 	RK_TRACE (APP);
 
+#if KDE_VERSION >= KDE_MAKE_VERSION(4,2,0)
 	// see RKWardMainWindow::partChanged() for a detailed comment
 	if ((e->type () == QEvent::ActivationChange) && isActiveWindow () && isVisible ()) {
 		if (factory ()) factory ()->refreshActionProperties ();
 	}
+#endif
 
 	KParts::MainWindow::changeEvent (e);
 }

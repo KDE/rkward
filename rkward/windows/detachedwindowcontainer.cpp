@@ -132,7 +132,9 @@ void DetachedWindowContainer::changeEvent (QEvent *e) {
 	if ((e->type () == QEvent::ActivationChange) && isActiveWindow () && isVisible ()) {
 		// why do we need both in this place? No idea, but without the first line, the shortcut is not refreshed, when it was changed via RMB from this window, and without the second line, the shortcut is not refreshed, when it was changed elsewhere.
 		captured->fixupPartGUI (true);
+#if KDE_VERSION >= KDE_MAKE_VERSION(4,2,0)
 		if (factory ()) factory ()->refreshActionProperties ();
+#endif
 	}
 
 	KParts::MainWindow::changeEvent (e);
