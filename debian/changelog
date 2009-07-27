@@ -9,6 +9,8 @@ rkward (0.5.1-1) unstable; urgency=low
   * removed support for building with kdelibs5-dev < 4.1.0
     closes: #531086 (dropped build depends on cmake and libphonon-dev)
 
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Mon, 27 Jul 2009 14:30:00 +0200
+
 rkward (0.5.0d-3) unstable; urgency=low
 
   * build-depend on libx11-dev
