@@ -1,6 +1,7 @@
 rkward (0.5.1-1) unstable; urgency=low
 
   * new upstream release
+  * bump standards version to 3.8.2 (no changes needed)
   * dropped notice on development status from description
   * added notice on differing copyright and additional
     LGPL licence of some files
