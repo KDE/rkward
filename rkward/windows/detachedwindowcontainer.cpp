@@ -38,18 +38,18 @@
 DetachedWindowContainer::DetachedWindowContainer (RKMDIWindow *widget_to_capture) : KParts::MainWindow  () {
 	RK_TRACE (APP);
 
+	actionCollection ()->addAction (KStandardAction::Close, "dwindow_close", this, SLOT(close()));
+
+	QAction *reattach = actionCollection ()->addAction ("dwindow_attach", this, SLOT(slotReattach()));
+	reattach->setText (i18n ("Attach to main window"));
+	reattach->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionAttachWindow));
+
 	setHelpMenuEnabled (false);
 // create own GUI
 	setXMLFile ("detachedwindowcontainer.rc");
 	insertChildClient (toplevel_actions = new RKTopLevelWindowGUI (this));
 	statusBar ()->hide ();
 	createShellGUI ();
-
-	actionCollection ()->addAction (KStandardAction::Close, "dwindow_close", this, SLOT(close()));
-
-	QAction *reattach = actionCollection ()->addAction ("dwindow_attach", this, SLOT(slotReattach()));
-	reattach->setText (i18n ("Attach to main window"));
-	reattach->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionAttachWindow));
 
 // copy main window toolbar settings
 	QMap<QString, Qt::ToolButtonStyle> main_window_toolbar_styles;
