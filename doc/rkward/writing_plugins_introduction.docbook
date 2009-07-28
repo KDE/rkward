@@ -486,7 +486,8 @@ And this was all there is to the printout function in most cases. rk.header () p
 </para>
 <programlisting>
 function printout () {
-?&gt;rk.header ("Independent samples t test", parameters=list ("Assume equal variances", &lt;? getRK ("varequal"); ?&gt;, "Confidence level", &lt;? getRK ("conflevel"); ?&gt;))
+	makeHeaderCode ("Independent samples t test", array ("Assume equal variances" =&gt; getRK_val ("varequal"), "Confidence level", =&gt; getRK_val ("conflevel")))
+?&gt;
 rk.print (res)
 &lt;?
 }
@@ -495,7 +496,7 @@ rk.print (res)
 The list of parameters is given as pairs of "Description", "Value". This will also be printed in a standard way.
 </para>
 <para>
-rk.print () utilizes the R2HTML package to provide HTML formatted output. Another helpful function is rk.results (), which can also output different kinds of result tables. If in doubt, however, just use rk.print (), and be done with.
+rk.print () utilizes the R2HTML package to provide HTML formatted output. Another helpful function is rk.results (), which can also output different kinds of result tables. If in doubt, however, just use rk.print (), and be done with. makeHeaderCode () is a PHP-level helper function to create a call to rk.header () (just take a look at the generated code). In some cases you may want to call rk.header () directly to print a header for your output.
 </para>
 <para>
 Note that internally, the output is just a plain HTML document at this point of time. Therefore you might be tempted to add custom HTML using cat (). While this will work, please don't do this. The output format may change (e.g. to ODF) in the future, so it's best not to introduce HTML specific code. Rather keep things simple with rk.header (), rk.print (), and rk.results (). If those don't seem to satisfy your formatting needs, contact us on the mailing list for help.

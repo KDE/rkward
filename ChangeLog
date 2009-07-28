@@ -1,6 +1,6 @@
-TODO: add notice on differing licences/copyrights in subdirs
+--- Version 0.5.1 - ???-??-2009
 - New command line option "--evaluate <Rcode>" mostly for the purpose of automated testing
-- Remove support for R 2.6.x and earlier		TODO: clean up more (RData?), adjust debian control
+- Remove support for R 2.6.x and earlier
 - Add basic checks for a correct installation of the RKWard resource files
 - Remove "What to expect" dialog at startup
 - Make keyboard shorcuts configurable
@@ -9,8 +9,8 @@ TODO: add notice on differing licences/copyrights in subdirs
 - Fixed: No warning was shown, when an open script file was changed on disk, externally
 - Fixed: Opening most file types (e.g. PDF) from the help browser was broken
 - Fixed: Make built-in editor work again for file.edit ()
-- (Almost) all plugins now write a header to the output window		TODO: work in progress; which ones should not?
-- Add convenience function "makeHeaderCode()" for use inside plugins	TODO: document, adjust for tests (->rk.describe.alternative())
+- More plugins now write a header to the output window
+- Add convenience function "makeHeaderCode()" for use inside plugins
 - Adjust some icons
 - Plugins can be invoked from R code (mostly for internal purposes)
 - Add "Run again" link for plugin generated output
