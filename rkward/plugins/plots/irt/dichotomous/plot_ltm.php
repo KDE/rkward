@@ -60,8 +60,8 @@ function doPrintout ($final) {
   // (see the "SEC" section in the plotting function below as well!)
   if($plot_type == "SEC")
     $options[] = "type=\"IIC\", items=0, plot=FALSE" ;
-  // the scatterplot is ltp specific:
-  if($plot_type_item == "loadings")
+  // the scatterplot is ltm specific:
+  if($plot_type == "loadings")
     $options[] = "type=\"loadings\"" ;
 
   // more advanced options
