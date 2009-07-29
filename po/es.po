@@ -1,21 +1,20 @@
-# translation of es.po to español
-# translation of es.po to
-# translation of rkward.po to
+# translation of rkward.po to español
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 #
 # Mvillarino <mvillarino@dubmail.net>, 2005.
 # Mvillarino <mvillarino@users.sourceforge.net>, 2006.
 # Germán Márquez Mejía <gmarquez@javeriana.edu.co>, 2008, 2009.
+# Germán Márquez Mejía <manchito@users.sourceforge.net>, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
-"Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
-"group_id=50231&atid=459007\n"
+"Report-Msgid-Bugs-To: http://sourceforge."
+"net/tracker/?group_id=50231&atid=459007\n"
 "POT-Creation-Date: 2009-06-30 21:47+0200\n"
-"PO-Revision-Date: 2009-04-29 18:59-0500\n"
-"Last-Translator: Germán Márquez Mejía <gmarquez@javeriana.edu.co>\n"
-"Language-Team: Spanish <kde-i18n-doc@kde.org>\n"
+"PO-Revision-Date: 2009-07-29 16:45-0500\n"
+"Last-Translator: Germán Márquez Mejía <manchito@users.sourceforge.net>\n"
+"Language-Team: Spanish <rkward-devel@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -654,7 +653,6 @@ msgid "Selected library location not writable"
 msgstr "Sin permisos de escritura en la ubicación seleccionada"
 
 #: dialogs/rkloadlibsdialog.cpp:828
-#, fuzzy
 msgid ""
 "The directory you are trying to install to (%1) is not writable with your "
 "current user permissions. You can chose a different library location to "
@@ -663,12 +661,10 @@ msgid ""
 "package to).\n"
 msgstr ""
 "No tiene permiso de escritura en el directorio donde intenta instalar (%1). "
-"Si usted es el(la) administrador(a) de este equipo puede intentar instalar "
-"los paquetes como root (se le solicitará la contraseña de administrador(a)). "
-"De lo contrario, deberá seleccionar una ubicación diferente para la "
+"Puede seleccionar una ubicación diferente para la "
 "instalación (si no tiene permisos de escritura en ninguna, probablemente "
 "desee usar el botón «Configurar repositorios» e indicar un directorio con los "
-"permisos adecuados para instalar los paquetes)."
+"permisos adecuados para instalar los paquetes).\n"
 
 #: dialogs/rkloadlibsdialog.cpp:832
 msgid ""
@@ -677,20 +673,26 @@ msgid ""
 "Sorry, automatic switching to Administrator is not yet supported in RKWard "
 "on Windows"
 msgstr ""
+"Si posee acceso a una cuenta de administrador en esta máquina, puede usarla "
+"para instalar el(los) paquete(s), o puede cambiar los permisos de «%1». Lo "
+"sentimos, el cambio automático a Administrador todavía no es soportado en "
+"RKWard para Windows."
 
 #: dialogs/rkloadlibsdialog.cpp:834
 msgid "Attempt installation, anyway"
-msgstr ""
+msgstr "Intentar la instalación de todos modos"
 
 #: dialogs/rkloadlibsdialog.cpp:837
 msgid ""
 "If you are the adminitstrator of this machine, you can try to install the "
 "packages as root (you'll be prompted for the root password)."
 msgstr ""
+"Si Ud. es el administrador de esta máquina, puede intentar instalar los "
+"paquetes como root (se le pedirá la contraseña de administrador)."
 
 #: dialogs/rkloadlibsdialog.cpp:838
 msgid "Become root"
-msgstr "Ejecutar como root"
+msgstr "Volverse root"
 
 #: dialogs/rkreadlinedialog.cpp:55
 msgid "Context:"
@@ -725,6 +727,8 @@ msgid ""
 "After starting (and after loading the specified workspace, if applicable), "
 "evaluate the given R code."
 msgstr ""
+"Después de arrancar (y luego de cargar el espacio de trabajo especificado, de "
+"ser aplicable), evaluar el código R dado."
 
 #: main.cpp:80
 msgid "Verbosity of debug messages (0-5)"
@@ -733,7 +737,7 @@ msgstr "Nivel de información de los mensajes de depuración (0-5)"
 #: main.cpp:81
 msgid "Mask for components to debug (see debug.h)"
 msgstr ""
-"Máscara para los componentes a depurar como números binarios (mirar en debug."
+"Máscara para los componentes a depurar (mirar en debug."
 "h)"
 
 #: main.cpp:82
@@ -749,9 +753,8 @@ msgid "Disable R C stack checking"
 msgstr "Deshabilitar verificación de pila C de R"
 
 #: main.cpp:84
-#, fuzzy
 msgid "R workspace file to open"
-msgstr "Preguntar qué archivo abrir"
+msgstr "Espacio de trabajo para abrir"
 
 #: main.cpp:86
 msgid "RKWard"
@@ -773,7 +776,7 @@ msgstr "%1"
 
 #: main.cpp:87
 msgid "Project leader / main developer"
-msgstr "Líder del proyecto / Desarrollador(a) en jefe"
+msgstr "Líder del proyecto / Desarrollador en jefe"
 
 #: main.cpp:88
 msgid "C++ coder since 0.2.9"
@@ -904,8 +907,7 @@ msgstr "Mostrar campos"
 #: misc/rkprogresscontrol.cpp:213
 msgid ""
 "<b>There have been errors and / or warnings! See below for a transcript</b>"
-msgstr ""
-"<b>¡Se han encontrado errores y/o avisos! Mire el reporte más abajo</b>"
+msgstr "<b>¡Se han encontrado errores y/o avisos! Mire el reporte más abajo</b>"
 
 #: misc/rkprogresscontrol.cpp:223 settings/rksettingsmoduleoutput.cpp:68
 msgid "Output"
@@ -1010,41 +1012,50 @@ msgid ""
 "unknown. Probably you need to load the corresponding PluginMap (Settings-"
 ">Configure RKWard->Plugins), or perhaps the plugin was renamed."
 msgstr ""
+"Intentó invocar un complemento llamado «%1», pero dicho complemento es "
+"desconocido. Probablemente deba cargar el PluginMap correspondiente "
+"(Preferencias->Configurar RKWard->Complementos), o tal vez el complemento "
+"cambió de nombre."
 
 #: plugin/rkcomponentmap.cpp:246
 msgid "No such plugin"
-msgstr ""
+msgstr "No existe el complemento"
 
 #: plugin/rkcomponentmap.cpp:255
 msgid ""
 "Bad serialization format while trying to invoke plugin '%1'. Please contact "
 "the RKWard team (Help->About RKWard->Authors)."
 msgstr ""
+"Formato de serialización erróneo mientras se invocaba el complemento «%1». "
+"Por favor contacte al equipo de RKWard (Ayuda->Acerca de RKWard->Autores)."
 
 #: plugin/rkcomponentmap.cpp:257
 msgid "Bad serialization format"
-msgstr ""
+msgstr "Formato de serialización erróneo"
 
 #: plugin/rkcomponentmap.cpp:261
 msgid ""
 "Not all specified settings could be applied. Most likely this is because "
 "some R objects are no longer present in your current workspace."
 msgstr ""
+"No se pudieron aplicar todas las preferencias. Seguramente porque algunos "
+"objetos de R ya no están presentes en su espacio de trabajo actual."
 
 #: plugin/rkcomponentmap.cpp:263
 msgid "Not all settings applied"
-msgstr ""
+msgstr "Preferencias sin aplicar"
 
 #: plugin/rkcomponentmap.cpp:280
 msgid ""
 "\n"
 "The plugin could not be auto-submitted with these settings."
 msgstr ""
+"\n"
+"El complemento no se pudo auto-enviar con esta configuración."
 
 #: plugin/rkcomponentmap.cpp:282
-#, fuzzy
 msgid "Could not submit"
-msgstr "No se pudo crear el complemento"
+msgstr "No se pudo enviar"
 
 #: plugin/rkdropdown.cpp:42 plugin/rkradio.cpp:45
 msgid "Select one:"
@@ -1155,9 +1166,8 @@ msgid "Code"
 msgstr "Código"
 
 #: plugin/rkstandardcomponentgui.cpp:165
-#, fuzzy
 msgid "Run again"
-msgstr "Ejecutar todo"
+msgstr "Ejecutar de nuevo"
 
 #: plugin/rkstandardcomponentgui.cpp:250
 msgid "Processing. Please wait"
@@ -1224,29 +1234,28 @@ msgid "Description"
 msgstr "Descripción"
 
 #: rbackend/rembedinternal.cpp:135
-#, fuzzy
 msgid ""
 "The R engine has encountered a fatal error:\n"
 "%1"
-msgstr "El motor R ha encontrado un error fatal:\n"
+msgstr ""
+"El motor R ha encontrado un error fatal:\n"
+"%1"
 
 #: rbackend/rembedinternal.cpp:242
-#, fuzzy
 msgid "The R engine has shut down with status: %1"
-msgstr "El motor R se ha apagado con el estado: "
+msgstr "El motor R se ha apagado con el estado: %1"
 
 #: rbackend/rinterface.cpp:87
 msgid "R Startup"
 msgstr "Arranque de R"
 
 #: rbackend/rinterface.cpp:216
-#, fuzzy
 msgid ""
 "<p>There was a problem starting the R backend. The following error(s) "
 "occurred:</p>\n"
 msgstr ""
-"Ha ocurrido un problema al arrancar R. Ha(n) tenido lugar el(los) siguiente"
-"(s) error(es):\n"
+"<p>Ocurrió un problema al arrancar el motor R. Ha(n) tenido lugar el(los) "
+"siguiente(s) error(es):</p>\n"
 
 #: rbackend/rinterface.cpp:218
 msgid ""
@@ -1259,30 +1268,40 @@ msgid ""
 "now, and fix your installation</b>. For help with that, see <a href=\"http://"
 "p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</p>\n"
 msgstr ""
+"</p>\t- La biblioteca de R «rkward» no pudo cargarse, o por lo menos no la "
+"versión correcta. Esto puede conducir a toda clase de errores, desde la "
+"simple falta de una característica hasta una completa pérdida de "
+"funcionalidad. La causa más probable es que la última instalación no ubicó "
+"todos los "
+"archivos en el lugar correcto. "
+"Sin embargo, en algunos casos, restos de una instalación previa que no fue "
+"limpiamente eliminada pueden ser la causa.</p>\t\t\t<p><b>Debería salir de "
+"RKWard ahora y reparar su instalación</b>. Para ayuda sobre este proceso "
+"véase <a href=\"http://"
+"p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</p>\n"
 
 #: rbackend/rinterface.cpp:222
-#, fuzzy
 msgid ""
 "<p>\t-There was a problem opening the files needed for communication with R. "
 "Most likely this is due to an incorrect setting for the location of these "
 "files. Check whether you have correctly configured the location of the log-"
 "files (Settings->Configure Settings->Logfiles) and restart RKWard.</p>\n"
 msgstr ""
-"\t-Ocurrió un problema al abrir los archivos necesarios para comunicarse con "
+"<p>\t-Ocurrió un problema al abrir los archivos necesarios para comunicarse "
+"con "
 "R. Lo más probable es que se deba a una configuración incorrecta de la "
 "ubicación de estos archivos. Compruebe que haya configurado correctamente la "
 "ubicación de los archivos de bitácoras (Preferencias->Configurar RKWard-"
-">Archivos de bitácoras) y reinicie RKWard.\n"
+">Archivos de bitácoras) y reinicie RKWard.</p>\n"
 
 #: rbackend/rinterface.cpp:225
-#, fuzzy
 msgid ""
 "<p>\t-An unspecified error occurred that is not yet handled by RKWard. "
 "Likely RKWard will not function properly. Please check your setup.</p>\n"
 msgstr ""
-"\t- Ha ocurrido un error no especificado que RKWard no puede manejar aún. "
+"<p>\t- Ha ocurrido un error no especificado que RKWard no puede manejar aún. "
 "Probablemente RKWard no funcionará correctamente. Por favor compruebe su "
-"configuración.\n"
+"configuración.</p>\n"
 
 #: rbackend/rinterface.cpp:233
 msgid "Error starting R"
@@ -1331,9 +1350,8 @@ msgid "Locale change"
 msgstr "Configuración regional"
 
 #: rbackend/rinterface.cpp:457
-#, fuzzy
 msgid "Question from the R backend"
-msgstr "Mensaje del motor R"
+msgstr "Pregunta del motor R"
 
 #: rbackend/rinterface.cpp:462
 msgid "Message from the R backend"
@@ -1344,7 +1362,6 @@ msgid "R backend requests information"
 msgstr "El motor R solicita información"
 
 #: rbackend/rinterface.cpp:484
-#, fuzzy
 msgid ""
 "\n"
 "It will be shut down immediately. This means, you can not use any more "
@@ -1358,10 +1375,10 @@ msgid ""
 msgstr ""
 "\n"
 "Se apagará de inmediato. Esto significa que no podrá usar ninguna otra "
-"función que dependa del motor R, por lo que es poco lo que podrá hacer, ni "
-"siquiera guardar el espacio de trabajo. Sin embargo, R ya lo ha hecho (eso "
-"esperamos). Podrá, eso sí, guardar los archivos de comandos abiertos, la "
-"salida, o copiar datos de los editores activos. Después de eso salga de "
+"función que dependa del motor R. Es decir, no podrá hacer casi nada, ni "
+"siquiera guardar el espacio de trabajo (aunque, si tiene suerte, R ya lo ha "
+"hecho). Podrá, eso sí, guardar los archivos de comandos abiertos, la "
+"salida, o copiar datos de los editores abiertos. Después de eso salga de "
 "RKWard.\n"
 "Dado que esto no debería ocurrir nunca, se le ruega que nos escriba un "
 "correo a rkward-devel@lists.sourceforge.net y nos diga qué estaba intentando "
@@ -1425,10 +1442,21 @@ msgid ""
 "with that, see <a href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/"
 "rkward/compiling</a>.</p>"
 msgstr ""
+"<p>RKWard no pudo encontrar ninguno de sus archivos de recursos, o sólo una "
+"versión antigua de ellos.  La causa más probable es que la última instalación "
+"no ubicó los "
+"archivos en el lugar correcto.  Esto puede conducir a toda clase de errores, "
+"desde la "
+"simple falta de una característica hasta una completa pérdida de "
+"funcionalidad.</"
+"p><p><b>Debería salir de "
+"RKWard ahora y reparar su instalación</b>. Para ayuda sobre este proceso "
+"véase <a href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/"
+"rkward/compiling</a>.</p>"
 
 #: rkward.cpp:187
 msgid "Broken installation"
-msgstr ""
+msgstr "Instalación defectuosa"
 
 #: rkward.cpp:191
 msgid ""
@@ -1437,11 +1465,15 @@ msgid ""
 "you'd like to help: <a href=\"http://p.sf.net/rkward/contact\">http://p.sf."
 "net/rkward/contact</a>.</p>"
 msgstr ""
+"<p>Por favor tenga en cuenta que RKWard aún no está bien probado en Windows.</"
+"p><p>Se tiene noticia de toda clase de problemas, y todavía quedan más por "
+"reportar. Si desea ayudar: <a href=\"http://p.sf.net/rkward/contact\">"
+"http://p.sf."
+"net/rkward/contact</a>.</p>"
 
 #: rkward.cpp:191
-#, fuzzy
 msgid "RKWard on Windows"
-msgstr "Complementos"
+msgstr "RKWard para Windows"
 
 #: rkward.cpp:211 settings/rksettingsmoduleobjectbrowser.cpp:128
 msgid "Workspace"
@@ -1852,21 +1884,22 @@ msgid "Also add those commands to console history"
 msgstr "Agregar también dichos comandos al historial de la consola"
 
 #: settings/rksettingsmoduleconsole.cpp:76
+#, fuzzy
 msgid "Do not add"
-msgstr ""
+msgstr "No agregarlos"
 
 #: settings/rksettingsmoduleconsole.cpp:77
+#, fuzzy
 msgid "Add only if single line"
-msgstr ""
+msgstr "Agregarlos sólo si son de una línea"
 
 #: settings/rksettingsmoduleconsole.cpp:78
-#, fuzzy
 msgid "Add all commands"
-msgstr "Comandos de usuario"
+msgstr "Agregar todos los comandos"
 
 #: settings/rksettingsmoduleconsole.cpp:86
 msgid "Command history is context sensitive by default"
-msgstr "El historial de comandos depende del contexto por defecto"
+msgstr "El historial de comandos depende por defecto del contexto"
 
 #: settings/rksettingsmoduleconsole.cpp:185
 msgid "Console"
@@ -2157,7 +2190,6 @@ msgid "Keep comments in packages"
 msgstr "Conservar los comentarios en los paquetes"
 
 #: settings/rksettingsmoduler.cpp:121 settings/rksettingsmoduler.cpp:143
-#, fuzzy
 msgid "TRUE"
 msgstr "VERDADERO"
 
@@ -2184,12 +2216,12 @@ msgstr "Comando usado para enviar archivos a la impresora"
 #: settings/rksettingsmoduler.cpp:154
 #, fuzzy
 msgid "Editor command"
-msgstr "Comandos de usuario"
+msgstr "Comando del editor"
 
 #: settings/rksettingsmoduler.cpp:165
 #, fuzzy
 msgid "Pager command"
-msgstr "Comandos de usuario"
+msgstr "Comando del paginador"
 
 #: settings/rksettingsmoduler.cpp:200
 msgid "R-Backend"
@@ -2331,13 +2363,12 @@ msgid "Unmark block"
 msgstr "Desmarcar bloque"
 
 #: windows/rkcommandeditorwindow.cpp:179
-#, fuzzy
 msgid "CD to script directory"
-msgstr "Editor de guiones"
+msgstr "CD al directorio del guión"
 
 #: windows/rkcommandeditorwindow.cpp:181
 msgid "Change the working directory to the directory of this script"
-msgstr ""
+msgstr "Cambiar el directorio de trabajo por el directorio de este guión"
 
 #: windows/rkcommandeditorwindow.cpp:186
 msgid "Configure Script Editor"
@@ -2360,9 +2391,8 @@ msgid "Unnamed"
 msgstr "Sin nombre"
 
 #: windows/rkcommandeditorwindow.cpp:449
-#, fuzzy
 msgid "cd to current script directory"
-msgstr "Configurar el editor de guiones"
+msgstr "cd al directorio del guión actual"
 
 #: windows/rkcommandeditorwindow.cpp:558
 msgid "%1 (Active)"
@@ -2423,7 +2453,7 @@ msgstr "Buscar en la ayuda"
 
 #: windows/rkhelpsearchwindow.cpp:159
 msgid "Find HTML help for %1"
-msgstr ""
+msgstr "Buscar ayuda HTML para %1"
 
 #: windows/rkhelpsearchwindow.cpp:232
 msgid ""
@@ -2456,23 +2486,20 @@ msgid "&Refresh Output"
 msgstr "Actualiza&r salida"
 
 #: windows/rkhtmlwindow.cpp:305
-#, fuzzy
 msgid "Output %1"
-msgstr "Salida"
+msgstr "Salida %1"
 
 #: windows/rkhtmlwindow.cpp:378
-#, fuzzy
 msgid "Print output"
 msgstr "Imprimir salida"
 
 #: windows/rkhtmlwindow.cpp:380
 msgid "Export page as HTML"
-msgstr ""
+msgstr "Exportar página como HTML"
 
 #: windows/rkhtmlwindow.cpp:394
-#, fuzzy
 msgid "Print page"
-msgstr "Imprimir la ayuda"
+msgstr "Imprimir página"
 
 #: windows/rkhtmlwindow.cpp:396
 msgid "Save Output as HTML"
@@ -2631,26 +2658,34 @@ msgid ""
 "Therefore, if you want to configure keyboard shortcuts e.g. for use inside "
 "the script editor, you need to open a script editor window, and activate it."
 msgstr ""
+"Por razones técnicas, el siguiente diálogo sólo le permite configurar los "
+"atajos de teclado para aquellas partes de RKWard que se encuentran activas "
+"actualmente.\n"
+"\n"
+"Por lo tanto, si desea configurar los atajos de teclado, por ejemplo, para su "
+"uso dentro del editor de guiones, debe primero abrir una ventana del editor "
+"de quiones y activarla."
 
 #: windows/rktoplevelwindowgui.cpp:116
-#, fuzzy
 msgid "Note"
-msgstr "Sin título"
+msgstr "Nota"
 
 #: windows/rktoplevelwindowgui.cpp:122
-#, fuzzy
 msgid "RKWard Plugins"
-msgstr "Complementos"
+msgstr "Complementos de RKWard"
 
 #: windows/rktoplevelwindowgui.cpp:150
 msgid ""
 "<p>Please submit your bug reports or wishes at <a href=\"%1\">%1</a> or send "
 "email to <a href=\"mailto:%2\">%2</a>.</p>"
 msgstr ""
+"<p>Por favor publique sus informes de errores o solicitudes en <a href=\"%1\">"
+"%1</a> o envíelos por correo electrónico "
+"a <a href=\"mailto:%2\">%2</a>.</p>"
 
 #: windows/rktoplevelwindowgui.cpp:152
 msgid "Reporting bugs in RKWard"
-msgstr ""
+msgstr "Reportar errores en RKWard"
 
 #: windows/rkwindowcatcher.cpp:57
 msgid ""
@@ -2763,13 +2798,13 @@ msgid "Duplicate"
 msgstr "Duplicar"
 
 #: windows/rkworkplace.cpp:212
-#, fuzzy
 msgid ""
 "The url you are trying to open ('%1') is not a local file or the filetype is "
 "not supported by RKWard. Do you want to open the url in the default "
 "application?"
 msgstr ""
-"La url que está intentando abrir («%1») no es un archivo local. ¿Desea abrir "
+"La url que está intentando abrir («%1») no es un archivo local o el tipo de "
+"archivo no está soportado por RKWard. ¿Desea abrir "
 "la url con la aplicación predeterminada?"
 
 #: windows/rkworkplace.cpp:212
