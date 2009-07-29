@@ -387,12 +387,17 @@ void RKWardMainWindow::initActions()
 void RKWardMainWindow::changeEvent (QEvent *e) {
 	RK_TRACE (APP);
 
-#if KDE_VERSION >= KDE_MAKE_VERSION(4,2,0)
 	// see RKWardMainWindow::partChanged() for a detailed comment
 	if ((e->type () == QEvent::ActivationChange) && isActiveWindow () && isVisible ()) {
-		if (factory ()) factory ()->refreshActionProperties ();
+		RKMDIWindow *active = RKWorkplace::mainWorkplace ()->activeWindow (RKMDIWindow::Attached);
+		toplevel_actions->reloadXML ();
+		createGUI (0);
+		if (active) {
+			active->fixupPartGUI (true);
+			createGUI (active->getPart ());
+		}
+		// NOTE: KXMLGUIFactory::refreshActionProperties(), which would be a simple repalcement for the above, seems to cause crashes, at least with KDElibs 4.2.2: http://sourceforge.net/tracker/?func=detail&atid=459007&aid=2828002&group_id=50231
 	}
-#endif
 
 	KParts::MainWindow::changeEvent (e);
 }
