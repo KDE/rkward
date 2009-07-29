@@ -1,0 +1,3 @@
+Warning in LRtest.Rm(estimates.pcm, se = TRUE) :
+  
+The following items were excluded due to inappropriate response patterns within subgroups: 

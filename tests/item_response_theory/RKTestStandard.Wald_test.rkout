@@ -1,0 +1,6 @@
+<h1>Wald test (estimates.rsm)</h1>
+DATE<br>
+<p class='character'><br>Wald test on item level (z-values):<br><br>           z-statistic p-value<br>beta I1.c1       0.388   0.698<br>beta I1.c2         NaN     NaN<br>beta I1.c3         NaN     NaN<br>beta I6.c1      -0.388   0.698<br>beta I6.c2         NaN     NaN<br>beta I6.c3         NaN     NaN<br></p><h2>Messages, warnings, or errors:</h2>
+<pre>I2 I3 I4 I5 
+Subgroup models are estimated without these items!
+</pre>
