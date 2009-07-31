@@ -1,3 +1,3 @@
 <h1>2PL parameter estimation</h1>
 DATE<br>
-<p class='character'><br>Call:<br>ltm(formula = WIRS ~ z1 * z2)<br><br>Coefficients:<br>        (Intercept)     z1      z2   z1:z2<br>Item 1       -1.097  0.271  -3.317  -1.160<br>Item 2        0.944  1.091   2.173   2.955<br>Item 3       -1.458  1.811  -0.314   0.543<br>Item 4       -1.465  1.116   0.556   0.269<br>Item 5       -1.083  2.133  -0.466   1.147<br>Item 6       -2.753  1.698  -0.935   1.072<br><br>Log.Lik: -3293.212<br></p>
+<p class='character'><br>Call:<br>ltm(formula = WIRS ~ z1 * z2)<br><br>Coefficients:<br>        (Intercept)     z1      z2   z1:z2<br>Item 1       -1.097  0.271  -3.317  -1.160<br>Item 2        0.944  1.091   2.173   2.955<br>Item 3       -1.458  1.811  -0.314   0.543<br>Item 4       -1.465  1.116   0.556   0.269<br>Item 5       -1.083  2.133  -0.466   1.147<br>Item 6       -2.753  1.698  -0.935   1.072<br><br>Log.Lik: -3293.2<br></p>

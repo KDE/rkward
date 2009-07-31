@@ -1,3 +1,3 @@
 <h1>LRSM  parameter estimation</h1>
 DATE<br>
-<p class='character'><br>Results of LRSM estimation: <br><br>Call:  LRSM(X = lrsmdat, mpoints = 2, se = FALSE, sum0 = FALSE) <br><br>Conditional log-likelihood: -109.3157 <br>Number of iterations: 11 <br>Number of parameters: 5 <br><br>Basic Parameters eta:<br>               eta 1     eta 2     eta 3       eta 4     eta 5<br>Estimate -0.04589654 0.1139302 0.1974475 -0.04155719 0.3460155<br>Std.Err           NA        NA        NA          NA        NA<br><br></p>
+<p class='character'><br>Results of LRSM estimation: <br><br>Call:  LRSM(X = lrsmdat, mpoints = 2, se = FALSE, sum0 = FALSE) <br><br>Conditional log-likelihood: -109.32 <br>Number of iterations: 11 <br>Number of parameters: 5 <br><br>Basic Parameters eta:<br>             eta 1   eta 2   eta 3     eta 4   eta 5<br>Estimate -0.045897 0.11393 0.19745 -0.041557 0.34602<br>Std.Err         NA      NA      NA        NA      NA<br><br></p>

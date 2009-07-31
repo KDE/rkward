@@ -1,3 +1,3 @@
 <h1>Cronbach's alpha (LSAT)</h1>
 DATE<br>
-<p class='character'><br>Cronbach's alpha for the 'LSAT' data-set<br><br>Items: 5<br>Sample units: 1000<br>alpha: 0.295<br><br>Bootstrap 95% CI based on 500 samples<br> 2.5% 97.5% <br>0.217 0.357 <br><br></p>
+<p class='character'><br>Cronbach's alpha for the 'LSAT' data-set<br><br>Items: 5<br>Sample units: 1000<br>alpha: 0.295<br><br>Bootstrap 95% CI based on 500 samples<br> 2.5% 97.5% <br>0.223 0.368 <br><br></p>
