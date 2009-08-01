@@ -7,8 +7,9 @@ rkward (0.5.1-1) unstable; urgency=low
     LGPL licence of some files
   * better version detection (thanks to Meik Michalke)
   * added conditional patch to support Ubuntu 8.04 (thanks to Meik Michalke)
-  * removed support for building with kdelibs5-dev < 4.1.0
-    closes: #531086 (dropped build depends on cmake and libphonon-dev)
+  * decrease debhelper compat level to 6, in order to support Ubuntu hardy
+  * drop build-depends on cmake and libphonon-dev
+    closes: #531086
 
  -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Mon, 27 Jul 2009 14:30:00 +0200
 
