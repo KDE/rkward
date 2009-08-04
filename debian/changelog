@@ -8,6 +8,7 @@ rkward (0.5.1-1) unstable; urgency=low
   * better version detection (thanks to Meik Michalke)
   * added conditional patch to support Ubuntu hardy (thanks to Meik Michalke)
   * decrease debhelper compat level to 6, in order to support Ubuntu hardy
+  * revert to using dh_clean -k in order to comply with compat level 6
 
  -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Tue, 04 Aug 2009 14:30:00 +0200
 

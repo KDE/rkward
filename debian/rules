@@ -77,6 +77,7 @@ clean: $(UNPATCHTARGET) # Will only be called if set, see above
 	rm -f build-stamp
 	# remove any .svn subdir included by accident
 	rm -rf $(CURDIR)/debian/.svn
+	rm -rf $(CURDIR)/debian/patches/.svn
 
 	# Add here commands to clean up after the build process.
 	rm -rf $(CURDIR)/build/
@@ -86,7 +87,7 @@ clean: $(UNPATCHTARGET) # Will only be called if set, see above
 install: build
 	dh_testdir
 	dh_testroot
-	dh_prep
+	dh_clean -k
 	dh_installdirs
 
 	# Add here commands to install the package into debian/rkward.
