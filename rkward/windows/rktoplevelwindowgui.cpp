@@ -45,7 +45,7 @@
 
 #include "../debug.h"
 
-RKTopLevelWindowGUI::RKTopLevelWindowGUI (QWidget *for_window) : QObject (for_window), KXMLGUIClient () {
+RKTopLevelWindowGUI::RKTopLevelWindowGUI (KXmlGuiWindow *for_window) : QObject (for_window), KXMLGUIClient () {
 	RK_TRACE (APP);
 
 	RKTopLevelWindowGUI::for_window = for_window;
@@ -104,6 +104,7 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI (QWidget *for_window) : QObject (for_wi
 
 	// settings
 	KStandardAction::keyBindings (this, SLOT (configureShortcuts ()), actionCollection ());
+	KStandardAction::configureToolbars (this, SLOT (configureToolbars()), actionCollection ());
 }
 
 RKTopLevelWindowGUI::~RKTopLevelWindowGUI () {
@@ -121,6 +122,14 @@ void RKTopLevelWindowGUI::configureShortcuts () {
 	}
 	dlg.addCollection (RKComponentMap::getMap ()->actionCollection (), i18n ("RKWard Plugins"));
 	dlg.configure (true);
+}
+
+void RKTopLevelWindowGUI::configureToolbars () {
+	RK_TRACE (APP);
+
+	KMessageBox::information (for_window, i18n ("For technical reasons, the following dialog allows you to configure the toolbar buttons only for those parts of RKWard that are currently active.\n\nTherefore, if you want to configure tool buttons e.g. for use inside the script editor, you need to open a script editor window, and activate it."), i18n ("Note"), "configure_toolbars_kparts");
+
+	for_window->configureToolbars ();
 }
 
 void RKTopLevelWindowGUI::invokeRHelp () {

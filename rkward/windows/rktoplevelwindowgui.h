@@ -22,14 +22,14 @@
 
 #include <qobject.h>
 
-class QWdiget;
+class KXmlGuiWindow;
 class RKMDIWindow;
 
 /** represents the common portions of the GUI for top level windows: The help menu, and the windows menu */
 class RKTopLevelWindowGUI : public QObject, public KXMLGUIClient {
 	Q_OBJECT
 public:
-	RKTopLevelWindowGUI (QWidget *for_window);
+	RKTopLevelWindowGUI (KXmlGuiWindow *for_window);
 	~RKTopLevelWindowGUI ();
 public slots:
 	// windows menu
@@ -65,10 +65,12 @@ public slots:
 	void showAboutApplication ();
 
 	// settings menu
-	/** configure key bindings. Implemented to show notice before the actual dialog. */
+	/** configure key bindings. Reimplemented to show notice before the actual dialog. */
 	void configureShortcuts ();
+	/** configure key bindings. Reimplemented to show notice before the actual dialog. */
+	void configureToolbars ();
 private:
-	QWidget *for_window;
+	KXmlGuiWindow *for_window;
 	void toggleToolView (RKMDIWindow *tool_window);
 };
 

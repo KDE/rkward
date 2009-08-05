@@ -1,3 +1,4 @@
+- Make toolbar buttons configurable
 - Fixed: Console window would sometimes remain in partially active state after piping commands
 
 --- Version 0.5.1 - Aug-04-2009
