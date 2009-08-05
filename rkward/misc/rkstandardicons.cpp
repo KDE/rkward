@@ -43,6 +43,8 @@ void RKStandardIcons::initIcons () {
 	icons[ActionRunSelection] = QIcon (rkward_icon_base + "run_selection.png");
 	icons[ActionCDToScript] = KIcon ("folder-txt");
 
+	icons[ActionConfigurePackages] = KIcon ("utilities-file-archiver");
+
 	icons[ActionDeleteRow] = KIcon ("no");
 	icons[ActionInsertRow] = KIcon ("edit-add");
 	icons[ActionDeleteVar] = icons[ActionDeleteRow];
@@ -67,7 +69,7 @@ void RKStandardIcons::initIcons () {
 	icons[ObjectList] = QIcon (rkward_icon_base + "list.png");
 	icons[ObjectFunction] = QIcon (rkward_icon_base + "function.png");
 	icons[ObjectEnvironment] = KIcon ("konqueror");
-	icons[ObjectPackageEnvironment] = KIcon ("utilities-file-archiver");
+	icons[ObjectPackageEnvironment] = icons[ActionConfigurePackages];
 	icons[ObjectMatrix] = QIcon (rkward_icon_base + "matrix.png");
 	icons[ObjectDataFrame] = KIcon ("x-office-spreadsheet");
 	icons[ObjectDataNumeric] = QIcon (rkward_icon_base + "data-numeric.png");

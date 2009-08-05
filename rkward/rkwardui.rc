@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward" version="0.5.1">
+<kpartgui name="rkward" version="52">
 <MenuBar>
 	<!-- The Main Window ui.rc is the only one, where merging happens, reliably. That is, why we need to define
 	     a lot of merge points, here, which can then be used be mdi windows and their children.
@@ -27,6 +27,8 @@
 		<Action name="file_open_recentx"/>
 		<Action name="file_savex"/>
 		<Action name="file_save_asx"/>
+		<Separator/>
+		<Action name="load_unload_libs"/>
 	</Menu>
 
 	<!-- These menus are actually defined in KParts. We also declare them here, to avoid menus jumping around -->
@@ -65,7 +67,7 @@
 	</Menu>
 	
 	<Menu name="settings"><text>&amp;Settings</text>
-		<Action name="file_load_libs"/>
+		<Action name="configure_packages"/>
 		<Action name="configure"/>
 	</Menu>
 

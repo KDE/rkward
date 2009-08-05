@@ -310,7 +310,7 @@ void RKWardMainWindow::slotConfigure () {
 void RKWardMainWindow::initActions()
 {  
 	RK_TRACE (APP);
-	QAction *action;
+	KAction *action;
 
 	// TODO: is there a way to insert actions between standard actions without having to give all standard actions custom ids?
 	new_data_frame = actionCollection ()->addAction ("new_data_frame", this, SLOT (slotNewDataFrame ()));
@@ -351,8 +351,14 @@ void RKWardMainWindow::initActions()
 	fileQuit = actionCollection ()->addAction (KStandardAction::Quit, "file_quitx", this, SLOT(close()));
 	fileQuit->setStatusTip (i18n ("Quits the application"));
 
-	file_load_libs = actionCollection ()->addAction ("file_load_libs", this, SLOT (slotFileLoadLibs()));
-	file_load_libs->setText (i18n ("Configure Packages"));
+	// These two currently do the same thing
+	action = actionCollection ()->addAction ("load_unload_libs", this, SLOT (slotFileLoadLibs()));
+	action->setText (i18n ("Load / Unload Packages"));
+	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionConfigurePackages));
+
+	action = actionCollection ()->addAction ("configure_packages", this, SLOT (slotFileLoadLibs()));
+	action->setText (i18n ("Configure Packages"));
+	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionConfigurePackages));
 
 	setStandardToolBarMenuEnabled (true);
 	createStandardStatusBarAction ();

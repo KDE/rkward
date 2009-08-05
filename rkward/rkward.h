@@ -164,7 +164,6 @@ private:
 	KAction* fileSaveWorkspace;
 	KAction* fileSaveWorkspaceAs;
 	KAction* fileQuit;
-	KAction* file_load_libs;
 	KAction* close_all_editors;
 	KAction* new_data_frame;
 	KAction* new_command_editor;

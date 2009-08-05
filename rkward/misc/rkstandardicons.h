@@ -43,6 +43,8 @@ public:
 		ActionRunSelection,
 		ActionCDToScript,
 
+		ActionConfigurePackages,
+
 		ActionDeleteRow,
 		ActionInsertRow,
 		ActionDeleteVar,
