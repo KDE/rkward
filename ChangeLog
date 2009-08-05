@@ -1,3 +1,5 @@
+- Fixed: Console window would sometimes remain in partially active state after piping commands
+
 --- Version 0.5.1 - Aug-04-2009
 - Support compilation on Windows
 - Add framework for automated plugin testing, and some first plugin tests

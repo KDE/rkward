@@ -141,7 +141,10 @@ void RKMDIWindow::activate (bool with_focus) {
 		topLevelWidget ()->activateWindow ();
 		setFocus();
 	} else {
-		if (old_focus) old_focus->setFocus ();
+		if (old_focus) {
+			old_focus->setFocus ();
+			active = false;
+		}
 	}
 }
 
