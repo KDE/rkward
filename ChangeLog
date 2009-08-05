@@ -1,4 +1,6 @@
 --- Version 0.5.1 - Aug-04-2009
+- Support compilation on Windows
+- Add framework for automated plugin testing, and some first plugin tests
 - New command line option "--evaluate <Rcode>" mostly for the purpose of automated testing
 - Remove support for R 2.6.x and earlier
 - Add basic checks for a correct installation of the RKWard resource files
