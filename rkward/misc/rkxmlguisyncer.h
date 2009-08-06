@@ -18,31 +18,12 @@
 #ifndef RKXMLGUISYNCER_H
 #define RKXMLGUISYNCER_H
 
-#include <QObject>
-#include <QMultiHash>
-#include <QSet>
-#include <QTimer>
-
 class KXMLGUIClient;
-class KActionCollection;
-class KDirWatch;
-class KXMLGUIFactory;
-
-/** For internal use by RKXMLGUISyncer, only */
-class RKXMLGUISyncerNotifier : public QObject {
-Q_OBJECT
-public:
-	RKXMLGUISyncerNotifier (QObject *parent) : QObject (parent) {};
-	~RKXMLGUISyncerNotifier () {};
-
-	void emitChangeSignal (KXMLGUIClient *client) { changed (client); };
-signals:
-	void changed (KXMLGUIClient *client);
-};
+class QObject;
+class RKXMLGUISyncerPrivate;
 
 /** This class listens for changes in the XMLGUI-configuration files of registered KXMLGUIClients. It then takes care of updating those KXMLGUIClients. */
-class RKXMLGUISyncer : public QObject {
-Q_OBJECT
+class RKXMLGUISyncer {
 public:
 	/** Returns the single static instance of the syncer. If the instance did not exit, yet, it is created, now. */
 	static RKXMLGUISyncer *self ();
@@ -61,23 +42,11 @@ public:
 	\endcode
 	*/
 	void registerChangeListener (KXMLGUIClient *watched_client, QObject *receiver, const char *method);
-private slots:
-	void uiRcFileChanged (const QString &path);
-	void actionCollectionDestroyed (QObject *object);
-	void guiFactoryDestroyed (QObject *object);
-	void rebuildGUIs ();
 protected:
 	RKXMLGUISyncer ();
 	~RKXMLGUISyncer ();
 private:
-	/** Internally we store the actionCollection() of each KXMLGUIClient, instead of a pointer to the client, directly. This is because KXMLGUIClient is not a QObject, and so we cannot safely detect its destruction. */
-	QMultiHash<QString, KActionCollection*> client_map;
-	QMultiHash<KActionCollection*, RKXMLGUISyncerNotifier*> notifier_map;
-
-	QSet<KXMLGUIFactory*> affected_factories;
-	QTimer rebuild_guis_timer;
-
-	KDirWatch *file_watcher;
+	RKXMLGUISyncerPrivate * const d;
 	static RKXMLGUISyncer *syncer;
 };
 

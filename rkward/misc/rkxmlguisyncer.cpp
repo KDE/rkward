@@ -16,14 +16,7 @@
  ***************************************************************************/
 
 #include "rkxmlguisyncer.h"
-
-#include <kxmlguiclient.h>
-#include <kxmlguifactory.h>
-#include <kactioncollection.h>
-#include <kdirwatch.h>
-#include <kapplication.h>
-
-#include <QDir>
+#include "rkxmlguisyncer_p.h"
 
 #include "../debug.h"
 
@@ -37,18 +30,13 @@ RKXMLGUISyncer *RKXMLGUISyncer::self () {
 	return syncer;
 }
 
-RKXMLGUISyncer::RKXMLGUISyncer () : QObject () {
+RKXMLGUISyncer::RKXMLGUISyncer () : d (new RKXMLGUISyncerPrivate) {
 	RK_TRACE (MISC);
-
-	file_watcher = KDirWatch::self ();
-	connect (file_watcher, SIGNAL (dirty(const QString&)), this, SLOT (uiRcFileChanged(const QString&)));
-
-	connect (&rebuild_guis_timer, SIGNAL (timeout()), this, SLOT (rebuildGUIs()));
-	rebuild_guis_timer.setSingleShot (true);
 }
 
 RKXMLGUISyncer::~RKXMLGUISyncer () {
 	RK_TRACE (MISC);
+	delete d;
 }
 
 void RKXMLGUISyncer::watchXMLGUIClientUIrc (KXMLGUIClient *client, bool recursive) {
@@ -61,13 +49,13 @@ void RKXMLGUISyncer::watchXMLGUIClientUIrc (KXMLGUIClient *client, bool recursiv
 	if (ac && (!local_xml_file.isEmpty()) && (!QDir (local_xml_file).exists ())) {
 		RK_ASSERT (ac->parentGUIClient () == client);
 
-		if (!client_map.contains (local_xml_file, ac)) {
-			if (!client_map.contains (local_xml_file)) {
-				file_watcher->addFile (local_xml_file);
+		if (!d->client_map.contains (local_xml_file, ac)) {
+			if (!d->client_map.contains (local_xml_file)) {
+				d->file_watcher->addFile (local_xml_file);
 			}
 
-			client_map.insertMulti (local_xml_file, ac);
-			connect (ac, SIGNAL (destroyed(QObject*)), this, SLOT (actionCollectionDestroyed(QObject*)));
+			d->client_map.insertMulti (local_xml_file, ac);
+			d->connect (ac, SIGNAL (destroyed(QObject*)), d, SLOT (actionCollectionDestroyed(QObject*)));
 		} // we simply ignore attempts to watch the same client twice
 	}
 
@@ -84,12 +72,14 @@ void RKXMLGUISyncer::registerChangeListener (KXMLGUIClient *watched_client, QObj
 	KActionCollection *ac = watched_client->actionCollection ();
 
 	RKXMLGUISyncerNotifier *notifier = new RKXMLGUISyncerNotifier (0);
-	connect (notifier, SIGNAL (changed(KXMLGUIClient*)), receiver, method);
+	d->connect (notifier, SIGNAL (changed(KXMLGUIClient*)), receiver, method);
 
-	notifier_map.insertMulti (ac, notifier);
+	d->notifier_map.insertMulti (ac, notifier);
 }
 
-void RKXMLGUISyncer::uiRcFileChanged (const QString &path)  {
+
+
+void RKXMLGUISyncerPrivate::uiRcFileChanged (const QString &path)  {
 	RK_TRACE (MISC);
 
 	RK_ASSERT (client_map.contains (path));
@@ -123,7 +113,7 @@ void RKXMLGUISyncer::uiRcFileChanged (const QString &path)  {
 	rebuild_guis_timer.start (0);
 }
 
-void RKXMLGUISyncer::rebuildGUIs () {
+void RKXMLGUISyncerPrivate::rebuildGUIs () {
 	RK_TRACE (MISC);
 
 	while (!affected_factories.isEmpty ()) {
@@ -142,7 +132,7 @@ void RKXMLGUISyncer::rebuildGUIs () {
 	}
 }
 
-void RKXMLGUISyncer::actionCollectionDestroyed (QObject *object) {
+void RKXMLGUISyncerPrivate::actionCollectionDestroyed (QObject *object) {
 	RK_TRACE (MISC);
 
 	// warning: Do not call any methods on the ac. It is half-destroyed, already.
@@ -166,10 +156,10 @@ void RKXMLGUISyncer::actionCollectionDestroyed (QObject *object) {
 	RK_DO (qDebug ("action collection destroyed. Still watch %d clients with %d notifiers", client_map.size (), notifier_map.size ()), MISC, DL_DEBUG);
 }
 
-void RKXMLGUISyncer::guiFactoryDestroyed (QObject *object) {
+void RKXMLGUISyncerPrivate::guiFactoryDestroyed (QObject *object) {
 	RK_TRACE (MISC);
 
 	affected_factories.remove (static_cast<KXMLGUIFactory*>(object));
 }
 
-#include "rkxmlguisyncer.moc"
+#include "rkxmlguisyncer_p.moc"
