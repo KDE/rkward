@@ -48,8 +48,6 @@ public slots:
 protected:
 /** when receiving a close event, dispatch to the embedded window */
 	void closeEvent (QCloseEvent *e);
-/** may need to reload embedded window's XMLGUI definition */
-	void changeEvent (QEvent *e);
 private:
 	RKMDIWindow *captured;
 	RKTopLevelWindowGUI *toplevel_actions;

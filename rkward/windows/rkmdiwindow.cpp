@@ -31,6 +31,7 @@
 #include "rktoolwindowbar.h"
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../misc/rkstandardicons.h"
+#include "../misc/rkxmlguisyncer.h"
 
 #include "../debug.h"
 
@@ -79,20 +80,6 @@ KActionCollection *RKMDIWindow::standardActionCollection () {
 		part->insertChildClient (standard_client);
 	}
 	return standard_client->actionCollection ();
-}
-
-void RKMDIWindow::fixupPartGUI (bool reload) {
-	RK_TRACE (APP);
-	RK_ASSERT (part);
-
-	if (reload) {
-		// needed esp. to apply changed shortcut settings
-		part->reloadXML ();
-		foreach (KXMLGUIClient *client, part->childClients ()) {
-			// no further recursion needed in our case
-			client->reloadXML ();
-		}
-	}
 }
 
 //virtual
@@ -224,6 +211,8 @@ void RKMDIWindow::initializeActivationSignals () {
 
 	RK_ASSERT (getPart ());
 	getPart ()->installEventFilter (this);
+
+	RKXMLGUISyncer::self ()->watchXMLGUIClientUIrc (getPart ());
 }
 
 void RKMDIWindow::paintEvent (QPaintEvent *e) {

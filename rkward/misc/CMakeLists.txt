@@ -15,6 +15,7 @@ SET(misc_STAT_SRCS
    rkdummypart.cpp
    rkstandardicons.cpp
    rkstandardactions.cpp
+   rkxmlguisyncer.cpp
    )
 
 QT4_AUTOMOC(${misc_STAT_SRCS})

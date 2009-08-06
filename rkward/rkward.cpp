@@ -61,6 +61,7 @@
 #include "core/renvironmentobject.h"
 #include "misc/rkstandardicons.h"
 #include "misc/rkcommonfunctions.h"
+#include "misc/rkxmlguisyncer.h"
 #include "rkglobals.h"
 #include "robjectbrowser.h"
 #include "dialogs/startupdialog.h"
@@ -129,6 +130,7 @@ RKWardMainWindow::RKWardMainWindow (RKWardStartupOptions *options) : KParts::Mai
 	setXMLFile ("rkwardui.rc");
 	insertChildClient (toplevel_actions = new RKTopLevelWindowGUI (this));
 	createShellGUI (true);
+	RKXMLGUISyncer::self ()->watchXMLGUIClientUIrc (this);
 
 	RKGlobals::mtracker = new RKModificationTracker (this);
 	RKComponentMap::initialize ();
@@ -390,41 +392,9 @@ void RKWardMainWindow::initActions()
 	run_menu_dummy->setEnabled (false);
 }
 
-void RKWardMainWindow::changeEvent (QEvent *e) {
-	RK_TRACE (APP);
-
-	// see RKWardMainWindow::partChanged() for a detailed comment
-	if ((e->type () == QEvent::ActivationChange) && isActiveWindow () && isVisible ()) {
-		RKMDIWindow *active = RKWorkplace::mainWorkplace ()->activeWindow (RKMDIWindow::Attached);
-		toplevel_actions->reloadXML ();
-		createGUI (0);
-		if (active) {
-			active->fixupPartGUI (true);
-			createGUI (active->getPart ());
-		}
-		// NOTE: KXMLGUIFactory::refreshActionProperties(), which would be a simple repalcement for the above, seems to cause crashes, at least with KDElibs 4.2.2: http://sourceforge.net/tracker/?func=detail&atid=459007&aid=2828002&group_id=50231
-	}
-
-	KParts::MainWindow::changeEvent (e);
-}
-
 void RKWardMainWindow::partChanged (KParts::Part *part) {
 	RK_TRACE (APP);
 
-	/* Changes in shortcut-settings are not automatically synced between all action collections. Therefore, if we change between parts with the same actions, the new part simply does not have any changes that happend while the other part was active.
-	Reliably detecting such changes seems impossible (QAction::changed() gets emitted all the time for all sorts of non-interesting changes as well). So what we do is simply make sure we sync the KXMLGUI-files each time we switch to a new part. Fortunately, the performance impact appears to be small. */
-
-	// first: find out, which window is about to be activated
-	if (part) {
-		QList<RKMDIWindow*> list = RKWorkplace::mainWorkplace ()->getObjectList ();
-		for (int i = 0; i < list.count (); ++i) {
-			if (list[i]->getPart () == part) {
-				// now reload XML and apply customizations
-				list[i]->fixupPartGUI (true);
-				break;
-			}
-		}
-	}
 	createGUI (part);
 
 	if (!guiFactory ()) {

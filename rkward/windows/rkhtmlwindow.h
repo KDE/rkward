@@ -73,8 +73,6 @@ public:
 @param show Show the window, if not currently shown (this actually means: it is created if not currently existant)
 @param raise Raise the window (if currently shown, or show==true) */
 	static RKHTMLWindow* refreshOutput (bool show, bool raise);
-/** reimplemented from RKMDIWindow */
-	void fixupPartGUI (bool reload);
 public slots:
 /** this is used for browsing only. Use openURL instead, when calling from outside. */
 	void slotOpenUrl (const KUrl & url, const KParts::OpenUrlArguments &, const KParts::BrowserArguments &);
@@ -87,6 +85,8 @@ public slots:
 	void flushOutput ();
 /** Reload current page.*/
 	void refresh ();
+/** apply our customizations to the khtmlpart GUI */
+	void fixupPartGUI ();
 private slots:
 /** This slot is called when the new page has finished loading. Sets scroll position to scroll_position */
 	void loadDone ();

@@ -158,8 +158,6 @@ public:
 
 	bool provideContext (unsigned int line_rev, QString *context, int *cursor_position);
 	QString currentCompletionWord () const;
-/** reimplemented from RKMDIWindow */
-	void fixupPartGUI (bool reload);
 public slots:
 /** update Tab caption according to the current url. Display the filename-component of the URL, or - if not available - a more elaborate description of the url. Also appends a "[modified]" if appropriate */
 	void updateCaption (KTextEditor::Document* = 0);
@@ -184,6 +182,9 @@ public slots:
 	void selectionChanged (KTextEditor::View* view);
 /** change to the directory of the current script */
 	void setWDToScript ();
+
+/** apply our customizations to the katepart GUI */
+	void fixupPartGUI ();
 protected:
 /** reimplemented from RKMDIWindow: give the editor window a chance to object to being closed (if unsaved) */
 	void closeEvent (QCloseEvent *e);

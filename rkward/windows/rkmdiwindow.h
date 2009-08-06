@@ -106,9 +106,6 @@ public:
 	bool isActive ();
 /** Returns a pointer to an action collection suitable to place RKStandardAction in. This collection (and the corresponding KXMLGUIClient) is created on the fly. */
 	KActionCollection *standardActionCollection ();
-/** Used to update the part gui after some aspects of it have changed (most importantly, after keyboard shortcuts were changed). This also takes care of updating the child clients. Reimplemented
-in some classes to re-apply customizations of the part GUI. */
-	virtual void fixupPartGUI (bool reload);
 signals:
 /** This signal is emitted, whenever the window caption was changed.
 @param RKMDIWindow* a pointer to this window */

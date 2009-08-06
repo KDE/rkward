@@ -30,6 +30,7 @@
 #include "rktoplevelwindowgui.h"
 #include "../rkward.h"
 #include "../misc/rkstandardicons.h"
+#include "../misc/rkxmlguisyncer.h"
 #include "rkworkplace.h"
 #include "../rkglobals.h"
 #include "../debug.h"
@@ -50,6 +51,7 @@ DetachedWindowContainer::DetachedWindowContainer (RKMDIWindow *widget_to_capture
 	insertChildClient (toplevel_actions = new RKTopLevelWindowGUI (this));
 	statusBar ()->hide ();
 	createShellGUI ();
+	RKXMLGUISyncer::self ()->watchXMLGUIClientUIrc (this);
 
 // copy main window toolbar settings
 	QMap<QString, Qt::ToolButtonStyle> main_window_toolbar_styles;
@@ -123,21 +125,6 @@ void DetachedWindowContainer::closeEvent (QCloseEvent *e) {
 	} else {
 		e->ignore ();
 	}
-}
-
-void DetachedWindowContainer::changeEvent (QEvent *e) {
-	RK_TRACE (APP);
-
-	// see RKWardMainWindow::partChanged() for a detailed comment
-	if ((e->type () == QEvent::ActivationChange) && isActiveWindow () && isVisible ()) {
-		captured->fixupPartGUI (true);
-		toplevel_actions->reloadXML ();
-		createGUI (0);
-		createGUI (captured->getPart ());
-		// see RKWardMainWindow::changeEvent() for why KXMLGUIFactory::refreshActionProperties () is not used, instead.
-	}
-
-	KParts::MainWindow::changeEvent (e);
 }
 
 #include "detachedwindowcontainer.moc"

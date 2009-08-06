@@ -50,6 +50,7 @@
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkstandardicons.h"
 #include "../misc/rkstandardactions.h"
+#include "../misc/rkxmlguisyncer.h"
 #include "../core/robjectlist.h"
 #include "../settings/rksettings.h"
 #include "../settings/rksettingsmodulecommandeditor.h"
@@ -97,9 +98,10 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 	RKCommandEditorWindowPart* part = new RKCommandEditorWindowPart (m_view);
 	part->insertChildClient (m_view);
 	setPart (part);
-	fixupPartGUI (false);
+	fixupPartGUI ();
 	initializeActions (part->actionCollection ());
 	initializeActivationSignals ();
+	RKXMLGUISyncer::self()->registerChangeListener (m_view, this, SLOT (fixupPartGUI()));
 
 	QHBoxLayout *layout = new QHBoxLayout (this);
 	layout->setContentsMargins (0, 0, 0, 0);
@@ -144,10 +146,8 @@ RKCommandEditorWindow::~RKCommandEditorWindow () {
 	delete m_doc;
 }
 
-void RKCommandEditorWindow::fixupPartGUI (bool reload) {
+void RKCommandEditorWindow::fixupPartGUI () {
 	RK_TRACE (COMMANDEDITOR);
-
-	RKMDIWindow::fixupPartGUI (reload);
 
 	// strip down the katepart's GUI. remove some stuff we definitely don't need.
 	RKCommonFunctions::removeContainers (m_view, QString ("bookmarks,tools_spelling,tools_spelling_from_cursor,tools_spelling_selection,switch_to_cmd_line").split (','), true);

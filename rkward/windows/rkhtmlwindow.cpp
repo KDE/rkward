@@ -41,6 +41,7 @@
 #include "../misc/rkstandardactions.h"
 #include "../misc/rkstandardicons.h"
 #include "../misc/xmlhelper.h"
+#include "../misc/rkxmlguisyncer.h"
 #include "../plugin/rkcomponentmap.h"
 #include "../windows/rkworkplace.h"
 #include "../windows/rkworkplaceview.h"
@@ -57,8 +58,9 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (par
 
 	khtmlpart = new KHTMLPart (this, 0, KHTMLPart::BrowserViewGUI);
 	setPart (khtmlpart);
-	fixupPartGUI (false);
+	fixupPartGUI ();
 	initializeActivationSignals ();
+	RKXMLGUISyncer::self()->registerChangeListener (khtmlpart, this, SLOT (fixupPartGUI()));
 	khtmlpart->setSelectable (true);
 	setFocusProxy (khtmlpart->widget ());
 	
@@ -90,10 +92,8 @@ RKHTMLWindow::~RKHTMLWindow () {
 	delete khtmlpart;
 }
 
-void RKHTMLWindow::fixupPartGUI (bool reload) {
+void RKHTMLWindow::fixupPartGUI () {
 	RK_TRACE (APP);
-
-	RKMDIWindow::fixupPartGUI (reload);
 
 	// strip down the khtmlpart's GUI. remove some stuff we definitely don't need.
 	RKCommonFunctions::removeContainers (khtmlpart, QString ("tools,security,extraToolBar,saveBackground,saveFrame,printFrame,kget_menu").split (','), true);
