@@ -33,7 +33,6 @@
 
 #include "../rkward.h"
 #include "rkhelpsearchwindow.h"
-#include "rkcommandeditorwindow.h"
 #include "../rkglobals.h"
 #include "../core/robjectlist.h"
 #include "../core/renvironmentobject.h"
@@ -266,13 +265,11 @@ void RObjectBrowserInternal::doubleClicked (const QModelIndex& index) {
 	if (!object) return;
 	if (object == RObjectList::getObjectList ()) return;
 
-#warning this will never work, as the object browser is active in this case!
-	QWidget *w = RKWorkplace::mainWorkplace ()->activeWindow (RKMDIWindow::Attached);
-	if (!w) return;
-
-	RKCommandEditorWindow *cw = qobject_cast<RKCommandEditorWindow*> (w);
-	if (cw) {
-		cw->insertText (object->getFullName ());
+	if (object->canEdit () && RKWorkplace::mainWorkplace ()->canEditObject (object)) {
+		RKWorkplace::mainWorkplace ()->editObject (object);
+	} else {
+		RKWorkplace::mainWorkplace ()->flushAllData ();
+		RKWorkplace::mainWorkplace ()->newObjectViewer (object);
 	}
 }
 
