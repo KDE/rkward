@@ -28,7 +28,7 @@
 #include <QWhatsThis>
 
 #include "../rkconsole.h"
-#include "../robjectbrowser.h"
+#include "../windows/robjectbrowser.h"
 #include "../windows/rkfilebrowser.h"
 #include "../windows/rcontrolwindow.h"
 #include "../windows/rkhtmlwindow.h"

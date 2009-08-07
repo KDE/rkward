@@ -2,7 +2,7 @@
                           robjectbrowser  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -17,7 +17,7 @@
 #ifndef ROBJECTBROWSER_H
 #define ROBJECTBROWSER_H
 
-#include "windows/rkmdiwindow.h"
+#include "rkmdiwindow.h"
 
 #include <QModelIndex>
 #include <QFocusEvent>

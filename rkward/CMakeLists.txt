@@ -21,7 +21,6 @@ SET(RKWard_Sources
 	rkward.cpp
 	main.cpp
 	rkglobals.cpp
-	robjectbrowser.cpp
 	robjectviewer.cpp
 	rkconsole.cpp
 	rkwardapplication.cpp

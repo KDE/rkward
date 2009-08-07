@@ -16,6 +16,7 @@ SET(windows_STAT_SRCS
 	rktoplevelwindowgui.cpp
 	rkfilebrowser.cpp
 	rktoolwindowbar.cpp
+	robjectbrowser.cpp
 )
 
 QT4_AUTOMOC(${windows_STAT_SRCS})

@@ -2,7 +2,7 @@
                           robjectbrowser  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004, 2006, 2007, 2008 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2008, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -31,20 +31,20 @@
 #include <kmessagebox.h>
 #include <kvbox.h>
 
-#include "rkward.h"
-#include "windows/rkhelpsearchwindow.h"
-#include "windows/rkcommandeditorwindow.h"
-#include "rkglobals.h"
-#include "core/robjectlist.h"
-#include "core/renvironmentobject.h"
-#include "core/rkmodificationtracker.h"
-#include "rbackend/rinterface.h"
-#include "misc/rkobjectlistview.h"
-#include "misc/rkdummypart.h"
-#include "windows/rkworkplace.h"
-#include "dataeditor/rkeditor.h"
+#include "../rkward.h"
+#include "rkhelpsearchwindow.h"
+#include "rkcommandeditorwindow.h"
+#include "../rkglobals.h"
+#include "../core/robjectlist.h"
+#include "../core/renvironmentobject.h"
+#include "../core/rkmodificationtracker.h"
+#include "../rbackend/rinterface.h"
+#include "../misc/rkobjectlistview.h"
+#include "../misc/rkdummypart.h"
+#include "rkworkplace.h"
+#include "../dataeditor/rkeditor.h"
 
-#include "debug.h"
+#include "../debug.h"
 
 // static
 RObjectBrowser* RObjectBrowser::object_browser = 0;
