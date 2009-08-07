@@ -29,6 +29,7 @@
 #include "renvironmentobject.h"
 #include "../rbackend/rinterface.h"
 #include "rkmodificationtracker.h"
+#include "../misc/rkprogresscontrol.h"
 
 #include "../rkglobals.h"
 
@@ -55,6 +56,33 @@ RObjectList::RObjectList () : RContainerObject (0, QString::null) {
 
 RObjectList::~RObjectList () {
 	RK_TRACE (OBJECTS);
+}
+
+QStringList RObjectList::detachPackages (const QStringList &packages, RCommandChain *chain, RKProgressControl* control) {
+	RK_TRACE (OBJECTS);
+
+	QStringList remove;
+	QStringList reject;
+	for (int i = 0; i < packages.size(); ++i) {
+		QString shortname = packages[i];
+		shortname.remove ("package:");
+		if (shortname == "base" || shortname == "methods" || shortname == "utils" || shortname == "grDevices" || shortname == "graphics" || shortname == "rkward") {
+			reject.append (i18n ("Did not unload package %1. It is required in RKWard. If you really want to do this, do so on the R Console.", shortname));
+		} else if (!findChildByName (packages[i])) {
+			RK_ASSERT (false);
+			reject.append (i18n ("Package %1 appears not to have been loaded", shortname));
+		} else {
+			remove.append (packages[i]);
+		}
+	}
+	for (int i = 0; i < remove.size (); ++i) {
+		RCommand *command = new RCommand ("detach (" + rQuote (remove[i]) + ")", RCommand::App | RCommand::ObjectListUpdate);
+
+		if (control) control->addRCommand (command);
+		RKGlobals::rInterface()->issueCommand (command, chain);
+	}
+
+	return reject;
 }
 
 void RObjectList::updateFromR (RCommandChain *chain) {
@@ -143,7 +171,7 @@ void RObjectList::updateEnvironments (const QStringList &env_names, bool force_g
 	}
 
 	// check which envs have been removed or changed position
-	for (int i = childmap.size () - 1; i >= 0; --i) {
+	for (int i = 0; i < childmap.size (); ++i) {	// do *not* cache the childmap.size ()! We may change it in the loop.
 		RObject *obj = childmap[i];
 		int new_pos = newchildmap.indexOf (obj);
 		

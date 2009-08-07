@@ -31,6 +31,7 @@ class RCommand;
 class RCommandChain;
 class RKEditor;
 class REnvironmentObject;
+class RKProgressControl;
 
 /**
 This class is responsible for keeping and updating a list of objects in the R-workspace.
@@ -66,6 +67,10 @@ public:
 
 	static RObjectList *getObjectList () { return object_list; };
 	static REnvironmentObject *getGlobalEnv ();
+
+	/** detach the given list of packages (if the packages are loaded, and safe to remove)
+	@returns a list of error messages (usually empty) */
+	QStringList detachPackages (const QStringList &packages, RCommandChain *chain = 0, RKProgressControl *control = 0);
 public slots:
 	void timeout ();
 signals:

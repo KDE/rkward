@@ -131,6 +131,8 @@ RObjectBrowserInternal::RObjectBrowserInternal (QWidget *parent) : QWidget (pare
 	connect (actions[CopyToGlobalEnv], SIGNAL(triggered(bool)), this, SLOT(popupCopyToGlobalEnv()));
 	actions.insert (Delete, new QAction (i18n ("Delete"), this));
 	connect (actions[Delete], SIGNAL(triggered(bool)), this, SLOT(popupDelete()));
+	actions.insert (Unload, new QAction (i18n ("Unload Package"), this));
+	connect (actions[Unload], SIGNAL(triggered(bool)), this, SLOT(popupUnload()));
 
 	QAction* sep = list_view->contextMenu ()->insertSeparator (list_view->contextMenu ()->actions ().value (0));
 	list_view->contextMenu ()->insertActions (sep, actions);
@@ -211,6 +213,18 @@ void RObjectBrowserInternal::popupDelete () {
 	RKGlobals::tracker ()->removeObject (list_view->menuObject ());
 }
 
+void RObjectBrowserInternal::popupUnload () {
+	RK_TRACE (APP);
+
+	RObject *object = list_view->menuObject ();
+	RK_ASSERT (object);
+	RK_ASSERT (object->isType (RObject::PackageEnv));
+
+	QStringList messages = RObjectList::getObjectList ()->detachPackages (QStringList (object->getShortName ()));
+
+	if (!messages.isEmpty ()) KMessageBox::sorry (this, messages.join ("\n"));
+}
+
 void RObjectBrowserInternal::popupRename () {
 	RK_TRACE (APP);
 	bool ok;
@@ -242,6 +256,7 @@ void RObjectBrowserInternal::contextMenuCallback (RObject *, bool *) {
 	actions[Copy]->setVisible (object->canRead () && (!object->isType (RObject::ToplevelEnv)));
 	actions[CopyToGlobalEnv]->setVisible (object->canRead () && (!object->isInGlobalEnv()) && (!object->isType (RObject::ToplevelEnv)));
 	actions[Delete]->setVisible (object->canRemove ());
+	actions[Unload]->setVisible (object->isType (RObject::PackageEnv));
 }
 
 void RObjectBrowserInternal::doubleClicked (const QModelIndex& index) {

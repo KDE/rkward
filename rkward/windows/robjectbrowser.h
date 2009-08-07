@@ -77,6 +77,7 @@ private slots:
 	void popupCopyToGlobalEnv ();
 	void popupView ();
 	void popupDelete ();
+	void popupUnload ();
 	void popupRename ();
 /** when an object in the list is double clicked, insert its name in the current RKCommandEditor window */
 	void doubleClicked (const QModelIndex &index);
@@ -92,6 +93,7 @@ private:
 		Copy,
 		CopyToGlobalEnv,
 		Delete,
+		Unload,
 		ActionCount
 	};
 	QList<QAction*> actions;

@@ -21,6 +21,7 @@ class QStringList;
 class QString;
 class QDomNode;
 class KXMLGUIClient;
+class QWidget;
 
 /** Some common static helper functions that don't really belong to any class in particular. If ever we have more than a dozen or so functions in here,
 we should probably split this file up. Until then, there's no real need.

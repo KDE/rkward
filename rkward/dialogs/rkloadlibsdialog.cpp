@@ -433,21 +433,28 @@ void LoadUnloadWidget::doLoadUnload () {
 	for (int i = 0; i < loaded_view->topLevelItemCount (); ++i) {
 		QTreeWidgetItem* loaded = loaded_view->topLevelItem (i);
 		if (!prev_packages.contains (loaded->text (0))) {
-			RCommand *command = new RCommand ("library (\"" + loaded->text (0) + "\")", RCommand::App | RCommand::ObjectListUpdate, QString::null, this, LOAD_PACKAGE_COMMAND);
+			RCommand *command = new RCommand ("library (\"" + loaded->text (0) + "\")", RCommand::App);
 			control->addRCommand (command);
 			RKGlobals::rInterface ()->issueCommand (command, parent->chain);
 		}
 	}
 	
 	// detach packages previously attached
+	QStringList packages_to_remove;
 	for (QStringList::Iterator it = prev_packages.begin (); it != prev_packages.end (); ++it) {
 		QList<QTreeWidgetItem*> loaded = loaded_view->findItems ((*it), Qt::MatchExactly, 0);
-		if (loaded.isEmpty ()) {		// no longer in the list
-			RCommand *command = new RCommand ("detach (package:" + (*it) + ')', RCommand::App | RCommand::ObjectListUpdate, QString (), this, LOAD_PACKAGE_COMMAND);
-			control->addRCommand (command);
-			RKGlobals::rInterface ()->issueCommand (command, parent->chain);
+		if (loaded.isEmpty ()) {	// no longer in the list
+			packages_to_remove.append ("package:" + *it);
 		}
 	}
+	if (!packages_to_remove.isEmpty ()) {
+		QStringList messages = RObjectList::getObjectList ()->detachPackages (packages_to_remove, parent->chain, control);
+		if (!messages.isEmpty ()) KMessageBox::sorry (this, messages.join ("\n"));
+	}
+
+	// find out, when we're done
+	RCommand *command = new RCommand (QString (), RCommand::EmptyCommand, QString (), this, LOAD_PACKAGE_COMMAND);
+	RKGlobals::rInterface ()->issueCommand (command, parent->chain);
 
 	control->doNonModal (true);
 }
