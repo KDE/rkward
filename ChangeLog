@@ -1,3 +1,5 @@
+- Safeguard against removal of essential packages via the GUI
+- Add context menu action to unload packages in the object browser window
 - Add shortcut to the load / unload packages dialog also in the workspace menu
 - Make toolbar buttons configurable
 - Fixed: Console window would sometimes remain in partially active state after piping commands

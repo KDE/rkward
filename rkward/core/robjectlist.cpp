@@ -30,6 +30,7 @@
 #include "../rbackend/rinterface.h"
 #include "rkmodificationtracker.h"
 #include "../misc/rkprogresscontrol.h"
+#include "../settings/rksettingsmoduler.h"
 
 #include "../rkglobals.h"
 
@@ -66,7 +67,7 @@ QStringList RObjectList::detachPackages (const QStringList &packages, RCommandCh
 	for (int i = 0; i < packages.size(); ++i) {
 		QString shortname = packages[i];
 		shortname.remove ("package:");
-		if (shortname == "base" || shortname == "methods" || shortname == "utils" || shortname == "grDevices" || shortname == "graphics" || shortname == "rkward") {
+		if (RKSettingsModuleRPackages::essentialPackages ().contains (shortname)) {
 			reject.append (i18n ("Did not unload package %1. It is required in RKWard. If you really want to do this, do so on the R Console.", shortname));
 		} else if (!findChildByName (packages[i])) {
 			RK_ASSERT (false);

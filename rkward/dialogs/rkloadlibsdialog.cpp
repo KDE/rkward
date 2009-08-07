@@ -278,9 +278,6 @@ LoadUnloadWidget::LoadUnloadWidget (RKLoadLibsDialog *dialog, QWidget *p_widget)
 	
 	QVBoxLayout *mvbox = new QVBoxLayout (this);
 	mvbox->setContentsMargins (0, 0, 0, 0);
-	QLabel *label = new QLabel (i18n ("There are no safeguards against removing essential packages. For example, unloading \"rkward\" will prevent this application from running properly. Please be careful about the packages you unload."), this);
-	label->setWordWrap (true);
-	mvbox->addWidget (label);
 	
 	QHBoxLayout *hbox = new QHBoxLayout ();
 	mvbox->addLayout (hbox);
@@ -295,7 +292,7 @@ LoadUnloadWidget::LoadUnloadWidget (RKLoadLibsDialog *dialog, QWidget *p_widget)
 	hbox->addLayout (loadedvbox);
 	loadedvbox->setContentsMargins (0, 0, 0, 0);
 	
-	label = new QLabel (i18n ("Installed packages"), this);
+	QLabel *label = new QLabel (i18n ("Installed packages"), this);
 	installed_view = new QTreeWidget (this);
 	installed_view->setHeaderLabels (QStringList () << i18n ("Name") << i18n ("Title") << i18n ("Version") << i18n ("Location"));
 	installed_view->setSelectionMode (QAbstractItemView::ExtendedSelection);

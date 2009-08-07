@@ -316,6 +316,7 @@ QStringList RKSettingsModuleRPackages::liblocs;
 QStringList RKSettingsModuleRPackages::defaultliblocs;
 bool RKSettingsModuleRPackages::archive_packages;
 QStringList RKSettingsModuleRPackages::package_repositories;
+QString RKSettingsModuleRPackages::essential_packages = QString ("base\nmethods\nutils\ngrDevices\ngraphics\nrkward");
 
 RKSettingsModuleRPackages::RKSettingsModuleRPackages (RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
 	RK_TRACE (SETTINGS);

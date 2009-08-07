@@ -115,6 +115,9 @@ public:
 	static bool archivePackages () { return archive_packages; }
 //	static QStringList getPackageRepositories () { return package_repositories; };
 
+/** returns the list of packages which are essential to rkward. This is hard-coded. */
+	static QStringList essentialPackages () { return essential_packages.split ("\n"); };
+
 	QString caption ();
 public slots:
 	void listChanged ();
@@ -132,6 +135,7 @@ private:
 
 	friend class RThread;
 	static QStringList defaultliblocs;
+	static QString essential_packages;
 };
 
 #endif
