@@ -94,6 +94,7 @@ private:
 		CopyToGlobalEnv,
 		Delete,
 		Unload,
+		LoadUnloadPackages,
 		ActionCount
 	};
 	QList<QAction*> actions;

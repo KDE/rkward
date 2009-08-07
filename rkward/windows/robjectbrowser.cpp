@@ -132,6 +132,8 @@ RObjectBrowserInternal::RObjectBrowserInternal (QWidget *parent) : QWidget (pare
 	connect (actions[Delete], SIGNAL(triggered(bool)), this, SLOT(popupDelete()));
 	actions.insert (Unload, new QAction (i18n ("Unload Package"), this));
 	connect (actions[Unload], SIGNAL(triggered(bool)), this, SLOT(popupUnload()));
+	actions.insert (LoadUnloadPackages, new QAction (i18n ("Load / Unload Packages"), this));
+	connect (actions[LoadUnloadPackages], SIGNAL(triggered(bool)), RKWardMainWindow::getMain(), SLOT(slotFileLoadLibs()));
 
 	QAction* sep = list_view->contextMenu ()->insertSeparator (list_view->contextMenu ()->actions ().value (0));
 	list_view->contextMenu ()->insertActions (sep, actions);
@@ -245,6 +247,7 @@ void RObjectBrowserInternal::contextMenuCallback (RObject *, bool *) {
 		for (int i = 0; i < ActionCount; ++i) {
 			actions[i]->setVisible (false);
 		}
+		actions[LoadUnloadPackages]->setVisible (true);
 		return;
 	}
 
@@ -256,6 +259,7 @@ void RObjectBrowserInternal::contextMenuCallback (RObject *, bool *) {
 	actions[CopyToGlobalEnv]->setVisible (object->canRead () && (!object->isInGlobalEnv()) && (!object->isType (RObject::ToplevelEnv)));
 	actions[Delete]->setVisible (object->canRemove ());
 	actions[Unload]->setVisible (object->isType (RObject::PackageEnv));
+	actions[LoadUnloadPackages]->setVisible (object == RObjectList::getObjectList ());
 }
 
 void RObjectBrowserInternal::doubleClicked (const QModelIndex& index) {
