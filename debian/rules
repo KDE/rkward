@@ -5,10 +5,12 @@
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
-# kdelibs 4:4.0.x (still around in Ubuntu 8.04) uses a different PATH for KDE 4 apps and needs some patching
-KDELIBSVERSION = $(shell dpkg-query -W --showformat='$${Version}' kdelibs5-dev)
-KDELIBS4DOT0 = $(shell dpkg --compare-versions "$(KDEBLIBSVERSION)" lt "4:4.1.0" || echo -n "1")
-ifneq (,$(KDELIBS4DOT0))
+# Determine the installed distribution and release number
+# Will be used to determine if certain tweaks are needed, see below
+DISTRO = $(shell grep "DISTRIB_ID" /etc/lsb-release | awk -F= '{print $$2}' ; grep "DISTRIB_RELEASE" /etc/lsb-release | awk -F= '{print $$2}')
+
+# Ubuntu 8.04 uses a different PATH for KDE 4 apps and needs some patching
+ifeq ("$(DISTRO)","Ubuntu 8.04")
 	export PATH := $(PATH):/usr/lib/kde4/bin
 	# If the following variables are set, patches are applied
 	PATCHTARGET = patch-ubuntu804
