@@ -51,6 +51,16 @@ suite <- new ("RKTestSuite", id="import_export_plugins",
 
 			rk.call.plugin ("rkward::setworkdir", dir.selection="import_export_plugins", submit.mode="submit")
 			stopifnot (oldwd == getwd ())
+		}),
+		new ("RKTest", id="import_spss", call=function () {
+			rk.call.plugin ("rkward::import_spss", convert_var_labels.state="1", data_frame.state="1", do_locale_conversion.state="0", doedit.state="0", file.selection="../import_export_plugins_testfile.sav", labels_limit.real="1000000.000000", saveto.selection="my.spss.data", trim_labels.state="0", use_labels.state="1", submit.mode="submit")
+
+			# In order to check, whether the import was correct
+			rk.print (my.spss.data)
+			for (var in my.spss.data) rk.print (rk.get.description(var))
+
+			# WARNING: TODO: We don't use the value labels of the third
+			# variable, yet.
 		})
 	), postCalls = list ()	# like initCalls: run after all tests to clean up. Empty in this case.
 )
