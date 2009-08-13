@@ -6,15 +6,13 @@ if (!isClass ("RKTestSuite")) source ("test_framework.R")
 
 ## definition of the test suite
 suite <- new ("RKTestSuite", id="import_export_plugins",
+	# place here libraries that are required for *all* tests in this suite, or highly likely to be installed
+	libraries = c ("R2HTML", "datasets"),
 	# initCalls are run *before* any tests. Use this to set up the environment
 	initCalls = list (
 		function () {
-			library ("R2HTML")
-			library ("datasets")
-			library ("foreign")
-		},
-		function () {
 			# prepare some different files for loading
+			library ("datasets")
 			women <- datasets::women
 
 			save (women, file="women.RData")
@@ -61,7 +59,7 @@ suite <- new ("RKTestSuite", id="import_export_plugins",
 
 			# WARNING: TODO: We don't use the value labels of the third
 			# variable, yet.
-		})
+		}, libraries=c("foreign"))
 	), postCalls = list ()	# like initCalls: run after all tests to clean up. Empty in this case.
 )
 

@@ -3,21 +3,20 @@ if (!isClass ("RKTestSuite")) source ("test_framework.R")
 
 ## definition of the test suite
 suite <- new ("RKTestSuite", id="item_response_theory",
+	libraries = c ("R2HTML", "ltm", "eRm"),
         # initCalls are run *before* any tests. Use this to set up the environment
         initCalls = list (
                 function () {
-                        library ("R2HTML")
-                        library ("ltm") # load ltm library (Rasch, 2PL, 3PL)
-                        library ("eRm") # load eRm library (LLTM)
-                },
-                function () {
 			## these are example data sets from the ltm package
+			library ("ltm") # load ltm library (Rasch, 2PL, 3PL)
 			# dichotomous data:
-                        data("LSAT")		# Rasch & 3 parameter model, Cronbach's alpha
+			data("LSAT")		# Rasch & 3 parameter model, Cronbach's alpha
 			data("WIRS")		# 2 parameter model
 			# polytomous data:
 			data("Environment")	# graded response model
+
 			## these are example data sets from the eRm package
+			library ("eRm") # load eRm library (LLTM)
 			# dichotomous data:
 			data("lltmdat1")	# linear logistic test model
 			# polytomous data:

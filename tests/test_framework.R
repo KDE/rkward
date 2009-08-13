@@ -1,6 +1,6 @@
 setClass ("RKTestSuite",
-		representation (id="character", initCalls="list", tests="list", postCalls="list"),
-		prototype(character(0), id=NULL, initCalls=list(), tests=list(), postCalls=list ()),
+		representation (id="character", libraries="character", initCalls="list", tests="list", postCalls="list"),
+		prototype(character(0), id=NULL, libraries=character(0), initCalls=list(), tests=list(), postCalls=list ()),
 		validity=function (object) {
 			if (length (object@id) != 1) return (FALSE)
 			if (length (object@tests) < 1) return (FALSE)
@@ -9,8 +9,8 @@ setClass ("RKTestSuite",
 	)
 
 setClass ("RKTest",
-		representation (id="character", call="function", fuzzy_output="logical", expect_error="logical"),
-		prototype(character(0), id=NULL, call=function () { stop () }, fuzzy_output=FALSE, expect_error=FALSE),
+		representation (id="character", call="function", fuzzy_output="logical", expect_error="logical", libraries="character"),
+		prototype(character(0), id=NULL, call=function () { stop () }, fuzzy_output=FALSE, expect_error=FALSE, libraries=character(0)),
 		validity=function (object) {
 			if (is.null (object@id)) return (FALSE)
 			return (TRUE)
@@ -42,12 +42,13 @@ setMethod ("show", "RKTestResult", function (object) {
 		cat (format (object@output_match[i], width=15))
 		cat (format (object@message_match[i], width=15))
 		cat (format (object@error[i], width=15))
-		cat (format (if (object@passed[i]) "pass" else "FAIL", width=15))
+		cat (format (if (is.na (object@passed[i])) "--skipped--" else if (object@passed[i]) "pass" else "FAIL", width=15))
 		cat ("\n")
 	}
 
 	cat (rep ("-", 96), "\n", sep="")
-	cat (as.character (sum (object@passed)), " / ", as.character (length (object@passed)), " tests passed\n");
+	cat (as.character (sum (object@passed, na.rm=TRUE)), " / ", as.character (sum (!is.na (object@passed))), " tests passed\n")
+	if (sum (is.na (object@passed)) > 0) cat ("(", as.character (sum (is.na (object@passed))), " / ", as.character (length (object@passed)), " tests skipped due to missing libraries)", sep="");
 })
 
 rktest.appendTestResults <- function (objecta, objectb) {
@@ -144,6 +145,20 @@ rktest.runRKTest <- function (test) {
 	result@id <- test@id
 	if (!validObject (test)) return (result)
 
+	missing_libs <- character(0)
+	for (lib in test@libraries) {
+		if (!suppressWarnings (base::require (lib, character.only=TRUE, quietly=TRUE))) {
+			missing_libs <- c (missing_libs, lib)
+		}
+	}
+	if (length (missing_libs) > 0) {
+		result@output_match <- result@message_match <- result@code_match <- NA_character_
+		result@error <- "missing lib(s)"
+		result@passed <- NA
+		cat ("\nSkipping test \"", test@id, "\" due to missing libraries: \"", paste (missing_libs, collapse="\", \""), "\"\n", sep="")
+		return (result)
+	}
+
 	output_file <- rktest.file (test@id, ".rkout")
 	code_file <- rktest.file (test@id, ".rkcommands.R")
 	message_file <- rktest.file (test@id, ".messages.txt")
@@ -204,6 +219,7 @@ rktest.runRKTestSuite <- function (suite, basedir=getwd ()) {
 	rk.sync.global ()	# objects might have been added/changed in the init calls
 
 	for (i in 1:length (suite@tests)) {
+		suite@tests[[i]]@libraries <- c(suite@libraries, suite@tests[[i]]@libraries)
 		try (res <- rktest.runRKTest(suite@tests[[i]]))
 		result <- rktest.appendTestResults (result, res)
 	}
