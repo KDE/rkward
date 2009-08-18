@@ -7,6 +7,8 @@
 
 # Determine the installed distribution and release number
 # Will be used to determine if certain tweaks are needed, see below
+# NOTE: /etc/lsb-release is part of package base-files, *only on Ubuntu*, not on Debian.
+# For now this is ok, as we only need special handling for Ubuntu Hardy at this time.
 DISTRO = $(shell grep "DISTRIB_ID" /etc/lsb-release | awk -F= '{print $$2}' ; grep "DISTRIB_RELEASE" /etc/lsb-release | awk -F= '{print $$2}')
 
 # Ubuntu 8.04 uses a different PATH for KDE 4 apps and needs some patching

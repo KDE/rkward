@@ -2,8 +2,10 @@ rkward (0.5.1-2) unstable; urgency=low
 
   * drop alternative depend on php4-cli as this is no longer part of any
     current debian based distribution
+  * more accurate detection of patch-needing Ubuntu
+    Hardy systems (thanks to Meik Michalke)
 
- -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Xxx, xx Xxx 2009 14:30:00 +0200
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Tue, 18 Aug 2009 14:30:00 +0200
 
 rkward (0.5.1-1) unstable; urgency=low
 
