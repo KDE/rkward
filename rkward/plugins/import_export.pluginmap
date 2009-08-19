@@ -7,8 +7,8 @@
 
 		<component type="standard" id="save_r" file="save/save/description.xml" label="Save R Objects" />
 		<component type="standard" id="save_skeleton" file="save/skeleton/description.xml" label="Create package skeleton" />
-		<component type="standard" id="save_variables" file="save/write/description.xml" label="Write variables" />
-		<component type="standard" id="save_table" file="save/write_table.xml" label="Write as table" />
+		<component type="standard" id="save_variables" file="save/write.xml" label="Write vector / matrix" />
+		<component type="standard" id="save_table" file="save/write_table.xml" label="Write table" />
 
 		<component type="standard" id="import_spss" file="import/import_spss.xml" label="Import SPSS">
 			<attribute id="format" value="*.sav *.por" label="SPSS data files"/>
