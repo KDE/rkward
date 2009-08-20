@@ -1,0 +1,18 @@
+<h1>Univariate statistics</h1>
+<h2>Parameters</h2>
+<ul><li>Remove Missing values: TRUE</li>
+<li>Trimmed value for trimmed mean: 0.05000000</li>
+<li>Constant for the MAD estimation: 1.46280000</li>
+<li>Winsorized values for Huber estimator: 1.50000000</li>
+<li>Tolerance in Huber estimator: 0.070000</li>
+<li>Mu for Huber estimator: 3</li>
+<li>S for Huber estimator: </li>
+<li>Initial value: median</li>
+</ul>
+DATE<br>
+<table border="1">
+<tr><td>Variable Name</td><td>Number of obs</td><td>Number of missing values</td><td>Mean</td><td>Variance</td><td>Sd</td><td>Minimum</td><td>Maximum</td><td>Median</td><td>Inter Quartile Range</td><td>Quartiles</td><td>Quantiles</td><td>Trimmed Mean</td><td>Median Absolute Deviation</td><td>Huber M-Estimator</td></tr>
+<tr><td>weight</td><td>15</td><td>0</td><td>136.73</td><td>240.21</td><td>15.499</td><td>115</td><td>164</td><td>135</td><td>23.5</td><td>0%: 115 25%: 124.5 50%: 135 75%: 148 100%: 164</td><td>0%: 115 20%: 122.4 40%: 130.8 60%: 140.2 80%: 150.8 100%: 164</td><td>136.73</td><td>17.554</td><td>3: 143.017677999144</td></tr>
+<tr><td>test50x</td><td>50</td><td>0</td><td>125.5</td><td>212.5</td><td>14.577</td><td>101</td><td>150</td><td>125.5</td><td>24.5</td><td>0%: 101 25%: 113.25 50%: 125.5 75%: 137.75 100%: 150</td><td>0%: 101 20%: 110.8 40%: 120.6 60%: 130.4 80%: 140.2 100%: 150</td><td>125.5</td><td>18.285</td><td>3: 138.260549866364</td></tr>
+</table>
+<a href="rkward://runplugin/rkward::basic_statistics/autre.real=6.000000%0aconstMad.real=1.46280000%0acustomMu.state=1%0acustomS.state=1%0ahuber.state=1%0ainitmu.string=median%0airq.state=1%0alength.state=1%0amad.state=1%0amaximum.state=1%0amean.state=1%0amedian.state=1%0aminimum.state=1%0amu.text=3%0anarm.state=1%0anbmaximum.real=0.000000%0anbminimum.real=0.000000%0anom.selection=my.data%0apourcent.real=0.05000000%0aquartile.state=1%0aresult.state=1%0as.text=%0asd.state=1%0atol.real=0.070000%0atrim.state=1%0avari.state=1%0awinsor.real=1.50000000%0az.available=women%5b%5b%5c%22weight%5c%22%5d%5d%5cntest50x">Run again</a>

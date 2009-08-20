@@ -1,4 +1,4 @@
-- Tolerate missing libraries in testing framework	TODO: - Update Wiki! - Encourage running 'make plugintests' after install in all relevant places
+- Tolerate missing libraries in testing framework	TODO: - Encourage running 'make plugintests' after install in all relevant places
 - Double-clicking an item in the workspace browser now opens an object viewer, or (if possible) editor
 - Safeguard against removal of essential packages via the GUI
 - Add context menu action to unload packages in the workspace browser window

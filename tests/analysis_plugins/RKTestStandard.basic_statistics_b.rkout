@@ -1,0 +1,11 @@
+<h1>Univariate statistics</h1>
+<h2>Parameters</h2>
+<ul><li>Remove Missing values: TRUE</li>
+</ul>
+DATE<br>
+<table border="1">
+<tr><td>Variable Name</td><td>Minimum values</td><td>Maximum values</td></tr>
+<tr><td>test10x</td><td>101 102</td><td>110 109 108</td></tr>
+<tr><td>height</td><td>58 59</td><td>72 71 70</td></tr>
+</table>
+<a href="rkward://runplugin/rkward::basic_statistics/autre.real=0.000000%0ahuber.state=%0airq.state=0%0alength.state=0%0amad.state=%0amaximum.state=0%0amean.state=0%0amedian.state=0%0aminimum.state=0%0anarm.state=1%0anbmaximum.real=3.000000%0anbminimum.real=2.000000%0aquartile.state=0%0aresult.state=%0asd.state=0%0atrim.state=%0avari.state=0%0az.available=test10x%5cnwomen%5b%5b%5c%22height%5c%22%5d%5d">Run again</a>

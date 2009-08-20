@@ -1,0 +1,27 @@
+<h1>Welch Two Sample t-test</h1>
+<h2>Parameters</h2>
+<ul><li>Comparing: test50x against test50y</li>
+<li>H1: true difference in means is not equal to 0</li>
+<li>Equal variances: not assumed</li>
+</ul>
+DATE<br>
+<table border="1">
+<tr><td>Variable Name</td><td>estimated mean</td><td>degrees of freedom</td><td>t</td><td>p</td><td>confidence interval percent</td><td>confidence interval of difference</td></tr>
+<tr><td>test50x
+<br/>test50y</td><td>125.5
+<br/>225.5</td><td>98</td><td>-34.3</td><td>2.1436e-56</td><td>95</td><td>-105.79
+<br/>-94.214</td></tr>
+</table>
+<a href="rkward://runplugin/rkward::t_test_two_vars/confint.state=1%0aconflevel.real=0.95000000%0ahypothesis.string=two.sided%0apaired.state=0%0avarequal.state=0%0ax.available=test50x%0ay.available=test50y">Run again</a><h1>Paired t-test</h1>
+<h2>Parameters</h2>
+<ul><li>Comparing: test10y against test10z</li>
+<li>H1: true difference in means is less than 0</li>
+</ul>
+DATE<br>
+<table border="1">
+<tr><td>Variable Name</td><td>estimated mean</td><td>degrees of freedom</td><td>t</td><td>p</td><td>confidence interval percent</td><td>confidence interval of difference</td></tr>
+<tr><td>test10y
+<br/>test10z</td><td>183.5</td><td>9</td><td>63.886</td><td>1</td><td>99</td><td>-Inf
+<br/>191.60</td></tr>
+</table>
+<a href="rkward://runplugin/rkward::t_test_two_vars/confint.state=1%0aconflevel.real=0.99000000%0ahypothesis.string=less%0apaired.state=1%0ax.available=test10y%0ay.available=test10z">Run again</a>
