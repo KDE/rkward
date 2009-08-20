@@ -221,7 +221,7 @@ bool RKHTMLWindow::handleRKWardURL (const KUrl &url) {
 			QString path = url.path ();
 			if (path.startsWith ('/')) path = path.mid (1);
 			int sep = path.indexOf ('/');
-			RKComponentMap::invokeComponent (path.left (sep), path.mid (sep+1).split ('\n'));
+			RKComponentMap::invokeComponent (path.left (sep), path.mid (sep+1).split ('\n', QString::SkipEmptyParts));
 			return true;
 		} else {
 			bool ok = false;
@@ -469,10 +469,10 @@ bool RKHTMLWindow::renderRKHelp (const KUrl &url) {
 			component_doc_element = component_xml->openXMLFile (chandle->getFilename (), DL_ERROR);
 			if (component_doc_element.isNull ()) break;
 			element = component_xml->getChildElement (component_doc_element, "help", DL_ERROR);
-			if (element.isNull ()) break;
-			help_file_name = component_xml->getStringAttribute (element, "file", QString::null, DL_ERROR);
-			if (help_file_name.isNull ()) break;
-			help_file_name = QFileInfo (chandle->getFilename ()).absoluteDir ().filePath (help_file_name);
+			if (!element.isNull ()) {
+				help_file_name = component_xml->getStringAttribute (element, "file", QString::null, DL_ERROR);
+				if (!help_file_name.isEmpty ()) help_file_name = QFileInfo (chandle->getFilename ()).absoluteDir ().filePath (help_file_name);
+			}
 		} else {
 			help_file_name = help_base_dir + url.path () + ".rkh";
 		}
@@ -480,7 +480,7 @@ bool RKHTMLWindow::renderRKHelp (const KUrl &url) {
 
 		// open help file
 		QDomElement help_doc_element = help_xml->openXMLFile (help_file_name, DL_ERROR);
-		if (help_doc_element.isNull ()) break;
+		if (help_doc_element.isNull () && (!for_component)) break;
 
 		// initialize output, and set title
 		khtmlpart->begin (url);
@@ -494,6 +494,16 @@ bool RKHTMLWindow::renderRKHelp (const KUrl &url) {
 			}
 		}
 		khtmlpart->write ("<html><head><title>" + page_title + "</title><link rel=\"stylesheet\" type=\"text/css\" href=\"" + css_filename + "\"></head>\n<body><div id=\"main\">\n<h1>" + page_title + "</h1>\n");
+
+		if (help_doc_element.isNull ()) {
+			RK_ASSERT (for_component);
+			khtmlpart->write (i18n ("<h1>Help page missing</h1>\n<p>The help page for this component has not yet been written (or is broken). Please consider contributing it.</p>\n"));
+		}
+		if (for_component) {
+			QString component_id = componentPathToId (url.path());
+			RKComponentHandle *handle = componentPathToHandle (url.path());
+			if (handle && handle->isAccessible ()) khtmlpart->write ("<a href=\"rkward://runplugin/" + component_id + "/\">" + i18n ("Use %1 now", page_title) + "</a>");
+		}
 
 		// fix all elements containing an "src" attribute
 		QDir base_path (QFileInfo (help_file_name).absolutePath());
@@ -668,7 +678,7 @@ void RKHTMLWindow::prepareHelpLink (QDomElement *link_element) {
 	}
 }
 
-RKComponentHandle *RKHTMLWindow::componentPathToHandle (QString path) {
+QString RKHTMLWindow::componentPathToId (QString path) {
 	RK_TRACE (APP);
 
 	QStringList path_segments = path.split ('/', QString::SkipEmptyParts);
@@ -676,7 +686,14 @@ RKComponentHandle *RKHTMLWindow::componentPathToHandle (QString path) {
 	if (path_segments.count () < 1) return 0;
 	if (path_segments.count () == 1) path_segments.push_front ("rkward");
 	RK_ASSERT (path_segments.count () == 2);
-	return (RKComponentMap::getComponentHandle (path_segments.join ("::")));
+
+	return (path_segments.join ("::"));
+}
+
+RKComponentHandle *RKHTMLWindow::componentPathToHandle (QString path) {
+	RK_TRACE (APP);
+
+	return (RKComponentMap::getComponentHandle (componentPathToId (path)));
 }
 
 QString RKHTMLWindow::startSection (const QString &name, const QString &title, const QString &shorttitle, QStringList *anchors, QStringList *anchor_names) {

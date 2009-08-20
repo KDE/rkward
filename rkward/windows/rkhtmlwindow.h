@@ -129,6 +129,7 @@ private:
 	bool renderRKHelp (const KUrl &url);
 	QString renderHelpFragment (QDomElement &fragment);
 	void prepareHelpLink (QDomElement *link_element);
+	QString componentPathToId (QString path);
 	RKComponentHandle *componentPathToHandle (QString path);
 	QString startSection (const QString &name, const QString &title, const QString &shorttitle, QStringList *anchors, QStringList *anchor_names);
 
