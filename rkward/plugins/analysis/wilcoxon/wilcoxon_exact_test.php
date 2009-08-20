@@ -1,6 +1,6 @@
 <?
 function preprocess () { ?>
-require(exactRankTests)
+require(coin)
 
 names <- rk.get.description (<? getRK ("x"); ?>, <? getRK ("y"); ?>)
 <?

@@ -55,7 +55,7 @@ try ({
 	if ($final) { ?>
 rk.graph.off ()
 
-print("Signif. codes:  0 '***', 0.001 '**', 0.01 '*', 0.05 '.'', 0.1 ' ', 1")
+rk.print("Legend:\t'***': p &lt; 0.001 -- '**': p &lt; 0.01 -- '*': p &lt; 0.05 -- '.'': p &lt; 0.1")
 <?  }
 }
 ?>

@@ -35,12 +35,12 @@ for (i in 1:length (vars))  {
 <?	}
 	if (($nmin = getRK_val ("nbminimum")) != "0") { ?>
 	if (length (var) >= <? echo ($nmin); ?>) {
-		results[i, 'Minimum values'] <- paste (sort(var, decreasing=FALSE, na.last=TRUE) [1:<? echo ($nmin); ?>])
+		results[i, 'Minimum values'] <- paste (sort(var, decreasing=FALSE, na.last=TRUE)[1:<? echo ($nmin); ?>], collapse=" ")
 	}
 <? 	}
 	if (($nmax = getRK_val ("nbmaximum")) != "0") { ?>
-	if (length (var) >= <? echo ($nmin); ?>) {
-		results[i, 'Maximum values'] <- paste (sort(var, decreasing=TRUE, na.last=TRUE) [1:<? echo ($nmin); ?>])
+	if (length (var) >= <? echo ($nmax); ?>) {
+		results[i, 'Maximum values'] <- paste (sort(var, decreasing=TRUE, na.last=TRUE)[1:<? echo ($nmax); ?>], collapse=" ")
 	}
 <? 	}
 	if (getRK_val ("median")) { ?>

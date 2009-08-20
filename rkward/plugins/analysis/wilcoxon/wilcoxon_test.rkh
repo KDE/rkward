@@ -5,25 +5,27 @@
 	</summary>
 
 	<usage>
-		Since this is a rather powerful test please refere to <link href="rkward://rhelp/wilcox.test"/> to make sure you carry out a Wilcoxon rank sum test (Mann-Whitney test) or Wilcoxon signed rank test accordingly.
+		Select a single vector (or paired test) to perform a Wilcoxon signed rank test on the null that the true distribution of x (or the difference between the paired vectors) is symmetric about 0 (or the specified location).
+
+		Select two vectors to perform a Wilcoxon rank sum test (equivalent to the Mann-Whitney test: see <link href="rkward://rhelp/wilcox.test"/> for details) on the null that the distributions of x and y differ (by 0 or the specified location shift).
 	</usage>
 
 	<settings>
 		<caption id="tab_variables"/>
 		<setting id="x">Select the data to be computed. The vectors need to be numeric.</setting>
-		<setting id="alternative">Here you can specify the alternative hypothesis. It must be one of "two sided", "greater" or "less".</setting>
-		<setting id="paired">Check if you want a paired test.</setting>
+		<setting id="alternative">The alternative hypothesis. "greater" means that x is shifted to the right of y / of the location parameter.</setting>
+		<setting id="paired">Check this for a paired test (Wilcoxon signed rank test of the difference between the two vectors).</setting>
 		<caption id="tab_options"/>
-		<setting id="confint">Check this if you want to compute a confidence interval.</setting>
-		<setting id="conflevel">Here you can define the confidence level of the interval (95% is typical).</setting>
-		<setting id="mu">This number is specifying an optional parameter used to form the null hypothesis. Please refer to R-help for more details.</setting>
-		<setting id="exact">Check if  an exact p-value should be computed. By default an asymptomatic p-value is calculated. If you have less than 50 cases per group without binding than an exact test should be performed. See <link href="rkward://rhelp/wilcox.exact"/></setting>
+		<setting id="confint">Check this if you want the confidence interval to be computed/printed.</setting>
+		<setting id="conflevel">Confidence level of the printed confidence interval.</setting>
+		<setting id="mu">The location / location shift to form the null hypothesis.</setting>
+		<setting id="exact">Should an exact p-value be computed? By default ("Automatic") an asymptomatic p-value is calculated if and only if you have less than 50 cases per group without binding than an exact test should be performed. To compute an exact p-value in the presence of ties, use <link href="rkward://component/wilcoxon_exact_test"/></setting>
 		<setting id="correct">If checked a continuity correction in the normal approximation for the p-value is applied.</setting>
 	</settings>
 	<related>
 		<ul>
 			<li><link href="rkward://rhelp/wilcox.test"/></li>
+			<li><link href="rkward://component/wilcoxon_exact_test"/></li>
 		</ul>
-
 	</related>
 </document>

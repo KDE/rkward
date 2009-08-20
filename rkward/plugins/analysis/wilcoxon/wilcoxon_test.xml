@@ -3,6 +3,12 @@
 	<code file="wilcoxon_test.php"/>
 	<help file="wilcoxon_test.rkh"/>
 
+	<logic>
+		<convert id="y_specified" mode="notequals" standard="" sources="y.available"/>
+		<connect client="paired.enabled" governor="y_specified"/>
+		<connect client="conflevel.enabled" governor="confint.state"/>
+	</logic>
+
 	<dialog label="Wilcoxon test">
 		<tabbook>
 			<tab label="Basic settings" id="tab_variables">
@@ -10,7 +16,7 @@
 					<varselector id="vars"/>
 					<column>
 						<varslot type="numeric" id="x" source="vars" required="true" label="compare"/>
-						<varslot type="numeric" id="y" source="vars" required="true" label="against"/>
+						<varslot type="numeric" id="y" source="vars" required="false" label="against (optional)"/>
 						<radio id="alternative" label="using test hypothesis">
 							<option value="two.sided" label="Two-sided"/>
 							<option value="greater" label="greater"/>
@@ -26,7 +32,7 @@
 					<checkbox id="confint" label="Compute confidence interval" checked="false" value="TRUE" value_unchecked="FALSE" />
 					<spinbox type="real" id="conflevel" label="confidence level" min="0" max="1" initial="0.95"/>
 				</frame>
-				<spinbox id="mu" label="mu" initial="0"/>
+				<spinbox id="mu" label="location (shift) to test against (mu)" initial="0"/>
 				<radio id="exact" label="compute exact p-value">
 					<option label="Always" value="yes" />
 					<option label="Automatic" value="automatic" checked="true" />
