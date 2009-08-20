@@ -1,0 +1,20 @@
+<h1>Source R file</h1>
+<h2>Parameters</h2>
+<ul><li>File: source.R</li>
+</ul>
+DATE<br>
+<h2>Messages, warnings, or errors:</h2>
+<pre>[1] "ok"
+</pre>
+<h1>Source R file</h1>
+<h2>Parameters</h2>
+<ul><li>File: source.R</li>
+</ul>
+DATE<br>
+<h2>Messages, warnings, or errors:</h2>
+<pre>
+> testx <- c (20:30)
+
+> print ("ok")
+[1] "ok"
+</pre>

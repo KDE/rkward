@@ -195,7 +195,7 @@ rktest.cleanRKTestSuite <- function (suite, basedir=getwd ()) {
 	# do not delete the standards!
 	files <- grep ("^RKTestStandard\\..*\\.(messages.txt|rkcommands.R|rkout)$", files, value=TRUE, invert=TRUE)
 
-	file.remove (files)
+	unlink (files)
 
 	invisible (NULL)
 }
@@ -263,6 +263,8 @@ rktest.setSuiteStandards <- function (suite, basedir=getwd ()) {
 	.rk.cat.output (gsub ("^\"", "", gsub ("=", "=\"", gsub ("\n", "\", ", settings))))
 	.rk.cat.output ("\", submit.mode=\"submit\")</pre>")
 }
+# Run this line to do the replacement:
+# .rk.rerun.plugin.link <- .rk.rerun.plugin.link.replacement
 
 ## Initialize test environment
 # By default .rk.rerun.plugin.link() and .rk.make.hr() are silenced during the test runs

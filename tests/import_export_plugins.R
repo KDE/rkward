@@ -59,7 +59,53 @@ suite <- new ("RKTestSuite", id="import_export_plugins",
 
 			# WARNING: TODO: We don't use the value labels of the third
 			# variable, yet.
-		}, libraries=c("foreign"))
+		}, libraries=c("foreign")),
+		new ("RKTest", id="load_source", call=function () {
+			stopifnot (!exists ("testx", globalenv ()))
+
+			cat ("testx <- c (20:30)\nprint (\"ok\")\n", file="source.R")
+
+			rk.call.plugin ("rkward::load_source", chdir.state="FALSE", echo.state="0", file.selection="source.R", local.state="TRUE", printeval.state="FALSE", submit.mode="submit")
+
+			stopifnot (!exists ("testx", globalenv ()))
+
+			rk.call.plugin ("rkward::load_source", chdir.state="FALSE", echo.state="1", file.selection="source.R", local.state="FALSE", printeval.state="FALSE", submit.mode="submit")
+
+			stopifnot (globalenv()$testx == c (20:30))
+		}),
+		new ("RKTest", id="save_r_object", call=function () {
+			# in this test we try to save to object with different settings, then reload them.
+			assign ("testx", datasets::warpbreaks, envir=globalenv())
+			assign ("testy", datasets::volcano, envir=globalenv())
+			rk.sync.global()
+
+			rk.call.plugin ("rkward::save_r", ascii.state="TRUE", compress.state="TRUE", data.available="testx", file.selection="x.RData", submit.mode="submit")
+			rk.call.plugin ("rkward::save_r", ascii.state="TRUE", compress.state="TRUE", data.available="testy", file.selection="y.RData", submit.mode="submit")
+
+			rm (testx, testy, envir=globalenv())
+			load ("x.RData")
+			stopifnot (testx == datasets::warpbreaks)
+			load ("y.RData")
+			stopifnot (testy == datasets::volcano)
+		}),
+		new ("RKTest", id="write_vector_matrix", call=function () {
+			assign ("testx", c (1:10), globalenv())
+			rk.sync.global()
+
+			rk.call.plugin ("rkward::save_variables", append.state="FALSE", data.available="testx", file.selection="data", ncolumns.real="2.000000", sep.string=",", submit.mode="submit")
+
+			x <- readLines ("data")
+			for (line in x) rk.print (line)
+		}),
+		new ("RKTest", id="write_table", call=function () {
+			rk.call.plugin ("rkward::save_table", append.state="FALSE", columns.string="TRUE", data.available="women", dec.string="'.'", eol.text="\\n", file.selection="data", na.text="NA", qmethod.string="'escape'", quote.state="TRUE", rows.string="FALSE", sep.string="'\\t'", submit.mode="submit")
+
+			x <- readLines ("data")
+			for (line in x) rk.print (line)
+		}),
+		new ("RKTest", id="package_skeleton", call=function () {
+			rk.call.plugin ("rkward::save_skeleton", data.available="rktest.setSuiteStandards\nrktest.runRKTestSuite", force.state="TRUE", name.text="anRpackage", path.selection=".", submit.mode="submit")
+		})
 	), postCalls = list ()	# like initCalls: run after all tests to clean up. Empty in this case.
 )
 
