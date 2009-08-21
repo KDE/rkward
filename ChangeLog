@@ -1,3 +1,4 @@
+- Debug output (previously sent to stderr) is now written to a temporary file
 - On plugin help pages, display a link to invoke the plugin
 - Tolerate missing libraries in testing framework	TODO: - Encourage running 'make plugintests' after install in all relevant places
 - Double-clicking an item in the workspace browser now opens an object viewer, or (if possible) editor

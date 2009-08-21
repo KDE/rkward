@@ -2,7 +2,7 @@
                           rksettingsmoduledebug  description
                              -------------------
     begin                : Tue Oct 23 2007
-    copyright            : (C) 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -19,6 +19,7 @@
 #include <klocale.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
+#include <ktemporaryfile.h>
 
 #include <qlayout.h>
 #include <qlabel.h>
@@ -30,6 +31,8 @@
 #include "../misc/rkspinbox.h"
 #include "../rkglobals.h"
 #include "../debug.h"
+
+KTemporaryFile* RKSettingsModuleDebug::debug_file = 0;
 
 RKSettingsModuleDebug::RKSettingsModuleDebug (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
 	RK_TRACE (SETTINGS);
@@ -85,6 +88,12 @@ RKSettingsModuleDebug::RKSettingsModuleDebug (RKSettings *gui, QWidget *parent) 
 	main_vbox->addWidget (command_timeout_box);
 
 	main_vbox->addStretch ();
+
+	if (debug_file) {
+		label = new QLabel (i18n ("<i>Note:</i> Debug output is written to %1", debug_file->fileName ()));
+		main_vbox->addWidget (label);
+		main_vbox->addStretch ();
+	}
 }
 
 RKSettingsModuleDebug::~RKSettingsModuleDebug () {

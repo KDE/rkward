@@ -53,11 +53,16 @@
 #include <kcmdlineargs.h>
 #include <kaboutdata.h>
 #include <klocale.h>
+#include <ktemporaryfile.h>
 
 #include <qstring.h>
 
+#include <stdio.h>
+#include <stdlib.h>
+
 #include "rkward.h"
 #include "rkwardapplication.h"
+#include "settings/rksettingsmoduledebug.h"
 
 #ifdef Q_WS_WIN
 	// these are needed for the exit hack.
@@ -74,6 +79,14 @@ int RK_Debug_Flags = ALL;
 int RK_Debug_CommandStep = 0;
 
 static KCmdLineOptions options;
+
+void RKDebugMessageOutput (QtMsgType type, const char *msg) {
+	if (type == QtFatalMsg) {
+		fprintf (stderr, "%s\n", msg);
+	}
+	RKSettingsModuleDebug::debug_file->write (msg);
+	RKSettingsModuleDebug::debug_file->write ("\n");
+}
 
 int main(int argc, char *argv[]) {
 	options.add ("evaluate <Rcode>", ki18n ("After starting (and after loading the specified workspace, if applicable), evaluate the given R code."), 0);
@@ -130,6 +143,11 @@ int main(int argc, char *argv[]) {
 	stoptions->evaluate = args->getOption ("evaluate");
 
 	RKWardApplication app;
+	// install message handler *after* the componentData has been initialized
+	RKSettingsModuleDebug::debug_file = new KTemporaryFile ();
+	RKSettingsModuleDebug::debug_file->setAutoRemove (false);
+	if (RKSettingsModuleDebug::debug_file->open ()) qInstallMsgHandler (RKDebugMessageOutput);
+
 	if (app.isSessionRestored ()) {
 		RESTORE(RKWardMainWindow);	// well, whatever this is supposed to do -> TODO
 	} else {
@@ -139,6 +157,11 @@ int main(int argc, char *argv[]) {
 
 	// do it!
 	int status = app.exec ();
+
+	qInstallMsgHandler (0);
+	RK_DO (qDebug ("Full debug output is at %s", qPrintable (RKSettingsModuleDebug::debug_file->fileName ())), APP, DL_INFO);
+	RKSettingsModuleDebug::debug_file->close ();
+
 #ifdef Q_WS_WIN
 	// HACK: Somehow, if we created a windows graph-device during runtime (possibly also on other conditions), we just can't exit cleanly anymore.
 	// We get out of the event loop, but once we return from main (including using _endthread(), _exit(), exit(), abort(), raise(SIGSEGV),
