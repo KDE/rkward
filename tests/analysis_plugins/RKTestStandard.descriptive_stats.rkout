@@ -9,4 +9,3 @@ DATE<br>
 <tr><td>height</td><td>65</td><td>65</td><td>58</td><td>72</td><td>4.4721</td><td>975</td><td>1.5110e+27</td><td>5.8512</td><td>15</td><td>0</td></tr>
 <tr><td>test10z</td><td>22</td><td>22</td><td>4</td><td>40</td><td>12.111</td><td>220</td><td>3.8051e+12</td><td>14.628</td><td>11</td><td>1</td></tr>
 </table>
-<a href="rkward://runplugin/rkward::descriptive/constMad.real=1.46280000%0alength.state=1%0amad.state=1%0amad_type.string=average%0amean.state=1%0amedian.state=1%0aprod.state=1%0arange.state=1%0asd.state=1%0asum.state=1%0atrim.real=0.00000000%0ax.available=women%5b%5b%5c%22height%5c%22%5d%5d%5cntest10z">Run again</a>

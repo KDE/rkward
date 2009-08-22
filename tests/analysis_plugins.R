@@ -52,9 +52,12 @@ suite <- new ("RKTestSuite", id="analysis_plugins",
 			rk.call.plugin ("rkward::wilcoxon_test", alternative.string="two.sided", confint.state="TRUE", conflevel.real="0.95000000", correct.state="FALSE", exact.string="yes", mu.real="0.00000000", x.available="test50x", y.available="", submit.mode="submit")
 
 			rk.call.plugin ("rkward::wilcoxon_test", alternative.string="less", confint.state="FALSE", correct.state="TRUE", exact.string="automatic", mu.real="0.00000000", paired.state="TRUE", x.available="test50x", y.available="test50y", submit.mode="submit")
-		})#,
-#		new ("RKTest", id="wilcoxon_exact_test", call=function () {
-#		}, libraries=c ("coin"))
+		}),
+		new ("RKTest", id="wilcoxon_exact_test", call=function () {
+			rk.call.plugin ("rkward::wilcoxon_exact_test", alternative.string="two.sided", confint.state="TRUE", conflevel.real="0.95000000", correct.state="FALSE", exact.string="yes", mu.real="0.00000000", x.available="test50x", y.available="", submit.mode="submit")
+
+			rk.call.plugin ("rkward::wilcoxon_exact_test", alternative.string="less", confint.state="FALSE", correct.state="TRUE", exact.string="automatic", mu.real="0.00000000", paired.state="TRUE", x.available="test50x", y.available="test50y", submit.mode="submit")
+		}, libraries=c ("exactRankTests"))
 	), postCalls = list (	# like initCalls: run after all tests to clean up.
 		function () {
 			suppressWarnings (rm (list=c ("women", "warpbreaks", "rock", "test50x", "test50y", "test50z", "test10x", "test10y", "test10z"), envir=globalenv())) 

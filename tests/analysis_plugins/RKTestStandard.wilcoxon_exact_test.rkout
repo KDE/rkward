@@ -1,7 +1,7 @@
-<h1>Wilcoxon signed rank test</h1>
+<h1>Exact Wilcoxon signed rank test</h1>
 <h2>Parameters</h2>
 <ul><li>Comparing: test50x</li>
-<li>H1: true location is not equal to 0</li>
+<li>H1: true mu is not equal to 0</li>
 <li>Continuity correction in normal approximation for p-value: FALSE</li>
 <li>Compute exact p-value: yes</li>
 <li>Paired test: FALSE</li>
@@ -13,10 +13,10 @@ DATE<br>
 <tr><td>test50x</td><td>1275</td><td>0</td><td>two.sided</td><td>1.7764e-15</td><td>95</td><td>121
 <br/>130</td><td>125.5</td></tr>
 </table>
-<h1>Wilcoxon signed rank test with continuity correction</h1>
+<h1>Asymptotic Wilcoxon signed rank test</h1>
 <h2>Parameters</h2>
 <ul><li>Comparing: test50x against test50y</li>
-<li>H1: true location shift is less than 0</li>
+<li>H1: true mu is less than 0</li>
 <li>Continuity correction in normal approximation for p-value: TRUE</li>
 <li>Compute exact p-value: automatic</li>
 <li>Paired test: TRUE</li>
@@ -26,5 +26,5 @@ DATE<br>
 <table border="1">
 <tr><td>Variable Names</td><td>statistic</td><td>Location Shift</td><td>Hypothesis</td><td>p</td></tr>
 <tr><td>test50x
-<br/>test50y</td><td>0</td><td>0</td><td>less</td><td>8.0007e-13</td></tr>
+<br/>test50y</td><td>0</td><td>0</td><td>less</td><td>7.6873e-13</td></tr>
 </table>

@@ -16,7 +16,7 @@ DATE<br>
 <tr><td>test50y</td><td>50</td><td>NA</td><td>0</td></tr>
 <tr><td>test50z</td><td>50</td><td>50</td><td>NA</td></tr>
 </table>
-<a href="rkward://runplugin/rkward::corr_matrix/do_p.state=1%0amethod.string=pearson%0ause.string=pairwise%0ax.available=test50x%5cntest50y%5cntest50z">Run again</a><h1>Correlation Matrix</h1>
+<h1>Correlation Matrix</h1>
 <h2>Parameters</h2>
 <ul><li>Method: pearson</li>
 <li>Exclusion: pairwise.complete.obs</li>
@@ -27,4 +27,3 @@ DATE<br>
 <tr><td>weight</td><td>1</td><td>0.9955</td></tr>
 <tr><td>height</td><td>0.9955</td><td>1</td></tr>
 </table>
-<a href="rkward://runplugin/rkward::corr_matrix/do_p.state=%0amethod.string=pearson%0ause.string=pairwise%0ax.available=women%5b%5b%5c%22weight%5c%22%5d%5d%5cnwomen%5b%5b%5c%22height%5c%22%5d%5d">Run again</a>
