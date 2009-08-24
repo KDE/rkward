@@ -1,0 +1,17 @@
+<h1>Statistical Moment</h1>
+<h2>Parameters</h2>
+<ul><li>Order: 1</li>
+<li>Compute central moments: FALSE</li>
+<li>Compute absolute moments: FALSE</li>
+<li>Remove missing values: TRUE</li>
+</ul>
+DATE<br>
+<table border="1">
+<tr><td>Variable Name</td><td>Moment</td></tr>
+<tr><td>test50z</td><td>102</td></tr>
+<tr><td>test50y</td><td>225.5</td></tr>
+<tr><td>test50x</td><td>125.5</td></tr>
+<tr><td>test10z</td><td>22</td></tr>
+<tr><td>test10y</td><td>205.5</td></tr>
+<tr><td>test10x</td><td>105.5</td></tr>
+</table>

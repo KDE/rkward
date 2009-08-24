@@ -1,0 +1,14 @@
+<h1>Bonett-Seier test of Geary's kurtosis</h1>
+<h2>Parameters</h2>
+<ul><li>Alternative Hypothesis: two.sided</li>
+</ul>
+DATE<br>
+<table border="1">
+<tr><td>Variable Name</td><td>Kurtosis estimator (tau)</td><td>Transformation (z)</td><td>p-value</td><td>Alternative Hypothesis</td><td>Length</td><td>NAs</td></tr>
+<tr><td>test50z</td><td>50</td><td>-2.2224</td><td>0.026254</td><td>kurtosis is not equal to sqrt(2/pi)</td><td>50</td><td>0</td></tr>
+<tr><td>test50y</td><td>12.5</td><td>-2.2224</td><td>0.026254</td><td>kurtosis is not equal to sqrt(2/pi)</td><td>50</td><td>0</td></tr>
+<tr><td>test50x</td><td>12.5</td><td>-2.2224</td><td>0.026254</td><td>kurtosis is not equal to sqrt(2/pi)</td><td>50</td><td>0</td></tr>
+<tr><td>test10z</td><td>10</td><td>-1.1304</td><td>0.25832</td><td>kurtosis is not equal to sqrt(2/pi)</td><td>11</td><td>1</td></tr>
+<tr><td>test10y</td><td>2.5</td><td>-1.1304</td><td>0.25832</td><td>kurtosis is not equal to sqrt(2/pi)</td><td>11</td><td>1</td></tr>
+<tr><td>test10x</td><td>2.5</td><td>-1.1304</td><td>0.25832</td><td>kurtosis is not equal to sqrt(2/pi)</td><td>11</td><td>1</td></tr>
+</table>

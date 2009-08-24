@@ -1,0 +1,26 @@
+<h1>Ansari-Bradley test</h1>
+<h2>Parameters</h2>
+<ul><li>Comparing: test50x against test10y</li>
+<li>Alternative Hypothesis: true ratio of scales is not equal to 1</li>
+<li>Compute exact p-value: yes</li>
+<li>Confidence Level: 0.95000000</li>
+</ul>
+DATE<br>
+<table border="1">
+<tr><td>Variable Names</td><td>statistic</td><td>null.value</td><td>p</td><td>confidence interval percent</td><td>confidence interval of difference</td><td>estimate of the ratio of scales</td></tr>
+<tr><td>test50x
+<br/>test10y</td><td>875</td><td>1</td><td>1.3814e-05</td><td>95</td><td>0.56158
+<br/>0.70792</td><td>0.58206</td></tr>
+</table>
+<h1>Ansari-Bradley test</h1>
+<h2>Parameters</h2>
+<ul><li>Comparing: test50x against test50y</li>
+<li>Alternative Hypothesis: true ratio of scales is less than 1</li>
+<li>Compute exact p-value: automatic</li>
+</ul>
+DATE<br>
+<table border="1">
+<tr><td>Variable Names</td><td>statistic</td><td>null.value</td><td>p</td></tr>
+<tr><td>test50x
+<br/>test50y</td><td>1275</td><td>1</td><td>0.5</td></tr>
+</table>
