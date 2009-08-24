@@ -13,9 +13,11 @@ function calculate () {
 	} else if ($exact_setting == "no") {
 		$exact_opt = ", exact=FALSE";
 	}
+	if (getRK_val ("confint") == "TRUE") {
+		if (($conflevel = getRK_val("conflevel")) != "0.95") $conflevel_opt = ", conf.level=" . $conflevel;
+	}
 ?>
-result <- ansari.exact (<? getRK ("x"); ?>, <? getRK ("y"); ?>, alternative = "<? getRK ("alternative"); ?>"<? echo ($exact_opt); ?>, conf.int = <? getRK ("confint"); ?> <?
-if (($conflevel = getRK_val ("conflevel")) != "0.95") echo (", conf.level=" . $conflevel); ?>)
+result <- ansari.exact (<? getRK ("x"); ?>, <? getRK ("y"); ?>, alternative = "<? getRK ("alternative"); ?>"<? echo ($exact_opt); ?>, conf.int = <? getRK ("confint"); echo ($conflevel_opt); ?>)
 
 <?
 }

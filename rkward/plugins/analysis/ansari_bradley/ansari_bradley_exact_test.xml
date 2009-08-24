@@ -3,6 +3,10 @@
 	<code file="ansari_bradley_exact_test.php"/>
 	<help file="ansari_bradley_exact_test.rkh"/>
 
+	<logic>
+		<connect client="conflevel.enabled" governor="confint.state"/>
+	</logic>
+
 	<dialog label="Ansari-Bradley two-sample exact test">
 		<tabbook>
 			<tab label="Basic settings">

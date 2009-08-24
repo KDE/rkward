@@ -1,7 +1,7 @@
 <!DOCTYPE rkhelp>
 <document>
 	<summary>
-		This test performs the Ansari-Bradley two-sample exact test to test for a difference in scale parameters.
+		This test performs the Ansari-Bradley two-sample exact test to test for a difference in scale parameters. This test differs from <link href="rkward://component/ansari_bradley_test"/> in that exact p-values can also be computed in the presence of ties.
 	</summary>
 
 	<usage>
@@ -20,9 +20,8 @@
 	</settings>
 	<related>
 		<ul>
-			<li><link href="rkward://rhelp/ansari.test"/></li>
 			<li><link href="rkward://rhelp/ansari.exact"/></li>
-			<li><link href="rkward://component/ansari_bradley_exact_test"/></li>
+			<li><link href="rkward://component/ansari_bradley_test"/></li>
 		</ul>
 
 	</related>
