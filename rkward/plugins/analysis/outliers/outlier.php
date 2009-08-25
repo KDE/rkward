@@ -43,7 +43,7 @@ if (all (is.na (results$'Error'))) results$'Error' <- NULL
 
 function printout () {
 ?>
-rk.header ("Outlier",
+rk.header ("Find potential outlier",
 	parameters=list ("Opposite", "<? getRK ("opposite"); ?>"))
 rk.results (results)
 <?

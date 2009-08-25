@@ -19,7 +19,7 @@
 				<column>
 					<frame label="test specific settings">
 						<dropdown id="type" label="Variant of test">
-							<option value="0" label="0"/>
+							<option value="0" label="0 (Automatic)"/>
 							<option value="10" label="10 (sample size 3-7)"/>
 							<option value="11" label="11 (sample size 8-10)"/>
 							<option value="12" label="12"/>

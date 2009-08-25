@@ -5,15 +5,15 @@
 	</summary>
 
 	<usage>
-		Chose the data to perform the Dixon test for outlier. You can chose multiple data. See <link href="rkward://rhelp/dixon.test"/>.
+		Chose the data to perform the Dixon test for outlier. You can chose multiple vectors. See <link href="rkward://rhelp/dixon.test"/>.
 	</usage>
 
 	<settings>
 		<caption id="tab_variables"/>
 		<setting id="x">Select the data to be computed. The vectors need to be numeric, and can be of different length but there is a limit.</setting>
 		<caption id="tab_options"/>
-		<setting id="type">This is specyfying the variant of test to be performed.</setting>
-		<setting id="two_sided">Here you can specify the alternative hypothesis. It must be one of "two-sided" or "not two-sided".</setting>
+		<setting id="type">Specifies the variant of test to be performed. See <link href="rkward://rhelp/dixon.test"/> for details. The default value (0) means that a suitable variant is selected automatically, according to the size of the sample.</setting>
+		<setting id="two_sided">Should the test be treated as two-sided (default)?</setting>
 		<setting id="opposite">Here you can define if you want to check not the value with largest difference from the mean, but opposite.</setting>
 		<setting id="descriptives">Print additional descriptive statistics (mean, sd, median, min, max) to help with interpretation of the test result (purely informational, does not affect the test). Missing values will be ignored.</setting>
 		<setting id="length">Show the total length of the data, and the number of missing values (purely informational, does not affect the test)?</setting>
