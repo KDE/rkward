@@ -98,6 +98,9 @@ suite <- new ("RKTestSuite", id="import_export_plugins",
 			for (line in x) rk.print (line)
 		}),
 		new ("RKTest", id="write_table", call=function () {
+			assign ("women", datasets::women, globalenv())
+			rk.sync.global()
+
 			rk.call.plugin ("rkward::save_table", append.state="FALSE", columns.string="TRUE", data.available="women", dec.string="'.'", eol.text="\\n", file.selection="data", na.text="NA", qmethod.string="'escape'", quote.state="TRUE", rows.string="FALSE", sep.string="'\\t'", submit.mode="submit")
 
 			x <- readLines ("data")

@@ -1,7 +1,7 @@
 <h1>Write as table</h1>
 <h2>Parameters</h2>
 <ul><li>File: data</li>
-<li>Data: as.environment ("package:datasets")$"women"</li>
+<li>Data: women</li>
 </ul>
 DATE<br>
 <p class='character'>"height"	"weight"</p><p class='character'>58	115</p><p class='character'>59	117</p><p class='character'>60	120</p><p class='character'>61	123</p><p class='character'>62	126</p><p class='character'>63	129</p><p class='character'>64	132</p><p class='character'>65	135</p><p class='character'>66	139</p><p class='character'>67	142</p><p class='character'>68	146</p><p class='character'>69	150</p><p class='character'>70	154</p><p class='character'>71	159</p><p class='character'>72	164</p>
