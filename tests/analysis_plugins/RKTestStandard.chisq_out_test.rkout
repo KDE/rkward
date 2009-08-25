@@ -1,0 +1,24 @@
+<h1>Chi-squared test for outlier</h1>
+<h2>Parameters</h2>
+<ul><li>Opposite: FALSE</li>
+</ul>
+DATE<br>
+<table border="1">
+<tr><td>Variable Name</td><td>Length</td><td>NAs</td><td>X-squared</td><td>p-value</td><td>Alternative Hypothesis</td><td>Variance</td><td>Mean</td><td>Standard Deviation</td><td>Median</td><td>Minimum</td><td>Maximum</td></tr>
+<tr><td>shape</td><td>48</td><td>0</td><td>8.6813</td><td>0.0032149</td><td>highest value 0.464125 is an outlier</td><td>0.0069717</td><td>0.21811</td><td>0.083496</td><td>0.19886</td><td>0.09033</td><td>0.46413</td></tr>
+<tr><td>perm</td><td>48</td><td>0</td><td>4.0819</td><td>0.043346</td><td>highest value 1300 is an outlier</td><td>191685</td><td>415.45</td><td>437.82</td><td>130.5</td><td>6.3</td><td>1300</td></tr>
+<tr><td>peri</td><td>48</td><td>0</td><td>2.7487</td><td>0.097335</td><td>lowest value 308.642 is an outlier</td><td>2049654</td><td>2682.2</td><td>1431.7</td><td>2536.2</td><td>308.64</td><td>4864.2</td></tr>
+<tr><td>area</td><td>48</td><td>0</td><td>5.2881</td><td>0.021472</td><td>lowest value 1016 is an outlier</td><td>7203045</td><td>7187.7</td><td>2683.8</td><td>7487</td><td>1016</td><td>12212</td></tr>
+</table>
+<h1>Chi-squared test for outlier</h1>
+<h2>Parameters</h2>
+<ul><li>Opposite: TRUE</li>
+</ul>
+DATE<br>
+<table border="1">
+<tr><td>Variable Name</td><td>X-squared</td><td>p-value</td><td>Alternative Hypothesis</td><td>Variance</td></tr>
+<tr><td>shape</td><td>2.3420</td><td>0.12592</td><td>lowest value 0.0903296 is an outlier</td><td>0.0069717</td></tr>
+<tr><td>perm</td><td>0.87333</td><td>0.35004</td><td>lowest value 6.3 is an outlier</td><td>191685</td></tr>
+<tr><td>peri</td><td>2.3229</td><td>0.12748</td><td>highest value 4864.22 is an outlier</td><td>2049654</td></tr>
+<tr><td>area</td><td>3.5045</td><td>0.061201</td><td>highest value 12212 is an outlier</td><td>7203045</td></tr>
+</table>

@@ -1,0 +1,10 @@
+<h1>Mood two-sample test of scale</h1>
+<h2>Parameters</h2>
+<ul><li>Alternative Hypothesis: two.sided</li>
+</ul>
+DATE<br>
+<table border="1">
+<tr><td>Variables</td><td>Z</td><td>p-value</td></tr>
+<tr><td>test50z
+<br/>test50x</td><td>6.3217</td><td>2.5873e-10</td></tr>
+</table>

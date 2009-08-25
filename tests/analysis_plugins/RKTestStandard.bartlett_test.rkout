@@ -1,0 +1,12 @@
+<h1>Bartlett test of homogeneity of variances</h1>
+DATE<br>
+<table border="1">
+<tr><td>Variables</td><td>Bartlett s K-squared</td><td>df</td><td>p-value</td></tr>
+<tr><td>breaks
+<br/>test50z
+<br/>test50y
+<br/>test50x
+<br/>test10z
+<br/>test10y
+<br/>test10x</td><td>249.64</td><td>6</td><td>4.9026e-51</td></tr>
+</table>

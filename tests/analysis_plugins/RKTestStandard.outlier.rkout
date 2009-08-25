@@ -1,0 +1,20 @@
+<h1>Find potential outlier</h1>
+<h2>Parameters</h2>
+<ul><li>Opposite: FALSE</li>
+</ul>
+DATE<br>
+<table border="1">
+<tr><td>Variable Name</td><td>Length</td><td>NAs</td><td>Outlier</td></tr>
+<tr><td>breaks</td><td>54</td><td>0</td><td>70</td></tr>
+<tr><td>test50z</td><td>50</td><td>0</td><td>200</td></tr>
+</table>
+<h1>Find potential outlier</h1>
+<h2>Parameters</h2>
+<ul><li>Opposite: TRUE</li>
+</ul>
+DATE<br>
+<table border="1">
+<tr><td>Variable Name</td><td>Outlier</td><td>Mean</td><td>Standard Deviation</td><td>Median</td><td>Minimum</td><td>Maximum</td></tr>
+<tr><td>breaks</td><td>10</td><td>28.148</td><td>13.199</td><td>26</td><td>10</td><td>70</td></tr>
+<tr><td>test50z</td><td>4</td><td>102</td><td>58.31</td><td>102</td><td>4</td><td>200</td></tr>
+</table>

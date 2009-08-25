@@ -58,16 +58,6 @@ suite <- new ("RKTestSuite", id="analysis_plugins",
 
 			rk.call.plugin ("rkward::wilcoxon_exact_test", alternative.string="less", confint.state="FALSE", correct.state="TRUE", exact.string="automatic", mu.real="0.00000000", paired.state="TRUE", x.available="test50x", y.available="test50y", submit.mode="submit")
 		}, libraries=c ("exactRankTests")),
-		new ("RKTest", id="ansari_bradley_test", call=function () {
-			rk.call.plugin ("rkward::ansari_bradley_test", alternative.string="two.sided", confint.state="TRUE", conflevel.real="0.95000000", exact.string="yes", x.available="test50x", y.available="test10y", submit.mode="submit")
-
-			rk.call.plugin ("rkward::ansari_bradley_test", alternative.string="less", confint.state="FALSE", exact.string="automatic", x.available="test50x", y.available="test50y", submit.mode="submit")
-		}),
-		new ("RKTest", id="ansari_bradley_exact_test", call=function () {
-			rk.call.plugin ("rkward::ansari_bradley_exact_test", alternative.string="two.sided", confint.state="TRUE", conflevel.real="0.95000000", exact.string="yes", x.available="test50x", y.available="test10y", submit.mode="submit")
-
-			rk.call.plugin ("rkward::ansari_bradley_exact_test", alternative.string="less", confint.state="FALSE", exact.string="automatic", x.available="test50x", y.available="test50y", submit.mode="submit")
-		}, libraries=c ("exactRankTests")),
 		new ("RKTest", id="moments_moment", call=function () {
 			rk.call.plugin ("rkward::moment", absolute.state="FALSE", central.state="FALSE", length.state="0", narm.state="TRUE", order.real="1.000000", x.available="test50z\ntest50y\ntest50x\ntest10z\ntest10y\ntest10x", submit.mode="submit")
 		}, libraries=c ("moments")),
@@ -82,7 +72,52 @@ suite <- new ("RKTestSuite", id="analysis_plugins",
 		}, libraries=c ("moments")),
 		new ("RKTest", id="skewness_kurtosis", call=function () {
 			rk.call.plugin ("rkward::skewness_kurtosis", geary.state="1", kurtosis.state="1", length.state="1", narm.state="1", skewness.state="1", x.available="women[[\"weight\"]]\nwomen[[\"height\"]]\nwarpbreaks[[\"breaks\"]]", submit.mode="submit")
-		}, libraries=c ("moments"))
+		}, libraries=c ("moments")),
+		new ("RKTest", id="F_test", call=function () {
+			rk.call.plugin ("rkward::F_test", alternative.string="two.sided", conflevel.real="0.95000000", ratio.real="1.00000000", x.available="test50z", y.available="test50y", submit.mode="submit")
+		}),
+		new ("RKTest", id="fligner_test", call=function () {
+			rk.call.plugin ("rkward::fligner_test", x.available="women[[\"weight\"]]\nwomen[[\"height\"]]\ntest50z\ntest50y\ntest50x\ntest10z\ntest10y\ntest10x", submit.mode="submit")
+		}),
+		new ("RKTest", id="bartlett_test", call=function () {
+			rk.call.plugin ("rkward::bartlett_test", x.available="warpbreaks[[\"breaks\"]]\ntest50z\ntest50y\ntest50x\ntest10z\ntest10y\ntest10x", submit.mode="submit")
+		}),
+		new ("RKTest", id="levene_test", call=function () {
+			rk.call.plugin ("rkward::levene_test", group.available="warpbreaks[[\"tension\"]]", y.available="warpbreaks[[\"breaks\"]]", submit.mode="submit")
+		}, libraries = c ("car")),
+		new ("RKTest", id="ansari_bradley_test", call=function () {
+			rk.call.plugin ("rkward::ansari_bradley_test", alternative.string="two.sided", confint.state="TRUE", conflevel.real="0.95000000", exact.string="yes", x.available="test50x", y.available="test10y", submit.mode="submit")
+
+			rk.call.plugin ("rkward::ansari_bradley_test", alternative.string="less", confint.state="FALSE", exact.string="automatic", x.available="test50x", y.available="test50y", submit.mode="submit")
+		}),
+		new ("RKTest", id="ansari_bradley_exact_test", call=function () {
+			rk.call.plugin ("rkward::ansari_bradley_exact_test", alternative.string="two.sided", confint.state="TRUE", conflevel.real="0.95000000", exact.string="yes", x.available="test50x", y.available="test10y", submit.mode="submit")
+
+			rk.call.plugin ("rkward::ansari_bradley_exact_test", alternative.string="less", confint.state="FALSE", exact.string="automatic", x.available="test50x", y.available="test50y", submit.mode="submit")
+		}, libraries=c ("exactRankTests")),
+		new ("RKTest", id="mood_test", call=function () {
+			rk.call.plugin ("rkward::mood_test", alternative.string="two.sided", x.available="test50z", y.available="test50x", submit.mode="submit")
+		}),
+		new ("RKTest", id="chisq_out_test", call=function () {
+			rk.call.plugin ("rkward::chisq_out_test", descriptives.state="1", length.state="1", opposite.state="FALSE", x.available="rock[[\"shape\"]]\nrock[[\"perm\"]]\nrock[[\"peri\"]]\nrock[[\"area\"]]", submit.mode="submit")
+
+			rk.call.plugin ("rkward::chisq_out_test", descriptives.state="0", length.state="0", opposite.state="TRUE", x.available="rock[[\"shape\"]]\nrock[[\"perm\"]]\nrock[[\"peri\"]]\nrock[[\"area\"]]", submit.mode="submit")
+		}, libraries = c ("outliers")),
+		new ("RKTest", id="dixon_test", call=function () {
+			rk.call.plugin ("rkward::dixon_test", descriptives.state="1", length.state="1", opposite.state="FALSE", two_sided.state="TRUE", type.string="0", x.available="women[[\"weight\"]]\nwomen[[\"height\"]]", submit.mode="submit")
+
+			rk.call.plugin ("rkward::dixon_test", descriptives.state="0", length.state="0", opposite.state="TRUE", two_sided.state="FALSE", type.string="0", x.available="women[[\"weight\"]]\nwomen[[\"height\"]]", submit.mode="submit")
+		}, libraries = c ("outliers")),
+		new ("RKTest", id="outlier", call=function () {
+			rk.call.plugin ("rkward::outlier", descriptives.state="0", length.state="1", opposite.state="FALSE", x.available="warpbreaks[[\"breaks\"]]\ntest50z", submit.mode="submit")
+
+			rk.call.plugin ("rkward::outlier", descriptives.state="1", length.state="0", opposite.state="TRUE", x.available="warpbreaks[[\"breaks\"]]\ntest50z", submit.mode="submit")
+		}, libraries = c ("outliers")),
+		new ("RKTest", id="grubbs_test", call=function () {
+			rk.call.plugin ("rkward::grubbs_test", descriptives.state="0", length.state="1", opposite.state="FALSE", two_sided.state="TRUE", type.string="10", x.available="warpbreaks[[\"breaks\"]]\ntest10z", submit.mode="submit")
+
+			rk.call.plugin ("rkward::grubbs_test", descriptives.state="1", length.state="1", opposite.state="TRUE", two_sided.state="FALSE", type.string="11", x.available="warpbreaks[[\"breaks\"]]\ntest10z", submit.mode="submit")
+		}, libraries = c ("outliers"))
 	), postCalls = list (	# like initCalls: run after all tests to clean up.
 		function () {
 			suppressWarnings (rm (list=c ("women", "warpbreaks", "rock", "test50x", "test50y", "test50z", "test10x", "test10y", "test10z"), envir=globalenv())) 

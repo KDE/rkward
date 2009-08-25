@@ -1,0 +1,11 @@
+<h1>F test to compare two variances</h1>
+<h2>Parameters</h2>
+<ul><li>Confidence Level: 0.95000000</li>
+<li>Alternative Hypothesis: true ratio of variances is not equal to 1</li>
+</ul>
+DATE<br>
+<table border="1">
+<tr><td>Variables</td><td>F</td><td>Numerator DF</td><td>Denominator DF</td><td>p-value</td><td>Lower CI</td><td>Upper CI</td><td>ratio of variances</td></tr>
+<tr><td>test50z
+<br/>test50y</td><td>16</td><td>49</td><td>49</td><td>0</td><td>9.0796</td><td>28.195</td><td>16</td></tr>
+</table>
