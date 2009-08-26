@@ -339,6 +339,7 @@ void LoadUnloadWidget::rCommandDone (RCommand *command) {
 		RK_ASSERT (command->getDataLength () == 4);
 
 		installed_view->clear ();
+		installed_view->setSortingEnabled (false);
 
 		RData *package = command->getStructureVector ()[0];
 		RData *title = command->getStructureVector ()[1];
@@ -357,6 +358,7 @@ void LoadUnloadWidget::rCommandDone (RCommand *command) {
 			item->setText (3, libpath->getStringVector ()[i]);
 		}
 		installed_view->resizeColumnToContents (0);
+		installed_view->setSortingEnabled (true);
 	} else if (command->getFlags () == GET_LOADED_PACKAGES) {
 		RK_ASSERT (command->getDataType () == RData::StringVector);
 
@@ -419,7 +421,7 @@ void LoadUnloadWidget::detachButtonClicked () {
 		// select corresponding package in list of available packages
 		QList<QTreeWidgetItem*> installed = installed_view->findItems (package_name, Qt::MatchExactly, 0);
 		if (!installed.isEmpty ()) {
-			RK_ASSERT (installed.count () == 1);
+			//RK_ASSERT (installed.count () == 1); // In fact, several versions of one package can be installed in several library locations
 			installed[0]->setSelected (true);
 		}
 	}
