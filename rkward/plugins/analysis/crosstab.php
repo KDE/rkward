@@ -42,18 +42,19 @@ function preview () {
 
 function doPrintout ($final) {
 	if ($final) { ?>
+rk.header ("Crosstabs (n to 1)", level=1)
 for (i in 1:length (results)) {
-	rk.header ("Crosstabs (n to 1)", parameters=list ("Dependent", descriptions[[i]][['Dependent']], "Independent", descriptions[[i]][['Independent']]))
+	rk.header ("Crosstabs (n to 1)", parameters=list ("Dependent", descriptions[[i]][['Dependent']], "Independent", descriptions[[i]][['Independent']]), level=2)
 	rk.results (results[[i]], titles=c(descriptions[[i]][['Dependent']], descriptions[[i]][['Independent']]))
 <?		if (getRK_val ("chisq") == "TRUE") { ?>
 
-	rk.header ("Pearson's Chi Square Test for Crosstabs", list ("Dependent", descriptions[[i]][['Dependent']], "Independent", descriptions[[i]][['Independent']], "Method", chisquares[[i]][["method"]]))
+	rk.header ("Pearson's Chi Square Test for Crosstabs", list ("Dependent", descriptions[[i]][['Dependent']], "Independent", descriptions[[i]][['Independent']], "Method", chisquares[[i]][["method"]]), level=2)
 	rk.results (list ('Statistic'=chisquares[[i]][['statistic']], 'df'=chisquares[[i]][['parameter']], 'p'=chisquares[[i]][['p.value']]))
 <?		}
 
 		if (getRK_val ("barplot") == "TRUE") { ?>
 
-	rk.header ("Barplot for Crosstabs", list ("Dependent", descriptions[[i]][['Dependent']], "Independent", descriptions[[i]][['Independent']]<? getRK ('barplot_embed.code.preprocess'); ?>))
+	rk.header ("Barplot for Crosstabs", list ("Dependent", descriptions[[i]][['Dependent']], "Independent", descriptions[[i]][['Independent']]<? getRK ('barplot_embed.code.preprocess'); ?>), level=2)
 	rk.graph.on ()
 	try ({
 <?			printIndented ("\t\t", getRK_val ('barplot_embed.code.printout')); ?>
