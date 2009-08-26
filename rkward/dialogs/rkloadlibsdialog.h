@@ -2,7 +2,7 @@
                           rkloadlibsdialog  -  description
                              -------------------
     begin                : Mon Sep 6 2004
-    copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -118,6 +118,7 @@ public slots:
 	void apply ();
 	void cancel ();
 	void updateInstalledPackages ();
+	void updateButtons ();
 protected:
 	void rCommandDone (RCommand *command);
 private:

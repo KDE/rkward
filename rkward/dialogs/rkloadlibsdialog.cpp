@@ -40,6 +40,7 @@
 #include "../settings/rksettings.h"
 #include "../core/robjectlist.h"
 #include "../misc/rkprogresscontrol.h"
+#include "../misc/rkstandardicons.h"
 
 #include "../debug.h"
 
@@ -299,9 +300,9 @@ LoadUnloadWidget::LoadUnloadWidget (RKLoadLibsDialog *dialog, QWidget *p_widget)
 	instvbox->addWidget (label);
 	instvbox->addWidget (installed_view);
 	
-	load_button = new QPushButton (i18n ("Load"), this);
+	load_button = new QPushButton (RKStandardIcons::getIcon (RKStandardIcons::ActionAddRight), i18n ("Load"), this);
 	connect (load_button, SIGNAL (clicked ()), this, SLOT (loadButtonClicked ()));
-	detach_button = new QPushButton (i18n ("Unload"), this);
+	detach_button = new QPushButton (RKStandardIcons::getIcon (RKStandardIcons::ActionRemoveLeft), i18n ("Unload"), this);
 	connect (detach_button, SIGNAL (clicked ()), this, SLOT (detachButtonClicked ()));
 	buttonvbox->addStretch (1);
 	buttonvbox->addWidget (load_button);
@@ -315,12 +316,16 @@ LoadUnloadWidget::LoadUnloadWidget (RKLoadLibsDialog *dialog, QWidget *p_widget)
 	loadedvbox->addWidget (label);
 	loadedvbox->addWidget (loaded_view);
 
+	connect (loaded_view, SIGNAL (itemSelectionChanged()), this, SLOT (updateButtons()));
+	connect (installed_view, SIGNAL (itemSelectionChanged()), this, SLOT (updateButtons()));
+
 	connect (dialog, SIGNAL (okClicked ()), this, SLOT (ok ()));
 	connect (dialog, SIGNAL (applyClicked ()), this, SLOT (apply ()));
 	connect (dialog, SIGNAL (cancelClicked ()), this, SLOT (cancel ()));
 	connect (this, SIGNAL (destroyed ()), dialog, SLOT (childDeleted ()));
 
 	updateInstalledPackages ();
+	updateButtons ();
 }
 
 LoadUnloadWidget::~LoadUnloadWidget () {
@@ -360,6 +365,9 @@ void LoadUnloadWidget::rCommandDone (RCommand *command) {
 		for (unsigned int i=0; i < command->getDataLength (); ++i) {
 			QTreeWidgetItem* item = new QTreeWidgetItem (loaded_view);
 			item->setText (0, command->getStringVector ()[i]);
+			if (RKSettingsModuleRPackages::essentialPackages ().contains (command->getStringVector ()[i])) {
+				item->setFlags (Qt::NoItemFlags);
+			}
 		}
 		loaded_view->resizeColumnToContents (0);
 		setEnabled (true);
@@ -383,15 +391,17 @@ void LoadUnloadWidget::updateInstalledPackages () {
 void LoadUnloadWidget::loadButtonClicked () {
 	RK_TRACE (DIALOGS);
 
+	loaded_view->clearSelection ();
 	QList<QTreeWidgetItem*> sel = installed_view->selectedItems ();
 	for (int i = 0; i < sel.size (); ++i) {
-		QTreeWidgetItem* installed = sel[0];
+		QString package_name = sel[i]->text (0);
 
 		// is this package already loaded?
-		QList<QTreeWidgetItem*> loaded = loaded_view->findItems (installed->text (0), Qt::MatchExactly, 0);
+		QList<QTreeWidgetItem*> loaded = loaded_view->findItems (package_name, Qt::MatchExactly, 0);
 		if (loaded.isEmpty ()) {
 			QTreeWidgetItem* item = new QTreeWidgetItem (loaded_view);
-			item->setText (0, installed->text (0));
+			item->setText (0, package_name);
+			item->setSelected (true);
 		}
 	}
 }
@@ -399,10 +409,27 @@ void LoadUnloadWidget::loadButtonClicked () {
 void LoadUnloadWidget::detachButtonClicked () {
 	RK_TRACE (DIALOGS);
 
+	installed_view->clearSelection ();
 	QList<QTreeWidgetItem*> sel = loaded_view->selectedItems ();
 	for (int i = 0; i < sel.size (); ++i) {
-		delete (sel[i]);	// remove from list
+		QString package_name = sel[i]->text (0);
+
+		delete (sel[i]);	// remove from list of loaded packages
+
+		// select corresponding package in list of available packages
+		QList<QTreeWidgetItem*> installed = installed_view->findItems (package_name, Qt::MatchExactly, 0);
+		if (!installed.isEmpty ()) {
+			RK_ASSERT (installed.count () == 1);
+			installed[0]->setSelected (true);
+		}
 	}
+}
+
+void LoadUnloadWidget::updateButtons () {
+	RK_TRACE (DIALOGS);
+
+	detach_button->setEnabled (!loaded_view->selectedItems ().isEmpty ());
+	load_button->setEnabled (!installed_view->selectedItems ().isEmpty ());
 }
 
 void LoadUnloadWidget::ok () {
@@ -430,7 +457,7 @@ void LoadUnloadWidget::doLoadUnload () {
 	for (int i = 0; i < loaded_view->topLevelItemCount (); ++i) {
 		QTreeWidgetItem* loaded = loaded_view->topLevelItem (i);
 		if (!prev_packages.contains (loaded->text (0))) {
-			RCommand *command = new RCommand ("library (\"" + loaded->text (0) + "\")", RCommand::App);
+			RCommand *command = new RCommand ("library (\"" + loaded->text (0) + "\")", RCommand::App | RCommand::ObjectListUpdate);
 			control->addRCommand (command);
 			RKGlobals::rInterface ()->issueCommand (command, parent->chain);
 		}
