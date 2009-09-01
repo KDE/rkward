@@ -34,7 +34,7 @@ for (i in 1:length (objects)) {
 function printout () {
 ?>
 rk.header ("KPSS Test for Level Stationarity",
-	parameters=list ("null hypothesis", "<? getRK ("null"); ?>", "version of truncation lag parameter", "<? getRK ("lshort"); ?>"))
+	parameters=list ("null hypothesis"="<? getRK ("null"); ?>", "version of truncation lag parameter"="<? if (getRK_val ("lshort") == "TRUE") echo ("short"); else echo ("long"); ?>"))
 
 rk.results (results)
 <?
