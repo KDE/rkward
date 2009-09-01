@@ -14,29 +14,25 @@ function printout () {
 rk.header ("Hodrick-Prescott Filter", parameters=list("Lambda", <? echo $lambda; ?>))
 x <- get("<? getRK("x"); ?>", envir=globalenv())
 lambda <- <? echo $lambda . "\n"; ?>
-nas <- 0
-for (i in 1:length(x)) {
-	if (is.na(x[i])) {
-		nas <- nas + 1
-	}
+
+if (any (is.na (x))) stop ("Missing values cannot be handled")
+
+i <- diag(length(x))
+trend <- solve(i + lambda * crossprod(diff(i, lag=1, d=2)), x) # The HP Filter itself. Thanks to Grant V. Farnsworth
+cycle <- x - trend
+if (is.ts(x)) {
+	trend <- ts(trend,start(x),frequency=frequency(x))
+	cycle <- ts(cycle,start(x),frequency=frequency(x))
 }
-if (nas == 0) {
-	i <- diag(length(x))
-	trend <- solve(i + lambda * crossprod(diff(i, lag=1, d=2)), x) # The HP Filter itself. Thanks to Grant V. Farnsworth
-	cycle <- x - trend
-	if (is.ts(x)) {
-		trend <- ts(trend,start(x),frequency=frequency(x))
-		cycle <- ts(cycle,start(x),frequency=frequency(x))
-	}
 <?
 	if (getRK_val("create_trend") == 1) {
 ?>
-	assign("<? getRK("trend_name"); ?>", trend, envir=globalenv())
+assign("<? getRK("trend_name"); ?>", trend, envir=globalenv())
 <?
 	} 
 	if (getRK_val("create_cycle") == 1) {
 ?>
-	assign("<? getRK("cycle_name"); ?>", cycle, envir=globalenv())
+assign("<? getRK("cycle_name"); ?>", cycle, envir=globalenv())
 <?
 	}
 
@@ -66,10 +62,10 @@ if (nas == 0) {
 		else
 			$uplab = getRK_val("uplab");
 ?>
-	rk.graph.on ()
-	try({
-		par(mfrow=c(<?if (getRK_val("plot_cycle") == 1) echo 2; else echo 1;?>,1),mar=c(2,4,2,2)+0.1)
-		plot.ts(cbind(x, trend), ylab=<? echo $uplab; echo $upcol; ?>,lwd=c(<? getRK("series_lwd"); ?>,<? getRK("trend_lwd"); ?>)<? echo $uplty; ?>, plot.type="single")
+rk.graph.on ()
+try({
+	par(mfrow=c(<?if (getRK_val("plot_cycle") == 1) echo 2; else echo 1;?>,1),mar=c(2,4,2,2)+0.1)
+	plot.ts(cbind(x, trend), ylab=<? echo $uplab; echo $upcol; ?>,lwd=c(<? getRK("series_lwd"); ?>,<? getRK("trend_lwd"); ?>)<? echo $uplty; ?>, plot.type="single")
 <?
 	if (getRK_val("plot_cycle") == 1) {
 		if (getRK_val("downlab.text") == "") 
@@ -80,16 +76,12 @@ if (nas == 0) {
 			else
 				$downlab = getRK_val("downlab");
 ?>
-		plot.ts(cycle, ylab=<? echo $downlab; if (getRK_val("cycle_col.color") != "") echo ", col=\"" . getRK_val("cycle_col.color") . "\""; ?>, lwd=<? getRK("cycle_lwd"); if (getRK_val("cycle_lty") != "") echo ", lty=\"" . getRK_val("cycle_lty") . "\""; ?>)
+	plot.ts(cycle, ylab=<? echo $downlab; if (getRK_val("cycle_col.color") != "") echo ", col=\"" . getRK_val("cycle_col.color") . "\""; ?>, lwd=<? getRK("cycle_lwd"); if (getRK_val("cycle_lty") != "") echo ", lty=\"" . getRK_val("cycle_lty") . "\""; ?>)
 <?
 	}
 ?>
-	})
-	rk.graph.off ()
-}
-else {
-	warning("The series provided contains missing values")
-}
+})
+rk.graph.off ()
 <?
 }
 ?>
