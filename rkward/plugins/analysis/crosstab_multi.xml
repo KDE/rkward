@@ -8,6 +8,7 @@
 			<varselector id="vars"/>
 			<column>
 				<varslot min_vars="1" multi="true" id="x" source="vars" required="true" label="variables:"/>
+				<checkbox id="exclude_nas" label="Exclude missing values" checked="true"/>
 			</column>
 		</row>
 	</dialog>

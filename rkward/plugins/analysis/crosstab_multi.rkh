@@ -12,6 +12,7 @@ For the case of two variables, or when the occurrences of values should be count
 
 	<settings>
 		<setting id="x">Select a data frame or more than one variables from a data frame or with the same length</setting>
+		<setting id="exclude_nas">Should NA (and NaN) values be excluded (default)? If this option is not checked, missing values are listed in the table just like regular values.</setting>
 	</settings>
 	<related>
 		<ul>
