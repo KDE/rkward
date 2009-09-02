@@ -2,7 +2,7 @@
                           rksaveagent  -  description
                              -------------------
     begin                : Sun Aug 29 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -20,6 +20,7 @@
 #include "../rbackend/rcommandreceiver.h"
 
 #include <kurl.h>
+#include <QObject>
 
 class RCommandChain;
 
@@ -28,7 +29,7 @@ This class basically provides a mechanism to let the user save a workspace, find
 
 @author Thomas Friedrichsmeier
 */
-class RKSaveAgent : public RCommandReceiver {
+class RKSaveAgent : public RCommandReceiver, public QObject {
 public:
 	enum DoneAction { DoNothing=0, Load=1 };
 

@@ -285,18 +285,10 @@ void RKWardMainWindow::initPlugins () {
 void RKWardMainWindow::startR () {
 	RK_TRACE (APP);
 	RK_ASSERT (!RKGlobals::rInterface ());
-	
-	QDir dir (RKSettingsModuleGeneral::filesPath());
-	if (!dir.exists ()) {
-		QDir current (dir.currentPath ());
-		current.mkdir (dir.path ());
-	}
-	dir = dir.filePath (".packagetemp");
-	if (!dir.exists ()) {
-		QDir current (dir.currentPath ());
-		current.mkdir (dir.path ());
-	}
-	
+
+	// make sure our general purpose files directory exists
+	RK_ASSERT (QDir ().mkpath (RKSettingsModuleGeneral::filesPath()));
+
 	RKGlobals::rinter = new RInterface ();
 	new RObjectList ();
 

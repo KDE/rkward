@@ -219,14 +219,14 @@ void RKHelpSearchWindow::rCommandDone (RCommand *command) {
 		for (int i = 0; i < COL_COUNT; ++i) results_view->resizeColumnToContents (i);
 		setEnabled(true);
 	} else if (command->getFlags () == GET_HELP_URL) {
-		KUrl url;
+		QString help_file;
 
 		if (command->getDataLength ()) {
 			RK_ASSERT (command->getDataType () == RData::StringVector);
-			url.setPath(command->getStringVector ()[0]);
+			help_file = command->getStringVector ()[0];
 		}
-		if (QFile::exists (url.path ())) {
-			RKWardMainWindow::getMain ()->openHTML (url);
+		if (QFile::exists (help_file)) {
+			RKWardMainWindow::getMain ()->openHTML (KUrl::fromPath (help_file));
 			return;
 		} else {
 			KMessageBox::sorry (this, i18n ("No help found on '%1'. Maybe the corresponding package is not installed/loaded, or maybe you mistyped the command. Try using Help->Search R Help for more options.", command->command ().section ("\"", 1, 1)), i18n ("No help found"));

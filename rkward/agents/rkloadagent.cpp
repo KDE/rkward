@@ -2,7 +2,7 @@
                           rkloadagent  -  description
                              -------------------
     begin                : Sun Sep 5 2004
-    copyright            : (C) 2004, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -39,14 +39,10 @@ RKLoadAgent::RKLoadAgent (const KUrl &url, bool merge) {
 
 	QString filename;
 	if (!url.isLocalFile ()) {
-#if !KDE_IS_VERSION (3, 2, 0)
-		KIO::NetAccess::download (url, tmpfile);
-#else
 		KIO::NetAccess::download (url, tmpfile, RKWardMainWindow::getMain ());
-#endif
 		filename = tmpfile;
 	} else {
-		filename = url.path ();
+		filename = url.toLocalFile ();
 	}
 	
 

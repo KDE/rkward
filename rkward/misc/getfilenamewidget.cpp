@@ -75,7 +75,7 @@ void GetFileNameWidget::locationEditChanged (const QString &) {
 }
 
 QString GetFileNameWidget::getLocation () {
-	return (edit->url ().path ());
+	return (edit->url ().toLocalFile ());
 }
 
 void GetFileNameWidget::setBackgroundColor (const QColor & color) {

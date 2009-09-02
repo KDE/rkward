@@ -420,7 +420,7 @@ void RKHTMLWindow::flushOutput () {
 
 	int res = KMessageBox::questionYesNo (this, i18n ("Do you really want to flush the output? It will not be possible to restore it."), i18n ("Flush output?"));
 	if (res==KMessageBox::Yes) {
-		QFile out_file (current_url.path ());
+		QFile out_file (current_url.toLocalFile ());
 		QDir out_dir = QFileInfo (out_file).absoluteDir ();
 		out_file.remove ();
 
