@@ -1,0 +1,38 @@
+<h1>Linear Regression</h1>
+DATE<br>
+<p class='character'>
+</p><br><li>Call:<font class='call'> lm(formula = warpbreaks[["breaks"]] ~ warpbreaks[["tension"]] + </font>
+Call:<font class='call'>     warpbreaks[["wool"]])</font>
+<br><li>  Residuals<br>
+
+
+<p align= center >
+<table cellspacing=0 border=1><caption align=bottom class=captiondataframe></caption><tr><td>
+	<table border=0 class=dataframe>
+	<tbody> <tr class= firstline > <th></th><th>Min</th><th>1Q</th><th>Median</th><th>3Q</th><th>Max</th> </tr>
+ <tr><td class=firstcolumn></td><td class=cellinside>-19.5</td><td class=cellinside> -8.1</td><td class=cellinside> -2.1</td><td class=cellinside>  6.5</td><td class=cellinside> 30.7</td></tr>
+ 
+	</tbody>
+</table>
+ </td></table>
+ <br>
+<br><li>Coefficients
+
+
+<p align= center >
+<table cellspacing=0 border=1><caption align=bottom class=captiondataframe></caption><tr><td>
+	<table border=0 class=dataframe>
+	<tbody> <tr class= firstline > <th></th><th>Estimate</th><th>Std. Error</th><th>t value</th><th>Pr(>|t|)</th><th></th> </tr>
+ <tr><td class=firstcolumn>(Intercept)</td><td class=cellinside> 39.28 </td><td class=cellinside>  3.16 </td><td class=cellinside>12.42  </td><td class=cellinside>< 2e-16</td><td class=cellinside>***    </td></tr>
+ <tr><td class=firstcolumn>warpbreaks[["tension"]]M</td><td class=cellinside>-10.00 </td><td class=cellinside>  3.87 </td><td class=cellinside>-2.58  </td><td class=cellinside>0.01279</td><td class=cellinside>  *    </td></tr>
+ <tr><td class=firstcolumn>warpbreaks[["tension"]]H</td><td class=cellinside>-14.72 </td><td class=cellinside>  3.87 </td><td class=cellinside>-3.80  </td><td class=cellinside>0.00039</td><td class=cellinside>***    </td></tr>
+ <tr><td class=firstcolumn>warpbreaks[["wool"]]B</td><td class=cellinside> -5.78 </td><td class=cellinside>  3.16 </td><td class=cellinside>-1.83  </td><td class=cellinside>0.07361</td><td class=cellinside>  .    </td></tr>
+ 
+	</tbody>
+</table>
+ </td></table>
+ <br>
+<p class='character'>
+<p>--- Signif. codes: 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</p>
+</p><br><li>Residuals standard error: 11.617 on 50 degrees of freedom
+<br><li>Multiple R-Squared:<b>0.269</b><br><li>Adjusted R-Squared:<b>0.225</b><br><li>F-statistics: <b>6.138</b> on 3 and 50 DF. P-value:<b>0.001</b>.

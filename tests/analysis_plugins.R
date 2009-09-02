@@ -23,6 +23,9 @@ suite <- new ("RKTestSuite", id="analysis_plugins",
 			assign ("test10x", 100+c (1:10, NA), envir=globalenv())
 			assign ("test10y", 200+c (1:10, NA), envir=globalenv())
 			assign ("test10z", c (1:10, NA)*4, envir=globalenv())
+			x <- data.frame ("A" = rep (c (1, 2), 8), "B" = rep (c (1, 1, 2, 2), 4), "C" = rep (c (1, 1, 1, 1, 2, 2, 2, 2), 2), "D"= c (rep (1, 8), rep (2, 8)))
+			x[2,2] <- NA
+			assign ("test_table", x, envir=globalenv())
 		}
 	## the tests
 	), tests = list (
@@ -117,10 +120,37 @@ suite <- new ("RKTestSuite", id="analysis_plugins",
 			rk.call.plugin ("rkward::grubbs_test", descriptives.state="0", length.state="1", opposite.state="FALSE", two_sided.state="TRUE", type.string="10", x.available="warpbreaks[[\"breaks\"]]\ntest10z", submit.mode="submit")
 
 			rk.call.plugin ("rkward::grubbs_test", descriptives.state="1", length.state="1", opposite.state="TRUE", two_sided.state="FALSE", type.string="11", x.available="warpbreaks[[\"breaks\"]]\ntest10z", submit.mode="submit")
-		}, libraries = c ("outliers"))
+		}, libraries = c ("outliers")),
+		new ("RKTest", id="pp_test", call=function () {
+			rk.call.plugin ("rkward::PP_test", length.state="1", lshort.string="FALSE", narm.state="0", x.available="rock[[\"shape\"]]\nrock[[\"perm\"]]\nrock[[\"peri\"]]\nrock[[\"area\"]]", submit.mode="submit")
+		}),
+		new ("RKTest", id="crosstab_n_to_1", call=function () {
+			rk.call.plugin ("rkward::crosstab", barplot.state="TRUE", barplot_embed.colors.string="default", barplot_embed.labels.state="0", barplot_embed.legend.state="0", barplot_embed.plotoptions.add_grid.state="0", barplot_embed.plotoptions.asp.real="0.00000000", barplot_embed.plotoptions.main.text="", barplot_embed.plotoptions.pointcolor.color.string="", barplot_embed.plotoptions.pointtype.string="", barplot_embed.plotoptions.sub.text="", barplot_embed.plotoptions.xaxt.state="", barplot_embed.plotoptions.xlab.text="", barplot_embed.plotoptions.xlog.state="", barplot_embed.plotoptions.xmaxvalue.text="", barplot_embed.plotoptions.xminvalue.text="", barplot_embed.plotoptions.yaxt.state="", barplot_embed.plotoptions.ylab.text="", barplot_embed.plotoptions.ylog.state="", barplot_embed.plotoptions.ymaxvalue.text="", barplot_embed.plotoptions.yminvalue.text="", barplot_embed.type.string="juxtaposed", chisq.state="TRUE", simpv.string="FALSE", x.available="warpbreaks[[\"tension\"]]", y.available="warpbreaks[[\"wool\"]]\nwarpbreaks[[\"tension\"]]", submit.mode="submit")
+		}),
+		new ("RKTest", id="crosstab_multi", call=function () {
+			rk.call.plugin ("rkward::crosstab_multi", exclude_nas.state="1", x.available="test_table[[\"A\"]]\ntest_table[[\"B\"]]\ntest_table[[\"C\"]]\ntest_table[[\"D\"]]", submit.mode="submit")
+		}),
+		new ("RKTest", id="box_test", call=function () {
+			rk.call.plugin ("rkward::Box_test", lag.real="1.000000", length.state="1", narm.state="0", type.string="Box-Pierce", x.available="test50x\ntest10y", submit.mode="submit")
+		}),
+		new ("RKTest", id="kpss_test", call=function () {
+			rk.call.plugin ("rkward::kpss_test", length.state="1", lshort.string="FALSE", narm.state="0", null.string="Trend", x.available="test10y\ntest10z\ntest50x\ntest50y", submit.mode="submit")
+		}, libraries=c("tseries")),
+		new ("RKTest", id="hp_filter", call=function () {
+			data (co2)
+			rk.sync.global()
+
+			rk.call.plugin ("rkward::hp_filter", create_cycle.state="1", create_trend.state="1", custom.state="0", cycle_col.color.string="green4", cycle_lty.string="", cycle_lwd.real="1.000000", cycle_name.selection="hpcycle", downlab.text="", lambda.string="1600", plot_cycle.state="1", series_col.color.string="blue", series_lty.string="", series_lwd.real="1.000000", trend_col.color.string="red", trend_lty.string="", trend_lwd.real="1.000000", trend_name.selection="hptrend", uplab.text="", x.available="co2", submit.mode="submit")
+
+			rk.print (summary (hptrend))
+			rk.print (summary (hpcycle))
+		}),
+		new ("RKTest", id="linear_regression", call=function () {
+			rk.call.plugin ("rkward::linear_regression", intercept.state="1", x.available="warpbreaks[[\"tension\"]]\nwarpbreaks[[\"wool\"]]", y.available="warpbreaks[[\"breaks\"]]", submit.mode="submit")
+		})
 	), postCalls = list (	# like initCalls: run after all tests to clean up.
 		function () {
-			suppressWarnings (rm (list=c ("women", "warpbreaks", "rock", "test50x", "test50y", "test50z", "test10x", "test10y", "test10z"), envir=globalenv())) 
+			suppressWarnings (rm (list=c ("women", "warpbreaks", "rock", "co2", "test50x", "test50y", "test50z", "test10x", "test10y", "test10z", "test_table"), envir=globalenv()))
 		}
 	)
 )

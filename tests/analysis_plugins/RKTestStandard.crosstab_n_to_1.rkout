@@ -1,0 +1,68 @@
+<h1>Crosstabs (n to 1)</h1>
+DATE<br>
+<h2>Crosstabs (n to 1)</h2>
+<h3>Parameters</h3>
+<ul><li>Dependent: tension</li>
+<li>Independent: wool</li>
+</ul>
+<br>
+<table border="1">
+<tr><td></td><td>wool = A</td><td>wool = B</td></tr>
+<tr><td>tension = L</td><td>9</td><td>9</td></tr>
+<tr><td>tension = M</td><td>9</td><td>9</td></tr>
+<tr><td>tension = H</td><td>9</td><td>9</td></tr>
+</table>
+<h2>Pearson's Chi Square Test for Crosstabs</h2>
+<h3>Parameters</h3>
+<ul><li>Dependent: tension</li>
+<li>Independent: wool</li>
+<li>Method: Pearson's Chi-squared test</li>
+</ul>
+<br>
+<table border="1">
+<tr><td>Statistic</td><td>df</td><td>p</td></tr>
+<tr><td>0</td><td>2</td><td>1</td></tr>
+</table>
+<h2>Barplot for Crosstabs</h2>
+<h3>Parameters</h3>
+<ul><li>Dependent: tension</li>
+<li>Independent: wool</li>
+<li>colors: default</li>
+<li>Type: juxtaposed</li>
+<li>Legend: FALSE</li>
+</ul>
+<br>
+<img src="graph.png" width="480" height="480"><br>
+<h2>Crosstabs (n to 1)</h2>
+<h3>Parameters</h3>
+<ul><li>Dependent: tension</li>
+<li>Independent: tension</li>
+</ul>
+<br>
+<table border="1">
+<tr><td></td><td>tension = L</td><td>tension = M</td><td>tension = H</td></tr>
+<tr><td>tension = L</td><td>18</td><td>0</td><td>0</td></tr>
+<tr><td>tension = M</td><td>0</td><td>18</td><td>0</td></tr>
+<tr><td>tension = H</td><td>0</td><td>0</td><td>18</td></tr>
+</table>
+<h2>Pearson's Chi Square Test for Crosstabs</h2>
+<h3>Parameters</h3>
+<ul><li>Dependent: tension</li>
+<li>Independent: tension</li>
+<li>Method: Pearson's Chi-squared test</li>
+</ul>
+<br>
+<table border="1">
+<tr><td>Statistic</td><td>df</td><td>p</td></tr>
+<tr><td>108</td><td>4</td><td>1.9429e-22</td></tr>
+</table>
+<h2>Barplot for Crosstabs</h2>
+<h3>Parameters</h3>
+<ul><li>Dependent: tension</li>
+<li>Independent: tension</li>
+<li>colors: default</li>
+<li>Type: juxtaposed</li>
+<li>Legend: FALSE</li>
+</ul>
+<br>
+<img src="graph.png" width="480" height="480"><br>

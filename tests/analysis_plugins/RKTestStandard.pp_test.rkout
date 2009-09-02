@@ -1,0 +1,12 @@
+<h1>Phillips-Perron Test for Unit Roots</h1>
+<h2>Parameters</h2>
+<ul><li>Truncation lag parameter short ('TRUE') or long ('FALSE'): FALSE</li>
+</ul>
+DATE<br>
+<table border="1">
+<tr><td>Variable Name</td><td>Length</td><td>NAs</td><td>Dickey-Fuller</td><td>Truncation lag parameter</td><td>p-value</td></tr>
+<tr><td>shape</td><td>48</td><td>0</td><td>-8.2621</td><td>9</td><td>0.01</td></tr>
+<tr><td>perm</td><td>48</td><td>0</td><td>-2.4302</td><td>9</td><td>0.40232</td></tr>
+<tr><td>peri</td><td>48</td><td>0</td><td>-3.4823</td><td>9</td><td>0.054578</td></tr>
+<tr><td>area</td><td>48</td><td>0</td><td>-4.0273</td><td>9</td><td>0.01627</td></tr>
+</table>

@@ -1,0 +1,13 @@
+<h1>KPSS Test for Level Stationarity</h1>
+<h2>Parameters</h2>
+<ul><li>null hypothesis: Trend</li>
+<li>version of truncation lag parameter: long</li>
+</ul>
+DATE<br>
+<table border="1">
+<tr><td>Variable Name</td><td>Length</td><td>NAs</td><td>KPSS Trend</td><td>Truncation lag parameter</td><td>p-value</td></tr>
+<tr><td>test10y</td><td>11</td><td>1</td><td>0.12980</td><td>2</td><td>0.079995</td></tr>
+<tr><td>test10z</td><td>11</td><td>1</td><td>0.11135</td><td>2</td><td>0.1</td></tr>
+<tr><td>test50x</td><td>50</td><td>0</td><td>0.10241</td><td>5</td><td>0.1</td></tr>
+<tr><td>test50y</td><td>50</td><td>0</td><td>0.13780</td><td>5</td><td>0.06518</td></tr>
+</table>
