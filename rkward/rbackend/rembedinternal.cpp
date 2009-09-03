@@ -815,6 +815,8 @@ bool REmbedInternal::startR (int argc, char** argv, bool stack_check) {
 	};
 	R_registerRoutines (R_getEmbeddingDllInfo(), NULL, callMethods, NULL, NULL);
 
+	connectCallbacks();
+
 	return true;
 }
 
@@ -958,7 +960,8 @@ void runUserCommandInternal (void *) {
 void REmbedInternal::runCommandInternal (const QString &command_qstring, RKWardRError *error, bool print_result) {
 	RK_TRACE (RBACKEND);
 
-	connectCallbacks ();		// sorry, but we will not play nicely with additional frontends trying to override our callbacks. (Unless they start their own R event loop, then they should be fine)
+	// Apparently the line below is no good idea after all. At least on Windows, this causes issues (crashes) with RGtk2, and several methods-using libraries
+	//connectCallbacks ();		// sorry, but we will not play nicely with additional frontends trying to override our callbacks. (Unless they start their own R event loop, then they should be fine)
 
 	*error = NoError;
 	if (!print_result) {
