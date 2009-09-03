@@ -1,3 +1,4 @@
+- Fix some potential path issues on Windows
 - "Analysis" menu was restructured, slightly
 - Debug output (previously sent to stderr) is now written to a temporary file
 - On plugin help pages, display a link to invoke the plugin

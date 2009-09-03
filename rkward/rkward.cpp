@@ -287,7 +287,8 @@ void RKWardMainWindow::startR () {
 	RK_ASSERT (!RKGlobals::rInterface ());
 
 	// make sure our general purpose files directory exists
-	RK_ASSERT (QDir ().mkpath (RKSettingsModuleGeneral::filesPath()));
+	bool ok = QDir ().mkpath (RKSettingsModuleGeneral::filesPath());
+	RK_ASSERT (ok);
 
 	RKGlobals::rinter = new RInterface ();
 	new RObjectList ();
