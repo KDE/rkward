@@ -290,7 +290,11 @@ QString QWinHost::getClientTitle() const {
 	if (!hwnd) return QString();
 
 	WCHAR buffer[256];
+    QT_WA({
 	::GetWindowText(hwnd, buffer, 255);
+    }, {
+	::GetWindowTextA(hwnd, (char*) buffer, 255);
+    })
 	return (QString((char*) buffer));
 }
 
