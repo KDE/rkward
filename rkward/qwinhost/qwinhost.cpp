@@ -289,9 +289,9 @@ LRESULT CALLBACK WinHostProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 QString QWinHost::getClientTitle() const {
 	if (!hwnd) return QString();
 
-	char buffer[256];
+	WCHAR buffer[256];
 	::GetWindowText(hwnd, buffer, 255);
-	return (QString(buffer));
+	return (QString((char*) buffer));
 }
 
 /*!
