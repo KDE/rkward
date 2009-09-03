@@ -590,6 +590,7 @@ void RThread::checkObjectUpdatesNeeded (bool check_list) {
 				toplevel_env_names.append (strings[i]);
 			}
 		}
+		delete [] strings;
 	
 	// TODO: avoid parsing this over and over again
 		RK_DO (qDebug ("checkObjectUpdatesNeeded: getting globalenv symbols"), RBACKEND, DL_TRACE);
@@ -611,6 +612,7 @@ void RThread::checkObjectUpdatesNeeded (bool check_list) {
 				global_env_toplevel_names.append (strings[i]);
 			}
 		}
+		delete [] strings;
 	
 		if (search_update_needed) {	// this includes an update of the globalenv, even if not needed
 			MUTEX_UNLOCK;
