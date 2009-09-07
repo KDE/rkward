@@ -417,13 +417,15 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 			}
 		} else if (do_cont) {
 			RK_DO (qDebug ("recurse into list %s", name.toLatin1().data ()), RBACKEND, DL_DEBUG);
-			if (Rf_isList (value) && (!Rf_isObject (value))) {		// old style list
+			// print.c in R has special handling for objects of this sort, so we better play it safe for those, too. It is not really certain that we need this, though (originally introduced in SVN rev 1826 without decent comment).
+			bool may_be_special = Rf_isObject (value) && (Rf_length (value) == 0);
+			if (Rf_isList (value) && (!may_be_special)) {		// old style list
 				for (unsigned int i = 0; i < childcount; ++i) {
 					SEXP child = CAR (value);
 					getStructureSafe (child, childnames[i], false, children[i]);
 					CDR (value);
 				}
-			} else if (Rf_isNewList (value) && (!Rf_isObject (value))) {				// new style list
+			} else if (Rf_isNewList (value) && (!may_be_special)) {				// new style list
 				for (unsigned int i = 0; i < childcount; ++i) {
 					SEXP child = VECTOR_ELT(value, i);
 					getStructureSafe (child, childnames[i], false, children[i]);
