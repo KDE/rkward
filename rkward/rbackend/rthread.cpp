@@ -390,6 +390,8 @@ void RThread::handleError (QString *call, int call_length) {
 
 void RThread::checkNotifyOutputTouched () {
 	RK_TRACE (RBACKEND);
+// TODO: instead of this, the output window(s) should simply watch the file for changes using
+// KDirWatch.
 
 	QFileInfo info (active_output_file);
 	if (info.exists ()) {

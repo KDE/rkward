@@ -156,13 +156,10 @@ void RKStandardComponentGUI::ok () {
 	command.append (code_property->printout ());
 	command.append ("})\n");
 
-	RKGlobals::rInterface ()->issueCommand (new RCommand (command, RCommand::Plugin | RCommand::DirectToOutput | RCommand::ObjectListUpdate), component->commandChain ());
-
 	// re-run link
-	command.clear ();
 	RKComponentHandle *handle = component->getHandle ();
 	if (handle->isAccessible ()) {
-		command.append ("\n.rk.rerun.plugin.link(plugin=\"" + RKComponentMap::getComponentId (handle) + "\", settings=\"" + RKCommonFunctions::escape (component->serializeState ()) + "\", label=\"" + i18n ("Run again") + "\")\n");
+		command.append (".rk.rerun.plugin.link(plugin=\"" + RKComponentMap::getComponentId (handle) + "\", settings=\"" + RKCommonFunctions::escape (component->serializeState ()) + "\", label=\"" + i18n ("Run again") + "\")\n");
 		// NOTE: the serialized state is quote-escape *again* for passing to R.
 	}
 	// separator line

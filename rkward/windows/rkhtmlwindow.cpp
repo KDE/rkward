@@ -24,6 +24,7 @@
 #include <kmessagebox.h>
 #include <kparts/partmanager.h>
 #include <kactioncollection.h>
+#include <kdirwatch.h>
 
 #include <qfileinfo.h>
 #include <qwidget.h>
