@@ -1,3 +1,4 @@
+- Plugin dialogs close automatically after submitting (by default)
 - Fetching object structure is much faster for very large data.frames
 - Fix crash when loading certain packages on Windows
 - Fix some potential path issues on Windows

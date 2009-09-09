@@ -29,6 +29,7 @@
 #include <qpushbutton.h>
 #include <qlabel.h>
 #include <QCloseEvent>
+#include <QCheckBox>
 
 #include "rkcomponentmap.h"
 #include "../misc/rkcommonfunctions.h"
@@ -97,10 +98,14 @@ void RKStandardComponentGUI::createDialog (bool switchable) {
 	connect (ok_button, SIGNAL (clicked ()), this, SLOT (ok ()));
 	vbox->addWidget (ok_button);
 	if (enslaved) ok_button->hide ();
-	
+
 	cancel_button = new QPushButton (i18n ("Close"), upper_widget);
 	connect (cancel_button, SIGNAL (clicked ()), this, SLOT (cancel ()));
 	vbox->addWidget (cancel_button);
+	auto_close_box = new QCheckBox (i18n ("Auto close"), upper_widget);
+	auto_close_box->setChecked (true);
+	vbox->addWidget (auto_close_box);
+	if (enslaved) auto_close_box->hide ();
 	vbox->addStretch (1);
 	
 	help_button = new QPushButton (i18n ("Help"), upper_widget);
@@ -165,6 +170,8 @@ void RKStandardComponentGUI::ok () {
 	// separator line
 	command.append (".rk.make.hr()\n");
 	RKGlobals::rInterface ()->issueCommand (new RCommand (command, RCommand::Plugin | RCommand::DirectToOutput | RCommand::ObjectListUpdate), component->commandChain ());
+
+	if (auto_close_box->isChecked ()) cancel ();
 }
 
 void RKStandardComponentGUI::cancel () {
@@ -302,6 +309,11 @@ void RKStandardComponentWizard::createWizard (bool switchable) {
 	connect (prev_button, SIGNAL (clicked ()), this, SLOT (prev ()));
 	connect (cancel_button, SIGNAL (clicked ()), this, SLOT (cancel ()));
 	connect (help_button, SIGNAL (clicked ()), this, SLOT (help ()));
+
+	// dummy:
+	auto_close_box = new QCheckBox(this);
+	auto_close_box->setChecked (true);
+	auto_close_box->hide ();
 }
 
 void RKStandardComponentWizard::addLastPage () {

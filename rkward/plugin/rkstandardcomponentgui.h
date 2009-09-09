@@ -65,6 +65,7 @@ class QPushButton;
 class QTimer;
 class QSplitter;
 class QCloseEvent;
+class QCheckBox;
 
 /** contains the standard GUI elements for a top-level RKStandardComponent. The base class creates a dialog interface. For a wizard interface use RKStandardComponentWizard. You *must* call createDialog () after construction, since I can't virualize this for reasons I don't understand!
 
@@ -107,6 +108,7 @@ protected:
 	QPushButton *cancel_button;
 	QPushButton *help_button;
 	QPushButton *switch_button;
+	QCheckBox *auto_close_box;
 	RKCommandEditorWindow *code_display;
 
 	bool enslaved;
