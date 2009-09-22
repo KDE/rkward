@@ -4,11 +4,18 @@
 	<components>
 		<component type="standard" id="simple_anova" file="simple_anova/description.xml" label="Simple Anova" />
 		<component type="standard" id="sieve_plot" file="plots/sieve_plot.xml" label="Extended Sieve Plot" />
+		<component type="standard" id="import_stata" file="00saveload/import/import_stata.xml" label="Import Stata">
+			<attribute id="format" value="*.dta" label="Stata data files"/>
+		</component>
+
 	</components>
 
 	<hierarchy>
 		<menu id="file" label="File">
 			<menu id="import" label="Import" index="4">
+				<menu id="import_format" label="Import format">
+					<entry component="import_stata"/>
+				</menu>
 			</menu>
 			<menu id="export" label="Export" index="5">
 			</menu>
