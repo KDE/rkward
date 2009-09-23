@@ -270,16 +270,16 @@ rktest.setSuiteStandards <- function (suite, basedir=getwd ()) {
 ## Initialize test environment
 rktest.initializeEnvironment <- function () {
 	# By default .rk.rerun.plugin.link() and .rk.make.hr() are silenced during the test runs
-	.rk.rerun.plugin.link <- .rk.make.hr <- function (...) { list (...) }
+	.rk.rerun.plugin.link <<- .rk.make.hr <<- function (...) { list (...) }
 
 	# This should make the output of rk.graph.on() fixed
-	rk.get.tempfile.name <- function (prefix, extension) paste (prefix, extension, sep="")
+	rk.get.tempfile.name <<- function (prefix, extension) paste (prefix, extension, sep="")
 
 	# HACK: Override date, so we don't get a difference for each call of rk.header ()
 	# TODO: implement a clean solution inside rk.header()
-	date <- function () {
+	assign ("date", function () {
 		return ("DATE")
-	}
+	}, envir=globalenv())
 
 	# numerical precision is often a problem. To work around this in many places, reduce default printed precision to 5 digits
 	options (digits=5)
