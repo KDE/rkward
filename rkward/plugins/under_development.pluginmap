@@ -29,5 +29,11 @@
 		<menu id="distributions" label="Distributions" index="7">
 		</menu>
 	</hierarchy>
+
+	<context id="import">
+		<menu id="import" label="Import">
+			<entry component="import_stata"/>
+		</menu>
+	</context>
 </document>
 
