@@ -1,0 +1,14 @@
+<h1>Beta distribution function</h1>
+<h2>Parameters</h2>
+<ul><li>Number of Observations: 100</li>
+<li>Lower quantile: 0.00000000</li>
+<li>Upper quantile: 1.00000000</li>
+<li>Shape1: 2.00000000</li>
+<li>Shape2: 2.00000000</li>
+<li>Non-centrality parameter: 0.00000000</li>
+<li>Scale: logarithmic</li>
+<li>Tail: Lower</li>
+<li>Function: pbeta</li>
+</ul>
+DATE<br>
+<img src="graph.png" width="480" height="480"><br>

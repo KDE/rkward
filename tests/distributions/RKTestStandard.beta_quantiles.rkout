@@ -1,0 +1,21 @@
+<h1>Beta quantiles</h1>
+<h2>Parameters</h2>
+<ul><li>Vector of probabilities: c (0.95)</li>
+<li>Shape 1: 1.00000000</li>
+<li>Shape 2: 1.00000000</li>
+<li>non-centrality parameter (ncp): 0.00000000</li>
+<li>Tail: lower.tail=TRUE</li>
+<li>Probabilities p are given as: log.p = FALSE</li>
+</ul>
+DATE<br>
+<h3>Beta quantiles: 0.95</h3><h1>Beta quantiles</h1>
+<h2>Parameters</h2>
+<ul><li>Vector of probabilities: c (-1)</li>
+<li>Shape 1: 1.04000000</li>
+<li>Shape 2: 1.03000000</li>
+<li>non-centrality parameter (ncp): 0.08000000</li>
+<li>Tail: lower.tail=FALSE</li>
+<li>Probabilities p are given as: log.p = TRUE</li>
+</ul>
+DATE<br>
+<h3>Beta quantiles: 0.6414</h3>

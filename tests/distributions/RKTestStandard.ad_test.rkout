@@ -1,0 +1,7 @@
+<h1>Anderson-Darling Normality Test</h1>
+DATE<br>
+<table border="1">
+<tr><td>Variable Name</td><td>Length</td><td>NAs</td><td>Statistic</td><td>p-value</td></tr>
+<tr><td>shape</td><td>48</td><td>0</td><td>A = 1.41372513181145</td><td>0.0010355</td></tr>
+<tr><td>perm</td><td>48</td><td>0</td><td>A = 3.99184371555789</td><td>4.2977e-10</td></tr>
+</table>

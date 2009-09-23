@@ -1,0 +1,20 @@
+<h1>Pearson chi-square Normality Test</h1>
+<h2>Parameters</h2>
+<ul><li>chi-square distribution with n.classes-3 df (TRUE) or chi-square distribution with n.classes-1 df (FALSE): adjust = TRUE</li>
+</ul>
+DATE<br>
+<table border="1">
+<tr><td>Variable Name</td><td>Length</td><td>NAs</td><td>Statistic</td><td>p-value</td><td>number of classes</td><td>degrees of freedom</td></tr>
+<tr><td>shape</td><td>48</td><td>0</td><td>P = 15.3333333333333</td><td>0.031956</td><td>10</td><td>7</td></tr>
+<tr><td>perm</td><td>48</td><td>0</td><td>P = 72</td><td>5.82e-13</td><td>10</td><td>7</td></tr>
+</table>
+<h1>Pearson chi-square Normality Test</h1>
+<h2>Parameters</h2>
+<ul><li>chi-square distribution with n.classes-3 df (TRUE) or chi-square distribution with n.classes-1 df (FALSE): adjust = FALSE</li>
+</ul>
+DATE<br>
+<table border="1">
+<tr><td>Variable Name</td><td>Length</td><td>NAs</td><td>Statistic</td><td>p-value</td><td>number of classes</td><td>degrees of freedom</td></tr>
+<tr><td>shape</td><td>48</td><td>0</td><td>P = 15.3333333333333</td><td>0.082177</td><td>10</td><td>9</td></tr>
+<tr><td>perm</td><td>48</td><td>0</td><td>P = 72</td><td>6.1643e-12</td><td>10</td><td>9</td></tr>
+</table>

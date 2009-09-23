@@ -1,0 +1,7 @@
+<h1>Cramer-von Mises Normality Test</h1>
+DATE<br>
+<table border="1">
+<tr><td>Variable Name</td><td>Length</td><td>NAs</td><td>Statistic</td><td>p-value</td></tr>
+<tr><td>shape</td><td>48</td><td>0</td><td>W = 0.232643041678355</td><td>0.0019712</td></tr>
+<tr><td>perm</td><td>48</td><td>0</td><td>W = 0.72561839750325</td><td>3.7586e-08</td></tr>
+</table>
