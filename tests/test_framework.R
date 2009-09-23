@@ -201,6 +201,7 @@ rktest.cleanRKTestSuite <- function (suite, basedir=getwd ()) {
 }
 
 rktest.runRKTestSuite <- function (suite, basedir=getwd ()) {
+	rktest.initializeEnvironment ()
 	result <- new ("RKTestResult")		# FALSE by default
 
 	if (!inherits (suite, "RKTestSuite")) return (result)
@@ -267,21 +268,24 @@ rktest.setSuiteStandards <- function (suite, basedir=getwd ()) {
 # .rk.rerun.plugin.link <- .rk.rerun.plugin.link.replacement
 
 ## Initialize test environment
-# By default .rk.rerun.plugin.link() and .rk.make.hr() are silenced during the test runs
-.rk.rerun.plugin.link <- .rk.make.hr <- function (...) { list (...) }
+rktest.initializeEnvironment <- function () {
+	# By default .rk.rerun.plugin.link() and .rk.make.hr() are silenced during the test runs
+	.rk.rerun.plugin.link <- .rk.make.hr <- function (...) { list (...) }
 
-# This should make the output of rk.graph.on() fixed
-rk.get.tempfile.name <- function (prefix, extension) paste (prefix, extension, sep="")
+	# This should make the output of rk.graph.on() fixed
+	rk.get.tempfile.name <- function (prefix, extension) paste (prefix, extension, sep="")
 
-# HACK: Override date, so we don't get a difference for each call of rk.header ()
-# TODO: implement a clean solution inside rk.header()
-date <- function () {
-	return ("DATE")
+	# HACK: Override date, so we don't get a difference for each call of rk.header ()
+	# TODO: implement a clean solution inside rk.header()
+	date <- function () {
+		return ("DATE")
+	}
+
+	# numerical precision is often a problem. To work around this in many places, reduce default printed precision to 5 digits
+	options (digits=5)
+
+	# Make sure i18n does not get in the way
+	invisible (Sys.setenv (LANGUAGE="C"))
+	if (.Platform$OS.type == "unix") invisible (Sys.setlocale ("LC_MESSAGES", "C"))
 }
-
-# numerical precision is often a problem. To work around this in many places, reduce default printed precision to 5 digits
-options (digits=5)
-
-# Make sure i18n does not get in the way
-invisible (Sys.setenv (LANGUAGE="C"))
-if (.Platform$OS.type == "unix") invisible (Sys.setlocale ("LC_MESSAGES", "C"))
+rktest.initializeEnvironment ()
