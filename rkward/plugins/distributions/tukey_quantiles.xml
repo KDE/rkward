@@ -9,7 +9,7 @@
 		</snippet>
 		<include file="dist_snippets.xml"/>
 	</snippets>
-	<tab label="Studentized Range Distribution quantiles" >
+	<dialog label="Studentized Range Distribution quantiles" >
 		<insert snippet="quantiles_layout"/>
 	</dialog>
 </document>
