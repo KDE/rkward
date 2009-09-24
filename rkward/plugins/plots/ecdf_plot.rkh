@@ -10,9 +10,10 @@
 		<caption id="tab_variables"/>
 		<setting id="x">The variable to plot the ECDF</setting>
 		<caption id="tab_stepfun_opts"/>
-		<setting id="stepfun_options">Options to change the look of the ECDF plot itself.Refer to <link href="rkward://component/plot_stepfun_options"/> for details.</setting>
+		<setting id="stepfun_options">Options to change the look of the ECDF plot itself. Refer to <link href="rkward://component/plot_stepfun_options"/> for details.</setting>
 		<caption id="tab_further_opts"/>
 		<setting id="th_pnorm">Should a theoretical normal distribution curve be added to the plot?</setting>
+		<setting id="adjust_th_pnorm">Should the normal distribution curve be adjusted to match the mean and standard deviation of the plotted data? If this is not set a normal curve with mean 0 and sd 1 is drawn.</setting>
 		<setting id="col_thnorm">Color of the theoretical normal distribution curve.</setting>
 		<setting id="rug">Should a rug be added to the plot?</setting>
 		<setting id="side">Should the rug be added above or below the plot?</setting>
