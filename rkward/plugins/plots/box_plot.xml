@@ -7,6 +7,7 @@
 		<set id="plotoptions.allow_ylim" to="true"/>
 		<set id="plotoptions.allow_xlim" to="false"/>
 		<set id="plotoptions.allow_log" to="false"/>	
+		<set id="plotoptions.allow_grid" to="true"/>
 		
 		<convert id="custom_names" mode="equals" sources="names_mode.string" standard="custom"/>
 		<convert id="rexp_names" mode="equals" sources="names_mode.string" standard="rexp"/>
@@ -15,8 +16,11 @@
 		<connect client="names_exp.visible" governor="rexp_names"/>
 		<connect client="names_exp.required" governor="rexp_names"/>
 
-		<set id="plotoptions.allow_grid" to="true"/>
-		
+		<connect client="pch_mean.enabled" governor="mean.state"/>
+		<connect client="pch_sd_high.enabled" governor="sd.state"/>
+		<connect client="pch_sd_low.enabled" governor="sd.state"/>
+		<convert id="sd_or_mean" mode="or" sources="mean.state;sd.state"/>
+		<connect client="size_and_color_frame.enabled" governor="sd_or_mean"/>
 	</logic>
 	<dialog label="Boxplot" >
 	<tabbook>
@@ -47,23 +51,21 @@
 					<checkbox id="notch" label="Draw Notches" checked="false" value="TRUE" value_unchecked="FALSE" />
 					<checkbox id="outline" label="Outline" checked="true" value="TRUE" value_unchecked="FALSE" />
 					<stretch/>
+					<frame id="size_and_color_frame" label="Size and color of marks">
+						<spinbox type="real" id="cex_sd_mean" label="size" initial="1"/>
+						<embed id="sd_mean_color" component="rkward::color_chooser" label="Color"/>
+					</frame>
 				</column>
 				<column>
-					<row>
+					<frame label="Mean">
 						<checkbox id="mean" checked="false" value="TRUE" label="show mean" />
 						<spinbox type="integer" id="pch_mean" label="mean symbol" initial="15"/>
-					</row>
-					<row>
-						<column>
-							<checkbox id="sd" checked="false" value="TRUE" label="show standard deviation" />
-						</column>
-						<column>
-							<spinbox type="integer" id="pch_sd_high" label="standard deviation symbol (upper)" initial="3"/>
-							<spinbox type="integer" id="pch_sd_low" label="standard deviation symbol (lower)" initial="3"/>
-						</column>
-					</row>
-					<spinbox type="real" id="cex_sd_mean" label="size" initial="1"/>
-					<embed id="sd_mean_color" component="rkward::color_chooser" label="Color"/>
+					</frame>
+					<frame label="SD">
+						<checkbox id="sd" checked="false" value="TRUE" label="show standard deviation" />
+						<spinbox type="integer" id="pch_sd_high" label="standard deviation symbol (upper)" initial="3"/>
+						<spinbox type="integer" id="pch_sd_low" label="standard deviation symbol (lower)" initial="3"/>
+					</frame>
 					<embed id="plotoptions" component="rkward::plot_options" as_button="true" label="Plot Options" />
 					<stretch/>
 				</column>
