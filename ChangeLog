@@ -1,4 +1,6 @@
-- Fix deadlock while handling some tcl events		TODO: much more (stress-)testing, backport? (r2649)
+	  TODO: We need to fix the output detection properly, after all. Otherwise, if the plugin produces an error, no re-run link is shown.
+- Assorted minor fixes and improvments to several plugins
+- Fix deadlock while handling some Tcl events		TODO: much more (stress-)testing, backport? (r2649)
 - Plugin dialogs close automatically after submitting (by default)
 - Fetching object structure is much faster for very large data.frames
 - Fix crash when loading certain packages on Windows
