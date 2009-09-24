@@ -1,0 +1,10 @@
+<h1>Gumbel quantile</h1>
+<h2>Parameters</h2>
+<ul><li>Vector of probabilities: c (0.95)</li>
+<li>Shape: 1.00000000</li>
+<li>Scale: 1.00000000</li>
+<li>Tail: lower.tail=FALSE</li>
+<li>Probabilities p are given as: log.p = FALSE</li>
+</ul>
+DATE<br>
+<h3>Gumbel quantiles: -2.9702</h3>

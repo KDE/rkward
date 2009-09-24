@@ -1,0 +1,12 @@
+<h1>Logistic density function</h1>
+<h2>Parameters</h2>
+<ul><li>Number of Observations: 100</li>
+<li>Lower quantile: -3.29000000</li>
+<li>Upper quantile: 3.29000000</li>
+<li>Location: 0.00000000</li>
+<li>Scale: 1.00000000</li>
+<li>Scale: normal</li>
+<li>Function: dlogis</li>
+</ul>
+DATE<br>
+<img src="graph.png" width="480" height="480"><br>

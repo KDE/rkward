@@ -1,0 +1,10 @@
+<h1>Negative Binomial probability</h1>
+<h2>Parameters</h2>
+<ul><li>Vector of quantiles: c (0.95)</li>
+<li>Size: 3</li>
+<li>Probability of success in each trial: 0.50000000</li>
+<li>Tail: lower.tail=TRUE</li>
+<li>Probabilities p are given as: log.p = TRUE</li>
+</ul>
+DATE<br>
+<h3>Negative Binomial probabilities: -2.0794</h3>

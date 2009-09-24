@@ -1,0 +1,10 @@
+<h1>Logistic probability</h1>
+<h2>Parameters</h2>
+<ul><li>Vector of quantiles: c (0.95)</li>
+<li>Location: 1.04000000</li>
+<li>Scale: 1.00000000</li>
+<li>Tail: lower.tail=TRUE</li>
+<li>Probabilities p are given as: log.p = TRUE</li>
+</ul>
+DATE<br>
+<h3>Logistic probabilities: -0.73916</h3>

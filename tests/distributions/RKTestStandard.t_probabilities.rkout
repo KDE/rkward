@@ -1,0 +1,10 @@
+<h1>t probability</h1>
+<h2>Parameters</h2>
+<ul><li>Vector of quantiles: c (0.95)</li>
+<li>Degrees of Freedom: 1.00000000</li>
+<li>non-centrality parameter: 0.00000000</li>
+<li>Tail: lower.tail=TRUE</li>
+<li>Probabilities p are given as: log.p = FALSE</li>
+</ul>
+DATE<br>
+<h3>t probabilities: 0.74184</h3>

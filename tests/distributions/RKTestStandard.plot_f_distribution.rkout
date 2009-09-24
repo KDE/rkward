@@ -1,0 +1,13 @@
+<h1>F density function</h1>
+<h2>Parameters</h2>
+<ul><li>Number of Observations: 100</li>
+<li>Lower quantile: 0.00100000</li>
+<li>Upper quantile: 25.00000000</li>
+<li>Numerator degrees of freedom: 5.00000000</li>
+<li>Denominator degrees of freedom: 5.00000000</li>
+<li>Non-centrality: 0.00000000</li>
+<li>Scale: logarithmic</li>
+<li>Function: df</li>
+</ul>
+DATE<br>
+<img src="graph.png" width="480" height="480"><br>

@@ -1,0 +1,12 @@
+<h1>Gamma density function</h1>
+<h2>Parameters</h2>
+<ul><li>Number of Observations: 100</li>
+<li>Lower quantile: 0.01000000</li>
+<li>Upper quantile: 4.60000000</li>
+<li>Shape: 1.61000000</li>
+<li>Rate: 0.87000000</li>
+<li>Scale: normal</li>
+<li>Function: dgamma</li>
+</ul>
+DATE<br>
+<img src="graph.png" width="480" height="480"><br>

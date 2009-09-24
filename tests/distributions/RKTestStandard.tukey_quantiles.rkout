@@ -1,0 +1,11 @@
+<h1>Studentized Range quantiles</h1>
+<h2>Parameters</h2>
+<ul><li>Vector of probabilities: c (0.95)</li>
+<li>Sample size for range: 2</li>
+<li>Degrees of freedom for s: 2:11</li>
+<li>Number of groups whose maximum range is considered: 1</li>
+<li>Tail: lower.tail=TRUE</li>
+<li>Probabilities p are given as: log.p = FALSE</li>
+</ul>
+DATE<br>
+<h3>Studentized Range quantiles: 6.0796 4.5007 3.9265 3.6354 3.4605 3.3441 3.2612 3.1992 3.1511 3.1127</h3>

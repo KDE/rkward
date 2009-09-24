@@ -1,0 +1,12 @@
+<h1>Normal density function</h1>
+<h2>Parameters</h2>
+<ul><li>Number of Observations: 100</li>
+<li>Lower quantile: -3.29000000</li>
+<li>Upper quantile: 3.29000000</li>
+<li>Mean: 0.00000000</li>
+<li>Standard Deviation: 1.00000000</li>
+<li>Scale: normal</li>
+<li>Function: dnorm</li>
+</ul>
+DATE<br>
+<img src="graph.png" width="480" height="480"><br>

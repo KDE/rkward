@@ -1,0 +1,19 @@
+<h1>Chi-squared probability</h1>
+<h2>Parameters</h2>
+<ul><li>Vector of quantiles: c (0.97, 0.65)</li>
+<li>Degrees of Freedom: 3.00000000</li>
+<li>non-centrality parameter: 0.05000000</li>
+<li>Tail: lower.tail=TRUE</li>
+<li>Probabilities p are given as: log.p = FALSE</li>
+</ul>
+DATE<br>
+<h3>Chi-squared probabilities: 0.18762 0.11261</h3><h1>Chi-squared probability</h1>
+<h2>Parameters</h2>
+<ul><li>Vector of quantiles: c (1)</li>
+<li>Degrees of Freedom: 1.01000000</li>
+<li>non-centrality parameter: 0.02000000</li>
+<li>Tail: lower.tail=FALSE</li>
+<li>Probabilities p are given as: log.p = TRUE</li>
+</ul>
+DATE<br>
+<h3>Chi-squared probabilities: -1.1229</h3>

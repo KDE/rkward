@@ -1,0 +1,10 @@
+<h1>Poisson density function</h1>
+<h2>Parameters</h2>
+<ul><li>Lower quantile: 0</li>
+<li>Upper quantile: 12</li>
+<li>Mean: 5.00000000</li>
+<li>Scale: normal</li>
+<li>Function: dpois</li>
+</ul>
+DATE<br>
+<img src="graph.png" width="480" height="480"><br>

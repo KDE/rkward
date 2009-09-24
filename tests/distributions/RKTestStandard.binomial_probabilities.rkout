@@ -1,0 +1,10 @@
+<h1>Binomial tail probability</h1>
+<h2>Parameters</h2>
+<ul><li>Vector of quantiles: c (0.95, 2)</li>
+<li>Binomial trials: 3</li>
+<li>Probability of success: 0.50000000</li>
+<li>Tail: lower.tail=TRUE</li>
+<li>Probabilities p are given as: log.p = FALSE</li>
+</ul>
+DATE<br>
+<h3>Binomial tail probabilities: 0.125 0.875</h3>

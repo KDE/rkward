@@ -1,0 +1,11 @@
+<h1>Binomial density function</h1>
+<h2>Parameters</h2>
+<ul><li>Lower quantile: 0</li>
+<li>Upper quantile: 12</li>
+<li>Number of trials: 12</li>
+<li>Probability of success on each trial: 0.50000000</li>
+<li>Scale: normal</li>
+<li>Function: dbinom</li>
+</ul>
+DATE<br>
+<img src="graph.png" width="480" height="480"><br>

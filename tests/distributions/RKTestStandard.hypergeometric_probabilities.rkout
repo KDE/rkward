@@ -1,0 +1,11 @@
+<h1>Hypergeometric probability</h1>
+<h2>Parameters</h2>
+<ul><li>Vector of quantiles: c (0, 1, 2, 3, 4, 5)</li>
+<li>Number of white balls in the urn: 5</li>
+<li>Number of black balls in the urn: 4</li>
+<li>Number of balls drawn from the urn: 4</li>
+<li>Tail: lower.tail=FALSE</li>
+<li>Probabilities p are given as: log.p = FALSE</li>
+</ul>
+DATE<br>
+<h3>Hypergeometric probabilities: 0.99206 0.83333 0.35714 0.039683 0 0</h3>

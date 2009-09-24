@@ -1,0 +1,10 @@
+<h1>Wilcoxon Rank Sum probability</h1>
+<h2>Parameters</h2>
+<ul><li>Vector of quantiles: c (0.95)</li>
+<li>m (Numbers of observations in the first sample): 2</li>
+<li>n (Numbers of observations in the second sample): 1</li>
+<li>Tail: lower.tail=TRUE</li>
+<li>Probabilities p are given as: log.p = FALSE</li>
+</ul>
+DATE<br>
+<h3>Wilcoxon Rank Sum probabilities: 0.33333</h3>

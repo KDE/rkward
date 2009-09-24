@@ -1,0 +1,10 @@
+<h1>Uniform probability</h1>
+<h2>Parameters</h2>
+<ul><li>Vector of quantiles: c (0.95)</li>
+<li>Lower limits of the distribution: 0.00000000</li>
+<li>Upper limits of the distribution: 1.00000000</li>
+<li>Tail: lower.tail=TRUE</li>
+<li>Probabilities p are given as: log.p = FALSE</li>
+</ul>
+DATE<br>
+<h3>Uniform probabilities: 0.95</h3>

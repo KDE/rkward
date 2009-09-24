@@ -1,0 +1,11 @@
+<h1>F quantile</h1>
+<h2>Parameters</h2>
+<ul><li>Vector of probabilities: c (0.95)</li>
+<li>Numerator degrees of freedom: 1.00000000</li>
+<li>Denominator degrees of freedom: 1.00000000</li>
+<li>non-centrality parameter: 0.00000000</li>
+<li>Tail: lower.tail=FALSE</li>
+<li>Probabilities p are given as: log.p = FALSE</li>
+</ul>
+DATE<br>
+<h3>F quantiles: 0.006194</h3>

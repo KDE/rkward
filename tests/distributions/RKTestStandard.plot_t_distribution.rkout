@@ -1,0 +1,13 @@
+<h1>Student t distribution function</h1>
+<h2>Parameters</h2>
+<ul><li>Number of Observations: 100</li>
+<li>Minimum: -12.92400000</li>
+<li>Maximum: 12.92400000</li>
+<li>Degrees of freedom: 1.00000000</li>
+<li>Non-centrality: 0.00000000</li>
+<li>Scale: normal</li>
+<li>Tail: Lower</li>
+<li>Function: pt</li>
+</ul>
+DATE<br>
+<img src="graph.png" width="480" height="480"><br>

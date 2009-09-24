@@ -1,0 +1,12 @@
+<h1>Uniform density function</h1>
+<h2>Parameters</h2>
+<ul><li>Number of Observations: 100</li>
+<li>Lower quantile: -1.00000000</li>
+<li>Upper quantile: 2.00000000</li>
+<li>Minimum: 0.00000000</li>
+<li>Maximum: 1.00000000</li>
+<li>Scale: normal</li>
+<li>Function: dunif</li>
+</ul>
+DATE<br>
+<img src="graph.png" width="480" height="480"><br>

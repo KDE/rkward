@@ -1,0 +1,9 @@
+<h1>Poisson probability</h1>
+<h2>Parameters</h2>
+<ul><li>Vector of quantiles: c (0.95)</li>
+<li>Lambda: 1.07000000</li>
+<li>Tail: lower.tail=TRUE</li>
+<li>Probabilities p are given as: log.p = TRUE</li>
+</ul>
+DATE<br>
+<h3>Poisson probabilities: -1.07</h3>

@@ -1,0 +1,10 @@
+<h1>Log Normal quantile</h1>
+<h2>Parameters</h2>
+<ul><li>Vector of probabilities: c (0.95)</li>
+<li>meanlog: 0.00000000</li>
+<li>sdlog: 1.00000000</li>
+<li>Tail: lower.tail=FALSE</li>
+<li>Probabilities p are given as: log.p = FALSE</li>
+</ul>
+DATE<br>
+<h3>Log Normal quantiles: 0.19304</h3>

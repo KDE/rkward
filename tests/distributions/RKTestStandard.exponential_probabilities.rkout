@@ -1,0 +1,9 @@
+<h1>Exponential probabilities</h1>
+<h2>Parameters</h2>
+<ul><li>Vector of quantiles: c (0.96)</li>
+<li>Rate: 1.07000000</li>
+<li>Tail: lower.tail=TRUE</li>
+<li>Probabilities p are given as: log.p = FALSE</li>
+</ul>
+DATE<br>
+<h3>Exponential probabilities: 0.64199</h3>
