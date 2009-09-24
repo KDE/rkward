@@ -50,8 +50,6 @@
 
 	<hierarchy>
 		<menu id="analysis" label="Analysis" index="4">
-			<menu id="ansari_bradley" label="Ansari-Bradley Tests" index="0">
-			</menu>
 			<entry component="basic_statistics" index="1"/>
 			<menu id="correlation" label="Correlation" index="1">
 				<entry component="corr_matrix" />
