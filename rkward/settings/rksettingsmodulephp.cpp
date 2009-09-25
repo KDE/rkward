@@ -42,7 +42,7 @@ RKSettingsModulePHP::RKSettingsModulePHP (RKSettings *gui, QWidget *parent) : RK
 	
 	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
 	
-	bin_choser = new GetFileNameWidget (this, GetFileNameWidget::ExistingFile, i18n ("File-location of the PHP binary"), QString (), php_bin);
+	bin_choser = new GetFileNameWidget (this, GetFileNameWidget::ExistingFile, true, i18n ("File-location of the PHP binary"), QString (), php_bin);
 	connect (bin_choser, SIGNAL (locationChanged ()), this, SLOT (pathChanged ()));
 	main_vbox->addWidget (bin_choser);
 

@@ -20,7 +20,7 @@
 	<dialog label="Import STATA file">
 		<tabbook>
 			<tab id="tab_general" label="General">
-				<browser type="file" id="file" label="File name" />
+				<browser type="file" allow_urls="true" id="file" label="File name" />
 				<stretch/>
 				<row>
 					<saveobject id="saveto" initial="my.stata.data" label="Object to save to"/>

@@ -1771,6 +1771,10 @@ At some places in this introduction we've talked about "properties" of GUI eleme
 	<listitem>One of "file", "dir", or "savefile". To select an existing file, existing directory, or non-existing file, respectively (optional, defaults to "file")</listitem>
 	</varlistentry>
 	<varlistentry>
+	<term>&lt;allow_urls&gt;</term>
+	<listitem>Whether (non-local) urls can be selected (optional, defaults to "false")</listitem>
+	</varlistentry>
+	<varlistentry>
 	<term>&lt;filter&gt;</term>
 	<listitem>File type filter, e.g. ("*.txt *.csv" for .txt and .csv files. Try not to induce limits unless absolutely needed, though) (optional, defaults to "", i.e. all files)</listitem>
 	</varlistentry>

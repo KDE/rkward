@@ -2,7 +2,7 @@
                           rkpluginbrowser  -  description
                              -------------------
     begin                : Sat Mar 10 2005
-    copyright            : (C) 2005, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -48,7 +48,9 @@ RKPluginBrowser::RKPluginBrowser (const QDomElement &element, RKComponent *paren
 	else if (intmode == 1) mode = GetFileNameWidget::ExistingDirectory;
 	else mode = GetFileNameWidget::SaveFile;
 
-	selector = new GetFileNameWidget (this, mode, xml->getStringAttribute (element, "label", i18n ("Enter filename"), DL_INFO), i18n ("Select"), xml->getStringAttribute (element, "initial", QString::null, DL_INFO));
+	bool only_local = !xml->getBoolAttribute (element, "allow_urls", false, DL_INFO);
+
+	selector = new GetFileNameWidget (this, mode, only_local, xml->getStringAttribute (element, "label", i18n ("Enter filename"), DL_INFO), i18n ("Select"), xml->getStringAttribute (element, "initial", QString::null, DL_INFO));
 	selector->setFilter (xml->getStringAttribute (element, "filter", QString::null, DL_INFO));
 	connect (selector, SIGNAL (locationChanged ()), SLOT (textChanged ()));
 

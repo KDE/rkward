@@ -2,7 +2,7 @@
                           getfilenamewidget  -  description
                              -------------------
     begin                : Tue Aug 24 2004
-    copyright            : (C) 2004, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -25,7 +25,7 @@
 
 #include "../debug.h"
 
-GetFileNameWidget::GetFileNameWidget (QWidget *parent, FileType mode, const QString &label, const QString &caption, const QString &initial) : QWidget (parent) {
+GetFileNameWidget::GetFileNameWidget (QWidget *parent, FileType mode, bool only_local, const QString &label, const QString &caption, const QString &initial) : QWidget (parent) {
 	RK_TRACE (MISC);
 	QVBoxLayout *vbox = new QVBoxLayout (this);
 	vbox->setContentsMargins (0, 0, 0, 0);
@@ -38,15 +38,19 @@ GetFileNameWidget::GetFileNameWidget (QWidget *parent, FileType mode, const QStr
 	vbox->addWidget (edit);
 
 	edit->setUrl (initial);
+
+	KFile::Modes mode_flags;
 	if (mode == ExistingDirectory) {
-		edit->setMode (KFile::Directory | KFile::ExistingOnly);
+		mode_flags = KFile::Directory | KFile::ExistingOnly;
 	} else if (mode == ExistingFile) {
-		edit->setMode (KFile::File | KFile::ExistingOnly);
+		mode_flags = KFile::File | KFile::ExistingOnly;
 	} else if (mode == SaveFile) {
-		edit->setMode (KFile::File);
+		mode_flags = KFile::File;
 	} else {
 		RK_ASSERT (false);
 	}
+	if (only_local) mode_flags |= KFile::LocalOnly;
+	edit->setMode (mode_flags);
 
 	if (caption.isEmpty ()) edit->setWindowTitle (label);
 	else edit->setWindowTitle (caption);
@@ -75,7 +79,8 @@ void GetFileNameWidget::locationEditChanged (const QString &) {
 }
 
 QString GetFileNameWidget::getLocation () {
-	return (edit->url ().toLocalFile ());
+	if (edit->url ().isLocalFile ()) return (edit->url ().toLocalFile ());
+	return (edit->url ().url ());
 }
 
 void GetFileNameWidget::setBackgroundColor (const QColor & color) {

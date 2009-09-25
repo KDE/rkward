@@ -32,7 +32,7 @@ class GetFileNameWidget : public QWidget {
 public:
 	enum FileType { ExistingFile=0, ExistingDirectory=1, SaveFile=2 };
 
-	GetFileNameWidget (QWidget *parent, FileType mode, const QString &label, const QString &caption, const QString &initial);
+	GetFileNameWidget (QWidget *parent, FileType mode, bool only_local, const QString &label, const QString &caption, const QString &initial);
 	~GetFileNameWidget ();
 
 /** set filename pattern filter, e.g. "*.cpp *.cc *.C|C++ Source Files\n*.h *.H|Header files" */
