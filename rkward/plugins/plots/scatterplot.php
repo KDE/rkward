@@ -3,6 +3,7 @@ function preprocess () {
 }
 
 function calculate () {
+	global $x, $y;
 	$x = str_replace ("\n", ",", trim (getRK_val ("x"))) ;
 	$y = str_replace ("\n", ",", trim (getRK_val ("y"))) ;
 	
@@ -47,7 +48,13 @@ function preview () {
 }
 
 function doPrintout ($final) {
+	global $x, $y;
+
 	if ($final) { ?>
+rk.header ("Scatterplot", parameters = list (
+	"X variables"=paste (rk.get.description (<?echo ($x); ?>), collapse=", "),
+	"Y variables"=paste (rk.get.description (<?echo ($y); ?>), collapse=", ")))
+
 rk.graph.on()
 
 <?	} ?>
