@@ -1,0 +1,8 @@
+<h1>Pie chart</h1>
+<h2>Parameters</h2>
+<ul><li>Variable: A</li>
+<li>Tabulate: No</li>
+<li>Clockwise: Yes</li>
+</ul>
+DATE<br>
+<img src="graph.png" width="480" height="480"><br>

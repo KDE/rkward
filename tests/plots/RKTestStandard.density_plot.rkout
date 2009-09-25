@@ -1,0 +1,19 @@
+<h1>Highest density regions</h1>
+<h2>Parameters</h2>
+<ul><li>: Variable</li>
+<li>: height</li>
+<li>: Band Width</li>
+<li>: nrd0</li>
+<li>: Adjust</li>
+<li>: 1</li>
+<li>: Remove Missing Values</li>
+<li>na.rm: TRUE</li>
+<li>: Length</li>
+<li>: 15</li>
+<li>: Resolution</li>
+<li>: 512</li>
+<li>: Smoothing Kernel</li>
+<li>: gaussian</li>
+</ul>
+DATE<br>
+<img src="graph.png" width="480" height="480"><br>

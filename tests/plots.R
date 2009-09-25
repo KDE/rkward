@@ -15,13 +15,8 @@ suite <- new ("RKTestSuite", id="plots",
 			library ("datasets")
 			data (women)
 			data (swiss)
+			data (warpbreaks)
 
-			assign ("test50x", 100+c (1:50), envir=globalenv())
-			assign ("test50y", 200+c (1:50), envir=globalenv())
-			assign ("test50z", c (1:50)*4, envir=globalenv())
-			assign ("test10x", 100+c (1:10, NA), envir=globalenv())
-			assign ("test10y", 200+c (1:10, NA), envir=globalenv())
-			assign ("test10z", c (1:10, NA)*4, envir=globalenv())
 			x <- data.frame ("A" = rep (c (1, 2), 8), "B" = rep (c (1, 1, 2, 2), 4), "C" = rep (c (1, 1, 1, 1, 2, 2, 2, 2), 2), "D"= c (rep (1, 8), rep (2, 8)))
 			x[2,2] <- NA
 			assign ("test_table", x, envir=globalenv())
@@ -58,10 +53,22 @@ suite <- new ("RKTestSuite", id="plots",
 		}),
 		new ("RKTest", id="piechart", call=function () {
 			rk.call.plugin ("rkward::piechart", angle.real="45.00000000", angle_inc.real="6.00000000", clockwise.state="1", colors.string="grayscale", density.real="3.00000000", density_inc.real="1.00000000", names_exp.text="names (x)", names_mode.string="default", plotoptions.add_grid.state="0", plotoptions.asp.real="0.00000000", plotoptions.main.text="", plotoptions.pointcolor.color.string="", plotoptions.pointtype.string="", plotoptions.sub.text="", plotoptions.xaxt.state="", plotoptions.xlab.text="", plotoptions.xlog.state="", plotoptions.xmaxvalue.text="", plotoptions.xminvalue.text="", plotoptions.yaxt.state="", plotoptions.ylab.text="", plotoptions.ylog.state="", plotoptions.ymaxvalue.text="", plotoptions.yminvalue.text="", radius.real="0.80000000", tabulate.state="0", x.available="test_table[[\"A\"]]", submit.mode="submit")
+		}),
+		new ("RKTest", id="scatterplot", call=function () {
+			rk.call.plugin ("rkward::scatterplot", cex.text="1", col.text="c ('black', 'red')", color.string="each", isCex.string="all", isPch.string="all", pch.text="1", plotoptions.add_grid.state="0", plotoptions.asp.real="0.00000000", plotoptions.main.text="", plotoptions.pointcolor.color.string="", plotoptions.pointtype.string="", plotoptions.sub.text="", plotoptions.xaxt.state="", plotoptions.xlab.text="", plotoptions.xlog.state="", plotoptions.xmaxvalue.text="", plotoptions.xminvalue.text="", plotoptions.yaxt.state="", plotoptions.ylab.text="", plotoptions.ylog.state="", plotoptions.ymaxvalue.text="", plotoptions.yminvalue.text="", pointtype.string="p", type_mode.string="all", x.available="women[[\"weight\"]]\nswiss[[\"Education\"]]", y.available="women[[\"height\"]]\nswiss[[\"Catholic\"]]", submit.mode="submit")
+		}),
+		new ("RKTest", id="scatterplot_matrix", call=function () {
+			rk.call.plugin ("rkward::scatterplot_matrix", diag.string="histogram", ellipse.state="FALSE", plot_points.state="TRUE", smooth.state="FALSE", x.available="swiss", submit.mode="submit")
+		}),
+		new ("RKTest", id="stem_leaf_plot", call=function () {
+			rk.call.plugin ("rkward::stem", atom.real="0.00000001", scale.real="1.50000000", width.real="80.00000000", x.available="swiss[[\"Fertility\"]]", submit.mode="submit")
+		}),
+		new ("RKTest", id="stripchart", call=function () {
+			rk.call.plugin ("rkward::stripchart", g.available="warpbreaks[[\"tension\"]]", method.string="stack", offset.real="0.50000000", orientation.string="Horizontal", plotoptions.add_grid.state="0", plotoptions.asp.real="0.00000000", plotoptions.main.text="", plotoptions.pointcolor.color.string="", plotoptions.pointtype.string="", plotoptions.sub.text="", plotoptions.xaxt.state="", plotoptions.xlab.text="", plotoptions.xlog.state="", plotoptions.xmaxvalue.text="", plotoptions.xminvalue.text="", plotoptions.yaxt.state="", plotoptions.ylab.text="", plotoptions.ylog.state="", plotoptions.ymaxvalue.text="", plotoptions.yminvalue.text="", x.available="warpbreaks[[\"breaks\"]]", submit.mode="submit")
 		})
 	), postCalls = list (	# like initCalls: run after all tests to clean up.
 		function () {
-			suppressWarnings (rm (list=c ("women", "warpbreaks", "rock", "co2", "test50x", "test50y", "test50z", "test10x", "test10y", "test10z", "test_table"), envir=globalenv()))
+			suppressWarnings (rm (list=c ("women", "swiss", "warpbreaks", "test_table"), envir=globalenv()))
 		}
 	)
 )

@@ -1,0 +1,10 @@
+<h1>Stripchart</h1>
+<h2>Parameters</h2>
+<ul><li>Variable: breaks</li>
+<li>Group: tension</li>
+<li>Method: stack</li>
+<li>Offset: 0.5</li>
+<li>Orientation: Horizontal</li>
+</ul>
+DATE<br>
+<img src="graph.png" width="480" height="480"><br>

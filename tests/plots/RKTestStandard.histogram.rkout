@@ -1,0 +1,23 @@
+<h1>Histogram</h1>
+<h2>Parameters</h2>
+<ul><li>: Variable</li>
+<li>: Education</li>
+<li>: Density bandwidth</li>
+<li>: nrd</li>
+<li>: Density adjust</li>
+<li>: 4</li>
+<li>: Density resolution</li>
+<li>: 512</li>
+<li>: Density Remove missing values</li>
+<li>na.rm: TRUE</li>
+<li>: Break points</li>
+<li>: Equally spaced vector of length 6</li>
+<li>: Right closed</li>
+<li>: TRUE</li>
+<li>: Include in lowest cell</li>
+<li>: TRUE</li>
+<li>: Scale</li>
+<li>: Density</li>
+</ul>
+DATE<br>
+<img src="graph.png" width="480" height="480"><br>

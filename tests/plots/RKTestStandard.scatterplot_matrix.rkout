@@ -1,0 +1,9 @@
+<h1>Scatterplot Matrix</h1>
+<h2>Parameters</h2>
+<ul><li>Diagonal Panels: histogram</li>
+<li>Plot points: TRUE</li>
+<li>Smooth: FALSE</li>
+<li>Ellipses: FALSE at 0.5 and 0.9 levels.</li>
+</ul>
+DATE<br>
+<img src="graph.png" width="480" height="480"><br>

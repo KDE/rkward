@@ -1,0 +1,7 @@
+<h1>Scatterplot</h1>
+<h2>Parameters</h2>
+<ul><li>X variables: weight, Education</li>
+<li>Y variables: height, Catholic</li>
+</ul>
+DATE<br>
+<img src="graph.png" width="480" height="480"><br>
