@@ -5,7 +5,7 @@ Import STATA data files.
 	</summary>
 
 	<usage>
-Choose the STATA data file to import. Usually those files have the ending '*.dta. An R object containing the STATA data will be created. This can either be a data.frame, or a list. Several options deal with handling labels and character encoding. See <link href="rkward://rhelp/read.dta" />. Other STATA files than data files (i. e.:*.log, *.smcl, *.do, *.ado) are not supported. 
+Choose the STATA data file to import. Usually those files have the ending '*.dta. An R object containing the STATA data will be created. This can either be a data.frame, or a list. Several options deal with handling labels and character encoding. See <link href="rkward://rhelp/read.dta" />. STATA files other than data files (i. e.:*.log, *.smcl, *.do, *.ado) are not supported. 
 	</usage>
 
 	<settings>
@@ -13,23 +13,17 @@ Choose the STATA data file to import. Usually those files have the ending '*.dta
 		<setting id="file">The filename of the file to import</setting>
 		<setting id="saveto">The name of an R object to store the imported data in. If you chose an existing symbol name, you will be prompted, whether to overwrite this object.</setting>
 		<setting id="doedit">Whether the object should be opened for editing after it was imported. Currently, this is only possible, if the object is saved as a data.frame (see next option).</setting>
-		<setting id="data_frame">Whether to save the data as a data.frame. The alternative is saving as a list (useful, if the columns in your STATA data have different lengths)</setting>
 
-		<setting id="convert_var_labels">RKWard can display STATA like variable labels. Check this option, if you would like to convert the STATA variable labels to RKWard format. If you leave the option unchecked, the STATA variable labels will still be available as an attribute "variable.labels" (see <link href="rkward://rhelp/read.dta" />)</setting>
-		<setting id="use_labels">Should STATA variables with value labels be converted to R factors with those levels?</setting>
-		<setting id="labels_limit">Maximum number of factor levels to use (see <link href="rkward://rhelp/read.dta" />)</setting>
-		<setting id="trim_labels">Trim trailing white space from labels?</setting>
-
-		<caption id="tab_encoding"/>
-		<setting id="do_locale_conversion">If special character (e.g. umlauts) do not show up correctly, the STATA file probably uses a different locale than your R session. In this case, check this option, and specify the correct character encoding below.</setting>
-		<setting id="encoding">Select character encoding to convert from. The option above needs to be checked, for this to be enabled.</setting>
-		<setting id="user_encoding">If none of the encodings above matches, you can specify an encoding here. Note that the available encodings may differ from platform to platform. See <link href="rkward://rhelp/iconvlist" /> for a list of available encodings.</setting>
+		<setting id="convert_dates">Convert Stata dates to R 'Date' class (see <link href="rkward://rhelp/read.dta" />)</setting>
+		<setting id="convert_factors">Use STATA value labels to create factors </setting>
+		<setting id="missing_type"> For version 8 or later, store information about different types of missing data</setting>
+		<setting id="convert_underscore">Convert '_' in Stata variable names to '.' in R names </setting>
+		<setting id="warn_missing_labels">Warn if a variable is specified with value labels and those value labels are not present in the file</setting>
 	</settings>
 	<related>
 		<ul>
 			<li><link href="rkward://component/import_csv"/></li>
 			<li><link href="rkward://rhelp/read.dta"/></li>
-			<li><link href="rkward://rhelp/iconv"/></li>
 		</ul>
 	</related>
 </document>
