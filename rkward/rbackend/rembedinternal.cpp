@@ -486,8 +486,8 @@ void processX11EventsWorker (void *) {
 	for (;;) {
 		fd_set *what;
 		what = R_checkActivityEx(R_wait_usec > 0 ? R_wait_usec : 50, 1, RK_doIntr);
-		if (what == NULL) break;
 		R_runHandlers(R_InputHandlers, what);
+		if (what == NULL) break;
 	}
 	/* This seems to be needed to make Rcmdr react to events. Has this always been the case? It was commented out for a long time, without anybody noticing. */
 	R_PolledEvents ();
