@@ -25,6 +25,7 @@
 #include <kparts/partmanager.h>
 #include <kactioncollection.h>
 #include <kdirwatch.h>
+#include <kmimetype.h>
 
 #include <qfileinfo.h>
 #include <qwidget.h>
@@ -32,6 +33,7 @@
 #include <qtimer.h>
 #include <qdir.h>
 #include <QHBoxLayout>
+#include <QHostInfo>
 
 #include "../rkglobals.h"
 #include "rkhelpsearchwindow.h"
@@ -247,7 +249,6 @@ bool RKHTMLWindow::handleRKWardURL (const KUrl &url) {
 	return false;
 }
 
-#include <kmimetype.h>
 bool RKHTMLWindow::openURL (const KUrl &url) {
 	RK_TRACE (APP);
 
@@ -259,6 +260,19 @@ bool RKHTMLWindow::openURL (const KUrl &url) {
 			return false;
 		}
 	} else {
+		if (!(url.isLocalFile ())) {
+			if (window_mode == HTMLHelpWindow) {
+				// since R 2.10.0, help urls may be on local ports
+				if (url.protocol ().toLower ().startsWith ("http")) {
+					QString host = url.host ();
+					if ((host == "127.0.0.1") || (host == "localhost") || host == QHostInfo::localHostName ()) {
+						khtmlpart->openUrl (url);
+						changeURL (url);
+						return true;
+					}
+				}
+			}
+		}
 		if (!(url.isLocalFile () && KMimeType::findByUrl (url)->is ("text/html"))) {
 			RKWorkplace::mainWorkplace ()->openAnyUrl (url);
 			return true;
