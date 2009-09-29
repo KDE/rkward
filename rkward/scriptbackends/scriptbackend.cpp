@@ -2,7 +2,7 @@
                           scriptbackend  -  description
                              -------------------
     begin                : Sun Aug 15 2004
-    copyright            : (C) 2004, 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -27,6 +27,9 @@ ScriptBackend::ScriptBackend () : QObject() {
 }
 
 ScriptBackend::~ScriptBackend () {
+	while (command_stack.count ()) {
+		delete command_stack.takeFirst ();
+	}
 }
 
 void ScriptBackend::callFunction (const QString &function, int flags, int type) {

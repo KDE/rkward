@@ -2,7 +2,7 @@
                           phpbackend  -  description
                              -------------------
     begin                : Mon Jul 26 2004
-    copyright            : (C) 2004, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -90,15 +90,11 @@ void PHPBackend::destroy () {
 	RK_TRACE (PHP);
 	if (!dead) {
 		dead = true;
-		php_process->kill ();
+		if (php_process) php_process->kill ();
 		QTimer::singleShot (10000, this, SLOT (deleteLater()));	// don't wait for ever for the process to die, even if it's somewhat dangerous
 	}
 
 	busy = false;
-	
-	while (command_stack.count ()) {
-		delete command_stack.takeFirst ();
-	}
 }
 
 void PHPBackend::tryNextFunction () {

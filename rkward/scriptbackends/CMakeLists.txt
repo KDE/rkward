@@ -7,6 +7,7 @@ SET(scriptbackends_STAT_SRCS
    phpbackend.cpp
    scriptbackend.cpp
    simplebackend.cpp
+   qtscriptbackend.cpp
    )
 
 QT4_AUTOMOC(${scriptbackends_STAT_SRCS})

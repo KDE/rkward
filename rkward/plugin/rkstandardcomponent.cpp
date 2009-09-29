@@ -33,6 +33,7 @@
 
 #include "rkstandardcomponentgui.h"
 #include "../scriptbackends/phpbackend.h"
+#include "../scriptbackends/qtscriptbackend.h"
 #include "../scriptbackends/simplebackend.h"
 #include "../misc/xmlhelper.h"
 #include "../settings/rksettingsmoduleplugins.h"
@@ -84,7 +85,12 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 	QDomElement element = xml->getChildElement (doc_element, "code", DL_WARNING);
 	if (element.hasAttribute ("file")) {
 		QString dummy = QFileInfo (filename).path() + '/' + xml->getStringAttribute (element, "file", "code.php", DL_WARNING);
-		backend = new PHPBackend (dummy);
+
+		if (!dummy.endsWith (".php")) {
+			backend = new QtScriptBackend (dummy);
+		} else {
+			backend = new PHPBackend (dummy);
+		}
 	} else {
 		SimpleBackend *back = new SimpleBackend ();
 		back->setPreprocessTemplate (xml->getStringAttribute (element, "preprocess", QString::null, DL_INFO));
