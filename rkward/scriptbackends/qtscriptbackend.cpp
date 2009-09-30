@@ -58,6 +58,7 @@ bool QtScriptBackend::initialize (RKComponentPropertyCode *code_property, bool a
 	connect (script_thread, SIGNAL (commandDone(const QString&)), this, SLOT (commandDone(const QString&)));
 	connect (script_thread, SIGNAL (needData(const QString&)), this, SLOT (needData(const QString&)));
 	current_type = ScriptBackend::Ignore;
+	script_thread->start ();
 
 	QtScriptBackend::code_property = code_property;
 	QtScriptBackend::add_headings = add_headings;
@@ -137,7 +138,6 @@ QtScriptBackendThread::QtScriptBackendThread (const QString &commonfile, const Q
 
 	_commonfile = commonfile;
 	_scriptfile = scriptfile;
-	start ();
 }
 
 QtScriptBackendThread::~QtScriptBackendThread () {
@@ -148,8 +148,9 @@ void QtScriptBackendThread::setCommand (const QString &command) {
 	RK_TRACE (PHP);
 
 	mutex.lock ();
-	RK_ASSERT (_command.isEmpty ());
-	_command = command;
+	RK_ASSERT (_command.isNull ());
+	if (command.isNull ()) _command = "";
+	else _command = command;
 	mutex.unlock ();
 }
 
@@ -185,7 +186,7 @@ QString QtScriptBackendThread::getValue (const QString &identifier) {
 
 bool QtScriptBackendThread::includeFile (const QString &filename) {
 	RK_TRACE (PHP);
-
+qDebug ("i1");
 	QString _filename = filename;
 	if (!filename.startsWith ("/")) {
 		KUrl script_path = KUrl (QUrl::fromLocalFile (_scriptfile)).upUrl ();
@@ -193,21 +194,29 @@ bool QtScriptBackendThread::includeFile (const QString &filename) {
 		_filename = script_path.toLocalFile ();
 	}
 
+qDebug ("i2");
         QFile file (_filename);
         if (!file.open (QIODevice::ReadOnly | QIODevice::Text)) {
 		emit (error (i18n ("The file \"%1\" (needed by \"%2\") could not be found. Please check your installation.", _filename, _scriptfile)));
 		return false;
 	}
 
+qDebug ("i3");
 	// evaluate in global context
 	engine.currentContext ()->setActivationObject (engine.globalObject ());
+qDebug ("i4");
 	QScriptValue result = engine.evaluate (file.readAll(), _filename);
 
+qDebug ("i5");
 	if (result.isError ()) {
-		emit (error (result.toString ()));
+qDebug ("i6e");
+		QString message = i18n ("File %1, line %2: %3", _filename, engine.uncaughtExceptionLineNumber (), result.toString ());
+qDebug (qPrintable (message));
+		emit (error (message));
 		return false;
 	}
 
+qDebug ("i6");
 	return true;
 }
 
@@ -215,31 +224,38 @@ void QtScriptBackendThread::run () {
 	RK_TRACE (PHP);
 
 	QScriptValue backend_object = engine.newQObject (this);
-	engine.globalObject ().setProperty ("thingy", backend_object);
+	engine.globalObject ().setProperty ("_RK_backend", backend_object);
 
+qDebug ("a");
 	if (!includeFile (_commonfile)) return;
+qDebug ("b");
 	if (!includeFile (_scriptfile)) return;
+qDebug ("c");
 
 	emit (commandDone ("startup complete"));
+qDebug ("d");
 
 	QString command;
 	while (1) {
 		mutex.lock ();
-		if (!_command.isEmpty ()) {
+		if (!_command.isNull ()) {
 			command = _command;
 			_command.clear ();
 		}
 		mutex.unlock ();
 
-		if (command.isEmpty ()) {
+		if (command.isNull ()) {
 			msleep (5);
 			continue;
 		}
 
 		// do it!
+qDebug (qPrintable (command));
 		QScriptValue result = engine.evaluate (command);
 		if (result.isError ()) {
-			emit (error (result.toString ()));
+			QString message = result.toString ();
+qDebug (qPrintable (message));
+			emit (error (message));
 			return;
 		} else {
 			emit (commandDone (result.toString ()));

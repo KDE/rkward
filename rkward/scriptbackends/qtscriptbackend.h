@@ -37,10 +37,10 @@ public:
 	bool initialize (RKComponentPropertyCode *code_property=0, bool add_headings=true);
 	void destroy ();
 	
-	void preprocess (int flags) { callFunction ("preprocess ();\n", flags, Preprocess); };
-	void calculate (int flags) { callFunction ("calculate ();\n", flags, Calculate); };
-	void printout (int flags) { callFunction ("printout ();\n", flags, Printout); };
-	void preview (int flags) { callFunction ("getPreview ();\n", flags, Preview); };
+	void preprocess (int flags) { callFunction ("do_preprocess ();\n", flags, Preprocess); };
+	void calculate (int flags) { callFunction ("do_calculate ();\n", flags, Calculate); };
+	void printout (int flags) { callFunction ("do_printout ();\n", flags, Printout); };
+	void preview (int flags) { callFunction ("do_preview ();\n", flags, Preview); };
 	void writeData (const QString &data);
 public slots:
 	void threadError (const QString &message);

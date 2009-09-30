@@ -17,7 +17,7 @@ ADD_LIBRARY(scriptbackends STATIC ${scriptbackends_STAT_SRCS})
 
 ########### install files ###############
 
-INSTALL(FILES   common.php php.ini DESTINATION ${DATA_INSTALL_DIR}/rkward/phpfiles )
+INSTALL(FILES common.php php.ini common.js DESTINATION ${DATA_INSTALL_DIR}/rkward/phpfiles )
 
 
 
