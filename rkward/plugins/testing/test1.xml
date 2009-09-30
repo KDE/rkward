@@ -22,6 +22,9 @@
 			<tab label="Model">
 				<formula id="model" fixed_factors="y" dependent="x" label="Now chose the model"/>
 			</tab>
+			<tab>
+				<embed id="embedded" component="rkward::qtscript_test2"/>
+			</tab>
 		</tabbook>
 	</dialog>
 

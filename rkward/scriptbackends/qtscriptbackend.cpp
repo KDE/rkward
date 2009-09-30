@@ -180,13 +180,25 @@ QString QtScriptBackendThread::getValue (const QString &identifier) {
 
 		if (!ret.isNull ()) return (ret);
 
-		msleep (5);
+		usleep (20);	// getValue () may be called very often, and we expect an answer very soon, so we don't sleep too long.
 	}
+}
+
+bool QtScriptBackendThread::scriptError () {
+	RK_TRACE (PHP);
+
+	if (!engine.hasUncaughtException ()) return false;
+
+	QString message = i18n ("Script Error: %1\nBacktrace:\n%2", engine.uncaughtException ().toString (), engine.uncaughtExceptionBacktrace ().join ("\n"));
+	engine.clearExceptions ();
+	emit (error (message));
+
+	return true;
 }
 
 bool QtScriptBackendThread::includeFile (const QString &filename) {
 	RK_TRACE (PHP);
-qDebug ("i1");
+
 	QString _filename = filename;
 	if (!filename.startsWith ("/")) {
 		KUrl script_path = KUrl (QUrl::fromLocalFile (_scriptfile)).upUrl ();
@@ -194,29 +206,18 @@ qDebug ("i1");
 		_filename = script_path.toLocalFile ();
 	}
 
-qDebug ("i2");
         QFile file (_filename);
         if (!file.open (QIODevice::ReadOnly | QIODevice::Text)) {
 		emit (error (i18n ("The file \"%1\" (needed by \"%2\") could not be found. Please check your installation.", _filename, _scriptfile)));
 		return false;
 	}
 
-qDebug ("i3");
 	// evaluate in global context
 	engine.currentContext ()->setActivationObject (engine.globalObject ());
-qDebug ("i4");
 	QScriptValue result = engine.evaluate (file.readAll(), _filename);
 
-qDebug ("i5");
-	if (result.isError ()) {
-qDebug ("i6e");
-		QString message = i18n ("File %1, line %2: %3", _filename, engine.uncaughtExceptionLineNumber (), result.toString ());
-qDebug (qPrintable (message));
-		emit (error (message));
-		return false;
-	}
+	if (scriptError ()) return false;
 
-qDebug ("i6");
 	return true;
 }
 
@@ -226,14 +227,10 @@ void QtScriptBackendThread::run () {
 	QScriptValue backend_object = engine.newQObject (this);
 	engine.globalObject ().setProperty ("_RK_backend", backend_object);
 
-qDebug ("a");
 	if (!includeFile (_commonfile)) return;
-qDebug ("b");
 	if (!includeFile (_scriptfile)) return;
-qDebug ("c");
 
 	emit (commandDone ("startup complete"));
-qDebug ("d");
 
 	QString command;
 	while (1) {
@@ -245,21 +242,14 @@ qDebug ("d");
 		mutex.unlock ();
 
 		if (command.isNull ()) {
-			msleep (5);
+			msleep (1);
 			continue;
 		}
 
 		// do it!
-qDebug (qPrintable (command));
 		QScriptValue result = engine.evaluate (command);
-		if (result.isError ()) {
-			QString message = result.toString ();
-qDebug (qPrintable (message));
-			emit (error (message));
-			return;
-		} else {
-			emit (commandDone (result.toString ()));
-		}
+		if (scriptError ()) return;
+		emit (commandDone (result.toString ()));
 
 		command.clear ();
 	}

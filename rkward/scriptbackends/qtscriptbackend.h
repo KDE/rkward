@@ -77,6 +77,9 @@ protected slots:
 protected:
 	void run ();
 private:
+	/** for any script error in the last evaluation. If there was an error, a message is generated, and this function return true (and the thread should be made to exit!) */
+	bool scriptError ();
+
 	QString _command;
 	QString _data;
 	QString _commonfile;

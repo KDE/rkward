@@ -4,6 +4,7 @@
 	<components>
 		<component type="standard" id="simple_anova" file="simple_anova/description.xml" label="Simple Anova" />
 		<component type="standard" id="qtscript_test1" file="testing/test1.xml" label="QtScript Test 1" />
+		<component type="standard" id="qtscript_test2" file="testing/test2.xml" label="QtScript Test 2" />
 		<component type="standard" id="sieve_plot" file="plots/sieve_plot.xml" label="Extended Sieve Plot" />
 		<component type="standard" id="import_stata" file="00saveload/import/import_stata.xml" label="Import Stata">
 			<attribute id="format" value="*.dta" label="Stata data files"/>
