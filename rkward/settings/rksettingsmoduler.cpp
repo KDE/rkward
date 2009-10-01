@@ -51,6 +51,8 @@ QString RKSettingsModuleR::options_editor;
 QString RKSettingsModuleR::options_pager;
 // static constants
 QString RKSettingsModuleR::builtin_editor = "<rkward>";
+// session constants
+QString RKSettingsModuleR::help_base_url;
 
 RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
 	RK_TRACE (SETTINGS);
@@ -257,7 +259,8 @@ QStringList RKSettingsModuleR::makeRRunTimeOptionCommands () {
 	list.append ("options (device=\"rk.screen.device\")\n");
 	// register as interactive
 	list.append ("try (deviceIsInteractive(name=\"rk.screen.device\"))\n");
-	list.append ("options (htmlhelp=TRUE); options (chmhelp=FALSE)\n");
+	list.append ("options (help_type=\"html\")\n");		// for R 2.10.0 and above
+	list.append ("options (htmlhelp=TRUE); options (chmhelp=FALSE)\n");	// COMPAT: for R 2.9.x and below
 	list.append ("options (browser=rk.show.html)\n");
 
 	return list;

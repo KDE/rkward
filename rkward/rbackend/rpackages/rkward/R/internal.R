@@ -410,3 +410,22 @@ formals (setwd) <- formals (base::setwd)
 		invisible (FALSE)
 	}
 }
+
+# retrieve the (expected) "base" url of help files. Most importantly this will be a local port for R 2.10.0 and above, but a local directory for 2.9.x and below. As a side effect, in R 2.10.0 and above, the dynamic help server is started.
+".rk.getHelpBaseUrl" <- function () {
+	port <- NA
+	if (compareVersion (as.character (getRversion()), "2.10.0") >= 0) {
+		try ({
+			port <- tools::startDynamicHelp ()
+		})
+		if (is.na (port)) {
+			try ({
+				port <- tools:::httpdPort
+			})
+		}
+	}
+	if (is.na (port)) {
+		return (paste ("file://", R.home (), sep=""))
+	}
+	return (paste ("http://127.0.0.1", port, sep=":"))
+}

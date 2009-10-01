@@ -40,6 +40,7 @@
 #include "../rkward.h"
 #include "../rkconsole.h"
 #include "../settings/rksettingsmodulegeneral.h"
+#include "../settings/rksettingsmoduler.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkstandardactions.h"
 #include "../misc/rkstandardicons.h"
@@ -109,7 +110,8 @@ QString RKHTMLWindow::getDescription () {
 		return ("output:" + current_url.url ());
 
 	} else {
-		return ("help:" + current_url.url ());
+		QString fixed_url = current_url.url ().replace (RKSettingsModuleR::helpBaseUrl(), "rkward://RHELPBASE");
+		return ("help:" + fixed_url);
 	}
 }
 
@@ -236,6 +238,13 @@ bool RKHTMLWindow::handleRKWardURL (const KUrl &url) {
 				return true;
 			} else if (url.host () == "page") {
 				ok = renderRKHelp (url);
+			} else if (url.host ().toUpper () == "RHELPBASE") {	// NOTE: QUrl () may lowercase the host part, internally
+				KUrl fixed_url = KUrl (RKSettingsModuleR::helpBaseUrl ());
+				fixed_url.setPath (url.path ());
+				if (url.hasQuery ()) fixed_url.setQuery (url.query ());
+				if (url.hasFragment ()) fixed_url.setFragment (url.fragment ());
+qDebug ("%s -> %s", qPrintable (url.url ()), qPrintable (fixed_url.url ()));
+				ok = openURL (fixed_url);
 			}
 		
 			if (!ok) {

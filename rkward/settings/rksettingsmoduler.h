@@ -52,6 +52,9 @@ public:
 /** generate the commands needed to set the R run time options */
 	static QStringList makeRRunTimeOptionCommands ();
 
+/** retrieve the (probable) base url of help pages. May change across R sessions */
+	static QString helpBaseUrl () { return help_base_url; };
+
 	static int getDefaultWidth () { return options_width; };
 public slots:
 	void boxChanged (int);
@@ -88,6 +91,10 @@ private:
 
 // constants
 	static QString builtin_editor;
+
+// session constants
+	friend class RThread;
+	static QString help_base_url;
 };
 
 /**
