@@ -1,5 +1,5 @@
 	  TODO: We need to fix the output detection properly, after all. Otherwise, if the plugin produces an error, no re-run link is shown.
-- Add support for the dynamic help server introduced in R 2.10.0	TODO: backport (r2672, r2676)
+- Add support for the dynamic help server introduced in R 2.10.0	TODO: backport (r2672, r2677)
 - Assorted minor fixes and improvments to several plugins
 - Fix deadlock while handling some Tcl events		TODO: much more (stress-)testing, backport? (r2649)
 - Plugin dialogs close automatically after submitting (by default)
