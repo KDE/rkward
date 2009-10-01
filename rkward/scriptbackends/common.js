@@ -7,7 +7,7 @@ function printIndented (indentation, lines) {
 	echo (indentation + lines.replace (/\n/g, "\n" + indentation));
 }
 
-// A string-like object that should not be quoted
+/// A string-like object that will not be quoted by quote ()
 function Literal (text) {
 	this.text = text;
 	this.noquote = 1;
