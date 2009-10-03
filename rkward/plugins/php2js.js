@@ -182,9 +182,97 @@ function eatGlobals (input) {
 }
 
 
+// this function is meant to be run in step 2 (i.e. on already js code)
+function mergeEchos (line) {
+	var output_save = output;
+	output = "";
 
+	var directly_after_echo = false;
+	for (var i = 0; i < line.length; ++i) {
+		var c = line.charAt (i);
 
+		if (!directly_after_echo) {
+			if (c == "'") {
+				// hack: skips js quotes, too
+				i += convertPHPQuote (line.substr (i), "'");
+				continue;
+			}
+		}
 
+		if (line.indexOf ("echo", i) == i) {
+			i += 4;
+			var output_save_2 = output;
+			output = "";
+			while (line.charAt (i) != ";") {
+				if (line.charAt (i) == "'") {
+					i += convertPHPQuote (line.substr (i), "'");
+				} else {
+					output += line.charAt (i);
+					++i;
+				}
+			}
+
+			var fragment = output;
+			output = output_save_2;
+			if (i >= line.length) {
+				print ("Strange echo statement. Please check by hand.");
+				continue;
+			}
+			fragment = fragment.replace (/^\s*/, "");
+			fragment = fragment.replace (/^\(/, "");
+			fragment = fragment.replace (/\)$/, "");
+
+			if (!directly_after_echo) {
+				output += "echo (";
+			} else {
+				output += " + ";
+			}
+			output += fragment;
+
+			directly_after_echo = true;
+		} else {
+			if (directly_after_echo) {
+				if (c != " ") {
+					output += "); " + c;
+					directly_after_echo = false;
+				}
+			} else {
+				output += c;
+			}
+		}
+	}
+
+	if (directly_after_echo) {
+		output += ");";
+	}
+
+	var ret = output;
+	output = output_save;
+	return (ret);
+}
+
+function postProcess (input) {
+	var lines = input.split ("\n");
+	var olines = new Array ();
+
+	for (var i = 0; i < lines.length; ++i) {
+		if (lines[i].search (/^function /) >= 0) {
+			olines.push (lines[i]);
+			while (lines[++i].search (/^\s*$/) >= 0) {
+				// skip empty line
+			}
+			if (lines[i] == "}") {
+				// kill entire function
+				olines.pop ();
+				continue;
+			}
+		}
+//		olines.push (lines[i]);
+		olines.push (mergeEchos (lines[i]));
+	}
+
+	return (olines.join ("\n"));
+}
 
 // the output buffer
 var output = "";
@@ -195,6 +283,7 @@ file = readFile (arguments[0]);
 
 // main conversion step
 convertTopLevel (file);
+output = postProcess (output);
 
 // add global var declarations
 globals.sort ();
