@@ -71,6 +71,17 @@ function convertPHPBlock (input) {
 			}
 		}
 
+		// comments
+		if ((c == "/") && (cn == "/")) {
+			var eol = input.indexOf ("\n", i);
+			output += input.substring (i, eol);
+			i = eol - 1;
+			continue;
+		}
+		if ((c == "/") && (cn == "*")) {
+			print ("Warning: multiline comments are not handled! Check by hand!");
+		}
+
 		// handle quotes
 		if (c == "\"") {
 			output += c;
@@ -93,7 +104,7 @@ function convertPHPBlock (input) {
 		// replace some functions
 		if (input.indexOf ("getRK_val", i) == i) {
 			output += "getValue";
-			i += 9;
+			i += 8;
 			continue;
 		} else if (input.indexOf ("getRK", i) == i) {
 			// replace with an echo form to allow later merging of echo statements
@@ -111,7 +122,7 @@ function convertPHPBlock (input) {
 
 		// associative array operator
 		if ((c == "=") && (cn == ">")) {
-			print ("Warning: please check correctness of conversion of arrays by hand");
+			print ("Warning: please check correctness of conversion of '=>' in arrays by hand");
 			output += ", ";
 			i++;
 			continue;
@@ -138,12 +149,15 @@ function convertPHPQuote (input, quote_char) {
 			continue;
 		}
 
-		if ((c == "$") && (quote_char == "\"")) {
-			token = getToken (input.substr (i + 1));
+		if ((c == "$") && (quote_char == "\"") && (pass == 1)) {
+			if (input.charAt (i+1) != quote_char) {
+				print ("Warning: '$' inside '\"'-delimited string. This might be a variable name. Please check by hand!");
+			}
+/*			token = getToken (input.substr (i + 1));
 			output += quote_char + " + " + token;
 			i += token.length;
 			if (input.charAt (i + 1) != quote_char) output += " + " + quote_char;
-			continue;
+			continue; */
 		}
 
 		// end of string
@@ -168,7 +182,11 @@ function getToken (input) {
 		print ("Something's wrong. Token end not found. Token start was " + input.substr (0, 10));
 		return (input);
 	}
-	return (input.substr (0, i));
+	var token = input.substr (0, i);
+	if (token.search (/\[\]/) != -1) {
+		print ("Use of [] in token " + token + ". Please convert to 'X.push (Y)' by hand.");
+	}
+	return (token);
 }
 
 function eatGlobals (input) {
@@ -176,7 +194,8 @@ function eatGlobals (input) {
 	var text = input.substr (0, end);
 	var tokens = text.split (",");
 	for (var i = 0; i < tokens.length; ++i) {
-		globals.push (getToken (tokens[i].substr (1)));
+		var token = tokens[i].replace (/^[\$ ]*/, "");
+		globals.push (getToken (token + " "));
 	}
 	return (end);
 }
@@ -190,11 +209,18 @@ function mergeEchos (line) {
 	var directly_after_echo = false;
 	for (var i = 0; i < line.length; ++i) {
 		var c = line.charAt (i);
+		var cn = line.charAt (i + 1);
+
+		// comments
+		if ((c == "/") && (cn == "/")) {
+			break;
+		}
 
 		if (!directly_after_echo) {
-			if (c == "'") {
+			if ((c == "'") || (c == "\"")) {
 				// hack: skips js quotes, too
-				i += convertPHPQuote (line.substr (i), "'");
+				output += c;
+				i += convertPHPQuote (line.substr (i + 1), c);
 				continue;
 			}
 		}
@@ -203,13 +229,16 @@ function mergeEchos (line) {
 			i += 4;
 			var output_save_2 = output;
 			output = "";
-			while (line.charAt (i) != ";") {
-				if (line.charAt (i) == "'") {
-					i += convertPHPQuote (line.substr (i), "'");
+			var cb = line.charAt (i);
+			while (cb != ";") {
+				if ((cb == "'") || (cb == "\"")) {
+					output += cb;
+					i += convertPHPQuote (line.substr (i + 1), cb);
 				} else {
-					output += line.charAt (i);
-					++i;
+					output += cb;
 				}
+				++i;
+				cb = line.charAt (i);
 			}
 
 			var fragment = output;
@@ -218,9 +247,8 @@ function mergeEchos (line) {
 				print ("Strange echo statement. Please check by hand.");
 				continue;
 			}
-			fragment = fragment.replace (/^\s*/, "");
-			fragment = fragment.replace (/^\(/, "");
-			fragment = fragment.replace (/\)$/, "");
+			fragment = fragment.replace (/^\s*\(\s*/, "");
+			fragment = fragment.replace (/\s*\)\s*$/, "");
 
 			if (!directly_after_echo) {
 				output += "echo (";
@@ -274,15 +302,19 @@ function postProcess (input) {
 	return (olines.join ("\n"));
 }
 
+filename = arguments[0];
+file = readFile (filename);
+print ("--------- converting file " + filename);
+
 // the output buffer
 var output = "";
 // list of global vars
 globals = new Array ();
-
-file = readFile (arguments[0]);
+var pass = 1;
 
 // main conversion step
 convertTopLevel (file);
+pass = 2;
 output = postProcess (output);
 
 // add global var declarations
@@ -295,4 +327,14 @@ for (var i = globals.length; i >= 0; --i) {
 	}
 	if (i == 0) output = "// globals\n" + output;
 }
-print (output);
+
+// write to file
+importPackage(java.io); // From rhino directory
+function writeFile(file, content) {
+	var buffer = new PrintWriter( new FileWriter(file) );
+	buffer.print(content);
+	buffer.flush();
+	buffer.close();
+} 
+outfile = arguments[0].replace (/\.php$/, ".js");
+writeFile (outfile, output);
