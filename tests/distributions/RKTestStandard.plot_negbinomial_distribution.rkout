@@ -3,7 +3,7 @@
 <ul><li>Lower quantile: 0</li>
 <li>Upper quantile: 24</li>
 <li>Target for number of successful trials: 12</li>
-<li>Probability of success in each trial: 0.75000000</li>
+<li>Probability of success in each trial: 0.75</li>
 <li>Scale: normal</li>
 <li>Function: dnbinom</li>
 </ul>

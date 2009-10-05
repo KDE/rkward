@@ -10,5 +10,5 @@ try ({
 })
 rk.graph.off ()
 })
-.rk.rerun.plugin.link(plugin="rkward::plot_wilcoxon_distribution", settings="function.string=d\nlog.state=0\nmax.real=24.000000\nmin.real=0.000000\nnm.real=4.000000\nnn.real=6.000000\nplotoptions.add_grid.state=0\nplotoptions.asp.real=0.00000000\nplotoptions.main.text=\nplotoptions.pointcolor.color.string=\nplotoptions.pointtype.string=p\nplotoptions.sub.text=\nplotoptions.xaxt.state=\nplotoptions.xlab.text=\nplotoptions.xlog.state=\nplotoptions.xmaxvalue.text=\nplotoptions.xminvalue.text=\nplotoptions.yaxt.state=\nplotoptions.ylab.text=\nplotoptions.ylog.state=\nplotoptions.ymaxvalue.text=\nplotoptions.yminvalue.text=", label="Run again")
+.rk.rerun.plugin.link(plugin="rkward::plot_wilcoxon_distribution", settings="function.string=d\nlog.state=0\nmax.real=24.00\nmin.real=0.00\nnm.real=4.00\nnn.real=6.00\nplotoptions.add_grid.state=0\nplotoptions.asp.real=0.00\nplotoptions.main.text=\nplotoptions.pointcolor.color.string=\nplotoptions.pointtype.string=p\nplotoptions.sub.text=\nplotoptions.xaxt.state=\nplotoptions.xlab.text=\nplotoptions.xlog.state=\nplotoptions.xmaxvalue.text=\nplotoptions.xminvalue.text=\nplotoptions.yaxt.state=\nplotoptions.ylab.text=\nplotoptions.ylog.state=\nplotoptions.ymaxvalue.text=\nplotoptions.yminvalue.text=", label="Run again")
 .rk.make.hr()

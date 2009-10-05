@@ -1,10 +1,10 @@
 <h1>Univariate statistics</h1>
 <h2>Parameters</h2>
 <ul><li>Remove Missing values: TRUE</li>
-<li>Trimmed value for trimmed mean: 0.05000000</li>
-<li>Constant for the MAD estimation: 1.46280000</li>
-<li>Winsorized values for Huber estimator: 1.50000000</li>
-<li>Tolerance in Huber estimator: 0.070000</li>
+<li>Trimmed value for trimmed mean: 0.05</li>
+<li>Constant for the MAD estimation: 1.4628</li>
+<li>Winsorized values for Huber estimator: 1.50</li>
+<li>Tolerance in Huber estimator: 0.07</li>
 <li>Mu for Huber estimator: 3</li>
 <li>S for Huber estimator: </li>
 <li>Initial value: median</li>

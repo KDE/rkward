@@ -1,8 +1,8 @@
 <h1>Gumbel probability</h1>
 <h2>Parameters</h2>
 <ul><li>Vector of quantiles: c (0.95)</li>
-<li>Shape: 1.03000000</li>
-<li>Scale: 1.04000000</li>
+<li>Shape: 1.03</li>
+<li>Scale: 1.04</li>
 <li>Tail: lower.tail=TRUE</li>
 <li>Probabilities p are given as: log.p = FALSE</li>
 </ul>

@@ -1,7 +1,7 @@
 <h1>Exponential probabilities</h1>
 <h2>Parameters</h2>
 <ul><li>Vector of quantiles: c (0.96)</li>
-<li>Rate: 1.07000000</li>
+<li>Rate: 1.07</li>
 <li>Tail: lower.tail=TRUE</li>
 <li>Probabilities p are given as: log.p = FALSE</li>
 </ul>

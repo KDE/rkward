@@ -5,7 +5,7 @@
 <li>Continuity correction in normal approximation for p-value: FALSE</li>
 <li>Compute exact p-value: yes</li>
 <li>Paired test: FALSE</li>
-<li>mu: 0.00000000</li>
+<li>mu: 0.00</li>
 </ul>
 DATE<br>
 <table border="1">
@@ -20,7 +20,7 @@ DATE<br>
 <li>Continuity correction in normal approximation for p-value: TRUE</li>
 <li>Compute exact p-value: automatic</li>
 <li>Paired test: TRUE</li>
-<li>mu: 0.00000000</li>
+<li>mu: 0.00</li>
 </ul>
 DATE<br>
 <table border="1">

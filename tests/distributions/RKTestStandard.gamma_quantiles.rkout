@@ -1,8 +1,8 @@
 <h1>Gamma quantile</h1>
 <h2>Parameters</h2>
 <ul><li>Vector of probabilities: c (-5)</li>
-<li>Shape: 1.00000000</li>
-<li>Rate: 1.00000000</li>
+<li>Shape: 1.00</li>
+<li>Rate: 1.00</li>
 <li>Tail: lower.tail=TRUE</li>
 <li>Probabilities p are given as: log.p = TRUE</li>
 </ul>

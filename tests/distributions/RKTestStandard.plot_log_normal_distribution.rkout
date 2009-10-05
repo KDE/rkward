@@ -1,10 +1,10 @@
 <h1>Lognormal distribution function</h1>
 <h2>Parameters</h2>
 <ul><li>Number of Observations: 100</li>
-<li>Lower quantile: 0.01000000</li>
-<li>Upper quantile: 3.29000000</li>
-<li>Mean: 4.00000000</li>
-<li>Standard deviation: 1.00000000</li>
+<li>Lower quantile: 0.01</li>
+<li>Upper quantile: 3.29</li>
+<li>Mean: 4.00</li>
+<li>Standard deviation: 1.00</li>
 <li>Scale: normal</li>
 <li>Tail: Lower</li>
 <li>Function: plnorm</li>

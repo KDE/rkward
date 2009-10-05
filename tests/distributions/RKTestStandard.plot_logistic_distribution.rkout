@@ -1,10 +1,10 @@
 <h1>Logistic density function</h1>
 <h2>Parameters</h2>
 <ul><li>Number of Observations: 100</li>
-<li>Lower quantile: -3.29000000</li>
-<li>Upper quantile: 3.29000000</li>
-<li>Location: 0.00000000</li>
-<li>Scale: 1.00000000</li>
+<li>Lower quantile: -3.29</li>
+<li>Upper quantile: 3.29</li>
+<li>Location: 0.00</li>
+<li>Scale: 1.00</li>
 <li>Scale: normal</li>
 <li>Function: dlogis</li>
 </ul>

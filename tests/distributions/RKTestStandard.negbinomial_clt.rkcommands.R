@@ -3,7 +3,7 @@ local({
 ## Compute
 ## Print result
 # parameters:
-size <- 12; prob <- 0.28000000;
+size <- 12; prob <- 0.28;
 # mean and variances of the distribution of sample averages:
 avg.exp <- size*(1-prob)/prob;
 avg.var <- (size*(1-prob)/prob^2)/10;
@@ -24,5 +24,5 @@ try ({
 })
 rk.graph.off ()
 })
-.rk.rerun.plugin.link(plugin="rkward::plot_negbinomial_clt", settings="drawnorm.state=1\nfunction.string=hist\nhistogram_opt.addtoplot.state=\nhistogram_opt.barlabels.state=\nhistogram_opt.density.real=-1.000000\nhistogram_opt.doborder.state=1\nhistogram_opt.freq.state=0\nhistogram_opt.histbordercol.color.string=\nhistogram_opt.histbreaksFunction.string=Sturges\nhistogram_opt.histlinetype.string=solid\nhistogram_opt.rightclosed.state=1\nhistogram_opt.usefillcol.state=\nnAvg.real=10.000000\nnDist.real=1000.000000\nnormlinecol.color.string=red\nnormpointtype.string=l\nparam.string=pprob\nplotoptions.add_grid.state=0\nplotoptions.asp.real=0.00000000\nplotoptions.main.text=\nplotoptions.pointcolor.color.string=\nplotoptions.pointtype.string=\nplotoptions.sub.text=\nplotoptions.xaxt.state=\nplotoptions.xlab.text=\nplotoptions.xlog.state=\nplotoptions.xmaxvalue.text=\nplotoptions.xminvalue.text=\nplotoptions.yaxt.state=\nplotoptions.ylab.text=\nplotoptions.ylog.state=\nplotoptions.ymaxvalue.text=\nplotoptions.yminvalue.text=\nprob.real=0.28000000\nscalenorm.state=0\nsize_disp.real=12.00000000\nsize_trial.real=12.000000", label="Run again")
+.rk.rerun.plugin.link(plugin="rkward::plot_negbinomial_clt", settings="drawnorm.state=1\nfunction.string=hist\nhistogram_opt.addtoplot.state=\nhistogram_opt.barlabels.state=\nhistogram_opt.density.real=-1.00\nhistogram_opt.doborder.state=1\nhistogram_opt.freq.state=0\nhistogram_opt.histbordercol.color.string=\nhistogram_opt.histbreaksFunction.string=Sturges\nhistogram_opt.histlinetype.string=solid\nhistogram_opt.rightclosed.state=1\nhistogram_opt.usefillcol.state=\nnAvg.real=10.00\nnDist.real=1000.00\nnormlinecol.color.string=red\nnormpointtype.string=l\nparam.string=pprob\nplotoptions.add_grid.state=0\nplotoptions.asp.real=0.00\nplotoptions.main.text=\nplotoptions.pointcolor.color.string=\nplotoptions.pointtype.string=\nplotoptions.sub.text=\nplotoptions.xaxt.state=\nplotoptions.xlab.text=\nplotoptions.xlog.state=\nplotoptions.xmaxvalue.text=\nplotoptions.xminvalue.text=\nplotoptions.yaxt.state=\nplotoptions.ylab.text=\nplotoptions.ylog.state=\nplotoptions.ymaxvalue.text=\nplotoptions.yminvalue.text=\nprob.real=0.28\nscalenorm.state=0\nsize_disp.real=12.0\nsize_trial.real=12.00", label="Run again")
 .rk.make.hr()

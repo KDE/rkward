@@ -3,7 +3,7 @@
 <ul><li>Comparing: test50x against test10y</li>
 <li>Alternative Hypothesis: true ratio of scales is not equal to 1</li>
 <li>Compute exact p-value: yes</li>
-<li>Confidence Level: 0.95000000</li>
+<li>Confidence Level: 0.95</li>
 </ul>
 DATE<br>
 <table border="1">

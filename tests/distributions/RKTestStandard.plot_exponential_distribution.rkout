@@ -1,9 +1,9 @@
 <h1>Exponential distribution function</h1>
 <h2>Parameters</h2>
 <ul><li>Number of Observations: 100</li>
-<li>Lower quantile: 0.00000000</li>
-<li>Upper quantile: 10.00000000</li>
-<li>Rate: 1.00000000</li>
+<li>Lower quantile: 0.00</li>
+<li>Upper quantile: 10.00</li>
+<li>Rate: 1.00</li>
 <li>Scale: normal</li>
 <li>Tail: Upper</li>
 <li>Function: pexp</li>

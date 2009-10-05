@@ -23,12 +23,12 @@ for (i in 1:length (vars))  {
 	results[i, 'Quantiles'] <- paste (names (temp), temp, sep=": ", collapse=" ")
 	
 	#robust statistics
-	results[i, 'Trimmed Mean'] <- mean (var, trim=0.05000000, na.rm=TRUE)
-	results[i, 'Median Absolute Deviation'] <- mad (var, constant=1.46280000, na.rm=TRUE)
+	results[i, 'Trimmed Mean'] <- mean (var, trim=0.05, na.rm=TRUE)
+	results[i, 'Median Absolute Deviation'] <- mad (var, constant=1.4628, na.rm=TRUE)
 	require ("MASS")
 	temp <- list (c('Location Estimate','Mad scale estimate'), c(NA,NA))
 	try({
-		temp <- hubers (var, k = 1.50000000,tol=0.070000, mu=3, s=,initmu =median(var))
+		temp <- hubers (var, k = 1.50,tol=0.07, mu=3, s=,initmu =median(var))
 	})
 	results[i, 'Huber M-Estimator'] <- paste (temp[[1]], temp[[2]], sep=": ", collapse=" ")
 }
@@ -37,10 +37,10 @@ for (i in 1:length (vars))  {
 'my.data' <- results
 ## Print result
 rk.header ("Univariate statistics", parameters=list (
-"Remove Missing values", TRUE, "Trimmed value for trimmed mean", "0.05000000"
-, "Constant for the MAD estimation", "1.46280000"
-, "Winsorized values for Huber estimator", "1.50000000"
-, "Tolerance in Huber estimator", "0.070000"
+"Remove Missing values", TRUE, "Trimmed value for trimmed mean", "0.05"
+, "Constant for the MAD estimation", "1.4628"
+, "Winsorized values for Huber estimator", "1.50"
+, "Tolerance in Huber estimator", "0.07"
 , "Mu for Huber estimator", "3"
 , "S for Huber estimator", ""
 , "Initial value", "median"
@@ -48,5 +48,5 @@ rk.header ("Univariate statistics", parameters=list (
 
 rk.results (results)
 })
-.rk.rerun.plugin.link(plugin="rkward::basic_statistics", settings="autre.real=6.000000\nconstMad.real=1.46280000\ncustomMu.state=1\ncustomS.state=1\nhuber.state=1\ninitmu.string=median\nirq.state=1\nlength.state=1\nmad.state=1\nmaximum.state=1\nmean.state=1\nmedian.state=1\nminimum.state=1\nmu.text=3\nnarm.state=1\nnbmaximum.real=0.000000\nnbminimum.real=0.000000\nnom.selection=my.data\npourcent.real=0.05000000\nquartile.state=1\nresult.state=1\ns.text=\nsd.state=1\ntol.real=0.070000\ntrim.state=1\nvari.state=1\nwinsor.real=1.50000000\nz.available=women[[\\\"weight\\\"]]\\ntest50x", label="Run again")
+.rk.rerun.plugin.link(plugin="rkward::basic_statistics", settings="autre.real=6.00\nconstMad.real=1.4628\ncustomMu.state=1\ncustomS.state=1\nhuber.state=1\ninitmu.string=median\nirq.state=1\nlength.state=1\nmad.state=1\nmaximum.state=1\nmean.state=1\nmedian.state=1\nminimum.state=1\nmu.text=3\nnarm.state=1\nnbmaximum.real=0.00\nnbminimum.real=0.00\nnom.selection=my.data\npourcent.real=0.05\nquartile.state=1\nresult.state=1\ns.text=\nsd.state=1\ntol.real=0.07\ntrim.state=1\nvari.state=1\nwinsor.real=1.50\nz.available=women[[\\\"weight\\\"]]\\ntest50x", label="Run again")
 .rk.make.hr()

@@ -1,10 +1,10 @@
 <h1>Chisquare density function</h1>
 <h2>Parameters</h2>
 <ul><li>Number of Observations: 100</li>
-<li>Lower quantile: 0.30000000</li>
-<li>Upper quantile: 24.10000000</li>
-<li>Degrees of freedom: 4.00000000</li>
-<li>Non-centrality parameter: 0.00000000</li>
+<li>Lower quantile: 0.30</li>
+<li>Upper quantile: 24.10</li>
+<li>Degrees of freedom: 4.00</li>
+<li>Non-centrality parameter: 0.00</li>
 <li>Scale: normal</li>
 <li>Function: dchisq</li>
 </ul>

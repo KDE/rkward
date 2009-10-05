@@ -1,6 +1,6 @@
 <h1>F test to compare two variances</h1>
 <h2>Parameters</h2>
-<ul><li>Confidence Level: 0.95000000</li>
+<ul><li>Confidence Level: 0.95</li>
 <li>Alternative Hypothesis: true ratio of variances is not equal to 1</li>
 </ul>
 DATE<br>

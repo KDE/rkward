@@ -1,9 +1,9 @@
 <h1>F probability</h1>
 <h2>Parameters</h2>
 <ul><li>Vector of quantiles: c (.1, .2)</li>
-<li>Numerator degrees of freedom: 1.02000000</li>
-<li>Denominator degrees of freedom: 1.11000000</li>
-<li>non-centrality parameter: 0.02000000</li>
+<li>Numerator degrees of freedom: 1.02</li>
+<li>Denominator degrees of freedom: 1.11</li>
+<li>non-centrality parameter: 0.02</li>
 <li>Tail: lower.tail=TRUE</li>
 <li>Probabilities p are given as: log.p = FALSE</li>
 </ul>

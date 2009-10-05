@@ -11,7 +11,7 @@ rk.header (result$method,
 	parameters=list ("Comparing", paste (names[1], "against", names[2]),
 	'H1', rk.describe.alternative (result),
 	"Compute exact p-value", "yes",
-	"Confidence Level", "0.95000000" ))
+	"Confidence Level", "0.95" ))
 
 rk.results (list (
 	'Variable Names'=names,
@@ -22,7 +22,7 @@ rk.results (list (
 	'confidence interval of difference'=result$conf.int,
 	'estimate of the ratio of scales'=result$estimate))
 })
-.rk.rerun.plugin.link(plugin="rkward::ansari_bradley_exact_test", settings="alternative.string=two.sided\nconfint.state=TRUE\nconflevel.real=0.95000000\nexact.string=yes\nx.available=test50x\ny.available=test10y", label="Run again")
+.rk.rerun.plugin.link(plugin="rkward::ansari_bradley_exact_test", settings="alternative.string=two.sided\nconfint.state=TRUE\nconflevel.real=0.95\nexact.string=yes\nx.available=test50x\ny.available=test10y", label="Run again")
 .rk.make.hr()
 local({
 ## Prepare

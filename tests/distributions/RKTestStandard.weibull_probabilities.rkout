@@ -1,8 +1,8 @@
 <h1>Weibull probability</h1>
 <h2>Parameters</h2>
 <ul><li>Vector of quantiles: c (0.95)</li>
-<li>Shape: 1.00000000</li>
-<li>Scale: 1.00000000</li>
+<li>Shape: 1.00</li>
+<li>Scale: 1.00</li>
 <li>Tail: lower.tail=TRUE</li>
 <li>Probabilities p are given as: log.p = FALSE</li>
 </ul>

@@ -22,5 +22,5 @@ rk.header ("Box-Pierce Test",
 
 rk.results (results)
 })
-.rk.rerun.plugin.link(plugin="rkward::Box_test", settings="lag.real=1.000000\nlength.state=1\nnarm.state=0\ntype.string=Box-Pierce\nx.available=test50x\\ntest10y", label="Run again")
+.rk.rerun.plugin.link(plugin="rkward::Box_test", settings="lag.real=1.00\nlength.state=1\nnarm.state=0\ntype.string=Box-Pierce\nx.available=test50x\\ntest10y", label="Run again")
 .rk.make.hr()

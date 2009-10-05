@@ -51,7 +51,7 @@ suite <- new ("RKTestSuite", id="import_export_plugins",
 			stopifnot (oldwd == getwd ())
 		}),
 		new ("RKTest", id="import_spss", call=function () {
-			rk.call.plugin ("rkward::import_spss", convert_var_labels.state="1", data_frame.state="1", do_locale_conversion.state="0", doedit.state="0", file.selection="../import_export_plugins_testfile.sav", labels_limit.real="1000000.000000", saveto.selection="my.spss.data", trim_labels.state="0", use_labels.state="1", submit.mode="submit")
+			rk.call.plugin ("rkward::import_spss", convert_var_labels.state="1", data_frame.state="1", do_locale_conversion.state="0", doedit.state="0", file.selection="../import_export_plugins_testfile.sav", labels_limit.real="1.00", saveto.selection="my.spss.data", trim_labels.state="0", use_labels.state="1", submit.mode="submit")
 
 			# In order to check, whether the import was correct
 			rk.print (my.spss.data)
@@ -92,7 +92,7 @@ suite <- new ("RKTestSuite", id="import_export_plugins",
 			assign ("testx", c (1:10), globalenv())
 			rk.sync.global()
 
-			rk.call.plugin ("rkward::save_variables", append.state="FALSE", data.available="testx", file.selection="data", ncolumns.real="2.000000", sep.string=",", submit.mode="submit")
+			rk.call.plugin ("rkward::save_variables", append.state="FALSE", data.available="testx", file.selection="data", ncolumns.real="2.", sep.string=",", submit.mode="submit")
 
 			x <- readLines ("data")
 			for (line in x) rk.print (line)

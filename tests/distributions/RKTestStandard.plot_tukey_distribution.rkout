@@ -1,10 +1,10 @@
 <h1>Tukey distribution function</h1>
 <h2>Parameters</h2>
 <ul><li>Number of Observations: 101</li>
-<li>Lower quantile: -1.00000000</li>
-<li>Upper quantile: 8.00000000</li>
+<li>Lower quantile: -1.00</li>
+<li>Upper quantile: 8.00</li>
 <li>Sample size for range: 6</li>
-<li>Degreed of freedom for s: 5.00000000</li>
+<li>Degreed of freedom for s: 5.00</li>
 <li>Number of groups: 1</li>
 <li>Scale: normal</li>
 <li>Tail: Lower</li>

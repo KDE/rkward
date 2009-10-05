@@ -1,8 +1,8 @@
 <h1>Cauchy probabilities</h1>
 <h2>Parameters</h2>
 <ul><li>Vector of quantiles: c (0.95)</li>
-<li>Location: 0.03000000</li>
-<li>Scale: 1.02000000</li>
+<li>Location: 0.03</li>
+<li>Scale: 1.02</li>
 <li>Tail: lower.tail=TRUE</li>
 <li>Probabilities p are given as: log.p = FALSE</li>
 </ul>
@@ -10,8 +10,8 @@ DATE<br>
 <h3>Cauchy probabilities: 0.7336</h3><h1>Cauchy probabilities</h1>
 <h2>Parameters</h2>
 <ul><li>Vector of quantiles: c (0.95)</li>
-<li>Location: -0.02000000</li>
-<li>Scale: 1.03000000</li>
+<li>Location: -0.02</li>
+<li>Scale: 1.03</li>
 <li>Tail: lower.tail=FALSE</li>
 <li>Probabilities p are given as: log.p = TRUE</li>
 </ul>
