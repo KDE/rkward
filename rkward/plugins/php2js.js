@@ -20,6 +20,7 @@ function convertTopLevel (input) {
 					output += "'); ";
 					in_echo = false;
 				}
+				if (input.substr (i+2, 3) == "php") i += 3;
 				i += 1 + convertPHPBlock (input.substr (i+2));
 				first_char = true;
 				continue;
@@ -39,6 +40,7 @@ function convertTopLevel (input) {
 		}
 
 		if (c == "'") c = "\\'";
+		else if (c == "\\") c = "\\\\";
 //		else if (c == "\t") c = "\\t";
 		else if (c == "\n") {
 			c = "\\n');\n"
@@ -139,13 +141,16 @@ function convertPHPBlock (input) {
 }
 
 function convertPHPQuote (input, quote_char) {
+	var inside_quote = "";
+	var closed = false;
+
 	for (var i = 0; i < input.length; ++i) {
 		var c = input.charAt (i);
 
 		// handle escapes first
 		if (c == "\\") {
-			output += c;
-			output += input.charAt (++i);
+			inside_quote += c;
+			inside_quote += input.charAt (++i);
 			continue;
 		}
 
@@ -162,15 +167,24 @@ function convertPHPQuote (input, quote_char) {
 
 		// end of string
 		if (c == quote_char) {
-			output += c;
-			return (i + 1);
+			closed = true;
+			break;
 		}
 
-		output += c;
+		inside_quote += c;
 	}
 
-	print ("Something's wrong. Closing " + quote_char + " not found.");
-	return input.length;
+/*	// unquote numeric constants
+	if ((inside_quote.length > 0) && (!isNaN (inside_quote))) {
+		output = output.substr (0, output.length -1);	// ugly hack: remove quote already added
+		output += inside_quote;
+	} else {
+		output += inside_quote + quote_char;
+	}*/
+	output += inside_quote + quote_char;
+
+	if (!closed) print ("Something's wrong. Closing " + quote_char + " not found.");
+	return i + 1;
 }
 
 function getToken (input) {
@@ -295,6 +309,9 @@ function postProcess (input) {
 				continue;
 			}
 		}
+		// fix includes
+		lines[i] = lines[i].replace (/^include\s*\(\s*[\"\']([^\)]*)\.php[\"\']\s*\)/, "include ('$1.js')");
+
 //		olines.push (lines[i]);
 		olines.push (mergeEchos (lines[i]));
 	}
