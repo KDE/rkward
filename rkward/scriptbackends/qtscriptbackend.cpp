@@ -187,7 +187,7 @@ QVariant QtScriptBackendThread::getValue (const QString &identifier) {
 	}
 
 	// return "0" as numeric constant. Many plugins rely on this form PHP times.
-	if (ret == "") return (QVariant (0.0));
+	if (ret == "0") return (QVariant (0.0));
 	else return (QVariant (ret));
 }
 
