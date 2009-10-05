@@ -112,6 +112,15 @@ RKComponent::UnserializeError RKComponentBase::unserializeState (const QStringLi
 	UnserializeError error = NoError;
 	for (QMap<QString, QString>::const_iterator it = props.constBegin (); it != props.constEnd (); ++it) {
 		if (fetchStringValue (it.key ()) != it.value ()) {
+			// COMPAT: In RKWard 0.5.1, the formatting of real numbers was different. Hence we compare the numeric values, instead
+			QString dummy;
+			RKComponentBase *prop = lookupComponent (it.key (), &dummy);
+			if (dummy.isEmpty () && prop && prop->type () == PropertyDouble) {
+				if (static_cast<RKComponentPropertyDouble*> (prop)->doubleValue () == it.value ().toDouble ()) {
+					continue;
+				}
+			}
+
 			RK_DO(qDebug ("Tried to apply value %s to property %s, but got %s", qPrintable (it.value ()), qPrintable (it.key ()), qPrintable (fetchStringValue (it.key ()))), PLUGIN, DL_INFO);
 			error = NotAllSettingsApplied;
 		}
@@ -279,6 +288,7 @@ void RKComponent::removeFromParent () {
 	// even if we remove a little more than necessary along the way.
 	QString key = getIdInParent ();
 	while (parentComponent ()->child_map.remove (key)) {;}
+	_parent = 0;
 }
 
 QString RKComponent::getIdInParent () const {

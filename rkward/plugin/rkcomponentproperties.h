@@ -176,7 +176,7 @@ public:
 	void setMin (double lower=FLT_MIN);
 /** set upper boundary. Default parameter will effectively remove the boundary. You should call this *before* connecting to any other properties, so limits can be reconciled */
 	void setMax (double upper=FLT_MAX);
-/** set text precision (default = 6) */
+/** set text precision (default = 2) */
 	void setPrecision (int digits) { precision = digits; };
 /** return current min value */
 	double minValue ();
