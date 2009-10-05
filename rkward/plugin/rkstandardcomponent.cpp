@@ -68,6 +68,7 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 	gui = 0;
 	wizard = 0;
 	created = false;
+	killed = false;
 	addChild ("code", code = new RKComponentPropertyCode (this, true));		// do not change this name!
 	code->setInternal (true);
 
@@ -76,8 +77,7 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 	QDomElement doc_element = xml->openXMLFile (filename, DL_ERROR);
 	if (xml->highestError () >= DL_ERROR) {
 		KMessageBox::error (this, i18n ("There has been an error while trying to parse the description of this plugin ('%1'). Please refer to stdout for details.", filename), i18n ("Could not create plugin"));
-		removeFromParent ();
-		deleteLater ();
+		kill ();
 		return;
 	}
 
@@ -101,9 +101,7 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 	}
 	connect (backend, SIGNAL (idle ()), this, SLOT (backendIdle ()));
 	connect (backend, SIGNAL (requestValue (const QString&)), this, SLOT (getValue (const QString&)));
-	connect (backend, SIGNAL (haveError ()), this, SLOT (hide ()));
-	connect (backend, SIGNAL (haveError ()), this, SLOT (removeFromParent ()));
-	connect (backend, SIGNAL (haveError ()), this, SLOT (deleteLater ()));
+	connect (backend, SIGNAL (haveError ()), this, SLOT (kill ()));
 	if (!backend->initialize (code, parent_component == 0)) return;
 
 	// check for existence of help file
@@ -119,7 +117,7 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 	if (!parent_component) {					// top-level
 		if (!createTopLevel (doc_element)) {
 			RK_ASSERT (false);
-			deleteLater ();
+			kill ();
 			return;		// should never happen
 		}
 	} else if (!parent_widget) {				// we have a parent component, but should still have a separate GUI
@@ -127,7 +125,7 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 		if (parentComponent ()->isWizardish ()) force_mode = 2;
 		if (!createTopLevel (doc_element, force_mode, true)) {
 			RK_ASSERT (false);
-			deleteLater ();
+			kill ();
 			return;		// should never happen
 		}		
 	} else {
@@ -150,7 +148,7 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 			gui_element = xml->getChildElement (doc_element, "dialog", DL_WARNING);
 			if (gui_element.isNull ()) {
 				xml->displayError (&doc_element, "Cannot embed a wizard into a dialog, and no dialog definition available", DL_ERROR);
-				deleteLater ();
+				kill ();
 				return;
 			}
 		}
@@ -163,6 +161,17 @@ RKStandardComponent::~RKStandardComponent () {
 
 	if (gui) gui->deleteLater ();
 	backend->destroy ();	// it will self-destruct, when it has closed the process.
+}
+
+void RKStandardComponent::kill () {
+	RK_TRACE (PLUGIN);
+
+	if (killed) return;
+	killed = true;
+
+	hide ();
+	removeFromParent ();
+	deleteLater ();
 }
 
 void RKStandardComponent::hide () {
@@ -326,7 +335,9 @@ bool RKStandardComponent::submit (int max_wait, RCommandChain *in_chain) {
 	QTime t;
 	t.start ();
 	while ((handle_change_timer->isActive () || backend->isBusy ()) && (t.elapsed () < max_wait)) {
+		if (killed) return (false);
 		QCoreApplication::processEvents (QEventLoop::ExcludeUserInputEvents, (max_wait / 2));
+		if (killed) return (false);
 	}
 	if (!(handle_change_timer->isActive () || backend->isBusy ())) {
 		if (isSatisfied ()) {

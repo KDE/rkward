@@ -276,7 +276,9 @@ bool RKComponentMap::invokeComponent (const QString &component_id, const QString
 		bool submit_ok = component->submit (50000, in_chain);
 #endif
 		if (!submit_ok) {
-			if (submit_mode == AutoSubmitOrFail) component->close ();
+			if (submit_mode == AutoSubmitOrFail) {
+				component->kill ();
+			}
 
 			_message.append (i18n ("\nThe plugin could not be auto-submitted with these settings."));
 			if (message) *message = _message;

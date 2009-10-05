@@ -93,9 +93,11 @@ public slots:
 /** for enslaved components */
 	void showGUI ();
 	void handleChange ();
+	void kill ();
 private:
 /** The property holding the generated code. Note that this member is tightly controlled by the ScriptBackend */
 	RKComponentPropertyCode *code;
+	bool killed;
 	QString filename;
 	bool have_help;	// TODO: replace by filename, once we use the help more
 	ScriptBackend *backend;
