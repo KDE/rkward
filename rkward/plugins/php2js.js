@@ -281,6 +281,11 @@ function mergeEchos (line) {
 			} else {
 				output += c;
 			}
+			
+			if (line.indexOf ("if", i) == i) {
+				output += "f";
+				i += feedthroughControlStatement (line.substr (i+2)) + 2;
+			}
 		}
 	}
 
@@ -291,6 +296,40 @@ function mergeEchos (line) {
 	var ret = output;
 	output = output_save;
 	return (ret);
+}
+
+function feedthroughControlStatement (input) {
+	var levelstack = new Array ();
+	for (var i = 0; i < input.length; ++i) {
+		var c = input.charAt (i);
+
+		output += c;
+
+		if ((c == "{") || (c == "(")) {
+			levelstack.push (c);
+		} else if (c == "}") {
+			if (levelstack[levelstack.length - 1] == "{") {
+				levelstack.pop ();
+				if (levelstack.length == 0) {
+					return i;
+				}
+			} else {
+				print ("Warning: Brace mismatch while postprocessing " + input);
+			}
+		} else if (c == ")") {
+			if (levelstack[levelstack.length - 1] == "(") {
+				levelstack.pop ();
+			} else {
+				print ("Warning: Brace mismatch while postprocessing " + input);
+			}
+		} else if (c == ";") {
+			if (levelstack.length == 0) {
+				print ("Note: Control statement without braces. This is bad style. ");
+				return i;
+			}
+		}
+	}
+	return i;	// end of line reached is an ok condition
 }
 
 function postProcess (input) {
