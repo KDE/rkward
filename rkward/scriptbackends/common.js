@@ -27,7 +27,7 @@ function makeHeaderCode (title, parameters) {
 	echo ("rk.header(" + quote (title));
 	if (parameters.length) {
 		echo (", parameters=list(");
-		for (p = 0; p < parameters.length; ++p) {
+		for (var p = 0; p < parameters.length; ++p) {
 			if (p) {
 				echo (", ");
 				if (!(p % 2)) echo ("\n\t");
@@ -52,31 +52,41 @@ function include (file) {
 }
 
 function flushOutput () {
-	string = this._script_output + "\n";
+	var string = this._script_output;
 	this._script_output = "";
 	return (string);
 }
 
 function do_preprocess () {
-	if (typeof (preprocess) == "undefined") return;
+	if (typeof (preprocess) == "undefined") return ("");
 	preprocess ();
 	return (flushOutput ());
 }
 
 function do_calculate () {
-	if (typeof (calculate) == "undefined") return;
+	if (typeof (calculate) == "undefined") return ("");
 	calculate ();
 	return (flushOutput ());
 }
 
 function do_printout () {
-	if (typeof (printout) == "undefined") return;
+	if (typeof (printout) == "undefined") return ("");
 	printout ();
 	return (flushOutput ());
 }
 
 function do_preview () {
-	if (typeof (preview) == "undefined") return;
+	if (typeof (preview) == "undefined") return ("");
 	preview ();
 	return (flushOutput ());
+}
+
+// for compatibility with the converted PHP code
+function trim (text) {
+	var ret = text.replace (/^\s*/, "").replace (/\s*$/, "");
+	return (ret);
+}
+
+function str_replace (needle, replacement, haystack) {
+	return (haystack.split (needle).join (replacement));
 }

@@ -39,7 +39,7 @@ QtScriptBackend::QtScriptBackend (const QString &filename) : ScriptBackend () {
 QtScriptBackend::~QtScriptBackend () {
 	RK_TRACE (PHP);
 
-	if (script_thread) script_thread->terminate ();
+	if (script_thread && script_thread->isRunning ()) script_thread->terminate ();
 }
 
 bool QtScriptBackend::initialize (RKComponentPropertyCode *code_property, bool add_headings) {
@@ -70,7 +70,7 @@ void QtScriptBackend::destroy () {
 	RK_TRACE (PHP);
 	if (!dead) {
 		dead = true;
-		if (script_thread) script_thread->terminate ();
+		if (script_thread) script_thread->kill ();
 		QTimer::singleShot (10000, this, SLOT (deleteLater()));	// don't wait for ever for the process to die, even if it's somewhat dangerous
 	}
 
@@ -138,6 +138,7 @@ QtScriptBackendThread::QtScriptBackendThread (const QString &commonfile, const Q
 
 	_commonfile = commonfile;
 	_scriptfile = scriptfile;
+	killed = false;
 }
 
 QtScriptBackendThread::~QtScriptBackendThread () {
@@ -164,13 +165,15 @@ void QtScriptBackendThread::setData (const QString &data) {
 	mutex.unlock ();
 }
 
-QString QtScriptBackendThread::getValue (const QString &identifier) {
+QVariant QtScriptBackendThread::getValue (const QString &identifier) {
 	RK_TRACE (PHP);
 
 	emit (needData (identifier));
 
 	QString ret;
 	while (1) {
+		if (killed) return QVariant ();
+
 		mutex.lock ();
 		if (!_data.isNull ()) {
 			ret = _data;
@@ -178,10 +181,14 @@ QString QtScriptBackendThread::getValue (const QString &identifier) {
 		}
 		mutex.unlock ();
 
-		if (!ret.isNull ()) return (ret);
+		if (!ret.isNull ()) break;
 
 		usleep (20);	// getValue () may be called very often, and we expect an answer very soon, so we don't sleep too long.
 	}
+
+	// return "0" as numeric constant. Many plugins rely on this form PHP times.
+	if (ret == "") return (QVariant (0.0));
+	else return (QVariant (ret));
 }
 
 bool QtScriptBackendThread::scriptError () {
@@ -234,6 +241,8 @@ void QtScriptBackendThread::run () {
 
 	QString command;
 	while (1) {
+		if (killed) return;
+
 		mutex.lock ();
 		if (!_command.isNull ()) {
 			command = _command;

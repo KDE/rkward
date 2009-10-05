@@ -67,12 +67,13 @@ public:
 
 	void setCommand (const QString &command);
 	void setData (const QString &data);
+	void kill () { killed = true; };
 signals:
 	void commandDone (const QString &result);
 	void needData (const QString &identifier);
 	void error (const QString &error);
 protected slots:
-	QString getValue (const QString &identifier);
+	QVariant getValue (const QString &identifier);
 	bool includeFile (const QString &filename);
 protected:
 	void run ();
@@ -86,6 +87,8 @@ private:
 	QString _scriptfile;
 
 	QScriptEngine engine;
+
+	bool killed;
 
 	QMutex mutex;
 };
