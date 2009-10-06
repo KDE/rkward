@@ -25,6 +25,7 @@
 #include <QVBoxLayout>
 #include <QGroupBox>
 #include <QTime>
+#include <QObjectCleanupHandler>
 
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -328,6 +329,10 @@ void RKStandardComponent::buildAndInitialize (const QDomElement &doc_element, co
 bool RKStandardComponent::submit (int max_wait, RCommandChain *in_chain) {
 	RK_TRACE (PLUGIN);
 
+	// the call to processEvents(), below, is quite dangerous, as the component self-destructs on errors. This helps us prevent crashes.
+	QObjectCleanupHandler chandler;
+	chandler.add (this);
+
 	RCommandChain *old_chain = command_chain; 	// should always be 0, but let's store it cleanly
 	command_chain = in_chain;
 	bool result = false;
@@ -335,9 +340,9 @@ bool RKStandardComponent::submit (int max_wait, RCommandChain *in_chain) {
 	QTime t;
 	t.start ();
 	while ((handle_change_timer->isActive () || backend->isBusy ()) && (t.elapsed () < max_wait)) {
-		if (killed) return (false);
+		if (chandler.isEmpty () || killed) return (false);
 		QCoreApplication::processEvents (QEventLoop::ExcludeUserInputEvents, (max_wait / 2));
-		if (killed) return (false);
+		if (chandler.isEmpty () || killed) return (false);
 	}
 	if (!(handle_change_timer->isActive () || backend->isBusy ())) {
 		if (isSatisfied ()) {
@@ -345,7 +350,9 @@ bool RKStandardComponent::submit (int max_wait, RCommandChain *in_chain) {
 			result = true;
 		}
 	}
+	if (chandler.isEmpty () || killed) return (result);
 	command_chain = old_chain;
+	chandler.remove (this);
 	return result;
 }
 
