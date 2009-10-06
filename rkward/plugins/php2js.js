@@ -117,6 +117,10 @@ function convertPHPBlock (input) {
 			continue;
 		} else if (input.indexOf ("Array", i) == i) {
 			output += "new ";
+		} else if (input.indexOf ("array", i) == i) {
+			output += "new Array";
+			i += 5;
+			continue;
 		} else if (input.indexOf ("global ", i) == i) {
 			i += 7 + eatGlobals (input.substr (i + 7));
 			continue;
