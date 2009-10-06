@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward" version="0.5.1">
+<kpartgui name="rkward" version="51">
 	<MenuBar>
 		<Menu name="edit" noMerge="1"><text>&amp;Edit</text>
 			<Menu name="tools"><text>&amp;Tools Move</text>

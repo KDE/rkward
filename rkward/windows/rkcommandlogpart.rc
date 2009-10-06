@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward" version="0.5.1">
+<kpartgui name="rkward" version="51">
 	<Menubar>
 		<Menu name="edit"><text>&amp;Edit</text>
 			<Action name="log_select_all"/>

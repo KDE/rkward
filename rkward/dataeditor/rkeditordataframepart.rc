@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkeditordataframepart" version="0.5.0">
+<kpartgui name="rkeditordataframepart" version="50">
 	<MenuBar>
 		<Menu name="edit"><text>&amp;Edit</text>
 			<Action name="cut"/>

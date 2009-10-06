@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward" version="0.5.1">
+<kpartgui name="rkward" version="51">
 <!-- What is this for, wouldn't it be easier to just inline these actions in the parts where they
      end up? Yes, but then they would be separate actions, internally, and each could be assigned
      a shortcut of its own. This is needed to tie them all together. -->

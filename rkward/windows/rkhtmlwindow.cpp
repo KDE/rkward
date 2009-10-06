@@ -255,13 +255,16 @@ bool RKHTMLWindow::openURL (const KUrl &url) {
 
 	if (handleRKWardURL (url)) return true;
 	if (window_mode == HTMLOutputWindow) {
-		// output window should not change url after initialization
-		if ((url != current_url) && (!current_url.isEmpty ())) {
-			RK_ASSERT (false);
-			return false;
+		if (url != current_url) {
+			// output window should not change url after initialization
+			if (!current_url.isEmpty ()) {
+				RK_ASSERT (false);
+				return false;
+			}
+
+			current_url = url;	// needs to be set before registering
+			RKOutputWindowManager::self ()->registerWindow (this);
 		}
-		current_url = url;	// needs to be set before registering
-		RKOutputWindowManager::self ()->registerWindow (this);
 	} else {
 		if (!(url.isLocalFile ())) {
 			if (window_mode == HTMLHelpWindow) {

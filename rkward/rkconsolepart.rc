@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward" version="0.5.1">
+<kpartgui name="rkward" version="51">
 	<MenuBar>
 		<Menu name="edit"><text>&amp;Edit</text>
 			<Action name="rkconsole_copy"></Action>
