@@ -121,7 +121,7 @@ RKComponent::UnserializeError RKComponentBase::unserializeState (const QStringLi
 				}
 			}
 
-			RK_DO(qDebug ("Tried to apply value %s to property %s, but got %s", qPrintable (it.value ()), qPrintable (it.key ()), qPrintable (fetchStringValue (it.key ()))), PLUGIN, DL_INFO);
+			RK_DO(qDebug ("Tried to apply value %s to property %s, but got %s", qPrintable (it.value ()), qPrintable (it.key ()), qPrintable (fetchStringValue (it.key ()))), PLUGIN, DL_WARNING);
 			error = NotAllSettingsApplied;
 		}
 	}
