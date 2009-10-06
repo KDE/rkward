@@ -41,6 +41,7 @@
 #include "../rkconsole.h"
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../settings/rksettingsmoduler.h"
+#include "../settings/rksettingsmoduleoutput.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkstandardactions.h"
 #include "../misc/rkstandardicons.h"
@@ -50,9 +51,6 @@
 #include "../windows/rkworkplace.h"
 #include "../windows/rkworkplaceview.h"
 #include "../debug.h"
-
-//static 
-RKHTMLWindow* RKHTMLWindow::current_output = 0;
 
 RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (parent, RKMDIWindow::HelpWindow) {
 	RK_TRACE (APP);
@@ -87,11 +85,6 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (par
 
 RKHTMLWindow::~RKHTMLWindow () {
 	RK_TRACE (APP);
-
-	if (this == current_output) {
-		RK_ASSERT (window_mode == HTMLOutputWindow);
-		current_output = 0;
-	}
 
 	delete khtmlpart;
 }
@@ -243,7 +236,6 @@ bool RKHTMLWindow::handleRKWardURL (const KUrl &url) {
 				fixed_url.setPath (url.path ());
 				if (url.hasQuery ()) fixed_url.setQuery (url.query ());
 				if (url.hasFragment ()) fixed_url.setFragment (url.fragment ());
-qDebug ("%s -> %s", qPrintable (url.url ()), qPrintable (fixed_url.url ()));
 				ok = openURL (fixed_url);
 			}
 		
@@ -268,6 +260,8 @@ bool RKHTMLWindow::openURL (const KUrl &url) {
 			RK_ASSERT (false);
 			return false;
 		}
+		current_url = url;	// needs to be set before registering
+		RKOutputWindowManager::self ()->registerWindow (this);
 	} else {
 		if (!(url.isLocalFile ())) {
 			if (window_mode == HTMLHelpWindow) {
@@ -354,38 +348,6 @@ void RKHTMLWindow::loadDone () {
 	} else {	// scroll to previous pos
 		if (scroll_position >= 0) khtmlpart->view()->setContentsPos (0, scroll_position);
 	}
-}
-
-//static
-RKHTMLWindow* RKHTMLWindow::getCurrentOutput () {
-	RK_TRACE (APP);
-	
-	if (!current_output) {
-		current_output = new RKHTMLWindow (RKWorkplace::mainWorkplace ()->view (), HTMLOutputWindow);
-
-		KUrl url (RKSettingsModuleGeneral::filesPath () + "/rk_out.html");
-		current_output->openURL (url);
-	}
-
-	return current_output;
-}
-
-//static
-RKHTMLWindow* RKHTMLWindow::refreshOutput (bool show, bool raise) {
-	RK_TRACE (APP);
-
-	if (current_output) {
-		if (raise) {
-			current_output->activate ();
-		}
-		current_output->refresh ();
-	} else {
-		if (show) {
-			// getCurrentOutput creates an output window
-			getCurrentOutput ();
-		}
-	}
-	return current_output;
 }
 
 void RKHTMLWindow::useMode (WindowMode new_mode) {
@@ -727,6 +689,131 @@ QString RKHTMLWindow::startSection (const QString &name, const QString &title, c
 	if (!shorttitle.isNull ()) anchor_names->append (shorttitle);
 	else anchor_names->append (title);
 	return (ret);
+}
+
+
+/////////////////////////////////////
+/////////////////////////////////////
+
+
+// static
+RKOutputWindowManager* RKOutputWindowManager::_self = 0;
+
+RKOutputWindowManager* RKOutputWindowManager::self () {
+	if (!_self) {
+		RK_TRACE (APP);
+
+		_self = new RKOutputWindowManager ();
+	}
+	return _self;
+}
+
+RKOutputWindowManager::RKOutputWindowManager () : QObject () {
+	RK_TRACE (APP);
+
+	file_watcher = new KDirWatch (this);
+	connect (file_watcher, SIGNAL (dirty(const QString&)), this, SLOT (fileChanged(const QString&)));
+	connect (file_watcher, SIGNAL (created(const QString&)), this, SLOT (fileChanged(const QString&)));
+}
+
+RKOutputWindowManager::~RKOutputWindowManager () {
+	RK_TRACE (APP);
+
+	file_watcher->removeFile (current_default_path);
+	delete (file_watcher);
+}
+
+void RKOutputWindowManager::registerWindow (RKHTMLWindow *window) {
+	RK_TRACE (APP);
+
+	RK_ASSERT (window->mode () == RKHTMLWindow::HTMLOutputWindow);
+	KUrl url = window->url ();
+
+	if (!url.isLocalFile ()) {
+		RK_ASSERT (false);		// should not happen right now, but might be an ok condition in the future. We can't monitor non-local files, though.
+		return;
+	}
+
+	url.cleanPath ();
+	QString file = url.toLocalFile ();
+	if (!windows.contains (file, window)) {
+		if (!windows.contains (file)) {
+			if (file != current_default_path) file_watcher->addFile (file);
+		}
+	
+		windows.insertMulti (file, window);
+		connect (window, SIGNAL (destroyed(QObject*)), this, SLOT (windowDestroyed(QObject*)));
+	} else {
+		RK_ASSERT (false);
+	}
+}
+
+void RKOutputWindowManager::setCurrentOutputPath (const QString &_path) {
+	RK_TRACE (APP);
+
+	KUrl url = KUrl::fromLocalFile (_path);
+	url.cleanPath ();
+	QString path = url.toLocalFile ();
+
+	if (path == current_default_path) return;
+
+	if (!windows.contains (path)) {
+		file_watcher->addFile (path);
+	}
+	if (!windows.contains (current_default_path)) {
+		file_watcher->removeFile (current_default_path);
+	}
+
+	current_default_path = path;
+}
+
+RKHTMLWindow* RKOutputWindowManager::getCurrentOutputWindow () {
+	RK_TRACE (APP);
+
+	RKHTMLWindow *current_output = windows.value (current_default_path);
+
+	if (!current_output) {
+		current_output = new RKHTMLWindow (RKWorkplace::mainWorkplace ()->view (), RKHTMLWindow::HTMLOutputWindow);
+
+		current_output->openURL (KUrl::fromLocalFile (current_default_path));
+
+		RK_ASSERT (current_output->url ().toLocalFile () == current_default_path);
+	}
+
+	return current_output;
+}
+
+void RKOutputWindowManager::fileChanged (const QString &path) {
+	RK_TRACE (APP);
+
+	RKHTMLWindow *w = 0;
+	QList<RKHTMLWindow *> window_list = windows.values (path);
+	for (int i = 0; i < window_list.size (); ++i) {
+		window_list[i]->refresh ();
+		w = window_list[i];
+	}
+
+	if (w) {
+		if (RKSettingsModuleOutput::autoRaise ()) w->activate ();
+	} else {
+		RK_ASSERT (path == current_default_path);
+		if (RKSettingsModuleOutput::autoShow ()) RKWorkplace::mainWorkplace ()->openOutputWindow (path);
+	}
+}
+
+void RKOutputWindowManager::windowDestroyed (QObject *window) {
+	RK_TRACE (APP);
+
+	// warning: Do not call any methods on the window. It is half-destroyed, already.
+	RKHTMLWindow *w = static_cast<RKHTMLWindow*> (window);
+
+	QString path = windows.key (w);
+	windows.remove (path, w);
+
+	// if there are no further windows for this file, stop listening
+	if ((path != current_default_path) && (!windows.contains (path))) {
+		file_watcher->removeFile (path);
+	}
 }
 
 #include "rkhtmlwindow.moc"

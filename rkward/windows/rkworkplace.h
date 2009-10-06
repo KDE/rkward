@@ -107,9 +107,6 @@ public:
 /** Opens a new output window. Currently only a single output window will ever be created. Subsequent calls to the function will not create additional windows right now (but will raise / refresh the output window
 @param url currently ignored! */
 	void openOutputWindow (const KUrl &url=KUrl ());
-/** signal there was new output, show/raise/refresh the output window as appropriate.
-TODO: this should be obsoleted somehow */
-	void refreshOutputWindow ();
 
 	void newX11Window (WId window_to_embed, int device_number);
 	void newObjectViewer (RObject *object);

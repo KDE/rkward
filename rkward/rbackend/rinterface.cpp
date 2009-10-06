@@ -32,6 +32,7 @@
 #include "../windows/rcontrolwindow.h"
 #include "../windows/rkworkplace.h"
 #include "../windows/rkcommandlog.h"
+#include "../windows/rkhtmlwindow.h"
 #include "../plugin/rkcomponentmap.h"
 #include "../misc/rkcommonfunctions.h"
 
@@ -324,10 +325,10 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 		} else {
 			issueCommand (".rk.set.reply (\"Too few arguments in call to get.tempfile.name.\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
 		}
-	} else if (call == "refreshOutput") {
-		RK_ASSERT (request->call.count () == 2); //but we don't use the second parameter, yet
+	} else if (call == "set.output.file") {
+		RK_ASSERT (request->call.count () == 2);
 
-		RKWorkplace::mainWorkplace ()->refreshOutputWindow ();
+		RKOutputWindowManager::self ()->setCurrentOutputPath (request->call[1]);
 	} else if (call == "sync") {
 		RK_ASSERT (request->call.count () >= 2);
 

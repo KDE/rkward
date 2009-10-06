@@ -160,8 +160,11 @@ void RKStandardComponentGUI::ok () {
 	command.append (code_property->calculate ());
 	command.append (code_property->printout ());
 	command.append ("})\n");
+	RKGlobals::rInterface ()->issueCommand (new RCommand (command, RCommand::Plugin | RCommand::DirectToOutput | RCommand::ObjectListUpdate), component->commandChain ());
 
 	// re-run link
+	// This should be run in a separate command, in case the above command bails out with an error. Even in that case, the re-run link should be printed.
+	command.clear ();
 	RKComponentHandle *handle = component->getHandle ();
 	if (handle->isAccessible ()) {
 		command.append (".rk.rerun.plugin.link(plugin=\"" + RKComponentMap::getComponentId (handle) + "\", settings=\"" + RKCommonFunctions::escape (component->serializeState ()) + "\", label=\"" + i18n ("Run again") + "\")\n");

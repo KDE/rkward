@@ -229,6 +229,8 @@ rktest.runRKTestSuite <- function (suite, basedir=getwd ()) {
 		for (i in 1:length (suite@postCalls)) try (suite@postCalls[[i]]())
 	}
 
+	rktest.resetEnvironment ()
+
 	result
 }
 
@@ -287,5 +289,17 @@ rktest.initializeEnvironment <- function () {
 	# Make sure i18n does not get in the way
 	invisible (Sys.setenv (LANGUAGE="C"))
 	if (.Platform$OS.type == "unix") invisible (Sys.setlocale ("LC_MESSAGES", "C"))
+
+	# This version of rk.set.output.html.file does not notify the frontend of the change. Without this, you'll get lots of output windows.
+	rk.set.output.html.file <<- function (x) {
+		stopifnot(is.character(x))
+		assign(".rk.output.html.file", x, as.environment("package:rkward"))
+	}
 }
 rktest.initializeEnvironment ()
+
+# counterpart to rktest.initializeEnvironment. Restores the most important settings
+rktest.resetEnvironment <- function () {
+	rm (list=c ("rk.set.output.html.file", "rk.get.tempfile.name", ".rk.make.hr"), envir=globalenv ())
+	.rk.rerun.plugin.link <<- .rk.rerun.plugin.link.replacement
+}

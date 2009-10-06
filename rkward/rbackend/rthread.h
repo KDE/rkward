@@ -196,7 +196,6 @@ private:
 /** This is the function in which an RCommand actually gets processed. Basically it passes the command to REmbedInteranl::runCommandInternal () and sends RInterface some events about what is currently happening. */
 	void doCommand (RCommand *command);
 	void notifyCommandDone (RCommand *command);
-	void checkNotifyOutputTouched ();
 /** thread is locked. No new commands will be executed. @see LockType @see lock @see unlock */
 	int locked;
 /** thread is killed. Should exit as soon as possible. @see kill */
@@ -213,9 +212,6 @@ private:
 /** check wether the object list / global environment / individual symbols have changed, and updates them, if needed */
 	void checkObjectUpdatesNeeded (bool check_list);
 	QList<RCommand*> all_current_commands;
-
-	QString active_output_file;
-	QDateTime output_last_modified;
 };
 
 #endif

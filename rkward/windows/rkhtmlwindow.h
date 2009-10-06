@@ -67,12 +67,7 @@ public:
 	KUrl url ();
 	void doGotoAnchor (const QString &anchor_name);
 
-/** return a pointer to the current output. If there is no output window, one will be created (and shown) automatically */
-	static RKHTMLWindow* getCurrentOutput ();
-/** refresh output window.
-@param show Show the window, if not currently shown (this actually means: it is created if not currently existant)
-@param raise Raise the window (if currently shown, or show==true) */
-	static RKHTMLWindow* refreshOutput (bool show, bool raise);
+	WindowMode mode () { return window_mode; };
 public slots:
 /** this is used for browsing only. Use openURL instead, when calling from outside. */
 	void slotOpenUrl (const KUrl & url, const KParts::OpenUrlArguments &, const KParts::BrowserArguments &);
@@ -123,8 +118,6 @@ private:
 
 	void fileDoesNotExistMessage ();
 
-	static RKHTMLWindow *current_output;
-
 	// for dealing with rkward://[page|component]-pages
 	bool renderRKHelp (const KUrl &url);
 	QString renderHelpFragment (QDomElement &fragment);
@@ -148,5 +141,32 @@ public:
 	~RKHelpRenderer () {};
 };
 
+#include <QMultiHash>
+
+#include <kdirwatch.h>
+
+/** Takes care of showing / refreshing output windows as needed. */
+class RKOutputWindowManager : public QObject {
+Q_OBJECT
+public:
+	static RKOutputWindowManager *self ();
+
+	void registerWindow (RKHTMLWindow *window);
+/** R may produce output while no output window is active. This allows to set the file that should be monitored for such changes (called from within rk.set.html.output.file()). */
+	void setCurrentOutputPath (const QString &path);
+/** return a pointer to the current output. If there is no output window, one will be created (and shown) automatically */
+	RKHTMLWindow* getCurrentOutputWindow ();
+private:
+	RKOutputWindowManager ();
+	~RKOutputWindowManager ();
+	static RKOutputWindowManager *_self;
+
+	QString current_default_path;
+	KDirWatch *file_watcher;
+	QMultiHash<QString, RKHTMLWindow *> windows;
+private slots:
+	void fileChanged (const QString &path);
+	void windowDestroyed (QObject *window);
+};
 
 #endif

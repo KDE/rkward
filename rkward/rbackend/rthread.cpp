@@ -233,11 +233,6 @@ void RThread::doCommand (RCommand *command) {
 				RK_ASSERT (!error);
 			}
 		}
-		if (!(command->type () & RCommand::Sync)) {
-			MUTEX_UNLOCK;
-			checkNotifyOutputTouched ();
-			MUTEX_LOCK;
-		}
 	
 		if (error) {
 			RK_DO (qDebug ("- error message was: '%s'", command->error ().toLatin1 ().data ()), RBACKEND, dl);
@@ -388,20 +383,6 @@ void RThread::handleError (QString *call, int call_length) {
 	MUTEX_UNLOCK;
 }
 
-void RThread::checkNotifyOutputTouched () {
-	RK_TRACE (RBACKEND);
-// TODO: instead of this, the output window(s) should simply watch the file for changes using
-// KDirWatch.
-
-	QFileInfo info (active_output_file);
-	if (info.exists ()) {
-		if ((!output_last_modified.isValid ()) || (output_last_modified < info.lastModified ())) {
-			output_last_modified = info.lastModified ();
-			handleSubstackCall (QStringList () << "refreshOutput" << active_output_file);
-		}
-	}
-}
-
 void RThread::handleSubstackCall (QStringList &call) {
 	RK_TRACE (RBACKEND);
 
@@ -411,11 +392,6 @@ void RThread::handleSubstackCall (QStringList &call) {
 			if ((current_command->type () & RCommand::ObjectListUpdate) || (!(current_command->type () & RCommand::Sync))) {		// ignore Sync commands that are not flagged as ObjectListUpdate
 				if (!changed_symbol_names.contains (call[1])) changed_symbol_names.append (call[1]);
 			}
-			return;
-		} else if (call[0] == "set.output.file") {
-			checkNotifyOutputTouched ();
-			active_output_file = call[1];
-			output_last_modified = QFileInfo (active_output_file).lastModified ();
 			return;
 		}
 	}

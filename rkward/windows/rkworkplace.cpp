@@ -39,7 +39,6 @@
 #include "../dataeditor/rkeditor.h"
 #include "../dataeditor/rkeditordataframe.h"
 #include "../robjectviewer.h"
-#include "../settings/rksettingsmoduleoutput.h"
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../rbackend/rinterface.h"
 #include "../windows/rkwindowcatcher.h"
@@ -274,19 +273,11 @@ void RKWorkplace::openHelpWindow (const KUrl &url, bool only_once) {
 void RKWorkplace::openOutputWindow (const KUrl &url) {
 	RK_TRACE (APP);
 
-	RKHTMLWindow::refreshOutput (true, true);
-	if (!windows.contains (RKHTMLWindow::getCurrentOutput ())) {
-		addWindow (RKHTMLWindow::getCurrentOutput ());
-	}
-}
-
-void RKWorkplace::refreshOutputWindow () {
-	RK_TRACE (APP);
-	RKHTMLWindow *window = RKHTMLWindow::refreshOutput (RKSettingsModuleOutput::autoShow (), RKSettingsModuleOutput::autoRaise ());
-	if (window) {
-		if (!windows.contains (window)) {
-			addWindow (window);
-		}
+	RKHTMLWindow *w = RKOutputWindowManager::self ()->getCurrentOutputWindow ();
+	if (!windows.contains (w)) {
+		addWindow (w);
+	} else {
+		w->activate ();
 	}
 }
 
