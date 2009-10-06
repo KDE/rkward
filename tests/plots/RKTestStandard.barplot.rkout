@@ -10,7 +10,7 @@ DATE<br>
 <img src="graph.png" width="480" height="480"><br>
 <h1>Barplot</h1>
 <h2>Parameters</h2>
-<ul><li>Variable: x</li>
+<ul><li>Variable: test_table</li>
 <li>Tabulate: No</li>
 <li>colors: default</li>
 <li>Type: stacked</li>

@@ -26,11 +26,11 @@ local({
 ## Prepare
 ## Compute
 ## Print result
-x <- x
+x <- test_table
 # barplot is a bit picky about attributes, so we need to convert to vector explicitely
 if(!is.matrix(x)) x <- as.vector(x)
 if(!is.matrix(x) && is.data.frame(x)) x <- data.matrix(x)
-rk.header ("Barplot", parameters=list ("Variable", rk.get.description (x), "Tabulate", "No", "colors", "default", "Type", "stacked", "Legend", "TRUE"))
+rk.header ("Barplot", parameters=list ("Variable", rk.get.description (test_table), "Tabulate", "No", "colors", "default", "Type", "stacked", "Legend", "TRUE"))
 
 rk.graph.on ()
 try ({
@@ -38,5 +38,5 @@ try ({
 })
 rk.graph.off ()
 })
-.rk.rerun.plugin.link(plugin="rkward::barplot", settings="barplot_embed.colors.string=default\nbarplot_embed.legend.state=1\nbarplot_embed.plotoptions.add_grid.state=0\nbarplot_embed.plotoptions.asp.real=0.00\nbarplot_embed.plotoptions.main.text=\nbarplot_embed.plotoptions.pointcolor.color.string=\nbarplot_embed.plotoptions.pointtype.string=\nbarplot_embed.plotoptions.sub.text=\nbarplot_embed.plotoptions.xaxt.state=\nbarplot_embed.plotoptions.xlab.text=\nbarplot_embed.plotoptions.xlog.state=\nbarplot_embed.plotoptions.xmaxvalue.text=\nbarplot_embed.plotoptions.xminvalue.text=\nbarplot_embed.plotoptions.yaxt.state=\nbarplot_embed.plotoptions.ylab.text=\nbarplot_embed.plotoptions.ylog.state=\nbarplot_embed.plotoptions.ymaxvalue.text=\nbarplot_embed.plotoptions.yminvalue.text=\nbarplot_embed.type.string=stacked\nnames_exp.text=names (x)\nnames_mode.string=default\ntabulate.state=0\nx.available=x", label="Run again")
+.rk.rerun.plugin.link(plugin="rkward::barplot", settings="barplot_embed.colors.string=default\nbarplot_embed.legend.state=1\nbarplot_embed.plotoptions.add_grid.state=0\nbarplot_embed.plotoptions.asp.real=0.00\nbarplot_embed.plotoptions.main.text=\nbarplot_embed.plotoptions.pointcolor.color.string=\nbarplot_embed.plotoptions.pointtype.string=\nbarplot_embed.plotoptions.sub.text=\nbarplot_embed.plotoptions.xaxt.state=\nbarplot_embed.plotoptions.xlab.text=\nbarplot_embed.plotoptions.xlog.state=\nbarplot_embed.plotoptions.xmaxvalue.text=\nbarplot_embed.plotoptions.xminvalue.text=\nbarplot_embed.plotoptions.yaxt.state=\nbarplot_embed.plotoptions.ylab.text=\nbarplot_embed.plotoptions.ylog.state=\nbarplot_embed.plotoptions.ymaxvalue.text=\nbarplot_embed.plotoptions.yminvalue.text=\nbarplot_embed.type.string=stacked\nnames_exp.text=names (x)\nnames_mode.string=default\ntabulate.state=0\nx.available=test_table", label="Run again")
 .rk.make.hr()
