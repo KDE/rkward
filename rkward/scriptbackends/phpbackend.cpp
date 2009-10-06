@@ -100,7 +100,7 @@ void PHPBackend::destroy () {
 void PHPBackend::tryNextFunction () {
 	RK_TRACE (PHP);
 
-	if (php_process && (php_process->state () == QProcess::Running) && (!busy) && (!command_stack.isEmpty ())) {
+	if (php_process && (!dead) && (!busy) && (!command_stack.isEmpty ())) {
 	/// clean up previous command if applicable
 		if (command_stack.first ()->complete) {
 			delete command_stack.takeFirst ();
