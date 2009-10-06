@@ -51,7 +51,7 @@ function convertTopLevel (input) {
 		output += c;
 
 		if (i >= input.length) {
-			print ("Something's wrong. Closure not found.");
+			message ("Something's wrong. Closure not found.");
 		}
 	}
 }
@@ -81,7 +81,7 @@ function convertPHPBlock (input) {
 			continue;
 		}
 		if ((c == "/") && (cn == "*")) {
-			print ("Warning: multiline comments are not handled! Check by hand!");
+			message ("Warning: multiline comments are not handled! Check by hand!");
 		}
 
 		// handle quotes
@@ -120,11 +120,14 @@ function convertPHPBlock (input) {
 		} else if (input.indexOf ("global ", i) == i) {
 			i += 7 + eatGlobals (input.substr (i + 7));
 			continue;
+		} else if (input.indexOf ("function", i) == i) {
+			current_fun = getFunctionName (input.substr (i+8));
+			locals[current_fun] = new Array ();
 		}
 
 		// associative array operator
 		if ((c == "=") && (cn == ">")) {
-			print ("Warning: please check correctness of conversion of '=>' in arrays by hand");
+			message ("Warning: please check correctness of conversion of '=>' in arrays by hand");
 			output += ", ";
 			i++;
 			continue;
@@ -136,8 +139,15 @@ function convertPHPBlock (input) {
 		output += c;
 	}
 
-	print ("Something's wrong. Closing ?> not found.");
+	message ("Something's wrong. Closing ?> not found.");
 	return input.length;
+}
+
+function getFunctionName (input) {
+	var open_paren = input.indexOf ("(");
+	var fun_name = input.substring (0, open_paren - 1);
+	fun_name = fun_name.replace (/\s*/g, "");
+	return fun_name;
 }
 
 function convertPHPQuote (input, quote_char) {
@@ -156,7 +166,7 @@ function convertPHPQuote (input, quote_char) {
 
 		if ((c == "$") && (quote_char == "\"") && (pass == 1)) {
 			if (input.charAt (i+1) != quote_char) {
-				print ("Warning: '$' inside '\"'-delimited string. This might be a variable name. Please check by hand!");
+				message ("Warning: '$' inside '\"'-delimited string. This might be a variable name. Please check by hand!");
 			}
 /*			token = getToken (input.substr (i + 1));
 			output += quote_char + " + " + token;
@@ -183,7 +193,7 @@ function convertPHPQuote (input, quote_char) {
 	}*/
 	output += inside_quote + quote_char;
 
-	if (!closed) print ("Something's wrong. Closing " + quote_char + " not found.");
+	if (!closed) message ("Something's wrong. Closing " + quote_char + " not found.");
 	return i + 1;
 }
 
@@ -193,13 +203,15 @@ function getToken (input) {
 		i = input.indexOf ("]", i);
 	}
 	if (i < 1) {
-		print ("Something's wrong. Token end not found. Token start was " + input.substr (0, 10));
+		message ("Something's wrong. Token end not found. Token start was " + input.substr (0, 10));
 		return (input);
 	}
 	var token = input.substr (0, i);
 	if (token.search (/\[\]/) != -1) {
-		print ("Use of [] in token " + token + ". Please convert to 'X.push (Y)' by hand.");
+		message ("Use of [] in token " + token + ". Please convert to 'X.push (Y)' by hand.");
 	}
+
+	if (!contains(locals[current_fun], token)) locals[current_fun].push (token);
 	return (token);
 }
 
@@ -209,7 +221,8 @@ function eatGlobals (input) {
 	var tokens = text.split (",");
 	for (var i = 0; i < tokens.length; ++i) {
 		var token = tokens[i].replace (/^[\$ ]*/, "");
-		globals.push (getToken (token + " "));
+		token = getToken (token + " ");
+		if (!contains (globals, token)) globals.push (token);
 	}
 	return (end);
 }
@@ -258,7 +271,7 @@ function mergeEchos (line) {
 			var fragment = output;
 			output = output_save_2;
 			if (i >= line.length) {
-				print ("Strange echo statement. Please check by hand.");
+				message ("Strange echo statement. Please check by hand.");
 				continue;
 			}
 			fragment = fragment.replace (/^\s*\(\s*/, "");
@@ -314,22 +327,29 @@ function feedthroughControlStatement (input) {
 					return i;
 				}
 			} else {
-				print ("Warning: Brace mismatch while postprocessing " + input);
+				message ("Warning: Brace mismatch while postprocessing " + input);
 			}
 		} else if (c == ")") {
 			if (levelstack[levelstack.length - 1] == "(") {
 				levelstack.pop ();
 			} else {
-				print ("Warning: Brace mismatch while postprocessing " + input);
+				message ("Warning: Brace mismatch while postprocessing " + input);
 			}
 		} else if (c == ";") {
 			if (levelstack.length == 0) {
-				print ("Note: Control statement without braces. This is bad style. ");
+				message ("Note: Control statement without braces. This is bad style. ");
 				return i;
 			}
 		}
 	}
 	return i;	// end of line reached is an ok condition
+}
+
+function contains (array, token) {
+	for (var i = 0; i < array.length; ++i) {
+		if (array[i] == token) return (true);
+	}
+	return (false);
 }
 
 function postProcess (input) {
@@ -338,6 +358,8 @@ function postProcess (input) {
 
 	for (var i = 0; i < lines.length; ++i) {
 		if (lines[i].search (/^function /) >= 0) {
+			var fun_name = getFunctionName (lines[i].substr (8));
+
 			olines.push (lines[i]);
 			while (lines[++i].search (/^\s*$/) >= 0) {
 				// skip empty line
@@ -346,6 +368,12 @@ function postProcess (input) {
 				// kill entire function
 				olines.pop ();
 				continue;
+			}
+
+			for (var l = 0; l < locals[fun_name].length; ++l) {
+				if (!contains (globals, locals[fun_name][l])) {
+					olines.push ('var ' + locals[fun_name][l] + ' = "";');
+				}
 			}
 		}
 		// fix includes
@@ -358,14 +386,23 @@ function postProcess (input) {
 	return (olines.join ("\n"));
 }
 
+function message (text) {
+	_message += text + "\n";
+	print (text);
+}
+
 filename = arguments[0];
 file = readFile (filename);
 print ("--------- converting file " + filename);
 
+var _message = "";
 // the output buffer
 var output = "";
 // list of global vars
-globals = new Array ();
+var globals = new Array ();
+var locals = new Object ();
+locals.none = new Array ();
+var current_fun = "none";
 var pass = 1;
 
 // main conversion step
@@ -374,15 +411,11 @@ pass = 2;
 output = postProcess (output);
 
 // add global var declarations
-globals.sort ();
-var prev_token;
 for (var i = globals.length; i >= 0; --i) {
-	if (prev_token != globals[i]) {		// print each var only once
-		prev_token = globals[i];
-		output = "var " + globals[i] + ";\n" + output;
-	}
+	output = "var " + globals[i] + ";\n" + output;
 	if (i == 0) output = "// globals\n" + output;
 }
+output = "/* ------- This file generated by php2js from PHP code. --------\nPlease check this file by hand, and remove this notice, afterwards.\nMessages:\n" + _message + "\n---------------------------- */\n\n" + output;
 
 // write to file
 importPackage(java.io); // From rhino directory
