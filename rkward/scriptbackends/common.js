@@ -1,21 +1,16 @@
-this._script_output = "";
+_script_output = "";
 function echo (text) {
-	this._script_output += text;
+	_script_output += text;
 }
 
 function printIndented (indentation, lines) {
 	echo (indentation + lines.replace (/\n/g, "\n" + indentation));
 }
 
-/// A string-like object that will not be quoted by quote ()
-function Literal (text) {
-	this.text = text;
-	this.noquote = 1;
-	this.valueOf = function () { return text };
-}
-
 function noquote (text) {
-	return (new Literal (text));
+	ret = new String (text);
+	ret.noquote = 1;
+	return (ret);
 }
 
 function quote (text) {
@@ -52,8 +47,8 @@ function include (file) {
 }
 
 function flushOutput () {
-	var string = this._script_output;
-	this._script_output = "";
+	var string = _script_output;
+	_script_output = "";
 	return (string);
 }
 
