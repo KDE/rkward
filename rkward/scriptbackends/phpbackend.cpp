@@ -92,6 +92,7 @@ void PHPBackend::destroy () {
 		dead = true;
 		if (php_process) php_process->kill ();
 		QTimer::singleShot (10000, this, SLOT (deleteLater()));	// don't wait for ever for the process to die, even if it's somewhat dangerous
+		code_property = 0;
 	}
 
 	busy = false;
