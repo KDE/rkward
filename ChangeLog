@@ -1,6 +1,6 @@
 	  TODO: Test new output detection on windows
 - All directly accessible plugins now have at least one automated test
-- Add support for the dynamic help server introduced in R 2.10.0	TODO: backport (r2672, r2677)
+- Add support for the dynamic help server introduced in R 2.10.0	TODO: backport (r2672, r2677, r2701)
 - Assorted minor fixes and improvements to several plugins
 - Fix deadlock while handling some Tcl events		TODO: backport? (r2649)
 - Plugin dialogs close automatically after submitting (by default)

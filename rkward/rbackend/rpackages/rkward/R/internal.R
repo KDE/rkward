@@ -429,3 +429,19 @@ formals (setwd) <- formals (base::setwd)
 	}
 	return (paste ("http://127.0.0.1", port, sep=":"))
 }
+
+# a simple wrapper around help() that makes it easier to detect in code, whether help was found or not.
+# used from RKHelpSearchWindow::getFunctionHelp
+".rk.getHelp" <- function (...) {
+	if (compareVersion (as.character (getRversion()), "2.10.0") >= 0) {
+		res <- help (..., help_type="html")
+	} else {
+		res <- help (..., chmhelp=FALSE, htmlhelp=TRUE)
+	}
+	if (!length (as.character (res))) {	# this seems undocumented, but it is what utils:::print.help_files_with_topic checks
+		show (res)
+		stop ("No help found")
+	}
+	show (res)
+	invisible (TRUE)
+}
