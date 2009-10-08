@@ -2,7 +2,7 @@
 <document>
 	<title>Trouble Shooting</title>
 	<summary>
-	RKWard is far from complete and certainly there are many issues that need to be fixed. However, some of the things you notice are not due to the nature of RKWard but R or something else. This section will try to cover some common issues.
+	RKWard is far from complete and certainly there are many issues that need to be fixed. However, some of the things you notice are not due to the nature of RKWard but R or something else. This section will try to cover some common issues. See also <link href="http://p.sf.net/rkward/faq">the online FAQ</link>.
 	</summary>
 	<section title="People tend to ask me what RKWard means. What should I answer?" shorttitle="What does &quot;RKWard&quot; mean?" id="the_name_problems">
 		Yes, it's a very odd name. ;) However, R comes obviously from the <link href="http://www.r-project.org/">R-language</link> which is the statistical basis of RKWard. K is derived from <link href="http://kde.org/">KDE</link> which delivered the basic GUI technologies for RKWard. And <link href="http://en.wikipedia.org/wiki/Ward">Ward</link>? That's another story.
@@ -30,10 +30,8 @@
 		Therefore it's important you know the test. Moreover it's very important to save the workspace and other sections you worked on before you do such operations. There is currently no recovery functionality within RKWard in case of a crash! You can find build-in tests from R to address this memory issue (see: <link href="rkward://rhelp/mem.limits" />, and <link href="rkward://rhelp/memory.limit" />).
 	</section>
 	<section title="I think I did something wrong? Where is 'Undo' and 'Redo'?" shorttitle="Undo/Redo" id="undo_redo_problems">
-		Right now RKWard doesn't have any "undo" or "redo" functionality in all places. For example there is such functionality for the script editor. But there is no undo or redo for finished plots or tests. Therefore it's important that you know what you do before you start. It's recommended to use copies of original data and to give everything a meaningful name.
+		Right now RKWard doesn't have "undo" or "redo" functionality in all places. For example there is such functionality for the script editor, but there is no undo or redo for finished plots or tests. Therefore it's important that you know what you do before you start. It's recommended to use copies of original data and to give everything a meaningful name.
 
-		However, RKWard tries to give you as much information as possible about things you have done. For example all test and plots show the specific settings in combination with the creation date. Moreover you can check and copy any code generated for your documentation purposes
-
-		Depending on available programmer resources, the release of KDE4 and other factors it's likely to be seen in future releases.
+		However, RKWard tries to give you as much information as possible about things you have done. For tests and plots that you run from the menu, the <link href="rkward://page/rkward_output"/> will contain a "run again" link below the output. You can use this to re-do this action with identical or slighly modified settings. Also, tests and plots try to show the most relevant settings in combination with the creation date. Moreover you can check and copy any code generated for your documentation purposes.
 	</section>
 </document>
