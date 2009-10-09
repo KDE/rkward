@@ -21,7 +21,6 @@
 					<checkbox id="convert_factors" checked="true" label="Use Stata value labels to create factors?" value="1" value_unchecked="0"/>
 					<checkbox id="missing_type" checked="false" label="For version 8 or later, store information about different types of missing data?" value="1" value_unchecked="0"/>
 					<checkbox id="convert_underscore" checked="false" label="Convert '_' in Stata variable names to '.' in R names" value="1" value_unchecked="0"/>
-					<checkbox id="warn_missing_labels" checked="true" label="Warn if a variable is specified with value labels and those value labels are not present in the file." value="1" value_unchecked="0"/>
 				</frame>
 			</tab>
 		</tabbook>

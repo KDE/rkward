@@ -1,45 +1,39 @@
 <?php
 function preprocess () { ?>
 require (foreign)
-<?	}
+<?
+}
 
 function calculate () {
+	$options = "";
 
 	if (getRK_val ("convert_dates")) {
-	       $convert_dates_opt = ", convert.dates=TRUE" ;
+	       $options .= ", convert.dates=TRUE" ;
 	} else {
-	       $convert_dates_opt = ", convert.dates=FALSE" ;
+	       $options .= ", convert.dates=FALSE" ;
 	}
 
 	if (getRK_val ("convert_factors")) {
-	       $convert_factors_opt = ", convert.factors=TRUE" ;
+	       $options .= ", convert.factors=TRUE" ;
 	} else {
-	       $convert_factors_opt = ", convert.factors=FALSE" ;
+	       $options .= ", convert.factors=FALSE" ;
 	}
 
 	if (getRK_val ("missing_type")) {
-	       $missing_type_opt = ", missing.type=TRUE" ;
+	       $options .= ", missing.type=TRUE" ;
 	} else {
-	       $missing_type_opt = ", missing.type=FALSE" ;
+	       $options .= ", missing.type=FALSE" ;
 	}
 
 	if (getRK_val ("convert_underscore")) {
-	       $convert_underscore_opt = ", convert.underscore=TRUE" ;
+	       $options .= ", convert.underscore=TRUE" ;
 	} else {
-	       $convert_underscore_opt = ", convert.underscore=FALSE" ;
+	       $options .= ", convert.underscore=FALSE" ;
 	}
-
-	if (getRK_val ("warn_missing_labels")) {
-	       $warn_missing_labels_opt = ", warn.missing.labels=TRUE" ;
-	} else {
-	       $warn_missing_labels_opt = ", warn.missing.lables=FALSE" ;
-	}
-
 
 	$object = getRK_val ("saveto");
 ?>
-data <- read.dta ("<? getRK ("file"); ?>"<? echo ($convert_dates_opt); echo ($convert_factors_opt); echo ($missing_type_opt); echo ($convert_underscore_opt); echo ($warn_missing_labels);  ?>)
-
+data <- read.dta ("<? getRK ("file"); ?>"<? echo ($options); ?>)
 
 # set variable labels for use in RKWard
 labels <- attr (data, "var.labels")
@@ -52,8 +46,6 @@ if (!is.null (labels)) {
         }
 }
 
-
-
 <? echo ($object); ?> <<- data		# assign to globalenv()
 <?
 	if (getRK_val ("doedit") ) { ?>
@@ -62,5 +54,6 @@ rk.edit (<? echo ($object); ?>)
 }
 
 function printout () {
+	makeHeaderCode ("Import Stata File", array ("File" => getRK_val ("file"), "Imported to" => getRK_val ("saveto")));
 }
 ?>
