@@ -368,7 +368,11 @@ void LoadUnloadWidget::rCommandDone (RCommand *command) {
 			QTreeWidgetItem* item = new QTreeWidgetItem (loaded_view);
 			item->setText (0, command->getStringVector ()[i]);
 			if (RKSettingsModuleRPackages::essentialPackages ().contains (command->getStringVector ()[i])) {
+#if QT_VERSION >= 0x040400
 				item->setFlags (Qt::NoItemFlags);
+#else
+				item->setFlags (0);
+#endif
 			}
 		}
 		loaded_view->resizeColumnToContents (0);
