@@ -1,4 +1,5 @@
 --- Version 0.5.2 - Oct-26-2009
+- Add Stata data file import plugin (by Michael Ash)
 - All directly accessible plugins now have at least one automated test
 - Add support for the dynamic help server introduced in R 2.10.0
 - Assorted minor fixes and improvements to several plugins
