@@ -1,8 +1,8 @@
-	  TODO: Test new output detection on windows
+--- Version 0.5.2 - Oct-26-2009
 - All directly accessible plugins now have at least one automated test
-- Add support for the dynamic help server introduced in R 2.10.0	TODO: backport (r2672, r2677, r2701)
+- Add support for the dynamic help server introduced in R 2.10.0
 - Assorted minor fixes and improvements to several plugins
-- Fix deadlock while handling some Tcl events		TODO: backport? (r2649)
+- Fix deadlock while handling some Tcl events
 - Plugin dialogs close automatically after submitting (by default)
 - Fetching object structure is much faster for very large data.frames
 - Fix crash when loading certain packages on Windows
