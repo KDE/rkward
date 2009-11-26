@@ -135,7 +135,12 @@ private:
 	MultiStringSelector *libloc_selector;
 	QCheckBox *archive_packages_box;
 	MultiStringSelector *repository_selector;
+	QComboBox *cran_mirrors;
+	QStringList cran_mirror_list;
+	QStringList cran_url_list;
 
+	static int cran_mirror_index;
+	static QString cran_mirror_url;
 	static QStringList liblocs;
 	static bool archive_packages;
 	static QStringList package_repositories;
