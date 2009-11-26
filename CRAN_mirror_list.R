@@ -3,13 +3,14 @@
 # and create two lists suitable for QStringList.
 # These two strings are used in rkward/settings/rksettingsmoduler.cpp
 
-MIRROR_LIST <- '/usr/share/R/doc/CRAN_mirrors.csv'
+#MIRROR_LIST <- '/usr/share/R/doc/CRAN_mirrors.csv'
 
 removeCityFromCountry <- function (x) {
 	sub (' *$', '', sub (paste ('(',x[2],')', sep=''), '', x[1], fixed=TRUE))
 }
 
-mirror.list <- read.csv(MIRROR_LIST, stringsAsFactors=FALSE)
+#mirror.list <- read.csv(MIRROR_LIST, stringsAsFactors=FALSE)
+mirror.list <- getCRANmirrors()
 
 mirror.names <- paste('"', 
 	paste (apply(mirror.list[,c(1,3)], 1, 'removeCityFromCountry'), 
