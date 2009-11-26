@@ -283,7 +283,7 @@
 		} else {
 			ret <- sprintf ("%s, ", ret)
 		}
-		if (names (x)[i] != "") {
+		if (!(is.null (names (x)) || (names (x)[i] == ""))) {
 			ret <- sprintf ("%s%s=\"%s\"", ret, names (x)[i], x[i])
 		} else {
 			ret <- sprintf ("%s\"%s\"", ret, x[i])

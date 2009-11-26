@@ -1,3 +1,5 @@
+- Fixed: Removing "@CRAN@" from the repositories would break package installation
+
 --- Version 0.5.2 - Oct-26-2009
 - Add Stata data file import plugin (by Michael Ash)
 - All directly accessible plugins now have at least one automated test
