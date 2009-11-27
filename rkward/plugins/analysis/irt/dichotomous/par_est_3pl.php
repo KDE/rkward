@@ -39,7 +39,7 @@ function calculate () {
   if($epshess != "1e-03")
     $control[] = "eps.hessian=".$epshess ;
 
-?>estimates.3pl <<- tpm(<? getRK("x");
+?>estimates.3pl <- tpm(<? getRK("x");
                   // any additional options?
                   if($type == "rasch") echo(", type=\"rasch\"");
                   if($constraint) echo(", constraint=".$constraint);
@@ -54,9 +54,18 @@ function calculate () {
 <?}
 
 function printout () {
+  // check whether parameter estimations should be kept in the global enviroment
+  $save         = getRK_val("chk_save");
+  $save_name    = getRK_val("save_name");
 ?>
 rk.header ("3PL parameter estimation")
 rk.print (estimates.3pl)
 <?
+// check if results are to be saved:
+if ($save && $save_name) {
+?>
+# keep results in current workspace
+<? echo($save_name); ?> <<- estimates.3pl
+<?}
 }
 ?>

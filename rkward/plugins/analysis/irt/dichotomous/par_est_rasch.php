@@ -30,7 +30,7 @@ function calculate () {
   if($verbose == "TRUE")
     $control[] = "verbose=TRUE" ;
 
-?>estimates.rasch <<- rasch(<? getRK("x");
+?>estimates.rasch <- rasch(<? getRK("x");
                   // any additional options?
                   if($constraint) echo(", constraint=".$constraint);
                   if($irtparam != "TRUE") echo(", IRT.param=FALSE");
@@ -43,9 +43,18 @@ function calculate () {
 <?}
 
 function printout () {
+  // check whether parameter estimations should be kept in the global enviroment
+  $save         = getRK_val("chk_save");
+  $save_name    = getRK_val("save_name");
 ?>
 rk.header ("Rasch parameter estimation")
 rk.print (estimates.rasch$coefficients)
 <?
+// check if results are to be saved:
+if ($save && $save_name) {
+?>
+# keep results in current workspace
+<? echo($save_name); ?> <<- estimates.rasch
+<?}
 }
 ?>

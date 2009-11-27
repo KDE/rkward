@@ -14,6 +14,9 @@
     <connect client="design_mtx.required" governor="design_matrix" />
     <connect client="etastart_vec.enabled" governor="eta_vector" />
     <connect client="etastart_vec.required" governor="eta_vector" />
+
+    <connect client="save_name.enabled"  governor="chk_save.state" />
+    <connect client="save_name.required" governor="chk_save.state" />
   </logic>
 
   <dialog label="IRT parameter estimation: Linear partial credit model">
@@ -30,6 +33,10 @@
               <option label="Compute group contrasts" value="contrasts" />
             </radio>
             <varslot type="numeric" id="group_vec" source="vars" label="Use this group vector:"/>
+	    <frame id="frame_save">
+	      <checkbox id="chk_save" label="Keep results in current workspace" value="save" checked="true"/>
+	      <saveobject id="save_name" initial="estimates.lpcm"/>
+	    </frame>
           </column>
         </row>
       </tab>

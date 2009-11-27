@@ -4,9 +4,8 @@
   <!--<help file="ltm_cronbach_alpha.rkh" />-->
 
   <logic>
-    <convert id="conf_int" mode="and" sources="chk_bsci.state;chk_bsci.enabled" />
-
-    <connect client="spin_ci.enabled" governor="conf_int" />
+    <connect client="inp_items.enabled" governor="chk_select.state" />
+    <connect client="spin_ci.enabled" governor="chk_bsci.state" />
   </logic>
 
   <dialog label="Cronbach's alpha">
@@ -15,8 +14,12 @@
         <row id="row_vars">
           <varselector id="vars" />
           <column>
-            <varslot type="numeric" id="x" source="vars" required="true" label="Item responses:"/>
-            <text>Must be a matrix or data.frame, with items as columns.</text>
+            <varslot type="numeric" id="x" source="vars" required="true" num_dimensions="2" label="Item responses:"/>
+            <text>Must be a matrix or data.frame, including the items as columns.</text>
+            <frame id="frame_items" label="Item selection">
+	      <checkbox id="chk_select" label="Select a subset of items" value="select" />
+	      <varslot type="numeric" id="inp_items" source="vars" multi="true" min_vars="2" label="List of items:" />
+            </frame>
             <stretch />
             <frame id="frame_options" label="Options">
               <spinbox id="spin_samples" label="Number of Bootstrap samples:" type="integer" initial="1000" min="1" size="small" />

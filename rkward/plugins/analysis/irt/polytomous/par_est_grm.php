@@ -34,7 +34,7 @@ function calculate () {
   if($dig_abbrv != "6")
     $control[] = "digits.abbrv=".$dig_abbrv ;
 
-?>estimates.grm <<- grm(<? getRK("x");
+?>estimates.grm <- grm(<? getRK("x");
                   // any additional options?
                   if($constraint == "const_discr") echo(", constrained=TRUE");
                   if($irtparam != "TRUE") echo(", IRT.param=FALSE");
@@ -48,9 +48,18 @@ function calculate () {
 <?}
 
 function printout () {
+  // check whether parameter estimations should be kept in the global enviroment
+  $save         = getRK_val("chk_save");
+  $save_name    = getRK_val("save_name");
 ?>
 rk.header ("GRM parameter estimation")
 rk.print (estimates.grm)
 <?
+// check if results are to be saved:
+if ($save && $save_name) {
+?>
+# keep results in current workspace
+<? echo($save_name); ?> <<- estimates.grm
+<?}
 }
 ?>

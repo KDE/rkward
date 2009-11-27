@@ -1,3 +1,3 @@
 <h1>Item-fit statistics (estimates.rasch)</h1>
 DATE<br>
-<p class='character'><br>Item-Fit Statistics and P-values<br><br>Call:<br>rasch(data = LSAT)<br><br>Alternative: Items do not fit the model<br>Ability Categories: 10<br><br>          X^2 Pr(>X^2)<br>Item 1 4.0187    0.045<br>Item 2 1.3574    0.244<br>Item 3 0.9791   0.3224<br>Item 4 1.5937   0.2068<br>Item 5 2.4648   0.1164<br><br></p>
+<p class='character'><br>Item-Fit Statistics and P-values<br><br>Call:<br>rasch(data = LSAT)<br><br>Alternative: Items do not fit the model<br>Ability Categories: 10<br><br>          X^2 Pr(>X^2)<br>Item 1  61.93  <0.0001<br>Item 2 159.01  <0.0001<br>Item 3 233.79  <0.0001<br>Item 4 132.47  <0.0001<br>Item 5  84.76  <0.0001<br><br></p>

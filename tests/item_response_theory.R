@@ -35,44 +35,44 @@ suite <- new ("RKTestSuite", id="item_response_theory",
 		## first, let's test all parameter estimations
 		## some parameters are later recycled for fitting tests and plotting
                 new ("RKTest", id="Rasch_parameter_estimation", call=function () {
-                        rk.call.plugin ("rkward::par_est_rasch", constraint.available="", ghk_rasch.real="21.00", irtparam.state="TRUE", iterqn_rasch.real="150.00", naaction.state="", optimeth.string="BFGS", startval.string="NULL", verbose.state="", x.available="LSAT", submit.mode="submit")
+                        rk.call.plugin ("rkward::par_est_rasch", chk_save.state="save", constraint.available="", ghk_rasch.real="21.00", irtparam.state="TRUE", iterqn_rasch.real="150.00", naaction.state="", optimeth.string="BFGS", save_name.selection="estimates.rasch", startval.string="NULL", verbose.state="", x.available="LSAT", submit.mode="submit")
 			estimates$rasch <<- estimates.rasch
                 }),
                 new ("RKTest", id="2PL_parameter_estimation", call=function () {
-			rk.call.plugin ("rkward::par_est_2pl", constraint.available="", ghk_2pl.real="15.00", interact.state="TRUE", irtparam.state="TRUE", iterem.real="40.00", iterqn_2pl.real="150.00", naaction.state="", optimeth.string="BFGS", startval.string="NULL", verbose.state="", x.available="WIRS", submit.mode="submit")
+			rk.call.plugin ("rkward::par_est_2pl", chk_save.state="save", constraint.available="", ghk_2pl.real="15.00", interact.state="TRUE", irtparam.state="TRUE", iterem.real="40.00", iterqn_2pl.real="150.00", naaction.state="", optimeth.string="BFGS", startval.string="NULL", verbose.state="", x.available="WIRS", submit.mode="submit")
 			estimates$"2pl" <<- estimates.2pl
                 }),
                 new ("RKTest", id="3PL_parameter_estimation", call=function () {
-			rk.call.plugin ("rkward::par_est_3pl", constraint.available="", epshess.real="0.001", ghk_3pl.real="21.00", irtparam.state="TRUE", iterqn_3pl.real="1000.00", maxguess.real="1.00", naaction.state="", optimeth.string="BFGS", optimizer.string="optim", startval.string="NULL", type.state="", verbose.state="", x.available="LSAT", submit.mode="submit")
+			rk.call.plugin ("rkward::par_est_3pl", chk_save.state="save", constraint.available="", epshess.real="0.001", ghk_3pl.real="21.00", irtparam.state="TRUE", iterqn_3pl.real="1000.00", maxguess.real="1.00", naaction.state="", optimeth.string="BFGS", optimizer.string="optim", startval.string="NULL", type.state="", verbose.state="", x.available="LSAT", submit.mode="submit")
 			estimates$"3pl" <<- estimates.3pl
                 }),
                 new ("RKTest", id="LLTM_parameter_estimation", call=function () {
-			rk.call.plugin ("rkward::par_est_lltm", design.string="auto", etastart.string="NULL", groups.string="1", mpoints.real="2.00", stderr.state="se", sumnull.state="sum0", x.available="lltmdat1", submit.mode="submit")
+			rk.call.plugin ("rkward::par_est_lltm", chk_save.state="save", design.string="auto", etastart.string="NULL", groups.string="1", mpoints.real="2.00", stderr.state="se", sumnull.state="sum0", x.available="lltmdat1", submit.mode="submit")
                 }),
                 new ("RKTest", id="GRM_parameter_estimation", call=function () {
-			rk.call.plugin ("rkward::par_est_grm", constraint.state="", dig_abbrv.real="6.00", ghk_grm.real="21.00", hessian.state="", irtparam.state="TRUE", iterqn_grm.real="150.00", naaction.state="", optimeth.string="BFGS", startval.string="NULL", verbose.state="", x.available="Environment", submit.mode="submit")
+			rk.call.plugin ("rkward::par_est_grm", chk_save.state="save", constraint.state="", dig_abbrv.real="6.00", ghk_grm.real="21.00", hessian.state="", irtparam.state="TRUE", iterqn_grm.real="150.00", naaction.state="", optimeth.string="BFGS", startval.string="NULL", verbose.state="", x.available="Environment", submit.mode="submit")
 			estimates$grm <<- estimates.grm
                 }),
                 new ("RKTest", id="RSM_parameter_estimation", call=function () {
-			rk.call.plugin ("rkward::par_est_rsm", design.string="auto", etastart.string="NULL", stderr.state="se", sumnull.state="sum0", x.available="rsmdat", submit.mode="submit")
+			rk.call.plugin ("rkward::par_est_rsm", chk_save.state="save", design.string="auto", etastart.string="NULL", stderr.state="se", sumnull.state="sum0", x.available="rsmdat", submit.mode="submit")
 			estimates$rsm <<- estimates.rsm
                 }),
                 new ("RKTest", id="PCM_parameter_estimation", call=function () {
-			rk.call.plugin ("rkward::par_est_pcm", design.string="auto", etastart.string="NULL", stderr.state="se", sumnull.state="sum0", x.available="pcmdat", submit.mode="submit")
+			rk.call.plugin ("rkward::par_est_pcm", chk_save.state="save", design.string="auto", etastart.string="NULL", stderr.state="se", sumnull.state="sum0", x.available="pcmdat", submit.mode="submit")
 			estimates$pcm <<- estimates.pcm
                 }),
                 new ("RKTest", id="LRSM_parameter_estimation", call=function () {
-			rk.call.plugin ("rkward::par_est_lrsm", design.string="auto", etastart.string="NULL", groups.string="1", mpoints.real="2.00", stderr.state="", sumnull.state="", x.available="lrsmdat", submit.mode="submit")
+			rk.call.plugin ("rkward::par_est_lrsm", chk_save.state="save", design.string="auto", etastart.string="NULL", groups.string="1", mpoints.real="2.00", stderr.state="", sumnull.state="", x.available="lrsmdat", submit.mode="submit")
                 }),
                 new ("RKTest", id="LPCM_parameter_estimation", call=function () {
 			G <<- c(rep(1,10),rep(2,10))	# group vector, see example section of help("LPCM")
 			rk.sync.global ()
-			rk.call.plugin ("rkward::par_est_lpcm", design.string="auto", etastart.string="NULL", group_vec.available="G", groups.string="contrasts", mpoints.real="2.00", stderr.state="se", sumnull.state="sum0", x.available="lpcmdat", submit.mode="submit")
+			rk.call.plugin ("rkward::par_est_lpcm", chk_save.state="save", design.string="auto", etastart.string="NULL", group_vec.available="G", groups.string="contrasts", mpoints.real="2.00", stderr.state="se", sumnull.state="sum0", x.available="lpcmdat", submit.mode="submit")
                 }),
 
 		## testing cronbach's alpha
                 new ("RKTest", id="Cronbach_alpha", call=function () {
-			rk.call.plugin ("rkward::ltm_cronbach_alpha", chk_bsci.state="bsci", chk_na.state="", chk_standard.state="", spin_ci.real="0.95", spin_samples.real="500.00", x.available="LSAT", submit.mode="submit")
+			rk.call.plugin ("rkward::ltm_cronbach_alpha", chk_bsci.state="bsci", chk_na.state="", chk_select.state="select", chk_standard.state="", inp_items.available="LSAT[[\"Item 1\"]]\nLSAT[[\"Item 2\"]]\nLSAT[[\"Item 3\"]]\nLSAT[[\"Item 4\"]]\nLSAT[[\"Item 5\"]]", spin_ci.real="0.95", spin_samples.real="1000.00", x.available="LSAT", submit.mode="submit")
                 }, fuzzy_output=TRUE), # calculating the bootstrap confidence interval isn't always that accurate
 
 		## now that our estimates are calculated, let's have a look at goodnes of fit

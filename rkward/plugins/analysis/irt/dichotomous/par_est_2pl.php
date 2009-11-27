@@ -34,7 +34,7 @@ function calculate () {
   if($verbose == "TRUE")
     $control[] ="verbose=TRUE" ;
 
-?>estimates.2pl <<- ltm(<? getRK("x"); ?> ~ z1<?
+?>estimates.2pl <- ltm(<? getRK("x"); ?> ~ z1<?
                   // any additional options?
                   if($interact == "TRUE") echo(" * z2");
                   if($constraint) echo(", constraint=".$constraint);
@@ -48,9 +48,18 @@ function calculate () {
 <?}
 
 function printout () {
+  // check whether parameter estimations should be kept in the global enviroment
+  $save         = getRK_val("chk_save");
+  $save_name    = getRK_val("save_name");
 ?>
 rk.header ("2PL parameter estimation")
 rk.print (estimates.2pl)
 <?
+// check if results are to be saved:
+if ($save && $save_name) {
+?>
+# keep results in current workspace
+<? echo($save_name); ?> <<- estimates.2pl
+<?}
 }
 ?>
