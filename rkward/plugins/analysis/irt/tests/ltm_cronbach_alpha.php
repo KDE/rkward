@@ -46,20 +46,38 @@ function calculate () {
                   // check if any advanced control options must be inserted
                   if($options) echo(", ".join(", ", $options));
  ?>)
+descript.res <- descript(<?
+		  if($data && $chk_select && $inp_items)
+		    echo("subset(".$data.", select=c(".$inp_items."))");
+		  else
+		    echo($data);
+ ?>, chi.squared=FALSE, B=<? echo($spin_samples); ?>)
 <?}
 
 function printout () {
+  $chk_select      = getRK_val("chk_select");
+  $spin_samples    = getRK_val("spin_samples");
+  $chk_standard    = getRK_val("chk_standard");
+  $chk_na          = getRK_val("chk_na");
+  $chk_bsci        = getRK_val("chk_bsci");
+  $spin_ci         = getRK_val("spin_ci");
   $inp_items       = getRK_val("inp_items");
   // reformat $inp_items
   if($inp_items)
     $inp_items       = str_replace("\n", ", ", preg_replace("/(.+)\[\[\"(.+)\"\]\]/", "$2", $inp_items));
 ?>
-rk.header ("Cronbach's alpha (<?
-  getRK("x");
-  if($inp_items)
-    echo(", subset: ".$inp_items);
- ?>)")
-rk.print (cronalpha.res)
+rk.header ("Cronbach's alpha")
+rk.print("for the '<? getRK("x"); ?>' data-set<?
+  if($chk_select && $inp_items)
+    echo(" (subset: ".$inp_items.")");
+ ?>")
+rk.print(paste("Items:",cronalpha.res$p,"<br />Sample units:",cronalpha.res$n,"<br /><strong>alpha:",round(cronalpha.res$alpha, digits=2),"</strong><? if($chk_standard) echo(" (standardized)"); ?>"))
+rk.print("Effects on alpha if items are removed:")
+rk.print(descript.res$alpha)
 <?
+if($chk_bsci) {?>
+rk.print("<? echo(($spin_ci * 100)."%"); ?> Confidence interval:")
+rk.print(cronalpha.res$ci)
+<?}
 }
 ?>
