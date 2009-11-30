@@ -1,0 +1,17 @@
+<h1>GPCM parameter estimation</h1>
+DATE<br>
+<p class='character'>Call: <code> gpcm(data = subset(Science, select = c("Work", "Industry", "Future", "Benefit")), constraint = "rasch") </code></p><p class='character'><h4>Coefficients:</h4></p>
+<p align= center >
+<table cellspacing=0 border=1><caption align=bottom class=captiondataframe></caption><tr><td>
+	<table border=0 class=dataframe>
+	<tbody> <tr class= firstline > <th></th><th>Catgr.1</th><th>Catgr.2</th><th>Catgr.3</th><th>Dscrmn</th> </tr>
+ <tr><td class=firstcolumn>Work</td><td class=cellinside>-1.80</td><td class=cellinside>-0.90</td><td class=cellinside> 1.80</td><td class=cellinside> 1.00</td></tr>
+ <tr><td class=firstcolumn>Industry</td><td class=cellinside>-2.54</td><td class=cellinside>-1.76</td><td class=cellinside> 0.20</td><td class=cellinside> 1.00</td></tr>
+ <tr><td class=firstcolumn>Future</td><td class=cellinside>-2.50</td><td class=cellinside>-1.39</td><td class=cellinside> 1.09</td><td class=cellinside> 1.00</td></tr>
+ <tr><td class=firstcolumn>Benefit</td><td class=cellinside>-2.33</td><td class=cellinside>-0.88</td><td class=cellinside> 1.31</td><td class=cellinside> 1.00</td></tr>
+ 
+	</tbody>
+</table>
+ </td></table>
+ <br>
+<p class='character'>Log-likelihood value at convergence: -1756.8</p>
