@@ -10,19 +10,20 @@
   		<component type="standard" id="par_est_grm" file="analysis/irt/polytomous/par_est_grm.xml" label="Graded response model fit" />
   		<component type="standard" id="par_est_rsm" file="analysis/irt/polytomous/par_est_rsm.xml" label="Rating scale model fit" />
   		<component type="standard" id="par_est_pcm" file="analysis/irt/polytomous/par_est_pcm.xml" label="Partial credit model fit" />
+  		<component type="standard" id="par_est_gpcm" file="analysis/irt/polytomous/par_est_gpcm.xml" label="Generalized partial credit model fit" />
   		<component type="standard" id="par_est_lrsm" file="analysis/irt/polytomous/par_est_lrsm.xml" label="Linear rating scale model fit" />
   		<component type="standard" id="par_est_lpcm" file="analysis/irt/polytomous/par_est_lpcm.xml" label="Linear partial credit model fit" />
 
- 		 <component type="standard" id="ltm_cronbach_alpha" file="analysis/irt/tests/ltm_cronbach_alpha.xml" label="Cronbach's alpha" />
+ 		<component type="standard" id="ltm_cronbach_alpha" file="analysis/irt/tests/ltm_cronbach_alpha.xml" label="Cronbach's alpha" />
 
- 		 <component type="standard" id="ltm_gof_rasch" file="analysis/irt/tests/ltm_gof_rasch.xml" label="Goodness of Fit (Rasch)" />
- 		 <component type="standard" id="ltm_unidimensional" file="analysis/irt/tests/ltm_unidimensional.xml" label="Unidimensionality check (Rasch, LTM, 3PM)" />
- 		 <component type="standard" id="ltm_item_fit" file="analysis/irt/tests/ltm_item_fit.xml" label="Item-fit statistics (Rasch, LTM, 3PM)" />
+ 		<component type="standard" id="ltm_gof_rasch" file="analysis/irt/tests/ltm_gof_rasch.xml" label="Goodness of Fit (Rasch)" />
+ 		<component type="standard" id="ltm_unidimensional" file="analysis/irt/tests/ltm_unidimensional.xml" label="Unidimensionality check (Rasch, LTM, 3PM)" />
+ 		<component type="standard" id="ltm_item_fit" file="analysis/irt/tests/ltm_item_fit.xml" label="Item-fit statistics (Rasch, LTM, 3PM)" />
   		<component type="standard" id="ltm_person_fit" file="analysis/irt/tests/ltm_person_fit.xml" label="Person-fit statistics (Rasch, LTM, 3PM)" />
   		<component type="standard" id="eRm_waldtest" file="analysis/irt/tests/eRm_waldtest.xml" label="Wald test (RSM, PCM)" />
   		<component type="standard" id="eRm_plotLR" file="plots/irt/tests/eRm_plotLR.xml" label="Andersen LR Plot (RSM, PCM)" />
 
- 		 <component type="standard" id="plot_rasch" file="plots/irt/dichotomous/plot_rasch.xml" label="Plot fitted Rasch model" />
+ 		<component type="standard" id="plot_rasch" file="plots/irt/dichotomous/plot_rasch.xml" label="Plot fitted Rasch model" />
   		<component type="standard" id="plot_ltm" file="plots/irt/dichotomous/plot_ltm.xml" label="Plot fitted two parameter logistic model" />
   		<component type="standard" id="plot_tpm" file="plots/irt/dichotomous/plot_tpm.xml" label="Plot fitted Birnbaum three parameter model" />
 
@@ -50,6 +51,7 @@
         				<entry component="par_est_grm" />
         				<entry component="par_est_rsm" />
         				<entry component="par_est_pcm" />
+        				<entry component="par_est_gpcm" />
         				<entry component="par_est_lrsm" />
         				<entry component="par_est_lpcm" />
       				</menu>

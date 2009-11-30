@@ -5,7 +5,11 @@ local({
 estimates.lrsm <- LRSM(lrsmdat, mpoints=2, se=FALSE, sum0=FALSE)
 ## Print result
 rk.header ("LRSM  parameter estimation")
-rk.print (estimates.lrsm)
+rk.print (paste("Call: <code>",deparse(estimates.lrsm$call, width.cutoff=500),"</code>"))
+rk.print ("<h4>Coefficients:</h4>")
+rk.print(t(rbind(Eta=estimates.lrsm$etapar,StdErr=estimates.lrsm$se.eta)))
+rk.print (paste("Conditional log-likelihood:",round(estimates.lrsm$loglik, digits=1),
+"<br />Number of iterations:",estimates.lrsm$iter,"<br />Number of parameters:",estimates.lrsm$npar))
 # keep results in current workspace
 estimates.lrsm <<- estimates.lrsm
 })

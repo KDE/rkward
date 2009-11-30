@@ -29,7 +29,11 @@ function printout () {
   $save_name    = getRK_val("save_name");
 ?>
 rk.header ("RSM  parameter estimation")
-rk.print (estimates.rsm)
+rk.print (paste("Call: <code>",deparse(estimates.rsm$call, width.cutoff=500),"</code>"))
+rk.print ("<h4>Coefficients:</h4>")
+rk.print(t(rbind(Eta=estimates.rsm$etapar,StdErr=estimates.rsm$se.eta)))
+rk.print (paste("Conditional log-likelihood:",round(estimates.rsm$loglik, digits=1),
+"<br />Number of iterations:",estimates.rsm$iter,"<br />Number of parameters:",estimates.rsm$npar))
 <?
 // check if results are to be saved:
 if ($save && $save_name) {

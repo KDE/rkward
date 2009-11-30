@@ -5,7 +5,10 @@ local({
 estimates.3pl <- tpm(LSAT)
 ## Print result
 rk.header ("3PL parameter estimation")
-rk.print (estimates.3pl)
+rk.print (paste("Call: <code>",deparse(estimates.3pl$call, width.cutoff=500),"</code>"))
+rk.print ("<h4>Coefficients:</h4>")
+rk.print (coef(estimates.3pl))
+rk.print (paste("Log-likelihood value at convergence:",round(estimates.3pl$log.Lik, digits=1)))
 # keep results in current workspace
 estimates.3pl <<- estimates.3pl
 })

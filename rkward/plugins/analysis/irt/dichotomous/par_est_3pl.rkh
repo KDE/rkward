@@ -7,7 +7,7 @@
     <usage>
       To fit the Birnbaum three parameter model with default settings, just the matrix of manifest variables (dichotomous item responses) must be selected. Further options are described in the sections below.
 
-      The complete results are stored as a new object in the current workspace for further use (e.g. plotting item characteristic curves). This object will be called <code>estimates.3pl</code>.
+      The complete results can be stored as a new object in the current workspace for further use (e.g. plotting item characteristic curves).
     </usage>
 
     <settings>

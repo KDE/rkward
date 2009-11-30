@@ -1,3 +1,28 @@
 <h1>LLTM  parameter estimation</h1>
 DATE<br>
-<p class='character'><br>Results of LLTM estimation: <br><br>Call:  LLTM(X = lltmdat1, mpoints = 2) <br><br>Conditional log-likelihood: -1511.2 <br>Number of iterations: 15 <br>Number of parameters: 15 <br><br>Basic Parameters eta:<br>           eta 1   eta 2    eta 3    eta 4   eta 5   eta 6   eta 7   eta 8<br>Estimate 0.18215 0.32422 -0.70372 -0.24748 0.49126 0.81037 0.68577 0.25312<br>Std.Err  0.14900 0.14929  0.15799  0.15099 0.15025 0.15393 0.15220 0.14909<br>            eta 9  eta 10  eta 11   eta 12   eta 13  eta 14   eta 15<br>Estimate -0.95333 0.25312 0.13485 -0.83996 -1.32511 0.51532 0.244881<br>Std.Err   0.16410 0.14909 0.14900  0.16111  0.17648 0.15044 0.082067<br><br></p>
+<p class='character'>Call: <code> LLTM(X = lltmdat1, mpoints = 2) </code></p><p class='character'><h4>Coefficients:</h4></p>
+<p align= center >
+<table cellspacing=0 border=1><caption align=bottom class=captiondataframe></caption><tr><td>
+	<table border=0 class=dataframe>
+	<tbody> <tr class= firstline > <th></th><th>Eta</th><th>StdErr</th> </tr>
+ <tr><td class=firstcolumn>eta 1</td><td class=cellinside> 0.182</td><td class=cellinside> 0.149</td></tr>
+ <tr><td class=firstcolumn>eta 2</td><td class=cellinside> 0.324</td><td class=cellinside> 0.149</td></tr>
+ <tr><td class=firstcolumn>eta 3</td><td class=cellinside>-0.704</td><td class=cellinside> 0.158</td></tr>
+ <tr><td class=firstcolumn>eta 4</td><td class=cellinside>-0.247</td><td class=cellinside> 0.151</td></tr>
+ <tr><td class=firstcolumn>eta 5</td><td class=cellinside> 0.491</td><td class=cellinside> 0.150</td></tr>
+ <tr><td class=firstcolumn>eta 6</td><td class=cellinside> 0.810</td><td class=cellinside> 0.154</td></tr>
+ <tr><td class=firstcolumn>eta 7</td><td class=cellinside> 0.686</td><td class=cellinside> 0.152</td></tr>
+ <tr><td class=firstcolumn>eta 8</td><td class=cellinside> 0.253</td><td class=cellinside> 0.149</td></tr>
+ <tr><td class=firstcolumn>eta 9</td><td class=cellinside>-0.953</td><td class=cellinside> 0.164</td></tr>
+ <tr><td class=firstcolumn>eta 10</td><td class=cellinside> 0.253</td><td class=cellinside> 0.149</td></tr>
+ <tr><td class=firstcolumn>eta 11</td><td class=cellinside> 0.135</td><td class=cellinside> 0.149</td></tr>
+ <tr><td class=firstcolumn>eta 12</td><td class=cellinside>-0.840</td><td class=cellinside> 0.161</td></tr>
+ <tr><td class=firstcolumn>eta 13</td><td class=cellinside>-1.325</td><td class=cellinside> 0.176</td></tr>
+ <tr><td class=firstcolumn>eta 14</td><td class=cellinside> 0.515</td><td class=cellinside> 0.150</td></tr>
+ <tr><td class=firstcolumn>eta 15</td><td class=cellinside> 0.245</td><td class=cellinside> 0.082</td></tr>
+ 
+	</tbody>
+</table>
+ </td></table>
+ <br>
+<p class='character'>Conditional log-likelihood: -1511.2 <br />Number of iterations: 15 <br />Number of parameters: 15</p>

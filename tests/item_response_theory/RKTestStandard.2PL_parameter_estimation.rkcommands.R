@@ -5,7 +5,10 @@ local({
 estimates.2pl <- ltm(WIRS ~ z1 * z2)
 ## Print result
 rk.header ("2PL parameter estimation")
-rk.print (estimates.2pl)
+rk.print (paste("Call: <code>",deparse(estimates.2pl$call, width.cutoff=500),"</code>"))
+rk.print ("<h4>Coefficients:</h4>")
+rk.print (coef(estimates.2pl))
+rk.print (paste("Log-likelihood value at convergence:",round(estimates.2pl$log.Lik, digits=1)))
 # keep results in current workspace
 estimates.2pl <<- estimates.2pl
 })

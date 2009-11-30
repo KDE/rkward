@@ -1,3 +1,23 @@
 <h1>LPCM  parameter estimation</h1>
 DATE<br>
-<p class='character'><br>Results of LPCM estimation: <br><br>Call:  LPCM(X = lpcmdat, mpoints = 2, groupvec = G) <br><br>Conditional log-likelihood: -103.72 <br>Number of iterations: 28 <br>Number of parameters: 10 <br><br>Basic Parameters eta:<br>           eta 1    eta 2    eta 3    eta 4    eta 5    eta 6   eta 7   eta 8<br>Estimate 0.41216 -0.29898 -0.13451 0.034894 -0.42887 -0.28640 0.16412 0.10074<br>Std.Err  0.39659  0.49423  0.40918 0.394328  0.47845  0.44882 0.39920 0.43511<br>            eta 9  eta 10<br>Estimate -0.20149 1.09404<br>Std.Err   0.26082 0.38704<br><br></p>
+<p class='character'>Call: <code> LPCM(X = lpcmdat, mpoints = 2, groupvec = G) </code></p><p class='character'><h4>Coefficients:</h4></p>
+<p align= center >
+<table cellspacing=0 border=1><caption align=bottom class=captiondataframe></caption><tr><td>
+	<table border=0 class=dataframe>
+	<tbody> <tr class= firstline > <th></th><th>Eta</th><th>StdErr</th> </tr>
+ <tr><td class=firstcolumn>eta 1</td><td class=cellinside> 0.412</td><td class=cellinside> 0.397</td></tr>
+ <tr><td class=firstcolumn>eta 2</td><td class=cellinside>-0.299</td><td class=cellinside> 0.494</td></tr>
+ <tr><td class=firstcolumn>eta 3</td><td class=cellinside>-0.135</td><td class=cellinside> 0.409</td></tr>
+ <tr><td class=firstcolumn>eta 4</td><td class=cellinside> 0.035</td><td class=cellinside> 0.394</td></tr>
+ <tr><td class=firstcolumn>eta 5</td><td class=cellinside>-0.429</td><td class=cellinside> 0.478</td></tr>
+ <tr><td class=firstcolumn>eta 6</td><td class=cellinside>-0.286</td><td class=cellinside> 0.449</td></tr>
+ <tr><td class=firstcolumn>eta 7</td><td class=cellinside> 0.164</td><td class=cellinside> 0.399</td></tr>
+ <tr><td class=firstcolumn>eta 8</td><td class=cellinside> 0.101</td><td class=cellinside> 0.435</td></tr>
+ <tr><td class=firstcolumn>eta 9</td><td class=cellinside>-0.201</td><td class=cellinside> 0.261</td></tr>
+ <tr><td class=firstcolumn>eta 10</td><td class=cellinside> 1.094</td><td class=cellinside> 0.387</td></tr>
+ 
+	</tbody>
+</table>
+ </td></table>
+ <br>
+<p class='character'>Conditional log-likelihood: -103.7 <br />Number of iterations: 28 <br />Number of parameters: 10</p>

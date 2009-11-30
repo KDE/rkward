@@ -5,7 +5,10 @@ local({
 estimates.rasch <- rasch(LSAT)
 ## Print result
 rk.header ("Rasch parameter estimation")
-rk.print (estimates.rasch$coefficients)
+rk.print (paste("Call: <code>",deparse(estimates.rasch$call, width.cutoff=500),"</code>"))
+rk.print ("<h4>Coefficients:</h4>")
+rk.print (coef(estimates.rasch))
+rk.print (paste("Log-likelihood value at convergence:",round(estimates.rasch$log.Lik, digits=1)))
 # keep results in current workspace
 estimates.rasch <<- estimates.rasch
 })

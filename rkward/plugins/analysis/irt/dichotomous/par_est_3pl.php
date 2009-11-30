@@ -59,7 +59,10 @@ function printout () {
   $save_name    = getRK_val("save_name");
 ?>
 rk.header ("3PL parameter estimation")
-rk.print (estimates.3pl)
+rk.print (paste("Call: <code>",deparse(estimates.3pl$call, width.cutoff=500),"</code>"))
+rk.print ("<h4>Coefficients:</h4>")
+rk.print (coef(estimates.3pl))
+rk.print (paste("Log-likelihood value at convergence:",round(estimates.3pl$log.Lik, digits=1)))
 <?
 // check if results are to be saved:
 if ($save && $save_name) {

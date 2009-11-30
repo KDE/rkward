@@ -53,7 +53,10 @@ function printout () {
   $save_name    = getRK_val("save_name");
 ?>
 rk.header ("GRM parameter estimation")
-rk.print (estimates.grm)
+rk.print (paste("Call: <code>",deparse(estimates.grm$call, width.cutoff=500),"</code>"))
+rk.print ("<h4>Coefficients:</h4>")
+rk.print (coef(estimates.grm))
+rk.print (paste("Log-likelihood value at convergence:",round(estimates.grm$log.Lik, digits=1)))
 <?
 // check if results are to be saved:
 if ($save && $save_name) {

@@ -1,3 +1,32 @@
 <h1>PCM  parameter estimation</h1>
 DATE<br>
-<p class='character'><br>Results of PCM estimation: <br><br>Call:  PCM(X = pcmdat) <br><br>Conditional log-likelihood: -121.10 <br>Number of iterations: 16 <br>Number of parameters: 19 <br><br>Basic Parameters eta:<br>           eta 1    eta 2   eta 3    eta 4   eta 5    eta 6     eta 7    eta 8<br>Estimate 0.93685 -0.33032 0.25086 0.065013 -1.4316 -0.22394 -0.074476 -0.87828<br>Std.Err  0.56521  0.80941 0.52546 0.579792  1.0239  0.56099  0.567946  0.78393<br>           eta 9   eta 10  eta 11   eta 12   eta 13  eta 14   eta 15  eta 16<br>Estimate 0.42298 -0.26350 0.13957 -0.98036 0.096206 0.40303 -0.58611 0.50414<br>Std.Err  0.54673  0.68881 0.64970  0.78801 0.584619 0.57883  0.82641 0.63450<br>          eta 17  eta 18   eta 19<br>Estimate 1.09952 0.84933 -0.29809<br>Std.Err  0.58696 0.50443  0.70054<br><br></p>
+<p class='character'>Call: <code> PCM(X = pcmdat) </code></p><p class='character'><h4>Coefficients:</h4></p>
+<p align= center >
+<table cellspacing=0 border=1><caption align=bottom class=captiondataframe></caption><tr><td>
+	<table border=0 class=dataframe>
+	<tbody> <tr class= firstline > <th></th><th>Eta</th><th>StdErr</th> </tr>
+ <tr><td class=firstcolumn>eta 1</td><td class=cellinside> 0.937</td><td class=cellinside> 0.565</td></tr>
+ <tr><td class=firstcolumn>eta 2</td><td class=cellinside>-0.330</td><td class=cellinside> 0.809</td></tr>
+ <tr><td class=firstcolumn>eta 3</td><td class=cellinside> 0.251</td><td class=cellinside> 0.525</td></tr>
+ <tr><td class=firstcolumn>eta 4</td><td class=cellinside> 0.065</td><td class=cellinside> 0.580</td></tr>
+ <tr><td class=firstcolumn>eta 5</td><td class=cellinside>-1.432</td><td class=cellinside> 1.024</td></tr>
+ <tr><td class=firstcolumn>eta 6</td><td class=cellinside>-0.224</td><td class=cellinside> 0.561</td></tr>
+ <tr><td class=firstcolumn>eta 7</td><td class=cellinside>-0.074</td><td class=cellinside> 0.568</td></tr>
+ <tr><td class=firstcolumn>eta 8</td><td class=cellinside>-0.878</td><td class=cellinside> 0.784</td></tr>
+ <tr><td class=firstcolumn>eta 9</td><td class=cellinside> 0.423</td><td class=cellinside> 0.547</td></tr>
+ <tr><td class=firstcolumn>eta 10</td><td class=cellinside>-0.263</td><td class=cellinside> 0.689</td></tr>
+ <tr><td class=firstcolumn>eta 11</td><td class=cellinside> 0.140</td><td class=cellinside> 0.650</td></tr>
+ <tr><td class=firstcolumn>eta 12</td><td class=cellinside>-0.980</td><td class=cellinside> 0.788</td></tr>
+ <tr><td class=firstcolumn>eta 13</td><td class=cellinside> 0.096</td><td class=cellinside> 0.585</td></tr>
+ <tr><td class=firstcolumn>eta 14</td><td class=cellinside> 0.403</td><td class=cellinside> 0.579</td></tr>
+ <tr><td class=firstcolumn>eta 15</td><td class=cellinside>-0.586</td><td class=cellinside> 0.826</td></tr>
+ <tr><td class=firstcolumn>eta 16</td><td class=cellinside> 0.504</td><td class=cellinside> 0.634</td></tr>
+ <tr><td class=firstcolumn>eta 17</td><td class=cellinside> 1.100</td><td class=cellinside> 0.587</td></tr>
+ <tr><td class=firstcolumn>eta 18</td><td class=cellinside> 0.849</td><td class=cellinside> 0.504</td></tr>
+ <tr><td class=firstcolumn>eta 19</td><td class=cellinside>-0.298</td><td class=cellinside> 0.701</td></tr>
+ 
+	</tbody>
+</table>
+ </td></table>
+ <br>
+<p class='character'>Conditional log-likelihood: -121.1 <br />Number of iterations: 16 <br />Number of parameters: 19</p>

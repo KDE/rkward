@@ -22,6 +22,7 @@ suite <- new ("RKTestSuite", id="item_response_theory",
 			# polytomous data:
 			data("rsmdat")		# rating scale model
 			data("pcmdat")		# partial credit model
+			data("Science")		# generalized partial credit model
 			data("lrsmdat")		# linear rating scale model
 			data("lpcmdat")		# linear partial credit model
                 },
@@ -61,6 +62,10 @@ suite <- new ("RKTestSuite", id="item_response_theory",
 			rk.call.plugin ("rkward::par_est_pcm", chk_save.state="save", design.string="auto", etastart.string="NULL", stderr.state="se", sumnull.state="sum0", x.available="pcmdat", submit.mode="submit")
 			estimates$pcm <<- estimates.pcm
                 }),
+                new ("RKTest", id="GPCM_parameter_estimation", call=function () {
+			rk.call.plugin ("rkward::par_est_gpcm", chk_save.state="save", chk_select.state="select", constraint.string="rasch", epshess.real="0.000001", ghk_gpcm.real="21.00", inp_items.available="Science[[\"Work\"]]\nScience[[\"Industry\"]]\nScience[[\"Future\"]]\nScience[[\"Benefit\"]]", irtparam.state="TRUE", iterqn_gpcm.real="150.00", naaction.state="", numrderiv.string="fd", optimeth.string="BFGS", optimizer.string="optim", save_name.selection="estimates.gpcm", startval.string="NULL", verbose.state="", x.available="Science", submit.mode="submit")
+			estimates$gpcm <<- estimates.gpcm
+                }),
                 new ("RKTest", id="LRSM_parameter_estimation", call=function () {
 			rk.call.plugin ("rkward::par_est_lrsm", chk_save.state="save", design.string="auto", etastart.string="NULL", groups.string="1", mpoints.real="2.00", stderr.state="", sumnull.state="", x.available="lrsmdat", submit.mode="submit")
                 }),
@@ -73,7 +78,7 @@ suite <- new ("RKTestSuite", id="item_response_theory",
 		## testing cronbach's alpha
                 new ("RKTest", id="Cronbach_alpha", call=function () {
 			rk.call.plugin ("rkward::ltm_cronbach_alpha", chk_bsci.state="bsci", chk_na.state="", chk_select.state="select", chk_standard.state="", inp_items.available="LSAT[[\"Item 1\"]]\nLSAT[[\"Item 2\"]]\nLSAT[[\"Item 3\"]]\nLSAT[[\"Item 4\"]]\nLSAT[[\"Item 5\"]]", spin_ci.real="0.95", spin_samples.real="1000.00", x.available="LSAT", submit.mode="submit")
-                }, fuzzy_output=TRUE), # calculating the bootstrap confidence interval isn't always that accurate
+                }, fuzzy_output=TRUE), # bootstrap, varies a little
 
 		## now that our estimates are calculated, let's have a look at goodnes of fit
                 new ("RKTest", id="goodnes-of-fit_Rasch", call=function () {
@@ -147,7 +152,7 @@ suite <- new ("RKTestSuite", id="item_response_theory",
         # like initCalls: run after all tests to clean up.
 	postCalls = list (
 		function(){
-			rm(list=c("LSAT","WIRS","lltmdat1","Environment","pcmdat","rsmdat","lrsmdat","lpcmdat","estimates"), envir=globalenv())
+			rm(list=c("LSAT","WIRS","lltmdat1","Environment","Science","pcmdat","rsmdat","lrsmdat","lpcmdat","estimates"), envir=globalenv())
 		}
 	)
 )

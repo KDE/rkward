@@ -1,3 +1,18 @@
 <h1>LRSM  parameter estimation</h1>
 DATE<br>
-<p class='character'><br>Results of LRSM estimation: <br><br>Call:  LRSM(X = lrsmdat, mpoints = 2, se = FALSE, sum0 = FALSE) <br><br>Conditional log-likelihood: -109.32 <br>Number of iterations: 11 <br>Number of parameters: 5 <br><br>Basic Parameters eta:<br>             eta 1   eta 2   eta 3     eta 4   eta 5<br>Estimate -0.045897 0.11393 0.19745 -0.041557 0.34602<br>Std.Err         NA      NA      NA        NA      NA<br><br></p>
+<p class='character'>Call: <code> LRSM(X = lrsmdat, mpoints = 2, se = FALSE, sum0 = FALSE) </code></p><p class='character'><h4>Coefficients:</h4></p>
+<p align= center >
+<table cellspacing=0 border=1><caption align=bottom class=captiondataframe></caption><tr><td>
+	<table border=0 class=dataframe>
+	<tbody> <tr class= firstline > <th></th><th>Eta</th><th>StdErr</th> </tr>
+ <tr><td class=firstcolumn>eta 1</td><td class=cellinside>-0.046</td><td class=cellinside>    NA</td></tr>
+ <tr><td class=firstcolumn>eta 2</td><td class=cellinside> 0.114</td><td class=cellinside>    NA</td></tr>
+ <tr><td class=firstcolumn>eta 3</td><td class=cellinside> 0.197</td><td class=cellinside>    NA</td></tr>
+ <tr><td class=firstcolumn>eta 4</td><td class=cellinside>-0.042</td><td class=cellinside>    NA</td></tr>
+ <tr><td class=firstcolumn>eta 5</td><td class=cellinside> 0.346</td><td class=cellinside>    NA</td></tr>
+ 
+	</tbody>
+</table>
+ </td></table>
+ <br>
+<p class='character'>Conditional log-likelihood: -109.3 <br />Number of iterations: 11 <br />Number of parameters: 5</p>

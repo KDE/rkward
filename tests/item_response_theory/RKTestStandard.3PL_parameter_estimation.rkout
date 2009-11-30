@@ -1,3 +1,18 @@
 <h1>3PL parameter estimation</h1>
 DATE<br>
-<p class='character'><br>Call:<br>tpm(data = LSAT)<br><br>Coefficients:<br>        Gussng  Dffclt  Dscrmn<br>Item 1   0.037  -3.296   0.829<br>Item 2   0.078  -1.145   0.760<br>Item 3   0.012  -0.249   0.902<br>Item 4   0.035  -1.766   0.701<br>Item 5   0.053  -2.990   0.666<br><br>Log.Lik: -2466.7<br></p>
+<p class='character'>Call: <code> tpm(data = LSAT) </code></p><p class='character'><h4>Coefficients:</h4></p>
+<p align= center >
+<table cellspacing=0 border=1><caption align=bottom class=captiondataframe></caption><tr><td>
+	<table border=0 class=dataframe>
+	<tbody> <tr class= firstline > <th></th><th>Gussng</th><th>Dffclt</th><th>Dscrmn</th> </tr>
+ <tr><td class=firstcolumn>Item 1</td><td class=cellinside> 0.037</td><td class=cellinside>-3.296</td><td class=cellinside> 0.829</td></tr>
+ <tr><td class=firstcolumn>Item 2</td><td class=cellinside> 0.078</td><td class=cellinside>-1.145</td><td class=cellinside> 0.760</td></tr>
+ <tr><td class=firstcolumn>Item 3</td><td class=cellinside> 0.012</td><td class=cellinside>-0.249</td><td class=cellinside> 0.902</td></tr>
+ <tr><td class=firstcolumn>Item 4</td><td class=cellinside> 0.035</td><td class=cellinside>-1.766</td><td class=cellinside> 0.701</td></tr>
+ <tr><td class=firstcolumn>Item 5</td><td class=cellinside> 0.053</td><td class=cellinside>-2.990</td><td class=cellinside> 0.666</td></tr>
+ 
+	</tbody>
+</table>
+ </td></table>
+ <br>
+<p class='character'>Log-likelihood value at convergence: -2466.7</p>

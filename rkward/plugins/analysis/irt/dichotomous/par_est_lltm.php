@@ -34,7 +34,11 @@ function printout () {
   $save_name    = getRK_val("save_name");
 ?>
 rk.header ("LLTM  parameter estimation")
-rk.print (estimates.lltm)
+rk.print (paste("Call: <code>",deparse(estimates.lltm$call, width.cutoff=500),"</code>"))
+rk.print ("<h4>Coefficients:</h4>")
+rk.print(t(rbind(Eta=estimates.lltm$etapar,StdErr=estimates.lltm$se.eta)))
+rk.print (paste("Conditional log-likelihood:",round(estimates.lltm$loglik, digits=1),
+"<br />Number of iterations:",estimates.lltm$iter,"<br />Number of parameters:",estimates.lltm$npar))
 <?
 // check if results are to be saved:
 if ($save && $save_name) {

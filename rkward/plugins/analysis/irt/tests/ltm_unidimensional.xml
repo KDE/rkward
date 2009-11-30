@@ -4,6 +4,8 @@
   <!--<help file="ltm_unidimensional.rkh" />-->
 
   <logic>
+    <connect client="save_name.enabled"  governor="chk_save.state" />
+    <connect client="save_name.required" governor="chk_save.state" />
   </logic>
 
   <dialog label="Unidimensionality check (Rasch, LTM, 3PM)">
@@ -18,6 +20,10 @@
             <frame id="frame_options" label="Monte Carlo options">
               <spinbox id="spin_samples" label="Number of samples:" type="integer" initial="100" min="1" size="small" />
             </frame>
+	    <frame id="frame_save">
+	      <checkbox id="chk_save" label="Keep results in current workspace" value="save" checked="true"/>
+	      <saveobject id="save_name" initial="unidim.res"/>
+	    </frame>
           </column>
         </row>
       </tab>

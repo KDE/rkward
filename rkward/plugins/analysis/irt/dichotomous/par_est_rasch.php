@@ -46,9 +46,13 @@ function printout () {
   // check whether parameter estimations should be kept in the global enviroment
   $save         = getRK_val("chk_save");
   $save_name    = getRK_val("save_name");
+  $irtparam     = getRK_val("irtparam");
 ?>
 rk.header ("Rasch parameter estimation")
-rk.print (estimates.rasch$coefficients)
+rk.print (paste("Call: <code>",deparse(estimates.rasch$call, width.cutoff=500),"</code>"))
+rk.print ("<h4>Coefficients:</h4>")
+rk.print (coef(estimates.rasch))
+rk.print (paste("Log-likelihood value at convergence:",round(estimates.rasch$log.Lik, digits=1)))
 <?
 // check if results are to be saved:
 if ($save && $save_name) {

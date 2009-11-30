@@ -1,3 +1,20 @@
 <h1>RSM  parameter estimation</h1>
 DATE<br>
-<p class='character'><br>Results of RSM estimation: <br><br>Call:  RSM(X = rsmdat) <br><br>Conditional log-likelihood: -107.56 <br>Number of iterations: 11 <br>Number of parameters: 7 <br><br>Basic Parameters eta:<br>            eta 1    eta 2     eta 3   eta 4   eta 5   eta 6    eta 7<br>Estimate -0.30515 -0.25586 -0.067308 0.16013 0.44424 0.16739 -0.13791<br>Std.Err   0.20537  0.20282  0.196507 0.19652 0.20849 0.45966  0.73249<br><br></p>
+<p class='character'>Call: <code> RSM(X = rsmdat) </code></p><p class='character'><h4>Coefficients:</h4></p>
+<p align= center >
+<table cellspacing=0 border=1><caption align=bottom class=captiondataframe></caption><tr><td>
+	<table border=0 class=dataframe>
+	<tbody> <tr class= firstline > <th></th><th>Eta</th><th>StdErr</th> </tr>
+ <tr><td class=firstcolumn>eta 1</td><td class=cellinside>-0.305</td><td class=cellinside> 0.205</td></tr>
+ <tr><td class=firstcolumn>eta 2</td><td class=cellinside>-0.256</td><td class=cellinside> 0.203</td></tr>
+ <tr><td class=firstcolumn>eta 3</td><td class=cellinside>-0.067</td><td class=cellinside> 0.197</td></tr>
+ <tr><td class=firstcolumn>eta 4</td><td class=cellinside> 0.160</td><td class=cellinside> 0.197</td></tr>
+ <tr><td class=firstcolumn>eta 5</td><td class=cellinside> 0.444</td><td class=cellinside> 0.208</td></tr>
+ <tr><td class=firstcolumn>eta 6</td><td class=cellinside> 0.167</td><td class=cellinside> 0.460</td></tr>
+ <tr><td class=firstcolumn>eta 7</td><td class=cellinside>-0.138</td><td class=cellinside> 0.732</td></tr>
+ 
+	</tbody>
+</table>
+ </td></table>
+ <br>
+<p class='character'>Conditional log-likelihood: -107.6 <br />Number of iterations: 11 <br />Number of parameters: 7</p>
