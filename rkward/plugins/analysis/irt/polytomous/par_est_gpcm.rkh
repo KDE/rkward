@@ -1,0 +1,73 @@
+<!DOCTYPE rkhelp>
+  <document>
+    <summary>
+      This plugin estimates parameters under Item Response Theory approach, using the <link href="rkward://rhelp/ltm-package">ltm</link> package.
+    </summary>
+
+    <usage>
+      To fit the generalized partial credit model with default settings, just the matrix of manifest variables (polytomous item responses) must be selected. Further options are described in the sections below.
+
+      The complete results can be stored as a new object in the current workspace for further use (e.g. plotting item characteristic curves).
+    </usage>
+
+    <settings>
+      <caption id="tab_data"/>
+      <setting id="x" title="Matrix of manifest variables">
+        Select the matrix of polytomous item responses from the objects shown on the left.
+      </setting>
+      <setting id="frame_items">
+	 If you only want to use a subset of items from selected object, you can specify these here.
+      </setting>
+
+      <caption id="tab_options"/>
+      <setting id="frame_constraints">
+	Choose if discrimination parameters should be computed for each item individually. Alternatively, you can estimate one discrimination parameter that is equal for all items, or fix it at 1 for all items.
+      </setting>
+      <setting id="startval">
+        By default start values for the parameters are computed automatically. Alternatively, you can force the use of random start values, or give a list of values to be used. For detailed information on the specific layout of that list please refer to the manual for the  <link href="rkward://rhelp/gpcm">gpcm()</link> function.
+      </setting>
+      <setting id="naaction">
+        Specifies how missing values are to be treated. By default all available cases are used. If checked, only complete cases will be considered.
+      </setting>
+      <setting id="irtparam">
+        If checked, the coefficients' estimates are reported under the usual Item Response Theory parameterization (which is the default).
+      </setting>
+
+      <caption id="tab_advanced_control"/>
+      <setting id="iterqn_gpcm" title="Number of quasi-Newton iterations">
+        Defaults to 150.
+      </setting>
+      <setting id="ghk_gpcm" title="Number of Gauss-Hermite quadrature points">
+        Defaults to 21.
+      </setting>
+      <setting id="optimizer" title="Used optimizer">
+        By default <link href="rkward://rhelp/optim">optim()</link> is being used for optimization. Alternatively, <link href="rkward://rhelp/nlminb">nlminb()</link> can be called.
+      </setting>
+      <setting id="optimeth" title="Optimization method">
+        The default optimization method is BFGS. It can be set to Nelder-Mead, CG, L-BFGS-B, or SANN instead. Please refer to the <link href="rkward://rhelp/optim">optim()</link> manual for details.
+      </setting>
+      <setting id="numrderiv">
+	Options are forward difference approximation (the default) and central difference approximation.
+      </setting>
+      <setting id="epshess">
+        Step size to be used in the numerical derivative. Default is 1e-06. If you use central difference approximation, change this to a larger value, e.g., 1e-03 or 1e-04.
+      </setting>
+      <setting id="verbose">
+        Pretty much speaks for itself ;-)
+      </setting>
+    </settings>
+
+   <related>
+       Please refer to the <code>ltm</code> manuals for further information and detailed command line options:
+        <ul>
+                <li><link href="rkward://rhelp/ltm-package"/></li>
+                <li><link href="rkward://rhelp/gpcm"/></li>
+        </ul>
+   </related>
+
+   <technical>
+     Todo:
+       <ul>
+         <li>The <code>parscale</code> control element is not yet implemented.</li>
+       </ul>
+   </technical>

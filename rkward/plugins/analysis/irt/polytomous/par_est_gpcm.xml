@@ -1,0 +1,91 @@
+<!DOCTYPE rkplugin>
+<document>
+  <code file="par_est_gpcm.php" />
+  <help file="par_est_gpcm.rkh" />
+
+  <logic>
+    <convert id="optim_used"  mode="equals" sources="optimizer.string" standard="optim" />
+    <convert id="sv_matrix" mode="equals" sources="startval.string" standard="list" />
+
+    <connect client="inp_items.enabled" governor="chk_select.state" />
+    <connect client="spin_ci.enabled" governor="chk_bsci.state" />
+    <connect client="optimeth.enabled" governor="optim_used" />
+    <connect client="startval_lst.enabled" governor="sv_matrix" />
+    <connect client="startval_lst.required" governor="sv_matrix" />
+
+    <connect client="save_name.enabled"  governor="chk_save.state" />
+    <connect client="save_name.required" governor="chk_save.state" />
+  </logic>
+
+  <dialog label="IRT parameter estimation: Generalized partial credit model">
+    <tabbook>
+      <tab id="tab_data" label="Manifest variables">
+        <row id="manifest_resp_row">
+          <varselector id="vars" />
+          <column>
+            <varslot type="numeric" id="x" classes="data.frame matrix" source="vars" required="true" label="Matrix of manifest variables:"/>
+            <frame id="frame_items" label="Item selection">
+	      <checkbox id="chk_select" label="Select a subset of items" value="select" />
+	      <varslot type="numeric" id="inp_items" source="vars" multi="true" min_vars="2" label="List of items:" />
+            </frame>
+            <stretch />
+	    <frame id="frame_save">
+	      <checkbox id="chk_save" label="Keep results in current workspace" value="save" checked="true"/>
+	      <saveobject id="save_name" initial="estimates.gpcm"/>
+	    </frame>
+          </column>
+        </row>
+      </tab>
+      <tab id="tab_options" label="Options">
+        <row id="options_row">
+          <varselector id="vars2" />
+          <column id="opt_var_col">
+            <radio label="Should parameters be fixed (constrainted)?" id="constraint">
+              <option label="Each item has its one discrimination parameter" value="gpcm" checked="true" />
+              <option label="Equal discrimination parameter across items" value="1PL" />
+              <option label="Discrimination parameter fixed at 1 across items" value="rasch" />
+            </radio>
+            <stretch />
+            <radio label="Start values" id="startval">
+              <option label="Compute automatically" value="NULL" checked="true" />
+              <option label="Use random start values" value="random" />
+              <option label="Use own list of start values" value="list" />
+            </radio>
+            <varslot type="numeric" id="startval_lst" source="vars2" label="List of start values:"/>
+            <frame label="Misc options">
+              <checkbox id="naaction" label="Use only complete cases" value="na.exclude" />
+              <checkbox id="irtparam" label="Usual IRT parameterization" checked="true" value="TRUE" />
+            </frame>
+          </column>
+        </row>
+      </tab>
+      <tab id="tab_advanced_control" label="Advanced control">
+        <row>
+        <column id="control_col">
+          <spinbox id="iterqn_gpcm" label="Number of quasi-Newton iterations:" type="integer" initial="150" size="small" />
+          <spinbox id="ghk_gpcm" label="Number of Gauss-Hermite quadrature points:" type="integer" initial="21" size="small" />
+          <dropdown id="optimizer" label="Used optimizer:">
+            <option label="optim()" value="optim" checked="true" />
+            <option label="nlminb()" value="nlminb" />
+          </dropdown>
+          <dropdown id="optimeth" label="Optimization method:">
+            <option label="BFGS" value="BFGS" checked="true" />
+            <option label="Nelder-Mead" value="Nelder-Mead" />
+            <option label="CG" value="CG" />
+            <option label="L-BFGS-B" value="L-BFGS-B" />
+            <option label="SANN" value="SANN" />
+          </dropdown>
+          <dropdown id="numrderiv" label="Numerical derivative algorithm to approximate Hessian matrix:">
+            <option label="Forward difference approximation" value="fd" checked="true" />
+            <option label="Central difference approximation" value="cd" />
+          </dropdown>
+          <spinbox id="epshess" label="Step-length for approximation" type="real" initial="1e-06" size="small" />
+          <!-- todo: parscale option -->
+          <stretch />
+          <checkbox id="verbose" label="Print verbose info about optimization" value="TRUE" />
+        </column>
+      </row>
+      </tab>
+    </tabbook>
+  </dialog>
+</document>
