@@ -327,7 +327,7 @@
 	if (!is.character (file)) {
 		nfile = tempfile()
 		env = environment (file)
-		dput (file, file=nfile)
+		dput (file, file=nfile, control=c ("useSource", "keepNA", "keepInteger", "showAttributes"))
 		.Call("rk.edit.files", nfile, title, name)
 		x <- dget (nfile)
 		environment (x) <- env

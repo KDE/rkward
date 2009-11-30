@@ -1,3 +1,4 @@
+- Fixed: Calling "fix(my.fun)" would remove comments
 - Fixed: Removing "@CRAN@" from the repositories would break package installation
 
 --- Version 0.5.2 - Oct-26-2009
