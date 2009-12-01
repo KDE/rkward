@@ -2,7 +2,7 @@
                           rkreadlinedialog  -  description
                              -------------------
     begin                : Fri Sep 15 2006
-    copyright            : (C) 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007, 2009 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -45,7 +45,7 @@ protected:
 	~RKReadLineDialog ();
 private:
 	QLineEdit *input;
-	static QRect stored_geom;
+	static QByteArray stored_geom;
 };
 
 #endif

@@ -33,7 +33,7 @@
 
 #include "../debug.h"
 
-QRect RKReadLineDialog::stored_geom;
+QByteArray RKReadLineDialog::stored_geom;
 
 RKReadLineDialog::RKReadLineDialog (QWidget *parent, const QString &caption, const QString &prompt, RCommand *command) : KDialog (parent) {
 	RK_TRACE (DIALOGS);
@@ -87,11 +87,11 @@ bool RKReadLineDialog::readLine (QWidget *parent, const QString &caption, const 
 	RK_ASSERT (result);
 
 	RKReadLineDialog *dialog = new RKReadLineDialog (parent, caption, prompt, command);
-	if (!stored_geom.isNull ()) dialog->setGeometry (stored_geom);
+	if (!stored_geom.isNull ()) dialog->restoreGeometry (stored_geom);
 	QTimer::singleShot (0, dialog->input, SLOT(setFocus()));
 	int res = dialog->exec ();
 	*result = dialog->input->text ();
-	stored_geom = dialog->frameGeometry ();
+	stored_geom = dialog->saveGeometry ();
 	delete dialog;
 
 	return (res != QDialog::Rejected);
