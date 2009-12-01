@@ -80,6 +80,12 @@ function convertPHPBlock (input) {
 			i = eol - 1;
 			continue;
 		}
+		if (c == "#") {
+			var eol = input.indexOf ("\n", i);
+			output += "//" + input.substring (i + 1, eol);
+			i = eol - 1;
+			continue;
+		}
 		if ((c == "/") && (cn == "*")) {
 			message ("Warning: multiline comments are not handled! Check by hand!");
 		}
@@ -127,6 +133,19 @@ function convertPHPBlock (input) {
 		} else if (input.indexOf ("function", i) == i) {
 			current_fun = getFunctionName (input.substr (i+8));
 			locals[current_fun] = new Array ();
+			fun_args[current_fun] = new Array ();
+			var args_start = input.indexOf ("(", i+8) + 1;
+			var funb_level = 1;
+			var args_end = args_start;
+			while (funb_level) {
+				if (input.charAt (args_end) == ")") {
+					funb_level -= 1;
+				} else if (input.charAt (args_end) == "(") {
+					funb_level += 1;
+				}
+				args_end += 1;
+			}
+			eatFunctionArgs (input.substring (args_start, args_end - 1));
 		}
 
 		// associative array operator
@@ -203,17 +222,17 @@ function convertPHPQuote (input, quote_char) {
 
 function getToken (input) {
 	var i = input.search (/[^a-zA-Z0-9_]+/);
-	if ((input.charAt (i) == "[") || (input.charAt (i+1) == "[")) {	// array subscripts
-		i = input.indexOf ("]", i);
+/*	if ((input.charAt (i) == "[") || (input.charAt (i+1) == "[")) {	// array subscripts
+		i = input.indexOf ("]", i) + 1;
 	}
 	if (i < 1) {
 		message ("Something's wrong. Token end not found. Token start was " + input.substr (0, 10));
 		return (input);
-	}
+	} */
 	var token = input.substr (0, i);
-	if (token.search (/\[\]/) != -1) {
+/*	if (token.search (/\[\]/) != -1) {
 		message ("Use of [] in token " + token + ". Please convert to 'X.push (Y)' by hand.");
-	}
+	} */
 
 	if (!contains(locals[current_fun], token)) locals[current_fun].push (token);
 	return (token);
@@ -231,6 +250,14 @@ function eatGlobals (input) {
 	return (end);
 }
 
+function eatFunctionArgs (input) {
+	var tokens = input.split (",");
+	for (var i = 0; i < tokens.length; ++i) {
+		var token = tokens[i].replace (/^[\$ ]*/, "");
+		token = getToken (token + " ");
+		fun_args[current_fun].push (token);
+	}
+}
 
 // this function is meant to be run in step 2 (i.e. on already js code)
 function mergeEchos (line) {
@@ -244,6 +271,11 @@ function mergeEchos (line) {
 
 		// comments
 		if ((c == "/") && (cn == "/")) {
+			if (directly_after_echo) {
+				output += "); ";
+				directly_after_echo = false;
+			}
+			output += line.substr (i);
 			break;
 		}
 
@@ -376,7 +408,9 @@ function postProcess (input) {
 
 			for (var l = 0; l < locals[fun_name].length; ++l) {
 				if (!contains (globals, locals[fun_name][l])) {
-					olines.push ('var ' + locals[fun_name][l] + ' = "";');
+					if (!contains (fun_args[fun_name], locals[fun_name][l])) {
+						olines.push ('var ' + locals[fun_name][l] + ' = "";');
+					}
 				}
 			}
 		}
@@ -405,6 +439,8 @@ var output = "";
 // list of global vars
 var globals = new Array ();
 var locals = new Object ();
+var fun_args = new Object ();
+fun_args.none = new Array ();
 locals.none = new Array ();
 var current_fun = "none";
 var pass = 1;
