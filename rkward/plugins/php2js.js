@@ -146,6 +146,10 @@ function convertPHPBlock (input) {
 				args_end += 1;
 			}
 			eatFunctionArgs (input.substring (args_start, args_end - 1));
+		} else if (input.indexOf ("count", i) == i) {
+			message ("Found string 'count'. Please check whether conversion is needed (use varname.length).");
+		} else if (input.indexOf ("strtr", i) == i) {
+			message ("Found string 'strtr'. Please check whether conversion is needed (use varname.replace(...)).");
 		}
 
 		// associative array operator
