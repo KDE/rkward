@@ -44,7 +44,7 @@ function convertTopLevel (input) {
 //		else if (c == "\t") c = "\\t";
 		else if (c == "\n") {
 			c = "\\n');\n"
-			in_echo = false;
+			    in_echo = false;
 		}
 
 		first_char = false;
@@ -195,11 +195,11 @@ function convertPHPQuote (input, quote_char) {
 			if (input.charAt (i+1) != quote_char) {
 				message ("Warning: '$' inside '\"'-delimited string. This might be a variable name. Please check by hand!");
 			}
-/*			token = getToken (input.substr (i + 1));
-			output += quote_char + " + " + token;
-			i += token.length;
-			if (input.charAt (i + 1) != quote_char) output += " + " + quote_char;
-			continue; */
+			/*			token = getToken (input.substr (i + 1));
+						output += quote_char + " + " + token;
+						i += token.length;
+						if (input.charAt (i + 1) != quote_char) output += " + " + quote_char;
+						continue; */
 		}
 
 		// end of string
@@ -211,13 +211,13 @@ function convertPHPQuote (input, quote_char) {
 		inside_quote += c;
 	}
 
-/*	// unquote numeric constants
-	if ((inside_quote.length > 0) && (!isNaN (inside_quote))) {
-		output = output.substr (0, output.length -1);	// ugly hack: remove quote already added
-		output += inside_quote;
-	} else {
-		output += inside_quote + quote_char;
-	}*/
+	/*	// unquote numeric constants
+		if ((inside_quote.length > 0) && (!isNaN (inside_quote))) {
+			output = output.substr (0, output.length -1);	// ugly hack: remove quote already added
+			output += inside_quote;
+		} else {
+			output += inside_quote + quote_char;
+		}*/
 	output += inside_quote + quote_char;
 
 	if (!closed) message ("Something's wrong. Closing " + quote_char + " not found.");
@@ -226,17 +226,17 @@ function convertPHPQuote (input, quote_char) {
 
 function getToken (input) {
 	var i = input.search (/[^a-zA-Z0-9_]+/);
-/*	if ((input.charAt (i) == "[") || (input.charAt (i+1) == "[")) {	// array subscripts
-		i = input.indexOf ("]", i) + 1;
-	}
-	if (i < 1) {
-		message ("Something's wrong. Token end not found. Token start was " + input.substr (0, 10));
-		return (input);
-	} */
+	/*	if ((input.charAt (i) == "[") || (input.charAt (i+1) == "[")) {	// array subscripts
+			i = input.indexOf ("]", i) + 1;
+		}
+		if (i < 1) {
+			message ("Something's wrong. Token end not found. Token start was " + input.substr (0, 10));
+			return (input);
+		} */
 	var token = input.substr (0, i);
-/*	if (token.search (/\[\]/) != -1) {
-		message ("Use of [] in token " + token + ". Please convert to 'X.push (Y)' by hand.");
-	} */
+	/*	if (token.search (/\[\]/) != -1) {
+			message ("Use of [] in token " + token + ". Please convert to 'X.push (Y)' by hand.");
+		} */
 
 	if (!contains(locals[current_fun], token)) locals[current_fun].push (token);
 	return (token);
@@ -315,7 +315,7 @@ function mergeEchos (line) {
 				continue;
 			}
 			fragment = fragment.replace (/^\s*\(\s*/, "");
-			fragment = fragment.replace (/\s*\)\s*$/, "");
+			                              fragment = fragment.replace (/\s*\)\s*$/, "");
 
 			if (!directly_after_echo) {
 				output += "echo (";
@@ -334,7 +334,7 @@ function mergeEchos (line) {
 			} else {
 				output += c;
 			}
-			
+
 			if (line.indexOf ("if", i) == i) {
 				output += "f";
 				i += feedthroughControlStatement (line.substr (i+2)) + 2;
@@ -421,53 +421,53 @@ function postProcess (input) {
 		// fix includes
 		lines[i] = lines[i].replace (/^include\s*\(\s*[\"\']([^\)]*)\.php[\"\']\s*\)/, "include ('$1.js')");
 
-//		olines.push (lines[i]);
-		olines.push (mergeEchos (lines[i]));
-	}
+		                              //		olines.push (lines[i]);
+		                              olines.push (mergeEchos (lines[i]));
+	                              }
 
-	return (olines.join ("\n"));
-}
+		                              return (olines.join ("\n"));
+	                              }
 
-function message (text) {
-	_message += text + "\n";
-	print (text);
-}
+		                              function message (text) {
+		                              _message += text + "\n";
+		                              print (text);
+	                              }
 
-filename = arguments[0];
-file = readFile (filename);
-print ("--------- converting file " + filename);
+		                              filename = arguments[0];
+		                              file = readFile (filename);
+		                              print ("--------- converting file " + filename);
 
-var _message = "";
-// the output buffer
-var output = "";
-// list of global vars
-var globals = new Array ();
-var locals = new Object ();
-var fun_args = new Object ();
-fun_args.none = new Array ();
-locals.none = new Array ();
-var current_fun = "none";
-var pass = 1;
+		                              var _message = "";
+		                              // the output buffer
+		                              var output = "";
+		                              // list of global vars
+		                              var globals = new Array ();
+		                              var locals = new Object ();
+		                              var fun_args = new Object ();
+		                              fun_args.none = new Array ();
+		                              locals.none = new Array ();
+		                              var current_fun = "none";
+		                              var pass = 1;
 
-// main conversion step
-convertTopLevel (file);
-pass = 2;
-output = postProcess (output);
+		                              // main conversion step
+		                              convertTopLevel (file);
+		                              pass = 2;
+		                              output = postProcess (output);
 
-// add global var declarations
-for (var i = globals.length; i >= 0; --i) {
-	output = "var " + globals[i] + ";\n" + output;
-	if (i == 0) output = "// globals\n" + output;
-}
-output = "/* ------- This file generated by php2js from PHP code. --------\nPlease check this file by hand, and remove this notice, afterwards.\nMessages:\n" + _message + "\n---------------------------- */\n\n" + output;
+		                              // add global var declarations
+		                              for (var i = globals.length; i >= 0; --i) {
+		                              output = "var " + globals[i] + "; \n" + output;
+		                              if (i == 0) output = "// globals\n" + output;
+	                              }
+	                              output = "/* ------- This file generated by php2js from PHP code. --------\nPlease check this file by hand, and remove this notice, afterwards.\nMessages:\n" + _message + "\n---------------------------- */\n\n" + output;
 
 // write to file
-importPackage(java.io); // From rhino directory
-function writeFile(file, content) {
-	var buffer = new PrintWriter( new FileWriter(file) );
-	buffer.print(content);
-	buffer.flush();
-	buffer.close();
-} 
-outfile = arguments[0].replace (/\.php$/, ".js");
-writeFile (outfile, output);
+	                              importPackage(java.io); // From rhino directory
+	function writeFile(file, content) {
+		var buffer = new PrintWriter( new FileWriter(file) );
+		buffer.print(content);
+		buffer.flush();
+		buffer.close();
+	}
+	outfile = arguments[0].replace (/\.php$/, ".js");
+	writeFile (outfile, output);
