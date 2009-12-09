@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-  <code file="par_est_2pl.php" />
+  <code file="par_est_2pl.js" />
   <help file="par_est_2pl.rkh" />
 
   <logic>
