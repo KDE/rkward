@@ -1,7 +1,7 @@
 <!DOCTYPE rkplugin>
 <document>
-  <code file="par_est_gpcm.php" />
-  <help file="par_est_gpcm.rkh" />
+  <code file="par_est_gpcm.js" />
+  <help file="par_est_gpcm.rkh" ></help>
 
   <logic>
     <convert id="optim_used"  mode="equals" sources="optimizer.string" standard="optim" />

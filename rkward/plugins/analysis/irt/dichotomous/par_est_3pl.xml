@@ -1,7 +1,7 @@
 <!DOCTYPE rkplugin>
 <document>
-  <code file="par_est_3pl.php" />
-  <help file="par_est_3pl.rkh" />
+  <code file="par_est_3pl.js" />
+  <help file="par_est_3pl.rkh" ></help>
 
   <logic>
     <convert id="optim_used"  mode="equals" sources="optimizer.string" standard="optim" />

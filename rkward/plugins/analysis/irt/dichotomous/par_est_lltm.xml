@@ -1,7 +1,7 @@
 <!DOCTYPE rkplugin>
 <document>
-  <code file="par_est_lltm.php" />
-  <help file="par_est_lltm.rkh" />
+  <code file="par_est_lltm.js" />
+  <help file="par_est_lltm.rkh" ></help>
 
   <logic>
     <convert id="group_contrasts" mode="equals" sources="groups.string" standard="contrasts" />

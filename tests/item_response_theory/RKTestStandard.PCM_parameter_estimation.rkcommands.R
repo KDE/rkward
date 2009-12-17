@@ -1,12 +1,13 @@
 local({
 ## Prepare
-  require(eRm)
+require(eRm)
 ## Compute
 estimates.pcm <- PCM(pcmdat)
 ## Print result
 rk.header ("PCM  parameter estimation")
-rk.print (paste("Call: <code>",deparse(estimates.pcm$call, width.cutoff=500),"</code>"))
-rk.print ("<h4>Coefficients:</h4>")
+rk.print ("Call:")
+rk.print.literal (deparse(estimates.pcm$call, width.cutoff=500))
+rk.header ("Coefficients:", level=4)
 rk.print(t(rbind(Eta=estimates.pcm$etapar,StdErr=estimates.pcm$se.eta)))
 rk.print (paste("Conditional log-likelihood:",round(estimates.pcm$loglik, digits=1),
 "<br />Number of iterations:",estimates.pcm$iter,"<br />Number of parameters:",estimates.pcm$npar))

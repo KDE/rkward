@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-  <code file="par_est_rasch.php" />
+  <code file="par_est_rasch.js" />
   <help file="par_est_rasch.rkh" />
 
   <logic>

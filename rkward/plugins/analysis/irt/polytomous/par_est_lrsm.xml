@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-  <code file="par_est_lrsm.php" />
+  <code file="par_est_lrsm.js" />
   <help file="par_est_lrsm.rkh" />
 
   <logic>

@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-  <code file="par_est_lpcm.php" />
+  <code file="par_est_lpcm.js" />
   <help file="par_est_lpcm.rkh" />
 
   <logic>

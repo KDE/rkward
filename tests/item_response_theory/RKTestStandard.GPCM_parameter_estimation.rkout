@@ -1,6 +1,9 @@
 <h1>GPCM parameter estimation</h1>
 DATE<br>
-<p class='character'>Call: <code> gpcm(data = subset(Science, select = c("Work", "Industry", "Future", "Benefit")), constraint = "rasch") </code></p><p class='character'><h4>Coefficients:</h4></p>
+<p class='character'>Call:</p><pre>gpcm(data = subset(Science, select = c("Work", "Industry", "Future", "Benefit")), constraint = "rasch")</pre>
+<h4>Coefficients:</h4>
+<br>
+
 <p align= center >
 <table cellspacing=0 border=1><caption align=bottom class=captiondataframe></caption><tr><td>
 	<table border=0 class=dataframe>

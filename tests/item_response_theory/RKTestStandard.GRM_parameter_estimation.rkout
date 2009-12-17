@@ -1,6 +1,9 @@
 <h1>GRM parameter estimation</h1>
 DATE<br>
-<p class='character'>Call: <code> grm(data = Environment) </code></p><p class='character'><h4>Coefficients:</h4></p>
+<p class='character'>Call:</p><pre>grm(data = Environment)</pre>
+<h4>Coefficients:</h4>
+<br>
+
 <p align= center >
 <table cellspacing=0 border=1><caption align=bottom class=captiondataframe></caption><tr><td>
 	<table border=0 class=dataframe>

@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-  <code file="par_est_grm.php" />
+  <code file="par_est_grm.js" />
   <help file="par_est_grm.rkh" />
 
   <logic>
