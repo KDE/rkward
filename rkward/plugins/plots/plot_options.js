@@ -43,13 +43,13 @@ function printout () {
 
 	xvars = getValue ("xvar").split ("\n");
 	if (xvars.length > 1) {
-		xvar = "c (" + join (", ", xvars) + ")";
+		xvar = "c (" + xvars.join (", ") + ")";
 	} else {
 		xvar = xvars[0];
 	}
 	yvars = getValue ("yvar").split ("\n");
 	if (yvars.length > 1) {
-		yvar = "c (" + join (", ", yvars) + ")";
+		yvar = "c (" + xvars.join (", ") + ")";
 	} else {
 		yvar = yvars[0];
 	}
