@@ -19,7 +19,7 @@ function preview () {
 	doPrintout (false);
 }
 
-function doPrintout (final) {
+function doPrintout (full) {
 	var var = "";
 	var names_mode = "";
 	var tabulate = "";
@@ -55,7 +55,7 @@ function doPrintout (final) {
 		echo ("names(x) <- c (\"" + str_replace (";", "\", \"", trim (getValue ("names_custom"))) + "\")\n");
 	}
 
-	if (final) {
+	if (full) {
 		echo ('rk.header ("Barplot", parameters=list ("Variable", rk.get.description (' + var + '), ' + tabulate_header + barplot_header + '))\n');
 		echo ('\n');
 		echo ('rk.graph.on ()\n');
@@ -66,7 +66,7 @@ function doPrintout (final) {
 
 
 	echo ('})\n');
-	if (final) {
+	if (full) {
 		echo ('rk.graph.off ()\n');
 	}
 }

@@ -20,7 +20,7 @@ function preview () {
 	doPrintout (false);
 }
 
-function doPrintout (final) {
+function doPrintout (full) {
 	var x = "";
 	var g = "";
 	var method = "";
@@ -42,7 +42,7 @@ function doPrintout (final) {
 	if (orientation == "Vertical") opts += ", vertical = TRUE";
 	plot_adds = getValue ("plotoptions.code.calculate"); //add grid and alike
 
-	if (final) {
+	if (full) {
 		echo ('rk.header ("Stripchart", list ("Variable"=rk.get.description (' + x + '), "Group"=rk.get.description (' + g + '), "Method"=' + method + params + ', "Orientation"="' + orientation + '"))\n');
 		echo ('\n');
 		echo ('rk.graph.on ()\n');
@@ -54,7 +54,7 @@ function doPrintout (final) {
 		printIndented ("\t", plot_adds);
 	}
 
-	if (final) {
+	if (full) {
 		echo ('rk.graph.off ()\n');
 	}
 }

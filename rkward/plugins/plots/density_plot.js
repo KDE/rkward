@@ -29,7 +29,7 @@ function printout () {
 	doPrintout (true);
 }
 
-function doPrintout (final) {
+function doPrintout (full) {
 	var adjust = "";
 	var x = "";
 	var resolution = "";
@@ -56,7 +56,7 @@ function doPrintout (final) {
 	if (dodensity_plot) title = "Density Plot";
 	else title = "Highest density regions";
 
-	if (final) {
+	if (full) {
 		echo ('rk.header ("' + title + '", list ("Variable", rk.get.description (' + x + ')');
 		if (!empty (bw)) {
 			echo (', "Band Width", "');
@@ -78,7 +78,7 @@ function doPrintout (final) {
 		echo ('	rug(' + x + ', ' + getValue ("rug_ticksize") + ', ' + getValue ("rug_lwd") + ', ' + getValue ("rug_side") + getValue ("rug_col.code.printout") + ')\n');
 	}
 	echo ('})\n');
-	if (final) {
+	if (full) {
 		echo ('rk.graph.off ()\n');
 	}
 }

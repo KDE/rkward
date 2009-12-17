@@ -21,7 +21,7 @@ function preview () {
 	doPrintout (false);
 }
 
-function doPrintout (final) {
+function doPrintout (full) {
 	var vars = "";
 	var names_mode = "";
 	var tabulate = "";
@@ -54,7 +54,7 @@ function doPrintout (final) {
 		echo ('}\n');
 	}
 	echo ('\n');
-	if (final) {
+	if (full) {
 		echo ('rk.header ("Dot chart", parameters=list ("Variable", rk.get.description (' + vars + '), ' + tabulate_header + '))\n');
 		echo ('\n');
 		echo ('rk.graph.on ()\n');
@@ -70,7 +70,7 @@ function doPrintout (final) {
 	echo ('	dotchart(x' + options + ')\n');
 	if (!empty (plotpost)) printIndented ("\t", plotpost);
 	echo ('})\n');
-	if (final) {
+	if (full) {
 		echo ('rk.graph.off ()\n');
 	}
 }

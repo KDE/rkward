@@ -20,7 +20,7 @@ function preview () {
 }
 
 // internal helper functions
-function doPrintout (final) {
+function doPrintout (full) {
 	var densityscaled = "";
 	var bw = "";
 	var adjust = "";
@@ -37,7 +37,7 @@ function doPrintout (final) {
 	plot_adds = getValue ("plotoptions.code.calculate");
 
 
-	if (final) {
+	if (full) {
 		echo ('rk.header ("Histogram", list ("Variable", rk.get.description (' + x + ') ');
 		if ((densityscaled) && getValue ("density")) {
 			echo (', "Density bandwidth", "');
@@ -67,7 +67,7 @@ function doPrintout (final) {
 	}
 
 	echo ('})\n');
-	if (final) {
+	if (full) {
 		echo ('rk.graph.off ()\n');
 	}
 }

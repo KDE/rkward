@@ -24,7 +24,7 @@ function preview () {
 	doPrintout (false);
 }
 
-function doPrintout (final) {
+function doPrintout (full) {
 	var fun = "";
 	var scalenorm = "";
 	var drawnorm = "";
@@ -101,7 +101,7 @@ function doPrintout (final) {
 			yLim = ', ylim=ylim';
 		}
 	}
-	if (final) {
+	if (full) {
 
 		echo ('rk.graph.on ()\n');
 		echo ('try ({\n');
@@ -120,7 +120,7 @@ function doPrintout (final) {
 		echo ('	lines (x=normX, y=normY, type="' + getValue ("normpointtype") + '"' + getValue ("normlinecol.code.printout") + ')\n');
 	}
 	if (!empty (plotadds)) printIndented ("\t", plotadds);
-	if (final) {
+	if (full) {
 
 		echo ('})\n');
 		echo ('rk.graph.off ()\n');

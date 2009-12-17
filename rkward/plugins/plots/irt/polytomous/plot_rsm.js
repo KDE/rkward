@@ -26,7 +26,7 @@ function preview () {
 	doPrintout (false);
 }
 
-function doPrintout (final) {
+function doPrintout (full) {
 	var inp_items = "";
 	var spin_abilfrom = "";
 	var spin_abilto = "";
@@ -42,8 +42,8 @@ function doPrintout (final) {
 	var plot_ops_ylab = "";
 	var options = "";
 	var arr_items = "";
-	// this function takes care of generating the code for the printout() section. If $final is set to true,
-	// it generates the full code, including headers. If $final is set to false, only the essentials will
+	// this function takes care of generating the code for the printout() section. If $full is set to true,
+	// it generates the full code, including headers. If $full is set to false, only the essentials will
 	// be generated.
 
 	// let's read all values into php variables for the sake of readable code
@@ -89,19 +89,19 @@ function doPrintout (final) {
 					if (annotation == "plain")
 					options[] = "legpos=FALSE" ;
 
-					if (final) {
+					if (full) {
 						echo ('rk.header("Rating scale model plot")\n');
 							echo ('\n');
 							echo ('rk.graph.on()\n');
 						}
-	// only the following section will be generated for $final==false
+	// only the following section will be generated for $full==false
 
 
 	echo ('try(plotICC(' + getValue("x"));
 	if (options) echo(", "+join(", ", options));
 		if (plot_options) echo(plot_options);
 		echo ('))\n');
-		if (final) {
+		if (full) {
 			echo ('rk.graph.off()\n');
 			}
 }

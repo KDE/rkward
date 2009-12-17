@@ -25,7 +25,7 @@ function preview () {
 	doPrintout (false);
 }
 
-function doPrintout (final) {
+function doPrintout (full) {
 	var vars = "";
 	var descriptives = "";
 	var tabulate = "";
@@ -43,7 +43,7 @@ function doPrintout (final) {
 		echo ('}\n');
 	}
 	echo ('\n');
-	if (final) {
+	if (full) {
 		echo ('rk.header ("Pareto chart")\n');
 		echo ('\n');
 		echo ('rk.graph.on ()\n');
@@ -51,11 +51,11 @@ function doPrintout (final) {
 
 	echo ('try ({\n');
 	echo ('	descriptives <- pareto.chart(x' + getValue ("plotoptions.code.printout") + ')\n');
-	if (final && descriptives) {
+	if (full && descriptives) {
 		echo ('	rk.results(xtable(descriptives))\n');
 	}
 	echo ('})\n');
-	if (final) {
+	if (full) {
 		echo ('rk.graph.off ()\n');
 	}
 }

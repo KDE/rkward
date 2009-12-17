@@ -24,7 +24,7 @@ function preview () {
 	doPrintout (false);
 }
 
-function doPrintout (final) {
+function doPrintout (full) {
 	var vars = "";
 	var shade = "";
 	var sievetype = "";
@@ -37,7 +37,7 @@ function doPrintout (final) {
 		echo ('x <- ' + vars);
 	}
 	echo ('\n');
-	if (final) {
+	if (full) {
 		echo ('rk.header ("Extended Sieve Plot", parameters=list ("Variable", rk.get.description (' + vars + '), "shade", ' + shade + '))\n');
 		echo ('\n');
 		echo ('rk.graph.on ()\n');
@@ -50,7 +50,7 @@ function doPrintout (final) {
 	echo ('	sieve(x, shade = ' + shade + ', sievetype = "' + sievetype + '" ' + getValue ("plotoptions.code.printout") + ')\n');
 	if (!empty (plotpost)) printIndented ("\t", plotpost);
 	echo ('})\n');
-	if (final) {
+	if (full) {
 		echo ('rk.graph.off ()\n');
 	}
 }

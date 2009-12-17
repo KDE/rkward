@@ -22,19 +22,19 @@ function preview () {
 	doPrintout (false);
 }
 
-function doPrintout (final) {
+function doPrintout (full) {
 	var vars = "";
 	vars = str_replace ("\n", ",", trim (getValue ("x"))) ;
 
 	echo ('data <- data.frame (' + vars + ')\n');
 	echo ('\n');
-	if (final) {
+	if (full) {
 		echo ('rk.header ("Scatterplot Matrix", parameters=list ("Diagonal Panels", "' + getValue("diag")) echo ('", "Plot points", "' + getValue ("plot_points") + '", "Smooth", "' + getValue ("smooth") + '", "Ellipses", "' + getValue ("ellipse") + ' at 0.5 and 0.9 levels."))\n');
 		echo ('\n');
 		echo ('rk.graph.on ()\n');
 	}
 	echo ('try (scatterplot.matrix(data, diagonal="' + getValue("diag")) echo ('", plot.points=' + getValue ("plot_points") + ', smooth=' + getValue ("smooth") + ', ellipse=' + getValue ("ellipse") + '))\n');
-	if (final) {
+	if (full) {
 		echo ('rk.graph.off ()\n');
 	}
 }

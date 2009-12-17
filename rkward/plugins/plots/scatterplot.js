@@ -57,8 +57,8 @@ function preview () {
 	doPrintout (false);
 }
 
-function doPrintout (final) {
-	if (final) {
+function doPrintout (full) {
+	if (full) {
 		echo ('rk.header ("Scatterplot", parameters = list (\n');
 		echo ('	"X variables"=paste (rk.get.description (' + x + '), collapse=", "),\n');
 		echo ('	"Y variables"=paste (rk.get.description (' + y + '), collapse=", ")))\n');
@@ -82,7 +82,7 @@ function doPrintout (final) {
 	echo ('		)\n');
 	echo ('	}\n');
 	echo ('})\n');
-	if (final) {
+	if (full) {
 		echo ('\n');
 		echo ('rk.graph.off()\n');
 	}

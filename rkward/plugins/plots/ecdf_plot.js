@@ -30,11 +30,11 @@ function preview () {
 	doPrintout (false);
 }
 
-function doPrintout (final) {
+function doPrintout (full) {
 	var x = "";
 	x = getValue ("x");
 
-	if (final) {
+	if (full) {
 		echo ('rk.header ("Empirical Cumulative Distribution Function", list ("Variable", rk.get.description (' + x + '), "Minimum", yrange[1], "Maximum", yrange[2]))\n');
 		echo ('\n');
 		echo ('rk.graph.on ()\n');
@@ -50,7 +50,7 @@ function doPrintout (final) {
 		echo ('	rug (' + x + ', ' + getValue ("ticksize") + ', ' + getValue ("lwd") + ', ' + getValue ("side") + getValue ("col_rug.code.printout") + ')\n');
 	}
 	echo ('})\n');
-	if (final) {
+	if (full) {
 		echo ('rk.graph.off ()\n');
 	}
 }

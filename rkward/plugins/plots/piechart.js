@@ -29,7 +29,7 @@ function preview () {
 	doPrintout (false);
 }
 
-function doPrintout (final) {
+function doPrintout (full) {
 	var vars = "";
 	var tabulate = "";
 	var tabulate_header = "";
@@ -92,7 +92,7 @@ function doPrintout (final) {
 		echo ('}\n');
 	}
 	echo ('\n');
-	if (final) {
+	if (full) {
 		echo ('rk.header ("Pie chart", parameters=list ("Variable", rk.get.description (' + vars + '), ' + tabulate_header + ', ' + clockwise_header + '))\n');
 		echo ('\n');
 		echo ('rk.graph.on ()\n');
@@ -109,7 +109,7 @@ function doPrintout (final) {
 	echo ('	pie(x' + options + ')\n');
 	if (!empty (plotpost)) printIndented ("\t", plotpost);
 	echo ('})\n');
-	if (final) {
+	if (full) {
 		echo ('rk.graph.off ()\n');
 	}
 }

@@ -19,7 +19,7 @@ function preview () {
 	doPrintout (false);
 }
 
-function doPrintout (final) {
+function doPrintout (full) {
 	var x = "";
 	var y = "";
 	var plot_adds = "";
@@ -31,7 +31,7 @@ function doPrintout (final) {
 	// get additional code (as of now grid) from the calculate section
 	plot_adds = getValue ("plotoptions.code.calculate");
 
-	if (final) {
+	if (full) {
 
 		echo ('rk.header ("Generic Plot")\n');
 		echo ('rk.graph.on ()\n');
@@ -46,7 +46,7 @@ function doPrintout (final) {
 	}
 
 	echo ('})\n');
-	if (final) {
+	if (full) {
 
 		echo ('rk.graph.off ()\n');
 	}

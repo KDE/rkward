@@ -37,7 +37,7 @@ function getDiscontRangeParameters () {
 	options['n'] = options['max'] - options['min'] + 1;
 }
 
-function doPrintout (final) {
+function doPrintout (full) {
 	var fun = "";
 	var log = "";
 	var log_option = "";
@@ -81,7 +81,7 @@ function doPrintout (final) {
 
 	getParameters ();
 
-	if (final) {
+	if (full) {
 		doHeader ();
 		echo ('\n');
 		echo ('rk.graph.on ()\n');
@@ -98,7 +98,7 @@ function doPrintout (final) {
 		printIndented ("\t", plot_adds);
 	}
 	echo ('})\n');
-	if (final) {
+	if (full) {
 		echo ('rk.graph.off ()\n');
 	}
 }

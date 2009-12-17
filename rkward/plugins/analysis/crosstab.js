@@ -53,8 +53,8 @@ function preview () {
 	doPrintout (false);
 }
 
-function doPrintout (final) {
-	if (final) {
+function doPrintout (full) {
+	if (full) {
 		echo ('rk.header ("Crosstabs (n to 1)", level=1)\n');
 		echo ('for (i in 1:length (results)) {\n');
 		echo ('	rk.header ("Crosstabs (n to 1)", parameters=list ("Dependent", descriptions[[i]][[\'Dependent\']], "Independent", descriptions[[i]][[\'Independent\']]), level=2)\n');

@@ -41,14 +41,14 @@ function preview () {
 	doPrintout (false);
 }
 
-function doPrintout (final) {
+function doPrintout (full) {
 	var vars = "";
 	vars = str_replace ("\n", ",", trim (getValue ("x"))) ;
 
 	echo ('data <- data.frame (' + vars + ')\n');
 	echo ('\n');
 
-	if (final) {
+	if (full) {
 		echo ('rk.header ("Correlation Matrix Plot", parameters=list ("Method", "' + getValue ("method") + '", "Exclusion", "' + getValue ("use") + '", "Precision", "' + getValue ("digits") + ' digits", "Scale text", "' + getValue ("scale") + '"))\n');
 		echo ('\n');
 		echo ('rk.graph.on ()\n');
@@ -57,7 +57,7 @@ function doPrintout (final) {
 	echo ('	cor.graph (data)\n');
 	echo ('})\n');
 
-	if (final) {
+	if (full) {
 		echo ('rk.graph.off ()\n');
 		echo ('\n');
 		echo ('rk.print("Legend:\\t\'***\': p &lt; 0.001 -- \'**\': p &lt; 0.01 -- \'*\': p &lt; 0.05 -- \'.\'\': p &lt; 0.1")\n');

@@ -19,7 +19,7 @@ function printout () {
 	doPrintout (true);
 }
 
-function doPrintout (final) {
+function doPrintout (full) {
 	var xvarsstring = "";
 	var names_mode = "";
 	var mean = "";
@@ -47,7 +47,7 @@ function doPrintout (final) {
 		echo ("names(data_list) <- c (\"" + str_replace (";", "\", \"", trim (getValue ("names_custom"))) + "\")\n");
 	}
 
-	if (final) {
+	if (full) {
 
 		echo ('rk.header ("Boxplot", list ("Variable(s)", rk.get.description (' + xvarsstring + ', paste.sep=", ")))\n');
 		echo ('rk.graph.on()\n');
@@ -79,7 +79,7 @@ function doPrintout (final) {
 		printIndented ("\t", plot_adds);
 	}
 
-	if (final) {
+	if (full) {
 		echo ('rk.graph.off ()\n');
 	}
 }
