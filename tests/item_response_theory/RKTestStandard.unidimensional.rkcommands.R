@@ -1,6 +1,6 @@
 local({
 ## Prepare
-  require(ltm)
+require(ltm)
 ## Compute
 unidim.res <- unidimTest(estimates.rasch)
 ## Print result

@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-  <code file="plot_rsm.php" />
+  <code file="plot_rsm.js" />
   <!-- <help file="plot_rsm.rkh" /> -->
 
   <dialog label="Plotting fitted rating scale model">

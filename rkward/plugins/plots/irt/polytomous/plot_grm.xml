@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-  <code file="plot_grm.php" />
+  <code file="plot_grm.js" />
   <!-- <help file="plot_grm.rkh" /> -->
 
   <logic>

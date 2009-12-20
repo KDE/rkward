@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-  <code file="eRm_waldtest.php" />
+  <code file="eRm_waldtest.js" />
   <!--<help file="eRm_waldtest.rkh" />-->
 
   <logic>

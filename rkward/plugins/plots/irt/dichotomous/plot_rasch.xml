@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-  <code file="plot_rasch.php" />
+  <code file="plot_rasch.js" />
   <!-- <help file="plot_rasch.rkh" /> -->
 
   <logic>

@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-  <code file="ltm_gof_rasch.php" />
+  <code file="ltm_gof_rasch.js" />
   <!--<help file="ltm_gof_rasch.rkh" />-->
 
   <logic>

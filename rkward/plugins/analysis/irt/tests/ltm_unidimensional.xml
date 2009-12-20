@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-  <code file="ltm_unidimensional.php" />
+  <code file="ltm_unidimensional.js" />
   <!--<help file="ltm_unidimensional.rkh" />-->
 
   <logic>

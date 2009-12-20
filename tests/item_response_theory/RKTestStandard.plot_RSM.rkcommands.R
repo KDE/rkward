@@ -1,6 +1,6 @@
 local({
 ## Prepare
-  require(eRm)
+require(eRm)
 ## Compute
 ## Print result
 rk.header("Rating scale model plot")

@@ -1,6 +1,6 @@
 local({
 ## Prepare
-  require(ltm)
+require(ltm)
 ## Compute
 ## Print result
 rk.header("Rasch model plot")

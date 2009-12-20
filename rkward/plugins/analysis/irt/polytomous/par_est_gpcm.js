@@ -10,7 +10,7 @@ function calculate () {
 	var inp_items     = getValue("inp_items");
 	// reformat inp_items
 		if (inp_items)
-			inp_items = inp_items.split("\n").join(", ").replace(/(\w*)\[\["(\w*)"\]\]/g, '"$2"');
+			inp_items = inp_items.replace(/\n/g,', ').replace(/(\w*)\[\[|\]\]/g, '');
 	var constraint    = getValue("constraint");
 	var startval      = getValue("startval");
 	var startval_lst  = getValue("startval_lst");

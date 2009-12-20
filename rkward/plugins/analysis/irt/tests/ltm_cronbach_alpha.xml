@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-  <code file="ltm_cronbach_alpha.php" />
+  <code file="ltm_cronbach_alpha.js" />
   <!--<help file="ltm_cronbach_alpha.rkh" />-->
 
   <logic>

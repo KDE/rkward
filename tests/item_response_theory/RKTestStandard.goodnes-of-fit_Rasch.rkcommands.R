@@ -1,6 +1,6 @@
 local({
 ## Prepare
-  require(ltm)
+require(ltm)
 ## Compute
 GoFRasch.res <- GoF.rasch(estimates.rasch)
 ## Print result

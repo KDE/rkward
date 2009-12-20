@@ -1,6 +1,6 @@
 local({
 ## Prepare
-  require(eRm)
+require(eRm)
 ## Compute
 waldtest.res <- Waldtest(estimates.rsm)
 ## Print result

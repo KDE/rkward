@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-  <code file="eRm_plotLR.php" />
+  <code file="eRm_plotLR.js" />
   <!-- <help file="eRm_plotLR.rkh" /> -->
 
   <logic>
@@ -10,9 +10,9 @@
     <connect client="splitvector.enabled" governor="split_vec" />
     <connect client="splitvector.required" governor="split_vec" />
     <connect client="chk_confint.enabled" governor="logic_conf" />
-    <connect client="spin_confint.enabled" governor="logic_conf" />
+    <connect client="spin_confint.enabled" governor="chk_confint.state" />
     <connect client="chk_ctrline.enabled" governor="logic_conf" />
-    <connect client="spin_ctrline.enabled" governor="logic_conf" />
+    <connect client="spin_ctrline.enabled" governor="chk_ctrline.state" />
   </logic>
 
   <dialog label="Andersen LR-Test">

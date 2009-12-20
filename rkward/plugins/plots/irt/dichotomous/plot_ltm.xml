@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-  <code file="plot_ltm.php" />
+  <code file="plot_ltm.js" />
   <!-- <help file="plot_ltm.rkh" /> -->
 
   <logic>

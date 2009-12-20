@@ -1,6 +1,6 @@
 local({
 ## Prepare
-  require(eRm)
+require(eRm)
 ## Compute
 ## Print result
 rk.header("Partial credit model plot")

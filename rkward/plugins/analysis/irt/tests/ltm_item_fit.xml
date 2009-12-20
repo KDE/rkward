@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-  <code file="ltm_item_fit.php" />
+  <code file="ltm_item_fit.js" />
   <!--<help file="ltm_item_fit.rkh" />-->
 
   <logic>

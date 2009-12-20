@@ -1,6 +1,6 @@
 local({
 ## Prepare
-  require(ltm)
+require(ltm)
 ## Compute
 itemfit.res <- item.fit(estimates.rasch)
 ## Print result

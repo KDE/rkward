@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-  <code file="plot_tpm.php" />
+  <code file="plot_tpm.js" />
   <!-- <help file="plot_tpm.rkh" /> -->
 
   <logic>

@@ -1,6 +1,6 @@
 local({
 ## Prepare
-  require(ltm)
+require(ltm)
 ## Compute
 personfit.res <- person.fit(estimates.rasch)
 ## Print result

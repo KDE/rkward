@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-  <code file="plot_pcm.php" />
+  <code file="plot_pcm.js" />
   <!-- <help file="plot_pcm.rkh" /> -->
 
   <dialog label="Plotting fitted partial credit model">
