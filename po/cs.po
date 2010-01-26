@@ -9,14 +9,14 @@
 # Thomas Friedrichsmeier <tfry@users.sourceforge.net>, 2006, 2007.
 # Stefan Roediger <stefan_roediger@gmx.de>, 2007.
 # Stefan Rödiger <stefan_roediger@gmx.de>, 2007, 2009.
-# Pavel Fric <pavelfric@seznam.cz>, 2009.
+# Pavel Fric <pavelfric@seznam.cz>, 2009, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: http://sourceforge."
 "net/tracker/?group_id=50231&atid=459007\n"
 "POT-Creation-Date: 2009-10-08 12:12+0200\n"
-"PO-Revision-Date: 2009-10-11 15:25+0200\n"
+"PO-Revision-Date: 2010-01-22 21:52+0100\n"
 "Last-Translator: Pavel Fric <pavelfric@seznam.cz>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "MIME-Version: 1.0\n"
@@ -133,8 +133,8 @@ msgid ""
 "RKWard can not determine, whether it is safe to continue processing R "
 "commands, before you have read the file(s) in question."
 msgstr ""
-"Příkaz běžící ve stroji R chce, abyste se podíval na jeden nebo více souborů."
-" RKWard nemůže určit, jestli je bezpečné pokračovat ve zpracování příkazů R "
+"Příkaz běžící v jádru R chce, abyste se podíval na jeden nebo více souborů."
+"RKWard nemůže určit, jestli je bezpečné pokračovat ve zpracování příkazů R "
 "předtím, než si přečtete zmíněný(é) soubor(y)."
 
 #: agents/showedittextfileagent.cpp:93
@@ -147,7 +147,7 @@ msgid ""
 "RKWard can not determine, whether it is safe to continue processing R "
 "commands, before you have read/edited (and saved) the file(s) in question."
 msgstr ""
-"Příkaz běžící ve stroji R chce, abyste upravil jeden nebo více souborů. "
+"Příkaz běžící v jádru R chce, abyste upravil jeden nebo více souborů. "
 "RKWard nemůže určit, jestli je bezpečné pokračovat ve zpracování příkazů R "
 "předtím, než si přečtete/upravíte (a uložíte) zmíněný(é) soubor(y)."
 
@@ -309,9 +309,8 @@ msgid ""
 "Did not unload package %1. It is required in RKWard. If you really want to "
 "do this, do so on the R Console."
 msgstr ""
-"Nebyl odstraněn balíček %1. Je vyžadován v RKWardu. Pokud to skutečně chcete "
-"udělat, "
-"udělejte to v ovládacím panelu R."
+"Nebyl odstraněn balíček %1. Je vyžadován v RKWardu. Pokud to skutečně "
+"chcete udělat, udělejte to v konzoli R."
 
 #: core/robjectlist.cpp:74
 msgid "Package %1 appears not to have been loaded"
@@ -644,11 +643,9 @@ msgid ""
 "repositories. Maybe the package name was mis-spelled. Or maybe you need to "
 "add additional repositories via the \"Configure Repositories\"-button."
 msgstr ""
-"Balíčky požadované zadní částí (\"%1\") nejsou ve zdrojích balíčků. Možná "
-"byl "
-"název balíčku zadán špatně. Nebo musíte nastavit doplňkové zdroje přes "
-"tlačítko"
-"\"Nastavit zdroje\"."
+"Balíčky požadované jádrem (\"%1\") nejsou ve zdrojích balíčků. Možná "
+"byl název balíčku zadán špatně. Nebo musíte nastavit doplňkové zdroje přes "
+"tlačítko \"Nastavit zdroje\"."
 
 #: dialogs/rkloadlibsdialog.cpp:794
 msgid "Package not available"
@@ -777,7 +774,7 @@ msgstr "RKWard"
 
 #: main.cpp:99
 msgid "Frontend to the R statistics language"
-msgstr "Přední část pro statistický jazyk R"
+msgstr "Rozhraní pro statistický jazyk R"
 
 #: main.cpp:99
 msgid "(c) 2002, 2004, 2005, 2006, 2007, 2008, 2009"
@@ -1262,12 +1259,12 @@ msgid ""
 "The R engine has encountered a fatal error:\n"
 "%1"
 msgstr ""
-"Stroj R potkala osudná chyba:\n"
+"Jádro R potkala osudná chyba:\n"
 "%1"
 
 #: rbackend/rembedinternal.cpp:242
 msgid "The R engine has shut down with status: %1"
-msgstr "DStroj R byl zastaven se stavem: %1 "
+msgstr "Jádro R bylo zastaveno se stavem: %1 "
 
 #: rbackend/rinterface.cpp:88
 msgid "R Startup"
@@ -1278,7 +1275,7 @@ msgid ""
 "<p>There was a problem starting the R backend. The following error(s) "
 "occurred:</p>\n"
 msgstr ""
-"<p>Při spouštění zadní části R vznikly určitá potíže. Vyskytla se "
+"<p>Při spouštění jádra R vznikly určitá potíže. Vyskytla se "
 "následující chyba(y):</p>\n"
 
 #: rbackend/rinterface.cpp:219
@@ -1334,7 +1331,7 @@ msgid ""
 "package-management tool, and there you can try to locate and install the "
 "needed package."
 msgstr ""
-"Zadní část k R poptává balíček '%1' kvůli provedení nynějšího úkolu, který v "
+"Jádro k R poptává balíček '%1' kvůli provedení nynějšího úkolu, který v "
 "současnosti není nainstalován. Bude otevřen nástroj pro správu balíčků. Z "
 "něj se můžete pokusit o nalezení a nainstalování nezbytného balíčku."
 
@@ -1354,15 +1351,15 @@ msgid ""
 "RKWard). In this case, please chose 'Cancel' now, then close the data "
 "windows, save, and retry."
 msgstr ""
-"V zadní části k R se pokouší nějaký příkaz změnit kódování znaků. RKWard "
+"V jádru k R se pokouší nějaký příkaz změnit kódování znaků. RKWard "
 "pro toto nabízí podporu a pokusí se přizpůsobit novému umístění. Tato "
 "operace se může stát příčinou pro nepatrné chyby, pokud by byla současně "
 "otevřena okna s daty. Tato funkce není zrovna moc dobře vyzkoušena, s proto "
 "bude rozumné, když před dalšími kroky uložíte své pracovní prostředí.\n"
 "Jestliže ještě máte otevřen nějaký editor s daty, nebo v případě jakýchkoli "
 "pochybností, doporučuje se vám je nejprve uzavřít (toto se bude v dalších "
-"verzích RKWard "
-"patrně provádět automaticky). V tomto případě nyní, prosím, zvolte "
+"verzích RKWard patrně provádět automaticky). V tomto případě nyní, prosím, "
+"zvolte "
 "\"Zrušit\", potom zavřete okna s daty, vše uložte a zkuste to ještě jednou."
 
 #: rbackend/rinterface.cpp:389
@@ -1371,15 +1368,15 @@ msgstr "Místní změna"
 
 #: rbackend/rinterface.cpp:458
 msgid "Question from the R backend"
-msgstr "Otázka od zadní části R"
+msgstr "Otázka od jádra k R"
 
 #: rbackend/rinterface.cpp:463
 msgid "Message from the R backend"
-msgstr "Oznámení od zadní části R"
+msgstr "Oznámení od jádra k R"
 
 #: rbackend/rinterface.cpp:468
 msgid "R backend requests information"
-msgstr "Zadní část R požaduje údaje"
+msgstr "Jádro k R požaduje údaje"
 
 #: rbackend/rinterface.cpp:485
 msgid ""
@@ -1395,7 +1392,7 @@ msgid ""
 msgstr ""
 "\n"
 "Bude zastaveno okamžitě. Znamená to, že dále nemůžete používat jakékoli"
-"funkce závisející na zadní části R. "
+"funkce závisející na jádru k R. "
 "Také jinak řečeno, nemůžete provádět vůbec nic, dokonce ani uložit pracovní "
 "prostředí. Máte-li štěstí, udělal to už R. Ovšem to, co můžete udělat, je, "
 "že můžete uložit otevřené soubory s příkazy, výstupy, nebo data z otevřeného "
@@ -1406,11 +1403,11 @@ msgstr ""
 
 #: rbackend/rinterface.cpp:486
 msgid "R engine has died"
-msgstr "Stroj R 'vytuhl'"
+msgstr "Jádro R 'vytuhlo'"
 
 #: rkconsole.cpp:112
 msgid "R Console"
-msgstr "Ovládací panel R"
+msgstr "Konzole R"
 
 #: rkconsole.cpp:589
 msgid "Syntax error\n"
@@ -1439,19 +1436,19 @@ msgid ""
 "have started to enter text in the console). Do you want to bypass the "
 "console this one time, or do you want to try again later?"
 msgstr ""
-"Nastavil jste RKWard na provádění skriptových příkazů přes ovládací panel. "
+"Nastavil jste RKWard na provádění skriptových příkazů přes konzoli. "
 "Nicméně je tento ovládací panel v současnosti zaneprázdněn (buď běží nějaký "
 "příkaz, nebo jste v ovládacím panelu začal zadávat příkaz). Chcete "
-"protentokrát obejít ovládací panel, nebo se chcete později pokusit ještě "
+"protentokrát konzoli obejít, nebo se chcete později pokusit ještě "
 "jednou?"
 
 #: rkconsole.cpp:844
 msgid "Console is busy"
-msgstr "Ovládací panel je zaneprázdněn"
+msgstr "Konzole je zaneprázdněna"
 
 #: rkconsole.cpp:844
 msgid "Bypass console"
-msgstr "Obejít ovládací panel"
+msgstr "Obejít konzoli"
 
 #: rkward.cpp:189
 msgid ""
@@ -1654,15 +1651,15 @@ msgstr "Chcete uložit nynější pracovní prostředí?"
 
 #: rkward.cpp:634
 msgid "R engine busy"
-msgstr "Stroj R je zaneprázdněn"
+msgstr "Jádro R je zaneprázdněno"
 
 #: rkward.cpp:637
 msgid "R engine idle"
-msgstr "Stroj R je nečinný"
+msgstr "Jádro R je nečinné"
 
 #: rkward.cpp:640
 msgid "R engine starting"
-msgstr "Spouští se stroj R"
+msgstr "Spouští se jádro R"
 
 #: rkward.cpp:677 rkward.cpp:679
 msgid "Open command file(s)"
@@ -1726,11 +1723,11 @@ msgid ""
 "in RKWard or a problem with your PHP installation. Check the settings "
 "(Settings->Configure Settings->PHP backend) and try again."
 msgstr ""
-"Vyskytla se chyba\n"
+"Při spouštění jádra pro PHP\n"
 "(\"%1\")\n"
-"při spouštění zadní části pro PHP. Příčinou je pravděpodobně chyba "
+"se vyskytla se chyba. Příčinou je pravděpodobně chyba "
 "v RKWardu, nebo nějaké potíže s vaší instalací PHP. Ověřte nastavení "
-"(Nastavení->Nastavit nastavení->Zadní část pro PHP) a zkuste to ještě jednou"
+"(Nastavení->Nastavit nastavení->Jádro pro PHP) a zkuste to ještě jednou."
 
 #: scriptbackends/phpbackend.cpp:201
 msgid ""
@@ -1740,9 +1737,9 @@ msgid ""
 "of course you may want to try to close and restart the plugin to see whether "
 "it works with different settings."
 msgstr ""
-"Zadní část pro PHP ohlásila chybu\n"
+"Jádro pro PHP ohlásilo chybu\n"
 "(\"%1\")\n"
-"a byla zastavena. Většinou je to způsobeno chybou v přídavném modulu. "
+"a bylo zastavena. Většinou je to způsobeno chybou v přídavném modulu. "
 "Ale samozřejmě můžete zkusit přídavný modul zavřít a znovu jej spustit, "
 "abyste se dozvěděl, zda pracuje s jiným nastavením."
 
@@ -1752,9 +1749,9 @@ msgid ""
 "configured the location of the PHP-binary (Settings->Configure Settings->PHP "
 "backend)"
 msgstr ""
-"Zadní část pro PHP se nepodařilo spustit. Ověřte, prosím, zda máte "
+"Jádro pro PHP se nepodařilo spustit. Ověřte, prosím, zda máte "
 "správně nastaveno umístění binárky PHP (Nastavení-"
-">nastavit nastavení->Zadní část pro PHP)"
+">Nastavit nastavení->Jádro pro PHP)"
 
 #: scriptbackends/phpbackend.cpp:221
 msgid ""
@@ -1762,8 +1759,8 @@ msgid ""
 "below:\n"
 "%1"
 msgstr ""
-"Zadní část pro PHP byla neočekávaně ukončena. Současná výstupní "
-"vyrovnávací paměť se ukazuje dole\n"
+"Jádro pro PHP bylo neočekávaně ukončeno. Současná výstupní "
+"vyrovnávací paměť se ukazuje dole:\n"
 "%1"
 
 #: scriptbackends/phpbackend.cpp:221
@@ -1775,7 +1772,7 @@ msgid ""
 "The QtScript-backend has reported an error:\n"
 "%1"
 msgstr ""
-"Zadní část pro QtScript nahlásila chybu:\n"
+"Jádro pro QtScript nahlásilo chybu:\n"
 "%1"
 
 #: scriptbackends/qtscriptbackend.cpp:113
@@ -1834,7 +1831,7 @@ msgstr "Překročení času (v ms), než se provede pokus o doplnění kódu"
 
 #: settings/rksettingsmodulecommandeditor.cpp:92
 msgid "Script editor"
-msgstr "Editor skriptu"
+msgstr "Editor skriptů"
 
 #: settings/rksettingsmoduleconsole.cpp:50
 msgid "Load/Save command history"
@@ -1852,16 +1849,15 @@ msgstr "Neomezená"
 
 #: settings/rksettingsmoduleconsole.cpp:61
 msgid "Maximum number of paragraphs/lines to display in the console"
-msgstr ""
-"Největší počet odstavců/řádků, které se mají ukazovat v ovládacím panelu"
+msgstr "Největší počet odstavců/řádků, které se mají ukazovat v konzoli"
 
 #: settings/rksettingsmoduleconsole.cpp:69
 msgid "Run commands from script editor through console"
-msgstr "Provést příkazy z editoru skriptů přes ovládací panel"
+msgstr "Provést příkazy z editoru skriptů přes konzoli"
 
 #: settings/rksettingsmoduleconsole.cpp:74
 msgid "Also add those commands to console history"
-msgstr "Přidat i tyto příkazy do historie ovládacího panelu"
+msgstr "Přidat i tyto příkazy do historie konzole"
 
 #: settings/rksettingsmoduleconsole.cpp:76
 msgid "Do not add"
@@ -1881,7 +1877,7 @@ msgstr "Historie příkazů je ve výchozím nastavení citlivá na souvislosti"
 
 #: settings/rksettingsmoduleconsole.cpp:185
 msgid "Console"
-msgstr "Ovládací panel"
+msgstr "Ovládací panel jinak též konzole"
 
 #: settings/rksettingsmoduledebug.cpp:42
 msgid ""
@@ -2061,7 +2057,7 @@ msgstr "Umístění s PHP binárním souborem"
 
 #: settings/rksettingsmodulephp.cpp:63
 msgid "PHP backend"
-msgstr "Zadní část pro PHP"
+msgstr "Jádro pro PHP"
 
 #: settings/rksettingsmoduleplugins.cpp:54
 msgid ""
@@ -2114,7 +2110,7 @@ msgid ""
 "The following settings mostly affect R behavior in the console. It is "
 "generally safe to keep these unchanged."
 msgstr ""
-"Následující nastavení ovlivňují většinou chování R v ovládacím panelu. "
+"Následující nastavení ovlivňují většinou chování R v konzoli. "
 "Obecně se dá říct, že je bezpečné ponechat je beze změny."
 
 #: settings/rksettingsmoduler.cpp:73
@@ -2203,7 +2199,7 @@ msgstr "Příkaz pro \"pager\""
 
 #: settings/rksettingsmoduler.cpp:202
 msgid "R-Backend"
-msgstr "Zadní část k R"
+msgstr "Jádro k R"
 
 #: settings/rksettingsmoduler.cpp:331
 msgid "Package repositories (where libraries are downloaded from)"
@@ -2291,7 +2287,7 @@ msgstr "Největší počet odstavců/řádků, které se mají ukazovat v zápis
 
 #: settings/rksettingsmodulewatch.cpp:281 windows/rkcommandlog.cpp:55
 msgid "Command log"
-msgstr "Zápis příkazů"
+msgstr "Výpis příkazů"
 
 #: windows/detachedwindowcontainer.cpp:45
 msgid "Attach to main window"
@@ -2299,7 +2295,7 @@ msgstr "Přiložit k hlavnímu oknu"
 
 #: windows/rcontrolwindow.cpp:51
 msgid "Configure R backend"
-msgstr "Nastavit zadní část k R"
+msgstr "Nastavit jádro k R"
 
 #: windows/rcontrolwindow.cpp:56 windows/rcontrolwindow.cpp:142
 msgid "Pause execution"
@@ -2341,7 +2337,7 @@ msgstr "Zrušit označení bloku"
 
 #: windows/rkcommandeditorwindow.cpp:179
 msgid "CD to script directory"
-msgstr "Změnit na adresář se skriptem"
+msgstr "Přejít do adresáře se skriptem"
 
 #: windows/rkcommandeditorwindow.cpp:181
 msgid "Change the working directory to the directory of this script"
@@ -2349,7 +2345,7 @@ msgstr "Změnit pracovní adresář na adresář s tímto skriptem"
 
 #: windows/rkcommandeditorwindow.cpp:186
 msgid "Configure Script Editor"
-msgstr "Nastavit skriptovací editor"
+msgstr "Nastavit editor skriptů"
 
 #: windows/rkcommandeditorwindow.cpp:270 windows/rkcommandeditorwindow.cpp:354
 msgid " [modified]"
@@ -2623,7 +2619,7 @@ msgstr "Ukázat/Skrýt prohlížeč souborového systému"
 
 #: windows/rktoplevelwindowgui.cpp:82
 msgid "Show/Hide Command Log"
-msgstr "Ukázat/Skrýt zápis příkazů"
+msgstr "Ukázat/Skrýt výpis příkazů"
 
 #: windows/rktoplevelwindowgui.cpp:86
 msgid "Show/Hide Pending Jobs"
@@ -2631,7 +2627,7 @@ msgstr "Ukázat/Skrýt úkoly čekající na vyřízení"
 
 #: windows/rktoplevelwindowgui.cpp:90
 msgid "Show/Hide Console"
-msgstr "Ukázat/Skrýt ovládací panel"
+msgstr "Ukázat/Skrýt konzoli neboli ovládací panel"
 
 #: windows/rktoplevelwindowgui.cpp:94
 msgid "Show/Hide R Help Search"
@@ -2658,8 +2654,9 @@ msgstr ""
 "pouze pro ty části RKWardu, které jsou nyní v činnosti.\n"
 "\n"
 "Z tohoto důvodu, jestliže chcete nastavit klávesové zkratky např. pro "
-"použití v rámci skriptovacího editoru, musíte otevřít okno skriptovacího "
-"editoru a spustit jej."
+"použití v rámci editoru skriptů, musíte otevřít okno editor skriptů a "
+"spustit "
+"jej."
 
 #: windows/rktoplevelwindowgui.cpp:117 windows/rktoplevelwindowgui.cpp:130
 msgid "Note"
@@ -2682,8 +2679,9 @@ msgstr ""
 "pouze pro ty části RKWardu, které jsou nyní v činnosti.\n"
 "\n"
 "Z tohoto důvodu, jestliže chcete nastavit klávesové zkratky např. pro "
-"použití v rámci skriptovacího editoru, musíte otevřít okno skriptovacího "
-"editoru a spustit jej."
+"použití v rámci editoru skriptů, musíte otevřít okno editor skriptů a "
+"spustit "
+"jej."
 
 #: windows/rktoplevelwindowgui.cpp:152
 msgid ""
