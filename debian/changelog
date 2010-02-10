@@ -1,3 +1,11 @@
+rkward (0.5.3-1) unstable; urgency=low
+
+  * new upstream release
+  * add watch file (thanks to Julien Lavergne and Scott Howard)
+    closes: #569114
+
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Xxx, XX Xxx 2010 14:30:00 +0200
+
 rkward (0.5.2-1) unstable; urgency=low
 
   * new upstream release
