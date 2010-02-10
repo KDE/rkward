@@ -16,7 +16,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://sourceforge."
 "net/tracker/?group_id=50231&atid=459007\n"
 "POT-Creation-Date: 2009-10-08 12:12+0200\n"
-"PO-Revision-Date: 2010-02-05 20:57+0100\n"
+"PO-Revision-Date: 2010-02-06 17:21+0100\n"
 "Last-Translator: Pavel Fric <pavelfric@seznam.cz>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "MIME-Version: 1.0\n"
@@ -547,7 +547,7 @@ msgstr "Nahrát"
 
 #: dialogs/rkloadlibsdialog.cpp:305
 msgid "Unload"
-msgstr "Odstranit"
+msgstr "Zrušit nahrání"
 
 #: dialogs/rkloadlibsdialog.cpp:312
 msgid "Loaded packages"
@@ -1877,7 +1877,7 @@ msgstr "Historie příkazů je ve výchozím nastavení citlivá na souvislosti"
 
 #: settings/rksettingsmoduleconsole.cpp:185
 msgid "Console"
-msgstr "Ovládací panel jinak též konzole"
+msgstr "Ovládací panel neboli konzole"
 
 #: settings/rksettingsmoduledebug.cpp:42
 msgid ""
@@ -2263,7 +2263,7 @@ msgstr "Ukázat chyby"
 
 #: settings/rksettingsmodulewatch.cpp:140
 msgid "show/raise window"
-msgstr "Ukázat/vyvolat okno"
+msgstr "Ukázat/Vyvolat okno"
 
 #: settings/rksettingsmodulewatch.cpp:144
 msgid "User commands"
@@ -2950,7 +2950,7 @@ msgstr "Zadat nový název"
 
 #: windows/robjectbrowser.cpp:295
 msgid "Non-Functions"
-msgstr "ne-funkce"
+msgstr "Ne-funkce"
 
 #: windows/robjectbrowser.cpp:305
 msgid "Show All Environments"
