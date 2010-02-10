@@ -16,7 +16,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://sourceforge."
 "net/tracker/?group_id=50231&atid=459007\n"
 "POT-Creation-Date: 2009-10-08 12:12+0200\n"
-"PO-Revision-Date: 2010-01-22 21:52+0100\n"
+"PO-Revision-Date: 2010-02-05 20:57+0100\n"
 "Last-Translator: Pavel Fric <pavelfric@seznam.cz>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "MIME-Version: 1.0\n"
@@ -177,7 +177,7 @@ msgid ""
 ">Configure RKWard->Workspace."
 msgstr ""
 "Balíček '%1' (který jste pravděpodobně právě nahrál) je nyní umístěn na "
-"černém listině"
+"černé listině"
 "kvůli získávání údajů o skladbě. Především to znamená, že předměty v tomto "
 "balíčku se nebudou objevovat v prohlížeči předmětů, a že nebude žádné "
 "dokončování názvu předmětu nebo radění argumentů k funkcím pro předměty v "
@@ -957,7 +957,7 @@ msgstr "Přepsat?"
 
 #: misc/rkstandardactions.cpp:33
 msgid "Run current line"
-msgstr "Provést nynější řádek s příkazem"
+msgstr "Provést nynější řádek"
 
 #: misc/rkstandardactions.cpp:43
 msgid "Run selection"
@@ -1331,7 +1331,7 @@ msgid ""
 "package-management tool, and there you can try to locate and install the "
 "needed package."
 msgstr ""
-"Jádro k R poptává balíček '%1' kvůli provedení nynějšího úkolu, který v "
+"Jádro R poptává balíček '%1' kvůli provedení nynějšího úkolu, který v "
 "současnosti není nainstalován. Bude otevřen nástroj pro správu balíčků. Z "
 "něj se můžete pokusit o nalezení a nainstalování nezbytného balíčku."
 
@@ -1376,7 +1376,7 @@ msgstr "Oznámení od jádra k R"
 
 #: rbackend/rinterface.cpp:468
 msgid "R backend requests information"
-msgstr "Jádro k R požaduje údaje"
+msgstr "Jádro R požaduje údaje"
 
 #: rbackend/rinterface.cpp:485
 msgid ""
@@ -1535,7 +1535,7 @@ msgstr "Soubor se skriptem"
 
 #: rkward.cpp:321
 msgid "Open R Script File"
-msgstr "Otevřít soubor se skriptem R"
+msgstr "Otevřít soubor skriptu R"
 
 #: rkward.cpp:326
 msgid "Import Data"
@@ -1579,7 +1579,7 @@ msgstr "Ukončí aplikaci"
 
 #: rkward.cpp:351 windows/robjectbrowser.cpp:135
 msgid "Load / Unload Packages"
-msgstr "Nahrát/Odstranit balíčky"
+msgstr "Nahrát/Zrušit nahrání balíčků"
 
 #: rkward.cpp:362
 msgid "Close All Data"
@@ -1667,7 +1667,7 @@ msgstr "Otevřít soubor s příkazem(y)"
 
 #: rkward.cpp:697
 msgid "[Unnamed Workspace]"
-msgstr "Nepojmenované pracovní prostředí]"
+msgstr "[Nepojmenované pracovní prostředí]"
 
 #: robjectviewer.cpp:58
 msgid "summary (x)"
@@ -1739,7 +1739,7 @@ msgid ""
 msgstr ""
 "Jádro pro PHP ohlásilo chybu\n"
 "(\"%1\")\n"
-"a bylo zastavena. Většinou je to způsobeno chybou v přídavném modulu. "
+"a bylo zastaveno. Většinou je to způsobeno chybou v přídavném modulu. "
 "Ale samozřejmě můžete zkusit přídavný modul zavřít a znovu jej spustit, "
 "abyste se dozvěděl, zda pracuje s jiným nastavením."
 
@@ -1885,9 +1885,9 @@ msgid ""
 "the untouched. Also, these settings will only apply to the current session, "
 "and not be saved."
 msgstr ""
-"<b>Tato nastavení tu jsou jen pro účely ladění.</b> Je jistější, "
-"ponechat je beze změny. Všechna tato nastavení nebudou uložena "
-"a použijí se pouze pro nynější sezení."
+"<b>Tato nastavení tu jsou jen pro účely ladění.</b> Je jistější "
+"ponechat je beze změny. Žádné z těchto nastavení nebude uloženo. "
+"Použijí se pouze pro nynější sezení."
 
 #: settings/rksettingsmoduledebug.cpp:48
 msgid "Debug level"
@@ -1911,7 +1911,7 @@ msgstr "Ladění"
 
 #: settings/rksettingsmodulegeneral.cpp:52
 msgid "Settings marked with (*) do not take effect until you restart RKWard"
-msgstr "Nastavení označená (*), začnou působit až po novém spuštění RKWardu"
+msgstr "Nastavení označená (*) začnou působit až po novém spuštění RKWardu"
 
 #: settings/rksettingsmodulegeneral.cpp:58
 msgid "Directory where the logfiles should be kept (*)"
@@ -2199,7 +2199,7 @@ msgstr "Příkaz pro \"pager\""
 
 #: settings/rksettingsmoduler.cpp:202
 msgid "R-Backend"
-msgstr "Jádro k R"
+msgstr "Jádro R"
 
 #: settings/rksettingsmoduler.cpp:331
 msgid "Package repositories (where libraries are downloaded from)"
@@ -2295,7 +2295,7 @@ msgstr "Přiložit k hlavnímu oknu"
 
 #: windows/rcontrolwindow.cpp:51
 msgid "Configure R backend"
-msgstr "Nastavit jádro k R"
+msgstr "Nastavit jádro R"
 
 #: windows/rcontrolwindow.cpp:56 windows/rcontrolwindow.cpp:142
 msgid "Pause execution"
@@ -2635,7 +2635,7 @@ msgstr "Ukázat/Skrýt okno pro hledání v nápovědě k R"
 
 #: windows/rktoplevelwindowgui.cpp:98
 msgid "Activate Document view"
-msgstr "Spustit pohled na dokument"
+msgstr "Zapnout pohled na dokument"
 
 #: windows/rktoplevelwindowgui.cpp:102
 msgid "Show &Output"
@@ -2793,7 +2793,7 @@ msgstr "Nastavit určenou pevnou velikost..."
 
 #: windows/rkwindowcatcher.cpp:350
 msgid "Make active"
-msgstr "Spustit"
+msgstr "Zapnout"
 
 #: windows/rkwindowcatcher.cpp:352
 msgid "Copy to output"
@@ -3058,7 +3058,7 @@ msgstr "&Pohled"
 #. i18n: ectx: Menu (window_activate)
 #: rc.cpp:42 rc.cpp:54 rc.cpp:105
 msgid "&Activate"
-msgstr "&Spustit"
+msgstr "&Zapnout"
 
 #. i18n: file: rkwardui.rc:74
 #. i18n: ectx: Menu (help)
