@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="cor_graph.php" />
+	<code file="cor_graph.js" />
 	<help file="cor_graph.rkh" />
 
 	<dialog label="Correlation Matrix Plot" >		

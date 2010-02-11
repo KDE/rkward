@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="barplot_embed.php" />
+	<code file="barplot_embed.js" />
 	<help file="barplot_embed.rkh" />
 	<logic>
 		<external id="xvar" default=""/>

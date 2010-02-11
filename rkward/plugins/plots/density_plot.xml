@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="density_plot.php" />
+	<code file="density_plot.js" />
 	<help file="density_plot.rkh" />
 	
 	<logic>
