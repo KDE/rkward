@@ -82,6 +82,10 @@ function trim (text) {
 	return (ret);
 }
 
+function split (by, text) {
+	return (text.split (by));
+}
+
 function str_replace (needle, replacement, haystack) {
 	return (haystack.split (needle).join (replacement));
 }
