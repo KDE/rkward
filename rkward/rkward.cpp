@@ -674,9 +674,9 @@ void RKWardMainWindow::slotOpenCommandEditor () {
 #ifdef Q_WS_WIN
 	// getOpenUrls(KUrl("kfiledialog:///<rfiles>"), ...) causes a hang on windows (KDElibs 4.2.3).
 #	warning Track this bug down and/or report it
-	urls = KFileDialog::getOpenUrls (KUrl (), "*.R *.r *.S *.s *.q|R Script Files (*.R *.r *.S *.s *.q)\n*.*|All Files (*.*)", this, i18n ("Open command file(s)"));
+	urls = KFileDialog::getOpenUrls (KUrl (), "*.R *.r *.S *.s *.q|R Script Files (*.R *.r *.S *.s *.q)\n*|All Files (*)", this, i18n ("Open command file(s)"));
 #else
-	urls = KFileDialog::getOpenUrls (KUrl ("kfiledialog:///<rfiles>"), "*.R *.r *.S *.s *.q|R Script Files (*.R *.r *.S *.s *.q)\n*.*|All Files (*.*)", this, i18n ("Open command file(s)"));
+	urls = KFileDialog::getOpenUrls (KUrl ("kfiledialog:///<rfiles>"), "*.R *.r *.S *.s *.q|R Script Files (*.R *.r *.S *.s *.q)\n*|All Files (*)", this, i18n ("Open command file(s)"));
 #endif
 	for (it = urls.begin() ; it != urls.end() ; ++it) {
 		slotOpenCommandEditor (*it);
