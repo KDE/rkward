@@ -2,7 +2,7 @@ local({
 ## Prepare
 ## Compute
 ## Print result
-	data_list <- list (women[["weight"]], women[["height"]])		#convert single sample variables to list
+data_list <- list (women[["weight"]], women[["height"]])		#convert single sample variables to list
 rk.header ("Boxplot", list ("Variable(s)", rk.get.description (women[["weight"]], women[["height"]], paste.sep=", ")))
 rk.graph.on()
 try (boxplot (data_list, notch = FALSE, outline = TRUE, horizontal = FALSE)) #actuall boxplot function

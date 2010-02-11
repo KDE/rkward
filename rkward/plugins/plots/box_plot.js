@@ -27,7 +27,7 @@ function doPrintout (full) {
 	plot_adds = getValue ("plotoptions.code.calculate"); //add grid and alike
 
 
-	echo ('	data_list <- list (' + xvarsstring + ')		#convert single sample variables to list\n');
+	echo ('data_list <- list (' + xvarsstring + ')		#convert single sample variables to list\n');
 	if (names_mode == "rexp") {
 		echo ("names(data_list) <- " + getValue ("names_exp") + "\n");
 	} else if (names_mode == "custom") {
