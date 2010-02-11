@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 	<document>
-	<code file="box_plot.php" />
+	<code file="box_plot.js" />
 	<logic>
 		<connect client="plotoptions.xvar" governor="x.available"/>
 		<set id="plotoptions.allow_type" to="true"/>
