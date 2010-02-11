@@ -4,11 +4,13 @@ function echo (text) {
 }
 
 function printIndented (indentation, lines) {
-	echo (indentation + lines.replace (/\n/g, "\n" + indentation));
+	/** More complex than may seem necessary at first glance. The point is that the
+	final linebreak in the input should *not* be replaced by linebreak + indentation. */
+	echo (indentation + lines.replace (/\n(.)/g, "\n" + indentation + "$1"));
 }
 
 function noquote (text) {
-	ret = new String (text);
+	var ret = new String (text);
 	ret.noquote = 1;
 	return (ret);
 }
