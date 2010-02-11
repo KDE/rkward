@@ -44,7 +44,7 @@ REmbedInternal *REmbedInternal::this_pointer = 0;
 #endif
 #include <math.h>
 
-#include "Rversion.h"
+#include <Rversion.h>
 
 #if (R_VERSION > R_Version(2, 6, 9))
 #define R_2_7
@@ -70,18 +70,18 @@ extern "C" {
 #	define Win32
 #endif
 
-#include "Rdefines.h"
-#include "R_ext/Rdynload.h"
-#include "R_ext/eventloop.h"
-#include "R_ext/Callbacks.h"
-#include "R.h"
-#include "Rinternals.h"
-#include "R_ext/Parse.h"
-#include "Rembedded.h"
+#include <Rdefines.h>
+#include <R_ext/Rdynload.h>
+#include <R_ext/eventloop.h>
+#include <R_ext/Callbacks.h>
+#include <R.h>
+#include <Rinternals.h>
+#include <R_ext/Parse.h>
+#include <Rembedded.h>
 
 #ifdef Q_WS_WIN
-#	include "R_ext/RStartup.h"
-#	include "R_ext/Utils.h"
+#	include <R_ext/RStartup.h>
+#	include <R_ext/Utils.h>
 
 	void RK_scheduleIntr () {
 		UserBreak = 1;
@@ -95,7 +95,7 @@ extern "C" {
 	structRstart RK_R_Params;
 #else
 #	define RK_doIntr Rf_onintr
-#	include "Rinterface.h"
+#	include <Rinterface.h>
 #endif
 
 // some functions we need that are not declared
@@ -108,7 +108,7 @@ extern uintptr_t R_CStackStart;	// inRinterface.h in R 2.9.0. TODO: check presen
 extern Rboolean R_Interactive;	// inRinterface.h in R 2.9.0. TODO: check presence in R 2.7.0
 #endif
 SEXP R_LastvalueSymbol;
-#include "R_ext/eventloop.h"
+#include <R_ext/eventloop.h>
 }
 
 #include "../rkglobals.h"
