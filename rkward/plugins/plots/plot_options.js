@@ -5,7 +5,7 @@ function prepareLabel (labelname) {
 		label = getValue ("default_" + labelname);
 		quoted = true;
 	}
-	if ((label != "") && (quoted)) label = "\"" + label.replace ('"', '\\"') + "\"";
+	if ((label != "") && (quoted)) label = quote (label);
 	if (label != "") label = ", " + labelname + "=" + label;
 
 	return label;
