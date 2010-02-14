@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="histogram_options.php"/>
+	<code file="histogram_options.js"/>
 	<help file="histogram_options.rkh"/>
 	<logic>
 		<external id="varname" default=""/>

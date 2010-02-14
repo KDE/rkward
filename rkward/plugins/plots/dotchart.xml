@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="dotchart.php" />
+	<code file="dotchart.js" />
 	<help file="dotchart.rkh" />
 	<logic>
 		<convert id="custom_names" mode="equals" sources="names_mode.string" standard="custom"/>

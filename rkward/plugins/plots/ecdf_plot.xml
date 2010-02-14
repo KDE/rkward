@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="ecdf_plot.php" />
+	<code file="ecdf_plot.js" />
 	<help file="ecdf_plot.rkh" />
 	<logic>
 		<connect client="plotoptions.xvar" governor="x.available"/>

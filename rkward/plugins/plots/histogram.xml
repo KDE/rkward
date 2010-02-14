@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="histogram.php" />
+	<code file="histogram.js" />
 	<help file="histogram.rkh" />
 	<logic>
 		<connect client="plotoptions.xvar" governor="x.available"/>
