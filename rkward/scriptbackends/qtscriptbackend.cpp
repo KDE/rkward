@@ -39,6 +39,7 @@ QtScriptBackend::QtScriptBackend (const QString &filename) : ScriptBackend () {
 QtScriptBackend::~QtScriptBackend () {
 	RK_TRACE (PHP);
 
+	destroy ();
 	if (script_thread && script_thread->isRunning ()) script_thread->terminate ();
 }
 
@@ -70,6 +71,7 @@ void QtScriptBackend::destroy () {
 	RK_TRACE (PHP);
 	if (!dead) {
 		dead = true;
+		code_property = 0;
 		if (script_thread) script_thread->kill ();
 		QTimer::singleShot (10000, this, SLOT (deleteLater()));	// don't wait for ever for the process to die, even if it's somewhat dangerous
 	}

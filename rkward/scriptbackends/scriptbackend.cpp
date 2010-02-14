@@ -24,6 +24,8 @@
 
 ScriptBackend::ScriptBackend () : QObject() {
 	busy = false;
+	current_type = Ignore;
+	code_property = 0;
 }
 
 ScriptBackend::~ScriptBackend () {
