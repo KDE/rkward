@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="stripchart_plot.php" />
+	<code file="stripchart_plot.js" />
 	<logic>
 		<connect client="plotoptions.xvar" governor="x.available"/>
 		<set id="plotoptions.allow_log" to="true"/>

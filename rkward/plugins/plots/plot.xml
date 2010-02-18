@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="plot.php" />
+	<code file="plot.js" />
 	<help file="plot.rkh" />
 	<logic>
 		<set id="plotoptions.allow_log" to="true"/>

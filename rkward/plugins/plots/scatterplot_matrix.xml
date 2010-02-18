@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="scatterplot_matrix.php" />
+	<code file="scatterplot_matrix.js" />
 	<help file="scatterplot_matrix.rkh" />
 
 	<dialog label="Scatterplot Matrix" >

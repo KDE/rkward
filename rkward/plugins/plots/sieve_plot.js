@@ -20,19 +20,13 @@ function printout () {
 
 function preview () {
 	preprocess ();
-	calculate ();
 	doPrintout (false);
 }
 
 function doPrintout (full) {
-	var vars = "";
-	var shade = "";
-	var sievetype = "";
-	var plotpre = "";
-	var plotpost = "";
-	vars = getValue ("x");
-	shade = getValue ("shade");
-	sievetype = getValue ("sievetype");
+	var vars = getValue ("x");
+	var shade = getValue ("shade");
+	var sievetype = getValue ("sievetype");
 	{
 		echo ('x <- ' + vars);
 	}
@@ -43,12 +37,15 @@ function doPrintout (full) {
 		echo ('rk.graph.on ()\n');
 	}
 
+	var plotpre = getValue ("plotoptions.code.preprocess");
+	var plotpost = getValue ("plotoptions.code.calculate");
+
 	echo ('try ({\n');
-	if (!empty (plotpre)) printIndented ("\t", plotpre);
+	if (plotpre.length > 0) printIndented ("\t", plotpre);
 
 
 	echo ('	sieve(x, shade = ' + shade + ', sievetype = "' + sievetype + '" ' + getValue ("plotoptions.code.printout") + ')\n');
-	if (!empty (plotpost)) printIndented ("\t", plotpost);
+	if (plotpost.length > 0) printIndented ("\t", plotpost);
 	echo ('})\n');
 	if (full) {
 		echo ('rk.graph.off ()\n');

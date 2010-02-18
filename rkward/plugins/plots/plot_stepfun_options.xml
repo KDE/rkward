@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="plot_stepfun_options.php"/>
+	<code file="plot_stepfun_options.js"/>
 	<help file="plot_stepfun_options.rkh"/>
 	<logic>
 		<external id="allow_addtoplot" default="true"/>

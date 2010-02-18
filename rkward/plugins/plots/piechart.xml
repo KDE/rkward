@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="piechart.php" />
+	<code file="piechart.js" />
 	<help file="piechart.rkh" />
 	<logic>
 		<set id="plotoptions.allow_ylim" to="false"/>

@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="sieve_plot.php" />
+	<code file="sieve_plot.js" />
 	<help file="sieve_plot.rkh" />
 	<logic>
 		<set id="plotoptions.allow_xlim" to="false"/>

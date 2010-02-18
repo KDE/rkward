@@ -1,8 +1,7 @@
 <!DOCTYPE rkplugin>
 
-
 <document>
-	<code file="stem.php"/>	
+	<code file="stem.js"/>	
 	<help file="stem.rkh" />
 	
 	<dialog label="Stem-and-Leaf Plots">
