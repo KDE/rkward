@@ -2,7 +2,7 @@
                           rkstandardcomponent  -  description
                              -------------------
     begin                : Sun Feb 19 2006
-    copyright            : (C) 2006, 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -69,13 +69,14 @@ public:
 	QString getFilename () { return filename; };
 	RKComponentHandle *getHandle () { return handle; };
 	bool haveHelp () { return have_help; };
-/** tries to submit. Warning: This function waits for all changes to come in and may not return immediately!
-@param max_wait Maximum time to wait for changes to settle in msecs (approx.)
+/** Submits the current code (by simulating a click on the ok button).
 @param in_chain The command chain to insert the command in (0 for regular command stack).
-@return true, if the plugin-code could be submitted */
-	bool submit (int max_wait=1000, RCommandChain *in_chain = 0);
+@return false, if the plugin-code could not be submitted (e.g. plugin was not satisfied) */
+	bool submit (RCommandChain *in_chain = 0);
 /** convenience access function: closes the corresponding GUI */
 	void close ();
+/** reimplemented to actually return Dead or Processing when appropriate */
+	ComponentStatus recursiveStatus ();
 
 	RCommandChain *commandChain () const { return command_chain; };
 public slots:
@@ -104,7 +105,7 @@ private:
 	RKStandardComponentGUI *gui;
 	RKComponentHandle *handle;
 	RKStandardComponentStack *wizard;
-	QTimer *handle_change_timer;
+	bool update_pending;
 	RCommandChain *command_chain;
 /** Avoid updating code-display, etc. until the component is fully created */
 	bool created;

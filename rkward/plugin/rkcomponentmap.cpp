@@ -2,7 +2,7 @@
                           rkcomponentmap.cpp  -  description
                              -------------------
     begin                : Thu May 12 2005
-    copyright            : (C) 2005, 2006, 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -19,6 +19,8 @@
 
 #include <qfileinfo.h>
 #include <qdir.h>
+#include <QTime>
+#include <QObjectCleanupHandler>
 
 #include <klocale.h>
 #include <kactioncollection.h>
@@ -265,27 +267,45 @@ bool RKComponentMap::invokeComponent (const QString &component_id, const QString
 		// not considered an error
 	}
 
+	if (submit_mode == ManualSubmit) return true;
+
+
 	// Auto-Submit
-	if (submit_mode != ManualSubmit) {
+	// the call to processEvents(), below, is quite dangerous, as the component self-destructs on errors. This helps us prevent crashes.
+	QObjectCleanupHandler chandler;
+	chandler.add (component);
+	
 #ifndef Q_OS_WIN
-		// if the plugin takes longer than 5 seconds to settle, than that really is sort of buggy...
-		bool submit_ok = component->submit (5000, in_chain);
+	// if the plugin takes longer than 5 seconds to settle, than that really is sort of buggy...
+	const int max_wait = 5000;
 #else
 #warning Temporary workaround. Remove this.
-		// (yet on windows, the PHP backend is *real* slow. We give it a bit longer as long as we still use it...
-		bool submit_ok = component->submit (50000, in_chain);
+	// (yet on windows, the PHP backend is *real* slow. We give it a bit longer as long as we still use it...
+	const int max_wait = 50000;
 #endif
-		if (!submit_ok) {
-			if (submit_mode == AutoSubmitOrFail) {
-				component->kill ();
-			}
 
-			_message.append (i18n ("\nThe plugin could not be auto-submitted with these settings."));
-			if (message) *message = _message;
-			else KMessageBox::sorry (RKWardMainWindow::getMain (), _message, i18n ("Could not submit"));
+	QTime t;
+	t.start ();
+	while ((!chandler.isEmpty ()) && (component->recursiveStatus () == RKComponentBase::Processing) && (t.elapsed () < max_wait)) {
+		QCoreApplication::processEvents (QEventLoop::ExcludeUserInputEvents, (max_wait / 2));
+	}
+	RKComponentBase::ComponentStatus status = RKComponentBase::Dead;
+	if (!chandler.isEmpty ()) status = component->recursiveStatus ();
+	chandler.remove (component);	// otherwise it would auto-delete the component, later!
 
-			return (submit_mode != AutoSubmitOrFail);
+	if (status == RKComponentBase::Satisfied) {
+		bool ok = component->submit (in_chain);
+		RK_ASSERT (ok);
+	} else {
+		if (submit_mode == AutoSubmitOrFail) {
+			if (status != RKComponentBase::Dead) component->kill ();
 		}
+
+		_message.append (i18n ("\nThe plugin could not be auto-submitted with these settings."));
+		if (message) *message = _message;
+		else KMessageBox::sorry (RKWardMainWindow::getMain (), _message, i18n ("Could not submit"));
+
+		return (submit_mode != AutoSubmitOrFail);
 	}
 
 	return true;

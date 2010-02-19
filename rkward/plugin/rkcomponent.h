@@ -2,7 +2,7 @@
                           rkcomponent  -  description
                              -------------------
     begin                : Tue Dec 13 2005
-    copyright            : (C) 2005, 2006, 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -67,6 +67,12 @@ public:
 		NotAllSettingsApplied,
 		NoSuchComponent
 	};
+	enum ComponentStatus {
+		Dead,
+		Processing,
+		Unsatisfied,
+		Satisfied
+	};
 /** for RTTI. see RKComponentBase::RKComponentTypes */
 	virtual int type () = 0;
 /** tries to locate a component (or property) described by identifier as a child (of any generation) of this RKComponentBase. If found, a pointer to this is returned. Also, the modifier parameter is set to hold any remaining modifier contained in the identifier.
@@ -83,6 +89,8 @@ public:
 	bool isComponent () { return (type () >= ComponentBase); };
 /** returns satisfaction state. see setRequired () */
 	virtual bool isSatisfied ();
+/** returns somewhat more elaborate state than isSatisfied(). (Effectively identical in the base class). */
+	virtual ComponentStatus recursiveStatus ();
 /** currently valid (i.e. satisfied, even if required)? default implementation always returns true */
 	virtual bool isValid () { return true; };
 /** set to required: will only be satisfied if it is valid. Else: always satisfied (but subclasses might override to always be dissatisfied on really bad values. By default RKComponentBase is required at construction */

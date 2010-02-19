@@ -2,7 +2,7 @@
                           rkcomponent  -  description
                              -------------------
     begin                : Tue Dec 13 2005
-    copyright            : (C) 2005, 2006, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -152,6 +152,22 @@ bool RKComponentBase::isSatisfied () {
 	return false;		// never happens in RKComponentBase, but might in subclasses
 }
 
+RKComponentBase::ComponentStatus RKComponentBase::recursiveStatus () {
+	RK_TRACE (PLUGIN);
+
+	bool processing = false;
+	bool children_satisfied = true;
+	for (QHash<QString, RKComponentBase*>::const_iterator it = child_map.constBegin (); it != child_map.constEnd (); ++it) {
+		ComponentStatus s = it.value ()->recursiveStatus ();
+		if (s == Dead) return Dead;
+		if (s == Processing) processing = true;
+		else if (s != Satisfied) children_satisfied = false;
+	}
+	if (processing) return Processing;
+	if (children_satisfied && isSatisfied ()) return Satisfied;
+	return Unsatisfied;
+}
+
 //############### RKComponent ########################
 
 RKComponent::RKComponent (RKComponent *parent_component, QWidget *parent_widget) : QWidget (parent_widget) {
@@ -227,6 +243,7 @@ void RKComponent::updateEnablednessRecursive () {
 
 bool RKComponent::isValid () {
 	RK_TRACE (PLUGIN);
+#warning TODO: I do not think we need this. Use recursiveStatus, instead
 
 	for (QHash<QString, RKComponentBase*>::const_iterator it = child_map.constBegin (); it != child_map.constEnd (); ++it) {
 		if (!(it.value ()->isSatisfied ())) return false;

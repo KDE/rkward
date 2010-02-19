@@ -2,7 +2,7 @@
                           rkstandardcomponent  -  description
                              -------------------
     begin                : Sun Feb 19 2006
-    copyright            : (C) 2006, 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -24,8 +24,6 @@
 #include <qtimer.h>
 #include <QVBoxLayout>
 #include <QGroupBox>
-#include <QTime>
-#include <QObjectCleanupHandler>
 
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -110,9 +108,7 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 	QString dummy = QFileInfo (filename).path() + '/' + xml->getStringAttribute (element, "file", "::nosuchfile::", DL_INFO);
 	have_help = QFileInfo (dummy).exists ();
 
-	handle_change_timer = new QTimer (this);
-	handle_change_timer->setSingleShot (true);
-	connect (handle_change_timer, SIGNAL (timeout ()), this, SLOT (handleChange ()));
+	update_pending = false;
 
 // construct the GUI
 	if (!parent_component) {					// top-level
@@ -326,34 +322,24 @@ void RKStandardComponent::buildAndInitialize (const QDomElement &doc_element, co
 	changed ();
 }
 
-bool RKStandardComponent::submit (int max_wait, RCommandChain *in_chain) {
+RKComponentBase::ComponentStatus RKStandardComponent::recursiveStatus () {
 	RK_TRACE (PLUGIN);
 
-	// the call to processEvents(), below, is quite dangerous, as the component self-destructs on errors. This helps us prevent crashes.
-	QObjectCleanupHandler chandler;
-	chandler.add (this);
+	if (killed) return Dead;
+	if (backend->isBusy () || update_pending) return Processing;
+	return (RKComponentBase::recursiveStatus ());
+}
 
-	RCommandChain *old_chain = command_chain; 	// should always be 0, but let's store it cleanly
+bool RKStandardComponent::submit (RCommandChain *in_chain) {
+	RK_TRACE (PLUGIN);
+
+	if (!isSatisfied ()) return false;
+
+        RCommandChain *prev_chain = command_chain;
 	command_chain = in_chain;
-	bool result = false;
-
-	QTime t;
-	t.start ();
-	while ((handle_change_timer->isActive () || backend->isBusy ()) && (t.elapsed () < max_wait)) {
-		if (chandler.isEmpty () || killed) return (false);
-		QCoreApplication::processEvents (QEventLoop::ExcludeUserInputEvents, (max_wait / 2));
-		if (chandler.isEmpty () || killed) return (false);
-	}
-	if (!(handle_change_timer->isActive () || backend->isBusy ())) {
-		if (isSatisfied ()) {
-			gui->ok ();
-			result = true;
-		}
-	}
-	if (chandler.isEmpty () || killed) return (result);
-	command_chain = old_chain;
-	chandler.remove (this);
-	return result;
+	gui->ok ();
+	command_chain = prev_chain;
+	return true;
 }
 
 void RKStandardComponent::close () {
@@ -372,13 +358,18 @@ void RKStandardComponent::changed () {
 	if (!created) return;
 	if (gui) gui->enableSubmit (false);
 
-	// delay actual handling, until all changes have run up
-	handle_change_timer->start (10);
+	// don't trigger update twice
+	if (!update_pending) {
+		update_pending = true;
+		QTimer::singleShot (0, this, SLOT (handleChange ()));
+	}
 }
 
 void RKStandardComponent::handleChange () {
 	RK_TRACE (PLUGIN);
 
+	if (killed) return;
+	update_pending = false;
 	backend->preprocess (0);
 	backend->calculate (0);
 	backend->printout (0);
