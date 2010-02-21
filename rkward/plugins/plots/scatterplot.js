@@ -25,9 +25,9 @@ function calculate () {
 	echo ('	stop("Unequal number of X and Y variables given")\n');
 	echo ('}\n');
 
-// find range of X/Y values needed
-	echo ('Xrange <- range (c (Xvars), na+rm=TRUE)\n');
-	echo ('Yrange <- range (c (Yvars), na+rm=TRUE)\n');
+	echo ('# find range of X/Y values needed\n');
+	echo ('Xrange <- range (c (Xvars), na.rm=TRUE)\n');
+	echo ('Yrange <- range (c (Yvars), na.rm=TRUE)\n');
 	echo ('\n');
 	echo ('type <- rep (' + type + ', length.out=length (Xvars));\n');
 	echo ('col <- rep (' + col + ', length.out=length (Xvars));\n');

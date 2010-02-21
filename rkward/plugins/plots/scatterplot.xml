@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="scatterplot.php"/>
+	<code file="scatterplot.js"/>
 	
 <!--Adrien d'Hardemare	
 first attempt to produce simple plot using the plot function

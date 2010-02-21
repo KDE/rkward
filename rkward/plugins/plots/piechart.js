@@ -37,7 +37,7 @@ function doPrintout (full) {
 		options += ", angle =" + angle;
 		if (angle_inc != 0) options += " + " + angle_inc + " * 0:length (x)";
 	}
-	if (radius != 0+8) options += ", radius=" + radius;
+	if (radius != 0.8) options += ", radius=" + radius;
 	if (col == "rainbow") options += ", col=rainbow (if(is.matrix(x)) dim(x) else length(x))";
 	else if (col == "grayscale") options += ", col=gray.colors (if(is.matrix(x)) dim(x) else length(x))";
 	options += getValue ("plotoptions.code.printout");
