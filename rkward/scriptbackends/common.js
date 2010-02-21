@@ -26,8 +26,8 @@ function makeHeaderCode (title, parameters) {
 		echo (", parameters=list(");
 		for (var p = 0; p < parameters.length; ++p) {
 			if (p) {
-				echo (", ");
-				if (!(p % 2)) echo ("\n\t");
+				if (!(p % 2)) echo (",\n\t");
+				else echo (", ");
 			}
 			echo (quote(parameters[p]));
 		}
