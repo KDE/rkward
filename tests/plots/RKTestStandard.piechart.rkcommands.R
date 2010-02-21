@@ -11,7 +11,7 @@ rk.header ("Pie chart", parameters=list ("Variable", rk.get.description (test_ta
 
 rk.graph.on ()
 try ({
-	pie(x, clockwise =1, density =3+ 1 * 0:length (x), angle =45+ 6 * 0:length (x), col=gray.colors (if(is.matrix(x)) dim(x) else length(x)))
+	pie(x, clockwise =1, density =3 + 1 * 0:length (x), angle =45 + 6 * 0:length (x), col=gray.colors (if(is.matrix(x)) dim(x) else length(x)))
 })
 rk.graph.off ()
 })
