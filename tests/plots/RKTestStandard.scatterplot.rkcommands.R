@@ -1,14 +1,12 @@
 local({
 ## Prepare
 ## Compute
-
 Xvars <- list(women[["weight"]],swiss[["Education"]])
 Yvars <- list(women[["height"]],swiss[["Catholic"]])
 
 if (length(Xvars) != length(Yvars)) {
 	stop("Unequal number of X and Y variables given")
 }
-
 # find range of X/Y values needed
 Xrange <- range (c (Xvars), na.rm=TRUE)
 Yrange <- range (c (Yvars), na.rm=TRUE)
