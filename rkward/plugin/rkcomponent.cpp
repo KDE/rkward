@@ -164,6 +164,7 @@ RKComponentBase::ComponentStatus RKComponentBase::recursiveStatus () {
 		else if (s != Satisfied) children_satisfied = false;
 	}
 	if (processing) return Processing;
+	if (!required) return Satisfied;
 	if (children_satisfied && isSatisfied ()) return Satisfied;
 	return Unsatisfied;
 }
