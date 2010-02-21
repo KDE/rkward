@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-  <code file="setworkdir.php" />
+  <code file="setworkdir.js" />
   <help file="setworkdir.rkh" />
   <dialog label="Set the working directory">
     <browser size="small" id="dir" type="dir" label="Choose the Working Directory"/>

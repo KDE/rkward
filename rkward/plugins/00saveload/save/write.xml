@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="write.php"/>
+	<code file="write.js"/>
 	<logic>
 		<convert id="several_columns" mode="range" min="2" sources="ncolumns.int"/>
 		<connect client="sep.enabled" governor="several_columns" />

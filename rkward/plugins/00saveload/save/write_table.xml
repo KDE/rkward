@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="write_table.php"/>
+	<code file="write_table.js"/>
 
 	<logic>
 		<convert id="customizerow" mode="equals" sources="rows.string" standard="custoRow" />

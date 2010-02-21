@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="import_spss.php" />
+	<code file="import_spss.js" />
 	<help file="import_spss.rkh" />
 	<logic>
 		<external id="filename"/>

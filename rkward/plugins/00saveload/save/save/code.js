@@ -12,12 +12,12 @@ var undefined;
 
 
 function calculate () {
-	vars = str_replace ("\n", ",", trim (getValue ("data")));
+	vars = trim (getValue ("data")).replace (/\n/g, ",");
 
 	echo ('save (' + vars + ', file="' + getValue("file") + '", ascii=' + getValue("ascii") + ', compress=' + getValue("compress") + ')\n');
 }
 
 function printout () {
-	makeHeaderCode ("Save R objects", new Array("File" ,  getValue ("file"), "Variables" ,  vars));
+	makeHeaderCode ("Save R objects", new Array("File", getValue ("file"), "Variables", vars));
 }
 

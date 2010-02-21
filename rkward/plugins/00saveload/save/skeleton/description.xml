@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="code.php"/>
+	<code file="code.js"/>
 
 	<dialog label="Create package skeleton">
 		<tabbook>

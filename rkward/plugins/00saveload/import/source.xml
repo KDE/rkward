@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="source.php"/>
+	<code file="source.js"/>
 	<help file="source.rkh"/>
 
 	<logic>

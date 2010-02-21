@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document> 
-	<code file="load_data.php"/>
+	<code file="load_data.js"/>
 	<help file="load_data.rkh"/>
 	<logic>
 		<convert id="use_globalenv" mode="equals" sources="other_env.state" standard="0"/>

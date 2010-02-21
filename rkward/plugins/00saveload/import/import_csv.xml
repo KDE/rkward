@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document> 
-	<code file="import_csv.php"/>
+	<code file="import_csv.js"/>
 	<help file="import_csv.rkh"/>
 	<logic>
 		<external id="filename" />
