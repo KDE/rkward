@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="import_stata.php" />
+	<code file="import_stata.js" />
 	<help file="import_stata.rkh" />
 	<logic>
 		<external id="filename"/>
