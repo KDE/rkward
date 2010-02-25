@@ -60,6 +60,13 @@ suite <- new ("RKTestSuite", id="import_export_plugins",
 			# WARNING: TODO: We don't use the value labels of the third
 			# variable, yet.
 		}, libraries=c("foreign")),
+		new ("RKTest", id="import_stata", call=function () {
+			rk.call.plugin ("rkward::import_stata", convert_dates.state="1", convert_factors.state="1", convert_underscore.state="0", doedit.state="0", file.selection="../import_export_plugins_testfile.dta", missing_type.state="0", saveto.selection="my.stata.data", submit.mode="submit")
+
+			# In order to check, whether the import was correct
+			rk.print (my.stata.data)
+			for (var in my.stata.data) rk.print (rk.get.description(var))
+		}, libraries=c("foreign")),
 		new ("RKTest", id="load_source", call=function () {
 			stopifnot (!exists ("testx", globalenv ()))
 
