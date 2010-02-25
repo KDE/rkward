@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="grid.php" />
+	<code file="grid.js" />
 	<help file="grid.rkh" />
 	<logic>
 		<external id="devnum"/>

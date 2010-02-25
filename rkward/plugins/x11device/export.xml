@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="export.php" />
+	<code file="export.js" />
 	<help file="export.rkh" />
 	<logic>
 		<external id="devnum"/>
