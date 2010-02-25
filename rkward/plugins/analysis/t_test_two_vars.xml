@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="t_test_two_vars.php"/>
+	<code file="t_test_two_vars.js"/>
 	<help file="t_test_two_vars.rkh"/>
 
 	<logic>

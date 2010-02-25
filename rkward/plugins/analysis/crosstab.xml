@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="crosstab.php"/>
+	<code file="crosstab.js"/>
 	<help file="crosstab.rkh"/>
 	<logic>
 		<connect client="chi_options.enabled" governor="chisq.state" />

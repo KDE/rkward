@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="ansari_bradley_test.php"/>
+	<code file="ansari_bradley_test.js"/>
 	<help file="ansari_bradley_test.rkh"/>
 
 	<logic>

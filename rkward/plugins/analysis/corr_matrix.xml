@@ -1,7 +1,7 @@
 <!DOCTYPE rkplugin>
 
 <document>
-	<code file="corr_matrix.php"/>
+	<code file="corr_matrix.js"/>
 	<help file="corr_matrix.rkh"/>
 
 	<dialog label="Correlation matrix">

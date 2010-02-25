@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="crosstab_multi.php" />
+	<code file="crosstab_multi.js" />
 	<help file="crosstab_multi.rkh" />
 
 	<dialog label="N to N Crosstabulation" >

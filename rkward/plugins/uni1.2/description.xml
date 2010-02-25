@@ -1,7 +1,7 @@
 <!DOCTYPE rkplugin>
 <!-- TODO: This plugin should really be split up. It is overly complex. -->
 <document>
-	<code file="code.php"/>
+	<code file="code.js"/>
 	<logic>
 		<connect client="constMad.enabled" governor="mad.state" />
 		<connect client="pourcent.enabled" governor="trim.state" />
