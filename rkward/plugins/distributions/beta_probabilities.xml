@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="beta_probabilities.php" />
+	<code file="beta_probabilities.js" />
 	<snippets>
 		<snippet id="dist_options">
 			<spinbox default_precision="2" type="real" initial="1" id="shape1" min="0" label="Shape 1"/>

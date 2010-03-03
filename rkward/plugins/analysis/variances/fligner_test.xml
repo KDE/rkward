@@ -1,7 +1,6 @@
 <!DOCTYPE rkplugin>
-
 <document>
-	<code file="fligner_test.php"/>
+	<code file="fligner_test.js"/>
 	<help file="fligner_test.rkh"/>
 	
 	<dialog label="Fligner-Killeen Test of Homogeneity of Variances">

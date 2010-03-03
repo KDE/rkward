@@ -1,7 +1,6 @@
 <!DOCTYPE rkplugin>
-
 <document>
-	<code file="F_test.php"/>
+	<code file="F_test.js"/>
 	<help file="F_test.rkh"/>
 	
 	<dialog label="F test">

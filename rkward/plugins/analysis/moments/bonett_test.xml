@@ -1,8 +1,6 @@
 <!DOCTYPE rkplugin>
-
-
 <document>
-	<code file="bonett_test.php"/>	
+	<code file="bonett_test.js"/>	
 	<help file="bonett_test.rkh" />
 	
 	<dialog label="Bonett-Seier test of Geary's kurtosis">

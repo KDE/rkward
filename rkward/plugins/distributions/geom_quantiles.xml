@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="geom_quantiles.php" />
+	<code file="geom_quantiles.js" />
 	<snippets>
 		<snippet id="dist_options">
 			<spinbox default_precision="2" type="real" min="0" initial="0.5" max="1" id="prob" label="probability of success in each trial"/>

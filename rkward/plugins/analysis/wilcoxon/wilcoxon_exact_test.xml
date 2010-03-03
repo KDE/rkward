@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="wilcoxon_exact_test.php"/>
+	<code file="wilcoxon_exact_test.js"/>
 	<help file="wilcoxon_exact_test.rkh"/>
 
 	<logic>

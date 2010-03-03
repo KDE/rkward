@@ -1,8 +1,6 @@
 <!DOCTYPE rkplugin>
-
-
 <document>
-	<code file="outlier.php"/>
+	<code file="outlier.js"/>
 	<help file="outlier.rkh"/>
 	
 	<dialog label="Find value with largest difference from the mean">

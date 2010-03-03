@@ -1,8 +1,6 @@
 <!DOCTYPE rkplugin>
-
-
 <document>
-	<code file="PP_test.php"/>
+	<code file="PP_test.js"/>
 	<help file="PP_test.rkh"/>
 	
 	<dialog label="Phillips-Perron Test for Unit Roots">

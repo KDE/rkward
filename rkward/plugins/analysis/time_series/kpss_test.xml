@@ -1,8 +1,6 @@
 <!DOCTYPE rkplugin>
-
-
 <document>
-	<code file="kpss_test.php"/>
+	<code file="kpss_test.js"/>
 	<help file="kpss_test.rkh"/>
 	
 	<dialog label="KPSS Test for Stationarity">

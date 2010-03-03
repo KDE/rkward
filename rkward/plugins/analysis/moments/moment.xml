@@ -1,8 +1,6 @@
 <!DOCTYPE rkplugin>
-
-
 <document>
-	<code file="moment.php"/>	
+	<code file="moment.js"/>
 	<help file="moment.rkh" />
 	
 	<dialog label="sample moment">

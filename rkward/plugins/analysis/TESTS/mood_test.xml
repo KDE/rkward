@@ -1,7 +1,6 @@
 <!DOCTYPE rkplugin>
-
 <document>
-	<code file="mood_test.php"/>
+	<code file="mood_test.js"/>
 	<help file="mood_test.rkh"/>
 	
 	<dialog label="Mood Two-Sample Test of Scale">

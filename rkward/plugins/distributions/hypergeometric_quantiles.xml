@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="hypergeometric_quantiles.php" />
+	<code file="hypergeometric_quantiles.js" />
 	<snippets>
 		<snippet id="dist_options">
 			<spinbox type="integer" min="0" initial="1" id="m" label="m (Number of white balls in the urn)"/>

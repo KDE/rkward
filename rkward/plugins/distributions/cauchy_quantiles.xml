@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="cauchy_quantiles.php" />
+	<code file="cauchy_quantiles.js" />
 	<snippets>
 		<snippet id="dist_options">
 			<spinbox default_precision="2" type="real" initial="0" id="location" label="Location"/>

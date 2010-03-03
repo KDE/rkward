@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="binomial_tail_probabilities.php" />
+	<code file="binomial_tail_probabilities.js" />
 	<snippets>
 		<snippet id="dist_options">
 			<spinbox default_precision="2" type="integer" initial="1" id="size" min="1" label="Binomial trials"/>

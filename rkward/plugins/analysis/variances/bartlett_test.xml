@@ -1,7 +1,6 @@
 <!DOCTYPE rkplugin>
-
 <document>
-	<code file="bartlett_test.php"/>
+	<code file="bartlett_test.js"/>
 	<help file="bartlett_test.rkh"/>
 	
 	<dialog label="Bartlett Test of Homogeneity of Variances">

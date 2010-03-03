@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="f_probabilities.php" />
+	<code file="f_probabilities.js" />
 	<snippets>
 		<snippet id="dist_options">
 			<spinbox default_precision="2" type="real" initial="1" id="df1" min="0" label="Numerator degree of Freedom"/>

@@ -1,7 +1,6 @@
 <!DOCTYPE rkplugin>
-
 <document>
-	<code file="hp_filter.php"/>
+	<code file="hp_filter.js"/>
 	<help file="hp_filter.rkh" />
 	<logic>
 		<connect client="lambda.enabled" governor="custom.state.not"/>

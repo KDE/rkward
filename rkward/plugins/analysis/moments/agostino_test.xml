@@ -1,8 +1,6 @@
 <!DOCTYPE rkplugin>
-
-
 <document>
-	<code file="agostino_test.php"/>	
+	<code file="agostino_test.js"/>
 	<help file="agostino_test.rkh" />
 	
 	<dialog label="D'Agostino test of skewness">

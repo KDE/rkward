@@ -1,9 +1,6 @@
 <!DOCTYPE rkplugin>
-
-<!-- This is the skewness and kurtosis plug-in-->
-
 <document>
-	<code file="skewness_kurtosis_test.php"/>
+	<code file="skewness_kurtosis_test.js"/>
 	<help file="skewness_kurtosis_test.rkh" />
 	<dialog label="Skewness and Kurtosis">
 		<tabbook>

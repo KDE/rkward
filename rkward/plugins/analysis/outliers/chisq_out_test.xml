@@ -1,8 +1,6 @@
 <!DOCTYPE rkplugin>
-
-
 <document>
-	<code file="chisq_out_test.php"/>
+	<code file="chisq_out_test.js"/>
 	<help file="chisq_out_test.rkh"/>
 	
 	<dialog label="Chi-squared test for outlier">

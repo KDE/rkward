@@ -1,8 +1,6 @@
 <!DOCTYPE rkplugin>
-
-
 <document>
-	<code file="dixon_test.php"/>
+	<code file="dixon_test.js"/>
 	<help file="dixon_test.rkh"/>
 	
 	<dialog label="Dixon tests for outlier">

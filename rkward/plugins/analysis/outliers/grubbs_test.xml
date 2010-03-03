@@ -1,8 +1,6 @@
 <!DOCTYPE rkplugin>
-
-
 <document>
-	<code file="grubbs_test.php"/>
+	<code file="grubbs_test.js"/>
 	<help file="grubbs_test.rkh"/>
 	
 	<dialog label="Grubbs tests for one or two outliers in data sample">

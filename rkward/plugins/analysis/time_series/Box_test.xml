@@ -1,8 +1,6 @@
 <!DOCTYPE rkplugin>
-
-
 <document>
-	<code file="Box_test.php"/>
+	<code file="Box_test.js"/>
 	<help file="Box_test.rkh"/>
 	
 	<dialog label="Box-Pierce and Ljung-Box Tests">

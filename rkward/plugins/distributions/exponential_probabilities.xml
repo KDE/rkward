@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="exponential_probabilities.php" />
+	<code file="exponential_probabilities.js" />
 	<snippets>
 		<snippet id="dist_options">
 			<spinbox default_precision="2" type="real" min="0" initial="1" id="rate" label="vector of rates"/>

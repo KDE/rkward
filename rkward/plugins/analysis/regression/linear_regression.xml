@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="linear_regression.php"/>
+	<code file="linear_regression.js"/>
 	<help file="linear_regression.rkh"/>
 
 	<dialog label="Fitting Linear Models">

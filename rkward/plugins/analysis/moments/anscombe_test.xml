@@ -1,8 +1,6 @@
 <!DOCTYPE rkplugin>
-
-
 <document>
-	<code file="anscombe_test.php"/>	
+	<code file="anscombe_test.js"/>	
 	<help file="anscombe_test.rkh" />
 	
 	<dialog label="Anscombe-Glynn test of kurtosis">

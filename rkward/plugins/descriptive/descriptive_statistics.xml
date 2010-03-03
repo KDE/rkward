@@ -1,7 +1,6 @@
 <!DOCTYPE rkplugin>
-<!-- This is a simple example, of how a "plugin" might be configured. -->
 <document>
-	<code file="descriptive_statistics.php" />
+	<code file="descriptive_statistics.js" />
 	<help file="descriptive_statistics.rkh" />
 
 	<dialog label="Descriptive Statistics" >

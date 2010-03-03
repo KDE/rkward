@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="gamma_quantiles.php" />
+	<code file="gamma_quantiles.js" />
 	<snippets>
 		<snippet id="dist_options">
 			<spinbox default_precision="2" type="real" min="0" initial="1" id="shape" label="Shape"/>

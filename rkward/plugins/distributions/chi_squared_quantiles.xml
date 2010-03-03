@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="chi_squared_quantiles.php" />
+	<code file="chi_squared_quantiles.js" />
 	<snippets>
 		<snippet id="dist_options">
 			<spinbox default_precision="2" type="real" initial="1" id="df" min="0" label="Degrees of Freedom"/>
