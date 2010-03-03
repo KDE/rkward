@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="plot_gamma_clt.php" />
+	<code file="plot_gamma_clt.js" />
 	<help file="plot_gamma_clt.rkh" />
 	<snippets>
 		<snippet id="dist_options">

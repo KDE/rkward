@@ -1,7 +1,7 @@
 <!DOCTYPE rkplugin>
 
 <document>
-	<code file="code.php"/>
+	<code file="code.js"/>
 	
 	<dialog label="Simple Anova">
 		<text>
