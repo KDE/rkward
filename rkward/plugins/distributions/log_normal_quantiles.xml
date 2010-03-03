@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="log_normal_quantiles.php" />
+	<code file="log_normal_quantiles.js" />
 	<snippets>
 		<snippet id="dist_options">
 			<spinbox default_precision="2" type="real" initial="0" id="meanlog" label="meanlog (mean of the distribution on the log scale)"/>

@@ -1,9 +1,6 @@
 <!DOCTYPE rkplugin>
-
-<!-- This is the Jarque-Bera test for Normality -->
-
 <document>
-	<code file="jb_test.php"/>
+	<code file="jb_test.js"/>
 	<help file="jb_test.rkh" />
 	<dialog label="Jarque-Bera Normality Test">
 		<tabbook>

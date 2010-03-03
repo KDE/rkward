@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
-<!--This is the simple "Plot Chi-squared probabilities" plugin--><document>
-	<code file="plot_chi_squared_distribution.php" />
+<document>
+	<code file="plot_chi_squared_distribution.js" />
 	<help file="plot_chi_squared_distribution.rkh" />
 	<logic>
 		<insert snippet="common_logic"/>

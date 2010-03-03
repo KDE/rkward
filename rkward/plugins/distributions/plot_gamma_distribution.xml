@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="plot_gamma_distribution.php" />
+	<code file="plot_gamma_distribution.js" />
 	<help file="plot_gamma_distribution.rkh" />
 	<logic>
 		<insert snippet="common_logic"/>

@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="plot_exponential_distribution.php" />
+	<code file="plot_exponential_distribution.js" />
 	<help file="plot_exponential_distribution.rkh" />
 	<logic>
 		<insert snippet="common_logic"/>

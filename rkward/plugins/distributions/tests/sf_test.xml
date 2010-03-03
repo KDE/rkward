@@ -1,9 +1,6 @@
 <!DOCTYPE rkplugin>
-
-<!-- This is the Shapiro-Francia test for Normality -->
-
 <document>
-	<code file="sf_test.php"/>
+	<code file="sf_test.js"/>
 	<dialog label="Shapiro-Wilk Normality Test">
 		<tabbook>
 			<tab label="Select Variables" >

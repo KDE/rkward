@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="plot_binomial_distribution.php" />
+	<code file="plot_binomial_distribution.js" />
 	<help file="plot_binomial_distribution.rkh" />
 	<logic>
 		<insert snippet="common_logic"/>

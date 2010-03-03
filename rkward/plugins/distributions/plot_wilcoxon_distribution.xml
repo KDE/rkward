@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="plot_wilcoxon_distribution.php" />
+	<code file="plot_wilcoxon_distribution.js" />
 	<help file="plot_wilcoxon_distribution.rkh" />
 	<logic>
 		<insert snippet="common_logic"/>

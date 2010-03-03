@@ -1,9 +1,6 @@
 <!DOCTYPE rkplugin>
-
-<!-- This is the Cramer-von Mises test for Normality -->
-
 <document>
-	<code file="pearson_test.php"/>
+	<code file="pearson_test.js"/>
 	<dialog label="Pearson chi-square Normality Test">
 		<tabbook>
 			<tab label="Select Variables" >

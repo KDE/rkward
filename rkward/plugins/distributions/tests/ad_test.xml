@@ -1,9 +1,6 @@
 <!DOCTYPE rkplugin>
-
-<!-- This is the Anderson-Darling test for Normality -->
-
 <document>
-	<code file="ad_test.php"/>
+	<code file="ad_test.js"/>
 	<dialog label="Anderson-Darling Normality Test">
 		<tabbook>
 			<tab label="Select Variables" >

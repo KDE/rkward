@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="plot_tukey_distribution.php" />
+	<code file="plot_tukey_distribution.js" />
 	<help file="plot_tukey_distribution.rkh" />
 	<logic>
 		<set id="function.enabled" to="false" />

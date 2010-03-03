@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="tukey_quantiles.php" />
+	<code file="tukey_quantiles.js" />
 	<snippets>
 		<snippet id="dist_options">
 			<spinbox min="1" type="integer" initial="2" id="nmeans" label="Sample size for range"/>

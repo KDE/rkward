@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
-<!--This is the simple "Plot logistic probabilities" plugin--><document>
-	<code file="plot_logistic_distribution.php" />
+<document>
+	<code file="plot_logistic_distribution.js" />
 	<help file="plot_logistic_distribution.rkh" />
 	<logic>
 		<insert snippet="common_logic"/>

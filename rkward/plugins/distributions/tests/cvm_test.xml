@@ -1,9 +1,6 @@
 <!DOCTYPE rkplugin>
-
-<!-- This is the Cramer-von Mises test for Normality -->
-
 <document>
-	<code file="cvm_test.php"/>
+	<code file="cvm_test.js"/>
 	<dialog label="Cramer-von Mises Normality Test">
 		<tabbook>
 			<tab label="Select Variables" >

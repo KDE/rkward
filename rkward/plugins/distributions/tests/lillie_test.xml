@@ -1,9 +1,6 @@
 <!DOCTYPE rkplugin>
-
-<!-- This is the Lilliefors (Kolmogorov-Smirnov) Normality test-->
-
 <document>
-	<code file="lillie_test.php"/>
+	<code file="lillie_test.js"/>
 	<dialog label="Lilliefors (Kolmogorov-Smirnov) Normality Test">
 		<tabbook>
 			<tab label="Select Variables" >

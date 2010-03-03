@@ -1,6 +1,6 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="uniform_quantiles.php" />
+	<code file="uniform_quantiles.js" />
 	<snippets>
 		<snippet id="dist_options">
 			<spinbox default_precision="2" type="real" initial="0" id="min" label="Lower limits of the distribution"/>
