@@ -6,8 +6,8 @@ function printout () {
 }
 
 function preview () {
-	do_preprocess ();	// do_preprocess calls preprocess(), if, and only if that is defined
-	do_calculate ();
+	if (typeof (preprocess) != "undefined") preprocess ();
+	if (typeof (calculate) != "undefined") calculate ();
 	doPrintout (false);
 }
 
