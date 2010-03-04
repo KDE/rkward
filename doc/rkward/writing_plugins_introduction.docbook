@@ -34,6 +34,8 @@ as Authors, publish date, the abstract, and Keywords -->
 <copyright>
 <year>2006</year>
 <year>2007</year>
+<year>2008</year>
+<year>2010</year>
 <holder>Thomas Friedrichsmeier</holder>
 </copyright>
 <!-- Translators: put here the copyright notice of the translation -->
@@ -41,8 +43,8 @@ as Authors, publish date, the abstract, and Keywords -->
      and in the FDL itself on how to use it. -->
 <legalnotice>&FDLNotice;</legalnotice>
 
-<date>2007-05-09</date>
-<releaseinfo>0.4.8.00</releaseinfo>
+<date>2010-03-04</date>
+<releaseinfo>0.5.3.00</releaseinfo>
 
 <abstract>
 <para>
@@ -63,10 +65,10 @@ This is a guide to writing plugins for &rkward;.
 <title>Introduction</title>
 
 <para>
-Documentation as of &kapp; release 0.4.8.
+Documentation as of &kapp; release 0.5.3.
 </para>
 <para>
-This document describes how to write your own plugins. Note, that at the time of this writing, none of the concepts are set it stone. Therefore, this document should be regarded as an introduction to the current approach, and as a basis for discussion. All sorts of comments are welcome.
+This document describes how to write your own plugins. Note, that at the time of this writing, some of the concepts are not yet set it stone. Therefore, this document should be regarded as an introduction to the current approach, and as a basis for discussion. All sorts of comments are welcome.
 </para>
 <para>
 For questions and comments, please write to the &kapp; development mailing list.
@@ -79,7 +81,7 @@ Writing a standard plugin is basically a four-step process:
 <itemizedlist>
 <listitem><link linkend="pluginmap">Placing a new Action in the menu-hierarchy</link></listitem>
 <listitem><link linkend="mainxml">Describing the looks and behavior of the plugin-GUI</link></listitem>
-<listitem><link linkend="phptemplate">Defining, how R-code is to be generated from the settings, the user makes in the GUI</link></listitem>
+<listitem><link linkend="jstemplate">Defining, how R-code is to be generated from the settings, the user makes in the GUI</link></listitem>
 <listitem><link linkend="pluginhelp">Adding a help page to your plugin</link></listitem>
 </itemizedlist>
 Those will be dealt with in turn.
@@ -106,7 +108,7 @@ Of course the first question you might have is: What portions of &kapp; function
 One way to answer this is: Deselect all .pluginmap-files under Settings->Configure &kapp;->Plugins, and see what's missing. A slightly more helpful answer: Most actual statistics functions accessible via the GUI are realized using plugins. Also, you can create fairly flexible GUIs for all kinds of operations using plugins.
 </para>
 <para>
-The basic paradigm behind &kapp; plugins is the one we'll walk you through in this document: An xml-file describes what the GUI looks like. An additional PHP-file is used to generate R syntax from the GUI settings. That is, plugins do not really have to perform any statistical calculations. Rather plugins generate the R syntax needed to run those calculations. The R syntax is then sent to the R backend for evaluation, and typically a result is shown in the output window.
+The basic paradigm behind &kapp; plugins is the one we'll walk you through in this document: An xml-file describes what the GUI looks like. An additional Javascript-file is used to generate R syntax from the GUI settings. That is, plugins do not really have to perform any statistical calculations. Rather plugins generate the R syntax needed to run those calculations. The R syntax is then sent to the R backend for evaluation, and typically a result is shown in the output window.
 </para>
 <para>
 Read on in the next chapters to see how this is done.
@@ -258,10 +260,10 @@ The doctype is not really interpreted, yet. Set it to rkplugin, anyway.
 </para>
 <programlisting>
 &lt;document&gt;
-	&lt;code file="t_test.php"/&gt;
+	&lt;code file="t_test.js"/&gt;
 </programlisting>
 <para>
-All plugins generate some code. Currently the only way to do so is using PHP, as detailed in <link linkend="phptemplate">the next chapter</link>. This defines, where to look for the PHP-code. The filename is relative to the directory the plugin-xml is in.
+All plugins generate some code. Currently the only way to do so is using JS, as detailed in <link linkend="jstemplate">the next chapter</link>. This defines, where to look for the JS-code. The filename is relative to the directory the plugin-xml is in.
 </para>
 <programlisting>
 	&lt;help file="t_test.rkh"/&gt;
@@ -373,7 +375,7 @@ That's all for the second page of the &lt;tabbook&gt;, all pages in the &lt;tabb
 </programlisting>
 <para>
 Finally we close the &lt;document&gt;-tag, and that's it. The GUI is defined. You can save the file now.
-But how does R-syntax get generated from the GUI-settings? I'll deal with that in the <link linkend="phptemplate">next chapter</link>. First, however, we'll look into adding a wizard interface, and some general considerations.
+But how does R-syntax get generated from the GUI-settings? I'll deal with that in the <link linkend="jstemplate">next chapter</link>. First, however, we'll look into adding a wizard interface, and some general considerations.
 </para>
 
 <section id="wizard_interface">
@@ -433,52 +435,50 @@ But how does R-syntax get generated from the GUI-settings? I'll deal with that i
 
 </chapter>
 
-<chapter id="phptemplate">
+<chapter id="jstemplate">
 <title>Generating R code from GUI settings</title>
 <para>
-Now we have a GUI defined, but we still need to generate some R-code from that. For that, we need another text-file, "code.php", located in the same directory as the <link linkend="mainxml">description.xml</link>. You may or may not be familiar with PHP. Documentation on PHP can be found here: http://www.php.net. But for most purposes you will not need to know much about PHP at all, as we'll only use some very basic features..
+Now we have a GUI defined, but we still need to generate some R-code from that. For that, we need another text-file, "code.js", located in the same directory as the <link linkend="mainxml">description.xml</link>. You may or may not be familiar with Javascript (or, to be technically precise: ECMA-script). Documentation on JS can be found in abundance, both in printed form, and on the internet (e.g.: https://developer.mozilla.org/en/Core_JavaScript_1.5_Guide). But for most purposes you will not need to know much about JS at all, as we'll only use some very basic features.
 </para>
 <para>
-For the independent samples t-test, the code.php file looks as follows (with comments in between):
-</para>
-<programlisting>
-&lt;?
-</programlisting>
-<para>
-This is a sort of opening tag in PHP. Everything between &lt;? and ?&gt; will be interpreted as PHP-code. Everything outside of these tags will simply be returned as plain text. See below for examples.
+For the independent samples t-test, the code.js file looks as follows (with comments in between):
 </para>
 <programlisting>
 function preprocess () {
 }
 </programlisting>
 <para>
-The PHP-file is organized into three separate functions: preprocess, calculate, and printout. This is because not all code is needed at all stages. Currently the preprocess-function is not really used in many places.
+The JS-file is organized into three separate functions: preprocess, calculate, and printout. This is because not all code is needed at all stages. Currently the preprocess-function is not really used in many places (typically you will omit it altogether).
 </para>
 <programlisting>
 function calculate () {
-?&gt;res &lt;- t.test (&lt;? getRK ("x"); ?&gt;, &lt;? getRK ("y"); ?&gt;, "&lt;? getRK ("hypothesis"); ?&gt;"&lt;? getRK ("varequal"); if (($conflevel = getRK_val ("conflevel")) != "0.95") echo (", conf.level=" . $conflevel); ?&gt;)
-&lt;?
+	echo ('res &lt;- t.test (x=' + getValue ("x") + ', y=' + getValue ("y") + ', hypothesis="' + getValue ("hypothesis") + '"' + getValue ("varequal"));
+	var conflevel = getValue ("conflevel");
+	if (conflevel != "0.95") echo (', conf.level=' + conflevel);
+	echo (')\n');
 }
 </programlisting>
 <para>
 This function generates the actual R-syntax to be run from the GUI-settings. Let's look at this in detail:
-First we leave the PHP-mode (?&gt;) and hence return
+The code to be used is generated using "echo"-statement. Looking at the echo() statement step by step, the first part of it is
 </para>
 <screen>
 res &lt;- t.test (
 </screen>
 <para>
-as plain text. Next we need to fill in the value, the user selected as the first variable. Hence we enter PHP-mode again (&lt;?) and call 'getRK ("x");'. This prints out the value of the GUI-element with id "x": our first &lt;varslot&gt;. Next we leave PHP-mode again, print a ', ', and do the same to fetch the value of the element "y" - the second &lt;varslot&gt;. For the hypothesis (the &lt;radio&gt;-group), and the equal variances-&lt;checkbox&gt;, the procedure is very similar.
+as plain text. Next we need to fill in the value, the user selected as the first variable. We fetch this using getValue ("x"), and append it to the string to be "echoed". This prints out the value of the GUI-element with id "x": our first &lt;varslot&gt;. Next, we append a ', ', and do the same to fetch the value of the element "y" - the second &lt;varslot&gt;. For the hypothesis (the &lt;radio&gt;-group), and the equal variances-&lt;checkbox&gt;, the procedure is very similar.
 </para>
 <para>
-It gets a little more tricky for the confidence level. For reasons of aestethics, we don't want to explicitly specify the confidence level to use, if it corresponds to the default value. Hence, instead of printing the value with 'getRK', we fetch it silently using 'getRK_val' and assign it to a PHP-variable. Then we check, whether that variable differs from "0.95" and if so print out an additional argument.
-Finally, we leave PHP-mode again, print a last ')', and that's it for the calculate-function.
+Note that instead of concatenating the output-snippets with "+", you can also use several echo()-statments. Everything is printed on a single line. To produce a linebreak in the generated code, insert a '\n' in the echoed string. In theory, you can even produce many lines with a single echo-statement, but please keep it to one line (or less) of generated code per echo().
+</para>
+<para>
+It gets a little more tricky for the confidence level. For reasons of aestethics, we don't want to explicitly specify the confidence level to use, if it corresponds to the default value. Hence, instead of printing the value unconditionally, we first fetch into a variable. Then we check, whether that variable differs from "0.95" and if so print out an additional argument.
+Finally, we echo a closing bracket and a line break: ')\n'. That's all for the calculate-function.
 </para>
 <programlisting>
 function printout () {
-?&gt;rk.header ("Independent samples t test")
-rk.print (res)
-&lt;?
+	echo ('rk.header ("Independent samples t test")\n');
+	echo ('rk.print (res)\n');
 }
 </programlisting>
 <para>
@@ -486,29 +486,24 @@ And this was all there is to the printout function in most cases. rk.header () p
 </para>
 <programlisting>
 function printout () {
-	makeHeaderCode ("Independent samples t test", array ("Assume equal variances" =&gt; getRK_val ("varequal"), "Confidence level", =&gt; getRK_val ("conflevel")))
-?&gt;
-rk.print (res)
-&lt;?
+	makeHeaderCode ("Independent samples t test", new Array ("Assume equal variances", getValue ("varequal"), "Confidence level", getValue ("conflevel")))
+	echo ('rk.print (res)\n');
 }
 </programlisting>
 <para>
-The list of parameters is given as pairs of "Description", "Value". This will also be printed in a standard way.
+rk.print () utilizes the R2HTML package to provide HTML formatted output. Another helpful function is rk.results (), which can also output different kinds of result tables. If in doubt, however, just use rk.print (), and be done with. makeHeaderCode () is a Js-level helper function to create a call to rk.header () (just take a look at the generated code). In some cases you may want to call "echo ('rk.header (...)')" directly to print a header for your output.
 </para>
 <para>
-rk.print () utilizes the R2HTML package to provide HTML formatted output. Another helpful function is rk.results (), which can also output different kinds of result tables. If in doubt, however, just use rk.print (), and be done with. makeHeaderCode () is a PHP-level helper function to create a call to rk.header () (just take a look at the generated code). In some cases you may want to call rk.header () directly to print a header for your output.
-</para>
-<para>
-Note that internally, the output is just a plain HTML document at this point of time. Therefore you might be tempted to add custom HTML using cat (). While this will work, please don't do this. The output format may change (e.g. to ODF) in the future, so it's best not to introduce HTML specific code. Rather keep things simple with rk.header (), rk.print (), and rk.results (). If those don't seem to satisfy your formatting needs, contact us on the mailing list for help.
+Note that internally, the output is just a plain HTML document at this point of time. Therefore you might be tempted to add custom HTML using rk.cat.output (). While this will work, please don't do this. The output format may change (e.g. to ODF) in the future, so it's best not to introduce HTML specific code. Rather keep things simple with rk.header (), rk.print (), rk.results (), and - if needed - rk.print.literal(). If those don't seem to satisfy your formatting needs, contact us on the mailing list for help.
 </para>
 <para>
 Congratulations! You created your first plugin. Read on in the next chapters for more advanced concepts.
 </para>
 
-<section id="phpconventions">
+<section id="jsconventions">
 <title>Conventions, policies, and background</title>
 <para>
-There are many ways to write R code for a certain task, and there are even more ways to generate this R code from PHP. How exactly you do it, is left up to you. Still there are a number of considerations that you should follow, and background information you should understand.
+There are many ways to write R code for a certain task, and there are even more ways to generate this R code from Js. How exactly you do it, is left up to you. Still there are a number of considerations that you should follow, and background information you should understand.
 </para>
 
 <section id="policylocal">
@@ -572,22 +567,16 @@ if (my.rotation &gt; wobble.rotation.limit (x)) {
 <section id="policysimplicity">
 <title>Dealing with complex options</title>
 <para>
-Many plugins can do more than one thing. For instance, the "Descriptive Statistics" plugin can compute mean, range, sum, product, median, length, etc. However, typically the user will only chose to have some of those calculations performed. In this case, please try to keep the generated code as simple as possible. It should only contain portions relevant to the options that are actually selected. To achieve this, here is an example of a common design patterns as you would use it (in PHP):
+Many plugins can do more than one thing. For instance, the "Descriptive Statistics" plugin can compute mean, range, sum, product, median, length, etc. However, typically the user will only chose to have some of those calculations performed. In this case, please try to keep the generated code as simple as possible. It should only contain portions relevant to the options that are actually selected. To achieve this, here is an example of a common design patterns as you would use it (in JS):
 </para>
 <programlisting>
-function calculate () { ?&gt;
-x &lt;- &lt;? getRK ("x");
-results &lt;- list () ?&gt;
-&lt;?
-	if (getRK_val ("domean")) { ?&gt;
-results$'Mean value' &lt;- mean (x)
-&lt;?	}
-	if (getRK_val ("domedian")) { ?&gt;
-results$'Median' &lt;- median (x)
-&lt;?	}
-	if (getRK_val ("dosd")) { ?&gt;
-results$'Standard deviation' &lt;- sd (x)
-&lt;?	}
+function calculate () {
+	echo ('x &lt;- &lt;' + getValue ("x") + ')\n');
+	echo ('results &lt;- list ()\n');
+
+	if (getRK_val ("domean")) echo ("results$'Mean value' &lt;- mean (x)\n");
+	if (getRK_val ("domedian")) echo ("results$'Median' &lt;- median (x)\n");
+	if (getRK_val ("dosd")) echo ("results$'Standard deviation' &lt;- sd (x)\n");
 	//...
 }
 </programlisting>
@@ -595,28 +584,25 @@ results$'Standard deviation' &lt;- sd (x)
 
 </section>
 
-<section id="phptips">
+<section id="jstips">
 <title>Tips and tricks</title>
 <para>
 Here are a few assorted tricks which may make writing plugins less tedious:
 </para>
 <para>
-If you need the value of a GUI setting at several places in you plugin's code, consider assigning it to a PHP variable, and using that instead of fetching it again and again with getRK. This is faster, more readable, and less typing all at the same time:
+If you need the value of a GUI setting at several places in you plugin's code, consider assigning it to a variable in JS, and using that instead of fetching it again and again with getValue. This is faster, more readable, and less typing all at the same time:
 </para>
 <programlisting>
 function calculate () {
-	if (getRK_val ("remove_nas") == "1") {
+	var narm = "";	// na.rm=FALSE is the default in all functions below
+	if (getValue ("remove_nas") == "1") {
 		$narm = ", na.rm=TRUE";
-	} else {
-		$narm = "";	// na.rm=FALSE is the default in all functions below
 	}
-?&gt;
-# ...
-results$foo &lt;- foo (x&lt;? echo ($narm); ?&gt;)
-results$bar &lt;- bar (x&lt;? echo ($narm); ?&gt;)
-results$foobar &lt;- foobar (x&lt;? echo ($narm); ?&gt;)
-# ...
-&lt;?
+	// ...
+	echo ("results$foo &lt;- foo (x" + narm + ")\n");
+	echo ("results$bar &lt;- bar (x" + narm + ")\n");
+	echo ("results$foobar &lt;- foobar (x" + narm "\n");
+	// ...
 }
 </programlisting>
 </section>
@@ -746,7 +732,7 @@ For instance, suppose you want to extend the t-test example used in this documen
 <programlisting>
 &lt;!DOCTYPE rkplugin&gt;
 &lt;document&gt;
-	&lt;code file="code.php"/&gt;
+	&lt;code file="code.js"/&gt;
 
 	&lt;dialog label="T-Test"&gt;
 		&lt;row&gt;
@@ -770,7 +756,7 @@ So far so good, but there are a number of problems with this GUI. First, both th
 <para>
 <programlisting>
 	[...]
-	&lt;code file="code.php"/&gt;
+	&lt;code file="code.js"/&gt;
 
 	&lt;logic&gt;
 		&lt;convert id="varmode" mode="equals" sources="mode.string" standard="variable" /&gt;
@@ -813,7 +799,7 @@ Once again, for a complete list of properties, refer to the <link linkend="refer
 <chapter id="embedding">
 <title>Embedding Plugins into Plugins</title>
 <para>
-When writing plugins, you will often find that you're creating a number of plugins that only differ in some respects, but have a lot more in common. For instance, for plotting, there are a number of generic R options that can be used with mostly all types of plots. Should you create a GUI and PHP-template for those over and over again?
+When writing plugins, you will often find that you're creating a number of plugins that only differ in some respects, but have a lot more in common. For instance, for plotting, there are a number of generic R options that can be used with mostly all types of plots. Should you create a GUI and JS-template for those over and over again?
 </para>
 <para>
 Obviously that would be quite a hassle. Fortunately, you don't have to do that. Rather you create the common functionality once, and later you can embed it into several plugins. In fact it is possible to embed any plugin into any other plugin, even if the original author of the embedded plugin never thought, somebody would want to embed their plugin into another one.
@@ -848,13 +834,13 @@ As you can see the syntax of the &lt;embed&gt;-tag is fairly simple. It takes an
 <section id="embedding_code">
 <title>Code generation when embedding</title>
 <para>
-So far so good, but what about the generated code? How are the code for the embedding and embedded plugin merged? In the embedding plugin's PHP-code, simply write something like this:
+So far so good, but what about the generated code? How are the code for the embedding and embedded plugin merged? In the embedding plugin's JS-code, simply write something like this:
 </para>
 <programlisting>
 function printout () {
-[...] ?&gt;
-myplotfunction ([...]&lt;? getRK ("plotoptions.code.printout"); ?&gt;)
-&lt;? [...]
+	// ...
+	echo ("myplotfunction ([...]" + getValue ("plotoptions.code.printout"); + ")\n");
+	// ...
 }
 </programlisting>
 <para>
@@ -930,7 +916,7 @@ In the logic section of the plot_options plugin there are two additional lines, 
 	&lt;/logic&gt;
 </programlisting>
 <para>
-This defines two additional properties in the plot_options plugin, whose sole purpose is to be connected to some (yet unknown) properties of the embedding plugin. In the plot_options plugin those two properties are simply used like any other, and for instance there are calls to getRK("xvar") in the plot_options PHP template.
+This defines two additional properties in the plot_options plugin, whose sole purpose is to be connected to some (yet unknown) properties of the embedding plugin. In the plot_options plugin those two properties are simply used like any other, and for instance there are calls to getValue("xvar") in the plot_options JS template.
 </para>
 <para>
 Now, for the incomplete plugin there is no way of knowing, where it will be embedded, and what the relevant settings in the embedding plugin will be called. So we need to add two additional lines in the embedding plugin's logic section as well:
@@ -955,38 +941,34 @@ This is nothing new in principle, we've covered &lt;connect&gt; statements in th
 Sometimes, you may wish to develop plugins for a series of similar functions. As an example, consider the distribution plots. These generate fairly similar code, and of course it's desirable to make the graphical interfaces look similar to each other. Finally large sections of the help files can be identical. Only a few parameters are different for each plugin.
 </para>
 <para>
-The naive approach to this is to develop one plugin, then basically copy and paste the entire contents of the .php, .xml, and .rkh files, then changing the few portions that are different. However, what if sometime later you find a spelling mistake that has been copied and pasted to all plugins? What if you want to add support for a new feature? You'd have to visit all plugins again, and change each single one. A tiresome and tedious process.
+The naive approach to this is to develop one plugin, then basically copy and paste the entire contents of the .js, .xml, and .rkh files, then changing the few portions that are different. However, what if sometime later you find a spelling mistake that has been copied and pasted to all plugins? What if you want to add support for a new feature? You'd have to visit all plugins again, and change each single one. A tiresome and tedious process.
 </para>
 <para>
-A second approach would be to use <link linkend="embedding">embedding</link>. However, in some cases this does not lend itself well to the problem at hand, mostly because the "chunks" you can embed are sometimes too large to be useful, and it places some constraints on the layout. For these cases, the concepts <link linkend="include_php">including .php files</link> <link linkend="include_xml">including .xml files</link> and <link linkend="snippets">snippets</link> can be very useful (but see the <link linkend="include_snippets_vs_embedding">thoughts on when it is preferrable to use embedding</link>).
+A second approach would be to use <link linkend="embedding">embedding</link>. However, in some cases this does not lend itself well to the problem at hand, mostly because the "chunks" you can embed are sometimes too large to be useful, and it places some constraints on the layout. For these cases, the concepts <link linkend="include_js">including .js files</link> <link linkend="include_xml">including .xml files</link> and <link linkend="snippets">snippets</link> can be very useful (but see the <link linkend="include_snippets_vs_embedding">thoughts on when it is preferrable to use embedding</link>).
 </para>
 <para>
 One word of caution, before you begin reading, though: These concepts can help making it simpler to deal with many similar plugins, and can improve maintainability and readability of those plugins. However, overdoing it can easily lead to the reverse effect. Use with some caution.
 </para>
-	<section id="include_php">
-	<title>Using the PHP include statement</title>
+	<section id="include_js">
+	<title>Using the JS include statement</title>
 	<para>
-Perhaps one of the most important features of PHP is that you can easily include one script file inside another. The value of this becomes immediately obvious, if some sections of your PHP code are similar across plugins. You can simply define those sections in a separate .php file, and include this in all the plugin .php files. For example, as in:
+You can easily include one script file into another in &kapp; plugins. The value of this becomes immediately obvious, if some sections of your JS code are similar across plugins. You can simply define those sections in a separate .js file, and include this in all the plugin .js files. For example, as in:
 	</para>
 	<programlisting>
-&lt;?
-// this is a file called "common_functions.php"
+// this is a file called "common_functions.js"
 
 function doCommonStuff () {
 	// perhaps fetch some options, etc.
 	// ...
-?&gt;
-# This is R code you want in several different plugins
-&lt;?
+	echo ("# This is R code you want in several different plugins\n");
+	// ...
 }
-?&gt;
 	</programlisting>
 	<programlisting>
-&lt;?
-// this is one of your regular plugin .php files
+// this is one of your regular plugin .js files
 
 // include the common functions
-include ("common_functions.php");
+include ("common_functions.js");
 
 function calculate () {
 	// do something
@@ -995,14 +977,12 @@ function calculate () {
 	// insert the common code
 	doCommonStuff ();
 }
-?&gt;
 	</programlisting>
 	<para>
 Note that sometimes it's even more useful to reverse this, and define the "skeleton" of preproces(), calculate(), and printout() functions is a common file, and make these call back for those part which are different across plugins. E.g.:
 	</para>
 	<programlisting>
-&lt;?
-// this is a file called "common_functions.php"
+// this is a file called "common_functions.js"
 
 function calculate () {
 	// do some things which are the same in all plugins
@@ -1013,25 +993,22 @@ function calculate () {
 
 	// ...
 }
-?&gt;
 	</programlisting>
 	<programlisting>
-&lt;?
-// this is one of your regular plugin .php files
+// this is one of your regular plugin .js files
 
 // include the common functions
-include ("common_functions.php");
+include ("common_functions.js");
 
 // note: no calculate() function is defined in here.
-// it in the common_functions.php, instead.
+// it in the common_functions.js, instead.
 
 function getSpecifics () {
 	// print some R code
 }
-?&gt;
 	</programlisting>
 	<para>
-One issue you should be aware of when using this technique is variable scoping. See the PHP manual on the keyword "global".
+One issue you should be aware of when using this technique is variable scoping. See the JS manual on variable scopes.
 	</para>
 	<para>
 This technique is heavily used in the distribution plot and distribution CLT plot plugins, so you may want to look there for examples.
@@ -1041,7 +1018,7 @@ This technique is heavily used in the distribution plot and distribution CLT plo
 	<section id="include_xml">
 	<title>Including .xml files</title>
 	<para>
-Basically the same feature of including files that is standard in PHP is also available for use in the .xml and .rkh files. At any place in these files you can place an &lt;include&gt; tag as shown below. The effect is that the entire contents of that XML file (to be precise: everything within the &lt;document&gt; tag of that file) is included verbatim at this point in the file. Note that you can only include another XML file.
+Basically the same feature of including files is also available for use in the .xml and .rkh files. At any place in these files you can place an &lt;include&gt; tag as shown below. The effect is that the entire contents of that XML file (to be precise: everything within the &lt;document&gt; tag of that file) is included verbatim at this point in the file. Note that you can only include another XML file.
 	</para>
 	<programlisting>
 &lt;document&gt;
@@ -1119,7 +1096,7 @@ While this example is not too useful in itself, think about combining this with 
 &lt;/document&gt;
 	</programlisting>
 	<para>
-Similar to <link linkend="include_php">inclusion in PHP</link>, the reverse approach is often even more useful:
+Similar to <link linkend="include_js">inclusion in JS</link>, the reverse approach is often even more useful:
 	</para>
 	<programlisting>
 &lt;!-- This is a file called "common_layout.xml" --&gt;
@@ -1183,7 +1160,7 @@ This chapter contains information on some topics that are useful only to certain
 <section id="preview_plots">
 	<title>Preview functionality for graphing plugins</title>
 	<para>
-A very useful feature for all plugins generating a plot / graph is to provide an automatically updating preview. To do so, you will need two things: Adding a &lt;preview&gt;-checkbox to your <link linkend="mainxml">GUI definition</link>, and adjusting the <link linkend="phptemplate">generated code</link> for the preview. We will deal with both in turn.
+A very useful feature for all plugins generating a plot / graph is to provide an automatically updating preview. To do so, you will need two things: Adding a &lt;preview&gt;-checkbox to your <link linkend="mainxml">GUI definition</link>, and adjusting the <link linkend="jstemplate">generated code</link> for the preview. We will deal with both in turn.
 	</para>
 	<para>
 Adding a &lt;preview&gt;-checkbox is simple. Just place the following somewhere in your GUI. It will take care of all the behind-the-scenes magic of creating a preview device, updaing the preview whenever the setting have changed, etc. Example:
@@ -1203,19 +1180,12 @@ Adding a &lt;preview&gt;-checkbox is simple. Just place the following somewhere 
 And that's it for the GUI definition.
 	</para>
 	<para>
-Adjusting the PHP template is a little more work. You will have to create a new function called "preview" in addition to the "preprocess", "calculate", etc. functions. This function should generate the code needed to produce the plot, and only that. Esp. no printing of headers, rk.graphics.on(), or similar calls. Below is an example of the typical pattern that you will use:
+Adjusting the JS template is a little more work. You will have to create a new function called "preview" in addition to the "preprocess", "calculate", etc. functions. This function should generate the code needed to produce the plot, and only that. Esp. no printing of headers, rk.graphics.on(), or similar calls. Below is an example of the typical pattern that you will use:
 	</para>
 	<programlisting>
-&lt;?php
 function preprocess () {
 	// the "somepackage" is needed to create the plot
-?&gt;
-require (somepackage)
-&lt;? [...]
-}
-
-function calculate () {
-	// empty in this example
+	ecoh ("require (somepackage)\n");
 }
 
 function printout () {
@@ -1227,29 +1197,27 @@ function printout () {
 function preview () {
 	// we call all stages of the general code. Only the printout () function need to be slightly different
 	preprocess ();
-	calculate ();
+	// calculate (); in this example the plugin has no calculate () function.
 	doPrintout (false);
 }
 
-function doPrintout ($final) {
-	// this function takes care of generating the code for the printout() section. If $final is set to true,
-	// it generates the full code, including headers. If $final is set to false, only the essentials will
+function doPrintout (full) {
+	// this function takes care of generating the code for the printout() section. If "full" is set to true,
+	// it generates the full code, including headers. If full is set to false, only the essentials will
 	// be generated.
 
-	if ($final) { ?&gt;
-rk.header ("An example plot")
+	if (full) {
+		echo ('rk.header ("An example plot")\n\n');
+		echo ('rk.graph.on ()\n');
+	} 
 
-rk.graph.on ()
-&lt;	} 
-	// only the following section will be generated for $final==false
-?&gt;
-try ({plot (5, 5)})
-&lt;	if ($final) { ?&gt;
-rk.graph.off ()
+	// only the following section will be generated for full==false
+	echo ('try ({plot (5, 5)})\n');
+
+	if (full) {
+		echo ('rk.graph.off ()\n');
 	}
-&lt;?
 }
-?&gt;
 	</programlisting>
 	<para>
 That's it, your plugin should now be preview-enabled.
@@ -1350,12 +1318,12 @@ You can declare two &lt;external&gt; properties in your plugin. "filename" will 
 
 <section id="propertytypes"><title>Types of properties / Modifiers</title>
 <para>
-At some places in this introduction we've talked about "properties" of GUI elements or otherwise. In fact there are several different types of properties. Usually you do not need to worry about this, as you can use common sense to connect any property to any other property. However, internally, there are different types of properties. What this matters for, is when fetching some special values in the PHP-template. In getRK ("id") statements you can also specify some so called "modifiers" like so: getRK ("id.modifier"). This modifier will affect, in which way the value is printed. Read on for the list of properties, and the modifiers they each make available:
+At some places in this introduction we've talked about "properties" of GUI elements or otherwise. In fact there are several different types of properties. Usually you do not need to worry about this, as you can use common sense to connect any property to any other property. However, internally, there are different types of properties. What this matters for, is when fetching some special values in the JS-template. In getValue ("id") statements you can also specify some so called "modifiers" like this: getValue ("id.modifier"). This modifier will affect, in which way the value is printed. Read on for the list of properties, and the modifiers they each make available:
 </para>
 <variablelist>
 <varlistentry>
 <term>String properties</term>
-<listitem>The most simple type of property, used to simply hold a piece of text. It does not provide any modifiers. If you attempt to fetch modified values from the PHP template, it will return the usual value, and a warning will be written to the terminal you're running rkward from.</listitem>
+<listitem>The most simple type of property, used to simply hold a piece of text. It does not provide any modifiers. If you attempt to fetch modified values from the JS template, it will return the usual value, and a warning will be written to the terminal you're running rkward from.</listitem>
 </varlistentry>
 <varlistentry>
 <term>Boolean properties</term>
@@ -1385,11 +1353,11 @@ At some places in this introduction we've talked about "properties" of GUI eleme
 </varlistentry>
 <varlistentry>
 <term>Integer properties</term>
-<listitem>A property designed to hold an integer value (but of course it still returns a numeric character string to the PHP-template). It does not accept any modifiers. Used in &lt;spinbox&gt;es (see below)</listitem>
+<listitem>A property designed to hold an integer value (but of course it still returns a numeric character string to the JS-template). It does not accept any modifiers. Used in &lt;spinbox&gt;es (see below)</listitem>
 </varlistentry>
 <varlistentry>
 <term>Real number properties</term>
-<listitem>A property designed to hold a real number value (but of course it still returns a numeric character string to the PHP-template). It does not accept any modifiers. Used in &lt;spinbox&gt;es (see below)</listitem>
+<listitem>A property designed to hold a real number value (but of course it still returns a numeric character string to the JS-template). It does not accept any modifiers. Used in &lt;spinbox&gt;es (see below)</listitem>
 </varlistentry>
 <varlistentry>
 <term>RObject properties</term>
@@ -1489,11 +1457,11 @@ At some places in this introduction we've talked about "properties" of GUI eleme
 </varlistentry>
 <varlistentry>
 <term>&lt;code&gt;</term>
-<listitem>Defines where to look for the PHP template to the plugin. Use only once per file, as a direct child of the document-tag. Attributes:
+<listitem>Defines where to look for the JS template to the plugin. Use only once per file, as a direct child of the document-tag. Attributes:
 	<variablelist>
 	<varlistentry>
 	<term>&lt;file&gt;</term>
-	<listitem>Filename of the PHP template, relative to the directory the plugin-xml is in</listitem>
+	<listitem>Filename of the JS template, relative to the directory the plugin-xml is in</listitem>
 	</varlistentry>
 	</variablelist></listitem>
 </varlistentry>
