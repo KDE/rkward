@@ -2378,6 +2378,11 @@ Finally, even if you found out how to do it on your own, but found the documenta
 </para>
 </appendix>
 
+<appendix id="license">
+<title>License</title>
+<para>&underFDL;</para>
+</appendix>
+
 &documentation.index;
 </book>
 <!--
