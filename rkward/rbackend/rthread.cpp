@@ -2,7 +2,7 @@
                           rthread  -  description
                              -------------------
     begin                : Mon Aug 2 2004
-    copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -91,9 +91,9 @@ void RThread::run () {
 	MUTEX_UNLOCK;
 	
 	while (1) {
-		MUTEX_LOCK;
 		processX11Events ();
 
+		MUTEX_LOCK;
 		if (previously_idle) {
 			if (!RCommandStack::regular_stack->isEmpty ()) {
 				qApp->postEvent (RKGlobals::rInterface (), new QCustomEvent (RBUSY_EVENT));
@@ -111,7 +111,6 @@ void RThread::run () {
 				// mutex will be unlocked inside
 				doCommand (command);
 				checkObjectUpdatesNeeded (check_list);
-				processX11Events ();
 			}
 		
 			if (killed) {
@@ -179,6 +178,7 @@ void RThread::doCommand (RCommand *command) {
 		} else {
 			runCommandInternal (ccommand, &error, ctype & RCommand::User);
 		}
+		if (!locked || killed) processX11Events ();
 
 		MUTEX_LOCK;
 
@@ -388,8 +388,8 @@ void RThread::handleSubstackCall (QString *call, int call_length) {
 	
 	bool done = false;
 	while (!done) {
-		MUTEX_LOCK;
 		processX11Events ();
+		MUTEX_LOCK;
 		// while commands are in queue, don't wait
 		while (reply_stack->isActive () && !locked) {
 			if (killed) {
@@ -404,7 +404,6 @@ void RThread::handleSubstackCall (QString *call, int call_length) {
 				bool object_update_forced = (command->type () & RCommand::ObjectListUpdate);
 				doCommand (command);
 				if (object_update_forced) checkObjectUpdatesNeeded (true);
-				processX11Events ();
 			}
 		}
 
@@ -437,11 +436,7 @@ void RThread::handleStandardCallback (RCallbackArgs *args) {
 	while (!(*done)) {
 		msleep (10); // callback not done yet? Sleep for a while
 
-		if (!locked) {			// what's with that lock? If the current command is cancelled, while we're in this loop, we must not lock the mutex and/or call anything in R. We may get long-jumped out of the loop before we get a chance to unlock
-			MUTEX_LOCK;
-			if (!locked) processX11Events ();
-			MUTEX_UNLOCK;
-		}
+		if (!(locked || killed)) processX11Events ();
 	}
 
 	RK_DO (qDebug ("standard callback done"), RBACKEND, DL_DEBUG);
