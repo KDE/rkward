@@ -2,7 +2,7 @@
                           rkhtmlwindow  -  description
                              -------------------
     begin                : Wed Oct 12 2005
-    copyright            : (C) 2005, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -37,6 +37,7 @@
 #include "../rkward.h"
 #include "../rkconsole.h"
 #include "../settings/rksettingsmodulegeneral.h"
+#include "../settings/rksettingsmoduler.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/xmlhelper.h"
 #include "../plugin/rkcomponentmap.h"
@@ -77,7 +78,8 @@ RKHTMLWindow::~RKHTMLWindow () {
 QString RKHTMLWindow::getDescription () {
 	RK_TRACE (APP);
 
-	return ("help:" + khtmlpart->url ().url ());
+	QString fixed_url = url ().url ().replace (RKSettingsModuleR::helpBaseUrl(), "rkward://RHELPBASE");
+	return ("help:" + fixed_url);
 }
 
 bool RKHTMLWindow::isModified () {
@@ -164,6 +166,19 @@ void RKHTMLWindow::slotBack () {
 bool RKHTMLWindow::openURL (const KURL &url) {
 	RK_TRACE (APP);
 
+	if (!(url.isLocalFile ())) {
+qDebug ("%s", url.url ().local8Bit ().data ());
+		// since R 2.10.0, help urls may be on local ports
+		if (url.protocol ().lower ().startsWith ("http")) {
+			QString host = url.host ().lower ();
+			if ((host == "127.0.0.1") || (host == "localhost")) {
+				khtmlpart->openURL (url);
+				changeURL (url);
+				return true;
+			}
+		}
+	}
+
 	// asyncrhonously dealing with non-local files would be quite a task. We chose the simple answer instead...
 	if (!(url.isLocalFile () && KMimeType::findByURL (url)->is ("text/html"))) {
 		if (KMessageBox::questionYesNo (this, i18n ("The url you are trying to open ('%1') is not a local file or not HTML. Do you want to open the url in the default application?").arg (url.prettyURL ()), i18n ("Open in default application?")) != KMessageBox::Yes) {
@@ -208,6 +223,7 @@ void RKHTMLWindow::changeURL (const KURL &url) {
 
 void RKHTMLWindow::updateCaption (const KURL &url) {
 	RK_TRACE (APP);
+
 	setCaption (url.filename ());
 }
 
@@ -423,7 +439,10 @@ bool RKHelpWindow::openURL (const KURL &url) {
 			return true;
 		} else if (url.host () == "page") {
 			ok = renderRKHelp (url);
-		}
+		} else if (url.host ().upper () == "RHELPBASE") {     // NOTE: QUrl () may lowercase the host part, internally
+			QString fixed_url = url.url ().replace (QRegExp (".*RHELPBASE", false), RKSettingsModuleR::helpBaseUrl ());
+			ok = openURL (KURL (fixed_url));
+ 		}
 
 		if (!ok) {
 			khtmlpart->begin (url);

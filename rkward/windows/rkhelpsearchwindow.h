@@ -2,7 +2,7 @@
                           rkhelpsearchwindow  -  description
                              -------------------
     begin                : Fri Feb 25 2005
-    copyright            : (C) 2005, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -45,7 +45,7 @@ public:
 @param cursor_pos cursor position in the current line
 Will figure out the word under the cursor, and provide help on that (if there is such a word, and such help exists) */
 	void getContextHelp (const QString &context_line, int cursor_pos);
-	void getFunctionHelp (const QString &function_name);
+	void getFunctionHelp (const QString &function_name, const QString &package=QString::null);
 	static RKHelpSearchWindow *mainHelpSearch () { return main_help_search; };
 public slots:
 	void slotFindButtonClicked();

@@ -1,3 +1,6 @@
+- Add support for the dynamic help server introduced in R 2.10.0
+- Backport some improvements in event handling
+- Fix deadlock while handling some Tcl events
 - Fix: Warn before saving file that was modified on disk, externally
 - Fix: Do not try to open mimetypes other than text/html directly in the help browser.
 - Fixed: Screen device in rkward was not seen as interactive by R

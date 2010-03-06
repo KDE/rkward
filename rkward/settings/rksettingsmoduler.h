@@ -2,7 +2,7 @@
                           rksettingsmoduler  -  description
                              -------------------
     begin                : Wed Jul 28 2004
-    copyright            : (C) 2004, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -51,6 +51,9 @@ public:
 	
 /** generate the commands needed to set the R run time options */
 	static QStringList makeRRunTimeOptionCommands ();
+
+/** retrieve the (probable) base url of help pages. May change across R sessions */
+       static QString helpBaseUrl () { return help_base_url; };
 public slots:
 	void boxChanged (int);
 	void pathChanged ();
@@ -79,6 +82,10 @@ private:
 	static int options_digits;
 	static bool options_checkbounds;
 	static QString options_printcmd;
+
+// session constants
+       friend class RThread;
+       static QString help_base_url;
 };
 
 /**

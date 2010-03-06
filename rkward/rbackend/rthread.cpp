@@ -486,6 +486,15 @@ int RThread::initialize () {
 	}
 	delete [] standardliblocs;
 
+// start help server / determined help base url
+	QString *help_base_url = getCommandAsStringVector (".rk.getHelpBaseUrl ()\n", &c, &error);
+	if (error) status |= OtherFail;
+	else {
+		RK_ASSERT (c == 1);
+		RKSettingsModuleR::help_base_url = help_base_url[0];
+	}
+	delete [] help_base_url;
+
 // apply user configurable run time options
 	QStringList commands = RKSettingsModuleR::makeRRunTimeOptionCommands () + RKSettingsModuleRPackages::makeRRunTimeOptionCommands ();
 	for (QStringList::const_iterator it = commands.begin (); it != commands.end (); ++it) {
@@ -501,7 +510,7 @@ int RThread::initialize () {
 	if (error) status |= SinkFail;
 	runCommandInternal ("rk.set.output.html.file (\"" + RKSettingsModuleGeneral::filesPath () + "/rk_out.html\")\n", &error);
 	if (error) status |= SinkFail;
-	runCommandInternal ("options (htmlhelp=TRUE); options (browser=\"dcop " + kapp->dcopClient ()->appId () + " rkwardapp openHTMLHelp \")", &error);
+	runCommandInternal ("options (browser=\"dcop " + kapp->dcopClient ()->appId () + " rkwardapp openHTMLHelp \")\n", &error);
 	if (error) status |= OtherFail;
 	// TODO: error-handling?
 

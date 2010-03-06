@@ -2,7 +2,7 @@
                           rkhelpsearchwindow  -  description
                              -------------------
     begin                : Fri Feb 25 2005
-    copyright            : (C) 2005, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -36,7 +36,7 @@
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkdummypart.h"
 
-#define GET_HELP_URL 1
+#define GET_HELP 1
 #define HELP_SEARCH 2
 #define GET_INSTALLED_PACKAGES 3
 
@@ -127,9 +127,15 @@ void RKHelpSearchWindow::getContextHelp (const QString &context_line, int cursor
 	getFunctionHelp (result);
 }
 
-void RKHelpSearchWindow::getFunctionHelp (const QString &function_name) {
+void RKHelpSearchWindow::getFunctionHelp (const QString &function_name, const QString &package) {
 	RK_TRACE (APP);
-	RKGlobals::rInterface ()->issueCommand ("help(\"" + function_name + "\", htmlhelp=TRUE)[1]", RCommand::App | RCommand::GetStringVector, QString::null, this, GET_HELP_URL, 0);
+
+// we use .rk.getHelp() instead of plain help() to receive an error, if no help could be found
+	QString command = ".rk.getHelp(\"" + function_name + '\"';
+	if (!package.isEmpty ()) command.append (", package=" + package);
+	command.append (')');
+
+	RKGlobals::rInterface ()->issueCommand (command, RCommand::App | RCommand::GetStringVector, QString::null, this, GET_HELP, 0);
 }
 
 void RKHelpSearchWindow::slotFindButtonClicked () {
@@ -182,13 +188,7 @@ void RKHelpSearchWindow::slotResultsListDblClicked (QListViewItem * item, const 
 		return;
 	}
 	
-	QString s="help(\"";
-	s.append (item->text (0));
-	s.append ("\", htmlhelp=TRUE, package= \"");
-	s.append (item->text (2));
-	s.append ("\")");
-	
-	RKGlobals::rInterface ()->issueCommand (s, RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, GET_HELP_URL, 0);
+	getFunctionHelp (item->text (0), item->text (2));
 }
 
 void RKHelpSearchWindow::rCommandDone (RCommand *command) {
@@ -202,14 +202,9 @@ void RKHelpSearchWindow::rCommandDone (RCommand *command) {
 			new QListViewItem (resultsList, command->getStringVector ()[i], command->getStringVector ()[count + i], command->getStringVector ()[2*count + i]);
 		}
 		setEnabled(true);
-	} else if (command->getFlags () == GET_HELP_URL) {
-		RK_ASSERT (command->getDataLength ());
-		url.setPath(command->getStringVector ()[0]);
-		if (QFile::exists (url.path ())) {
-			RKWardMainWindow::getMain ()->openHTML (url);
-			return;
-		} else {
-			KMessageBox::sorry (this, i18n ("No help found on '%1'. Maybe the corresponding package is not installed/loaded, or maybe you mistyped the command. Try using Help->Search R Help for more options.").arg (command->command ().section ("\"", 1, 1)), i18n ("No help found"));
+	} else if (command->getFlags () == GET_HELP) {
+		if (command->failed ()) {
+                        KMessageBox::sorry (this, i18n ("No help found on '%1'. Maybe the corresponding package is not installed/loaded, or maybe you mistyped the command. Try using Help->Search R Help for more options.").arg (command->command ().section ("\"", 1, 1)), i18n ("No help found"));
 		}
 	} else if (command->getFlags () == GET_INSTALLED_PACKAGES) {
 		RK_ASSERT (command->getDataType () == RData::StringVector);

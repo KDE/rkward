@@ -2,7 +2,7 @@
                           rksettingsmoduler  -  description
                              -------------------
     begin                : Wed Jul 28 2004
-    copyright            : (C) 2004, 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -47,6 +47,8 @@ int RKSettingsModuleR::options_expressions;
 int RKSettingsModuleR::options_digits;
 bool RKSettingsModuleR::options_checkbounds;
 QString RKSettingsModuleR::options_printcmd;
+// session constants
+QString RKSettingsModuleR::help_base_url;
 
 RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
 	RK_TRACE (SETTINGS);
@@ -220,6 +222,8 @@ QStringList RKSettingsModuleR::makeRRunTimeOptionCommands () {
 	list.append ("options (device=\"rk.screen.device\")\n");
 	// register as interactive
 	list.append ("try (deviceIsInteractive(name=\"rk.screen.device\"))\n");
+	list.append ("options (help_type=\"html\")\n");         // for R 2.10.0 and above
+	list.append ("try ({options (htmlhelp=TRUE); options (chmhelp=FALSE)})\n");     // COMPAT: for R 2.9.x and below
 
 	return list;
 }
