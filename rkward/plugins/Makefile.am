@@ -10,6 +10,11 @@ dist_plugins_DATA = \
 	under_development.pluginmap \
 	x11device.pluginmap
 
+pluginsXtestingdir = $(kde_datadir)/rkward/testing
+dist_pluginsXtesting_DATA = \
+	testing/test2.xml \
+	testing/test1.xml
+
 pluginsX00saveloaddir = $(kde_datadir)/rkward/00saveload
 dist_pluginsX00saveload_DATA = \
 	00saveload/setworkdir.php \
@@ -18,8 +23,10 @@ dist_pluginsX00saveload_DATA = \
 
 pluginsX00saveloadXsavedir = $(kde_datadir)/rkward/00saveload/save
 dist_pluginsX00saveloadXsave_DATA = \
+	00saveload/save/write.php \
 	00saveload/save/write_table.xml \
-	00saveload/save/write_table.php
+	00saveload/save/write_table.php \
+	00saveload/save/write.xml
 
 pluginsX00saveloadXsaveXskeletondir = $(kde_datadir)/rkward/00saveload/save/skeleton
 dist_pluginsX00saveloadXsaveXskeleton_DATA = \
@@ -31,20 +38,18 @@ dist_pluginsX00saveloadXsaveXsave_DATA = \
 	00saveload/save/save/code.php \
 	00saveload/save/save/description.xml
 
-pluginsX00saveloadXsaveXwritedir = $(kde_datadir)/rkward/00saveload/save/write
-dist_pluginsX00saveloadXsaveXwrite_DATA = \
-	00saveload/save/write/code.php \
-	00saveload/save/write/description.xml
-
 pluginsX00saveloadXimportdir = $(kde_datadir)/rkward/00saveload/import
 dist_pluginsX00saveloadXimport_DATA = \
+	00saveload/import/import_stata.xml \
 	00saveload/import/import_spss.rkh \
 	00saveload/import/import_csv.php \
 	00saveload/import/source.xml \
 	00saveload/import/source.php \
 	00saveload/import/load_data.xml \
 	00saveload/import/load_data.rkh \
+	00saveload/import/import_stata.rkh \
 	00saveload/import/import_csv.rkh \
+	00saveload/import/import_stata.php \
 	00saveload/import/import_spss.php \
 	00saveload/import/import_csv.xml \
 	00saveload/import/import_spss.xml \
@@ -528,6 +533,7 @@ dist_pluginsXanalysisXmoments_DATA = \
 
 pluginsXanalysisXwilcoxondir = $(kde_datadir)/rkward/analysis/wilcoxon
 dist_pluginsXanalysisXwilcoxon_DATA = \
+	analysis/wilcoxon/wilcoxon_exact_test.rkh \
 	analysis/wilcoxon/wilcoxon_test.php \
 	analysis/wilcoxon/wilcoxon_exact_test.php \
 	analysis/wilcoxon/wilcoxon_test.xml \
