@@ -1,3 +1,4 @@
+- Backport all plugin changes and additions up to RKWard 0.5.2
 - Add support for the dynamic help server introduced in R 2.10.0
 - Backport some improvements in event handling
 - Fix deadlock while handling some Tcl events
