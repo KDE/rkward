@@ -1,0 +1,52 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="t_test_two_vars.php"/>
+	<help file="t_test_two_vars.rkh"/>
+
+	<logic>
+		<convert id="notpaired" mode="equals" sources="paired.state" standard="0"/>
+		<connect client="varequal.enabled" governor="notpaired"/>
+	</logic>
+
+	<dialog label="Two Variable t-Test">
+		<tabbook>
+			<tab label="Basic settings" id="tab_variables">
+				<row id="basic_settings_row">
+					<varselector id="vars"/>
+					<column>
+						<varslot type="numeric" id="x" source="vars" required="true" label="compare"/>
+						<varslot type="numeric" id="y" source="vars" required="true" label="against"/>
+						<radio id="hypothesis" label="using test hypothesis">
+							<option value="two.sided" label="Two-sided"/>
+							<option value="greater" label="First is greater"/>
+							<option value="less" label="Second is greater"/>
+						</radio>
+						<checkbox id="paired" label="Paired sample" value="1" value_unchecked="0" />
+					</column>
+				</row>
+			</tab>
+			<tab label="Options" id="tab_options">
+				<checkbox id="varequal" label="assume equal variances" value="1" value_unchecked="0"/>
+				<frame label="Confidence Interval" id="confint_frame">
+					<spinbox type="real" id="conflevel" label="confidence level" min="0" max="1" initial="0.95"/>
+					<checkbox id="confint" label="print confidence interval" value="1" checked="true"/>
+				</frame>
+				<stretch/>
+			</tab>
+		</tabbook>
+	</dialog>
+	<wizard label="Two Variable t-Test">
+		<page>
+			<text>As a first step, select the two variables you want to compare against each other. And specify, which one you theorize to be greater. Select two-sided, if your theory does not tell you, which variable is greater.</text>
+			<copy id="basic_settings_row"/>
+		</page>
+		<page>
+			<text>Below are some advanced options. It's generally safe not to assume the variables have equal variances. An appropriate correction will be applied then. Chosing "assume equal variances" may increase test-strength, however.</text>
+			<copy id="varequal"/>
+			<text>Sometimes it's helpful to get an estimate of the confidence interval of the difference in means. Below you can specify whether one should be shown, and which confidence-level should be applied (95% corresponds to a 5% level of significance).</text>
+			<copy id="confint_frame"/>
+			<stretch/>
+		</page>
+	</wizard>
+	
+</document>

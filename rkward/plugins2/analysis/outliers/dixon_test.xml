@@ -1,0 +1,44 @@
+<!DOCTYPE rkplugin>
+
+
+<document>
+	<code file="dixon_test.php"/>
+	<help file="dixon_test.rkh"/>
+	
+	<dialog label="Dixon tests for outlier">
+		<tabbook>
+			<tab id="tab_variables" label="Basic settings">
+				<row>
+					<varselector id="vars"/>
+					<column>
+						<varslot type="numeric" id="x" multi="true" source="vars" required="true" label="variable(s):"/>
+					</column>
+				</row>
+			</tab>
+			<tab id="tab_options" label="Options">
+				<column>
+					<frame label="test specific settings">
+						<dropdown id="type" label="Variant of test">
+							<option value="0" label="0 (Automatic)"/>
+							<option value="10" label="10 (sample size 3-7)"/>
+							<option value="11" label="11 (sample size 8-10)"/>
+							<option value="12" label="12"/>
+							<option value="20" label="20 (sample size 11-13)"/>
+							<option value="21" label="21 (sample size 14 and more)"/>
+							<option value="22" label="22"/>
+						</dropdown>
+						<checkbox id="opposite" label="Opposite" value_unchecked="FALSE" value="TRUE" checked="false" />
+						<checkbox id="two_sided" label="two-sided (default)" value_unchecked="FALSE" value="TRUE" checked="true" />
+					</frame>
+					<frame label="additional settings">
+						<checkbox id="descriptives" label="Show additional descriptives" value_unchecked="0" value="1" checked="false" />
+						<checkbox id="length" label="Show Length and NAs" value_unchecked="0" value="1" checked="true" />
+					</frame>
+					<stretch/>
+				</column>
+				<stretch/>
+			</tab>
+		</tabbook>
+	</dialog>
+	
+</document>

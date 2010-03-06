@@ -1,0 +1,15 @@
+<!DOCTYPE rkhelp>
+<document>
+	<snippets>
+		<snippet id="dist_name"><span>Exponential</span></snippet>
+		<snippet id="dist_related">
+			<li><link href="rkward://component/plot_exponential_distribution"/></li>
+			<li><link href="rkward://rhelp/Exponential"/></li>
+		</snippet>
+		<snippet id="dist_options_help">
+			<setting id="frame_expparam">See RKWard help on <link href="rkward://component/plot_exponential_distribution"/>.</setting>
+		</snippet>
+		<include file="plot_clt_help_snippets.xml"/>
+	</snippets>
+	<insert snippet="clt_help_template"/>
+</document>

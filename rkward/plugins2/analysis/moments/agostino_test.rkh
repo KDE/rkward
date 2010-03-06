@@ -1,0 +1,30 @@
+<!DOCTYPE rkhelp>
+<document>
+	<summary>
+		This test performs the D'Agostino test for skewness in normally distributed data.
+	</summary>
+
+	<usage>
+		Chose the data to perform the D'Agostino test for skewness in normally distributed data. You can chose multiple data. See <link href="rkward://rhelp/agostino.test"/>.
+	</usage>
+
+	<settings>
+		<caption id="tab_variables"/>
+		<setting id="x">Select the data to be computed. The vectors need to be numeric, and can be of different length.</setting>
+		<setting id="alternative">Here you can specify the alternative hypothesis. It must be one of "two sided", "greater" or "less".</setting>
+		<caption id="tab_options"/>
+		<setting id="length">Show the total length of the data, and the number of missing values (purely informational, does not affect the test)?</setting>
+		<setting id="show_alternative">If checked, a verbose description of the alternative hypothesis will be shown along with the results</setting>
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://rhelp/bonett.test"/></li>
+			<li><link href="rkward://rhelp/skewness"/></li>
+			<li><link href="rkward://rhelp/geary"/></li>
+			<li><link href="rkward://rhelp/kurtosis"/></li>
+			<li><link href="rkward://rhelp/moment"/></li>
+			<li><link href="rkward://rhelp/anscombe.test"/></li>
+		</ul>
+
+	</related>
+</document>

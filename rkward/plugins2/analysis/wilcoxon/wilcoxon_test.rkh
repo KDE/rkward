@@ -1,0 +1,31 @@
+<!DOCTYPE rkhelp>
+<document>
+	<summary>
+		This test performs the Wilcoxon Rank Sum and Signed Rank Tests (the later is equivalent to the Mann-Whitney test).
+	</summary>
+
+	<usage>
+		Select a single vector (or paired test) to perform a Wilcoxon signed rank test on the null that the true distribution of x (or the difference between the paired vectors) is symmetric about 0 (or the specified location).
+
+		Select two vectors to perform a Wilcoxon rank sum test (equivalent to the Mann-Whitney test: see <link href="rkward://rhelp/wilcox.test"/> for details) on the null that the distributions of x and y differ (by 0 or the specified location shift).
+	</usage>
+
+	<settings>
+		<caption id="tab_variables"/>
+		<setting id="x">Select the data to be computed. The vectors need to be numeric.</setting>
+		<setting id="alternative">The alternative hypothesis. "greater" means that x is shifted to the right of y / of the location parameter.</setting>
+		<setting id="paired">Check this for a paired test (Wilcoxon signed rank test of the difference between the two vectors).</setting>
+		<caption id="tab_options"/>
+		<setting id="confint">Check this if you want the confidence interval to be computed/printed.</setting>
+		<setting id="conflevel">Confidence level of the printed confidence interval.</setting>
+		<setting id="mu">The location / location shift to form the null hypothesis.</setting>
+		<setting id="exact">Should an exact p-value be computed? By default ("Automatic") an asymptomatic p-value is calculated if and only if you have less than 50 cases per group without binding than an exact test should be performed. To compute an exact p-value in the presence of ties, use <link href="rkward://component/wilcoxon_exact_test"/></setting>
+		<setting id="correct">If checked a continuity correction in the normal approximation for the p-value is applied.</setting>
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://rhelp/wilcox.test"/></li>
+			<li><link href="rkward://component/wilcoxon_exact_test"/></li>
+		</ul>
+	</related>
+</document>

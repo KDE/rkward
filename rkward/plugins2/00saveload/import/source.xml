@@ -1,0 +1,33 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="source.php"/>
+	<help file="source.rkh"/>
+
+	<logic>
+		<convert id="global_env" mode="equals" sources="local.state" standard="FALSE"/>
+		<connect client="run_global_warning.visible" governor="global_env"/>
+
+		<connect client="maxdeparselength.enabled" governor="echo.state" />
+		<connect client="promptecho.enabled" governor="echo.state" />
+		<connect client="verbose.enabled" governor="echo.state" />
+	</logic>
+	<dialog label="Source an R file" >
+		<tabbook>
+			<tab label="Main options" id="tab_main">
+				<browser filter="*.R *.r" id="file" label="File name" />
+				<checkbox value_unchecked="FALSE" checked="false" value="TRUE" id="chdir" label="Use directory of source file as working directory" />
+				<checkbox value_unchecked="FALSE" checked="false" value="TRUE" id="local" label="Run in a local environment" />
+				<text id="run_global_warning" type="warning">WARNING: This may overwrite existing objects without prompting!</text>
+				<stretch/>
+			</tab>
+			<tab label="Output options" id="tab_further">
+				<checkbox value_unchecked="0" checked="false" value="1" id="echo" label="Echo source statements" />
+				<input size="medium" initial="" id="promptecho" label="Prompt for echoed lines (empty for default)"/>
+				<spinbox size="small" type="integer" id="maxdeparselength" min="1" initial="150" label="Maximal length of echoed statements" />
+				<checkbox value_unchecked="FALSE" checked="false" value="TRUE" id="verbose" label="Verbose" />
+				<checkbox value_unchecked="FALSE" checked="false" value="TRUE" id="printeval" label="Print eval" />
+				<stretch/>
+			</tab>
+		</tabbook>
+	</dialog>
+</document>

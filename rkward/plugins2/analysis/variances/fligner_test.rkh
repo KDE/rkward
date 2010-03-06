@@ -1,0 +1,22 @@
+<!DOCTYPE rkhelp>
+<document>
+	<summary>
+		This test performs the Fligner-Killeen Test of Homogeneity of Variances.
+	</summary>
+
+	<usage>
+		Select several numeric vectors to perform the Fligner-Killeen (median) test of the null that the variances in each of the samples are the same.
+	</usage>
+
+	<settings>
+		<setting id="x">The samples to be checked for equal variance. The vectors need to be numeric, but don't need to have the same length.</setting>
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://rhelp/fligner.test"/></li>
+			<li><link href="rkward://component/F_test"/></li>
+			<li><link href="rkward://component/ansari_bradley_test"/></li>
+		</ul>
+
+	</related>
+</document>

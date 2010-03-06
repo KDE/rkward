@@ -1,0 +1,127 @@
+<!DOCTYPE rkplugin>
+
+<document>
+	<code file="hp_filter.php"/>
+	<help file="hp_filter.rkh" />
+	<logic>
+		<connect client="lambda.enabled" governor="custom.state.not"/>
+		<connect client="clambda.enabled" governor="custom.state"/>
+		<connect client="trend_name.enabled" governor="create_trend.state"/>
+		<connect client="trend_name.required" governor="trend_name.enabled"/>
+		<connect client="cycle_name.enabled" governor="create_cycle.state"/>
+		<connect client="cycle_name.required" governor="cycle_name.enabled"/>
+		<connect client="cycle_frame.enabled" governor="plot_cycle.state"/>
+		<connect client="cycle_col.color.enabled" governor="plot_cycle.state"/>
+		<connect client="downlab.enabled" governor="plot_cycle.state"/>
+		<connect client="uplabisquote.enabled" governor="uplab_full"/>
+		<connect client="downlabisquote.enabled" governor="downlab_fullplot"/>
+		<connect client="interpret.enabled" governor="lab_full"/>
+		<set id="series_col.default_color" to="blue"/>
+		<set id="trend_col.default_color" to="red"/>
+		<set id="cycle_col.default_color" to="green4"/>
+		<convert id="uplab_full" mode="notequals" sources="uplab.text" standard=""/>
+		<convert id="downlab_full" mode="notequals" sources="downlab.text" standard=""/>
+		<convert id="downlab_fullplot" mode="and" sources="plot_cycle.state;downlab_full"/>
+		<convert id="lab_full" mode="or" sources="uplab_full;downlab_full"/>
+		
+	</logic>
+	<dialog label="Hodrick-Prescott Filter">
+		<tabbook>
+			<tab label="Select Variable" >
+				<row>
+					<column>
+						<varselector id="var"/>
+					</column>
+					<column>
+						<row>
+							<varslot classes="numeric ts" num_dimensions="1" multi="false" id="x" source="var" required="true" label="Variable:"/>
+						</row>
+						<row>
+							<frame label="Lambda" id="frame_lambda">
+								<dropdown id="lambda">
+									<option value="100" label="100 (Annual)"/>
+									<option value="1600" label="1600 (Quarterly)" checked="true"/>
+									<option value="14400" label="14400 (Monthly)"/>
+								</dropdown>
+								<checkbox id="custom" label="Custom value" value="1" value_unchecked="0"/>
+								<spinbox initial="1" min="1" id="clambda" type="integer"/>
+							</frame>
+						</row>
+						<row>
+							<frame label="Output series" id="output_frame">
+								<row>
+									<checkbox id="create_trend" label="Trend" value="1" value_unchecked="0" checked="true"/>
+									<saveobject id="trend_name" initial="hptrend"/>
+								</row>
+								<row>
+									<checkbox id="create_cycle" label="Cycle" value="1" value_unchecked="0"/>
+									<saveobject id="cycle_name" initial="hpcycle"/>
+								</row>
+							</frame>
+						</row>
+					</column>
+				</row>
+			</tab>
+			<tab label="Plot options" id="tab_plot">
+				<checkbox id="plot_cycle" label="Plot Cycle" value="1" value_unchecked="0" checked="true"/>
+				<frame label="Lines" id="frame_lines">
+					<row>
+						<frame label="Original series" id="original_frame">
+							<spinbox id="series_lwd" type="integer" label="Line width" min="1" initial="1"/>
+							<dropdown id="series_lty" label="Line type" >
+								<option value="" label="default" checked="true"/>
+								<option value="solid" label="Solid"/>
+								<option value="dashed" label="Dashed" />
+								<option value="dotted" label="Dotted" />
+								<option value="dotdash" label="Dot-Dash" />
+								<option value="longdash" label="Long-dash" />
+								<option value="twodash" label="Two-dash" />
+							</dropdown>
+							<embed id="series_col" component="rkward::color_chooser"/>
+							<stretch/>
+						</frame>
+						<frame label="Trend">
+							<spinbox id="trend_lwd" type="integer" label="Line width" min="1" initial="1"/>
+							<dropdown id="trend_lty" label="Line type" >
+								<option value="" label="default" checked="true"/>
+								<option value="solid" label="Solid"/>
+								<option value="dashed" label="Dashed" />
+								<option value="dotted" label="Dotted" />
+								<option value="dotdash" label="Dot-Dash" />
+								<option value="longdash" label="Long-dash" />
+								<option value="twodash" label="Two-dash" />
+							</dropdown>
+							<embed id="trend_col" component="rkward::color_chooser"/>
+							<stretch/>
+						</frame>
+						<frame label="Cycle" id="cycle_frame">
+							<spinbox id="cycle_lwd" type="integer" label="Line width" min="1" initial="1"/>
+							<dropdown id="cycle_lty" label="Line type" >
+								<option value="" label="default" checked="true"/>
+								<option value="solid" label="Solid"/>
+								<option value="dashed" label="Dashed" />
+								<option value="dotted" label="Dotted" />
+								<option value="dotdash" label="Dot-Dash" />
+								<option value="longdash" label="Long-dash" />
+								<option value="twodash" label="Two-dash" />
+							</dropdown>
+							<embed id="cycle_col" component="rkward::color_chooser"/>
+							<stretch/>
+						</frame>
+					</row>
+				</frame>
+				<frame label="Labels (leave empty for default)" id="frame_labels">
+					<row>
+						<input id="uplab" label="Original series and trend Y axis label"/>
+						<input id="downlab" label="Cycle Y axis label"/>
+					</row>
+					<text id="interpret">Interpret these labels as literal (quoted) strings?</text>
+					<row>
+						<checkbox id="uplabisquote" label="interpret as string" value="1" checked="true" />
+					        <checkbox id="downlabisquote" label="interpret as string" value="1" checked="true" />
+					</row>
+				</frame>
+			</tab>
+		</tabbook>
+	</dialog>
+</document>

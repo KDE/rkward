@@ -1,0 +1,28 @@
+<!DOCTYPE rkhelp>
+<document>
+	<summary>
+Import STATA data files.
+	</summary>
+
+	<usage>
+Choose the STATA data file to import. Usually those files have the ending '*.dta. An R object containing the STATA data will be created. STATA files other than data files (i. e.:*.log, *.smcl, *.do, *.ado) are not supported. 
+	</usage>
+
+	<settings>
+		<caption id="tab_general"/>
+		<setting id="file">The filename of the file to import. This may also be a URL (http://, http:// and ftp:// are supported).</setting>
+		<setting id="saveto">The name of an R object to store the imported data in. If you chose an existing symbol name, you will be prompted, whether to overwrite this object.</setting>
+		<setting id="doedit">Whether the object should be opened for editing after it was imported. </setting>
+
+		<setting id="convert_dates">Convert Stata dates to R 'Date' class (see <link href="rkward://rhelp/read.dta"/>, <link href="rkward://rhelp/Dates"/>).</setting>
+		<setting id="convert_factors">R uses value labels only for factors. Should Stata variable with value labels be converted to factors?</setting>
+		<setting id="missing_type">Stata version 8 and above differentiates various different type of missing values. If this option is set, this information is stored in an attribute of the imported data. See <link href="rkward://rhelp/read.dta"/> for details.</setting>
+		<setting id="convert_underscore">The underscore ('_') is usually not used in R variable names, and may cause problems in some (rare) situations. Should underscore characters be converted to dots ('.')?</setting>
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://component/import_csv"/></li>
+			<li><link href="rkward://rhelp/read.dta"/></li>
+		</ul>
+	</related>
+</document>

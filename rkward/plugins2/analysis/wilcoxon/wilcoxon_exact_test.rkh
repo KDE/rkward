@@ -1,0 +1,8 @@
+<!DOCTYPE rkhelp>
+<document>
+	<summary>
+		This test differs from <link href="rkward://component/wilcoxon_test"/> in that it uses a different algorithm and supports the exact test even for tied samples.
+
+		For details of the implementation see <link href="rkward://rhelp/wilcox.exact.test"/>. For documentation of the dialog settings, see <link href="rkward://component/wilcoxon_test"/>.
+	</summary>
+</document>

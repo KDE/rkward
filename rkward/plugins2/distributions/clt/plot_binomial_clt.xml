@@ -1,0 +1,22 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="plot_binomial_clt.php" />
+	<help file="plot_binomial_clt.rkh" />
+	<snippets>
+		<snippet id="dist_options">
+			<frame id="frame_binomparam" label="Binomial Parameters">
+				<spinbox type="integer" id="size" min="1" initial="12" label="Number of trials" />
+				<spinbox default_precision="2" type="real" id="prob" initial="0.5" min="0" max="1" label="Probability of success on each trial" />
+			</frame>
+		</snippet>
+		<include file="plot_clt_snippets.xml"/>
+	</snippets>
+	<logic>
+		<insert snippet="clt_logic"/>
+		<set id="dist_stepfun.default_verticals" to="false" />
+		<set id="plotoptions.default_main" to="Binomial"/>
+	</logic>
+	<dialog label="Central Limit Theorem: Binomial to Normal" >
+		<insert snippet="clt_layout"/>
+	</dialog>
+</document>

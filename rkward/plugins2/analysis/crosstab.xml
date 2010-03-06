@@ -1,0 +1,45 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="crosstab.php"/>
+	<help file="crosstab.rkh"/>
+	<logic>
+		<connect client="chi_options.enabled" governor="chisq.state" />
+		<connect client="barplot_options.enabled" governor="barplot.state" />
+		<connect client="preview.enabled" governor="barplot.state"/>
+		<set id="barplot_embed.xvar" to="results[[i]]"/>
+
+		<convert id="montecarlo" mode="equals" sources="simpv.string" standard="TRUE" />
+		<connect client="B.enabled" governor="montecarlo" />
+	</logic>
+	<dialog label="N to 1 Crosstabulation" >
+		<tabbook>
+			<tab label="Variables" id="variables_tab">
+				<row>
+					<varselector id="vars"/>
+					<column>
+						<varslot multi="false" id="x" source="vars" label="Dependent" required="true" />
+						<varslot min_vars="1" multi="true" id="y" source="vars" required="true" label="Independent"/>
+						<checkbox id="chisq" label="Chisquare" value="TRUE" value_unchecked="FALSE" checked="false" />
+						<checkbox id="barplot" label="Draw Barplot" value="TRUE" value_unchecked="FALSE" checked="false" />
+						<preview id="preview" label="Preview (for barplot)"/>
+						<stretch/>
+					</column>
+				</row>
+			</tab>
+			<tab label="Chisquare Options" id="chi_options">
+				<radio id="simpv" label="Method of computing p-value">
+					<option value="FALSE" label="Asymptotic"  checked="true" />
+					<option value="TRUE" label="Monte Carlo" />
+				</radio>
+				<frame label="Number of replicates">
+					<spinbox type="integer" min="1" id="B" initial="2000" label="Number of replicates used in the Monte Carlo Method" />
+				</frame>
+				<stretch/>
+			</tab>
+			<tab label="Barplot Options" id="barplot_options">
+				<embed label="Barplot Options" id="barplot_embed" component="rkward::barplot_embed"/>
+			</tab>
+		</tabbook>
+	</dialog>
+
+</document>

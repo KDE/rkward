@@ -1,0 +1,27 @@
+<!DOCTYPE rkplugin>
+<!--This is the simple "Plot logistic probabilities" plugin--><document>
+	<code file="plot_logistic_distribution.php" />
+	<help file="plot_logistic_distribution.rkh" />
+	<logic>
+		<insert snippet="common_logic"/>
+	</logic>
+	<snippets>
+		<snippet id="range_options">
+			<spinbox type="integer" id="n" min="2" initial="100" label="Number of Observations" />
+			<frame label="Range" >
+				<spinbox default_precision="2" type="real" id="min" initial="-3.29" label="Lower quantile" />
+				<spinbox default_precision="2" type="real" id="max" initial="3.29" label="Upper quantile" />
+			</frame>
+		</snippet>
+		<snippet id="dist_options">
+			<frame label="Parameters">
+				<spinbox default_precision="2" type="real" id="loc" initial="0" label="Location" />
+				<spinbox default_precision="2" type="real" id="scale" initial="1" min="0.01" label="Scale" />
+			</frame>
+		</snippet>
+		<include file="plot_dist_common_snippets.xml"/>
+	</snippets>
+	<dialog label="Plot Logistic probabilities" >
+		<insert snippet="dialog_layout"/>
+	</dialog>
+</document>

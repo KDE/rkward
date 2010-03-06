@@ -1,0 +1,67 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="histogram.php" />
+	<help file="histogram.rkh" />
+	<logic>
+		<connect client="plotoptions.xvar" governor="x.available"/>
+		<set id="plotoptions.allow_log" to="false"/>
+		<set id="plotoptions.allow_type" to="false"/>
+		
+		<connect client="histogram_opt.varname" governor="x.available" />
+		<set id="histogram_opt.allow_freq" to="true" />
+		<set id="histogram_opt.allow_barlabels" to="true" />
+		<set id="histogram_opt.allow_addtoplot" to="false" />
+		
+		<convert id="densityscaled" mode="equals" sources="histogram_opt.freq.state" standard="0" />
+		<connect client="tab_densityoptions.enabled" governor="densityscaled" />
+		
+		<convert id="dodensity" mode="and" sources="densityscaled;density.state"/>
+		<connect client="col_density.enabled" governor="dodensity"/>
+		<connect client="bw.enabled" governor="dodensity"/>
+		<connect client="adjust.enabled" governor="dodensity"/>
+		<connect client="narm.enabled" governor="dodensity"/>
+		<connect client="n.enabled" governor="dodensity"/>
+		
+		<set id="plotoptions.allow_grid" to="true"/>
+	</logic>
+	<dialog label="Histogram" >
+		<tabbook>
+			<tab label="Variable(s)" id="tab_variables">
+				<row>
+					<varselector id="vars" />
+					<column>
+						<varslot multi="false" type="numeric" id="x" source="vars" label="variable(s):" required="true" />
+						<stretch/>
+						<preview id="preview"/>
+						<embed id="plotoptions" component="rkward::plot_options" as_button="true" label="Generic Plot Options" />
+					</column>
+				</row>
+			</tab>
+			<tab label="Histogram Options" id="tab_histoptions">
+				<embed id="histogram_opt" component="rkward::histogram_options" as_button="false" label="Histogram Options"/>
+			</tab>
+			<tab label="Density" id="tab_densityoptions">
+				<checkbox value_unchecked="0" value="1" checked="false" id="density" label="Plot Density curve" />
+				<row>
+					<frame label="General options">
+						<checkbox id="narm" label="Remove Missing Values" value="na.rm=TRUE" value_unchecked="na.rm=FALSE" checked="true" />
+						<embed id="col_density" component="rkward::color_chooser" label="Color" />
+						<spinbox id="n" initial="512" label="resolution" />
+					</frame>
+					<frame label="Bandwidth options">		
+						<dropdown id="bw" label="Bandwidth">
+							<option value="nrd0" label="nrd0"/>
+							<option value="nrd" label="nrd"/>
+							<option value="ucv" label="ucv"/>
+							<option value="bcv" label="bcv"/>
+							<option value="SJ-ste" label="SJ-ste"/>
+							<option value="SJ-dpi" label="SJ-dpi"/>
+						</dropdown>
+						<spinbox type="real" id="adjust" label="Adjust Bandwidth" initial="1"/>
+					</frame>
+				</row>
+				<stretch/>
+			</tab>
+		</tabbook>
+	</dialog>
+</document>

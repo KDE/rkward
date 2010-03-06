@@ -1,0 +1,101 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="density_plot.php" />
+	<help file="density_plot.rkh" />
+	
+	<logic>
+		<connect client="plotoptions.xvar" governor="x.available"/>
+		<set id="plotoptions.allow_log" to="false"/>
+		<set id="plotoptions.allow_type" to="false"/>
+
+		<!-- only gaussian kernel works for highest density regions plot -->
+		<convert id="is_normal_density_plot" mode="equals" sources="plot_type.string" standard="density_plot"/>
+		<connect client="kern.rectangular.enabled" governor="is_normal_density_plot"/>
+		<connect client="kern.triangular.enabled" governor="is_normal_density_plot"/>
+		<connect client="kern.epanechnikov.enabled" governor="is_normal_density_plot"/>
+		<connect client="kern.biweight.enabled" governor="is_normal_density_plot"/>
+		<connect client="kern.cosine.enabled" governor="is_normal_density_plot"/>
+		<connect client="kern.optcosine.enabled" governor="is_normal_density_plot"/>
+
+		<convert id="gaussian_kernel" mode="equals" sources="kern.string" standard="gaussian"/>
+		<connect client="bw.enabled" governor="gaussian_kernel"/>
+
+		<connect client="rug_ticksize.enabled" governor="rug.state"/>
+		<connect client="rug_lwd.enabled" governor="rug.state"/>
+		<connect client="rug_side.enabled" governor="rug.state"/>
+		<connect client="rug_col.enabled" governor="rug.state"/>
+	</logic>
+	<dialog label="Density Plot" >
+		<tabbook>
+			<tab label="Variable(s)" id="tab_vars">
+				<row>
+					<varselector id="vars" />
+					<column>
+						<varslot multi="false" type="numeric" id="x" source="vars" label="variable(s):" required="true" />
+						<stretch/>
+						<preview id="preview"/>
+					</column>
+				</row>
+			</tab>
+			<tab label="Options" id="tab_options">
+				<row>
+					<column>
+						<radio id="plot_type" label="type of plot">
+							<option value="density_plot" checked="true" label="plot normal density"/>
+							<option value="hdr_plot" label="plot highest density regions"/>
+						</radio>
+						<frame id="frame_density_opts" label="density estimation options">
+							<row>
+								<column>
+									<dropdown id="kern" label="Smoothing Kernel">
+										<option value="gaussian" label="gaussian (default)"/>
+										<option id="rectangular" value="rectangular" label="rectangular"/>
+										<option id="triangular" value="triangular" label="triangular"/>
+										<option id="epanechnikov" value="epanechnikov" label="epanechnikov"/>
+										<option id="biweight" value="biweight" label="biweight"/>
+										<option id="cosine" value="cosine" label="cosine"/>
+										<option id="optcosine" value="optcosine" label="optcosine"/>
+									</dropdown>
+									<dropdown id="bw" label="Bandwidth">
+										<option value="nrd0" label="nrd0"/>
+										<option value="nrd" label="nrd"/>
+										<option value="ucv" label="ucv"/>
+										<option value="bcv" label="bcv"/>
+										<option value="SJ-ste" label="SJ-ste"/>
+										<option value="SJ-dpi" label="SJ-dpi"/>
+									</dropdown>
+									<spinbox type="real" min="0.00001" id="adjust" label="Adjust Bandwidth" initial="1"/>
+									<stretch/>
+								</column>
+								<column>
+									<checkbox id="narm" label="Remove Missing Values" value="na.rm=TRUE" value_unchecked="na.rm=FALSE" checked="true"/>
+									<spinbox id="n" initial="512" label="Resolution" />
+									<stretch/>
+								</column>
+							</row>
+						</frame>
+					</column>
+					<column>
+						<frame label="Rug" id="frame_rug">
+							<checkbox value_unchecked="0" value="1" checked="false" id="rug" label="Add rug" />
+							<spinbox min="0" initial="0.03" id="rug_ticksize" label="Ticksize" />
+							<spinbox min="0" initial="0.5" id="rug_lwd" label="Line width of ticks" default_precision="0"/>
+							<radio label="Side of Rug" id="rug_side">
+								<option value="side = 1" label="Rug on Bottom" />
+								<option value="side = 3" label="Rug on Top" />
+							</radio>
+							<embed id="rug_col" component="rkward::color_chooser" label="Color"/>
+							<stretch/>
+						</frame>
+					</column>
+				</row>
+			</tab>
+			<tab label="Axis/Title" id="tab_plotoptions">
+				<row>
+					<embed id="plotoptions" component="rkward::plot_options" as_button="false" label="Plot Options" />
+					<stretch/>
+				</row>
+			</tab>
+		</tabbook>
+	</dialog>
+</document>

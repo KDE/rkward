@@ -1,0 +1,22 @@
+<!DOCTYPE rkhelp>
+<document>
+	<summary>
+		Simple color picker.
+	</summary>
+
+	<usage>
+		Pick a color.
+
+		This plugin is meant to be used embedded, and you should not really ever see this help page.
+	</usage>
+
+	<settings>
+		<setting id="color">The color to use.</setting>
+	</settings>
+
+	<related>
+		<ul>
+			<li><link href="rkward://rhelp/colors"/></li>
+		</ul>
+	</related>
+</document>

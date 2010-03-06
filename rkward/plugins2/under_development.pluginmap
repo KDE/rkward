@@ -1,0 +1,37 @@
+<!DOCTYPE rkpluginmap>
+
+<document base_prefix="" namespace="rkward">
+	<components>
+		<component type="standard" id="simple_anova" file="simple_anova/description.xml" label="Simple Anova" />
+		<component type="standard" id="qtscript_test1" file="testing/test1.xml" label="QtScript Test 1" />
+		<component type="standard" id="qtscript_test2" file="testing/test2.xml" label="QtScript Test 2" />
+		<component type="standard" id="sieve_plot" file="plots/sieve_plot.xml" label="Extended Sieve Plot" />
+
+	</components>
+
+	<hierarchy>
+		<menu id="file" label="File">
+			<menu id="import" label="Import" index="4">
+				<menu id="import_format" label="Import format">
+				</menu>
+			</menu>
+			<menu id="export" label="Export" index="5">
+			</menu>
+		</menu>
+		<menu id="analysis" label="Analysis" index="4">
+			<entry component="simple_anova" index="9"/>
+			<entry component="qtscript_test1" index="1"/>
+		</menu>
+		<menu id="plots" label="Plots" index="5">
+			<entry component="sieve_plot" />
+		</menu>
+		<menu id="distributions" label="Distributions" index="7">
+		</menu>
+	</hierarchy>
+
+	<context id="import">
+		<menu id="import" label="Import">
+		</menu>
+	</context>
+</document>
+

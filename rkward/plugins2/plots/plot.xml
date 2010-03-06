@@ -1,0 +1,29 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="plot.php" />
+	<help file="plot.rkh" />
+	<logic>
+		<set id="plotoptions.allow_log" to="true"/>
+		<set id="plotoptions.allow_aspect" to="true"/>
+		<set id="plotoptions.allow_grid" to="true"/>
+	</logic>
+	<dialog label="Generic Plot">
+		<tabbook>
+			<tab label="Variables" id="tab_variables">
+				<row>
+					<varselector id="vars"/>
+					<column>
+					<varslot id="xvarslot" source="vars" required="true" label="X variable"/>
+					<varslot id="yvarslot" source="vars" required="false" label="Y variable"/>
+					<stretch/>
+					<preview id="preview"/>
+					</column>
+				</row>
+			</tab>
+			<tab label="Plot Options" id="tab_options">
+			<embed id="plotoptions" component="rkward::plot_options" label="Various plot options"/>
+			</tab>
+		</tabbook>
+	</dialog>
+
+</document>

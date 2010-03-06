@@ -1,0 +1,22 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="plot_beta_clt.php" />
+	<help file="plot_beta_clt.rkh" />
+	<snippets>
+		<snippet id="dist_options">
+			<frame id="frame_betaparam" label="Beta Parameters">
+				<spinbox default_precision="1" type="real" id="a" initial="2" min="0.01" label="Shape1 (a)" />
+				<spinbox default_precision="1" type="real" id="b" initial="2" min="0.01" label="Shape2 (b)" />
+			</frame>
+		</snippet>
+		<include file="plot_clt_snippets.xml"/>
+	</snippets>
+	<logic>
+		<insert snippet="clt_logic"/>
+		<set id="dist_stepfun.default_dopoints" to="false" />
+		<set id="plotoptions.default_main" to="Beta"/>
+	</logic>
+	<dialog label="Central Limit Theorem: Beta to Normal" >
+		<insert snippet="clt_layout"/>
+	</dialog>
+</document>

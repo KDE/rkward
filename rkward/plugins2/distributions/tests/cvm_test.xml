@@ -1,0 +1,29 @@
+<!DOCTYPE rkplugin>
+
+<!-- This is the Cramer-von Mises test for Normality -->
+
+<document>
+	<code file="cvm_test.php"/>
+	<dialog label="Cramer-von Mises Normality Test">
+		<tabbook>
+			<tab label="Select Variables" >
+				<row>
+					<column>
+						<varselector id="vars"/>
+					</column>
+					<column>
+						<varslot type="numeric" multi="true" id="x" source="vars" required="true" label="variable(s):" min_length="8"/>
+						<text>
+							Note: Objects must have at least 8 values
+						</text>
+						<stretch/>
+					</column>
+				</row>
+			</tab>
+			<tab label="Options">
+				<checkbox id="length" label="Show Length and NAs" value_unchecked="0" value="1" checked="true" />
+				<stretch/>
+			</tab>
+		</tabbook>
+	</dialog>
+</document>

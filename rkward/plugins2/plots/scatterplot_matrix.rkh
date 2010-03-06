@@ -1,0 +1,36 @@
+<!DOCTYPE rkhelp>
+<document>
+	<summary>
+Scatterplot matrix plot produces scatterplot matrices with univariate displays down the diagonal.
+	</summary>
+
+	<usage>
+Choose one or more objects to be plotted. Choose the diagonal plot and how the scatterplots should be plotted from the options tab.
+	</usage>
+
+	<settings>
+		<caption id="tab_variables"/>
+		<setting id="x">Select a data matrix or a numeric data frame or more than one variables from a data matrix</setting>
+		<caption id="tab_options"/>
+		<setting id="diag">Select which plot should be plotted in the diagonal among
+		<li>Density plot. See <link href="rkward://rhelp/density"/></li>
+		<li>Boxplot. See <link href="rkward://rhelp/boxplot"/></li>
+		<li>Histogram. See <link href="rkward://rhelp/histogram"/></li>
+		<li>QQplot. See <link href="rkward://rhelp/qqplot"/></li>
+		<li>No plot. Do not plot anything in the diagonal</li>
+		</setting>
+		<setting id="plot_points">Select it if you want points to be plotted in scatterplots. </setting>
+		<setting id="smooth">Select it if you want a lowess smooth to be plotted in scatterplots. </setting>
+		<setting id="ellipse">Select it if you want data-concentration ellipses to be plotted in scatterplots. The ellipses are plotted at levels 0.5 and 0.9. </setting>
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://rhelp/scatterplot.matrix"/></li>
+			<li><link href="rkward://rhelp/scatterplot"/></li>
+			<li><link href="rkward://rhelp/density"/></li>
+			<li><link href="rkward://rhelp/boxplot"/></li>
+			<li><link href="rkward://rhelp/histogram"/></li>
+			<li><link href="rkward://rhelp/qqplot"/></li>
+		</ul>
+	</related>
+</document>

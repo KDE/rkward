@@ -1,0 +1,14 @@
+<!DOCTYPE rkpluginmap>
+
+<document base_prefix="" namespace="rkward">
+	<components>
+		<!-- These are meant to be embedded, and are not shown in the menu -->
+		<component type="standard" id="plot_options" file="plots/plot_options.xml" label="Plot Options" />
+		<component type="standard" id="color_chooser" file="plots/color_chooser.xml" label="Color Chooser" />
+		<component type="standard" id="plot_stepfun_options" file="plots/plot_stepfun_options.xml" label="Step Function plot options" />
+		<component type="standard" id="histogram_options" file="plots/histogram_options.xml" label="Histogram Options" />
+		<component type="standard" id="barplot_embed" file="plots/barplot_embed.xml" label="Barplot Options" />
+
+		<component type="standard" id="x11grid" file="x11device/grid.xml" label="Draw Grid" />
+	</components>
+</document>

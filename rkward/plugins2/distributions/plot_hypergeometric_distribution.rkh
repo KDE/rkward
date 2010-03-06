@@ -1,0 +1,29 @@
+<!DOCTYPE rkhelp>
+<document>
+	<snippets>
+		<include file="plot_dist_common_snippets.xml"/>
+	</snippets>
+
+	<summary>
+Density and distribution function plots for the Hypergeometric distribution.
+	</summary>
+
+	<insert snippet="general_usage_help"/>
+
+	<settings>
+		<insert snippet="density_help"/>
+		<insert snippet="discont_range_help"/>
+		<setting id="m">See R reference on Hypergeometric distribution.</setting>
+		<setting id="n_val">See R reference on Hypergeometric distribution.</setting>
+		<setting id="k">See R reference on Hypergeometric distribution.</setting>
+		<insert snippet="common_options_help"/>
+	</settings>
+
+	<related>
+		<ul>
+			<li><link href="rkward://rhelp/Hypergeometric"/></li>
+			<li><link href="rkward://component/plot_options"/></li>
+			<li><link href="rkward://rhelp/curve"/></li>
+		</ul>
+	</related>
+</document>

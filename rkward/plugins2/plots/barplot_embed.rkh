@@ -1,0 +1,39 @@
+<!DOCTYPE rkhelp>
+<document>
+	<summary>
+Options applicable to bar plots
+	</summary>
+
+	<usage>
+Choose if you want stacked bars, legend, and rainbow colors. Also you can choose if you want to display or not bar values (labels) and in what place.
+	</usage>
+
+	<settings>
+		<setting id="legend">Should a legend be added to the barplot? The row names of the data will be used to construct the legend, so this option has no effect, if the rows are not named.</setting>
+		<setting id="colors">Select between grey and rainbow colors.</setting>
+		<setting id="type">Select a type between juxtaposed bars and stacked bars. This setting is only meaningful for two-dimensional data. If you chose stacked bars you can not display bar values, below.</setting>
+		<setting id="labels">Select if you want to display bar values (labels).</setting>
+		<setting id="place">If you have selected to display bar values (labels) you can select where should they be displayed:
+		<li> Above the bars </li>
+		<li> Beside the bars </li>
+		<li> Inside the bars </li>
+		</setting>
+		<setting id="plotoptions">Generic plot options. See <link href="rkward://component/plot_options"/>.</setting>	
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://component/barplot"/></li>
+			<li><link href="rkward://component/plot_options"/></li>
+			<li><link href="rkward://rhelp/barplot"/></li>
+			<li><link href="rkward://rhelp/table"/></li>
+		</ul>
+	</related>
+	<technical>
+		This plugin is meant to be embedded in other plugins. It does not by itself provide a means to select input data. When embedding this plugin, you will be interested in the following properties:
+		<ul>
+			<li><i>xvar</i>: The name of the data variable. You can connect this to a varslot, or set it to a fixed string such as "x". This is required.</li>
+			<li><i>code.preprocess</i>: Provides a summary of parameters to be used in a call to rk.header(), if you have a use for it.</li>
+			<li><i>code.printout</i>: The actual commands needed to construct the barplot.</li>
+		</ul>
+	</technical>
+</document>

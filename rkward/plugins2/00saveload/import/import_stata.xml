@@ -1,0 +1,28 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="import_stata.php" />
+	<help file="import_stata.rkh" />
+	<logic>
+		<external id="filename"/>
+		<connect governor="filename" client="file.selection"/>
+	</logic>
+	<dialog label="Import STATA file">
+		<tabbook>
+			<tab id="tab_general" label="General">
+				<browser type="file" allow_urls="true" id="file" label="File name" />
+				<stretch/>
+				<row>
+					<saveobject id="saveto" initial="my.stata.data" label="Object to save to"/>
+					<checkbox id="doedit" value="1" value_unchecked="0" label="Edit Object" checked="true" />
+				</row>
+				<stretch/>
+				<frame label="Options">
+					<checkbox id="convert_dates" checked="true" label="Convert Stata dates to 'Date' class" value="1" value_unchecked="0"/>
+					<checkbox id="convert_factors" checked="true" label="Use Stata value labels to create factors?" value="1" value_unchecked="0"/>
+					<checkbox id="missing_type" checked="false" label="For version 8 or later, store information about different types of missing data?" value="1" value_unchecked="0"/>
+					<checkbox id="convert_underscore" checked="false" label="Convert '_' in Stata variable names to '.' in R names" value="1" value_unchecked="0"/>
+				</frame>
+			</tab>
+		</tabbook>
+	</dialog>
+</document>

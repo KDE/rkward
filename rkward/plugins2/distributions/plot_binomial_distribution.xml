@@ -1,0 +1,27 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="plot_binomial_distribution.php" />
+	<help file="plot_binomial_distribution.rkh" />
+	<logic>
+		<insert snippet="common_logic"/>
+		<set id="plotoptions.default_pointtype" to="p"/>
+	</logic>
+	<snippets>
+		<snippet id="range_options">
+			<frame label="Range" >
+				<spinbox type="integer" min = "0" id="min" initial="0" label="Lower quantile" />
+				<spinbox type="integer" min = "0" id="max" initial="12" label="Upper quantile" />
+			</frame>
+		</snippet>
+		<snippet id="dist_options">
+			<frame label="Parameters">
+				<spinbox type="integer" id="size" min="0" initial="12" label="Number of trials" />
+				<spinbox default_precision="2" type="real" id="prob" initial="0.5" min="0" max="1" label="Probability of success on each trial" />
+			</frame>
+		</snippet>
+		<include file="plot_dist_common_snippets.xml"/>
+	</snippets>
+	<dialog label="Plot binomial probabilities" >
+		<insert snippet="dialog_layout"/>
+	</dialog>
+</document>

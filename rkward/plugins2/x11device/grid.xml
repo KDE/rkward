@@ -1,0 +1,58 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="grid.php" />
+	<help file="grid.rkh" />
+	<logic>
+		<external id="devnum"/>
+		<external id="context" default=""/>
+		<!-- if we're not in the X11 context, we're embedded -->
+		<convert id="is_embed" mode="equals" sources="context" standard=""/>
+
+		<convert id="nx_other" sources="nx.string" mode="equals" standard="other"/>
+		<connect client="nx_cells.enabled" governor="nx_other"/>
+		<convert id="ny_other" sources="ny.string" mode="equals" standard="other"/>
+		<connect client="ny_cells.enabled" governor="ny_other"/>
+
+		<connect client="lwd.enabled" governor="custlwd.state"/>
+		<connect client="trellis_note.visible" governor="is_embed.not" />
+	</logic>
+	<dialog label="Grid options">
+		<row>
+			<column>
+				<radio id="nx" label="Number of X cells">
+					<option value="NULL" label="At the ticks"/>
+					<option value="NA" label="None"/>
+					<option value="other" label="Specify below"/>
+				</radio>
+				<spinbox id="nx_cells" label="X Cells" type="integer" min="0" initial="5"/>
+			</column>
+			<column>
+				<radio id="ny" label="Number of Y cells">
+					<option value="NULL" label="At the ticks"/>
+					<option value="NA" label="None"/>
+					<option value="other" label="Specify below"/>
+				</radio>
+				<spinbox id="ny_cells" label="Y Cells" type="integer" min="0" initial="5" />
+			</column>
+		</row>
+		<row>
+				<checkbox id="custlwd" label="Custom Line width" checked="false"/>
+				<checkbox id="equilogs" label="Equilogs" checked="true"/>
+		</row>
+		<row>
+				<spinbox id="lwd" type="integer" label="Line width" min="1" initial="1"/>
+				<dropdown id="linetype" label="Line type" >
+					<option value="" label="Default" checked="true"/>
+					<option value="solid" label="Solid"/>
+					<option value="dashed" label="Dashed" />
+					<option value="dotted" label="Dotted" />
+					<option value="dotdash" label="Dot-Dash" />
+					<option value="longdash" label="Long-dash" />
+					<option value="twodash" label="Two-dash" />
+				</dropdown>
+				<embed id="col" component="rkward::color_chooser" label="Color"/>
+		</row>
+	<stretch/>
+	<text id="trellis_note">Note: Not applicable for Trellis type devices! </text>
+	</dialog>
+</document>

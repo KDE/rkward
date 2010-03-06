@@ -1,0 +1,47 @@
+<!DOCTYPE rkhelp>
+  <document>
+    <summary>
+      This plugin estimates parameters under Item Response Theory approach, using the <link href="rkward://rhelp/eRm-package">eRm</link> package.
+    </summary>
+
+    <usage>
+      To fit the linear partial credit model with default settings, just the matrix of manifest variables (item responses) must be selected. Further options are described in the sections below. For detailed information on the expected layout of matrices and vectors please refer to the manual for the <link href="rkward://rhelp/LPCM">LPCM()</link> function.
+
+      The complete results are stored as a new object in the current workspace for further use (e.g. plotting item characteristic curves). This object will be called <code>estimates.lpcm</code>.
+    </usage>
+
+    <settings>
+      <caption id="tab_data"/>
+      <setting id="x" title="Matrix of manifest variables">
+        Select the matrix of item responses from the objects shown on the left.
+      </setting>
+      <setting id="mpoints">
+        If repeated measurement applies, specify how many are represented in the data matrix (defaults to 1). This will divide the columns in the matrix into equally sized subsets of data.
+      </setting>
+      <setting id="groups">
+        If you want to compute group contrasts, a vector determing the group membership of each subject must be given. By default no group contrasts are imposed.
+      </setting>
+
+      <caption id="tab_options"/>
+      <setting id="design">
+        By default the design matrix for the LPCM will be computed automatically. Alternatively, you may specify your own design matrix here.
+      </setting>
+      <setting id="etastart">
+        By default eta values start with the 0-vector. To change this, a vector of starting values can be specified.
+      </setting>
+      <setting id="stderr">
+        If checked, standard errors are computed (which is the default).
+      </setting>
+      <setting id="sumnull">
+         By default parameters are normalized to sum-0 by specifying an appropriate design matrix. Uncheck this box to restrict the first parameter to 0.
+      </setting>
+
+    </settings>
+
+   <related>
+       Please refer to the <code>eRm</code> manuals for further information and detailed command line options:
+        <ul>
+                <li><link href="rkward://rhelp/eRm-package"/></li>
+                <li><link href="rkward://rhelp/LPCM"/></li>
+        </ul>
+   </related>

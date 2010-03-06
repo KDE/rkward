@@ -1,0 +1,43 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="write.php"/>
+	<logic>
+		<convert id="several_columns" mode="range" min="2" sources="ncolumns.int"/>
+		<connect client="sep.enabled" governor="several_columns" />
+
+		<convert id="customsep" mode="equals" sources="sep.string" standard="other" />
+		<convert id="enable_customsep" mode="and" sources="customsep;sep.enables" />
+		<connect client="custom_sep.enabled" governor="enable_customsep" />
+		<connect client="custom_sep.required" governor="custom_sep.enabled" />
+	</logic>
+
+	<dialog label="Write vector / matrix" >
+		<tabbook>
+			<tab label="Select variables" >
+			<column>
+				<varselector id="vars" label="Select a vector or matrix" />
+				<varslot multi="false" classes="character numeric integer factor matrix" id="data" source="vars" label="Data" required="true" />
+				<browser size="small" initial="data" id="file" label="File name" />
+			</column>
+			<frame label="Options" >
+				<row>
+					<column>
+						<radio id="sep" label="Field separator character" >
+							<option id="sepTab" value="\t" label="Tab" />
+							<option id="sepSemiC" value=";" label="';' (Semicolon)" />
+							<option id="sepComma" value="," label="',' (Comma)" />
+							<option id="sepSpace" value=" " label="Space" checked="true" />
+							<option id="sepOther" value="other" label="Other (specify below)" />
+						</radio>
+						<input id="custom_sep" label="Specify field separator character" />
+					</column>
+					<column>
+						<spinbox type="integer" initial="1" min="1" id="ncolumns" max="100" label="Number of columns to write" />
+						<checkbox value_unchecked="FALSE" checked="false" value="TRUE" id="append" label="Append to existing file" />
+					</column>
+				</row>
+			</frame>
+			</tab>
+		</tabbook>
+	</dialog>
+</document>

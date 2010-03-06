@@ -1,0 +1,108 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="scatterplot.php"/>
+	
+<!--Adrien d'Hardemare	
+first attempt to produce simple plot using the plot function
+A duplicate option has to be tested-->
+	<logic>
+		<convert id="manual_type" mode="equals" sources="type_mode.string" standard="each" />
+		<convert id="standard_type" mode="equals" sources="type_mode.string" standard="all" />
+		<connect client="pointtype.enabled" governor="standard_type" />
+		<connect client="custom_type.enabled" governor="manual_type" />
+		<connect client="custom_type.required" governor="manual_type" />
+
+		<set id="plotoptions.allow_type" to="false" />
+	</logic>
+	<dialog label="Scatterplot" >
+		<tabbook>
+			<tab label="Variables" id="variables_tab">
+				<row>
+					<varselector id="vars" />
+					<column>
+						<row>
+							<varslot multi="true" duplicate="true" types="number unknown" id="x" source="vars" label="'X' variables" required="true" />
+							<varslot multi="true" duplicate="true" types="number unknown" id="y" source="vars" label="'Y' variables" required="true" />
+						</row>
+						<preview id="preview"/>
+					</column>
+				</row>
+			</tab>
+			<tab label="Options" id="options_tab">
+				<embed id="plotoptions" component="rkward::plot_options" as_button="true" label="General plot options"/>
+				<frame>
+					<row>
+						<radio id="type_mode" label="Points / lines" >
+							<option value="all" label="Same type for all variables" />
+							<option value="each" label="Different for each variable" />
+						</radio>
+						<column>
+							<dropdown id="pointtype" label="Type of all points/lines" >
+								<option value="p" label="Plot individual points " />
+								<option value="l" label="Plot lines " />
+								<option value="b" label="Plot points connected by lines (both)" />
+								<option value="o" label="Plot points overlaid by lines " />
+								<option value="h" label="Plot vertical lines from points to the zero axis (high-density)" />
+								<option value="s" label="Step-function plots: the left edge defines the point" />
+								<option value="S" label="Step-function plots: the right edge defines the point" />
+							</dropdown>
+							<input size="small" id="custom_type" initial="c ('p', 'l')" label="Vector of type specifiers" />
+						</column>
+					</row>
+				</frame>
+				<frame>
+					<row>
+						<radio id="color" label="Color" >
+							<option value="all" label="Same color for all variables" />
+							<option value="each" label="Different for each variable" />
+						</radio>
+						<column>
+							<text>
+					Enter value - for diff.col. enter a vector -
+					eg:  c(1,2) or c('red','green')
+							</text>
+							<input size="small" id="col" initial="'black'" label=" " />
+						</column>
+					</row>
+				</frame>
+			</tab>
+			<!-- This way of splitting up options is not really logical, but they are too much for one page -->
+			<tab label="Further options" id="further_options_tab">
+				<frame>
+					<row>
+						<radio id="isCex" label="Size" >
+							<option value="all" label="Same for all variables" />
+							<option value="each" label="Different for each variable" />
+						</radio>
+						<column>
+							<text>
+								A numerical value giving the amount by which plotting text and symbols should be scaled relative to the default. 
+							</text>
+							<input size="small" id="cex" initial="1" label="Enter value - for diff.size. enter a vector -" />
+						</column>
+					</row>
+				</frame>
+				<frame>
+					<row>
+						<radio id="isPch" label="Symbol" >
+							<option value="all" label="Same for all variables" />
+							<option value="each" label="Different for each variable" />
+						</radio>
+						<column>
+							<text>
+								Either an integer specifying a symbol or a single character to be used as the default in plotting points.
+							</text>
+							<input size="small" id="pch" initial="1" label="Enter value - for diff.symbol. enter a vector -" />
+						</column>
+					</row>
+				</frame>
+			</tab>
+		</tabbook>
+	</dialog>
+	<wizard label="Scatterplot">
+	<!-- This wizard is somewhat pointless, as all it's really just a copy of the dialog tabs, with one tab per page. But so what, maybe it still "looks" friendlier, while it does not really change anything -->
+		<copy id="variables_tab" copy_element_tag_name="page" />
+		<copy id="options_tab" copy_element_tag_name="page" />
+		<copy id="further_options_tab" copy_element_tag_name="page" />
+	</wizard>
+</document>

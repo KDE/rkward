@@ -1,0 +1,46 @@
+<!DOCTYPE rkhelp>
+<document>
+	<!-- title can be ommitted, as this is the help page for a plugin
+	<title>alskfa</title>
+	-->
+	<summary>
+		Compute the most common descriptive statistics for one or more numeric vectors
+	</summary>
+	<usage>
+		Select one or more objects to analyse. For most types of analysis, the objects need to be numeric vectors. On the subsequent tabs/pages specify, which statistics you want computed (see below for details).
+
+		Each selected variable will be analysed independently of the others. NA values are excluded from the calculations.
+	</usage>
+	<settings>
+		<caption id="tab_variables"/>
+		<setting id="x">Select one or more numeric vectors to analyse</setting>
+		<caption id="tab_mean_sd"/>
+		<setting id="mean">Should the mean value be computed?</setting>
+		<setting id="trim">Trim of the mean. See <link href="rkward://rhelp/mean"/></setting>
+		<setting id="sd">Compute the standard deviation?</setting>
+		<caption id="tab_median_mad"/>
+		<setting id="median">Should the median value be computed?</setting>
+		<setting id="mad">Compute the median absolute deviation, i.e., the (lo-/hi-) median of the absolute deviations from the median, and (by default) adjust by a factor for asymptotically normal consistency (see <link href="rkward://rhelp/mad"/>).</setting>
+		<setting id="constMad">Scale factor to use when computing the median absolute deviation</setting>
+		<setting id="mad_type">How to treat even size samples: Average the two middle values, take the lower, or take the higher</setting>
+		<caption id="tab_range_etc"/>
+		<setting id="range">Compute the range, i.e. lowest and highest value</setting>
+		<setting id="sum">Compute the sum of all values</setting>
+		<setting id="prod">Compute the product of all values</setting>
+		<setting id="length">Count the total length of values, and the number of missing values (NAs)</setting>
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://rhelp/mean"/></li>
+			<li><link href="rkward://rhelp/sd"/></li>
+			<li><link href="rkward://rhelp/median"/></li>
+			<li><link href="rkward://rhelp/mad"/></li>
+			<li><link href="rkward://rhelp/range"/></li>
+			<li><link href="rkward://rhelp/sum"/></li>
+			<li><link href="rkward://rhelp/prod"/></li>
+			<li><link href="rkward://rhelp/length"/></li>
+			<li><link href="rkward://rhelp/NA"/></li>
+			<li><link href="rkward://component/basic_statistics"/></li>
+		</ul>
+	</related>
+</document>

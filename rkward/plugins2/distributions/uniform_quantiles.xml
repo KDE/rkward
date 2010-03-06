@@ -1,0 +1,14 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="uniform_quantiles.php" />
+	<snippets>
+		<snippet id="dist_options">
+			<spinbox default_precision="2" type="real" initial="0" id="min" label="Lower limits of the distribution"/>
+			<spinbox default_precision="2" type="real" initial="1" id="max" label="Upper limits of the distribution"/>
+		</snippet>
+		<include file="dist_snippets.xml"/>
+	</snippets>
+	<dialog label="Uniform quantiles" >
+		<insert snippet="quantiles_layout"/>
+	</dialog>
+</document>

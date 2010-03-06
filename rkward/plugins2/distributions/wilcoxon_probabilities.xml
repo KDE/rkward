@@ -1,0 +1,14 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="wilcoxon_probabilities.php" />
+	<snippets>
+		<snippet id="dist_options">
+			<spinbox type="integer" min="1" initial="1" id="m" label="m (Numbers of observations in the first sample)"/>
+			<spinbox type="integer" min="1" initial="1" id="n" label="n (Numbers of observations in the second sample)"/>
+		</snippet>
+		<include file="dist_snippets.xml"/>
+	</snippets>
+	<dialog label="Wilcoxon Rank Sum probabilities" >
+		<insert snippet="probabilities_layout"/>
+	</dialog>
+</document>

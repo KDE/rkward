@@ -1,0 +1,31 @@
+<!DOCTYPE rkplugin>
+
+<document>
+	<code file="test1.js"/>
+	
+	<dialog label="Testing QtScript code generation">
+		<text>
+			This plugin is bogus! Do not use!
+		</text>
+		<tabbook>
+			<tab label="Basic settings">
+				<row>
+					<column>
+						<varselector id="vars"/>
+					</column>
+					<column>
+						<varslot type="numeric" id="x" source="vars" required="true" label="dependent variable"/>
+						<varslot type="numeric" id="y" source="vars" required="true" multi="true" label="fixed factors"/>
+					</column>
+				</row>
+			</tab>
+			<tab label="Model">
+				<formula id="model" fixed_factors="y" dependent="x" label="Now chose the model"/>
+			</tab>
+			<tab>
+				<embed id="embedded" component="rkward::qtscript_test2"/>
+			</tab>
+		</tabbook>
+	</dialog>
+
+</document>

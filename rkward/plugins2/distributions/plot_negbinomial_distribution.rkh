@@ -1,0 +1,31 @@
+<!DOCTYPE rkhelp>
+<document>
+	<snippets>
+		<include file="plot_dist_common_snippets.xml"/>
+	</snippets>
+
+	<summary>
+Density and distribution function plots for the Negative Binomial distribution.
+	</summary>
+
+	<insert snippet="general_usage_help"/>
+
+	<settings>
+		<insert snippet="density_help"/>
+		<insert snippet="discont_range_help"/>
+		<setting id="size_trial">This is the <i>size</i> parameter when the 'probability' form of the parameterisation is used. This is always a non-negative integer. See R reference on Negative Binomial distribution.</setting>
+		<setting id="size_disp">This is the <i>size</i> parameter when the 'mu' form of the parameterisation is used. This is a non-negative real number. See R reference on Negative Binomial distribution.</setting>
+		<setting id="prob">See R reference on Negative Binomial distribution.</setting>
+		<setting id="mu">See R reference on Negative Binomial distribution.</setting>
+		<setting id="param">The type of the parameterization to be used. See R reference on Negative Binomial distribution.</setting>
+		<insert snippet="common_options_help"/>
+	</settings>
+
+	<related>
+		<ul>
+			<li><link href="rkward://rhelp/NegBinomial"/></li>
+			<li><link href="rkward://component/plot_options"/></li>
+			<li><link href="rkward://rhelp/curve"/></li>
+		</ul>
+	</related>
+</document>

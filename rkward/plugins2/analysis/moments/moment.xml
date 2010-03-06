@@ -1,0 +1,32 @@
+<!DOCTYPE rkplugin>
+
+
+<document>
+	<code file="moment.php"/>	
+	<help file="moment.rkh" />
+	
+	<dialog label="sample moment">
+		<tabbook>
+			<tab id="tab_variables" label="Basic settings">
+				<row>
+					<varselector id="vars"/>
+					<column>
+						<varslot type="numeric" id="x" multi="true" source="vars" required="true" label="variable(s):"/>
+					</column>
+				</row>
+			</tab>
+			<tab id="tab_options" label="Options">
+				<spinbox type="integer" id="order" label="Order" initial="1"/>
+				<frame label="specific test settings">
+					<checkbox id="central" label="compute central moments" checked="false" value="TRUE" value_unchecked="FALSE" />
+					<checkbox id="absolute" label="compute absolute moments" checked="false" value="TRUE" value_unchecked="FALSE" />
+					<checkbox id="narm" label="remove missing values" checked="true" value="TRUE" value_unchecked="FALSE" />
+				</frame>
+				<frame label="additional settings">
+					<checkbox id="length" label="Show Length and NAs" value_unchecked="0" value="1" checked="false" />
+				</frame>
+			</tab>
+		</tabbook>
+	</dialog>
+	
+</document>

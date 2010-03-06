@@ -1,0 +1,15 @@
+<!DOCTYPE rkhelp>
+<document>
+	<snippets>
+		<snippet id="dist_name"><span>Logistic</span></snippet>
+		<snippet id="dist_related">
+			<li><link href="rkward://component/plot_logistic_distribution"/></li>
+			<li><link href="rkward://rhelp/Logistic"/></li>
+		</snippet>
+		<snippet id="dist_options_help">
+			<setting id="frame_logisparam">See RKWard help on <link href="rkward://component/plot_logistic_distribution"/>.</setting>
+		</snippet>
+		<include file="plot_clt_help_snippets.xml"/>
+	</snippets>
+	<insert snippet="clt_help_template"/>
+</document>

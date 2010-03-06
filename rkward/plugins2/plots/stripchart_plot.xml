@@ -1,0 +1,59 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="stripchart_plot.php" />
+	<logic>
+		<connect client="plotoptions.xvar" governor="x.available"/>
+		<set id="plotoptions.allow_log" to="true"/>
+		<set id="plotoptions.allow_type" to="false"/>
+		<set id="plotoptions.allow_asp" to="true"/>
+		
+		<set id="plotoptions.allow_grid" to="true"/>
+		
+		<convert id="method_jitter" mode="equals" sources="method.string" standard="jitter"/>
+		<convert id="method_stack" mode="equals" sources="method.string" standard="stack"/>
+		<connect client="jitter.enabled" governor="method_jitter"/>
+		<connect client="offset.enabled" governor="method_stack"/>
+	</logic>
+	<dialog label="Stripchart" >
+		<tabbook>
+			<tab label="Variable(s)" >
+				<row>
+					<varselector id="vars" />
+					<column>
+						<varslot multi="false" type="numeric" id="x" source="vars" label="variable" required="true" />
+						<varslot multi="false" type="numeric" id="g" source="vars" label="Group" required="true" />
+						<stretch/>
+						<preview id="preview"/>
+					</column>
+				</row>
+			</tab>
+			<tab label="Options">
+				<row>
+					<column>
+						<radio id="method" label="Treatment of identical values">
+							<option value="overplot" label="Overplot"/>
+							<option value="jitter" label="Jitter"/>
+							<option value="stack" label="Stack"/>
+						</radio>
+						<spinbox label="Jitter" id="jitter" initial="0.1" />
+						<spinbox label="offset" id="offset" initial="0.33333333333" />
+						<stretch/>
+					</column>
+					<column>
+						<radio id="orientation" label="Orientation">
+							<option value="Horizontal" label="Horizontal"/>
+							<option value="Vertical" label="Vertical"/>
+						</radio>
+						<stretch/>
+					</column>
+				</row>
+			</tab>
+			<tab label="Plot Options" >
+				<row>
+					<embed id="plotoptions" component="rkward::plot_options" as_button="false" label="Plot Options" />
+					<stretch/>
+				</row>
+			</tab>
+		</tabbook>
+	</dialog>
+</document>

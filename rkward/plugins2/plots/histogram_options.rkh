@@ -1,0 +1,55 @@
+<!DOCTYPE rkplugin>
+<document>
+	<summary>
+		This plugin provides various options for <b>hist</b> or <b>plot.histogram</b>.
+	</summary>
+	<usage>
+		This plugin is mostly used as an embeded plugin. All the GUI elements here set various parameters to either hist or plot.histogram functions. For parameter specific help see the respective R references. Few parameter combinations might not produce any sensible plot, so read the R references to make a judicious choice of parameters.
+	</usage>
+	<settings>
+		<setting id="addtoplot">Check this box if the histogram is to be added to the current plot. This is the <i>add</i> parameter.</setting>
+		<setting id="freq">This is the <i>freq</i> parameter.</setting>
+		<setting id="barlabels">This is the <i>label</i> parameter.</setting>
+		<setting id="rightclosed">This is the <i>right</i> parameter.</setting>
+		<setting id="include_lowest">This is the <i>include.lowest</i> parameter.</setting>
+		<caption id="frame_breaks"/>
+		<setting id="histbreaksFunction">This is the <i>breaks</i> parameter to <b>hist</b>, unless either 'Integer numbers' or 'Vector of break points' is chosen. The 'Integer numbers' options sets the break points as the integers between the minimum and the maximum of the variable. The 'Vector of break points' options sets equally spaced break points in the range of the variable. The number of break points in this case is provided by 'Vector length' (see below).</setting>
+		<setting id="histbreaks_ncells">If 'A single number' is chosen in the above field, then this provides a suggestion to the number of cells. This is the <i>breaks</i> parameter with a single number argument.</setting>
+		<setting id="histbreaks_veclength">If 'Vector of break points' is chosen in the above field, then this provides the length of the vector of equally spaced break points in the range of the variable. This is the <i>breaks</i> parameter with a vector argument. The actual sequence is calculated by an inline function call (see the generated code). The range of the variable is extended by 10% before obtaining the sequence, so that both the minimum and maximum points are included.</setting>
+		<caption id="frame_histborderoptions"/>
+		<setting id="doborder">Whether border to the histogram bars are to be drawn. If unchecked then, <i>border=FALSE</i> is added to the code. Otherwise a color is provided as the argument to <i>border</i>.</setting>
+		<setting id="histbordercol">This is the <i>border</i> argument which provides the color of the border. Check the above box to use this option.</setting>
+		<caption id="frame_histlineoptions"/>
+		<setting id="histlinetype">This is the <i>lty</i> parameter. Choosing 'Blank' will not draw any lines, select a fill color to make a sensible plot. See R reference for further details.</setting>
+		<setting id="density">This is the <i>density</i> parameter. See the R reference on 'rect' for more details.</setting>
+		<setting id="angle">This is the <i>angle</i> parameter.</setting>
+		<caption id="frame_histfilloptions"/>
+		<setting id="usefillcol">Check this box to use a fill color for the histogram bars.</setting>
+		<setting id="histfillcol">This is the <i>col</i> parameter. The embeding plugin might set a default color. If it is empty, then <i>col</i> is not used in the code, otherwise the chosen color is used to fill the bars.</setting>
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://rhelp/hist"/></li>
+			<li><link href="rkward://rhelp/plot.histogram"/></li>
+			<li><link href="rkward://rhelp/rect"/></li>
+			<li><link href="rkward://rhelp/extendrange"/></li>
+		</ul>
+	</related>
+	<technical>
+		General users may skip this section of help, this is primarily for developers.
+
+		The following external tags are provided for use in the embedding plugin.
+		<ul>
+			<li><i>varname</i>: For linking to the variable name for which histogram is being plotted. This is used in the 'Integer numbers' option for breaks.</li>
+			<li><i>allow_freq</i>: Setting this to "true" ("false") enables (disables) the display of the 'Frequency' checkbox.</li>
+			<li><i>allow_barlabels</i>: Setting this to "true" ("false") enables (disables) the display of the 'Bar labels' checkbox.</li>
+			<li><i>allow_addtoplot</i>: Setting this to "true" ("false") enables (disables) the display of the 'Add bars to current plot' checkbox.</li>
+		</ul>
+		In order to allow flexible use, the generated options are separated into three different sections:
+		<ul>
+			<li><i>code.preprocess</i>: Options suitable for use in a call to rk.header(). These are safe to ignore, if you do not need them.</li>
+			<li><i>code.calculate</i>: This contains only the <i>breaks</i>-option.</li>
+			<li><i>code.printout</i>: This contains all the other options determining the look of the plot.</li>
+		</ul>
+	</technical>
+</document>

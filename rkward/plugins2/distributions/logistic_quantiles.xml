@@ -1,0 +1,14 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="logistic_quantiles.php" />
+	<snippets>
+		<snippet id="dist_options">
+			<spinbox default_precision="2" type="real" initial="1" id="location" label="Location"/>
+			<spinbox default_precision="2" type="real" min="0" initial="1" id="scale" label="Scale"/>
+		</snippet>
+		<include file="dist_snippets.xml"/>
+	</snippets>
+	<dialog label="Logistic quantiles" >
+		<insert snippet="quantiles_layout"/>
+	</dialog>
+</document>

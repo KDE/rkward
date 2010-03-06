@@ -1,0 +1,22 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="plot_logistic_clt.php" />
+	<help file="plot_logistic_clt.rkh" />
+	<snippets>
+		<snippet id="dist_options">
+			<frame id="frame_logisparam" label="Logistic Parameters">
+				<spinbox default_precision="1" type="real" id="loc" initial="0" label="Location" />
+				<spinbox default_precision="1" type="real" id="scale" initial="1" min="0.01" label="Scale" />
+			</frame>
+		</snippet>
+		<include file="plot_clt_snippets.xml"/>
+	</snippets>
+	<logic>
+		<insert snippet="clt_logic"/>
+		<set id="dist_stepfun.default_dopoints" to="false" />
+		<set id="plotoptions.default_main" to="Logistic"/>
+	</logic>
+	<dialog label="Central Limit Theorem: Logistic to Normal" >
+		<insert snippet="clt_layout"/>
+	</dialog>
+</document>

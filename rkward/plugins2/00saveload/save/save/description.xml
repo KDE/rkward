@@ -1,0 +1,24 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="code.php"/>
+
+	<dialog label="Save R objects" >
+		<tabbook>
+			<tab label="Select variables" >
+				<column>
+					<row>
+						<varselector id="vars" />
+						<varslot multi="true" id="data" source="vars" label="Object" required="true" />
+					</row>
+				</column>
+				<frame label="Options" >
+					<row>
+						<browser size="small" initial="my.RData" id="file" label="File name" />
+						<checkbox value_unchecked="FALSE" checked="false" value="TRUE" id="ascii" label="Ascii" />
+						<checkbox value_unchecked="FALSE" checked="false" value="TRUE" id="compress" label="Compress" />
+					</row>
+				</frame>
+			</tab>
+		</tabbook>
+	</dialog>
+</document>

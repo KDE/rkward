@@ -1,0 +1,26 @@
+<!DOCTYPE rkplugin>
+
+
+<document>
+	<code file="stem.php"/>	
+	<help file="stem.rkh" />
+	
+	<dialog label="Stem-and-Leaf Plots">
+		<tabbook>
+			<tab id="tab_variables" label="Basic settings">
+				<row>
+					<varselector id="vars"/>
+					<column>
+						<varslot type="numeric" id="x" multi="false" source="vars" required="true" label="variable:"/>
+					</column>
+				</row>
+			</tab>
+			<tab id="tab_options" label="Options">
+				<spinbox type="real" id="scale" label="scale" initial="1"/>
+				<spinbox type="real" id="width" label="width" initial="80"/>
+				<spinbox type="real" id="atom" label="atom" initial="0.00000001"/>
+			</tab>
+		</tabbook>
+	</dialog>
+	
+</document>

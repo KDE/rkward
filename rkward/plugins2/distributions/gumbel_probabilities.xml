@@ -1,0 +1,14 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="gumbel_probabilities.php" />
+	<snippets>
+		<snippet id="dist_options">
+			<spinbox default_precision="2" type="real" min="0" initial="1" id="shape" label="Shape"/>
+			<spinbox default_precision="2" type="real" min="1" initial="1" id="scale" label="Scale"/>
+		</snippet>
+		<include file="dist_snippets.xml"/>
+	</snippets>
+	<dialog label="Gumbel probabilities" >
+		<insert snippet="probabilities_layout"/>
+	</dialog>
+</document>

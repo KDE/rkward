@@ -1,0 +1,28 @@
+<!DOCTYPE rkhelp>
+<document>
+	<snippets>
+		<include file="plot_dist_common_snippets.xml"/>
+	</snippets>
+
+	<summary>
+Density and distribution function plots for the Lognormal distribution.
+	</summary>
+
+	<insert snippet="general_usage_help"/>
+
+	<settings>
+		<insert snippet="density_help"/>
+		<insert snippet="cont_range_help"/>
+		<setting id="mean">See R reference on Lognormal distribution.</setting>
+		<setting id="sd">See R reference on Lognormal distribution.</setting>
+		<insert snippet="common_options_help"/>
+	</settings>
+
+	<related>
+		<ul>
+			<li><link href="rkward://rhelp/Lognormal"/></li>
+			<li><link href="rkward://component/plot_options"/></li>
+			<li><link href="rkward://rhelp/curve"/></li>
+		</ul>
+	</related>
+</document>

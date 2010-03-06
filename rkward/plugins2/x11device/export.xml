@@ -1,0 +1,192 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="export.php" />
+	<help file="export.rkh" />
+	<logic>
+		<external id="devnum"/>
+
+		<convert id="isPS" mode="equals" sources="format.string" standard="postscript" />
+		<convert id="isPDF" mode="equals" sources="format.string" standard="pdf" />
+		<convert id="isJPEG" mode="equals" sources="format.string" standard="jpeg" />
+		<convert id="isPNG" mode="equals" sources="format.string" standard="png" />
+		<convert id="isGS" mode="equals" sources="format.string" standard="gs" />
+		<convert id="isPSPDF" mode="or" sources="isPS;isPDF" />
+		<convert id="isJPEGPNG" mode="or" sources="isPNG;isJPEG" />
+		<convert id="isPSPDFGS" mode="or" sources="isPSPDF;isGS" />
+		<convert id="isJPEGPNGGS" mode="or" sources="isJPEGPNG;isGS" />
+		<convert id="isPSGS" mode="or" sources="isPS;isGS" />
+		<convert id="isnotGS" mode="or" sources="isPSPDF;isJPEGPNG" />
+
+		<connect client="formateps.enabled" governor="isPS"/>
+		<convert id="isEPS" mode="and" sources="formateps.enabled;formateps.state"/>
+		<convert id="allowOrientation" mode="and" sources="isPSGS;isEPS.not"/>
+
+		<connect client="autoextension.state" governor="isnotGS"/>
+		<connect client="autoextension.enabled" governor="isnotGS"/>
+
+		<connect client="tab_more_options.enabled" governor="isPSPDFGS" />
+
+		<connect client="autoquality.enabled" governor="isJPEG" />
+		<connect client="ps_horiz.enabled" governor="allowOrientation"/>
+		<connect client="paper.enabled" governor="isEPS.not"/>
+
+		<convert id="userwidth0" mode="equals" sources="autowidth.state" standard="0" />
+		<connect client="width.enabled" governor="userwidth0"/>
+
+		<convert id="userheight0" mode="equals" sources="autoheight.state" standard="0" />
+		<connect client="height.enabled" governor="userheight0"/>
+
+		<convert id="userpointsize0" mode="equals" sources="autopointsize.state" standard="0" />
+		<connect client="pointsize.enabled" governor="userpointsize0"/>
+
+		<convert id="userres0" mode="equals" sources="autores.state" standard="0" />
+		<connect client="autores.enabled" governor="isJPEGPNGGS"/>
+		<convert id="userres" mode="and" sources="userres0;autores.enabled" />
+		<connect client="resolution.enabled" governor="userres"/>
+
+		<convert id="userquality0" mode="equals" sources="autoquality.state" standard="0" />
+		<convert id="userquality" mode="and" sources="userquality0;autoquality.enabled" />
+		<connect client="quality.enabled" governor="userquality"/>
+
+		<convert id="usertitle0" mode="equals" sources="autotitle.state" standard="0" />
+		<connect client="title.enabled" governor="usertitle0"/>
+
+		<convert id="formatother" mode="equals" sources="gsformat.string" standard="other" />
+		<connect client="gs_specifiedformat.enabled" governor="formatother" />
+		<connect client="frame_gsoptions.enabled" governor="isGS" />
+	</logic>
+
+	<dialog label="Export contents of graphics device to png/jpeg format">
+		<tabbook>
+			<tab id="tab_file_and_type" label="Filename and Generic options">
+				<row>
+					<column>
+						<browser type="savefile" id="file" label="File name" initial="Rplot" filter="*.ps *.eps *.pdf *.png *.jpg *.jpeg *.bmp" />
+						<checkbox id="autoextension" value="1" value_unchecked="0" checked="true" label="Automatic File extension"/>
+						<frame id="frame_dimensions" label="Dimensions">
+							<row>
+								<column>
+									<checkbox id="autowidth" value="1" value_unchecked="0" checked="true" label="Automatic Width"/>
+									<spinbox id="width" label="Width in inches" min="0" initial="6" default_precision="1"/>
+								</column>
+								<column>
+									<checkbox id="autoheight" value="1" value_unchecked="0" checked="true" label="Automatic Height"/>
+									<spinbox id="height" label="Height in inches" min="0" initial="6" default_precision="1" />
+								</column>
+							</row>
+						</frame>
+					</column>
+					<column>
+						<radio id="format" label="Output format" >
+							<option value="postscript" label="Postscript" checked="true"/>
+							<option value="pdf" label="PDF" />
+							<option value="png" label="PNG" />
+							<option value="jpeg" label="JPEG" />
+							<option value="gs" label="via Ghostscript" />
+						</radio>
+						<checkbox id="formateps" label="EPS compatible" checked="true" value="1" value_unchecked="0"/>
+					</column>
+				</row>
+				<row>
+					<frame id="frame_generic_options" label="Generic Export Options">
+						<row>
+							<column>
+								<checkbox id="autopointsize" value="1" value_unchecked="0" checked="true" label="Default pointsize"/>
+								<spinbox id="pointsize" label="Point size" min="0" initial="12"  default_precision="1" />
+							</column>
+							<column>
+								<checkbox id="autores" value="1" value_unchecked="0" checked="true" label="Default Resolution"/>
+								<spinbox id="resolution" label="Resolution (dpi)" type="integer" min="0" initial="96" default_precision="1"/>
+							</column>
+							<column>
+								<checkbox id="autoquality" value="1" value_unchecked="0" checked="true" label="Default Quality"/>
+								<spinbox label="JPEG Quality" type="integer" id="quality" min="0" max="100" initial="75"/>
+							</column>
+						</row>
+					</frame>
+				</row>
+			</tab>
+
+			<tab id="tab_more_options" label="Postscript/PDF/Ghostscript Options">
+				<frame id="frame_paperprop" label="Paper properties">
+					<row>
+						<dropdown id="paper" label="Paper Size">
+							<option value="" label="Default" checked="true"/>
+							<option value="a4" label="A4"/>
+							<option value="letter" label="Letter"/>
+							<option value="legal" label="Legal"/>
+							<option value="executive" label="Executive"/>
+							<option value="special" label="Special"/>
+						</dropdown>
+						<column>
+							<checkbox id="pagecentre" value="1" value_unchecked="0" checked="true" label="Pagecentre"/>
+							<checkbox id="ps_horiz" value="1" value_unchecked="0" checked="true" label="Horizontal (ps/gs)"/>
+						</column>
+					</row>
+				</frame>
+				<frame id="font_properties" label="Font properties">
+					<row>
+						<dropdown id="family" label="Font family">
+							<option value="" label="Default" checked="true"/>
+							<option value="AvantGarde" label="AvantGarde"/>
+							<option value="Bookman" label="Bookman"/>
+							<option value="Courier" label="Courier"/>
+							<option value="Helvectica" label="Helvectica"/>
+							<option value="Helvectica-Narrow" label="Helvectica Narrow"/>
+							<option value="mono" label="Mono"/>
+							<option value="NewCenturySchoolbook" label="New Century Schoolbook"/>
+							<option value="Palatino" label="Palatino"/>
+							<option value="sans" label="Sans"/>
+							<option value="serif" label="Serif"/>
+							<option value="symbol" label="Symbol"/>
+							<option value="Times" label="Times"/>
+							<option value="CenturySch" label="CenturySch (URW)"/>
+							<option value="NimbusMon" label="NimbusMon (URW)"/>
+							<option value="NimbusSanCond" label="NimbusSanCond (URW)"/>
+							<option value="URWBookman" label="URWBookman"/>
+							<option value="URWHelvectica" label="URWHelvectica"/>
+							<option value="URWGothic" label="URWGothic"/>
+							<option value="URWPalladio" label="URWPalladio"/>
+							<option value="URWTimes" label="URWTimes"/>
+						</dropdown>
+						<dropdown id="encoding" label="Font Encoding">
+							<option value="" label="Default" checked="true"/>
+							<option value="ISOLatin1.enc" label="ISOLatin1"/>
+							<option value="ISOLatin2.enc" label="ISOLatin2"/>
+							<option value="CP1250.enc" label="CP1250"/>
+							<option value="ISOLatin7.enc" label="ISOLatin7"/>
+							<option value="CP1257.enc" label="CP1257"/>
+							<option value="ISOLatin9.enc" label="ISOLatin9"/>
+							<option value="PDFDoc.enc" label="PDFDoc"/>
+						</dropdown>
+					</row>
+				</frame>
+				<frame id="title_properties" label="Title embeded in file">
+					<row>
+						<column>
+							<checkbox id="autotitle" value="1" value_unchecked="0" checked="true" label="Default Title"/>
+						</column>
+						<column>
+							<input id="title" size="small" initial="R Graphics Output"/>
+						</column>
+					</row>
+				</frame>
+				<frame id="frame_gsoptions" label="Ghostscript  specific options">
+					<row>
+						<dropdown id="gsformat" label="GS Output device" >
+							<option value="pdfwrite" label="PDF" />
+							<option value="pswrite" label="PostScript" />
+							<option value="pngmono" label="PNG (b/w)" />
+							<option value="pnggray" label="PNG (grayscale)" />
+							<option value="png256" label="PNG (256 colors)" />
+							<option value="png16m" label="PNG (16M colors)" />
+							<option value="jpeg" label="JPEG" />
+							<option value="other" label="Other (specify here):" />
+						</dropdown>
+						<input label="Other Ghostscript device" id="gs_specifiedformat" initial="pcxgray" size="medium"/>
+					</row>
+				</frame>
+			</tab>
+		</tabbook>
+	</dialog>
+</document>

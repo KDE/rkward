@@ -1,0 +1,38 @@
+<!DOCTYPE rkplugin>
+
+<!-- This is the skewness and kurtosis plug-in-->
+
+<document>
+	<code file="skewness_kurtosis_test.php"/>
+	<help file="skewness_kurtosis_test.rkh" />
+	<dialog label="Skewness and Kurtosis">
+		<tabbook>
+			<tab id="tab_variables" label="Select Variables" >
+				<row>
+					<column>
+						<varselector id="vars"/>
+					</column>
+					<column>
+						<frame>
+							<varslot type="numeric" multi="true" id="x" source="vars" required="true" label="variable(s):"/>
+						</frame>
+						<stretch/>
+					</column>
+				</row>
+			</tab>
+			<tab label="Options" id="tab_options">
+				<checkbox id="narm" label="Exclude missing values" checked="true" value="1" value_unchecked="0" />
+				<frame label="Skewness">
+					<checkbox id="skewness" label="Skewness" value_unchecked="0" value="1" checked="true" />
+				</frame>
+				<frame label="Kurtosis">
+					<checkbox id="kurtosis" label="Kurtosis" value_unchecked="0" value="1" checked="true" />
+				</frame>
+				<frame label="Geary's kurtosis">
+					<checkbox id="geary" label="Geary's kurtosis" value_unchecked="0" value="1" checked="false" />
+				</frame>
+				<checkbox id="length" label="Show Length" value_unchecked="0" value="1" checked="false" />
+			</tab>
+		</tabbook>
+	</dialog>
+</document>

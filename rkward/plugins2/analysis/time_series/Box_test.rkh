@@ -1,0 +1,26 @@
+<!DOCTYPE rkhelp>
+<document>
+	<summary>
+		This test computes Box-Pierce or Ljung-Box test statistic for examining the null hypothesis of independence in a given time series.
+	</summary>
+
+	<usage>
+		Select the data sets for which you want to perform the Box-Pierce or Ljung-Box test. For this test the samples need to be numeric vectors (see below for details).
+	</usage>
+
+	<settings>
+		<caption id="tab_variables"/>
+		<setting id="x">Select the data to be computed. The vectors need to be numeric, and can be of different length.</setting>
+		<setting id="lag">Number of autocorrelation coefficients to base the test on.</setting>
+		<setting id="type">Define type of test. Either Ljung-Box or Box-Pierce can be used.</setting>
+		<caption id="tab_options"/>
+		<setting id="narm">Exclude missing values from calculation?</setting>
+		<setting id="length">Show the total length of the data, and the number of missing values (purely informational, does not affect the test)?</setting>
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://component/kpss_test"/></li>
+			<li><link href="rkward://rhelp/Box.test"/></li>
+		</ul>
+	</related>
+</document>

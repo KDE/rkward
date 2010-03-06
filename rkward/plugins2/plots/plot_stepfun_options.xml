@@ -1,0 +1,68 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="plot_stepfun_options.php"/>
+	<help file="plot_stepfun_options.rkh"/>
+	<logic>
+		<external id="allow_addtoplot" default="true"/>
+		<external id="default_dopoints" default="true"/>
+		<external id="default_verticals" default="true"/>
+		<external id="allow_col01line" default="false"/>
+
+		<set id="col_vert.argument" to=", col.vert="/>
+		<set id="col_points.argument" to=", col.points="/>
+		<set id="col_hor.argument" to=", col.hor="/>
+
+		<connect client="addtoplot.visible" governor="allow_addtoplot"/>
+
+		<convert id="default_verticalsb" sources="default_verticals" mode="equals" standard="true"/>
+		<connect client="verticals.state" governor="default_verticalsb"/>
+		<connect client="col_vert.color.enabled" governor="verticals.state"/>
+
+		<convert id="default_dopointsb" sources="default_dopoints" mode="equals" standard="true"/>
+		<connect client="do_points.state" governor="default_dopointsb"/>
+		<connect client="col_points.color.enabled" governor="do_points.state"/>
+
+		<convert id="allow_col01line_TRUE" sources="allow_col01line" mode="equals" standard="true"/>
+		<connect client="frame_col_y0.visible" governor="allow_col01line_TRUE"/>
+		<connect client="frame_col_y1.visible" governor="allow_col01line_TRUE"/>
+		<set id="col_y0.argument" to=""/>
+		<set id="col_y1.argument" to=""/>
+	</logic>
+	<dialog label="Step function plot options">
+		<row>
+			<frame id="frame_opt" label="Options">
+				<checkbox id="addtoplot" label="Add to current plot" checked="false"/>
+				<dropdown id="linetype" label="Line type for all lines" >
+					<option value="" label="Default" checked="true"/>
+					<option value="solid" label="Solid"/>
+					<option value="dashed" label="Dashed" />
+					<option value="dotted" label="Dotted" />
+					<option value="dotdash" label="Dot-Dash" />
+					<option value="longdash" label="Long-dash" />
+					<option value="twodash" label="Two-dash" />
+				</dropdown>
+			</frame>
+			<frame id="frame_points" label="Points">
+				<checkbox id="do_points" label="Draw points" checked="true"/>
+				<embed id="col_points" component="rkward::color_chooser" label="Color"/>
+			</frame>
+		</row>
+		<row>
+			<frame id="frame_col_horiz" label="Horizontal Lines">
+				<embed id="col_hor" component="rkward::color_chooser" label="Color"/>
+			</frame>
+			<frame id="frame_vert" label="Vertical lines">
+				<checkbox id="verticals" label="Draw vertical lines" />
+				<embed id="col_vert" component="rkward::color_chooser" label="Color"/>
+			</frame>
+		</row>
+		<row>
+			<frame id="frame_col_y0" label="For y = 0 line">
+				<embed id="col_y0" component="rkward::color_chooser" label="Color"/>
+			</frame>
+			<frame id="frame_col_y1" label="For y = 1 line">
+				<embed id="col_y1" component="rkward::color_chooser" label="Color"/>
+			</frame>
+		</row>
+	</dialog>
+</document>

@@ -1,0 +1,27 @@
+<!DOCTYPE rkhelp>
+<document>
+	<summary>
+		Shows the value with largest difference from sample mean (potential outlier).
+	</summary>
+
+	<usage>
+		Chose the data to find the value with the largest difference from the sample mean. You can select multiple vectors. See <link href="rkward://rhelp/outlier"/>.
+	</usage>
+
+	<settings>
+		<caption id="tab_variables"/>
+		<setting id="x">Select the data to be computed. The vectors need to be numeric. Any missing values are ignored in the calculation.</setting>
+		<caption id="tab_options"/>
+		<setting id="opposite">Select this option to give the opposite value. If the largest value has maximum difference from the mean, it gives smallest and vice versa.</setting>
+		<setting id="descriptives">Print additional descriptive statistics (mean, sd, median, min, max) to help with interpretation of the test result (purely informational, does not affect the test). Missing values will be ignored.</setting>
+		<setting id="length">Show the total length of the data, and the number of missing values (purely informational, does not affect the test)?</setting>
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://rhelp/outlier"/></li>
+			<li><link href="rkward://component/chisq_out_test"/></li>
+			<li><link href="rkward://component/dixon_test"/></li>
+			<li><link href="rkward://component/grubbs_test"/></li>
+		</ul>
+	</related>
+</document>

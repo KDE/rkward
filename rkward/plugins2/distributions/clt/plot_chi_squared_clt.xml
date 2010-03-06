@@ -1,0 +1,22 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="plot_chi_squared_clt.php" />
+	<help file="plot_chi_squared_clt.rkh" />
+	<snippets>
+		<snippet id="dist_options">
+			<frame id="frame_chisqparam" label="Chi squared Parameters">
+				<spinbox default_precision="1" type="real" min="0.01" id="df" initial="4.0" label="Degrees of freedom" />
+				<spinbox default_precision="1" type="real" min="0" id="ncp" initial="0" label="Non-centrality parameter" />
+			</frame>
+		</snippet>
+		<include file="plot_clt_snippets.xml"/>
+	</snippets>
+	<logic>
+		<insert snippet="clt_logic"/>
+		<set id="dist_stepfun.default_dopoints" to="false" />
+		<set id="plotoptions.default_main" to="Chi-Squared"/>
+	</logic>
+	<dialog label="Central Limit Theorem: Chi squared to Normal" >
+		<insert snippet="clt_layout"/>
+	</dialog>
+</document>

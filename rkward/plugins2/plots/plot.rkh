@@ -1,0 +1,25 @@
+<!DOCTYPE rkhelp>
+<document>
+	<summary>
+		This is an implementation of the standard (traditional S) graphics function <b>plot</b>.
+	</summary>
+	<usage>
+		Choose the X and Y variables and customize the options to draw the plot.
+
+		Note: <b>plot</b> is a generic function. The type of plot you will actually get depends on the type of the input variables. For instance, for numeric vectors a scatterplot is produced (see below), while for data.frames as scatterplot matrix is plotted, etc. This is often useful to provide a meaningful visualization of the data, but does not allow for fine grained control.
+	</usage>
+	<settings>
+		<caption id="tab_variables"/>
+		<setting id="xvarslot">This is the <i>x</i> argument. And it is required to draw any plot. In the simplest case of plotting variables of class type integer/numeric, when "Y Variable" is not provided, this is actually the y-coordinate and the indices of the plotting variable is taken as the x-coordinate. See R reference on 'plot' for more details.</setting>
+		<setting id="yvarslot">This is the <i>y</i> argument. Note that this is not always needed, and does not have an effect for some types of x variables.</setting>
+		<caption id="tab_options"/>
+		<setting id="plotoptions">Further generic plot options. Refer to <link href="rkward://component/plot_options"/> for details. Note that some of these settings may not have an effect, depending on the type of plot actually produced.</setting>
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://rhelp/plot"/></li>
+			<li><link href="rkward://component/plot_options"/></li>
+		</ul>
+	</related>
+</document>
+

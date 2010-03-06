@@ -1,0 +1,17 @@
+<!DOCTYPE rkplugin>
+
+<document>
+	<code file="levene_test.php"/>
+	<help file="levene_test.rkh"/>
+	
+	<dialog label="Levene's Test">
+		<row>
+			<varselector id="vars"/>
+				<column>
+					<varslot type="numeric" id="y" source="vars" required="true" label="response variable"/>
+					<varslot type="factor" id="group" source="vars" required="true" label="groups"/>
+				</column>
+		</row>
+	</dialog>
+	
+</document>

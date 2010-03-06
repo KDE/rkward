@@ -1,0 +1,21 @@
+<!DOCTYPE rkhelp>
+<document>
+	<summary>
+		Perform a simple linear regression. Currently, this plugin provides only basic functionality. For more options refer to <link href="rkward://rhelp/lm"/>.
+	</summary>
+
+	<usage>
+		Select the variable to be predicted (dependent), and one or more independent variables.
+	</usage>
+
+	<settings>
+		<setting id="y">The dependent variable. This must be numeric.</setting>
+		<setting id="x">One or more independent variables, each of the same length as the dependent. Note that factor variables are treated as categorial predictors, while numeric variables are treated as continuous predictors, automatically.</setting>
+		<setting id="intercept">Should an intercept term be included in the model?</setting>
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://rhelp/lm"/></li>
+		</ul>
+	</related>
+</document>

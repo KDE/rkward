@@ -1,0 +1,76 @@
+<!DOCTYPE rkplugin>
+	<document>
+	<code file="box_plot.php" />
+	<logic>
+		<connect client="plotoptions.xvar" governor="x.available"/>
+		<set id="plotoptions.allow_type" to="true"/>
+		<set id="plotoptions.allow_ylim" to="true"/>
+		<set id="plotoptions.allow_xlim" to="false"/>
+		<set id="plotoptions.allow_log" to="false"/>	
+		<set id="plotoptions.allow_grid" to="true"/>
+		
+		<convert id="custom_names" mode="equals" sources="names_mode.string" standard="custom"/>
+		<convert id="rexp_names" mode="equals" sources="names_mode.string" standard="rexp"/>
+		<connect client="names_custom.visible" governor="rexp_names.not"/>
+		<connect client="names_custom.enabled" governor="custom_names"/>
+		<connect client="names_exp.visible" governor="rexp_names"/>
+		<connect client="names_exp.required" governor="rexp_names"/>
+
+		<connect client="pch_mean.enabled" governor="mean.state"/>
+		<connect client="pch_sd_high.enabled" governor="sd.state"/>
+		<connect client="pch_sd_low.enabled" governor="sd.state"/>
+		<convert id="sd_or_mean" mode="or" sources="mean.state;sd.state"/>
+		<connect client="size_and_color_frame.enabled" governor="sd_or_mean"/>
+	</logic>
+	<dialog label="Boxplot" >
+	<tabbook>
+		<tab label="Variable(s)" >
+			<row>
+				<varselector id="vars" />
+				<varslot multi="true" type="numeric" source="vars" id="x" label="variable(s):" required="true" />
+				<stretch/>
+				<frame label="Labels">
+					<radio id="names_mode" label="Labeling" >
+						<option value="default" label="Default labels" checked="true"/>
+						<option value="custom" label="Custom labels"/>
+						<option value="rexp" label="From R expression"/>
+					</radio>
+					<input id="names_exp" label="Expression to use for labels" initial="names (x)"/>
+					<input id="names_custom" label="Labels (separated by ';')" initial="First label;Second label"/>
+				</frame>
+			</row>
+			<preview id="preview"/>
+		</tab>
+		<tab label="Options" >
+			<row>
+				<column>
+					<radio id="orientation" label="orientation" >
+						<option value="TRUE" label="horizontal" />
+						<option checked="true" value="FALSE" label="vertical" />
+					</radio>
+					<checkbox id="notch" label="Draw Notches" checked="false" value="TRUE" value_unchecked="FALSE" />
+					<checkbox id="outline" label="Outline" checked="true" value="TRUE" value_unchecked="FALSE" />
+					<stretch/>
+					<frame id="size_and_color_frame" label="Size and color of marks">
+						<spinbox type="real" id="cex_sd_mean" label="size" initial="1"/>
+						<embed id="sd_mean_color" component="rkward::color_chooser" label="Color"/>
+					</frame>
+				</column>
+				<column>
+					<frame label="Mean">
+						<checkbox id="mean" checked="false" value="TRUE" label="show mean" />
+						<spinbox type="integer" id="pch_mean" label="mean symbol" initial="15"/>
+					</frame>
+					<frame label="SD">
+						<checkbox id="sd" checked="false" value="TRUE" label="show standard deviation" />
+						<spinbox type="integer" id="pch_sd_high" label="standard deviation symbol (upper)" initial="3"/>
+						<spinbox type="integer" id="pch_sd_low" label="standard deviation symbol (lower)" initial="3"/>
+					</frame>
+					<embed id="plotoptions" component="rkward::plot_options" as_button="true" label="Plot Options" />
+					<stretch/>
+				</column>
+			</row>
+		</tab>
+	</tabbook>
+</dialog>
+</document>

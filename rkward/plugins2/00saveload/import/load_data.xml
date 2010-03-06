@@ -1,0 +1,19 @@
+<!DOCTYPE rkplugin>
+<document> 
+	<code file="load_data.php"/>
+	<help file="load_data.rkh"/>
+	<logic>
+		<convert id="use_globalenv" mode="equals" sources="other_env.state" standard="0"/>
+		<connect client="globalenv_warning.visible" governor="use_globalenv"/>
+
+		<connect client="envir.enabled" governor="other_env.state"/>
+		<connect client="otherenv_warning.visible" governor="other_env.state"/>
+	</logic>
+	<dialog label="Load an R data file">
+		<browser size="small" id="file" label="R data file to load" filter="*.RData" />
+		<text id="globalenv_warning" type="warning">WARNING: This may overwrite existing objects in .GlobalEnv. Be sure to save your workspace, first.</text>
+		<checkbox id="other_env" label="Save to specified environment" value="1" value_unchecked="0"/>
+		<saveobject id="envir" label="Environment to save to" initial="my.env"/>
+		<text id="otherenv_warning" type="warning">WARNING: If the environment already exists, all objects inside it will be lost.</text>
+	</dialog>
+</document>

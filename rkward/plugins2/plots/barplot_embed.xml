@@ -1,0 +1,36 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="barplot_embed.php" />
+	<help file="barplot_embed.rkh" />
+	<logic>
+		<external id="xvar" default=""/>
+		<set id="plotoptions.allow_ylim" to="false"/>
+		<set id="plotoptions.allow_xlim" to="false"/>
+		<set id="plotoptions.allow_type" to="false"/>
+
+		<convert id="juxtaposed" mode="equals" sources="type.string" standard="juxtaposed" />
+		<connect client="labels.enabled" governor="juxtaposed" />
+		<convert id="labelsvalue" mode="and" sources="labels.state;labels.enabled" />
+		<connect client="place.enabled" governor="labelsvalue" />
+	</logic>
+	<dialog label="Barplot Options">
+		<checkbox id="legend" label="Draw Legend" value="1" value_unchecked="0" checked="false"/>
+		<radio id="colors" label="Colors" >
+			<option value="default" label="Default (grayscale)" checked="true" />
+			<option value="rainbow" label="Rainbow colors" />
+		</radio>
+		<radio id="type" label="Type" >
+			<option value="juxtaposed" label="Juxtaposed" checked="true"/>
+			<option value="stacked" label="Stacked"/>
+		</radio>
+		<frame id="Value labels">
+			<checkbox id="labels" label="Display values" value="1" value_unchecked="0"/>
+			<radio id="place" label="Placement">
+				<option value="3" label="Above Bars" checked="true"/>
+				<option value="2" label="Beside Bars"/>
+				<option value="1" label="Inside Bars"/>
+			</radio>
+		</frame>
+		<embed id="plotoptions" component="rkward::plot_options" as_button="true" label="Plot Options"/>
+	</dialog>	
+</document>

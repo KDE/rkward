@@ -1,0 +1,96 @@
+<!DOCTYPE rkplugin>
+<document>
+<!--	<code file="color_chooser.php" /> -->
+<!-- WHAT IS THIS?
+     It's a very dirty hack to make the color chooser fast. This is needed, as the color chooser is often embedded many times into a single plugin. Starting a separate PHP process for each of those would be insane. So we need something different...
+     
+     This will eventually be replaced by a different (and clean!) scripting solution. For now: don't imitate this! -->
+	<code printout="$$$argument$$$$$$color.string$$$$$$have_col.numeric$$$!!!!?!%3!=!0!:!!?!!=!!:!%1&quot;%2&quot;"/>
+	<help file="color_chooser.rkh" />
+	<logic>
+		<external id="argument" default=", col=" />
+		<external id="default_color" default="" />
+		<connect client="color.string" governor="default_color"/>
+		
+		<convert id="have_col" mode="notequals" sources="color.string" standard=""/>
+	</logic>
+	<dialog label="Choose color" >
+		<dropdown id="color" label="Color">
+			<option value="" label="default" checked="true" />
+			<option value="azure" label="Azure" />
+			<option value="black" label="Black" />
+			<option value="blue" label="Blue" />
+			<option value="blue1" label="Blue1" />
+			<option value="blue2" label="Blue2" />
+			<option value="blue3" label="Blue3" />
+			<option value="blue4" label="Blue4" />
+			<option value="brown" label="Brown" />
+			<option value="cyan" label="Cyan" />
+			<option value="darkviolet" label="Darkviolet" />
+			<option value="gold" label="Gold" />
+			<option value="gray" label="Gray" />
+			<option value="gray1" label="Gray1" />
+			<option value="gray2" label="Gray2" />
+			<option value="gray3" label="Gray3" />
+			<option value="gray4" label="Gray4" />
+			<option value="green" label="Green" />
+			<option value="green1" label="Green1" />
+			<option value="green2" label="Green2" />
+			<option value="green3" label="Green3" />
+			<option value="green4" label="Green4" />
+			<option value="grey" label="Grey" />
+			<option value="grey1" label="Grey1" />
+			<option value="grey2" label="Grey2" />
+			<option value="grey3" label="Grey3" />
+			<option value="grey4" label="Grey4" />
+			<option value="lawngreen" label="Lawngreen" />
+			<option value="limegreen" label="Limegreen" />
+			<option value="linen" label="Linen" />
+			<option value="magenta" label="Magenta" />
+			<option value="magenta1" label="Magenta1" />
+			<option value="magenta2" label="Magenta2" />
+			<option value="magenta3" label="Magenta3" />
+			<option value="magenta4" label="Magenta4" />
+			<option value="mintcream" label="Mintcream" />
+			<option value="mistyrose" label="Mistyrose" />
+			<option value="navajowhite" label="Navajowhite" />
+			<option value="orange" label="Orange" />
+			<option value="orchid" label="Orchid" />
+			<option value="palegreen" label="Palegreen" />
+			<option value="papayawhip" label="Papayawhip" />
+			<option value="peachpuff" label="Peachpuff" />
+			<option value="pink" label="Pink" />
+			<option value="red" label="Red" />
+			<option value="red1" label="Red1" />
+			<option value="red2" label="Red2" />
+			<option value="red3" label="Red3" />
+			<option value="red4" label="Red4" />
+			<option value="royalblue" label="Royalblue" />
+			<option value="salmon" label="Salmon" />
+			<option value="sandybrown" label="Sandybrown" />
+			<option value="seagreen" label="Seagreen" />
+			<option value="sienna" label="Sienna" />
+			<option value="skyblue" label="Skyblue" />
+			<option value="slategrey" label="Slategrey" />
+			<option value="snow" label="Snow" />
+			<option value="springgreen" label="Springgreen" />
+			<option value="steelblue" label="Steelblue" />
+			<option value="tan" label="Tan" />
+			<option value="thistle" label="Thistle" />
+			<option value="tomato" label="Tomato" />
+			<option value="violet" label="Violet" />
+			<option value="violetred1" label="Violetred1" />
+			<option value="violetred2" label="Violetred2" />
+			<option value="violetred3" label="Violetred3" />
+			<option value="violetred4" label="Violetred4" />
+			<option value="wheat" label="Wheat" />
+			<option value="white" label="White" />
+			<option value="yellow" label="Yellow" />
+			<option value="yellow1" label="Yellow1" />
+			<option value="yellow2" label="Yellow2" />
+			<option value="yellow3" label="Yellow3" />
+			<option value="yellow4" label="Yellow4" />
+			<option value="yellowgreen" label="Yellowgreen" />
+		</dropdown>
+	</dialog>
+</document>

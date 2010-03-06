@@ -1,0 +1,61 @@
+<!DOCTYPE rkplugin>
+<!-- This is a simple example, of how a "plugin" might be configured. -->
+<document>
+	<code file="descriptive_statistics.php" />
+	<help file="descriptive_statistics.rkh" />
+
+	<dialog label="Descriptive Statistics" >
+		<tabbook>
+			<tab label="Variables" id="tab_variables">
+				<row>
+					<column>
+						<varselector id="vars" />
+					</column>
+					<column>
+						<varslot multi="true" type="numeric" source="vars" id="x" num_dimensions="1" label="variable(s):" required="true" />
+					</column>
+				</row>
+			</tab>
+			<tab label="Mean Standard Deviation" id="tab_mean_sd">
+				<column>
+					<checkbox value_unchecked="0" checked="true" value="1" id="mean" label="mean" />
+					<spinbox type="real" initial="0" min="0" id="trim" max="0.5" label="trim" />
+				</column>
+				<column>
+					<checkbox value_unchecked="0" checked="true" value="1" id="sd" label="standard deviation" />
+				</column>
+				<stretch/>
+			</tab>
+			<tab label="Median, MAD" id="tab_median_mad">
+				<column>
+					<frame label="Median" >
+						<checkbox value_unchecked="0" value="1" id="median" label="median" />
+					</frame>
+					<frame label="Median Absolute Deviation (mad)" >
+						<checkbox value_unchecked="0" value="1" id="mad" label="mad" />
+						<spinbox type="real" initial="1.4628" id="constMad" label="Constant" />
+						<radio id="mad_type" label="Treatment of even sample sizes" >
+							<option value="low" label="use lo-median" />
+							<option value="average" label="use average" checked="true" />
+							<option value="high" label="use hi-median" />
+						</radio>
+					</frame>
+					<stretch/>
+				</column>
+			</tab>
+			<tab label="Range, Sum, Product and Length" id="tab_range_etc">
+				<row>
+					<column>
+						<frame>
+							<checkbox value_unchecked="0" checked="true" value="1" id="range" label="range" />
+							<checkbox value_unchecked="0" value="1" id="sum" label="sum" />
+							<checkbox value_unchecked="0" value="1" id="prod" label="prod" />
+							<checkbox value_unchecked="0" value="1" id="length" label="Length and NAs" checked="true" />
+						</frame>
+						<stretch/>
+					</column>
+				</row>
+			</tab>
+		</tabbook>
+	</dialog>
+</document>

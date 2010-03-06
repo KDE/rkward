@@ -1,0 +1,28 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="plot_hypergeometric_distribution.php" />
+	<help file="plot_hypergeometric_distribution.rkh" />
+	<logic>
+		<insert snippet="common_logic"/>
+		<set id="plotoptions.default_pointtype" to="p"/>
+	</logic>
+	<snippets>
+		<snippet id="range_options">
+			<frame label="Range" >
+				<spinbox type="integer" min = "0" id="min" initial="0" label="Lower quantile" />
+				<spinbox type="integer" min = "0" id="max" initial="12" label="Upper quantile (at most k)" />
+			</frame>
+		</snippet>
+		<snippet id="dist_options">
+			<frame label="Parameters">
+				<spinbox type="integer" id="m" min="0" initial="12" label="Number of white balls (m)" />
+				<spinbox type="integer" id="n_val" min="0" initial="12" label="Number of black balls (n)" />
+				<spinbox type="integer" id="k" min="0" initial="15" label="Number of balls drawn (k)" />
+			</frame>
+		</snippet>
+		<include file="plot_dist_common_snippets.xml"/>
+	</snippets>
+	<dialog label="Plot hypergeometric probabilities" >
+		<insert snippet="dialog_layout"/>
+	</dialog>
+</document>

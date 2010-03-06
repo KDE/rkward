@@ -1,0 +1,22 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="plot_t_clt.php" />
+	<help file="plot_t_clt.rkh" />
+	<snippets>
+		<snippet id="dist_options">
+			<frame id="frame_tparam" label="t Parameters">
+				<spinbox default_precision="1" type="real" id="df" min="2.01" initial="3" label="Degrees of freedom" />
+				<spinbox default_precision="1" type="real" id="ncp" initial="0" label="Non-centrality parameter" />
+			</frame>
+		</snippet>
+		<include file="plot_clt_snippets.xml"/>
+	</snippets>
+	<logic>
+		<insert snippet="clt_logic"/>
+		<set id="dist_stepfun.default_dopoints" to="false" />
+		<set id="plotoptions.default_main" to="t"/>
+	</logic>
+	<dialog label="Central Limit Theorem: t to Normal" >
+		<insert snippet="clt_layout"/>
+	</dialog>
+</document>

@@ -1,0 +1,15 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="tukey_probabilities.php" />
+	<snippets>
+		<snippet id="dist_options">
+			<spinbox min="1" type="integer" initial="2" id="nmeans" label="Sample size for range"/>
+			<input default_precision="2" initial="5" id="df" label="Degrees of freedom for s"/>
+			<spinbox default_precision="2" type="integer" initial="1" min="0" id="nranges" label="Number of groups whose maximum range is considered"/>
+		</snippet>
+		<include file="dist_snippets.xml"/>
+	</snippets>
+	<dialog label="Studentized Range Distribution" >
+		<insert snippet="probabilities_layout"/>
+	</dialog>
+</document>

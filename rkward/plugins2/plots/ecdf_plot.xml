@@ -1,0 +1,68 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="ecdf_plot.php" />
+	<help file="ecdf_plot.rkh" />
+	<logic>
+		<connect client="plotoptions.xvar" governor="x.available"/>
+		<set id="plotoptions.allow_log" to="false"/>
+		<set id="plotoptions.allow_type" to="false"/>
+		<set id="plotoptions.allow_asp" to="true"/>
+
+		<set id="stepfun_options.allow_addtoplot" to="false"/>
+		<set id="stepfun_options.default_verticals" to="false"/>
+		<set id="stepfun_options.allow_col01line" to="true"/>
+
+		<connect client="col_thnorm.enabled" governor="th_pnorm.state"/>
+		<connect client="adjust_th_pnorm.enabled" governor="th_pnorm.state"/>
+
+		<connect client="side.enabled" governor="rug.state"/>
+		<connect client="ticksize.enabled" governor="rug.state"/>
+		<connect client="lwd.enabled" governor="rug.state"/>
+		<connect client="col_rug.enabled" governor="rug.state"/>
+	</logic>
+	<dialog label="Empirical Distribution Function" >
+		<tabbook>
+			<tab label="Variable(s)" id="tab_variables">
+				<row>
+					<varselector id="vars" />
+					<column>
+						<varslot multi="false" type="numeric" id="x" source="vars" label="variable(s):" required="true" />
+						<preview id="preview"/>
+					</column>
+					<stretch/>
+				</row>
+			</tab>
+			<tab label="Step function options" id="tab_stepfun_opts">
+				<embed id="stepfun_options" component="rkward::plot_stepfun_options" label="Step function plot options"/>
+				<stretch/>
+			</tab>
+			<tab label="Further options" id="tab_further_opts">
+				<frame label="Theoretical Normal Distribution">
+					<checkbox value_unchecked="0" value="1" checked="false" id="th_pnorm" label="Draw Theoretical Normal Distribution" />
+					<checkbox value_unchecked="0" value="1" checked="true" id="adjust_th_pnorm" label="Adjust to mean and sd of data" />
+					<embed id="col_thnorm" component="rkward::color_chooser" label="Color"/>
+				</frame>
+				<frame label="Rug">
+					<checkbox value_unchecked="0" value="1" checked="true" id="rug" label="Add rug to plot" />
+					<row>
+						<radio label="Side of Rug" id="side">
+							<option value="side = 1" label="Rug on bottom" />
+							<option value="side = 3" label="Rug on top" />
+						</radio>
+						<column>
+							<spinbox initial="0.03" id="ticksize" label="Ticksize" />
+							<spinbox initial="0.5" id="lwd" label="Line width of ticks" />
+							<embed id="col_rug" component="rkward::color_chooser" label="Color"/>
+						</column>
+					</row>
+				</frame>
+				<stretch/>
+			</tab>
+			<tab label="Title/Axis" id="tab_plot_opts">
+				<column>
+					<embed id="plotoptions" component="rkward::plot_options" as_button="false" label="Plot Options" />
+				</column>
+			</tab>
+		</tabbook>
+	</dialog>
+</document>

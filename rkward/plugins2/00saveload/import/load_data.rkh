@@ -1,0 +1,27 @@
+<!DOCTYPE rkhelp>
+<document>
+	<summary>
+Load an R data file.
+	</summary>
+
+	<usage>
+Chose the R file to import. This would be a file created e.g. by saving the workspace from RKWard, using the R <link href="rkward://rhelp/save">save()</link> command, or the <link href="rkward://component/save_r"/> plugin. The main difference to loading a workspace via Workspace-&gt;Open Workspace, is that the workspace is not cleaned, first, but rather merged with your existing workspace. If in doubt, use Workspace-&gt;Open Workspace, instead of this plugin.
+
+Be sure to save your workspace before using this plugin, as your variables will be overwritten, if the loaded workspace contains objects of the same names.
+	</usage>
+
+	<settings>
+		<setting id="file">The filename of the file to load</setting>
+		<setting id="other_env">Should the data be loaded into another (specified environment) instead of the global environment?</setting>
+		<setting id="envir">Only applicable, if the above option is checked. Name of the environment to load the data to. If this does not yet exist, it will be created. If it already exists, it will be overwritten completely, i.e. deleting all objects inside it!</setting>
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://component/import_csv"/></li>
+			<li><link href="rkward://component/save_r"/></li>
+			<li><link href="rkward://rhelp/load"/></li>
+			<li><link href="rkward://rhelp/save"/></li>
+			<li><link href="rkward://page/rkward_for_new_users"/></li>
+		</ul>
+	</related>
+</document>
