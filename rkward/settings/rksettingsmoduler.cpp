@@ -2,7 +2,7 @@
                           rksettingsmoduler  -  description
                              -------------------
     begin                : Wed Jul 28 2004
-    copyright            : (C) 2004, 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -260,7 +260,7 @@ QStringList RKSettingsModuleR::makeRRunTimeOptionCommands () {
 	// register as interactive
 	list.append ("try (deviceIsInteractive(name=\"rk.screen.device\"))\n");
 	list.append ("options (help_type=\"html\")\n");		// for R 2.10.0 and above
-	list.append ("options (htmlhelp=TRUE); options (chmhelp=FALSE)\n");	// COMPAT: for R 2.9.x and below
+	list.append ("try ({options (htmlhelp=TRUE); options (chmhelp=FALSE)})\n");	// COMPAT: for R 2.9.x and below
 	list.append ("options (browser=rk.show.html)\n");
 
 	return list;
