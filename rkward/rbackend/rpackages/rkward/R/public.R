@@ -136,16 +136,37 @@
 }
 
 # Requests a graph to be written.
-"rk.graph.on" <- function (width=480, height=480, ...)
+rk.graph.on <- function (width=getOption ("rk.graphics.width"), height=getOption ("rk.graphics.heigth"), ...) 
 {
-    filename <- rk.get.tempfile.name(prefix = "graph", extension = ".png")
-    png(filename=file.path(filename), width=width, height=height, ...)
-    cat(paste("<img src=\"", filename, "\" width=\"", width, "\" height=\"", height, "\"><br>", sep = ""), 
-        file = rk.get.output.html.file(), append = TRUE)
+	if (!is.numeric (width)) width <- 480
+	if (!is.numeric (height)) height <- 480
+
+	device.type <- getOption ("rk.graphics.type")
+	if (is.null (device.type)) device.type <- "PNG"	# default behavior is PNG for now
+
+	ret <- NULL
+	if (device.type == "PNG") {
+		filename <- rk.get.tempfile.name(prefix = "graph", extension = ".png")
+		ret <- png(filename = file.path(filename), width = width, height = height, ...)
+		.rk.cat.output(paste("<img src=\"", filename, "\" width=\"", width, 
+			"\" height=\"", height, "\"><br>", sep = ""))
+	} else if (device.type == "SVG") {
+		filename <- rk.get.tempfile.name(prefix = "graph", extension = ".svg")
+		ret <- svg(filename = file.path(filename), ...)
+		.rk.cat.output(paste("<object data=\"", filename, "\" type=\"image/svg+xml\" width=\"", width, 
+			"\" height=\"", height, "\">\n", sep = ""))
+		.rk.cat.output(paste("<param name=\"src\" value=\"", filename, "\">\n", sep = ""))
+		.rk.cat.output(paste("This browser appears incapable of displaying SVG object. The SVG source is at:", filename))
+		.rk.cat.output("</object>")
+	} else {
+		stop (paste ("Device type \"", device.type, "\" is unknown to RKWard", sep=""))
+	}
+
+	invisible (ret)
 }
 
 "rk.graph.off" <- function(){
-	cat ("\n", file = rk.get.output.html.file(), append = TRUE)	# so the output will be auto-refreshed
+	.rk.cat.output ("\n")	# so the output will be auto-refreshed
 	dev.off()
 }
 

@@ -19,6 +19,7 @@
 #include "rinterface.h"
 #include "rcommandstack.h"
 #include "../settings/rksettingsmoduler.h"
+#include "../settings/rksettingsmoduleoutput.h"
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../rkglobals.h"
 #include "../rkward.h"		// for startup options
@@ -514,7 +515,7 @@ int RThread::initialize () {
 	delete [] help_base_url;
 
 // apply user configurable run time options
-	QStringList commands = RKSettingsModuleR::makeRRunTimeOptionCommands () + RKSettingsModuleRPackages::makeRRunTimeOptionCommands ();
+	QStringList commands = RKSettingsModuleR::makeRRunTimeOptionCommands () + RKSettingsModuleRPackages::makeRRunTimeOptionCommands () + RKSettingsModuleOutput::makeRRunTimeOptionCommands ();
 	for (QStringList::const_iterator it = commands.begin (); it != commands.end (); ++it) {
 		runCommandInternal ((*it).toLocal8Bit (), &error);
 		if (error) {

@@ -2,7 +2,7 @@
                           rksettingsmoduleoutput  -  description
                              -------------------
     begin                : Fri Jul 30 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -19,7 +19,11 @@
 
 #include "rksettingsmodule.h"
 
+#include <QStringList>
+
 class QCheckBox;
+class QComboBox;
+class KIntSpinBox;
 
 /**
 @author Thomas Friedrichsmeier
@@ -27,13 +31,15 @@ class QCheckBox;
 class RKSettingsModuleOutput : public RKSettingsModule {
 	Q_OBJECT
 public:
-    RKSettingsModuleOutput (RKSettings *gui, QWidget *parent);
-
-    ~RKSettingsModuleOutput ();
+	RKSettingsModuleOutput (RKSettings *gui, QWidget *parent);
+	~RKSettingsModuleOutput ();
 	
 	bool hasChanges ();
 	void applyChanges ();
 	void save (KConfig *config);
+
+/** generate the commands needed to set the R run time options */
+	static QStringList makeRRunTimeOptionCommands ();
 	
 	static void saveSettings (KConfig *config);
 	static void loadSettings (KConfig *config);
@@ -47,9 +53,15 @@ public slots:
 private:
 	QCheckBox *auto_show_box;
 	QCheckBox *auto_raise_box;
+	QComboBox *graphics_type_box;
+	KIntSpinBox *graphics_width_box;
+	KIntSpinBox *graphics_height_box;
 
 	static bool auto_show;
 	static bool auto_raise;
+	static QString graphics_type;
+	static int graphics_width;
+	static int graphics_height;
 };
 
 #endif

@@ -2,7 +2,7 @@
                           rksettingsmoduleoutput  -  description
                              -------------------
     begin                : Fri Jul 30 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -19,19 +19,25 @@
 #include <klocale.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
+#include <knuminput.h>
 
 #include <qlayout.h>
 #include <qlabel.h>
 #include <QGroupBox>
 #include <qcheckbox.h>
 #include <QVBoxLayout>
+#include <QComboBox>
 
 #include "../rkglobals.h"
+#include "../rbackend/rinterface.h"
 #include "../debug.h"
 
 // static members
 bool RKSettingsModuleOutput::auto_show;
 bool RKSettingsModuleOutput::auto_raise;
+QString RKSettingsModuleOutput::graphics_type;
+int RKSettingsModuleOutput::graphics_width;
+int RKSettingsModuleOutput::graphics_height;
 
 RKSettingsModuleOutput::RKSettingsModuleOutput (RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
 	RK_TRACE (SETTINGS);
@@ -40,13 +46,38 @@ RKSettingsModuleOutput::RKSettingsModuleOutput (RKSettings *gui, QWidget *parent
 	
 	QGroupBox *group = new QGroupBox (i18n ("Output Window options"), this);
 	QVBoxLayout* group_layout = new QVBoxLayout (group);
-	group_layout->addWidget (auto_show_box = new QCheckBox ("show window on new output", group));
+	group_layout->addWidget (auto_show_box = new QCheckBox (i18n ("show window on new output"), group));
 	auto_show_box->setChecked (auto_show);
 	connect (auto_show_box, SIGNAL (stateChanged (int)), this, SLOT (boxChanged (int)));
-	group_layout->addWidget (auto_raise_box = new QCheckBox ("raise window on new output", group));
+	group_layout->addWidget (auto_raise_box = new QCheckBox (i18n ("raise window on new output"), group));
 	auto_raise_box->setChecked (auto_raise);
 	auto_raise_box->setEnabled (auto_show);
 	connect (auto_raise_box, SIGNAL (stateChanged (int)), this, SLOT (boxChanged (int)));
+
+	main_vbox->addWidget (group);
+
+	group = new QGroupBox (i18n ("Graphics"), this);
+	group_layout = new QVBoxLayout (group);
+	QHBoxLayout *h_layout = new QHBoxLayout (group);
+	group_layout->addLayout (h_layout);
+	h_layout->addWidget (new QLabel (i18n ("File format"), group));
+	h_layout->addWidget (graphics_type_box = new QComboBox (group));
+	h_layout->addStretch ();
+	graphics_type_box->addItem (i18n ("<Default>"), QString ("NULL"));
+	graphics_type_box->addItem (i18n ("PNG"), QString ("\"PNG\""));
+	graphics_type_box->addItem (i18n ("SVG"), QString ("\"SVG\""));
+	graphics_type_box->setCurrentIndex (graphics_type_box->findData (graphics_type));
+	graphics_type_box->setEditable (false);
+	connect (graphics_type_box, SIGNAL (currentIndexChanged (int)), this, SLOT (boxChanged (int)));
+	h_layout = new QHBoxLayout (group);
+	group_layout->addLayout (h_layout);
+	h_layout->addWidget (new QLabel (i18n ("Width:"), group));
+	h_layout->addWidget (graphics_width_box = new KIntSpinBox (1, INT_MAX, 1, graphics_width, group));
+	h_layout->addWidget (new QLabel (i18n ("Height:"), group));
+	h_layout->addWidget (graphics_height_box = new KIntSpinBox (1, INT_MAX, 1, graphics_height, group));
+	h_layout->addStretch ();
+	connect (graphics_width_box, SIGNAL (valueChanged (int)), this, SLOT (boxChanged (int)));
+	connect (graphics_height_box, SIGNAL (valueChanged (int)), this, SLOT (boxChanged (int)));
 
 	main_vbox->addWidget (group);
 
@@ -78,6 +109,14 @@ void RKSettingsModuleOutput::applyChanges () {
 
 	auto_show = auto_show_box->isChecked ();
 	auto_raise = auto_raise_box->isChecked ();
+
+	graphics_type = graphics_type_box->itemData (graphics_type_box->currentIndex ()).toString ();
+	graphics_width = graphics_width_box->value ();
+	graphics_height = graphics_height_box->value ();
+	QStringList commands = makeRRunTimeOptionCommands ();
+	for (QStringList::const_iterator it = commands.begin (); it != commands.end (); ++it) {
+		RKGlobals::rInterface ()->issueCommand (*it, RCommand::App, QString::null, 0, 0, commandChain ());
+	}
 }
 
 void RKSettingsModuleOutput::save (KConfig *config) {
@@ -92,6 +131,9 @@ void RKSettingsModuleOutput::saveSettings (KConfig *config) {
 	KConfigGroup cg = config->group ("Output Window");
 	cg.writeEntry ("auto_show", auto_show);
 	cg.writeEntry ("auto_raise", auto_raise);
+	cg.writeEntry ("graphics_type", graphics_type);
+	cg.writeEntry ("graphics_width", graphics_width);
+	cg.writeEntry ("graphics_height", graphics_height);
 }
 
 void RKSettingsModuleOutput::loadSettings (KConfig *config) {
@@ -100,6 +142,22 @@ void RKSettingsModuleOutput::loadSettings (KConfig *config) {
 	KConfigGroup cg = config->group ("Output Window");
 	auto_show = cg.readEntry ("auto_show", true);
 	auto_raise = cg.readEntry ("auto_raise", true);
+	graphics_type = cg.readEntry ("graphics_type", "NULL");
+	graphics_width = cg.readEntry ("graphics_width", 480);
+	graphics_height = cg.readEntry ("graphics_height", 480);
+}
+
+//static
+QStringList RKSettingsModuleOutput::makeRRunTimeOptionCommands () {
+	QStringList list;
+
+// output format options
+	QString command = "options (\"rk.graphics.type\"=" + graphics_type;
+	command.append (", \"rk.graphics.width\"=" + QString::number (graphics_width));
+	command.append (", \"rk.graphics.height\"=" + QString::number (graphics_height));
+	list.append (command + ")\n");
+	
+	return (list);
 }
 
 #include "rksettingsmoduleoutput.moc"
