@@ -1,3 +1,4 @@
+- Fixed: Frequent crashes while running automated plugintests
 - Fixed: Filenames without extension would not be shown in file dialogs
 - Fixed: Calling "fix(my.fun)" would remove comments
 - Fixed: Removing "@CRAN@" from the repositories would break package installation
