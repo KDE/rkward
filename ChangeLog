@@ -1,3 +1,4 @@
+- Add SVG support to export (graphics) plugin
 - Add basic settings format settings for graphics output		TODO: somehow, SVG does not work correctly in khtmlpart, thus not the default for now. Can we do anything about this?
 - Convert all plugins to use ECMAscript instead of PHP; RKWard no longer depends on PHP
 - Fixed: Frequent crashes while running automated plugintests

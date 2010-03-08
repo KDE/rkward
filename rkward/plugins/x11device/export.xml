@@ -15,14 +15,13 @@
 		<convert id="isPSPDFGS" mode="or" sources="isPSPDF;isGS" />
 		<convert id="isJPEGPNGGS" mode="or" sources="isJPEGPNG;isGS" />
 		<convert id="isPSGS" mode="or" sources="isPS;isGS" />
-		<convert id="isnotGS" mode="or" sources="isPSPDF;isJPEGPNG" />
 
 		<connect client="formateps.enabled" governor="isPS"/>
 		<convert id="isEPS" mode="and" sources="formateps.enabled;formateps.state"/>
 		<convert id="allowOrientation" mode="and" sources="isPSGS;isEPS.not"/>
 
-		<connect client="autoextension.state" governor="isnotGS"/>
-		<connect client="autoextension.enabled" governor="isnotGS"/>
+		<connect client="autoextension.state" governor="isGS.not"/>
+		<connect client="autoextension.enabled" governor="isGS.not"/>
 
 		<connect client="tab_more_options.enabled" governor="isPSPDFGS" />
 
@@ -80,6 +79,7 @@
 						<radio id="format" label="Output format" >
 							<option value="postscript" label="Postscript" checked="true"/>
 							<option value="pdf" label="PDF" />
+							<option value="svg" label="SVG" />
 							<option value="png" label="PNG" />
 							<option value="jpeg" label="JPEG" />
 							<option value="gs" label="via Ghostscript" />

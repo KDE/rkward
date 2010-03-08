@@ -4,7 +4,7 @@
 		Export the current contents of a graphics device to a postscript/pdf/png/jpeg file either using the native functions or using ghostscript.
 	</summary>
 	<usage>
-		Chose an exporting function and a filename to save to. Additional options for size and resolution etc. are also available (see below). Exporting is done using <b>dev.print</b>. For exporting using ghostscript, <b>dev2bitmap</b> is used, which needs Ghostscript. Most of the exporting parameters are directly sent to the exporting function (<b>postscript</b> or <b>pdf</b> or <b>png</b> or <b>jpeg</b>) by dev.print. Note that there are no 'color' options (like background or foreground color) in this plugin. This is because dev.print simply prints the current graphics (mostly on X11) to the spedified file in the chosen format. To set background (or foreground) colors, these will need to be provided when calling the plotting function, mostly using <b>par</b>(). Note that all the parameters to postscript are also valid parameters to dev2bitmap.
+		Chose an exporting function and a filename to save to. Additional options for size and resolution etc. are also available (see below). Exporting is done using <b>dev.print</b>. For exporting using ghostscript, <b>dev2bitmap</b> is used, which needs Ghostscript. Most of the exporting parameters are directly sent to the exporting function (<b>postscript</b>, <b>pdf</b>, <b>svg</b>, <b>png</b>, or <b>jpeg</b>) by dev.print. Note that there are no 'color' options (like background or foreground color) in this plugin. This is because dev.print simply prints the current graphics (mostly on X11) to the spedified file in the chosen format. To set background (or foreground) colors, these will need to be provided when calling the plotting function, mostly using <b>par</b>(). Note that all the parameters to postscript are also valid parameters to dev2bitmap.
 
 		This plugin is only available in the context of a graphics device.
 	</usage>
@@ -13,7 +13,7 @@
 
 		<setting id="file">The filename to save to. By default the file will be saved in the directory from where RkWard was started, which is the user's home directory when started from K-menu. After checking for a proper file extension, this is the <i>file</i> parameter to dev.print. For exporting via ghostscript provide a suitable extension.</setting>
 		<setting id="autoextension">Check this box to let RKWard detect the file extension automatically. If the filename specified in the 'File name' box already has a relevant extension, then nothing is done, that is, the specified filename is used. Otherwise a relevant extension is appended to the filename above to construct the full filename. This option is disabled for exporting via ghostscript.</setting>
-		<setting id="format">Choose whether to use postscript or pdf or png or jpeg for exporting the file. This is the <i>device</i> parameter to dev.print. If 'via Ghostscript' is chosen then the output format of the ghostscript device will need to be provided (see below under 'Ghostscript specific options').</setting>
+		<setting id="format">Choose whether to use postscript, pdf, svg, png or jpeg for exporting the file. This is the <i>device</i> parameter to dev.print. If 'via Ghostscript' is chosen then the output format of the ghostscript device will need to be provided (see below under 'Ghostscript specific options').</setting>
 		<setting id="formateps">When exporting in postscript format, this allows you to select, whether an EPSF (.eps-file) header should be generated. This seems to generate more portable files, so is recommended in most cases. Papersize and orientation can not be set in this case. This sets the <i>onefile</i> parameter to postscript to FALSE.</setting>
 
 		<caption id="frame_dimensions"/>
@@ -46,6 +46,7 @@
 			<li><link href="rkward://rhelp/dev.print"/></li>
 			<li><link href="rkward://rhelp/postscript"/></li>
 			<li><link href="rkward://rhelp/pdf"/></li>
+			<li><link href="rkward://rhelp/svg"/></li>
 			<li><link href="rkward://rhelp/png"/></li>
 			<li><link href="rkward://rhelp/jpeg"/></li>
 			<li><link href="rkward://rhelp/par"/></li>
