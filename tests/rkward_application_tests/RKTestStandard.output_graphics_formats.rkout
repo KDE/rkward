@@ -1,0 +1,5 @@
+<img src="graph.png" width="480" height="480"><br>
+<img src="graph.jpg" width="500" height="500"><br>
+<object data="graph.svg" type="image/svg+xml" width="300" height="480">
+<param name="src" value="graph.svg">
+This browser appears incapable of displaying SVG object. The SVG source is at: graph.svg</object>

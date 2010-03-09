@@ -44,6 +44,15 @@ suite <- new ("RKTestSuite", id="rkward_application_tests",
 			# promise should not be evaluated again
 			.GlobalEnv$promised.value <- 245
 			stopifnot (.GlobalEnv$promise.symbol == 123)
+		}),
+		new ("RKTest", id="output_graphics_formats", call=function () {
+			rk.graph.on(); plot (1, 1); rk.graph.off()	# should produce PNG, 480*480
+
+			options (rk.graphics.type="JPG", rk.graphics.width=500, rk.graphics.height=500, rk.graphics.jpg.quality=34)
+			rk.graph.on(); plot (1, 1); rk.graph.off()
+			rktest.initializeEnvironment ()	# restore options
+
+			rk.graph.on (device.type="SVG", width=300); plot (1, 1); rk.graph.off ()
 		})
 	# postCalls are run *after* all tests. Use this to clean up
 	), postCalls = list (
