@@ -56,12 +56,14 @@ private:
 	QComboBox *graphics_type_box;
 	KIntSpinBox *graphics_width_box;
 	KIntSpinBox *graphics_height_box;
+	KIntSpinBox *graphics_jpg_quality_box;
 
 	static bool auto_show;
 	static bool auto_raise;
 	static QString graphics_type;
 	static int graphics_width;
 	static int graphics_height;
+	static int graphics_jpg_quality;
 };
 
 #endif

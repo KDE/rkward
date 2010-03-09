@@ -38,6 +38,7 @@ bool RKSettingsModuleOutput::auto_raise;
 QString RKSettingsModuleOutput::graphics_type;
 int RKSettingsModuleOutput::graphics_width;
 int RKSettingsModuleOutput::graphics_height;
+int RKSettingsModuleOutput::graphics_jpg_quality;
 
 RKSettingsModuleOutput::RKSettingsModuleOutput (RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
 	RK_TRACE (SETTINGS);
@@ -62,17 +63,25 @@ RKSettingsModuleOutput::RKSettingsModuleOutput (RKSettings *gui, QWidget *parent
 	group_layout->addLayout (h_layout);
 	h_layout->addWidget (new QLabel (i18n ("File format"), group));
 	h_layout->addWidget (graphics_type_box = new QComboBox (group));
-	h_layout->addStretch ();
 	graphics_type_box->addItem (i18n ("<Default>"), QString ("NULL"));
 	graphics_type_box->addItem (i18n ("PNG"), QString ("\"PNG\""));
 	graphics_type_box->addItem (i18n ("SVG"), QString ("\"SVG\""));
+	graphics_type_box->addItem (i18n ("JPG"), QString ("\"JPG\""));
 	graphics_type_box->setCurrentIndex (graphics_type_box->findData (graphics_type));
 	graphics_type_box->setEditable (false);
 	connect (graphics_type_box, SIGNAL (currentIndexChanged (int)), this, SLOT (boxChanged (int)));
+	h_layout->addSpacing (2*RKGlobals::spacingHint ());
+	h_layout->addWidget (new QLabel (i18n ("JPG quality"), group));
+	h_layout->addWidget (graphics_jpg_quality_box = new KIntSpinBox (1, 100, 1, graphics_jpg_quality, group));
+	graphics_jpg_quality_box->setEnabled (graphics_type == "\"JPG\"");
+	connect (graphics_jpg_quality_box, SIGNAL (valueChanged (int)), this, SLOT (boxChanged (int)));
+	h_layout->addStretch ();
+
 	h_layout = new QHBoxLayout (group);
 	group_layout->addLayout (h_layout);
 	h_layout->addWidget (new QLabel (i18n ("Width:"), group));
 	h_layout->addWidget (graphics_width_box = new KIntSpinBox (1, INT_MAX, 1, graphics_width, group));
+	h_layout->addSpacing (2*RKGlobals::spacingHint ());
 	h_layout->addWidget (new QLabel (i18n ("Height:"), group));
 	h_layout->addWidget (graphics_height_box = new KIntSpinBox (1, INT_MAX, 1, graphics_height, group));
 	h_layout->addStretch ();
@@ -92,6 +101,7 @@ void RKSettingsModuleOutput::boxChanged (int) {
 	RK_TRACE (SETTINGS);
 	change ();
 	auto_raise_box->setEnabled (auto_show_box->isChecked ());
+	graphics_jpg_quality_box->setEnabled (graphics_type_box->itemData (graphics_type_box->currentIndex ()).toString () == "\"JPG\"");
 }
 
 QString RKSettingsModuleOutput::caption () {
@@ -113,6 +123,7 @@ void RKSettingsModuleOutput::applyChanges () {
 	graphics_type = graphics_type_box->itemData (graphics_type_box->currentIndex ()).toString ();
 	graphics_width = graphics_width_box->value ();
 	graphics_height = graphics_height_box->value ();
+	graphics_jpg_quality = graphics_jpg_quality_box->value ();
 	QStringList commands = makeRRunTimeOptionCommands ();
 	for (QStringList::const_iterator it = commands.begin (); it != commands.end (); ++it) {
 		RKGlobals::rInterface ()->issueCommand (*it, RCommand::App, QString::null, 0, 0, commandChain ());
@@ -134,6 +145,7 @@ void RKSettingsModuleOutput::saveSettings (KConfig *config) {
 	cg.writeEntry ("graphics_type", graphics_type);
 	cg.writeEntry ("graphics_width", graphics_width);
 	cg.writeEntry ("graphics_height", graphics_height);
+	cg.writeEntry ("graphics_jpg_quality", graphics_jpg_quality);
 }
 
 void RKSettingsModuleOutput::loadSettings (KConfig *config) {
@@ -145,6 +157,7 @@ void RKSettingsModuleOutput::loadSettings (KConfig *config) {
 	graphics_type = cg.readEntry ("graphics_type", "NULL");
 	graphics_width = cg.readEntry ("graphics_width", 480);
 	graphics_height = cg.readEntry ("graphics_height", 480);
+	graphics_jpg_quality = cg.readEntry ("graphics_jpg_quality", 75);
 }
 
 //static
@@ -155,6 +168,7 @@ QStringList RKSettingsModuleOutput::makeRRunTimeOptionCommands () {
 	QString command = "options (\"rk.graphics.type\"=" + graphics_type;
 	command.append (", \"rk.graphics.width\"=" + QString::number (graphics_width));
 	command.append (", \"rk.graphics.height\"=" + QString::number (graphics_height));
+	if (graphics_type == "\"JPG\"") command.append (", \"rk.graphics.jpg.quality\"=" + QString::number (graphics_jpg_quality));
 	list.append (command + ")\n");
 	
 	return (list);
