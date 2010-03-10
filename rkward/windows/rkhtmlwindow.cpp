@@ -2,7 +2,7 @@
                           rkhtmlwindow  -  description
                              -------------------
     begin                : Wed Oct 12 2005
-    copyright            : (C) 2005, 2006, 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -36,6 +36,7 @@
 #include <QHostInfo>
 
 #include "../rkglobals.h"
+#include "../rbackend/rinterface.h"
 #include "rkhelpsearchwindow.h"
 #include "../rkward.h"
 #include "../rkconsole.h"
@@ -397,7 +398,7 @@ void RKHTMLWindow::fileDoesNotExistMessage () {
 
 	khtmlpart->begin();
 	if (window_mode == HTMLOutputWindow) {
-		khtmlpart->write (i18n ("<HTML><BODY><H1>RKWard output</H1>\n<P>The output is empty.</P>\n</BODY></HTML>"));
+		khtmlpart->write (i18n ("<HTML><BODY><H1>RKWard output file could not be found</H1>\n</BODY></HTML>"));
 	} else {
 		khtmlpart->write ("<html><body><h1>" + i18n ("Page does not exist or is broken") + "</h1></body></html>");
 	}
@@ -420,6 +421,9 @@ void RKHTMLWindow::flushOutput () {
 			QFile file (out_dir.absoluteFilePath (*it));
 			file.remove ();
 		}
+
+		// initialize the now empty file
+		RKGlobals::rInterface ()->issueCommand ("rk.set.output.html.file (\"" + out_file.fileName () + "\")\n", RCommand::App);
 		refresh ();
 	}
 }

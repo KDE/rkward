@@ -2,7 +2,7 @@
                           rembedinternal  -  description
                              -------------------
     begin                : Sun Jul 25 2004
-    copyright            : (C) 2004, 2005, 2006, 2007, 2008, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -712,6 +712,22 @@ SEXP doUpdateLocale () {
 	return R_NilValue;
 }
 
+// returns the MIME-name of the current locale encoding (from Qt)
+SEXP doLocaleName () {
+	RK_TRACE (RBACKEND);
+
+	RK_ASSERT (REmbedInternal::this_pointer->current_locale_codec);
+	SEXP res = allocVector(STRSXP, 1);
+	PROTECT (res);
+#ifdef R_2_9
+	SET_STRING_ELT (res, 0, mkChar (REmbedInternal::this_pointer->current_locale_codec->name ().data ()));
+#else
+	SET_VECTOR_ELT (res, 0, mkChar (REmbedInternal::this_pointer->current_locale_codec->name ().data ()));
+#endif
+	UNPROTECT (1);
+	return res;
+}
+
 #include "rkstructuregetter.cpp"
 
 SEXP doGetStructure (SEXP toplevel, SEXP name, SEXP envlevel, SEXP namespacename) {
@@ -805,12 +821,13 @@ bool REmbedInternal::startR (int argc, char** argv, bool stack_check) {
 //		{ "rk.do.condition", (DL_FUNC) &doCondition, 1 },
 		{ "rk.do.error", (DL_FUNC) &doError, 1 },
 		{ "rk.do.command", (DL_FUNC) &doSubstackCall, 1 },
-		{ "rk.update.locale", (DL_FUNC) &doUpdateLocale, 0 },
 		{ "rk.get.structure", (DL_FUNC) &doGetStructure, 4 },
 		{ "rk.get.structure.global", (DL_FUNC) &doGetGlobalEnvStructure, 3 },
 		{ "rk.copy.no.eval", (DL_FUNC) &doCopyNoEval, 3 },
 		{ "rk.edit.files", (DL_FUNC) &doEditFiles, 3 },
 		{ "rk.show.files", (DL_FUNC) &doShowFiles, 4 },
+		{ "rk.update.locale", (DL_FUNC) &doUpdateLocale, 0 },
+		{ "rk.locale.name", (DL_FUNC) &doLocaleName, 0 },
 		{ 0, 0, 0 }
 	};
 	R_registerRoutines (R_getEmbeddingDllInfo(), NULL, callMethods, NULL, NULL);
