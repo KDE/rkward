@@ -114,17 +114,19 @@
 	return (.rk.output.html.file)
 }
 
-"rk.set.output.html.file" <- function (x, no.init=FALSE) {
+"rk.set.output.html.file" <- function (x) {
 	stopifnot (is.character (x))
-	.rk.do.call ("set.output.file", x);
 	assign (".rk.output.html.file", x, as.environment ("package:rkward"))
 
-	if (!(no.init | file.exists (x))) {
+	if (!file.exists (x)) {
 		.rk.cat.output (paste ("<?xml version=\"1.0\" encoding=\"", .Call ("rk.locale.name"), "\"?>\n", sep=""));
 		.rk.cat.output ("<html><head><title>RKWard Output</title></head>\n<body>\n")
 		# This initial output mostly to indicate the output is really there, just empty for now
-		.rk.cat.output (paste ("<pre>RKWard output initialized", date (), "</pre>\n"));
+		.rk.cat.output (paste ("<pre>RKWard output initialized on", date (), "</pre>\n"));
 	}
+
+	# needs to come after initialization, so initialization alone does not trigger an update during startup
+	.rk.do.call ("set.output.file", x);
 }
 
 # renames a named object in a data.frame/list without changing it's position
