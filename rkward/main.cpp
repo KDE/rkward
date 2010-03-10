@@ -2,7 +2,7 @@
                           main.cpp  -  description
                              -------------------
     begin                : Tue Oct 29 20:06:08 CET 2002
-    copyright            : (C) 2002, 2005, 2006, 2007, 2008, 2009 by Thomas Friedrichsmeier 
+    copyright            : (C) 2002, 2005, 2006, 2007, 2008, 2009, 2010 by Thomas Friedrichsmeier 
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -96,7 +96,7 @@ int main(int argc, char *argv[]) {
 	options.add ("disable-stack-check", ki18n ("Disable R C stack checking"), 0);
 	options.add ("+[File]", ki18n ("R workspace file to open"), 0);
 
-	KAboutData aboutData("rkward", QByteArray (), ki18n ("RKWard"), VERSION, ki18n ("Frontend to the R statistics language"), KAboutData::License_GPL, ki18n ("(c) 2002, 2004, 2005, 2006, 2007, 2008, 2009"), KLocalizedString (), "http://rkward.sf.net", "rkward-devel@lists.sourceforge.net");
+	KAboutData aboutData("rkward", QByteArray (), ki18n ("RKWard"), VERSION, ki18n ("Frontend to the R statistics language"), KAboutData::License_GPL, ki18n ("(c) 2002, 2004, 2005, 2006, 2007, 2008, 2009, 2010"), KLocalizedString (), "http://rkward.sf.net", "rkward-devel@lists.sourceforge.net");
 	aboutData.addAuthor (ki18n ("%1").subs ("Thomas Friedrichsmeier"), ki18n ("Project leader / main developer"));
 	aboutData.addAuthor (ki18n ("%1").subs ("Pierre Ecochard"), ki18n ("C++ coder since 0.2.9"));
 	aboutData.addAuthor (ki18n ("%1").subs ("Stefan Roediger"), ki18n ("Many plugins, suggestions, marketing, translations"));
