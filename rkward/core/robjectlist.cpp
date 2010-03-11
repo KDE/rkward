@@ -2,7 +2,7 @@
                           robjectlist  -  description
                              -------------------
     begin                : Wed Aug 18 2004
-    copyright            : (C) 2004, 2006, 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -57,6 +57,15 @@ RObjectList::RObjectList () : RContainerObject (0, QString::null) {
 
 RObjectList::~RObjectList () {
 	RK_TRACE (OBJECTS);
+}
+
+void RObjectList::setWorkspaceURL (const KUrl &url) {
+	RK_TRACE (OBJECTS);
+
+	if (url != current_url) {
+		current_url = url;
+		emit (workspaceUrlChanged (url));
+	}
 }
 
 QStringList RObjectList::detachPackages (const QStringList &packages, RCommandChain *chain, RKProgressControl* control) {

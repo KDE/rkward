@@ -355,8 +355,9 @@ void RKCommandEditorWindow::updateCaption (KTextEditor::Document*) {
 
 	setCaption (name);
 
-	// Well, this does not really belong, here, but needs to happen on pretty much the same occastions:
+	// Well, these do not really belong, here, but need to happen on pretty much the same occasions:
 	action_setwd_to_script->setEnabled (!url ().isEmpty ());
+	RKWardMainWindow::getMain ()->addScriptUrl (url ());
 }
 
 void RKCommandEditorWindow::showHelp () {

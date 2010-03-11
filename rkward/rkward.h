@@ -2,7 +2,7 @@
 			rkward.h  -  description
 			-------------------
 begin                : Tue Oct 29 20:06:08 CET 2002 
-copyright            : (C) 2002, 2005, 2006, 2007, 2008, 2009 by Thomas Friedrichsmeier 
+copyright            : (C) 2002, 2005, 2006, 2007, 2008, 2009, 2010 by Thomas Friedrichsmeier 
 email                : tfry@users.sourceforge.net
 ***************************************************************************/
 
@@ -123,6 +123,11 @@ public slots:
 
 /** configures RKward-settings */
 	void slotConfigure ();
+
+/** Add the given url to the list of recent scripts */
+	void addScriptUrl (const KUrl& url);
+/** Add the given url to the list of recent workspaces */
+	void addWorkspaceUrl (const KUrl& url);
 
 	/** Init-procedures to be done after the exec-loop was started */
 	void doPostInit ();

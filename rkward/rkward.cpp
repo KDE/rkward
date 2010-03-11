@@ -2,7 +2,7 @@
                           rkward.cpp  -  description
                              -------------------
     begin                : Tue Oct 29 20:06:08 CET 2002
-    copyright            : (C) 2002, 2005, 2006, 2007, 2008, 2009 by Thomas Friedrichsmeier 
+    copyright            : (C) 2002, 2005, 2006, 2007, 2008, 2009, 2010 by Thomas Friedrichsmeier 
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -292,6 +292,7 @@ void RKWardMainWindow::startR () {
 
 	RKGlobals::rinter = new RInterface ();
 	new RObjectList ();
+	connect (RObjectList::getObjectList (), SIGNAL (workspaceUrlChanged(const KUrl&)), this, SLOT (addWorkspaceUrl(const KUrl&)));
 
 	RKGlobals::rInterface ()->startThread ();
 
@@ -424,7 +425,6 @@ void RKWardMainWindow::openWorkspace (const KUrl &url) {
 	if (url.isEmpty ()) return;
 
 	new RKLoadAgent (url, false);
-	fileOpenRecentWorkspace->addUrl (url);
 }
 
 void RKWardMainWindow::saveOptions () {
@@ -583,6 +583,13 @@ void RKWardMainWindow::slotFileSaveWorkspaceAs () {
 	new RKSaveAgent (RObjectList::getObjectList ()->getWorkspaceURL (), true);
 }
 
+void RKWardMainWindow::addWorkspaceUrl (const KUrl &url) {
+	RK_TRACE (APP);
+
+	if (!url.isEmpty ()) fileOpenRecentWorkspace->addUrl (url);
+	setCaption (QString::null);	// trigger update of caption
+}
+
 void RKWardMainWindow::updateCWD () {
 	RK_TRACE (APP);
 
@@ -658,13 +665,17 @@ void RKWardMainWindow::slotNewCommandEditor () {
 	slotOpenCommandEditor (KUrl ());
 }
 
+void RKWardMainWindow::addScriptUrl (const KUrl& url) {
+	RK_TRACE (APP);
+
+	if (!url.isEmpty ()) fileOpenRecent->addUrl (url);
+}
+
 void RKWardMainWindow::slotOpenCommandEditor (const KUrl &url) {
 	RK_TRACE (APP);
 
-	if (RKWorkplace::mainWorkplace ()->openScriptEditor (url)) {
-		if (!url.isEmpty ()) fileOpenRecent->addUrl (url);
-	}
-};
+	RKWorkplace::mainWorkplace ()->openScriptEditor (url);
+}
 
 void RKWardMainWindow::slotOpenCommandEditor () {
 	RK_TRACE (APP);

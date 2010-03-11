@@ -2,7 +2,7 @@
                           robjectlist  -  description
                              -------------------
     begin                : Wed Aug 18 2004
-    copyright            : (C) 2004, 2006, 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -78,6 +78,8 @@ signals:
 	void updateStarted ();
 /// emitted when the list of objects has been updated	// TODO: remove me
 	void updateComplete ();
+/** emitted when the workspace Url has changed */
+	void workspaceUrlChanged (const KUrl& url);
 protected:
 /// reimplemented from RContainerObject to call "remove (objectname)" instead of "objectname <- NULL"
 	QString removeChildCommand (RObject *object) const;
@@ -91,7 +93,7 @@ protected:
 private:
 	friend class RKLoadAgent;
 	friend class RKSaveAgent;
-	void setWorkspaceURL (const KUrl &url) { current_url = url; };
+	void setWorkspaceURL (const KUrl &url);
 	QTimer *update_timer;
 	
 	RCommandChain *update_chain;

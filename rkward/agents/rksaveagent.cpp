@@ -2,7 +2,7 @@
                           rksaveagent  -  description
                              -------------------
     begin                : Sun Aug 29 2004
-    copyright            : (C) 2004, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -91,7 +91,6 @@ void RKSaveAgent::rCommandDone (RCommand *command) {
 		when_done = DoNothing;
 	} else {
 		RObjectList::getObjectList ()->setWorkspaceURL (save_url);
-		RKWardMainWindow::getMain ()->setCaption (QString::null);	// trigger update of caption
 	}
 	done ();
 }
