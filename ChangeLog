@@ -1,3 +1,4 @@
+- File->Open R Script File now allows to specify the character encoding to use
 - Fixed: No entries were added the recent script/workspaces actions after "save as"
 - Initialize the output file with an appropriate encoding specification
 - Add SVG support to export (graphics) plugin

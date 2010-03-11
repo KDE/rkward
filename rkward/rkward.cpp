@@ -30,7 +30,7 @@
 // include files for KDE
 #include <kiconloader.h>
 #include <kmessagebox.h>
-#include <kfiledialog.h>
+#include <kencodingfiledialog.h>
 #include <kmenubar.h>
 #include <kstatusbar.h>
 #include <klocale.h>
@@ -671,26 +671,26 @@ void RKWardMainWindow::addScriptUrl (const KUrl& url) {
 	if (!url.isEmpty ()) fileOpenRecent->addUrl (url);
 }
 
-void RKWardMainWindow::slotOpenCommandEditor (const KUrl &url) {
+void RKWardMainWindow::slotOpenCommandEditor (const KUrl &url, const QString &encoding) {
 	RK_TRACE (APP);
 
-	RKWorkplace::mainWorkplace ()->openScriptEditor (url);
+	RKWorkplace::mainWorkplace ()->openScriptEditor (url, encoding);
 }
 
 void RKWardMainWindow::slotOpenCommandEditor () {
 	RK_TRACE (APP);
-	KUrl::List urls;
+	KEncodingFileDialog::Result res;
 	KUrl::List::const_iterator it;
 
 #ifdef Q_WS_WIN
 	// getOpenUrls(KUrl("kfiledialog:///<rfiles>"), ...) causes a hang on windows (KDElibs 4.2.3).
 #	warning Track this bug down and/or report it
-	urls = KFileDialog::getOpenUrls (KUrl (), "*.R *.r *.S *.s *.q|R Script Files (*.R *.r *.S *.s *.q)\n*|All Files (*)", this, i18n ("Open command file(s)"));
+	res = KEncodingFileDialog::getOpenUrlsAndEncoding (QString (), QString (), "*.R *.r *.S *.s *.q|R Script Files (*.R *.r *.S *.s *.q)\n*|All Files (*)", this, i18n ("Open script file(s)"));
 #else
-	urls = KFileDialog::getOpenUrls (KUrl ("kfiledialog:///<rfiles>"), "*.R *.r *.S *.s *.q|R Script Files (*.R *.r *.S *.s *.q)\n*|All Files (*)", this, i18n ("Open command file(s)"));
+	res = KEncodingFileDialog::getOpenUrlsAndEncoding (QString (), "kfiledialog:///<rfiles>", "*.R *.r *.S *.s *.q|R Script Files (*.R *.r *.S *.s *.q)\n*|All Files (*)", this, i18n ("Open script file(s)"));
 #endif
-	for (it = urls.begin() ; it != urls.end() ; ++it) {
-		slotOpenCommandEditor (*it);
+	for (it = res.URLs.begin() ; it != res.URLs.end() ; ++it) {
+		slotOpenCommandEditor (*it, res.encoding);
 	}
 };
 

@@ -2,7 +2,7 @@
                           rkworkplace  -  description
                              -------------------
     begin                : Thu Sep 21 2006
-    copyright            : (C) 2006, 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -95,11 +95,12 @@ public:
 
 /** Opens a new script editor
 @param url URL to load. Default option is to open an empty document
+@param encoding encoding to use. If QString (), the default encoding is used.
 @param use_r_highlighting Set R highlighting mode (vs. no highlighting)? Default is yes
 @param read_only Open the document read only? Default is false, i.e. Read-write
 @param force_caption Usually the caption is determined from the url of the file. If you specify a non-empty string here, that is used instead.
 @returns false if a local url could not be opened, true for all remote urls, and on success */
-	bool openScriptEditor (const KUrl &url=KUrl (), bool use_r_highlighting=true, bool read_only=false, const QString &force_caption = QString::null);
+	bool openScriptEditor (const KUrl &url=KUrl (), const QString& encoding=QString (), bool use_r_highlighting=true, bool read_only=false, const QString &force_caption = QString::null);
 /** Opens a new help window, starting at the given url
 @param url URL to open
 @param only_once if true, checks whether any help window already shows this URL. If so, raise it, but do not open a new window. Else show the new window */

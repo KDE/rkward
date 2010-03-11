@@ -2,7 +2,7 @@
                           rkcommandeditorwindow  -  description
                              -------------------
     begin                : Mon Aug 30 2004
-    copyright            : (C) 2004, 2006, 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -135,8 +135,9 @@ public:
 	~RKCommandEditorWindow ();
 /** open given URL. 
 @param use_r_highlighting Initialize the view to use R syntax highlighting. Use, if you're going to edit an R syntax file
+@param encoding encoding to use. If QString (), the default encoding is used.
 @param read_only Open the file in read-only mode */
-	bool openURL (const KUrl &url, bool use_r_highlighting=true, bool read_only=false);
+	bool openURL (const KUrl &url, const QString& encoding=QString (), bool use_r_highlighting=true, bool read_only=false);
 /** returns, whether the document was modified since the last save */
 	bool isModified ();
 /** insert the given text into the document at the current cursor position. Additionally, focuses the view */

@@ -137,7 +137,7 @@ public slots:
 /** open a new command editor (ask for file to open) */
 	void slotOpenCommandEditor ();
 /** open a new command editor (load given url) */
-	void slotOpenCommandEditor (const KUrl &url);
+	void slotOpenCommandEditor (const KUrl &url, const QString& encoding = QString ());
 
 /** close current window (Windows->Close). */
 	void slotCloseWindow ();

@@ -2,7 +2,7 @@
                           rkworkplace  -  description
                              -------------------
     begin                : Thu Sep 21 2006
-    copyright            : (C) 2006, 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -205,7 +205,7 @@ bool RKWorkplace::openAnyUrl (const KUrl &url) {
 		return true;	// TODO
 	}
 	if (mimetype->name ().startsWith ("text")) {
-		return (openScriptEditor (url, false));
+		return (openScriptEditor (url, QString (), false));
 	}
 
 	if (KMessageBox::questionYesNo (this, i18n ("The url you are trying to open ('%1') is not a local file or the filetype is not supported by RKWard. Do you want to open the url in the default application?", url.prettyUrl ()), i18n ("Open in default application?")) != KMessageBox::Yes) {
@@ -216,7 +216,7 @@ bool RKWorkplace::openAnyUrl (const KUrl &url) {
 	return false;
 }
 
-bool RKWorkplace::openScriptEditor (const KUrl &url, bool use_r_highlighting, bool read_only, const QString &force_caption) {
+bool RKWorkplace::openScriptEditor (const KUrl &url, const QString& encoding, bool use_r_highlighting, bool read_only, const QString &force_caption) {
 	RK_TRACE (APP);
 
 // is this url already opened?
@@ -233,9 +233,9 @@ bool RKWorkplace::openScriptEditor (const KUrl &url, bool use_r_highlighting, bo
 	}
 
 	RKCommandEditorWindow *editor = new RKCommandEditorWindow (view (), use_r_highlighting);
-
+  
 	if (!url.isEmpty ()) {
-		if (!editor->openURL (url, use_r_highlighting, read_only)) {
+		if (!editor->openURL (url, encoding, use_r_highlighting, read_only)) {
 			delete editor;
 			KMessageBox::messageBox (view (), KMessageBox::Error, i18n ("Unable to open \"%1\"", url.prettyUrl ()), i18n ("Could not open command file"));
 			return false;

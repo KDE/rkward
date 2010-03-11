@@ -2,7 +2,7 @@
                           rkcommandeditorwindow  -  description
                              -------------------
     begin                : Mon Aug 30 2004
-    copyright            : (C) 2004, 2006, 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -311,8 +311,11 @@ void RKCommandEditorWindow::setReadOnly (bool ro) {
 	m_doc->setReadWrite (!ro);
 }
 
-bool RKCommandEditorWindow::openURL (const KUrl &url, bool use_r_highlighting, bool read_only){
+bool RKCommandEditorWindow::openURL (const KUrl &url, const QString& encoding, bool use_r_highlighting, bool read_only){
 	RK_TRACE (COMMANDEDITOR);
+
+	// encoding must be set *before* loading the file
+	if (!encoding.isEmpty ()) m_doc->setEncoding (encoding);
 	if (m_doc->openUrl (url)){
 		if (use_r_highlighting) setRHighlighting ();
 		setReadOnly (read_only);

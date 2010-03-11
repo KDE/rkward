@@ -2,7 +2,7 @@
                           showedittextfileagent  -  description
                              -------------------
     begin                : Tue Sep 13 2005
-    copyright            : (C) 2005, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -108,7 +108,7 @@ void ShowEditTextFileAgent::showEditFiles (RCallbackArgs *args) {
 
 		message.append (title + "\n");
 
-		bool ok = RKWorkplace::mainWorkplace ()->openScriptEditor (KUrl::fromLocalFile (files[n]), r_highlighting, read_only, title);
+		bool ok = RKWorkplace::mainWorkplace ()->openScriptEditor (KUrl::fromLocalFile (files[n]), QString (), r_highlighting, read_only, title);
 
 		if (!ok)  {
 			bad_files_list.append ("- ").append (title).append (" (").append (files[n]).append (")\n");
