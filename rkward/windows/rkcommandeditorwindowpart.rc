@@ -1,14 +1,14 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward" version="51">
+<kpartgui name="rkward" version="53">
 	<MenuBar>
-		<Menu name="edit" noMerge="1"><text>&amp;Edit</text>
+		<Menu name="edit"><text>&amp;Edit</text>
 			<Menu name="tools"><text>&amp;Tools Move</text>
 				<Merge/>
 			</Menu>
 			<Action name="copy"/>
-			<Merge/>
-			<Action name="mark_block"/>
-			<Action name="unmark_block"/>
+			<Action name="paste_vector" group="after_edit_paste_merge"/>
+			<Action name="mark_block" group="edit_select_merge"/>
+			<Action name="unmark_block" group="edit_select_merge"/>
 		</Menu>
 		<Menu name="run" noMerge="1"><text>&amp;Run</text>
 			<Action name="run_block" group="postrun_actions_merge"/>

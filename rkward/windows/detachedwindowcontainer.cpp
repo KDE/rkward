@@ -2,7 +2,7 @@
                           detachedwindowcontainer  -  description
                              -------------------
     begin                : Wed Oct 21 2005
-    copyright            : (C) 2005, 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2007, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -26,6 +26,7 @@
 #include <qlayout.h>
 #include <qwidget.h>
 #include <QCloseEvent>
+#include <QMenu>
 
 #include "rktoplevelwindowgui.h"
 #include "../rkward.h"
@@ -50,7 +51,7 @@ DetachedWindowContainer::DetachedWindowContainer (RKMDIWindow *widget_to_capture
 	setXMLFile ("detachedwindowcontainer.rc");
 	insertChildClient (toplevel_actions = new RKTopLevelWindowGUI (this));
 	statusBar ()->hide ();
-	createShellGUI ();
+	createShellGUI (true);
 	RKXMLGUISyncer::self ()->watchXMLGUIClientUIrc (this);
 
 // copy main window toolbar settings
@@ -67,6 +68,11 @@ DetachedWindowContainer::DetachedWindowContainer (RKMDIWindow *widget_to_capture
 	widget_to_capture->show ();
 	createGUI (widget_to_capture->getPart ());
 	captured = widget_to_capture;
+
+	hideEmptyMenus ();
+	// hide empty menus now, and after any reloads
+	// the signal is available since KDE 4.1.3, but we can tolerate a bit of aesthethic malfunction on earlier versions
+	connect (guiFactory (), SIGNAL(makingChanges(bool)), this, SLOT(hideEmptyMenus(bool)));
 
 // sanitize toolbars
 	foreach (KToolBar *bar, toolBars ()) {
@@ -85,6 +91,19 @@ DetachedWindowContainer::DetachedWindowContainer (RKMDIWindow *widget_to_capture
 
 DetachedWindowContainer::~DetachedWindowContainer () {
 	RK_TRACE (APP);
+}
+
+void DetachedWindowContainer::hideEmptyMenus (bool ignore) {
+	if (ignore) return;
+	RK_TRACE (APP);
+
+	// remove empty menus (we had to define them in detachedwindowcontainer.rc in order to force a sane menu order)
+	QStringList menu_names;
+	menu_names << "file" << "device" << "edit" << "run" << "view" << "settings";
+	foreach (QString name, menu_names) {
+		QMenu* menu = dynamic_cast<QMenu*>(guiFactory ()->container (name, this));
+		if (menu) menu->menuAction ()->setVisible (!menu->isEmpty ());
+	}
 }
 
 void DetachedWindowContainer::viewDestroyed (QObject *) {

@@ -2,7 +2,7 @@
                           detachedwindowcontainer  -  description
                              -------------------
     begin                : Wed Oct 21 2005
-    copyright            : (C) 2005, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -45,6 +45,9 @@ public slots:
 /** update own caption, when the window's caption has changed */
 	void updateCaption (RKMDIWindow *);
 	void slotSetStatusBarText (const QString &text);
+/** Hide any emtpy menus.
+@param ignore do nothing if true. For internal use, only. */
+	void hideEmptyMenus (bool ignore=false);
 protected:
 /** when receiving a close event, dispatch to the embedded window */
 	void closeEvent (QCloseEvent *e);

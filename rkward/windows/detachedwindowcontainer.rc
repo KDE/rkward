@@ -1,7 +1,28 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward" version="48">
+<kpartgui name="rkward" version="53">
 	<MenuBar>
-		<Merge/>
+		<Menu name="file"><text>&amp;File</text>
+			<DefineGroup name="file_dummy_merge" />
+		</Menu>
+		<Menu name="device" append="first_menu"><text>&amp;Device</text>
+			<DefineGroup name="device_dummy_merge" />
+		</Menu>
+		<Menu name="edit"><text>&amp;Edit</text>
+			<DefineGroup name="edit_paste_merge" append="edit_paste_merge" />
+			<DefineGroup name="after_edit_paste_merge" append="edit_paste_merge" />
+			<DefineGroup name="edit_select_merge" append="edit_select_merge" />
+		</Menu>
+		<Menu name="view"><text>&amp;View</text>
+			<DefineGroup name="view_dummy_merge" />
+		</Menu>
+		<Menu name="run"><text>&amp;Run</text>
+			<DefineGroup name="prerun_actions_merge" append="prerun_actions_merge"/>
+			<DefineGroup name="run_actions_merge" append="run_actions_merge"/>
+			<DefineGroup name="postrun_actions_merge" append="postrun_actions_merge"/>
+		</Menu>
+		
+		<Merge name="rkwardcomponents" />
+
 		<Menu name="window"><text>&amp;Window</text>
 			<Merge/>
 			<Action name="dwindow_close"/>
@@ -10,6 +31,7 @@
 			<Separator/>
 			<Action name="dwindow_attach"/>
 		</Menu>
+		<Menu name="settings"/>
 		<Menu name="help"><text>&amp;Help</text>
 			<Merge/>
 		</Menu>

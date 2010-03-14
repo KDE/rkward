@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward" version="52">
+<kpartgui name="rkward" version="53">
 <MenuBar>
 	<!-- The Main Window ui.rc is the only one, where merging happens, reliably. That is, why we need to define
 	     a lot of merge points, here, which can then be used be mdi windows and their children.
@@ -34,6 +34,9 @@
 	<!-- These menus are actually defined in KParts. We also declare them here, to avoid menus jumping around -->
 	<Menu name="edit"><text>&amp;Edit</text>
 		<Action name="edit_menu_dummy"/>
+		<DefineGroup name="edit_paste_merge" append="edit_paste_merge" />
+		<DefineGroup name="after_edit_paste_merge" append="edit_paste_merge" />
+		<DefineGroup name="edit_select_merge" append="edit_select_merge" />
 	</Menu>
 	<Menu name="view"><text>&amp;View</text>
 		<Action name="view_menu_dummy"/>
