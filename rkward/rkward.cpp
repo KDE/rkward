@@ -397,11 +397,11 @@ void RKWardMainWindow::partChanged (KParts::Part *part) {
 	}
 
 	QMenu* menu = dynamic_cast<QMenu*>(guiFactory ()->container ("edit", this));
-	edit_menu_dummy->setVisible (menu && (menu->actions ().size () <= 1));
+	edit_menu_dummy->setVisible (menu && (menu->isEmpty ()));
 	menu = dynamic_cast<QMenu*>(guiFactory ()->container ("view", this));
-	view_menu_dummy->setVisible (menu && (menu->actions ().size () <= 1));
+	view_menu_dummy->setVisible (menu && (menu->isEmpty ()));
 	menu = dynamic_cast<QMenu*>(guiFactory ()->container ("run", this));
-	run_menu_dummy->setVisible (menu && (menu->actions ().size () <= 1));
+	run_menu_dummy->setVisible (menu && (menu->isEmpty ()));
 }
 
 void RKWardMainWindow::initStatusBar () {
