@@ -33,6 +33,7 @@ KAction* RKStandardActions::pasteSpecial (RKMDIWindow *window, const QObject *re
 	KAction* ret = new RKPasteSpecialAction (window->standardActionCollection ());
 	window->standardActionCollection ()->addAction ("paste_special", ret);
 	ret->connect (ret, SIGNAL (pasteText (const QString&)), receiver, member);
+	ret->setShortcut (Qt::ShiftModifier + Qt::ControlModifier + Qt::Key_V);
 	return ret;
 }
 

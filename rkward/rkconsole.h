@@ -2,7 +2,7 @@
                           rkconsole  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -55,9 +55,6 @@ public:
 /** Destructor */
 	~RKConsole ();
 
-/** Submits a batch of commands, line by line.
-\param batch a QString containing the batch of commands to be executed */
-	void submitBatch (const QString &batch);
 /** Returns the command currently being edited (not executed yet) */
 	QString currentCommand ();
 /** Returns the current cursor position. Returns the column on which is the cursor.  */
@@ -179,6 +176,10 @@ public slots:
 /** interrupt current command. */
 	void slotInterruptCommand ();
 	void runSelection ();
+
+/** Submits a batch of commands, line by line.
+\param batch a QString containing the batch of commands to be executed */
+	void submitBatch (const QString &batch);
 };
 
 /** A part interface to RKConsole. Provides the context-help functionality

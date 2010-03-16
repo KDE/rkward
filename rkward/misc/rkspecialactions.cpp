@@ -91,18 +91,20 @@ RKPasteSpecialDialog::RKPasteSpecialDialog (QWidget* parent) : KDialog (parent) 
 	group_layout->addWidget (rbutton);
 	connect (dimensionality_group, SIGNAL (buttonClicked(int)), this, SLOT (updateState()));
 
+	const QMimeData* clipdata = QApplication::clipboard ()->mimeData ();
+
 	// Separator box
 	box = new QGroupBox (i18n ("Field separator"), row);
 	group_layout = new QVBoxLayout (box);
 	separator_group = new QButtonGroup (box);
 	rbutton = new QRadioButton (i18n ("Tab"), box);
-	rbutton->setChecked (true);
 	separator_group->addButton (rbutton, SepTab);
-#warning TODO: autodetection heuristics
 	group_layout->addWidget (rbutton);
+	rbutton->setChecked (true);		// tab-separated is a reasonable fallback guess
 	rbutton = new QRadioButton (i18n ("Comma"), box);
 	separator_group->addButton (rbutton, SepComma);
 	group_layout->addWidget (rbutton);
+	if (clipdata->hasFormat ("text/comma-separated-values")) rbutton->setChecked (true);
 	rbutton = new QRadioButton (i18n ("Single space"), box);
 	separator_group->addButton (rbutton, SepSpace);
 	group_layout->addWidget (rbutton);
@@ -213,24 +215,19 @@ QString RKPasteSpecialDialog::resultingText () {
 	if (reverse_h || reverse_v || transpose) matrix = matrix.transformed (reverse_h, reverse_v, transpose);
 
 	QString ret;
-	if (dim == DimMatrix) {
-		ret.append ("rbind (\n");
-	}
+	if (dim == DimMatrix) ret.append ("cbind (\n");
 
-	for (int i = 0; i < matrix.numRows (); ++i) {
+	for (int i = 0; i < matrix.numColumns (); ++i) {
 		if (i != 0) ret.append ("),\n");
 		ret.append ("c(");
-		for (int j = 0; j < matrix.numColumns (); ++j) {
+		for (int j = 0; j < matrix.numRows (); ++j) {
 			if (j != 0) ret.append (",");
-			ret.append (prepString (matrix.getText (i, j)));
+			ret.append (prepString (matrix.getText (j, i)));
 		}
-		if (i == (matrix.numRows () - 1)) ret.append (")\n");
+		if (i == (matrix.numColumns () - 1)) ret.append (")\n");
 	}
 
-	if (dim == DimMatrix) {
-		ret.append (")\n");
-	}
-
+	if (dim == DimMatrix) ret.append (")\n");
 	return (ret);
 }
 

@@ -813,6 +813,8 @@ void RKConsole::initializeActions (KActionCollection *ac) {
 	copy_literal_action = ac->addAction ("rkconsole_copy_literal", this, SLOT (literalCopy()));
 	copy_literal_action->setText (i18n ("Copy selection literally"));
 
+	RKStandardActions::pasteSpecial (this, this, SLOT (submitBatch(const QString&)));
+
 	ac->addAction (KStandardAction::Clear, "rkconsole_clear", this, SLOT (clear()));
 	paste_action = ac->addAction (KStandardAction::Paste, "rkconsole_paste", this, SLOT (paste()));
 	QAction *action = ac->addAction ("rkconsole_configure", this, SLOT (configure()));

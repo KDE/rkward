@@ -15,7 +15,10 @@ Bugs outside RKWard:
 			- http://lists.kde.org/?l=kde-core-devel&m=103307809508725&w=2
 
 Bugs:
-	- "cannot create html package index" when installing package as a regular user (due to R.home ("doc") not writable)
+	- XMLGUI:
+		- The edit menu is broken in the main window, but not detached windows (for script editor, console)
+			- When adding the DefineGroups from detachedwindowcontainer.rc to rkwardui.rc, the edit menu goes totally mental, there, sometimes, even shuffling actions apparently more or less randomly.
+			- No idea, how to fix that
 	- There is definitely a memory leak in handling output!
 		- Produce lots and lots of output -> watch mem usage grow
 		- Probably the RKConsole is to blame (run outside console -> no significant increase)

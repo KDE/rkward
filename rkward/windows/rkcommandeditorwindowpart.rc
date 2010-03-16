@@ -5,7 +5,6 @@
 			<Menu name="tools"><text>&amp;Tools Move</text>
 				<Merge/>
 			</Menu>
-			<Action name="copy"/>
 			<Action name="mark_block" group="edit_select_merge"/>
 			<Action name="unmark_block" group="edit_select_merge"/>
 		</Menu>
