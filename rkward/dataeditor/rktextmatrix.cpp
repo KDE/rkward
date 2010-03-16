@@ -96,6 +96,38 @@ void RKTextMatrix::copyToClipboard () const {
 	QApplication::clipboard()->setMimeData (data);
 }
 
+RKTextMatrix RKTextMatrix::transformed (bool reverse_h, bool reverse_v, bool transpose) const {
+	RK_TRACE (EDITOR);
+
+	RKTextMatrix ret;
+	if (isEmpty ()) return ret;		// empty matrices would violate some assumptions of the following code
+
+	const int maxrow = rows.size () - 1;		// for easier typing
+	const int maxcol = rows[0].size () - 1;
+
+	if (transpose) ret.upsize (maxcol, maxrow);		// set dimensions from the start to save a few cycles
+	else ret.upsize (maxrow, maxcol);
+
+	for (int row=0; row <= maxrow; ++row) {
+		for (int col=0; col <= maxcol; ++col) {
+			int dest_row = row;
+			if (reverse_v) dest_row = maxrow - row;
+			int dest_col = col;
+			if (reverse_h) dest_col = maxcol - col;
+
+			if (transpose) {
+				int dummy = dest_row;
+				dest_row = dest_col;
+				dest_col = dummy;
+			}
+
+			ret.setText (dest_row, dest_col, rows[row][col]);
+		}
+	}
+
+	return ret;
+}
+
 void RKTextMatrix::setText (int row, int col, const QString& text) {
 //	RK_TRACE (EDITOR);
 

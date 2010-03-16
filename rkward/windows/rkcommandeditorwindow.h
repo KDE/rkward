@@ -183,6 +183,8 @@ public slots:
 	void selectionChanged (KTextEditor::View* view);
 /** change to the directory of the current script */
 	void setWDToScript ();
+/** paste the given text at the current cursor position */
+	void paste (const QString &text);
 
 /** apply our customizations to the katepart GUI */
 	void fixupPartGUI ();

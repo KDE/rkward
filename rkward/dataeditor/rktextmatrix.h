@@ -50,6 +50,12 @@ public:
 	/** get the contents of an entire row at once */
 	QStringList getRow (int row) const;
 
+	/** Return a transformed matrix. Not optimized for performance!
+	@param reverse_h Reverse order of columns
+	@param reverse_v Reverse order of rows
+	@param transpose Switch rows against columns */
+	RKTextMatrix transformed (bool reverse_h, bool reverse_v, bool transpose) const;
+
 	void clear ();
 	bool isEmpty () const;
 

@@ -157,12 +157,14 @@ void RKCommandEditorWindow::fixupPartGUI () {
 void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 	RK_TRACE (COMMANDEDITOR);
 
-	action_run_all = RKStandardActions::runAll (this, "run_all", this, SLOT (runAll()));
-	action_run_selection = RKStandardActions::runSelection (this, "run_selection", this, SLOT (runSelection()));
-	action_run_selection->setEnabled (false);
-	action_run_line = RKStandardActions::runLine (this, "run_line", this, SLOT (runLine()));
+	RKStandardActions::pasteSpecial (this, this, SLOT (paste(const QString&)));
 
-	action_help_function = RKStandardActions::functionHelp (this, "function_reference", this, SLOT (showHelp()));
+	action_run_all = RKStandardActions::runAll (this, this, SLOT (runAll()));
+	action_run_selection = RKStandardActions::runSelection (this, this, SLOT (runSelection()));
+	action_run_selection->setEnabled (false);
+	action_run_line = RKStandardActions::runLine (this, this, SLOT (runLine()));
+
+	action_help_function = RKStandardActions::functionHelp (this, this, SLOT (showHelp()));
 
 	actionmenu_run_block = new KActionMenu (i18n ("Run block"), this);
 	actionmenu_run_block->setDelayed (false);	// KDE4: TODO does not work correctly in the tool bar.
@@ -253,6 +255,8 @@ void RKCommandEditorWindow::focusIn (KTextEditor::View* v) {
 	setPopupMenu ();
 }
 
+/** NOTE: this function still needed?
+- Still needed in KDE 4.3.4. */
 void RKCommandEditorWindow::setPopupMenu () {
 	RK_TRACE (COMMANDEDITOR);
 
@@ -444,6 +448,12 @@ bool RKCommandEditorWindow::provideContext (unsigned int line_rev, QString *cont
 	*context = m_doc->line (current_line_num - line_rev);
 
 	return true;
+}
+
+void RKCommandEditorWindow::paste (const QString& text) {
+	RK_TRACE (COMMANDEDITOR);
+
+	m_view->insertText (text);
 }
 
 void RKCommandEditorWindow::setWDToScript () {

@@ -122,7 +122,7 @@ void RKHTMLWindow::initActions () {
 
 	print = actionCollection ()->addAction (KStandardAction::Print, "print_html", this, SLOT (slotPrint()));
 
-	run_selection = RKStandardActions::runSelection (this, "run_selection", this, SLOT (runSelection()));
+	run_selection = RKStandardActions::runSelection (this, this, SLOT (runSelection()));
 
 		// needed to enable / disable the run selection action
 	connect (khtmlpart, SIGNAL (selectionChanged()), this, SLOT (selectionChanged()));

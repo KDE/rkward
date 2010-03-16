@@ -2,7 +2,7 @@
                           rkstandardactions  -  description
                              -------------------
     begin                : Sun Nov 18 2007
-    copyright            : (C) 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -27,11 +27,15 @@ class RKMDIWindow;
 
 @author Thomas Friedrichsmeier */
 namespace RKStandardActions {
-	KAction* runLine (RKMDIWindow *window, const QString &name, const QObject *receiver=0, const char *member=0);
-	KAction* runSelection (RKMDIWindow *window, const QString &name, const QObject *receiver=0, const char *member=0);
-	KAction* runAll (RKMDIWindow *window, const QString &name, const QObject *receiver=0, const char *member=0);
+/** Allows special pasting modes for script windows.
+@param member needs to have the signature void fun (const QString&). */
+	KAction* pasteSpecial (RKMDIWindow *window, const QObject *receiver=0, const char *member=0);
 
-	KAction* functionHelp (RKMDIWindow *window, const QString &name, const QObject *receiver=0, const char *member=0);
+	KAction* runLine (RKMDIWindow *window, const QObject *receiver=0, const char *member=0);
+	KAction* runSelection (RKMDIWindow *window, const QObject *receiver=0, const char *member=0);
+	KAction* runAll (RKMDIWindow *window, const QObject *receiver=0, const char *member=0);
+
+	KAction* functionHelp (RKMDIWindow *window, const QObject *receiver=0, const char *member=0);
 };
 
 #endif

@@ -13,6 +13,7 @@ SET(misc_STAT_SRCS
    rkprogresscontrol.cpp
    rksaveobjectchooser.cpp
    rkdummypart.cpp
+   rkspecialactions.cpp
    rkstandardicons.cpp
    rkstandardactions.cpp
    rkxmlguisyncer.cpp

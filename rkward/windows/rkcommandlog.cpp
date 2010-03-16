@@ -2,7 +2,7 @@
                           rkcommandlog  -  description
                              -------------------
     begin                : Sun Nov 3 2002
-    copyright            : (C) 2002, 2004, 2005 2006, 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2004, 2005 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -284,7 +284,7 @@ void RKCommandLogPart::initActions () {
 	QAction *configure = actionCollection ()->addAction ("log_configure", log, SLOT(configureLog()));
 	configure->setText (i18n ("Configure"));
 
-	run_selection = RKStandardActions::runSelection (log, "run_selection", log, SLOT(runSelection()));
+	run_selection = RKStandardActions::runSelection (log, log, SLOT(runSelection()));
 
 	connect (log->getView (), SIGNAL (popupMenuRequest (const QPoint &)), this, SLOT (doPopupMenu (const QPoint &)));
 }
