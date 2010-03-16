@@ -2,7 +2,7 @@
                           rktextmatrix  -  description
                              -------------------
     begin                : Thu Nov 08 2007
-    copyright            : (C) 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -32,9 +32,8 @@ RKTextMatrix::RKTextMatrix () {
 RKTextMatrix::RKTextMatrix (const RKTextMatrix& copy) {
 	RK_TRACE (EDITOR);
 
-	rowcount = copy.rowcount;
 	colcount = copy.colcount;
-	columns = copy.columns;
+	rows = copy.rows;
 }
 
 RKTextMatrix::~RKTextMatrix () {
@@ -51,44 +50,27 @@ RKTextMatrix RKTextMatrix::matrixFromClipboard () {
 	// provided the two in order.
 	if (data->hasFormat ("text/tab-separated-values")) {
 		RK_DO (qDebug ("paste tsv"), EDITOR, DL_DEBUG);
-		return (matrixFromTabSeparatedValues (QString::fromLocal8Bit (data->data ("text/tab-separated-values"))));
+		return (matrixFromSeparatedValues (QString::fromLocal8Bit (data->data ("text/tab-separated-values"))));
 	} else if (data->hasText ()) {
 		RK_DO (qDebug ("paste plain text"), EDITOR, DL_DEBUG);
-		return (matrixFromTabSeparatedValues (data->text ()));
+		return (matrixFromSeparatedValues (data->text ()));
 	}
 
 	return RKTextMatrix ();
 }
 
 // static
-RKTextMatrix RKTextMatrix::matrixFromTabSeparatedValues (const QString& tsv) {
+RKTextMatrix RKTextMatrix::matrixFromSeparatedValues (const QString& text, const QRegExp& tab, const QChar& brk) {
 	RK_TRACE (EDITOR);
 
 	RKTextMatrix ret;
-	if (tsv.isEmpty ()) return ret;
+	if (text.isEmpty ()) return ret;
 
-	QChar tab ('\t');
-	QChar brk ('\n');
-
-	int buffer_len = tsv.length ();
-	int row = 0;
-	int col = 0;
-
-	QString current_word;
-	for (int pos = 0; pos < buffer_len; ++pos) {
-		QChar c = tsv.at (pos);
-		if (c == tab) {
-			ret.setText (row, col++, current_word);
-			current_word.clear ();
-		} else if (c == brk) {
-			ret.setText (row++, col, current_word);
-			col = 0;
-			current_word.clear ();
-		} else {
-			current_word.append (c);
-		}
+	QStringList textrows = text.split (brk);
+	for (int i = 0; i < textrows.size (); ++i) {
+		QStringList split = textrows[i].split (tab);
+		ret.appendRow (split);
 	}
-	ret.setText (row, col, current_word);
 
 	return ret;
 }
@@ -97,15 +79,9 @@ QString RKTextMatrix::toTabSeparatedValues () const {
 	RK_TRACE (EDITOR);
 
 	QString ret;
-	RK_ASSERT (columns.size () == colcount);
-	for (int row = 0; row < rowcount; ++row) {
+	for (int row = 0; row < rows.size (); ++row) {
 		if (row) ret.append ('\n');
-
-		for (int col = 0; col < colcount; ++col) {
-			if (col) ret.append ('\t');
-			if (!row) RK_ASSERT (columns[col].size () == rowcount);
-			ret.append (columns[col][row]);
-		}
+		ret.append (rows[row].join (QChar ('\t')));
 	}
 	return ret;
 }
@@ -124,7 +100,7 @@ void RKTextMatrix::setText (int row, int col, const QString& text) {
 //	RK_TRACE (EDITOR);
 
 	upsize (row, col);
-	columns[col][row] = text;
+	rows[row][col] = text;
 }
 
 void RKTextMatrix::setColumn (int column, const QString* textarray, int length) {
@@ -132,15 +108,25 @@ void RKTextMatrix::setColumn (int column, const QString* textarray, int length) 
 
 	upsize (length - 1, column);
 	for (int i = 0; i < length; ++i) {
-		columns[column][i] = textarray[i];
+		rows[i][column] = textarray[i];
 	}
+}
+
+void RKTextMatrix::appendRow (const QStringList& row) {
+	RK_TRACE (EDITOR);
+
+	QStringList _row = row;
+	while (colcount > _row.size ()) _row.append (QString ());
+	rows.append (_row);
+	upsize (rows.size ()-1, row.size ()-1);
 }
 
 QString RKTextMatrix::getText (int row, int col) const {
 //	RK_TRACE (EDITOR);
 
-	if ((row > rowcount) || (col > colcount)) return QString ();
-	return (columns[col][row]);
+	if (row > rows.size ()) return QString ();
+	if (col > colcount) return QString ();
+	return (rows[row][col]);
 }
 
 QString* RKTextMatrix::getColumn (int col) const {
@@ -150,45 +136,48 @@ QString* RKTextMatrix::getColumn (int col) const {
 		return 0;
 	}
 
-	TextColumn column = columns[col];
-	QString* ret = new QString[column.size ()];
-	for (int i = 0; i < column.size (); ++i) {
-		ret[i] = column[i];
+	QString* ret = new QString[rows.size ()];
+	for (int i = 0; i < rows.size (); ++i) {
+		ret[i] = rows[i][col];
 	}
 	return ret;
+}
+
+QStringList RKTextMatrix::getRow (int row) const {
+	RK_TRACE (EDITOR);
+
+	if (row >= rows.size ()) return (QStringList ());
+	RK_ASSERT (rows[row].size () == colcount);
+	return (rows[row]);
 }
 
 void RKTextMatrix::clear () {
 	RK_TRACE (EDITOR);
 
-	columns.clear ();
-	rowcount = colcount = 0;
+	rows.clear ();
+	colcount = 0;
 }
 
 bool RKTextMatrix::isEmpty () const {
 	RK_TRACE (EDITOR);
 
-	if ((rowcount == 0) || (colcount == 0)) return true;
-	RK_ASSERT (!columns.isEmpty ());
+	if (rows.isEmpty() || (colcount == 0)) return true;
 	return false;
 }
 
 void RKTextMatrix::upsize (int newmaxrow, int newmaxcol) {
 //	RK_TRACE (EDITOR);
 
-	if (newmaxcol >= colcount) {
-		for (; colcount <= newmaxcol; ++colcount) {
-			TextColumn column;
-			column.resize (rowcount);
-			columns.append (column);
-		}
-		RK_ASSERT (colcount == columns.size ());
+	while (newmaxrow >= rows.size ()) {
+		QStringList list;
+		for (int i = 0; i < colcount; ++i) list.append (QString ());
+		rows.append(list);
 	}
 
-	if (newmaxrow >= rowcount) {
-		for (int i = 0; i < colcount; ++i) {
-			columns[i].resize (newmaxrow + 1);
+	if (newmaxcol >= colcount) {
+		for (int i = 0; i < rows.size (); ++i) {
+			while (newmaxcol >= rows[i].size ()) rows[i].append (QString());
 		}
-		rowcount = newmaxrow + 1;
+		colcount = newmaxcol + 1;
 	}
 }
