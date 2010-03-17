@@ -1,3 +1,4 @@
+- Fixed: Newly created variables were not properly updated when closing and re-opening the editor
 - Added "paste special" action to script editor and console for pasting R vectors and matrices from spreadsheets
 - Fix order of menus for detached windows
 - File->Open R Script File now allows to specify the character encoding to use

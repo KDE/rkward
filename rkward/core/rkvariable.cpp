@@ -2,7 +2,7 @@
                           rkvariable  -  description
                              -------------------
     begin                : Thu Aug 12 2004
-    copyright            : (C) 2004, 2007, 2008 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007, 2008, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -234,6 +234,7 @@ void RKVariable::beginEdit () {
 	if (!data) {
 		allocateEditData ();
 		if (!isPending ()) updateDataFromR (0);
+		else (type -= Pending);
 	}
 	++(data->num_listeners);
 }
