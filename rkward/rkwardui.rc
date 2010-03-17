@@ -34,6 +34,17 @@
 	<!-- These menus are actually defined in KParts. We also declare them here, to avoid menus jumping around -->
 	<Menu name="edit"><text>&amp;Edit</text>
 		<Action name="edit_menu_dummy"/>
+		<DefineGroup name="edit_first_merge" />
+		<Separator />
+		<DefineGroup name="edit_undo_merge" />
+		<Separator />
+		<DefineGroup name="edit_paste_merge" />
+		<DefineGroup name="after_edit_paste_merge" />
+		<Separator />
+		<DefineGroup name="edit_select_merge" />
+		<Separator />
+		<DefineGroup name="edit_find_merge" />
+		<Separator />
 	</Menu>
 	<Menu name="view"><text>&amp;View</text>
 		<Action name="view_menu_dummy"/>

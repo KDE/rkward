@@ -2,7 +2,7 @@
 <kpartgui name="rkward" version="53">
 	<MenuBar>
 		<Menu name="edit"><text>&amp;Edit</text>
-			<Menu name="tools"><text>&amp;Tools Move</text>
+			<Menu name="tools" group="edit_first_merge"><text>&amp;Tools Move</text>
 				<Merge/>
 			</Menu>
 			<Action name="mark_block" group="edit_select_merge"/>
