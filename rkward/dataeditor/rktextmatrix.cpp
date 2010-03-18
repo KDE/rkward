@@ -67,6 +67,7 @@ RKTextMatrix RKTextMatrix::matrixFromSeparatedValues (const QString& text, const
 	if (text.isEmpty ()) return ret;
 
 	QStringList textrows = text.split (brk);
+	if (textrows.last ().isEmpty ()) textrows.removeLast ();	// some apps append a trailing line break
 	for (int i = 0; i < textrows.size (); ++i) {
 		QStringList split = textrows[i].split (tab);
 		ret.appendRow (split);
