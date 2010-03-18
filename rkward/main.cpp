@@ -2,7 +2,7 @@
                           main.cpp  -  description
                              -------------------
     begin                : Tue Oct 29 20:06:08 CET 2002
-    copyright            : (C) 2002, 2005, 2006, 2007 by Thomas Friedrichsmeier 
+    copyright            : (C) 2002, 2005, 2006, 2007, 2010 by Thomas Friedrichsmeier 
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -81,7 +81,7 @@ static KCmdLineOptions options[] =
 };
 
 int main(int argc, char *argv[]) {
-	KAboutData aboutData( "rkward", I18N_NOOP ("RKWard"), version, description, KAboutData::License_GPL, "(c) 2002, 2004, 2005, 2006, 2007", 0, "http://rkward.sf.net", "rkward-devel@lists.sourceforge.net");
+	KAboutData aboutData( "rkward", I18N_NOOP ("RKWard"), version, description, KAboutData::License_GPL, "(c) 2002, 2004, 2005, 2006, 2007, 2008, 2009, 2010", 0, "http://rkward.sf.net", "rkward-devel@lists.sourceforge.net");
 	aboutData.addAuthor ("Thomas Friedrichsmeier", I18N_NOOP ("Project leader / main developer"), 0);
 	aboutData.addAuthor ("Pierre Ecochard",  I18N_NOOP ("C++ coder since 0.2.9"), 0);
 	aboutData.addAuthor ("Stefan Roediger", I18N_NOOP ("Many plugins, suggestions, marketing, translations"), 0);
