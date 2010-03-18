@@ -2,7 +2,7 @@
                           rinterface.cpp  -  description
                              -------------------
     begin                : Fri Nov 1 2002
-    copyright            : (C) 2002, 2004, 2005, 2006, 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2004, 2005, 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -26,6 +26,7 @@
 #include "../core/renvironmentobject.h"
 #include "../core/rkmodificationtracker.h"
 #include "../dialogs/rkloadlibsdialog.h"
+#include "../dialogs/rkselectlistdialog.h"
 #include "../dialogs/rkreadlinedialog.h"
 #include "../agents/showedittextfileagent.h"
 #include "../agents/rkeditobjectagent.h"
@@ -415,6 +416,24 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 		} else {
 			RK_ASSERT (false);
 		}
+	} else if (call == "select.list") {
+		QString title = request->call[1];
+		bool multiple = (request->call[2] == "multi");
+		int num_preselects = request->call[3].toInt ();
+		QStringList preselects = request->call.mid (4, num_preselects);
+		QStringList choices = request->call.mid (4 + num_preselects);
+
+		QStringList results = RKSelectListDialog::doSelect (0, title, choices, preselects, multiple);
+		if (results.isEmpty ()) results.append ("");	// R wants to have it that way
+
+		QString command = ".rk.set.reply (c (";
+		for (int i = 0; i < results.length (); ++i) {
+			if (i > 0) command.append (", ");
+			command.append (RObject::rQuote (results[i]));
+		}
+		command.append ("))");
+
+		issueCommand (command, RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
 	} else if (call == "recordCommands") {
 		if (request->call.count () == 3) {
 			QString filename = request->call[1];

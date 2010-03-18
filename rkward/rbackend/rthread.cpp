@@ -2,7 +2,7 @@
                           rthread  -  description
                              -------------------
     begin                : Mon Aug 2 2004
-    copyright            : (C) 2004, 2006, 2007, 2008, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2008, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -494,6 +494,8 @@ int RThread::initialize () {
 	runCommandInternal ("library (\"rkward\")\n", &error);
 	if (error) status |= LibLoadFail;
 	runCommandInternal (QString ("stopifnot(.rk.app.version==\"%1\")\n").arg (VERSION), &error);
+	if (error) status |= LibLoadFail;
+	runCommandInternal (".rk.fix.assignments ()\n", &error);
 	if (error) status |= LibLoadFail;
 
 // find out about standard library locations

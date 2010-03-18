@@ -413,3 +413,31 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 
 	invisible (TRUE)
 }
+
+# drop-in-replacement for tk_select.list()
+"rk.select.list" <- function (list, preselect = NULL, multiple = FALSE, title = NULL) {
+	preselect <- as.character (preselect)
+	preselect.len = length (preselect)
+	list <- as.character (list)
+	list.len <- length (list)
+	params <- list ()
+
+	# serialize all parameters
+	params[1] <- as.character (title)
+	if (multiple) params[2] <- "multi"
+	else params[2] <- "single"
+	params[3] <- as.character (preselect.len)
+	if (preselect.len) {
+		for (i in 1:preselect.len) {
+			params[3+i] <- preselect[i]
+		}
+	}
+	if (list.len) {	# we should hope, the list is not empty...
+		for (i in 1:list.len) {
+			params[3+preselect.len+i] <- list[i]
+		}
+	}
+
+	.rk.do.call ("select.list", params)
+}
+

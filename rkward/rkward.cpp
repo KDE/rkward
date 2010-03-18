@@ -85,6 +85,7 @@
 
 #include "agents/showedittextfileagent.h"	// TODO: see below: needed purely for linking!
 #include "dialogs/rkreadlinedialog.h"	// TODO: see below: needed purely for linking!
+#include "dialogs/rkselectlistdialog.h"	// TODO: see below: needed purely for linking!
 #include "windows/detachedwindowcontainer.h"	// TODO: see below: needed purely for linking!
 #include "dataeditor/rkeditordataframe.h"	// TODO: see below: needed purely for linking!
 #include "agents/rkeditobjectagent.h"	// TODO: see below: needed purely for linking!
@@ -93,6 +94,7 @@
 void bogusCalls () {
 	ShowEditTextFileAgent::showEditFiles (0);		// TODO: AAAAAAAARGGGH!!!! It won't link without this bogus line!!!
 	RKReadLineDialog::readLine (0, QString(), QString(), 0, 0);	// TODO: see above
+	RKSelectListDialog::doSelect (0, QString(), QStringList(), QStringList(), false);	// TODO: see above
 	new RKEditorDataFrame (0, 0);
 	DetachedWindowContainer (0);
 	new RKWorkplaceView (0);

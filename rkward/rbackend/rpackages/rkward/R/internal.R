@@ -445,3 +445,35 @@ formals (setwd) <- formals (base::setwd)
 	show (res)
 	invisible (TRUE)
 }
+
+".rk.select.list.proxy" <- function () {
+	# the "graphics" parameter was introduced in R 2.11.0, so we cannot rely on its existance
+	if (!exists ("graphics", inherits=FALSE)) graphics <- TRUE
+	if (graphics) {
+		return (rk.select.list (list, preselect, multiple, title))
+	}
+
+	# for text list, use the default implementation
+	eval (body (.rk.select.list.default))
+}
+formals (.rk.select.list.proxy) <- formals (utils::select.list)
+.rk.select.list.default <- utils::select.list
+
+".rk.menu.proxy" <- function () {
+	if (graphics) {
+		res <- rk.select.list (choices, multiple=FALSE, title=title)
+		return (match(res, choices, nomatch = 0L))
+	}
+
+	# for text menus, use the default implementation
+	eval (body (.rk.menu.default))
+}
+formals (.rk.menu.proxy) <- formals (utils::menu)
+.rk.menu.default <- utils::menu
+
+# where masking is not enough, we need to assign in the namespace. This can only be done after package loading,
+# so we have a separate function for that.
+".rk.fix.assignments" <- function () {
+	assignInNamespace ("menu", .rk.menu.proxy, envir=as.environment ("package:utils"))
+	assignInNamespace ("select.list", .rk.select.list.proxy, envir=as.environment ("package:utils"))
+}
