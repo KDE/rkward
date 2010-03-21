@@ -19,8 +19,6 @@
 
 #include <QListWidget>
 #include <QLabel>
-//#include <QApplication>
-//#include <QDesktopWidget>
 
 #include <klocale.h>
 #include <kvbox.h>
@@ -37,9 +35,9 @@ RKSelectListDialog::RKSelectListDialog (QWidget *parent, const QString &caption,
 	KVBox *page = new KVBox ();
 	setMainWidget (page);
 
+	if (multiple) new QLabel (i18n ("<b>Select one or more:</b>"), page);
+	else new QLabel (i18n ("<b>Select one:</b>"), page);
 	new QLabel (caption, page);
-
-//	int screen_height = qApp->desktop ()->height () - 2*marginHint() - 2*spacingHint ();
 
 	input = new QListWidget (page);
 	input->addItems (choices);
@@ -49,6 +47,12 @@ RKSelectListDialog::RKSelectListDialog (QWidget *parent, const QString &caption,
 		int pos = choices.indexOf (preselected[i]);
 		if (pos >= 0) input->item (pos)->setSelected (true);
 	}
+
+	QSize base_hint = minimumSizeHint ();
+	int other_height = base_hint.height () - input->minimumSizeHint ().height ();	// height of all other things besides the list widget
+	int ideal_height = other_height + qMax (input->sizeHintForRow (0)*input->count (), 50);
+	// KDialog appears to be smart enough to limit this to the available screen geometry
+	setInitialSize (QSize (base_hint.width (), ideal_height));
 
 	connect (input, SIGNAL (itemSelectionChanged()), this, SLOT (updateState()));
 	updateState ();
