@@ -1,3 +1,4 @@
+- Add close buttons to each tab in the main document view area (not available in KDE 4.0)
 - Make "print", "export as HTML", "dynamic word wrap", and "increase/descress font size" available for the console window
 - Use a native menu, instead of the default TclTk-menu			TODO: test, discuss the settings page, again
 - Fixed: Newly created variables were not properly updated when closing and re-opening the editor

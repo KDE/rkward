@@ -2,7 +2,7 @@
                           rkworkplaceview  -  description
                              -------------------
     begin                : Tue Sep 26 2006
-    copyright            : (C) 2006, 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -23,6 +23,7 @@
 #include <kactioncollection.h>
 #include <kaction.h>
 #include <kicon.h>
+#include <kdeversion.h>
 
 #include <qapplication.h>
 #include <qevent.h>
@@ -37,13 +38,23 @@
 RKWorkplaceView::RKWorkplaceView (QWidget *parent) : KTabWidget (parent) {
 	RK_TRACE (APP);
 
-	// close button
+	// close button(s)
 	QToolButton* close_button = new QToolButton (this);
 	close_button->setIcon (KIcon ("tab-close"));
 	connect (close_button, SIGNAL (clicked()), this, SLOT (closeCurrentPage()));
 	close_button->adjustSize ();
 	setCornerWidget (close_button, Qt::TopRightCorner);
 
+#if KDE_IS_VERSION(4,1,0)
+#	if QT_VERSION >= 0x040500
+	setTabsClosable (true);
+	connect (this, SIGNAL (tabCloseRequested(int)), this, SLOT (closePage(int)));
+#	else
+	setCloseButtonEnabled (true);
+	connect (this, SIGNAL (closeRequest(QWidget*)), this, SLOT (closePage(QWidget*)));
+#	endif
+#endif
+	
 	setTabBarHidden (true);		// initially
 	connect (this, SIGNAL (currentChanged(int)), this, SLOT (currentPageChanged(int)));
 }
@@ -167,6 +178,22 @@ void RKWorkplaceView::closeCurrentPage () {
 	}
 
 	w->close (true);
+}
+
+void RKWorkplaceView::closePage (QWidget* page) {
+	RK_TRACE (APP);
+
+	if (!page) {
+		RK_ASSERT (false);
+		return;
+	}
+	static_cast<RKMDIWindow*>(page)->close (true);
+}
+
+void RKWorkplaceView::closePage (int page) {
+	RK_TRACE (APP);
+
+	closePage (widget (page));
 }
 
 void RKWorkplaceView::childCaptionChanged (RKMDIWindow *widget) {

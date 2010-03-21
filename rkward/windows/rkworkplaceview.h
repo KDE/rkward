@@ -2,7 +2,7 @@
                           rkworkplaceview  -  description
                              -------------------
     begin                : Tue Sep 26 2006
-    copyright            : (C) 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -68,6 +68,10 @@ public slots:
 	void pageLeft ();
 /** Active the page right of the current tab */
 	void pageRight ();
+/** Close a page given the correspoding widget */
+	void closePage (QWidget* page);
+/** Close a page given its index */
+	void closePage (int page);
 private slots:
 /** (Attempts to) close the current tab */
 	void closeCurrentPage ();
