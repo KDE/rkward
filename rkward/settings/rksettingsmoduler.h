@@ -2,7 +2,7 @@
                           rksettingsmoduler  -  description
                              -------------------
     begin                : Wed Jul 28 2004
-    copyright            : (C) 2004, 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -97,12 +97,14 @@ private:
 	static QString help_base_url;
 };
 
+#include "../rbackend/rcommandreceiver.h"
+
 /**
 Configure packages and library paths
 
 @author Thomas Friedrichsmeier
 */
-class RKSettingsModuleRPackages : public RKSettingsModule {
+class RKSettingsModuleRPackages : public RKSettingsModule, public RCommandReceiver {
 	Q_OBJECT
 public:
     RKSettingsModuleRPackages (RKSettings *gui, QWidget *parent);
@@ -120,26 +122,24 @@ public:
 	static QStringList makeRRunTimeOptionCommands ();
 
 	static bool archivePackages () { return archive_packages; }
-//	static QStringList getPackageRepositories () { return package_repositories; };
 
 /** returns the list of packages which are essential to rkward. This is hard-coded. */
 	static QStringList essentialPackages () { return essential_packages.split ("\n"); };
 
 	QString caption ();
 public slots:
-	void listChanged ();
-	void boxChanged (int);
+	void settingChanged ();
 	void addLibLoc (QStringList *string_list);
 	void addRepository (QStringList *string_list);
+	void selectCRANMirror ();
+protected:
+	void rCommandDone (RCommand *command);
 private:
 	MultiStringSelector *libloc_selector;
 	QCheckBox *archive_packages_box;
 	MultiStringSelector *repository_selector;
-	QComboBox *cran_mirrors;
-	QStringList cran_mirror_list;
+	QLineEdit* cran_mirror_input;
 
-	static QStringList cran_url_list;
-	static int cran_mirror_index;
 	static QString cran_mirror_url;
 	static QStringList liblocs;
 	static bool archive_packages;

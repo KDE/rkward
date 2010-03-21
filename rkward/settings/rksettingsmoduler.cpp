@@ -29,8 +29,11 @@
 #include <qlineedit.h>
 #include <QVBoxLayout>
 #include <QGridLayout>
+#include <QPushButton>
 
+#include "../core/robject.h"
 #include "../misc/multistringselector.h"
+#include "../misc/rkprogresscontrol.h"
 #include "../rbackend/rinterface.h"
 #include "../rkglobals.h"
 #include "../debug.h"
@@ -320,46 +323,42 @@ QStringList RKSettingsModuleRPackages::defaultliblocs;
 bool RKSettingsModuleRPackages::archive_packages;
 QStringList RKSettingsModuleRPackages::package_repositories;
 QString RKSettingsModuleRPackages::essential_packages = QString ("base\nmethods\nutils\ngrDevices\ngraphics\nrkward");
-int RKSettingsModuleRPackages::cran_mirror_index;
 QString RKSettingsModuleRPackages::cran_mirror_url;
-QStringList RKSettingsModuleRPackages::cran_url_list;
 
-RKSettingsModuleRPackages::RKSettingsModuleRPackages (RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
+RKSettingsModuleRPackages::RKSettingsModuleRPackages (RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent), RCommandReceiver () {
 	RK_TRACE (SETTINGS);
 
 	QVBoxLayout *main_vbox = new QVBoxLayout (this);
 
 	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
 
-	repository_selector = new MultiStringSelector (i18n ("Package repositories (where libraries are downloaded from)"), this);
+	main_vbox->addWidget (new QLabel (i18n ("CRAN download mirror (leave empty to be prompted once each session):"), this));
+	QHBoxLayout* hbox = new QHBoxLayout ();
+	main_vbox->addLayout (hbox);
+	cran_mirror_input = new QLineEdit (cran_mirror_url, this);
+	if (cran_mirror_url == "@CRAN@") cran_mirror_input->clear ();
+	connect (cran_mirror_input, SIGNAL (textChanged(const QString&)), this, SLOT (settingChanged()));
+	hbox->addWidget (cran_mirror_input);
+	QPushButton* cran_mirror_button = new QPushButton (i18n ("Select mirror"), this);
+	connect (cran_mirror_button, SIGNAL (clicked()), this, SLOT (selectCRANMirror()));
+	hbox->addWidget (cran_mirror_button);
+
+	repository_selector = new MultiStringSelector (i18n ("Additional package repositories (where libraries are downloaded from)"), this);
 	repository_selector->setValues (package_repositories);
-	connect (repository_selector, SIGNAL (listChanged ()), this, SLOT (listChanged ()));
+	connect (repository_selector, SIGNAL (listChanged ()), this, SLOT (settingChanged ()));
 	connect (repository_selector, SIGNAL (getNewStrings (QStringList*)), this, SLOT (addRepository (QStringList*)));
 	main_vbox->addWidget (repository_selector);
 
-	/** lists created from CRAN_mirrors.csv using CRAN_mirror_list.R: 
-	 would ideally like to create this dynamically at build time 
-	 in a separate .h file  as a static variable **/
-	cran_mirror_list  << "Ask everytime" << "Argentina - Buenos Aires - Patan.com.ar" << "Argentina - Mendoza - CONICET" << "Australia - Melbourne - University of Melbourne" << "Austria - Wien - Wirtschaftsuniversitaet Wien" << "Belgium - Antwerp - K.U.Leuven Association" << "Brazil (PR) - Curitiba - Universidade Federal do Parana" << "Brazil (RJ) - Rio de Janeiro - Oswaldo Cruz Foundation" << "Brazil (SP 1) - Sao Paulo - University of Sao Paulo" << "Brazil (SP 2) - Piracicaba - University of Sao Paulo" << "Canada (BC) - Burnaby - Simon Fraser University" << "Canada (ON) - Toronto - University of Toronto" << "Canada (QC) - Montreal - iWeb" << "Chile - Santiago - Pontificia Universidad Catolica de Chile" << "China (Beijing) - Bejing - CTEX.ORG" << "China - Hong Kong - GeoExpat.Com" << "Colombia - Bogota - National University of Colombia" << "Croatia - Zagreb - Rudjer Boskovic Institute" << "Denmark - Aalborg - dotsrc.org" << "France - Toulouse - CICT" << "France - Lyon - Dept. of Biometry & Evol. Biology" << "France - Paris - Miroir-Francais" << "Germany - Berlin - Softliste.de" << "Germany - Goettingen - GWDG Goettingen" << "Germany - Hannover - Opensource Mirror Project" << "Germany - Muenchen - Rakanu.com" << "Germany - Wiesbaden - Yalwa GmbH" << "Iran - Mashhad - Ferdowsi University of Mashhad" << "Ireland - Dublin - HEAnet" << "Italy - Milano - Garr Mirror" << "Italy - Padua - University of Padua" << "Italy - Palermo - Universita degli Studi di Palermo" << "Japan - Aizu - University of Aizu" << "Japan - Hyogo - Hyogo University of Teacher Education" << "Japan - Tokyo - University of Tokyo" << "Japan - Tsukuba - University of Tsukuba" << "Korea - Seoul - Seoul National University" << "Mexico - Cuernavaca - Universidad Autonoma del Estado de Morelos" << "Netherlands (Amsterdam 2) - Amsterdam - Nedmirror" << "Netherlands - Utrecht - Utrecht University" << "New Zealand - Auckland - University of Auckland" << "Norway - Bergen - University of Bergen" << "Poland - Oswiecim - Piotrkosoft - Data Storage Center" << "Poland - Wroclaw - University of Wroclaw" << "Portugal - Porto - Universidade do Porto" << "Russia - Moscow - GIS-Lab.info" << "Singapore 1 - Singapore - National University of Singapore" << "Singapore 2 - Singapore - National University of Singapore" << "Slovakia - Bratislava - FYXM.net" << "South Africa - Grahamstown - Rhodes University" << "Spain - Madrid - Spanish National Research Network" << "Sweden - Uppsala - Swedish University Computer Network" << "Switzerland - Zuerich - ETH Zuerich" << "Taiwan - Taichung - Providence University" << "Taiwan (Taipeh) - Taipei - National Taiwan University" << "Thailand - Bangkok - Kapook.com" << "UK - Bristol - University of Bristol" << "USA (AZ) - Scottsdale - opensourceresources.org" << "USA (CA 1) - Berkeley - University of California" << "USA (CA 2) - Los Angeles - University of California" << "USA (IA) - Ames - Iowa State University" << "USA (MD) - Bethesda - National Cancer Institute" << "USA (MI) - Houghton - Michigan Technological University" << "USA (MO) - St. Louis - Washington University" << "USA (NC) - Chapel Hill - University of North Carolina" << "USA (OH) - Cleveland - Case Western Reserve University" << "USA (PA 1) - Pittsburgh - Statlib" << "USA (PA 2) - Pittsburgh - Hoobly Classifieds" << "USA (TN) - Knoxville - University of Tennessee" << "USA (TX 1) - San Antonio - Revolution Computing" << "USA (TX 2) - Dallas - CyberUse.com" << "USA (TX 3) - Houston - sixsigmaonline.org" << "USA (WA) - Seattle - Fred Hutchinson Cancer Research Center";
-	main_vbox->addWidget (new QLabel (i18n ("CRAN download mirror:"), this));
-	cran_mirrors = new QComboBox (this);
-	cran_mirrors->setEditable (false);
-	for (int i = 0; i < cran_mirror_list.size(); ++i)
-		cran_mirrors->insertItem (i, i18n (cran_mirror_list.at(i).toLocal8Bit().constData()));
-	cran_mirrors->setCurrentIndex (cran_mirror_index);
-	connect (cran_mirrors, SIGNAL (activated (int)), this, SLOT (boxChanged (int)));
-	main_vbox->addWidget (cran_mirrors);
-
 	archive_packages_box = new QCheckBox (i18n ("Archive downloaded packages"), this);
 	archive_packages_box->setChecked (archive_packages);
-	connect (archive_packages_box, SIGNAL (stateChanged (int)), this, SLOT (boxChanged (int)));
+	connect (archive_packages_box, SIGNAL (stateChanged (int)), this, SLOT (settingChanged()));
 	main_vbox->addWidget (archive_packages_box);	
 
 	main_vbox->addStretch ();
 
-	libloc_selector = new MultiStringSelector (i18n ("R Library locations  (where libraries get installed to, locally)"), this);
+	libloc_selector = new MultiStringSelector (i18n ("R Library locations (where libraries get installed to, locally)"), this);
 	libloc_selector->setValues (liblocs);
-	connect (libloc_selector, SIGNAL (listChanged ()), this, SLOT (listChanged ()));
+	connect (libloc_selector, SIGNAL (listChanged ()), this, SLOT (settingChanged ()));
 	connect (libloc_selector, SIGNAL (getNewStrings (QStringList*)), this, SLOT (addLibLoc (QStringList*)));
 	main_vbox->addWidget (libloc_selector);
 	QLabel *label = new QLabel (i18n ("Note: The startup defaults will always be used in addition to the locations you specify in this list"), this);
@@ -372,12 +371,7 @@ RKSettingsModuleRPackages::~RKSettingsModuleRPackages () {
 	RK_TRACE (SETTINGS);
 }
 
-void RKSettingsModuleRPackages::listChanged () {
-	RK_TRACE (SETTINGS);
-	change ();
-}
-
-void RKSettingsModuleRPackages::boxChanged (int) {
+void RKSettingsModuleRPackages::settingChanged () {
 	RK_TRACE (SETTINGS);
 	change ();
 }
@@ -392,7 +386,7 @@ void RKSettingsModuleRPackages::addLibLoc (QStringList *string_list) {
 
 void RKSettingsModuleRPackages::addRepository (QStringList *string_list) {
 	RK_TRACE (SETTINGS);
-	QString new_string = KInputDialog::getText (i18n ("Add repository"), i18n ("Add URL of new repository\n(Enter \"@CRAN@\" for the standard CRAN-mirror)"), QString::null, 0, this);
+	QString new_string = KInputDialog::getText (i18n ("Add repository"), i18n ("Add URL of new repository"), QString::null, 0, this);
 	(*string_list).append (new_string);
 }
 
@@ -406,18 +400,40 @@ bool RKSettingsModuleRPackages::hasChanges () {
 	return changed;
 }
 
+#define SELECT_CRAN_MIRROR_COMMAND 123
+void RKSettingsModuleRPackages::selectCRANMirror () {
+	RK_TRACE (SETTINGS);
+	QString title = i18n ("Select CRAN mirror");
+	
+	RCommand* command = new RCommand ("rk.select.CRAN.mirror()\n", RCommand::App | RCommand::GetStringVector, title, this, SELECT_CRAN_MIRROR_COMMAND);
+
+	RKProgressControl* control = new RKProgressControl (this, title, title, RKProgressControl::StandardCancel);
+	control->addRCommand (command, true);
+	RKGlobals::rInterface ()->issueCommand (command);
+	control->doModal (true);
+}
+
+void RKSettingsModuleRPackages::rCommandDone (RCommand *command) {
+	RK_TRACE (SETTINGS);
+
+	if (command->getFlags () == SELECT_CRAN_MIRROR_COMMAND) {
+		if (command->succeeded ()) {
+			RK_ASSERT (command->getStringVector ());
+			cran_mirror_input->setText (command->getStringVector ()[0]);
+		}
+	} else {
+		RK_ASSERT (false);
+	}
+}
+
 //static
 QStringList RKSettingsModuleRPackages::makeRRunTimeOptionCommands () {
 	QStringList list;
 
 // package repositories
-	QString command = "options (repos=c (";
+	QString command = "options (repos=c (CRAN=" + RObject::rQuote (cran_mirror_url);
 	for (QStringList::const_iterator it = package_repositories.begin (); it != package_repositories.end (); ++it) {
-		if (it != package_repositories.begin ()) {
-			command.append (", ");
-		}
-		if (*it == "@CRAN@") command.append ("CRAN=\"" + cran_mirror_url + "\""); 
-		else command.append ("\"" + *it + "\"");
+		command.append (", " + RObject::rQuote (*it));
 	}
 	list.append (command + "))\n");
 
@@ -443,8 +459,8 @@ QStringList RKSettingsModuleRPackages::makeRRunTimeOptionCommands () {
 void RKSettingsModuleRPackages::applyChanges () {
 	RK_TRACE (SETTINGS);
 
-	cran_mirror_index = cran_mirrors->currentIndex ();
-	cran_mirror_url = cran_url_list.at(cran_mirror_index).toLocal8Bit().constData();
+	cran_mirror_url = cran_mirror_input->text ();
+	if (cran_mirror_url.isEmpty ()) cran_mirror_url = "@CRAN@";
 
 	archive_packages = archive_packages_box->isChecked ();
 	package_repositories = repository_selector->getValues ();
@@ -478,16 +494,12 @@ void RKSettingsModuleRPackages::loadSettings (KConfig *config) {
 
 	KConfigGroup cg = config->group ("R Settings");
 
-	// This definition should be done in a more saner place:
-	cran_url_list << "@CRAN@" << "http://cran.patan.com.ar/" << "http://mirror.cricyt.edu.ar/r/" << "http://cran.ms.unimelb.edu.au/" << "http://cran.at.r-project.org/" << "http://www.freestatistics.org/cran/" << "http://cran.br.r-project.org/" << "http://cran.fiocruz.br/" << "http://www.vps.fmvz.usp.br/CRAN/" << "http://brieger.esalq.usp.br/CRAN/" << "http://cran.stat.sfu.ca/" << "http://probability.ca/cran/" << "http://cran.parentinginformed.com/" << "http://dirichlet.mat.puc.cl/" << "http://ftp.ctex.org/mirrors/CRAN/" << "http://mirrors.geoexpat.com/cran/" << "http://www.laqee.unal.edu.co/CRAN/" << "http://imago.irb.hr/r/" << "http://cran.dk.r-project.org/" << "http://cran.fr.r-project.org/" << "http://cran.univ-lyon1.fr/" << "http://cran.miroir-francais.fr/" << "http://mirrors.softliste.de/cran/" << "http://ftp5.gwdg.de/pub/misc/cran/" << "http://cran.mirroring.de" << "http://cran.rakanu.com/" << "http://ftp.yalwa.org/cran/" << "http://cran.um.ac.ir/" << "http://ftp.heanet.ie/mirrors/cran.r-project.org/" << "http://rm.mirror.garr.it/mirrors/CRAN/" << "http://cran.stat.unipd.it/" << "http://dssm.unipa.it/CRAN/" << "ftp://ftp.u-aizu.ac.jp/pub/lang/R/CRAN" << "http://essrc.hyogo-u.ac.jp/cran/" << "ftp://ftp.ecc.u-tokyo.ac.jp/CRAN/" << "http://cran.md.tsukuba.ac.jp/" << "http://bibs.snu.ac.kr/R/" << "http://www2.uaem.mx/r-mirror/" << "http://cran.nedmirror.nl/" << "http://cran-mirror.cs.uu.nl/" << "http://cran.stat.auckland.ac.nz/" << "http://cran.ii.uib.no/" << "http://piotrkosoft.net/pub/mirrors/CRAN/" << "http://r.meteo.uni.wroc.pl/" << "http://cran.pt.r-project.org/" << "http://cran.gis-lab.info/" << "http://cran.bic.nus.edu.sg/" << "http://cran.stat.nus.edu.sg/" << "http://cran.fyxm.net/" << "http://cran.za.r-project.org/" << "http://cran.es.r-project.org/" << "http://ftp.sunet.se/pub/lang/CRAN/" << "http://cran.ch.r-project.org/" << "http://cran.cs.pu.edu.tw/" << "http://cran.csie.ntu.edu.tw/" << "http://mirror.kapook.com/cran/" << "http://cran.uk.r-project.org/" << "http://cran.opensourceresources.org/" << "http://cran.cnr.Berkeley.edu" << "http://cran.stat.ucla.edu/" << "http://streaming.stat.iastate.edu/CRAN/" << "http://watson.nci.nih.gov/cran_mirror/" << "http://cran.mtu.edu/" << "http://cran.wustl.edu/" << "http://www.ibiblio.org/pub/languages/R/CRAN/" << "http://cran.case.edu/" << "http://lib.stat.cmu.edu/R/CRAN/" << "http://cran.mirrors.hoobly.com" << "http://mira.sunsite.utk.edu/CRAN/" << "http://www.revolution-computing.com/cran/" << "http://www.cyberuse.com/cran/" << "http://cran.sixsigmaonline.org/" << "http://cran.fhcrc.org/";
 	cran_mirror_url = cg.readEntry ("CRAN mirror url", "@CRAN@");
-	cran_mirror_index = cran_url_list.indexOf (cran_mirror_url);
-	if (cran_mirror_index == -1) cran_mirror_index = 0;
-
-	archive_packages = cg.readEntry ("archive packages", false);
-	package_repositories = cg.readEntry ("Repositories", QStringList ("@CRAN@"));
+	package_repositories = cg.readEntry ("Repositories", QStringList ());
+	package_repositories.removeAll ("@CRAN@");	// COMPAT: Cran mirror was part of this list before 0.5.3
 
 	liblocs = cg.readEntry ("LibraryLocations", QStringList ());
+	archive_packages = cg.readEntry ("archive packages", false);
 }
 
 #include "rksettingsmoduler.moc"

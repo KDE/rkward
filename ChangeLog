@@ -11,7 +11,7 @@
 - Fixed: Frequent crashes while running automated plugintests
 - Fixed: Filenames without extension would not be shown in file dialogs
 - Fixed: Calling "fix(my.fun)" would remove comments
-- Fixed: Removing "@CRAN@" from the repositories would break package installation		TODO: doesn't it still? Investigate.
+- Fixed: Removing "@CRAN@" from the repositories would break package installation
 
 --- Version 0.5.2 - Oct-26-2009
 - Add Stata data file import plugin (by Michael Ash)

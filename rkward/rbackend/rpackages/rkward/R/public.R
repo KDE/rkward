@@ -414,6 +414,16 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	invisible (TRUE)
 }
 
+# a wrapper around chooseCRANmirror() without changing options ("repos"), permanently
+"rk.select.CRAN.mirror" <- function () {
+	old_repos <- getOption("repos")
+	on.exit (options (repos=old_repos))
+
+	chooseCRANmirror()
+
+	return (as.character (getOption ("repos")["CRAN"]))
+}
+
 # drop-in-replacement for tk_select.list()
 "rk.select.list" <- function (list, preselect = NULL, multiple = FALSE, title = NULL) {
 	preselect <- as.character (preselect)

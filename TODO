@@ -150,6 +150,8 @@ UI-stuff
 		- this does not really need to be a top-level tool window any more. Since it's rarely used, it might be hidden somewhere.
 
 Internal stuff:
+	- RCommand deletion
+		- dealing synchronously with commands (e.g. via a modal RKProgressControl) would be so much easier, if the commands would not be deleted quite as soon!
 	- rklocalesupport:
 		- does locale switching / detection work? Does Qt have something, yet?
 	- Workspace browser / code completion
