@@ -128,10 +128,12 @@ friend class RKConsolePart;
 	const char *nprefix;
 /** This string stores the continuation prefix. */
 	const char *iprefix;
-/** This function unplugs a KAction
-\param action the KAction to be unplugged
-\param ac the action collection from which to retrieve the KAction*/
-	void unplugAction (const QString &action, KActionCollection* ac);
+
+/** Create a proxy for the katepart action of the same name. The action is added to the actioncollection, automatically. Also any icon and label (but not shorcut) is copied.
+@param actionName Identifier of the action in katepartui.rc and rkconsolepart.rc
+@param label Label for the proxy action. If empty (default) copy the label from the katepartui
+@returns a pointer to the proxy action */
+	QAction* addProxyAction (const QString& actionName, const QString& label=QString ());
 
 	QString cleanedSelection ();
 

@@ -144,6 +144,43 @@ RKConsole::~RKConsole () {
 	RKSettingsModuleConsole::saveCommandHistory (commands_history);
 }
 
+QAction* RKConsole::addProxyAction (const QString& actionName, const QString& label) {
+	RK_TRACE (APP);
+	RK_ASSERT (getPart ());
+	RK_ASSERT (view);
+
+	// katepart has more than one actionCollection
+	QList<KActionCollection*> acs = view->findChildren<KActionCollection*>();
+	acs.append (view->actionCollection ());
+
+	QAction* found = 0;
+	foreach (KActionCollection* ac, acs) {
+		found = ac->action (actionName);
+		if (found) break;
+	}
+
+	if (found) {
+		QAction* ret = new KAction (getPart ());
+		if (label.isEmpty ()) ret->setText (found->text ());
+		else ret->setText (label);
+		ret->setIcon (found->icon ());
+		ret->setIconText (found->iconText ());
+		ret->setToolTip (found->toolTip ());
+		ret->setStatusTip (found->statusTip ());
+		ret->setCheckable (found->isCheckable ());
+		ret->setChecked (found->isChecked ());
+		// TODO: ideally, we'd also relay enabledness, checked state, etc. That would probably require a separate class,
+		// and is not currently needed for the actions that we copy
+		connect (ret, SIGNAL (triggered(bool)), found, SLOT (trigger()));
+		connect (ret, SIGNAL (toggled(bool)), found, SLOT (toggle()));
+
+		getPart ()->actionCollection ()->addAction (actionName, ret);
+		return ret;
+	} else {
+		return 0;
+	}
+}
+
 void RKConsole::triggerEditAction (QString name) {
 	RK_TRACE (APP);
 
@@ -739,14 +776,6 @@ int RKConsole::currentCursorPosition (){
 	return(c.column ());
 }
 
-//KDE4 still needed? (see ctor)
-void RKConsole::unplugAction(const QString &action, KActionCollection* ac) {
-	QAction* a = ac->action (action);
-	if( a ){
-		a->setEnabled (false);
-	}
-}
-
 int RKConsole::currentCursorPositionInCommand(){
 	RK_TRACE (APP);
 	return(currentCursorPosition() - prefix.length());
@@ -819,6 +848,12 @@ void RKConsole::initializeActions (KActionCollection *ac) {
 	paste_action = ac->addAction (KStandardAction::Paste, "rkconsole_paste", this, SLOT (paste()));
 	QAction *action = ac->addAction ("rkconsole_configure", this, SLOT (configure()));
 	action->setText (i18n ("Configure"));
+
+	addProxyAction ("file_print", i18n ("Print Console"));
+	addProxyAction ("file_export_html");
+	addProxyAction ("view_dynamic_word_wrap");
+	addProxyAction ("view_inc_font_sizes");
+	addProxyAction ("view_dec_font_sizes");
 }
 
 void RKConsole::pipeUserCommand (const QString &command) {

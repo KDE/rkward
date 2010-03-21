@@ -1,6 +1,11 @@
 <!DOCTYPE kpartgui>
 <kpartgui name="rkward" version="53">
 	<MenuBar>
+		<Menu name="file"><text>&amp;File</text>
+			<Action name="file_print"/>
+			<Separator group="print_merge" />
+			<Action name="file_export_html"/>
+		</Menu>
 		<Menu name="edit"><text>&amp;Edit</text>
 			<Action name="rkconsole_copy" group="edit_paste_merge"/>
 			<Action name="rkconsole_copy_literal" group="edit_paste_merge"/>
@@ -8,6 +13,11 @@
 			<DefineGroup name="edit_paste_merge" append="edit_paste_merge"/>
 			<Separator/>
 			<Action name="rkconsole_clear"/>
+		</Menu>
+		<Menu name="view"><text>&amp;View</text>
+			<Action name="view_dynamic_word_wrap" />
+			<Action name="view_inc_font_sizes" />
+			<Action name="view_dec_font_sizes" />
 		</Menu>
 		<Menu name="run"><text>&amp;Run</text>
 			<Action name="interrupt" group="postrun_actions_merge"/>
