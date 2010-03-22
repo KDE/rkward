@@ -2,7 +2,7 @@
                           rktabpage.cpp  -  description
                              -------------------
     begin                : Wed Apr 5 2006
-    copyright            : (C) 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -40,6 +40,8 @@ RKTabPage::RKTabPage (const QDomElement &element, RKComponent *parent_component,
 	tabbook = parent_widget;
 	tabbook->addTab (this, label);
 	index = tabbook->indexOf (this);
+	// for whatever reason, this needs to be set *after* the page was added to the tabbook
+	page->setSizePolicy (QSizePolicy (QSizePolicy::Expanding, QSizePolicy::Expanding));
 
 	inserted = true;
 	connect (visibility_property, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (visibleEnabledChanged (RKComponentPropertyBase *)));
