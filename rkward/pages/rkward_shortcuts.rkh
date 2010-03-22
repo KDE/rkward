@@ -4,7 +4,11 @@
 	<summary>
 	You can control RKWard in many situations without using a mouse device, using only the keyboard.
 
-	Most shortcuts are not yet configurable (this will be added in a future release), but you can configure most shortcuts of the script editor. To do so, open a script editor window, then choose 'Settings->Configure editor->Short cuts' from the menu.
+	Most shortcuts are configurable, using Settings->Configure Shortcuts. For technical reasons, only the shortcuts of those components will be listed that are eactive
+	at that time. Hence, for example, if you want to edit the shortcuts for the data editor, first open a data editor, then select Settings->Configure Shortcuts.
+	Most shorcuts for the script editor are managed separately using Settings->Configure Editor->Shortcuts.
+
+	On most systems, you can also configure shortcuts by right-clicking on the respective menu item.
 	</summary>
 	<section title="RKWard Default Shortcut keys" id="default_shortcut_keys">
 		<table>
