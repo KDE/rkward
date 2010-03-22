@@ -1,6 +1,6 @@
 <!DOCTYPE kpartgui>
 <kpartgui name="rkward" version="51">
-	<Menubar>
+	<MenuBar>
 		<Menu name="edit"><text>&amp;Edit</text>
 			<Action name="log_select_all"/>
 			<Action name="log_copy"/>
@@ -9,7 +9,7 @@
 		<Menu name="settings"><text>&amp;Settings</text>
 			<Action name="log_configure"/>
 		</Menu>
-	</Menubar>
+	</MenuBar>
 	<Menu name="rkcommandlog_context_menu">
 		<Action name="log_copy"/>
 		<DefineGroup name="rkcommandlog_context_merge1" append="rkcommandlog_context_merge1"/>
