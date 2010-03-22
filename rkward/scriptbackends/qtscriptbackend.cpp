@@ -2,7 +2,7 @@
                           krossbackend  -  description
                              -------------------
     begin                : Mon Sep 28 2009
-    copyright            : (C) 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -34,7 +34,6 @@ QtScriptBackend::QtScriptBackend (const QString &filename) : ScriptBackend () {
 	dead = false;
 	busy = true;
 }
-
 
 QtScriptBackend::~QtScriptBackend () {
 	RK_TRACE (PHP);
@@ -209,7 +208,7 @@ bool QtScriptBackendThread::includeFile (const QString &filename) {
 	RK_TRACE (PHP);
 
 	QString _filename = filename;
-	if (!filename.startsWith ("/")) {
+	if (QFileInfo (filename).isRelative ()) {
 		KUrl script_path = KUrl (QUrl::fromLocalFile (_scriptfile)).upUrl ();
 		script_path.addPath (filename);
 		_filename = script_path.toLocalFile ();
