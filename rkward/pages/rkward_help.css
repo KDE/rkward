@@ -50,6 +50,13 @@
 	border: 1px solid silver;
 }
 
+#navigation h1 {
+	font-size: 1em;
+	color: gray;
+	margin-top: 0em;
+	margin-bottom: 0.5em;
+}
+
 #navigation p {
 	font-size: 0.9em;
 	margin-top: 0em;

@@ -576,18 +576,14 @@ bool RKHTMLWindow::renderRKHelp (const KUrl &url) {
 
 		// create a navigation bar
 		KUrl url_copy = url;
-		QString navigation;
-		QStringList::const_iterator names_it = anchornames.constBegin ();
-		for (QStringList::const_iterator it = anchors.constBegin (); it != anchors.constEnd (); ++it) {
-			if (!((*it).isNull () || (*names_it).isNull ())) {
-				url_copy.setRef (*it);
-				navigation.append ("<p><a href=\"" + url_copy.url () + "\">" + *names_it + "</a></p>\n");
-			}
-
-			if (names_it != anchornames.constEnd ()) {
-				++names_it;
-			} else {
-				RK_ASSERT (false);
+		QString navigation = i18n ("<h1>On this page:</h1>");
+		RK_ASSERT (anchornames.size () == anchors.size ());
+		for (int i = 0; i < anchors.size (); ++i) {
+			QString anchor = anchors[i];
+			QString anchorname = anchornames[i];
+			if (!(anchor.isEmpty () || anchorname.isEmpty ())) {
+				url_copy.setRef (anchor);
+				navigation.append ("<p><a href=\"" + url_copy.url () + "\">" + anchorname + "</a></p>\n");
 			}
 		}
 		khtmlpart->write ("</div><div id=\"navigation\">" + navigation + "</div>");
