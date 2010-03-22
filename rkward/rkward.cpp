@@ -325,9 +325,14 @@ void RKWardMainWindow::initActions()
 
 	fileOpenRecent = static_cast<KRecentFilesAction*> (actionCollection ()->addAction (KStandardAction::OpenRecent, "file_open_recenty", this, SLOT(slotOpenCommandEditor (const KUrl&))));
 
+#ifdef Q_WS_WIN
+	// TODO: find the cause and fix it! http://sourceforge.net/tracker/?func=detail&aid=2848341&group_id=50231&atid=459007
+#	warning TODO: import data dialog is disabled on windows due to bug in kdelibs
+#else
 	action = actionCollection ()->addAction ("import_data", this, SLOT (importData()));
 	action->setText (i18n ("Import Data"));
 	action->setStatusTip (i18n ("Import data from a variety of file formats"));
+#endif
 
 	fileOpenWorkspace = actionCollection ()->addAction (KStandardAction::Open, "file_openx", this, SLOT(slotFileOpenWorkspace()));
 	fileOpenWorkspace->setText (i18n ("Open Workspace"));
