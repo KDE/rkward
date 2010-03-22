@@ -452,7 +452,7 @@ bool RKHTMLWindow::renderRKHelp (const KUrl &url) {
 		QDomElement element;
 		QDomElement component_doc_element;
 		QString help_base_dir = RKCommonFunctions::getRKWardDataDir () + "pages/";
-		QString css_filename = "file://" + help_base_dir + "rkward_help.css";
+		QString css_filename = QUrl::fromLocalFile (help_base_dir + "rkward_help.css").toString ();
 
 		// determine help file, and prepare
 		if (for_component) {
