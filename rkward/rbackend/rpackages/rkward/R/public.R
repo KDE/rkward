@@ -158,7 +158,10 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		.rk.cat.output(paste("<img src=\"", filename, "\" width=\"", width, 
 			"\" height=\"", height, "\"><br>", sep = ""))
 	} else if (device.type == "JPG") {
-		if (missing (quality)) quality = getOption ("rk.graphics.jpg.quality", 75)
+		if (missing (quality)) {
+			quality = getOption ("rk.graphics.jpg.quality")		# COMPAT: getOption (x, *default*) not yet available in R 2.9
+			if (is.null (quality)) quality = 75
+		}
 		filename <- rk.get.tempfile.name(prefix = "graph", extension = ".jpg")
 		ret <- jpeg(filename = file.path(filename), width = width, height = height, "quality"=quality, ...)
 		.rk.cat.output(paste("<img src=\"", filename, "\" width=\"", width, 
