@@ -1,6 +1,5 @@
 !define R_DOWNLOAD_URL "http://cran.r-project.org/bin/windows/base/"
 !define KDE_DOWNLOAD_URL "http://techbase.kde.org/Projects/KDE_on_Windows/Installation"
-!define PHP_DOWNLOAD_URL "http://www.php.net/downloads.php"
 
 !include nsDialogs.nsh
 !include LogicLib.nsh
@@ -80,12 +79,13 @@ Function WelcomeCreate
 	${EndIf}
 
 	${NSD_CreateLabel} 0 0 100% 20u "Welcome to the RKWard on Windows installer."
-	${NSD_CreateLabel} 0 21u 100% 48u "RKWard on Windows is still young, and installation is a bit cumbersome, but we'll talk you through the needed steps.$\r$\nNote that you need to install R and KDE _before_ you can install RKWard. PHP is also needed at runtime (but this installer will run without it).$\r$\nTo download the required software / or to get more info, these links should be helpful:"
+	${NSD_CreateLabel} 0 21u 100% 32u "RKWard on Windows is still young, and installation is a bit cumbersome, but we'll talk you through the needed steps.$\r$\nNote that you need to install R and KDE _before_ you can install RKWard.$\r$\nPlease DO read these instructions, first:"
 
-	!insertmacro MakeExternalLink 70u "Help resources for RKWard on Windows" "http://p.sf.net/rkward/windows"
-	!insertmacro MakeExternalLink 86u "Download R installer" ${R_DOWNLOAD_URL}
-	!insertmacro MakeExternalLink 102u "KDE installation instructions" ${KDE_DOWNLOAD_URL}
-	!insertmacro MakeExternalLink 118u "Download PHP installer" ${PHP_DOWNLOAD_URL}
+	!insertmacro MakeExternalLink 62u "READ ME: Installing RKWard on Windows" "http://p.sf.net/rkward/windows"
+
+	${NSD_CreateLabel} 0 86u 100% 16u "These links to R and KDE, may also be helpful:"
+	!insertmacro MakeExternalLink 102u "Download R installer" ${R_DOWNLOAD_URL}
+	!insertmacro MakeExternalLink 118u "KDE installation instructions" ${KDE_DOWNLOAD_URL}
 
 	nsDialogs::Show
 FunctionEnd
