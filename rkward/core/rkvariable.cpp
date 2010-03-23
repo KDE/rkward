@@ -234,7 +234,6 @@ void RKVariable::beginEdit () {
 	if (!data) {
 		allocateEditData ();
 		if (!isPending ()) updateDataFromR (0);
-		else (type -= Pending);
 	}
 	++(data->num_listeners);
 }
@@ -295,6 +294,8 @@ void RKVariable::discardEditData () {
 	delete data->value_labels;
 	delete data;
 	data = 0;
+
+	if (isPending ())  (type -= Pending);
 }
 
 void RKVariable::updateDataFromR (RCommandChain *chain) {
