@@ -27,8 +27,8 @@ REM sh.exe must not be in path during cmake call, but must be in path for R pack
 SET PATH=%PATH%;%SH_PATH%
 mingw32-make install DESTDIR=%INSTALL_DIR%
 
-move %INSTALL_DIR%/%KDEPREFIX% %INSTALL_DIR%/_KDEPREFIX_
 move %INSTALL_DIR%/%RHOME% %INSTALL_DIR%/_RHOME_
+move %INSTALL_DIR%/%KDEPREFIX% %INSTALL_DIR%/_KDEPREFIX_
 
 REM Prepare Version info for use in NSIS
 echo !define RKWARD_VERSION \ > %RELEASE_DIR%/rkward_version.nsh
