@@ -17,8 +17,6 @@
 
 #include "rkpthreadsupport.h"
 
-#include "pthread_config.h"
-
 #include <qstring.h>
 #include "../debug.h"
 
@@ -27,6 +25,7 @@
 #	include <stdint.h>	// for uintptr_t
 #else
 #	include <pthread.h>
+#	include "pthread_config.h"
 #endif
 #ifdef HAVE_PTHREAD_NP_H
 #	include <pthread_np.h>
