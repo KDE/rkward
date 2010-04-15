@@ -9,7 +9,7 @@
 - Fixed: No entries were added the recent script/workspaces actions after "save as"
 - Initialize the output file with an appropriate encoding specification
 - Add SVG support to export (graphics) plugin
-- Add basic settings format settings for graphics output		TODO: somehow, SVG does not work correctly in khtmlpart/KDE 4.3, thus not the default for now. Can we do anything about this?
+- Add basic settings format settings for graphics output
 - Convert all plugins to use ECMAscript instead of PHP; RKWard no longer depends on PHP
 - Fixed: Frequent crashes while running automated plugintests
 - Fixed: Filenames without extension would not be shown in file dialogs

@@ -16,9 +16,10 @@ Bugs outside RKWard:
 
 Bugs:
 	- XMLGUI:
-		- The edit menu is broken in the main window, but not detached windows (for script editor, console)
-			- When adding the DefineGroups from detachedwindowcontainer.rc to rkwardui.rc, the edit menu goes totally mental, there, sometimes, even shuffling actions apparently more or less randomly.
+		- In *some* versions of KDE, the edit menu is broken in the main window, but not detached windows (for script editor, console)
 			- No idea, how to fix that
+			- Apparently the cause of the difference (and the point where problems start) is when parts get switched.
+				- DefineGroup's are simply forgot / ignored after that
 	- There is definitely a memory leak in handling output!
 		- Produce lots and lots of output -> watch mem usage grow
 		- Probably the RKConsole is to blame (run outside console -> no significant increase)

@@ -1,2 +1,2 @@
 /* Version number of package */
-#define VERSION "0.5.3-test4"
+#define VERSION "0.5.3-pre1"
