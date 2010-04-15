@@ -1,7 +1,7 @@
 SET KDEPREFIXDRIVE=c:
 SET KDEPREFIX=KDE
-SET RHOMEDRIVE=c:
-SET RHOME=Programme/R/R-2.9.0
+SET RHOMEDRIVE=F:
+SET RHOME=KDE/lib/R
 
 SET SH_PATH=C:\Rtools\bin
 SET MAKENSIS=c:/programme/nsis/makensis.exe

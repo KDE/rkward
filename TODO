@@ -2,24 +2,19 @@ The following list of TODO-items is NOT complete!
 Also, plans change frequently. If something is listed for a specific release, that's no more than a rough plan.
 All in all, this TODO list is mostly for internal purposes, and many parts may not necessarily be intellegible to anybody but the authors.
 
-Advertizing:
-	- start being a bit bolder about RKWard (descriptions, startup notification, etc.)
-
 Bugs outside RKWard:
 	- KDE 4
-		- KPageDialog does not take all pages into acount when calculating minimum size
-			- known workarounds:
-				http://article.gmane.org/gmane.comp.kde.cvs/700027
-				http://kdepim.sourcearchive.com/documentation/4.1.80/kleopatra_2conf_2configuredialog_8cpp-source.html
 		- why is the icon style only honored for mainToolBar (in KXMLGUIBuilder)? It looks like this is done on purpose, but why???
 			- http://lists.kde.org/?l=kde-core-devel&m=103307809508725&w=2
+		- Windows:
+			- KStandardDirs::findExe() does not find .bat or .com (prevents rkward icon from inclusion in KDE menu)
 
 Bugs:
 	- XMLGUI:
-		- In *some* versions of KDE, the edit menu is broken in the main window, but not detached windows (for script editor, console)
-			- No idea, how to fix that
-			- Apparently the cause of the difference (and the point where problems start) is when parts get switched.
-				- DefineGroup's are simply forgot / ignored after that
+		- The edit menu is broken in the main window, but not detached windows (for script editor, console)
+			- Ok in KDE 4.3.4 / Linux
+			- Broken in KDE 4.4.1 / Windows
+			- Apparently it is the *switching* of parts that is the problem. For the very first part, the GUI is ok, after that all DefineGroups seem to be forgotten
 	- There is definitely a memory leak in handling output!
 		- Produce lots and lots of output -> watch mem usage grow
 		- Probably the RKConsole is to blame (run outside console -> no significant increase)
