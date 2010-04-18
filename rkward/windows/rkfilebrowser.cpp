@@ -2,7 +2,7 @@
                           rkfilebrowser  -  description
                              -------------------
     begin                : Thu Apr 26 2007
-    copyright            : (C) 2007, 2008, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2008, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -23,6 +23,7 @@
 #include <kcompletionbox.h>
 #include <ktoolbar.h>
 #include <kactioncollection.h>
+#include <kconfiggroup.h>
 
 #include <qdir.h>
 #include <qlayout.h>
@@ -96,15 +97,20 @@ RKFileBrowserWidget::RKFileBrowserWidget (QWidget *parent) : KVBox (parent) {
 	setFocusProxy (urlbox);
 
 	dir = new KDirOperator (KUrl (), this);
-	dir->setView(KFile::Simple);
 	dir->setPreviewWidget (0);
+	KConfigGroup config = KGlobal::config ()->group ("file browser window");
+	dir->readConfig (config);
+	dir->setView (KFile::Default);
+	connect (RKWardMainWindow::getMain (), SIGNAL (aboutToQuitRKWard()), this, SLOT (saveConfig()));
 
 	toolbar->addAction (dir->actionCollection ()->action ("up"));
 	toolbar->addAction (dir->actionCollection ()->action ("back"));
 	toolbar->addAction (dir->actionCollection ()->action ("forward"));
 	toolbar->addAction (dir->actionCollection ()->action ("home"));
 	toolbar->addAction (dir->actionCollection ()->action ("short view"));
+	toolbar->addAction (dir->actionCollection ()->action ("tree view"));
 	toolbar->addAction (dir->actionCollection ()->action ("detailed view"));
+//	toolbar->addAction (dir->actionCollection ()->action ("detailed tree view"));	// should we have this as well? Trying to avoid crowding in the toolbar
 
 	connect (dir, SIGNAL (urlEntered (const KUrl &)), this, SLOT (urlChangedInView (const KUrl &)));
 	connect (urlbox, SIGNAL (returnPressed (const QString &)), this, SLOT (urlChangedInCombo (const QString &)));
@@ -117,6 +123,14 @@ RKFileBrowserWidget::RKFileBrowserWidget (QWidget *parent) : KVBox (parent) {
 
 RKFileBrowserWidget::~RKFileBrowserWidget () {
 	RK_TRACE (APP);
+}
+
+// does not work in d-tor. Apparently it's too late, then
+void RKFileBrowserWidget::saveConfig () {
+	RK_TRACE (APP);
+
+	KConfigGroup config = KGlobal::config ()->group ("file browser window");
+	dir->writeConfig (config);
 }
 
 void RKFileBrowserWidget::setURL (const QString &url) {

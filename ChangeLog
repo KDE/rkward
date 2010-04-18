@@ -1,3 +1,5 @@
+- File browser window saves settings on exit
+- Several windows-specific bugs were fixed
 - Plugin dialogs are shown with a larger initial size
 - Add close buttons to each tab in the main document view area (not available in KDE 4.0)
 - Make "print", "export as HTML", "dynamic word wrap", and "increase/descress font size" available for the console window

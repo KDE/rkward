@@ -1,6 +1,7 @@
 rkward (0.5.3-1) unstable; urgency=low
 
   * new upstream release
+    closes: #556321 (failed to link against thread-library, explicitely)
   * add watch file (thanks to Julien Lavergne and Scott Howard)
     closes: #569114
 

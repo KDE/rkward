@@ -2,7 +2,7 @@
                           rkfilebrowser  -  description
                              -------------------
     begin                : Thu Apr 26 2007
-    copyright            : (C) 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -62,6 +62,7 @@ public slots:
 	void urlChangedInCombo (const QString &url);
 	void urlChangedInCombo (const KUrl &url);
 	void fileActivated (const KFileItem& item);
+	void saveConfig ();
 private:
 	KDirOperator *dir;
 	KUrlComboBox *urlbox;
