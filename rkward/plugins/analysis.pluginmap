@@ -32,9 +32,6 @@
 		<component type="standard" id="outlier" file="analysis/outliers/outlier.xml" label="Find outlier" />
 		<component type="standard" id="grubbs_test" file="analysis/outliers/grubbs_test.xml" label="Grubbs test" />
 
-		<!-- miscellanious tests -->
-		<component type="standard" id="PP_test" file="analysis/TESTS/PP_test.xml" label="Phillips-Perron Test" />
-
 		<!-- crosstabulation -->
 		<component type="standard" id="crosstab" file="analysis/crosstab.xml" label="N to 1 Crosstabulation" />
 		<component type="standard" id="crosstab_multi" file="analysis/crosstab_multi.xml" label="N to N Crosstabulation" />
@@ -43,6 +40,7 @@
 		<component type="standard" id="Box_test" file="analysis/time_series/Box_test.xml" label="Box-Pierce or Ljung-Box Tests" />
 		<component type="standard" id="kpss_test" file="analysis/time_series/kpss_test.xml" label="KPSS Test for Stationarity" />
 		<component type="standard" id="hp_filter" file="analysis/time_series/hp_filter.xml" label="Hodrick-Prescott Filter" />
+		<component type="standard" id="PP_test" file="analysis/TESTS/PP_test.xml" label="Phillips-Perron Test" />
 
 		<!-- regression -->
 		<component type="standard" id="linear_regression" file="analysis/regression/linear_regression.xml" label="Linear Regression" />
@@ -64,9 +62,6 @@
 				<menu id="ttests" label="t-Tests" index="0">
 					<entry component="t_test_two_vars" />
 				</menu>
-			</menu>
-			<menu id="misc_tests" label="Miscellaneous tests" index="5">
-				<entry component="PP_test"/>
 			</menu>
 			<menu id="moments" label="Moments" index="6">
 				<entry component="anscombe_test"/>
@@ -99,8 +94,9 @@
 			</menu>
 			<menu id="time_series" label="Time Series" index="10">
 				<entry component="Box_test"/>
-				<entry component="kpss_test"/>
 				<entry component="hp_filter"/>
+				<entry component="kpss_test"/>
+				<entry component="PP_test"/>
 			</menu>
 			<menu id="wilcoxon_test" label="Wilcoxon Tests" index="11">
 				<entry component="wilcoxon_test" />
