@@ -31,8 +31,8 @@ function printout () {
 	echo ('rk.header ("KPSS Test for Level Stationarity",\n');
 	echo ('	parameters=list ("null hypothesis"="' + getValue ("null") + '", "version of truncation lag parameter"="');
 	if (getValue ("lshort") == "TRUE") echo ("short");
-	else echo ("long" + '"))\n');
-	echo ('\n');
+	else echo ("long");
+	echo ('"))\n');
 	echo ('rk.results (results)\n');
 }
 

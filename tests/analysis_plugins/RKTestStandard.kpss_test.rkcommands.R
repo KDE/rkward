@@ -20,7 +20,6 @@ for (i in 1:length (objects)) {
 ## Print result
 rk.header ("KPSS Test for Level Stationarity",
 	parameters=list ("null hypothesis"="Trend", "version of truncation lag parameter"="long"))
-
 rk.results (results)
 })
 .rk.rerun.plugin.link(plugin="rkward::kpss_test", settings="length.state=1\nlshort.string=FALSE\nnarm.state=0\nnull.string=Trend\nx.available=test10y\\ntest10z\\ntest50x\\ntest50y", label="Run again")
