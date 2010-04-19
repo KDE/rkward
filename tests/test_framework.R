@@ -290,6 +290,7 @@ rktest.initializeEnvironment <- function () {
 	# Make sure i18n does not get in the way
 	invisible (Sys.setenv (LANGUAGE="C"))
 	if (.Platform$OS.type == "unix") invisible (Sys.setlocale ("LC_MESSAGES", "C"))
+	options (useFancyQuotes=FALSE)
 
 	# This version of rk.set.output.html.file does not notify the frontend of the change. Without this, you'll get lots of output windows.
 	rk.set.output.html.file <<- function (x) {
