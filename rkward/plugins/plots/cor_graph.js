@@ -26,6 +26,7 @@ function printout () {
 }
 
 function preview () {
+	preprocess ();
 	doPrintout (false);
 }
 
