@@ -3,7 +3,7 @@ if (!isClass ("RKTestSuite")) source ("test_framework.R")
 
 ## definition of the test suite
 suite <- new ("RKTestSuite", id="item_response_theory",
-	libraries = c ("R2HTML", "ltm", "eRm"),
+	libraries = c ("ltm", "eRm"),
         # initCalls are run *before* any tests. Use this to set up the environment
         initCalls = list (
                 function () {

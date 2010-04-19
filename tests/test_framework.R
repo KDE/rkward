@@ -271,6 +271,9 @@ rktest.setSuiteStandards <- function (suite, basedir=getwd ()) {
 
 ## Initialize test environment
 rktest.initializeEnvironment <- function () {
+	# Almost all tests depend on R2HTML, indirectly, so we should really assume it (or have the user install it) at the start
+	stopifnot (require (R2HTML))
+
 	# By default .rk.rerun.plugin.link() and .rk.make.hr() are silenced during the test runs
 	.rk.rerun.plugin.link <<- .rk.make.hr <<- function (...) { list (...) }
 

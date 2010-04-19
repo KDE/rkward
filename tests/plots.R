@@ -7,7 +7,7 @@ if (!isClass ("RKTestSuite")) source ("test_framework.R")
 ## definition of the test suite
 suite <- new ("RKTestSuite", id="plots",
 	# place here libraries that are required for *all* tests in this suite, or highly likely to be installed
-	libraries = c ("R2HTML", "datasets", "graphics"),
+	libraries = c ("datasets", "graphics"),
 	# initCalls are run *before* any tests. Use this to set up the environment
 	initCalls = list (
 		function () {
