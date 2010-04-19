@@ -222,6 +222,7 @@ void RKWorkplaceView::currentPageChanged (int) {
 	} else {
 		setCaption (QString ());
 	}
+	updateActions ();
 }
 
 
