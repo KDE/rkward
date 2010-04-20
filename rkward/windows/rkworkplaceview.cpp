@@ -24,6 +24,7 @@
 #include <kaction.h>
 #include <kicon.h>
 #include <kdeversion.h>
+#include <kacceleratormanager.h>
 
 #include <qapplication.h>
 #include <qevent.h>
@@ -55,6 +56,7 @@ RKWorkplaceView::RKWorkplaceView (QWidget *parent) : KTabWidget (parent) {
 #	endif
 #endif
 	
+	KAcceleratorManager::setNoAccel (tabBar ());	// TODO: This is a WORKAROUND for a bug in kdelibs where tabs named "a0.txt", "a1.txt", etc. will steal the Alt+0/1... shortcuts
 	setTabBarHidden (true);		// initially
 	connect (this, SIGNAL (currentChanged(int)), this, SLOT (currentPageChanged(int)));
 }
