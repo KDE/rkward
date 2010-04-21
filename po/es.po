@@ -4,16 +4,15 @@
 #
 # Mvillarino <mvillarino@dubmail.net>, 2005.
 # Mvillarino <mvillarino@users.sourceforge.net>, 2006.
-# Germán Márquez Mejía <gmarquez@javeriana.edu.co>, 2008, 2009.
-# Germán Márquez Mejía <manchito@users.sourceforge.net>, 2009.
+# Germán Márquez Mejía <manchito@users.sourceforge.net>, 2008,2009,2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
-"Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
-"group_id=50231&atid=459007\n"
+"Report-Msgid-Bugs-To: http://sourceforge."
+"net/tracker/?group_id=50231&atid=459007\n"
 "POT-Creation-Date: 2010-04-15 16:30+0200\n"
-"PO-Revision-Date: 2009-07-29 16:45-0500\n"
-"Last-Translator: Germán Márquez Mejía <manchito@users.sourceforge.net>\n"
+"PO-Revision-Date: 2010-04-21 13:38+0200\n"
+"Last-Translator: Germán Márquez Mejía\n"
 "Language-Team: Spanish <rkward-devel@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -703,9 +702,8 @@ msgid "<b>Select one or more:</b>"
 msgstr ""
 
 #: dialogs/rkselectlistdialog.cpp:39
-#, fuzzy
 msgid "<b>Select one:</b>"
-msgstr "Seleccionar uno:"
+msgstr "<b>Seleccionar uno:</b>"
 
 #: dialogs/startupdialog.cpp:46
 msgid "What would you like to do?"
@@ -772,9 +770,8 @@ msgid "Frontend to the R statistics language"
 msgstr "Interfaz gráfica para el lenguaje estadístico R"
 
 #: main.cpp:99
-#, fuzzy
 msgid "(c) 2002, 2004, 2005, 2006, 2007, 2008, 2009, 2010"
-msgstr "(c) 2002, 2004, 2005, 2006, 2007, 2008, 2009"
+msgstr "(c) 2002, 2004, 2005, 2006, 2007, 2008, 2009, 2010"
 
 #: main.cpp:100 main.cpp:101 main.cpp:102 main.cpp:103 main.cpp:105
 #: main.cpp:106 main.cpp:107 main.cpp:108 main.cpp:109 main.cpp:110
@@ -916,8 +913,7 @@ msgstr "Mostrar campos"
 #: misc/rkprogresscontrol.cpp:213
 msgid ""
 "<b>There have been errors and / or warnings! See below for a transcript</b>"
-msgstr ""
-"<b>¡Se han encontrado errores y/o avisos! Mire el reporte más abajo</b>"
+msgstr "<b>¡Se han encontrado errores y/o avisos! Mire el reporte más abajo</b>"
 
 #: misc/rkprogresscontrol.cpp:223 settings/rksettingsmoduleoutput.cpp:109
 msgid "Output"
@@ -961,9 +957,8 @@ msgid "Paste mode"
 msgstr ""
 
 #: misc/rkspecialactions.cpp:82
-#, fuzzy
 msgid "Single string"
-msgstr "Motor R iniciando"
+msgstr "Cadena sencilla"
 
 #: misc/rkspecialactions.cpp:85
 msgid "Vector"
@@ -978,14 +973,12 @@ msgid "Tab"
 msgstr ""
 
 #: misc/rkspecialactions.cpp:104
-#, fuzzy
 msgid "Comma"
-msgstr "Comando"
+msgstr "Coma"
 
 #: misc/rkspecialactions.cpp:108
-#, fuzzy
 msgid "Single space"
-msgstr "Guardar espacio de trabajo"
+msgstr "Espacio sencillo"
 
 #: misc/rkspecialactions.cpp:111
 msgid "Any whitespace"
@@ -1502,9 +1495,8 @@ msgid "Configure"
 msgstr "Configurar"
 
 #: rkconsole.cpp:852
-#, fuzzy
 msgid "Print Console"
-msgstr "Consola de R"
+msgstr "Imprimir la consola"
 
 #: rkconsole.cpp:881
 msgid ""
@@ -1650,9 +1642,8 @@ msgid "Quits the application"
 msgstr "Sale de la aplicación"
 
 #: rkward.cpp:359 windows/robjectbrowser.cpp:135
-#, fuzzy
 msgid "Load / Unload Packages"
-msgstr "Paquetes cargados"
+msgstr "Cargar / Desactivar paquetes"
 
 #: rkward.cpp:370
 msgid "Close All Data"
@@ -1735,9 +1726,8 @@ msgid "R engine starting"
 msgstr "Motor R iniciando"
 
 #: rkward.cpp:695 rkward.cpp:697
-#, fuzzy
 msgid "Open script file(s)"
-msgstr "Abrir archivo de guiones de R..."
+msgstr "Abrir archivo(s) de guiones"
 
 #: rkward.cpp:715
 msgid "[Unnamed Workspace]"
@@ -1841,18 +1831,16 @@ msgid "PHP Process exited"
 msgstr "El proceso PHP terminó"
 
 #: scriptbackends/qtscriptbackend.cpp:114
-#, fuzzy
 msgid ""
 "The QtScript-backend has reported an error:\n"
 "%1"
 msgstr ""
-"El motor R ha encontrado un error fatal:\n"
+"El motor QtScript ha reportado un error:\n"
 "%1"
 
 #: scriptbackends/qtscriptbackend.cpp:114
-#, fuzzy
 msgid "Scripting error"
-msgstr "Editor de guiones"
+msgstr "Error de guion"
 
 #: scriptbackends/qtscriptbackend.cpp:200
 msgid ""
@@ -1862,12 +1850,11 @@ msgid ""
 msgstr ""
 
 #: scriptbackends/qtscriptbackend.cpp:219
-#, fuzzy
 msgid ""
 "The file \"%1\" (needed by \"%2\") could not be found. Please check your "
 "installation."
 msgstr ""
-"El archivo de soporte «%1» no fue encontrado o no se puede leer. Por favor "
+"El archivo «%1» (requerido por «%2») no fue encontrado. Por favor "
 "verifique su instalación."
 
 #: scriptbackends/scriptbackend.cpp:91
@@ -1933,12 +1920,10 @@ msgid "Also add those commands to console history"
 msgstr "Agregar también dichos comandos al historial de la consola"
 
 #: settings/rksettingsmoduleconsole.cpp:76
-#, fuzzy
 msgid "Do not add"
 msgstr "No agregarlos"
 
 #: settings/rksettingsmoduleconsole.cpp:77
-#, fuzzy
 msgid "Add only if single line"
 msgstr "Agregarlos sólo si son de una línea"
 
@@ -2135,14 +2120,12 @@ msgid "Graphics"
 msgstr ""
 
 #: settings/rksettingsmoduleoutput.cpp:64
-#, fuzzy
 msgid "File format"
-msgstr "Formato de archivo: "
+msgstr "Formato de archivo"
 
 #: settings/rksettingsmoduleoutput.cpp:66
-#, fuzzy
 msgid "<Default>"
-msgstr "Predeterminado"
+msgstr "<Predeterminado>"
 
 #: settings/rksettingsmoduleoutput.cpp:67
 msgid "PNG"
@@ -2161,14 +2144,12 @@ msgid "JPG quality"
 msgstr ""
 
 #: settings/rksettingsmoduleoutput.cpp:82
-#, fuzzy
 msgid "Width:"
-msgstr "Ancho"
+msgstr "Ancho:"
 
 #: settings/rksettingsmoduleoutput.cpp:85
-#, fuzzy
 msgid "Height:"
-msgstr "Alto"
+msgstr "Alto:"
 
 #: settings/rksettingsmodulephp.cpp:39
 msgid "Changes in this section take effect the next time you start a plugin"
@@ -2315,12 +2296,10 @@ msgid "Command used to send files to printer"
 msgstr "Comando usado para enviar archivos a la impresora"
 
 #: settings/rksettingsmoduler.cpp:159
-#, fuzzy
 msgid "Editor command"
 msgstr "Comando del editor"
 
 #: settings/rksettingsmoduler.cpp:170
-#, fuzzy
 msgid "Pager command"
 msgstr "Comando del paginador"
 
@@ -2333,23 +2312,21 @@ msgid "CRAN download mirror (leave empty to be prompted once each session):"
 msgstr ""
 
 #: settings/rksettingsmoduler.cpp:342
-#, fuzzy
 msgid "Select mirror"
-msgstr "Seleccionar uno:"
+msgstr "Seleccionar servidor"
 
 #: settings/rksettingsmoduler.cpp:346
-#, fuzzy
 msgid "Additional package repositories (where libraries are downloaded from)"
-msgstr "Repositorios de paquetes (de donde son descargadas las bibliotecas)"
+msgstr ""
+"Repositorios de paquetes adicionales (de donde se descargan las bibliotecas)"
 
 #: settings/rksettingsmoduler.cpp:352
 msgid "Archive downloaded packages"
 msgstr "Archivar los paquetes descargados"
 
 #: settings/rksettingsmoduler.cpp:359
-#, fuzzy
 msgid "R Library locations (where libraries get installed to, locally)"
-msgstr "Ubicación de las bibliotecas de R (donde son instaladas localmente)"
+msgstr "Ubicaciones de las bibliotecas de R (donde son instaladas localmente)"
 
 #: settings/rksettingsmoduler.cpp:364
 msgid ""
@@ -2368,9 +2345,8 @@ msgid "Add repository"
 msgstr "Añadir repositorio"
 
 #: settings/rksettingsmoduler.cpp:389
-#, fuzzy
 msgid "Add URL of new repository"
-msgstr "Añadir repositorio"
+msgstr "Añadir URL de nuevo repositorio"
 
 #: settings/rksettingsmoduler.cpp:395
 msgid "R-Packages"
@@ -2477,11 +2453,11 @@ msgstr "Desmarcar bloque"
 
 #: windows/rkcommandeditorwindow.cpp:181
 msgid "CD to script directory"
-msgstr "CD al directorio del guión"
+msgstr "CD al directorio del guion"
 
 #: windows/rkcommandeditorwindow.cpp:183
 msgid "Change the working directory to the directory of this script"
-msgstr "Cambiar el directorio de trabajo por el directorio de este guión"
+msgstr "Cambiar el directorio de trabajo por el directorio de este guion"
 
 #: windows/rkcommandeditorwindow.cpp:188
 msgid "Configure Script Editor"
@@ -2505,7 +2481,7 @@ msgstr "Sin nombre"
 
 #: windows/rkcommandeditorwindow.cpp:468
 msgid "cd to current script directory"
-msgstr "cd al directorio del guión actual"
+msgstr "cd al directorio del guion actual"
 
 #: windows/rkcommandeditorwindow.cpp:577
 msgid "%1 (Active)"
@@ -2624,13 +2600,11 @@ msgid "Save Output as HTML"
 msgstr "Guardar salida como HTML"
 
 #: windows/rkhtmlwindow.cpp:401
-#, fuzzy
 msgid ""
 "<HTML><BODY><H1>RKWard output file could not be found</H1>\n"
 "</BODY></HTML>"
 msgstr ""
-"<HTML><BODY><H1>Salida de RKWard</H1>\n"
-"<P>La salida está vacía.</P>\n"
+"<HTML><BODY><H1>No se encontró el archivo de salida de RKWard</H1>\n"
 "</BODY></HTML>"
 
 #: windows/rkhtmlwindow.cpp:403
@@ -2797,7 +2771,7 @@ msgstr ""
 "\n"
 "Por lo tanto, si desea configurar los atajos de teclado, por ejemplo, para "
 "su uso dentro del editor de guiones, debe primero abrir una ventana del "
-"editor de quiones y activarla."
+"editor de guiones y activarla."
 
 #: windows/rktoplevelwindowgui.cpp:117 windows/rktoplevelwindowgui.cpp:130
 msgid "Note"
@@ -2808,7 +2782,6 @@ msgid "RKWard Plugins"
 msgstr "Complementos de RKWard"
 
 #: windows/rktoplevelwindowgui.cpp:130
-#, fuzzy
 msgid ""
 "For technical reasons, the following dialog allows you to configure the "
 "toolbar buttons only for those parts of RKWard that are currently active.\n"
@@ -2817,12 +2790,12 @@ msgid ""
 "script editor, you need to open a script editor window, and activate it."
 msgstr ""
 "Por razones técnicas, el siguiente diálogo sólo le permite configurar los "
-"atajos de teclado para aquellas partes de RKWard que se encuentran activas "
-"actualmente.\n"
+"botones de la barra de herramientas para aquellas partes de RKWard "
+"que se encuentran activas.\n"
 "\n"
-"Por lo tanto, si desea configurar los atajos de teclado, por ejemplo, para "
+"Por lo tanto, si desea configurar los botones, por ejemplo, para "
 "su uso dentro del editor de guiones, debe primero abrir una ventana del "
-"editor de quiones y activarla."
+"editor de guiones y activarla."
 
 #: windows/rktoplevelwindowgui.cpp:152
 msgid ""
@@ -3055,9 +3028,8 @@ msgid "Delete"
 msgstr "Eliminar"
 
 #: windows/robjectbrowser.cpp:133
-#, fuzzy
 msgid "Unload Package"
-msgstr "Paquetes cargados"
+msgstr "Desactivar paquete"
 
 #: windows/robjectbrowser.cpp:186
 msgid "Copy object"
