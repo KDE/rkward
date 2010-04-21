@@ -520,7 +520,7 @@ msgstr "Konfiguriere Repositories"
 #: dialogs/rkloadlibsdialog.cpp:226
 msgid "Please stand by while installing selected packages"
 msgstr ""
-"Bitte warten warten Sie während die gewählten Pakete installiert werden"
+"Bitte warten Sie während die gewählten Pakete installiert werden"
 
 #: dialogs/rkloadlibsdialog.cpp:226
 msgid "Installing packages"
