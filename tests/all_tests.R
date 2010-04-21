@@ -22,6 +22,13 @@ for (testsuite in testsuites) {
 cat ("\n\nOverall results:\n")
 print (allresults)
 
+if (any (is.na (allresults@passed))) {
+	cat ("\nNOTE: Skipped tests due to missing libaries are not an indication of problems.")
+	cat ("\nCurrently, the following R packages are needed in order to run all available tests:")
+	# TODO: Make this list dynamic and / or print only the missing libs
+	cat ('\n"R2HTML", "tseries", "nortest", "outliers", "exactRankTests", "moments", "car", "hdrcde", "qcc", "xtable", "eRm", "ltm"')
+}
+
 sink()
 
 cat (paste ("\n\nThese output are saved in: ", paste (getwd(), plugintest.outfile, sep=.Platform$file.sep), ".\nIf needed, send them to rkward-devel@lists.sourceforge.net\n", sep=""))
