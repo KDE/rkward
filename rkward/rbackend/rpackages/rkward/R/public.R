@@ -422,7 +422,16 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	old_repos <- getOption("repos")
 	on.exit (options (repos=old_repos))
 
-	chooseCRANmirror()
+	if (!interactive())
+		stop("cannot choose a CRAN mirror non-interactively")
+	m <- getCRANmirrors(all = FALSE, local.only = FALSE)
+	res <- menu (paste(m[, 1L], m[, 5L], sep = " - "), getOption("menu.graphics"), "CRAN mirror")
+	if (res > 0L) {
+		URL <- m[res, "URL"]
+		repos <- getOption("repos")
+		repos["CRAN"] <- gsub("/$", "", URL[1L])
+		options(repos = repos)
+	}
 
 	return (as.character (getOption ("repos")["CRAN"]))
 }
