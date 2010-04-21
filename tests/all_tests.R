@@ -5,7 +5,9 @@ testsuites <- c ("rkward_application_tests.R", "import_export_plugins.R", "item_
 
 plugintest.outfile <- 'make_plugintests.txt'
 sink (file = plugintest.outfile, append=FALSE, type="output", split=TRUE)
-cat ("R-Version:\n")
+cat ("RKWard Version:\n")
+print (.rk.app.version)
+cat ("\n\nR-Version:\n")
 print (R.version)
 cat ("\n\nInstalled packages:\n")
 print (subset(installed.packages(),select=c(LibPath,Version)))
