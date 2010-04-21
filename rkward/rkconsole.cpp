@@ -204,9 +204,12 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 	command_was_piped = false;
 
 	if (para < doc->lines () - 1 || pos < prefix.length ()) {	// not inside the last line?
-		int t = (int) pos;					// adjust position before interpreting keystroke
-		if (prefix.length()>pos) t=prefix.length ();
-		view->setCursorPosition (KTextEditor::Cursor (doc->lines () -1, t));
+		int key = e->key ();
+		if ((key != Qt::Key_Shift) && (key != Qt::Key_Control) && (key != Qt::Key_Meta) && (key != Qt::Key_Alt)) {
+			int t = (int) pos;					// adjust position before interpreting non-modifier keystroke
+			if (prefix.length()>pos) t=prefix.length ();
+			view->setCursorPosition (KTextEditor::Cursor (doc->lines () -1, t));
+		}
 	}
 
 	if (view->selection ()) {
