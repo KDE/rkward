@@ -221,19 +221,18 @@ bool RKWorkplace::openScriptEditor (const KUrl &url, const QString& encoding, bo
 
 // is this url already opened?
 	if (!url.isEmpty ()) {
-		for (RKWorkplaceObjectList::const_iterator it = windows.constBegin (); it != windows.constEnd (); ++it) {
-			if ((*it)->type == RKMDIWindow::CommandEditorWindow) {
-				KUrl ourl = static_cast<RKCommandEditorWindow *> (*it)->url ();
-				if (url == ourl) {
-					(*it)->activate ();
-					return true;
-				}
-			}
+	  	RKWorkplaceObjectList script_windows = getObjectList (RKMDIWindow::CommandEditorWindow, RKMDIWindow::AnyWindowState);
+		for (RKWorkplaceObjectList::const_iterator it = script_windows.constBegin (); it != script_windows.constEnd (); ++it) {
+			  KUrl ourl = static_cast<RKCommandEditorWindow *> (*it)->url ();
+			  if (url == ourl) {
+				  (*it)->activate ();
+				  return true;
+			  }
 		}
 	}
 
 	RKCommandEditorWindow *editor = new RKCommandEditorWindow (view (), use_r_highlighting);
-  
+
 	if (!url.isEmpty ()) {
 		if (!editor->openURL (url, encoding, use_r_highlighting, read_only)) {
 			delete editor;
