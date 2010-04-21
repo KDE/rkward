@@ -134,7 +134,7 @@ suite <- new ("RKTestSuite", id="analysis_plugins",
 			rk.call.plugin ("rkward::Box_test", lag.real="1.00", length.state="1", narm.state="0", type.string="Box-Pierce", x.available="test50x\ntest10y", submit.mode="submit")
 		}),
 		new ("RKTest", id="kpss_test", call=function () {
-			rk.call.plugin ("rkward::kpss_test", length.state="1", lshort.string="FALSE", narm.state="0", null.string="Trend", x.available="test10y\ntest10z\ntest50x\ntest50y", submit.mode="submit")
+			rk.call.plugin ("rkward::kpss_test", length.state="1", lshort.string="FALSE", narm.state="0", null.string="Trend", x.available="test50x\ntest50y\ntest50z", submit.mode="submit")
 		}, libraries=c("tseries")),
 		new ("RKTest", id="hp_filter", call=function () {
 			data (co2)
