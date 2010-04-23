@@ -62,8 +62,8 @@ function calculate () {
 	if (jpegpng && autoW && autoH) {
 		options += ", width=par(\"din\")[1]*" + resolution;
 	} else if (jpegpng) {
-		if (!autoW) options += ", width=" + round(getValue ("width")*resolution);
-		if (!autoH) options += ", height=" + round(getValue ("height")*resolution);
+		if (!autoW) options += ", width=" + Math.round(getValue ("width")*resolution);
+		if (!autoH) options += ", height=" + Math.round(getValue ("height")*resolution);
 	} else {
 		if (!autoW) options += ", width=" + getValue ("width");
 		if (!autoH) options += ", height=" + getValue ("height");
