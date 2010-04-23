@@ -43,7 +43,7 @@ RKSelectListDialog::RKSelectListDialog (QWidget *parent, const QString &caption,
 	input->addItems (choices);
 	if (multiple) input->setSelectionMode (QAbstractItemView::MultiSelection);
 	else input->setSelectionMode (QAbstractItemView::SingleSelection);
-	for (int i = 0; i < preselected.length (); ++i) {
+	for (int i = 0; i < preselected.count (); ++i) {
 		int pos = choices.indexOf (preselected[i]);
 		if (pos >= 0) input->item (pos)->setSelected (true);
 	}
@@ -80,7 +80,7 @@ QStringList RKSelectListDialog::doSelect (QWidget *parent, const QString &captio
 
 	QStringList list;
 	QList<QListWidgetItem*> selected = dialog->input->selectedItems ();
-	for (int i = 0; i < selected.length (); ++i) {
+	for (int i = 0; i < selected.count (); ++i) {
 		list.append (selected[i]->text ());
 	}
 
