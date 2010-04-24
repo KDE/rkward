@@ -427,7 +427,7 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 		if (results.isEmpty ()) results.append ("");	// R wants to have it that way
 
 		QString command = ".rk.set.reply (c (";
-		for (int i = 0; i < results.length (); ++i) {
+		for (int i = 0; i < results.count (); ++i) {
 			if (i > 0) command.append (", ");
 			command.append (RObject::rQuote (results[i]));
 		}
