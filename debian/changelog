@@ -1,11 +1,12 @@
-rkward (0.5.3-1) unstable; urgency=low
+rkward (0.5.3-pre4-1) unstable; urgency=low
 
   * new upstream release
     closes: #556321 (failed to link against thread-library, explicitely)
   * add watch file (thanks to Julien Lavergne and Scott Howard)
     closes: #569114
+  * remove obsolete runtime dependency on php5-cli
 
- -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Xxx, XX Xxx 2010 14:30:00 +0200
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Sun, 25 Apr 2010 14:30:00 +0200
 
 rkward (0.5.2-1) unstable; urgency=low
 
