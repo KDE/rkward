@@ -82,6 +82,8 @@ clean: $(UNPATCHTARGET) # Will only be called if set, see above
 	# remove any .svn subdir included by accident
 	rm -rf $(CURDIR)/debian/.svn
 	rm -rf $(CURDIR)/debian/patches/.svn
+	# only for rkward 0.5.3: remove script included in upsteram tarball by accident
+	rm -f $(CURDIR)/rkward/plugins/svncopy.sh
 
 	# Add here commands to clean up after the build process.
 	rm -rf $(CURDIR)/build/
