@@ -1,10 +1,12 @@
 rkward (0.5.3-1) unstable; urgency=low
 
   * new upstream release
-    closes: #556321 (failed to link against thread-library, explicitely)
+    closes: #556321 (failed to link against thread-library, explicitly)
   * add watch file (thanks to Julien Lavergne and Scott Howard)
     closes: #569114
   * remove obsolete runtime dependency on php5-cli
+  * add dependency on ${misc:Depends} as recommended by debhelper
+  * bump standards version to 3.8.4 (no changes needed)
 
  -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Fri, 30 Apr 2010 14:30:00 +0200
 
