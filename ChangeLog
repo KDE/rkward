@@ -1,3 +1,4 @@
+--- Version 0.5.3 - Apr-30-2010
 - Fixed: Windows->Activate->Window left / right actions were always disabled
 - File browser window saves settings on exit
 - Several windows-specific bugs were fixed

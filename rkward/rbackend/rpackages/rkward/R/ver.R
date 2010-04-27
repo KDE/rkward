@@ -1,1 +1,1 @@
-".rk.app.version" <- "0.5.3-pre3"
+".rk.app.version" <- "0.5.3"
