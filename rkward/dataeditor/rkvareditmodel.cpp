@@ -2,7 +2,7 @@
                           rkvareditmodel  -  description
                              -------------------
     begin                : Mon Nov 05 2007
-    copyright            : (C) 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -18,6 +18,8 @@
 #include "rkvareditmodel.h"
 
 #include <klocale.h>
+
+#include <QColor>
 
 #include "../core/rcontainerobject.h"
 #include "../core/rkmodificationtracker.h"
@@ -225,7 +227,10 @@ QVariant RKVarEditModel::data (const QModelIndex& index, int role) const {
 	if (role == Qt::EditRole) return var->getText (row, false);
 
 	RKVariable::Status status = var->cellStatus (row);
-	if ((role == Qt::BackgroundRole) && (status == RKVariable::ValueInvalid)) return (Qt::red);
+	if ((role == Qt::BackgroundRole)) {
+		if (status == RKVariable::ValueInvalid) return (Qt::red);
+		if (row % 2) return (QColor (240, 255, 240));	// very light green
+	}
 	if ((role == Qt::ForegroundRole) && (status == RKVariable::ValueUnknown)) return (Qt::lightGray);
 	if (role == Qt::TextAlignmentRole) {
 		if (var->getAlignment () == RKVariable::AlignCellLeft) return ((int) Qt::AlignLeft | Qt::AlignVCenter);
