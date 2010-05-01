@@ -566,6 +566,7 @@ void RKCommandEditorWindow::clearUnusedBlocks () {
 
 void RKCommandEditorWindow::addBlock (int index, const KTextEditor::Range& range) {
 	RK_TRACE (COMMANDEDITOR);
+	if (!smart_iface) return;	// may happen in KDE => 4.6 if compiled with KDE <= 4.4
 	RK_ASSERT ((index >= 0) && (index < block_records.size ()));
 
 	clearUnusedBlocks ();
@@ -589,6 +590,7 @@ void RKCommandEditorWindow::addBlock (int index, const KTextEditor::Range& range
 
 void RKCommandEditorWindow::removeBlock (int index, bool was_deleted) {
 	RK_TRACE (COMMANDEDITOR);
+	if (!smart_iface) return;	// may happen in KDE => 4.6 if compiled with KDE <= 4.4
 	RK_ASSERT ((index >= 0) && (index < block_records.size ()));
 
 	if (!was_deleted) {

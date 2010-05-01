@@ -1,3 +1,5 @@
+TODO: Do not use SmartInterface for KDE 4.5 and above
+
 - The tabs in the main window can now be re-ordered by dragging with the mouse (left click if compiled with Qt 4.5 or above, middle click for earlier versions)
 - Add alternating row backgrounds in data.frame-editor
 
