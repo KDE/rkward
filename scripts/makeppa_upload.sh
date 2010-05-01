@@ -8,7 +8,7 @@ AUTHOR="Thomas Friedrichsmeier <tfry@users.sourceforge.net>"
 ## end: These may need adjusting!
 
 VERSION=${1}
-cd `dirname $0`
+cd `dirname $0`/..
 BASEDIR=`pwd`
 PPATEMPDIR=$BASEDIR/ppatemp
 mkdir $PPATEMPDIR

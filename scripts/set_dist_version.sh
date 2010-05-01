@@ -4,7 +4,7 @@
 #
 
 VERSION=${1}
-cd `dirname $0`
+cd `dirname $0`/..
 BASEDIR=`pwd`
 
 echo "/* Version number of package */" > $BASEDIR/rkward/version.h

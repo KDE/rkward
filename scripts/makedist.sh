@@ -1,7 +1,7 @@
 #!/bin/bash
 
 VERSION=${1}
-cd `dirname $0`
+cd `dirname $0`/..
 BASEDIR=`pwd`
 mkdir $BASEDIR/disttemp
 DISTDIRREL=rkward-$VERSION
