@@ -1,3 +1,4 @@
+- The tabs in the main window can now be re-ordered by dragging with the mouse (left click if compiled with Qt 4.5 or above, middle click for earlier versions)
 - Add alternating row backgrounds in data.frame-editor
 
 --- Version 0.5.3 - Apr-30-2010
@@ -7,7 +8,7 @@
 - Plugin dialogs are shown with a larger initial size
 - Add close buttons to each tab in the main document view area (not available in KDE 4.0)
 - Make "print", "export as HTML", "dynamic word wrap", and "increase/descress font size" available for the console window
-- Use a native menu, instead of the default TclTk-menu			TODO: test, discuss the settings page, again
+- Use a native menu, instead of the default TclTk-menu
 - Fixed: Newly created variables were not properly updated when closing and re-opening the editor
 - Added "paste special" action to script editor and console for pasting R vectors and matrices from spreadsheets
 - Fix order of menus for detached windows

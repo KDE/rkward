@@ -55,7 +55,13 @@ RKWorkplaceView::RKWorkplaceView (QWidget *parent) : KTabWidget (parent) {
 	connect (this, SIGNAL (closeRequest(QWidget*)), this, SLOT (closePage(QWidget*)));
 #	endif
 #endif
-	
+
+#if QT_VERSION >= 0x040500
+	setMovable (true);
+#else
+	setTabReorderingEnabled (true);	// the KDE function is deprecated sind Qt 4.5 / KDE 4.4
+#endif
+
 	KAcceleratorManager::setNoAccel (tabBar ());	// TODO: This is a WORKAROUND for a bug in kdelibs where tabs named "a0.txt", "a1.txt", etc. will steal the Alt+0/1... shortcuts
 	setTabBarHidden (true);		// initially
 	connect (this, SIGNAL (currentChanged(int)), this, SLOT (currentPageChanged(int)));
