@@ -190,6 +190,7 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 
 void RKCommandEditorWindow::initBlocks () {
 	RK_TRACE (COMMANDEDITOR);
+	if (!smart_iface) return;	// may happen in KDE => 4.6 if compiled with KDE <= 4.4
 	RK_ASSERT (block_records.isEmpty ());
 
 	KActionCollection* ac = getPart ()->actionCollection ();
