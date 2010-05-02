@@ -13,11 +13,11 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
-"Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
-"group_id=50231&atid=459007\n"
-"POT-Creation-Date: 2010-04-15 16:30+0200\n"
-"PO-Revision-Date: 2010-02-06 17:21+0100\n"
-"Last-Translator: Pavel Fric <pavelfric@seznam.cz>\n"
+"Report-Msgid-Bugs-To: http://sourceforge."
+"net/tracker/?group_id=50231&atid=459007\n"
+"POT-Creation-Date: 2010-04-27 10:01+0200\n"
+"PO-Revision-Date: 2010-04-30 15:36+0200\n"
+"Last-Translator: Pavel\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -704,12 +704,11 @@ msgstr "Souvislosti:"
 
 #: dialogs/rkselectlistdialog.cpp:38
 msgid "<b>Select one or more:</b>"
-msgstr ""
+msgstr "<b>Vybrat jeden nebo více:</b>"
 
 #: dialogs/rkselectlistdialog.cpp:39
-#, fuzzy
 msgid "<b>Select one:</b>"
-msgstr "Vybrat jeden:"
+msgstr "<b>Vybrat jeden:</b>"
 
 #: dialogs/startupdialog.cpp:46
 msgid "What would you like to do?"
@@ -776,9 +775,8 @@ msgid "Frontend to the R statistics language"
 msgstr "Rozhraní pro statistický jazyk R"
 
 #: main.cpp:99
-#, fuzzy
 msgid "(c) 2002, 2004, 2005, 2006, 2007, 2008, 2009, 2010"
-msgstr "(c) 2002, 2004, 2005, 2006, 2007, 2008, 2009"
+msgstr "(c) 2002, 2004, 2005, 2006, 2007, 2008, 2009, 2010"
 
 #: main.cpp:100 main.cpp:101 main.cpp:102 main.cpp:103 main.cpp:105
 #: main.cpp:106 main.cpp:107 main.cpp:108 main.cpp:109 main.cpp:110
@@ -939,7 +937,7 @@ msgid "Errors / Warnings:"
 msgstr "Chyby/varování:"
 
 #: misc/rkprogresscontrol.cpp:246 plugin/rkstandardcomponentgui.cpp:301
-#: rkconsole.cpp:881 robjectviewer.cpp:170
+#: rkconsole.cpp:884 robjectviewer.cpp:170
 msgid "Cancel"
 msgstr "Zrušit"
 
@@ -957,82 +955,79 @@ msgstr "Přepsat?"
 
 #: misc/rkspecialactions.cpp:27 misc/rkspecialactions.cpp:66
 msgid "Paste special..."
-msgstr ""
+msgstr "Vložit zvláštní..."
 
 #: misc/rkspecialactions.cpp:79
 msgid "Paste mode"
-msgstr ""
+msgstr "Režim vkládání"
 
 #: misc/rkspecialactions.cpp:82
-#, fuzzy
 msgid "Single string"
-msgstr "Spouští se jádro R"
+msgstr "Jednoduchý řetězec"
 
 #: misc/rkspecialactions.cpp:85
 msgid "Vector"
-msgstr ""
+msgstr "Vektor"
 
 #: misc/rkspecialactions.cpp:97
 msgid "Field separator"
-msgstr ""
+msgstr "Oddělovač polí"
 
 #: misc/rkspecialactions.cpp:100
 msgid "Tab"
-msgstr ""
+msgstr "Zarážka"
 
 #: misc/rkspecialactions.cpp:104
-#, fuzzy
 msgid "Comma"
-msgstr "Příkaz"
+msgstr "Čárka"
 
 #: misc/rkspecialactions.cpp:108
-#, fuzzy
 msgid "Single space"
-msgstr "Uložit pracovní prostředí"
+msgstr "Jednoduchá mezera"
 
 #: misc/rkspecialactions.cpp:111
 msgid "Any whitespace"
-msgstr ""
+msgstr "Jakékoli prázdné místo"
 
 #: misc/rkspecialactions.cpp:115
 msgid "Other:"
-msgstr ""
+msgstr "Jiné:"
 
 #: misc/rkspecialactions.cpp:126
 msgid "Quoting"
-msgstr ""
+msgstr "Uvozovky"
 
 #: misc/rkspecialactions.cpp:129
 msgid "Do not quote values"
-msgstr ""
+msgstr "Nedávat hodnoty do uvozovek"
 
 #: misc/rkspecialactions.cpp:132
 msgid "Automatic"
-msgstr ""
+msgstr "Automaticky"
 
 #: misc/rkspecialactions.cpp:136
 msgid "Quote all values"
-msgstr ""
+msgstr "Dávat všechny hodnoty do uvozovek"
 
 #: misc/rkspecialactions.cpp:142
 msgid "Transformations"
-msgstr ""
+msgstr "Zobrazení"
 
 #: misc/rkspecialactions.cpp:144
 msgid "Reverse horizontally"
-msgstr ""
+msgstr "Otočit vodorovně"
 
 #: misc/rkspecialactions.cpp:146
 msgid "Reverse vertically"
-msgstr ""
+msgstr "Otočit svisle"
 
 #: misc/rkspecialactions.cpp:148
 msgid "Flip rows/columns"
-msgstr ""
+msgstr "Přepnout řádky/sloupce"
 
 #: misc/rkspecialactions.cpp:150
 msgid "Insert NAs where needed"
-msgstr ""
+msgstr "Vložit NA, kde je to potřeba"
 
 #: misc/rkstandardactions.cpp:44
 msgid "Run current line"
@@ -1483,32 +1478,31 @@ msgstr "Jádro R 'vytuhlo'"
 msgid "R Console"
 msgstr "Konzole R"
 
-#: rkconsole.cpp:626
+#: rkconsole.cpp:629
 msgid "Syntax error\n"
 msgstr "Chyba ve skladbě\n"
 
-#: rkconsole.cpp:834
+#: rkconsole.cpp:837
 msgid "Interrupt running command"
 msgstr "Přerušit prováděný příkaz"
 
-#: rkconsole.cpp:840
+#: rkconsole.cpp:843
 msgid "Copy selection cleaned"
 msgstr "Kopírovat výběr vyčištěný"
 
-#: rkconsole.cpp:843
+#: rkconsole.cpp:846
 msgid "Copy selection literally"
 msgstr "Kopírovat výběr doslovně"
 
-#: rkconsole.cpp:850 windows/rkcommandlog.cpp:285
+#: rkconsole.cpp:853 windows/rkcommandlog.cpp:285
 msgid "Configure"
 msgstr "Nastavit"
 
-#: rkconsole.cpp:852
-#, fuzzy
+#: rkconsole.cpp:855
 msgid "Print Console"
-msgstr "Konzole R"
+msgstr "Vytisknout konzoli"
 
-#: rkconsole.cpp:881
+#: rkconsole.cpp:884
 msgid ""
 "You have configured RKWard to run script commands through the console. "
 "However, the console is currently busy (either a command is running, or you "
@@ -1520,11 +1514,11 @@ msgstr ""
 "nebo jste v ovládacím panelu začal zadávat příkaz). Chcete protentokrát "
 "konzoli obejít, nebo se chcete později pokusit ještě jednou?"
 
-#: rkconsole.cpp:881
+#: rkconsole.cpp:884
 msgid "Console is busy"
 msgstr "Konzole je zaneprázdněna"
 
-#: rkconsole.cpp:881
+#: rkconsole.cpp:884
 msgid "Bypass console"
 msgstr "Obejít konzoli"
 
@@ -1735,9 +1729,8 @@ msgid "R engine starting"
 msgstr "Spouští se jádro R"
 
 #: rkward.cpp:695 rkward.cpp:697
-#, fuzzy
 msgid "Open script file(s)"
-msgstr "Otevřít soubor skriptu R"
+msgstr "Otevřít soubor(y) skriptu"
 
 #: rkward.cpp:715
 msgid "[Unnamed Workspace]"
@@ -2119,51 +2112,47 @@ msgstr "Volby pro okno s výstupem"
 
 #: settings/rksettingsmoduleoutput.cpp:50
 msgid "show window on new output"
-msgstr ""
+msgstr "Ukázat okno na nový výstup"
 
 #: settings/rksettingsmoduleoutput.cpp:53
 msgid "raise window on new output"
-msgstr ""
+msgstr "Vyvolat okno na nový výstup"
 
 #: settings/rksettingsmoduleoutput.cpp:60
 msgid "Graphics"
-msgstr ""
+msgstr "Obrazové zpracování"
 
 #: settings/rksettingsmoduleoutput.cpp:64
-#, fuzzy
 msgid "File format"
-msgstr "Souborový formát: "
+msgstr "Souborový formát"
 
 #: settings/rksettingsmoduleoutput.cpp:66
-#, fuzzy
 msgid "<Default>"
-msgstr "Výchozí"
+msgstr "<Výchozí>"
 
 #: settings/rksettingsmoduleoutput.cpp:67
 msgid "PNG"
-msgstr ""
+msgstr "PNG"
 
 #: settings/rksettingsmoduleoutput.cpp:68
 msgid "SVG"
-msgstr ""
+msgstr "SVG"
 
 #: settings/rksettingsmoduleoutput.cpp:69
 msgid "JPG"
-msgstr ""
+msgstr "JPG"
 
 #: settings/rksettingsmoduleoutput.cpp:74
 msgid "JPG quality"
-msgstr ""
+msgstr "Jakost JPG"
 
 #: settings/rksettingsmoduleoutput.cpp:82
-#, fuzzy
 msgid "Width:"
-msgstr "Šířka"
+msgstr "Šířka:"
 
 #: settings/rksettingsmoduleoutput.cpp:85
-#, fuzzy
 msgid "Height:"
-msgstr "Výška"
+msgstr "Výška:"
 
 #: settings/rksettingsmodulephp.cpp:39
 msgid "Changes in this section take effect the next time you start a plugin"
@@ -2324,25 +2313,25 @@ msgstr "Jádro R"
 #: settings/rksettingsmoduler.cpp:335
 msgid "CRAN download mirror (leave empty to be prompted once each session):"
 msgstr ""
+"Stahovací zrcadlo CRAN (ponechat prázdné, aby bylo napovězeno při každém "
+"sezení):"
 
 #: settings/rksettingsmoduler.cpp:342
-#, fuzzy
 msgid "Select mirror"
-msgstr "Vybrat jeden:"
+msgstr "Vybrat zrcadlo"
 
 #: settings/rksettingsmoduler.cpp:346
-#, fuzzy
 msgid "Additional package repositories (where libraries are downloaded from)"
-msgstr "Zdroje balíčků (sklady, ze kterých se mají knihovny stahovat)"
+msgstr ""
+"Dodatečné sklady balíčků (zdroje, ze kterých se mají knihovny stahovat)"
 
 #: settings/rksettingsmoduler.cpp:352
 msgid "Archive downloaded packages"
 msgstr "Archivovat stažené balíčky"
 
 #: settings/rksettingsmoduler.cpp:359
-#, fuzzy
 msgid "R Library locations (where libraries get installed to, locally)"
-msgstr "Umístění knihovny R (kam se mají knihovny ukládat, místně)"
+msgstr "Umístění knihovny R (kam se mají knihovny instalovat, místně)"
 
 #: settings/rksettingsmoduler.cpp:364
 msgid ""
@@ -2361,9 +2350,8 @@ msgid "Add repository"
 msgstr "Přidat zdroj (sklad)"
 
 #: settings/rksettingsmoduler.cpp:389
-#, fuzzy
 msgid "Add URL of new repository"
-msgstr "Přidat zdroj (sklad)"
+msgstr "Přidat adresu (URL) nového skladu (zdroje)"
 
 #: settings/rksettingsmoduler.cpp:395
 msgid "R-Packages"
@@ -2371,7 +2359,7 @@ msgstr "Balíčky R"
 
 #: settings/rksettingsmoduler.cpp:406
 msgid "Select CRAN mirror"
-msgstr ""
+msgstr "Vybrat zrcadlo CRAN"
 
 #: settings/rksettingsmodulewatch.cpp:123
 msgid ""
@@ -2615,13 +2603,11 @@ msgid "Save Output as HTML"
 msgstr "Uložit výstup jako HTML"
 
 #: windows/rkhtmlwindow.cpp:401
-#, fuzzy
 msgid ""
 "<HTML><BODY><H1>RKWard output file could not be found</H1>\n"
 "</BODY></HTML>"
 msgstr ""
-"<HTML><BODY><H1>Výstup z RKWardu</H1>\n"
-"<P>Výstup je prázdný.</P>\n"
+"<HTML><BODY><H1>Soubor s výstupem z RKWardu se nepodařilo najít</H1>\n"
 "</BODY></HTML>"
 
 #: windows/rkhtmlwindow.cpp:403
@@ -2682,7 +2668,7 @@ msgstr "Odborné podrobnosti"
 
 #: windows/rkhtmlwindow.cpp:579
 msgid "<h1>On this page:</h1>"
-msgstr ""
+msgstr "<h1>Na této stránce:</h1>"
 
 #: windows/rkhtmlwindow.cpp:646
 msgid "R Reference on '%1'"
@@ -2952,15 +2938,15 @@ msgstr ""
 msgid "Open in default application?"
 msgstr "Otevřít ve výchozí aplikaci?"
 
-#: windows/rkworkplace.cpp:240
+#: windows/rkworkplace.cpp:239
 msgid "Unable to open \"%1\""
 msgstr "Nelze otevřít soubor \"%1\""
 
-#: windows/rkworkplace.cpp:240
+#: windows/rkworkplace.cpp:239
 msgid "Could not open command file"
 msgstr "Nepodařilo se otevřít soubor s příkazem"
 
-#: windows/rkworkplace.cpp:349
+#: windows/rkworkplace.cpp:348
 msgid ""
 "You are about to edit object \"%1\", which is very large (%2 fields). RKWard "
 "is not optimized to handle very large objects in the built in data editor. "
@@ -2985,31 +2971,31 @@ msgstr ""
 "Obecné.\n"
 "Skutečně upravovat předmět?"
 
-#: windows/rkworkplace.cpp:349
+#: windows/rkworkplace.cpp:348
 msgid "About to edit very large object"
 msgstr "Chystáte se upravit velmi velký předmět"
 
-#: windows/rkworkplace.cpp:509
+#: windows/rkworkplace.cpp:508
 msgid "Save Workplace layout"
 msgstr "Uložit rozvržení pracoviště"
 
-#: windows/rkworkplace.cpp:516
+#: windows/rkworkplace.cpp:515
 msgid "Restore Workplace layout"
 msgstr "Obnovit rozvržení pracoviště"
 
-#: windows/rkworkplace.cpp:585
+#: windows/rkworkplace.cpp:584
 msgid "Previous Window"
 msgstr "Předchozí okno"
 
-#: windows/rkworkplace.cpp:590
+#: windows/rkworkplace.cpp:589
 msgid "Next Window"
 msgstr "Další okno"
 
-#: windows/rkworkplaceview.cpp:70
+#: windows/rkworkplaceview.cpp:72
 msgid "Window Left"
 msgstr "Okno vlevo"
 
-#: windows/rkworkplaceview.cpp:74
+#: windows/rkworkplaceview.cpp:76
 msgid "Window Right"
 msgstr "Okno vpravo"
 
