@@ -24,9 +24,7 @@ class RKMDIWindow;
 class KAction;
 class KActionCollection;
 
-/** The widget containing all the MDI document windows. Right now it mostly acts as a QTabWidget (is not one, as unfortunately, QTabWidget always has a sunken frame), but might be extended to allow switching between different view modes
-
-KDE4 TODO: We now use KTabWidget natively, hoping, we can avoid the sunken frame problem somehow. We may need to revisit this decision, later. TODO cleanup
+/** This is mostly a KTabWidget with some extras such as updating the caption, a context menu, etc.
  */
 
 class RKWorkplaceView : public KTabWidget {
@@ -60,7 +58,16 @@ signals:
 /** caption has changed
 @param new_caption the new caption */
 	void captionChanged (const QString &new_caption);
-public slots:
+private slots:
+/** (Attempts to) close the current tab */
+	void closeCurrentPage ();
+/** handle context menu requests */
+	void showContextMenu (const QPoint &pos);
+/** handle close request from context menu */
+	void contextMenuClosePage ();
+/** handle detach request from context menu */
+	void contextMenuDetachWindow ();
+/** Internal function to update caption and actions, when the current page has changed. */
 	void currentPageChanged (int page);
 /** called when the caption of a window changes. Updates the tab-label, and - if appropriate - the caption of this widget */
 	void childCaptionChanged (RKMDIWindow *widget);
@@ -72,9 +79,6 @@ public slots:
 	void closePage (QWidget* page);
 /** Close a page given its index */
 	void closePage (int page);
-private slots:
-/** (Attempts to) close the current tab */
-	void closeCurrentPage ();
 private:
 	void updateActions ();
 

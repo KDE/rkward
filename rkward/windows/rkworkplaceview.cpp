@@ -25,6 +25,7 @@
 #include <kicon.h>
 #include <kdeversion.h>
 #include <kacceleratormanager.h>
+#include <kmenu.h>
 
 #include <qapplication.h>
 #include <qevent.h>
@@ -32,6 +33,8 @@
 #include <QToolButton>
 
 #include "rkmdiwindow.h"
+#include "rkworkplace.h"
+#include "../misc/rkstandardicons.h"
 
 #include "../debug.h"
 
@@ -61,6 +64,9 @@ RKWorkplaceView::RKWorkplaceView (QWidget *parent) : KTabWidget (parent) {
 #else
 	setTabReorderingEnabled (true);	// the KDE function is deprecated sind Qt 4.5 / KDE 4.4
 #endif
+
+	tabBar ()->setContextMenuPolicy (Qt::CustomContextMenu);
+	connect (tabBar (), SIGNAL (customContextMenuRequested(const QPoint&)), this, SLOT (showContextMenu(const QPoint&)));
 
 	KAcceleratorManager::setNoAccel (tabBar ());	// TODO: This is a WORKAROUND for a bug in kdelibs where tabs named "a0.txt", "a1.txt", etc. will steal the Alt+0/1... shortcuts
 	setTabBarHidden (true);		// initially
@@ -202,6 +208,50 @@ void RKWorkplaceView::closePage (int page) {
 	RK_TRACE (APP);
 
 	closePage (widget (page));
+}
+
+void RKWorkplaceView::showContextMenu (const QPoint &pos) {
+	RK_TRACE (APP);
+
+	int tab = tabBar ()->tabAt (pos);
+	if (tab < 0) return;	// no context menu for the empty area
+
+	KMenu* m = new KMenu (this);
+	QAction *action = KStandardAction::close (this, SLOT (contextMenuClosePage()), this);
+	action->setData (tab);
+	m->addAction (action);
+	action = m->addAction (RKStandardIcons::getIcon (RKStandardIcons::ActionDetachWindow), i18n("Detach"), this, SLOT (contextMenuDetachWindow()));
+	action->setData (tab);
+	m->exec (mapToGlobal (pos));
+	delete m;
+}
+
+void RKWorkplaceView::contextMenuClosePage () {
+	RK_TRACE (APP);
+
+	QAction* action = dynamic_cast<QAction*> (sender ());
+	if (!action) {
+		RK_ASSERT (false);
+		return;
+	}
+
+	int tab = action->data ().toInt ();
+	RK_ASSERT (tab >= 0);
+	closePage (tab);
+}
+
+void RKWorkplaceView::contextMenuDetachWindow () {
+	RK_TRACE (APP);
+
+	QAction* action = dynamic_cast<QAction*> (sender ());
+	if (!action) {
+		RK_ASSERT (false);
+		return;
+	}
+
+	int tab = action->data ().toInt ();
+	RK_ASSERT (tab >= 0);
+	RKWorkplace::mainWorkplace ()->detachWindow (static_cast<RKMDIWindow*> (widget (tab)));
 }
 
 void RKWorkplaceView::childCaptionChanged (RKMDIWindow *widget) {
