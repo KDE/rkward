@@ -116,6 +116,7 @@ private:
 };
 
 class QTimer;
+class RKJobSequence;
 
 /**
 	\brief Provides an editor window for R-commands, as well as a text-editor window in general.
@@ -199,6 +200,14 @@ private slots:
 /** run a block */
 	void runBlock ();
 	void clearUnusedBlocks ();
+/** creates an autosave file */
+	void doAutoSave ();
+/** handler to control when autosaves should be created */
+	void autoSaveHandlerModifiedChanged ();
+/** handler to control when autosaves should be created */
+	void autoSaveHandlerTextChanged ();
+/** handle any errors during auto-saving */
+	void autoSaveHandlerJobFinished (RKJobSequence* seq);
 private:
 	KTextEditor::Document *m_doc;
 	KTextEditor::View *m_view;
@@ -237,6 +246,9 @@ private:
 	KAction* action_setwd_to_script;
 
 	KAction* action_help_function;
+
+	KUrl previous_autosave_url;
+	QTimer* autosave_timer;
 };
 
 #endif

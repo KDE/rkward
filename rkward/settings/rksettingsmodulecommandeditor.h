@@ -2,7 +2,7 @@
                           rksettingsmodulecommandeditor  -  description
                              -------------------
     begin                : Tue Oct 23 2007
-    copyright            : (C) 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -21,6 +21,8 @@
 
 class RKSpinBox;
 class QCheckBox;
+class QLineEdit;
+class QGroupBox;
 
 /**
 configuration for the Command Editor windows
@@ -47,8 +49,13 @@ public:
 	static int completionMinChars () { return completion_min_chars; };
 	static int completionTimeout () { return completion_timeout; };
 	static bool completionEnabled () { return completion_enabled; };
+
+	static bool autosaveEnabled () { return autosave_enabled; };
+	static bool autosaveKeep () { return autosave_keep; };
+	static int autosaveInterval () { return autosave_interval; };
+	static QString autosaveSuffix () { return ".rkward_autosave"; };
 public slots:
-	void settingChanged (int);
+	void settingChanged ();
 private:
 	static int completion_min_chars;
 	static int completion_timeout;
@@ -57,6 +64,16 @@ private:
 	RKSpinBox* completion_min_chars_box;
 	RKSpinBox* completion_timeout_box;
 	QCheckBox* completion_enabled_box;
+
+	static bool autosave_enabled;
+	static bool autosave_keep;
+	static int autosave_interval;
+//	static QString autosave_suffix;
+
+	QGroupBox* autosave_enabled_box;
+	QCheckBox* autosave_keep_box;
+	RKSpinBox* autosave_interval_box;
+//	QLineEdit* autosave_suffix_edit;
 };
 
 #endif

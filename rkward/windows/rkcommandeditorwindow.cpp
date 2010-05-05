@@ -46,11 +46,15 @@
 #include <klibloader.h>
 #include <kactioncollection.h>
 #include <kactionmenu.h>
+#include <ktemporaryfile.h>
+#include <kio/deletejob.h>
+#include <kio/job.h>
 
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkstandardicons.h"
 #include "../misc/rkstandardactions.h"
 #include "../misc/rkxmlguisyncer.h"
+#include "../misc/rkjobsequence.h"
 #include "../core/robjectlist.h"
 #include "../settings/rksettings.h"
 #include "../settings/rksettingsmodulecommandeditor.h"
@@ -108,8 +112,10 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 	layout->addWidget(m_view);
 
 	connect (m_doc, SIGNAL (documentUrlChanged (KTextEditor::Document*)), this, SLOT (updateCaption (KTextEditor::Document*)));
-	connect (m_doc, SIGNAL (modifiedChanged (KTextEditor::Document*)), this, SLOT (updateCaption (KTextEditor::Document*)));		// of course most of the time this causes a redundant call to updateCaption. Not if a modification is undone, however.
+	connect (m_doc, SIGNAL (modifiedChanged (KTextEditor::Document*)), this, SLOT (updateCaption(KTextEditor::Document*)));                // of course most of the time this causes a redundant call to updateCaption. Not if a modification is undone, however.
+	connect (m_doc, SIGNAL (modifiedChanged (KTextEditor::Document*)), this, SLOT (autoSaveHandlerModifiedChanged()));
 	connect (m_doc, SIGNAL (textChanged (KTextEditor::Document*)), this, SLOT (tryCompletionProxy (KTextEditor::Document*)));
+	connect (m_doc, SIGNAL (textChanged (KTextEditor::Document*)), this, SLOT (autoSaveHandlerTextChanged()));
 	connect (m_view, SIGNAL (selectionChanged(KTextEditor::View*)), this, SLOT (selectionChanged(KTextEditor::View*)));
 	// somehow the katepart loses the context menu each time it loses focus
 	connect (m_view, SIGNAL (focusIn(KTextEditor::View*)), this, SLOT (focusIn(KTextEditor::View*)));
@@ -135,6 +141,9 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 	smart_iface = qobject_cast<KTextEditor::SmartInterface*> (m_doc);
 	initBlocks ();
 	RK_ASSERT (smart_iface);
+
+	autosave_timer = new QTimer (this);
+	connect (autosave_timer, SIGNAL (timeout()), this, SLOT (doAutoSave()));
 
 	updateCaption ();	// initialize
 	QTimer::singleShot (0, this, SLOT (setPopupMenu ()));
@@ -330,6 +339,83 @@ bool RKCommandEditorWindow::openURL (const KUrl &url, const QString& encoding, b
 		return true;
 	}
 	return false;
+}
+
+void RKCommandEditorWindow::autoSaveHandlerModifiedChanged () {
+	RK_TRACE (COMMANDEDITOR);
+
+	if (!isModified ()) {
+		autosave_timer->stop ();
+
+		if (RKSettingsModuleCommandEditor::autosaveKeep ()) return;
+		if (!previous_autosave_url.isValid ()) return;
+		RKJobSequence* dummy = new RKJobSequence ();
+		dummy->addJob (KIO::del (previous_autosave_url));
+		connect (dummy, SIGNAL (finished(RKJobSequence*)), this, SLOT (autoSaveHandlerJobFinished(RKJobSequence*)));
+		dummy->start ();
+		previous_autosave_url.clear ();
+	}
+}
+
+void RKCommandEditorWindow::autoSaveHandlerTextChanged () {
+	RK_TRACE (COMMANDEDITOR);
+
+	if (!isModified ()) return;		// may happen after load or undo
+	if (!RKSettingsModuleCommandEditor::autosaveEnabled ()) return;
+	if (!autosave_timer->isActive ()) {
+		autosave_timer->start (RKSettingsModuleCommandEditor::autosaveInterval () * 60 * 1000);
+	}
+}
+
+void RKCommandEditorWindow::doAutoSave () {
+	RK_TRACE (COMMANDEDITOR);
+	RK_ASSERT (isModified ());
+
+	KTemporaryFile save;
+	save.setSuffix (RKSettingsModuleCommandEditor::autosaveSuffix ());
+	RK_ASSERT (save.open ());
+	QTextStream out (&save);
+	out.setCodec ("UTF-8");		// make sure that all characters can be saved, without nagging the user
+	out << m_doc->text ();
+	save.close ();
+	save.setAutoRemove (false);
+
+	RKJobSequence* alljobs = new RKJobSequence ();
+	connect (alljobs, SIGNAL (finished(RKJobSequence*)), this, SLOT (autoSaveHandlerJobFinished(RKJobSequence*)));
+	// backup the old autosave file in case something goes wrong during pushing the new one
+	KUrl backup_autosave_url;
+	if (previous_autosave_url.isValid ()) {
+		backup_autosave_url = previous_autosave_url;
+		backup_autosave_url.setFileName (backup_autosave_url.fileName () + "~");
+		alljobs->addJob (KIO::file_move (previous_autosave_url, backup_autosave_url, -1, KIO::Overwrite));
+	}
+	
+	// push the newly written file
+	if (url ().isValid ()) {
+		KUrl autosave_url = url ();
+		autosave_url.setFileName (autosave_url.fileName () + RKSettingsModuleCommandEditor::autosaveSuffix ());
+		alljobs->addJob (KIO::file_move (KUrl::fromLocalFile (save.fileName ()), autosave_url, -1, KIO::Overwrite));
+		previous_autosave_url = autosave_url;
+	} else {		// i.e., the document is still "Untitled"
+		previous_autosave_url = KUrl::fromLocalFile (save.fileName ());
+	}
+
+	// remove the backup
+	if (backup_autosave_url.isValid ()) {
+		alljobs->addJob (KIO::del (backup_autosave_url));
+	}
+	alljobs->start ();
+
+	// do not create any more autosaves until the text is changed, again
+	autosave_timer->stop ();
+}
+
+void RKCommandEditorWindow::autoSaveHandlerJobFinished (RKJobSequence* seq) {
+	RK_TRACE (COMMANDEDITOR);
+
+	if (seq->hadError ()) {
+		KMessageBox::detailedError (this, i18n ("An error occurred during while trying to create an autosave of the script file '%1':", url ().url ()), "- " + seq->errors ().join ("\n- "));
+	}
 }
 
 KUrl RKCommandEditorWindow::url () {
