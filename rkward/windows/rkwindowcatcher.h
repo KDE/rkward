@@ -133,8 +133,11 @@ private:
 	RKProgressControl *error_dialog;
 #ifdef Q_WS_WIN
 	QWinHost *capture;
-#else
+#elif defined Q_WS_X11
 	QX11EmbedContainer *capture;
+#else
+	// a dummy to make things compile for now
+	QWidget *capture;
 #endif
 
 	bool dynamic_size;

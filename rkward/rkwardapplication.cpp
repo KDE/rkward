@@ -2,7 +2,7 @@
                           rkwardapplication  -  description
                              -------------------
     begin                : Sun Nov 26 2006
-    copyright            : (C) 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -21,6 +21,8 @@
 
 #ifdef Q_WS_WIN
 #	include <windows.h>
+#elif defined Q_WS_MAC
+#	warning "Graph window capturing is not supported on Mac OS native, yet. Consider using X11."
 #else
 #	include <X11/X.h>
 #	include <X11/Xlib.h>
@@ -65,9 +67,9 @@ RKWardApplication::RKWardApplication () : KApplication () {
 	rkapp = this;
 	detect_x11_creations = false;
 
-#ifndef Q_WS_WIN
+#ifdef Q_WS_X11
 	wm_name_property = XInternAtom (QX11Info::display (), "WM_NAME", true);
-#endif	//nQ_WS_WIN
+#endif	//Q_WS_X11
 }
 
 RKWardApplication::~RKWardApplication () {
@@ -89,10 +91,10 @@ void RKWardApplication::startWindowCreationDetection () {
 
 #ifdef Q_WS_WIN
 	RKWardApplicationPrivate::updateToplevelWindowList ();
-#else	//Q_WS_WIN
+#elif defined Q_WS_X11
 	XSelectInput (QX11Info::display (), QX11Info::appRootWindow (), SubstructureNotifyMask);
 	syncX ();	// this is to make sure we don't miss out on the window creation (if it happens very early). Testing shows, we really need this.
-#endif	//Q_WS_WIN
+#endif
 }
 
 WId RKWardApplication::endWindowCreationDetection () {
@@ -129,7 +131,7 @@ WId RKWardApplication::endWindowCreationDetection () {
 		return candidate_windows[0];
 	}
 	return 0;
-#else	//Q_WS_WIN
+#elif defined Q_WS_X11
 	if (!created_window) {
 		// we did not see the window, yet? Maybe the event simply hasn't been processed, yet.
 		syncX ();
@@ -139,10 +141,12 @@ WId RKWardApplication::endWindowCreationDetection () {
 	detect_x11_creations = false;
 	XSelectInput (QX11Info::display (), QX11Info::appRootWindow (), NoEventMask);
 	return created_window;
-#endif	//Q_WS_WIN
+#else
+	return 0;
+#endif
 }
 
-#ifndef Q_WS_WIN
+#ifdef Q_WS_X11
 void RKWardApplication::registerNameWatcher (WId watched, RKMDIWindow *watcher) {
 	RK_TRACE (APP);
 	RK_ASSERT (!name_watchers_list.contains (watched));
@@ -188,4 +192,4 @@ bool RKWardApplication::x11EventFilter (XEvent *e) {
 
 	return KApplication::x11EventFilter (e);
 }
-#endif	//nQ_WS_WIN
+#endif	// Q_WS_X11

@@ -40,7 +40,7 @@ public:
 	@returns the window id of the last top-level window created after the last call to startWindowCreation, hoping it was only one. 0 if no window was created/detected. */
 	WId endWindowCreationDetection ();
 
-#ifndef Q_WS_WIN
+#ifdef Q_WS_X11
 	/** watch the given window for changes in its WM_NAME property (i.e. changes in caption). When a change is detected, the caption will be set on watcher. WARNING: Do not use to watch windows managed by Qt! Will override the event mask for this window (within qt_xdisplay ()). WARNING: Remember to call unregisterNameWatcher, when watcher is deleted! */
 	void registerNameWatcher (WId watched, RKMDIWindow *watcher);
 	/** remove a watch created with registerNameWatcher */

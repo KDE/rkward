@@ -70,7 +70,7 @@ void RKWindowCatcher::stop (int new_cur_device) {
 #ifdef Q_WS_WIN
 #	include "../qwinhost/qwinhost.h"
 #	include <windows.h>
-#else
+#elif defined Q_WS_X11
 #	include <QX11EmbedContainer>
 #endif
 #include <QTimer>
@@ -122,7 +122,7 @@ RKCaughtX11Window::RKCaughtX11Window (WId window_to_embed, int device_number) : 
 	// set a fixed size until the window is shown
 	xembed_container->setFixedSize (wininfo.rcClient.right - wininfo.rcClient.left, wininfo.rcClient.bottom - wininfo.rcClient.top);
 	move (wininfo.rcClient.left, wininfo.rcClient.top);
-#else
+#elif defined Q_WS_X11
 	KWindowInfo wininfo = KWindowSystem::windowInfo (embedded, NET::WMName | NET::WMGeometry);
 	RK_ASSERT (wininfo.valid ());
 
@@ -151,7 +151,7 @@ void RKCaughtX11Window::doEmbed () {
 	connect (capture, SIGNAL (clientTitleChanged(const QString&)), this, SLOT (setCaption(const QString&)), Qt::QueuedConnection);
 
 	setCaption (capture->getClientTitle ());
-#else
+#elif defined Q_WS_X11
 	capture = new QX11EmbedContainer (xembed_container);
 	capture->embedClient (embedded);
 	connect (capture, SIGNAL (clientClosed ()), this, SLOT (deleteLater ()));
@@ -167,7 +167,7 @@ RKCaughtX11Window::~RKCaughtX11Window () {
 	RK_TRACE (MISC);
 
 	capture->close ();
-#ifndef Q_WS_WIN
+#ifdef Q_WS_X11
 	RKWardApplication::getApp ()->unregisterNameWatcher (embedded);
 #endif
 	error_dialog->autoDeleteWhenDone ();
