@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ## begin: These may need adjusting!
-TARGETS="lucid karmic jaunty intrepid hardy"
+TARGETS="maverick lucid karmic jaunty"
 PPAVERSIONSTRING="experimental1ppa1"
 PPAID="rkward-devel"
 AUTHOR="Thomas Friedrichsmeier <tfry@users.sourceforge.net>"
@@ -14,7 +14,7 @@ PPATEMPDIR=$BASEDIR/ppatemp
 mkdir $PPATEMPDIR
 
 # first create source snapshot
-${BASEDIR}/makedist.sh $VERSION
+${BASEDIR}/scripts/makedist.sh $VERSION
 cp ${BASEDIR}/rkward-$VERSION.tar.gz $PPATEMPDIR/rkward_$VERSION.orig.tar.gz
 
 function doSourceUpload {
