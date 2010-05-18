@@ -8,7 +8,7 @@ DISTDIRREL=rkward-$VERSION
 DISTDIR=$BASEDIR/disttemp/$DISTDIRREL
 mkdir $DISTDIR
 
-$BASEDIR/set_dist_version.sh $VERSION
+$BASEDIR/scripts/set_dist_version.sh $VERSION
 
 cp -a AUTHORS CMakeLists.txt COPYING ChangeLog TODO INSTALL NOTES README configure $DISTDIR
 mkdir $DISTDIR/doc
