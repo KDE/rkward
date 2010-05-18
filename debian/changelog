@@ -1,5 +1,6 @@
 rkward (0.5.3-2) unstable; urgency=low
 
+  * correct usage of hyphens vs. minus signs in the man page
   * correct the watch file
 
  -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Fri, 07 May 2010 14:30:00 +0200
