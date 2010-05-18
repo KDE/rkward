@@ -2,7 +2,7 @@
                           rkloadlibsdialog  -  description
                              -------------------
     begin                : Mon Sep 6 2004
-    copyright            : (C) 2004, 2006, 2007, 2008, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2008, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -170,8 +170,12 @@ bool RKLoadLibsDialog::installPackages (const QStringList &packages, const QStri
 	RK_TRACE (DIALOGS);
 
 	if (packages.isEmpty ()) return false;
-	QString command_string = "install.packages (pkgs=c (\"" + packages.join ("\", \"") + "\")" + ", lib=\"" + to_libloc + "\""; 
-	if (RKSettingsModuleRPackages::archivePackages ()) command_string += ", destdir=\"" + QDir (RKSettingsModuleGeneral::filesPath ()).filePath ("package_archive") + "\"";
+	QString command_string = "install.packages (pkgs=c (\"" + packages.join ("\", \"") + "\")" + ", lib=\"" + to_libloc + "\"";
+	QString downloaddir = QDir (RKSettingsModuleGeneral::filesPath ()).filePath ("package_archive");
+	if (RKSettingsModuleRPackages::archivePackages ()) {
+		QDir (RKSettingsModuleGeneral::filesPath ()).mkdir ("package_archive");
+		command_string += ", destdir=\"" + downloaddir + "\"";
+	}
 	if (install_dependencies) command_string += ", dependencies=TRUE";
 	command_string += ")\n";
 
@@ -189,7 +193,7 @@ bool RKLoadLibsDialog::installPackages (const QStringList &packages, const QStri
 			RK_ASSERT (false);
 #else
 			KUser user;
-			stream << QString ("system (\"chown ") + user.loginName() + ' ' + QDir (RKSettingsModuleGeneral::filesPath ()).filePath ("package_archive") + "/*\")\n";
+			stream << QString ("system (\"chown ") + user.loginName() + ' ' + downloaddir + "/*\")\n";
 #endif
 		}
 		stream << "q ()\n";
