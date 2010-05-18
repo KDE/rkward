@@ -1,5 +1,7 @@
 TODO: Do not use SmartInterface for KDE 4.5 and above
 
+- Fixed: Crash while analysing some objects returned by XML::xmlParseTree() for invalid XML
+- Fixed: Error while installing packages with R 2.11.0, when archiving packages in a non-existing directory
 - Add option to autosave script files (enabled by default)
 - The tabbar in the main window now shows a context menu with options to close/detach a window
 - The tabs in the main window can now be re-ordered by dragging with the mouse (left click if compiled with Qt 4.5 or above, middle click for earlier versions)

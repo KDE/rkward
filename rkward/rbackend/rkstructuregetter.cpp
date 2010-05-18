@@ -2,7 +2,7 @@
                           rkstructuregetter  -  description
                              -------------------
     begin                : Wed Apr 11 2007
-    copyright            : (C) 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -417,8 +417,9 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 			}
 		} else if (do_cont) {
 			RK_DO (qDebug ("recurse into list %s", name.toLatin1().data ()), RBACKEND, DL_DEBUG);
-			// print.c in R has special handling for objects of this sort, so we better play it safe for those, too. It is not really certain that we need this, though (originally introduced in SVN rev 1826 without decent comment).
-			bool may_be_special = Rf_isObject (value) && (Rf_length (value) == 0);
+			// fewer elements than names() can happen, although I doubt it is supposed to happen.
+			// see http://sourceforge.net/tracker/?func=detail&aid=3002439&group_id=50231&atid=459007
+			bool may_be_special = Rf_length (value) < childcount;
 			if (Rf_isList (value) && (!may_be_special)) {		// old style list
 				for (unsigned int i = 0; i < childcount; ++i) {
 					SEXP child = CAR (value);
