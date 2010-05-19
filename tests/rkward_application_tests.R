@@ -53,6 +53,16 @@ suite <- new ("RKTestSuite", id="rkward_application_tests",
 			rktest.initializeEnvironment ()	# restore options
 
 			rk.graph.on (device.type="SVG", width=300); plot (1, 1); rk.graph.off ()
+		}),
+		new ("RKTest", id="no_crash_on_strange_objects", call=function () {
+			# This object was created by library (XML) v. 3.1-0
+			# xmlTreeParse ("<log><description>An unclosed quote\"</description></log>")
+			#
+			# In R 2.11.0, str (x) produces an error "subecript out of bounds"
+			# The main concern is that we should handle this object gracefully, i.e. do not crash while syncing it.
+			load ("../rkward_application_tests_strange_object.RData")
+			rk.sync.global ()
+			rk.sync (x)
 		})
 	# postCalls are run *after* all tests. Use this to clean up
 	), postCalls = list (
