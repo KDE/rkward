@@ -24,6 +24,7 @@
 #include <QPaintEvent>
 
 #include <kparts/event.h>
+#include <kxmlguifactory.h>
 #include <kactioncollection.h>
 
 #include "rkworkplace.h"
@@ -152,7 +153,17 @@ bool RKMDIWindow::close (bool also_delete) {
 
 	if (also_delete) {
 		bool closed = QWidget::close ();
-		if (closed) deleteLater ();
+		if (closed) {
+			// WORKAROUND for https://bugs.kde.org/show_bug.cgi?id=170806
+			// NOTE: can't move this to the d'tor, since the part is already partially deleted, then
+			// TODO: use version check / remove once fixed in kdelibs
+			if (part && part->factory ()) {
+				part->factory ()->removeClient (part);
+			}
+			// WORKAROUND end
+
+			deleteLater ();
+		}
 		return closed;
 	} else {
 		RK_ASSERT (!testAttribute (Qt::WA_DeleteOnClose));
