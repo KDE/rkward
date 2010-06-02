@@ -2,7 +2,7 @@
                           robject  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004, 2006, 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -29,6 +29,7 @@
 #include "renvironmentobject.h"
 #include "rfunctionobject.h"
 #include "rkmodificationtracker.h"
+#include "rkrownames.h"
 
 #include "../debug.h"
 
@@ -314,7 +315,6 @@ void RObject::updateDataFromR (RCommandChain *) {
 	type -= (type & NeedDataUpdate);
 }
 
-#warning probably we do not really need this. Rather we should always call updateDataFromR recursively, and that will take care of things. (make sure not to overwrite pending changes, though)
 void RObject::markDataDirty () {
 	RK_TRACE (OBJECTS);
 
@@ -324,6 +324,7 @@ void RObject::markDataDirty () {
 		for (int i = children.size () - 1; i >= 0; --i) {
 			children[i]->markDataDirty ();
 		}
+		static_cast<RContainerObject*> (this)->rownames_object->markDataDirty ();
 	}
 }
 

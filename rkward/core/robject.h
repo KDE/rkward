@@ -2,7 +2,7 @@
                           robject  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004, 2006, 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -45,25 +45,26 @@ public:
 /** types of objects, RKWard knows about */
 	enum RObjectType {
 		DataFrame=1,
-		Matrix=2,
-		Array=4,
-		List=8,
-		Container=16,
-		Variable=32,
-		Workspace=64,
-		Function=128,
-		Environment=256,
-		GlobalEnv=512,
-		ToplevelEnv=1024,
-		PackageEnv=2048,
-		HasMetaObject=4096,
-		Misplaced=8192,		/** < the object is not in the namespace where it would be expected */
+		Matrix=1 << 1,
+		Array=1 << 2,
+		List=1 << 3,
+		Container=1 << 4,
+		Variable=1 << 5,
+		Workspace=1 << 6,
+		Function=1 << 7,
+		Environment=1 << 8,
+		GlobalEnv=1 << 9,
+		ToplevelEnv=1 << 10,
+		PackageEnv=1 << 11,
+		HasMetaObject=1 << 12,
+		Misplaced=1 << 13,		/** < the object is not in the namespace where it would be expected */
 		Numeric=1 << 14,
 		Factor=2 << 14,
 		Character=3 << 14,
 		Logical=4 << 14,
 		DataTypeMask=Numeric | Factor | Character | Logical,
-		NeedDataUpdate=1 << 30,	/** < the object's data should be (re-) fetched from R */
+		NonVisibleObject=1 << 29,	/** < the object is not listed in the object list. Currently, this is only the case for row.names()-objects */
+		NeedDataUpdate=1 << 30,	/** < the object's data should be (re-) fetched from R. The main purpose of this flag is to make sure the data is synced *after* the structure has been synced */
 		Pending=1 << 31		/** < the object is pending, i.e. it has been created in the object list, but we have not seen it in R, yet. This is used by data editors to create the illusion that a new object was added immediately, while in fact it takes some time to create it in the backend. */
 	};
 

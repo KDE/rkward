@@ -2,7 +2,7 @@
                           rcontainerobject  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004, 2006, 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -23,6 +23,7 @@
 #include "rkvariable.h"
 #include "rfunctionobject.h"
 #include "renvironmentobject.h"
+#include "rkrownames.h"
 
 #include "../rkglobals.h"
 #include "rkmodificationtracker.h"
@@ -32,6 +33,7 @@
 RContainerObject::RContainerObject (RContainerObject *parent, const QString &name) : RObject (parent, name) {
 	RK_TRACE (OBJECTS);
 	type = Container;
+	rownames_object = 0;
 }
 
 RContainerObject::~RContainerObject () {
@@ -41,6 +43,7 @@ RContainerObject::~RContainerObject () {
 	for (int i = childmap.size () - 1; i >= 0; --i) {
 		delete childmap[i];
 	}
+	delete rownames_object;
 }
 
 RObject *RContainerObject::updateChildStructure (RObject *child, RData *new_data, bool just_created) {
@@ -87,6 +90,7 @@ bool RContainerObject::updateStructure (RData *new_data) {
 		RData *children_sub = new_data->getStructureVector ()[5];
 		RK_ASSERT (children_sub->getDataType () == RData::StructureVector);
 		updateChildren (children_sub);
+		updateRowNamesObject ();
 	} else {
 		RK_ASSERT (false);
 	}
@@ -233,6 +237,30 @@ RObject *RContainerObject::findChildByIndex (int position) const {
 	}
 	RK_ASSERT (false);
 	return 0;
+}
+
+RKRowNames* RContainerObject::rowNames () {
+	RK_TRACE (OBJECTS);
+
+	if (!rownames_object) {
+		rownames_object = new RKRowNames (this);
+		updateRowNamesObject ();
+	}
+	return rownames_object;
+}
+
+void RContainerObject::updateRowNamesObject () {
+	RK_TRACE (OBJECTS);
+
+	if (!rownames_object) return;
+
+	int childlen = 0;
+	if (!childmap.isEmpty ()) childlen = childmap[0]->getLength ();
+	rownames_object->dimensions[0] = childlen;
+
+	if (rownames_object->isType (NeedDataUpdate)) {
+		rownames_object->updateDataFromR (0);
+	}
 }
 
 int RContainerObject::getIndexOf (RObject *child) const {

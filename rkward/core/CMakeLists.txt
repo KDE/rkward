@@ -11,6 +11,7 @@ SET(core_STAT_SRCS
    rkmodificationtracker.cpp
    rfunctionobject.cpp
    renvironmentobject.cpp
+   rkrownames.cpp
    )
 
 QT4_AUTOMOC(${core_STAT_SRCS})

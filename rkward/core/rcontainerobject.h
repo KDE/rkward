@@ -2,7 +2,7 @@
                           rcontainerobject  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -21,6 +21,7 @@
 
 class RCommand;
 class RKEditor;
+class RKRowNames;
 
 /**
 Internal representation of objects in the R-workspace that contain other objects
@@ -78,9 +79,15 @@ public:
 	void beginEdit () {};
 	/** see beginEdit() */
 	void endEdit () {};
+	/** return an RKVariable representing the row-names object for this container */
+	RKRowNames* rowNames ();
+private:
+	/** usually, we do not update the structure of the row.names() from R, as it is always the same. However, we may need to adjust the length, and this hack does that. */
+	void updateRowNamesObject ();
 protected:
 	void updateChildren (RData *new_children);
 	RObjectMap childmap;
+	RKRowNames *rownames_object;
 	// why do I need this to make it compile?!
 	friend class RObjectList;
 	friend class RObject;

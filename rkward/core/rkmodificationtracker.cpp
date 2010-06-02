@@ -2,7 +2,7 @@
                           rkmodificationtracker  -  description
                              -------------------
     begin                : Tue Aug 31 2004
-    copyright            : (C) 2004, 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -341,6 +341,7 @@ QModelIndex RKObjectListModel::indexFor (RObject *object) const {
 	RK_TRACE (OBJECTS);
 
 	if (!object) return QModelIndex ();
+	if (object->isType (RObject::NonVisibleObject)) return QModelIndex ();
 
 	RContainerObject *parent = object->getContainer ();
 	// must cast to RObject, here. Else casting to void* and back will confuse the hell out of GCC 4.2

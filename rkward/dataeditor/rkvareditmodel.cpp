@@ -23,6 +23,7 @@
 
 #include "../core/rcontainerobject.h"
 #include "../core/rkmodificationtracker.h"
+#include "../core/rkrownames.h"
 #include "../rbackend/rinterface.h"
 #include "../rkglobals.h"
 
@@ -99,6 +100,12 @@ void RKVarEditModel::objectMetaChanged (RObject* changed) {
 void RKVarEditModel::objectDataChanged (RObject* object, const RObject::ChangeSet *changes) {
 	RK_TRACE (EDITOR);
 
+	if (object == rownames) {
+		RK_ASSERT (changes);
+		emit (headerDataChanged (Qt::Vertical, changes->from_index, changes->to_index));
+		return;
+	}
+
 	int cindex = objects.indexOf (static_cast<RKVariable*> (object));	// no check for isVariable needed. we only need to look up, if we have this object, and where.
 	if (cindex < 0) return;	// none of our buisiness
 
@@ -137,6 +144,7 @@ bool RKVarEditModel::insertRows (int row, int count, const QModelIndex& parent) 
 // TODO: this does not emit any data change notifications to other editors
 		objects[i]->insertRows (row, count);
 	}
+	rownames->insertRows (row, count);
 	doInsertRowsInBackend (row, count);
 	endInsertRows ();
 
@@ -300,7 +308,10 @@ QVariant RKVarEditModel::headerData (int section, Qt::Orientation orientation, i
 		return objects[section]->getShortName ();
 	}
 
-	return QString::number (section + 1);
+	if (section < rownames->getLength ()) {
+		return rownames->getText (section);
+	}
+	return QVariant ();
 }
 
 RKTextMatrix RKVarEditModel::getTextMatrix (const QItemSelectionRange& range) const {
@@ -719,12 +730,15 @@ void RKVarEditDataFrameModel::init (RContainerObject* dataframe) {
 		RK_ASSERT (obj->isVariable ());
 		addObject (i, static_cast<RKVariable*> (obj));
 	}
+	rownames = dataframe->rowNames ();
+	listenForObject (rownames);
 }
 
 RKVarEditDataFrameModel::~RKVarEditDataFrameModel () {
 	RK_TRACE (EDITOR);
 
 	if (dataframe) stopListenForObject (dataframe);
+	if (rownames) stopListenForObject (rownames);
 }
 
 bool RKVarEditDataFrameModel::insertColumns (int column, int count, const QModelIndex& parent) {

@@ -2,7 +2,7 @@
                           rkvareditmodel  -  description
                              -------------------
     begin                : Mon Nov 05 2007
-    copyright            : (C) 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -29,6 +29,7 @@
 class RKVarEditMetaModel;
 class RCommandChain;
 class RKEditor;
+class RKRowNames;
 
 /** Base class for RKVarEditModel and RKVarEditMetaModel. Defines a common interface for copy and paste operations. Models might reimplement these functions for more efficiency.
 @author Thomas Friedrichsmeier */
@@ -92,6 +93,7 @@ signals:
 protected:
 friend class RKVarEditMetaModel;
 	QList<RKVariable*> objects;
+	RKRowNames *rownames;
 
 	/** very simple convenience function to return the number of true cols + trailing cols */
 	int apparentCols () const { return (trueCols () + trailing_cols); };
