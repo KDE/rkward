@@ -2,7 +2,7 @@
                           rkvariable  -  description
                              -------------------
     begin                : Thu Aug 12 2004
-    copyright            : (C) 2004, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -84,13 +84,9 @@ numeric!  TODO: unused  */
 /** sets the status of the given range of cells to Unknown (the entire row if from_row and to_row are -1). Usually you call this, when you are about to update the given data-range, but haven't fetched the data for that, yet. The unknown-flag is cleared for the cells, as soon as data is written to those cells. The effect is that the cells will not be editable until the data was updated. */
 	void setUnknown (int from_row=-1, int to_row=-1);
 
-/** entirely remove the given row (i.e. the cell). Will also take care of updating the state (are there any invalid cells left?). Does not sync with the backend for technical reasons! You have to remove the row in the backend explicitly. */
-	void removeRow (int row);
-/** see removeRow (), but removes a range of rows (i.e. cells). Since data only needs to be copied once, this is more efficient than several single calls to removeRow (). Does not sync with the backend for technical reasons! You have to remove the row in the backend explicitly. */
+/** entirely remove the given rows (i.e. the cells). Will also take care of updating the state (are there any invalid cells left?). Does not sync with the backend for technical reasons! You have to remove the row in the backend explicitly. */
 	void removeRows (int from_row, int to_row);
-/** inserts a row/cell (with empty value) just above the given index. Does not sync with the backend for technical reasons! You have to insert the row in the backend explicitly. */
-	void insertRow (int row);
-/** like insertRow (), but inserts count rows. Does not sync with the backend for technical reasons! You have to insert the row in the backend explicitly. */
+/** inserts count rows (with empty values) just above the given index. Does not sync with the backend for technical reasons! You have to insert the row in the backend explicitly. */
 	void insertRows (int row, int count);
 /** Tells the object it has (data) length len. Usually this will only be called directly after creating a new object */
 	void setLength (int len);

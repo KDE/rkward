@@ -707,11 +707,6 @@ RKVariable::Status RKVariable::cellStatus (int row) const {
 	return ValueValid;
 }
 
-void RKVariable::removeRow (int row) {
-	RK_TRACE (OBJECTS);
-	removeRows (row, row);
-}
-
 void RKVariable::removeRows (int from_row, int to_row) {
 	RK_TRACE (OBJECTS);
 
@@ -748,11 +743,6 @@ void RKVariable::removeRows (int from_row, int to_row) {
 
 	dimensions[0] -= offset;	
 	downSize ();
-}
-
-void RKVariable::insertRow (int row) {
-	RK_TRACE (OBJECTS);
-	insertRows (row, 1);
 }
 
 void RKVariable::insertRows (int row, int count) {
