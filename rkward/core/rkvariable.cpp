@@ -380,17 +380,6 @@ void RKVariable::writeData (int from_row, int to_row, RCommandChain *chain) {
 	RKGlobals::tracker ()->objectDataChanged (this, set);
 }
 
-void RKVariable::cellChanged (int row) {
-	RK_TRACE (OBJECTS);
-	if (data->immediate_sync) {
-		writeData (row, row);
-	} else {
-		RK_ASSERT (data->changes);
-		if ((data->changes->from_index > row) || (data->changes->from_index == -1)) data->changes->from_index = row;
-		if (data->changes->to_index < row) data->changes->to_index = row;
-	}
-}
-
 void RKVariable::cellsChanged (int from_row, int to_row) {
 	RK_TRACE (OBJECTS);
 	if (data->immediate_sync) {
@@ -570,7 +559,7 @@ void RKVariable::setText (int row, const QString &text) {
 			}
 		}
 	}
-	cellChanged (row);
+	cellsChanged (row, row);
 }
 
 QString RKVariable::getLabeled (int row) const {
@@ -660,32 +649,17 @@ QString *RKVariable::getCharacter (int from_row, int to_row) const {
 void RKVariable::setCharacter (int from_row, int to_row, QString *txtdata) {
 	RK_TRACE (OBJECTS);
 	RK_ASSERT (to_row < getLength ());
-	
-	if (getDataType () == DataCharacter) {
-		int i=0;
-		for (int row=from_row; row <= to_row; ++row) {
-			if (data->cell_states[row] & RKVarEditData::Invalid) data->cell_states[row] = RKVarEditData::UnsyncedInvalidState;
-			else data->cell_states[row] = 0;
 
-			if (txtdata[i].isNull ()) data->cell_states[row] |= RKVarEditData::NA;
-			else data->cell_states[row] |= RKVarEditData::Valid;
-
-			data->cell_strings[row] = txtdata[i++];
-		}
-	} else {
-		bool old_sync = data->immediate_sync;
-		setSyncing (false);
-		int i=0;
-		for (int row=from_row; row <= to_row; ++row) {
-			setText (row, txtdata[i++]);
-		}
-		if (old_sync) {
-			syncDataToR ();
-			setSyncing (true);
-		}
-		return;
+	bool old_sync = data->immediate_sync;
+	setSyncing (false);
+	int i=0;
+	for (int row=from_row; row <= to_row; ++row) {
+		setText (row, txtdata[i++]);
 	}
-	cellsChanged (from_row, to_row);
+	if (old_sync) {
+		syncDataToR ();
+		setSyncing (true);
+	}
 }
 
 void RKVariable::setUnknown (int from_row, int to_row) {
