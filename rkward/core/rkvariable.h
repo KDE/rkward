@@ -66,23 +66,13 @@ is set to Unused, if _no_ cell in the row is used, Valid if _all_ cells in the r
 /** get the value at the given row in text-form suitable for submission to R. I.e. strings are quoted, numbers are not, empty values are returned as NA */
 	QString getRText (int row) const;
 /** set the value at the given row in text-form. Will try to convert the given string to the internal storage format if possible. */
-	void setText (int row, const QString &text);
+	virtual void setText (int row, const QString &text);
 
-/** get a copy of the numeric values of rows starting from from_index, going to to_index. Do not use this before making sure that the rStorage () is really
-numeric!  TODO: unused  */
-	double *getNumeric (int from_row, int to_row) const;
-/** set numeric values in the given range. Assumes you provide enough values for the range. If internalStorage is String, all values will be converted to strings, so you should use this function only, if you know you are dealing with a numeric object */
-	void setNumeric (int from_row, int to_row, double *data);
-/** like getNumeric, but returns values as an array of QStrings. TODO: unused */
+/** get a copy of the text values of rows from from_index to to_index. TODO: This could be made, but currently is not, more efficient than calling getText in a loop. */
 	QString *getCharacter (int from_row, int to_row) const;
-/** like setNumeric, but sets chars. If internalStorage () is numeric, attempts to convert the given strings to numbers. I.e. the function behaves essentially like setText (), but operates on a range of cells. */
-	void setCharacter (int from_row, int to_row, QString *data);
 	
 /** returns the current status of the given cell */
 	Status cellStatus (int row) const;
-
-/** sets the status of the given range of cells to Unknown (the entire row if from_row and to_row are -1). Usually you call this, when you are about to update the given data-range, but haven't fetched the data for that, yet. The unknown-flag is cleared for the cells, as soon as data is written to those cells. The effect is that the cells will not be editable until the data was updated. */
-	void setUnknown (int from_row=-1, int to_row=-1);
 
 /** entirely remove the given rows (i.e. the cells). Will also take care of updating the state (are there any invalid cells left?). Does not sync with the backend for technical reasons! You have to remove the row in the backend explicitly. */
 	void removeRows (int from_row, int to_row);
@@ -137,6 +127,10 @@ numeric!  TODO: unused  */
 /** inverse of parseFormattingOptionsString () */
 	static QString formattingOptionsToString (const FormattingOptions& options);
 protected:
+/** like setNumeric, but sets chars. If internalStorage () is numeric, attempts to convert the given strings to numbers. I.e. the function behaves essentially like setText (), but operates on a range of cells. Code may assume that all data comes directly from R, is entirely valid in R. */
+	virtual void setCharacterFromR (int from_row, int to_row, QString *data);
+/** set numeric values in the given range. Assumes you provide enough values for the range. If internalStorage is String, all values will be converted to strings, so you should use this function only, if you know you are dealing with a numeric object. Code may assume that all data comes directly from R, is entirely valid in R. */
+	void setNumericFromR (int from_row, int to_row, double *data);
 /** reimplemented from RObject to change the internal data storage mode, if the var is being edited */
 	bool updateType (RData *new_data);
 /** Extended from RObject::EditData to actually contain data. */
@@ -175,7 +169,7 @@ protected:
 	void beginEdit ();
 /** reimplemented from RObject */
 	void endEdit ();
-private:
+
 /** changes the allocated storage to contain a least length elements. More data may be allocated than acutally needed. This function only ever does upsizing. */
 	void extendToLength (int length);
 /** changes the allocated storage to contain a least getLength elements. More data may be allocated than acutally needed. This function only ever does downsizing. */

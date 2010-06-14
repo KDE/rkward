@@ -155,9 +155,9 @@ void RKVariable::rCommandDone (RCommand *command) {
 		RK_ASSERT (cdata->getDataLength () == (unsigned int) getLength ()); // not a problem due to the line below, I'd still like to know if / when this happens.
 		extendToLength (cdata->getDataLength ());
 		if (cdata->getDataType () == RData::StringVector) {
-			setCharacter (0, getLength () - 1, cdata->getStringVector ());
+			setCharacterFromR (0, getLength () - 1, cdata->getStringVector ());
 		} else if (cdata->getDataType () == RData::RealVector) {
-			setNumeric (0, getLength () - 1, cdata->getRealVector ());
+			setNumericFromR (0, getLength () - 1, cdata->getRealVector ());
 		} else if (cdata->getDataType () == RData::IntVector) {
 			unsigned int len = getLength ();
 			double *dd = new double[len];
@@ -165,7 +165,7 @@ void RKVariable::rCommandDone (RCommand *command) {
 				if (cdata->getIntVector ()[i] == INT_MIN) dd[i] = NAN;
 				else dd[i] = (double) cdata->getIntVector ()[i];
 			}
-			setNumeric (0, getLength () - 1, dd);
+			setNumericFromR (0, getLength () - 1, dd);
 			delete [] dd;
 		}
 
@@ -512,7 +512,6 @@ QString RKVariable::getRText (int row) const {
 	}
 }
 
-#warning this could/should be merged with setCharacter (which is currently less complete)
 void RKVariable::setText (int row, const QString &text) {
 	RK_TRACE (OBJECTS);
 	RK_ASSERT (row < getLength ());
@@ -572,20 +571,7 @@ QString RKVariable::getLabeled (int row) const {
 	return getText (row);
 }
 
-double *RKVariable::getNumeric (int from_row, int to_row) const {
-	RK_TRACE (OBJECTS);
-	if (to_row >= getLength ()) {
-		RK_ASSERT (false);
-		return 0;
-	}
-	RK_ASSERT (from_row <= to_row);
-
-	// TODO: no, this is not good. Return a _copy_!
-	// we simply return the whole array starting at the given offset for now. Change this, if the storage mechanism gets changed!
-	return &(data->cell_doubles[from_row]);
-}
-
-void RKVariable::setNumeric (int from_row, int to_row, double *numdata) {
+void RKVariable::setNumericFromR (int from_row, int to_row, double *numdata) {
 	RK_TRACE (OBJECTS);
 	RK_ASSERT (to_row < getLength ());
 
@@ -646,7 +632,7 @@ QString *RKVariable::getCharacter (int from_row, int to_row) const {
 	return ret;
 }
 
-void RKVariable::setCharacter (int from_row, int to_row, QString *txtdata) {
+void RKVariable::setCharacterFromR (int from_row, int to_row, QString *txtdata) {
 	RK_TRACE (OBJECTS);
 	RK_ASSERT (to_row < getLength ());
 
@@ -659,18 +645,6 @@ void RKVariable::setCharacter (int from_row, int to_row, QString *txtdata) {
 	if (old_sync) {
 		syncDataToR ();
 		setSyncing (true);
-	}
-}
-
-void RKVariable::setUnknown (int from_row, int to_row) {
-	RK_TRACE (OBJECTS);
-	RK_ASSERT (to_row < getLength ());
-
-	if ((from_row < 0)) from_row = 0;
-	if ((to_row < 0)) to_row = data->allocated_length - 1;
-		
-	for (int row=from_row; row <= to_row; ++row) {
-		data->cell_strings[row] = RKVarEditData::Unknown;
 	}
 }
 
