@@ -127,6 +127,10 @@ void RKXMLGUISyncerPrivate::rebuildGUIs () {
 		}
 		for (int i = 0; i < clients.size (); ++i) {
 			factory->addClient (clients[i]);
+			if (clients[i]->xmlFile ().isEmpty ()) {
+				// somehow config-based settings get lost above, so re-read them, now.
+				clients[i]->actionCollection ()->readSettings();
+			}
 		}
 		RK_DO (qDebug ("done rebuilding factory"), MISC, DL_DEBUG);
 	}
