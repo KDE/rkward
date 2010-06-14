@@ -385,11 +385,11 @@ void RKVarEditModel::setTextMatrix (const QModelIndex& offset, const RKTextMatri
 	int tcol = 0;
 	for (int col = left; col <= right; ++col) {
 		RKVariable* var = objects[col];
-		QString* data = text.getColumn (tcol);
-		RK_ASSERT (data);
-		var->setCharacter (top, bottom, data);
-		delete [] data;		// hm, why doesn't RKVariable take ownership?
-		++tcol;
+		int trow = 0;
+		for (int row = top; row <= bottom; ++row) {
+			var->setText (row, text.getText (trow, tcol));
+			++trow;
+		}
 	}
 }
 
