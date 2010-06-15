@@ -35,6 +35,7 @@ RKVarEditModel::RKVarEditModel (QObject *parent) : RKVarEditModelBase (parent), 
 	meta_model = 0;
 	trailing_rows = trailing_cols = 0;
 	edit_blocks = 0;
+	rownames = 0;
 
 	addNotificationType (RObjectListener::ObjectRemoved);
 	addNotificationType (RObjectListener::MetaChanged);
@@ -738,8 +739,8 @@ void RKVarEditDataFrameModel::init (RContainerObject* dataframe) {
 RKVarEditDataFrameModel::~RKVarEditDataFrameModel () {
 	RK_TRACE (EDITOR);
 
-	if (dataframe) stopListenForObject (dataframe);
 	if (rownames) stopListenForObject (rownames);
+	if (dataframe) stopListenForObject (dataframe);
 }
 
 bool RKVarEditDataFrameModel::insertColumns (int column, int count, const QModelIndex& parent) {
@@ -800,6 +801,8 @@ void RKVarEditDataFrameModel::objectRemoved (RObject* object) {
 
 	if (object == dataframe) {
 		while (!objects.isEmpty ()) RKVarEditModel::objectRemoved (objects[0]);
+		if (rownames) stopListenForObject (rownames);
+		rownames = 0;
 		stopListenForObject (dataframe);
 		dataframe = 0;
 	}
