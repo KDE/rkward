@@ -2,7 +2,7 @@
                           twintable.h  -  description
                              -------------------
     begin                : Tue Oct 29 2002
-    copyright            : (C) 2002, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2006, 2007, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -83,11 +83,9 @@ protected:
 	TwinTableMember* dataview;
 
 	QAction* action_insert_col_left;
-	QAction* action_insert_col_right;
 	QAction* action_delete_col;
 
 	QAction* action_insert_row_above;
-	QAction* action_insert_row_below;
 	QAction* action_delete_row;
 	QAction* action_delete_rows;
 

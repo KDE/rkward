@@ -2,7 +2,7 @@
                           twintable.cpp  -  description
                              -------------------
     begin                : Tue Oct 29 2002
-    copyright            : (C) 2002, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2006, 2007, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -53,6 +53,7 @@ TwinTable::TwinTable (QWidget *parent) : RKEditor (parent), RObjectListener (ROb
 	splitter->setStretchFactor (splitter->indexOf (dataview), 1);
 	dataview->verticalHeader ()->setResizeMode (QHeaderView::Fixed);
 	dataview->horizontalHeader ()->hide ();
+	dataview->setAlternatingRowColors (true);
 
 	layout->addWidget (splitter);
 
@@ -76,22 +77,18 @@ TwinTable::TwinTable (QWidget *parent) : RKEditor (parent), RObjectListener (ROb
 	// which will be reacted upon by the following popup-menus:
 	top_header_menu = new QMenu (this);
 	action_insert_col_left = top_header_menu->addAction (RKStandardIcons::getIcon (RKStandardIcons::ActionInsertVar), QString (), this, SLOT (insertColumn()));
-	action_insert_col_right = top_header_menu->addAction (RKStandardIcons::getIcon (RKStandardIcons::ActionInsertVar), QString (), this, SLOT (insertColumn()));
 	action_delete_col = top_header_menu->addAction (RKStandardIcons::getIcon (RKStandardIcons::ActionDeleteVar), QString (), this, SLOT (deleteColumn()));
 
 	left_header_menu = new QMenu (this);
 	action_insert_row_above = left_header_menu->addAction (RKStandardIcons::getIcon (RKStandardIcons::ActionInsertRow), QString (), this, SLOT (insertRow()));
-	action_insert_row_below = left_header_menu->addAction (RKStandardIcons::getIcon (RKStandardIcons::ActionInsertRow), QString (), this, SLOT (insertRow()));
 	action_delete_row = left_header_menu->addAction (RKStandardIcons::getIcon (RKStandardIcons::ActionDeleteRow), QString (), this, SLOT (deleteRow()));
 	action_delete_rows = left_header_menu->addAction (RKStandardIcons::getIcon (RKStandardIcons::ActionDeleteRow), QString (), this, SLOT (deleteSelectedRows()));
 
 	// add all actions to a group, so they can be enabled/disabled easily
 	edit_actions = new QActionGroup (this);
 	edit_actions->addAction (action_insert_col_left);
-	edit_actions->addAction (action_insert_col_right);
 	edit_actions->addAction (action_delete_col);
 	edit_actions->addAction (action_insert_row_above);
-	edit_actions->addAction (action_insert_row_below);
 	edit_actions->addAction (action_delete_row);
 	edit_actions->addAction (action_delete_rows);
 
@@ -182,13 +179,10 @@ void TwinTable::metaHeaderContextMenu (int row, int col, const QPoint& pos) {
 		RK_ASSERT (row == -1);
 		RK_ASSERT (col <= datamodel->trueCols ());
 
-		action_insert_col_left->setVisible (true);
+		action_insert_col_left->setEnabled (col >= datamodel->firstRealColumn ());
 		action_insert_col_left->setText (i18n ("Insert new variable left"));	// TODO: show name
 		action_insert_col_left->setData (col);
-		action_insert_col_right->setVisible (col < datamodel->trueCols ());
-		action_insert_col_right->setText (i18n ("Insert new variable right"));	// TODO: show name
-		action_insert_col_right->setData (col+1);
-		action_delete_col->setVisible (col < datamodel->trueCols ());
+		action_delete_col->setEnabled ((col >= datamodel->firstRealColumn ()) && (col < datamodel->trueCols ()));
 		action_delete_col->setText (i18n ("Delete this variable"));	// TODO: show name
 		action_delete_col->setData (col);
 
@@ -203,27 +197,23 @@ void TwinTable::dataHeaderContextMenu (int row, int col, const QPoint& pos) {
 	if (row >= 0) {
 		RK_ASSERT (row <= datamodel->trueRows ());
 
-		action_insert_row_above->setVisible (true);
 		action_insert_row_above->setText (i18n ("Insert new case above (at %1)", row + 1));
 		action_insert_row_above->setData (row);
-		action_insert_row_below->setVisible (row < datamodel->trueRows ());
-		action_insert_row_below->setText (i18n ("Insert new case below (at %1)", row + 2));
-		action_insert_row_below->setData (row + 1);
 
 		QItemSelectionRange sel = dataview->getSelectionBoundaries ();
 		if (sel.isValid ()) {
 			int top = sel.top ();
 			int bottom = sel.bottom ();
 			if (bottom >= datamodel->trueRows ()) bottom = datamodel->trueRows () - 1;
-			if (top > bottom) top = bottom;
 
-			action_delete_rows->setVisible (true);
+			action_delete_rows->setEnabled (top > bottom);
+			if (top > bottom) bottom = top;
 			action_delete_rows->setText (i18n ("Delete marked rows (%1-%2)", (top+1), (bottom+1)));
 		} else {
-			action_delete_rows->setVisible (false);
+			action_delete_rows->setEnabled (false);
 		}
 
-		action_delete_row->setVisible (row < datamodel->trueRows ());
+		action_delete_row->setEnabled (row < datamodel->trueRows ());
 		action_delete_row->setText (i18n ("Delete this row (%1)", (row+1)));
 		action_delete_row->setData (row);
 
@@ -235,9 +225,8 @@ void TwinTable::deleteColumn () {
 	RK_TRACE (EDITOR);
 	RK_ASSERT (rw);
 
-	QObject *s = sender ();
 	int col;
-	if (s == action_delete_col) col = action_delete_col->data ().toInt ();
+	if (sender () == action_delete_col) col = action_delete_col->data ().toInt ();
 	else {
 		RK_ASSERT (false);
 		return;
@@ -252,10 +241,8 @@ void TwinTable::insertColumn () {
 	RK_TRACE (EDITOR);
 	RK_ASSERT (rw);
 
-	QObject *s = sender ();
 	int where;
-	if (s == action_insert_col_left) where = action_insert_col_left->data ().toInt ();
-	else if (s == action_insert_col_right) where = action_insert_col_right->data ().toInt ();
+	if (sender () == action_insert_col_left) where = action_insert_col_left->data ().toInt ();
 	else {
 		RK_ASSERT (false);
 		return;
@@ -270,9 +257,8 @@ void TwinTable::deleteRow () {
 	RK_TRACE (EDITOR);
 	RK_ASSERT (rw);
 
-	QObject *s = sender ();
 	int where;
-	if (s == action_delete_row) where = action_delete_row->data ().toInt ();
+	if (sender () == action_delete_row) where = action_delete_row->data ().toInt ();
 	else {
 		RK_ASSERT (false);
 		return;
@@ -304,10 +290,8 @@ void TwinTable::insertRow () {
 	RK_TRACE (EDITOR);
 	RK_ASSERT (rw);
 
-	QObject *s = sender ();
 	int where;
-	if (s == action_insert_row_above) where = action_insert_row_above->data ().toInt ();
-	else if (s == action_insert_row_below) where = action_insert_row_below->data ().toInt ();
+	if (sender () == action_insert_row_above) where = action_insert_row_above->data ().toInt ();
 	else {
 		RK_ASSERT (false);
 		return;
