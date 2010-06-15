@@ -34,8 +34,10 @@ RKVarEditModel::RKVarEditModel (QObject *parent) : RKVarEditModelBase (parent), 
 
 	meta_model = 0;
 	trailing_rows = trailing_cols = 0;
+	var_col_offset = 0;
 	edit_blocks = 0;
 	rownames = 0;
+	header_locked = false;
 
 	addNotificationType (RObjectListener::ObjectRemoved);
 	addNotificationType (RObjectListener::MetaChanged);
@@ -77,7 +79,10 @@ void RKVarEditModel::objectRemoved (RObject* object) {
 	RK_TRACE (EDITOR);
 
 	int index = objects.indexOf (static_cast<RKVariable*> (object));	// no check for isVariable needed. we only need to look up, if we have this object, and where.
-	if (index < 0) return;	// none of our buisiness
+	if (index < var_col_offset) {
+		RK_ASSERT (index < 0);	// some unrelated object
+		return;
+	}
 
 	beginRemoveColumns (QModelIndex (), index, index);
 	if (meta_model) meta_model->beginRemoveDataObject (index);
@@ -85,7 +90,7 @@ void RKVarEditModel::objectRemoved (RObject* object) {
 	if (meta_model) meta_model->endRemoveDataObject ();
 	endRemoveColumns ();
 
-	if (objects.isEmpty ()) emit (modelDepleted ());	// editor may or may want to auto-destruct
+	if (objects.size () <= var_col_offset) emit (modelDepleted ());	// editor may or may want to auto-destruct
 }
 
 void RKVarEditModel::objectMetaChanged (RObject* changed) {
@@ -100,12 +105,6 @@ void RKVarEditModel::objectMetaChanged (RObject* changed) {
 
 void RKVarEditModel::objectDataChanged (RObject* object, const RObject::ChangeSet *changes) {
 	RK_TRACE (EDITOR);
-
-	if (object == rownames) {
-		RK_ASSERT (changes);
-		emit (headerDataChanged (Qt::Vertical, changes->from_index, changes->to_index));
-		return;
-	}
 
 	int cindex = objects.indexOf (static_cast<RKVariable*> (object));	// no check for isVariable needed. we only need to look up, if we have this object, and where.
 	if (cindex < 0) return;	// none of our buisiness
@@ -146,7 +145,6 @@ bool RKVarEditModel::insertRows (int row, int count, const QModelIndex& parent) 
 // TODO: this does not emit any data change notifications to other editors
 		objects[i]->insertRows (row, count);
 	}
-	rownames->insertRows (row, count);
 	endInsertRows ();
 
 	return true;
@@ -170,7 +168,6 @@ bool RKVarEditModel::removeRows (int row, int count, const QModelIndex& parent) 
 // TODO: this does not emit any data change notifications to other editors
 		objects[i]->removeRows (row, lastrow);
 	}
-	rownames->removeRows (row, lastrow);
 	endRemoveRows ();
 
 	return true;
@@ -219,6 +216,11 @@ QVariant RKVarEditModel::data (const QModelIndex& index, int role) const {
 		return QVariant ();
 	}
 
+	if (col < var_col_offset) {
+		// TODO: make this look more like a normal header
+		if (role == Qt::ForegroundRole) return (Qt::blue);
+	}
+
 	// on a trailing row / col
 	if ((col >= objects.size ()) || (row >= objects[0]->getLength ())) {
 		if (role == Qt::BackgroundRole) return (Qt::gray);
@@ -239,7 +241,6 @@ QVariant RKVarEditModel::data (const QModelIndex& index, int role) const {
 	RKVariable::Status status = var->cellStatus (row);
 	if ((role == Qt::BackgroundRole)) {
 		if (status == RKVariable::ValueInvalid) return (Qt::red);
-		if (row % 2) return (QColor (240, 255, 240));	// very light green
 	}
 	if ((role == Qt::ForegroundRole) && (status == RKVariable::ValueUnknown)) return (Qt::lightGray);
 	if (role == Qt::TextAlignmentRole) {
@@ -262,6 +263,8 @@ Qt::ItemFlags RKVarEditModel::flags (const QModelIndex& index) const {
 		RK_ASSERT (false);
 		return flags;
 	}
+
+	if ((col < var_col_offset) && header_locked) return flags;
 
 	if (!edit_blocks) flags |= Qt::ItemIsEditable | Qt::ItemIsEnabled;
 	if ((col < objects.size ()) && (row < objects[0]->getLength ())) flags |= Qt::ItemIsSelectable;
@@ -313,6 +316,7 @@ QVariant RKVarEditModel::headerData (int section, Qt::Orientation orientation, i
 	if (section < rownames->getLength ()) {
 		return rownames->getText (section);
 	}
+
 	return QVariant ();
 }
 
@@ -469,6 +473,11 @@ QVariant RKVarEditMetaModel::data (const QModelIndex& index, int role) const {
 		return QVariant ();
 	}
 
+	if (col < var_col_offset) {
+	  	if (role == Qt::BackgroundRole) return (Qt::lightGray);
+		return QVariant ();
+	}
+
 	// on a trailing col
 	if (col >= data_model->objects.size ()) {
 		if (role == Qt::BackgroundRole) return (Qt::gray);
@@ -506,6 +515,7 @@ Qt::ItemFlags RKVarEditMetaModel::flags (const QModelIndex& index) const {
 		return flags;
 	}
 
+	if (col < var_col_offset) return flags;
 	if (!data_model->edit_blocks) flags |= Qt::ItemIsEditable | Qt::ItemIsEnabled;
 	if ((col < data_model->objects.size ()) && (row < RowCount)) flags |= Qt::ItemIsSelectable;
 
@@ -519,6 +529,11 @@ bool RKVarEditMetaModel::setData (const QModelIndex& index, const QVariant& valu
 	int row = index.row ();
 	int col = index.column ();
 	if (data_model->edit_blocks || (role != Qt::EditRole) || (col >= data_model->apparentCols ()) || (row >= RowCount)) {
+		RK_ASSERT (false);
+		return false;
+	}
+
+	if (col < var_col_offset) {
 		RK_ASSERT (false);
 		return false;
 	}
@@ -732,13 +747,13 @@ void RKVarEditDataFrameModel::init (RContainerObject* dataframe) {
 		addObject (i, static_cast<RKVariable*> (obj));
 	}
 	rownames = dataframe->rowNames ();
-	listenForObject (rownames);
+	addObject (0, rownames);
+	getMetaModel ()->var_col_offset = var_col_offset = 1;
 }
 
 RKVarEditDataFrameModel::~RKVarEditDataFrameModel () {
 	RK_TRACE (EDITOR);
 
-	if (rownames) stopListenForObject (rownames);
 	if (dataframe) stopListenForObject (dataframe);
 }
 
@@ -751,6 +766,7 @@ bool RKVarEditDataFrameModel::insertColumns (int column, int count, const QModel
 	}
 
 	if (column > trueCols ()) column = trueCols ();
+	if (column < var_col_offset) column = var_col_offset;
 	for (int col = column; col < (column + count); ++col) {
 		RObject *obj = dataframe->createPendingChild (dataframe->validizeName (QString ()), col);
 		RK_ASSERT (obj->isVariable ());
@@ -766,6 +782,11 @@ bool RKVarEditDataFrameModel::removeColumns (int column, int count, const QModel
 	RK_TRACE (EDITOR);
 
 	if (parent.isValid ()) {
+		RK_ASSERT (false);
+		return false;
+	}
+
+	if (column < var_col_offset) {
 		RK_ASSERT (false);
 		return false;
 	}
@@ -800,8 +821,6 @@ void RKVarEditDataFrameModel::objectRemoved (RObject* object) {
 
 	if (object == dataframe) {
 		while (!objects.isEmpty ()) RKVarEditModel::objectRemoved (objects[0]);
-		if (rownames) stopListenForObject (rownames);
-		rownames = 0;
 		stopListenForObject (dataframe);
 		dataframe = 0;
 	}
@@ -820,7 +839,7 @@ void RKVarEditDataFrameModel::childAdded (int index, RObject* parent) {
 		RObject* child = dataframe->findChildByIndex (index);
 		RK_ASSERT (child);
 
-		if (child->isVariable ()) addObject (index, static_cast<RKVariable*> (child));
+		if (child->isVariable ()) addObject (index + var_col_offset, static_cast<RKVariable*> (child));
 		else RK_ASSERT (false);
 	}
 }
@@ -830,14 +849,14 @@ void RKVarEditDataFrameModel::childMoved (int old_index, int new_index, RObject*
 
 	if (parent == dataframe) {
 		RObject *child = dataframe->findChildByIndex (new_index);	// it's at the new position, already
-		RK_ASSERT (objects.size () > old_index);
-		RK_ASSERT (child == objects[old_index]);
+		RK_ASSERT (objects.size () > (old_index + var_col_offset));
+		RK_ASSERT (child == objects[old_index + var_col_offset]);
 		// if an object has changed position, there should be at least two objects left. Hence, the objectRemoved-call will never lead to editor destruction
-		RK_ASSERT (objects.size () >= 2);
+		RK_ASSERT (objects.size () >= (var_col_offset + 2));
 		objectRemoved (child);
 
 		RK_ASSERT (child->isVariable ());
-		addObject (new_index, static_cast<RKVariable*> (child));
+		addObject (new_index + var_col_offset, static_cast<RKVariable*> (child));
 	} else {
 		// even though we are listening for the child objects as well, we should see move notifications
 		// only for children of the parent.
@@ -861,8 +880,8 @@ void RKVarEditDataFrameModel::pushTable (RCommandChain *sync_chain) {
 	RK_ASSERT (objects.size ());
 	RKVariable* child = objects[0];
 	QString na_vector = "=as.numeric (rep (NA, " + QString::number (child->getLength ()) + "))";
-	for (int col=0; col < objects.size (); ++col) {
-		if (col != 0) command.append (", ");
+	for (int col=var_col_offset; col < objects.size (); ++col) {
+		if (col > var_col_offset) command.append (", ");
 		command.append (objects[col]->getShortName () + na_vector);
 	}
 	command.append (")");

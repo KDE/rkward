@@ -44,6 +44,9 @@ public:
 
 	virtual int trueRows () const = 0;
 	virtual int trueCols () const = 0;
+	int firstRealColumn () const { return var_col_offset; };
+
+	int var_col_offset;
 };
 
 /** This class represents a collection of RKVariables of uniform length (typically a data.frame) suitable for editing in a model/view editor such as QTableView. Probably it will only ever support editing a single RKVariable, though, as it is not possible to ensure uniform length outside of a data.frame. For a data.frame use RKVarEditDataFrameModel . Since the real data storage is in RKVariable, it is ok (and recommended) to create separate models for separate editors/viewers, even if the objects in question are the same. */
@@ -81,6 +84,7 @@ public:
 
 	int trueCols () const { return objects.size (); };
 	int trueRows () const { return (objects.isEmpty () ? 0 : objects[0]->getLength ()); };
+	void lockHeader (bool lock) { header_locked = lock; };
 
 	virtual void restoreObject (RObject* object, RCommandChain* chain);
 
@@ -113,6 +117,7 @@ friend class RKVarEditMetaModel;
 	int trailing_cols;
 
 	int edit_blocks;
+	bool header_locked;
 
 	RKVarEditMetaModel* meta_model;
 	RKEditor* myeditor;
