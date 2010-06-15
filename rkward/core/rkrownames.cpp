@@ -36,6 +36,8 @@ RKRowNames::RKRowNames (RContainerObject *parent) : RKVariable (parent, QString 
 	setDataType (RObject::DataCharacter);
 	check_duplicates = true;
 	is_sequential_up_to_row = -1;
+
+	name = i18n ("row names");
 }
 
 RKRowNames::~RKRowNames () {
@@ -78,7 +80,7 @@ void RKRowNames::setText (int row, const QString &text) {
 
 	lockSyncing (true);
 
-	RKVariable::setText (row, QString());	// don't get in the way of duplicate checking!
+	data->cell_strings[row] = QString ();	// don't get in the way of duplicate checking!
 	QString real_text = text;
 	if (real_text.isEmpty ()) {
 		if (isSequential ()) {
@@ -88,16 +90,26 @@ void RKRowNames::setText (int row, const QString &text) {
 		}
 	}
 
+	bool was_sequential_row = false;
 	if (is_sequential_up_to_row >= (row - 1)) {
 		if (real_text == QString::number (row + 1)) {
 			if (makeUnique (&real_text, true)) {
 				is_sequential_up_to_row = qMax (row, is_sequential_up_to_row);
+				was_sequential_row = true;
+				if (is_sequential_up_to_row == row) {
+					// even more sequential numbers after this?
+					for (int i = row + 1; i < getLength (); ++i) {
+						if (data->cell_strings[i] != QString::number (i + 1)) break;
+						is_sequential_up_to_row = i;
+					}
+				}
 			}
 		}
 	}
 
-	if (is_sequential_up_to_row < row) {
+	if (!was_sequential_row) {
 		makeUnique (&real_text, false);
+		is_sequential_up_to_row = qMin (row - 1, is_sequential_up_to_row);
 	}
 	RKVariable::setText (row, real_text);
 

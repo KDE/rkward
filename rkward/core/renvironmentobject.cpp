@@ -117,7 +117,7 @@ void REnvironmentObject::updateFromR (RCommandChain *chain, const QStringList &c
 	for (int i = childmap.size () - 1; i >= 0; --i) {
 		RObject *object = childmap[i];
 		if (!current_symbols.contains (object->getShortName ())) {
-			if (!object->isPending ()) if (!(RKGlobals::tracker ()->removeObject (object, 0, true))) debug_baseline++;
+			if (object->isPending () || (!(RKGlobals::tracker ()->removeObject (object, 0, true)))) debug_baseline++;
 		}
 	}
 
