@@ -86,6 +86,7 @@ void RKDebugMessageOutput (QtMsgType type, const char *msg) {
 	}
 	RKSettingsModuleDebug::debug_file->write (msg);
 	RKSettingsModuleDebug::debug_file->write ("\n");
+	RKSettingsModuleDebug::debug_file->flush ();
 }
 
 int main(int argc, char *argv[]) {

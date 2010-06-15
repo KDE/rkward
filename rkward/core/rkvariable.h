@@ -17,7 +17,7 @@
 #ifndef RKVARIABLE_H
 #define RKVARIABLE_H
 
-#include <qstring.h>
+#include <QStringList>
 #include <QHash>
 
 #include "robject.h"
@@ -54,7 +54,7 @@ is set to Unused, if _no_ cell in the row is used, Valid if _all_ cells in the r
 	enum Status { ValueUnused=0, ValueValid=1, ValueInvalid=2, ValueUnknown=4 };
 
 /** sets whether changed data should be synced immediately or not. Set this to off for large paste operations. Rember to call setSyncing (true) and syncDataToR () after the paste is complete */
-	void setSyncing (bool immediate);
+	void lockSyncing (bool lock);
 /** syncs pending data changes to the backend */
 	void syncDataToR ();
 /** reimplemented from RObject */
@@ -75,9 +75,9 @@ is set to Unused, if _no_ cell in the row is used, Valid if _all_ cells in the r
 	Status cellStatus (int row) const;
 
 /** entirely remove the given rows (i.e. the cells). Will also take care of updating the state (are there any invalid cells left?). Does not sync with the backend for technical reasons! You have to remove the row in the backend explicitly. */
-	void removeRows (int from_row, int to_row);
+	virtual void removeRows (int from_row, int to_row);
 /** inserts count rows (with empty values) just above the given index. Does not sync with the backend for technical reasons! You have to insert the row in the backend explicitly. */
-	void insertRows (int row, int count);
+	virtual void insertRows (int row, int count);
 /** Tells the object it has (data) length len. Usually this will only be called directly after creating a new object */
 	void setLength (int len);
 
@@ -127,6 +127,8 @@ is set to Unused, if _no_ cell in the row is used, Valid if _all_ cells in the r
 /** inverse of parseFormattingOptionsString () */
 	static QString formattingOptionsToString (const FormattingOptions& options);
 protected:
+/** Discards pending unsynced changes. */
+	void discardUnsyncedChanges ();
 /** like setNumeric, but sets chars. If internalStorage () is numeric, attempts to convert the given strings to numbers. I.e. the function behaves essentially like setText (), but operates on a range of cells. Code may assume that all data comes directly from R, is entirely valid in R. */
 	virtual void setCharacterFromR (int from_row, int to_row, QString *data);
 /** set numeric values in the given range. Assumes you provide enough values for the range. If internalStorage is String, all values will be converted to strings, so you should use this function only, if you know you are dealing with a numeric object. Code may assume that all data comes directly from R, is entirely valid in R. */
@@ -135,8 +137,8 @@ protected:
 	bool updateType (RData *new_data);
 /** Extended from RObject::EditData to actually contain data. */
 	struct RKVarEditData {
-		QString *cell_strings;
-		double *cell_doubles;
+		QStringList cell_strings;
+		QList<double> cell_doubles;
 		enum CellState {
 			Unknown=0,
 			Invalid=1,
@@ -144,14 +146,12 @@ protected:
 			Valid=4,
 			UnsyncedInvalidState=8
 		};
-		int *cell_states;
+		QList<int> cell_states;
 
-/// the currently allocated length of cell_data and cell_states. Used to determine, when a re-allocation is required
-		int allocated_length;
 /// see setSyncing
-		bool immediate_sync;
+		int sync_locks;
 /// stores changes if syncing is not immediate
-		ChangeSet *changes;
+		ChangeSet changes;
 /// stores whether there were preivously invalid cells. If so, and there are no longer, now, we may change the mode in the backend.
 		bool previously_valid;
 /** the value-labels or factor levels assigned to this variable. 0 if no values/levels given. TODO: Should this be made a regular (non-pointer) member, or is the saved mem really worth the trouble? */
@@ -177,7 +177,7 @@ protected:
 /** takes care of syncing the given range of cells */
 	void cellsChanged (int from_row, int to_row);
 /** writes the given range of cells to the backend (regardless of whether syncing should be immediate) */
-	void writeData (int from_row, int to_row, RCommandChain *chain=0);
+	virtual void writeData (int from_row, int to_row, RCommandChain *chain=0);
 	void writeInvalidField (int row, RCommandChain *chain=0);
 /** writes the values labels to the backend */
 	void writeValueLabels (RCommandChain *chain) const;
@@ -188,19 +188,6 @@ protected:
 	void allocateEditData ();
 /** discard edit data */
 	void discardEditData ();
-
-/** TODO: QStrings can't be memmoved. We should use QVector/QList instead. */
-	void memMoveQStrings (QString *dst, QString *src, int count) {
-		if (dst > src) {
-			for (int i = count - 1; i >= 0; --i) {
-				dst[i] = src[i];
-			}
-		} else {
-			for (int i = 0; i < count; ++i) {
-				dst[i] = src[i];
-			}
-		}
-	};
 /////////////////// END: data-handling //////////////////////
 };
 

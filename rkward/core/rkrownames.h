@@ -37,6 +37,10 @@ public:
 	void writeData (int from_row, int to_row, RCommandChain *chain=0);
 /** Reimplemented to check, whether the values are all 1:n, custom, or invalid. */
 	void setText (int row, const QString &text);
+/** Reimplemented to also adjust the subsequent row names, if, and only if rownames are 1:n */
+	void removeRows (int from_row, int to_row);
+/** Reimplemented to give the new row and appropriate default name, and to adjust the subsequent row names, if, and only if rownames are 1:n */
+	void insertRows (int row, int count);
 protected:
 /** Reimplemented to disable duplicate checks during the setText() calls within */
 	void setCharacterFromR (int from_row, int to_row, QString *data);
@@ -45,6 +49,7 @@ private:
 	bool makeUnique (QString *text, bool non_sequentials_only);
 	int is_sequential_up_to_row;
 	bool check_duplicates;
+	bool isSequential () { return (is_sequential_up_to_row == (getLength () - 1)); };
 };
 
 #endif

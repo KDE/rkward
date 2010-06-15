@@ -140,12 +140,12 @@ bool RKVarEditModel::insertRows (int row, int count, const QModelIndex& parent) 
 	RK_ASSERT (lastrow >= row);
 
 	beginInsertRows (QModelIndex (), row, row+count-1);
+	doInsertRowsInBackend (row, count);
 	for (int i=0; i < objects.size (); ++i) {
 // TODO: this does not emit any data change notifications to other editors
 		objects[i]->insertRows (row, count);
 	}
 	rownames->insertRows (row, count);
-	doInsertRowsInBackend (row, count);
 	endInsertRows ();
 
 	return true;
@@ -164,11 +164,12 @@ bool RKVarEditModel::removeRows (int row, int count, const QModelIndex& parent) 
 	RK_ASSERT (lastrow >= row);
 
 	beginRemoveRows (QModelIndex (), row, lastrow);
+	doRemoveRowsInBackend (row, lastrow - row + 1);
 	for (int i=0; i < objects.size (); ++i) {
 // TODO: this does not emit any data change notifications to other editors
 		objects[i]->removeRows (row, lastrow);
 	}
-	doRemoveRowsInBackend (row, lastrow - row + 1);
+	rownames->removeRows (row, lastrow);
 	endRemoveRows ();
 
 	return true;
@@ -639,11 +640,11 @@ void RKVarEditMetaModel::blankRange (const QItemSelectionRange& range) {
 
 	for (int col = left; col <= right; ++col) {
 		RKVariable* var = data_model->objects[col];
-		var->setSyncing (false);
+		var->lockSyncing (true);
 		for (int row = top; row <= bottom; ++row) {
 			setData (createIndex (row, col), QString (), Qt::EditRole);
 		}
-		var->setSyncing (true);
+		var->lockSyncing (false);
 	}
 }
 
@@ -672,13 +673,12 @@ void RKVarEditMetaModel::setTextMatrix (const QModelIndex& offset, const RKTextM
 	for (int col = left; col <= right; ++col) {
 		int trow = 0;
 		RKVariable* var = data_model->objects[col];
-		var->setSyncing (false);
+		var->lockSyncing (true);
 		for (int row = top; row <= bottom; ++row) {
 			setData (index (row, col), text.getText (trow, tcol), Qt::EditRole);
 			++trow;
 		}
-		var->syncDataToR ();
-		var->setSyncing (true);
+		var->lockSyncing (false);
 		++tcol;
 	}
 }
@@ -705,6 +705,7 @@ RKVarEditDataFrameModel::RKVarEditDataFrameModel (const QString& validized_name,
 		RObject* child = df->createPendingChild (df->validizeName (QString ()), -1, false, false);
 		RK_ASSERT (child->isVariable ());
 	}
+#warning: TODO: properly initialize the rownames!
 
 	init (df);
 
