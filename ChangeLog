@@ -1,5 +1,6 @@
 TODO: Do not use SmartInterface for KDE 4.5 and above
 
+- Fixed: When starting with an empty table, RKWard would sometimes claim that this object has been removed
 - Fixed: Would crash when trying to configure toolbars under certain circumstances (workaround for bug in kdelibs)
 - Fixed: Crash while analysing some objects returned by XML::xmlParseTree() for invalid XML
 - Fixed: Error while installing packages with R 2.11.0, when archiving packages in a non-existing directory

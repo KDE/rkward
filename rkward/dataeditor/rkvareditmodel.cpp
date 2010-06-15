@@ -706,7 +706,6 @@ RKVarEditDataFrameModel::RKVarEditDataFrameModel (const QString& validized_name,
 		RObject* child = df->createPendingChild (df->validizeName (QString ()), -1, false, false);
 		RK_ASSERT (child->isVariable ());
 	}
-#warning: TODO: properly initialize the rownames!
 
 	init (df);
 

@@ -2,7 +2,7 @@
                           renvironmentobject  -  description
                              -------------------
     begin                : Wed Sep 27 2006
-    copyright            : (C) 2006, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -117,7 +117,7 @@ void REnvironmentObject::updateFromR (RCommandChain *chain, const QStringList &c
 	for (int i = childmap.size () - 1; i >= 0; --i) {
 		RObject *object = childmap[i];
 		if (!current_symbols.contains (object->getShortName ())) {
-			if (!(RKGlobals::tracker ()->removeObject (object, 0, true))) debug_baseline++;
+			if (!object->isPending ()) if (!(RKGlobals::tracker ()->removeObject (object, 0, true))) debug_baseline++;
 		}
 	}
 
