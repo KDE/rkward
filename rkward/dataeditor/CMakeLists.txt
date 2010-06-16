@@ -11,7 +11,6 @@ SET(dataeditor_STAT_SRCS
    celleditor.cpp
    editlabelsdialog.cpp
    editformatdialog.cpp
-   rkeditordataframepart.cpp
    rkvareditmodel.cpp
    rktextmatrix.cpp
    )

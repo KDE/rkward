@@ -2,7 +2,7 @@
                           rkeditordataframe  -  description
                              -------------------
     begin                : Fri Aug 20 2004
-    copyright            : (C) 2004, 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -28,7 +28,7 @@
 #include "../core/robjectlist.h"
 #include "../core/renvironmentobject.h"
 #include "../core/rcontainerobject.h"
-#include "rkeditordataframepart.h"
+#include "../misc/rkdummypart.h"
 #include "../windows/rkworkplace.h"
 
 #include "../debug.h"
@@ -75,7 +75,8 @@ RKEditorDataFrame::RKEditorDataFrame (const QString& new_object_name, QWidget* p
 void RKEditorDataFrame::commonInit () {
 	RK_TRACE (EDITOR);
 
-	setPart (new RKEditorDataFramePart (this));
+	setPart (new RKDummyPart (this, this));
+	getPart ()->insertChildClient (this);
 	initializeActivationSignals ();
 
 	open_chain = RKGlobals::rInterface ()->startChain (0);

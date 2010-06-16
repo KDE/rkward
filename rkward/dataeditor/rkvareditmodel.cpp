@@ -396,6 +396,7 @@ void RKVarEditModel::setTextMatrix (const QModelIndex& offset, const RKTextMatri
 			var->setText (row, text.getText (trow, tcol));
 			++trow;
 		}
+		++tcol;
 	}
 }
 

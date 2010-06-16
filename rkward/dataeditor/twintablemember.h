@@ -2,7 +2,7 @@
                           twintablemember.h  -  description
                              -------------------
     begin                : Tue Oct 29 2002
-    copyright            : (C) 2002, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2006, 2007, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -108,7 +108,7 @@ friend class TwinTable;
 public slots:
 	void editorDone (QWidget* editor, RKItemDelegate::EditorDoneReason);
 protected slots:
-	void headerContextMenuRequested (const QPoint& pos);
+	void handleContextMenuRequest (const QPoint& pos);
 	void updateColWidth (int section, int old_w, int new_w);
 	void tableSelectionChanged (const QItemSelection& selected, const QItemSelection& deselected);
 };

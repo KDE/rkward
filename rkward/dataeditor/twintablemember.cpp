@@ -2,7 +2,7 @@
                           twintablemember.cpp  -  description
                              -------------------
     begin                : Tue Oct 29 2002
-    copyright            : (C) 2002, 2006, 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -39,9 +39,11 @@ TwinTableMember::TwinTableMember (QWidget *parent) : QTableView (parent){
 	setSelectionMode (QAbstractItemView::ContiguousSelection);
 
 	verticalHeader ()->setContextMenuPolicy (Qt::CustomContextMenu);
-	connect (verticalHeader (), SIGNAL (customContextMenuRequested(const QPoint&)), this, SLOT (headerContextMenuRequested(const QPoint&)));
+	connect (verticalHeader (), SIGNAL (customContextMenuRequested(const QPoint&)), this, SLOT (handleContextMenuRequest(const QPoint&)));
 	horizontalHeader ()->setContextMenuPolicy (Qt::CustomContextMenu);
-	connect (horizontalHeader (), SIGNAL (customContextMenuRequested(const QPoint&)), this, SLOT (headerContextMenuRequested(const QPoint&)));
+	connect (horizontalHeader (), SIGNAL (customContextMenuRequested(const QPoint&)), this, SLOT (handleContextMenuRequest(const QPoint&)));
+	setContextMenuPolicy (Qt::CustomContextMenu);
+	connect (this, SIGNAL (customContextMenuRequested(const QPoint&)), this, SLOT (handleContextMenuRequest(const QPoint&)));
 
 	updating_twin = false;
 }
@@ -164,12 +166,18 @@ QItemSelectionRange TwinTableMember::getSelectionBoundaries () {
 	QItemSelection sel = selectionModel ()->selection ();
 	if (sel.isEmpty ()){
 		QModelIndex current = currentIndex ();
-		if (!current.isValid ()) return (QItemSelectionRange ());
+		if ((!current.isValid ()) || isIndexHidden (current)) return (QItemSelectionRange ());
 
 		return (QItemSelectionRange (currentIndex (), currentIndex ()));
 	} else {
 		RK_ASSERT (sel.size () == 1);
-		return (sel[0]);
+
+		QItemSelectionRange range = sel[0];
+		while (isColumnHidden (range.left ())) {
+			// purge hidden leading columns from the range
+			range = QItemSelectionRange (mymodel->index (range.top (), range.left () + 1, rootIndex ()), range.bottomRight ());
+		}
+		return (range);
 	}
 }
 
@@ -206,7 +214,7 @@ void TwinTableMember::updateColWidth (int section, int, int new_w) {
 	updating_twin = false;
 }
 
-void TwinTableMember::headerContextMenuRequested (const QPoint& pos) {
+void TwinTableMember::handleContextMenuRequest (const QPoint& pos) {
 	RK_TRACE (EDITOR);
 
 	if (sender () == horizontalHeader ()) {
@@ -216,7 +224,14 @@ void TwinTableMember::headerContextMenuRequested (const QPoint& pos) {
 		int row = verticalHeader ()->logicalIndexAt (pos);
 		if (row >= 0) emit (contextMenuRequest (row, -1, verticalHeader ()->mapToGlobal (pos)));
 	} else {
-		RK_ASSERT (false);
+		RK_ASSERT (sender () == this);
+
+		int col = columnAt (pos.x ());
+		int row = rowAt (pos.y ());
+		if ((row < 0) || (col < 0)) {
+			row = col = -2;	// to differentiate from the headers, above
+		}
+		emit (contextMenuRequest (row, col, mapToGlobal (pos)));
 	}
 }
 

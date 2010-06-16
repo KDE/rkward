@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkeditordataframepart" version="50">
+<kpartgui name="rkeditordataframepart" version="54">
 	<MenuBar>
 		<Menu name="edit"><text>&amp;Edit</text>
 			<Action name="cut"/>
@@ -8,12 +8,35 @@
 			<Action name="paste_to_selection"/>
 			<Action name="paste_to_table"/>
 			<Separator/>
-			<Merge/> 
+			<Action name="show_rownames"/>
+			<Action name="enable_editing"/>
 		</Menu>
-<!--		<Menu name="windows"><text>&amp;Windows</text>
-			<Action name="window_close"/>
-		</Menu>-->
 	</MenuBar>
+	<Menu name="top_header_menu">
+		<Action name="insert_col_left"/>
+		<Action name="delete_col"/>
+		<Separator/>
+		<Action name="show_rownames"/>
+		<Action name="enable_editing"/>
+	</Menu>
+	<Menu name="left_header_menu">
+		<Action name="insert_row_above"/>
+		<Action name="delete_row"/>
+		<Action name="delete_rows"/>
+		<Separator/>
+		<Action name="show_rownames"/>
+		<Action name="enable_editing"/>
+	</Menu>
+	<Menu name="general_context_menu">
+		<Action name="cut"/>
+		<Action name="copy"/>
+		<Action name="paste"/>
+		<Action name="paste_to_selection"/>
+		<Action name="paste_to_table"/>
+		<Separator/>
+		<Action name="show_rownames"/>
+		<Action name="enable_editing"/>
+	</Menu>
 	<ToolBar fullWidth="true" name="mdiToolBar">
 		<Action name="cut"/>
 		<Action name="copy"/>
