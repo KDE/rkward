@@ -44,6 +44,22 @@ RKRowNames::~RKRowNames () {
 	RK_TRACE (OBJECTS);
 }
 
+void RKRowNames::beginEdit () {
+	RK_TRACE (OBJECTS);
+
+	bool just_initialized = (data == 0);
+	RKVariable::beginEdit ();
+
+	if (just_initialized) {
+		RK_ASSERT (data);
+		for (int i = 0; i < getLength (); ++i) {
+			data->cell_strings[i] = QString::number (i+1);
+			data->cell_states[i] = RKVarEditData::Valid;
+		}
+		is_sequential_up_to_row = getLength () - 1;
+	}
+}
+
 QString RKRowNames::getFullName () const {
 //	RK_TRACE (OBJECTS);
 
@@ -55,11 +71,6 @@ void RKRowNames::writeData (int from_row, int to_row, RCommandChain *chain) {
 
 	if (isSequential ()) {
 		RKGlobals::rInterface ()->issueCommand (getFullName () + " <- NULL", RCommand::App | RCommand::Sync, QString::null, 0,0, chain);
-
-		ChangeSet *set = new ChangeSet;
-		set->from_index = from_row;
-		set->to_index = to_row;
-		RKGlobals::tracker ()->objectDataChanged (this, set);
 	} else {
 		// unfortunately, we always need to write the whole data, as row.names<- does not support indexing.
 		QString data_string = "c (";
@@ -73,6 +84,11 @@ void RKRowNames::writeData (int from_row, int to_row, RCommandChain *chain) {
 		data_string.append (")");
 		RKGlobals::rInterface ()->issueCommand (getFullName () + " <- " + data_string, RCommand::App | RCommand::Sync, QString::null, 0, 0, chain);
 	}
+
+	ChangeSet *set = new ChangeSet;
+	set->from_index = from_row;
+	set->to_index = to_row;
+	RKGlobals::tracker ()->objectDataChanged (this, set);
 }
 
 void RKRowNames::setText (int row, const QString &text) {

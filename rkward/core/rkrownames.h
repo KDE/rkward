@@ -44,6 +44,8 @@ public:
 protected:
 /** Reimplemented to disable duplicate checks during the setText() calls within */
 	void setCharacterFromR (int from_row, int to_row, QString *data);
+/** Reimplemented to assume sequential row number on initialization */
+	void beginEdit ();
 private:
 /** @returns: true if the text was already unique, false, if it had to be adjusted */
 	bool makeUnique (QString *text, bool non_sequentials_only);
