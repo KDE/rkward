@@ -45,8 +45,8 @@ void RKStandardIcons::initIcons () {
 
 	icons[ActionConfigurePackages] = KIcon ("utilities-file-archiver");
 
-	icons[ActionDeleteRow] = KIcon ("no");
-	icons[ActionInsertRow] = KIcon ("edit-add");
+	icons[ActionDeleteRow] = KIcon ("edit-delete");
+	icons[ActionInsertRow] = KIcon ("list-add");
 	icons[ActionDeleteVar] = icons[ActionDeleteRow];
 	icons[ActionInsertVar] = icons[ActionInsertRow];
 	icons[ActionPasteInsideTable] = QIcon (rkward_icon_base + "paste_inside_table.png");
