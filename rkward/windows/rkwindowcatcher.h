@@ -2,7 +2,7 @@
                           rwindowcatcher.h  -  description
                              -------------------
     begin                : Wed May 4 2005
-    copyright            : (C) 2005, 2006, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -121,6 +121,8 @@ public slots:
 	void copyDeviceToRObject ();
 	void duplicateDevice ();
 
+	void previousPlot ();
+	void nextPlot ();
 private slots:
 	void doEmbed ();
 private:

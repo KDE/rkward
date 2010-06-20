@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward" version="42">
+<kpartgui name="rkward" version="54">
 	<MenuBar>
 		<Menu name="device"><text>&amp;Device</text>
 			<Action name="device_activate"/>
@@ -18,6 +18,9 @@
 			<Action name="set_fixed_size_3"/>
 			<Action name="set_fixed_size_manual"/>
 			<Merge/>
+			<Separator/>
+			<Action name="plot_prev"/>
+			<Action name="plot_next"/>
 		</Menu>
 		<Merge/>
 	</MenuBar>

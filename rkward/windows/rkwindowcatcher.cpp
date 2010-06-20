@@ -2,7 +2,7 @@
                           rwindowcatcher.cpp  -  description
                              -------------------
     begin                : Wed May 4 2005
-    copyright            : (C) 2005, 2006, 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -316,6 +316,17 @@ void RKCaughtX11Window::duplicateDevice () {
 	RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ")\ndev.copy (device=x11)", RCommand::App, i18n ("Duplicate graphics device number %1", device_number), error_dialog);
 }
 
+void RKCaughtX11Window::nextPlot () {
+	RK_TRACE (MISC);
+
+	RKGlobals::rInterface ()->issueCommand ("rk.next.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Load next plot in device number %1", device_number), error_dialog);
+}
+
+void RKCaughtX11Window::previousPlot () {
+	RK_TRACE (MISC);
+
+	RKGlobals::rInterface ()->issueCommand ("rk.previous.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Load previous plot in device number %1", device_number), error_dialog);
+}
 
 ///////////////////////////////// END RKCaughtX11Window ///////////////////////////////
 /**************************************************************************************/
@@ -345,6 +356,11 @@ RKCaughtX11WindowPart::RKCaughtX11WindowPart (RKCaughtX11Window *window) : KPart
 	action->setText (i18n ("Set fixed size 2000x2000"));
 	action = actionCollection ()->addAction ("set_fixed_size_manual", window, SLOT (setFixedSizeManual()));
 	action->setText (i18n ("Set specified fixed size..."));
+
+	action = actionCollection ()->addAction ("plot_prev", window, SLOT (previousPlot()));
+	action->setText (i18n ("Restore previous plot"));
+	action = actionCollection ()->addAction ("plot_next", window, SLOT (nextPlot()));
+	action->setText (i18n ("Advance to next plot"));
 
 	action = actionCollection ()->addAction ("device_activate", window, SLOT (activateDevice()));
 	action->setText (i18n ("Make active"));
