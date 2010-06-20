@@ -5,17 +5,20 @@
 
 	<logic>
 		<script><![CDATA[
+			call_num = 0;
 			gui.setValue ("Select a dependent variable!", "text.text");
 
 			f = Kross.module('forms');
 			label = f.createWidget(scripty, 'QLabel', 'Label', {});
 			label.setText ('<b>This label was created by the script. Be sure to read the label above, too.</b>');
 
-			_rkward.addChangeCommand ("x.available", "updateText ()");
+			gui.addChangeCommand ("x.available", "updateText ()");
 			updateText = function () {
+				call_num += 1;
 				obj = makeRObject (gui.getValue ("x.available"));
 				text = "So, you think it's '" + obj.objectname + "'?\n";
-				text += "That has length " + obj.dimensions() + " and classes " + obj.classes() + "!";
+				text += "That has length " + obj.dimensions() + " and classes " + obj.classes() + "!\n";
+				text += "Updates of this text so far: " + call_num;
 				gui.setValue (text, "text.text");
 			}
 			]]></script>

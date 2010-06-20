@@ -38,6 +38,10 @@ function Component(id) {
 	this.getChild = function (id) {
 		return (new Component (this.absoluteId (id)));
 	}
+
+	this.addChangeCommand = function (id, command) {
+		_rkward.addChangeCommand (this.absoluteId (id), command);
+	}
 }
 makeComponent = function (id) {
 	return (new Component (id));
