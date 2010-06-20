@@ -8,6 +8,7 @@ SET(scriptbackends_STAT_SRCS
    scriptbackend.cpp
    simplebackend.cpp
    qtscriptbackend.cpp
+   rkcomponentscripting.cpp
    )
 
 QT4_AUTOMOC(${scriptbackends_STAT_SRCS})
@@ -17,7 +18,7 @@ ADD_LIBRARY(scriptbackends STATIC ${scriptbackends_STAT_SRCS})
 
 ########### install files ###############
 
-INSTALL(FILES common.php php.ini common.js DESTINATION ${DATA_INSTALL_DIR}/rkward/phpfiles )
+INSTALL(FILES common.php php.ini common.js rkcomponentscripting.js DESTINATION ${DATA_INSTALL_DIR}/rkward/phpfiles )
 
 
 

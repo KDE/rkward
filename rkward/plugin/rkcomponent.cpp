@@ -294,6 +294,8 @@ void RKComponent::changed () {
 	if (parentComponent ()) {
 		parentComponent ()->changed ();
 	}
+
+	emit (componentChanged (this));
 }
 
 void RKComponent::removeFromParent () {

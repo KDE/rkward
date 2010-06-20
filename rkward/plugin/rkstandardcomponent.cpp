@@ -34,6 +34,7 @@
 #include "../scriptbackends/phpbackend.h"
 #include "../scriptbackends/qtscriptbackend.h"
 #include "../scriptbackends/simplebackend.h"
+#include "../scriptbackends/rkcomponentscripting.h"
 #include "../misc/xmlhelper.h"
 #include "../settings/rksettingsmoduleplugins.h"
 
@@ -64,6 +65,7 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 	RKStandardComponent::handle = handle;
 	command_chain = 0;
 	backend = 0;
+	scripting = 0;
 	gui = 0;
 	wizard = 0;
 	created = false;
@@ -169,6 +171,15 @@ void RKStandardComponent::kill () {
 	hide ();
 	removeFromParent ();
 	deleteLater ();
+}
+
+RKComponentScriptingProxy* RKStandardComponent::scriptingProxy () {
+	RK_TRACE (PLUGIN);
+
+	if (!scripting) {
+		scripting = new RKComponentScriptingProxy (this);
+	}
+	return scripting;
 }
 
 void RKStandardComponent::hide () {
@@ -640,6 +651,13 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 			} else {
 				xml->displayError (&e, QString ("Could not embed component '%1'. Not found").arg (component_id), DL_ERROR);
 			}
+		} else if (e.tagName () == "scriptable") {
+			widget = new RKComponent (component (), parent_widget);
+			QVBoxLayout *layout = new QVBoxLayout (widget);
+			layout->setContentsMargins (0, 0, 0, 0);
+			KVBox *box = new KVBox (widget);
+			layout->addWidget (box);
+			component ()->scriptingProxy ()->addScriptableWidget (id, widget);
 		} else {
 			xml->displayError (&e, QString ("Invalid tagname '%1'").arg (e.tagName ()), DL_ERROR);
 		}
@@ -703,6 +721,13 @@ void RKComponentBuilder::parseLogic (const QDomElement &element) {
 		}
 		convert->setRequireTrue (xml->getBoolAttribute (*it, "require_true", false, DL_INFO));
 		component ()->addChild (id, convert);
+	}
+
+	QDomElement e = xml->getChildElement (element, "script", DL_INFO);
+	if (!e.isNull ()) {
+		QString file = xml->getStringAttribute (e, "file", QString (), DL_INFO);
+		QString inline_command = e.text ();
+		component ()->scriptingProxy ()->initialize (file, inline_command);
 	}
 }
 

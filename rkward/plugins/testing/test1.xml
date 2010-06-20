@@ -2,9 +2,27 @@
 
 <document>
 	<code file="test1.js"/>
-	
-	<dialog label="Testing QtScript code generation">
-		<text>
+
+	<logic>
+		<script><![CDATA[
+			gui.setValue ("Select a dependent variable!", "text.text");
+
+			f = Kross.module('forms');
+			label = f.createWidget(scripty, 'QLabel', 'Label', {});
+			label.setText ('<b>This label was created by the script. Be sure to read the label above, too.</b>');
+
+			_rkward.addChangeCommand ("x.available", "updateText ()");
+			updateText = function () {
+				obj = makeRObject (gui.getValue ("x.available"));
+				text = "So, you think it's '" + obj.objectname + "'?\n";
+				text += "That has length " + obj.dimensions() + " and classes " + obj.classes() + "!";
+				gui.setValue (text, "text.text");
+			}
+			]]></script>
+	</logic>
+
+	<dialog label="Testing Kross/QtScript code generation">
+		<text id="text">
 			This plugin is bogus! Do not use!
 		</text>
 		<tabbook>
@@ -18,12 +36,10 @@
 						<varslot type="numeric" id="y" source="vars" required="true" multi="true" label="fixed factors"/>
 					</column>
 				</row>
+				<scriptable id="scripty"/>
 			</tab>
 			<tab label="Model">
 				<formula id="model" fixed_factors="y" dependent="x" label="Now chose the model"/>
-			</tab>
-			<tab>
-				<embed id="embedded" component="rkward::qtscript_test2"/>
 			</tab>
 		</tabbook>
 	</dialog>

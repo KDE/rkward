@@ -181,6 +181,9 @@ public:
 protected slots:
 /** if a child component self-destructs, it should remove itself from its parent *before* destructing. Don't use in a regular destructor. Call only if the child dies unexpectedly */
 	void removeFromParent ();
+signals:
+/** emitted from changed() */
+	void componentChanged (RKComponent* component);
 protected:
 	RKComponentPropertyBool *visibility_property;
 	RKComponentPropertyBool *enabledness_property;

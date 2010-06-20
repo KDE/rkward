@@ -23,6 +23,7 @@
 #include <qdom.h>
 #include <QList>
 
+class RKComponentScriptingProxy;
 class RKStandardComponentGUI;
 class RCommandChain;
 class RKComponentHandle;
@@ -79,6 +80,9 @@ public:
 	ComponentStatus recursiveStatus ();
 
 	RCommandChain *commandChain () const { return command_chain; };
+
+/** Return the GUI-scripting handler (creating it, if needed) */
+	RKComponentScriptingProxy* scriptingProxy ();
 public slots:
 /** this gets called by the script-backend, when it's done. Might enable the
 	submit button or destruct the plugin. */
@@ -102,6 +106,7 @@ private:
 	QString filename;
 	bool have_help;	// TODO: replace by filename, once we use the help more
 	ScriptBackend *backend;
+	RKComponentScriptingProxy* scripting;
 	RKStandardComponentGUI *gui;
 	RKComponentHandle *handle;
 	RKStandardComponentStack *wizard;
