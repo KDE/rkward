@@ -463,3 +463,111 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	.rk.do.call ("select.list", params)
 }
 
+# create a (global) history of various graphics calls - a rudimentary attempt
+# can do: record, showPrevious, showNext, replay
+"rk.record.plot" <- function ()
+{
+	# TODO: 
+	# - record / show from which device? - Partially implemented
+	# - Create separate history for each device?
+	# - Destroy the history when a device is closed?
+	# - .... ?
+	
+	env <- environment()
+	recorded <- list()
+	current <- numeric (length(dev.list()) + 2); # 1 is always null device
+	newPlotExists <- FALSE
+	
+	onAddDevice <- function (deviceId)
+	{
+		recordUnsaved (deviceId)
+		current <<- c(current, current[deviceId])
+	}
+	onDelDevice <- function (deviceId = dev.cur())
+	{
+		recordUnsaved (deviceId)
+		current <<- current[-deviceId]
+	}
+	record <- function(newplotflag = TRUE, force = FALSE)
+	{
+		if (newPlotExists) {
+			if (class (try (unsavedPlot <- recordPlot(), silent=TRUE)) != 'try-error')
+			{
+				current[dev.cur()] <<- length(recorded) + 1L
+				recorded[[current[dev.cur()]]] <<- unsavedPlot
+			}
+		}
+		if (force) {
+			if (class (try (unsavedPlot <- recordPlot(), silent=TRUE)) != 'try-error')
+			{
+				recorded[[current[dev.cur()]]] <<- unsavedPlot
+			}
+		}
+		newPlotExists <<- newplotflag
+	}
+	recordUnsaved <- function (deviceId)
+	{
+		if ((current[deviceId] == length (recorded)) && newPlotExists) {
+			record (newplotflag = FALSE)
+		}
+	}
+	replay <- function(n = current[dev.cur()] - 1L, deviceId = dev.cur ())
+	{
+		if (n > 0 && n <= length(recorded)) {
+			current[deviceId] <<- n
+			replayPlot(recorded[[n]])
+		}
+		#else message("'n' not in valid range: ", n)
+	}
+	restore <- function() replay(n = length(recorded))
+	showPrevious <- function(deviceId)
+	{
+		recordUnsaved (deviceId)
+		replay(n = current[deviceId] - 1L, deviceId = deviceId)
+	}
+	showNext <- function(deviceId)
+	{
+		recordUnsaved (deviceId)
+		replay(n = current[deviceId] + 1L, deviceId = deviceId)
+	}
+	resetHistory <- function ()
+	{
+		recorded <<- list()
+		current <<- numeric (length(dev.list()) + 2)
+		newPlotExists <<- FALSE
+		
+	}
+	env
+}
+rk.record.plot <- rk.record.plot ()
+
+# quick wrappers around rk.record.plot$show{Previous,Next} :
+# 1 is always the null device
+"rk.next.plot" <- function (deviceId = 2)
+{
+	# TODO - utilze the device number when rk.record.plot matures
+	cur.deviceId <- dev.cur ()
+	dev.set (which = deviceId)
+	rk.record.plot$showNext (deviceId)
+	dev.set (which = cur.deviceId)
+	invisible ()
+}
+"rk.current.plot" <- function (deviceId = 2)
+{
+	# TODO - utilze the device number when rk.record.plot matures
+	cur.deviceId <- dev.cur ()
+	dev.set (which = deviceId)
+	rk.record.plot$record (newplotflag=FALSE, force=TRUE)
+	dev.set (which = cur.deviceId)
+	invisible ()
+}
+"rk.previous.plot" <- function (deviceId = 2)
+{
+	# TODO - utilze the device number when rk.record.plot matures
+	cur.deviceId <- dev.cur ()
+	dev.set (which = deviceId)
+	rk.record.plot$showPrevious (deviceId)
+	dev.set (which = cur.deviceId)
+	invisible ()
+}
+

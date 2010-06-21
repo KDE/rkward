@@ -122,6 +122,7 @@ public slots:
 	void duplicateDevice ();
 
 	void previousPlot ();
+	void currentPlot ();
 	void nextPlot ();
 private slots:
 	void doEmbed ();

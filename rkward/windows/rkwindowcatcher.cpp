@@ -313,13 +313,20 @@ void RKCaughtX11Window::copyDeviceToRObject () {
 void RKCaughtX11Window::duplicateDevice () {
 	RK_TRACE (MISC);
 
-	RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ")\ndev.copy (device=x11)", RCommand::App, i18n ("Duplicate graphics device number %1", device_number), error_dialog);
+// 	RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ")\ndev.copy (device=x11)", RCommand::App, i18n ("Duplicate graphics device number %1", device_number), error_dialog);
+	RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ")\nrk.record.plot$onAddDevice (" + QString::number (device_number) + ")\ndev.copy (device=x11)", RCommand::App, i18n ("Duplicate graphics device number %1", device_number), error_dialog);
 }
 
 void RKCaughtX11Window::nextPlot () {
 	RK_TRACE (MISC);
 
 	RKGlobals::rInterface ()->issueCommand ("rk.next.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Load next plot in device number %1", device_number), error_dialog);
+}
+
+void RKCaughtX11Window::currentPlot () {
+	RK_TRACE (MISC);
+
+	RKGlobals::rInterface ()->issueCommand ("rk.current.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Add current plot in device number %1", device_number), error_dialog);
 }
 
 void RKCaughtX11Window::previousPlot () {
@@ -358,9 +365,14 @@ RKCaughtX11WindowPart::RKCaughtX11WindowPart (RKCaughtX11Window *window) : KPart
 	action->setText (i18n ("Set specified fixed size..."));
 
 	action = actionCollection ()->addAction ("plot_prev", window, SLOT (previousPlot()));
-	action->setText (i18n ("Restore previous plot"));
+// 	action->setText (i18n ("Restore previous plot"));
+	action->setText (i18n ("<"));
+	action = actionCollection ()->addAction ("plot_curr", window, SLOT (currentPlot()));
+// 	action->setText (i18n ("Add current plot"));
+	action->setText (i18n ("+"));
 	action = actionCollection ()->addAction ("plot_next", window, SLOT (nextPlot()));
-	action->setText (i18n ("Advance to next plot"));
+// 	action->setText (i18n ("Advance to next plot"));
+	action->setText (i18n (">"));
 
 	action = actionCollection ()->addAction ("device_activate", window, SLOT (activateDevice()));
 	action->setText (i18n ("Make active"));

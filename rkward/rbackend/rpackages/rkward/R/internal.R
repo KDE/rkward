@@ -473,9 +473,18 @@ formals (select.list) <- formals (utils::select.list)
 formals (menu) <- formals (utils::menu)
 .rk.menu.default <- utils::menu
 
+"plot.new" <- function () 
+{
+	rk.record.plot$record ()
+	eval (body (.rk.plot.new.default))
+}
+formals (plot.new) <- formals (graphics::plot.new)
+.rk.plot.new.default <- graphics::plot.new
+
 # where masking is not enough, we need to assign in the namespace. This can only be done after package loading,
 # so we have a separate function for that.
 ".rk.fix.assignments" <- function () {
 	assignInNamespace ("menu", menu, envir=as.environment ("package:utils"))
 	assignInNamespace ("select.list", select.list, envir=as.environment ("package:utils"))
+	assignInNamespace ("plot.new", plot.new, envir=as.environment ("package:graphics"))
 }

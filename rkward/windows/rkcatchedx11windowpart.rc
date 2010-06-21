@@ -19,9 +19,10 @@
 			<Action name="set_fixed_size_manual"/>
 			<Merge/>
 			<Separator/>
-			<Action name="plot_prev"/>
-			<Action name="plot_next"/>
 		</Menu>
+			<Action name="plot_prev"/>
+			<Action name="plot_curr"/>
+			<Action name="plot_next"/>
 		<Merge/>
 	</MenuBar>
 </kpartgui>
