@@ -123,7 +123,8 @@ void RKVariable::rCommandDone (RCommand *command) {
 	if (command->getFlags () == ROBJECT_UDPATE_STRUCTURE_COMMAND) {
 		RObject::rCommandDone (command);
 	} else if (command->getFlags () == GET_DATA_COMMAND) {
-		RK_ASSERT (data);
+		if (!data) return;	// this can happen, if the editor is closed while a data update is still queued.
+
 		// prevent resyncing of data
 		lockSyncing (true);
 
