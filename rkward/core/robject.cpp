@@ -320,11 +320,12 @@ void RObject::markDataDirty () {
 
 	type |= NeedDataUpdate;
 	if (isContainer ()) {
-		RObjectMap children = static_cast<RContainerObject*> (this)->childmap;
+	    RContainerObject* this_container = static_cast<RContainerObject*> (this);
+		RObjectMap children = this_container->childmap;
 		for (int i = children.size () - 1; i >= 0; --i) {
 			children[i]->markDataDirty ();
 		}
-		static_cast<RContainerObject*> (this)->rownames_object->markDataDirty ();
+		if (this_container->rownames_object) this_container->rownames_object->markDataDirty ();
 	}
 }
 
