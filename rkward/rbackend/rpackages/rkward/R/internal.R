@@ -141,41 +141,6 @@
 #	.Internal (.addCondHands (c ("message", "warning", "error"), list (function (m) { .Call ("rk.do.condition", c ("m", conditionMessage (m))) }, function (w) { .Call ("rk.do.condition", c ("w", conditionMessage (w))) }, function (e) { .Call ("rk.do.condition", c ("e", conditionMessage (e))) }), globalenv (), NULL, TRUE))
 #}
 
-# overriding x11 to get informed, when a new x11 window is opened
-"rk.screen.device" <- function (...) {
-	.rk.do.call ("startOpenX11", as.character (dev.cur ()));
-
-	if (!exists (".rk.default.device")) {
-		if (base::.Platform$OS.type == "unix") {
-			device <- grDevices::x11
-		} else {
-			device <- grDevices::windows
-		}
-	} else {
-		device <- .rk.default.device
-		if (is.character (.rk.default.device)) {
-			device <- get (.rk.default.device)
-		}
-	}
-	x <- device (...)
-
-	.rk.do.call ("endOpenX11", as.character (dev.cur ()));
-
-	invisible (x)
-}
-
-"x11" <- rk.screen.device
-
-"X11" <- x11
-
-if (base::.Platform$OS.type == "windows") {
-	  "windows" = rk.screen.device
-	  "win.graph" = rk.screen.device
-}
-
-# set from rkward the application:
-# options(device="rk.screen.device")
-
 # these functions can be used to track assignments to R objects. The main interfaces are .rk.watch.symbol (k) and .rk.unwatch.symbol (k). This works by copying the symbol to a backup environment, removing it, and replacing it by an active binding to the backup location
 ".rk.watched.symbols" <- new.env ()
 
@@ -333,31 +298,6 @@ if (base::.Platform$OS.type == "windows") {
 
 ".rk.set.reply" <- function (x) .rk.rkreply <<- x
 
-".rk.preview.devices" <- list ();
-
-".rk.startPreviewDevice" <- function (x) {
-	a <- .rk.preview.devices[[x]]
-	if (is.null (a)) {
-		a <- dev.cur ()
-		x11 ()
-		if (a != dev.cur ()) {
-			.rk.preview.devices[[x]] <<- dev.cur ()
-		}
-	} else {
-		dev.set (a)
-	}
-}
-
-".rk.killPreviewDevice" <- function (x) {
-	a <- .rk.preview.devices[[x]]
-	if (!is.null (a)) {
-		.rk.preview.devices[[x]] <<- NULL
-		if (a %in% dev.list ()) {
-			dev.off (a)
-		}
-	}
-}
-
 "Sys.setlocale" <- function (category = "LC_ALL", locale = "", ...) {
 	if (category == "LC_ALL" || category == "LC_CTYPE" || category == "LANG") {
 		.rk.do.call ("preLocaleChange", NULL);
@@ -473,18 +413,12 @@ formals (select.list) <- formals (utils::select.list)
 formals (menu) <- formals (utils::menu)
 .rk.menu.default <- utils::menu
 
-"plot.new" <- function () 
-{
-	rk.record.plot$record ()
-	eval (body (.rk.plot.new.default))
-}
-formals (plot.new) <- formals (graphics::plot.new)
-.rk.plot.new.default <- graphics::plot.new
-
 # where masking is not enough, we need to assign in the namespace. This can only be done after package loading,
 # so we have a separate function for that.
 ".rk.fix.assignments" <- function () {
 	assignInNamespace ("menu", menu, envir=as.environment ("package:utils"))
 	assignInNamespace ("select.list", select.list, envir=as.environment ("package:utils"))
-	assignInNamespace ("plot.new", plot.new, envir=as.environment ("package:graphics"))
+	
+	# call separate assignments functions:
+	eval (body (.rk.fix.assignments.graphics)) # internal_graphics.R
 }
