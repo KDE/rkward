@@ -155,23 +155,23 @@ rk.record.plot <- rk.record.plot ()
 	rk.record.plot$showFirst (deviceId)
 	rk.record.plot$printPars ()
 }
-"rk.next.plot" <- function (deviceId = 2)
-{
-	rk.record.plot$showNext (deviceId)
-	rk.record.plot$printPars ()
-}
-"rk.current.plot" <- function (deviceId = 2)
-{
-	if (!(deviceId %in% .rk.preview.devices)) rk.record.plot$record (deviceId, newplotflag=FALSE, force=TRUE)
-	rk.record.plot$printPars ()
-}
 "rk.previous.plot" <- function (deviceId = 2)
 {
 	rk.record.plot$showPrevious (deviceId)
 	rk.record.plot$printPars ()
 }
+"rk.next.plot" <- function (deviceId = 2)
+{
+	rk.record.plot$showNext (deviceId)
+	rk.record.plot$printPars ()
+}
 "rk.last.plot" <- function (deviceId = 2)
 {
 	rk.record.plot$showLast (deviceId)
+	rk.record.plot$printPars ()
+}
+"rk.current.plot" <- function (deviceId = 2)
+{
+	if (!(deviceId %in% .rk.preview.devices)) rk.record.plot$record (deviceId, newplotflag=FALSE, force=TRUE)
 	rk.record.plot$printPars ()
 }

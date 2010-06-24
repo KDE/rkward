@@ -92,7 +92,8 @@ formals (dev.off) <- formals (grDevices::dev.off)
 .rk.dev.off.default <- grDevices::dev.off
 
 # see .rk.fix.assignmetns () in internal.R
-".rk.fix.assignments.graphics" <- function () {
+".rk.fix.assignments.graphics" <- function ()
+{
 	assignInNamespace ("plot.new", plot.new, envir=as.environment ("package:graphics"))
 	assignInNamespace ("dev.off", dev.off, envir=as.environment ("package:grDevices"))
 }
