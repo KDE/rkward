@@ -1,5 +1,5 @@
 /***************************************************************************
-                          krossbackend  -  description
+                          qtscriptbackend  -  description
                              -------------------
     begin                : Mon Sep 28 2009
     copyright            : (C) 2009, 2010 by Thomas Friedrichsmeier
