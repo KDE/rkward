@@ -143,6 +143,15 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		message ('Current devices: ', paste (unlist (current), collapse = ', ')) 
 		message ('New plot exists? ', paste (unlist (newPlotExists), collapse = ', ')) 
 	}
+	fixDeviceLists <- function ()
+	{
+		maxdeviceId <- ifelse (is.null (dev.list()), 1, max (dev.list()))
+		if (maxdeviceId < length (current)) {
+			current <<- current [1:maxdeviceId]
+			newPlotExists <<- newPlotExists [1:maxdeviceId]
+		}
+		invisible ()
+	}
 	env
 }
 rk.record.plot <- rk.record.plot ()

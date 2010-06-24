@@ -82,16 +82,35 @@ if (base::.Platform$OS.type == "windows") {
 formals (plot.new) <- formals (graphics::plot.new)
 .rk.plot.new.default <- graphics::plot.new
 
+# Wait time between two dev.off () calls for the renegade devices;
+# users can change it by calling the function
+.rk.renegade.devices.kill.time <- 0.1
+".rk.set.renegade.kill.time" <- function (x = 0.1) .rk.renegade.devices.kill.time <<- x
+
 "dev.off" <- function (which = dev.cur ())
 {
 	.is.inter <- dev.interactive ()
 	if (.is.inter) { 
 		# Why use 'which'? There is a which ()!!
 		if (!(which %in% .rk.preview.devices)) rk.record.plot$onDelDevice (deviceId = which)
+		
+		ldevs.before <- dev.list ()
 	}
 	
 	eval (body (.rk.dev.off.default))
 	.ret.value <- .Last.value
+	
+	if (.is.inter) {
+		renegade.devices <- setdiff (dev.list (), ldevs.before)
+		if (!is.null (renegade.devices) && length (renegade.devices) > 0)
+			sapply (X = renegade.devices, 
+				FUN = function (x) {
+					# sleep! otherwise, sometimes, rkward is left w/ an empty device window
+					Sys.sleep (.rk.renegade.devices.kill.time)
+					.rk.dev.off.default (x)
+				})
+		rk.record.plot$fixDeviceLists ()
+	}
 	return (.ret.value)
 }
 formals (dev.off) <- formals (grDevices::dev.off)
