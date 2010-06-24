@@ -9,10 +9,16 @@
 			<Action name="device_copy_to_output"/>
 			<Action name="device_copy_to_r_object"/>
 			<Merge/>
+			<Separator/>
 			<Menu name="history"><text>&amp;History</text>
+				<Action name="plot_first"/>
 				<Action name="plot_prev"/>
-				<Action name="plot_record"/>
 				<Action name="plot_next"/>
+				<Action name="plot_last"/>
+				<Separator/>
+				<Action name="plot_record"/>
+				<Separator/>
+				<Action name="plot_clear_history"/>
 			</Menu>
 		</Menu>
 		<Menu name="view"><text>&amp;View</text>
@@ -28,8 +34,13 @@
 		<Merge/>
 	</MenuBar>
 	<ToolBar name="mdiToolBar">
+		<Action name="plot_first"/>
 		<Action name="plot_prev"/>
-		<Action name="plot_record"/>
 		<Action name="plot_next"/>
+		<Action name="plot_last"/>
+		<Separator/>
+		<Action name="plot_record"/>
+		<Separator/>
+		<Action name="plot_clear_history"/>
 	</ToolBar>
 </kpartgui>

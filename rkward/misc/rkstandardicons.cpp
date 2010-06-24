@@ -2,7 +2,7 @@
                           rkstandardicons  -  description
                              -------------------
     begin                : Wed Oct 24 2007
-    copyright            : (C) 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -57,8 +57,14 @@ void RKStandardIcons::initIcons () {
 
 	icons[ActionMoveLeft] = KIcon ("go-previous");
 	icons[ActionMoveRight] = KIcon ("go-next");
+	icons[ActionMoveFirst] = KIcon ("go-first");
+	icons[ActionMoveLast] = KIcon ("go-last");
 	icons[ActionMoveUp] = KIcon ("go-up");
 	icons[ActionMoveDown] = KIcon ("go-down");
+
+	icons[ActionSnapshot] = KIcon ("flag.png");
+
+	icons[ActionClear] = KIcon ("edit-clear.png");
 
 	icons[ActionDetachWindow] = KIcon ("view-fullscreen");
 	icons[ActionAttachWindow] = KIcon ("view-restore");

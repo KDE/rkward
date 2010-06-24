@@ -26,6 +26,7 @@
 
 #include "../rkwardapplication.h"
 #include "rkworkplace.h"
+#include "../misc/rkstandardicons.h"
 #include "../debug.h"
 
 RKWindowCatcher::RKWindowCatcher () {
@@ -349,18 +350,41 @@ void RKCaughtX11Window::nextPlot () {
 	updateHistoryActions (history_length, history_position+1);
 }
 
-void RKCaughtX11Window::recordCurrentPlot () {
-	RK_TRACE (MISC);
-
-	RKGlobals::rInterface ()->issueCommand ("rk.current.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Add current plot in device number %1", device_number), error_dialog);
-	updateHistoryActions (history_length+1, history_length);
-}
-
 void RKCaughtX11Window::previousPlot () {
 	RK_TRACE (MISC);
 
 	RKGlobals::rInterface ()->issueCommand ("rk.previous.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Load previous plot in device number %1", device_number), error_dialog);
 	updateHistoryActions (history_length, history_position-1);
+}
+
+void RKCaughtX11Window::firstPlot () {
+	RK_TRACE (MISC);
+
+	RKGlobals::rInterface ()->issueCommand ("rk.first.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Load first plot in device number %1", device_number), error_dialog);
+	updateHistoryActions (history_length, 1);
+}
+
+void RKCaughtX11Window::lastPlot () {
+	RK_TRACE (MISC);
+
+	RKGlobals::rInterface ()->issueCommand ("rk.last.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Load last plot in device number %1", device_number), error_dialog);
+	updateHistoryActions (history_length, history_length);
+}
+
+void RKCaughtX11Window::recordCurrentPlot () {
+	RK_TRACE (MISC);
+
+	RKGlobals::rInterface ()->issueCommand ("rk.current.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Add current plot to history (device number %1)", device_number), error_dialog);
+	updateHistoryActions (history_length+1, history_length+1);
+}
+
+void RKCaughtX11Window::clearHistory () {
+	RK_TRACE (MISC);
+
+	if (KMessageBox::warningContinueCancel (this, i18n ("This will clear the plot history for all devices windows, not only this one. If this is not your intent, press cancel, below.")) != KMessageBox::Continue) return;
+
+	RKGlobals::rInterface ()->issueCommand ("rk.record.plot$resetHistory ()", RCommand::App, i18n ("Clear plot history"), error_dialog);
+	updateHistoryActions (0, 0);
 }
 
 void RKCaughtX11Window::updateHistoryActions (int history_length, int position) {
@@ -369,8 +393,10 @@ void RKCaughtX11Window::updateHistoryActions (int history_length, int position) 
 	RKCaughtX11Window::history_length = history_length;
 	RKCaughtX11Window::history_position = position;
 
+	plot_first_action->setEnabled (position > 1);
 	plot_prev_action->setEnabled (position > 1);
 	plot_next_action->setEnabled ((history_length > 0) && (position < history_length));
+	plot_last_action->setEnabled ((history_length > 0) && (position < history_length));
 }
 
 ///////////////////////////////// END RKCaughtX11Window ///////////////////////////////
@@ -403,17 +429,28 @@ RKCaughtX11WindowPart::RKCaughtX11WindowPart (RKCaughtX11Window *window) : KPart
 	action->setText (i18n ("Set specified fixed size..."));
 
 	action = actionCollection ()->addAction ("plot_prev", window, SLOT (previousPlot()));
-// 	action->setText (i18n ("Restore previous plot"));
-	action->setText (i18n ("<"));
+ 	action->setText (i18n ("Previous plot"));
+	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveLeft));
 	window->plot_prev_action = (KAction*) action;
-	action = actionCollection ()->addAction ("plot_record", window, SLOT (recordCurrentPlot()));
-// 	action->setText (i18n ("Add current plot to history"));
-	action->setText (i18n ("+"));
-	window->plot_record_action = (KAction*) action;
+	action = actionCollection ()->addAction ("plot_first", window, SLOT (firstPlot()));
+ 	action->setText (i18n ("First plot"));
+	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveFirst));
+	window->plot_first_action = (KAction*) action;
 	action = actionCollection ()->addAction ("plot_next", window, SLOT (nextPlot()));
-// 	action->setText (i18n ("Advance to next plot"));
-	action->setText (i18n (">"));
+ 	action->setText (i18n ("Next plot"));
+	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveRight));
 	window->plot_next_action = (KAction*) action;
+	action = actionCollection ()->addAction ("plot_last", window, SLOT (lastPlot()));
+ 	action->setText (i18n ("Last plot"));
+	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveLast));
+	window->plot_last_action = (KAction*) action;
+
+	action = actionCollection ()->addAction ("plot_record", window, SLOT (recordCurrentPlot()));
+ 	action->setText (i18n ("Add to history"));
+	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionSnapshot));
+	action = actionCollection ()->addAction ("plot_clear_history", window, SLOT (clearHistory()));
+ 	action->setText (i18n ("Clear history"));
+	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionClear));
 
 	action = actionCollection ()->addAction ("device_activate", window, SLOT (activateDevice()));
 	action->setText (i18n ("Make active"));

@@ -2,7 +2,7 @@
                           rkstandardicons  -  description
                              -------------------
     begin                : Wed Oct 24 2007
-    copyright            : (C) 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -57,8 +57,14 @@ public:
 
 		ActionMoveLeft,
 		ActionMoveRight,
+		ActionMoveFirst,
+		ActionMoveLast,
 		ActionMoveUp,
 		ActionMoveDown,
+
+		ActionSnapshot,
+
+		ActionClear,
 
 		ActionDetachWindow,
 		ActionAttachWindow,

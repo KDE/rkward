@@ -130,9 +130,18 @@ public slots:
 	void copyDeviceToRObject ();
 	void duplicateDevice ();
 
+/** history navigation */
+	void firstPlot ();
+/** history navigation */
 	void previousPlot ();
-	void recordCurrentPlot ();
+/** history navigation */
 	void nextPlot ();
+/** history navigation */
+	void lastPlot ();
+/** history navigation */
+	void recordCurrentPlot ();
+/** history navigation */
+	void clearHistory ();
 private slots:
 	void doEmbed ();
 private:
@@ -158,7 +167,8 @@ private:
 	KToggleAction *dynamic_size_action;
 	KAction *plot_prev_action;
 	KAction *plot_next_action;
-	KAction *plot_record_action;
+	KAction *plot_first_action;
+	KAction *plot_last_action;
 
 	int history_length;
 	int history_position;

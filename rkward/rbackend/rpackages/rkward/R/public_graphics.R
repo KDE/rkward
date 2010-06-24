@@ -134,6 +134,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	{
 		recorded <<- list()
 		current <<- as.list(0)
+		for (dev_num in dev.list()) current[[dev_num]] <<- 0
 		newPlotExists <<- as.list(FALSE)
 		.rk.graph.history.gui ()
 	}
