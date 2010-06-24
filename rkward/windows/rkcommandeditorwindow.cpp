@@ -387,14 +387,14 @@ void RKCommandEditorWindow::doAutoSave () {
 	if (previous_autosave_url.isValid ()) {
 		backup_autosave_url = previous_autosave_url;
 		backup_autosave_url.setFileName (backup_autosave_url.fileName () + "~");
-		alljobs->addJob (KIO::file_move (previous_autosave_url, backup_autosave_url, -1, KIO::Overwrite));
+		alljobs->addJob (KIO::file_move (previous_autosave_url, backup_autosave_url, -1, KIO::HideProgressInfo | KIO::Overwrite));
 	}
 	
 	// push the newly written file
 	if (url ().isValid ()) {
 		KUrl autosave_url = url ();
 		autosave_url.setFileName (autosave_url.fileName () + RKSettingsModuleCommandEditor::autosaveSuffix ());
-		alljobs->addJob (KIO::file_move (KUrl::fromLocalFile (save.fileName ()), autosave_url, -1, KIO::Overwrite));
+		alljobs->addJob (KIO::file_move (KUrl::fromLocalFile (save.fileName ()), autosave_url, -1, KIO::HideProgressInfo | KIO::Overwrite));
 		previous_autosave_url = autosave_url;
 	} else {		// i.e., the document is still "Untitled"
 		previous_autosave_url = KUrl::fromLocalFile (save.fileName ());
@@ -402,7 +402,7 @@ void RKCommandEditorWindow::doAutoSave () {
 
 	// remove the backup
 	if (backup_autosave_url.isValid ()) {
-		alljobs->addJob (KIO::del (backup_autosave_url));
+		alljobs->addJob (KIO::del (backup_autosave_url, KIO::HideProgressInfo));
 	}
 	alljobs->start ();
 
