@@ -90,6 +90,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 			if (class (try (unsavedPlot <- recordPlot(), silent=TRUE)) != 'try-error') {
 				current [[deviceId]] <<- length(recorded) + 1L
 				recorded [[current [[deviceId]]]] <<- unsavedPlot
+				.rk.graph.history.gui (deviceId)
 			}
 		} else if (force) {
 			if (class (try (unsavedPlot <- recordPlot(), silent=TRUE)) != 'try-error') {
@@ -112,6 +113,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		if (n > 0 && n <= length(recorded)) {
 			current [[deviceId]] <<- n
 			replayPlot(recorded[[n]])
+			.rk.graph.history.gui (deviceId)
 		}
 		else message("replay: 'n' not in valid range: ", n)
 		dev.set (cur.deviceId)
@@ -133,6 +135,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		recorded <<- list()
 		current <- as.list(0)
 		newPlotExists <- as.list(FALSE)
+		.rk.graph.history.gui (deviceId)
 	}
 	printPars <- function ()
 	{

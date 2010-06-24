@@ -65,6 +65,14 @@ if (base::.Platform$OS.type == "windows") {
 	}
 }
 
+".rk.graph.history.gui" <- function (deviceId = dev.cur())
+{
+	# this function is called whenever the history length changes (ie, increases, for now)
+	# or the position changes in any device.
+	# see public_graphics.R :: rk.record.plot
+	invisible ()
+}
+
 "plot.new" <- function () 
 {
 	if (dev.cur() == 1) rk.screen.device ()
