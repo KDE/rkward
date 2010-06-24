@@ -133,8 +133,8 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	resetHistory <- function ()
 	{
 		recorded <<- list()
-		current <- as.list(0)
-		newPlotExists <- as.list(FALSE)
+		current <<- as.list(0)
+		newPlotExists <<- as.list(FALSE)
 		.rk.graph.history.gui (deviceId)
 	}
 	printPars <- function ()

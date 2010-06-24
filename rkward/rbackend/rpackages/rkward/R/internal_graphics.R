@@ -84,9 +84,15 @@ formals (plot.new) <- formals (graphics::plot.new)
 
 "dev.off" <- function (which = dev.cur ())
 {
-	# Why use 'which'? There is a which ()!!
-	if (dev.interactive () && !(which %in% .rk.preview.devices)) rk.record.plot$onDelDevice (deviceId = which)
+	.is.inter <- dev.interactive ()
+	if (.is.inter) { 
+		# Why use 'which'? There is a which ()!!
+		if (!(which %in% .rk.preview.devices)) rk.record.plot$onDelDevice (deviceId = which)
+	}
+	
 	eval (body (.rk.dev.off.default))
+	.ret.value <- .Last.value
+	return (.ret.value)
 }
 formals (dev.off) <- formals (grDevices::dev.off)
 .rk.dev.off.default <- grDevices::dev.off
