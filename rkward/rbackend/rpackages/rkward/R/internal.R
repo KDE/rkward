@@ -420,5 +420,5 @@ formals (menu) <- formals (utils::menu)
 	assignInNamespace ("select.list", select.list, envir=as.environment ("package:utils"))
 	
 	# call separate assignments functions:
-	eval (body (.rk.fix.assignments.graphics)) # internal_graphics.R
+	if (exists (".rk.fix.assignments.graphics")) eval (body (.rk.fix.assignments.graphics)) # internal_graphics.R
 }

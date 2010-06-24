@@ -2,8 +2,10 @@
 ## These functions are _not_ supposed to be called by the end user.
 
 # overriding x11 to get informed, when a new x11 window is opened
-"rk.screen.device" <- function (...) {
+"rk.screen.device" <- function (..., is.preview.device = FALSE) {
 	.rk.do.call ("startOpenX11", as.character (dev.cur ()));
+
+	if (!is.preview.device) dupFrom <- dev.cur ()
 
 	if (!exists (".rk.default.device")) {
 		if (base::.Platform$OS.type == "unix") {
@@ -20,6 +22,8 @@
 	x <- device (...)
 
 	.rk.do.call ("endOpenX11", as.character (dev.cur ()));
+
+	if (!is.preview.device) rk.record.plot$onAddDevice (duplicateId = dupFrom, deviceId = dev.cur ())
 
 	invisible (x)
 }
@@ -42,7 +46,7 @@ if (base::.Platform$OS.type == "windows") {
 	a <- .rk.preview.devices[[x]]
 	if (is.null (a)) {
 		a <- dev.cur ()
-		x11 ()
+		x11 (is.preview.device = TRUE)
 		if (a != dev.cur ()) {
 			.rk.preview.devices[[x]] <<- dev.cur ()
 		}
@@ -54,22 +58,33 @@ if (base::.Platform$OS.type == "windows") {
 ".rk.killPreviewDevice" <- function (x) {
 	a <- .rk.preview.devices[[x]]
 	if (!is.null (a)) {
-		.rk.preview.devices[[x]] <<- NULL
 		if (a %in% dev.list ()) {
 			dev.off (a)
 		}
+		.rk.preview.devices[[x]] <<- NULL
 	}
 }
 
 "plot.new" <- function () 
 {
-	rk.record.plot$record ()
+	if (dev.cur() == 1) rk.screen.device ()
+	if (dev.interactive () && !(dev.cur() %in% .rk.preview.devices)) rk.record.plot$record ()
 	eval (body (.rk.plot.new.default))
 }
 formals (plot.new) <- formals (graphics::plot.new)
 .rk.plot.new.default <- graphics::plot.new
 
+"dev.off" <- function (which = dev.cur ())
+{
+	# Why use 'which'? There is a which ()!!
+	if (dev.interactive () && !(which %in% .rk.preview.devices)) rk.record.plot$onDelDevice (deviceId = which)
+	eval (body (.rk.dev.off.default))
+}
+formals (dev.off) <- formals (grDevices::dev.off)
+.rk.dev.off.default <- grDevices::dev.off
+
 # see .rk.fix.assignmetns () in internal.R
 ".rk.fix.assignments.graphics" <- function () {
 	assignInNamespace ("plot.new", plot.new, envir=as.environment ("package:graphics"))
+	assignInNamespace ("dev.off", dev.off, envir=as.environment ("package:grDevices"))
 }

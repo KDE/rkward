@@ -314,7 +314,7 @@ void RKCaughtX11Window::duplicateDevice () {
 	RK_TRACE (MISC);
 
 // 	RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ")\ndev.copy (device=x11)", RCommand::App, i18n ("Duplicate graphics device number %1", device_number), error_dialog);
-	RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ")\nrk.record.plot$onAddDevice (" + QString::number (device_number) + ")\ndev.copy (device=x11)", RCommand::App, i18n ("Duplicate graphics device number %1", device_number), error_dialog);
+	RKGlobals::rInterface ()->issueCommand ("rk.duplicate.device (" + QString::number (device_number) + ")", RCommand::App, i18n ("Duplicate graphics device number %1", device_number), error_dialog);
 }
 
 void RKCaughtX11Window::nextPlot () {
