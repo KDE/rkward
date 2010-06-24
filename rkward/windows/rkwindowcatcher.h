@@ -68,6 +68,9 @@ public:
 /** end looking out for new R X11 windows. If a new window was in fact created, this is captured by creating an RKCaughtX11Window
 @param new_cur_device the new active device number, i.e. the device number of the created window */
 	void stop (int new_cur_device);
+/** called from the R backend when the device history needs to be updated
+@param params the serialized parameters as supplied from R */
+	void updateHistory (QStringList params);
 private:
 	int last_cur_device;
 };
@@ -75,8 +78,11 @@ private:
 
 #include "rkmdiwindow.h"
 
+#include <QHash>
+
 class RKCaughtX11WindowPart;
 class KToggleAction;
+class KAction;
 class QXEmbedCopy;
 class QScrollArea;
 class KVBox;
@@ -103,6 +109,9 @@ public:
 	void prepareToBeAttached ();
 /** see prepareToBeAttached (). Reenable the dynamic_size_action */
 	void prepareToBeDetached ();
+/** returns the window corresponding the to given R device number (or 0 if no such window exists) */
+	static RKCaughtX11Window* getWindow (int device_number) { return device_windows.value (device_number); };
+	void updateHistoryActions (int history_length, int position);
 public slots:
 /** Fixed size action was (potentially) toggled. Update to the new state */
 	void fixedSizeToggled ();
@@ -122,7 +131,7 @@ public slots:
 	void duplicateDevice ();
 
 	void previousPlot ();
-	void currentPlot ();
+	void recordCurrentPlot ();
 	void nextPlot ();
 private slots:
 	void doEmbed ();
@@ -134,6 +143,8 @@ private:
 	QScrollArea *scroll_widget;
 	KVBox *box_widget;
 	RKProgressControl *error_dialog;
+
+	static QHash<int, RKCaughtX11Window*> device_windows;
 #ifdef Q_WS_WIN
 	QWinHost *capture;
 #elif defined Q_WS_X11
@@ -145,6 +156,12 @@ private:
 
 	bool dynamic_size;
 	KToggleAction *dynamic_size_action;
+	KAction *plot_prev_action;
+	KAction *plot_next_action;
+	KAction *plot_record_action;
+
+	int history_length;
+	int history_position;
 };
 
 /** Provides a KPart interface for RKCaughtX11Window. */

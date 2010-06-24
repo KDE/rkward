@@ -60,6 +60,23 @@ void RKWindowCatcher::stop (int new_cur_device) {
 	last_cur_device = new_cur_device;
 }
 
+void RKWindowCatcher::updateHistory (QStringList params) {
+	RK_TRACE (MISC);
+	RK_ASSERT (params.length () >= 1);
+	RK_ASSERT ((params.length () % 2) == 1)
+
+	int history_length = params[0].toInt ();
+	for (int i = 1; i < (params.length () - 1); i += 2) {
+		RKCaughtX11Window* window = RKCaughtX11Window::getWindow (params[i].toInt ());
+		if (window) {
+			int position = params[i+1].toInt ();
+			window->updateHistoryActions (history_length, position);
+		} else {
+			RK_DO (qDebug ("Device %d is not managed, while trying to update history", params[i].toInt ()), RBACKEND, DL_DEBUG);
+		}
+	}
+}
+
 ///////////////////////////////// END RKWindowCatcher //////////////////////////////////
 /**************************************************************************************/
 //////////////////////////////// BEGIN RKCaughtX11Window //////////////////////////////
@@ -89,16 +106,22 @@ void RKWindowCatcher::stop (int new_cur_device) {
 #include "../misc/rksaveobjectchooser.h"
 #include "../plugin/rkcomponentcontext.h"
 
+// static
+QHash<int, RKCaughtX11Window*> RKCaughtX11Window::device_windows;
+
 RKCaughtX11Window::RKCaughtX11Window (WId window_to_embed, int device_number) : RKMDIWindow (0, X11Window) {
 	RK_TRACE (MISC);
 
 	embedded = window_to_embed;
 	RKCaughtX11Window::device_number = device_number;
+	RK_ASSERT (!device_windows.contains (device_number));
+	device_windows.insert (device_number, this);
 
 	error_dialog = new RKProgressControl (0, i18n ("An error occurred"), i18n ("An error occurred"), RKProgressControl::DetailedError);
 	setPart (new RKCaughtX11WindowPart (this));
 	initializeActivationSignals ();
 	setFocusPolicy (Qt::ClickFocus);
+	updateHistoryActions (0, 0);
 
 	QVBoxLayout *layout = new QVBoxLayout (this);
 	layout->setContentsMargins (0, 0, 0, 0);
@@ -165,6 +188,8 @@ void RKCaughtX11Window::doEmbed () {
 
 RKCaughtX11Window::~RKCaughtX11Window () {
 	RK_TRACE (MISC);
+	RK_ASSERT (device_windows.contains (device_number));
+	device_windows.remove (device_number);
 
 	capture->close ();
 #ifdef Q_WS_X11
@@ -321,18 +346,31 @@ void RKCaughtX11Window::nextPlot () {
 	RK_TRACE (MISC);
 
 	RKGlobals::rInterface ()->issueCommand ("rk.next.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Load next plot in device number %1", device_number), error_dialog);
+	updateHistoryActions (history_length, history_position+1);
 }
 
-void RKCaughtX11Window::currentPlot () {
+void RKCaughtX11Window::recordCurrentPlot () {
 	RK_TRACE (MISC);
 
 	RKGlobals::rInterface ()->issueCommand ("rk.current.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Add current plot in device number %1", device_number), error_dialog);
+	updateHistoryActions (history_length+1, history_length);
 }
 
 void RKCaughtX11Window::previousPlot () {
 	RK_TRACE (MISC);
 
 	RKGlobals::rInterface ()->issueCommand ("rk.previous.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Load previous plot in device number %1", device_number), error_dialog);
+	updateHistoryActions (history_length, history_position-1);
+}
+
+void RKCaughtX11Window::updateHistoryActions (int history_length, int position) {
+	RK_TRACE (MISC);
+
+	RKCaughtX11Window::history_length = history_length;
+	RKCaughtX11Window::history_position = position;
+
+	plot_prev_action->setEnabled (position > 1);
+	plot_next_action->setEnabled ((history_length > 0) && (position < history_length));
 }
 
 ///////////////////////////////// END RKCaughtX11Window ///////////////////////////////
@@ -367,12 +405,15 @@ RKCaughtX11WindowPart::RKCaughtX11WindowPart (RKCaughtX11Window *window) : KPart
 	action = actionCollection ()->addAction ("plot_prev", window, SLOT (previousPlot()));
 // 	action->setText (i18n ("Restore previous plot"));
 	action->setText (i18n ("<"));
-	action = actionCollection ()->addAction ("plot_curr", window, SLOT (currentPlot()));
-// 	action->setText (i18n ("Add current plot"));
+	window->plot_prev_action = (KAction*) action;
+	action = actionCollection ()->addAction ("plot_record", window, SLOT (recordCurrentPlot()));
+// 	action->setText (i18n ("Add current plot to history"));
 	action->setText (i18n ("+"));
+	window->plot_record_action = (KAction*) action;
 	action = actionCollection ()->addAction ("plot_next", window, SLOT (nextPlot()));
 // 	action->setText (i18n ("Advance to next plot"));
 	action->setText (i18n (">"));
+	window->plot_next_action = (KAction*) action;
 
 	action = actionCollection ()->addAction ("device_activate", window, SLOT (activateDevice()));
 	action->setText (i18n ("Make active"));

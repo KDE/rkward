@@ -90,7 +90,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 			if (class (try (unsavedPlot <- recordPlot(), silent=TRUE)) != 'try-error') {
 				current [[deviceId]] <<- length(recorded) + 1L
 				recorded [[current [[deviceId]]]] <<- unsavedPlot
-				.rk.graph.history.gui (deviceId)
+				.rk.graph.history.gui ()
 			}
 		} else if (force) {
 			if (class (try (unsavedPlot <- recordPlot(), silent=TRUE)) != 'try-error') {
@@ -113,7 +113,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		if (n > 0 && n <= length(recorded)) {
 			current [[deviceId]] <<- n
 			replayPlot(recorded[[n]])
-			.rk.graph.history.gui (deviceId)
+			.rk.graph.history.gui ()
 		}
 		else message("replay: 'n' not in valid range: ", n)
 		dev.set (cur.deviceId)
@@ -135,7 +135,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		recorded <<- list()
 		current <<- as.list(0)
 		newPlotExists <<- as.list(FALSE)
-		.rk.graph.history.gui (deviceId)
+		.rk.graph.history.gui ()
 	}
 	printPars <- function ()
 	{
@@ -152,6 +152,20 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		}
 		invisible ()
 	}
+	.rk.graph.history.gui <- function ()
+	{
+		# this function is called whenever the history length changes (ie, increases, for now)
+		# or the position changes in any device.
+		# see public_graphics.R :: rk.record.plot
+		history_length <- length (recorded)
+		positions <- NULL
+		for (dev_num in 1:length (current)) {
+			positions <- c (positions, dev_num, current[[dev_num]])
+		}
+		.rk.do.call ("updateDeviceHistory", as.character (c (history_length, positions)));
+		invisible (NULL)
+	}
+
 	env
 }
 rk.record.plot <- rk.record.plot ()

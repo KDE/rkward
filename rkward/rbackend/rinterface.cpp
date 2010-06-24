@@ -384,6 +384,10 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 			window_catcher->stop (QString (request->call[1]).toInt ());
 			MUTEX_UNLOCK;
 		}
+	} else if (call == "updateDeviceHistory") {
+		if (request->call.count () >= 3) {
+			window_catcher->updateHistory (request->call.mid (1));
+		}
 #endif // DISABLE_RKWINDOWCATCHER
 	} else if (call == "wdChange") {
 		RKWardMainWindow::getMain ()->updateCWD ();
