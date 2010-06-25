@@ -20,6 +20,7 @@
 #ifndef DISABLE_RKWINDOWCATCHER
 
 #include <qlayout.h>
+#include <qapplication.h>
 
 #include <kmessagebox.h>
 #include <klocale.h>
@@ -75,6 +76,16 @@ void RKWindowCatcher::updateHistory (QStringList params) {
 		} else {
 			RK_DO (qDebug ("Device %d is not managed, while trying to update history", params[i].toInt ()), RBACKEND, DL_DEBUG);
 		}
+	}
+}
+
+void RKWindowCatcher::killDevice (int device_number) {
+	RK_TRACE (MISC);
+
+	RKCaughtX11Window* window = RKCaughtX11Window::getWindow (device_number);
+	if (window) {
+		window->close (true);
+		QApplication::syncX ();
 	}
 }
 

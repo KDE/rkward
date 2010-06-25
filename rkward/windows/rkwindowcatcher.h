@@ -71,6 +71,9 @@ public:
 /** called from the R backend when the device history needs to be updated
 @param params the serialized parameters as supplied from R */
 	void updateHistory (QStringList params);
+/** Kill an R device
+@param device_number R device number of the device to kil */
+	void killDevice (int device_number);
 private:
 	int last_cur_device;
 };

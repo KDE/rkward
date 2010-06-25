@@ -385,8 +385,12 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 			MUTEX_UNLOCK;
 		}
 	} else if (call == "updateDeviceHistory") {
-		if (request->call.count () >= 3) {
+		if (request->call.count () >= 2) {
 			window_catcher->updateHistory (request->call.mid (1));
+		}
+	} else if (call == "killDevice") {
+		if (request->call.count () >= 2) {
+			window_catcher->killDevice (request->call[1].toInt ());
 		}
 #endif // DISABLE_RKWINDOWCATCHER
 	} else if (call == "wdChange") {
