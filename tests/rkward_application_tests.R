@@ -63,7 +63,21 @@ suite <- new ("RKTestSuite", id="rkward_application_tests",
 			load ("../rkward_application_tests_strange_object.RData")
 			rk.sync.global ()
 			rk.sync (x)
-		}, libraries=c ("XML"))
+		}, libraries=c ("XML")),
+		new ("RKTest", id="dev_off_bug", call=function () {
+			graphics.off()
+			stopifnot (is.null (dev.list ()))
+
+			plot (1, 1); x11(); plot (2, 2)
+
+			Sys.sleep (2)	# wait for everything to settle
+			stopifnot (all.equal (as.numeric (dev.list ()), c (2, 3)))
+			dev.off (2)
+			Sys.sleep (2)
+			stopifnot (all.equal (as.numeric (dev.list ()), 3))
+			dev.off ()
+			stopifnot (is.null (dev.list ()))
+		})
 	# postCalls are run *after* all tests. Use this to clean up
 	), postCalls = list (
 		function () {
