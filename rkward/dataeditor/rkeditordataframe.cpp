@@ -48,7 +48,7 @@ RKEditorDataFrame::RKEditorDataFrame (RContainerObject* object, QWidget *parent)
 
 	RKVarEditDataFrameModel* model = new RKVarEditDataFrameModel (object, this);
 	initTable (model, object);
-	connect (model, SIGNAL (modelObjectDestroyed()), this, SLOT (deleteLater()));
+	connect (model, SIGNAL (modelObjectDestroyed()), this, SLOT (detachModel()));
 
 	waitForLoad ();
 }
@@ -86,6 +86,14 @@ RKEditorDataFrame::~RKEditorDataFrame () {
 	RK_TRACE (EDITOR);
 }
 
+void RKEditorDataFrame::detachModel () {
+	RK_TRACE (EDITOR);
+
+	dataview->setRKModel (0);
+	metaview->setRKModel (0);
+	deleteLater ();
+}
+
 void RKEditorDataFrame::flushChanges () {
 	RK_TRACE (EDITOR);
 	flushEdit ();
@@ -118,3 +126,5 @@ void RKEditorDataFrame::restoreObject (RObject *object) {
 #warning TODO: this interface should be moved to the model for good.
 	datamodel->restoreObject (object, 0);
 }
+
+#include "rkeditordataframe.moc"

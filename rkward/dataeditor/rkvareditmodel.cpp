@@ -80,8 +80,9 @@ void RKVarEditModel::objectRemoved (RObject* object) {
 
 	int index = objects.indexOf (static_cast<RKVariable*> (object));	// no check for isVariable needed. we only need to look up, if we have this object, and where.
 	if (index < var_col_offset) {
-		RK_ASSERT (index < 0);	// some unrelated object
-		return;
+		if (index < 0) return;	// e.g. the data.frame object
+		// the rownames object should only be deleted, when the whole data.frame is gone)
+		RK_ASSERT (objects.size () <= var_col_offset);
 	}
 
 	beginRemoveColumns (QModelIndex (), index, index);

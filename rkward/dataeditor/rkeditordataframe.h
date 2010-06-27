@@ -31,6 +31,7 @@ An RKEditor for data.frames.
 @author Thomas Friedrichsmeier
 */
 class RKEditorDataFrame : public TwinTable, public RCommandReceiver {
+	Q_OBJECT
 public:
 /** constructor.
 @param object an existing R object
@@ -47,6 +48,8 @@ public:
 
 /** Tells the editor to restore the given object in the R-workspace from its copy of the data */
 	void restoreObject (RObject *object);
+private slots:
+	void detachModel ();
 private:
 /// syncs the whole table.
 	void pushTable (RCommandChain *sync_chain);
