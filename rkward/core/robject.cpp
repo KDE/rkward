@@ -52,6 +52,7 @@ RObject::~RObject () {
 
 	delete [] dimensions;
 	delete [] classnames;
+	cancelOutstandingCommands ();
 }
 
 bool RObject::irregularShortName (const QString &name) {
