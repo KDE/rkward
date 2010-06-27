@@ -23,12 +23,12 @@ suite <- new ("RKTestSuite", id="import_export_plugins",
 	## the tests
 	), tests = list (
 		new ("RKTest", id="load_r_object", call=function () {
-			rk.call.plugin ("rkward::load_r_object", file.selection="women.RData", other_env.state="0", submit.mode="submit")
+			rk.call.plugin ("rkward::load_r_object", file.selection="women.RData", envir.active="0", submit.mode="submit")
 
 			stopifnot (all.equal (.GlobalEnv$women, datasets::women))
 		}),
 		new ("RKTest", id="import_csv", call=function () {
-			rk.call.plugin ("rkward::import_csv", allow_escapes.state="", blanklinesskip.state="TRUE", checkname.state="TRUE", colclass.string="", colname.string="", dec.string="'.'", doedit.state="0", file.selection="women.csv", flush.state="", isrow.state="true", na.text="NA", name.selection="women", nrows.text="-1", quick.string="csv", quote.string="'\\\"'", sep.string="','", skip.text="0", strings_as_factors.string="", stripwhite.state="FALSE", rowname.string="rowcol", nomrow.text="1", submit.mode="submit")
+			rk.call.plugin ("rkward::import_csv", allow_escapes.state="", blanklinesskip.state="TRUE", checkname.state="TRUE", colclass.string="", colname.string="", dec.string="'.'", doedit.state="0", file.selection="women.csv", flush.state="", isrow.state="true", na.text="NA", name.objectname="women", nrows.text="-1", quick.string="csv", quote.string="'\\\"'", sep.string="','", skip.text="0", strings_as_factors.string="", stripwhite.state="FALSE", rowname.string="rowcol", nomrow.text="1", submit.mode="submit")
 
 			stopifnot (all.equal (.GlobalEnv$women, datasets::women))
 		}),
@@ -37,7 +37,7 @@ suite <- new ("RKTestSuite", id="import_export_plugins",
 			rk.sync.global ()
 
 			# this one is expected to fail, as it would overwrite the existing "women" in globalenv()
-			rk.call.plugin ("rkward::import_csv", file.selection="women.csv", name.selection="women", submit.mode="submit")
+			rk.call.plugin ("rkward::import_csv", file.selection="women.csv", name.objectname="women", submit.mode="submit")
 		}, expect_error=TRUE),
 		new ("RKTest", id="setworkdir", call=function () {
 			oldwd <- getwd ()
@@ -51,7 +51,7 @@ suite <- new ("RKTestSuite", id="import_export_plugins",
 			stopifnot (oldwd == getwd ())
 		}),
 		new ("RKTest", id="import_spss", call=function () {
-			rk.call.plugin ("rkward::import_spss", convert_var_labels.state="1", data_frame.state="1", do_locale_conversion.state="0", doedit.state="0", file.selection="../import_export_plugins_testfile.sav", labels_limit.real="1.00", saveto.selection="my.spss.data", trim_labels.state="0", use_labels.state="1", submit.mode="submit")
+			rk.call.plugin ("rkward::import_spss", convert_var_labels.state="1", data_frame.state="1", do_locale_conversion.state="0", doedit.state="0", file.selection="../import_export_plugins_testfile.sav", labels_limit.real="1.00", saveto.objectname="my.spss.data", trim_labels.state="0", use_labels.state="1", submit.mode="submit")
 
 			# In order to check, whether the import was correct
 			rk.print (my.spss.data)
@@ -61,7 +61,7 @@ suite <- new ("RKTestSuite", id="import_export_plugins",
 			# variable, yet.
 		}, libraries=c("foreign")),
 		new ("RKTest", id="import_stata", call=function () {
-			rk.call.plugin ("rkward::import_stata", convert_dates.state="1", convert_factors.state="1", convert_underscore.state="0", doedit.state="0", file.selection="../import_export_plugins_testfile.dta", missing_type.state="0", saveto.selection="my.stata.data", submit.mode="submit")
+			rk.call.plugin ("rkward::import_stata", convert_dates.state="1", convert_factors.state="1", convert_underscore.state="0", doedit.state="0", file.selection="../import_export_plugins_testfile.dta", missing_type.state="0", saveto.objectname="my.stata.data", submit.mode="submit")
 
 			# In order to check, whether the import was correct
 			rk.print (my.stata.data)

@@ -14,7 +14,7 @@ function calculate () {
 }
 
 function printout () {
-	var save         = getValue("chk_save");
+	var save         = getValue("save_name.active");
 	var save_name    = getValue("save_name");
 
 	echo ('rk.header ("Unidimensionality check (' + getValue("x") + ')")\n');
@@ -22,6 +22,6 @@ function printout () {
 	// check if results are to be saved:
 	if (save && save_name) {
 		echo ('# keep results in current workspace\n');
-		echo (save_name + ' <<- unidim.res\n');
+		echo ('.GlobalEnv$' + save_name + ' <- unidim.res\n');
 	}
 }

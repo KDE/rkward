@@ -12,7 +12,7 @@ rk.print(t(rbind(Eta=estimates.pcm$etapar,StdErr=estimates.pcm$se.eta)))
 rk.print (paste("Conditional log-likelihood:",round(estimates.pcm$loglik, digits=1),
 "<br />Number of iterations:",estimates.pcm$iter,"<br />Number of parameters:",estimates.pcm$npar))
 # keep results in current workspace
-estimates.pcm <<- estimates.pcm
+.GlobalEnv$estimates.pcm <- estimates.pcm
 })
-.rk.rerun.plugin.link(plugin="rkward::par_est_pcm", settings="chk_save.state=save\ndesign.string=auto\netastart.string=NULL\nsave_name.selection=estimates.pcm\nstderr.state=se\nsumnull.state=sum0\nx.available=pcmdat", label="Run again")
+.rk.rerun.plugin.link(plugin="rkward::par_est_pcm", settings="design.string=auto\netastart.string=NULL\nsave_name.active=1\nsave_name.objectname=estimates.pcm\nsave_name.parent=.GlobalEnv\nstderr.state=se\nsumnull.state=sum0\nx.available=pcmdat", label="Run again")
 .rk.make.hr()

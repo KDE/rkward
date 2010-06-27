@@ -30,10 +30,10 @@ suite <- new ("RKTestSuite", id="analysis_plugins",
 	## the tests
 	), tests = list (
 		new ("RKTest", id="basic_statistics_a", call=function () {
-			rk.call.plugin ("rkward::basic_statistics", autre.real="6.00", constMad.real="1.4628", customMu.state="1", customS.state="1", huber.state="1", initmu.string="median", irq.state="1", length.state="1", mad.state="1", maximum.state="1", mean.state="1", median.state="1", minimum.state="1", mu.text="3", narm.state="1", nbmaximum.real="0.00", nbminimum.real="0.00", nom.selection="my.data", pourcent.real="0.05", quartile.state="1", result.state="1", s.text="", sd.state="1", tol.real="0.07", trim.state="1", vari.state="1", winsor.real="1.50", z.available="women[[\"weight\"]]\ntest50x", submit.mode="submit")
+			rk.call.plugin ("rkward::basic_statistics", autre.real="6.00", constMad.real="1.4628", customMu.state="1", customS.state="1", huber.state="1", initmu.string="median", irq.state="1", length.state="1", mad.state="1", maximum.state="1", mean.state="1", median.state="1", minimum.state="1", mu.text="3", narm.state="1", nbmaximum.real="0.00", nbminimum.real="0.00", saveas.active="1", saveas.objectname="my.data", pourcent.real="0.05", quartile.state="1", s.text="", sd.state="1", tol.real="0.07", trim.state="1", vari.state="1", winsor.real="1.50", z.available="women[[\"weight\"]]\ntest50x", submit.mode="submit")
 		}, libraries=c("MASS")),
 		new ("RKTest", id="basic_statistics_b", call=function () {
-			rk.call.plugin ("rkward::basic_statistics", autre.real="0.00", huber.state="", irq.state="0", length.state="0", mad.state="", maximum.state="0", mean.state="0", median.state="0", minimum.state="0", narm.state="1", nbmaximum.real="3.00", nbminimum.real="2.00", quartile.state="0", result.state="", sd.state="0", trim.state="", vari.state="0", z.available="test10x\nwomen[[\"height\"]]", submit.mode="submit")
+			rk.call.plugin ("rkward::basic_statistics", autre.real="0.00", huber.state="", irq.state="0", length.state="0", mad.state="", maximum.state="0", mean.state="0", median.state="0", minimum.state="0", narm.state="1", nbmaximum.real="3.00", nbminimum.real="2.00", quartile.state="0", sd.state="0", trim.state="", vari.state="0", z.available="test10x\nwomen[[\"height\"]]", submit.mode="submit")
 		}),
 		new ("RKTest", id="correlation_matrix", call=function () {		
 			rk.call.plugin ("rkward::corr_matrix", do_p.state="1", method.string="pearson", use.string="pairwise", x.available="test50x\ntest50y\ntest50z", submit.mode="submit")
@@ -137,10 +137,10 @@ suite <- new ("RKTestSuite", id="analysis_plugins",
 			rk.call.plugin ("rkward::kpss_test", length.state="1", lshort.string="FALSE", narm.state="0", null.string="Trend", x.available="test50x\ntest50y\ntest50z", submit.mode="submit")
 		}, libraries=c("tseries")),
 		new ("RKTest", id="hp_filter", call=function () {
-			data (co2)
+			co2 <- datasets::co2		# another, incompatible co2 dataset exists in package locfit
 			rk.sync.global()
 
-			rk.call.plugin ("rkward::hp_filter", create_cycle.state="1", create_trend.state="1", custom.state="0", cycle_col.color.string="green4", cycle_lty.string="", cycle_lwd.real="1.00", cycle_name.selection="hpcycle", downlab.text="", lambda.string="1600", plot_cycle.state="1", series_col.color.string="blue", series_lty.string="", series_lwd.real="1.00", trend_col.color.string="red", trend_lty.string="", trend_lwd.real="1.00", trend_name.selection="hptrend", uplab.text="", x.available="co2", submit.mode="submit")
+			rk.call.plugin ("rkward::hp_filter", cycle_name.active="1", trend_name.active="1", custom.state="0", cycle_col.color.string="green4", cycle_lty.string="", cycle_lwd.real="1.00", cycle_name.objectname="hpcycle", downlab.text="", lambda.string="1600", plot_cycle.state="1", series_col.color.string="blue", series_lty.string="", series_lwd.real="1.00", trend_col.color.string="red", trend_lty.string="", trend_lwd.real="1.00", trend_name.objectname="hptrend", uplab.text="", x.available="co2", submit.mode="submit")
 
 			rk.print (summary (hptrend))
 			rk.print (summary (hpcycle))

@@ -34,7 +34,7 @@ for (i in 1:length (vars))  {
 }
 
 # store results
-'my.data' <- results
+.GlobalEnv$my.data <- results
 ## Print result
 rk.header ("Univariate statistics", parameters=list (
 "Remove Missing values", TRUE, "Trimmed value for trimmed mean", "0.05"
@@ -48,5 +48,5 @@ rk.header ("Univariate statistics", parameters=list (
 
 rk.results (results)
 })
-.rk.rerun.plugin.link(plugin="rkward::basic_statistics", settings="autre.real=6.00\nconstMad.real=1.4628\ncustomMu.state=1\ncustomS.state=1\nhuber.state=1\ninitmu.string=median\nirq.state=1\nlength.state=1\nmad.state=1\nmaximum.state=1\nmean.state=1\nmedian.state=1\nminimum.state=1\nmu.text=3\nnarm.state=1\nnbmaximum.real=0.00\nnbminimum.real=0.00\nnom.selection=my.data\npourcent.real=0.05\nquartile.state=1\nresult.state=1\ns.text=\nsd.state=1\ntol.real=0.07\ntrim.state=1\nvari.state=1\nwinsor.real=1.50\nz.available=women[[\\\"weight\\\"]]\\ntest50x", label="Run again")
+.rk.rerun.plugin.link(plugin="rkward::basic_statistics", settings="autre.real=6.00\nconstMad.real=1.4628\ncustomMu.state=1\ncustomS.state=1\nhuber.state=1\ninitmu.string=median\nirq.state=1\nlength.state=1\nmad.state=1\nmaximum.state=1\nmean.state=1\nmedian.state=1\nminimum.state=1\nmu.text=3\nnarm.state=1\nnbmaximum.real=0.00\nnbminimum.real=0.00\npourcent.real=0.05\nquartile.state=1\ns.text=\nsaveas.active=1\nsaveas.objectname=my.data\nsaveas.parent=.GlobalEnv\nsd.state=1\ntol.real=0.07\ntrim.state=1\nvari.state=1\nwinsor.real=1.50\nz.available=women[[\\\"weight\\\"]]\\ntest50x", label="Run again")
 .rk.make.hr()

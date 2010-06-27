@@ -2,7 +2,7 @@
                           rkpluginsaveobject  -  description
                              -------------------
     begin                : Tue Jan 30 2007
-    copyright            : (C) 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -18,6 +18,7 @@
 #include "rkpluginsaveobject.h"
 
 #include <QVBoxLayout>
+#include <QGroupBox>
 
 #include <klocale.h>
 
@@ -29,61 +30,104 @@
 RKPluginSaveObject::RKPluginSaveObject (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget) : RKComponent (parent_component, parent_widget) {
 	RK_TRACE (PLUGIN);
 
-	// get xml-helper
+	// read settings
 	XMLHelper *xml = XMLHelper::getStaticHelper ();
 
-	// create and add property
-	addChild ("selection", selection = new RKComponentPropertyBase (this, xml->getBoolAttribute (element, "required", true, DL_INFO)));
-	connect (selection, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (selectionChanged (RKComponentPropertyBase *)));
+	bool checkable = xml->getBoolAttribute (element, "checkable", false, DL_INFO);
+	bool checked = xml->getBoolAttribute (element, "checked", false, DL_INFO);
+	bool required = xml->getBoolAttribute (element, "required", true, DL_INFO);
+	QString label = xml->getStringAttribute (element, "label", i18n ("Save to:"), DL_INFO);
+	QString initial = xml->getStringAttribute (element, "initial", i18n ("my.data"), DL_INFO);
+
+	// create and add properties
+	addChild ("selection", selection = new RKComponentPropertyBase (this, required));
+	connect (selection, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (externalChange ()));
+	selection->setInternal (true);	// the two separate properties "parent" and "objectname" are used for (re-)storing.
+	addChild ("parent", parent = new RKComponentPropertyRObjects (this, false));
+	connect (parent, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (externalChange ()));
+	addChild ("objectname", objectname = new RKComponentPropertyBase (this, false));
+	connect (objectname, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (externalChange ()));
+	addChild ("active", active = new RKComponentPropertyBool (this, false, false, "1", "0"));
+	connect (active, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (externalChange ()));
+	if (!checkable) active->setInternal (true);
+
+	// create GUI
+	groupbox = new QGroupBox (label, this);
+	groupbox->setCheckable (checkable);
+	if (checkable) groupbox->setChecked (checked);
+	connect (groupbox, SIGNAL (toggled(bool)), this, SLOT (internalChange ()));
+
+	selector = new RKSaveObjectChooser (groupbox, initial);
+	connect (selector, SIGNAL (changed (bool)), SLOT (internalChange ()));
 
 	QVBoxLayout *vbox = new QVBoxLayout (this);
 	vbox->setContentsMargins (0, 0, 0, 0);
 
-	selector = new RKSaveObjectChooser (this, xml->getStringAttribute (element, "initial", i18n ("my.data"), DL_INFO), xml->getStringAttribute (element, "label", i18n ("Save to:"), DL_INFO));
-	connect (selector, SIGNAL (changed ()), SLOT (selectionChanged ()));
-	connect (selector, SIGNAL (okStatusChanged (bool)), SLOT (selectionChanged (bool)));
+	QVBoxLayout *vbox_b = new QVBoxLayout (groupbox);
+	vbox_b->setContentsMargins (0, 0, 0, 0);
+	vbox_b->addWidget (selector);
 
-	vbox->addWidget (selector);
+	vbox->addWidget (groupbox);
 
 	// initialize
+	setRequired (required);
 	updating = false;
-	selectionChanged ();
+	internalChange ();
 }
 
 RKPluginSaveObject::~RKPluginSaveObject () {
 	RK_TRACE (PLUGIN);
 }
 
-void RKPluginSaveObject::selectionChanged (RKComponentPropertyBase *) {
+void RKPluginSaveObject::update () {
 	RK_TRACE (PLUGIN);
 
-	if (updating) return;
-	updating = true;
-
-	selector->setObjectName (selection->value ());
-
-	updating = false;
 	if (isSatisfied ()) selector->setBackgroundColor (QColor (255, 255, 255));
 	else selector->setBackgroundColor (QColor (255, 0, 0));
 	changed ();
 }
 
-void RKPluginSaveObject::selectionChanged () {
+void RKPluginSaveObject::externalChange () {
 	RK_TRACE (PLUGIN);
 
-	selection->setValue (selector->validizedSelectedObjectName ());
+	if (updating) return;
+
+	// NOTE: the selection-property is read-only!
+	selector->setBaseName (objectname->value ());
+	selector->setRootObject (parent->objectValue ());
+	if (groupbox->isCheckable ()) {
+		groupbox->setChecked (active->boolValue ());
+	}
+
+	// call internalChange, now, in case one or more setings could not be applied
+	internalChange ();
 }
 
-void RKPluginSaveObject::selectionChanged (bool) {
+void RKPluginSaveObject::internalChange () {
 	RK_TRACE (PLUGIN);
 
-	selectionChanged ();
+	if (updating) return;
+	updating = true;
+
+	selection->setValue (selector->currentFullName ());
+	objectname->setValue (selector->currentBaseName ());
+	parent->setObjectValue (selector->rootObject ());
+	active->setBoolValue ((!groupbox->isCheckable()) || groupbox->isChecked());
+
+	updating = false;
+	update ();
 }
 
 bool RKPluginSaveObject::isValid () {
 	RK_TRACE (PLUGIN);
 
 	return (RKComponent::isValid () && selector->isOk ());
+}
+
+QString RKPluginSaveObject::value (const QString& modifier) {
+//	RK_TRACE (PLUGIN);
+
+	return (selection->value (modifier));
 }
 
 #include "rkpluginsaveobject.moc"

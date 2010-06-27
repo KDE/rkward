@@ -24,5 +24,5 @@ rk.header ("Univariate statistics", parameters=list (
 
 rk.results (results)
 })
-.rk.rerun.plugin.link(plugin="rkward::basic_statistics", settings="autre.real=0.00\nhuber.state=\nirq.state=0\nlength.state=0\nmad.state=\nmaximum.state=0\nmean.state=0\nmedian.state=0\nminimum.state=0\nnarm.state=1\nnbmaximum.real=3.00\nnbminimum.real=2.00\nquartile.state=0\nresult.state=\nsd.state=0\ntrim.state=\nvari.state=0\nz.available=test10x\\nwomen[[\\\"height\\\"]]", label="Run again")
+.rk.rerun.plugin.link(plugin="rkward::basic_statistics", settings="autre.real=0.00\nhuber.state=\nirq.state=0\nlength.state=0\nmad.state=\nmaximum.state=0\nmean.state=0\nmedian.state=0\nminimum.state=0\nnarm.state=1\nnbmaximum.real=3.00\nnbminimum.real=2.00\nquartile.state=0\nsaveas.active=0\nsaveas.objectname=my.data\nsaveas.parent=.GlobalEnv\nsd.state=0\ntrim.state=\nvari.state=0\nz.available=test10x\\nwomen[[\\\"height\\\"]]", label="Run again")
 .rk.make.hr()

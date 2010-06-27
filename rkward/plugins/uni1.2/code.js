@@ -78,9 +78,9 @@ function calculate () {
 	}
 	echo ('}\n');
 	echo ('\n');
-	if (getValue ("result") == "1") {
+	if (getValue ("saveas.active")) {
 		echo ('# store results\n');
-		echo ('\'' + getValue ("nom") + '\' <- results\n');
+		echo ('.GlobalEnv$' + getValue ("saveas") + ' <- results\n');
 	}
 }
 

@@ -16,7 +16,7 @@ function calculate () {
 		tableOptions = "";
 	}
 // Other method is to use read.table and show all the options - more transparent
-	echo ('imported <<- read.' + quick + ' (file="' + getValue("file") + '"' + tableOptions + ', '); // doing row names (what a pity...)
+	echo ('imported <- read.' + quick + ' (file="' + getValue("file") + '"' + tableOptions + ', '); // doing row names (what a pity...)
 	if (getValue("rowname")!="NULL") {
 		echo ("row.names = ");
 		if (getValue("rowname")=="rowcol") echo (getValue("nomrow") + ",");
@@ -30,14 +30,14 @@ function calculate () {
 	echo (' na.strings = "' + getValue("na") + '", nrows = ' + getValue("nrows") + ', skip = ' + getValue("skip") + ', check.names = ' + getValue("checkname") + ', strip.white = ' + getValue("stripwhite") + ', blank.lines.skip = ' + getValue("blanklinesskip") + getValue("allow_escapes") + getValue("flush") + getValue("strings_as_factors") + ')\n');
 	echo ('\n');
 	echo ('# copy from the local environment to globalenv()\n');
-	echo ('assign("' + getValue("name") + '", imported, envir=globalenv())\n');
+	echo ('.GlobalEnv$' + getValue("name") + ' <- imported\n');
 	if (getValue ("doedit")) {
 		echo ('\n');
-		echo ('rk.edit (' + getValue ("name") + ')\n');
+		echo ('rk.edit (.GlobalEnv$' + getValue ("name") + ')\n');
 	}
 }
 
 function printout () {
-	makeHeaderCode ("Import text / csv data", new Array("File" ,  getValue ("file"), "Import as" ,  getValue ("name")));
+	makeHeaderCode ("Import text / csv data", new Array("File" ,  getValue ("file"), "Import as", getValue ("name")));
 }
 

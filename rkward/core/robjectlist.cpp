@@ -221,6 +221,10 @@ RObject *RObjectList::findObject (const QString &name, bool is_canonified) const
 		if (!found) return 0;
 
 		return (found->findObject (remainder, true));
+	} else if (canonified.startsWith (".GlobalEnv$")) {
+		return (getGlobalEnv ()->findObject (canonified.mid (11), true));
+	} else if (canonified == ".GlobalEnv") {
+		return (getGlobalEnv ());
 	}
 
 	// no "::"-qualification given, do normal search in all environments, return first match
@@ -248,6 +252,11 @@ void RObjectList::findObjectsMatching (const QString &partial_name, RObjectSearc
 		
 		found->findObjectsMatching (remainder, current_list, true);
 		return;
+	} else if (canonified.startsWith (".GlobalEnv$")) {
+		getGlobalEnv ()->findObjectsMatching (canonified.mid (11), current_list, true);
+		return;
+	} else if (canonified == ".GlobalEnv") {
+		current_list->insert (canonified, getGlobalEnv());	// but do not return, there will be at least one further match in base
 	}
 
 	// no namespace given. Search all environments for matches

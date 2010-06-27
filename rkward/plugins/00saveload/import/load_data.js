@@ -3,15 +3,15 @@ var envir;
 
 function calculate () {
 	var other_env = false;
-	if (getValue ("other_env")) {
+	if (getValue ("envir.active")) {
 		other_env = true;
-		envir = getValue ("envir");
+		envir = ".GlobalEnv$" + getValue ("envir");
 	} else {
 		envir = "globalenv()";
 	}
 
 	if (other_env) {
-		echo ('assign ("' + envir + ', new.env (parent=globalenv()), envir=globalenv())\n');
+		echo (envir + ' <- new.env (parent=globalenv())\n');
 	}
 	echo ('load (file="' + getValue("file") + '", envir=' + envir + ')\n');
 }

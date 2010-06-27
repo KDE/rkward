@@ -7,7 +7,7 @@ function printout () {
 	}
 
 	echo ('rk.header ("Hodrick-Prescott Filter", parameters=list("Lambda", ' +  lambda + '))\n');
-	echo ('x <- get("' + getValue("x") + '", envir=globalenv())\n');
+	echo ('x <- ' + getValue("x") + '\n');
 	echo ('lambda <- ' +  lambda + "\n");
 	echo ('\n');
 	echo ('if (any (is.na (x))) stop ("Missing values cannot be handled")\n');
@@ -19,11 +19,11 @@ function printout () {
 	echo ('	trend <- ts(trend,start(x),frequency=frequency(x))\n');
 	echo ('	cycle <- ts(cycle,start(x),frequency=frequency(x))\n');
 	echo ('}\n');
-	if (getValue("create_trend") == 1) {
-		echo ('assign("' + getValue("trend_name") + '", trend, envir=globalenv())\n');
+	if (getValue("trend_name.active")) {
+		echo ('.GlobalEnv$' + getValue("trend_name") + ' <- trend\n');
 	}
-	if (getValue("create_cycle") == 1) {
-		echo ('assign("' + getValue("cycle_name") + '", cycle, envir=globalenv())\n');
+	if (getValue("cycle_name.active")) {
+		echo ('.GlobalEnv$' + getValue("cycle_name") + ' <- cycle\n');
 	}
 
 	var upcol = "";
@@ -39,20 +39,20 @@ function printout () {
 
 	var uplty = "";
 	if (getValue("series_lty") != "" & getValue("trend_lty") != "") {
-		uplty = ", lty=c(\"" + getValue("series_lty") + "\", \"" + getValue("trend_lty") + "\")";
+		uplty = ", lty=c(" + quote (getValue("series_lty")) + ", " + quote (getValue("trend_lty")) + ")";
 	} else if (getValue("series_lty") != "") {
-		uplty = ", lty=c(\"" + getValue("series_lty") + "\", \"solid\")";
+		uplty = ", lty=c(" + quote (getValue("series_lty")) + ", \"solid\")";
 	} else if (getValue("trend_lty") != "") {
-		uplty = ", lty=c(\"solid\", \"" + getValue("trend_lty") + "\")";
+		uplty = ", lty=c(\"solid\", " + quote (getValue("trend_lty")) + ")";
 	} else {
 		uplty = "";
 	}
 
 	var uplab = "";
 	if (getValue("uplab.text") == "") {
-		uplab = "\"" + getValue("x") + ", Trend\"";
+		uplab = quote (getValue("x") + ", Trend");
 	} else if (getValue("uplabisquote") == 1) {
-		uplab = "\"" + getValue("uplab") + "\"";
+		uplab = quote (getValue("uplab"));
 	} else {
 		uplab = getValue("uplab");
 	}
@@ -69,7 +69,7 @@ function printout () {
 		if (getValue("downlab.text") == "") {
 			downlab = "\"Cycle\"";
 		} else if (getValue("downlabisquote") == 1) {
-			downlab = "\"" + getValue("downlab") + "\"";
+			downlab = quote (getValue("downlab"));
 		} else {
 			downlab = getValue("downlab");
 		}

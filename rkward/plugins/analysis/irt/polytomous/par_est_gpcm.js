@@ -62,7 +62,7 @@ function calculate () {
 
 function printout () {
 	// check whether parameter estimations should be kept in the global enviroment
-	var save = getValue("chk_save");
+	var save = getValue("save_name.active");
 	var save_name = getValue("save_name");
 
 	echo ('rk.header ("GPCM parameter estimation")\n');
@@ -74,6 +74,6 @@ function printout () {
 // check if results are to be saved:
 	if (save && save_name) {
 		echo ('# keep results in current workspace\n');
-		echo (save_name + ' <<- estimates.gpcm\n');
+		echo ('.GlobalEnv$' + save_name + ' <- estimates.gpcm\n');
 	}
 }

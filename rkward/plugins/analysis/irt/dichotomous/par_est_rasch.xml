@@ -8,9 +8,6 @@
 
     <connect client="startval_mtx.enabled" governor="sv_matrix" />
     <connect client="startval_mtx.required" governor="sv_matrix" />
-
-    <connect client="save_name.enabled"  governor="chk_save.state" />
-    <connect client="save_name.required" governor="chk_save.state" />
   </logic>
 
   <dialog label="IRT parameter estimation: Rasch model">
@@ -21,10 +18,7 @@
           <column>
             <varslot type="numeric" id="x" classes="data.frame matrix" source="vars" required="true" label="Matrix of manifest variables:"/>
             <stretch />
-	    <frame id="frame_save">
-	      <checkbox id="chk_save" label="Keep results in current workspace" value="save" checked="true"/>
-	      <saveobject id="save_name" initial="estimates.rasch"/>
-	    </frame>
+            <saveobject id="save_name" checkable="true" checked="true" label="Save results in workspace" initial="estimates.rasch"/>
           </column>
         </row>
       </tab>

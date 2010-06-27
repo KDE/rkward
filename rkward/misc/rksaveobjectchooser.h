@@ -19,33 +19,46 @@
 #define RKSAVEOBJECTCHOOSER_H
 
 #include <qwidget.h>
+#include "../core/rkmodificationtracker.h"
 
 class QLineEdit;
 class QCheckBox;
+class QPushButton;
+class QLabel;
 
 /** Simple helper widget to select an R symbol name to write something to. */
-class RKSaveObjectChooser : public QWidget {
+class RKSaveObjectChooser : public QWidget, public RObjectListener {
 	Q_OBJECT
 public:
-	RKSaveObjectChooser (QWidget *parent, const QString &initial, const QString &prompt = QString::null);
+	RKSaveObjectChooser (QWidget *parent, const QString &initial);
 	~RKSaveObjectChooser ();
 
-	QString validizedSelectedObjectName ();
+	QString currentFullName () const { return current_full_name; };
+	QString currentBaseName () const;
 	bool isOk () const;
-	void setObjectName (const QString &name);
+	void setBaseName (const QString &name);
 	void setBackgroundColor (const QColor &color);
-public slots:
-	void nameEditChanged (const QString &);
-	void overwriteConfirmChanged (int);
+	RObject* rootObject () const { return root_object; };
+	void setRootObject (RObject* new_root);
+private slots:
+	void updateState ();
+	void selectRootObject ();
 signals:
-	void okStatusChanged (bool);
-	void changed ();
+	void changed (bool);
+protected:
+	void objectRemoved (RObject* removed);
+	void childAdded (int index, RObject* parent);
 private:
 	bool object_exists;
-	bool prev_ok;
 
+	RObject *current_object;
+	RObject *root_object;
+	QLabel *root_label;
+	QPushButton *root_button;
 	QLineEdit *name_edit;
 	QCheckBox *overwrite_confirm;
+
+	QString current_full_name;
 };
 
 #endif

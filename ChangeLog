@@ -1,5 +1,7 @@
 TODO: Do not use SmartInterface for KDE 4.5 and above
 
+- The save-object selector in plugins now allows to save as part of a data.frame / list		TODO: document plugin-API additions
+- Fixed: On some systems, dev.off() would spawn two new graphics windows.			TODO: write test case
 - Support row names in the data.frame-editor
 - Fixed: When starting with an empty table, RKWard would sometimes claim that this object has been removed
 - Fixed: Would crash when trying to configure toolbars under certain circumstances (workaround for bug in kdelibs)

@@ -44,9 +44,9 @@ function calculate () {
 	echo ('        }\n');
 	echo ('}\n');
 	echo ('\n');
-	echo (object + ' <<- data		# assign to globalenv()\n');
+	echo ('.GlobalEnv$' + object + ' <- data		# assign to globalenv()\n');
 	if (getValue ("doedit") ) {
-		echo ('rk.edit (' + object + ')\n');
+		echo ('rk.edit (.GlobalEnv$' + object + ')\n');
 	}
 }
 

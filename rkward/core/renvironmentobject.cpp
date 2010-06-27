@@ -52,6 +52,7 @@ REnvironmentObject::~REnvironmentObject () {
 QString REnvironmentObject::getFullName () const {
 	RK_TRACE (OBJECTS);
 
+	if (type & GlobalEnv) return name;	// .GlobalEnv
 	if (type & ToplevelEnv) return ("as.environment (\"" + name + "\")");
 	return parent->makeChildName (name, type & Misplaced);
 }

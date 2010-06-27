@@ -17,7 +17,6 @@
 
 		<connect client="tol.enabled" governor="huber.state" />
 		<connect client="initmu.enabled" governor="huber.state" />
-		<connect client="nom.enabled" governor="result.state" />
 	</logic>
 	<dialog label="Basic statistics" >
 		<tabbook>
@@ -110,8 +109,7 @@
 			</tab>
 			<tab id="option" label="Options" >
 				<checkbox value_unchecked="0" checked="true" value="1" id="narm" label="Omit missing values" />
-				<checkbox checked="false" value="1" id="result" label="Store results" />
-				<saveobject intial="rk.univariate" id="nom" label="Name of the result" />
+				<saveobject intial="rk.univariate" id="saveas" checkable="true" label="Store results" />
 				<stretch/>
 			</tab>
 		</tabbook>

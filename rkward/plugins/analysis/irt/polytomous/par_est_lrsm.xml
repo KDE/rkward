@@ -33,10 +33,7 @@
               <option label="Compute group contrasts" value="contrasts" />
             </radio>
             <varslot type="numeric" id="group_vec" source="vars" label="Use this group vector:"/>
-	    <frame id="frame_save">
-	      <checkbox id="chk_save" label="Keep results in current workspace" value="save" checked="true"/>
-	      <saveobject id="save_name" initial="estimates.lrsm"/>
-	    </frame>
+            <saveobject id="save_name" checkable="true" checked="true" label="Save results in workspace" initial="estimates.lrsm"/>
           </column>
         </row>
       </tab>

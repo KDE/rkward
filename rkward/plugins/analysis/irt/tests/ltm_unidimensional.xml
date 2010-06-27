@@ -20,10 +20,7 @@
             <frame id="frame_options" label="Monte Carlo options">
               <spinbox id="spin_samples" label="Number of samples:" type="integer" initial="100" min="1" size="small" />
             </frame>
-	    <frame id="frame_save">
-	      <checkbox id="chk_save" label="Keep results in current workspace" value="save" checked="true"/>
-	      <saveobject id="save_name" initial="unidim.res"/>
-	    </frame>
+            <saveobject id="save_name" checkable="true" checked="true" label="Save results in workspace" initial="unidim.res"/>
           </column>
         </row>
       </tab>

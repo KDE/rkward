@@ -5,10 +5,6 @@
 	<logic>
 		<connect client="lambda.enabled" governor="custom.state.not"/>
 		<connect client="clambda.enabled" governor="custom.state"/>
-		<connect client="trend_name.enabled" governor="create_trend.state"/>
-		<connect client="trend_name.required" governor="trend_name.enabled"/>
-		<connect client="cycle_name.enabled" governor="create_cycle.state"/>
-		<connect client="cycle_name.required" governor="cycle_name.enabled"/>
 		<connect client="cycle_frame.enabled" governor="plot_cycle.state"/>
 		<connect client="cycle_col.color.enabled" governor="plot_cycle.state"/>
 		<connect client="downlab.enabled" governor="plot_cycle.state"/>
@@ -48,14 +44,8 @@
 						</row>
 						<row>
 							<frame label="Output series" id="output_frame">
-								<row>
-									<checkbox id="create_trend" label="Trend" value="1" value_unchecked="0" checked="true"/>
-									<saveobject id="trend_name" initial="hptrend"/>
-								</row>
-								<row>
-									<checkbox id="create_cycle" label="Cycle" value="1" value_unchecked="0"/>
-									<saveobject id="cycle_name" initial="hpcycle"/>
-								</row>
+								<saveobject id="trend_name" label="Save trend" checkable="true" checked="true" initial="hptrend"/>
+								<saveobject id="cycle_name" label="Save cycle" checkable="true" initial="hpcycle"/>
 							</frame>
 						</row>
 					</column>

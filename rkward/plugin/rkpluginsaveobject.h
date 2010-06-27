@@ -2,7 +2,7 @@
                           rkpluginsaveobject  -  description
                              -------------------
     begin                : Tue Jan 30 2007
-    copyright            : (C) 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -24,6 +24,7 @@
 
 class RKSaveObjectChooser;
 class QDomElement;
+class QGroupBox;
 
 /** RKComponent to select an R object name to save something to
 
@@ -36,17 +37,23 @@ public:
 	RKPluginSaveObject (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
 	~RKPluginSaveObject ();
 
-	RKComponentPropertyBase *selection;
-	QString value (const QString &modifier) { return (selection->value (modifier)); };
+	QString value (const QString &modifier);
 	int type () { return ComponentSaveObject; };
 	bool isValid ();
 public slots:
-	void selectionChanged ();
-	void selectionChanged (bool);
-	void selectionChanged (RKComponentPropertyBase *);
+	void externalChange ();
+	void internalChange ();
 private:
 	RKSaveObjectChooser *selector;
+	void update ();
 	bool updating;
+
+	QGroupBox* groupbox;
+
+	RKComponentPropertyBase *selection;
+	RKComponentPropertyBase *objectname;
+	RKComponentPropertyRObjects *parent;
+	RKComponentPropertyBool *active;
 };
 
 #endif

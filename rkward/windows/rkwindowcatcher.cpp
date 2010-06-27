@@ -330,8 +330,9 @@ void RKCaughtX11Window::copyDeviceToRObject () {
 	KVBox *page = new KVBox (dialog);
 	dialog->setMainWidget (page);
 
-	RKSaveObjectChooser *chooser = new RKSaveObjectChooser (page, "my.plot", i18n ("Specify the R object name, you want to save the graph to"));
-	connect (chooser, SIGNAL (okStatusChanged (bool)), dialog, SLOT (enableButtonOk (bool)));
+	new QLabel (i18n ("Specify the R object name, you want to save the graph to"), page);
+	RKSaveObjectChooser *chooser = new RKSaveObjectChooser (page, "my.plot");
+	connect (chooser, SIGNAL (changed (bool)), dialog, SLOT (enableButtonOk (bool)));
 	if (!chooser->isOk ()) dialog->enableButtonOk (false);
 
 	dialog->exec ();
@@ -339,9 +340,9 @@ void RKCaughtX11Window::copyDeviceToRObject () {
 	if (dialog->result () == QDialog::Accepted) {
 		RK_ASSERT (chooser->isOk ());
 
-		QString name = chooser->validizedSelectedObjectName ();
+		QString name = chooser->currentFullName ();
 
-		RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ")\n" + RObject::rQuote (name) + " <- recordPlot ()", RCommand::App | RCommand::ObjectListUpdate, i18n ("Save contents of graphics device number %1 to object '%2'", device_number, name), error_dialog);
+		RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ")\n" + name + " <- recordPlot ()", RCommand::App | RCommand::ObjectListUpdate, i18n ("Save contents of graphics device number %1 to object '%2'", device_number, name), error_dialog);
 	}
 
 	delete dialog;

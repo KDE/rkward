@@ -182,6 +182,8 @@ R, only for internal lookup. For submission to R, always use RObject::getFullNam
 @param is_canonified the object name may usually have to be canonified. Since this function may be called recursively, canonification may already have occurred on a higher level. In this case the argument is set to true to avoid some duplicate work. When calling from outside always leave the default false.
 @returns a pointer to the object (if found) or 0 if not found */
 	virtual RObject *findObject (const QString &name, bool is_canonified=false) const;
+/** generates a (full) name for a child of this object with the given name. */
+	virtual QString makeChildName (const QString &short_child_name, bool misplaced=false) const;
 protected:
 // why do I need those to compile? I thought they were derived classes!
 	friend class RContainerObject;
@@ -198,8 +200,6 @@ protected:
 	QString *classnames;
 	unsigned int num_classes;
 
-/** generates a (full) name for a child of this object with the given name. */
-	virtual QString makeChildName (const QString &short_child_name, bool misplaced=false) const;
 	virtual QString makeChildBaseName (const QString &short_child_name) const;
 
 /** Update object to reflect the structure passed in the new_data argument. If the data is mismatching (i.e. can not be accommodated by this type of object) false is returned (calls canAccommodateStructure () internally). In this case you should delete the object, and create a new one.

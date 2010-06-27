@@ -12,7 +12,7 @@ rk.print(t(rbind(Eta=estimates.lltm$etapar,StdErr=estimates.lltm$se.eta)))
 rk.print (paste("Conditional log-likelihood:",round(estimates.lltm$loglik, digits=1),
 "<br />Number of iterations:",estimates.lltm$iter,"<br />Number of parameters:",estimates.lltm$npar))
 # keep results in current workspace
-estimates.lltm <<- estimates.lltm
+.GlobalEnv$estimates.lltm <- estimates.lltm
 })
-.rk.rerun.plugin.link(plugin="rkward::par_est_lltm", settings="chk_save.state=save\ndesign.string=auto\netastart.string=NULL\ngroups.string=1\nmpoints.real=2.00\nsave_name.selection=estimates.lltm\nstderr.state=se\nsumnull.state=sum0\nx.available=lltmdat1", label="Run again")
+.rk.rerun.plugin.link(plugin="rkward::par_est_lltm", settings="design.string=auto\netastart.string=NULL\ngroups.string=1\nmpoints.real=2.00\nsave_name.active=1\nsave_name.objectname=estimates.lltm\nsave_name.parent=.GlobalEnv\nstderr.state=se\nsumnull.state=sum0\nx.available=lltmdat1", label="Run again")
 .rk.make.hr()

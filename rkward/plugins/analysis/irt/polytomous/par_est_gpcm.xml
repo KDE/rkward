@@ -12,9 +12,6 @@
     <connect client="optimeth.enabled" governor="optim_used" />
     <connect client="startval_lst.enabled" governor="sv_matrix" />
     <connect client="startval_lst.required" governor="sv_matrix" />
-
-    <connect client="save_name.enabled"  governor="chk_save.state" />
-    <connect client="save_name.required" governor="chk_save.state" />
   </logic>
 
   <dialog label="IRT parameter estimation: Generalized partial credit model">
@@ -29,10 +26,7 @@
 	      <varslot type="numeric" id="inp_items" source="vars" multi="true" min_vars="2" label="List of items:" />
             </frame>
             <stretch />
-	    <frame id="frame_save">
-	      <checkbox id="chk_save" label="Keep results in current workspace" value="save" checked="true"/>
-	      <saveobject id="save_name" initial="estimates.gpcm"/>
-	    </frame>
+            <saveobject id="save_name" checkable="true" checked="true" label="Save results in workspace" initial="estimates.gpcm"/>
           </column>
         </row>
       </tab>
