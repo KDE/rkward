@@ -84,6 +84,7 @@ void RKWindowCatcher::killDevice (int device_number) {
 
 	RKCaughtX11Window* window = RKCaughtX11Window::getWindow (device_number);
 	if (window) {
+		window->setKilledInR ();
 		window->close (true);
 		QApplication::syncX ();
 	}
@@ -103,6 +104,7 @@ void RKWindowCatcher::killDevice (int device_number) {
 #	include <QX11EmbedContainer>
 #endif
 #include <QTimer>
+#include <QCloseEvent>
 
 #include <ktoggleaction.h>
 #include <kdialog.h>
@@ -110,6 +112,7 @@ void RKWindowCatcher::killDevice (int device_number) {
 #include <kvbox.h>
 #include <kwindowsystem.h>
 #include <kactioncollection.h>
+#include <kpassivepopup.h>
 
 #include "../rkglobals.h"
 #include "../rbackend/rinterface.h"
@@ -121,9 +124,10 @@ void RKWindowCatcher::killDevice (int device_number) {
 // static
 QHash<int, RKCaughtX11Window*> RKCaughtX11Window::device_windows;
 
-RKCaughtX11Window::RKCaughtX11Window (WId window_to_embed, int device_number) : RKMDIWindow (0, X11Window) {
+RKCaughtX11Window::RKCaughtX11Window (WId window_to_embed, int device_number) : RKMDIWindow (0, X11Window), RCommandReceiver () {
 	RK_TRACE (MISC);
 
+	killed_in_r = false;
 	embedded = window_to_embed;
 	RKCaughtX11Window::device_number = device_number;
 	RK_ASSERT (!device_windows.contains (device_number));
@@ -134,6 +138,10 @@ RKCaughtX11Window::RKCaughtX11Window (WId window_to_embed, int device_number) : 
 	initializeActivationSignals ();
 	setFocusPolicy (Qt::ClickFocus);
 	updateHistoryActions (0, 0);
+
+	status_popup = new KPassivePopup (this);
+	status_popup->setTimeout (0);
+	disconnect (status_popup, SIGNAL (clicked()), status_popup, SLOT (hide()));	// no auto-hiding, please
 
 	QVBoxLayout *layout = new QVBoxLayout (this);
 	layout->setContentsMargins (0, 0, 0, 0);
@@ -208,6 +216,21 @@ RKCaughtX11Window::~RKCaughtX11Window () {
 	RKWardApplication::getApp ()->unregisterNameWatcher (embedded);
 #endif
 	error_dialog->autoDeleteWhenDone ();
+	delete status_popup;
+}
+
+bool RKCaughtX11Window::close (bool also_delete) {
+	RK_TRACE (MISC);
+
+	if (killed_in_r || RKGlobals::rInterface ()->backendIsDead ()) {
+		return RKMDIWindow::close (also_delete);
+	}
+
+	RCommand* c = new RCommand ("dev.off (" + QString::number (device_number) + ')', RCommand::App, i18n ("Shutting down device number %1", device_number), error_dialog);
+	setStatusMessage (i18n ("Closing device (saving history)"), c);
+	RKGlobals::rInterface ()->issueCommand (c);
+
+	return false;
 }
 
 void RKCaughtX11Window::prepareToBeAttached () {
@@ -358,29 +381,37 @@ void RKCaughtX11Window::duplicateDevice () {
 void RKCaughtX11Window::nextPlot () {
 	RK_TRACE (MISC);
 
-	RKGlobals::rInterface ()->issueCommand ("rk.next.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Load next plot in device number %1", device_number), error_dialog);
+	RCommand* c = new RCommand ("rk.next.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Load next plot in device number %1", device_number), error_dialog);
 	updateHistoryActions (history_length, history_position+1);
+	setStatusMessage (i18n ("Loading plot from history"), c);
+	RKGlobals::rInterface ()->issueCommand (c);
 }
 
 void RKCaughtX11Window::previousPlot () {
 	RK_TRACE (MISC);
 
-	RKGlobals::rInterface ()->issueCommand ("rk.previous.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Load previous plot in device number %1", device_number), error_dialog);
+	RCommand* c = new RCommand ("rk.previous.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Load previous plot in device number %1", device_number), error_dialog);
 	updateHistoryActions (history_length, history_position-1);
+	setStatusMessage (i18n ("Loading plot from history"), c);
+	RKGlobals::rInterface ()->issueCommand (c);
 }
 
 void RKCaughtX11Window::firstPlot () {
 	RK_TRACE (MISC);
 
-	RKGlobals::rInterface ()->issueCommand ("rk.first.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Load first plot in device number %1", device_number), error_dialog);
+	RCommand* c = new RCommand ("rk.first.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Load first plot in device number %1", device_number), error_dialog);
 	updateHistoryActions (history_length, 1);
+	setStatusMessage (i18n ("Loading plot from history"), c);
+	RKGlobals::rInterface ()->issueCommand (c);
 }
 
 void RKCaughtX11Window::lastPlot () {
 	RK_TRACE (MISC);
 
-	RKGlobals::rInterface ()->issueCommand ("rk.last.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Load last plot in device number %1", device_number), error_dialog);
+	RCommand* c = new RCommand ("rk.last.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Load last plot in device number %1", device_number), error_dialog);
 	updateHistoryActions (history_length, history_length);
+	setStatusMessage (i18n ("Loading plot from history"), c);
+	RKGlobals::rInterface ()->issueCommand (c);
 }
 
 void RKCaughtX11Window::recordCurrentPlot () {
@@ -410,6 +441,30 @@ void RKCaughtX11Window::updateHistoryActions (int history_length, int position) 
 	plot_next_action->setEnabled ((history_length > 0) && (position < history_length));
 	plot_last_action->setEnabled ((history_length > 0) && (position < history_length));
 }
+
+void RKCaughtX11Window::setStatusMessage (const QString& message, RCommand *command) {
+	RK_TRACE (MISC);
+
+	status_change_command = command;
+	if (command) command->addReceiver (this);
+	if (!message.isEmpty ()) {
+		status_popup->setView (QString (), message);
+		status_popup->show (xembed_container->mapToGlobal (QPoint (20, 20)));
+	} else {
+		status_popup->hide ();
+	}
+}
+
+void RKCaughtX11Window::rCommandDone (RCommand *command) {
+	RK_TRACE (MISC);
+
+	if (command == status_change_command) {
+		setStatusMessage (QString ());
+		status_popup->hide();
+	}
+	RCommandReceiver::rCommandDone (command);
+}
+
 
 ///////////////////////////////// END RKCaughtX11Window ///////////////////////////////
 /**************************************************************************************/

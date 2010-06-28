@@ -80,6 +80,7 @@ private:
 
 
 #include "rkmdiwindow.h"
+#include "../rbackend/rcommandreceiver.h"
 
 #include <QHash>
 
@@ -92,9 +93,10 @@ class KVBox;
 class RKProgressControl;
 class QX11EmbedContainer;
 class QWinHost;
+class KPassivePopup;
 
 /** An R X11 device window managed by rkward. */
-class RKCaughtX11Window : public RKMDIWindow {
+class RKCaughtX11Window : public RKMDIWindow, public RCommandReceiver {
 	Q_OBJECT
 public:
 /** ctor
@@ -115,6 +117,10 @@ public:
 /** returns the window corresponding the to given R device number (or 0 if no such window exists) */
 	static RKCaughtX11Window* getWindow (int device_number) { return device_windows.value (device_number); };
 	void updateHistoryActions (int history_length, int position);
+/** Set a status message to be shown in a popup inside the window. The message persists until the given R command has finished, or until this function is called with an empty string.
+This should be used, when the plot is currently out-of-date (e.g. when loading a plot from history), _not_ when the window
+is simply busy (e.g. when saving the current plot to history). */
+	void setStatusMessage (const QString& message, RCommand* command=0);
 public slots:
 /** Fixed size action was (potentially) toggled. Update to the new state */
 	void fixedSizeToggled ();
@@ -145,11 +151,17 @@ public slots:
 	void recordCurrentPlot ();
 /** history navigation */
 	void clearHistory ();
+
+/** reimplemented to keep window alive while saving history */
+	bool close (bool also_delete);
+	void setKilledInR () { killed_in_r = true; };
 private slots:
 	void doEmbed ();
 private:
+	void rCommandDone (RCommand *command);
 	friend class RKCaughtX11WindowPart;	// needs access to the actions
 	int device_number;
+	bool killed_in_r;
 	WId embedded;
 	KVBox *xembed_container;
 	QScrollArea *scroll_widget;
@@ -172,6 +184,9 @@ private:
 	KAction *plot_next_action;
 	KAction *plot_first_action;
 	KAction *plot_last_action;
+
+	KPassivePopup* status_popup;
+	RCommand* status_change_command;
 
 	int history_length;
 	int history_position;

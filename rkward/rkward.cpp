@@ -506,9 +506,11 @@ bool RKWardMainWindow::doQueryQuit () {
 	RKWorkplace::RKWorkplaceObjectList map = RKWorkplace::mainWorkplace ()->getObjectList ();
 	for (RKWorkplace::RKWorkplaceObjectList::const_iterator it = map.constBegin (); it != map.constEnd (); ++it){
 		if (!(*it)->close (true)) {
-			// If a child refuses to close, we return false.
-			slotSetStatusReady ();
-			return false;
+			if (!(*it)->isType (RKMDIWindow::X11Window)) {	// X11 windows have a delayed close
+				// If a child refuses to close, we return false.
+				slotSetStatusReady ();
+				return false;
+			}
 		}
 	}
 
