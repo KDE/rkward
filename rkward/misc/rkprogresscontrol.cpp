@@ -2,7 +2,7 @@
                           rkprogresscontol  -  description
                              -------------------
     begin                : Sun Sep 10 2006
-    copyright            : (C) 2006, 2007, 2008, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007, 2008, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -237,7 +237,8 @@ RKProgressControlDialog::RKProgressControlDialog (const QString &text, const QSt
 		output_box->setStretchFactor (output_text, 10);
 	}
 	setDetailsWidget (output_box);
-	connect (this, SIGNAL(aboutToShowDetails()), this, SLOT(scrollDown()));
+	// it's important to use a queued connection, here. Otherwise, if the details widget gets shown due to error output, scrollDown() would only scroll to the position directly *above* the new output.
+	connect (this, SIGNAL(aboutToShowDetails()), this, SLOT(scrollDown()), Qt::QueuedConnection);
 
 	KDialog::ButtonCodes button_codes = KDialog::Cancel;
 	if (mode_flags & RKProgressControl::OutputSwitchable) button_codes |= KDialog::Details;
@@ -286,9 +287,6 @@ void RKProgressControlDialog::addOutput (const ROutput *output) {
 
 void RKProgressControlDialog::scrollDown () {
 	RK_TRACE (MISC);
-
-	// oh what an ugly hack... (to cope with changing slider position just when the details widget becomes visible
-	if (!output_text->isVisible ()) QTimer::singleShot (0, this, SLOT(scrollDown()));
 
 	QScrollBar *bar = output_text->verticalScrollBar ();
 	if (bar) bar->setValue (bar->maximum ());
