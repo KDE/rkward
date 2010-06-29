@@ -59,16 +59,13 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 "rk.record.plot" <- function ()
 {
 	# TODO: 
-	# - add showFirst and showLast to menubar / toolbar
 	# - add a length and size limit to recorded () list
-	# - add a menu / toolbar to clear history
-	# - Create separate history for each device? May be not!
-	# - Destroy the history when a device is closed?
+	# - add one or more tests to rkward_application_tests.R
 	# - .... ?
 	
 	env <- environment()
 	recorded <- list()
-	current <- list("1" = 0) # 1 is always null device
+	histPositions <- list("1" = 0) # 1 is always null device
 	newPlotExists <- list("1" = FALSE)
 	isDuplicate <- FALSE
 	
@@ -78,12 +75,12 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		old_dev <- as.character (old_dev)
 		deviceId <- as.character (deviceId)
 		
-		if (old_dev %in% names (current) && old_dev != "1") recordUnsaved (old_dev)
+		if (old_dev %in% names (histPositions) && old_dev != "1") recordUnsaved (old_dev)
 		
 		if (isDuplicate) {
-			current [[deviceId]] <<- current [[old_dev]]
+			histPositions [[deviceId]] <<- histPositions [[old_dev]]
 		} else {
-			current [[deviceId]] <<- length (recorded) + 1
+			histPositions [[deviceId]] <<- length (recorded) + 1
 		}
 		newPlotExists [[deviceId]] <<- FALSE
 	}
@@ -92,7 +89,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		deviceId <- as.character (deviceId)
 		
 		recordUnsaved (deviceId)
-		current [[deviceId]] <<- newPlotExists [[deviceId]] <<- NULL
+		histPositions [[deviceId]] <<- newPlotExists [[deviceId]] <<- NULL
 	}
 	record <- function(deviceId = dev.cur (), newplotflag = TRUE, force = FALSE)
 	{
@@ -103,13 +100,13 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		
 		if (newPlotExists [[deviceId]]) {
 			if (class (try (unsavedPlot <- recordPlot(), silent=TRUE)) != 'try-error') {
-				current [[deviceId]] <<- length(recorded) + 1L
-				recorded [[current [[deviceId]]]] <<- unsavedPlot
+				histPositions [[deviceId]] <<- length(recorded) + 1L
+				recorded [[histPositions [[deviceId]]]] <<- unsavedPlot
 				.rk.graph.history.gui ()
 			}
 		} else if (force) {
 			if (class (try (unsavedPlot <- recordPlot(), silent=TRUE)) != 'try-error') {
-				recorded [[current [[deviceId]]]] <<- unsavedPlot
+				recorded [[histPositions [[deviceId]]]] <<- unsavedPlot
 			}
 		}
 		newPlotExists [[deviceId]] <<- newplotflag
@@ -121,7 +118,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 			record (deviceId, newplotflag = FALSE)
 		}
 	}
-	replay <- function(n = current [[as.character (deviceId)]] - 1L, deviceId = dev.cur ())
+	replay <- function(n = histPositions [[as.character (deviceId)]] - 1L, deviceId = dev.cur ())
 	{
 		deviceId <- as.character (deviceId)
 		
@@ -129,7 +126,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		dev.set (as.numeric(deviceId))
 		
 		if (n > 0 && n <= length(recorded)) {
-			current [[deviceId]] <<- n
+			histPositions [[deviceId]] <<- n
 			replayPlot(recorded[[n]])
 			.rk.graph.history.gui ()
 		}
@@ -140,20 +137,20 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	showPrevious <- function(deviceId)
 	{
 		recordUnsaved (deviceId)
-		replay(n = current [[as.character (deviceId)]] - 1L, deviceId = deviceId)
+		replay(n = histPositions [[as.character (deviceId)]] - 1L, deviceId = deviceId)
 	}
 	showNext <- function(deviceId)
 	{
 		recordUnsaved (deviceId)
-		replay(n = current [[as.character (deviceId)]] + 1L, deviceId = deviceId)
+		replay(n = histPositions [[as.character (deviceId)]] + 1L, deviceId = deviceId)
 	}
 	showLast <- function(deviceId = dev.cur()) replay(n = length(recorded), deviceId)
 	resetHistory <- function ()
 	{
 		recorded <<- list()
 		isDuplicate <<- FALSE
-		for (dev_num in names (current)) {
-			current[[dev_num]] <<- 0
+		for (dev_num in names (histPositions)) {
+			histPositions[[dev_num]] <<- 0
 			newPlotExists [[dev_num]] <<- FALSE
 		}
 		.rk.graph.history.gui ()
@@ -161,24 +158,23 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	printPars <- function ()
 	{
 		message ('History len: ', length (recorded))
-		message ('Current devices  : ', paste (names (current), collapse = ', ')) 
-		message ('Current positions: ', paste (unlist (current), collapse = ', ')) 
+		message ('Current devices  : ', paste (names (histPositions), collapse = ', ')) 
+		message ('Current positions: ', paste (unlist (histPositions), collapse = ', ')) 
 		message ('New plot exists? ', paste (unlist (newPlotExists), collapse = ', ')) 
 	}
 	.rk.graph.history.gui <- function ()
 	{
 		# this function is called whenever the history length changes (ie, increases, for now)
 		# or the position changes in any device.
-		# see public_graphics.R :: rk.record.plot
 		history_length <- length (recorded)
 		
 		# TODO: no need to update all devices when called from replay ()
-		ndevs <- length (current)
+		ndevs <- length (histPositions)
 		if (ndevs > 1) {
 			positions <- character (1 + 2 * ndevs)
 			positions [1] <- history_length # coerced as character
-			positions [2 * (1:ndevs)] <- names (current)
-			positions [1 + 2 * (1:ndevs)] <- unlist (current, use.names = FALSE)
+			positions [2 * (1:ndevs)] <- names (histPositions)
+			positions [1 + 2 * (1:ndevs)] <- unlist (histPositions, use.names = FALSE)
 			.rk.do.call ("updateDeviceHistory", positions);
 		}
 		invisible (NULL)
@@ -191,27 +187,27 @@ rk.record.plot <- rk.record.plot ()
 # quick wrappers around rk.record.plot$show{Previous,Next} :
 # 1 is always the null device
 # TODO : comment / remove printPars call
-"rk.first.plot" <- function (deviceId = 2)
+"rk.first.plot" <- function (deviceId = dev.cur ())
 {
 	rk.record.plot$showFirst (deviceId)
 	rk.record.plot$printPars ()
 }
-"rk.previous.plot" <- function (deviceId = 2)
+"rk.previous.plot" <- function (deviceId = dev.cur ())
 {
 	rk.record.plot$showPrevious (deviceId)
 	rk.record.plot$printPars ()
 }
-"rk.next.plot" <- function (deviceId = 2)
+"rk.next.plot" <- function (deviceId = dev.cur ())
 {
 	rk.record.plot$showNext (deviceId)
 	rk.record.plot$printPars ()
 }
-"rk.last.plot" <- function (deviceId = 2)
+"rk.last.plot" <- function (deviceId = dev.cur ())
 {
 	rk.record.plot$showLast (deviceId)
 	rk.record.plot$printPars ()
 }
-"rk.current.plot" <- function (deviceId = 2)
+"rk.current.plot" <- function (deviceId = dev.cur ())
 {
 	if (!(deviceId %in% .rk.preview.devices)) rk.record.plot$record (deviceId, newplotflag=FALSE, force=TRUE)
 	rk.record.plot$printPars ()
