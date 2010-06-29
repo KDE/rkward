@@ -1,6 +1,6 @@
 <!DOCTYPE kpartgui>
 <!-- This contains *mostly* a duplicate of rkwardui.rc. Perhaps the two can be merged one day, but that's not as trivial as it may sound.. -->
-<kpartgui name="rkward" version="53">
+<kpartgui name="rkward_detachedwindow" version="54">
 	<MenuBar>
 		<Menu name="file"><text>&amp;File</text>
 			<DefineGroup name="file_dummy_merge" />

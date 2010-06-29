@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward" version="53">
+<kpartgui name="rkward_commandeditor" version="54">
 	<MenuBar>
 		<Menu name="edit"><text>&amp;Edit</text>
 			<Menu name="tools" group="edit_first_merge"><text>&amp;Tools Move</text>
@@ -8,7 +8,7 @@
 			<Action name="mark_block" group="edit_select_merge"/>
 			<Action name="unmark_block" group="edit_select_merge"/>
 		</Menu>
-		<Menu name="run" noMerge="1"><text>&amp;Run</text>
+		<Menu name="run"><text>&amp;Run</text>
 			<Action name="run_block" group="postrun_actions_merge"/>
 			<Separator group="postrun_actions_merge"/>
 			<Action name="setwd_to_script" group="postrun_actions_merge"/>

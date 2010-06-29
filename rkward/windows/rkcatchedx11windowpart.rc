@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward" version="54">
+<kpartgui name="rkward_x11window" version="54">
 	<MenuBar>
 		<Menu name="device"><text>&amp;Device</text>
 			<Action name="device_activate"/>
