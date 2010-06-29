@@ -24,7 +24,7 @@
 	.rk.do.call ("endOpenX11", as.character (dev.cur ()));
 
 	if (!is.preview.device) {
-		rk.record.plot$onAddDevice (duplicateId = dupFrom, deviceId = dev.cur ())
+		rk.record.plot$onAddDevice (old_dev = dupFrom, deviceId = dev.cur ())
 		rk.record.plot$.rk.graph.history.gui ()
 	}
 
@@ -89,10 +89,6 @@ formals (plot.new) <- formals (graphics::plot.new)
 	}
 
 	ret <- eval (body (.rk.dev.off.default))
-	
-	if (.is.inter) {
-		rk.record.plot$fixDeviceLists ()
-	}
 
 	return (ret)
 }
