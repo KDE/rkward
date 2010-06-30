@@ -115,7 +115,7 @@ void RKObjectListView::initialize () {
 
 	QModelIndex genv = settings->mapFromSource (RKGlobals::tracker ()->indexFor (RObjectList::getGlobalEnv ()));
 	QModelIndex olist = settings->mapFromSource (RKGlobals::tracker ()->indexFor (RObjectList::getObjectList ()));
-	setExpanded (olist, true);
+	setRootIndex (olist);
 	setExpanded (genv, true);
 	setMinimumHeight (rowHeight (genv) * 5);
 	resetWidths ();
