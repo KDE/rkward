@@ -69,7 +69,7 @@ friend class RKWardMainWindow;
 	static RKHelpSearchWindow *main_help_search;
 };
 
-/** An item model meant for use by RKHelpSearchWindow. Since it is fairly specialized, it is unlikely to be of any use in any other context. NOTE: This class is pretty useless, really, we should just switch to a QTree/TableWidget with predefined model, whenever we need to make the next big change to the RKHelpSearchWindow. */
+/** An item model meant for use by RKHelpSearchWindow. Since it is fairly specialized, it is unlikely to be of any use in any other context. NOTE: This class is pretty useless, really, we should just switch to a QTree/TableWidget with predefined model, whenever we need to make the next big change to the RKHelpSearchWindow.
 @author Thomas Friedrichsmeier */
 class RKHelpSearchResultsModel : public QAbstractTableModel {
 public:
