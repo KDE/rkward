@@ -190,7 +190,7 @@ void RKHelpSearchWindow::slotFindButtonClicked () {
 		package.append ("NULL");	// all installed packages; actually we could also use package.clear(), here.
 	} else if (packagesList->currentIndex () == 1) {
 		package.append (".packages()");	// all loaded packages
-	} else if (packagesList->currentIndex () > 1) {
+	} else {
 		package.append ("\"" + packagesList->currentText () + "\"");
 	}
 
