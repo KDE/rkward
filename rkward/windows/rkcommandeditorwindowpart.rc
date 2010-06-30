@@ -29,13 +29,13 @@
 		<Action name="mark_block"/>
 		<Action name="unmark_block"/>
 		<Menu name="run"><text>&amp;Run</text>
-			<DefineGroup name="run_actions_merge" append="run_actions_merge"/>
+			<DefineGroup name="run_actions_merge"/>
 			<Action name="run_block"/>
 			<Separator/>
 			<Action name="setwd_to_script"/>
 		</Menu>
 		<Separator/>
-		<DefineGroup name="ktexteditor_popup_merge2" append="ktexteditor_popup_merge2"/>
+		<DefineGroup name="ktexteditor_popup_merge2"/>
 		<Separator/>
 		<Action name="configure_commandeditor"/>
 	</Menu>
