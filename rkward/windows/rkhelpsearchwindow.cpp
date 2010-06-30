@@ -2,7 +2,7 @@
                           rkhelpsearchwindow  -  description
                              -------------------
     begin                : Fri Feb 25 2005
-    copyright            : (C) 2005, 2006, 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -31,6 +31,7 @@
 #include <QHBoxLayout>
 #include <QFocusEvent>
 #include <QVBoxLayout>
+#include <QSortFilterProxyModel>
 
 #include "../rbackend/rinterface.h"
 #include "../rbackend/rcommandreceiver.h"
@@ -99,7 +100,11 @@ RKHelpSearchWindow::RKHelpSearchWindow (QWidget *parent, bool tool_window, const
 
 	packagesList = new QComboBox (this);
 	packagesList->setEditable (false);
-	packagesList->addItem (i18n("All"));
+	packagesList->addItem (i18n("All installed packages"));
+	packagesList->addItem (i18n("All loaded packages"));
+#if QT_VERSION >= 0x040400
+	packagesList->insertSeparator (2);
+#endif
 	fields_packages_layout->addWidget (packagesList);
 
 	QVBoxLayout* checkboxes_layout = new QVBoxLayout ();
@@ -117,9 +122,12 @@ RKHelpSearchWindow::RKHelpSearchWindow (QWidget *parent, bool tool_window, const
 	selection_layout->addWidget (findButton);
 
 	results = new RKHelpSearchResultsModel (this);
+	QSortFilterProxyModel *proxy_model = new QSortFilterProxyModel (this);
+	proxy_model->setSourceModel (results);
 	results_view = new QTreeView (this);
 	results_view->setRootIsDecorated (false);
-	results_view->setModel (results);
+	results_view->setModel (proxy_model);
+	results_view->setSortingEnabled (true);
 	connect (results_view, SIGNAL (doubleClicked(const QModelIndex&)), this, SLOT (resultDoubleClicked(const QModelIndex&)));
 	main_layout->addWidget (results_view);
 
@@ -177,14 +185,18 @@ void RKHelpSearchWindow::slotFindButtonClicked () {
 		ignoreCase="FALSE";
 	}
 	
-	QString package = "NULL";
-	if (packagesList->currentIndex () != 0) {
-		package= "\"" +	packagesList->currentText () + "\"";
+	QString package = ", package=";
+	if (packagesList->currentIndex () == 0) {
+		package.append ("NULL");	// all installed packages; actually we could also use package.clear(), here.
+	} else if (packagesList->currentIndex () == 1) {
+		package.append (".packages()");	// all loaded packages
+	} else if (packagesList->currentIndex () > 1) {
+		package.append ("\"" + packagesList->currentText () + "\"");
 	}
 
 	QString fields = fieldsList->itemData (fieldsList->currentIndex ()).toString ();
 
-	QString s = ".rk.get.search.results (\"" + field->currentText () + "\",agrep=" + agrep + ", ignore.case=" + ignoreCase + ", package=" + package + ", fields=" + fields +")";
+	QString s = ".rk.get.search.results (\"" + field->currentText () + "\",agrep=" + agrep + ", ignore.case=" + ignoreCase + package + ", fields=" + fields +")";
 	
 	RKGlobals::rInterface ()->issueCommand (s, RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, HELP_SEARCH, 0);
 	setEnabled (false);
