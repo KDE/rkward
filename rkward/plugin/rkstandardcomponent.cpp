@@ -37,6 +37,8 @@
 #include "../scriptbackends/rkcomponentscripting.h"
 #include "../misc/xmlhelper.h"
 #include "../settings/rksettingsmoduleplugins.h"
+#include "../windows/rkmdiwindow.h"
+#include "../windows/rkworkplace.h"
 
 // component widgets
 #include "rkvarselector.h"
@@ -72,6 +74,17 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 	killed = false;
 	addChild ("code", code = new RKComponentPropertyCode (this, true));		// do not change this name!
 	code->setInternal (true);
+
+	RKComponentPropertyBase *current_object_property = new RKComponentPropertyBase (this, false);
+	current_object_property->setInternal (true);
+	RKMDIWindow *w = RKWorkplace::mainWorkplace ()->activeWindow (RKMDIWindow::AnyWindowState);
+	if (w) {
+qDebug ("something's active: %s", qPrintable (w->globalContextProperty ("current_object")));
+		current_object_property->setValue (w->globalContextProperty ("current_object"));
+	} else {
+qDebug ("nothing's active");
+	}
+	addChild ("current_object", current_object_property);
 
 	// open the main description file for parsing
 	XMLHelper* xml = XMLHelper::getStaticHelper ();

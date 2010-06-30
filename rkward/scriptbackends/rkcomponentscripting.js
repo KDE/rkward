@@ -31,7 +31,7 @@ function Component(id) {
 		return (_rkward.getValue (this.absoluteId (id)));
 	}
 
-	this.setValue = function (value, id) {
+	this.setValue = function (id, value) {
 		return (_rkward.setValue (value, this.absoluteId (id)));
 	}
 
@@ -68,7 +68,7 @@ function RObject(objectname) {
 	this.initialize();
 
 	this.getName = function () {
-		return (this._name);
+		return (this.objectname);
 	}
 
 	this.exists = function () {

@@ -1,0 +1,25 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="generate_random.js"/>
+	<logic>
+		<connect governor="current_object" client="saveto.parent"/>
+		<script><![CDATA[
+			// the top-level block is called only once
+			gui.addChangeCommand ("saveto.parent", "parentChanged ()");
+
+			// this function is called on every change of the saveto's parent
+			parentChanged = function () {
+				parent_object = makeRObject (gui.getValue ("saveto.parent"));
+				gui.setValue ("length.enabled", !parent_object.isDataFrame ());
+			}
+			]]></script>
+	</logic>
+	<dialog label="Generate random data">
+		<text id="text">Well, this could be extended to other distributions in the same dialog. For now, it's normal distribution.</text>
+		<spinbox default_precision="2" type="real" initial="0" id="mean" label="mu (mean)"/>
+		<spinbox default_precision="2" type="real" min="0" initial="1" id="sd" label="sigma (standard deviation)"/>
+		<frame/>
+		<spinbox type="integer" initial="10" id="length" label="Length of generated sequence"/>
+		<saveobject id="saveto" label="Save as" initial="random"/>
+	</dialog>
+</document>

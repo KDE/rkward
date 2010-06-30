@@ -2,7 +2,7 @@
                           rkmdiwindow  -  description
                              -------------------
     begin                : Tue Sep 26 2006
-    copyright            : (C) 2006, 2007, 2008, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007, 2008, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -18,8 +18,8 @@
 #ifndef RKMDIWINDOW_H
 #define RKMDIWINDOW_H
 
-#include <qwidget.h>
 #include <QFrame>
+#include <QMap>
 
 #include <kparts/part.h>
 
@@ -106,6 +106,8 @@ public:
 	bool isActive ();
 /** Returns a pointer to an action collection suitable to place RKStandardAction in. This collection (and the corresponding KXMLGUIClient) is created on the fly. */
 	KActionCollection *standardActionCollection ();
+/** plugin-accessible properties of this object in the global context. Currently used only by RKEditorDataFrame to give information on the currently active data.frame. NOTE: ATM, you cannot set arbitrary properties. Only those supported in RKStandardComponent will have an effect. */
+	QString globalContextProperty (const QString& property) { return global_context_properties.value (property); };
 signals:
 /** This signal is emitted, whenever the window caption was changed.
 @param RKMDIWindow* a pointer to this window */
@@ -120,6 +122,8 @@ protected:
 
 /** reimplemented from QWidget to emulate focus-follows-mouse behavior */
 	void enterEvent (QEvent *event);
+/** @see globalContextProperty() */
+	void setGlobalContextProperty (const QString& property, const QString& value) { global_context_properties.insert (property, value); };
 friend class RKWorkplace;
 /** type of this window */
 	int type;
@@ -131,6 +135,8 @@ friend class RKToolWindowBar;
 	RKToolWindowBar *tool_window_bar;
 	bool active;
 	RKMDIStandardActionClient *standard_client;
+/** @see globalContextProperty() */
+	QMap<QString, QString> global_context_properties;
 };
 
 #endif

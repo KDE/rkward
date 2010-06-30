@@ -6,7 +6,7 @@
 	<logic>
 		<script><![CDATA[
 			call_num = 0;
-			gui.setValue ("Select a dependent variable!", "text.text");
+			gui.setValue ("text.text", "Select a dependent variable!");
 
 			f = Kross.module('forms');
 			label = f.createWidget(scripty, 'QLabel', 'Label', {});
@@ -19,7 +19,7 @@
 				text = "So, you think it's '" + obj.objectname + "'?\n";
 				text += "That has length " + obj.dimensions() + " and classes " + obj.classes() + "!\n";
 				text += "Updates of this text so far: " + call_num;
-				gui.setValue (text, "text.text");
+				gui.setValue ("text.text", text);
 			}
 			]]></script>
 	</logic>
