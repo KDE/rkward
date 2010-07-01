@@ -1768,6 +1768,14 @@ At some places in this introduction we've talked about "properties" of GUI eleme
 	<term>&lt;required&gt;</term>
 	<listitem>Whether - for submitting the code - it is required that the field holds a permissible object name. See <link linkend="elementproperties">required-property</link> (optional, defaults to true)</listitem>
 	</varlistentry>
+	<varlistentry>
+	<term>&lt;checkable&gt;</term>
+	<listitem>In many use cases, saving to an R object is optional. In these cases, a checkbox can be integrated into the saveobject-element using this attribute. When set to true, the saveobject will be activated / deactivated by the checkbox. See the <link linkend="elementproperties">active-property</link> of saveobject (optional, defaults to false)</listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>&lt;checked&gt;</term>
+	<listitem>For checkable saveobject-elements, only: Whether the control is checked/enabled by default (optional, defaults to false)</listitem>
+	</varlistentry>
 	</variablelist></listitem>
 </varlistentry>
 <varlistentry>
@@ -1983,6 +1991,10 @@ In addition to this, some elements have additional properties you can connect to
 	<term>selected</term>
 	<listitem>The objects currently selected. You probably do not want to use this. Used internally (RObject)</listitem>
 	</varlistentry>
+	<varlistentry>
+	<term>root</term>
+	<listitem>The root/parent object of the objects offered for selection (RObject)</listitem>
+	</varlistentry>
 	</variablelist></listitem>
 </varlistentry>
 <varlistentry>
@@ -2077,7 +2089,19 @@ In addition to this, some elements have additional properties you can connect to
 	<variablelist>
 	<varlistentry>
 	<term>selection</term>
-	<listitem>Current text (selected object name) (string)</listitem>
+	<listitem>Full name of the selected object (string; read-only - to set this programmatically, use "parent", and "objectname")</listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>parent</term>
+	<listitem>The parent object of the selected object. This is always an existing R object of a type that can contain other objects (e.g. a list or data.frame). When set to an empty string or an invalid object, ".GlobalEnv" is assumed (RObject)</listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>objectname</term>
+	<listitem>The base-name of the selected object, i.e. the string entered by the user (changed to a valid R name, if necessary) (string)</listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>active</term>
+	<listitem>For checkable saveobjects, only: Whether the control is checked/enabled. Always true for non-checkable saveobjects (bool)</listitem>
 	</varlistentry>
 	</variablelist></listitem>
 </varlistentry>
