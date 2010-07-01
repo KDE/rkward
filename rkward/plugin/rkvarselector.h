@@ -2,7 +2,7 @@
                           rkvarselector.h  -  description
                              -------------------
     begin                : Thu Nov 7 2002
-    copyright            : (C) 2002, 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2006, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -24,27 +24,27 @@
 class RKObjectListView;
 class QDomElement;
 
-/** This is an especially important RK-plugin-widget. It provides a list of variables
-(derived from the document's table), that can be selected for statistical analysis.
+/** This is an especially important RK-plugin-widget. It provides a list of variables, that
+can be selected for statistical analysis.
 It's major counterpart is the RKVarSlot-class, which "takes" variables selected from
-this list. Most of the time, you'll only have a single VarSelector in a GUI, but
-you can have more than one, e.g. for serving conceptionally different VarSlots.
+this list. Most of the time, you'll only have a single RKVarSelector in a GUI, but
+you can have more than one, e.g. for serving conceptionally different RKVarSlots.
 
 @author Thomas Friedrichsmeier
-  */
-
-
+*/
 class RKVarSelector : public RKComponent {
 	Q_OBJECT
 public: 
 	RKVarSelector (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
 	~RKVarSelector ();
 	int type () { return ComponentVarSelector; };
-public slots:
+private slots:
 	void objectSelectionChanged ();
+	void rootChanged ();
 private:
 	RKObjectListView *list_view;
 	RKComponentPropertyRObjects *selected;
+	RKComponentPropertyRObjects *root;
 };
 
 #endif

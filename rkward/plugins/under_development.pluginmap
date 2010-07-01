@@ -5,6 +5,7 @@
 		<component type="standard" id="simple_anova" file="simple_anova/description.xml" label="Simple Anova" />
 		<component type="standard" id="sieve_plot" file="plots/sieve_plot.xml" label="Extended Sieve Plot" />
 		<component type="standard" id="generate_random" file="data/generate_random.xml" label="Generate random data" />
+		<component type="standard" id="sort_data" file="data/sort.xml" label="Sort data" />
 
 <!-- These are purely for testing: -->
 		<component type="standard" id="qtscript_test1" file="testing/test1.xml" label="QtScript Test 1" />
@@ -22,7 +23,8 @@
 			</menu>
 		</menu>
 		<menu id="data" label="Data" index="3">
-			<entry component="generate_random" index="9"/>
+			<entry component="generate_random"/>
+			<entry component="sort_data"/>
 		</menu>
 		<menu id="analysis" label="Analysis" index="4">
 			<entry component="simple_anova" index="9"/>

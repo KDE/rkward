@@ -2,7 +2,7 @@
                           rkobjectlistview  -  description
                              -------------------
     begin                : Wed Sep 1 2004
-    copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -53,6 +53,7 @@ from your custom menu items, to figure out, which object you should operate on. 
 
 /** Scrolls so that the item representing object becomes visible, and makes it current */
 	void setObjectCurrent (RObject *object, bool only_if_none_current=false);
+	void setRootObject (RObject *root);
 
 	RObject::ObjectList selectedObjects () const;
 

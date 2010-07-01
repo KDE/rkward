@@ -2,7 +2,7 @@
                           rkobjectlistview  -  description
                              -------------------
     begin                : Wed Sep 1 2004
-    copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -56,6 +56,19 @@ void RKObjectListView::setObjectCurrent (RObject *object, bool only_if_none_curr
 	if (index.isValid ()) {
 		scrollTo (index);
 		setCurrentIndex (index);
+		resizeColumnToContents (0);
+	} else {
+		RK_ASSERT (false);
+	}
+}
+
+void RKObjectListView::setRootObject (RObject *root) {
+	RK_TRACE (APP);
+
+	if (!root) return;
+	QModelIndex index = settings->mapFromSource (RKGlobals::tracker ()->indexFor (root));
+	if (index.isValid ()) {
+		setRootIndex (index);
 		resizeColumnToContents (0);
 	} else {
 		RK_ASSERT (false);

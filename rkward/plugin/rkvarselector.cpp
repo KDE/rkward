@@ -2,7 +2,7 @@
                           rkvarselector.cpp  -  description
                              -------------------
     begin                : Thu Nov 7 2002
-    copyright            : (C) 2002, 2006, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2006, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -33,6 +33,9 @@ RKVarSelector::RKVarSelector (const QDomElement &element, RKComponent *parent_co
 // TODO: read filter settings
 	addChild ("selected", selected = new RKComponentPropertyRObjects (this, false));
 	selected->setInternal (true);
+	addChild ("root", root = new RKComponentPropertyRObjects (this, false));
+	connect (root, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (rootChanged()));
+	root->setInternal (true);
 
 	QVBoxLayout *vbox = new QVBoxLayout (this);
 	vbox->setContentsMargins (0, 0, 0, 0);
@@ -47,10 +50,19 @@ RKVarSelector::RKVarSelector (const QDomElement &element, RKComponent *parent_co
 	vbox->addWidget (list_view);
 	list_view->getSettings ()->setSetting (RKObjectListViewSettings::ShowObjectsAllEnvironments, false);
 	list_view->initialize ();
+	rootChanged ();
 }
 
 RKVarSelector::~RKVarSelector () {
 	RK_TRACE (PLUGIN);
+}
+
+void RKVarSelector::rootChanged () {
+	RK_TRACE (PLUGIN);
+
+	RObject* object = root->objectValue ();
+	if (!object) object = RObjectList::getObjectList ();
+	list_view->setRootObject (object);
 }
 
 void RKVarSelector::objectSelectionChanged () {
