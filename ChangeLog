@@ -3,7 +3,7 @@ TODO: Do not use SmartInterface for KDE 4.5 and above
 - Fixed: Placement of several menu items was broken - again - with KDE 4.4 and above
 - Allow sorting of results in help search window
 - Fixed: CPU usage would go to 100% for no good reason under certain circumstances
-- The save-object selector in plugins now allows to save as part of a data.frame / list		TODO: document plugin-API additions
+- The save-object selector in plugins now allows to save as part of a data.frame / list
 - Fixed: On some systems, dev.off() would spawn two new graphics windows
 - Support row names in the data.frame-editor
 - Fixed: When starting with an empty table, RKWard would sometimes claim that this object has been removed
