@@ -4,11 +4,11 @@
 OSCREPOS="home:tfry-suse:rkward-devel"
 ## end: These may need adjusting!
 
-VERSION=${1}
-# RPM does not accept dashes in the version name...
-VERSION=`echo -n ${VERSION} | sed -e 's/-/_/g'`
 cd `dirname $0`/..
 BASEDIR=`pwd`
+VERSION=`${BASEDIR}/scripts/getversion.sh ${1}`
+# RPM does not accept dashes in the version name...
+VERSION=`echo -n ${VERSION} | sed -e 's/-/_/g'`
 OSCTEMPDIR=${BASEDIR}/osctemp
 rm -rf ${OSCTEMPDIR}
 mkdir ${OSCTEMPDIR}

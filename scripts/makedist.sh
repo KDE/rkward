@@ -1,8 +1,10 @@
 #!/bin/bash
 
-VERSION=${1}
 cd `dirname $0`/..
 BASEDIR=`pwd`
+OLDVERSION=`${BASEDIR}/scripts/getversion.sh`
+VERSION=`${BASEDIR}/scripts/getversion.sh ${1}`
+
 mkdir $BASEDIR/disttemp
 DISTDIRREL=rkward-$VERSION
 DISTDIR=$BASEDIR/disttemp/$DISTDIRREL
@@ -34,3 +36,5 @@ mv rkward-$VERSION.tar.gz $BASEDIR/
 
 cd $BASEDIR
 rm -rf $BASEDIR/disttemp
+
+$BASEDIR/scripts/set_dist_version.sh $OLDVERSION

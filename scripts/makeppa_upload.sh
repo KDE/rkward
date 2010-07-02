@@ -7,9 +7,9 @@ PPAID="rkward-devel"
 AUTHOR="Thomas Friedrichsmeier <tfry@users.sourceforge.net>"
 ## end: These may need adjusting!
 
-VERSION=${1}
 cd `dirname $0`/..
 BASEDIR=`pwd`
+VERSION=`${BASEDIR}/scripts/getversion.sh ${1}`
 PPATEMPDIR=$BASEDIR/ppatemp
 mkdir $PPATEMPDIR
 
