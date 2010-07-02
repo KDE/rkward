@@ -1,5 +1,7 @@
 TODO: Do not use SmartInterface for KDE 4.5 and above
 
+- New options for scripting GUI logic in plugins		TODO: document, merge common functionality of common.js and rkcomponentscriptiong.js, error handling
+- The current object of an active data editor can be referenced in plugins		TODO: document
 - Fixed: Placement of several menu items was broken - again - with KDE 4.4 and above
 - Allow sorting of results in help search window
 - Fixed: CPU usage would go to 100% for no good reason under certain circumstances

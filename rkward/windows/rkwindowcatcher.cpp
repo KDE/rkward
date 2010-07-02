@@ -64,11 +64,11 @@ void RKWindowCatcher::stop (int new_cur_device) {
 
 void RKWindowCatcher::updateHistory (QStringList params) {
 	RK_TRACE (MISC);
-	RK_ASSERT (params.length () >= 1);
-	RK_ASSERT ((params.length () % 2) == 1)
+	RK_ASSERT (params.count () >= 1);
+	RK_ASSERT ((params.count () % 2) == 1)
 
 	int history_length = params[0].toInt ();
-	for (int i = 1; i < (params.length () - 1); i += 2) {
+	for (int i = 1; i < (params.count () - 1); i += 2) {
 		RKCaughtX11Window* window = RKCaughtX11Window::getWindow (params[i].toInt ());
 		if (window) {
 			int position = params[i+1].toInt ();
