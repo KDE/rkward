@@ -5,7 +5,7 @@
 "rk.screen.device" <- function (..., is.preview.device = FALSE) {
 	.rk.do.call ("startOpenX11", as.character (dev.cur ()));
 
-	if (!is.preview.device) dupFrom <- dev.cur ()
+	old_dev <- dev.cur ()
 
 	if (!exists (".rk.default.device")) {
 		if (base::.Platform$OS.type == "unix") {
@@ -23,10 +23,7 @@
 
 	.rk.do.call ("endOpenX11", as.character (dev.cur ()));
 
-	if (!is.preview.device) {
-		rk.record.plot$onAddDevice (old_dev = dupFrom, deviceId = dev.cur ())
-		rk.record.plot$.rk.graph.history.gui ()
-	}
+	rk.record.plot$onAddDevice (old_dev = old_dev, deviceId = dev.cur ())
 
 	invisible (x)
 }
@@ -46,16 +43,20 @@ if (base::.Platform$OS.type == "windows") {
 ".rk.preview.devices" <- list ();
 
 ".rk.startPreviewDevice" <- function (x) {
+	rk.record.plot$printPars()
 	a <- .rk.preview.devices[[x]]
 	if (is.null (a)) {
 		a <- dev.cur ()
-		x11 (is.preview.device = TRUE)
+		rk.record.plot$.set.isPreviewDevice (TRUE)
+		x11 ()
+		rk.record.plot$.set.isPreviewDevice (FALSE)
 		if (a != dev.cur ()) {
 			.rk.preview.devices[[x]] <<- dev.cur ()
 		}
 	} else {
 		dev.set (a)
 	}
+	rk.record.plot$printPars()
 }
 
 ".rk.killPreviewDevice" <- function (x) {
@@ -71,7 +72,7 @@ if (base::.Platform$OS.type == "windows") {
 "plot.new" <- function () 
 {
 	if (dev.cur() == 1) rk.screen.device ()
-	if (dev.interactive () && !(dev.cur() %in% .rk.preview.devices)) rk.record.plot$record ()
+	rk.record.plot$record ()
 	eval (body (.rk.plot.new.default))
 }
 formals (plot.new) <- formals (graphics::plot.new)
@@ -79,17 +80,12 @@ formals (plot.new) <- formals (graphics::plot.new)
 
 "dev.off" <- function (which = dev.cur ())
 {
-	.is.inter <- dev.interactive ()
-	if (.is.inter) { 
-		# Why use 'which'? There is a which ()!!
-		if (!(which %in% .rk.preview.devices)) rk.record.plot$onDelDevice (deviceId = which)
-
-		# see http://thread.gmane.org/gmane.comp.statistics.rkward.devel/802
-		.rk.do.call ("killDevice", as.character (which))
-	}
-
+	rk.record.plot$onDelDevice (deviceId = which)
+	
+	# see http://thread.gmane.org/gmane.comp.statistics.rkward.devel/802
+	.rk.do.call ("killDevice", as.character (which))
+	
 	ret <- eval (body (.rk.dev.off.default))
-
 	return (ret)
 }
 formals (dev.off) <- formals (grDevices::dev.off)

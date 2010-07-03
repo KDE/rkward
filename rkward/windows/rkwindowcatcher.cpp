@@ -382,7 +382,7 @@ void RKCaughtX11Window::nextPlot () {
 	RK_TRACE (MISC);
 
 	RCommand* c = new RCommand ("rk.next.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Load next plot in device number %1", device_number), error_dialog);
-	updateHistoryActions (history_length, history_position+1);
+	//updateHistoryActions (history_length, history_position+1);
 	setStatusMessage (i18n ("Loading plot from history"), c);
 	RKGlobals::rInterface ()->issueCommand (c);
 }
@@ -391,7 +391,7 @@ void RKCaughtX11Window::previousPlot () {
 	RK_TRACE (MISC);
 
 	RCommand* c = new RCommand ("rk.previous.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Load previous plot in device number %1", device_number), error_dialog);
-	updateHistoryActions (history_length, history_position-1);
+	//updateHistoryActions (history_length, history_position-1);
 	setStatusMessage (i18n ("Loading plot from history"), c);
 	RKGlobals::rInterface ()->issueCommand (c);
 }
@@ -400,7 +400,7 @@ void RKCaughtX11Window::firstPlot () {
 	RK_TRACE (MISC);
 
 	RCommand* c = new RCommand ("rk.first.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Load first plot in device number %1", device_number), error_dialog);
-	updateHistoryActions (history_length, 1);
+	//updateHistoryActions (history_length, 1);
 	setStatusMessage (i18n ("Loading plot from history"), c);
 	RKGlobals::rInterface ()->issueCommand (c);
 }
@@ -409,7 +409,7 @@ void RKCaughtX11Window::lastPlot () {
 	RK_TRACE (MISC);
 
 	RCommand* c = new RCommand ("rk.last.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Load last plot in device number %1", device_number), error_dialog);
-	updateHistoryActions (history_length, history_length);
+	//updateHistoryActions (history_length, history_length);
 	setStatusMessage (i18n ("Loading plot from history"), c);
 	RKGlobals::rInterface ()->issueCommand (c);
 }
@@ -418,7 +418,7 @@ void RKCaughtX11Window::recordCurrentPlot () {
 	RK_TRACE (MISC);
 
 	RKGlobals::rInterface ()->issueCommand ("rk.current.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Add current plot to history (device number %1)", device_number), error_dialog);
-	updateHistoryActions (history_length+1, history_length+1);
+	//updateHistoryActions (history_length+1, history_length+1);
 }
 
 void RKCaughtX11Window::clearHistory () {
@@ -427,7 +427,7 @@ void RKCaughtX11Window::clearHistory () {
 	if (KMessageBox::warningContinueCancel (this, i18n ("This will clear the plot history for all devices windows, not only this one. If this is not your intent, press cancel, below.")) != KMessageBox::Continue) return;
 
 	RKGlobals::rInterface ()->issueCommand ("rk.record.plot$resetHistory ()", RCommand::App, i18n ("Clear plot history"), error_dialog);
-	updateHistoryActions (0, 0);
+	//updateHistoryActions (0, 0);
 }
 
 void RKCaughtX11Window::updateHistoryActions (int history_length, int position) {
@@ -440,6 +440,8 @@ void RKCaughtX11Window::updateHistoryActions (int history_length, int position) 
 	plot_prev_action->setEnabled (position > 1);
 	plot_next_action->setEnabled ((history_length > 0) && (position < history_length));
 	plot_last_action->setEnabled ((history_length > 0) && (position < history_length));
+	
+	plot_clear_history_action->setEnabled (history_length > 0);
 }
 
 void RKCaughtX11Window::setStatusMessage (const QString& message, RCommand *command) {
@@ -516,6 +518,7 @@ RKCaughtX11WindowPart::RKCaughtX11WindowPart (RKCaughtX11Window *window) : KPart
  	action->setText (i18n ("Add to history"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionSnapshot));
 	action = actionCollection ()->addAction ("plot_clear_history", window, SLOT (clearHistory()));
+	window->plot_clear_history_action = (KAction*) action;
  	action->setText (i18n ("Clear history"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionClear));
 

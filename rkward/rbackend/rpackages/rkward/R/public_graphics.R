@@ -60,7 +60,9 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 {
 	# TODO: 
 	# - add a length and size limit to recorded () list
+	# - add option to delete a plot from history
 	# - add one or more tests to rkward_application_tests.R
+	# - .rk.graph.history.gui () add option to update only one deviceId
 	# - .... ?
 	
 	env <- environment()
@@ -68,48 +70,94 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	histPositions <- list("1" = 0) # 1 is always null device
 	newPlotExists <- list("1" = FALSE)
 	isDuplicate <- FALSE
+	isPreviewDevice <- FALSE
 	
 	.set.isDuplicate <- function (x = FALSE) { isDuplicate <<- x }
+	.set.isPreviewDevice <- function (x = FALSE) { isPreviewDevice <<- x }
 	onAddDevice <- function (old_dev = 1, deviceId = dev.cur ())
 	{
 		old_dev <- as.character (old_dev)
 		deviceId <- as.character (deviceId)
 		
+		# onAddDevice is called only from rk.screen.device, so no need to check dev.interactive ()
+		if (isPreviewDevice) return (invisible (NULL))
 		if (old_dev %in% names (histPositions) && old_dev != "1") recordUnsaved (old_dev)
 		
 		if (isDuplicate) {
 			histPositions [[deviceId]] <<- histPositions [[old_dev]]
 		} else {
-			histPositions [[deviceId]] <<- length (recorded) + 1
+			n <- length (recorded)
+			histPositions [[deviceId]] <<- if (n > 0) n + 1 else 0
 		}
 		newPlotExists [[deviceId]] <<- FALSE
+		.rk.graph.history.gui ()
 	}
 	onDelDevice <- function (deviceId = dev.cur())
 	{
 		deviceId <- as.character (deviceId)
 		
-		recordUnsaved (deviceId)
-		histPositions [[deviceId]] <<- newPlotExists [[deviceId]] <<- NULL
+		if (deviceId %in% names (histPositions) && deviceId != "1") {
+			recordUnsaved (deviceId)
+			histPositions [[deviceId]] <<- newPlotExists [[deviceId]] <<- NULL
+		}
 	}
 	record <- function(deviceId = dev.cur (), newplotflag = TRUE, force = FALSE)
 	{
 		deviceId <- as.character (deviceId)
 		
+		isManaged <- deviceId %in% names (histPositions)
+		if (!isManaged && !force) return (invisible (NULL)) # --- (*)
+		
 		cur.deviceId <- dev.cur ()
 		dev.set (as.numeric(deviceId))
 		
-		if (newPlotExists [[deviceId]]) {
+		if (isManaged) {
+			# device is managed, that is, non-preview-interactive
+			
+			if (newPlotExists [[deviceId]]) {
+				# there is a new plot on this device, so save it,
+				# immaterial of whether force == TRUE or FALSE
+				
+				if (class (try (unsavedPlot <- recordPlot(), silent=TRUE)) != 'try-error') {
+					histPositions [[deviceId]] <<- n <- length(recorded) + 1
+					recorded [[n]] <<- unsavedPlot
+					.rk.graph.history.gui ()
+				}
+			} else if (force) {
+				# no new plot on this managed device but force == TRUE
+				# in other words, called from a non-preview interactive device by clicking "Add to history" icon
+				# so overwrite the existing plot in history by the current plot
+				# 
+				# use case:
+				# go back in history and update the plot using points () or lines () or ...
+				
+				n <- histPositions [[deviceId]]
+				if (n == 0) {
+					newPlotExists [[deviceId]] <<- TRUE
+					record (deviceId, newplotflag = FALSE, force = FALSE)
+				} else {
+					if (class (try (unsavedPlot <- recordPlot(), silent=TRUE)) != 'try-error') {
+						recorded [[n]] <<- unsavedPlot
+					}
+				}
+			}
+			newPlotExists [[deviceId]] <<- newplotflag
+		} else {
+			# device is not managed but due to (*) force == TRUE
+			# in other words, called from a preview device by clicking "Add to history" icon
+			# note: non-interactive devices such as pdf() png() etc. get returned at (*)
+			#
+			# use case:
+			# save a particular "preview" plot to history (useful since preview plots are _not_
+			# automatically added to history)
+			
+			n <- length (recorded) + 1
 			if (class (try (unsavedPlot <- recordPlot(), silent=TRUE)) != 'try-error') {
-				histPositions [[deviceId]] <<- length(recorded) + 1L
-				recorded [[histPositions [[deviceId]]]] <<- unsavedPlot
+				recorded [[n]] <<- unsavedPlot
 				.rk.graph.history.gui ()
 			}
-		} else if (force) {
-			if (class (try (unsavedPlot <- recordPlot(), silent=TRUE)) != 'try-error') {
-				recorded [[histPositions [[deviceId]]]] <<- unsavedPlot
-			}
 		}
-		newPlotExists [[deviceId]] <<- newplotflag
+		
 		dev.set (cur.deviceId)
 	}
 	recordUnsaved <- function (deviceId = dev.cur ())
@@ -133,7 +181,11 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		else message("replay: 'n' not in valid range: ", n)
 		dev.set (cur.deviceId)
 	}
-	showFirst <- function(deviceId = dev.cur()) replay(n = 1, deviceId)
+	showFirst <- function(deviceId = dev.cur())
+	{
+		recordUnsaved (deviceId)
+		replay(n = 1, deviceId)
+	}
 	showPrevious <- function(deviceId)
 	{
 		recordUnsaved (deviceId)
@@ -144,11 +196,16 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		recordUnsaved (deviceId)
 		replay(n = histPositions [[as.character (deviceId)]] + 1L, deviceId = deviceId)
 	}
-	showLast <- function(deviceId = dev.cur()) replay(n = length(recorded), deviceId)
+	showLast <- function(deviceId = dev.cur())
+	{
+		recordUnsaved (deviceId)
+		replay(n = length(recorded), deviceId)
+	}
 	resetHistory <- function ()
 	{
 		recorded <<- list()
 		isDuplicate <<- FALSE
+		isPreviewDevice <<- FALSE
 		for (dev_num in names (histPositions)) {
 			histPositions[[dev_num]] <<- 0
 			newPlotExists [[dev_num]] <<- FALSE
@@ -207,8 +264,14 @@ rk.record.plot <- rk.record.plot ()
 	rk.record.plot$showLast (deviceId)
 	rk.record.plot$printPars ()
 }
+## TODO: .addthis.
 "rk.current.plot" <- function (deviceId = dev.cur ())
 {
-	if (!(deviceId %in% .rk.preview.devices)) rk.record.plot$record (deviceId, newplotflag=FALSE, force=TRUE)
+	# this call is not as simple as it looks; details are handled inside rk.record.plot$record ()
+	# 
+	# reason:
+	# flixibility to add a preview plot (preview device is _not_ managed) to the graphics history
+	
+	rk.record.plot$record (deviceId, newplotflag=FALSE, force=TRUE)
 	rk.record.plot$printPars ()
 }
