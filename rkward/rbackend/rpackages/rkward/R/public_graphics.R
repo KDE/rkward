@@ -201,7 +201,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		recordUnsaved (deviceId)
 		replay(n = length(recorded), deviceId)
 	}
-	resetHistory <- function ()
+	clearHistory <- function ()
 	{
 		recorded <<- list()
 		isDuplicate <<- FALSE
@@ -264,8 +264,7 @@ rk.record.plot <- rk.record.plot ()
 	rk.record.plot$showLast (deviceId)
 	rk.record.plot$printPars ()
 }
-## TODO: .addthis.
-"rk.current.plot" <- function (deviceId = dev.cur ())
+"rk.addthis.plot" <- function (deviceId = dev.cur ())
 {
 	# this call is not as simple as it looks; details are handled inside rk.record.plot$record ()
 	# 

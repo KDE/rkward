@@ -417,16 +417,16 @@ void RKCaughtX11Window::lastPlot () {
 void RKCaughtX11Window::recordCurrentPlot () {
 	RK_TRACE (MISC);
 
-	RKGlobals::rInterface ()->issueCommand ("rk.current.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Add current plot to history (device number %1)", device_number), error_dialog);
+	RKGlobals::rInterface ()->issueCommand ("rk.addthis.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Add current plot to history (device number %1)", device_number), error_dialog);
 	//updateHistoryActions (history_length+1, history_length+1);
 }
 
 void RKCaughtX11Window::clearHistory () {
 	RK_TRACE (MISC);
 
-	if (KMessageBox::warningContinueCancel (this, i18n ("This will clear the plot history for all devices windows, not only this one. If this is not your intent, press cancel, below.")) != KMessageBox::Continue) return;
+	if (KMessageBox::warningContinueCancel (this, i18n ("This will clear the plot history for all device windows, not just this one. If this is not your intent, press cancel, below.")) != KMessageBox::Continue) return;
 
-	RKGlobals::rInterface ()->issueCommand ("rk.record.plot$resetHistory ()", RCommand::App, i18n ("Clear plot history"), error_dialog);
+	RKGlobals::rInterface ()->issueCommand ("rk.record.plot$clearHistory ()", RCommand::App, i18n ("Clear plot history"), error_dialog);
 	//updateHistoryActions (0, 0);
 }
 
