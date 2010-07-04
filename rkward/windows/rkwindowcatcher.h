@@ -150,6 +150,8 @@ public slots:
 /** history navigation */
 	void recordCurrentPlot ();
 /** history navigation */
+	void removeCurrentPlot ();
+/** history navigation */
 	void clearHistory ();
 
 /** reimplemented to keep window alive while saving history */
@@ -184,6 +186,7 @@ private:
 	KAction *plot_next_action;
 	KAction *plot_first_action;
 	KAction *plot_last_action;
+	KAction *plot_remove_action;
 	KAction *plot_clear_history_action;
 
 	KPassivePopup* status_popup;

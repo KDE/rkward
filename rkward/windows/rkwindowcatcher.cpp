@@ -421,6 +421,12 @@ void RKCaughtX11Window::recordCurrentPlot () {
 	//updateHistoryActions (history_length+1, history_length+1);
 }
 
+void RKCaughtX11Window::removeCurrentPlot () {
+	RK_TRACE (MISC);
+
+	RKGlobals::rInterface ()->issueCommand ("rk.removethis.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Remove current plot from history (device number %1)", device_number), error_dialog);
+}
+
 void RKCaughtX11Window::clearHistory () {
 	RK_TRACE (MISC);
 
@@ -440,7 +446,9 @@ void RKCaughtX11Window::updateHistoryActions (int history_length, int position) 
 	plot_prev_action->setEnabled (position > 1);
 	plot_next_action->setEnabled ((history_length > 0) && (position < history_length));
 	plot_last_action->setEnabled ((history_length > 0) && (position < history_length));
-	
+
+	plot_remove_action->setEnabled (history_length > 1);
+
 	plot_clear_history_action->setEnabled (history_length > 0);
 }
 
@@ -517,6 +525,11 @@ RKCaughtX11WindowPart::RKCaughtX11WindowPart (RKCaughtX11Window *window) : KPart
 	action = actionCollection ()->addAction ("plot_record", window, SLOT (recordCurrentPlot()));
  	action->setText (i18n ("Add to history"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionSnapshot));
+	action = actionCollection ()->addAction ("plot_remove", window, SLOT (removeCurrentPlot()));
+ 	action->setText (i18n ("Remove from history"));
+	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionRemovePlot));
+	window->plot_remove_action = (KAction*) action;
+
 	action = actionCollection ()->addAction ("plot_clear_history", window, SLOT (clearHistory()));
 	window->plot_clear_history_action = (KAction*) action;
  	action->setText (i18n ("Clear history"));

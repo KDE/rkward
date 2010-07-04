@@ -166,6 +166,44 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 			record (deviceId, newplotflag = FALSE)
 		}
 	}
+	remove <- function (deviceId = dev.cur ())
+	{
+		history_length <- length (recorded)
+		if (history_length <= 1) {
+			if (history_length == 1) .rk.graph.history.gui ()
+			return (invisible (NULL))
+		}
+		
+		deviceId <- as.character (deviceId)
+		n <- histPositions [[deviceId]] # history position of the calling device
+		
+		if (newPlotExists [[deviceId]]) {
+			# for unsaved plots, just set the flag to FALSE and replay the previous (== n) plot
+			
+			newPlotExists [[deviceId]] <<- FALSE
+			replay (n, deviceId)
+		} else {
+			# a saved plot: delete it:
+			recorded [[n]] <<- NULL
+			
+			# devices with position = n:
+			dEqn <- names (histPositions)[unlist (histPositions) == n]
+			# devices with position > n:
+			dGtn <- names (histPositions)[unlist (histPositions) > n]
+			
+			if (n > length (recorded)) n <- n - 1
+			
+			# for all devices in dEqn, replay the next (== n) plot, or, if this was the last plot then,
+			# replay the previous (== n) plot
+			lapply (X = dEqn, function (d,N) replay (n = N, deviceId = d), N = n)
+			
+			# for all devices in dGtn, decrese their position counter by 1 and update the gui
+			histPositions [dGtn] <<- lapply (histPositions [dGtn], FUN = function (d) d-1)
+			.rk.graph.history.gui (dGtn)
+		}
+		
+		invisible (NULL)
+	}
 	replay <- function(n = histPositions [[as.character (deviceId)]] - 1L, deviceId = dev.cur ())
 	{
 		deviceId <- as.character (deviceId)
@@ -273,3 +311,9 @@ rk.record.plot <- rk.record.plot ()
 	rk.record.plot$record (deviceId, newplotflag=FALSE, force=TRUE)
 	rk.record.plot$printPars ()
 }
+"rk.removethis.plot" <- function (deviceId = dev.cur ())
+{
+	rk.record.plot$remove (deviceId)
+	rk.record.plot$printPars ()
+}
+

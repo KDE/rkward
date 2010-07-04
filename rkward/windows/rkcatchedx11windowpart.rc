@@ -17,6 +17,7 @@
 				<Action name="plot_last"/>
 				<Separator/>
 				<Action name="plot_record"/>
+				<Action name="plot_remove"/>
 				<Separator/>
 				<Action name="plot_clear_history"/>
 			</Menu>
@@ -40,6 +41,7 @@
 		<Action name="plot_last"/>
 		<Separator/>
 		<Action name="plot_record"/>
+		<Action name="plot_remove"/>
 		<Separator/>
 		<Action name="plot_clear_history"/>
 	</ToolBar>

@@ -63,6 +63,7 @@ public:
 		ActionMoveDown,
 
 		ActionSnapshot,
+		ActionRemovePlot,
 
 		ActionClear,
 
