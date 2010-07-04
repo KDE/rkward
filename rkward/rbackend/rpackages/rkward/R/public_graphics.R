@@ -90,7 +90,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 			histPositions [[deviceId]] <<- if (n > 0) n + 1 else 0
 		}
 		newPlotExists [[deviceId]] <<- FALSE
-		.rk.graph.history.gui ()
+		.rk.graph.history.gui (deviceId)
 	}
 	onDelDevice <- function (deviceId = dev.cur())
 	{
@@ -176,7 +176,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		if (n > 0 && n <= length(recorded)) {
 			histPositions [[deviceId]] <<- n
 			replayPlot(recorded[[n]])
-			.rk.graph.history.gui ()
+			.rk.graph.history.gui (deviceId)
 		}
 		else message("replay: 'n' not in valid range: ", n)
 		dev.set (cur.deviceId)
@@ -219,21 +219,29 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		message ('Current positions: ', paste (unlist (histPositions), collapse = ', ')) 
 		message ('New plot exists? ', paste (unlist (newPlotExists), collapse = ', ')) 
 	}
-	.rk.graph.history.gui <- function ()
+	.rk.graph.history.gui <- function (deviceId = NULL)
 	{
 		# this function is called whenever the history length changes (ie, increases, for now)
 		# or the position changes in any device.
 		history_length <- length (recorded)
 		
-		# TODO: no need to update all devices when called from replay ()
-		ndevs <- length (histPositions)
-		if (ndevs > 1) {
-			positions <- character (1 + 2 * ndevs)
-			positions [1] <- history_length # coerced as character
-			positions [2 * (1:ndevs)] <- names (histPositions)
-			positions [1 + 2 * (1:ndevs)] <- unlist (histPositions, use.names = FALSE)
-			.rk.do.call ("updateDeviceHistory", positions);
+		if (is.null (deviceId)) {
+			# update all managed devices:
+			ndevs <- length (histPositions)
+			if (ndevs > 1) {
+				positions <- character (1 + 2 * ndevs)
+				positions [1] <- history_length # coerced as character
+				positions [2 * (1:ndevs)] <- names (histPositions)
+				positions [1 + 2 * (1:ndevs)] <- unlist (histPositions, use.names = FALSE)
+			}
+		} else {
+			# update only the one device: deviceId:
+			positions <- c(history_length, deviceId, histPositions [[as.character (deviceId)]])
+			positions <- as.character (positions)
+			names (positions) <- NULL
 		}
+		
+		.rk.do.call ("updateDeviceHistory", positions);
 		invisible (NULL)
 	}
 
