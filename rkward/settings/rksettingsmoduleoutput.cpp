@@ -39,6 +39,8 @@ QString RKSettingsModuleOutput::graphics_type;
 int RKSettingsModuleOutput::graphics_width;
 int RKSettingsModuleOutput::graphics_height;
 int RKSettingsModuleOutput::graphics_jpg_quality;
+int RKSettingsModuleOutput::graphics_hist_max_length;
+int RKSettingsModuleOutput::graphics_hist_max_plotsize;
 
 RKSettingsModuleOutput::RKSettingsModuleOutput (RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
 	RK_TRACE (SETTINGS);
@@ -88,6 +90,18 @@ RKSettingsModuleOutput::RKSettingsModuleOutput (RKSettings *gui, QWidget *parent
 	connect (graphics_width_box, SIGNAL (valueChanged (int)), this, SLOT (boxChanged (int)));
 	connect (graphics_height_box, SIGNAL (valueChanged (int)), this, SLOT (boxChanged (int)));
 
+	h_layout = new QHBoxLayout (group);
+	group_layout->addLayout (h_layout);
+	h_layout->addWidget (new QLabel (i18n ("History length:"), group));
+	h_layout->addWidget (graphics_hist_max_length_box = new KIntSpinBox (2, 25, 1, graphics_hist_max_length, group));
+	h_layout->addSpacing (2*RKGlobals::spacingHint ());
+	h_layout->addWidget (new QLabel (i18n ("History size:"), group));
+	h_layout->addWidget (graphics_hist_max_plotsize_box = new KIntSpinBox (4, 2048, 4, graphics_hist_max_plotsize, group)); // in KB
+	h_layout->addWidget (new QLabel (i18n ("KiB"), group));
+	h_layout->addStretch ();
+	connect (graphics_hist_max_length_box, SIGNAL (valueChanged (int)), this, SLOT (boxChanged (int)));
+	connect (graphics_hist_max_plotsize_box, SIGNAL (valueChanged (int)), this, SLOT (boxChanged (int)));
+
 	main_vbox->addWidget (group);
 
 	main_vbox->addStretch ();
@@ -124,6 +138,10 @@ void RKSettingsModuleOutput::applyChanges () {
 	graphics_width = graphics_width_box->value ();
 	graphics_height = graphics_height_box->value ();
 	graphics_jpg_quality = graphics_jpg_quality_box->value ();
+
+	graphics_hist_max_length = graphics_hist_max_length_box->value ();
+	graphics_hist_max_plotsize = graphics_hist_max_plotsize_box->value ();
+
 	QStringList commands = makeRRunTimeOptionCommands ();
 	for (QStringList::const_iterator it = commands.begin (); it != commands.end (); ++it) {
 		RKGlobals::rInterface ()->issueCommand (*it, RCommand::App, QString::null, 0, 0, commandChain ());
@@ -146,6 +164,8 @@ void RKSettingsModuleOutput::saveSettings (KConfig *config) {
 	cg.writeEntry ("graphics_width", graphics_width);
 	cg.writeEntry ("graphics_height", graphics_height);
 	cg.writeEntry ("graphics_jpg_quality", graphics_jpg_quality);
+	cg.writeEntry ("graphics_hist_max_length", graphics_hist_max_length);
+	cg.writeEntry ("graphics_hist_max_plotsize", graphics_hist_max_plotsize);
 }
 
 void RKSettingsModuleOutput::loadSettings (KConfig *config) {
@@ -158,6 +178,8 @@ void RKSettingsModuleOutput::loadSettings (KConfig *config) {
 	graphics_width = cg.readEntry ("graphics_width", 480);
 	graphics_height = cg.readEntry ("graphics_height", 480);
 	graphics_jpg_quality = cg.readEntry ("graphics_jpg_quality", 75);
+	graphics_hist_max_length = cg.readEntry ("graphics_hist_max_length", 20);
+	graphics_hist_max_plotsize = cg.readEntry ("graphics_hist_max_plotsize", 52);
 }
 
 //static
@@ -169,6 +191,8 @@ QStringList RKSettingsModuleOutput::makeRRunTimeOptionCommands () {
 	command.append (", \"rk.graphics.width\"=" + QString::number (graphics_width));
 	command.append (", \"rk.graphics.height\"=" + QString::number (graphics_height));
 	if (graphics_type == "\"JPG\"") command.append (", \"rk.graphics.jpg.quality\"=" + QString::number (graphics_jpg_quality));
+	command.append (", \"rk.graphics.hist.max.length\"=" + QString::number (graphics_hist_max_length));
+	command.append (", \"rk.graphics.hist.max.plotsize\"=" + QString::number (graphics_hist_max_plotsize));
 	list.append (command + ")\n");
 	
 	return (list);

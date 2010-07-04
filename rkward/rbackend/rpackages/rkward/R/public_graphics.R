@@ -55,14 +55,12 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	rk.record.plot$.set.isDuplicate (FALSE)
 }
 
-# create a (global) history of various graphics calls - a rudimentary attempt
+# A global history of various graphics calls; trellis / grid graphics is not supported yet
 "rk.record.plot" <- function ()
 {
 	# TODO: 
 	# - add a length and size limit to recorded () list
-	# - add option to delete a plot from history
 	# - add one or more tests to rkward_application_tests.R
-	# - .rk.graph.history.gui () add option to update only one deviceId
 	# - .... ?
 	
 	env <- environment()
@@ -316,4 +314,3 @@ rk.record.plot <- rk.record.plot ()
 	rk.record.plot$remove (deviceId)
 	rk.record.plot$printPars ()
 }
-
