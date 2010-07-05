@@ -51,6 +51,7 @@ public:
 	void updateFromR (RCommandChain *chain, const QStringList &current_searchpath);
 	
 	QString getFullName () const { return QString (); };
+	QString getBaseName () const { return QString (); };
 	QString makeChildName (const QString &short_child_name, bool) const { return short_child_name; };
 	/** reimplemented from RContainerObject: do nothing. The object-list has no meta data. */
 	void writeMetaData (RCommandChain *) {};
