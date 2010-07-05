@@ -137,7 +137,7 @@ suite <- new ("RKTestSuite", id="analysis_plugins",
 			rk.call.plugin ("rkward::kpss_test", length.state="1", lshort.string="FALSE", narm.state="0", null.string="Trend", x.available="test50x\ntest50y\ntest50z", submit.mode="submit")
 		}, libraries=c("tseries")),
 		new ("RKTest", id="hp_filter", call=function () {
-			co2 <- datasets::co2		# another, incompatible co2 dataset exists in package locfit
+			.GlobalEnv$co2 <- datasets::co2		# another, incompatible co2 dataset exists in package locfit
 			rk.sync.global()
 
 			rk.call.plugin ("rkward::hp_filter", cycle_name.active="1", trend_name.active="1", custom.state="0", cycle_col.color.string="green4", cycle_lty.string="", cycle_lwd.real="1.00", cycle_name.objectname="hpcycle", downlab.text="", lambda.string="1600", plot_cycle.state="1", series_col.color.string="blue", series_lty.string="", series_lwd.real="1.00", trend_col.color.string="red", trend_lty.string="", trend_lwd.real="1.00", trend_name.objectname="hptrend", uplab.text="", x.available="co2", submit.mode="submit")
