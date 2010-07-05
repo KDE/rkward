@@ -164,7 +164,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 			record (deviceId, newplotflag = FALSE)
 		}
 	}
-	remove <- function (deviceId = dev.cur ())
+	remove <- function (deviceId = dev.cur (), pos = NULL) # pos can be of length > 1
 	{
 		history_length <- length (recorded)
 		if (history_length <= 1) {
@@ -172,33 +172,57 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 			return (invisible (NULL))
 		}
 		
-		deviceId <- as.character (deviceId)
-		n <- histPositions [[deviceId]] # history position of the calling device
-		
-		if (newPlotExists [[deviceId]]) {
-			# for unsaved plots, just set the flag to FALSE and replay the previous (== n) plot
+		pop.and.update <- function (n) {
+			recorded <<- recorded [-n]
+			len.r <- length (recorded)
 			
-			newPlotExists [[deviceId]] <<- FALSE
-			replay (n, deviceId)
-		} else {
-			# a saved plot: delete it:
-			recorded [[n]] <<- NULL
+			pos.aff <- unlist (histPositions) >= min (n) # all affected positions
+			pos.rem <- unlist (histPositions) %in% n # only removed positions
 			
-			# devices with position = n:
-			dEqn <- names (histPositions)[unlist (histPositions) == n]
-			# devices with position > n:
-			dGtn <- names (histPositions)[unlist (histPositions) > n]
+			dEqn <- names (histPositions)[pos.rem] # devices whose plots were removed
+			for (d in dEqn) {
+				m <- min (histPositions[[d]] - sum (n <= histPositions[[d]]) + 1, len.r)
+				if (newPlotExists[[d]]) {
+					histPositions [[d]] <<- m
+					.rk.graph.history.gui (d)
+				} else
+					replay (n = m, deviceId = d)
+			}
 			
-			if (n > length (recorded)) n <- n - 1
-			
-			# for all devices in dEqn, replay the next (== n) plot, or, if this was the last plot then,
-			# replay the previous (== n) plot
-			lapply (X = dEqn, function (d,N) replay (n = N, deviceId = d), N = n)
-			
-			# for all devices in dGtn, decrese their position counter by 1 and update the gui
-			histPositions [dGtn] <<- lapply (histPositions [dGtn], FUN = function (d) d-1)
+			dGtn <- names (histPositions)[pos.aff & !pos.rem] # affected devices whose plots were _NOT_ removed
+			for (d in dGtn) {
+				histPositions[[d]] <<- histPositions[[d]] - sum (n <= histPositions[[d]])
+			}
 			.rk.graph.history.gui (dGtn)
+			
+			.rk.graph.history.gui (names (histPositions) [unlist (histPositions) == len.r])
 		}
+		
+		if (is.null (pos)) {
+			# call from: a managed device by clicking on 'Remove from history' icon
+			
+			if (is.null (deviceId)) stop ('Both deviceId and pos are NULL')
+			deviceId <- as.character (deviceId)
+			if (! (deviceId %in% names(histPositions))) stop (paste ('Device', deviceId, 'is not managed'))
+			
+			pos <- histPositions [[deviceId]]
+			
+			if (newPlotExists [[deviceId]]) {
+				# current plot, which is to be deleted, hasn't been saved to history yet, so just 
+				# set its flag to FALSE and replay the previous plot which is @ pos and not (pos-1)
+				
+				newPlotExists [[deviceId]] <<- FALSE
+				replay (n = pos, deviceId)
+			} else {
+				# current plot is a saved plot: so pop it and update the "affected" devices
+				
+				pop.and.update (n = pos)
+			}
+		} else if (all(pos > 0) && all (pos <= history_length)) {
+			# not called from any managed devices, so pop and update
+			pop.and.update (n = pos)
+		} else
+			stop (paste ('Invalid position(s)'))
 		
 		invisible (NULL)
 	}
@@ -257,7 +281,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	}
 	.rk.graph.history.gui <- function (deviceIds = names (histPositions))
 	{
-		# this function is called whenever the history length changes (ie, increases, for now)
+		# this function is called whenever the history length changes
 		# or the position changes in any device.
 		
 		deviceIds <- deviceIds [deviceIds != "1"] # ignore NULL device
