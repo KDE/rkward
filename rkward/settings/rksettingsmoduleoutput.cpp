@@ -90,13 +90,17 @@ RKSettingsModuleOutput::RKSettingsModuleOutput (RKSettings *gui, QWidget *parent
 	connect (graphics_width_box, SIGNAL (valueChanged (int)), this, SLOT (boxChanged (int)));
 	connect (graphics_height_box, SIGNAL (valueChanged (int)), this, SLOT (boxChanged (int)));
 
+	main_vbox->addWidget (group);
+
+	group = new QGroupBox (i18n ("Screen device history"), this);
+	group_layout = new QVBoxLayout (group);
 	h_layout = new QHBoxLayout (group);
 	group_layout->addLayout (h_layout);
 	h_layout->addWidget (new QLabel (i18n ("History length:"), group));
-	h_layout->addWidget (graphics_hist_max_length_box = new KIntSpinBox (2, 25, 1, graphics_hist_max_length, group));
+	h_layout->addWidget (graphics_hist_max_length_box = new KIntSpinBox (1, 200, 1, graphics_hist_max_length, group));
 	h_layout->addSpacing (2*RKGlobals::spacingHint ());
 	h_layout->addWidget (new QLabel (i18n ("History size:"), group));
-	h_layout->addWidget (graphics_hist_max_plotsize_box = new KIntSpinBox (4, 2048, 4, graphics_hist_max_plotsize, group)); // in KB
+	h_layout->addWidget (graphics_hist_max_plotsize_box = new KIntSpinBox (4, 20000, 4, graphics_hist_max_plotsize, group)); // in KB
 	h_layout->addWidget (new QLabel (i18n ("KiB"), group));
 	h_layout->addStretch ();
 	connect (graphics_hist_max_length_box, SIGNAL (valueChanged (int)), this, SLOT (boxChanged (int)));
