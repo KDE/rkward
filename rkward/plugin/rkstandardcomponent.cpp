@@ -78,12 +78,7 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 	RKComponentPropertyBase *current_object_property = new RKComponentPropertyBase (this, false);
 	current_object_property->setInternal (true);
 	RKMDIWindow *w = RKWorkplace::mainWorkplace ()->activeWindow (RKMDIWindow::AnyWindowState);
-	if (w) {
-qDebug ("something's active: %s", qPrintable (w->globalContextProperty ("current_object")));
-		current_object_property->setValue (w->globalContextProperty ("current_object"));
-	} else {
-qDebug ("nothing's active");
-	}
+	if (w) current_object_property->setValue (w->globalContextProperty ("current_object"));
 	addChild ("current_object", current_object_property);
 
 	// open the main description file for parsing
