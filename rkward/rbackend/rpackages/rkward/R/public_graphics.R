@@ -59,7 +59,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 "rk.record.plot" <- function ()
 {
 	# TODO: 
-	# - add a length and size limit to recorded () list
+	# - check when decreasing the max history length below the current recorded length
 	# - add one or more tests to rkward_application_tests.R
 	# - .... ?
 	
@@ -99,6 +99,46 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 			histPositions [[deviceId]] <<- newPlotExists [[deviceId]] <<- NULL
 		}
 	}
+	push.pop.and.record <- function (which.pop = NULL, which.push = NULL, deviceId = NULL, newplot = FALSE, oldplot = !newplot)
+	{
+		if (class (try (unsavedPlot <- recordPlot(), silent=TRUE)) != 'try-error') {
+			s <- object.size (unsavedPlot) # in bytes
+			
+			
+			if (s <= getOption ('rk.graphics.hist.max.plotsize') * 1024) {
+				if (oldplot) {
+					recorded [[which.push]] <<- unsavedPlot
+					return (TRUE)
+				}
+				
+				len.r <- length(recorded)
+				ml <- getOption ('rk.graphics.hist.max.length')
+				
+				if (len.r < ml) {
+					n <- len.r + 1
+				} else if (len.r == ml) {
+					warning ('Max length reached, popping out the first plot.')
+					remove (deviceId = NULL, pos = which.pop)
+					n <- len.r
+				} else {
+					warning ('Current history length > max length: plot not added to history!')
+					return (FALSE)
+				}
+				
+				if (!is.null (deviceId)) histPositions [[deviceId]] <<- n
+				.rk.graph.history.gui ()
+				recorded [[n]] <<- unsavedPlot
+				
+				return (TRUE)
+			} else {
+				warning ('Oversized plot: not added to history!') # don't use stop (...)
+				return (FALSE)
+			}
+		} else {
+			warning ('recordPlot () bailed out!') # don't use stop (...)
+			return (FALSE)
+		}
+	}
 	record <- function(deviceId = dev.cur (), newplotflag = TRUE, force = FALSE)
 	{
 		deviceId <- as.character (deviceId)
@@ -112,15 +152,12 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		if (isManaged) {
 			# device is managed, that is, non-preview-interactive
 			
+			succeded <- TRUE
 			if (newPlotExists [[deviceId]]) {
 				# there is a new plot on this device, so save it,
 				# immaterial of whether force == TRUE or FALSE
 				
-				if (class (try (unsavedPlot <- recordPlot(), silent=TRUE)) != 'try-error') {
-					histPositions [[deviceId]] <<- n <- length(recorded) + 1
-					recorded [[n]] <<- unsavedPlot
-					.rk.graph.history.gui ()
-				}
+				succeded <- push.pop.and.record (which.pop = 1, deviceId = deviceId, newplot = TRUE)
 			} else if (force) {
 				# no new plot on this managed device but force == TRUE
 				# in other words, called from a non-preview interactive device by clicking "Add to history" icon
@@ -134,12 +171,11 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 					newPlotExists [[deviceId]] <<- TRUE
 					record (deviceId, newplotflag = FALSE, force = FALSE)
 				} else {
-					if (class (try (unsavedPlot <- recordPlot(), silent=TRUE)) != 'try-error') {
-						recorded [[n]] <<- unsavedPlot
-					}
+					succeded <- push.pop.and.record (which.push = n, oldplot = TRUE)
 				}
 			}
-			newPlotExists [[deviceId]] <<- newplotflag
+			if (succeded || !force)
+				newPlotExists [[deviceId]] <<- newplotflag
 		} else {
 			# device is not managed but due to (*) force == TRUE
 			# in other words, called from a preview device by clicking "Add to history" icon
@@ -149,11 +185,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 			# save a particular "preview" plot to history (useful since preview plots are _not_
 			# automatically added to history)
 			
-			n <- length (recorded) + 1
-			if (class (try (unsavedPlot <- recordPlot(), silent=TRUE)) != 'try-error') {
-				recorded [[n]] <<- unsavedPlot
-				.rk.graph.history.gui ()
-			}
+			push.pop.and.record (which.pop = 1, deviceId = NULL, newplot = TRUE)
 		}
 		
 		dev.set (cur.deviceId)
@@ -219,7 +251,8 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 				pop.and.update (n = pos)
 			}
 		} else if (all(pos > 0) && all (pos <= history_length)) {
-			# not called from any managed devices, so pop and update
+			# call from: push.pop.and.record () (see above) not from any device
+			
 			pop.and.update (n = pos)
 		} else
 			stop (paste ('Invalid position(s)'))
