@@ -88,7 +88,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 			histPositions [[deviceId]] <<- if (n > 0) n + 1 else 0
 		}
 		newPlotExists [[deviceId]] <<- FALSE
-		.rk.graph.history.gui (deviceId)
+		.rk.graph.history.gui () # (deviceId)
 	}
 	onDelDevice <- function (deviceId = dev.cur())
 	{
@@ -216,7 +216,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 				m <- min (histPositions[[d]] - sum (n <= histPositions[[d]]) + 1, len.r)
 				if (newPlotExists[[d]]) {
 					histPositions [[d]] <<- m
-					.rk.graph.history.gui (d)
+					.rk.graph.history.gui () # (d)
 				} else
 					replay (n = m, deviceId = d)
 			}
@@ -225,9 +225,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 			for (d in dGtn) {
 				histPositions[[d]] <<- histPositions[[d]] - sum (n <= histPositions[[d]])
 			}
-			.rk.graph.history.gui (dGtn)
-			
-			.rk.graph.history.gui (names (histPositions) [unlist (histPositions) == len.r])
+			.rk.graph.history.gui () # (dGtn)
 		}
 		
 		if (is.null (pos)) {
@@ -269,7 +267,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		if (n > 0 && n <= length(recorded)) {
 			histPositions [[deviceId]] <<- n
 			replayPlot(recorded[[n]])
-			.rk.graph.history.gui (deviceId)
+			.rk.graph.history.gui () # (deviceId)
 		}
 		else message("replay: 'n' not in valid range: ", n)
 		dev.set (cur.deviceId)
