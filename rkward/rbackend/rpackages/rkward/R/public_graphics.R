@@ -216,7 +216,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 				m <- min (histPositions[[d]] - sum (n <= histPositions[[d]]) + 1, len.r)
 				if (newPlotExists[[d]]) {
 					histPositions [[d]] <<- m
-					.rk.graph.history.gui () # (d)
+					#.rk.graph.history.gui () # (d)
 				} else
 					replay (n = m, deviceId = d)
 			}
