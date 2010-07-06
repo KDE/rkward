@@ -326,6 +326,24 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		}
 		invisible (NULL)
 	}
+	.verify.hist.limits <- function ()
+	{
+		# Length restriction:
+		len.max <- getOption ('rk.graphics.hist.max.length')
+		len.r <- length (recorded)
+		
+		ans <- 'no'
+		if (len.max < len.r) {
+			## TODO: implement using rk.ask.yesnocancel ()
+			ans <- readline (paste ('Current screen history has more plots than the maximum number chosen. ',len.r - len.max,' of the foremost plots will be removed.\nIf you want to continue type [y]es. Instead, if you prefer to remove them yourself type [n]o or hit Cancel.', sep = ''))
+			if (tolower(ans) %in% c('y', 'yes'))
+				remove (deviceId = NULL, pos = 1:(len.r - len.max))
+		}
+		
+		# Size restriction:
+		#s <- getOption ('rk.graphics.hist.max.plotsize')
+		# Existing plots are not checked for their sizes, only the new ones are.
+	}
 
 	env
 }
