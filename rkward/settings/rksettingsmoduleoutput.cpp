@@ -96,13 +96,12 @@ RKSettingsModuleOutput::RKSettingsModuleOutput (RKSettings *gui, QWidget *parent
 	group_layout = new QVBoxLayout (group);
 	h_layout = new QHBoxLayout (group);
 	group_layout->addLayout (h_layout);
-	h_layout->addWidget (new QLabel (i18n ("History length:"), group));
+	h_layout->addWidget (new QLabel (i18n ("Maximum number of recorded plots:"), group));
 	h_layout->addWidget (graphics_hist_max_length_box = new KIntSpinBox (1, 200, 1, graphics_hist_max_length, group));
-	h_layout->addSpacing (2*RKGlobals::spacingHint ());
-	h_layout->addWidget (new QLabel (i18n ("History size:"), group));
+	h_layout = new QHBoxLayout (group);
+	group_layout->addLayout (h_layout);
+	h_layout->addWidget (new QLabel (i18n ("Maximum size of a single recorded plot (in KB):"), group));
 	h_layout->addWidget (graphics_hist_max_plotsize_box = new KIntSpinBox (4, 20000, 4, graphics_hist_max_plotsize, group)); // in KB
-	h_layout->addWidget (new QLabel (i18n ("KiB"), group));
-	h_layout->addStretch ();
 	connect (graphics_hist_max_length_box, SIGNAL (valueChanged (int)), this, SLOT (boxChanged (int)));
 	connect (graphics_hist_max_plotsize_box, SIGNAL (valueChanged (int)), this, SLOT (boxChanged (int)));
 
