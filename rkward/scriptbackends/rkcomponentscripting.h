@@ -59,6 +59,8 @@ private:
 	RKComponent* component;
 	Kross::Action* script;
 	QString _scriptfile;
+/** helper function for compatibility with KDE < 4.3 */
+	void evaluate (const QByteArray &code);
 
 	void handleChange (RKComponentBase* changed);
 	QHash<RKComponentBase*, QString> component_commands;

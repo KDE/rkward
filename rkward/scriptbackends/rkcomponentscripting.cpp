@@ -18,6 +18,7 @@
 #include "rkcomponentscripting.h"
 
 #include <klocale.h>
+#include <kdeversion.h>
 
 #include "../plugin/rkcomponent.h"
 #include "../core/robjectlist.h"
@@ -50,6 +51,9 @@ void RKComponentScriptingProxy::initialize (const QString& file, const QString& 
 	}
 	QDir files_path (RKCommonFunctions::getRKWardDataDir () + "phpfiles/");
 	_command.prepend ("_rkward.include('" + files_path.absoluteFilePath ("rkcomponentscripting.js") + "');\n");
+#if not KDE_IS_VERSION(4,3,0)
+	_command.prepend ("_rk_eval = function (x) { eval (x); }\n");
+#endif
 	script->setCode (_command.toUtf8 ());
 
 	script->trigger ();
@@ -79,12 +83,22 @@ void RKComponentScriptingProxy::include (const QString& filename) {
 
 	QFile file (_filename);
 	if (!file.open (QIODevice::ReadOnly | QIODevice::Text)) {
-		script->evaluate (i18n ("error ('The file \"%1\" (needed by \"%2\") could not be found. Please check your installation.');\n", _filename, _scriptfile).toUtf8 ());
+		evaluate (i18n ("error ('The file \"%1\" (needed by \"%2\") could not be found. Please check your installation.');\n", _filename, _scriptfile).toUtf8 ());
 		return;
 	}
 
-	script->evaluate (file.readAll());
+	evaluate (file.readAll());
 	handleScriptError (_filename);
+}
+
+void RKComponentScriptingProxy::evaluate (const QByteArray &code) {
+	RK_TRACE (PHP);
+
+#if KDE_IS_VERSION(4,3,0)
+	script->evaluate (code);
+#else
+	script->callFunction ("_rk_eval", QVariantList() << QString (code));
+#endif
 }
 
 void RKComponentScriptingProxy::addScriptableWidget (const QString& name, QWidget *widget) {
@@ -125,7 +139,7 @@ void RKComponentScriptingProxy::handleChange (RKComponentBase* changed) {
 	RK_TRACE (PHP);
 
 	QString command = component_commands.value (changed);
-	script->evaluate (command.toUtf8());
+	evaluate (command.toUtf8());
 }
 
 QString RKComponentScriptingProxy::getValue (const QString &id) const {
