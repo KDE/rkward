@@ -485,16 +485,20 @@ RKMDIWindow *RKWorkplace::activeWindow (RKMDIWindow::State state) {
 QString RKWorkplace::makeWorkplaceDescription (const QString &sep, bool quote) {
 	RK_TRACE (APP);
 
+	// window order in the workplace view may have changed with respect to our list. Thus we first generate a properly sorted list
+	RKWorkplaceObjectList list = getObjectList (RKMDIWindow::DocumentWindow, RKMDIWindow::Detached);
+	for (int i=0; i < wview->count (); ++i) {
+		list.append (static_cast<RKMDIWindow*> (wview->widget (i)));
+	}
+	
 	QString workplace_description;
 	bool first = true;
-	for (RKWorkplaceObjectList::const_iterator it = windows.constBegin (); it != windows.constEnd (); ++it) {
-		if ((*it)->isToolWindow ()) continue;
-
+	foreach (RKMDIWindow *win, list) {
 		if (first) first = false;
 		else workplace_description.append (sep);
 
-		if (!quote) workplace_description.append ((*it)->getDescription ());
-		else workplace_description.append (RObject::rQuote ((*it)->getDescription ()));
+		if (!quote) workplace_description.append (win->getDescription ());
+		else workplace_description.append (RObject::rQuote (win->getDescription ()));
 	}
 	return workplace_description;
 }
