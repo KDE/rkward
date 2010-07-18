@@ -1,8 +1,8 @@
 <!DOCTYPE rkhelp>
 <document>
 	<summary>
-		This test differs from <link href="rkward://component/wilcoxon_test"/> in that it uses a different algorithm and supports the exact test even for tied samples.
+		This test differs from <link href="rkward://component/wilcoxon_test"/> in that it uses a different algorithm and supports the exact test even for tied samples. Please note: The package 'exactRankTests' which was previously used in RKWard is no longer under development. Thus the function wilcox_test from the 'coin' package will be used.
 
-		For details of the implementation see <link href="rkward://rhelp/wilcox.exact.test"/>. For documentation of the dialog settings, see <link href="rkward://component/wilcoxon_test"/>.
+		For details of the implementation see <link href="rkward://rhelp/wilcox_test"/>. For documentation of the dialog settings, see <link href="rkward://component/wilcoxon_test"/>.
 	</summary>
 </document>
