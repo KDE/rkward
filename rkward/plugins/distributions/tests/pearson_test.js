@@ -3,7 +3,7 @@ function preprocess () {
 }
 
 function calculate () {
-	var vars = "substitute (" + trim (getValue ("x")).replace ("\n", "), substitute (") + ")";
+	var vars = "substitute (" + trim (getValue ("x")).replace (/\n/g, "), substitute (") + ")";
 	var adjust = getValue ("adjust");
 
 

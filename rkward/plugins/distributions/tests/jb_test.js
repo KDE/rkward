@@ -3,7 +3,7 @@ function preprocess () {
 }
 
 function calculate () {
-	var vars = "substitute (" + trim (getValue ("x")).replace ("\n", "), substitute (") + ")";
+	var vars = "substitute (" + trim (getValue ("x")).replace (/\n/g, "), substitute (") + ")";
 
 	echo ('vars <- list (' + vars + ')\n');
 	echo ('results <- data.frame (\'Variable Name\'=rep (NA, length (vars)), check.names=FALSE)\n');
