@@ -32,15 +32,15 @@ ENDIF(NOT R_HOME)
 
 MESSAGE(STATUS "Looking for R include files")
 IF(NOT R_INCLUDEDIR)
-	IF(WIN32)	# This version of the test will not work with R < 2.9.0, but the other version (in the else part) will not work on windows (and on windows the paths are generally standard, anyway).
+	IF(WIN32 OR APPLE)	# This version of the test will not work with R < 2.9.0, but the other version (in the else part) will not work on windows or apple (but we do not really need to support ancient versions of R, there).
 		EXECUTE_PROCESS(
 			COMMAND ${R_EXECUTABLE} "--slave" "--no-save" "-e" "cat(R.home('include'))"
 			OUTPUT_VARIABLE R_INCLUDEDIR)
-	ELSE(WIN32)
+	ELSE(WIN32 OR APPLE)
 		EXECUTE_PROCESS(
 			COMMAND ${R_EXECUTABLE} CMD sh -c "echo -n $R_INCLUDE_DIR"
 			OUTPUT_VARIABLE R_INCLUDEDIR)
-	ENDIF(WIN32)
+	ENDIF(WIN32 OR APPLE)
 ELSE(NOT R_INCLUDEDIR)
 	MESSAGE(STATUS "Location specified by user")
 ENDIF(NOT R_INCLUDEDIR)
