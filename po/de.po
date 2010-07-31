@@ -8,20 +8,20 @@
 # SJR <stefan_roediger@gmx.de>, 2006, 2007.
 # Thomas Friedrichsmeier <tfry@users.sourceforge.net>, 2006, 2007.
 # Stefan Roediger <stefan_roediger@gmx.de>, 2007.
-# Stefan Rödiger <stefan_roediger@gmx.de>, 2007, 2009.
+# Stefan Rödiger <stefan_roediger@gmx.de>, 2007, 2009, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
-"Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
-"group_id=50231&atid=459007\n"
+"Report-Msgid-Bugs-To: http://sourceforge."
+"net/tracker/?group_id=50231&atid=459007\n"
 "POT-Creation-Date: 2010-04-15 16:30+0200\n"
-"PO-Revision-Date: 2009-03-27 01:09+0100\n"
+"PO-Revision-Date: 2010-07-31 02:18+0200\n"
 "Last-Translator: Stefan Rödiger <stefan_roediger@gmx.de>\n"
-"Language-Team:  <de@li.org>\n"
+"Language-Team: German <kde-i18n-de@kde.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
+"X-Generator: Lokalize 1.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: agents/rkeditobjectagent.cpp:56
@@ -46,7 +46,7 @@ msgid ""
 "There has been an error opening file '%1':\n"
 "%2"
 msgstr ""
-"Ein Fehler ist aufgetreten beim öffnen der Datei'%1':\n"
+"Ein Fehler ist aufgetreten beim öffnen der Datei '%1':\n"
 "%2"
 
 #: agents/rkloadagent.cpp:73
@@ -310,10 +310,12 @@ msgid ""
 "Did not unload package %1. It is required in RKWard. If you really want to "
 "do this, do so on the R Console."
 msgstr ""
+"Das Packet %1 wurde nicht entfernt. Es wird von RKWard benötigt. Wenn Sie "
+"dies wirklich beabsichtigen, können Sie dies in der R-Konsole durchführen."
 
 #: core/robjectlist.cpp:83
 msgid "Package %1 appears not to have been loaded"
-msgstr ""
+msgstr "Packet %1 wurde wahrscheinlich nicht geladen"
 
 #: dataeditor/editformatdialog.cpp:41
 msgid "Alignment"
@@ -358,9 +360,9 @@ msgid ""
 "index column is read only). To remove levels at the end of the list, just "
 "set them to empty."
 msgstr ""
-"Levels können nur aufeinander folgende Ganzzahlen, beginnend mit 1, "
+"Levels können nur aufeinander folgende ganzzahlige Werte, beginnend mit 1, "
 "zugewiesen werden (Indexspalte kann nur gelesen werden). Um Levels am Ende "
-"der Lister zu entfernen, einfach als leer setzten."
+"der Liste zu entfernen, einfach als leer setzten."
 
 #: dataeditor/editlabelsdialog.cpp:229
 msgid "Levels / Value labels for '%1'"
@@ -379,12 +381,10 @@ msgid "Invalid Name"
 msgstr "Unzulässiger Name"
 
 #: dataeditor/rkeditordataframepart.cpp:58
-#, fuzzy
 msgid "Paste inside table"
 msgstr "Füge in Tabelle ein"
 
 #: dataeditor/rkeditordataframepart.cpp:63
-#, fuzzy
 msgid "Paste inside selection"
 msgstr "Füge in Auswahl ein"
 
@@ -519,8 +519,7 @@ msgstr "Konfiguriere Repositories"
 
 #: dialogs/rkloadlibsdialog.cpp:226
 msgid "Please stand by while installing selected packages"
-msgstr ""
-"Bitte warten Sie während die gewählten Pakete installiert werden"
+msgstr "Bitte warten Sie während die gewählten Pakete installiert werden"
 
 #: dialogs/rkloadlibsdialog.cpp:226
 msgid "Installing packages"
@@ -694,16 +693,24 @@ msgid ""
 "Sorry, automatic switching to Administrator is not yet supported in RKWard "
 "on Windows"
 msgstr ""
+"Falls Sie zugriff auf den Administrator-Account dieses Computers haben, denn "
+"können Sie dies nutzen um die Packete zu installieren, oder Sie können die "
+"Zugriffsrechte von '%1' ändern. "
+"Entschuldigen Sie bitte, das automatische wechseln zum Administrator-Account "
+"wird von RKWard unter Windows noch nicht unterstützt."
 
 #: dialogs/rkloadlibsdialog.cpp:871
 msgid "Attempt installation, anyway"
-msgstr ""
+msgstr "Versuche dennoch Installation"
 
 #: dialogs/rkloadlibsdialog.cpp:874
 msgid ""
 "If you are the adminitstrator of this machine, you can try to install the "
 "packages as root (you'll be prompted for the root password)."
 msgstr ""
+"Wenn Sie der Administrator dieses Computers sind, dann können Sie versuchen "
+"die Packte mit Administratorrechten zu installieren (Sie werden "
+"wahrscheinlich nach dem Administratorpasswort gefragt)."
 
 #: dialogs/rkloadlibsdialog.cpp:875
 msgid "Become root"
@@ -715,7 +722,7 @@ msgstr "Kontext:"
 
 #: dialogs/rkselectlistdialog.cpp:38
 msgid "<b>Select one or more:</b>"
-msgstr ""
+msgstr "<b>Einen oder mehr auswählen:</b>"
 
 #: dialogs/rkselectlistdialog.cpp:39
 #, fuzzy
@@ -751,6 +758,8 @@ msgid ""
 "After starting (and after loading the specified workspace, if applicable), "
 "evaluate the given R code."
 msgstr ""
+"Nach Starten (und nach laden des definierten Workspace wenn anwendbar), "
+"evaluiere den angegebenen R-Code."
 
 #: main.cpp:93
 msgid "Verbosity of debug messages (0-5)"
@@ -808,11 +817,11 @@ msgstr "C++ Entwickler seit 0.2.9"
 
 #: main.cpp:102
 msgid "Many plugins, suggestions, marketing, translations"
-msgstr "Viele Plug-Ins, Vorschläge, Marketing und Übersetzungen"
+msgstr "Viele Plugins, Vorschläge, Marketing und Übersetzungen"
 
 #: main.cpp:103 main.cpp:117
 msgid "Many plugins, suggestions"
-msgstr "Viele Plug-Ins, Vorschläge"
+msgstr "Viele Plugins, Vorschläge"
 
 #: main.cpp:104
 msgid "Contributors in alphabetical order"
@@ -824,7 +833,7 @@ msgstr "Verschiedene hilfreiche Kommentare und Diskussionen"
 
 #: main.cpp:106
 msgid "Plugins and patches"
-msgstr "Plug-Ins und Patches"
+msgstr "Plugins und Patches"
 
 #: main.cpp:107
 msgid "New website"
@@ -832,7 +841,7 @@ msgstr "Neue Website"
 
 #: main.cpp:108
 msgid "HP filter plugin, spanish translation"
-msgstr ""
+msgstr "HP-Filter-Plugin, spanische Übersetzung"
 
 #: main.cpp:109
 msgid "A cool icon"
@@ -856,7 +865,7 @@ msgstr "Viele Kommentare, nützliche Vorschläge und Fehlerberichte"
 
 #: main.cpp:114
 msgid "German Translation, bug reports"
-msgstr ""
+msgstr "Deutsche Übersetzung und Fehlerberichte"
 
 #: main.cpp:115
 msgid "Some patches"
@@ -864,7 +873,7 @@ msgstr "Einige Patches"
 
 #: main.cpp:116
 msgid "patches and helpful comments"
-msgstr ""
+msgstr "Patches und hilfreiche Kommentare"
 
 #: main.cpp:118
 msgid "Many more people on rkward-devel@lists.sourceforge.net"
@@ -970,11 +979,11 @@ msgstr "Überschreiben?"
 
 #: misc/rkspecialactions.cpp:27 misc/rkspecialactions.cpp:66
 msgid "Paste special..."
-msgstr ""
+msgstr "Spezielles einfügen..."
 
 #: misc/rkspecialactions.cpp:79
 msgid "Paste mode"
-msgstr ""
+msgstr "Einfügemodus"
 
 #: misc/rkspecialactions.cpp:82
 #, fuzzy
@@ -983,15 +992,15 @@ msgstr "R Engine wird gestartet"
 
 #: misc/rkspecialactions.cpp:85
 msgid "Vector"
-msgstr ""
+msgstr "Vektor"
 
 #: misc/rkspecialactions.cpp:97
 msgid "Field separator"
-msgstr ""
+msgstr "Feldtrenner"
 
 #: misc/rkspecialactions.cpp:100
 msgid "Tab"
-msgstr ""
+msgstr "Reiter"
 
 #: misc/rkspecialactions.cpp:104
 #, fuzzy
@@ -1005,47 +1014,47 @@ msgstr "Speichere Workspace"
 
 #: misc/rkspecialactions.cpp:111
 msgid "Any whitespace"
-msgstr ""
+msgstr "Beliebiger Leerraum"
 
 #: misc/rkspecialactions.cpp:115
 msgid "Other:"
-msgstr ""
+msgstr "Andere:"
 
 #: misc/rkspecialactions.cpp:126
 msgid "Quoting"
-msgstr ""
+msgstr "Zitieren"
 
 #: misc/rkspecialactions.cpp:129
 msgid "Do not quote values"
-msgstr ""
+msgstr "Werte nicht zitieren"
 
 #: misc/rkspecialactions.cpp:132
 msgid "Automatic"
-msgstr ""
+msgstr "Automatisch"
 
 #: misc/rkspecialactions.cpp:136
 msgid "Quote all values"
-msgstr ""
+msgstr "Alle Werte zitieren"
 
 #: misc/rkspecialactions.cpp:142
 msgid "Transformations"
-msgstr ""
+msgstr "Transformationen"
 
 #: misc/rkspecialactions.cpp:144
 msgid "Reverse horizontally"
-msgstr ""
+msgstr "Horizontal umkehren"
 
 #: misc/rkspecialactions.cpp:146
 msgid "Reverse vertically"
-msgstr ""
+msgstr "Vertikal umkehren"
 
 #: misc/rkspecialactions.cpp:148
 msgid "Flip rows/columns"
-msgstr ""
+msgstr "Zeilen/Spalten tauschen"
 
 #: misc/rkspecialactions.cpp:150
 msgid "Insert NAs where needed"
-msgstr ""
+msgstr "NAs einfügen wenn benötigt"
 
 #: misc/rkstandardactions.cpp:44
 msgid "Run current line"
@@ -1118,41 +1127,53 @@ msgid ""
 "unknown. Probably you need to load the corresponding PluginMap (Settings-"
 ">Configure RKWard->Plugins), or perhaps the plugin was renamed."
 msgstr ""
+"Sie haben versucht das Plugin '%1' aufzurufen, aber dieses Plugin ist "
+"gegenwärtig unbekannt \n"
+"Möglicherweise müssen Sie die entsprechende PluginMap (Einstellungen->"
+"Konfiguriere RKWard->Plugins) laden, oder möglicherweise wurde das Plugin "
+"umbenannt."
 
 #: plugin/rkcomponentmap.cpp:248
 msgid "No such plugin"
-msgstr ""
+msgstr "Dieses Plugin ist nicht vorhanden"
 
 #: plugin/rkcomponentmap.cpp:257
 msgid ""
 "Bad serialization format while trying to invoke plugin '%1'. Please contact "
 "the RKWard team (Help->About RKWard->Authors)."
 msgstr ""
+"Schlechtes Serialisierungsformat während des Versuchs das Plugin '%1' "
+"aufzurufen. \n"
+"Bitte kontaktieren Sie das RKWard-Team (Hilfe->Über RKWard->Autoren)."
 
 #: plugin/rkcomponentmap.cpp:259
 msgid "Bad serialization format"
-msgstr ""
+msgstr "Schlechtes Serialisierungsformat"
 
 #: plugin/rkcomponentmap.cpp:263
 msgid ""
 "Not all specified settings could be applied. Most likely this is because "
 "some R objects are no longer present in your current workspace."
 msgstr ""
+"Nicht alles angegebenen Einstellungen konnten angewendet werden. "
+"Wahrscheinlich sind einige \n"
+"R-Objekte nicht mehr in ihrem gegenwärtigen Workspace."
 
 #: plugin/rkcomponentmap.cpp:265
 msgid "Not all settings applied"
-msgstr ""
+msgstr "Nicht alle Einstellungen wurden übernommen"
 
 #: plugin/rkcomponentmap.cpp:304
 msgid ""
 "\n"
 "The plugin could not be auto-submitted with these settings."
 msgstr ""
+"\n"
+"Das Plugin konnte mit diesen Einstellungen automatisch übergeben werden."
 
 #: plugin/rkcomponentmap.cpp:306
-#, fuzzy
 msgid "Could not submit"
-msgstr "Konnte Plug-In nicht erzeugen"
+msgstr "Konnte nicht übergeben"
 
 #: plugin/rkdropdown.cpp:42 plugin/rkradio.cpp:45
 msgid "Select one:"
@@ -1176,7 +1197,7 @@ msgstr "Benutzermodell:"
 
 #: plugin/rkformula.cpp:100
 msgid "Main effects"
-msgstr "Haupteffekt"
+msgstr "Haupteffekte"
 
 #: plugin/rkformula.cpp:105
 msgid "Level"
@@ -1235,12 +1256,12 @@ msgid ""
 "There has been an error while trying to parse the description of this plugin "
 "('%1'). Please refer to stdout for details."
 msgstr ""
-"Beim Versuch die Beschreibung dieses Plug-Ins zu lese, ist ein Fehler "
+"Beim Versuch die Beschreibung dieses Plugins zu lese, ist ein Fehler "
 "aufgetreten ('%1'). Bitte berufen Sie sich auf stdout für Details."
 
 #: plugin/rkstandardcomponent.cpp:78
 msgid "Could not create plugin"
-msgstr "Konnte Plug-In nicht erzeugen"
+msgstr "Konnte Plugin nicht erzeugen"
 
 #: plugin/rkstandardcomponentgui.cpp:97 plugin/rkstandardcomponentgui.cpp:405
 msgid "Submit"
@@ -1252,7 +1273,7 @@ msgstr "Schließen"
 
 #: plugin/rkstandardcomponentgui.cpp:105
 msgid "Auto close"
-msgstr ""
+msgstr "Automatisch schließen"
 
 #: plugin/rkstandardcomponentgui.cpp:111
 msgid "Help"
@@ -1546,7 +1567,7 @@ msgstr ""
 
 #: rkward.cpp:191
 msgid "Broken installation"
-msgstr ""
+msgstr "Fehlerhafte Installation"
 
 #: rkward.cpp:195
 msgid ""
@@ -1555,6 +1576,10 @@ msgid ""
 "you'd like to help: <a href=\"http://p.sf.net/rkward/contact\">http://p.sf."
 "net/rkward/contact</a>.</p>"
 msgstr ""
+"<p>Hinweis. RKWard wurde unter Windows noch nicht ausführlich getestet.</"
+"p><p>Es gibt eine Reihe bekannter und unbekannter Probleme. Wenn Sie helfen "
+"möchten: <a href=\"http://p.sf.net/rkward/contact\">http://p.sf."
+"net/rkward/contact</a>.</p>"
 
 #: rkward.cpp:195
 #, fuzzy
@@ -1587,7 +1612,7 @@ msgstr ""
 
 #: rkward.cpp:279
 msgid "No (valid) plugins found"
-msgstr "Keine (gültigen) Plug-Ins gefunden"
+msgstr "Keine (gültigen) Plugins gefunden"
 
 #: rkward.cpp:315
 msgid "Dataset"
@@ -1809,8 +1834,8 @@ msgid ""
 "it works with different settings."
 msgstr ""
 "Das PHP-Backende hat einen Fehler berichtet(\"%1\")\n"
-"und wurde geschlossen. Dies lässt sich meistens auf ein Bug im Plug-In "
-"zurückführen. Aber selbstverständlich können Sie das Plug-In schließen und "
+"und wurde geschlossen. Dies lässt sich meistens auf ein Bug im Plugin "
+"zurückführen. Aber selbstverständlich können Sie das Plugin schließen und "
 "erneut starten, um zu überprüfen ob es mit anderen Einstellungen "
 "funktioniert."
 
@@ -1856,6 +1881,9 @@ msgid ""
 "Backtrace:\n"
 "%2"
 msgstr ""
+"Skriptfehler: %1\n"
+"Rückverfolgung:\n"
+"%2"
 
 #: scriptbackends/qtscriptbackend.cpp:219
 #, fuzzy
@@ -1933,11 +1961,11 @@ msgstr "Füge auch diese Kommandos dem Verlauf der Konsole zu"
 
 #: settings/rksettingsmoduleconsole.cpp:76
 msgid "Do not add"
-msgstr ""
+msgstr "Nicht anfügen"
 
 #: settings/rksettingsmoduleconsole.cpp:77
 msgid "Add only if single line"
-msgstr ""
+msgstr "Nur anfügen wenn einzelne Zeile"
 
 #: settings/rksettingsmoduleconsole.cpp:78
 #, fuzzy
@@ -1976,7 +2004,7 @@ msgstr "Zeitüberschreitung des Kommando"
 
 #: settings/rksettingsmoduledebug.cpp:93
 msgid "<i>Note:</i> Debug output is written to %1"
-msgstr ""
+msgstr "<i>Hinweis:</i> Debug-Ausgabe wurde geschrieben nach %1"
 
 #: settings/rksettingsmoduledebug.cpp:110
 msgid "Debug"
@@ -2125,15 +2153,15 @@ msgstr "Eigenschaften des Ausgabefensters"
 
 #: settings/rksettingsmoduleoutput.cpp:50
 msgid "show window on new output"
-msgstr ""
+msgstr "Fenster bei neuer Ausgabe zeigen"
 
 #: settings/rksettingsmoduleoutput.cpp:53
 msgid "raise window on new output"
-msgstr ""
+msgstr "Fenster bei neuer Ausgabe hervorbringen"
 
 #: settings/rksettingsmoduleoutput.cpp:60
 msgid "Graphics"
-msgstr ""
+msgstr "Graphik"
 
 #: settings/rksettingsmoduleoutput.cpp:64
 #, fuzzy
@@ -2147,19 +2175,19 @@ msgstr "Standardeinstellung"
 
 #: settings/rksettingsmoduleoutput.cpp:67
 msgid "PNG"
-msgstr ""
+msgstr "PNG"
 
 #: settings/rksettingsmoduleoutput.cpp:68
 msgid "SVG"
-msgstr ""
+msgstr "SVG"
 
 #: settings/rksettingsmoduleoutput.cpp:69
 msgid "JPG"
-msgstr ""
+msgstr "JPG"
 
 #: settings/rksettingsmoduleoutput.cpp:74
 msgid "JPG quality"
-msgstr ""
+msgstr "JPG-Qualität"
 
 #: settings/rksettingsmoduleoutput.cpp:82
 #, fuzzy
@@ -2174,7 +2202,7 @@ msgstr "Höhe"
 #: settings/rksettingsmodulephp.cpp:39
 msgid "Changes in this section take effect the next time you start a plugin"
 msgstr ""
-"Änderungen in diesen Sektionen werden erst beim nächsten Start des Plug-Ins "
+"Änderungen in diesen Sektionen werden erst beim nächsten Start des Plugins "
 "wirksam"
 
 #: settings/rksettingsmodulephp.cpp:45
@@ -2333,6 +2361,7 @@ msgstr "R-Backend"
 #: settings/rksettingsmoduler.cpp:335
 msgid "CRAN download mirror (leave empty to be prompted once each session):"
 msgstr ""
+"CRAN Spiegelserver (freilassen um in jeder RKWard-Sitzung gefragt zu werden):"
 
 #: settings/rksettingsmoduler.cpp:342
 #, fuzzy
@@ -2382,7 +2411,7 @@ msgstr "R-Pakete"
 
 #: settings/rksettingsmoduler.cpp:406
 msgid "Select CRAN mirror"
-msgstr ""
+msgstr "Wähle CRAN Spiegelserver"
 
 #: settings/rksettingsmodulewatch.cpp:123
 msgid ""
@@ -2414,7 +2443,7 @@ msgstr "Nutzer Befehle"
 
 #: settings/rksettingsmodulewatch.cpp:145
 msgid "Plugin generated commands"
-msgstr "Plug-In generierte Befehle "
+msgstr "Plugin generierte Befehle "
 
 #: settings/rksettingsmodulewatch.cpp:146
 msgid "Application commands"
@@ -2486,7 +2515,7 @@ msgstr "Skripteditor"
 
 #: windows/rkcommandeditorwindow.cpp:183
 msgid "Change the working directory to the directory of this script"
-msgstr ""
+msgstr "Wechsle das Arbeitsverzeichnis zum Verzeichnis von diesem Skript"
 
 #: windows/rkcommandeditorwindow.cpp:188
 msgid "Configure Script Editor"
@@ -2579,7 +2608,7 @@ msgstr "Suche in Hilfe"
 
 #: windows/rkhelpsearchwindow.cpp:160
 msgid "Find HTML help for %1"
-msgstr ""
+msgstr "Finde HTML-Hilfe für %1"
 
 #: windows/rkhelpsearchwindow.cpp:220
 msgid ""
@@ -2623,7 +2652,7 @@ msgstr "Drucke Ausgabe"
 
 #: windows/rkhtmlwindow.cpp:369
 msgid "Export page as HTML"
-msgstr ""
+msgstr "Exportiere Seite als HTML"
 
 #: windows/rkhtmlwindow.cpp:380
 #, fuzzy
@@ -2670,10 +2699,14 @@ msgid ""
 "<p>The help page for this component has not yet been written (or is broken). "
 "Please consider contributing it.</p>\n"
 msgstr ""
+"<h1>Hilfeseite fehlt</h1>\n"
+"<p>Die Hilfeseite für diese Komponente wurde noch nicht geschrieben oder ist "
+"fehlerhaft. "
+"Bitte ziehen Sie in Betracht dies mit zu verbessern.</p>\n"
 
 #: windows/rkhtmlwindow.cpp:498
 msgid "Use %1 now"
-msgstr ""
+msgstr "Verwenden Sie %1 nun"
 
 #: windows/rkhtmlwindow.cpp:515
 msgid "Summary"
@@ -2701,7 +2734,7 @@ msgstr "Technische Details"
 
 #: windows/rkhtmlwindow.cpp:579
 msgid "<h1>On this page:</h1>"
-msgstr ""
+msgstr "<h1>Auf dieser Seite:</h1>"
 
 #: windows/rkhtmlwindow.cpp:646
 msgid "R Reference on '%1'"
@@ -2804,16 +2837,19 @@ msgid ""
 "Therefore, if you want to configure keyboard shortcuts e.g. for use inside "
 "the script editor, you need to open a script editor window, and activate it."
 msgstr ""
+"Aus technischen Gründen können sie mit dem folgenden Dialog die Shortcuts "
+"nur für die gegenwärtig aktiven Teile von RKWard konfigurieren.\n"
+"\n"
+"Um beispielsweise die Shortcuts für innerhalb des Skripteditors zu ändern, "
+"müssen Sie das Skripteditorfenster öffnen und es aktivieren."
 
 #: windows/rktoplevelwindowgui.cpp:117 windows/rktoplevelwindowgui.cpp:130
-#, fuzzy
 msgid "Note"
-msgstr "Kein Titel"
+msgstr "Notiz"
 
 #: windows/rktoplevelwindowgui.cpp:123
-#, fuzzy
 msgid "RKWard Plugins"
-msgstr "Plugins"
+msgstr "RKWard Plugins"
 
 #: windows/rktoplevelwindowgui.cpp:130
 msgid ""
@@ -2829,10 +2865,12 @@ msgid ""
 "<p>Please submit your bug reports or wishes at <a href=\"%1\">%1</a> or send "
 "email to <a href=\"mailto:%2\">%2</a>.</p>"
 msgstr ""
+"<p>Bitte übermitteln Sie ihre Fehlerberichte oder Wünsche an <a href=\"%1\">"
+"%1</a> oder senden Sie eine E-Mail an <a href=\"mailto:%2\">%2</a>.</p>"
 
 #: windows/rktoplevelwindowgui.cpp:154
 msgid "Reporting bugs in RKWard"
-msgstr ""
+msgstr "Fehler in RKWard melden"
 
 #: windows/rkwindowcatcher.cpp:57
 msgid ""
