@@ -192,7 +192,7 @@ void RKWardMainWindow::doPostInit () {
 	}
 
 #ifdef Q_WS_WIN
-	KMessageBox::information (this, i18n ("<p>Please note that RKWard on is not well tested on Windows, yet.</p><p>There are all sorts of known issues, and issues yet to be reported. If you'd like to help: <a href=\"http://p.sf.net/rkward/contact\">http://p.sf.net/rkward/contact</a>.</p>"), i18n ("RKWard on Windows"), "rkward_on_windows", KMessageBox::Notify | KMessageBox::AllowLink);
+	KMessageBox::information (this, i18n ("<p>Please note that RKWard is not well tested on Windows, yet.</p><p>There are all sorts of known issues, and issues yet to be reported. If you'd like to help: <a href=\"http://p.sf.net/rkward/contact\">http://p.sf.net/rkward/contact</a>.</p>"), i18n ("RKWard on Windows"), "rkward_on_windows", KMessageBox::Notify | KMessageBox::AllowLink);
 #endif
 
 	setUpdatesEnabled (false);
