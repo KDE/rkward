@@ -105,7 +105,7 @@ suite <- new ("RKTestSuite", id="item_response_theory",
 			estimates.rsm <<- estimates$rsm
 			rk.sync.global ()
 			# this test should eliminate four items and give a warning!
-			rk.call.plugin ("rkward::eRm_waldtest", rad_splitcr.string="median", x.available="estimates.rsm", submit.mode="submit")
+			rk.call.plugin ("rkward::eRm_waldtest", drop_optimizer.string="optim", rad_splitcr.string="median", x.available="estimates.rsm", submit.mode="submit")
                 }),
                 new ("RKTest", id="Andersen_LR_plot", call=function () {
 			estimates.pcm <<- estimates$pcm
