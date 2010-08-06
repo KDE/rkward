@@ -15,7 +15,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://sourceforge."
 "net/tracker/?group_id=50231&atid=459007\n"
 "POT-Creation-Date: 2010-04-15 16:30+0200\n"
-"PO-Revision-Date: 2010-07-31 02:18+0200\n"
+"PO-Revision-Date: 2010-08-06 22:13+0200\n"
 "Last-Translator: Stefan Rödiger <stefan_roediger@gmx.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "MIME-Version: 1.0\n"
@@ -857,7 +857,7 @@ msgstr "Verschiedene wertvolle Kommentare, Hinweise und Patches"
 
 #: main.cpp:112
 msgid "Translation, Suggestions, plugins"
-msgstr "Übersetzungen, Vorschläge und Plugins"
+msgstr "Übersetzungen, Vorschläge, Plugins"
 
 #: main.cpp:113
 msgid "Many comments, useful suggestions, and bug reports"
@@ -986,9 +986,8 @@ msgid "Paste mode"
 msgstr "Einfügemodus"
 
 #: misc/rkspecialactions.cpp:82
-#, fuzzy
 msgid "Single string"
-msgstr "R Engine wird gestartet"
+msgstr "Einzelne Zeichenkette"
 
 #: misc/rkspecialactions.cpp:85
 msgid "Vector"
@@ -1002,15 +1001,14 @@ msgstr "Feldtrenner"
 msgid "Tab"
 msgstr "Reiter"
 
+# Is it a typo (Comma vs. Command)?
 #: misc/rkspecialactions.cpp:104
-#, fuzzy
 msgid "Comma"
-msgstr "Kommando"
+msgstr ""
 
 #: misc/rkspecialactions.cpp:108
-#, fuzzy
 msgid "Single space"
-msgstr "Speichere Workspace"
+msgstr "Einzelner Raum"
 
 #: misc/rkspecialactions.cpp:111
 msgid "Any whitespace"
@@ -1086,7 +1084,7 @@ msgstr ""
 
 #: misc/xmlhelper.cpp:176
 msgid "Trying to retrieve children of invalid element"
-msgstr "Versuche Children von invalidem Element wiederaufzufinden"
+msgstr "Versuche Children von invalidem Element wieder aufzufinden"
 
 #: misc/xmlhelper.cpp:187
 msgid "Expected exactly one element '%1' but found %2"
@@ -1288,9 +1286,8 @@ msgid "Code"
 msgstr "Code"
 
 #: plugin/rkstandardcomponentgui.cpp:170
-#, fuzzy
 msgid "Run again"
-msgstr "Führe alles aus"
+msgstr "Erneut ausführen"
 
 #: plugin/rkstandardcomponentgui.cpp:257
 msgid "Processing. Please wait"
@@ -1302,7 +1299,7 @@ msgid ""
 "Click 'Submit' to run the command(s)."
 msgstr ""
 "Unten können Sie die Befehle sehen die entsprechend Ihrer Einstellungen "
-"gemacht wurden. Klicken Sie 'Übergeben'um die Befehle auszuführen."
+"gemacht wurden. Klicken Sie 'Übergeben' um die Befehle auszuführen."
 
 #: plugin/rkstandardcomponentgui.cpp:382 plugin/rkstandardcomponentgui.cpp:400
 msgid "Next >"
@@ -1330,7 +1327,7 @@ msgstr "Abgebrochen"
 
 #: rbackend/rcommandstack.cpp:364
 msgid "Command Stack"
-msgstr "Kommando Stapel"
+msgstr "Kommandostapel"
 
 #: rbackend/rcommandstack.cpp:366
 msgid "Command Chain"
@@ -1357,29 +1354,28 @@ msgid "Description"
 msgstr "Beschreibung"
 
 #: rbackend/rembedinternal.cpp:135
-#, fuzzy
 msgid ""
 "The R engine has encountered a fatal error:\n"
 "%1"
-msgstr "Die R-Engine ist auf einen fatalen Fehler getroffen:\n"
+msgstr ""
+"Die R-Engine ist auf einen fatalen Fehler getroffen:\n"
+"%1"
 
 #: rbackend/rembedinternal.cpp:242
-#, fuzzy
 msgid "The R engine has shut down with status: %1"
-msgstr "Die R-Engine wurde beendet mit dem Status: "
+msgstr "Die R-Engine wurde beendet mit dem Status: %1"
 
 #: rbackend/rinterface.cpp:89
 msgid "R Startup"
 msgstr "R Start"
 
 #: rbackend/rinterface.cpp:218
-#, fuzzy
 msgid ""
 "<p>There was a problem starting the R backend. The following error(s) "
 "occurred:</p>\n"
 msgstr ""
-"Es gab ein Problem beim Start vom R Backend. Die folgenden Fehler traten "
-"auf:\n"
+"<p>Es gab ein Problem beim Start vom R-Backend. Die folgenden Fehler traten "
+"auf:</p>\n"
 
 #: rbackend/rinterface.cpp:220
 msgid ""
@@ -1392,30 +1388,41 @@ msgid ""
 "now, and fix your installation</b>. For help with that, see <a href=\"http://"
 "p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</p>\n"
 msgstr ""
+"</p>\t- Die 'rkward' R-library konnte entweder nicht geladen werden oder "
+"liegt nicht in der korrekten Version vor. Das kann zu einer ganzen Reihe von "
+"Fehlern führen, die vom Fehlen einzelner Funktionen bis zum totalen Versagen "
+"von Funktionen führen können. Die wahrscheinlichste Ursache dafür ist, dass "
+"die letzte Installation die notwendigen Dateien nicht am korrekten Platz "
+"hinterlegt hat. Es ist aber auch möglich das von einer vorherigen "
+"Installation Dateien nicht sauber entfernt wurden.</p>\t\t\t<p><b>Sie "
+"sollten RKWard nun beenden und die Probleme beheben</b>. Für Hilfe wenden "
+"Sie sich bitte an <a href=\"http://"
+"p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</p>\n"
 
 #: rbackend/rinterface.cpp:224
-#, fuzzy
 msgid ""
 "<p>\t-There was a problem opening the files needed for communication with R. "
 "Most likely this is due to an incorrect setting for the location of these "
 "files. Check whether you have correctly configured the location of the log-"
 "files (Settings->Configure Settings->Logfiles) and restart RKWard.</p>\n"
 msgstr ""
-"\t-Es gab ein Problem beim öffnen der Dateien die für die Kommunikation mit "
+"<p>\t-Es gab ein Problem beim öffnen der Dateien die für die Kommunikation "
+"mit "
 "R notwendig sind. Dies ist meistens auf die Angabe eines falschen "
 "Speicherorts für diese Dateien zurückzuführen. Überprüfen Sie bitte ob Sie "
 "den den Speicherort der log-Dateien (Einstellungen->Konfiguriere "
-"Einstellungen->Logfiles) konfiguriert haben und starten Sie RKWard erneut.\n"
+"Einstellungen->Logfiles) konfiguriert haben und starten Sie RKWard erneut.<"
+"/p>\n"
 
 #: rbackend/rinterface.cpp:227
-#, fuzzy
 msgid ""
 "<p>\t-An unspecified error occurred that is not yet handled by RKWard. "
 "Likely RKWard will not function properly. Please check your setup.</p>\n"
 msgstr ""
-"\t-Ein nicht spezifizierter Fehler ist aufgetreten der noch nicht von RKWard "
+"<p>\t-Ein nicht spezifizierter Fehler ist aufgetreten der noch nicht von "
+"RKWard "
 "gehandhabt werden kann. Wahrscheinlich wird RKWard nicht richtig "
-"funktionieren. Bitte überprüfen Sie ihr Setup.\n"
+"funktionieren. Bitte überprüfen Sie ihr Setup.</p>\n"
 
 #: rbackend/rinterface.cpp:235
 msgid "Error starting R"
@@ -1437,7 +1444,6 @@ msgid "Require package '%1'"
 msgstr "Benötige Paket '%1'"
 
 #: rbackend/rinterface.cpp:390
-#, fuzzy
 msgid ""
 "A command in the R backend is trying to change the character encoding. While "
 "RKWard offers support for this, and will try to adjust to the new locale, "
@@ -1464,20 +1470,18 @@ msgid "Locale change"
 msgstr "Lokale Änderung"
 
 #: rbackend/rinterface.cpp:477
-#, fuzzy
 msgid "Question from the R backend"
-msgstr "Benachrichtigung vom R Backend"
+msgstr "Benachrichtigung vom R-Backend"
 
 #: rbackend/rinterface.cpp:482
 msgid "Message from the R backend"
-msgstr "Benachrichtigung vom R Backend"
+msgstr "Benachrichtigung vom R-Backend"
 
 #: rbackend/rinterface.cpp:487
 msgid "R backend requests information"
-msgstr "R Backend erbittet Informationen"
+msgstr "R-Backend erbittet Informationen"
 
 #: rbackend/rinterface.cpp:504
-#, fuzzy
 msgid ""
 "\n"
 "It will be shut down immediately. This means, you can not use any more "
@@ -1491,7 +1495,7 @@ msgid ""
 msgstr ""
 "\n"
 "Es wird unverzüglich geschlossen werden. Dies bedeutet das Sie nunmehr keine "
-"Funktionen die vom R backend abhängig sind weiter verwenden können. "
+"Funktionen die vom R-Backend abhängig sind weiter verwenden können. "
 "Insbesondere können Sie nichts weiter ausführen, nicht einmal den Workspace "
 "speichern. Möglicherweise hat R bereits den Workspace gespeichert. Sie "
 "können allerdings jegliche offene Befehls-Dateien, Ausgaben, oder Daten aus "
@@ -1529,12 +1533,10 @@ msgid "Configure"
 msgstr "Konfigurieren"
 
 #: rkconsole.cpp:852
-#, fuzzy
 msgid "Print Console"
-msgstr "R-Konsole"
+msgstr "Drucke Konsole"
 
 #: rkconsole.cpp:881
-#, fuzzy
 msgid ""
 "You have configured RKWard to run script commands through the console. "
 "However, the console is currently busy (either a command is running, or you "
@@ -1544,7 +1546,7 @@ msgstr ""
 "Sie haben RKWard konfiguriert Skriptbefehle in der Konsole auszuführen. "
 "Jedoch diese Konsole ist gerade beschäftigt (entweder ein Befehl läuft oder "
 "Sie haben begonnen Text in die Konsole einzugeben). Wollen Sie die Konsole "
-"diesesmal umgehen oder möchten Sie es später nocheinmal versuchen?"
+"diesmal umgehen oder möchten Sie es später noch einmal versuchen?"
 
 #: rkconsole.cpp:881
 msgid "Console is busy"
@@ -1582,9 +1584,8 @@ msgstr ""
 "net/rkward/contact</a>.</p>"
 
 #: rkward.cpp:195
-#, fuzzy
 msgid "RKWard on Windows"
-msgstr "Plugins"
+msgstr "RKWard unter Windows"
 
 #: rkward.cpp:215 settings/rksettingsmoduleobjectbrowser.cpp:128
 msgid "Workspace"
@@ -1671,9 +1672,8 @@ msgid "Quits the application"
 msgstr "Beende die Anwendung "
 
 #: rkward.cpp:359 windows/robjectbrowser.cpp:135
-#, fuzzy
 msgid "Load / Unload Packages"
-msgstr "Geladene Pakete"
+msgstr "Lade / Entlade Packete"
 
 #: rkward.cpp:370
 msgid "Close All Data"
@@ -1745,24 +1745,23 @@ msgstr "Möchten Sie den aktuellen Workspace speichern?"
 
 #: rkward.cpp:648
 msgid "R engine busy"
-msgstr "R Engine ist beschäftigt"
+msgstr "R-Engine ist beschäftigt"
 
 #: rkward.cpp:651
 msgid "R engine idle"
-msgstr "R Engine im Ruhezustand"
+msgstr "R-Engine im Ruhezustand"
 
 #: rkward.cpp:654
 msgid "R engine starting"
-msgstr "R Engine wird gestartet"
+msgstr "R-Engine wird gestartet"
 
 #: rkward.cpp:695 rkward.cpp:697
-#, fuzzy
 msgid "Open script file(s)"
-msgstr "Öffne R-Skriptdatei"
+msgstr "Öffne R-Skriptdatei(en)"
 
 #: rkward.cpp:715
 msgid "[Unnamed Workspace]"
-msgstr "[Unbenannter Workspace]"
+msgstr "[UnbenannteR-Workspace]"
 
 #: robjectviewer.cpp:58
 msgid "summary (x)"
@@ -1864,11 +1863,10 @@ msgid "PHP Process exited"
 msgstr "PHP-Prozess beendet"
 
 #: scriptbackends/qtscriptbackend.cpp:114
-#, fuzzy
 msgid ""
 "The QtScript-backend has reported an error:\n"
 "%1"
-msgstr "Die R-Engine ist auf einen fatalen Fehler getroffen:\n"
+msgstr "Das  QtScript-Backend hat einen Fehler gemeldet:\n"
 
 #: scriptbackends/qtscriptbackend.cpp:114
 #, fuzzy
@@ -1886,12 +1884,11 @@ msgstr ""
 "%2"
 
 #: scriptbackends/qtscriptbackend.cpp:219
-#, fuzzy
 msgid ""
 "The file \"%1\" (needed by \"%2\") could not be found. Please check your "
 "installation."
 msgstr ""
-"Die Datei \"%1\" konnte nicht gefunden werden oder ist nicht lesbar. Bitte "
+"Die Datei \"%1\" (benötigt von \"%2\") konnte nicht gefunden werden. Bitte "
 "überprüfen Sie ihre Installation."
 
 #: scriptbackends/scriptbackend.cpp:91
@@ -1968,9 +1965,8 @@ msgid "Add only if single line"
 msgstr "Nur anfügen wenn einzelne Zeile"
 
 #: settings/rksettingsmoduleconsole.cpp:78
-#, fuzzy
 msgid "Add all commands"
-msgstr "Nutzer Befehle"
+msgstr "Alle Kommandos hinzuzufügen"
 
 #: settings/rksettingsmoduleconsole.cpp:86
 msgid "Command history is context sensitive by default"
@@ -2030,7 +2026,7 @@ msgstr "Frage nach einer Datei die geöffnet werden soll"
 
 #: settings/rksettingsmodulegeneral.cpp:70
 msgid "Show selection dialog (default)"
-msgstr "Zeige Auswahl Dialog (Standard)"
+msgstr "Zeige Auswahldialog (Standard)"
 
 #: settings/rksettingsmodulegeneral.cpp:75
 msgid "Show RKWard Help on Startup"
@@ -2043,27 +2039,27 @@ msgid ""
 "Which do you prefer?"
 msgstr ""
 "Die Anordnung des Arbeitsplatzes (d.h. welche Skript-, Daten- oder "
-"Hilfefenster geöffnet sind), kann entweder pro R Arbeitsdatei, oder davon "
+"Hilfefenster geöffnet sind), kann entweder pro R-Workspace, oder davon "
 "unabhängig gespeichert (und wieder hergestellt) werden. Welche Option "
 "wünschen Sie?"
 
 #: settings/rksettingsmodulegeneral.cpp:91
 msgid "Save/restore with R workspace, when saving/loading R workspace"
 msgstr ""
-"Zusammen mit Arbeitsdatei speichern / wieder herstellen, wenn Arbeitsdatei "
-"gepeichert / wiederhergestellt wird"
+"Zusammen mit R-Workspace speichern/wieder herstellen, wenn R-Workspace "
+"gepeichert/wiederhergestellt wird"
 
 #: settings/rksettingsmodulegeneral.cpp:94
 msgid ""
 "Save/restore independent of R workspace (save at end of RKWard session, "
 "restore at next start)"
 msgstr ""
-"Unabhängig von der Arbeitsdatei speichern / wieder herstellen (gepeichert "
+"Unabhängig von R den Workspace speichern/wiederherstellen (gepeichert "
 "wird am Ende einer RKWard Sitzung, wiederhergestellt beim neuen Start)"
 
 #: settings/rksettingsmodulegeneral.cpp:97
 msgid "Do not save/restore workplace layout"
-msgstr "Arbeitsplatzanordnung nicht speichern"
+msgstr "Arbeitsplatzanordnung nicht speichern/wiederherstellen"
 
 #: settings/rksettingsmodulegeneral.cpp:106
 msgid ""
@@ -2130,7 +2126,6 @@ msgid "Type field"
 msgstr "Typen-Feld"
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:68
-#, fuzzy
 msgid "Class field"
 msgstr "Klassen-Feld"
 
@@ -2149,7 +2144,7 @@ msgstr ""
 
 #: settings/rksettingsmoduleoutput.cpp:48
 msgid "Output Window options"
-msgstr "Eigenschaften des Ausgabefensters"
+msgstr "Auswahlmöglichkeiten des Ausgabefensters"
 
 #: settings/rksettingsmoduleoutput.cpp:50
 msgid "show window on new output"
@@ -2161,17 +2156,15 @@ msgstr "Fenster bei neuer Ausgabe hervorbringen"
 
 #: settings/rksettingsmoduleoutput.cpp:60
 msgid "Graphics"
-msgstr "Graphik"
+msgstr "Graphiken"
 
 #: settings/rksettingsmoduleoutput.cpp:64
-#, fuzzy
 msgid "File format"
-msgstr "Dateiformat: "
+msgstr "Dateiformat"
 
 #: settings/rksettingsmoduleoutput.cpp:66
-#, fuzzy
 msgid "<Default>"
-msgstr "Standardeinstellung"
+msgstr "<Standardeinstellung>"
 
 #: settings/rksettingsmoduleoutput.cpp:67
 msgid "PNG"
@@ -2190,14 +2183,12 @@ msgid "JPG quality"
 msgstr "JPG-Qualität"
 
 #: settings/rksettingsmoduleoutput.cpp:82
-#, fuzzy
 msgid "Width:"
-msgstr "Breite"
+msgstr "Weite:"
 
 #: settings/rksettingsmoduleoutput.cpp:85
-#, fuzzy
 msgid "Height:"
-msgstr "Höhe"
+msgstr "Höhe:"
 
 #: settings/rksettingsmodulephp.cpp:39
 msgid "Changes in this section take effect the next time you start a plugin"
@@ -2211,7 +2202,7 @@ msgstr "Adresse, wo PHP-Binärdatei zu finden ist"
 
 #: settings/rksettingsmodulephp.cpp:63
 msgid "PHP backend"
-msgstr "PHP Backend"
+msgstr "PHP-Backend"
 
 #: settings/rksettingsmoduleplugins.cpp:54
 msgid ""
@@ -2237,7 +2228,7 @@ msgstr "Bevorzuge immer Wizards"
 
 #: settings/rksettingsmoduleplugins.cpp:82
 msgid "R syntax display (in dialogs)"
-msgstr "R Syntaxanzeige (in Dialogen)"
+msgstr "R-Syntaxanzeige (in Dialogen)"
 
 #: settings/rksettingsmoduleplugins.cpp:85
 msgid "Code shown by default"
@@ -2320,9 +2311,8 @@ msgid "Keep comments in packages"
 msgstr "Behalte Kommentare in Paketen"
 
 #: settings/rksettingsmoduler.cpp:126 settings/rksettingsmoduler.cpp:148
-#, fuzzy
 msgid "TRUE"
-msgstr "WAHR)"
+msgstr "WAHR"
 
 #: settings/rksettingsmoduler.cpp:127 settings/rksettingsmoduler.cpp:149
 msgid "FALSE (default)"
@@ -2345,14 +2335,12 @@ msgid "Command used to send files to printer"
 msgstr "Befehl, um Dateien zum Drucker zu senden"
 
 #: settings/rksettingsmoduler.cpp:159
-#, fuzzy
 msgid "Editor command"
-msgstr "Nutzer Befehle"
+msgstr "Editorbefehle"
 
 #: settings/rksettingsmoduler.cpp:170
-#, fuzzy
 msgid "Pager command"
-msgstr "Nutzer Befehle"
+msgstr "Pager-Kommando"
 
 #: settings/rksettingsmoduler.cpp:205
 msgid "R-Backend"
@@ -2364,12 +2352,10 @@ msgstr ""
 "CRAN Spiegelserver (freilassen um in jeder RKWard-Sitzung gefragt zu werden):"
 
 #: settings/rksettingsmoduler.cpp:342
-#, fuzzy
 msgid "Select mirror"
-msgstr "Wähle eine:"
+msgstr "Wähle Spiegelserver"
 
 #: settings/rksettingsmoduler.cpp:346
-#, fuzzy
 msgid "Additional package repositories (where libraries are downloaded from)"
 msgstr ""
 "Paket Aufbewahrungsort (Repositories) (von denen Bibliotheken "
@@ -2380,7 +2366,6 @@ msgid "Archive downloaded packages"
 msgstr "Archiviere heruntergeladene Pakete"
 
 #: settings/rksettingsmoduler.cpp:359
-#, fuzzy
 msgid "R Library locations (where libraries get installed to, locally)"
 msgstr "R-Bibliothek Adresse (wohin Bibliotheken gespeichert werden, lokal)"
 
@@ -2389,21 +2374,21 @@ msgid ""
 "Note: The startup defaults will always be used in addition to the locations "
 "you specify in this list"
 msgstr ""
-"Vermerk: Die StartUp Fehlwerte werden immer genutzt zusätzlich den Adressen "
+"Vermerk: Die StartUp-Standardwerte werden immer genutzt zusätzlich den "
+"Adressen "
 "die Sie in dieser Liste spezifizieren"
 
 #: settings/rksettingsmoduler.cpp:381
 msgid "Add R Library Directory"
-msgstr "Füge R-Bibliothek Verzeichnis hinzu"
+msgstr "Füge R-Bibliotheksverzeichnis hinzu"
 
 #: settings/rksettingsmoduler.cpp:389
 msgid "Add repository"
-msgstr "Füge Respiratory hinzu"
+msgstr "Füge Repository hinzu"
 
 #: settings/rksettingsmoduler.cpp:389
-#, fuzzy
 msgid "Add URL of new repository"
-msgstr "Füge Respiratory hinzu"
+msgstr "Füge URL von neuem Repository hinzu"
 
 #: settings/rksettingsmoduler.cpp:395
 msgid "R-Packages"
@@ -2435,7 +2420,7 @@ msgstr "Zeige Fehler"
 
 #: settings/rksettingsmodulewatch.cpp:140
 msgid "show/raise window"
-msgstr "Fenster anzeige/hebe"
+msgstr "Fenster anzeigen/heben"
 
 #: settings/rksettingsmodulewatch.cpp:144
 msgid "User commands"
@@ -2451,7 +2436,7 @@ msgstr "Anwendungsbefehle"
 
 #: settings/rksettingsmodulewatch.cpp:147
 msgid "Synchronization commands"
-msgstr "Synchronisations Befehle"
+msgstr "Synchronisationsbefehle"
 
 #: settings/rksettingsmodulewatch.cpp:151
 msgid "Maximum number of paragraphs/lines to display in the Command Log"
@@ -2460,7 +2445,7 @@ msgstr ""
 
 #: settings/rksettingsmodulewatch.cpp:281 windows/rkcommandlog.cpp:55
 msgid "Command log"
-msgstr "Kommando Log"
+msgstr "Kommando-Log"
 
 #: windows/detachedwindowcontainer.cpp:46
 msgid "Attach to main window"
@@ -2468,7 +2453,7 @@ msgstr "An Hauptfenster anhängen"
 
 #: windows/rcontrolwindow.cpp:51
 msgid "Configure R backend"
-msgstr "Konfiguriere R Backend"
+msgstr "Konfiguriere R-Backend"
 
 #: windows/rcontrolwindow.cpp:56 windows/rcontrolwindow.cpp:142
 msgid "Pause execution"
@@ -2506,12 +2491,11 @@ msgstr "Auswahl als Block markieren"
 
 #: windows/rkcommandeditorwindow.cpp:176
 msgid "Unmark block"
-msgstr "Block nicht markieren"
+msgstr "Block nicht mehr markieren"
 
 #: windows/rkcommandeditorwindow.cpp:181
-#, fuzzy
 msgid "CD to script directory"
-msgstr "Skripteditor"
+msgstr "CD zum Skriptverzeichnis"
 
 #: windows/rkcommandeditorwindow.cpp:183
 msgid "Change the working directory to the directory of this script"
@@ -2539,9 +2523,8 @@ msgid "Unnamed"
 msgstr "Unbenannt"
 
 #: windows/rkcommandeditorwindow.cpp:468
-#, fuzzy
 msgid "cd to current script directory"
-msgstr "Konfiguriere Skripteditor"
+msgstr "Wechsle Verzeichnis (cd) zum gegenwärtigen Skriptverzeichnis"
 
 #: windows/rkcommandeditorwindow.cpp:577
 msgid "%1 (Active)"
@@ -2641,9 +2624,8 @@ msgid "&Refresh Output"
 msgstr "&Aktualisiere Ausgabe"
 
 #: windows/rkhtmlwindow.cpp:326
-#, fuzzy
 msgid "Output %1"
-msgstr "Ausgabe"
+msgstr "Ausgabe %1"
 
 #: windows/rkhtmlwindow.cpp:367
 #, fuzzy
@@ -2664,13 +2646,11 @@ msgid "Save Output as HTML"
 msgstr "Speichere Ausgabe als HTML"
 
 #: windows/rkhtmlwindow.cpp:401
-#, fuzzy
 msgid ""
 "<HTML><BODY><H1>RKWard output file could not be found</H1>\n"
 "</BODY></HTML>"
 msgstr ""
-"<HTML><BODY><H1>RKWard Ausgabe</H1>\n"
-"<P>Die Ausgabe ist leer.</P>\n"
+"<HTML><BODY><H1>RKWard Ausgabedatei konnte nicht gefunden werden</H1>\n"
 "</BODY></HTML>"
 
 #: windows/rkhtmlwindow.cpp:403
@@ -2682,8 +2662,8 @@ msgid ""
 "Do you really want to flush the output? It will not be possible to restore "
 "it."
 msgstr ""
-"Möchten Sie die Ausgabe wirklich leeren? Eine Wiederherstellung "
-"wirdunmöglich sein."
+"Möchten Sie die Ausgabe wirklich leeren? Eine Wiederherstellung wird "
+"unmöglich sein."
 
 #: windows/rkhtmlwindow.cpp:411
 msgid "Flush output?"
@@ -2798,7 +2778,7 @@ msgstr "Zeige RKWard-Hilfe"
 
 #: windows/rktoplevelwindowgui.cpp:74
 msgid "Show/Hide Workspace Browser"
-msgstr "Zeige/Verberge Workspace Browser"
+msgstr "Zeige/Verberge Workspace-Browser"
 
 #: windows/rktoplevelwindowgui.cpp:78
 msgid "Show/Hide Filesystem Browser"
@@ -2818,7 +2798,7 @@ msgstr "Zeige/Verberge Konsole"
 
 #: windows/rktoplevelwindowgui.cpp:94
 msgid "Show/Hide R Help Search"
-msgstr "Zeige / VerbergeFenster zur R-Hilfe"
+msgstr "Zeige/VerbergeFenster zur R-Hilfe"
 
 #: windows/rktoplevelwindowgui.cpp:98
 msgid "Activate Document view"
@@ -2859,6 +2839,11 @@ msgid ""
 "Therefore, if you want to configure tool buttons e.g. for use inside the "
 "script editor, you need to open a script editor window, and activate it."
 msgstr ""
+"Aus technischen Gründen können Sie nur den Werkzeugleiste-Button im "
+"gegenwärtig aktiven Teil von RKWard mit dem folgenden Dialog konfigurieren.\n"
+"\n"
+"Wenn Sie beispielsweise die Werkzeugleiste-Buttons im Skripteditor "
+"konfigurieren, dann müssen Sie den Skripteditor öffnen und ihn aktivieren."
 
 #: windows/rktoplevelwindowgui.cpp:152
 msgid ""
@@ -2933,7 +2918,7 @@ msgstr "Inhalte von Grafikfenster %1 drucken"
 
 #: windows/rkwindowcatcher.cpp:291
 msgid "Specify R object"
-msgstr "R Objektname angeben"
+msgstr "R Objekt spezifizieren"
 
 #: windows/rkwindowcatcher.cpp:296
 msgid "Specify the R object name, you want to save the graph to"
@@ -2997,11 +2982,11 @@ msgstr ""
 
 #: windows/rkworkplace.cpp:211
 msgid "Open in default application?"
-msgstr "Standardanwendung öffnen?"
+msgstr "In Standardanwendung öffnen?"
 
 #: windows/rkworkplace.cpp:240
 msgid "Unable to open \"%1\""
-msgstr "Die Datei \"%1\" kann nicht geöffnet werden"
+msgstr "\"%1\" konnte nicht geöffnet werden"
 
 #: windows/rkworkplace.cpp:240
 msgid "Could not open command file"
@@ -3062,7 +3047,7 @@ msgstr "Fenster Rechts"
 
 #: windows/robjectbrowser.cpp:67
 msgid "Objects in the R workspace"
-msgstr "Objekte im R Workspace"
+msgstr "Objekte im R-Workspace"
 
 #: windows/robjectbrowser.cpp:119
 msgid "Search Help"
@@ -3093,9 +3078,8 @@ msgid "Delete"
 msgstr "Lösche"
 
 #: windows/robjectbrowser.cpp:133
-#, fuzzy
 msgid "Unload Package"
-msgstr "Geladene Pakete"
+msgstr "Entladen Pakete"
 
 #: windows/robjectbrowser.cpp:186
 msgid "Copy object"
@@ -3238,7 +3222,7 @@ msgstr "&Import"
 #. i18n: ectx: Menu (workspace)
 #: rc.cpp:33
 msgid "&Workspace"
-msgstr "W&orkspace"
+msgstr "&Workspace"
 
 #. i18n: file: rkwardui.rc:67
 #. i18n: ectx: Menu (window_activate)
@@ -3286,12 +3270,12 @@ msgstr "&Werkzeuge Bewegen"
 #: rc.cpp:133
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Ihre Namen"
+msgstr "stefan_roediger@gmx.de, jvajen@googlemail.com"
 
 #: rc.cpp:134
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "Ihre E-Mails"
+msgstr "Stefan Rödiger, Jannis Vajen"
 
 #~ msgid "Open command file(s)"
 #~ msgstr "Öffne Befehls Dateie(n)"
