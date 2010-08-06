@@ -1,22 +1,57 @@
 <h1>2PL parameter estimation</h1>
 DATE<br>
-<p class='character'>Call:</p><pre>ltm(formula = WIRS ~ z1 * z2)</pre>
+
+<p class='character'>Call:</p>
+<pre>ltm(formula = WIRS ~ z1 * z2)</pre>
 <h4>Coefficients:</h4>
 <br>
 
+
 <p align= center >
-<table cellspacing=0 border=1><caption align=bottom class=captiondataframe></caption><tr><td>
+<table cellspacing=0 border=1><caption align=bottom class=captiondataframe></caption>
+<tr><td>
 	<table border=0 class=dataframe>
 	<tbody> <tr class= firstline > <th></th><th>(Intercept)</th><th>z1</th><th>z2</th><th>z1:z2</th> </tr>
- <tr><td class=firstcolumn>Item 1</td><td class=cellinside>-1.10</td><td class=cellinside> 0.27</td><td class=cellinside>-3.32</td><td class=cellinside>-1.16</td></tr>
- <tr><td class=firstcolumn>Item 2</td><td class=cellinside> 0.94</td><td class=cellinside> 1.09</td><td class=cellinside> 2.17</td><td class=cellinside> 2.95</td></tr>
- <tr><td class=firstcolumn>Item 3</td><td class=cellinside>-1.46</td><td class=cellinside> 1.81</td><td class=cellinside>-0.31</td><td class=cellinside> 0.54</td></tr>
- <tr><td class=firstcolumn>Item 4</td><td class=cellinside>-1.46</td><td class=cellinside> 1.12</td><td class=cellinside> 0.56</td><td class=cellinside> 0.27</td></tr>
- <tr><td class=firstcolumn>Item 5</td><td class=cellinside>-1.08</td><td class=cellinside> 2.13</td><td class=cellinside>-0.47</td><td class=cellinside> 1.15</td></tr>
- <tr><td class=firstcolumn>Item 6</td><td class=cellinside>-2.75</td><td class=cellinside> 1.70</td><td class=cellinside>-0.94</td><td class=cellinside> 1.07</td></tr>
+ 
+<tr><td class=firstcolumn>Item 1</td>
+<td class=cellinside>-1.10</td>
+<td class=cellinside> 0.27</td>
+<td class=cellinside>-3.32</td>
+<td class=cellinside>-1.16</td></tr>
+ 
+<tr><td class=firstcolumn>Item 2</td>
+<td class=cellinside> 0.94</td>
+<td class=cellinside> 1.09</td>
+<td class=cellinside> 2.17</td>
+<td class=cellinside> 2.95</td></tr>
+ 
+<tr><td class=firstcolumn>Item 3</td>
+<td class=cellinside>-1.46</td>
+<td class=cellinside> 1.81</td>
+<td class=cellinside>-0.31</td>
+<td class=cellinside> 0.54</td></tr>
+ 
+<tr><td class=firstcolumn>Item 4</td>
+<td class=cellinside>-1.46</td>
+<td class=cellinside> 1.12</td>
+<td class=cellinside> 0.56</td>
+<td class=cellinside> 0.27</td></tr>
+ 
+<tr><td class=firstcolumn>Item 5</td>
+<td class=cellinside>-1.08</td>
+<td class=cellinside> 2.13</td>
+<td class=cellinside>-0.47</td>
+<td class=cellinside> 1.15</td></tr>
+ 
+<tr><td class=firstcolumn>Item 6</td>
+<td class=cellinside>-2.75</td>
+<td class=cellinside> 1.70</td>
+<td class=cellinside>-0.94</td>
+<td class=cellinside> 1.07</td></tr>
  
 	</tbody>
 </table>
  </td></table>
  <br>
+
 <p class='character'>Log-likelihood value at convergence: -3293.2</p>

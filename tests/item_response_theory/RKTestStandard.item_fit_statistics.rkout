@@ -1,3 +1,43 @@
 <h1>Item-fit statistics (estimates.rasch)</h1>
 DATE<br>
-<p class='character'><br>Item-Fit Statistics and P-values<br><br>Call:<br>rasch(data = LSAT)<br><br>Alternative: Items do not fit the model<br>Ability Categories: 10<br><br>          X^2 Pr(>X^2)<br>Item 1  61.93  <0.0001<br>Item 2 159.01  <0.0001<br>Item 3 233.79  <0.0001<br>Item 4 132.47  <0.0001<br>Item 5  84.76  <0.0001<br><br></p>
+
+<p class='character'>Call:</p>
+<pre>rasch(data = LSAT)</pre>
+
+<p class='character'>Alternative: Items do not fit the model</p>
+
+<p class='character'>Ability Categories: 10</p>
+<h4>Item-Fit Statistics and P-values:</h4>
+<br>
+
+
+<p align= center >
+<table cellspacing=0 border=1><caption align=bottom class=captiondataframe></caption>
+<tr><td>
+	<table border=0 class=dataframe>
+	<tbody> <tr class= firstline > <th></th><th>X^2</th><th>Pr (&gt;X^2)</th> </tr>
+ 
+<tr><td class=firstcolumn>Item 1</td>
+<td class=cellinside>61.929 </td>
+<td class=cellinside>0.000  </td></tr>
+ 
+<tr><td class=firstcolumn>Item 2</td>
+<td class=cellinside>159.01 </td>
+<td class=cellinside>0.000  </td></tr>
+ 
+<tr><td class=firstcolumn>Item 3</td>
+<td class=cellinside>233.787</td>
+<td class=cellinside>0.000  </td></tr>
+ 
+<tr><td class=firstcolumn>Item 4</td>
+<td class=cellinside>132.473</td>
+<td class=cellinside>0.000  </td></tr>
+ 
+<tr><td class=firstcolumn>Item 5</td>
+<td class=cellinside>84.76  </td>
+<td class=cellinside>0.000  </td></tr>
+ 
+	</tbody>
+</table>
+ </td></table>
+ <br>

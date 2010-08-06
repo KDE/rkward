@@ -7,25 +7,39 @@
     <convert id="split_vec"  mode="equals" sources="rad_splitcr.string" standard="vector" />
 
     <connect client="splitvector.enabled" governor="split_vec" />
+    <connect client="vars2.enabled" governor="split_vec" />
     <connect client="splitvector.required" governor="split_vec" />
   </logic>
 
   <dialog label="Wald test">
     <tabbook>
-      <tab id="tab_var_options" label="Data">
+      <tab id="tab_var_data" label="Data">
         <row id="row_vars">
           <varselector id="vars" />
           <column>
             <varslot type="numeric" id="x" classes="Rm" source="vars" required="true" label="Chose fitted model to test:"/>
             <text>Only objects of class Rm are valid!</text>
             <stretch />
+          </column>
+        </row>
+      </tab>
+      <tab id="tab_var_options" label="Options">
+        <row id="row_vars">
+          <varselector id="vars2" />
+	  <column>
             <radio id="rad_splitcr" label="Split criterion for subject raw scores">
               <option label="Median" value="median" checked="true" />
               <option label="Mean" value="mean" />
               <option label="Use dichotomous vector to define groups" value="vector" />
             </radio>
-            <varslot type="numeric" id="splitvector" source="vars" label="Select grouping vector:"/>
-          </column>
+            <varslot type="numeric" id="splitvector" source="vars2" label="Select grouping vector:"/>
+            <frame id="optimizer" label="Optimizer">
+            <dropdown  id="drop_optimizer" label="Used optimizer:">
+	      <option label="nlm()" value="nlm" checked="true" />
+	      <option label="optim()" value="optim" />
+	    </dropdown>
+	    </frame>
+	  </column>
         </row>
       </tab>
     </tabbook>

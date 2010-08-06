@@ -1,21 +1,41 @@
 <h1>Rasch parameter estimation</h1>
 DATE<br>
-<p class='character'>Call:</p><pre>rasch(data = LSAT)</pre>
+
+<p class='character'>Call:</p>
+<pre>rasch(data = LSAT)</pre>
 <h4>Coefficients:</h4>
 <br>
 
+
 <p align= center >
-<table cellspacing=0 border=1><caption align=bottom class=captiondataframe></caption><tr><td>
+<table cellspacing=0 border=1><caption align=bottom class=captiondataframe></caption>
+<tr><td>
 	<table border=0 class=dataframe>
 	<tbody> <tr class= firstline > <th></th><th>Dffclt</th><th>Dscrmn</th> </tr>
- <tr><td class=firstcolumn>Item 1</td><td class=cellinside>-3.62</td><td class=cellinside> 0.76</td></tr>
- <tr><td class=firstcolumn>Item 2</td><td class=cellinside>-1.32</td><td class=cellinside> 0.76</td></tr>
- <tr><td class=firstcolumn>Item 3</td><td class=cellinside>-0.32</td><td class=cellinside> 0.76</td></tr>
- <tr><td class=firstcolumn>Item 4</td><td class=cellinside>-1.73</td><td class=cellinside> 0.76</td></tr>
- <tr><td class=firstcolumn>Item 5</td><td class=cellinside>-2.78</td><td class=cellinside> 0.76</td></tr>
+ 
+<tr><td class=firstcolumn>Item 1</td>
+<td class=cellinside>-3.62</td>
+<td class=cellinside> 0.76</td></tr>
+ 
+<tr><td class=firstcolumn>Item 2</td>
+<td class=cellinside>-1.32</td>
+<td class=cellinside> 0.76</td></tr>
+ 
+<tr><td class=firstcolumn>Item 3</td>
+<td class=cellinside>-0.32</td>
+<td class=cellinside> 0.76</td></tr>
+ 
+<tr><td class=firstcolumn>Item 4</td>
+<td class=cellinside>-1.73</td>
+<td class=cellinside> 0.76</td></tr>
+ 
+<tr><td class=firstcolumn>Item 5</td>
+<td class=cellinside>-2.78</td>
+<td class=cellinside> 0.76</td></tr>
  
 	</tbody>
 </table>
  </td></table>
  <br>
+
 <p class='character'>Log-likelihood value at convergence: -2466.9</p>

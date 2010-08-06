@@ -1,6 +1,47 @@
 <h1>Wald test (estimates.rsm)</h1>
 DATE<br>
-<p class='character'><br>Wald test on item level (z-values):<br><br>           z-statistic p-value<br>beta I1.c1       0.388   0.698<br>beta I1.c2         NaN     NaN<br>beta I1.c3         NaN     NaN<br>beta I6.c1      -0.388   0.698<br>beta I6.c2         NaN     NaN<br>beta I6.c3         NaN     NaN<br></p><h2>Messages, warnings, or errors:</h2>
+
+<p class='character'>Call:</p>
+<pre>Waldtest.Rm(object = estimates.rsm)</pre>
+<h4>Wald test on item level (z-values):</h4>
+<br>
+
+
+<p align= center >
+<table cellspacing=0 border=1><caption align=bottom class=captiondataframe></caption>
+<tr><td>
+	<table border=0 class=dataframe>
+	<tbody> <tr class= firstline > <th></th><th>z-statistic</th><th>p-value</th> </tr>
+ 
+<tr><td class=firstcolumn>beta I1.c1</td>
+<td class=cellinside> 0.39</td>
+<td class=cellinside> 0.70</td></tr>
+ 
+<tr><td class=firstcolumn>beta I1.c2</td>
+<td class=cellinside> 0.15</td>
+<td class=cellinside> 0.88</td></tr>
+ 
+<tr><td class=firstcolumn>beta I1.c3</td>
+<td class=cellinside> 0.16</td>
+<td class=cellinside> 0.88</td></tr>
+ 
+<tr><td class=firstcolumn>beta I6.c1</td>
+<td class=cellinside>-0.39</td>
+<td class=cellinside> 0.70</td></tr>
+ 
+<tr><td class=firstcolumn>beta I6.c2</td>
+<td class=cellinside> 0.14</td>
+<td class=cellinside> 0.89</td></tr>
+ 
+<tr><td class=firstcolumn>beta I6.c3</td>
+<td class=cellinside> 0.15</td>
+<td class=cellinside> 0.88</td></tr>
+ 
+	</tbody>
+</table>
+ </td></table>
+ <br>
+<h2>Messages, warnings, or errors:</h2>
 <pre>I2 I3 I4 I5 
 Subgroup models are estimated without these items!
 </pre>

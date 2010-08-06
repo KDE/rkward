@@ -1,23 +1,49 @@
 <h1>RSM  parameter estimation</h1>
 DATE<br>
-<p class='character'>Call:</p><pre>RSM(X = rsmdat)</pre>
+
+<p class='character'>Call:</p>
+<pre>RSM(X = rsmdat)</pre>
 <h4>Coefficients:</h4>
 <br>
 
+
 <p align= center >
-<table cellspacing=0 border=1><caption align=bottom class=captiondataframe></caption><tr><td>
+<table cellspacing=0 border=1><caption align=bottom class=captiondataframe></caption>
+<tr><td>
 	<table border=0 class=dataframe>
 	<tbody> <tr class= firstline > <th></th><th>Eta</th><th>StdErr</th> </tr>
- <tr><td class=firstcolumn>I2</td><td class=cellinside> 0.305</td><td class=cellinside> 0.205</td></tr>
- <tr><td class=firstcolumn>I3</td><td class=cellinside> 0.256</td><td class=cellinside> 0.203</td></tr>
- <tr><td class=firstcolumn>I4</td><td class=cellinside> 0.067</td><td class=cellinside> 0.197</td></tr>
- <tr><td class=firstcolumn>I5</td><td class=cellinside>-0.160</td><td class=cellinside> 0.197</td></tr>
- <tr><td class=firstcolumn>I6</td><td class=cellinside>-0.444</td><td class=cellinside> 0.208</td></tr>
- <tr><td class=firstcolumn>Cat 2</td><td class=cellinside>-0.167</td><td class=cellinside> 0.460</td></tr>
- <tr><td class=firstcolumn>Cat 3</td><td class=cellinside> 0.138</td><td class=cellinside> 0.732</td></tr>
+ 
+<tr><td class=firstcolumn>I2</td>
+<td class=cellinside> 0.305</td>
+<td class=cellinside> 0.205</td></tr>
+ 
+<tr><td class=firstcolumn>I3</td>
+<td class=cellinside> 0.256</td>
+<td class=cellinside> 0.203</td></tr>
+ 
+<tr><td class=firstcolumn>I4</td>
+<td class=cellinside> 0.067</td>
+<td class=cellinside> 0.197</td></tr>
+ 
+<tr><td class=firstcolumn>I5</td>
+<td class=cellinside>-0.160</td>
+<td class=cellinside> 0.197</td></tr>
+ 
+<tr><td class=firstcolumn>I6</td>
+<td class=cellinside>-0.444</td>
+<td class=cellinside> 0.208</td></tr>
+ 
+<tr><td class=firstcolumn>Cat 2</td>
+<td class=cellinside>-0.167</td>
+<td class=cellinside> 0.460</td></tr>
+ 
+<tr><td class=firstcolumn>Cat 3</td>
+<td class=cellinside> 0.138</td>
+<td class=cellinside> 0.732</td></tr>
  
 	</tbody>
 </table>
  </td></table>
  <br>
+
 <p class='character'>Conditional log-likelihood: -107.6 <br />Number of iterations: 11 <br />Number of parameters: 7</p>

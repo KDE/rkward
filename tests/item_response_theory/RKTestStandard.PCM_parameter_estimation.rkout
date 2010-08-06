@@ -1,35 +1,97 @@
 <h1>PCM  parameter estimation</h1>
 DATE<br>
-<p class='character'>Call:</p><pre>PCM(X = pcmdat)</pre>
+
+<p class='character'>Call:</p>
+<pre>PCM(X = pcmdat)</pre>
 <h4>Coefficients:</h4>
 <br>
 
+
 <p align= center >
-<table cellspacing=0 border=1><caption align=bottom class=captiondataframe></caption><tr><td>
+<table cellspacing=0 border=1><caption align=bottom class=captiondataframe></caption>
+<tr><td>
 	<table border=0 class=dataframe>
 	<tbody> <tr class= firstline > <th></th><th>Eta</th><th>StdErr</th> </tr>
- <tr><td class=firstcolumn>I1.c2</td><td class=cellinside>-0.937</td><td class=cellinside> 0.565</td></tr>
- <tr><td class=firstcolumn>I1.c3</td><td class=cellinside> 0.330</td><td class=cellinside> 0.809</td></tr>
- <tr><td class=firstcolumn>I2.c1</td><td class=cellinside>-0.251</td><td class=cellinside> 0.525</td></tr>
- <tr><td class=firstcolumn>I2.c2</td><td class=cellinside>-0.065</td><td class=cellinside> 0.580</td></tr>
- <tr><td class=firstcolumn>I2.c3</td><td class=cellinside> 1.432</td><td class=cellinside> 1.024</td></tr>
- <tr><td class=firstcolumn>I3.c1</td><td class=cellinside> 0.224</td><td class=cellinside> 0.561</td></tr>
- <tr><td class=firstcolumn>I3.c2</td><td class=cellinside> 0.074</td><td class=cellinside> 0.568</td></tr>
- <tr><td class=firstcolumn>I3.c3</td><td class=cellinside> 0.878</td><td class=cellinside> 0.784</td></tr>
- <tr><td class=firstcolumn>I4.c1</td><td class=cellinside>-0.423</td><td class=cellinside> 0.547</td></tr>
- <tr><td class=firstcolumn>I4.c2</td><td class=cellinside> 0.263</td><td class=cellinside> 0.689</td></tr>
- <tr><td class=firstcolumn>I4.c3</td><td class=cellinside>-0.140</td><td class=cellinside> 0.650</td></tr>
- <tr><td class=firstcolumn>I5.c1</td><td class=cellinside> 0.980</td><td class=cellinside> 0.788</td></tr>
- <tr><td class=firstcolumn>I5.c2</td><td class=cellinside>-0.096</td><td class=cellinside> 0.585</td></tr>
- <tr><td class=firstcolumn>I5.c3</td><td class=cellinside>-0.403</td><td class=cellinside> 0.579</td></tr>
- <tr><td class=firstcolumn>I6.c1</td><td class=cellinside> 0.586</td><td class=cellinside> 0.826</td></tr>
- <tr><td class=firstcolumn>I6.c2</td><td class=cellinside>-0.504</td><td class=cellinside> 0.634</td></tr>
- <tr><td class=firstcolumn>I6.c3</td><td class=cellinside>-1.100</td><td class=cellinside> 0.587</td></tr>
- <tr><td class=firstcolumn>I7.c1</td><td class=cellinside>-0.849</td><td class=cellinside> 0.504</td></tr>
- <tr><td class=firstcolumn>I7.c2</td><td class=cellinside> 0.298</td><td class=cellinside> 0.701</td></tr>
+ 
+<tr><td class=firstcolumn>I1.c2</td>
+<td class=cellinside>-0.937</td>
+<td class=cellinside> 0.565</td></tr>
+ 
+<tr><td class=firstcolumn>I1.c3</td>
+<td class=cellinside> 0.330</td>
+<td class=cellinside> 0.809</td></tr>
+ 
+<tr><td class=firstcolumn>I2.c1</td>
+<td class=cellinside>-0.251</td>
+<td class=cellinside> 0.525</td></tr>
+ 
+<tr><td class=firstcolumn>I2.c2</td>
+<td class=cellinside>-0.065</td>
+<td class=cellinside> 0.580</td></tr>
+ 
+<tr><td class=firstcolumn>I2.c3</td>
+<td class=cellinside> 1.432</td>
+<td class=cellinside> 1.024</td></tr>
+ 
+<tr><td class=firstcolumn>I3.c1</td>
+<td class=cellinside> 0.224</td>
+<td class=cellinside> 0.561</td></tr>
+ 
+<tr><td class=firstcolumn>I3.c2</td>
+<td class=cellinside> 0.074</td>
+<td class=cellinside> 0.568</td></tr>
+ 
+<tr><td class=firstcolumn>I3.c3</td>
+<td class=cellinside> 0.878</td>
+<td class=cellinside> 0.784</td></tr>
+ 
+<tr><td class=firstcolumn>I4.c1</td>
+<td class=cellinside>-0.423</td>
+<td class=cellinside> 0.547</td></tr>
+ 
+<tr><td class=firstcolumn>I4.c2</td>
+<td class=cellinside> 0.263</td>
+<td class=cellinside> 0.689</td></tr>
+ 
+<tr><td class=firstcolumn>I4.c3</td>
+<td class=cellinside>-0.140</td>
+<td class=cellinside> 0.650</td></tr>
+ 
+<tr><td class=firstcolumn>I5.c1</td>
+<td class=cellinside> 0.980</td>
+<td class=cellinside> 0.788</td></tr>
+ 
+<tr><td class=firstcolumn>I5.c2</td>
+<td class=cellinside>-0.096</td>
+<td class=cellinside> 0.585</td></tr>
+ 
+<tr><td class=firstcolumn>I5.c3</td>
+<td class=cellinside>-0.403</td>
+<td class=cellinside> 0.579</td></tr>
+ 
+<tr><td class=firstcolumn>I6.c1</td>
+<td class=cellinside> 0.586</td>
+<td class=cellinside> 0.826</td></tr>
+ 
+<tr><td class=firstcolumn>I6.c2</td>
+<td class=cellinside>-0.504</td>
+<td class=cellinside> 0.634</td></tr>
+ 
+<tr><td class=firstcolumn>I6.c3</td>
+<td class=cellinside>-1.100</td>
+<td class=cellinside> 0.587</td></tr>
+ 
+<tr><td class=firstcolumn>I7.c1</td>
+<td class=cellinside>-0.849</td>
+<td class=cellinside> 0.504</td></tr>
+ 
+<tr><td class=firstcolumn>I7.c2</td>
+<td class=cellinside> 0.298</td>
+<td class=cellinside> 0.701</td></tr>
  
 	</tbody>
 </table>
  </td></table>
  <br>
+
 <p class='character'>Conditional log-likelihood: -121.1 <br />Number of iterations: 16 <br />Number of parameters: 19</p>

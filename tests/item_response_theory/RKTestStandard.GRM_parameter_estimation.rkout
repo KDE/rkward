@@ -1,22 +1,51 @@
 <h1>GRM parameter estimation</h1>
 DATE<br>
-<p class='character'>Call:</p><pre>grm(data = Environment)</pre>
+
+<p class='character'>Call:</p>
+<pre>grm(data = Environment)</pre>
 <h4>Coefficients:</h4>
 <br>
 
+
 <p align= center >
-<table cellspacing=0 border=1><caption align=bottom class=captiondataframe></caption><tr><td>
+<table cellspacing=0 border=1><caption align=bottom class=captiondataframe></caption>
+<tr><td>
 	<table border=0 class=dataframe>
 	<tbody> <tr class= firstline > <th></th><th>Extrmt1</th><th>Extrmt2</th><th>Dscrmn</th> </tr>
- <tr><td class=firstcolumn>LeadPetrol</td><td class=cellinside>0.487</td><td class=cellinside>2.584</td><td class=cellinside>1.378</td></tr>
- <tr><td class=firstcolumn>RiverSea</td><td class=cellinside>1.058</td><td class=cellinside>2.499</td><td class=cellinside>2.341</td></tr>
- <tr><td class=firstcolumn>RadioWaste</td><td class=cellinside>0.779</td><td class=cellinside>1.793</td><td class=cellinside>3.123</td></tr>
- <tr><td class=firstcolumn>AirPollution</td><td class=cellinside>0.457</td><td class=cellinside>2.157</td><td class=cellinside>3.283</td></tr>
- <tr><td class=firstcolumn>Chemicals</td><td class=cellinside>0.809</td><td class=cellinside>1.868</td><td class=cellinside>2.947</td></tr>
- <tr><td class=firstcolumn>Nuclear</td><td class=cellinside>0.073</td><td class=cellinside>1.427</td><td class=cellinside>1.761</td></tr>
+ 
+<tr><td class=firstcolumn>LeadPetrol</td>
+<td class=cellinside>0.487</td>
+<td class=cellinside>2.584</td>
+<td class=cellinside>1.378</td></tr>
+ 
+<tr><td class=firstcolumn>RiverSea</td>
+<td class=cellinside>1.058</td>
+<td class=cellinside>2.499</td>
+<td class=cellinside>2.341</td></tr>
+ 
+<tr><td class=firstcolumn>RadioWaste</td>
+<td class=cellinside>0.779</td>
+<td class=cellinside>1.793</td>
+<td class=cellinside>3.123</td></tr>
+ 
+<tr><td class=firstcolumn>AirPollution</td>
+<td class=cellinside>0.457</td>
+<td class=cellinside>2.157</td>
+<td class=cellinside>3.283</td></tr>
+ 
+<tr><td class=firstcolumn>Chemicals</td>
+<td class=cellinside>0.809</td>
+<td class=cellinside>1.868</td>
+<td class=cellinside>2.947</td></tr>
+ 
+<tr><td class=firstcolumn>Nuclear</td>
+<td class=cellinside>0.073</td>
+<td class=cellinside>1.427</td>
+<td class=cellinside>1.761</td></tr>
  
 	</tbody>
 </table>
  </td></table>
  <br>
+
 <p class='character'>Log-likelihood value at convergence: -1090.4</p>

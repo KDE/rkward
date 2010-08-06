@@ -1,7 +1,3 @@
 Warning in Waldtest.Rm(estimates.rsm) :
   
 The following items were excluded due to inappropriate response patterns within subgroups: 
-Warning messages:
-1: In sqrt(diag(solve(parest$hessian))) : NaNs produced
-2: In sqrt(diag(lres$W %*% solve(parest$hessian) %*% t(lres$W))) :
-  NaNs produced

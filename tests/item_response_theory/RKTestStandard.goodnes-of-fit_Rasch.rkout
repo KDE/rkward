@@ -1,3 +1,13 @@
 <h1>Goodness of Fit for Rasch Models (estimates.rasch)</h1>
 DATE<br>
-<p class='character'><br>Bootstrap Goodness-of-Fit using Pearson chi-squared<br><br>Call:<br>rasch(data = LSAT)<br><br>Tobs: 18.34 <br># data-sets: 50 <br>p-value: 0.94 <br></p>
+
+<p class='character'>Call:</p>
+<pre>rasch(data = LSAT)</pre>
+<h4>Parametric Bootstrap test:</h4>
+<br>
+
+<p class='character'>Chi-squared statistic: 18.345</p>
+
+<p class='character'>Bootstrap samples: 49</p>
+
+<p class='character'>p-value: 0.78</p>

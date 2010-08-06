@@ -1,28 +1,55 @@
 <h1>Cronbach's alpha</h1>
 DATE<br>
-<p class='character'>for the 'LSAT' data-set (subset: Item 1, Item 2, Item 3, Item 4, Item 5)</p><p class='character'>Items: 5 <br />Sample units: 1000 <br /><strong>alpha: 0.29 </strong></p><p class='character'>Effects on alpha if items are removed:</p>
+
+<p class='character'>for the 'LSAT' data-set (subset: Item 1, Item 2, Item 3, Item 4, Item 5)</p>
+
+<p class='character'>Items: 5 <br />Sample units: 1000 <br /><strong>alpha: 0.29 </strong></p>
+
+<p class='character'>Effects on alpha if items are removed:</p>
+
+
 <p align= center >
-<table cellspacing=0 border=1><caption align=bottom class=captiondataframe></caption><tr><td>
+<table cellspacing=0 border=1><caption align=bottom class=captiondataframe></caption>
+<tr><td>
 	<table border=0 class=dataframe>
 	<tbody> <tr class= firstline > <th></th><th>value</th> </tr>
- <tr><td class=firstcolumn>All Items</td><td class=cellinside>0.29</td></tr>
- <tr><td class=firstcolumn>Excluding Item 1</td><td class=cellinside>0.28</td></tr>
- <tr><td class=firstcolumn>Excluding Item 2</td><td class=cellinside>0.24</td></tr>
- <tr><td class=firstcolumn>Excluding Item 3</td><td class=cellinside>0.22</td></tr>
- <tr><td class=firstcolumn>Excluding Item 4</td><td class=cellinside>0.25</td></tr>
- <tr><td class=firstcolumn>Excluding Item 5</td><td class=cellinside>0.27</td></tr>
+ 
+<tr><td class=firstcolumn>All Items</td>
+<td class=cellinside>0.29</td></tr>
+ 
+<tr><td class=firstcolumn>Excluding Item 1</td>
+<td class=cellinside>0.28</td></tr>
+ 
+<tr><td class=firstcolumn>Excluding Item 2</td>
+<td class=cellinside>0.24</td></tr>
+ 
+<tr><td class=firstcolumn>Excluding Item 3</td>
+<td class=cellinside>0.22</td></tr>
+ 
+<tr><td class=firstcolumn>Excluding Item 4</td>
+<td class=cellinside>0.25</td></tr>
+ 
+<tr><td class=firstcolumn>Excluding Item 5</td>
+<td class=cellinside>0.27</td></tr>
  
 	</tbody>
 </table>
  </td></table>
  <br>
+
 <p class='character'>95% Confidence interval:</p>
 
+
+
 <p align= center >
-<table cellspacing=0 border=1><caption align=bottom class=captiondataframe></caption><tr><td>
+<table cellspacing=0 border=1><caption align=bottom class=captiondataframe></caption>
+<tr><td>
 	<table border=0 class=dataframe>
 	<tbody> <tr class= firstline > <th></th><th>2.5%</th><th>97.5%</th> </tr>
- <tr><td class=firstcolumn></td><td class=cellinside>0.22</td><td class=cellinside>0.36</td></tr>
+ 
+<tr><td class=firstcolumn></td>
+<td class=cellinside>0.22</td>
+<td class=cellinside>0.36</td></tr>
  
 	</tbody>
 </table>
