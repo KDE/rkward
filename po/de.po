@@ -15,7 +15,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://sourceforge."
 "net/tracker/?group_id=50231&atid=459007\n"
 "POT-Creation-Date: 2010-04-15 16:30+0200\n"
-"PO-Revision-Date: 2010-08-07 18:27+0200\n"
+"PO-Revision-Date: 2010-08-07 18:44+0200\n"
 "Last-Translator: Stefan Rödiger <stefan_roediger@gmx.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "MIME-Version: 1.0\n"
@@ -66,8 +66,7 @@ msgid "Waiting for R to finish"
 msgstr "Warte auf Beenden von R"
 
 #: agents/rksaveagent.cpp:63
-msgid ""
-"No filename given. Your data was NOT saved. Do you still want to proceed?"
+msgid "No filename given. Your data was NOT saved. Do you still want to proceed?"
 msgstr ""
 "Kein Dateiname angegeben. Ihre Daten wurden NICHT gespeichert. Möchten Sie "
 "dennoch fortfahren?"
@@ -1105,8 +1104,7 @@ msgstr "Illegaler Attributwert. Nur Dezimalzahlen sind erlaubt."
 
 #: misc/xmlhelper.cpp:308
 msgid "Illegal attribute value. Allowed values are '%1' or '%2', only."
-msgstr ""
-"Illegaler Attributwert. Erlaubt sind nur Werte die Werte '%1' und '%2'."
+msgstr "Illegaler Attributwert. Erlaubt sind nur Werte die Werte '%1' und '%2'."
 
 #: misc/xmlhelper.cpp:319
 msgid "XML-parsing '%1' "
@@ -1404,12 +1402,10 @@ msgid ""
 "files (Settings->Configure Settings->Logfiles) and restart RKWard.</p>\n"
 msgstr ""
 "<p>\t-Es gab ein Problem beim öffnen der Dateien die für die Kommunikation "
-"mit "
-"R notwendig sind. Dies ist meistens auf die Angabe eines falschen "
+"mit R notwendig sind. Dies ist meistens auf die Angabe eines falschen "
 "Speicherorts für diese Dateien zurückzuführen. Überprüfen Sie bitte ob Sie "
 "den den Speicherort der log-Dateien (Einstellungen->Konfiguriere "
-"Einstellungen->Logfiles) konfiguriert haben und starten Sie RKWard erneut.<"
-"/p>\n"
+"Einstellungen->Logfiles) konfiguriert haben und starten Sie RKWard erneut.</p>\n"
 
 #: rbackend/rinterface.cpp:227
 msgid ""
@@ -1873,6 +1869,7 @@ msgid ""
 "The QtScript-backend has reported an error:\n"
 "%1"
 msgstr "Das  QtScript-Backend hat einen Fehler gemeldet:\n"
+"%1"
 
 #: scriptbackends/qtscriptbackend.cpp:114
 #, fuzzy
@@ -1927,8 +1924,7 @@ msgstr "Anzahl Zeichen bevor Code-Vervollständigung durchgeführt wird"
 
 #: settings/rksettingsmodulecommandeditor.cpp:64
 msgid "Timeout (milli seconds) before completion is attempted"
-msgstr ""
-"Timeout (in Millisekunden) bis Code-Vervollständigung durchgeführt wird"
+msgstr "Timeout (in Millisekunden) bis Code-Vervollständigung durchgeführt wird"
 
 #: settings/rksettingsmodulecommandeditor.cpp:92
 msgid "Script editor"
@@ -2517,8 +2513,7 @@ msgstr "[verändert]"
 
 #: windows/rkcommandeditorwindow.cpp:287
 msgid "The document \"%1\" has been modified. Close it anyway?"
-msgstr ""
-"Das Dokument \"%1\" wurde verändert. Soll es dennoch geschlossen werden?"
+msgstr "Das Dokument \"%1\" wurde verändert. Soll es dennoch geschlossen werden?"
 
 #: windows/rkcommandeditorwindow.cpp:287
 msgid "File not saved"
@@ -2888,7 +2883,7 @@ msgstr ""
 "wie diese Meldung, dann ist das ein Fall, in dem RKWard besser funktionieren "
 "sollte. In diesem Fall kontaktieren sie uns bitte unter rkward-devel@lists."
 "sourceforge.net und teilen Sie uns Informationen zu Ihrem System mit, damit "
-"wir versuchen können, diese Fehler in kommenden Versionen zu beheben."
+"wir versuchen können, diese Fehler in kommenden Versionen von RKWard zu beheben."
 
 #: windows/rkwindowcatcher.cpp:57
 msgid "Could not embed R X11 window"
