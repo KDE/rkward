@@ -15,7 +15,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://sourceforge."
 "net/tracker/?group_id=50231&atid=459007\n"
 "POT-Creation-Date: 2010-04-15 16:30+0200\n"
-"PO-Revision-Date: 2010-08-06 22:13+0200\n"
+"PO-Revision-Date: 2010-08-07 18:27+0200\n"
 "Last-Translator: Stefan Rödiger <stefan_roediger@gmx.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "MIME-Version: 1.0\n"
@@ -608,8 +608,9 @@ msgid ""
 "Please stand by while determining, which packages have an update available "
 "online."
 msgstr ""
-"Bitte haben Sie etwas Geduld während überprüft wird Pakete online eine "
-"aktualisiert Version zur bereitstellen."
+"Bitte haben Sie etwas Geduld während online überprüft wird von welchen "
+"Paketen eine "
+"aktualisierte Version vorliegt."
 
 #: dialogs/rkloadlibsdialog.cpp:648 dialogs/rkloadlibsdialog.cpp:787
 msgid "Fetching list"
@@ -669,7 +670,6 @@ msgid "Selected library location not writable"
 msgstr "Gewählter Speicheroft für Bibliotheken ist nicht beschreibbar"
 
 #: dialogs/rkloadlibsdialog.cpp:865
-#, fuzzy
 msgid ""
 "The directory you are trying to install to (%1) is not writable with your "
 "current user permissions. You can chose a different library location to "
@@ -678,13 +678,11 @@ msgid ""
 "package to).\n"
 msgstr ""
 "Mit den gegenwärtigen Nutzerrechten haben keine Schreibrechte um in das "
-"Verzeichnis (%1) zu installieren. Wenn Sie der Administrator dieses Rechners "
-"sind können Sie versuchen diese Pakete als root (Sie werden nach dem "
-"Passwort gefragt werden) zu installieren. Anderenfalls müssen Sie einen "
+"Verzeichnis (%1) zu installieren. Sie können einen "
 "anderen Speicherort für Ihre Bibliotheken finden in den Sie installieren "
 "können (wenn keiner beschreibbar ist, dann möchten Sie möglicherweise den "
 "\"Konfiguriere Repositories\"-Button verwenden um ein beschreibbares "
-"Verzeichnis für die Installation Ihrer Pakete zu wählen)."
+"Verzeichnis für die Installation Ihrer Pakete zu wählen).\n"
 
 #: dialogs/rkloadlibsdialog.cpp:869
 msgid ""
@@ -725,9 +723,8 @@ msgid "<b>Select one or more:</b>"
 msgstr "<b>Einen oder mehr auswählen:</b>"
 
 #: dialogs/rkselectlistdialog.cpp:39
-#, fuzzy
 msgid "<b>Select one:</b>"
-msgstr "Wähle eine:"
+msgstr "<b>Wählen Sie einen:</b>"
 
 #: dialogs/startupdialog.cpp:46
 msgid "What would you like to do?"
@@ -1566,6 +1563,15 @@ msgid ""
 "with that, see <a href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/"
 "rkward/compiling</a>.</p>"
 msgstr ""
+"<p>Der RKWard-Editor konnte entweder die Ressourcedateien nicht finden, oder "
+"nur eine alte Version von diesen Dateien. Die wahrscheinlichste Ursache "
+"dafür ist, dass die letzte Installation die Dateien nicht am richtigen "
+"Speicherort abgelegt hat. Das kann zu einer Reihe von Problemen führen, die "
+"vom fehlen einzelner Funktionen bis zum Komplettausfall reichen.</p><p><b>"
+"Sie sollten RKWard nun beenden und die Installation reparieren.</b>Hilfe "
+"finden Sie unter <a href=\"http://p.sf.net/rkward/compiling\">http://p.sf."
+"net/"
+"rkward/compiling</a>.</p>"
 
 #: rkward.cpp:191
 msgid "Broken installation"
