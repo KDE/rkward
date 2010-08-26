@@ -96,4 +96,16 @@ formals (dev.off) <- formals (grDevices::dev.off)
 {
 	assignInNamespace ("plot.new", plot.new, envir=as.environment ("package:graphics"))
 	assignInNamespace ("dev.off", dev.off, envir=as.environment ("package:grDevices"))
+	
+	## set a hook defining "print.function" for lattice:
+	setHook (packageEvent ("lattice", "onLoad"),
+		function (...)
+			lattice::lattice.options (print.function = function (x, ...)
+			{
+				if (dev.cur() == 1) rk.screen.device ()
+				rk.record.plot$record ()
+				plot (x, ...)
+				invisible ()
+			})
+	)
 }
