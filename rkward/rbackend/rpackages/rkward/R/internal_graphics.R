@@ -74,6 +74,7 @@ if (base::.Platform$OS.type == "windows") {
 	if (dev.cur() == 1) rk.screen.device ()
 	rk.record.plot$record ()
 	eval (body (.rk.plot.new.default))
+	rk.record.plot$.set.gType.newplot ('standard')
 }
 formals (plot.new) <- formals (graphics::plot.new)
 .rk.plot.new.default <- graphics::plot.new
@@ -105,6 +106,7 @@ formals (dev.off) <- formals (grDevices::dev.off)
 				if (dev.cur() == 1) rk.screen.device ()
 				rk.record.plot$record ()
 				plot (x, ...)
+				rk.record.plot$.set.gType.newplot ('lattice')
 				invisible ()
 			})
 	)

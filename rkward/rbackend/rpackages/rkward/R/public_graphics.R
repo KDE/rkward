@@ -69,9 +69,18 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	newPlotExists <- list("1" = FALSE)
 	isDuplicate <- FALSE
 	isPreviewDevice <- FALSE
+	gType <- list ()
+	gType.newplot <- ""
 	
 	.set.isDuplicate <- function (x = FALSE) { isDuplicate <<- x }
 	.set.isPreviewDevice <- function (x = FALSE) { isPreviewDevice <<- x }
+	.set.gType.newplot <- function (x) gType.newplot <<- x
+	.set.trellis.last.object <- function (deviceId = dev.cur ())
+	{
+		if (gType[[deviceId]] == "lattice")
+			assign ("last.object", recorded[[deviceId]], envir = lattice:::.LatticeEnv)
+		invisible ()
+	}
 	onAddDevice <- function (old_dev = 1, deviceId = dev.cur ())
 	{
 		old_dev <- as.character (old_dev)
@@ -101,13 +110,24 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	}
 	push.pop.and.record <- function (which.pop = NULL, which.push = NULL, deviceId = NULL, newplot = FALSE, oldplot = !newplot)
 	{
-		if (class (try (unsavedPlot <- recordPlot(), silent=TRUE)) != 'try-error') {
+		unsavedPlot <- NULL
+		actually.record.the.plot <- function ()
+		{
+			retval <- FALSE
+			if (gType.newplot == "standard") {
+				if (class (try (unsavedPlot <<- recordPlot(), silent=TRUE)) != "try-error") retval <- TRUE
+			} else if  (gType.newplot == "lattice") {
+				if (class (try (unsavedPlot <<- trellis.last.object (), silent=TRUE)) != "try-error") retval <- TRUE
+			}
+			return (retval)
+		}
+		if (actually.record.the.plot ()) {
 			s <- object.size (unsavedPlot) # in bytes
-			
 			
 			if (s <= getOption ('rk.graphics.hist.max.plotsize') * 1024) {
 				if (oldplot) {
 					recorded [[which.push]] <<- unsavedPlot
+					gType [[which.push]] <<- gType.newplot
 					return (TRUE)
 				}
 				
@@ -128,6 +148,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 				if (!is.null (deviceId)) histPositions [[deviceId]] <<- n
 				.rk.graph.history.gui ()
 				recorded [[n]] <<- unsavedPlot
+				gType [[n]] <<- gType.newplot
 				
 				return (TRUE)
 			} else {
@@ -135,7 +156,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 				return (FALSE)
 			}
 		} else {
-			warning ('recordPlot () bailed out!') # don't use stop (...)
+			warning ('Unable to record the plot!') # don't use stop (...)
 			return (FALSE)
 		}
 	}
@@ -205,7 +226,9 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		}
 		
 		pop.and.update <- function (n) {
+			## TODO: check if this is too expensive? Use recorded[[n]] <<- NULL ??
 			recorded <<- recorded [-n]
+			gType <<- gType [-n]
 			len.r <- length (recorded)
 			
 			pos.aff <- unlist (histPositions) >= min (n) # all affected positions
@@ -265,8 +288,14 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		dev.set (as.numeric(deviceId))
 		
 		if (n > 0 && n <= length(recorded)) {
+			if (gType [[n]] == "standard") {
+				replayPlot (recorded[[n]])
+			} else if (gType [[n]] == "lattice") {
+				message (deparse (recorded[[n]]$call)) # show case call object
+				plot (recorded[[n]])
+			}
 			histPositions [[deviceId]] <<- n
-			replayPlot(recorded[[n]])
+			.set.gType.newplot (gType [[n]])
 			.rk.graph.history.gui () # (deviceId)
 		}
 		else message("replay: 'n' not in valid range: ", n)
@@ -297,6 +326,8 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		recorded <<- list()
 		isDuplicate <<- FALSE
 		isPreviewDevice <<- FALSE
+		gType <<- list ()
+		gType.newplot <<- ""
 		for (dev_num in names (histPositions)) {
 			histPositions[[dev_num]] <<- 0
 			newPlotExists [[dev_num]] <<- FALSE
@@ -309,6 +340,8 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		message ('Current devices  : ', paste (names (histPositions), collapse = ', ')) 
 		message ('Current positions: ', paste (unlist (histPositions), collapse = ', ')) 
 		message ('New plot exists? ', paste (unlist (newPlotExists), collapse = ', ')) 
+		message ('gType @ these pos: ', paste (unlist (gType [unlist (histPositions)]), collapse = ', '))
+		message ('gType newplot?   : ', gType.newplot)
 	}
 	.rk.graph.history.gui <- function (deviceIds = names (histPositions))
 	{
