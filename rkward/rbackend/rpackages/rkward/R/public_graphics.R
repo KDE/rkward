@@ -55,6 +55,12 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	rk.record.plot$.set.isDuplicate (FALSE)
 }
 
+"rk.activate.device" <- function (deviceId = dev.cur ())
+{
+	dev.set (deviceId)
+	rk.record.plot$.set.trellis.last.object (deviceId)
+}
+
 # A global history of various graphics calls; trellis / grid graphics is not supported yet
 "rk.record.plot" <- function ()
 {
