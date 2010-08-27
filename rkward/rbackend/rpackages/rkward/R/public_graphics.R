@@ -83,8 +83,9 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	.set.gType.newplot <- function (x) gType.newplot <<- x
 	.set.trellis.last.object <- function (deviceId = dev.cur ())
 	{
-		if (gType[[deviceId]] == "lattice")
-			assign ("last.object", recorded[[deviceId]], envir = lattice:::.LatticeEnv)
+		deviceId <- as.character (deviceId)
+		if (gType[[histPositions [[deviceId]]]] == "lattice")
+			assign ("last.object", recorded[[histPositions [[deviceId]]]], envir = lattice:::.LatticeEnv)
 		invisible ()
 	}
 	onAddDevice <- function (old_dev = 1, deviceId = dev.cur ())
@@ -298,7 +299,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 				replayPlot (recorded[[n]])
 			} else if (gType [[n]] == "lattice") {
 				message (deparse (recorded[[n]]$call)) # show case call object
-				plot (recorded[[n]])
+				plot (recorded[[n]], save.object = (cur.deviceId == as.numeric (deviceId)))
 			}
 			histPositions [[deviceId]] <<- n
 			.set.gType.newplot (gType [[n]])
