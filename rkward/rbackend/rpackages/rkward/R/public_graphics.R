@@ -234,6 +234,9 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		
 		pop.and.update <- function (n) {
 			## TODO: check if this is too expensive? Use recorded[[n]] <<- NULL ??
+			## length (n) can be > 1: see .verify.hist.limits ()
+			
+			## TODO: investigate b/n x <<- x[-n] & x[n] <<- NULL
 			recorded <<- recorded [-n]
 			gType <<- gType [-n]
 			len.r <- length (recorded)
@@ -294,13 +297,16 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		cur.deviceId <- dev.cur ()
 		dev.set (as.numeric(deviceId))
 		
+		status.display <- paste ("Device: ", deviceId, ", History: ", n, sep = '')
 		if (n > 0 && n <= length(recorded)) {
 			if (gType [[n]] == "standard") {
+				status.display <- paste (status.display, ", Call: Standard graphics", sep = "")
 				replayPlot (recorded[[n]])
 			} else if (gType [[n]] == "lattice") {
-				message (deparse (recorded[[n]]$call)) # show case call object
+				status.display <- paste (status.display, ", Call: ", deparse (recorded[[n]]$call), sep = "")
 				plot (recorded[[n]], save.object = (cur.deviceId == as.numeric (deviceId)))
 			}
+			message (status.display, "\n") # add to a new status bar?
 			histPositions [[deviceId]] <<- n
 			.set.gType.newplot (gType [[n]])
 			.rk.graph.history.gui () # (deviceId)
