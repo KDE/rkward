@@ -298,7 +298,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		cur.deviceId <- dev.cur ()
 		dev.set (as.numeric(deviceId))
 		
-		status.display <- paste ("Device: ", deviceId, ", History: ", n, sep = '')
+		status.display <- paste ("Dev: ", deviceId, ", Pos: ", n, sep = '')
 		if (n > 0 && n <= length(recorded)) {
 			if (gType [[n]] == "standard") {
 				status.display <- paste (status.display, ", Call: Standard graphics", sep = "")
@@ -307,7 +307,8 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 				status.display <- paste (status.display, ", Call: ", deparse (recorded[[n]]$call), sep = "")
 				plot (recorded[[n]], save.object = (cur.deviceId == as.numeric (deviceId)))
 			}
-			message (status.display, "\n") # add to a new status bar?
+			status.display <- paste (status.display, ", Size: ", round (object.size (recorded[[n]])/1024, 2), " Kb", sep = "")
+			message ("--\n", status.display, "\n--\n") # add to a new status bar?
 			histPositions [[deviceId]] <<- n
 			.rk.graph.history.gui () # (deviceId)
 		}
@@ -349,10 +350,11 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	}
 	printPars <- function ()
 	{
-		message ('History len: ', length (recorded))
+		message ('History length   : ', length (recorded))
+		message ("History size (KB): ", round (object.size (recorded) / 1024, 2))
 		message ('Current devices  : ', paste (names (histPositions), collapse = ', ')) 
 		message ('Current positions: ', paste (unlist (histPositions), collapse = ', ')) 
-		message ('New plot exists? ', paste (unlist (newPlotExists), collapse = ', ')) 
+		message ('New plot exists? : ', paste (unlist (newPlotExists), collapse = ', ')) 
 		message ('gType @ these pos: ', paste (unlist (gType [unlist (histPositions)]), collapse = ', '))
 		message ('gType newplot?   : ', gType.newplot)
 	}
