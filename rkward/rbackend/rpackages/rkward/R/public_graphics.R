@@ -216,6 +216,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 			push.pop.and.record (which.pop = 1, deviceId = NULL, newplot = TRUE)
 		}
 		
+		.set.gType.newplot ("")
 		dev.set (cur.deviceId)
 	}
 	recordUnsaved <- function (deviceId = dev.cur ())
@@ -308,7 +309,6 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 			}
 			message (status.display, "\n") # add to a new status bar?
 			histPositions [[deviceId]] <<- n
-			.set.gType.newplot (gType [[n]])
 			.rk.graph.history.gui () # (deviceId)
 		}
 		else message("replay: 'n' not in valid range: ", n)

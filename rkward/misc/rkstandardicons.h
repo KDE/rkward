@@ -62,8 +62,10 @@ public:
 		ActionMoveUp,
 		ActionMoveDown,
 
+		ActionFlagGreen,
 		ActionSnapshot,
 		ActionRemovePlot,
+		ActionWindowDuplicate,
 
 		ActionClear,
 

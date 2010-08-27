@@ -537,13 +537,16 @@ RKCaughtX11WindowPart::RKCaughtX11WindowPart (RKCaughtX11Window *window) : KPart
 
 	action = actionCollection ()->addAction ("device_activate", window, SLOT (activateDevice()));
 	action->setText (i18n ("Make active"));
+	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionFlagGreen));
 	action = actionCollection ()->addAction ("device_copy_to_output", window, SLOT (copyDeviceToOutput()));
 	action->setText (i18n ("Copy to output"));
+	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowOutput));
 	action = actionCollection ()->addAction (KStandardAction::Print, "device_print", window, SLOT (printDevice()));
 	action = actionCollection ()->addAction ("device_copy_to_r_object", window, SLOT (copyDeviceToRObject()));
 	action->setText (i18n ("Store as R object..."));
 	action = actionCollection ()->addAction ("device_duplicate", window, SLOT (duplicateDevice()));
 	action->setText (i18n ("Duplicate"));
+	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionWindowDuplicate));
 
 	// initialize context for plugins
 	RKContextMap *context = RKComponentMap::getContext ("x11");
