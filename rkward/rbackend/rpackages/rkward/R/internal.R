@@ -422,3 +422,5 @@ formals (menu) <- formals (utils::menu)
 	# call separate assignments functions:
 	if (exists (".rk.fix.assignments.graphics")) eval (body (.rk.fix.assignments.graphics)) # internal_graphics.R
 }
+
+.rk.active.device <- 1

@@ -2,11 +2,13 @@
 ## These functions are accessible to the user.
 
 # Requests a graph to be written.
-rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOption ("rk.graphics.width"), height=getOption ("rk.graphics.height"), quality, ...) 
+rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOption ("rk.graphics.width"), height=getOption ("rk.graphics.height"), quality, ..., set.active.device = TRUE) 
 {
 	if (!is.numeric (width)) width <- 480
 	if (!is.numeric (height)) height <- 480
 	if (is.null (device.type)) device.type <- "PNG"	# default behavior is PNG for now
+
+	if (set.active.device) assign (".rk.active.device", dev.cur (), pos = "package:rkward")
 
 	ret <- NULL
 	if (device.type == "PNG") {
@@ -44,7 +46,12 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 
 "rk.graph.off" <- function(){
 	.rk.cat.output ("\n")	# so the output will be auto-refreshed
-	dev.off()
+	ret <- dev.off()
+	
+	# dev.off () sets dev.next () as active, which may not have been active before rk.graph.on was called; so reset the correct device as active:
+	i <- get (".rk.active.device", pos = "package:rkward")
+	if ((!is.null (i)) && i > 1) dev.set (i)
+	ret
 }
 
 "rk.duplicate.device" <- function (deviceId = dev.cur ())
