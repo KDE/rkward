@@ -380,19 +380,14 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		cur.deviceId <- dev.cur ()
 		dev.set (as.numeric(deviceId))
 		
-		status.display <- paste ("Dev: ", deviceId, ", Pos: ", n, sep = '')
 		if (n > 0 && n <= length(recorded)) {
 			if (gType [[n]] == "standard") {
-				status.display <- paste (status.display, ", Call: Standard graphics", sep = "")
 				replayPlot (recorded[[n]])
 			} else if (gType [[n]] == "lattice") {
-				status.display <- paste (status.display, ", Call: ", deparse (recorded[[n]]$call), sep = "")
 				# (re-)plot the lattice object but, if the current window is NOT active, then do not save
 				# it to lattice:::.LatticeEnv$last.object ("trellis.last.object")
 				plot (recorded[[n]], save.object = (cur.deviceId == as.numeric (deviceId)))
 			}
-			status.display <- paste (status.display, ", Size: ", round (object.size (recorded[[n]])/1024, 2), " Kb", sep = "")
-			message ("--\n", status.display, "\n--\n") # add to a new status bar?
 			histPositions [[deviceId]] <<- n
 			.rk.graph.history.gui () # (deviceId)
 		}
@@ -465,6 +460,32 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 			.rk.do.call ("updateDeviceHistory", positions);
 		}
 		invisible (NULL)
+	}
+	.get.oldplot.call <- function (deviceId)
+	{
+		switch (gType [[histPositions [[deviceId]]]],
+			standard = "\"standard graphics\"",
+			lattice = deparse (recorded [[histPositions [[deviceId]]]]$call),
+			"Unknown")
+	}
+	.get.plot.info.str <- function (deviceId = dev.cur ())
+	{
+		deviceId <- as.character (deviceId)
+		if (newPlotExists [[deviceId]]) {
+			info.str <- paste ("Dev: ", deviceId, ", Pos: ?, Size: ?, Type: ", gType.newplot [[deviceId]], sep = "")
+		} else {
+			# else if (!is.null (histPositions [[deviceId]]))?
+			info.str <- paste ("Dev: ", deviceId, 
+				", Pos: ", histPositions [[deviceId]], 
+				", Size: ", round (object.size (recorded [[histPositions [[deviceId]]]])/1024, 2), " KB",
+				", Call: ", .get.oldplot.call (deviceId), sep = "")
+		} # else info.str <- NULL
+		info.str
+	}
+	showPlotInfo <- function (deviceId = dev.cur ())
+	{
+		## TODO: update to either a proper message box, or move to a 'status bar'
+		readline (prompt = .get.plot.info.str (deviceId))
 	}
 	.verify.hist.limits <- function ()
 	{

@@ -62,6 +62,7 @@ void RKStandardIcons::initIcons () {
 	icons[ActionMoveUp] = KIcon ("go-up");
 	icons[ActionMoveDown] = KIcon ("go-down");
 
+	icons[ActionDocumentInfo] = KIcon ("documentinfo.png");
 	icons[ActionFlagGreen] = KIcon ("flag-green.png");
 	icons[ActionSnapshot] = KIcon ("list-add.png");
 	icons[ActionRemovePlot] = KIcon ("list-remove.png");

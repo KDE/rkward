@@ -436,6 +436,12 @@ void RKCaughtX11Window::clearHistory () {
 	//updateHistoryActions (0, 0);
 }
 
+void RKCaughtX11Window::showPlotInfo () {
+	RK_TRACE (MISC);
+
+	RKGlobals::rInterface ()->issueCommand ("rk.record.plot$showPlotInfo (" + QString::number (device_number) + ")", RCommand::App, i18n ("Device properties (device number %1)", device_number), error_dialog);
+}
+
 void RKCaughtX11Window::updateHistoryActions (int history_length, int position) {
 	RK_TRACE (MISC);
 
@@ -534,6 +540,11 @@ RKCaughtX11WindowPart::RKCaughtX11WindowPart (RKCaughtX11Window *window) : KPart
 	window->plot_clear_history_action = (KAction*) action;
  	action->setText (i18n ("Clear history"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionClear));
+
+	action = actionCollection ()->addAction ("device_properties", window, SLOT (showPlotInfo()));
+	window->device_properties_action = (KAction*) action;
+	action->setText (i18n ("Device properties"));
+	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionDocumentInfo));
 
 	action = actionCollection ()->addAction ("device_activate", window, SLOT (activateDevice()));
 	action->setText (i18n ("Make active"));

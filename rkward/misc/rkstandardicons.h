@@ -62,6 +62,7 @@ public:
 		ActionMoveUp,
 		ActionMoveDown,
 
+		ActionDocumentInfo,
 		ActionFlagGreen,
 		ActionSnapshot,
 		ActionRemovePlot,

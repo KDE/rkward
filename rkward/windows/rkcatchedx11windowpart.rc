@@ -21,6 +21,8 @@
 				<Separator/>
 				<Action name="plot_clear_history"/>
 			</Menu>
+			<Separator/>
+			<Action name="device_properties"/>
 		</Menu>
 		<Menu name="view"><text>&amp;View</text>
 			<Action name="toggle_fixed_size"/>
@@ -49,5 +51,7 @@
 		<Action name="plot_remove"/>
 		<Separator/>
 		<Action name="plot_clear_history"/>
+		<Separator/>
+		<Action name="device_properties"/>
 	</ToolBar>
 </kpartgui>
