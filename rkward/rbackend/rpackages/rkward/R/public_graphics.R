@@ -128,8 +128,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 			histPositions [[deviceId]] <<- newPlotExists [[deviceId]] <<- NULL
 		}
 	}
-## TODO: newplot -> this.plot.is.new, remove oldplot
-	push.pop.and.record <- function (which.pop = NULL, which.push = NULL, deviceId = NULL, newplot = FALSE, oldplot = !newplot)
+	push.pop.and.record <- function (which.pop = NULL, which.push = NULL, deviceId = NULL, this.plot.is.new = FALSE)
 	{
 		actually.record.the.plot <- function ()
 		{
@@ -154,7 +153,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 			this.plot.gType <- "standard"
 			recording.succeeded <- actually.record.the.plot ()
 		
-		} else if (newplot) {
+		} else if (this.plot.is.new) {
 			# when this is a new plot (unsaved yet), use gType.newplot since gType hasn't been assigned yet
 			# generally, called from plot.new () or print.trellis (); although can be called by clicking 
 			# "Add to history" icon directly as well...
@@ -163,7 +162,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		
 		} else {
 			# this is an old plot; surely called by clicking the "Add to history" icon
-			# see "oldplot = TRUE" block below:
+			# see "if (!this.plot.is.new)" block below:
 			this.plot.gType <- gType [[histPositions [[deviceId]]]]
 			recording.succeeded <- actually.record.the.plot ()
 		}
@@ -172,7 +171,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 			s <- object.size (unsavedPlot) # in bytes
 			
 			if (s <= getOption ('rk.graphics.hist.max.plotsize') * 1024) {
-				if (oldplot) {
+				if (!this.plot.is.new) {
 					# One can not overwrite / replace-in-position an existing plot by a completely new plot...
 					#   thus, no change to gType.newplot [[]].
 					# When recording over an existing plot, the graphics type must remain same... 
@@ -216,8 +215,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 			return (FALSE)
 		}
 	}
-## TODO: newplotflag -> newplot.in.queue
-	record <- function(deviceId = dev.cur (), newplotflag = TRUE, force = FALSE, newplot.gType = '')
+	record <- function(deviceId = dev.cur (), newplot.in.queue = TRUE, force = FALSE, newplot.gType = '')
 	{
 		deviceId <- as.character (deviceId)
 		
@@ -237,7 +235,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 				# there is a new plot on this device, so save it,
 				# immaterial of whether force == TRUE or FALSE
 				
-				succeded <- push.pop.and.record (which.pop = 1, deviceId = deviceId, newplot = TRUE)
+				succeded <- push.pop.and.record (which.pop = 1, deviceId = deviceId, this.plot.is.new = TRUE)
 			} else if (force) {
 				# no new plot on this managed device but force == TRUE
 				# in other words, called from a non-preview interactive device by clicking "Add to history" icon
@@ -259,9 +257,9 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 					# See the comments in clearHistory () for further details.
 					
 					newPlotExists [[deviceId]] <<- TRUE
-					record (deviceId, newplotflag = FALSE, force = FALSE) # one recursion
+					record (deviceId, newplot.in.queue = FALSE, force = FALSE) # one recursion
 				} else {
-					succeded <- push.pop.and.record (which.push = n, deviceId = deviceId, oldplot = TRUE)
+					succeded <- push.pop.and.record (which.push = n, deviceId = deviceId, this.plot.is.new = FALSE)
 				}
 			}
 			if (succeded || !force) {
@@ -274,8 +272,8 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 				#   update, only when the recording succeeds, if the recording fails, there is nothing
 				#   to "move to"..
 				
-				newPlotExists [[deviceId]] <<- newplotflag
-				if (newplotflag) gType.newplot [[deviceId]] <<- newplot.gType
+				newPlotExists [[deviceId]] <<- newplot.in.queue
+				if (newplot.in.queue) gType.newplot [[deviceId]] <<- newplot.gType
 			}
 		} else {
 			# device is not managed but due to (*) force == TRUE
@@ -288,7 +286,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 			# 
 			# in such a case, gType.newplot [[deviceId]] is non-existant
 			
-			push.pop.and.record (which.pop = 1, deviceId = NULL, newplot = TRUE)
+			push.pop.and.record (which.pop = 1, deviceId = NULL, this.plot.is.new = TRUE)
 		}
 		
 		
@@ -297,7 +295,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	recordUnsaved <- function (deviceId = dev.cur ())
 	{
 		if (newPlotExists [[as.character (deviceId)]]) {
-			record (deviceId, newplotflag = FALSE)
+			record (deviceId, newplot.in.queue = FALSE)
 		}
 	}
 	remove <- function (deviceId = dev.cur (), pos = NULL) # pos can be of length > 1
@@ -521,7 +519,7 @@ rk.record.plot <- rk.record.plot ()
 	# reason:
 	# flixibility to add a preview plot (preview device is _not_ managed) to the graphics history
 	
-	rk.record.plot$record (deviceId, newplotflag=FALSE, force=TRUE)
+	rk.record.plot$record (deviceId, newplot.in.queue=FALSE, force=TRUE)
 	rk.record.plot$printPars ()
 }
 "rk.removethis.plot" <- function (deviceId = dev.cur ())
