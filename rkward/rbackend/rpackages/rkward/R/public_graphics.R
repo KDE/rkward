@@ -48,7 +48,8 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	.rk.cat.output ("\n")	# so the output will be auto-refreshed
 	ret <- dev.off()
 	
-	# dev.off () sets dev.next () as active, which may not have been active before rk.graph.on was called; so reset the correct device as active:
+	# dev.off () sets dev.next () as active, which may not have been active before rk.graph.on was called;
+	# so reset the correct device as active:
 	i <- get (".rk.active.device", pos = "package:rkward")
 	if ((!is.null (i)) && i > 1) dev.set (i)
 	ret
@@ -78,12 +79,14 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	
 	env <- environment()
 	recorded <- list()
-	histPositions <- list("1" = 0) # 1 is always null device
-	newPlotExists <- list("1" = FALSE)
+	histPositions <- list("1" = 0)     # one element for every managed graphics device / window; 1 is always null device
+	newPlotExists <- list("1" = FALSE) # see histPositions
 	isDuplicate <- FALSE
 	isPreviewDevice <- FALSE
-	gType <- list ()
-	gType.newplot <- list ()
+	
+	# graphics types (standard / lattice / ...) for the stored / new plots
+	gType <- list ()                   # one element for every plot recorded in history, unlike histPositions and newPlotExists
+	gType.newplot <- list ()           # similar to newPlotExists, but for tracking only a subset - those which have an unsaved plot
 	
 	.set.isDuplicate <- function (x = FALSE) { isDuplicate <<- x }
 	.set.isPreviewDevice <- function (x = FALSE) { isPreviewDevice <<- x }
@@ -145,14 +148,21 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		this.plot.gType <- ""
 		recording.succeeded <- FALSE
 		
-## TODO: add comments for each sub-block
 		if (is.null (deviceId)) {
+			# call from a preview device, which is not managed; currently, 29 Aug 2010, all preview
+			# devices are created from standard graphics functions.
 			this.plot.gType <- "standard"
 			recording.succeeded <- actually.record.the.plot ()
+		
 		} else if (newplot) {
+			# when this is a new plot (unsaved yet), use gType.newplot since gType hasn't been assigned yet
+			# generally, called from plot.new () or print.trellis (); although can be called by clicking 
+			# "Add to history" icon directly as well...
 			this.plot.gType <- gType.newplot [[deviceId]]
 			recording.succeeded <- actually.record.the.plot ()
+		
 		} else {
+			# this is an old plot; surely called by clicking the "Add to history" icon
 			# see "oldplot = TRUE" block below:
 			this.plot.gType <- gType [[histPositions [[deviceId]]]]
 			recording.succeeded <- actually.record.the.plot ()
@@ -192,8 +202,8 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 				gType [[n]] <<- this.plot.gType
 				.rk.graph.history.gui ()
 				
-## TODO: update comment
-				# after a successful recording, remove ....
+				# after a successful recording, no need to keep tracking gType.newplot, it is
+				# already saved in gType and is accessible via "gType [[histPositions[[deviceId]]]]"
 				if (!is.null (deviceId)) gType.newplot [[deviceId]] <<- NULL
 				
 				return (TRUE)
@@ -212,6 +222,8 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		deviceId <- as.character (deviceId)
 		
 		isManaged <- deviceId %in% names (histPositions)
+		
+		# non-interactive devices, such as pdf (), png (), ... are returned at this stage:
 		if (!isManaged && !force) return (invisible (NULL)) # --- (*)
 		
 		cur.deviceId <- dev.cur ()
@@ -247,15 +259,21 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 					# See the comments in clearHistory () for further details.
 					
 					newPlotExists [[deviceId]] <<- TRUE
-					record (deviceId, newplotflag = FALSE, force = FALSE)
+					record (deviceId, newplotflag = FALSE, force = FALSE) # one recursion
 				} else {
 					succeded <- push.pop.and.record (which.push = n, deviceId = deviceId, oldplot = TRUE)
 				}
 			}
 			if (succeded || !force) {
-## TODO: update comment
-				# when not "force"d, if for some reason, recording did not succeed, do not alter the
-				# status (whether or not new plot exists) of the current device
+				# force == FALSE (ie call originating from plot.new () or print.trellis ()):
+				#   in such a case always update... NOTE: any failed recording is LOST.
+				#   For example: in plot(0,0); xylpot (0~0); if recording "plot(0,0)" fails then
+				#   system moves to "xyplot (0~0)" loosing the former plot
+				# 
+				# for == TRUE (ie call original from "Add to history" icon):
+				#   update, only when the recording succeeds, if the recording fails, there is nothing
+				#   to "move to"..
+				
 				newPlotExists [[deviceId]] <<- newplotflag
 				if (newplotflag) gType.newplot [[deviceId]] <<- newplot.gType
 			}
@@ -322,9 +340,9 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		}
 		
 		if (is.null (pos)) {
-## TODO: update comment
-			# pos == NULL means that ...
-			# call from: a managed device by clicking on 'Remove from history' icon
+			# pos == NULL means call originated from a managed device by clicking on 'Remove from history' icon,
+			# it does not mean that the position on the concerned device is NULL! The actual position is
+			# appropriately set below.
 			
 			if (is.null (deviceId)) stop ('Both deviceId and pos are NULL') # why should this happen ??
 			deviceId <- as.character (deviceId)
@@ -356,7 +374,6 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	}
 	replay <- function(n = histPositions [[as.character (deviceId)]] - 1L, deviceId = dev.cur ())
 	{
-## TODO: update comment?
 		# when this function is called, there are NO unsaved plots! Saving the unsaved plot is taken care off
 		# by the wrapper functions, showXxxxx (), below
 		
@@ -372,6 +389,8 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 				replayPlot (recorded[[n]])
 			} else if (gType [[n]] == "lattice") {
 				status.display <- paste (status.display, ", Call: ", deparse (recorded[[n]]$call), sep = "")
+				# (re-)plot the lattice object but, if the current window is NOT active, then do not save
+				# it to lattice:::.LatticeEnv$last.object ("trellis.last.object")
 				plot (recorded[[n]], save.object = (cur.deviceId == as.numeric (deviceId)))
 			}
 			status.display <- paste (status.display, ", Size: ", round (object.size (recorded[[n]])/1024, 2), " Kb", sep = "")
@@ -408,20 +427,19 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		isDuplicate <<- FALSE
 		isPreviewDevice <<- FALSE
 		
-## TODO: update comment:
-		# although clear history is clicked, the "+" icon is active and the displayed plot shuold be recorded
-		
+		# although the history gets cleared, the "Add to history" icon can be used to record the displayed plot
 		for (dev_num in names (histPositions)[-1]) {
-			# if the displayed plot is not new, save its type from gType, else leave gType.newplot unchaged
-			# IMP: this part has to come before resetting histPositions and newPlotExists.
+			# if the displayed plot is not new, save its type from gType, else leave gType.newplot unchaged;
+			# obviously, this part has to come before resetting histPositions and newPlotExists.
 			if (!newPlotExists [[dev_num]])
 				gType.newplot [[dev_num]] <<- gType [[histPositions[[dev_num]]]]
 			
 			histPositions[[dev_num]] <<- 0
 			newPlotExists [[dev_num]] <<- FALSE
 		}
-		gType <<- list () # IMP: reset gType only AFTER the for loop
-		# DO NOT reset gType.newplot list at all
+		# reset gType now (after gType.newplot has been re-created);
+		# NEVER reset gType.newplot
+		gType <<- list ()
 		.rk.graph.history.gui ()
 	}
 	printPars <- function ()
