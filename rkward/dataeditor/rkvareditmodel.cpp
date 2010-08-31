@@ -823,7 +823,7 @@ void RKVarEditDataFrameModel::objectRemoved (RObject* object) {
 	RK_TRACE (EDITOR);
 
 	if (object == dataframe) {
-		while (!objects.isEmpty ()) RKVarEditModel::objectRemoved (objects[0]);
+		while (!objects.isEmpty ()) RKVarEditModel::objectRemoved (objects.last());		// NOTE: The rownames object (index position 0) must always go away last!
 		stopListenForObject (dataframe);
 		dataframe = 0;
 	}
