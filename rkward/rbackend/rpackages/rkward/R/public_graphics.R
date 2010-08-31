@@ -471,21 +471,23 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	.get.plot.info.str <- function (deviceId = dev.cur ())
 	{
 		deviceId <- as.character (deviceId)
+		if (!deviceId %in% names (histPositions)) return ("Preview devices is not managed.")
+		
 		if (newPlotExists [[deviceId]]) {
-			info.str <- paste ("Dev: ", deviceId, ", Pos: ?, Size: ?, Type: ", gType.newplot [[deviceId]], sep = "")
+			info.str <- paste ("Device: ", deviceId, ", Position: ?, Size: ?\nType: ", gType.newplot [[deviceId]], sep = "")
 		} else {
 			# else if (!is.null (histPositions [[deviceId]]))?
-			info.str <- paste ("Dev: ", deviceId, 
-				", Pos: ", histPositions [[deviceId]], 
-				", Size: ", round (object.size (recorded [[histPositions [[deviceId]]]])/1024, 2), " KB",
-				", Call: ", .get.oldplot.call (deviceId), sep = "")
+			info.str <- paste ("Device: ", deviceId, 
+				", Position: ", histPositions [[deviceId]], 
+				", Size (KB): ", round (object.size (recorded [[histPositions [[deviceId]]]])/1024, 2),
+				"\nCall: ", .get.oldplot.call (deviceId), sep = "")
 		} # else info.str <- NULL
 		info.str
 	}
 	showPlotInfo <- function (deviceId = dev.cur ())
 	{
 		## TODO: update to either a proper message box, or move to a 'status bar'
-		readline (prompt = .get.plot.info.str (deviceId))
+		system (paste ("kdialog --msgbox \"", .get.plot.info.str (deviceId), "\" --title \"Plot properties\" --icon rkward", sep = ""), wait = FALSE)
 	}
 	.verify.hist.limits <- function ()
 	{
@@ -496,8 +498,13 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		ans <- 'no'
 		if (len.max < len.r) {
 			## TODO: implement using rk.ask.yesnocancel ()
-			ans <- readline (paste ('Current screen history has more plots than the maximum number chosen. ',len.r - len.max,' of the foremost plots will be removed.\nIf you want to continue type [y]es. Instead, if you prefer to remove them yourself type [n]o or hit Cancel.', sep = ''))
-			if (tolower(ans) %in% c('y', 'yes'))
+			ans <- as.numeric (system (paste ("kdialog --warningcontinuecancel ",
+				"\"Current screen history has more plots than the maximum number specified in the settings. ",
+				len.r - len.max," of the foremost plots will be removed.",
+				"\n\nIf you agree hit Continue.",
+				"\nIf you prefer to remove them yourself hit Cancel.\"",
+				" --title \"Plot history length\" --icon rkward; echo $?", sep = ""), intern = TRUE))
+			if (ans == 0)
 				remove (deviceId = NULL, pos = 1:(len.r - len.max))
 		}
 		
