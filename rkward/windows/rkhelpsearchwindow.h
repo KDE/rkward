@@ -2,7 +2,7 @@
                           rkhelpsearchwindow  -  description
                              -------------------
     begin                : Fri Feb 25 2005
-    copyright            : (C) 2005, 2006, 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -30,7 +30,7 @@ class QCheckBox;
 class QPushButton;
 class RKHelpSearchResultsModel;
 class QTreeView;
-
+class QSortFilterProxyModel;
 class RCommandChain;
 
 /** Provides a UI interface for help-search.
@@ -64,6 +64,7 @@ private:
 	QPushButton* findButton;
 	QTreeView* results_view;
 	RKHelpSearchResultsModel* results;
+	QSortFilterProxyModel* proxy_model;
 
 friend class RKWardMainWindow;
 	static RKHelpSearchWindow *main_help_search;

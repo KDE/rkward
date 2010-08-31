@@ -122,7 +122,7 @@ RKHelpSearchWindow::RKHelpSearchWindow (QWidget *parent, bool tool_window, const
 	selection_layout->addWidget (findButton);
 
 	results = new RKHelpSearchResultsModel (this);
-	QSortFilterProxyModel *proxy_model = new QSortFilterProxyModel (this);
+	proxy_model = new QSortFilterProxyModel (this);
 	proxy_model->setSourceModel (results);
 	results_view = new QTreeView (this);
 	results_view->setRootIsDecorated (false);
@@ -208,7 +208,7 @@ void RKHelpSearchWindow::resultDoubleClicked (const QModelIndex& index) {
 
 	if (!index.isValid ()) return;
 
-	int row = index.row ();
+	int row = proxy_model->mapToSource (index).row ();
 	QString topic = results->data (results->index (row, COL_TOPIC)).toString ();
 	QString package = results->data (results->index (row, COL_PACKAGE)).toString ();
 	if (topic.isEmpty ()) return;
