@@ -40,21 +40,21 @@ function doPrintout (full) {
 	}
 	echo ('try (boxplot (data_list, notch = ' + getValue ("notch") + ', outline = ' + getValue("outline") + ', horizontal = ' + getValue("orientation") + getValue ("plotoptions.code.printout") + ')) #actuall boxplot function\n');
 	if ((mean == "TRUE") && (horizontal == "TRUE")) {
-		echo ('	try (points(1:length(data_list) ~ apply(data.frame(' + xvarsstring + '),2,mean,na.rm = TRUE),pch=' + pch_mean + ', cex = ' + getValue ("cex_sd_mean") + getValue ("sd_mean_color.code.printout") + ')) #calculates the mean for all data and adds a point at the corresponding position\n');
+		echo ('	try (points(1:length(data_list) ~ sapply(data_list,mean,na.rm = TRUE),pch=' + pch_mean + ', cex = ' + getValue ("cex_sd_mean") + getValue ("sd_mean_color.code.printout") + ')) #calculates the mean for all data and adds a point at the corresponding position\n');
 	}
 	if ((mean == "TRUE") && (horizontal == "FALSE")) {
-		echo ('	try (points(apply(data.frame(' + xvarsstring + '),2,mean,na.rm = TRUE),pch=' + pch_mean + ', cex = ' + getValue ("cex_sd_mean") + getValue ("sd_mean_color.code.printout") + ')) #calculates the mean for all data and adds a point at the corresponding position\n');
+		echo ('	try (points(sapply(data_list,mean,na.rm = TRUE),pch=' + pch_mean + ', cex = ' + getValue ("cex_sd_mean") + getValue ("sd_mean_color.code.printout") + ')) #calculates the mean for all data and adds a point at the corresponding position\n');
 	}
 
 	if ((sd == "TRUE") && (horizontal == "FALSE")) {
-		echo ('	sd_low <- (apply(data.frame(' + xvarsstring + '),2,mean,na.rm = TRUE)) - (apply(data.frame(' + xvarsstring + '),2,sd,na.rm = TRUE))\n');
-		echo ('	sd_high <- (apply(data.frame(' + xvarsstring + '),2,mean,na.rm = TRUE)) + (apply(data.frame(' + xvarsstring + '),2,sd,na.rm = TRUE))\n');
+		echo ('	sd_low <- (sapply(data_list,mean,na.rm = TRUE)) - (sapply(data_list,sd,na.rm = TRUE))\n');
+		echo ('	sd_high <- (sapply(data_list,mean,na.rm = TRUE)) + (sapply(data_list,sd,na.rm = TRUE))\n');
 		echo ('	points(sd_low,pch=' + pch_sd_low + ', cex = ' + getValue ("cex_sd_mean") + getValue ("sd_mean_color.code.printout") + ')\n');
 		echo ('	points(sd_high,pch=' + pch_sd_high + ', cex = ' + getValue ("cex_sd_mean") + getValue ("sd_mean_color.code.printout") + ')\n');
 	}
 	if ((sd == "TRUE") && (horizontal == "TRUE")) {
-		echo ('	sd_low <- (apply(data.frame(' + xvarsstring + '),2,mean,na.rm = TRUE)) - (apply(data.frame(' + xvarsstring + '),2,sd,na.rm = TRUE))\n');
-		echo ('	sd_high <- (apply(data.frame(' + xvarsstring + '),2,mean,na.rm = TRUE)) + (apply(data.frame(' + xvarsstring + '),2,sd,na.rm = TRUE))\n');
+		echo ('	sd_low <- (sapply(data_list,mean,na.rm = TRUE)) - (sapply(data_list,sd,na.rm = TRUE))\n');
+		echo ('	sd_high <- (sapply(data_list,mean,na.rm = TRUE)) + (sapply(data_list,sd,na.rm = TRUE))\n');
 		echo ('	points(1:length(data_list) ~ sd_low,pch=' + pch_sd_low + ', cex = ' + getValue ("cex_sd_mean") + getValue ("sd_mean_color.code.printout") + ')\n');
 		echo ('	points(1:length(data_list) ~ sd_high,pch=' + pch_sd_high + ', cex = ' + getValue ("cex_sd_mean") + getValue ("sd_mean_color.code.printout") + ')\n');
 	}
