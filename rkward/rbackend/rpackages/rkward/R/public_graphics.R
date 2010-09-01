@@ -461,15 +461,50 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		}
 		invisible (NULL)
 	}
+	.get.oldplot.call.std <- function (deviceId)
+	{
+		# rp <- recordPlot () is a nested pairlist object (of class "recordedplot"):
+		# rp[[1]] is the "meta data", rp[[2]] is always raw,
+		# We then figure out the relevant stuff from rp[[1]]. Use "str (rp)" for details.
+		# Currently, only main, xlab, and ylab meta data can be extracted, unambiguously.
+		# The high level calls are not part of the meta data, only the low level .Internal
+		#   calls are stored: Eg: .Primitive (plot.xy), .Primitive (rect), .Primitive (persp), etc...
+		
+		# .f. identifies which element in rp[[1]] contains title (=main,sub,xlab,ylab) information:
+		# differs from call to call. Eg: for plot () calls this is 7, for hist () this is 3, ...
+		.f. <- function ()
+			which (lapply (recorded [[histPositions [[deviceId]]]][[1]], FUN = function (x) x[[1]]) == ".Primitive(\"title\")")
+		# Sometimes there is no title information at all - happens when the high level calling function
+		#   does not specifically provide any of main/sub/xlab/ylab arguemnts: Eg: persp (...)
+		
+		.x. <- list (main = "", xlab = "", ylab = "")
+		
+		# when present, rp [[1]] [[.n.]] [[2]] contains main, sub, xlab, ylab, etc.
+		.n. <- .f. ()
+		if (length (.n.) > 0)
+			.x. [c ("main", "xlab", "ylab")] <- recorded [[histPositions [[deviceId]]]] [[1]] [[.n.]] [[2]] [c(1,3,4)]
+		
+		# single quotes are used becuase kdialog in showPlotInfo needs double quotes
+		paste ("Main: '", .x.$main, "'; X label: '", .x.$xlab, "'; Y label: '", .x.$ylab, "'", sep = "")
+	}
+	.get.oldplot.call.lattice <- function (deviceId)
+	{
+		# trellis objects contain a call object which is the best meta data possible!
+		# If needed, main/xlab/ylab can be extracted as well.
+		paste ("Call: ", deparse (recorded [[histPositions [[deviceId]]]]$call), sep = "")
+	}
 	.get.oldplot.call <- function (deviceId)
 	{
+		# this can be easily extended to more types
 		switch (gType [[histPositions [[deviceId]]]],
-			standard = "\"standard graphics\"",
-			lattice = deparse (recorded [[histPositions [[deviceId]]]]$call),
+			standard = .get.oldplot.call.std (deviceId),
+			lattice = .get.oldplot.call.lattice (deviceId),
 			"Unknown")
 	}
 	.get.plot.info.str <- function (deviceId = dev.cur ())
 	{
+		# if needed a 'timestamp' field can be stored while recording, which can then be used here
+		
 		deviceId <- as.character (deviceId)
 		if (!deviceId %in% names (histPositions)) return ("Preview devices is not managed.")
 		
@@ -480,7 +515,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 			info.str <- paste ("Device: ", deviceId, 
 				", Position: ", histPositions [[deviceId]], 
 				", Size (KB): ", round (object.size (recorded [[histPositions [[deviceId]]]])/1024, 2),
-				"\nCall: ", .get.oldplot.call (deviceId), sep = "")
+				"\n", .get.oldplot.call (deviceId), sep = "")
 		} # else info.str <- NULL
 		info.str
 	}
