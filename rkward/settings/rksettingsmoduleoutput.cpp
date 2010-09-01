@@ -182,7 +182,7 @@ void RKSettingsModuleOutput::loadSettings (KConfig *config) {
 	graphics_height = cg.readEntry ("graphics_height", 480);
 	graphics_jpg_quality = cg.readEntry ("graphics_jpg_quality", 75);
 	graphics_hist_max_length = cg.readEntry ("graphics_hist_max_length", 20);
-	graphics_hist_max_plotsize = cg.readEntry ("graphics_hist_max_plotsize", 52);
+	graphics_hist_max_plotsize = cg.readEntry ("graphics_hist_max_plotsize", 1024);
 }
 
 //static
