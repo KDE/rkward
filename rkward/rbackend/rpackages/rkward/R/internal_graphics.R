@@ -109,4 +109,14 @@ formals (dev.off) <- formals (grDevices::dev.off)
 				invisible ()
 			})
 	)
+	
+	## persp does not call plot.new (), so set a hook. Fortunately, the hook is placed after drawing the plot.
+	setHook ("persp",
+		function (...)
+		{
+			if (dev.cur() == 1) rk.screen.device ()
+			rk.record.plot$record (newplot.gType = 'standard')
+		},
+		action = "append"
+	)
 }
