@@ -30,6 +30,8 @@ Bugs:
 			- more precisely: seems to happen after scrolling
 			- no idea, why this happens
 	- Quitting via q() in the R console will often lead to a segfault during shutdown
+	- "seq", used in the wrapper script, is not always available on MacOS (and perhaps elsewhere)
+	- options ("pager") is currently broken in RKWard. May not be a problem, but we offer a GUI to configure it in Settings->Configure RKWard...
 
 Compilation / technical
 	- Incorporate FreeBSD patches http://www.freshports.org/math/rkward/files.php?message_id=200609172111.k8HLBiob081349@repoman.freebsd.org
