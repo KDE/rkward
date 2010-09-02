@@ -124,6 +124,7 @@ bool repldll_last_parse_successful = false;
 
 SEXP RKWard_RData_Tag;
 QString *SEXPToStringList (SEXP from_exp, unsigned int *count);
+QString SEXPToString (SEXP from_exp);
 int *SEXPToIntArray (SEXP from_exp, unsigned int *count);
 
 // ############## R Standard callback overrides BEGIN ####################
@@ -136,34 +137,6 @@ void RSuicide (const char* message) {
 	REmbedInternal::this_pointer->handleStandardCallback (&args);
 	REmbedInternal::this_pointer->shutdown (true);
 	Rf_error ("Backend dead");	// this jumps us out of the REPL.
-}
-
-void RShowMessage (const char* message) {
-	RK_TRACE (RBACKEND);
-
-	RCallbackArgs args;
-	args.type = RCallbackArgs::RShowMessage;
-	args.params["message"] = QVariant (message);
-	REmbedInternal::this_pointer->handleStandardCallback (&args);
-}
-
-// TODO: currently used on windows, only!
-/* FROM R_ext/RStartup.h: "Return value here is expected to be 1 for Yes, -1 for No and 0 for Cancel:
-   symbolic constants in graphapp.h" */
-int RAskYesNoCancel (const char* message) {
-	RK_TRACE (RBACKEND);
-
-	RCallbackArgs args;
-	args.type = RCallbackArgs::RShowMessage;
-	args.params["message"] = QVariant (message);
-	args.params["askync"] = QVariant (true);
-
-	REmbedInternal::this_pointer->handleStandardCallback (&args);
-
-	QString ret = args.params["result"].toString ();
-	if (ret == "yes") return 1;
-	if (ret == "no") return -1;
-	return 0;
 }
 
 int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) {
@@ -378,6 +351,50 @@ int RShowFiles (int nfile, const char **file, const char **headers, const char *
 	return 1;
 }
 
+/* FROM R_ext/RStartup.h: "Return value here is expected to be 1 for Yes, -1 for No and 0 for Cancel:
+   symbolic constants in graphapp.h" */
+int doDialogHelper (QString caption, QString message, QString button_yes, QString button_no, QString button_cancel) {
+	RK_TRACE (RBACKEND);
+
+	RCallbackArgs args;
+	args.type = RCallbackArgs::RShowMessage;
+	args.params["caption"] = QVariant (caption);
+	args.params["message"] = QVariant (message);
+	args.params["button_yes"] = QVariant (button_yes);
+	args.params["button_no"] = QVariant (button_no);
+	args.params["button_cancel"] = QVariant (button_cancel);
+	
+	REmbedInternal::this_pointer->handleStandardCallback (&args);
+
+	QString ret = args.params["result"].toString ();
+	if (ret == "yes") return 1;
+	if (ret == "no") return -1;
+	return 0;
+}
+
+SEXP doDialog (SEXP caption, SEXP message, SEXP button_yes, SEXP button_no, SEXP button_cancel) {
+	RK_TRACE (RBACKEND);
+
+	int result = doDialogHelper (SEXPToString (caption), SEXPToString (message), SEXPToString (button_yes), SEXPToString (button_no), SEXPToString (button_cancel));
+
+	SEXP ret = Rf_allocVector(INTSXP, 1);
+	INTEGER (ret)[0] = result;
+	return ret;
+}
+
+void RShowMessage (const char* message) {
+	RK_TRACE (RBACKEND);
+
+	doDialogHelper (i18n ("Message from the R backend"), message, "ok", QString (), QString ());
+}
+
+// TODO: currently used on windows, only!
+int RAskYesNoCancel (const char* message) {
+	RK_TRACE (RBACKEND);
+
+	return doDialogHelper (i18n ("Question from the R backend"), message, "yes", "no", "cancel");
+}
+
 void RBusy (int busy) {
 	RK_TRACE (RBACKEND);
 
@@ -517,6 +534,20 @@ void REmbedInternal::processX11Events () {
 
 // In case an error (or user interrupt) is caught inside processX11EventsWorker, we don't want to long-jump out.
 	R_ToplevelExec (processX11EventsWorker, 0);
+}
+
+// converts SEXP to strings, and returns the first string (or QString(), if SEXP contains no strings)
+QString SEXPToString (SEXP from_exp) {
+	RK_TRACE (RBACKEND);
+
+	QString ret;
+
+	unsigned int count;
+	QString *list = SEXPToStringList (from_exp, &count);
+
+	if (count >= 1) ret = list[0];
+	delete [] list;
+	return ret;
 }
 
 QString *SEXPToStringList (SEXP from_exp, unsigned int *count) {
@@ -826,6 +857,7 @@ bool REmbedInternal::startR (int argc, char** argv, bool stack_check) {
 		{ "rk.copy.no.eval", (DL_FUNC) &doCopyNoEval, 3 },
 		{ "rk.edit.files", (DL_FUNC) &doEditFiles, 3 },
 		{ "rk.show.files", (DL_FUNC) &doShowFiles, 4 },
+		{ "rk.dialog", (DL_FUNC) &doDialog, 5 },
 		{ "rk.update.locale", (DL_FUNC) &doUpdateLocale, 0 },
 		{ "rk.locale.name", (DL_FUNC) &doLocaleName, 0 },
 		{ 0, 0, 0 }

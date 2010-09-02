@@ -482,14 +482,35 @@ void RInterface::processRCallbackRequest (RCallbackArgs *args) {
 	RCallbackArgs::RCallbackType type = args->type;
 
 	if (type == RCallbackArgs::RShowMessage) {
-		if (args->params.value ("askync").toBool ()) {
-			int res = KMessageBox::questionYesNoCancel (0, args->params["message"].toString (), i18n ("Question from the R backend"));
-			if (res == KMessageBox::Yes) args->params["result"] = "yes";
-			else if (res == KMessageBox::No) args->params["result"] = "no";
-			// else: cancel
-		} else {
-			KMessageBox::information (0, args->params["message"].toString (), i18n ("Message from the R backend"));
+		QString caption = args->params["caption"].toString ();
+		QString message = args->params["message"].toString ();
+		QString button_yes = args->params["button_yes"].toString ();;
+		QString button_no = args->params["button_no"].toString ();;
+		QString button_cancel = args->params["button_cancel"].toString ();;
+
+		KGuiItem button_yes_item = KStandardGuiItem::yes ();
+		if (button_yes != "yes") button_yes_item.setText (button_yes);
+		KGuiItem button_no_item = KStandardGuiItem::no ();
+		if (button_no != "no") button_no_item.setText (button_no);
+		KGuiItem button_cancel_item = KStandardGuiItem::cancel ();
+		if (button_cancel != "cancel") button_cancel_item.setText (button_cancel);
+
+		KMessageBox::DialogType dialog_type = KMessageBox::QuestionYesNoCancel;
+		if (button_cancel.isEmpty ()) dialog_type = KMessageBox::QuestionYesNo;
+		if (button_no.isEmpty () && button_cancel.isEmpty ()) {
+			if (button_yes == "ok") button_yes_item = KStandardGuiItem::ok ();
+			dialog_type = KMessageBox::Information;
 		}
+
+		int result = KMessageBox::messageBox (0, dialog_type, message, caption, button_yes_item, button_no_item, button_cancel_item);
+
+		QString result_string;
+		if ((result == KMessageBox::Yes) || (result == KMessageBox::Ok)) result_string = "yes";
+		else if (result == KMessageBox::No) result_string = "no";
+		else if (result == KMessageBox::Cancel) result_string = "cancel";
+		else RK_ASSERT (false);
+
+		args->params["result"] = result_string;
 	} else if (type == RCallbackArgs::RReadLine) {
 		QString result;
 

@@ -416,3 +416,16 @@
 
 	.rk.do.call ("select.list", params)
 }
+
+"rk.show.message" <- function (message, caption = "Information") {
+	.Call ("rk.dialog", caption, message, "ok", "", "")
+	invisible (TRUE)
+}
+
+# to disable a button, set it to ""
+"rk.show.question" <- function (message, caption = "Question", button.yes = "yes", button.no = "no", button.cancel = "cancel") {
+	res <- .Call ("rk.dialog", caption, message, button.yes, button.no, button.cancel)
+	if (res > 0) return (TRUE)
+	else if (res < 0) return (FALSE)
+	else return (NULL)	# cancelled
+}

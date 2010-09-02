@@ -521,7 +521,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	showPlotInfo <- function (deviceId = dev.cur ())
 	{
 		## TODO: update to either a proper message box, or move to a 'status bar'
-		system (paste ("kdialog --msgbox \"", .get.plot.info.str (deviceId), "\" --title \"Plot properties\" --icon rkward", sep = ""), wait = FALSE)
+		rk.show.message (.get.plot.info.str (deviceId), caption = "Plot properties")
 	}
 	.verify.hist.limits <- function ()
 	{
