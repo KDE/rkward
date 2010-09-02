@@ -188,7 +188,6 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 				if (len.r < ml) {
 					n <- len.r + 1
 				} else if (len.r == ml) {
-					warning ('Max length reached, popping out the first plot.')
 					remove (deviceId = NULL, pos = which.pop)
 					n <- len.r
 				} else {

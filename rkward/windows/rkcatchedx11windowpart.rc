@@ -42,16 +42,10 @@
 		<Separator/>
 		<Action name="device_copy_to_output"/>
 		<Separator/>
-		<Action name="plot_first"/>
 		<Action name="plot_prev"/>
 		<Action name="plot_next"/>
-		<Action name="plot_last"/>
 		<Separator/>
 		<Action name="plot_record"/>
 		<Action name="plot_remove"/>
-		<Separator/>
-		<Action name="plot_clear_history"/>
-		<Separator/>
-		<Action name="device_properties"/>
 	</ToolBar>
 </kpartgui>
