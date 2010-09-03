@@ -751,6 +751,8 @@ RKFunctionArgHinter::~RKFunctionArgHinter () {
 void RKFunctionArgHinter::tryArgHint () {
 	RK_TRACE (COMMANDEDITOR);
 
+	if (!RKSettingsModuleCommandEditor::argHintingEnabled ()) return;
+
 	// do this in the next event cycle to make sure any inserted characters have truly been inserted
 	QTimer::singleShot (0, this, SLOT (tryArgHintNow ()));
 }

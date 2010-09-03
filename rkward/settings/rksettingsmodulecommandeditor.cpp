@@ -35,6 +35,7 @@
 int RKSettingsModuleCommandEditor::completion_min_chars;
 int RKSettingsModuleCommandEditor::completion_timeout;
 bool RKSettingsModuleCommandEditor::completion_enabled;
+bool RKSettingsModuleCommandEditor::arghinting_enabled;
 bool RKSettingsModuleCommandEditor::autosave_enabled;
 bool RKSettingsModuleCommandEditor::autosave_keep;
 int RKSettingsModuleCommandEditor::autosave_interval;
@@ -76,6 +77,11 @@ RKSettingsModuleCommandEditor::RKSettingsModuleCommandEditor (RKSettings *gui, Q
 	box_layout->addWidget (completion_timeout_box);
 
 	main_vbox->addWidget (group);
+
+	arghinting_enabled_box = new QCheckBox (i18n ("Enable function argument hinting"), group);
+	arghinting_enabled_box->setChecked (arghinting_enabled);
+	connect (arghinting_enabled_box, SIGNAL (stateChanged(int)), this, SLOT (settingChanged()));
+	main_vbox->addWidget (arghinting_enabled_box);
 
 	main_vbox->addSpacing (2 * RKGlobals::spacingHint ());
 
@@ -138,6 +144,7 @@ void RKSettingsModuleCommandEditor::applyChanges () {
 	completion_enabled = completion_enabled_box->isChecked ();
 	completion_min_chars = completion_min_chars_box->intValue ();
 	completion_timeout = completion_timeout_box->intValue ();
+	arghinting_enabled = arghinting_enabled_box->isChecked ();
 
 	autosave_enabled = autosave_enabled_box->isChecked ();
 	autosave_keep = autosave_keep_box->isChecked ();
@@ -159,6 +166,7 @@ void RKSettingsModuleCommandEditor::saveSettings (KConfig *config) {
 	cg.writeEntry ("Completion enabled", completion_enabled);
 	cg.writeEntry ("Completion min chars", completion_min_chars);
 	cg.writeEntry ("Completion timeout", completion_timeout);
+	cg.writeEntry ("Argument hinting enabled", arghinting_enabled);
 
 	cg.writeEntry ("Autosave enabled", autosave_enabled);
 	cg.writeEntry ("Autosave keep saves", autosave_keep);
@@ -173,6 +181,7 @@ void RKSettingsModuleCommandEditor::loadSettings (KConfig *config) {
 	completion_enabled = cg.readEntry ("Completion enabled", true);
 	completion_min_chars = cg.readEntry ("Completion min chars", 2);
 	completion_timeout = cg.readEntry ("Completion timeout", 500);
+	arghinting_enabled = cg.readEntry ("Argument hinting enabled", true);
 
 	autosave_enabled = cg.readEntry ("Autosave enabled", true);
 	autosave_keep = cg.readEntry ("Autosave keep saves", false);

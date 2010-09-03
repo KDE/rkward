@@ -49,6 +49,7 @@ public:
 	static int completionMinChars () { return completion_min_chars; };
 	static int completionTimeout () { return completion_timeout; };
 	static bool completionEnabled () { return completion_enabled; };
+	static bool argHintingEnabled () { return arghinting_enabled; };
 
 	static bool autosaveEnabled () { return autosave_enabled; };
 	static bool autosaveKeep () { return autosave_keep; };
@@ -60,10 +61,12 @@ private:
 	static int completion_min_chars;
 	static int completion_timeout;
 	static bool completion_enabled;
+	static bool arghinting_enabled;
 
 	RKSpinBox* completion_min_chars_box;
 	RKSpinBox* completion_timeout_box;
 	QCheckBox* completion_enabled_box;
+	QCheckBox* arghinting_enabled_box;
 
 	static bool autosave_enabled;
 	static bool autosave_keep;
