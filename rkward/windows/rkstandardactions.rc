@@ -37,7 +37,7 @@
 		<Action name="function_reference" group="ktexteditor_popup_merge2"/>
 	</Menu>
 	<Menu name="rkconsole_context_menu">
-		<Action name="paste_special" group="edit_paste_merge"/>
+		<Action name="paste_special" group="rkconsole_context_merge_paste"/>
 		<Action name="run_selection" group="rkconsole_context_merge1"/>
 		<Action name="function_reference" group="rkconsole_context_merge2"/>
 	</Menu>

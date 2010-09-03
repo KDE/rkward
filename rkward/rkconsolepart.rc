@@ -7,10 +7,20 @@
 			<Action name="file_export_html"/>
 		</Menu>
 		<Menu name="edit"><text>&amp;Edit</text>
+<!-- Something strange is going on, here. When using the commented version, after switching
+a few times between console and script editor, the Edit menu will start to become shuffled.
+Probably a kdelibs bug (4.4.4).
+
+The uncommented version is not quite correct (the "paste special" action will be misplaced),
+but avoids the total derangement of the edit menu over time.
 			<Action name="rkconsole_copy" group="edit_paste_merge"/>
 			<Action name="rkconsole_copy_literal" group="edit_paste_merge"/>
 			<Action name="rkconsole_paste" group="edit_paste_merge"/>
-			<DefineGroup name="edit_paste_merge" append="edit_paste_merge"/>
+			<Separator/>
+			<Action name="rkconsole_clear"/> -->
+			<Action name="rkconsole_copy"/>
+			<Action name="rkconsole_copy_literal"/>
+			<Action name="rkconsole_paste"/>
 			<Separator/>
 			<Action name="rkconsole_clear"/>
 		</Menu>
@@ -33,7 +43,7 @@
 		<Action name="rkconsole_copy"/>
 		<Action name="rkconsole_copy_literal"/>
 		<Action name="rkconsole_paste"/>
-		<DefineGroup name="edit_paste_merge" />
+		<DefineGroup name="rkconsole_context_merge_paste" />
 		<Separator/>
 		<DefineGroup name="rkconsole_context_merge1"/>
 		<Action name="interrupt"/>
