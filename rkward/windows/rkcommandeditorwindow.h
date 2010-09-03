@@ -22,12 +22,18 @@
 #include <QTimer>
 #include <QString>
 
+#include <kdeversion.h>
 #include <ktexteditor/view.h>
 #include <ktexteditor/document.h>
 #include <ktexteditor/codecompletionmodel.h>
 #include <ktexteditor/codecompletioninterface.h>
-#include <ktexteditor/smartrange.h>
-#include <ktexteditor/smartinterface.h>
+#if KDE_IS_VERSION(4,5,0)
+#	include <ktexteditor/movingrange.h>
+#	include <ktexteditor/movinginterface.h>
+#else
+#	include <ktexteditor/smartrange.h>
+#	include <ktexteditor/smartinterface.h>
+#endif
 #include <kurl.h>
 
 #include "../windows/rkmdiwindow.h"
@@ -212,7 +218,11 @@ private:
 	KTextEditor::Document *m_doc;
 	KTextEditor::View *m_view;
 	KTextEditor::CodeCompletionInterface *cc_iface;
+#if KDE_IS_VERSION(4,5,0)
+	KTextEditor::MovingInterface *smart_iface;
+#else
 	KTextEditor::SmartInterface *smart_iface;
+#endif
 	RKFunctionArgHinter *hinter;
 	RKCodeCompletionModel *completion_model;
 
@@ -223,7 +233,11 @@ private:
 	void initializeActions (KActionCollection* ac);
 
 	struct BlockRecord {
+#if KDE_IS_VERSION(4,5,0)
+		KTextEditor::MovingRange* range;
+#else
 		KTextEditor::SmartRange* range;
+#endif
 		bool active;
 		KTextEditor::Attribute::Ptr attribute;
 		KAction* mark;

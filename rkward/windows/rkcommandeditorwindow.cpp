@@ -138,7 +138,11 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 		hinter = new RKFunctionArgHinter (this, m_view);
 	}
 
+#if KDE_IS_VERSION(4,5,0)
+	smart_iface = qobject_cast<KTextEditor::MovingInterface*> (m_doc);
+#else
 	smart_iface = qobject_cast<KTextEditor::SmartInterface*> (m_doc);
+#endif
 	initBlocks ();
 	RK_ASSERT (smart_iface);
 
@@ -251,6 +255,10 @@ void RKCommandEditorWindow::initBlocks () {
 		record.run->setIcon (icon);
 		record.run->setData (i);
 		actionmenu_run_block->addAction (record.run);
+
+		// these two not strictly needed due to removeBlock(), below. Silences a GCC warning, however.
+		record.range = 0;
+		record.active = false;
 
 		block_records.append (record);
 		removeBlock (i, true);	// initialize to empty
@@ -659,8 +667,13 @@ void RKCommandEditorWindow::addBlock (int index, const KTextEditor::Range& range
 	clearUnusedBlocks ();
 	removeBlock (index);
 
+#if KDE_IS_VERSION(4,5,0)
+	KTextEditor::MovingRange* srange = smart_iface->newMovingRange (range);
+	srange->setInsertBehaviors (KTextEditor::MovingRange::ExpandRight);
+#else
 	KTextEditor::SmartRange* srange = smart_iface->newSmartRange (range);
 	srange->setInsertBehavior (KTextEditor::SmartRange::ExpandRight);
+#endif
 
 	QString actiontext = i18n ("%1 (Active)", index + 1);
 	block_records[index].range = srange;
@@ -672,7 +685,9 @@ void RKCommandEditorWindow::addBlock (int index, const KTextEditor::Range& range
 	block_records[index].run->setText (actiontext);
 	block_records[index].run->setEnabled (true);
 
+#if !KDE_IS_VERSION(4,5,0)
 	smart_iface->addHighlightToView (m_view, srange);
+#endif
 }
 
 void RKCommandEditorWindow::removeBlock (int index, bool was_deleted) {
@@ -681,7 +696,9 @@ void RKCommandEditorWindow::removeBlock (int index, bool was_deleted) {
 	RK_ASSERT ((index >= 0) && (index < block_records.size ()));
 
 	if (!was_deleted) {
+#if !KDE_IS_VERSION(4,5,0)
 		smart_iface->removeHighlightFromView (m_view, block_records[index].range);
+#endif
 		delete (block_records[index].range);
 	}
 
