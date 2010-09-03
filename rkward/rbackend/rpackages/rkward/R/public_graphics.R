@@ -235,8 +235,8 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 			# length (n) can be > 1: see .verify.hist.limits ()
 			
 			len.n <- length (n)
-			recorded[[n]] <<- NULL
-			gType[[n]] <<- NULL
+			recorded[n] <<- NULL
+			gType[n] <<- NULL
 			len.r <- length (recorded)
 			
 			printPars () # DEBUG
@@ -445,14 +445,9 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		
 		ans <- 'no'
 		if (len.max < len.r) {
-			## TODO: implement using rk.ask.yesnocancel ()
-			ans <- as.numeric (system (paste ("kdialog --warningcontinuecancel ",
-				"\"Current screen history has more plots than the maximum number specified in the settings. ",
-				len.r - len.max," of the foremost plots will be removed.",
-				"\n\nIf you agree hit Continue.",
-				"\nIf you prefer to remove them yourself hit Cancel.\"",
-				" --title \"Plot history length\" --icon rkward; echo $?", sep = ""), intern = TRUE))
-			if (ans == 0)
+			ans <- rk.show.question (paste ("Current plot history has more plots than the maximum number specified in the settings.\n",
+				10 - 5, " of the foremost plots will be removed.\n\nDo you want to Continue?", sep =""))
+			if (!is.null(ans) && ans)
 				remove (deviceId = NULL, pos = 1:(len.r - len.max))
 		}
 		
