@@ -184,7 +184,7 @@ private:
 	KAction *plot_replaceby_action;
 	KAction *plot_remove_action;
 	KAction *plot_clear_history_action;
-	KAction *device_properties_action;
+	KAction *plot_properties_action;
 
 	KPassivePopup* status_popup;
 	RCommand* status_change_command;

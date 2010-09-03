@@ -417,7 +417,7 @@ void RKCaughtX11Window::lastPlot () {
 void RKCaughtX11Window::replacebyCurrentPlot () {
 	RK_TRACE (MISC);
 
-	RKGlobals::rInterface ()->issueCommand ("rk.replaceby.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Replace previous plot by the current plot (device number %1)", device_number), error_dialog);
+	RKGlobals::rInterface ()->issueCommand ("rk.replaceby.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Overwrite previous plot by the current plot (device number %1)", device_number), error_dialog);
 	//updateHistoryActions (history_length+1, history_length+1);
 }
 
@@ -439,7 +439,7 @@ void RKCaughtX11Window::clearHistory () {
 void RKCaughtX11Window::showPlotInfo () {
 	RK_TRACE (MISC);
 
-	RKGlobals::rInterface ()->issueCommand ("rk.record.plot$showPlotInfo (" + QString::number (device_number) + ")", RCommand::App, i18n ("Device properties (device number %1)", device_number), error_dialog);
+	RKGlobals::rInterface ()->issueCommand ("rk.record.plot$showPlotInfo (" + QString::number (device_number) + ")", RCommand::App, i18n ("Plot properties (device number %1)", device_number), error_dialog);
 }
 
 void RKCaughtX11Window::updateHistoryActions (int history_length, int position) {
@@ -457,6 +457,7 @@ void RKCaughtX11Window::updateHistoryActions (int history_length, int position) 
 	plot_remove_action->setEnabled (history_length > 0);
 
 	plot_clear_history_action->setEnabled (history_length > 0);
+	plot_properties_action->setEnabled (history_length > 0);
 }
 
 void RKCaughtX11Window::setStatusMessage (const QString& message, RCommand *command) {
@@ -530,10 +531,10 @@ RKCaughtX11WindowPart::RKCaughtX11WindowPart (RKCaughtX11Window *window) : KPart
 	window->plot_last_action = (KAction*) action;
 
 	action = actionCollection ()->addAction ("plot_replaceby", window, SLOT (replacebyCurrentPlot()));
- 	action->setText (i18n ("Replace previous plot"));
+ 	action->setText (i18n ("Overwrite previous plot"));
 	window->plot_replaceby_action = (KAction*) action;
 	action = actionCollection ()->addAction ("plot_remove", window, SLOT (removeCurrentPlot()));
- 	action->setText (i18n ("Remove from history"));
+ 	action->setText (i18n ("Remove current plot"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionRemovePlot));
 	window->plot_remove_action = (KAction*) action;
 
@@ -542,9 +543,9 @@ RKCaughtX11WindowPart::RKCaughtX11WindowPart (RKCaughtX11Window *window) : KPart
  	action->setText (i18n ("Clear history"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionClear));
 
-	action = actionCollection ()->addAction ("device_properties", window, SLOT (showPlotInfo()));
-	window->device_properties_action = (KAction*) action;
-	action->setText (i18n ("Device properties"));
+	action = actionCollection ()->addAction ("plot_properties", window, SLOT (showPlotInfo()));
+	window->plot_properties_action = (KAction*) action;
+	action->setText (i18n ("Plot properties"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionDocumentInfo));
 
 	action = actionCollection ()->addAction ("device_activate", window, SLOT (activateDevice()));

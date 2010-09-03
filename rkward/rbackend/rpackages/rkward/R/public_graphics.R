@@ -446,7 +446,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		ans <- 'no'
 		if (len.max < len.r) {
 			ans <- rk.show.question (paste ("Current plot history has more plots than the maximum number specified in the settings.\n",
-				10 - 5, " of the foremost plots will be removed.\n\nDo you want to Continue?", sep =""))
+				len.r - len.max, " of the foremost plots will be removed.\n\nDo you want to Continue?", sep =""))
 			if (!is.null(ans) && ans)
 				remove (deviceId = NULL, pos = 1:(len.r - len.max))
 		}
