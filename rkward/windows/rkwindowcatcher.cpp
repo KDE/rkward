@@ -414,10 +414,10 @@ void RKCaughtX11Window::lastPlot () {
 	RKGlobals::rInterface ()->issueCommand (c);
 }
 
-void RKCaughtX11Window::recordCurrentPlot () {
+void RKCaughtX11Window::replacebyCurrentPlot () {
 	RK_TRACE (MISC);
 
-	RKGlobals::rInterface ()->issueCommand ("rk.addthis.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Add current plot to history (device number %1)", device_number), error_dialog);
+	RKGlobals::rInterface ()->issueCommand ("rk.replaceby.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Replace previous plot by the current plot (device number %1)", device_number), error_dialog);
 	//updateHistoryActions (history_length+1, history_length+1);
 }
 
@@ -453,7 +453,8 @@ void RKCaughtX11Window::updateHistoryActions (int history_length, int position) 
 	plot_next_action->setEnabled ((history_length > 0) && (position < history_length));
 	plot_last_action->setEnabled ((history_length > 0) && (position < history_length));
 
-	plot_remove_action->setEnabled (history_length > 1);
+	plot_replaceby_action->setEnabled (history_length > 0);
+	plot_remove_action->setEnabled (history_length > 0);
 
 	plot_clear_history_action->setEnabled (history_length > 0);
 }
@@ -528,9 +529,9 @@ RKCaughtX11WindowPart::RKCaughtX11WindowPart (RKCaughtX11Window *window) : KPart
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveLast));
 	window->plot_last_action = (KAction*) action;
 
-	action = actionCollection ()->addAction ("plot_record", window, SLOT (recordCurrentPlot()));
- 	action->setText (i18n ("Add to history"));
-	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionSnapshot));
+	action = actionCollection ()->addAction ("plot_replaceby", window, SLOT (replacebyCurrentPlot()));
+ 	action->setText (i18n ("Replace previous plot"));
+	window->plot_replaceby_action = (KAction*) action;
 	action = actionCollection ()->addAction ("plot_remove", window, SLOT (removeCurrentPlot()));
  	action->setText (i18n ("Remove from history"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionRemovePlot));

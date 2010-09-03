@@ -72,6 +72,7 @@ if (base::.Platform$OS.type == "windows") {
 "plot.new" <- function () 
 {
 	if (dev.cur() == 1) rk.screen.device ()
+	rk.record.plot$record.all.recordable ()
 	rk.record.plot$record (newplot.gType = 'standard')
 	eval (body (.rk.plot.new.default))
 }
@@ -104,6 +105,7 @@ formals (dev.off) <- formals (grDevices::dev.off)
 			{
 				if (dev.cur() == 1) rk.screen.device ()
 				## TODO: use "trellis" instead of "lattice" to accomodate ggplot2 plots?
+				rk.record.plot$record.all.recordable ()
 				rk.record.plot$record (newplot.gType = 'lattice')
 				plot (x, ...)
 				invisible ()
@@ -115,6 +117,7 @@ formals (dev.off) <- formals (grDevices::dev.off)
 		function (...)
 		{
 			if (dev.cur() == 1) rk.screen.device ()
+			rk.record.plot$record.all.recordable ()
 			rk.record.plot$record (newplot.gType = 'standard')
 		},
 		action = "append"

@@ -10,17 +10,17 @@
 			<Action name="device_copy_to_r_object"/>
 			<Merge/>
 			<Separator/>
-			<Menu name="history"><text>&amp;History</text>
-				<Action name="plot_first"/>
-				<Action name="plot_prev"/>
-				<Action name="plot_next"/>
-				<Action name="plot_last"/>
-				<Separator/>
-				<Action name="plot_record"/>
-				<Action name="plot_remove"/>
-				<Separator/>
-				<Action name="plot_clear_history"/>
-			</Menu>
+		</Menu>
+		<Menu name="history"><text>&amp;History</text>
+			<Action name="plot_first"/>
+			<Action name="plot_prev"/>
+			<Action name="plot_next"/>
+			<Action name="plot_last"/>
+			<Separator/>
+			<Action name="plot_replaceby"/>
+			<Action name="plot_remove"/>
+			<Separator/>
+			<Action name="plot_clear_history"/>
 			<Separator/>
 			<Action name="device_properties"/>
 		</Menu>
@@ -45,7 +45,6 @@
 		<Action name="plot_prev"/>
 		<Action name="plot_next"/>
 		<Separator/>
-		<Action name="plot_record"/>
 		<Action name="plot_remove"/>
 	</ToolBar>
 </kpartgui>

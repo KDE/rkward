@@ -144,7 +144,7 @@ public slots:
 	void previousPlot ();
 	void nextPlot ();
 	void lastPlot ();
-	void recordCurrentPlot ();
+	void replacebyCurrentPlot ();
 	void removeCurrentPlot ();
 	void clearHistory ();
 	void showPlotInfo ();
@@ -181,6 +181,7 @@ private:
 	KAction *plot_next_action;
 	KAction *plot_first_action;
 	KAction *plot_last_action;
+	KAction *plot_replaceby_action;
 	KAction *plot_remove_action;
 	KAction *plot_clear_history_action;
 	KAction *device_properties_action;
