@@ -652,7 +652,11 @@ void RKCommandEditorWindow::clearUnusedBlocks () {
 	for (int i = 0; i < block_records.size (); ++i) {
 		if (block_records[i].active) {
 // TODO: do we need to check whether the range was deleted? Does the katepart do such evil things?
+#if KDE_IS_VERSION(4,5,0)
+			if (block_records[i].range->isEmpty ()) {
+#else
 			if (!block_records[i].range->isValid () || block_records[i].range->isEmpty ()) {
+#endif
 				removeBlock (i, true);
 			}
 		}
