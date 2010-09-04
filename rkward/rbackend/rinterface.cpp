@@ -495,14 +495,26 @@ void RInterface::processRCallbackRequest (RCallbackArgs *args) {
 		KGuiItem button_cancel_item = KStandardGuiItem::cancel ();
 		if (button_cancel != "cancel") button_cancel_item.setText (button_cancel);
 
+		bool shown = false;
 		KMessageBox::DialogType dialog_type = KMessageBox::QuestionYesNoCancel;
 		if (button_cancel.isEmpty ()) dialog_type = KMessageBox::QuestionYesNo;
 		if (button_no.isEmpty () && button_cancel.isEmpty ()) {
-			if (button_yes == "ok") button_yes_item = KStandardGuiItem::ok ();
 			dialog_type = KMessageBox::Information;
+			if (args->params["wait"].toString () != "1") {	// non-modal dialogs are not supported out of the box by KMessageBox;
+				KDialog* dialog = new KDialog ();
+				KMessageBox::createKMessageBox (dialog, QMessageBox::Information, message, QStringList (), QString (), 0, KMessageBox::Notify | KMessageBox::NoExec);
+				dialog->setWindowTitle (caption);
+				dialog->setAttribute (Qt::WA_DeleteOnClose);
+				dialog->setButtons (KDialog::Ok);
+				dialog->show();
+				shown = true;
+			}
 		}
 
-		int result = KMessageBox::messageBox (0, dialog_type, message, caption, button_yes_item, button_no_item, button_cancel_item);
+		int result = KMessageBox::Ok;
+		if (!shown) {
+			result = KMessageBox::messageBox (0, dialog_type, message, caption, button_yes_item, button_no_item, button_cancel_item);
+		}
 
 		QString result_string;
 		if ((result == KMessageBox::Yes) || (result == KMessageBox::Ok)) result_string = "yes";

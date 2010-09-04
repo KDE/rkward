@@ -126,6 +126,7 @@ SEXP RKWard_RData_Tag;
 QString *SEXPToStringList (SEXP from_exp, unsigned int *count);
 QString SEXPToString (SEXP from_exp);
 int *SEXPToIntArray (SEXP from_exp, unsigned int *count);
+int SEXPToInt (SEXP from_exp);
 
 // ############## R Standard callback overrides BEGIN ####################
 void RSuicide (const char* message) {
@@ -353,7 +354,7 @@ int RShowFiles (int nfile, const char **file, const char **headers, const char *
 
 /* FROM R_ext/RStartup.h: "Return value here is expected to be 1 for Yes, -1 for No and 0 for Cancel:
    symbolic constants in graphapp.h" */
-int doDialogHelper (QString caption, QString message, QString button_yes, QString button_no, QString button_cancel) {
+int doDialogHelper (QString caption, QString message, QString button_yes, QString button_no, QString button_cancel, bool wait) {
 	RK_TRACE (RBACKEND);
 
 	RCallbackArgs args;
@@ -363,7 +364,8 @@ int doDialogHelper (QString caption, QString message, QString button_yes, QStrin
 	args.params["button_yes"] = QVariant (button_yes);
 	args.params["button_no"] = QVariant (button_no);
 	args.params["button_cancel"] = QVariant (button_cancel);
-	
+	if (wait) args.params["wait"] = "1";
+
 	REmbedInternal::this_pointer->handleStandardCallback (&args);
 
 	QString ret = args.params["result"].toString ();
@@ -372,10 +374,10 @@ int doDialogHelper (QString caption, QString message, QString button_yes, QStrin
 	return 0;
 }
 
-SEXP doDialog (SEXP caption, SEXP message, SEXP button_yes, SEXP button_no, SEXP button_cancel) {
+SEXP doDialog (SEXP caption, SEXP message, SEXP button_yes, SEXP button_no, SEXP button_cancel, SEXP wait) {
 	RK_TRACE (RBACKEND);
 
-	int result = doDialogHelper (SEXPToString (caption), SEXPToString (message), SEXPToString (button_yes), SEXPToString (button_no), SEXPToString (button_cancel));
+	int result = doDialogHelper (SEXPToString (caption), SEXPToString (message), SEXPToString (button_yes), SEXPToString (button_no), SEXPToString (button_cancel), SEXPToInt (wait));
 
 	SEXP ret = Rf_allocVector(INTSXP, 1);
 	INTEGER (ret)[0] = result;
@@ -385,14 +387,14 @@ SEXP doDialog (SEXP caption, SEXP message, SEXP button_yes, SEXP button_no, SEXP
 void RShowMessage (const char* message) {
 	RK_TRACE (RBACKEND);
 
-	doDialogHelper (i18n ("Message from the R backend"), message, "ok", QString (), QString ());
+	doDialogHelper (i18n ("Message from the R backend"), message, "ok", QString (), QString (), true);
 }
 
 // TODO: currently used on windows, only!
 int RAskYesNoCancel (const char* message) {
 	RK_TRACE (RBACKEND);
 
-	return doDialogHelper (i18n ("Question from the R backend"), message, "yes", "no", "cancel");
+	return doDialogHelper (i18n ("Question from the R backend"), message, "yes", "no", "cancel", true);
 }
 
 void RBusy (int busy) {
@@ -615,6 +617,19 @@ int *SEXPToIntArray (SEXP from_exp, unsigned int *count) {
 		if (integers[i] == R_NaInt) integers[i] = INT_MIN;		// this has no effect for now, but if R ever chnages it's R_NaInt, then it will
 	}
 	return integers;
+}
+
+// converts SEXP to integers, and returns the first int (INT_MIN, if SEXP contains no ints)
+int SEXPToInt (SEXP from_exp) {
+	RK_TRACE (RBACKEND);
+
+	int ret = INT_MIN;
+	unsigned int count;
+	int *integers = SEXPToIntArray (from_exp, &count);
+	if (count >= 1) ret = integers[0];
+	delete [] integers;
+
+	return ret;
 }
 
 double *SEXPToRealArray (SEXP from_exp, unsigned int *count) {
@@ -857,7 +872,7 @@ bool REmbedInternal::startR (int argc, char** argv, bool stack_check) {
 		{ "rk.copy.no.eval", (DL_FUNC) &doCopyNoEval, 3 },
 		{ "rk.edit.files", (DL_FUNC) &doEditFiles, 3 },
 		{ "rk.show.files", (DL_FUNC) &doShowFiles, 4 },
-		{ "rk.dialog", (DL_FUNC) &doDialog, 5 },
+		{ "rk.dialog", (DL_FUNC) &doDialog, 6 },
 		{ "rk.update.locale", (DL_FUNC) &doUpdateLocale, 0 },
 		{ "rk.locale.name", (DL_FUNC) &doLocaleName, 0 },
 		{ 0, 0, 0 }
