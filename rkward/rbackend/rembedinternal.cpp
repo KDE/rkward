@@ -126,7 +126,7 @@ SEXP RKWard_RData_Tag;
 QString *SEXPToStringList (SEXP from_exp, unsigned int *count);
 QString SEXPToString (SEXP from_exp);
 int *SEXPToIntArray (SEXP from_exp, unsigned int *count);
-int SEXPToInt (SEXP from_exp);
+int SEXPToInt (SEXP from_exp, int def_value = INT_MIN);
 
 // ############## R Standard callback overrides BEGIN ####################
 void RSuicide (const char* message) {
@@ -291,14 +291,12 @@ SEXP doShowEditFiles (SEXP files, SEXP titles, SEXP wtitle, SEXP del, RCallbackA
 	RK_TRACE (RBACKEND);
 
 	// this function would be much shorter, if SEXPToStringList would simply return a QStringList...
-	unsigned int files_count, titles_count, wtitle_count, del_count;
+	unsigned int files_count, titles_count;
 	QString *file_strings = SEXPToStringList (files, &files_count);
 	QString *title_strings = SEXPToStringList (titles, &titles_count);
-	QString *wtitle_strings = SEXPToStringList (wtitle, &wtitle_count);
-	int *del_bools = SEXPToIntArray (del, &del_count);
+	QString wtitle_string = SEXPToString (wtitle);
+	bool del_files = SEXPToInt (del, 0) != 0;
 
-	RK_ASSERT (wtitle_count <= 1);
-	RK_ASSERT (del_count <= 1);
 	RK_ASSERT (files_count == titles_count);
 	RK_ASSERT (files_count >= 1);
 
@@ -310,17 +308,11 @@ SEXP doShowEditFiles (SEXP files, SEXP titles, SEXP wtitle, SEXP del, RCallbackA
 		files_list.append (file_strings[i]);
 		titles_list.append (title_strings[i]);
 	}
-	QString wtitle_string;
-	if (wtitle_count) wtitle_string = wtitle_strings[0];
-	bool del_files = false;
-	if (del_count) del_files = (del_bools[0] != 0);
 
 	REditFilesHelper (files_list, titles_list, wtitle_string, edit, del_files);
 
 	delete [] file_strings;
 	delete [] title_strings;
-	delete [] wtitle_strings;
-	delete [] del_bools;
 
 	return (R_NilValue);
 }
@@ -538,7 +530,7 @@ void REmbedInternal::processX11Events () {
 	R_ToplevelExec (processX11EventsWorker, 0);
 }
 
-// converts SEXP to strings, and returns the first string (or QString(), if SEXP contains no strings)
+/** converts SEXP to strings, and returns the first string (or QString(), if SEXP contains no strings) */
 QString SEXPToString (SEXP from_exp) {
 	RK_TRACE (RBACKEND);
 
@@ -619,11 +611,11 @@ int *SEXPToIntArray (SEXP from_exp, unsigned int *count) {
 	return integers;
 }
 
-// converts SEXP to integers, and returns the first int (INT_MIN, if SEXP contains no ints)
-int SEXPToInt (SEXP from_exp) {
+/** converts SEXP to integers, and returns the first int (def_value, if SEXP contains no ints) */
+int SEXPToInt (SEXP from_exp, int def_value) {
 	RK_TRACE (RBACKEND);
 
-	int ret = INT_MIN;
+	int ret = def_value;
 	unsigned int count;
 	int *integers = SEXPToIntArray (from_exp, &count);
 	if (count >= 1) ret = integers[0];
