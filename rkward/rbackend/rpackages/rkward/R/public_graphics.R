@@ -61,14 +61,14 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	rk.record.plot$.set.isDuplicate (TRUE)
 	dev.copy (device = x11)
 	rk.record.plot$.set.isDuplicate (FALSE)
-	rk.record.plot$printPars () # DEBUG
+	#rk.record.plot$printPars () # DEBUG
 }
 
 "rk.activate.device" <- function (deviceId = dev.cur ())
 {
 	dev.set (deviceId)
 	rk.record.plot$.set.trellis.last.object (deviceId)
-	rk.record.plot$printPars () # DEBUG
+	#rk.record.plot$printPars () # DEBUG
 }
 
 # A global history of various graphics calls;
@@ -133,7 +133,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 			histPositions [[deviceId]] <<- NULL
 			replacePositions [[deviceId]] <<- NULL
 		}
-		printPars () # DEBUG
+		#printPars () # DEBUG
 	}
 	.grow.history <- function (deviceId, np.gT)
 	{
@@ -216,7 +216,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 			
 			dev.set (cur.deviceId)
 			.rk.graph.history.gui ()
-			printPars () # DEBUG
+			#printPars () # DEBUG
 			return (invisible ())
 		}
 	}
@@ -239,14 +239,14 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 			gType[n] <<- NULL
 			len.r <- length (recorded)
 			
-			printPars () # DEBUG
+			#printPars () # DEBUG
 			for (d in names (histPositions)[-1]) {
 				m <- min (histPositions [[d]] - len.n + 1, len.r)
 				histPositions [[d]] <<- replacePositions [[d]] <<- m
 				message ("d: ", d, ", m: ", m)  # DEBUG
 				replay (m, d)
 			}
-			printPars () # DEBUG
+			#printPars () # DEBUG
 			.rk.graph.history.gui ()
 		}
 		
@@ -336,7 +336,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		gType <<- list ()
 		histPositions [names (histPositions)] <<- 0
 		replacePositions [names (replacePositions)] <<- 0
-		printPars () # DEBUG
+		#printPars () # DEBUG
 		.rk.graph.history.gui ()
 	}
 	printPars <- function ()
@@ -364,7 +364,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 			positions [1 + 2 * (1:ndevs)] <- unlist (histPositions[deviceIds], use.names = FALSE)
 			.rk.do.call ("updateDeviceHistory", positions);
 		}
-		print (positions) # DEBUG
+		#print (positions) # DEBUG
 		invisible (NULL)
 	}
 	.get.oldplot.call.std <- function (n)
