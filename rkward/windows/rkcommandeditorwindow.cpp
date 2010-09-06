@@ -389,20 +389,33 @@ void RKCommandEditorWindow::doAutoSave () {
 	save.setAutoRemove (false);
 
 	RKJobSequence* alljobs = new RKJobSequence ();
+	// The KJob-Handling below seems to be a bit error-prone, at least for the file-protocol on Windows.
+	// Thus, for the simple case of local files, we use QFile, instead.
 	connect (alljobs, SIGNAL (finished(RKJobSequence*)), this, SLOT (autoSaveHandlerJobFinished(RKJobSequence*)));
 	// backup the old autosave file in case something goes wrong during pushing the new one
 	KUrl backup_autosave_url;
 	if (previous_autosave_url.isValid ()) {
 		backup_autosave_url = previous_autosave_url;
 		backup_autosave_url.setFileName (backup_autosave_url.fileName () + "~");
-		alljobs->addJob (KIO::file_move (previous_autosave_url, backup_autosave_url, -1, KIO::HideProgressInfo | KIO::Overwrite));
+		if (previous_autosave_url.isLocalFile ()) {
+			QFile::remove (backup_autosave_url.toLocalFile ());
+			QFile::copy (previous_autosave_url.toLocalFile (), backup_autosave_url.toLocalFile ());
+		} else {
+			alljobs->addJob (KIO::file_move (previous_autosave_url, backup_autosave_url, -1, KIO::HideProgressInfo | KIO::Overwrite));
+		}
 	}
 	
 	// push the newly written file
 	if (url ().isValid ()) {
 		KUrl autosave_url = url ();
 		autosave_url.setFileName (autosave_url.fileName () + RKSettingsModuleCommandEditor::autosaveSuffix ());
-		alljobs->addJob (KIO::file_move (KUrl::fromLocalFile (save.fileName ()), autosave_url, -1, KIO::HideProgressInfo | KIO::Overwrite));
+		if (autosave_url.isLocalFile ()) {
+			QFile::remove (backup_autosave_url.toLocalFile ());
+			save.copy (backup_autosave_url.toLocalFile ());
+			save.remove ();
+		} else {
+			alljobs->addJob (KIO::file_move (KUrl::fromLocalFile (save.fileName ()), autosave_url, -1, KIO::HideProgressInfo | KIO::Overwrite));
+		}
 		previous_autosave_url = autosave_url;
 	} else {		// i.e., the document is still "Untitled"
 		previous_autosave_url = KUrl::fromLocalFile (save.fileName ());
@@ -410,7 +423,11 @@ void RKCommandEditorWindow::doAutoSave () {
 
 	// remove the backup
 	if (backup_autosave_url.isValid ()) {
-		alljobs->addJob (KIO::del (backup_autosave_url, KIO::HideProgressInfo));
+		if (backup_autosave_url.isLocalFile ()) {
+			QFile::remove (backup_autosave_url.toLocalFile ());
+		} else {
+			alljobs->addJob (KIO::del (backup_autosave_url, KIO::HideProgressInfo));
+		}
 	}
 	alljobs->start ();
 

@@ -48,7 +48,6 @@ QStringList RKJobSequence::errors () const {
 void RKJobSequence::start () {
 	RK_TRACE (MISC);
 
-	RK_ASSERT (!outstanding_jobs.isEmpty ());
 	nextJob ();
 }
 
