@@ -369,7 +369,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 			positions [2 * (1:ndevs) - 1] <- deviceIds
 			positions [2 * (1:ndevs)] <- unlist (histPositions[deviceIds], use.names = FALSE)
 			labels <- NULL
-			if (length (recorded) > 0) labels <- sapply (1:length (recorded), .get.oldplot.call)
+			if (length (recorded) > 0) labels <- sapply (1:length (recorded), function (x) try (.get.oldplot.call (x)))
 			.rk.do.call ("updateDeviceHistory", c (length (recorded), labels, positions));
 		}
 		#print (positions) # DEBUG
