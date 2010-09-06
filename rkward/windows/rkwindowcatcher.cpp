@@ -68,11 +68,12 @@ void RKWindowCatcher::updateHistory (QStringList params) {
 	RK_ASSERT ((params.count () % 2) == 1)
 
 	int history_length = params[0].toInt ();
-	for (int i = 1; i < (params.count () - 1); i += 2) {
+	QStringList labels = params.mid (1, history_length);
+	for (int i = history_length + 1; i < (params.count () - 1); i += 2) {
 		RKCaughtX11Window* window = RKCaughtX11Window::getWindow (params[i].toInt ());
 		if (window) {
 			int position = params[i+1].toInt ();
-			window->updateHistoryActions (history_length, position);
+			window->updateHistoryActions (history_length, position, labels);
 		} else {
 			RK_DO (qDebug ("Device %d is not managed, while trying to update history", params[i].toInt ()), RBACKEND, DL_DEBUG);
 		}
@@ -107,6 +108,7 @@ void RKWindowCatcher::killDevice (int device_number) {
 #include <QCloseEvent>
 
 #include <ktoggleaction.h>
+#include <kselectaction.h>
 #include <kdialog.h>
 #include <knuminput.h>
 #include <kvbox.h>
@@ -137,7 +139,7 @@ RKCaughtX11Window::RKCaughtX11Window (WId window_to_embed, int device_number) : 
 	setPart (new RKCaughtX11WindowPart (this));
 	initializeActivationSignals ();
 	setFocusPolicy (Qt::ClickFocus);
-	updateHistoryActions (0, 0);
+	updateHistoryActions (0, 0, QStringList ());
 
 	status_popup = new KPassivePopup (this);
 	status_popup->setTimeout (0);
@@ -382,7 +384,6 @@ void RKCaughtX11Window::nextPlot () {
 	RK_TRACE (MISC);
 
 	RCommand* c = new RCommand ("rk.next.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Load next plot in device number %1", device_number), error_dialog);
-	//updateHistoryActions (history_length, history_position+1);
 	setStatusMessage (i18n ("Loading plot from history"), c);
 	RKGlobals::rInterface ()->issueCommand (c);
 }
@@ -391,7 +392,6 @@ void RKCaughtX11Window::previousPlot () {
 	RK_TRACE (MISC);
 
 	RCommand* c = new RCommand ("rk.previous.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Load previous plot in device number %1", device_number), error_dialog);
-	//updateHistoryActions (history_length, history_position-1);
 	setStatusMessage (i18n ("Loading plot from history"), c);
 	RKGlobals::rInterface ()->issueCommand (c);
 }
@@ -400,7 +400,6 @@ void RKCaughtX11Window::firstPlot () {
 	RK_TRACE (MISC);
 
 	RCommand* c = new RCommand ("rk.first.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Load first plot in device number %1", device_number), error_dialog);
-	//updateHistoryActions (history_length, 1);
 	setStatusMessage (i18n ("Loading plot from history"), c);
 	RKGlobals::rInterface ()->issueCommand (c);
 }
@@ -409,7 +408,14 @@ void RKCaughtX11Window::lastPlot () {
 	RK_TRACE (MISC);
 
 	RCommand* c = new RCommand ("rk.last.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Load last plot in device number %1", device_number), error_dialog);
-	//updateHistoryActions (history_length, history_length);
+	setStatusMessage (i18n ("Loading plot from history"), c);
+	RKGlobals::rInterface ()->issueCommand (c);
+}
+
+void RKCaughtX11Window::gotoPlot (int index) {
+	RK_TRACE (MISC);
+
+	RCommand* c = new RCommand ("rk.goto.plot (" + QString::number (device_number) + ", " + QString::number (index+1) + ')', RCommand::App, i18n ("Load plot %1 in device number %2", index, device_number), error_dialog);
 	setStatusMessage (i18n ("Loading plot from history"), c);
 	RKGlobals::rInterface ()->issueCommand (c);
 }
@@ -442,7 +448,7 @@ void RKCaughtX11Window::showPlotInfo () {
 	RKGlobals::rInterface ()->issueCommand ("rk.record.plot$showPlotInfo (" + QString::number (device_number) + ")", RCommand::App, i18n ("Plot properties (device number %1)", device_number), error_dialog);
 }
 
-void RKCaughtX11Window::updateHistoryActions (int history_length, int position) {
+void RKCaughtX11Window::updateHistoryActions (int history_length, int position, const QStringList &labels) {
 	RK_TRACE (MISC);
 
 	RKCaughtX11Window::history_length = history_length;
@@ -452,6 +458,11 @@ void RKCaughtX11Window::updateHistoryActions (int history_length, int position) 
 	plot_prev_action->setEnabled (position > 1);
 	plot_next_action->setEnabled ((history_length > 0) && (position < history_length));
 	plot_last_action->setEnabled ((history_length > 0) && (position < history_length));
+	QStringList _labels = labels;
+	if (position > history_length) _labels.append (i18n ("<Unsaved plot>"));
+	plot_list_action->setItems (_labels);
+	plot_list_action->setCurrentItem (history_position - 1);
+	plot_list_action->setEnabled (history_length > 0);
 
 	plot_replaceby_action->setEnabled (history_length > 0);
 	plot_remove_action->setEnabled (history_length > 0);
@@ -529,6 +540,11 @@ RKCaughtX11WindowPart::RKCaughtX11WindowPart (RKCaughtX11Window *window) : KPart
  	action->setText (i18n ("Last plot"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveLast));
 	window->plot_last_action = (KAction*) action;
+	action = window->plot_list_action = new KSelectAction (i18n ("Go to plot"), 0);
+	window->plot_list_action->setToolBarMode (KSelectAction::MenuMode);
+	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionListPlots));
+	actionCollection ()->addAction ("plot_list", action);
+	connect (action, SIGNAL (triggered(int)), window, SLOT (gotoPlot(int)));
 
 	action = actionCollection ()->addAction ("plot_replaceby", window, SLOT (replacebyCurrentPlot()));
  	action->setText (i18n ("Overwrite previous plot"));

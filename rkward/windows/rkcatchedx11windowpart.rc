@@ -12,6 +12,8 @@
 			<Separator/>
 		</Menu>
 		<Menu name="history"><text>&amp;History</text>
+			<Action name="plot_list"/>
+			<Separator/>
 			<Action name="plot_first"/>
 			<Action name="plot_prev"/>
 			<Action name="plot_next"/>
@@ -42,6 +44,7 @@
 		<Separator/>
 		<Action name="device_copy_to_output"/>
 		<Separator/>
+		<Action name="plot_list"/>
 		<Action name="plot_prev"/>
 		<Action name="plot_next"/>
 		<Separator/>

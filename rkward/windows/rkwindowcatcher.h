@@ -87,6 +87,7 @@ private:
 class RKCaughtX11WindowPart;
 class KToggleAction;
 class KAction;
+class KSelectAction;
 class QXEmbedCopy;
 class QScrollArea;
 class KVBox;
@@ -116,7 +117,7 @@ public:
 	void prepareToBeDetached ();
 /** returns the window corresponding the to given R device number (or 0 if no such window exists) */
 	static RKCaughtX11Window* getWindow (int device_number) { return device_windows.value (device_number); };
-	void updateHistoryActions (int history_length, int position);
+	void updateHistoryActions (int history_length, int position, const QStringList &labels);
 /** Set a status message to be shown in a popup inside the window. The message persists until the given R command has finished, or until this function is called with an empty string.
 This should be used, when the plot is currently out-of-date (e.g. when loading a plot from history), _not_ when the window
 is simply busy (e.g. when saving the current plot to history). */
@@ -144,6 +145,7 @@ public slots:
 	void previousPlot ();
 	void nextPlot ();
 	void lastPlot ();
+	void gotoPlot (int index);
 	void replacebyCurrentPlot ();
 	void removeCurrentPlot ();
 	void clearHistory ();
@@ -185,6 +187,7 @@ private:
 	KAction *plot_remove_action;
 	KAction *plot_clear_history_action;
 	KAction *plot_properties_action;
+	KSelectAction *plot_list_action;
 
 	KPassivePopup* status_popup;
 	RCommand* status_change_command;

@@ -328,6 +328,13 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		record (deviceId)
 		replay(n = length(recorded), deviceId)
 	}
+	showPlot <- function(deviceId = dev.cur(), index)
+	{
+		# TODO: record might remove a plot form history, thus changing the indices!
+		record (deviceId)
+		index = max (as.integer (index), 1L)
+		replay(n = min (length (recorded), index))
+	}
 	clearHistory <- function ()
 	{
 		isDuplicate <<- FALSE
@@ -359,10 +366,11 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		ndevs <- length (deviceIds)
 		if (ndevs>0) {
 			positions <- character (1 + 2 * ndevs)
-			positions [1] <- length (recorded) # coerced as character
-			positions [2 * (1:ndevs)] <- deviceIds
-			positions [1 + 2 * (1:ndevs)] <- unlist (histPositions[deviceIds], use.names = FALSE)
-			.rk.do.call ("updateDeviceHistory", positions);
+			positions [2 * (1:ndevs) - 1] <- deviceIds
+			positions [2 * (1:ndevs)] <- unlist (histPositions[deviceIds], use.names = FALSE)
+			labels <- NULL
+			if (length (recorded) > 0) labels <- sapply (1:length (recorded), .get.oldplot.call)
+			.rk.do.call ("updateDeviceHistory", c (length (recorded), labels, positions));
 		}
 		#print (positions) # DEBUG
 		invisible (NULL)
@@ -481,6 +489,10 @@ rk.record.plot <- rk.record.plot ()
 "rk.last.plot" <- function (deviceId = dev.cur ())
 {
 	rk.record.plot$showLast (deviceId)
+	rk.record.plot$printPars ()
+}
+"rk.goto.plot" <- function (deviceId = dev.cur (), index=1) {
+	rk.record.plot$showPlot (deviceId, index)
 	rk.record.plot$printPars ()
 }
 "rk.replaceby.plot" <- function (deviceId = dev.cur ())

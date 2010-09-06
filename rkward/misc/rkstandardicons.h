@@ -65,6 +65,7 @@ public:
 		ActionDocumentInfo,
 		ActionFlagGreen,
 		ActionSnapshot,
+		ActionListPlots,
 		ActionRemovePlot,
 		ActionWindowDuplicate,
 

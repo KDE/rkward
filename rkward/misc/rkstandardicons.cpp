@@ -65,6 +65,7 @@ void RKStandardIcons::initIcons () {
 	icons[ActionDocumentInfo] = KIcon ("documentinfo.png");
 	icons[ActionFlagGreen] = KIcon ("flag-green.png");
 	icons[ActionSnapshot] = KIcon ("list-add.png");
+	icons[ActionListPlots] = KIcon ("view-preview.png");
 	icons[ActionRemovePlot] = KIcon ("list-remove.png");
 	icons[ActionWindowDuplicate] = KIcon ("window-duplicate.png");
 
