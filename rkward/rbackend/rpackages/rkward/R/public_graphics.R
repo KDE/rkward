@@ -365,7 +365,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		deviceIds <- deviceIds [deviceIds != "1"] # ignore NULL device
 		ndevs <- length (deviceIds)
 		if (ndevs>0) {
-			positions <- character (1 + 2 * ndevs)
+			positions <- character (2 * ndevs)
 			positions [2 * (1:ndevs) - 1] <- deviceIds
 			positions [2 * (1:ndevs)] <- unlist (histPositions[deviceIds], use.names = FALSE)
 			labels <- NULL
