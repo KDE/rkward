@@ -357,10 +357,14 @@ void RKCommandEditorWindow::autoSaveHandlerModifiedChanged () {
 
 		if (RKSettingsModuleCommandEditor::autosaveKeep ()) return;
 		if (!previous_autosave_url.isValid ()) return;
-		RKJobSequence* dummy = new RKJobSequence ();
-		dummy->addJob (KIO::del (previous_autosave_url));
-		connect (dummy, SIGNAL (finished(RKJobSequence*)), this, SLOT (autoSaveHandlerJobFinished(RKJobSequence*)));
-		dummy->start ();
+		if (previous_autosave_url.isLocalFile ()) {
+			QFile::remove (previous_autosave_url.toLocalFile ());
+		} else {
+			RKJobSequence* dummy = new RKJobSequence ();
+			dummy->addJob (KIO::del (previous_autosave_url));
+			connect (dummy, SIGNAL (finished(RKJobSequence*)), this, SLOT (autoSaveHandlerJobFinished(RKJobSequence*)));
+			dummy->start ();
+		}
 		previous_autosave_url.clear ();
 	}
 }
@@ -410,8 +414,8 @@ void RKCommandEditorWindow::doAutoSave () {
 		KUrl autosave_url = url ();
 		autosave_url.setFileName (autosave_url.fileName () + RKSettingsModuleCommandEditor::autosaveSuffix ());
 		if (autosave_url.isLocalFile ()) {
-			QFile::remove (backup_autosave_url.toLocalFile ());
-			save.copy (backup_autosave_url.toLocalFile ());
+			QFile::remove (autosave_url.toLocalFile ());
+			save.copy (autosave_url.toLocalFile ());
 			save.remove ();
 		} else {
 			alljobs->addJob (KIO::file_move (KUrl::fromLocalFile (save.fileName ()), autosave_url, -1, KIO::HideProgressInfo | KIO::Overwrite));
