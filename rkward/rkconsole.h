@@ -74,6 +74,9 @@ public:
 	static void pipeUserCommand (RCommand *command);
 /** Overload for the above function: Use this, if you just need to run a string with no specials */
 	static void pipeUserCommand (const QString &command);
+
+/** reimplemnented from RKMDIWindow to clear selection when gaining focus */
+	void activate (bool with_focus=true);
 protected:
 /** Handle keystrokes before they reach the kate-part. Return TRUE if we want the kate-part to ignore it
 \param e the QKeyEvent */

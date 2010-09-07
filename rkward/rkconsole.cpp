@@ -927,6 +927,14 @@ void RKConsole::contextMenuEvent (QContextMenuEvent * event) {
 	copy_action->setEnabled (true);
 }
 
+void RKConsole::activate (bool with_focus) {
+	RK_TRACE (APP);
+
+	// see http://www.mail-archive.com/rkward-devel@lists.sourceforge.net/msg00933.html
+	if (with_focus) view->removeSelection ();
+	RKMDIWindow::activate (with_focus);
+}
+
 ///################### END RKConsole ########################
 ///################### BEGIN RKConsolePart ####################
 
