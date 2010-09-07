@@ -68,7 +68,7 @@ void RKWindowCatcher::updateHistory (QStringList params) {
 
 	int history_length = params[0].toInt ();
 	QStringList labels = params.mid (1, history_length);
-	RK_ASSERT ((params.count () - history_length) % 2) == 1)
+	RK_ASSERT (((params.count () - history_length) % 2) == 1)
 	for (int i = history_length + 1; i < (params.count () - 1); i += 2) {
 		RKCaughtX11Window* window = RKCaughtX11Window::getWindow (params[i].toInt ());
 		if (window) {
