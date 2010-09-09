@@ -94,12 +94,13 @@ IF(NOT LIBR_LAPACK)
 ELSE(NOT LIBR_LAPACK)
 	MESSAGE(STATUS "Yes, ${LIBR_LAPACK} exists")
 	SET(R_USED_LIBS ${R_USED_LIBS} Rlapack)
-	IF(NOT (WIN32 OR APPLE))
+	IF(WIN32 OR APPLE)
+	ELSE(WIN32 OR APPLE)
 		# needed when linking to Rlapack on linux for some unknown reason.
 		# apparently not needed on windows (let's see, when it comes back to bite us, though)
 		# and compiling on windows is hard enough even without requiring libgfortran, too.
 		SET(R_USED_LIBS ${R_USED_LIBS} gfortran)
-	ENDIF(NOT (WIN32 OR APPLE))
+	ENDIF(WIN32 OR APPLE)
 ENDIF(NOT LIBR_LAPACK)
 
 # for at least some versions of R, we seem to have to link against -lRlapack. Else loading some
