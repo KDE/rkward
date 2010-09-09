@@ -147,12 +147,11 @@ void RKSettings::slotButtonClicked (int button) {
 	} else if (button == KDialog::Cancel) {
 		reject ();
 	} else if (button == KDialog::Help) {
-		int i = 0;
-		for (i = 0; i < NumPages; ++i) {
-			if (currentPage () == pages[i]) break;
+		RKSettingsModule *current_module = dynamic_cast<RKSettingsModule*> (currentPage ()->widget ());
+		if (!current_module) {
+			RK_ASSERT (false);
+			return;
 		}
-		RKSettingsModule *current_module = modules[static_cast<SettingsPage> (i)];
-		RK_ASSERT (current_module);
 	
 		RKWorkplace::mainWorkplace ()->openHelpWindow (current_module->helpURL ());
 	} else {
