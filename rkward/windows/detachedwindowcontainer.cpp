@@ -61,6 +61,7 @@ DetachedWindowContainer::DetachedWindowContainer (RKMDIWindow *widget_to_capture
 	}
 
 // capture widget
+// NOTE: If the window has not been shown, before, its geometry() is always 640*480, unconditionally.
 	setGeometry (widget_to_capture->frameGeometry ());
 	if (!widget_to_capture->isWindow ()) move (widget_to_capture->mapToGlobal (widget_to_capture->pos ()));
 	widget_to_capture->setParent (this);

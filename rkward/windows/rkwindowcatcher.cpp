@@ -166,14 +166,15 @@ RKCaughtX11Window::RKCaughtX11Window (WId window_to_embed, int device_number) : 
 				wininfo.rcClient.right - wininfo.rcWindow.right, wininfo.rcClient.bottom - wininfo.rcWindow.bottom);
 	// set a fixed size until the window is shown
 	xembed_container->setFixedSize (wininfo.rcClient.right - wininfo.rcClient.left, wininfo.rcClient.bottom - wininfo.rcClient.top);
-	move (wininfo.rcClient.left, wininfo.rcClient.top);
+	setGeometry (wininfo.rcClient.left, wininfo.rcClient.right, wininfo.rcClient.top, wininfo.rcClient.bottom);	// see comment in X11 section
+	move (wininfo.rcClient.left, wininfo.rcClient.top);		// else the window frame may be off scree on top/left.
 #elif defined Q_WS_X11
 	KWindowInfo wininfo = KWindowSystem::windowInfo (embedded, NET::WMName | NET::WMGeometry);
 	RK_ASSERT (wininfo.valid ());
 
 	// set a fixed size until the window is shown
 	xembed_container->setFixedSize (wininfo.geometry ().width (), wininfo.geometry ().height ());
-	move (wininfo.geometry ().topLeft());
+	setGeometry (wininfo.geometry ());	// it's important to set a size, even while not visible. Else DetachedWindowContainer will assign a default size of 640*480, and then size upwards, if necessary.
 	setCaption (wininfo.name ());
 #endif
 	dynamic_size = false;
