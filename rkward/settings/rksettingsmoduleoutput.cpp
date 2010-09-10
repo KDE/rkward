@@ -194,9 +194,9 @@ QStringList RKSettingsModuleOutput::makeRRunTimeOptionCommands () {
 	command.append (", \"rk.graphics.width\"=" + QString::number (graphics_width));
 	command.append (", \"rk.graphics.height\"=" + QString::number (graphics_height));
 	if (graphics_type == "\"JPG\"") command.append (", \"rk.graphics.jpg.quality\"=" + QString::number (graphics_jpg_quality));
-	command.append (", \"rk.graphics.hist.max.length\"=" + QString::number (graphics_hist_max_length));
+	//command.append (", \"rk.graphics.hist.max.length\"=" + QString::number (graphics_hist_max_length));
 	command.append (", \"rk.graphics.hist.max.plotsize\"=" + QString::number (graphics_hist_max_plotsize));
-	list.append (command + ")\nrk.record.plot$.verify.hist.limits ()\n");
+	list.append (command + ")\nrk.record.plot$.verify.hist.limits (" + QString::number (graphics_hist_max_length) + ")\n");
 	
 	return (list);
 }

@@ -19,7 +19,7 @@
 			<Action name="plot_next"/>
 			<Action name="plot_last"/>
 			<Separator/>
-			<Action name="plot_replaceby"/>
+			<Action name="plot_force_append"/>
 			<Action name="plot_remove"/>
 			<Separator/>
 			<Action name="plot_clear_history"/>

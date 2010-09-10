@@ -146,7 +146,7 @@ public slots:
 	void nextPlot ();
 	void lastPlot ();
 	void gotoPlot (int index);
-	void replacebyCurrentPlot ();
+	void forceAppendCurrentPlot ();
 	void removeCurrentPlot ();
 	void clearHistory ();
 	void showPlotInfo ();
@@ -183,7 +183,7 @@ private:
 	KAction *plot_next_action;
 	KAction *plot_first_action;
 	KAction *plot_last_action;
-	KAction *plot_replaceby_action;
+	KAction *plot_force_append_action;
 	KAction *plot_remove_action;
 	KAction *plot_clear_history_action;
 	KAction *plot_properties_action;

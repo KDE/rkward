@@ -2,7 +2,7 @@
 ## These functions are _not_ supposed to be called by the end user.
 
 # overriding x11 to get informed, when a new x11 window is opened
-"rk.screen.device" <- function (..., is.preview.device = FALSE) {
+"rk.screen.device" <- function (..., is.being.duplicated = FALSE, is.preview.device = FALSE) {
 	.rk.do.call ("startOpenX11", as.character (dev.cur ()));
 
 	old_dev <- dev.cur ()
@@ -23,7 +23,7 @@
 
 	.rk.do.call ("endOpenX11", as.character (dev.cur ()));
 
-	rk.record.plot$onAddDevice (old_dev = old_dev, deviceId = dev.cur ())
+	rk.record.plot$onAddDevice (old_dev, dev.cur (), is.being.duplicated, is.preview.device)
 
 	invisible (x)
 }
@@ -43,20 +43,18 @@ if (base::.Platform$OS.type == "windows") {
 ".rk.preview.devices" <- list ();
 
 ".rk.startPreviewDevice" <- function (x) {
-	rk.record.plot$printPars()
+	rk.record.plot$getDevSummary() ## DEBUG
 	a <- .rk.preview.devices[[x]]
 	if (is.null (a)) {
 		a <- dev.cur ()
-		rk.record.plot$.set.isPreviewDevice (TRUE)
-		x11 ()
-		rk.record.plot$.set.isPreviewDevice (FALSE)
+		x11 (is.preview.device = TRUE)
 		if (a != dev.cur ()) {
 			.rk.preview.devices[[x]] <<- dev.cur ()
 		}
 	} else {
 		dev.set (a)
 	}
-	rk.record.plot$printPars()
+	rk.record.plot$getDevSummary() ## DEBUG
 }
 
 ".rk.killPreviewDevice" <- function (x) {
@@ -72,8 +70,9 @@ if (base::.Platform$OS.type == "windows") {
 "plot.new" <- function () 
 {
 	if (dev.cur() == 1) rk.screen.device ()
-	rk.record.plot$record.all.recordable ()
-	rk.record.plot$record (newplot.gType = 'standard')
+rk.record.plot$.my.message ("------- call begin -----------")
+	rk.record.plot$record (nextplot.pkg = "graphics")
+rk.record.plot$.my.message ("------- call end   -----------")
 	eval (body (.rk.plot.new.default))
 }
 formals (plot.new) <- formals (graphics::plot.new)
@@ -81,7 +80,7 @@ formals (plot.new) <- formals (graphics::plot.new)
 
 "dev.off" <- function (which = dev.cur ())
 {
-	rk.record.plot$onDelDevice (deviceId = which)
+	rk.record.plot$onDelDevice (devId = which)
 	
 	# see http://thread.gmane.org/gmane.comp.statistics.rkward.devel/802
 	.rk.do.call ("killDevice", as.character (which))
@@ -105,9 +104,13 @@ formals (dev.off) <- formals (grDevices::dev.off)
 			{
 				if (dev.cur() == 1) rk.screen.device ()
 				## TODO: use "trellis" instead of "lattice" to accomodate ggplot2 plots?
-				rk.record.plot$record.all.recordable ()
-				rk.record.plot$record (newplot.gType = 'lattice')
+rk.record.plot$.my.message ("------- call begin -----------")
+				rk.record.plot$record (nextplot.pkg = "lattice")
+rk.record.plot$.my.message ("------- call end   -----------")
 				plot (x, ...)
+rk.record.plot$.my.message ("------- call begin -----------")
+				rk.record.plot$.save.tlo.in.hP ()
+rk.record.plot$.my.message ("------- call end   -----------")
 				invisible ()
 			})
 	)
@@ -117,8 +120,9 @@ formals (dev.off) <- formals (grDevices::dev.off)
 		function (...)
 		{
 			if (dev.cur() == 1) rk.screen.device ()
-			rk.record.plot$record.all.recordable ()
-			rk.record.plot$record (newplot.gType = 'standard')
+rk.record.plot$.my.message ("------- call begin -----------")
+			rk.record.plot$record (nextplot.pkg = "graphics")
+rk.record.plot$.my.message ("------- call end   -----------")
 		},
 		action = "append"
 	)

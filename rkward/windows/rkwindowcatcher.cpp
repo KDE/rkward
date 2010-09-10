@@ -421,10 +421,10 @@ void RKCaughtX11Window::gotoPlot (int index) {
 	RKGlobals::rInterface ()->issueCommand (c);
 }
 
-void RKCaughtX11Window::replacebyCurrentPlot () {
+void RKCaughtX11Window::forceAppendCurrentPlot () {
 	RK_TRACE (MISC);
 
-	RKGlobals::rInterface ()->issueCommand ("rk.replaceby.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Overwrite previous plot by the current plot (device number %1)", device_number), error_dialog);
+	RKGlobals::rInterface ()->issueCommand ("rk.force.append.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Append this plot to history (device number %1)", device_number), error_dialog);
 	//updateHistoryActions (history_length+1, history_length+1);
 }
 
@@ -465,7 +465,7 @@ void RKCaughtX11Window::updateHistoryActions (int history_length, int position, 
 	plot_list_action->setCurrentItem (history_position - 1);
 	plot_list_action->setEnabled (history_length > 0);
 
-	plot_replaceby_action->setEnabled (history_length > 0);
+	plot_force_append_action->setEnabled (history_length > 0);
 	plot_remove_action->setEnabled (history_length > 0);
 
 	plot_clear_history_action->setEnabled (history_length > 0);
@@ -547,11 +547,12 @@ RKCaughtX11WindowPart::RKCaughtX11WindowPart (RKCaughtX11Window *window) : KPart
 	actionCollection ()->addAction ("plot_list", action);
 	connect (action, SIGNAL (triggered(int)), window, SLOT (gotoPlot(int)));
 
-	action = actionCollection ()->addAction ("plot_replaceby", window, SLOT (replacebyCurrentPlot()));
- 	action->setText (i18n ("Overwrite previous plot"));
-	window->plot_replaceby_action = (KAction*) action;
+	action = actionCollection ()->addAction ("plot_force_append", window, SLOT (forceAppendCurrentPlot()));
+ 	action->setText (i18n ("Append this plot"));
+	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionSnapshot));
+	window->plot_force_append_action = (KAction*) action;
 	action = actionCollection ()->addAction ("plot_remove", window, SLOT (removeCurrentPlot()));
- 	action->setText (i18n ("Remove current plot"));
+ 	action->setText (i18n ("Remove this plot"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionRemovePlot));
 	window->plot_remove_action = (KAction*) action;
 
