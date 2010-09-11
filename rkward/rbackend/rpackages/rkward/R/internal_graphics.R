@@ -71,7 +71,8 @@ if (base::.Platform$OS.type == "windows") {
 {
 	if (dev.cur() == 1) rk.screen.device ()
 rk.record.plot$.my.message ("------- call begin -----------")
-	rk.record.plot$record (nextplot.pkg = "graphics")
+	.callstr <- sys.call (-sys.parents()[sys.nframe ()])
+	rk.record.plot$record (nextplot.pkg = "graphics", nextplot.call = .callstr)
 rk.record.plot$.my.message ("------- call end   -----------")
 	eval (body (.rk.plot.new.default))
 }
@@ -121,7 +122,8 @@ rk.record.plot$.my.message ("------- call end   -----------")
 		{
 			if (dev.cur() == 1) rk.screen.device ()
 rk.record.plot$.my.message ("------- call begin -----------")
-			rk.record.plot$record (nextplot.pkg = "graphics")
+			.callstr <- sys.call (-which.max(sys.parents()))
+			rk.record.plot$record (nextplot.pkg = "graphics", nextplot.call = .callstr)
 rk.record.plot$.my.message ("------- call end   -----------")
 		},
 		action = "append"

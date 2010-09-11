@@ -91,7 +91,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	.hP.template <- list (is.this.plot.new = FALSE, is.this.dev.new = TRUE, 
 		pos.cur = NA_integer_, pos.prev = NA_integer_, pos.dupfrom = NA_integer_, 
 		#do.record = FALSE, do.append = FALSE, do.replace = FALSE, 
-		pkg = "", plot = NA)
+		pkg = "", call = NA_character_, plot = NA)
 	histPositions <- list ("1" = .hP.template)
 	.hP.names <- names (histPositions)
 	.set.hP.names <- function () .hP.names <<- names (histPositions)
@@ -152,9 +152,11 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		if (is.being.duplicated && !histPositions [[devId.from]]$is.this.dev.new) {
 			.my.message ("Being duplicated")
 			# devId.from > 1
+			## TODO: see if so many "[[" calls can be reduced?
 			histPositions [[devId]]$is.this.plot.new <<- TRUE
 			histPositions [[devId]]$is.this.dev.new <<- FALSE
 			histPositions [[devId]]$pkg <<- histPositions [[devId.from]]$pkg
+			histPositions [[devId]]$call <<- histPositions [[devId.from]]$call
 			if (!histPositions [[devId.from]]$is.this.plot.new)
 				histPositions [[devId]]$pos.dupfrom <<- histPositions [[devId.from]]$pos.cur
 			histPositions [[devId]]$plot <<- histPositions [[devId.from]]$plot
@@ -191,18 +193,19 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		.my.hP.print (devId)
 		invisible ()
 	}
-	.prep.new.device <- function (devId, pkg)
+	.prep.new.device <- function (devId, pkg, .cstr)
 	{
 		.my.message ("in: .prep.new.device")
 		histPositions [[devId]]$is.this.dev.new <<- FALSE
 		histPositions [[devId]]$is.this.plot.new <<- TRUE
 		histPositions [[devId]]$pkg <<- pkg
+		histPositions [[devId]]$call <<- .cstr
 		getDevSummary ()
 		invisible ()
 	}
 	
 	## Recording functions
-	record <- function(devId = dev.cur (), isManaged = NULL, action = "", callUHA = TRUE, nextplot.pkg = "")
+	record <- function(devId = dev.cur (), isManaged = NULL, action = "", callUHA = TRUE, nextplot.pkg = "", nextplot.call = NA_character_)
 	{
 		.my.message ("in: record")
 		devId <- as.character (devId)
@@ -213,7 +216,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		if (histPositions[[devId]]$is.this.dev.new) {
 			# a new device: ie after an x11 () call
 			if (action == "")  
-				return (invisible (.prep.new.device (devId, nextplot.pkg))) # call from plot.new () / persp () / print.trellis ()
+				return (invisible (.prep.new.device (devId, nextplot.pkg, nextplot.call))) # call from plot.new () / persp () / print.trellis ()
 			else if (action == "force.append")
 				return (invisible (rk.show.message ("Nothing to record!", "Record Warning", FALSE))) # call from rk.force.append.plot
 			else
@@ -226,6 +229,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		if (action == "force.append") {
 			histPositions[[devId]]$is.this.plot.new <<- TRUE
 			histPositions[[devId]]$pkg <<- "unknown"
+			histPositions[[devId]]$call <<- NA_character_
 		} else if (nextplot.pkg == "graphics") {
 			# unless force.append is used,
 			# check for par (mfrow / mfcol / mfg) and split.screen scenarios:
@@ -243,12 +247,12 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		
 		if (newplot.in.Q) {
 			.tmp.hP <- modifyList (.hP.template, 
-				list (is.this.plot.new = TRUE, is.this.dev.new = FALSE, pkg = nextplot.pkg))
+				list (is.this.plot.new = TRUE, is.this.dev.new = FALSE, pkg = nextplot.pkg, call = nextplot.call))
+			## TODO: check this:
 			.tmp.hP$pos.prev <- ifelse (is.null (.unsavedPlot$plot) && .unsavedPlot$is.os, 
 				histPositions [[devId]]$pos.prev, n)
 			histPositions [[devId]] <<- .tmp.hP
 		} else {
-			## TODO: if (is.na (n))
 			histPositions [[devId]]$is.this.plot.new <<- FALSE
 			## TODO: pos.prev ??
 			if (!is.na (n)) histPositions [[devId]]$pos.cur <<- n
@@ -276,7 +280,8 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		.my.message ("save.mode: ", save.mode)
 		
 		n <- save.plot.to.history (devId, save.mode, 
-			ifelse (action == "force.append", "unknown", "graphics"), st)
+			ifelse (action == "force.append", "unknown", "graphics"), 
+			st, histPositions[[devId]]$call)
 		.my.message ("'n' = ", n, " (RET from save.plot.to.history)")
 		invisible (n)
 	}
@@ -293,7 +298,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		
 		.my.message ("save.mode: ", save.mode)#, ", check.odsp: ", check.odsp)
 		
-		n <- save.plot.to.history (devId, save.mode, "lattice", st)
+		n <- save.plot.to.history (devId, save.mode, "lattice", st, histPositions[[devId]]$call)
 		.my.message ("'n' = ", n, " (RET from save.plot.to.history)")
 		invisible (n)
 	}
@@ -328,15 +333,15 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	}
 	
 	## Saving (the recorded plot) functions:
-	save.plot.to.history <- function (devId, save.mode, pkg, st)
+	save.plot.to.history <- function (devId, save.mode, pkg, st, .cstr = NA_character_)
 	{
 		.my.message ("in: save.plot.to.history")
 		switch (save.mode,
-			append = .save.plot.to.history.append (devId, pkg, st),
-			overwrite = .save.plot.to.history.overwrite (devId, pkg, st),
+			append = .save.plot.to.history.append (devId, pkg, st, .cstr),
+			overwrite = .save.plot.to.history.overwrite (devId, pkg, st, .cstr),
 			NA_integer_)
 	}
-	.save.plot.to.history.append <- function (devId, pkg, st)
+	.save.plot.to.history.append <- function (devId, pkg, st, .cstr)
 	{
 		.my.message ("in: .save.plot.to.history.append")
 		if (!.save.oversized.plot ()) return (invisible (NA_integer_))
@@ -345,11 +350,11 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		if (is.na (n)) return (invisible (n))
 		
 		savedPlots [[st]] <<- list (plot = .unsavedPlot$plot, pkg = pkg, time = st, call = NULL)
-		savedPlots [[st]]$call <<- try (.get.oldplot.call (n, .cll))
+		savedPlots [[st]]$call <<- try (.get.oldplot.call (n, .cll, .cstr))
 		.my.message ("'n' = ", n, " (.save.plot.to.history.append)")
 		invisible (n)
 	}
-	.save.plot.to.history.overwrite <- function (devId, pkg, st)
+	.save.plot.to.history.overwrite <- function (devId, pkg, st, .cstr)
 	{
 		.my.message ("in: .save.plot.to.history.overwrite")
 		# this is not setup to handle an (yet unwritten) 'overwrite' action from tool/menu bar
@@ -359,7 +364,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 			if (!.save.oversized.plot ()) return (invisible (n))
 			.my.message ("_NOT_ identical, so overwriting!")
 			savedPlots [[.st.]]$plot <<- .unsavedPlot$plot
-			savedPlots [[.st.]]$call <<- try (.get.oldplot.call (n, .cll))
+			savedPlots [[.st.]]$call <<- try (.get.oldplot.call (n, .cll, .cstr))
 			.check.other.dev.at.same.pos (devId, n)
 		} else .my.message ("_IS_ identical, so not ckecking for odsp")
 		.my.message ("'n' = ", n, " (.save.plot.to.history.overwrite)")
@@ -495,6 +500,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 			histPositions [[d]]$pos.cur <<- NA_integer_
 			histPositions [[d]]$pos.prev <<- NA_integer_
 			histPositions [[d]]$pos.dupfrom <<- NA_integer_
+			# do not reset "pkg" and "call" elements
 		}
 		.rk.update.hist.actions ()
 		getDevSummary ()
@@ -528,7 +534,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 			plot (savedPlots [[st]]$plot, save.object = (cur.devId == as.numeric (devId)))
 		}
 		histPositions [[devId]] <<- modifyList (.hP.template, 
-			list (is.this.plot.new = FALSE, is.this.dev.new = FALSE, pos.prev = n, pos.cur = n, pkg = pkg))
+			list (is.this.plot.new = FALSE, is.this.dev.new = FALSE, pos.prev = n, pos.cur = n, pkg = pkg, call = savedPlots [[st]]$call))
 		.my.hP.print (devId)
 		dev.set (cur.devId)
 		invisible()
@@ -672,15 +678,15 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 			info.str <- paste ("Device: ", devId, 
 				", Position: ", n, 
 				", Size (KB): ", round (object.size (savedPlots [[.sP.index [[n]]]]$plot)/1024, 2),
-				"\n", .get.oldplot.call (n, l), sep = "")
+				"\n", .get.oldplot.call (n, l, histPositions [[devId]]$call), sep = "")
 		}
 		info.str
 	}
-	.get.oldplot.call <- function (n, l=0)
+	.get.oldplot.call <- function (n, l=0, cs = NA_character_)
 	{
 		# this can be easily extended to more types
 		switch (savedPlots [[.sP.index [[n]]]]$pkg,
-			graphics = .get.oldplot.call.std (n, l),
+			graphics = .get.oldplot.call.std2 (l, cs),
 			unknown = .get.oldplot.call.std (n, l),
 			lattice = .get.oldplot.call.lattice (n, l),
 			"Unknown")
@@ -719,6 +725,13 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		
 		#.lab.str <- paste ("Main: '", .x.$main, "'; X label: '", .x.$xlab, "'; Y label: '", .x.$ylab, "'", sep = "")
 		.lab.str <- paste ("X: ", .x.$xlab, "; Y: ", .x.$ylab, "; ", .x.$main, sep = "")
+		if (l <= 0 || nchar (.lab.str) <= l) return (.lab.str)
+		
+		paste (substr (.lab.str, 1, l), "...", sep = "")
+	}
+	.get.oldplot.call.std2 <- function (l=0, cs)
+	{
+		.lab.str <- paste (ifelse (is.call (cs), deparse (cs), cs), collapse = ifelse (l<=0, "\n", ", "))
 		if (l <= 0 || nchar (.lab.str) <= l) return (.lab.str)
 		
 		paste (substr (.lab.str, 1, l), "...", sep = "")
