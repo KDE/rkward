@@ -515,7 +515,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		.my.message ("'n' = ", n, " (replay)")
 		on.exit (.rk.update.hist.actions ())
 		if (missing (n))
-			return (invisible (rk.show.messgae ("Position missing", "Replay error", FALSE)))
+			return (invisible (rk.show.message ("Position missing", "Replay error", FALSE)))
 		if (is.na (n) || n < 0 || n > sP.length)
 			return (invisible (rk.show.message(paste ("replay: 'n' not in valid range: ", n), "Replay error", FALSE)))
 		
@@ -572,7 +572,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		.my.message ("in: showPlot")
 		if (!.is.device.managed (devId)) return (invisible ())
 		
-		.n. <- histPositions [[devId]]$pos.cur
+		.n. <- histPositions [[as.character (devId)]]$pos.cur
 		if (index == ifelse (is.na (.n.), sP.length + 1, .n.)) {
 			.my.message ("Same position! No action needed.")
 			return (invisible ())
