@@ -71,8 +71,8 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	dev.set (devId)
 	if (getOption ("rk.enable.graphics.history")) {
 	rk.record.plot$.my.message ("------- call begin -----------")
-	rk.record.plot$.set.trellis.last.object ()
-	rk.record.plot$getDevSummary ()
+		rk.record.plot$.set.trellis.last.object ()
+		rk.record.plot$getDevSummary ()
 	rk.record.plot$.my.message ("------- call end   -----------")
 	}
 }

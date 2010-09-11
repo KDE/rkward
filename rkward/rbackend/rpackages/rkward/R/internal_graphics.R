@@ -24,7 +24,7 @@
 	.rk.do.call ("endOpenX11", as.character (dev.cur ()));
 
 	if (getOption ("rk.enable.graphics.history"))
-	rk.record.plot$onAddDevice (old_dev, dev.cur (), is.being.duplicated, is.preview.device)
+		rk.record.plot$onAddDevice (old_dev, dev.cur (), is.being.duplicated, is.preview.device)
 
 	invisible (x)
 }
@@ -71,8 +71,8 @@ if (base::.Platform$OS.type == "windows") {
 	if (dev.cur() == 1) rk.screen.device ()
 	if (getOption ("rk.enable.graphics.history")) {
 rk.record.plot$.my.message ("------- call begin -----------")
-	.callstr <- sys.call (-sys.parents()[sys.nframe ()])
-	rk.record.plot$record (nextplot.pkg = "graphics", nextplot.call = .callstr)
+		.callstr <- sys.call (-sys.parents()[sys.nframe ()])
+		rk.record.plot$record (nextplot.pkg = "graphics", nextplot.call = .callstr)
 rk.record.plot$.my.message ("------- call end   -----------")
 	}
 	eval (body (.rk.plot.new.default))
@@ -83,7 +83,7 @@ formals (plot.new) <- formals (graphics::plot.new)
 "dev.off" <- function (which = dev.cur ())
 {
 	if (getOption ("rk.enable.graphics.history"))
-	rk.record.plot$onDelDevice (devId = which)
+		rk.record.plot$onDelDevice (devId = which)
 	
 	# see http://thread.gmane.org/gmane.comp.statistics.rkward.devel/802
 	.rk.do.call ("killDevice", as.character (which))
@@ -109,13 +109,13 @@ formals (dev.off) <- formals (grDevices::dev.off)
 				## TODO: use "trellis" instead of "lattice" to accomodate ggplot2 plots?
 				if (getOption ("rk.enable.graphics.history")) {
 rk.record.plot$.my.message ("------- call begin -----------")
-				rk.record.plot$record (nextplot.pkg = "lattice")
+					rk.record.plot$record (nextplot.pkg = "lattice")
 rk.record.plot$.my.message ("------- call end   -----------")
 				}
 				plot (x, ...)
 				if (getOption ("rk.enable.graphics.history")) {
 rk.record.plot$.my.message ("------- call begin -----------")
-				rk.record.plot$.save.tlo.in.hP ()
+					rk.record.plot$.save.tlo.in.hP ()
 rk.record.plot$.my.message ("------- call end   -----------")
 				}
 				invisible ()
@@ -129,8 +129,8 @@ rk.record.plot$.my.message ("------- call end   -----------")
 			if (dev.cur() == 1) rk.screen.device ()
 			if (getOption ("rk.enable.graphics.history")) {
 rk.record.plot$.my.message ("------- call begin -----------")
-			.callstr <- sys.call (-which.max(sys.parents()))
-			rk.record.plot$record (nextplot.pkg = "graphics", nextplot.call = .callstr)
+				.callstr <- sys.call (-which.max(sys.parents()))
+				rk.record.plot$record (nextplot.pkg = "graphics", nextplot.call = .callstr)
 rk.record.plot$.my.message ("------- call end   -----------")
 			}
 		},
