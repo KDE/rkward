@@ -598,10 +598,8 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	}
 	showPlotInfo <- function (devId = dev.cur ())
 	{
-		.my.message ("------- call begin -----------")
 		.my.message ("in: showPlotInfo")
 		rk.show.message (.get.plot.info.str (devId), caption = "Plot properties")
-		.my.message ("------- call end   -----------")
 	}
 	
 	## Utility / print functions:
@@ -770,13 +768,9 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	}
 	.verify.hist.limits <- function (len.max)
 	{
-		.my.message ("------- call begin -----------")
 		.my.message ("in: verify.hist.limits")
 		# this is called from settings/rksettingsmoduleoutput.cpp ~199
 		# Length restriction:
-		len.max <- as.integer (len.max)
-		#len.max <- getOption ('rk.graphics.hist.max.length')
-		
 		if (len.max < sP.length) {
 			ans <- rk.show.question (paste ("Current plot history has more plots than the specified limit.\nIf you continue then _",
 				sP.length - len.max, "_ of the foremost plots will be removed.\nInstead, if you ignore then the new limit will be effective only after restarting RKWard.", sep =""), 
@@ -794,7 +788,6 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		# Size restriction:
 		#s <- getOption ('rk.graphics.hist.max.plotsize')
 		# Existing plots are not checked for their sizes, only the new ones are.
-		.my.message ("------- call end   -----------")
 	}
 
 	env
@@ -852,5 +845,23 @@ rk.record.plot <- rk.record.plot ()
 	rk.record.plot$.my.message ("------- call begin -----------")
 	rk.record.plot$removePlot (devId)
 	rk.record.plot$getDevSummary ()
+	rk.record.plot$.my.message ("------- call end   -----------")
+}
+"rk.clear.plot.history" <- function ()
+{
+	rk.record.plot$.my.message ("------- call begin -----------")
+	rk.record.plot$clearHistory ()
+	rk.record.plot$.my.message ("------- call end   -----------")
+}
+"rk.show.plot.info" <- function (devId = dev.cur ())
+{
+	rk.record.plot$.my.message ("------- call begin -----------")
+	rk.record.plot$showPlotInfo (devId)
+	rk.record.plot$.my.message ("------- call end   -----------")
+}
+"rk.verify.plot.hist.limits" <- function (lmax)
+{
+	rk.record.plot$.my.message ("------- call begin -----------")
+	rk.record.plot$.verify.hist.limits (as.integer (lmax))
 	rk.record.plot$.my.message ("------- call end   -----------")
 }
