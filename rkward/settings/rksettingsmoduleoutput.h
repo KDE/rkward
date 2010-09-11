@@ -57,6 +57,7 @@ private:
 	KIntSpinBox *graphics_width_box;
 	KIntSpinBox *graphics_height_box;
 	KIntSpinBox *graphics_jpg_quality_box;
+	QCheckBox *graphics_hist_enable_box;
 	KIntSpinBox *graphics_hist_max_length_box;
 	KIntSpinBox *graphics_hist_max_plotsize_box;
 
@@ -66,6 +67,7 @@ private:
 	static int graphics_width;
 	static int graphics_height;
 	static int graphics_jpg_quality;
+	static bool graphics_hist_enable;
 	static int graphics_hist_max_length;
 	static int graphics_hist_max_plotsize;
 };

@@ -455,8 +455,8 @@ void RKCaughtX11Window::updateHistoryActions (int history_length, int position, 
 	RKCaughtX11Window::history_length = history_length;
 	RKCaughtX11Window::history_position = position;
 
-	plot_first_action->setEnabled (position > 1);
-	plot_prev_action->setEnabled (position > 1);
+	plot_first_action->setEnabled ((history_length > 0) && (position > 1));
+	plot_prev_action->setEnabled ((history_length > 0) && (position > 1));
 	plot_next_action->setEnabled ((history_length > 0) && (position < history_length));
 	plot_last_action->setEnabled ((history_length > 0) && (position < history_length));
 	QStringList _labels = labels;

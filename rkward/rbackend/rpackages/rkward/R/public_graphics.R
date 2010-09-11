@@ -68,11 +68,13 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 ## o/w a user call of dev.set () and dev.copy () will not be set/initiate the history properly
 "rk.activate.device" <- function (devId = dev.cur ())
 {
-	rk.record.plot$.my.message ("------- call begin -----------")
 	dev.set (devId)
+	if (getOption ("rk.enable.graphics.history")) {
+	rk.record.plot$.my.message ("------- call begin -----------")
 	rk.record.plot$.set.trellis.last.object ()
 	rk.record.plot$getDevSummary ()
 	rk.record.plot$.my.message ("------- call end   -----------")
+	}
 }
 
 # A global history of various graphics calls;
@@ -167,6 +169,27 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		.my.message ("------- call end   -----------")
 		invisible ()
 	}
+	initialize.histPositions <- function ()
+	{
+		# this is called from rk.toggle.plot.history ()
+		on.exit (.rk.update.hist.actions (enable.plot.hist = TRUE))
+		
+		# all open screen devices
+		.osd <- which (names (dev.list ()) %in% deviceIsInteractive ()) + 1
+		.opd <- unlist (.rk.preview.devices)
+		# to be managed devices:
+		if (length (.opd) > 0) .osd <-.osd [!(.osd %in% .opd)]
+		if (length (.osd) == 0) return (invisible ())
+		modifyList
+		
+		rk.show.message ("RKWard will re-initiate recording. For empty devices you may see an initial error.")
+		histPositions <<- list ("1" = .hP.template)
+		for (d in as.character (.osd))
+			histPositions [[d]] <<- modifyList(.hP.template, 
+					list (is.this.plot.new = TRUE, is.this.dev.new = FALSE, pkg = "unknown"))
+		.set.hP.names ()
+		getDevSummary ()
+	}
 	onDelDevice <- function (devId = dev.cur())
 	{
 		.my.message ("------- call begin -----------")
@@ -182,6 +205,19 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		getDevSummary ()
 		.my.message ("------- call end   -----------")
 		invisible ()
+	}
+	flushout.histPositions <- function ()
+	{
+		# this is called from rk.toggle.plot.history ()
+		
+		# save any unsaved plots and "close" the device w/o actually closing the window:
+		getDevSummary ()
+		for (d in .hP.names)
+			record (devId = d, action = "dev.off")
+		getDevSummary ()
+		.rk.update.hist.actions (enable.plot.hist = FALSE)
+		histPositions <<- list ("1" = .hP.template)
+		getDevSummary ()
 	}
 	.save.tlo.in.hP <- function (devId = dev.cur ())
 	{
@@ -743,7 +779,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	}
 	
 	## Utility / R - C++ connection functions:
-	.rk.update.hist.actions <- function (devIds = .hP.names)
+	.rk.update.hist.actions <- function (devIds = .hP.names, enable.plot.hist = TRUE)
 	{
 		# this function is called whenever the history length changes
 		# or the position changes in any device.
@@ -758,7 +794,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 			#labels <- NULL
 			#if (sP.length > 0) labels <- sapply (1:sP.length, function (x) try (.get.oldplot.call (x, .cll)))
 			labels <- .get.sP.calls ()
-			.rk.do.call ("updateDeviceHistory", c (sP.length, labels, positions));
+			.rk.do.call ("updateDeviceHistory", c (ifelse (enable.plot.hist, sP.length, 0), labels, positions));
 			.my.message ("uDHA call:")
 			.my.message ("  length: ", sP.length)
 			.my.message ("  positions: ", paste (positions, collapse = ", "))
@@ -797,8 +833,19 @@ rk.record.plot <- rk.record.plot ()
 # Users should use only these wrappers:
 # 1 is always the null device
 # TODO : comment / remove getDevSummary call
+"rk.toggle.plot.history" <- function (x = TRUE)
+{
+	if (x) {
+		rk.record.plot$initialize.histPositions ()
+	} else {
+		rk.record.plot$flushout.histPositions ()
+	}
+	options ("rk.enable.graphics.history" = x)
+	invisible ()
+}
 "rk.first.plot" <- function (devId = dev.cur ())
 {
+	if (!getOption ("rk.enable.graphics.history")) return (invisible ())
 	rk.record.plot$.my.message ("------- call begin -----------")
 	rk.record.plot$showFirst (devId)
 	rk.record.plot$getDevSummary ()
@@ -806,6 +853,7 @@ rk.record.plot <- rk.record.plot ()
 }
 "rk.previous.plot" <- function (devId = dev.cur ())
 {
+	if (!getOption ("rk.enable.graphics.history")) return (invisible ())
 	rk.record.plot$.my.message ("------- call begin -----------")
 	rk.record.plot$showPrevious (devId)
 	rk.record.plot$getDevSummary ()
@@ -813,6 +861,7 @@ rk.record.plot <- rk.record.plot ()
 }
 "rk.next.plot" <- function (devId = dev.cur ())
 {
+	if (!getOption ("rk.enable.graphics.history")) return (invisible ())
 	rk.record.plot$.my.message ("------- call begin -----------")
 	rk.record.plot$showNext (devId)
 	rk.record.plot$getDevSummary ()
@@ -820,12 +869,15 @@ rk.record.plot <- rk.record.plot ()
 }
 "rk.last.plot" <- function (devId = dev.cur ())
 {
+	if (!getOption ("rk.enable.graphics.history")) return (invisible ())
 	rk.record.plot$.my.message ("------- call begin -----------")
 	rk.record.plot$showLast (devId)
 	rk.record.plot$getDevSummary ()
 	rk.record.plot$.my.message ("------- call end   -----------")
 }
-"rk.goto.plot" <- function (devId = dev.cur (), index=1) {
+"rk.goto.plot" <- function (devId = dev.cur (), index=1)
+{
+	if (!getOption ("rk.enable.graphics.history")) return (invisible ())
 	rk.record.plot$.my.message ("------- call begin -----------")
 	rk.record.plot$.my.message ("in: goto.plot")
 	rk.record.plot$.my.message ("index: ", index)
@@ -835,6 +887,7 @@ rk.record.plot <- rk.record.plot ()
 }
 "rk.force.append.plot" <- function (devId = dev.cur ())
 {
+	if (!getOption ("rk.enable.graphics.history")) return (invisible ())
 	rk.record.plot$.my.message ("------- call begin -----------")
 	rk.record.plot$forceAppend (devId)
 	rk.record.plot$getDevSummary ()
@@ -842,6 +895,7 @@ rk.record.plot <- rk.record.plot ()
 }
 "rk.removethis.plot" <- function (devId = dev.cur ())
 {
+	if (!getOption ("rk.enable.graphics.history")) return (invisible ())
 	rk.record.plot$.my.message ("------- call begin -----------")
 	rk.record.plot$removePlot (devId)
 	rk.record.plot$getDevSummary ()
@@ -849,18 +903,21 @@ rk.record.plot <- rk.record.plot ()
 }
 "rk.clear.plot.history" <- function ()
 {
+	if (!getOption ("rk.enable.graphics.history")) return (invisible ())
 	rk.record.plot$.my.message ("------- call begin -----------")
 	rk.record.plot$clearHistory ()
 	rk.record.plot$.my.message ("------- call end   -----------")
 }
 "rk.show.plot.info" <- function (devId = dev.cur ())
 {
+	if (!getOption ("rk.enable.graphics.history")) return (invisible ())
 	rk.record.plot$.my.message ("------- call begin -----------")
 	rk.record.plot$showPlotInfo (devId)
 	rk.record.plot$.my.message ("------- call end   -----------")
 }
 "rk.verify.plot.hist.limits" <- function (lmax)
 {
+	if (!getOption ("rk.enable.graphics.history")) return (invisible ())
 	rk.record.plot$.my.message ("------- call begin -----------")
 	rk.record.plot$.verify.hist.limits (as.integer (lmax))
 	rk.record.plot$.my.message ("------- call end   -----------")
