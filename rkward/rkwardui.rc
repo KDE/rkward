@@ -92,9 +92,6 @@
 		<Action name="new_data_frame"/>
 		<Action name="new_command_editor"/>
 		<Action name="file_openy"/>
-		<Separator/>
-		<Action name="prev_window"/>
-		<Action name="next_window"/>
 </ToolBar>
 <ToolBar fullWidth="true" name="mdiToolBar">
 	<DefineGroup name="pretoolbar_actions_merge" append="pretoolbar_actions_merge"/>

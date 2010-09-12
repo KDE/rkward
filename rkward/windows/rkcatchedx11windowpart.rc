@@ -39,9 +39,6 @@
 		<Merge/>
 	</MenuBar>
 	<ToolBar name="mdiToolBar">
-		<Action name="device_activate"/>
-		<Action name="device_duplicate"/>
-		<Separator/>
 		<Action name="device_copy_to_output"/>
 		<Separator/>
 		<Action name="plot_list"/>
