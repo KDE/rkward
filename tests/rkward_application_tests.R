@@ -77,7 +77,79 @@ suite <- new ("RKTestSuite", id="rkward_application_tests",
 			stopifnot (all.equal (as.numeric (dev.list ()), 3))
 			dev.off ()
 			stopifnot (is.null (dev.list ()))
-		})
+		}),
+		new ("RKTest", id="plot_history_basics", call=function () {
+			graphics.off()
+			Sys.sleep (2)	# wait for everything to settle
+			rk.clear.plot.history()
+			options(rk.graphics.hist.max.plotsize=1000)
+			rk.toggle.plot.history(TRUE)
+			rk.verify.plot.hist.limits (5)
+			.pop.notify <<- FALSE
+
+			plots <- list ()
+			plot (1, 1)
+			plots[[1]] <- recordPlot()
+			plot (2, 2)
+			plots[[2]] <- recordPlot()
+			plot (3, 3)
+			plots[[3]] <- recordPlot()
+			rk.force.append.plot ()
+			stopifnot (dev.cur() == 2)
+			x11 ()
+			plot (4, 4)
+			plots[[4]] <- recordPlot()
+			plot (5, 5)
+			plots[[5]] <- recordPlot()
+			stopifnot (dev.cur() == 3)
+
+			## Navigation
+			rk.previous.plot (2)
+			stopifnot (dev.cur() == 3)
+			dev.set (2)
+			stopifnot (identical (recordPlot(), plots[[2]]))
+			rk.next.plot (2)
+			stopifnot (identical (recordPlot(), plots[[3]]))
+
+			rk.previous.plot (3)
+			dev.set (3)
+			stopifnot (identical (recordPlot(), plots[[4]]))
+			rk.next.plot (3)
+			stopifnot (identical (recordPlot(), plots[[5]]))
+
+			dev.set (2)
+			rk.goto.plot (2, 1)
+			stopifnot (identical (recordPlot(), plots[[1]]))
+
+			## Removing
+			# The plot should be removed in device 3, too
+			rk.removethis.plot (2)
+			stopifnot (identical (recordPlot(), plots[[2]]))
+			dev.set (3)
+			rk.first.plot (3)
+			stopifnot (identical (recordPlot(), plots[[2]]))
+
+			# this time, the plot was shown in both devices. It should not have be removed in the other!
+			rk.removethis.plot (3)
+			stopifnot (identical (recordPlot(), plots[[3]]))
+			dev.set (2)
+			stopifnot (identical (recordPlot(), plots[[2]]))
+
+			## Reaching the history limit
+			# three plots in history at this time, and one pending in device 2
+			dev.set (3)
+			rk.first.plot ()
+			stopifnot (identical (recordPlot(), plots[[3]]))
+			rk.last.plot ()
+			stopifnot (identical (recordPlot(), plots[[5]]))
+			dev.set (2)
+			plot (1, 1)
+			plot (1, 1)
+			# five plots in history at this time, and one pending in device 2
+			rk.force.append.plot ()	# first should have been popped, now
+			rk.first.plot ()
+			stopifnot (identical (recordPlot(), plots[[4]]))
+		}, libraries=c ("lattice"))
 	# postCalls are run *after* all tests. Use this to clean up
 	), postCalls = list (
 		function () {
