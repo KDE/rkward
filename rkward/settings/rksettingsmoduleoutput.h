@@ -48,6 +48,7 @@ public:
 	
 	static bool autoShow () { return auto_show; };
 	static bool autoRaise () { return auto_raise; };
+	static bool plotHistoryEnabled () { return graphics_hist_enable; };
 public slots:
 	void boxChanged (int);
 private:
