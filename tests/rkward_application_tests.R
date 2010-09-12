@@ -104,6 +104,7 @@ suite <- new ("RKTestSuite", id="rkward_application_tests",
 			stopifnot (dev.cur() == 3)
 
 			## Navigation
+			message ("mark 1")
 			rk.previous.plot (2)
 			stopifnot (dev.cur() == 3)
 			dev.set (2)
@@ -122,13 +123,16 @@ suite <- new ("RKTestSuite", id="rkward_application_tests",
 			stopifnot (identical (recordPlot(), plots[[1]]))
 
 			## Removing
+			message ("mark 2")
 			# The plot should be removed in device 3, too
 			rk.removethis.plot (2)
 			stopifnot (identical (recordPlot(), plots[[2]]))
+			message ("mark 3")
 			dev.set (3)
 			rk.first.plot (3)
 			stopifnot (identical (recordPlot(), plots[[2]]))
 
+			message ("mark 4")
 			# this time, the plot was shown in both devices. It should not have be removed in the other!
 			rk.removethis.plot (3)
 			stopifnot (identical (recordPlot(), plots[[3]]))
@@ -136,6 +140,7 @@ suite <- new ("RKTestSuite", id="rkward_application_tests",
 			stopifnot (identical (recordPlot(), plots[[2]]))
 
 			## Reaching the history limit
+			message ("mark 5")
 			# three plots in history at this time, and one pending in device 2
 			dev.set (3)
 			rk.first.plot ()
