@@ -279,7 +279,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		st <- .get.sys.time ()
 		n <- switch (histPositions[[devId]]$pkg,
 			graphics = .record.graphics (devId, action, newplot.in.Q, st),
-			unknown = .record.graphics (devId, action, newplot.in.Q, st, TRUE),
+			unknown = .record.graphics (devId, action, newplot.in.Q, st, "unknown"),
 			lattice = .record.lattice (devId, action, newplot.in.Q, st),
 			NA_integer_)
 		
@@ -304,11 +304,10 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		getDevSummary ()
 		invisible ()
 	}
-	.record.graphics <- function (devId, action, newplot.in.Q, st, unk = FALSE)
+	.record.graphics <- function (devId, action, newplot.in.Q, st, pkg = "graphics")
 	{
-		.pkg <- ifelse (unk, "unknown", "graphics")
-		.my.message ("in: .record.", .pkg)
-		.record.main (devId, .pkg)
+		.my.message ("in: .record.", pkg)
+		.record.main (devId, pkg)
 		if (is.null (.unsavedPlot$plot)) return (invisible (NA_integer_))
 		
 		if (histPositions [[devId]]$is.this.plot.new) {
@@ -322,7 +321,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		.my.message ("save.mode: ", save.mode)
 		
 		n <- save.plot.to.history (devId, save.mode, 
-			ifelse (action == "force.append", "unknown", .pkg), 
+			ifelse (action == "force.append", "unknown", pkg), 
 			st, histPositions[[devId]]$call)
 		.my.message ("'n' = ", n, " (RET from save.plot.to.history)")
 		invisible (n)
