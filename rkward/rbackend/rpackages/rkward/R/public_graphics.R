@@ -180,13 +180,18 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		# to be managed devices:
 		if (length (.opd) > 0) .osd <-.osd [!(.osd %in% .opd)]
 		if (length (.osd) == 0) return (invisible ())
-		modifyList
 		
-		rk.show.message ("RKWard will re-initiate recording. For empty devices you may see an initial error.")
+		d.cur <- dev.cur ()
 		histPositions <<- list ("1" = .hP.template)
-		for (d in as.character (.osd))
-			histPositions [[d]] <<- modifyList(.hP.template, 
+		for (d in as.character (.osd)) {
+			dev.set (as.numeric (d))
+			if (is.null (recordPlot ()[[1]])) # empty device
+				histPositions [[d]] <<- .hP.template
+			else
+				histPositions [[d]] <<- modifyList(.hP.template, 
 					list (is.this.plot.new = TRUE, is.this.dev.new = FALSE, pkg = "unknown"))
+		}
+		dev.set (d.cur)
 		.set.hP.names ()
 		getDevSummary ()
 	}
@@ -274,7 +279,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		st <- .get.sys.time ()
 		n <- switch (histPositions[[devId]]$pkg,
 			graphics = .record.graphics (devId, action, newplot.in.Q, st),
-			unknown = .record.graphics (devId, action, newplot.in.Q, st),
+			unknown = .record.graphics (devId, action, newplot.in.Q, st, TRUE),
 			lattice = .record.lattice (devId, action, newplot.in.Q, st),
 			NA_integer_)
 		
@@ -299,10 +304,11 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		getDevSummary ()
 		invisible ()
 	}
-	.record.graphics <- function (devId, action, newplot.in.Q, st)
+	.record.graphics <- function (devId, action, newplot.in.Q, st, unk = FALSE)
 	{
-		.my.message ("in: .record.graphics")
-		.record.main (devId, "graphics")
+		.pkg <- ifelse (unk, "unknown", "graphics")
+		.my.message ("in: .record.", .pkg)
+		.record.main (devId, .pkg)
 		if (is.null (.unsavedPlot$plot)) return (invisible (NA_integer_))
 		
 		if (histPositions [[devId]]$is.this.plot.new) {
@@ -316,7 +322,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		.my.message ("save.mode: ", save.mode)
 		
 		n <- save.plot.to.history (devId, save.mode, 
-			ifelse (action == "force.append", "unknown", "graphics"), 
+			ifelse (action == "force.append", "unknown", .pkg), 
 			st, histPositions[[devId]]$call)
 		.my.message ("'n' = ", n, " (RET from save.plot.to.history)")
 		invisible (n)
@@ -759,6 +765,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		
 		#.lab.str <- paste ("Main: '", .x.$main, "'; X label: '", .x.$xlab, "'; Y label: '", .x.$ylab, "'", sep = "")
 		.lab.str <- paste ("X: ", .x.$xlab, "; Y: ", .x.$ylab, "; ", .x.$main, sep = "")
+		if (all (unlist (.x.) == "")) .lab.str <- paste ("<Unknown>", .lab.str)
 		if (l <= 0 || nchar (.lab.str) <= l) return (.lab.str)
 		
 		paste (substr (.lab.str, 1, l), "...", sep = "")
