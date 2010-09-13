@@ -7,11 +7,16 @@
 
 	old_dev <- dev.cur ()
 
+	args <- list (...)
 	if (!exists (".rk.default.device")) {
 		if (base::.Platform$OS.type == "unix") {
 			device <- grDevices::x11
 		} else {
 			device <- grDevices::windows
+			if (is.null (args[["width"]])) args[["width"]] <- options ("rk.screendevice.width")[[1]]
+			if (!is.numeric (args[["width"]])) args[["width"]] <- 7
+			if (is.null (args[["height"]])) args[["height"]] <- options ("rk.screendevice.height")[[1]]
+			if (!is.numeric (args[["height"]])) args[["height"]] <- 7
 		}
 	} else {
 		device <- .rk.default.device
@@ -19,7 +24,7 @@
 			device <- get (.rk.default.device)
 		}
 	}
-	x <- device (...)
+	do.call (device, args)
 
 	.rk.do.call ("endOpenX11", as.character (dev.cur ()));
 

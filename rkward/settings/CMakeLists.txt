@@ -8,6 +8,7 @@ SET(settings_STAT_SRCS
    rksettingsmodule.cpp
    rksettingsmodulegeneral.cpp
    rksettingsmoduleoutput.cpp
+   rksettingsmodulegraphics.cpp
    rksettingsmodulephp.cpp
    rksettingsmoduleplugins.cpp
    rksettingsmoduler.cpp

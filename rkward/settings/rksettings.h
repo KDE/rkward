@@ -37,17 +37,18 @@ class RKSettings : public KPageDialog {
 public:
 	enum SettingsPage {
 		NoPage=0,
-		PagePlugins=1,
-		PageR=2,
-		PageRPackages=3,
-		PagePHP=4,
-		PageGeneral=5,
-		PageOutput=6,
-		PageWatch=7,
-		PageConsole=8,
-		PageCommandEditor=9,
-		PageObjectBrowser=10,
-		PageDebug=11,
+		PagePlugins,
+		PageR,
+		PageRPackages,
+		PagePHP,
+		PageGeneral,
+		PageOutput,
+		PageX11,
+		PageWatch,
+		PageConsole,
+		PageCommandEditor,
+		PageObjectBrowser,
+		PageDebug,
 		NumPages = PageDebug + 1
 	};
 

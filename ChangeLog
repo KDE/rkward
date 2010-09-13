@@ -1,3 +1,4 @@
+- Add option to specify default onscreen graphics dimensions		TODO: test on windows
 - Fixed: Graphics windows used to assume a minimum size of 640*480 pixels, even if a smaller size was specified			/ TODO: check on Windows!
 - Add option to disable function argument hinting
 - New functions rk.show.message() and rk.show.question() for user interaction from R code

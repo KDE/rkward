@@ -27,7 +27,7 @@
 #include <kwindowsystem.h>
 
 #include "../rkwardapplication.h"
-#include "../settings/rksettingsmoduleoutput.h"
+#include "../settings/rksettingsmodulegraphics.h"
 #include "rkworkplace.h"
 #include "../misc/rkstandardicons.h"
 #include "../debug.h"
@@ -473,11 +473,11 @@ void RKCaughtX11Window::updateHistoryActions (int history_length, int position, 
 	plot_list_action->setCurrentItem (history_position - 1);
 	plot_list_action->setEnabled (history_length > 0);
 
-	plot_force_append_action->setEnabled (RKSettingsModuleOutput::plotHistoryEnabled ());
+	plot_force_append_action->setEnabled (RKSettingsModuleGraphics::plotHistoryEnabled ());
 	plot_remove_action->setEnabled (history_length > 0);
 
 	plot_clear_history_action->setEnabled (history_length > 0);
-	plot_properties_action->setEnabled (RKSettingsModuleOutput::plotHistoryEnabled ());
+	plot_properties_action->setEnabled (RKSettingsModuleGraphics::plotHistoryEnabled ());
 }
 
 void RKCaughtX11Window::setStatusMessage (const QString& message, RCommand *command) {
