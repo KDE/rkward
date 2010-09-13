@@ -24,7 +24,7 @@
 			device <- get (.rk.default.device)
 		}
 	}
-	do.call (device, args)
+	x <- do.call (device, args)
 
 	.rk.do.call ("endOpenX11", as.character (dev.cur ()));
 
