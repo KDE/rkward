@@ -24,6 +24,7 @@
 
 #include <kmessagebox.h>
 #include <klocale.h>
+#include <kwindowsystem.h>
 
 #include "../rkwardapplication.h"
 #include "../settings/rksettingsmoduleoutput.h"
@@ -55,7 +56,14 @@ void RKWindowCatcher::stop (int new_cur_device) {
 	if (new_cur_device != last_cur_device) {
 		if (w) {
 			RKWorkplace::mainWorkplace ()->newX11Window (w, new_cur_device);
-			//new RKCaughtX11Window (w, new_cur_device);
+			// All this syncing looks like a bloody hack? Absolutely. It appears to work around the occasional error "figure margins too large" from R, though.
+			qApp->processEvents ();
+			qApp->syncX ();
+			qApp->processEvents ();
+#if defined Q_WS_X11
+			// this appears to have the side-effect of forcing the captured window to sync with X, which is exactly, what we're trying to achieve.
+			KWindowInfo wininfo = KWindowSystem::windowInfo (w, NET::WMName | NET::WMGeometry);
+#endif
 		} else {
 			KMessageBox::information (0, i18n ("You have created a new X11 device window in R. Usually, RKWard tries to detect such windows, to take control of them, and add a menu-bar to them. This time, however, RKWard failed to detect, which window was created, and so can not embed it.\nIf you created the window on a different screen or X11 display, that is to be expected. You might want to consider changing options(\"display\"), then.\nIf you can see the X11 window on the same screen as this message, then RKWard should do better. In this case, please contact us at rkward-devel@lists.sourceforge.net with details on your setup, so we can try to fix this in future versions of RKWard."), i18n ("Could not embed R X11 window"), "failure_to_detect_x11_device");
 		}
@@ -113,7 +121,6 @@ void RKWindowCatcher::killDevice (int device_number) {
 #include <kdialog.h>
 #include <knuminput.h>
 #include <kvbox.h>
-#include <kwindowsystem.h>
 #include <kactioncollection.h>
 #include <kpassivepopup.h>
 

@@ -70,10 +70,8 @@ suite <- new ("RKTestSuite", id="rkward_application_tests",
 
 			plot (1, 1); x11(); plot (2, 2)
 
-			Sys.sleep (2)	# wait for everything to settle
 			stopifnot (all.equal (as.numeric (dev.list ()), c (2, 3)))
 			dev.off (2)
-			Sys.sleep (2)
 			stopifnot (all.equal (as.numeric (dev.list ()), 3))
 			dev.off ()
 			stopifnot (is.null (dev.list ()))
@@ -92,7 +90,6 @@ suite <- new ("RKTestSuite", id="rkward_application_tests",
 			}
 
 			graphics.off()
-			Sys.sleep (2)	# wait for everything to settle
 			rk.clear.plot.history()
 			options(rk.graphics.hist.max.plotsize=1000)
 			rk.toggle.plot.history(TRUE)
@@ -200,7 +197,6 @@ suite <- new ("RKTestSuite", id="rkward_application_tests",
 			compareCurrentPlotWith (plots[[6]])
 
 			graphics.off ()
-			Sys.sleep (2)	# wait for everything to settle
 			rk.clear.plot.history()
 
 			## Manage only screen devices
@@ -214,7 +210,6 @@ suite <- new ("RKTestSuite", id="rkward_application_tests",
 			plot (3,3)
 			stopifnot (identical (c(1,2,4), as.numeric (rk.record.plot$.hP.names)))
 			graphics.off ()
-			Sys.sleep (2)	# wait for everything to settle
 			rk.clear.plot.history()
 			file.remove (fname)
 
@@ -242,10 +237,19 @@ suite <- new ("RKTestSuite", id="rkward_application_tests",
 			stopifnot (rk.record.plot$sP.length == 6)
 
 			graphics.off ()
-			Sys.sleep (2)	# wait for everything to settle
 			rk.clear.plot.history()
 			message ("mark 10")
-		}, libraries=c ("lattice"))
+		}, libraries=c ("lattice")),
+		new ("RKTest", id="device_capturing_stress_test", call=function () {
+			# This test checks for the "figure margins too large" error, that used to occur when plotting on a fresh device, sometimes.
+			# Since the error only appeared occasionally, we try 100 times to produce it. Unfortunately, that does make the test run annoyingly long...
+			graphics.off()
+			for (i in 1:100) {
+				rk.screen.device ()
+				plot (rnorm (100))
+				dev.off ()
+			}
+		})
 	# postCalls are run *after* all tests. Use this to clean up
 	), postCalls = list (
 		function () {
