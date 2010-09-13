@@ -86,14 +86,14 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	sP.length <- length (.sP.index)
 	.set.sP.length <- function () sP.length <<- length (.sP.index)
 	
-	.sP.template <- list (plot = NULL, pkg = "", time = NULL, call = NULL)
+	.sP.template <- list (plot = NULL, tlo.ls = NULL, pkg = "", time = NULL, call = NULL)
 	savedPlots <- list () # length (savedPlots) should always be == length (.sP.index) == sP.length
-	.unsavedPlot <- list (plot = NULL, pkg = NA_character_, is.os = NA, tryerr = NA)
+	.unsavedPlot <- list (plot = NULL, tlo.ls = NULL, pkg = NA_character_, is.os = NA, tryerr = NA)
 	
 	.hP.template <- list (is.this.plot.new = FALSE, is.this.dev.new = TRUE, 
 		pos.cur = NA_integer_, pos.prev = NA_integer_, pos.dupfrom = NA_integer_, 
 		#do.record = FALSE, do.append = FALSE, do.replace = FALSE, 
-		pkg = "", call = NA_character_, plot = NA)
+		pkg = "", call = NA_character_, plot = NA, tlo.ls = NA)
 	histPositions <- list ("1" = .hP.template)
 	.hP.names <- names (histPositions)
 	.set.hP.names <- function () .hP.names <<- names (histPositions)
@@ -117,11 +117,11 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		
 		.my.message ("call from .set.tlo: Will set tlo")
 		if (histPositions[[devId]]$is.this.plot.new)
-			tlo <- histPositions[[devId]]$plot
+			tlo.ls <- histPositions[[devId]]$tlo.ls
 		else
-			tlo <- savedPlots [[.sP.index [[histPositions[[devId]]$pos.cur]]]]$plot
+			tlo.ls <- savedPlots [[.sP.index [[histPositions[[devId]]$pos.cur]]]]$tlo.ls
 		
-		assign ("last.object", tlo, envir = lattice:::.LatticeEnv)
+		assign ("lattice.status", tlo.ls, envir = lattice:::.LatticeEnv)
 	}
 	.is.par.or.screen.inuse <- function ()
 	{
@@ -162,6 +162,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 			if (!histPositions [[devId.from]]$is.this.plot.new)
 				histPositions [[devId]]$pos.dupfrom <<- histPositions [[devId.from]]$pos.cur
 			histPositions [[devId]]$plot <<- histPositions [[devId.from]]$plot
+			histPositions [[devId]]$tlo.ls <<- histPositions [[devId.from]]$tlo.ls
 		}
 		.set.hP.names ()
 		getDevSummary ()
@@ -226,11 +227,13 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	}
 	.save.tlo.in.hP <- function (devId = dev.cur ())
 	{
+		if (!.is.device.managed (devId)) return (invisible ())
 		.my.message ("in: .save.tlo.in.hP")
 		# tlo = trellis.last.object
 		## TODO: explain why this is needed
 		devId <- as.character (devId)
 		histPositions [[devId]]$plot <<- trellis.last.object ()
+		histPositions [[devId]]$tlo.ls <<- get ("lattice.status", envir = lattice:::.LatticeEnv)
 		.my.hP.print (devId)
 		invisible ()
 	}
@@ -348,26 +351,26 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		.my.message ("in: .record.main")
 		devId.cur <- dev.cur ()
 		unsplot <- NULL
+		unsplot.ls <- NULL
 		if (pkg %in% c("graphics", "unknown")) {
 			dev.set (as.numeric (devId))
 			try (unsplot <- recordPlot(), silent=TRUE)
 			dev.set (devId.cur)
 		} else if  (pkg == "lattice") {
-			dev.set (as.numeric (devId))
-			try (unsplot <- trellis.last.object (), silent=TRUE)
-			dev.set (devId.cur)
+			unsplot <- histPositions [[devId]]$plot
+			unsplot.ls <- histPositions [[devId]]$tlo.ls
 		} else {
 			##TODO: is is still possible to save it?
-			.unsavedPlot <<- list (plot = NULL, pkg = NA_character_, is.os = NA, tryerr = NA)
+			.unsavedPlot <<- list (plot = NULL, tlo.ls = NULL, pkg = NA_character_, is.os = NA, tryerr = NA)
 			return (invisible (rk.show.message ("Unknown graphics function. Use append to store.", "Recording error", FALSE)))
 		}
 		
 		if (class (unsplot) == "try-error") {
-			.unsavedPlot <<- list (plot = NULL, pkg = pkg, is.os = NA, tryerr = TRUE)
+			.unsavedPlot <<- list (plot = NULL, tlo.ls = NULL, pkg = pkg, is.os = NA, tryerr = TRUE)
 			return (invisible (rk.show.message ("Unknown recording error", "Recording error", FALSE)))
 		}
 		
-		.unsavedPlot <<- list (plot = unsplot, pkg = pkg, 
+		.unsavedPlot <<- list (plot = unsplot, tlo.ls = unsplot.ls, pkg = pkg, 
 			is.os = object.size (unsplot) > getOption ("rk.graphics.hist.max.plotsize") * 1024, tryerr = FALSE)
 		
 		invisible ()
@@ -390,7 +393,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		n <- .grow.history (st)
 		if (is.na (n)) return (invisible (n))
 		
-		savedPlots [[st]] <<- list (plot = .unsavedPlot$plot, pkg = pkg, time = st, call = NULL)
+		savedPlots [[st]] <<- list (plot = .unsavedPlot$plot, tlo.ls = .unsavedPlot$tlo.ls, pkg = pkg, time = st, call = NULL)
 		savedPlots [[st]]$call <<- try (.get.oldplot.call (n, .cll, .cstr))
 		.my.message ("'n' = ", n, " (.save.plot.to.history.append)")
 		invisible (n)
@@ -405,6 +408,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 			if (!.save.oversized.plot ()) return (invisible (n))
 			.my.message ("_NOT_ identical, so overwriting!")
 			savedPlots [[.st.]]$plot <<- .unsavedPlot$plot
+			savedPlots [[.st.]]$tlo.ls <<- .unsavedPlot$tlo.ls
 			savedPlots [[.st.]]$call <<- try (.get.oldplot.call (n, .cll, .cstr))
 			.check.other.dev.at.same.pos (devId, n)
 		} else .my.message ("_IS_ identical, so not ckecking for odsp")
@@ -533,7 +537,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		.my.message ("in: clearHistory")
 		.sP.index <<- list (); .set.sP.length ()
 		savedPlots <<- list ()
-		.unsavedPlot <<- list (plot = NULL, pkg = NA_character_, is.os = NA, tryerr = NA)
+		.unsavedPlot <<- list (plot = NULL, tlo.ls = NULL, pkg = NA_character_, is.os = NA, tryerr = NA)
 		.ss.used <<- FALSE
 		for (d in .hP.names[-1]) {
 			if (!histPositions [[d]]$is.this.dev.new)
@@ -572,10 +576,15 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		} else if (pkg == "lattice") {
 			# (re-)plot the lattice object but, if the current window is NOT active, then do not save
 			# it to lattice:::.LatticeEnv$last.object ("trellis.last.object")
+			if (cur.devId != as.numeric (devId))
+				tlo.ls <- get ("lattice.status", envir = lattice:::.LatticeEnv)
 			plot (savedPlots [[st]]$plot, save.object = (cur.devId == as.numeric (devId)))
+			if (cur.devId != as.numeric (devId))
+				assign ("lattice.status", tlo.ls, envir = lattice:::.LatticeEnv)
 		}
 		histPositions [[devId]] <<- modifyList (.hP.template, 
-			list (is.this.plot.new = FALSE, is.this.dev.new = FALSE, pos.prev = n, pos.cur = n, pkg = pkg, call = savedPlots [[st]]$call))
+			list (is.this.plot.new = FALSE, is.this.dev.new = FALSE, pos.prev = n, pos.cur = n, pkg = pkg, 
+				call = savedPlots [[st]]$call, plot = savedPlots [[st]]$plot, tlo.ls = savedPlots [[st]]$tlo.ls))
 		.my.hP.print (devId)
 		dev.set (cur.devId)
 		invisible()
