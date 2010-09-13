@@ -79,19 +79,25 @@ suite <- new ("RKTestSuite", id="rkward_application_tests",
 			stopifnot (is.null (dev.list ()))
 		}),
 		new ("RKTest", id="plot_history_basics", call=function () {
+			le <- "package:lattice" %in% search ()
 			graphics.off()
 			Sys.sleep (2)	# wait for everything to settle
 			rk.clear.plot.history()
 			options(rk.graphics.hist.max.plotsize=1000)
 			rk.toggle.plot.history(TRUE)
 			rk.verify.plot.hist.limits (5)
-			.pop.notify <<- FALSE
+			assign (".pop.notify", FALSE, envir=rk.record.plot)
 
 			plots <- list ()
 			plot (1, 1)
 			plots[[1]] <- recordPlot()
-			plot (2, 2)
-			plots[[2]] <- recordPlot()
+			if (le) {
+				print (xyplot (2~2))
+				plots[[2]] <- trellis.last.object ()
+			} else {
+				plot (2,2)
+				plots[[2]] <- recordPlot()
+			}
 			plot (3, 3)
 			plots[[3]] <- recordPlot()
 			rk.force.append.plot ()
@@ -99,26 +105,39 @@ suite <- new ("RKTestSuite", id="rkward_application_tests",
 			x11 ()
 			plot (4, 4)
 			plots[[4]] <- recordPlot()
-			plot (5, 5)
-			plots[[5]] <- recordPlot()
+			if (le) {
+				print (xyplot (5~5))
+				plots[[5]] <- trellis.last.object ()
+			} else {
+				plot (5,5)
+				plots[[5]] <- recordPlot()
+			}
 			stopifnot (dev.cur() == 3)
 
 			## Navigation
 			message ("mark 1")
 			rk.previous.plot (2)
 			stopifnot (dev.cur() == 3)
-			dev.set (2)
-			stopifnot (identical (recordPlot(), plots[[2]]))
+			rk.activate.device (2)
+			if (le) {
+				stopifnot (identical (trellis.last.object(), plots[[2]]))
+			} else {
+				stopifnot (identical (recordPlot(), plots[[2]]))
+			}
 			rk.next.plot (2)
 			stopifnot (identical (recordPlot(), plots[[3]]))
 
 			rk.previous.plot (3)
-			dev.set (3)
+			rk.activate.device (3)
 			stopifnot (identical (recordPlot(), plots[[4]]))
 			rk.next.plot (3)
-			stopifnot (identical (recordPlot(), plots[[5]]))
+			if (le) {
+				stopifnot (identical (trellis.last.object(), plots[[5]]))
+			} else {
+				stopifnot (identical (recordPlot(), plots[[5]]))
+			}
 
-			dev.set (2)
+			rk.activate.device (2)
 			rk.goto.plot (2, 1)
 			stopifnot (identical (recordPlot(), plots[[1]]))
 
@@ -126,34 +145,119 @@ suite <- new ("RKTestSuite", id="rkward_application_tests",
 			message ("mark 2")
 			# The plot should be removed in device 3, too
 			rk.removethis.plot (2)
-			stopifnot (identical (recordPlot(), plots[[2]]))
+			if (le) {
+				stopifnot (identical (trellis.last.object(), plots[[2]]))
+			} else {
+				stopifnot (identical (recordPlot(), plots[[2]]))
+			}
 			message ("mark 3")
-			dev.set (3)
+			rk.activate.device (3)
 			rk.first.plot (3)
-			stopifnot (identical (recordPlot(), plots[[2]]))
+			if (le) {
+				stopifnot (identical (trellis.last.object(), plots[[2]]))
+			} else {
+				stopifnot (identical (recordPlot(), plots[[2]]))
+			}
 
 			message ("mark 4")
 			# this time, the plot was shown in both devices. It should not have be removed in the other!
 			rk.removethis.plot (3)
 			stopifnot (identical (recordPlot(), plots[[3]]))
-			dev.set (2)
-			stopifnot (identical (recordPlot(), plots[[2]]))
+			rk.activate.device (2)
+			if (le) {
+				stopifnot (identical (trellis.last.object(), plots[[2]]))
+			} else {
+				stopifnot (identical (recordPlot(), plots[[2]]))
+			}
 
 			## Reaching the history limit
 			message ("mark 5")
 			# three plots in history at this time, and one pending in device 2
-			dev.set (3)
+			rk.activate.device (3)
 			rk.first.plot ()
 			stopifnot (identical (recordPlot(), plots[[3]]))
 			rk.last.plot ()
-			stopifnot (identical (recordPlot(), plots[[5]]))
-			dev.set (2)
+			if (le) {
+				stopifnot (identical (trellis.last.object(), plots[[5]]))
+			} else {
+				stopifnot (identical (recordPlot(), plots[[5]]))
+			}
+			rk.activate.device (2)
 			plot (1, 1)
 			plot (1, 1)
 			# five plots in history at this time, and one pending in device 2
 			rk.force.append.plot ()	# first should have been popped, now
 			rk.first.plot ()
 			stopifnot (identical (recordPlot(), plots[[4]]))
+
+			## Duplicating plots
+			message ("mark 6")
+			rk.verify.plot.hist.limits (10)
+			rk.duplicate.device ()
+			stopifnot (dev.cur() == 4)
+			title (main = "plot [[4]]: duplicated")
+			plots[[6]] <- recordPlot ()
+			rk.first.plot () 
+			# at this stage 6 plots are in history, duplicated plot is at pos = 6
+			rk.activate.device (2)
+			stopifnot (identical (recordPlot(), plots[[4]]))
+			message ("mark 7")
+			title (main = "plot [[4]]: altered")
+			plots[[7]] <- recordPlot ()
+			rk.next.plot (); rk.previous.plot (); # overwrites at pos = 1
+			stopifnot (identical (recordPlot (), plots[[7]]))
+			rk.activate.device (4)
+			rk.force.append.plot () # original plot 4, is now at position 7
+			stopifnot (identical (recordPlot (), plots[[4]]))
+			rk.previous.plot (); # duplicated plot
+			stopifnot (identical (recordPlot (), plots[[6]]))
+
+			graphics.off ()
+			Sys.sleep (2)	# wait for everything to settle
+			rk.clear.plot.history()
+
+			## Manage only screen devices
+			message ("mark 8")
+			plot (1, 1)
+			fname <- rk.get.tempfile.name ("image", ".jpg")
+			message ("mark 8a")
+			jpeg (filename = fname)
+			plot (2,2)
+			x11 ()
+			plot (3,3)
+			stopifnot (identical (c(1,2,4), as.numeric (rk.record.plot$.hP.names)))
+			graphics.off ()
+			Sys.sleep (2)	# wait for everything to settle
+			rk.clear.plot.history()
+			file.remove (fname)
+
+			## Switching plot history on/off
+			message ("mark 9")
+			plots <- list ()
+			plot (1,1); plots[[1]] <- recordPlot()
+			plot (2,2); plots[[2]] <- recordPlot()
+			plot (3,3); plots[[3]] <- recordPlot()
+			x11 ()
+			plot (4,4); plots[[4]] <- recordPlot()
+			rk.toggle.plot.history(FALSE)
+			stopifnot (rk.record.plot$sP.length == 4)
+			plot (5,5)
+			plot (6,6); plots[[6]] <- recordPlot()
+			dev.set (2)
+			plot (7,7); plots[[7]] <- recordPlot()
+			stopifnot (rk.record.plot$sP.length == 4)
+			rk.toggle.plot.history(TRUE)
+			rk.force.append.plot ()
+			stopifnot (identical (recordPlot (), plots[[7]]))
+			dev.set (3)
+			rk.force.append.plot ()
+			stopifnot (identical (recordPlot (), plots[[6]]))
+			stopifnot (rk.record.plot$sP.length == 6)
+
+			graphics.off ()
+			Sys.sleep (2)	# wait for everything to settle
+			rk.clear.plot.history()
+			message ("mark 10")
 		}, libraries=c ("lattice"))
 	# postCalls are run *after* all tests. Use this to clean up
 	), postCalls = list (
