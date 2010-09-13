@@ -80,6 +80,17 @@ suite <- new ("RKTestSuite", id="rkward_application_tests",
 		}),
 		new ("RKTest", id="plot_history_basics", call=function () {
 			le <- "package:lattice" %in% search ()
+			compareCurrentPlotWith <- function (x) {
+				if (inherits (x, "trellis")) {
+					matches <- identical (trellis.last.object (), x)
+				} else {
+					matches <- identical (recordPlot (), x)
+				}
+				if (!matches) {
+					message ("Current plot does not match with ", deparse (substitute (x)))
+				}
+			}
+
 			graphics.off()
 			Sys.sleep (2)	# wait for everything to settle
 			rk.clear.plot.history()
@@ -119,76 +130,52 @@ suite <- new ("RKTestSuite", id="rkward_application_tests",
 			rk.previous.plot (2)
 			stopifnot (dev.cur() == 3)
 			rk.activate.device (2)
-			if (le) {
-				stopifnot (identical (trellis.last.object(), plots[[2]]))
-			} else {
-				stopifnot (identical (recordPlot(), plots[[2]]))
-			}
+			compareCurrentPlotWith (plots[[2]])
 			rk.next.plot (2)
-			stopifnot (identical (recordPlot(), plots[[3]]))
+			compareCurrentPlotWith (plots[[3]])
 
 			rk.previous.plot (3)
 			rk.activate.device (3)
-			stopifnot (identical (recordPlot(), plots[[4]]))
+			compareCurrentPlotWith (plots[[4]])
 			rk.next.plot (3)
-			if (le) {
-				stopifnot (identical (trellis.last.object(), plots[[5]]))
-			} else {
-				stopifnot (identical (recordPlot(), plots[[5]]))
-			}
+			compareCurrentPlotWith (plots[[5]])
 
 			rk.activate.device (2)
 			rk.goto.plot (2, 1)
-			stopifnot (identical (recordPlot(), plots[[1]]))
+			compareCurrentPlotWith (plots[[1]])
 
 			## Removing
 			message ("mark 2")
 			# The plot should be removed in device 3, too
 			rk.removethis.plot (2)
-			if (le) {
-				stopifnot (identical (trellis.last.object(), plots[[2]]))
-			} else {
-				stopifnot (identical (recordPlot(), plots[[2]]))
-			}
+			compareCurrentPlotWith (plots[[2]])
 			message ("mark 3")
 			rk.activate.device (3)
 			rk.first.plot (3)
-			if (le) {
-				stopifnot (identical (trellis.last.object(), plots[[2]]))
-			} else {
-				stopifnot (identical (recordPlot(), plots[[2]]))
-			}
+			compareCurrentPlotWith (plots[[2]])
 
 			message ("mark 4")
 			# this time, the plot was shown in both devices. It should not have be removed in the other!
 			rk.removethis.plot (3)
-			stopifnot (identical (recordPlot(), plots[[3]]))
+			compareCurrentPlotWith (plots[[3]])
 			rk.activate.device (2)
-			if (le) {
-				stopifnot (identical (trellis.last.object(), plots[[2]]))
-			} else {
-				stopifnot (identical (recordPlot(), plots[[2]]))
-			}
+			compareCurrentPlotWith (plots[[2]])
 
 			## Reaching the history limit
 			message ("mark 5")
 			# three plots in history at this time, and one pending in device 2
 			rk.activate.device (3)
 			rk.first.plot ()
-			stopifnot (identical (recordPlot(), plots[[3]]))
+			compareCurrentPlotWith (plots[[3]])
 			rk.last.plot ()
-			if (le) {
-				stopifnot (identical (trellis.last.object(), plots[[5]]))
-			} else {
-				stopifnot (identical (recordPlot(), plots[[5]]))
-			}
+			compareCurrentPlotWith (plots[[5]])
 			rk.activate.device (2)
 			plot (1, 1)
 			plot (1, 1)
 			# five plots in history at this time, and one pending in device 2
 			rk.force.append.plot ()	# first should have been popped, now
 			rk.first.plot ()
-			stopifnot (identical (recordPlot(), plots[[4]]))
+			compareCurrentPlotWith (plots[[4]])
 
 			## Duplicating plots
 			message ("mark 6")
@@ -200,17 +187,17 @@ suite <- new ("RKTestSuite", id="rkward_application_tests",
 			rk.first.plot () 
 			# at this stage 6 plots are in history, duplicated plot is at pos = 6
 			rk.activate.device (2)
-			stopifnot (identical (recordPlot(), plots[[4]]))
+			compareCurrentPlotWith (plots[[4]])
 			message ("mark 7")
 			title (main = "plot [[4]]: altered")
 			plots[[7]] <- recordPlot ()
 			rk.next.plot (); rk.previous.plot (); # overwrites at pos = 1
-			stopifnot (identical (recordPlot (), plots[[7]]))
+			compareCurrentPlotWith (plots[[7]])
 			rk.activate.device (4)
 			rk.force.append.plot () # original plot 4, is now at position 7
-			stopifnot (identical (recordPlot (), plots[[4]]))
+			compareCurrentPlotWith (plots[[4]])
 			rk.previous.plot (); # duplicated plot
-			stopifnot (identical (recordPlot (), plots[[6]]))
+			compareCurrentPlotWith (plots[[6]])
 
 			graphics.off ()
 			Sys.sleep (2)	# wait for everything to settle
@@ -219,7 +206,7 @@ suite <- new ("RKTestSuite", id="rkward_application_tests",
 			## Manage only screen devices
 			message ("mark 8")
 			plot (1, 1)
-			fname <- rk.get.tempfile.name ("image", ".jpg")
+			fname <- rk.get.tempfile.name ()
 			message ("mark 8a")
 			jpeg (filename = fname)
 			plot (2,2)
@@ -248,10 +235,10 @@ suite <- new ("RKTestSuite", id="rkward_application_tests",
 			stopifnot (rk.record.plot$sP.length == 4)
 			rk.toggle.plot.history(TRUE)
 			rk.force.append.plot ()
-			stopifnot (identical (recordPlot (), plots[[7]]))
+			compareCurrentPlotWith (plots[[7]])
 			dev.set (3)
 			rk.force.append.plot ()
-			stopifnot (identical (recordPlot (), plots[[6]]))
+			compareCurrentPlotWith (plots[[6]])
 			stopifnot (rk.record.plot$sP.length == 6)
 
 			graphics.off ()
