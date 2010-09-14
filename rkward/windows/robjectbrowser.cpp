@@ -2,7 +2,7 @@
                           robjectbrowser  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004, 2006, 2007, 2008, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2008, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -62,6 +62,7 @@ RObjectBrowser::RObjectBrowser (QWidget *parent, bool tool_window, const char *n
 
 	RKDummyPart *part = new RKDummyPart (this, layout_widget);
 	setPart (part);
+	setMetaInfo (i18n ("R workspace browser"), "rkward://page/rkward_workspace_browser", RKSettings::PageObjectBrowser);
 	initializeActivationSignals ();
 
 	setCaption (i18n ("Objects in the R workspace"));
