@@ -69,6 +69,7 @@ RCommand::~RCommand(){
 	for (QList<ROutput*>::const_iterator it = output_list.constBegin (); it != output_list.constEnd (); ++it) {
 		delete (*it);
 	}
+	delete [] receivers;
 	// The output_list itself is cleared automatically
 }
 

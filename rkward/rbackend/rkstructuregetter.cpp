@@ -444,6 +444,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 			}
 		}
 		UNPROTECT (1);   /* childnames_s */
+		delete [] childnames;
 	} else if (is_function) {
 		RData *funargsdata = new RData;
 		funargsdata->datatype = RData::StringVector;
