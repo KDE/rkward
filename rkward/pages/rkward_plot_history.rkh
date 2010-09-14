@@ -1,0 +1,52 @@
+<!DOCTYPE rkhelp>
+<document>
+	<title>Screen device history</title>
+
+	<summary>
+	The screen device history provides an interface to flip through your plots, similar a web browser. The current implementation understands most function calls from the graphics and lattice packages. Adding other graphical engines is planned for future. See the Technical Details section below for more information.
+
+	The screen device history is only accessible from an open screen device, under the <i>History</i> menu. It is available on most screen device windows. Such devices are called "managed" devices for the purpose of this help page. File devices, such as png, pdf, etc. are not, obviously, affected by this screen history implementation, and hence they are not managed. In addition, "preview" devices, which are available on some of the plugins are not managed either.
+	</summary>
+
+	<section title="Available actions" id="scd_actions">
+	Several actions are available either from the <i>History</i> menu or from the toolbar icons on a managed device. The displayed icons on the toolbar can be configured from the device window's Settings->Configure Toolbars menu item.
+
+	<ul>
+		<li><b>Go to plot</b>: This provides a drop down list of _all_ the plots stored in the history; giving an easily accessible "jumping" action. RKWard tries hard to identify the appropriate plot calls, but this is not always feasible. In such cases a further attempt is made to identify the <i>X label</i>, <i>Y label</i> and the <i>Main</i> titles of the plot and the displayed string looks like "<b>X:</b> <i>xlab</i>; <b>Y:</b> <i>ylab</i>; <i>main</i>". Sometimes even that is not possible (indicated by <b>&lt;Unknown&gt;</b>). Plots which are pending to be saved are indicated by <b>&lt;Unsaved plot&gt;</b>. The displayed strings are prepended with their corresponding position in the history. For the usual "linear browsing" see first / previous / next / last actions below.</li>
+		<li><b>First, Previous, Next, and Last plot</b>: Obvious browsing (or replaying) actions. These will try to save any unsaved/pending plot before displaying/replaying the intended (first / previous / next / last) plot. This shuold be very helpful for browsing to an already stored in the history and update it. For example, a base graphics plot modified by, say, <code>abline(h=0, v=0)</code> will automatically get stored "in-place" in the history.</li>
+		<li><b>Append this plot</b>: This action is provided to forcefully append the displayed plot to the end of the history, irrespective of its status (saved / unsaved) and type (graphics / lattice / ...). In cases when a plot does not automatically get stored in the history, this action should come in handy. But this flexibility comes at the cost of not being able to identify the plot call.</li>
+		<li><b>Remove this plot</b>: This will remove the currently displayed from the history (if it is stored) and replay the next "available" plot. When multiple devices are displaying the same plot (to be precise, same position in the history), then removing a plot from one device will not remove it from other devices; instead it will set the status of this plot on the other devies as new / pending. Thus, if you happen to remove one by mistake, and if it happens to be displayed on a second device, then you can re-add it to the history from the second device.</li>
+		<li><b>Clear history</b>: As the name suggests, this action will clear the plotting history. But the plots currently displayed on the devices, upon further action, will get added back to the history. To completely reset the screen device history close all open devices and call <code>rk.record.plot$clearHistory()</code></li>
+		<li><b>Plot properties</b>: This shows some additional information such as the size of the displayed plot as stored in the memory, the position of the current plot in the history, and, whenever possible the complete plot call.</li>
+	</ul>
+	</section>
+
+	<section title="Configurable Settings" id="scd_settings">
+	Some default settings for the Screen device history can be configured from Settings->Configure RKWard->Onscreen Graphics:
+
+	<ul>
+		<li><b>Screen device history</b>: Enables / disables the recording of plots globally. You can toggle this from within a running RKWard session which will affect all currently open and future screen devices. When unchecked, RKWard will not store any further plots in the history; altough, the ones already stored are not lost! You can access the stored plots by re-enabling this. When toggling this, RKWard tries to save any unsaved plots, but be careful especially when the maximum history length is small (see below). You may want to disable this when the implemented history behavior seems non-intuitive or when dealing with large plots.</li>
+		<li><b>Maximum number of recorded plots</b>: Controls the maximum number of plots that can be stored in the history. When this limit is reached, plots from the beginning of the history will get removed one by one, much like a push-pop stack. A warning dialog is shown when this happens. Be careful when setting this below the number of already stored plots. In that case an approriate number of plots from the beginning of the history stack will get removed, which may not be desirable.</li>
+		<li><b>Maximum size of a single recorded plot</b>: Controls the maximum allowed size (in KB) of a single plot that can be stored in the history. For a plot larger than this specified size, a dialog box, to save or to ignore the plot, will be presented. Unlike the above length restriction, this setting will affect only the future plots (that is, will not remove any already stored, yet large, plots).</li>
+	</ul>
+	</section>
+
+	<section title="Technical Details" id="scd_tech">
+	Some assorted technical details:
+	<ul>
+		<li>Technically speaking, function calls that pass through either <code>graphics::plot.new()</code> or <code>graphics::persp()</code> or <code>lattice::print.trellis()</code> are captured.</li>
+		<li>The base graphics plots are recorded and replayed using <code>recordPlot()</code> and <code>replayPlot()</code>.</li>
+		<li>The lattice plots are added to the history using a custom <code>print.trellis()</code> function set by <code>lattice.options("print.function")</code>. So, you are warned against resetting or modifying this from a running RKWard session. Similarly, you are very strongly advised agiainst using the <code>plot</code> method on a trellis object since it will not pass through <code>print.trellis()</code> and hence not be stored in the history. This may seem inocuous, but it will have irreparable consequences when trying to use <code>trellis.last.object()</code>, thereafter. You have been warned!</li>
+	</ul>
+	</section>
+
+	<related>
+	<ul>
+		<li><link href="rkward://rhelp/recordPlot"/></li>
+		<li><link href="rkward://rhelp/replayPlot"/></li>
+		<li><link href="rkward://rhelp/lattice.options"/> (needs lattice)</li>
+		<li><link href="rkward://rhelp/trellis.last.object"/> (needs lattice)</li>
+	</ul>
+	</related>
+
+</document>

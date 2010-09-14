@@ -48,6 +48,9 @@
 
 	Support for adding other types of data, esp. single vectors is planned, but not currently supported.
 	</section>
+	<section title="Graphics" id="graphics">
+	R has a few immensely powerful graphics systems (although not interactive) provided by various packages such as <b>graphics</b> and <b>lattice</b>. RKWard wraps around the standard platform-dependent screen device to provide a uniform experience. In additional to the standard functionality of these packages, RKWard provides a screen device history mechanism to store and browse your plots. See <link href="rkward://page/rkward_plot_history"/> for details.
+	</section>
 	<section title="Everything else" id="more">
 	You will notice that RKWard provides a lot of further menu options. These provide access to functionality in R. In fact, they do so by generating R syntax from settings made in a graphical dialog. For instance, select Analysis->Descriptive Statistics. You will notice a small window at the bottom (can be toggled on or off using the "Code" button) that contains the R code needed to generate these statistics. This way, even if you prefer to script your code by hand, you can use dialogs to gain snippets of code for functions you are less familiar with in R.
 
