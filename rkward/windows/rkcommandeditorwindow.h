@@ -183,8 +183,6 @@ public slots:
 	void runLine ();
 /** run the entire script */
 	void runAll ();
-/** invoke the settings page for the command editor */
-	void configure ();
 
 /** selection has changed. Enable / disable actions accordingly */
 	void selectionChanged (KTextEditor::View* view);

@@ -370,6 +370,7 @@ void RKHTMLWindow::useMode (WindowMode new_mode) {
 		else RK_ASSERT (false);		// we should know about this
 
 		setXMLFile ("rkoutputwindow.rc");
+		setMetaInfo (i18n ("Output Window"), "rkward://page/rkward_output", RKSettings::PageOutput);
 		run_selection->setVisible (false);
 	} else {
 		RK_ASSERT (new_mode == HTMLHelpWindow);

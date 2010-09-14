@@ -103,6 +103,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 	part->insertChildClient (m_view);
 	setPart (part);
 	fixupPartGUI ();
+	setMetaInfo (i18n ("Script Editor"), QString (), RKSettings::PageCommandEditor);
 	initializeActions (part->actionCollection ());
 	initializeActivationSignals ();
 	RKXMLGUISyncer::self()->registerChangeListener (m_view, this, SLOT (fixupPartGUI()));
@@ -196,9 +197,6 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 	action_setwd_to_script->setHelpText (i18n ("Change the working directory to the directory of this script"));
 #endif
 	action_setwd_to_script->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionCDToScript));
-
-	KAction* action_configure = ac->addAction ("configure_commandeditor", this, SLOT (configure()));
-	action_configure->setText (i18n ("Configure Script Editor"));
 }
 
 void RKCommandEditorWindow::initBlocks () {
@@ -748,12 +746,6 @@ void RKCommandEditorWindow::selectionChanged (KTextEditor::View* view) {
 		action_run_selection->setEnabled (false);
 		actionmenu_mark_block->setEnabled (false);
 	}
-}
-
-void RKCommandEditorWindow::configure () {
-	RK_TRACE (COMMANDEDITOR);
-
-	RKSettings::configureSettings (RKSettings::PageCommandEditor, this);
 }
 
 //////////////////////// RKFunctionArgHinter //////////////////////////////

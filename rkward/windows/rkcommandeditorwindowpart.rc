@@ -36,7 +36,5 @@
 		</Menu>
 		<Separator/>
 		<DefineGroup name="ktexteditor_popup_merge2"/>
-		<Separator/>
-		<Action name="configure_commandeditor"/>
 	</Menu>
 </kpartgui>
