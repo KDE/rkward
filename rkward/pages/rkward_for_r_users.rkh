@@ -19,7 +19,7 @@
 	See <link href="rkward://page/rkward_console"/> for more details.
 	</section>
 	<section title="Script Editors" id="script_editor">
-	Often it is more conventient to write scripts in a separate file, instead of typing them directly in the console. To open a new script editor (with syntax highlighting, and many more features), chose File->New->Script File, or open an already existing Script file using File->Open R Script File.
+	Often it is more convenient to write scripts in a separate file, instead of typing them directly in the console. To open a new script editor (with syntax highlighting, and many more features), chose File->New->Script File, or open an already existing Script file using File->Open R Script File.
 
 	You will note that the editor opens in a new window in the main workplace (the area of the window, that you are most likely reading this text, in). You can open any number of Script editor windows at the same time.
 
@@ -37,7 +37,7 @@
 	RKWard provides an advanced dialog to have installation, updating, and loading of packages. This is available from Workspace->Configure Packages.
 	</section>
 	<section title="Window management" id="window_management">
-	All windows shown in the main view area can be detached to a separate top level window using Windows->Detach. Similarily, detached windows can be attached to the main workplace using Window->Attach.
+	All windows shown in the main view area can be detached to a separate top level window using Windows->Detach. Similarly, detached windows can be attached to the main workplace using Window->Attach.
 
 	Windows can be closed using Windows->Close (Ctrl+W by default).
 
