@@ -23,6 +23,8 @@
 
 #include <kparts/part.h>
 
+#include "../settings/rksettings.h"
+
 class QEvent;
 class QPaintEvent;
 class RKWorkplace;
@@ -114,8 +116,12 @@ signals:
 	void captionChanged (RKMDIWindow *);
 /** This signal is emitted, when the window was activated *with* focus */
 	void windowActivated (RKMDIWindow *);
+protected slots:
+	void showWindowHelp ();
+	void showWindowSettings ();
 protected:
 	void setPart (KParts::Part *p) { part = p; };
+	void setMetaInfo (const QString& generic_window_name, const QString& help_url, RKSettings::SettingsPage settings_page=RKSettings::NoPage);
 	void initializeActivationSignals ();
 	void paintEvent (QPaintEvent *e);
 	void windowActivationChange (bool);
@@ -137,6 +143,9 @@ friend class RKToolWindowBar;
 	RKMDIStandardActionClient *standard_client;
 /** @see globalContextProperty() */
 	QMap<QString, QString> global_context_properties;
+	QString generic_window_name;
+	QString help_url;
+	RKSettings::SettingsPage settings_page;
 };
 
 #endif

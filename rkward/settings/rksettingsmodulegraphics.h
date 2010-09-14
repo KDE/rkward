@@ -45,7 +45,8 @@ public:
 	static void loadSettings (KConfig *config);
 	
 	QString caption ();
-	
+	QString helpURL () { return ("rkward://page/rkward_plot_history#scd_settings"); };
+
 	static bool plotHistoryEnabled () { return graphics_hist_enable; };
 public slots:
 	void boxChanged ();

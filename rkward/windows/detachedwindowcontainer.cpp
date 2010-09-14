@@ -100,7 +100,7 @@ void DetachedWindowContainer::hideEmptyMenus (bool ignore) {
 
 	// remove empty menus (we had to define them in detachedwindowcontainer.rc in order to force a sane menu order)
 	QStringList menu_names;
-	menu_names << "file" << "device" << "edit" << "run" << "view" << "settings";
+	menu_names << "file" << "device" << "history" << "edit" << "run" << "view" << "settings";
 	foreach (QString name, menu_names) {
 		QMenu* menu = dynamic_cast<QMenu*>(guiFactory ()->container (name, this));
 		if (menu) menu->menuAction ()->setVisible (!menu->isEmpty ());

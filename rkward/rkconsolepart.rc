@@ -32,9 +32,6 @@ but avoids the total derangement of the edit menu over time.
 		<Menu name="run"><text>&amp;Run</text>
 			<Action name="interrupt" group="postrun_actions_merge"/>
 		</Menu>
-		<Menu name="settings"><text>&amp;Settings</text>
-			<Action name="rkconsole_configure"></Action>
-		</Menu>
 	</MenuBar>
 	<ToolBar fullWidth="true" name="mdiToolBar">
 		<Action name="interrupt" group="postrun_actions_merge"/>
@@ -51,7 +48,5 @@ but avoids the total derangement of the edit menu over time.
 		<DefineGroup name="rkconsole_context_merge2"/>
 		<Separator/>
 		<Action name="rkconsole_clear"/>
-		<Separator/>
-		<Action name="rkconsole_configure"/>
 	</Menu>
 </kpartgui>

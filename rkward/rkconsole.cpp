@@ -112,6 +112,7 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 	setCaption (i18n ("R Console"));
 	console_part = new RKConsolePart (this);
 	setPart (console_part);
+	setMetaInfo (shortCaption (), "rkward://page/rkward_console", RKSettings::PageConsole);
 	initializeActivationSignals ();
 	initializeActions (getPart ()->actionCollection ());
 
@@ -796,11 +797,6 @@ void RKConsole::resetIncompleteCommand () {
 	tryNextInBatch (true);
 }
 
-void RKConsole::configure () {
-	RK_TRACE (APP);
-	RKSettings::configureSettings (RKSettings::PageConsole, this);
-}
-
 void RKConsole::slotInterruptCommand () {
 	RK_TRACE (APP);
 	RK_ASSERT (current_command || command_incomplete);
@@ -849,8 +845,6 @@ void RKConsole::initializeActions (KActionCollection *ac) {
 
 	ac->addAction (KStandardAction::Clear, "rkconsole_clear", this, SLOT (clear()));
 	paste_action = ac->addAction (KStandardAction::Paste, "rkconsole_paste", this, SLOT (paste()));
-	QAction *action = ac->addAction ("rkconsole_configure", this, SLOT (configure()));
-	action->setText (i18n ("Configure"));
 
 	addProxyAction ("file_print", i18n ("Print Console"));
 	addProxyAction ("file_export_html");

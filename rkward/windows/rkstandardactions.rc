@@ -16,6 +16,10 @@
 		</Menu>
 		<Menu name="help">
 			<Action name="function_reference" group="help_actions_merge"/>
+			<Action name="window_help" group="prehelp_actions_merge"/>
+		</Menu>
+		<Menu name="settings">
+			<Action name="window_configure"/>
 		</Menu>
 	</MenuBar>
 	<ToolBar fullWidth="true" name="mdiToolBar">
@@ -40,6 +44,8 @@
 		<Action name="paste_special" group="rkconsole_context_merge_paste"/>
 		<Action name="run_selection" group="rkconsole_context_merge1"/>
 		<Action name="function_reference" group="rkconsole_context_merge2"/>
+		<Separator/>
+		<Action name="window_configure"/>
 	</Menu>
 	<Menu name="rkcommandlog_context_menu">
 		<Action name="run_selection" group="rkcommandlog_context_merge1"/>

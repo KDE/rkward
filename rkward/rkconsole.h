@@ -175,7 +175,6 @@ public slots:
 	void literalCopy ();
 /** Clear the view, and add a prompt at the top. */
 	void clear ();
-	void configure ();
 /** show context help on the current word */
 	void showContextHelp ();
 /** interrupt current command. */

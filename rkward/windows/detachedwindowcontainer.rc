@@ -24,6 +24,9 @@
 		<Menu name="view"><text>&amp;View</text>
 			<DefineGroup name="view_dummy_merge" />
 		</Menu>
+		<Menu name="history"><text>&amp;History</text>
+			<DefineGroup name="history_dummy_merge" />
+		</Menu>
 		<Menu name="run"><text>&amp;Run</text>
 			<DefineGroup name="prerun_actions_merge" append="prerun_actions_merge"/>
 			<DefineGroup name="run_actions_merge" append="run_actions_merge"/>
@@ -40,9 +43,13 @@
 			<Separator/>
 			<Action name="dwindow_attach"/>
 		</Menu>
-		<Menu name="settings"/>
+		<Menu name="settings"><text>&amp;Settings</text>
+			<DefineGroup name="settings_dummy_merge" />
+		</Menu>
 		<Menu name="help"><text>&amp;Help</text>
-			<Merge/>
+			<DefineGroup name="prehelp_actions_merge" append="prehelp_actions_merge"/>
+			<DefineGroup name="help_actions_merge" append="help_actions_merge"/>
+			<DefineGroup name="posthelp_actions_merge" append="posthelp_actions_merge"/>
 		</Menu>
 	</MenuBar>
 </kpartgui>

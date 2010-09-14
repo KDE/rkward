@@ -2,7 +2,7 @@
                           rkmdiwindow  -  description
                              -------------------
     begin                : Tue Sep 26 2006
-    copyright            : (C) 2006, 2007, 2008, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007, 2008, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -26,6 +26,8 @@
 #include <kparts/event.h>
 #include <kxmlguifactory.h>
 #include <kactioncollection.h>
+#include <klocale.h>
+#include <kaction.h>
 
 #include "rkworkplace.h"
 #include "rkworkplaceview.h"
@@ -259,5 +261,39 @@ void RKMDIWindow::enterEvent (QEvent *event) {
 
 	QFrame::enterEvent (event);
 }
+
+void RKMDIWindow::setMetaInfo (const QString& _generic_window_name, const QString& _help_url, RKSettings::SettingsPage _settings_page) {
+	RK_TRACE (APP);
+
+	// only meant to be called once
+	RK_ASSERT (generic_window_name.isEmpty() && _help_url.isEmpty ());
+	generic_window_name = _generic_window_name;
+	help_url = _help_url;
+	settings_page = _settings_page;
+
+	if (!help_url.isEmpty ()) {
+		KAction *action = standardActionCollection ()->addAction ("window_help", this, SLOT (showWindowHelp()));
+		action->setText (i18n ("Help on %1", generic_window_name));
+	}
+	if (settings_page != RKSettings::NoPage) {
+		KAction *action = standardActionCollection ()->addAction ("window_configure", this, SLOT (showWindowSettings()));
+		action->setText (i18n ("Configure %1", generic_window_name));
+	}
+}
+
+void RKMDIWindow::showWindowHelp () {
+	RK_TRACE (APP);
+
+	RK_ASSERT (!help_url.isEmpty ());
+	RKWorkplace::mainWorkplace()->openHelpWindow (help_url, true);
+}
+
+void RKMDIWindow::showWindowSettings () {
+	RK_TRACE (APP);
+
+	RK_ASSERT (settings_page != RKSettings::NoPage);
+	RKSettings::configureSettings (settings_page, this);
+}
+
 
 #include "rkmdiwindow.moc"
