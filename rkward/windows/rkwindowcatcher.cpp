@@ -21,6 +21,7 @@
 
 #include <qlayout.h>
 #include <qapplication.h>
+#include <QDesktopWidget>
 
 #include <kmessagebox.h>
 #include <klocale.h>
@@ -216,6 +217,13 @@ void RKCaughtX11Window::doEmbed () {
 	// make xembed_container resizable, again, now that it actually has a content
 	dynamic_size_action->setChecked (true);
 	fixedSizeToggled ();
+
+	// try to be helpful when the window is too large to fit on screen
+	QRect dims = window ()->frameGeometry ();
+	QRect avail = QApplication::desktop ()->availableGeometry (window ());
+	if ((dims.width () > avail.width ()) || (dims.height () > avail.height ())) {
+		KMessageBox::information (this, i18n ("The current window appears to too large to fit on the screen. If this happens regularly, you may want to adjust the default graphics window size in Settings->Configure RKWard->Onscreen Graphics."), i18n ("Large window"), "dont_ask_again_large_x11_window");
+	}
 }
 
 RKCaughtX11Window::~RKCaughtX11Window () {
