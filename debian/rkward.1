@@ -2,7 +2,7 @@
 .\" First parameter, NAME, should be all caps
 .\" Second parameter, SECTION, should be 1-8, maybe w/ subsection
 .\" other parameters are allowed: see man(7), man(1)
-.TH RKWARD 1 "11-10-2005"
+.TH RKWARD 1 "14-09-2010"
 .\" Please adjust this date whenever revising the manpage.
 .\"
 .\" Some roff macros, for reference:
@@ -45,7 +45,7 @@ Verbosity of debug output. 0-5, where 0 is no output, 5 is all output including 
 Allows to configure, which sections of code to debug. Flags are given as a binary number. Refer to the source files for documentation, as this really is an internal option
 .TP
 .B \-\-debugger <command>
-Run RKWard through the specified debugger command. To add command line options to the debugger command, enclose them in single quotes ('') together with the command.
+Run RKWard through the specified debugger command. To add command line options to the debugger command, enclose them in single quotes ('') together with the command. NOTE: To use the \-\-debugger option, it must be specified as the first option on the command line.
 .TP
 .B \-\-disable-stack-check
 Disable the R C stack checking mechanism. If you see the error message "C stack usage too close to the limit", this option may serve as a workaround.

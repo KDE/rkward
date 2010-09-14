@@ -30,16 +30,15 @@ error () {
 }
 
 debugger=
-for i in `seq $#`
-do
-  arg=$(eval echo \$\{`echo ${i}`\})
-  if [ "${arg}" = "--debugger" ]; then
-    debugger=$(eval echo \$\{`echo $((i+1))`\})
-    if test -z "`echo ${debugger} | sed 's/^-.*//'`"; then
-      error "option '${arg}' requires an argument"
-    fi
+if [ "${1}" = "--debugger" ]; then
+  shift
+  if [ -z "${1}" ]; then
+    error  "option '--debugger' requires an argument"
+  else
+    debugger=${1}
+    shift
   fi
-done
+fi
 
 ## set LC_NUMERIC to "C"
 export LC_NUMERIC="C"
