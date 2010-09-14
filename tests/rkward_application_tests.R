@@ -246,7 +246,7 @@ suite <- new ("RKTestSuite", id="rkward_application_tests",
 			graphics.off()
 			for (i in 1:100) {
 				rk.screen.device ()
-				plot (rnorm (100))
+				plot (rnorm (100), main=paste (i, "/ 100"))
 				dev.off ()
 			}
 		})
