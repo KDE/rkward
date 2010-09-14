@@ -39,9 +39,6 @@ QString RKSettingsModuleOutput::graphics_type;
 int RKSettingsModuleOutput::graphics_width;
 int RKSettingsModuleOutput::graphics_height;
 int RKSettingsModuleOutput::graphics_jpg_quality;
-bool RKSettingsModuleOutput::graphics_hist_enable;
-int RKSettingsModuleOutput::graphics_hist_max_length;
-int RKSettingsModuleOutput::graphics_hist_max_plotsize;
 
 RKSettingsModuleOutput::RKSettingsModuleOutput (RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
 	RK_TRACE (SETTINGS);
@@ -93,26 +90,6 @@ RKSettingsModuleOutput::RKSettingsModuleOutput (RKSettings *gui, QWidget *parent
 
 	main_vbox->addWidget (group);
 
-	group = new QGroupBox (i18n ("Screen device history"), this);
-	group_layout = new QVBoxLayout (group);
-	group_layout->addWidget (graphics_hist_enable_box = new QCheckBox (i18n ("enable screen device history"), group));
-	graphics_hist_enable_box->setChecked (graphics_hist_enable);
-	connect (graphics_hist_enable_box, SIGNAL (stateChanged (int)), this, SLOT (boxChanged (int)));
-	h_layout = new QHBoxLayout (group);
-	group_layout->addLayout (h_layout);
-	h_layout->addWidget (new QLabel (i18n ("Maximum number of recorded plots:"), group));
-	h_layout->addWidget (graphics_hist_max_length_box = new KIntSpinBox (1, 200, 1, graphics_hist_max_length, group));
-	graphics_hist_max_length_box->setEnabled (graphics_hist_enable);
-	h_layout = new QHBoxLayout (group);
-	group_layout->addLayout (h_layout);
-	h_layout->addWidget (new QLabel (i18n ("Maximum size of a single recorded plot (in KB):"), group));
-	h_layout->addWidget (graphics_hist_max_plotsize_box = new KIntSpinBox (4, 20000, 4, graphics_hist_max_plotsize, group)); // in KB
-	graphics_hist_max_plotsize_box->setEnabled (graphics_hist_enable);
-	connect (graphics_hist_max_length_box, SIGNAL (valueChanged (int)), this, SLOT (boxChanged (int)));
-	connect (graphics_hist_max_plotsize_box, SIGNAL (valueChanged (int)), this, SLOT (boxChanged (int)));
-
-	main_vbox->addWidget (group);
-
 	main_vbox->addStretch ();
 }
 
@@ -124,8 +101,6 @@ void RKSettingsModuleOutput::boxChanged (int) {
 	RK_TRACE (SETTINGS);
 	change ();
 	auto_raise_box->setEnabled (auto_show_box->isChecked ());
-	graphics_hist_max_length_box->setEnabled (graphics_hist_enable_box->isChecked ());
-	graphics_hist_max_plotsize_box->setEnabled (graphics_hist_enable_box->isChecked ());
 	graphics_jpg_quality_box->setEnabled (graphics_type_box->itemData (graphics_type_box->currentIndex ()).toString () == "\"JPG\"");
 }
 
@@ -150,10 +125,6 @@ void RKSettingsModuleOutput::applyChanges () {
 	graphics_height = graphics_height_box->value ();
 	graphics_jpg_quality = graphics_jpg_quality_box->value ();
 
-	graphics_hist_enable = graphics_hist_enable_box->isChecked ();
-	graphics_hist_max_length = graphics_hist_max_length_box->value ();
-	graphics_hist_max_plotsize = graphics_hist_max_plotsize_box->value ();
-
 	QStringList commands = makeRRunTimeOptionCommands ();
 	for (QStringList::const_iterator it = commands.begin (); it != commands.end (); ++it) {
 		RKGlobals::rInterface ()->issueCommand (*it, RCommand::App, QString::null, 0, 0, commandChain ());
@@ -176,9 +147,6 @@ void RKSettingsModuleOutput::saveSettings (KConfig *config) {
 	cg.writeEntry ("graphics_width", graphics_width);
 	cg.writeEntry ("graphics_height", graphics_height);
 	cg.writeEntry ("graphics_jpg_quality", graphics_jpg_quality);
-	cg.writeEntry ("graphics_hist_enable", graphics_hist_enable);
-	cg.writeEntry ("graphics_hist_max_length", graphics_hist_max_length);
-	cg.writeEntry ("graphics_hist_max_plotsize", graphics_hist_max_plotsize);
 }
 
 void RKSettingsModuleOutput::loadSettings (KConfig *config) {
@@ -191,9 +159,6 @@ void RKSettingsModuleOutput::loadSettings (KConfig *config) {
 	graphics_width = cg.readEntry ("graphics_width", 480);
 	graphics_height = cg.readEntry ("graphics_height", 480);
 	graphics_jpg_quality = cg.readEntry ("graphics_jpg_quality", 75);
-	graphics_hist_enable = cg.readEntry ("graphics_hist_enable", true);
-	graphics_hist_max_length = cg.readEntry ("graphics_hist_max_length", 20);
-	graphics_hist_max_plotsize = cg.readEntry ("graphics_hist_max_plotsize", 1024);
 }
 
 //static
@@ -205,10 +170,7 @@ QStringList RKSettingsModuleOutput::makeRRunTimeOptionCommands () {
 	command.append (", \"rk.graphics.width\"=" + QString::number (graphics_width));
 	command.append (", \"rk.graphics.height\"=" + QString::number (graphics_height));
 	if (graphics_type == "\"JPG\"") command.append (", \"rk.graphics.jpg.quality\"=" + QString::number (graphics_jpg_quality));
-	//command.append (", \"rk.graphics.hist.max.length\"=" + QString::number (graphics_hist_max_length));
-	command.append (", \"rk.graphics.hist.max.plotsize\"=" + QString::number (graphics_hist_max_plotsize));
-	command.append (")\nrk.toggle.plot.history (" + QString (graphics_hist_enable?"TRUE":"FALSE") + ")\n");
-	list.append (command + "rk.verify.plot.hist.limits (" + QString::number (graphics_hist_max_length) + ")\n");
+	list.append (command + ")\n");
 	
 	return (list);
 }

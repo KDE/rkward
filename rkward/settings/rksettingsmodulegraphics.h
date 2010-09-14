@@ -22,6 +22,7 @@
 #include <QStringList>
 
 class QGroupBox;
+class RKSpinBox;
 class KIntSpinBox;
 
 /**
@@ -53,15 +54,15 @@ private:
 	KIntSpinBox *graphics_hist_max_length_box;
 	KIntSpinBox *graphics_hist_max_plotsize_box;
 
-	KIntSpinBox *graphics_height_box;
-	KIntSpinBox *graphics_width_box;
+	RKSpinBox *graphics_height_box;
+	RKSpinBox *graphics_width_box;
 
 	static bool graphics_hist_enable;
 	static int graphics_hist_max_length;
 	static int graphics_hist_max_plotsize;
 
-	static int graphics_height;
-	static int graphics_width;
+	static double graphics_height;
+	static double graphics_width;
 };
 
 #endif

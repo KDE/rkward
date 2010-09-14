@@ -48,7 +48,6 @@ public:
 	
 	static bool autoShow () { return auto_show; };
 	static bool autoRaise () { return auto_raise; };
-	static bool plotHistoryEnabled () { return graphics_hist_enable; };
 public slots:
 	void boxChanged (int);
 private:
@@ -58,9 +57,6 @@ private:
 	KIntSpinBox *graphics_width_box;
 	KIntSpinBox *graphics_height_box;
 	KIntSpinBox *graphics_jpg_quality_box;
-	QCheckBox *graphics_hist_enable_box;
-	KIntSpinBox *graphics_hist_max_length_box;
-	KIntSpinBox *graphics_hist_max_plotsize_box;
 
 	static bool auto_show;
 	static bool auto_raise;
@@ -68,9 +64,6 @@ private:
 	static int graphics_width;
 	static int graphics_height;
 	static int graphics_jpg_quality;
-	static bool graphics_hist_enable;
-	static int graphics_hist_max_length;
-	static int graphics_hist_max_plotsize;
 };
 
 #endif

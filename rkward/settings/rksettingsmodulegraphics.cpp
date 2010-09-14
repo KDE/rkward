@@ -26,15 +26,15 @@
 #include <QGroupBox>
 #include <qcheckbox.h>
 #include <QVBoxLayout>
-#include <QComboBox>
 
 #include "../rkglobals.h"
 #include "../rbackend/rinterface.h"
+#include "../misc/rkspinbox.h"
 #include "../debug.h"
 
 // static members
-int RKSettingsModuleGraphics::graphics_width;
-int RKSettingsModuleGraphics::graphics_height;
+double RKSettingsModuleGraphics::graphics_width;
+double RKSettingsModuleGraphics::graphics_height;
 bool RKSettingsModuleGraphics::graphics_hist_enable;
 int RKSettingsModuleGraphics::graphics_hist_max_length;
 int RKSettingsModuleGraphics::graphics_hist_max_plotsize;
@@ -47,10 +47,12 @@ RKSettingsModuleGraphics::RKSettingsModuleGraphics (RKSettings *gui, QWidget *pa
 	QGroupBox *group = new QGroupBox (i18n ("Default window size"), this);
 	QVBoxLayout* group_layout = new QVBoxLayout (group);
 	group_layout->addWidget (new QLabel (i18n ("Default width (inches):"), group));
-	group_layout->addWidget (graphics_width_box = new KIntSpinBox (1, 100, 1, graphics_width, group));
+	group_layout->addWidget (graphics_width_box = new RKSpinBox (group));
+	graphics_width_box->setRealMode (1, 100.0, graphics_width, 1, 3);
 	group_layout->addSpacing (2*RKGlobals::spacingHint ());
 	group_layout->addWidget (new QLabel (i18n ("Default height (inches)"), group));
-	group_layout->addWidget (graphics_height_box = new KIntSpinBox (1, 100, 1, graphics_height, group));
+	group_layout->addWidget (graphics_height_box = new RKSpinBox (group));
+	graphics_height_box->setRealMode (1, 100.0, graphics_height, 1, 3);
 	connect (graphics_width_box, SIGNAL (valueChanged (int)), this, SLOT (boxChanged ()));
 	connect (graphics_height_box, SIGNAL (valueChanged (int)), this, SLOT (boxChanged ()));
 	main_vbox->addWidget (group);
@@ -100,8 +102,8 @@ bool RKSettingsModuleGraphics::hasChanges () {
 void RKSettingsModuleGraphics::applyChanges () {
 	RK_TRACE (SETTINGS);
 
-	graphics_width = graphics_width_box->value ();
-	graphics_height = graphics_height_box->value ();
+	graphics_width = graphics_width_box->realValue ();
+	graphics_height = graphics_height_box->realValue ();
 
 	graphics_hist_enable = graphics_hist_box->isChecked ();
 	graphics_hist_max_length = graphics_hist_max_length_box->value ();
@@ -134,8 +136,8 @@ void RKSettingsModuleGraphics::loadSettings (KConfig *config) {
 	RK_TRACE (SETTINGS);
 
 	KConfigGroup cg = config->group ("Graphics Device Windows");
-	graphics_width = cg.readEntry ("graphics_width", 7);
-	graphics_height = cg.readEntry ("graphics_height", 7);
+	graphics_width = cg.readEntry ("graphics_width", 7.0);
+	graphics_height = cg.readEntry ("graphics_height", 7.0);
 	graphics_hist_enable = cg.readEntry ("graphics_hist_enable", true);
 	graphics_hist_max_length = cg.readEntry ("graphics_hist_max_length", 20);
 	graphics_hist_max_plotsize = cg.readEntry ("graphics_hist_max_plotsize", 1024);
