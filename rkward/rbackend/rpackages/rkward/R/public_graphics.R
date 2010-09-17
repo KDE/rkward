@@ -204,7 +204,6 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		devId <- as.character (devId)
 		histPositions [[devId]]$plot <<- trellis.last.object ()
 		histPositions [[devId]]$tlo.ls <<- get ("lattice.status", envir = lattice:::.LatticeEnv)
-		.my.hP.print (devId)
 		invisible ()
 	}
 	.prep.new.device <- function (devId, pkg, .cstr)
@@ -514,7 +513,6 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		histPositions [[devId]] <<- modifyList (.hP.template, 
 			list (is.this.plot.new = FALSE, is.this.dev.new = FALSE, pos.prev = n, pos.cur = n, pkg = pkg, 
 				call = savedPlots [[st]]$call, plot = savedPlots [[st]]$plot, tlo.ls = savedPlots [[st]]$tlo.ls))
-		.my.hP.print (devId)
 		.rk.dev.set.default (cur.devId)
 		invisible()
 	}
@@ -636,7 +634,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	.get.plot.info.str <- function (devId = dev.cur (), l=0)
 	{
 		devId <- as.character (devId)
-		if (!(devId %in% .hP.names)) return (invisible (rk.show.message (paste ("Device", devId, "is not managed."), wait = FALSE)))
+		if (!(devId %in% .hP.names)) return (paste ("Device", devId, "is not managed."))
 		
 		n <- histPositions [[devId]]$pos.cur
 		if (is.na (n)) {

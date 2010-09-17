@@ -394,7 +394,6 @@ void RKCaughtX11Window::copyDeviceToRObject () {
 void RKCaughtX11Window::duplicateDevice () {
 	RK_TRACE (MISC);
 
-// 	RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ")\ndev.copy (device=x11)", RCommand::App, i18n ("Duplicate graphics device number %1", device_number), error_dialog);
 	RKGlobals::rInterface ()->issueCommand ("rk.duplicate.device (" + QString::number (device_number) + ")", RCommand::App, i18n ("Duplicate graphics device number %1", device_number), error_dialog);
 }
 
@@ -442,7 +441,6 @@ void RKCaughtX11Window::forceAppendCurrentPlot () {
 	RK_TRACE (MISC);
 
 	RKGlobals::rInterface ()->issueCommand ("rk.force.append.plot (" + QString::number (device_number) + ')', RCommand::App, i18n ("Append this plot to history (device number %1)", device_number), error_dialog);
-	//updateHistoryActions (history_length+1, history_length+1);
 }
 
 void RKCaughtX11Window::removeCurrentPlot () {
@@ -457,7 +455,6 @@ void RKCaughtX11Window::clearHistory () {
 	if (KMessageBox::warningContinueCancel (this, i18n ("This will clear the plot history for all device windows, not just this one. If this is not your intent, press cancel, below.")) != KMessageBox::Continue) return;
 
 	RKGlobals::rInterface ()->issueCommand ("rk.clear.plot.history ()", RCommand::App, i18n ("Clear plot history"), error_dialog);
-	//updateHistoryActions (0, 0);
 }
 
 void RKCaughtX11Window::showPlotInfo () {
