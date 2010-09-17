@@ -574,7 +574,6 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	}
 	
 	## Utility / print functions:
-## TODO: add these functions to rkh file
 	getDevSummary <- function (devId = NULL)
 	{
 		message ("History length   : ", sP.length)
@@ -813,4 +812,14 @@ rk.record.plot <- rk.record.plot ()
 {
 	if (!getOption ("rk.enable.graphics.history")) return (invisible ())
 	rk.record.plot$.verify.hist.limits (as.integer (lmax))
+}
+"rk.plot.history.summary" <- function (which = NULL, type = c ("devices", "history"))
+{
+	ret <- NULL
+	if (getOption ("rk.enable.graphics.history")) 
+		ret <- switch (
+			devices = rk.record.plot$getDevSummary (which),
+			history = rk.record.plot$getSavedPlotsSummary (),
+			NULL)
+	ret
 }
