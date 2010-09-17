@@ -75,10 +75,8 @@ if (base::.Platform$OS.type == "windows") {
 {
 	if (dev.cur() == 1) rk.screen.device ()
 	if (getOption ("rk.enable.graphics.history")) {
-rk.record.plot$.my.message ("------- call begin -----------")
 		.callstr <- sys.call (-sys.parents()[sys.nframe ()])
 		rk.record.plot$record (nextplot.pkg = "graphics", nextplot.call = .callstr)
-rk.record.plot$.my.message ("------- call end   -----------")
 	}
 	eval (body (.rk.plot.new.default))
 }
@@ -126,15 +124,11 @@ formals (dev.set) <- formals (grDevices::dev.set)
 				if (dev.cur() == 1) rk.screen.device ()
 				## TODO: use "trellis" instead of "lattice" to accomodate ggplot2 plots?
 				if (getOption ("rk.enable.graphics.history")) {
-rk.record.plot$.my.message ("------- call begin -----------")
 					rk.record.plot$record (nextplot.pkg = "lattice")
-rk.record.plot$.my.message ("------- call end   -----------")
 				}
 				plot (x, ...)
 				if (getOption ("rk.enable.graphics.history")) {
-rk.record.plot$.my.message ("------- call begin -----------")
 					rk.record.plot$.save.tlo.in.hP ()
-rk.record.plot$.my.message ("------- call end   -----------")
 				}
 				invisible ()
 			})
@@ -146,10 +140,8 @@ rk.record.plot$.my.message ("------- call end   -----------")
 		{
 			if (dev.cur() == 1) rk.screen.device ()
 			if (getOption ("rk.enable.graphics.history")) {
-rk.record.plot$.my.message ("------- call begin -----------")
 				.callstr <- sys.call (-which.max(sys.parents()))
 				rk.record.plot$record (nextplot.pkg = "graphics", nextplot.call = .callstr)
-rk.record.plot$.my.message ("------- call end   -----------")
 			}
 		},
 		action = "append"
