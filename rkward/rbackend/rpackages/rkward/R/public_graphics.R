@@ -64,19 +64,6 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	rk.record.plot$.my.message ("------- call end   -----------")
 }
 
-## TODO: need a wrapper around dev.set () and dev.copy!!
-## o/w a user call of dev.set () and dev.copy () will not be set/initiate the history properly
-"rk.activate.device" <- function (devId = dev.cur ())
-{
-	dev.set (devId)
-	if (getOption ("rk.enable.graphics.history")) {
-	rk.record.plot$.my.message ("------- call begin -----------")
-		rk.record.plot$.set.trellis.last.object ()
-		rk.record.plot$getDevSummary ()
-	rk.record.plot$.my.message ("------- call end   -----------")
-	}
-}
-
 # A global history of various graphics calls;
 "rk.record.plot" <- function ()
 {
@@ -111,7 +98,8 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	.is.device.managed <- function (devId) as.character (devId) %in% .hP.names[-1]
 	.set.trellis.last.object <- function (devId = dev.cur ())
 	{
-		# called only from rk.activate.device ()
+		# called only from dev.set ()
+		if (!.is.device.managed (devId)) return (invisible ())
 		devId <- as.character (devId)
 		if (histPositions[[devId]]$pkg != "lattice") return (invisible ())
 		
@@ -185,14 +173,14 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		d.cur <- dev.cur ()
 		histPositions <<- list ("1" = .hP.template)
 		for (d in as.character (.osd)) {
-			dev.set (as.numeric (d))
+			.rk.dev.set.default (as.numeric (d))
 			if (is.null (recordPlot ()[[1]])) # empty device
 				histPositions [[d]] <<- .hP.template
 			else
 				histPositions [[d]] <<- modifyList(.hP.template, 
 					list (is.this.plot.new = TRUE, is.this.dev.new = FALSE, pkg = "unknown"))
 		}
-		dev.set (d.cur)
+		.rk.dev.set.default (d.cur)
 		.set.hP.names ()
 		getDevSummary ()
 	}
@@ -353,9 +341,9 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		unsplot <- NULL
 		unsplot.ls <- NULL
 		if (pkg %in% c("graphics", "unknown")) {
-			dev.set (as.numeric (devId))
+			.rk.dev.set.default (as.numeric (devId))
 			try (unsplot <- recordPlot(), silent=TRUE)
-			dev.set (devId.cur)
+			.rk.dev.set.default (devId.cur)
 		} else if  (pkg == "lattice") {
 			unsplot <- histPositions [[devId]]$plot
 			unsplot.ls <- histPositions [[devId]]$tlo.ls
@@ -566,7 +554,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		
 		devId <- as.character (devId)
 		cur.devId <- dev.cur ()
-		dev.set (as.numeric(devId))
+		.rk.dev.set.default (as.numeric(devId))
 		
 		st <- .sP.index [[n]]
 		pkg <- savedPlots [[st]]$pkg
@@ -586,7 +574,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 			list (is.this.plot.new = FALSE, is.this.dev.new = FALSE, pos.prev = n, pos.cur = n, pkg = pkg, 
 				call = savedPlots [[st]]$call, plot = savedPlots [[st]]$plot, tlo.ls = savedPlots [[st]]$tlo.ls))
 		.my.hP.print (devId)
-		dev.set (cur.devId)
+		.rk.dev.set.default (cur.devId)
 		invisible()
 	}
 	

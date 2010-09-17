@@ -347,7 +347,7 @@ void RKCaughtX11Window::setFixedSizeManual () {
 void RKCaughtX11Window::activateDevice () {
 	RK_TRACE (MISC);
 
-	RKGlobals::rInterface ()->issueCommand ("rk.activate.device (" + QString::number (device_number) + ")", RCommand::App, i18n ("Activate graphics device number %1", device_number), error_dialog);
+	RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ")", RCommand::App, i18n ("Activate graphics device number %1", device_number), error_dialog);
 }
 
 void RKCaughtX11Window::copyDeviceToOutput () {
@@ -482,7 +482,7 @@ void RKCaughtX11Window::updateHistoryActions (int history_length, int position, 
 	plot_list_action->setCurrentItem (history_position - 1);
 	plot_list_action->setEnabled (history_length > 0);
 
-	plot_force_append_action->setEnabled (RKSettingsModuleGraphics::plotHistoryEnabled ());
+	plot_force_append_action->setEnabled ((history_length > 0) && (RKSettingsModuleGraphics::plotHistoryEnabled ()));
 	plot_remove_action->setEnabled (history_length > 0);
 
 	plot_clear_history_action->setEnabled (history_length > 0);

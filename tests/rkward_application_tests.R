@@ -126,18 +126,18 @@ suite <- new ("RKTestSuite", id="rkward_application_tests",
 			message ("mark 1")
 			rk.previous.plot (2)
 			stopifnot (dev.cur() == 3)
-			rk.activate.device (2)
+			dev.set (2)
 			compareCurrentPlotWith (plots[[2]])
 			rk.next.plot (2)
 			compareCurrentPlotWith (plots[[3]])
 
 			rk.previous.plot (3)
-			rk.activate.device (3)
+			dev.set (3)
 			compareCurrentPlotWith (plots[[4]])
 			rk.next.plot (3)
 			compareCurrentPlotWith (plots[[5]])
 
-			rk.activate.device (2)
+			dev.set (2)
 			rk.goto.plot (2, 1)
 			compareCurrentPlotWith (plots[[1]])
 
@@ -147,7 +147,7 @@ suite <- new ("RKTestSuite", id="rkward_application_tests",
 			rk.removethis.plot (2)
 			compareCurrentPlotWith (plots[[2]])
 			message ("mark 3")
-			rk.activate.device (3)
+			dev.set (3)
 			rk.first.plot (3)
 			compareCurrentPlotWith (plots[[2]])
 
@@ -155,18 +155,18 @@ suite <- new ("RKTestSuite", id="rkward_application_tests",
 			# this time, the plot was shown in both devices. It should not have be removed in the other!
 			rk.removethis.plot (3)
 			compareCurrentPlotWith (plots[[3]])
-			rk.activate.device (2)
+			dev.set (2)
 			compareCurrentPlotWith (plots[[2]])
 
 			## Reaching the history limit
 			message ("mark 5")
 			# three plots in history at this time, and one pending in device 2
-			rk.activate.device (3)
+			dev.set (3)
 			rk.first.plot ()
 			compareCurrentPlotWith (plots[[3]])
 			rk.last.plot ()
 			compareCurrentPlotWith (plots[[5]])
-			rk.activate.device (2)
+			dev.set (2)
 			plot (1, 1)
 			plot (1, 1)
 			# five plots in history at this time, and one pending in device 2
@@ -183,14 +183,14 @@ suite <- new ("RKTestSuite", id="rkward_application_tests",
 			plots[[6]] <- recordPlot ()
 			rk.first.plot () 
 			# at this stage 6 plots are in history, duplicated plot is at pos = 6
-			rk.activate.device (2)
+			dev.set (2)
 			compareCurrentPlotWith (plots[[4]])
 			message ("mark 7")
 			title (main = "plot [[4]]: altered")
 			plots[[7]] <- recordPlot ()
 			rk.next.plot (); rk.previous.plot (); # overwrites at pos = 1
 			compareCurrentPlotWith (plots[[7]])
-			rk.activate.device (4)
+			dev.set (4)
 			rk.force.append.plot () # original plot 4, is now at position 7
 			compareCurrentPlotWith (plots[[4]])
 			rk.previous.plot (); # duplicated plot

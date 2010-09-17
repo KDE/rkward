@@ -99,11 +99,24 @@ formals (plot.new) <- formals (graphics::plot.new)
 formals (dev.off) <- formals (grDevices::dev.off)
 .rk.dev.off.default <- grDevices::dev.off
 
+"dev.set" <- function ()
+{
+	ret <- eval (body (.rk.dev.set.default))
+	
+	if (getOption ("rk.enable.graphics.history") && rk.record.plot$.is.device.managed (which))
+		rk.record.plot$.set.trellis.last.object (which)
+	
+	ret
+}
+formals (dev.set) <- formals (grDevices::dev.set)
+.rk.dev.set.default <- grDevices::dev.set
+
 # see .rk.fix.assignmetns () in internal.R
 ".rk.fix.assignments.graphics" <- function ()
 {
 	assignInNamespace ("plot.new", plot.new, envir=as.environment ("package:graphics"))
 	assignInNamespace ("dev.off", dev.off, envir=as.environment ("package:grDevices"))
+	assignInNamespace ("dev.set", dev.set, envir=as.environment ("package:grDevices"))
 	
 	## set a hook defining "print.function" for lattice:
 	setHook (packageEvent ("lattice", "onLoad"),
