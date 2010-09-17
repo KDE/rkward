@@ -359,7 +359,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 			savedPlots [[.st.]]$tlo.ls <<- .unsavedPlot$tlo.ls
 			savedPlots [[.st.]]$call <<- try (.get.oldplot.call (n, .cll, .cstr))
 			.check.other.dev.at.same.pos (devId, n)
-		} else .my.message ("_IS_ identical, so not ckecking for odsp")
+		}
 		invisible (n)
 	}
 	.save.oversized.plot <- function ()
@@ -574,26 +574,11 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	}
 	
 	## Utility / print functions:
-	getDevSummary <- function ()
+## TODO: add these functions to rkh file
+	getDevSummary <- function (devId = NULL)
 	{
-		if (!.rk.rp.debug) return (invisible ())
-		message ('History length   : ', sP.length)
+		message ("History length   : ", sP.length)
 		message ("History size (KB): ", round (object.size (savedPlots) / 1024, 2))
-		.my.hP.print ()
-	}
-	getSavedPlotsSummary <- function ()
-	{
-		.tmp.df <- data.frame (
-			call = sapply (savedPlots[unlist (.sP.index, use.names = FALSE)], "[[", "call"),
-			size.KB  = sapply (lapply (savedPlots[unlist (.sP.index, use.names = FALSE)], "[[", "plot"), function (x) object.size(x)/1024),
-			pkg  = sapply (savedPlots[unlist (.sP.index, use.names = FALSE)], "[[", "pkg"),
-			timestamp  = sapply (savedPlots[unlist (.sP.index, use.names = FALSE)], "[[", "time"))
-		rownames (.tmp.df) <- NULL
-		.tmp.df
-	}
-	.my.message <- function (...) if (.rk.rp.debug) message (paste (..., sep = " "))
-	.my.hP.print <- function (devId = NULL) {
-		if (!.rk.rp.debug) return (invisible ())
 		if (is.null (devId)) {
 			.tmp.df <- data.frame (
 				pNew = sapply (histPositions, "[[", "is.this.plot.new"),
@@ -617,9 +602,17 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 				pCls  = class (.a.hP$plot))
 			rownames (.tmp.df) <- devId
 		}
-		sink (file = stderr (), type = "output")
-		print (.tmp.df)
-		sink (file = stdout (), type = "output")
+		.tmp.df
+	}
+	getSavedPlotsSummary <- function ()
+	{
+		.tmp.df <- data.frame (
+			call = sapply (savedPlots[unlist (.sP.index, use.names = FALSE)], "[[", "call"),
+			size.KB  = sapply (lapply (savedPlots[unlist (.sP.index, use.names = FALSE)], "[[", "plot"), function (x) object.size(x)/1024),
+			pkg  = sapply (savedPlots[unlist (.sP.index, use.names = FALSE)], "[[", "pkg"),
+			timestamp  = sapply (savedPlots[unlist (.sP.index, use.names = FALSE)], "[[", "time"))
+		rownames (.tmp.df) <- NULL
+		.tmp.df
 	}
 	
 	## Utility / call labels functions:
@@ -653,12 +646,12 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	{
 		# this can be easily extended to more types
 		switch (savedPlots [[.sP.index [[n]]]]$pkg,
-			graphics = .get.oldplot.call.std2 (l, cs),
-			unknown = .get.oldplot.call.std (n, l),
+			graphics = .get.oldplot.call.std (l, cs),
+			unknown = .get.oldplot.call.unk (n, l),
 			lattice = .get.oldplot.call.lattice (n, l),
 			"Unknown")
 	}
-	.get.oldplot.call.std <- function (n,l=0)
+	.get.oldplot.call.unk <- function (n,l=0)
 	{
 		# rp <- recordPlot () is a nested pairlist object (of class "recordedplot"):
 		# rp[[1]] is the "meta data", rp[[2]] is always raw,
@@ -697,7 +690,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		
 		paste (substr (.lab.str, 1, l), "...", sep = "")
 	}
-	.get.oldplot.call.std2 <- function (l=0, cs)
+	.get.oldplot.call.std <- function (l=0, cs)
 	{
 		.lab.str <- paste (ifelse (is.call (cs), deparse (cs), cs), collapse = ifelse (l<=0, "\n", ", "))
 		if (l <= 0 || nchar (.lab.str) <= l) return (.lab.str)
