@@ -66,28 +66,32 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 {
 	env <- environment()
 	
+	# .sP.index is used maintain an index of the history using Sys.time. This will help
+	# when "insert"ing a plot into history is implemented. We then have to shift around
+	# only .sP.index and not the whole "savedPlots" list
 	.sP.index <- list ()
 	sP.length <- length (.sP.index)
 	.set.sP.length <- function () sP.length <<- length (.sP.index)
 	
+	# template for every element of savedPlots; tlo.ls is ("lattice.status") used only for lattice plots
 	.sP.template <- list (plot = NULL, tlo.ls = NULL, pkg = "", time = NULL, call = NULL)
+	# this is the main list which stores all the history; the list is tagged by Sys.time
 	savedPlots <- list () # length (savedPlots) should always be == length (.sP.index) == sP.length
+	# used for temporarily storing the plots before they are pushed into savedPlots:
 	.unsavedPlot <- list (plot = NULL, tlo.ls = NULL, pkg = NA_character_, is.os = NA, tryerr = NA)
 	
+	# template for every element of histPositions; tlo.ls ("lattice.status") is used only for lattice plots
 	.hP.template <- list (is.this.plot.new = FALSE, is.this.dev.new = TRUE, 
 		pos.cur = NA_integer_, pos.prev = NA_integer_, pos.dupfrom = NA_integer_, 
-		#do.record = FALSE, do.append = FALSE, do.replace = FALSE, 
 		pkg = "", call = NA_character_, plot = NA, tlo.ls = NA)
+	# this list stores the details for currently displayed plots on the devices; tagged by device number
 	histPositions <- list ("1" = .hP.template)
 	.hP.names <- names (histPositions)
 	.set.hP.names <- function () .hP.names <<- names (histPositions)
 	
-	.rk.rp.debug <- FALSE
-	.set.rk.rp.debug <- function (x) .rk.rp.debug <<- x
-	
 	.ss.used <- FALSE # split.screen variable
 	.pop.notify <- TRUE # used when hist limit is reached
-	.cll <- 50
+	.cll <- 50 # no. of characters used in the "goto plot" drop down list
 	.set.call.lab.len <- function (x) .cll <<- x
 	
 	## Generic functions:
@@ -95,7 +99,8 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	.is.device.managed <- function (devId) as.character (devId) %in% .hP.names[-1]
 	.set.trellis.last.object <- function (devId = dev.cur ())
 	{
-		# called only from dev.set ()
+		# called only from dev.set (); this appropriately sets the "lattice.status"
+		# list so that trellis.last.object () can retrieve the correct variables
 		if (!.is.device.managed (devId)) return (invisible ())
 		devId <- as.character (devId)
 		if (histPositions[[devId]]$pkg != "lattice") return (invisible ())
@@ -151,7 +156,9 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	}
 	initialize.histPositions <- function ()
 	{
-		# this is called from rk.toggle.plot.history ()
+		# this is called from rk.toggle.plot.history ();
+		# when plot history is re-enabled, this initializes device specific lists so that the displayed
+		# plots can be recorded at the next appropriate action
 		on.exit (.rk.update.hist.actions (enable.plot.hist = TRUE))
 		
 		# all open screen devices
@@ -189,6 +196,8 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	flushout.histPositions <- function ()
 	{
 		# this is called from rk.toggle.plot.history ()
+		# when plot history is disabled, this records any unsaved plots on the devices and
+		# cleans out the device specific lists
 		
 		# save any unsaved plots and "close" the device w/o actually closing the window:
 		for (d in .hP.names)
@@ -200,7 +209,9 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	{
 		if (!.is.device.managed (devId)) return (invisible ())
 		# tlo = trellis.last.object
-		## TODO: explain why this is needed
+		# when there are multiple devices showing the same lattice plot in the history, we need to
+		# store the "lattice.status" into each device specific list, so that, if/when removing
+		# one of the displayed plots, the other can still be re-added back in the history.
 		devId <- as.character (devId)
 		histPositions [[devId]]$plot <<- trellis.last.object ()
 		histPositions [[devId]]$tlo.ls <<- get ("lattice.status", envir = lattice:::.LatticeEnv)
@@ -218,13 +229,15 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	## Recording functions
 	record <- function(devId = dev.cur (), isManaged = NULL, action = "", callUHA = TRUE, nextplot.pkg = "", nextplot.call = NA_character_)
 	{
+		# callUHA is not really utilized, but there to provide a flixibility to not call 
+		# .rk.update.hist.action () when not needed
 		devId <- as.character (devId)
 		
 		if (is.null (isManaged)) isManaged <- .is.device.managed (devId)
 		if (!isManaged) return (invisible ())
 		
 		if (histPositions[[devId]]$is.this.dev.new) {
-			# a new device: ie after an x11 () call
+			# a new device: ie after either an "x11 ()" call or a "dev.copy (device = x11)" call
 			if (action == "")  
 				return (invisible (.prep.new.device (devId, nextplot.pkg, nextplot.call))) # call from plot.new () / persp () / print.trellis ()
 			else if (action == "force.append")
@@ -232,8 +245,6 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 			else
 				return (invisible ()) # if needed, handle individual actions separately
 		}
-		
-		#if (histPositions[[devId]]$pkg == "") histPositions[[devId]]$pkg <<- "graphics"
 		
 		newplot.in.Q <- nextplot.pkg != ""
 		if (action == "force.append") {
@@ -255,13 +266,11 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		if (newplot.in.Q) {
 			.tmp.hP <- modifyList (.hP.template, 
 				list (is.this.plot.new = TRUE, is.this.dev.new = FALSE, pkg = nextplot.pkg, call = nextplot.call))
-			## TODO: check this:
 			.tmp.hP$pos.prev <- ifelse (is.null (.unsavedPlot$plot) && .unsavedPlot$is.os, 
 				histPositions [[devId]]$pos.prev, n)
 			histPositions [[devId]] <<- .tmp.hP
 		} else {
 			histPositions [[devId]]$is.this.plot.new <<- FALSE
-			## TODO: pos.prev ??
 			if (!is.na (n)) histPositions [[devId]]$pos.cur <<- n
 			if (action == "force.append") histPositions [[devId]]$plot <<- NA
 		}
@@ -313,7 +322,6 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 			unsplot <- histPositions [[devId]]$plot
 			unsplot.ls <- histPositions [[devId]]$tlo.ls
 		} else {
-			##TODO: is is still possible to save it?
 			.unsavedPlot <<- list (plot = NULL, tlo.ls = NULL, pkg = NA_character_, is.os = NA, tryerr = NA)
 			return (invisible (rk.show.message ("Unknown graphics function. Use append to store.", "Recording error", FALSE)))
 		}
@@ -503,7 +511,9 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 			replayPlot (savedPlots [[st]]$plot)
 		} else if (pkg == "lattice") {
 			# (re-)plot the lattice object but, if the current window is NOT active, then do not save
-			# it to lattice:::.LatticeEnv$last.object ("trellis.last.object")
+			# it to lattice:::.LatticeEnv$lattice.status ("trellis.last.object" needs it). But we need
+			# to set lattice.status to whichever was the last lattice plot so that trellis.last.object () can
+			# access it
 			if (cur.devId != as.numeric (devId))
 				tlo.ls <- get ("lattice.status", envir = lattice:::.LatticeEnv)
 			plot (savedPlots [[st]]$plot, save.object = (cur.devId == as.numeric (devId)))
@@ -717,10 +727,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 			positions [2 * (1:ndevs) - 1] <- devIds
 			ihP <- sapply (histPositions[devIds], "[[", "pos.cur"); ihP [is.na (ihP)] <- sP.length + 1
 			positions [2 * (1:ndevs)] <- ihP
-			#labels <- NULL
-			#if (sP.length > 0) labels <- sapply (1:sP.length, function (x) try (.get.oldplot.call (x, .cll)))
-			labels <- .get.sP.calls ()
-			.rk.do.call ("updateDeviceHistory", c (ifelse (enable.plot.hist, sP.length, 0), labels, positions));
+			.rk.do.call ("updateDeviceHistory", c (ifelse (enable.plot.hist, sP.length, 0), .get.sP.calls (), positions));
 		}
 		invisible ()
 	}
