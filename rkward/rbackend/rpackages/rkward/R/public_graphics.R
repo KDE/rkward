@@ -51,7 +51,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	# dev.off () sets dev.next () as active, which may not have been active before rk.graph.on was called;
 	# so reset the correct device as active:
 	i <- get (".rk.active.device", pos = "package:rkward")
-	if ((!is.null (i)) && (i %in% dev.list ())) dev.set (i)
+	if ((!is.null (i)) && (i %in% dev.list ())) ret <- dev.set (i)
 	ret
 }
 
