@@ -489,7 +489,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		on.exit (.rk.update.hist.actions ())
 		if (missing (n))
 			return (invisible (rk.show.message ("Position missing", "Replay error", FALSE)))
-		if (is.na (n) || n < 0 || n > sP.length)
+		if (is.na (n) || n <= 0 || n > sP.length)
 			return (invisible (rk.show.message(paste ("replay: 'n' not in valid range: ", n), "Replay error", FALSE)))
 		
 		devId <- as.character (devId)
@@ -570,7 +570,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	}
 	showPlotInfo <- function (devId = dev.cur ())
 	{
-		rk.show.message (.get.plot.info.str (devId), caption = "Plot properties")
+		rk.show.message (.get.plot.info.str (devId), caption = "Plot properties", FALSE)
 	}
 	
 	## Utility / print functions:
