@@ -1,8 +1,10 @@
-- Add option to specify default onscreen graphics dimensions		TODO: test on windows
+- Added full-featured plot history for the onscreen graphics device
+- Fixed: Potential crash when editing data-frame with duplicate column names		TODO: warn when editing such a data.frame
+- Added option to specify default onscreen graphics dimensions		TODO: test on windows
 - Fixed: Graphics windows used to assume a minimum size of 640*480 pixels, even if a smaller size was specified			/ TODO: check on Windows!
-- Add option to disable function argument hinting
+- Added option to disable function argument hinting
 - New functions rk.show.message() and rk.show.question() for user interaction from R code
-- New options for scripting GUI logic in plugins		TODO: document, merge common functionality of common.js and rkcomponentscriptiong.js, error handling
+- New options for scripting GUI logic in plugins		TODO: document, error handling
 - The current object of an active data editor can be referenced in plugins		TODO: document
 - Fixed: Placement of several menu items was broken - again - with KDE 4.4 and above
 - Allow sorting of results in help search window
@@ -14,10 +16,10 @@
 - Fixed: Would crash when trying to configure toolbars under certain circumstances (workaround for bug in kdelibs)
 - Fixed: Crash while analysing some objects returned by XML::xmlParseTree() for invalid XML
 - Fixed: Error while installing packages with R 2.11.0, when archiving packages in a non-existing directory
-- Add option to autosave script files (enabled by default)
+- Added option to autosave script files (enabled by default)
 - The tabbar in the main window now shows a context menu with options to close/detach a window
 - The tabs in the main window can now be re-ordered by dragging with the mouse (left click if compiled with Qt 4.5 or above, middle click for earlier versions)
-- Add alternating row backgrounds in data.frame-editor
+- Added alternating row backgrounds in data.frame-editor
 
 --- Version 0.5.3 - Apr-30-2010
 - Fixed: Windows->Activate->Window left / right actions were always disabled

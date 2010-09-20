@@ -141,7 +141,8 @@ void RContainerObject::updateChildren (RData *new_children) {
 	unsigned int new_child_count = new_children->getDataLength ();
 
 	// first find out, which children are now available, copy the old ones, create the new ones
-	RObjectMap new_childmap;
+	RObjectMap new_childmap, old_childmap;
+	old_childmap = childmap;
 	for (unsigned int i = 0; i < new_child_count; ++i) {
 		RData *child_data = new_children->getStructureVector ()[i];
 		RK_ASSERT (child_data->getDataType () == RData::StructureVector);
@@ -151,7 +152,15 @@ void RContainerObject::updateChildren (RData *new_children) {
 		RK_ASSERT (child_name_data->getDataLength () >= 1);
 		QString child_name = child_name_data->getStringVector ()[0];
 
-		RObject *child_object = findChildByName (child_name);
+		RObject *child_object = 0;
+		for (int j = 0; j < old_childmap.size (); ++j) {
+			RObject *obj = old_childmap[j];
+			if (obj && (obj->getShortName () == child_name)) {
+				child_object = obj;
+				old_childmap[j] = 0;	// in case of duplicate names, avoid finding the same child over and over again
+				break;
+			}
+		}
 		if (child_object) {
 			child_object = updateChildStructure (child_object, child_data);
 		} else {
