@@ -38,7 +38,7 @@ rk.graph.off()
 }
 
 \seealso{
-  \code{\link{options}}, \code{\link{getOption}}, \code{\link{png}}, \code{\link{svg}}, \code{\link{dev.copy}}, \code{\link{dev.off}}, \code{\link{invisible}}
+  \code{\link{png}}, \code{\link{svg}}, \code{\link{dev.copy}}, \code{\link{dev.off}}, \url{rkward://page/rkward_output}
 }
 
 \examples{
