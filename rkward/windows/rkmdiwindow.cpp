@@ -266,7 +266,7 @@ void RKMDIWindow::setMetaInfo (const QString& _generic_window_name, const QStrin
 	RK_TRACE (APP);
 
 	// only meant to be called once
-	RK_ASSERT (generic_window_name.isEmpty() && _help_url.isEmpty ());
+	RK_ASSERT (generic_window_name.isEmpty() && help_url.isEmpty ());
 	generic_window_name = _generic_window_name;
 	help_url = _help_url;
 	settings_page = _settings_page;
