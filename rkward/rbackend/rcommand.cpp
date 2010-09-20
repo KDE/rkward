@@ -113,8 +113,8 @@ void RCommand::finished () {
 	RK_TRACE (RBACKEND);
 
 	for (int i=0; i < num_receivers; ++i) {
-		receivers[i]->rCommandDone (this);
 		receivers[i]->delCommand (this);
+		receivers[i]->rCommandDone (this);
 	}
 }
 
