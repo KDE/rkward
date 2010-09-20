@@ -3,90 +3,24 @@
 	<title>Utility functions in RKWard</title>
 
 	<summary>
-	This help page briefly documents the various utility functions available in RKWard which are accessible to the user.
+	This help page links to the man pages of various utility functions available in RKWard which are accessible to the user.
 	</summary>
 
 	<section title="Graphics related functions" id="public_g_fns">
-	Most of the functions described in this section, unless otherwise mentioned, returns NULL invisibly.<br></br><br></br>
-
-	<b><code>rk.graph.on (device.type=getOption ("rk.graphics.type"), width=getOption ("rk.graphics.width"), height=getOption ("rk.graphics.height"), quality, ...)</code></b>:<br></br>this function is used to copy the currently displayed plot to the output html file. The output can be seen from Windows->Show output. <code>device.type</code> can be either <i>PNG</i> or <i>SVG</i> or <i>JPG</i> or <i>NULL</i> (in case of NULL <i>PNG</i> is used). Additional parameters are passed on to the relevant device. Typical usages include:
-	<pre>
-	rk.graph.on ("JPG", 480, 480, 75)
-	plot (rnorm (100))
-	rk.graph.off ()
-	</pre>
-	or
-	<pre>
-	plot (rnorm (100))
-	dev.copy (device = "rk.graph.on")
-	rk.graph.off ()
-	</pre>Returns the value of the device call invisibly.<br></br><br></br>
-
-	<b><code>rk.graph.off ()</code></b>:<br></br>
-	closes the device that was opened by rk.graph.on. See the examples above. Returns the name and number of the device that was active before rk.graph.on was called.<br></br><br></br>
-
-	<b><code>rk.duplicate.device (devId = dev.cur ())</code></b>:<br></br>
-	duplicates the specified screen device. The plot on the new device behaves independently of the one it was duplicated from. Returns the value of a <code>dev.copy</code> call.<br></br><br></br>
-
-	<b><code>rk.record.plot</code></b>:<br></br>
-	This is an environment to store the screen device history. You should not use the functions / variables in this environment directly, instead use the many wrapper functions as discussed below. (Should this be put in internal_graphics.R?)<br></br><br></br>
-
-	<b><code>rk.toggle.plot.history (x = TRUE)</code></b>:<br></br>
-	x = TRUE enables and x = FALSE disables the plot history. You should not use this function. Instead use the checkbox in Settings->Configure RKWard->Onscreen Graphics->Screen device history. After the needed initialization / clean up,  it sets the option variable <i>rk.enable.graphics.history</i>  to x.<br></br><br></br>
-
-	<b><code>rk.first.plot (devId = dev.cur ())</code></b>:<br></br>
-	replay the first plot on the specified device.<br></br><br></br>
-
-	<b><code>rk.previous.plot (devId = dev.cur ())</code></b>:<br></br>
-	replay the previous plot in the history on the specified device.<br></br><br></br>
-
-	<b><code>rk.next.plot (devId = dev.cur ())</code></b>:<br></br>
-	replay the next plot in the history on the specified device.<br></br><br></br>
-
-	<b><code>rk.last.plot (devId = dev.cur ())</code></b>:<br></br>
-	replay the last plot on the specified device.<br></br><br></br>
-
-	<b><code>rk.goto.plot (devId = dev.cur (), index=1)</code></b>:<br></br>
-	replay a particular plot, identified by <code>index</code> on the specified device.<br></br><br></br>
-
-	<b><code>rk.force.append.plot (devId = dev.cur ())</code></b>:<br></br>
-	forcefully append the currently displayed plot to the history. This function ignores the type of plot (graphics / lattice) and by-passes the general recording mechanism, as a result the plot call can not be identified.<br></br><br></br>
-
-	<b><code>rk.removethis.plot (devId = dev.cur ())</code></b>:<br></br>
-	removes the plot displayed on the specified device from history. If there are more than one device showing the same plot then removing from one does not wipe it from the other devices. They can be re-added to the history from the other devices.<br></br><br></br>
-
-	<b><code>rk.clear.plot.history ()</code></b>:<br></br>
-	clears the screen device history.<br></br><br></br>
-
-	<b><code>rk.show.plot.info (devId = dev.cur ())</code></b>:<br></br>
-	when available, shows some extra information regarding the displayed plot on the specified device.<br></br><br></br>
-
-	<b><code>rk.verify.plot.hist.limits (lmax)</code></b>:<br></br>
-	You should not need to use this function. (Put it in internal_graphics.R?)<br></br><br></br>
-
-	<b><code>rk.plot.history.summary (which = NULL, type = c ("devices", "history"))</code></b>:<br></br>
-	Provides some summaries of the screen device history. <code>type = "devices"</code> provides summary of all or one device(s) depending on whether <code>which = NULL</code> or <code>which</code> is a single number identifying the device. <code>type = "history"</code> provides summary of the entire stored history. Returns a data.frame with some messages.<br></br><br></br>
+	<ul>
+		<li>See <link href="rkward://rhelp/rk.graph.on"/> or <link href="rkward://rhelp/rk.graph.off"/>.</li>
+		<li>See <link href="rkward://rhelp/rk.record.plot"/></li>
+		<li>See <link href="rkward://rhelp/rk.duplicate.device"/></li>
+	</ul>
 	</section>
 
 	<section title="Other functions" id="public_fns">
 
-	<b><code>rk.show.message (message, caption = "Information", wait=TRUE)</code></b>:<br></br>
-	shows a message box with <code>message</code> as the content of the box and <code>caption</code> as the box title. <code>wait=FALSE</code> displays the message box asynchronously. Always returns TRUE invisibly. See <link href="rkward://rhelp/system"/>.<br></br><br></br>
-
-	<b><code>rk.show.question (message, caption = "Question", button.yes = "yes", button.no = "no", button.cancel = "cancel")</code></b>:<br></br>
-	shows a message box waiting for an input from the user, either "yes" or "no" or "cancel," with <code>message</code> as the content of the box and <code>caption</code> as the box title. The text on the "yes," "no," and "cancel" buttons can be modified using <code>button.yes</code>, <code>button.no</code>, and <code>button.cancel</code> arguments. Setting any of these arguements to <b>""</b> (empty string) will disable the corresponding button. Returns TRUE for "yes," FALSE for "no," and NULL for "cancel."<br></br><br></br>
+	<ul>
+		<li>See <link href="rkward://rhelp/rk.show.message"/> or <link href="rkward://rhelp/rk.show.question"/>.</li>
+	</ul>
 
 	TODO: add documentation for all functions from public.R
 	</section>
-
-	<related>
-	<ul>
-		<li><link href="rkward://rhelp/options"/></li>
-		<li><link href="rkward://rhelp/getOption"/></li>
-		<li><link href="rkward://rhelp/invisible"/></li>
-		<li><link href="rkward://rhelp/dev.cur"/>, <link href="rkward://rhelp/dev.copy"/></li>
-		<li><link href="rkward://rhelp/png"/>, <link href="rkward://rhelp/svg"/></li>
-	</ul>
-	</related>
 
 </document>
