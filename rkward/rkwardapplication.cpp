@@ -35,6 +35,8 @@
 Atom wm_name_property;
 #endif	//Q_WS_WIN
 
+#include <kauthorized.h>
+
 #include "debug.h"
 
 #warning TODO: We could really use the detection logic from windows for x11, too. It seems much easier.
@@ -63,6 +65,9 @@ RKWardApplication *RKWardApplication::rkapp = 0;
 RKWardApplication::RKWardApplication () : KApplication () {
 	//RK_TRACE (APP);	// would be called before initialization of debug-level
 	RK_ASSERT (!rkapp);
+
+	// Don't complain when linking rkward://-pages from Rd pages
+	KAuthorized::allowUrlAction ("redirect", KUrl ("http://"), KUrl ("rkward://"));
 
 	rkapp = this;
 	detect_x11_creations = false;
