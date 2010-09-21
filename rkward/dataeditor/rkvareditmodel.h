@@ -94,6 +94,9 @@ public:
 	RKVariable* getObject (int index) const;
 signals:
 	void modelDepleted ();
+	void hasDuplicates (const QStringList& dupes);
+private slots:
+	void checkDuplicatesNow ();
 protected:
 friend class RKVarEditMetaModel;
 	QList<RKVariable*> objects;
@@ -112,6 +115,10 @@ friend class RKVarEditMetaModel;
 
 	virtual void doInsertRowsInBackend (int row, int count);
 	virtual void doRemoveRowsInBackend (int row, int count);
+
+	/** Check whether there are any duplicate names in the model. Actual check is delayed until the next iteration of the event loop. If a duplicate is found, hasDuplicates(const QStringList&) is emitted. */
+	void checkDuplicates ();
+	bool duplicate_check_triggered;
 
 	int trailing_rows;
 	int trailing_cols;

@@ -21,6 +21,7 @@
 #include <kaction.h>
 #include <kactioncollection.h>
 #include <kxmlguifactory.h>
+#include <kmessagebox.h>
 
 #include <qvariant.h>
 #include <qsplitter.h>
@@ -171,6 +172,15 @@ void TwinTable::initTable (RKVarEditModel* model, RObject* object) {
 	addNotificationType (RObjectListener::MetaChanged);
 	listenForObject (object);
 	objectMetaChanged (object);
+	connect (model, SIGNAL (hasDuplicates(const QStringList&)), this, SLOT (containsDuplicates(const QStringList&)));
+}
+
+void TwinTable::containsDuplicates (const QStringList& dupes) {
+	RK_TRACE (EDITOR);
+
+	if (!rw) return;
+	KMessageBox::informationList (this, i18n ("The editor '%1' contains the following duplicate columns. Editing this table may not be safe, and has been disabled. You may re-enable editing if you know what you are doing, but you are strongly advised to fix the table, and/or backup your data, first.", windowTitle ()), dupes, i18n ("Duplicate columns detected"));
+	enableEditing (false);
 }
 
 void TwinTable::objectMetaChanged (RObject* changed) {

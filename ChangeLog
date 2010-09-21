@@ -1,5 +1,5 @@
 - Added full-featured plot history for the onscreen graphics device
-- Fixed: Potential crash when editing data-frame with duplicate column names		TODO: warn when editing such a data.frame
+- Fixed: Potential crash when editing data-frame with duplicate column names
 - Added option to specify default onscreen graphics dimensions		TODO: test on windows
 - Fixed: Graphics windows used to assume a minimum size of 640*480 pixels, even if a smaller size was specified			/ TODO: check on Windows!
 - Added option to disable function argument hinting

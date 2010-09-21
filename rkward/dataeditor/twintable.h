@@ -72,6 +72,8 @@ public slots:
 	void pasteToTable();
 /** paste the clipboard into the table, but not beyond selection boundaries	*/
 	void pasteToSelection();
+/** connected to RKVarEditModel::hasDuplicates() */
+	void containsDuplicates (const QStringList& dupes);
 private:
 	int meta_header_anchor_section;
 /** read-write */

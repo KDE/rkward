@@ -20,6 +20,7 @@
 #include <klocale.h>
 
 #include <QColor>
+#include <QTimer>
 
 #include "../core/rcontainerobject.h"
 #include "../core/rkmodificationtracker.h"
@@ -38,6 +39,7 @@ RKVarEditModel::RKVarEditModel (QObject *parent) : RKVarEditModelBase (parent), 
 	edit_blocks = 0;
 	rownames = 0;
 	header_locked = false;
+	duplicate_check_triggered = false;
 
 	addNotificationType (RObjectListener::ObjectRemoved);
 	addNotificationType (RObjectListener::MetaChanged);
@@ -73,6 +75,8 @@ void RKVarEditModel::addObject (int index, RKVariable* object) {
 	objects.insert (index, object);
 	if (meta_model) meta_model->endAddDataObject ();
 	endInsertColumns ();
+
+	checkDuplicates ();
 }
 
 void RKVarEditModel::objectRemoved (RObject* object) {
@@ -92,6 +96,35 @@ void RKVarEditModel::objectRemoved (RObject* object) {
 	endRemoveColumns ();
 
 	if (objects.size () <= var_col_offset) emit (modelDepleted ());	// editor may or may want to auto-destruct
+}
+
+void RKVarEditModel::checkDuplicates () {
+	RK_TRACE (EDITOR);
+
+	if (duplicate_check_triggered) return;
+	duplicate_check_triggered = true;
+	QTimer::singleShot (0, this, SLOT (checkDuplicatesNow()));
+}
+
+void RKVarEditModel::checkDuplicatesNow () {
+	RK_TRACE (EDITOR);
+
+	duplicate_check_triggered = false;
+
+	QStringList dupes;
+	for (int i = var_col_offset; i < objects.size (); ++i) {
+		QString name = objects[i]->getShortName ();
+		for (int j = i+1; j < objects.size (); ++j) {
+			if (objects[j]->getShortName () == name) {
+				if (objects[i]->getFullName () == objects[j]->getFullName ()) {
+					dupes.append (objects[i]->getFullName ());
+					j = objects.size ();		// break
+				}
+			}
+		}
+	}
+
+	if (!dupes.isEmpty ()) emit (hasDuplicates (dupes));
 }
 
 void RKVarEditModel::objectMetaChanged (RObject* changed) {
