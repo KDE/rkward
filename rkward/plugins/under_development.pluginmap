@@ -4,8 +4,6 @@
 	<components>
 		<component type="standard" id="simple_anova" file="simple_anova/description.xml" label="Simple Anova" />
 		<component type="standard" id="sieve_plot" file="plots/sieve_plot.xml" label="Extended Sieve Plot" />
-		<component type="standard" id="generate_random" file="data/generate_random.xml" label="Generate random data" />
-		<component type="standard" id="sort_data" file="data/sort.xml" label="Sort data" />
 		<component type="standard" id="sort_data2" file="data/sort2.xml" label="Sort data (Variant 2)" />
 
 <!-- These are purely for testing: -->

@@ -14,8 +14,8 @@
 			}
 			]]></script>
 	</logic>
-	<dialog label="Generate random data">
-		<text id="text">Well, this could be extended to other distributions in the same dialog. For now, it's normal distribution.</text>
+	<dialog label="Generate random data (normal distribution)">
+<!-- TODO: extend this plugin to different distributions! -->
 		<spinbox default_precision="2" type="real" initial="0" id="mean" label="mu (mean)"/>
 		<spinbox default_precision="2" type="real" min="0" initial="1" id="sd" label="sigma (standard deviation)"/>
 		<frame/>

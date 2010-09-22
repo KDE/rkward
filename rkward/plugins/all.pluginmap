@@ -7,4 +7,5 @@
 	<require file="plots.pluginmap"/>
 	<require file="x11device.pluginmap"/>
 	<require file="irt.pluginmap"/>
+	<require file="data.pluginmap"/>
 </document>

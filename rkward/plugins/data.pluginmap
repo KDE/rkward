@@ -1,0 +1,15 @@
+<!DOCTYPE rkpluginmap>
+
+<document base_prefix="" namespace="rkward">
+	<components>
+		<component type="standard" id="generate_random" file="data/generate_random.xml" label="Generate random data" />
+		<component type="standard" id="sort_data" file="data/sort.xml" label="Sort data" />
+	</components>
+
+	<hierarchy>
+		<menu id="data" label="Data" index="3">
+			<entry component="generate_random" />
+			<entry component="sort_data" />
+		</menu>
+	</hierarchy>
+</document>
