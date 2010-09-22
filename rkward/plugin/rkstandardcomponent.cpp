@@ -186,6 +186,7 @@ RKComponentScriptingProxy* RKStandardComponent::scriptingProxy () {
 
 	if (!scripting) {
 		scripting = new RKComponentScriptingProxy (this);
+		connect (scripting, SIGNAL (haveError ()), this, SLOT (kill ()));
 	}
 	return scripting;
 }

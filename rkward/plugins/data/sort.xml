@@ -2,6 +2,7 @@
 <document>
 	<code file="sort.js"/>
 	<logic>
+		<set id="vectormode" to="0"/>
 		<connect governor="current_object" client="object.available"/>
 		<connect governor="object.available" client="sortby_selector.root"/>
 		<convert id="isok" mode="equals" sources="notice.text" standard="" require_true="true"/>
@@ -19,11 +20,11 @@
 				gui.setValue ("sortby_frame.enabled", object.isDataFrame ());
 				gui.setValue ("sortby.required", object.isDataFrame ());
 
-				if (!(object.dimensions().length == 1 || object.isDataFrame())) {
-					// Not very elegant, but...
-					gui.setValue ("notice.text", "This type of object is not supported in this plugin");
-				} else {
+				if (!object.exists() || object.isDataFrame() || object.dimensions().length == 1) {
 					gui.setValue ("notice.text", "");
+				} else {
+					// Not very elegant, but does the trick
+					gui.setValue ("notice.text", "Sorting this type of object is not supported in this plugin");
 				}
 			}
 			]]></script>

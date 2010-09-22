@@ -19,6 +19,7 @@
 
 #include <klocale.h>
 #include <kdeversion.h>
+#include <kmessagebox.h>
 
 #include "../plugin/rkcomponent.h"
 #include "../core/robjectlist.h"
@@ -66,8 +67,9 @@ void RKComponentScriptingProxy::handleScriptError (const QString& current_file) 
 	QString file = current_file;
 	if (file.isEmpty ()) file = _scriptfile;
 	if (script->hadError ()) {
-#warning TODO: refine error messages (file/context), and display them in a dialog
-qDebug ("line %d: %s", script->errorLineNo (), qPrintable (script->errorMessage ()));
+		QString message = i18n ("There was an error while evaluating script code.\nFile: %1\nLine: %2\nMessage: %3.", file, script->errorLineNo(), script->errorMessage());
+		KMessageBox::detailedError (0, message, script->errorTrace ());
+		emit (haveError());
 	}
 }
 
@@ -99,6 +101,7 @@ void RKComponentScriptingProxy::evaluate (const QByteArray &code) {
 #else
 	script->callFunction ("_rk_eval", QVariantList() << QString (code));
 #endif
+	handleScriptError ();
 }
 
 void RKComponentScriptingProxy::addScriptableWidget (const QString& name, QWidget *widget) {

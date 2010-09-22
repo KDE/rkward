@@ -55,6 +55,8 @@ public slots:
 	QVariantList getObjectInfo (const QString &name);
 	QString getObjectParent (const QString &name);
 	QString getObjectChild (const QString &name);
+signals:
+	void haveError ();
 private:
 	RKComponent* component;
 	Kross::Action* script;
