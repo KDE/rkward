@@ -21,11 +21,11 @@ rk.set.output.html.file(x)
 \details{
   In RKWard the output is saved as a html file which is located at "~/.rkward" by default. (\bold{TODO}: make this platform free). The name of this html file can be retrieved and set using \code{rk.get.output.html.file} and \code{rk.set.output.html.file}.
 
-  \code{rk.get.tempfile.name} returns a non-existing filename inside the directory of the output file. It is mainly used by \link{rk.graph.on} to create filenames suitable for storing images in the output. The filenames of the temporary files are of the form "\code{prefix}%03d.\code{extension}". \code{rk.get.tempfile.name} is somewhat misnamed. For truly temporary files, \link{tempfile} is generally more suitable.
+  \code{rk.get.tempfile.name} returns a non-existing filename inside the directory of the output file. It is mainly used by \link{rk.graph.on} to create filenames suitable for storing images in the output. The filenames of the temporary files are of the form "\code{prefix}\emph{xyz}.\code{extension}". \code{rk.get.tempfile.name} is somewhat misnamed. For truly temporary files, \link{tempfile} is generally more suitable.
 }
 
 \value{
-  \code{rk.get.tempfile.name} and \code{rk.get.output.html.file} returns a string while \code{rk.set.output.html.file} returns \code{NULL}?
+  \code{rk.get.tempfile.name} and \code{rk.get.output.html.file} returns a string while \code{rk.set.output.html.file} returns \code{NULL}.
 }
 
 \author{Thomas Friedrichsmeier \email{rkward-devel@lists.sourceforge.net}}
