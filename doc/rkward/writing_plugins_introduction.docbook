@@ -43,8 +43,8 @@ as Authors, publish date, the abstract, and Keywords -->
      and in the FDL itself on how to use it. -->
 <legalnotice>&FDLNotice;</legalnotice>
 
-<date>2010-03-04</date>
-<releaseinfo>0.5.3.00</releaseinfo>
+<date>2010-09-10</date>
+<releaseinfo>0.5.4.00</releaseinfo>
 
 <abstract>
 <para>
@@ -65,7 +65,7 @@ This is a guide to writing plugins for &rkward;.
 <title>Introduction</title>
 
 <para>
-Documentation as of &kapp; release 0.5.3.
+Documentation as of &kapp; release 0.5.4.
 </para>
 <para>
 This document describes how to write your own plugins. Note, that at the time of this writing, some of the concepts are not yet set it stone. Therefore, this document should be regarded as an introduction to the current approach, and as a basis for discussion. All sorts of comments are welcome.
@@ -794,6 +794,42 @@ We do just the reverse for the spinbox. So in effect, either the varslot is show
 <para>
 Once again, for a complete list of properties, refer to the <link linkend="reference">reference</link>. One more property, however, is special in that all GUI elements have it: "enabled". This is slightly less drastic that "visible". It does not show/hide the GUI element, but only enables/disables it. Disabled elements are typically shown grayed out, and do not react to user input.
 </para>
+<section id="logic_scripted">
+<title>Scripted GUI logic</title>
+<para>While connecting properties as described above is often enough, sometimes it is more flexible or more convenient to use JS to script the GUI logic. In this way, the above example could be re-written as:</para>
+<programlisting>
+	[...]
+	&lt;code file="code.js"/&gt;
+
+	&lt;logic&gt;
+		&lt;script&gt;&lt;![CDATA[
+			// ECMAScript code in this block
+			// the top-level statement is only called once
+			gui.addChangeCommand ("mode.string", "modeChanged ()");
+
+			// this function is called whenever the "mode" was changed
+			modeChanged = function () {
+				var varmode = (gui.getValue ("mode.string") == "variable");
+				gui.setValue ("y.required", varmode);
+				gui.setValue ("y.enabled", varmode);
+				gui.setValue ("constant.required", !varmode);
+				gui.setValue ("constant.enabled", !varmode);
+			}
+		]]&gt;&lt;/script&gt;
+	&lt;/logic&gt;
+
+	&lt;dialog label="T-Test"&gt;
+	[...]
+</programlisting>
+<para>
+The first line of code tells RKWard to call the function "modeChanged()" whenever the value of the "mode" radio-box changes. Inside this function, we define a helper-variable "varmode" which is true when the mode is "variable", false is it is "constant". Then we use "gui.setValue()" to set the "required"- and "enabled"-properties of "y" and "constant", in just the same way as we did using &lt;connect&gt;-statements, before.</para>
+<para>
+The scripted approach to GUI logic becomes particularily useful when you want to change the available option according to the type of object that the user has selected. See <link linkend="guilogic_functions">the reference</link> for available functions.
+</para>
+<para>
+Note that the scripted approach to GUI logic can be mixed with &lt;connect&gt; and &lt;convert&gt;-statements if you like. Also note that the &lt;script&gt;-tag allows to specify a script file name in addition to or as an alternative to inlining the script code. Typically, inlining the script code as shown above is most convenient, however.
+</para>
+</section>
 </chapter>
 
 <chapter id="embedding">
@@ -1309,6 +1345,12 @@ The attribute line simply says, that the associate filename extensions for XYZ f
 You can declare two &lt;external&gt; properties in your plugin. "filename" will be set to the selected file name, and "context" will be set to "import".
 		</para>
 	</section>
+</section>
+
+<section id="current_object">
+<title>Referencing the current object</title>
+<para>For many plugins it is desirable to work on the "current" object. For instance a "sort" plugin could pre-select the data.frame that is currently being edited for sorting. The name of the current object is available to plugins as a pre-defined property called "current_object". You can connect to this property in the usual way. If no object is current, the property equates to an empty string.</para>
+<para>Currently the "current_object" can only be of class data.frame, but please do not rely on this, since this will be extended to other types of data in the future. Therefore please check any requirements by using appropriate constraints on your &lt;varslot&gt;s, or by using <link linkend="logic_scripted">GUI logic scripting</link>.</para>
 </section>
 
 </chapter>
@@ -2380,6 +2422,48 @@ In addition to this, some elements have additional properties you can connect to
 <varlistentry>
 <term>&lt;various html tags&gt;</term>
 <listitem>Most basic html tags are allowed within the sections. Please keep manual formatting to a minimum, however.</listitem>
+</varlistentry>
+</variablelist>
+</section>
+
+<section id="guilogic_functions"><title>Functions available for GUI logic scripting</title>
+<variablelist>
+<varlistentry><term>Class "Component"</term>
+<listitem>Class which represents a single component or component-property. The most important instance of this class is the variable "gui" which is predefined as the root property of the current component. The following methods are available for instances of class "Component":
+	<variablelist>
+	<varlistentry><term>absoluteId(base_id)</term><listitem>Returns the absolute id of <emphasis>base_id</emphasis>, or - if base_id is omitted - the identifier of the component.</listitem></varlistentry>
+	<varlistentry><term>getValue(id)</term><listitem>Returns the value of the given child property. Returns the value of this property, if id is omitted.</listitem></varlistentry>
+	<varlistentry><term>setValue(id, value)</term><listitem>Set the value of the given child property to <emphasis>value</emphasis>.</listitem></varlistentry>
+	<varlistentry><term>getChild(id)</term><listitem>Return an instance of the child-property with the given <emphasis>id</emphasis>.</listitem></varlistentry>
+	<varlistentry><term>addChangeCommand(id, command)</term><listitem>Execute <emphasis>command</emphasis> whenever the child property given by <emphasis>id</emphasis> changes.</listitem></varlistentry>
+	</variablelist></listitem>
+</varlistentry>
+<varlistentry><term>Class "RObject"</term>
+<listitem>Class which represents a single R object. An instance of this class can be obtained by using <command>makeRObject(objectname)</command>. The following methods are available for instances of class "RObject": <warning>If any commands are still pending in the backend, the information provided by these methods can be out-of-date by the time that the plugin code is run. Do <emphasis>not</emphasis> rely on it for critical operations (risking loss of data).</warning>
+	<variablelist>
+	<varlistentry><term>getName()</term><listitem>Returns the absolute name of the object.</listitem></varlistentry>
+	<varlistentry><term>exists()</term><listitem>Returns whether the object exists. You should generally check this before using any of the methods listed below.</listitem></varlistentry>
+	<varlistentry><term>dimensions()</term><listitem>Returns an array of dimensions (similar to <command>dim()</command> in R).</listitem></varlistentry>
+	<varlistentry><term>classes()</term><listitem>Returns an array of classes (similar to <command>class()</command> in R).</listitem></varlistentry>
+	<varlistentry><term>isClass(class)</term><listitem>Returns true, if the object is of class <emphasis>class</emphasis>.</listitem></varlistentry>
+	<varlistentry><term>isDataFrame()</term><listitem>Returns true, if the object is a data.frame.</listitem></varlistentry>
+	<varlistentry><term>isMatrix()</term><listitem>Returns true, if the object is a matrix.</listitem></varlistentry>
+	<varlistentry><term>isList()</term><listitem>Returns true, if the object is a list.</listitem></varlistentry>
+	<varlistentry><term>isFunction()</term><listitem>Returns true, if the object is a function.</listitem></varlistentry>
+	<varlistentry><term>isEnvironment()</term><listitem>Returns true, if the object is an environment.</listitem></varlistentry>
+	<varlistentry><term>isDataNumeric()</term><listitem>Returns true, if the object is a vector of numeric data.</listitem></varlistentry>
+	<varlistentry><term>isDataFactor()</term><listitem>Returns true, if the object is a vector of factor data.</listitem></varlistentry>
+	<varlistentry><term>isDataCharacter()</term><listitem>Returns true, if the object is a vector of character data.</listitem></varlistentry>
+	<varlistentry><term>isDataLogical()</term><listitem>Returns true, if the object is a vector of logical data.</listitem></varlistentry>
+	<varlistentry><term>parent()</term><listitem>Returns an instance of "RObject" representing the parent of this object.</listitem></varlistentry>
+	<varlistentry><term>child(childname)</term><listitem>Returns an instance of "RObject" representing the child <emphasis>childname</emphasis> of this object.</listitem></varlistentry>
+	</variablelist></listitem>
+</varlistentry>
+<varlistentry><term>Class "RObjectArray"</term>
+<listitem>An array of RObject instances. An instance of this class can be obtained by using <command>makeRObjectArray(objectnames)</command>. It is particularily useful when dealing with varslots which allow to select multiple objects.</listitem>
+</varlistentry>
+<varlistentry><term>include()-function</term>
+<listitem><command>include(filename)</command>can be used to include a separate JS file.</listitem>
 </varlistentry>
 </variablelist>
 </section>

@@ -4,8 +4,8 @@
 - Fixed: Graphics windows used to assume a minimum size of 640*480 pixels, even if a smaller size was specified			/ TODO: check on Windows!
 - Added option to disable function argument hinting
 - New functions rk.show.message() and rk.show.question() for user interaction from R code
-- New options for scripting GUI logic in plugins		TODO: document, error handling
-- The current object of an active data editor can be referenced in plugins		TODO: document
+- New options for scripting GUI logic in plugins
+- The current object of an active data editor can be referenced in plugins
 - Fixed: Placement of several menu items was broken - again - with KDE 4.4 and above
 - Allow sorting of results in help search window
 - Fixed: CPU usage would go to 100% for no good reason under certain circumstances
