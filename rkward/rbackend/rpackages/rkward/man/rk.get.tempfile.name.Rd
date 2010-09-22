@@ -19,21 +19,35 @@ rk.set.output.html.file(x)
 }
 
 \details{
-  In RKWard the output is saved as a html file which is located at "~/.rkward" (\bold{TODO}: make this platform free). The name of this html file can be retrieved and set using \code{rk.get.output.html.file} and \code{rk.set.output.html.file}. Images that are copied to output are also saved here. The filenames of these images are of the form "\code{prefix}%03d.\code{extension}"; which can be retrieved using \code{rk.get.tempfile.name}.
+  In RKWard the output is saved as a html file which is located at "~/.rkward" by default. (\bold{TODO}: make this platform free). The name of this html file can be retrieved and set using \code{rk.get.output.html.file} and \code{rk.set.output.html.file}.
+
+  \code{rk.get.tempfile.name} returns a non-existing filename inside the directory of the output file. It is mainly used by \link{rk.graph.on} to create filenames suitable for storing images in the output. The filenames of the temporary files are of the form "\code{prefix}%03d.\code{extension}". \code{rk.get.tempfile.name} is somewhat misnamed. For truly temporary files, \link{tempfile} is generally more suitable.
 }
 
 \value{
-  \code{rk.get.tempfile.name} and \code{rk.get.output.html.file} returns a string while \code{rk.set.output.html.file} returns \bold{TODO} NULL?
+  \code{rk.get.tempfile.name} and \code{rk.get.output.html.file} returns a string while \code{rk.set.output.html.file} returns \code{NULL}?
 }
 
 \author{Thomas Friedrichsmeier \email{rkward-devel@lists.sourceforge.net}}
 
 \seealso{
-\url{rkward://page/rkward_output}
+\url{rkward://page/rkward_output}, \link{tempfile}, \link{file}, \link{rk.print}
 }
 
 \examples{
-\bold{TODO}
+testfile.name <- rk.get.tempfile.name(prefix="test", extension=".txt")
+testfile <- file(testfile.name)
+cat("This is a test\n", file=testfile)
+close(testfile)
+unlink(testfile.name)
+
+outfile <- rk.get.output.html.file()
+
+## Not run
+rk.set.output.html.file("~/.rkward/another_file.html")
+rk.header("Output on a different output file")
+rk.show.html(rk.get.output.html.file())
+rk.set.output.html.file(outfile)
 }
 
 \keyword{utilities}

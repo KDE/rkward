@@ -26,14 +26,14 @@ rk.list.names(..., deparse.level = 2)
 
 \details{
  \code{rk.get.label} retrieves the rkward label (if any) of the given object.
- 
- \code{rk.set.label} sets the rkward label (if any) of the given object.
- 
+
+ \code{rk.set.label} sets the rkward label for the given object.
+
  \code{rk.get.short.name} creates a short name for the given object.
- 
- \code{rk.get.description} creates descriptive string(s) for each of the arguments in "\code{\dots}"; collapsing into a single string using \code{paste.sep} (if not NULL). \bold{TODO}: explain \code{is.substitute}.
- 
- \code{rk.list.names} returns the names of the arguments passed as \code{...}; in case of nested lists, deparsing only upto a depth given by \code{deparse.level}.
+
+ \code{rk.get.description} creates descriptive string(s) for each of the arguments in "\code{\dots}"; collapsing into a single string using \code{paste.sep} (if not NULL). If \code{is.substitute=TRUE}, the arguments will be deparsed, first, which can be useful when using \code{rk.get.description} inside a function.
+
+ \code{rk.list.names} returns the names of the arguments passed as \code{...}; when using \code{rk.list.names} inside a function, it may be necessary to increase the \code{deparse.level} level.
 }
 
 \value{
@@ -43,7 +43,12 @@ rk.list.names(..., deparse.level = 2)
 \author{Thomas Friedrichsmeier \email{rkward-devel@lists.sourceforge.net}}
 
 \examples{
-\bold{TODO}
+x <- data.frame(a=c(1:3), b=c(2:4))
+rk.set.label(x[["a"]], "First column")
+rk.get.short.name (x$a)                   # "x$a"
+rk.get.label (x$a)                        # "First column"
+rk.get.description (x$a)                  # "x$a (First column)"
+rk.list.names (x, x$a, x$b)               # "x" "x$a" "x$b"
 }
 
 \keyword{utilities}
