@@ -5,6 +5,7 @@
 </ul>
 DATE<br>
 
+
 <p align= center >
 <table cellspacing=0 border=1>
 <caption align=bottom class=captiondataframe></caption>
@@ -16,17 +17,94 @@ DATE<br>
 		<th>testvar  </th>
 		<th>specialäöüßèchars  </th>
 		<th>strings</th> 
-	</tr> <tr> <td class=firstcolumn>1</td><td class=cellinside> 1</td><td class=cellinside>value1</td><td class=cellinside>a string</td></tr>
- <tr> <td class=firstcolumn>2</td><td class=cellinside> 2</td><td class=cellinside>value2</td><td class=cellinside>another</td></tr>
- <tr> <td class=firstcolumn>3</td><td class=cellinside> 3</td><td class=cellinside>valueöäü3</td><td class=cellinside>text</td></tr>
- <tr> <td class=firstcolumn>4</td><td class=cellinside> 4</td><td class=cellinside> </td><td class=cellinside>test</td></tr>
- <tr> <td class=firstcolumn>5</td><td class=cellinside> </td><td class=cellinside>value1</td><td class=cellinside>äöüß</td></tr>
- <tr> <td class=firstcolumn>6</td><td class=cellinside> 6</td><td class=cellinside>value2</td><td class=cellinside>$€</td></tr>
- <tr> <td class=firstcolumn>7</td><td class=cellinside> 7</td><td class=cellinside>valueöäü3</td><td class=cellinside> </td></tr>
- <tr> <td class=firstcolumn>8</td><td class=cellinside> 8</td><td class=cellinside> </td><td class=cellinside>last</td></tr>
+	</tr> 
+<tr> 
+<td class=firstcolumn>1
+</td>
+<td class=cellinside> 1
+</td>
+<td class=cellinside>value1
+</td>
+<td class=cellinside>a string
+</td></tr>
+ 
+<tr> 
+<td class=firstcolumn>2
+</td>
+<td class=cellinside> 2
+</td>
+<td class=cellinside>value2
+</td>
+<td class=cellinside>another
+</td></tr>
+ 
+<tr> 
+<td class=firstcolumn>3
+</td>
+<td class=cellinside> 3
+</td>
+<td class=cellinside>valueöäü3
+</td>
+<td class=cellinside>text
+</td></tr>
+ 
+<tr> 
+<td class=firstcolumn>4
+</td>
+<td class=cellinside> 4
+</td>
+<td class=cellinside> 
+</td>
+<td class=cellinside>test
+</td></tr>
+ 
+<tr> 
+<td class=firstcolumn>5
+</td>
+<td class=cellinside> 
+</td>
+<td class=cellinside>value1
+</td>
+<td class=cellinside>äöüß
+</td></tr>
+ 
+<tr> 
+<td class=firstcolumn>6
+</td>
+<td class=cellinside> 6
+</td>
+<td class=cellinside>value2
+</td>
+<td class=cellinside>$€
+</td></tr>
+ 
+<tr> 
+<td class=firstcolumn>7
+</td>
+<td class=cellinside> 7
+</td>
+<td class=cellinside>valueöäü3
+</td>
+<td class=cellinside> 
+</td></tr>
+ 
+<tr> 
+<td class=firstcolumn>8
+</td>
+<td class=cellinside> 8
+</td>
+<td class=cellinside> 
+</td>
+<td class=cellinside>last
+</td></tr>
  
 	</tbody>
 </table>
  </td></table>
  <br>
-<p class='character'>var (Variable label 1)</p><p class='character'>var (Variable label 2 with some special chars: äöü#+ß€)</p><p class='character'>var ()</p>
+
+<p class='character'>var (Variable label 1)</p>
+
+<p class='character'>var (Variable label 2 with some special chars: äöü#+ß€)</p>
+
+<p class='character'>var ()</p>
