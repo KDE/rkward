@@ -6,11 +6,19 @@ DATE<br>
 <img src="graph.png" width="480" height="480"><br>
 
 
+
 <p align= center >
-<table cellspacing=0 border=1><caption align=bottom class=captiondataframe></caption><tr><td>
+<table cellspacing=0 border=1><caption align=bottom class=captiondataframe></caption>
+<tr><td>
 	<table border=0 class=dataframe>
 	<tbody> <tr class= firstline > <th>Min.</th><th>1st Qu.</th><th>Median</th><th>Mean</th><th>3rd Qu.</th><th>Max.</th> </tr>
- <td class=cellinside>316</td><td class=cellinside>323</td><td class=cellinside>335</td><td class=cellinside>337</td><td class=cellinside>351</td><td class=cellinside>363</td></tr>
+ 
+<td class=cellinside>316</td>
+<td class=cellinside>323</td>
+<td class=cellinside>335</td>
+<td class=cellinside>337</td>
+<td class=cellinside>351</td>
+<td class=cellinside>363</td></tr>
  
 	</tbody>
 </table>
@@ -18,11 +26,19 @@ DATE<br>
  <br>
 
 
+
 <p align= center >
-<table cellspacing=0 border=1><caption align=bottom class=captiondataframe></caption><tr><td>
+<table cellspacing=0 border=1><caption align=bottom class=captiondataframe></caption>
+<tr><td>
 	<table border=0 class=dataframe>
 	<tbody> <tr class= firstline > <th>Min.</th><th>1st Qu.</th><th>Median</th><th>Mean</th><th>3rd Qu.</th><th>Max.</th> </tr>
- <td class=cellinside>-3.72</td><td class=cellinside>-1.66</td><td class=cellinside> 0.25</td><td class=cellinside> 0.00</td><td class=cellinside> 1.80</td><td class=cellinside> 3.92</td></tr>
+ 
+<td class=cellinside>-3.72</td>
+<td class=cellinside>-1.66</td>
+<td class=cellinside> 0.25</td>
+<td class=cellinside> 0.00</td>
+<td class=cellinside> 1.80</td>
+<td class=cellinside> 3.92</td></tr>
  
 	</tbody>
 </table>

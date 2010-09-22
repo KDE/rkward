@@ -4,19 +4,81 @@
 </ul>
 DATE<br>
 
+
 <p align= center >
-<table cellspacing=0 border=1><caption align=bottom class=captiondataframe></caption><tr><td>
+<table cellspacing=0 border=1><caption align=bottom class=captiondataframe></caption>
+<tr><td>
 	<table border=0 class=dataframe>
-	<tbody> <td class=cellinside>                 </td><td class=cellinside>                 </td><td class=cellinside>                 </td><td class=cellinside>test_table[["D"]]</td><td class=cellinside>1                </td><td class=cellinside>2                </td></tr>
- <td class=cellinside>test_table[["A"]]</td><td class=cellinside>test_table[["B"]]</td><td class=cellinside>test_table[["C"]]</td><td class=cellinside>                 </td><td class=cellinside>                 </td><td class=cellinside>                 </td></tr>
- <td class=cellinside>1                </td><td class=cellinside>1                </td><td class=cellinside>1                </td><td class=cellinside>                 </td><td class=cellinside>1                </td><td class=cellinside>1                </td></tr>
- <td class=cellinside>                 </td><td class=cellinside>                 </td><td class=cellinside>2                </td><td class=cellinside>                 </td><td class=cellinside>1                </td><td class=cellinside>1                </td></tr>
- <td class=cellinside>                 </td><td class=cellinside>2                </td><td class=cellinside>1                </td><td class=cellinside>                 </td><td class=cellinside>1                </td><td class=cellinside>1                </td></tr>
- <td class=cellinside>                 </td><td class=cellinside>                 </td><td class=cellinside>2                </td><td class=cellinside>                 </td><td class=cellinside>1                </td><td class=cellinside>1                </td></tr>
- <td class=cellinside>2                </td><td class=cellinside>1                </td><td class=cellinside>1                </td><td class=cellinside>                 </td><td class=cellinside>0                </td><td class=cellinside>1                </td></tr>
- <td class=cellinside>                 </td><td class=cellinside>                 </td><td class=cellinside>2                </td><td class=cellinside>                 </td><td class=cellinside>1                </td><td class=cellinside>1                </td></tr>
- <td class=cellinside>                 </td><td class=cellinside>2                </td><td class=cellinside>1                </td><td class=cellinside>                 </td><td class=cellinside>1                </td><td class=cellinside>1                </td></tr>
- <td class=cellinside>                 </td><td class=cellinside>                 </td><td class=cellinside>2                </td><td class=cellinside>                 </td><td class=cellinside>1                </td><td class=cellinside>1                </td></tr>
+	<tbody> 
+<td class=cellinside>                 </td>
+<td class=cellinside>                 </td>
+<td class=cellinside>                 </td>
+<td class=cellinside>test_table[["D"]]</td>
+<td class=cellinside>1                </td>
+<td class=cellinside>2                </td></tr>
+ 
+<td class=cellinside>test_table[["A"]]</td>
+<td class=cellinside>test_table[["B"]]</td>
+<td class=cellinside>test_table[["C"]]</td>
+<td class=cellinside>                 </td>
+<td class=cellinside>                 </td>
+<td class=cellinside>                 </td></tr>
+ 
+<td class=cellinside>1                </td>
+<td class=cellinside>1                </td>
+<td class=cellinside>1                </td>
+<td class=cellinside>                 </td>
+<td class=cellinside>1                </td>
+<td class=cellinside>1                </td></tr>
+ 
+<td class=cellinside>                 </td>
+<td class=cellinside>                 </td>
+<td class=cellinside>2                </td>
+<td class=cellinside>                 </td>
+<td class=cellinside>1                </td>
+<td class=cellinside>1                </td></tr>
+ 
+<td class=cellinside>                 </td>
+<td class=cellinside>2                </td>
+<td class=cellinside>1                </td>
+<td class=cellinside>                 </td>
+<td class=cellinside>1                </td>
+<td class=cellinside>1                </td></tr>
+ 
+<td class=cellinside>                 </td>
+<td class=cellinside>                 </td>
+<td class=cellinside>2                </td>
+<td class=cellinside>                 </td>
+<td class=cellinside>1                </td>
+<td class=cellinside>1                </td></tr>
+ 
+<td class=cellinside>2                </td>
+<td class=cellinside>1                </td>
+<td class=cellinside>1                </td>
+<td class=cellinside>                 </td>
+<td class=cellinside>0                </td>
+<td class=cellinside>1                </td></tr>
+ 
+<td class=cellinside>                 </td>
+<td class=cellinside>                 </td>
+<td class=cellinside>2                </td>
+<td class=cellinside>                 </td>
+<td class=cellinside>1                </td>
+<td class=cellinside>1                </td></tr>
+ 
+<td class=cellinside>                 </td>
+<td class=cellinside>2                </td>
+<td class=cellinside>1                </td>
+<td class=cellinside>                 </td>
+<td class=cellinside>1                </td>
+<td class=cellinside>1                </td></tr>
+ 
+<td class=cellinside>                 </td>
+<td class=cellinside>                 </td>
+<td class=cellinside>2                </td>
+<td class=cellinside>                 </td>
+<td class=cellinside>1                </td>
+<td class=cellinside>1                </td></tr>
  
 	</tbody>
 </table>

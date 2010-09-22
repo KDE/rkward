@@ -5,19 +5,34 @@
 </ul>
 DATE<br>
 
+
 <p class='character'><p><b> Levene's Test for Homogeneity of Variance </b></p></p>
 
+
+
 <p align= center >
-<table cellspacing=0 border=1><caption align=bottom class=captiondataframe></caption><tr><td>
+<table cellspacing=0 border=1><caption align=bottom class=captiondataframe></caption>
+<tr><td>
 	<table border=0 class=dataframe>
 	<tbody> <tr class= firstline > <th></th><th>Df</th><th>F value</th><th>Pr(>F)</th><th></th> </tr>
- <tr><td class=firstcolumn>group</td><td class=cellinside> 2   </td><td class=cellinside>2.82 </td><td class=cellinside>0.069</td><td class=cellinside>.    </td></tr>
- <tr><td class=firstcolumn> </td><td class=cellinside>51   </td><td class=cellinside>     </td><td class=cellinside>     </td><td class=cellinside>     </td></tr>
+ 
+<tr><td class=firstcolumn>group</td>
+<td class=cellinside> 2   </td>
+<td class=cellinside>2.82 </td>
+<td class=cellinside>0.069</td>
+<td class=cellinside>.    </td></tr>
+ 
+<tr><td class=firstcolumn> </td>
+<td class=cellinside>51   </td>
+<td class=cellinside>     </td>
+<td class=cellinside>     </td>
+<td class=cellinside>     </td></tr>
  
 	</tbody>
 </table>
  </td></table>
  <br>
+
 <p class='character'>
 <p>--- Signif. codes: 0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</p>
 </p>
