@@ -15,12 +15,15 @@
 	</section>
 
 	<section title="Other functions" id="public_fns">
-
 	<ul>
-		<li>See <link href="rkward://rhelp/rk.show.message"/> or <link href="rkward://rhelp/rk.show.question"/>.</li>
+		<li>Call plugins: <link href="rkward://rhelp/rk.call.plugin"/>.</li>
+		<li>Various editing (object and files) related functions are documented here: <link href="rkward://rhelp/rk.edit"/>.</li>
+		<li>Various output and results related functions are documented here: <link href="rkward://rhelp/rk.results"/>.</li>
+		<li>Various labels and names related functions are documented here: <link href="rkward://rhelp/rk.get.label"/>.</li>
+		<li>Various file name related functions are documented here: <link href="rkward://rhelp/rk.get.tempfile.name"/>.</li>
+		<li>Message boxes and selection lists: see <link href="rkward://rhelp/rk.show.message"/>.</li>
+		<li>Misc functions: <link href="rkward://rhelp/rk.misc"/> and <link href="rkward://rhelp/rk.sync"/>.</li>
 	</ul>
-
-	TODO: add documentation for all functions from public.R
 	</section>
 
 </document>
