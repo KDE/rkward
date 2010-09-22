@@ -84,11 +84,9 @@ rk.duplicate.device(devId = dev.cur())
 }
 
 \seealso{
-  \code{\link{dev.cur}}, \code{\link{dev.copy}}, \code{\link{setHook}},
-  
-  \code{\link{graphics}}, \code{\link{recordPlot}}, \code{\link{replayPlot}}, \code{\link{persp}},
-  
-  \code{\link{Lattice}}, \code{\link{print.trellis}}, \code{\link{trellis.last.object}}
+  \code{\link{recordPlot}}, \code{\link{replayPlot}}
+  \code{\link{print.trellis}}, \code{\link{trellis.last.object}}
+  \url{rkward://page/rkward_plot_history}
 }
 
 \examples{

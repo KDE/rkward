@@ -28,6 +28,10 @@ rk.set.output.html.file(x)
 
 \author{Thomas Friedrichsmeier \email{rkward-devel@lists.sourceforge.net}}
 
+\seealso{
+\url{rkward://page/rkward_output}
+}
+
 \examples{
 \bold{TODO}
 }
