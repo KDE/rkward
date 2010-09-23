@@ -85,7 +85,7 @@ rktest.compare.against.standard <- function (file, fuzzy=FALSE) {
 		if (!file.exists (standard_file)) return ("match (empty)")
 	}
 
-	output.diff <- system(paste("diff", shQuote(file), shQuote(standard_file), "--strip-trailing-cr", "--new-file"), intern=TRUE)
+	output.diff <- suppressWarnings (system(paste("diff", shQuote(file), shQuote(standard_file), "--strip-trailing-cr", "--new-file"), intern=TRUE))
 	if (!length (output.diff)) return ("match")
 	if ((length (output.diff) == 1) && (!nzchar (output.diff))) return ("match")
 

@@ -1,3 +1,4 @@
+- Fixed: Running user commands would crash with R 2.12.0
 - Added full-featured plot history for the onscreen graphics device
 - Fixed: Potential crash when editing data-frame with duplicate column names
 - Added option to specify default onscreen graphics dimensions		TODO: test on windows
