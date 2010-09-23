@@ -15,7 +15,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://sourceforge."
 "net/tracker/?group_id=50231&atid=459007\n"
 "POT-Creation-Date: 2010-04-15 16:30+0200\n"
-"PO-Revision-Date: 2010-08-07 18:44+0200\n"
+"PO-Revision-Date: 2010-09-24 00:09+0200\n"
 "Last-Translator: Stefan Rödiger <stefan_roediger@gmx.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "MIME-Version: 1.0\n"
@@ -309,19 +309,18 @@ msgid ""
 "Did not unload package %1. It is required in RKWard. If you really want to "
 "do this, do so on the R Console."
 msgstr ""
-"Das Packet %1 wurde nicht entfernt. Es wird von RKWard benötigt. Wenn Sie "
+"Das Paket %1 wurde nicht entfernt. Es wird von RKWard benötigt. Wenn Sie "
 "dies wirklich beabsichtigen, können Sie dies in der R-Konsole durchführen."
 
 #: core/robjectlist.cpp:83
 msgid "Package %1 appears not to have been loaded"
-msgstr "Packet %1 wurde wahrscheinlich nicht geladen"
+msgstr "Paket %1 wurde wahrscheinlich nicht geladen"
 
 #: dataeditor/editformatdialog.cpp:41
 msgid "Alignment"
 msgstr "Ausrichtung"
 
 #: dataeditor/editformatdialog.cpp:45
-#, fuzzy
 msgid "Default"
 msgstr "Standardeinstellung"
 
@@ -666,7 +665,7 @@ msgstr "Beinhalte Abhängigkeiten"
 
 #: dialogs/rkloadlibsdialog.cpp:864
 msgid "Selected library location not writable"
-msgstr "Gewählter Speicheroft für Bibliotheken ist nicht beschreibbar"
+msgstr "Gewählter Speicherort für Bibliotheken ist nicht beschreibbar"
 
 #: dialogs/rkloadlibsdialog.cpp:865
 msgid ""
@@ -691,7 +690,7 @@ msgid ""
 "on Windows"
 msgstr ""
 "Falls Sie zugriff auf den Administrator-Account dieses Computers haben, denn "
-"können Sie dies nutzen um die Packete zu installieren, oder Sie können die "
+"können Sie dies nutzen um die Pakete zu installieren, oder Sie können die "
 "Zugriffsrechte von '%1' ändern. "
 "Entschuldigen Sie bitte, das automatische wechseln zum Administrator-Account "
 "wird von RKWard unter Windows noch nicht unterstützt."
@@ -774,14 +773,12 @@ msgstr ""
 "jeweiligen Befehlen in einfache Anführungszeichen ('') ein)"
 
 #: main.cpp:96
-#, fuzzy
 msgid "Disable R C stack checking"
 msgstr "Schalte R C Stack Check ab"
 
 #: main.cpp:97
-#, fuzzy
 msgid "R workspace file to open"
-msgstr "Frage nach einer Datei die geöffnet werden soll"
+msgstr "R-Workspace Datei die geöffnet werden soll"
 
 #: main.cpp:99
 msgid "RKWard"
@@ -792,9 +789,8 @@ msgid "Frontend to the R statistics language"
 msgstr "Frontend für die Statistiksprache R"
 
 #: main.cpp:99
-#, fuzzy
 msgid "(c) 2002, 2004, 2005, 2006, 2007, 2008, 2009, 2010"
-msgstr "(c) 2002, 2004, 2005, 2006, 2007, 2008"
+msgstr "(c) 2002, 2004, 2005, 2006, 2007, 2008, 2009, 2010"
 
 #: main.cpp:100 main.cpp:101 main.cpp:102 main.cpp:103 main.cpp:105
 #: main.cpp:106 main.cpp:107 main.cpp:108 main.cpp:109 main.cpp:110
@@ -1000,7 +996,7 @@ msgstr "Reiter"
 # Is it a typo (Comma vs. Command)?
 #: misc/rkspecialactions.cpp:104
 msgid "Comma"
-msgstr ""
+msgstr "Komma"
 
 #: misc/rkspecialactions.cpp:108
 msgid "Single space"
@@ -1559,7 +1555,7 @@ msgid ""
 "with that, see <a href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/"
 "rkward/compiling</a>.</p>"
 msgstr ""
-"<p>Der RKWard-Editor konnte entweder die Ressourcedateien nicht finden, oder "
+"<p>Der RKWard-Editor konnte entweder die Ressourcendateien nicht finden, oder "
 "nur eine alte Version von diesen Dateien. Die wahrscheinlichste Ursache "
 "dafür ist, dass die letzte Installation die Dateien nicht am richtigen "
 "Speicherort abgelegt hat. Das kann zu einer Reihe von Problemen führen, die "
@@ -1675,7 +1671,7 @@ msgstr "Beende die Anwendung "
 
 #: rkward.cpp:359 windows/robjectbrowser.cpp:135
 msgid "Load / Unload Packages"
-msgstr "Lade / Entlade Packete"
+msgstr "Lade / Entlade Pakete"
 
 #: rkward.cpp:370
 msgid "Close All Data"
@@ -1763,7 +1759,7 @@ msgstr "Öffne R-Skriptdatei(en)"
 
 #: rkward.cpp:715
 msgid "[Unnamed Workspace]"
-msgstr "[UnbenannteR-Workspace]"
+msgstr "[Unbenannte R-Workspace]"
 
 #: robjectviewer.cpp:58
 msgid "summary (x)"
@@ -1798,12 +1794,12 @@ msgid "Ready"
 msgstr "Fertig"
 
 #: scriptbackends/phpbackend.cpp:66
-#, fuzzy
 msgid ""
 "The support file \"%1\" could not be found or is not readable. Please check "
 "your installation."
 msgstr ""
-"Die Datei \"%1\" konnte nicht gefunden werden oder ist nicht lesbar. Bitte "
+"Die unterstützende Datei \"%1\" konnte nicht gefunden werden oder ist nicht "
+"lesbar. Bitte "
 "überprüfen Sie ihre Installation."
 
 #: scriptbackends/phpbackend.cpp:66 scriptbackends/phpbackend.cpp:167
@@ -1868,13 +1864,13 @@ msgstr "PHP-Prozess beendet"
 msgid ""
 "The QtScript-backend has reported an error:\n"
 "%1"
-msgstr "Das  QtScript-Backend hat einen Fehler gemeldet:\n"
+msgstr ""
+"Das  QtScript-Backend hat einen Fehler gemeldet:\n"
 "%1"
 
 #: scriptbackends/qtscriptbackend.cpp:114
-#, fuzzy
 msgid "Scripting error"
-msgstr "Skripteditor"
+msgstr "Skriptfehler"
 
 #: scriptbackends/qtscriptbackend.cpp:200
 msgid ""
@@ -2294,7 +2290,7 @@ msgstr "Maximale Anzahl von Elementen im Ausdruck angezeigt"
 
 #: settings/rksettingsmoduler.cpp:107
 msgid "Maximum length of warnings/errors to print"
-msgstr "Maximale Länge von Warnungen/Fehleren die ausgegeben werden soll"
+msgstr "Maximale Länge von Warnungen/Fehlern die ausgegeben werden soll"
 
 #: settings/rksettingsmoduler.cpp:113
 msgid "Keep comments in functions"
@@ -2473,7 +2469,7 @@ msgid ""
 msgstr ""
 "Einige Kommandos die Sie versuchen zurückzunehmen wurden als \"sync"
 "\" (Buchstabe 'S' in Typ-Spalte). Abbrechen solcher Kommandos könnte zu "
-"Datenverlußt führen. Diese Kommandos sind nicht zurückgenommen wurden."
+"Datenverlust führen. Diese Kommandos sind nicht zurückgenommen wurden."
 
 #: windows/rcontrolwindow.cpp:133
 msgid "Some commands not cancelled"
@@ -2629,7 +2625,6 @@ msgid "Output %1"
 msgstr "Ausgabe %1"
 
 #: windows/rkhtmlwindow.cpp:367
-#, fuzzy
 msgid "Print output"
 msgstr "Drucke Ausgabe"
 
@@ -2638,9 +2633,8 @@ msgid "Export page as HTML"
 msgstr "Exportiere Seite als HTML"
 
 #: windows/rkhtmlwindow.cpp:380
-#, fuzzy
 msgid "Print page"
-msgstr "Drucke Hilfe"
+msgstr "Drucke Seite"
 
 #: windows/rkhtmlwindow.cpp:382
 msgid "Save Output as HTML"
@@ -2799,7 +2793,7 @@ msgstr "Zeige/Verberge Konsole"
 
 #: windows/rktoplevelwindowgui.cpp:94
 msgid "Show/Hide R Help Search"
-msgstr "Zeige/VerbergeFenster zur R-Hilfe"
+msgstr "Zeige/Verberge Fenster zur R-Hilfe"
 
 #: windows/rktoplevelwindowgui.cpp:98
 msgid "Activate Document view"
@@ -2972,13 +2966,13 @@ msgid "Duplicate"
 msgstr "Duplizieren"
 
 #: windows/rkworkplace.cpp:211
-#, fuzzy
 msgid ""
 "The url you are trying to open ('%1') is not a local file or the filetype is "
 "not supported by RKWard. Do you want to open the url in the default "
 "application?"
 msgstr ""
-"Die URL welche Sie versuchen zu öffnen ('%1') ist keine lokale Datei. "
+"Die URL welche Sie versuchen zu öffnen ('%1') ist keine lokale Datei oder der "
+"Dateityp wird nicht von RKWard unterstützt. "
 "Möchten Sie die URL in der Standardanwendung öffnen?"
 
 #: windows/rkworkplace.cpp:211
@@ -3258,7 +3252,6 @@ msgstr "&Gerät"
 #. i18n: file: windows/rktoplevelwindowgui.rc:5
 #. i18n: ectx: Menu (window)
 #: rc.cpp:72 rc.cpp:123
-#, fuzzy
 msgid "&Window"
 msgstr "&Fenster"
 
