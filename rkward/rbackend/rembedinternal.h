@@ -162,6 +162,10 @@ Otherwise it is very similar to handleSubstackCall (), esp. in that is implement
 	static REmbedInternal *this_pointer;
 	static char *na_char_internal;
 	bool r_running;
+/** Check whether the runtime version of R is at least the given version. Valid only *after* startR() has been called! */
+	bool RRuntimeIsVersion (int major, int minor, int revision) {
+		return (r_version >= (1000 * major + 10 * minor + revision));
+	}
 
 /** Flags used to classify output. */
 //	static bool output_is_warning;
@@ -169,6 +173,7 @@ Otherwise it is very similar to handleSubstackCall (), esp. in that is implement
 //	static bool next_output_is_error;
 	QTextCodec *current_locale_codec;
 private:
+	int r_version;
 // can't declare this as part of the class, as it would confuse REmbed
 //	SEXPREC *runCommandInternalBase (const char *command, bool *error);
 };

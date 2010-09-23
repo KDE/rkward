@@ -127,6 +127,8 @@ QString *SEXPToStringList (SEXP from_exp, unsigned int *count);
 QString SEXPToString (SEXP from_exp);
 int *SEXPToIntArray (SEXP from_exp, unsigned int *count);
 int SEXPToInt (SEXP from_exp, int def_value = INT_MIN);
+SEXP parseCommand (const QString &command_qstring, REmbedInternal::RKWardRError *error);
+SEXP runCommandInternalBase (SEXP pr, REmbedInternal::RKWardRError *error);
 
 // ############## R Standard callback overrides BEGIN ####################
 void RSuicide (const char* message) {
@@ -873,6 +875,15 @@ bool REmbedInternal::startR (int argc, char** argv, bool stack_check) {
 
 	connectCallbacks();
 
+	// get info on R runtime version
+	REmbedInternal::RKWardRError error;
+	unsigned int count;
+	int *dummy = getCommandAsIntVector ("as.numeric (R.version$major) * 1000 + as.numeric (R.version$minor) * 10", &count, &error);
+	RK_ASSERT ((error == REmbedInternal::NoError) && (count == 1));
+	if (count) r_version = dummy[0];
+	else r_version = 0;
+	delete [] dummy;
+
 	return true;
 }
 
@@ -1011,6 +1022,9 @@ void runUserCommandInternal (void *) {
 	} while (((repldll_result = R_ReplDLLdo1 ()) == 2) && (!repldll_buffer_transfer_finished));	// keep iterating while the statement is incomplete, and we still have more in the buffer to transfer
 	//Rprintf ("iteration complete, status: %d\n", repldll_result);
 	PROTECT (R_LastvalueSymbol);		// why do we need this? No idea, but R_ToplevelExec tries to unprotect something
+	if (REmbedInternal::this_pointer->RRuntimeIsVersion (2, 11, 9)) {
+		PROTECT (R_LastvalueSymbol);		// ... and with R 2.12.0 it tries to unprotect two things
+	}
 }
 
 void REmbedInternal::runCommandInternal (const QString &command_qstring, RKWardRError *error, bool print_result) {
