@@ -268,7 +268,7 @@
 }
 
 "rk.make.repos.string" <- function () {
-	x <- options ("repos")$repos
+	x <- getOption ("repos")
 	len <- length (x)
 	ret <- sprintf ("c (")
 	first <- TRUE

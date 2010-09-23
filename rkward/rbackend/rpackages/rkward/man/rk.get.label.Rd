@@ -21,7 +21,7 @@ rk.list.names(..., deparse.level = 2)
   \item{label}{a string, to set the label attribute of an object}
   \item{envir}{an environment, where the attribute is evaluated}
   \item{paste.sep}{a string, used as the \code{collapse} argument for paste}
-  \item{is.substitute}{a logical (not NA), \bold{TODO} __explain me__}
+  \item{is.substitute}{a logical (not NA). See Details.}
 }
 
 \details{
