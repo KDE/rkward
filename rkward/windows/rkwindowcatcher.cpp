@@ -57,11 +57,11 @@ void RKWindowCatcher::stop (int new_cur_device) {
 	if (new_cur_device != last_cur_device) {
 		if (w) {
 			RKWorkplace::mainWorkplace ()->newX11Window (w, new_cur_device);
+#if defined Q_WS_X11
 			// All this syncing looks like a bloody hack? Absolutely. It appears to work around the occasional error "figure margins too large" from R, though.
 			qApp->processEvents ();
 			qApp->syncX ();
 			qApp->processEvents ();
-#if defined Q_WS_X11
 			// this appears to have the side-effect of forcing the captured window to sync with X, which is exactly, what we're trying to achieve.
 			KWindowInfo wininfo = KWindowSystem::windowInfo (w, NET::WMName | NET::WMGeometry);
 #endif
