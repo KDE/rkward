@@ -373,24 +373,8 @@
 
 # list all available plugins in RKWard; this is a companion function for rk.call.plugin:
 # the output provides possible strings for "plugin" argument in rk.call.plugin
-rk.list.plugins <- function (path, type = "all") {
-	# Need a better way to get path and not have the user provide it
-	# path = /usr/share/kde4/apps/rkward, ~/.kde/share/apps/rkward, ...
-	if (missing (path) || !file.exists (path)) stop ("Wrong path")
-	
-	if (type == "all") type <- "*"
-	
-	pnm <- NULL
-	for (fname in list.files (path, paste (type, "pluginmap", sep = "."))) {
-		con <- file (file.path (path, fname), "r", blocking = FALSE)
-		.L. <- readLines (con)
-		close (con)
-		.L. <- .L.[grepl ("<component ", .L., fixed = TRUE)]
-		.L. <- .L.[grepl ("id=", .L., fixed = TRUE)]
-		if (length (.L.) > 0)
-			pnm <- c(pnm, sapply (strsplit (sapply (strsplit(.L., "id=\"", fixed = TRUE), "[[",2), "\" "), "[[", 1))
-	}
-	pnm
+rk.list.plugins <- function () {
+	.rk.do.call ("listPlugins")
 }
 
 # a wrapper around chooseCRANmirror() without changing options ("repos"), permanently

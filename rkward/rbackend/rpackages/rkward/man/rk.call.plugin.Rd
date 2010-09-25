@@ -13,23 +13,23 @@ rk.list.plugins(path, type = "all")
 }
 
 \arguments{
-\item{plugin}{character string, giving the name of the plugin to call. This is of the form "\code{rkward::}\emph{plugin_name}". See Details.}
+\item{plugin}{character string, giving the name of the plugin to call. See Details.}
 \item{\dots}{arguments passed to the \code{plugin}}
-\item{submit.mode}{character string, specifying the submission mode: \code{"manual"} will open the plugin GUI and wait for the user to submit it manually, \code{"submit"} will submit the plugin to the output, or \bold{TODO: _check me_} \code{"auto"} will use the built-in default of the plugin (which in most cases will be same as \code{"submit"}).}
-\item{path}{character string, giving the directory to search for various pluginmap files. This is the directory where the KDE application, "RKWard," is installed (and not the R package, "rkward"). For example, on most Debian based Linux systems this is generally \code{/usr/share/kde4/apps/rkward} or \code{~/.kde/share/apps/rkward}.}
-\item{type}{character string, giving the specific pluginmap file to scan. Currently suported strings are \code{"all"}, \code{"analysis"}, \code{"data"}, \code{"distributions"}, \code{"import_export"}, \code{"irt"}, \code{"plots"}, and \code{"x11device"}. The default value of \code{"all"} scans all pluginmap files.}
+\item{submit.mode}{character string, specifying the submission mode: \code{"manual"} will open the plugin GUI and wait for the user to submit it manually, \code{"auto"} will try to submit the plugin, if it can be submitted with the current settings (i.e. if the "Submit"-button is enabled after applying all specified parameters). If the plugin cannot be submitted, with the current settings, it will behave like \code{"manual"}. \code{"submit"} is like \code{"auot"}, but will  close the plugin, and generate an error, if it cannot be submitted..}
 }
 
 \details{
-\code{rk.call.plugin} provides a high level wrapper to call any plugin available in RKWard. The exact string to be used as \code{plugin} is generally not transparent to the user. Use \code{rk.list.plugins} to list these. A particular character string (\emph{plugin_name}) thus obtained needs to be prefixed by \code{"rkward::"} for a valid \code{plugin} argument. See example.
+\code{rk.call.plugin} provides a high level wrapper to call any plugin available in RKWard. The exact string to be used as \code{plugin}, and the list of arguments available for a particular plugin, are generally not transparent to the user.\code{rk.list.plugins} can be used to obtain a list of current plugins. For plugin arguments, it is recommended to run the plugin, and inspect the "Run again" link that is generated on the output.
 
-\code{rk.list.plugins} scans the given pluginmap file and lists all the available plugins under it. 
+\bold{Warning}: Using \code{rk.call.plugin}, especially with submit.modes \code{"auto"} or \code{"submit"} to program a sequence of analyses has important drawbacks. First, the semantics of plugins are not guaranteed to remain unchanged across different versions of RKWard, thus your code may stop working after an upgrade. Second, your code will not be usable outside of an RKWard session. Consider copying the generated code for each plugin, instead. The primary use-cases for \code{rk.call.plugin} are automated tests, cross-references, and scripted tutorials.
+
+\code{rk.list.plugins} returns the list of the names of all currently registered plugins.
 }
 
 \value{
 \code{rk.call.plugin} returns \code{TRUE} invisibly.
 
-\code{rk.list.plugins} returns a character vector of plugin names. If none found, \code{NULL} is returned. 
+\code{rk.list.plugins} returns a character vector of plugin names. If none found, \code{NULL} is returned.
 }
 
 \author{Thomas Friedrichsmeier \email{rkward-devel@lists.sourceforge.net}}
@@ -39,8 +39,8 @@ rk.list.plugins(path, type = "all")
 }
 
 \examples{
-## list all analysis related plugins
-rk.list.plugins ("~/.kde/share/apps/rkward", "analysis")
+## list all current plugins
+rk.list.plugins ()
 
 ## "t_test_two_vars" plugin:
 ## see the output: Windows->Show Output

@@ -2,7 +2,7 @@
                           rkcomponentmap.h  -  description
                              -------------------
     begin                : Thu May 12 2005
-    copyright            : (C) 2005, 2006, 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -179,6 +179,8 @@ public:
 /** invokes the specified component as toplevel
 @param message If a non-null pointer to QString is given, error messages are written into this string *instead* of being displayed */
 	static bool invokeComponent (const QString &component_id, const QStringList &serialized_settings, ComponentInvocationMode submit_mode = ManualSubmit, QString *message=0, RCommandChain *in_chain = 0);
+/** @returns a list of all currently registered component ids */
+	QStringList allComponentIds () { return components.keys(); };
 private:
 /** typedef for easy reference to iterator */
 	typedef QMap<QString, RKComponentHandle*> ComponentMap;

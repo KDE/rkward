@@ -419,6 +419,13 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 		} else {
 			RK_ASSERT (false);
 		}
+	} else if (call == "listPlugins") {
+		if (request->call.count () == 1) {
+			QStringList list = RKComponentMap::getMap ()->allComponentIds ();
+			issueCommand (".rk.set.reply (c (\"" + list.join ("\", \"") + "\"))\n", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
+		} else {
+			RK_ASSERT (false);
+		}
 	} else if (call == "showHTML") {
 		if (request->call.count () == 2) {
 			RKWorkplace::mainWorkplace ()->openHelpWindow (request->call[1]);
