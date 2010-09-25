@@ -16,7 +16,7 @@
 
 	<section title="Other functions" id="public_fns">
 	<ul>
-		<li>Call plugins: <link href="rkward://rhelp/rk.call.plugin"/>.</li>
+		<li>Call or list plugins: <link href="rkward://rhelp/rk.call.plugin"/>.</li>
 		<li>Various editing (object and files) related functions are documented here: <link href="rkward://rhelp/rk.edit"/>.</li>
 		<li>Various output and results related functions are documented here: <link href="rkward://rhelp/rk.results"/>.</li>
 		<li>Various labels and names related functions are documented here: <link href="rkward://rhelp/rk.get.label"/>.</li>

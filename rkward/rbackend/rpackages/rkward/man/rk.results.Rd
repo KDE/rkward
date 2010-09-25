@@ -46,7 +46,7 @@ rk.describe.alternative(x)
 \author{Thomas Friedrichsmeier \email{rkward-devel@lists.sourceforge.net}}
 
 \seealso{
-\code{\link{HTML}}, \code{\link{rk.get.output.html.file}}, \code{\link{rk.get.description}}, \url{rkward://page/rkward_output}
+\code{\link{HTML}}, \code{\link{rk.get.output.html.file}}, \code{\link{rk.get.description}}, \code{\link{rk.call.plugin}}, \url{rkward://page/rkward_output} 
 }
 
 \examples{
