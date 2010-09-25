@@ -11,7 +11,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://sourceforge."
 "net/tracker/?group_id=50231&atid=459007\n"
 "POT-Creation-Date: 2010-04-15 16:30+0200\n"
-"PO-Revision-Date: 2010-04-21 13:38+0200\n"
+"PO-Revision-Date: 2010-09-25 13:53+0200\n"
 "Last-Translator: Germán Márquez Mejía\n"
 "Language-Team: Spanish <rkward-devel@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -298,10 +298,12 @@ msgid ""
 "Did not unload package %1. It is required in RKWard. If you really want to "
 "do this, do so on the R Console."
 msgstr ""
+"No se desactivó el paquete %1. Se necesita en RKWard. Si realmente desea "
+"desactivarlo, hágalo en la consola de R."
 
 #: core/robjectlist.cpp:83
 msgid "Package %1 appears not to have been loaded"
-msgstr ""
+msgstr "Parece que el paquete %1 no se ha cargado"
 
 #: dataeditor/editformatdialog.cpp:41
 msgid "Alignment"
@@ -699,7 +701,7 @@ msgstr "Contexto:"
 
 #: dialogs/rkselectlistdialog.cpp:38
 msgid "<b>Select one or more:</b>"
-msgstr ""
+msgstr "<b>Seleccionar uno o más:</b>"
 
 #: dialogs/rkselectlistdialog.cpp:39
 msgid "<b>Select one:</b>"
@@ -950,11 +952,11 @@ msgstr "¿Sobreescribir?"
 
 #: misc/rkspecialactions.cpp:27 misc/rkspecialactions.cpp:66
 msgid "Paste special..."
-msgstr ""
+msgstr "Pegado especial..."
 
 #: misc/rkspecialactions.cpp:79
 msgid "Paste mode"
-msgstr ""
+msgstr "Modo de pegado"
 
 #: misc/rkspecialactions.cpp:82
 msgid "Single string"
@@ -962,15 +964,15 @@ msgstr "Cadena sencilla"
 
 #: misc/rkspecialactions.cpp:85
 msgid "Vector"
-msgstr ""
+msgstr "Vector"
 
 #: misc/rkspecialactions.cpp:97
 msgid "Field separator"
-msgstr ""
+msgstr "Separador de campo"
 
 #: misc/rkspecialactions.cpp:100
 msgid "Tab"
-msgstr ""
+msgstr "Tabulador"
 
 #: misc/rkspecialactions.cpp:104
 msgid "Comma"
@@ -982,47 +984,47 @@ msgstr "Espacio sencillo"
 
 #: misc/rkspecialactions.cpp:111
 msgid "Any whitespace"
-msgstr ""
+msgstr "Cualquier espacio"
 
 #: misc/rkspecialactions.cpp:115
 msgid "Other:"
-msgstr ""
+msgstr "Otro:"
 
 #: misc/rkspecialactions.cpp:126
 msgid "Quoting"
-msgstr ""
+msgstr "Entrecomillado"
 
 #: misc/rkspecialactions.cpp:129
 msgid "Do not quote values"
-msgstr ""
+msgstr "No entrecomillar valores"
 
 #: misc/rkspecialactions.cpp:132
 msgid "Automatic"
-msgstr ""
+msgstr "Automático"
 
 #: misc/rkspecialactions.cpp:136
 msgid "Quote all values"
-msgstr ""
+msgstr "Entrecomillar todo"
 
 #: misc/rkspecialactions.cpp:142
 msgid "Transformations"
-msgstr ""
+msgstr "Transformaciones"
 
 #: misc/rkspecialactions.cpp:144
 msgid "Reverse horizontally"
-msgstr ""
+msgstr "Invertir orden horizontal"
 
 #: misc/rkspecialactions.cpp:146
 msgid "Reverse vertically"
-msgstr ""
+msgstr "Invertir orden vertical"
 
 #: misc/rkspecialactions.cpp:148
 msgid "Flip rows/columns"
-msgstr ""
+msgstr "Voltear filas/columnas"
 
 #: misc/rkspecialactions.cpp:150
 msgid "Insert NAs where needed"
-msgstr ""
+msgstr "Agregar NA donde se necesite"
 
 #: misc/rkstandardactions.cpp:44
 msgid "Run current line"
@@ -1237,7 +1239,7 @@ msgstr "Cerrar"
 
 #: plugin/rkstandardcomponentgui.cpp:105
 msgid "Auto close"
-msgstr ""
+msgstr "Cerrar autom."
 
 #: plugin/rkstandardcomponentgui.cpp:111
 msgid "Help"
@@ -1848,6 +1850,9 @@ msgid ""
 "Backtrace:\n"
 "%2"
 msgstr ""
+"Error de guion: %1\n"
+"Trazado inverso:\n"
+"%2"
 
 #: scriptbackends/qtscriptbackend.cpp:219
 msgid ""
@@ -1963,7 +1968,7 @@ msgstr "Tiempo límite de los comandos"
 
 #: settings/rksettingsmoduledebug.cpp:93
 msgid "<i>Note:</i> Debug output is written to %1"
-msgstr ""
+msgstr "<i>Nota:</i> La salida del depurador se escribe en %1"
 
 #: settings/rksettingsmoduledebug.cpp:110
 msgid "Debug"
@@ -2109,15 +2114,15 @@ msgstr "Opciones de la ventana de salida"
 
 #: settings/rksettingsmoduleoutput.cpp:50
 msgid "show window on new output"
-msgstr ""
+msgstr "mostrar ventana cuando se produzcan nuevos resultados"
 
 #: settings/rksettingsmoduleoutput.cpp:53
 msgid "raise window on new output"
-msgstr ""
+msgstr "pasar ventana al frente cuando se produzcan nuevos resultados"
 
 #: settings/rksettingsmoduleoutput.cpp:60
 msgid "Graphics"
-msgstr ""
+msgstr "Gráficos"
 
 #: settings/rksettingsmoduleoutput.cpp:64
 msgid "File format"
@@ -2129,19 +2134,19 @@ msgstr "<Predeterminado>"
 
 #: settings/rksettingsmoduleoutput.cpp:67
 msgid "PNG"
-msgstr ""
+msgstr "PNG"
 
 #: settings/rksettingsmoduleoutput.cpp:68
 msgid "SVG"
-msgstr ""
+msgstr "SVG"
 
 #: settings/rksettingsmoduleoutput.cpp:69
 msgid "JPG"
-msgstr ""
+msgstr "JPG"
 
 #: settings/rksettingsmoduleoutput.cpp:74
 msgid "JPG quality"
-msgstr ""
+msgstr "Calidad JPG"
 
 #: settings/rksettingsmoduleoutput.cpp:82
 msgid "Width:"
@@ -2310,6 +2315,7 @@ msgstr "Motor R"
 #: settings/rksettingsmoduler.cpp:335
 msgid "CRAN download mirror (leave empty to be prompted once each session):"
 msgstr ""
+"Servidor CRAN de descargas (dejar vacío para elegir uno en cada sesión):"
 
 #: settings/rksettingsmoduler.cpp:342
 msgid "Select mirror"
@@ -2354,7 +2360,7 @@ msgstr "Paquetes de R"
 
 #: settings/rksettingsmoduler.cpp:406
 msgid "Select CRAN mirror"
-msgstr ""
+msgstr "Seleccionar servidor CRAN"
 
 #: settings/rksettingsmodulewatch.cpp:123
 msgid ""
@@ -2631,10 +2637,14 @@ msgid ""
 "<p>The help page for this component has not yet been written (or is broken). "
 "Please consider contributing it.</p>\n"
 msgstr ""
+"<h1>No hay página de ayuda</h1>\n"
+"<p>La página de ayuda para este componente no se ha escrito aún (o está "
+"dañada). "
+"Por favor contemple la posibilidad de contribuir a ella."
 
 #: windows/rkhtmlwindow.cpp:498
 msgid "Use %1 now"
-msgstr ""
+msgstr "Usar %1 ahora"
 
 #: windows/rkhtmlwindow.cpp:515
 msgid "Summary"
@@ -2662,7 +2672,7 @@ msgstr "Detalles técnicos"
 
 #: windows/rkhtmlwindow.cpp:579
 msgid "<h1>On this page:</h1>"
-msgstr ""
+msgstr "<h1>En esta página:</h1>"
 
 #: windows/rkhtmlwindow.cpp:646
 msgid "R Reference on '%1'"
