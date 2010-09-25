@@ -14,9 +14,9 @@ rk.sync.global()
 }
 
 \details{
-\bold{TODO}: Explain what is "sync"
+RKWard keeps an internal representation of objects in the R workspace. For objects in the \code{.GlobalEnv}, this representation is updated after each top-level statement. For the rare cases where this is not enough, \code{rk.sync} can be used to update the representation of a single object, \code{x}, while \code{rk.sync.global} scans the \code{.GlobalEnv} for new and removed objects, and updates as appropriate.
 
-While \code{rk.sync} syncs a single object, \code{x}, \code{rk.sync.global} syncs all objects in  \code{.GlobalEnv}.
+These functions are rarely needed outside automated testing. However, rk.sync() can be useful, if an object outside the \code{.GlobalEnv} has changed, since this will not be detected automatically. Also, by default RKWard does not recurse into environments when updating its representation of objects. rk.sync() can be used, here, to inspect the objects inside environments (see examples).
 }
 
 \value{
@@ -29,7 +29,12 @@ While \code{rk.sync} syncs a single object, \code{x}, \code{rk.sync.global} sync
 A typical user should not need to use these.
 }
 
+\seealso{
+\url{rkward://page/rkward_workspace_browser} 
+}
+
 \examples{
+rk.sync (rkward::rk.record.plot)
 }
 
 \keyword{utilities}
