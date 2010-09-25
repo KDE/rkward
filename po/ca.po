@@ -11,11 +11,13 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
-"Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?group_id=50231&atid=459007\n"
-"POT-Creation-Date: 2010-04-15 16:30+0200\n"
+"Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
+"group_id=50231&atid=459007\n"
+"POT-Creation-Date: 2010-09-25 15:14+0200\n"
 "PO-Revision-Date: 2010-04-28 11:15+0200\n"
 "Last-Translator: Pep Roca <pep.roca@gmail.com>\n"
 "Language-Team:  <kde-i18n-ca@kde.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -63,7 +65,8 @@ msgid "Waiting for R to finish"
 msgstr "S'està esperant que R finalitzi"
 
 #: agents/rksaveagent.cpp:63
-msgid "No filename given. Your data was NOT saved. Do you still want to proceed?"
+msgid ""
+"No filename given. Your data was NOT saved. Do you still want to proceed?"
 msgstr ""
 "No heu proporcionat cap nom de fitxer. Les dades NO s'han desat. Voleu "
 "continuar malgrat això?"
@@ -92,7 +95,7 @@ msgstr ""
 "La gravació del fitxer '%1' ha fallat. Voleu intentar gravar-lo amb un altre "
 "nom de fitxer?"
 
-#: agents/showedittextfileagent.cpp:57 misc/rkprogresscontrol.cpp:301
+#: agents/showedittextfileagent.cpp:57 misc/rkprogresscontrol.cpp:299
 #: plugin/rkstandardcomponentgui.cpp:386
 msgid "Done"
 msgstr "Fet"
@@ -161,7 +164,7 @@ msgstr ""
 
 # ??? Per revisar
 # Completar i revisar amb fr.po i es.po
-#: core/renvironmentobject.cpp:97
+#: core/renvironmentobject.cpp:98
 msgid ""
 "The package '%1' (probably you just loaded it) is currently blacklisted for "
 "retrieving structure information. Practically this means, the objects in "
@@ -176,12 +179,13 @@ msgstr ""
 "llista negra per recuperar informació sobre la seva estructura. A la "
 "pràctica, això vol dir que els seus objectes no apareixeran en el navegador "
 "d'objectes. \n"
-"Habitualment un paquet es fica a la llista negra, si te una enorme quantitat de dades i es trigaria molt en "
-"carregar. Per treure'l de la llista, anar a Arranjaments->Configura RKWard->Espai de treball."
+"Habitualment un paquet es fica a la llista negra, si te una enorme quantitat "
+"de dades i es trigaria molt en carregar. Per treure'l de la llista, anar a "
+"Arranjaments->Configura RKWard->Espai de treball."
 
 # ??? Per revisar
 # Revisar amb fr.po i es.po
-#: core/renvironmentobject.cpp:97
+#: core/renvironmentobject.cpp:98
 msgid "Package blacklisted"
 msgstr "El paquet està en la llista negra "
 
@@ -212,56 +216,65 @@ msgid "Remove object?"
 msgstr "Elimino l'objecte?"
 
 #: core/rkmodificationtracker.cpp:78
-msgid "Do you really want to remove the object '%1'? There's no way to get it back."
+msgid ""
+"Do you really want to remove the object '%1'? There's no way to get it back."
 msgstr "Realment voleu eliminar l'objecte '%1'? No podrà recuperar-se mai més."
 
 # a es.po està traduit com "Renombrar"
-#: core/rkmodificationtracker.cpp:331 dataeditor/rkvareditmodel.cpp:571
-#: dialogs/rkloadlibsdialog.cpp:298 dialogs/rkloadlibsdialog.cpp:314
-#: dialogs/rkloadlibsdialog.cpp:523 dialogs/rkloadlibsdialog.cpp:683
+#: core/rkmodificationtracker.cpp:331 dataeditor/rkvareditmodel.cpp:640
+#: dialogs/rkloadlibsdialog.cpp:302 dialogs/rkloadlibsdialog.cpp:318
+#: dialogs/rkloadlibsdialog.cpp:527 dialogs/rkloadlibsdialog.cpp:687
 #: plugin/rkformula.cpp:81 plugin/rkvarslot.cpp:55
 msgid "Name"
 msgstr "Nom"
 
 #: core/rkmodificationtracker.cpp:332 dataeditor/editlabelsdialog.cpp:213
-#: dataeditor/rkvareditmodel.cpp:572 misc/rkobjectlistview.cpp:168
+#: dataeditor/rkvareditmodel.cpp:641 misc/rkobjectlistview.cpp:181
 msgid "Label"
 msgstr "Etiqueta"
 
-#: core/rkmodificationtracker.cpp:333 dataeditor/rkvareditmodel.cpp:573
-#: misc/rkobjectlistview.cpp:167 rbackend/rcommandstack.cpp:399
+#: core/rkmodificationtracker.cpp:333 dataeditor/rkvareditmodel.cpp:642
+#: misc/rkobjectlistview.cpp:180 rbackend/rcommandstack.cpp:399
 msgid "Type"
 msgstr "Tipus"
 
-#: core/rkmodificationtracker.cpp:334 misc/rkobjectlistview.cpp:169
+#: core/rkmodificationtracker.cpp:334 misc/rkobjectlistview.cpp:182
 msgid "Class"
 msgstr "Classe"
 
-#: core/robject.cpp:116
+#: core/rkrownames.cpp:40
+msgid "row names"
+msgstr ""
+
+#: core/rkrownames.cpp:105
+msgid "new.row"
+msgstr ""
+
+#: core/robject.cpp:118
 msgid "Full location:"
 msgstr "Camí complet:"
 
-#: core/robject.cpp:118
+#: core/robject.cpp:120
 msgid "Label:"
 msgstr "Etiqueta:"
 
-#: core/robject.cpp:119
+#: core/robject.cpp:121
 msgid "Type:"
 msgstr "Tipus:"
 
 # fr.po: "Lancer la sélection"
 # es.po: "Ejecutar la selección"
-#: core/robject.cpp:122
+#: core/robject.cpp:124
 msgid "Function"
 msgstr "Funció"
 
-#: core/robject.cpp:123
+#: core/robject.cpp:125
 msgid "Usage: "
 msgstr "Ús: "
 
 # De Vocabulari d'informàtica, © Gabinet de Llengua Catalana Universitat Autònoma de Barcelona
 # Tomàs Aluja. Introducció a R: data.frame. Son matrius on les variables són de qualsevol tipus, es el resultat natural de la lectura d'un fitxer de dades.
-#: core/robject.cpp:125
+#: core/robject.cpp:127
 msgid "Data frame"
 msgstr "Marc de dades"
 
@@ -269,42 +282,42 @@ msgstr "Marc de dades"
 # Ho tradueixent com "matriu"
 # Introducció a R. Tomàs Aluja: arrays. Són matrius de qualsevol nombre de dimensions
 # http://osdir.com/: Un profesor de la asignatura de criptología mi escuela traduce "array" por "formación". Según él un vector no es lo mismo que un array, pues un vector tiene características que el array no tiene, como una dirección, un sentido y un módulo. (Aunque se pueda usar un array para representarlo, no confundir el continente con lo contenido), Llevando la idea un poco más allá, pienso que no tiene sentido un "vector de registros" o "un vector de booleanos", por lo que parece quedar más claro que "vector" no es lo mismo que "array".
-#: core/robject.cpp:127
+#: core/robject.cpp:129
 msgid "Array"
 msgstr ""
 
-#: core/robject.cpp:129 misc/rkspecialactions.cpp:88
+#: core/robject.cpp:131 misc/rkspecialactions.cpp:88
 msgid "Matrix"
 msgstr "Matriu"
 
 # Introducció a R. Tomàs Aluja: llistes. Són llistes d'altres objectes. Es molt general
-#: core/robject.cpp:131
+#: core/robject.cpp:133
 msgid "List"
 msgstr "Llista"
 
-#: core/robject.cpp:133
+#: core/robject.cpp:135
 msgid "Variable"
 msgstr "Variable"
 
-#: core/robject.cpp:134
+#: core/robject.cpp:136
 msgid "Data Type:"
 msgstr "Tipus de dades:"
 
 # fr.po: Alignement
 # es.po: Alineación
-#: core/robject.cpp:136
+#: core/robject.cpp:138
 msgid "Environment"
 msgstr "Entorn"
 
-#: core/robject.cpp:141
+#: core/robject.cpp:143
 msgid "Length: "
 msgstr "Longitud: "
 
-#: core/robject.cpp:143
+#: core/robject.cpp:145
 msgid "Dimensions: "
 msgstr "Dimensions : "
 
-#: core/robject.cpp:151
+#: core/robject.cpp:153
 msgid "Class(es):"
 msgstr "Classe(s):"
 
@@ -315,8 +328,8 @@ msgid ""
 "Did not unload package %1. It is required in RKWard. If you really want to "
 "do this, do so on the R Console."
 msgstr ""
-"El paquet %1 no s'ha descarregat. Es necessari en RKWard. Si realment vol fer "
-"això, feu en la consola del R."
+"El paquet %1 no s'ha descarregat. Es necessari en RKWard. Si realment vol "
+"fer això, feu en la consola del R."
 
 #: core/robjectlist.cpp:83
 msgid "Package %1 appears not to have been loaded"
@@ -326,8 +339,8 @@ msgstr "El paquet %1 no sembla haver estat carregat"
 msgid "Alignment"
 msgstr "Alineació"
 
-#: dataeditor/editformatdialog.cpp:45
 # Recull de termes Softcatalà.Recull: 4.1: default:  valor per defecte
+#: dataeditor/editformatdialog.cpp:45
 msgid "Default"
 msgstr "Opció per omissió"
 
@@ -380,126 +393,120 @@ msgstr ""
 msgid "Levels / Value labels for '%1'"
 msgstr "Nivells / Etiquetes dels valors de '%1'"
 
-#: dataeditor/rkeditordataframe.cpp:62 windows/robjectbrowser.cpp:190
-#: windows/robjectbrowser.cpp:236
+#: dataeditor/rkeditordataframe.cpp:63 windows/robjectbrowser.cpp:191
+#: windows/robjectbrowser.cpp:237
 msgid "The name you specified was already in use or not valid. Renamed to %1"
 msgstr ""
 "El nom que heu escollit ja s'està utilitzant o és incorrecte. S'ha "
 "reanomenat a %1"
 
-#: dataeditor/rkeditordataframe.cpp:62 windows/robjectbrowser.cpp:190
-#: windows/robjectbrowser.cpp:236
+#: dataeditor/rkeditordataframe.cpp:63 windows/robjectbrowser.cpp:191
+#: windows/robjectbrowser.cpp:237
 msgid "Invalid Name"
 msgstr "Nom no vàlid"
 
-#: dataeditor/rkeditordataframepart.cpp:58
-# ??? p roca: Per revisar
-msgid "Paste inside table"
-msgstr "Enganxa dintre de la taula"
+#: dataeditor/rkvareditmodel.cpp:263 dataeditor/rkvareditmodel.cpp:520
+msgid "Type on these fields to add new columns"
+msgstr "Teclejar en aquests camps per afegir noves columnes"
 
-#: dataeditor/rkeditordataframepart.cpp:63
-# ??? p roca: Per revisar
-msgid "Paste inside selection"
-msgstr "Enganxa dintre de la selecció"
+#: dataeditor/rkvareditmodel.cpp:264
+msgid "Type on these fields to add new rows"
+msgstr "Teclejar en aquests camps per afegir noves files"
 
-#: dataeditor/rkeditordataframepart.cpp:67
+#: dataeditor/rkvareditmodel.cpp:347
+msgid "#New Variable#"
+msgstr "#Nova variable#"
+
+#: dataeditor/rkvareditmodel.cpp:643
+msgid "Format"
+msgstr "Format"
+
+#: dataeditor/rkvareditmodel.cpp:644
+msgid "Levels"
+msgstr "Nivells"
+
+#: dataeditor/twintable.cpp:102
 msgid "Cuts the selected section and puts it to the clipboard"
 msgstr "Talla la selecció i col·loca-la en el porta-retalls"
 
-#: dataeditor/rkeditordataframepart.cpp:68
+#: dataeditor/twintable.cpp:104
 msgid "Copies the selected section to the clipboard"
 msgstr "Copia la selecció en el porta-retalls"
 
-#: dataeditor/rkeditordataframepart.cpp:69
-msgid "Pastes the clipboard contents to actual position"
+#: dataeditor/twintable.cpp:107
+#, fuzzy
+msgid "Pastes the clipboard contents to current position"
 msgstr "Enganxa el contingut del porta-retalls en la posició actual"
 
-#: dataeditor/rkeditordataframepart.cpp:70
+# ??? p roca: Per revisar
+#: dataeditor/twintable.cpp:110
+msgid "Paste inside table"
+msgstr "Enganxa dintre de la taula"
+
+#: dataeditor/twintable.cpp:112
+#, fuzzy
 msgid ""
-"Pastes the clipboard contents to actual position, but not beyond the table's "
-"boundaries"
+"Pastes the clipboard contents to current position, but not beyond the "
+"table's boundaries"
 msgstr ""
 "Enganxa el contingut del porta-retalls a la posició actual, però sense "
 "ultrapassar els límits del quadre"
 
-#: dataeditor/rkeditordataframepart.cpp:71
+# ??? p roca: Per revisar
+#: dataeditor/twintable.cpp:115
+msgid "Paste inside selection"
+msgstr "Enganxa dintre de la selecció"
+
+#: dataeditor/twintable.cpp:117
+#, fuzzy
 msgid ""
-"Pastes the clipboard contents to actual position, but not beyond the "
+"Pastes the clipboard contents to current position, but not beyond the "
 "boundaries of the current selection"
 msgstr ""
 "Enganxa el contingut del porta-retalls a la posició actual, però sense "
 "ultrapassar els límits de la selecció actual"
 
-#: dataeditor/rkeditordataframepart.cpp:77
-msgid "Cutting selection..."
-msgstr "S'està tallant la selecció..."
+#: dataeditor/twintable.cpp:182
+msgid ""
+"The editor '%1' contains the following duplicate columns. Editing this table "
+"may not be safe, and has been disabled. You may re-enable editing if you "
+"know what you are doing, but you are strongly advised to fix the table, and/"
+"or backup your data, first."
+msgstr ""
 
-#: dataeditor/rkeditordataframepart.cpp:86
-msgid "Copying selection to clipboard..."
-msgstr "S'està copiant la selecció al porta-retalls..."
+#: dataeditor/twintable.cpp:182
+msgid "Duplicate columns detected"
+msgstr ""
 
-#: dataeditor/rkeditordataframepart.cpp:113
-msgid "Inserting clipboard contents..."
-msgstr "S'està inserint el contingut del porta-retalls..."
-
-#: dataeditor/rkvareditmodel.cpp:214 dataeditor/rkvareditmodel.cpp:457
-msgid "Type on these fields to add new columns"
-msgstr "Teclejar en aquests camps per afegir noves columnes"
-
-#: dataeditor/rkvareditmodel.cpp:215
-msgid "Type on these fields to add new rows"
-msgstr "Teclejar en aquests camps per afegir noves files"
-
-#: dataeditor/rkvareditmodel.cpp:294
-msgid "#New Variable#"
-msgstr "#Nova variable#"
-
-#: dataeditor/rkvareditmodel.cpp:574
-msgid "Format"
-msgstr "Format"
-
-#: dataeditor/rkvareditmodel.cpp:575
-msgid "Levels"
-msgstr "Nivells"
-
-#: dataeditor/twintable.cpp:98
-# ??? p roca: Per revisar: Permetre l'edició?
-msgid "Enable editing"
-msgstr "Edició habilitada"
-
-#: dataeditor/twintable.cpp:146
+#: dataeditor/twintable.cpp:191
 msgid " [read-only]"
 msgstr " [només de lectura]"
 
-#: dataeditor/twintable.cpp:186
+#: dataeditor/twintable.cpp:236
 msgid "Insert new variable left"
 msgstr "Insereix una nova variable a l'esquerra"
 
-#: dataeditor/twintable.cpp:189
-msgid "Insert new variable right"
-msgstr "Insereix nova variable a la dreta"
-
-#: dataeditor/twintable.cpp:192
+#: dataeditor/twintable.cpp:239
 msgid "Delete this variable"
 msgstr "Suprimeix aquesta variable"
 
-#: dataeditor/twintable.cpp:207
+#: dataeditor/twintable.cpp:250
 msgid "Insert new case above (at %1)"
 msgstr "Insereix un nou cas al damunt (a %1)"
 
-#: dataeditor/twintable.cpp:210
-msgid "Insert new case below (at %1)"
-msgstr "Insereix un nou cas a sota (a %1)"
-
-#: dataeditor/twintable.cpp:221
+#: dataeditor/twintable.cpp:260
 msgid "Delete marked rows (%1-%2)"
 msgstr "Esborra les files seleccionades (%1-%2)"
 
 # po.fr: "Supprimer cette case" (sense %1)
 # En tots els ítems del menú on surt es parla de cas, no de files
-#: dataeditor/twintable.cpp:227
+#: dataeditor/twintable.cpp:266
 msgid "Delete this row (%1)"
 msgstr "Esborra aquesta fila (%1)"
+
+#: dataeditor/twintable.cpp:389
+msgid "Inserting clipboard contents..."
+msgstr "S'està inserint el contingut del porta-retalls..."
 
 #: dialogs/rkimportdialog.cpp:35
 msgid "File format: "
@@ -523,7 +530,7 @@ msgid "Local packages"
 msgstr "Paquets locals"
 
 #: dialogs/rkloadlibsdialog.cpp:68 robjectviewer.cpp:166
-#: windows/robjectbrowser.cpp:116
+#: windows/robjectbrowser.cpp:117
 msgid "Update"
 msgstr "Actualitza"
 
@@ -535,48 +542,48 @@ msgstr "Instal·la"
 msgid "Configure Repositories"
 msgstr "Configura els dipòsits"
 
-#: dialogs/rkloadlibsdialog.cpp:226
+#: dialogs/rkloadlibsdialog.cpp:230
 msgid "Please stand by while installing selected packages"
 msgstr "Espereu mentre instal·lo els paquets seleccionats"
 
-#: dialogs/rkloadlibsdialog.cpp:226
+#: dialogs/rkloadlibsdialog.cpp:230
 msgid "Installing packages"
 msgstr "S'estan instal·lant els paquets"
 
-#: dialogs/rkloadlibsdialog.cpp:264
+#: dialogs/rkloadlibsdialog.cpp:268
 msgid "Installation process died with exit code %1"
 msgstr "El procés d'instal lació ha fallat amb el codi de sortida %1"
 
-#: dialogs/rkloadlibsdialog.cpp:296
+#: dialogs/rkloadlibsdialog.cpp:300
 msgid "Installed packages"
 msgstr "Paquets instal·lats"
 
-#: dialogs/rkloadlibsdialog.cpp:298 windows/rkhelpsearchwindow.cpp:93
-#: windows/rkhelpsearchwindow.cpp:301
+#: dialogs/rkloadlibsdialog.cpp:302 windows/rkhelpsearchwindow.cpp:94
+#: windows/rkhelpsearchwindow.cpp:313
 msgid "Title"
 msgstr "Títol"
 
-#: dialogs/rkloadlibsdialog.cpp:298 dialogs/rkloadlibsdialog.cpp:683
+#: dialogs/rkloadlibsdialog.cpp:302 dialogs/rkloadlibsdialog.cpp:687
 msgid "Version"
 msgstr "Versió"
 
-#: dialogs/rkloadlibsdialog.cpp:298 dialogs/rkloadlibsdialog.cpp:523
+#: dialogs/rkloadlibsdialog.cpp:302 dialogs/rkloadlibsdialog.cpp:527
 msgid "Location"
 msgstr "Ubicació"
 
-#: dialogs/rkloadlibsdialog.cpp:303
+#: dialogs/rkloadlibsdialog.cpp:307
 msgid "Load"
 msgstr "Càrrega"
 
-#: dialogs/rkloadlibsdialog.cpp:305
+#: dialogs/rkloadlibsdialog.cpp:309
 msgid "Unload"
 msgstr "Descàrrega"
 
-#: dialogs/rkloadlibsdialog.cpp:312
+#: dialogs/rkloadlibsdialog.cpp:316
 msgid "Loaded packages"
 msgstr "Paquets carregats"
 
-#: dialogs/rkloadlibsdialog.cpp:459
+#: dialogs/rkloadlibsdialog.cpp:463
 msgid ""
 "There has been an error while trying to load / unload packages. See "
 "transcript below for details"
@@ -586,11 +593,11 @@ msgstr ""
 
 # fr.po:Erreur lors du traitement des paquets
 # es.po:  Error en la gestión de paquetes
-#: dialogs/rkloadlibsdialog.cpp:459
+#: dialogs/rkloadlibsdialog.cpp:463
 msgid "Error while handling packages"
 msgstr "S'ha produït un error al tractar els paquets"
 
-#: dialogs/rkloadlibsdialog.cpp:514
+#: dialogs/rkloadlibsdialog.cpp:518
 msgid ""
 "In order to find out, which of your installed packaged have an update "
 "available, click \"Fetch List\". This feature requires a working internet "
@@ -600,33 +607,33 @@ msgstr ""
 "existents dels paquets que teniu instal·lats. Heu de tenir funcionant una "
 "connexió a Internet."
 
-#: dialogs/rkloadlibsdialog.cpp:523
+#: dialogs/rkloadlibsdialog.cpp:527
 msgid "Local Version"
 msgstr "Versió local"
 
-#: dialogs/rkloadlibsdialog.cpp:523
+#: dialogs/rkloadlibsdialog.cpp:527
 msgid "Online Version"
 msgstr "Versió disponible"
 
 # fr.po: Récupérer la liste
 # es.po: Listado de transferencias
-#: dialogs/rkloadlibsdialog.cpp:530 dialogs/rkloadlibsdialog.cpp:690
+#: dialogs/rkloadlibsdialog.cpp:534 dialogs/rkloadlibsdialog.cpp:694
 msgid "Fetch list"
 msgstr "Obté la llista"
 
-#: dialogs/rkloadlibsdialog.cpp:532
+#: dialogs/rkloadlibsdialog.cpp:536
 msgid "Update Selected"
 msgstr "Actualitza els seleccionats"
 
-#: dialogs/rkloadlibsdialog.cpp:534
+#: dialogs/rkloadlibsdialog.cpp:538
 msgid "Update All"
 msgstr "Actualitza'ls tots"
 
-#: dialogs/rkloadlibsdialog.cpp:597
+#: dialogs/rkloadlibsdialog.cpp:601
 msgid "[No updates available]"
 msgstr "[No existeix cap actualització disponible]"
 
-#: dialogs/rkloadlibsdialog.cpp:648
+#: dialogs/rkloadlibsdialog.cpp:652
 msgid ""
 "Please stand by while determining, which packages have an update available "
 "online."
@@ -634,11 +641,11 @@ msgstr ""
 "Espereu mentre determino quins paquets tenen una actualització disponible a "
 "la xarxa."
 
-#: dialogs/rkloadlibsdialog.cpp:648 dialogs/rkloadlibsdialog.cpp:787
+#: dialogs/rkloadlibsdialog.cpp:652 dialogs/rkloadlibsdialog.cpp:791
 msgid "Fetching list"
 msgstr "S'està obtenint la llista"
 
-#: dialogs/rkloadlibsdialog.cpp:675
+#: dialogs/rkloadlibsdialog.cpp:679
 msgid ""
 "Many packages are available on CRAN (Comprehensive R Archive Network), and "
 "other repositories (click \"Configure Repositories\" to add more sources). "
@@ -651,19 +658,19 @@ msgstr ""
 "esbrinar quins paquets estan disponibles. Heu de tenir funcionant una "
 "connexió a Internet."
 
-#: dialogs/rkloadlibsdialog.cpp:692
+#: dialogs/rkloadlibsdialog.cpp:696
 msgid "Install Selected"
 msgstr "Instal·la els seleccionats"
 
-#: dialogs/rkloadlibsdialog.cpp:747
+#: dialogs/rkloadlibsdialog.cpp:751
 msgid "[No packages available]"
 msgstr "[No existeix cap paquet disponible]"
 
-#: dialogs/rkloadlibsdialog.cpp:787
+#: dialogs/rkloadlibsdialog.cpp:791
 msgid "Please stand by while downloading the list of available packages."
 msgstr "Espereu mentre es descarrega la llista de paquets disponibles."
 
-#: dialogs/rkloadlibsdialog.cpp:798
+#: dialogs/rkloadlibsdialog.cpp:802
 msgid ""
 "The package requested by the backend (\"%1\") was not found in the package "
 "repositories. Maybe the package name was mis-spelled. Or maybe you need to "
@@ -673,23 +680,23 @@ msgstr ""
 "paquets. Potser el nom del paquet ha estat mal escrit. O potser necessiteu "
 "afegir dipòsits addicionals des del botó \"Configura els dipòsits\"."
 
-#: dialogs/rkloadlibsdialog.cpp:798
+#: dialogs/rkloadlibsdialog.cpp:802
 msgid "Package not available"
 msgstr "El paquet no està disponible"
 
-#: dialogs/rkloadlibsdialog.cpp:827
+#: dialogs/rkloadlibsdialog.cpp:831
 msgid "Install packages to:"
 msgstr "Instal·la els paquets a:"
 
-#: dialogs/rkloadlibsdialog.cpp:832
+#: dialogs/rkloadlibsdialog.cpp:836
 msgid "Include dependencies"
 msgstr "Inclou dependències"
 
-#: dialogs/rkloadlibsdialog.cpp:864
+#: dialogs/rkloadlibsdialog.cpp:868
 msgid "Selected library location not writable"
 msgstr "No es pot escriure en la ubicació seleccionada per la biblioteca"
 
-#: dialogs/rkloadlibsdialog.cpp:865
+#: dialogs/rkloadlibsdialog.cpp:869
 msgid ""
 "The directory you are trying to install to (%1) is not writable with your "
 "current user permissions. You can chose a different library location to "
@@ -705,30 +712,31 @@ msgstr ""
 "botó de \"Configura els dipòsits\" per especificar un directori modificable "
 "on instal·lar els paquets).\n"
 
-#: dialogs/rkloadlibsdialog.cpp:869
+#: dialogs/rkloadlibsdialog.cpp:873
 msgid ""
 "If have access to an administrator account on this machine, you can use that "
 "to install the package(s), or you could change the permissions of '%1'. "
 "Sorry, automatic switching to Administrator is not yet supported in RKWard "
 "on Windows"
 msgstr ""
-"Si teniu accés a un compte d'administrador en aquest equip, el podeu utilitzar "
-"per instal lar el paquet (s), o podria canviar els permisos de '% 1 '. El canvi "
-"automàticament a administrador encara no s'admet en el RKWard de Windows"
+"Si teniu accés a un compte d'administrador en aquest equip, el podeu "
+"utilitzar per instal lar el paquet (s), o podria canviar els permisos de '% "
+"1 '. El canvi automàticament a administrador encara no s'admet en el RKWard "
+"de Windows"
 
-#: dialogs/rkloadlibsdialog.cpp:871
+#: dialogs/rkloadlibsdialog.cpp:875
 msgid "Attempt installation, anyway"
 msgstr "De totes formes, s'intenta la instal·lació"
 
-#: dialogs/rkloadlibsdialog.cpp:874
+#: dialogs/rkloadlibsdialog.cpp:878
 msgid ""
 "If you are the adminitstrator of this machine, you can try to install the "
 "packages as root (you'll be prompted for the root password)."
 msgstr ""
-"Si sou el administrador d'aquest equip, pot tractar d'instal lar el "
-"paquets com a root (se li demanarà la contrasenya de root)."
+"Si sou el administrador d'aquest equip, pot tractar d'instal lar el paquets "
+"com a root (se li demanarà la contrasenya de root)."
 
-#: dialogs/rkloadlibsdialog.cpp:875
+#: dialogs/rkloadlibsdialog.cpp:879
 msgid "Become root"
 msgstr "Convertir-se en root"
 
@@ -768,141 +776,143 @@ msgstr "<<Obre un altre fitxer>>"
 msgid "Always do this on startup"
 msgstr "Fes sempre això a l'engegar"
 
-#: main.cpp:92
+#: main.cpp:93
 msgid ""
 "After starting (and after loading the specified workspace, if applicable), "
 "evaluate the given R code."
 msgstr ""
-"Després d'arrencar (i després de carregar l'espai de treball especificat, si s'escau), "
-"avalua el codi R donat."
+"Després d'arrencar (i després de carregar l'espai de treball especificat, si "
+"s'escau), avalua el codi R donat."
 
 # fr.po: Prolixité des messages de trace (0-5)
 # es,po: Nivel de información de los mensajes de depuración (0-5)
-#: main.cpp:93
+#: main.cpp:94
 msgid "Verbosity of debug messages (0-5)"
 msgstr "Nivell d'informació dels missatges de depuració (0-5)"
 
 # es.po: Máscara para los componentes a depurar como números binarios (mirar en debug. "h)"
 # fr: Masque en tant que nombre binaire (voir debug.h) des composants à tracer
-#: main.cpp:94
+#: main.cpp:95
 msgid "Mask for components to debug (see debug.h)"
 msgstr "Màscara per als components a depurar (mireu en depura.h)"
 
-#: main.cpp:95
+#: main.cpp:96
 msgid ""
 "Debugger (enclose any debugger arguments in single quotes ('') together with "
 "the command)"
-msgstr "Depurador (junt amb l'ordre, escrigueu qualsevol argument de depuració entre cometes simples (''))"
+msgstr ""
+"Depurador (junt amb l'ordre, escrigueu qualsevol argument de depuració entre "
+"cometes simples (''))"
 
 # ??? Per revisar
 # ó Desactiva la comprovació de la pila C del R?
-#: main.cpp:96
+#: main.cpp:97
 msgid "Disable R C stack checking"
 msgstr "Desactiva la comprovació de la pila R C"
 
-#: main.cpp:97
 # ??? p roca: Per revisar:
 # fr.po: Demander à ouvrir un fichier
 # es.po: Espacio de trabajo para abrir
+#: main.cpp:98
 msgid "R workspace file to open"
 msgstr "Espai de treball a obrir"
 
-#: main.cpp:99
+#: main.cpp:100
 msgid "RKWard"
 msgstr "RKWard"
 
-#: main.cpp:99
 # ??? p roca: Per revisar
 # es.po: Interfaz gráfica para el lenguaje estadístico R
 # softcatala_recull_4.1.html: frontend:  frontal
+#: main.cpp:100
 msgid "Frontend to the R statistics language"
 msgstr "Interfície gràfica pel llenguatge estadístic R"
 
-#: main.cpp:99
+#: main.cpp:100
 msgid "(c) 2002, 2004, 2005, 2006, 2007, 2008, 2009, 2010"
 msgstr "(c) 2002, 2004, 2005, 2006, 2007, 2008, 2009, 2010"
 
-#: main.cpp:100 main.cpp:101 main.cpp:102 main.cpp:103 main.cpp:105
-#: main.cpp:106 main.cpp:107 main.cpp:108 main.cpp:109 main.cpp:110
-#: main.cpp:111 main.cpp:112 main.cpp:113 main.cpp:114 main.cpp:115
-#: main.cpp:116 main.cpp:117
+#: main.cpp:101 main.cpp:102 main.cpp:103 main.cpp:104 main.cpp:106
+#: main.cpp:107 main.cpp:108 main.cpp:109 main.cpp:110 main.cpp:111
+#: main.cpp:112 main.cpp:113 main.cpp:114 main.cpp:115 main.cpp:116
+#: main.cpp:117 main.cpp:118
 msgid "%1"
 msgstr "%1"
 
-#: main.cpp:100
+#: main.cpp:101
 msgid "Project leader / main developer"
 msgstr "Líder del projecte / desenvolupador principal"
 
 # Softcatalà: coder: codificador
-#: main.cpp:101
+#: main.cpp:102
 msgid "C++ coder since 0.2.9"
 msgstr "Codificador C++ des de 0.2.9"
 
-#: main.cpp:102
+#: main.cpp:103
 msgid "Many plugins, suggestions, marketing, translations"
 msgstr "Molts endollables, suggeriments, màrqueting, traduccions"
 
-#: main.cpp:103 main.cpp:117
+#: main.cpp:104 main.cpp:118
 msgid "Many plugins, suggestions"
 msgstr "Molts endollables, suggeriments"
 
-#: main.cpp:104
+#: main.cpp:105
 msgid "Contributors in alphabetical order"
 msgstr "Col·laboradors en ordre alfabètic"
 
-#: main.cpp:105
+#: main.cpp:106
 msgid "Several helpful comments and discussions"
 msgstr "Varis comentaris i discussions útils"
 
-#: main.cpp:106
+#: main.cpp:107
 msgid "Plugins and patches"
 msgstr "Endollables i pedaços"
 
-#: main.cpp:107
+#: main.cpp:108
 msgid "New website"
 msgstr "Nova pàgina web"
 
-#: main.cpp:108
+#: main.cpp:109
 msgid "HP filter plugin, spanish translation"
 msgstr "Endollable del filtre HP, traducció al castellà"
 
-#: main.cpp:109
+#: main.cpp:110
 msgid "A cool icon"
 msgstr "Una bonica icona"
 
-#: main.cpp:110
+#: main.cpp:111
 msgid "RKWard logo, many suggestions, help on wording"
 msgstr "El logotip de RKWard, molts suggeriments, ajudes en la redacció"
 
-#: main.cpp:111
+#: main.cpp:112
 msgid "Several valuable comments, hints and patches"
 msgstr "Alguns valuosos commentaris, consells i pedaços"
 
-#: main.cpp:112
+#: main.cpp:113
 msgid "Translation, Suggestions, plugins"
 msgstr "Traduccions, suggeriments, endollables"
 
-#: main.cpp:113
+#: main.cpp:114
 msgid "Many comments, useful suggestions, and bug reports"
 msgstr "Molts comentaris, suggeriments útils i informes d'errors"
 
-#: main.cpp:114
+#: main.cpp:115
 msgid "German Translation, bug reports"
 msgstr "Traducció a l'alemany, informes d'errors"
 
-#: main.cpp:115
+#: main.cpp:116
 msgid "Some patches"
 msgstr "Alguns pedaços"
 
-#: main.cpp:116
+#: main.cpp:117
 msgid "patches and helpful comments"
 msgstr "pedaços i comentaris útils"
 
-#: main.cpp:118
+#: main.cpp:119
 msgid "Many more people on rkward-devel@lists.sourceforge.net"
 msgstr "Moltes més persones a rkward-devel@lists.sourceforge.net"
 
-#: main.cpp:118
+#: main.cpp:119
 msgid "Sorry, if we forgot to list you. Please contact us to get added"
 msgstr ""
 "Ho sento si m'he oblidat d'incloure-us en la llista. Si us plau, poseu-vos "
@@ -933,36 +943,37 @@ msgstr "Avall"
 msgid "Configure Defaults"
 msgstr "Configura la visualització"
 
-#: misc/rkobjectlistview.cpp:162
+#: misc/rkobjectlistview.cpp:175
 msgid "All Environments"
 msgstr "Tots els entorns"
 
-#: misc/rkobjectlistview.cpp:163
+#: misc/rkobjectlistview.cpp:176
 msgid "Objects with children"
 msgstr "Objectes amb fills"
 
-#: misc/rkobjectlistview.cpp:164
+#: misc/rkobjectlistview.cpp:177
 msgid "Variables"
 msgstr "Variables"
 
-#: misc/rkobjectlistview.cpp:165 windows/robjectbrowser.cpp:296
+#: misc/rkobjectlistview.cpp:178 windows/robjectbrowser.cpp:297
 msgid "Functions"
 msgstr "Funcions"
 
-#: misc/rkobjectlistview.cpp:166
+#: misc/rkobjectlistview.cpp:179
 msgid "Hidden Objects"
 msgstr "Objectes ocults"
 
-#: misc/rkobjectlistview.cpp:266
+#: misc/rkobjectlistview.cpp:279
 msgid "Show Objects"
 msgstr "Mostra els objectes"
 
-#: misc/rkobjectlistview.cpp:274
+#: misc/rkobjectlistview.cpp:287
 msgid "Show Fields"
 msgstr "Mostra els camps"
 
 #: misc/rkprogresscontrol.cpp:213
-msgid "<b>There have been errors and / or warnings! See below for a transcript</b>"
+msgid ""
+"<b>There have been errors and / or warnings! See below for a transcript</b>"
 msgstr ""
 "<b>S'han produït errors i / o avisos! Una transcripció dels missatges es "
 "mostra aquí sota</b>"
@@ -984,20 +995,30 @@ msgstr "Errors / Avisos"
 msgid "Errors / Warnings:"
 msgstr "Errors / Avisos:"
 
-#: misc/rkprogresscontrol.cpp:246 plugin/rkstandardcomponentgui.cpp:301
-#: rkconsole.cpp:881 robjectviewer.cpp:170
+#: misc/rkprogresscontrol.cpp:247 plugin/rkstandardcomponentgui.cpp:301
+#: rkconsole.cpp:878 robjectviewer.cpp:170
 msgid "Cancel"
 msgstr "Cancel·la"
 
-#: misc/rksaveobjectchooser.cpp:41
-msgid "Object name to save to"
-msgstr "Introduïu el nom de l'objecte"
+#: misc/rksaveobjectchooser.cpp:53
+msgid "Change"
+msgstr ""
 
-#: misc/rksaveobjectchooser.cpp:85
+#: misc/rksaveobjectchooser.cpp:92
+#, fuzzy
+msgid "Parent object: %1"
+msgstr "Reanomena objecte"
+
+#: misc/rksaveobjectchooser.cpp:103
+#, fuzzy
+msgid "Select parent object"
+msgstr "Recupero l'objecte?"
+
+#: misc/rksaveobjectchooser.cpp:178
 msgid "Overwrite? (The given object name already exists)"
 msgstr "Sobreescric? (El nom del objecte ja existeix)"
 
-#: misc/rksaveobjectchooser.cpp:89
+#: misc/rksaveobjectchooser.cpp:183
 msgid "Overwrite?"
 msgstr "Sobreescric?"
 
@@ -1021,9 +1042,9 @@ msgstr "Vector"
 msgid "Field separator"
 msgstr "Camp separador"
 
-#: misc/rkspecialactions.cpp:100
 # ??? p roca: Per revisar
 # Pot ser tabulació ó  pestanya. Suposo que es separador tabulador
+#: misc/rkspecialactions.cpp:100
 msgid "Tab"
 msgstr "Tabulació"
 
@@ -1043,13 +1064,13 @@ msgstr "Qualsevol espai en blanc"
 msgid "Other:"
 msgstr "Altres:"
 
-#: misc/rkspecialactions.cpp:126
 # ??? p roca: Per revisar: Són cometes?
+#: misc/rkspecialactions.cpp:126
 msgid "Quoting"
 msgstr "Cometes"
 
-#: misc/rkspecialactions.cpp:129
 # ??? p roca: Per revisar: Són cometes?
+#: misc/rkspecialactions.cpp:129
 msgid "Do not quote values"
 msgstr "No ficar els valors entre cometes"
 
@@ -1057,8 +1078,8 @@ msgstr "No ficar els valors entre cometes"
 msgid "Automatic"
 msgstr "Automàtic"
 
-#: misc/rkspecialactions.cpp:136
 # ??? p roca: Per revisar: Són cometes?
+#: misc/rkspecialactions.cpp:136
 msgid "Quote all values"
 msgstr "Ficar tots els valors entre comentes"
 
@@ -1127,7 +1148,8 @@ msgstr "No heu especificat l'atribut '%1'. S'assumeix '%2'"
 # fr.po: Valeur d'attribut interdite. Les valeurs possibles sont seulement parmi '%1'.
 #: misc/xmlhelper.cpp:260
 msgid "Illegal attribute value. Allowed values are one of '%1', only."
-msgstr "El valor de l'atribut està prohibit. Només es permet un dels valors de '%1'."
+msgstr ""
+"El valor de l'atribut està prohibit. Només es permet un dels valors de '%1'."
 
 #: misc/xmlhelper.cpp:274
 msgid "Illegal attribute value. Only integer numbers are allowed."
@@ -1141,8 +1163,8 @@ msgstr "El valor de l'atribut està prohibit. Només es permeten nombres reals."
 #: misc/xmlhelper.cpp:308
 msgid "Illegal attribute value. Allowed values are '%1' or '%2', only."
 msgstr ""
-"El valor de l'atribut està prohibit. Només es permeten els valors '%1' o '%"
-"2'."
+"El valor de l'atribut està prohibit. Només es permeten els valors '%1' o "
+"'%2'."
 
 #: misc/xmlhelper.cpp:319
 msgid "XML-parsing '%1' "
@@ -1157,39 +1179,46 @@ msgid ""
 "You tried to invoke a plugin called '%1', but that plugin is currently "
 "unknown. Probably you need to load the corresponding PluginMap (Settings-"
 ">Configure RKWard->Plugins), or perhaps the plugin was renamed."
-msgstr "Heu intentat executar l'endollable '% 1', però aquest endollable és desconegut. Probablement necessiteu carregar el corresponent fitxer PluginMap (Arranjaments-> Configura el RKWard->Endollables), o poder l'endollable ha sigut renombrat."
+msgstr ""
+"Heu intentat executar l'endollable '% 1', però aquest endollable és "
+"desconegut. Probablement necessiteu carregar el corresponent fitxer "
+"PluginMap (Arranjaments-> Configura el RKWard->Endollables), o poder "
+"l'endollable ha sigut renombrat."
 
 #: plugin/rkcomponentmap.cpp:248
 msgid "No such plugin"
 msgstr "No existeix aquest endollable"
 
-#: plugin/rkcomponentmap.cpp:257
 # ??? p roca: Per revisar: serialization??
 # A http://ca.wikipedia.org/wiki/Serialització traduit per Serialització
+#: plugin/rkcomponentmap.cpp:257
 msgid ""
 "Bad serialization format while trying to invoke plugin '%1'. Please contact "
 "the RKWard team (Help->About RKWard->Authors)."
-msgstr "Format de serialització inadequat al intentar executar el endollable '%1'. Contacteu amb l'equip de RKWard (Ajuda->Quant a RKWard->Autors)."
+msgstr ""
+"Format de serialització inadequat al intentar executar el endollable '%1'. "
+"Contacteu amb l'equip de RKWard (Ajuda->Quant a RKWard->Autors)."
 
 #: plugin/rkcomponentmap.cpp:259
 msgid "Bad serialization format"
 msgstr "Format de serialització inadequat"
 
-#: plugin/rkcomponentmap.cpp:263
 # ??? p roca: Per revisar: settings: settings  configuració, paràmetres (m pl)
+#: plugin/rkcomponentmap.cpp:263
 msgid ""
 "Not all specified settings could be applied. Most likely this is because "
 "some R objects are no longer present in your current workspace."
 msgstr ""
-"No es poden aplicar tots els paràmetres especificats. Molt probablement, es degut a que "
-"alguns objectes R ja no estan presents en l'àrea de treball actual."
+"No es poden aplicar tots els paràmetres especificats. Molt probablement, es "
+"degut a que alguns objectes R ja no estan presents en l'àrea de treball "
+"actual."
 
 #: plugin/rkcomponentmap.cpp:265
 msgid "Not all settings applied"
 msgstr "No s'han aplicat tots els paràmetres"
 
-#: plugin/rkcomponentmap.cpp:304
 # ??? p roca: Per revisar
+#: plugin/rkcomponentmap.cpp:304
 msgid ""
 "\n"
 "The plugin could not be auto-submitted with these settings."
@@ -1250,13 +1279,13 @@ msgstr "Introduïu el nom de fitxer"
 msgid "Select"
 msgstr "Selecciona"
 
-#: plugin/rkpluginsaveobject.cpp:42 rkward.cpp:247
-msgid "my.data"
-msgstr "Dades.meves"
-
-#: plugin/rkpluginsaveobject.cpp:42
+#: plugin/rkpluginsaveobject.cpp:39
 msgid "Save to:"
 msgstr "Desar com:"
+
+#: plugin/rkpluginsaveobject.cpp:40 rkward.cpp:247
+msgid "my.data"
+msgstr "Dades.meves"
 
 #: plugin/rkpluginspinbox.cpp:45
 msgid "Enter value:"
@@ -1287,15 +1316,15 @@ msgid "Preview not (yet) possible"
 msgstr "Encara no és possible la previsualització"
 
 # parse: anàlisi sintàctica (Vocabulari d'informàtica. © Gabinet de Llengua Catalana. Universitat Autònoma de Barcelona)
-#: plugin/rkstandardcomponent.cpp:78
+#: plugin/rkstandardcomponent.cpp:88
 msgid ""
 "There has been an error while trying to parse the description of this plugin "
 "('%1'). Please refer to stdout for details."
 msgstr ""
-"S'ha produït un error a l'analitzar la descripció d'aquest endollable ('%"
-"1'). Per a més detalls, reviseu la sortida estàndard."
+"S'ha produït un error a l'analitzar la descripció d'aquest endollable "
+"('%1'). Per a més detalls, reviseu la sortida estàndard."
 
-#: plugin/rkstandardcomponent.cpp:78
+#: plugin/rkstandardcomponent.cpp:88
 msgid "Could not create plugin"
 msgstr "No s'ha pogut crear l'endollable"
 
@@ -1398,7 +1427,7 @@ msgstr "Estat"
 msgid "Description"
 msgstr "Descripció"
 
-#: rbackend/rembedinternal.cpp:135
+#: rbackend/rembedinternal.cpp:139
 msgid ""
 "The R engine has encountered a fatal error:\n"
 "%1"
@@ -1406,9 +1435,17 @@ msgstr ""
 "El motor R ha trobat un error fatal:\n"
 "%1"
 
-#: rbackend/rembedinternal.cpp:242
+#: rbackend/rembedinternal.cpp:218
 msgid "The R engine has shut down with status: %1"
 msgstr "El motor R s'ha aturat en l'estat: %1"
+
+#: rbackend/rembedinternal.cpp:384
+msgid "Message from the R backend"
+msgstr "Missatge del dorsal R"
+
+#: rbackend/rembedinternal.cpp:391
+msgid "Question from the R backend"
+msgstr "Pregunta del dorsal R"
 
 #: rbackend/rinterface.cpp:89
 msgid "R Startup"
@@ -1419,8 +1456,8 @@ msgid ""
 "<p>There was a problem starting the R backend. The following error(s) "
 "occurred:</p>\n"
 msgstr ""
-"<p>Hi ha hagut un problema al endegar l'execució del dorsal R. S'ha(n) produït "
-"el(s) següent(s) error(s):</p>\n"
+"<p>Hi ha hagut un problema al endegar l'execució del dorsal R. S'ha(n) "
+"produït el(s) següent(s) error(s):</p>\n"
 
 #: rbackend/rinterface.cpp:220
 msgid ""
@@ -1433,25 +1470,37 @@ msgid ""
 "now, and fix your installation</b>. For help with that, see <a href=\"http://"
 "p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</p>\n"
 msgstr ""
-"</p>\t- No he pogut carregar la biblioteca R 'rkward' o la versió no és la apropiada. Això pot provocat tot tipus d'errors, des de la manca d'alguna funcionalitat fins que totes les funcions fallin. La causa més probable és que en la darrera instal·lació no es van ficar tots els fitxers en el lloc correcte. També pot ser degut que la presència de restes d'una instal·lació anterior que no ha estat adequadament eliminada.</p>\t\t\t<p><b>Ara heu de sortir del RKWard, i arreglar la seva instal·lació</b>. Per ajuda sobre això, consultar <a href=\"http://"
-"p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</p>\n"
+"</p>\t- No he pogut carregar la biblioteca R 'rkward' o la versió no és la "
+"apropiada. Això pot provocat tot tipus d'errors, des de la manca d'alguna "
+"funcionalitat fins que totes les funcions fallin. La causa més probable és "
+"que en la darrera instal·lació no es van ficar tots els fitxers en el lloc "
+"correcte. També pot ser degut que la presència de restes d'una instal·lació "
+"anterior que no ha estat adequadament eliminada.</p>\t\t\t<p><b>Ara heu de "
+"sortir del RKWard, i arreglar la seva instal·lació</b>. Per ajuda sobre "
+"això, consultar <a href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/"
+"rkward/compiling</a>.</p>\n"
 
 #: rbackend/rinterface.cpp:224
+#, fuzzy
 msgid ""
-"<p>\t-There was a problem opening the files needed for communication with R. "
-"Most likely this is due to an incorrect setting for the location of these "
-"files. Check whether you have correctly configured the location of the log-"
-"files (Settings->Configure Settings->Logfiles) and restart RKWard.</p>\n"
+"<p>\t-There was a problem setting up the communication with R. Most likely "
+"this is due to an incorrect version of the 'rkward' R-library or failure to "
+"find that at all. This indicates a borken installation.</p>\t\t\t<p><b>You "
+"should quit RKWard, now, and fix your installation</b>. For help with that, "
+"see <a href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/rkward/"
+"compiling</a>.</p></p>\n"
 msgstr ""
-"<p>\t-Existeix un problema al obrir els arxius necessaris per a la comunicació "
-"amb el R. Probablement això és degut a un arranjament incorrecte de la "
-"ubicació d'aquests fitxers. Verifiqueu si heu configurat correctament la "
-"ubicació dels fitxers bitàcola (Arranjaments->Configura arranjaments-> "
-"Fitxers bitàcola) i reengegueu el RKWard.</p>\n"
+"<p>El RKWard o no pot trobar cap fitxer de recursos, o només troba una "
+"versió antiga dels mateixos. La causa més probable és que en la darrera "
+"instal·lació no es van ficar tots els fitxers en el lloc correcte. Això pot "
+"provocat tot tipus d'errors, des de la manca d'alguna funcionalitat fins que "
+"totes les funcions fallin.</p><p><b>Ara heu de sortir del RKWard, i arreglar "
+"la seva instal·lació</b>. Per ajuda sobre això, consultar  <a href=\"http://"
+"p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</p>"
 
 # fr.po: \t- Une erreur non spécifiée qui n'est pas encore gérée par RKWard s'est produite. RKWard ne va probablement pas fonctionner correctement. Veuillez vérifier votre installation.\n
 # es.po: "\t- Ha ocurrido un error no especificado que aún no está gestionado por RKWard. Posiblemente RKWard no funcione correctamente. Por favor, compruebe su configuración.\n
-#: rbackend/rinterface.cpp:227
+#: rbackend/rinterface.cpp:228
 msgid ""
 "<p>\t-An unspecified error occurred that is not yet handled by RKWard. "
 "Likely RKWard will not function properly. Please check your setup.</p>\n"
@@ -1460,12 +1509,12 @@ msgstr ""
 "RKWard. Segurament el RKWard no funcionarà adequadament. Si us plau, reviseu "
 "la vostra configuració.</p>\n"
 
-#: rbackend/rinterface.cpp:235
+#: rbackend/rinterface.cpp:236
 msgid "Error starting R"
 msgstr "S'ha produït un error a l'engegar-se el R"
 
 # fr.po: Le moteur R a besoin du paquet '%1' pour continuer. Ce paquet n'est pas installé. L'outils de gestion des paquets va être ouvert, pour que vous puissiez installer le paquet manquant.
-#: rbackend/rinterface.cpp:361
+#: rbackend/rinterface.cpp:362
 msgid ""
 "The R-backend has indicated that in order to carry out the current task it "
 "needs the package '%1', which is not currently installed. We will open the "
@@ -1476,11 +1525,11 @@ msgstr ""
 "paquet no està instal·lat. Ara s'obrirà l'eina de gestió de paquets, a fi "
 "que pugueu intentar localitzar i instal·lar aquest paquet."
 
-#: rbackend/rinterface.cpp:361
+#: rbackend/rinterface.cpp:362
 msgid "Require package '%1'"
 msgstr "Requerix el paquet '%1'"
 
-#: rbackend/rinterface.cpp:390
+#: rbackend/rinterface.cpp:399
 msgid ""
 "A command in the R backend is trying to change the character encoding. While "
 "RKWard offers support for this, and will try to adjust to the new locale, "
@@ -1502,23 +1551,15 @@ msgstr ""
 "pròximes versions de RKWard). En aquest cas, si us plau, ara escolliu "
 "'Cancel·lar', després tanqueu a finestra de dades, guardeu i reintenteu."
 
-#: rbackend/rinterface.cpp:390
+#: rbackend/rinterface.cpp:399
 msgid "Locale change"
 msgstr "Canvia els locals"
 
-#: rbackend/rinterface.cpp:477
-msgid "Question from the R backend"
-msgstr "Pregunta del dorsal R"
-
-#: rbackend/rinterface.cpp:482
-msgid "Message from the R backend"
-msgstr "Missatge del dorsal R"
-
-#: rbackend/rinterface.cpp:487
+#: rbackend/rinterface.cpp:536
 msgid "R backend requests information"
 msgstr "El dorsal R necessita informació"
 
-#: rbackend/rinterface.cpp:504
+#: rbackend/rinterface.cpp:553
 msgid ""
 "\n"
 "It will be shut down immediately. This means, you can not use any more "
@@ -1533,14 +1574,15 @@ msgstr ""
 "\n"
 "S'aturarà immediatament. Això vol dir que no podreu seguir utilitzant les "
 "funcions basades en el dorsal R. És a dir, que no podeu fer pràcticament "
-"res, ni tan sols desar l'espai de treball (però afortunadament, el R ja l'ha guardat). Tanmateix, podeu desar els fitxers d'ordres que tingueu oberts, "
+"res, ni tan sols desar l'espai de treball (però afortunadament, el R ja l'ha "
+"guardat). Tanmateix, podeu desar els fitxers d'ordres que tingueu oberts, "
 "els resultats, o les dades dels editors de dades oberts. Després, sortiu del "
 "RKWard.\n"
 " Atès que això no hauria de succeir mai, si us plau, trameteu un missatge a "
 "rkward-devel@lists.sourceforge.net explicant el que intentaveu fer quan s'ha "
 "produït això. Disculpeu!"
 
-#: rbackend/rinterface.cpp:505
+#: rbackend/rinterface.cpp:554
 msgid "R engine has died"
 msgstr "El motor R s'ha aturat"
 
@@ -1548,50 +1590,46 @@ msgstr "El motor R s'ha aturat"
 msgid "R Console"
 msgstr "Consola R"
 
-#: rkconsole.cpp:626
+#: rkconsole.cpp:630
 msgid "Syntax error\n"
 msgstr "Error de sintaxi\n"
 
 # fr.po: Interrompre l'exécution de la commande
-#: rkconsole.cpp:834
+#: rkconsole.cpp:833
 msgid "Interrupt running command"
 msgstr "Interromp l'execució de l'ordre"
 
 # Thomas Friedrichsmeier:
 # Console action: Copy the selection, but remove any leading "> " or "+ " on the copied lines, so it is easier to re-use commands from the console.
-#: rkconsole.cpp:840
+#: rkconsole.cpp:839
 msgid "Copy selection cleaned"
 msgstr "Còpia la selecció de forma neta"
 
-#: rkconsole.cpp:843
+#: rkconsole.cpp:842
 msgid "Copy selection literally"
 msgstr "Copia la selecció literalment"
 
-#: rkconsole.cpp:850 windows/rkcommandlog.cpp:285
-msgid "Configure"
-msgstr "Configura"
-
-#: rkconsole.cpp:852
+#: rkconsole.cpp:849
 msgid "Print Console"
 msgstr "Imprimeix la consola"
 
-#: rkconsole.cpp:881
+#: rkconsole.cpp:878
 msgid ""
 "You have configured RKWard to run script commands through the console. "
 "However, the console is currently busy (either a command is running, or you "
 "have started to enter text in the console). Do you want to bypass the "
 "console this one time, or do you want to try again later?"
 msgstr ""
-"Ha configurat el RKWard perquè executi les seqüències d'ordres a través de la consola. "
-"Tanmateix, la consola ara està ocupada (o s'està executant una ordre o heu "
-"començat a escriure-hi text a la consola). Voleu evitar la consola ara, o ho "
-"voleu intentar de nou més tard?"
+"Ha configurat el RKWard perquè executi les seqüències d'ordres a través de "
+"la consola. Tanmateix, la consola ara està ocupada (o s'està executant una "
+"ordre o heu començat a escriure-hi text a la consola). Voleu evitar la "
+"consola ara, o ho voleu intentar de nou més tard?"
 
-#: rkconsole.cpp:881
+#: rkconsole.cpp:878
 msgid "Console is busy"
 msgstr "La consola és ocupada"
 
-#: rkconsole.cpp:881
+#: rkconsole.cpp:878
 msgid "Bypass console"
 msgstr "Evita la consola"
 
@@ -1605,24 +1643,30 @@ msgid ""
 "with that, see <a href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/"
 "rkward/compiling</a>.</p>"
 msgstr ""
-"<p>El RKWard o no pot trobar cap fitxer de recursos, o només troba una versió antiga dels mateixos. La causa més probable és que en la darrera instal·lació no es van ficar tots els fitxers en el lloc correcte. Això pot provocat tot tipus d'errors, des de la manca d'alguna funcionalitat fins que totes les funcions fallin.</"
-"p><p><b>Ara heu de sortir del RKWard, i arreglar la seva instal·lació</b>. Per ajuda sobre això, consultar  <a href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/"
-"rkward/compiling</a>.</p>"
+"<p>El RKWard o no pot trobar cap fitxer de recursos, o només troba una "
+"versió antiga dels mateixos. La causa més probable és que en la darrera "
+"instal·lació no es van ficar tots els fitxers en el lloc correcte. Això pot "
+"provocat tot tipus d'errors, des de la manca d'alguna funcionalitat fins que "
+"totes les funcions fallin.</p><p><b>Ara heu de sortir del RKWard, i arreglar "
+"la seva instal·lació</b>. Per ajuda sobre això, consultar  <a href=\"http://"
+"p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</p>"
 
 #: rkward.cpp:191
 msgid "Broken installation"
 msgstr "Instal·lació incompleta"
 
 #: rkward.cpp:195
+#, fuzzy
 msgid ""
-"<p>Please note that RKWard on is not well tested on Windows, yet.</"
-"p><p>There are all sorts of known issues, and issues yet to be reported. If "
-"you'd like to help: <a href=\"http://p.sf.net/rkward/contact\">http://p.sf."
-"net/rkward/contact</a>.</p>"
+"<p>Please note that RKWard is not well tested on Windows, yet.</p><p>There "
+"are all sorts of known issues, and issues yet to be reported. If you'd like "
+"to help: <a href=\"http://p.sf.net/rkward/contact\">http://p.sf.net/rkward/"
+"contact</a>.</p>"
 msgstr ""
-"<p>Tingueu en compte que el RKWard encara no està del tot provat en Windows.</"
-"p><p> Hi ha tot tipus de problemes coneguts, i d'altres encara no identificats. Si voleu ajudar: <a href=\"http://p.sf.net/rkward/contact\">http://p.sf."
-"net/rkward/contact</a>.</p>"
+"<p>Tingueu en compte que el RKWard encara no està del tot provat en Windows."
+"</p><p> Hi ha tot tipus de problemes coneguts, i d'altres encara no "
+"identificats. Si voleu ajudar: <a href=\"http://p.sf.net/rkward/contact"
+"\">http://p.sf.net/rkward/contact</a>.</p>"
 
 #: rkward.cpp:195
 msgid "RKWard on Windows"
@@ -1715,7 +1759,7 @@ msgstr "Desa el document actual com a..."
 msgid "Quits the application"
 msgstr "Surt de l'aplicació"
 
-#: rkward.cpp:359 windows/robjectbrowser.cpp:135
+#: rkward.cpp:359 windows/robjectbrowser.cpp:136
 msgid "Load / Unload Packages"
 msgstr "Carrega / Descarrega els paquets"
 
@@ -1733,6 +1777,7 @@ msgid "Close All"
 msgstr "Tanca-ho tot"
 
 #: rkward.cpp:380 windows/rktoolwindowbar.cpp:274
+#: windows/rkworkplaceview.cpp:223
 msgid "Detach"
 msgstr "Allibera"
 
@@ -1757,7 +1802,7 @@ msgstr "S'està eixint..."
 msgid "Quitting RKWard: Do you want to save the workspace?"
 msgstr "S'està sortint del RKWard. Voleu desar l'espai de treball actual?"
 
-#: rkward.cpp:497 rkward.cpp:557
+#: rkward.cpp:497 rkward.cpp:559
 msgid "Save Workspace?"
 msgstr "Deso l'espai de treball?"
 
@@ -1765,47 +1810,47 @@ msgstr "Deso l'espai de treball?"
 msgid "Don't quit"
 msgstr "No surtis"
 
-#: rkward.cpp:522
+#: rkward.cpp:524
 msgid "New dataset"
 msgstr "Nou conjunt de dades"
 
-#: rkward.cpp:522
+#: rkward.cpp:524
 msgid "Enter name for the new dataset"
 msgstr "Introduïu el nom pel nou conjunt de dades"
 
-#: rkward.cpp:532
+#: rkward.cpp:534
 msgid "Opening workspace..."
 msgstr "S'està obrint l'espai de treball..."
 
-#: rkward.cpp:538 rkward.cpp:540
+#: rkward.cpp:540 rkward.cpp:542
 msgid "*|All files"
 msgstr "*|Tots els fitxers"
 
-#: rkward.cpp:538 rkward.cpp:540
+#: rkward.cpp:540 rkward.cpp:542
 msgid "Open File..."
 msgstr "Obre el fitxer..."
 
-#: rkward.cpp:557
+#: rkward.cpp:559
 msgid "Do you want to save the current workspace?"
 msgstr "Voleu desar l'espai de treball actual?"
 
-#: rkward.cpp:648
+#: rkward.cpp:650
 msgid "R engine busy"
 msgstr "El motor R està ocupat"
 
-#: rkward.cpp:651
+#: rkward.cpp:653
 msgid "R engine idle"
 msgstr "El motor R està inactiu"
 
-#: rkward.cpp:654
+#: rkward.cpp:656
 msgid "R engine starting"
 msgstr "Iniciant-se el motor R"
 
-#: rkward.cpp:695 rkward.cpp:697
+#: rkward.cpp:697 rkward.cpp:699
 msgid "Open script file(s)"
 msgstr "Obre el(s) fitxer(s) de seqüència"
 
-#: rkward.cpp:715
+#: rkward.cpp:717
 msgid "[Unnamed Workspace]"
 msgstr "[Espai de treball sense nom]"
 
@@ -1813,9 +1858,9 @@ msgstr "[Espai de treball sense nom]"
 msgid "summary (x)"
 msgstr "resum (x)"
 
-#: robjectviewer.cpp:59
 # ??? p roca: Per revisar:
 # Imprimir? Mostrar?
+#: robjectviewer.cpp:59
 msgid "print (x)"
 msgstr "mostrar (x)"
 
@@ -1917,8 +1962,8 @@ msgstr ""
 "El dorsal QtScript ha informat d'un error:\n"
 "%1"
 
-#: scriptbackends/qtscriptbackend.cpp:114
 # ??? p roca: Per revisar
+#: scriptbackends/qtscriptbackend.cpp:114
 msgid "Scripting error"
 msgstr "Error en la seqüència"
 
@@ -1937,8 +1982,25 @@ msgid ""
 "The file \"%1\" (needed by \"%2\") could not be found. Please check your "
 "installation."
 msgstr ""
-"El fitxer \"%1\" (necessari per \"%2\") no es troba. Si us plau, "
-"verifiqueu la vostra instal·lació."
+"El fitxer \"%1\" (necessari per \"%2\") no es troba. Si us plau, verifiqueu "
+"la vostra instal·lació."
+
+#: scriptbackends/rkcomponentscripting.cpp:70
+msgid ""
+"There was an error while evaluating script code.\n"
+"File: %1\n"
+"Line: %2\n"
+"Message: %3."
+msgstr ""
+
+#: scriptbackends/rkcomponentscripting.cpp:88
+#, fuzzy
+msgid ""
+"error ('The file \"%1\" (needed by \"%2\") could not be found. Please check "
+"your installation.');\n"
+msgstr ""
+"El fitxer \"%1\" (necessari per \"%2\") no es troba. Si us plau, verifiqueu "
+"la vostra instal·lació."
 
 #: scriptbackends/scriptbackend.cpp:91
 msgid "## Prepare\n"
@@ -1952,28 +2014,45 @@ msgstr "## Calcula\n"
 msgid "## Print result\n"
 msgstr "## Imprimeix els resultats\n"
 
-#: settings/rksettings.cpp:71
+#: settings/rksettings.cpp:72
 msgid "Settings"
 msgstr "Arranjaments"
 
-#: settings/rksettingsmodulecommandeditor.cpp:43
 # terminació
+#: settings/rksettingsmodulecommandeditor.cpp:49
 msgid "Code Completion"
 msgstr "Autoacabat de codi"
 
-#: settings/rksettingsmodulecommandeditor.cpp:46
+#: settings/rksettingsmodulecommandeditor.cpp:52
 msgid "Enable code completion"
 msgstr "Habilita l'autoacabat del codi"
 
-#: settings/rksettingsmodulecommandeditor.cpp:53
+#: settings/rksettingsmodulecommandeditor.cpp:59
 msgid "Minimum number of characters before completion is attempted"
 msgstr "Nombre mínim de caràcters abans d'intentar l'autoacabament"
 
-#: settings/rksettingsmodulecommandeditor.cpp:64
+#: settings/rksettingsmodulecommandeditor.cpp:70
 msgid "Timeout (milli seconds) before completion is attempted"
 msgstr "Temps d'espera (milisegons) abans d'intentar l'autoacabament"
 
-#: settings/rksettingsmodulecommandeditor.cpp:92
+#: settings/rksettingsmodulecommandeditor.cpp:81
+msgid "Enable function argument hinting"
+msgstr ""
+
+#: settings/rksettingsmodulecommandeditor.cpp:88
+#, fuzzy
+msgid "Autosaves"
+msgstr "Tanca automàticament"
+
+#: settings/rksettingsmodulecommandeditor.cpp:94
+msgid "Autosave interval (minutes)"
+msgstr ""
+
+#: settings/rksettingsmodulecommandeditor.cpp:109
+msgid "Keep autosave file after manual save"
+msgstr ""
+
+#: settings/rksettingsmodulecommandeditor.cpp:133
 msgid "Script editor"
 msgstr "Editor de fitxers de seqüència"
 
@@ -2009,10 +2088,10 @@ msgstr "Afegeix també aquestes ordres en l'historial de la consola"
 msgid "Do not add"
 msgstr "No l'afegeixis"
 
-#: settings/rksettingsmoduleconsole.cpp:77
 # ??? p roca: Per revisar
 # Afegeix només si és una sola línia
 # Afegeix només si només hi ha una sola línia
+#: settings/rksettingsmoduleconsole.cpp:77
 msgid "Add only if single line"
 msgstr "Afegeix només si és una sola línia"
 
@@ -2022,8 +2101,8 @@ msgstr "Afegeix totes les ordres"
 
 # ??? Per revisar
 # fr: La commande d'historique est sensible à la casse par défaut
-#: settings/rksettingsmoduleconsole.cpp:86
 # es: El historial de comandos depende por defecto del contexto
+#: settings/rksettingsmoduleconsole.cpp:86
 msgid "Command history is context sensitive by default"
 msgstr "El historial d'ordres depèn, per omissió, del context"
 
@@ -2031,13 +2110,16 @@ msgstr "El historial d'ordres depèn, per omissió, del context"
 msgid "Console"
 msgstr "Consola"
 
-#: settings/rksettingsmoduledebug.cpp:42
 # es: Estas opciones sólo son para propósitos de depurado.Es segurodejarlas como están. Además, estas opciones solamente tendrán efecto en la sesión actual y no se guardarán.
+#: settings/rksettingsmoduledebug.cpp:42
 msgid ""
 "<b>These settings are for debugging purposes, only.</b> It is safe to leave "
 "the untouched. Also, these settings will only apply to the current session, "
 "and not be saved."
-msgstr "<b>Aquestes opcions només són per depuració.</b> Es poden deixar com estan. Admès, aquestes opcions només tenen efecte en la sessió actual i no es guardaran."
+msgstr ""
+"<b>Aquestes opcions només són per depuració.</b> Es poden deixar com estan. "
+"Admès, aquestes opcions només tenen efecte en la sessió actual i no es "
+"guardaran."
 
 #: settings/rksettingsmoduledebug.cpp:48
 msgid "Debug level"
@@ -2047,9 +2129,9 @@ msgstr "Nivell de depuració"
 msgid "Debug flags"
 msgstr "Senyaladors de depuració"
 
-#: settings/rksettingsmoduledebug.cpp:83
 # ??? p roca: Per revisar
 # es: Tiempo límite de los comandos
+#: settings/rksettingsmoduledebug.cpp:83
 msgid "Command timeout"
 msgstr "Temps d'espera de les ordres"
 
@@ -2065,10 +2147,12 @@ msgstr "Depuració"
 # Recull de termes de Softcatalà: settings - m pl paràmetres
 #: settings/rksettingsmodulegeneral.cpp:52
 msgid "Settings marked with (*) do not take effect until you restart RKWard"
-msgstr "Els arranjaments marcats amb un (*) només s'aplicaran si reengegueu RKWard"
+msgstr ""
+"Els arranjaments marcats amb un (*) només s'aplicaran si reengegueu RKWard"
 
 #: settings/rksettingsmodulegeneral.cpp:58
-msgid "Directory where the logfiles should be kept (*)"
+#, fuzzy
+msgid "Directory where rkward may store files (*)"
 msgstr "Directori on s'han de guardar els fitxers bitàcola (*)"
 
 #: settings/rksettingsmodulegeneral.cpp:64
@@ -2130,28 +2214,61 @@ msgstr ""
 msgid "No limit"
 msgstr "Sense límits"
 
-#: settings/rksettingsmodulegeneral.cpp:116
 # ??? p roca: Per revisar
 # es: Comportamiento de foco de ventana MDI
+#: settings/rksettingsmodulegeneral.cpp:116
 msgid "MDI window focus behavior"
 msgstr "Comportament de focus de la finestra MDI"
 
-#: settings/rksettingsmodulegeneral.cpp:119
 # ??? p roca: Per revisar
 # es: Clic para focalizar
 # Clicar per focalitzar?
+#: settings/rksettingsmodulegeneral.cpp:119
 msgid "Click to focus"
 msgstr "Clicar par centrar"
 
-#: settings/rksettingsmodulegeneral.cpp:120
 # ??? p roca: Per revisar
 # El foco sigue al ratón
+#: settings/rksettingsmodulegeneral.cpp:120
 msgid "Focus follows mouse"
 msgstr "El focus segueix al ratolí"
 
 #: settings/rksettingsmodulegeneral.cpp:145
 msgid "General"
 msgstr "General"
+
+#: settings/rksettingsmodulegraphics.cpp:47
+msgid "Default window size"
+msgstr ""
+
+#: settings/rksettingsmodulegraphics.cpp:49
+#, fuzzy
+msgid "Default width (inches):"
+msgstr "Ample dels resultats (caràcters)"
+
+#: settings/rksettingsmodulegraphics.cpp:53
+#, fuzzy
+msgid "Default height (inches)"
+msgstr "Alçada per defecte al mostrar el codi (píxels)"
+
+#: settings/rksettingsmodulegraphics.cpp:62
+msgid "Screen device history"
+msgstr ""
+
+# ??? Per revisar: és l'ordre print, no la impressió
+#: settings/rksettingsmodulegraphics.cpp:69
+#, fuzzy
+msgid "Maximum number of recorded plots:"
+msgstr "Nombre màxim d'elements que s'han de mostrar"
+
+#: settings/rksettingsmodulegraphics.cpp:73
+msgid "Maximum size of a single recorded plot (in KB):"
+msgstr ""
+
+#: settings/rksettingsmodulegraphics.cpp:94
+#, fuzzy
+msgid "Onscreen Graphics"
+msgstr "Gràfics"
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:46
 msgid "Which objects should be shown by default?"
@@ -2210,13 +2327,13 @@ msgstr "Afegeixi el nom del paquet del que no vol recollir l'estructura"
 msgid "Output Window options"
 msgstr "Opcions de la finestra de resultats"
 
-#: settings/rksettingsmoduleoutput.cpp:50
 # ??? p roca: Per revisar: No se que vol dir
+#: settings/rksettingsmoduleoutput.cpp:50
 msgid "show window on new output"
 msgstr "mostrar la finestra de la nova sortida"
 
-#: settings/rksettingsmoduleoutput.cpp:53
 # ??? p roca: Per revisar: no se que vol dir
+#: settings/rksettingsmoduleoutput.cpp:53
 msgid "raise window on new output"
 msgstr "puja la finestra de la nova sortida"
 
@@ -2414,10 +2531,10 @@ msgstr "Ordre que s'ha d'utilitzar per imprimir els fitxers"
 msgid "Editor command"
 msgstr "Editor d'ordres"
 
-#: settings/rksettingsmoduler.cpp:170
 # ??? p roca: Per revisar: Paginador d'ordres?
 # es: Comando del paginador
 # Localitzador d'ordres o ordres del paginador / localització
+#: settings/rksettingsmoduler.cpp:170
 msgid "Pager command"
 msgstr ""
 
@@ -2429,7 +2546,9 @@ msgstr "Dorsal-R"
 
 #: settings/rksettingsmoduler.cpp:335
 msgid "CRAN download mirror (leave empty to be prompted once each session):"
-msgstr "CRAN rèplica de baixades (deixar vuit per ser preguntat un cop en cada sessió):"
+msgstr ""
+"CRAN rèplica de baixades (deixar vuit per ser preguntat un cop en cada "
+"sessió):"
 
 #: settings/rksettingsmoduler.cpp:342
 msgid "Select mirror"
@@ -2437,7 +2556,8 @@ msgstr "Selecciona una rèplica"
 
 #: settings/rksettingsmoduler.cpp:346
 msgid "Additional package repositories (where libraries are downloaded from)"
-msgstr "Dipòsit de paquets addicionals (d'on són descarregades les biblioteques)"
+msgstr ""
+"Dipòsit de paquets addicionals (d'on són descarregades les biblioteques)"
 
 #: settings/rksettingsmoduler.cpp:352
 msgid "Archive downloaded packages"
@@ -2445,7 +2565,8 @@ msgstr "Arxiva els paquets descarregats"
 
 #: settings/rksettingsmoduler.cpp:359
 msgid "R Library locations (where libraries get installed to, locally)"
-msgstr "Ubicacions de les biblioteques R (on localment s'instal·len les biblioteques)"
+msgstr ""
+"Ubicacions de les biblioteques R (on localment s'instal·len les biblioteques)"
 
 #: settings/rksettingsmoduler.cpp:364
 msgid ""
@@ -2565,57 +2686,64 @@ msgstr "Algunes ordres no s'han cancel·lat"
 msgid "Resume execution"
 msgstr "Continua l'execució"
 
-#: windows/rkcommandeditorwindow.cpp:169
+#: windows/rkcommandeditorwindow.cpp:106
+#, fuzzy
+msgid "Script Editor"
+msgstr "Editor de fitxers de seqüència"
+
+#: windows/rkcommandeditorwindow.cpp:183
 msgid "Run block"
 msgstr "Executa el bloc"
 
-#: windows/rkcommandeditorwindow.cpp:173
 # es: Marcar la selección como bloque
 # ca kate: Mode selecció per blocs
+#: windows/rkcommandeditorwindow.cpp:187
 msgid "Mark selection as block"
 msgstr "Mode selecció per  blocs rectangulars"
 
-#: windows/rkcommandeditorwindow.cpp:176
+#: windows/rkcommandeditorwindow.cpp:190
 msgid "Unmark block"
 msgstr "Desmarca bloc"
 
-#: windows/rkcommandeditorwindow.cpp:181
+#: windows/rkcommandeditorwindow.cpp:195
 msgid "CD to script directory"
 msgstr "CD al directori de seqüències"
 
-#: windows/rkcommandeditorwindow.cpp:183
+#: windows/rkcommandeditorwindow.cpp:197
 msgid "Change the working directory to the directory of this script"
 msgstr "Canvia el directori de treball per el d'aquesta seqüència"
 
-#: windows/rkcommandeditorwindow.cpp:188
-msgid "Configure Script Editor"
-msgstr "Configura l'editor de seqüències"
-
-#: windows/rkcommandeditorwindow.cpp:274 windows/rkcommandeditorwindow.cpp:361
+#: windows/rkcommandeditorwindow.cpp:290 windows/rkcommandeditorwindow.cpp:475
 msgid " [modified]"
 msgstr " [modicat]"
 
-#: windows/rkcommandeditorwindow.cpp:287
+#: windows/rkcommandeditorwindow.cpp:303
 msgid "The document \"%1\" has been modified. Close it anyway?"
 msgstr "S'ha modificat el document \"%1\". Segur que el vol tancar?"
 
-#: windows/rkcommandeditorwindow.cpp:287
+#: windows/rkcommandeditorwindow.cpp:303
 msgid "File not saved"
 msgstr "El fitxer no s'ha desat"
 
-#: windows/rkcommandeditorwindow.cpp:360
+#: windows/rkcommandeditorwindow.cpp:444
+msgid ""
+"An error occurred during while trying to create an autosave of the script "
+"file '%1':"
+msgstr ""
+
+#: windows/rkcommandeditorwindow.cpp:474
 msgid "Unnamed"
 msgstr "Sense nom"
 
-#: windows/rkcommandeditorwindow.cpp:468
+#: windows/rkcommandeditorwindow.cpp:582
 msgid "cd to current script directory"
 msgstr "cd al directori de la seqüència actual"
 
-#: windows/rkcommandeditorwindow.cpp:577
+#: windows/rkcommandeditorwindow.cpp:701
 msgid "%1 (Active)"
 msgstr "%1 (Activa)"
 
-#: windows/rkcommandeditorwindow.cpp:599
+#: windows/rkcommandeditorwindow.cpp:728
 msgid "%1 (Unused)"
 msgstr "%1 (Sense ús)"
 
@@ -2631,52 +2759,65 @@ msgstr "Error de sintaxi.\n"
 msgid "An unspecified error occurred while running the command.\n"
 msgstr "S'ha produït un error desconegut mentre s'executava l'ordre.\n"
 
-#: windows/rkhelpsearchwindow.cpp:69
+#: windows/rkcommandlog.cpp:285
+msgid "Configure"
+msgstr "Configura"
+
+#: windows/rkhelpsearchwindow.cpp:70
 msgid "Find:"
 msgstr "Cerca:"
 
-#: windows/rkhelpsearchwindow.cpp:72
+#: windows/rkhelpsearchwindow.cpp:73
 msgid "Fields:"
 msgstr "Camps:"
 
-#: windows/rkhelpsearchwindow.cpp:90 windows/rkhelpsearchwindow.cpp:102
-#: windows/robjectbrowser.cpp:294
+#: windows/rkhelpsearchwindow.cpp:91 windows/robjectbrowser.cpp:295
 msgid "All"
 msgstr "Tot"
 
-#: windows/rkhelpsearchwindow.cpp:91
+#: windows/rkhelpsearchwindow.cpp:92
 msgid "All but keywords"
 msgstr "Tot menys les paraules claus"
 
-#: windows/rkhelpsearchwindow.cpp:92
+#: windows/rkhelpsearchwindow.cpp:93
 msgid "Keywords"
 msgstr "Paraules clau"
 
-#: windows/rkhelpsearchwindow.cpp:96
+#: windows/rkhelpsearchwindow.cpp:97
 msgid "Package:"
 msgstr "Paquet:"
 
-#: windows/rkhelpsearchwindow.cpp:108
+#: windows/rkhelpsearchwindow.cpp:103
+#, fuzzy
+msgid "All installed packages"
+msgstr "Paquets instal·lats"
+
+#: windows/rkhelpsearchwindow.cpp:104
+#, fuzzy
+msgid "All loaded packages"
+msgstr "Paquets carregats"
+
+#: windows/rkhelpsearchwindow.cpp:113
 msgid "Case sensitive"
 msgstr "Sensible a majúscules"
 
-#: windows/rkhelpsearchwindow.cpp:110
+#: windows/rkhelpsearchwindow.cpp:115
 msgid "Fuzzy matching"
 msgstr "Emparellament inexacta"
 
-#: windows/rkhelpsearchwindow.cpp:114
+#: windows/rkhelpsearchwindow.cpp:119
 msgid "Find"
 msgstr "Cerca"
 
-#: windows/rkhelpsearchwindow.cpp:128
+#: windows/rkhelpsearchwindow.cpp:136
 msgid "Help search"
 msgstr "Busca ajuda"
 
-#: windows/rkhelpsearchwindow.cpp:160
+#: windows/rkhelpsearchwindow.cpp:168
 msgid "Find HTML help for %1"
 msgstr "Cerca l'ajuda HTML per %1"
 
-#: windows/rkhelpsearchwindow.cpp:220
+#: windows/rkhelpsearchwindow.cpp:232
 msgid ""
 "No help found on '%1'. Maybe the corresponding package is not installed/"
 "loaded, or maybe you mistyped the command. Try using Help->Search R Help for "
@@ -2686,16 +2827,16 @@ msgstr ""
 "instal·lat / carregat, o potser heu escrit malament l'ordre Per a més "
 "opcions, intenteu utilitzar Ajuda->Cerca ajuda del R."
 
-#: windows/rkhelpsearchwindow.cpp:220
+#: windows/rkhelpsearchwindow.cpp:232
 msgid "No help found"
 msgstr "No s'ha trobat l'ajuda"
 
-#: windows/rkhelpsearchwindow.cpp:300
 # ??? p roca: Per revisar: es: Campo, fr: Sujet
+#: windows/rkhelpsearchwindow.cpp:312
 msgid "Topic"
 msgstr "Tema"
 
-#: windows/rkhelpsearchwindow.cpp:302
+#: windows/rkhelpsearchwindow.cpp:314
 msgid "Package"
 msgstr "Paquet"
 
@@ -2712,8 +2853,8 @@ msgstr "&Actualitza els resultats"
 msgid "Output %1"
 msgstr "Resultats %1"
 
-#: windows/rkhtmlwindow.cpp:367
 # ??? p roca: Per revisar: podira ser Mostre els resultats?
+#: windows/rkhtmlwindow.cpp:367
 msgid "Print output"
 msgstr "Imprimeix els resultats"
 
@@ -2721,15 +2862,20 @@ msgstr "Imprimeix els resultats"
 msgid "Export page as HTML"
 msgstr "Exporta la pàgina com HTML"
 
-#: windows/rkhtmlwindow.cpp:380
+#: windows/rkhtmlwindow.cpp:373
+#, fuzzy
+msgid "Output Window"
+msgstr "Opcions de la finestra de resultats"
+
+#: windows/rkhtmlwindow.cpp:381
 msgid "Print page"
 msgstr "Imprimeix la pàgina"
 
-#: windows/rkhtmlwindow.cpp:382
+#: windows/rkhtmlwindow.cpp:383
 msgid "Save Output as HTML"
 msgstr "Desa els resultats com HTML"
 
-#: windows/rkhtmlwindow.cpp:401
+#: windows/rkhtmlwindow.cpp:402
 msgid ""
 "<HTML><BODY><H1>RKWard output file could not be found</H1>\n"
 "</BODY></HTML>"
@@ -2737,74 +2883,84 @@ msgstr ""
 "<HTML><BODY><H1>El fitxer de resultats del RKWard no s'ha pogut trobar</H1>\n"
 "</BODY></HTML>"
 
-#: windows/rkhtmlwindow.cpp:403
+#: windows/rkhtmlwindow.cpp:404
 msgid "Page does not exist or is broken"
 msgstr "La pàgina no existeix o està malament"
 
-#: windows/rkhtmlwindow.cpp:411
+#: windows/rkhtmlwindow.cpp:412
 msgid ""
 "Do you really want to flush the output? It will not be possible to restore "
 "it."
 msgstr "Realment voleu netejar els resultats? No es podran recuperar."
 
-#: windows/rkhtmlwindow.cpp:411
+#: windows/rkhtmlwindow.cpp:412
 msgid "Flush output?"
 msgstr "Netejo els resultats?"
 
-#: windows/rkhtmlwindow.cpp:480
+#: windows/rkhtmlwindow.cpp:481
 msgid "No Title"
 msgstr "No títol"
 
-#: windows/rkhtmlwindow.cpp:493
 # ??? Per revisar : Núria
+#: windows/rkhtmlwindow.cpp:494
 msgid ""
 "<h1>Help page missing</h1>\n"
 "<p>The help page for this component has not yet been written (or is broken). "
 "Please consider contributing it.</p>\n"
 msgstr ""
 "<h1>Falta la pàgina d'ajuda</h1>\n"
-"<p>La pàgina d'ajuda per aquest component encara ho s'ha escrit (o és incompleta). "
-"Considereu contribuir-hi</p>\n"
+"<p>La pàgina d'ajuda per aquest component encara ho s'ha escrit (o és "
+"incompleta). Considereu contribuir-hi</p>\n"
 
-#: windows/rkhtmlwindow.cpp:498
+#: windows/rkhtmlwindow.cpp:499
 msgid "Use %1 now"
 msgstr "Utilitza %1 ara"
 
-#: windows/rkhtmlwindow.cpp:515
+#: windows/rkhtmlwindow.cpp:516
 msgid "Summary"
 msgstr "Sumari"
 
-#: windows/rkhtmlwindow.cpp:521
+#: windows/rkhtmlwindow.cpp:522
 msgid "Usage"
 msgstr "Ús"
 
-#: windows/rkhtmlwindow.cpp:538
+#: windows/rkhtmlwindow.cpp:539
 msgid "GUI settings"
 msgstr "Arranjaments de la IGU"
 
-#: windows/rkhtmlwindow.cpp:546
+#: windows/rkhtmlwindow.cpp:547
 msgid "Unnamed GUI element"
 msgstr "Element de la IGU sense nom"
 
-#: windows/rkhtmlwindow.cpp:566
+#: windows/rkhtmlwindow.cpp:567
 msgid "Related functions and pages"
 msgstr "Funcions relacionades i pàgines"
 
-#: windows/rkhtmlwindow.cpp:573
+#: windows/rkhtmlwindow.cpp:574
 msgid "Technical details"
 msgstr "Detalls tècnics"
 
-#: windows/rkhtmlwindow.cpp:579
+#: windows/rkhtmlwindow.cpp:580
 msgid "<h1>On this page:</h1>"
 msgstr "<h1>En aquesta pàgina:</h1>"
 
-#: windows/rkhtmlwindow.cpp:646
+#: windows/rkhtmlwindow.cpp:647
 msgid "R Reference on '%1'"
 msgstr "Ajuda del R sobre '%1'"
 
-#: windows/rkhtmlwindow.cpp:661
+#: windows/rkhtmlwindow.cpp:662
 msgid "BROKEN REFERENCE"
 msgstr "REFERÈNCIA TRENCADA"
+
+#: windows/rkmdiwindow.cpp:276
+#, fuzzy
+msgid "Help on %1"
+msgstr "Ajuda sobre el R"
+
+#: windows/rkmdiwindow.cpp:280
+#, fuzzy
+msgid "Configure %1"
+msgstr "Configura"
 
 #: windows/rktoolwindowbar.cpp:272
 msgid "Attachment"
@@ -2903,9 +3059,12 @@ msgid ""
 "Therefore, if you want to configure keyboard shortcuts e.g. for use inside "
 "the script editor, you need to open a script editor window, and activate it."
 msgstr ""
-"Per raons tècniques, el següent diàleg només us permet configurar les dreceres del teclat per les parts del RKWard que estan actualment actives.\n"
+"Per raons tècniques, el següent diàleg només us permet configurar les "
+"dreceres del teclat per les parts del RKWard que estan actualment actives.\n"
 "\n"
-"Per tant, si voleu configurar les dreceres de teclat de, p.ex.,l'editor de seqüències, heu d'obrir una finestra de l'editor de seqüències per activar-lo."
+"Per tant, si voleu configurar les dreceres de teclat de, p.ex.,l'editor de "
+"seqüències, heu d'obrir una finestra de l'editor de seqüències per activar-"
+"lo."
 
 #: windows/rktoplevelwindowgui.cpp:117 windows/rktoplevelwindowgui.cpp:130
 msgid "Note"
@@ -2923,21 +3082,28 @@ msgid ""
 "Therefore, if you want to configure tool buttons e.g. for use inside the "
 "script editor, you need to open a script editor window, and activate it."
 msgstr ""
-"Per raons tècniques, el següent diàleg només us permet configurar les dreceres dels botós de la barra d'eines per les parts del RKWard que estan actualment actives.\n"
+"Per raons tècniques, el següent diàleg només us permet configurar les "
+"dreceres dels botós de la barra d'eines per les parts del RKWard que estan "
+"actualment actives.\n"
 "\n"
-"Per tant, si voleu configurar els botós de la barra d'eines de, p.ex.,l'editor de seqüències, heu d'obrir una finestra de l'editor de seqüències per activar-lo."
+"Per tant, si voleu configurar els botós de la barra d'eines de, p.ex.,"
+"l'editor de seqüències, heu d'obrir una finestra de l'editor de seqüències "
+"per activar-lo."
 
 #: windows/rktoplevelwindowgui.cpp:152
 msgid ""
 "<p>Please submit your bug reports or wishes at <a href=\"%1\">%1</a> or send "
 "email to <a href=\"mailto:%2\">%2</a>.</p>"
-msgstr "<p>Si us plau, trameteu els vostres informes d'errors o desitjos a <a href=\"%1\">%1</a> o envieu un missatge electrònic a <a href=\"mailto:%2\">%2</a>.</p>"
+msgstr ""
+"<p>Si us plau, trameteu els vostres informes d'errors o desitjos a <a href="
+"\"%1\">%1</a> o envieu un missatge electrònic a <a href=\"mailto:%2\">%2</a>."
+"</p>"
 
 #: windows/rktoplevelwindowgui.cpp:154
 msgid "Reporting bugs in RKWard"
 msgstr "Informar els errors del RKWard"
 
-#: windows/rkwindowcatcher.cpp:57
+#: windows/rkwindowcatcher.cpp:69
 msgid ""
 "You have created a new X11 device window in R. Usually, RKWard tries to "
 "detect such windows, to take control of them, and add a menu-bar to them. "
@@ -2964,90 +3130,217 @@ msgstr ""
 "la vostra configuració a fi que intentem arreglar això en les futures "
 "versions de RKWard."
 
-#: windows/rkwindowcatcher.cpp:57
+#: windows/rkwindowcatcher.cpp:69
 msgid "Could not embed R X11 window"
 msgstr "No s'ha pogut incrustar la finestra X11 del R"
 
-#: windows/rkwindowcatcher.cpp:98
+#: windows/rkwindowcatcher.cpp:147
 msgid "An error occurred"
 msgstr "S'ha produït un error"
 
+#: windows/rkwindowcatcher.cpp:149
+msgid "Graphics Device Window"
+msgstr ""
+
+#: windows/rkwindowcatcher.cpp:225
+msgid ""
+"The current window appears to too large to fit on the screen. If this "
+"happens regularly, you may want to adjust the default graphics window size "
+"in Settings->Configure RKWard->Onscreen Graphics."
+msgstr ""
+
+# fr.po: montrer / monter la fenêtre
+# es.po: mostrar/restaurar ventana
+#: windows/rkwindowcatcher.cpp:225
+#, fuzzy
+msgid "Large window"
+msgstr "mostra/puja la finestra"
+
+#: windows/rkwindowcatcher.cpp:249
+#, fuzzy
+msgid "Shutting down device number %1"
+msgstr "S'ha activat el dispositiu gràfic nombre %1"
+
+#: windows/rkwindowcatcher.cpp:250
+msgid "Closing device (saving history)"
+msgstr ""
+
 # ??? Per revisar
-#: windows/rkwindowcatcher.cpp:242
+#: windows/rkwindowcatcher.cpp:322
 msgid "Specify fixed size"
 msgstr "Especifiqueu la mida fixa"
 
-#: windows/rkwindowcatcher.cpp:248
+#: windows/rkwindowcatcher.cpp:328
 msgid "Width"
 msgstr "Ample"
 
-#: windows/rkwindowcatcher.cpp:252
+#: windows/rkwindowcatcher.cpp:332
 msgid "Height"
 msgstr "Alt"
 
-#: windows/rkwindowcatcher.cpp:270
+#: windows/rkwindowcatcher.cpp:350
 msgid "Activate graphics device number %1"
 msgstr "S'ha activat el dispositiu gràfic nombre %1"
 
-#: windows/rkwindowcatcher.cpp:276
+#: windows/rkwindowcatcher.cpp:356
 msgid "Copy contents of graphics device number %1 to output"
 msgstr "Copia el contingut del dispositiu gràfic número %1 als resultats"
 
-#: windows/rkwindowcatcher.cpp:282
+#: windows/rkwindowcatcher.cpp:362
 msgid "Print contents of graphics device number %1"
 msgstr "Imprimeix el contingit del dispositiu gràfic nombre %1"
 
-#: windows/rkwindowcatcher.cpp:291
+#: windows/rkwindowcatcher.cpp:371
 msgid "Specify R object"
 msgstr "Especifiqueu l'objecte R"
 
 # fr: Définissez le nom d'objet de R, vous veulent sauver le graphique à
 # ??? Per revisar
-#: windows/rkwindowcatcher.cpp:296
+#: windows/rkwindowcatcher.cpp:376
 msgid "Specify the R object name, you want to save the graph to"
 msgstr "Especifiqueu el nom de l'objecte R on voleu desar el gràfic"
 
-#: windows/rkwindowcatcher.cpp:307
+#: windows/rkwindowcatcher.cpp:388
 msgid "Save contents of graphics device number %1 to object '%2'"
 msgstr "Desa el contingut del dispositiu gràfic número %1 a l'objecte '%2'"
 
-#: windows/rkwindowcatcher.cpp:316
+#: windows/rkwindowcatcher.cpp:397
 msgid "Duplicate graphics device number %1"
 msgstr "Duplica el dispositiu gràfic nombre %1"
 
-#: windows/rkwindowcatcher.cpp:335
+#: windows/rkwindowcatcher.cpp:403
+#, fuzzy
+msgid "Load next plot in device number %1"
+msgstr "Imprimeix el contingit del dispositiu gràfic nombre %1"
+
+#: windows/rkwindowcatcher.cpp:404 windows/rkwindowcatcher.cpp:412
+#: windows/rkwindowcatcher.cpp:420 windows/rkwindowcatcher.cpp:428
+#: windows/rkwindowcatcher.cpp:436
+#, fuzzy
+msgid "Loading plot from history"
+msgstr "Carrega/Desa l'historial d'ordres"
+
+#: windows/rkwindowcatcher.cpp:411
+#, fuzzy
+msgid "Load previous plot in device number %1"
+msgstr "Duplica el dispositiu gràfic nombre %1"
+
+#: windows/rkwindowcatcher.cpp:419
+#, fuzzy
+msgid "Load first plot in device number %1"
+msgstr "S'ha activat el dispositiu gràfic nombre %1"
+
+#: windows/rkwindowcatcher.cpp:427
+#, fuzzy
+msgid "Load last plot in device number %1"
+msgstr "Duplica el dispositiu gràfic nombre %1"
+
+#: windows/rkwindowcatcher.cpp:435
+#, fuzzy
+msgid "Load plot %1 in device number %2"
+msgstr "Duplica el dispositiu gràfic nombre %1"
+
+#: windows/rkwindowcatcher.cpp:443
+#, fuzzy
+msgid "Append this plot to history (device number %1)"
+msgstr "Imprimeix el contingit del dispositiu gràfic nombre %1"
+
+#: windows/rkwindowcatcher.cpp:449
+#, fuzzy
+msgid "Remove current plot from history (device number %1)"
+msgstr "Imprimeix el contingit del dispositiu gràfic nombre %1"
+
+#: windows/rkwindowcatcher.cpp:455
+msgid ""
+"This will clear the plot history for all device windows, not just this one. "
+"If this is not your intent, press cancel, below."
+msgstr ""
+
+#: windows/rkwindowcatcher.cpp:457
+msgid "Clear plot history"
+msgstr ""
+
+#: windows/rkwindowcatcher.cpp:463
+#, fuzzy
+msgid "Plot properties (device number %1)"
+msgstr "Duplica el dispositiu gràfic nombre %1"
+
+#: windows/rkwindowcatcher.cpp:477
+msgid "<Unsaved plot>"
+msgstr ""
+
+#: windows/rkwindowcatcher.cpp:528
 msgid "Draw area follows size of window"
 msgstr "Adapta l'àrea del dibuix a la mida de la finestra"
 
-#: windows/rkwindowcatcher.cpp:341
+#: windows/rkwindowcatcher.cpp:534
 msgid "Set fixed size 500x500"
 msgstr "Estableix una mida fixa de 500x500"
 
-#: windows/rkwindowcatcher.cpp:343
+#: windows/rkwindowcatcher.cpp:536
 msgid "Set fixed size 1000x1000"
 msgstr "Estableix una mida fixa de 1000x1000"
 
-#: windows/rkwindowcatcher.cpp:345
+#: windows/rkwindowcatcher.cpp:538
 msgid "Set fixed size 2000x2000"
 msgstr "Estableix una mida fixa de 2000x2000"
 
-#: windows/rkwindowcatcher.cpp:347
+#: windows/rkwindowcatcher.cpp:540
 msgid "Set specified fixed size..."
 msgstr "Estableix una mida especificada..."
 
-#: windows/rkwindowcatcher.cpp:350
+#: windows/rkwindowcatcher.cpp:543
+#, fuzzy
+msgid "Previous plot"
+msgstr "Finestra anterior"
+
+#: windows/rkwindowcatcher.cpp:547
+msgid "First plot"
+msgstr ""
+
+#: windows/rkwindowcatcher.cpp:551
+#, fuzzy
+msgid "Next plot"
+msgstr "Següent >"
+
+#: windows/rkwindowcatcher.cpp:555
+msgid "Last plot"
+msgstr ""
+
+#: windows/rkwindowcatcher.cpp:558
+msgid "Go to plot"
+msgstr ""
+
+#: windows/rkwindowcatcher.cpp:565
+msgid "Append this plot"
+msgstr ""
+
+#: windows/rkwindowcatcher.cpp:569
+#, fuzzy
+msgid "Remove this plot"
+msgstr "Elimino l'objecte?"
+
+#: windows/rkwindowcatcher.cpp:575
+msgid "Clear history"
+msgstr ""
+
+#: windows/rkwindowcatcher.cpp:580
+msgid "Plot properties"
+msgstr ""
+
+#: windows/rkwindowcatcher.cpp:584
 msgid "Make active"
 msgstr "Fes-la activa"
 
-#: windows/rkwindowcatcher.cpp:352
+#: windows/rkwindowcatcher.cpp:587
 msgid "Copy to output"
 msgstr "Copia els resultats"
 
-#: windows/rkwindowcatcher.cpp:355
+#: windows/rkwindowcatcher.cpp:591
 msgid "Store as R object..."
 msgstr "Guarda com un objecte R..."
 
-#: windows/rkwindowcatcher.cpp:357
+#: windows/rkwindowcatcher.cpp:593
 msgid "Duplicate"
 msgstr "Duplicat"
 
@@ -3058,22 +3351,23 @@ msgid ""
 "not supported by RKWard. Do you want to open the url in the default "
 "application?"
 msgstr ""
-"La URL que esteu intentant obrir ('%1') no és un fitxer local o el tipus de fitxer no l'admet el RKWard. . Voleu obrir "
-"aquesta URL en l'aplicació per omissió?"
+"La URL que esteu intentant obrir ('%1') no és un fitxer local o el tipus de "
+"fitxer no l'admet el RKWard. . Voleu obrir aquesta URL en l'aplicació per "
+"omissió?"
 
 #: windows/rkworkplace.cpp:211
 msgid "Open in default application?"
 msgstr "L'obro en l'aplicació per omissió?"
 
-#: windows/rkworkplace.cpp:240
+#: windows/rkworkplace.cpp:239
 msgid "Unable to open \"%1\""
 msgstr "No es pot obrir \"%1\""
 
-#: windows/rkworkplace.cpp:240
+#: windows/rkworkplace.cpp:239
 msgid "Could not open command file"
 msgstr "No s'ha pogut obrir el fitxer d'ordres"
 
-#: windows/rkworkplace.cpp:349
+#: windows/rkworkplace.cpp:348
 msgid ""
 "You are about to edit object \"%1\", which is very large (%2 fields). RKWard "
 "is not optimized to handle very large objects in the built in data editor. "
@@ -3086,128 +3380,133 @@ msgid ""
 ">Configure RKWard->General.\n"
 "Really edit object?"
 msgstr ""
-"Esteu a punt d'editar l'objecte \"%1\" que és molt gran (%2 camps). El L'editor "
-"integrat de dades del RKWard no està optimitzat per manegar objectes grans. "
-"Això pot utilitzar molta memòria, i -depenent del vostre sistema- anar molt "
-"lent. Es recomana editar els objectes grans utilitzant els mètodes "
-"disponibles en la línia d'ordres o dividir-los en bocins més petits abans "
-"d'editar-los. D'altra banda, si teniu memòria suficient, o les dades són "
-"suficientment simples (les dades numèriques són més fàcils de manegar que "
-"els factors (variables qualitatives)), poder es poden editar sense "
-"problemes. Podeu configurar aquest avís (o desactivar-lo del tot) a "
+"Esteu a punt d'editar l'objecte \"%1\" que és molt gran (%2 camps). El "
+"L'editor integrat de dades del RKWard no està optimitzat per manegar "
+"objectes grans. Això pot utilitzar molta memòria, i -depenent del vostre "
+"sistema- anar molt lent. Es recomana editar els objectes grans utilitzant "
+"els mètodes disponibles en la línia d'ordres o dividir-los en bocins més "
+"petits abans d'editar-los. D'altra banda, si teniu memòria suficient, o les "
+"dades són suficientment simples (les dades numèriques són més fàcils de "
+"manegar que els factors (variables qualitatives)), poder es poden editar "
+"sense problemes. Podeu configurar aquest avís (o desactivar-lo del tot) a "
 "Arranjaments-> Configura RKWard->General.\n"
 "Edito l'objecte?"
 
-#: windows/rkworkplace.cpp:349
+#: windows/rkworkplace.cpp:348
 msgid "About to edit very large object"
 msgstr "Quant a editar objectges molt grans"
 
 # fr.po: Enregistrer l'espace de travail
 # es.po: Guardar Espacio de Trabajo
 #  Thomas Friedrichsmeier: Workplace is the windows (script editors / data editors / help files / output) managed by rkward
-#: windows/rkworkplace.cpp:509
+#: windows/rkworkplace.cpp:512
 msgid "Save Workplace layout"
 msgstr "Desa el lloc de treball del RkWard"
 
-#: windows/rkworkplace.cpp:516
+#: windows/rkworkplace.cpp:519
 msgid "Restore Workplace layout"
 msgstr "Restableix el lloc de treball del RKWard"
 
-#: windows/rkworkplace.cpp:585
+#: windows/rkworkplace.cpp:588
 msgid "Previous Window"
 msgstr "Finestra anterior"
 
-#: windows/rkworkplace.cpp:590
+#: windows/rkworkplace.cpp:593
 msgid "Next Window"
 msgstr "Finestra següent"
 
 # ¿O finestra esquerra?
 # ??? Per revisar
-#: windows/rkworkplaceview.cpp:70
+#: windows/rkworkplaceview.cpp:84
 msgid "Window Left"
 msgstr "Finestra a l'esquerra"
 
 # ¿O finestra dreta?
 # ??? Per revisar
-#: windows/rkworkplaceview.cpp:74
+#: windows/rkworkplaceview.cpp:88
 msgid "Window Right"
 msgstr "Finestra a la dreta"
 
-#: windows/robjectbrowser.cpp:67
+#: windows/robjectbrowser.cpp:65
+#, fuzzy
+msgid "R workspace browser"
+msgstr "Mostra/Oculta el navegador de l'espai de treball"
+
+#: windows/robjectbrowser.cpp:68
 msgid "Objects in the R workspace"
 msgstr "Objectes en l'espai de treball del R"
 
-#: windows/robjectbrowser.cpp:119
+#: windows/robjectbrowser.cpp:120
 msgid "Search Help"
 msgstr "Cerca ajuda"
 
-#: windows/robjectbrowser.cpp:121
+#: windows/robjectbrowser.cpp:122
 msgid "Edit"
 msgstr "Edita"
 
-#: windows/robjectbrowser.cpp:123
+#: windows/robjectbrowser.cpp:124
 msgid "View"
 msgstr "Visualitza"
 
-#: windows/robjectbrowser.cpp:125
+#: windows/robjectbrowser.cpp:126
 msgid "Rename"
 msgstr "Reanomena"
 
-#: windows/robjectbrowser.cpp:127
+#: windows/robjectbrowser.cpp:128
 msgid "Copy to new symbol"
 msgstr "Copia al nou symbol"
 
-#: windows/robjectbrowser.cpp:129
+#: windows/robjectbrowser.cpp:130
 msgid "Copy to .GlobalEnv"
 msgstr "Copia al .GlobalEnv"
 
-#: windows/robjectbrowser.cpp:131
+#: windows/robjectbrowser.cpp:132
 msgid "Delete"
 msgstr "Esborra"
 
-#: windows/robjectbrowser.cpp:133
+#: windows/robjectbrowser.cpp:134
 msgid "Unload Package"
 msgstr "Paquets carregats"
 
-#: windows/robjectbrowser.cpp:186
+#: windows/robjectbrowser.cpp:187
 msgid "Copy object"
 msgstr "Copia l'objecte"
 
 # fr.po: Entrer un nouveau nom
-#: windows/robjectbrowser.cpp:186
+#: windows/robjectbrowser.cpp:187
 msgid "Enter the name to copy to"
 msgstr "Introduïu un nou nom"
 
-#: windows/robjectbrowser.cpp:202
+#: windows/robjectbrowser.cpp:203
 msgid ""
-"An object named '%1' already exists in the GlobalEnv. Created the copy as '%"
-"2' instead."
+"An object named '%1' already exists in the GlobalEnv. Created the copy as "
+"'%2' instead."
 msgstr ""
 "Un objecte anomenat '%1' ja existeix en el GlobalEnv. He creat la còpia com "
 "a'%2'."
 
-#: windows/robjectbrowser.cpp:202
+#: windows/robjectbrowser.cpp:203
 msgid "Name already in use"
 msgstr "Nom ja utilitzat"
 
-#: windows/robjectbrowser.cpp:232
+#: windows/robjectbrowser.cpp:233
 msgid "Rename object"
 msgstr "Reanomena objecte"
 
-#: windows/robjectbrowser.cpp:232
+#: windows/robjectbrowser.cpp:233
 msgid "Enter the new name"
 msgstr "Entreu el nou nom"
 
 # Thomas Friedrichsmeier: While "Non-Functions" really is the most precise description, "Data" would probably be close enough. Another option might be to translate as "Other", since "Functions" and "Non-Functions" are shown side-by-side in the Workspace browser.
-#: windows/robjectbrowser.cpp:295
+#: windows/robjectbrowser.cpp:296
 msgid "Non-Functions"
 msgstr "Dades i altres"
 
-#: windows/robjectbrowser.cpp:305
+#: windows/robjectbrowser.cpp:306
 msgid "Show All Environments"
 msgstr "Mostra tots els entorns"
 
-#: windows/robjectbrowser.cpp:309
+#: windows/robjectbrowser.cpp:310
 msgid "Show Hidden Objects"
 msgstr "Mostra els objectes ocults"
 
@@ -3227,18 +3526,10 @@ msgstr "Mostra els objectes ocults"
 #. i18n: ectx: Menu (edit)
 #. i18n: file: windows/rkoutputwindow.rc:7
 #. i18n: ectx: Menu (edit)
-#: rc.cpp:3 rc.cpp:12 rc.cpp:36 rc.cpp:63 rc.cpp:87 rc.cpp:102 rc.cpp:111
-#: rc.cpp:117
+#: rc.cpp:3 rc.cpp:9 rc.cpp:30 rc.cpp:57 rc.cpp:90 rc.cpp:105 rc.cpp:114
+#: rc.cpp:120
 msgid "&Edit"
 msgstr "&Edita"
-
-#. i18n: file: dataeditor/rkeditordataframepart.rc:13
-#. i18n: ectx: Menu (windows)
-#. i18n: file: rkwardui.rc:61
-#. i18n: ectx: Menu (window)
-#: rc.cpp:6 rc.cpp:45
-msgid "&Windows"
-msgstr "&Finestres"
 
 #. i18n: file: rkconsolepart.rc:4
 #. i18n: ectx: Menu (file)
@@ -3250,41 +3541,75 @@ msgstr "&Finestres"
 #. i18n: ectx: Menu (file)
 #. i18n: file: windows/rkoutputwindow.rc:4
 #. i18n: ectx: Menu (file)
-#: rc.cpp:9 rc.cpp:24 rc.cpp:57 rc.cpp:108 rc.cpp:114
+#: rc.cpp:6 rc.cpp:18 rc.cpp:51 rc.cpp:111 rc.cpp:117
 msgid "&File"
 msgstr "&Fitxer"
 
-#. i18n: file: rkconsolepart.rc:17
+#. i18n: file: rkconsolepart.rc:27
 #. i18n: ectx: Menu (view)
 #. i18n: file: rkwardui.rc:49
 #. i18n: ectx: Menu (view)
 #. i18n: file: windows/detachedwindowcontainer.rc:24
 #. i18n: ectx: Menu (view)
-#. i18n: file: windows/rkcatchedx11windowpart.rc:13
+#. i18n: file: windows/rkcatchedx11windowpart.rc:29
 #. i18n: ectx: Menu (view)
 #. i18n: file: windows/rkoutputwindow.rc:12
 #. i18n: ectx: Menu (view)
-#: rc.cpp:15 rc.cpp:39 rc.cpp:66 rc.cpp:84 rc.cpp:120
+#: rc.cpp:12 rc.cpp:33 rc.cpp:60 rc.cpp:87 rc.cpp:123
 msgid "&View"
 msgstr "&Visualitza"
 
-#. i18n: file: rkconsolepart.rc:22
+#. i18n: file: rkconsolepart.rc:32
 #. i18n: ectx: Menu (run)
 #. i18n: file: rkwardui.rc:52
 #. i18n: ectx: Menu (run)
-#. i18n: file: windows/detachedwindowcontainer.rc:27
+#. i18n: file: windows/detachedwindowcontainer.rc:30
 #. i18n: ectx: Menu (run)
 #. i18n: file: windows/rkcommandeditorwindowpart.rc:11
 #. i18n: ectx: Menu (run)
 #. i18n: file: windows/rkcommandeditorwindowpart.rc:31
 #. i18n: ectx: Menu (run)
-#: rc.cpp:18 rc.cpp:42 rc.cpp:69 rc.cpp:93 rc.cpp:99
+#: rc.cpp:15 rc.cpp:36 rc.cpp:66 rc.cpp:96 rc.cpp:102
 msgid "&Run"
 msgstr "&Executa"
 
-#. i18n: file: rkconsolepart.rc:25
-#. i18n: ectx: Menu (settings)
+#. i18n: file: rkwardui.rc:8
+#. i18n: ectx: Menu (new_data)
+#: rc.cpp:21
+msgid "&New"
+msgstr "&Nou"
+
+#. i18n: file: rkwardui.rc:15
+#. i18n: ectx: Menu (import)
+#: rc.cpp:24
+msgid "&Import"
+msgstr "&Importar"
+
+#. i18n: file: rkwardui.rc:25
+#. i18n: ectx: Menu (workspace)
+#: rc.cpp:27
+msgid "&Workspace"
+msgstr "&Espai de treball"
+
+#. i18n: file: rkwardui.rc:61
+#. i18n: ectx: Menu (window)
+#: rc.cpp:39
+msgid "&Windows"
+msgstr "&Finestres"
+
+#. i18n: file: rkwardui.rc:67
+#. i18n: ectx: Menu (window_activate)
+#. i18n: file: windows/detachedwindowcontainer.rc:42
+#. i18n: ectx: Menu (window_activate)
+#. i18n: file: windows/rktoplevelwindowgui.rc:9
+#. i18n: ectx: Menu (window_activate)
+#: rc.cpp:42 rc.cpp:72 rc.cpp:129
+msgid "&Activate"
+msgstr "&Activa"
+
 #. i18n: file: rkwardui.rc:80
+#. i18n: ectx: Menu (settings)
+#. i18n: file: windows/detachedwindowcontainer.rc:46
 #. i18n: ectx: Menu (settings)
 #. i18n: file: windows/rkcommandeditorwindowpart.rc:16
 #. i18n: ectx: Menu (settings)
@@ -3292,45 +3617,17 @@ msgstr "&Executa"
 #. i18n: ectx: Menu (settings)
 #. i18n: file: windows/rktoplevelwindowgui.rc:21
 #. i18n: ectx: Menu (settings)
-#: rc.cpp:21 rc.cpp:51 rc.cpp:96 rc.cpp:105 rc.cpp:129
+#: rc.cpp:45 rc.cpp:75 rc.cpp:99 rc.cpp:108 rc.cpp:132
 msgid "&Settings"
 msgstr "&Arranjaments"
 
-#. i18n: file: rkwardui.rc:8
-#. i18n: ectx: Menu (new_data)
-#: rc.cpp:27
-msgid "&New"
-msgstr "&Nou"
-
-#. i18n: file: rkwardui.rc:15
-#. i18n: ectx: Menu (import)
-#: rc.cpp:30
-msgid "&Import"
-msgstr "&Importar"
-
-#. i18n: file: rkwardui.rc:25
-#. i18n: ectx: Menu (workspace)
-#: rc.cpp:33
-msgid "&Workspace"
-msgstr "&Espai de treball"
-
-#. i18n: file: rkwardui.rc:67
-#. i18n: ectx: Menu (window_activate)
-#. i18n: file: windows/detachedwindowcontainer.rc:39
-#. i18n: ectx: Menu (window_activate)
-#. i18n: file: windows/rktoplevelwindowgui.rc:9
-#. i18n: ectx: Menu (window_activate)
-#: rc.cpp:48 rc.cpp:75 rc.cpp:126
-msgid "&Activate"
-msgstr "&Activa"
-
 #. i18n: file: rkwardui.rc:85
 #. i18n: ectx: Menu (help)
-#. i18n: file: windows/detachedwindowcontainer.rc:44
+#. i18n: file: windows/detachedwindowcontainer.rc:49
 #. i18n: ectx: Menu (help)
 #. i18n: file: windows/rktoplevelwindowgui.rc:25
 #. i18n: ectx: Menu (help)
-#: rc.cpp:54 rc.cpp:78 rc.cpp:132
+#: rc.cpp:48 rc.cpp:78 rc.cpp:135
 msgid "&Help"
 msgstr "&Ajuda"
 
@@ -3338,35 +3635,77 @@ msgstr "&Ajuda"
 #. i18n: ectx: Menu (device)
 #. i18n: file: windows/rkcatchedx11windowpart.rc:4
 #. i18n: ectx: Menu (device)
-#: rc.cpp:60 rc.cpp:81
+#: rc.cpp:54 rc.cpp:81
 msgid "&Device"
 msgstr "&Dispositiu"
 
-#. i18n: file: windows/detachedwindowcontainer.rc:35
+#. i18n: file: windows/detachedwindowcontainer.rc:27
+#. i18n: ectx: Menu (history)
+#. i18n: file: windows/rkcatchedx11windowpart.rc:14
+#. i18n: ectx: Menu (history)
+#: rc.cpp:63 rc.cpp:84
+msgid "&History"
+msgstr ""
+
+# ??? p roca: Per revisar
+#. i18n: file: windows/detachedwindowcontainer.rc:38
 #. i18n: ectx: Menu (window)
 #. i18n: file: windows/rktoplevelwindowgui.rc:5
 #. i18n: ectx: Menu (window)
-#: rc.cpp:72 rc.cpp:123
-# ??? p roca: Per revisar
+#: rc.cpp:69 rc.cpp:126
 msgid "&Window"
 msgstr "&Finestres"
 
-#. i18n: file: windows/rkcommandeditorwindowpart.rc:5
-#. i18n: ectx: Menu (tools)
-#: rc.cpp:90
 # ??? p roca: Per revisar: posició del & i traducció
 # ??? Per revisar : kde-i18n-ca@kde.org
 # es: M&ovimiento de herramientas
+#. i18n: file: windows/rkcommandeditorwindowpart.rc:5
+#. i18n: ectx: Menu (tools)
+#: rc.cpp:93
 msgid "&Tools Move"
 msgstr "M&oviment d'eines"
 
-#: rc.cpp:133
+#: rc.cpp:136
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr ""
 
-#: rc.cpp:134
+#: rc.cpp:137
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr ""
 
+#~ msgid "Cutting selection..."
+#~ msgstr "S'està tallant la selecció..."
+
+#~ msgid "Copying selection to clipboard..."
+#~ msgstr "S'està copiant la selecció al porta-retalls..."
+
+# ??? p roca: Per revisar: Permetre l'edició?
+#~ msgid "Enable editing"
+#~ msgstr "Edició habilitada"
+
+#~ msgid "Insert new variable right"
+#~ msgstr "Insereix nova variable a la dreta"
+
+#~ msgid "Insert new case below (at %1)"
+#~ msgstr "Insereix un nou cas a sota (a %1)"
+
+#~ msgid "Object name to save to"
+#~ msgstr "Introduïu el nom de l'objecte"
+
+#~ msgid ""
+#~ "<p>\t-There was a problem opening the files needed for communication with "
+#~ "R. Most likely this is due to an incorrect setting for the location of "
+#~ "these files. Check whether you have correctly configured the location of "
+#~ "the log-files (Settings->Configure Settings->Logfiles) and restart RKWard."
+#~ "</p>\n"
+#~ msgstr ""
+#~ "<p>\t-Existeix un problema al obrir els arxius necessaris per a la "
+#~ "comunicació amb el R. Probablement això és degut a un arranjament "
+#~ "incorrecte de la ubicació d'aquests fitxers. Verifiqueu si heu configurat "
+#~ "correctament la ubicació dels fitxers bitàcola (Arranjaments->Configura "
+#~ "arranjaments-> Fitxers bitàcola) i reengegueu el RKWard.</p>\n"
+
+#~ msgid "Configure Script Editor"
+#~ msgstr "Configura l'editor de seqüències"
