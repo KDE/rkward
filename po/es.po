@@ -2752,7 +2752,7 @@ msgid ""
 msgstr ""
 "<h1>No hay página de ayuda</h1>\n"
 "<p>La página de ayuda para este componente no se ha escrito aún (o está "
-"dañada). Por favor contemple la posibilidad de contribuir a ella."
+"dañada). Por favor contemple la posibilidad de contribuir a ella.</p>\n"
 
 #: windows/rkhtmlwindow.cpp:499
 msgid "Use %1 now"
