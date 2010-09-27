@@ -441,7 +441,7 @@ void RKCommandEditorWindow::autoSaveHandlerJobFinished (RKJobSequence* seq) {
 	RK_TRACE (COMMANDEDITOR);
 
 	if (seq->hadError ()) {
-		KMessageBox::detailedError (this, i18n ("An error occurred during while trying to create an autosave of the script file '%1':", url ().url ()), "- " + seq->errors ().join ("\n- "));
+		KMessageBox::detailedError (this, i18n ("An error occurred while trying to create an autosave of the script file '%1':", url ().url ()), "- " + seq->errors ().join ("\n- "));
 	}
 }
 
