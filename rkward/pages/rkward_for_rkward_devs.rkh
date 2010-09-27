@@ -1,0 +1,29 @@
+<!DOCTYPE rkhelp>
+<document>
+	<title>For RKWard Developers</title>
+	<summary>
+	List of various "internal" functions which are generally not of interest to regular users but may be to those who are interested in writing (or extending) plugins or contributing to other areas of RKWard. Make sure to read the warnings and special comments wherever noted.
+	</summary>
+
+	<section title="Plugins" id="plugins">
+	<ul>
+		<li>Call or list available plugins: For automated testing of plugins see <link href="rkward://rhelp/rk.call.plugin"/>.</li>
+	</ul>
+	</section>
+
+	<section title="Objects" id="objects">
+	<ul>
+		<li>Various labels and names related functions are documented here: <link href="rkward://rhelp/rk.get.label"/>.</li>
+		<li>Sync: these functions are useful in automated testing: <link href="rkward://rhelp/rk.sync"/></li>
+	</ul>
+	</section>
+	
+	<related>
+<ul>
+	<li>For more functions of interest see: <link href="rkward://page/rkward_public_functions"/></li>
+	<li>Do read the the online <link href="http://sourceforge.net/apps/mediawiki/rkward/index.php?title=Developer_Information">wiki</link> as well.</li>
+</ul>
+	</related>
+
+TODO: Make this more developer centric with as many links as possible (doc writing, plugin pages, etc)
+</document>
