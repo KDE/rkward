@@ -12,10 +12,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
-"Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
-"group_id=50231&atid=459007\n"
+"Report-Msgid-Bugs-To: http://sourceforge."
+"net/tracker/?group_id=50231&atid=459007\n"
 "POT-Creation-Date: 2010-09-25 15:14+0200\n"
-"PO-Revision-Date: 2010-09-24 00:09+0200\n"
+"PO-Revision-Date: 2010-09-28 02:09+0200\n"
 "Last-Translator: Stefan Rödiger <stefan_roediger@gmx.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -247,13 +247,12 @@ msgid "Class"
 msgstr "Klasse"
 
 #: core/rkrownames.cpp:40
-#, fuzzy
 msgid "row names"
-msgstr "stefan_roediger@gmx.de, jvajen@googlemail.com"
+msgstr "Zeilennamen"
 
 #: core/rkrownames.cpp:105
 msgid "new.row"
-msgstr ""
+msgstr "neue.zeile"
 
 #: core/robject.cpp:118
 msgid "Full location:"
@@ -418,7 +417,6 @@ msgid "Copies the selected section to the clipboard"
 msgstr "Kopiert den gewählten Abschnitt in die Zwischenablage"
 
 #: dataeditor/twintable.cpp:107
-#, fuzzy
 msgid "Pastes the clipboard contents to current position"
 msgstr "Fügt den Inhalt der Zwischenablage in die aktuelle Position ein"
 
@@ -427,7 +425,6 @@ msgid "Paste inside table"
 msgstr "Füge in Tabelle ein"
 
 #: dataeditor/twintable.cpp:112
-#, fuzzy
 msgid ""
 "Pastes the clipboard contents to current position, but not beyond the "
 "table's boundaries"
@@ -440,7 +437,6 @@ msgid "Paste inside selection"
 msgstr "Füge in Auswahl ein"
 
 #: dataeditor/twintable.cpp:117
-#, fuzzy
 msgid ""
 "Pastes the clipboard contents to current position, but not beyond the "
 "boundaries of the current selection"
@@ -455,10 +451,15 @@ msgid ""
 "know what you are doing, but you are strongly advised to fix the table, and/"
 "or backup your data, first."
 msgstr ""
+"Der Editor '%1' enthält folgende doppelte Spaltennamen. Das Editieren dieser "
+"Tabelle ist möglicherweise nicht sicher und wurde deaktiviert. Sie können es "
+"reaktivieren, wenn Sie sich wirklich sicher sind was Sie tun. Dennoch wird "
+"dringlichst geraten die Tabelle zu überarbeiten und/oder ein Sicherung der "
+"Daten zu erstellen."
 
 #: dataeditor/twintable.cpp:182
 msgid "Duplicate columns detected"
-msgstr ""
+msgstr "Doppelte Spaltennamen gefunden"
 
 #: dataeditor/twintable.cpp:191
 msgid " [read-only]"
@@ -593,7 +594,7 @@ msgstr "Online Version"
 
 #: dialogs/rkloadlibsdialog.cpp:534 dialogs/rkloadlibsdialog.cpp:694
 msgid "Fetch list"
-msgstr "Hole Liste"
+msgstr "Rufe Liste ab"
 
 #: dialogs/rkloadlibsdialog.cpp:536
 msgid "Update Selected"
@@ -617,7 +618,7 @@ msgstr ""
 
 #: dialogs/rkloadlibsdialog.cpp:652 dialogs/rkloadlibsdialog.cpp:791
 msgid "Fetching list"
-msgstr "Lade Liste"
+msgstr "Abrufen der Liste"
 
 #: dialogs/rkloadlibsdialog.cpp:679
 msgid ""
@@ -652,17 +653,17 @@ msgid ""
 "add additional repositories via the \"Configure Repositories\"-button."
 msgstr ""
 "Die Pakete die von Backend angefordert wurden (\"%1\") sind nicht in den "
-"Paket Repositories. Möglicherweise ist der Paketname falsch. Oder "
-"möglicherweise benötigen sie zusätzliche Repositories mittels dem "
-"\"Konfiguriere Repositories\"-Button."
+"Paket-Repositories. Möglicherweise ist der Paketname falsch geschrieben, "
+"oder Sie müssen zusätzliche Repositories mittels dem \"Konfiguriere "
+"Repositories\"-Button angeben."
 
 #: dialogs/rkloadlibsdialog.cpp:802
 msgid "Package not available"
-msgstr "Keine Pakete verfügbar"
+msgstr "Pakete nicht verfügbar"
 
 #: dialogs/rkloadlibsdialog.cpp:831
 msgid "Install packages to:"
-msgstr "Installierte Pakete zu:"
+msgstr "Installierte Pakete in:"
 
 #: dialogs/rkloadlibsdialog.cpp:836
 msgid "Include dependencies"
@@ -680,12 +681,12 @@ msgid ""
 "\"Configure Repositories\"-button to set up a writable directory to install "
 "package to).\n"
 msgstr ""
-"Mit den gegenwärtigen Nutzerrechten haben keine Schreibrechte um in das "
-"Verzeichnis (%1) zu installieren. Sie können einen anderen Speicherort für "
-"Ihre Bibliotheken finden in den Sie installieren können (wenn keiner "
-"beschreibbar ist, dann möchten Sie möglicherweise den \"Konfiguriere "
-"Repositories\"-Button verwenden um ein beschreibbares Verzeichnis für die "
-"Installation Ihrer Pakete zu wählen).\n"
+"Mit den gegenwärtigen Nutzerrechten haben Sie keine Schreibrechte, um in das "
+"Verzeichnis (%1) zu installieren. Sie können einen anderen "
+"Bibliotheksspeicherort wählen, wohin die Installation erfolgen soll (wenn "
+"keiner beschreibbar ist, dann können Sie den \"Konfiguriere "
+"Repositories\"-Knopf verwenden um ein beschreibbares Verzeichnis für die "
+"Installation der Pakete zu erstellen).\n"
 
 #: dialogs/rkloadlibsdialog.cpp:873
 msgid ""
@@ -964,17 +965,15 @@ msgstr "Abbrechen"
 
 #: misc/rksaveobjectchooser.cpp:53
 msgid "Change"
-msgstr ""
+msgstr "Ändere"
 
 #: misc/rksaveobjectchooser.cpp:92
-#, fuzzy
 msgid "Parent object: %1"
-msgstr "Benenne Objekt um"
+msgstr "Eltern- (Parent) Objekt: %1"
 
 #: misc/rksaveobjectchooser.cpp:103
-#, fuzzy
 msgid "Select parent object"
-msgstr "Objekte wiederherstellen?"
+msgstr "Wähle Eltern- (Parent) Objekt"
 
 #: misc/rksaveobjectchooser.cpp:178
 msgid "Overwrite? (The given object name already exists)"
@@ -1415,7 +1414,6 @@ msgstr ""
 "net/rkward/compiling</a>.</p>\n"
 
 #: rbackend/rinterface.cpp:224
-#, fuzzy
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
 "this is due to an incorrect version of the 'rkward' R-library or failure to "
@@ -1424,12 +1422,10 @@ msgid ""
 "see <a href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/rkward/"
 "compiling</a>.</p></p>\n"
 msgstr ""
-"<p>Der RKWard-Editor konnte entweder die Ressourcendateien nicht finden, "
-"oder nur eine alte Version von diesen Dateien. Die wahrscheinlichste Ursache "
-"dafür ist, dass die letzte Installation die Dateien nicht am richtigen "
-"Speicherort abgelegt hat. Das kann zu einer Reihe von Problemen führen, die "
-"vom fehlen einzelner Funktionen bis zum Komplettausfall reichen.</"
-"p><p><b>Sie sollten RKWard nun beenden und die Installation reparieren.</"
+"<p>\t-Ein Problem bei der Kommunikation mit R ist aufgetreten. Dies liegt "
+"möglicherweise an einer inkorrekten Version der 'rkward' R-Bibliothek oder "
+"einem anderen Fehler. Dies deutet auf eine fehlerhafte Installation hin."
+"</p><p><b>Sie sollten RKWard nun beenden und die Installation reparieren.</"
 "b>Hilfe finden Sie unter <a href=\"http://p.sf.net/rkward/compiling\">http://"
 "p.sf.net/rkward/compiling</a>.</p>"
 
@@ -1586,15 +1582,14 @@ msgid "Broken installation"
 msgstr "Fehlerhafte Installation"
 
 #: rkward.cpp:195
-#, fuzzy
 msgid ""
 "<p>Please note that RKWard is not well tested on Windows, yet.</p><p>There "
 "are all sorts of known issues, and issues yet to be reported. If you'd like "
 "to help: <a href=\"http://p.sf.net/rkward/contact\">http://p.sf.net/rkward/"
 "contact</a>.</p>"
 msgstr ""
-"<p>Hinweis. RKWard wurde unter Windows noch nicht ausführlich getestet.</"
-"p><p>Es gibt eine Reihe bekannter und unbekannter Probleme. Wenn Sie helfen "
+"<p>Hinweis. RKWard wurde unter Windows noch nicht ausführlich getestet.</p><"
+"p>Es gibt eine Reihe bekannter und unbekannter Probleme. Wenn Sie helfen "
 "möchten: <a href=\"http://p.sf.net/rkward/contact\">http://p.sf.net/rkward/"
 "contact</a>.</p>"
 
@@ -1914,15 +1909,19 @@ msgid ""
 "Line: %2\n"
 "Message: %3."
 msgstr ""
+"Ein Fehler trat bei bei der Evaluierung des Skriptkodes auf.\n"
+"Datei: %1\n"
+"Zeile: %2\n"
+"Nachricht: %3."
 
 #: scriptbackends/rkcomponentscripting.cpp:88
-#, fuzzy
 msgid ""
 "error ('The file \"%1\" (needed by \"%2\") could not be found. Please check "
 "your installation.');\n"
 msgstr ""
-"Die Datei \"%1\" (benötigt von \"%2\") konnte nicht gefunden werden. Bitte "
-"überprüfen Sie ihre Installation."
+"Fehler ('Die Datei \"%1\" (benötigt von \"%2\") konnte nicht gefunden werden."
+" Bitte "
+"überprüfen Sie ihre Installation.');\n"
 
 #: scriptbackends/scriptbackend.cpp:91
 msgid "## Prepare\n"
@@ -1959,20 +1958,20 @@ msgstr ""
 
 #: settings/rksettingsmodulecommandeditor.cpp:81
 msgid "Enable function argument hinting"
-msgstr ""
+msgstr "Aktive Funktionsargument Vorschläge"
 
 #: settings/rksettingsmodulecommandeditor.cpp:88
-#, fuzzy
 msgid "Autosaves"
-msgstr "Automatisch schließen"
+msgstr "Automatische Speicherungen"
 
 #: settings/rksettingsmodulecommandeditor.cpp:94
 msgid "Autosave interval (minutes)"
-msgstr ""
+msgstr "Intervall für automatisches Speichern (Minuten)"
 
 #: settings/rksettingsmodulecommandeditor.cpp:109
 msgid "Keep autosave file after manual save"
 msgstr ""
+"Behalte automatisch gespeicherte Dateien (Backups) nach manueller Speicherung"
 
 #: settings/rksettingsmodulecommandeditor.cpp:133
 msgid "Script editor"
@@ -2063,9 +2062,8 @@ msgstr ""
 "Neustart von RKWard wirksam"
 
 #: settings/rksettingsmodulegeneral.cpp:58
-#, fuzzy
 msgid "Directory where rkward may store files (*)"
-msgstr "Verzeichnis in dem die Log-Dateien aufbewahrt werden sollten (*)"
+msgstr "Verzeichnis in dem RKWard Dateien aufbewahren soll (*)"
 
 #: settings/rksettingsmodulegeneral.cpp:64
 msgid "Startup Action (*)"
@@ -2142,35 +2140,31 @@ msgstr "Allgemein"
 
 #: settings/rksettingsmodulegraphics.cpp:47
 msgid "Default window size"
-msgstr ""
+msgstr "Standardfenstergröße"
 
 #: settings/rksettingsmodulegraphics.cpp:49
-#, fuzzy
 msgid "Default width (inches):"
-msgstr "Breite der Ausgabe (Zeichen)"
+msgstr "Standardbreite (Zoll (inches))"
 
 #: settings/rksettingsmodulegraphics.cpp:53
-#, fuzzy
 msgid "Default height (inches)"
-msgstr "Standardhöhe vom Code-Display (Pixel)"
+msgstr "Standardhöhe (Zoll (inches))"
 
 #: settings/rksettingsmodulegraphics.cpp:62
 msgid "Screen device history"
-msgstr ""
+msgstr "Bildschirmgeräte-Verlauf"
 
 #: settings/rksettingsmodulegraphics.cpp:69
-#, fuzzy
 msgid "Maximum number of recorded plots:"
-msgstr "Maximale Anzahl von Elementen im Ausdruck angezeigt"
+msgstr "Maximale Anzahl von aufgezeichneten Plots"
 
 #: settings/rksettingsmodulegraphics.cpp:73
 msgid "Maximum size of a single recorded plot (in KB):"
-msgstr ""
+msgstr "Maximale Größe von einzelnen aufgezeichneten Plots (in KB):"
 
 #: settings/rksettingsmodulegraphics.cpp:94
-#, fuzzy
 msgid "Onscreen Graphics"
-msgstr "Graphiken"
+msgstr "Bildschirmgraphiken"
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:46
 msgid "Which objects should be shown by default?"
@@ -2564,7 +2558,6 @@ msgid "Resume execution"
 msgstr "Ausführung fortsetzen"
 
 #: windows/rkcommandeditorwindow.cpp:106
-#, fuzzy
 msgid "Script Editor"
 msgstr "Skripteditor"
 
@@ -2606,6 +2599,8 @@ msgid ""
 "An error occurred during while trying to create an autosave of the script "
 "file '%1':"
 msgstr ""
+"Während der automatischen Skript-Speicherung trat ein Fehler beim Skript "
+"'%1':"
 
 #: windows/rkcommandeditorwindow.cpp:474
 msgid "Unnamed"
@@ -2666,14 +2661,12 @@ msgid "Package:"
 msgstr "Paket:"
 
 #: windows/rkhelpsearchwindow.cpp:103
-#, fuzzy
 msgid "All installed packages"
-msgstr "Installierte Pakete"
+msgstr "Alle installierten Pakete"
 
 #: windows/rkhelpsearchwindow.cpp:104
-#, fuzzy
 msgid "All loaded packages"
-msgstr "Geladene Pakete"
+msgstr "Alle geladenen Pakete"
 
 #: windows/rkhelpsearchwindow.cpp:113
 msgid "Case sensitive"
@@ -2738,9 +2731,8 @@ msgid "Export page as HTML"
 msgstr "Exportiere Seite als HTML"
 
 #: windows/rkhtmlwindow.cpp:373
-#, fuzzy
 msgid "Output Window"
-msgstr "Auswahlmöglichkeiten des Ausgabefensters"
+msgstr "Ausgabefenster"
 
 #: windows/rkhtmlwindow.cpp:381
 msgid "Print page"
@@ -2829,14 +2821,12 @@ msgid "BROKEN REFERENCE"
 msgstr "DEFEKTE REFERENZ"
 
 #: windows/rkmdiwindow.cpp:276
-#, fuzzy
 msgid "Help on %1"
-msgstr "Hilfe zu R"
+msgstr "Hilfe zu %1"
 
 #: windows/rkmdiwindow.cpp:280
-#, fuzzy
 msgid "Configure %1"
-msgstr "Konfigurieren"
+msgstr "Konfiguriere %1"
 
 #: windows/rktoolwindowbar.cpp:272
 msgid "Attachment"
@@ -3009,7 +2999,7 @@ msgstr "Ein Fehler ist aufgetreten"
 
 #: windows/rkwindowcatcher.cpp:149
 msgid "Graphics Device Window"
-msgstr ""
+msgstr "Grafikgerätfenster"
 
 #: windows/rkwindowcatcher.cpp:225
 msgid ""
@@ -3017,20 +3007,21 @@ msgid ""
 "happens regularly, you may want to adjust the default graphics window size "
 "in Settings->Configure RKWard->Onscreen Graphics."
 msgstr ""
+"Das gegenwärtige Fenster scheint zu groß zu sein, um auf den Bildschirm zu "
+"passen.  Falls dies häufig passiert, dann können Sie die Standardgröße der "
+"Fenster unter Einstellungen->Konfiguriere RKWard->Bildschirmgrafik anpassen."
 
 #: windows/rkwindowcatcher.cpp:225
-#, fuzzy
 msgid "Large window"
-msgstr "Fenster anzeigen/heben"
+msgstr "Großes Fenster"
 
 #: windows/rkwindowcatcher.cpp:249
-#, fuzzy
 msgid "Shutting down device number %1"
-msgstr "Grafikfenster %1 aktivieren"
+msgstr "Schließe Gerätenummer %1"
 
 #: windows/rkwindowcatcher.cpp:250
 msgid "Closing device (saving history)"
-msgstr ""
+msgstr "Schließe Gerät (speichere Verlauf)"
 
 #: windows/rkwindowcatcher.cpp:322
 msgid "Specify fixed size"
@@ -3075,65 +3066,59 @@ msgid "Duplicate graphics device number %1"
 msgstr "Grafikfenster %1 duplizieren"
 
 #: windows/rkwindowcatcher.cpp:403
-#, fuzzy
 msgid "Load next plot in device number %1"
-msgstr "Inhalte von Grafikfenster %1 drucken"
+msgstr "Lade nächsten Plot in Gerätenummer %1"
 
 #: windows/rkwindowcatcher.cpp:404 windows/rkwindowcatcher.cpp:412
 #: windows/rkwindowcatcher.cpp:420 windows/rkwindowcatcher.cpp:428
 #: windows/rkwindowcatcher.cpp:436
-#, fuzzy
 msgid "Loading plot from history"
-msgstr "Lade/Speichere Befehlsverlauf"
+msgstr "Lade Plot vom Verlauf"
 
 #: windows/rkwindowcatcher.cpp:411
-#, fuzzy
 msgid "Load previous plot in device number %1"
-msgstr "Grafikfenster %1 duplizieren"
+msgstr "Lade vorherigen Plot in Gerätenummer %1"
 
 #: windows/rkwindowcatcher.cpp:419
-#, fuzzy
 msgid "Load first plot in device number %1"
-msgstr "Grafikfenster %1 aktivieren"
+msgstr "Lade ersten Plot in Gerätenummer %1"
 
 #: windows/rkwindowcatcher.cpp:427
-#, fuzzy
 msgid "Load last plot in device number %1"
-msgstr "Grafikfenster %1 duplizieren"
+msgstr "Lade letzten Plot in Gerätenummer %1"
 
 #: windows/rkwindowcatcher.cpp:435
-#, fuzzy
 msgid "Load plot %1 in device number %2"
-msgstr "Grafikfenster %1 duplizieren"
+msgstr "Lade Plot %1 in Gerätenummer %2"
 
 #: windows/rkwindowcatcher.cpp:443
-#, fuzzy
 msgid "Append this plot to history (device number %1)"
-msgstr "Inhalte von Grafikfenster %1 drucken"
+msgstr "Hänge diesen Plot dem Verlauf an (Gerätenummer %1)"
 
 #: windows/rkwindowcatcher.cpp:449
-#, fuzzy
 msgid "Remove current plot from history (device number %1)"
-msgstr "Inhalte von Grafikfenster %1 drucken"
+msgstr "Entferne aktullen Plot vom Verlauf (Gerätenummer %1)"
 
 #: windows/rkwindowcatcher.cpp:455
 msgid ""
 "This will clear the plot history for all device windows, not just this one. "
 "If this is not your intent, press cancel, below."
 msgstr ""
+"Dies wird den Plot-Verlauf nicht nur für dieses, sondern für alle "
+"Gerätefenster löschen. "
+"Wenn Sie dies nicht beabsichtigen bitte wählen Sie nun Abbrechen."
 
 #: windows/rkwindowcatcher.cpp:457
 msgid "Clear plot history"
-msgstr ""
+msgstr "Lösche Plot-Verlauf"
 
 #: windows/rkwindowcatcher.cpp:463
-#, fuzzy
 msgid "Plot properties (device number %1)"
-msgstr "Grafikfenster %1 duplizieren"
+msgstr "Ploteigenschaften (Grafikfenster %1)"
 
 #: windows/rkwindowcatcher.cpp:477
 msgid "<Unsaved plot>"
-msgstr ""
+msgstr "<Nicht gespeicherter Plot>"
 
 #: windows/rkwindowcatcher.cpp:528
 msgid "Draw area follows size of window"
@@ -3156,43 +3141,40 @@ msgid "Set specified fixed size..."
 msgstr "Feste Größe einstellen..."
 
 #: windows/rkwindowcatcher.cpp:543
-#, fuzzy
 msgid "Previous plot"
-msgstr "Vorheriges Fenster"
+msgstr "Vorheriger Plot"
 
 #: windows/rkwindowcatcher.cpp:547
 msgid "First plot"
-msgstr ""
+msgstr "Erster Plot"
 
 #: windows/rkwindowcatcher.cpp:551
-#, fuzzy
 msgid "Next plot"
-msgstr "Nächstes >"
+msgstr "Nächster Plot"
 
 #: windows/rkwindowcatcher.cpp:555
 msgid "Last plot"
-msgstr ""
+msgstr "Letzter Plot"
 
 #: windows/rkwindowcatcher.cpp:558
 msgid "Go to plot"
-msgstr ""
+msgstr "Gehe zu Plot"
 
 #: windows/rkwindowcatcher.cpp:565
 msgid "Append this plot"
-msgstr ""
+msgstr "Diesen Plot anhängen"
 
 #: windows/rkwindowcatcher.cpp:569
-#, fuzzy
 msgid "Remove this plot"
-msgstr "Objekt entfernen?"
+msgstr "Entferne diesen Plot"
 
 #: windows/rkwindowcatcher.cpp:575
 msgid "Clear history"
-msgstr ""
+msgstr "Lösche Verlauf"
 
 #: windows/rkwindowcatcher.cpp:580
 msgid "Plot properties"
-msgstr ""
+msgstr "Plot-Eigenschaften"
 
 #: windows/rkwindowcatcher.cpp:584
 msgid "Make active"
@@ -3286,9 +3268,8 @@ msgid "Window Right"
 msgstr "Fenster Rechts"
 
 #: windows/robjectbrowser.cpp:65
-#, fuzzy
 msgid "R workspace browser"
-msgstr "Zeige/Verberge Workspace-Browser"
+msgstr "R-Workspace-Browser"
 
 #: windows/robjectbrowser.cpp:68
 msgid "Objects in the R workspace"
@@ -3501,7 +3482,7 @@ msgstr "&Gerät"
 #. i18n: ectx: Menu (history)
 #: rc.cpp:63 rc.cpp:84
 msgid "&History"
-msgstr ""
+msgstr "&Verlauf"
 
 #. i18n: file: windows/detachedwindowcontainer.rc:38
 #. i18n: ectx: Menu (window)
