@@ -1,8 +1,9 @@
+--- Version 0.5.4 - Oct-04-2010
 - Fixed: Running user commands would crash with R 2.12.0
 - Added full-featured plot history for the onscreen graphics device
 - Fixed: Potential crash when editing data-frame with duplicate column names
-- Added option to specify default onscreen graphics dimensions		TODO: test on windows
-- Fixed: Graphics windows used to assume a minimum size of 640*480 pixels, even if a smaller size was specified			/ TODO: check on Windows!
+- Added option to specify default onscreen graphics dimensions
+- Fixed: Graphics windows used to assume a minimum size of 640*480 pixels, even if a smaller size was specified
 - Added option to disable function argument hinting
 - New functions rk.show.message() and rk.show.question() for user interaction from R code
 - New options for scripting GUI logic in plugins
