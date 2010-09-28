@@ -15,7 +15,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://sourceforge."
 "net/tracker/?group_id=50231&atid=459007\n"
 "POT-Creation-Date: 2010-09-25 15:14+0200\n"
-"PO-Revision-Date: 2010-09-28 02:09+0200\n"
+"PO-Revision-Date: 2010-09-28 03:49+0200\n"
 "Last-Translator: Stefan Rödiger <stefan_roediger@gmx.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -451,11 +451,6 @@ msgid ""
 "know what you are doing, but you are strongly advised to fix the table, and/"
 "or backup your data, first."
 msgstr ""
-"Der Editor '%1' enthält folgende doppelte Spaltennamen. Das Editieren dieser "
-"Tabelle ist möglicherweise nicht sicher und wurde deaktiviert. Sie können es "
-"reaktivieren, wenn Sie sich wirklich sicher sind was Sie tun. Dennoch wird "
-"dringlichst geraten die Tabelle zu überarbeiten und/oder ein Sicherung der "
-"Daten zu erstellen."
 
 #: dataeditor/twintable.cpp:182
 msgid "Duplicate columns detected"
@@ -681,12 +676,12 @@ msgid ""
 "\"Configure Repositories\"-button to set up a writable directory to install "
 "package to).\n"
 msgstr ""
-"Mit den gegenwärtigen Nutzerrechten haben Sie keine Schreibrechte, um in das "
-"Verzeichnis (%1) zu installieren. Sie können einen anderen "
-"Bibliotheksspeicherort wählen, wohin die Installation erfolgen soll (wenn "
-"keiner beschreibbar ist, dann können Sie den \"Konfiguriere "
-"Repositories\"-Knopf verwenden um ein beschreibbares Verzeichnis für die "
-"Installation der Pakete zu erstellen).\n"
+"Mit den gegenwärtigen Nutzerrechten haben keine Schreibrechte um in das "
+"Verzeichnis (%1) zu installieren. Sie können einen anderen Speicherort für "
+"Ihre Bibliotheken finden in den Sie installieren können (wenn keiner "
+"beschreibbar ist, dann möchten Sie möglicherweise den \"Konfiguriere "
+"Repositories\"-Button verwenden um ein beschreibbares Verzeichnis für die "
+"Installation Ihrer Pakete zu wählen).\n"
 
 #: dialogs/rkloadlibsdialog.cpp:873
 msgid ""
@@ -1424,10 +1419,10 @@ msgid ""
 msgstr ""
 "<p>\t-Ein Problem bei der Kommunikation mit R ist aufgetreten. Dies liegt "
 "möglicherweise an einer inkorrekten Version der 'rkward' R-Bibliothek oder "
-"einem anderen Fehler. Dies deutet auf eine fehlerhafte Installation hin."
-"</p><p><b>Sie sollten RKWard nun beenden und die Installation reparieren.</"
+"einem anderen Fehler. Dies deutet auf eine fehlerhafte Installation hin.</p>"
+"\t\t\t<p><b>Sie sollten RKWard nun beenden und die Installation reparieren.</"
 "b>Hilfe finden Sie unter <a href=\"http://p.sf.net/rkward/compiling\">http://"
-"p.sf.net/rkward/compiling</a>.</p>"
+"p.sf.net/rkward/compiling</a>.</p>\n"
 
 #: rbackend/rinterface.cpp:228
 msgid ""
@@ -1971,7 +1966,6 @@ msgstr "Intervall für automatisches Speichern (Minuten)"
 #: settings/rksettingsmodulecommandeditor.cpp:109
 msgid "Keep autosave file after manual save"
 msgstr ""
-"Behalte automatisch gespeicherte Dateien (Backups) nach manueller Speicherung"
 
 #: settings/rksettingsmodulecommandeditor.cpp:133
 msgid "Script editor"
@@ -2599,8 +2593,6 @@ msgid ""
 "An error occurred during while trying to create an autosave of the script "
 "file '%1':"
 msgstr ""
-"Während der automatischen Skript-Speicherung trat ein Fehler beim Skript "
-"'%1':"
 
 #: windows/rkcommandeditorwindow.cpp:474
 msgid "Unnamed"
@@ -2666,7 +2658,7 @@ msgstr "Alle installierten Pakete"
 
 #: windows/rkhelpsearchwindow.cpp:104
 msgid "All loaded packages"
-msgstr "Alle geladenen Pakete"
+msgstr "Geladene Pakete"
 
 #: windows/rkhelpsearchwindow.cpp:113
 msgid "Case sensitive"
@@ -3007,9 +2999,6 @@ msgid ""
 "happens regularly, you may want to adjust the default graphics window size "
 "in Settings->Configure RKWard->Onscreen Graphics."
 msgstr ""
-"Das gegenwärtige Fenster scheint zu groß zu sein, um auf den Bildschirm zu "
-"passen.  Falls dies häufig passiert, dann können Sie die Standardgröße der "
-"Fenster unter Einstellungen->Konfiguriere RKWard->Bildschirmgrafik anpassen."
 
 #: windows/rkwindowcatcher.cpp:225
 msgid "Large window"
@@ -3097,16 +3086,13 @@ msgstr "Hänge diesen Plot dem Verlauf an (Gerätenummer %1)"
 
 #: windows/rkwindowcatcher.cpp:449
 msgid "Remove current plot from history (device number %1)"
-msgstr "Entferne aktullen Plot vom Verlauf (Gerätenummer %1)"
+msgstr "Entferne aktuellen Plot vom Verlauf (Gerätenummer %1)"
 
 #: windows/rkwindowcatcher.cpp:455
 msgid ""
 "This will clear the plot history for all device windows, not just this one. "
 "If this is not your intent, press cancel, below."
 msgstr ""
-"Dies wird den Plot-Verlauf nicht nur für dieses, sondern für alle "
-"Gerätefenster löschen. "
-"Wenn Sie dies nicht beabsichtigen bitte wählen Sie nun Abbrechen."
 
 #: windows/rkwindowcatcher.cpp:457
 msgid "Clear plot history"
