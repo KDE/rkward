@@ -8,10 +8,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: rkward\n"
-"Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
-"group_id=50231&atid=459007\n"
+"Report-Msgid-Bugs-To: http://sourceforge."
+"net/tracker/?group_id=50231&atid=459007\n"
 "POT-Creation-Date: 2010-09-28 08:39+0200\n"
-"PO-Revision-Date: 2010-09-27 22:44+0200\n"
+"PO-Revision-Date: 2010-09-28 08:50+0200\n"
 "Last-Translator: Germán Márquez Mejía\n"
 "Language-Team: Spanish <rkward-devel@lists.sourceforge.net>\n"
 "Language: es\n"
@@ -1389,7 +1389,6 @@ msgstr ""
 "net/rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</p>\n"
 
 #: rbackend/rinterface.cpp:224
-#, fuzzy
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
 "this is due to an incorrect version of the 'rkward' R-library or failure to "
@@ -2562,7 +2561,6 @@ msgid "File not saved"
 msgstr "Archivo no guardado"
 
 #: windows/rkcommandeditorwindow.cpp:444
-#, fuzzy
 msgid ""
 "An error occurred while trying to create an autosave of the script file '%1':"
 msgstr ""
