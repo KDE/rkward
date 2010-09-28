@@ -12,10 +12,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
-"Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
-"group_id=50231&atid=459007\n"
+"Report-Msgid-Bugs-To: http://sourceforge."
+"net/tracker/?group_id=50231&atid=459007\n"
 "POT-Creation-Date: 2010-09-28 08:39+0200\n"
-"PO-Revision-Date: 2010-09-28 03:49+0200\n"
+"PO-Revision-Date: 2010-09-29 01:23+0200\n"
 "Last-Translator: Stefan Rödiger <stefan_roediger@gmx.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -451,6 +451,11 @@ msgid ""
 "know what you are doing, but you are strongly advised to fix the table, and/"
 "or backup your data, first."
 msgstr ""
+"Der Editor '%1' enthält folgende doppelte Spaltennamen. Das Editieren dieser "
+"Tabelle ist möglicherweise nicht sicher und wurde deaktiviert. Sie können es "
+"reaktivieren, wenn Sie sich wirklich sicher sind was Sie tun. Dennoch wird "
+"dringlichst geraten die Tabelle zu überarbeiten und/oder ein Sicherung der "
+"Daten zu erstellen."
 
 #: dataeditor/twintable.cpp:182
 msgid "Duplicate columns detected"
@@ -1409,7 +1414,6 @@ msgstr ""
 "net/rkward/compiling</a>.</p>\n"
 
 #: rbackend/rinterface.cpp:224
-#, fuzzy
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
 "this is due to an incorrect version of the 'rkward' R-library or failure to "
@@ -1966,6 +1970,7 @@ msgstr "Intervall für automatisches Speichern (Minuten)"
 #: settings/rksettingsmodulecommandeditor.cpp:109
 msgid "Keep autosave file after manual save"
 msgstr ""
+"Behalte automatisch gespeicherte Dateien (Backups) nach manueller Speicherung"
 
 #: settings/rksettingsmodulecommandeditor.cpp:133
 msgid "Script editor"
@@ -2592,6 +2597,7 @@ msgstr "Datei nicht gespeichert"
 msgid ""
 "An error occurred while trying to create an autosave of the script file '%1':"
 msgstr ""
+"Ein Fehler trat auf bei der automatischen Speicherung  der Skriptdatei '%1':"
 
 #: windows/rkcommandeditorwindow.cpp:474
 msgid "Unnamed"
@@ -2998,6 +3004,9 @@ msgid ""
 "happens regularly, you may want to adjust the default graphics window size "
 "in Settings->Configure RKWard->Onscreen Graphics."
 msgstr ""
+"Das gegenwärtige Fenster scheint zu groß zu sein, um auf den Bildschirm zu "
+"passen.  Falls dies häufig passiert, dann können Sie die Standardgröße der "
+"Fenster unter Einstellungen->Konfiguriere RKWard->Bildschirmgrafik anpassen."
 
 #: windows/rkwindowcatcher.cpp:225
 msgid "Large window"
@@ -3092,6 +3101,9 @@ msgid ""
 "This will clear the plot history for all device windows, not just this one. "
 "If this is not your intent, press cancel, below."
 msgstr ""
+"Dies wird den Plot-Verlauf nicht nur für dieses, sondern für alle  "
+"Gerätefenster löschen. Wenn Sie dies nicht beabsichtigen "
+"wählen Sie nun bitte Abbrechen."
 
 #: windows/rkwindowcatcher.cpp:457
 msgid "Clear plot history"
@@ -3486,12 +3498,12 @@ msgstr "&Werkzeuge Bewegen"
 #: rc.cpp:136
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "stefan_roediger@gmx.de, jvajen@googlemail.com"
+msgstr "Stefan Rödiger, Jannis Vajen"
 
 #: rc.cpp:137
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "Stefan Rödiger, Jannis Vajen"
+msgstr "stefan_roediger@gmx.de, jvajen@googlemail.com"
 
 #~ msgid "Cutting selection..."
 #~ msgstr "Auswahl ausschneiden..."
