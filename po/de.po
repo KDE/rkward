@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: http://sourceforge."
 "net/tracker/?group_id=50231&atid=459007\n"
-"POT-Creation-Date: 2010-09-28 08:39+0200\n"
-"PO-Revision-Date: 2010-09-29 01:23+0200\n"
+"POT-Creation-Date: 2010-09-29 10:23+0200\n"
+"PO-Revision-Date: 2010-09-29 10:38+0200\n"
 "Last-Translator: Stefan Rödiger <stefan_roediger@gmx.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -36,7 +36,7 @@ msgstr ""
 
 #: agents/rkeditobjectagent.cpp:56
 msgid "Cannot edit '%1'"
-msgstr "Kann Objekt '%1' nicht editieren"
+msgstr "Kann '%1' nicht editieren"
 
 #: agents/rkloadagent.cpp:38
 msgid "Loading Workspace ..."
@@ -59,8 +59,9 @@ msgid ""
 "Waiting for remaining R commands to finish. To quit immediately, press "
 "Cancel (WARNING: This may result in loss of data)"
 msgstr ""
-"Bitte warten bis noch laufende R-Kommandos beendet sind. Um sofort zu "
-"beenden bitte Abbrechen wählen (WARNUNG: Das könnte zu Datenverlust führen)"
+"Bitte warten bis laufende R-Kommandos beendet sind. "
+"Um sofort zu beenden bitte Abbrechen wählen "
+"(WARNUNG: Das könnte zu Datenverlust führen)"
 
 #: agents/rkquitagent.cpp:41
 msgid "Waiting for R to finish"
@@ -75,7 +76,7 @@ msgstr ""
 
 #: agents/rksaveagent.cpp:75
 msgid "Saving to file '%1' failed. What do you want to do?"
-msgstr "Speichern als Datei '%1' gescheitert. Was möchten Sie tun?"
+msgstr "Speichern als Datei '%1' ist gescheitert. Was möchten Sie tun?"
 
 #: agents/rksaveagent.cpp:75
 msgid "Save failed"
@@ -380,7 +381,7 @@ msgstr "Level / Label-Werte für '%1'"
 #: windows/robjectbrowser.cpp:237
 msgid "The name you specified was already in use or not valid. Renamed to %1"
 msgstr ""
-"Der Name den Sie angegeben haben wird bereits verwendet oder ist nicht "
+"Der Name den Sie angegeben haben wird bereits verwendet, oder ist nicht "
 "zulässig. Umbenannt zu %1"
 
 #: dataeditor/rkeditordataframe.cpp:63 windows/robjectbrowser.cpp:191
@@ -410,15 +411,15 @@ msgstr "Level"
 
 #: dataeditor/twintable.cpp:102
 msgid "Cuts the selected section and puts it to the clipboard"
-msgstr "Schneide die Auswahl aus und lege sie in der Zwischenablage ab"
+msgstr "Auswahl ausschneiden und in Zwischenablage ablegen"
 
 #: dataeditor/twintable.cpp:104
 msgid "Copies the selected section to the clipboard"
-msgstr "Kopiert den gewählten Abschnitt in die Zwischenablage"
+msgstr "Kopiere gewählten Abschnitt in die Zwischenablage"
 
 #: dataeditor/twintable.cpp:107
 msgid "Pastes the clipboard contents to current position"
-msgstr "Fügt den Inhalt der Zwischenablage in die aktuelle Position ein"
+msgstr "Füge Inhalt der Zwischenablage in die aktuelle Position ein"
 
 #: dataeditor/twintable.cpp:110
 msgid "Paste inside table"
@@ -707,7 +708,7 @@ msgstr "Versuche dennoch Installation"
 
 #: dialogs/rkloadlibsdialog.cpp:878
 msgid ""
-"If you are the adminitstrator of this machine, you can try to install the "
+"If you are the administrator of this machine, you can try to install the "
 "packages as root (you'll be prompted for the root password)."
 msgstr ""
 "Wenn Sie der Administrator dieses Computers sind, dann können Sie versuchen "
@@ -3102,8 +3103,8 @@ msgid ""
 "If this is not your intent, press cancel, below."
 msgstr ""
 "Dies wird den Plot-Verlauf nicht nur für dieses, sondern für alle  "
-"Gerätefenster löschen. Wenn Sie dies nicht beabsichtigen "
-"wählen Sie nun bitte Abbrechen."
+"Gerätefenster löschen. Wenn Sie dies nicht beabsichtigen wählen Sie nun "
+"bitte Abbrechen."
 
 #: windows/rkwindowcatcher.cpp:457
 msgid "Clear plot history"
@@ -3238,7 +3239,7 @@ msgstr ""
 
 #: windows/rkworkplace.cpp:348
 msgid "About to edit very large object"
-msgstr "Sie beabsichtigen ein sehr großes Objekt zu ändern"
+msgstr "Sie beabsichtigen ein sehr großes Objekt zu bearbeiten"
 
 #: windows/rkworkplace.cpp:512
 msgid "Save Workplace layout"
@@ -3326,7 +3327,7 @@ msgstr "Name wird bereits benutzt"
 
 #: windows/robjectbrowser.cpp:233
 msgid "Rename object"
-msgstr "Benenne Objekt um"
+msgstr "Objekt umbenennen"
 
 #: windows/robjectbrowser.cpp:233
 msgid "Enter the new name"
@@ -3344,166 +3345,60 @@ msgstr "Zeige alle Umgebungen"
 msgid "Show Hidden Objects"
 msgstr "Zeige versteckte Objekte"
 
-#. i18n: file: dataeditor/rkeditordataframepart.rc:4
-#. i18n: ectx: Menu (edit)
-#. i18n: file: rkconsolepart.rc:9
-#. i18n: ectx: Menu (edit)
-#. i18n: file: rkwardui.rc:35
-#. i18n: ectx: Menu (edit)
-#. i18n: file: windows/detachedwindowcontainer.rc:11
-#. i18n: ectx: Menu (edit)
-#. i18n: file: windows/rkcommandeditorwindowpart.rc:4
-#. i18n: ectx: Menu (edit)
-#. i18n: file: windows/rkcommandlogpart.rc:4
-#. i18n: ectx: Menu (edit)
-#. i18n: file: windows/rkhelpwindow.rc:7
-#. i18n: ectx: Menu (edit)
-#. i18n: file: windows/rkoutputwindow.rc:7
-#. i18n: ectx: Menu (edit)
-#: rc.cpp:3 rc.cpp:9 rc.cpp:30 rc.cpp:57 rc.cpp:90 rc.cpp:105 rc.cpp:114
-#: rc.cpp:120
-msgid "&Edit"
-msgstr "&Editieren"
-
-#. i18n: file: rkconsolepart.rc:4
-#. i18n: ectx: Menu (file)
-#. i18n: file: rkwardui.rc:7
-#. i18n: ectx: Menu (file)
-#. i18n: file: windows/detachedwindowcontainer.rc:5
-#. i18n: ectx: Menu (file)
-#. i18n: file: windows/rkhelpwindow.rc:4
-#. i18n: ectx: Menu (file)
-#. i18n: file: windows/rkoutputwindow.rc:4
-#. i18n: ectx: Menu (file)
-#: rc.cpp:6 rc.cpp:18 rc.cpp:51 rc.cpp:111 rc.cpp:117
-msgid "&File"
-msgstr "&Datei"
-
-#. i18n: file: rkconsolepart.rc:27
-#. i18n: ectx: Menu (view)
-#. i18n: file: rkwardui.rc:49
-#. i18n: ectx: Menu (view)
-#. i18n: file: windows/detachedwindowcontainer.rc:24
-#. i18n: ectx: Menu (view)
-#. i18n: file: windows/rkcatchedx11windowpart.rc:29
-#. i18n: ectx: Menu (view)
-#. i18n: file: windows/rkoutputwindow.rc:12
-#. i18n: ectx: Menu (view)
-#: rc.cpp:12 rc.cpp:33 rc.cpp:60 rc.cpp:87 rc.cpp:123
-msgid "&View"
-msgstr "&Ansicht"
-
-#. i18n: file: rkconsolepart.rc:32
-#. i18n: ectx: Menu (run)
-#. i18n: file: rkwardui.rc:52
-#. i18n: ectx: Menu (run)
-#. i18n: file: windows/detachedwindowcontainer.rc:30
-#. i18n: ectx: Menu (run)
-#. i18n: file: windows/rkcommandeditorwindowpart.rc:11
-#. i18n: ectx: Menu (run)
-#. i18n: file: windows/rkcommandeditorwindowpart.rc:31
-#. i18n: ectx: Menu (run)
-#: rc.cpp:15 rc.cpp:36 rc.cpp:66 rc.cpp:96 rc.cpp:102
-msgid "&Run"
-msgstr "&Ausführen"
-
-#. i18n: file: rkwardui.rc:8
-#. i18n: ectx: Menu (new_data)
-#: rc.cpp:21
-msgid "&New"
-msgstr "&Neu"
-
-#. i18n: file: rkwardui.rc:15
-#. i18n: ectx: Menu (import)
-#: rc.cpp:24
-msgid "&Import"
-msgstr "&Import"
-
-#. i18n: file: rkwardui.rc:25
-#. i18n: ectx: Menu (workspace)
-#: rc.cpp:27
-msgid "&Workspace"
-msgstr "&Workspace"
-
-#. i18n: file: rkwardui.rc:61
-#. i18n: ectx: Menu (window)
-#: rc.cpp:39
-msgid "&Windows"
-msgstr "&Fenster"
-
-#. i18n: file: rkwardui.rc:67
-#. i18n: ectx: Menu (window_activate)
-#. i18n: file: windows/detachedwindowcontainer.rc:42
-#. i18n: ectx: Menu (window_activate)
-#. i18n: file: windows/rktoplevelwindowgui.rc:9
-#. i18n: ectx: Menu (window_activate)
-#: rc.cpp:42 rc.cpp:72 rc.cpp:129
-msgid "&Activate"
-msgstr "&Aktiviere"
-
-#. i18n: file: rkwardui.rc:80
-#. i18n: ectx: Menu (settings)
-#. i18n: file: windows/detachedwindowcontainer.rc:46
-#. i18n: ectx: Menu (settings)
-#. i18n: file: windows/rkcommandeditorwindowpart.rc:16
-#. i18n: ectx: Menu (settings)
-#. i18n: file: windows/rkcommandlogpart.rc:9
-#. i18n: ectx: Menu (settings)
-#. i18n: file: windows/rktoplevelwindowgui.rc:21
-#. i18n: ectx: Menu (settings)
-#: rc.cpp:45 rc.cpp:75 rc.cpp:99 rc.cpp:108 rc.cpp:132
-msgid "&Settings"
-msgstr "&Einstellungen"
-
-#. i18n: file: rkwardui.rc:85
-#. i18n: ectx: Menu (help)
-#. i18n: file: windows/detachedwindowcontainer.rc:49
-#. i18n: ectx: Menu (help)
-#. i18n: file: windows/rktoplevelwindowgui.rc:25
-#. i18n: ectx: Menu (help)
-#: rc.cpp:48 rc.cpp:78 rc.cpp:135
-msgid "&Help"
-msgstr "&Hilfe"
-
-#. i18n: file: windows/detachedwindowcontainer.rc:8
-#. i18n: ectx: Menu (device)
-#. i18n: file: windows/rkcatchedx11windowpart.rc:4
-#. i18n: ectx: Menu (device)
-#: rc.cpp:54 rc.cpp:81
-msgid "&Device"
-msgstr "&Gerät"
-
-#. i18n: file: windows/detachedwindowcontainer.rc:27
-#. i18n: ectx: Menu (history)
-#. i18n: file: windows/rkcatchedx11windowpart.rc:14
-#. i18n: ectx: Menu (history)
-#: rc.cpp:63 rc.cpp:84
-msgid "&History"
-msgstr "&Verlauf"
-
-#. i18n: file: windows/detachedwindowcontainer.rc:38
-#. i18n: ectx: Menu (window)
-#. i18n: file: windows/rktoplevelwindowgui.rc:5
-#. i18n: ectx: Menu (window)
-#: rc.cpp:69 rc.cpp:126
-msgid "&Window"
-msgstr "&Fenster"
-
-#. i18n: file: windows/rkcommandeditorwindowpart.rc:5
-#. i18n: ectx: Menu (tools)
-#: rc.cpp:93
-msgid "&Tools Move"
-msgstr "&Werkzeuge Bewegen"
-
-#: rc.cpp:136
+#: rc.cpp:1
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Stefan Rödiger, Jannis Vajen"
 
-#: rc.cpp:137
+#: rc.cpp:2
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "stefan_roediger@gmx.de, jvajen@googlemail.com"
+
+#~ msgid "&Edit"
+#~ msgstr "&Editieren"
+
+#~ msgid "&File"
+#~ msgstr "&Datei"
+
+#~ msgid "&View"
+#~ msgstr "&Ansicht"
+
+#~ msgid "&Run"
+#~ msgstr "&Ausführen"
+
+#~ msgid "&New"
+#~ msgstr "&Neu"
+
+#~ msgid "&Import"
+#~ msgstr "&Import"
+
+#~ msgid "&Workspace"
+#~ msgstr "&Workspace"
+
+#~ msgid "&Windows"
+#~ msgstr "&Fenster"
+
+#~ msgid "&Activate"
+#~ msgstr "&Aktiviere"
+
+#~ msgid "&Settings"
+#~ msgstr "&Einstellungen"
+
+#~ msgid "&Help"
+#~ msgstr "&Hilfe"
+
+#~ msgid "&Device"
+#~ msgstr "&Gerät"
+
+#~ msgid "&History"
+#~ msgstr "&Verlauf"
+
+#~ msgid "&Window"
+#~ msgstr "&Fenster"
+
+#~ msgid "&Tools Move"
+#~ msgstr "&Werkzeuge Bewegen"
 
 #~ msgid "Cutting selection..."
 #~ msgstr "Auswahl ausschneiden..."
