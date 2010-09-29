@@ -875,7 +875,7 @@ bool PackageInstallParamsWidget::checkWritable (bool *as_root) {
 		int res = KMessageBox::warningContinueCancel (this, message, mcaption, KGuiItem (i18n ("Attempt installation, anyway")));
 		if (res == KMessageBox::Continue) return true;
 #else
-		message.append (i18n ("If you are the adminitstrator of this machine, you can try to install the packages as root (you'll be prompted for the root password)."));
+		message.append (i18n ("If you are the administrator of this machine, you can try to install the packages as root (you'll be prompted for the root password)."));
 		int res = KMessageBox::warningContinueCancel (this, message, mcaption, KGuiItem (i18n ("Become root")));
 		if (res == KMessageBox::Continue) {
 			*as_root = true;
