@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
 "group_id=50231&atid=459007\n"
-"POT-Creation-Date: 2010-09-29 10:23+0200\n"
+"POT-Creation-Date: 2010-09-29 22:44+0200\n"
 "PO-Revision-Date: 2008-04-13 21:24+0200\n"
 "Last-Translator: Bui Arantsson <bui.foss@googlemail.com>\n"
 "Language-Team: Danish <en@li.org>\n"
@@ -3281,57 +3281,166 @@ msgstr "Vis Alle Omgivelser"
 msgid "Show Hidden Objects"
 msgstr "Vis gemte objekter"
 
-#: rc.cpp:1
+#. i18n: file: dataeditor/rkeditordataframepart.rc:4
+#. i18n: ectx: Menu (edit)
+#. i18n: file: rkconsolepart.rc:9
+#. i18n: ectx: Menu (edit)
+#. i18n: file: rkwardui.rc:35
+#. i18n: ectx: Menu (edit)
+#. i18n: file: windows/detachedwindowcontainer.rc:11
+#. i18n: ectx: Menu (edit)
+#. i18n: file: windows/rkcommandeditorwindowpart.rc:4
+#. i18n: ectx: Menu (edit)
+#. i18n: file: windows/rkcommandlogpart.rc:4
+#. i18n: ectx: Menu (edit)
+#. i18n: file: windows/rkhelpwindow.rc:7
+#. i18n: ectx: Menu (edit)
+#. i18n: file: windows/rkoutputwindow.rc:7
+#. i18n: ectx: Menu (edit)
+#: rc.cpp:3 rc.cpp:9 rc.cpp:30 rc.cpp:57 rc.cpp:90 rc.cpp:105 rc.cpp:114
+#: rc.cpp:120
+msgid "&Edit"
+msgstr "&Redigér"
+
+#. i18n: file: rkconsolepart.rc:4
+#. i18n: ectx: Menu (file)
+#. i18n: file: rkwardui.rc:7
+#. i18n: ectx: Menu (file)
+#. i18n: file: windows/detachedwindowcontainer.rc:5
+#. i18n: ectx: Menu (file)
+#. i18n: file: windows/rkhelpwindow.rc:4
+#. i18n: ectx: Menu (file)
+#. i18n: file: windows/rkoutputwindow.rc:4
+#. i18n: ectx: Menu (file)
+#: rc.cpp:6 rc.cpp:18 rc.cpp:51 rc.cpp:111 rc.cpp:117
+msgid "&File"
+msgstr "&Fil"
+
+#. i18n: file: rkconsolepart.rc:27
+#. i18n: ectx: Menu (view)
+#. i18n: file: rkwardui.rc:49
+#. i18n: ectx: Menu (view)
+#. i18n: file: windows/detachedwindowcontainer.rc:24
+#. i18n: ectx: Menu (view)
+#. i18n: file: windows/rkcatchedx11windowpart.rc:29
+#. i18n: ectx: Menu (view)
+#. i18n: file: windows/rkoutputwindow.rc:12
+#. i18n: ectx: Menu (view)
+#: rc.cpp:12 rc.cpp:33 rc.cpp:60 rc.cpp:87 rc.cpp:123
+msgid "&View"
+msgstr "&Oversigt"
+
+#. i18n: file: rkconsolepart.rc:32
+#. i18n: ectx: Menu (run)
+#. i18n: file: rkwardui.rc:52
+#. i18n: ectx: Menu (run)
+#. i18n: file: windows/detachedwindowcontainer.rc:30
+#. i18n: ectx: Menu (run)
+#. i18n: file: windows/rkcommandeditorwindowpart.rc:11
+#. i18n: ectx: Menu (run)
+#. i18n: file: windows/rkcommandeditorwindowpart.rc:31
+#. i18n: ectx: Menu (run)
+#: rc.cpp:15 rc.cpp:36 rc.cpp:66 rc.cpp:96 rc.cpp:102
+msgid "&Run"
+msgstr "&Kør"
+
+#. i18n: file: rkwardui.rc:8
+#. i18n: ectx: Menu (new_data)
+#: rc.cpp:21
+msgid "&New"
+msgstr "&Ny"
+
+#. i18n: file: rkwardui.rc:15
+#. i18n: ectx: Menu (import)
+#: rc.cpp:24
+msgid "&Import"
+msgstr "&Importér"
+
+#. i18n: file: rkwardui.rc:25
+#. i18n: ectx: Menu (workspace)
+#: rc.cpp:27
+msgid "&Workspace"
+msgstr "&Arbejdsflade"
+
+#. i18n: file: rkwardui.rc:61
+#. i18n: ectx: Menu (window)
+#: rc.cpp:39
+msgid "&Windows"
+msgstr "&Vinduer"
+
+#. i18n: file: rkwardui.rc:67
+#. i18n: ectx: Menu (window_activate)
+#. i18n: file: windows/detachedwindowcontainer.rc:42
+#. i18n: ectx: Menu (window_activate)
+#. i18n: file: windows/rktoplevelwindowgui.rc:9
+#. i18n: ectx: Menu (window_activate)
+#: rc.cpp:42 rc.cpp:72 rc.cpp:129
+msgid "&Activate"
+msgstr "&Aktivér"
+
+#. i18n: file: rkwardui.rc:80
+#. i18n: ectx: Menu (settings)
+#. i18n: file: windows/detachedwindowcontainer.rc:46
+#. i18n: ectx: Menu (settings)
+#. i18n: file: windows/rkcommandeditorwindowpart.rc:16
+#. i18n: ectx: Menu (settings)
+#. i18n: file: windows/rkcommandlogpart.rc:9
+#. i18n: ectx: Menu (settings)
+#. i18n: file: windows/rktoplevelwindowgui.rc:21
+#. i18n: ectx: Menu (settings)
+#: rc.cpp:45 rc.cpp:75 rc.cpp:99 rc.cpp:108 rc.cpp:132
+msgid "&Settings"
+msgstr "&Indstillinger"
+
+#. i18n: file: rkwardui.rc:85
+#. i18n: ectx: Menu (help)
+#. i18n: file: windows/detachedwindowcontainer.rc:49
+#. i18n: ectx: Menu (help)
+#. i18n: file: windows/rktoplevelwindowgui.rc:25
+#. i18n: ectx: Menu (help)
+#: rc.cpp:48 rc.cpp:78 rc.cpp:135
+msgid "&Help"
+msgstr "&Hjælp"
+
+#. i18n: file: windows/detachedwindowcontainer.rc:8
+#. i18n: ectx: Menu (device)
+#. i18n: file: windows/rkcatchedx11windowpart.rc:4
+#. i18n: ectx: Menu (device)
+#: rc.cpp:54 rc.cpp:81
+msgid "&Device"
+msgstr "&Device(vindue)"
+
+#. i18n: file: windows/detachedwindowcontainer.rc:27
+#. i18n: ectx: Menu (history)
+#. i18n: file: windows/rkcatchedx11windowpart.rc:14
+#. i18n: ectx: Menu (history)
+#: rc.cpp:63 rc.cpp:84
+msgid "&History"
+msgstr ""
+
+#. i18n: file: windows/detachedwindowcontainer.rc:38
+#. i18n: ectx: Menu (window)
+#. i18n: file: windows/rktoplevelwindowgui.rc:5
+#. i18n: ectx: Menu (window)
+#: rc.cpp:69 rc.cpp:126
+msgid "&Window"
+msgstr "&Vindue"
+
+#. i18n: file: windows/rkcommandeditorwindowpart.rc:5
+#. i18n: ectx: Menu (tools)
+#: rc.cpp:93
+msgid "&Tools Move"
+msgstr "&Værktøj Flyt"
+
+#: rc.cpp:136
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Dine navne"
 
-#: rc.cpp:2
+#: rc.cpp:137
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "Dine e-mail"
-
-#~ msgid "&Edit"
-#~ msgstr "&Redigér"
-
-#~ msgid "&File"
-#~ msgstr "&Fil"
-
-#~ msgid "&View"
-#~ msgstr "&Oversigt"
-
-#~ msgid "&Run"
-#~ msgstr "&Kør"
-
-#~ msgid "&New"
-#~ msgstr "&Ny"
-
-#~ msgid "&Import"
-#~ msgstr "&Importér"
-
-#~ msgid "&Workspace"
-#~ msgstr "&Arbejdsflade"
-
-#~ msgid "&Windows"
-#~ msgstr "&Vinduer"
-
-#~ msgid "&Activate"
-#~ msgstr "&Aktivér"
-
-#~ msgid "&Settings"
-#~ msgstr "&Indstillinger"
-
-#~ msgid "&Help"
-#~ msgstr "&Hjælp"
-
-#~ msgid "&Device"
-#~ msgstr "&Device(vindue)"
-
-#~ msgid "&Window"
-#~ msgstr "&Vindue"
-
-#~ msgid "&Tools Move"
-#~ msgstr "&Værktøj Flyt"
 
 #~ msgid "Cutting selection..."
 #~ msgstr "Klipper markering..."
