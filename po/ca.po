@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
 "group_id=50231&atid=459007\n"
-"POT-Creation-Date: 2010-09-29 22:44+0200\n"
-"PO-Revision-Date: 2010-04-28 11:15+0200\n"
+"POT-Creation-Date: 2010-09-30 17:02+0200\n"
+"PO-Revision-Date: 2010-09-30 16:07+0200\n"
 "Last-Translator: Pep Roca <pep.roca@gmail.com>\n"
 "Language-Team:  <kde-i18n-ca@kde.org>\n"
 "Language: \n"
@@ -242,13 +242,15 @@ msgstr "Tipus"
 msgid "Class"
 msgstr "Classe"
 
+# ??? p roca: Per revisar
 #: core/rkrownames.cpp:40
+#, fuzzy
 msgid "row names"
-msgstr ""
+msgstr "noms de la fila"
 
 #: core/rkrownames.cpp:105
 msgid "new.row"
-msgstr ""
+msgstr "fila nova"
 
 #: core/robject.cpp:118
 msgid "Full location:"
@@ -473,10 +475,14 @@ msgid ""
 "know what you are doing, but you are strongly advised to fix the table, and/"
 "or backup your data, first."
 msgstr ""
+"L'editor '%1' te les següents columnes duplicades. Editar aquesta taula pot "
+"ser perillós i s'ha deshabilitat. Si sabeu el que esteu fent, podeu tornar a "
+"activar l'edició, però s'aconsella primer corregir la taula, i / o fer una "
+"còpia de seguretat de les dades."
 
 #: dataeditor/twintable.cpp:182
 msgid "Duplicate columns detected"
-msgstr ""
+msgstr "S'han trobat columnes duplicades"
 
 #: dataeditor/twintable.cpp:191
 msgid " [read-only]"
@@ -1001,19 +1007,21 @@ msgstr "Errors / Avisos:"
 msgid "Cancel"
 msgstr "Cancel·la"
 
+# ??? p roca: Per revisar
+# No se si és canviat (s'informa que s'ha canviat)
+#  o canvia  (fes l'acció de canviar)
 #: misc/rksaveobjectchooser.cpp:53
+#, fuzzy
 msgid "Change"
-msgstr ""
+msgstr "Canviat"
 
 #: misc/rksaveobjectchooser.cpp:92
-#, fuzzy
 msgid "Parent object: %1"
-msgstr "Reanomena objecte"
+msgstr "Objecte pare: %1"
 
 #: misc/rksaveobjectchooser.cpp:103
-#, fuzzy
 msgid "Select parent object"
-msgstr "Recupero l'objecte?"
+msgstr "Escolliu l'objecte pare"
 
 #: misc/rksaveobjectchooser.cpp:178
 msgid "Overwrite? (The given object name already exists)"
@@ -1491,13 +1499,12 @@ msgid ""
 "see <a href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/rkward/"
 "compiling</a>.</p></p>\n"
 msgstr ""
-"<p>El RKWard o no pot trobar cap fitxer de recursos, o només troba una "
-"versió antiga dels mateixos. La causa més probable és que en la darrera "
-"instal·lació no es van ficar tots els fitxers en el lloc correcte. Això pot "
-"provocat tot tipus d'errors, des de la manca d'alguna funcionalitat fins que "
-"totes les funcions fallin.</p><p><b>Ara heu de sortir del RKWard, i arreglar "
-"la seva instal·lació</b>. Per ajuda sobre això, consultar  <a href=\"http://"
-"p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</p>"
+"<p>\t-Hi hagut un problema en establir la comunicació amb R.El més probable "
+"és que això sigui degut a una versió incorrecta de la biblioteca 'rkward' R "
+"o que no es troba. Això vol dir una instal·lació incorrecta.\t</p>\t\t"
+"\t<p><b> És recomanable que ara sortiu del RKWard i arregleu la "
+"instal·lació</b>. Per ajuda sobre això, consulteu  <a href=\"http://p.sf.net/"
+"rkward/compiling\"> http://p.sf.net/rkward/compiling</a>.</p></p>\n"
 
 # fr.po: \t- Une erreur non spécifiée qui n'est pas encore gérée par RKWard s'est produite. RKWard ne va probablement pas fonctionner correctement. Veuillez vérifier votre installation.\n
 # es.po: "\t- Ha ocurrido un error no especificado que aún no está gestionado por RKWard. Posiblemente RKWard no funcione correctamente. Por favor, compruebe su configuración.\n
@@ -1993,15 +2000,18 @@ msgid ""
 "Line: %2\n"
 "Message: %3."
 msgstr ""
+"S'ha produït un error en avaluar el codi de la seqüència.\n"
+"Arxiu: %1\n"
+"Línia: %2\n"
+"Missatge: %3."
 
 #: scriptbackends/rkcomponentscripting.cpp:88
-#, fuzzy
 msgid ""
 "error ('The file \"%1\" (needed by \"%2\") could not be found. Please check "
 "your installation.');\n"
 msgstr ""
-"El fitxer \"%1\" (necessari per \"%2\") no es troba. Si us plau, verifiqueu "
-"la vostra instal·lació."
+"error ('El fitxer \"%1\" (necessari per \"%2\") no es troba. Si us plau, "
+"verifiqueu la vostra instal·lació.');\n"
 
 #: scriptbackends/scriptbackend.cpp:91
 msgid "## Prepare\n"
@@ -2038,20 +2048,20 @@ msgstr "Temps d'espera (milisegons) abans d'intentar l'autoacabament"
 
 #: settings/rksettingsmodulecommandeditor.cpp:81
 msgid "Enable function argument hinting"
-msgstr ""
+msgstr "Habilita les pistes per als arguments de les funcions"
 
 #: settings/rksettingsmodulecommandeditor.cpp:88
-#, fuzzy
 msgid "Autosaves"
-msgstr "Tanca automàticament"
+msgstr "Desaments automàtics"
 
 #: settings/rksettingsmodulecommandeditor.cpp:94
 msgid "Autosave interval (minutes)"
-msgstr ""
+msgstr "Interval dels desaments automàtics (minuts)"
 
 #: settings/rksettingsmodulecommandeditor.cpp:109
 msgid "Keep autosave file after manual save"
 msgstr ""
+"Manté la còpia de seguretat automàtica d'arxius després del desat manual"
 
 #: settings/rksettingsmodulecommandeditor.cpp:133
 msgid "Script editor"
@@ -2105,7 +2115,7 @@ msgstr "Afegeix totes les ordres"
 # es: El historial de comandos depende por defecto del contexto
 #: settings/rksettingsmoduleconsole.cpp:86
 msgid "Command history is context sensitive by default"
-msgstr "El historial d'ordres depèn, per omissió, del context"
+msgstr "L'historial d'ordres depèn, per omissió, del context"
 
 #: settings/rksettingsmoduleconsole.cpp:185
 msgid "Console"
@@ -2152,9 +2162,8 @@ msgstr ""
 "Els arranjaments marcats amb un (*) només s'aplicaran si reengegueu RKWard"
 
 #: settings/rksettingsmodulegeneral.cpp:58
-#, fuzzy
 msgid "Directory where rkward may store files (*)"
-msgstr "Directori on s'han de guardar els fitxers bitàcola (*)"
+msgstr "Directori on RKWard pot emmagatzemar arxius (*)"
 
 #: settings/rksettingsmodulegeneral.cpp:64
 msgid "Startup Action (*)"
@@ -2240,36 +2249,32 @@ msgstr "General"
 
 #: settings/rksettingsmodulegraphics.cpp:47
 msgid "Default window size"
-msgstr ""
+msgstr "Mida de la finestra per omissió"
 
 #: settings/rksettingsmodulegraphics.cpp:49
-#, fuzzy
 msgid "Default width (inches):"
-msgstr "Ample dels resultats (caràcters)"
+msgstr "Ample per omissió (polzades):"
 
 #: settings/rksettingsmodulegraphics.cpp:53
-#, fuzzy
 msgid "Default height (inches)"
-msgstr "Alçada per defecte al mostrar el codi (píxels)"
+msgstr "Alçada per omissió (polzades)"
 
 #: settings/rksettingsmodulegraphics.cpp:62
 msgid "Screen device history"
-msgstr ""
+msgstr "Històric del dispositiu de pantalla"
 
-# ??? Per revisar: és l'ordre print, no la impressió
+# ??? Per revisar: recorded guardats? enregistrats?
 #: settings/rksettingsmodulegraphics.cpp:69
-#, fuzzy
 msgid "Maximum number of recorded plots:"
-msgstr "Nombre màxim d'elements que s'han de mostrar"
+msgstr "Nombre màxim de gràfics desats:"
 
 #: settings/rksettingsmodulegraphics.cpp:73
 msgid "Maximum size of a single recorded plot (in KB):"
-msgstr ""
+msgstr "La mida màxima d'un únic gràfic desat (en KB):"
 
 #: settings/rksettingsmodulegraphics.cpp:94
-#, fuzzy
 msgid "Onscreen Graphics"
-msgstr "Gràfics"
+msgstr "Gràfics en pantalla"
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:46
 msgid "Which objects should be shown by default?"
@@ -2537,7 +2542,7 @@ msgstr "Editor d'ordres"
 # Localitzador d'ordres o ordres del paginador / localització
 #: settings/rksettingsmoduler.cpp:170
 msgid "Pager command"
-msgstr ""
+msgstr "Localitzador d'ordres"
 
 # fr.po: Processus R
 # es.po: Backend R
@@ -2688,7 +2693,6 @@ msgid "Resume execution"
 msgstr "Continua l'execució"
 
 #: windows/rkcommandeditorwindow.cpp:106
-#, fuzzy
 msgid "Script Editor"
 msgstr "Editor de fitxers de seqüència"
 
@@ -2727,9 +2731,12 @@ msgid "File not saved"
 msgstr "El fitxer no s'ha desat"
 
 #: windows/rkcommandeditorwindow.cpp:444
+#, fuzzy
 msgid ""
 "An error occurred while trying to create an autosave of the script file '%1':"
 msgstr ""
+"S'ha produït un error mentre s'intentava crear un arxiu de còpia de "
+"seguretat automàtica de la seqüència d'ordres '%1':"
 
 #: windows/rkcommandeditorwindow.cpp:474
 msgid "Unnamed"
@@ -2788,14 +2795,12 @@ msgid "Package:"
 msgstr "Paquet:"
 
 #: windows/rkhelpsearchwindow.cpp:103
-#, fuzzy
 msgid "All installed packages"
-msgstr "Paquets instal·lats"
+msgstr "Tots els paquets instal·lats"
 
 #: windows/rkhelpsearchwindow.cpp:104
-#, fuzzy
 msgid "All loaded packages"
-msgstr "Paquets carregats"
+msgstr "Tots els paquets carregats"
 
 #: windows/rkhelpsearchwindow.cpp:113
 msgid "Case sensitive"
@@ -2863,9 +2868,8 @@ msgid "Export page as HTML"
 msgstr "Exporta la pàgina com HTML"
 
 #: windows/rkhtmlwindow.cpp:373
-#, fuzzy
 msgid "Output Window"
-msgstr "Opcions de la finestra de resultats"
+msgstr "Finestra de resultats"
 
 #: windows/rkhtmlwindow.cpp:381
 msgid "Print page"
@@ -2953,14 +2957,12 @@ msgid "BROKEN REFERENCE"
 msgstr "REFERÈNCIA TRENCADA"
 
 #: windows/rkmdiwindow.cpp:276
-#, fuzzy
 msgid "Help on %1"
-msgstr "Ajuda sobre el R"
+msgstr "Ajuda sobre %1"
 
 #: windows/rkmdiwindow.cpp:280
-#, fuzzy
 msgid "Configure %1"
-msgstr "Configura"
+msgstr "Configura %1"
 
 #: windows/rktoolwindowbar.cpp:272
 msgid "Attachment"
@@ -3138,9 +3140,11 @@ msgstr "No s'ha pogut incrustar la finestra X11 del R"
 msgid "An error occurred"
 msgstr "S'ha produït un error"
 
+# ??? p roca: Per revisar
 #: windows/rkwindowcatcher.cpp:149
+#, fuzzy
 msgid "Graphics Device Window"
-msgstr ""
+msgstr "Finestre de gràfics"
 
 #: windows/rkwindowcatcher.cpp:225
 msgid ""
@@ -3148,22 +3152,23 @@ msgid ""
 "happens regularly, you may want to adjust the default graphics window size "
 "in Settings->Configure RKWard->Onscreen Graphics."
 msgstr ""
+"La finestra actual sembla massa gran per mostrar-se a la pantalla. Si això "
+"passa sovint, podeu ajustar la mida per omissió de la finestra de gràfics a "
+"Arranjaments->Configura RKWard->Pantalla de gràfics."
 
 # fr.po: montrer / monter la fenêtre
 # es.po: mostrar/restaurar ventana
 #: windows/rkwindowcatcher.cpp:225
-#, fuzzy
 msgid "Large window"
-msgstr "mostra/puja la finestra"
+msgstr "Finestra gran"
 
 #: windows/rkwindowcatcher.cpp:249
-#, fuzzy
 msgid "Shutting down device number %1"
-msgstr "S'ha activat el dispositiu gràfic nombre %1"
+msgstr "S'està aturant el dispositiu nombre %1"
 
 #: windows/rkwindowcatcher.cpp:250
 msgid "Closing device (saving history)"
-msgstr ""
+msgstr "S'està tancant el dispositiu (s'està salvant l'històric)"
 
 # ??? Per revisar
 #: windows/rkwindowcatcher.cpp:322
@@ -3209,65 +3214,58 @@ msgid "Duplicate graphics device number %1"
 msgstr "Duplica el dispositiu gràfic nombre %1"
 
 #: windows/rkwindowcatcher.cpp:403
-#, fuzzy
 msgid "Load next plot in device number %1"
-msgstr "Imprimeix el contingit del dispositiu gràfic nombre %1"
+msgstr "Carrega el gràfic següent en el dispositiu nombre %1"
 
 #: windows/rkwindowcatcher.cpp:404 windows/rkwindowcatcher.cpp:412
 #: windows/rkwindowcatcher.cpp:420 windows/rkwindowcatcher.cpp:428
 #: windows/rkwindowcatcher.cpp:436
-#, fuzzy
 msgid "Loading plot from history"
-msgstr "Carrega/Desa l'historial d'ordres"
+msgstr "S'està carregant el gràfic del historial"
 
 #: windows/rkwindowcatcher.cpp:411
-#, fuzzy
 msgid "Load previous plot in device number %1"
-msgstr "Duplica el dispositiu gràfic nombre %1"
+msgstr "Carrega el gràfic anterior en el dispositiu nombre %1"
 
 #: windows/rkwindowcatcher.cpp:419
-#, fuzzy
 msgid "Load first plot in device number %1"
-msgstr "S'ha activat el dispositiu gràfic nombre %1"
+msgstr "Carrega el primer gràfic en el dispositiu nombre %1"
 
 #: windows/rkwindowcatcher.cpp:427
-#, fuzzy
 msgid "Load last plot in device number %1"
-msgstr "Duplica el dispositiu gràfic nombre %1"
+msgstr "Carrega el gràfic darrer en el dispositiu nombre %1"
 
 #: windows/rkwindowcatcher.cpp:435
-#, fuzzy
 msgid "Load plot %1 in device number %2"
-msgstr "Duplica el dispositiu gràfic nombre %1"
+msgstr "Carrega el gràfic %1 en el dispositiu nombre %2"
 
 #: windows/rkwindowcatcher.cpp:443
-#, fuzzy
 msgid "Append this plot to history (device number %1)"
-msgstr "Imprimeix el contingit del dispositiu gràfic nombre %1"
+msgstr "Afegeix aquest gràfic al historial (dispositiu nombre %1)"
 
 #: windows/rkwindowcatcher.cpp:449
-#, fuzzy
 msgid "Remove current plot from history (device number %1)"
-msgstr "Imprimeix el contingit del dispositiu gràfic nombre %1"
+msgstr "Elimina el gràfic actual del històric (dispositiu nombre %1)"
 
 #: windows/rkwindowcatcher.cpp:455
 msgid ""
 "This will clear the plot history for all device windows, not just this one. "
 "If this is not your intent, press cancel, below."
 msgstr ""
+"Això esborrarà l'historial de gràfics per tots les finestres, no només "
+"d'aquesta. Si aquest no és la seva intenció, premi cancel lar, a continuació."
 
 #: windows/rkwindowcatcher.cpp:457
 msgid "Clear plot history"
-msgstr ""
+msgstr "Neteja l'historial de gràfics"
 
 #: windows/rkwindowcatcher.cpp:463
-#, fuzzy
 msgid "Plot properties (device number %1)"
-msgstr "Duplica el dispositiu gràfic nombre %1"
+msgstr "Propietats del gràfic (dispositiu nombre %1)"
 
 #: windows/rkwindowcatcher.cpp:477
 msgid "<Unsaved plot>"
-msgstr ""
+msgstr "<Gràfic sense desar>"
 
 #: windows/rkwindowcatcher.cpp:528
 msgid "Draw area follows size of window"
@@ -3290,43 +3288,40 @@ msgid "Set specified fixed size..."
 msgstr "Estableix una mida especificada..."
 
 #: windows/rkwindowcatcher.cpp:543
-#, fuzzy
 msgid "Previous plot"
-msgstr "Finestra anterior"
+msgstr "Gràfic anterior"
 
 #: windows/rkwindowcatcher.cpp:547
 msgid "First plot"
-msgstr ""
+msgstr "Gràfic primer"
 
 #: windows/rkwindowcatcher.cpp:551
-#, fuzzy
 msgid "Next plot"
-msgstr "Següent >"
+msgstr "Gràfic següent"
 
 #: windows/rkwindowcatcher.cpp:555
 msgid "Last plot"
-msgstr ""
+msgstr "Gràfic darrer"
 
 #: windows/rkwindowcatcher.cpp:558
 msgid "Go to plot"
-msgstr ""
+msgstr "Vés al gràfic"
 
 #: windows/rkwindowcatcher.cpp:565
 msgid "Append this plot"
-msgstr ""
+msgstr "Afegeix aquest gràfic"
 
 #: windows/rkwindowcatcher.cpp:569
-#, fuzzy
 msgid "Remove this plot"
-msgstr "Elimino l'objecte?"
+msgstr "Elimina aquest gràfic"
 
 #: windows/rkwindowcatcher.cpp:575
 msgid "Clear history"
-msgstr ""
+msgstr "Neteja l'historial"
 
 #: windows/rkwindowcatcher.cpp:580
 msgid "Plot properties"
-msgstr ""
+msgstr "Propietats del gràfic"
 
 #: windows/rkwindowcatcher.cpp:584
 msgid "Make active"
@@ -3427,10 +3422,11 @@ msgstr "Finestra a l'esquerra"
 msgid "Window Right"
 msgstr "Finestra a la dreta"
 
+# ??? p roca: Per revisar
 #: windows/robjectbrowser.cpp:65
 #, fuzzy
 msgid "R workspace browser"
-msgstr "Mostra/Oculta el navegador de l'espai de treball"
+msgstr "Navegador de l'espai de treball del R"
 
 #: windows/robjectbrowser.cpp:68
 msgid "Objects in the R workspace"
@@ -3645,7 +3641,7 @@ msgstr "&Dispositiu"
 #. i18n: ectx: Menu (history)
 #: rc.cpp:63 rc.cpp:84
 msgid "&History"
-msgstr ""
+msgstr "&Historial"
 
 # ??? p roca: Per revisar
 #. i18n: file: windows/detachedwindowcontainer.rc:38
@@ -3674,38 +3670,3 @@ msgstr ""
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr ""
-
-#~ msgid "Cutting selection..."
-#~ msgstr "S'està tallant la selecció..."
-
-#~ msgid "Copying selection to clipboard..."
-#~ msgstr "S'està copiant la selecció al porta-retalls..."
-
-# ??? p roca: Per revisar: Permetre l'edició?
-#~ msgid "Enable editing"
-#~ msgstr "Edició habilitada"
-
-#~ msgid "Insert new variable right"
-#~ msgstr "Insereix nova variable a la dreta"
-
-#~ msgid "Insert new case below (at %1)"
-#~ msgstr "Insereix un nou cas a sota (a %1)"
-
-#~ msgid "Object name to save to"
-#~ msgstr "Introduïu el nom de l'objecte"
-
-#~ msgid ""
-#~ "<p>\t-There was a problem opening the files needed for communication with "
-#~ "R. Most likely this is due to an incorrect setting for the location of "
-#~ "these files. Check whether you have correctly configured the location of "
-#~ "the log-files (Settings->Configure Settings->Logfiles) and restart RKWard."
-#~ "</p>\n"
-#~ msgstr ""
-#~ "<p>\t-Existeix un problema al obrir els arxius necessaris per a la "
-#~ "comunicació amb el R. Probablement això és degut a un arranjament "
-#~ "incorrecte de la ubicació d'aquests fitxers. Verifiqueu si heu configurat "
-#~ "correctament la ubicació dels fitxers bitàcola (Arranjaments->Configura "
-#~ "arranjaments-> Fitxers bitàcola) i reengegueu el RKWard.</p>\n"
-
-#~ msgid "Configure Script Editor"
-#~ msgstr "Configura l'editor de seqüències"
