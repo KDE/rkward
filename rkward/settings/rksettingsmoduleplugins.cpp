@@ -2,7 +2,7 @@
                           rksettingsmoduleplugins  -  description
                              -------------------
     begin                : Wed Jul 28 2004
-    copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -21,6 +21,7 @@
 #include <kfiledialog.h>
 #include <kmessagebox.h>
 #include <khbox.h>
+#include <knewstuff2/engine.h>
 
 #include <qlayout.h>
 #include <qlabel.h>
@@ -29,6 +30,7 @@
 #include <qgroupbox.h>
 #include <qcheckbox.h>
 #include <QVBoxLayout>
+#include <QPushButton>
 
 #include "../rkward.h"
 #include "../rkglobals.h"
@@ -106,6 +108,11 @@ RKSettingsModulePlugins::RKSettingsModulePlugins (RKSettings *gui, QWidget *pare
 	connect (map_choser, SIGNAL (listChanged ()), this, SLOT (pathsChanged ()));
 	main_vbox->addWidget (map_choser);
 
+#warning REMEMBER TO CLEAN UP
+	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
+	button = new QPushButton ("Push me, Meik", this);
+	main_vbox->addWidget (button);
+	connect (button, SIGNAL (clicked()), this, SLOT (downloadPlugins()));
 
 	main_vbox->addStretch ();
 }
@@ -179,5 +186,15 @@ void RKSettingsModulePlugins::loadSettings (KConfig *config) {
 	show_code = cg.readEntry ("Code display default", false);
 	code_size = cg.readEntry ("Code display size", 40);
 }
+
+void RKSettingsModulePlugins::downloadPlugins () {
+	RK_TRACE (SETTINGS);
+
+	KNS::Engine engine (0);
+	if (engine.init ("rkward.knsrc")) {
+		engine.downloadDialogModal (this);
+	}
+}
+
 
 #include "rksettingsmoduleplugins.moc"

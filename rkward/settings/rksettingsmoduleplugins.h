@@ -2,7 +2,7 @@
                           rksettingsmoduleplugins  -  description
                              -------------------
     begin                : Wed Jul 28 2004
-    copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -55,6 +55,8 @@ public slots:
 	void pathsChanged ();
 	void settingChanged (int);
 	void browseRequest (QStringList* strings);
+	/** Invoke the plugin download dialog. */
+	void downloadPlugins ();
 private:
 	MultiStringSelector *map_choser;
 	QButtonGroup *button_group;
