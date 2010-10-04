@@ -533,9 +533,18 @@ void RInterface::processRCallbackRequest (RCallbackArgs *args) {
 	} else if (type == RCallbackArgs::RReadLine) {
 		QString result;
 
-		bool ok = RKReadLineDialog::readLine (0, i18n ("R backend requests information"), args->params["prompt"].toString (), runningCommand (), &result);
+		// yes, readline *can* be called outside of a current command (e.g. from tcl/tk)
+		bool dummy_command = false;
+		RCommand *command = runningCommand ();
+		if (!command) {
+			command = new RCommand ("");
+			dummy_command = true;
+		}
+
+		bool ok = RKReadLineDialog::readLine (0, i18n ("R backend requests information"), args->params["prompt"].toString (), command, &result);
 		args->params["result"] = QVariant (result);
 
+		if (dummy_command) delete command;
 		if (!ok) args->params["cancelled"] = QVariant (true);
 	} else if ((type == RCallbackArgs::RShowFiles) || (type == RCallbackArgs::REditFiles)) {
 		ShowEditTextFileAgent::showEditFiles (args);
