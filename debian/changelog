@@ -7,6 +7,7 @@ rkward (0.5.5-0devel1) unstable; urgency=low
 rkward (0.5.4-1) unstable; urgency=low
 
   * new upstream release
+  * bump standards version to 3.9.1 (no changes needed)
   * no more need to remove svncopy.sh-script in rules
 
  -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Mon, 04 Oct 2010 14:30:00 +0200
