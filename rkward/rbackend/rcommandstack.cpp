@@ -2,7 +2,7 @@
                           rcommandstack  -  description
                              -------------------
     begin                : Mon Sep 6 2004
-    copyright            : (C) 2004, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -520,7 +520,7 @@ void RCommandStackModel::relayItemAboutToBeAdded (RCommandBase* parent) {
 	RK_ASSERT (!RInterface::inRThread ());
 
 	QModelIndex parent_index = indexFor (parent);
-	if (parent->commandPointer ()) {
+	if ((!parent) || parent->commandPointer ()) {
 		beginInsertRows (parent_index, 0, 0);
 	} else {
 		// items are always added at the end

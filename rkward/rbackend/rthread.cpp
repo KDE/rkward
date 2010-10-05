@@ -390,8 +390,8 @@ void RThread::handleSubstackCall (QStringList &call) {
 
 	if (call.count () == 2) {		// schedule symbol update for later
 		if (call[0] == "ws") {
-			RK_ASSERT (current_command);
-			if ((current_command->type () & RCommand::ObjectListUpdate) || (!(current_command->type () & RCommand::Sync))) {		// ignore Sync commands that are not flagged as ObjectListUpdate
+			// always keep in mind: No current command can happen for tcl/tk events.
+			if ((!current_command) || (current_command->type () & RCommand::ObjectListUpdate) || (!(current_command->type () & RCommand::Sync))) {		// ignore Sync commands that are not flagged as ObjectListUpdate
 				if (!changed_symbol_names.contains (call[1])) changed_symbol_names.append (call[1]);
 			}
 			return;

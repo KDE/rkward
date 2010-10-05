@@ -37,6 +37,9 @@ Compilation / technical
 	- cleanup DISABLE_RKWINDOWCATCHER (either get rid of it, or do it right)
 	- eventually the whole RData-structure should be made to use QList-types
 
+R backend:
+	- tcl/tk can evaluate all sorts of R stuff, even if there is no "command". It would help, if we simply defined a "default" command to be active at such times.
+
 UI-stuff
 	- find/create a set of menu icons (https://sourceforge.net/mailarchive/message.php?msg_id=37891606)
 	- "First-run wizard"
@@ -241,12 +244,6 @@ R plugins:
 	- X11->Export:
 		- provide SVG export option
 	- provide context menu / other UI to export to different formats / edit
-	- PHP-backend:
-		- http://de3.php.net/manual/en/function.call-user-func.php seems to be faster than eval
-		- find out why an error in the backend often leads to a subsequent crash
-		- it might be possible to create only one "master" PHP process, and fork off child processes as needed from that (pcntl_fork() in PHP).
-			- Do some timing, on how much faster this would actually be
-			- The main drawback is that communication could no longer go via stdin/out, but some other mechanism would be needed. This would also mean ditching KProcess, and using perhaps QTcpServer/Socket.
 	- plugins (general)
 		- ODS filter (try to find someone to implement one in R)
 	- formula-widget:
