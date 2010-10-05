@@ -1,3 +1,4 @@
+- Removed the remainder of the PHP scripting backend
 - Fixed: Would crash on tcl/tk events in some cases
 
 --- Version 0.5.4 - Oct-04-2010

@@ -28,7 +28,6 @@
 // modules
 #include "rksettingsmoduleplugins.h"
 #include "rksettingsmoduler.h"
-#include "rksettingsmodulephp.h"
 #include "rksettingsmodulegeneral.h"
 #include "rksettingsmoduleoutput.h"
 #include "rksettingsmodulegraphics.h"
@@ -99,7 +98,6 @@ void RKSettings::initModules () {
 	modules.insert (PagePlugins, new RKSettingsModulePlugins (this, 0));
 	modules.insert (PageR, new RKSettingsModuleR (this, 0));
 	modules.insert (PageRPackages, new RKSettingsModuleRPackages (this, 0));
-	modules.insert (PagePHP, new RKSettingsModulePHP (this, 0));
 	modules.insert (PageGeneral, new RKSettingsModuleGeneral (this, 0));
 	modules.insert (PageOutput, new RKSettingsModuleOutput (this, 0));
 	modules.insert (PageX11, new RKSettingsModuleGraphics (this, 0));
@@ -187,7 +185,6 @@ void RKSettings::loadSettings (KConfig *config) {
 	RKSettingsModulePlugins::loadSettings(config);
 	RKSettingsModuleR::loadSettings(config);
 	RKSettingsModuleRPackages::loadSettings(config);
-	RKSettingsModulePHP::loadSettings(config);
 	RKSettingsModuleOutput::loadSettings(config);
 	RKSettingsModuleGraphics::loadSettings(config);
 	RKSettingsModuleWatch::loadSettings(config);
@@ -203,7 +200,6 @@ void RKSettings::saveSettings (KConfig *config) {
 	RKSettingsModulePlugins::saveSettings(config);
 	RKSettingsModuleR::saveSettings(config);
 	RKSettingsModuleRPackages::saveSettings(config);
-	RKSettingsModulePHP::saveSettings(config);
 	RKSettingsModuleOutput::saveSettings(config);
 	RKSettingsModuleGraphics::saveSettings(config);
 	RKSettingsModuleWatch::saveSettings(config);

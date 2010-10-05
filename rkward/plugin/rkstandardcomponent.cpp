@@ -31,7 +31,6 @@
 #include <khbox.h>
 
 #include "rkstandardcomponentgui.h"
-#include "../scriptbackends/phpbackend.h"
 #include "../scriptbackends/qtscriptbackend.h"
 #include "../scriptbackends/simplebackend.h"
 #include "../scriptbackends/rkcomponentscripting.h"
@@ -90,16 +89,12 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 		return;
 	}
 
-	// initialize the PHP-backend with the code-template
+	// initialize the script backend with the code-template
 	QDomElement element = xml->getChildElement (doc_element, "code", DL_WARNING);
 	if (element.hasAttribute ("file")) {
-		QString dummy = QFileInfo (filename).path() + '/' + xml->getStringAttribute (element, "file", "code.php", DL_WARNING);
+		QString dummy = QFileInfo (filename).path() + '/' + xml->getStringAttribute (element, "file", "code.js", DL_WARNING);
 
-		if (!dummy.endsWith (".php")) {
-			backend = new QtScriptBackend (dummy);
-		} else {
-			backend = new PHPBackend (dummy);
-		}
+		backend = new QtScriptBackend (dummy);
 	} else {
 		SimpleBackend *back = new SimpleBackend ();
 		back->setPreprocessTemplate (xml->getStringAttribute (element, "preprocess", QString::null, DL_INFO));
@@ -283,7 +278,7 @@ void RKStandardComponent::switchInterface () {
 
 	createTopLevel (doc_element, force_mode);
 
-	// set old GUI settings. For this purpose, we'll temporarily disable updates in the phpbackend
+	// set old GUI settings. For this purpose, we'll temporarily disable updates in the script backend
 	created = false;
 	setPropertyValues (&value_save);
 	created = true;

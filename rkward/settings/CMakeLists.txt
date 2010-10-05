@@ -9,7 +9,6 @@ SET(settings_STAT_SRCS
    rksettingsmodulegeneral.cpp
    rksettingsmoduleoutput.cpp
    rksettingsmodulegraphics.cpp
-   rksettingsmodulephp.cpp
    rksettingsmoduleplugins.cpp
    rksettingsmoduler.cpp
    rksettingsmodulewatch.cpp

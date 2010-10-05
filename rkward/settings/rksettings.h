@@ -40,7 +40,6 @@ public:
 		PagePlugins,
 		PageR,
 		PageRPackages,
-		PagePHP,
 		PageGeneral,
 		PageOutput,
 		PageX11,
