@@ -52,8 +52,7 @@ public:
 	static bool showCodeByDefault () { return show_code; };
 	static int defaultCodeHeight () { return code_size; };
 public slots:
-	void pathsChanged ();
-	void settingChanged (int);
+	void settingChanged ();
 	void browseRequest (QStringList* strings);
 	/** Invoke the plugin download dialog. */
 	void downloadPlugins ();
@@ -67,6 +66,11 @@ private:
 	static PluginPrefs interface_pref;
 	static bool show_code;
 	static int code_size;
+
+	static void installPluginPack (const QString &archive_file);
+	static void uninstallPluginPack (const QString &archive_file);
+	static QString baseNameOfPluginPack (const QString &archive_file);
+	static QStringList findPluginMapsRecursive (const QString &basedir);
 };
 
 #endif

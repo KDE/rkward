@@ -1,4 +1,4 @@
 [KNewStuff2]
 ProvidersUrl=http://R.reaktanz.de/GHNS/reaktanz-provider.xml
-Uncompress=archive
+Uncompress=never
 InstallPath=.rkward/plugins/

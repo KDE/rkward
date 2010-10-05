@@ -1,3 +1,5 @@
+- Fixed: Would crash on tcl/tk events in some cases
+
 --- Version 0.5.4 - Oct-04-2010
 - Fixed: Running user commands would crash with R 2.12.0
 - Added full-featured plot history for the onscreen graphics device

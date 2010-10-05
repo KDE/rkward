@@ -22,6 +22,9 @@
 #include <kmessagebox.h>
 #include <khbox.h>
 #include <knewstuff2/engine.h>
+#include <ktar.h>
+#include <kzip.h>
+#include <kio/deletejob.h>
 
 #include <qlayout.h>
 #include <qlabel.h>
@@ -74,7 +77,7 @@ RKSettingsModulePlugins::RKSettingsModulePlugins (RKSettings *gui, QWidget *pare
 	button_group->addButton (button, PreferWizard);
 	if ((button = button_group->button (interface_pref))) button->setChecked (true);
 
-	connect (button_group, SIGNAL (buttonClicked (int)), this, SLOT (settingChanged (int)));
+	connect (button_group, SIGNAL (buttonClicked (int)), this, SLOT (settingChanged ()));
 	main_vbox->addWidget (button_box);
 
 
@@ -86,14 +89,14 @@ RKSettingsModulePlugins::RKSettingsModulePlugins (RKSettings *gui, QWidget *pare
 
 	show_code_box = new QCheckBox (i18n ("Code shown by default"), code_frame);
 	show_code_box->setChecked (show_code);
-	connect (show_code_box, SIGNAL (stateChanged (int)), this, SLOT (settingChanged (int)));
+	connect (show_code_box, SIGNAL (stateChanged (int)), this, SLOT (settingChanged ()));
 	group_layout->addWidget (show_code_box);
 
 	KHBox *code_size_hbox = new KHBox (code_frame);
 	new QLabel (i18n ("Default height of code display (pixels)"), code_size_hbox);
 	code_size_box = new RKSpinBox (code_size_hbox);
 	code_size_box->setIntMode (20, 5000, code_size);
-	connect (code_size_box, SIGNAL (valueChanged (int)), this, SLOT (settingChanged (int)));
+	connect (code_size_box, SIGNAL (valueChanged (int)), this, SLOT (settingChanged ()));
 	group_layout->addWidget (code_size_hbox);
 
 	main_vbox->addWidget (code_frame);
@@ -105,7 +108,7 @@ RKSettingsModulePlugins::RKSettingsModulePlugins (RKSettings *gui, QWidget *pare
 	map_choser = new MultiStringSelector (i18n ("Select .pluginmap file(s)"), this);
 	map_choser->setValues (plugin_maps);
 	connect (map_choser, SIGNAL (getNewStrings (QStringList*)), this, SLOT (browseRequest (QStringList*)));
-	connect (map_choser, SIGNAL (listChanged ()), this, SLOT (pathsChanged ()));
+	connect (map_choser, SIGNAL (listChanged ()), this, SLOT (settingChanged ()));
 	main_vbox->addWidget (map_choser);
 
 #warning REMEMBER TO CLEAN UP
@@ -121,12 +124,7 @@ RKSettingsModulePlugins::~RKSettingsModulePlugins() {
 	RK_TRACE (SETTINGS);
 }
 
-void RKSettingsModulePlugins::pathsChanged () {
-	RK_TRACE (SETTINGS);
-	change ();
-}
-
-void RKSettingsModulePlugins::settingChanged (int) {
+void RKSettingsModulePlugins::settingChanged () {
 	RK_TRACE (SETTINGS);
 	change ();
 }
@@ -190,10 +188,101 @@ void RKSettingsModulePlugins::loadSettings (KConfig *config) {
 void RKSettingsModulePlugins::downloadPlugins () {
 	RK_TRACE (SETTINGS);
 
+	QStringList oldmaps = plugin_maps;
+
+	#warning TODO: temporary hack
+// Some KNS is smart enough to remove the .rkward/plugins director if it is no longer used, but not smart enough to add it back, when needed....
+	QDir::home ().mkpath (".rkward/plugins");
+
 	KNS::Engine engine (0);
-	if (engine.init ("rkward.knsrc")) {
-		engine.downloadDialogModal (this);
+	if (!engine.init ("rkward.knsrc")) return;
+	KNS::Entry::List list = engine.downloadDialogModal (this);
+
+	for (int i = 0; i < list.size (); ++i) {
+		foreach (const QString inst, list[i]->installedFiles ()) {
+			installPluginPack (inst);
+		}
+		foreach (const QString inst, list[i]->uninstalledFiles ()) {
+			uninstallPluginPack (inst);
+		}
 	}
+
+	// new pluginmaps were already added in installPluginPack. Now let's check, whether there's any maps to remove, too:
+	for (int i = 0; i < plugin_maps.size (); ++i) {
+		QFileInfo info (plugin_maps[i]);
+		if (!info.isReadable ()) {
+			plugin_maps.removeAt (i);
+			--i;
+		}
+	}
+
+	if (plugin_maps != oldmaps) {
+		map_choser->setValues (plugin_maps);
+		change ();
+	}
+}
+
+void RKSettingsModulePlugins::installPluginPack (const QString &archive_file) {
+	RK_TRACE (SETTINGS);
+
+	QString basename = baseNameOfPluginPack (archive_file);
+	if (basename.isEmpty ()) return;
+
+	KArchive* archive;
+	if (archive_file.endsWith (".zip", Qt::CaseInsensitive)) {
+		archive = new KZip (archive_file);
+	} else {
+		archive = new KTar (archive_file);
+	}
+	if (!archive->open (QIODevice::ReadOnly)) {
+#warning TODO: show error message
+		RK_ASSERT (false);
+		return;
+	}
+	archive->directory ()->copyTo (basename, true);
+	delete (archive);
+
+	QStringList installed_maps = findPluginMapsRecursive (basename);
+	foreach (const QString map, installed_maps) {
+		if (!plugin_maps.contains (map)) plugin_maps.append (map);
+	}
+}
+
+void RKSettingsModulePlugins::uninstallPluginPack (const QString &archive_file) {
+	RK_TRACE (SETTINGS);
+
+	QString basename = baseNameOfPluginPack (archive_file);
+	if (basename.isEmpty ()) return;
+
+	// Well, calling exec is ugly, but so much simpler than handling this asynchronously...
+	KIO::del (KUrl::fromLocalFile (basename))->exec ();
+}
+
+QString RKSettingsModulePlugins::baseNameOfPluginPack (const QString &archive_file) {
+	RK_TRACE (SETTINGS);
+
+	if (archive_file.endsWith (".tar.gz", Qt::CaseInsensitive)) {
+		return (archive_file.left (archive_file.length () - 7));
+	} else if (archive_file.endsWith (".zip", Qt::CaseInsensitive)) {
+		return (archive_file.left (archive_file.length () - 4));
+	}
+	return QString ();
+}
+
+QStringList RKSettingsModulePlugins::findPluginMapsRecursive (const QString &basedir) {
+	RK_TRACE (SETTINGS);
+
+	QDir dir (basedir);
+	QStringList maps = dir.entryList (QDir::Files).filter (QRegExp (".*\\.pluginmap$"));
+	QStringList ret;
+	foreach (const QString &map, maps) ret.append (dir.absoluteFilePath (map));
+
+	QStringList subdirs = dir.entryList (QDir::Dirs | QDir::NoSymLinks | QDir::NoDotAndDotDot);
+	foreach (const QString subdir, subdirs) {
+		ret.append (findPluginMapsRecursive (dir.absoluteFilePath (subdir)));
+	}
+
+	return ret;
 }
 
 
