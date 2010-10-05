@@ -190,8 +190,8 @@ void RKSettingsModulePlugins::downloadPlugins () {
 
 	QStringList oldmaps = plugin_maps;
 
-	#warning TODO: temporary hack
-// Some KNS is smart enough to remove the .rkward/plugins director if it is no longer used, but not smart enough to add it back, when needed....
+#warning TODO: temporary hack
+// Somehow KNS is smart enough to remove the .rkward/plugins directory if it is no longer used, but not smart enough to add it back, when needed...
 	QDir::home ().mkpath (".rkward/plugins");
 
 	KNS::Engine engine (0);
@@ -207,7 +207,7 @@ void RKSettingsModulePlugins::downloadPlugins () {
 		}
 	}
 
-	// new pluginmaps were already added in installPluginPack. Now let's check, whether there's any maps to remove, too:
+	// new pluginmaps were already added in installPluginPack. Now let's check, whether there any to be removed:
 	for (int i = 0; i < plugin_maps.size (); ++i) {
 		QFileInfo info (plugin_maps[i]);
 		if (!info.isReadable ()) {
@@ -284,6 +284,5 @@ QStringList RKSettingsModulePlugins::findPluginMapsRecursive (const QString &bas
 
 	return ret;
 }
-
 
 #include "rksettingsmoduleplugins.moc"
