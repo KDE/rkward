@@ -1,0 +1,13 @@
+Package: rkwardtests
+Type: Package
+Title: RKWard Plugin Test Suite Framework
+Version: 0.5.5
+Date: 2010-10-05
+Author: Thomas Friedrichsmeier
+Maintainer: Thomas Friedrichsmeier <thomas.friedrichsmeier@ruhr-uni-bochum.de>, m.eik michalke <meik.michalke@uni-duesseldorf.de>
+Depends: R (>= 2.9.0),methods,roxygen
+Description: A set of functions, classes and methods to test plugins that were written for RKWard.
+License: GPL (>= 2)
+Encoding: UTF-8
+LazyLoad: yes
+URL: http://rkward.sourceforge.net

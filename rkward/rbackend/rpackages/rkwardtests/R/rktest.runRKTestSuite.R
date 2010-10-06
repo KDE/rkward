@@ -1,0 +1,53 @@
+#' Run a single RKWard plugin test suite
+#'
+#' This function can be called to run a single plugin test suite.
+#' 
+#' @title Run RKWard plugin test suite
+#' @usage rktest.runRKTestSuite(suite, basedir=getwd())
+#' @aliases rktest.runRKTestSuite
+#' @param suite Character string naming the test suite to run.
+#' @param basedir Defaults to the working directory.
+#' @return An object of class \code{\link[rkwardtests:RKTestResult]{RKTestResult-class}}.
+#' @docType function
+#' @author Thomas Friedrichsmeier \email{thomas.friedrichsmeier@@ruhr-uni-bochum.de}
+#' @keywords utilities
+#' @seealso \code{\link[rkwardtests:RKTestSuite]{RKTestSuite-class}}, \code{\link[rkwardtests:rktest.makeplugintests]{rktest.makeplugintests}}
+#' @export
+#' @examples
+#' \dontrun{
+#' result <- rktest.runRKTestSuite()
+#' }
+
+rktest.runRKTestSuite <- function (suite, basedir=getwd ()) {
+	rktest.initializeEnvironment ()
+	result <- new ("RKTestResult")		# FALSE by default
+
+	if (!inherits (suite, "RKTestSuite")) return (result)
+	if (!validObject (suite)) return (result)
+
+	# clean any old results
+	rktest.cleanRKTestSuite (suite, basedir)
+
+	oldwd = getwd ()
+	on.exit (setwd (oldwd))
+	setwd (paste (basedir, suite@id, sep="/"))
+
+	if (length (suite@initCalls) > 0) {
+		for (i in 1:length (suite@initCalls)) try (suite@initCalls[[i]]())
+	}
+	rk.sync.global ()	# objects might have been added/changed in the init calls
+
+	for (i in 1:length (suite@tests)) {
+		suite@tests[[i]]@libraries <- c(suite@libraries, suite@tests[[i]]@libraries)
+		try (res <- rktest.runRKTest(suite@tests[[i]]))
+		result <- rktest.appendTestResults (result, res)
+	}
+
+	if (length (suite@postCalls) > 0) {
+		for (i in 1:length (suite@postCalls)) try (suite@postCalls[[i]]())
+	}
+
+	rktest.resetEnvironment ()
+
+	result
+}
