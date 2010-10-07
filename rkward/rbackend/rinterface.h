@@ -92,6 +92,7 @@ not be interrupted. */
 	bool backendIsIdle ();
 
 	static bool inRThread ();
+	static void tryToDoEmergencySave ();
 public slots:
 /** called periodically to flush output buffer in RThread */
 	void flushOutput ();

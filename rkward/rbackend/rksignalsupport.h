@@ -2,7 +2,7 @@
                           rksignalsupport  -  description
                              -------------------
     begin                : Thu Nov 22 2007
-    copyright            : (C) 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -19,8 +19,8 @@
 #define RKSIGNALSUPPORT_H
 
 namespace RKSignalSupport {
-	void saveDefaultSigSegvHandler ();
-	void installSigSegvProxy ();
+	void saveDefaultSignalHandlers ();
+	void installSignalProxies ();
 };
 
 #endif

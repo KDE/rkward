@@ -2,7 +2,7 @@
                           rkcommonfunctions  -  description
                              -------------------
     begin                : Mon Oct 17 2005
-    copyright            : (C) 2005, 2006, 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -38,6 +38,9 @@ namespace RKCommonFunctions {
 
 /** Get the base directory where RKWard data files are stored */
 	QString getRKWardDataDir ();
+/** Get a suitable file name in the RKWard data directory */
+	QString getUseableRKWardSavefileName (const QString &prefix, const QString &postfix);
+
 
 /** given the context line, find what looks like an R symbol */
 	QString getCurrentSymbol (const QString &context_line, int cursor_pos, bool strict=true);

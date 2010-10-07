@@ -2,7 +2,7 @@
                           rkcommonfunctions  -  description
                              -------------------
     begin                : Mon Oct 17 2005
-    copyright            : (C) 2005, 2006, 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -19,10 +19,13 @@
 #include <qstringlist.h>
 #include <qdom.h>
 #include <qregexp.h>
+#include <QDir>
 
 #include <kxmlguiclient.h>
 #include <kglobal.h>
 #include <kstandarddirs.h>
+
+#include "../settings/rksettingsmodulegeneral.h"
 
 namespace RKCommonFunctions {
 	void removeNamedElementsRecursive (const QStringList &names, QDomNode &parent) {
@@ -136,6 +139,18 @@ namespace RKCommonFunctions {
 		return (KGlobal::dirs ()->findResourceDir ("data", "rkward/resource.ver") + "rkward/");
 	}
 
+	QString getUseableRKWardSavefileName (const QString &prefix, const QString &postfix) {
+		QDir dir (RKSettingsModuleGeneral::filesPath ());
+
+		int i=0;
+		while (true) {
+			QString candidate = prefix + QString::number (i) + postfix;
+			if (!dir.exists (candidate)) {
+				return dir.filePath (candidate);
+			}
+			i++;
+		}
+	}
 
 	QString escape (const QString &in) {
 		QString out;

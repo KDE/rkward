@@ -24,12 +24,14 @@ REmbedInternal *REmbedInternal::this_pointer = 0;
 #include <QStringList>
 #include <qtextcodec.h>
 #include <klocale.h>
+
 #include "../core/robject.h"
 #include "../debug.h"
 
 #include "rklocalesupport.h"
 #include "rkpthreadsupport.h"
 #include "rksignalsupport.h"
+#include "../misc/rkcommonfunctions.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -231,6 +233,14 @@ void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 		REmbedInternal::this_pointer->shutdown (true);
 	}
 	Rf_error ("Backend dead");	// this jumps us out of the REPL.
+}
+
+void REmbedInternal::tryToDoEmergencySave () {
+	RK_TRACE (RBACKEND);
+
+	// we're probably in a signal handler, and the stack base has changed.
+	R_CStackLimit = (uintptr_t)-1;
+	if (R_DirtyImage) R_SaveGlobalEnvToFile (RKCommonFunctions::getUseableRKWardSavefileName ("rkward_recover", ".RData").toLocal8Bit ());
 }
 
 QStringList charPArrayToQStringList (const char** chars, int count) {
@@ -800,7 +810,7 @@ bool REmbedInternal::startR (int argc, char** argv, bool stack_check) {
 
 	setupCallbacks ();
 
-	RKSignalSupport::saveDefaultSigSegvHandler ();
+	RKSignalSupport::saveDefaultSignalHandlers ();
 
 	r_running = true;
 	Rf_initialize_R (argc, argv);
@@ -854,7 +864,7 @@ bool REmbedInternal::startR (int argc, char** argv, bool stack_check) {
 	RKWard_RData_Tag = Rf_install ("RKWard_RData_Tag");
 	R_LastvalueSymbol = Rf_install (".Last.value");
 
-	RKSignalSupport::installSigSegvProxy ();
+	RKSignalSupport::installSignalProxies ();
 
 // register our functions
 	R_CallMethodDef callMethods [] = {

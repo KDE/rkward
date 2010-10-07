@@ -137,6 +137,15 @@ bool RInterface::inRThread () {
 	return (QThread::currentThread () == RKGlobals::rInterface ()->r_thread);
 }
 
+void RInterface::tryToDoEmergencySave () {
+	RK_TRACE (RBACKEND);
+	if (!inRThread ()) {
+		RKGlobals::rInterface ()->r_thread->terminate ();
+		RKGlobals::rInterface ()->r_thread->wait (1000);
+	}
+	RKGlobals::rInterface ()->r_thread->tryToDoEmergencySave ();
+}
+
 void RInterface::startThread () {
 	RK_TRACE (RBACKEND);
 
@@ -317,13 +326,8 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 		if (request->call.count () >= 3) {
 			QString file_prefix = request->call[1];
 			QString file_extension = request->call[2];
-			QDir dir (RKSettingsModuleGeneral::filesPath ());
-		
-			int i=0;
-			while (dir.exists (file_prefix + QString::number (i) + file_extension)) {
-				i++;
-			}
-			issueCommand (".rk.set.reply (\"" + dir.filePath (file_prefix + QString::number (i) + file_extension) + "\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
+
+			issueCommand (".rk.set.reply (\"" + RKCommonFunctions::getUseableRKWardSavefileName (file_prefix, file_extension) + "\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
 		} else {
 			issueCommand (".rk.set.reply (\"Too few arguments in call to get.tempfile.name.\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
 		}

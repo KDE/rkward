@@ -1,3 +1,5 @@
+- Attempt to save workspace on crashes		TODO: detect recovery-file at startup, and offer to load it.
+- Also try to relay SIGABRT and SIGILL to the proper signal handlers
 - Removed the remainder of the PHP scripting backend
 - Fixed: Would crash on tcl/tk events in some cases
 

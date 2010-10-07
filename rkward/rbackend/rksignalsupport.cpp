@@ -2,7 +2,7 @@
                           rksignalsupport  -  description
                              -------------------
     begin                : Thu Nov 22 2007
-    copyright            : (C) 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -33,84 +33,118 @@ namespace RKSignalSupportPrivate {
 #ifdef Q_WS_WIN
 	__sighandler_t r_sigsegv_handler = 0;
 	__sighandler_t default_sigsegv_handler = 0;
-
-	void sigsegv_proxy (int signum) {
+	__sighandler_t r_sigill_handler = 0;
+	__sighandler_t default_sigill_handler = 0;
+	__sighandler_t r_sigabrt_handler = 0;
+	__sighandler_t default_sigabrt_handler = 0;
 #else
-	struct sigaction r_sigsegv_action;
-	struct sigaction default_sigsegv_action;
-
-	void sigsegv_proxy (int signum, siginfo_t *info, void *context) {
+	struct sigaction r_sigsegv_handler;
+	struct sigaction default_sigsegv_handler;
+	struct sigaction r_sigill_handler;
+	struct sigaction default_sigill_handler;
+	struct sigaction r_sigabrt_handler;
+	struct sigaction default_sigabrt_handler;
 #endif
-		RK_ASSERT (signum == SIGSEGV);
-	
+
+#ifdef Q_WS_WIN
+	void signal_proxy (int signum) {
+		__sighandler_t r_handler = r_sigsegv_handler;
+		__sighandler_t default_handler = default_sigsegv_handler;
+#else
+	void signal_proxy (int signum, siginfo_t *info, void *context) {
+		struct sigaction r_handler = r_sigsegv_handler;
+		struct sigaction default_handler = default_sigsegv_handler;
+#endif
+		if (signum == SIGILL) {
+			r_handler = r_sigill_handler;
+			default_handler = default_sigill_handler;
+		} else if (signum == SIGABRT) {
+			r_handler = r_sigabrt_handler;
+			default_handler = default_sigabrt_handler;
+		} else {
+			RK_ASSERT (signum == SIGSEGV);
+		}
+
+		RInterface::tryToDoEmergencySave ();
+
 		// if we are not in the R thread, handling the signal in R does more harm than good.
 		if (RInterface::inRThread ()) {
 #ifdef Q_WS_WIN
-			if (r_sigsegv_handler) {
-				r_sigsegv_handler (signum);
+			if (r_handler) {
+				r_handler (signum);
 				return;
 			}
 #else
-			if (r_sigsegv_action.sa_sigaction) {
-				r_sigsegv_action.sa_sigaction (signum, info, context);
+			if (r_handler.sa_sigaction) {
+				r_handler.sa_sigaction (signum, info, context);
 				return;
-			} else if (r_sigsegv_action.sa_handler) {
-				r_sigsegv_action.sa_handler (signum);
+			} else if (r_handler.sa_handler) {
+				r_handler.sa_handler (signum);
 				return;
 			}
 #endif
 		}
 
 #ifdef Q_WS_WIN
-		if (default_sigsegv_handler) {
-			default_sigsegv_handler (signum);
+		if (default_handler) {
+			default_handler (signum);
 			return;
 		}
 #else
 		// this might be a Qt/KDE override or default handling
-		if (default_sigsegv_action.sa_sigaction) {
-			default_sigsegv_action.sa_sigaction (signum, info, context);
+		if (default_handler.sa_sigaction) {
+			default_handler.sa_sigaction (signum, info, context);
 			return;
-		} else if (default_sigsegv_action.sa_handler) {
-			default_sigsegv_action.sa_handler (signum);
+		} else if (default_handler.sa_handler) {
+			default_handler.sa_handler (signum);
 			return;
 		}
 #endif
-
-		// not handled? should not happen
-		RK_ASSERT (false);
-
-		// do the default fallback handling
-		signal (SIGSEGV, SIG_DFL);
-		raise (SIGSEGV);
 	}
 }
 
-void RKSignalSupport::saveDefaultSigSegvHandler () {
+void RKSignalSupport::saveDefaultSignalHandlers () {
 	RK_TRACE (RBACKEND);
 
 #ifdef Q_WS_WIN
 	RKSignalSupportPrivate::default_sigsegv_handler = signal (SIGSEGV, SIG_DFL);
+	RKSignalSupportPrivate::default_sigill_handler = signal (SIGILL, SIG_DFL);
+	RKSignalSupportPrivate::default_sigabrt_handler = signal (SIGABRT, SIG_DFL);
 #else
-	sigaction (SIGSEGV, 0, &RKSignalSupportPrivate::default_sigsegv_action);
+	sigaction (SIGSEGV, 0, &RKSignalSupportPrivate::default_sigsegv_handler);
+	sigaction (SIGILL, 0, &RKSignalSupportPrivate::default_sigill_handler);
+	sigaction (SIGABRT, 0, &RKSignalSupportPrivate::default_sigabrt_handler);
 #endif
 }
 
-void RKSignalSupport::installSigSegvProxy () {
+void RKSignalSupport::installSignalProxies () {
 	RK_TRACE (RBACKEND);
 
 #ifdef Q_WS_WIN
-	RKSignalSupportPrivate::r_sigsegv_handler = signal (SIGSEGV, &RKSignalSupportPrivate::sigsegv_proxy);
+	RKSignalSupportPrivate::r_sigsegv_handler = signal (SIGSEGV, &RKSignalSupportPrivate::signal_proxy);
+	RKSignalSupportPrivate::r_sigill_handler = signal (SIGILL, &RKSignalSupportPrivate::signal_proxy);
+	RKSignalSupportPrivate::r_sigabrt_handler = signal (SIGABRT, &RKSignalSupportPrivate::signal_proxy);
 #else
 	// retrieve R signal handler
-	sigaction (SIGSEGV, 0, &RKSignalSupportPrivate::r_sigsegv_action);
+	sigaction (SIGSEGV, 0, &RKSignalSupportPrivate::r_sigsegv_handler);
+	sigaction (SIGILL, 0, &RKSignalSupportPrivate::r_sigill_handler);
+	sigaction (SIGABRT, 0, &RKSignalSupportPrivate::r_sigabrt_handler);
 
+	// set new proxy handlers
 	struct sigaction proxy_action;
-	proxy_action = RKSignalSupportPrivate::r_sigsegv_action;
+	proxy_action = RKSignalSupportPrivate::r_sigsegv_handler;
 	proxy_action.sa_flags |= SA_SIGINFO;
-	proxy_action.sa_sigaction = &RKSignalSupportPrivate::sigsegv_proxy;
-
-	// set new proxy handler
+	proxy_action.sa_sigaction = &RKSignalSupportPrivate::signal_proxy;
 	sigaction (SIGSEGV, &proxy_action, 0);
+
+	proxy_action = RKSignalSupportPrivate::r_sigill_handler;
+	proxy_action.sa_flags |= SA_SIGINFO;
+	proxy_action.sa_sigaction = &RKSignalSupportPrivate::signal_proxy;
+	sigaction (SIGILL, &proxy_action, 0);
+
+	proxy_action = RKSignalSupportPrivate::default_sigabrt_handler;
+	proxy_action.sa_flags |= SA_SIGINFO;
+	proxy_action.sa_sigaction = &RKSignalSupportPrivate::signal_proxy;
+	sigaction (SIGABRT, &proxy_action, 0);
 #endif
 }

@@ -161,6 +161,7 @@ Otherwise it is very similar to handleSubstackCall (), esp. in that is implement
 /** only one instance of this class may be around. This pointer keeps the reference to it, for interfacing to from C to C++ */
 	static REmbedInternal *this_pointer;
 	static char *na_char_internal;
+	static void tryToDoEmergencySave ();
 	bool r_running;
 /** Check whether the runtime version of R is at least the given version. Valid only *after* startR() has been called! */
 	bool RRuntimeIsVersion (int major, int minor, int revision) {
