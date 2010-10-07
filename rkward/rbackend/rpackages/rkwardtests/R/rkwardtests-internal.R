@@ -186,6 +186,5 @@ rktest.initializeEnvironment <- function () {
 
 # counterpart to rktest.initializeEnvironment. Restores the most important settings
 rktest.resetEnvironment <- function () {
-	rm (list=c ("rk.set.output.html.file", "rk.get.tempfile.name", ".rk.make.hr"), envir=globalenv ())
 	.rk.rerun.plugin.link <<- .rk.rerun.plugin.link.replacement
 }

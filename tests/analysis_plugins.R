@@ -1,9 +1,3 @@
-## intro
-# This should be the first line in each test suite file: Include the
-# test framework, unless already included (multiple inclusion would not
-# really do any harm either, though
-if (!isClass ("RKTestSuite")) source ("test_framework.R")
-
 ## definition of the test suite
 suite <- new ("RKTestSuite", id="analysis_plugins",
 	# place here libraries that are required for *all* tests in this suite, or highly likely to be installed
@@ -154,7 +148,3 @@ suite <- new ("RKTestSuite", id="analysis_plugins",
 		}
 	)
 )
-
-## always store the result in "results" and print it
-results <- rktest.runRKTestSuite (suite)
-print (results)

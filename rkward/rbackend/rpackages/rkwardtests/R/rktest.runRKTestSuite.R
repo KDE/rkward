@@ -3,13 +3,14 @@
 #' This function can be called to run a single plugin test suite.
 #' 
 #' @title Run RKWard plugin test suite
-#' @usage rktest.runRKTestSuite(suite, basedir=getwd())
+#' @usage rktest.runRKTestSuite(suite, basedir=getwd(), test.id=NULL)
 #' @aliases rktest.runRKTestSuite
 #' @param suite Character string naming the test suite to run.
 #' @param basedir Defaults to the working directory.
+#' @param test.id An optional character string or vector naming one or more tests of a suite to be run (if NULL, all tests are run).
 #' @return An object of class \code{\link[rkwardtests:RKTestResult]{RKTestResult-class}}.
 #' @docType function
-#' @author Thomas Friedrichsmeier \email{thomas.friedrichsmeier@@ruhr-uni-bochum.de}
+#' @author Thomas Friedrichsmeier \email{thomas.friedrichsmeier@@ruhr-uni-bochum.de}, Meik Michalke \email{meik.michalke@@uni-duesseldorf.de}
 #' @keywords utilities
 #' @seealso \code{\link[rkwardtests:RKTestSuite]{RKTestSuite-class}}, \code{\link[rkwardtests:rktest.makeplugintests]{rktest.makeplugintests}}
 #' @export
@@ -18,7 +19,7 @@
 #' result <- rktest.runRKTestSuite()
 #' }
 
-rktest.runRKTestSuite <- function (suite, basedir=getwd ()) {
+rktest.runRKTestSuite <- function (suite, basedir=getwd (), test.id=NULL) {
 	rktest.initializeEnvironment ()
 	result <- new ("RKTestResult")		# FALSE by default
 
@@ -36,6 +37,10 @@ rktest.runRKTestSuite <- function (suite, basedir=getwd ()) {
 		for (i in 1:length (suite@initCalls)) try (suite@initCalls[[i]]())
 	}
 	rk.sync.global ()	# objects might have been added/changed in the init calls
+
+	# check if only a subset of tests is desired
+	if(length(test.id) > 0)
+	  suite@tests <- suite@tests[is.element(sapply(suite@tests, function(test){test@id}), test.id)]
 
 	for (i in 1:length (suite@tests)) {
 		suite@tests[[i]]@libraries <- c(suite@libraries, suite@tests[[i]]@libraries)

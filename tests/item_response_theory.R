@@ -1,6 +1,3 @@
-## intro
-if (!isClass ("RKTestSuite")) source ("test_framework.R")
-
 ## definition of the test suite
 suite <- new ("RKTestSuite", id="item_response_theory",
 	libraries = c ("ltm", "eRm"),
@@ -156,7 +153,3 @@ suite <- new ("RKTestSuite", id="item_response_theory",
 		}
 	)
 )
-
-## always store the result in "results" and print it
-results <- rktest.runRKTestSuite (suite)
-print (results)
