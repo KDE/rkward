@@ -1,7 +1,7 @@
 \name{rktest.makeplugintests}
 \alias{rktest.makeplugintests}
 \title{Run RKWard plugin test suite}
-\usage{rktest.makeplugintests(testsuites, outfile="make_plugintests.txt")}
+\usage{rktest.makeplugintests(testsuites, testroot, outfile="make_plugintests.txt")}
 \description{Run a whole RKWard plugin test suite}
 \details{The function \code{rktest.makeplugintests} will run a whole test suite that was prepared to check one or several RKWard plugins.}
 \alias{rktest.makeplugintests}
@@ -11,9 +11,10 @@
 \keyword{utilities}
 \seealso{\code{\link[rkwardtests:RKTestSuite]{RKTestSuite-class}}, \code{\link[rkwardtests:RKTestResult]{RKTestResult-class}}}
 \arguments{\item{testsuites}{A character vector naming the test suites to be run.}
+\item{testroot}{A character vector pointing to the root directory where the test suite resides (including its folder with test standards).}
 \item{outfile}{A character string giving a file name for the result log.}
 }
 \examples{\dontrun{
-rktest.makeplugintests(testsuites=c("rkward_application_tests.R", "import_export_plugins.R"))
+rktest.makeplugintests(testsuites=c("rkward_application_tests.R", "import_export_plugins.R"), testroot=getwd())
 }}
 

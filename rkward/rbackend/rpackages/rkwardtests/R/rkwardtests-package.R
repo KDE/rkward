@@ -4,8 +4,8 @@
 #' Package: \tab rkwardtests\cr
 #' Type: \tab Package\cr
 #' Version: \tab 0.5.5\cr
-#' Date: \tab 2010-10-05\cr
-#' Depends: \tab R (>= 2.9.0),methods,roxygen\cr
+#' Date: \tab 2010-10-07\cr
+#' Depends: \tab R (>= 2.9.0),methods\cr
 #' Encoding: \tab UTF-8\cr
 #' License: \tab GPL (>= 3)\cr
 #' LazyLoad: \tab yes\cr
@@ -21,4 +21,5 @@
 #' @author Thomas Friedrichsmeier \email{thomas.friedrichsmeier@@ruhr-uni-bochum.de}, Meik Michalke \email{meik.michalke@@uni-duesseldorf.de}
 #' @keywords package
 #' @seealso \code{\link[rkwardtests:rktest.makeplugintests]{rktest.makeplugintests}}
+roxygen <- function() NULL
 roxygen()
