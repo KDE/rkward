@@ -12,6 +12,10 @@ mkdir $DISTDIR
 
 $BASEDIR/scripts/set_dist_version.sh $VERSION
 
+# update roxygen documentation just in case we forgot:
+TESTSPACKAGE="${BASEDIR}/rkward/rbackend/rpackages/rkwardtests/"
+/usr/bin/R CMD roxygen "${TESTSPACKAGE}" "${TESTSPACKAGE}"
+
 cp -a AUTHORS CMakeLists.txt COPYING ChangeLog TODO INSTALL NOTES README configure $DISTDIR
 mkdir $DISTDIR/doc
 mkdir $DISTDIR/po
