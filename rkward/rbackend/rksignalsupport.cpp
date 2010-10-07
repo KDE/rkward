@@ -100,6 +100,11 @@ namespace RKSignalSupportPrivate {
 			return;
 		}
 #endif
+
+		RK_ASSERT (false);	// had not handler? Could conceivably happen, but should not.
+
+		signal (signum, SIG_DFL);
+		raise (signum);
 	}
 }
 
