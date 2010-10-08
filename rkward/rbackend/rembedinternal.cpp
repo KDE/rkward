@@ -239,8 +239,10 @@ void REmbedInternal::tryToDoEmergencySave () {
 	RK_TRACE (RBACKEND);
 
 	// we're probably in a signal handler, and the stack base has changed.
+	uintptr_t old_lim = R_CStackLimit;
 	R_CStackLimit = (uintptr_t)-1;
 	if (R_DirtyImage) R_SaveGlobalEnvToFile (RKCommonFunctions::getUseableRKWardSavefileName ("rkward_recover", ".RData").toLocal8Bit ());
+	R_CStackLimit = old_lim;
 }
 
 QStringList charPArrayToQStringList (const char** chars, int count) {
