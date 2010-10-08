@@ -263,6 +263,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 			type |= RObject::Function;
 		} else if (callSimpleBool (is_environment_fun, value, R_BaseEnv)) {
 			is_container = true;
+#warning TODO: if is (x, "refClass"), we should treat it as a list, not environment
 			is_environment = true;
 			type |= RObject::Environment;
 		} else {
