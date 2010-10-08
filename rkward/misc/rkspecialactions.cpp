@@ -216,18 +216,22 @@ QString RKPasteSpecialDialog::resultingText () {
 
 	QString ret;
 	if (dim == DimMatrix) ret.append ("cbind (\n");
+	else ret.append ("c (");	// DimVector
 
 	for (int i = 0; i < matrix.numColumns (); ++i) {
-		if (i != 0) ret.append ("),\n");
-		ret.append ("c(");
+		if (dim == DimMatrix) {
+			if (i != 0) ret.append ("),\n");
+			ret.append ("c(");
+		} else if (i != 0) ret.append (",");
+
 		for (int j = 0; j < matrix.numRows (); ++j) {
 			if (j != 0) ret.append (",");
 			ret.append (prepString (matrix.getText (j, i)));
 		}
-		if (i == (matrix.numColumns () - 1)) ret.append (")\n");
 	}
-
+	ret.append (")\n");
 	if (dim == DimMatrix) ret.append (")\n");
+
 	return (ret);
 }
 
