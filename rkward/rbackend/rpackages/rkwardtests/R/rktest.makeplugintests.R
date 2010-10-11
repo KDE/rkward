@@ -3,7 +3,8 @@
 #' The function \code{rktest.makeplugintests} will run a whole test suite that was prepared to check one or several RKWard plugins.
 #' 
 #' @title Run RKWard plugin test suite
-#' @usage rktest.makeplugintests(testsuites, testroot, outfile="make_plugintests.txt", append=FALSE, test.id=NULL)
+#' @usage rktest.makeplugintests(testsuites, testroot,
+#' outfile="make_plugintests.txt", append=FALSE, test.id=NULL)
 #' @aliases rktest.makeplugintests
 #' @param testsuites A character string or vector naming the test suites to be run.
 #' @param testroot A character string pointing to the root directory where the test suite resides (including its folder with test standards).
@@ -18,8 +19,10 @@
 #' @export
 #' @examples
 #' \dontrun{
-#' rktest.makeplugintests(testsuites=c("rkward_application_tests.R", "import_export_plugins.R"), testroot=getwd())
-#' rktest.makeplugintests(testsuites="distribution.R", testroot=getwd(), test.id=c("poisson_quantiles", "geom_quantiles"))
+#' rktest.makeplugintests(testsuites=c("rkward_application_tests.R",
+#'    "import_export_plugins.R"), testroot=getwd())
+#' rktest.makeplugintests(testsuites="distribution.R",
+#'   testroot=getwd(), test.id=c("poisson_quantiles", "geom_quantiles"))
 #' }
 
 rktest.makeplugintests <- function(testsuites, testroot, outfile="make_plugintests.txt", append=FALSE, test.id=NULL){

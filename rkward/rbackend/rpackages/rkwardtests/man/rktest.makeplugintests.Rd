@@ -1,7 +1,8 @@
 \name{rktest.makeplugintests}
 \alias{rktest.makeplugintests}
 \title{Run RKWard plugin test suite}
-\usage{rktest.makeplugintests(testsuites, testroot, outfile="make_plugintests.txt", append=FALSE, test.id=NULL)}
+\usage{rktest.makeplugintests(testsuites, testroot,
+outfile="make_plugintests.txt", append=FALSE, test.id=NULL)}
 \description{Run a whole RKWard plugin test suite}
 \details{The function \code{rktest.makeplugintests} will run a whole test suite that was prepared to check one or several RKWard plugins.}
 \alias{rktest.makeplugintests}
@@ -17,7 +18,9 @@
 \item{test.id}{An optional character string or vector naming one or more tests of a suite to be run (if NULL, all tests are run).}
 }
 \examples{\dontrun{
-rktest.makeplugintests(testsuites=c("rkward_application_tests.R", "import_export_plugins.R"), testroot=getwd())
-rktest.makeplugintests(testsuites="distribution.R", testroot=getwd(), test.id=c("poisson_quantiles", "geom_quantiles"))
+rktest.makeplugintests(testsuites=c("rkward_application_tests.R",
+"import_export_plugins.R"), testroot=getwd())
+rktest.makeplugintests(testsuites="distribution.R",
+testroot=getwd(), test.id=c("poisson_quantiles", "geom_quantiles"))
 }}
 

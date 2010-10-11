@@ -154,6 +154,12 @@ rktest.initializeEnvironment <- function () {
 	# Almost all tests depend on R2HTML, indirectly, so we should really assume it (or have the user install it) at the start
 	stopifnot (require (R2HTML))
 
+	# create a temporary dump of the current state of things we'll alter
+	# will be read by rktest.resetEnvironment()
+	assign(".rktest.tmp.dump",
+	  list(.rk.rerun.plugin.link=.rk.rerun.plugin.link,
+	        rk.set.output.html.file=rk.set.output.html.file),
+	  envir=globalenv())
 	# By default .rk.rerun.plugin.link() and .rk.make.hr() are silenced during the test runs
 	.rk.rerun.plugin.link <<- .rk.make.hr <<- function (...) { list (...) }
 
@@ -186,5 +192,12 @@ rktest.initializeEnvironment <- function () {
 
 # counterpart to rktest.initializeEnvironment. Restores the most important settings
 rktest.resetEnvironment <- function () {
-	.rk.rerun.plugin.link <<- .rk.rerun.plugin.link.replacement
+	# return to previously dumped state
+	assign(".rk.rerun.plugin.link",
+		.rktest.tmp.dump[[".rk.rerun.plugin.link"]],
+		envir=globalenv())
+	assign("rk.set.output.html.file",
+		.rktest.tmp.dump[["rk.set.output.html.file"]],
+		envir=globalenv())
+	rm(".rktest.tmp.dump", envir=globalenv())
 }
