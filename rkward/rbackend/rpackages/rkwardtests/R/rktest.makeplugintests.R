@@ -33,6 +33,7 @@ rktest.makeplugintests <- function(testsuites, testroot, outfile="make_plugintes
 
   ## initialize
   rktest.initializeEnvironment()
+  on.exit(rktest.resetEnvironment(), add=TRUE)
 
   sink (file = outfile, append=append, type="output", split=TRUE)
   cat ("RKWard Version:\n")

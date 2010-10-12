@@ -20,7 +20,13 @@
 #' }
 
 rktest.runRKTestSuite <- function (suite, basedir=getwd (), test.id=NULL) {
-	rktest.initializeEnvironment ()
+	# check wheter test environment is already set,
+	# otherwise initialize
+	if(!exists(".rktest.tmp.dump", where=globalenv())){
+	  rktest.initializeEnvironment()
+	  on.exit(rktest.resetEnvironment())
+	}
+
 	result <- new ("RKTestResult")		# FALSE by default
 
 	if (!inherits (suite, "RKTestSuite")) return (result)
@@ -30,7 +36,7 @@ rktest.runRKTestSuite <- function (suite, basedir=getwd (), test.id=NULL) {
 	rktest.cleanRKTestSuite (suite, basedir)
 
 	oldwd = getwd ()
-	on.exit (setwd (oldwd))
+	on.exit (setwd (oldwd), add=TRUE)
 	setwd (paste (basedir, suite@id, sep="/"))
 
 	if (length (suite@initCalls) > 0) {
@@ -51,8 +57,6 @@ rktest.runRKTestSuite <- function (suite, basedir=getwd (), test.id=NULL) {
 	if (length (suite@postCalls) > 0) {
 		for (i in 1:length (suite@postCalls)) try (suite@postCalls[[i]]())
 	}
-
-	rktest.resetEnvironment ()
 
 	result
 }

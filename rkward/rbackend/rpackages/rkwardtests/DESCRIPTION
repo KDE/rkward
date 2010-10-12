@@ -2,7 +2,7 @@ Package: rkwardtests
 Type: Package
 Title: RKWard Plugin Test Suite Framework
 Version: 0.5.5
-Date: 2010-10-07
+Date: 2010-10-12
 Author: Thomas Friedrichsmeier, Meik Michalke
 Maintainer: Thomas Friedrichsmeier <thomas.friedrichsmeier@ruhr-uni-bochum.de>, Meik Michalke <meik.michalke@uni-duesseldorf.de>
 Depends: R (>= 2.9.0),methods

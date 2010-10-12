@@ -140,9 +140,9 @@ rktest.cleanRKTestSuite <- function (suite, basedir=getwd ()) {
 	on.exit (setwd (oldwd))
 	setwd (paste (basedir, suite@id, sep="/"))
 
-	files <- list.files ()
+	files <-  list.files(pattern="\\.(rkcommands.R|rkout|messages.txt)$")
 	# do not delete the standards!
-	files <- grep ("^RKTestStandard\\..*\\.(messages.txt|rkcommands.R|rkout)$", files, value=TRUE, invert=TRUE)
+	files <- grep ("^RKTestStandard\\.", files, value=TRUE, invert=TRUE)
 
 	unlink (files)
 
