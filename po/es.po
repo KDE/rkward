@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
 "group_id=50231&atid=459007\n"
-"POT-Creation-Date: 2010-09-30 17:02+0200\n"
+"POT-Creation-Date: 2010-10-14 10:23+0200\n"
 "PO-Revision-Date: 2010-09-28 08:50+0200\n"
 "Last-Translator: Germán Márquez Mejía\n"
 "Language-Team: Spanish <rkward-devel@lists.sourceforge.net>\n"
@@ -1232,7 +1232,7 @@ msgstr "Actualización de la vista previa"
 msgid "Preview not (yet) possible"
 msgstr "La vista previa no es posible (aún)"
 
-#: plugin/rkstandardcomponent.cpp:88
+#: plugin/rkstandardcomponent.cpp:87
 msgid ""
 "There has been an error while trying to parse the description of this plugin "
 "('%1'). Please refer to stdout for details."
@@ -1240,7 +1240,7 @@ msgstr ""
 "Ha ocurrido un error mientras se intentaba desplegar la descripción de este "
 "complemento («%1»). Para detalles, por favor remítase a la salida estándar."
 
-#: plugin/rkstandardcomponent.cpp:88
+#: plugin/rkstandardcomponent.cpp:87
 msgid "Could not create plugin"
 msgstr "No se pudo crear el complemento"
 
@@ -1336,7 +1336,7 @@ msgstr "Estado"
 msgid "Description"
 msgstr "Descripción"
 
-#: rbackend/rembedinternal.cpp:139
+#: rbackend/rembedinternal.cpp:141
 msgid ""
 "The R engine has encountered a fatal error:\n"
 "%1"
@@ -1344,15 +1344,15 @@ msgstr ""
 "El motor R ha encontrado un error fatal:\n"
 "%1"
 
-#: rbackend/rembedinternal.cpp:218
+#: rbackend/rembedinternal.cpp:220
 msgid "The R engine has shut down with status: %1"
 msgstr "El motor R se ha apagado con el estado: %1"
 
-#: rbackend/rembedinternal.cpp:384
+#: rbackend/rembedinternal.cpp:396
 msgid "Message from the R backend"
 msgstr "Mensaje del motor R"
 
-#: rbackend/rembedinternal.cpp:391
+#: rbackend/rembedinternal.cpp:403
 msgid "Question from the R backend"
 msgstr "Pregunta del motor R"
 
@@ -1360,7 +1360,7 @@ msgstr "Pregunta del motor R"
 msgid "R Startup"
 msgstr "Arranque de R"
 
-#: rbackend/rinterface.cpp:218
+#: rbackend/rinterface.cpp:227
 msgid ""
 "<p>There was a problem starting the R backend. The following error(s) "
 "occurred:</p>\n"
@@ -1368,7 +1368,7 @@ msgstr ""
 "<p>Ocurrió un problema al arrancar el motor R. Ha(n) tenido lugar el(los) "
 "siguiente(s) error(es):</p>\n"
 
-#: rbackend/rinterface.cpp:220
+#: rbackend/rinterface.cpp:229
 msgid ""
 "</p>\t- The 'rkward' R-library either could not be loaded at all, or not in "
 "the correct version. This may lead to all sorts of errors, from single "
@@ -1389,7 +1389,7 @@ msgstr ""
 "instalación</b>. Para ayuda sobre este proceso véase <a href=\"http://p.sf."
 "net/rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</p>\n"
 
-#: rbackend/rinterface.cpp:224
+#: rbackend/rinterface.cpp:233
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
 "this is due to an incorrect version of the 'rkward' R-library or failure to "
@@ -1405,7 +1405,7 @@ msgstr ""
 "ayuda sobre este proceso véase <a href=\"http://p.sf.net/rkward/compiling"
 "\">http://p.sf.net/rkward/compiling</a>.</p></p>\n"
 
-#: rbackend/rinterface.cpp:228
+#: rbackend/rinterface.cpp:237
 msgid ""
 "<p>\t-An unspecified error occurred that is not yet handled by RKWard. "
 "Likely RKWard will not function properly. Please check your setup.</p>\n"
@@ -1414,11 +1414,11 @@ msgstr ""
 "Probablemente RKWard no funcionará correctamente. Por favor compruebe su "
 "configuración.</p>\n"
 
-#: rbackend/rinterface.cpp:236
+#: rbackend/rinterface.cpp:245
 msgid "Error starting R"
 msgstr "Error al arrancar R"
 
-#: rbackend/rinterface.cpp:362
+#: rbackend/rinterface.cpp:366
 msgid ""
 "The R-backend has indicated that in order to carry out the current task it "
 "needs the package '%1', which is not currently installed. We will open the "
@@ -1429,11 +1429,11 @@ msgstr ""
 "«%1», actualmente no instalado. Se abrirá la herramienta de gestión de "
 "paquetes y allí podrá intentar ubicar e instalar el paquete solicitado."
 
-#: rbackend/rinterface.cpp:362
+#: rbackend/rinterface.cpp:366
 msgid "Require package '%1'"
 msgstr "Requerir el paquete «%1»"
 
-#: rbackend/rinterface.cpp:399
+#: rbackend/rinterface.cpp:403
 msgid ""
 "A command in the R backend is trying to change the character encoding. While "
 "RKWard offers support for this, and will try to adjust to the new locale, "
@@ -1456,15 +1456,15 @@ msgstr ""
 "recientes de RKWard). En tal caso, por favor pulse «Cancelar» y cierre las "
 "ventanas de datos luego, guarde e intente nuevamente."
 
-#: rbackend/rinterface.cpp:399
+#: rbackend/rinterface.cpp:403
 msgid "Locale change"
 msgstr "Configuración regional"
 
-#: rbackend/rinterface.cpp:536
+#: rbackend/rinterface.cpp:548
 msgid "R backend requests information"
 msgstr "El motor R solicita información"
 
-#: rbackend/rinterface.cpp:553
+#: rbackend/rinterface.cpp:566
 msgid ""
 "\n"
 "It will be shut down immediately. This means, you can not use any more "
@@ -1486,7 +1486,7 @@ msgstr ""
 "correo a rkward-devel@lists.sourceforge.net y nos diga qué estaba intentando "
 "hacer cuando esto ocurrió. ¡Lo sentimos!"
 
-#: rbackend/rinterface.cpp:554
+#: rbackend/rinterface.cpp:567
 msgid "R engine has died"
 msgstr "El motor R ha muerto"
 
@@ -1782,71 +1782,6 @@ msgstr "Pulse «Actualizar» para obtener la información"
 msgid "Ready"
 msgstr "Preparado"
 
-#: scriptbackends/phpbackend.cpp:66
-msgid ""
-"The support file \"%1\" could not be found or is not readable. Please check "
-"your installation."
-msgstr ""
-"El archivo de soporte «%1» no fue encontrado o no se puede leer. Por favor "
-"verifique su instalación."
-
-#: scriptbackends/phpbackend.cpp:66 scriptbackends/phpbackend.cpp:167
-#: scriptbackends/phpbackend.cpp:201 scriptbackends/phpbackend.cpp:219
-msgid "PHP-Error"
-msgstr "Error de PHP"
-
-#: scriptbackends/phpbackend.cpp:167
-msgid ""
-"There has been an error\n"
-"(\"%1\")\n"
-"while starting up the PHP backend. Most likely this is due to either a bug "
-"in RKWard or a problem with your PHP installation. Check the settings "
-"(Settings->Configure Settings->PHP backend) and try again."
-msgstr ""
-"Ha ocurrido un error\n"
-"(«%1»)\n"
-"mientras se iniciaba el motor PHP. Probablemente se deba a un error en "
-"RKWard o a un problema con su instalación de PHP. Compruebe la configuración "
-"(Preferencias->Configurar RKWard->Motor PHP) e intente nuevamente."
-
-#: scriptbackends/phpbackend.cpp:201
-msgid ""
-"The PHP-backend has reported an error\n"
-"(\"%1\")\n"
-"and has been shut down. This is most likely due to a bug in the plugin. But "
-"of course you may want to try to close and restart the plugin to see whether "
-"it works with different settings."
-msgstr ""
-"El motor PHP ha reportado un error\n"
-"(«%1»)\n"
-"y ha sido apagado. Esto posiblemente se deba a un error en el complemento. "
-"Tal vez desee intentar cerrar y reiniciar el complemento para ver si trabaja "
-"con otra configuración."
-
-#: scriptbackends/phpbackend.cpp:219
-msgid ""
-"The PHP backend could not be started. Check whether you have correctly "
-"configured the location of the PHP-binary (Settings->Configure Settings->PHP "
-"backend)"
-msgstr ""
-"No se ha podido iniciar el motor PHP. Compruebe que ha configurado "
-"correctamente la ubicación del ejecutable (Preferencias->Configurar RKWard-"
-">Motor PHP)"
-
-#: scriptbackends/phpbackend.cpp:221
-msgid ""
-"The PHP-backend has died unexpectedly. The current output buffer is shown "
-"below:\n"
-"%1"
-msgstr ""
-"El motor PHP murió inesperadamente. El búfer de salida actual se muestra a "
-"continuación:\n"
-"%1"
-
-#: scriptbackends/phpbackend.cpp:221
-msgid "PHP Process exited"
-msgstr "El proceso PHP terminó"
-
 #: scriptbackends/qtscriptbackend.cpp:114
 msgid ""
 "The QtScript-backend has reported an error:\n"
@@ -1909,7 +1844,7 @@ msgstr "## Computar\n"
 msgid "## Print result\n"
 msgstr "## Imprimir el resultado\n"
 
-#: settings/rksettings.cpp:72
+#: settings/rksettings.cpp:71
 msgid "Settings"
 msgstr "Preferencias"
 
@@ -2236,21 +2171,7 @@ msgstr "Ancho:"
 msgid "Height:"
 msgstr "Alto:"
 
-#: settings/rksettingsmodulephp.cpp:39
-msgid "Changes in this section take effect the next time you start a plugin"
-msgstr ""
-"Los cambios en esta sección tendrán efecto la próxima vez que arranque un "
-"complemento"
-
-#: settings/rksettingsmodulephp.cpp:45
-msgid "File-location of the PHP binary"
-msgstr "Ubicación del ejecutable PHP"
-
-#: settings/rksettingsmodulephp.cpp:63
-msgid "PHP backend"
-msgstr "Motor PHP"
-
-#: settings/rksettingsmoduleplugins.cpp:54
+#: settings/rksettingsmoduleplugins.cpp:59
 msgid ""
 "Some plugins are available with both, a wizard-like interface and a "
 "traditional dialog interface. If both are available, which mode of "
@@ -2260,39 +2181,39 @@ msgstr ""
 "interfaz de diálogo tradicional. En el caso de que ambas estén disponibles, "
 "¿cuál prefiere?"
 
-#: settings/rksettingsmoduleplugins.cpp:64
+#: settings/rksettingsmoduleplugins.cpp:69
 msgid "Always prefer dialogs"
 msgstr "Siempre preferir diálogos"
 
-#: settings/rksettingsmoduleplugins.cpp:67
+#: settings/rksettingsmoduleplugins.cpp:72
 msgid "Prefer recommended interface"
 msgstr "Preferir la interfaz recomendada"
 
-#: settings/rksettingsmoduleplugins.cpp:70
+#: settings/rksettingsmoduleplugins.cpp:75
 msgid "Always prefer wizards"
 msgstr "Siempre preferir asistentes"
 
-#: settings/rksettingsmoduleplugins.cpp:82
+#: settings/rksettingsmoduleplugins.cpp:87
 msgid "R syntax display (in dialogs)"
 msgstr "Mostrar la sintaxis de R (en los diálogos)"
 
-#: settings/rksettingsmoduleplugins.cpp:85
+#: settings/rksettingsmoduleplugins.cpp:90
 msgid "Code shown by default"
 msgstr "Mostrar el código por defecto"
 
-#: settings/rksettingsmoduleplugins.cpp:91
+#: settings/rksettingsmoduleplugins.cpp:96
 msgid "Default height of code display (pixels)"
 msgstr "Altura predeterminada del área de código (en pixeles)"
 
-#: settings/rksettingsmoduleplugins.cpp:103
+#: settings/rksettingsmoduleplugins.cpp:108
 msgid "Select .pluginmap file(s)"
 msgstr "Seleccionar archivo(s) .pluginmap"
 
-#: settings/rksettingsmoduleplugins.cpp:130
+#: settings/rksettingsmoduleplugins.cpp:135
 msgid "Select .pluginmap-file"
 msgstr "Seleccionar archivo .pluginmap"
 
-#: settings/rksettingsmoduleplugins.cpp:135
+#: settings/rksettingsmoduleplugins.cpp:140
 msgid "Plugins"
 msgstr "Complementos"
 
@@ -3471,6 +3392,75 @@ msgstr "Marcelino Villarino, Germán Márquez Mejía"
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "mvillarino@users.sourceforge.net, manchito@users.sourceforge.net"
+
+#~ msgid ""
+#~ "The support file \"%1\" could not be found or is not readable. Please "
+#~ "check your installation."
+#~ msgstr ""
+#~ "El archivo de soporte «%1» no fue encontrado o no se puede leer. Por "
+#~ "favor verifique su instalación."
+
+#~ msgid "PHP-Error"
+#~ msgstr "Error de PHP"
+
+#~ msgid ""
+#~ "There has been an error\n"
+#~ "(\"%1\")\n"
+#~ "while starting up the PHP backend. Most likely this is due to either a "
+#~ "bug in RKWard or a problem with your PHP installation. Check the settings "
+#~ "(Settings->Configure Settings->PHP backend) and try again."
+#~ msgstr ""
+#~ "Ha ocurrido un error\n"
+#~ "(«%1»)\n"
+#~ "mientras se iniciaba el motor PHP. Probablemente se deba a un error en "
+#~ "RKWard o a un problema con su instalación de PHP. Compruebe la "
+#~ "configuración (Preferencias->Configurar RKWard->Motor PHP) e intente "
+#~ "nuevamente."
+
+#~ msgid ""
+#~ "The PHP-backend has reported an error\n"
+#~ "(\"%1\")\n"
+#~ "and has been shut down. This is most likely due to a bug in the plugin. "
+#~ "But of course you may want to try to close and restart the plugin to see "
+#~ "whether it works with different settings."
+#~ msgstr ""
+#~ "El motor PHP ha reportado un error\n"
+#~ "(«%1»)\n"
+#~ "y ha sido apagado. Esto posiblemente se deba a un error en el "
+#~ "complemento. Tal vez desee intentar cerrar y reiniciar el complemento "
+#~ "para ver si trabaja con otra configuración."
+
+#~ msgid ""
+#~ "The PHP backend could not be started. Check whether you have correctly "
+#~ "configured the location of the PHP-binary (Settings->Configure Settings-"
+#~ ">PHP backend)"
+#~ msgstr ""
+#~ "No se ha podido iniciar el motor PHP. Compruebe que ha configurado "
+#~ "correctamente la ubicación del ejecutable (Preferencias->Configurar "
+#~ "RKWard->Motor PHP)"
+
+#~ msgid ""
+#~ "The PHP-backend has died unexpectedly. The current output buffer is shown "
+#~ "below:\n"
+#~ "%1"
+#~ msgstr ""
+#~ "El motor PHP murió inesperadamente. El búfer de salida actual se muestra "
+#~ "a continuación:\n"
+#~ "%1"
+
+#~ msgid "PHP Process exited"
+#~ msgstr "El proceso PHP terminó"
+
+#~ msgid "Changes in this section take effect the next time you start a plugin"
+#~ msgstr ""
+#~ "Los cambios en esta sección tendrán efecto la próxima vez que arranque un "
+#~ "complemento"
+
+#~ msgid "File-location of the PHP binary"
+#~ msgstr "Ubicación del ejecutable PHP"
+
+#~ msgid "PHP backend"
+#~ msgstr "Motor PHP"
 
 #~ msgid "Cutting selection..."
 #~ msgstr "Cortando la selección..."

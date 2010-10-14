@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
 "group_id=50231&atid=459007\n"
-"POT-Creation-Date: 2010-09-30 17:02+0200\n"
+"POT-Creation-Date: 2010-10-14 10:23+0200\n"
 "PO-Revision-Date: 2010-09-29 10:38+0200\n"
 "Last-Translator: Stefan Rödiger <stefan_roediger@gmx.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -1255,7 +1255,7 @@ msgstr "Aktualisiere Vorschau"
 msgid "Preview not (yet) possible"
 msgstr "Vorschau ist (noch) nicht möglich"
 
-#: plugin/rkstandardcomponent.cpp:88
+#: plugin/rkstandardcomponent.cpp:87
 msgid ""
 "There has been an error while trying to parse the description of this plugin "
 "('%1'). Please refer to stdout for details."
@@ -1263,7 +1263,7 @@ msgstr ""
 "Beim Versuch die Beschreibung dieses Plugins zu lese, ist ein Fehler "
 "aufgetreten ('%1'). Bitte berufen Sie sich auf stdout für Details."
 
-#: plugin/rkstandardcomponent.cpp:88
+#: plugin/rkstandardcomponent.cpp:87
 msgid "Could not create plugin"
 msgstr "Konnte Plugin nicht erzeugen"
 
@@ -1359,7 +1359,7 @@ msgstr "Status"
 msgid "Description"
 msgstr "Beschreibung"
 
-#: rbackend/rembedinternal.cpp:139
+#: rbackend/rembedinternal.cpp:141
 msgid ""
 "The R engine has encountered a fatal error:\n"
 "%1"
@@ -1367,15 +1367,15 @@ msgstr ""
 "Die R-Engine ist auf einen fatalen Fehler getroffen:\n"
 "%1"
 
-#: rbackend/rembedinternal.cpp:218
+#: rbackend/rembedinternal.cpp:220
 msgid "The R engine has shut down with status: %1"
 msgstr "Die R-Engine wurde beendet mit dem Status: %1"
 
-#: rbackend/rembedinternal.cpp:384
+#: rbackend/rembedinternal.cpp:396
 msgid "Message from the R backend"
 msgstr "Benachrichtigung vom R-Backend"
 
-#: rbackend/rembedinternal.cpp:391
+#: rbackend/rembedinternal.cpp:403
 msgid "Question from the R backend"
 msgstr "Benachrichtigung vom R-Backend"
 
@@ -1383,7 +1383,7 @@ msgstr "Benachrichtigung vom R-Backend"
 msgid "R Startup"
 msgstr "R Start"
 
-#: rbackend/rinterface.cpp:218
+#: rbackend/rinterface.cpp:227
 msgid ""
 "<p>There was a problem starting the R backend. The following error(s) "
 "occurred:</p>\n"
@@ -1391,7 +1391,7 @@ msgstr ""
 "<p>Es gab ein Problem beim Start vom R-Backend. Die folgenden Fehler traten "
 "auf:</p>\n"
 
-#: rbackend/rinterface.cpp:220
+#: rbackend/rinterface.cpp:229
 msgid ""
 "</p>\t- The 'rkward' R-library either could not be loaded at all, or not in "
 "the correct version. This may lead to all sorts of errors, from single "
@@ -1413,7 +1413,7 @@ msgstr ""
 "Sie sich bitte an <a href=\"http://p.sf.net/rkward/compiling\">http://p.sf."
 "net/rkward/compiling</a>.</p>\n"
 
-#: rbackend/rinterface.cpp:224
+#: rbackend/rinterface.cpp:233
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
 "this is due to an incorrect version of the 'rkward' R-library or failure to "
@@ -1429,7 +1429,7 @@ msgstr ""
 "b>Hilfe finden Sie unter <a href=\"http://p.sf.net/rkward/compiling\">http://"
 "p.sf.net/rkward/compiling</a>.</p>\n"
 
-#: rbackend/rinterface.cpp:228
+#: rbackend/rinterface.cpp:237
 msgid ""
 "<p>\t-An unspecified error occurred that is not yet handled by RKWard. "
 "Likely RKWard will not function properly. Please check your setup.</p>\n"
@@ -1438,11 +1438,11 @@ msgstr ""
 "RKWard gehandhabt werden kann. Wahrscheinlich wird RKWard nicht richtig "
 "funktionieren. Bitte überprüfen Sie ihr Setup.</p>\n"
 
-#: rbackend/rinterface.cpp:236
+#: rbackend/rinterface.cpp:245
 msgid "Error starting R"
 msgstr "Fehler beim Start von R"
 
-#: rbackend/rinterface.cpp:362
+#: rbackend/rinterface.cpp:366
 msgid ""
 "The R-backend has indicated that in order to carry out the current task it "
 "needs the package '%1', which is not currently installed. We will open the "
@@ -1453,11 +1453,11 @@ msgstr ""
 "durchzuführen. Es wird das Paket-Management-Tool geöffnet. Von dort können "
 "Sie versuchen, das benötigte Paket zu finden und zu installieren."
 
-#: rbackend/rinterface.cpp:362
+#: rbackend/rinterface.cpp:366
 msgid "Require package '%1'"
 msgstr "Benötige Paket '%1'"
 
-#: rbackend/rinterface.cpp:399
+#: rbackend/rinterface.cpp:403
 msgid ""
 "A command in the R backend is trying to change the character encoding. While "
 "RKWard offers support for this, and will try to adjust to the new locale, "
@@ -1479,15 +1479,15 @@ msgstr ""
 "automatisch geschehen). In diesem Fall wählen Sie bitte 'Abbrechen', dann "
 "schließen Sie das Datenfenster, sichern alles und versuchen es nochmals."
 
-#: rbackend/rinterface.cpp:399
+#: rbackend/rinterface.cpp:403
 msgid "Locale change"
 msgstr "Lokale Änderung"
 
-#: rbackend/rinterface.cpp:536
+#: rbackend/rinterface.cpp:548
 msgid "R backend requests information"
 msgstr "R-Backend erbittet Informationen"
 
-#: rbackend/rinterface.cpp:553
+#: rbackend/rinterface.cpp:566
 msgid ""
 "\n"
 "It will be shut down immediately. This means, you can not use any more "
@@ -1510,7 +1510,7 @@ msgstr ""
 "aussagekräftige E-Mail mit der Beschreibung was passierte an rkward-"
 "devel@lists.sourceforge.net. Entschuldigung!"
 
-#: rbackend/rinterface.cpp:554
+#: rbackend/rinterface.cpp:567
 msgid "R engine has died"
 msgstr "R-Engine ist 'gestorben'"
 
@@ -1806,72 +1806,6 @@ msgstr "Klicken Sie auf \"Aktualisieren\" um Informationen abzurufen"
 msgid "Ready"
 msgstr "Fertig"
 
-#: scriptbackends/phpbackend.cpp:66
-msgid ""
-"The support file \"%1\" could not be found or is not readable. Please check "
-"your installation."
-msgstr ""
-"Die unterstützende Datei \"%1\" konnte nicht gefunden werden oder ist nicht "
-"lesbar. Bitte überprüfen Sie ihre Installation."
-
-#: scriptbackends/phpbackend.cpp:66 scriptbackends/phpbackend.cpp:167
-#: scriptbackends/phpbackend.cpp:201 scriptbackends/phpbackend.cpp:219
-msgid "PHP-Error"
-msgstr "PHP-Fehler"
-
-#: scriptbackends/phpbackend.cpp:167
-msgid ""
-"There has been an error\n"
-"(\"%1\")\n"
-"while starting up the PHP backend. Most likely this is due to either a bug "
-"in RKWard or a problem with your PHP installation. Check the settings "
-"(Settings->Configure Settings->PHP backend) and try again."
-msgstr ""
-"Es ist ein Fehler\n"
-"(\"%1\")\n"
-"während des Starts des PHP-Backend aufgetreten. Ursache ist wahrscheinlich "
-"ein Bug in RKWard, oder ein Problem mit Ihrer PHP-Installation. Überprüfen "
-"Sie diese Einstellungen (Einstellungen->Konfiguriere Einstellungen->PHP-"
-"Backend) und versuchen Sie es nochmals."
-
-#: scriptbackends/phpbackend.cpp:201
-msgid ""
-"The PHP-backend has reported an error\n"
-"(\"%1\")\n"
-"and has been shut down. This is most likely due to a bug in the plugin. But "
-"of course you may want to try to close and restart the plugin to see whether "
-"it works with different settings."
-msgstr ""
-"Das PHP-Backende hat einen Fehler berichtet(\"%1\")\n"
-"und wurde geschlossen. Dies lässt sich meistens auf ein Bug im Plugin "
-"zurückführen. Aber selbstverständlich können Sie das Plugin schließen und "
-"erneut starten, um zu überprüfen ob es mit anderen Einstellungen "
-"funktioniert."
-
-#: scriptbackends/phpbackend.cpp:219
-msgid ""
-"The PHP backend could not be started. Check whether you have correctly "
-"configured the location of the PHP-binary (Settings->Configure Settings->PHP "
-"backend)"
-msgstr ""
-"Das PHP Backend konnte nicht gestartet werden. Überprüfen Sie bitte ob Sie "
-"den Speicherort der PHP- Binary korrekt angegeben haben (Einstellungen-"
-">Konfiguriere Einstellungen->PHP Backend)"
-
-#: scriptbackends/phpbackend.cpp:221
-msgid ""
-"The PHP-backend has died unexpectedly. The current output buffer is shown "
-"below:\n"
-"%1"
-msgstr ""
-"Das PHP-Backend wurde unerwartet beendet. Der gegenwärtige Ausgabepuffer "
-"wird unten angezeigt:\n"
-"%1"
-
-#: scriptbackends/phpbackend.cpp:221
-msgid "PHP Process exited"
-msgstr "PHP-Prozess beendet"
-
 #: scriptbackends/qtscriptbackend.cpp:114
 msgid ""
 "The QtScript-backend has reported an error:\n"
@@ -1934,7 +1868,7 @@ msgstr "## Berechne\n"
 msgid "## Print result\n"
 msgstr "## Drucke Ergebnisse\n"
 
-#: settings/rksettings.cpp:72
+#: settings/rksettings.cpp:71
 msgid "Settings"
 msgstr "Einstellungen"
 
@@ -2266,21 +2200,7 @@ msgstr "Weite:"
 msgid "Height:"
 msgstr "Höhe:"
 
-#: settings/rksettingsmodulephp.cpp:39
-msgid "Changes in this section take effect the next time you start a plugin"
-msgstr ""
-"Änderungen in diesen Sektionen werden erst beim nächsten Start des Plugins "
-"wirksam"
-
-#: settings/rksettingsmodulephp.cpp:45
-msgid "File-location of the PHP binary"
-msgstr "Adresse, wo PHP-Binärdatei zu finden ist"
-
-#: settings/rksettingsmodulephp.cpp:63
-msgid "PHP backend"
-msgstr "PHP-Backend"
-
-#: settings/rksettingsmoduleplugins.cpp:54
+#: settings/rksettingsmoduleplugins.cpp:59
 msgid ""
 "Some plugins are available with both, a wizard-like interface and a "
 "traditional dialog interface. If both are available, which mode of "
@@ -2290,39 +2210,39 @@ msgstr ""
 "artigen und einem traditionell Dialog-basierten. Welchen Modus bevorzugen "
 "Sie, falls beide vorhanden sind?"
 
-#: settings/rksettingsmoduleplugins.cpp:64
+#: settings/rksettingsmoduleplugins.cpp:69
 msgid "Always prefer dialogs"
 msgstr "Bevorzuge immer Dialoge"
 
-#: settings/rksettingsmoduleplugins.cpp:67
+#: settings/rksettingsmoduleplugins.cpp:72
 msgid "Prefer recommended interface"
 msgstr "Bevorzuge empfohlene Interfaces"
 
-#: settings/rksettingsmoduleplugins.cpp:70
+#: settings/rksettingsmoduleplugins.cpp:75
 msgid "Always prefer wizards"
 msgstr "Bevorzuge immer Wizards"
 
-#: settings/rksettingsmoduleplugins.cpp:82
+#: settings/rksettingsmoduleplugins.cpp:87
 msgid "R syntax display (in dialogs)"
 msgstr "R-Syntaxanzeige (in Dialogen)"
 
-#: settings/rksettingsmoduleplugins.cpp:85
+#: settings/rksettingsmoduleplugins.cpp:90
 msgid "Code shown by default"
 msgstr "Code standardmäßig anzeigen"
 
-#: settings/rksettingsmoduleplugins.cpp:91
+#: settings/rksettingsmoduleplugins.cpp:96
 msgid "Default height of code display (pixels)"
 msgstr "Standardhöhe vom Code-Display (Pixel)"
 
-#: settings/rksettingsmoduleplugins.cpp:103
+#: settings/rksettingsmoduleplugins.cpp:108
 msgid "Select .pluginmap file(s)"
 msgstr "Wähle .pluginmap-Datei(en )"
 
-#: settings/rksettingsmoduleplugins.cpp:130
+#: settings/rksettingsmoduleplugins.cpp:135
 msgid "Select .pluginmap-file"
 msgstr "Wähle .pluginmap-Datei"
 
-#: settings/rksettingsmoduleplugins.cpp:135
+#: settings/rksettingsmoduleplugins.cpp:140
 msgid "Plugins"
 msgstr "Plugins"
 
@@ -3504,6 +3424,75 @@ msgstr "Stefan Rödiger, Jannis Vajen"
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "stefan_roediger@gmx.de, jvajen@googlemail.com"
+
+#~ msgid ""
+#~ "The support file \"%1\" could not be found or is not readable. Please "
+#~ "check your installation."
+#~ msgstr ""
+#~ "Die unterstützende Datei \"%1\" konnte nicht gefunden werden oder ist "
+#~ "nicht lesbar. Bitte überprüfen Sie ihre Installation."
+
+#~ msgid "PHP-Error"
+#~ msgstr "PHP-Fehler"
+
+#~ msgid ""
+#~ "There has been an error\n"
+#~ "(\"%1\")\n"
+#~ "while starting up the PHP backend. Most likely this is due to either a "
+#~ "bug in RKWard or a problem with your PHP installation. Check the settings "
+#~ "(Settings->Configure Settings->PHP backend) and try again."
+#~ msgstr ""
+#~ "Es ist ein Fehler\n"
+#~ "(\"%1\")\n"
+#~ "während des Starts des PHP-Backend aufgetreten. Ursache ist "
+#~ "wahrscheinlich ein Bug in RKWard, oder ein Problem mit Ihrer PHP-"
+#~ "Installation. Überprüfen Sie diese Einstellungen (Einstellungen-"
+#~ ">Konfiguriere Einstellungen->PHP-Backend) und versuchen Sie es nochmals."
+
+#~ msgid ""
+#~ "The PHP-backend has reported an error\n"
+#~ "(\"%1\")\n"
+#~ "and has been shut down. This is most likely due to a bug in the plugin. "
+#~ "But of course you may want to try to close and restart the plugin to see "
+#~ "whether it works with different settings."
+#~ msgstr ""
+#~ "Das PHP-Backende hat einen Fehler berichtet(\"%1\")\n"
+#~ "und wurde geschlossen. Dies lässt sich meistens auf ein Bug im Plugin "
+#~ "zurückführen. Aber selbstverständlich können Sie das Plugin schließen und "
+#~ "erneut starten, um zu überprüfen ob es mit anderen Einstellungen "
+#~ "funktioniert."
+
+#~ msgid ""
+#~ "The PHP backend could not be started. Check whether you have correctly "
+#~ "configured the location of the PHP-binary (Settings->Configure Settings-"
+#~ ">PHP backend)"
+#~ msgstr ""
+#~ "Das PHP Backend konnte nicht gestartet werden. Überprüfen Sie bitte ob "
+#~ "Sie den Speicherort der PHP- Binary korrekt angegeben haben "
+#~ "(Einstellungen->Konfiguriere Einstellungen->PHP Backend)"
+
+#~ msgid ""
+#~ "The PHP-backend has died unexpectedly. The current output buffer is shown "
+#~ "below:\n"
+#~ "%1"
+#~ msgstr ""
+#~ "Das PHP-Backend wurde unerwartet beendet. Der gegenwärtige Ausgabepuffer "
+#~ "wird unten angezeigt:\n"
+#~ "%1"
+
+#~ msgid "PHP Process exited"
+#~ msgstr "PHP-Prozess beendet"
+
+#~ msgid "Changes in this section take effect the next time you start a plugin"
+#~ msgstr ""
+#~ "Änderungen in diesen Sektionen werden erst beim nächsten Start des "
+#~ "Plugins wirksam"
+
+#~ msgid "File-location of the PHP binary"
+#~ msgstr "Adresse, wo PHP-Binärdatei zu finden ist"
+
+#~ msgid "PHP backend"
+#~ msgstr "PHP-Backend"
 
 #~ msgid "Cutting selection..."
 #~ msgstr "Auswahl ausschneiden..."

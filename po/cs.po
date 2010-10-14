@@ -10,14 +10,15 @@
 # Stefan Roediger <stefan_roediger@gmx.de>, 2007.
 # Stefan Rödiger <stefan_roediger@gmx.de>, 2007, 2009.
 # Pavel Fric <pavelfric@seznam.cz>, 2009, 2010.
+# Pavel Fric <fripohled@blogspot.com>, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
 "group_id=50231&atid=459007\n"
-"POT-Creation-Date: 2010-09-30 17:02+0200\n"
-"PO-Revision-Date: 2010-04-30 15:36+0200\n"
-"Last-Translator: Pavel\n"
+"POT-Creation-Date: 2010-10-14 10:23+0200\n"
+"PO-Revision-Date: 2010-10-06 11:49+0200\n"
+"Last-Translator: Pavel Fric <fripohled@blogspot.com>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
@@ -242,13 +243,12 @@ msgid "Class"
 msgstr "Třída"
 
 #: core/rkrownames.cpp:40
-#, fuzzy
 msgid "row names"
-msgstr "Pavel Fric"
+msgstr "názvy řádků"
 
 #: core/rkrownames.cpp:105
 msgid "new.row"
-msgstr ""
+msgstr "nový řádek"
 
 #: core/robject.cpp:118
 msgid "Full location:"
@@ -412,7 +412,6 @@ msgid "Copies the selected section to the clipboard"
 msgstr "Kopíruje vybranou část do schránky"
 
 #: dataeditor/twintable.cpp:107
-#, fuzzy
 msgid "Pastes the clipboard contents to current position"
 msgstr "Vloží obsah schránky v současné poloze"
 
@@ -421,7 +420,6 @@ msgid "Paste inside table"
 msgstr "Vložit do tabulky"
 
 #: dataeditor/twintable.cpp:112
-#, fuzzy
 msgid ""
 "Pastes the clipboard contents to current position, but not beyond the "
 "table's boundaries"
@@ -432,7 +430,6 @@ msgid "Paste inside selection"
 msgstr "Vložit do výběru"
 
 #: dataeditor/twintable.cpp:117
-#, fuzzy
 msgid ""
 "Pastes the clipboard contents to current position, but not beyond the "
 "boundaries of the current selection"
@@ -446,10 +443,14 @@ msgid ""
 "know what you are doing, but you are strongly advised to fix the table, and/"
 "or backup your data, first."
 msgstr ""
+"Editor '%1' obsahuje následující zdvojené sloupce. Úpravy této tabulky "
+"nemusí být bezpečné a byly zakázány. Úpravy můžete znovu povolit, pokud "
+"víte, co děláte, ale naléhavě se doporučuje nejprve tabulku opravit a/nebo "
+"zazálohovat vaše data."
 
 #: dataeditor/twintable.cpp:182
 msgid "Duplicate columns detected"
-msgstr ""
+msgstr "Zjištěny zdvojené sloupce"
 
 #: dataeditor/twintable.cpp:191
 msgid " [read-only]"
@@ -692,7 +693,6 @@ msgid "Attempt installation, anyway"
 msgstr "Každopádně se pokusit o instalaci"
 
 #: dialogs/rkloadlibsdialog.cpp:878
-#, fuzzy
 msgid ""
 "If you are the administrator of this machine, you can try to install the "
 "packages as root (you'll be prompted for the root password)."
@@ -949,17 +949,15 @@ msgstr "Zrušit"
 
 #: misc/rksaveobjectchooser.cpp:53
 msgid "Change"
-msgstr ""
+msgstr "Změnit"
 
 #: misc/rksaveobjectchooser.cpp:92
-#, fuzzy
 msgid "Parent object: %1"
-msgstr "Přejmenovat předmět"
+msgstr "Rodičovský předmět: %1"
 
 #: misc/rksaveobjectchooser.cpp:103
-#, fuzzy
 msgid "Select parent object"
-msgstr "Obnovit předmět?"
+msgstr "Vybrat rodičovský předmět"
 
 #: misc/rksaveobjectchooser.cpp:178
 msgid "Overwrite? (The given object name already exists)"
@@ -1238,7 +1236,7 @@ msgstr "Obnovení náhledu"
 msgid "Preview not (yet) possible"
 msgstr "Náhled není (ještě) možný"
 
-#: plugin/rkstandardcomponent.cpp:88
+#: plugin/rkstandardcomponent.cpp:87
 msgid ""
 "There has been an error while trying to parse the description of this plugin "
 "('%1'). Please refer to stdout for details."
@@ -1246,7 +1244,7 @@ msgstr ""
 "Při pokusu o přečtení popisu k tomuto přídavnému modulu se vyskytla chyba "
 "('%1'). Podívejte se, prosím na stdout kvůli podrobnostem."
 
-#: plugin/rkstandardcomponent.cpp:88
+#: plugin/rkstandardcomponent.cpp:87
 msgid "Could not create plugin"
 msgstr "Nepodařilo se vytvořit přídavný modul"
 
@@ -1342,7 +1340,7 @@ msgstr "Stav"
 msgid "Description"
 msgstr "Popis"
 
-#: rbackend/rembedinternal.cpp:139
+#: rbackend/rembedinternal.cpp:141
 msgid ""
 "The R engine has encountered a fatal error:\n"
 "%1"
@@ -1350,15 +1348,15 @@ msgstr ""
 "Jádro R potkala osudná chyba:\n"
 "%1"
 
-#: rbackend/rembedinternal.cpp:218
+#: rbackend/rembedinternal.cpp:220
 msgid "The R engine has shut down with status: %1"
 msgstr "Jádro R bylo zastaveno se stavem: %1 "
 
-#: rbackend/rembedinternal.cpp:384
+#: rbackend/rembedinternal.cpp:396
 msgid "Message from the R backend"
 msgstr "Oznámení od jádra k R"
 
-#: rbackend/rembedinternal.cpp:391
+#: rbackend/rembedinternal.cpp:403
 msgid "Question from the R backend"
 msgstr "Otázka od jádra k R"
 
@@ -1366,7 +1364,7 @@ msgstr "Otázka od jádra k R"
 msgid "R Startup"
 msgstr "Spuštění R"
 
-#: rbackend/rinterface.cpp:218
+#: rbackend/rinterface.cpp:227
 msgid ""
 "<p>There was a problem starting the R backend. The following error(s) "
 "occurred:</p>\n"
@@ -1374,7 +1372,7 @@ msgstr ""
 "<p>Při spouštění jádra R vznikly určitá potíže. Vyskytla se následující chyba"
 "(y):</p>\n"
 
-#: rbackend/rinterface.cpp:220
+#: rbackend/rinterface.cpp:229
 msgid ""
 "</p>\t- The 'rkward' R-library either could not be loaded at all, or not in "
 "the correct version. This may lead to all sorts of errors, from single "
@@ -1394,8 +1392,7 @@ msgstr ""
 "opravit svou instalaci</b>. S tímto vám pomůže <a href=\"http://p.sf.net/"
 "rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</p>\n"
 
-#: rbackend/rinterface.cpp:224
-#, fuzzy
+#: rbackend/rinterface.cpp:233
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
 "this is due to an incorrect version of the 'rkward' R-library or failure to "
@@ -1404,15 +1401,14 @@ msgid ""
 "see <a href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/rkward/"
 "compiling</a>.</p></p>\n"
 msgstr ""
-"<p>RKWard buď nemohl vůbec najít své zdrojové soubory, nebo pouze staré "
-"verze těchto souborů. Většinou bývá příčinou této věci, že při poslední "
-"instalaci se nepodařilo umístit tyto soubory na správné místo. Může to vést "
-"ke všem druhům potíží, od chybění jednoduchých funkcí po úplné selhání "
-"funkčnosti.</p><p><b>Měl byste nyní ukončit RKWard, a opravit svou "
-"instalaci</b>. Pomoc s tím hledejte na adrese <a href=\"http://p.sf.net/"
-"rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</p>"
+"<p>\t-Při zřizování spojení s R se vyskytly potíže. Nejpravděpodobněji je to "
+"kvůli nesprávné verzi knihovny R 'rkward', nebo se ji vůbec nepovedlo najít. "
+"Značí to poškozenou instalaci.</p>\t\t\t<p><b>Měl byste nyní RKWard ukončit, "
+"a svou instalaci opravit</b>. Pro nápovědu k tomu se podívejte na <a href="
+"\"http://p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</"
+"p></p>\n"
 
-#: rbackend/rinterface.cpp:228
+#: rbackend/rinterface.cpp:237
 msgid ""
 "<p>\t-An unspecified error occurred that is not yet handled by RKWard. "
 "Likely RKWard will not function properly. Please check your setup.</p>\n"
@@ -1420,11 +1416,11 @@ msgstr ""
 "<p>\t-Vyskytla se neurčitá chyba, kterou RKWard zatím nezvládá. RKWard "
 "pravděpodobně nebude pracovat správně. Ověřte, prosím, svou instalaci.</p>\n"
 
-#: rbackend/rinterface.cpp:236
+#: rbackend/rinterface.cpp:245
 msgid "Error starting R"
 msgstr "Chyba při spuštění R"
 
-#: rbackend/rinterface.cpp:362
+#: rbackend/rinterface.cpp:366
 msgid ""
 "The R-backend has indicated that in order to carry out the current task it "
 "needs the package '%1', which is not currently installed. We will open the "
@@ -1435,11 +1431,11 @@ msgstr ""
 "současnosti není nainstalován. Bude otevřen nástroj pro správu balíčků. Z "
 "něj se můžete pokusit o nalezení a nainstalování nezbytného balíčku."
 
-#: rbackend/rinterface.cpp:362
+#: rbackend/rinterface.cpp:366
 msgid "Require package '%1'"
 msgstr "Vyžadován balíček '%1'"
 
-#: rbackend/rinterface.cpp:399
+#: rbackend/rinterface.cpp:403
 msgid ""
 "A command in the R backend is trying to change the character encoding. While "
 "RKWard offers support for this, and will try to adjust to the new locale, "
@@ -1462,15 +1458,15 @@ msgstr ""
 "zvolte \"Zrušit\", potom zavřete okna s daty, vše uložte a zkuste to ještě "
 "jednou."
 
-#: rbackend/rinterface.cpp:399
+#: rbackend/rinterface.cpp:403
 msgid "Locale change"
 msgstr "Místní změna"
 
-#: rbackend/rinterface.cpp:536
+#: rbackend/rinterface.cpp:548
 msgid "R backend requests information"
 msgstr "Jádro R požaduje údaje"
 
-#: rbackend/rinterface.cpp:553
+#: rbackend/rinterface.cpp:566
 msgid ""
 "\n"
 "It will be shut down immediately. This means, you can not use any more "
@@ -1492,7 +1488,7 @@ msgstr ""
 "popisem toho, co se přihodilo a co jste prováděl, na adresu rkward-"
 "devel@lists.sourceforge.net. Prominutí!"
 
-#: rbackend/rinterface.cpp:554
+#: rbackend/rinterface.cpp:567
 msgid "R engine has died"
 msgstr "Jádro R 'vytuhlo'"
 
@@ -1563,7 +1559,6 @@ msgid "Broken installation"
 msgstr "Pokažená instalace"
 
 #: rkward.cpp:195
-#, fuzzy
 msgid ""
 "<p>Please note that RKWard is not well tested on Windows, yet.</p><p>There "
 "are all sorts of known issues, and issues yet to be reported. If you'd like "
@@ -1788,70 +1783,6 @@ msgstr "Klepněte na \"Obnovit\" pro získání informací"
 msgid "Ready"
 msgstr "Připraven"
 
-#: scriptbackends/phpbackend.cpp:66
-msgid ""
-"The support file \"%1\" could not be found or is not readable. Please check "
-"your installation."
-msgstr ""
-"Podpůrný soubor\"%1\" se nepodařilo najít, nebo je nečitelný. Zkontrolujte, "
-"prosím, svou instalaci."
-
-#: scriptbackends/phpbackend.cpp:66 scriptbackends/phpbackend.cpp:167
-#: scriptbackends/phpbackend.cpp:201 scriptbackends/phpbackend.cpp:219
-msgid "PHP-Error"
-msgstr "Chyba PHP"
-
-#: scriptbackends/phpbackend.cpp:167
-msgid ""
-"There has been an error\n"
-"(\"%1\")\n"
-"while starting up the PHP backend. Most likely this is due to either a bug "
-"in RKWard or a problem with your PHP installation. Check the settings "
-"(Settings->Configure Settings->PHP backend) and try again."
-msgstr ""
-"Při spouštění jádra pro PHP\n"
-"(\"%1\")\n"
-"se vyskytla se chyba. Příčinou je pravděpodobně chyba v RKWardu, nebo nějaké "
-"potíže s vaší instalací PHP. Ověřte nastavení (Nastavení->Nastavit nastavení-"
-">Jádro pro PHP) a zkuste to ještě jednou."
-
-#: scriptbackends/phpbackend.cpp:201
-msgid ""
-"The PHP-backend has reported an error\n"
-"(\"%1\")\n"
-"and has been shut down. This is most likely due to a bug in the plugin. But "
-"of course you may want to try to close and restart the plugin to see whether "
-"it works with different settings."
-msgstr ""
-"Jádro pro PHP ohlásilo chybu\n"
-"(\"%1\")\n"
-"a bylo zastaveno. Většinou je to způsobeno chybou v přídavném modulu. Ale "
-"samozřejmě můžete zkusit přídavný modul zavřít a znovu jej spustit, abyste "
-"se dozvěděl, zda pracuje s jiným nastavením."
-
-#: scriptbackends/phpbackend.cpp:219
-msgid ""
-"The PHP backend could not be started. Check whether you have correctly "
-"configured the location of the PHP-binary (Settings->Configure Settings->PHP "
-"backend)"
-msgstr ""
-"Jádro pro PHP se nepodařilo spustit. Ověřte, prosím, zda máte správně "
-"nastaveno umístění binárky PHP (Nastavení->Nastavit nastavení->Jádro pro PHP)"
-
-#: scriptbackends/phpbackend.cpp:221
-msgid ""
-"The PHP-backend has died unexpectedly. The current output buffer is shown "
-"below:\n"
-"%1"
-msgstr ""
-"Jádro pro PHP bylo neočekávaně ukončeno. Současná výstupní vyrovnávací paměť "
-"se ukazuje dole:\n"
-"%1"
-
-#: scriptbackends/phpbackend.cpp:221
-msgid "PHP Process exited"
-msgstr "Proces PHP ukončen"
-
 #: scriptbackends/qtscriptbackend.cpp:114
 msgid ""
 "The QtScript-backend has reported an error:\n"
@@ -1889,15 +1820,18 @@ msgid ""
 "Line: %2\n"
 "Message: %3."
 msgstr ""
+"Při vyhodnocování kódu skriptu se objevila chyba.\n"
+"Soubor: %1\n"
+"Řádek: %2\n"
+"Zpráva: %3."
 
 #: scriptbackends/rkcomponentscripting.cpp:88
-#, fuzzy
 msgid ""
 "error ('The file \"%1\" (needed by \"%2\") could not be found. Please check "
 "your installation.');\n"
 msgstr ""
-"Soubor \"%1\" (vyžadován \"%2\") se nepodařilo najít. Zkontrolujte, prosím, "
-"svou instalaci."
+"chyba ('soubor \"%1\" (vyžadován \"%2\") se nepodařilo najít. Prověřte, "
+"prosím, svou instalaci.');\n"
 
 #: scriptbackends/scriptbackend.cpp:91
 msgid "## Prepare\n"
@@ -1911,7 +1845,7 @@ msgstr "## Vypočítat\n"
 msgid "## Print result\n"
 msgstr "## Tisknout výsledek\n"
 
-#: settings/rksettings.cpp:72
+#: settings/rksettings.cpp:71
 msgid "Settings"
 msgstr "Nastavení"
 
@@ -1933,20 +1867,19 @@ msgstr "Překročení času (v ms), než se provede pokus o doplnění kódu"
 
 #: settings/rksettingsmodulecommandeditor.cpp:81
 msgid "Enable function argument hinting"
-msgstr ""
+msgstr "Povolit naznačení argumentu funkce"
 
 #: settings/rksettingsmodulecommandeditor.cpp:88
-#, fuzzy
 msgid "Autosaves"
-msgstr "Automaticky zavřít"
+msgstr "Automatické ukládání"
 
 #: settings/rksettingsmodulecommandeditor.cpp:94
 msgid "Autosave interval (minutes)"
-msgstr ""
+msgstr "Časový úsek pro automatické ukládání (minuty)"
 
 #: settings/rksettingsmodulecommandeditor.cpp:109
 msgid "Keep autosave file after manual save"
-msgstr ""
+msgstr "Nechat soubor s automatickým ukládáním po ručním uložení"
 
 #: settings/rksettingsmodulecommandeditor.cpp:133
 msgid "Script editor"
@@ -2033,9 +1966,8 @@ msgid "Settings marked with (*) do not take effect until you restart RKWard"
 msgstr "Nastavení označená (*) začnou působit až po novém spuštění RKWardu"
 
 #: settings/rksettingsmodulegeneral.cpp:58
-#, fuzzy
 msgid "Directory where rkward may store files (*)"
-msgstr "Adresář, v němž by se měly uchovávat soubory se zápisy (*)"
+msgstr "Adresář, v němž by rkward měl uchovávat soubory (*)"
 
 #: settings/rksettingsmodulegeneral.cpp:64
 msgid "Startup Action (*)"
@@ -2111,35 +2043,31 @@ msgstr "Obecné"
 
 #: settings/rksettingsmodulegraphics.cpp:47
 msgid "Default window size"
-msgstr ""
+msgstr "Výchozí velikost okna"
 
 #: settings/rksettingsmodulegraphics.cpp:49
-#, fuzzy
 msgid "Default width (inches):"
-msgstr "Šířka výstupu (znaky)"
+msgstr "Výchozí šířka (palce):"
 
 #: settings/rksettingsmodulegraphics.cpp:53
-#, fuzzy
 msgid "Default height (inches)"
-msgstr "Výchozí velikost zobrazovaného kódu (pixely)"
+msgstr "Výchozí výška (palce):"
 
 #: settings/rksettingsmodulegraphics.cpp:62
 msgid "Screen device history"
-msgstr ""
+msgstr "Historie zařízení obrazovky"
 
 #: settings/rksettingsmodulegraphics.cpp:69
-#, fuzzy
 msgid "Maximum number of recorded plots:"
-msgstr "Největší počet prvků ukázaných v tisku"
+msgstr "Největší počet nahraných nákresů:"
 
 #: settings/rksettingsmodulegraphics.cpp:73
 msgid "Maximum size of a single recorded plot (in KB):"
-msgstr ""
+msgstr "Největší velikost jednoho nahraného nákresu (v KB):"
 
 #: settings/rksettingsmodulegraphics.cpp:94
-#, fuzzy
 msgid "Onscreen Graphics"
-msgstr "Obrazové zpracování"
+msgstr "Znázornění na obrazovce"
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:46
 msgid "Which objects should be shown by default?"
@@ -2241,21 +2169,7 @@ msgstr "Šířka:"
 msgid "Height:"
 msgstr "Výška:"
 
-#: settings/rksettingsmodulephp.cpp:39
-msgid "Changes in this section take effect the next time you start a plugin"
-msgstr ""
-"Změny v této části začnou působit teprve při příštím spuštění přídavného "
-"modulu"
-
-#: settings/rksettingsmodulephp.cpp:45
-msgid "File-location of the PHP binary"
-msgstr "Umístění s PHP binárním souborem"
-
-#: settings/rksettingsmodulephp.cpp:63
-msgid "PHP backend"
-msgstr "Jádro pro PHP"
-
-#: settings/rksettingsmoduleplugins.cpp:54
+#: settings/rksettingsmoduleplugins.cpp:59
 msgid ""
 "Some plugins are available with both, a wizard-like interface and a "
 "traditional dialog interface. If both are available, which mode of "
@@ -2265,39 +2179,39 @@ msgstr ""
 "rozhraní ve stylu průvodce, a druhým tradiční dialog. V případě, že je "
 "dostupné obojí, dáváte přednost kterému z nich?"
 
-#: settings/rksettingsmoduleplugins.cpp:64
+#: settings/rksettingsmoduleplugins.cpp:69
 msgid "Always prefer dialogs"
 msgstr "Vždy dávat přednost dialogům"
 
-#: settings/rksettingsmoduleplugins.cpp:67
+#: settings/rksettingsmoduleplugins.cpp:72
 msgid "Prefer recommended interface"
 msgstr "Dávat přednost doporučenému rozhraní"
 
-#: settings/rksettingsmoduleplugins.cpp:70
+#: settings/rksettingsmoduleplugins.cpp:75
 msgid "Always prefer wizards"
 msgstr "Vždy dávat přednost průvodcům"
 
-#: settings/rksettingsmoduleplugins.cpp:82
+#: settings/rksettingsmoduleplugins.cpp:87
 msgid "R syntax display (in dialogs)"
 msgstr "Zobrazení skladby R (v dialozích)"
 
-#: settings/rksettingsmoduleplugins.cpp:85
+#: settings/rksettingsmoduleplugins.cpp:90
 msgid "Code shown by default"
 msgstr "Ve výchozím nastavení ukazovat kód"
 
-#: settings/rksettingsmoduleplugins.cpp:91
+#: settings/rksettingsmoduleplugins.cpp:96
 msgid "Default height of code display (pixels)"
 msgstr "Výchozí velikost zobrazovaného kódu (pixely)"
 
-#: settings/rksettingsmoduleplugins.cpp:103
+#: settings/rksettingsmoduleplugins.cpp:108
 msgid "Select .pluginmap file(s)"
 msgstr "Vybrat soubor(y) .pluginmap"
 
-#: settings/rksettingsmoduleplugins.cpp:130
+#: settings/rksettingsmoduleplugins.cpp:135
 msgid "Select .pluginmap-file"
 msgstr "Vybrat soubor .pluginmap"
 
-#: settings/rksettingsmoduleplugins.cpp:135
+#: settings/rksettingsmoduleplugins.cpp:140
 msgid "Plugins"
 msgstr "Přídavné moduly"
 
@@ -2531,7 +2445,6 @@ msgid "Resume execution"
 msgstr "Znovu začít s prováděním"
 
 #: windows/rkcommandeditorwindow.cpp:106
-#, fuzzy
 msgid "Script Editor"
 msgstr "Editor skriptů"
 
@@ -2571,6 +2484,8 @@ msgstr "Soubor neuložen"
 msgid ""
 "An error occurred while trying to create an autosave of the script file '%1':"
 msgstr ""
+"Při pokusu o vytvoření automaticky ukládaného souboru skriptového souboru se "
+"vyskytla chyba '%1':"
 
 #: windows/rkcommandeditorwindow.cpp:474
 msgid "Unnamed"
@@ -2629,14 +2544,12 @@ msgid "Package:"
 msgstr "Balíček:"
 
 #: windows/rkhelpsearchwindow.cpp:103
-#, fuzzy
 msgid "All installed packages"
-msgstr "Nainstalované balíčky"
+msgstr "Všechny nainstalované balíčky"
 
 #: windows/rkhelpsearchwindow.cpp:104
-#, fuzzy
 msgid "All loaded packages"
-msgstr "Nahrané balíčky"
+msgstr "Všechny nahrané balíčky"
 
 #: windows/rkhelpsearchwindow.cpp:113
 msgid "Case sensitive"
@@ -2701,9 +2614,8 @@ msgid "Export page as HTML"
 msgstr "Vyvést stránku jako HTML"
 
 #: windows/rkhtmlwindow.cpp:373
-#, fuzzy
 msgid "Output Window"
-msgstr "Volby pro okno s výstupem"
+msgstr "Okno s výstupem"
 
 #: windows/rkhtmlwindow.cpp:381
 msgid "Print page"
@@ -2790,14 +2702,12 @@ msgid "BROKEN REFERENCE"
 msgstr "POŠKOZENÝ ODKAZ"
 
 #: windows/rkmdiwindow.cpp:276
-#, fuzzy
 msgid "Help on %1"
-msgstr "Nápověda k R"
+msgstr "Nápověda k %1"
 
 #: windows/rkmdiwindow.cpp:280
-#, fuzzy
 msgid "Configure %1"
-msgstr "Nastavit"
+msgstr "Nastavit %1"
 
 #: windows/rktoolwindowbar.cpp:272
 msgid "Attachment"
@@ -2971,7 +2881,7 @@ msgstr "Došlo k chybě"
 
 #: windows/rkwindowcatcher.cpp:149
 msgid "Graphics Device Window"
-msgstr ""
+msgstr "Okno zařízení znázornění"
 
 #: windows/rkwindowcatcher.cpp:225
 msgid ""
@@ -2979,20 +2889,21 @@ msgid ""
 "happens regularly, you may want to adjust the default graphics window size "
 "in Settings->Configure RKWard->Onscreen Graphics."
 msgstr ""
+"Nynější okno se jeví být příliš veliké na to, aby se vešlo do obrazovky. "
+"Stává-li se to pravidelně, budete možná chtít upravit výchozí velikost okna "
+"znázornění v Nastavení->Nastavit RKWard->Znázornění na obrazovce."
 
 #: windows/rkwindowcatcher.cpp:225
-#, fuzzy
 msgid "Large window"
-msgstr "Ukázat/Vyvolat okno"
+msgstr "Velké okno"
 
 #: windows/rkwindowcatcher.cpp:249
-#, fuzzy
 msgid "Shutting down device number %1"
-msgstr "Spustit grafické zařízení číslo %1"
+msgstr "Zastavuje se zařízení číslo %1"
 
 #: windows/rkwindowcatcher.cpp:250
 msgid "Closing device (saving history)"
-msgstr ""
+msgstr "Uzavírá se zařízení (ukládá se historie)"
 
 #: windows/rkwindowcatcher.cpp:322
 msgid "Specify fixed size"
@@ -3035,65 +2946,58 @@ msgid "Duplicate graphics device number %1"
 msgstr "Zdvojit grafické zařízení číslo %1"
 
 #: windows/rkwindowcatcher.cpp:403
-#, fuzzy
 msgid "Load next plot in device number %1"
-msgstr "Tisknout obsah grafického zařízení číslo %1"
+msgstr "Nahrát další nákres do zařízení číslo %1"
 
 #: windows/rkwindowcatcher.cpp:404 windows/rkwindowcatcher.cpp:412
 #: windows/rkwindowcatcher.cpp:420 windows/rkwindowcatcher.cpp:428
 #: windows/rkwindowcatcher.cpp:436
-#, fuzzy
 msgid "Loading plot from history"
-msgstr "Nahrát/Uložit historii příkazů"
+msgstr "Nahrává se nákres z historie"
 
 #: windows/rkwindowcatcher.cpp:411
-#, fuzzy
 msgid "Load previous plot in device number %1"
-msgstr "Zdvojit grafické zařízení číslo %1"
+msgstr "Nahrát předchozí nákres do zařízení číslo %1"
 
 #: windows/rkwindowcatcher.cpp:419
-#, fuzzy
 msgid "Load first plot in device number %1"
-msgstr "Spustit grafické zařízení číslo %1"
+msgstr "Nahrát první nákres do zařízení číslo %1"
 
 #: windows/rkwindowcatcher.cpp:427
-#, fuzzy
 msgid "Load last plot in device number %1"
-msgstr "Zdvojit grafické zařízení číslo %1"
+msgstr "Nahrát poslední nákres do zařízení číslo %1"
 
 #: windows/rkwindowcatcher.cpp:435
-#, fuzzy
 msgid "Load plot %1 in device number %2"
-msgstr "Zdvojit grafické zařízení číslo %1"
+msgstr "Nahrát nákres %1 do zařízení číslo %2"
 
 #: windows/rkwindowcatcher.cpp:443
-#, fuzzy
 msgid "Append this plot to history (device number %1)"
-msgstr "Tisknout obsah grafického zařízení číslo %1"
+msgstr "Přidat tento nákres do historie (zařízení číslo %1)"
 
 #: windows/rkwindowcatcher.cpp:449
-#, fuzzy
 msgid "Remove current plot from history (device number %1)"
-msgstr "Tisknout obsah grafického zařízení číslo %1"
+msgstr "Odstranit nynější nákres z historie (zařízení číslo %1)"
 
 #: windows/rkwindowcatcher.cpp:455
 msgid ""
 "This will clear the plot history for all device windows, not just this one. "
 "If this is not your intent, press cancel, below."
 msgstr ""
+"Tímto se vymaže historie nákresů u všech oken zařízení, ne jen u tohoto. "
+"Není-li toto vaším úmyslem, stiskněte dole tlačítko Zrušit."
 
 #: windows/rkwindowcatcher.cpp:457
 msgid "Clear plot history"
-msgstr ""
+msgstr "Smazat historii nákresů"
 
 #: windows/rkwindowcatcher.cpp:463
-#, fuzzy
 msgid "Plot properties (device number %1)"
-msgstr "Zdvojit grafické zařízení číslo %1"
+msgstr "Vlastnosti nákresu (zařízení číslo %1)"
 
 #: windows/rkwindowcatcher.cpp:477
 msgid "<Unsaved plot>"
-msgstr ""
+msgstr "<Neuložený nákres>"
 
 #: windows/rkwindowcatcher.cpp:528
 msgid "Draw area follows size of window"
@@ -3116,43 +3020,40 @@ msgid "Set specified fixed size..."
 msgstr "Nastavit určenou pevnou velikost..."
 
 #: windows/rkwindowcatcher.cpp:543
-#, fuzzy
 msgid "Previous plot"
-msgstr "Předchozí okno"
+msgstr "Předchozí nákres"
 
 #: windows/rkwindowcatcher.cpp:547
 msgid "First plot"
-msgstr ""
+msgstr "První nákres"
 
 #: windows/rkwindowcatcher.cpp:551
-#, fuzzy
 msgid "Next plot"
-msgstr "Další >"
+msgstr "Další nákres"
 
 #: windows/rkwindowcatcher.cpp:555
 msgid "Last plot"
-msgstr ""
+msgstr "Poslední nákres"
 
 #: windows/rkwindowcatcher.cpp:558
 msgid "Go to plot"
-msgstr ""
+msgstr "Jít na nákres"
 
 #: windows/rkwindowcatcher.cpp:565
 msgid "Append this plot"
-msgstr ""
+msgstr "Přidat tento nákres"
 
 #: windows/rkwindowcatcher.cpp:569
-#, fuzzy
 msgid "Remove this plot"
-msgstr "Odstranit předmět?"
+msgstr "Odstranit tento nákres"
 
 #: windows/rkwindowcatcher.cpp:575
 msgid "Clear history"
-msgstr ""
+msgstr "Smazat historii"
 
 #: windows/rkwindowcatcher.cpp:580
 msgid "Plot properties"
-msgstr ""
+msgstr "Vlastnosti nákresu"
 
 #: windows/rkwindowcatcher.cpp:584
 msgid "Make active"
@@ -3246,9 +3147,8 @@ msgid "Window Right"
 msgstr "Okno vpravo"
 
 #: windows/robjectbrowser.cpp:65
-#, fuzzy
 msgid "R workspace browser"
-msgstr "Ukázat/Skrýt prohlížeč pracovního prostředí"
+msgstr "Prohlížeč pracovního prostředí R"
 
 #: windows/robjectbrowser.cpp:68
 msgid "Objects in the R workspace"
@@ -3461,7 +3361,7 @@ msgstr "&Zařízení"
 #. i18n: ectx: Menu (history)
 #: rc.cpp:63 rc.cpp:84
 msgid "&History"
-msgstr ""
+msgstr "&Historie"
 
 #. i18n: file: windows/detachedwindowcontainer.rc:38
 #. i18n: ectx: Menu (window)
@@ -3486,6 +3386,74 @@ msgstr "Pavel Fric"
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "fripohled.blogspot.com"
+
+#~ msgid ""
+#~ "The support file \"%1\" could not be found or is not readable. Please "
+#~ "check your installation."
+#~ msgstr ""
+#~ "Podpůrný soubor\"%1\" se nepodařilo najít, nebo je nečitelný. "
+#~ "Zkontrolujte, prosím, svou instalaci."
+
+#~ msgid "PHP-Error"
+#~ msgstr "Chyba PHP"
+
+#~ msgid ""
+#~ "There has been an error\n"
+#~ "(\"%1\")\n"
+#~ "while starting up the PHP backend. Most likely this is due to either a "
+#~ "bug in RKWard or a problem with your PHP installation. Check the settings "
+#~ "(Settings->Configure Settings->PHP backend) and try again."
+#~ msgstr ""
+#~ "Při spouštění jádra pro PHP\n"
+#~ "(\"%1\")\n"
+#~ "se vyskytla se chyba. Příčinou je pravděpodobně chyba v RKWardu, nebo "
+#~ "nějaké potíže s vaší instalací PHP. Ověřte nastavení (Nastavení->Nastavit "
+#~ "nastavení->Jádro pro PHP) a zkuste to ještě jednou."
+
+#~ msgid ""
+#~ "The PHP-backend has reported an error\n"
+#~ "(\"%1\")\n"
+#~ "and has been shut down. This is most likely due to a bug in the plugin. "
+#~ "But of course you may want to try to close and restart the plugin to see "
+#~ "whether it works with different settings."
+#~ msgstr ""
+#~ "Jádro pro PHP ohlásilo chybu\n"
+#~ "(\"%1\")\n"
+#~ "a bylo zastaveno. Většinou je to způsobeno chybou v přídavném modulu. Ale "
+#~ "samozřejmě můžete zkusit přídavný modul zavřít a znovu jej spustit, "
+#~ "abyste se dozvěděl, zda pracuje s jiným nastavením."
+
+#~ msgid ""
+#~ "The PHP backend could not be started. Check whether you have correctly "
+#~ "configured the location of the PHP-binary (Settings->Configure Settings-"
+#~ ">PHP backend)"
+#~ msgstr ""
+#~ "Jádro pro PHP se nepodařilo spustit. Ověřte, prosím, zda máte správně "
+#~ "nastaveno umístění binárky PHP (Nastavení->Nastavit nastavení->Jádro pro "
+#~ "PHP)"
+
+#~ msgid ""
+#~ "The PHP-backend has died unexpectedly. The current output buffer is shown "
+#~ "below:\n"
+#~ "%1"
+#~ msgstr ""
+#~ "Jádro pro PHP bylo neočekávaně ukončeno. Současná výstupní vyrovnávací "
+#~ "paměť se ukazuje dole:\n"
+#~ "%1"
+
+#~ msgid "PHP Process exited"
+#~ msgstr "Proces PHP ukončen"
+
+#~ msgid "Changes in this section take effect the next time you start a plugin"
+#~ msgstr ""
+#~ "Změny v této části začnou působit teprve při příštím spuštění přídavného "
+#~ "modulu"
+
+#~ msgid "File-location of the PHP binary"
+#~ msgstr "Umístění s PHP binárním souborem"
+
+#~ msgid "PHP backend"
+#~ msgstr "Jádro pro PHP"
 
 #~ msgid "Cutting selection..."
 #~ msgstr "Vyjímá se výběr..."

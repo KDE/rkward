@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: lt\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
 "group_id=50231&atid=459007\n"
-"POT-Creation-Date: 2010-09-30 17:02+0200\n"
+"POT-Creation-Date: 2010-10-14 10:23+0200\n"
 "PO-Revision-Date: 2010-08-06 20:28+0300\n"
 "Last-Translator: Mindaugas Baranauskas <embar@users.berlios.de>\n"
 "Language-Team: Lithuanian <embar@users.berlios.de>\n"
@@ -1220,7 +1220,7 @@ msgstr "Peržiūra atnaujinama"
 msgid "Preview not (yet) possible"
 msgstr "Peržiūra (dar) negalima"
 
-#: plugin/rkstandardcomponent.cpp:88
+#: plugin/rkstandardcomponent.cpp:87
 msgid ""
 "There has been an error while trying to parse the description of this plugin "
 "('%1'). Please refer to stdout for details."
@@ -1228,7 +1228,7 @@ msgstr ""
 "Nagrinėjant papildinio („%1“) aprašą, įvyko klaida. Žiūrėkite standartinį "
 "išvedimą (stdout)."
 
-#: plugin/rkstandardcomponent.cpp:88
+#: plugin/rkstandardcomponent.cpp:87
 msgid "Could not create plugin"
 msgstr "Nepavyksta sukurti papildinio"
 
@@ -1324,7 +1324,7 @@ msgstr "Būsena"
 msgid "Description"
 msgstr "Aprašas"
 
-#: rbackend/rembedinternal.cpp:139
+#: rbackend/rembedinternal.cpp:141
 msgid ""
 "The R engine has encountered a fatal error:\n"
 "%1"
@@ -1332,15 +1332,15 @@ msgstr ""
 "R variklis patyrė lemtingą klaidą:\n"
 "%1"
 
-#: rbackend/rembedinternal.cpp:218
+#: rbackend/rembedinternal.cpp:220
 msgid "The R engine has shut down with status: %1"
 msgstr "R variklis sustojo būsenoje %1"
 
-#: rbackend/rembedinternal.cpp:384
+#: rbackend/rembedinternal.cpp:396
 msgid "Message from the R backend"
 msgstr "R variklio pranešimas"
 
-#: rbackend/rembedinternal.cpp:391
+#: rbackend/rembedinternal.cpp:403
 msgid "Question from the R backend"
 msgstr "R variklio klausimas"
 
@@ -1348,13 +1348,13 @@ msgstr "R variklio klausimas"
 msgid "R Startup"
 msgstr "R paleidimas"
 
-#: rbackend/rinterface.cpp:218
+#: rbackend/rinterface.cpp:227
 msgid ""
 "<p>There was a problem starting the R backend. The following error(s) "
 "occurred:</p>\n"
 msgstr "<p>Nepavyko paleisti R variklio. Klaidos:</p>\n"
 
-#: rbackend/rinterface.cpp:220
+#: rbackend/rinterface.cpp:229
 msgid ""
 "</p>\t- The 'rkward' R-library either could not be loaded at all, or not in "
 "the correct version. This may lead to all sorts of errors, from single "
@@ -1374,7 +1374,7 @@ msgstr ""
 "kompiliavimo patarimais, pateiktais <a href=\"http://p.sf.net/rkward/"
 "compiling\">http://p.sf.net/rkward/compiling</a> tinklalapyje.</p>\n"
 
-#: rbackend/rinterface.cpp:224
+#: rbackend/rinterface.cpp:233
 #, fuzzy
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
@@ -1392,7 +1392,7 @@ msgstr ""
 "Pasinaudokite kompiliavimo patarimais, pateiktais <a href=\"http://p.sf.net/"
 "rkward/compiling\">http://p.sf.net/rkward/compiling</a> tinklalapyje.</p>"
 
-#: rbackend/rinterface.cpp:228
+#: rbackend/rinterface.cpp:237
 msgid ""
 "<p>\t-An unspecified error occurred that is not yet handled by RKWard. "
 "Likely RKWard will not function properly. Please check your setup.</p>\n"
@@ -1400,11 +1400,11 @@ msgstr ""
 "<p>\t-Įvyko netikėta klaida, kurios RKWard dar negali apdoroti. Tikėtina, "
 "kad nebeveiks tinkamai. Patikrinkite konfigūraciją.</p>\n"
 
-#: rbackend/rinterface.cpp:236
+#: rbackend/rinterface.cpp:245
 msgid "Error starting R"
 msgstr "R paleidimo klaida"
 
-#: rbackend/rinterface.cpp:362
+#: rbackend/rinterface.cpp:366
 msgid ""
 "The R-backend has indicated that in order to carry out the current task it "
 "needs the package '%1', which is not currently installed. We will open the "
@@ -1415,11 +1415,11 @@ msgstr ""
 "Netrukus bus atverta paketų tvarkytuvė, kurioje galėsite rasti ir įdiegti "
 "reikiamą paketą."
 
-#: rbackend/rinterface.cpp:362
+#: rbackend/rinterface.cpp:366
 msgid "Require package '%1'"
 msgstr "Reikia paketo „%1“"
 
-#: rbackend/rinterface.cpp:399
+#: rbackend/rinterface.cpp:403
 msgid ""
 "A command in the R backend is trying to change the character encoding. While "
 "RKWard offers support for this, and will try to adjust to the new locale, "
@@ -1441,15 +1441,15 @@ msgstr ""
 "savaime nustatoma). Tokiu atveju spauskite „Atšaukti“, užverkite duomenų "
 "langus, įrašykite ir bandykite dar kartą."
 
-#: rbackend/rinterface.cpp:399
+#: rbackend/rinterface.cpp:403
 msgid "Locale change"
 msgstr "Lokalės keitimas"
 
-#: rbackend/rinterface.cpp:536
+#: rbackend/rinterface.cpp:548
 msgid "R backend requests information"
 msgstr "R varikliui reikia informacijos"
 
-#: rbackend/rinterface.cpp:553
+#: rbackend/rinterface.cpp:566
 msgid ""
 "\n"
 "It will be shut down immediately. This means, you can not use any more "
@@ -1470,7 +1470,7 @@ msgstr ""
 "Taip neturėtų būti, tad praneškite apie tai į rkward-devel@lists.sourceforge."
 "net pašto dėžutę nurodydami, ką dabar padarėte, kad taip nutiko. Atsiprašome!"
 
-#: rbackend/rinterface.cpp:554
+#: rbackend/rinterface.cpp:567
 msgid "R engine has died"
 msgstr "R variklis nulūžo"
 
@@ -1765,69 +1765,6 @@ msgstr "Norėdami gauti informaciją, spauskite „At“naujinti"
 msgid "Ready"
 msgstr "Pasiruošęs"
 
-#: scriptbackends/phpbackend.cpp:66
-msgid ""
-"The support file \"%1\" could not be found or is not readable. Please check "
-"your installation."
-msgstr ""
-"Palaikymo rinkmena „%1“ nerasta arba nepavyko jos nuskaityti. Patikrinkite, "
-"ar gerai įdiegėte."
-
-#: scriptbackends/phpbackend.cpp:66 scriptbackends/phpbackend.cpp:167
-#: scriptbackends/phpbackend.cpp:201 scriptbackends/phpbackend.cpp:219
-msgid "PHP-Error"
-msgstr "PHP klaida"
-
-#: scriptbackends/phpbackend.cpp:167
-msgid ""
-"There has been an error\n"
-"(\"%1\")\n"
-"while starting up the PHP backend. Most likely this is due to either a bug "
-"in RKWard or a problem with your PHP installation. Check the settings "
-"(Settings->Configure Settings->PHP backend) and try again."
-msgstr ""
-"Klaida\n"
-"(„%1“)\n"
-"įvyko paleidžiant PHP variklį. Tai gali būti RKWard riktas,arba nepavykusio "
-"PHP diegimo pasekmė. Patikrinkite nuostatas (Nuostatos -> Konfigūruoti "
-"RKWard -> PHP variklis)  ir bandykite iš naujo."
-
-#: scriptbackends/phpbackend.cpp:201
-msgid ""
-"The PHP-backend has reported an error\n"
-"(\"%1\")\n"
-"and has been shut down. This is most likely due to a bug in the plugin. But "
-"of course you may want to try to close and restart the plugin to see whether "
-"it works with different settings."
-msgstr ""
-"PHP variklis pranešė apie klaidą\n"
-" („%1“)\n"
-"ir sustojo. Greičiausiai papildinyje yra klaida. Bet galite užverti ir iš "
-"naujo paleisti papildinį naudodami kitas nuostatas."
-
-#: scriptbackends/phpbackend.cpp:219
-msgid ""
-"The PHP backend could not be started. Check whether you have correctly "
-"configured the location of the PHP-binary (Settings->Configure Settings->PHP "
-"backend)"
-msgstr ""
-"Nepavyksta paleisti PHP variklio. Patikrinkite, ar tinkamai nurodėte PHP "
-"dvejetainės (vykdomosios) rinkmenos vietą (Nuostatos -> Konfigūruoti RKWard -"
-"> PHP variklis)"
-
-#: scriptbackends/phpbackend.cpp:221
-msgid ""
-"The PHP-backend has died unexpectedly. The current output buffer is shown "
-"below:\n"
-"%1"
-msgstr ""
-"Netikėtai nulūžo PHP variklis. Žemiau rodomas veikiamasis išvedimo buferis:\n"
-"%1"
-
-#: scriptbackends/phpbackend.cpp:221
-msgid "PHP Process exited"
-msgstr "PHP procesas nutrūko"
-
 #: scriptbackends/qtscriptbackend.cpp:114
 msgid ""
 "The QtScript-backend has reported an error:\n"
@@ -1887,7 +1824,7 @@ msgstr "## Skaičiuoti\n"
 msgid "## Print result\n"
 msgstr "## Pateikti rezultatus\n"
 
-#: settings/rksettings.cpp:72
+#: settings/rksettings.cpp:71
 msgid "Settings"
 msgstr "Nuostatos"
 
@@ -2215,19 +2152,7 @@ msgstr "Plotis:"
 msgid "Height:"
 msgstr "Aukštis:"
 
-#: settings/rksettingsmodulephp.cpp:39
-msgid "Changes in this section take effect the next time you start a plugin"
-msgstr "Šios sekcijos pakeitimai įsigalios tik iš naujo paleidus papildinį"
-
-#: settings/rksettingsmodulephp.cpp:45
-msgid "File-location of the PHP binary"
-msgstr "PHP dvejetainės rinkmenos vieta"
-
-#: settings/rksettingsmodulephp.cpp:63
-msgid "PHP backend"
-msgstr "PHP variklis"
-
-#: settings/rksettingsmoduleplugins.cpp:54
+#: settings/rksettingsmoduleplugins.cpp:59
 msgid ""
 "Some plugins are available with both, a wizard-like interface and a "
 "traditional dialog interface. If both are available, which mode of "
@@ -2236,39 +2161,39 @@ msgstr ""
 "Kai kurie papildiniai turi tiek vediklio, tiek įprasto dialogo sąsają. Jei "
 "papildinys palaiko abi sąsajas, kuriai iš jų teikti pirmenybę?"
 
-#: settings/rksettingsmoduleplugins.cpp:64
+#: settings/rksettingsmoduleplugins.cpp:69
 msgid "Always prefer dialogs"
 msgstr "Jei įmanoma, visada naudoti dialogus"
 
-#: settings/rksettingsmoduleplugins.cpp:67
+#: settings/rksettingsmoduleplugins.cpp:72
 msgid "Prefer recommended interface"
 msgstr "Jei įmanoma, naudoti numatytąją sąsają"
 
-#: settings/rksettingsmoduleplugins.cpp:70
+#: settings/rksettingsmoduleplugins.cpp:75
 msgid "Always prefer wizards"
 msgstr "Jei įmanoma, visada naudoti vediklius"
 
-#: settings/rksettingsmoduleplugins.cpp:82
+#: settings/rksettingsmoduleplugins.cpp:87
 msgid "R syntax display (in dialogs)"
 msgstr "R sintaksės polangis (dialoguose)"
 
-#: settings/rksettingsmoduleplugins.cpp:85
+#: settings/rksettingsmoduleplugins.cpp:90
 msgid "Code shown by default"
 msgstr "Kodą rodyti numatytuoju atveju"
 
-#: settings/rksettingsmoduleplugins.cpp:91
+#: settings/rksettingsmoduleplugins.cpp:96
 msgid "Default height of code display (pixels)"
 msgstr "Numatytasis kodo polangio aukštis (taškais)"
 
-#: settings/rksettingsmoduleplugins.cpp:103
+#: settings/rksettingsmoduleplugins.cpp:108
 msgid "Select .pluginmap file(s)"
 msgstr "Pasirinkite .pluginmap rinkmeną(-as)"
 
-#: settings/rksettingsmoduleplugins.cpp:130
+#: settings/rksettingsmoduleplugins.cpp:135
 msgid "Select .pluginmap-file"
 msgstr "Pasirinkite .pluginmap rinkmeną"
 
-#: settings/rksettingsmoduleplugins.cpp:135
+#: settings/rksettingsmoduleplugins.cpp:140
 msgid "Plugins"
 msgstr "Papildiniai"
 
@@ -3453,6 +3378,71 @@ msgstr "Mindaugas Baranauskas"
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "embar@users.berlios.de"
+
+#~ msgid ""
+#~ "The support file \"%1\" could not be found or is not readable. Please "
+#~ "check your installation."
+#~ msgstr ""
+#~ "Palaikymo rinkmena „%1“ nerasta arba nepavyko jos nuskaityti. "
+#~ "Patikrinkite, ar gerai įdiegėte."
+
+#~ msgid "PHP-Error"
+#~ msgstr "PHP klaida"
+
+#~ msgid ""
+#~ "There has been an error\n"
+#~ "(\"%1\")\n"
+#~ "while starting up the PHP backend. Most likely this is due to either a "
+#~ "bug in RKWard or a problem with your PHP installation. Check the settings "
+#~ "(Settings->Configure Settings->PHP backend) and try again."
+#~ msgstr ""
+#~ "Klaida\n"
+#~ "(„%1“)\n"
+#~ "įvyko paleidžiant PHP variklį. Tai gali būti RKWard riktas,arba "
+#~ "nepavykusio PHP diegimo pasekmė. Patikrinkite nuostatas (Nuostatos -> "
+#~ "Konfigūruoti RKWard -> PHP variklis)  ir bandykite iš naujo."
+
+#~ msgid ""
+#~ "The PHP-backend has reported an error\n"
+#~ "(\"%1\")\n"
+#~ "and has been shut down. This is most likely due to a bug in the plugin. "
+#~ "But of course you may want to try to close and restart the plugin to see "
+#~ "whether it works with different settings."
+#~ msgstr ""
+#~ "PHP variklis pranešė apie klaidą\n"
+#~ " („%1“)\n"
+#~ "ir sustojo. Greičiausiai papildinyje yra klaida. Bet galite užverti ir iš "
+#~ "naujo paleisti papildinį naudodami kitas nuostatas."
+
+#~ msgid ""
+#~ "The PHP backend could not be started. Check whether you have correctly "
+#~ "configured the location of the PHP-binary (Settings->Configure Settings-"
+#~ ">PHP backend)"
+#~ msgstr ""
+#~ "Nepavyksta paleisti PHP variklio. Patikrinkite, ar tinkamai nurodėte PHP "
+#~ "dvejetainės (vykdomosios) rinkmenos vietą (Nuostatos -> Konfigūruoti "
+#~ "RKWard -> PHP variklis)"
+
+#~ msgid ""
+#~ "The PHP-backend has died unexpectedly. The current output buffer is shown "
+#~ "below:\n"
+#~ "%1"
+#~ msgstr ""
+#~ "Netikėtai nulūžo PHP variklis. Žemiau rodomas veikiamasis išvedimo "
+#~ "buferis:\n"
+#~ "%1"
+
+#~ msgid "PHP Process exited"
+#~ msgstr "PHP procesas nutrūko"
+
+#~ msgid "Changes in this section take effect the next time you start a plugin"
+#~ msgstr "Šios sekcijos pakeitimai įsigalios tik iš naujo paleidus papildinį"
+
+#~ msgid "File-location of the PHP binary"
+#~ msgstr "PHP dvejetainės rinkmenos vieta"
+
+#~ msgid "PHP backend"
+#~ msgstr "PHP variklis"
 
 #~ msgid "Cutting selection..."
 #~ msgstr "Iškerpama pažymėta sritis..."

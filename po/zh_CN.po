@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: lala\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
 "group_id=50231&atid=459007\n"
-"POT-Creation-Date: 2010-09-30 17:02+0200\n"
+"POT-Creation-Date: 2010-10-14 10:23+0200\n"
 "PO-Revision-Date: 2008-01-17 09:48+0800\n"
 "Last-Translator: Roy Qu <royqh1979@gmail.com>\n"
 "Language-Team: Simplified Chinese\n"
@@ -1189,13 +1189,13 @@ msgstr "预览正在更新"
 msgid "Preview not (yet) possible"
 msgstr "尚无法预览"
 
-#: plugin/rkstandardcomponent.cpp:88
+#: plugin/rkstandardcomponent.cpp:87
 msgid ""
 "There has been an error while trying to parse the description of this plugin "
 "('%1'). Please refer to stdout for details."
 msgstr "在试图分析此插件(\"%1\")的描述时出错。请查看标准输出以获取详细信息。"
 
-#: plugin/rkstandardcomponent.cpp:88
+#: plugin/rkstandardcomponent.cpp:87
 msgid "Could not create plugin"
 msgstr "无法创建插件"
 
@@ -1290,23 +1290,23 @@ msgstr "状态"
 msgid "Description"
 msgstr "描述"
 
-#: rbackend/rembedinternal.cpp:139
+#: rbackend/rembedinternal.cpp:141
 #, fuzzy
 msgid ""
 "The R engine has encountered a fatal error:\n"
 "%1"
 msgstr "R引擎发生了致命错误：\n"
 
-#: rbackend/rembedinternal.cpp:218
+#: rbackend/rembedinternal.cpp:220
 #, fuzzy
 msgid "The R engine has shut down with status: %1"
 msgstr "R引擎已终止，状态值为："
 
-#: rbackend/rembedinternal.cpp:384
+#: rbackend/rembedinternal.cpp:396
 msgid "Message from the R backend"
 msgstr "R后台消息"
 
-#: rbackend/rembedinternal.cpp:391
+#: rbackend/rembedinternal.cpp:403
 #, fuzzy
 msgid "Question from the R backend"
 msgstr "R后台消息"
@@ -1315,14 +1315,14 @@ msgstr "R后台消息"
 msgid "R Startup"
 msgstr "R已启动"
 
-#: rbackend/rinterface.cpp:218
+#: rbackend/rinterface.cpp:227
 #, fuzzy
 msgid ""
 "<p>There was a problem starting the R backend. The following error(s) "
 "occurred:</p>\n"
 msgstr "启动R后台失败。发生了如下的错误：\n"
 
-#: rbackend/rinterface.cpp:220
+#: rbackend/rinterface.cpp:229
 msgid ""
 "</p>\t- The 'rkward' R-library either could not be loaded at all, or not in "
 "the correct version. This may lead to all sorts of errors, from single "
@@ -1334,7 +1334,7 @@ msgid ""
 "p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</p>\n"
 msgstr ""
 
-#: rbackend/rinterface.cpp:224
+#: rbackend/rinterface.cpp:233
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
 "this is due to an incorrect version of the 'rkward' R-library or failure to "
@@ -1344,7 +1344,7 @@ msgid ""
 "compiling</a>.</p></p>\n"
 msgstr ""
 
-#: rbackend/rinterface.cpp:228
+#: rbackend/rinterface.cpp:237
 #, fuzzy
 msgid ""
 "<p>\t-An unspecified error occurred that is not yet handled by RKWard. "
@@ -1353,11 +1353,11 @@ msgstr ""
 "\t-发生了一个未特别指定的错误，RKWard尚无法处理它。 这可能会导致RKWard无法正"
 "确运行。请检查您的安装设置是否正确。\n"
 
-#: rbackend/rinterface.cpp:236
+#: rbackend/rinterface.cpp:245
 msgid "Error starting R"
 msgstr "启动R错误"
 
-#: rbackend/rinterface.cpp:362
+#: rbackend/rinterface.cpp:366
 msgid ""
 "The R-backend has indicated that in order to carry out the current task it "
 "needs the package '%1', which is not currently installed. We will open the "
@@ -1367,11 +1367,11 @@ msgstr ""
 "R后台提示说它需要函数包\"%1\"来执行当前的任务，但该包尚未被安装。 我们将为您"
 "打开函数包管理工具，然后您可以尝试定位和安装所需的函数包。"
 
-#: rbackend/rinterface.cpp:362
+#: rbackend/rinterface.cpp:366
 msgid "Require package '%1'"
 msgstr "需要函数包\"%1\""
 
-#: rbackend/rinterface.cpp:399
+#: rbackend/rinterface.cpp:403
 msgid ""
 "A command in the R backend is trying to change the character encoding. While "
 "RKWard offers support for this, and will try to adjust to the new locale, "
@@ -1391,15 +1391,15 @@ msgstr ""
 "命令（在新版本的RKWard中可能会支持自动检测此类问题）。请选择\"取消\"键， 关闭"
 "数据窗口，保存，然后再次尝试。"
 
-#: rbackend/rinterface.cpp:399
+#: rbackend/rinterface.cpp:403
 msgid "Locale change"
 msgstr "语言环境已改变"
 
-#: rbackend/rinterface.cpp:536
+#: rbackend/rinterface.cpp:548
 msgid "R backend requests information"
 msgstr "R后台需要信息"
 
-#: rbackend/rinterface.cpp:553
+#: rbackend/rinterface.cpp:566
 #, fuzzy
 msgid ""
 "\n"
@@ -1420,7 +1420,7 @@ msgstr ""
 "既然这种情况本不应该发生，所以如果它发生了，请写信给rkward-devel@lists. "
 "sourceforge.net，告诉我们您当时正在做什么。很抱歉！"
 
-#: rbackend/rinterface.cpp:554
+#: rbackend/rinterface.cpp:567
 msgid "R engine has died"
 msgstr "R引擎已终止。"
 
@@ -1706,61 +1706,6 @@ msgstr "点击“更新”按钮以获取更新信息"
 msgid "Ready"
 msgstr "就绪"
 
-#: scriptbackends/phpbackend.cpp:66
-msgid ""
-"The support file \"%1\" could not be found or is not readable. Please check "
-"your installation."
-msgstr "未能找到支持文件\"%1\"，或者该文件不可读。请检查您的安装是否正确。"
-
-#: scriptbackends/phpbackend.cpp:66 scriptbackends/phpbackend.cpp:167
-#: scriptbackends/phpbackend.cpp:201 scriptbackends/phpbackend.cpp:219
-msgid "PHP-Error"
-msgstr "PHP错误"
-
-#: scriptbackends/phpbackend.cpp:167
-msgid ""
-"There has been an error\n"
-"(\"%1\")\n"
-"while starting up the PHP backend. Most likely this is due to either a bug "
-"in RKWard or a problem with your PHP installation. Check the settings "
-"(Settings->Configure Settings->PHP backend) and try again."
-msgstr ""
-"在启动PHP后台时出错(\"%1\")。 这很有可能是因为RKWard中有bug，也可能是因为PHP"
-"安装又问题。 请检查设置(\"设置\"->\"配置RKWard\"->PHP后台)之后重试。"
-
-#: scriptbackends/phpbackend.cpp:201
-msgid ""
-"The PHP-backend has reported an error\n"
-"(\"%1\")\n"
-"and has been shut down. This is most likely due to a bug in the plugin. But "
-"of course you may want to try to close and restart the plugin to see whether "
-"it works with different settings."
-msgstr ""
-"PHP后台在报告出错之后退出。这可能是由于插件中存在bug。 您可以尝试用不同的设置"
-"关闭并重启该插件，检测它是否能正常工作。"
-
-#: scriptbackends/phpbackend.cpp:219
-msgid ""
-"The PHP backend could not be started. Check whether you have correctly "
-"configured the location of the PHP-binary (Settings->Configure Settings->PHP "
-"backend)"
-msgstr ""
-"无法启动PHP后台。请检查您是否正确配置了PHP可执行文件的路径(\"设置\"->\"配置"
-"RKWard\"->\"PHP后台\")"
-
-#: scriptbackends/phpbackend.cpp:221
-msgid ""
-"The PHP-backend has died unexpectedly. The current output buffer is shown "
-"below:\n"
-"%1"
-msgstr ""
-"PHP后台异常失败。以下是当前的输出缓冲区内容：\n"
-"%1"
-
-#: scriptbackends/phpbackend.cpp:221
-msgid "PHP Process exited"
-msgstr "PHP进程已退出。"
-
 #: scriptbackends/qtscriptbackend.cpp:114
 #, fuzzy
 msgid ""
@@ -1814,7 +1759,7 @@ msgstr "## 计算\n"
 msgid "## Print result\n"
 msgstr "## 打印结果\n"
 
-#: settings/rksettings.cpp:72
+#: settings/rksettings.cpp:71
 msgid "Settings"
 msgstr "设置"
 
@@ -2139,19 +2084,7 @@ msgstr "宽度"
 msgid "Height:"
 msgstr "高度"
 
-#: settings/rksettingsmodulephp.cpp:39
-msgid "Changes in this section take effect the next time you start a plugin"
-msgstr "在本节中的修改将在您下次启动插件时生效"
-
-#: settings/rksettingsmodulephp.cpp:45
-msgid "File-location of the PHP binary"
-msgstr "PHP可执行文件的路径"
-
-#: settings/rksettingsmodulephp.cpp:63
-msgid "PHP backend"
-msgstr "PHP后台"
-
-#: settings/rksettingsmoduleplugins.cpp:54
+#: settings/rksettingsmoduleplugins.cpp:59
 msgid ""
 "Some plugins are available with both, a wizard-like interface and a "
 "traditional dialog interface. If both are available, which mode of "
@@ -2160,39 +2093,39 @@ msgstr ""
 "某些插件同时提供向导界面和传统的对话框界面。如果同时存在两种界面，您希望使用"
 "哪一种？"
 
-#: settings/rksettingsmoduleplugins.cpp:64
+#: settings/rksettingsmoduleplugins.cpp:69
 msgid "Always prefer dialogs"
 msgstr "优先使用对话框"
 
-#: settings/rksettingsmoduleplugins.cpp:67
+#: settings/rksettingsmoduleplugins.cpp:72
 msgid "Prefer recommended interface"
 msgstr "使用插件本身推荐的界面"
 
-#: settings/rksettingsmoduleplugins.cpp:70
+#: settings/rksettingsmoduleplugins.cpp:75
 msgid "Always prefer wizards"
 msgstr "优先使用向导"
 
-#: settings/rksettingsmoduleplugins.cpp:82
+#: settings/rksettingsmoduleplugins.cpp:87
 msgid "R syntax display (in dialogs)"
 msgstr "R语法显示(在对话框中)"
 
-#: settings/rksettingsmoduleplugins.cpp:85
+#: settings/rksettingsmoduleplugins.cpp:90
 msgid "Code shown by default"
 msgstr "缺省显示代码"
 
-#: settings/rksettingsmoduleplugins.cpp:91
+#: settings/rksettingsmoduleplugins.cpp:96
 msgid "Default height of code display (pixels)"
 msgstr "代码显示的缺省高度(以像素为单位)"
 
-#: settings/rksettingsmoduleplugins.cpp:103
+#: settings/rksettingsmoduleplugins.cpp:108
 msgid "Select .pluginmap file(s)"
 msgstr "选择.pluginmap文件"
 
-#: settings/rksettingsmoduleplugins.cpp:130
+#: settings/rksettingsmoduleplugins.cpp:135
 msgid "Select .pluginmap-file"
 msgstr "选择.pluginmap文件"
 
-#: settings/rksettingsmoduleplugins.cpp:135
+#: settings/rksettingsmoduleplugins.cpp:140
 msgid "Plugins"
 msgstr "插件"
 
@@ -3357,6 +3290,62 @@ msgstr "Roy Qu"
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "royqh1979@gmail.com"
+
+#~ msgid ""
+#~ "The support file \"%1\" could not be found or is not readable. Please "
+#~ "check your installation."
+#~ msgstr "未能找到支持文件\"%1\"，或者该文件不可读。请检查您的安装是否正确。"
+
+#~ msgid "PHP-Error"
+#~ msgstr "PHP错误"
+
+#~ msgid ""
+#~ "There has been an error\n"
+#~ "(\"%1\")\n"
+#~ "while starting up the PHP backend. Most likely this is due to either a "
+#~ "bug in RKWard or a problem with your PHP installation. Check the settings "
+#~ "(Settings->Configure Settings->PHP backend) and try again."
+#~ msgstr ""
+#~ "在启动PHP后台时出错(\"%1\")。 这很有可能是因为RKWard中有bug，也可能是因为"
+#~ "PHP安装又问题。 请检查设置(\"设置\"->\"配置RKWard\"->PHP后台)之后重试。"
+
+#~ msgid ""
+#~ "The PHP-backend has reported an error\n"
+#~ "(\"%1\")\n"
+#~ "and has been shut down. This is most likely due to a bug in the plugin. "
+#~ "But of course you may want to try to close and restart the plugin to see "
+#~ "whether it works with different settings."
+#~ msgstr ""
+#~ "PHP后台在报告出错之后退出。这可能是由于插件中存在bug。 您可以尝试用不同的"
+#~ "设置关闭并重启该插件，检测它是否能正常工作。"
+
+#~ msgid ""
+#~ "The PHP backend could not be started. Check whether you have correctly "
+#~ "configured the location of the PHP-binary (Settings->Configure Settings-"
+#~ ">PHP backend)"
+#~ msgstr ""
+#~ "无法启动PHP后台。请检查您是否正确配置了PHP可执行文件的路径(\"设置\"->\"配"
+#~ "置RKWard\"->\"PHP后台\")"
+
+#~ msgid ""
+#~ "The PHP-backend has died unexpectedly. The current output buffer is shown "
+#~ "below:\n"
+#~ "%1"
+#~ msgstr ""
+#~ "PHP后台异常失败。以下是当前的输出缓冲区内容：\n"
+#~ "%1"
+
+#~ msgid "PHP Process exited"
+#~ msgstr "PHP进程已退出。"
+
+#~ msgid "Changes in this section take effect the next time you start a plugin"
+#~ msgstr "在本节中的修改将在您下次启动插件时生效"
+
+#~ msgid "File-location of the PHP binary"
+#~ msgstr "PHP可执行文件的路径"
+
+#~ msgid "PHP backend"
+#~ msgstr "PHP后台"
 
 #~ msgid "Cutting selection..."
 #~ msgstr "剪切选中区域..."
