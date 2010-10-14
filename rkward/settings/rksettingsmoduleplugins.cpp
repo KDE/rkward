@@ -111,9 +111,8 @@ RKSettingsModulePlugins::RKSettingsModulePlugins (RKSettings *gui, QWidget *pare
 	connect (map_choser, SIGNAL (listChanged ()), this, SLOT (settingChanged ()));
 	main_vbox->addWidget (map_choser);
 
-#warning REMEMBER TO CLEAN UP
 	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
-	button = new QPushButton ("Push me, Meik", this);
+	button = new QPushButton (i18n ("Install or uninstall add-on plugin packs"), this);
 	main_vbox->addWidget (button);
 	connect (button, SIGNAL (clicked()), this, SLOT (downloadPlugins()));
 
@@ -228,6 +227,18 @@ void RKSettingsModulePlugins::installPluginPack (const QString &archive_file) {
 	QString basename = baseNameOfPluginPack (archive_file);
 	if (basename.isEmpty ()) return;
 
+	// remove any old versions of the same plugin. Unfortunately, KNewStuff does not clean up when installing updates.
+	QFileInfo archive_file_info (archive_file);
+	QFileInfo base_file_info (basename);
+	QDir base_dir = base_file_info.absoluteDir ();
+	QString base_filename = base_file_info.fileName ();
+	QStringList old_versions = base_dir.entryList (QDir::Files).filter (QRegExp ("^" + base_filename + "(-.*)?\\.(tar\\.gz|\\zip)$"));
+	foreach (const QString old_version, old_versions) {
+		if (old_version != archive_file_info.fileName ()) QFile::remove (base_dir.absoluteFilePath (old_version));
+	}
+	// finally, remove the previous unpacked installation, if any, to make sure we have a clean install
+	if (QDir().exists (basename)) KIO::del (KUrl::fromLocalFile (basename))->exec ();
+
 	KArchive* archive;
 	if (archive_file.endsWith (".zip", Qt::CaseInsensitive)) {
 		archive = new KZip (archive_file);
@@ -261,12 +272,24 @@ void RKSettingsModulePlugins::uninstallPluginPack (const QString &archive_file) 
 QString RKSettingsModulePlugins::baseNameOfPluginPack (const QString &archive_file) {
 	RK_TRACE (SETTINGS);
 
-	if (archive_file.endsWith (".tar.gz", Qt::CaseInsensitive)) {
-		return (archive_file.left (archive_file.length () - 7));
-	} else if (archive_file.endsWith (".zip", Qt::CaseInsensitive)) {
-		return (archive_file.left (archive_file.length () - 4));
+	QFileInfo file_info (archive_file);
+	QDir dir = file_info.absoluteDir ();
+	QString name = file_info.fileName ();
+
+	// strip file-type ending
+	if (name.endsWith (".tar.gz", Qt::CaseInsensitive)) {
+		name = name.left (name.length () - 7);
+	} else if (name.endsWith (".zip", Qt::CaseInsensitive)) {
+		name = name.left (name.length () - 4);
+	} else {
+		return QString ();
 	}
-	return QString ();
+
+	// strip version (if any)
+	int where = name.indexOf ("-", 1);	// must have at least one char of name before version string
+	if (where > 0) name = name.left (where);
+
+	return dir.absoluteFilePath (name);
 }
 
 QStringList RKSettingsModulePlugins::findPluginMapsRecursive (const QString &basedir) {
