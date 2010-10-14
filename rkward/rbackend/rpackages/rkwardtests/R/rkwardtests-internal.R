@@ -187,8 +187,6 @@ rktest.initializeEnvironment <- function () {
 		assign(".rk.output.html.file", x, as.environment("package:rkward"))
 	}
 }
-## moved this into rktest.makeplugintests()
-#rktest.initializeEnvironment ()
 
 # counterpart to rktest.initializeEnvironment. Restores the most important settings
 rktest.resetEnvironment <- function () {
@@ -200,4 +198,57 @@ rktest.resetEnvironment <- function () {
 		.rktest.tmp.dump[["rk.set.output.html.file"]],
 		envir=globalenv())
 	rm(".rktest.tmp.dump", envir=globalenv())
+}
+
+## handling of temporary directories
+# get the path to the recent temporary directory, if exists
+rktest.getTempDir <- function(){
+  if(exists(".rktest.temp.dir", where=globalenv())){
+    temp.dir <- get(".rktest.temp.dir", pos=globalenv())
+    if(file_test("-d", temp.dir)) {
+      return(temp.dir)
+    }
+    else {
+      return(FALSE)
+    }
+  }
+  else {
+    return(FALSE)
+  }
+}
+
+# create a temporary directory for the test results
+# the path to it will be stored in an object in globalenv() and returned
+rktest.createTempDir <- function(){
+  temp.dir <- rktest.getTempDir()
+  # if a temp.dir already exists, we will use it!
+  if(is.character(temp.dir)){
+    return(temp.dir)
+  } else{}
+  new.temp.dir <- tempfile("rktests.")
+  # to be sure path is treated as a directory, add a trailing slash if omitted
+  if(length(grep("/$", new.temp.dir)) == 0)
+    new.temp.dir <- paste(new.temp.dir,"/", sep="")
+
+  if(!dir.create(new.temp.dir, recursive=TRUE)) {
+    stop(simpleError("Couldn't create temporary directory!"))
+  }
+  else {
+    assign(".rktest.temp.dir", new.temp.dir, envir=globalenv())
+    return(new.temp.dir)
+  }
+}
+
+# remove the temporary directory that is defined in globalenv()
+rktest.removeTempDir <- function(){
+  temp.dir <- rktest.getTempDir()
+  if(is.character(temp.dir)){
+    unlink(temp.dir, recursive=TRUE)
+    # should the function stop here if unlink() failed?
+    rm(".rktest.temp.dir", envir=globalenv())
+    return(TRUE)
+  }
+  else {
+    return(FALSE)
+  }
 }
