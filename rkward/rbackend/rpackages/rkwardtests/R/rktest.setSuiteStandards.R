@@ -7,7 +7,7 @@
 #' @usage rktest.setSuiteStandards(suite, basedir=getwd())
 #' @aliases rktest.setSuiteStandards
 #' @param suite Character string naming the test suite to set standards for.
-#' @param basedir Defaults to the working directory.
+#' @param basedir Should point to the testroot, defaults to the working directory.
 #' @return The function simply changes the names of the previously created files,
 #' specifically adding the prefix "RKTestStandard.".
 #' @docType function
@@ -17,7 +17,7 @@
 #' @export
 #' @examples
 #' \dontrun{
-#' rktest.setSuiteStandards()
+#' rktest.setSuiteStandards("rkward_application_tests.R")
 #' }
 
 rktest.setSuiteStandards <- function (suite, basedir=getwd ()) {
@@ -29,12 +29,12 @@ rktest.setSuiteStandards <- function (suite, basedir=getwd ()) {
 
 	oldwd = getwd ()
 	on.exit (setwd (oldwd))
-	setwd (paste (basedir, suite@id, sep="/"))
+	setwd (file.path(basedir, suite@id))
 
-	files <- list.files ()
+	temp.suite.dir <- rktest.createTempSuiteDir(suite@id)
+	files <- list.files (temp.suite.dir)
 	files <- grep ("\\.(messages.txt|rkcommands.R|rkout)$", files, value=TRUE)
-	files <- grep ("^RKTestStandard", files, value=TRUE, invert=TRUE)
-	file.copy (files, paste ("RKTestStandard.", files, sep=""), overwrite=TRUE)
+	file.copy (file.path(temp.suite.dir, files), paste ("RKTestStandard.", files, sep=""), overwrite=TRUE)
 
 	# clean anything that is *not* a standard file
 	rktest.cleanRKTestSuite (suite, basedir)

@@ -4,7 +4,7 @@
 #' Package: \tab rkwardtests\cr
 #' Type: \tab Package\cr
 #' Version: \tab 0.5.5\cr
-#' Date: \tab 2010-10-12\cr
+#' Date: \tab 2010-10-14\cr
 #' Depends: \tab R (>= 2.9.0),methods\cr
 #' Encoding: \tab UTF-8\cr
 #' License: \tab GPL (>= 3)\cr

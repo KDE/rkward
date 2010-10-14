@@ -37,7 +37,7 @@ rktest.runRKTestSuite <- function (suite, basedir=getwd (), test.id=NULL) {
 
 	oldwd = getwd ()
 	on.exit (setwd (oldwd), add=TRUE)
-	setwd (paste (basedir, suite@id, sep="/"))
+	setwd (file.path(basedir, suite@id))
 
 	if (length (suite@initCalls) > 0) {
 		for (i in 1:length (suite@initCalls)) try (suite@initCalls[[i]]())

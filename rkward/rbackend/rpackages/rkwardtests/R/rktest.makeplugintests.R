@@ -3,14 +3,14 @@
 #' The function \code{rktest.makeplugintests} will run a whole test suite that was prepared to check one or several RKWard plugins.
 #' 
 #' @title Run RKWard plugin test suite
-#' @usage rktest.makeplugintests(testsuites, testroot,
+#' @usage rktest.makeplugintests(testsuites="testsuite.R", testroot=getwd(),
 #' outfile="make_plugintests.txt", append=FALSE, test.id=NULL)
 #' @aliases rktest.makeplugintests
 #' @param testsuites A character string or vector naming the test suites to be run.
 #' @param testroot A character string pointing to the root directory where the test suite resides (including its folder with test standards).
 #' @param outfile A character string giving a file name for the result log.
 #' @param append If TRUE, append output to an existing file.
-#' @param test.id An optional character string or vector naming one or more tests of a suite to be run (if NULL, all tests are run).
+#' @param test.id Optional character string or vector naming one or more tests of a suite to be run (if NULL, all tests are run).
 #' @return Results are printed to stdout and saved to the defined output file.
 #' @docType function
 #' @author Thomas Friedrichsmeier \email{thomas.friedrichsmeier@@ruhr-uni-bochum.de}, Meik Michalke \email{meik.michalke@@uni-duesseldorf.de}
@@ -25,7 +25,7 @@
 #'   testroot=getwd(), test.id=c("poisson_quantiles", "geom_quantiles"))
 #' }
 
-rktest.makeplugintests <- function(testsuites, testroot, outfile="make_plugintests.txt", append=FALSE, test.id=NULL){
+rktest.makeplugintests <- function(testsuites="testsuite.R", testroot=getwd(), outfile="make_plugintests.txt", append=FALSE, test.id=NULL){
   ## change to test root directory
   oldwd <- getwd()
   on.exit(setwd(oldwd))
@@ -63,5 +63,6 @@ rktest.makeplugintests <- function(testsuites, testroot, outfile="make_plugintes
   sink()
 
   cat (paste ("\n\nThese output are saved in: ", paste (getwd(), outfile, sep=.Platform$file.sep), ".\nIf needed, send them to rkward-devel@lists.sourceforge.net\n", sep=""))
+  cat (paste("\nThe full test results have been saved to this temporary directory:\n", rktest.getTempDir(),"\n"))
 
 }

@@ -1,7 +1,7 @@
-export(.rk.rerun.plugin.link.replacement)
 import(methods)
 exportClasses(RKTest)
 export(rktest.makeplugintests)
+export(rktest.replaceRunAgainLink)
 exportClasses(RKTestResult)
 export(rktest.runRKTestSuite)
 export(rktest.setSuiteStandards)

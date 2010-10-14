@@ -1,5 +1,15 @@
 # these functions are all used internally 
 
+.rk.rerun.plugin.link.replacement <- function (plugin, settings, label) {
+	.rk.cat.output ("<h3>Rerun code:</h3>")
+	.rk.cat.output ("<pre>")
+	.rk.cat.output ("rk.call.plugin (\"")
+	.rk.cat.output (plugin)
+	.rk.cat.output ("\", ")
+	.rk.cat.output (gsub ("^\"", "", gsub ("=", "=\"", gsub ("\n", "\", ", settings))))
+	.rk.cat.output ("\", submit.mode=\"submit\")</pre>")
+}
+
 rktest.appendTestResults <- function (objecta, objectb) {
 	stopifnot (inherits (objecta, "RKTestResult") && validObject (objecta))
 	stopifnot (inherits (objectb, "RKTestResult") && validObject (objectb))
@@ -18,12 +28,14 @@ rktest.appendTestResults <- function (objecta, objectb) {
 }
 
 rktest.file <- function (id, extension) {
-	file.path(getwd(), paste (id, extension, sep=""))
+	# get or create a temporary directory
+	temp.suite.dir <- rktest.createTempSuiteDir(suite@id)
+	file.path(temp.suite.dir, paste (id, extension, sep=""))
 }
 
 # returns true, if file corresponds to standard.
 rktest.compare.against.standard <- function (file, fuzzy=FALSE) {
-	standard_file <- gsub ("^(.*\\/)([^\\/]*)$", "\\1RKTestStandard\\.\\2", file)
+	standard_file <- file.path(getwd(), gsub ("^(.*\\/)([^\\/]*)$", "RKTestStandard\\.\\2", file))
 	if (file.exists (file)) {
 		# purge empty files
 		info <- file.info (file)
@@ -136,17 +148,9 @@ rktest.runRKTest <- function (test) {
 }
 
 rktest.cleanRKTestSuite <- function (suite, basedir=getwd ()) {
-	oldwd = getwd ()
-	on.exit (setwd (oldwd))
-	setwd (paste (basedir, suite@id, sep="/"))
-
-	files <-  list.files(pattern="\\.(rkcommands.R|rkout|messages.txt)$")
-	# do not delete the standards!
-	files <- grep ("^RKTestStandard\\.", files, value=TRUE, invert=TRUE)
-
-	unlink (files)
-
-	invisible (NULL)
+      # kept for backwards compatibility ;-)
+      # basedir is superfluous, though
+      rktest.removeTempSuiteDir(suite@id)
 }
 
 ## Initialize test environment
@@ -226,9 +230,6 @@ rktest.createTempDir <- function(){
     return(temp.dir)
   } else{}
   new.temp.dir <- tempfile("rktests.")
-  # to be sure path is treated as a directory, add a trailing slash if omitted
-  if(length(grep("/$", new.temp.dir)) == 0)
-    new.temp.dir <- paste(new.temp.dir,"/", sep="")
 
   if(!dir.create(new.temp.dir, recursive=TRUE)) {
     stop(simpleError("Couldn't create temporary directory!"))
@@ -247,6 +248,51 @@ rktest.removeTempDir <- function(){
     # should the function stop here if unlink() failed?
     rm(".rktest.temp.dir", envir=globalenv())
     return(TRUE)
+  }
+  else {
+    return(FALSE)
+  }
+}
+
+# create a suite directory inside the temp dir
+# for the actual test files
+rktest.createTempSuiteDir <- function(suite.id){
+  # create or get the temp base dir to use
+  temp.dir <- rktest.createTempDir()
+  temp.suite.dir <- file.path(temp.dir, suite.id)
+  # check if this dir already exists, then just return its path
+  if(file_test("-d", temp.suite.dir)){
+    return(temp.suite.dir)
+  }
+  # if not, try to create it and again return its path
+  else {
+    if(!dir.create(temp.suite.dir, recursive=TRUE)) {
+      stop(simpleError("Couldn't create temporary suite directory!"))
+    }
+    else {
+      return(temp.suite.dir)
+    }
+  }
+}
+
+# remove just the suite temp dir
+rktest.removeTempSuiteDir <- function(suite.id){
+  temp.dir <- rktest.getTempDir()
+  if(is.character(temp.dir)){
+    temp.suite.dir <- file.path(temp.dir, suite.id)
+    # check if this dir exists
+    if(file_test("-d", temp.suite.dir)){
+      unlink(temp.suite.dir, recursive=TRUE)
+      # if nothing is left in the base tempdir now, remove it as well
+      if(length(list.files(temp.dir)) == 0) {
+	rktest.removeTempDir()
+      } else {}
+      return(TRUE)
+    }
+    # if not, return FALSE
+    else {
+      return(FALSE)
+    }
   }
   else {
     return(FALSE)

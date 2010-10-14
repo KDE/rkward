@@ -13,9 +13,9 @@ specifically adding the prefix "RKTestStandard.".}
 \keyword{utilities}
 \seealso{\code{\link[rkwardtests:RKTestSuite]{RKTestSuite-class}}, \code{\link[rkwardtests:rktest.makeplugintests]{rktest.makeplugintests}}}
 \arguments{\item{suite}{Character string naming the test suite to set standards for.}
-\item{basedir}{Defaults to the working directory.}
+\item{basedir}{Should point to the testroot, defaults to the working directory.}
 }
 \examples{\dontrun{
-rktest.setSuiteStandards()
+rktest.setSuiteStandards("rkward_application_tests.R")
 }}
 
