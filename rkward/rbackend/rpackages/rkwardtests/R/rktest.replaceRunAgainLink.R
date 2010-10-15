@@ -22,25 +22,9 @@
 #' }
 
 rktest.replaceRunAgainLink <- function(restore=FALSE){
-  if(!restore){
-    # check if there's already a backup
-    if(!exists(".rktest.replaceRunAgainLink.restore", where=globalenv())){
-      replace <- get(".rk.rerun.plugin.link", pos=globalenv())
-      assign(".rktest.replaceRunAgainLink.restore", replace, envir=globalenv())
-      assign(".rk.rerun.plugin.link", .rk.rerun.plugin.link.replacement, envir=globalenv())
-    }
-    else {
-      stop(simpleWarning("Found a backup to restore -- have you already replaced the link?"))
-    }
-  }
-  else {
-    if(exists(".rktest.replaceRunAgainLink.restore", where=globalenv())){
-      restore <- get(".rktest.replaceRunAgainLink.restore", pos=globalenv())
-      assign(".rk.rerun.plugin.link", restore, envir=globalenv())
-      rm(".rktest.replaceRunAgainLink.restore", pos=globalenv())
-    }
-    else {
-      stop(simpleWarning("No backup to restore found!"))
-    }
-  }
+	if(!restore){
+		rktest.replace (".rk.rerun.plugin.link", .rk.rerun.plugin.link.replacement, backup.name=".rk.rerun.plugin.link.manual.replace")
+	} else {
+		rktest.restore (".rk.rerun.plugin.link", backup.name=".rk.rerun.plugin.link.manual.replace")
+	}
 }

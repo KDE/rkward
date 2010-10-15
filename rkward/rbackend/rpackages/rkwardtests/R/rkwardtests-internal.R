@@ -153,29 +153,43 @@ rktest.cleanRKTestSuite <- function (suite, basedir=getwd ()) {
       rktest.removeTempSuiteDir(suite@id)
 }
 
+## Convenience functions for replacing / restoring functions for the test runs
+.rktest.backups <- new.env()
+rktest.replace <- function (name, replacement, envir=as.environment ("package:rkward"), backup.name=name) {
+	if (exists (backup.name, envir=.rktest.backups, inherits=FALSE)) {
+		message ("Is looks like ", name, " has already been replaced. Not replacing it again.")
+	} else {
+		assign (backup.name, get (name, envir), envir=.rktest.backups)
+		assign (name, replacement, envir)
+	}
+}
+
+rktest.restore <- function (name, envir=as.environment ("package:rkward"), backup.name=name) {
+	if (exists (backup.name, envir=.rktest.backups, inherits=FALSE)) {
+		assign (name, get (backup.name, envir=.rktest.backups), envir=envir)
+	} else {
+		message ("No backup available for ", name, ". Already restored?")
+	}
+	rm (list=backup.name, envir=.rktest.backups)
+}
+
 ## Initialize test environment
 rktest.initializeEnvironment <- function () {
 	# Almost all tests depend on R2HTML, indirectly, so we should really assume it (or have the user install it) at the start
 	stopifnot (require (R2HTML))
 
-	# create a temporary dump of the current state of things we'll alter
-	# will be read by rktest.resetEnvironment()
-	assign(".rktest.tmp.dump",
-	  list(.rk.rerun.plugin.link=.rk.rerun.plugin.link,
-	        rk.set.output.html.file=rk.set.output.html.file),
-	  envir=globalenv())
 	# By default .rk.rerun.plugin.link() and .rk.make.hr() are silenced during the test runs
-	.rk.rerun.plugin.link <<- .rk.make.hr <<- function (...) { list (...) }
+	rktest.replace (".rk.rerun.plugin.link", function (...) list (...))
+	rktest.replace (".rk.make.hr", function (...) list (...))
 
 	# This should make the output of rk.graph.on() fixed
-	rk.get.tempfile.name <<- function (prefix="image", extension=".jpg") paste (prefix, extension, sep="")
+	rktest.replace ("rk.get.tempfile.name", function (prefix="image", extension=".jpg") paste (prefix, extension, sep=""))
 	options (rk.graphics.type="PNG", rk.graphics.width=480, rk.graphics.height=480)
 
 	# HACK: Override date, so we don't get a difference for each call of rk.header ()
 	# TODO: implement a clean solution inside rk.header()
-	assign ("date", function () {
-		return ("DATE")
-	}, envir=globalenv())
+	# Note: date is in baseenv() and we cannot easily replace it there, so placing an override in globalenv(), instead
+	assign ("date", function () return ("DATE"), envir=globalenv())
 
 	# numerical precision is often a problem. To work around this in many places, reduce default printed precision to 5 digits
 	options (digits=5)
@@ -186,22 +200,20 @@ rktest.initializeEnvironment <- function () {
 	options (useFancyQuotes=FALSE)
 
 	# This version of rk.set.output.html.file does not notify the frontend of the change. Without this, you'll get lots of output windows.
-	rk.set.output.html.file <<- function (x) {
+	rktest.replace ("rk.set.output.html.file", function (x) {
 		stopifnot(is.character(x))
 		assign(".rk.output.html.file", x, as.environment("package:rkward"))
-	}
+	})
 }
 
 # counterpart to rktest.initializeEnvironment. Restores the most important settings
 rktest.resetEnvironment <- function () {
 	# return to previously dumped state
-	assign(".rk.rerun.plugin.link",
-		.rktest.tmp.dump[[".rk.rerun.plugin.link"]],
-		envir=globalenv())
-	assign("rk.set.output.html.file",
-		.rktest.tmp.dump[["rk.set.output.html.file"]],
-		envir=globalenv())
-	rm(".rktest.tmp.dump", envir=globalenv())
+	rktest.restore (".rk.rerun.plugin.link")
+	rktest.restore (".rk.make.hr")
+	rktest.restore ("rk.get.tempfile.name")
+	rktest.restore ("rk.set.output.html.file")
+	rm (date, envir=globalenv())
 }
 
 ## handling of temporary directories
