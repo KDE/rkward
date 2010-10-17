@@ -26,6 +26,7 @@ Var RHomeOk
 Var KDEPrefixOk
 Var DownloadLinkText
 Var DownloadLinkDest
+Var RDll_location
 
 # pages
 Page custom WelcomeCreate
@@ -103,11 +104,14 @@ Function ValidateRHome
 		StrCpy $0 "$FileSelectCurrent\bin\R.exe exists"
 		IntOp $RHomeOk_count $RHomeOk_count + 1
 	NextCheck:
-	IfFileExists $FileSelectCurrent\bin\R.dll Rdll_found
-		StrCpy $1 "$FileSelectCurrent\bin\R.dll does not exist"
+	StrCpy $RDll_location $FileSelectCurrent\bin\R.dll
+	IfFileExists $RDll_location Rdll_found
+		StrCpy $RDll_location $FileSelectCurrent\bin\i386\R.dll
+	IfFileExists $RDll_location Rdll_found
+		StrCpy $1 "$FileSelectCurrent\bin[\i386]\R.dll does not exist"
 	Goto done
 	Rdll_Found:
-		GetDllVersion "$FileSelectCurrent\bin\R.dll" $R0 $R1
+		GetDllVersion "$RDll_location" $R0 $R1
 		IntOp $R2 $R0 / 0x00010000
 		IntOp $R3 $R0 & 0x0000FFFF
 		StrCpy $1 "Version $R2.$R3"
@@ -119,7 +123,7 @@ Function ValidateRHome
 		${Else}
 			StrCpy $2 "is too old!"
 		${EndIf}
-		StrCpy $1 "$FileSelectCurrent\bin\R.dll exists ($1 $2)"
+		StrCpy $1 "$RDll_location exists ($1 $2)"
 	done:
 	${If} $RHomeOk_count >= 2
 		StrCpy $2 "OK!"
