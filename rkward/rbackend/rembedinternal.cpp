@@ -46,6 +46,9 @@ REmbedInternal *REmbedInternal::this_pointer = 0;
 #endif
 #include <math.h>
 
+// keep R from defining tons of aliases
+#define R_NO_REMAP 1
+
 #include <Rversion.h>
 
 #if (R_VERSION > R_Version(2, 6, 9))
@@ -563,14 +566,14 @@ QString *SEXPToStringList (SEXP from_exp, unsigned int *count) {
 	// bad format? coerce the vector first
 	if (TYPEOF (from_exp) != STRSXP) {
 		SEXP strexp;
-		PROTECT (strexp = coerceVector (from_exp, STRSXP));
+		PROTECT (strexp = Rf_coerceVector (from_exp, STRSXP));
 		QString *list = SEXPToStringList (strexp, count);
 		UNPROTECT (1);
 		return list;
 	}
 
 	// format already good? Avoid coercion (and associated copying)
-	*count = length (from_exp);
+	*count = Rf_length (from_exp);
 	QString *list = new QString[*count];
 	unsigned int i = 0;
 	for (; i < *count; ++i) {
@@ -608,14 +611,14 @@ int *SEXPToIntArray (SEXP from_exp, unsigned int *count) {
 	// bad format? coerce the vector first
 	if (TYPEOF (from_exp) != INTSXP) {
 		SEXP intexp;
-		PROTECT (intexp = coerceVector (from_exp, INTSXP));
+		PROTECT (intexp = Rf_coerceVector (from_exp, INTSXP));
 		integers = SEXPToIntArray (intexp, count);
 		UNPROTECT (1);
 		return integers;
 	}
 
 	// format already good? Avoid coercion (and associated copying)
-	*count = length (from_exp);
+	*count = Rf_length (from_exp);
 	integers = new int[*count];
 	for (unsigned int i = 0; i < *count; ++i) {
 		integers[i] = INTEGER (from_exp)[i];
@@ -645,14 +648,14 @@ double *SEXPToRealArray (SEXP from_exp, unsigned int *count) {
 	// bad format? coerce the vector first
 	if (TYPEOF (from_exp) != REALSXP) {
 		SEXP realexp;
-		PROTECT (realexp = coerceVector (from_exp, REALSXP));
+		PROTECT (realexp = Rf_coerceVector (from_exp, REALSXP));
 		reals = SEXPToRealArray (realexp, count);
 		UNPROTECT (1);
 		return reals;
 	}
 	
 	// format already good? Avoid coercion (and associated copying)
-	*count = length (from_exp);
+	*count = Rf_length (from_exp);
 	reals = new double[*count];
 	for (unsigned int i = 0; i < *count; ++i) {
 		reals[i] = REAL (from_exp)[i];
@@ -680,7 +683,7 @@ RData *SEXPToRData (SEXP from_exp) {
 			break;
 		case VECSXP:
 			count = 0;
-			count = length (from_exp);
+			count = Rf_length (from_exp);
 			{
 				RData **structure_array = new RData*[count];
 				for (unsigned int i=0; i < count; ++i) {
@@ -768,12 +771,12 @@ SEXP doLocaleName () {
 	RK_TRACE (RBACKEND);
 
 	RK_ASSERT (REmbedInternal::this_pointer->current_locale_codec);
-	SEXP res = allocVector(STRSXP, 1);
+	SEXP res = Rf_allocVector(STRSXP, 1);
 	PROTECT (res);
 #ifdef R_2_9
-	SET_STRING_ELT (res, 0, mkChar (REmbedInternal::this_pointer->current_locale_codec->name ().data ()));
+	SET_STRING_ELT (res, 0, Rf_mkChar (REmbedInternal::this_pointer->current_locale_codec->name ().data ()));
 #else
-	SET_VECTOR_ELT (res, 0, mkChar (REmbedInternal::this_pointer->current_locale_codec->name ().data ()));
+	SET_VECTOR_ELT (res, 0, Rf_mkChar (REmbedInternal::this_pointer->current_locale_codec->name ().data ()));
 #endif
 	UNPROTECT (1);
 	return res;
@@ -792,17 +795,17 @@ SEXP doGetStructure (SEXP toplevel, SEXP name, SEXP envlevel, SEXP namespacename
 SEXP doGetGlobalEnvStructure (SEXP name, SEXP envlevel, SEXP namespacename) {
 	RK_TRACE (RBACKEND);
 
-	return doGetStructure (findVar (Rf_install (CHAR (STRING_ELT (name, 0))), R_GlobalEnv), name, envlevel, namespacename);
+	return doGetStructure (Rf_findVar (Rf_install (CHAR (STRING_ELT (name, 0))), R_GlobalEnv), name, envlevel, namespacename);
 }
 
 /** copy a symbol without touching it (esp. not forcing any promises) */
 SEXP doCopyNoEval (SEXP name, SEXP fromenv, SEXP toenv) {
 	RK_TRACE (RBACKEND);
 
-	if(!isString (name) || length (name) != 1) error ("name is not a single string");
-	if(!isEnvironment (fromenv)) error ("fromenv is not an environment");
-	if(!isEnvironment (toenv)) error ("toenv is not an environment");
-	defineVar (Rf_install (CHAR (STRING_ELT (name, 0))), findVar (Rf_install (CHAR (STRING_ELT (name, 0))), fromenv), toenv);
+	if(!Rf_isString (name) || Rf_length (name) != 1) Rf_error ("name is not a single string");
+	if(!Rf_isEnvironment (fromenv)) Rf_error ("fromenv is not an environment");
+	if(!Rf_isEnvironment (toenv)) Rf_error ("toenv is not an environment");
+	Rf_defineVar (Rf_install (CHAR (STRING_ELT (name, 0))), Rf_findVar (Rf_install (CHAR (STRING_ELT (name, 0))), fromenv), toenv);
 	return (R_NilValue);
 }
 
@@ -887,13 +890,13 @@ bool REmbedInternal::startR (int argc, char** argv, bool stack_check) {
 	connectCallbacks();
 
 	// get info on R runtime version
-	REmbedInternal::RKWardRError error;
-	unsigned int count;
-	int *dummy = getCommandAsIntVector ("as.numeric (R.version$major) * 1000 + as.numeric (R.version$minor) * 10", &count, &error);
-	RK_ASSERT ((error == REmbedInternal::NoError) && (count == 1));
-	if (count) r_version = dummy[0];
-	else r_version = 0;
-	delete [] dummy;
+	RCommand *dummy = runDirectCommand ("as.numeric (R.version$major) * 1000 + as.numeric (R.version$minor) * 10", RCommand::GetIntVector);
+	if ((dummy->getDataType () == RData::IntVector) && (dummy->getDataLength () == 1)) {
+		r_version = dummy->getIntVector ()[0];
+	} else {
+		RK_ASSERT (false);
+		r_version = 0;
+	}
 
 	return true;
 }
@@ -907,11 +910,11 @@ SEXP parseCommand (const QString &command_qstring, REmbedInternal::RKWardRError 
 	QByteArray localc = REmbedInternal::this_pointer->current_locale_codec->fromUnicode (command_qstring);		// needed so the string below does not go out of scope
 	const char *command = localc.data ();
 
-	PROTECT(cv=allocVector(STRSXP, 1));
+	PROTECT(cv=Rf_allocVector(STRSXP, 1));
 #ifdef R_2_9
-	SET_STRING_ELT(cv, 0, mkChar(command));
+	SET_STRING_ELT(cv, 0, Rf_mkChar(command));
 #else
-	SET_VECTOR_ELT(cv, 0, mkChar(command));
+	SET_VECTOR_ELT(cv, 0, Rf_mkChar(command));
 #endif
 
 	// TODO: Maybe we can use R_ParseGeneral instead. Then we could find the exact character, where parsing fails. Nope: not exported API
@@ -1038,20 +1041,25 @@ void runUserCommandInternal (void *) {
 	}
 }
 
-void REmbedInternal::runCommandInternal (const QString &command_qstring, RKWardRError *error, bool print_result) {
+bool REmbedInternal::runDirectCommand (const QString &command) {
 	RK_TRACE (RBACKEND);
 
-	// Apparently the line below is no good idea after all. At least on Windows, this causes issues (crashes) with RGtk2, and several methods-using libraries
-	//connectCallbacks ();		// sorry, but we will not play nicely with additional frontends trying to override our callbacks. (Unless they start their own R event loop, then they should be fine)
+	RCommand c (command, RCommand::App | RCommand::Sync);
+	runCommand (&c);
+	return (c.succeeded ());
+}
 
-	*error = NoError;
-	if (!print_result) {
-		SEXP parsed = parseCommand (command_qstring, error);
-		if (*error == NoError) runCommandInternalBase (parsed, error);
-	} else {		
+RCommand *REmbedInternal::runDirectCommand (const QString &command, RCommand::CommandTypes datatype) {
+	RK_TRACE (RBACKEND);
+	RK_ASSERT ((datatype >= RCommand::GetIntVector) && (datatype <= RCommand::GetStructuredData));
+
+	RCommand *c = new RCommand (command, RCommand::App | RCommand::Sync | datatype);
+	runCommand (c);
+	return c;
 }
 
 void REmbedInternal::runCommand (RCommand *command) {
+	RK_TRACE (RBACKEND);
 	RK_ASSERT (command);
 
 	RKWardRError error = NoError;
@@ -1099,20 +1107,20 @@ hist == 1 iff R wants a parse-able input.
 		}
 		if (ok == FALSE) {
 			if (repldll_last_parse_successful) {
-				*error = REmbedInternal::OtherError;
+				error = REmbedInternal::OtherError;
 			} else {
-				*error = REmbedInternal::SyntaxError;
+				error = REmbedInternal::SyntaxError;
 			}
 		} else {
 			if (prev_iteration_was_incomplete) {
-				*error = REmbedInternal::Incomplete;
+				error = REmbedInternal::Incomplete;
 			} else {
-				*error = REmbedInternal::NoError;
+				error = REmbedInternal::NoError;
 			}
 		}
 		repldlldo1_wants_code = false;		// make sure we don't get confused in RReadConsole
 	} else {		// not a user command
-		SEXP parsed = parseCommand (command, &error);
+		SEXP parsed = parseCommand (command->command (), &error);
 		if (error == NoError) {
 			SEXP exp;
 			PROTECT (exp = runCommandInternalBase (parsed, &error));
@@ -1127,7 +1135,7 @@ hist == 1 iff R wants a parse-able input.
 					command->datatype = RData::StringVector;
 					command->data = SEXPToIntArray (exp, &(command->length));
 				} else if (command->type () & RCommand::GetStructuredData) {
-					RData *data SEXPToRData (exp);
+					RData *data = SEXPToRData (exp);
 					if (data) command->setData (data);
 				}
 			}
@@ -1158,11 +1166,9 @@ hist == 1 iff R wants a parse-able input.
 			RK_DO (qDebug ("Command failed (other)"), RBACKEND, dl);
 		}
 		RK_DO (qDebug ("failed command was: '%s'", command->command ().toLatin1 ().data ()), RBACKEND, dl);
+		flushOutput ();
+		RK_DO (qDebug ("- error message was: '%s'", command->error ().toLatin1 ().data ()), RBACKEND, dl);
 	} else {
 		command->status |= RCommand::WasTried;
-	}
-
-	if (error) {
-		RK_DO (qDebug ("- error message was: '%s'", command->error ().toLatin1 ().data ()), RBACKEND, dl);
 	}
 }

@@ -23,6 +23,8 @@
 #include <QMap>
 #include <QVariant>
 
+#include "rcommand.h"
+
 #ifdef Q_WS_WIN
 extern "C" {
 	void RK_scheduleIntr();
@@ -50,8 +52,6 @@ struct RCallbackArgs {
 };
 
 class QStringList;
-class RData;
-class RCommand;
 class QTextCodec;
 /** This function converts a list of strings to a QStringList (locale aware), and returns the pointer. Needed to keep R and Qt includes separate. The strings can be deleted afterwards. Implementation is in rthread.cpp */
 QString *stringsToStringList (char **strings, int count);
@@ -94,13 +94,16 @@ protected:
 @param argv Arguments as would be passed on the commandline to R
 @param stack_check C stack checking enabled */
 	bool startR (int argc, char **argv, bool stack_check);
-/** low-level running of a command.
-@param command command to be run
-@param error this will be set to a value in RKWardError depending on success/failure of the command
-@param print_result whether the R_Visible flag should be set. If true, R will behave mostly as if in a regular console session. Otherwise values
-will only be printed if called for expressedly with print ("...") or similar.
-@param suppress_incomplete make sure never to run an incomplete command */
-	void runCommandInternal (const QString &command, RKWardRError *error, bool print_result=false);
+
+/** convenience low-level function for running a command, directly
+@param command command to be runCommand
+@returns true if command was run successfully, false in case of an error */
+	bool runDirectCommand (const QString &command);
+/** convenience low-level function for running a command, directly. Use this overload, if you want to handle a return value.
+@param command command to be runCommand
+@param datatype the data type that should be (attempted to be) returned
+@returns a pointer to the RCommand-instance that was created and used, internally. You can query this pointer for status and data. Be sure to delete it, when done. */
+	RCommand *runDirectCommand (const QString &command, RCommand::CommandTypes datatype); 
 public:
 /** call this periodically to make R's x11 windows process their events */
 	static void processX11Events ();

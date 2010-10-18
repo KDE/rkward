@@ -71,25 +71,25 @@ SEXP RKStructureGetter::prefetch_fun (const char *name, bool from_base) {
 }
 
 SEXP RKStructureGetter::callSimpleFun (SEXP fun, SEXP arg, SEXP env) {
-	SEXP call = allocVector (LANGSXP, 2);
+	SEXP call = Rf_allocVector (LANGSXP, 2);
 	PROTECT (call);
 	SETCAR (call, fun);
 	SETCAR (CDR (call), arg);
 
-	SEXP ret = eval (call, env);
+	SEXP ret = Rf_eval (call, env);
 
 	UNPROTECT (1); /* call */
 	return ret;
 }
 
 SEXP RKStructureGetter::callSimpleFun2 (SEXP fun, SEXP arg1, SEXP arg2, SEXP env) {
-	SEXP call = allocVector (LANGSXP, 3);
+	SEXP call = Rf_allocVector (LANGSXP, 3);
 	PROTECT (call);
 	SETCAR (call, fun);
 	SETCAR (CDR (call), arg1);
 	SETCAR (CDDR (call), arg2);
 
-	SEXP ret = eval (call, env);
+	SEXP ret = Rf_eval (call, env);
 
 	UNPROTECT (1); /* call */
 	return ret;
@@ -175,7 +175,7 @@ SEXP RKStructureGetter::resolvePromise (SEXP from) {
 
 			PROTECT (from);
 			SET_PRSEEN(from, 1);
-			ret = eval(PRCODE(from), PRENV(from));
+			ret = Rf_eval(PRCODE(from), PRENV(from));
 			SET_PRSEEN(from, 0);
 			if (keep_evalled_promises) {
 				SET_PRVALUE(from, ret);
@@ -224,7 +224,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 		extern SEXP R_data_class (SEXP, Rboolean);
 		classes_s = R_data_class (value, (Rboolean) 0);
 
-		value = coerceVector (value, EXPRSXP);	// make sure the object is safe for everything to come
+		value = Rf_coerceVector (value, EXPRSXP);	// make sure the object is safe for everything to come
 		UNPROTECT (1); /* old value */
 
 		PROTECT (classes_s);
@@ -389,7 +389,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 		if (do_env) {
 			RK_DO (qDebug ("recurse into environment %s", name.toLatin1().data ()), RBACKEND, DL_DEBUG);
 			for (unsigned int i = 0; i < childcount; ++i) {
-				SEXP current_childname = install(CHAR(STRING_ELT(childnames_s, i)));
+				SEXP current_childname = Rf_install(CHAR(STRING_ELT(childnames_s, i)));
 				PROTECT (current_childname);
 				SEXP child = Rf_findVar (current_childname, value);
 				PROTECT (child);
@@ -466,7 +466,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 		funargvaluesdata->data = SEXPToStringList (formals_s, &(funargvaluesdata->length));
 
 		// the argument names
-		SEXP names_s = getAttrib (formals_s, R_NamesSymbol);
+		SEXP names_s = Rf_getAttrib (formals_s, R_NamesSymbol);
 		PROTECT (names_s);
 		funargsdata->data = SEXPToStringList (names_s, &(funargsdata->length));
 
