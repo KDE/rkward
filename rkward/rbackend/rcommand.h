@@ -201,6 +201,9 @@ public:
 	ROutputList &getOutput () { return output_list; };
 /** modify the command string. DO NOT CALL THIS after the command has been submitted! */
 	void setCommand (const QString &command) { _command = command; };
+
+/** public for internal reasons, only. Don't modify outside the rbackend classes. */
+	int status;  
 private:
 friend class RThread;
 friend class RInterface;
@@ -214,7 +217,6 @@ friend class RCommandStackModel;
 	QString _command;
 	int _type;
 	int _flags;
-	int status;
 	QString _rk_equiv;
 	int _id;
 	static int next_id;

@@ -175,49 +175,9 @@ void RThread::doCommand (RCommand *command) {
 		RCommandStackModel::getModel ()->itemChange (command);
 
 		MUTEX_UNLOCK;
-		if (ctype & RCommand::GetStringVector) {
-			command->datatype = RData::StringVector;
-			command->data = getCommandAsStringVector (ccommand, &(command->length), &error);
-		} else if (ctype & RCommand::GetRealVector) {
-			command->datatype = RData::RealVector;
-			command->data = getCommandAsRealVector (ccommand, &(command->length), &error);
-		} else if (ctype & RCommand::GetIntVector) {
-			command->datatype = RData::IntVector;
-			command->data = getCommandAsIntVector (ccommand, &(command->length), &error);
-		} else if (ctype & RCommand::GetStructuredData) {
-			RData *data = getCommandAsRData (ccommand, &error);
-			if (data) command->setData (data);
-		} else {
-			runCommandInternal (ccommand, &error, ctype & RCommand::User);
-		}
+		runCommand (command);
 		if (!locked || killed) processX11Events ();
 		MUTEX_LOCK;
-
-		#ifdef RKWARD_DEBUG
-			int dl = DL_WARNING;		// failed application commands are an issue worth reporting, failed user commands are not
-			if (command->type () | RCommand::User) dl = DL_DEBUG;
-		#endif
-		if (error != NoError) {
-			command->status |= RCommand::WasTried | RCommand::Failed;
-			if (error == Incomplete) {
-				command->status |= RCommand::ErrorIncomplete;
-				RK_DO (qDebug ("Command failed (incomplete)"), RBACKEND, dl);
-			} else if (error == SyntaxError) {
-				command->status |= RCommand::ErrorSyntax;
-				RK_DO (qDebug ("Command failed (syntax)"), RBACKEND, dl);
-			} else if (command->status & RCommand::Canceled) {
-				RK_DO (qDebug ("Command failed (interrupted)"), RBACKEND, dl);
-			} else {
-				command->status |= RCommand::ErrorOther;
-				#ifdef RKWARD_DEBUG
-					dl = DL_WARNING;		// always interested in strange errors
-				#endif
-				RK_DO (qDebug ("Command failed (other)"), RBACKEND, dl);
-			}
-			RK_DO (qDebug ("failed command was: '%s'", command->command ().toLatin1 ().data ()), RBACKEND, dl);
-		} else {
-			command->status |= RCommand::WasTried;
-		}
 
 		flushOutput ();
 		if (command->type () & RCommand::DirectToOutput) {
@@ -236,10 +196,6 @@ void RThread::doCommand (RCommand *command) {
 			}
 		}
 	
-		if (error) {
-			RK_DO (qDebug ("- error message was: '%s'", command->error ().toLatin1 ().data ()), RBACKEND, dl);
-	//		runCommandInternal (".rk.init.handlers ()\n", &dummy);
-		}
 		RK_DO (qDebug ("done running command"), RBACKEND, DL_DEBUG);
 		all_current_commands.pop_back();
 	} else {
@@ -352,17 +308,6 @@ void RThread::flushOutput () {
 	out_buf_len = 0;
 }
 
-/*
-void RThread::handleCondition (char **call, int call_length) {
-	RK_TRACE (RBACKEND);
-
-	RK_ASSERT (call_length >= 2);
-	if (!call_length) return;
-
-	//RThreadInternal::next_output_is_error = true;
-	qDebug ("condition '%s', message '%s'", call[0], call[1]);
-} */
-
 void RThread::handleError (QString *call, int call_length) {
 	RK_TRACE (RBACKEND);
 
@@ -468,13 +413,6 @@ void RThread::handleStandardCallback (RCallbackArgs *args) {
 	}
 
 	RK_DO (qDebug ("standard callback done"), RBACKEND, DL_DEBUG);
-}
-
-void RThread::currentCommandWasCancelled () {
-	RK_TRACE (RBACKEND);
-
-	RK_ASSERT (current_command);
-	current_command->status |= RCommand::Canceled;
 }
 
 int RThread::initialize () {

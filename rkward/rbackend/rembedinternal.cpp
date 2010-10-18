@@ -180,8 +180,7 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 	REmbedInternal::this_pointer->handleStandardCallback (&args);
 // default implementation seems to return 1 on success, 0 on failure, contrary to some documentation. see unix/std-sys.c
 	if (args.params["cancelled"].toBool ()) {
-#warning TODO: this should be handled in rthread.cpp, instead
-		REmbedInternal::this_pointer->currentCommandWasCancelled ();
+		if (REmbedInternal::this_pointer->current_command) REmbedInternal::this_pointer->current_command->status |= RCommand::Canceled;
 		RK_doIntr();
 		return 0;	// we should not ever get here, but still...
 	}
@@ -208,7 +207,7 @@ void RWriteConsoleEx (const char *buf, int buflen, int type) {
 
 /** For R callbacks that we want to disable, entirely */
 void RDoNothing () {
-	RK_TRACE (RBACKEND);
+	//RK_TRACE (RBACKEND);
 }
 
 void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
@@ -1049,7 +1048,17 @@ void REmbedInternal::runCommandInternal (const QString &command_qstring, RKWardR
 	if (!print_result) {
 		SEXP parsed = parseCommand (command_qstring, error);
 		if (*error == NoError) runCommandInternalBase (parsed, error);
-	} else {		// run a user command
+	} else {		
+}
+
+void REmbedInternal::runCommand (RCommand *command) {
+	RK_ASSERT (command);
+
+	RKWardRError error = NoError;
+
+	// running user commands is quite different from all other commands
+	if (command->type () & RCommand::User) {
+		// run a user command
 /* Using R_ReplDLLdo1 () is a pain, but it seems to be the only entry point for evaluating a command as if it had been entered on a plain R console (with auto-printing if not invisible, etc.). Esp. since R_Visible is no longer exported in R 2.5.0, as it seems as of today (2007-01-17).
 
 Problems to deal with:
@@ -1074,7 +1083,7 @@ hist == 1 iff R wants a parse-able input.
 		R_ReplDLLinit ();		// resets the parse buffer (things might be left over from a previous incomplete parse)
 		bool prev_iteration_was_incomplete = false;
 
-		QByteArray localc = current_locale_codec->fromUnicode (command_qstring);		// needed so the string below does not go out of scope
+		QByteArray localc = current_locale_codec->fromUnicode (command->command ());		// needed so the string below does not go out of scope
 		current_buffer = localc.data ();
 
 		repldll_buffer_transfer_finished = false;
@@ -1102,93 +1111,58 @@ hist == 1 iff R wants a parse-able input.
 			}
 		}
 		repldlldo1_wants_code = false;		// make sure we don't get confused in RReadConsole
+	} else {		// not a user command
+		SEXP parsed = parseCommand (command, &error);
+		if (error == NoError) {
+			SEXP exp;
+			PROTECT (exp = runCommandInternalBase (parsed, &error));
+			if (error == NoError) {
+				if (command->type () & RCommand::GetStringVector) {
+					command->datatype = RData::StringVector;
+					command->data = SEXPToStringList (exp, &(command->length));
+				} else if (command->type () & RCommand::GetRealVector) {
+					command->datatype = RData::StringVector;
+					command->data = SEXPToRealArray (exp, &(command->length));
+				} else if (command->type () & RCommand::GetIntVector) {
+					command->datatype = RData::StringVector;
+					command->data = SEXPToIntArray (exp, &(command->length));
+				} else if (command->type () & RCommand::GetStructuredData) {
+					RData *data SEXPToRData (exp);
+					if (data) command->setData (data);
+				}
+			}
+			UNPROTECT (1); // exp
+		}
 	}
-}
 
-QString *REmbedInternal::getCommandAsStringVector (const QString &command, uint *count, RKWardRError *error) {	
-	RK_TRACE (RBACKEND);
-
-	SEXP exp;
-	QString *list = 0;
-
-	*error = NoError;
-	SEXP parsed = parseCommand (command, error);
-	if (*error == NoError) PROTECT (exp = runCommandInternalBase (parsed, error));
-	
-	if (*error == NoError) {
-		list = SEXPToStringList (exp, count);
+	// common error/status handling
+	#ifdef RKWARD_DEBUG
+		int dl = DL_WARNING;		// failed application commands are an issue worth reporting, failed user commands are not
+		if (command->type () & RCommand::User) dl = DL_DEBUG;
+	#endif
+	if (error != NoError) {
+		command->status |= RCommand::WasTried | RCommand::Failed;
+		if (error == Incomplete) {
+			command->status |= RCommand::ErrorIncomplete;
+			RK_DO (qDebug ("Command failed (incomplete)"), RBACKEND, dl);
+		} else if (error == SyntaxError) {
+			command->status |= RCommand::ErrorSyntax;
+			RK_DO (qDebug ("Command failed (syntax)"), RBACKEND, dl);
+		} else if (command->status & RCommand::Canceled) {
+			RK_DO (qDebug ("Command failed (interrupted)"), RBACKEND, dl);
+		} else {
+			command->status |= RCommand::ErrorOther;
+			#ifdef RKWARD_DEBUG
+				dl = DL_WARNING;		// always interested in strange errors
+			#endif
+			RK_DO (qDebug ("Command failed (other)"), RBACKEND, dl);
+		}
+		RK_DO (qDebug ("failed command was: '%s'", command->command ().toLatin1 ().data ()), RBACKEND, dl);
+	} else {
+		command->status |= RCommand::WasTried;
 	}
-	
-	UNPROTECT (1); // exp
-	
-	if (*error != NoError) {
-		*count = 0;
-		return 0;
-	}
-	return list;
-}
 
-double *REmbedInternal::getCommandAsRealVector (const QString &command, uint *count, RKWardRError *error) {
-	RK_TRACE (RBACKEND);
-
-	SEXP exp;
-	double *reals = 0;
-	
-	*error = NoError;
-	SEXP parsed = parseCommand (command, error);
-	if (*error == NoError) PROTECT (exp = runCommandInternalBase (parsed, error));
-	
-	if (*error == NoError) {
-		reals = SEXPToRealArray (exp, count);
+	if (error) {
+		RK_DO (qDebug ("- error message was: '%s'", command->error ().toLatin1 ().data ()), RBACKEND, dl);
 	}
-	
-	UNPROTECT (1); // exp
-	
-	if (*error != NoError) {
-		*count = 0;
-		return 0;
-	}
-	return reals;
-}
-
-int *REmbedInternal::getCommandAsIntVector (const QString &command, uint *count, RKWardRError *error) {
-	RK_TRACE (RBACKEND);
-
-	SEXP exp;
-	int *integers = 0;
-	
-	*error = NoError;
-	SEXP parsed = parseCommand (command, error);
-	if (*error == NoError) PROTECT (exp = runCommandInternalBase (parsed, error));
-	
-	if (*error == NoError) {
-		integers = SEXPToIntArray (exp, count);
-	}
-	
-	UNPROTECT (1); // exp
-	
-	if (*error != NoError) {
-		*count = 0;
-		return 0;
-	}
-	return integers;
-}
-
-RData *REmbedInternal::getCommandAsRData (const QString &command, RKWardRError *error) {
-	RK_TRACE (RBACKEND);
-
-	SEXP exp;
-	RData *data = 0;
-	
-	*error = NoError;
-	SEXP parsed = parseCommand (command, error);
-	if (*error == NoError) PROTECT (exp = runCommandInternalBase (parsed, error));
-	
-	if (*error == NoError) {
-		data = SEXPToRData (exp);
-	}
-	
-	UNPROTECT (1); // exp
-	
-	return data;
 }
