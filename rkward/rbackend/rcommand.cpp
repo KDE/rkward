@@ -59,8 +59,10 @@ RCommand::RCommand(const QString &command, int type, const QString &rk_equiv, RC
 	_rk_equiv = rk_equiv;
 	RCommand::receivers = new RCommandReceiver* [MAX_RECEIVERS];
 	num_receivers = 0;
-	addReceiver (receiver);
-	addReceiver (RKCommandLog::getLog ());
+	if (!(type & Internal)) {
+		addReceiver (receiver);
+		addReceiver (RKCommandLog::getLog ());
+	}
 }
 
 RCommand::~RCommand(){

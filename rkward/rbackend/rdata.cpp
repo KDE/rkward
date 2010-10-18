@@ -34,19 +34,19 @@ RData::~RData () {
 	discardData ();
 }
 
-double *RData::getRealVector () {
+double *RData::getRealVector () const {
 	return (static_cast<double *> (data));
 }
 
-int *RData::getIntVector () {
+int *RData::getIntVector () const {
 	return (static_cast<int *> (data));
 }
 
-QString *RData::getStringVector () {
+QString *RData::getStringVector () const {
 	return (static_cast<QString *> (data));
 }
 
-RData **RData::getStructureVector () {
+RData **RData::getStructureVector () const {
 	return (static_cast<RData **> (data));
 }
 

@@ -164,12 +164,8 @@ void RThread::doCommand (RCommand *command) {
 	// step 2: actual handling
 	if (!((command->type () & RCommand::EmptyCommand) || (command->status & RCommand::Canceled))) {
 		all_current_commands.append (command);
-		RKWardRError error;
-		
-		int ctype = command->type ();
-		QString ccommand = command->command ();		// easier typing below
-		
-		RK_DO (qDebug ("running command: %s", ccommand.toLatin1().data ()), RBACKEND, DL_DEBUG);
+
+		RK_DO (qDebug ("running command: %s", command->command ().toLatin1().data ()), RBACKEND, DL_DEBUG);
 	
 		command->status |= RCommand::Running;	// it is important that this happens before the Mutex is unlocked!
 		RCommandStackModel::getModel ()->itemChange (command);
@@ -185,14 +181,11 @@ void RThread::doCommand (RCommand *command) {
 
 			if (!outp.isEmpty ()) {
 				// all regular output was sink()ed, i.e. all remaining output is a message/warning/error
-				RKWardRError error;
-				runCommandInternal (".rk.cat.output (\"<h2>Messages, warnings, or errors:</h2>\\n\")", &error, false);
-				RK_ASSERT (!error);
+				runDirectCommand (".rk.cat.output (\"<h2>Messages, warnings, or errors:</h2>\\n\")");
 
 				outp.replace ('\\', "\\\\");
 				outp.replace ('"', "\\\"");
-				runCommandInternal ("rk.print.literal (\"" + outp + "\")", &error, false);
-				RK_ASSERT (!error);
+				runDirectCommand ("rk.print.literal (\"" + outp + "\")");
 			}
 		}
 	
@@ -427,49 +420,41 @@ int RThread::initialize () {
 
 	connectCallbacks ();
 
-	RKWardRError error;
 	int status = 0;
-	
-	runCommandInternal ("library (\"rkward\")\n", &error);
-	if (error) status |= LibLoadFail;
-	runCommandInternal (QString ("stopifnot(.rk.app.version==\"%1\")\n").arg (VERSION), &error);
-	if (error) status |= LibLoadFail;
-	runCommandInternal (".rk.fix.assignments ()\n", &error);
-	if (error) status |= LibLoadFail;
+
+	if (!runDirectCommand ("library (\"rkward\")\n")) status |= LibLoadFail;
+	if (!runDirectCommand (QString ("stopifnot(.rk.app.version==\"%1\")\n").arg (VERSION))) status |= LibLoadFail;
+	if (!runDirectCommand (".rk.fix.assignments ()\n")) status |= LibLoadFail;
 
 // find out about standard library locations
-	unsigned int c;
-	QString *standardliblocs = getCommandAsStringVector (".libPaths ()\n", &c, &error);
-	if (error) status |= OtherFail;
-	for (unsigned int i = 0; i < c; ++i) {
-		RKSettingsModuleRPackages::defaultliblocs.append (standardliblocs[i]);
+	RCommand *dummy = runDirectCommand (".libPaths ()\n", RCommand::GetStringVector);
+	if (dummy->failed ()) status |= OtherFail;
+	for (unsigned int i = 0; i < dummy->getDataLength (); ++i) {
+		RKSettingsModuleRPackages::defaultliblocs.append (dummy->getStringVector ()[i]);
 	}
-	delete [] standardliblocs;
+	delete dummy;
 
 // start help server / determined help base url
-	QString *help_base_url = getCommandAsStringVector (".rk.getHelpBaseUrl ()\n", &c, &error);
-	if (error) status |= OtherFail;
+	dummy = runDirectCommand (".rk.getHelpBaseUrl ()\n", RCommand::GetStringVector);
+	if (dummy->failed ()) status |= OtherFail;
 	else {
-		RK_ASSERT (c == 1);
-		RKSettingsModuleR::help_base_url = help_base_url[0];
+		RK_ASSERT (dummy->getDataLength () == 1);
+		RKSettingsModuleR::help_base_url = dummy->getStringVector ()[0];
 	}
-	delete [] help_base_url;
+	delete dummy;
 
 // apply user configurable run time options
 	QStringList commands = RKSettingsModuleR::makeRRunTimeOptionCommands () + RKSettingsModuleRPackages::makeRRunTimeOptionCommands () + RKSettingsModuleOutput::makeRRunTimeOptionCommands () + RKSettingsModuleGraphics::makeRRunTimeOptionCommands ();
 	for (QStringList::const_iterator it = commands.begin (); it != commands.end (); ++it) {
-		runCommandInternal ((*it).toLocal8Bit (), &error);
-		if (error) {
+		if (!runDirectCommand ((*it).toLocal8Bit ())) {
 			status |= OtherFail;
 			RK_DO (qDebug ("error in initialization call '%s'", (*it).toLatin1().data ()), RBACKEND, DL_ERROR);
 		}
 	}
 
 // error/output sink and help browser
-	runCommandInternal ("options (error=quote (.rk.do.error ()))\n", &error);
-	if (error) status |= SinkFail;
-	runCommandInternal ("rk.set.output.html.file (\"" + RKSettingsModuleGeneral::filesPath () + "/rk_out.html\")\n", &error);
-	if (error) status |= SinkFail;
+	if (!runDirectCommand ("options (error=quote (.rk.do.error ()))\n")) status |= SinkFail;
+	if (!runDirectCommand ("rk.set.output.html.file (\"" + RKSettingsModuleGeneral::filesPath () + "/rk_out.html\")\n")) status |= SinkFail;
 
 	MUTEX_LOCK;
 	flushOutput ();
@@ -487,21 +472,17 @@ void RThread::checkObjectUpdatesNeeded (bool check_list) {
 
 	bool search_update_needed = false;
 	bool globalenv_update_needed = false;
-	RKWardRError error;
 
-	if (check_list) {
-		unsigned int count;
-		QString *strings;
-	
+	if (check_list) {	
 	// TODO: avoid parsing this over and over again
 		RK_DO (qDebug ("checkObjectUpdatesNeeded: getting search list"), RBACKEND, DL_TRACE);
-		strings = getCommandAsStringVector ("search ()\n", &count, &error);
-		if ((int) count != toplevel_env_names.count ()) {
+		RCommand *dummy = runDirectCommand ("search ()\n", RCommand::GetStringVector);
+		if ((int) dummy->getDataLength () != toplevel_env_names.count ()) {
 			search_update_needed = true;
 		} else {
-			for (unsigned int i = 0; i < count; ++i) {
+			for (unsigned int i = 0; i < dummy->getDataLength (); ++i) {
 				// order is important in the search path
-				if (toplevel_env_names[i] != strings[i]) {
+				if (toplevel_env_names[i] != dummy->getStringVector ()[i]) {
 					search_update_needed = true;
 					break;
 				}
@@ -509,21 +490,21 @@ void RThread::checkObjectUpdatesNeeded (bool check_list) {
 		}
 		if (search_update_needed) {
 			toplevel_env_names.clear ();
-			for (unsigned int i = 0; i < count; ++i) {
-				toplevel_env_names.append (strings[i]);
+			for (unsigned int i = 0; i < dummy->getDataLength (); ++i) {
+				toplevel_env_names.append (dummy->getStringVector ()[i]);
 			}
 		}
-		delete [] strings;
+		delete dummy;
 	
 	// TODO: avoid parsing this over and over again
 		RK_DO (qDebug ("checkObjectUpdatesNeeded: getting globalenv symbols"), RBACKEND, DL_TRACE);
-		strings = getCommandAsStringVector ("ls (globalenv (), all.names=TRUE)\n", &count, &error);
-		if ((int) count != global_env_toplevel_names.count ()) {
+		dummy = runDirectCommand ("ls (globalenv (), all.names=TRUE)\n", RCommand::GetStringVector);
+		if ((int) dummy->getDataLength () != global_env_toplevel_names.count ()) {
 			globalenv_update_needed = true;
 		} else {
-			for (unsigned int i = 0; i < count; ++i) {
+			for (unsigned int i = 0; i < dummy->getDataLength (); ++i) {
 				// order is not important in the symbol list
-				if (!global_env_toplevel_names.contains (strings[i])) {
+				if (!global_env_toplevel_names.contains (dummy->getStringVector ()[i])) {
 					globalenv_update_needed = true;
 					break;
 				}
@@ -531,11 +512,11 @@ void RThread::checkObjectUpdatesNeeded (bool check_list) {
 		}
 		if (globalenv_update_needed) {
 			global_env_toplevel_names.clear ();
-			for (unsigned int i = 0; i < count; ++i) {
-				global_env_toplevel_names.append (strings[i]);
+			for (unsigned int i = 0; i < dummy->getDataLength (); ++i) {
+				global_env_toplevel_names.append (dummy->getStringVector ()[i]);
 			}
 		}
-		delete [] strings;
+		delete dummy;
 	
 		if (search_update_needed) {	// this includes an update of the globalenv, even if not needed
 			MUTEX_UNLOCK;
@@ -555,7 +536,7 @@ void RThread::checkObjectUpdatesNeeded (bool check_list) {
 
 	if (search_update_needed || globalenv_update_needed) {
 		RK_DO (qDebug ("checkObjectUpdatesNeeded: updating watches"), RBACKEND, DL_TRACE);
-		runCommandInternal (".rk.watch.globalenv ()\n", &error);
+		runDirectCommand (".rk.watch.globalenv ()\n");
 	}
 
 	if (!changed_symbol_names.isEmpty ()) {

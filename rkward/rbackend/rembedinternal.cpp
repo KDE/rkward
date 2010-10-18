@@ -1044,7 +1044,7 @@ void runUserCommandInternal (void *) {
 bool REmbedInternal::runDirectCommand (const QString &command) {
 	RK_TRACE (RBACKEND);
 
-	RCommand c (command, RCommand::App | RCommand::Sync);
+	RCommand c (command, RCommand::App | RCommand::Sync | RCommand::Internal);
 	runCommand (&c);
 	return (c.succeeded ());
 }
@@ -1053,7 +1053,7 @@ RCommand *REmbedInternal::runDirectCommand (const QString &command, RCommand::Co
 	RK_TRACE (RBACKEND);
 	RK_ASSERT ((datatype >= RCommand::GetIntVector) && (datatype <= RCommand::GetStructuredData));
 
-	RCommand *c = new RCommand (command, RCommand::App | RCommand::Sync | datatype);
+	RCommand *c = new RCommand (command, RCommand::App | RCommand::Sync | RCommand::Internal | datatype);
 	runCommand (c);
 	return c;
 }
@@ -1129,10 +1129,10 @@ hist == 1 iff R wants a parse-able input.
 					command->datatype = RData::StringVector;
 					command->data = SEXPToStringList (exp, &(command->length));
 				} else if (command->type () & RCommand::GetRealVector) {
-					command->datatype = RData::StringVector;
+					command->datatype = RData::RealVector;
 					command->data = SEXPToRealArray (exp, &(command->length));
 				} else if (command->type () & RCommand::GetIntVector) {
-					command->datatype = RData::StringVector;
+					command->datatype = RData::IntVector;
 					command->data = SEXPToIntArray (exp, &(command->length));
 				} else if (command->type () & RCommand::GetStructuredData) {
 					RData *data = SEXPToRData (exp);

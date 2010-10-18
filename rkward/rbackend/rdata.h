@@ -37,13 +37,13 @@ public:
 /** returns the length (size) of the data array. @see RCommand::GetStringVector @see RCommand::GetRealVector @see RCommand::GetIntVector @see RCommand:GetStructure */
 	unsigned int getDataLength () { return length; };
 /** returns an array of double, if that is the type of data contained (else 0). The array is owned by the RCommand! @see RCommand::GetRealVector @see RData::detachData () @see RData::getDataLength () @see RData::getDataType () */
-	double *getRealVector ();
+	double *getRealVector () const;
 /** returns an array of int, if that is the type of data contained (else 0). The array is owned by the RCommand! @see RCommand::GetIntVector @see RData::detachData () @see RData::getDataLength () @see RData::getDataType () */
-	int *getIntVector ();
+	int *getIntVector () const;
 /** returns an array of QString, if that is the type of data contained (else 0). The array is owned by the RCommand! @see RCommand::GetStringVector @see RData::detachData () @see RData::getDataLength () @see RData::getDataType () */
-	QString *getStringVector ();
+	QString *getStringVector () const;
 /** returns an array of RData*, if that is the type of data contained (else 0). The array is owned by the RCommand! @see RCommand::GetStructureVector @see RData::detachData () @see RData::getDataLength () @see RData::getDataType () */
-	RData **getStructureVector ();
+	RData **getStructureVector () const;
 /** The data contained in the RData structure is owned by RData, and will usually be deleted at the end of the lifetime of the RData object. If you want to keep the data, call detachData () to prevent this deletion. You will be responsible for deletion of the data yourself. */
 	void detachData ();
 	void discardData ();
