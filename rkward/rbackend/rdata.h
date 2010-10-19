@@ -50,8 +50,8 @@ public:
 /** purely for debugging! */
 	void printStructure (const QString &prefix);
 
-/** public for technical reasons only. Do not use! Copy data from the given RData, and discard it */
-	void setData (RData *from);
+/** public for technical reasons only. Do not use! Move data from the given RData to this RData. The source RData is emptied! */
+	void setData (RData &from);
 /** public for technical reasons only. Do not use! */
 	RDataType datatype;
 /** public for technical reasons only. Do not use! */

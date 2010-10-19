@@ -53,10 +53,6 @@ struct RCallbackArgs {
 
 class QStringList;
 class QTextCodec;
-/** This function converts a list of strings to a QStringList (locale aware), and returns the pointer. Needed to keep R and Qt includes separate. The strings can be deleted afterwards. Implementation is in rthread.cpp */
-QString *stringsToStringList (char **strings, int count);
-/** Function to delete an array of Qstring. Does delete [] strings, nothing more. But can not inline this in this class due to conflicting R and Qt includes. Implementation is in rthread.cpp */
-void deleteQStringArray (QString *strings);
 
  /** The main purpose of separating this class from RThread is that R- and Qt-includes don't go together well. Hence this class is Qt-agnostic while
 	RThread is essentially R-agnostic.
@@ -146,11 +142,32 @@ Otherwise it is very similar to handleSubstackCall (), esp. in that is implement
 		return (r_version >= (1000 * major + 10 * minor + revision));
 	}
 
-/** Flags used to classify output. */
-//	static bool output_is_warning;
-/** Flags used to classify output. */
-//	static bool next_output_is_error;
+/** @see lock (), @see unlock ()*/
+	enum LockType {
+		User=1,		/**< locked on user request */
+		Cancel=2,	/**< locked to safely cancel a running command */
+		Startup=4	/**< locked on startup */
+	};
+
+/** Locks the thread. This is called by RInterface, when the currently running command is to be cancelled. It is used to make sure that the
+backend thread does not proceed with further commands, before the main thread takes notice. Also it is called, if the RThread is paused on User request. Further, the thread is initially locked so the main thread can check for some conditions before the backend thread may produce
+more errors/crashes. @see unlock @see RInterface::cancelCommand @see RInterface::pauseProcessing
+@param reason As there are several reasons to lock the thread, and more than one reason may be in place at a given time, a reason needs to be specified for both lock () and unlock (). Only if all "reasons are unlocked ()", processing continues. */
+	void lock (LockType reason) { locked |= reason; };
+/** Unlocks the thread.  Also the thread may get locked when canceling the currently running command. @see lock */
+	void unlock (LockType reason) { locked -= (locked & reason); };
+/** "Kills" the thread. Actually this just tells the thread that is is about to be terminated. Allows the thread to terminate gracefully */
+	void kill () { killed = true; };
+	bool isKilled () { return killed; };
+
 	QTextCodec *current_locale_codec;
+protected:
+/** thread is locked. No new commands will be executed. @see LockType @see lock @see unlock */
+	int locked;
+/** thread is killed. Should exit as soon as possible. @see kill */
+	bool killed;
+/** The internal storage for pauseOutput () */
+	bool output_paused;
 private:
 	int r_version;
 // can't declare this as part of the class, as it would confuse REmbed

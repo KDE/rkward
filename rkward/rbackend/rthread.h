@@ -102,22 +102,6 @@ public:
 /** destructor */
 	~RThread ();
 
-/** @see lock (), @see unlock ()*/
-	enum LockType {
-		User=1,		/**< locked on user request */
-		Cancel=2,	/**< locked to safely cancel a running command */
-		Startup=4	/**< locked on startup */
-	};
-/** Locks the thread. This is called by RInterface, when the currently running command is to be cancelled. It is used to make sure that the
-backend thread does not proceed with further commands, before the main thread takes notice. Also it is called, if the RThread is paused on User request. Further, the thread is initially locked so the main thread can check for some conditions before the backend thread may produce
-more errors/crashes. @see unlock @see RInterface::cancelCommand @see RInterface::pauseProcessing
-@param reason As there are several reasons to lock the thread, and more than one reason may be in place at a given time, a reason needs to be specified for both lock () and unlock (). Only if all "reasons are unlocked ()", processing continues. */
-	void lock (LockType reason) { locked |= reason; };
-/** Unlocks the thread.  Also the thread may get locked when canceling the currently running command. @see lock */
-	void unlock (LockType reason) { locked -= (locked & reason); };
-/** "Kills" the thread. Actually this just tells the thread that is is about to be terminated. Allows the thread to terminate gracefully */
-	void kill () { killed = true; };
-	bool isKilled () { return killed; };
 /** Pause output by placing it in a delay loop, until unpaused again */
 	void pauseOutput (bool paused) { output_paused = paused; };
 /** the internal counterpart to pauseOutput () */
@@ -190,10 +174,6 @@ private:
 /** This is the function in which an RCommand actually gets processed. Basically it passes the command to REmbedInteranl::runCommandInternal () and sends RInterface some events about what is currently happening. */
 	void doCommand (RCommand *command);
 	void notifyCommandDone (RCommand *command);
-/** thread is locked. No new commands will be executed. @see LockType @see lock @see unlock */
-	int locked;
-/** thread is killed. Should exit as soon as possible. @see kill */
-	bool killed;
 /** The internal storage for pauseOutput () */
 	bool output_paused;
 

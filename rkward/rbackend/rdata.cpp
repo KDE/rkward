@@ -2,7 +2,7 @@
                           rdata  -  description
                              -------------------
     begin                : Sun Oct 01 2006
-    copyright            : (C) 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -81,13 +81,12 @@ void RData::discardData () {
 	detachData ();
 }
 
-void RData::setData (RData *from) {
-	data = from->data;
-	length = from->length;
-	datatype = from->datatype;
+void RData::setData (RData &from) {
+	data = from.data;
+	length = from.length;
+	datatype = from.datatype;
 
-	from->detachData ();
-	delete from;
+	from.detachData ();
 }
 
 void RData::printStructure (const QString &prefix) {

@@ -31,6 +31,7 @@ REmbedInternal *REmbedInternal::this_pointer = 0;
 #include "rklocalesupport.h"
 #include "rkpthreadsupport.h"
 #include "rksignalsupport.h"
+#include "rinterface.h"		// for acces to the mutex
 #include "../misc/rkcommonfunctions.h"
 
 #include <stdlib.h>
@@ -1064,8 +1065,15 @@ void REmbedInternal::runCommand (RCommand *command) {
 
 	RKWardRError error = NoError;
 
+	// NOTE the command must not be accessed while the mutex is unlocked!
+	// Therefore we copy the data we need, and create a container for the returned data
+	int ctype = command->type ();
+	QByteArray ccommand = current_locale_codec->fromUnicode (command->command ());
+	RData retdata;
+
+	MUTEX_UNLOCK;
 	// running user commands is quite different from all other commands
-	if (command->type () & RCommand::User) {
+	if (ctype & RCommand::User) {
 		// run a user command
 /* Using R_ReplDLLdo1 () is a pain, but it seems to be the only entry point for evaluating a command as if it had been entered on a plain R console (with auto-printing if not invisible, etc.). Esp. since R_Visible is no longer exported in R 2.5.0, as it seems as of today (2007-01-17).
 
@@ -1091,8 +1099,7 @@ hist == 1 iff R wants a parse-able input.
 		R_ReplDLLinit ();		// resets the parse buffer (things might be left over from a previous incomplete parse)
 		bool prev_iteration_was_incomplete = false;
 
-		QByteArray localc = current_locale_codec->fromUnicode (command->command ());		// needed so the string below does not go out of scope
-		current_buffer = localc.data ();
+		current_buffer = ccommand.data ();
 
 		repldll_buffer_transfer_finished = false;
 		Rboolean ok = (Rboolean) 1;	// set to false, if there is a jump during the R_ToplevelExec (i.e.. some sort of error)
@@ -1125,24 +1132,28 @@ hist == 1 iff R wants a parse-able input.
 			SEXP exp;
 			PROTECT (exp = runCommandInternalBase (parsed, &error));
 			if (error == NoError) {
-				if (command->type () & RCommand::GetStringVector) {
-					command->datatype = RData::StringVector;
-					command->data = SEXPToStringList (exp, &(command->length));
-				} else if (command->type () & RCommand::GetRealVector) {
-					command->datatype = RData::RealVector;
-					command->data = SEXPToRealArray (exp, &(command->length));
-				} else if (command->type () & RCommand::GetIntVector) {
-					command->datatype = RData::IntVector;
-					command->data = SEXPToIntArray (exp, &(command->length));
-				} else if (command->type () & RCommand::GetStructuredData) {
-					RData *data = SEXPToRData (exp);
-					if (data) command->setData (data);
+				if (ctype & RCommand::GetStringVector) {
+					retdata.datatype = RData::StringVector;
+					retdata.data = SEXPToStringList (exp, &(command->length));
+				} else if (ctype & RCommand::GetRealVector) {
+					retdata.datatype = RData::RealVector;
+					retdata.data = SEXPToRealArray (exp, &(command->length));
+				} else if (ctype & RCommand::GetIntVector) {
+					retdata.datatype = RData::IntVector;
+					retdata.data = SEXPToIntArray (exp, &(command->length));
+				} else if (ctype & RCommand::GetStructuredData) {
+					RData *dummy = SEXPToRData (exp);
+					retdata.setData (*dummy);
+					delete dummy;
 				}
 			}
 			UNPROTECT (1); // exp
 		}
 	}
+	if (!locked || killed) processX11Events ();
+	MUTEX_LOCK;
 
+	command->setData (retdata);
 	// common error/status handling
 	#ifdef RKWARD_DEBUG
 		int dl = DL_WARNING;		// failed application commands are an issue worth reporting, failed user commands are not
@@ -1170,5 +1181,19 @@ hist == 1 iff R wants a parse-able input.
 		RK_DO (qDebug ("- error message was: '%s'", command->error ().toLatin1 ().data ()), RBACKEND, dl);
 	} else {
 		command->status |= RCommand::WasTried;
+	}
+
+	flushOutput ();
+	if (command->type () & RCommand::DirectToOutput) {
+		QString outp = command->fullOutput();
+
+		if (!outp.isEmpty ()) {
+			// all regular output was sink()ed, i.e. all remaining output is a message/warning/error
+			runDirectCommand (".rk.cat.output (\"<h2>Messages, warnings, or errors:</h2>\\n\")");
+
+			outp.replace ('\\', "\\\\");
+			outp.replace ('"', "\\\"");
+			runDirectCommand ("rk.print.literal (\"" + outp + "\")");
+		}
 	}
 }
