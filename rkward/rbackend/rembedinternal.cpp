@@ -47,25 +47,15 @@ REmbedInternal *REmbedInternal::this_pointer = 0;
 #endif
 #include <math.h>
 
-// keep R from defining tons of aliases
-#define R_NO_REMAP 1
-
-#include <Rversion.h>
-
-#if (R_VERSION > R_Version(2, 6, 9))
-#define R_2_7
-#endif
-
-#ifndef R_2_7
-#error R version 2.7.0 or later is needed to compile this version of RKWard
-#endif
-
-#if (R_VERSION > R_Version(2, 8, 9))
-#define R_2_9
-#endif
 
 extern "C" {
 #define R_INTERFACE_PTRS 1
+// for R_CStackStart/Limit
+#define CSTACK_DEFNS 1
+// keep R from defining tons of aliases
+#define R_NO_REMAP 1
+// What the...? "Conflicting definitions" between stdint.h and Rinterface.h despite the #if in Rinterface.h
+#define uintptr_t uintptr_t
 
 // needed to detect CHARSXP encoding
 #define IS_UTF8(x) (Rf_getCharCE(x) == CE_UTF8)
@@ -106,13 +96,6 @@ extern "C" {
 
 // some functions we need that are not declared
 extern void Rf_PrintWarnings (void);
-extern int Rf_initialize_R(int ac, char **av);	// in embedded.h in R 2.9.0. TODO: check presence in R 2.7.0
-extern void setup_Rmainloop(void);	// in embedded.h in R 2.9.0. TODO: check presence in R 2.7.0
-#ifndef Q_WS_WIN
-extern uintptr_t R_CStackLimit;	// inRinterface.h in R 2.9.0. TODO: check presence in R 2.7.0
-extern uintptr_t R_CStackStart;	// inRinterface.h in R 2.9.0. TODO: check presence in R 2.7.0
-extern Rboolean R_Interactive;	// inRinterface.h in R 2.9.0. TODO: check presence in R 2.7.0
-#endif
 SEXP R_LastvalueSymbol;
 #include <R_ext/eventloop.h>
 }
@@ -578,11 +561,7 @@ QString *SEXPToStringList (SEXP from_exp, unsigned int *count) {
 	QString *list = new QString[*count];
 	unsigned int i = 0;
 	for (; i < *count; ++i) {
-#ifdef R_2_9
 		SEXP dummy = STRING_ELT (from_exp, i);
-#else
-		SEXP dummy = VECTOR_ELT (from_exp, i);
-#endif
 
 		if (TYPEOF (dummy) != CHARSXP) {
 			list[i] = QString ("not defined");	// can this ever happen?
@@ -774,11 +753,7 @@ SEXP doLocaleName () {
 	RK_ASSERT (REmbedInternal::this_pointer->current_locale_codec);
 	SEXP res = Rf_allocVector(STRSXP, 1);
 	PROTECT (res);
-#ifdef R_2_9
 	SET_STRING_ELT (res, 0, Rf_mkChar (REmbedInternal::this_pointer->current_locale_codec->name ().data ()));
-#else
-	SET_VECTOR_ELT (res, 0, Rf_mkChar (REmbedInternal::this_pointer->current_locale_codec->name ().data ()));
-#endif
 	UNPROTECT (1);
 	return res;
 }
@@ -912,11 +887,7 @@ SEXP parseCommand (const QString &command_qstring, REmbedInternal::RKWardRError 
 	const char *command = localc.data ();
 
 	PROTECT(cv=Rf_allocVector(STRSXP, 1));
-#ifdef R_2_9
 	SET_STRING_ELT(cv, 0, Rf_mkChar(command));
-#else
-	SET_VECTOR_ELT(cv, 0, Rf_mkChar(command));
-#endif
 
 	// TODO: Maybe we can use R_ParseGeneral instead. Then we could find the exact character, where parsing fails. Nope: not exported API
 	pr=R_ParseVector(cv, -1, &status, R_NilValue);

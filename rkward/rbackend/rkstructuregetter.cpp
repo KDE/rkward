@@ -396,22 +396,10 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 
 				bool child_misplaced = false;
 				if (with_namespace) {
-					/* before R 2.4.0, operator "::" would only work on true namespaces, not on package names (operator "::" work, if there is a namespace, and that namespace has the symbol in it)
-					TODO remove once we depend on R >= 2.4.0 */
-#					ifndef R_2_5
-					if (Rf_isNull (namespace_envir)) {
-						child_misplaced = true;
-					} else {
-						SEXP dummy = Rf_findVarInFrame (namespace_envir, current_childname);
-						if (Rf_isNull (dummy) || (dummy == R_UnboundValue)) child_misplaced = true;
-					}
-					/* for R 2.4.0 or greater: operator "::" works if package has no namespace at all, or has a namespace with the symbol in it */
-#					else
 					if (!Rf_isNull (namespace_envir)) {
 						SEXP dummy = Rf_findVarInFrame (namespace_envir, current_childname);
 						if (Rf_isNull (dummy) || (dummy == R_UnboundValue)) child_misplaced = true;
 					}
-#					endif
 				}
 
 				getStructureSafe (child, childnames[i], child_misplaced, children[i]);
