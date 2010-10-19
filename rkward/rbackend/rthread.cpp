@@ -215,6 +215,7 @@ void RThread::handleOutput (const QString &output, int buf_length, bool regular)
 	if (!buf_length) return;
 	waitIfOutputPaused ();
 
+	MUTEX_LOCK;
 	ROutput::ROutputType output_type;
 	if (regular) {
 		output_type = ROutput::Output;
@@ -234,17 +235,18 @@ void RThread::handleOutput (const QString &output, int buf_length, bool regular)
 	}
 	current_output->output.append (output);
 
+	
 	if ((out_buf_len += buf_length) > MAX_BUF_LENGTH) {
 		RK_DO (qDebug ("Output buffer has %d characters. Forcing flush", out_buf_len), RBACKEND, DL_DEBUG);
 		flushOutput ();
 	}
+	MUTEX_UNLOCK;
 }
 
 void RThread::flushOutput () {
 	if (!current_output) return;		// avoid creating loads of traces
 	RK_TRACE (RBACKEND);
 
-	MUTEX_LOCK;
 	if (current_command) {
 		for (QList<RCommand*>::const_iterator it = all_current_commands.constBegin (); it != all_current_commands.constEnd(); ++it) {
 			ROutput *output = current_output;
@@ -277,7 +279,6 @@ void RThread::flushOutput () {
 		RK_DO (qDebug ("output without receiver'%s'", current_output->output.toLatin1 ().data ()), RBACKEND, DL_WARNING);
 		delete current_output;
 	}
-	MUTEX_UNLOCK;
 
 // forget output
 	current_output = 0;
@@ -373,7 +374,9 @@ void RThread::handleSubstackCall (QStringList &call) {
 void RThread::handleStandardCallback (RCallbackArgs *args) {
 	RK_TRACE (RBACKEND);
 
+	MUTEX_LOCK;
 	flushOutput ();
+	MUTEX_UNLOCK;
 	args->done = false;
 
 	RKRBackendEvent* event = new RKRBackendEvent (RKRBackendEvent::RCallbackRequest, args);
@@ -437,7 +440,9 @@ int RThread::initialize () {
 	if (!runDirectCommand ("options (error=quote (.rk.do.error ()))\n")) status |= SinkFail;
 	if (!runDirectCommand ("rk.set.output.html.file (\"" + RKSettingsModuleGeneral::filesPath () + "/rk_out.html\")\n")) status |= SinkFail;
 
+	MUTEX_LOCK;
 	flushOutput ();
+	MUTEX_UNLOCK;
 
 	return status;
 }

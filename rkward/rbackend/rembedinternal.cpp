@@ -1042,7 +1042,9 @@ void REmbedInternal::runCommand (RCommand *command) {
 	QByteArray ccommand = current_locale_codec->fromUnicode (command->command ());
 	RData retdata;
 
-	MUTEX_UNLOCK;
+	if (!(ctype & RCommand::Internal)) {
+		MUTEX_UNLOCK;
+	}
 	// running user commands is quite different from all other commands
 	if (ctype & RCommand::User) {
 		// run a user command
@@ -1105,13 +1107,13 @@ hist == 1 iff R wants a parse-able input.
 			if (error == NoError) {
 				if (ctype & RCommand::GetStringVector) {
 					retdata.datatype = RData::StringVector;
-					retdata.data = SEXPToStringList (exp, &(command->length));
+					retdata.data = SEXPToStringList (exp, &(retdata.length));
 				} else if (ctype & RCommand::GetRealVector) {
 					retdata.datatype = RData::RealVector;
-					retdata.data = SEXPToRealArray (exp, &(command->length));
+					retdata.data = SEXPToRealArray (exp, &(retdata.length));
 				} else if (ctype & RCommand::GetIntVector) {
 					retdata.datatype = RData::IntVector;
-					retdata.data = SEXPToIntArray (exp, &(command->length));
+					retdata.data = SEXPToIntArray (exp, &(retdata.length));
 				} else if (ctype & RCommand::GetStructuredData) {
 					RData *dummy = SEXPToRData (exp);
 					retdata.setData (*dummy);
@@ -1121,8 +1123,10 @@ hist == 1 iff R wants a parse-able input.
 			UNPROTECT (1); // exp
 		}
 	}
-	if (!locked || killed) processX11Events ();
-	MUTEX_LOCK;
+	if (!(ctype & RCommand::Internal)) {
+		if (!locked || killed) processX11Events ();
+		MUTEX_LOCK;
+	}
 
 	command->setData (retdata);
 	// common error/status handling
