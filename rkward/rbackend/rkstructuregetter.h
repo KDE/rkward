@@ -60,6 +60,7 @@ private:
 	SEXP is_list_fun;
 	SEXP is_function_fun;
 	SEXP is_environment_fun;
+	SEXP as_environment_fun;
 	SEXP is_factor_fun;
 	SEXP is_numeric_fun;
 	SEXP is_character_fun;

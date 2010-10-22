@@ -36,6 +36,7 @@ RKStructureGetter::RKStructureGetter (bool keep_evalled_promises) {
 	is_list_fun = prefetch_fun ("is.list");
 	is_function_fun = prefetch_fun ("is.function");
 	is_environment_fun = prefetch_fun ("is.environment");
+	as_environment_fun = prefetch_fun ("as.environment");
 	is_factor_fun = prefetch_fun ("is.factor");
 	is_numeric_fun = prefetch_fun ("is.numeric");
 	is_character_fun = prefetch_fun ("is.character");
@@ -203,11 +204,11 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 
 	RK_DO (qDebug ("fetching '%s': %p, s-type %d", name.toLatin1().data(), val, TYPEOF (val)), RBACKEND, DL_DEBUG);
 
-	PROTECT (val);
+	SEXP value = val;
+	PROTECT_INDEX value_index;
+	PROTECT_WITH_INDEX (value, &value_index);
 	// manually resolve any promises
-	SEXP value = resolvePromise (val);
-	UNPROTECT (1);		/* val */
-	PROTECT (value);
+	REPROTECT (value = resolvePromise (value), value_index);
 
 	// first field: get name
 	RData *namedata = new RData;
@@ -224,11 +225,9 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 		extern SEXP R_data_class (SEXP, Rboolean);
 		classes_s = R_data_class (value, (Rboolean) 0);
 
-		value = Rf_coerceVector (value, EXPRSXP);	// make sure the object is safe for everything to come
-		UNPROTECT (1); /* old value */
+		REPROTECT (value = Rf_coerceVector (value, EXPRSXP), value_index);	// make sure the object is safe for everything to come
 
 		PROTECT (classes_s);
-		PROTECT (value);
 	} else {
 		classes_s = callSimpleFun (class_fun, value, R_BaseEnv);
 		PROTECT (classes_s);
@@ -263,9 +262,8 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 			type |= RObject::Function;
 		} else if (callSimpleBool (is_environment_fun, value, R_BaseEnv)) {
 			is_container = true;
-#warning TODO: if is (x, "refClass"), we should treat it as a list, not environment
-			is_environment = true;
 			type |= RObject::Environment;
+			is_environment = true;
 		} else {
 			type |= RObject::Variable;
 			if (callSimpleBool (is_factor_fun, value, R_BaseEnv)) type |= RObject::Factor;
@@ -388,6 +386,11 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 
 		if (do_env) {
 			RK_DO (qDebug ("recurse into environment %s", name.toLatin1().data ()), RBACKEND, DL_DEBUG);
+			if (!Rf_isEnvironment (value)) {
+				// some classes (ReferenceClasses) are identified as envionments by is.environment(), but are not internally ENVSXPs.
+				// For these, Rf_findVar would fail.
+				REPROTECT (value = callSimpleFun (as_environment_fun, value, R_GlobalEnv), value_index);
+			}
 			for (unsigned int i = 0; i < childcount; ++i) {
 				SEXP current_childname = Rf_install(CHAR(STRING_ELT(childnames_s, i)));
 				PROTECT (current_childname);

@@ -1,3 +1,4 @@
+- Fixed: Would fail to analyse structure of ReferenceClass-objects
 - Fixed: "Vector" mode in "Paste special" action did not work correctly
 - Attempt to save workspace on crashes		TODO: detect recovery-file at startup, and offer to load it.
 - Also try to relay SIGABRT and SIGILL to the proper signal handlers
