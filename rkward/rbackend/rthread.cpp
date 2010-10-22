@@ -14,7 +14,7 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "rthread.h"
+#include "rembedinternal.h"
 
 #include "rinterface.h"
 #include "rcommandstack.h"
@@ -41,27 +41,6 @@
 #endif
 
 #define MAX_BUF_LENGTH 4000
-
-RThread::RThread () : QThread (), REmbedInternal () {
-	RK_TRACE (RBACKEND);
-	current_command = 0;
-
-	RK_ASSERT (this_pointer == 0);
-	this_pointer = this;
-	RK_ASSERT (this_pointer);
-	current_output = 0;
-	out_buf_len = 0;
-	output_paused = false;
-
-#ifdef Q_WS_WIN
-	// we hope that on other platforms the default is reasonable
-	setStackSize (0xa00000);	// 10MB as recommended by r_exts-manual
-#endif
-}
-
-RThread::~RThread() {
-	RK_TRACE (RBACKEND);
-}
 
 void RThread::interruptProcessing (bool interrupt) {
 	if (!interrupt) return;

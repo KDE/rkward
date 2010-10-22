@@ -17,7 +17,7 @@
 
 #include "rinterface.h"
 
-#include "rthread.h"
+#include "rembedinternal.h"
 #include "rcommandstack.h"
 #include "../rkward.h"
 #include "../settings/rksettingsmoduler.h"

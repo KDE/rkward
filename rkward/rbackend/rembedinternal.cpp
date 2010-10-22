@@ -18,7 +18,7 @@
 #include "rembedinternal.h"
 
 // static
-REmbedInternal *REmbedInternal::this_pointer = 0; 
+RThread *RThread::this_pointer = 0; 
 
 #include <qstring.h>
 #include <QStringList>
@@ -31,7 +31,7 @@ REmbedInternal *REmbedInternal::this_pointer = 0;
 #include "rklocalesupport.h"
 #include "rkpthreadsupport.h"
 #include "rksignalsupport.h"
-#include "rinterface.h"		// for acces to the mutex
+#include "rinterface.h"		// for access to the mutex
 #include "../misc/rkcommonfunctions.h"
 
 #include <stdlib.h>
@@ -116,8 +116,8 @@ QString *SEXPToStringList (SEXP from_exp, unsigned int *count);
 QString SEXPToString (SEXP from_exp);
 int *SEXPToIntArray (SEXP from_exp, unsigned int *count);
 int SEXPToInt (SEXP from_exp, int def_value = INT_MIN);
-SEXP parseCommand (const QString &command_qstring, REmbedInternal::RKWardRError *error);
-SEXP runCommandInternalBase (SEXP pr, REmbedInternal::RKWardRError *error);
+SEXP parseCommand (const QString &command_qstring, RThread::RKWardRError *error);
+SEXP runCommandInternalBase (SEXP pr, RThread::RKWardRError *error);
 
 // ############## R Standard callback overrides BEGIN ####################
 void RSuicide (const char* message) {
@@ -126,8 +126,8 @@ void RSuicide (const char* message) {
 	RCallbackArgs args;
 	args.type = RCallbackArgs::RBackendExit;
 	args.params["message"] = QVariant (i18n ("The R engine has encountered a fatal error:\n%1").arg (message));
-	REmbedInternal::this_pointer->handleStandardCallback (&args);
-	REmbedInternal::this_pointer->shutdown (true);
+	RThread::this_pointer->handleStandardCallback (&args);
+	RThread::this_pointer->shutdown (true);
 	Rf_error ("Backend dead");	// this jumps us out of the REPL.
 }
 
@@ -164,15 +164,15 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 	args.params["prompt"] = QVariant (prompt);
 	args.params["cancelled"] = QVariant (false);
 
-	REmbedInternal::this_pointer->handleStandardCallback (&args);
+	RThread::this_pointer->handleStandardCallback (&args);
 // default implementation seems to return 1 on success, 0 on failure, contrary to some documentation. see unix/std-sys.c
 	if (args.params["cancelled"].toBool ()) {
-		if (REmbedInternal::this_pointer->current_command) REmbedInternal::this_pointer->current_command->status |= RCommand::Canceled;
+		if (RThread::this_pointer->current_command) RThread::this_pointer->current_command->status |= RCommand::Canceled;
 		RK_doIntr();
 		return 0;	// we should not ever get here, but still...
 	}
 	if (buf) {
-		QByteArray localres = REmbedInternal::this_pointer->current_locale_codec->fromUnicode (args.params["result"].toString ());
+		QByteArray localres = RThread::this_pointer->current_locale_codec->fromUnicode (args.params["result"].toString ());
 		// need to append a newline, here. TODO: theoretically, RReadConsole comes back for more, if \0 was encountered before \n.
 		qstrncpy ((char *) buf, localres.left (buflen - 2).append ('\n').data (), buflen);
 		return 1;
@@ -189,7 +189,7 @@ int RReadConsoleWin (const char* prompt, char* buf, int buflen, int hist) {
 void RWriteConsoleEx (const char *buf, int buflen, int type) {
 	RK_TRACE (RBACKEND);
 
-	REmbedInternal::this_pointer->handleOutput (REmbedInternal::this_pointer->current_locale_codec->toUnicode (buf, buflen), buflen, type == 0);
+	RThread::this_pointer->handleOutput (RThread::this_pointer->current_locale_codec->toUnicode (buf, buflen), buflen, type == 0);
 }
 
 /** For R callbacks that we want to disable, entirely */
@@ -204,7 +204,7 @@ void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 		RCallbackArgs args;
 		args.type = RCallbackArgs::RBackendExit;
 		args.params["message"] = QVariant (i18n ("The R engine has shut down with status: %1").arg (status));
-		REmbedInternal::this_pointer->handleStandardCallback (&args);
+		RThread::this_pointer->handleStandardCallback (&args);
 
 		if(saveact == SA_DEFAULT) saveact = SA_SAVE;
 		if (saveact == SA_SAVE) {
@@ -214,14 +214,14 @@ void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 				if (RunLast) R_dot_Last ();
 		}
 
-		REmbedInternal::this_pointer->shutdown (false);
+		RThread::this_pointer->shutdown (false);
 	} else {
-		REmbedInternal::this_pointer->shutdown (true);
+		RThread::this_pointer->shutdown (true);
 	}
 	Rf_error ("Backend dead");	// this jumps us out of the REPL.
 }
 
-void REmbedInternal::tryToDoEmergencySave () {
+void RThread::tryToDoEmergencySave () {
 	RK_TRACE (RBACKEND);
 
 	// we're probably in a signal handler, and the stack base has changed.
@@ -247,9 +247,9 @@ int RChooseFile (int isnew, char *buf, int len) {
 	args.type = RCallbackArgs::RChooseFile;
 	args.params["new"] = QVariant ((bool) isnew);
 
-	REmbedInternal::this_pointer->handleStandardCallback (&args);
+	RThread::this_pointer->handleStandardCallback (&args);
 
-	QByteArray localres = REmbedInternal::this_pointer->current_locale_codec->fromUnicode (args.params["result"].toString ());
+	QByteArray localres = RThread::this_pointer->current_locale_codec->fromUnicode (args.params["result"].toString ());
 	qstrncpy ((char *) buf, localres.data (), len);
 
 // return length of filename (strlen (buf))
@@ -275,7 +275,7 @@ void REditFilesHelper (QStringList files, QStringList titles, QString wtitle, RC
 	args.params["titles"] = QVariant (titles);
 	args.params["wtitle"] = QVariant (wtitle);
 
-	REmbedInternal::this_pointer->handleStandardCallback (&args);
+	RThread::this_pointer->handleStandardCallback (&args);
 }
 
 int REditFiles (int nfile, const char **file, const char **title, const char *wtitle) {
@@ -358,7 +358,7 @@ int doDialogHelper (QString caption, QString message, QString button_yes, QStrin
 	args.params["button_cancel"] = QVariant (button_cancel);
 	if (wait) args.params["wait"] = "1";
 
-	REmbedInternal::this_pointer->handleStandardCallback (&args);
+	RThread::this_pointer->handleStandardCallback (&args);
 
 	QString ret = args.params["result"].toString ();
 	if (ret == "yes") return 1;
@@ -401,17 +401,30 @@ void RBusy (int busy) {
 
 // ############## R Standard callback overrides END ####################
 
-char *REmbedInternal::na_char_internal = new char;
+char *RThread::na_char_internal = new char;
 
-REmbedInternal::REmbedInternal () {
+RThread::RThread () {
 	RK_TRACE (RBACKEND);
 
 	current_locale_codec = QTextCodec::codecForLocale ();
 	r_running = false;
+
+	current_command = 0;
+
+	RK_ASSERT (this_pointer == 0);
+	this_pointer = this;
+	current_output = 0;
+	out_buf_len = 0;
+	output_paused = false;
+
+#ifdef Q_WS_WIN
+	// we hope that on other platforms the default is reasonable
+	setStackSize (0xa00000);	// 10MB as recommended by r_exts-manual
+#endif
 }
 
 #ifdef Q_WS_WIN
-void REmbedInternal::setupCallbacks () {
+void RThread::setupCallbacks () {
 	RK_TRACE (RBACKEND);
 
 	R_setStartTime();
@@ -436,16 +449,16 @@ void REmbedInternal::setupCallbacks () {
 	RK_R_Params.R_Interactive = (Rboolean) 1;
 }
 
-void REmbedInternal::connectCallbacks () {
+void RThread::connectCallbacks () {
 	RK_TRACE (RBACKEND);
 	R_SetParams(&RK_R_Params);
 }
 #else
-void REmbedInternal::setupCallbacks () {
+void RThread::setupCallbacks () {
 	RK_TRACE (RBACKEND);
 }
 
-void REmbedInternal::connectCallbacks () {
+void RThread::connectCallbacks () {
 	RK_TRACE (RBACKEND);
 
 // IMPORTANT: see also the #ifdef QS_WS_WIN-portion!
@@ -474,11 +487,11 @@ void REmbedInternal::connectCallbacks () {
 }
 #endif
 
-REmbedInternal::~REmbedInternal () {
+RThread::~RThread () {
 	RK_TRACE (RBACKEND);
 }
 
-void REmbedInternal::shutdown (bool suicidal) {
+void RThread::shutdown (bool suicidal) {
 	RK_TRACE (RBACKEND);
 
 	if (!r_running) return;		// already shut down
@@ -522,7 +535,7 @@ TODO: verify we really need this. */
 #endif
 }
 
-void REmbedInternal::processX11Events () {
+void RThread::processX11Events () {
 	// do not trace
 	if (!this_pointer->r_running) return;
 
@@ -574,7 +587,7 @@ QString *SEXPToStringList (SEXP from_exp, unsigned int *count) {
 				} else if (IS_LATIN1 (dummy)) {
 					list[i] = QString::fromLatin1 ((char *) STRING_PTR (dummy));
 				} else {
-					list[i] = REmbedInternal::this_pointer->current_locale_codec->toUnicode ((char *) STRING_PTR (dummy));
+					list[i] = RThread::this_pointer->current_locale_codec->toUnicode ((char *) STRING_PTR (dummy));
 				}
 			}
 		}
@@ -705,7 +718,7 @@ SEXP doError (SEXP call) {
 
 	unsigned int count;
 	QString *strings = SEXPToStringList (call, &count);
-	REmbedInternal::this_pointer->handleError (strings, count);
+	RThread::this_pointer->handleError (strings, count);
 	delete [] strings;
 	return R_NilValue;
 }
@@ -714,7 +727,7 @@ SEXP doError (SEXP call) {
 SEXP doCondition (SEXP call) {
 	int count;
 	char **strings = extractStrings (call, &count);
-	REmbedInternal::this_pointer->handleCondition (strings, count);
+	RThread::this_pointer->handleCondition (strings, count);
 	return R_NilValue;
 } */
 
@@ -727,7 +740,7 @@ SEXP doSubstackCall (SEXP call) {
 	for (unsigned int i = 0; i < count; ++i) {
 		list.append (strings[i]);
 	}
-	REmbedInternal::this_pointer->handleSubstackCall (list);
+	RThread::this_pointer->handleSubstackCall (list);
 	delete [] strings;
 	return R_NilValue;
 }
@@ -740,8 +753,8 @@ SEXP doUpdateLocale () {
 	RK_TRACE (RBACKEND);
 
 	RK_DO (qDebug ("Changing locale"), RBACKEND, DL_WARNING);
-	REmbedInternal::this_pointer->current_locale_codec = RKGetCurrentLocaleCodec ();
-	RK_DO (qDebug ("New locale codec is %s", REmbedInternal::this_pointer->current_locale_codec->name ().data ()), RBACKEND, DL_WARNING);
+	RThread::this_pointer->current_locale_codec = RKGetCurrentLocaleCodec ();
+	RK_DO (qDebug ("New locale codec is %s", RThread::this_pointer->current_locale_codec->name ().data ()), RBACKEND, DL_WARNING);
 
 	return R_NilValue;
 }
@@ -750,10 +763,10 @@ SEXP doUpdateLocale () {
 SEXP doLocaleName () {
 	RK_TRACE (RBACKEND);
 
-	RK_ASSERT (REmbedInternal::this_pointer->current_locale_codec);
+	RK_ASSERT (RThread::this_pointer->current_locale_codec);
 	SEXP res = Rf_allocVector(STRSXP, 1);
 	PROTECT (res);
-	SET_STRING_ELT (res, 0, Rf_mkChar (REmbedInternal::this_pointer->current_locale_codec->name ().data ()));
+	SET_STRING_ELT (res, 0, Rf_mkChar (RThread::this_pointer->current_locale_codec->name ().data ()));
 	UNPROTECT (1);
 	return res;
 }
@@ -785,7 +798,7 @@ SEXP doCopyNoEval (SEXP name, SEXP fromenv, SEXP toenv) {
 	return (R_NilValue);
 }
 
-bool REmbedInternal::startR (int argc, char** argv, bool stack_check) {
+bool RThread::startR (int argc, char** argv, bool stack_check) {
 	RK_TRACE (RBACKEND);
 
 	setupCallbacks ();
@@ -877,13 +890,13 @@ bool REmbedInternal::startR (int argc, char** argv, bool stack_check) {
 	return true;
 }
 
-SEXP parseCommand (const QString &command_qstring, REmbedInternal::RKWardRError *error) {
+SEXP parseCommand (const QString &command_qstring, RThread::RKWardRError *error) {
 	RK_TRACE (RBACKEND);
 
 	ParseStatus status = PARSE_NULL;
 	SEXP cv, pr;
 
-	QByteArray localc = REmbedInternal::this_pointer->current_locale_codec->fromUnicode (command_qstring);		// needed so the string below does not go out of scope
+	QByteArray localc = RThread::this_pointer->current_locale_codec->fromUnicode (command_qstring);		// needed so the string below does not go out of scope
 	const char *command = localc.data ();
 
 	PROTECT(cv=Rf_allocVector(STRSXP, 1));
@@ -903,13 +916,13 @@ SEXP parseCommand (const QString &command_qstring, REmbedInternal::RKWardRError 
 
 	if (status != PARSE_OK) {
 		if ((status == PARSE_INCOMPLETE) || (status == PARSE_EOF)) {
-			*error = REmbedInternal::Incomplete;
+			*error = RThread::Incomplete;
 		} else if (status == PARSE_ERROR) {
 			//extern SEXP parseError (SEXP call, int linenum);
 			//parseError (R_NilValue, 0);
-			*error = REmbedInternal::SyntaxError;
+			*error = RThread::SyntaxError;
 		} else { // PARSE_NULL
-			*error = REmbedInternal::OtherError;
+			*error = RThread::OtherError;
 		}
 		pr = R_NilValue;
 	}
@@ -917,7 +930,7 @@ SEXP parseCommand (const QString &command_qstring, REmbedInternal::RKWardRError 
 	return pr;
 }
 
-SEXP runCommandInternalBase (SEXP pr, REmbedInternal::RKWardRError *error) {
+SEXP runCommandInternalBase (SEXP pr, RThread::RKWardRError *error) {
 	RK_TRACE (RBACKEND);
 
 	SEXP exp;
@@ -941,9 +954,9 @@ SEXP runCommandInternalBase (SEXP pr, REmbedInternal::RKWardRError *error) {
 	}
 
 	if (r_error) {
-		*error = REmbedInternal::OtherError;
+		*error = RThread::OtherError;
 	} else {
-		*error = REmbedInternal::NoError;
+		*error = RThread::NoError;
 	}
 
 	UNPROTECT(1); /* pr */
@@ -969,7 +982,7 @@ SEXP exp should be PROTECTed prior to calling this function.
 //TODO: I don't think it's meant to be this way. Maybe nag the R-devels about it one day. 
 //TODO: this is not entirely correct. See PrintValueEnv (), which is what Repl_Console uses (but is hidden)
 */
-void tryPrintValue (SEXP exp, REmbedInternal::RKWardRError *error) {
+void tryPrintValue (SEXP exp, RThread::RKWardRError *error) {
 	RK_TRACE (RBACKEND);
 
 	int ierror = 0;
@@ -986,9 +999,9 @@ void tryPrintValue (SEXP exp, REmbedInternal::RKWardRError *error) {
 	UNPROTECT (2);	/* e, tryprint */
 
 	if (ierror) {
-		*error = REmbedInternal::OtherError;
+		*error = RThread::OtherError;
 	} else {
-		*error = REmbedInternal::NoError;
+		*error = RThread::NoError;
 	}
 }
 #endif
@@ -1008,12 +1021,12 @@ void runUserCommandInternal (void *) {
 	} while (((repldll_result = R_ReplDLLdo1 ()) == 2) && (!repldll_buffer_transfer_finished));	// keep iterating while the statement is incomplete, and we still have more in the buffer to transfer
 	//Rprintf ("iteration complete, status: %d\n", repldll_result);
 	PROTECT (R_LastvalueSymbol);		// why do we need this? No idea, but R_ToplevelExec tries to unprotect something
-	if (REmbedInternal::this_pointer->RRuntimeIsVersion (2, 11, 9)) {
+	if (RThread::this_pointer->RRuntimeIsVersion (2, 11, 9)) {
 		PROTECT (R_LastvalueSymbol);		// ... and with R 2.12.0 it tries to unprotect two things
 	}
 }
 
-bool REmbedInternal::runDirectCommand (const QString &command) {
+bool RThread::runDirectCommand (const QString &command) {
 	RK_TRACE (RBACKEND);
 
 	RCommand c (command, RCommand::App | RCommand::Sync | RCommand::Internal);
@@ -1021,7 +1034,7 @@ bool REmbedInternal::runDirectCommand (const QString &command) {
 	return (c.succeeded ());
 }
 
-RCommand *REmbedInternal::runDirectCommand (const QString &command, RCommand::CommandTypes datatype) {
+RCommand *RThread::runDirectCommand (const QString &command, RCommand::CommandTypes datatype) {
 	RK_TRACE (RBACKEND);
 	RK_ASSERT ((datatype >= RCommand::GetIntVector) && (datatype <= RCommand::GetStructuredData));
 
@@ -1030,7 +1043,7 @@ RCommand *REmbedInternal::runDirectCommand (const QString &command, RCommand::Co
 	return c;
 }
 
-void REmbedInternal::runCommand (RCommand *command) {
+void RThread::runCommand (RCommand *command) {
 	RK_TRACE (RBACKEND);
 	RK_ASSERT (command);
 
@@ -1087,15 +1100,15 @@ hist == 1 iff R wants a parse-able input.
 		}
 		if (ok == FALSE) {
 			if (repldll_last_parse_successful) {
-				error = REmbedInternal::OtherError;
+				error = RThread::OtherError;
 			} else {
-				error = REmbedInternal::SyntaxError;
+				error = RThread::SyntaxError;
 			}
 		} else {
 			if (prev_iteration_was_incomplete) {
-				error = REmbedInternal::Incomplete;
+				error = RThread::Incomplete;
 			} else {
-				error = REmbedInternal::NoError;
+				error = RThread::NoError;
 			}
 		}
 		repldlldo1_wants_code = false;		// make sure we don't get confused in RReadConsole

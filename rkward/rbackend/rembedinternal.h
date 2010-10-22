@@ -22,8 +22,12 @@
 
 #include <QMap>
 #include <QVariant>
+#include <QThread>
+#include <QStringList>
+#include <QEvent>
 
 #include "rcommand.h"
+#include "rcommandstack.h"
 
 #ifdef Q_WS_WIN
 extern "C" {
@@ -53,25 +57,88 @@ struct RCallbackArgs {
 
 class QStringList;
 class QTextCodec;
+class RInterface;
+struct RCallbackArgs;
+struct ROutput;
 
- /** The main purpose of separating this class from RThread is that R- and Qt-includes don't go together well. Hence this class is Qt-agnostic while
-	RThread is essentially R-agnostic.
-	
-	@see RThread
+/** this struct is used to pass on eval-requests (i.e. request for RKWard to do something, which may involve issuing further commands) from the
+backend-thread to the main thread. Do not use outside the backend-classes. */
+struct REvalRequest {
+private:
+friend class RInterface;
+friend class RThread;
+	QStringList call;
+	RCommandChain *in_chain;
+};
 
-	*@author Thomas Friedrichsmeier
+/** Simple event class to relay information from the RThread to the main thread. This is basically like QCustomEvent in Qt3*/
+class RKRBackendEvent : public QEvent {
+public:
+	enum EventType {
+		Base = QEvent::User + 1,
+		RCommandIn,
+		RCommandOut,
+		RBusy,
+		RIdle,
+		RCommandOutput,
+		RStarted,
+		REvalRequest,
+		RCallbackRequest,
+		RStartupError
+	};
+
+	RKRBackendEvent (EventType type, void* data=0) : QEvent ((QEvent::Type) type) { _data = data; };
+	RKRBackendEvent ();
+
+	EventType etype () { return ((EventType) type ()); };
+	void* data () { return _data; };
+private:
+	void* _data;
+};
+
+/** This class represents the thread the R backend is running in. So to speak, this is where the "eventloop" of R is running. The main thing happening
+in this class, is that an infinite loop is running. Whenever there are commands to be executed, those get evaluated. Also, at regular intervals,
+processing of X11-Events in R is triggered. The rest of the time the thread sleeps.
+
+Actually, there are really two copies of the main loop: The regular one, and a second one which gets run when the R backend has requested some
+task to be carried out (@see handleSubstackCall). In this case, we might have to run some further child commands in the backend, before we proceed with the commands in
+the main queque. Some thing like:
+
+- Run some RCommand s
+	- R backend asks for some information / action
+		- potentially some more RCommand s are needed to accomplish this request
+			- (additional levels of substacks)
+		- return the result
+	- R backend request completed
+- Run some more RCommand s
+
+This subordinate/nested eventloop is done in handleSubstackCall ().
+
+A closely related class is RInterface: RThread communicates with RInterface by placing QCustomEvent s, when commands are done
+or when the backend needs information from the frontend. For historical reasons, the definitions of RThread class-members are currently spread over different files.
+
+Only one RThread-object can be used in an application.
+Don't use this class in RKWard directly. Unless you really want to modify the internal workings of the backend, you will want to look at RInterface and use the functions there.
+
+@see RInterface
+
+@author Thomas Friedrichsmeier
 */
-class REmbedInternal {
+class RThread : public QThread {
 public: 
-/** constructor. You can't create an instance of this class due to pure virtual functions. Create an instance of RThread instead. */
-	REmbedInternal ();
+/** constructor. Only one RThread should ever be created, and that happens in RInterface::RInterface (). */
+	RThread ();
 /** destructor */
-	virtual ~REmbedInternal ();
+	virtual ~RThread ();
 
-/** set up R standard callbacks */
-	void setupCallbacks ();
-/** connect R standard callbacks */
-	void connectCallbacks ();
+/** Pause output by placing it in a delay loop, until unpaused again */
+	void pauseOutput (bool paused) { output_paused = paused; };
+/** the internal counterpart to pauseOutput () */
+	void waitIfOutputPaused ();
+
+
+/** interrupt processing of the current command. This is much like the user pressing Ctrl+C in a terminal with R. This is probably the only non-portable function in RThread, but I can't see a good way around placing it here, or to make it portable. */
+	void interruptProcessing (bool interrupt);
 
 /** Enum specifying types of errors that may occur while parsing/evaluating a command in R */
 	enum RKWardRError {
@@ -80,6 +147,18 @@ public:
 		SyntaxError=2,		/**< Syntax error */
 		OtherError=3		/**< Other error, usually a semantic error, e.g. object not found */
 	};
+
+/** An enum describing whether initialization of the embedded R-process went well, or what errors occurred. */
+	enum InitStatus {
+		Ok=0,					/**< No error */
+		LibLoadFail=1,		/**< Error while trying to load the rkward R package */
+		SinkFail=2,			/**< Error while redirecting R's stdout and stderr to files to be read from rkward */
+		OtherFail=4			/**< Other error while initializing the embedded R-process */
+	}; // TODO: make obsolete!
+
+/** initializes the R-backend. Returns an error-code that consists of a bit-wise or-conjunction of the RThread::InitStatus -enum, RThread::Ok on success.
+Note that you should call initialize only once in a application */
+	int initialize ();
 
 /** clean shutdown of R.
 @param suicidal if true, perform only the most basic shutdown operations */
@@ -104,28 +183,37 @@ public:
 /** call this periodically to make R's x11 windows process their events */
 	static void processX11Events ();
 
+/** convenience struct for event passing */
+	struct ROutputContainer {
+		/** the actual output fragment */
+		ROutput *output;
+		/** the corresponding command */
+		RCommand *command;
+	};
+/** current output */
+	ROutput *current_output;
+/** current length of output. Used so we can flush every once in a while, if output becomes too long */
+	int out_buf_len;
+
 /** This gets called on normal R output (R_WriteConsole). Used to get at output. */
-	virtual void handleOutput (const QString &output, int len, bool regular) = 0;
+	void handleOutput (const QString &output, int len, bool regular);
 
-/** This gets called, when the console is flushed */
-	virtual void flushOutput () = 0;
+/** Flushes current output buffer. Lock the mutex before calling this function! It is called from both threads and is not re-entrant */
+	void flushOutput ();
 
-/** This gets called, when R reports warnings/messages. Used to get at warning-output. */
-//	virtual void handleCondition (char **call, int call_length) = 0;
+/** This gets called, when R reports an error (override of options ("error") in R). Used to get at error-output.
+This function is public for technical reasons, only. Don't use except from R-backend code!
+reports an error. */
+	void handleError (QString *call, int call_length);
 
-/** This gets called, when R reports an error (override of options ("error") in R). Used to get at error-output. */
-	virtual void handleError (QString *call, int call_length) = 0;
+/** This is a sub-eventloop, being run when the backend request information from the frontend. See \ref RThread for a more detailed description */
+	void handleSubstackCall (QStringList &call);
 
-/** The main callback from R to rkward. Since we need QStrings and stuff to handle the requests, this is only a pure virtual function. The real
-implementation is in RThread::handleSubstackCall () */
-	virtual void handleSubstackCall (QStringList &list) = 0;
-
-/** This second callback handles R standard callbacks. The difference to the first one is, that these are typically required to finish within the same
-function. On the other hand, also, they don't require further computations in R, and hence no full-fledged substack.
-
-Otherwise it is very similar to handleSubstackCall (), esp. in that is implemented in RThread::handleStandardCallback ()
-@see RCallbackArgs @see RCallbackType */
-	virtual void handleStandardCallback (RCallbackArgs *args) = 0;
+/** This is a minimal sub-eventloop, being run, when the backend requests simple information from the frontend. It differs from handleSubstack in two
+points:
+1) it does not create a full-fledged substack for additional R commands
+2) it may return information via the args parameter immediately */
+	void handleStandardCallback (RCallbackArgs *args);
 
 /** The command currently being executed. */
 	RCommand *current_command;
@@ -133,7 +221,7 @@ Otherwise it is very similar to handleSubstackCall (), esp. in that is implement
 	void runCommand (RCommand *command);
 
 /** only one instance of this class may be around. This pointer keeps the reference to it, for interfacing to from C to C++ */
-	static REmbedInternal *this_pointer;
+	static RThread *this_pointer;
 	static char *na_char_internal;
 	static void tryToDoEmergencySave ();
 	bool r_running;
@@ -166,12 +254,34 @@ protected:
 	int locked;
 /** thread is killed. Should exit as soon as possible. @see kill */
 	bool killed;
+/** On pthread systems this is the pthread_id of the backend thread. It is needed to send SIGINT to the R backend */
+	Qt::HANDLE thread_id;
+private:
+/** set up R standard callbacks */
+	void setupCallbacks ();
+/** connect R standard callbacks */
+	void connectCallbacks ();
+
+	int r_version;
+protected:
+/** the main loop. See \ref RThread for a more detailed description */
+	void run ();
+private:
+/** This is the function in which an RCommand actually gets processed. Basically it passes the command to runCommand () and sends RInterface some events about what is currently happening. */
+	void doCommand (RCommand *command);
+	void notifyCommandDone (RCommand *command);
 /** The internal storage for pauseOutput () */
 	bool output_paused;
-private:
-	int r_version;
-// can't declare this as part of the class, as it would confuse REmbed
-//	SEXPREC *runCommandInternalBase (const char *command, bool *error);
+
+/** A copy of the names of the toplevel environments (as returned by "search ()"). */
+	QStringList toplevel_env_names;
+/** A copy of the names of the toplevel symbols in the .GlobalEnv. */
+	QStringList global_env_toplevel_names;
+/** A list of symbols that have been assigned new values during the current command */
+	QStringList changed_symbol_names;
+/** check wether the object list / global environment / individual symbols have changed, and updates them, if needed */
+	void checkObjectUpdatesNeeded (bool check_list);
+	QList<RCommand*> all_current_commands;
 };
  
 #endif
