@@ -72,7 +72,7 @@
 #ifdef Q_WS_X11
 #	include <X11/X.h>
 #	include <X11/Xlib.h>
-#	include <X11/Intrinsic.h>
+//#	include <X11/Intrinsic.h>
 #endif
 
 #include "debug.h"
@@ -97,7 +97,7 @@ void RKDebugMessageOutput (QtMsgType type, const char *msg) {
 int main(int argc, char *argv[]) {
 #ifdef Q_WS_X11
 	XInitThreads ();	// Makes library (gWidgetsRGtk2) work on X11.
-	XtToolkitThreadInitialize ();
+//	XtToolkitThreadInitialize ();
 #endif
 	options.add ("evaluate <Rcode>", ki18n ("After starting (and after loading the specified workspace, if applicable), evaluate the given R code."), 0);
 	options.add ("debug-level <level>", ki18n ("Verbosity of debug messages (0-5)"), "2");
