@@ -18,7 +18,8 @@
 #include "rembedinternal.h"
 
 // static
-RThread *RThread::this_pointer = 0; 
+RThread *RThread::this_pointer = 0;
+RThread::RKReplStatus RThread::repl_status = { QByteArray (), 0, true, 0, RThread::RKReplStatus::NoUserCommand, 0 };
 
 #include <qstring.h>
 #include <QStringList>
@@ -96,20 +97,13 @@ extern "C" {
 
 // some functions we need that are not declared
 extern void Rf_PrintWarnings (void);
+extern void run_Rmainloop (void);
 SEXP R_LastvalueSymbol;
 #include <R_ext/eventloop.h>
 }
 
 #include "../rkglobals.h"
 #include "rdata.h"
-
-// Needed for the REPL
-const char *current_buffer = 0;
-bool repldlldo1_wants_code = false;
-bool repldll_buffer_transfer_finished = false;
-int repldll_result = 0;		/* -2: error; -1: incomplete; 0: nothing, yet 1: ok 2: incomplete statement, while buffer not empty. Should not happen */
-bool repldll_last_parse_successful = false;
-
 
 SEXP RKWard_RData_Tag;
 QString *SEXPToStringList (SEXP from_exp, unsigned int *count);
@@ -131,34 +125,121 @@ void RSuicide (const char* message) {
 	Rf_error ("Backend dead");	// this jumps us out of the REPL.
 }
 
+Rboolean RKToplevelStatementFinishedCallback (SEXP expr, SEXP value, Rboolean succeeded, Rboolean visible, void *) {
+	RK_TRACE (RBACKEND);
+	Q_UNUSED (expr);
+	Q_UNUSED (value);
+	Q_UNUSED (visible);
+
+	if (RThread::repl_status.eval_depth == 0) {
+		RK_ASSERT (RThread::repl_status.user_command_status = RThread::RKReplStatus::UserCommandRunning);
+		if (succeeded) {
+			RThread::repl_status.user_command_successful_up_to = RThread::repl_status.user_command_transmitted_up_to;
+			if (RThread::repl_status.user_command_completely_transmitted) RThread::repl_status.user_command_status = RThread::RKReplStatus::NoUserCommand;
+			else RThread::repl_status.user_command_status = RThread::RKReplStatus::UserCommandTransmitted;
+		} else {
+			// skip remainder of command
+			RThread::repl_status.user_command_status = RThread::RKReplStatus::NoUserCommand;
+		}
+	}
+	
+	return (Rboolean) true;
+}
+
+void RKInsertToplevelStatementFinishedCallback (void *) {
+	RK_TRACE (RBACKEND);
+
+	if (RThread::this_pointer->r_running) {
+		int pos;
+		Rf_addTaskCallback (&RKToplevelStatementFinishedCallback, 0, &RKInsertToplevelStatementFinishedCallback, "_rkward_main_callback", &pos);
+	}
+}
+
+void RKTransmitNextUserCommandChunk (unsigned char* buf, int buflen) {
+	RK_TRACE (RBACKEND);
+
+	RK_ASSERT (RThread::repl_status.user_command_transmitted_up_to < RThread::repl_status.user_command_buffer.length ());
+	const char* current_buffer = RThread::repl_status.user_command_buffer.data ();
+	current_buffer += RThread::repl_status.user_command_transmitted_up_to;	// Skip what we have already transmitted
+
+	bool reached_eof = false;
+	int pos = 0;
+	while (pos < (buflen-1)) {
+		buf[pos] = *current_buffer;
+		if (*current_buffer == '\n') break;
+		else if (*current_buffer == ';') break;
+		else if (*current_buffer == '\0') {
+			reached_eof = true;
+			break;
+		}
+		++current_buffer;
+		++pos;
+	}
+	RThread::repl_status.user_command_transmitted_up_to += (pos + 1);
+	if (reached_eof) {
+		buf[pos] = '\n';
+		RThread::repl_status.user_command_completely_transmitted = true;
+	}
+	buf[++pos] = '\0';
+}
+
 int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) {
 	RK_TRACE (RBACKEND);
 
-	// handle requests for new code
-	if (repldlldo1_wants_code) {
-		//Rprintf ("wants code, buffsize: %d\n", buflen);
-		if (repldll_buffer_transfer_finished) {
-			return 0;
-		}
-
-		int pos = 0;		// fgets emulation
-		while (pos < (buflen-1)) {
-			buf[pos] = *current_buffer;
-			if (*current_buffer == '\0') {
-				repldll_buffer_transfer_finished = true;
-				break;
+	RK_ASSERT (buf && buflen);
+	RK_ASSERT (RThread::repl_status.eval_depth >= 0);
+	if (RThread::repl_status.eval_depth == 0) {
+		if (RThread::repl_status.user_command_status == RThread::RKReplStatus::NoUserCommand) {
+			MUTEX_LOCK;
+			RCommand *command = RThread::this_pointer->fetchNextCommand ();
+			if (!(command->type () & RCommand::User)) {
+				RThread::this_pointer->runCommand (command);
+				MUTEX_UNLOCK;
+			} else {
+				// so, we are about to transmit a new user command, which is quite a complex endeavour...
+				RThread::repl_status.user_command_transmitted_up_to = 0;
+				RThread::repl_status.user_command_completely_transmitted = false;
+				RThread::repl_status.user_command_successful_up_to = 0;
+				RThread::repl_status.user_command_buffer = RThread::this_pointer->current_locale_codec->fromUnicode (command->command ());
+				RThread::this_pointer->current_command = command;
+				MUTEX_UNLOCK;
+				RKTransmitNextUserCommandChunk (buf, buflen);
+				RThread::repl_status.user_command_status = RThread::RKReplStatus::UserCommandTransmitted;
 			}
-			++current_buffer;
-			++pos;
+			buf[0] = '\0';
+			return 1;
+		} else if (RThread::repl_status.user_command_status == RThread::RKReplStatus::UserCommandTransmitted) {
+			if (RThread::repl_status.user_command_completely_transmitted) {
+				// fully transmitted, but R is still asking for more? -> Incomplete statement
+				MUTEX_LOCK;
+				RThread::this_pointer->current_command->status |= RCommand::ErrorIncomplete;
+				RThread::repl_status.user_command_status = RThread::RKReplStatus::NoUserCommand;
+				MUTEX_UNLOCK;
+			} else {
+				RKTransmitNextUserCommandChunk (buf, buflen);
+			}
+			buf[0] = '\0';
+			return 1;
+		} else if (RThread::repl_status.user_command_status == RThread::RKReplStatus::UserCommandSyntaxError) {
+			MUTEX_LOCK;
+			RThread::this_pointer->current_command->status |= RCommand::ErrorIncomplete;
+			RThread::repl_status.user_command_status = RThread::RKReplStatus::NoUserCommand;
+			MUTEX_UNLOCK;
+			buf[0] = '\0';
+			return 1;
+		} else if (RThread::repl_status.user_command_status == RThread::RKReplStatus::UserCommandRunning) {
+			// it appears, the user command triggered a call to readline. Will be handled, below.
+			// NOT returning
+		} else {
+			RK_ASSERT (false);
+			RThread::repl_status.user_command_status = RThread::RKReplStatus::NoUserCommand;
+			buf[0] = '\0';
+			return 1;
 		}
-		if (repldll_buffer_transfer_finished) buf[pos] = '\n';
-		buf[++pos] = '\0';
-		//Rprintf ("buffer now: '%s'\n", buf);
-		return 1;
 	}
-
+	
 	// here, we handle readline() calls and such, i.e. not the regular prompt for code
-	// browser() also takes us here.
+	// browser() also takes us here. TODO: give browser() special handling!
 	RCallbackArgs args;
 	args.type = RCallbackArgs::RReadLine;
 	args.params["prompt"] = QVariant (prompt);
@@ -169,15 +250,17 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 	if (args.params["cancelled"].toBool ()) {
 		if (RThread::this_pointer->current_command) RThread::this_pointer->current_command->status |= RCommand::Canceled;
 		RK_doIntr();
-		return 0;	// we should not ever get here, but still...
+		// threoretically, the above should have got us out, but for good measure:
+		Rf_error ("cancelled");
 	}
-	if (buf) {
-		QByteArray localres = RThread::this_pointer->current_locale_codec->fromUnicode (args.params["result"].toString ());
-		// need to append a newline, here. TODO: theoretically, RReadConsole comes back for more, if \0 was encountered before \n.
-		qstrncpy ((char *) buf, localres.left (buflen - 2).append ('\n').data (), buflen);
-		return 1;
-	}
-	return 0;
+
+	QByteArray localres = RThread::this_pointer->current_locale_codec->fromUnicode (args.params["result"].toString ());
+	// need to append a newline, here. TODO: theoretically, RReadConsole comes back for more, if \0 was encountered before \n.
+	qstrncpy ((char *) buf, localres.left (buflen - 2).append ('\n').data (), buflen);
+
+	// we should not ever get here, but still...
+	buf[0] = '\0';
+	return 1;
 }
 
 #ifdef Q_WS_WIN
@@ -188,6 +271,15 @@ int RReadConsoleWin (const char* prompt, char* buf, int buflen, int hist) {
 
 void RWriteConsoleEx (const char *buf, int buflen, int type) {
 	RK_TRACE (RBACKEND);
+
+	// output while nothing else is running (including handlers?) -> This may be a syntax error.
+	if (RThread::repl_status.eval_depth == 0) {
+		if (RThread::repl_status.user_command_status == RThread::RKReplStatus::UserCommandTransmitted) {
+			RThread::repl_status.user_command_status = RThread::RKReplStatus::UserCommandSyntaxError;
+		} else {
+			RK_ASSERT (RThread::repl_status.user_command_status != RThread::RKReplStatus::NoUserCommand);
+		}
+	}
 
 	RThread::this_pointer->handleOutput (RThread::this_pointer->current_locale_codec->toUnicode (buf, buflen), buflen, type == 0);
 }
@@ -392,10 +484,11 @@ int RAskYesNoCancel (const char* message) {
 void RBusy (int busy) {
 	RK_TRACE (RBACKEND);
 
-	// R_ReplDLLDo1 calls R_Busy (1) after reading in code (if needed), parsing it, and right before evaluating it.
+	// R_ReplIteration calls R_Busy (1) after reading in code (if needed), successfully parsing it, and right before evaluating it.
 	if (busy) {
-		repldlldo1_wants_code = false;
-		repldll_last_parse_successful = true;
+		if (RThread::repl_status.user_command_status == RThread::RKReplStatus::UserCommandTransmitted) {
+			RThread::repl_status.user_command_status = RThread::RKReplStatus::UserCommandRunning;
+		}
 	}
 }
 
@@ -539,8 +632,10 @@ void RThread::processX11Events () {
 	// do not trace
 	if (!this_pointer->r_running) return;
 
+	RThread::repl_status.eval_depth++;
 // In case an error (or user interrupt) is caught inside processX11EventsWorker, we don't want to long-jump out.
 	R_ToplevelExec (processX11EventsWorker, 0);
+	RThread::repl_status.eval_depth--;
 }
 
 /** converts SEXP to strings, and returns the first string (or QString(), if SEXP contains no strings) */
@@ -877,6 +972,7 @@ bool RThread::startR (int argc, char** argv, bool stack_check) {
 	R_registerRoutines (R_getEmbeddingDllInfo(), NULL, callMethods, NULL, NULL);
 
 	connectCallbacks();
+	RKInsertToplevelStatementFinishedCallback (0);
 
 	// get info on R runtime version
 	RCommand *dummy = runDirectCommand ("as.numeric (R.version$major) * 1000 + as.numeric (R.version$minor) * 10", RCommand::GetIntVector);
@@ -888,6 +984,12 @@ bool RThread::startR (int argc, char** argv, bool stack_check) {
 	}
 
 	return true;
+}
+
+void RThread::enterEventLoop () {
+	RK_TRACE (RBACKEND);
+
+	run_Rmainloop ();
 }
 
 SEXP parseCommand (const QString &command_qstring, RThread::RKWardRError *error) {
@@ -1006,26 +1108,6 @@ void tryPrintValue (SEXP exp, RThread::RKWardRError *error) {
 }
 #endif
 
-void runUserCommandInternal (void *) {
-	RK_TRACE (RBACKEND);
-
-/* R_ReplDLLdo1 return codes:
--1: EOF
-1: normal prompt
-2: continuation prompt (parse incomplete) */
-	do {
-		//Rprintf ("iteration status: %d\n", repldll_result);
-		repldll_result = -2;
-		repldlldo1_wants_code = true;
-		repldll_last_parse_successful = false;
-	} while (((repldll_result = R_ReplDLLdo1 ()) == 2) && (!repldll_buffer_transfer_finished));	// keep iterating while the statement is incomplete, and we still have more in the buffer to transfer
-	//Rprintf ("iteration complete, status: %d\n", repldll_result);
-	PROTECT (R_LastvalueSymbol);		// why do we need this? No idea, but R_ToplevelExec tries to unprotect something
-	if (RThread::this_pointer->RRuntimeIsVersion (2, 11, 9)) {
-		PROTECT (R_LastvalueSymbol);		// ... and with R 2.12.0 it tries to unprotect two things
-	}
-}
-
 bool RThread::runDirectCommand (const QString &command) {
 	RK_TRACE (RBACKEND);
 
@@ -1060,7 +1142,8 @@ void RThread::runCommand (RCommand *command) {
 	}
 	// running user commands is quite different from all other commands
 	if (ctype & RCommand::User) {
-		// run a user command
+#error restructure, move this, keep comment
+	  // run a user command
 /* Using R_ReplDLLdo1 () is a pain, but it seems to be the only entry point for evaluating a command as if it had been entered on a plain R console (with auto-printing if not invisible, etc.). Esp. since R_Visible is no longer exported in R 2.5.0, as it seems as of today (2007-01-17).
 
 Problems to deal with:
@@ -1081,38 +1164,8 @@ R_ReadConsole based on R_busy calls, but you may be able to use the
 second 'hist' argument. I didn't look too carefully, but it seems like
 hist == 1 iff R wants a parse-able input.
 */
-
-		R_ReplDLLinit ();		// resets the parse buffer (things might be left over from a previous incomplete parse)
-		bool prev_iteration_was_incomplete = false;
-
-		current_buffer = ccommand.data ();
-
-		repldll_buffer_transfer_finished = false;
-		Rboolean ok = (Rboolean) 1;	// set to false, if there is a jump during the R_ToplevelExec (i.e.. some sort of error)
-
-		repldll_result = 0;
-		while ((ok != FALSE) && ((!repldll_buffer_transfer_finished) || (repldll_result != -1))) {
-			// we always need to iterate until the parse returned an EOF AND we have no more code in the buffer to supply.
-			// However, if this happens right after we last received an INCOMPLETE, this means the parse really was incomplete.
-			// Otherwise, there's simply nothing more to parse.
-			prev_iteration_was_incomplete = (repldll_result == 2);
-			ok = R_ToplevelExec (runUserCommandInternal, 0);
-		}
-		if (ok == FALSE) {
-			if (repldll_last_parse_successful) {
-				error = RThread::OtherError;
-			} else {
-				error = RThread::SyntaxError;
-			}
-		} else {
-			if (prev_iteration_was_incomplete) {
-				error = RThread::Incomplete;
-			} else {
-				error = RThread::NoError;
-			}
-		}
-		repldlldo1_wants_code = false;		// make sure we don't get confused in RReadConsole
 	} else {		// not a user command
+		repl_status.eval_depth++;
 		SEXP parsed = parseCommand (command->command (), &error);
 		if (error == NoError) {
 			SEXP exp;
@@ -1135,6 +1188,7 @@ hist == 1 iff R wants a parse-able input.
 			}
 			UNPROTECT (1); // exp
 		}
+		repl_status.eval_depth--;
 	}
 	if (!(ctype & RCommand::Internal)) {
 		if (!locked || killed) processX11Events ();

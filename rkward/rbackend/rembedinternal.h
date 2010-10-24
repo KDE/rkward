@@ -136,7 +136,6 @@ public:
 /** the internal counterpart to pauseOutput () */
 	void waitIfOutputPaused ();
 
-
 /** interrupt processing of the current command. This is much like the user pressing Ctrl+C in a terminal with R. This is probably the only non-portable function in RThread, but I can't see a good way around placing it here, or to make it portable. */
 	void interruptProcessing (bool interrupt);
 
@@ -159,6 +158,8 @@ public:
 /** initializes the R-backend. Returns an error-code that consists of a bit-wise or-conjunction of the RThread::InitStatus -enum, RThread::Ok on success.
 Note that you should call initialize only once in a application */
 	int initialize ();
+
+	void enterEventLoop ();
 
 /** clean shutdown of R.
 @param suicidal if true, perform only the most basic shutdown operations */
@@ -249,6 +250,21 @@ more errors/crashes. @see unlock @see RInterface::cancelCommand @see RInterface:
 	bool isKilled () { return killed; };
 
 	QTextCodec *current_locale_codec;
+
+	struct RKReplStatus {
+		QByteArray user_command_buffer;
+		int user_command_transmitted_up_to;
+		bool user_command_completely_transmitted;
+		int user_command_successful_up_to;
+		enum {
+			NoUserCommand,
+			UserCommandTransmitted,
+			UserCommandSyntaxError,
+			UserCommandRunning
+		} user_command_status;
+		int eval_depth;		// Number (depth) of non-user commands currently running. User commands can only run at depth 0
+	};
+	static RKReplStatus repl_status;
 protected:
 /** thread is locked. No new commands will be executed. @see LockType @see lock @see unlock */
 	int locked;
@@ -266,7 +282,7 @@ private:
 protected:
 /** the main loop. See \ref RThread for a more detailed description */
 	void run ();
-private:
+private:  
 /** This is the function in which an RCommand actually gets processed. Basically it passes the command to runCommand () and sends RInterface some events about what is currently happening. */
 	void doCommand (RCommand *command);
 	void notifyCommandDone (RCommand *command);
