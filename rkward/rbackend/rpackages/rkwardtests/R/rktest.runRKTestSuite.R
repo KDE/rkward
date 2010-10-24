@@ -22,7 +22,7 @@
 rktest.runRKTestSuite <- function (suite, basedir=getwd (), test.id=NULL) {
 	# check wheter test environment is already set,
 	# otherwise initialize
-	if(!exists(".rktest.tmp.dump", where=globalenv())){
+	if(!exists(".rktest.tmp.storage", where=globalenv())){
 	  rktest.initializeEnvironment()
 	  on.exit(rktest.resetEnvironment())
 	}

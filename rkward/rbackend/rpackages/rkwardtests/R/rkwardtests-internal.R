@@ -154,23 +154,28 @@ rktest.cleanRKTestSuite <- function (suite, basedir=getwd ()) {
 }
 
 ## Convenience functions for replacing / restoring functions for the test runs
-.rktest.backups <- new.env()
 rktest.replace <- function (name, replacement, envir=as.environment ("package:rkward"), backup.name=name) {
-	if (exists (backup.name, envir=.rktest.backups, inherits=FALSE)) {
+  if(!exists(".rktest.tmp.storage", where=globalenv())){
+	assign(".rktest.tmp.storage", new.env(), pos=globalenv())
+  } else{}
+	if (exists (backup.name, envir=.rktest.tmp.storage, inherits=FALSE)) {
 		message ("Is looks like ", name, " has already been replaced. Not replacing it again.")
 	} else {
-		assign (backup.name, get (name, envir), envir=.rktest.backups)
+		assign (backup.name, get (name, envir), envir=.rktest.tmp.storage)
 		assign (name, replacement, envir)
 	}
 }
 
 rktest.restore <- function (name, envir=as.environment ("package:rkward"), backup.name=name) {
-	if (exists (backup.name, envir=.rktest.backups, inherits=FALSE)) {
-		assign (name, get (backup.name, envir=.rktest.backups), envir=envir)
+	if (exists (backup.name, envir=.rktest.tmp.storage, inherits=FALSE)) {
+		assign (name, get (backup.name, envir=.rktest.tmp.storage), envir=envir)
 	} else {
 		message ("No backup available for ", name, ". Already restored?")
 	}
-	rm (list=backup.name, envir=.rktest.backups)
+	rm (list=backup.name, envir=.rktest.tmp.storage)
+	if(length(.rktest.tmp.storage) == 0){
+	  rm(".rktest.tmp.storage", pos=globalenv())
+	} else{}
 }
 
 ## Initialize test environment
@@ -219,8 +224,8 @@ rktest.resetEnvironment <- function () {
 ## handling of temporary directories
 # get the path to the recent temporary directory, if exists
 rktest.getTempDir <- function(){
-  if(exists(".rktest.temp.dir", where=globalenv())){
-    temp.dir <- get(".rktest.temp.dir", pos=globalenv())
+  if(exists(".rktest.tmp.storage", where=globalenv()) && exists(".rktest.temp.dir", where=.rktest.tmp.storage)){
+    temp.dir <- get(".rktest.temp.dir", pos=.rktest.tmp.storage)
     if(file_test("-d", temp.dir)) {
       return(temp.dir)
     }
@@ -247,7 +252,10 @@ rktest.createTempDir <- function(){
     stop(simpleError("Couldn't create temporary directory!"))
   }
   else {
-    assign(".rktest.temp.dir", new.temp.dir, envir=globalenv())
+	if(!exists(".rktest.tmp.storage", where=globalenv())){
+	  assign(".rktest.tmp.storage", new.env(), pos=globalenv())
+	} else{}
+    assign(".rktest.temp.dir", new.temp.dir, envir=.rktest.tmp.storage)
     return(new.temp.dir)
   }
 }
@@ -258,7 +266,10 @@ rktest.removeTempDir <- function(){
   if(is.character(temp.dir)){
     unlink(temp.dir, recursive=TRUE)
     # should the function stop here if unlink() failed?
-    rm(".rktest.temp.dir", envir=globalenv())
+    rm(".rktest.temp.dir", envir=.rktest.tmp.storage)
+	if(length(.rktest.tmp.storage) == 0){
+	  rm(".rktest.tmp.storage", pos=globalenv())
+	} else{}
     return(TRUE)
   }
   else {
