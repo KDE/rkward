@@ -57,7 +57,6 @@ void RThread::run () {
 	locked = Startup;
 	killed = false;
 	int err;
-	bool previously_idle = false;
 
 	// in RInterface::RInterface() we create a fake RCommand to capture all the output/errors during startup
 	MUTEX_LOCK;
@@ -86,7 +85,36 @@ void RThread::run () {
 	notifyCommandDone (current_command);
 	MUTEX_UNLOCK;
 
+	enterEventLoop ();
+}
+
+void RThread::commandFinished () {
+	RK_TRACE (RBACKEND);
+
+	RK_DO (qDebug ("done running command"), RBACKEND, DL_DEBUG);
+	MUTEX_LOCK;
+	current_command->status -= (current_command->status & RCommand::Running);
+	current_command->status |= RCommand::WasTried;
+	RCommandStackModel::getModel ()->itemChange (current_command);
+
+	checkObjectUpdatesNeeded (current_command->type () & (RCommand::User | RCommand::ObjectListUpdate));
+	RCommandStack::currentStack ()->pop ();
+	notifyCommandDone (current_command);	// command may be deleted after this
+
+	all_current_commands.pop_back();
+	current_command = all_current_commands.last ();
+	MUTEX_UNLOCK;
+}
+
+RCommand* RThread::fetchNextCommand (RCommandStack* stack) {
+	RK_TRACE (RBACKEND);
+
+#warning We would need so much less mutex locking everywhere, if the command would simply be copied between threads!
 	while (1) {
+		if (killed) {
+			return 0;
+		}
+
 		processX11Events ();
 
 		MUTEX_LOCK;
@@ -96,24 +124,42 @@ void RThread::run () {
 				previously_idle = false;
 			}
 		}
-	
-		// while commands are in queue, don't wait
-		while ((!locked) && RCommandStack::regular_stack->isActive ()) {
-			current_command = RCommandStack::regular_stack->currentCommand ();
-			
-			if (current_command) {
-				// mutex will be unlocked inside
-				doCommand (current_command);
-				checkObjectUpdatesNeeded (current_command->type () & (RCommand::User | RCommand::ObjectListUpdate));
-				RCommandStack::regular_stack->pop ();
-				notifyCommandDone (current_command);	// command may be deleted after this
+
+		if ((!locked) && stack->isActive ()) {
+			RCommand *command = stack->currentCommand ();
+
+			if (command) {
+				// notify GUI-thread that a new command is being tried and initialize
+				RKRBackendEvent* event = new RKRBackendEvent (RKRBackendEvent::RCommandIn, command);
+				qApp->postEvent (RKGlobals::rInterface (), event);
+				all_current_commands.append (command);
+
+				if ((command->type () & RCommand::EmptyCommand) || (command->status & RCommand::Canceled) || (command->type () & RCommand::QuitCommand)) {
+					// some commands are not actually run by R, but handled inline, here
+					if (command->status & RCommand::Canceled) {
+						command->status |= RCommand::Failed;
+					} else if (command->type () & RCommand::QuitCommand) {
+						killed = true;
+						MUTEX_UNLOCK;
+						shutdown (false);
+						MUTEX_LOCK;		// I guess we don't get here, though?
+					}
+					commandFinished ();
+				} else {
+					RK_DO (qDebug ("running command: %s", command->command ().toLatin1().data ()), RBACKEND, DL_DEBUG);
+				
+					command->status |= RCommand::Running;	// it is important that this happens before the Mutex is unlocked!
+					RCommandStackModel::getModel ()->itemChange (command);
+
+					MUTEX_UNLOCK;
+					return command;
+				}
 			}
-		
-			if (killed) {
-				shutdown (false);
-				MUTEX_UNLOCK;
-				return;
-			}
+		}
+
+		if ((!stack->isActive ()) && stack->isEmpty () && stack != RCommandStack::regular_stack) {
+			MUTEX_UNLOCK;
+			return 0;		// substack depleted
 		}
 
 		if (!previously_idle) {
@@ -127,32 +173,22 @@ void RThread::run () {
 		MUTEX_UNLOCK;
 		if (killed) {
 			shutdown (false);
-			return;
+			return 0;
 		}
-		current_command = 0;
 		msleep (10);
 	}
+
+	return 0;
 }
 
 void RThread::doCommand (RCommand *command) {
 	RK_TRACE (RBACKEND);
-	// step 1: notify GUI-thread that a new command is being tried and initialize
-	RKRBackendEvent* event = new RKRBackendEvent (RKRBackendEvent::RCommandIn, command);
-	qApp->postEvent (RKGlobals::rInterface (), event);
 
 	// step 2: actual handling
 	if (!((command->type () & RCommand::EmptyCommand) || (command->status & RCommand::Canceled))) {
-		all_current_commands.append (command);
-
-		RK_DO (qDebug ("running command: %s", command->command ().toLatin1().data ()), RBACKEND, DL_DEBUG);
-	
-		command->status |= RCommand::Running;	// it is important that this happens before the Mutex is unlocked!
-		RCommandStackModel::getModel ()->itemChange (command);
 
 		runCommand (command);
 	
-		RK_DO (qDebug ("done running command"), RBACKEND, DL_DEBUG);
-		all_current_commands.pop_back();
 	} else {
 		if (command->status & RCommand::Canceled) {
 			command->status |= RCommand::Failed;
@@ -163,9 +199,6 @@ void RThread::doCommand (RCommand *command) {
 			MUTEX_LOCK;
 		}
 	}
-
-	command->status -= (command->status & RCommand::Running);
-	RCommandStackModel::getModel ()->itemChange (command);
 }
 
 
@@ -299,50 +332,20 @@ void RThread::handleSubstackCall (QStringList &call) {
 		}
 	}
 
-	RCommand *prev_command = current_command;
 	REvalRequest request;
 	request.call = call;
 	MUTEX_LOCK;
 	flushOutput ();
-	RCommandStack *reply_stack = new RCommandStack (prev_command);
+	RCommandStack *reply_stack = new RCommandStack (current_command);
 	request.in_chain = reply_stack->startChain (reply_stack);
 	MUTEX_UNLOCK;
 
 	RKRBackendEvent* event = new RKRBackendEvent (RKRBackendEvent::REvalRequest, &request);
 	qApp->postEvent (RKGlobals::rInterface (), event);
-	
-	bool done = false;
-	while (!done) {
-		processX11Events ();
-		MUTEX_LOCK;
-		// while commands are in queue, don't wait
-		while (reply_stack->isActive ()) {		// substack calls are to be considered "sync", and don't respect locks
-			if (killed) {
-				done = true;
-				break;
-			}
 
-			current_command = reply_stack->currentCommand ();
-			if (current_command) {
-				// mutex will be unlocked inside
-				bool object_update_forced = (current_command->type () & RCommand::ObjectListUpdate);
-				doCommand (current_command);
-				if (object_update_forced) checkObjectUpdatesNeeded (true);
-				reply_stack->pop ();
-				notifyCommandDone (current_command);	// command may be deleted after this
-			} else {
-				msleep (10);
-			}
-		}
-
-		if (reply_stack->isEmpty ()) {
-			done = true;
-		}
-		MUTEX_UNLOCK;
-
-		// if no commands are in queue, sleep for a while
-		current_command = prev_command;
-		msleep (10);
+	RCommand *c;
+	while ((c = fetchNextCommand (reply_stack))) {
+		runCommand (c);
 	}
 
 	MUTEX_LOCK;

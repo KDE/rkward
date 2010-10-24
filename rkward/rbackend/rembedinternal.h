@@ -255,6 +255,7 @@ more errors/crashes. @see unlock @see RInterface::cancelCommand @see RInterface:
 		QByteArray user_command_buffer;
 		int user_command_transmitted_up_to;
 		bool user_command_completely_transmitted;
+		int user_command_parsed_up_to;
 		int user_command_successful_up_to;
 		enum {
 			NoUserCommand,
@@ -265,11 +266,16 @@ more errors/crashes. @see unlock @see RInterface::cancelCommand @see RInterface:
 		int eval_depth;		// Number (depth) of non-user commands currently running. User commands can only run at depth 0
 	};
 	static RKReplStatus repl_status;
+
+	// fetch next command (and do event processing while waiting)
+	RCommand *fetchNextCommand (RCommandStack *stack);
+	void commandFinished ();
 protected:
 /** thread is locked. No new commands will be executed. @see LockType @see lock @see unlock */
 	int locked;
 /** thread is killed. Should exit as soon as possible. @see kill */
 	bool killed;
+	bool previously_idle;
 /** On pthread systems this is the pthread_id of the backend thread. It is needed to send SIGINT to the R backend */
 	Qt::HANDLE thread_id;
 private:

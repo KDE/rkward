@@ -19,7 +19,7 @@
 
 // static
 RThread *RThread::this_pointer = 0;
-RThread::RKReplStatus RThread::repl_status = { QByteArray (), 0, true, 0, RThread::RKReplStatus::NoUserCommand, 0 };
+RThread::RKReplStatus RThread::repl_status = { QByteArray (), 0, true, 0, 0, RThread::RKReplStatus::NoUserCommand, 0 };
 
 #include <qstring.h>
 #include <QStringList>
@@ -134,12 +134,18 @@ Rboolean RKToplevelStatementFinishedCallback (SEXP expr, SEXP value, Rboolean su
 	if (RThread::repl_status.eval_depth == 0) {
 		RK_ASSERT (RThread::repl_status.user_command_status = RThread::RKReplStatus::UserCommandRunning);
 		if (succeeded) {
-			RThread::repl_status.user_command_successful_up_to = RThread::repl_status.user_command_transmitted_up_to;
+			RThread::repl_status.user_command_successful_up_to = RThread::repl_status.user_command_parsed_up_to;
 			if (RThread::repl_status.user_command_completely_transmitted) RThread::repl_status.user_command_status = RThread::RKReplStatus::NoUserCommand;
 			else RThread::repl_status.user_command_status = RThread::RKReplStatus::UserCommandTransmitted;
 		} else {
 			// skip remainder of command
 			RThread::repl_status.user_command_status = RThread::RKReplStatus::NoUserCommand;
+		}
+		if (RThread::repl_status.user_command_status == RThread::RKReplStatus::NoUserCommand) {
+			MUTEX_LOCK;
+			if (!succeeded) RThread::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorOther;
+			MUTEX_UNLOCK;
+			RThread::this_pointer->commandFinished ();
 		}
 	}
 	
@@ -191,17 +197,28 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 	if (RThread::repl_status.eval_depth == 0) {
 		if (RThread::repl_status.user_command_status == RThread::RKReplStatus::NoUserCommand) {
 			MUTEX_LOCK;
-			RCommand *command = RThread::this_pointer->fetchNextCommand ();
+			RCommand *command = RThread::this_pointer->fetchNextCommand (RCommandStack::regular_stack);
+			if (!command) return 0;	// jumps out of the event loop!
+
+			RThread::this_pointer->current_command = command;
 			if (!(command->type () & RCommand::User)) {
 				RThread::this_pointer->runCommand (command);
+				RThread::this_pointer->commandFinished ();
 				MUTEX_UNLOCK;
 			} else {
 				// so, we are about to transmit a new user command, which is quite a complex endeavour...
+				/* Some words about running user commands:
+				- User commands can only be run at the top level of execution, not in any sub-stacks. But then, they should never get there, in the first place.
+				- Handling user commands is totally different from all other commands, and relies on R's "REPL" (read-evaluate-print-loop). This is a whole bunch of dedicated code, but there is no other way to achieve handling of commands as if they had been entered on a plain R console (incluing auto-printing, and toplevel handlers). Most importantly, since important symbols are not exported, such as R_Visible. Vice versa, it is not possible to treat all commands like user commands, esp. in substacks.
+
+				Problems to deal with:
+				- R_ReadConsole serves a lot of different functions, including reading in code, but also handling user input for readline() or browser(). This makes it necessary to carefully track the current status using "repl_status". You will find repl_status to be modified at a couple of different functions.
+				*/
 				RThread::repl_status.user_command_transmitted_up_to = 0;
 				RThread::repl_status.user_command_completely_transmitted = false;
+				RThread::repl_status.user_command_parsed_up_to = 0;
 				RThread::repl_status.user_command_successful_up_to = 0;
 				RThread::repl_status.user_command_buffer = RThread::this_pointer->current_locale_codec->fromUnicode (command->command ());
-				RThread::this_pointer->current_command = command;
 				MUTEX_UNLOCK;
 				RKTransmitNextUserCommandChunk (buf, buflen);
 				RThread::repl_status.user_command_status = RThread::RKReplStatus::UserCommandTransmitted;
@@ -212,7 +229,7 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 			if (RThread::repl_status.user_command_completely_transmitted) {
 				// fully transmitted, but R is still asking for more? -> Incomplete statement
 				MUTEX_LOCK;
-				RThread::this_pointer->current_command->status |= RCommand::ErrorIncomplete;
+				RThread::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorIncomplete;
 				RThread::repl_status.user_command_status = RThread::RKReplStatus::NoUserCommand;
 				MUTEX_UNLOCK;
 			} else {
@@ -222,7 +239,7 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 			return 1;
 		} else if (RThread::repl_status.user_command_status == RThread::RKReplStatus::UserCommandSyntaxError) {
 			MUTEX_LOCK;
-			RThread::this_pointer->current_command->status |= RCommand::ErrorIncomplete;
+			RThread::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorSyntax;
 			RThread::repl_status.user_command_status = RThread::RKReplStatus::NoUserCommand;
 			MUTEX_UNLOCK;
 			buf[0] = '\0';
@@ -239,7 +256,7 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 	}
 	
 	// here, we handle readline() calls and such, i.e. not the regular prompt for code
-	// browser() also takes us here. TODO: give browser() special handling!
+	// browser() also takes us here. TODO: give browser() special handling! May be identifiable due to hist==true
 	RCallbackArgs args;
 	args.type = RCallbackArgs::RReadLine;
 	args.params["prompt"] = QVariant (prompt);
@@ -487,6 +504,7 @@ void RBusy (int busy) {
 	// R_ReplIteration calls R_Busy (1) after reading in code (if needed), successfully parsing it, and right before evaluating it.
 	if (busy) {
 		if (RThread::repl_status.user_command_status == RThread::RKReplStatus::UserCommandTransmitted) {
+			RThread::repl_status.user_command_parsed_up_to = RThread::repl_status.user_command_transmitted_up_to;
 			RThread::repl_status.user_command_status = RThread::RKReplStatus::UserCommandRunning;
 		}
 	}
@@ -509,6 +527,7 @@ RThread::RThread () {
 	current_output = 0;
 	out_buf_len = 0;
 	output_paused = false;
+	previously_idle = false;
 
 #ifdef Q_WS_WIN
 	// we hope that on other platforms the default is reasonable
@@ -947,7 +966,6 @@ bool RThread::startR (int argc, char** argv, bool stack_check) {
 #endif
 
 	RKGlobals::na_double = NA_REAL;
-	R_ReplDLLinit ();
 
 	RKWard_RData_Tag = Rf_install ("RKWard_RData_Tag");
 	R_LastvalueSymbol = Rf_install (".Last.value");
@@ -1137,59 +1155,38 @@ void RThread::runCommand (RCommand *command) {
 	QByteArray ccommand = current_locale_codec->fromUnicode (command->command ());
 	RData retdata;
 
+	// running user commands is quite different from all other commands and should have been handled by RReadConsole
+	RK_ASSERT (!(ctype & RCommand::User));
+
 	if (!(ctype & RCommand::Internal)) {
 		MUTEX_UNLOCK;
 	}
-	// running user commands is quite different from all other commands
-	if (ctype & RCommand::User) {
-#error restructure, move this, keep comment
-	  // run a user command
-/* Using R_ReplDLLdo1 () is a pain, but it seems to be the only entry point for evaluating a command as if it had been entered on a plain R console (with auto-printing if not invisible, etc.). Esp. since R_Visible is no longer exported in R 2.5.0, as it seems as of today (2007-01-17).
 
-Problems to deal with:
-- R_ReplDLLdo1 () may do a jump on an error. Hence we need R_ToplevelExec (public sind R 2.4.0)
-	- this is why runUserCommandInternal needs to be a separate function
-- R_ReplDLLdo1 () expects to receive the code input via R_ReadConsole. The same R_ReadConsole that commands like readline () or browser () will use to get their input.
-	- hence we need some state variables to figure out, when a call to R_ReadConsole originates directly from R_ReplDLLdo1 (), or some R statement. R_Busy () is our friend, here.
-- R_ReplDLLdo1 () will only ever evaluate one statement, even if several statements have already been transfered to the buffer. In fact, it will even return once after each ';' or '\n', even if the statement is not complete, but more is already in the buffer
-	- Hence we need two loops around R_ReplDLLdo1 (): one to make sure it continues reading until a statement is actually complete, another to continue if there is a second (complete or incomplete) statement in the command
-	- Also, in case the command was too long to fit inside the buffer at once (repldll_buffer_transfer_finished)
-- Some more state variables are used for figuring out, which type of error occurred, if any, since we don't get any decent return value
-
-This is the logic spread out over the following section, runUserCommandInternal (), and RReadConsole (). 
-
-NOTE from Deepayan Sarkar: Another possible simplification (which may not be worth doing
-ultimately): you distinguish between two types of calls to
-R_ReadConsole based on R_busy calls, but you may be able to use the
-second 'hist' argument. I didn't look too carefully, but it seems like
-hist == 1 iff R wants a parse-able input.
-*/
-	} else {		// not a user command
-		repl_status.eval_depth++;
-		SEXP parsed = parseCommand (command->command (), &error);
+	repl_status.eval_depth++;
+	SEXP parsed = parseCommand (command->command (), &error);
+	if (error == NoError) {
+		SEXP exp;
+		PROTECT (exp = runCommandInternalBase (parsed, &error));
 		if (error == NoError) {
-			SEXP exp;
-			PROTECT (exp = runCommandInternalBase (parsed, &error));
-			if (error == NoError) {
-				if (ctype & RCommand::GetStringVector) {
-					retdata.datatype = RData::StringVector;
-					retdata.data = SEXPToStringList (exp, &(retdata.length));
-				} else if (ctype & RCommand::GetRealVector) {
-					retdata.datatype = RData::RealVector;
-					retdata.data = SEXPToRealArray (exp, &(retdata.length));
-				} else if (ctype & RCommand::GetIntVector) {
-					retdata.datatype = RData::IntVector;
-					retdata.data = SEXPToIntArray (exp, &(retdata.length));
-				} else if (ctype & RCommand::GetStructuredData) {
-					RData *dummy = SEXPToRData (exp);
-					retdata.setData (*dummy);
-					delete dummy;
-				}
+			if (ctype & RCommand::GetStringVector) {
+				retdata.datatype = RData::StringVector;
+				retdata.data = SEXPToStringList (exp, &(retdata.length));
+			} else if (ctype & RCommand::GetRealVector) {
+				retdata.datatype = RData::RealVector;
+				retdata.data = SEXPToRealArray (exp, &(retdata.length));
+			} else if (ctype & RCommand::GetIntVector) {
+				retdata.datatype = RData::IntVector;
+				retdata.data = SEXPToIntArray (exp, &(retdata.length));
+			} else if (ctype & RCommand::GetStructuredData) {
+				RData *dummy = SEXPToRData (exp);
+				retdata.setData (*dummy);
+				delete dummy;
 			}
-			UNPROTECT (1); // exp
 		}
-		repl_status.eval_depth--;
+		UNPROTECT (1); // exp
 	}
+	repl_status.eval_depth--;
+
 	if (!(ctype & RCommand::Internal)) {
 		if (!locked || killed) processX11Events ();
 		MUTEX_LOCK;

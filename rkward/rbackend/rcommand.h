@@ -2,7 +2,7 @@
                           rcommand.h  -  description
                              -------------------
     begin                : Mon Nov 11 2002
-    copyright            : (C) 2002, 2006, 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -24,6 +24,8 @@
 #include <QList>
 
 #include "rdata.h"
+
+#define MAX_RECEIVERS_PER_RCOMMAND 3
 
 class RCommandReceiver;
 class RCommand;
@@ -72,24 +74,6 @@ struct ROutput {
 };
 
 typedef QList<ROutput*> ROutputList;
-
-/*
-struct RGetValueRequest {
-private:
-friend class RInterface;
-friend class RThread;
-	char **call;
-	int call_length;
-};
-
-struct RGetValueReply {
-private:
-friend class RInterface;
-friend class RThread;
-	char **reply;
-	int reply_length;
-};
-*/
 
 /** For introductory information on using RCommand, see \ref UsingTheInterfaceToR 
 
@@ -221,8 +205,7 @@ friend class RCommandStackModel;
 	QString _rk_equiv;
 	int _id;
 	static int next_id;
-	int num_receivers;
-	RCommandReceiver **receivers;
+	RCommandReceiver *receivers[MAX_RECEIVERS_PER_RCOMMAND];
 };
 
 #endif
