@@ -316,7 +316,11 @@ void RWriteConsoleEx (const char *buf, int buflen, int type) {
 	// output while nothing else is running (including handlers?) -> This may be a syntax error.
 	if (RThread::repl_status.eval_depth == 0) {
 		if (RThread::repl_status.user_command_status == RThread::RKReplStatus::UserCommandTransmitted) {
-			RThread::repl_status.user_command_status = RThread::RKReplStatus::UserCommandSyntaxError;
+			// status UserCommandTransmitted might have been set from RKToplevelStatementFinishedHandler, too, in which case all is fine
+			// (we're probably inside another task handler at this point, then)
+			if (RThread::repl_status.user_command_parsed_up_to < RThread::repl_status.user_command_transmitted_up_to) { 
+				RThread::repl_status.user_command_status = RThread::RKReplStatus::UserCommandSyntaxError;
+			}
 		} else if (RThread::repl_status.user_command_status == RThread::RKReplStatus::ReplIterationKilled) {
 			// purge superflous newlines
 			if (QString ("\n") == buf) return;
