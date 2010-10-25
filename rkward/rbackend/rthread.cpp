@@ -83,7 +83,7 @@ void RThread::run () {
 	enterEventLoop ();
 }
 
-void RThread::commandFinished () {
+void RThread::commandFinished (bool check_object_updates_needed) {
 	RK_TRACE (RBACKEND);
 
 	RK_DO (qDebug ("done running command"), RBACKEND, DL_DEBUG);
@@ -92,7 +92,9 @@ void RThread::commandFinished () {
 	current_command->status |= RCommand::WasTried;
 	RCommandStackModel::getModel ()->itemChange (current_command);
 
-	checkObjectUpdatesNeeded (current_command->type () & (RCommand::User | RCommand::ObjectListUpdate));
+	if (check_object_updates_needed || (current_command->type () & RCommand::ObjectListUpdate)) {
+		checkObjectUpdatesNeeded (current_command->type () & (RCommand::User | RCommand::ObjectListUpdate));
+	}
 	RCommandStack::currentStack ()->pop ();
 	notifyCommandDone (current_command);	// command may be deleted after this
 
@@ -324,7 +326,7 @@ void RThread::handleSubstackCall (QStringList &call) {
 		MUTEX_LOCK;
 		runCommand (c);
 		MUTEX_UNLOCK;
-		commandFinished ();
+		commandFinished (false);
 	}
 
 	MUTEX_LOCK;

@@ -47,10 +47,6 @@ private:
 	bool with_namespace;
 	SEXP namespace_envir;
 
-	static SEXP callSimpleFun (SEXP fun, SEXP arg, SEXP env);
-	static SEXP callSimpleFun2 (SEXP fun, SEXP arg1, SEXP arg2, SEXP env);
-	static bool callSimpleBool (SEXP fun, SEXP arg, SEXP env);
-
 	SEXP class_fun;
 	SEXP dims_fun;
 	SEXP meta_attrib;

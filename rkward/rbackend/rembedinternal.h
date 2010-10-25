@@ -261,7 +261,9 @@ more errors/crashes. @see unlock @see RInterface::cancelCommand @see RInterface:
 			NoUserCommand,
 			UserCommandTransmitted,
 			UserCommandSyntaxError,
-			UserCommandRunning
+			UserCommandRunning,
+			UserCommandFailed,
+			ReplIterationKilled
 		} user_command_status;
 		int eval_depth;		// Number (depth) of non-user commands currently running. User commands can only run at depth 0
 	};
@@ -269,7 +271,7 @@ more errors/crashes. @see unlock @see RInterface::cancelCommand @see RInterface:
 
 	// fetch next command (and do event processing while waiting)
 	RCommand *fetchNextCommand (RCommandStack *stack);
-	void commandFinished ();
+	void commandFinished (bool check_object_updates_needed=true);
 protected:
 /** thread is locked. No new commands will be executed. @see LockType @see lock @see unlock */
 	int locked;

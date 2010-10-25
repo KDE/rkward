@@ -22,6 +22,7 @@ SET(
 	rkpthreadsupport.cpp
 	rksignalsupport.cpp
 	rklocalesupport.cpp
+	rkrsupport.cpp
 )
 
 

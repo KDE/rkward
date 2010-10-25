@@ -71,37 +71,6 @@ SEXP RKStructureGetter::prefetch_fun (const char *name, bool from_base) {
 	return (ret);
 }
 
-SEXP RKStructureGetter::callSimpleFun (SEXP fun, SEXP arg, SEXP env) {
-	SEXP call = Rf_allocVector (LANGSXP, 2);
-	PROTECT (call);
-	SETCAR (call, fun);
-	SETCAR (CDR (call), arg);
-
-	SEXP ret = Rf_eval (call, env);
-
-	UNPROTECT (1); /* call */
-	return ret;
-}
-
-SEXP RKStructureGetter::callSimpleFun2 (SEXP fun, SEXP arg1, SEXP arg2, SEXP env) {
-	SEXP call = Rf_allocVector (LANGSXP, 3);
-	PROTECT (call);
-	SETCAR (call, fun);
-	SETCAR (CDR (call), arg1);
-	SETCAR (CDDR (call), arg2);
-
-	SEXP ret = Rf_eval (call, env);
-
-	UNPROTECT (1); /* call */
-	return ret;
-}
-
-bool RKStructureGetter::callSimpleBool (SEXP fun, SEXP arg, SEXP env) {
-	SEXP res = callSimpleFun (fun, arg, env);
-	RK_ASSERT (TYPEOF (res) == LGLSXP);
-	return ((bool) LOGICAL (res)[0]);
-}
-
 RData *RKStructureGetter::getStructure (SEXP toplevel, SEXP name, SEXP envlevel, SEXP namespacename) {
 	RK_TRACE (RBACKEND);
 
@@ -124,7 +93,7 @@ RData *RKStructureGetter::getStructure (SEXP toplevel, SEXP name, SEXP envlevel,
 		PROTECT (as_ns_fun);
 		RK_ASSERT (!Rf_isNull (as_ns_fun));
 
-		namespace_envir = callSimpleFun (as_ns_fun, namespacename, R_GlobalEnv);
+		namespace_envir = RKRSupport::callSimpleFun (as_ns_fun, namespacename, R_GlobalEnv);
 		UNPROTECT (1);	/* as_ns_fun */
 
 		PROTECT (namespace_envir);
@@ -229,7 +198,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 
 		PROTECT (classes_s);
 	} else {
-		classes_s = callSimpleFun (class_fun, value, R_BaseEnv);
+		classes_s = RKRSupport::callSimpleFun (class_fun, value, R_BaseEnv);
 		PROTECT (classes_s);
 	}
 
@@ -249,27 +218,27 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 		if (classes[i] == "data.frame") type |= RObject::DataFrame;
 	}
 
-	if (callSimpleBool (is_matrix_fun, value, R_BaseEnv)) type |= RObject::Matrix;
-	if (callSimpleBool (is_array_fun, value, R_BaseEnv)) type |= RObject::Array;
-	if (callSimpleBool (is_list_fun, value, R_BaseEnv)) type |= RObject::List;
+	if (RKRSupport::callSimpleBool (is_matrix_fun, value, R_BaseEnv)) type |= RObject::Matrix;
+	if (RKRSupport::callSimpleBool (is_array_fun, value, R_BaseEnv)) type |= RObject::Array;
+	if (RKRSupport::callSimpleBool (is_list_fun, value, R_BaseEnv)) type |= RObject::List;
 
 	if (type != 0) {
 		is_container = true;
 		type |= RObject::Container;
 	} else {
-		if (callSimpleBool (is_function_fun, value, R_BaseEnv)) {
+		if (RKRSupport::callSimpleBool (is_function_fun, value, R_BaseEnv)) {
 			is_function = true;
 			type |= RObject::Function;
-		} else if (callSimpleBool (is_environment_fun, value, R_BaseEnv)) {
+		} else if (RKRSupport::callSimpleBool (is_environment_fun, value, R_BaseEnv)) {
 			is_container = true;
 			type |= RObject::Environment;
 			is_environment = true;
 		} else {
 			type |= RObject::Variable;
-			if (callSimpleBool (is_factor_fun, value, R_BaseEnv)) type |= RObject::Factor;
-			else if (callSimpleBool (is_numeric_fun, value, R_BaseEnv)) type |= RObject::Numeric;
-			else if (callSimpleBool (is_character_fun, value, R_BaseEnv)) type |= RObject::Character;
-			else if (callSimpleBool (is_logical_fun, value, R_BaseEnv)) type |= RObject::Logical;
+			if (RKRSupport::callSimpleBool (is_factor_fun, value, R_BaseEnv)) type |= RObject::Factor;
+			else if (RKRSupport::callSimpleBool (is_numeric_fun, value, R_BaseEnv)) type |= RObject::Numeric;
+			else if (RKRSupport::callSimpleBool (is_character_fun, value, R_BaseEnv)) type |= RObject::Character;
+			else if (RKRSupport::callSimpleBool (is_logical_fun, value, R_BaseEnv)) type |= RObject::Logical;
 		}
 	}
 	if (misplaced) type |= RObject::Misplaced;
@@ -280,7 +249,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 	if (!Rf_isNull (Rf_getAttrib (value, meta_attrib))) {
 		type |= RObject::HasMetaObject;
 
-		SEXP meta_s = callSimpleFun (get_meta_fun, value, R_GlobalEnv);
+		SEXP meta_s = RKRSupport::callSimpleFun (get_meta_fun, value, R_GlobalEnv);
 		PROTECT (meta_s);
 		metadata->data = SEXPToStringList (meta_s, &count);
 		metadata->length = count;
@@ -303,7 +272,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 	// get dims
 	int *dims;
 	unsigned int num_dims;
-	SEXP dims_s = callSimpleFun (dims_fun, value, R_BaseEnv);
+	SEXP dims_s = RKRSupport::callSimpleFun (dims_fun, value, R_BaseEnv);
 	if (!Rf_isNull (dims_s)) {
 		dims = SEXPToIntArray (dims_s, &num_dims);
 	} else {
@@ -311,7 +280,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 
 		unsigned int len = Rf_length (value);
 		if ((len < 2) && (!is_function)) {		// suspicious. Maybe some kind of list
-			SEXP len_s = callSimpleFun (length_fun, value, R_BaseEnv);
+			SEXP len_s = RKRSupport::callSimpleFun (length_fun, value, R_BaseEnv);
 			PROTECT (len_s);
 			if (Rf_isNull (len_s)) {
 				dims = new int[1];
@@ -366,7 +335,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 		if (do_env) {
 			childnames_s = R_lsInternal (value, (Rboolean) 1);
 		} else if (do_cont) {
-			childnames_s = callSimpleFun (names_fun, value, R_BaseEnv);
+			childnames_s = RKRSupport::callSimpleFun (names_fun, value, R_BaseEnv);
 		} else {
 			childnames_s = R_NilValue; // dummy
 		}
@@ -389,7 +358,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 			if (!Rf_isEnvironment (value)) {
 				// some classes (ReferenceClasses) are identified as envionments by is.environment(), but are not internally ENVSXPs.
 				// For these, Rf_findVar would fail.
-				REPROTECT (value = callSimpleFun (as_environment_fun, value, R_GlobalEnv), value_index);
+				REPROTECT (value = RKRSupport::callSimpleFun (as_environment_fun, value, R_GlobalEnv), value_index);
 			}
 			for (unsigned int i = 0; i < childcount; ++i) {
 				SEXP current_childname = Rf_install(CHAR(STRING_ELT(childnames_s, i)));
@@ -429,7 +398,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 				PROTECT (index);
 				for (unsigned int i = 0; i < childcount; ++i) {
 					INTEGER (index)[0] = (i + 1);
-					SEXP child = callSimpleFun2 (double_brackets_fun, value, index, R_BaseEnv);
+					SEXP child = RKRSupport::callSimpleFun2 (double_brackets_fun, value, index, R_BaseEnv);
 					getStructureSafe (child, childnames[i], false, children[i]);
 				}
 				UNPROTECT (1); /* index */
@@ -451,7 +420,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 		res[6] = funargvaluesdata;
 
 // TODO: this is still the major bottleneck, but no idea, how to improve on this
-		SEXP formals_s = callSimpleFun (get_formals_fun, value, R_GlobalEnv);
+		SEXP formals_s = RKRSupport::callSimpleFun (get_formals_fun, value, R_GlobalEnv);
 		PROTECT (formals_s);
 		// the default values
 		funargvaluesdata->data = SEXPToStringList (formals_s, &(funargvaluesdata->length));

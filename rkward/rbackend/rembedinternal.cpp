@@ -102,6 +102,7 @@ SEXP R_LastvalueSymbol;
 #include <R_ext/eventloop.h>
 }
 
+#include "rkrsupport.h"
 #include "../rkglobals.h"
 #include "rdata.h"
 
@@ -135,17 +136,13 @@ Rboolean RKToplevelStatementFinishedCallback (SEXP expr, SEXP value, Rboolean su
 		RK_ASSERT (RThread::repl_status.user_command_status = RThread::RKReplStatus::UserCommandRunning);
 		if (succeeded) {
 			RThread::repl_status.user_command_successful_up_to = RThread::repl_status.user_command_parsed_up_to;
-			if (RThread::repl_status.user_command_completely_transmitted) RThread::repl_status.user_command_status = RThread::RKReplStatus::NoUserCommand;
-			else RThread::repl_status.user_command_status = RThread::RKReplStatus::UserCommandTransmitted;
+			if (RThread::repl_status.user_command_completely_transmitted) {
+				RThread::repl_status.user_command_status = RThread::RKReplStatus::NoUserCommand;
+				RThread::this_pointer->commandFinished ();
+			} else RThread::repl_status.user_command_status = RThread::RKReplStatus::UserCommandTransmitted;
 		} else {
-			// skip remainder of command
-			RThread::repl_status.user_command_status = RThread::RKReplStatus::NoUserCommand;
-		}
-		if (RThread::repl_status.user_command_status == RThread::RKReplStatus::NoUserCommand) {
-			MUTEX_LOCK;
-			if (!succeeded) RThread::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorOther;
-			MUTEX_UNLOCK;
-			RThread::this_pointer->commandFinished ();
+			// well, this point of code is never reached with R up to 2.12.0. Instead failed user commands are handled in doError().
+			RThread::repl_status.user_command_status = RThread::RKReplStatus::UserCommandFailed;
 		}
 	}
 	
@@ -215,6 +212,8 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 
 					Problems to deal with:
 					- R_ReadConsole serves a lot of different functions, including reading in code, but also handling user input for readline() or browser(). This makes it necessary to carefully track the current status using "repl_status". You will find repl_status to be modified at a couple of different functions.
+					- One difficulty lies in finding out, just when a command has finished (successfully or with an error). RKToplevelStatementFinishCallback(), and doError() handle the respective cases.
+					NOTE; in R 2.12.0 and above, Rf_countContexts() might help to find out when we are back to square 1!
 					*/
 					RThread::repl_status.user_command_transmitted_up_to = 0;
 					RThread::repl_status.user_command_completely_transmitted = false;
@@ -228,12 +227,16 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 				}
 			} else if (RThread::repl_status.user_command_status == RThread::RKReplStatus::UserCommandTransmitted) {
 				if (RThread::repl_status.user_command_completely_transmitted) {
-					// fully transmitted, but R is still asking for more? -> Incomplete statement
+					// fully transmitted, but R is still asking for more? This looks like an incomplete statement.
+					// HOWEVER: It may also have been an empty statement such as " ", so let's check whether the prompt looks like a "continue" prompt
+					bool incomplete = false;
+					if (RThread::this_pointer->current_locale_codec->toUnicode (prompt) == SEXPToString (Rf_GetOption (Rf_install ("continue"), R_BaseEnv))) {
+						incomplete = true;
+					}
 					MUTEX_LOCK;
-					RThread::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorIncomplete;
-					RThread::repl_status.user_command_status = RThread::RKReplStatus::NoUserCommand;
+					if (incomplete) RThread::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorIncomplete;
+					RThread::repl_status.user_command_status = RThread::RKReplStatus::ReplIterationKilled;
 					MUTEX_UNLOCK;
-					RThread::this_pointer->commandFinished ();
 					RK_doIntr ();	// to discard the buffer
 				} else {
 					RKTransmitNextUserCommandChunk (buf, buflen);
@@ -246,11 +249,28 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 				MUTEX_UNLOCK;
 				RThread::this_pointer->commandFinished ();
 			} else if (RThread::repl_status.user_command_status == RThread::RKReplStatus::UserCommandRunning) {
-				// it appears, the user command triggered a call to readline. Will be handled, below.
-				// NOT returning
-				break;
+				// it appears, the user command triggered a call to readline.
+				int n_frames = SEXPToInt (RKRSupport::callSimpleFun0 (Rf_findFun (Rf_install ("sys.nframe"), R_BaseEnv), R_GlobalEnv));
+				if (n_frames < 1) {
+					// No active frames? This is either a browser() call at toplevel, or R jumped us back to toplevel, behind our backs.
+					// For safety, let's reset and start over.
+					MUTEX_LOCK;
+					RThread::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorOther;
+					RThread::repl_status.user_command_status = RThread::RKReplStatus::ReplIterationKilled;
+					MUTEX_UNLOCK;
+					RK_doIntr ();	// to discard the buffer
+				} else {
+					// Handled below
+					break;
+				}
+			} else if (RThread::repl_status.user_command_status == RThread::RKReplStatus::UserCommandFailed) {
+				MUTEX_LOCK;
+				RThread::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorOther;
+				RThread::repl_status.user_command_status = RThread::RKReplStatus::NoUserCommand;
+				MUTEX_UNLOCK;
+				RThread::this_pointer->commandFinished ();
 			} else {
-				RK_ASSERT (false);
+				RK_ASSERT (RThread::repl_status.user_command_status == RThread::RKReplStatus::ReplIterationKilled);
 				RThread::repl_status.user_command_status = RThread::RKReplStatus::NoUserCommand;
 				RThread::this_pointer->commandFinished ();
 			}
@@ -296,6 +316,9 @@ void RWriteConsoleEx (const char *buf, int buflen, int type) {
 	if (RThread::repl_status.eval_depth == 0) {
 		if (RThread::repl_status.user_command_status == RThread::RKReplStatus::UserCommandTransmitted) {
 			RThread::repl_status.user_command_status = RThread::RKReplStatus::UserCommandSyntaxError;
+		} else if (RThread::repl_status.user_command_status == RThread::RKReplStatus::ReplIterationKilled) {
+			// purge superflous newlines
+			if (QString ("\n") == buf) return;
 		} else {
 			RK_ASSERT (RThread::repl_status.user_command_status != RThread::RKReplStatus::NoUserCommand);
 		}
@@ -313,10 +336,12 @@ void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 	RK_TRACE (RBACKEND);
 
 	if (saveact != SA_SUICIDE) {
-		RCallbackArgs args;
-		args.type = RCallbackArgs::RBackendExit;
-		args.params["message"] = QVariant (i18n ("The R engine has shut down with status: %1").arg (status));
-		RThread::this_pointer->handleStandardCallback (&args);
+		if (!RThread::this_pointer->isKilled ()) {
+			RCallbackArgs args;
+			args.type = RCallbackArgs::RBackendExit;
+			args.params["message"] = QVariant (i18n ("The R engine has shut down with status: %1").arg (status));
+			RThread::this_pointer->handleStandardCallback (&args);
+		}
 
 		if(saveact == SA_DEFAULT) saveact = SA_SAVE;
 		if (saveact == SA_SAVE) {
@@ -833,20 +858,15 @@ RData *SEXPToRData (SEXP from_exp) {
 SEXP doError (SEXP call) {
 	RK_TRACE (RBACKEND);
 
+	if (RThread::this_pointer->repl_status.eval_depth == 0) {
+		RThread::this_pointer->repl_status.user_command_status = RThread::RKReplStatus::UserCommandFailed;
+	}
 	unsigned int count;
 	QString *strings = SEXPToStringList (call, &count);
 	RThread::this_pointer->handleError (strings, count);
 	delete [] strings;
 	return R_NilValue;
 }
-
-/*
-SEXP doCondition (SEXP call) {
-	int count;
-	char **strings = extractStrings (call, &count);
-	RThread::this_pointer->handleCondition (strings, count);
-	return R_NilValue;
-} */
 
 SEXP doSubstackCall (SEXP call) {
 	RK_TRACE (RBACKEND);
@@ -1096,38 +1116,6 @@ SEXP runCommandInternalBase (SEXP pr, RThread::RKWardRError *error) {
 	UNPROTECT (1);		// exp; We unprotect this, as most of the time the caller is not really interested in the result
 	return exp;
 }
-
-#if 0
-// This is currently unused, but might come in handy, again.
-/* Basically a safe version of Rf_PrintValue, as yes, Rf_PrintValue may lead to an error and long_jump->crash!
-For example in help (function, htmlhelp=TRUE), when no HTML-help is installed!
-SEXP exp should be PROTECTed prior to calling this function.
-//TODO: I don't think it's meant to be this way. Maybe nag the R-devels about it one day. 
-//TODO: this is not entirely correct. See PrintValueEnv (), which is what Repl_Console uses (but is hidden)
-*/
-void tryPrintValue (SEXP exp, RThread::RKWardRError *error) {
-	RK_TRACE (RBACKEND);
-
-	int ierror = 0;
-	SEXP tryprint, e;
-
-// Basically, we call 'print (expression)' (but inside a tryEval)
-	tryprint = Rf_findFun (Rf_install ("print"),  R_GlobalEnv);
-	PROTECT (tryprint);
-	e = allocVector (LANGSXP, 2);
-	PROTECT (e);
-	SETCAR (e, tryprint);
-	SETCAR (CDR (e), exp);
-	R_tryEval (e, R_GlobalEnv, &ierror);
-	UNPROTECT (2);	/* e, tryprint */
-
-	if (ierror) {
-		*error = RThread::OtherError;
-	} else {
-		*error = RThread::NoError;
-	}
-}
-#endif
 
 bool RThread::runDirectCommand (const QString &command) {
 	RK_TRACE (RBACKEND);
