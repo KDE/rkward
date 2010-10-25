@@ -195,66 +195,68 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 	RK_ASSERT (buf && buflen);
 	RK_ASSERT (RThread::repl_status.eval_depth >= 0);
 	if (RThread::repl_status.eval_depth == 0) {
-		if (RThread::repl_status.user_command_status == RThread::RKReplStatus::NoUserCommand) {
-			MUTEX_LOCK;
-			RCommand *command = RThread::this_pointer->fetchNextCommand (RCommandStack::regular_stack);
-			if (!command) return 0;	// jumps out of the event loop!
+		while (1) {
+			if (RThread::repl_status.user_command_status == RThread::RKReplStatus::NoUserCommand) {
+				RCommand *command = RThread::this_pointer->fetchNextCommand (RCommandStack::regular_stack);
+				if (!command) {
+					return 0;	// jumps out of the event loop!
+				}
 
-			RThread::this_pointer->current_command = command;
-			if (!(command->type () & RCommand::User)) {
-				RThread::this_pointer->runCommand (command);
-				RThread::this_pointer->commandFinished ();
-				MUTEX_UNLOCK;
-			} else {
-				// so, we are about to transmit a new user command, which is quite a complex endeavour...
-				/* Some words about running user commands:
-				- User commands can only be run at the top level of execution, not in any sub-stacks. But then, they should never get there, in the first place.
-				- Handling user commands is totally different from all other commands, and relies on R's "REPL" (read-evaluate-print-loop). This is a whole bunch of dedicated code, but there is no other way to achieve handling of commands as if they had been entered on a plain R console (incluing auto-printing, and toplevel handlers). Most importantly, since important symbols are not exported, such as R_Visible. Vice versa, it is not possible to treat all commands like user commands, esp. in substacks.
-
-				Problems to deal with:
-				- R_ReadConsole serves a lot of different functions, including reading in code, but also handling user input for readline() or browser(). This makes it necessary to carefully track the current status using "repl_status". You will find repl_status to be modified at a couple of different functions.
-				*/
-				RThread::repl_status.user_command_transmitted_up_to = 0;
-				RThread::repl_status.user_command_completely_transmitted = false;
-				RThread::repl_status.user_command_parsed_up_to = 0;
-				RThread::repl_status.user_command_successful_up_to = 0;
-				RThread::repl_status.user_command_buffer = RThread::this_pointer->current_locale_codec->fromUnicode (command->command ());
-				MUTEX_UNLOCK;
-				RKTransmitNextUserCommandChunk (buf, buflen);
-				RThread::repl_status.user_command_status = RThread::RKReplStatus::UserCommandTransmitted;
-			}
-			buf[0] = '\0';
-			return 1;
-		} else if (RThread::repl_status.user_command_status == RThread::RKReplStatus::UserCommandTransmitted) {
-			if (RThread::repl_status.user_command_completely_transmitted) {
-				// fully transmitted, but R is still asking for more? -> Incomplete statement
 				MUTEX_LOCK;
-				RThread::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorIncomplete;
+				if (!(command->type () & RCommand::User)) {
+					RThread::this_pointer->runCommand (command);
+					RThread::this_pointer->commandFinished ();
+					MUTEX_UNLOCK;
+				} else {
+					// so, we are about to transmit a new user command, which is quite a complex endeavour...
+					/* Some words about running user commands:
+					- User commands can only be run at the top level of execution, not in any sub-stacks. But then, they should never get there, in the first place.
+					- Handling user commands is totally different from all other commands, and relies on R's "REPL" (read-evaluate-print-loop). This is a whole bunch of dedicated code, but there is no other way to achieve handling of commands as if they had been entered on a plain R console (incluing auto-printing, and toplevel handlers). Most importantly, since important symbols are not exported, such as R_Visible. Vice versa, it is not possible to treat all commands like user commands, esp. in substacks.
+
+					Problems to deal with:
+					- R_ReadConsole serves a lot of different functions, including reading in code, but also handling user input for readline() or browser(). This makes it necessary to carefully track the current status using "repl_status". You will find repl_status to be modified at a couple of different functions.
+					*/
+					RThread::repl_status.user_command_transmitted_up_to = 0;
+					RThread::repl_status.user_command_completely_transmitted = false;
+					RThread::repl_status.user_command_parsed_up_to = 0;
+					RThread::repl_status.user_command_successful_up_to = 0;
+					RThread::repl_status.user_command_buffer = RThread::this_pointer->current_locale_codec->fromUnicode (command->command ());
+					MUTEX_UNLOCK;
+					RKTransmitNextUserCommandChunk (buf, buflen);
+					RThread::repl_status.user_command_status = RThread::RKReplStatus::UserCommandTransmitted;
+					return 1;
+				}
+			} else if (RThread::repl_status.user_command_status == RThread::RKReplStatus::UserCommandTransmitted) {
+				if (RThread::repl_status.user_command_completely_transmitted) {
+					// fully transmitted, but R is still asking for more? -> Incomplete statement
+					MUTEX_LOCK;
+					RThread::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorIncomplete;
+					RThread::repl_status.user_command_status = RThread::RKReplStatus::NoUserCommand;
+					MUTEX_UNLOCK;
+					RThread::this_pointer->commandFinished ();
+					RK_doIntr ();	// to discard the buffer
+				} else {
+					RKTransmitNextUserCommandChunk (buf, buflen);
+					return 1;
+				}
+			} else if (RThread::repl_status.user_command_status == RThread::RKReplStatus::UserCommandSyntaxError) {
+				MUTEX_LOCK;
+				RThread::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorSyntax;
 				RThread::repl_status.user_command_status = RThread::RKReplStatus::NoUserCommand;
 				MUTEX_UNLOCK;
+				RThread::this_pointer->commandFinished ();
+			} else if (RThread::repl_status.user_command_status == RThread::RKReplStatus::UserCommandRunning) {
+				// it appears, the user command triggered a call to readline. Will be handled, below.
+				// NOT returning
+				break;
 			} else {
-				RKTransmitNextUserCommandChunk (buf, buflen);
+				RK_ASSERT (false);
+				RThread::repl_status.user_command_status = RThread::RKReplStatus::NoUserCommand;
+				RThread::this_pointer->commandFinished ();
 			}
-			buf[0] = '\0';
-			return 1;
-		} else if (RThread::repl_status.user_command_status == RThread::RKReplStatus::UserCommandSyntaxError) {
-			MUTEX_LOCK;
-			RThread::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorSyntax;
-			RThread::repl_status.user_command_status = RThread::RKReplStatus::NoUserCommand;
-			MUTEX_UNLOCK;
-			buf[0] = '\0';
-			return 1;
-		} else if (RThread::repl_status.user_command_status == RThread::RKReplStatus::UserCommandRunning) {
-			// it appears, the user command triggered a call to readline. Will be handled, below.
-			// NOT returning
-		} else {
-			RK_ASSERT (false);
-			RThread::repl_status.user_command_status = RThread::RKReplStatus::NoUserCommand;
-			buf[0] = '\0';
-			return 1;
 		}
 	}
-	
+
 	// here, we handle readline() calls and such, i.e. not the regular prompt for code
 	// browser() also takes us here. TODO: give browser() special handling! May be identifiable due to hist==true
 	RCallbackArgs args;
@@ -276,6 +278,7 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 	qstrncpy ((char *) buf, localres.left (buflen - 2).append ('\n').data (), buflen);
 
 	// we should not ever get here, but still...
+	RK_ASSERT (false);
 	buf[0] = '\0';
 	return 1;
 }

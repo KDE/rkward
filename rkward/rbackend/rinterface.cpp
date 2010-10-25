@@ -86,7 +86,7 @@ RInterface::RInterface () {
 	r_thread = new RThread ();
 
 	// create a fake init command
-	issueCommand (new RCommand (i18n ("R Startup"), RCommand::App | RCommand::Sync, i18n ("R Startup")));
+	issueCommand (new RCommand (i18n ("R Startup"), RCommand::App | RCommand::Sync | RCommand::ObjectListUpdate, i18n ("R Startup")));
 
 	flush_timer = new QTimer (this);
 	connect (flush_timer, SIGNAL (timeout ()), this, SLOT (flushOutput ()));

@@ -78,12 +78,7 @@ void RThread::run () {
 		msleep (10);
 	}
 
-	MUTEX_LOCK;
-	checkObjectUpdatesNeeded (true);
-	RCommandStack::regular_stack->pop ();	// remove the fake command
-	all_current_commands.pop_back ();
-	notifyCommandDone (current_command);
-	MUTEX_UNLOCK;
+	commandFinished ();		// the fake startup command
 
 	enterEventLoop ();
 }
@@ -102,13 +97,14 @@ void RThread::commandFinished () {
 	notifyCommandDone (current_command);	// command may be deleted after this
 
 	all_current_commands.pop_back();
-	current_command = all_current_commands.last ();
+	if (!all_current_commands.isEmpty ()) current_command = all_current_commands.last ();
 	MUTEX_UNLOCK;
 }
 
 RCommand* RThread::fetchNextCommand (RCommandStack* stack) {
 	RK_TRACE (RBACKEND);
 
+	bool main_stack = (stack == RCommandStack::regular_stack);
 #warning We would need so much less mutex locking everywhere, if the command would simply be copied between threads!
 	while (1) {
 		if (killed) {
@@ -125,7 +121,7 @@ RCommand* RThread::fetchNextCommand (RCommandStack* stack) {
 			}
 		}
 
-		if ((!locked) && stack->isActive ()) {
+		if ((!(main_stack && locked)) && stack->isActive ()) {		// do not respect locks in substacks
 			RCommand *command = stack->currentCommand ();
 
 			if (command) {
@@ -133,6 +129,7 @@ RCommand* RThread::fetchNextCommand (RCommandStack* stack) {
 				RKRBackendEvent* event = new RKRBackendEvent (RKRBackendEvent::RCommandIn, command);
 				qApp->postEvent (RKGlobals::rInterface (), event);
 				all_current_commands.append (command);
+				current_command = command;
 
 				if ((command->type () & RCommand::EmptyCommand) || (command->status & RCommand::Canceled) || (command->type () & RCommand::QuitCommand)) {
 					// some commands are not actually run by R, but handled inline, here
@@ -157,7 +154,7 @@ RCommand* RThread::fetchNextCommand (RCommandStack* stack) {
 			}
 		}
 
-		if ((!stack->isActive ()) && stack->isEmpty () && stack != RCommandStack::regular_stack) {
+		if ((!stack->isActive ()) && stack->isEmpty () && !main_stack) {
 			MUTEX_UNLOCK;
 			return 0;		// substack depleted
 		}
@@ -180,27 +177,6 @@ RCommand* RThread::fetchNextCommand (RCommandStack* stack) {
 
 	return 0;
 }
-
-void RThread::doCommand (RCommand *command) {
-	RK_TRACE (RBACKEND);
-
-	// step 2: actual handling
-	if (!((command->type () & RCommand::EmptyCommand) || (command->status & RCommand::Canceled))) {
-
-		runCommand (command);
-	
-	} else {
-		if (command->status & RCommand::Canceled) {
-			command->status |= RCommand::Failed;
-		} else if (command->type () & RCommand::QuitCommand) {
-			killed = true;
-			MUTEX_UNLOCK;
-			shutdown (false);
-			MUTEX_LOCK;
-		}
-	}
-}
-
 
 void RThread::notifyCommandDone (RCommand *command) {
 	RK_TRACE (RBACKEND);
@@ -345,7 +321,10 @@ void RThread::handleSubstackCall (QStringList &call) {
 
 	RCommand *c;
 	while ((c = fetchNextCommand (reply_stack))) {
+		MUTEX_LOCK;
 		runCommand (c);
+		MUTEX_UNLOCK;
+		commandFinished ();
 	}
 
 	MUTEX_LOCK;
