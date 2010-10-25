@@ -160,10 +160,6 @@ Note that you should call initialize only once in a application */
 	int initialize ();
 
 	void enterEventLoop ();
-
-/** clean shutdown of R.
-@param suicidal if true, perform only the most basic shutdown operations */
-	void shutdown (bool suicidal);
 protected:
 /** low-level initialization of R
 @param argc Number of arguments as would be passed on the commandline to R
@@ -272,11 +268,11 @@ more errors/crashes. @see unlock @see RInterface::cancelCommand @see RInterface:
 	// fetch next command (and do event processing while waiting)
 	RCommand *fetchNextCommand (RCommandStack *stack);
 	void commandFinished (bool check_object_updates_needed=true);
+/** thread is killed. Should exit as soon as possible. @see kill */
+	bool killed;
 protected:
 /** thread is locked. No new commands will be executed. @see LockType @see lock @see unlock */
 	int locked;
-/** thread is killed. Should exit as soon as possible. @see kill */
-	bool killed;
 	bool previously_idle;
 /** On pthread systems this is the pthread_id of the backend thread. It is needed to send SIGINT to the R backend */
 	Qt::HANDLE thread_id;

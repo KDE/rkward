@@ -24,7 +24,7 @@
 
 #include "rcommand.h"
 
-#define DEBUG_MUTEX
+//#define DEBUG_MUTEX
 #ifdef DEBUG_MUTEX
 #define MUTEX_LOCK RInterface::mutex.lock (); qDebug ("mutex locks: %d, locked in %s, %s, %d", ++RInterface::mutex_counter, __FILE__, __FUNCTION__, __LINE__); 
 #define MUTEX_UNLOCK qDebug ("mutex locks: %d, unlocked in %s, %s, %d", --RInterface::mutex_counter, __FILE__, __FUNCTION__, __LINE__); RInterface::mutex.unlock ();

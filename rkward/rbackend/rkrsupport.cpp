@@ -17,8 +17,6 @@
 
 #include "rkrsupport.h"
 
-#include <QString>
-
 #include "../debug.h"
 
 SEXP RKRSupport::callSimpleFun0 (SEXP fun, SEXP env) {

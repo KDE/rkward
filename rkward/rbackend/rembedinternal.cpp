@@ -122,8 +122,7 @@ void RSuicide (const char* message) {
 	args.type = RCallbackArgs::RBackendExit;
 	args.params["message"] = QVariant (i18n ("The R engine has encountered a fatal error:\n%1").arg (message));
 	RThread::this_pointer->handleStandardCallback (&args);
-	RThread::this_pointer->shutdown (true);
-	Rf_error ("Backend dead");	// this jumps us out of the REPL.
+	RThread::this_pointer->killed = true;
 }
 
 Rboolean RKToplevelStatementFinishedCallback (SEXP expr, SEXP value, Rboolean succeeded, Rboolean visible, void *) {
@@ -193,6 +192,8 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 	RK_ASSERT (RThread::repl_status.eval_depth >= 0);
 	if (RThread::repl_status.eval_depth == 0) {
 		while (1) {
+			if (RThread::this_pointer->killed) return 0;
+
 			if (RThread::repl_status.user_command_status == RThread::RKReplStatus::NoUserCommand) {
 				RCommand *command = RThread::this_pointer->fetchNextCommand (RCommandStack::regular_stack);
 				if (!command) {
@@ -350,11 +351,8 @@ void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 		} else {
 				if (RunLast) R_dot_Last ();
 		}
-
-		RThread::this_pointer->shutdown (false);
-	} else {
-		RThread::this_pointer->shutdown (true);
 	}
+	RThread::this_pointer->killed = true;
 	Rf_error ("Backend dead");	// this jumps us out of the REPL.
 }
 
@@ -629,15 +627,6 @@ void RThread::connectCallbacks () {
 
 RThread::~RThread () {
 	RK_TRACE (RBACKEND);
-}
-
-void RThread::shutdown (bool suicidal) {
-	RK_TRACE (RBACKEND);
-
-	if (!r_running) return;		// already shut down
-	r_running = false;
-
-	Rf_endEmbeddedR (suicidal);
 }
 
 #if 0
@@ -1031,6 +1020,7 @@ void RThread::enterEventLoop () {
 	RK_TRACE (RBACKEND);
 
 	run_Rmainloop ();
+	Rf_endEmbeddedR (0);
 }
 
 SEXP parseCommand (const QString &command_qstring, RThread::RKWardRError *error) {

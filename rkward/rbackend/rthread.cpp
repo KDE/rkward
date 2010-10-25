@@ -139,9 +139,6 @@ RCommand* RThread::fetchNextCommand (RCommandStack* stack) {
 						command->status |= RCommand::Failed;
 					} else if (command->type () & RCommand::QuitCommand) {
 						killed = true;
-						MUTEX_UNLOCK;
-						shutdown (false);
-						MUTEX_LOCK;		// I guess we don't get here, though?
 					}
 					commandFinished ();
 				} else {
@@ -171,7 +168,6 @@ RCommand* RThread::fetchNextCommand (RCommandStack* stack) {
 		// if no commands are in queue, sleep for a while
 		MUTEX_UNLOCK;
 		if (killed) {
-			shutdown (false);
 			return 0;
 		}
 		msleep (10);
