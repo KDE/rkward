@@ -750,6 +750,8 @@ void RKCommandEditorWindow::selectionChanged (KTextEditor::View* view) {
 
 //////////////////////// RKFunctionArgHinter //////////////////////////////
 
+#include <QToolTip>
+
 #include "../core/rfunctionobject.h"
 
 RKFunctionArgHinter::RKFunctionArgHinter (RKScriptContextProvider *provider, KTextEditor::View* view) {
@@ -764,14 +766,14 @@ RKFunctionArgHinter::RKFunctionArgHinter (RKScriptContextProvider *provider, KTe
 		obj->installEventFilter (this);
 	}
 
-	arghints_popup = new QFrame (0, Qt::ToolTip);
-	QVBoxLayout *layout = new QVBoxLayout (arghints_popup);
-	layout->setContentsMargins (2, 2, 2, 2);
-	arghints_popup->setFrameStyle (QFrame::Plain);
-	arghints_popup->setFrameShape (QFrame::Box);
+	arghints_popup = new QLabel (0, Qt::ToolTip);
+	arghints_popup->setForegroundRole (QPalette::ToolTipText);
+	arghints_popup->setBackgroundRole (QPalette::ToolTipBase);
+	arghints_popup->setMargin (2);
+	arghints_popup->setPalette (QToolTip::palette());
+	arghints_popup->setFrameStyle (QFrame::Box);
 	arghints_popup->setLineWidth (1);
-	arghints_popup_text = new QLabel (arghints_popup);
-	layout->addWidget (arghints_popup_text);
+	arghints_popup->setWordWrap (true);
 	arghints_popup->hide ();
 	active = false;
 
@@ -868,8 +870,8 @@ void RKFunctionArgHinter::tryArgHintNow () {
 	}
 
 	// initialize and show popup
-	arghints_popup_text->setText (effective_symbol + " (" + static_cast<RFunctionObject*> (object)->printArgs () + ')');
-	arghints_popup->resize (arghints_popup_text->sizeHint () + QSize (2, 2));
+	arghints_popup->setText (effective_symbol + " (" + static_cast<RFunctionObject*> (object)->printArgs () + ')');
+	arghints_popup->resize (arghints_popup->sizeHint () + QSize (2, 2));
 	active = true;
 	updater.start (50);
 	updateArgHintWindow ();
@@ -880,7 +882,7 @@ void RKFunctionArgHinter::updateArgHintWindow () {
 
 	if (!active) return;
 
-	arghints_popup->move (view->mapToGlobal (view->cursorPositionCoordinates () + QPoint (0, arghints_popup->height ())));
+	arghints_popup->move (view->mapToGlobal (view->cursorPositionCoordinates () + QPoint (0, arghints_popup->fontMetrics ().lineSpacing () + arghints_popup->margin ()*2)));
 	if (view->hasFocus ()) arghints_popup->show ();
 	else arghints_popup->hide ();
 }

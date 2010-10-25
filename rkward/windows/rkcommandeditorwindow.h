@@ -98,8 +98,7 @@ private:
 	/** A timer to refresh the hint window periodically. This is a bit sorry, but it's really hard to find out, when the view has been moved, or gains/loses focus. While possible, this approach uses much less code. */
 	QTimer updater;
 	bool active;
-	QFrame *arghints_popup;
-	QLabel *arghints_popup_text;
+	QLabel *arghints_popup;
 };
 
 /** code completion model for RKCommandEditorWindow */
