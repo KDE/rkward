@@ -56,6 +56,7 @@
 #include <ktemporaryfile.h>
 
 #include <qstring.h>
+#include <QMutex>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -77,16 +78,19 @@
 int RK_Debug_Level = 0;
 int RK_Debug_Flags = ALL;
 int RK_Debug_CommandStep = 0;
+QMutex RK_Debug_Mutex;
 
 static KCmdLineOptions options;
 
 void RKDebugMessageOutput (QtMsgType type, const char *msg) {
+	RK_Debug_Mutex.lock ();
 	if (type == QtFatalMsg) {
 		fprintf (stderr, "%s\n", msg);
 	}
 	RKSettingsModuleDebug::debug_file->write (msg);
 	RKSettingsModuleDebug::debug_file->write ("\n");
 	RKSettingsModuleDebug::debug_file->flush ();
+	RK_Debug_Mutex.unlock ();
 }
 
 int main(int argc, char *argv[]) {
