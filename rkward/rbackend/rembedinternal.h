@@ -23,6 +23,7 @@
 #include <QMap>
 #include <QVariant>
 #include <QThread>
+#include <QMutex>
 #include <QStringList>
 #include <QEvent>
 
@@ -68,7 +69,15 @@ private:
 friend class RInterface;
 friend class RThread;
 	QStringList call;
-	RCommandChain *in_chain;
+};
+
+/** Used to request the next command from the front-end */
+struct RNextCommandRequest {
+private:
+friend class RInterface;
+friend class RThread;
+	bool *done;
+	RCommand *command;
 };
 
 /** Simple event class to relay information from the RThread to the main thread. This is basically like QCustomEvent in Qt3*/
@@ -76,10 +85,8 @@ class RKRBackendEvent : public QEvent {
 public:
 	enum EventType {
 		Base = QEvent::User + 1,
-		RCommandIn,
+		RNextCommandRequest,
 		RCommandOut,
-		RBusy,
-		RIdle,
 		RCommandOutput,
 		RStarted,
 		REvalRequest,
@@ -131,11 +138,6 @@ public:
 /** destructor */
 	virtual ~RThread ();
 
-/** Pause output by placing it in a delay loop, until unpaused again */
-	void pauseOutput (bool paused) { output_paused = paused; };
-/** the internal counterpart to pauseOutput () */
-	void waitIfOutputPaused ();
-
 /** interrupt processing of the current command. This is much like the user pressing Ctrl+C in a terminal with R. This is probably the only non-portable function in RThread, but I can't see a good way around placing it here, or to make it portable. */
 	void interruptProcessing (bool interrupt);
 
@@ -180,28 +182,12 @@ public:
 /** call this periodically to make R's x11 windows process their events */
 	static void processX11Events ();
 
-/** convenience struct for event passing */
-	struct ROutputContainer {
-		/** the actual output fragment */
-		ROutput *output;
-		/** the corresponding command */
-		RCommand *command;
-	};
-/** current output */
-	ROutput *current_output;
-/** current length of output. Used so we can flush every once in a while, if output becomes too long */
-	int out_buf_len;
-
 /** This gets called on normal R output (R_WriteConsole). Used to get at output. */
-	void handleOutput (const QString &output, int len, bool regular);
+	void handleOutput (const QString &output, int len, ROutput::ROutputType type);
 
-/** Flushes current output buffer. Lock the mutex before calling this function! It is called from both threads and is not re-entrant */
-	void flushOutput ();
-
-/** This gets called, when R reports an error (override of options ("error") in R). Used to get at error-output.
-This function is public for technical reasons, only. Don't use except from R-backend code!
-reports an error. */
-	void handleError (QString *call, int call_length);
+/** Flushes current output buffer. Meant to be called from RInterface::flushOutput, only.
+@param forcibly: if true, will always flush the output. If false, will flush the output only if the mutex can be locked without waiting. */
+	ROutputList flushOutput (bool forcibly=false);
 
 /** This is a sub-eventloop, being run when the backend request information from the frontend. See \ref RThread for a more detailed description */
 	void handleSubstackCall (QStringList &call);
@@ -227,20 +213,6 @@ points:
 		return (r_version >= (1000 * major + 10 * minor + revision));
 	}
 
-/** @see lock (), @see unlock ()*/
-	enum LockType {
-		User=1,		/**< locked on user request */
-		Cancel=2,	/**< locked to safely cancel a running command */
-		Startup=4	/**< locked on startup */
-	};
-
-/** Locks the thread. This is called by RInterface, when the currently running command is to be cancelled. It is used to make sure that the
-backend thread does not proceed with further commands, before the main thread takes notice. Also it is called, if the RThread is paused on User request. Further, the thread is initially locked so the main thread can check for some conditions before the backend thread may produce
-more errors/crashes. @see unlock @see RInterface::cancelCommand @see RInterface::pauseProcessing
-@param reason As there are several reasons to lock the thread, and more than one reason may be in place at a given time, a reason needs to be specified for both lock () and unlock (). Only if all "reasons are unlocked ()", processing continues. */
-	void lock (LockType reason) { locked |= reason; };
-/** Unlocks the thread.  Also the thread may get locked when canceling the currently running command. @see lock */
-	void unlock (LockType reason) { locked -= (locked & reason); };
 /** "Kills" the thread. Actually this just tells the thread that is is about to be terminated. Allows the thread to terminate gracefully */
 	void kill () { killed = true; };
 	bool isKilled () { return killed; };
@@ -266,16 +238,15 @@ more errors/crashes. @see unlock @see RInterface::cancelCommand @see RInterface:
 	static RKReplStatus repl_status;
 
 	// fetch next command (and do event processing while waiting)
-	RCommand *fetchNextCommand (RCommandStack *stack);
+	RCommand *fetchNextCommand ();
 	void commandFinished (bool check_object_updates_needed=true);
 /** thread is killed. Should exit as soon as possible. @see kill */
 	bool killed;
 protected:
-/** thread is locked. No new commands will be executed. @see LockType @see lock @see unlock */
-	int locked;
-	bool previously_idle;
 /** On pthread systems this is the pthread_id of the backend thread. It is needed to send SIGINT to the R backend */
 	Qt::HANDLE thread_id;
+/** If the length of the current output buffer is too long, this will pause any further output until the main thread has had a chance to catch up. */
+	void waitIfOutputBufferExceeded ();
 private:
 /** set up R standard callbacks */
 	void setupCallbacks ();
@@ -290,8 +261,6 @@ private:
 /** This is the function in which an RCommand actually gets processed. Basically it passes the command to runCommand () and sends RInterface some events about what is currently happening. */
 	void doCommand (RCommand *command);
 	void notifyCommandDone (RCommand *command);
-/** The internal storage for pauseOutput () */
-	bool output_paused;
 
 /** A copy of the names of the toplevel environments (as returned by "search ()"). */
 	QStringList toplevel_env_names;
@@ -302,6 +271,13 @@ private:
 /** check wether the object list / global environment / individual symbols have changed, and updates them, if needed */
 	void checkObjectUpdatesNeeded (bool check_list);
 	QList<RCommand*> all_current_commands;
+
+	/** current output */
+	ROutputList output_buffer;
+/** Provides thread-safety for the output_buffer */
+	QMutex output_buffer_mutex;
+/** current length of output. If the backlog of output which has not yet been processed by the frontend becomes too long, output will be paused, automatically */
+	int out_buf_len;
 };
  
 #endif

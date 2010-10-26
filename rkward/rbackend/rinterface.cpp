@@ -82,11 +82,16 @@ RInterface::RInterface () {
 	RCommandStack::regular_stack = new RCommandStack (0);
 	running_command_canceled = 0;
 	command_logfile_mode = NotRecordingCommands;
+	command_request = 0;
+	previously_idle = false;
+	locked = Startup;
 
 	r_thread = new RThread ();
 
 	// create a fake init command
-	issueCommand (new RCommand (i18n ("R Startup"), RCommand::App | RCommand::Sync | RCommand::ObjectListUpdate, i18n ("R Startup")));
+	RCommand *fake = new RCommand (i18n ("R Startup"), RCommand::App | RCommand::Sync | RCommand::ObjectListUpdate, i18n ("R Startup"));
+	issueCommand (fake);
+	all_current_commands.append (fake);
 
 	flush_timer = new QTimer (this);
 	connect (flush_timer, SIGNAL (timeout ()), this, SLOT (flushOutput ()));
@@ -133,6 +138,10 @@ bool RInterface::backendIsIdle () {
 	return (idle);
 }
 
+bool RInterface::backendIsLocked () {
+	return (RKGlobals::rInterface ()->locked != 0);
+}
+
 bool RInterface::inRThread () {
 	return (QThread::currentThread () == RKGlobals::rInterface ()->r_thread);
 }
@@ -156,6 +165,78 @@ RCommand *RInterface::runningCommand () {
 	 return r_thread->current_command;
 }
 
+void RInterface::tryNextCommand () {
+	RK_TRACE (RBACKEND);
+	if (!command_request) return;
+
+	RCommandStack *stack = RCommandStack::currentStack ();
+	bool main_stack = (stack == RCommandStack::regular_stack);
+
+	if ((!(main_stack && locked)) && stack->isActive ()) {		// do not respect locks in substacks
+		RCommand *command = stack->currentCommand ();
+
+		if (command) {
+			all_current_commands.append (command);
+
+			if ((command->type () & RCommand::EmptyCommand) || (command->status & RCommand::Canceled) || (command->type () & RCommand::QuitCommand)) {
+				// some commands are not actually run by R, but handled inline, here
+				if (command->status & RCommand::Canceled) {
+					command->status |= RCommand::Failed;
+				}
+				if (command->type () & RCommand::QuitCommand) {
+					r_thread->kill ();
+				}
+				stack->pop ();
+				// notify ourselves...
+				RKRBackendEvent* event = new RKRBackendEvent (RKRBackendEvent::RCommandOut, command);
+				qApp->postEvent (this, event);
+				return;
+			}
+
+			if (previously_idle) RKWardMainWindow::getMain ()->setRStatus (RKWardMainWindow::Busy);
+			previously_idle = false;
+
+			doNextCommand (command);
+			return;
+		}
+	}
+
+	if ((!stack->isActive ()) && stack->isEmpty () && !main_stack) {
+		// a substack was depleted
+		delete stack;
+		doNextCommand (0);
+	} else if (main_stack) {
+		if (!previously_idle) RKWardMainWindow::getMain ()->setRStatus (RKWardMainWindow::Idle);
+		previously_idle = true;
+	}
+}
+
+void RInterface::doNextCommand (RCommand *command) {
+	RK_TRACE (RBACKEND);
+	RK_ASSERT (command_request);
+
+	flushOutput (true);
+	if (command) {
+		RK_DO (qDebug ("running command: %s", command->command ().toLatin1().data ()), RBACKEND, DL_DEBUG);
+		command->status |= RCommand::Running;
+		RCommandStackModel::getModel ()->itemChange (command);
+
+		RKCommandLog::getLog ()->addInput (command);
+
+		if (command_logfile_mode != NotRecordingCommands) {
+			if ((!(command->type () & RCommand::Sync)) || command_logfile_mode == RecordingCommandsWithSync) {
+				command_logfile.write (command->command ().toUtf8 ());
+				command_logfile.write ("\n");
+			}
+		}
+	}
+
+	command_request->command = command;
+	*(command_request->done) = true;
+	command_request = 0;
+	QThread::yieldCurrentThread ();
+}
+
 void RInterface::customEvent (QEvent *e) {
 	RK_TRACE (RBACKEND);
 
@@ -167,30 +248,19 @@ void RInterface::customEvent (QEvent *e) {
 		return;
 	}
 
-	if (ev->etype () == RKRBackendEvent::RCommandOutput) {
-		RThread::ROutputContainer *container = (static_cast <RThread::ROutputContainer *> (ev->data ()));
-		container->command->newOutput (container->output);
-		delete container;
-
-// TODO: not quite good, yet, leads to staggering output (but overall throughput is the same):
-	// output events can easily stack up in the hundreds, not allowing GUI events to get through. Let's block further output events for a minute and then catch up with the event queue
-		if (qApp->hasPendingEvents ()) {
-			r_thread->pauseOutput (true);
-			qApp->processEvents ();
-			r_thread->pauseOutput (false);
-		}
-	} else if (ev->etype () == RKRBackendEvent::RCommandIn) {
-		RCommand *command = static_cast <RCommand *> (ev->data ());
-		RKCommandLog::getLog ()->addInput (command);
-
-		if (command_logfile_mode != NotRecordingCommands) {
-			if ((!(command->type () & RCommand::Sync)) || command_logfile_mode == RecordingCommandsWithSync) {
-				command_logfile.write (command->command ().toUtf8 ());
-				command_logfile.write ("\n");
-			}
-		}
+	if (ev->etype () == RKRBackendEvent::RNextCommandRequest) {
+		RK_ASSERT (!command_request);
+		command_request = static_cast<RNextCommandRequest*> (ev->data ());
+		tryNextCommand ();
 	} else if (ev->etype () == RKRBackendEvent::RCommandOut) {
+		flushOutput (true);
+
 		RCommand *command = static_cast <RCommand *> (ev->data ());
+		RK_ASSERT (!all_current_commands.isEmpty ());
+		RK_ASSERT (all_current_commands.last () == command);
+		all_current_commands.pop_back ();
+		RCommandStack::currentStack ()->pop ();
+
 		if (command->status & RCommand::Canceled) {
 			command->status |= RCommand::HasError;
 			ROutput *out = new ROutput;
@@ -202,25 +272,20 @@ void RInterface::customEvent (QEvent *e) {
 				RK_ASSERT (command == running_command_canceled);
 				running_command_canceled = 0;
 				r_thread->interruptProcessing (false);
-				r_thread->unlock (RThread::Cancel);
+				locked -= locked & Cancel;
 			}
 		}
 		command->finished ();
 		delete command;
-	} else if ((ev->etype () == RKRBackendEvent::RIdle)) {
-		RKWardMainWindow::getMain ()->setRStatus (RKWardMainWindow::Idle);	
-	} else if ((ev->etype () == RKRBackendEvent::RBusy)) {
-		RKWardMainWindow::getMain ()->setRStatus (RKWardMainWindow::Busy);
 	} else if ((ev->etype () == RKRBackendEvent::REvalRequest)) {
-		r_thread->pauseOutput (false); // we may be recursing downwards into event loops here. Hence we need to make sure, we don't create a deadlock
 		processREvalRequest (static_cast<REvalRequest *> (ev->data ()));
 	} else if ((ev->etype () == RKRBackendEvent::RCallbackRequest)) {
-		r_thread->pauseOutput (false); // see above
 		processRCallbackRequest (static_cast<RCallbackArgs *> (ev->data ()));
 	} else if ((ev->etype () == RKRBackendEvent::RStarted)) {
-		r_thread->unlock (RThread::Startup);
+		locked -= locked & Startup;
 		RKWardMainWindow::discardStartupOptions ();
 	} else if ((ev->etype () == RKRBackendEvent::RStartupError)) {
+		flushOutput (true);
 		int* err_p = static_cast<int*> (ev->data ());
 		int err = *err_p;
 		delete err_p;
@@ -251,9 +316,54 @@ void RInterface::customEvent (QEvent *e) {
 void RInterface::flushOutput () {
 // do not trace. called periodically
 //	RK_TRACE (RBACKEND);
-	MUTEX_LOCK;
-	r_thread->flushOutput ();
-	MUTEX_UNLOCK;
+
+	flushOutput (false);
+}
+
+void RInterface::flushOutput (bool forced) {
+// do not trace. called periodically
+//	RK_TRACE (RBACKEND);
+
+	ROutputList list = r_thread->flushOutput (forced);
+qDebug ("fo %d", list.size ());
+	foreach (ROutput *output, list) {
+		if (all_current_commands.isEmpty ()) {
+			RK_DO (qDebug ("output without receiver'%s'", qPrintable (output->output)), RBACKEND, DL_WARNING);
+			delete output;
+			continue;	// to delete the other output pointers, too
+		} else {
+			RK_DO (qDebug ("output '%s'", qPrintable (output->output)), RBACKEND, DL_DEBUG);
+		}
+
+		bool first = true;
+		foreach (RCommand* command, all_current_commands) {
+			ROutput *coutput = output;
+			if (!first) {		// this output belongs to several commands at once. So we need to copy it.
+				coutput = new ROutput;
+				coutput->type = output->type;
+				coutput->output = output->output;
+			}
+			first = false;
+
+			if (coutput->type == ROutput::Output) {
+				command->status |= RCommand::HasOutput;
+				command->output_list.append (coutput);
+			} else if (coutput->type == ROutput::Warning) {
+				command->status |= RCommand::HasWarnings;
+				command->output_list.append (coutput);
+			} else if (coutput->type == ROutput::Error) {
+				command->status |= RCommand::HasError;
+				// An error output is typically just the copy of the previous output, so merge if possible
+				if (command->output_list.isEmpty ()) {
+					command->output_list.append (coutput);
+				}
+				if (command->output_list.last ()->output == coutput->output) {
+					command->output_list.last ()->type = ROutput::Error;
+				}
+			}
+			command->newOutput (coutput);
+		}
+	}
 }
 
 void RInterface::issueCommand (RCommand *command, RCommandChain *chain) { 
@@ -261,6 +371,7 @@ void RInterface::issueCommand (RCommand *command, RCommandChain *chain) {
 	MUTEX_LOCK;
 	if (command->command ().isEmpty ()) command->_type |= RCommand::EmptyCommand;
 	RCommandStack::issueCommand (command, chain);
+	tryNextCommand ();
 	MUTEX_UNLOCK;
 }
 
@@ -278,6 +389,7 @@ void RInterface::closeChain (RCommandChain *chain) {
 
 	MUTEX_LOCK;
 	RCommandStack::closeChain (chain);
+	tryNextCommand ();
 	MUTEX_UNLOCK;
 };
 
@@ -290,7 +402,7 @@ void RInterface::cancelCommand (RCommand *command) {
 		if (command->type () && RCommand::Running) {
 			if (running_command_canceled != command) {
 				RK_ASSERT (!running_command_canceled);
-				r_thread->lock (RThread::Cancel);
+				locked |= Cancel;
 				running_command_canceled = command;
 				r_thread->interruptProcessing (true);
 			}
@@ -306,18 +418,22 @@ void RInterface::cancelCommand (RCommand *command) {
 void RInterface::pauseProcessing (bool pause) {
 	RK_TRACE (RBACKEND);
 
-	if (pause) r_thread->lock (RThread::User);
-	else r_thread->unlock (RThread::User);
+	if (pause) locked |= User;
+	else locked -= locked & User;
 }
 
 void RInterface::processREvalRequest (REvalRequest *request) {
 	RK_TRACE (RBACKEND);
 
+	RK_ASSERT (!all_current_commands.isEmpty ());
+	RCommandStack *reply_stack = new RCommandStack (all_current_commands.last ());
+	RCommandChain *in_chain = reply_stack->startChain (reply_stack);
+
 	// clear reply object
-	issueCommand (".rk.set.reply (NULL)", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
+	issueCommand (".rk.set.reply (NULL)", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
 	if (request->call.isEmpty ()) {
 		RK_ASSERT (false);
-		closeChain (request->in_chain);
+		closeChain (in_chain);
 		return;
 	}
 	
@@ -327,9 +443,9 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 			QString file_prefix = request->call[1];
 			QString file_extension = request->call[2];
 
-			issueCommand (".rk.set.reply (\"" + RKCommonFunctions::getUseableRKWardSavefileName (file_prefix, file_extension) + "\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
+			issueCommand (".rk.set.reply (\"" + RKCommonFunctions::getUseableRKWardSavefileName (file_prefix, file_extension) + "\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
 		} else {
-			issueCommand (".rk.set.reply (\"Too few arguments in call to get.tempfile.name.\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
+			issueCommand (".rk.set.reply (\"Too few arguments in call to get.tempfile.name.\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
 		}
 	} else if (call == "set.output.file") {
 		RK_ASSERT (request->call.count () == 2);
@@ -344,35 +460,35 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 			if (obj) {
 				RK_DO (qDebug ("triggering update for symbol %s", object_name.toLatin1 ().data()), RBACKEND, DL_DEBUG);
 				obj->markDataDirty ();
-				obj->updateFromR (request->in_chain);
+				obj->updateFromR (in_chain);
 			} else {
 				RK_DO (qDebug ("lookup failed for changed symbol %s", object_name.toLatin1 ().data()), RBACKEND, DL_WARNING);
 			}
 		}
 	} else if (call == "syncenvs") {
 		RK_DO (qDebug ("triggering update of object list"), RBACKEND, DL_DEBUG);
-		RObjectList::getObjectList ()->updateFromR (request->in_chain, request->call.mid (1));
+		RObjectList::getObjectList ()->updateFromR (in_chain, request->call.mid (1));
 	} else if (call == "syncglobal") {
 		RK_DO (qDebug ("triggering update of globalenv"), RBACKEND, DL_DEBUG);
-		RObjectList::getGlobalEnv ()->updateFromR (request->in_chain, request->call.mid (1));
+		RObjectList::getGlobalEnv ()->updateFromR (in_chain, request->call.mid (1));
 	} else if (call == "edit") {
 		RK_ASSERT (request->call.count () >= 2);
 
 		QStringList object_list = request->call.mid (1);
-		new RKEditObjectAgent (object_list, request->in_chain);
+		new RKEditObjectAgent (object_list, in_chain);
 	} else if (call == "require") {
 		if (request->call.count () >= 2) {
 			QString lib_name = request->call[1];
 			KMessageBox::information (0, i18n ("The R-backend has indicated that in order to carry out the current task it needs the package '%1', which is not currently installed. We will open the package-management tool, and there you can try to locate and install the needed package.", lib_name), i18n ("Require package '%1'", lib_name));
-			RKLoadLibsDialog::showInstallPackagesModal (0, request->in_chain, lib_name);
-			issueCommand (".rk.set.reply (\"\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
+			RKLoadLibsDialog::showInstallPackagesModal (0, in_chain, lib_name);
+			issueCommand (".rk.set.reply (\"\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
 		} else {
-			issueCommand (".rk.set.reply (\"Too few arguments in call to require.\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
+			issueCommand (".rk.set.reply (\"Too few arguments in call to require.\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
 		}
 	} else if (call == "quit") {
 		RKWardMainWindow::getMain ()->close ();
 		// if we're still alive, quitting was cancelled
-		issueCommand (".rk.set.reply (\"Quitting was cancelled\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
+		issueCommand (".rk.set.reply (\"Quitting was cancelled\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
 #ifndef DISABLE_RKWINDOWCATCHER
  	} else if (call == "startOpenX11") {
 		// TODO: error checking/handling (wrong parameter count/type)
@@ -402,7 +518,7 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 	} else if (call == "preLocaleChange") {
 		int res = KMessageBox::warningContinueCancel (0, i18n ("A command in the R backend is trying to change the character encoding. While RKWard offers support for this, and will try to adjust to the new locale, this operation may cause subtle bugs, if data windows are currently open. Also the feature is not well tested, yet, and it may be advisable to save your workspace before proceeding.\nIf you have any data editor opened, or in any doubt, it is recommended to close those first (this will probably be auto-detected in later versions of RKWard). In this case, please chose 'Cancel' now, then close the data windows, save, and retry."), i18n ("Locale change"));
 		if (res != KMessageBox::Continue) {
-			issueCommand (".rk.set.reply (FALSE)", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
+			issueCommand (".rk.set.reply (FALSE)", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
 		}
 	} else if (call == "doPlugin") {
 		if (request->call.count () >= 3) {
@@ -411,14 +527,14 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 			RKComponentMap::ComponentInvocationMode mode = RKComponentMap::ManualSubmit;
 			if (request->call[2] == "auto") mode = RKComponentMap::AutoSubmit;
 			else if (request->call[2] == "submit") mode = RKComponentMap::AutoSubmitOrFail;
-			ok = RKComponentMap::invokeComponent (request->call[1], request->call.mid (3), mode, &message, request->in_chain);
+			ok = RKComponentMap::invokeComponent (request->call[1], request->call.mid (3), mode, &message, in_chain);
 
 			if (message.isEmpty ()) {
-				issueCommand (".rk.set.reply (NULL)", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
+				issueCommand (".rk.set.reply (NULL)", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
 			} else {
 				QString type = "warning";
 				if (!ok) type = "error";
-				issueCommand (".rk.set.reply (list (type=\"" + type + "\", message=\"" + RKCommonFunctions::escape (message) + "\"))", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
+				issueCommand (".rk.set.reply (list (type=\"" + type + "\", message=\"" + RKCommonFunctions::escape (message) + "\"))", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
 			}
 		} else {
 			RK_ASSERT (false);
@@ -426,7 +542,7 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 	} else if (call == "listPlugins") {
 		if (request->call.count () == 1) {
 			QStringList list = RKComponentMap::getMap ()->allComponentIds ();
-			issueCommand (".rk.set.reply (c (\"" + list.join ("\", \"") + "\"))\n", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
+			issueCommand (".rk.set.reply (c (\"" + list.join ("\", \"") + "\"))\n", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
 		} else {
 			RK_ASSERT (false);
 		}
@@ -453,7 +569,7 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 		}
 		command.append ("))");
 
-		issueCommand (command, RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
+		issueCommand (command, RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
 	} else if (call == "recordCommands") {
 		if (request->call.count () == 3) {
 			QString filename = request->call[1];
@@ -464,7 +580,7 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 				command_logfile.close ();
 			} else {
 				if (command_logfile_mode != NotRecordingCommands) {
-					issueCommand (".rk.set.reply (\"Attempt to start recording, while already recording commands. Ignoring.\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
+					issueCommand (".rk.set.reply (\"Attempt to start recording, while already recording commands. Ignoring.\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
 				} else {
 					command_logfile.setFileName (filename);
 					bool ok = command_logfile.open (QIODevice::WriteOnly | QIODevice::Truncate);
@@ -472,7 +588,7 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 						command_logfile_mode = RecordingCommands;
 						if (with_sync) command_logfile_mode = RecordingCommandsWithSync;
 					} else {
-						issueCommand (".rk.set.reply (\"Could not open file for writing. Not recording commands.\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
+						issueCommand (".rk.set.reply (\"Could not open file for writing. Not recording commands.\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
 					}
 				}
 			}
@@ -480,10 +596,10 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 			RK_ASSERT (false);
 		}
 	} else {
-		issueCommand (".rk.set.reply (\"Unrecognized call '" + call + "'. Ignoring\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, request->in_chain);
+		issueCommand (".rk.set.reply (\"Unrecognized call '" + call + "'. Ignoring\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
 	}
 	
-	closeChain (request->in_chain);
+	closeChain (in_chain);
 }
 
 void RInterface::processRCallbackRequest (RCallbackArgs *args) {

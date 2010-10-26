@@ -40,7 +40,8 @@
 #	include <pthread.h>		// seems to be needed at least on FreeBSD
 #endif
 
-#define MAX_BUF_LENGTH 4000
+#define MAX_BUF_LENGTH 16000
+#define OUTPUT_STRING_RESERVE 1000
 
 void RThread::interruptProcessing (bool interrupt) {
 	if (!interrupt) return;
@@ -54,7 +55,6 @@ void RThread::interruptProcessing (bool interrupt) {
 void RThread::run () {
 	RK_TRACE (RBACKEND);
 	thread_id = currentThreadId ();
-	locked = Startup;
 	killed = false;
 	int err;
 
@@ -68,13 +68,12 @@ void RThread::run () {
 	if ((err = initialize ())) {
 		int* err_c = new int;
 		*err_c = err;
-		flushOutput ();		// to make errors/warnings available to the main thread
 		qApp->postEvent (RKGlobals::rInterface (), new RKRBackendEvent (RKRBackendEvent::RStartupError, err_c));
 	}
 	qApp->postEvent (RKGlobals::rInterface (), new RKRBackendEvent (RKRBackendEvent::RStarted));
 
 	// wait until RKWard is set to go (esp, it has handled any errors during startup, etc.)
-	while (locked) {
+	while (RInterface::backendIsLocked ()) {
 		msleep (10);
 	}
 
@@ -95,7 +94,6 @@ void RThread::commandFinished (bool check_object_updates_needed) {
 	if (check_object_updates_needed || (current_command->type () & RCommand::ObjectListUpdate)) {
 		checkObjectUpdatesNeeded (current_command->type () & (RCommand::User | RCommand::ObjectListUpdate));
 	}
-	RCommandStack::currentStack ()->pop ();
 	notifyCommandDone (current_command);	// command may be deleted after this
 
 	all_current_commands.pop_back();
@@ -103,77 +101,30 @@ void RThread::commandFinished (bool check_object_updates_needed) {
 	MUTEX_UNLOCK;
 }
 
-RCommand* RThread::fetchNextCommand (RCommandStack* stack) {
+RCommand* RThread::fetchNextCommand () {
 	RK_TRACE (RBACKEND);
 
-	bool main_stack = (stack == RCommandStack::regular_stack);
-#warning We would need so much less mutex locking everywhere, if the command would simply be copied between threads!
-	while (1) {
-		if (killed) {
-			return 0;
-		}
+	RNextCommandRequest req;
+	bool done = false;
+	req.done = &done;
+	req.command = 0;
 
+	RKRBackendEvent* event = new RKRBackendEvent (RKRBackendEvent::RNextCommandRequest, &req);
+	qApp->postEvent (RKGlobals::rInterface (), event);
+
+	while (!done) {
+		if (killed) return 0;
 		processX11Events ();
-
-		MUTEX_LOCK;
-		if (previously_idle) {
-			if (!RCommandStack::regular_stack->isEmpty ()) {
-				qApp->postEvent (RKGlobals::rInterface (), new RKRBackendEvent (RKRBackendEvent::RBusy));
-				previously_idle = false;
-			}
-		}
-
-		if ((!(main_stack && locked)) && stack->isActive ()) {		// do not respect locks in substacks
-			RCommand *command = stack->currentCommand ();
-
-			if (command) {
-				// notify GUI-thread that a new command is being tried and initialize
-				RKRBackendEvent* event = new RKRBackendEvent (RKRBackendEvent::RCommandIn, command);
-				qApp->postEvent (RKGlobals::rInterface (), event);
-				all_current_commands.append (command);
-				current_command = command;
-
-				if ((command->type () & RCommand::EmptyCommand) || (command->status & RCommand::Canceled) || (command->type () & RCommand::QuitCommand)) {
-					// some commands are not actually run by R, but handled inline, here
-					if (command->status & RCommand::Canceled) {
-						command->status |= RCommand::Failed;
-					} else if (command->type () & RCommand::QuitCommand) {
-						killed = true;
-					}
-					commandFinished ();
-				} else {
-					RK_DO (qDebug ("running command: %s", command->command ().toLatin1().data ()), RBACKEND, DL_DEBUG);
-				
-					command->status |= RCommand::Running;	// it is important that this happens before the Mutex is unlocked!
-					RCommandStackModel::getModel ()->itemChange (command);
-
-					MUTEX_UNLOCK;
-					return command;
-				}
-			}
-		}
-
-		if ((!stack->isActive ()) && stack->isEmpty () && !main_stack) {
-			MUTEX_UNLOCK;
-			return 0;		// substack depleted
-		}
-
-		if (!previously_idle) {
-			if (RCommandStack::regular_stack->isEmpty ()) {
-				qApp->postEvent (RKGlobals::rInterface (), new RKRBackendEvent (RKRBackendEvent::RIdle));
-				previously_idle = true;
-			}
-		}
-		
-		// if no commands are in queue, sleep for a while
-		MUTEX_UNLOCK;
-		if (killed) {
-			return 0;
-		}
-		msleep (10);
+		if (!done) msleep (10);
 	}
 
-	return 0;
+	RCommand *command = req.command;
+	if (command) {
+		all_current_commands.append (command);
+		current_command = command;
+	}
+
+	return command;
 }
 
 void RThread::notifyCommandDone (RCommand *command) {
@@ -187,110 +138,59 @@ void RThread::notifyCommandDone (RCommand *command) {
 	qApp->postEvent (RKGlobals::rInterface (), event);
 }
 
-void RThread::waitIfOutputPaused () {
+void RThread::waitIfOutputBufferExceeded () {
 	// don't trace
-	while (output_paused) {
+	while (out_buf_len > MAX_BUF_LENGTH) {
 		msleep (10);
 	}
 }
 
-void RThread::handleOutput (const QString &output, int buf_length, bool regular) {
+void RThread::handleOutput (const QString &output, int buf_length, ROutput::ROutputType output_type) {
 	RK_TRACE (RBACKEND);
 
-// TODO: output sometimes arrives in small chunks. Maybe it would be better to keep an internal buffer, and only append it to the output, when R_FlushConsole gets called?
 	if (!buf_length) return;
-	waitIfOutputPaused ();
+	waitIfOutputBufferExceeded ();
 
-	MUTEX_LOCK;
-	ROutput::ROutputType output_type;
-	if (regular) {
-		output_type = ROutput::Output;
-	} else {
-		output_type = ROutput::Warning;
-	}
+	output_buffer_mutex.lock ();
 
-	if (current_output) {
-		if (current_output->type != output_type) {
-			flushOutput ();
-		}
+	ROutput *current_output = 0;
+	if (!output_buffer.isEmpty ()) {
+		// Merge with previous output fragment, if of the same type
+		current_output = output_buffer.last ();
+		if (current_output->type != output_type) current_output = 0;
 	}
-	if (!current_output) {	// not an else, might have been set to 0 in the above if
+	if (!current_output) {
 		current_output = new ROutput;
 		current_output->type = output_type;
-		current_output->output.reserve (MAX_BUF_LENGTH + 50);
+		current_output->output.reserve (OUTPUT_STRING_RESERVE);
+		output_buffer.append (current_output);
 	}
 	current_output->output.append (output);
+	out_buf_len += buf_length;
 
-	
-	if ((out_buf_len += buf_length) > MAX_BUF_LENGTH) {
-		RK_DO (qDebug ("Output buffer has %d characters. Forcing flush", out_buf_len), RBACKEND, DL_DEBUG);
-		flushOutput ();
-	}
-	MUTEX_UNLOCK;
+	output_buffer_mutex.unlock ();
 }
 
-void RThread::flushOutput () {
-	if (!current_output) return;		// avoid creating loads of traces
+ROutputList RThread::flushOutput (bool forcibly) {
+	ROutputList ret;
+
+	if (out_buf_len == 0) return ret;		// if there is absolutely no output, just skip.
 	RK_TRACE (RBACKEND);
 
-	if (current_command) {
-		for (QList<RCommand*>::const_iterator it = all_current_commands.constBegin (); it != all_current_commands.constEnd(); ++it) {
-			ROutput *output = current_output;
-			if ((*it) != current_command) {		// this output belongs to several commands at once. So we need to copy it.
-				output = new ROutput;
-				output->type = current_output->type;
-				output->output = current_output->output;
-			}
-
-			(*it)->output_list.append (output);
-			if (output->type == ROutput::Output) {
-				(*it)->status |= RCommand::HasOutput;
-			} else if (output->type == ROutput::Warning) {
-				(*it)->status |= RCommand::HasWarnings;
-			} else if (output->type == ROutput::Error) {
-				(*it)->status |= RCommand::HasError;
-			}
-
-			// pass a signal to the main thread for real-time update of output
-			ROutputContainer *outc = new ROutputContainer;
-			outc->output = output;
-			outc->command = *it;
-			RKRBackendEvent* event = new RKRBackendEvent (RKRBackendEvent::RCommandOutput, outc);
-			qApp->postEvent (RKGlobals::rInterface (), event);
-		}
-
-		RK_DO (qDebug ("output '%s'", current_output->output.toLatin1 ().data ()), RBACKEND, DL_DEBUG);
+	if (!forcibly) {
+		if (!output_buffer_mutex.tryLock ()) return ret;
 	} else {
-		// running Rcmdr, eh?
-		RK_DO (qDebug ("output without receiver'%s'", current_output->output.toLatin1 ().data ()), RBACKEND, DL_WARNING);
-		delete current_output;
+		output_buffer_mutex.lock ();
 	}
 
-// forget output
-	current_output = 0;
+	RK_ASSERT (!output_buffer.isEmpty ());	// see check for out_buf_len, above
+
+	ret = output_buffer;
+	output_buffer.clear ();
 	out_buf_len = 0;
-}
 
-void RThread::handleError (QString *call, int call_length) {
-	RK_TRACE (RBACKEND);
-
-	if (!call_length) return;
-	waitIfOutputPaused ();
-
-	MUTEX_LOCK;
-	// Unfortunately, errors still get printed to the output, UNLESS a sink() is in place. We try this crude method for the time being:
-	flushOutput ();
-	if (current_command) {
-		if (!current_command->output_list.isEmpty ()) {
-			if (current_command->output_list.last ()->output == call[0]) {
-				current_command->output_list.last ()->type = ROutput::Error;
-			}
-		}
-		current_command->status |= RCommand::HasError;
-	}
-
-	RK_DO (qDebug ("error '%s'", call[0].toLatin1 ().data ()), RBACKEND, DL_DEBUG);
-	MUTEX_UNLOCK;
+	output_buffer_mutex.unlock ();
+	return ret;
 }
 
 void RThread::handleSubstackCall (QStringList &call) {
@@ -308,34 +208,21 @@ void RThread::handleSubstackCall (QStringList &call) {
 
 	REvalRequest request;
 	request.call = call;
-	MUTEX_LOCK;
-	flushOutput ();
-	RCommandStack *reply_stack = new RCommandStack (current_command);
-	request.in_chain = reply_stack->startChain (reply_stack);
-	MUTEX_UNLOCK;
-
 	RKRBackendEvent* event = new RKRBackendEvent (RKRBackendEvent::REvalRequest, &request);
 	qApp->postEvent (RKGlobals::rInterface (), event);
 
 	RCommand *c;
-	while ((c = fetchNextCommand (reply_stack))) {
+	while ((c = fetchNextCommand ())) {
 		MUTEX_LOCK;
 		runCommand (c);
 		MUTEX_UNLOCK;
 		commandFinished (false);
 	}
-
-	MUTEX_LOCK;
-	delete reply_stack;
-	MUTEX_UNLOCK;
 }
 
 void RThread::handleStandardCallback (RCallbackArgs *args) {
 	RK_TRACE (RBACKEND);
 
-	MUTEX_LOCK;
-	flushOutput ();
-	MUTEX_UNLOCK;
 	args->done = false;
 
 	RKRBackendEvent* event = new RKRBackendEvent (RKRBackendEvent::RCallbackRequest, args);
@@ -345,7 +232,7 @@ void RThread::handleStandardCallback (RCallbackArgs *args) {
 	while (!(*done)) {
 		msleep (10); // callback not done yet? Sleep for a while
 
-		if (!(locked || killed)) processX11Events ();
+		if (!(RInterface::backendIsLocked () || killed)) processX11Events ();
 	}
 
 	RK_DO (qDebug ("standard callback done"), RBACKEND, DL_DEBUG);
@@ -398,10 +285,6 @@ int RThread::initialize () {
 // error/output sink and help browser
 	if (!runDirectCommand ("options (error=quote (.rk.do.error ()))\n")) status |= SinkFail;
 	if (!runDirectCommand ("rk.set.output.html.file (\"" + RKSettingsModuleGeneral::filesPath () + "/rk_out.html\")\n")) status |= SinkFail;
-
-	MUTEX_LOCK;
-	flushOutput ();
-	MUTEX_UNLOCK;
 
 	return status;
 }

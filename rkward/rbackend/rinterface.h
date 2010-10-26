@@ -2,7 +2,7 @@
                           rinterface.h  -  description
                              -------------------
     begin                : Fri Nov 1 2002
-    copyright            : (C) 2002, 2004, 2005, 2006, 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2004, 2005, 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -41,6 +41,7 @@ class RThread;
 class RCommandReceiver;
 struct REvalRequest;
 struct RKWardStartupOptions;
+struct RNextCommandRequest;
 
 /** This class provides the main interface to the R-processor.
 
@@ -91,12 +92,16 @@ not be interrupted. */
 	bool backendIsDead ();
 	bool backendIsIdle ();
 
+	static bool backendIsLocked ();
+
 	static bool inRThread ();
 	static void tryToDoEmergencySave ();
-public slots:
+private slots:
 /** called periodically to flush output buffer in RThread */
 	void flushOutput ();
 private:
+/** Calls RThread::flushOutput(), and takes care of adding the output to all applicable commands */
+	void flushOutput (bool forced);
 /** pointer to the RThread */
 	RThread *r_thread;
 /** Timer to trigger flushing output */
@@ -116,6 +121,25 @@ private:
 //	void processRGetValueRequest (RGetValueRequest);
 /** See \ref RThread::doStandardCallback (). Does the actual job. */
 	void processRCallbackRequest (RCallbackArgs *args);
+
+/** A list of all commands that have entered, and not yet left, the backend thread */
+	QList<RCommand*> all_current_commands;
+	RNextCommandRequest *command_request;
+	void tryNextCommand ();
+	void doNextCommand (RCommand *command);
+	bool previously_idle;
+
+/** @see locked */
+	enum LockType {
+		User=1,		/**< locked on user request */
+		Cancel=2,	/**< locked to safely cancel a running command */
+		Startup=4	/**< locked on startup */
+	};
+
+/** Used for locking the backend, meaning not further commands will be given to the backend. This is used, when the currently running command is to be cancelled. It is used to make sure that the backend thread does not proceed with further commands, before the main thread takes notice. Also it is called, if the RThread is paused on User request. Further, the thread is initially locked so the main thread can check for some conditions before the backend thread may produce
+more errors/crashes. @see RInterface::cancelCommand @see RInterface::pauseProcessing
+May be an OR'ed combination of several LockType s */
+	int locked;
 friend class RKWardMainWindow;
 friend class RCommand;
 /** Used (once!) to start the RThread. Need to make this separate to avoid race conditions */

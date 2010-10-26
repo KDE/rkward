@@ -189,7 +189,7 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 			if (RThread::this_pointer->killed) return 0;
 
 			if (RThread::repl_status.user_command_status == RThread::RKReplStatus::NoUserCommand) {
-				RCommand *command = RThread::this_pointer->fetchNextCommand (RCommandStack::regular_stack);
+				RCommand *command = RThread::this_pointer->fetchNextCommand ();
 				if (!command) {
 					return 0;	// jumps out of the event loop!
 				}
@@ -323,7 +323,7 @@ void RWriteConsoleEx (const char *buf, int buflen, int type) {
 		}
 	}
 
-	RThread::this_pointer->handleOutput (RThread::this_pointer->current_locale_codec->toUnicode (buf, buflen), buflen, type == 0);
+	RThread::this_pointer->handleOutput (RThread::this_pointer->current_locale_codec->toUnicode (buf, buflen), buflen, type == 0 ? ROutput::Output : ROutput::Warning);
 }
 
 /** For R callbacks that we want to disable, entirely */
@@ -549,10 +549,7 @@ RThread::RThread () {
 
 	RK_ASSERT (this_pointer == 0);
 	this_pointer = this;
-	current_output = 0;
 	out_buf_len = 0;
-	output_paused = false;
-	previously_idle = false;
 
 #ifdef Q_WS_WIN
 	// we hope that on other platforms the default is reasonable
@@ -679,10 +676,9 @@ SEXP doError (SEXP call) {
 	if (RThread::this_pointer->repl_status.eval_depth == 0) {
 		RThread::this_pointer->repl_status.user_command_status = RThread::RKReplStatus::UserCommandFailed;
 	}
-	unsigned int count;
-	QString *strings = RKRSupport::SEXPToStringList (call, &count);
-	RThread::this_pointer->handleError (strings, count);
-	delete [] strings;
+	QString string = RKRSupport::SEXPToString (call);
+	RThread::this_pointer->handleOutput (string, string.length (), ROutput::Error);
+	RK_DO (qDebug ("error '%s'", qPrintable (string)), RBACKEND, DL_DEBUG);
 	return R_NilValue;
 }
 
@@ -1000,7 +996,7 @@ void RThread::runCommand (RCommand *command) {
 
 	if (ctype & RCommand::DirectToOutput) runDirectCommand (".rk.print.captured.messages()");
 	if (!(ctype & RCommand::Internal)) {
-		if (!locked || killed) processX11Events ();
+		if (!RInterface::backendIsLocked () || killed) processX11Events ();
 		MUTEX_LOCK;
 	}
 
@@ -1028,11 +1024,9 @@ void RThread::runCommand (RCommand *command) {
 			RK_DO (qDebug ("Command failed (other)"), RBACKEND, dl);
 		}
 		RK_DO (qDebug ("failed command was: '%s'", command->command ().toLatin1 ().data ()), RBACKEND, dl);
-		flushOutput ();
-		RK_DO (qDebug ("- error message was: '%s'", command->error ().toLatin1 ().data ()), RBACKEND, dl);
+/*		flushOutput ();
+		RK_DO (qDebug ("- error message was: '%s'", command->error ().toLatin1 ().data ()), RBACKEND, dl); */
 	} else {
 		command->status |= RCommand::WasTried;
 	}
-
-	flushOutput ();
 }
