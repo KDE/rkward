@@ -1,3 +1,4 @@
+- Fixed: Installation would continue, seemingly successfully, even if R support libraries could not be installed
 - Fixed: Function argument hints would sometimes persist after closing a script window
 - Fixed: "Vector" mode in "Paste special" action did not work correctly
 - Attempt to save workspace on crashes		TODO: detect recovery-file at startup, and offer to load it.
