@@ -333,6 +333,45 @@ formals (setwd) <- formals (base::setwd)
 	.rk.cat.output ("<hr>\n");
 }
 
+# for caputring message output while running a plugin command
+.rk.capture.messages <- function () {
+	if (exists (".rk.capture.messages.sinkfile", envir=as.environment ("package:rkward"), inherits=FALSE)) {
+		# We don't support nesting, so purge it, first
+		.rk.print.captured.messages ()
+	}
+
+	sinkfile <- tempfile ()
+	assign (".rk.capture.messages.sinkfile", sinkfile, envir=as.environment ("package:rkward"))
+	sink (file (sinkfile, open="w"), type="message")
+	assign (".rk.capture.messages.sinknumber", sink.number ("message"), envir=as.environment ("package:rkward"))
+}
+
+.rk.print.captured.messages <- function (clear=TRUE) {
+	if (!exists (".rk.capture.messages.sinkfile", envir=as.environment ("package:rkward"), inherits=FALSE)) return ()
+
+	sinkfile <- get (".rk.capture.messages.sinkfile", envir=as.environment ("package:rkward"), inherits=FALSE)
+	if (file.exists (sinkfile)) {
+		output <- readLines (sinkfile, warn=FALSE)
+		if (length (output) > 0) {
+			.rk.cat.output ("<h2>Messages, warnings, or errors:</h2>\n")
+			rk.print.literal (output)
+		}
+	}
+
+	if (clear) {
+		sinknumber <- get (".rk.capture.messages.sinknumber", envir=as.environment ("package:rkward"), inherits=FALSE)
+		if (sink.number (type="message") > sinknumber) {
+			stop ("Another message sink appears to be in place. Remove that, first")
+		} else if (sink.number (type="message") < sinknumber) {
+			warning ("Message sink has been removed, already.")
+		} else {
+			sink (type="message")	# remove it
+		}
+		if (file.exists (sinkfile)) file.remove (sinkfile)
+		remove (list=".rk.capture.messages.sinkfile", envir=as.environment ("package:rkward"))
+	}
+}
+
 # Start recording commands that are submitted from rkward to R.
 # filename: filename to write to (file will be truncated!).
 # include.sync.commands: Should internal synchronisation commands be included?

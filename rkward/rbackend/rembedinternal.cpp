@@ -154,7 +154,7 @@ void RKInsertToplevelStatementFinishedCallback (void *) {
 void RKTransmitNextUserCommandChunk (unsigned char* buf, int buflen) {
 	RK_TRACE (RBACKEND);
 
-	RK_ASSERT (RThread::repl_status.user_command_transmitted_up_to < RThread::repl_status.user_command_buffer.length ());
+	RK_ASSERT (RThread::repl_status.user_command_transmitted_up_to <= RThread::repl_status.user_command_buffer.length ());	// NOTE: QByteArray::length () does not count the trailing '\0'
 	const char* current_buffer = RThread::repl_status.user_command_buffer.data ();
 	current_buffer += RThread::repl_status.user_command_transmitted_up_to;	// Skip what we have already transmitted
 
@@ -349,6 +349,7 @@ void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 		} else {
 				if (RunLast) R_dot_Last ();
 		}
+		R_CleanTempDir ();
 	}
 	RThread::this_pointer->killed = true;
 	Rf_error ("Backend dead");	// this jumps us out of the REPL.
@@ -961,7 +962,7 @@ void RThread::runCommand (RCommand *command) {
 	// NOTE the command must not be accessed while the mutex is unlocked!
 	// Therefore we copy the data we need, and create a container for the returned data
 	int ctype = command->type ();
-	QByteArray ccommand = current_locale_codec->fromUnicode (command->command ());
+	QString ccommand = command->command ();
 	RData retdata;
 
 	// running user commands is quite different from all other commands and should have been handled by RReadConsole
@@ -970,9 +971,10 @@ void RThread::runCommand (RCommand *command) {
 	if (!(ctype & RCommand::Internal)) {
 		MUTEX_UNLOCK;
 	}
+	if (ctype & RCommand::DirectToOutput) runDirectCommand (".rk.capture.messages()");
 
 	repl_status.eval_depth++;
-	SEXP parsed = parseCommand (command->command (), &error);
+	SEXP parsed = parseCommand (ccommand, &error);
 	if (error == NoError) {
 		SEXP exp;
 		PROTECT (exp = runCommandInternalBase (parsed, &error));
@@ -996,6 +998,7 @@ void RThread::runCommand (RCommand *command) {
 	}
 	repl_status.eval_depth--;
 
+	if (ctype & RCommand::DirectToOutput) runDirectCommand (".rk.print.captured.messages()");
 	if (!(ctype & RCommand::Internal)) {
 		if (!locked || killed) processX11Events ();
 		MUTEX_LOCK;
@@ -1032,16 +1035,4 @@ void RThread::runCommand (RCommand *command) {
 	}
 
 	flushOutput ();
-	if (command->type () & RCommand::DirectToOutput) {
-		QString outp = command->fullOutput();
-
-		if (!outp.isEmpty ()) {
-			// all regular output was sink()ed, i.e. all remaining output is a message/warning/error
-			runDirectCommand (".rk.cat.output (\"<h2>Messages, warnings, or errors:</h2>\\n\")");
-
-			outp.replace ('\\', "\\\\");
-			outp.replace ('"', "\\\"");
-			runDirectCommand ("rk.print.literal (\"" + outp + "\")");
-		}
-	}
 }
