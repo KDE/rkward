@@ -782,6 +782,7 @@ RKFunctionArgHinter::RKFunctionArgHinter (RKScriptContextProvider *provider, KTe
 
 RKFunctionArgHinter::~RKFunctionArgHinter () {
 	RK_TRACE (COMMANDEDITOR);
+	delete arghints_popup;
 }
 
 void RKFunctionArgHinter::tryArgHint () {
