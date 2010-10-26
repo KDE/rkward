@@ -18,8 +18,13 @@
 #ifndef RKRSUPPORT_H
 #define RKRSUPPORT_H
 
-#include <QString>
+#include <limits.h>
 
+#include <QStringList>
+
+#include "rdata.h"
+
+#define R_NO_REMAP 1
 #include <Rdefines.h>
 
 /** Convenience functions for working with R. */
@@ -28,6 +33,13 @@ namespace RKRSupport {
 	SEXP callSimpleFun (SEXP fun, SEXP arg, SEXP env);
 	SEXP callSimpleFun2 (SEXP fun, SEXP arg1, SEXP arg2, SEXP env);
 	bool callSimpleBool (SEXP fun, SEXP arg, SEXP env);
+
+	QString *SEXPToStringList (SEXP from_exp, unsigned int *count);
+	QString SEXPToString (SEXP from_exp);
+	int *SEXPToIntArray (SEXP from_exp, unsigned int *count);
+	int SEXPToInt (SEXP from_exp, int def_value = INT_MIN);
+	double *SEXPToRealArray (SEXP from_exp, unsigned int *count);
+	RData *SEXPToRData (SEXP from_exp);
 };
 
 #endif

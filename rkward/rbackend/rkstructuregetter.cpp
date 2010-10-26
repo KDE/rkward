@@ -78,7 +78,7 @@ RData *RKStructureGetter::getStructure (SEXP toplevel, SEXP name, SEXP envlevel,
 	envir_depth = INTEGER (envlevel)[0];
 
 	unsigned int count;
-	QString *name_dummy = SEXPToStringList (name, &count);
+	QString *name_dummy = RKRSupport::SEXPToStringList (name, &count);
 	RK_ASSERT (count == 1);
 	QString name_string = name_dummy[0];
 	delete [] name_dummy;
@@ -202,7 +202,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 		PROTECT (classes_s);
 	}
 
-	QString *classes = SEXPToStringList (classes_s, &count);
+	QString *classes = RKRSupport::SEXPToStringList (classes_s, &count);
 	unsigned int num_classes = count;
 	UNPROTECT (1);	/* classes_s */
 
@@ -251,7 +251,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 
 		SEXP meta_s = RKRSupport::callSimpleFun (get_meta_fun, value, R_GlobalEnv);
 		PROTECT (meta_s);
-		metadata->data = SEXPToStringList (meta_s, &count);
+		metadata->data = RKRSupport::SEXPToStringList (meta_s, &count);
 		metadata->length = count;
 		UNPROTECT (1);	/* meta_s */
 	} else {
@@ -274,7 +274,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 	unsigned int num_dims;
 	SEXP dims_s = RKRSupport::callSimpleFun (dims_fun, value, R_BaseEnv);
 	if (!Rf_isNull (dims_s)) {
-		dims = SEXPToIntArray (dims_s, &num_dims);
+		dims = RKRSupport::SEXPToIntArray (dims_s, &num_dims);
 	} else {
 		num_dims = 1;
 
@@ -286,7 +286,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 				dims = new int[1];
 				dims[0] = len;
 			} else {
-				dims = SEXPToIntArray (len_s, &num_dims);
+				dims = RKRSupport::SEXPToIntArray (len_s, &num_dims);
 			}
 			UNPROTECT (1); /* len_s */
 		} else {
@@ -340,7 +340,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 			childnames_s = R_NilValue; // dummy
 		}
 		PROTECT (childnames_s);
-		QString *childnames = SEXPToStringList (childnames_s, &childcount);
+		QString *childnames = RKRSupport::SEXPToStringList (childnames_s, &childcount);
 
 		childdata->length = childcount;
 		RData **children = new RData*[childcount];
@@ -423,12 +423,12 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 		SEXP formals_s = RKRSupport::callSimpleFun (get_formals_fun, value, R_GlobalEnv);
 		PROTECT (formals_s);
 		// the default values
-		funargvaluesdata->data = SEXPToStringList (formals_s, &(funargvaluesdata->length));
+		funargvaluesdata->data = RKRSupport::SEXPToStringList (formals_s, &(funargvaluesdata->length));
 
 		// the argument names
 		SEXP names_s = Rf_getAttrib (formals_s, R_NamesSymbol);
 		PROTECT (names_s);
-		funargsdata->data = SEXPToStringList (names_s, &(funargsdata->length));
+		funargsdata->data = RKRSupport::SEXPToStringList (names_s, &(funargsdata->length));
 
 		UNPROTECT (2); /* names_s, formals_s */
 	}
