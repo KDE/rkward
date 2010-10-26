@@ -203,8 +203,8 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 				MUTEX_LOCK;
 				if (!(command->type () & RCommand::User)) {
 					RThread::this_pointer->runCommand (command);
-					RThread::this_pointer->commandFinished ();
 					MUTEX_UNLOCK;
+					RThread::this_pointer->commandFinished ();
 				} else {
 					// so, we are about to transmit a new user command, which is quite a complex endeavour...
 					/* Some words about running user commands:

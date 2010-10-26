@@ -413,6 +413,7 @@ void RThread::checkObjectUpdatesNeeded (bool check_list) {
 	/* NOTE: We're keeping separate lists of the items on the search path, and the toplevel symbols in .GlobalEnv here.
 	This info is also present in RObjectList (and it's children). However: a) in a less convenient form, b) in the other thread. To avoid locking, and other complexity, keeping separate lists seems an ok solution. Keep in mind that only the names of only the toplevel objects are kept, here, so the memory overhead should be minimal */
 
+	MUTEX_UNLOCK;
 	bool search_update_needed = false;
 	bool globalenv_update_needed = false;
 
@@ -462,18 +463,14 @@ void RThread::checkObjectUpdatesNeeded (bool check_list) {
 		delete dummy;
 	
 		if (search_update_needed) {	// this includes an update of the globalenv, even if not needed
-			MUTEX_UNLOCK;
 			QStringList call = toplevel_env_names;
 			call.prepend ("syncenvs");	// should be faster than the reverse
 			handleSubstackCall (call);
-			MUTEX_LOCK;
 		} 
 		if (globalenv_update_needed) {
-			MUTEX_UNLOCK;
 			QStringList call = global_env_toplevel_names;
 			call.prepend ("syncglobal");	// should be faster than the reverse
 			handleSubstackCall (call);
-			MUTEX_LOCK;
 		}
 	}
 
@@ -485,9 +482,8 @@ void RThread::checkObjectUpdatesNeeded (bool check_list) {
 	if (!changed_symbol_names.isEmpty ()) {
 		QStringList call = changed_symbol_names;
 		call.prepend (QString ("sync"));	// should be faster than reverse
-		MUTEX_UNLOCK;
 		handleSubstackCall (call);
-		MUTEX_LOCK;
 		changed_symbol_names.clear ();
 	}
+	MUTEX_LOCK;
 }
