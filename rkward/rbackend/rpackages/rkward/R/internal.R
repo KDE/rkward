@@ -335,19 +335,23 @@ formals (setwd) <- formals (base::setwd)
 
 # for caputring message output while running a plugin command
 ".rk.capture.messages" <- function () {
-	if (exists (".rk.capture.messages.sinkfile", envir=as.environment ("package:rkward"), inherits=FALSE)) {
+	if (exists (".rk.capture.messages.sinknumber", envir=as.environment ("package:rkward"), inherits=FALSE)) {
 		# We don't support nesting, so purge it, first
 		.rk.print.captured.messages ()
 	}
+	if (!exists (".rk.capture.messages.sinkfile", envir=as.environment ("package:rkward"), inherits=FALSE)) {
+		sinkfile <- tempfile ("rkward_plugin_messages")
+		assign (".rk.capture.messages.sinkfile", sinkfile, envir=as.environment ("package:rkward"))
+	} else {
+		sinkfile <- get (".rk.capture.messages.sinkfile", envir=as.environment ("package:rkward"), inherits=FALSE)
+	}
 
-	sinkfile <- tempfile ()
-	assign (".rk.capture.messages.sinkfile", sinkfile, envir=as.environment ("package:rkward"))
 	sink (file (sinkfile, open="w"), type="message")
 	assign (".rk.capture.messages.sinknumber", sink.number ("message"), envir=as.environment ("package:rkward"))
 }
 
-".rk.print.captured.messages" <- function (clear=TRUE) {
-	if (!exists (".rk.capture.messages.sinkfile", envir=as.environment ("package:rkward"), inherits=FALSE)) return ()
+".rk.print.captured.messages" <- function () {
+	if (!exists (".rk.capture.messages.sinknumber", envir=as.environment ("package:rkward"), inherits=FALSE)) return ()
 
 	sinkfile <- get (".rk.capture.messages.sinkfile", envir=as.environment ("package:rkward"), inherits=FALSE)
 	if (file.exists (sinkfile)) {
@@ -358,20 +362,17 @@ formals (setwd) <- formals (base::setwd)
 		}
 	}
 
-	if (clear) {
-		sinknumber <- get (".rk.capture.messages.sinknumber", envir=as.environment ("package:rkward"), inherits=FALSE)
-		if (sink.number (type="message") > sinknumber) {
-			stop ("Another message sink appears to be in place. Remove that, first")
-		} else if (sink.number (type="message") < sinknumber) {
-			warning ("Message sink has been removed, already.")
-		} else {
-			sink (type="message")	# remove it
-			con <- getConnection (sinknumber)
-			con.close ()
-		}
-		if (file.exists (sinkfile)) file.remove (sinkfile)
-		remove (list=".rk.capture.messages.sinkfile", envir=as.environment ("package:rkward"))
+	sinknumber <- get (".rk.capture.messages.sinknumber", envir=as.environment ("package:rkward"), inherits=FALSE)
+	if (sink.number (type="message") == sinknumber) {
+		sink (type="message")	# remove it
+	} else {
+		warning ("Message sink has been added or removed since last call to .rk.capture.messages().")
 	}
+
+	con <- getConnection (sinknumber)
+	close (con)
+
+	remove (list=".rk.capture.messages.sinknumber", envir=as.environment ("package:rkward"))
 }
 
 # Start recording commands that are submitted from rkward to R.
