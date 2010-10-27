@@ -7,5 +7,5 @@
 \details{This class is used internally by \code{\link[rkwardtests:rktest.makeplugintests]{rktest.makeplugintests}}.}
 \keyword{classes}
 \author{Thomas Friedrichsmeier \email{thomas.friedrichsmeier@ruhr-uni-bochum.de}}
-\section{Slots}{\describe{\item{\code{id}:}{}\item{\code{code_match}:}{}\item{\code{output_match}:}{}\item{\code{message_match}:}{}\item{\code{error}:}{}\item{\code{passed}:}{}}}
+\section{Slots}{\describe{\item{\code{id}:}{}\item{\code{code_match}:}{}\item{\code{output_match}:}{}\item{\code{message_match}:}{}\item{\code{error}:}{}\item{\code{missing_libs}:}{}\item{\code{passed}:}{}}}
 

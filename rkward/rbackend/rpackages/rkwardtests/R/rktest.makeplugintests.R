@@ -54,10 +54,10 @@ rktest.makeplugintests <- function(testsuites="testsuite.R", testroot=getwd(), o
   print (allresults)
 
   if (any (is.na (allresults@passed))) {
+	  missing.libs <- unique(allresults@missing_libs[!is.na(allresults@missing_libs)])
 	  cat ("\nNOTE: Skipped tests due to missing libaries are not an indication of problems.")
-	  cat ("\nCurrently, the following R packages are needed in order to run all available tests:")
-	  # TODO: Make this list dynamic and / or print only the missing libs
-	  cat ('\n"R2HTML", "tseries", "nortest", "outliers", "exactRankTests", "moments", "car", "hdrcde", "qcc", "xtable", "eRm", "ltm"')
+	  cat ("\nThe following missing R packages are needed in order to run all tests:\n")
+	  print(missing.libs)
   }
 
   sink()

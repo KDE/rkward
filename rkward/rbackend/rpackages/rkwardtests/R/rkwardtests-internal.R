@@ -21,6 +21,7 @@ rktest.appendTestResults <- function (objecta, objectb) {
 		objecta@output_match[index+i] = objectb@output_match[i]
 		objecta@message_match[index+i] = objectb@message_match[i]
 		objecta@error[index+i] = objectb@error[i]
+		objecta@missing_libs[index+i] = objectb@missing_libs[i]
 		objecta@passed[index+i] = objectb@passed[i]
 	}
 
@@ -115,6 +116,7 @@ rktest.runRKTest <- function (test) {
 	if (length (missing_libs) > 0) {
 		result@output_match <- result@message_match <- result@code_match <- NA_character_
 		result@error <- "missing lib(s)"
+		result@missing_libs <- missing_libs
 		result@passed <- NA
 		cat ("\nSkipping test \"", test@id, "\" due to missing libraries: \"", paste (missing_libs, collapse="\", \""), "\"\n", sep="")
 		return (result)
@@ -159,7 +161,7 @@ rktest.replace <- function (name, replacement, envir=as.environment ("package:rk
 	assign(".rktest.tmp.storage", new.env(), pos=globalenv())
   } else{}
 	if (exists (backup.name, envir=.rktest.tmp.storage, inherits=FALSE)) {
-		message ("Is looks like ", name, " has already been replaced. Not replacing it again.")
+		message ("It looks like ", name, " has already been replaced. Not replacing it again.")
 	} else {
 		assign (backup.name, get (name, envir), envir=.rktest.tmp.storage)
 		assign (name, replacement, envir)
