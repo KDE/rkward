@@ -334,7 +334,7 @@ formals (setwd) <- formals (base::setwd)
 }
 
 # for caputring message output while running a plugin command
-.rk.capture.messages <- function () {
+".rk.capture.messages" <- function () {
 	if (exists (".rk.capture.messages.sinkfile", envir=as.environment ("package:rkward"), inherits=FALSE)) {
 		# We don't support nesting, so purge it, first
 		.rk.print.captured.messages ()
@@ -346,7 +346,7 @@ formals (setwd) <- formals (base::setwd)
 	assign (".rk.capture.messages.sinknumber", sink.number ("message"), envir=as.environment ("package:rkward"))
 }
 
-.rk.print.captured.messages <- function (clear=TRUE) {
+".rk.print.captured.messages" <- function (clear=TRUE) {
 	if (!exists (".rk.capture.messages.sinkfile", envir=as.environment ("package:rkward"), inherits=FALSE)) return ()
 
 	sinkfile <- get (".rk.capture.messages.sinkfile", envir=as.environment ("package:rkward"), inherits=FALSE)
@@ -366,6 +366,8 @@ formals (setwd) <- formals (base::setwd)
 			warning ("Message sink has been removed, already.")
 		} else {
 			sink (type="message")	# remove it
+			con <- getConnection (sinknumber)
+			con.close ()
 		}
 		if (file.exists (sinkfile)) file.remove (sinkfile)
 		remove (list=".rk.capture.messages.sinkfile", envir=as.environment ("package:rkward"))

@@ -24,15 +24,6 @@
 
 #include "rcommand.h"
 
-//#define DEBUG_MUTEX
-#ifdef DEBUG_MUTEX
-#define MUTEX_LOCK RInterface::mutex.lock (); qDebug ("mutex locks: %d, locked in %s, %s, %d", ++RInterface::mutex_counter, __FILE__, __FUNCTION__, __LINE__); 
-#define MUTEX_UNLOCK qDebug ("mutex locks: %d, unlocked in %s, %s, %d", --RInterface::mutex_counter, __FILE__, __FUNCTION__, __LINE__); RInterface::mutex.unlock ();
-#else
-#define MUTEX_LOCK RInterface::mutex.lock ();
-#define MUTEX_UNLOCK RInterface::mutex.unlock ();
-#endif
-
 class RCommand;
 class RKWardMainWindow;
 struct RCallbackArgs;
@@ -80,12 +71,6 @@ not be interrupted. */
 /** Pauses process. The current command will continue to run, but no new command will be */
 	void pauseProcessing (bool pause);
 
-/** *The* mutex in usein RKWard. This is needed to ensure, the main (GUI) thread, and the backend thread (@see RThread) do not try to access the same data at the same time. Use MUTEX_LOCK and MUTEX_UNLOCK to lock/unlock the mutex. */
-	static QMutex mutex;
-#ifdef DEBUG_MUTEX
-	static int mutex_counter;
-#endif
-
 /** returns the command currently running in the thread. Be careful when using the returned pointer! */
 	RCommand *runningCommand ();
 
@@ -132,8 +117,7 @@ private:
 /** @see locked */
 	enum LockType {
 		User=1,		/**< locked on user request */
-		Cancel=2,	/**< locked to safely cancel a running command */
-		Startup=4	/**< locked on startup */
+		Cancel=2	/**< locked to safely cancel a running command */
 	};
 
 /** Used for locking the backend, meaning not further commands will be given to the backend. This is used, when the currently running command is to be cancelled. It is used to make sure that the backend thread does not proceed with further commands, before the main thread takes notice. Also it is called, if the RThread is paused on User request. Further, the thread is initially locked so the main thread can check for some conditions before the backend thread may produce

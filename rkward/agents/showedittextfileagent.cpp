@@ -134,10 +134,8 @@ void ShowEditTextFileAgent::done () {
 		}
 	}
 
-	MUTEX_LOCK;
 	// this line is what causes the backend-thread to resume processing:
 	args->done = true;
-	MUTEX_UNLOCK;
 
 	deleteLater ();
 }

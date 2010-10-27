@@ -58,22 +58,19 @@ void RThread::run () {
 	killed = false;
 	int err;
 
-	// in RInterface::RInterface() we create a fake RCommand to capture all the output/errors during startup
-	MUTEX_LOCK;
-	current_command = RCommandStack::regular_stack->currentCommand ();
-	all_current_commands.append (current_command);
-	RK_ASSERT (current_command);
-	MUTEX_UNLOCK;
+	// in RInterface::RInterface() we have created a fake RCommand to capture all the output/errors during startup. Fetch it
+	fetchNextCommand ();
 
 	if ((err = initialize ())) {
 		int* err_c = new int;
 		*err_c = err;
 		qApp->postEvent (RKGlobals::rInterface (), new RKRBackendEvent (RKRBackendEvent::RStartupError, err_c));
 	}
-	qApp->postEvent (RKGlobals::rInterface (), new RKRBackendEvent (RKRBackendEvent::RStarted));
+	bool startup_was_handled = false;
+	qApp->postEvent (RKGlobals::rInterface (), new RKRBackendEvent (RKRBackendEvent::RStarted, &startup_was_handled));
 
 	// wait until RKWard is set to go (esp, it has handled any errors during startup, etc.)
-	while (RInterface::backendIsLocked ()) {
+	while (!startup_was_handled) {
 		msleep (10);
 	}
 
@@ -86,22 +83,22 @@ void RThread::commandFinished (bool check_object_updates_needed) {
 	RK_TRACE (RBACKEND);
 
 	RK_DO (qDebug ("done running command"), RBACKEND, DL_DEBUG);
-	MUTEX_LOCK;
+
 	current_command->status -= (current_command->status & RCommand::Running);
 	current_command->status |= RCommand::WasTried;
-	RCommandStackModel::getModel ()->itemChange (current_command);
 
-	if (check_object_updates_needed || (current_command->type () & RCommand::ObjectListUpdate)) {
-		checkObjectUpdatesNeeded (current_command->type () & (RCommand::User | RCommand::ObjectListUpdate));
+	if (check_object_updates_needed || (current_command->type & RCommand::ObjectListUpdate)) {
+		checkObjectUpdatesNeeded (current_command->type & (RCommand::User | RCommand::ObjectListUpdate));
 	}
-	notifyCommandDone (current_command);	// command may be deleted after this
+
+	RKRBackendEvent* event = new RKRBackendEvent (RKRBackendEvent::RCommandOut, current_command);
+	qApp->postEvent (RKGlobals::rInterface (), event);		// command may be deleted after this!
 
 	all_current_commands.pop_back();
 	if (!all_current_commands.isEmpty ()) current_command = all_current_commands.last ();
-	MUTEX_UNLOCK;
 }
 
-RCommand* RThread::fetchNextCommand () {
+RCommandProxy* RThread::fetchNextCommand () {
 	RK_TRACE (RBACKEND);
 
 	RNextCommandRequest req;
@@ -118,24 +115,13 @@ RCommand* RThread::fetchNextCommand () {
 		if (!done) msleep (10);
 	}
 
-	RCommand *command = req.command;
+	RCommandProxy *command = req.command;
 	if (command) {
 		all_current_commands.append (command);
 		current_command = command;
 	}
 
 	return command;
-}
-
-void RThread::notifyCommandDone (RCommand *command) {
-	RK_TRACE (RBACKEND);
-
-	RK_ASSERT (command == current_command);
-	current_command = 0;
-
-	// notify GUI-thread that command was finished
-	RKRBackendEvent* event = new RKRBackendEvent (RKRBackendEvent::RCommandOut, command);
-	qApp->postEvent (RKGlobals::rInterface (), event);
 }
 
 void RThread::waitIfOutputBufferExceeded () {
@@ -149,6 +135,7 @@ void RThread::handleOutput (const QString &output, int buf_length, ROutput::ROut
 	RK_TRACE (RBACKEND);
 
 	if (!buf_length) return;
+	RK_DO (qDebug ("Output type %d: ", output_type, qPrintable (output)), RBACKEND, DL_DEBUG);
 	waitIfOutputBufferExceeded ();
 
 	output_buffer_mutex.lock ();
@@ -199,7 +186,7 @@ void RThread::handleSubstackCall (QStringList &call) {
 	if (call.count () == 2) {		// schedule symbol update for later
 		if (call[0] == "ws") {
 			// always keep in mind: No current command can happen for tcl/tk events.
-			if ((!current_command) || (current_command->type () & RCommand::ObjectListUpdate) || (!(current_command->type () & RCommand::Sync))) {		// ignore Sync commands that are not flagged as ObjectListUpdate
+			if ((!current_command) || (current_command->type & RCommand::ObjectListUpdate) || (!(current_command->type & RCommand::Sync))) {		// ignore Sync commands that are not flagged as ObjectListUpdate
 				if (!changed_symbol_names.contains (call[1])) changed_symbol_names.append (call[1]);
 			}
 			return;
@@ -211,11 +198,9 @@ void RThread::handleSubstackCall (QStringList &call) {
 	RKRBackendEvent* event = new RKRBackendEvent (RKRBackendEvent::REvalRequest, &request);
 	qApp->postEvent (RKGlobals::rInterface (), event);
 
-	RCommand *c;
+	RCommandProxy *c;
 	while ((c = fetchNextCommand ())) {
-		MUTEX_LOCK;
 		runCommand (c);
-		MUTEX_UNLOCK;
 		commandFinished (false);
 	}
 }
@@ -257,8 +242,8 @@ int RThread::initialize () {
 	if (!runDirectCommand (".rk.fix.assignments ()\n")) status |= LibLoadFail;
 
 // find out about standard library locations
-	RCommand *dummy = runDirectCommand (".libPaths ()\n", RCommand::GetStringVector);
-	if (dummy->failed ()) status |= OtherFail;
+	RCommandProxy *dummy = runDirectCommand (".libPaths ()\n", RCommand::GetStringVector);
+	if (dummy->status & RCommand::Failed) status |= OtherFail;
 	for (unsigned int i = 0; i < dummy->getDataLength (); ++i) {
 		RKSettingsModuleRPackages::defaultliblocs.append (dummy->getStringVector ()[i]);
 	}
@@ -266,7 +251,7 @@ int RThread::initialize () {
 
 // start help server / determined help base url
 	dummy = runDirectCommand (".rk.getHelpBaseUrl ()\n", RCommand::GetStringVector);
-	if (dummy->failed ()) status |= OtherFail;
+	if (dummy->status & RCommand::Failed) status |= OtherFail;
 	else {
 		RK_ASSERT (dummy->getDataLength () == 1);
 		RKSettingsModuleR::help_base_url = dummy->getStringVector ()[0];
@@ -296,14 +281,13 @@ void RThread::checkObjectUpdatesNeeded (bool check_list) {
 	/* NOTE: We're keeping separate lists of the items on the search path, and the toplevel symbols in .GlobalEnv here.
 	This info is also present in RObjectList (and it's children). However: a) in a less convenient form, b) in the other thread. To avoid locking, and other complexity, keeping separate lists seems an ok solution. Keep in mind that only the names of only the toplevel objects are kept, here, so the memory overhead should be minimal */
 
-	MUTEX_UNLOCK;
 	bool search_update_needed = false;
 	bool globalenv_update_needed = false;
 
 	if (check_list) {	
 	// TODO: avoid parsing this over and over again
 		RK_DO (qDebug ("checkObjectUpdatesNeeded: getting search list"), RBACKEND, DL_TRACE);
-		RCommand *dummy = runDirectCommand ("search ()\n", RCommand::GetStringVector);
+		RCommandProxy *dummy = runDirectCommand ("search ()\n", RCommand::GetStringVector);
 		if ((int) dummy->getDataLength () != toplevel_env_names.count ()) {
 			search_update_needed = true;
 		} else {
@@ -368,5 +352,4 @@ void RThread::checkObjectUpdatesNeeded (bool check_list) {
 		handleSubstackCall (call);
 		changed_symbol_names.clear ();
 	}
-	MUTEX_LOCK;
 }

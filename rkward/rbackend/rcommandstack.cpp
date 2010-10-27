@@ -95,11 +95,9 @@ RCommand* RCommandStack::currentCommand () {
 	RK_TRACE (RBACKEND);
 
 	if (RK_Debug_CommandStep) {
-		MUTEX_UNLOCK;
 		QTime t;
 		t.start ();
 		while (t.elapsed () < RK_Debug_CommandStep) {}
-		MUTEX_LOCK;
 	}
 
 	clearFinishedChains ();
@@ -199,13 +197,6 @@ RCommandStackModel::RCommandStackModel (QObject *parent) : QAbstractItemModel (p
 
 	static_model = this;
 	listeners = 0;
-	have_mutex_lock = false;
-
-	connect (this, SIGNAL (itemAboutToBeAdded(RCommandBase*)), this, SLOT (relayItemAboutToBeAdded(RCommandBase*)), Qt::BlockingQueuedConnection);
-	connect (this, SIGNAL (itemAdded()), this, SLOT (relayItemAdded()), Qt::BlockingQueuedConnection);
-	connect (this, SIGNAL (itemAboutToBeRemoved(RCommandBase*)), this, SLOT (relayItemAboutToBeRemoved(RCommandBase*)), Qt::BlockingQueuedConnection);
-	connect (this, SIGNAL (itemRemoved()), this, SLOT (relayItemRemoved()), Qt::BlockingQueuedConnection);
-	connect (this, SIGNAL (itemChanged(RCommandBase*)), this, SLOT (relayItemChanged(RCommandBase*)), Qt::BlockingQueuedConnection);
 }
 
 RCommandStackModel::~RCommandStackModel () {
@@ -217,7 +208,6 @@ RCommandStackModel::~RCommandStackModel () {
 
 void RCommandStackModel::addListener () {
 	RK_TRACE (RBACKEND);
-	lockMutex ();	// this should make sure, a listener is not added in the middle of a beginRowsXXX and endRowsXXX signal pair
 
 	++listeners;
 }
@@ -226,13 +216,12 @@ void RCommandStackModel::removeListener () {
 	RK_TRACE (RBACKEND);
 
 	--listeners;
-	if (!listeners) unlockMutex ();
+	RK_ASSERT (listeners >= 0);
 }
 
 QModelIndex RCommandStackModel::index (int row, int column, const QModelIndex& parent) const {
 	RK_ASSERT (listeners > 0);
 	RK_TRACE (RBACKEND);
-	lockMutex ();
 
 	RCommandBase* index_data = 0;
 
@@ -264,7 +253,6 @@ QModelIndex RCommandStackModel::index (int row, int column, const QModelIndex& p
 QModelIndex RCommandStackModel::parent (const QModelIndex& child) const {
 	RK_ASSERT (listeners);
 	RK_TRACE (RBACKEND);
-	lockMutex ();
 
 	RCommandBase* index_data;
 	if (!child.isValid()) {
@@ -289,7 +277,6 @@ QModelIndex RCommandStackModel::parent (const QModelIndex& child) const {
 int RCommandStackModel::rowCount (const QModelIndex& parent) const {
 	RK_ASSERT (listeners);
 	RK_TRACE (RBACKEND);
-	lockMutex ();
 
 	if (!parent.isValid ()) return 1;
 
@@ -315,7 +302,6 @@ int RCommandStackModel::rowCount (const QModelIndex& parent) const {
 int RCommandStackModel::columnCount (const QModelIndex&) const {
 	RK_ASSERT (listeners);
 	RK_TRACE (RBACKEND);
-	lockMutex ();
 
 	return NUM_COLS;
 }
@@ -323,7 +309,6 @@ int RCommandStackModel::columnCount (const QModelIndex&) const {
 QVariant RCommandStackModel::data (const QModelIndex& index, int role) const {
 	RK_ASSERT (listeners);
 	RK_TRACE (RBACKEND);
-	lockMutex ();
 
 	if (!index.isValid ()) return QVariant ();
 	RK_ASSERT (index.model () == this);
@@ -377,7 +362,6 @@ QVariant RCommandStackModel::data (const QModelIndex& index, int role) const {
 Qt::ItemFlags RCommandStackModel::flags (const QModelIndex& index) const {
 	RK_ASSERT (listeners);
 	RK_TRACE (RBACKEND);
-	lockMutex ();
 
 	if (!index.isValid ()) return 0;
 	RK_ASSERT (index.model () == this);
@@ -392,7 +376,6 @@ Qt::ItemFlags RCommandStackModel::flags (const QModelIndex& index) const {
 QVariant RCommandStackModel::headerData (int section, Qt::Orientation orientation, int role) const {
 	RK_ASSERT (listeners);
 	RK_TRACE (RBACKEND);
-	lockMutex ();
 
 	if ((orientation == Qt::Horizontal) && (role == Qt::DisplayRole)) {
 		if (section == MAIN_COL) return (i18n ("Command"));
@@ -428,96 +411,21 @@ void RCommandStackModel::aboutToPop (RCommandBase* parent) {
 	if (!listeners) return;
 	RK_TRACE (RBACKEND);
 
-	if (RInterface::inRThread ()) {
-		MUTEX_UNLOCK;	// release the mutex in the R thread, as the main thread will need it.
-		emit (itemAboutToBeRemoved (parent));
-		MUTEX_LOCK;
-	} else {
-		relayItemAboutToBeRemoved (parent);
-	}
+	QModelIndex parent_index = indexFor (parent);
+	// items are always removed at the front
+	beginRemoveRows (parent_index, 0, 0);
 }
 
 void RCommandStackModel::popComplete () {
 	if (!listeners) return;
 	RK_TRACE (RBACKEND);
 
-	if (RInterface::inRThread ()) {
-		MUTEX_UNLOCK;	// release the mutex in the R thread, as the main thread will need it.
-		emit (itemRemoved ());
-		MUTEX_LOCK;
-	} else {
-		relayItemRemoved ();
-	}
+	endRemoveRows ();
 }
 
 void RCommandStackModel::aboutToAdd (RCommandBase* parent) {
 	if (!listeners) return;
 	RK_TRACE (RBACKEND);
-
-	if (RInterface::inRThread ()) {
-		MUTEX_UNLOCK;	// release the mutex in the R thread, as the main thread will need it.
-		emit (itemAboutToBeAdded (parent));
-		MUTEX_LOCK;
-	} else {
-		relayItemAboutToBeAdded (parent);
-	}
-}
-
-void RCommandStackModel::addComplete () {
-	if (!listeners) return;
-	RK_TRACE (RBACKEND);
-
-	if (RInterface::inRThread ()) {
-		MUTEX_UNLOCK;	// release the mutex in the R thread, as the main thread will need it.
-		emit (itemAdded ());
-		MUTEX_LOCK;
-	} else {
-		relayItemAdded ();
-	}
-}
-
-void RCommandStackModel::itemChange (RCommandBase* item) {
-	if (!listeners) return;
-	RK_TRACE (RBACKEND);
-
-	if (RInterface::inRThread ()) {
-		MUTEX_UNLOCK;	// release the mutex in the R thread, as the main thread will need it.
-		emit (itemChanged (item));
-		MUTEX_LOCK;
-	} else {
-		relayItemChanged (item);
-	}
-}
-
-void RCommandStackModel::lockMutex () const {
-	if (have_mutex_lock) return;
-	RK_TRACE (RBACKEND);
-
-	RK_ASSERT (!RInterface::inRThread ());
-
-	MUTEX_LOCK;
-// We're playing silly const games, here, as the reimplementations from QAbstractItemModel need to be const.
-// Well, we're not really changing anything, though, just keeping track of the mutex lock.
-	bool *cheat = const_cast<bool*> (&have_mutex_lock);
-	*cheat = true;
-
-	QTimer::singleShot (0, const_cast<RCommandStackModel*> (this), SLOT (unlockMutex()));
-}
-
-void RCommandStackModel::unlockMutex () {
-	if (!have_mutex_lock) return;
-	RK_TRACE (RBACKEND);
-
-	RK_ASSERT (!RInterface::inRThread ());
-
-	MUTEX_UNLOCK;
-	have_mutex_lock = false;
-}
-
-void RCommandStackModel::relayItemAboutToBeAdded (RCommandBase* parent) {
-	RK_TRACE (RBACKEND);
-
-	RK_ASSERT (!RInterface::inRThread ());
 
 	QModelIndex parent_index = indexFor (parent);
 	if ((!parent) || parent->commandPointer ()) {
@@ -529,36 +437,16 @@ void RCommandStackModel::relayItemAboutToBeAdded (RCommandBase* parent) {
 	}
 }
 
-void RCommandStackModel::relayItemAdded () {
+void RCommandStackModel::addComplete () {
+	if (!listeners) return;
 	RK_TRACE (RBACKEND);
-
-	RK_ASSERT (!RInterface::inRThread ());
 
 	endInsertRows ();
 }
 
-void RCommandStackModel::relayItemAboutToBeRemoved (RCommandBase* parent) {
+void RCommandStackModel::itemChange (RCommandBase* item) {
+	if (!listeners) return;
 	RK_TRACE (RBACKEND);
-
-	RK_ASSERT (!RInterface::inRThread ());
-
-	QModelIndex parent_index = indexFor (parent);
-	// items are always removed at the front
-	beginRemoveRows (parent_index, 0, 0);
-}
-
-void RCommandStackModel::relayItemRemoved () {
-	RK_TRACE (RBACKEND);
-
-	RK_ASSERT (!RInterface::inRThread ());
-
-	endRemoveRows ();
-}
-
-void RCommandStackModel::relayItemChanged (RCommandBase* item) {
-	RK_TRACE (RBACKEND);
-
-	RK_ASSERT (!RInterface::inRThread ());
 
 	QModelIndex item_index = indexFor (item);
 	emit (dataChanged (item_index, item_index));

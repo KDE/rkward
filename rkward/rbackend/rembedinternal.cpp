@@ -30,10 +30,10 @@ RThread::RKReplStatus RThread::repl_status = { QByteArray (), 0, true, 0, 0, RTh
 #include "../debug.h"
 
 #include "rkrsupport.h"
+#include "rinterface.h"
 #include "rklocalesupport.h"
 #include "rkpthreadsupport.h"
 #include "rksignalsupport.h"
-#include "rinterface.h"		// for access to the mutex
 #include "../misc/rkcommonfunctions.h"
 
 #include <stdlib.h>
@@ -189,15 +189,13 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 			if (RThread::this_pointer->killed) return 0;
 
 			if (RThread::repl_status.user_command_status == RThread::RKReplStatus::NoUserCommand) {
-				RCommand *command = RThread::this_pointer->fetchNextCommand ();
+				RCommandProxy *command = RThread::this_pointer->fetchNextCommand ();
 				if (!command) {
 					return 0;	// jumps out of the event loop!
 				}
 
-				MUTEX_LOCK;
-				if (!(command->type () & RCommand::User)) {
+				if (!(command->type & RCommand::User)) {
 					RThread::this_pointer->runCommand (command);
-					MUTEX_UNLOCK;
 					RThread::this_pointer->commandFinished ();
 				} else {
 					// so, we are about to transmit a new user command, which is quite a complex endeavour...
@@ -214,8 +212,7 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 					RThread::repl_status.user_command_completely_transmitted = false;
 					RThread::repl_status.user_command_parsed_up_to = 0;
 					RThread::repl_status.user_command_successful_up_to = 0;
-					RThread::repl_status.user_command_buffer = RThread::this_pointer->current_locale_codec->fromUnicode (command->command ());
-					MUTEX_UNLOCK;
+					RThread::repl_status.user_command_buffer = RThread::this_pointer->current_locale_codec->fromUnicode (command->command);
 					RKTransmitNextUserCommandChunk (buf, buflen);
 					RThread::repl_status.user_command_status = RThread::RKReplStatus::UserCommandTransmitted;
 					return 1;
@@ -228,20 +225,17 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 					if (RThread::this_pointer->current_locale_codec->toUnicode (prompt) == RKRSupport::SEXPToString (Rf_GetOption (Rf_install ("continue"), R_BaseEnv))) {
 						incomplete = true;
 					}
-					MUTEX_LOCK;
 					if (incomplete) RThread::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorIncomplete;
 					RThread::repl_status.user_command_status = RThread::RKReplStatus::ReplIterationKilled;
-					MUTEX_UNLOCK;
+#warning TODO: use Rf_error(""), instead?
 					RK_doIntr ();	// to discard the buffer
 				} else {
 					RKTransmitNextUserCommandChunk (buf, buflen);
 					return 1;
 				}
 			} else if (RThread::repl_status.user_command_status == RThread::RKReplStatus::UserCommandSyntaxError) {
-				MUTEX_LOCK;
 				RThread::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorSyntax;
 				RThread::repl_status.user_command_status = RThread::RKReplStatus::NoUserCommand;
-				MUTEX_UNLOCK;
 				RThread::this_pointer->commandFinished ();
 			} else if (RThread::repl_status.user_command_status == RThread::RKReplStatus::UserCommandRunning) {
 				// it appears, the user command triggered a call to readline.
@@ -249,20 +243,17 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 				if (n_frames < 1) {
 					// No active frames? This is either a browser() call at toplevel, or R jumped us back to toplevel, behind our backs.
 					// For safety, let's reset and start over.
-					MUTEX_LOCK;
 					RThread::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorOther;
 					RThread::repl_status.user_command_status = RThread::RKReplStatus::ReplIterationKilled;
-					MUTEX_UNLOCK;
+#warning TODO: use Rf_error(""), instead?
 					RK_doIntr ();	// to discard the buffer
 				} else {
 					// Handled below
 					break;
 				}
 			} else if (RThread::repl_status.user_command_status == RThread::RKReplStatus::UserCommandFailed) {
-				MUTEX_LOCK;
 				RThread::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorOther;
 				RThread::repl_status.user_command_status = RThread::RKReplStatus::NoUserCommand;
-				MUTEX_UNLOCK;
 				RThread::this_pointer->commandFinished ();
 			} else {
 				RK_ASSERT (RThread::repl_status.user_command_status == RThread::RKReplStatus::ReplIterationKilled);
@@ -830,7 +821,7 @@ bool RThread::startR (int argc, char** argv, bool stack_check) {
 	RKInsertToplevelStatementFinishedCallback (0);
 
 	// get info on R runtime version
-	RCommand *dummy = runDirectCommand ("as.numeric (R.version$major) * 1000 + as.numeric (R.version$minor) * 10", RCommand::GetIntVector);
+	RCommandProxy *dummy = runDirectCommand ("as.numeric (R.version$major) * 1000 + as.numeric (R.version$minor) * 10", RCommand::GetIntVector);
 	if ((dummy->getDataType () == RData::IntVector) && (dummy->getDataLength () == 1)) {
 		r_version = dummy->getIntVector ()[0];
 	} else {
@@ -935,42 +926,36 @@ SEXP runCommandInternalBase (SEXP pr, RThread::RKWardRError *error) {
 bool RThread::runDirectCommand (const QString &command) {
 	RK_TRACE (RBACKEND);
 
-	RCommand c (command, RCommand::App | RCommand::Sync | RCommand::Internal);
+	RCommandProxy c (command, RCommand::App | RCommand::Sync | RCommand::Internal);
 	runCommand (&c);
-	return (c.succeeded ());
+	return ((c.status & RCommand::WasTried) && !(c.status & RCommand::Failed));
 }
 
-RCommand *RThread::runDirectCommand (const QString &command, RCommand::CommandTypes datatype) {
+RCommandProxy *RThread::runDirectCommand (const QString &command, RCommand::CommandTypes datatype) {
 	RK_TRACE (RBACKEND);
 	RK_ASSERT ((datatype >= RCommand::GetIntVector) && (datatype <= RCommand::GetStructuredData));
 
-	RCommand *c = new RCommand (command, RCommand::App | RCommand::Sync | RCommand::Internal | datatype);
+	RCommandProxy *c = new RCommandProxy (command, RCommand::App | RCommand::Sync | RCommand::Internal | datatype);
 	runCommand (c);
 	return c;
 }
 
-void RThread::runCommand (RCommand *command) {
+void RThread::runCommand (RCommandProxy *command) {
 	RK_TRACE (RBACKEND);
 	RK_ASSERT (command);
 
 	RKWardRError error = NoError;
 
-	// NOTE the command must not be accessed while the mutex is unlocked!
-	// Therefore we copy the data we need, and create a container for the returned data
-	int ctype = command->type ();
-	QString ccommand = command->command ();
+	int ctype = command->type;	// easier typing
 	RData retdata;
 
 	// running user commands is quite different from all other commands and should have been handled by RReadConsole
 	RK_ASSERT (!(ctype & RCommand::User));
 
-	if (!(ctype & RCommand::Internal)) {
-		MUTEX_UNLOCK;
-	}
 	if (ctype & RCommand::DirectToOutput) runDirectCommand (".rk.capture.messages()");
 
 	repl_status.eval_depth++;
-	SEXP parsed = parseCommand (ccommand, &error);
+	SEXP parsed = parseCommand (command->command, &error);
 	if (error == NoError) {
 		SEXP exp;
 		PROTECT (exp = runCommandInternalBase (parsed, &error));
@@ -997,35 +982,19 @@ void RThread::runCommand (RCommand *command) {
 	if (ctype & RCommand::DirectToOutput) runDirectCommand (".rk.print.captured.messages()");
 	if (!(ctype & RCommand::Internal)) {
 		if (!RInterface::backendIsLocked () || killed) processX11Events ();
-		MUTEX_LOCK;
 	}
 
 	command->setData (retdata);
 	// common error/status handling
-	#ifdef RKWARD_DEBUG
-		int dl = DL_WARNING;		// failed application commands are an issue worth reporting, failed user commands are not
-		if (command->type () & RCommand::User) dl = DL_DEBUG;
-	#endif
 	if (error != NoError) {
 		command->status |= RCommand::WasTried | RCommand::Failed;
 		if (error == Incomplete) {
 			command->status |= RCommand::ErrorIncomplete;
-			RK_DO (qDebug ("Command failed (incomplete)"), RBACKEND, dl);
 		} else if (error == SyntaxError) {
 			command->status |= RCommand::ErrorSyntax;
-			RK_DO (qDebug ("Command failed (syntax)"), RBACKEND, dl);
-		} else if (command->status & RCommand::Canceled) {
-			RK_DO (qDebug ("Command failed (interrupted)"), RBACKEND, dl);
-		} else {
+		} else if (!(command->status & RCommand::Canceled)) {
 			command->status |= RCommand::ErrorOther;
-			#ifdef RKWARD_DEBUG
-				dl = DL_WARNING;		// always interested in strange errors
-			#endif
-			RK_DO (qDebug ("Command failed (other)"), RBACKEND, dl);
 		}
-		RK_DO (qDebug ("failed command was: '%s'", command->command ().toLatin1 ().data ()), RBACKEND, dl);
-/*		flushOutput ();
-		RK_DO (qDebug ("- error message was: '%s'", command->error ().toLatin1 ().data ()), RBACKEND, dl); */
 	} else {
 		command->status |= RCommand::WasTried;
 	}

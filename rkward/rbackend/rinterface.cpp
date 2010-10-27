@@ -60,12 +60,6 @@ RKWindowCatcher *window_catcher;
 // update output (for immediate output commands) at least this often (msecs):
 #define FLUSH_INTERVAL 100
 
-//static
-QMutex RInterface::mutex (QMutex::Recursive);
-#ifdef DEBUG_MUTEX
-	int RInterface::mutex_counter;
-#endif // DEBUG_MUTEX
-
 RInterface::RInterface () {
 	RK_TRACE (RBACKEND);
 	
@@ -84,18 +78,17 @@ RInterface::RInterface () {
 	command_logfile_mode = NotRecordingCommands;
 	command_request = 0;
 	previously_idle = false;
-	locked = Startup;
-
-	r_thread = new RThread ();
+	locked = 0;
 
 	// create a fake init command
 	RCommand *fake = new RCommand (i18n ("R Startup"), RCommand::App | RCommand::Sync | RCommand::ObjectListUpdate, i18n ("R Startup"));
 	issueCommand (fake);
-	all_current_commands.append (fake);
 
 	flush_timer = new QTimer (this);
 	connect (flush_timer, SIGNAL (timeout ()), this, SLOT (flushOutput ()));
 	flush_timer->start (FLUSH_INTERVAL);
+
+	r_thread = new RThread ();
 }
 
 void RInterface::issueCommand (const QString &command, int type, const QString &rk_equiv, RCommandReceiver *receiver, int flags, RCommandChain *chain) {
@@ -132,9 +125,7 @@ bool RInterface::backendIsIdle () {
 	RK_TRACE (RBACKEND);
 
 	bool idle;
-	MUTEX_LOCK;
-	idle = (RCommandStack::regular_stack->isEmpty() && (!r_thread->current_command));
-	MUTEX_UNLOCK;
+	idle = (RCommandStack::regular_stack->isEmpty() && (!runningCommand()));
 	return (idle);
 }
 
@@ -162,7 +153,8 @@ void RInterface::startThread () {
 }
 
 RCommand *RInterface::runningCommand () {
-	 return r_thread->current_command;
+	 if (all_current_commands.isEmpty ()) return 0;
+	 return (all_current_commands.last ());
 }
 
 void RInterface::tryNextCommand () {
@@ -188,7 +180,7 @@ void RInterface::tryNextCommand () {
 				}
 				stack->pop ();
 				// notify ourselves...
-				RKRBackendEvent* event = new RKRBackendEvent (RKRBackendEvent::RCommandOut, command);
+				RKRBackendEvent* event = new RKRBackendEvent (RKRBackendEvent::RCommandOut, new RCommandProxy (command));
 				qApp->postEvent (this, event);
 				return;
 			}
@@ -216,7 +208,10 @@ void RInterface::doNextCommand (RCommand *command) {
 	RK_ASSERT (command_request);
 
 	flushOutput (true);
+	RCommandProxy *proxy = 0;
 	if (command) {
+		proxy = new RCommandProxy (command);
+
 		RK_DO (qDebug ("running command: %s", command->command ().toLatin1().data ()), RBACKEND, DL_DEBUG);
 		command->status |= RCommand::Running;
 		RCommandStackModel::getModel ()->itemChange (command);
@@ -231,7 +226,7 @@ void RInterface::doNextCommand (RCommand *command) {
 		}
 	}
 
-	command_request->command = command;
+	command_request->command = proxy;
 	*(command_request->done) = true;
 	command_request = 0;
 	QThread::yieldCurrentThread ();
@@ -255,11 +250,30 @@ void RInterface::customEvent (QEvent *e) {
 	} else if (ev->etype () == RKRBackendEvent::RCommandOut) {
 		flushOutput (true);
 
-		RCommand *command = static_cast <RCommand *> (ev->data ());
+		RCommandProxy *cproxy = static_cast <RCommandProxy *> (ev->data ());
 		RK_ASSERT (!all_current_commands.isEmpty ());
-		RK_ASSERT (all_current_commands.last () == command);
-		all_current_commands.pop_back ();
+		RCommand *command = all_current_commands.takeLast ();
 		RCommandStack::currentStack ()->pop ();
+		cproxy->mergeAndDelete (command);
+
+		#ifdef RKWARD_DEBUG
+			int dl = DL_WARNING;		// failed application commands are an issue worth reporting, failed user commands are not
+			if (command->type () & RCommand::User) dl = DL_DEBUG;
+			if (command->failed ()) {
+				command->status |= RCommand::WasTried | RCommand::Failed;
+				if (command->status & RCommand::ErrorIncomplete) {
+					RK_DO (qDebug ("Command failed (incomplete)"), RBACKEND, dl);
+				} else if (command->status & RCommand::ErrorSyntax) {
+					RK_DO (qDebug ("Command failed (syntax)"), RBACKEND, dl);
+				} else if (command->status & RCommand::Canceled) {
+					RK_DO (qDebug ("Command failed (interrupted)"), RBACKEND, dl);
+				} else {
+					RK_DO (qDebug ("Command failed (other)"), RBACKEND, dl);
+				}
+				RK_DO (qDebug ("failed command was: '%s'", qPrintable (command->command ())), RBACKEND, dl);
+				RK_DO (qDebug ("- error message was: '%s'", qPrintable (command->error ())), RBACKEND, dl);
+			}
+		#endif
 
 		if (command->status & RCommand::Canceled) {
 			command->status |= RCommand::HasError;
@@ -276,13 +290,15 @@ void RInterface::customEvent (QEvent *e) {
 			}
 		}
 		command->finished ();
+		RCommandStackModel::getModel ()->itemChange (command);
 		delete command;
 	} else if ((ev->etype () == RKRBackendEvent::REvalRequest)) {
 		processREvalRequest (static_cast<REvalRequest *> (ev->data ()));
 	} else if ((ev->etype () == RKRBackendEvent::RCallbackRequest)) {
 		processRCallbackRequest (static_cast<RCallbackArgs *> (ev->data ()));
 	} else if ((ev->etype () == RKRBackendEvent::RStarted)) {
-		locked -= locked & Startup;
+		bool* ok_to_proceed = static_cast<bool*> (ev->data ());
+		*ok_to_proceed = true;
 		RKWardMainWindow::discardStartupOptions ();
 	} else if ((ev->etype () == RKRBackendEvent::RStartupError)) {
 		flushOutput (true);
@@ -325,7 +341,7 @@ void RInterface::flushOutput (bool forced) {
 //	RK_TRACE (RBACKEND);
 
 	ROutputList list = r_thread->flushOutput (forced);
-qDebug ("fo %d", list.size ());
+
 	foreach (ROutput *output, list) {
 		if (all_current_commands.isEmpty ()) {
 			RK_DO (qDebug ("output without receiver'%s'", qPrintable (output->output)), RBACKEND, DL_WARNING);
@@ -368,34 +384,29 @@ qDebug ("fo %d", list.size ());
 
 void RInterface::issueCommand (RCommand *command, RCommandChain *chain) { 
 	RK_TRACE (RBACKEND);
-	MUTEX_LOCK;
+
 	if (command->command ().isEmpty ()) command->_type |= RCommand::EmptyCommand;
 	RCommandStack::issueCommand (command, chain);
 	tryNextCommand ();
-	MUTEX_UNLOCK;
 }
 
 RCommandChain *RInterface::startChain (RCommandChain *parent) {
 	RK_TRACE (RBACKEND);
+
 	RCommandChain *ret;
-	MUTEX_LOCK;
 	ret = RCommandStack::startChain (parent);
-	MUTEX_UNLOCK;
 	return ret;
 };
 
 void RInterface::closeChain (RCommandChain *chain) {
 	RK_TRACE (RBACKEND);
 
-	MUTEX_LOCK;
 	RCommandStack::closeChain (chain);
 	tryNextCommand ();
-	MUTEX_UNLOCK;
 };
 
 void RInterface::cancelCommand (RCommand *command) {
 	RK_TRACE (RBACKEND);
-	MUTEX_LOCK;
 	
 	if (!(command->type () & RCommand::Sync)) {
 		command->status |= RCommand::Canceled;
@@ -412,7 +423,6 @@ void RInterface::cancelCommand (RCommand *command) {
 	}
 
 	RCommandStackModel::getModel ()->itemChange (command);
-	MUTEX_UNLOCK;
 }
 
 void RInterface::pauseProcessing (bool pause) {
@@ -493,16 +503,12 @@ void RInterface::processREvalRequest (REvalRequest *request) {
  	} else if (call == "startOpenX11") {
 		// TODO: error checking/handling (wrong parameter count/type)
 		if (request->call.count () >= 2) {
-			MUTEX_LOCK;
 			window_catcher->start (QString (request->call[1]).toInt ());
-			MUTEX_UNLOCK;
 		}
  	} else if (call == "endOpenX11") {
 		// TODO: error checking/handling (wrong parameter count/type)
 		if (request->call.count () >= 2) {
-			MUTEX_LOCK;
 			window_catcher->stop (QString (request->call[1]).toInt ());
-			MUTEX_UNLOCK;
 		}
 	} else if (call == "updateDeviceHistory") {
 		if (request->call.count () >= 2) {
@@ -657,7 +663,7 @@ void RInterface::processRCallbackRequest (RCallbackArgs *args) {
 		bool dummy_command = false;
 		RCommand *command = runningCommand ();
 		if (!command) {
-			command = new RCommand ("");
+			command = new RCommand ("", RCommand::EmptyCommand);
 			dummy_command = true;
 		}
 

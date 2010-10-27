@@ -29,6 +29,7 @@
 
 class RCommandReceiver;
 class RCommand;
+class RCommandProxy;
 class RCommandChain;
 
 /** Base class for RCommand and RCommandChain, to make it possible to store both in the same list */
@@ -104,7 +105,7 @@ public:
 @param receiver The RCommandReceiver this command should be passed on to, when finished.
 @param flags A freely assignable integer, that you can use to identify what the command was all about. Only the RCommandReceiver handling the results will have to know what exactly the flags mean.
 */
-	explicit RCommand (const QString &command, int type = 0, const QString &rk_equiv = QString::null, RCommandReceiver *receiver=0, int flags=0);
+	explicit RCommand (const QString &command, int type, const QString &rk_equiv = QString::null, RCommandReceiver *receiver=0, int flags=0);
 /** destructor. Note: you should not delete RCommands manually. This is done in RInterface. TODO: make protected */
 	~RCommand();
 /** @returns the type as specified in RCommand::RCommand */
@@ -186,11 +187,8 @@ public:
 	ROutputList &getOutput () { return output_list; };
 /** modify the command string. DO NOT CALL THIS after the command has been submitted! */
 	void setCommand (const QString &command) { _command = command; };
-
-/** public for internal reasons, only. Don't modify outside the rbackend classes. */
-	int status;  
 private:
-friend class RThread;
+friend class RCommandProxy;
 friend class RInterface;
 friend class RCommandStack;
 friend class RCommandStackModel;
@@ -202,10 +200,29 @@ friend class RCommandStackModel;
 	QString _command;
 	int _type;
 	int _flags;
+	int status;  
 	QString _rk_equiv;
 	int _id;
 	static int next_id;
 	RCommandReceiver *receivers[MAX_RECEIVERS_PER_RCOMMAND];
+};
+
+/** This is a reduced version of an RCommand, intended for use in the R backend. */
+class RCommandProxy : public RData {
+public:
+/** creates a proxy for the given RCommand */
+	RCommandProxy (RCommand *from);
+	~RCommandProxy ();
+/** update the given RCommand with the status / data of the proxy command. */
+	void mergeAndDelete (RCommand *to);
+protected:
+friend class RThread;
+	RCommandProxy (const QString &command, int type);
+public:		// all these are public for technical reasons, only.
+	QString command;
+	int type;
+	int id;
+	int status;
 };
 
 #endif

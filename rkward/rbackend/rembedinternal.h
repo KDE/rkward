@@ -77,7 +77,7 @@ private:
 friend class RInterface;
 friend class RThread;
 	bool *done;
-	RCommand *command;
+	RCommandProxy *command;
 };
 
 /** Simple event class to relay information from the RThread to the main thread. This is basically like QCustomEvent in Qt3*/
@@ -176,8 +176,8 @@ protected:
 /** convenience low-level function for running a command, directly. Use this overload, if you want to handle a return value.
 @param command command to be runCommand
 @param datatype the data type that should be (attempted to be) returned
-@returns a pointer to the RCommand-instance that was created and used, internally. You can query this pointer for status and data. Be sure to delete it, when done. */
-	RCommand *runDirectCommand (const QString &command, RCommand::CommandTypes datatype); 
+@returns a pointer to the RCommandProxy-instance that was created and used, internally. You can query this pointer for status and data. Be sure to delete it, when done. */
+	RCommandProxy *runDirectCommand (const QString &command, RCommand::CommandTypes datatype); 
 public:
 /** call this periodically to make R's x11 windows process their events */
 	static void processX11Events ();
@@ -199,9 +199,9 @@ points:
 	void handleStandardCallback (RCallbackArgs *args);
 
 /** The command currently being executed. */
-	RCommand *current_command;
+	RCommandProxy *current_command;
 
-	void runCommand (RCommand *command);
+	void runCommand (RCommandProxy *command);
 
 /** only one instance of this class may be around. This pointer keeps the reference to it, for interfacing to from C to C++ */
 	static RThread *this_pointer;
@@ -238,7 +238,7 @@ points:
 	static RKReplStatus repl_status;
 
 	// fetch next command (and do event processing while waiting)
-	RCommand *fetchNextCommand ();
+	RCommandProxy *fetchNextCommand ();
 	void commandFinished (bool check_object_updates_needed=true);
 /** thread is killed. Should exit as soon as possible. @see kill */
 	bool killed;
@@ -258,10 +258,6 @@ protected:
 /** the main loop. See \ref RThread for a more detailed description */
 	void run ();
 private:  
-/** This is the function in which an RCommand actually gets processed. Basically it passes the command to runCommand () and sends RInterface some events about what is currently happening. */
-	void doCommand (RCommand *command);
-	void notifyCommandDone (RCommand *command);
-
 /** A copy of the names of the toplevel environments (as returned by "search ()"). */
 	QStringList toplevel_env_names;
 /** A copy of the names of the toplevel symbols in the .GlobalEnv. */
@@ -270,7 +266,7 @@ private:
 	QStringList changed_symbol_names;
 /** check wether the object list / global environment / individual symbols have changed, and updates them, if needed */
 	void checkObjectUpdatesNeeded (bool check_list);
-	QList<RCommand*> all_current_commands;
+	QList<RCommandProxy*> all_current_commands;
 
 	/** current output */
 	ROutputList output_buffer;
