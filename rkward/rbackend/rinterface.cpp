@@ -358,6 +358,7 @@ void RInterface::flushOutput (bool forced) {
 				}
 				if (command->output_list.last ()->output == coutput->output) {
 					command->output_list.last ()->type = ROutput::Error;
+					continue;	// don't call command->newOutput(), again!
 				}
 			}
 			command->newOutput (coutput);
