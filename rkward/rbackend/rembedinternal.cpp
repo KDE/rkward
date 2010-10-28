@@ -318,7 +318,7 @@ void RWriteConsoleEx (const char *buf, int buflen, int type) {
 	RK_TRACE (RBACKEND);
 
 	// output while nothing else is running (including handlers?) -> This may be a syntax error.
-	if (RThread::repl_status.eval_depth == 0) {
+	if ((RThread::repl_status.eval_depth == 0) && (!RThread::repl_status.in_browser_context) && (!RThread::this_pointer->killed)) {
 		if (RThread::repl_status.user_command_status == RThread::RKReplStatus::UserCommandTransmitted) {
 			// status UserCommandTransmitted might have been set from RKToplevelStatementFinishedHandler, too, in which case all is fine
 			// (we're probably inside another task handler at this point, then)
@@ -351,17 +351,12 @@ void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 			RThread::this_pointer->handleRequest (&request);
 		}
 
-		if(saveact == SA_DEFAULT) saveact = SA_SAVE;
-		if (saveact == SA_SAVE) {
-				if (RunLast) R_dot_Last ();
-				if (R_DirtyImage) R_SaveGlobalEnv ();
-		} else {
-				if (RunLast) R_dot_Last ();
-		}
+		if (RunLast) R_dot_Last ();
+
+		R_RunExitFinalizers ();
 		R_CleanTempDir ();
 	}
-	RThread::this_pointer->killed = true;
-	Rf_error ("Backend dead");	// this jumps us out of the REPL.
+	RThread::this_pointer->killed = true;	// just in case
 }
 
 void RThread::tryToDoEmergencySave () {
@@ -679,7 +674,7 @@ void RThread::processX11Events () {
 SEXP doError (SEXP call) {
 	RK_TRACE (RBACKEND);
 
-	if (RThread::this_pointer->repl_status.eval_depth == 0) {
+	if ((RThread::this_pointer->repl_status.eval_depth == 0) && (!RThread::repl_status.in_browser_context) && (!RThread::this_pointer->killed)) {
 		RThread::this_pointer->repl_status.user_command_status = RThread::RKReplStatus::UserCommandFailed;
 	}
 	QString string = RKRSupport::SEXPToString (call);
@@ -866,7 +861,7 @@ void RThread::enterEventLoop () {
 	RK_TRACE (RBACKEND);
 
 	run_Rmainloop ();
-	Rf_endEmbeddedR (0);
+	// NOTE: Do NOT run Rf_endEmbeddedR(). It does more that we want. We rely on RCleanup, instead.
 }
 
 SEXP parseCommand (const QString &command_qstring, RThread::RKWardRError *error) {
