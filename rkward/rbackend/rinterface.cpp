@@ -219,7 +219,7 @@ void RInterface::handleCommandOut (RCommandProxy *proxy) {
 		}
 	#endif
 
-	if (command->status & RCommand::Canceled) {
+	if ((command->status & RCommand::Canceled) || (command == running_command_canceled)) {
 		command->status |= RCommand::HasError;
 		ROutput *out = new ROutput;
 		out->type = ROutput::Error;
