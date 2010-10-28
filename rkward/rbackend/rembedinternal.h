@@ -168,7 +168,7 @@ protected:
 @param argv Arguments as would be passed on the commandline to R
 @param stack_check C stack checking enabled */
 	bool startR (int argc, char **argv, bool stack_check);
-
+public:
 /** convenience low-level function for running a command, directly
 @param command command to be runCommand
 @returns true if command was run successfully, false in case of an error */
@@ -178,7 +178,6 @@ protected:
 @param datatype the data type that should be (attempted to be) returned
 @returns a pointer to the RCommandProxy-instance that was created and used, internally. You can query this pointer for status and data. Be sure to delete it, when done. */
 	RCommandProxy *runDirectCommand (const QString &command, RCommand::CommandTypes datatype); 
-public:
 /** call this periodically to make R's x11 windows process their events */
 	static void processX11Events ();
 
@@ -230,8 +229,11 @@ public:
 			ReplIterationKilled
 		} user_command_status;
 		int eval_depth;		// Number (depth) of non-user commands currently running. User commands can only run at depth 0
+		bool in_browser_context;
 	};
 	static RKReplStatus repl_status;
+/** holds a copy of the default R_GlobalContext. Needed to find out, when a browser context has been left. */
+	static void *default_global_context;
 
 	void commandFinished (bool check_object_updates_needed=true);
 /** thread is killed. Should exit as soon as possible. @see kill */

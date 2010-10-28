@@ -19,7 +19,8 @@
 
 // static
 RThread *RThread::this_pointer = 0;
-RThread::RKReplStatus RThread::repl_status = { QByteArray (), 0, true, 0, 0, RThread::RKReplStatus::NoUserCommand, 0 };
+RThread::RKReplStatus RThread::repl_status = { QByteArray (), 0, true, 0, 0, RThread::RKReplStatus::NoUserCommand, 0, false };
+void* RThread::default_global_context = 0;
 
 #include <qstring.h>
 #include <QStringList>
@@ -124,7 +125,7 @@ Rboolean RKToplevelStatementFinishedCallback (SEXP expr, SEXP value, Rboolean su
 	Q_UNUSED (value);
 	Q_UNUSED (visible);
 
-	if (RThread::repl_status.eval_depth == 0) {
+	if ((RThread::repl_status.eval_depth == 0) && (!RThread::repl_status.in_browser_context)) {		// Yes, toplevel-handlers _do_ get called in a browser context!
 		RK_ASSERT (RThread::repl_status.user_command_status = RThread::RKReplStatus::UserCommandRunning);
 		if (succeeded) {
 			RThread::repl_status.user_command_successful_up_to = RThread::repl_status.user_command_parsed_up_to;
@@ -183,7 +184,15 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 
 	RK_ASSERT (buf && buflen);
 	RK_ASSERT (RThread::repl_status.eval_depth >= 0);
-	if (RThread::repl_status.eval_depth == 0) {
+
+	if (RThread::repl_status.in_browser_context) {		// previously we were in a browser context. Check, whether we've left that.
+		if (RThread::default_global_context == R_GlobalContext) {
+			RThread::repl_status.in_browser_context = false;
+			RK_ASSERT (!hist);
+		}
+	}
+	
+	if ((!RThread::repl_status.in_browser_context) && (RThread::repl_status.eval_depth == 0)) {
 		while (1) {
 			if (RThread::repl_status.user_command_status == RThread::RKReplStatus::NoUserCommand) {
 				RCommandProxy *command = RThread::this_pointer->fetchNextCommand ();
@@ -235,17 +244,30 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 				RThread::repl_status.user_command_status = RThread::RKReplStatus::NoUserCommand;
 				RThread::this_pointer->commandFinished ();
 			} else if (RThread::repl_status.user_command_status == RThread::RKReplStatus::UserCommandRunning) {
-				// it appears, the user command triggered a call to readline.
-				int n_frames = RKRSupport::SEXPToInt (RKRSupport::callSimpleFun0 (Rf_findFun (Rf_install ("sys.nframe"), R_BaseEnv), R_GlobalEnv));
+				// This can mean three different things:
+				// 1) User called readline ()
+				// 2) User called browser ()
+				// 3) R jumped us back to toplevel behind our backs.
+				// Let's find out, which one it is.
+				if (hist && (RThread::default_global_context != R_GlobalContext)) {
+					break;	// this looks like a call to browser(). Will be handled below.
+				}
+
+				int n_frames = 0;
+				RCommandProxy *dummy = RThread::this_pointer->runDirectCommand ("sys.nframe()", RCommand::GetIntVector);
+				if ((dummy->getDataType () == RData::IntVector) && (dummy->getDataLength () == 1)) {
+					n_frames = dummy->getIntVector ()[0];
+				}
+				// What the ??? Why does this simple version always return 0?
+				//int n_frames = RKRSupport::SEXPToInt (RKRSupport::callSimpleFun0 (Rf_install ("sys.nframe"), R_GlobalEnv));
 				if (n_frames < 1) {
-					// No active frames? This is either a browser() call at toplevel, or R jumped us back to toplevel, behind our backs.
+					// No active frames? This can't be a call to readline(), then, so probably R jumped us back to toplevel, behind our backs.
 					// For safety, let's reset and start over.
 					RThread::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorOther;
 					RThread::repl_status.user_command_status = RThread::RKReplStatus::ReplIterationKilled;
-#warning TODO: use Rf_error(""), instead?
 					RK_doIntr ();	// to discard the buffer
 				} else {
-					// Handled below
+					// A call to readline(). Will be handled below
 					break;
 				}
 			} else if (RThread::repl_status.user_command_status == RThread::RKReplStatus::UserCommandFailed) {
@@ -261,7 +283,12 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 	}
 
 	// here, we handle readline() calls and such, i.e. not the regular prompt for code
-	// browser() also takes us here. TODO: give browser() special handling! May be identifiable due to hist==true
+	// browser() also takes us here.
+	if (hist && (RThread::default_global_context != R_GlobalContext)) {
+		// TODO: give browser() special handling!
+		RThread::repl_status.in_browser_context = true;
+	}
+
 	RBackendRequest request (true, RBackendRequest::ReadLine);
 	request.params["prompt"] = QVariant (prompt);
 	request.params["cancelled"] = QVariant (false);
@@ -272,15 +299,12 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 		RK_doIntr();
 		// threoretically, the above should have got us out of the loop, but for good measure:
 		Rf_error ("cancelled");
+		RK_ASSERT (false);	// should not reach this point.
 	}
 
 	QByteArray localres = RThread::this_pointer->current_locale_codec->fromUnicode (request.params["result"].toString ());
 	// need to append a newline, here. TODO: theoretically, RReadConsole comes back for more, if \0 was encountered before \n.
 	qstrncpy ((char *) buf, localres.left (buflen - 2).append ('\n').data (), buflen);
-
-	// we should not ever get here, but still...
-	RK_ASSERT (false);
-	buf[0] = '\0';
 	return 1;
 }
 
@@ -824,6 +848,7 @@ bool RThread::startR (int argc, char** argv, bool stack_check) {
 
 	connectCallbacks();
 	RKInsertToplevelStatementFinishedCallback (0);
+	default_global_context = R_GlobalContext;
 
 	// get info on R runtime version
 	RCommandProxy *dummy = runDirectCommand ("as.numeric (R.version$major) * 1000 + as.numeric (R.version$minor) * 10", RCommand::GetIntVector);
