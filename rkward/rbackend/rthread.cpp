@@ -56,32 +56,32 @@ void RThread::run () {
 	RK_TRACE (RBACKEND);
 	thread_id = currentThreadId ();
 	killed = false;
-	int err;
+	previous_command = 0;
 
 	// in RInterface::RInterface() we have created a fake RCommand to capture all the output/errors during startup. Fetch it
+	repl_status.eval_depth++;
 	fetchNextCommand ();
 
-	if ((err = initialize ())) {
-		int* err_c = new int;
-		*err_c = err;
-		qApp->postEvent (RKGlobals::rInterface (), new RKRBackendEvent (RKRBackendEvent::RStartupError, err_c));
+	QString err = initialize ();
+	if (!err.isEmpty ()) {
+		RBackendRequest req (true, RBackendRequest::StartupError);
+		req.params["message"] = err;
+		handleRequest (&req);
 	}
-	bool startup_was_handled = false;
-	qApp->postEvent (RKGlobals::rInterface (), new RKRBackendEvent (RKRBackendEvent::RStarted, &startup_was_handled));
 
 	// wait until RKWard is set to go (esp, it has handled any errors during startup, etc.)
-	while (!startup_was_handled) {
-		msleep (10);
-	}
+	RBackendRequest* req = new RBackendRequest (true, RBackendRequest::Started);
+	handleRequest (req);
+	delete req;
 
 	commandFinished ();		// the fake startup command
+	repl_status.eval_depth--;
 
 	enterEventLoop ();
 }
 
 void RThread::commandFinished (bool check_object_updates_needed) {
 	RK_TRACE (RBACKEND);
-
 	RK_DO (qDebug ("done running command"), RBACKEND, DL_DEBUG);
 
 	current_command->status -= (current_command->status & RCommand::Running);
@@ -91,37 +91,62 @@ void RThread::commandFinished (bool check_object_updates_needed) {
 		checkObjectUpdatesNeeded (current_command->type & (RCommand::User | RCommand::ObjectListUpdate));
 	}
 
-	RKRBackendEvent* event = new RKRBackendEvent (RKRBackendEvent::RCommandOut, current_command);
-	qApp->postEvent (RKGlobals::rInterface (), event);		// command may be deleted after this!
+	previous_command = current_command;
 
 	all_current_commands.pop_back();
 	if (!all_current_commands.isEmpty ()) current_command = all_current_commands.last ();
 }
 
+RCommandProxy* RThread::handleRequest (RBackendRequest *_request, bool mayHandleSubstack) {
+	RK_TRACE (RBACKEND);
+	RK_ASSERT (_request);
+
+	RBackendRequest* request = _request;
+	bool synchronous = request->synchronous;	// It's important to *copy* this. For async requests, the request instance may be deleted right after sending.
+	if (!synchronous) request = request->duplicate ();	// will remain in the frontend, and be deleted, there
+
+	RKRBackendEvent* event = new RKRBackendEvent (request);
+	qApp->postEvent (RKGlobals::rInterface (), event);
+
+	if (!synchronous) {
+		RK_ASSERT (mayHandleSubstack);	// i.e. not called from fetchNextCommand
+		_request->done = true;	// for aesthetics
+		return 0;
+	}
+
+	while (!request->done) {
+		if (killed) return 0;
+		// NOTE: processX11Events() may, conceivably, lead to new requests, which may also wait for sub-commands!
+		processX11Events ();
+		if (!request->done) msleep (10);
+	}
+
+	RCommandProxy* command = request->command;
+	if (!command) return 0;
+
+	all_current_commands.append (command);
+	current_command = command;
+
+	if (!mayHandleSubstack) return command;
+	
+	while (command) {
+		runCommand (command);
+		commandFinished (false);
+
+		command = fetchNextCommand ();
+	};
+
+	return 0;
+}
+
 RCommandProxy* RThread::fetchNextCommand () {
 	RK_TRACE (RBACKEND);
 
-	RNextCommandRequest req;
-	bool done = false;
-	req.done = &done;
-	req.command = 0;
+	RBackendRequest req (true, RBackendRequest::CommandOut);
+	req.command = previous_command;
+	previous_command = 0;
 
-	RKRBackendEvent* event = new RKRBackendEvent (RKRBackendEvent::RNextCommandRequest, &req);
-	qApp->postEvent (RKGlobals::rInterface (), event);
-
-	while (!done) {
-		if (killed) return 0;
-		processX11Events ();
-		if (!done) msleep (10);
-	}
-
-	RCommandProxy *command = req.command;
-	if (command) {
-		all_current_commands.append (command);
-		current_command = command;
-	}
-
-	return command;
+	return (handleRequest (&req, false));
 }
 
 void RThread::waitIfOutputBufferExceeded () {
@@ -132,10 +157,10 @@ void RThread::waitIfOutputBufferExceeded () {
 }
 
 void RThread::handleOutput (const QString &output, int buf_length, ROutput::ROutputType output_type) {
+	if (!buf_length) return;
 	RK_TRACE (RBACKEND);
 
-	if (!buf_length) return;
-	RK_DO (qDebug ("Output type %d: ", output_type, qPrintable (output)), RBACKEND, DL_DEBUG);
+	RK_DO (qDebug ("Output type %d: %s", output_type, qPrintable (output)), RBACKEND, DL_DEBUG);
 	waitIfOutputBufferExceeded ();
 
 	output_buffer_mutex.lock ();
@@ -180,50 +205,15 @@ ROutputList RThread::flushOutput (bool forcibly) {
 	return ret;
 }
 
-void RThread::handleSubstackCall (QStringList &call) {
+void RThread::handleHistoricalSubstackRequest (const QStringList &list) {
 	RK_TRACE (RBACKEND);
 
-	if (call.count () == 2) {		// schedule symbol update for later
-		if (call[0] == "ws") {
-			// always keep in mind: No current command can happen for tcl/tk events.
-			if ((!current_command) || (current_command->type & RCommand::ObjectListUpdate) || (!(current_command->type & RCommand::Sync))) {		// ignore Sync commands that are not flagged as ObjectListUpdate
-				if (!changed_symbol_names.contains (call[1])) changed_symbol_names.append (call[1]);
-			}
-			return;
-		}
-	}
+	RBackendRequest request (true, RBackendRequest::HistoricalSubstackRequest);
+	request.params["call"] = list;
+	handleRequest (&request);
+}                                                                        
 
-	REvalRequest request;
-	request.call = call;
-	RKRBackendEvent* event = new RKRBackendEvent (RKRBackendEvent::REvalRequest, &request);
-	qApp->postEvent (RKGlobals::rInterface (), event);
-
-	RCommandProxy *c;
-	while ((c = fetchNextCommand ())) {
-		runCommand (c);
-		commandFinished (false);
-	}
-}
-
-void RThread::handleStandardCallback (RCallbackArgs *args) {
-	RK_TRACE (RBACKEND);
-
-	args->done = false;
-
-	RKRBackendEvent* event = new RKRBackendEvent (RKRBackendEvent::RCallbackRequest, args);
-	qApp->postEvent (RKGlobals::rInterface (), event);
-	
-	bool *done = &(args->done);
-	while (!(*done)) {
-		msleep (10); // callback not done yet? Sleep for a while
-
-		if (!(RInterface::backendIsLocked () || killed)) processX11Events ();
-	}
-
-	RK_DO (qDebug ("standard callback done"), RBACKEND, DL_DEBUG);
-}
-
-int RThread::initialize () {
+QString RThread::initialize () {
 	RK_TRACE (RBACKEND);
 
 	int argc = 2;
@@ -271,7 +261,20 @@ int RThread::initialize () {
 	if (!runDirectCommand ("options (error=quote (.rk.do.error ()))\n")) status |= SinkFail;
 	if (!runDirectCommand ("rk.set.output.html.file (\"" + RKSettingsModuleGeneral::filesPath () + "/rk_out.html\")\n")) status |= SinkFail;
 
-	return status;
+	QString error_messages;
+	if (status & LibLoadFail) {
+		error_messages.append (i18n ("</p>\t- The 'rkward' R-library either could not be loaded at all, or not in the correct version. This may lead to all sorts of errors, from single missing features to complete failure to function. The most likely cause is that the last installation did not place all files in the correct place. However, in some cases, left-overs from a previous installation that was not cleanly removed may be the cause.</p>\
+		<p><b>You should quit RKWard, now, and fix your installation</b>. For help with that, see <a href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</p>\n"));
+	}
+	if (status & SinkFail) {
+		error_messages.append (i18n ("<p>\t-There was a problem setting up the communication with R. Most likely this is due to an incorrect version of the 'rkward' R-library or failure to find that at all. This indicates a broken installation.</p>\
+		<p><b>You should quit RKWard, now, and fix your installation</b>. For help with that, see <a href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</p></p>\n"));
+	}
+	if (status & OtherFail) {
+		error_messages.append (i18n ("<p>\t-An unspecified error occurred that is not yet handled by RKWard. Likely RKWard will not function properly. Please check your setup.</p>\n"));
+	}
+
+	return error_messages;
 }
 
 void RThread::checkObjectUpdatesNeeded (bool check_list) {
@@ -332,12 +335,12 @@ void RThread::checkObjectUpdatesNeeded (bool check_list) {
 		if (search_update_needed) {	// this includes an update of the globalenv, even if not needed
 			QStringList call = toplevel_env_names;
 			call.prepend ("syncenvs");	// should be faster than the reverse
-			handleSubstackCall (call);
+			handleHistoricalSubstackRequest (call);
 		} 
 		if (globalenv_update_needed) {
 			QStringList call = global_env_toplevel_names;
 			call.prepend ("syncglobal");	// should be faster than the reverse
-			handleSubstackCall (call);
+			handleHistoricalSubstackRequest (call);
 		}
 	}
 
@@ -349,7 +352,7 @@ void RThread::checkObjectUpdatesNeeded (bool check_list) {
 	if (!changed_symbol_names.isEmpty ()) {
 		QStringList call = changed_symbol_names;
 		call.prepend (QString ("sync"));	// should be faster than reverse
-		handleSubstackCall (call);
+		handleHistoricalSubstackRequest (call);
 		changed_symbol_names.clear ();
 	}
 }

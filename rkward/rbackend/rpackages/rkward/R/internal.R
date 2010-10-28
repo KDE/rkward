@@ -60,13 +60,13 @@
 	}
 }
 
+".rk.rkreply" <- NULL
+".rk.set.reply" <- function (x) .rk.rkreply <<- x
+
 ".rk.do.call" <- function (x, args=NULL) {
+	.rk.set.reply (NULL)
 	.Call ("rk.do.command", c (x, args));
-	if (exists (".rk.rkreply")) {
-		return (.rk.rkreply)
-	} else {
-		return (NULL)
-	}
+	return (.rk.rkreply)
 }
 
 # package information formats may - according to the help - be subject to change. Hence this function to cope with "missing" values
@@ -294,15 +294,11 @@
 
 ".rk.output.html.file" <- NULL
 
-".rk.rkreply" <- NULL
-
-".rk.set.reply" <- function (x) .rk.rkreply <<- x
-
 "Sys.setlocale" <- function (category = "LC_ALL", locale = "", ...) {
 	if (category == "LC_ALL" || category == "LC_CTYPE" || category == "LANG") {
-		.rk.do.call ("preLocaleChange", NULL);
-		if (!is.null (.rk.rkreply)) {
-			if (.rk.rkreply == FALSE) stop ("Changing the locale was cancelled by user");
+		allow <- .rk.do.call ("preLocaleChange", NULL);
+		if (!is.null (allow)) {
+			if (allow == FALSE) stop ("Changing the locale was cancelled by user");
 		}
 
 		ret <- base::Sys.setlocale (category, locale, ...)

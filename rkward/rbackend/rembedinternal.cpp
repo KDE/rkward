@@ -112,10 +112,9 @@ SEXP runCommandInternalBase (SEXP pr, RThread::RKWardRError *error);
 void RSuicide (const char* message) {
 	RK_TRACE (RBACKEND);
 
-	RCallbackArgs args;
-	args.type = RCallbackArgs::RBackendExit;
-	args.params["message"] = QVariant (i18n ("The R engine has encountered a fatal error:\n%1").arg (message));
-	RThread::this_pointer->handleStandardCallback (&args);
+	RBackendRequest request (true, RBackendRequest::BackendExit);
+	request.params["message"] = QVariant (i18n ("The R engine has encountered a fatal error:\n%1").arg (message));
+	RThread::this_pointer->handleRequest (&request);
 	RThread::this_pointer->killed = true;
 }
 
@@ -186,8 +185,6 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 	RK_ASSERT (RThread::repl_status.eval_depth >= 0);
 	if (RThread::repl_status.eval_depth == 0) {
 		while (1) {
-			if (RThread::this_pointer->killed) return 0;
-
 			if (RThread::repl_status.user_command_status == RThread::RKReplStatus::NoUserCommand) {
 				RCommandProxy *command = RThread::this_pointer->fetchNextCommand ();
 				if (!command) {
@@ -265,21 +262,19 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 
 	// here, we handle readline() calls and such, i.e. not the regular prompt for code
 	// browser() also takes us here. TODO: give browser() special handling! May be identifiable due to hist==true
-	RCallbackArgs args;
-	args.type = RCallbackArgs::RReadLine;
-	args.params["prompt"] = QVariant (prompt);
-	args.params["cancelled"] = QVariant (false);
+	RBackendRequest request (true, RBackendRequest::ReadLine);
+	request.params["prompt"] = QVariant (prompt);
+	request.params["cancelled"] = QVariant (false);
 
-	RThread::this_pointer->handleStandardCallback (&args);
-// default implementation seems to return 1 on success, 0 on failure, contrary to some documentation. see unix/std-sys.c
-	if (args.params["cancelled"].toBool ()) {
+	RThread::this_pointer->handleRequest (&request);
+	if (request.params["cancelled"].toBool ()) {
 		if (RThread::this_pointer->current_command) RThread::this_pointer->current_command->status |= RCommand::Canceled;
 		RK_doIntr();
-		// threoretically, the above should have got us out, but for good measure:
+		// threoretically, the above should have got us out of the loop, but for good measure:
 		Rf_error ("cancelled");
 	}
 
-	QByteArray localres = RThread::this_pointer->current_locale_codec->fromUnicode (args.params["result"].toString ());
+	QByteArray localres = RThread::this_pointer->current_locale_codec->fromUnicode (request.params["result"].toString ());
 	// need to append a newline, here. TODO: theoretically, RReadConsole comes back for more, if \0 was encountered before \n.
 	qstrncpy ((char *) buf, localres.left (buflen - 2).append ('\n').data (), buflen);
 
@@ -327,10 +322,9 @@ void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 
 	if (saveact != SA_SUICIDE) {
 		if (!RThread::this_pointer->isKilled ()) {
-			RCallbackArgs args;
-			args.type = RCallbackArgs::RBackendExit;
-			args.params["message"] = QVariant (i18n ("The R engine has shut down with status: %1").arg (status));
-			RThread::this_pointer->handleStandardCallback (&args);
+			RBackendRequest request (true, RBackendRequest::BackendExit);
+			request.params["message"] = QVariant (i18n ("The R engine has shut down with status: %1").arg (status));
+			RThread::this_pointer->handleRequest (&request);
 		}
 
 		if(saveact == SA_DEFAULT) saveact = SA_SAVE;
@@ -368,13 +362,12 @@ QStringList charPArrayToQStringList (const char** chars, int count) {
 int RChooseFile (int isnew, char *buf, int len) {
 	RK_TRACE (RBACKEND);
 
-	RCallbackArgs args;
-	args.type = RCallbackArgs::RChooseFile;
-	args.params["new"] = QVariant ((bool) isnew);
+	RBackendRequest request (true, RBackendRequest::ChooseFile);
+	request.params["new"] = QVariant ((bool) isnew);
 
-	RThread::this_pointer->handleStandardCallback (&args);
+	RThread::this_pointer->handleRequest (&request);
 
-	QByteArray localres = RThread::this_pointer->current_locale_codec->fromUnicode (args.params["result"].toString ());
+	QByteArray localres = RThread::this_pointer->current_locale_codec->fromUnicode (request.params["result"].toString ());
 	qstrncpy ((char *) buf, localres.data (), len);
 
 // return length of filename (strlen (buf))
@@ -384,35 +377,33 @@ int RChooseFile (int isnew, char *buf, int len) {
 /* There are about one million possible entry points to editing / showing files. We try to cover them all, using the
 following bunch of functions (REditFilesHelper() and doShowEditFiles() are helpers, only) */
 
-void REditFilesHelper (QStringList files, QStringList titles, QString wtitle, RCallbackArgs::RCallbackType edit, bool delete_files) {
+void REditFilesHelper (QStringList files, QStringList titles, QString wtitle, RBackendRequest::RCallbackType edit, bool delete_files) {
 	RK_TRACE (RBACKEND);
 
-	RCallbackArgs args;
-	if (edit == RCallbackArgs::REditFiles) args.type = RCallbackArgs::REditFiles;
-	else {
-		RK_ASSERT (edit == RCallbackArgs::RShowFiles);
-		args.type = RCallbackArgs::RShowFiles;
-		args.params["delete"] = QVariant (delete_files);
+	RK_ASSERT ((edit == RBackendRequest::ShowFiles) || (edit == RBackendRequest::EditFiles));
+	RBackendRequest request (edit != RBackendRequest::ShowFiles, edit);		// editing is synchronous, showing is asynchronous
+	if (edit == RBackendRequest::ShowFiles) {
+		request.params["delete"] = QVariant (delete_files);
 	}
 	// see ?file.show() for what appears to be the intended meaning of these first three parameters
 	// (which seem to be inconsistently named even in R itself...)
-	args.params["files"] = QVariant (files);
-	args.params["titles"] = QVariant (titles);
-	args.params["wtitle"] = QVariant (wtitle);
+	request.params["files"] = QVariant (files);
+	request.params["titles"] = QVariant (titles);
+	request.params["wtitle"] = QVariant (wtitle);
 
-	RThread::this_pointer->handleStandardCallback (&args);
+	RThread::this_pointer->handleRequest (&request);
 }
 
 int REditFiles (int nfile, const char **file, const char **title, const char *wtitle) {
 	RK_TRACE (RBACKEND);
 
-	REditFilesHelper (charPArrayToQStringList (file, nfile), charPArrayToQStringList (title, nfile), wtitle, RCallbackArgs::REditFiles, false);
+	REditFilesHelper (charPArrayToQStringList (file, nfile), charPArrayToQStringList (title, nfile), wtitle, RBackendRequest::EditFiles, false);
 
 // default implementation seems to return 1 if nfile <= 0, else 1. No idea, what for. see unix/std-sys.c
 	return (nfile <= 0);
 }
 
-SEXP doShowEditFiles (SEXP files, SEXP titles, SEXP wtitle, SEXP del, RCallbackArgs::RCallbackType edit) {
+SEXP doShowEditFiles (SEXP files, SEXP titles, SEXP wtitle, SEXP del, RBackendRequest::RCallbackType edit) {
 	RK_TRACE (RBACKEND);
 
 	// this function would be much shorter, if SEXPToStringList would simply return a QStringList...
@@ -443,7 +434,7 @@ SEXP doShowEditFiles (SEXP files, SEXP titles, SEXP wtitle, SEXP del, RCallbackA
 }
 
 SEXP doEditFiles (SEXP files, SEXP titles, SEXP wtitle) {
-	return (doShowEditFiles (files, titles, wtitle, R_NilValue, RCallbackArgs::REditFiles));
+	return (doShowEditFiles (files, titles, wtitle, R_NilValue, RBackendRequest::EditFiles));
 }
 
 int REditFile (const char *buf) {
@@ -457,13 +448,13 @@ int REditFile (const char *buf) {
 }
 
 SEXP doShowFiles (SEXP files, SEXP titles, SEXP wtitle, SEXP delete_files) {
-	return (doShowEditFiles (files, titles, wtitle, delete_files, RCallbackArgs::RShowFiles));
+	return (doShowEditFiles (files, titles, wtitle, delete_files, RBackendRequest::ShowFiles));
 }
 
 int RShowFiles (int nfile, const char **file, const char **headers, const char *wtitle, Rboolean del, const char */* pager */) {
 	RK_TRACE (RBACKEND);
 
-	REditFilesHelper (charPArrayToQStringList (file, nfile), charPArrayToQStringList (headers, nfile), QString (wtitle), RCallbackArgs::RShowFiles, (bool) del);
+	REditFilesHelper (charPArrayToQStringList (file, nfile), charPArrayToQStringList (headers, nfile), QString (wtitle), RBackendRequest::ShowFiles, (bool) del);
 
 // default implementation seems to returns 1 on success, 0 on failure. see unix/std-sys.c
 	return 1;
@@ -474,20 +465,20 @@ int RShowFiles (int nfile, const char **file, const char **headers, const char *
 int doDialogHelper (QString caption, QString message, QString button_yes, QString button_no, QString button_cancel, bool wait) {
 	RK_TRACE (RBACKEND);
 
-	RCallbackArgs args;
-	args.type = RCallbackArgs::RShowMessage;
-	args.params["caption"] = QVariant (caption);
-	args.params["message"] = QVariant (message);
-	args.params["button_yes"] = QVariant (button_yes);
-	args.params["button_no"] = QVariant (button_no);
-	args.params["button_cancel"] = QVariant (button_cancel);
-	if (wait) args.params["wait"] = "1";
+	RBackendRequest request (wait, RBackendRequest::ShowMessage);
+	request.params["caption"] = QVariant (caption);
+	request.params["message"] = QVariant (message);
+	request.params["button_yes"] = QVariant (button_yes);
+	request.params["button_no"] = QVariant (button_no);
+	request.params["button_cancel"] = QVariant (button_cancel);
 
-	RThread::this_pointer->handleStandardCallback (&args);
-
-	QString ret = args.params["result"].toString ();
-	if (ret == "yes") return 1;
-	if (ret == "no") return -1;
+	RThread::this_pointer->handleRequest (&request);
+ 
+	if (wait) {
+		QString ret = request.params["result"].toString ();
+		if (ret == "yes") return 1;
+		if (ret == "no") return -1;
+	}
 	return 0;
 }
 
@@ -682,8 +673,22 @@ SEXP doSubstackCall (SEXP call) {
 	for (unsigned int i = 0; i < count; ++i) {
 		list.append (strings[i]);
 	}
-	RThread::this_pointer->handleSubstackCall (list);
 	delete [] strings;
+
+	// handle symbol updates inline
+	if (list.count () == 2) {		// schedule symbol update for later
+		if (list[0] == "ws") {
+			// always keep in mind: No current command can happen for tcl/tk events.
+			if ((!RThread::this_pointer->current_command) || (RThread::this_pointer->current_command->type & RCommand::ObjectListUpdate) || (!(RThread::this_pointer->current_command->type & RCommand::Sync))) {		// ignore Sync commands that are not flagged as ObjectListUpdate
+				if (!RThread::this_pointer->changed_symbol_names.contains (list[1])) RThread::this_pointer->changed_symbol_names.append (list[1]);
+			}
+			return R_NilValue;
+		}
+	}
+
+#warning TODO: extend this by sychronity parameter
+	RThread::this_pointer->handleHistoricalSubstackRequest (list);
+
 	return R_NilValue;
 }
 
@@ -954,30 +959,34 @@ void RThread::runCommand (RCommandProxy *command) {
 
 	if (ctype & RCommand::DirectToOutput) runDirectCommand (".rk.capture.messages()");
 
-	repl_status.eval_depth++;
-	SEXP parsed = parseCommand (command->command, &error);
-	if (error == NoError) {
-		SEXP exp;
-		PROTECT (exp = runCommandInternalBase (parsed, &error));
+	if (ctype & RCommand::QuitCommand) {
+		killed = true;
+	} else if (!(ctype & RCommand::EmptyCommand)) {
+		repl_status.eval_depth++;
+		SEXP parsed = parseCommand (command->command, &error);
 		if (error == NoError) {
-			if (ctype & RCommand::GetStringVector) {
-				retdata.datatype = RData::StringVector;
-				retdata.data = RKRSupport::SEXPToStringList (exp, &(retdata.length));
-			} else if (ctype & RCommand::GetRealVector) {
-				retdata.datatype = RData::RealVector;
-				retdata.data = RKRSupport::SEXPToRealArray (exp, &(retdata.length));
-			} else if (ctype & RCommand::GetIntVector) {
-				retdata.datatype = RData::IntVector;
-				retdata.data = RKRSupport::SEXPToIntArray (exp, &(retdata.length));
-			} else if (ctype & RCommand::GetStructuredData) {
-				RData *dummy = RKRSupport::SEXPToRData (exp);
-				retdata.setData (*dummy);
-				delete dummy;
+			SEXP exp;
+			PROTECT (exp = runCommandInternalBase (parsed, &error));
+			if (error == NoError) {
+				if (ctype & RCommand::GetStringVector) {
+					retdata.datatype = RData::StringVector;
+					retdata.data = RKRSupport::SEXPToStringList (exp, &(retdata.length));
+				} else if (ctype & RCommand::GetRealVector) {
+					retdata.datatype = RData::RealVector;
+					retdata.data = RKRSupport::SEXPToRealArray (exp, &(retdata.length));
+				} else if (ctype & RCommand::GetIntVector) {
+					retdata.datatype = RData::IntVector;
+					retdata.data = RKRSupport::SEXPToIntArray (exp, &(retdata.length));
+				} else if (ctype & RCommand::GetStructuredData) {
+					RData *dummy = RKRSupport::SEXPToRData (exp);
+					retdata.setData (*dummy);
+					delete dummy;
+				}
 			}
+			UNPROTECT (1); // exp
 		}
-		UNPROTECT (1); // exp
+		repl_status.eval_depth--;
 	}
-	repl_status.eval_depth--;
 
 	if (ctype & RCommand::DirectToOutput) runDirectCommand (".rk.print.captured.messages()");
 	if (!(ctype & RCommand::Internal)) {

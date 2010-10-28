@@ -100,7 +100,7 @@ public:
 @param read_only Open the document read only? Default is false, i.e. Read-write
 @param force_caption Usually the caption is determined from the url of the file. If you specify a non-empty string here, that is used instead.
 @returns false if a local url could not be opened, true for all remote urls, and on success */
-	bool openScriptEditor (const KUrl &url=KUrl (), const QString& encoding=QString (), bool use_r_highlighting=true, bool read_only=false, const QString &force_caption = QString::null);
+	bool openScriptEditor (const KUrl &url=KUrl (), const QString& encoding=QString (), bool use_r_highlighting=true, bool read_only=false, const QString &force_caption = QString::null, bool delete_on_close=false);
 /** Opens a new help window, starting at the given url
 @param url URL to open
 @param only_once if true, checks whether any help window already shows this URL. If so, raise it, but do not open a new window. Else show the new window */

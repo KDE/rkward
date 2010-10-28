@@ -216,7 +216,7 @@ bool RKWorkplace::openAnyUrl (const KUrl &url) {
 	return false;
 }
 
-bool RKWorkplace::openScriptEditor (const KUrl &url, const QString& encoding, bool use_r_highlighting, bool read_only, const QString &force_caption) {
+bool RKWorkplace::openScriptEditor (const KUrl &url, const QString& encoding, bool use_r_highlighting, bool read_only, const QString &force_caption, bool delete_on_close) {
 	RK_TRACE (APP);
 
 // is this url already opened?
@@ -234,7 +234,7 @@ bool RKWorkplace::openScriptEditor (const KUrl &url, const QString& encoding, bo
 	RKCommandEditorWindow *editor = new RKCommandEditorWindow (view (), use_r_highlighting);
 
 	if (!url.isEmpty ()) {
-		if (!editor->openURL (url, encoding, use_r_highlighting, read_only)) {
+		if (!editor->openURL (url, encoding, use_r_highlighting, read_only, delete_on_close)) {
 			delete editor;
 			KMessageBox::messageBox (view (), KMessageBox::Error, i18n ("Unable to open \"%1\"", url.prettyUrl ()), i18n ("Could not open command file"));
 			return false;

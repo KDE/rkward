@@ -36,80 +36,80 @@ extern "C" {
 }
 #endif
 
-/** This struct is used to pass the standard callbacks from R to the main thread (if needed; some are handled in the backend thread). Note that for the callbacks that need to be passed to the main
-thread, we can be quite wasteful both in terms of cycles and memory, since these are usually
-requests for user interaction. Hence we use a QVariantMap to accommodate all the different needed
-parameters, easily, and in a readable way. */
-struct RCallbackArgs {
-/** is main thread done with the callback, yet? Initialized to false inside the true handler: RThread::doStandardCallback () */
-	bool done;
-/** type of the callback */
+class RBackendRequest {
+public:
 	enum RCallbackType {
-		RBackendExit,
-		RShowMessage,
-		RShowFiles,
-		RChooseFile,
-		REditFiles,
-		RReadLine
-       } type;
-/** All the parameters sent in either direction */
+		BackendExit,
+		ShowMessage,
+		ShowFiles,
+		ChooseFile,
+		EditFiles,
+		ReadLine,
+		CommandOut,
+		Started,
+		EvalRequest,
+		CallbackRequest,
+		StartupError,
+		HistoricalSubstackRequest,
+		OtherRequest		/**< Any other type of request. Note: which requests are in the enum, and which are not has mostly historical reasons. @see params */
+	};
+
+	RBackendRequest (bool synchronous, RCallbackType type) {
+		RBackendRequest::synchronous = synchronous;
+		RBackendRequest::type = type;
+		done = false;
+		command = 0;
+	}
+	~RBackendRequest () {};
+
+	RBackendRequest *duplicate () {
+		RBackendRequest* ret = new RBackendRequest (synchronous, type);
+		ret->done = done;
+		ret->command = command;
+		ret->params = params;
+		return ret;
+	}
+
+	void completed () {
+		if (!synchronous) delete this;
+		else done = true;
+	}
+
+/** Should this request be handled synchronously? False by default. */
+	bool synchronous;
+/** For synchronous requests, only: The frontend-thread will set this to true (using completed()), once the request has been "completed". Important: The backend thread MUST NOT touch a request after it has been sent, and before "done" has been set to true. */
+	bool done;
+	RCallbackType type;
+/** For synchronous requests, only: If the the frontend wants any commands to be executed, it will place the next one in this slot. The backend thread should keep executing commands (in a sub-eventloop) while this is non-zero. Also, the backend-thread may place here any command that has just finished. */
+	RCommandProxy *command;
+/** Any other parameters, esp. for RCallbackType::OtherRequest. Can be used in both directions. */
 	QVariantMap params;
 };
 
 class QStringList;
 class QTextCodec;
 class RInterface;
-struct RCallbackArgs;
 struct ROutput;
-
-/** this struct is used to pass on eval-requests (i.e. request for RKWard to do something, which may involve issuing further commands) from the
-backend-thread to the main thread. Do not use outside the backend-classes. */
-struct REvalRequest {
-private:
-friend class RInterface;
-friend class RThread;
-	QStringList call;
-};
-
-/** Used to request the next command from the front-end */
-struct RNextCommandRequest {
-private:
-friend class RInterface;
-friend class RThread;
-	bool *done;
-	RCommandProxy *command;
-};
 
 /** Simple event class to relay information from the RThread to the main thread. This is basically like QCustomEvent in Qt3*/
 class RKRBackendEvent : public QEvent {
 public:
 	enum EventType {
-		Base = QEvent::User + 1,
-		RNextCommandRequest,
-		RCommandOut,
-		RCommandOutput,
-		RStarted,
-		REvalRequest,
-		RCallbackRequest,
-		RStartupError
+		RKWardEvent = QEvent::User + 1
 	};
-
-	RKRBackendEvent (EventType type, void* data=0) : QEvent ((QEvent::Type) type) { _data = data; };
+	RKRBackendEvent (RBackendRequest* data=0) : QEvent ((QEvent::Type) RKWardEvent) { _data = data; };
 	RKRBackendEvent ();
 
-	EventType etype () { return ((EventType) type ()); };
-	void* data () { return _data; };
+	RBackendRequest* data () { return _data; };
 private:
-	void* _data;
+	RBackendRequest* _data;
 };
 
 /** This class represents the thread the R backend is running in. So to speak, this is where the "eventloop" of R is running. The main thing happening
-in this class, is that an infinite loop is running. Whenever there are commands to be executed, those get evaluated. Also, at regular intervals,
+in this class, is that it enters R's REPL (Read-evaluate-parse-loop). Whenever there are commands to be executed, those get evaluated. When there are not,
 processing of X11-Events in R is triggered. The rest of the time the thread sleeps.
 
-Actually, there are really two copies of the main loop: The regular one, and a second one which gets run when the R backend has requested some
-task to be carried out (@see handleSubstackCall). In this case, we might have to run some further child commands in the backend, before we proceed with the commands in
-the main queque. Some thing like:
+Actually, there is also a custom sub-eventloop, which gets called when the R backend has requested something. See handleRequest(). In this case, we might have to run some further child commands in the backend, before we proceed with the commands in the main queque. Some thing like:
 
 - Run some RCommand s
 	- R backend asks for some information / action
@@ -119,7 +119,7 @@ the main queque. Some thing like:
 	- R backend request completed
 - Run some more RCommand s
 
-This subordinate/nested eventloop is done in handleSubstackCall ().
+This subordinate/nested eventloop is done in handleRequest ().
 
 A closely related class is RInterface: RThread communicates with RInterface by placing QCustomEvent s, when commands are done
 or when the backend needs information from the frontend. For historical reasons, the definitions of RThread class-members are currently spread over different files.
@@ -159,7 +159,7 @@ public:
 
 /** initializes the R-backend. Returns an error-code that consists of a bit-wise or-conjunction of the RThread::InitStatus -enum, RThread::Ok on success.
 Note that you should call initialize only once in a application */
-	int initialize ();
+	QString initialize ();
 
 	void enterEventLoop ();
 protected:
@@ -189,14 +189,10 @@ public:
 @param forcibly: if true, will always flush the output. If false, will flush the output only if the mutex can be locked without waiting. */
 	ROutputList flushOutput (bool forcibly=false);
 
-/** This is a sub-eventloop, being run when the backend request information from the frontend. See \ref RThread for a more detailed description */
-	void handleSubstackCall (QStringList &call);
-
-/** This is a minimal sub-eventloop, being run, when the backend requests simple information from the frontend. It differs from handleSubstack in two
-points:
-1) it does not create a full-fledged substack for additional R commands
-2) it may return information via the args parameter immediately */
-	void handleStandardCallback (RCallbackArgs *args);
+	void handleRequest (RBackendRequest *request) { handleRequest (request, true); };
+/** A relic of history. Eventually most of these will be replaced by dedicated RBackendRequests. */
+	void handleHistoricalSubstackRequest (const QStringList &list);
+	RCommandProxy* fetchNextCommand ();
 
 /** The command currently being executed. */
 	RCommandProxy *current_command;
@@ -237,16 +233,17 @@ points:
 	};
 	static RKReplStatus repl_status;
 
-	// fetch next command (and do event processing while waiting)
-	RCommandProxy *fetchNextCommand ();
 	void commandFinished (bool check_object_updates_needed=true);
 /** thread is killed. Should exit as soon as possible. @see kill */
 	bool killed;
+/** A list of symbols that have been assigned new values during the current command */
+	QStringList changed_symbol_names;
 protected:
 /** On pthread systems this is the pthread_id of the backend thread. It is needed to send SIGINT to the R backend */
 	Qt::HANDLE thread_id;
 /** If the length of the current output buffer is too long, this will pause any further output until the main thread has had a chance to catch up. */
 	void waitIfOutputBufferExceeded ();
+	RCommandProxy* handleRequest (RBackendRequest *request, bool mayHandleSubstack);
 private:
 /** set up R standard callbacks */
 	void setupCallbacks ();
@@ -262,8 +259,6 @@ private:
 	QStringList toplevel_env_names;
 /** A copy of the names of the toplevel symbols in the .GlobalEnv. */
 	QStringList global_env_toplevel_names;
-/** A list of symbols that have been assigned new values during the current command */
-	QStringList changed_symbol_names;
 /** check wether the object list / global environment / individual symbols have changed, and updates them, if needed */
 	void checkObjectUpdatesNeeded (bool check_list);
 	QList<RCommandProxy*> all_current_commands;
@@ -274,6 +269,9 @@ private:
 	QMutex output_buffer_mutex;
 /** current length of output. If the backlog of output which has not yet been processed by the frontend becomes too long, output will be paused, automatically */
 	int out_buf_len;
+
+	/** The previously executed command. Only non-zero until a new command has been requested. */
+	RCommandProxy *previous_command;
 };
  
 #endif

@@ -19,6 +19,7 @@
 
 #include <klocale.h>
 #include <kdialog.h>
+#include <kmessagebox.h>
 
 #include <qlabel.h>
 #include <qlayout.h>
@@ -34,10 +35,10 @@
 
 #include "../debug.h"
 
-ShowEditTextFileAgent::ShowEditTextFileAgent (RCallbackArgs *args, const QString &text, const QString &caption) : QObject (RKWardMainWindow::getMain ()) {
+ShowEditTextFileAgent::ShowEditTextFileAgent (RBackendRequest *request, const QString &text, const QString &caption) : QObject (RKWardMainWindow::getMain ()) {
 	RK_TRACE (APP);
 
-	ShowEditTextFileAgent::args = args;
+	ShowEditTextFileAgent::request = request;
 
 	dialog = new KDialog (0);
 
@@ -56,7 +57,7 @@ ShowEditTextFileAgent::ShowEditTextFileAgent (RCallbackArgs *args, const QString
 
 	dialog->setButtonText (KDialog::Ok, i18n ("Done"));
 
-	connect (dialog, SIGNAL (finished ()), this, SLOT (done ()));
+	connect (dialog, SIGNAL (finished ()), this, SLOT (deleteLater ()));
 
 	// do it
 	dialog->show ();
@@ -65,38 +66,23 @@ ShowEditTextFileAgent::ShowEditTextFileAgent (RCallbackArgs *args, const QString
 
 ShowEditTextFileAgent::~ShowEditTextFileAgent () {
 	RK_TRACE (APP);
+
+	request->completed ();
+	dialog->deleteLater ();
 }
 
 // static
-void ShowEditTextFileAgent::showEditFiles (RCallbackArgs *args) {
+void ShowEditTextFileAgent::showEditFiles (RBackendRequest *request) {
 	RK_TRACE (APP);
-	if (!args) return;
+	if (!request) return;
 
-	QString caption;
-	QString message;
-	QString message_snip1 = i18n (" For that reason processing has been stopped for now. Press the \"Done\"-button, or close this dialog once you think it is safe to resume.\n\n");
-	QString message_snip2 = i18n ("The file(s) have been opened in text-windows. The following is a list of the file(s) in question:\n\n");
-
-	QStringList files = args->params["files"].toStringList ();
-	QStringList titles = args->params["titles"].toStringList ();
-	QString wtitle = args->params["wtitle"].toString ();
+	QStringList files = request->params["files"].toStringList ();
+	QStringList titles = request->params["titles"].toStringList ();
+	QString wtitle = request->params["wtitle"].toString ();
 	int count = files.count ();
 	RK_ASSERT (titles.count () == count);
 
-	QString bad_files_list;
-	bool r_highlighting = false;
-	bool read_only = true;
-	if (args->type == RCallbackArgs::RShowFiles) {
-		caption = i18n ("Showing file(s)");
-		message = i18n ("A command running in the R-engine wants you to see one or more file(s). RKWard can not determine, whether it is safe to continue processing R commands, before you have read the file(s) in question.") + message_snip1 + message_snip2;
-	} else if (args->type == RCallbackArgs::REditFiles) {
-		caption = i18n ("Edit file(s)");
-		message = i18n ("A command running in the R-engine wants you to edit one or more file(s). RKWard can not determine, whether it is safe to continue processing R commands, before you have read/edited (and saved) the file(s) in question.") + message_snip1 + message_snip2;
-
-		r_highlighting = true;
-		read_only = false;
-	}
-
+	QStringList display_titles;
 	for (int n = 0; n < count; ++n) {
 		QString title;
 		if (!titles[n].isEmpty ()) title = titles[n];
@@ -105,39 +91,31 @@ void ShowEditTextFileAgent::showEditFiles (RCallbackArgs *args) {
 			if (!title.isEmpty ()) title.prepend (": ");
 			title.prepend (wtitle);
 		}
-
-		message.append (title + "\n");
-
-		bool ok = RKWorkplace::mainWorkplace ()->openScriptEditor (KUrl::fromLocalFile (files[n]), QString (), r_highlighting, read_only, title);
-
-		if (!ok)  {
-			bad_files_list.append ("- ").append (title).append (" (").append (files[n]).append (")\n");
-		}
+		display_titles.append (title);
 	}
 
-	if (!bad_files_list.isEmpty ()) {
-		message.append (i18n ("\n\nThe following of the above files were not readable and have not been opened:\n\n"));
-		message.append (bad_files_list);
+	bool r_highlighting = false;
+	bool read_only = true;
+	bool delete_files = false;
+	if (request->type == RBackendRequest::ShowFiles) {
+		RK_ASSERT (!request->synchronous);
+
+		KMessageBox::informationList (RKWardMainWindow::getMain (), i18n ("A command running in the R-engine wants you to see the following file(s):\n"), display_titles, i18n ("Showing file(s)"), "show_files");
+
+		delete_files = request->params["delete"].toBool ();
+		request->completed ();
+	} else if (request->type == RBackendRequest::EditFiles) {
+		new ShowEditTextFileAgent (request, i18n ("A command running in the R-engine wants you to edit one or more file(s). Please look at these files, edit them as appriopriate, and save them. When done, press the \"Done\"-button, or close this dialog to resume.\n\n") + display_titles.join ("\n"), i18n ("Edit file(s)"));
+
+		r_highlighting = true;
+		read_only = false;
+	} else {
+		RK_ASSERT (false);
 	}
 
-	new ShowEditTextFileAgent (args, message, caption);
+	// do this last, as it may produce error messages, if some of the files could not be opened.
+	for (int n = 0; n < count; ++n) {
+		RKWorkplace::mainWorkplace ()->openScriptEditor (KUrl::fromLocalFile (files[n]), QString (), r_highlighting, read_only, display_titles[n], delete_files);
+	}
 }
 
-void ShowEditTextFileAgent::done () {
-	RK_TRACE (APP);
-	dialog->deleteLater ();
-
-	QStringList files = args->params["files"].toStringList ();
-	if ((args->type == RCallbackArgs::RShowFiles) && args->params["delete"].toBool ()) {
-		for (int n = 0; n < files.count (); ++n) {
-			RK_ASSERT (QFile::remove (QString (files[n])));
-		}
-	}
-
-	// this line is what causes the backend-thread to resume processing:
-	args->done = true;
-
-	deleteLater ();
-}
-
-#include "showedittextfileagent.moc"

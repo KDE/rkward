@@ -76,7 +76,6 @@ RInterface::RInterface () {
 	RCommandStack::regular_stack = new RCommandStack (0);
 	running_command_canceled = 0;
 	command_logfile_mode = NotRecordingCommands;
-	command_request = 0;
 	previously_idle = false;
 	locked = 0;
 
@@ -152,14 +151,9 @@ void RInterface::startThread () {
 	r_thread->start ();
 }
 
-RCommand *RInterface::runningCommand () {
-	 if (all_current_commands.isEmpty ()) return 0;
-	 return (all_current_commands.last ());
-}
-
 void RInterface::tryNextCommand () {
 	RK_TRACE (RBACKEND);
-	if (!command_request) return;
+	if (!currentCommandRequest ()) return;
 
 	RCommandStack *stack = RCommandStack::currentStack ();
 	bool main_stack = (stack == RCommandStack::regular_stack);
@@ -170,18 +164,12 @@ void RInterface::tryNextCommand () {
 		if (command) {
 			all_current_commands.append (command);
 
-			if ((command->type () & RCommand::EmptyCommand) || (command->status & RCommand::Canceled) || (command->type () & RCommand::QuitCommand)) {
-				// some commands are not actually run by R, but handled inline, here
-				if (command->status & RCommand::Canceled) {
-					command->status |= RCommand::Failed;
-				}
-				if (command->type () & RCommand::QuitCommand) {
-					r_thread->kill ();
-				}
-				stack->pop ();
+			if (command->status & RCommand::Canceled) {
+				// avoid passing cancelled commands to R
+				command->status |= RCommand::Failed;
+
 				// notify ourselves...
-				RKRBackendEvent* event = new RKRBackendEvent (RKRBackendEvent::RCommandOut, new RCommandProxy (command));
-				qApp->postEvent (this, event);
+				handleCommandOut (new RCommandProxy (command));
 				return;
 			}
 
@@ -203,8 +191,56 @@ void RInterface::tryNextCommand () {
 	}
 }
 
+void RInterface::handleCommandOut (RCommandProxy *proxy) {
+	RK_TRACE (RBACKEND);
+
+	RK_ASSERT (proxy);
+	RK_ASSERT (!all_current_commands.isEmpty ());
+	RCommand *command = all_current_commands.takeLast ();
+	RCommandStack::currentStack ()->pop ();
+	proxy->mergeAndDelete (command);
+
+	#ifdef RKWARD_DEBUG
+		int dl = DL_WARNING;		// failed application commands are an issue worth reporting, failed user commands are not
+		if (command->type () & RCommand::User) dl = DL_DEBUG;
+		if (command->failed ()) {
+			command->status |= RCommand::WasTried | RCommand::Failed;
+			if (command->status & RCommand::ErrorIncomplete) {
+				RK_DO (qDebug ("Command failed (incomplete)"), RBACKEND, dl);
+			} else if (command->status & RCommand::ErrorSyntax) {
+				RK_DO (qDebug ("Command failed (syntax)"), RBACKEND, dl);
+			} else if (command->status & RCommand::Canceled) {
+				RK_DO (qDebug ("Command failed (interrupted)"), RBACKEND, dl);
+			} else {
+				RK_DO (qDebug ("Command failed (other)"), RBACKEND, dl);
+			}
+			RK_DO (qDebug ("failed command was: '%s'", qPrintable (command->command ())), RBACKEND, dl);
+			RK_DO (qDebug ("- error message was: '%s'", qPrintable (command->error ())), RBACKEND, dl);
+		}
+	#endif
+
+	if (command->status & RCommand::Canceled) {
+		command->status |= RCommand::HasError;
+		ROutput *out = new ROutput;
+		out->type = ROutput::Error;
+		out->output = ("--- interrupted ---");
+		command->output_list.append (out);
+		command->newOutput (out);
+		if (running_command_canceled) {
+			RK_ASSERT (command == running_command_canceled);
+			running_command_canceled = 0;
+			r_thread->interruptProcessing (false);
+			locked -= locked & Cancel;
+		}
+	}
+	command->finished ();
+	RCommandStackModel::getModel ()->itemChange (command);
+	delete command;
+}
+
 void RInterface::doNextCommand (RCommand *command) {
 	RK_TRACE (RBACKEND);
+	RBackendRequest* command_request = currentCommandRequest ();
 	RK_ASSERT (command_request);
 
 	flushOutput (true);
@@ -227,8 +263,8 @@ void RInterface::doNextCommand (RCommand *command) {
 	}
 
 	command_request->command = proxy;
-	*(command_request->done) = true;
-	command_request = 0;
+	command_request->completed ();
+	command_requests.pop_back ();
 	QThread::yieldCurrentThread ();
 }
 
@@ -236,87 +272,32 @@ void RInterface::customEvent (QEvent *e) {
 	RK_TRACE (RBACKEND);
 
 	RKRBackendEvent *ev;
-	if (((int) e->type ()) >= ((int) RKRBackendEvent::Base)) {
+	if (((int) e->type ()) == ((int) RKRBackendEvent::RKWardEvent)) {
 		ev = static_cast<RKRBackendEvent*> (e);
 	} else {
 		RK_ASSERT (false);
 		return;
 	}
 
-	if (ev->etype () == RKRBackendEvent::RNextCommandRequest) {
-		RK_ASSERT (!command_request);
-		command_request = static_cast<RNextCommandRequest*> (ev->data ());
+	flushOutput (true);
+	RBackendRequest *request = ev->data ();
+	if (request->type == RBackendRequest::CommandOut) {
+		RCommandProxy *cproxy = request->command;
+
+		if (cproxy) handleCommandOut (cproxy);
+		// else: cproxy should only even be 0 in the very first cycle
+
+		command_requests.append (request);
 		tryNextCommand ();
-	} else if (ev->etype () == RKRBackendEvent::RCommandOut) {
-		flushOutput (true);
-
-		RCommandProxy *cproxy = static_cast <RCommandProxy *> (ev->data ());
-		RK_ASSERT (!all_current_commands.isEmpty ());
-		RCommand *command = all_current_commands.takeLast ();
-		RCommandStack::currentStack ()->pop ();
-		cproxy->mergeAndDelete (command);
-
-		#ifdef RKWARD_DEBUG
-			int dl = DL_WARNING;		// failed application commands are an issue worth reporting, failed user commands are not
-			if (command->type () & RCommand::User) dl = DL_DEBUG;
-			if (command->failed ()) {
-				command->status |= RCommand::WasTried | RCommand::Failed;
-				if (command->status & RCommand::ErrorIncomplete) {
-					RK_DO (qDebug ("Command failed (incomplete)"), RBACKEND, dl);
-				} else if (command->status & RCommand::ErrorSyntax) {
-					RK_DO (qDebug ("Command failed (syntax)"), RBACKEND, dl);
-				} else if (command->status & RCommand::Canceled) {
-					RK_DO (qDebug ("Command failed (interrupted)"), RBACKEND, dl);
-				} else {
-					RK_DO (qDebug ("Command failed (other)"), RBACKEND, dl);
-				}
-				RK_DO (qDebug ("failed command was: '%s'", qPrintable (command->command ())), RBACKEND, dl);
-				RK_DO (qDebug ("- error message was: '%s'", qPrintable (command->error ())), RBACKEND, dl);
-			}
-		#endif
-
-		if (command->status & RCommand::Canceled) {
-			command->status |= RCommand::HasError;
-			ROutput *out = new ROutput;
-			out->type = ROutput::Error;
-			out->output = ("--- interrupted ---");
-			command->output_list.append (out);
-			command->newOutput (out);
-			if (running_command_canceled) {
-				RK_ASSERT (command == running_command_canceled);
-				running_command_canceled = 0;
-				r_thread->interruptProcessing (false);
-				locked -= locked & Cancel;
-			}
-		}
-		command->finished ();
-		RCommandStackModel::getModel ()->itemChange (command);
-		delete command;
-	} else if ((ev->etype () == RKRBackendEvent::REvalRequest)) {
-		processREvalRequest (static_cast<REvalRequest *> (ev->data ()));
-	} else if ((ev->etype () == RKRBackendEvent::RCallbackRequest)) {
-		processRCallbackRequest (static_cast<RCallbackArgs *> (ev->data ()));
-	} else if ((ev->etype () == RKRBackendEvent::RStarted)) {
-		bool* ok_to_proceed = static_cast<bool*> (ev->data ());
-		*ok_to_proceed = true;
+	} else if (request->type == RBackendRequest::HistoricalSubstackRequest) {
+		processHistoricalSubstackRequest (request);
+	} else if ((request->type == RBackendRequest::Started)) {
+		request->completed ();
 		RKWardMainWindow::discardStartupOptions ();
-	} else if ((ev->etype () == RKRBackendEvent::RStartupError)) {
-		flushOutput (true);
-		int* err_p = static_cast<int*> (ev->data ());
-		int err = *err_p;
-		delete err_p;
+	} else if ((request->type == RBackendRequest::StartupError)) {
 		QString message = i18n ("<p>There was a problem starting the R backend. The following error(s) occurred:</p>\n");
-		if (err & RThread::LibLoadFail) {
-			message.append (i18n ("</p>\t- The 'rkward' R-library either could not be loaded at all, or not in the correct version. This may lead to all sorts of errors, from single missing features to complete failure to function. The most likely cause is that the last installation did not place all files in the correct place. However, in some cases, left-overs from a previous installation that was not cleanly removed may be the cause.</p>\
-			<p><b>You should quit RKWard, now, and fix your installation</b>. For help with that, see <a href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</p>\n"));
-		}
-		if (err & RThread::SinkFail) {
-			message.append (i18n ("<p>\t-There was a problem setting up the communication with R. Most likely this is due to an incorrect version of the 'rkward' R-library or failure to find that at all. This indicates a broken installation.</p>\
-			<p><b>You should quit RKWard, now, and fix your installation</b>. For help with that, see <a href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</p></p>\n"));
-		}
-		if (err & RThread::OtherFail) {
-			message.append (i18n ("<p>\t-An unspecified error occurred that is not yet handled by RKWard. Likely RKWard will not function properly. Please check your setup.</p>\n"));
-		}
+		message.append (request->params["message"].toString ());
+
 		QString details = runningCommand()->fullOutput();
 		if (!details.isEmpty ()) {
 			// WORKAROUND for stupid KMessageBox behavior. (kdelibs 4.2.3)
@@ -324,8 +305,10 @@ void RInterface::customEvent (QEvent *e) {
 			details = details.replace('<', "&lt;").replace('\n', "<br>").leftJustified (513);
 		}
 		KMessageBox::detailedError (0, message, details, i18n ("Error starting R"), KMessageBox::Notify | KMessageBox::AllowLink);
+
+		request->completed ();
 	} else {
-		RK_ASSERT (false);
+		processRBackendRequest (request);
 	}
 }
 
@@ -432,40 +415,41 @@ void RInterface::pauseProcessing (bool pause) {
 	else locked -= locked & User;
 }
 
-void RInterface::processREvalRequest (REvalRequest *request) {
+void RInterface::processHistoricalSubstackRequest (RBackendRequest* request) {
 	RK_TRACE (RBACKEND);
 
+	command_requests.append (request);
 	RK_ASSERT (!all_current_commands.isEmpty ());
 	RCommandStack *reply_stack = new RCommandStack (all_current_commands.last ());
 	RCommandChain *in_chain = reply_stack->startChain (reply_stack);
 
-	// clear reply object
-	issueCommand (".rk.set.reply (NULL)", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
-	if (request->call.isEmpty ()) {
+	QStringList calllist = request->params["call"].toStringList ();
+
+	if (calllist.isEmpty ()) {
 		RK_ASSERT (false);
 		closeChain (in_chain);
 		return;
 	}
-	
-	QString call = request->call[0];
+
+	QString call = calllist[0];
 	if (call == "get.tempfile.name") {
-		if (request->call.count () >= 3) {
-			QString file_prefix = request->call[1];
-			QString file_extension = request->call[2];
+		if (calllist.count () >= 3) {
+			QString file_prefix = calllist[1];
+			QString file_extension = calllist[2];
 
 			issueCommand (".rk.set.reply (\"" + RKCommonFunctions::getUseableRKWardSavefileName (file_prefix, file_extension) + "\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
 		} else {
 			issueCommand (".rk.set.reply (\"Too few arguments in call to get.tempfile.name.\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
 		}
 	} else if (call == "set.output.file") {
-		RK_ASSERT (request->call.count () == 2);
+		RK_ASSERT (calllist.count () == 2);
 
-		RKOutputWindowManager::self ()->setCurrentOutputPath (request->call[1]);
+		RKOutputWindowManager::self ()->setCurrentOutputPath (calllist[1]);
 	} else if (call == "sync") {
-		RK_ASSERT (request->call.count () >= 2);
+		RK_ASSERT (calllist.count () >= 2);
 
-		for (int i = 1; i < request->call.count (); ++i) {
-			QString object_name = request->call[i];
+		for (int i = 1; i < calllist.count (); ++i) {
+			QString object_name = calllist[i];
 			RObject *obj = RObjectList::getObjectList ()->findObject (object_name);
 			if (obj) {
 				RK_DO (qDebug ("triggering update for symbol %s", object_name.toLatin1 ().data()), RBACKEND, DL_DEBUG);
@@ -477,18 +461,18 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 		}
 	} else if (call == "syncenvs") {
 		RK_DO (qDebug ("triggering update of object list"), RBACKEND, DL_DEBUG);
-		RObjectList::getObjectList ()->updateFromR (in_chain, request->call.mid (1));
+		RObjectList::getObjectList ()->updateFromR (in_chain, calllist.mid (1));
 	} else if (call == "syncglobal") {
 		RK_DO (qDebug ("triggering update of globalenv"), RBACKEND, DL_DEBUG);
-		RObjectList::getGlobalEnv ()->updateFromR (in_chain, request->call.mid (1));
+		RObjectList::getGlobalEnv ()->updateFromR (in_chain, calllist.mid (1));
 	} else if (call == "edit") {
-		RK_ASSERT (request->call.count () >= 2);
+		RK_ASSERT (calllist.count () >= 2);
 
-		QStringList object_list = request->call.mid (1);
+		QStringList object_list = calllist.mid (1);
 		new RKEditObjectAgent (object_list, in_chain);
 	} else if (call == "require") {
-		if (request->call.count () >= 2) {
-			QString lib_name = request->call[1];
+		if (calllist.count () >= 2) {
+			QString lib_name = calllist[1];
 			KMessageBox::information (0, i18n ("The R-backend has indicated that in order to carry out the current task it needs the package '%1', which is not currently installed. We will open the package-management tool, and there you can try to locate and install the needed package.", lib_name), i18n ("Require package '%1'", lib_name));
 			RKLoadLibsDialog::showInstallPackagesModal (0, in_chain, lib_name);
 			issueCommand (".rk.set.reply (\"\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
@@ -502,21 +486,21 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 #ifndef DISABLE_RKWINDOWCATCHER
  	} else if (call == "startOpenX11") {
 		// TODO: error checking/handling (wrong parameter count/type)
-		if (request->call.count () >= 2) {
-			window_catcher->start (QString (request->call[1]).toInt ());
+		if (calllist.count () >= 2) {
+			window_catcher->start (QString (calllist[1]).toInt ());
 		}
  	} else if (call == "endOpenX11") {
 		// TODO: error checking/handling (wrong parameter count/type)
-		if (request->call.count () >= 2) {
-			window_catcher->stop (QString (request->call[1]).toInt ());
+		if (calllist.count () >= 2) {
+			window_catcher->stop (QString (calllist[1]).toInt ());
 		}
 	} else if (call == "updateDeviceHistory") {
-		if (request->call.count () >= 2) {
-			window_catcher->updateHistory (request->call.mid (1));
+		if (calllist.count () >= 2) {
+			window_catcher->updateHistory (calllist.mid (1));
 		}
 	} else if (call == "killDevice") {
-		if (request->call.count () >= 2) {
-			window_catcher->killDevice (request->call[1].toInt ());
+		if (calllist.count () >= 2) {
+			window_catcher->killDevice (calllist[1].toInt ());
 		}
 #endif // DISABLE_RKWINDOWCATCHER
 	} else if (call == "wdChange") {
@@ -527,17 +511,15 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 			issueCommand (".rk.set.reply (FALSE)", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
 		}
 	} else if (call == "doPlugin") {
-		if (request->call.count () >= 3) {
+		if (calllist.count () >= 3) {
 			QString message;
 			bool ok;
 			RKComponentMap::ComponentInvocationMode mode = RKComponentMap::ManualSubmit;
-			if (request->call[2] == "auto") mode = RKComponentMap::AutoSubmit;
-			else if (request->call[2] == "submit") mode = RKComponentMap::AutoSubmitOrFail;
-			ok = RKComponentMap::invokeComponent (request->call[1], request->call.mid (3), mode, &message, in_chain);
+			if (calllist[2] == "auto") mode = RKComponentMap::AutoSubmit;
+			else if (calllist[2] == "submit") mode = RKComponentMap::AutoSubmitOrFail;
+			ok = RKComponentMap::invokeComponent (calllist[1], calllist.mid (3), mode, &message, in_chain);
 
-			if (message.isEmpty ()) {
-				issueCommand (".rk.set.reply (NULL)", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
-			} else {
+			if (!message.isEmpty ()) {
 				QString type = "warning";
 				if (!ok) type = "error";
 				issueCommand (".rk.set.reply (list (type=\"" + type + "\", message=\"" + RKCommonFunctions::escape (message) + "\"))", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
@@ -546,24 +528,24 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 			RK_ASSERT (false);
 		}
 	} else if (call == "listPlugins") {
-		if (request->call.count () == 1) {
+		if (calllist.count () == 1) {
 			QStringList list = RKComponentMap::getMap ()->allComponentIds ();
 			issueCommand (".rk.set.reply (c (\"" + list.join ("\", \"") + "\"))\n", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
 		} else {
 			RK_ASSERT (false);
 		}
 	} else if (call == "showHTML") {
-		if (request->call.count () == 2) {
-			RKWorkplace::mainWorkplace ()->openHelpWindow (request->call[1]);
+		if (calllist.count () == 2) {
+			RKWorkplace::mainWorkplace ()->openHelpWindow (calllist[1]);
 		} else {
 			RK_ASSERT (false);
 		}
 	} else if (call == "select.list") {
-		QString title = request->call[1];
-		bool multiple = (request->call[2] == "multi");
-		int num_preselects = request->call[3].toInt ();
-		QStringList preselects = request->call.mid (4, num_preselects);
-		QStringList choices = request->call.mid (4 + num_preselects);
+		QString title = calllist[1];
+		bool multiple = (calllist[2] == "multi");
+		int num_preselects = calllist[3].toInt ();
+		QStringList preselects = calllist.mid (4, num_preselects);
+		QStringList choices = calllist.mid (4 + num_preselects);
 
 		QStringList results = RKSelectListDialog::doSelect (0, title, choices, preselects, multiple);
 		if (results.isEmpty ()) results.append ("");	// R wants to have it that way
@@ -577,9 +559,9 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 
 		issueCommand (command, RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
 	} else if (call == "recordCommands") {
-		if (request->call.count () == 3) {
-			QString filename = request->call[1];
-			bool with_sync = (request->call[2] == "include.sync");
+		if (calllist.count () == 3) {
+			QString filename = calllist[1];
+			bool with_sync = (calllist[2] == "include.sync");
 
 			if (filename.isEmpty ()) {
 				command_logfile_mode = NotRecordingCommands;
@@ -608,18 +590,18 @@ void RInterface::processREvalRequest (REvalRequest *request) {
 	closeChain (in_chain);
 }
 
-void RInterface::processRCallbackRequest (RCallbackArgs *args) {
+void RInterface::processRBackendRequest (RBackendRequest *request) {
 	RK_TRACE (RBACKEND);
 
 	// first, copy out the type. Allows for easier typing below
-	RCallbackArgs::RCallbackType type = args->type;
+	RBackendRequest::RCallbackType type = request->type;
 
-	if (type == RCallbackArgs::RShowMessage) {
-		QString caption = args->params["caption"].toString ();
-		QString message = args->params["message"].toString ();
-		QString button_yes = args->params["button_yes"].toString ();;
-		QString button_no = args->params["button_no"].toString ();;
-		QString button_cancel = args->params["button_cancel"].toString ();;
+	if (type == RBackendRequest::ShowMessage) {
+		QString caption = request->params["caption"].toString ();
+		QString message = request->params["message"].toString ();
+		QString button_yes = request->params["button_yes"].toString ();;
+		QString button_no = request->params["button_no"].toString ();;
+		QString button_cancel = request->params["button_cancel"].toString ();;
 
 		KGuiItem button_yes_item = KStandardGuiItem::yes ();
 		if (button_yes != "yes") button_yes_item.setText (button_yes);
@@ -628,26 +610,24 @@ void RInterface::processRCallbackRequest (RCallbackArgs *args) {
 		KGuiItem button_cancel_item = KStandardGuiItem::cancel ();
 		if (button_cancel != "cancel") button_cancel_item.setText (button_cancel);
 
-		bool shown = false;
 		KMessageBox::DialogType dialog_type = KMessageBox::QuestionYesNoCancel;
 		if (button_cancel.isEmpty ()) dialog_type = KMessageBox::QuestionYesNo;
 		if (button_no.isEmpty () && button_cancel.isEmpty ()) {
 			dialog_type = KMessageBox::Information;
-			if (args->params["wait"].toString () != "1") {	// non-modal dialogs are not supported out of the box by KMessageBox;
+			if (!request->synchronous) {	// non-modal dialogs are not supported out of the box by KMessageBox;
 				KDialog* dialog = new KDialog ();
 				KMessageBox::createKMessageBox (dialog, QMessageBox::Information, message, QStringList (), QString (), 0, KMessageBox::Notify | KMessageBox::NoExec);
 				dialog->setWindowTitle (caption);
 				dialog->setAttribute (Qt::WA_DeleteOnClose);
 				dialog->setButtons (KDialog::Ok);
 				dialog->show();
-				shown = true;
+
+				request->completed ();
+				return;
 			}
 		}
 
-		int result = KMessageBox::Ok;
-		if (!shown) {
-			result = KMessageBox::messageBox (0, dialog_type, message, caption, button_yes_item, button_no_item, button_cancel_item);
-		}
+		int result = KMessageBox::messageBox (0, dialog_type, message, caption, button_yes_item, button_no_item, button_cancel_item);
 
 		QString result_string;
 		if ((result == KMessageBox::Yes) || (result == KMessageBox::Ok)) result_string = "yes";
@@ -655,8 +635,8 @@ void RInterface::processRCallbackRequest (RCallbackArgs *args) {
 		else if (result == KMessageBox::Cancel) result_string = "cancel";
 		else RK_ASSERT (false);
 
-		args->params["result"] = result_string;
-	} else if (type == RCallbackArgs::RReadLine) {
+		request->params["result"] = result_string;
+	} else if (type == RBackendRequest::ReadLine) {
 		QString result;
 
 		// yes, readline *can* be called outside of a current command (e.g. from tcl/tk)
@@ -667,30 +647,30 @@ void RInterface::processRCallbackRequest (RCallbackArgs *args) {
 			dummy_command = true;
 		}
 
-		bool ok = RKReadLineDialog::readLine (0, i18n ("R backend requests information"), args->params["prompt"].toString (), command, &result);
-		args->params["result"] = QVariant (result);
+		bool ok = RKReadLineDialog::readLine (0, i18n ("R backend requests information"), request->params["prompt"].toString (), command, &result);
+		request->params["result"] = QVariant (result);
 
 		if (dummy_command) delete command;
-		if (!ok) args->params["cancelled"] = QVariant (true);
-	} else if ((type == RCallbackArgs::RShowFiles) || (type == RCallbackArgs::REditFiles)) {
-		ShowEditTextFileAgent::showEditFiles (args);
+		if (!ok) request->params["cancelled"] = QVariant (true);
+	} else if ((type == RBackendRequest::ShowFiles) || (type == RBackendRequest::EditFiles)) {
+		ShowEditTextFileAgent::showEditFiles (request);
 		return;		// we are not done, yet!
-	} else if (type == RCallbackArgs::RChooseFile) {
+	} else if (type == RBackendRequest::ChooseFile) {
 		QString filename;
-		if (args->params["new"].toBool ()) {
+		if (request->params["new"].toBool ()) {
 			filename = KFileDialog::getSaveFileName ();
 		} else {
 			filename = KFileDialog::getOpenFileName ();
 		}
-		args->params["result"] = QVariant (filename);
-	} else if (type == RCallbackArgs::RBackendExit) {
-		QString message = args->params["message"].toString ();
+		request->params["result"] = QVariant (filename);
+	} else if (type == RBackendRequest::BackendExit) {
+		QString message = request->params["message"].toString ();
 		message += i18n ("\nIt will be shut down immediately. This means, you can not use any more functions that rely on the R backend. I.e. you can do hardly anything at all, not even save the workspace (but if you're lucky, R already did that). What you can do, however, is save any open command-files, the output, or copy data out of open data editors. Quit RKWard after that.\nSince this should never happen, please write a mail to rkward-devel@lists.sourceforge.net, and tell us, what you were trying to do, when this happened. Sorry!");
 		KMessageBox::error (0, message, i18n ("R engine has died"));
 		r_thread->kill ();
 	}
 
-	args->done = true;
+	request->completed ();
 }
 
 #include "rinterface.moc"

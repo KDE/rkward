@@ -158,6 +158,7 @@ RKCommandEditorWindow::~RKCommandEditorWindow () {
 	RK_TRACE (COMMANDEDITOR);
 	delete hinter;
 	delete m_doc;
+	if (!delete_on_close.isEmpty ()) KIO::del (delete_on_close)->start ();
 }
 
 void RKCommandEditorWindow::fixupPartGUI () {
@@ -331,7 +332,7 @@ void RKCommandEditorWindow::setReadOnly (bool ro) {
 	m_doc->setReadWrite (!ro);
 }
 
-bool RKCommandEditorWindow::openURL (const KUrl &url, const QString& encoding, bool use_r_highlighting, bool read_only){
+bool RKCommandEditorWindow::openURL (const KUrl &url, const QString& encoding, bool use_r_highlighting, bool read_only, bool delete_on_close){
 	RK_TRACE (COMMANDEDITOR);
 
 	// encoding must be set *before* loading the file
@@ -341,6 +342,14 @@ bool RKCommandEditorWindow::openURL (const KUrl &url, const QString& encoding, b
 		setReadOnly (read_only);
 
 		updateCaption ();
+
+		if (delete_on_close) {
+			if (!read_only) {
+				RK_ASSERT (false);
+				return true;
+			}
+			RKCommandEditorWindow::delete_on_close=url;
+		}
 
 		return true;
 	}
