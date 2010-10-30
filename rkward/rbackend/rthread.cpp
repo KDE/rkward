@@ -48,7 +48,7 @@ void RThread::interruptProcessing (bool interrupt) {
 #ifdef Q_WS_WIN
 	RK_scheduleIntr ();
 #else
-	pthread_kill ((pthread_t) thread_id, SIGINT);
+	pthread_kill ((pthread_t) thread_id, SIGUSR1);	// relays to SIGINT
 #endif
 }
 

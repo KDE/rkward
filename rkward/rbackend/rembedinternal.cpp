@@ -19,7 +19,7 @@
 
 // static
 RThread *RThread::this_pointer = 0;
-RThread::RKReplStatus RThread::repl_status = { QByteArray (), 0, true, 0, 0, RThread::RKReplStatus::NoUserCommand, 0, false };
+RThread::RKReplStatus RThread::repl_status = { QByteArray (), 0, true, 0, 0, RThread::RKReplStatus::NoUserCommand, 0, false, false };
 void* RThread::default_global_context = 0;
 
 #include <qstring.h>
@@ -75,25 +75,25 @@ extern "C" {
 #include <Rinternals.h>
 #include <R_ext/Parse.h>
 #include <Rembedded.h>
+#include <Rinterface.h>
 
 #ifdef Q_WS_WIN
 #	include <R_ext/RStartup.h>
 #	include <R_ext/Utils.h>
 
-	void RK_scheduleIntr () {
-		UserBreak = 1;
-	}
-
-	void RK_doIntr () {
-		RK_scheduleIntr ();
-		R_CheckUserInterrupt ();
-	}
-
 	structRstart RK_R_Params;
-#else
-#	define RK_doIntr Rf_onintr
-#	include <Rinterface.h>
 #endif
+
+void RK_scheduleIntr () {
+	RThread::this_pointer->repl_status.interrupted = true;
+	RKSignalSupport::callOldSigIntHandler ();
+}
+
+void RK_doIntr () {
+	RK_scheduleIntr ();
+	RThread::this_pointer->repl_status.interrupted = true;
+	R_CheckUserInterrupt ();
+}
 
 // some functions we need that are not declared
 extern void Rf_PrintWarnings (void);
@@ -671,15 +671,26 @@ void RThread::processX11Events () {
 	RThread::repl_status.eval_depth--;
 }
 
+extern int R_interrupts_pending;
 SEXP doError (SEXP call) {
 	RK_TRACE (RBACKEND);
 
 	if ((RThread::this_pointer->repl_status.eval_depth == 0) && (!RThread::repl_status.in_browser_context) && (!RThread::this_pointer->killed)) {
 		RThread::this_pointer->repl_status.user_command_status = RThread::RKReplStatus::UserCommandFailed;
 	}
-	QString string = RKRSupport::SEXPToString (call);
-	RThread::this_pointer->handleOutput (string, string.length (), ROutput::Error);
-	RK_DO (qDebug ("error '%s'", qPrintable (string)), RBACKEND, DL_DEBUG);
+	if (RThread::this_pointer->repl_status.interrupted) {
+		// it is unlikely, but possible, that an interrupt signal was received, but the current command failed for some other reason, before processing was acutally interrupted. In this case, R_interrupts_pending if not yet cleared.
+		// NOTE: if R_interrupts_pending stops being exported one day, we might be able to use R_CheckUserInterrupt() inside an R_ToplevelExec() to find out, whether an interrupt was still pending.
+		if (!R_interrupts_pending) {
+			RThread::this_pointer->repl_status.interrupted = false;
+			foreach (RCommandProxy *command, RThread::this_pointer->all_current_commands) command->status |= RCommand::Canceled;
+			RK_DO (qDebug ("interrupted"), RBACKEND, DL_DEBUG);
+		}
+	} else {
+		QString string = RKRSupport::SEXPToString (call);
+		RThread::this_pointer->handleOutput (string, string.length (), ROutput::Error);
+		RK_DO (qDebug ("error '%s'", qPrintable (string)), RBACKEND, DL_DEBUG);
+	}
 	return R_NilValue;
 }
 
@@ -822,7 +833,8 @@ bool RThread::startR (int argc, char** argv, bool stack_check) {
 	RKWard_RData_Tag = Rf_install ("RKWard_RData_Tag");
 	R_LastvalueSymbol = Rf_install (".Last.value");
 
-	RKSignalSupport::installSignalProxies ();
+	RKSignalSupport::installSignalProxies ();	// for the crash signals
+	RKSignalSupport::installSigIntAndUsrHandlers (RK_scheduleIntr);
 
 // register our functions
 	R_CallMethodDef callMethods [] = {

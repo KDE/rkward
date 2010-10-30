@@ -21,6 +21,9 @@
 namespace RKSignalSupport {
 	void saveDefaultSignalHandlers ();
 	void installSignalProxies ();
+
+	void installSigIntAndUsrHandlers (void (*handler) (void));
+	void callOldSigIntHandler ();
 };
 
 #endif

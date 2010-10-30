@@ -23,10 +23,8 @@
 
 #include "../debug.h"
 
-#ifdef Q_WS_WIN
-#	ifndef __sighandler_t
-		typedef void (*__sighandler_t) (int);
-#	endif
+#ifndef __sighandler_t
+	typedef void (*__sighandler_t) (int);
 #endif
 
 namespace RKSignalSupportPrivate {
@@ -45,6 +43,12 @@ namespace RKSignalSupportPrivate {
 	struct sigaction r_sigabrt_handler;
 	struct sigaction default_sigabrt_handler;
 #endif
+	__sighandler_t r_sigint_handler = 0;
+	void (*new_sigint_handler) (void) = 0;
+	void internal_sigint_handler (int num) {
+		new_sigint_handler ();
+		signal (num, internal_sigint_handler);
+	}
 
 #ifdef Q_WS_WIN
 	void signal_proxy (int signum) {
@@ -152,4 +156,21 @@ void RKSignalSupport::installSignalProxies () {
 	proxy_action.sa_sigaction = &RKSignalSupportPrivate::signal_proxy;
 	sigaction (SIGABRT, &proxy_action, 0);
 #endif
+}
+
+void RKSignalSupport::installSigIntAndUsrHandlers (void (*handler) (void)) {
+	RK_TRACE (RBACKEND);
+
+	RK_ASSERT (!RKSignalSupportPrivate::r_sigint_handler);
+	RKSignalSupportPrivate::new_sigint_handler = handler;
+	RKSignalSupportPrivate::r_sigint_handler = signal (SIGINT, &RKSignalSupportPrivate::internal_sigint_handler);
+	// default action in R: save and quit. We use these as a proxy for SIGINT, instead.
+	signal (SIGUSR1, &RKSignalSupportPrivate::internal_sigint_handler);
+	signal (SIGUSR2, &RKSignalSupportPrivate::internal_sigint_handler);
+}
+
+void RKSignalSupport::callOldSigIntHandler () {
+	RK_TRACE (RBACKEND);
+
+	RKSignalSupportPrivate::r_sigint_handler (SIGINT);
 }

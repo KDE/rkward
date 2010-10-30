@@ -195,6 +195,7 @@ public:
 
 /** The command currently being executed. */
 	RCommandProxy *current_command;
+	QList<RCommandProxy*> all_current_commands;
 
 	void runCommand (RCommandProxy *command);
 
@@ -230,6 +231,7 @@ public:
 		} user_command_status;
 		int eval_depth;		// Number (depth) of non-user commands currently running. User commands can only run at depth 0
 		bool in_browser_context;
+		bool interrupted;
 	};
 	static RKReplStatus repl_status;
 /** holds a copy of the default R_GlobalContext. Needed to find out, when a browser context has been left. */
@@ -263,7 +265,6 @@ private:
 	QStringList global_env_toplevel_names;
 /** check wether the object list / global environment / individual symbols have changed, and updates them, if needed */
 	void checkObjectUpdatesNeeded (bool check_list);
-	QList<RCommandProxy*> all_current_commands;
 
 	/** current output */
 	ROutputList output_buffer;
