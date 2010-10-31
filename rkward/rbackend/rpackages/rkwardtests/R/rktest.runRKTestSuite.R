@@ -9,7 +9,6 @@
 #' @param basedir Defaults to the working directory.
 #' @param test.id An optional character string or vector naming one or more tests of a suite to be run (if NULL, all tests are run).
 #' @return An object of class \code{\link[rkwardtests:RKTestResult]{RKTestResult-class}}.
-#' @docType function
 #' @author Thomas Friedrichsmeier \email{thomas.friedrichsmeier@@ruhr-uni-bochum.de}, Meik Michalke \email{meik.michalke@@uni-duesseldorf.de}
 #' @keywords utilities
 #' @seealso \code{\link[rkwardtests:RKTestSuite]{RKTestSuite-class}}, \code{\link[rkwardtests:rktest.makeplugintests]{rktest.makeplugintests}}
@@ -22,7 +21,7 @@
 rktest.runRKTestSuite <- function (suite, basedir=getwd (), test.id=NULL) {
 	# check wheter test environment is already set,
 	# otherwise initialize
-	if(!exists(".rktest.tmp.storage", where=globalenv())){
+	if(!exists("initialized", where=rkwardtests::.rktest.tmp.storage) || !get("initialized", pos=rkwardtests::.rktest.tmp.storage)){
 	  rktest.initializeEnvironment()
 	  on.exit(rktest.resetEnvironment())
 	}

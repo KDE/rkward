@@ -8,7 +8,6 @@ output and R messages as the standard that will be compared to during following 
 \alias{rktest.setSuiteStandards}
 \value{The function simply changes the names of the previously created files,
 specifically adding the prefix "RKTestStandard.".}
-\docType{function}
 \author{Thomas Friedrichsmeier \email{thomas.friedrichsmeier@ruhr-uni-bochum.de}}
 \keyword{utilities}
 \seealso{\code{\link[rkwardtests:RKTestSuite]{RKTestSuite-class}}, \code{\link[rkwardtests:rktest.makeplugintests]{rktest.makeplugintests}}}

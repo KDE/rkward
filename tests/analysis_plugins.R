@@ -35,6 +35,11 @@ suite <- new ("RKTestSuite", id="analysis_plugins",
 			rk.call.plugin ("rkward::corr_matrix", do_p.state="", method.string="pearson", use.string="pairwise", x.available="women[[\"weight\"]]\nwomen[[\"height\"]]", submit.mode="submit")
 		}),
 		new ("RKTest", id="correlation_matrix_plot", call=function () {
+			# change dir to not mess around too much
+			oldwd <- getwd()
+			setwd(file.path(rktest.getTempDir(), "analysis_plugins"))
+			on.exit(setwd(oldwd))
+
 			rk.call.plugin ("rkward::cor_graph", digits.real="3.00", method.string="pearson", scale.state="TRUE", use.string="pairwise.complete.obs", x.available="rock", submit.mode="submit")
 		}),
 		new ("RKTest", id="descriptive_stats", call=function () {
@@ -119,6 +124,11 @@ suite <- new ("RKTestSuite", id="analysis_plugins",
 			rk.call.plugin ("rkward::PP_test", length.state="1", lshort.string="FALSE", narm.state="0", x.available="rock[[\"shape\"]]\nrock[[\"perm\"]]\nrock[[\"peri\"]]\nrock[[\"area\"]]", submit.mode="submit")
 		}),
 		new ("RKTest", id="crosstab_n_to_1", call=function () {
+			# change dir to not mess around too much
+			oldwd <- getwd()
+			setwd(file.path(rktest.getTempDir(), "analysis_plugins"))
+			on.exit(setwd(oldwd))
+
 			rk.call.plugin ("rkward::crosstab", barplot.state="TRUE", barplot_embed.colors.string="default", barplot_embed.labels.state="0", barplot_embed.legend.state="0", barplot_embed.plotoptions.add_grid.state="0", barplot_embed.plotoptions.asp.real="0.00", barplot_embed.plotoptions.main.text="", barplot_embed.plotoptions.pointcolor.color.string="", barplot_embed.plotoptions.pointtype.string="", barplot_embed.plotoptions.sub.text="", barplot_embed.plotoptions.xaxt.state="", barplot_embed.plotoptions.xlab.text="", barplot_embed.plotoptions.xlog.state="", barplot_embed.plotoptions.xmaxvalue.text="", barplot_embed.plotoptions.xminvalue.text="", barplot_embed.plotoptions.yaxt.state="", barplot_embed.plotoptions.ylab.text="", barplot_embed.plotoptions.ylog.state="", barplot_embed.plotoptions.ymaxvalue.text="", barplot_embed.plotoptions.yminvalue.text="", barplot_embed.type.string="juxtaposed", chisq.state="TRUE", simpv.string="FALSE", x.available="warpbreaks[[\"tension\"]]", y.available="warpbreaks[[\"wool\"]]\nwarpbreaks[[\"tension\"]]", submit.mode="submit")
 		}),
 		new ("RKTest", id="crosstab_multi", call=function () {
@@ -133,6 +143,10 @@ suite <- new ("RKTestSuite", id="analysis_plugins",
 		new ("RKTest", id="hp_filter", call=function () {
 			.GlobalEnv$co2 <- datasets::co2		# another, incompatible co2 dataset exists in package locfit
 			rk.sync.global()
+			# change dir to not mess around too much
+			oldwd <- getwd()
+			setwd(file.path(rktest.getTempDir(), "analysis_plugins"))
+			on.exit(setwd(oldwd))
 
 			rk.call.plugin ("rkward::hp_filter", cycle_name.active="1", trend_name.active="1", custom.state="0", cycle_col.color.string="green4", cycle_lty.string="", cycle_lwd.real="1.00", cycle_name.objectname="hpcycle", downlab.text="", lambda.string="1600", plot_cycle.state="1", series_col.color.string="blue", series_lty.string="", series_lwd.real="1.00", trend_col.color.string="red", trend_lty.string="", trend_lwd.real="1.00", trend_name.objectname="hptrend", uplab.text="", x.available="co2", submit.mode="submit")
 

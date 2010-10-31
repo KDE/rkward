@@ -1,4 +1,4 @@
-library (rkwardtests)
+require (rkwardtests)
 
 ## add your test suite files, to this vector:
 testsuites <- c (
@@ -9,4 +9,4 @@ testsuites <- c (
 	"distributions.R",
 	"plots.R")
 
-rktest.makeplugintests (testsuites, getwd (), outfile="make_plugintests.txt")
+rktest.makeplugintests (testsuites=testsuites, outfile="make_plugintests.txt")

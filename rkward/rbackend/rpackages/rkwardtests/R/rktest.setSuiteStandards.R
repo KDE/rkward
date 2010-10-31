@@ -10,7 +10,6 @@
 #' @param basedir Should point to the testroot, defaults to the working directory.
 #' @return The function simply changes the names of the previously created files,
 #' specifically adding the prefix "RKTestStandard.".
-#' @docType function
 #' @author Thomas Friedrichsmeier \email{thomas.friedrichsmeier@@ruhr-uni-bochum.de}
 #' @keywords utilities
 #' @seealso \code{\link[rkwardtests:RKTestSuite]{RKTestSuite-class}}, \code{\link[rkwardtests:rktest.makeplugintests]{rktest.makeplugintests}}

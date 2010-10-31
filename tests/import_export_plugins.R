@@ -7,21 +7,30 @@ suite <- new ("RKTestSuite", id="import_export_plugins",
 		function () {
 			# prepare some different files for loading
 			library ("datasets")
-			women <- datasets::women
-
-			save (women, file="women.RData")
-			write.csv (women, file="women.csv")
-
-			suppressWarnings (rm ("women"))
+			assign("women.data", datasets::women, pos=globalenv())
 		}
 	## the tests
 	), tests = list (
 		new ("RKTest", id="load_r_object", call=function () {
+			# change dir to not mess around too much
+			oldwd <- getwd()
+			setwd(file.path(rktest.getTempDir(), "import_export_plugins"))
+			on.exit(setwd(oldwd))
+
+			save (women.data, file="women.RData")
+
 			rk.call.plugin ("rkward::load_r_object", file.selection="women.RData", envir.active="0", submit.mode="submit")
 
-			stopifnot (all.equal (.GlobalEnv$women, datasets::women))
+			stopifnot (all.equal (.GlobalEnv$women.data, datasets::women))
 		}),
 		new ("RKTest", id="import_csv", call=function () {
+			# change dir to not mess around too much
+			oldwd <- getwd()
+			setwd(file.path(rktest.getTempDir(), "import_export_plugins"))
+			on.exit(setwd(oldwd))
+
+			write.csv (women.data, file="women.csv")
+
 			rk.call.plugin ("rkward::import_csv", allow_escapes.state="", blanklinesskip.state="TRUE", checkname.state="TRUE", colclass.string="", colname.string="", dec.string="'.'", doedit.state="0", file.selection="women.csv", flush.state="", isrow.state="true", na.text="NA", name.objectname="women", nrows.text="-1", quick.string="csv", quote.string="'\\\"'", sep.string="','", skip.text="0", strings_as_factors.string="", stripwhite.state="FALSE", rowname.string="rowcol", nomrow.text="1", submit.mode="submit")
 
 			stopifnot (all.equal (.GlobalEnv$women, datasets::women))
@@ -29,6 +38,10 @@ suite <- new ("RKTestSuite", id="import_export_plugins",
 		new ("RKTest", id="import_csv_overwrite", call=function () {
 			assign ("women", datasets::women, envir=globalenv ())
 			rk.sync.global ()
+			# change dir to not mess around too much
+			oldwd <- getwd()
+			setwd(file.path(rktest.getTempDir(), "import_export_plugins"))
+			on.exit(setwd(oldwd))
 
 			# this one is expected to fail, as it would overwrite the existing "women" in globalenv()
 			rk.call.plugin ("rkward::import_csv", file.selection="women.csv", name.objectname="women", submit.mode="submit")
@@ -62,6 +75,11 @@ suite <- new ("RKTestSuite", id="import_export_plugins",
 			for (var in my.stata.data) rk.print (rk.get.description(var))
 		}, libraries=c("foreign")),
 		new ("RKTest", id="load_source", call=function () {
+			# change dir to not mess around too much
+			oldwd <- getwd()
+			setwd(file.path(rktest.getTempDir(), "import_export_plugins"))
+			on.exit(setwd(oldwd))
+
 			stopifnot (!exists ("testx", globalenv ()))
 
 			cat ("testx <- c (20:30)\nprint (\"ok\")\n", file="source.R")
@@ -79,6 +97,10 @@ suite <- new ("RKTestSuite", id="import_export_plugins",
 			assign ("testx", datasets::warpbreaks, envir=globalenv())
 			assign ("testy", datasets::volcano, envir=globalenv())
 			rk.sync.global()
+			# change dir to not mess around too much
+			oldwd <- getwd()
+			setwd(file.path(rktest.getTempDir(), "import_export_plugins"))
+			on.exit(setwd(oldwd))
 
 			rk.call.plugin ("rkward::save_r", ascii.state="TRUE", compress.state="TRUE", data.available="testx", file.selection="x.RData", submit.mode="submit")
 			rk.call.plugin ("rkward::save_r", ascii.state="TRUE", compress.state="TRUE", data.available="testy", file.selection="y.RData", submit.mode="submit")
@@ -92,6 +114,10 @@ suite <- new ("RKTestSuite", id="import_export_plugins",
 		new ("RKTest", id="write_vector_matrix", call=function () {
 			assign ("testx", c (1:10), globalenv())
 			rk.sync.global()
+			# change dir to not mess around too much
+			oldwd <- getwd()
+			setwd(file.path(rktest.getTempDir(), "import_export_plugins"))
+			on.exit(setwd(oldwd))
 
 			rk.call.plugin ("rkward::save_variables", append.state="FALSE", data.available="testx", file.selection="data", ncolumns.real="2.", sep.string=",", submit.mode="submit")
 
@@ -101,6 +127,10 @@ suite <- new ("RKTestSuite", id="import_export_plugins",
 		new ("RKTest", id="write_table", call=function () {
 			assign ("women", datasets::women, globalenv())
 			rk.sync.global()
+			# change dir to not mess around too much
+			oldwd <- getwd()
+			setwd(file.path(rktest.getTempDir(), "import_export_plugins"))
+			on.exit(setwd(oldwd))
 
 			rk.call.plugin ("rkward::save_table", append.state="FALSE", columns.string="TRUE", data.available="women", dec.string="'.'", eol.text="\\n", file.selection="data", na.text="NA", qmethod.string="'escape'", quote.state="TRUE", rows.string="FALSE", sep.string="'\\t'", submit.mode="submit")
 
@@ -108,7 +138,19 @@ suite <- new ("RKTestSuite", id="import_export_plugins",
 			for (line in x) rk.print (line)
 		}),
 		new ("RKTest", id="package_skeleton", call=function () {
-			rk.call.plugin ("rkward::save_skeleton", data.available="rktest.setSuiteStandards\nrktest.runRKTestSuite", force.state="TRUE", name.text="anRpackage", path.selection=".", submit.mode="submit")
+			# create two functions to use
+			assign ("skel.func1", rkwardtests::rktest.getTempDir, envir=globalenv())
+			assign ("skel.func2", rkwardtests::rktest.getTempDir, envir=globalenv())
+			rk.sync.global()
+			# change dir to not mess around too much
+			oldwd <- getwd()
+			setwd(file.path(rktest.getTempDir(), "import_export_plugins"))
+			on.exit(setwd(oldwd))
+
+			rk.call.plugin ("rkward::save_skeleton", data.available="skel.func1\nskel.func2", force.state="TRUE", name.text="anRpackage", path.selection=".", submit.mode="submit")
+			rm (skel.func1, skel.func2, envir=globalenv())
 		})
-	), postCalls = list ()	# like initCalls: run after all tests to clean up. Empty in this case.
+	), postCalls = list (
+			function(){rm("women.data", pos=globalenv())}
+			)	# like initCalls: run after all tests to clean up. Empty in this case.
 )

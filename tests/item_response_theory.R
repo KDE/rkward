@@ -107,6 +107,11 @@ suite <- new ("RKTestSuite", id="item_response_theory",
                 new ("RKTest", id="Andersen_LR_plot", call=function () {
 			estimates.pcm <<- estimates$pcm
 			rk.sync.global ()
+			# change dir to not mess around too much
+			oldwd <- getwd()
+			setwd(file.path(rktest.getTempDir(), "item_response_theory"))
+			on.exit(setwd(oldwd))
+
 			rk.call.plugin ("rkward::eRm_plotLR", annotation.string="items", chk_confint.state="conf", chk_ctrline.state="ctrline", chk_se.state="se", inp_items.text="", plotoptions.add_grid.state="0", plotoptions.asp.real="0.00", plotoptions.main.text="", plotoptions.pointcolor.color.string="", plotoptions.pointtype.string="", plotoptions.sub.text="", plotoptions.xaxt.state="", plotoptions.xlab.text="", plotoptions.xlog.state="", plotoptions.xmaxvalue.text="", plotoptions.xminvalue.text="", plotoptions.yaxt.state="", plotoptions.ylab.text="", plotoptions.ylog.state="", plotoptions.ymaxvalue.text="", plotoptions.yminvalue.text="", rad_splitcr.string="median", spin_abilfrom.real="-3.00", spin_abilto.real="3.00", spin_confint.real="0.95", spin_ctrline.real="0.95", x.available="estimates.pcm", submit.mode="submit")
                 }),
 
@@ -114,33 +119,63 @@ suite <- new ("RKTestSuite", id="item_response_theory",
                 new ("RKTest", id="plot_Rasch", call=function () {
 			estimates.rasch <<- estimates$rasch
 			rk.sync.global ()
+			# change dir to not mess around too much
+			oldwd <- getwd()
+			setwd(file.path(rktest.getTempDir(), "item_response_theory"))
+			on.exit(setwd(oldwd))
+
 			rk.call.plugin ("rkward::plot_rasch", annotation.string="legend", inp_items.text="", plot_type.string="items", plot_type_item.string="ICC", plotoptions.add_grid.state="0", plotoptions.asp.real="0.00", plotoptions.main.text="", plotoptions.pointcolor.color.string="", plotoptions.pointtype.string="", plotoptions.sub.text="", plotoptions.xaxt.state="", plotoptions.xlab.text="", plotoptions.xlog.state="", plotoptions.xmaxvalue.text="", plotoptions.xminvalue.text="", plotoptions.yaxt.state="", plotoptions.ylab.text="", plotoptions.ylog.state="", plotoptions.ymaxvalue.text="", plotoptions.yminvalue.text="", spin_from.real="-3.80", spin_to.real="3.80", x.available="estimates.rasch", submit.mode="submit")
                 }),
                 new ("RKTest", id="plot_2PL", call=function () {
 			estimates.2pl <<- estimates$"2pl"
 			rk.sync.global ()
+			# change dir to not mess around too much
+			oldwd <- getwd()
+			setwd(file.path(rktest.getTempDir(), "item_response_theory"))
+			on.exit(setwd(oldwd))
+
 			rk.call.plugin ("rkward::plot_ltm", annotation.string="annot", inp_items.text="1", plot_type.string="items", plot_type_item.string="ICC", plotoptions.add_grid.state="0", plotoptions.asp.real="0.00", plotoptions.main.text="", plotoptions.pointcolor.color.string="", plotoptions.pointtype.string="", plotoptions.sub.text="", plotoptions.xaxt.state="", plotoptions.xlab.text="", plotoptions.xlog.state="", plotoptions.xmaxvalue.text="", plotoptions.xminvalue.text="", plotoptions.yaxt.state="", plotoptions.ylab.text="", plotoptions.ylog.state="", plotoptions.ymaxvalue.text="", plotoptions.yminvalue.text="", spin_from.real="-3.80", spin_to.real="3.80", x.available="estimates.2pl", submit.mode="submit")
                 }),
                 new ("RKTest", id="plot_3PL", call=function () {
 			estimates.3pl <<- estimates$"3pl"
 			rk.sync.global ()
+			# change dir to not mess around too much
+			oldwd <- getwd()
+			setwd(file.path(rktest.getTempDir(), "item_response_theory"))
+			on.exit(setwd(oldwd))
+
 			# this time, plot the test information curve
 			rk.call.plugin ("rkward::plot_tpm", annotation.string="annot", plot_type.string="TIC", plotoptions.add_grid.state="0", plotoptions.asp.real="0.00", plotoptions.main.text="", plotoptions.pointcolor.color.string="", plotoptions.pointtype.string="", plotoptions.sub.text="", plotoptions.xaxt.state="", plotoptions.xlab.text="", plotoptions.xlog.state="", plotoptions.xmaxvalue.text="", plotoptions.xminvalue.text="", plotoptions.yaxt.state="", plotoptions.ylab.text="", plotoptions.ylog.state="", plotoptions.ymaxvalue.text="", plotoptions.yminvalue.text="", spin_from.real="-3.80", spin_to.real="3.80", x.available="estimates.3pl", submit.mode="submit")
                 }),
                 new ("RKTest", id="plot_GRM", call=function () {
 			estimates.grm <<- estimates$grm
 			rk.sync.global ()
+			# change dir to not mess around too much
+			oldwd <- getwd()
+			setwd(file.path(rktest.getTempDir(), "item_response_theory"))
+			on.exit(setwd(oldwd))
+
 			rk.call.plugin ("rkward::plot_grm", annotation.string="annot", inp_items.text="6", plot_type.string="items", plot_type_item.string="ICC", plotoptions.add_grid.state="0", plotoptions.asp.real="0.00", plotoptions.main.text="", plotoptions.pointcolor.color.string="", plotoptions.pointtype.string="", plotoptions.sub.text="", plotoptions.xaxt.state="", plotoptions.xlab.text="", plotoptions.xlog.state="", plotoptions.xmaxvalue.text="", plotoptions.xminvalue.text="", plotoptions.yaxt.state="", plotoptions.ylab.text="", plotoptions.ylog.state="", plotoptions.ymaxvalue.text="", plotoptions.yminvalue.text="", spin_categ.real="0.00", spin_from.real="-3.80", spin_to.real="3.80", x.available="estimates.grm", submit.mode="submit")
                 }),
                 new ("RKTest", id="plot_RSM", call=function () {
 			estimates.rsm <<- estimates$rsm
 			rk.sync.global ()
+			# change dir to not mess around too much
+			oldwd <- getwd()
+			setwd(file.path(rktest.getTempDir(), "item_response_theory"))
+			on.exit(setwd(oldwd))
+
 			# plot the first three items in one image
 			rk.call.plugin ("rkward::plot_rsm", annotation.string="legend", chk_ask.state="", chk_mplot.state="mplot", inp_items.text="1:3", plotoptions.add_grid.state="0", plotoptions.asp.real="0.00", plotoptions.main.text="", plotoptions.pointcolor.color.string="", plotoptions.pointtype.string="", plotoptions.sub.text="", plotoptions.xaxt.state="", plotoptions.xlab.text="", plotoptions.xlog.state="", plotoptions.xmaxvalue.text="", plotoptions.xminvalue.text="", plotoptions.yaxt.state="", plotoptions.ylab.text="", plotoptions.ylog.state="", plotoptions.ymaxvalue.text="", plotoptions.yminvalue.text="", spin_abilfrom.real="-4.00", spin_abilto.real="4.00", spin_probfrom.real="0.00", spin_probto.real="1.00", x.available="estimates.rsm", submit.mode="submit")
                 }),
                 new ("RKTest", id="plot_PCM", call=function () {
 			estimates.pcm <<- estimates$pcm
 			rk.sync.global ()
+			# change dir to not mess around too much
+			oldwd <- getwd()
+			setwd(file.path(rktest.getTempDir(), "item_response_theory"))
+			on.exit(setwd(oldwd))
+
 			# here we plot items 3 to 6
 			rk.call.plugin ("rkward::plot_pcm", annotation.string="legend", chk_ask.state="", chk_mplot.state="mplot", inp_items.text="3:6", plotoptions.add_grid.state="0", plotoptions.asp.real="0.00", plotoptions.main.text="", plotoptions.pointcolor.color.string="", plotoptions.pointtype.string="", plotoptions.sub.text="", plotoptions.xaxt.state="", plotoptions.xlab.text="", plotoptions.xlog.state="", plotoptions.xmaxvalue.text="", plotoptions.xminvalue.text="", plotoptions.yaxt.state="", plotoptions.ylab.text="", plotoptions.ylog.state="", plotoptions.ymaxvalue.text="", plotoptions.yminvalue.text="", spin_abilfrom.real="-4.00", spin_abilto.real="4.00", spin_probfrom.real="0.00", spin_probto.real="1.00", x.available="estimates.pcm", submit.mode="submit")
                 })

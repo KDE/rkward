@@ -6,7 +6,6 @@
 \details{This function can be called to run a single plugin test suite.}
 \alias{rktest.runRKTestSuite}
 \value{An object of class \code{\link[rkwardtests:RKTestResult]{RKTestResult-class}}.}
-\docType{function}
 \author{Thomas Friedrichsmeier \email{thomas.friedrichsmeier@ruhr-uni-bochum.de}, Meik Michalke \email{meik.michalke@uni-duesseldorf.de}}
 \keyword{utilities}
 \seealso{\code{\link[rkwardtests:RKTestSuite]{RKTestSuite-class}}, \code{\link[rkwardtests:rktest.makeplugintests]{rktest.makeplugintests}}}

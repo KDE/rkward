@@ -12,7 +12,6 @@
 #' @param append If TRUE, append output to an existing file.
 #' @param test.id Optional character string or vector naming one or more tests of a suite to be run (if NULL, all tests are run).
 #' @return Results are printed to stdout and saved to the defined output file.
-#' @docType function
 #' @author Thomas Friedrichsmeier \email{thomas.friedrichsmeier@@ruhr-uni-bochum.de}, Meik Michalke \email{meik.michalke@@uni-duesseldorf.de}
 #' @keywords utilities
 #' @seealso \code{\link[rkwardtests:RKTestSuite]{RKTestSuite-class}}, \code{\link[rkwardtests:RKTestResult]{RKTestResult-class}}

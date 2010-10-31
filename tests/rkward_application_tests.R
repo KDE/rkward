@@ -40,11 +40,23 @@ suite <- new ("RKTestSuite", id="rkward_application_tests",
 			stopifnot (.GlobalEnv$promise.symbol == 123)
 		}),
 		new ("RKTest", id="output_graphics_formats", call=function () {
-			rk.graph.on(); plot (1, 1); rk.graph.off()	# should produce PNG, 480*480
+			# change dir to not mess around too much
+			oldwd <- getwd()
+			setwd(file.path(rktest.getTempDir(), "rkward_application_tests"))
+			on.exit(setwd(oldwd))
 
-			options (rk.graphics.type="JPG", rk.graphics.width=500, rk.graphics.height=500, rk.graphics.jpg.quality=34)
+			rk.graph.on(); plot (1, 1); rk.graph.off()	# should produce PNG, 480*480
+			old.options <- options()
+			options (rk.graphics.type="JPG",
+				 rk.graphics.width=500,
+				 rk.graphics.height=500,
+				 rk.graphics.jpg.quality=34)
 			rk.graph.on(); plot (1, 1); rk.graph.off()
-			rktest.initializeEnvironment ()	# restore options
+			# restore options
+			options (rk.graphics.type=old.options$rk.graphics.type,
+				 rk.graphics.width=old.options$rk.graphics.width,
+				 rk.graphics.height=old.options$rk.graphics.height,
+				 rk.graphics.jpg.quality=old.options$rk.graphics.jpg.quality)
 
 			rk.graph.on (device.type="SVG", width=300); plot (1, 1); rk.graph.off ()
 		}),
@@ -59,6 +71,11 @@ suite <- new ("RKTestSuite", id="rkward_application_tests",
 			rk.sync (x)
 		}, libraries=c ("XML")),
 		new ("RKTest", id="dev_off_bug", call=function () {
+			# change dir to not mess around too much
+			oldwd <- getwd()
+			setwd(file.path(rktest.getTempDir(), "rkward_application_tests"))
+			on.exit(setwd(oldwd))
+
 			graphics.off()
 			stopifnot (is.null (dev.list ()))
 
@@ -71,6 +88,11 @@ suite <- new ("RKTestSuite", id="rkward_application_tests",
 			stopifnot (is.null (dev.list ()))
 		}),
 		new ("RKTest", id="plot_history_basics", call=function () {
+			# change dir to not mess around too much
+			oldwd <- getwd()
+			setwd(file.path(rktest.getTempDir(), "rkward_application_tests"))
+			on.exit(setwd(oldwd))
+
 			le <- "package:lattice" %in% search ()
 			compareCurrentPlotWith <- function (x) {
 				if (inherits (x, "trellis")) {
@@ -235,6 +257,11 @@ suite <- new ("RKTestSuite", id="rkward_application_tests",
 			message ("mark 10")
 		}, libraries=c ("lattice")),
 		new ("RKTest", id="device_capturing_stress_test", call=function () {
+			# change dir to not mess around too much
+			oldwd <- getwd()
+			setwd(file.path(rktest.getTempDir(), "rkward_application_tests"))
+			on.exit(setwd(oldwd))
+
 			# This test checks for the "figure margins too large" error, that used to occur when plotting on a fresh device, sometimes.
 			# Since the error only appeared occasionally, we try 100 times to produce it. Unfortunately, that does make the test run annoyingly long...
 			graphics.off()

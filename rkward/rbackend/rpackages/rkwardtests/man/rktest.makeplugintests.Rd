@@ -7,7 +7,6 @@ outfile="make_plugintests.txt", append=FALSE, test.id=NULL)}
 \details{The function \code{rktest.makeplugintests} will run a whole test suite that was prepared to check one or several RKWard plugins.}
 \alias{rktest.makeplugintests}
 \value{Results are printed to stdout and saved to the defined output file.}
-\docType{function}
 \author{Thomas Friedrichsmeier \email{thomas.friedrichsmeier@ruhr-uni-bochum.de}, Meik Michalke \email{meik.michalke@uni-duesseldorf.de}}
 \keyword{utilities}
 \seealso{\code{\link[rkwardtests:RKTestSuite]{RKTestSuite-class}}, \code{\link[rkwardtests:RKTestResult]{RKTestResult-class}}}
