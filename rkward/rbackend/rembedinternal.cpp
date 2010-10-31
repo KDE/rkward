@@ -86,13 +86,13 @@ extern "C" {
 #endif
 
 void RK_scheduleIntr () {
-	RThread::this_pointer->repl_status.interrupted = true;
+	RThread::repl_status.interrupted = true;
 	RKSignalSupport::callOldSigIntHandler ();
 }
 
 void RK_doIntr () {
 	RK_scheduleIntr ();
-	RThread::this_pointer->repl_status.interrupted = true;
+	RThread::repl_status.interrupted = true;
 	R_CheckUserInterrupt ();
 }
 
@@ -676,14 +676,14 @@ extern int R_interrupts_pending;
 SEXP doError (SEXP call) {
 	RK_TRACE (RBACKEND);
 
-	if ((RThread::this_pointer->repl_status.eval_depth == 0) && (!RThread::repl_status.in_browser_context) && (!RThread::this_pointer->killed)) {
-		RThread::this_pointer->repl_status.user_command_status = RThread::RKReplStatus::UserCommandFailed;
+	if ((RThread::repl_status.eval_depth == 0) && (!RThread::repl_status.in_browser_context) && (!RThread::this_pointer->killed)) {
+		RThread::repl_status.user_command_status = RThread::RKReplStatus::UserCommandFailed;
 	}
-	if (RThread::this_pointer->repl_status.interrupted) {
+	if (RThread::repl_status.interrupted) {
 		// it is unlikely, but possible, that an interrupt signal was received, but the current command failed for some other reason, before processing was acutally interrupted. In this case, R_interrupts_pending if not yet cleared.
 		// NOTE: if R_interrupts_pending stops being exported one day, we might be able to use R_CheckUserInterrupt() inside an R_ToplevelExec() to find out, whether an interrupt was still pending.
 		if (!R_interrupts_pending) {
-			RThread::this_pointer->repl_status.interrupted = false;
+			RThread::repl_status.interrupted = false;
 			foreach (RCommandProxy *command, RThread::this_pointer->all_current_commands) command->status |= RCommand::Canceled;
 			RK_DO (qDebug ("interrupted"), RBACKEND, DL_DEBUG);
 		}
