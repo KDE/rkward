@@ -2,7 +2,7 @@
                           rkstructuregetter  -  description
                              -------------------
     begin                : Wed Apr 11 2007
-    copyright            : (C) 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -17,6 +17,12 @@
 
 #ifndef RKSTRUCTUREGETTER_H
 #define RKSTRUCTUREGETTER_H
+
+#include <Rinternals.h>
+
+#include <QString>
+
+class RData;
 
 /** Low level helper class for getting the structure of R objects (.rk.get.structure).
 Since this is only used from REmbedInternal, and making Qt and R includes cooperate is so much trouble,

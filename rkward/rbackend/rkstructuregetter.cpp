@@ -17,6 +17,12 @@
 
 #include "rkstructuregetter.h"
 
+#include "rdata.h"
+#include "rkrsupport.h"
+#include "../core/robject.h"
+
+#include "../debug.h"
+
 RKStructureGetter::RKStructureGetter (bool keep_evalled_promises) {
 	RK_TRACE (RBACKEND);
 

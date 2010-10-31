@@ -23,6 +23,7 @@ SET(
 	rksignalsupport.cpp
 	rklocalesupport.cpp
 	rkrsupport.cpp
+	rkstructuregetter.cpp
 )
 
 

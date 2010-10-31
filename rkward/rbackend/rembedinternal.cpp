@@ -31,6 +31,7 @@ void* RThread::default_global_context = 0;
 #include "../debug.h"
 
 #include "rkrsupport.h"
+#include "rkstructuregetter.h"
 #include "rinterface.h"
 #include "rklocalesupport.h"
 #include "rkpthreadsupport.h"
@@ -747,8 +748,6 @@ SEXP doLocaleName () {
 	UNPROTECT (1);
 	return res;
 }
-
-#include "rkstructuregetter.cpp"
 
 SEXP doGetStructure (SEXP toplevel, SEXP name, SEXP envlevel, SEXP namespacename) {
 	RK_TRACE (RBACKEND);
