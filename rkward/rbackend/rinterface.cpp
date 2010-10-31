@@ -22,6 +22,8 @@
 #include "../rkward.h"
 #include "../settings/rksettingsmoduler.h"
 #include "../settings/rksettingsmodulegeneral.h"
+#include "../settings/rksettingsmoduleoutput.h"
+#include "../settings/rksettingsmodulegraphics.h"
 #include "../core/robjectlist.h"
 #include "../core/renvironmentobject.h"
 #include "../core/rkmodificationtracker.h"
@@ -60,6 +62,11 @@ RKWindowCatcher *window_catcher;
 // update output (for immediate output commands) at least this often (msecs):
 #define FLUSH_INTERVAL 100
 
+#define GET_LIB_PATHS 1
+#define GET_HELP_BASE 2
+#define SET_RUNTIME_OPTS 3
+#define STARTUP_PHASE2_COMPLETE 4
+
 RInterface::RInterface () {
 	RK_TRACE (RBACKEND);
 	
@@ -75,12 +82,13 @@ RInterface::RInterface () {
 	new RCommandStackModel (this);
 	RCommandStack::regular_stack = new RCommandStack (0);
 	running_command_canceled = 0;
+	startup_phase2_error = false;
 	command_logfile_mode = NotRecordingCommands;
 	previously_idle = false;
 	locked = 0;
 
 	// create a fake init command
-	RCommand *fake = new RCommand (i18n ("R Startup"), RCommand::App | RCommand::Sync | RCommand::ObjectListUpdate, i18n ("R Startup"));
+	RCommand *fake = new RCommand (i18n ("R Startup"), RCommand::App | RCommand::Sync | RCommand::ObjectListUpdate, i18n ("R Startup"), this, STARTUP_PHASE2_COMPLETE);
 	issueCommand (fake);
 
 	flush_timer = new QTimer (this);
@@ -268,6 +276,44 @@ void RInterface::doNextCommand (RCommand *command) {
 	QThread::yieldCurrentThread ();
 }
 
+void RInterface::rCommandDone (RCommand *command) {
+	RK_TRACE (RBACKEND);
+
+	if (command->failed ()) {
+		startup_phase2_error = true;
+		return;
+	}
+
+	if (command->getFlags () == GET_LIB_PATHS) {
+		RK_ASSERT (command->getDataType () == RData::StringVector);
+		for (unsigned int i = 0; i < command->getDataLength (); ++i) {
+			RKSettingsModuleRPackages::defaultliblocs.append (command->getStringVector ()[i]);
+		}
+	} else if (command->getFlags () == GET_HELP_BASE) {
+		RK_ASSERT (command->getDataType () == RData::StringVector);
+		RK_ASSERT (command->getDataLength () == 1);
+		RKSettingsModuleR::help_base_url = command->getStringVector ()[0];
+	} else if (command->getFlags () == SET_RUNTIME_OPTS) {
+		// no special handling. In case of failures, staturt_fail was set to true, above.
+	} else if (command->getFlags () == STARTUP_PHASE2_COMPLETE) {
+		QString message = startup_errors;
+		if (startup_phase2_error) message.append (i18n ("<p>\t-An unspecified error occurred that is not yet handled by RKWard. Likely RKWard will not function properly. Please check your setup.</p>\n"));
+		if (!message.isEmpty ()) {
+			message.prepend (i18n ("<p>There was a problem starting the R backend. The following error(s) occurred:</p>\n"));
+
+			QString details = runningCommand()->fullOutput().replace('<', "&lt;").replace('\n', "<br>");
+			if (!details.isEmpty ()) {
+				// WORKAROUND for stupid KMessageBox behavior. (kdelibs 4.2.3)
+				// If length of details <= 512, it tries to show the details as a QLabel.
+				details = details.leftJustified (513);
+			}
+			KMessageBox::detailedError (0, message, details, i18n ("Error starting R"), KMessageBox::Notify | KMessageBox::AllowLink);
+		}
+
+		startup_errors.clear ();
+	}
+}
+
 void RInterface::customEvent (QEvent *e) {
 	RK_TRACE (RBACKEND);
 
@@ -292,21 +338,29 @@ void RInterface::customEvent (QEvent *e) {
 	} else if (request->type == RBackendRequest::HistoricalSubstackRequest) {
 		processHistoricalSubstackRequest (request);
 	} else if ((request->type == RBackendRequest::Started)) {
+		// The backend thread has finished basic initialization, but we still have more to do...
+		startup_errors = request->params["message"].toString ();
+
+		command_requests.append (request);
+		RCommandStack *stack = new RCommandStack (runningCommand ());
+		RCommandChain *chain = stack->startChain (stack);
+
+		// find out about standard library locations
+		issueCommand (".libPaths ()\n", RCommand::GetStringVector | RCommand::App | RCommand::Sync, QString (), this, GET_LIB_PATHS, chain);
+		// start help server / determined help base url
+		issueCommand (".rk.getHelpBaseUrl ()\n", RCommand::GetStringVector | RCommand::App | RCommand::Sync, QString (), this, GET_HELP_BASE, chain);
+
+		// apply user configurable run time options
+		QStringList commands = RKSettingsModuleR::makeRRunTimeOptionCommands () + RKSettingsModuleRPackages::makeRRunTimeOptionCommands () + RKSettingsModuleOutput::makeRRunTimeOptionCommands () + RKSettingsModuleGraphics::makeRRunTimeOptionCommands ();
+		for (QStringList::const_iterator it = commands.begin (); it != commands.end (); ++it) {
+			issueCommand (*it, RCommand::App | RCommand::Sync, QString (), this, SET_RUNTIME_OPTS, chain);
+		}
+		// initialize output file
+		issueCommand ("rk.set.output.html.file (\"" + RKSettingsModuleGeneral::filesPath () + "/rk_out.html\")\n", RCommand::App | RCommand::Sync, QString (), this, SET_RUNTIME_OPTS, chain);
+
+		closeChain (chain);
 		request->completed ();
 		RKWardMainWindow::discardStartupOptions ();
-	} else if ((request->type == RBackendRequest::StartupError)) {
-		QString message = i18n ("<p>There was a problem starting the R backend. The following error(s) occurred:</p>\n");
-		message.append (request->params["message"].toString ());
-
-		QString details = runningCommand()->fullOutput();
-		if (!details.isEmpty ()) {
-			// WORKAROUND for stupid KMessageBox behavior. (kdelibs 4.2.3)
-			// If length of details <= 512, it tries to show the details as a QLabel.
-			details = details.replace('<', "&lt;").replace('\n', "<br>").leftJustified (513);
-		}
-		KMessageBox::detailedError (0, message, details, i18n ("Error starting R"), KMessageBox::Notify | KMessageBox::AllowLink);
-
-		request->completed ();
 	} else {
 		processRBackendRequest (request);
 	}

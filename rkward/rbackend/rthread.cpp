@@ -17,23 +17,13 @@
 #include "rembedinternal.h"
 
 #include "rinterface.h"
-#include "rcommandstack.h"
-#include "../settings/rksettingsmoduler.h"
-#include "../settings/rksettingsmoduleoutput.h"
-#include "../settings/rksettingsmodulegraphics.h"
-#include "../settings/rksettingsmodulegeneral.h"
 #include "../rkglobals.h"
 #include "../rkward.h"		// for startup options
 #include "../version.h"
 
 #include "../debug.h"
 
-#include <kapplication.h>
 #include <klocale.h>
-
-#include <qstring.h>
-#include <QList>
-#include <QFileInfo>
 
 #ifndef Q_WS_WIN
 #	include <signal.h>		// needed for pthread_kill
@@ -58,24 +48,7 @@ void RThread::run () {
 	killed = false;
 	previous_command = 0;
 
-	// in RInterface::RInterface() we have created a fake RCommand to capture all the output/errors during startup. Fetch it
-	repl_status.eval_depth++;
-	fetchNextCommand ();
-
-	QString err = initialize ();
-	if (!err.isEmpty ()) {
-		RBackendRequest req (true, RBackendRequest::StartupError);
-		req.params["message"] = err;
-		handleRequest (&req);
-	}
-
-	// wait until RKWard is set to go (esp, it has handled any errors during startup, etc.)
-	RBackendRequest* req = new RBackendRequest (true, RBackendRequest::Started);
-	handleRequest (req);
-	delete req;
-
-	commandFinished ();		// the fake startup command
-	repl_status.eval_depth--;
+	initialize ();
 
 	enterEventLoop ();
 }
@@ -213,8 +186,12 @@ void RThread::handleHistoricalSubstackRequest (const QStringList &list) {
 	handleRequest (&request);
 }                                                                        
 
-QString RThread::initialize () {
+void RThread::initialize () {
 	RK_TRACE (RBACKEND);
+
+	// in RInterface::RInterface() we have created a fake RCommand to capture all the output/errors during startup. Fetch it
+	repl_status.eval_depth++;
+	fetchNextCommand ();
 
 	int argc = 2;
 	char* argv[2] = { qstrdup ("--slave"), qstrdup ("--no-save") };
@@ -225,56 +202,33 @@ QString RThread::initialize () {
 
 	connectCallbacks ();
 
-	int status = 0;
-
-	if (!runDirectCommand ("library (\"rkward\")\n")) status |= LibLoadFail;
-	if (!runDirectCommand (QString ("stopifnot(.rk.app.version==\"%1\")\n").arg (VERSION))) status |= LibLoadFail;
-	if (!runDirectCommand (".rk.fix.assignments ()\n")) status |= LibLoadFail;
-
-// find out about standard library locations
-	RCommandProxy *dummy = runDirectCommand (".libPaths ()\n", RCommand::GetStringVector);
-	if (dummy->status & RCommand::Failed) status |= OtherFail;
-	for (unsigned int i = 0; i < dummy->getDataLength (); ++i) {
-		RKSettingsModuleRPackages::defaultliblocs.append (dummy->getStringVector ()[i]);
-	}
-	delete dummy;
-
-// start help server / determined help base url
-	dummy = runDirectCommand (".rk.getHelpBaseUrl ()\n", RCommand::GetStringVector);
-	if (dummy->status & RCommand::Failed) status |= OtherFail;
-	else {
-		RK_ASSERT (dummy->getDataLength () == 1);
-		RKSettingsModuleR::help_base_url = dummy->getStringVector ()[0];
-	}
-	delete dummy;
-
-// apply user configurable run time options
-	QStringList commands = RKSettingsModuleR::makeRRunTimeOptionCommands () + RKSettingsModuleRPackages::makeRRunTimeOptionCommands () + RKSettingsModuleOutput::makeRRunTimeOptionCommands () + RKSettingsModuleGraphics::makeRRunTimeOptionCommands ();
-	for (QStringList::const_iterator it = commands.begin (); it != commands.end (); ++it) {
-		if (!runDirectCommand ((*it).toLocal8Bit ())) {
-			status |= OtherFail;
-			RK_DO (qDebug ("error in initialization call '%s'", (*it).toLatin1().data ()), RBACKEND, DL_ERROR);
-		}
-	}
+	bool lib_load_fail = false;
+	bool sink_fail = false;
+	if (!runDirectCommand ("library (\"rkward\")\n")) lib_load_fail = true;
+	if (!runDirectCommand (QString ("stopifnot(.rk.app.version==\"%1\")\n").arg (VERSION))) lib_load_fail = true;
+	if (!runDirectCommand (".rk.fix.assignments ()\n")) sink_fail = true;
 
 // error/output sink and help browser
-	if (!runDirectCommand ("options (error=quote (.rk.do.error ()))\n")) status |= SinkFail;
-	if (!runDirectCommand ("rk.set.output.html.file (\"" + RKSettingsModuleGeneral::filesPath () + "/rk_out.html\")\n")) status |= SinkFail;
+	if (!runDirectCommand ("options (error=quote (.rk.do.error ()))\n")) sink_fail = true;
 
 	QString error_messages;
-	if (status & LibLoadFail) {
+	if (lib_load_fail) {
 		error_messages.append (i18n ("</p>\t- The 'rkward' R-library either could not be loaded at all, or not in the correct version. This may lead to all sorts of errors, from single missing features to complete failure to function. The most likely cause is that the last installation did not place all files in the correct place. However, in some cases, left-overs from a previous installation that was not cleanly removed may be the cause.</p>\
 		<p><b>You should quit RKWard, now, and fix your installation</b>. For help with that, see <a href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</p>\n"));
 	}
-	if (status & SinkFail) {
-		error_messages.append (i18n ("<p>\t-There was a problem setting up the communication with R. Most likely this is due to an incorrect version of the 'rkward' R-library or failure to find that at all. This indicates a broken installation.</p>\
+	if (sink_fail) {
+		error_messages.append (i18n ("<p>\t-There was a problem setting up the communication with R. Most likely this indicates a broken installation.</p>\
 		<p><b>You should quit RKWard, now, and fix your installation</b>. For help with that, see <a href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</p></p>\n"));
 	}
-	if (status & OtherFail) {
-		error_messages.append (i18n ("<p>\t-An unspecified error occurred that is not yet handled by RKWard. Likely RKWard will not function properly. Please check your setup.</p>\n"));
-	}
 
-	return error_messages;
+	RBackendRequest req (true, RBackendRequest::Started);
+	req.params["message"] = QVariant (error_messages);
+	// blocks until RKWard is set to go (esp, it has displayed startup error messages, etc.)
+	// in fact, a number of sub-commands are run while handling this request!
+	handleRequest (&req);
+
+	commandFinished ();		// the fake startup command
+	repl_status.eval_depth--;
 }
 
 void RThread::checkObjectUpdatesNeeded (bool check_list) {

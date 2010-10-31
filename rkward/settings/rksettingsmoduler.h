@@ -93,7 +93,7 @@ private:
 	static QString builtin_editor;
 
 // session constants
-	friend class RThread;
+	friend class RInterface;
 	static QString help_base_url;
 };
 
@@ -145,7 +145,7 @@ private:
 	static bool archive_packages;
 	static QStringList package_repositories;
 
-	friend class RThread;
+	friend class RInterface;
 	static QStringList defaultliblocs;
 	static QString essential_packages;
 };

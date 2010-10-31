@@ -2,7 +2,7 @@
                           rkcommandlog  -  description
                              -------------------
     begin                : Sun Nov 3 2002
-    copyright            : (C) 2002, 2004, 2005, 2006, 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2004, 2005, 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -64,8 +64,8 @@ private:
 	void checkRaiseWindow (RCommand *command);
 /** internal helper function, called whenever a line/lines have been added. Check whether log is longer than maximum setting. Scroll to the bottom */
 	void linesAdded ();
-/** Id of last command the input (i.e. the command itself) was shown for. Used to keep track of whether a command's input should be shown or not */
-	int command_input_shown;
+/** Used to keep track, which commands "input" has already been shown */
+	QList<RCommand*> command_input_shown;
 /** On a given command, the log_view should not be raised more than once */
 	int last_raised_command;
 

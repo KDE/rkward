@@ -23,12 +23,12 @@
 #include <QFile>
 
 #include "rcommand.h"
+#include "rcommandreceiver.h"
 
 class RCommand;
 class RKWardMainWindow;
 class QTimer;
 class RThread;
-class RCommandReceiver;
 struct RKWardStartupOptions;
 struct RBackendRequest;
 
@@ -44,7 +44,7 @@ struct RBackendRequest;
 	*@author Thomas Friedrichsmeier
 */
 
-class RInterface : public QObject {
+class RInterface : public QObject, public RCommandReceiver {
 	Q_OBJECT
 public:
 /** constructor */
@@ -122,6 +122,9 @@ private:
 more errors/crashes. @see RInterface::cancelCommand @see RInterface::pauseProcessing
 May be an OR'ed combination of several LockType s */
 	int locked;
+
+	QString startup_errors;
+	bool startup_phase2_error;
 friend class RKWardMainWindow;
 friend class RCommand;
 /** Used (once!) to start the RThread. Need to make this separate to avoid race conditions */
@@ -129,6 +132,7 @@ friend class RCommand;
 protected:
 /** needed to handle the QCustomEvent s, the RThread is sending (notifications on what's happening in the backend thread) */
 	void customEvent (QEvent *e);
+	void rCommandDone (RCommand *command);
 };
 
 /**

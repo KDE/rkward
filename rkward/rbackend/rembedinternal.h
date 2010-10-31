@@ -49,7 +49,6 @@ public:
 		Started,
 		EvalRequest,
 		CallbackRequest,
-		StartupError,
 		HistoricalSubstackRequest,
 		OtherRequest		/**< Any other type of request. Note: which requests are in the enum, and which are not has mostly historical reasons. @see params */
 	};
@@ -149,17 +148,9 @@ public:
 		OtherError=3		/**< Other error, usually a semantic error, e.g. object not found */
 	};
 
-/** An enum describing whether initialization of the embedded R-process went well, or what errors occurred. */
-	enum InitStatus {
-		Ok=0,					/**< No error */
-		LibLoadFail=1,		/**< Error while trying to load the rkward R package */
-		SinkFail=2,			/**< Error while redirecting R's stdout and stderr to files to be read from rkward */
-		OtherFail=4			/**< Other error while initializing the embedded R-process */
-	}; // TODO: make obsolete!
-
-/** initializes the R-backend. Returns an error-code that consists of a bit-wise or-conjunction of the RThread::InitStatus -enum, RThread::Ok on success.
+/** initializes the R-backend. Emits an RCallbackType::Started-request (with any error messages) when done.
 Note that you should call initialize only once in a application */
-	QString initialize ();
+	void initialize ();
 
 	void enterEventLoop ();
 protected:
