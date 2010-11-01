@@ -3,10 +3,10 @@
 #' This function can be called to run a single plugin test suite.
 #' 
 #' @title Run RKWard plugin test suite
-#' @usage rktest.runRKTestSuite(suite, basedir=getwd(), test.id=NULL)
+#' @usage rktest.runRKTestSuite(suite, testroot=getwd(), test.id=NULL)
 #' @aliases rktest.runRKTestSuite
 #' @param suite Character string naming the test suite to run.
-#' @param basedir Defaults to the working directory.
+#' @param testroot Defaults to the working directory.
 #' @param test.id An optional character string or vector naming one or more tests of a suite to be run (if NULL, all tests are run).
 #' @return An object of class \code{\link[rkwardtests:RKTestResult]{RKTestResult-class}}.
 #' @author Thomas Friedrichsmeier \email{thomas.friedrichsmeier@@ruhr-uni-bochum.de}, Meik Michalke \email{meik.michalke@@uni-duesseldorf.de}
@@ -18,7 +18,7 @@
 #' result <- rktest.runRKTestSuite()
 #' }
 
-rktest.runRKTestSuite <- function (suite, basedir=getwd (), test.id=NULL) {
+rktest.runRKTestSuite <- function (suite, testroot=getwd (), test.id=NULL) {
 	# check wheter test environment is already set,
 	# otherwise initialize
 	if(!exists("initialized", where=rkwardtests::.rktest.tmp.storage) || !get("initialized", pos=rkwardtests::.rktest.tmp.storage)){
@@ -32,11 +32,12 @@ rktest.runRKTestSuite <- function (suite, basedir=getwd (), test.id=NULL) {
 	if (!validObject (suite)) return (result)
 
 	# clean any old results
-	rktest.cleanRKTestSuite (suite, basedir)
+	rktest.cleanRKTestSuite (suite)
 
 	oldwd = getwd ()
 	on.exit (setwd (oldwd), add=TRUE)
-	setwd (file.path(basedir, suite@id))
+#	setwd (file.path(testroot, suite@id))
+	setwd (rktest.createTempSuiteDir(suite@id))
 
 	if (length (suite@initCalls) > 0) {
 		for (i in 1:length (suite@initCalls)) try (suite@initCalls[[i]]())
@@ -49,7 +50,7 @@ rktest.runRKTestSuite <- function (suite, basedir=getwd (), test.id=NULL) {
 
 	for (i in 1:length (suite@tests)) {
 		suite@tests[[i]]@libraries <- c(suite@libraries, suite@tests[[i]]@libraries)
-		try (res <- rktest.runRKTest(suite@tests[[i]]))
+		try (res <- rktest.runRKTest(test=suite@tests[[i]], standard.path=file.path(testroot, suite@id), suite.id=suite@id))
 		result <- rktest.appendTestResults (result, res)
 	}
 
@@ -57,5 +58,5 @@ rktest.runRKTestSuite <- function (suite, basedir=getwd (), test.id=NULL) {
 		for (i in 1:length (suite@postCalls)) try (suite@postCalls[[i]]())
 	}
 
-	result
+	return(result)
 }

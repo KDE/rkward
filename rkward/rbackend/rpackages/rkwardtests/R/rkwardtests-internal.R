@@ -32,15 +32,15 @@ rktest.appendTestResults <- function (objecta, objectb) {
 	objecta
 }
 
-rktest.file <- function (id, extension) {
+rktest.file <- function (id, extension, suite.id) {
 	# get or create a temporary directory
-	temp.suite.dir <- rktest.createTempSuiteDir(suite@id)
+	temp.suite.dir <- rktest.createTempSuiteDir(suite.id)
 	file.path(temp.suite.dir, paste (id, extension, sep=""))
 }
 
 # returns true, if file corresponds to standard.
-rktest.compare.against.standard <- function (file, fuzzy=FALSE) {
-	standard_file <- file.path(getwd(), gsub ("^(.*\\/)([^\\/]*)$", "RKTestStandard\\.\\2", file))
+rktest.compare.against.standard <- function (file, standard.path, fuzzy=FALSE) {
+	standard_file <- file.path(standard.path, gsub ("^(.*\\/)([^\\/]*)$", "RKTestStandard\\.\\2", file))
 	if (file.exists (file)) {
 		# purge empty files
 		info <- file.info (file)
@@ -104,7 +104,7 @@ rktest.runRKTest.internal <- function (test, output_file, code_file, message_fil
 	return (failed)
 }
 
-rktest.runRKTest <- function (test) {
+rktest.runRKTest <- function (test, standard.path, suite.id) {
 	result <- new ("RKTestResult")		# FALSE by default
 
 	if (!inherits (test, "RKTest")) return (result)
@@ -126,9 +126,13 @@ rktest.runRKTest <- function (test) {
 		return (result)
 	}
 
-	output_file <- rktest.file (test@id, ".rkout")
-	code_file <- rktest.file (test@id, ".rkcommands.R")
-	message_file <- rktest.file (test@id, ".messages.txt")
+	for (testfile in test@files) {
+		file.copy(file.path(standard.path, testfile), getwd())
+	}
+
+	output_file <- rktest.file (test@id, ".rkout", suite.id)
+	code_file <- rktest.file (test@id, ".rkcommands.R", suite.id)
+	message_file <- rktest.file (test@id, ".messages.txt", suite.id)
 
 	# the essence of the test:
 	res.error <- rktest.runRKTest.internal (test, output_file, code_file, message_file)
@@ -141,11 +145,11 @@ rktest.runRKTest <- function (test) {
 		else result@error <- "no"
 	}
 
-	result@output_match = rktest.compare.against.standard (output_file, test@fuzzy_output)
+	result@output_match = rktest.compare.against.standard (output_file, standard.path, test@fuzzy_output)
 	if (result@output_match == "MISMATCH") passed <- FALSE
-	result@message_match = rktest.compare.against.standard (message_file)
+	result@message_match = rktest.compare.against.standard (message_file, standard.path)
 	if (result@message_match == "MISMATCH") passed <- FALSE
-	result@code_match = rktest.compare.against.standard (code_file)
+	result@code_match = rktest.compare.against.standard (code_file, standard.path)
 	if (result@code_match == "MISMATCH") passed <- FALSE
 
 	result@passed <- passed
@@ -153,9 +157,8 @@ rktest.runRKTest <- function (test) {
 	result
 }
 
-rktest.cleanRKTestSuite <- function (suite, basedir=getwd ()) {
+rktest.cleanRKTestSuite <- function (suite) {
       # kept for backwards compatibility ;-)
-      # basedir is superfluous, though
       rktest.removeTempSuiteDir(suite@id)
 }
 

@@ -44,8 +44,8 @@ rktest.makeplugintests <- function(testsuites="testsuite.R", testroot=getwd(), o
 
   allresults <- new ("RKTestResult")
   for (testsuite in testsuites) {
-	  source (testsuite)
-	  results <- rktest.runRKTestSuite (suite=suite, basedir=getwd(), test.id=test.id)
+	  tryCatch(source(testsuite, local=TRUE), error=function(e) e)
+	  results <- rktest.runRKTestSuite (suite=suite, testroot=testroot, test.id=test.id)
 	  allresults <- rktest.appendTestResults (allresults, results)
   }
 

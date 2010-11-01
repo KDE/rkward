@@ -40,11 +40,6 @@ suite <- new ("RKTestSuite", id="rkward_application_tests",
 			stopifnot (.GlobalEnv$promise.symbol == 123)
 		}),
 		new ("RKTest", id="output_graphics_formats", call=function () {
-			# change dir to not mess around too much
-			oldwd <- getwd()
-			setwd(file.path(rktest.getTempDir(), "rkward_application_tests"))
-			on.exit(setwd(oldwd))
-
 			rk.graph.on(); plot (1, 1); rk.graph.off()	# should produce PNG, 480*480
 			old.options <- options()
 			options (rk.graphics.type="JPG",
@@ -66,16 +61,11 @@ suite <- new ("RKTestSuite", id="rkward_application_tests",
 			#
 			# In R 2.11.0, str (x) produces an error "subecript out of bounds" (only if library (XML) is loaded!
 			# The main concern is that we should handle this object gracefully, i.e. do not crash while syncing it.
-			load ("../rkward_application_tests_strange_object.RData")
+			load ("rkward_application_tests_strange_object.RData")
 			rk.sync.global ()
 			rk.sync (x)
-		}, libraries=c ("XML")),
+		}, libraries=c ("XML"), files=c("../rkward_application_tests_strange_object.RData")),
 		new ("RKTest", id="dev_off_bug", call=function () {
-			# change dir to not mess around too much
-			oldwd <- getwd()
-			setwd(file.path(rktest.getTempDir(), "rkward_application_tests"))
-			on.exit(setwd(oldwd))
-
 			graphics.off()
 			stopifnot (is.null (dev.list ()))
 
@@ -88,11 +78,6 @@ suite <- new ("RKTestSuite", id="rkward_application_tests",
 			stopifnot (is.null (dev.list ()))
 		}),
 		new ("RKTest", id="plot_history_basics", call=function () {
-			# change dir to not mess around too much
-			oldwd <- getwd()
-			setwd(file.path(rktest.getTempDir(), "rkward_application_tests"))
-			on.exit(setwd(oldwd))
-
 			le <- "package:lattice" %in% search ()
 			compareCurrentPlotWith <- function (x) {
 				if (inherits (x, "trellis")) {
@@ -257,11 +242,6 @@ suite <- new ("RKTestSuite", id="rkward_application_tests",
 			message ("mark 10")
 		}, libraries=c ("lattice")),
 		new ("RKTest", id="device_capturing_stress_test", call=function () {
-			# change dir to not mess around too much
-			oldwd <- getwd()
-			setwd(file.path(rktest.getTempDir(), "rkward_application_tests"))
-			on.exit(setwd(oldwd))
-
 			# This test checks for the "figure margins too large" error, that used to occur when plotting on a fresh device, sometimes.
 			# Since the error only appeared occasionally, we try 100 times to produce it. Unfortunately, that does make the test run annoyingly long...
 			graphics.off()
