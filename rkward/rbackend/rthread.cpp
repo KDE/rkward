@@ -18,11 +18,11 @@
 
 #include "rinterface.h"
 #include "../rkglobals.h"
-#include "../rkward.h"		// for startup options
 #include "../version.h"
 
 #include "../debug.h"
 
+#include <QCoreApplication>
 #include <klocale.h>
 
 #ifndef Q_WS_WIN
@@ -193,14 +193,7 @@ void RThread::initialize () {
 	repl_status.eval_depth++;
 	fetchNextCommand ();
 
-	int argc = 2;
-	char* argv[2] = { qstrdup ("--slave"), qstrdup ("--no-save") };
-	RKWardStartupOptions *options = RKWardMainWindow::getStartupOptions ();
-	RK_ASSERT (options);
-
-	startR (argc, argv, !(options->no_stack_check));
-
-	connectCallbacks ();
+	startR ();
 
 	bool lib_load_fail = false;
 	bool sink_fail = false;

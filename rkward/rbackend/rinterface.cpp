@@ -373,7 +373,6 @@ void RInterface::customEvent (QEvent *e) {
 
 		closeChain (chain);
 		request->completed ();
-		RKWardMainWindow::discardStartupOptions ();
 	} else {
 		processRBackendRequest (request);
 	}

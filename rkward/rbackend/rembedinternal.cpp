@@ -754,7 +754,7 @@ SEXP doCopyNoEval (SEXP name, SEXP fromenv, SEXP toenv) {
 	return (R_NilValue);
 }
 
-bool RThread::startR (int argc, char** argv, bool stack_check) {
+bool RThread::startR () {
 	RK_TRACE (RBACKEND);
 
 	setupCallbacks ();
@@ -762,20 +762,19 @@ bool RThread::startR (int argc, char** argv, bool stack_check) {
 	RKSignalSupport::saveDefaultSignalHandlers ();
 
 	r_running = true;
-	Rf_initialize_R (argc, argv);
+	int argc = 3;
+	char* argv[3] = { "--slave", "--no-save", "--no-restore" };
+	Rf_initialize_R (3, argv);
 
-#ifndef Q_WS_WIN
 	// in R on windows the stack limits detection seems to work out of the box for threads
-	if (stack_check) {
+#ifndef Q_WS_WIN
+	{
 		char dummy;
 		size_t stacksize;
 		void *stackstart;
 		RKGetCurrentThreadStackLimits (&stacksize, &stackstart, &dummy);
 		R_CStackStart = (uintptr_t) stackstart;
 		R_CStackLimit = stacksize;
-	} else {
-		R_CStackStart = (uintptr_t) -1;
-		R_CStackLimit = (uintptr_t) -1;
 	}
 #endif
 
@@ -787,18 +786,15 @@ bool RThread::startR (int argc, char** argv, bool stack_check) {
 	setup_Rmainloop ();
 
 #ifndef Q_WS_WIN
-	// in R on windows the stack limits detection seems to work out of the box for threads
-	if (stack_check) {
-		// safety check: If we are beyond the stack boundaries already, we better disable stack checking
-		// this has to come *after* the first setup_Rmainloop ()!
-		Rboolean stack_ok = R_ToplevelExec (R_CheckStackWrapper, (void *) 0);
-		if (!stack_ok) {
-			RK_DO (qDebug ("R_CheckStack() failed during initialization. Will disable stack checking and try to re-initialize."), RBACKEND, DL_WARNING);
-			RK_DO (qDebug ("If this does not work, try the --disable-stack-check command line option, *and* submit a bug report."), RBACKEND, DL_WARNING);
-			R_CStackStart = (uintptr_t) -1;
-			R_CStackLimit = (uintptr_t) -1;
-			setup_Rmainloop ();
-		}
+	// safety check: If we are beyond the stack boundaries already, we better disable stack checking
+	// this has to come *after* the first setup_Rmainloop ()!
+	Rboolean stack_ok = R_ToplevelExec (R_CheckStackWrapper, (void *) 0);
+	if (!stack_ok) {
+		RK_DO (qDebug ("R_CheckStack() failed during initialization. Will disable stack checking and try to re-initialize."), RBACKEND, DL_WARNING);
+		RK_DO (qDebug ("Whether or not things work after this, *please* submit a bug report."), RBACKEND, DL_WARNING);
+		R_CStackStart = (uintptr_t) -1;
+		R_CStackLimit = (uintptr_t) -1;
+		setup_Rmainloop ();
 	}
 #endif
 

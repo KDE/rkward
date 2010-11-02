@@ -154,11 +154,8 @@ Note that you should call initialize only once in a application */
 
 	void enterEventLoop ();
 protected:
-/** low-level initialization of R
-@param argc Number of arguments as would be passed on the commandline to R
-@param argv Arguments as would be passed on the commandline to R
-@param stack_check C stack checking enabled */
-	bool startR (int argc, char **argv, bool stack_check);
+/** low-level initialization of R */
+	bool startR ();
 public:
 /** convenience low-level function for running a command, directly
 @param command command to be runCommand

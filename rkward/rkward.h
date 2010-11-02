@@ -43,7 +43,6 @@ class KSqueezedTextLabel;
 
 struct RKWardStartupOptions {
 	KUrl initial_url;	/**< The workspace file to load on startup. If empty, show a dialog asking what to do. **/
-	bool no_stack_check;	/**< Disable R C stack checking */
 	QString evaluate;	/**< R code to run after startup */
 };
 
@@ -72,13 +71,6 @@ public:
 	KParts::PartManager *partManager () { return part_manager; };
 
 	static RKWardMainWindow *getMain () { return rkward_mainwin; };
-
-/** return pointer to startup options. WARNING: The options are deleted shortly after startup */
-	static RKWardStartupOptions* getStartupOptions () { return getMain()->startup_options; };
-	static void discardStartupOptions () {
-		delete (getMain()->startup_options);
-		getMain()->startup_options = 0;
-	};
 
 /** (try to) close all windows, and ask whether it is ok to quit */
 	bool doQueryQuit ();

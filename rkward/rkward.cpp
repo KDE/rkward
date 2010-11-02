@@ -141,7 +141,6 @@ RKWardMainWindow::RKWardMainWindow (RKWardStartupOptions *options) : KParts::Mai
 		startup_options = options;
 	} else {
 		startup_options = new RKWardStartupOptions;
-		startup_options->no_stack_check = false;
 		startup_options->initial_url = KUrl();
 	}
 
@@ -208,6 +207,8 @@ void RKWardMainWindow::doPostInit () {
 	// startup options will be deleted from the R thread (TODO correct this!), so we need to copy the initial_url here, or run into race conditions
 	KUrl open_url = startup_options->initial_url;
 	QString evaluate_code = startup_options->evaluate;
+	delete startup_options;
+	startup_options = 0;
 	startR ();
 	
 	initPlugins ();
