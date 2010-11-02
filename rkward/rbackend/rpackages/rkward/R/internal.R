@@ -184,7 +184,7 @@
 	#assign (k, get (k, envir=globalenv ()), envir=.rk.watched.symbols)
 	rm (list=k, envir=globalenv ())
 
-	base::makeActiveBinding (k, f, globalenv ())
+	.rk.makeActiveBinding.default (k, f, globalenv ())
 
 	invisible (TRUE)
 }
