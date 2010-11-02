@@ -145,13 +145,14 @@
 ".rk.watched.symbols" <- new.env ()
 
 # override makeActiveBinding: If active bindings are created in globalenv (), watch them properly
+.rk.makeActiveBinding.default <- base::makeActiveBinding
 "makeActiveBinding" <- function (sym, fun, env, ...) {
 	if (identical (env, globalenv ())) {
-		base::makeActiveBinding (sym, fun, .rk.watched.symbols, ...)
+		.rk.makeActiveBinding.default (sym, fun, .rk.watched.symbols, ...)
 		f <- .rk.make.watch.f (sym)
-		base::makeActiveBinding (sym, f, globalenv (), ...)
+		.rk.makeActiveBinding.default (sym, f, globalenv (), ...)
 	} else {
-		base::makeActiveBinding (sym, fun, env, ...)
+		.rk.makeActiveBinding.default (sym, fun, env, ...)
 	}
 }
 
@@ -418,6 +419,10 @@ formals (menu) <- formals (utils::menu)
 ".rk.fix.assignments" <- function () {
 	assignInNamespace ("menu", menu, envir=as.environment ("package:utils"))
 	assignInNamespace ("select.list", select.list, envir=as.environment ("package:utils"))
+	try ({
+		unlockBinding ("makeActiveBinding", base::.BaseNamespaceEnv)
+		assign ("makeActiveBinding", rkward::makeActiveBinding, envir=base::.BaseNamespaceEnv)
+	})
 	
 	# call separate assignments functions:
 	if (exists (".rk.fix.assignments.graphics")) eval (body (.rk.fix.assignments.graphics)) # internal_graphics.R
