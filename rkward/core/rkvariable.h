@@ -130,9 +130,9 @@ protected:
 /** Discards pending unsynced changes. */
 	void discardUnsyncedChanges ();
 /** like setNumeric, but sets chars. If internalStorage () is numeric, attempts to convert the given strings to numbers. I.e. the function behaves essentially like setText (), but operates on a range of cells. Code may assume that all data comes directly from R, is entirely valid in R. */
-	virtual void setCharacterFromR (int from_row, int to_row, QString *data);
+	virtual void setCharacterFromR (int from_row, int to_row, const QStringList &data);
 /** set numeric values in the given range. Assumes you provide enough values for the range. If internalStorage is String, all values will be converted to strings, so you should use this function only, if you know you are dealing with a numeric object. Code may assume that all data comes directly from R, is entirely valid in R. */
-	void setNumericFromR (int from_row, int to_row, double *data);
+	void setNumericFromR (int from_row, int to_row, const QVector<double> &data);
 /** reimplemented from RObject to change the internal data storage mode, if the var is being edited */
 	bool updateType (RData *new_data);
 /** Extended from RObject::EditData to actually contain data. */

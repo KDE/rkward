@@ -744,7 +744,7 @@ bool RKComponentPropertyRObjects::isObjectValid (RObject *object) {
 
 	// first check dimensionality
 	if (dims > 0) {
-		if ((int) object->numDimensions () != dims) return false;
+		if (object->getDimensions ().size () != dims) return false;
 	}
 	int olength = object->getLength ();
 	if ((min_length > 0) && (olength < min_length)) return false;

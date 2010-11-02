@@ -33,6 +33,10 @@
 
 #include "../debug.h"
 
+namespace RObjectPrivate {
+	QVector<qint32> dim_null (1, 0);
+}
+
 RObject::RObject (RContainerObject *parent, const QString &name) {
 	RK_TRACE (OBJECTS);
 	
@@ -40,18 +44,12 @@ RObject::RObject (RContainerObject *parent, const QString &name) {
 	RObject::name = name;
 	type = 0;
 	meta_map = 0;
-	classnames = 0;
-	num_classes = 0;
-	dimensions = new int[1];	// safe initialization
-	dimensions[0] = 0;
-	num_dimensions = 0;
+	dimensions = RObjectPrivate::dim_null;	// safe initialization
 }
 
 RObject::~RObject () {
 	RK_TRACE (OBJECTS);
 
-	delete [] dimensions;
-	delete [] classnames;
 	cancelOutstandingCommands ();
 }
 
@@ -139,11 +137,11 @@ QString RObject::getObjectDescription () const {
 	}
 
 	if (isType (Container | Variable)) {
-		if (num_dimensions == 1) {
+		if (dimensions.size () == 1) {
 			ret.append ("<br><b>" + i18n ("Length: ") + QString::number (dimensions[0]));
-		} else if (num_dimensions > 1) {
+		} else if (dimensions.size () > 1) {
 			ret.append ("<br><b>" + i18n ("Dimensions: "));
-			for (unsigned int i=0; i < num_dimensions; ++i) {
+			for (int i=0; i < dimensions.size (); ++i) {
 				if (i) ret.append (", ");
 				ret.append (QString::number (dimensions[i]));
 			}
@@ -191,25 +189,13 @@ void RObject::setMetaProperty (const QString &id, const QString &value, bool syn
 
 QString RObject::makeClassString (const QString &sep) const {
 	RK_TRACE (OBJECTS);
-	QString ret;
-	bool first = true;
-	for (unsigned int i=0; i < numClasses (); ++i) {
-		if (first) first = false;
-		else ret.append (sep);
-		ret.append (getClassName (i));
-	}
-	return ret;
+	return (classnames.join (sep));
 }
 
 bool RObject::inherits (const QString &class_name) const {
 	RK_TRACE (OBJECTS);
 
-	for (unsigned int i=0; i < numClasses (); ++i) {
-		if (getClassName (i) == class_name) {
-			return true;
-		}
-	}
-	return false;
+	return (classnames.contains (class_name));
 }
 
 QString RObject::makeChildName (const QString &short_child_name, bool) const {
@@ -402,24 +388,11 @@ bool RObject::updateClasses (RData *new_data) {
 
 	bool change = false;
 
-	unsigned int new_len = new_data->getDataLength ();
-	QString *new_classes = new_data->getStringVector ();
-	new_data->detachData ();
-
-	if (numClasses () != new_len) {
+	QStringList new_classes = new_data->getStringVector ();
+	if (new_classes != classnames) {
 		change = true;
-	} else {
-		for (unsigned int cn=0; cn < numClasses (); ++cn) {
-			if (classnames[cn] != new_classes[cn]) {
-				change = true;
-				break;
-			}
-		}
+		classnames = new_classes;
 	}
-
-	num_classes = new_len;
-	delete [] classnames;
-	classnames = new_classes;
 
 	return change;
 }
@@ -462,27 +435,19 @@ bool RObject::updateDimensions (RData *new_data) {
 	RK_ASSERT (new_data->getDataLength () >= 1);
 	RK_ASSERT (new_data->getDataType () == RData::IntVector);
 
-	bool changed = false;
-
-	unsigned int new_len = new_data->getDataLength ();
-	int *new_dimensions = new_data->getIntVector ();
-	new_data->detachData ();
-
-	if (num_dimensions != new_len) {
-		changed = true;
-	} else {
-		for (unsigned int d=0; d < num_dimensions; ++d) {
-			if (dimensions[d] != new_dimensions[d]) {
-				changed = true;
-				break;
+	QVector<qint32> new_dimensions = new_data->getIntVector ();
+	if (new_dimensions != dimensions) {
+		if (new_dimensions.isEmpty ()) {
+			if (dimensions != RObjectPrivate::dim_null) {
+				dimensions = RObjectPrivate::dim_null;
+				return true;
 			}
+		} else {
+			dimensions = new_dimensions;
+			return true;
 		}
 	}
-	delete [] dimensions;
-	num_dimensions = new_len;
-	dimensions = new_dimensions;
-
-	return true;
+	return false;
 }
 
 void RObject::rename (const QString &new_short_name) {

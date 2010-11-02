@@ -70,6 +70,8 @@ RKCommandLog::RKCommandLog (QWidget *parent, bool tool_window, const char *name)
 
 RKCommandLog::~RKCommandLog(){
 	RK_TRACE (APP);
+
+	RK_ASSERT (command_input_shown.isEmpty ());
 }
 
 void RKCommandLog::addInput (RCommand *command) {

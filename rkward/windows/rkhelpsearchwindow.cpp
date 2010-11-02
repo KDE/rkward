@@ -222,8 +222,7 @@ void RKHelpSearchWindow::rCommandDone (RCommand *command) {
 		RK_ASSERT ((command->getDataLength () % 3) == 0);
 		RK_ASSERT (command->getDataType () == RData::StringVector);
 
-		results->setResults (command->getStringVector (), command->getDataLength () / 3);
-		command->detachData ();		// now owned by the model
+		results->setResults (command->getStringVector ());
 
 		for (int i = 0; i < COL_COUNT; ++i) results_view->resizeColumnToContents (i);
 		setEnabled(true);
@@ -247,22 +246,18 @@ void RKHelpSearchWindow::rCommandDone (RCommand *command) {
 RKHelpSearchResultsModel::RKHelpSearchResultsModel (QObject *parent) : QAbstractTableModel (parent) {
 	RK_TRACE (APP);
 
-	results = 0;
 	result_count = 0;
 }
 
 RKHelpSearchResultsModel::~RKHelpSearchResultsModel () {
 	RK_TRACE (APP);
-
-	delete [] results;
 }
 
-void RKHelpSearchResultsModel::setResults (QString* new_results, int new_result_count) {
+void RKHelpSearchResultsModel::setResults (const QStringList &new_results) {
 	RK_TRACE (APP);
 
-	delete [] results;
 	results = new_results;
-	result_count = new_result_count;
+	result_count = results.size () / 3;
 
 	reset ();
 }
@@ -285,7 +280,7 @@ QVariant RKHelpSearchResultsModel::data (const QModelIndex& index, int role) con
 	// easier typing
 	int row = index.row ();
 	int col = index.column ();
-	if (results) {
+	if (result_count) {
 		if (role == Qt::DisplayRole || role == Qt::ToolTipRole) {
 			if (row < result_count) {
 				if (col < COL_COUNT) {

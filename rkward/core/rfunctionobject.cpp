@@ -25,10 +25,6 @@
 RFunctionObject::RFunctionObject (RContainerObject *parent, const QString &name) : RObject (parent, name) {
 	RK_TRACE (OBJECTS);
 	type = Function;
-
-	argcount = 0;
-	argnames = 0;
-	argvalues = 0;
 }
 
 RFunctionObject::~RFunctionObject () {
@@ -39,7 +35,7 @@ QString RFunctionObject::printArgs () const {
 	RK_TRACE (OBJECTS);
 
 	QString ret;
-	for (unsigned int i = 0; i < argcount; ++i) {
+	for (int i = 0; i < argnames.size (); ++i) {
 		if (i) ret.append (", ");
 		ret.append (argnames[i]);
 		if (!argvalues[i].isEmpty ()) {
@@ -70,38 +66,17 @@ bool RFunctionObject::updateArguments (RData *new_data) {
 	RData *argnames_data = new_data->getStructureVector ()[5];
 	RData *argvalues_data = new_data->getStructureVector ()[6];
 
-	unsigned int new_arglen = argnames_data->getDataLength (); 
 	RK_ASSERT (argnames_data->getDataType () == RData::StringVector);
 	RK_ASSERT (argvalues_data->getDataType () == RData::StringVector);
 
-	RK_ASSERT (new_arglen == argvalues_data->getDataLength ());
-	QString *new_argnames = argnames_data->getStringVector ();
-	QString *new_argvalues = argvalues_data->getStringVector ();
-	argnames_data->detachData ();
-	argvalues_data->detachData ();
+	QStringList new_argnames = argnames_data->getStringVector ();
+	QStringList new_argvalues = argvalues_data->getStringVector ();
+	RK_ASSERT (new_argnames.size () == new_argvalues.size ());
 
-	bool changed = false;
-	if (new_arglen != argcount) {
-		changed = true;
-	} else {
-		for (unsigned int i = 0; i < new_arglen; ++i) {
-			if (argnames[i] != new_argnames[i]) {
-				changed = true;
-				break;
-			}
-
-			if (argvalues[i] != new_argvalues[i]) {
-				changed = true;
-				break;
-			}
-		}
+	if ((new_argnames != argnames) || (new_argvalues != argvalues)) {
+		argnames = new_argnames;
+		argvalues = new_argvalues;
+		return true;
 	}
-
-	argcount = new_arglen;
-	delete [] argnames;
-	delete [] argvalues;
-	argnames = new_argnames;
-	argvalues = new_argvalues;
-
-	return changed;
+	return false;
 }

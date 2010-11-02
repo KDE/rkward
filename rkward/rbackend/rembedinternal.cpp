@@ -426,29 +426,15 @@ int REditFiles (int nfile, const char **file, const char **title, const char *wt
 SEXP doShowEditFiles (SEXP files, SEXP titles, SEXP wtitle, SEXP del, RBackendRequest::RCallbackType edit) {
 	RK_TRACE (RBACKEND);
 
-	// this function would be much shorter, if SEXPToStringList would simply return a QStringList...
-	unsigned int files_count, titles_count;
-	QString *file_strings = RKRSupport::SEXPToStringList (files, &files_count);
-	QString *title_strings = RKRSupport::SEXPToStringList (titles, &titles_count);
+	QStringList file_strings = RKRSupport::SEXPToStringList (files);
+	QStringList title_strings = RKRSupport::SEXPToStringList (titles);
 	QString wtitle_string = RKRSupport::SEXPToString (wtitle);
 	bool del_files = RKRSupport::SEXPToInt (del, 0) != 0;
 
-	RK_ASSERT (files_count == titles_count);
-	RK_ASSERT (files_count >= 1);
+	RK_ASSERT (file_strings.size () == title_strings.size ());
+	RK_ASSERT (file_strings.size () >= 1);
 
-	files_count = titles_count = qMin (files_count, titles_count);
-
-	QStringList files_list;
-	QStringList titles_list;
-	for (unsigned int i = 0; i < files_count; ++i) {
-		files_list.append (file_strings[i]);
-		titles_list.append (title_strings[i]);
-	}
-
-	REditFilesHelper (files_list, titles_list, wtitle_string, edit, del_files);
-
-	delete [] file_strings;
-	delete [] title_strings;
+	REditFilesHelper (file_strings, title_strings, wtitle_string, edit, del_files);
 
 	return (R_NilValue);
 }
@@ -698,13 +684,7 @@ SEXP doError (SEXP call) {
 SEXP doSubstackCall (SEXP call) {
 	RK_TRACE (RBACKEND);
 
-	unsigned int count;
-	QString *strings = RKRSupport::SEXPToStringList (call, &count);
-	QStringList list;
-	for (unsigned int i = 0; i < count; ++i) {
-		list.append (strings[i]);
-	}
-	delete [] strings;
+	QStringList list = RKRSupport::SEXPToStringList (call);
 
 	// handle symbol updates inline
 	if (list.count () == 2) {		// schedule symbol update for later
@@ -983,7 +963,6 @@ void RThread::runCommand (RCommandProxy *command) {
 	RKWardRError error = NoError;
 
 	int ctype = command->type;	// easier typing
-	RData retdata;
 
 	// running user commands is quite different from all other commands and should have been handled by RReadConsole
 	RK_ASSERT (!(ctype & RCommand::User));
@@ -1000,17 +979,14 @@ void RThread::runCommand (RCommandProxy *command) {
 			PROTECT (exp = runCommandInternalBase (parsed, &error));
 			if (error == NoError) {
 				if (ctype & RCommand::GetStringVector) {
-					retdata.datatype = RData::StringVector;
-					retdata.data = RKRSupport::SEXPToStringList (exp, &(retdata.length));
+					command->setData (RKRSupport::SEXPToStringList (exp));
 				} else if (ctype & RCommand::GetRealVector) {
-					retdata.datatype = RData::RealVector;
-					retdata.data = RKRSupport::SEXPToRealArray (exp, &(retdata.length));
+					command->setData (RKRSupport::SEXPToRealArray (exp));
 				} else if (ctype & RCommand::GetIntVector) {
-					retdata.datatype = RData::IntVector;
-					retdata.data = RKRSupport::SEXPToIntArray (exp, &(retdata.length));
+					command->setData (RKRSupport::SEXPToIntArray (exp));
 				} else if (ctype & RCommand::GetStructuredData) {
 					RData *dummy = RKRSupport::SEXPToRData (exp);
-					retdata.setData (*dummy);
+					command->swallowData (*dummy);
 					delete dummy;
 				}
 			}
@@ -1024,7 +1000,6 @@ void RThread::runCommand (RCommandProxy *command) {
 		if (!RInterface::backendIsLocked () || killed) processX11Events ();
 	}
 
-	command->setData (retdata);
 	// common error/status handling
 	if (error != NoError) {
 		command->status |= RCommand::WasTried | RCommand::Failed;

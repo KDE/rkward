@@ -78,47 +78,45 @@ bool RKRSupport::callSimpleBool (SEXP fun, SEXP arg, SEXP env) {
 QString RKRSupport::SEXPToString (SEXP from_exp) {
 	RK_TRACE (RBACKEND);
 
-	QString ret;
+	QStringList list = SEXPToStringList (from_exp);
 
-	unsigned int count;
-	QString *list = SEXPToStringList (from_exp, &count);
-
-	if (count >= 1) ret = list[0];
-	delete [] list;
-	return ret;
+	if (!list.isEmpty ()) return list[0];
+	return QString ();
 }
 
-QString *RKRSupport::SEXPToStringList (SEXP from_exp, unsigned int *count) {
+QStringList RKRSupport::SEXPToStringList (SEXP from_exp) {
 	RK_TRACE (RBACKEND);
 
 	// bad format? coerce the vector first
 	if (TYPEOF (from_exp) != STRSXP) {
 		SEXP strexp;
 		PROTECT (strexp = Rf_coerceVector (from_exp, STRSXP));
-		QString *list = SEXPToStringList (strexp, count);
+		QStringList list = SEXPToStringList (strexp);
 		UNPROTECT (1);
 		return list;
 	}
 
 	// format already good? Avoid coercion (and associated copying)
-	*count = Rf_length (from_exp);
-	QString *list = new QString[*count];
-	unsigned int i = 0;
-	for (; i < *count; ++i) {
+	int count = Rf_length (from_exp);
+	QStringList list;
+#if QT_VERSION >= 0x040700
+	list.reserve (count);
+#endif
+	for (int i = 0; i < count; ++i) {
 		SEXP dummy = STRING_ELT (from_exp, i);
 
 		if (TYPEOF (dummy) != CHARSXP) {
-			list[i] = QString ("not defined");	// can this ever happen?
+			list.append (QString ("not defined"));	// can this ever happen?
 		} else {
 			if (dummy == NA_STRING) {
-				list[i] = QString::null;
+				list.append (QString ());
 			} else {
 				if (IS_UTF8 (dummy)) {
-					list[i] = QString::fromUtf8 ((char *) STRING_PTR (dummy));
+					list.append (QString::fromUtf8 ((char *) STRING_PTR (dummy)));
 				} else if (IS_LATIN1 (dummy)) {
-					list[i] = QString::fromLatin1 ((char *) STRING_PTR (dummy));
+					list.append (QString::fromLatin1 ((char *) STRING_PTR (dummy)));
 				} else {
-					list[i] = RThread::this_pointer->current_locale_codec->toUnicode ((char *) STRING_PTR (dummy));
+					list.append (RThread::this_pointer->current_locale_codec->toUnicode ((char *) STRING_PTR (dummy)));
 				}
 			}
 		}
@@ -127,25 +125,25 @@ QString *RKRSupport::SEXPToStringList (SEXP from_exp, unsigned int *count) {
 	return list;
 }
 
-int *RKRSupport::SEXPToIntArray (SEXP from_exp, unsigned int *count) {
+RData::IntStorage RKRSupport::SEXPToIntArray (SEXP from_exp) {
 	RK_TRACE (RBACKEND);
 
-	int *integers;
+	RData::IntStorage integers;
 
 	// bad format? coerce the vector first
 	if (TYPEOF (from_exp) != INTSXP) {
 		SEXP intexp;
 		PROTECT (intexp = Rf_coerceVector (from_exp, INTSXP));
-		integers = SEXPToIntArray (intexp, count);
+		integers = SEXPToIntArray (intexp);
 		UNPROTECT (1);
 		return integers;
 	}
 
 	// format already good? Avoid coercion (and associated copying)
-	*count = Rf_length (from_exp);
-	integers = new int[*count];
-	for (unsigned int i = 0; i < *count; ++i) {
-		integers[i] = INTEGER (from_exp)[i];
+	unsigned int count = Rf_length (from_exp);
+	integers.reserve (count);
+	for (unsigned int i = 0; i < count; ++i) {
+		integers.append (INTEGER (from_exp)[i]);
 		if (integers[i] == R_NaInt) integers[i] = INT_MIN;		// this has no effect for now, but if R ever chnages it's R_NaInt, then it will
 	}
 	return integers;
@@ -155,34 +153,30 @@ int *RKRSupport::SEXPToIntArray (SEXP from_exp, unsigned int *count) {
 int RKRSupport::SEXPToInt (SEXP from_exp, int def_value) {
 	RK_TRACE (RBACKEND);
 
-	int ret = def_value;
-	unsigned int count;
-	int *integers = SEXPToIntArray (from_exp, &count);
-	if (count >= 1) ret = integers[0];
-	delete [] integers;
-
-	return ret;
+	RData::IntStorage integers = SEXPToIntArray (from_exp);
+	if (!integers.isEmpty ()) return integers[0];
+	return def_value;
 }
 
-double *RKRSupport::SEXPToRealArray (SEXP from_exp, unsigned int *count) {
+RData::RealStorage RKRSupport::SEXPToRealArray (SEXP from_exp) {
 	RK_TRACE (RBACKEND);
 
-	double *reals;
+	RData::RealStorage reals;
 
 	// bad format? coerce the vector first
 	if (TYPEOF (from_exp) != REALSXP) {
 		SEXP realexp;
 		PROTECT (realexp = Rf_coerceVector (from_exp, REALSXP));
-		reals = SEXPToRealArray (realexp, count);
+		reals = SEXPToRealArray (realexp);
 		UNPROTECT (1);
 		return reals;
 	}
 	
 	// format already good? Avoid coercion (and associated copying)
-	*count = Rf_length (from_exp);
-	reals = new double[*count];
-	for (unsigned int i = 0; i < *count; ++i) {
-		reals[i] = REAL (from_exp)[i];
+	unsigned int count = Rf_length (from_exp);
+	reals.reserve (count);
+	for (unsigned int i = 0; i < count; ++i) {
+		reals.append (REAL (from_exp)[i]);
 		if (R_IsNaN (reals[i]) || R_IsNA (reals[i]) ) reals[i] = RKGlobals::na_double;
 	}
 	return reals;
@@ -193,32 +187,28 @@ RData *RKRSupport::SEXPToRData (SEXP from_exp) {
 
 	RData *data = new RData;
 
-	unsigned int count;
 	int type = TYPEOF (from_exp);
 	switch (type) {
 		case LGLSXP:
 		case INTSXP:
-			data->data = SEXPToIntArray (from_exp, &count);
-			data->datatype = RData::IntVector;
+			data->setData (SEXPToIntArray (from_exp));
 			break;
 		case REALSXP:
-			data->data = SEXPToRealArray (from_exp, &count);
-			data->datatype = RData::RealVector;
+			data->setData (SEXPToRealArray (from_exp));
 			break;
 		case VECSXP:
-			count = 0;
-			count = Rf_length (from_exp);
 			{
-				RData **structure_array = new RData*[count];
+				unsigned int count = Rf_length (from_exp);
+				RData::RDataStorage structure_array;
+				structure_array.reserve (count);
 				for (unsigned int i=0; i < count; ++i) {
 					SEXP subexp = VECTOR_ELT (from_exp, i);
 					//PROTECT (subexp);	// should already be protected as part of the parent from_exp
-					structure_array[i] = SEXPToRData (subexp);
+					structure_array.append (SEXPToRData (subexp));
 					//UNPROTECT (1);
 				}
-				data->data = structure_array;
+				data->setData (structure_array);
 			}
-			data->datatype = RData::StructureVector;
 			break;
 /*		case NILSXP:
 			data->data = 0;
@@ -230,16 +220,12 @@ RData *RKRSupport::SEXPToRData (SEXP from_exp) {
 				delete data;
 				data = (RData*) R_ExternalPtrAddr (from_exp);
 				R_ClearExternalPtr (from_exp);
-				count = data->length;
 				break;
 			}
 		case STRSXP:
 		default:
-			data->data = SEXPToStringList (from_exp, &count);
-			data->datatype = RData::StringVector;
+			data->setData (SEXPToStringList (from_exp));
 	}
-
-	data->length = count;
 
 	return data;
 }

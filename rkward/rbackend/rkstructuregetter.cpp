@@ -84,10 +84,7 @@ RData *RKStructureGetter::getStructure (SEXP toplevel, SEXP name, SEXP envlevel,
 	envir_depth = INTEGER (envlevel)[0];
 
 	unsigned int count;
-	QString *name_dummy = RKRSupport::SEXPToStringList (name, &count);
-	RK_ASSERT (count == 1);
-	QString name_string = name_dummy[0];
-	delete [] name_dummy;
+	QString name_string = RKRSupport::SEXPToString (name);
 
 	// resolve namespace, if needed
 	if (Rf_isNull (namespacename)) {
@@ -187,11 +184,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 
 	// first field: get name
 	RData *namedata = new RData;
-	namedata->datatype = RData::StringVector;
-	namedata->length = 1;
-	QString *name_dummy = new QString[1];
-	name_dummy[0] = name;
-	namedata->data = name_dummy;
+	namedata->setData (QStringList (name));
 
 	// get classes
 	SEXP classes_s;
@@ -208,18 +201,15 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 		PROTECT (classes_s);
 	}
 
-	QString *classes = RKRSupport::SEXPToStringList (classes_s, &count);
-	unsigned int num_classes = count;
+	QStringList classes = RKRSupport::SEXPToStringList (classes_s);
 	UNPROTECT (1);	/* classes_s */
 
 	// store classes
 	RData *classdata = new RData;
-	classdata->datatype = RData::StringVector;
-	classdata->data = classes;
-	classdata->length = num_classes;
+	classdata->setData (classes);
 
 	// basic classification
-	for (unsigned int i = 0; i < num_classes; ++i) {
+	for (int i = classes.size () - 1; i >= 0; --i) {
 #warning: Using is.data.frame() may be more reliable (would need to be called only on List-objects, thus no major performance hit)
 		if (classes[i] == "data.frame") type |= RObject::DataFrame;
 	}
@@ -251,73 +241,54 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 
 	// get meta data, if any
 	RData *metadata = new RData;
-	metadata->datatype = RData::StringVector;
 	if (!Rf_isNull (Rf_getAttrib (value, meta_attrib))) {
 		type |= RObject::HasMetaObject;
 
 		SEXP meta_s = RKRSupport::callSimpleFun (get_meta_fun, value, R_GlobalEnv);
 		PROTECT (meta_s);
-		metadata->data = RKRSupport::SEXPToStringList (meta_s, &count);
-		metadata->length = count;
+		metadata->setData (RKRSupport::SEXPToStringList (meta_s));
 		UNPROTECT (1);	/* meta_s */
 	} else {
-		metadata->length = 1;
-		QString *meta_dummy = new QString[1];
-		meta_dummy[0] = "";
-		metadata->data = meta_dummy;
+		metadata->setData (QStringList (QString ("")));
 	}
 
 	// store type
 	RData *typedata = new RData;
-	typedata->datatype = RData::IntVector;
-	typedata->length = 1;
-	int *type_dummy = new int[1];
-	type_dummy[0] = type;
-	typedata->data = type_dummy;
+	typedata->setData (RData::IntStorage (1, type));
 
 	// get dims
-	int *dims;
-	unsigned int num_dims;
+	RData::IntStorage dims;
 	SEXP dims_s = RKRSupport::callSimpleFun (dims_fun, value, R_BaseEnv);
 	if (!Rf_isNull (dims_s)) {
-		dims = RKRSupport::SEXPToIntArray (dims_s, &num_dims);
+		dims = RKRSupport::SEXPToIntArray (dims_s);
 	} else {
-		num_dims = 1;
-
 		unsigned int len = Rf_length (value);
 		if ((len < 2) && (!is_function)) {		// suspicious. Maybe some kind of list
 			SEXP len_s = RKRSupport::callSimpleFun (length_fun, value, R_BaseEnv);
 			PROTECT (len_s);
 			if (Rf_isNull (len_s)) {
-				dims = new int[1];
-				dims[0] = len;
+				dims.append (len);
 			} else {
-				dims = RKRSupport::SEXPToIntArray (len_s, &num_dims);
+				dims = RKRSupport::SEXPToIntArray (len_s);
 			}
 			UNPROTECT (1); /* len_s */
 		} else {
-			dims = new int[1];
-			dims[0] = len;
+			dims.append (len);
 		}
 	}
 
 	// store dims
 	RData *dimdata = new RData;
-	dimdata->datatype = RData::IntVector;
-	dimdata->length = num_dims;
-	dimdata->data = dims;
+	dimdata->setData (dims);
 
 	// store everything we have so far
+	int storage_length = 5;
 	if (is_container) {
-		storage->length = 6;
+		storage_length = 6;
 	} else if (is_function) {
-		storage->length = 7;
-	} else {
-		storage->length = 5;
+		storage_length = 7;
 	}
-	storage->datatype = RData::StructureVector;
-	RData **res = new RData*[storage->length];
-	storage->data = res;
+	RData::RDataStorage res (storage_length, 0);
 	res[0] = namedata;
 	res[1] = typedata;
 	res[2] = classdata;
@@ -329,14 +300,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 		bool do_env = (is_environment && (++envir_depth < 2));
 		bool do_cont = is_container && (!is_environment);
 
-		RData *childdata = new RData;
-		childdata->datatype = RData::StructureVector;
-		childdata->length = 0;
-		childdata->data = 0;
-		res[5] = childdata;
-
 		// fetch list of child names
-		unsigned int childcount;
 		SEXP childnames_s;
 		if (do_env) {
 			childnames_s = R_lsInternal (value, (Rboolean) 1);
@@ -346,17 +310,12 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 			childnames_s = R_NilValue; // dummy
 		}
 		PROTECT (childnames_s);
-		QString *childnames = RKRSupport::SEXPToStringList (childnames_s, &childcount);
+		QStringList childnames = RKRSupport::SEXPToStringList (childnames_s);
+		unsigned int childcount = childnames.size ();
 
-		childdata->length = childcount;
-		RData **children = new RData*[childcount];
-		childdata->data = children;
-		childdata->length = childcount;
-		for (unsigned int i = 0; i < childcount; ++i) {		// in case there is an error while fetching one of the children, let's pre-initialize everything.
-			children[i] = new RData;
-			children[i]->data = 0;
-			children[i]->length = 0;
-			children[i]->datatype = RData::NoData;
+		RData::RDataStorage children (childcount, 0);
+		for (unsigned int i = 0; i < childcount; ++i) {
+			children[i] = new RData ();		// NOTE: RData-ctor pre-initalizes these to empty. Thus, we're safe even if there is an error while fetching one of the children.
 		}
 
 		if (do_env) {
@@ -367,7 +326,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 				REPROTECT (value = RKRSupport::callSimpleFun (as_environment_fun, value, R_GlobalEnv), value_index);
 			}
 			for (unsigned int i = 0; i < childcount; ++i) {
-				SEXP current_childname = Rf_install(CHAR(STRING_ELT(childnames_s, i)));
+				SEXP current_childname = Rf_install(CHAR(STRING_ELT(childnames_s, i)));		// ??? Why does simply using STRING_ELT(childnames_i, i) crash?
 				PROTECT (current_childname);
 				SEXP child = Rf_findVar (current_childname, value);
 				PROTECT (child);
@@ -381,7 +340,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 				}
 
 				getStructureSafe (child, childnames[i], child_misplaced, children[i]);
-				UNPROTECT (2); /* childname, child */
+				UNPROTECT (2); /* current_childname, child */
 			}
 		} else if (do_cont) {
 			RK_DO (qDebug ("recurse into list %s", name.toLatin1().data ()), RBACKEND, DL_DEBUG);
@@ -411,35 +370,34 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 			}
 		}
 		UNPROTECT (1);   /* childnames_s */
-		delete [] childnames;
+
+		RData *childdata = new RData;
+		childdata->setData (children);
+		res[5] = childdata;
 	} else if (is_function) {
-		RData *funargsdata = new RData;
-		funargsdata->datatype = RData::StringVector;
-		funargsdata->length = 0;
-		funargsdata->data = 0;
-		res[5] = funargsdata;
-
-		RData *funargvaluesdata = new RData;
-		funargvaluesdata->datatype = RData::StringVector;
-		funargvaluesdata->length = 0;
-		funargvaluesdata->data = 0;
-		res[6] = funargvaluesdata;
-
-// TODO: this is still the major bottleneck, but no idea, how to improve on this
+// TODO: get_formals_fun is still the major bottleneck, but no idea, how to improve on this
 		SEXP formals_s = RKRSupport::callSimpleFun (get_formals_fun, value, R_GlobalEnv);
 		PROTECT (formals_s);
 		// the default values
-		funargvaluesdata->data = RKRSupport::SEXPToStringList (formals_s, &(funargvaluesdata->length));
+		RData *funargvaluesdata = new RData;
+		funargvaluesdata->setData (RKRSupport::SEXPToStringList (formals_s));
 
 		// the argument names
 		SEXP names_s = Rf_getAttrib (formals_s, R_NamesSymbol);
 		PROTECT (names_s);
-		funargsdata->data = RKRSupport::SEXPToStringList (names_s, &(funargsdata->length));
+		RData *funargsdata = new RData;
+		funargsdata->setData (RKRSupport::SEXPToStringList (names_s));
 
 		UNPROTECT (2); /* names_s, formals_s */
+
+		res[5] = funargsdata;
+		res[6] = funargvaluesdata;
 	}
 
 	UNPROTECT (1); /* value */
+
+	RK_ASSERT (!res.contains (0));
+	storage->setData (res);
 }
 
 }	/* extern "C" */

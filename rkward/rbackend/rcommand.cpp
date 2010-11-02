@@ -178,7 +178,7 @@ RCommandProxy::RCommandProxy (RCommand *from) : RData () {
 	id = from->_id;
 	status = from->status;
 	RK_ASSERT (status == 0);	// Initialization from an already touched command is not a real problem, but certainly no expected usage
-	RK_ASSERT (from->datatype == RData::NoData);
+	RK_ASSERT (from->getDataType () == RData::NoData);
 }
 
 RCommandProxy::RCommandProxy (const QString &command, int type) {
@@ -194,7 +194,7 @@ RCommandProxy::RCommandProxy (const QString &command, int type) {
 RCommandProxy::~RCommandProxy () {
 	RK_TRACE (RBACKEND);
 
-	RK_ASSERT ((type & RCommand::Internal) || (datatype == RData::NoData));
+	RK_ASSERT ((type & RCommand::Internal) || (getDataType () == RData::NoData));
 }
 
 void RCommandProxy::mergeAndDelete (RCommand *to) {
@@ -204,6 +204,6 @@ void RCommandProxy::mergeAndDelete (RCommand *to) {
 	RK_ASSERT (to->_type == type);
 
 	to->status = status;
-	to->setData (*this);
+	to->swallowData (*this);
 	delete this;
 }

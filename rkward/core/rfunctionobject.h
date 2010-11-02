@@ -36,9 +36,8 @@ public:
 	bool updateStructure (RData *new_data);
 	QString printArgs () const;
 protected:
-	unsigned int argcount;
-	QString *argnames;
-	QString *argvalues;
+	QStringList argnames;
+	QStringList argvalues;
 	bool updateArguments (RData *new_data);
 };
 

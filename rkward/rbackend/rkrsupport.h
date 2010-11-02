@@ -34,12 +34,12 @@ namespace RKRSupport {
 	SEXP callSimpleFun2 (SEXP fun, SEXP arg1, SEXP arg2, SEXP env);
 	bool callSimpleBool (SEXP fun, SEXP arg, SEXP env);
 
-	QString *SEXPToStringList (SEXP from_exp, unsigned int *count);
+	QStringList SEXPToStringList (SEXP from_exp);
 	QString SEXPToString (SEXP from_exp);
-	int *SEXPToIntArray (SEXP from_exp, unsigned int *count);
+	RData::IntStorage SEXPToIntArray (SEXP from_exp);
 	int SEXPToInt (SEXP from_exp, int def_value = INT_MIN);
-	double *SEXPToRealArray (SEXP from_exp, unsigned int *count);
-	RData *SEXPToRData (SEXP from_exp);
+	RData::RealStorage SEXPToRealArray (SEXP from_exp);
+	RData* SEXPToRData (SEXP from_exp);
 };
 
 #endif

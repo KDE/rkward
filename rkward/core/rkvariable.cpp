@@ -158,13 +158,13 @@ void RKVariable::rCommandDone (RCommand *command) {
 			setNumericFromR (0, getLength () - 1, cdata->getRealVector ());
 		} else if (cdata->getDataType () == RData::IntVector) {
 			unsigned int len = getLength ();
-			double *dd = new double[len];
+			QVector<double> dd;
+			dd.reserve (len);
 			for (unsigned int i = 0; i < len; ++i) {
 				if (cdata->getIntVector ()[i] == INT_MIN) dd[i] = NAN;
 				else dd[i] = (double) cdata->getIntVector ()[i];
 			}
 			setNumericFromR (0, getLength () - 1, dd);
-			delete [] dd;
 		}
 
 		// now set the invalid fields (only if they are still NAs in the R data)
@@ -206,7 +206,7 @@ void RKVariable::rCommandDone (RCommand *command) {
 void RKVariable::setLength (int len) {
 	RK_TRACE (OBJECTS);
 	RK_ASSERT (!getLength ());	// should only be called once
-	RK_ASSERT (dimensions);
+	RK_ASSERT (!dimensions.isEmpty ());
 
 	dimensions[0] = len;
 }
@@ -514,9 +514,10 @@ QString RKVariable::getLabeled (int row) const {
 	return getText (row);
 }
 
-void RKVariable::setNumericFromR (int from_row, int to_row, double *numdata) {
+void RKVariable::setNumericFromR (int from_row, int to_row, const QVector<double> &numdata) {
 	RK_TRACE (OBJECTS);
 	RK_ASSERT (to_row < getLength ());
+	RK_ASSERT ((to_row - from_row) < numdata.size ());
 
 	if (getDataType () == DataCharacter) {
 		RK_ASSERT (false);		// asserting false to catch cases of this use for now. it's not really a problem, though
@@ -575,9 +576,10 @@ QString *RKVariable::getCharacter (int from_row, int to_row) const {
 	return ret;
 }
 
-void RKVariable::setCharacterFromR (int from_row, int to_row, QString *txtdata) {
+void RKVariable::setCharacterFromR (int from_row, int to_row, const QStringList &txtdata) {
 	RK_TRACE (OBJECTS);
 	RK_ASSERT (to_row < getLength ());
+	RK_ASSERT ((to_row - from_row) < txtdata.size ());
 
 	lockSyncing (true);
 	int i=0;
