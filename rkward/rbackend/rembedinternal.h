@@ -230,6 +230,7 @@ public:
 	bool killed;
 /** A list of symbols that have been assigned new values during the current command */
 	QStringList changed_symbol_names;
+	static bool inRThread () { return (currentThread () == this_pointer); };
 protected:
 /** On pthread systems this is the pthread_id of the backend thread. It is needed to send SIGINT to the R backend */
 	Qt::HANDLE thread_id;

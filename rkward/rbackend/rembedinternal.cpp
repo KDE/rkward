@@ -763,8 +763,8 @@ bool RThread::startR () {
 
 	r_running = true;
 	int argc = 3;
-	char* argv[3] = { "--slave", "--no-save", "--no-restore" };
-	Rf_initialize_R (3, argv);
+	char* argv[3] = { qstrdup ("--slave"), qstrdup ("--no-save"), qstrdup ("--no-restore") };
+	Rf_initialize_R (argc, argv);
 
 	// in R on windows the stack limits detection seems to work out of the box for threads
 #ifndef Q_WS_WIN

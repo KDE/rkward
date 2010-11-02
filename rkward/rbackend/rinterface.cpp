@@ -141,13 +141,9 @@ bool RInterface::backendIsLocked () {
 	return (RKGlobals::rInterface ()->locked != 0);
 }
 
-bool RInterface::inRThread () {
-	return (QThread::currentThread () == RKGlobals::rInterface ()->r_thread);
-}
-
 void RInterface::tryToDoEmergencySave () {
 	RK_TRACE (RBACKEND);
-	if (!inRThread ()) {
+	if (!RThread::inRThread ()) {
 		RKGlobals::rInterface ()->r_thread->terminate ();
 		RKGlobals::rInterface ()->r_thread->wait (1000);
 	}

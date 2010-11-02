@@ -77,7 +77,6 @@ not be interrupted. */
 
 	static bool backendIsLocked ();
 
-	static bool inRThread ();
 	static void tryToDoEmergencySave ();
 private slots:
 /** called periodically to flush output buffer in RThread */

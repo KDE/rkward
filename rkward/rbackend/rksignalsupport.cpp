@@ -19,6 +19,7 @@
 
 #include <signal.h>
 
+#include "rembedinternal.h"
 #include "rinterface.h"
 
 #include "../debug.h"
@@ -72,7 +73,7 @@ namespace RKSignalSupportPrivate {
 		RInterface::tryToDoEmergencySave ();
 
 		// if we are not in the R thread, handling the signal in R does more harm than good.
-		if (RInterface::inRThread ()) {
+		if (RThread::inRThread ()) {
 #ifdef Q_WS_WIN
 			if (r_handler) {
 				r_handler (signum);
