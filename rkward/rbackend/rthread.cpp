@@ -238,45 +238,26 @@ void RThread::checkObjectUpdatesNeeded (bool check_list) {
 	// TODO: avoid parsing this over and over again
 		RK_DO (qDebug ("checkObjectUpdatesNeeded: getting search list"), RBACKEND, DL_TRACE);
 		RCommandProxy *dummy = runDirectCommand ("search ()\n", RCommand::GetStringVector);
-		if ((int) dummy->getDataLength () != toplevel_env_names.count ()) {
-			search_update_needed = true;
-		} else {
-			for (unsigned int i = 0; i < dummy->getDataLength (); ++i) {
-				// order is important in the search path
-				if (toplevel_env_names[i] != dummy->getStringVector ()[i]) {
-					search_update_needed = true;
-					break;
-				}
-			}
-		}
-		if (search_update_needed) {
-			toplevel_env_names.clear ();
-			for (unsigned int i = 0; i < dummy->getDataLength (); ++i) {
-				toplevel_env_names.append (dummy->getStringVector ()[i]);
-			}
-		}
+		if (dummy->getStringVector () != toplevel_env_names) search_update_needed = true;
+		if (search_update_needed) toplevel_env_names = dummy->getStringVector ();
 		delete dummy;
 	
 	// TODO: avoid parsing this over and over again
 		RK_DO (qDebug ("checkObjectUpdatesNeeded: getting globalenv symbols"), RBACKEND, DL_TRACE);
 		dummy = runDirectCommand ("ls (globalenv (), all.names=TRUE)\n", RCommand::GetStringVector);
-		if ((int) dummy->getDataLength () != global_env_toplevel_names.count ()) {
+		QStringList new_globalenv_toplevel_names = dummy->getStringVector ();
+		if (new_globalenv_toplevel_names.count () != global_env_toplevel_names.count ()) {
 			globalenv_update_needed = true;
 		} else {
-			for (unsigned int i = 0; i < dummy->getDataLength (); ++i) {
+			for (unsigned int i = 0; i < new_globalenv_toplevel_names.count (); ++i) {
 				// order is not important in the symbol list
-				if (!global_env_toplevel_names.contains (dummy->getStringVector ()[i])) {
+				if (!global_env_toplevel_names.contains (new_globalenv_toplevel_names[i])) {
 					globalenv_update_needed = true;
 					break;
 				}
 			}
 		}
-		if (globalenv_update_needed) {
-			global_env_toplevel_names.clear ();
-			for (unsigned int i = 0; i < dummy->getDataLength (); ++i) {
-				global_env_toplevel_names.append (dummy->getStringVector ()[i]);
-			}
-		}
+		if (globalenv_update_needed) global_env_toplevel_names = new_globalenv_toplevel_names;
 		delete dummy;
 	
 		if (search_update_needed) {	// this includes an update of the globalenv, even if not needed
