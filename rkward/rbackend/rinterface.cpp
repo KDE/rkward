@@ -85,6 +85,7 @@ RInterface::RInterface () {
 	startup_phase2_error = false;
 	command_logfile_mode = NotRecordingCommands;
 	previously_idle = false;
+	previous_command = 0;
 	locked = 0;
 
 	// create a fake init command
@@ -159,6 +160,15 @@ void RInterface::startThread () {
 	r_thread->start ();
 }
 
+void RInterface::popPreviousCommand () {
+	RK_TRACE (RBACKEND);
+
+	RK_ASSERT (previous_command == 0);
+	RK_ASSERT (!all_current_commands.isEmpty ());
+	previous_command = all_current_commands.takeLast ();
+	RCommandStack::currentStack ()->pop ();
+}
+
 void RInterface::tryNextCommand () {
 	RK_TRACE (RBACKEND);
 	if (!currentCommandRequest ()) return;
@@ -177,6 +187,7 @@ void RInterface::tryNextCommand () {
 				command->status |= RCommand::Failed;
 
 				// notify ourselves...
+				popPreviousCommand ();
 				handleCommandOut (new RCommandProxy (command));
 				return;
 			}
@@ -203,9 +214,8 @@ void RInterface::handleCommandOut (RCommandProxy *proxy) {
 	RK_TRACE (RBACKEND);
 
 	RK_ASSERT (proxy);
-	RK_ASSERT (!all_current_commands.isEmpty ());
-	RCommand *command = all_current_commands.takeLast ();
-	RCommandStack::currentStack ()->pop ();
+	RK_ASSERT (previous_command);
+	RCommand* command = previous_command;
 	proxy->mergeAndDelete (command);
 
 	#ifdef RKWARD_DEBUG
@@ -244,6 +254,7 @@ void RInterface::handleCommandOut (RCommandProxy *proxy) {
 	command->finished ();
 	RCommandStackModel::getModel ()->itemChange (command);
 	delete command;
+	previous_command = 0;
 }
 
 void RInterface::doNextCommand (RCommand *command) {
@@ -330,11 +341,13 @@ void RInterface::customEvent (QEvent *e) {
 	if (request->type == RBackendRequest::CommandOut) {
 		RCommandProxy *cproxy = request->command;
 
-		if (cproxy) handleCommandOut (cproxy);
-		// else: cproxy should only even be 0 in the very first cycle
-
+		// NOTE: the order of processing is: first try to submit the next command, then handle the old command.
+		// The reason for doing it this way, instead of the reverse, is that this allows the backend thread / process to continue working, concurrently
+		// NOTE: cproxy should only even be 0 in the very first cycle
+		if (cproxy) popPreviousCommand ();
 		command_requests.append (request);
 		tryNextCommand ();
+		if (cproxy) handleCommandOut (cproxy);
 	} else if (request->type == RBackendRequest::HistoricalSubstackRequest) {
 		processHistoricalSubstackRequest (request);
 	} else if ((request->type == RBackendRequest::Started)) {

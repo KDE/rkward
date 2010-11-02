@@ -817,7 +817,6 @@ bool RThread::startR (int argc, char** argv, bool stack_check) {
 
 // register our functions
 	R_CallMethodDef callMethods [] = {
-//		{ "rk.do.condition", (DL_FUNC) &doCondition, 1 },
 		{ "rk.do.error", (DL_FUNC) &doError, 1 },
 		{ "rk.do.command", (DL_FUNC) &doSubstackCall, 1 },
 		{ "rk.get.structure", (DL_FUNC) &doGetStructure, 4 },
