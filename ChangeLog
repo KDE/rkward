@@ -1,3 +1,4 @@
+- Fixed: Did not respect system settings for tooltip background color in some styles
 - Fixed: Installation would continue, seemingly successfully, even if R support libraries could not be installed
 - Fixed: Function argument hints would sometimes persist after closing a script window
 - Fixed: "Vector" mode in "Paste special" action did not work correctly

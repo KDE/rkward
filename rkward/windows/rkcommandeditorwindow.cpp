@@ -767,10 +767,11 @@ RKFunctionArgHinter::RKFunctionArgHinter (RKScriptContextProvider *provider, KTe
 	}
 
 	arghints_popup = new QLabel (0, Qt::ToolTip);
-	arghints_popup->setForegroundRole (QPalette::ToolTipText);
-	arghints_popup->setBackgroundRole (QPalette::ToolTipBase);
 	arghints_popup->setMargin (2);
-	arghints_popup->setPalette (QToolTip::palette());
+	QPalette p = QToolTip::palette ();		// HACK to trick the style into using the correct color
+	p.setColor (QPalette::Inactive, QPalette::Window, p.color (QPalette::Inactive, QPalette::ToolTipBase));
+	p.setColor (QPalette::Inactive, QPalette::Text, p.color (QPalette::Inactive, QPalette::ToolTipText));
+	arghints_popup->setPalette (p);
 	arghints_popup->setFrameStyle (QFrame::Box);
 	arghints_popup->setLineWidth (1);
 	arghints_popup->setWordWrap (true);
