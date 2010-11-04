@@ -45,7 +45,7 @@ void RThread::interruptProcessing (bool interrupt) {
 void RThread::run () {
 	RK_TRACE (RBACKEND);
 	thread_id = currentThreadId ();
-	killed = false;
+	killed = NotKilled;
 	previous_command = 0;
 
 	initialize ();
@@ -91,7 +91,7 @@ RCommandProxy* RThread::handleRequest (RBackendRequest *_request, bool mayHandle
 		if (killed) return 0;
 		// NOTE: processX11Events() may, conceivably, lead to new requests, which may also wait for sub-commands!
 		processX11Events ();
-		if (!request->done) msleep (10);
+		if (!request->done) msleep (1);
 	}
 
 	RCommandProxy* command = request->command;
@@ -125,6 +125,7 @@ RCommandProxy* RThread::fetchNextCommand () {
 void RThread::waitIfOutputBufferExceeded () {
 	// don't trace
 	while (out_buf_len > MAX_BUF_LENGTH) {
+		if (isKilled ()) return;	// don't block. Frontend could be crashed
 		msleep (10);
 	}
 }

@@ -137,19 +137,6 @@ bool RInterface::backendIsIdle () {
 	return (idle);
 }
 
-bool RInterface::backendIsLocked () {
-	return (RKGlobals::rInterface ()->locked != 0);
-}
-
-void RInterface::tryToDoEmergencySave () {
-	RK_TRACE (RBACKEND);
-	if (!RThread::inRThread ()) {
-		RKGlobals::rInterface ()->r_thread->terminate ();
-		RKGlobals::rInterface ()->r_thread->wait (1000);
-	}
-	RKGlobals::rInterface ()->r_thread->tryToDoEmergencySave ();
-}
-
 void RInterface::startThread () {
 	RK_TRACE (RBACKEND);
 

@@ -19,7 +19,6 @@
 #define RINTERFACE_H
 
 #include <qobject.h>
-#include <qmutex.h>
 #include <QFile>
 
 #include "rcommand.h"
@@ -29,7 +28,6 @@ class RCommand;
 class RKWardMainWindow;
 class QTimer;
 class RThread;
-struct RKWardStartupOptions;
 struct RBackendRequest;
 
 /** This class provides the main interface to the R-processor.
@@ -74,10 +72,6 @@ not be interrupted. */
 
 	bool backendIsDead ();
 	bool backendIsIdle ();
-
-	static bool backendIsLocked ();
-
-	static void tryToDoEmergencySave ();
 private slots:
 /** called periodically to flush output buffer in RThread */
 	void flushOutput ();

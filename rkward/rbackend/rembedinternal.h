@@ -197,9 +197,16 @@ public:
 		return (r_version >= (1000 * major + 10 * minor + revision));
 	}
 
+/** thread is killed. Should exit as soon as possible. @see kill */
+	enum KillType {
+		NotKilled = 0,
+		ExitNow = 1,
+		EmergencySaveThenExit = 2,
+		AlreadyDead = 3
+	} killed;
 /** "Kills" the thread. Actually this just tells the thread that is is about to be terminated. Allows the thread to terminate gracefully */
-	void kill () { killed = true; };
-	bool isKilled () { return killed; };
+	void kill () { killed = ExitNow; };
+	bool isKilled () { return (killed != NotKilled); };
 
 	QTextCodec *current_locale_codec;
 
@@ -226,8 +233,6 @@ public:
 	static void *default_global_context;
 
 	void commandFinished (bool check_object_updates_needed=true);
-/** thread is killed. Should exit as soon as possible. @see kill */
-	bool killed;
 /** A list of symbols that have been assigned new values during the current command */
 	QStringList changed_symbol_names;
 	static bool inRThread () { return (currentThread () == this_pointer); };

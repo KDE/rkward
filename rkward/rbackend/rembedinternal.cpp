@@ -111,15 +111,6 @@ SEXP parseCommand (const QString &command_qstring, RThread::RKWardRError *error)
 SEXP runCommandInternalBase (SEXP pr, RThread::RKWardRError *error);
 
 // ############## R Standard callback overrides BEGIN ####################
-void RSuicide (const char* message) {
-	RK_TRACE (RBACKEND);
-
-	RBackendRequest request (true, RBackendRequest::BackendExit);
-	request.params["message"] = QVariant (i18n ("The R engine has encountered a fatal error:\n%1").arg (message));
-	RThread::this_pointer->handleRequest (&request);
-	RThread::this_pointer->killed = true;
-}
-
 Rboolean RKToplevelStatementFinishedCallback (SEXP expr, SEXP value, Rboolean succeeded, Rboolean visible, void *) {
 	RK_TRACE (RBACKEND);
 	Q_UNUSED (expr);
@@ -319,7 +310,7 @@ void RWriteConsoleEx (const char *buf, int buflen, int type) {
 	RK_TRACE (RBACKEND);
 
 	// output while nothing else is running (including handlers?) -> This may be a syntax error.
-	if ((RThread::repl_status.eval_depth == 0) && (!RThread::repl_status.in_browser_context) && (!RThread::this_pointer->killed)) {
+	if ((RThread::repl_status.eval_depth == 0) && (!RThread::repl_status.in_browser_context) && (!RThread::this_pointer->isKilled ())) {
 		if (RThread::repl_status.user_command_status == RThread::RKReplStatus::UserCommandTransmitted) {
 			// status UserCommandTransmitted might have been set from RKToplevelStatementFinishedHandler, too, in which case all is fine
 			// (we're probably inside another task handler at this point, then)
@@ -345,6 +336,14 @@ void RDoNothing () {
 void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 	RK_TRACE (RBACKEND);
 
+	if (RThread::this_pointer->killed == RThread::AlreadyDead) return;	// Nothing to clean up
+
+	// we could be in a signal handler, and the stack base may have changed.
+	uintptr_t old_lim = R_CStackLimit;
+	R_CStackLimit = (uintptr_t)-1;
+
+	if ((status != 0) && (RThread::this_pointer->killed != RThread::ExitNow)) RThread::this_pointer->killed = RThread::EmergencySaveThenExit;
+
 	if (saveact != SA_SUICIDE) {
 		if (!RThread::this_pointer->isKilled ()) {
 			RBackendRequest request (true, RBackendRequest::BackendExit);
@@ -357,17 +356,56 @@ void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 		R_RunExitFinalizers ();
 		R_CleanTempDir ();
 	}
-	RThread::this_pointer->killed = true;	// just in case
+
+	RThread::this_pointer->r_running = false;	// To signify we have finished everything else and are now trying to create an emergency save (if applicable)
+
+	if (RThread::this_pointer->killed == RThread::EmergencySaveThenExit) {
+		if (R_DirtyImage) R_SaveGlobalEnvToFile (RKCommonFunctions::getUseableRKWardSavefileName ("rkward_recover", ".RData").toLocal8Bit ());
+	}
+
+	RThread::this_pointer->killed = RThread::AlreadyDead;	// just in case
+
+	R_CStackLimit = old_lim;	// well, it should not matter any longer, but...
+}
+
+void RSuicide (const char* message) {
+	RK_TRACE (RBACKEND);
+
+	if (!RThread::this_pointer->isKilled ()) {
+		RBackendRequest request (true, RBackendRequest::BackendExit);
+		request.params["message"] = QVariant (i18n ("The R engine has encountered a fatal error:\n%1").arg (message));
+		RThread::this_pointer->handleRequest (&request);
+		RThread::this_pointer->killed = RThread::EmergencySaveThenExit;
+		RCleanUp (SA_SUICIDE, 1, 0);
+	} else {
+		RK_ASSERT (false);
+	}
 }
 
 void RThread::tryToDoEmergencySave () {
 	RK_TRACE (RBACKEND);
 
-	// we're probably in a signal handler, and the stack base has changed.
-	uintptr_t old_lim = R_CStackLimit;
-	R_CStackLimit = (uintptr_t)-1;
-	if (R_DirtyImage) R_SaveGlobalEnvToFile (RKCommonFunctions::getUseableRKWardSavefileName ("rkward_recover", ".RData").toLocal8Bit ());
-	R_CStackLimit = old_lim;
+	if (inRThread ()) {
+		// If we are in the correct thread, things are easy:
+		RCleanUp (SA_SUICIDE, 1, 0);
+		RK_doIntr ();	// to jump out of the loop, if needed
+	} else {
+		// If we are in the wrong thread, things are a lot more tricky. We need to cause the R thread to exit, and wait for it to finish saving.
+		// Fortunately, if we are in the wrong thread, that probably means, the R thread did *not* crash, and will thus still be functional
+		this_pointer->killed = EmergencySaveThenExit;
+		this_pointer->interruptProcessing (true);
+		for (int i = 0; i < 100; ++i) {		// give it up to ten seconds to intterrupt and exit the loop
+			if (!this_pointer->r_running) break;
+			msleep (100);
+		}
+		if (!this_pointer->r_running) {
+			for (int i = 0; i < 600; ++i) {		// give it up to sixty seconds to finish saving
+				if (this_pointer->killed == AlreadyDead) return;	// finished
+				msleep (100);
+			}
+		}
+		RK_ASSERT (false);	// Too bad, but we seem to be stuck. No chance but to return (and crash)
+	}
 }
 
 QStringList charPArrayToQStringList (const char** chars, int count) {
@@ -651,6 +689,7 @@ TODO: verify we really need this. */
 void RThread::processX11Events () {
 	// do not trace
 	if (!this_pointer->r_running) return;
+	if (this_pointer->isKilled ()) return;
 
 	RThread::repl_status.eval_depth++;
 // In case an error (or user interrupt) is caught inside processX11EventsWorker, we don't want to long-jump out.
@@ -662,7 +701,7 @@ extern int R_interrupts_pending;
 SEXP doError (SEXP call) {
 	RK_TRACE (RBACKEND);
 
-	if ((RThread::repl_status.eval_depth == 0) && (!RThread::repl_status.in_browser_context) && (!RThread::this_pointer->killed)) {
+	if ((RThread::repl_status.eval_depth == 0) && (!RThread::repl_status.in_browser_context) && (!RThread::this_pointer->isKilled ())) {
 		RThread::repl_status.user_command_status = RThread::RKReplStatus::UserCommandFailed;
 	}
 	if (RThread::repl_status.interrupted) {
@@ -965,7 +1004,7 @@ void RThread::runCommand (RCommandProxy *command) {
 	if (ctype & RCommand::DirectToOutput) runDirectCommand (".rk.capture.messages()");
 
 	if (ctype & RCommand::QuitCommand) {
-		killed = true;
+		killed = ExitNow;
 	} else if (!(ctype & RCommand::EmptyCommand)) {
 		repl_status.eval_depth++;
 		SEXP parsed = parseCommand (command->command, &error);
@@ -991,9 +1030,6 @@ void RThread::runCommand (RCommandProxy *command) {
 	}
 
 	if (ctype & RCommand::DirectToOutput) runDirectCommand (".rk.print.captured.messages()");
-	if (!(ctype & RCommand::Internal)) {
-		if (!RInterface::backendIsLocked () || killed) processX11Events ();
-	}
 
 	// common error/status handling
 	if (error != NoError) {
