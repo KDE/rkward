@@ -24,6 +24,8 @@ SET(
 	rklocalesupport.cpp
 	rkrsupport.cpp
 	rkstructuregetter.cpp
+	rkrbackendprotocol_backend.cpp
+	rkrbackendprotocol_frontend.cpp
 )
 
 

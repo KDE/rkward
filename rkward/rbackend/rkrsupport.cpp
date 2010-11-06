@@ -116,7 +116,7 @@ QStringList RKRSupport::SEXPToStringList (SEXP from_exp) {
 				} else if (IS_LATIN1 (dummy)) {
 					list.append (QString::fromLatin1 ((char *) STRING_PTR (dummy)));
 				} else {
-					list.append (RThread::this_pointer->current_locale_codec->toUnicode ((char *) STRING_PTR (dummy)));
+					list.append (RKRBackend::this_pointer->current_locale_codec->toUnicode ((char *) STRING_PTR (dummy)));
 				}
 			}
 		}

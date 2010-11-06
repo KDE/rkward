@@ -69,10 +69,10 @@ namespace RKSignalSupportPrivate {
 			RK_ASSERT (signum == SIGSEGV);
 		}
 
-		RThread::tryToDoEmergencySave ();
+		RKRBackend::tryToDoEmergencySave ();
 
 		// if we are not in the R thread, handling the signal in R does more harm than good.
-		if (RThread::inRThread ()) {
+		if (RKRBackendProtocolBackend::inRThread ()) {
 #ifdef Q_WS_WIN
 			if (r_handler) {
 				r_handler (signum);

@@ -297,8 +297,6 @@ void RKWardMainWindow::startR () {
 	new RObjectList ();
 	connect (RObjectList::getObjectList (), SIGNAL (workspaceUrlChanged(const KUrl&)), this, SLOT (addWorkspaceUrl(const KUrl&)));
 
-	RKGlobals::rInterface ()->startThread ();
-
 	RObjectBrowser::mainBrowser ()->unlock ();
 }
 

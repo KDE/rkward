@@ -83,7 +83,6 @@ RData *RKStructureGetter::getStructure (SEXP toplevel, SEXP name, SEXP envlevel,
 	// TODO: accept an envlevel parameter
 	envir_depth = INTEGER (envlevel)[0];
 
-	unsigned int count;
 	QString name_string = RKRSupport::SEXPToString (name);
 
 	// resolve namespace, if needed
@@ -172,7 +171,6 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 	bool is_container = false;
 	bool is_environment = false;
 	unsigned int type = 0;
-	unsigned int count;
 
 	RK_DO (qDebug ("fetching '%s': %p, s-type %d", name.toLatin1().data(), val, TYPEOF (val)), RBACKEND, DL_DEBUG);
 

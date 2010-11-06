@@ -18,12 +18,13 @@
 #include "rembedinternal.h"
 
 // static
-RThread *RThread::this_pointer = 0;
-RThread::RKReplStatus RThread::repl_status = { QByteArray (), 0, true, 0, 0, RThread::RKReplStatus::NoUserCommand, 0, false, false };
-void* RThread::default_global_context = 0;
+RKRBackend *RKRBackend::this_pointer = 0;
+RKRBackend::RKReplStatus RKRBackend::repl_status = { QByteArray (), 0, true, 0, 0, RKRBackend::RKReplStatus::NoUserCommand, 0, false, false };
+void* RKRBackend::default_global_context = 0;
 
 #include <qstring.h>
 #include <QStringList>
+#include <QThread>
 #include <qtextcodec.h>
 #include <klocale.h>
 
@@ -32,7 +33,6 @@ void* RThread::default_global_context = 0;
 
 #include "rkrsupport.h"
 #include "rkstructuregetter.h"
-#include "rinterface.h"
 #include "rklocalesupport.h"
 #include "rkpthreadsupport.h"
 #include "rksignalsupport.h"
@@ -86,14 +86,18 @@ extern "C" {
 #endif
 
 void RK_scheduleIntr () {
-	RThread::repl_status.interrupted = true;
+	RKRBackend::repl_status.interrupted = true;
 	RKSignalSupport::callOldSigIntHandler ();
 }
 
 void RK_doIntr () {
 	RK_scheduleIntr ();
-	RThread::repl_status.interrupted = true;
+	RKRBackend::repl_status.interrupted = true;
 	R_CheckUserInterrupt ();
+}
+
+void RKRBackend::scheduleInterrupt () {
+	RK_scheduleIntr ();
 }
 
 // some functions we need that are not declared
@@ -107,8 +111,8 @@ SEXP R_LastvalueSymbol;
 #include "rdata.h"
 
 extern SEXP RKWard_RData_Tag;
-SEXP parseCommand (const QString &command_qstring, RThread::RKWardRError *error);
-SEXP runCommandInternalBase (SEXP pr, RThread::RKWardRError *error);
+SEXP parseCommand (const QString &command_qstring, RKRBackend::RKWardRError *error);
+SEXP runCommandInternalBase (SEXP pr, RKRBackend::RKWardRError *error);
 
 // ############## R Standard callback overrides BEGIN ####################
 Rboolean RKToplevelStatementFinishedCallback (SEXP expr, SEXP value, Rboolean succeeded, Rboolean visible, void *) {
@@ -117,17 +121,17 @@ Rboolean RKToplevelStatementFinishedCallback (SEXP expr, SEXP value, Rboolean su
 	Q_UNUSED (value);
 	Q_UNUSED (visible);
 
-	if ((RThread::repl_status.eval_depth == 0) && (!RThread::repl_status.in_browser_context)) {		// Yes, toplevel-handlers _do_ get called in a browser context!
-		RK_ASSERT (RThread::repl_status.user_command_status = RThread::RKReplStatus::UserCommandRunning);
+	if ((RKRBackend::repl_status.eval_depth == 0) && (!RKRBackend::repl_status.in_browser_context)) {		// Yes, toplevel-handlers _do_ get called in a browser context!
+		RK_ASSERT (RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::UserCommandRunning);
 		if (succeeded) {
-			RThread::repl_status.user_command_successful_up_to = RThread::repl_status.user_command_parsed_up_to;
-			if (RThread::repl_status.user_command_completely_transmitted) {
-				RThread::repl_status.user_command_status = RThread::RKReplStatus::NoUserCommand;
-				RThread::this_pointer->commandFinished ();
-			} else RThread::repl_status.user_command_status = RThread::RKReplStatus::UserCommandTransmitted;
+			RKRBackend::repl_status.user_command_successful_up_to = RKRBackend::repl_status.user_command_parsed_up_to;
+			if (RKRBackend::repl_status.user_command_completely_transmitted) {
+				RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::NoUserCommand;
+				RKRBackend::this_pointer->commandFinished ();
+			} else RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::UserCommandTransmitted;
 		} else {
 			// well, this point of code is never reached with R up to 2.12.0. Instead failed user commands are handled in doError().
-			RThread::repl_status.user_command_status = RThread::RKReplStatus::UserCommandFailed;
+			RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::UserCommandFailed;
 		}
 	}
 	
@@ -137,7 +141,7 @@ Rboolean RKToplevelStatementFinishedCallback (SEXP expr, SEXP value, Rboolean su
 void RKInsertToplevelStatementFinishedCallback (void *) {
 	RK_TRACE (RBACKEND);
 
-	if (RThread::this_pointer->r_running) {
+	if (RKRBackend::this_pointer->r_running) {
 		int pos;
 		Rf_addTaskCallback (&RKToplevelStatementFinishedCallback, 0, &RKInsertToplevelStatementFinishedCallback, "_rkward_main_callback", &pos);
 	}
@@ -146,9 +150,9 @@ void RKInsertToplevelStatementFinishedCallback (void *) {
 void RKTransmitNextUserCommandChunk (unsigned char* buf, int buflen) {
 	RK_TRACE (RBACKEND);
 
-	RK_ASSERT (RThread::repl_status.user_command_transmitted_up_to <= RThread::repl_status.user_command_buffer.length ());	// NOTE: QByteArray::length () does not count the trailing '\0'
-	const char* current_buffer = RThread::repl_status.user_command_buffer.data ();
-	current_buffer += RThread::repl_status.user_command_transmitted_up_to;	// Skip what we have already transmitted
+	RK_ASSERT (RKRBackend::repl_status.user_command_transmitted_up_to <= RKRBackend::repl_status.user_command_buffer.length ());	// NOTE: QByteArray::length () does not count the trailing '\0'
+	const char* current_buffer = RKRBackend::repl_status.user_command_buffer.data ();
+	current_buffer += RKRBackend::repl_status.user_command_transmitted_up_to;	// Skip what we have already transmitted
 
 	bool reached_eof = false;
 	int pos = 0;
@@ -163,10 +167,10 @@ void RKTransmitNextUserCommandChunk (unsigned char* buf, int buflen) {
 		++current_buffer;
 		++pos;
 	}
-	RThread::repl_status.user_command_transmitted_up_to += (pos + 1);
+	RKRBackend::repl_status.user_command_transmitted_up_to += (pos + 1);
 	if (reached_eof) {
 		buf[pos] = '\n';
-		RThread::repl_status.user_command_completely_transmitted = true;
+		RKRBackend::repl_status.user_command_completely_transmitted = true;
 	}
 	buf[++pos] = '\0';
 }
@@ -175,26 +179,26 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 	RK_TRACE (RBACKEND);
 
 	RK_ASSERT (buf && buflen);
-	RK_ASSERT (RThread::repl_status.eval_depth >= 0);
+	RK_ASSERT (RKRBackend::repl_status.eval_depth >= 0);
 
-	if (RThread::repl_status.in_browser_context) {		// previously we were in a browser context. Check, whether we've left that.
-		if (RThread::default_global_context == R_GlobalContext) {
-			RThread::repl_status.in_browser_context = false;
+	if (RKRBackend::repl_status.in_browser_context) {		// previously we were in a browser context. Check, whether we've left that.
+		if (RKRBackend::default_global_context == R_GlobalContext) {
+			RKRBackend::repl_status.in_browser_context = false;
 			RK_ASSERT (!hist);
 		}
 	}
 	
-	if ((!RThread::repl_status.in_browser_context) && (RThread::repl_status.eval_depth == 0)) {
+	if ((!RKRBackend::repl_status.in_browser_context) && (RKRBackend::repl_status.eval_depth == 0)) {
 		while (1) {
-			if (RThread::repl_status.user_command_status == RThread::RKReplStatus::NoUserCommand) {
-				RCommandProxy *command = RThread::this_pointer->fetchNextCommand ();
+			if (RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::NoUserCommand) {
+				RCommandProxy *command = RKRBackend::this_pointer->fetchNextCommand ();
 				if (!command) {
 					return 0;	// jumps out of the event loop!
 				}
 
 				if (!(command->type & RCommand::User)) {
-					RThread::this_pointer->runCommand (command);
-					RThread::this_pointer->commandFinished ();
+					RKRBackend::this_pointer->runCommand (command);
+					RKRBackend::this_pointer->commandFinished ();
 				} else {
 					// so, we are about to transmit a new user command, which is quite a complex endeavour...
 					/* Some words about running user commands:
@@ -206,47 +210,47 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 					- One difficulty lies in finding out, just when a command has finished (successfully or with an error). RKToplevelStatementFinishCallback(), and doError() handle the respective cases.
 					NOTE; in R 2.12.0 and above, Rf_countContexts() might help to find out when we are back to square 1!
 					*/
-					RThread::repl_status.user_command_transmitted_up_to = 0;
-					RThread::repl_status.user_command_completely_transmitted = false;
-					RThread::repl_status.user_command_parsed_up_to = 0;
-					RThread::repl_status.user_command_successful_up_to = 0;
-					RThread::repl_status.user_command_buffer = RThread::this_pointer->current_locale_codec->fromUnicode (command->command);
+					RKRBackend::repl_status.user_command_transmitted_up_to = 0;
+					RKRBackend::repl_status.user_command_completely_transmitted = false;
+					RKRBackend::repl_status.user_command_parsed_up_to = 0;
+					RKRBackend::repl_status.user_command_successful_up_to = 0;
+					RKRBackend::repl_status.user_command_buffer = RKRBackend::this_pointer->current_locale_codec->fromUnicode (command->command);
 					RKTransmitNextUserCommandChunk (buf, buflen);
-					RThread::repl_status.user_command_status = RThread::RKReplStatus::UserCommandTransmitted;
+					RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::UserCommandTransmitted;
 					return 1;
 				}
-			} else if (RThread::repl_status.user_command_status == RThread::RKReplStatus::UserCommandTransmitted) {
-				if (RThread::repl_status.user_command_completely_transmitted) {
+			} else if (RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::UserCommandTransmitted) {
+				if (RKRBackend::repl_status.user_command_completely_transmitted) {
 					// fully transmitted, but R is still asking for more? This looks like an incomplete statement.
 					// HOWEVER: It may also have been an empty statement such as " ", so let's check whether the prompt looks like a "continue" prompt
 					bool incomplete = false;
-					if (RThread::this_pointer->current_locale_codec->toUnicode (prompt) == RKRSupport::SEXPToString (Rf_GetOption (Rf_install ("continue"), R_BaseEnv))) {
+					if (RKRBackend::this_pointer->current_locale_codec->toUnicode (prompt) == RKRSupport::SEXPToString (Rf_GetOption (Rf_install ("continue"), R_BaseEnv))) {
 						incomplete = true;
 					}
-					if (incomplete) RThread::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorIncomplete;
-					RThread::repl_status.user_command_status = RThread::RKReplStatus::ReplIterationKilled;
+					if (incomplete) RKRBackend::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorIncomplete;
+					RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::ReplIterationKilled;
 #warning TODO: use Rf_error(""), instead?
 					RK_doIntr ();	// to discard the buffer
 				} else {
 					RKTransmitNextUserCommandChunk (buf, buflen);
 					return 1;
 				}
-			} else if (RThread::repl_status.user_command_status == RThread::RKReplStatus::UserCommandSyntaxError) {
-				RThread::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorSyntax;
-				RThread::repl_status.user_command_status = RThread::RKReplStatus::NoUserCommand;
-				RThread::this_pointer->commandFinished ();
-			} else if (RThread::repl_status.user_command_status == RThread::RKReplStatus::UserCommandRunning) {
+			} else if (RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::UserCommandSyntaxError) {
+				RKRBackend::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorSyntax;
+				RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::NoUserCommand;
+				RKRBackend::this_pointer->commandFinished ();
+			} else if (RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::UserCommandRunning) {
 				// This can mean three different things:
 				// 1) User called readline ()
 				// 2) User called browser ()
 				// 3) R jumped us back to toplevel behind our backs.
 				// Let's find out, which one it is.
-				if (hist && (RThread::default_global_context != R_GlobalContext)) {
+				if (hist && (RKRBackend::default_global_context != R_GlobalContext)) {
 					break;	// this looks like a call to browser(). Will be handled below.
 				}
 
 				int n_frames = 0;
-				RCommandProxy *dummy = RThread::this_pointer->runDirectCommand ("sys.nframe()", RCommand::GetIntVector);
+				RCommandProxy *dummy = RKRBackend::this_pointer->runDirectCommand ("sys.nframe()", RCommand::GetIntVector);
 				if ((dummy->getDataType () == RData::IntVector) && (dummy->getDataLength () == 1)) {
 					n_frames = dummy->getIntVector ()[0];
 				}
@@ -255,46 +259,46 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 				if (n_frames < 1) {
 					// No active frames? This can't be a call to readline(), then, so probably R jumped us back to toplevel, behind our backs.
 					// For safety, let's reset and start over.
-					RThread::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorOther;
-					RThread::repl_status.user_command_status = RThread::RKReplStatus::ReplIterationKilled;
+					RKRBackend::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorOther;
+					RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::ReplIterationKilled;
 					RK_doIntr ();	// to discard the buffer
 				} else {
 					// A call to readline(). Will be handled below
 					break;
 				}
-			} else if (RThread::repl_status.user_command_status == RThread::RKReplStatus::UserCommandFailed) {
-				RThread::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorOther;
-				RThread::repl_status.user_command_status = RThread::RKReplStatus::NoUserCommand;
-				RThread::this_pointer->commandFinished ();
+			} else if (RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::UserCommandFailed) {
+				RKRBackend::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorOther;
+				RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::NoUserCommand;
+				RKRBackend::this_pointer->commandFinished ();
 			} else {
-				RK_ASSERT (RThread::repl_status.user_command_status == RThread::RKReplStatus::ReplIterationKilled);
-				RThread::repl_status.user_command_status = RThread::RKReplStatus::NoUserCommand;
-				RThread::this_pointer->commandFinished ();
+				RK_ASSERT (RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::ReplIterationKilled);
+				RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::NoUserCommand;
+				RKRBackend::this_pointer->commandFinished ();
 			}
 		}
 	}
 
 	// here, we handle readline() calls and such, i.e. not the regular prompt for code
 	// browser() also takes us here.
-	if (hist && (RThread::default_global_context != R_GlobalContext)) {
+	if (hist && (RKRBackend::default_global_context != R_GlobalContext)) {
 		// TODO: give browser() special handling!
-		RThread::repl_status.in_browser_context = true;
+		RKRBackend::repl_status.in_browser_context = true;
 	}
 
 	RBackendRequest request (true, RBackendRequest::ReadLine);
 	request.params["prompt"] = QVariant (prompt);
 	request.params["cancelled"] = QVariant (false);
 
-	RThread::this_pointer->handleRequest (&request);
+	RKRBackend::this_pointer->handleRequest (&request);
 	if (request.params["cancelled"].toBool ()) {
-		if (RThread::this_pointer->current_command) RThread::this_pointer->current_command->status |= RCommand::Canceled;
+		if (RKRBackend::this_pointer->current_command) RKRBackend::this_pointer->current_command->status |= RCommand::Canceled;
 		RK_doIntr();
 		// threoretically, the above should have got us out of the loop, but for good measure:
 		Rf_error ("cancelled");
 		RK_ASSERT (false);	// should not reach this point.
 	}
 
-	QByteArray localres = RThread::this_pointer->current_locale_codec->fromUnicode (request.params["result"].toString ());
+	QByteArray localres = RKRBackend::this_pointer->current_locale_codec->fromUnicode (request.params["result"].toString ());
 	// need to append a newline, here. TODO: theoretically, RReadConsole comes back for more, if \0 was encountered before \n.
 	qstrncpy ((char *) buf, localres.left (buflen - 2).append ('\n').data (), buflen);
 	return 1;
@@ -310,22 +314,22 @@ void RWriteConsoleEx (const char *buf, int buflen, int type) {
 	RK_TRACE (RBACKEND);
 
 	// output while nothing else is running (including handlers?) -> This may be a syntax error.
-	if ((RThread::repl_status.eval_depth == 0) && (!RThread::repl_status.in_browser_context) && (!RThread::this_pointer->isKilled ())) {
-		if (RThread::repl_status.user_command_status == RThread::RKReplStatus::UserCommandTransmitted) {
+	if ((RKRBackend::repl_status.eval_depth == 0) && (!RKRBackend::repl_status.in_browser_context) && (!RKRBackend::this_pointer->isKilled ())) {
+		if (RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::UserCommandTransmitted) {
 			// status UserCommandTransmitted might have been set from RKToplevelStatementFinishedHandler, too, in which case all is fine
 			// (we're probably inside another task handler at this point, then)
-			if (RThread::repl_status.user_command_parsed_up_to < RThread::repl_status.user_command_transmitted_up_to) { 
-				RThread::repl_status.user_command_status = RThread::RKReplStatus::UserCommandSyntaxError;
+			if (RKRBackend::repl_status.user_command_parsed_up_to < RKRBackend::repl_status.user_command_transmitted_up_to) { 
+				RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::UserCommandSyntaxError;
 			}
-		} else if (RThread::repl_status.user_command_status == RThread::RKReplStatus::ReplIterationKilled) {
+		} else if (RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::ReplIterationKilled) {
 			// purge superflous newlines
 			if (QString ("\n") == buf) return;
 		} else {
-			RK_ASSERT (RThread::repl_status.user_command_status != RThread::RKReplStatus::NoUserCommand);
+			RK_ASSERT (RKRBackend::repl_status.user_command_status != RKRBackend::RKReplStatus::NoUserCommand);
 		}
 	}
 
-	RThread::this_pointer->handleOutput (RThread::this_pointer->current_locale_codec->toUnicode (buf, buflen), buflen, type == 0 ? ROutput::Output : ROutput::Warning);
+	RKRBackend::this_pointer->handleOutput (RKRBackend::this_pointer->current_locale_codec->toUnicode (buf, buflen), buflen, type == 0 ? ROutput::Output : ROutput::Warning);
 }
 
 /** For R callbacks that we want to disable, entirely */
@@ -336,19 +340,19 @@ void RDoNothing () {
 void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 	RK_TRACE (RBACKEND);
 
-	if (RThread::this_pointer->killed == RThread::AlreadyDead) return;	// Nothing to clean up
+	if (RKRBackend::this_pointer->killed == RKRBackend::AlreadyDead) return;	// Nothing to clean up
 
 	// we could be in a signal handler, and the stack base may have changed.
 	uintptr_t old_lim = R_CStackLimit;
 	R_CStackLimit = (uintptr_t)-1;
 
-	if ((status != 0) && (RThread::this_pointer->killed != RThread::ExitNow)) RThread::this_pointer->killed = RThread::EmergencySaveThenExit;
+	if ((status != 0) && (RKRBackend::this_pointer->killed != RKRBackend::ExitNow)) RKRBackend::this_pointer->killed = RKRBackend::EmergencySaveThenExit;
 
 	if (saveact != SA_SUICIDE) {
-		if (!RThread::this_pointer->isKilled ()) {
+		if (!RKRBackend::this_pointer->isKilled ()) {
 			RBackendRequest request (true, RBackendRequest::BackendExit);
 			request.params["message"] = QVariant (i18n ("The R engine has shut down with status: %1").arg (status));
-			RThread::this_pointer->handleRequest (&request);
+			RKRBackend::this_pointer->handleRequest (&request);
 		}
 
 		if (RunLast) R_dot_Last ();
@@ -357,13 +361,13 @@ void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 		R_CleanTempDir ();
 	}
 
-	RThread::this_pointer->r_running = false;	// To signify we have finished everything else and are now trying to create an emergency save (if applicable)
+	RKRBackend::this_pointer->r_running = false;	// To signify we have finished everything else and are now trying to create an emergency save (if applicable)
 
-	if (RThread::this_pointer->killed == RThread::EmergencySaveThenExit) {
+	if (RKRBackend::this_pointer->killed == RKRBackend::EmergencySaveThenExit) {
 		if (R_DirtyImage) R_SaveGlobalEnvToFile (RKCommonFunctions::getUseableRKWardSavefileName ("rkward_recover", ".RData").toLocal8Bit ());
 	}
 
-	RThread::this_pointer->killed = RThread::AlreadyDead;	// just in case
+	RKRBackend::this_pointer->killed = RKRBackend::AlreadyDead;	// just in case
 
 	R_CStackLimit = old_lim;	// well, it should not matter any longer, but...
 }
@@ -371,21 +375,21 @@ void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 void RSuicide (const char* message) {
 	RK_TRACE (RBACKEND);
 
-	if (!RThread::this_pointer->isKilled ()) {
+	if (!RKRBackend::this_pointer->isKilled ()) {
 		RBackendRequest request (true, RBackendRequest::BackendExit);
 		request.params["message"] = QVariant (i18n ("The R engine has encountered a fatal error:\n%1").arg (message));
-		RThread::this_pointer->handleRequest (&request);
-		RThread::this_pointer->killed = RThread::EmergencySaveThenExit;
+		RKRBackend::this_pointer->handleRequest (&request);
+		RKRBackend::this_pointer->killed = RKRBackend::EmergencySaveThenExit;
 		RCleanUp (SA_SUICIDE, 1, 0);
 	} else {
 		RK_ASSERT (false);
 	}
 }
 
-void RThread::tryToDoEmergencySave () {
+void RKRBackend::tryToDoEmergencySave () {
 	RK_TRACE (RBACKEND);
 
-	if (inRThread ()) {
+	if (RKRBackendProtocolBackend::inRThread ()) {
 		// If we are in the correct thread, things are easy:
 		RCleanUp (SA_SUICIDE, 1, 0);
 		RK_doIntr ();	// to jump out of the loop, if needed
@@ -393,15 +397,15 @@ void RThread::tryToDoEmergencySave () {
 		// If we are in the wrong thread, things are a lot more tricky. We need to cause the R thread to exit, and wait for it to finish saving.
 		// Fortunately, if we are in the wrong thread, that probably means, the R thread did *not* crash, and will thus still be functional
 		this_pointer->killed = EmergencySaveThenExit;
-		this_pointer->interruptProcessing (true);
+		RK_scheduleIntr ();
 		for (int i = 0; i < 100; ++i) {		// give it up to ten seconds to intterrupt and exit the loop
 			if (!this_pointer->r_running) break;
-			msleep (100);
+			RKRBackendProtocolBackend::msleep (100);
 		}
 		if (!this_pointer->r_running) {
 			for (int i = 0; i < 600; ++i) {		// give it up to sixty seconds to finish saving
 				if (this_pointer->killed == AlreadyDead) return;	// finished
-				msleep (100);
+				RKRBackendProtocolBackend::msleep (100);
 			}
 		}
 		RK_ASSERT (false);	// Too bad, but we seem to be stuck. No chance but to return (and crash)
@@ -423,9 +427,9 @@ int RChooseFile (int isnew, char *buf, int len) {
 	RBackendRequest request (true, RBackendRequest::ChooseFile);
 	request.params["new"] = QVariant ((bool) isnew);
 
-	RThread::this_pointer->handleRequest (&request);
+	RKRBackend::this_pointer->handleRequest (&request);
 
-	QByteArray localres = RThread::this_pointer->current_locale_codec->fromUnicode (request.params["result"].toString ());
+	QByteArray localres = RKRBackend::this_pointer->current_locale_codec->fromUnicode (request.params["result"].toString ());
 	qstrncpy ((char *) buf, localres.data (), len);
 
 // return length of filename (strlen (buf))
@@ -449,7 +453,7 @@ void REditFilesHelper (QStringList files, QStringList titles, QString wtitle, RB
 	request.params["titles"] = QVariant (titles);
 	request.params["wtitle"] = QVariant (wtitle);
 
-	RThread::this_pointer->handleRequest (&request);
+	RKRBackend::this_pointer->handleRequest (&request);
 }
 
 int REditFiles (int nfile, const char **file, const char **title, const char *wtitle) {
@@ -516,7 +520,7 @@ int doDialogHelper (QString caption, QString message, QString button_yes, QStrin
 	request.params["button_no"] = QVariant (button_no);
 	request.params["button_cancel"] = QVariant (button_cancel);
 
-	RThread::this_pointer->handleRequest (&request);
+	RKRBackend::this_pointer->handleRequest (&request);
  
 	if (wait) {
 		QString ret = request.params["result"].toString ();
@@ -554,18 +558,18 @@ void RBusy (int busy) {
 
 	// R_ReplIteration calls R_Busy (1) after reading in code (if needed), successfully parsing it, and right before evaluating it.
 	if (busy) {
-		if (RThread::repl_status.user_command_status == RThread::RKReplStatus::UserCommandTransmitted) {
-			RThread::repl_status.user_command_parsed_up_to = RThread::repl_status.user_command_transmitted_up_to;
-			RThread::repl_status.user_command_status = RThread::RKReplStatus::UserCommandRunning;
+		if (RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::UserCommandTransmitted) {
+			RKRBackend::repl_status.user_command_parsed_up_to = RKRBackend::repl_status.user_command_transmitted_up_to;
+			RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::UserCommandRunning;
 		}
 	}
 }
 
 // ############## R Standard callback overrides END ####################
 
-char *RThread::na_char_internal = new char;
+char *RKRBackend::na_char_internal = new char;
 
-RThread::RThread () {
+RKRBackend::RKRBackend () {
 	RK_TRACE (RBACKEND);
 
 	current_locale_codec = QTextCodec::codecForLocale ();
@@ -576,11 +580,6 @@ RThread::RThread () {
 	RK_ASSERT (this_pointer == 0);
 	this_pointer = this;
 	out_buf_len = 0;
-
-#ifdef Q_WS_WIN
-	// we hope that on other platforms the default is reasonable
-	setStackSize (0xa00000);	// 10MB as recommended by r_exts-manual
-#endif
 }
 
 #ifdef Q_WS_WIN
@@ -614,11 +613,11 @@ void RThread::connectCallbacks () {
 	R_SetParams(&RK_R_Params);
 }
 #else
-void RThread::setupCallbacks () {
+void RKRBackend::setupCallbacks () {
 	RK_TRACE (RBACKEND);
 }
 
-void RThread::connectCallbacks () {
+void RKRBackend::connectCallbacks () {
 	RK_TRACE (RBACKEND);
 
 // IMPORTANT: see also the #ifdef QS_WS_WIN-portion!
@@ -647,7 +646,7 @@ void RThread::connectCallbacks () {
 }
 #endif
 
-RThread::~RThread () {
+RKRBackend::~RKRBackend () {
 	RK_TRACE (RBACKEND);
 }
 
@@ -686,35 +685,35 @@ TODO: verify we really need this. */
 #endif
 }
 
-void RThread::processX11Events () {
+void RKRBackend::processX11Events () {
 	// do not trace
 	if (!this_pointer->r_running) return;
 	if (this_pointer->isKilled ()) return;
 
-	RThread::repl_status.eval_depth++;
+	RKRBackend::repl_status.eval_depth++;
 // In case an error (or user interrupt) is caught inside processX11EventsWorker, we don't want to long-jump out.
 	R_ToplevelExec (processX11EventsWorker, 0);
-	RThread::repl_status.eval_depth--;
+	RKRBackend::repl_status.eval_depth--;
 }
 
 extern int R_interrupts_pending;
 SEXP doError (SEXP call) {
 	RK_TRACE (RBACKEND);
 
-	if ((RThread::repl_status.eval_depth == 0) && (!RThread::repl_status.in_browser_context) && (!RThread::this_pointer->isKilled ())) {
-		RThread::repl_status.user_command_status = RThread::RKReplStatus::UserCommandFailed;
+	if ((RKRBackend::repl_status.eval_depth == 0) && (!RKRBackend::repl_status.in_browser_context) && (!RKRBackend::this_pointer->isKilled ())) {
+		RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::UserCommandFailed;
 	}
-	if (RThread::repl_status.interrupted) {
+	if (RKRBackend::repl_status.interrupted) {
 		// it is unlikely, but possible, that an interrupt signal was received, but the current command failed for some other reason, before processing was acutally interrupted. In this case, R_interrupts_pending if not yet cleared.
 		// NOTE: if R_interrupts_pending stops being exported one day, we might be able to use R_CheckUserInterrupt() inside an R_ToplevelExec() to find out, whether an interrupt was still pending.
 		if (!R_interrupts_pending) {
-			RThread::repl_status.interrupted = false;
-			foreach (RCommandProxy *command, RThread::this_pointer->all_current_commands) command->status |= RCommand::Canceled;
+			RKRBackend::repl_status.interrupted = false;
+			foreach (RCommandProxy *command, RKRBackend::this_pointer->all_current_commands) command->status |= RCommand::Canceled;
 			RK_DO (qDebug ("interrupted"), RBACKEND, DL_DEBUG);
 		}
 	} else {
 		QString string = RKRSupport::SEXPToString (call);
-		RThread::this_pointer->handleOutput (string, string.length (), ROutput::Error);
+		RKRBackend::this_pointer->handleOutput (string, string.length (), ROutput::Error);
 		RK_DO (qDebug ("error '%s'", qPrintable (string)), RBACKEND, DL_DEBUG);
 	}
 	return R_NilValue;
@@ -729,15 +728,15 @@ SEXP doSubstackCall (SEXP call) {
 	if (list.count () == 2) {		// schedule symbol update for later
 		if (list[0] == "ws") {
 			// always keep in mind: No current command can happen for tcl/tk events.
-			if ((!RThread::this_pointer->current_command) || (RThread::this_pointer->current_command->type & RCommand::ObjectListUpdate) || (!(RThread::this_pointer->current_command->type & RCommand::Sync))) {		// ignore Sync commands that are not flagged as ObjectListUpdate
-				if (!RThread::this_pointer->changed_symbol_names.contains (list[1])) RThread::this_pointer->changed_symbol_names.append (list[1]);
+			if ((!RKRBackend::this_pointer->current_command) || (RKRBackend::this_pointer->current_command->type & RCommand::ObjectListUpdate) || (!(RKRBackend::this_pointer->current_command->type & RCommand::Sync))) {		// ignore Sync commands that are not flagged as ObjectListUpdate
+				if (!RKRBackend::this_pointer->changed_symbol_names.contains (list[1])) RKRBackend::this_pointer->changed_symbol_names.append (list[1]);
 			}
 			return R_NilValue;
 		}
 	}
 
 #warning TODO: extend this by sychronity parameter
-	RThread::this_pointer->handleHistoricalSubstackRequest (list);
+	RKRBackend::this_pointer->handleHistoricalSubstackRequest (list);
 
 	return R_NilValue;
 }
@@ -750,8 +749,8 @@ SEXP doUpdateLocale () {
 	RK_TRACE (RBACKEND);
 
 	RK_DO (qDebug ("Changing locale"), RBACKEND, DL_WARNING);
-	RThread::this_pointer->current_locale_codec = RKGetCurrentLocaleCodec ();
-	RK_DO (qDebug ("New locale codec is %s", RThread::this_pointer->current_locale_codec->name ().data ()), RBACKEND, DL_WARNING);
+	RKRBackend::this_pointer->current_locale_codec = RKGetCurrentLocaleCodec ();
+	RK_DO (qDebug ("New locale codec is %s", RKRBackend::this_pointer->current_locale_codec->name ().data ()), RBACKEND, DL_WARNING);
 
 	return R_NilValue;
 }
@@ -760,10 +759,10 @@ SEXP doUpdateLocale () {
 SEXP doLocaleName () {
 	RK_TRACE (RBACKEND);
 
-	RK_ASSERT (RThread::this_pointer->current_locale_codec);
+	RK_ASSERT (RKRBackend::this_pointer->current_locale_codec);
 	SEXP res = Rf_allocVector(STRSXP, 1);
 	PROTECT (res);
-	SET_STRING_ELT (res, 0, Rf_mkChar (RThread::this_pointer->current_locale_codec->name ().data ()));
+	SET_STRING_ELT (res, 0, Rf_mkChar (RKRBackend::this_pointer->current_locale_codec->name ().data ()));
 	UNPROTECT (1);
 	return res;
 }
@@ -793,7 +792,7 @@ SEXP doCopyNoEval (SEXP name, SEXP fromenv, SEXP toenv) {
 	return (R_NilValue);
 }
 
-bool RThread::startR () {
+bool RKRBackend::startR () {
 	RK_TRACE (RBACKEND);
 
 	setupCallbacks ();
@@ -882,20 +881,20 @@ bool RThread::startR () {
 	return true;
 }
 
-void RThread::enterEventLoop () {
+void RKRBackend::enterEventLoop () {
 	RK_TRACE (RBACKEND);
 
 	run_Rmainloop ();
 	// NOTE: Do NOT run Rf_endEmbeddedR(). It does more that we want. We rely on RCleanup, instead.
 }
 
-SEXP parseCommand (const QString &command_qstring, RThread::RKWardRError *error) {
+SEXP parseCommand (const QString &command_qstring, RKRBackend::RKWardRError *error) {
 	RK_TRACE (RBACKEND);
 
 	ParseStatus status = PARSE_NULL;
 	SEXP cv, pr;
 
-	QByteArray localc = RThread::this_pointer->current_locale_codec->fromUnicode (command_qstring);		// needed so the string below does not go out of scope
+	QByteArray localc = RKRBackend::this_pointer->current_locale_codec->fromUnicode (command_qstring);		// needed so the string below does not go out of scope
 	const char *command = localc.data ();
 
 	PROTECT(cv=Rf_allocVector(STRSXP, 1));
@@ -915,13 +914,13 @@ SEXP parseCommand (const QString &command_qstring, RThread::RKWardRError *error)
 
 	if (status != PARSE_OK) {
 		if ((status == PARSE_INCOMPLETE) || (status == PARSE_EOF)) {
-			*error = RThread::Incomplete;
+			*error = RKRBackend::Incomplete;
 		} else if (status == PARSE_ERROR) {
 			//extern SEXP parseError (SEXP call, int linenum);
 			//parseError (R_NilValue, 0);
-			*error = RThread::SyntaxError;
+			*error = RKRBackend::SyntaxError;
 		} else { // PARSE_NULL
-			*error = RThread::OtherError;
+			*error = RKRBackend::OtherError;
 		}
 		pr = R_NilValue;
 	}
@@ -929,7 +928,7 @@ SEXP parseCommand (const QString &command_qstring, RThread::RKWardRError *error)
 	return pr;
 }
 
-SEXP runCommandInternalBase (SEXP pr, RThread::RKWardRError *error) {
+SEXP runCommandInternalBase (SEXP pr, RKRBackend::RKWardRError *error) {
 	RK_TRACE (RBACKEND);
 
 	SEXP exp;
@@ -953,9 +952,9 @@ SEXP runCommandInternalBase (SEXP pr, RThread::RKWardRError *error) {
 	}
 
 	if (r_error) {
-		*error = RThread::OtherError;
+		*error = RKRBackend::OtherError;
 	} else {
-		*error = RThread::NoError;
+		*error = RKRBackend::NoError;
 	}
 
 	UNPROTECT(1); /* pr */
@@ -973,7 +972,7 @@ SEXP runCommandInternalBase (SEXP pr, RThread::RKWardRError *error) {
 	return exp;
 }
 
-bool RThread::runDirectCommand (const QString &command) {
+bool RKRBackend::runDirectCommand (const QString &command) {
 	RK_TRACE (RBACKEND);
 
 	RCommandProxy c (command, RCommand::App | RCommand::Sync | RCommand::Internal);
@@ -981,7 +980,7 @@ bool RThread::runDirectCommand (const QString &command) {
 	return ((c.status & RCommand::WasTried) && !(c.status & RCommand::Failed));
 }
 
-RCommandProxy *RThread::runDirectCommand (const QString &command, RCommand::CommandTypes datatype) {
+RCommandProxy *RKRBackend::runDirectCommand (const QString &command, RCommand::CommandTypes datatype) {
 	RK_TRACE (RBACKEND);
 	RK_ASSERT ((datatype >= RCommand::GetIntVector) && (datatype <= RCommand::GetStructuredData));
 
@@ -990,7 +989,7 @@ RCommandProxy *RThread::runDirectCommand (const QString &command, RCommand::Comm
 	return c;
 }
 
-void RThread::runCommand (RCommandProxy *command) {
+void RKRBackend::runCommand (RCommandProxy *command) {
 	RK_TRACE (RBACKEND);
 	RK_ASSERT (command);
 

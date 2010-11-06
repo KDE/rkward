@@ -16,7 +16,7 @@
  ***************************************************************************/
 #include "rembedinternal.h"
 
-#include "rinterface.h"
+#include "rkrbackendprotocol.h"
 #include "../rkglobals.h"
 #include "../version.h"
 
@@ -25,26 +25,11 @@
 #include <QCoreApplication>
 #include <klocale.h>
 
-#ifndef Q_WS_WIN
-#	include <signal.h>		// needed for pthread_kill
-#	include <pthread.h>		// seems to be needed at least on FreeBSD
-#endif
-
 #define MAX_BUF_LENGTH 16000
 #define OUTPUT_STRING_RESERVE 1000
 
-void RThread::interruptProcessing (bool interrupt) {
-	if (!interrupt) return;
-#ifdef Q_WS_WIN
-	RK_scheduleIntr ();
-#else
-	pthread_kill ((pthread_t) thread_id, SIGUSR1);	// relays to SIGINT
-#endif
-}
-
-void RThread::run () {
+void RKRBackend::run () {
 	RK_TRACE (RBACKEND);
-	thread_id = currentThreadId ();
 	killed = NotKilled;
 	previous_command = 0;
 
@@ -53,7 +38,7 @@ void RThread::run () {
 	enterEventLoop ();
 }
 
-void RThread::commandFinished (bool check_object_updates_needed) {
+void RKRBackend::commandFinished (bool check_object_updates_needed) {
 	RK_TRACE (RBACKEND);
 	RK_DO (qDebug ("done running command"), RBACKEND, DL_DEBUG);
 
@@ -70,20 +55,14 @@ void RThread::commandFinished (bool check_object_updates_needed) {
 	if (!all_current_commands.isEmpty ()) current_command = all_current_commands.last ();
 }
 
-RCommandProxy* RThread::handleRequest (RBackendRequest *_request, bool mayHandleSubstack) {
+RCommandProxy* RKRBackend::handleRequest (RBackendRequest *request, bool mayHandleSubstack) {
 	RK_TRACE (RBACKEND);
-	RK_ASSERT (_request);
+	RK_ASSERT (request);
 
-	RBackendRequest* request = _request;
-	bool synchronous = request->synchronous;	// It's important to *copy* this. For async requests, the request instance may be deleted right after sending.
-	if (!synchronous) request = request->duplicate ();	// will remain in the frontend, and be deleted, there
+	RKRBackendProtocolBackend::instance ()->sendRequest (request);
 
-	RKRBackendEvent* event = new RKRBackendEvent (request);
-	qApp->postEvent (RKGlobals::rInterface (), event);
-
-	if (!synchronous) {
+	if (!request->synchronous) {
 		RK_ASSERT (mayHandleSubstack);	// i.e. not called from fetchNextCommand
-		_request->done = true;	// for aesthetics
 		return 0;
 	}
 
@@ -91,7 +70,7 @@ RCommandProxy* RThread::handleRequest (RBackendRequest *_request, bool mayHandle
 		if (killed) return 0;
 		// NOTE: processX11Events() may, conceivably, lead to new requests, which may also wait for sub-commands!
 		processX11Events ();
-		if (!request->done) msleep (1);
+		if (!request->done) RKRBackendProtocolBackend::msleep (1);
 	}
 
 	RCommandProxy* command = request->command;
@@ -112,7 +91,7 @@ RCommandProxy* RThread::handleRequest (RBackendRequest *_request, bool mayHandle
 	return 0;
 }
 
-RCommandProxy* RThread::fetchNextCommand () {
+RCommandProxy* RKRBackend::fetchNextCommand () {
 	RK_TRACE (RBACKEND);
 
 	RBackendRequest req (true, RBackendRequest::CommandOut);
@@ -122,15 +101,15 @@ RCommandProxy* RThread::fetchNextCommand () {
 	return (handleRequest (&req, false));
 }
 
-void RThread::waitIfOutputBufferExceeded () {
+void RKRBackend::waitIfOutputBufferExceeded () {
 	// don't trace
 	while (out_buf_len > MAX_BUF_LENGTH) {
 		if (isKilled ()) return;	// don't block. Frontend could be crashed
-		msleep (10);
+		RKRBackendProtocolBackend::msleep (10);
 	}
 }
 
-void RThread::handleOutput (const QString &output, int buf_length, ROutput::ROutputType output_type) {
+void RKRBackend::handleOutput (const QString &output, int buf_length, ROutput::ROutputType output_type) {
 	if (!buf_length) return;
 	RK_TRACE (RBACKEND);
 
@@ -157,7 +136,7 @@ void RThread::handleOutput (const QString &output, int buf_length, ROutput::ROut
 	output_buffer_mutex.unlock ();
 }
 
-ROutputList RThread::flushOutput (bool forcibly) {
+ROutputList RKRBackend::flushOutput (bool forcibly) {
 	ROutputList ret;
 
 	if (out_buf_len == 0) return ret;		// if there is absolutely no output, just skip.
@@ -179,7 +158,7 @@ ROutputList RThread::flushOutput (bool forcibly) {
 	return ret;
 }
 
-void RThread::handleHistoricalSubstackRequest (const QStringList &list) {
+void RKRBackend::handleHistoricalSubstackRequest (const QStringList &list) {
 	RK_TRACE (RBACKEND);
 
 	RBackendRequest request (true, RBackendRequest::HistoricalSubstackRequest);
@@ -187,7 +166,7 @@ void RThread::handleHistoricalSubstackRequest (const QStringList &list) {
 	handleRequest (&request);
 }                                                                        
 
-void RThread::initialize () {
+void RKRBackend::initialize () {
 	RK_TRACE (RBACKEND);
 
 	// in RInterface::RInterface() we have created a fake RCommand to capture all the output/errors during startup. Fetch it
@@ -225,7 +204,7 @@ void RThread::initialize () {
 	repl_status.eval_depth--;
 }
 
-void RThread::checkObjectUpdatesNeeded (bool check_list) {
+void RKRBackend::checkObjectUpdatesNeeded (bool check_list) {
 	RK_TRACE (RBACKEND);
 	if (killed) return;
 

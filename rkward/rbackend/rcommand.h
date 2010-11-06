@@ -216,7 +216,7 @@ public:
 /** update the given RCommand with the status / data of the proxy command. */
 	void mergeAndDelete (RCommand *to);
 protected:
-friend class RThread;
+friend class RKRBackend;
 	RCommandProxy (const QString &command, int type);
 public:		// all these are public for technical reasons, only.
 	QString command;

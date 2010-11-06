@@ -22,13 +22,13 @@
 
 #include <QMap>
 #include <QVariant>
-#include <QThread>
 #include <QMutex>
 #include <QStringList>
 #include <QEvent>
 
 #include "rcommand.h"
 #include "rcommandstack.h"
+#include "rkrbackendprotocol.h"
 
 #ifdef Q_WS_WIN
 extern "C" {
@@ -36,73 +36,10 @@ extern "C" {
 }
 #endif
 
-class RBackendRequest {
-public:
-	enum RCallbackType {
-		BackendExit,
-		ShowMessage,
-		ShowFiles,
-		ChooseFile,
-		EditFiles,
-		ReadLine,
-		CommandOut,
-		Started,
-		EvalRequest,
-		CallbackRequest,
-		HistoricalSubstackRequest,
-		OtherRequest		/**< Any other type of request. Note: which requests are in the enum, and which are not has mostly historical reasons. @see params */
-	};
-
-	RBackendRequest (bool synchronous, RCallbackType type) {
-		RBackendRequest::synchronous = synchronous;
-		RBackendRequest::type = type;
-		done = false;
-		command = 0;
-	}
-	~RBackendRequest () {};
-
-	RBackendRequest *duplicate () {
-		RBackendRequest* ret = new RBackendRequest (synchronous, type);
-		ret->done = done;
-		ret->command = command;
-		ret->params = params;
-		return ret;
-	}
-
-	void completed () {
-		if (!synchronous) delete this;
-		else done = true;
-	}
-
-/** Should this request be handled synchronously? False by default. */
-	bool synchronous;
-/** For synchronous requests, only: The frontend-thread will set this to true (using completed()), once the request has been "completed". Important: The backend thread MUST NOT touch a request after it has been sent, and before "done" has been set to true. */
-	bool done;
-	RCallbackType type;
-/** For synchronous requests, only: If the the frontend wants any commands to be executed, it will place the next one in this slot. The backend thread should keep executing commands (in a sub-eventloop) while this is non-zero. Also, the backend-thread may place here any command that has just finished. */
-	RCommandProxy *command;
-/** Any other parameters, esp. for RCallbackType::OtherRequest. Can be used in both directions. */
-	QVariantMap params;
-};
-
 class QStringList;
 class QTextCodec;
 class RInterface;
 struct ROutput;
-
-/** Simple event class to relay information from the RThread to the main thread. This is basically like QCustomEvent in Qt3*/
-class RKRBackendEvent : public QEvent {
-public:
-	enum EventType {
-		RKWardEvent = QEvent::User + 1
-	};
-	RKRBackendEvent (RBackendRequest* data=0) : QEvent ((QEvent::Type) RKWardEvent) { _data = data; };
-	RKRBackendEvent ();
-
-	RBackendRequest* data () { return _data; };
-private:
-	RBackendRequest* _data;
-};
 
 /** This class represents the thread the R backend is running in. So to speak, this is where the "eventloop" of R is running. The main thing happening
 in this class, is that it enters R's REPL (Read-evaluate-parse-loop). Whenever there are commands to be executed, those get evaluated. When there are not,
@@ -120,25 +57,25 @@ Actually, there is also a custom sub-eventloop, which gets called when the R bac
 
 This subordinate/nested eventloop is done in handleRequest ().
 
-A closely related class is RInterface: RThread communicates with RInterface by placing QCustomEvent s, when commands are done
-or when the backend needs information from the frontend. For historical reasons, the definitions of RThread class-members are currently spread over different files.
+A closely related class is RInterface: RKRBackend communicates with RInterface by placing QCustomEvent s, when commands are done
+or when the backend needs information from the frontend. For historical reasons, the definitions of RKRBackend class-members are currently spread over different files.
 
-Only one RThread-object can be used in an application.
+Only one RKRBackend-object can be used in an application.
 Don't use this class in RKWard directly. Unless you really want to modify the internal workings of the backend, you will want to look at RInterface and use the functions there.
 
 @see RInterface
 
 @author Thomas Friedrichsmeier
 */
-class RThread : public QThread {
+class RKRBackend {
 public: 
-/** constructor. Only one RThread should ever be created, and that happens in RInterface::RInterface (). */
-	RThread ();
+/** constructor. Only one RKRBackend should ever be created, and that happens in RInterface::RInterface (). */
+	RKRBackend ();
 /** destructor */
-	virtual ~RThread ();
+	virtual ~RKRBackend ();
 
-/** interrupt processing of the current command. This is much like the user pressing Ctrl+C in a terminal with R. This is probably the only non-portable function in RThread, but I can't see a good way around placing it here, or to make it portable. */
-	void interruptProcessing (bool interrupt);
+/** interrupt processing of the current command. This is much like the user pressing Ctrl+C in a terminal with R. This is probably the only non-portable function in RKRBackend, but I can't see a good way around placing it here, or to make it portable. */
+	static void interruptProcessing (bool interrupt);
 
 /** Enum specifying types of errors that may occur while parsing/evaluating a command in R */
 	enum RKWardRError {
@@ -188,7 +125,7 @@ public:
 	void runCommand (RCommandProxy *command);
 
 /** only one instance of this class may be around. This pointer keeps the reference to it, for interfacing to from C to C++ */
-	static RThread *this_pointer;
+	static RKRBackend *this_pointer;
 	static char *na_char_internal;
 	static void tryToDoEmergencySave ();
 	bool r_running;
@@ -197,14 +134,14 @@ public:
 		return (r_version >= (1000 * major + 10 * minor + revision));
 	}
 
-/** thread is killed. Should exit as soon as possible. @see kill */
+/** backend is killed. Should exit as soon as possible. @see kill */
 	enum KillType {
 		NotKilled = 0,
 		ExitNow = 1,
 		EmergencySaveThenExit = 2,
 		AlreadyDead = 3
 	} killed;
-/** "Kills" the thread. Actually this just tells the thread that is is about to be terminated. Allows the thread to terminate gracefully */
+/** "Kills" the backend. Actually this just tells the thread that is is about to be terminated. Allows the thread to terminate gracefully */
 	void kill () { killed = ExitNow; };
 	bool isKilled () { return (killed != NotKilled); };
 
@@ -235,10 +172,10 @@ public:
 	void commandFinished (bool check_object_updates_needed=true);
 /** A list of symbols that have been assigned new values during the current command */
 	QStringList changed_symbol_names;
-	static bool inRThread () { return (currentThread () == this_pointer); };
+/** the main loop. See \ref RKRBackend for a more detailed description */
+	void run ();
+	static void scheduleInterrupt ();
 protected:
-/** On pthread systems this is the pthread_id of the backend thread. It is needed to send SIGINT to the R backend */
-	Qt::HANDLE thread_id;
 /** If the length of the current output buffer is too long, this will pause any further output until the main thread has had a chance to catch up. */
 	void waitIfOutputBufferExceeded ();
 	RCommandProxy* handleRequest (RBackendRequest *request, bool mayHandleSubstack);
@@ -249,9 +186,6 @@ private:
 	void connectCallbacks ();
 
 	int r_version;
-protected:
-/** the main loop. See \ref RThread for a more detailed description */
-	void run ();
 private:  
 /** A copy of the names of the toplevel environments (as returned by "search ()"). */
 	QStringList toplevel_env_names;

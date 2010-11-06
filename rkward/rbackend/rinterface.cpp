@@ -17,8 +17,8 @@
 
 #include "rinterface.h"
 
-#include "rembedinternal.h"
 #include "rcommandstack.h"
+#include "rkrbackendprotocol.h"
 #include "../rkward.h"
 #include "../settings/rksettingsmoduler.h"
 #include "../settings/rksettingsmodulegeneral.h"
@@ -87,6 +87,7 @@ RInterface::RInterface () {
 	previously_idle = false;
 	previous_command = 0;
 	locked = 0;
+	backend_dead = false;
 
 	// create a fake init command
 	RCommand *fake = new RCommand (i18n ("R Startup"), RCommand::App | RCommand::Sync | RCommand::ObjectListUpdate, i18n ("R Startup"), this, STARTUP_PHASE2_COMPLETE);
@@ -96,7 +97,8 @@ RInterface::RInterface () {
 	connect (flush_timer, SIGNAL (timeout ()), this, SLOT (flushOutput ()));
 	flush_timer->start (FLUSH_INTERVAL);
 
-	r_thread = new RThread ();
+	new RKRBackendProtocolFrontend (this);
+	RKRBackendProtocolFrontend::instance ()->setupBackend (QVariantMap ());
 }
 
 void RInterface::issueCommand (const QString &command, int type, const QString &rk_equiv, RCommandReceiver *receiver, int flags, RCommandChain *chain) {
@@ -107,26 +109,8 @@ void RInterface::issueCommand (const QString &command, int type, const QString &
 RInterface::~RInterface(){
 	RK_TRACE (RBACKEND);
 
-	if (r_thread->isRunning ()) {
-		RK_DO (qDebug ("Waiting for R thread to finish up..."), RBACKEND, DL_INFO);
-		r_thread->interruptProcessing (true);
-		r_thread->kill ();
-		r_thread->wait (1000);
-		if (r_thread->isRunning ()) {
-			RK_DO (qDebug ("Backend thread is still running. It will be killed, now."), RBACKEND, DL_WARNING);
-			r_thread->terminate ();
-			RK_ASSERT (false);
-		}
-	}
-	delete r_thread;
 	delete flush_timer;
 	delete window_catcher;
-}
-
-bool RInterface::backendIsDead () {
-	RK_TRACE (RBACKEND);
-
-	return (!r_thread->isRunning ());
 }
 
 bool RInterface::backendIsIdle () {
@@ -135,12 +119,6 @@ bool RInterface::backendIsIdle () {
 	bool idle;
 	idle = (RCommandStack::regular_stack->isEmpty() && (!runningCommand()));
 	return (idle);
-}
-
-void RInterface::startThread () {
-	RK_TRACE (RBACKEND);
-
-	r_thread->start ();
 }
 
 void RInterface::popPreviousCommand () {
@@ -220,6 +198,8 @@ void RInterface::handleCommandOut (RCommandProxy *proxy) {
 		}
 	#endif
 
+	if (command->type () & RCommand::QuitCommand) backend_dead = true;
+
 	if ((command->status & RCommand::Canceled) || (command == running_command_canceled)) {
 		command->status |= RCommand::HasError;
 		ROutput *out = new ROutput;
@@ -230,7 +210,6 @@ void RInterface::handleCommandOut (RCommandProxy *proxy) {
 		if (running_command_canceled) {
 			RK_ASSERT (command == running_command_canceled);
 			running_command_canceled = 0;
-			r_thread->interruptProcessing (false);
 			locked -= locked & Cancel;
 		}
 	}
@@ -265,9 +244,8 @@ void RInterface::doNextCommand (RCommand *command) {
 	}
 
 	command_request->command = proxy;
-	command_request->completed ();
+	RKRBackendProtocolFrontend::setRequestCompleted (command_request);
 	command_requests.pop_back ();
-	QThread::yieldCurrentThread ();
 }
 
 void RInterface::rCommandDone (RCommand *command) {
@@ -308,19 +286,10 @@ void RInterface::rCommandDone (RCommand *command) {
 	}
 }
 
-void RInterface::customEvent (QEvent *e) {
+void RInterface::handleRequest (RBackendRequest* request) {
 	RK_TRACE (RBACKEND);
 
-	RKRBackendEvent *ev;
-	if (((int) e->type ()) == ((int) RKRBackendEvent::RKWardEvent)) {
-		ev = static_cast<RKRBackendEvent*> (e);
-	} else {
-		RK_ASSERT (false);
-		return;
-	}
-
 	flushOutput (true);
-	RBackendRequest *request = ev->data ();
 	if (request->type == RBackendRequest::CommandOut) {
 		RCommandProxy *cproxy = request->command;
 
@@ -355,7 +324,7 @@ void RInterface::customEvent (QEvent *e) {
 		issueCommand ("rk.set.output.html.file (\"" + RKSettingsModuleGeneral::filesPath () + "/rk_out.html\")\n", RCommand::App | RCommand::Sync, QString (), this, SET_RUNTIME_OPTS, chain);
 
 		closeChain (chain);
-		request->completed ();
+		RKRBackendProtocolFrontend::setRequestCompleted (request);
 	} else {
 		processRBackendRequest (request);
 	}
@@ -372,7 +341,7 @@ void RInterface::flushOutput (bool forced) {
 // do not trace. called periodically
 //	RK_TRACE (RBACKEND);
 
-	ROutputList list = r_thread->flushOutput (forced);
+	ROutputList list = RKRBackendProtocolFrontend::instance ()->flushOutput (forced);
 
 	foreach (ROutput *output, list) {
 		if (all_current_commands.isEmpty ()) {
@@ -448,7 +417,7 @@ void RInterface::cancelCommand (RCommand *command) {
 				RK_ASSERT (!running_command_canceled);
 				locked |= Cancel;
 				running_command_canceled = command;
-				r_thread->interruptProcessing (true);
+				RKRBackendProtocolFrontend::instance ()->interruptProcessing ();
 			}
 		}
 	} else {
@@ -672,7 +641,7 @@ void RInterface::processRBackendRequest (RBackendRequest *request) {
 				dialog->setButtons (KDialog::Ok);
 				dialog->show();
 
-				request->completed ();
+				RKRBackendProtocolFrontend::setRequestCompleted (request);
 				return;
 			}
 		}
@@ -717,10 +686,10 @@ void RInterface::processRBackendRequest (RBackendRequest *request) {
 		QString message = request->params["message"].toString ();
 		message += i18n ("\nIt will be shut down immediately. This means, you can not use any more functions that rely on the R backend. I.e. you can do hardly anything at all, not even save the workspace (but if you're lucky, R already did that). What you can do, however, is save any open command-files, the output, or copy data out of open data editors. Quit RKWard after that.\nSince this should never happen, please write a mail to rkward-devel@lists.sourceforge.net, and tell us, what you were trying to do, when this happened. Sorry!");
 		KMessageBox::error (0, message, i18n ("R engine has died"));
-		r_thread->kill ();
+		backend_dead = true;
 	}
 
-	request->completed ();
+	RKRBackendProtocolFrontend::setRequestCompleted (request);
 }
 
 #include "rinterface.moc"

@@ -28,7 +28,7 @@
 
 #include "../windows/rkcommandeditorwindow.h"
 #include "../rbackend/rinterface.h"
-#include "../rbackend/rembedinternal.h"
+#include "../rbackend/rkrbackendprotocol.h"
 #include "../windows/rkworkplace.h"
 #include "../rkglobals.h"
 #include "../rkward.h"
@@ -67,7 +67,7 @@ ShowEditTextFileAgent::ShowEditTextFileAgent (RBackendRequest *request, const QS
 ShowEditTextFileAgent::~ShowEditTextFileAgent () {
 	RK_TRACE (APP);
 
-	request->completed ();
+	RKRBackendProtocolFrontend::setRequestCompleted (request);
 	dialog->deleteLater ();
 }
 
@@ -103,7 +103,7 @@ void ShowEditTextFileAgent::showEditFiles (RBackendRequest *request) {
 		KMessageBox::informationList (RKWardMainWindow::getMain (), i18n ("A command running in the R-engine wants you to see the following file(s):\n"), display_titles, i18n ("Showing file(s)"), "show_files");
 
 		delete_files = request->params["delete"].toBool ();
-		request->completed ();
+		RKRBackendProtocolFrontend::setRequestCompleted (request);
 	} else if (request->type == RBackendRequest::EditFiles) {
 		new ShowEditTextFileAgent (request, i18n ("A command running in the R-engine wants you to edit one or more file(s). Please look at these files, edit them as appriopriate, and save them. When done, press the \"Done\"-button, or close this dialog to resume.\n\n") + display_titles.join ("\n"), i18n ("Edit file(s)"));
 

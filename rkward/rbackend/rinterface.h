@@ -27,7 +27,7 @@
 class RCommand;
 class RKWardMainWindow;
 class QTimer;
-class RThread;
+class RKRBackend;
 struct RBackendRequest;
 
 /** This class provides the main interface to the R-processor.
@@ -70,7 +70,7 @@ not be interrupted. */
 /** returns the command currently running in the thread. Be careful when using the returned pointer! */
 	RCommand *runningCommand () const { return (all_current_commands.isEmpty () ? 0 : all_current_commands.last ()); };
 
-	bool backendIsDead ();
+	bool backendIsDead () { return backend_dead; };
 	bool backendIsIdle ();
 private slots:
 /** called periodically to flush output buffer in RThread */
@@ -79,7 +79,7 @@ private:
 /** Calls RThread::flushOutput(), and takes care of adding the output to all applicable commands */
 	void flushOutput (bool forced);
 /** pointer to the RThread */
-	RThread *r_thread;
+	RKRBackend *r_thread;
 /** Timer to trigger flushing output */
 	QTimer *flush_timer;
 /** canceling the command that is (or seems to be) currently running is tricky: In order to do so, we need to signal an interrupt to the RThread. We need this pointer to find out, when the command has actually been interrupted, and we can resume processing. */
@@ -120,13 +120,12 @@ May be an OR'ed combination of several LockType s */
 
 	QString startup_errors;
 	bool startup_phase2_error;
+friend class RKRBackendProtocolFrontend;
+	bool backend_dead;
 friend class RKWardMainWindow;
 friend class RCommand;
-/** Used (once!) to start the RThread. Need to make this separate to avoid race conditions */
-	void startThread ();
 protected:
-/** needed to handle the QCustomEvent s, the RThread is sending (notifications on what's happening in the backend thread) */
-	void customEvent (QEvent *e);
+	void handleRequest (RBackendRequest *request);
 	void rCommandDone (RCommand *command);
 };
 
