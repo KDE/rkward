@@ -72,6 +72,8 @@ not be interrupted. */
 
 	bool backendIsDead () { return backend_dead; };
 	bool backendIsIdle ();
+	static bool isNaReal (double value) { return na_real == value; };
+	static bool isNaInt (int value) { return na_int == value; };
 private slots:
 /** called periodically to flush output buffer in RThread */
 	void flushOutput ();
@@ -122,6 +124,8 @@ May be an OR'ed combination of several LockType s */
 	bool startup_phase2_error;
 friend class RKRBackendProtocolFrontend;
 	bool backend_dead;
+	static double na_real;
+	static int na_int;
 friend class RKWardMainWindow;
 friend class RCommand;
 protected:
@@ -376,8 +380,9 @@ The following classes contain (or should contain) further important documentatio
 
 Even lower level API:
 
-- \ref RThread
-- \ref REmbedInternal
+- \ref RRBackendProtcolFrontend
+- \ref RBackend
+- \ref RRBackendProtcolBackend
 
 */
 

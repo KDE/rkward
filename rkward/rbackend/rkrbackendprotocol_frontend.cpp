@@ -15,12 +15,13 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "rkrbackendprotocol.h"
+#include "rkrbackendprotocol_frontend.h"
 
 #include "rinterface.h"
 #ifdef RKWARD_THREADED
 #	include <QThread>
 #	include "rembedinternal.h"
+#	include "rkrbackendprotocol_backend.h"
 #endif
 
 #include "../debug.h"
@@ -98,7 +99,6 @@ void RKRBackendProtocolFrontend::terminateBackend () {
 
 #ifdef RKWARD_THREADED
 void RKRBackendProtocolFrontend::customEvent (QEvent *e) {
-qDebug ("got it");
 	if (((int) e->type ()) == ((int) RKRBackendEvent::RKWardEvent)) {
 		RKRBackendEvent *ev = static_cast<RKRBackendEvent*> (e);
 		frontend->handleRequest (ev->data ());

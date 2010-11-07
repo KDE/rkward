@@ -16,8 +16,7 @@
  ***************************************************************************/
 #include "rembedinternal.h"
 
-#include "rkrbackendprotocol.h"
-#include "../rkglobals.h"
+#include "rkrbackendprotocol_backend.h"
 #include "../version.h"
 
 #include "../debug.h"

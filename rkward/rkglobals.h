@@ -44,9 +44,6 @@ public:
 /// static pointer to the RKModificationTracker
 	static RKModificationTracker *tracker () { return mtracker; };
 
-/// a NA double
-	static double na_double;
-	
 /// returns KDialog::marginHint (), without the need to include kdialog.h in all the sources
 	static int marginHint ();
 /// returns KDialog::spacingHint (), without the need to include kdialog.h in all the sources

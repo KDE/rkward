@@ -26,6 +26,7 @@ SET(
 	rkstructuregetter.cpp
 	rkrbackendprotocol_backend.cpp
 	rkrbackendprotocol_frontend.cpp
+	rkrbackendprotocol_shared.cpp
 )
 
 

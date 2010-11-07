@@ -18,7 +18,7 @@
 #include "rinterface.h"
 
 #include "rcommandstack.h"
-#include "rkrbackendprotocol.h"
+#include "rkrbackendprotocol_frontend.h"
 #include "../rkward.h"
 #include "../settings/rksettingsmoduler.h"
 #include "../settings/rksettingsmodulegeneral.h"
@@ -66,6 +66,10 @@ RKWindowCatcher *window_catcher;
 #define GET_HELP_BASE 2
 #define SET_RUNTIME_OPTS 3
 #define STARTUP_PHASE2_COMPLETE 4
+
+// statics
+double RInterface::na_real;
+int RInterface::na_int;
 
 RInterface::RInterface () {
 	RK_TRACE (RBACKEND);
@@ -149,7 +153,7 @@ void RInterface::tryNextCommand () {
 
 				// notify ourselves...
 				popPreviousCommand ();
-				handleCommandOut (new RCommandProxy (command));
+				handleCommandOut (command->makeProxy ());
 				return;
 			}
 
@@ -177,7 +181,7 @@ void RInterface::handleCommandOut (RCommandProxy *proxy) {
 	RK_ASSERT (proxy);
 	RK_ASSERT (previous_command);
 	RCommand* command = previous_command;
-	proxy->mergeAndDelete (command);
+	command->mergeAndDeleteProxy (proxy);
 
 	#ifdef RKWARD_DEBUG
 		int dl = DL_WARNING;		// failed application commands are an issue worth reporting, failed user commands are not
@@ -227,7 +231,7 @@ void RInterface::doNextCommand (RCommand *command) {
 	flushOutput (true);
 	RCommandProxy *proxy = 0;
 	if (command) {
-		proxy = new RCommandProxy (command);
+		proxy = command->makeProxy ();
 
 		RK_DO (qDebug ("running command: %s", command->command ().toLatin1().data ()), RBACKEND, DL_DEBUG);
 		command->status |= RCommand::Running;
@@ -682,6 +686,9 @@ void RInterface::processRBackendRequest (RBackendRequest *request) {
 			filename = KFileDialog::getOpenFileName ();
 		}
 		request->params["result"] = QVariant (filename);
+	} else if (type == RBackendRequest::SetParamsFromBackend) {
+			na_real = request->params["na_real"].toDouble ();
+			na_int = request->params["na_int"].toInt ();
 	} else if (type == RBackendRequest::BackendExit) {
 		QString message = request->params["message"].toString ();
 		message += i18n ("\nIt will be shut down immediately. This means, you can not use any more functions that rely on the R backend. I.e. you can do hardly anything at all, not even save the workspace (but if you're lucky, R already did that). What you can do, however, is save any open command-files, the output, or copy data out of open data editors. Quit RKWard after that.\nSince this should never happen, please write a mail to rkward-devel@lists.sourceforge.net, and tell us, what you were trying to do, when this happened. Sorry!");

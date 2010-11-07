@@ -19,7 +19,6 @@
 #include <qstringlist.h>
 #include "float.h"
 #include "math.h"
-#include "limits.h"
 
 #include "rcontainerobject.h"
 #include "robjectlist.h"
@@ -161,7 +160,7 @@ void RKVariable::rCommandDone (RCommand *command) {
 			QVector<double> dd;
 			dd.reserve (len);
 			for (unsigned int i = 0; i < len; ++i) {
-				if (cdata->getIntVector ()[i] == INT_MIN) dd[i] = NAN;
+				if (RInterface::isNaInt (cdata->getIntVector ()[i])) dd[i] = NAN;
 				else dd[i] = (double) cdata->getIntVector ()[i];
 			}
 			setNumericFromR (0, getLength () - 1, dd);

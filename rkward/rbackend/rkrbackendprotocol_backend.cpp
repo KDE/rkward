@@ -15,7 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "rkrbackendprotocol.h"
+#include "rkrbackendprotocol_backend.h"
 
 #include "rembedinternal.h"
 
@@ -28,6 +28,7 @@
 #	endif
 #	include <QThread>
 #	include <QApplication>
+#	include "rkrbackendprotocol_frontend.h"
 #else
 #	include <unistd.h>
 #endif

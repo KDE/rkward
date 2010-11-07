@@ -1,5 +1,5 @@
 /***************************************************************************
-                          rembedinternal  -  description
+                          rkrbackend  -  description
                              -------------------
     begin                : Sun Jul 25 2004
     copyright            : (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010 by Thomas Friedrichsmeier
@@ -17,7 +17,7 @@
 
 #include "rembedinternal.h"
 
-// static
+// statics
 RKRBackend *RKRBackend::this_pointer = 0;
 RKRBackend::RKReplStatus RKRBackend::repl_status = { QByteArray (), 0, true, 0, 0, RKRBackend::RKReplStatus::NoUserCommand, 0, false, false };
 void* RKRBackend::default_global_context = 0;
@@ -107,7 +107,6 @@ SEXP R_LastvalueSymbol;
 #include <R_ext/eventloop.h>
 }
 
-#include "../rkglobals.h"
 #include "rdata.h"
 
 extern SEXP RKWard_RData_Tag;
@@ -567,8 +566,6 @@ void RBusy (int busy) {
 
 // ############## R Standard callback overrides END ####################
 
-char *RKRBackend::na_char_internal = new char;
-
 RKRBackend::RKRBackend () {
 	RK_TRACE (RBACKEND);
 
@@ -841,7 +838,10 @@ bool RKRBackend::startR () {
 	R_Interactive = (Rboolean) TRUE;
 #endif
 
-	RKGlobals::na_double = NA_REAL;
+	RBackendRequest req (false, RBackendRequest::SetParamsFromBackend);
+	req.params["na_real"] = NA_REAL;	// may not be initialized before setup_Rmainloop!
+	req.params["na_int"] = NA_INTEGER;
+	handleRequest (&req);
 
 	RKWard_RData_Tag = Rf_install ("RKWard_RData_Tag");
 	R_LastvalueSymbol = Rf_install (".Last.value");

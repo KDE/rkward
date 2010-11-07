@@ -1,5 +1,5 @@
 /***************************************************************************
-                          rembedinternal  -  description
+                          rkrbackend  -  description
                              -------------------
     begin                : Sun Jul 25 2004
     copyright            : (C) 2004, 2005, 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
@@ -28,7 +28,7 @@
 
 #include "rcommand.h"
 #include "rcommandstack.h"
-#include "rkrbackendprotocol.h"
+#include "rkrbackendprotocol_backend.h"
 
 #ifdef Q_WS_WIN
 extern "C" {
@@ -126,7 +126,6 @@ public:
 
 /** only one instance of this class may be around. This pointer keeps the reference to it, for interfacing to from C to C++ */
 	static RKRBackend *this_pointer;
-	static char *na_char_internal;
 	static void tryToDoEmergencySave ();
 	bool r_running;
 /** Check whether the runtime version of R is at least the given version. Valid only *after* startR() has been called! */

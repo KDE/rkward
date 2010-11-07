@@ -1,8 +1,8 @@
 /***************************************************************************
-                          rkglobals  -  description
+                          rkrbackendprotocol  -  description
                              -------------------
-    begin                : Wed Aug 18 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    begin                : Thu Nov 04 2010
+    copyright            : (C) 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -14,27 +14,28 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "rkglobals.h"
 
-#include <qstring.h>
+#ifndef RKRBACKENDPROTOCOL_BACKEND_H
+#define RKRBACKENDPROTOCOL_BACKEND_H
 
-RInterface *RKGlobals::rinter;
-RKModificationTracker *RKGlobals::mtracker;
+#include "rkrbackendprotocol_shared.h"
 
-RKGlobals::RKGlobals () {
-}
+class RKRBackendProtocolBackend {
+public:
+	static bool inRThread ();
+protected:
+friend class RKRBackendProtocolFrontend;
+friend class RKRBackend;
+friend class RKRBackendThread;
+	RKRBackendProtocolBackend ();
+	~RKRBackendProtocolBackend ();
 
+	void sendRequest (RBackendRequest *request);
+	static void msleep (int delay);
+	static void interruptProcessing ();
+	static RKRBackendProtocolBackend* instance () { return _instance; };
+private:
+	static RKRBackendProtocolBackend* _instance;
+};
 
-RKGlobals::~RKGlobals () {
-}
-
-#include <kdialog.h>
-
-int RKGlobals::marginHint () {
-	return KDialog::marginHint ();
-}
-
-int RKGlobals::spacingHint () {
-	return KDialog::spacingHint ();
-}
-
+#endif

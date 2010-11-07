@@ -25,7 +25,6 @@
 
 #include <QTextCodec>
 
-#include "../rkglobals.h"
 #include "rembedinternal.h"
 #include "../debug.h"
 
@@ -144,7 +143,6 @@ RData::IntStorage RKRSupport::SEXPToIntArray (SEXP from_exp) {
 	integers.reserve (count);
 	for (unsigned int i = 0; i < count; ++i) {
 		integers.append (INTEGER (from_exp)[i]);
-		if (integers[i] == R_NaInt) integers[i] = INT_MIN;		// this has no effect for now, but if R ever chnages it's R_NaInt, then it will
 	}
 	return integers;
 }
@@ -177,7 +175,7 @@ RData::RealStorage RKRSupport::SEXPToRealArray (SEXP from_exp) {
 	reals.reserve (count);
 	for (unsigned int i = 0; i < count; ++i) {
 		reals.append (REAL (from_exp)[i]);
-		if (R_IsNaN (reals[i]) || R_IsNA (reals[i]) ) reals[i] = RKGlobals::na_double;
+		if (R_IsNaN (reals[i]) || R_IsNA (reals[i])) reals[i] = NA_REAL;	// for our purposes, treat all non-numbers as missing
 	}
 	return reals;
 }

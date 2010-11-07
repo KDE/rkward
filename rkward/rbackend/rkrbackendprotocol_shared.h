@@ -15,22 +15,16 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef RKRBACKENDPROTOCOL_H
-#define RKRBACKENDPROTOCOL_H
-
-#include <QVariantMap>
-#include <QObject>
-
-#include "rcommand.h"
+#ifndef RKRBACKENDPROTOCOL_SHARED_H
+#define RKRBACKENDPROTOCOL_SHARED_H
 
 #ifndef RKWARD_SPLIT_PROCESS
 #	define RKWARD_THREADED
 #endif
 
-class RKRBackendProtocolFrontend;
-class RKRBackendProtocolBackend;
-class RKRBackend;
-class RInterface;
+#include <QVariantMap>
+
+class RCommandProxy;
 
 class RBackendRequest {
 public:
@@ -46,6 +40,7 @@ public:
 		EvalRequest,
 		CallbackRequest,
 		HistoricalSubstackRequest,
+		SetParamsFromBackend,
 		OtherRequest		/**< Any other type of request. Note: which requests are in the enum, and which are not has mostly historical reasons. @see params */
 	};
 
@@ -101,43 +96,21 @@ protected:
 	};
 #endif
 
-class RKRBackendProtocolFrontend : public QObject {
-public:
-	RKRBackendProtocolFrontend (RInterface* parent);
-	~RKRBackendProtocolFrontend ();
+#include "rcommand.h"
 
-	static void setRequestCompleted (RBackendRequest *request);
-	ROutputList flushOutput (bool force);
-	void interruptProcessing ();
-	void terminateBackend ();
-	void setupBackend (QVariantMap backend_params);
-	static RKRBackendProtocolFrontend* instance () { return _instance; };
+/** This is a reduced version of an RCommand, intended for use in the R backend. */
+class RCommandProxy : public RData {
 protected:
-#ifdef RKWARD_THREADED
-/** needed to handle the QEvents, the R thread is sending (notifications on what's happening in the backend thread) */
-	void customEvent (QEvent *e);
-#endif
-private:
-	static RKRBackendProtocolFrontend* _instance;
-	RInterface *frontend;
-};
-
-class RKRBackendProtocolBackend {
-public:
-	static bool inRThread ();
-protected:
-friend class RKRBackendProtocolFrontend;
+friend class RCommand;
 friend class RKRBackend;
-friend class RKRBackendThread;
-	RKRBackendProtocolBackend ();
-	~RKRBackendProtocolBackend ();
-
-	void sendRequest (RBackendRequest *request);
-	static void msleep (int delay);
-	static void interruptProcessing ();
-	static RKRBackendProtocolBackend* instance () { return _instance; };
-private:
-	static RKRBackendProtocolBackend* _instance;
+	RCommandProxy ();
+	~RCommandProxy ();
+	RCommandProxy (const QString &command, int type);
+public:		// all these are public for technical reasons, only.
+	QString command;
+	int type;
+	int id;
+	int status;
 };
 
 #endif

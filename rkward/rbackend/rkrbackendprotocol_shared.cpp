@@ -1,8 +1,8 @@
 /***************************************************************************
-                          rkglobals  -  description
+                          rkrbackendprotocol  -  description
                              -------------------
-    begin                : Wed Aug 18 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    begin                : Thu Nov 04 2010
+    copyright            : (C) 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -14,27 +14,22 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#include "rkglobals.h"
 
-#include <qstring.h>
+#include "rkrbackendprotocol_shared.h"
 
-RInterface *RKGlobals::rinter;
-RKModificationTracker *RKGlobals::mtracker;
+#include "../debug.h"
 
-RKGlobals::RKGlobals () {
+RCommandProxy::RCommandProxy (const QString &command, int type) {
+	RK_TRACE (RBACKEND);
+
+	RCommandProxy::command = command;
+	RCommandProxy::type = type;
+	id = -1;
+	status = 0;
 }
 
+RCommandProxy::~RCommandProxy () {
+	RK_TRACE (RBACKEND);
 
-RKGlobals::~RKGlobals () {
+	RK_ASSERT ((type & RCommand::Internal) || (getDataType () == RData::NoData));
 }
-
-#include <kdialog.h>
-
-int RKGlobals::marginHint () {
-	return KDialog::marginHint ();
-}
-
-int RKGlobals::spacingHint () {
-	return KDialog::spacingHint ();
-}
-

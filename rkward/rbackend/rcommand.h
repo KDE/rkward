@@ -95,7 +95,6 @@ typedef QList<ROutput*> ROutputList;
 	kept around very long, so they should not be a memory issue.
   *@author Thomas Friedrichsmeier
   */
-  
 class RCommand : public RData, public RCommandBase {
 public:
 /** constructs an RCommand.
@@ -187,8 +186,11 @@ public:
 	ROutputList &getOutput () { return output_list; };
 /** modify the command string. DO NOT CALL THIS after the command has been submitted! */
 	void setCommand (const QString &command) { _command = command; };
+
+/** creates a proxy for this RCommand */
+	RCommandProxy* makeProxy () const;
+	void mergeAndDeleteProxy (RCommandProxy *proxy);
 private:
-friend class RCommandProxy;
 friend class RInterface;
 friend class RCommandStack;
 friend class RCommandStackModel;
@@ -205,24 +207,6 @@ friend class RCommandStackModel;
 	int _id;
 	static int next_id;
 	RCommandReceiver *receivers[MAX_RECEIVERS_PER_RCOMMAND];
-};
-
-/** This is a reduced version of an RCommand, intended for use in the R backend. */
-class RCommandProxy : public RData {
-public:
-/** creates a proxy for the given RCommand */
-	RCommandProxy (RCommand *from);
-	~RCommandProxy ();
-/** update the given RCommand with the status / data of the proxy command. */
-	void mergeAndDelete (RCommand *to);
-protected:
-friend class RKRBackend;
-	RCommandProxy (const QString &command, int type);
-public:		// all these are public for technical reasons, only.
-	QString command;
-	int type;
-	int id;
-	int status;
 };
 
 #endif

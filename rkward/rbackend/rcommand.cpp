@@ -19,6 +19,7 @@
 #include "rcommandreceiver.h"
 #include "rinterface.h"
 #include "../windows/rkcommandlog.h"
+#include "rkrbackendprotocol_shared.h"
 
 #include "../debug.h"
 #include "../rkglobals.h"
@@ -167,43 +168,25 @@ QString RCommand::fullOutput () {
 	return ret;
 }
 
-
-
-RCommandProxy::RCommandProxy (RCommand *from) : RData () {
+void RCommand::mergeAndDeleteProxy (RCommandProxy *proxy) {
 	RK_TRACE (RBACKEND);
-	RK_ASSERT (from);
 
-	command = from->_command;
-	type = from->_type;
-	id = from->_id;
-	status = from->status;
+	RK_ASSERT (proxy);
+	RK_ASSERT (proxy->id == _id);
+	RK_ASSERT (proxy->type == _type);
+
+	status = proxy->status;
+	swallowData (*proxy);
+	delete proxy;
+}
+
+RCommandProxy* RCommand::makeProxy () const {
+	RK_TRACE (RBACKEND);
 	RK_ASSERT (status == 0);	// Initialization from an already touched command is not a real problem, but certainly no expected usage
-	RK_ASSERT (from->getDataType () == RData::NoData);
-}
+	RK_ASSERT (getDataType () == RData::NoData);
 
-RCommandProxy::RCommandProxy (const QString &command, int type) {
-	RK_TRACE (RBACKEND);
-
-	RCommandProxy::command = command;
-	RCommandProxy::type = type;
-	RK_ASSERT (type & RCommand::Internal);
-	id = -1;
-	status = 0;
-}
-
-RCommandProxy::~RCommandProxy () {
-	RK_TRACE (RBACKEND);
-
-	RK_ASSERT ((type & RCommand::Internal) || (getDataType () == RData::NoData));
-}
-
-void RCommandProxy::mergeAndDelete (RCommand *to) {
-	RK_TRACE (RBACKEND);
-	RK_ASSERT (to);
-	RK_ASSERT (to->_id == id);
-	RK_ASSERT (to->_type == type);
-
-	to->status = status;
-	to->swallowData (*this);
-	delete this;
+	RCommandProxy *ret = new RCommandProxy (_command, _type);
+	ret->id = _id,
+	ret->status = status;
+	return ret;
 }
