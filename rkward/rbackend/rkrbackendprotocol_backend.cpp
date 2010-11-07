@@ -17,7 +17,7 @@
 
 #include "rkrbackendprotocol_backend.h"
 
-#include "rembedinternal.h"
+#include "rkrbackend.h"
 
 #include "../debug.h"
 

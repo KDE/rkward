@@ -12,9 +12,8 @@ INCLUDE_DIRECTORIES( ${R_INCLUDEDIR} ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT
 
 SET(
 	rbackend_STAT_SRCS
-	rembedinternal.cpp
+	rkrbackend.cpp
 	rinterface.cpp
-	rthread.cpp
 	rcommand.cpp
 	rcommandreceiver.cpp
 	rcommandstack.cpp

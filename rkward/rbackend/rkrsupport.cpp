@@ -25,7 +25,7 @@
 
 #include <QTextCodec>
 
-#include "rembedinternal.h"
+#include "rkrbackend.h"
 #include "../debug.h"
 
 // This is sort of idiotic, but placing RKWard_RData_Tag into the RKRSupport-namespace somehow confuses the hell out of G++ (4.4.5)

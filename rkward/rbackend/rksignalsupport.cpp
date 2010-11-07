@@ -19,7 +19,7 @@
 
 #include <signal.h>
 
-#include "rembedinternal.h"
+#include "rkrbackend.h"
 
 #include "../debug.h"
 

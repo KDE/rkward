@@ -20,7 +20,7 @@
 #include "rinterface.h"
 #ifdef RKWARD_THREADED
 #	include <QThread>
-#	include "rembedinternal.h"
+#	include "rkrbackend.h"
 #	include "rkrbackendprotocol_backend.h"
 #endif
 

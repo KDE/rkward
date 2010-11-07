@@ -24,9 +24,7 @@
 
 class RData;
 
-/** Low level helper class for getting the structure of R objects (.rk.get.structure).
-Since this is only used from REmbedInternal, and making Qt and R includes cooperate is so much trouble,
-this is designed to be included directly in rembedinternal.cpp, i.e. includes are not properly defined. I'll fix that later. */
+/** Low level helper class for getting the structure of R objects (.rk.get.structure). */
 class RKStructureGetter {
 public:
 	RKStructureGetter (bool keep_evalled_promises);
