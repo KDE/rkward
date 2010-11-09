@@ -706,8 +706,10 @@ SEXP doError (SEXP call) {
 		// NOTE: if R_interrupts_pending stops being exported one day, we might be able to use R_CheckUserInterrupt() inside an R_ToplevelExec() to find out, whether an interrupt was still pending.
 		if (!R_interrupts_pending) {
 			RKRBackend::repl_status.interrupted = false;
-			foreach (RCommandProxy *command, RKRBackend::this_pointer->all_current_commands) command->status |= RCommand::Canceled;
-			RK_DO (qDebug ("interrupted"), RBACKEND, DL_DEBUG);
+			if (!RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::ReplIterationKilled) {	// was interrupted only to step out of the repl iteration
+				foreach (RCommandProxy *command, RKRBackend::this_pointer->all_current_commands) command->status |= RCommand::Canceled;
+				RK_DO (qDebug ("interrupted"), RBACKEND, DL_DEBUG);
+			}
 		}
 	} else {
 		QString string = RKRSupport::SEXPToString (call);
