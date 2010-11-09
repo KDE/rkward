@@ -218,7 +218,6 @@ void RInterface::handleCommandOut (RCommandProxy *proxy) {
 		}
 	}
 	command->finished ();
-	RCommandStackModel::getModel ()->itemChange (command);
 	delete command;
 	previous_command = 0;
 }
@@ -304,6 +303,7 @@ void RInterface::handleRequest (RBackendRequest* request) {
 		command_requests.append (request);
 		tryNextCommand ();
 		if (cproxy) handleCommandOut (cproxy);
+		tryNextCommand ();
 	} else if (request->type == RBackendRequest::HistoricalSubstackRequest) {
 		processHistoricalSubstackRequest (request);
 	} else if ((request->type == RBackendRequest::Started)) {
