@@ -294,7 +294,7 @@ void RInterface::handleRequest (RBackendRequest* request) {
 
 	flushOutput (true);
 	if (request->type == RBackendRequest::CommandOut) {
-		RCommandProxy *cproxy = request->command;
+		RCommandProxy *cproxy = request->takeCommand ();
 
 		// NOTE: the order of processing is: first try to submit the next command, then handle the old command.
 		// The reason for doing it this way, instead of the reverse, is that this allows the backend thread / process to continue working, concurrently

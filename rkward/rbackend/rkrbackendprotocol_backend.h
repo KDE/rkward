@@ -20,6 +20,8 @@
 
 #include "rkrbackendprotocol_shared.h"
 
+class QThread;
+
 class RKRBackendProtocolBackend {
 public:
 	static bool inRThread ();
@@ -36,6 +38,10 @@ friend class RKRBackendThread;
 	static RKRBackendProtocolBackend* instance () { return _instance; };
 private:
 	static RKRBackendProtocolBackend* _instance;
+	QThread *r_thread;
+#ifndef Q_WS_WIN
+	Qt::HANDLE r_thread_id;
+#endif
 };
 
 #endif

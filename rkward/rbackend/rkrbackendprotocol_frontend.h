@@ -23,6 +23,7 @@
 #include <QObject>
 
 class RInterface;
+class QThread;
 
 class RKRBackendProtocolFrontend : public QObject {
 public:
@@ -39,6 +40,8 @@ protected:
 #ifdef RKWARD_THREADED
 /** needed to handle the QEvents, the R thread is sending (notifications on what's happening in the backend thread) */
 	void customEvent (QEvent *e);
+#else
+	QThread* main_thread;
 #endif
 private:
 	static RKRBackendProtocolFrontend* _instance;

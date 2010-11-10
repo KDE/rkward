@@ -23,6 +23,7 @@
 #endif
 
 #include <QVariantMap>
+#include "rcommand.h"
 
 class RCommandProxy;
 
@@ -41,26 +42,42 @@ public:
 		CallbackRequest,
 		HistoricalSubstackRequest,
 		SetParamsFromBackend,
+#ifndef RKWARD_THREADED
+		Output,		/**< A piece of output. Note: If the backend runs in a single process, output is handled in a pull fashion, instead of using requests. */
+#endif
 		OtherRequest		/**< Any other type of request. Note: which requests are in the enum, and which are not has mostly historical reasons. @see params */
 	};
 
-	RBackendRequest (bool synchronous, RCallbackType type) {
-		RBackendRequest::synchronous = synchronous;
-		RBackendRequest::type = type;
-		done = false;
+	RBackendRequest (bool synchronous, RCallbackType type);
+	~RBackendRequest ();
+
+	RCommandProxy *takeCommand () {
+		RCommandProxy* ret = command;
 		command = 0;
+		return ret;
 	}
-	~RBackendRequest () {};
+
+	ROutputList *takeOutput () {
+		ROutputList* ret = output;
+		output = 0;
+		return ret;
+	}
 
 /** Should this request be handled synchronously? False by default. */
 	bool synchronous;
 /** For synchronous requests, only: The frontend-thread will set this to true (using completed()), once the request has been "completed". Important: The backend thread MUST NOT touch a request after it has been sent, and before "done" has been set to true. */
-	bool done;
+	bool volatile done;
 	RCallbackType type;
 /** For synchronous requests, only: If the the frontend wants any commands to be executed, it will place the next one in this slot. The backend thread should keep executing commands (in a sub-eventloop) while this is non-zero. Also, the backend-thread may place here any command that has just finished. */
 	RCommandProxy *command;
 /** Any other parameters, esp. for RCallbackType::OtherRequest. Can be used in both directions. */
 	QVariantMap params;
+/** NOTE: only used for separate process backend. See RCallbackType::Output */
+	ROutputList *output;
+#ifndef RKWARD_THREADED
+/** NOTE: this does @em not copy merge the "done" flag. Do that manually, @em after merging (and don't touch the request from the transmitter thread, after that). */
+	void mergeReply (RBackendRequest *reply);
+#endif
 protected:
 	friend class RKRBackendProtocolFrontend;
 	friend class RKRBackendProtocolBackend;
@@ -70,13 +87,8 @@ protected:
 		else done = true;
 	}
 
-	RBackendRequest *duplicate () {
-		RBackendRequest* ret = new RBackendRequest (synchronous, type);
-		ret->done = done;
-		ret->command = command;
-		ret->params = params;
-		return ret;
-	}
+/** duplicates the request. NOTE: The command, and output, if any are @em taken from the original, and transferred to the copy, not really duplicated. */
+	RBackendRequest *duplicate ();
 };
 
 #ifdef RKWARD_THREADED
@@ -96,13 +108,12 @@ protected:
 	};
 #endif
 
-#include "rcommand.h"
-
 /** This is a reduced version of an RCommand, intended for use in the R backend. */
 class RCommandProxy : public RData {
 protected:
 friend class RCommand;
 friend class RKRBackend;
+friend class RBackendRequest;
 	RCommandProxy ();
 	~RCommandProxy ();
 	RCommandProxy (const QString &command, int type);
@@ -112,5 +123,23 @@ public:		// all these are public for technical reasons, only.
 	int id;
 	int status;
 };
+
+#ifndef RKWARD_THREADED
+	/** functions for serialization / unserialization of communication between backend and frontend.
+	NOTE: This could really be a namespace, instead of a class, but "friending" a class is simply easier... */
+	class RKRBackendSerializer {
+	public:
+		static QByteArray serialize (const RBackendRequest &request);
+		static RBackendRequest *unserialize (const QByteArray &buffer);
+
+	private:
+		static void serializeOutput (const ROutputList &list, QDataStream &stream);
+		static void serializeData (const RData &data, QDataStream &stream);
+		static void serializeProxy (const RCommandProxy &proxy, QDataStream &stream);
+		static ROutputList* unserializeOutput (QDataStream &stream);
+		static RData* unserializeData (QDataStream &stream);
+		static RCommandProxy* unserializeProxy (QDataStream &stream);
+	};
+#endif
 
 #endif

@@ -1097,7 +1097,7 @@ RCommandProxy* RKRBackend::handleRequest (RBackendRequest *request, bool mayHand
 		if (!request->done) RKRBackendProtocolBackend::msleep (1);
 	}
 
-	RCommandProxy* command = request->command;
+	RCommandProxy* command = request->takeCommand ();
 	if (!command) return 0;
 
 	all_current_commands.append (command);
