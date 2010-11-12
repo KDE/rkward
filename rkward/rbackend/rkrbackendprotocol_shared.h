@@ -23,6 +23,7 @@
 #endif
 
 #include <QVariantMap>
+#include <QMutex>
 #include "rcommand.h"
 
 class RCommandProxy;
@@ -141,5 +142,28 @@ public:		// all these are public for technical reasons, only.
 		static RCommandProxy* unserializeProxy (QDataStream &stream);
 	};
 #endif
+
+class RKROutputBuffer {
+public:
+	RKROutputBuffer ();
+	virtual ~RKROutputBuffer ();
+
+/** This gets called on normal R output (R_WriteConsole). Used to get at output. */
+	void handleOutput (const QString &output, int len, ROutput::ROutputType type);
+
+/** Flushes current output buffer. Meant to be called from RInterface::flushOutput, only.
+@param forcibly: if true, will always flush the output. If false, will flush the output only if the mutex can be locked without waiting. */
+	ROutputList flushOutput (bool forcibly=false);
+protected:
+/** Function to be called while waiting for downstream threads to catch up. Return false to make the buffer continue, immediately (e.g. to prevent lockups after a crash) */
+	virtual bool doMSleep (int msecs) = 0;
+private:
+/** current output */
+	ROutputList output_buffer;
+/** Provides thread-safety for the output_buffer */
+	QMutex output_buffer_mutex;
+/** current length of output. If the backlog of output which has not yet been processed by the frontend becomes too long, output will be paused, automatically */
+	int out_buf_len;
+};
 
 #endif

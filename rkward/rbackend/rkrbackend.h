@@ -67,7 +67,7 @@ Don't use this class in RKWard directly. Unless you really want to modify the in
 
 @author Thomas Friedrichsmeier
 */
-class RKRBackend {
+class RKRBackend : public RKROutputBuffer {
 public: 
 /** constructor. Only one RKRBackend should ever be created, and that happens in RInterface::RInterface (). */
 	RKRBackend ();
@@ -93,6 +93,8 @@ Note that you should call initialize only once in a application */
 protected:
 /** low-level initialization of R */
 	bool startR ();
+/** reimplemented from RKROutputBuffer */
+	bool doMSleep (int msecs);
 public:
 /** convenience low-level function for running a command, directly
 @param command command to be runCommand
@@ -105,13 +107,6 @@ public:
 	RCommandProxy *runDirectCommand (const QString &command, RCommand::CommandTypes datatype); 
 /** call this periodically to make R's x11 windows process their events */
 	static void processX11Events ();
-
-/** This gets called on normal R output (R_WriteConsole). Used to get at output. */
-	void handleOutput (const QString &output, int len, ROutput::ROutputType type);
-
-/** Flushes current output buffer. Meant to be called from RInterface::flushOutput, only.
-@param forcibly: if true, will always flush the output. If false, will flush the output only if the mutex can be locked without waiting. */
-	ROutputList flushOutput (bool forcibly=false);
 
 	void handleRequest (RBackendRequest *request) { handleRequest (request, true); };
 /** A relic of history. Eventually most of these will be replaced by dedicated RBackendRequests. */
@@ -175,8 +170,6 @@ public:
 	void run ();
 	static void scheduleInterrupt ();
 protected:
-/** If the length of the current output buffer is too long, this will pause any further output until the main thread has had a chance to catch up. */
-	void waitIfOutputBufferExceeded ();
 	RCommandProxy* handleRequest (RBackendRequest *request, bool mayHandleSubstack);
 private:
 /** set up R standard callbacks */
@@ -192,13 +185,6 @@ private:
 	QStringList global_env_toplevel_names;
 /** check wether the object list / global environment / individual symbols have changed, and updates them, if needed */
 	void checkObjectUpdatesNeeded (bool check_list);
-
-	/** current output */
-	ROutputList output_buffer;
-/** Provides thread-safety for the output_buffer */
-	QMutex output_buffer_mutex;
-/** current length of output. If the backlog of output which has not yet been processed by the frontend becomes too long, output will be paused, automatically */
-	int out_buf_len;
 
 	/** The previously executed command. Only non-zero until a new command has been requested. */
 	RCommandProxy *previous_command;

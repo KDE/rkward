@@ -34,6 +34,7 @@ RCommandProxy::~RCommandProxy () {
 	RK_ASSERT ((type & RCommand::Internal) || (getDataType () == RData::NoData));
 }
 
+
 RBackendRequest::RBackendRequest (bool synchronous, RCallbackType type) {
 	RK_TRACE (RBACKEND);
 
@@ -177,10 +178,123 @@ RBackendRequest* RBackendRequest::duplicate () {
 		RK_TRACE (RBACKEND);
 
 		RData* ret = new RData;
-		#error
+		RDataType type;
+		stream >> (qint8) (RDataType) type;
+		if (type == RData::IntVector) {
+			RData::IntStorage data << stream;
+			ret->setData (data);
+		} else if (type == RData::StringVector) {
+			RData::StringStorage data << steam;
+			ret->setData (data);
+		} else if (type == RData::RealVector) {
+			RData::RealStorage data << stream;
+			ret->setData (data);
+		} else if (type == RData::StructureVector) {
+			RData::RDataStorage data;
+			qint32 len << stream;
+#if QT_VERSION >= 0x040700
+			data.reserve (len);
+#endif
+			for (qint32 i = 0; i < lne; ++i) {
+				data.append (unserializeData (stream));
+			}
+			ret->setData (data);
+		} else {
+			RK_ASSERT (type == RData::NoData);
+		}
 	}
 
-	void RKRBackendSerializer::serializeProxy (const RCommandProxy &proxy, QDataStream &stream);
-#error
-	*RCommandProxy RKRBackendSerializer::unserializeProxy (QDataStream &stream);
+	void RKRBackendSerializer::serializeProxy (const RCommandProxy &proxy, QDataStream &stream) {
+		RK_TRACE (RBACKEND);
+
+		stream << proxy.command;
+		stream << (qint32) proxy.type;
+		stream << (qint32) proxy.id;
+		stream << (qint32) proxy.status;
+
+		serializeData (proxy, stream);
+	}
+
+	*RCommandProxy RKRBackendSerializer::unserializeProxy (QDataStream &stream) {
+		RK_TRACE (RBACKEND);
+
+		QString command << stream;
+		qint32 type << stream;
+		RCommandProxy* ret = new RCommandProxy (command, type);
+		proxy->id << (qint32) stream;
+		proxy->status << (qint32) stream;
+
+		RData *data = unserializeData (stream);
+		proxy->swallowData (*data);
+		delete (data);
+		return proxy;
+	}
 #endif
+
+
+#define MAX_BUF_LENGTH 16000
+#define OUTPUT_STRING_RESERVE 1000
+
+RKROutputBuffer::RKROutputBuffer () {
+	RK_TRACE (RBACKEND);
+
+	out_buf_len = 0;
+}
+
+RKROutputBuffer::~RKROutputBuffer () {
+	RK_TRACE (RBACKEND);
+}
+
+void RKROutputBuffer::handleOutput (const QString &output, int buf_length, ROutput::ROutputType output_type) {
+	if (!buf_length) return;
+	RK_TRACE (RBACKEND);
+
+	RK_DO (qDebug ("Output type %d: %s", output_type, qPrintable (output)), RBACKEND, DL_DEBUG);
+
+	// wait while the output buffer is exceeded to give downstream threads a chance to catch up
+	while (out_buf_len > MAX_BUF_LENGTH) {
+		if (!doMSleep (10)) break;
+	}
+
+	output_buffer_mutex.lock ();
+
+	ROutput *current_output = 0;
+	if (!output_buffer.isEmpty ()) {
+		// Merge with previous output fragment, if of the same type
+		current_output = output_buffer.last ();
+		if (current_output->type != output_type) current_output = 0;
+	}
+	if (!current_output) {
+		current_output = new ROutput;
+		current_output->type = output_type;
+		current_output->output.reserve (OUTPUT_STRING_RESERVE);
+		output_buffer.append (current_output);
+	}
+	current_output->output.append (output);
+	out_buf_len += buf_length;
+
+	output_buffer_mutex.unlock ();
+}
+
+ROutputList RKROutputBuffer::flushOutput (bool forcibly) {
+	ROutputList ret;
+
+	if (out_buf_len == 0) return ret;		// if there is absolutely no output, just skip.
+	RK_TRACE (RBACKEND);
+
+	if (!forcibly) {
+		if (!output_buffer_mutex.tryLock ()) return ret;
+	} else {
+		output_buffer_mutex.lock ();
+	}
+
+	RK_ASSERT (!output_buffer.isEmpty ());	// see check for out_buf_len, above
+
+	ret = output_buffer;
+	output_buffer.clear ();
+	out_buf_len = 0;
+
+	output_buffer_mutex.unlock ();
+	return ret;
+}
+

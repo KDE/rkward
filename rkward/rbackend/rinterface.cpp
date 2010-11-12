@@ -298,7 +298,7 @@ void RInterface::handleRequest (RBackendRequest* request) {
 
 		// NOTE: the order of processing is: first try to submit the next command, then handle the old command.
 		// The reason for doing it this way, instead of the reverse, is that this allows the backend thread / process to continue working, concurrently
-		// NOTE: cproxy should only even be 0 in the very first cycle
+		// NOTE: cproxy should only ever be 0 in the very first cycle
 		if (cproxy) popPreviousCommand ();
 		command_requests.append (request);
 		tryNextCommand ();

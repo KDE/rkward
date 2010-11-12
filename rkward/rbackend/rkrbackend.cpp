@@ -577,7 +577,6 @@ RKRBackend::RKRBackend () {
 
 	RK_ASSERT (this_pointer == 0);
 	this_pointer = this;
-	out_buf_len = 0;
 }
 
 #ifdef Q_WS_WIN
@@ -1049,9 +1048,6 @@ void RKRBackend::runCommand (RCommandProxy *command) {
 }
 
 
-#define MAX_BUF_LENGTH 16000
-#define OUTPUT_STRING_RESERVE 1000
-
 void RKRBackend::run () {
 	RK_TRACE (RBACKEND);
 	killed = NotKilled;
@@ -1118,68 +1114,11 @@ RCommandProxy* RKRBackend::handleRequest (RBackendRequest *request, bool mayHand
 RCommandProxy* RKRBackend::fetchNextCommand () {
 	RK_TRACE (RBACKEND);
 
-	RBackendRequest req (true, RBackendRequest::CommandOut);
+	RBackendRequest req (killed == NotKilled, RBackendRequest::CommandOut);		// when killed, we don't wait for the reply. Thus, request is async, then.
 	req.command = previous_command;
 	previous_command = 0;
 
 	return (handleRequest (&req, false));
-}
-
-void RKRBackend::waitIfOutputBufferExceeded () {
-	// don't trace
-	while (out_buf_len > MAX_BUF_LENGTH) {
-		if (isKilled ()) return;	// don't block. Frontend could be crashed
-		RKRBackendProtocolBackend::msleep (10);
-	}
-}
-
-void RKRBackend::handleOutput (const QString &output, int buf_length, ROutput::ROutputType output_type) {
-	if (!buf_length) return;
-	RK_TRACE (RBACKEND);
-
-	RK_DO (qDebug ("Output type %d: %s", output_type, qPrintable (output)), RBACKEND, DL_DEBUG);
-	waitIfOutputBufferExceeded ();
-
-	output_buffer_mutex.lock ();
-
-	ROutput *current_output = 0;
-	if (!output_buffer.isEmpty ()) {
-		// Merge with previous output fragment, if of the same type
-		current_output = output_buffer.last ();
-		if (current_output->type != output_type) current_output = 0;
-	}
-	if (!current_output) {
-		current_output = new ROutput;
-		current_output->type = output_type;
-		current_output->output.reserve (OUTPUT_STRING_RESERVE);
-		output_buffer.append (current_output);
-	}
-	current_output->output.append (output);
-	out_buf_len += buf_length;
-
-	output_buffer_mutex.unlock ();
-}
-
-ROutputList RKRBackend::flushOutput (bool forcibly) {
-	ROutputList ret;
-
-	if (out_buf_len == 0) return ret;		// if there is absolutely no output, just skip.
-	RK_TRACE (RBACKEND);
-
-	if (!forcibly) {
-		if (!output_buffer_mutex.tryLock ()) return ret;
-	} else {
-		output_buffer_mutex.lock ();
-	}
-
-	RK_ASSERT (!output_buffer.isEmpty ());	// see check for out_buf_len, above
-
-	ret = output_buffer;
-	output_buffer.clear ();
-	out_buf_len = 0;
-
-	output_buffer_mutex.unlock ();
-	return ret;
 }
 
 void RKRBackend::handleHistoricalSubstackRequest (const QStringList &list) {
@@ -1288,3 +1227,11 @@ void RKRBackend::checkObjectUpdatesNeeded (bool check_list) {
 		changed_symbol_names.clear ();
 	}
 }
+
+bool RKRBackend::doMSleep (int msecs) {
+	// do not trace!
+	if (isKilled ()) return false;
+	RKRBackendProtocolBackend::msleep (msecs);
+	return true;
+}
+
