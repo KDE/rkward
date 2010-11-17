@@ -92,28 +92,27 @@ protected:
 	RBackendRequest *duplicate ();
 };
 
-#ifdef RKWARD_THREADED
-#	include <QEvent>
-	/** Simple event class to relay information from the RKRBackend to the main thread. This is basically like QCustomEvent in Qt3*/
-	class RKRBackendEvent : public QEvent {
-	public:
-		enum EventType {
-			RKWardEvent = QEvent::User + 1
-		};
-		RKRBackendEvent (RBackendRequest* data=0) : QEvent ((QEvent::Type) RKWardEvent) { _data = data; };
-		RKRBackendEvent ();
-
-		RBackendRequest* data () { return _data; };
-	private:
-		RBackendRequest* _data;
+#include <QEvent>
+/** Simple event class to relay information from the RKRBackend to the main thread. This is basically like QCustomEvent in Qt3*/
+class RKRBackendEvent : public QEvent {
+public:
+	enum EventType {
+		RKWardEvent = QEvent::User + 1
 	};
-#endif
+	RKRBackendEvent (RBackendRequest* data=0) : QEvent ((QEvent::Type) RKWardEvent) { _data = data; };
+	RKRBackendEvent ();
+
+	RBackendRequest* data () { return _data; };
+private:
+	RBackendRequest* _data;
+};
 
 /** This is a reduced version of an RCommand, intended for use in the R backend. */
 class RCommandProxy : public RData {
 protected:
 friend class RCommand;
 friend class RKRBackend;
+friend class RKRBackendSerializer;
 friend class RBackendRequest;
 	RCommandProxy ();
 	~RCommandProxy ();

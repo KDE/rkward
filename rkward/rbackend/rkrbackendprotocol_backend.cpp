@@ -133,7 +133,7 @@
 
 			// send request
 			QByteArray buffer = RKRBackendSerializer::serialize (*request);
-			connection.write (QString (buffer.length () + 1).local8Bit ().data () + "\n");
+			connection.write (QString::number (buffer.length ()).local8Bit ().data () + "\n");
 			connection.write (buffer);
 			while (connection.bytesToWrite ()) {
 				if (!connection.waitForBytesWritten ()) handleTransmitError ("Could not connect: %s");
@@ -210,7 +210,7 @@
 				}
 
 				receive_buffer.append (connection.readAll (expected_length - receive_buffer.length ()));
-				if (receive_buffer.length () >= expected_length () return receive_buffer;
+				if (receive_buffer.length () >= expected_length) return receive_buffer;
 			}
 		}
 

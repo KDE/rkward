@@ -88,7 +88,11 @@ extern "C" {
 
 void RK_scheduleIntr () {
 	RKRBackend::repl_status.interrupted = true;
+#ifdef Q_WS_WIN
+	UserBreak = 1;
+#else
 	RKSignalSupport::callOldSigIntHandler ();
+#endif
 }
 
 void RK_doIntr () {

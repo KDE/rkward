@@ -28,12 +28,13 @@
 #	include <QLocalServer>
 #	include <QLocalSocket>
 #	include <QProcess>
+#	include <QCoreApplication>
 #endif
 
 #include "../debug.h"
 
 #ifndef RKWARD_THREADED
-	class RKFrontendTransmitter : public QThread, public QObject, public RKROutputBuffer {
+	class RKFrontendTransmitter : public QThread, public RKROutputBuffer {
 		Q_OBJECT
 		public:
 			RKFrontendTransmitter () {
@@ -47,11 +48,14 @@
 				// start backend
 				QStringList args;
 				args.append ("--debug-level " + QString::number (RK_Debug_Level));
-				args.append ("--server-name " + server.fullName ());
+				args.append ("--server-name " + server.fullServerName ());
 				backend.setProcessChannelMode (QProcess::MergedChannels);	// at least for now. Seems difficult to get interleaving right, without this.
 				connect (&backend, SIGNAL (readyReadStandardOutput ()), this, SLOT (newProcessOutput ()));
 				connect (&backend, SIGNAL (finished (int, QProcess::ExitStatus)), this, SLOT (backendExit (int, QProcess::ExitStatus)));
 				backend.start ("rkward_backend", args, QIODevice::ReadOnly);
+
+				RK_ASSERT (_instance == 0);
+				_instance = this;
 			};
 
 			~RKFrontendTransmitter () {
@@ -60,6 +64,8 @@
 				RK_ASSERT (!server.isListening ());
 				delete connection;
 			};
+
+			static RKFrontendTransmitter* instance () { return _instance; };
 
 			void run () {
 				RK_ASSERT (connection);
@@ -70,7 +76,12 @@
 				backend.moveToThread (this);
 
 				exec ();
-			}
+			};
+
+			bool doMSleep (int delay) {
+				msleep (delay);
+				return true;
+			};
 		private slots:
 			void connectAndEnterLoop () {
 				RK_TRACE (RBACKEND);
@@ -83,18 +94,74 @@
 			};
 
 			void newProcessOutput () {
-				#error
+				RK_TRACE (RBACKEND);
+#warning TODO: fix interleaving
+				QString output = QString::fromLocal8Bit (backend.readAll ());
+				handleOutput (output, output.size (), ROutput::Warning);
 			};
+
 			void newConnectionData () {
-				#error
+				RK_TRACE (RBACKEND);
+
+				if (!connection->canReadLine ()) return;
+
+				QString line = QString::fromLocal8Bit (connection->readLine ());
+				bool ok;
+				int expected_length = line.toInt (&ok);
+				if (!ok) handleTransmitError ("Protocol header error. Last connection error was: " + connection->errorString ());
+
+				QByteArray receive_buffer;
+				while (receive_buffer.length () < expected_length) {
+					if (connection->bytesAvailable ()) {
+						receive_buffer.append (connection->read (expected_length - receive_buffer.length ()));
+					} else {
+						connection->waitForReadyRead (1000);
+						if (!connection->isOpen ()) {
+							handleTransmitError ("Connection closed unexepctedly. Last error: " + connection->errorString ());
+							return;
+						}
+					}
+				}
+
+				RBackendRequest *req = RKRBackendSerializer::unserialize (receive_buffer);
+				RKRBackendEvent* event = new RKRBackendEvent (req);
+				qApp->postEvent (RKRBackendProtocolFrontend::instance ()->parent (), event);
 			};
+
 			void backendExit (int exitcode, QProcess::ExitStatus exitstatus) {
-				#error
+				RK_TRACE (RBACKEND);
+
+				RBackendRequest* req = new RBackendRequest (false, RBackendRequest::BackendExit);
+				RKRBackendEvent* event = new RKRBackendEvent (req);
+				qApp->postEvent (RKRBackendProtocolFrontend::instance ()->parent (), event);
 			};
+
 			void connectionStateChanged (QLocalSocket::LocalSocketState state) {
 				if (state != QLocalSocket::UnconnectedState) return;		// only interested in connection failure
-				#error
+				RK_TRACE (RBACKEND);
 
+				RBackendRequest* req = new RBackendRequest (false, RBackendRequest::BackendExit);
+				RKRBackendEvent* event = new RKRBackendEvent (req);
+				qApp->postEvent (RKRBackendProtocolFrontend::instance ()->parent (), event);
+			};
+
+			void writeRequest (RBackendRequest *request) {
+				RK_TRACE (RBACKEND);
+
+				QByteArray buffer = RKRBackendSerializer::serialize (*request);
+				connection->write (QString::number (buffer.length ()).toLocal8Bit () + "\n");
+				connection->write (buffer);
+				delete request;
+			};
+
+			void customEvent (QEvent *e) {
+				if (((int) e->type ()) == ((int) RKRBackendEvent::RKWardEvent)) {
+					RKRBackendEvent *ev = static_cast<RKRBackendEvent*> (e);
+					writeRequest (ev->data ());
+				} else {
+					RK_ASSERT (false);
+					return;
+				}
 			};
 		private:
 			void handleTransmitError (const QString &message) {
@@ -102,12 +169,17 @@
 				#warning: Show those errors to the user!
 
 				qDebug ("%s", qPrintable (message));
-			}
+			};
 
+			int current_request_length;
 			QProcess backend;
 			QLocalServer server;
 			QLocalSocket* connection;
+			static RKFrontendTransmitter *_instance;
 	};
+	RKFrontendTransmitter* RKFrontendTransmitter::_instance = 0;
+
+	#include "rkrbackendprotocol_frontend.moc"
 #endif
 
 RKRBackendProtocolFrontend* RKRBackendProtocolFrontend::_instance = 0;
@@ -123,7 +195,11 @@ RKRBackendProtocolFrontend::~RKRBackendProtocolFrontend () {
 	RK_TRACE (RBACKEND);
 
 	terminateBackend ();
+#ifdef RKWARD_THREADED
 	delete RKRBackendProtocolBackend::instance ();
+#else
+	delete RKFrontendTransmitter::instance ();
+#endif
 }
 
 void RKRBackendProtocolFrontend::setupBackend (QVariantMap backend_params) {
@@ -132,20 +208,22 @@ void RKRBackendProtocolFrontend::setupBackend (QVariantMap backend_params) {
 #ifdef RKWARD_THREADED
 	new RKRBackendProtocolBackend ();
 #else
-#error
+	new RKFrontendTransmitter ();
 #endif
 }
 
 void RKRBackendProtocolFrontend::setRequestCompleted (RBackendRequest *request) {
 	RK_TRACE (RBACKEND);
 
-#ifdef RKWARD_THREADED
 	bool sync = request->synchronous;
 	request->completed ();
-	if (sync) QThread::yieldCurrentThread ();
-#else
-#error
+	if (!sync) return;
+
+#ifndef RKWARD_THREADED
+	RKRBackendEvent* ev = new RKRBackendEvent (request);
+	qApp->postEvent (RKFrontendTransmitter::instance (), ev);
 #endif
+	QThread::yieldCurrentThread ();
 }
 
 ROutputList RKRBackendProtocolFrontend::flushOutput (bool force) {
@@ -154,7 +232,7 @@ ROutputList RKRBackendProtocolFrontend::flushOutput (bool force) {
 #ifdef RKWARD_THREADED
 	return (RKRBackend::this_pointer->flushOutput (force));
 #else
-#error
+	return RKFrontendTransmitter::instance ()->flushOutput (force);
 #endif
 }
 
@@ -165,8 +243,8 @@ void RKRBackendProtocolFrontend::interruptProcessing () {
 	RK_ASSERT (!RKRBackendProtocolBackend::inRThread ());
 	RKRBackendProtocolBackend::interruptProcessing ();
 #else
-	kill (SIGUSR1, pid_of_it);
-#error
+//	kill (SIGUSR1, pid_of_it);
+#warning wont't work on windows!
 #endif
 }
 
@@ -176,8 +254,8 @@ void RKRBackendProtocolFrontend::terminateBackend () {
 #ifdef RKWARD_THREADED
 	RKRBackend::this_pointer->kill ();
 #else
-	kill (SIGUSR2, pid_of_it);
-#error
+//	kill (SIGUSR2, pid_of_it);
+#warning wont't work on windows!
 #endif
 }
 
@@ -192,3 +270,4 @@ void RKRBackendProtocolFrontend::customEvent (QEvent *e) {
 	}
 }
 #endif
+

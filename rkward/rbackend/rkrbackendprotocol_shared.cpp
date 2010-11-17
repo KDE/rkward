@@ -97,7 +97,7 @@ RBackendRequest* RBackendRequest::duplicate () {
 		}
 		if (request.output) {
 			RK_ASSERT (request.type == RBackendRequest::Output);
-			sream << true;
+			stream << true;
 			serializeOutput (*(request.output), stream);
 		} else {
 			stream << false;
@@ -111,16 +111,20 @@ RBackendRequest* RBackendRequest::duplicate () {
 		RK_TRACE (RBACKEND);
 
 		QDataStream stream (buffer);
-		RBackendRequest *request = new RBackendRequest (false, RBackendRequest::OtherType);		// will be overwritten
+		RBackendRequest *request = new RBackendRequest (false, RBackendRequest::OtherRequest);		// will be overwritten
 
-		stream >> (qint8) (RBackendRequest::RCallbackType) (*request.type);
-		stream >> (*request.synchronous);
-		stream >> (*request.done);
-		bool has_command << stream;
-		if (has_command) (*request.command) = unserializeProxy (stream);
-		bool has_output << stream;
-		if (has_output) (*request.output) = unserializeProxy (stream);
-		(*request.params) << stream;
+		bool dummyb;
+		qint8 dummy8;
+		stream >> dummy8;
+		request->type = (RBackendRequest::RCallbackType) dummy8;
+		stream >> request->synchronous;
+		stream >> dummyb;
+		request->done = dummyb;
+		stream >> dummyb;
+		if (dummyb) request->command = unserializeProxy (stream);
+		stream >> dummyb;
+		if (dummyb) request->output = unserializeOutput (stream);
+		stream >> request->params;
 
 		return request;
 	}
@@ -130,24 +134,27 @@ RBackendRequest* RBackendRequest::duplicate () {
 
 		stream << (qint32) list.size ();
 		for (qint32 i = 0; i < list.size (); ++i) {
-			stream << (qint8) list[i].type;
-			stream << list[i].output;
+			stream << (qint8) list[i]->type;
+			stream << list[i]->output;
 		}
 	}
 
-	*ROutputList RKRBackendSerializer::unserializeOutput (QDataStream &stream) {
+	ROutputList* RKRBackendSerializer::unserializeOutput (QDataStream &stream) {
 		RK_TRACE (RBACKEND);
 
 		ROutputList *ret = new ROutputList ();
-		qint32 len << stream;
+		qint32 len;
+		stream >> len;
 #if QT_VERSION >= 0x040700
 		ret->reserve (len);
 #endif
 
 		for (qint32 i = 0; i < len; ++i) {
-			ROutput out;
-			out.type << (ROutput::ROutputType) (qint8) stream;
-			out.output << stream;
+			ROutput* out = new ROutput;
+			qint8 dummy8;
+			stream >> dummy8;
+			out->type = (ROutput::ROutputType) dummy8;
+			stream >> out->output;
 			ret->append (out);
 		}
 
@@ -157,7 +164,7 @@ RBackendRequest* RBackendRequest::duplicate () {
 	void RKRBackendSerializer::serializeData (const RData &data, QDataStream &stream) {
 		RK_TRACE (RBACKEND);
 
-		RDataType type = data.getDataType ();
+		RData::RDataType type = data.getDataType ();
 		stream << (qint8) type;
 		if (type == RData::IntVector) stream << data.getIntVector ();
 		else if (type == RData::StringVector) stream << data.getStringVector ();
@@ -167,7 +174,7 @@ RBackendRequest* RBackendRequest::duplicate () {
 			qint32 len = list.size ();
 			stream << len;
 			for (qint32 i = 0; i < list.size (); ++i) {
-				serializeData (*(list[i]));
+				serializeData (*(list[i]), stream);
 			}
 		} else {
 			RK_ASSERT (type == RData::NoData);
@@ -178,30 +185,38 @@ RBackendRequest* RBackendRequest::duplicate () {
 		RK_TRACE (RBACKEND);
 
 		RData* ret = new RData;
-		RDataType type;
-		stream >> (qint8) (RDataType) type;
+		RData::RDataType type;
+		qint8 dummy8;
+		stream >> dummy8;
+		type = (RData::RDataType) dummy8;
 		if (type == RData::IntVector) {
-			RData::IntStorage data << stream;
+			RData::IntStorage data;
+			stream >> data;
 			ret->setData (data);
 		} else if (type == RData::StringVector) {
-			RData::StringStorage data << steam;
+			RData::StringStorage data;
+			stream >> data;
 			ret->setData (data);
 		} else if (type == RData::RealVector) {
-			RData::RealStorage data << stream;
+			RData::RealStorage data;
+			stream >> data;;
 			ret->setData (data);
 		} else if (type == RData::StructureVector) {
 			RData::RDataStorage data;
-			qint32 len << stream;
+			qint32 len;
+			stream >> len;
 #if QT_VERSION >= 0x040700
 			data.reserve (len);
 #endif
-			for (qint32 i = 0; i < lne; ++i) {
+			for (qint32 i = 0; i < len; ++i) {
 				data.append (unserializeData (stream));
 			}
 			ret->setData (data);
 		} else {
 			RK_ASSERT (type == RData::NoData);
 		}
+
+		return ret;
 	}
 
 	void RKRBackendSerializer::serializeProxy (const RCommandProxy &proxy, QDataStream &stream) {
@@ -215,19 +230,25 @@ RBackendRequest* RBackendRequest::duplicate () {
 		serializeData (proxy, stream);
 	}
 
-	*RCommandProxy RKRBackendSerializer::unserializeProxy (QDataStream &stream) {
+	RCommandProxy* RKRBackendSerializer::unserializeProxy (QDataStream &stream) {
 		RK_TRACE (RBACKEND);
 
-		QString command << stream;
-		qint32 type << stream;
+		QString command;
+		stream >> command;
+		qint32 type;
+		stream >> type;
 		RCommandProxy* ret = new RCommandProxy (command, type);
-		proxy->id << (qint32) stream;
-		proxy->status << (qint32) stream;
+		qint32 dummy32;
+		stream >> dummy32;
+		ret->id = dummy32;
+		stream >> dummy32;
+		ret->status = dummy32;
 
 		RData *data = unserializeData (stream);
-		proxy->swallowData (*data);
+		ret->swallowData (*data);
 		delete (data);
-		return proxy;
+
+		return ret;
 	}
 #endif
 
