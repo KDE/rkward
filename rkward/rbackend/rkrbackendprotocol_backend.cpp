@@ -88,8 +88,10 @@
 			RK_TRACE (RBACKEND);
 			RK_ASSERT (_instance == 0);
 			_instance = this;
+			connection = 0;
 
-			connection.connectToServer (servername);	// acutal connection will be done inside run()
+			moveToThread (this);
+			RKRBackendTransmitter::servername = servername;
 		};
 
 		~RKRBackendTransmitter () {
@@ -104,7 +106,10 @@
 		void run () {
 			RK_TRACE (RBACKEND);
 
-			if (!connection.waitForConnected ()) handleTransmitError ("Could not connect: %s");
+			connection = new QLocalSocket (this);
+			connection->connectToServer (servername);	// acutal connection will be done inside run()
+
+			if (!connection->waitForConnected ()) handleTransmitError ("Could not connect: %s");
 #warning do handshake
 			while (1) {
 				flushOutput (false);
@@ -137,10 +142,10 @@
 
 			// send request
 			QByteArray buffer = RKRBackendSerializer::serialize (*request);
-			connection.write (QString::number (buffer.length ()).toLocal8Bit () + "\n");
-			connection.write (buffer);
-			while (connection.bytesToWrite ()) {
-				if (!connection.waitForBytesWritten ()) handleTransmitError ("Could not connect: %s");
+			connection->write (QString::number (buffer.length ()).toLocal8Bit () + "\n");
+			connection->write (buffer);
+			while (connection->bytesToWrite ()) {
+				if (!connection->waitForBytesWritten ()) handleTransmitError ("Could not connect: %s");
 #warning, at this point we could check for an early reply to CommandOut requests
 // currently, there is not as much concurrency between the processes as there could be. This is due to the fact, that the transmitter will always block until the result of the
 // last command has been serialized and transmitted to the frontend. Instead, it could check for and fetch the next command, already (if available), to keep the backend going.
@@ -154,7 +159,6 @@
 			// NOTE: currently, in the backend, we *never* expect a read without a synchronous request
 			RBackendRequest* reply = RKRBackendSerializer::unserialize (fetchTransmission (true));
 			request->mergeReply (reply);
-			RK_ASSERT (reply->done);
 			delete reply;
 #warning Read up on whether volatile provides a good enough memory barrier at this point!
 			request->done = true;	// must be the very last thing we do with the request!
@@ -164,32 +168,34 @@
 		@param block Block until a transmission was received.
 		@note @em If a transmission is available, this will always block until the transmission has been received in full. */
 		QByteArray fetchTransmission (bool block) {
+			RK_ASSERT (connection);
+
 			QByteArray receive_buffer;
 			int expected_length = 0;
 			bool got_header = false;
-			bool have_data = false;
 			while (1) {
-				have_data = have_data || connection.waitForReadyRead (1);
-				if (!connection.isOpen ()) {
+				connection->waitForReadyRead (1);
+				if (!connection->isOpen ()) {
 					handleTransmitError ("Connection closed unexepctedly. Last error: %s");
 					return receive_buffer;
 				}
-				if (!have_data) {
+				if (!connection->bytesAvailable ()) {
 					if (!block) return receive_buffer;
 					continue;
 				}
+
 				RK_TRACE (RBACKEND);
 				if (!got_header) {
-					if (!connection.canReadLine ()) continue;	// at this point we have received *something*, but not even a full header, yet.
+					if (!connection->canReadLine ()) continue;	// at this point we have received *something*, but not even a full header, yet.
 
-					QString line = QString::fromLocal8Bit (connection.readLine ());
+					QString line = QString::fromLocal8Bit (connection->readLine ());
 					bool ok;
 					expected_length = line.toInt (&ok);
 					if (!ok) handleTransmitError ("Protocol header error. Last connection error was: %s");
 					got_header = true;
 				}
 
-				receive_buffer.append (connection.read (expected_length - receive_buffer.length ()));
+				receive_buffer.append (connection->read (expected_length - receive_buffer.length ()));
 				if (receive_buffer.length () >= expected_length) return receive_buffer;
 			}
 		}
@@ -205,14 +211,15 @@
 		}
 
 		void handleTransmitError (const char* message_template) {
-			printf (message_template, qPrintable (connection.errorString ()));
+			printf (message_template, qPrintable (connection->errorString ()));
 		}
 
-		QLocalSocket connection;
+		QLocalSocket* connection;
 		QList<RBackendRequest *> current_requests;		// there *can* be multiple active requests (if the first ones are asynchronous)
 		QMutex request_mutex;
 		static RKRBackendTransmitter* _instance;
 		static RKRBackendTransmitter* instance () { return _instance; };
+		QString servername;
 	};
 	RKRBackendTransmitter* RKRBackendTransmitter::_instance = 0;
 
@@ -237,12 +244,16 @@
 		KGlobal::locale ();		// to initialize it in the primary thread
 
 		QString servername;
+		QString data_dir;
 		QStringList args = app.arguments ();
 		for (int i = 1; i < args.count (); ++i) {
 			if (args[i].startsWith ("--debug-level")) {
-				RK_Debug_Level = args.value (++i, QString ()).toInt ();
+				RK_Debug_Level = args[i].section (' ', 1).toInt ();
 			} else if (args[i].startsWith ("--server-name")) {
-				servername = args.value (++i, QString ());
+				servername = args[i].section (' ', 1);
+			} else if (args[i].startsWith ("--data-dir")) {
+#warning What about paths with spaces?!
+				data_dir = args[i].section (' ', 1);
 			} else {
 				printf ("unkown argument %s", qPrintable (args[i]));
 			}
@@ -252,14 +263,14 @@
 		}
 
 		RKRBackendTransmitter transmitter (servername);
-		RKRBackendProtocolBackend backend ();
+		RKRBackendProtocolBackend backend (data_dir);
 		transmitter.start ();
 		RKRBackend::this_pointer->run ();
 	}
 #endif
 
 RKRBackendProtocolBackend* RKRBackendProtocolBackend::_instance = 0;
-RKRBackendProtocolBackend::RKRBackendProtocolBackend () {
+RKRBackendProtocolBackend::RKRBackendProtocolBackend (const QString &storage_dir) {
 	RK_TRACE (RBACKEND);
 
 	_instance = this;
@@ -272,6 +283,7 @@ RKRBackendProtocolBackend::RKRBackendProtocolBackend () {
 	r_thread = QThread::currentThread ();	// R thread == main thread
 	r_thread_id = QThread::currentThreadId ();
 #endif
+	data_dir = storage_dir;
 }
 
 RKRBackendProtocolBackend::~RKRBackendProtocolBackend () {

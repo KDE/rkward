@@ -18,6 +18,8 @@
 #include "rkfrontendtransmitter.h"
 
 #include "rkrbackendprotocol_frontend.h"
+#include "../misc/rkcommonfunctions.h"
+#include "../settings/rksettingsmodulegeneral.h"
 
 #include "kstandarddirs.h"
 #include <QCoreApplication>
@@ -28,56 +30,62 @@ RKFrontendTransmitter* RKFrontendTransmitter::_instance = 0;
 RKFrontendTransmitter::RKFrontendTransmitter () : QThread () {
 	RK_TRACE (RBACKEND);
 
-	// start server
 	connection = 0;
-	if (!server.listen ("rkward")) handleTransmitError ("failure to start frontend server: " + server.errorString ());
-	connect (&server, SIGNAL (newConnection ()), this, SLOT (connectAndEnterLoop ()));
-
-	// start backend
-	QStringList args;
-	args.append ("--debug-level " + QString::number (RK_Debug_Level));
-	args.append ("--server-name " + server.fullServerName ());
-	backend.setProcessChannelMode (QProcess::MergedChannels);	// at least for now. Seems difficult to get interleaving right, without this.
-	connect (&backend, SIGNAL (readyReadStandardOutput ()), this, SLOT (newProcessOutput ()));
-	connect (&backend, SIGNAL (finished (int, QProcess::ExitStatus)), this, SLOT (backendExit (int, QProcess::ExitStatus)));
-	backend.start (KStandardDirs::findExe ("rkward.rbackend", QCoreApplication::applicationDirPath ()), args, QIODevice::ReadOnly);
 
 	RK_ASSERT (_instance == 0);
 	_instance = this;
+
+	moveToThread (this);
+	start ();
 }
 
 RKFrontendTransmitter::~RKFrontendTransmitter () {
 	RK_TRACE (RBACKEND);
 
-	RK_ASSERT (!server.isListening ());
+	RK_ASSERT (!server->isListening ());
 	delete connection;
 }
 
 void RKFrontendTransmitter::run () {
-	RK_ASSERT (connection);
+	RK_TRACE (RBACKEND);
 
-	connection->moveToThread (this);
-	connect (connection, SIGNAL (stateChanged (QLocalSocket::LocalSocketState)), this, SLOT (connectionStateChanged (QLocalSocket::LocalSocketState)));
-	connect (connection, SIGNAL (readyRead ()), this, SLOT (newConnectionData ()));
-	backend.moveToThread (this);
+	// start server
+	server = new QLocalServer (this);
+	if (!server->listen ("rkward")) handleTransmitError ("failure to start frontend server: " + server->errorString ());
+	connect (server, SIGNAL (newConnection ()), this, SLOT (connectAndEnterLoop ()), Qt::QueuedConnection);
+
+	// start backend
+	backend = new QProcess (this);
+	QStringList args;
+	args.append ("--debug-level " + QString::number (RK_Debug_Level));
+	args.append ("--server-name " + server->fullServerName ());
+	args.append ("--data-dir " + RKSettingsModuleGeneral::filesPath ());
+	backend->setProcessChannelMode (QProcess::MergedChannels);	// at least for now. Seems difficult to get interleaving right, without this.
+	connect (backend, SIGNAL (readyReadStandardOutput ()), this, SLOT (newProcessOutput ()));
+	connect (backend, SIGNAL (finished (int, QProcess::ExitStatus)), this, SLOT (backendExit (int, QProcess::ExitStatus)));
+	QString backend_executable = KStandardDirs::findExe ("rkward.rbackend", QCoreApplication::applicationDirPath () + "/rbackend");
+	if (backend_executable.isEmpty ()) backend_executable = KStandardDirs::findExe ("rkward.rbackend", QCoreApplication::applicationDirPath ());
+	RK_ASSERT (!backend_executable.isEmpty ());
+	backend->start (backend_executable, args, QIODevice::ReadOnly);
 
 	exec ();
 }
 
 void RKFrontendTransmitter::connectAndEnterLoop () {
 	RK_TRACE (RBACKEND);
-	RK_ASSERT (server.hasPendingConnections ());
+	RK_ASSERT (server->hasPendingConnections ());
 
-	connection = server.nextPendingConnection ();
-	server.close ();
+	connection = server->nextPendingConnection ();
+	server->close ();
 
-	start ();
+	connect (connection, SIGNAL (stateChanged (QLocalSocket::LocalSocketState)), this, SLOT (connectionStateChanged ()));
+	connect (connection, SIGNAL (readyRead ()), this, SLOT (newConnectionData ()));
 }
 
 void RKFrontendTransmitter::newProcessOutput () {
 	RK_TRACE (RBACKEND);
 #warning TODO: fix interleaving
-	QString output = QString::fromLocal8Bit (backend.readAll ());
+	QString output = QString::fromLocal8Bit (backend->readAll ());
 	handleOutput (output, output.size (), ROutput::Warning);
 }
 
@@ -105,8 +113,20 @@ void RKFrontendTransmitter::newConnectionData () {
 	}
 
 	RBackendRequest *req = RKRBackendSerializer::unserialize (receive_buffer);
+	if (req->type == RBackendRequest::Output) {
+		ROutputList* list = req->output;
+		for (int i = 0; i < list->size (); ++i) {
+			ROutput *out = (*list)[i];
+			handleOutput (out->output, out->output.length (), out->type);
+			delete (out);
+		}
+		req->output = 0;
+		RK_ASSERT (req->synchronous);
+		writeRequest (req);	// to tell the backend, that we are keeping up. This also deletes the request.
+		return;
+	}
 	RKRBackendEvent* event = new RKRBackendEvent (req);
-	qApp->postEvent (RKRBackendProtocolFrontend::instance ()->parent (), event);
+	qApp->postEvent (RKRBackendProtocolFrontend::instance (), event);
 }
 
 void RKFrontendTransmitter::backendExit (int exitcode, QProcess::ExitStatus exitstatus) {
@@ -114,16 +134,16 @@ void RKFrontendTransmitter::backendExit (int exitcode, QProcess::ExitStatus exit
 
 	RBackendRequest* req = new RBackendRequest (false, RBackendRequest::BackendExit);
 	RKRBackendEvent* event = new RKRBackendEvent (req);
-	qApp->postEvent (RKRBackendProtocolFrontend::instance ()->parent (), event);
+	qApp->postEvent (RKRBackendProtocolFrontend::instance (), event);
 }
 
-void RKFrontendTransmitter::connectionStateChanged (QLocalSocket::LocalSocketState state) {
-	if (state != QLocalSocket::UnconnectedState) return;		// only interested in connection failure
+void RKFrontendTransmitter::connectionStateChanged () {
+	if (connection->state () != QLocalSocket::UnconnectedState) return;		// only interested in connection failure
 	RK_TRACE (RBACKEND);
 
 	RBackendRequest* req = new RBackendRequest (false, RBackendRequest::BackendExit);
 	RKRBackendEvent* event = new RKRBackendEvent (req);
-	qApp->postEvent (RKRBackendProtocolFrontend::instance ()->parent (), event);
+	qApp->postEvent (RKRBackendProtocolFrontend::instance (), event);
 }
 
 void RKFrontendTransmitter::writeRequest (RBackendRequest *request) {
@@ -132,6 +152,7 @@ void RKFrontendTransmitter::writeRequest (RBackendRequest *request) {
 	QByteArray buffer = RKRBackendSerializer::serialize (*request);
 	connection->write (QString::number (buffer.length ()).toLocal8Bit () + "\n");
 	connection->write (buffer);
+	connection->flush ();
 	delete request;
 }
 

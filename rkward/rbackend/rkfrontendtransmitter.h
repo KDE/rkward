@@ -50,13 +50,13 @@ private slots:
 	void newProcessOutput ();
 	void newConnectionData ();
 	void backendExit (int exitcode, QProcess::ExitStatus exitstatus);
-	void connectionStateChanged (QLocalSocket::LocalSocketState state);
+	void connectionStateChanged ();
 private:
 	void handleTransmitError (const QString &message);
 
 	int current_request_length;
-	QProcess backend;
-	QLocalServer server;
+	QProcess* backend;
+	QLocalServer* server;
 	QLocalSocket* connection;
 	static RKFrontendTransmitter *_instance;
 };

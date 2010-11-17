@@ -37,10 +37,9 @@ public:
 	void setupBackend (QVariantMap backend_params);
 	static RKRBackendProtocolFrontend* instance () { return _instance; };
 protected:
-#ifdef RKWARD_THREADED
 /** needed to handle the QEvents, the R thread is sending (notifications on what's happening in the backend thread) */
 	void customEvent (QEvent *e);
-#else
+#ifndef RKWARD_THREADED
 	QThread* main_thread;
 #endif
 private:

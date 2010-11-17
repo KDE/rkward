@@ -156,14 +156,14 @@ RKWardMainWindow::~RKWardMainWindow() {
 	RK_TRACE (APP);
 
 	// these would not be strictly necessary, as we're exiting the app, anyway.
-	delete RControlWindow::getControl ();
-	delete RKGlobals::rInterface ();
 	delete RObjectList::getObjectList ();
 	delete RObjectBrowser::mainBrowser ();
 	delete RKCommandLog::getLog ();
 	delete RKConsole::mainConsole ();
 	delete RKHelpSearchWindow::mainHelpSearch ();
 	delete RKGlobals::tracker ();
+	delete RKGlobals::rInterface ();
+	delete RControlWindow::getControl ();
 }
 
 void RKWardMainWindow::closeEvent (QCloseEvent *e) {

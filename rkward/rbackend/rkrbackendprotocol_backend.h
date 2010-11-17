@@ -25,17 +25,19 @@ class QThread;
 class RKRBackendProtocolBackend {
 public:
 	static bool inRThread ();
+	static QString dataDir () { return _instance->data_dir; };
+
+	RKRBackendProtocolBackend (const QString &data_dir);
+	~RKRBackendProtocolBackend ();
 protected:
 friend class RKRBackendProtocolFrontend;
 friend class RKRBackend;
 friend class RKRBackendThread;
-	RKRBackendProtocolBackend ();
-	~RKRBackendProtocolBackend ();
-
 	void sendRequest (RBackendRequest *request);
 	static void msleep (int delay);
 	static void interruptProcessing ();
 	static RKRBackendProtocolBackend* instance () { return _instance; };
+	QString data_dir;
 private:
 	static RKRBackendProtocolBackend* _instance;
 	QThread *r_thread;

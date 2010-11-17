@@ -79,8 +79,6 @@ void RKRBackendProtocolFrontend::setRequestCompleted (RBackendRequest *request) 
 }
 
 ROutputList RKRBackendProtocolFrontend::flushOutput (bool force) {
-	RK_TRACE (RBACKEND);
-
 #ifdef RKWARD_THREADED
 	return (RKRBackend::this_pointer->flushOutput (force));
 #else
@@ -96,7 +94,7 @@ void RKRBackendProtocolFrontend::interruptProcessing () {
 	RKRBackendProtocolBackend::interruptProcessing ();
 #else
 //	kill (SIGUSR1, pid_of_it);
-#warning wont't work on windows!
+#warning will not work on windows!
 #endif
 }
 
@@ -107,11 +105,10 @@ void RKRBackendProtocolFrontend::terminateBackend () {
 	RKRBackend::this_pointer->kill ();
 #else
 //	kill (SIGUSR2, pid_of_it);
-#warning wont't work on windows!
+#warning will not work on windows!
 #endif
 }
 
-#ifdef RKWARD_THREADED
 void RKRBackendProtocolFrontend::customEvent (QEvent *e) {
 	if (((int) e->type ()) == ((int) RKRBackendEvent::RKWardEvent)) {
 		RKRBackendEvent *ev = static_cast<RKRBackendEvent*> (e);
@@ -121,5 +118,4 @@ void RKRBackendProtocolFrontend::customEvent (QEvent *e) {
 		return;
 	}
 }
-#endif
 

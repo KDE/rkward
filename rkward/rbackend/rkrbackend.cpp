@@ -25,6 +25,7 @@ void* RKRBackend::default_global_context = 0;
 #include <qstring.h>
 #include <QStringList>
 #include <QThread>
+#include <QDir>
 #include <qtextcodec.h>
 #include <klocale.h>
 
@@ -368,7 +369,16 @@ void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 	RKRBackend::this_pointer->r_running = false;	// To signify we have finished everything else and are now trying to create an emergency save (if applicable)
 
 	if (RKRBackend::this_pointer->killed == RKRBackend::EmergencySaveThenExit) {
-		if (R_DirtyImage) R_SaveGlobalEnvToFile (RKCommonFunctions::getUseableRKWardSavefileName ("rkward_recover", ".RData").toLocal8Bit ());
+		QString filename;
+		QDir dir (RKRBackendProtocolBackend::dataDir ());
+		int i=0;
+		while (true) {
+			filename = "rkward_recover" + QString::number (i) + ".RData";
+			if (!dir.exists (filename)) break;
+			i++;
+		}
+
+		if (R_DirtyImage) R_SaveGlobalEnvToFile (filename.toLocal8Bit ());
 	}
 
 	RKRBackend::this_pointer->killed = RKRBackend::AlreadyDead;	// just in case

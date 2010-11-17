@@ -131,6 +131,7 @@ void RInterface::popPreviousCommand () {
 	RK_ASSERT (previous_command == 0);
 	RK_ASSERT (!all_current_commands.isEmpty ());
 	previous_command = all_current_commands.takeLast ();
+qDebug ("previous command: %d", previous_command->id ());
 	RCommandStack::currentStack ()->pop ();
 }
 
@@ -328,7 +329,6 @@ void RInterface::handleRequest (RBackendRequest* request) {
 		issueCommand ("rk.set.output.html.file (\"" + RKSettingsModuleGeneral::filesPath () + "/rk_out.html\")\n", RCommand::App | RCommand::Sync, QString (), this, SET_RUNTIME_OPTS, chain);
 
 		closeChain (chain);
-		RKRBackendProtocolFrontend::setRequestCompleted (request);
 	} else {
 		processRBackendRequest (request);
 	}
@@ -694,6 +694,8 @@ void RInterface::processRBackendRequest (RBackendRequest *request) {
 		message += i18n ("\nIt will be shut down immediately. This means, you can not use any more functions that rely on the R backend. I.e. you can do hardly anything at all, not even save the workspace (but if you're lucky, R already did that). What you can do, however, is save any open command-files, the output, or copy data out of open data editors. Quit RKWard after that.\nSince this should never happen, please write a mail to rkward-devel@lists.sourceforge.net, and tell us, what you were trying to do, when this happened. Sorry!");
 		KMessageBox::error (0, message, i18n ("R engine has died"));
 		backend_dead = true;
+	} else {
+		RK_ASSERT (false);
 	}
 
 	RKRBackendProtocolFrontend::setRequestCompleted (request);
