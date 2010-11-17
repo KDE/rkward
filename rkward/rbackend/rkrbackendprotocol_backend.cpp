@@ -33,6 +33,8 @@
 #else
 #	include <QLocalSocket>
 #	include <QMutex>
+#	include "kcomponentdata.h"
+#	include "kglobal.h"
 #endif
 
 #ifdef RKWARD_THREADED
@@ -84,8 +86,9 @@
 	public:
 		RKRBackendTransmitter (const QString &servername) {
 			RK_TRACE (RBACKEND);
+			RK_ASSERT (_instance == 0);
+			_instance = this;
 
-			current_request = 0;
 			connection.connectToServer (servername);	// acutal connection will be done inside run()
 		};
 
@@ -120,11 +123,12 @@
 		};
 		
 		void postRequest (RBackendRequest *request) {
-			QMutextLocker (request_mutex);
-
 			RK_TRACE (RBACKEND);
 			RK_ASSERT (request);
+
+			request_mutex.lock ();
 			current_requests.append (request);
+			request_mutex.unlock ();
 		}
 
 		void handleRequestInternal (RBackendRequest *request) {
@@ -133,7 +137,7 @@
 
 			// send request
 			QByteArray buffer = RKRBackendSerializer::serialize (*request);
-			connection.write (QString::number (buffer.length ()).local8Bit ().data () + "\n");
+			connection.write (QString::number (buffer.length ()).toLocal8Bit () + "\n");
 			connection.write (buffer);
 			while (connection.bytesToWrite ()) {
 				if (!connection.waitForBytesWritten ()) handleTransmitError ("Could not connect: %s");
@@ -148,31 +152,7 @@
 
 			// wait for reply
 			// NOTE: currently, in the backend, we *never* expect a read without a synchronous request
-			QByteArray receive_buffer;
-			unsigned int expected_length = 0;
-			bool got_header = false;
-			while (1) {
-				bool have_data = waitForReadyRead ();
-				if (!connection.isOpen ()) {
-					handleTransmitError ("Connection closed unexepctedly. Last error: %s");
-					return;
-				}
-				if (!have_data) continue;
-				if (!got_header) {
-					if (!connection.canReadLine ()) continue;
-
-					QString line = QString::fromLocal8Bit (connection.readLine ());
-					bool ok;
-					expected_length = line.toInt (&ok);
-					if (!ok) handleTransmitError ("Protocol header error. Last connection error was: %s");
-					got_header = true;
-				}
-
-				receive_buffer.append (connection.readAll (expected_length - receive_buffer.length ()));
-				if (receive_buffer.length () >= expected_length () break;
-			}
-
-			RBackendRequest* reply = RBackendRequest::unserialize (fetchTransmission (true));
+			RBackendRequest* reply = RKRBackendSerializer::unserialize (fetchTransmission (true));
 			request->mergeReply (reply);
 			RK_ASSERT (reply->done);
 			delete reply;
@@ -185,11 +165,11 @@
 		@note @em If a transmission is available, this will always block until the transmission has been received in full. */
 		QByteArray fetchTransmission (bool block) {
 			QByteArray receive_buffer;
-			unsigned int expected_length = 0;
+			int expected_length = 0;
 			bool got_header = false;
-			boo have_data = false;
+			bool have_data = false;
 			while (1) {
-				bool have_data = have_data || waitForReadyRead (1);
+				have_data = have_data || connection.waitForReadyRead (1);
 				if (!connection.isOpen ()) {
 					handleTransmitError ("Connection closed unexepctedly. Last error: %s");
 					return receive_buffer;
@@ -209,13 +189,13 @@
 					got_header = true;
 				}
 
-				receive_buffer.append (connection.readAll (expected_length - receive_buffer.length ()));
+				receive_buffer.append (connection.read (expected_length - receive_buffer.length ()));
 				if (receive_buffer.length () >= expected_length) return receive_buffer;
 			}
 		}
 
 		void flushOutput (bool force) {
-			ROutputList out = RKRBackend::flushOutput (force);
+			ROutputList out = RKRBackend::this_pointer->flushOutput (force);
 			if (out.isEmpty ()) return;
 
 			// output request would not strictly need to be synchronous. However, making them synchronous ensures that the frontend is keeping up with the output sent by the backend.
@@ -231,13 +211,16 @@
 		QLocalSocket connection;
 		QList<RBackendRequest *> current_requests;		// there *can* be multiple active requests (if the first ones are asynchronous)
 		QMutex request_mutex;
+		static RKRBackendTransmitter* _instance;
+		static RKRBackendTransmitter* instance () { return _instance; };
 	};
+	RKRBackendTransmitter* RKRBackendTransmitter::_instance = 0;
 
 	int RK_Debug_Level = 2;
 	int RK_Debug_Flags = ALL;
 	QMutex RK_Debug_Mutex;
 
-	void RKDebugMessageOutput (QtMsgType type, const char *msg) {
+/*	void RKDebugMessageOutput (QtMsgType type, const char *msg) {
 		RK_Debug_Mutex.lock ();
 		if (type == QtFatalMsg) {
 			fprintf (stderr, "%s\n", msg);
@@ -246,7 +229,7 @@
 		RKSettingsModuleDebug::debug_file->write ("\n");
 		RKSettingsModuleDebug::debug_file->flush ();
 		RK_Debug_Mutex.unlock ();
-	}
+	} */
 
 	int main(int argc, char *argv[]) {
 		QCoreApplication app (argc, argv);
@@ -254,7 +237,7 @@
 		KGlobal::locale ();		// to initialize it in the primary thread
 
 		QString servername;
-		QStringList args = app->arguments ();
+		QStringList args = app.arguments ();
 		for (int i = 1; i < args.count (); ++i) {
 			if (args[i].startsWith ("--debug-level")) {
 				RK_Debug_Level = args.value (++i, QString ()).toInt ();
@@ -264,7 +247,7 @@
 				printf ("unkown argument %s", qPrintable (args[i]));
 			}
 		}
-		if (severname.isEmpty ()) {
+		if (servername.isEmpty ()) {
 			printf ("no server to connect to");
 		}
 
@@ -273,7 +256,6 @@
 		transmitter.start ();
 		RKRBackend::this_pointer->run ();
 	}
-#error
 #endif
 
 RKRBackendProtocolBackend* RKRBackendProtocolBackend::_instance = 0;
@@ -313,7 +295,7 @@ void RKRBackendProtocolBackend::sendRequest (RBackendRequest *_request) {
 	RKRBackendEvent* event = new RKRBackendEvent (request);
 	qApp->postEvent (RKRBackendProtocolFrontend::instance (), event);
 #else
-	RBackendTransmitter::instance ()->postRequest (request);
+	RKRBackendTransmitter::instance ()->postRequest (request);
 #endif
 }
 
@@ -325,7 +307,7 @@ void RKRBackendProtocolBackend::msleep (int delay) {
 #ifdef RKWARD_THREADED
 	RKRBackendThread::instance->publicmsleep (delay);
 #else
-	RKRBackendTransmitter::instance->publicmsleep (delay);
+	RKRBackendTransmitter::instance ()->publicmsleep (delay);
 #endif
 }
 
