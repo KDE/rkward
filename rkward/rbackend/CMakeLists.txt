@@ -37,30 +37,38 @@ SET (
 SET(RBACKEND_SPLIT 1)
 IF(RBACKEND_SPLIT)
 	SET (
-		rbackend_STAT_SRCS
+		rbackend_FRONTEND_SRCS
 		${rbackend_frontend_SRCS}
 		${rbackend_shared_SRCS}
 		rkfrontendtransmitter.cpp
+		rktransmitter.cpp
 	)
-	QT4_AUTOMOC(${rbackend_STAT_SRCS})
-	ADD_LIBRARY(rbackend STATIC ${rbackend_STAT_SRCS})
+	QT4_AUTOMOC(${rbackend_FRONTEND_SRCS})
+	ADD_LIBRARY(rbackend STATIC ${rbackend_FRONTEND_SRCS})
 	TARGET_LINK_LIBRARIES(rbackend ${CMAKE_THREAD_LIBS_INIT})
 
-	QT4_AUTOMOC(${rbackend_backend_SRCS})
+	SET (
+		rbackend_BACKEND_SRCS
+		${rbackend_backend_SRCS}
+		${rbackend_shared_SRCS}
+		rkbackendtransmitter.cpp
+		rktransmitter.cpp
+	)
+	QT4_AUTOMOC(${rbackend_BACKEND_SRCS})
 	ADD_DEFINITIONS (-DRKWARD_SPLIT_PROCESS)
-	KDE4_ADD_EXECUTABLE(rkward.rbackend ${rbackend_backend_SRCS} ${rbackend_shared_SRCS})
+	KDE4_ADD_EXECUTABLE(rkward.rbackend ${rbackend_BACKEND_SRCS})
 	TARGET_LINK_LIBRARIES(rkward.rbackend ${R_USED_LIBS} ${CMAKE_THREAD_LIBS_INIT} ${KDE4_KDECORE_LIBS})
 	LINK_DIRECTORIES(${R_SHAREDLIBDIR})
 ELSE(RBACKEND_SPLIT)
 	SET (
-		rbackend_STAT_SRCS
+		rbackend_ALL_SRCS
 		${rbackend_frontend_SRCS}
 		${rbackend_shared_SRCS}
 		${rbackend_backend_SRCS}
 	)
 
-	QT4_AUTOMOC(${rbackend_STAT_SRCS})
-	ADD_LIBRARY(rbackend STATIC ${rbackend_STAT_SRCS})
+	QT4_AUTOMOC(${rbackend_ALL_SRCS})
+	ADD_LIBRARY(rbackend STATIC ${rbackend_ALL_SRCS})
 	TARGET_LINK_LIBRARIES(rbackend ${R_USED_LIBS} ${CMAKE_THREAD_LIBS_INIT})
 	LINK_DIRECTORIES(${R_SHAREDLIBDIR})
 ENDIF(RBACKEND_SPLIT)

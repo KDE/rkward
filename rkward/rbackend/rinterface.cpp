@@ -131,7 +131,6 @@ void RInterface::popPreviousCommand () {
 	RK_ASSERT (previous_command == 0);
 	RK_ASSERT (!all_current_commands.isEmpty ());
 	previous_command = all_current_commands.takeLast ();
-qDebug ("previous command: %d", previous_command->id ());
 	RCommandStack::currentStack ()->pop ();
 }
 
@@ -690,10 +689,12 @@ void RInterface::processRBackendRequest (RBackendRequest *request) {
 			na_real = request->params["na_real"].toDouble ();
 			na_int = request->params["na_int"].toInt ();
 	} else if (type == RBackendRequest::BackendExit) {
-		QString message = request->params["message"].toString ();
-		message += i18n ("\nIt will be shut down immediately. This means, you can not use any more functions that rely on the R backend. I.e. you can do hardly anything at all, not even save the workspace (but if you're lucky, R already did that). What you can do, however, is save any open command-files, the output, or copy data out of open data editors. Quit RKWard after that.\nSince this should never happen, please write a mail to rkward-devel@lists.sourceforge.net, and tell us, what you were trying to do, when this happened. Sorry!");
-		KMessageBox::error (0, message, i18n ("R engine has died"));
-		backend_dead = true;
+		if (!backend_dead) {
+			backend_dead = true;
+			QString message = request->params["message"].toString ();
+			message += i18n ("\nThe R backend will be shut down immediately. This means, you can not use any more functions that rely on it. I.e. you can do hardly anything at all, not even save the workspace (but if you're lucky, R already did that). What you can do, however, is save any open command-files, the output, or copy data out of open data editors. Quit RKWard after that.\nSince this should never happen, please write a mail to rkward-devel@lists.sourceforge.net, and tell us, what you were trying to do, when this happened. Sorry!");
+			KMessageBox::error (0, message, i18n ("R engine has died"));
+		}
 	} else {
 		RK_ASSERT (false);
 	}

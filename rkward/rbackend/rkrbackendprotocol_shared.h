@@ -124,24 +124,6 @@ public:		// all these are public for technical reasons, only.
 	int status;
 };
 
-#ifndef RKWARD_THREADED
-	/** functions for serialization / unserialization of communication between backend and frontend.
-	NOTE: This could really be a namespace, instead of a class, but "friending" a class is simply easier... */
-	class RKRBackendSerializer {
-	public:
-		static QByteArray serialize (const RBackendRequest &request);
-		static RBackendRequest *unserialize (const QByteArray &buffer);
-
-	private:
-		static void serializeOutput (const ROutputList &list, QDataStream &stream);
-		static void serializeData (const RData &data, QDataStream &stream);
-		static void serializeProxy (const RCommandProxy &proxy, QDataStream &stream);
-		static ROutputList* unserializeOutput (QDataStream &stream);
-		static RData* unserializeData (QDataStream &stream);
-		static RCommandProxy* unserializeProxy (QDataStream &stream);
-	};
-#endif
-
 class RKROutputBuffer {
 public:
 	RKROutputBuffer ();

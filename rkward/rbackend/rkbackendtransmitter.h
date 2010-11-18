@@ -1,7 +1,7 @@
 /***************************************************************************
-                          rkfrontendtransmitter  -  description
+                          rkbackendtransmitter  -  description
                              -------------------
-    begin                : Thu Nov 04 2010
+    begin                : Thu Nov 18 2010
     copyright            : (C) 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
@@ -15,39 +15,32 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef RKFRONTENDTRANSMITTER_H
-#define RKFRONTENDTRANSMITTER_H
+#ifndef RKBACKENDTRANSMITTER_H
+#define RKBACKENDTRANSMITTER_H
 
 #include "rktransmitter.h"
 
-class QProcess;
-class QLocalServer;
-
-class RKFrontendTransmitter : public RKAbstractTransmitter, public RKROutputBuffer {
+/** Private class used by the RKRBackendProtocol, in case of the backend running in a split process.
+This will be used as the secondary thread, and takes care of serializing, sending, receiving, and unserializing requests. */
+class RKRBackendTransmitter : public RKAbstractTransmitter {
 Q_OBJECT
 public:
-	RKFrontendTransmitter ();
-	~RKFrontendTransmitter ();
+	RKRBackendTransmitter (const QString &servername);
+	~RKRBackendTransmitter ();
+
+	void publicmsleep (int delay) { msleep (delay); };
 
 	void run ();
 
-	bool doMSleep (int delay) {
-		msleep (delay);
-		return true;
-	};
 	void writeRequest (RBackendRequest *request);
 	void requestReceived (RBackendRequest *request);
-private slots:
-	void connectAndEnterLoop ();
-	void newProcessOutput ();
-	void backendExit (int exitcode);
-private:
 	void handleTransmissionError (const QString &message);
-
-	int current_request_length;
-	QProcess* backend;
-	QLocalServer* server;
+private slots:
+	void flushOutput ();
+private:
+	void flushOutput (bool force);
+	QList<RBackendRequest*> current_sync_requests;	// pointers to the request that we expect a reply for. Yes, internally, this can be several requests.
+	QString servername;
 };
 
 #endif
-

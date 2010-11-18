@@ -50,6 +50,8 @@ RKRBackendProtocolFrontend::~RKRBackendProtocolFrontend () {
 #ifdef RKWARD_THREADED
 	delete RKRBackendProtocolBackend::instance ();
 #else
+	RKFrontendTransmitter::instance ()->quit ();
+	RKFrontendTransmitter::instance ()->wait (1000);
 	delete RKFrontendTransmitter::instance ();
 #endif
 }
@@ -82,7 +84,7 @@ ROutputList RKRBackendProtocolFrontend::flushOutput (bool force) {
 #ifdef RKWARD_THREADED
 	return (RKRBackend::this_pointer->flushOutput (force));
 #else
-	return RKFrontendTransmitter::instance ()->flushOutput (force);
+	return static_cast<RKFrontendTransmitter*> (RKFrontendTransmitter::instance ())->flushOutput (force);
 #endif
 }
 
@@ -104,8 +106,7 @@ void RKRBackendProtocolFrontend::terminateBackend () {
 #ifdef RKWARD_THREADED
 	RKRBackend::this_pointer->kill ();
 #else
-//	kill (SIGUSR2, pid_of_it);
-#warning will not work on windows!
+	// Backend process will terminate automatically, when the transmitter dies
 #endif
 }
 

@@ -377,8 +377,10 @@ void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 			if (!dir.exists (filename)) break;
 			i++;
 		}
+		filename = dir.absoluteFilePath (filename);
 
 		if (R_DirtyImage) R_SaveGlobalEnvToFile (filename.toLocal8Bit ());
+		qDebug ("Created emergency save file in %s", qPrintable (filename));
 	}
 
 	RKRBackend::this_pointer->killed = RKRBackend::AlreadyDead;	// just in case
@@ -405,6 +407,7 @@ void RKRBackend::tryToDoEmergencySave () {
 
 	if (RKRBackendProtocolBackend::inRThread ()) {
 		// If we are in the correct thread, things are easy:
+		RKRBackend::this_pointer->killed = RKRBackend::EmergencySaveThenExit;
 		RCleanUp (SA_SUICIDE, 1, 0);
 		RK_doIntr ();	// to jump out of the loop, if needed
 	} else {
@@ -1095,7 +1098,7 @@ RCommandProxy* RKRBackend::handleRequest (RBackendRequest *request, bool mayHand
 
 	RKRBackendProtocolBackend::instance ()->sendRequest (request);
 
-	if (!request->synchronous) {
+	if ((!request->synchronous) && (!isKilled ())) {
 		RK_ASSERT (mayHandleSubstack);	// i.e. not called from fetchNextCommand
 		return 0;
 	}
@@ -1128,7 +1131,7 @@ RCommandProxy* RKRBackend::handleRequest (RBackendRequest *request, bool mayHand
 RCommandProxy* RKRBackend::fetchNextCommand () {
 	RK_TRACE (RBACKEND);
 
-	RBackendRequest req (killed == NotKilled, RBackendRequest::CommandOut);		// when killed, we don't wait for the reply. Thus, request is async, then.
+	RBackendRequest req (!isKilled (), RBackendRequest::CommandOut);	// when killed, we do *not* actually wait for the reply, before the request is deleted.
 	req.command = previous_command;
 	previous_command = 0;
 
