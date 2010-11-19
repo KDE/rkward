@@ -84,21 +84,26 @@ void RKRBackendTransmitter::writeRequest (RBackendRequest *request) {
 void RKRBackendTransmitter::requestReceived (RBackendRequest* request) {
 	RK_TRACE (RBACKEND);
 
-	if (current_sync_requests.isEmpty ()) {
-		RK_ASSERT (false);
-		return;
-	}
-
-	RBackendRequest* current_sync_request = current_sync_requests.takeFirst ();
-	if (current_sync_request->type == RBackendRequest::Output) {
-		delete current_sync_request;	// this was just our internal request
-		delete request;
+	// first check for requests which originated in the frontend
+	if (request->type == RBackendRequest::Interrupt) {
+		RKRBackendProtocolBackend::interruptProcessing ();
+	// requests which originated in the backend below this line
 	} else {
-		current_sync_request->mergeReply (request);
-		delete request;
-		current_sync_request->done = true;
+		if (current_sync_requests.isEmpty ()) {
+			RK_ASSERT (false);
+			return;
+		}
+
+		RBackendRequest* current_sync_request = current_sync_requests.takeFirst ();
+		if (current_sync_request->type == RBackendRequest::Output) {
+			delete current_sync_request;	// this was just our internal request
+		} else {
+			current_sync_request->mergeReply (request);
+			current_sync_request->done = true;
+		}
+		RK_DO (qDebug ("Expecting replies for %d requests (popped %p)", current_sync_requests.size (), current_sync_request), RBACKEND, DL_DEBUG);
 	}
-	RK_DO (qDebug ("Expecting replies for %d requests (popped %p)", current_sync_requests.size (), current_sync_request), RBACKEND, DL_DEBUG);
+	delete request;
 }
 
 void RKRBackendTransmitter::flushOutput (bool force) {
@@ -117,7 +122,7 @@ void RKRBackendTransmitter::flushOutput (bool force) {
 void RKRBackendTransmitter::handleTransmissionError (const QString &message) {
 	RK_TRACE (RBACKEND);
 
-	RK_DO (qDebug (qPrintable ("Transmission error " + message)), RBACKEND, DL_ERROR);
+	RK_DO (qDebug ("%s", qPrintable ("Transmission error " + message)), RBACKEND, DL_ERROR);
 	RKRBackend::tryToDoEmergencySave ();
 }
 

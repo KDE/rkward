@@ -33,6 +33,7 @@ protected:
 friend class RKRBackendProtocolFrontend;
 friend class RKRBackend;
 friend class RKRBackendThread;
+friend class RKRBackendTransmitter;
 	void sendRequest (RBackendRequest *request);
 	static void msleep (int delay);
 	static void interruptProcessing ();

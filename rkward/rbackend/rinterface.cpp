@@ -204,7 +204,7 @@ void RInterface::handleCommandOut (RCommandProxy *proxy) {
 
 	if (command->type () & RCommand::QuitCommand) backend_dead = true;
 
-	if ((command->status & RCommand::Canceled) || (command == running_command_canceled)) {
+	if (command->status & RCommand::Canceled) {
 		command->status |= RCommand::HasError;
 		ROutput *out = new ROutput;
 		out->type = ROutput::Error;
@@ -416,6 +416,8 @@ void RInterface::cancelCommand (RCommand *command) {
 	if (!(command->type () & RCommand::Sync)) {
 		command->status |= RCommand::Canceled;
 		if (command->type () && RCommand::Running) {
+#warning This assumption is wrong. Fix command cancellation.
+// In particular, the backend may contain several commands at once. We should tell the backend, exactly which commands to cancel
 			if (running_command_canceled != command) {
 				RK_ASSERT (!running_command_canceled);
 				locked |= Cancel;

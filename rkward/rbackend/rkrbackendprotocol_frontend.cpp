@@ -95,8 +95,8 @@ void RKRBackendProtocolFrontend::interruptProcessing () {
 	RK_ASSERT (!RKRBackendProtocolBackend::inRThread ());
 	RKRBackendProtocolBackend::interruptProcessing ();
 #else
-//	kill (SIGUSR1, pid_of_it);
-#warning will not work on windows!
+	RBackendRequest *req = new RBackendRequest (false, RBackendRequest::Interrupt);
+	qApp->postEvent (RKFrontendTransmitter::instance (), new RKRBackendEvent (req));
 #endif
 }
 
