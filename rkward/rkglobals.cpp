@@ -21,8 +21,6 @@
 RInterface *RKGlobals::rinter;
 RKModificationTracker *RKGlobals::mtracker;
 
-double RKGlobals::na_double;
-
 RKGlobals::RKGlobals () {
 }
 

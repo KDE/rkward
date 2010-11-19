@@ -56,6 +56,7 @@
 #include <ktemporaryfile.h>
 
 #include <qstring.h>
+#include <QMutex>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -77,16 +78,19 @@
 int RK_Debug_Level = 0;
 int RK_Debug_Flags = ALL;
 int RK_Debug_CommandStep = 0;
+QMutex RK_Debug_Mutex;
 
 static KCmdLineOptions options;
 
 void RKDebugMessageOutput (QtMsgType type, const char *msg) {
+	RK_Debug_Mutex.lock ();
 	if (type == QtFatalMsg) {
 		fprintf (stderr, "%s\n", msg);
 	}
 	RKSettingsModuleDebug::debug_file->write (msg);
 	RKSettingsModuleDebug::debug_file->write ("\n");
 	RKSettingsModuleDebug::debug_file->flush ();
+	RK_Debug_Mutex.unlock ();
 }
 
 int main(int argc, char *argv[]) {
@@ -101,7 +105,6 @@ int main(int argc, char *argv[]) {
 	options.add ("debug-level <level>", ki18n ("Verbosity of debug messages (0-5)"), "2");
 	options.add ("debug-flags <flags>", ki18n ("Mask for components to debug (see debug.h)"), "8191");
 	options.add ("debugger <command>", ki18n ("Debugger (enclose any debugger arguments in single quotes ('') together with the command)"), "");
-	options.add ("disable-stack-check", ki18n ("Disable R C stack checking"), 0);
 	options.add ("+[File]", ki18n ("R workspace file to open"), 0);
 
 	KAboutData aboutData("rkward", QByteArray (), ki18n ("RKWard"), VERSION, ki18n ("Frontend to the R statistics language"), KAboutData::License_GPL, ki18n ("(c) 2002, 2004, 2005, 2006, 2007, 2008, 2009, 2010"), KLocalizedString (), "http://rkward.sf.net", "rkward-devel@lists.sourceforge.net");
@@ -147,7 +150,6 @@ int main(int argc, char *argv[]) {
 	if (args->count ()) {
 		stoptions->initial_url = KUrl (args->makeURL (args->arg (0).toLatin1()));
 	}
-	stoptions->no_stack_check = args->isSet ("disable-stack-check");
 	stoptions->evaluate = args->getOption ("evaluate");
 
 	RKWardApplication app;

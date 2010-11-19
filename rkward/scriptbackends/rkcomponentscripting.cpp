@@ -171,16 +171,12 @@ QVariantList RKComponentScriptingProxy::getObjectInfo (const QString &name) {
 		QVariantList ret;
 
 		QVariantList dims;
-		for (unsigned int i = 0; i < object->numDimensions (); ++i) {
-			dims.append (object->getDimension (i));
+		foreach (int dim, object->getDimensions ()) {
+			dims.append (dim);
 		}
 		ret.append (QVariant (dims));
 
-		QStringList classes;
-		for (unsigned int i = 0; i < object->numClasses (); ++i) {
-			classes.append (object->getClassName (i));
-		}
-		ret.append (QVariant (classes));
+		ret.append (QVariant (object->classNames ()));
 
 		ret.append (object->isType (RObject::DataFrame));
 		ret.append (object->isType (RObject::Matrix));

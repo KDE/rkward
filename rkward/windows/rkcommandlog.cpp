@@ -57,7 +57,6 @@ RKCommandLog::RKCommandLog (QWidget *parent, bool tool_window, const char *name)
 	clearLog ();
 
 	last_raised_command = 0;
-	command_input_shown = 0;
 
 	RKCommandLogPart *part = new RKCommandLogPart (this);
 	setPart (part);
@@ -71,6 +70,8 @@ RKCommandLog::RKCommandLog (QWidget *parent, bool tool_window, const char *name)
 
 RKCommandLog::~RKCommandLog(){
 	RK_TRACE (APP);
+
+	RK_ASSERT (command_input_shown.isEmpty ());
 }
 
 void RKCommandLog::addInput (RCommand *command) {
@@ -85,7 +86,7 @@ void RKCommandLog::addInput (RCommand *command) {
 
 void RKCommandLog::addInputNoCheck (RCommand *command) {
 	RK_TRACE (APP);
-	if (command->id () == command_input_shown) return;		// already shown
+	if (command_input_shown.contains (command)) return;		// already shown
 
 // TODO: make colors/styles configurable
 	if (command->type () & RCommand::User) {
@@ -105,7 +106,7 @@ void RKCommandLog::addInputNoCheck (RCommand *command) {
 
 	log_view->setFontItalic (false);
 
-	command_input_shown = command->id ();
+	command_input_shown.append (command);
 }
 
 void RKCommandLog::addOutputNoCheck (RCommand *command, ROutput *output) {
@@ -192,6 +193,7 @@ void RKCommandLog::rCommandDone (RCommand *command) {
 	}
 
 	if (RKSettingsModuleWatch::shouldShowOutput (command)) log_view->insertPlainText ("\n");
+	command_input_shown.removeAll (command);
 }
 
 void RKCommandLog::settingsChanged (RKSettings::SettingsPage page) {

@@ -8,25 +8,67 @@ ADD_SUBDIRECTORY( rpackages )
 
 INCLUDE_DIRECTORIES( ${R_INCLUDEDIR} ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${KDE4_INCLUDE_DIR} ${QT_INCLUDES}  )
 
-########### next target ###############
-
-SET(
-	rbackend_STAT_SRCS
-	rembedinternal.cpp
-	rinterface.cpp
-	rthread.cpp
-	rcommand.cpp
-	rcommandreceiver.cpp
-	rcommandstack.cpp
+SET (
+	rbackend_shared_SRCS
+	rkrbackendprotocol_shared.cpp
 	rdata.cpp
+)
+
+SET (
+	rbackend_backend_SRCS
+	rkrbackend.cpp
 	rkpthreadsupport.cpp
 	rksignalsupport.cpp
 	rklocalesupport.cpp
+	rkrsupport.cpp
+	rkstructuregetter.cpp
+	rkrbackendprotocol_backend.cpp
 )
 
+SET (
+	rbackend_frontend_SRCS
+	rinterface.cpp
+	rcommand.cpp
+	rcommandreceiver.cpp
+	rcommandstack.cpp
+	rkrbackendprotocol_frontend.cpp
+)
 
-QT4_AUTOMOC(${rbackend_STAT_SRCS})
+SET(RBACKEND_SPLIT 1)
+IF(RBACKEND_SPLIT)
+	SET (
+		rbackend_FRONTEND_SRCS
+		${rbackend_frontend_SRCS}
+		${rbackend_shared_SRCS}
+		rkfrontendtransmitter.cpp
+		rktransmitter.cpp
+	)
+	QT4_AUTOMOC(${rbackend_FRONTEND_SRCS})
+	ADD_LIBRARY(rbackend STATIC ${rbackend_FRONTEND_SRCS})
+	TARGET_LINK_LIBRARIES(rbackend ${CMAKE_THREAD_LIBS_INIT})
 
-ADD_LIBRARY(rbackend STATIC ${rbackend_STAT_SRCS})
-TARGET_LINK_LIBRARIES(rbackend ${R_USED_LIBS} ${CMAKE_THREAD_LIBS_INIT})
-LINK_DIRECTORIES(${R_SHAREDLIBDIR})
+	SET (
+		rbackend_BACKEND_SRCS
+		${rbackend_backend_SRCS}
+		${rbackend_shared_SRCS}
+		rkbackendtransmitter.cpp
+		rktransmitter.cpp
+	)
+	QT4_AUTOMOC(${rbackend_BACKEND_SRCS})
+	ADD_DEFINITIONS (-DRKWARD_SPLIT_PROCESS)
+	KDE4_ADD_EXECUTABLE(rkward.rbackend ${rbackend_BACKEND_SRCS})
+	TARGET_LINK_LIBRARIES(rkward.rbackend ${R_USED_LIBS} ${CMAKE_THREAD_LIBS_INIT} ${KDE4_KDECORE_LIBS})
+	LINK_DIRECTORIES(${R_SHAREDLIBDIR})
+ELSE(RBACKEND_SPLIT)
+	SET (
+		rbackend_ALL_SRCS
+		${rbackend_frontend_SRCS}
+		${rbackend_shared_SRCS}
+		${rbackend_backend_SRCS}
+	)
+
+	QT4_AUTOMOC(${rbackend_ALL_SRCS})
+	ADD_LIBRARY(rbackend STATIC ${rbackend_ALL_SRCS})
+	TARGET_LINK_LIBRARIES(rbackend ${R_USED_LIBS} ${CMAKE_THREAD_LIBS_INIT})
+	LINK_DIRECTORIES(${R_SHAREDLIBDIR})
+ENDIF(RBACKEND_SPLIT)

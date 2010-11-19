@@ -118,17 +118,14 @@ public:
 	void rename (const QString &new_short_name);
 	void remove (bool removed_in_workspace);
 
-	unsigned int numClasses () const { return num_classes; };
-	QString getClassName (int index) const { return classnames[index]; };
+	const QStringList &classNames () const { return classnames; };
 	QString makeClassString (const QString &sep) const;
 /** @param class_name the name of the class to check for
 @returns true, if the object has (among others) the given class, false otherwise */
 	bool inherits (const QString &class_name) const;
 
-/** get number of dimensions. For simplicity, In RKWard each object is considered to have at least one dimension (but that dimension may be 0 in length) */
-	unsigned int numDimensions () const { return num_dimensions; };
-/** get the length of the given dimension. The object is guaranteed to have at least 1 dimension, so calling getDimension (0) is always safe */
-	int getDimension (int index) const { return dimensions[index]; };
+/** get vector of dimensions. For simplicity, In RKWard each object is considered to have at least one dimension (but that dimension may be 0 in length) */
+	const QVector<qint32> &getDimensions () const { return dimensions; };
 /** short hand for getDimension (0). Meaningful for one-dimensional objects */
 	int getLength () const { return dimensions[0]; };
 
@@ -195,10 +192,8 @@ protected:
 	RContainerObject *parent;
 	QString name;
 	int type;
-	int *dimensions;
-	unsigned int num_dimensions;
-	QString *classnames;
-	unsigned int num_classes;
+	QVector<qint32> dimensions;
+	QStringList classnames;
 
 	virtual QString makeChildBaseName (const QString &short_child_name) const;
 

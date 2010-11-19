@@ -2,7 +2,7 @@
                           rcommand.h  -  description
                              -------------------
     begin                : Mon Nov 11 2002
-    copyright            : (C) 2002, 2006, 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -25,8 +25,11 @@
 
 #include "rdata.h"
 
+#define MAX_RECEIVERS_PER_RCOMMAND 3
+
 class RCommandReceiver;
 class RCommand;
+class RCommandProxy;
 class RCommandChain;
 
 /** Base class for RCommand and RCommandChain, to make it possible to store both in the same list */
@@ -73,24 +76,6 @@ struct ROutput {
 
 typedef QList<ROutput*> ROutputList;
 
-/*
-struct RGetValueRequest {
-private:
-friend class RInterface;
-friend class RThread;
-	char **call;
-	int call_length;
-};
-
-struct RGetValueReply {
-private:
-friend class RInterface;
-friend class RThread;
-	char **reply;
-	int reply_length;
-};
-*/
-
 /** For introductory information on using RCommand, see \ref UsingTheInterfaceToR 
 
 	This class is used to encapsulate an R-command, so it can be easily identified
@@ -110,7 +95,6 @@ friend class RThread;
 	kept around very long, so they should not be a memory issue.
   *@author Thomas Friedrichsmeier
   */
-  
 class RCommand : public RData, public RCommandBase {
 public:
 /** constructs an RCommand.
@@ -120,7 +104,7 @@ public:
 @param receiver The RCommandReceiver this command should be passed on to, when finished.
 @param flags A freely assignable integer, that you can use to identify what the command was all about. Only the RCommandReceiver handling the results will have to know what exactly the flags mean.
 */
-	explicit RCommand (const QString &command, int type = 0, const QString &rk_equiv = QString::null, RCommandReceiver *receiver=0, int flags=0);
+	explicit RCommand (const QString &command, int type, const QString &rk_equiv = QString::null, RCommandReceiver *receiver=0, int flags=0);
 /** destructor. Note: you should not delete RCommands manually. This is done in RInterface. TODO: make protected */
 	~RCommand();
 /** @returns the type as specified in RCommand::RCommand */
@@ -153,6 +137,7 @@ public:
 		Sync=16,		/**< Command is used to sync data to or from R-space. Typically used in the editor classes */
 		EmptyCommand=32,		/**< Command is empty and will not be processed (an empty command may be used as a "marker") */
 		Console=64,	/**< Command originated in the console. These commands will get some extra treatment in RKwatch */
+		Internal=128,	/**< Command is meant to be used in the backend, only. Do not use outside rbackend classes! */
 		GetIntVector=512,			/**< Try to fetch result as an array of integers */
 		GetStringVector=1024,	/**< Try to fetch result as an array of chars */
 		GetRealVector=2048,		/**< Try to fetch result as an array of doubles */
@@ -201,8 +186,11 @@ public:
 	ROutputList &getOutput () { return output_list; };
 /** modify the command string. DO NOT CALL THIS after the command has been submitted! */
 	void setCommand (const QString &command) { _command = command; };
+
+/** creates a proxy for this RCommand */
+	RCommandProxy* makeProxy () const;
+	void mergeAndDeleteProxy (RCommandProxy *proxy);
 private:
-friend class RThread;
 friend class RInterface;
 friend class RCommandStack;
 friend class RCommandStackModel;
@@ -214,12 +202,11 @@ friend class RCommandStackModel;
 	QString _command;
 	int _type;
 	int _flags;
-	int status;
+	int status;  
 	QString _rk_equiv;
 	int _id;
 	static int next_id;
-	int num_receivers;
-	RCommandReceiver **receivers;
+	RCommandReceiver *receivers[MAX_RECEIVERS_PER_RCOMMAND];
 };
 
 #endif

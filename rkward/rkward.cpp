@@ -141,7 +141,6 @@ RKWardMainWindow::RKWardMainWindow (RKWardStartupOptions *options) : KParts::Mai
 		startup_options = options;
 	} else {
 		startup_options = new RKWardStartupOptions;
-		startup_options->no_stack_check = false;
 		startup_options->initial_url = KUrl();
 	}
 
@@ -157,14 +156,14 @@ RKWardMainWindow::~RKWardMainWindow() {
 	RK_TRACE (APP);
 
 	// these would not be strictly necessary, as we're exiting the app, anyway.
-	delete RControlWindow::getControl ();
-	delete RKGlobals::rInterface ();
 	delete RObjectList::getObjectList ();
 	delete RObjectBrowser::mainBrowser ();
 	delete RKCommandLog::getLog ();
 	delete RKConsole::mainConsole ();
 	delete RKHelpSearchWindow::mainHelpSearch ();
 	delete RKGlobals::tracker ();
+	delete RKGlobals::rInterface ();
+	delete RControlWindow::getControl ();
 }
 
 void RKWardMainWindow::closeEvent (QCloseEvent *e) {
@@ -208,6 +207,8 @@ void RKWardMainWindow::doPostInit () {
 	// startup options will be deleted from the R thread (TODO correct this!), so we need to copy the initial_url here, or run into race conditions
 	KUrl open_url = startup_options->initial_url;
 	QString evaluate_code = startup_options->evaluate;
+	delete startup_options;
+	startup_options = 0;
 	startR ();
 	
 	initPlugins ();
@@ -295,8 +296,6 @@ void RKWardMainWindow::startR () {
 	RKGlobals::rinter = new RInterface ();
 	new RObjectList ();
 	connect (RObjectList::getObjectList (), SIGNAL (workspaceUrlChanged(const KUrl&)), this, SLOT (addWorkspaceUrl(const KUrl&)));
-
-	RKGlobals::rInterface ()->startThread ();
 
 	RObjectBrowser::mainBrowser ()->unlock ();
 }

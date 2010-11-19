@@ -2,7 +2,7 @@
                           rkstructuregetter  -  description
                              -------------------
     begin                : Wed Apr 11 2007
-    copyright            : (C) 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -18,9 +18,13 @@
 #ifndef RKSTRUCTUREGETTER_H
 #define RKSTRUCTUREGETTER_H
 
-/** Low level helper class for getting the structure of R objects (.rk.get.structure).
-Since this is only used from REmbedInternal, and making Qt and R includes cooperate is so much trouble,
-this is designed to be included directly in rembedinternal.cpp, i.e. includes are not properly defined. I'll fix that later. */
+#include <Rinternals.h>
+
+#include <QString>
+
+class RData;
+
+/** Low level helper class for getting the structure of R objects (.rk.get.structure). */
 class RKStructureGetter {
 public:
 	RKStructureGetter (bool keep_evalled_promises);
@@ -47,10 +51,6 @@ private:
 	bool with_namespace;
 	SEXP namespace_envir;
 
-	static SEXP callSimpleFun (SEXP fun, SEXP arg, SEXP env);
-	static SEXP callSimpleFun2 (SEXP fun, SEXP arg1, SEXP arg2, SEXP env);
-	static bool callSimpleBool (SEXP fun, SEXP arg, SEXP env);
-
 	SEXP class_fun;
 	SEXP dims_fun;
 	SEXP meta_attrib;
@@ -60,6 +60,7 @@ private:
 	SEXP is_list_fun;
 	SEXP is_function_fun;
 	SEXP is_environment_fun;
+	SEXP as_environment_fun;
 	SEXP is_factor_fun;
 	SEXP is_numeric_fun;
 	SEXP is_character_fun;

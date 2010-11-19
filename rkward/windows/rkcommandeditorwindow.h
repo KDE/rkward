@@ -142,8 +142,9 @@ public:
 /** open given URL. 
 @param use_r_highlighting Initialize the view to use R syntax highlighting. Use, if you're going to edit an R syntax file
 @param encoding encoding to use. If QString (), the default encoding is used.
-@param read_only Open the file in read-only mode */
-	bool openURL (const KUrl &url, const QString& encoding=QString (), bool use_r_highlighting=true, bool read_only=false);
+@param read_only Open the file in read-only mode
+@param delete_on_close File should be deleted when closing the window. Only respected with read_only=true. */
+	bool openURL (const KUrl &url, const QString& encoding=QString (), bool use_r_highlighting=true, bool read_only=false, bool delete_on_close=false);
 /** returns, whether the document was modified since the last save */
 	bool isModified ();
 /** insert the given text into the document at the current cursor position. Additionally, focuses the view */
@@ -260,6 +261,8 @@ private:
 
 	KUrl previous_autosave_url;
 	QTimer* autosave_timer;
+
+	KUrl delete_on_close;
 };
 
 #endif

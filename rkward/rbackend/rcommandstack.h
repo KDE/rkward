@@ -2,7 +2,7 @@
                           rcommandstack  -  description
                              -------------------
     begin                : Mon Sep 6 2004
-    copyright            : (C) 2004, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -123,38 +123,10 @@ public:
 	/** call this, when you have made changes to an item, that should be reflected in RControlWindow
 	@param item The item that was changed */
 	void itemChange (RCommandBase* item);
-private slots:
-	/** compagnon to lockMutex () */
-	void unlockMutex ();
-	/** the purpose of these signals and slots is to make sure the aboutToPop(), popComplete(), aboutToAdd(), addComplete(), and itemChange() methods are *always* dealt with in the main (GUI) thread. */
-	void relayItemAboutToBeAdded (RCommandBase* parent);
-	/** @see relayItemAboutToBeAdded() */
-	void relayItemAdded ();
-	/** @see relayItemAboutToBeAdded() */
-	void relayItemAboutToBeRemoved (RCommandBase* parent);
-	/** @see relayItemAboutToBeAdded() */
-	void relayItemRemoved ();
-	/** @see relayItemAboutToBeAdded() */
-	void relayItemChanged (RCommandBase* item);
-signals:
-	/** @see relayItemAboutToBeAdded() */
-	void itemAboutToBeAdded (RCommandBase* parent);
-	/** @see relayItemAboutToBeAdded() */
-	void itemAdded ();
-	/** @see relayItemAboutToBeAdded() */
-	void itemAboutToBeRemoved (RCommandBase* parent);
-	/** @see relayItemAboutToBeAdded() */
-	void itemRemoved ();
-	/** @see relayItemAboutToBeAdded() */
-	void itemChanged (RCommandBase* item);
 private:
-	/** locks the mutex temporarily (until the event loop is next entered again), and only, if not already locked */
-	void lockMutex () const;
 	/** number of listeners. If there are no listeners, the model will do almost nothing at all */
 	int listeners;
 	static RCommandStackModel* static_model;
-	/** @see lockMutex() */
-	bool have_mutex_lock;
 
 	/** create a model index for the given item */
 	QModelIndex indexFor (RCommandBase *item);

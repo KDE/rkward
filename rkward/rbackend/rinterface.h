@@ -2,7 +2,7 @@
                           rinterface.h  -  description
                              -------------------
     begin                : Fri Nov 1 2002
-    copyright            : (C) 2002, 2004, 2005, 2006, 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2004, 2005, 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -19,28 +19,16 @@
 #define RINTERFACE_H
 
 #include <qobject.h>
-#include <qmutex.h>
 #include <QFile>
 
 #include "rcommand.h"
-
-//#define DEBUG_MUTEX
-#ifdef DEBUG_MUTEX
-#define MUTEX_LOCK RInterface::mutex.lock (); qDebug ("mutex locks: %d, locked in %s, %s, %d", ++RInterface::mutex_counter, __FILE__, __FUNCTION__, __LINE__); 
-#define MUTEX_UNLOCK qDebug ("mutex locks: %d, unlocked in %s, %s, %d", --RInterface::mutex_counter, __FILE__, __FUNCTION__, __LINE__); RInterface::mutex.unlock ();
-#else
-#define MUTEX_LOCK RInterface::mutex.lock ();
-#define MUTEX_UNLOCK RInterface::mutex.unlock ();
-#endif
+#include "rcommandreceiver.h"
 
 class RCommand;
 class RKWardMainWindow;
-struct RCallbackArgs;
 class QTimer;
-class RThread;
-class RCommandReceiver;
-struct REvalRequest;
-struct RKWardStartupOptions;
+class RKRBackend;
+struct RBackendRequest;
 
 /** This class provides the main interface to the R-processor.
 
@@ -54,7 +42,7 @@ struct RKWardStartupOptions;
 	*@author Thomas Friedrichsmeier
 */
 
-class RInterface : public QObject {
+class RInterface : public QObject, public RCommandReceiver {
 	Q_OBJECT
 public:
 /** constructor */
@@ -79,26 +67,21 @@ not be interrupted. */
 /** Pauses process. The current command will continue to run, but no new command will be */
 	void pauseProcessing (bool pause);
 
-/** *The* mutex in usein RKWard. This is needed to ensure, the main (GUI) thread, and the backend thread (@see RThread) do not try to access the same data at the same time. Use MUTEX_LOCK and MUTEX_UNLOCK to lock/unlock the mutex. */
-	static QMutex mutex;
-#ifdef DEBUG_MUTEX
-	static int mutex_counter;
-#endif
-
 /** returns the command currently running in the thread. Be careful when using the returned pointer! */
-	RCommand *runningCommand ();
+	RCommand *runningCommand () const { return (all_current_commands.isEmpty () ? 0 : all_current_commands.last ()); };
 
-	bool backendIsDead ();
+	bool backendIsDead () { return backend_dead; };
 	bool backendIsIdle ();
-
-	static bool inRThread ();
-	static void tryToDoEmergencySave ();
-public slots:
+	static bool isNaReal (double value) { return na_real == value; };
+	static bool isNaInt (int value) { return na_int == value; };
+private slots:
 /** called periodically to flush output buffer in RThread */
 	void flushOutput ();
 private:
+/** Calls RThread::flushOutput(), and takes care of adding the output to all applicable commands */
+	void flushOutput (bool forced);
 /** pointer to the RThread */
-	RThread *r_thread;
+	RKRBackend *r_thread;
 /** Timer to trigger flushing output */
 	QTimer *flush_timer;
 /** canceling the command that is (or seems to be) currently running is tricky: In order to do so, we need to signal an interrupt to the RThread. We need this pointer to find out, when the command has actually been interrupted, and we can resume processing. */
@@ -111,18 +94,43 @@ private:
 		RecordingCommandsWithSync
 	} command_logfile_mode;
 
-/** See \ref RThread::doSubstack (). Does the actual job. */
-	void processREvalRequest (REvalRequest *request);
-//	void processRGetValueRequest (RGetValueRequest);
-/** See \ref RThread::doStandardCallback (). Does the actual job. */
-	void processRCallbackRequest (RCallbackArgs *args);
+	void processHistoricalSubstackRequest (RBackendRequest *request);
+	void processRBackendRequest (RBackendRequest *request);
+
+/** A list of all commands that have entered, and not yet left, the backend thread */
+	QList<RCommand*> all_current_commands;
+	RCommand* previous_command;
+/** NOTE: processsing R events while waiting for the next command may, conceivably, lead to new requests, which may also wait for sub-commands! Thus we keep a simple stack of requests. */
+	QList<RBackendRequest*> command_requests;
+	RBackendRequest* currentCommandRequest () const { return (command_requests.isEmpty () ? 0 : command_requests.last ()); };
+	void tryNextCommand ();
+	void doNextCommand (RCommand *command);
+	void popPreviousCommand ();
+	void handleCommandOut (RCommandProxy *proxy);
+	bool previously_idle;
+
+/** @see locked */
+	enum LockType {
+		User=1,		/**< locked on user request */
+		Cancel=2	/**< locked to safely cancel a running command */
+	};
+
+/** Used for locking the backend, meaning not further commands will be given to the backend. This is used, when the currently running command is to be cancelled. It is used to make sure that the backend thread does not proceed with further commands, before the main thread takes notice. Also it is called, if the RThread is paused on User request. Further, the thread is initially locked so the main thread can check for some conditions before the backend thread may produce
+more errors/crashes. @see RInterface::cancelCommand @see RInterface::pauseProcessing
+May be an OR'ed combination of several LockType s */
+	int locked;
+
+	QString startup_errors;
+	bool startup_phase2_error;
+friend class RKRBackendProtocolFrontend;
+	bool backend_dead;
+	static double na_real;
+	static int na_int;
 friend class RKWardMainWindow;
 friend class RCommand;
-/** Used (once!) to start the RThread. Need to make this separate to avoid race conditions */
-	void startThread ();
 protected:
-/** needed to handle the QCustomEvent s, the RThread is sending (notifications on what's happening in the backend thread) */
-	void customEvent (QEvent *e);
+	void handleRequest (RBackendRequest *request);
+	void rCommandDone (RCommand *command);
 };
 
 /**
@@ -372,8 +380,9 @@ The following classes contain (or should contain) further important documentatio
 
 Even lower level API:
 
-- \ref RThread
-- \ref REmbedInternal
+- \ref RRBackendProtcolFrontend
+- \ref RBackend
+- \ref RRBackendProtcolBackend
 
 */
 

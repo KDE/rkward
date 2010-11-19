@@ -43,7 +43,7 @@ public:
 	void insertRows (int row, int count);
 protected:
 /** Reimplemented to disable duplicate checks during the setText() calls within */
-	void setCharacterFromR (int from_row, int to_row, QString *data);
+	void setCharacterFromR (int from_row, int to_row, const QStringList &data);
 /** Reimplemented to assume sequential row number on initialization */
 	void beginEdit ();
 private:

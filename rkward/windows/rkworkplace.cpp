@@ -216,7 +216,7 @@ bool RKWorkplace::openAnyUrl (const KUrl &url) {
 	return false;
 }
 
-bool RKWorkplace::openScriptEditor (const KUrl &url, const QString& encoding, bool use_r_highlighting, bool read_only, const QString &force_caption) {
+bool RKWorkplace::openScriptEditor (const KUrl &url, const QString& encoding, bool use_r_highlighting, bool read_only, const QString &force_caption, bool delete_on_close) {
 	RK_TRACE (APP);
 
 // is this url already opened?
@@ -234,7 +234,7 @@ bool RKWorkplace::openScriptEditor (const KUrl &url, const QString& encoding, bo
 	RKCommandEditorWindow *editor = new RKCommandEditorWindow (view (), use_r_highlighting);
 
 	if (!url.isEmpty ()) {
-		if (!editor->openURL (url, encoding, use_r_highlighting, read_only)) {
+		if (!editor->openURL (url, encoding, use_r_highlighting, read_only, delete_on_close)) {
 			delete editor;
 			KMessageBox::messageBox (view (), KMessageBox::Error, i18n ("Unable to open \"%1\"", url.prettyUrl ()), i18n ("Could not open command file"));
 			return false;
@@ -341,8 +341,8 @@ RKEditor *RKWorkplace::editObject (RObject *object) {
 		}
 
 		unsigned long size = 1;
-		for (unsigned int i = 0; i < iobj->numDimensions (); ++i) {
-			size *= iobj->getDimension (i);
+		foreach (int dim, iobj->getDimensions ()) {
+			size *= dim;
 		}
 		if ((RKSettingsModuleGeneral::warnLargeObjectThreshold () != 0) && (size > RKSettingsModuleGeneral::warnLargeObjectThreshold ())) {
 			if (KMessageBox::warningContinueCancel (view (), i18n ("You are about to edit object \"%1\", which is very large (%2 fields). RKWard is not optimized to handle very large objects in the built in data editor. This will use a lot of memory, and - depending on your system - might be very slow. For large objects it is generally recommended to edit using command line means or to split into smaller chunks before editing. On the other hand, if you have enough memory, or the data is simple enough (numeric data is easier to handle, than factor), editing may not be a problem at all. You can configure this warning (or turn it off entirely) under Settings->Configure RKWard->General.\nReally edit object?", iobj->getFullName (), size), i18n ("About to edit very large object")) != KMessageBox::Continue) {

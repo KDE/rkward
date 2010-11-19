@@ -1,8 +1,8 @@
 /***************************************************************************
-                          rfunctionobject  -  description
+                          rkfrontendtransmitter  -  description
                              -------------------
-    begin                : Wed Apr 26 2006
-    copyright            : (C) 2006 by Thomas Friedrichsmeier
+    begin                : Thu Nov 04 2010
+    copyright            : (C) 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -14,31 +14,41 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#ifndef RFUNCTION_H
-#define RFUNCTION_H
 
-#include "robject.h"
+#ifndef RKFRONTENDTRANSMITTER_H
+#define RKFRONTENDTRANSMITTER_H
 
-class RCommand;
+#include "rktransmitter.h"
 
-/**
-Internal representation of function objects in the R workspace
+class QProcess;
+class QLocalServer;
 
-@author Thomas Friedrichsmeier
-*/
-
-class RFunctionObject : public RObject {
+class RKFrontendTransmitter : public RKAbstractTransmitter, public RKROutputBuffer {
+Q_OBJECT
 public:
-	RFunctionObject (RContainerObject *parent, const QString &name);
-	~RFunctionObject ();
+	RKFrontendTransmitter ();
+	~RKFrontendTransmitter ();
 
-/** reimplemented from RObject to handle function arguments */
-	bool updateStructure (RData *new_data);
-	QString printArgs () const;
-protected:
-	QStringList argnames;
-	QStringList argvalues;
-	bool updateArguments (RData *new_data);
+	void run ();
+
+	bool doMSleep (int delay) {
+		msleep (delay);
+		return true;
+	};
+	void writeRequest (RBackendRequest *request);
+	void requestReceived (RBackendRequest *request);
+private slots:
+	void connectAndEnterLoop ();
+	void newProcessOutput ();
+	void backendExit (int exitcode);
+private:
+	void handleTransmissionError (const QString &message);
+
+	int current_request_length;
+	QProcess* backend;
+	QLocalServer* server;
+	QString token;
 };
 
 #endif
+

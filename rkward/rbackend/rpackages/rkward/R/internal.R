@@ -60,13 +60,13 @@
 	}
 }
 
+".rk.rkreply" <- NULL
+".rk.set.reply" <- function (x) .rk.rkreply <<- x
+
 ".rk.do.call" <- function (x, args=NULL) {
+	.rk.set.reply (NULL)
 	.Call ("rk.do.command", c (x, args));
-	if (exists (".rk.rkreply")) {
-		return (.rk.rkreply)
-	} else {
-		return (NULL)
-	}
+	return (.rk.rkreply)
 }
 
 # package information formats may - according to the help - be subject to change. Hence this function to cope with "missing" values
@@ -295,15 +295,11 @@
 
 ".rk.output.html.file" <- NULL
 
-".rk.rkreply" <- NULL
-
-".rk.set.reply" <- function (x) .rk.rkreply <<- x
-
 "Sys.setlocale" <- function (category = "LC_ALL", locale = "", ...) {
 	if (category == "LC_ALL" || category == "LC_CTYPE" || category == "LANG") {
-		.rk.do.call ("preLocaleChange", NULL);
-		if (!is.null (.rk.rkreply)) {
-			if (.rk.rkreply == FALSE) stop ("Changing the locale was cancelled by user");
+		allow <- .rk.do.call ("preLocaleChange", NULL);
+		if (!is.null (allow)) {
+			if (allow == FALSE) stop ("Changing the locale was cancelled by user");
 		}
 
 		ret <- base::Sys.setlocale (category, locale, ...)
@@ -332,6 +328,48 @@ formals (setwd) <- formals (base::setwd)
 
 ".rk.make.hr" <- function () {
 	.rk.cat.output ("<hr>\n");
+}
+
+# for caputring message output while running a plugin command
+".rk.capture.messages" <- function () {
+	if (exists (".rk.capture.messages.sinknumber", envir=as.environment ("package:rkward"), inherits=FALSE)) {
+		# We don't support nesting, so purge it, first
+		.rk.print.captured.messages ()
+	}
+	if (!exists (".rk.capture.messages.sinkfile", envir=as.environment ("package:rkward"), inherits=FALSE)) {
+		sinkfile <- tempfile ("rkward_plugin_messages")
+		assign (".rk.capture.messages.sinkfile", sinkfile, envir=as.environment ("package:rkward"))
+	} else {
+		sinkfile <- get (".rk.capture.messages.sinkfile", envir=as.environment ("package:rkward"), inherits=FALSE)
+	}
+
+	sink (file (sinkfile, open="w"), type="message")
+	assign (".rk.capture.messages.sinknumber", sink.number ("message"), envir=as.environment ("package:rkward"))
+}
+
+".rk.print.captured.messages" <- function () {
+	if (!exists (".rk.capture.messages.sinknumber", envir=as.environment ("package:rkward"), inherits=FALSE)) return ()
+
+	sinkfile <- get (".rk.capture.messages.sinkfile", envir=as.environment ("package:rkward"), inherits=FALSE)
+	if (file.exists (sinkfile)) {
+		output <- readLines (sinkfile, warn=FALSE)
+		if (length (output) > 0) {
+			.rk.cat.output ("<h2>Messages, warnings, or errors:</h2>\n")
+			rk.print.literal (output)
+		}
+	}
+
+	sinknumber <- get (".rk.capture.messages.sinknumber", envir=as.environment ("package:rkward"), inherits=FALSE)
+	if (sink.number (type="message") == sinknumber) {
+		sink (type="message")	# remove it
+	} else {
+		warning ("Message sink has been added or removed since last call to .rk.capture.messages().")
+	}
+
+	con <- getConnection (sinknumber)
+	close (con)
+
+	remove (list=".rk.capture.messages.sinknumber", envir=as.environment ("package:rkward"))
 }
 
 # Start recording commands that are submitted from rkward to R.

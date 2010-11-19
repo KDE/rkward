@@ -19,11 +19,10 @@
 #include "rcommandreceiver.h"
 #include "rinterface.h"
 #include "../windows/rkcommandlog.h"
+#include "rkrbackendprotocol_shared.h"
 
 #include "../debug.h"
 #include "../rkglobals.h"
-
-#define MAX_RECEIVERS 3
 
 RCommandBase::RCommandBase (bool is_chain) {
 	is_command_chain = is_chain;
@@ -57,10 +56,11 @@ RCommand::RCommand(const QString &command, int type, const QString &rk_equiv, RC
 	if (_command.isEmpty ()) _type |= EmptyCommand;
 	status = 0;
 	_rk_equiv = rk_equiv;
-	RCommand::receivers = new RCommandReceiver* [MAX_RECEIVERS];
-	num_receivers = 0;
-	addReceiver (receiver);
-	addReceiver (RKCommandLog::getLog ());
+	for (int i = 0; i < MAX_RECEIVERS_PER_RCOMMAND; ++i) receivers[i] = 0;
+	if (!(type & Internal)) {
+		addReceiver (receiver);
+		addReceiver (RKCommandLog::getLog ());
+	}
 }
 
 RCommand::~RCommand(){
@@ -69,7 +69,6 @@ RCommand::~RCommand(){
 	for (QList<ROutput*>::const_iterator it = output_list.constBegin (); it != output_list.constEnd (); ++it) {
 		delete (*it);
 	}
-	delete [] receivers;
 	// The output_list itself is cleared automatically
 }
 
@@ -78,13 +77,15 @@ void RCommand::addReceiver (RCommandReceiver *receiver) {
 
 	if (!receiver) return;
 
-	if (num_receivers >= MAX_RECEIVERS) {
-		RK_DO (qDebug ("Too many receivers for command"), RBACKEND, DL_ERROR);
-		return;
+	for (int i = 0; i < MAX_RECEIVERS_PER_RCOMMAND; ++i) {
+		if (receivers[i] == 0) {
+			receivers[i] = receiver;
+			receiver->addCommand (this);
+			return;
+		}
 	}
 
-	receivers[num_receivers++] = receiver;
-	receiver->addCommand (this);
+	RK_DO (qDebug ("Too many receivers for command"), RBACKEND, DL_ERROR);
 }
 
 void RCommand::removeReceiver (RCommandReceiver *receiver) {
@@ -92,27 +93,21 @@ void RCommand::removeReceiver (RCommandReceiver *receiver) {
 
 	if (!receiver) return;
 
-	RCommandReceiver **newlist = new RCommandReceiver* [MAX_RECEIVERS];
-	int num_new_receivers = 0;
-	for (int i=0; i < num_receivers; ++i) {
-		if (receivers[i] != receiver) {
-			newlist[num_new_receivers++] = receivers[i];
+	for (int i = 0; i < MAX_RECEIVERS_PER_RCOMMAND; ++i) {
+		if (receivers[i] == receiver) {
+			receivers[i] = 0;
+			return;
 		}
 	}
 
-	if (num_new_receivers == num_receivers) {
-		RK_DO (qDebug ("Was not a receiver in RCommand::removeReceiver"), RBACKEND, DL_WARNING);
-	}
-
-	delete [] receivers;
-	receivers = newlist;
-	num_receivers = num_new_receivers;
+	RK_DO (qDebug ("Was not a receiver in RCommand::removeReceiver: %p", receiver), RBACKEND, DL_WARNING);
 }
 
 void RCommand::finished () {
 	RK_TRACE (RBACKEND);
 
-	for (int i=0; i < num_receivers; ++i) {
+	for (int i=0; i < MAX_RECEIVERS_PER_RCOMMAND; ++i) {
+		if (receivers[i] == 0) continue;
 		receivers[i]->delCommand (this);
 		receivers[i]->rCommandDone (this);
 	}
@@ -121,7 +116,8 @@ void RCommand::finished () {
 void RCommand::newOutput (ROutput *output) {
 	RK_TRACE (RBACKEND);
 
-	for (int i=0; i < num_receivers; ++i) {
+	for (int i=0; i < MAX_RECEIVERS_PER_RCOMMAND; ++i) {
+		if (receivers[i] == 0) continue;
 		receivers[i]->newOutput (this, output);
 	}
 }
@@ -169,5 +165,28 @@ QString RCommand::fullOutput () {
 	for (ROutputList::const_iterator it = output_list.begin (); it != output_list.end (); ++it) {
 		ret.append ((*it)->output);
 	}
+	return ret;
+}
+
+void RCommand::mergeAndDeleteProxy (RCommandProxy *proxy) {
+	RK_TRACE (RBACKEND);
+
+	RK_ASSERT (proxy);
+	RK_ASSERT (proxy->id == _id);
+	RK_ASSERT (proxy->type == _type);
+
+	status = proxy->status;
+	swallowData (*proxy);
+	delete proxy;
+}
+
+RCommandProxy* RCommand::makeProxy () const {
+	RK_TRACE (RBACKEND);
+	RK_ASSERT (status == 0);	// Initialization from an already touched command is not a real problem, but certainly no expected usage
+	RK_ASSERT (getDataType () == RData::NoData);
+
+	RCommandProxy *ret = new RCommandProxy (_command, _type);
+	ret->id = _id,
+	ret->status = status;
 	return ret;
 }

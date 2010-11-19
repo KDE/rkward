@@ -78,14 +78,14 @@ public:
 	~RKHelpSearchResultsModel ();
 
 /** Set the results. The model will assume ownership of the results */
-	void setResults (QString* new_results, int new_result_count);
+	void setResults (const QStringList &new_results);
 
 	int rowCount (const QModelIndex& parent=QModelIndex()) const;
 	int columnCount (const QModelIndex& parent=QModelIndex()) const;
 	QVariant data (const QModelIndex& index, int role=Qt::DisplayRole) const;
 	QVariant headerData (int section, Qt::Orientation orientation, int role=Qt::DisplayRole) const;
 private:
-	QString* results;
+	QStringList results;
 	int result_count;
 };
 

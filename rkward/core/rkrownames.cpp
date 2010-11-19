@@ -214,7 +214,7 @@ void RKRowNames::removeRows (int from_row, int to_row) {
 	lockSyncing (false);
 }
 
-void RKRowNames::setCharacterFromR (int from_row, int to_row, QString *data) {
+void RKRowNames::setCharacterFromR (int from_row, int to_row, const QStringList &data) {
 	RK_TRACE (OBJECTS);
 
 	is_sequential_up_to_row = -1;
