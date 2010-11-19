@@ -714,7 +714,7 @@ extern int R_interrupts_pending;
 SEXP doError (SEXP call) {
 	RK_TRACE (RBACKEND);
 
-	if ((RKRBackend::repl_status.eval_depth == 0) && (!RKRBackend::repl_status.in_browser_context) && (!RKRBackend::this_pointer->isKilled ())) {
+	if ((RKRBackend::repl_status.eval_depth == 0) && (!RKRBackend::repl_status.in_browser_context) && (!RKRBackend::this_pointer->isKilled ()) && (RKRBackend::repl_status.user_command_status != RKRBackend::RKReplStatus::ReplIterationKilled)) {
 		RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::UserCommandFailed;
 	}
 	if (RKRBackend::repl_status.interrupted) {
