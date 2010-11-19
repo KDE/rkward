@@ -56,7 +56,7 @@ RKRBackendProtocolFrontend::~RKRBackendProtocolFrontend () {
 #endif
 }
 
-void RKRBackendProtocolFrontend::setupBackend (QVariantMap backend_params) {
+void RKRBackendProtocolFrontend::setupBackend () {
 	RK_TRACE (RBACKEND);
 
 #ifdef RKWARD_THREADED

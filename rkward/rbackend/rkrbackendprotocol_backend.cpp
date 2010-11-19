@@ -127,7 +127,7 @@
 			}
 		}
 		if (servername.isEmpty ()) {
-			printf ("no server to connect to");
+			printf ("no server to connect to\n");
 			return 1;
 		}
 

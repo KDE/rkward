@@ -102,7 +102,7 @@ RInterface::RInterface () {
 	flush_timer->start (FLUSH_INTERVAL);
 
 	new RKRBackendProtocolFrontend (this);
-	RKRBackendProtocolFrontend::instance ()->setupBackend (QVariantMap ());
+	RKRBackendProtocolFrontend::instance ()->setupBackend ();
 }
 
 void RInterface::issueCommand (const QString &command, int type, const QString &rk_equiv, RCommandReceiver *receiver, int flags, RCommandChain *chain) {

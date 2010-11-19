@@ -34,7 +34,7 @@ public:
 	ROutputList flushOutput (bool force);
 	void interruptProcessing ();
 	void terminateBackend ();
-	void setupBackend (QVariantMap backend_params);
+	void setupBackend ();
 	static RKRBackendProtocolFrontend* instance () { return _instance; };
 protected:
 /** needed to handle the QEvents, the R thread is sending (notifications on what's happening in the backend thread) */

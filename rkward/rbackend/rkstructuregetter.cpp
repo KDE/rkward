@@ -309,10 +309,10 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 		}
 		PROTECT (childnames_s);
 		QStringList childnames = RKRSupport::SEXPToStringList (childnames_s);
-		unsigned int childcount = childnames.size ();
+		int childcount = childnames.size ();
 
 		RData::RDataStorage children (childcount, 0);
-		for (unsigned int i = 0; i < childcount; ++i) {
+		for (int i = 0; i < childcount; ++i) {
 			children[i] = new RData ();		// NOTE: RData-ctor pre-initalizes these to empty. Thus, we're safe even if there is an error while fetching one of the children.
 		}
 
@@ -323,7 +323,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 				// For these, Rf_findVar would fail.
 				REPROTECT (value = RKRSupport::callSimpleFun (as_environment_fun, value, R_GlobalEnv), value_index);
 			}
-			for (unsigned int i = 0; i < childcount; ++i) {
+			for (int i = 0; i < childcount; ++i) {
 				SEXP current_childname = Rf_install(CHAR(STRING_ELT(childnames_s, i)));		// ??? Why does simply using STRING_ELT(childnames_i, i) crash?
 				PROTECT (current_childname);
 				SEXP child = Rf_findVar (current_childname, value);
@@ -346,20 +346,20 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 			// see http://sourceforge.net/tracker/?func=detail&aid=3002439&group_id=50231&atid=459007
 			bool may_be_special = Rf_length (value) < childcount;
 			if (Rf_isList (value) && (!may_be_special)) {		// old style list
-				for (unsigned int i = 0; i < childcount; ++i) {
+				for (int i = 0; i < childcount; ++i) {
 					SEXP child = CAR (value);
 					getStructureSafe (child, childnames[i], false, children[i]);
 					CDR (value);
 				}
 			} else if (Rf_isNewList (value) && (!may_be_special)) {				// new style list
-				for (unsigned int i = 0; i < childcount; ++i) {
+				for (int i = 0; i < childcount; ++i) {
 					SEXP child = VECTOR_ELT(value, i);
 					getStructureSafe (child, childnames[i], false, children[i]);
 				}
 			} else {		// probably an S4 object disguised as a list
 				SEXP index = Rf_allocVector(INTSXP, 1);
 				PROTECT (index);
-				for (unsigned int i = 0; i < childcount; ++i) {
+				for (int i = 0; i < childcount; ++i) {
 					INTEGER (index)[0] = (i + 1);
 					SEXP child = RKRSupport::callSimpleFun2 (double_brackets_fun, value, index, R_BaseEnv);
 					getStructureSafe (child, childnames[i], false, children[i]);
