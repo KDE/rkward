@@ -47,6 +47,7 @@ private:
 	int current_request_length;
 	QProcess* backend;
 	QLocalServer* server;
+	QString token;
 };
 
 #endif

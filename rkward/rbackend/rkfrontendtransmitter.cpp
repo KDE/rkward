@@ -21,12 +21,15 @@
 #include "../misc/rkcommonfunctions.h"
 #include "../settings/rksettingsmodulegeneral.h"
 
+#include "klocale.h"
+#include "krandom.h"
 #include "kstandarddirs.h"
 #include <QCoreApplication>
 #include <QProcess>
 #include <QLocalServer>
 #include <QLocalSocket>
 
+#include "../version.h"
 #include "../debug.h"
 
 RKFrontendTransmitter::RKFrontendTransmitter () : RKAbstractTransmitter () {
@@ -46,7 +49,9 @@ void RKFrontendTransmitter::run () {
 
 	// start server
 	server = new QLocalServer (this);
-	if (!server->listen ("rkward")) handleTransmissionError ("failure to start frontend server: " + server->errorString ());
+	// we add a bit of randomness to the servername, as in general the servername must be unique
+	// there could be conflicts with concurrent or with previous crashed rkward sessions.
+	if (!server->listen ("rkward" + KRandom::randomString (8))) handleTransmissionError ("Failure to start frontend server: " + server->errorString ());
 	connect (server, SIGNAL (newConnection ()), this, SLOT (connectAndEnterLoop ()), Qt::QueuedConnection);
 
 	// start backend
@@ -56,12 +61,19 @@ void RKFrontendTransmitter::run () {
 	args.append ("--server-name " + server->fullServerName ());
 	args.append ("--data-dir " + RKSettingsModuleGeneral::filesPath ());
 	backend->setProcessChannelMode (QProcess::MergedChannels);	// at least for now. Seems difficult to get interleaving right, without this.
-	connect (backend, SIGNAL (readyReadStandardOutput ()), this, SLOT (newProcessOutput ()));
 	connect (backend, SIGNAL (finished (int, QProcess::ExitStatus)), this, SLOT (backendExit (int)));
 	QString backend_executable = KStandardDirs::findExe ("rkward.rbackend", QCoreApplication::applicationDirPath () + "/rbackend");
 	if (backend_executable.isEmpty ()) backend_executable = KStandardDirs::findExe ("rkward.rbackend", QCoreApplication::applicationDirPath ());
 	RK_ASSERT (!backend_executable.isEmpty ());
 	backend->start (backend_executable, args, QIODevice::ReadOnly);
+
+	// fetch security token
+	if (!backend->canReadLine ()) backend->waitForReadyRead ();
+	token = QString::fromLocal8Bit (backend->readLine ());
+	token.chop (1);
+
+	connect (backend, SIGNAL (readyReadStandardOutput ()), this, SLOT (newProcessOutput ()));
+	if (backend->bytesAvailable ()) newProcessOutput ();
 
 	exec ();
 
@@ -78,8 +90,20 @@ void RKFrontendTransmitter::connectAndEnterLoop () {
 	RK_TRACE (RBACKEND);
 	RK_ASSERT (server->hasPendingConnections ());
 
-	setConnection (server->nextPendingConnection ());
+	QLocalSocket *con = server->nextPendingConnection ();
 	server->close ();
+
+	// handshake
+	if (!con->canReadLine ()) con->waitForReadyRead (1000);
+	QString token_c = QString::fromLocal8Bit (con->readLine ());
+	token_c.chop (1);
+	if (token_c != token) handleTransmissionError (i18n ("Error during handshake with backend process. Expected token '%1', received token '%2'").arg (token).arg (token_c));
+	if (!con->canReadLine ()) con->waitForReadyRead (1000);
+	QString version_c = QString::fromLocal8Bit (con->readLine ());
+	version_c.chop (1);
+	if (version_c != VERSION) handleTransmissionError (i18n ("Version mismatch during handshake with backend process. Frontend is version '%1' while backend is '%2'.\nPlease fix your installation.").arg (VERSION).arg (version_c));
+
+	setConnection (con);
 }
 
 void RKFrontendTransmitter::newProcessOutput () {

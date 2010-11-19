@@ -25,7 +25,7 @@ This will be used as the secondary thread, and takes care of serializing, sendin
 class RKRBackendTransmitter : public RKAbstractTransmitter {
 Q_OBJECT
 public:
-	RKRBackendTransmitter (const QString &servername);
+	RKRBackendTransmitter (const QString &servername, const QString &token);
 	~RKRBackendTransmitter ();
 
 	void publicmsleep (int delay) { msleep (delay); };
@@ -41,6 +41,7 @@ private:
 	void flushOutput (bool force);
 	QList<RBackendRequest*> current_sync_requests;	// pointers to the request that we expect a reply for. Yes, internally, this can be several requests.
 	QString servername;
+	QString token;
 };
 
 #endif

@@ -84,6 +84,7 @@
 #	include "rkbackendtransmitter.h"
 
 #	include "ktemporaryfile.h"
+#	include "krandom.h"
 	int RK_Debug_Level = 2;
 	int RK_Debug_Flags = ALL;
 	QMutex RK_Debug_Mutex;
@@ -127,9 +128,16 @@
 		}
 		if (servername.isEmpty ()) {
 			printf ("no server to connect to");
+			return 1;
 		}
 
-		RKRBackendTransmitter transmitter (servername);
+		// a simple security token to all the frontend to make sure that it is really talking to the backend process that it started in the local socket connection.
+		// this token is sent both via stdout and the local socket connection. The frontend simply compares both values.
+		QString token = KRandom::randomString (32);
+		printf ("%s\n", token.toLocal8Bit ().data ());
+		fflush (stdout);
+
+		RKRBackendTransmitter transmitter (servername, token);
 		RKRBackendProtocolBackend backend (data_dir);
 		transmitter.start ();
 		RKRBackend::this_pointer->run ();

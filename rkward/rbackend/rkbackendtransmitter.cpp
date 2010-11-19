@@ -22,12 +22,14 @@
 #include <QTimer>
 #include <QLocalSocket>
 
+#include "../version.h"
 #include "../debug.h"
 
-RKRBackendTransmitter::RKRBackendTransmitter (const QString &servername) {
+RKRBackendTransmitter::RKRBackendTransmitter (const QString &servername, const QString &token) {
 	RK_TRACE (RBACKEND);
 
 	RKRBackendTransmitter::servername = servername;
+	RKRBackendTransmitter::token = token;
 }
 
 RKRBackendTransmitter::~RKRBackendTransmitter () {
@@ -56,7 +58,11 @@ void RKRBackendTransmitter::run () {
 	setConnection (con);
 	
 	if (!connection->waitForConnected ()) handleTransmissionError ("Could not connect: " + connection->errorString ());
-#warning do handshake
+	// handshake
+	connection->write (token.toLocal8Bit ().data ());
+	connection->write ("\n");
+	connection->write (VERSION);
+	connection->write ("\n");
 
 	QTimer* flush_timer = new QTimer (this);
 	connect (flush_timer, SIGNAL (timeout()), this, SLOT (flushOutput()));
