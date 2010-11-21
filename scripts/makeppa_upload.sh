@@ -1,10 +1,16 @@
 #!/bin/bash
 
 ## begin: These may need adjusting!
-TARGETS="maverick lucid karmic jaunty"
-PPAVERSIONSTRING="experimental1ppa1"
-PPAID="rkward-devel"
+TARGETS="natty maverick lucid karmic jaunty"
 AUTHOR="Thomas Friedrichsmeier <tfry@users.sourceforge.net>"
+if [ ${1} = "--stable" ]; then
+	shift
+	PPAID="rkward-stable"
+	PPAVERSIONSTRING=".1rkward.stable"
+else
+	PPAID="rkward-devel"
+	PPAVERSIONSTRING=".0rkward.devel"
+fi
 ## end: These may need adjusting!
 
 cd `dirname $0`/..
