@@ -3,24 +3,27 @@
 ## begin: These may need adjusting!
 TARGETS="natty maverick lucid karmic jaunty"
 AUTHOR="Thomas Friedrichsmeier <tfry@users.sourceforge.net>"
-if [ ${1} = "--stable" ]; then
-	shift
-	PPAID="rkward-stable"
-	PPAVERSIONSTRING=".1rkward.stable"
-else
-	PPAID="rkward-devel"
-	PPAVERSIONSTRING=".0rkward.devel"
-fi
 ## end: These may need adjusting!
 
 cd `dirname $0`/..
 BASEDIR=`pwd`
-VERSION=`${BASEDIR}/scripts/getversion.sh ${1}`
 PPATEMPDIR=$BASEDIR/ppatemp
 mkdir $PPATEMPDIR
 
-# first create source snapshot
-${BASEDIR}/scripts/makedist.sh $VERSION
+if [ ${1} = "--stable" ]; then
+	shift
+	PPAID="rkward-stable"
+	PPAVERSIONSTRING=".1rkward.stable"
+	# do not re-create tarball
+	VERSION=`${BASEDIR}/scripts/getversion.sh ${1}`
+else
+	PPAID="rkward-devel"
+	PPAVERSIONSTRING=".0rkward.devel"
+	# first create source snapshot
+	VERSION=`${BASEDIR}/scripts/getversion.sh ${1}`
+	${BASEDIR}/scripts/makedist.sh $VERSION
+fi
+
 cp ${BASEDIR}/rkward-$VERSION.tar.gz $PPATEMPDIR/rkward_$VERSION.orig.tar.gz
 
 function doSourceUpload {
