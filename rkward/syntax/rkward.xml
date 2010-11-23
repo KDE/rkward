@@ -171,6 +171,6 @@
 	<comments>
 		<comment name="singleLine" start="#" end=""/>
 	</comments>
-	<keywords casesensitive="1" />
+	<keywords casesensitive="true" weakDeliminator="." />
 </general>
 </language>
