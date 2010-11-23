@@ -1,4 +1,5 @@
 - Moved automated testing framework moved to a dedicated R package "rkwardtests", and added documentation
+- Support pasting to the middle of the current command line in the R Console
 - Better handling of script-editor commands while the R Console is busy
 - Correct interleaving of multi-line commands and the corresponding output in the R Console
 - Fixed: Portions of multi-line commands entered on the R Console would be run twice under some circumstances

@@ -57,9 +57,7 @@ public:
 
 /** Returns the command currently being edited (not executed yet) */
 	QString currentEditingLine () const;
-/** Returns the current cursor position. Returns the column on which is the cursor.  */
-	int currentCursorPosition () const;
-/** Returns the current cursor position, within the current command (without taking into account the prefix).*/
+/** Returns the current cursor position, within the current command (without taking into account the prefix). Returns -1 if the cursor is not on the line containing the command. */
 	int currentCursorPositionInCommand ();
 	void doTabCompletion ();
 	bool provideContext (unsigned int line_rev, QString *context, int *cursor_position);

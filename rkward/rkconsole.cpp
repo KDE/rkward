@@ -123,7 +123,7 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 // KDE4: a way to do this?
 //	doc->setUndoSteps (0);
 	clear ();
-	doc->setHighlightingMode ("RKWard output");
+	doc->setHighlightingMode ("R interactive session");
 
 	commands_history = RKSettingsModuleConsole::loadCommandHistory ();
 	commands_history_position = commands_history.constEnd ();
@@ -422,6 +422,7 @@ void RKConsole::doTabCompletion () {
 	int word_start;
 	int word_end;
 	int cursor_pos = currentCursorPositionInCommand ();
+	if (cursor_pos < 0) cursor_pos = current_line.length ();
 	RKCommonFunctions::getCurrentSymbolOffset (current_line, cursor_pos, false, &word_start, &word_end);
 	QString current_symbol = current_line.mid (word_start, word_end - word_start);
 
@@ -717,6 +718,14 @@ void RKConsole::submitBatch (const QString &batch) {
 
 	previous_chunk_was_piped = false;
 	input_buffer.append (batch);
+	if (!current_command) {		// pasting into the middle of the command line
+		QString line = currentEditingLine ();
+		int pos = currentCursorPositionInCommand ();
+		if (pos >= 0) {
+			setCurrentEditingLine (line.left (pos));
+			input_buffer.append (line.mid (pos));
+		}
+	}
 	if (!current_command) tryNextInBuffer ();
 }
 
@@ -815,14 +824,12 @@ void RKConsole::literalCopy () {
 	QApplication::clipboard()->setText (view->selectionText ());
 }
 
-int RKConsole::currentCursorPosition () const {
-	KTextEditor::Cursor c = view->cursorPosition ();
-	return(c.column ());
-}
-
 int RKConsole::currentCursorPositionInCommand(){
 	RK_TRACE (APP);
-	return (currentCursorPosition() - prefix.length());
+
+	KTextEditor::Cursor c = view->cursorPosition ();
+	if (c.line () < (doc->lines () - 1)) return -1;
+	return (c.column () - prefix.length());
 }
 
 void RKConsole::resetConsole () {
@@ -913,6 +920,7 @@ void RKConsole::pipeCommandThroughConsoleLocal (const QString &command_string) {
 			}
 		}
 	}
+	cursorAtTheEnd ();
 	submitBatch (command_string + '\n');
 	previous_chunk_was_piped = true;
 }
