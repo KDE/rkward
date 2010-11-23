@@ -588,7 +588,7 @@ void RKCommandEditorWindow::setWDToScript () {
 	// KURL::directory () returns a leading slash on windows as of KDElibs 4.3
 	while (dir.startsWith ('/')) dir.remove (0, 1);
 #endif
-	RKConsole::pipeUserCommand (new RCommand ("setwd (\"" + dir + "\")", RCommand::User, i18n ("cd to current script directory")));
+	RKConsole::pipeUserCommand ("setwd (\"" + dir + "\")");
 }
 
 void RKCommandEditorWindow::runSelection() {
@@ -597,7 +597,7 @@ void RKCommandEditorWindow::runSelection() {
 	QString command = m_view->selectionText ();
 	if (command.isEmpty ()) return;
 
-	RKConsole::pipeUserCommand (new RCommand (command, RCommand::User, QString::null));
+	RKConsole::pipeUserCommand (command);
 }
 
 void RKCommandEditorWindow::runLine() {
@@ -605,7 +605,7 @@ void RKCommandEditorWindow::runLine() {
 
 	KTextEditor::Cursor c = m_view->cursorPosition();
 	QString command = m_doc->line (c.line());
-	if (!command.isEmpty ()) RKConsole::pipeUserCommand (new RCommand (command, RCommand::User, QString::null));
+	if (!command.isEmpty ()) RKConsole::pipeUserCommand (command);
 
 	// advance to next line (NOTE: m_view->down () won't work on auto-wrapped lines)
 	c.setLine(c.line() + 1);
@@ -638,7 +638,7 @@ void RKCommandEditorWindow::runBlock () {
 		QString command = m_doc->text (*(block_records[index].range));
 		if (command.isEmpty ()) return;
 	
-		RKConsole::pipeUserCommand (new RCommand (command, RCommand::User, QString::null));
+		RKConsole::pipeUserCommand (command);
 	}
 }
 

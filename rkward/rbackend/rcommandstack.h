@@ -50,6 +50,7 @@ public:
 
 /** see pop() */
 	RCommand* currentCommand ();
+	RCommandChain* currentChain () { return current_chain; };
 
 /** the regular command stack, i.e. not a callback */
 	static RCommandStack *regular_stack;

@@ -55,6 +55,7 @@ RCommand::RCommand(const QString &command, int type, const QString &rk_equiv, RC
 	else _command = command;
 	if (_command.isEmpty ()) _type |= EmptyCommand;
 	status = 0;
+	has_been_run_up_to = 0;
 	_rk_equiv = rk_equiv;
 	for (int i = 0; i < MAX_RECEIVERS_PER_RCOMMAND; ++i) receivers[i] = 0;
 	if (!(type & Internal)) {
@@ -122,7 +123,17 @@ void RCommand::newOutput (ROutput *output) {
 	}
 }
 
-QString RCommand::error () {
+void RCommand::commandLineIn () {
+	RK_TRACE (RBACKEND);
+	RK_ASSERT (_type & User);
+
+	for (int i=0; i < MAX_RECEIVERS_PER_RCOMMAND; ++i) {
+		if (receivers[i] == 0) continue;
+		receivers[i]->userCommandLineIn (this);
+	}
+}
+
+QString RCommand::error () const {
 	RK_TRACE (RBACKEND);
 
 	QString ret;
@@ -134,7 +145,7 @@ QString RCommand::error () {
 	return ret;
 }
 
-QString RCommand::output () {
+QString RCommand::output () const {
 	RK_TRACE (RBACKEND);
 
 	QString ret;
@@ -146,7 +157,7 @@ QString RCommand::output () {
 	return ret;
 }
 
-QString RCommand::warnings () {
+QString RCommand::warnings () const {
 	RK_TRACE (RBACKEND);
 
 	QString ret;
@@ -158,7 +169,7 @@ QString RCommand::warnings () {
 	return ret;
 }
 
-QString RCommand::fullOutput () {
+QString RCommand::fullOutput () const {
 	RK_TRACE (RBACKEND);
 
 	QString ret;
@@ -166,6 +177,13 @@ QString RCommand::fullOutput () {
 		ret.append ((*it)->output);
 	}
 	return ret;
+}
+
+QString RCommand::remainingCommand () const {
+	RK_TRACE (RBACKEND);
+	RK_ASSERT (_type & User);	// not a grave problem, if it's not, but not useful, either
+
+	return _command.mid (has_been_run_up_to);
 }
 
 void RCommand::mergeAndDeleteProxy (RCommandProxy *proxy) {
@@ -176,6 +194,7 @@ void RCommand::mergeAndDeleteProxy (RCommandProxy *proxy) {
 	RK_ASSERT (proxy->type == _type);
 
 	status = proxy->status;
+	has_been_run_up_to = proxy->has_been_run_up_to;
 	swallowData (*proxy);
 	delete proxy;
 }
@@ -183,10 +202,12 @@ void RCommand::mergeAndDeleteProxy (RCommandProxy *proxy) {
 RCommandProxy* RCommand::makeProxy () const {
 	RK_TRACE (RBACKEND);
 	RK_ASSERT (status == 0);	// Initialization from an already touched command is not a real problem, but certainly no expected usage
+	RK_ASSERT (has_been_run_up_to == 0);
 	RK_ASSERT (getDataType () == RData::NoData);
 
 	RCommandProxy *ret = new RCommandProxy (_command, _type);
 	ret->id = _id,
 	ret->status = status;
+	ret->has_been_run_up_to = has_been_run_up_to;
 	return ret;
 }

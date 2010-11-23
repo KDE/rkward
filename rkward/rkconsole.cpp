@@ -119,7 +119,6 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 	nprefix = "> ";
 	iprefix = "+ ";
 	prefix = nprefix;
-	command_incomplete = false;
 	output_continuation = false;
 // KDE4: a way to do this?
 //	doc->setUndoSteps (0);
@@ -130,8 +129,9 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 	commands_history_position = commands_history.constEnd ();
 
 	current_command = 0;
+	current_command_displayed_up_to = 0;
 	tab_key_pressed_before = false;
-	command_was_piped = false;
+	previous_chunk_was_piped = false;
 
 // KDE4 TODO: workaround for KDE 4 pre-release versions. Hope this gets fixed before 4.0
 // see http://lists.kde.org/?l=kwrite-devel&m=119721420603507&w=2
@@ -199,10 +199,8 @@ void RKConsole::setCursorClear (int line, int col) {
 }
 
 bool RKConsole::handleKeyPress (QKeyEvent *e) {
-
 	KTextEditor::Cursor c = view->cursorPosition ();
 	int para=c.line (); int pos=c.column ();
-	command_was_piped = false;
 
 	if (para < doc->lines () - 1 || pos < prefix.length ()) {	// not inside the last line?
 		int key = e->key ();
@@ -230,6 +228,8 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 		e->ignore ();
 		return true;
 	}
+
+	previous_chunk_was_piped = false;
 
 	if (e->key () == Qt::Key_Up) {
 		commandsListUp (RKSettingsModuleConsole::shouldDoHistoryContextSensitive (e->modifiers ()));
@@ -279,6 +279,7 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 		return true;
 	} else if (e->key() == Qt::Key_Enter || e->key() == Qt::Key_Return) {
 		hinter->hideArgHint ();
+		addCommandToHistory (currentEditingLine ());
 		submitCommand ();
 		return true;
 	} else if (e->key () == Qt::Key_Left){
@@ -335,7 +336,7 @@ bool RKConsole::provideContext (unsigned int line_rev, QString *context, int *cu
 
 	if (line_rev == 0) {
 		*cursor_position = currentCursorPositionInCommand ();
-		*context = currentCommand ();
+		*context = currentEditingLine ();
 	} else {
 		*cursor_position = -1;
 		*context = incomplete_command;
@@ -416,7 +417,7 @@ bool RKConsole::doTabCompletionHelper (int line_num, const QString &line, int wo
 void RKConsole::doTabCompletion () {
 	RK_TRACE (APP);
 
-	QString current_line = currentCommand ();
+	QString current_line = currentEditingLine ();
 	int current_line_num = doc->lines () - 1;
 	int word_start;
 	int word_end;
@@ -514,12 +515,14 @@ bool RKConsole::eventFilter (QObject *o, QEvent *e) {
 	return false;
 }
 
-QString RKConsole::currentCommand () {
+QString RKConsole::currentEditingLine () const {
 	RK_TRACE (APP);
+
+	if (current_command) return QString ();	// it doesn't count as "editing" line, if a command is currently being executed
 	return (doc->line (doc->lines () - 1).mid (prefix.length ()));
 }
 
-void RKConsole::setCurrentCommand (const QString &command) {
+void RKConsole::setCurrentEditingLine (const QString &command) {
 	RK_TRACE (APP);
 
 	int lastline = doc->lines () - 1;
@@ -543,21 +546,34 @@ void RKConsole::cursorAtTheBeginning () {
 void RKConsole::submitCommand () {
 	RK_TRACE (APP);
 
-	QString current_line = currentCommand ();
-	QString command = current_line;
-	addCommandToHistory (current_line);
-	
-	if (command_incomplete) {
-		command.prepend (incomplete_command + '\n');
+	QString command = incomplete_command + currentEditingLine ();
+	if (!input_buffer.isEmpty ()) {
+		int last_line_end = input_buffer.lastIndexOf ('\n');
+		if (last_line_end < 0) {
+			last_line_end = 0;
+			RK_ASSERT (false);
+		}
+		command.append (input_buffer.left (last_line_end));
+		if (last_line_end < (input_buffer.size () - 1)) {
+			input_buffer = input_buffer.mid (last_line_end + 1);
+		} else {
+			input_buffer.clear ();
+		}
 	}
+	current_command_displayed_up_to = incomplete_command.length ();
+	setCurrentEditingLine (command.mid (current_command_displayed_up_to, command.indexOf ('\n', current_command_displayed_up_to) - current_command_displayed_up_to));
+	current_command_displayed_up_to += currentEditingLine ().length ();
 
-	doc->insertLine (doc->lines (), QString ());
-	if (!current_line.isEmpty ()) {
-		current_command = new RCommand (command, RCommand::User | RCommand::Console, QString::null, this);
+	skip_command_display_lines = incomplete_command.count ('\n');	// incomplete command has already been shown.
+
+	if (!command.isEmpty ()) {
+		doc->insertLine (doc->lines (), QString ());
+		current_command = new RCommand (command, RCommand::User | RCommand::Console, QString (), this);
 		RKGlobals::rInterface ()->issueCommand (current_command);
 		interrupt_command_action->setEnabled (true);
 	} else {
-		tryNextInBatch ();
+		showPrompt (true);
+		tryNextInBuffer ();
 	}
 }
 
@@ -565,11 +581,11 @@ void RKConsole::commandsListUp (bool context_sensitive) {
 	RK_TRACE (APP);
 
 	// if we are at the last line, i.e. not yet navigating the command history, store the current command
-	if (commands_history.constEnd () == commands_history_position) history_editing_line = currentCommand ();
+	if (commands_history.constEnd () == commands_history_position) history_editing_line = currentEditingLine ();
 
 	if (context_sensitive) {
 		if (command_edited) {
-			command_history_context = currentCommand ();
+			command_history_context = currentEditingLine ();
 			commands_history_position = commands_history.constEnd ();
 			command_edited = false;
 		}
@@ -589,7 +605,7 @@ void RKConsole::commandsListUp (bool context_sensitive) {
 
 	if (found) {		// if we did not find a previous matching line, do not touch the commands_history_position
 		commands_history_position = it;
-		setCurrentCommand (*commands_history_position);
+		setCurrentEditingLine (*commands_history_position);
 	} else {
 		KApplication::kApplication ()->beep ();
 	}
@@ -600,7 +616,7 @@ void RKConsole::commandsListDown (bool context_sensitive) {
 
 	if (context_sensitive) {
 		if (command_edited) {
-			command_history_context = currentCommand ();
+			command_history_context = currentEditingLine ();
 	  		commands_history_position = commands_history.constEnd ();
 	  		command_edited = false;
 	  		return; // back at bottommost item
@@ -620,30 +636,32 @@ void RKConsole::commandsListDown (bool context_sensitive) {
 		}
 	}
 
-	if (commands_history.constEnd () == commands_history_position) setCurrentCommand (history_editing_line);
-	else setCurrentCommand (*commands_history_position);
+	if (commands_history.constEnd () == commands_history_position) setCurrentEditingLine (history_editing_line);
+	else setCurrentEditingLine (*commands_history_position);
 }
 
 void RKConsole::rCommandDone (RCommand *command) {
 	RK_TRACE (APP);
+
+	current_command = 0;
+
 	if (command->errorSyntax () && command->error ().isEmpty ()) {
 		doc->insertLine (doc->lines () - 1, i18n ("Syntax error\n"));
 	}
 
 	if (command->errorIncomplete ()) {
 		prefix = iprefix;
-		command_incomplete = true;
-		incomplete_command = command->command ();
+		incomplete_command = command->remainingCommand ();
 	} else {
 		prefix = nprefix;
-		command_incomplete = false;
-		incomplete_command = QString::null;
+		incomplete_command.clear ();
 	}
 
 	if (output_continuation) doc->insertLine (doc->lines (), "");
 	output_continuation = false;
 	commands_history_position = commands_history.constEnd ();
-	tryNextInBatch ();
+	showPrompt (true);
+	tryNextInBuffer ();
 }
 
 void RKConsole::newOutput (RCommand *, ROutput *output) {
@@ -666,7 +684,7 @@ void RKConsole::newOutput (RCommand *, ROutput *output) {
 
 	if (RKSettingsModuleConsole::maxConsoleLines ()) {
 		uint c = (uint) doc->lines();
-// We remove the superflous lines in chunks of 20 while handling output for better performance. Later, in tryNextInBatch(), we trim down to the correct size.
+// We remove the superflous lines in chunks of 20 while handling output for better performance. Later, in showPrompt(), we trim down to the correct size.
 		if (c > (RKSettingsModuleConsole::maxConsoleLines () + 20)) {
 // KDE4: does the setUpdatesEnabled (false) still affect performance?
 			view->setUpdatesEnabled (false);		// major performance boost while removing lines!
@@ -678,19 +696,34 @@ void RKConsole::newOutput (RCommand *, ROutput *output) {
 	output_continuation = true;
 }
 
+void RKConsole::userCommandLineIn (RCommand* cmd) {
+	RK_TRACE (APP);
+	RK_ASSERT (cmd == current_command);
+
+	if (--skip_command_display_lines >= 0) return;
+
+	QString line = cmd->command ().mid (current_command_displayed_up_to + 1);
+	line = line.section ('\n', 0, 0) + '\n';
+	current_command_displayed_up_to += line.length ();
+	if (line.length () < 2) return;		// omit empty lines (esp. the trailing newline of the command!)
+
+	prefix = iprefix;
+	showPrompt (!doc->line (doc->lines ()-1).isEmpty ());
+	setCurrentEditingLine (line);
+}
+
 void RKConsole::submitBatch (const QString &batch) {
 	RK_TRACE (APP);
 
-	if (current_command) return;
-	// splitting batch, not allowing empty entries.
-	// TODO: hack something so we can have empty entries.
-	commands_batch = batch.split ("\n", QString::SkipEmptyParts);
-	tryNextInBatch (false);
+	previous_chunk_was_piped = false;
+	input_buffer.append (batch);
+	if (!current_command) tryNextInBuffer ();
 }
 
-void RKConsole::tryNextInBatch (bool add_new_line) {
+void RKConsole::showPrompt (bool add_new_line) {
 	RK_TRACE (APP);
-	if (add_new_line) {
+
+	if (add_new_line || (!doc->lines ())) {
 		if (RKSettingsModuleConsole::maxConsoleLines ()) {
 			uint c = doc->lines();
 			if (c > RKSettingsModuleConsole::maxConsoleLines ()) {
@@ -700,27 +733,34 @@ void RKConsole::tryNextInBatch (bool add_new_line) {
 				view->setUpdatesEnabled (true);
 			}
 		}
-		if (!doc->lines ()) doc->insertLine (0, QString ());
-		doc->insertText (KTextEditor::Cursor (doc->lines () - 1, 0), prefix);
-//		doc->insertLine (doc->lines (), prefix);		// somehow, it seems to be safer to do this after removing superfluous lines, than before
-		cursorAtTheEnd ();
+		doc->insertLine (doc->lines (), QString ());
 	}
+	doc->insertText (KTextEditor::Cursor (doc->lines () - 1, 0), prefix);
+//	doc->insertLine (doc->lines (), prefix);		// somehow, it seems to be safer to do this after removing superfluous lines, than before
+	cursorAtTheEnd ();
+}
 
-	if (!commands_batch.isEmpty()) {
-		// If we were not finished executing a batch of commands, we execute the next one.
-		setCurrentCommand (currentCommand () + commands_batch.first ());
-		commands_batch.pop_front ();
-		if (!commands_batch.isEmpty ()){
-			submitCommand ();
+void RKConsole::tryNextInBuffer () {
+	RK_TRACE (APP);
+
+	if (!input_buffer.isEmpty ()) {
+		if (input_buffer.contains ('\n')) {
+			submitCommand ();	// will submit and clear the buffer
 			return;
+		} else {
+			setCurrentEditingLine (currentEditingLine () + input_buffer);
+			input_buffer.clear ();
 		}
-		// We would put this here if we would want the last line to be executed. We generally don't want this, as there is an empty last item, if there is a newline at the end.
-		//TODO: deal with this kind of situation better.
-		//commands_batch.erase(commands_batch.begin());
 	}
+	interrupt_command_action->setEnabled (false);
+}
 
-	current_command = 0;
-	interrupt_command_action->setEnabled (isBusy ());
+bool RKConsole::isBusy () const {
+	if (current_command) return true;
+	if (!incomplete_command.isEmpty ()) return true;
+	if (!currentEditingLine ().isEmpty ()) return true;
+	if (!input_buffer.isEmpty ()) return true;
+	return false;
 }
 
 void RKConsole::paste () {
@@ -732,7 +772,7 @@ void RKConsole::paste () {
 void RKConsole::clear () {
 	RK_TRACE (APP);
 	doc->clear ();
-	tryNextInBatch ();
+	showPrompt ();
 }
 
 void RKConsole::addCommandToHistory (const QString &command) {
@@ -775,51 +815,40 @@ void RKConsole::literalCopy () {
 	QApplication::clipboard()->setText (view->selectionText ());
 }
 
-int RKConsole::currentCursorPosition (){
+int RKConsole::currentCursorPosition () const {
 	KTextEditor::Cursor c = view->cursorPosition ();
 	return(c.column ());
 }
 
 int RKConsole::currentCursorPositionInCommand(){
 	RK_TRACE (APP);
-	return(currentCursorPosition() - prefix.length());
+	return (currentCursorPosition() - prefix.length());
 }
 
-void RKConsole::resetIncompleteCommand () {
+void RKConsole::resetConsole () {
 	RK_TRACE (APP);
-
-	RK_ASSERT (command_incomplete);
-	prefix = nprefix;
-	command_incomplete = false;
-	incomplete_command = QString::null;
-	doc->insertLine (doc->lines (), "");
-
-	tryNextInBatch (true);
-}
-
-void RKConsole::slotInterruptCommand () {
-	RK_TRACE (APP);
-	RK_ASSERT (current_command || command_incomplete);
 	RK_DO (qDebug("received interrupt signal in console"), APP, DL_DEBUG);
 
-	commands_batch.clear ();
-	if (command_incomplete) {
-		resetIncompleteCommand ();
-	} else {
+	input_buffer.clear ();
+	if (current_command) {
 		RKGlobals::rInterface ()->cancelCommand (current_command);
+	} else {
+		prefix = nprefix;
+		incomplete_command.clear ();
+
+		showPrompt (true);
 	}
 }
 
 void RKConsole::runSelection () {
 	RK_TRACE (APP);
 
-	QString command = cleanedSelection ();
-	pipeUserCommand (new RCommand (command, RCommand::User));
+	pipeUserCommand (cleanedSelection ());
 }
 
 void RKConsole::showContextHelp () {
 	RK_TRACE (APP);
-	RKHelpSearchWindow::mainHelpSearch ()->getContextHelp (currentCommand (), currentCursorPositionInCommand ());
+	RKHelpSearchWindow::mainHelpSearch ()->getContextHelp (currentEditingLine (), currentCursorPositionInCommand ());
 }
 
 void RKConsole::initializeActions (KActionCollection *ac) {
@@ -829,7 +858,7 @@ void RKConsole::initializeActions (KActionCollection *ac) {
 
 	run_selection_action = RKStandardActions::runSelection (this, this, SLOT (runSelection()));
 
-	interrupt_command_action = ac->addAction ("interrupt", this, SLOT (slotInterruptCommand()));
+	interrupt_command_action = ac->addAction ("interrupt", this, SLOT (resetConsole()));
 	interrupt_command_action->setText (i18n ("Interrupt running command"));
 	interrupt_command_action->setShortcut (Qt::ControlModifier + Qt::Key_C);
 	interrupt_command_action->setIcon (KIcon ("media-playback-stop"));
@@ -856,55 +885,36 @@ void RKConsole::initializeActions (KActionCollection *ac) {
 void RKConsole::pipeUserCommand (const QString &command) {
 	RK_TRACE (APP);
 
-	RCommand *cmd = new RCommand (command, RCommand::User);
-	pipeUserCommand (cmd);
-}
-
-void RKConsole::pipeUserCommand (RCommand *command) {
-	RK_TRACE (APP);
-
 	if (RKSettingsModuleConsole::pipeUserCommandsThroughConsole ()) {
 		RKConsole::mainConsole ()->pipeCommandThroughConsoleLocal (command);
 	} else {
-		RKGlobals::rInterface ()->issueCommand (command);
+		RCommand *cmd = new RCommand (command, RCommand::User);
+		RKGlobals::rInterface ()->issueCommand (cmd);
 	}
 }
 
-void RKConsole::pipeCommandThroughConsoleLocal (RCommand *command) {
+void RKConsole::pipeCommandThroughConsoleLocal (const QString &command_string) {
 	RK_TRACE (APP);
 
 	activate (false);
-	if ((!command_was_piped) && (isBusy () || (!currentCommand ().isEmpty ()))) {
-		int res = KMessageBox::questionYesNo (this, i18n ("You have configured RKWard to run script commands through the console. However, the console is currently busy (either a command is running, or you have started to enter text in the console). Do you want to bypass the console this one time, or do you want to try again later?"), i18n ("Console is busy"), KGuiItem (i18n ("Bypass console")), KGuiItem (i18n ("Cancel")));
-		if (res == KMessageBox::Yes) {
-			RKGlobals::rInterface ()->issueCommand (command);
-		} else {
-			delete command;
+	if (isBusy () && (!previous_chunk_was_piped)) {
+		int res = KMessageBox::questionYesNoCancel (this, i18n ("You have configured RKWard to pipe script editor commands through the R Console. However, another command is currently active in the console. Do you want to append it to the command in the console, or do you want to reset the console, first? Press cancel if you do not wish to run the new command, now."), i18n ("R Console is busy"), KGuiItem (i18n ("Append")), KGuiItem (i18n ("Reset, then submit")));
+		if (res == KMessageBox::No) {
+			resetConsole ();
+		} else if (res != KMessageBox::Yes) {
+			return;
 		}
-	} else {
-		QString command_string = command->command ();
-		QString text = command_string;
-		if (RKSettingsModuleConsole::addPipedCommandsToHistory() != RKSettingsModuleConsole::DontAdd) {
-			QStringList lines = text.split ('\n', QString::SkipEmptyParts);
-			if ((RKSettingsModuleConsole::addPipedCommandsToHistory() == RKSettingsModuleConsole::AlwaysAdd) || (lines.count () == 1)) {
-				for (int i = 0; i < lines.count (); ++i) {
-					addCommandToHistory (lines[i]);
-				}
+	}
+	if (RKSettingsModuleConsole::addPipedCommandsToHistory() != RKSettingsModuleConsole::DontAdd) {
+		QStringList lines = command_string.split ('\n', QString::SkipEmptyParts);
+		if ((RKSettingsModuleConsole::addPipedCommandsToHistory() == RKSettingsModuleConsole::AlwaysAdd) || (lines.count () == 1)) {
+			for (int i = 0; i < lines.count (); ++i) {
+				addCommandToHistory (lines[i]);
 			}
 		}
-		text.replace ('\n', QString ("\n") + iprefix);
-		doc->insertText (KTextEditor::Cursor (doc->lines () - 1, QString (nprefix).length ()), text + '\n');
-		command->addReceiver (this);
-		command->addTypeFlag (RCommand::Console);
-		current_command = command;
-		if (command_incomplete) {
-			RK_ASSERT (command_was_piped);
-			command_string.prepend (incomplete_command + '\n');
-			command->setCommand (command_string);
-		}
-		command_was_piped = true;
-		RKGlobals::rInterface ()->issueCommand (command);
 	}
+	submitBatch (command_string + '\n');
+	previous_chunk_was_piped = true;
 }
 
 void RKConsole::contextMenuEvent (QContextMenuEvent * event) {

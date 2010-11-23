@@ -2,7 +2,7 @@
                           rcommandreceiver  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -48,11 +48,14 @@ protected:
 	friend class RInterface;
 /** This function is called when a command for this receiver is finished (and before it is deleted). You have to implement it in your subclass to do the actual handling.
 @param command A pointer to the command. The pointer is still valid during this call, but the RCommand will be deleted shortly after! */
-	virtual void rCommandDone (RCommand *);
+	virtual void rCommandDone (RCommand *) {};
 /** This function is called when there is new output for a command or this receiver. Default implementation does nothing. Reimplement if you want to get at a command's output immediately (i.e. before the command is fully completed).
 @param command A pointer to the command
 @param output The new output-fragment */
-	virtual void newOutput (RCommand *, ROutput *);
+	virtual void newOutput (RCommand *, ROutput *) {};
+/** This function is called when a new line of the given command has been fed to the backend. Note: This is only ever called for commands of type RCommand::User.
+@param command A pointer to the command */
+	virtual void userCommandLineIn (RCommand*) {};
 protected:
 	RCommandList outstanding_commands;
 	void cancelOutstandingCommands ();

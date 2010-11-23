@@ -165,6 +165,7 @@ void RKRBackendSerializer::serializeProxy (const RCommandProxy &proxy, QDataStre
 	stream << (qint32) proxy.type;
 	stream << (qint32) proxy.id;
 	stream << (qint32) proxy.status;
+	stream << (qint32) proxy.has_been_run_up_to;
 
 	serializeData (proxy, stream);
 }
@@ -182,6 +183,8 @@ RCommandProxy* RKRBackendSerializer::unserializeProxy (QDataStream &stream) {
 	ret->id = dummy32;
 	stream >> dummy32;
 	ret->status = dummy32;
+	stream >> dummy32;
+	ret->has_been_run_up_to = dummy32;
 
 	RData *data = unserializeData (stream);
 	ret->swallowData (*data);

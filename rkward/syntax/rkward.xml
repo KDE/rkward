@@ -9,7 +9,7 @@
 	R      : http://www.r-project.org/
 	RKWard : http://rkward.sourceforge.net/
 	-->
-<language version="2.02" kateversion="2.5" name="RKWard output" section="Scripts" extensions="" mimetype="" author="P. Ecochard" license="GPL">
+<language version="2.03" kateversion="2.5" name="R interactive session" section="Scripts" extensions="" mimetype="" author="P. Ecochard" license="GPL">
 <highlighting>
 	<list name="controls">
 	<item> for </item>
@@ -46,6 +46,7 @@
 		<!-- The output context does no highlighting. If a "> " is encountered at line start, pop back to ctxbase (and to command0 from there) --> 
 		<context attribute="Output" lineEndContext="#stay" name="output">
 			<Detect2Chars attribute="Prompt" context="#pop" char="&gt;" char1=" " column="0" lookAhead="true" endRegion="commandRegion"/>
+			<Detect2Chars attribute="Prompt" context="#pop" char="+" char1=" " column="0" lookAhead="true"/>
 		</context>
 
 		<!-- The base level context in command mode. Does not allow closing '}' -->
@@ -98,10 +99,10 @@
 		<!-- This context is not really used, but meant to be included. It checks whether a new line is a continuation of a command. If so, it eats the "+ " at the line start. Else it tries to pop back to the top level -->
 		<context attribute="Normal Text" name="CommandContinuationCheck" lineEndContext="#stay">
 			<!-- Since this rule is included in every (relevant) context, this will unwind the entire context stack back to ctxbase. -->
-			<RegExpr attribute="Prompt" context="#pop" String="^&gt; " lookAhead="true" endRegion="commandRegion"/>
+			<Detect2Chars attribute="Prompt" context="#pop" char="&gt;" char1=" " column="0" lookAhead="true" endRegion="commandRegion"/>
 			<!-- See above -->
-			<RegExpr attribute="Normal Text" context="#pop" String="^([^\+]|$)" lookAhead="true"/>
-			<RegExpr attribute="Prompt" context="#stay" String="^\+ "/>
+			<RegExpr attribute="Normal Text" context="output" String="^([^\+]|$)" lookAhead="true"/>
+			<Detect2Chars attribute="Prompt" context="#stay" char="&gt;" char1=" " column="0" lookAhead="true"/>
 		</context>
 
 		<!-- This context is not really used, but contains the common rules -->

@@ -264,6 +264,21 @@ void RInterface::rCommandDone (RCommand *command) {
 		for (unsigned int i = 0; i < command->getDataLength (); ++i) {
 			RKSettingsModuleRPackages::defaultliblocs.append (command->getStringVector ()[i]);
 		}
+
+		RCommandStack *stack = RCommandStack::currentStack ();
+		RCommandChain *chain = stack->currentChain ();
+		RK_ASSERT (chain);
+		RK_ASSERT (!chain->isClosed ());
+
+		// apply user configurable run time options
+		QStringList commands = RKSettingsModuleR::makeRRunTimeOptionCommands () + RKSettingsModuleRPackages::makeRRunTimeOptionCommands () + RKSettingsModuleOutput::makeRRunTimeOptionCommands () + RKSettingsModuleGraphics::makeRRunTimeOptionCommands ();
+		for (QStringList::const_iterator it = commands.begin (); it != commands.end (); ++it) {
+			issueCommand (*it, RCommand::App | RCommand::Sync, QString (), this, SET_RUNTIME_OPTS, chain);
+		}
+		// initialize output file
+		issueCommand ("rk.set.output.html.file (\"" + RKSettingsModuleGeneral::filesPath () + "/rk_out.html\")\n", RCommand::App | RCommand::Sync, QString (), this, SET_RUNTIME_OPTS, chain);
+
+		closeChain (chain);
 	} else if (command->getFlags () == GET_HELP_BASE) {
 		RK_ASSERT (command->getDataType () == RData::StringVector);
 		RK_ASSERT (command->getDataLength () == 1);
@@ -319,15 +334,7 @@ void RInterface::handleRequest (RBackendRequest* request) {
 		// start help server / determined help base url
 		issueCommand (".rk.getHelpBaseUrl ()\n", RCommand::GetStringVector | RCommand::App | RCommand::Sync, QString (), this, GET_HELP_BASE, chain);
 
-		// apply user configurable run time options
-		QStringList commands = RKSettingsModuleR::makeRRunTimeOptionCommands () + RKSettingsModuleRPackages::makeRRunTimeOptionCommands () + RKSettingsModuleOutput::makeRRunTimeOptionCommands () + RKSettingsModuleGraphics::makeRRunTimeOptionCommands ();
-		for (QStringList::const_iterator it = commands.begin (); it != commands.end (); ++it) {
-			issueCommand (*it, RCommand::App | RCommand::Sync, QString (), this, SET_RUNTIME_OPTS, chain);
-		}
-		// initialize output file
-		issueCommand ("rk.set.output.html.file (\"" + RKSettingsModuleGeneral::filesPath () + "/rk_out.html\")\n", RCommand::App | RCommand::Sync, QString (), this, SET_RUNTIME_OPTS, chain);
-
-		closeChain (chain);
+		// NOTE: more initialization commands get run *after* we have determined the standard library locations (see rCommandDone())
 	} else {
 		processRBackendRequest (request);
 	}
@@ -620,7 +627,15 @@ void RInterface::processRBackendRequest (RBackendRequest *request) {
 	// first, copy out the type. Allows for easier typing below
 	RBackendRequest::RCallbackType type = request->type;
 
-	if (type == RBackendRequest::ShowMessage) {
+	if (type == RBackendRequest::CommandLineIn) {
+		int id = request->params["commandid"].toInt ();
+		RCommand *command = all_current_commands.value (0, 0);	// User command will always be the first.
+		if ((command == 0) || (command->id () != id)) {
+			RK_ASSERT (false);
+		} else {
+			command->commandLineIn ();
+		}
+	} else if (type == RBackendRequest::ShowMessage) {
 		QString caption = request->params["caption"].toString ();
 		QString message = request->params["message"].toString ();
 		QString button_yes = request->params["button_yes"].toString ();;

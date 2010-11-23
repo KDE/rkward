@@ -128,6 +128,7 @@ void RKFrontendTransmitter::requestReceived(RBackendRequest* request) {
 		writeRequest (request);	// to tell the backend, that we are keeping up. Also deletes the request.
 		return;
 	}
+
 	RKRBackendEvent* event = new RKRBackendEvent (request);
 	qApp->postEvent (RKRBackendProtocolFrontend::instance (), event);
 }

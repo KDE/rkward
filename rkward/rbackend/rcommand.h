@@ -53,6 +53,8 @@ private:
 @see RInterface::startChain
 @see RInterface::closeChain */
 class RCommandChain : public RCommandBase {
+public:
+	bool isClosed () const { return closed; };
 protected:
 friend class RCommandStack;
 friend class RCommandStackModel;
@@ -108,25 +110,27 @@ public:
 /** destructor. Note: you should not delete RCommands manually. This is done in RInterface. TODO: make protected */
 	~RCommand();
 /** @returns the type as specified in RCommand::RCommand */
-	int type () { return _type; };
+	int type () const { return _type; };
 /** @returns the raw command status. @see CommandStatus */
-	int getStatus () { return status; };
+	int getStatus () const { return status; };
 /** @returns the rk_equiv as specified in RCommand::RCommand */
-	QString rkEquivalent () { return _rk_equiv; };
+	QString rkEquivalent () const { return _rk_equiv; };
 /** @returns the command string (i.e. the input) as specified in RCommand::RCommand */
-	QString command () { return _command; };
+	QString command () const { return _command; };
+/** @returns like command(), but for user commands, which have been run, partially, returns only the remaining portion of the command. */
+	QString remainingCommand () const;
 /** Each RCommand is assigned a unique integer id (incrementing from 0 to integer overflow) upon creation. This returns this id. 
 	@returns the unique id of this command */
-	int id () { return _id; };
+	int id () const { return _id; };
 /* TODO: Adjust these two functions to allow re-getting of output and error-messages from logs */
 /** @returns the full output of the command, i.e. all "regular" output, warning messages, and errors, in the order they were encountered. @see RCommand::output @see RCommand::error @see RCommand::warnings */
-	QString fullOutput ();
+	QString fullOutput () const;
 /** @returns the "regular" (ROutput::Output) output of the command, if any (e.g. "[1] 1" for "print (1)"). @see RCommand::succeeded @see RCommand::hasOutput */
-	QString output ();
+	QString output () const;
 /** @returns the warning message(s) given by R, if any. @see RCommand::output @see RCommand::error */
-	QString warnings ();
+	QString warnings () const;
 /** @returns the error message given by R, if any. @see RCommand::failed @see RCommand::hasError */
-	QString error ();
+	QString error () const;
 /** Types of commands (potentially more to come), bitwise or-able,
 	although partially exclusive. See \ref UsingTheInterfaceToR for a overview of what these are used for. TODO: find out, why Canceled is in here, and document that fact. */
 	enum CommandTypes {
@@ -159,25 +163,25 @@ public:
 		Canceled=8192				/**< Command was cancelled. */
 	};
 /** the command has been passed to the backend. */
-	bool wasTried () { return (status & WasTried); };
+	bool wasTried () const { return (status & WasTried); };
 /** the command failed */
-	bool failed () { return (status & Failed); };
+	bool failed () const { return (status & Failed); };
 /** the command was cancelled before it was executed */
-	bool wasCanceled () { return (wasTried () && failed () && (status & Canceled)); }
+	bool wasCanceled () const { return (wasTried () && failed () && (status & Canceled)); }
 /** the command succeeded (wasTried () && (!failed ()) */
-	bool succeeded () { return ((status & WasTried) && !(status & Failed)); };
+	bool succeeded () const { return ((status & WasTried) && !(status & Failed)); };
 /** command has a string output retrievable via RCommand::output () */
-	bool hasOutput () { return (status & HasOutput); };
+	bool hasOutput () const { return (status & HasOutput); };
 /** command has a string output retrievable via RCommand::warnings () */
-	bool hasWarnings () { return (status & HasWarnings); };
+	bool hasWarnings () const { return (status & HasWarnings); };
 /** command has an error-message retrievable via RCommand::error () */
-	bool hasError () { return (status & HasError); };
+	bool hasError () const { return (status & HasError); };
 /** backend rejected command as being incomplete */
-	bool errorIncomplete () { return (status & ErrorIncomplete); };
+	bool errorIncomplete () const { return (status & ErrorIncomplete); };
 /** backend rejected command as having a syntax error */
-	bool errorSyntax () { return (status & ErrorSyntax); };
+	bool errorSyntax () const { return (status & ErrorSyntax); };
 /** return the flags associated with the command. Those are the same that you specified in the constructor, RKWard does not touch them. @see RCommand::RCommand */
-	int getFlags () { return (_flags); };
+	int getFlags () const { return (_flags); };
 /** Add an additional listener to the command */
 	void addReceiver (RCommandReceiver *receiver);
 /** Remove a receiver from the list. This may be needed when a listener wants to self-destruct, to make sure we don't try to send any further info there */
@@ -198,11 +202,14 @@ friend class RCommandStackModel;
 	void finished ();
 /** new output was generated. Pass on to receiver(s) */
 	void newOutput (ROutput *output);
+/** next line of command has been transmitted. Pass on to receiver(s). Only called for RCommand::User type commands */
+	void commandLineIn ();
 	ROutputList output_list;
 	QString _command;
 	int _type;
 	int _flags;
-	int status;  
+	int status;
+	int has_been_run_up_to;
 	QString _rk_equiv;
 	int _id;
 	static int next_id;

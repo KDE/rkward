@@ -161,10 +161,13 @@ void RKTransmitNextUserCommandChunk (unsigned char* buf, int buflen) {
 
 	bool reached_eof = false;
 	int pos = 0;
+	bool reached_newline = false;
 	while (pos < (buflen-1)) {
 		buf[pos] = *current_buffer;
-		if (*current_buffer == '\n') break;
-		else if (*current_buffer == ';') break;
+		if (*current_buffer == '\n') {
+			reached_newline = true;
+			break;
+		} else if (*current_buffer == ';') break;
 		else if (*current_buffer == '\0') {
 			reached_eof = true;
 			break;
@@ -178,6 +181,13 @@ void RKTransmitNextUserCommandChunk (unsigned char* buf, int buflen) {
 		RKRBackend::repl_status.user_command_completely_transmitted = true;
 	}
 	buf[++pos] = '\0';
+
+	if (reached_newline) {
+		// Making this request synchronous is a bit painful. However, without this, it's extremely difficult to get correct interleaving of output and command lines
+		RBackendRequest req (true, RBackendRequest::CommandLineIn);
+		req.params["commandid"] = RKRBackend::this_pointer->current_command->id;
+		RKRBackend::this_pointer->handleRequest (&req);
+	}
 }
 
 int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) {
@@ -1081,6 +1091,15 @@ void RKRBackend::commandFinished (bool check_object_updates_needed) {
 
 	current_command->status -= (current_command->status & RCommand::Running);
 	current_command->status |= RCommand::WasTried;
+
+	if (current_command->type & RCommand::User) {
+		RK_ASSERT (repl_status.eval_depth == 0);
+
+		// This method may look a bit over-complex, but remember that repl_status.user_command_successful_up_to works on an *encoded* buffer
+		QByteArray remainder_encoded = repl_status.user_command_buffer.mid (repl_status.user_command_successful_up_to);
+		QString remainder = current_locale_codec->toUnicode (remainder_encoded);
+		current_command->has_been_run_up_to = current_command->command.length () - remainder.length ();
+	}
 
 	if (check_object_updates_needed || (current_command->type & RCommand::ObjectListUpdate)) {
 		checkObjectUpdatesNeeded (current_command->type & (RCommand::User | RCommand::ObjectListUpdate));

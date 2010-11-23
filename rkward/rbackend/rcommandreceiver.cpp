@@ -2,7 +2,7 @@
                           rcommandreceiver  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -33,14 +33,6 @@ RCommandReceiver::~RCommandReceiver () {
 	for (RCommandList::const_iterator it = outstanding_commands.constBegin (); it != outstanding_commands.constEnd (); ++it) {
 		(*it)->removeReceiver (this);
 	}
-}
-
-void RCommandReceiver::rCommandDone (RCommand *) {
-	RK_TRACE (RBACKEND);
-}
-
-void RCommandReceiver::newOutput (RCommand *, ROutput *) {
-	RK_TRACE (RBACKEND);
 }
 
 void RCommandReceiver::cancelOutstandingCommands () {

@@ -56,22 +56,18 @@ public:
 	~RKConsole ();
 
 /** Returns the command currently being edited (not executed yet) */
-	QString currentCommand ();
+	QString currentEditingLine () const;
 /** Returns the current cursor position. Returns the column on which is the cursor.  */
-	int currentCursorPosition ();
+	int currentCursorPosition () const;
 /** Returns the current cursor position, within the current command (without taking into account the prefix).*/
 	int currentCursorPositionInCommand ();
-/** interrupt the current incomplete command (if any) */
-	void resetIncompleteCommand ();
 	void doTabCompletion ();
 	bool provideContext (unsigned int line_rev, QString *context, int *cursor_position);
 
 	static RKConsole *mainConsole () { return main_console; };
 	static void setMainConsole (RKConsole *console) { main_console = console; };
 
-	bool isBusy () { return (current_command || command_incomplete); };
-/** Run a user command (through console, if applicable */
-	static void pipeUserCommand (RCommand *command);
+	bool isBusy () const;
 /** Overload for the above function: Use this, if you just need to run a string with no specials */
 	static void pipeUserCommand (const QString &command);
 
@@ -104,8 +100,6 @@ friend class RKConsolePart;
 	QString history_editing_line;
 /** The context to look out for, if doing a context search in the command history */
 	QString command_history_context;
-/** A list to store a commands batch that will be executed one line at a time */
-	QStringList commands_batch;
 /** Sets the cursor position to the end of the last line. */
 	void cursorAtTheEnd ();
 /** Submits the current command */
@@ -120,9 +114,10 @@ friend class RKConsolePart;
 	void cursorAtTheBeginning ();
 /** Sets the current command. This is used from commandsListUp (), and commandsListDown ();
 \param command the new command */
-	void setCurrentCommand (const QString &command);
-/** Add a new line, and try to submit the next item in a batch of (pasted) commands. If there is no batch, only add the new line. */
-	void tryNextInBatch (bool add_new_line = true);
+	void setCurrentEditingLine (const QString &line);
+/** Try to submit the next chunk of the input buffer. */
+	void tryNextInBuffer ();
+	void showPrompt (bool add_new_line = false);
 /** Add given command to command history. Also checks, wether the history is longer than max length, and chops it if so. */
 	void addCommandToHistory (const QString &command);
 
@@ -163,8 +158,7 @@ friend class RKConsolePart;
 	void setCursorClear (int line, int col);
 
 	void initializeActions (KActionCollection *ac);
-	void pipeCommandThroughConsoleLocal (RCommand *command);
-	bool command_was_piped;
+	void pipeCommandThroughConsoleLocal (const QString &command);
 
 	RKConsolePart *console_part;
 public slots:
@@ -177,13 +171,30 @@ public slots:
 	void clear ();
 /** show context help on the current word */
 	void showContextHelp ();
-/** interrupt current command. */
-	void slotInterruptCommand ();
+/** Cancels the current command, and clears the command buffer */
+	void resetConsole ();
 	void runSelection ();
 
 /** Submits a batch of commands, line by line.
 \param batch a QString containing the batch of commands to be executed */
 	void submitBatch (const QString &batch);
+private:
+/** Commands can be queued in the console in four different places:
+1) The not-yet-executed remainder of a previous incomplete command.
+2) A command which has already been issued. Note that this command, too, be incomplete, in which case it's remainder will be stored to 1.
+3) One or more lines of commands which have been pasted or piped to the Console, but have not yet been submitted.
+4) One line of a command without a trailing newline. This may be part of a previously pasted command, but most typically it is the line the user is currently editing.
+
+1 and 2 are mutually exclusive, and stored in incomplete_command, or current_command->command ().
+3 is stored in input_buffer. If there is no current command, the input buffer will be emptied as soon as tryNextInBatch() is called.
+4 and 2 are mutually exclusive. 4 can be retrieved as currentEditingLine () */
+	QString input_buffer;
+	int current_command_displayed_up_to;
+	int skip_command_display_lines;
+	bool previous_chunk_was_piped;
+	
+/** Reimplemented from RCommandReceiver to display the next line of the command */
+	void userCommandLineIn (RCommand* command);
 };
 
 /** A part interface to RKConsole. Provides the context-help functionality
