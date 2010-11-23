@@ -66,7 +66,7 @@ public:
 	static void setMainConsole (RKConsole *console) { main_console = console; };
 
 	bool isBusy () const;
-/** Overload for the above function: Use this, if you just need to run a string with no specials */
+/** Run a command through the console (unless user has configured such commands to be run outside the console: then it will run in separately). */
 	static void pipeUserCommand (const QString &command);
 
 /** reimplemnented from RKMDIWindow to clear selection when gaining focus */
@@ -87,7 +87,6 @@ friend class RKConsolePart;
 /** a helper function to doTabCompletionHelper */
 	void insertCompletion (int line_num, int word_start, int word_end, const QString &completion);
 	QString incomplete_command;
-	bool command_incomplete;
 /** A list to store previous commands */
 	QStringList commands_history;
 /** current position in the commands history */
@@ -169,11 +168,11 @@ public slots:
 	void clear ();
 /** show context help on the current word */
 	void showContextHelp ();
-/** Cancels the current command, and clears the command buffer */
+/** Cancels the current command, if any, and clears the command buffer(s) */
 	void resetConsole ();
 	void runSelection ();
 
-/** Submits a batch of commands, line by line.
+/** Adds a chunk of commands to the input buffer
 \param batch a QString containing the batch of commands to be executed */
 	void submitBatch (const QString &batch);
 private:
