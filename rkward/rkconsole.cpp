@@ -119,7 +119,6 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 	nprefix = "> ";
 	iprefix = "+ ";
 	prefix = nprefix;
-	output_continuation = false;
 // KDE4: a way to do this?
 //	doc->setUndoSteps (0);
 	clear ();
@@ -567,13 +566,13 @@ void RKConsole::submitCommand () {
 
 	skip_command_display_lines = incomplete_command.count ('\n') + 1;	// incomplete command, and first line have already been shown.
 
+	doc->insertLine (doc->lines (), QString ());
 	if (!command.isEmpty ()) {
-		doc->insertLine (doc->lines (), QString ());
 		current_command = new RCommand (command, RCommand::User | RCommand::Console, QString (), this);
 		RKGlobals::rInterface ()->issueCommand (current_command);
 		interrupt_command_action->setEnabled (true);
 	} else {
-		showPrompt (true);
+		showPrompt ();
 		tryNextInBuffer ();
 	}
 }
@@ -658,10 +657,8 @@ void RKConsole::rCommandDone (RCommand *command) {
 		incomplete_command.clear ();
 	}
 
-	if (output_continuation) doc->insertLine (doc->lines (), "");
-	output_continuation = false;
 	commands_history_position = commands_history.constEnd ();
-	showPrompt (true);
+	showPrompt ();
 	tryNextInBuffer ();
 }
 
@@ -669,11 +666,8 @@ void RKConsole::newOutput (RCommand *, ROutput *output) {
 	RK_TRACE (APP);
 
 	int start_line = doc->lines () -1;
-	if (output_continuation) {
-		doc->insertText (doc->documentEnd (), output->output);
-	} else {
-		doc->insertText (KTextEditor::Cursor (doc->lines () -1, 0), output->output);
-	}
+	doc->insertText (doc->documentEnd (), output->output);
+
 	int end_line = doc->lines () -1;
 	if (output->type != ROutput::Output) {
 		KTextEditor::MarkInterface *markiface = qobject_cast<KTextEditor::MarkInterface*> (doc);
@@ -694,7 +688,6 @@ void RKConsole::newOutput (RCommand *, ROutput *output) {
 		}
 	}
 	cursorAtTheEnd ();
-	output_continuation = true;
 }
 
 void RKConsole::userCommandLineIn (RCommand* cmd) {
@@ -709,7 +702,7 @@ void RKConsole::userCommandLineIn (RCommand* cmd) {
 	if (line.length () < 2) return;		// omit empty lines (esp. the trailing newline of the command!)
 
 	prefix = iprefix;
-	showPrompt (!doc->line (doc->lines ()-1).isEmpty ());
+	showPrompt ();
 	setCurrentEditingLine (line);
 }
 
@@ -729,10 +722,10 @@ void RKConsole::submitBatch (const QString &batch) {
 	if (!current_command) tryNextInBuffer ();
 }
 
-void RKConsole::showPrompt (bool add_new_line) {
+void RKConsole::showPrompt () {
 	RK_TRACE (APP);
 
-	if (add_new_line || (!doc->lines ())) {
+	if ((!doc->lines ()) || (!doc->line (doc->lines () - 1).isEmpty ())) {
 		if (RKSettingsModuleConsole::maxConsoleLines ()) {
 			uint c = doc->lines();
 			if (c > RKSettingsModuleConsole::maxConsoleLines ()) {
@@ -843,7 +836,7 @@ void RKConsole::resetConsole () {
 		prefix = nprefix;
 		incomplete_command.clear ();
 
-		showPrompt (true);
+		showPrompt ();
 	}
 }
 

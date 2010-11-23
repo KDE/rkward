@@ -114,7 +114,7 @@ friend class RKConsolePart;
 	void setCurrentEditingLine (const QString &line);
 /** Try to submit the next chunk of the input buffer. */
 	void tryNextInBuffer ();
-	void showPrompt (bool add_new_line = false);
+	void showPrompt ();
 /** Add given command to command history. Also checks, wether the history is longer than max length, and chops it if so. */
 	void addCommandToHistory (const QString &command);
 
@@ -131,8 +131,6 @@ friend class RKConsolePart;
 	QAction* addProxyAction (const QString& actionName, const QString& label=QString ());
 
 	QString cleanedSelection ();
-
-	bool output_continuation;
 
 	RCommand *current_command;
 	KTextEditor::Document *doc;
