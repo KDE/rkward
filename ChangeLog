@@ -1,3 +1,11 @@
+- Moved automated testing framework moved to a dedicated R package "rkwardtests", and added documentation
+- Better handling of script-editor commands while the R Console is busy
+- Correct interleaving of multi-line commands and the corresponding output in the R Console
+- Fixed: Portions of multi-line commands entered on the R Console would be run twice under some circumstances
+- Fixed: Lockups or crashes when using packages RGtk2 or rJava on the X11 platform
+- Fixed: R task callback handlers were not called
+- GUI frontend and R backend now run in separate processes
+- Re-write of large portions of the R embedding code
 - Fixed: Did not respect system settings for tooltip background color in some styles
 - Fixed: Installation would continue, seemingly successfully, even if R support libraries could not be installed
 - Fixed: Function argument hints would sometimes persist after closing a script window
