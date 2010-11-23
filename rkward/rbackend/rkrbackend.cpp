@@ -182,7 +182,7 @@ void RKTransmitNextUserCommandChunk (unsigned char* buf, int buflen) {
 	}
 	buf[++pos] = '\0';
 
-	if (reached_newline) {
+	if (reached_newline || reached_eof) {
 		// Making this request synchronous is a bit painful. However, without this, it's extremely difficult to get correct interleaving of output and command lines
 		RBackendRequest req (true, RBackendRequest::CommandLineIn);
 		req.params["commandid"] = RKRBackend::this_pointer->current_command->id;
