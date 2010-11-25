@@ -535,6 +535,8 @@ void RInterface::processHistoricalSubstackRequest (RBackendRequest* request) {
 		}
 #endif // DISABLE_RKWINDOWCATCHER
 	} else if (call == "wdChange") {
+		// in case of separate processes, apply new working directory in frontend, too.
+		QDir::setCurrent (calllist.value(1, QString ()));
 		RKWardMainWindow::getMain ()->updateCWD ();
 	} else if (call == "preLocaleChange") {
 		int res = KMessageBox::warningContinueCancel (0, i18n ("A command in the R backend is trying to change the character encoding. While RKWard offers support for this, and will try to adjust to the new locale, this operation may cause subtle bugs, if data windows are currently open. Also the feature is not well tested, yet, and it may be advisable to save your workspace before proceeding.\nIf you have any data editor opened, or in any doubt, it is recommended to close those first (this will probably be auto-detected in later versions of RKWard). In this case, please chose 'Cancel' now, then close the data windows, save, and retry."), i18n ("Locale change"));
