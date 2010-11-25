@@ -559,11 +559,14 @@ void RKConsole::submitCommand () {
 		} else {
 			input_buffer.clear ();
 		}
+	} else {
+		RK_ASSERT (!command.endsWith ('\n'));
+		command.append ('\n');
 	}
+
 	current_command_displayed_up_to = incomplete_command.length ();
 	setCurrentEditingLine (command.mid (current_command_displayed_up_to, command.indexOf ('\n', current_command_displayed_up_to) - current_command_displayed_up_to));
 	current_command_displayed_up_to += currentEditingLine ().length ();
-
 	skip_command_display_lines = incomplete_command.count ('\n') + 1;	// incomplete command, and first line have already been shown.
 
 	doc->insertLine (doc->lines (), QString ());

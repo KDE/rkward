@@ -149,6 +149,7 @@ bool RKComponentBase::isSatisfied () {
 	RK_TRACE (PLUGIN);
 	if (!required) return true;
 	if (isValid ()) return true;
+ 	if (isComponent ()) RK_DO (qDebug ("component not satisfied: %s", qPrintable (static_cast<RKComponent*> (this)->getIdInParent ())), PLUGIN, DL_DEBUG);
 	return false;		// never happens in RKComponentBase, but might in subclasses
 }
 

@@ -121,6 +121,7 @@ void RKPluginSaveObject::internalChange () {
 bool RKPluginSaveObject::isValid () {
 	RK_TRACE (PLUGIN);
 
+	if (groupbox->isCheckable () && (!groupbox->isChecked ())) return true;
 	return (RKComponent::isValid () && selector->isOk ());
 }
 
