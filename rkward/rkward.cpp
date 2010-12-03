@@ -392,6 +392,17 @@ void RKWardMainWindow::initActions()
 	run_menu_dummy->setEnabled (false);
 }
 
+/*
+// debug code: prints out all current actions
+void printActionsRecursive (QAction* action, const QString &prefix) {
+	if (action->menu ()) {
+		foreach (QAction *a, action->menu ()->actions ()) printActionsRecursive (a, prefix + action->text () + "->");
+	} else {
+		qDebug ("%s", qPrintable (prefix + action->text ()));
+	}
+}
+*/
+
 void RKWardMainWindow::partChanged (KParts::Part *part) {
 	RK_TRACE (APP);
 
@@ -408,6 +419,11 @@ void RKWardMainWindow::partChanged (KParts::Part *part) {
 	view_menu_dummy->setVisible (menu && (menu->isEmpty ()));
 	menu = dynamic_cast<QMenu*>(guiFactory ()->container ("run", this));
 	run_menu_dummy->setVisible (menu && (menu->isEmpty ()));
+
+/*
+	// debug code: prints out all current actions
+	foreach (QAction *action, menuBar ()->actions ()) printActionsRecursive (action, QString ());
+*/
 }
 
 void RKWardMainWindow::initStatusBar () {
