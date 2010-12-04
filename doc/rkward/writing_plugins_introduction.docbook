@@ -23,7 +23,15 @@ as Authors, publish date, the abstract, and Keywords -->
 <firstname>Thomas</firstname>
 <surname>Friedrichsmeier</surname>
 <affiliation>
-<address><email>tfry AT users DOT sourceforge DOT net</email></address>
+<address><email>rkward-devel AT lists DOT sourceforge DOT net</email></address>
+</affiliation>
+</author>
+
+<author>
+<firstname>Meik</firstname>
+<surname>Michalke</surname>
+<affiliation>
+<address><email>rkward-devel AT lists DOT sourceforge DOT net</email></address>
 </affiliation>
 </author>
 <!-- Additional authors go here -->
