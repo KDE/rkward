@@ -13,7 +13,7 @@
 				</column>
 				<frame label="Options" >
 					<row>
-						<browser size="small" initial="my.RData" id="file" label="File name" />
+						<browser type="savefile" size="small" initial="my.RData" id="file" label="File name" />
 						<checkbox value_unchecked="FALSE" checked="false" value="TRUE" id="ascii" label="Ascii" />
 						<checkbox value_unchecked="FALSE" checked="false" value="TRUE" id="compress" label="Compress" />
 					</row>
