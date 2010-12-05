@@ -17,7 +17,7 @@
 			<column>
 				<varselector id="vars" label="Select a vector or matrix" />
 				<varslot multi="false" classes="character numeric integer factor matrix" id="data" source="vars" label="Data" required="true" />
-				<browser size="small" initial="data" id="file" label="File name" />
+				<browser type="savefile" size="small" initial="data" id="file" label="File name" />
 			</column>
 			<frame label="Options" >
 				<row>

@@ -19,7 +19,7 @@
 					</text>
 					<varselector id="vars" label="Select a variable or a table" />
 					<varslot multi="false" classes="array data.frame matrix character numeric integer" source="vars" id="data" label="Data" required="true" />
-					<browser size="small" id="file" initial="data" label="Name of the file" />
+					<browser type="savefile" size="small" id="file" initial="data" label="Name of the file" />
 				</column>
 				<frame label="Options" >
 					<row>
