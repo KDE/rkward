@@ -2,7 +2,7 @@
                           getfilenamewidget  -  description
                              -------------------
     begin                : Tue Aug 24 2004
-    copyright            : (C) 2004, 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007, 2009, 2010 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -70,7 +70,7 @@ void GetFileNameWidget::setFilter (const QString &filter) {
 void GetFileNameWidget::setLocation (const QString &new_location) {
 	RK_TRACE (MISC);
 
-	edit->setUrl (new_location);
+	if (edit->text () != new_location) edit->setUrl (new_location);
 }
 
 void GetFileNameWidget::locationEditChanged (const QString &) {

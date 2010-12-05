@@ -1,3 +1,4 @@
+- Fixed: Cursor would keep jumping to the end, when typing a filename in the filename selection field in plugins
 - Fixed: Submit button would not become enabled in "Basic Statistics" plugin
 - Moved automated testing framework moved to a dedicated R package "rkwardtests", and added documentation
 - Support pasting to the middle of the current command line in the R Console
