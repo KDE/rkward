@@ -208,17 +208,15 @@ bool RKLoadLibsDialog::installPackages (const QStringList &packages, const QStri
 #ifdef Q_WS_WIN
 	RK_ASSERT (!as_root);
 	call = R_binary;
-	params << "--no-save" << "--file=" + file.fileName ();
 #else
 	if (as_root) {
 		call = KStandardDirs::findExe ("kdesu");
-		params << "-t";
+		params << "-t" << "--" << R_binary;
 	} else {
-		call = "sh";
-		params << "-c";
+		call = R_binary;
 	}
-	params << R_binary + " CMD R --no-save < " + file.fileName ();
 #endif
+	params << "--no-save" << "--no-restore" << "--file=" + file.fileName ();
 
 	installation_process = new QProcess ();
 	installation_process->setProcessChannelMode (QProcess::SeparateChannels);
