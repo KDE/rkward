@@ -620,7 +620,7 @@ void RKRBackend::setupCallbacks () {
 // IMPORTANT: see also the #ifndef QS_WS_WIN-portion!
 	RK_R_Params.rhome = get_R_HOME ();
 	RK_R_Params.home = getRUser ();
-	RK_R_Params.CharacterMode = LinkDLL;
+	RK_R_Params.CharacterMode = RGui;
 	RK_R_Params.ShowMessage = RShowMessage;
 	RK_R_Params.ReadConsole = RReadConsoleWin;
 	RK_R_Params.WriteConsoleEx = RWriteConsoleEx;
