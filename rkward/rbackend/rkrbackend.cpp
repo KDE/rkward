@@ -581,6 +581,7 @@ void RShowMessage (const char* message) {
 int RAskYesNoCancel (const char* message) {
 	RK_TRACE (RBACKEND);
 
+	if (RKRBackend::this_pointer->killed) return -1;	// HACK: At this point R asks whether to save the workspace. We have already handled that. So return -1 for "no"
 	return doDialogHelper (i18n ("Question from the R backend"), message, "yes", "no", "cancel", true);
 }
 
@@ -1167,7 +1168,7 @@ void RKRBackend::handleHistoricalSubstackRequest (const QStringList &list) {
 	RBackendRequest request (true, RBackendRequest::HistoricalSubstackRequest);
 	request.params["call"] = list;
 	handleRequest (&request);
-}                                                                        
+}
 
 void RKRBackend::initialize () {
 	RK_TRACE (RBACKEND);
