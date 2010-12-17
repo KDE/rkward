@@ -111,9 +111,9 @@ void RKRBackend::scheduleInterrupt () {
 }
 
 // some functions we need that are not declared
-extern void Rf_PrintWarnings (void);
-extern void run_Rmainloop (void);
-SEXP R_LastvalueSymbol;
+LibExtern void Rf_PrintWarnings (void);
+LibExtern void run_Rmainloop (void);
+LibExtern SEXP R_LastvalueSymbol;
 #include <R_ext/eventloop.h>
 }
 
@@ -725,7 +725,7 @@ void RKRBackend::processX11Events () {
 	RKRBackend::repl_status.eval_depth--;
 }
 
-extern int R_interrupts_pending;
+LibExtern int R_interrupts_pending;
 SEXP doError (SEXP call) {
 	RK_TRACE (RBACKEND);
 
