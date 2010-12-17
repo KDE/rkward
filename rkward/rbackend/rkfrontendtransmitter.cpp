@@ -71,6 +71,9 @@ void RKFrontendTransmitter::run () {
 	if (!backend->canReadLine ()) backend->waitForReadyRead ();
 	token = QString::fromLocal8Bit (backend->readLine ());
 	token.chop (1);
+#ifdef Q_WS_WIN
+	token.chop (1);	// '\r', I suppose...
+#endif
 
 	connect (backend, SIGNAL (readyReadStandardOutput ()), this, SLOT (newProcessOutput ()));
 	if (backend->bytesAvailable ()) newProcessOutput ();

@@ -17,6 +17,17 @@
 
 #include "rkrbackend.h"
 
+#ifdef Q_WS_WIN
+#	include <windows.h>
+#	include <winsock2.h>
+#	undef ERROR 	// clashes with R
+#	define Win32	// needed for R includes
+#else
+#	include <dlfcn.h>
+#	include <sys/resource.h>
+#	include <sys/types.h>
+#endif
+
 // statics
 RKRBackend *RKRBackend::this_pointer = 0;
 RKRBackend::RKReplStatus RKRBackend::repl_status = { QByteArray (), 0, true, 0, 0, RKRBackend::RKReplStatus::NoUserCommand, 0, false, false };
@@ -43,14 +54,6 @@ void* RKRBackend::default_global_context = 0;
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
-#ifdef Q_WS_WIN
-#	include <winsock.h>
-#	undef ERROR	// windows define clashes with R define
-#else
-#include <dlfcn.h>
-#include <sys/resource.h>
-#include <sys/types.h>
-#endif
 
 extern "C" {
 #define R_INTERFACE_PTRS 1
@@ -65,11 +68,6 @@ extern "C" {
 #define IS_UTF8(x) (Rf_getCharCE(x) == CE_UTF8)
 #define IS_LATIN1(x) (Rf_getCharCE(x) == CE_LATIN1)
 
-#ifdef Q_WS_WIN
-	// needed for R includes
-#	define Win32
-#endif
-
 #include <Rdefines.h>
 #include <R_ext/Rdynload.h>
 #include <R_ext/eventloop.h>
@@ -78,13 +76,19 @@ extern "C" {
 #include <Rinternals.h>
 #include <R_ext/Parse.h>
 #include <Rembedded.h>
-#include <Rinterface.h>
 
 #ifdef Q_WS_WIN
 #	include <R_ext/RStartup.h>
 #	include <R_ext/Utils.h>
 
 	structRstart RK_R_Params;
+
+	// why oh why isn't Rinterface.h available on Windows?
+	LibExtern void* R_GlobalContext;
+	LibExtern uintptr_t R_CStackLimit;
+	LibExtern void R_SaveGlobalEnvToFile(char*);
+#else
+#	include <Rinterface.h>
 #endif
 
 void RK_scheduleIntr () {
@@ -389,7 +393,7 @@ void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 		}
 		filename = dir.absoluteFilePath (filename);
 
-		if (R_DirtyImage) R_SaveGlobalEnvToFile (filename.toLocal8Bit ());
+		if (R_DirtyImage) R_SaveGlobalEnvToFile (filename.toLocal8Bit ().data ());
 		qDebug ("Created emergency save file in %s", qPrintable (filename));
 	}
 
@@ -607,7 +611,7 @@ RKRBackend::RKRBackend () {
 }
 
 #ifdef Q_WS_WIN
-void RThread::setupCallbacks () {
+void RKRBackend::setupCallbacks () {
 	RK_TRACE (RBACKEND);
 
 	R_setStartTime();
@@ -632,7 +636,7 @@ void RThread::setupCallbacks () {
 	RK_R_Params.R_Interactive = (Rboolean) 1;
 }
 
-void RThread::connectCallbacks () {
+void RKRBackend::connectCallbacks () {
 	RK_TRACE (RBACKEND);
 	R_SetParams(&RK_R_Params);
 }

@@ -71,7 +71,9 @@
 
 		void run () {
 			RK_TRACE (RBACKEND);
+#	ifndef Q_WS_WIN
 			RKRBackendProtocolBackend::instance ()->r_thread_id = currentThreadId ();
+#	endif
 			RKRBackend::this_pointer->run ();
 		}
 
@@ -160,7 +162,9 @@ RKRBackendProtocolBackend::RKRBackendProtocolBackend (const QString &storage_dir
 	RKRBackendThread::instance->start ();
 #else
 	r_thread = QThread::currentThread ();	// R thread == main thread
+#	ifndef Q_WS_WIN
 	r_thread_id = QThread::currentThreadId ();
+#	endif
 #endif
 	data_dir = storage_dir;
 }

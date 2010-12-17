@@ -66,7 +66,8 @@ private slots:
 	void fetchTransmission ();
 	void disconnected ();
 private:
-static RKAbstractTransmitter* _instance;
+	static RKAbstractTransmitter* _instance;
+	bool fetching_transmission;
 };
 
 #endif

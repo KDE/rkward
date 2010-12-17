@@ -164,9 +164,11 @@ void RKSignalSupport::installSigIntAndUsrHandlers (void (*handler) (void)) {
 	RK_ASSERT (!RKSignalSupportPrivate::r_sigint_handler);
 	RKSignalSupportPrivate::new_sigint_handler = handler;
 	RKSignalSupportPrivate::r_sigint_handler = signal (SIGINT, &RKSignalSupportPrivate::internal_sigint_handler);
+#ifndef Q_WS_WIN
 	// default action in R: save and quit. We use these as a proxy for SIGINT, instead.
 	signal (SIGUSR1, &RKSignalSupportPrivate::internal_sigint_handler);
 	signal (SIGUSR2, &RKSignalSupportPrivate::internal_sigint_handler);
+#endif
 }
 
 void RKSignalSupport::callOldSigIntHandler () {

@@ -203,6 +203,7 @@ RKAbstractTransmitter::RKAbstractTransmitter () : QThread () {
 	RK_ASSERT (_instance == 0);	// NOTE: Although there are two instances of an abstract transmitter in an RKWard session, these live in different processes.
 	_instance = this;
 	connection = 0;
+	fetching_transmission = false;
 
 	moveToThread (this);
 }
@@ -221,6 +222,7 @@ void RKAbstractTransmitter::transmitRequest (RBackendRequest *request) {
 	}
 
 	QByteArray buffer = RKRBackendSerializer::serialize (*request);
+	RK_DO (qDebug ("Transmitting request of length %s", QString::number (buffer.length ()).toLocal8Bit ().data ()), RBACKEND, DL_DEBUG);
 	connection->write (QString::number (buffer.length ()).toLocal8Bit () + "\n");
 	connection->write (buffer);
 }
@@ -245,12 +247,15 @@ void RKAbstractTransmitter::fetchTransmission () {
 		return;
 	}
 
+	if (fetching_transmission) return;	// apparently, on Windows, readyRead() *does* get emitted from waitForReadyRead. Avoid recursion.
+
 	if (!connection->canReadLine ()) return;
+	fetching_transmission = true;
 
 	QString line = QString::fromLocal8Bit (connection->readLine ());
 	bool ok;
 	int expected_length = line.toInt (&ok);
-	if (!ok) handleTransmissionError ("Protocol header error. Last connection error was: " + connection->errorString ());
+	if (!ok) handleTransmissionError ("Protocol header error. Last connection error was: " + connection->errorString ()+ "; header was: " + line);
 
 	QByteArray receive_buffer;
 	while (receive_buffer.length () < expected_length) {
@@ -264,6 +269,7 @@ void RKAbstractTransmitter::fetchTransmission () {
 			}
 		}
 	}
+	fetching_transmission = false;
 
 	requestReceived (RKRBackendSerializer::unserialize (receive_buffer));
 
