@@ -113,7 +113,6 @@ void RKRBackend::scheduleInterrupt () {
 // some functions we need that are not declared
 LibExtern void Rf_PrintWarnings (void);
 LibExtern void run_Rmainloop (void);
-LibExtern SEXP R_LastvalueSymbol;
 #include <R_ext/eventloop.h>
 }
 
@@ -878,7 +877,6 @@ bool RKRBackend::startR () {
 	handleRequest (&req);
 
 	RKWard_RData_Tag = Rf_install ("RKWard_RData_Tag");
-	R_LastvalueSymbol = Rf_install (".Last.value");
 
 	RKSignalSupport::installSignalProxies ();	// for the crash signals
 	RKSignalSupport::installSigIntAndUsrHandlers (RK_scheduleIntr);
