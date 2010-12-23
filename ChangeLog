@@ -1,3 +1,4 @@
+- Fixed: Converting a variable to factor in the editor would drop existing levels, silently, and lead to NAs
 - Fixed: Cursor would keep jumping to the end, when typing a filename in the filename selection field in plugins
 - Fixed: Submit button would not become enabled in "Basic Statistics" plugin
 - Moved automated testing framework moved to a dedicated R package "rkwardtests", and added documentation

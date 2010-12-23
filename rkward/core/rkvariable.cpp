@@ -100,6 +100,7 @@ void RKVariable::setVarType (RObject::RDataType new_type, bool sync) {
 			else if (new_type == RObject::DataFactor) command += "as.factor";
 			command += ")";
 			RKGlobals::rInterface ()->issueCommand (command, RCommand::App | RCommand::Sync, QString::null);
+			if (new_type == RObject::DataFactor) writeValueLabels (0);		// as.factor resets the "levels"-attribute!
 
 			syncDataToR ();
 		}
