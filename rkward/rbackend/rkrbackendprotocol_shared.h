@@ -47,6 +47,7 @@ public:
 #ifndef RKWARD_THREADED
 		Output,		/**< A piece of output. Note: If the backend runs in a single process, output is handled in a pull fashion, instead of using requests. */
 		Interrupt,	/**< Interrupt evaluation. This request type originates in the frontend, not the backend (the only one so far). */
+		SyncOutput,	/**< Synchronization of output between R output and stdout. Note: If the backend runs in a single process, the stdout/stderr channel is not supported anyway. */
 #endif
 		OtherRequest		/**< Any other type of request. Note: which requests are in the enum, and which are not has mostly historical reasons. @see params */
 	};

@@ -785,6 +785,25 @@ SEXP doUpdateLocale () {
 	return R_NilValue;
 }
 
+SEXP doSyncOutput (SEXP flushstdout) {
+	RK_TRACE (RBACKEND);
+
+#if (!defined RKWARD_THREADED) && (!defined Q_OS_WIN)
+	const char* token = "##RKOutputEndTag3210723##";	// should be unique enough for practical purposes
+	bool doflushstdout = (RKRSupport::SEXPToInt (flushstdout) != 0);
+
+	RBackendRequest req (true, RBackendRequest::SyncOutput);
+	if (doflushstdout) req.params["endtoken"] = QString (token);
+	RKRBackend::this_pointer->handleRequest (&req);
+	if (doflushstdout) {
+		printf ("%s", token);
+		fflush (stdout);
+	}
+#endif
+
+	return R_NilValue;
+}
+
 // returns the MIME-name of the current locale encoding (from Qt)
 SEXP doLocaleName () {
 	RK_TRACE (RBACKEND);
@@ -893,6 +912,7 @@ bool RKRBackend::startR () {
 		{ "rk.dialog", (DL_FUNC) &doDialog, 6 },
 		{ "rk.update.locale", (DL_FUNC) &doUpdateLocale, 0 },
 		{ "rk.locale.name", (DL_FUNC) &doLocaleName, 0 },
+		{ "rk.sync.output", (DL_FUNC) &doSyncOutput, 1 },
 		{ 0, 0, 0 }
 	};
 	R_registerRoutines (R_getEmbeddingDllInfo(), NULL, callMethods, NULL, NULL);

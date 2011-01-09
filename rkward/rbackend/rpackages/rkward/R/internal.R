@@ -452,14 +452,49 @@ formals (select.list) <- formals (utils::select.list)
 formals (menu) <- formals (utils::menu)
 .rk.menu.default <- utils::menu
 
+# Add output synchronisation across system(), and system2() calls.
+"system" <- function () {
+	if (intern || ignore.stdout || ignore.stderr) eval (body (.rk.system.default))
+	else {
+		.Call ("rk.sync.output", 0)
+		on.exit (.Call ("rk.sync.output", 1), TRUE)
+		eval (body (.rk.system.default))
+	}
+}
+formals (system) <- formals (base::system)
+.rk.system.default <- base::system
+
+# NOTE: system2 was not introduced before R 2.12.0 (or was it 2.11.0?)
+if (exists ("system2", base::.BaseNamespaceEnv)) {
+	"system2" <- function () {
+		if (stdout == "" && stderr == "") eval (body (.rk.system2.default))
+		else {
+			.Call ("rk.sync.output", 0)
+			on.exit (.Call ("rk.sync.output", 1), TRUE)
+			eval (body (.rk.system2.default))
+		}
+	}
+	formals (system2) <- formals (base::system2)
+	.rk.system2.default <- base::system2
+}
+
 # where masking is not enough, we need to assign in the namespace. This can only be done after package loading,
 # so we have a separate function for that.
+#NOTE: TODO: By now we are replacing so many functions, that it would make sense to create a generic framework for doing such replacements.
 ".rk.fix.assignments" <- function () {
 	assignInNamespace ("menu", menu, envir=as.environment ("package:utils"))
 	assignInNamespace ("select.list", select.list, envir=as.environment ("package:utils"))
 	try ({
 		unlockBinding ("makeActiveBinding", base::.BaseNamespaceEnv)
 		assign ("makeActiveBinding", rkward::makeActiveBinding, envir=base::.BaseNamespaceEnv)
+	})
+	try ({
+		unlockBinding ("system", base::.BaseNamespaceEnv)
+		assign ("system", rkward::system, envir=base::.BaseNamespaceEnv)
+	})
+	try ({
+		unlockBinding ("system2", base::.BaseNamespaceEnv)
+		assign ("system2", rkward::system, envir=base::.BaseNamespaceEnv)
 	})
 	
 	# call separate assignments functions:
