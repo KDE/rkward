@@ -41,7 +41,7 @@
 
 # function below is only needed to ensure a nice ordering of the columns. Simply adding a new column would be much easier than this.
 ".rk.data.frame.insert.column" <- function (x, label, index=0) {
-	column <- rep (NA, times=dim (x)[2])
+	column <- as.numeric (rep (NA, times=dim (x)[2]))
 	if ((index == 0) || (index > dim (x)[2])) {	# insert column at end
 		eval (substitute (x[[label]] <<- column))
 	} else {
