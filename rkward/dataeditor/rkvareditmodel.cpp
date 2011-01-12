@@ -806,11 +806,11 @@ bool RKVarEditDataFrameModel::insertColumns (int column, int count, const QModel
 	if (column > trueCols ()) column = trueCols ();
 	if (column < var_col_offset) column = var_col_offset;
 	for (int col = column; col < (column + count); ++col) {
-		RObject *obj = dataframe->createPendingChild (dataframe->validizeName (QString ()), col);
+		RObject *obj = dataframe->createPendingChild (dataframe->validizeName (QString ()), col-var_col_offset);
 		RK_ASSERT (obj->isVariable ());
 //		addObject (col, obj);	// the object will be added via RKModificationTracker::addObject -> this::childAdded. That will also take care of calling beginInsertColumns()/endInsertColumns()
 	
-		RKGlobals::rInterface ()->issueCommand (new RCommand (".rk.data.frame.insert.column (" + dataframe->getFullName () + ", \"" + obj->getShortName () + "\", " + QString::number (col+1) + ")", RCommand::App | RCommand::Sync));
+		RKGlobals::rInterface ()->issueCommand (new RCommand (".rk.data.frame.insert.column (" + dataframe->getFullName () + ", \"" + obj->getShortName () + "\", " + QString::number (col+1-var_col_offset) + ")", RCommand::App | RCommand::Sync));
 	}
 
 	return true;
