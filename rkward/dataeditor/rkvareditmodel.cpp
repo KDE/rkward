@@ -70,7 +70,7 @@ void RKVarEditModel::addObject (int index, RKVariable* object) {
 
 	beginInsertColumns (QModelIndex (), index, index);
 	if (meta_model) meta_model->beginAddDataObject (index);
-	if (object->isPending ()) object->setLength (trueRows ());	// probably we just created it ourselves
+	if (object->isPending () && (!object->getLength ())) object->setLength (trueRows ());	// probably we just created it ourselves
 	listenForObject (object);
 	objects.insert (index, object);
 	if (meta_model) meta_model->endAddDataObject ();
@@ -756,6 +756,8 @@ RKVarEditDataFrameModel::RKVarEditDataFrameModel (const QString& validized_name,
 	for (int i = 0; i < initial_cols; ++i) {
 		RObject* child = df->createPendingChild (df->validizeName (QString ()), -1, false, false);
 		RK_ASSERT (child->isVariable ());
+		// let's start with one (empty) row, to avoid confusion
+		static_cast<RKVariable*> (child)->setLength (1);
 	}
 
 	init (df);
