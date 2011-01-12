@@ -172,8 +172,6 @@ protected:
 
 /** changes the allocated storage to contain a least length elements. More data may be allocated than acutally needed. This function only ever does upsizing. */
 	void extendToLength (int length);
-/** changes the allocated storage to contain a least getLength elements. More data may be allocated than acutally needed. This function only ever does downsizing. */
-	void downSize ();
 /** takes care of syncing the given range of cells */
 	void cellsChanged (int from_row, int to_row);
 /** writes the given range of cells to the backend (regardless of whether syncing should be immediate) */

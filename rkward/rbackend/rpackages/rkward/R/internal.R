@@ -41,14 +41,15 @@
 
 # function below is only needed to ensure a nice ordering of the columns. Simply adding a new column would be much easier than this.
 ".rk.data.frame.insert.column" <- function (x, label, index=0) {
+	column <- rep (NA, times=dim (x)[2])
 	if ((index == 0) || (index > dim (x)[2])) {	# insert column at end
-		eval (substitute (x[[label]] <<- c (NA)))
+		eval (substitute (x[[label]] <<- column))
 	} else {
 		for (i in dim (x)[2]:index) {
 			eval (substitute (x[i+1] <<- x[[i]]))
 			eval (substitute (names (x)[i+1] <<- names (x)[i]))
 		}
-		eval (substitute (x[index] <<- c (NA)))
+		eval (substitute (x[index] <<- column))
 		eval (substitute (names (x)[index] <<- label))
 	}
 }
