@@ -457,8 +457,8 @@ void TwinTable::enableEditing (bool on) {
 	dataview->rw = rw;
 
 	QPalette palette = metaview->palette ();
-	if (on) palette.setColor (QPalette::Base, QColor (255, 255, 255));
-	else palette.setColor (QPalette::Base, QColor (240, 240, 240));
+	if (on) palette.setColor (QPalette::Base, QApplication::palette ().color (QPalette::Active, QPalette::Base));
+	else palette.setColor (QPalette::Base, QApplication::palette ().color (QPalette::Disabled, QPalette::Base));
 	metaview->setPalette (palette);
 	dataview->setPalette (palette);
 
