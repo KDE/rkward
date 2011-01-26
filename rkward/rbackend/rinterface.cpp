@@ -2,7 +2,7 @@
                           rinterface.cpp  -  description
                              -------------------
     begin                : Fri Nov 1 2002
-    copyright            : (C) 2002, 2004, 2005, 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2004, 2005, 2006, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -20,6 +20,7 @@
 #include "rcommandstack.h"
 #include "rkrbackendprotocol_frontend.h"
 #include "../rkward.h"
+#include "../rkconsole.h"
 #include "../settings/rksettingsmoduler.h"
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../settings/rksettingsmoduleoutput.h"
@@ -591,6 +592,19 @@ void RInterface::processHistoricalSubstackRequest (RBackendRequest* request) {
 		command.append ("))");
 
 		issueCommand (command, RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
+	} else if (call == "commandHistory") {
+		if (calllist[1] == "get") {
+			QStringList hist = RKConsole::mainConsole ()->commandHistory ();
+			QString command = (".rk.set.reply (c (");
+			for (int i = 0; i < hist.size (); ++i) {
+				command.append (RObject::rQuote (hist[i]));
+				if (i < (hist.size () - 1)) command.append (",\n");
+			}
+			command.append ("))\n");
+			issueCommand (command, RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
+		} else {
+			RKConsole::mainConsole ()->setCommandHistory (calllist.mid (2), calllist[1] == "append");
+		}
 	} else if (call == "recordCommands") {
 		if (calllist.count () == 3) {
 			QString filename = calllist[1];

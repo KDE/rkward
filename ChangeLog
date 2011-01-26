@@ -1,3 +1,4 @@
+- Add support for R functions loadhistory(), savehistory(), history(), and timestamp ()
 - Do not load .RData file from current directory by default (configurable)
 - Fixed: On Windows, a wrong locale for LC_NUMERIC would be applied, resulting in malfunction of pdf() and postscript()
 - Fixed: Did not use system configured background color in data editor

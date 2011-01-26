@@ -2,7 +2,7 @@
                           robject  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004, 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -498,9 +498,18 @@ RObject::RDataType RObject::textToType (const QString &text) {
 
 //static
 QString RObject::rQuote (const QString &string) {
-	// TODO: this is not entirely correct, yet (let alone efficient)!
-	QString copy = string;
-	return ("\"" + copy.replace (QRegExp ("\""), "\\\"") + "\"");
+	QString ret;
+	int s = string.size ();
+	ret.reserve (s + 2);	// typical case: Only quotes added, no escapes needed.
+	ret.append ('\"');
+	for (int i = 0; i < s; ++i) {
+		const QChar c = string[i];
+		if ((c == '\\') || (c == '\"')) ret.append ('\\');
+		ret.append (c);
+	}
+	ret.append ('\"');
+
+	return ret;
 }
 
 // static

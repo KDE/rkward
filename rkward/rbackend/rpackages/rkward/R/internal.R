@@ -391,6 +391,22 @@ formals (setwd) <- formals (base::setwd)
 	}
 }
 
+## History manipulation function (overloads for functions by the same name in package utils)
+"loadhistory" <- function (file = ".Rhistory") {
+	invisible (.rk.do.call ("commandHistory", c ("set", readLines (file))))
+}
+
+"savehistory" <- function (file = ".Rhistory") {
+	invisible (writeLines (.rk.do.call ("commandHistory", "get"), file))
+}
+
+"timestamp" <- function (stamp = date(), prefix = "##------ ", suffix = " ------##", quiet = FALSE) {
+	stamp <- paste(prefix, stamp, suffix, sep = "")
+	.rk.do.call (.rk.do.call ("commandHistory", c ("append", stamp)))
+	if (!quiet) cat(stamp, sep = "\n")
+	invisible(stamp)
+}
+
 # retrieve the (expected) "base" url of help files. Most importantly this will be a local port for R 2.10.0 and above, but a local directory for 2.9.x and below. As a side effect, in R 2.10.0 and above, the dynamic help server is started.
 ".rk.getHelpBaseUrl" <- function () {
 	port <- NA
@@ -483,6 +499,9 @@ if (exists ("system2", base::.BaseNamespaceEnv)) {
 # so we have a separate function for that.
 #NOTE: TODO: By now we are replacing so many functions, that it would make sense to create a generic framework for doing such replacements.
 ".rk.fix.assignments" <- function () {
+	assignInNamespace ("loadhistory", loadhistory, envir=as.environment ("package:utils"))
+	assignInNamespace ("savehistory", savehistory, envir=as.environment ("package:utils"))
+	assignInNamespace ("timestamp", timestamp, envir=as.environment ("package:utils"))
 	assignInNamespace ("menu", menu, envir=as.environment ("package:utils"))
 	assignInNamespace ("select.list", select.list, envir=as.environment ("package:utils"))
 	try ({

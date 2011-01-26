@@ -2,7 +2,7 @@
                           rkconsole  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004, 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -782,10 +782,10 @@ void RKConsole::clear () {
 
 void RKConsole::addCommandToHistory (const QString &command) {
 	RK_TRACE (APP);
-	if (command.isEmpty () || ((!commands_history.isEmpty ()) && commands_history.last() == command)) return; // don't add empty or duplicate lines
-
-	commands_history.append (command);
-	history_editing_line = QString ();
+	if ((!command.isEmpty ()) && (commands_history.isEmpty () || commands_history.last() != command)) { // don't add empty or duplicate lines
+		commands_history.append (command);
+		history_editing_line = QString ();
+	}
 
 	if (RKSettingsModuleConsole::maxHistoryLength ()) {
 		uint c = commands_history.count ();
@@ -793,6 +793,15 @@ void RKConsole::addCommandToHistory (const QString &command) {
 			commands_history.pop_front ();
 		}
 	}
+}
+
+void RKConsole::setCommandHistory (const QStringList &new_history, bool append) {
+	RK_TRACE (APP);
+
+	if (append) commands_history.append (new_history);
+	else commands_history = new_history;
+
+	addCommandToHistory (QString ());	// side-effect of checking history length
 }
 
 QString RKConsole::cleanedSelection () {

@@ -2,7 +2,7 @@
                           rkconsole  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004, 2006, 2007, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -71,6 +71,8 @@ public:
 
 /** reimplemnented from RKMDIWindow to clear selection when gaining focus */
 	void activate (bool with_focus=true);
+	void setCommandHistory (const QStringList &new_history, bool append);
+	QStringList commandHistory () const { return commands_history; };
 protected:
 /** Handle keystrokes before they reach the kate-part. Return TRUE if we want the kate-part to ignore it
 \param e the QKeyEvent */
