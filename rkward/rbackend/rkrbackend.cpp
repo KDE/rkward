@@ -20,6 +20,7 @@
 #ifdef Q_WS_WIN
 #	include <windows.h>
 #	include <winsock2.h>
+#	include <locale.h>
 #	undef ERROR 	// clashes with R
 #	define Win32	// needed for R includes
 #else
@@ -888,6 +889,8 @@ bool RKRBackend::startR () {
 #ifndef Q_WS_WIN
 	// on windows, set in connectCallbacks() for technical reasons
 	R_Interactive = (Rboolean) TRUE;
+#else
+	setlocale (LC_NUMERIC, "C");	// something appears to mess with the locale on Windows. R will not work correctly without LC_NUMERIC=C
 #endif
 
 	RBackendRequest req (false, RBackendRequest::SetParamsFromBackend);
