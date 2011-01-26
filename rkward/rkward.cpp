@@ -2,7 +2,7 @@
                           rkward.cpp  -  description
                              -------------------
     begin                : Tue Oct 29 20:06:08 CET 2002
-    copyright            : (C) 2002, 2005, 2006, 2007, 2008, 2009, 2010 by Thomas Friedrichsmeier 
+    copyright            : (C) 2002, 2005, 2006, 2007, 2008, 2009, 2011 by Thomas Friedrichsmeier 
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -235,20 +235,23 @@ void RKWardMainWindow::doPostInit () {
 	setUpdatesEnabled (true);
 	show ();
 
-	if (!open_url.isEmpty()) {
-		openWorkspace (open_url);
-	} else {
-		StartupDialog::StartupDialogResult *result = StartupDialog::getStartupAction (this, fileOpenRecentWorkspace);
-		if (result->result == StartupDialog::EmptyWorkspace) {
-		} else if (result->result == StartupDialog::OpenFile) {
-			openWorkspace (result->open_url);
-		} else if (result->result == StartupDialog::ChoseFile) {
-			slotFileOpenWorkspace ();
-		} else if (result->result == StartupDialog::EmptyTable) {
-			RKWorkplace::mainWorkplace ()->editNewDataFrame (i18n ("my.data"));
+//	bool recovered = RKRecoverDialog::checkRecoverCrashedWorkspace ();
+//	if (!recovered) {
+		if (!open_url.isEmpty()) {
+			openWorkspace (open_url);
+		} else {
+			StartupDialog::StartupDialogResult result = StartupDialog::getStartupAction (this, fileOpenRecentWorkspace);
+			if (!result.open_url.isEmpty ()) {
+				openWorkspace (result.open_url);
+			} else {
+				if (result.result == StartupDialog::ChoseFile) {
+					slotFileOpenWorkspace ();
+				} else if (result.result == StartupDialog::EmptyTable) {
+					RKWorkplace::mainWorkplace ()->editNewDataFrame (i18n ("my.data"));
+				}
+			}
 		}
-		delete result;
-	}
+//	}
 
 	if (RKSettingsModuleGeneral::workplaceSaveMode () == RKSettingsModuleGeneral::SaveWorkplaceWithSession) {
 		RKWorkplace::mainWorkplace ()->restoreWorkplace (RKSettingsModuleGeneral::getSavedWorkplace (KGlobal::config ().data ()));

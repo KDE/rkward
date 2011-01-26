@@ -2,7 +2,7 @@
                           rksettingsmodulegeneral  -  description
                              -------------------
     begin                : Fri Jul 30 2004
-    copyright            : (C) 2004, 2007, 2008, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007, 2008, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -64,11 +64,12 @@ RKSettingsModuleGeneral::RKSettingsModuleGeneral (RKSettings *gui, QWidget *pare
 	main_vbox->addWidget (new QLabel (i18n ("Startup Action (*)"), this));
 	startup_action_choser = new QComboBox (this);
 	startup_action_choser->setEditable (false);
-	startup_action_choser->insertItem (StartupDialog::EmptyWorkspace, i18n ("Start with an empty workspace"));
-	startup_action_choser->insertItem (StartupDialog::EmptyTable, i18n ("Start with an empty table"));
-	startup_action_choser->insertItem (StartupDialog::ChoseFile, i18n ("Ask for a file to open"));
-	startup_action_choser->insertItem (StartupDialog::NoSavedSetting, i18n ("Show selection dialog (default)"));
-	startup_action_choser->setCurrentIndex (startup_action);
+	startup_action_choser->addItem (i18n ("Start with an empty workspace"), (int) StartupDialog::EmptyWorkspace);
+	startup_action_choser->addItem (i18n ("Load .RData-file from current directory, if available (R option '--restore')"), (int) StartupDialog::RestoreFromWD);
+	startup_action_choser->addItem (i18n ("Start with an empty table"), (int) StartupDialog::EmptyTable);
+	startup_action_choser->addItem (i18n ("Ask for a file to open"), (int) StartupDialog::ChoseFile);
+	startup_action_choser->addItem (i18n ("Show selection dialog (default)"), (int) StartupDialog::NoSavedSetting);
+	startup_action_choser->setCurrentIndex (startup_action_choser->findData (startup_action));
 	connect (startup_action_choser, SIGNAL (activated (int)), this, SLOT (boxChanged (int)));
 	main_vbox->addWidget (startup_action_choser);
 
@@ -153,7 +154,7 @@ bool RKSettingsModuleGeneral::hasChanges () {
 void RKSettingsModuleGeneral::applyChanges () {
 	RK_TRACE (SETTINGS);
 	new_files_path = files_choser->getLocation ();
-	startup_action = static_cast<StartupDialog::Result> (startup_action_choser->currentIndex ());
+	startup_action = static_cast<StartupDialog::Result> (startup_action_choser->itemData (startup_action_choser->currentIndex ()).toInt ());
 	show_help_on_startup = show_help_on_startup_box->isChecked ();
 	workplace_save_mode = static_cast<WorkplaceSaveMode> (workplace_save_chooser->checkedId ());
 	warn_size_object_edit = warn_size_object_edit_box->intValue ();

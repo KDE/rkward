@@ -2,7 +2,7 @@
                           startupdialog  -  description
                              -------------------
     begin                : Thu Aug 26 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -26,6 +26,7 @@
 #include <qpixmap.h>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <QFileInfo>
 
 #include <klocale.h>
 #include <kvbox.h>
@@ -53,12 +54,19 @@ StartupDialog::StartupDialog (QWidget *parent, StartupDialogResult *result, KRec
 
 	choser = new QButtonGroup (this);
 	QGroupBox* choser_box = new QGroupBox (vbox);
-	QVBoxLayout*choser_layout = new QVBoxLayout(choser_box);
+	QVBoxLayout* choser_layout = new QVBoxLayout(choser_box);
 
 	choser_layout->addWidget (empty_workspace_button = new QRadioButton (i18n ("Start with an empty workspace"), choser_box));
 	choser->addButton (empty_workspace_button);
 	choser_layout->addWidget (empty_table_button = new QRadioButton (i18n ("Start with an empty table"), choser_box));
 	choser->addButton (empty_table_button);
+	KUrl rdata_file = getRestoreFile ();
+	choser_layout->addWidget (restore_workspace_button = new QRadioButton (choser_box));
+	choser->addButton (restore_workspace_button);
+	if (rdata_file.isEmpty ()) {
+		restore_workspace_button->setEnabled (false);
+		restore_workspace_button->setText (i18n ("Load workspace from current directory"));
+	} else restore_workspace_button->setText (i18n ("Load workspace from current directory:\n%1", rdata_file.toLocalFile ()));
 	choser_layout->addWidget (open_button = new QRadioButton (i18n ("Load an existing workspace:"), choser_box));
 	choser->addButton (open_button);
 	connect (open_button, SIGNAL (toggled (bool)), this, SLOT (openButtonSelected (bool)));
@@ -88,6 +96,9 @@ void StartupDialog::accept () {
 		result->result = EmptyWorkspace;
 	} else if (empty_table_button->isChecked ()) {
 		result->result = EmptyTable;
+	} else if (restore_workspace_button->isChecked ()) {
+		result->result = RestoreFromWD;
+		result->open_url = getRestoreFile ();
 	} else if (open_button->isChecked ()) {
 		QListWidgetItem *item = file_list->currentItem ();
 		if (item == chose_file_item) {
@@ -157,22 +168,36 @@ void StartupDialog::showEvent (QShowEvent *event) {
 	KDialog::showEvent (event);
 }
 
-//static
-StartupDialog::StartupDialogResult *StartupDialog::getStartupAction (QWidget *parent, KRecentFilesAction *recent_files) {
+// static
+KUrl StartupDialog::getRestoreFile () {
 	RK_TRACE (DIALOGS);
 
-	StartupDialogResult *result = new StartupDialogResult;
-	result->result = RKSettingsModuleGeneral::startupAction ();
+	QFileInfo rdata_file (".RData");
+	if (rdata_file.exists ()) return KUrl::fromLocalFile (rdata_file.absoluteFilePath ());
 
-	if (result->result != NoSavedSetting) {
+	return KUrl ();
+}
+
+//static
+StartupDialog::StartupDialogResult StartupDialog::getStartupAction (QWidget *parent, KRecentFilesAction *recent_files) {
+	RK_TRACE (DIALOGS);
+
+	StartupDialogResult result;
+	result.result = RKSettingsModuleGeneral::startupAction ();
+
+	if (result.result == RestoreFromWD) {
+		result.open_url = getRestoreFile ();
+		if (result.open_url.isEmpty ()) result.result = NoSavedSetting;
+	}
+	if (result.result != NoSavedSetting) {
 		return result;
 	}
 
-	StartupDialog *dialog = new StartupDialog (parent, result, recent_files);
+	StartupDialog *dialog = new StartupDialog (parent, &result, recent_files);
 	dialog->exec ();
 	delete dialog;
 	
-	RK_DO (qDebug ("startup-dialog result: %d, url: %s", result->result, result->open_url.fileName ().toLatin1 ().data ()), DIALOGS, DL_DEBUG);
+	RK_DO (qDebug ("startup-dialog result: %d, url: %s", result.result, qPrintable (result.open_url.url ())), DIALOGS, DL_DEBUG);
 	
 	return result;
 }
