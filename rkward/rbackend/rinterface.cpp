@@ -202,8 +202,6 @@ void RInterface::handleCommandOut (RCommandProxy *proxy) {
 		}
 	#endif
 
-	if (command->type () & RCommand::QuitCommand) backend_dead = true;
-
 	if (command->status & RCommand::Canceled) {
 		command->status |= RCommand::HasError;
 		ROutput *out = new ROutput;
@@ -244,6 +242,8 @@ void RInterface::doNextCommand (RCommand *command) {
 				command_logfile.write ("\n");
 			}
 		}
+
+		if (command->type () & RCommand::QuitCommand) backend_dead = true;
 	}
 
 	command_request->command = proxy;
