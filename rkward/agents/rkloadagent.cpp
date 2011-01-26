@@ -2,7 +2,7 @@
                           rkloadagent  -  description
                              -------------------
     begin                : Sun Sep 5 2004
-    copyright            : (C) 2004, 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007, 2009, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -49,7 +49,7 @@ RKLoadAgent::RKLoadAgent (const KUrl &url, bool merge) {
 	RCommand *command;
 	
 	if (!merge) {
-		RKWardMainWindow::getMain ()->slotCloseAllEditors ();
+		RKWardMainWindow::getMain ()->slotCloseAllWindows ();
 		command = new RCommand ("remove (list=ls (all.names=TRUE))", RCommand::App | RCommand::ObjectListUpdate);
 		RKGlobals::rInterface ()->issueCommand (command);
 	}
