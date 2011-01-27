@@ -2,7 +2,7 @@
                           rkrbackend  -  description
                              -------------------
     begin                : Sun Jul 25 2004
-    copyright            : (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -212,6 +212,12 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 			if (RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::NoUserCommand) {
 				RCommandProxy *command = RKRBackend::this_pointer->fetchNextCommand ();
 				if (!command) {
+#ifdef Q_OS_WINDOWS
+					// Can't easily override R_CleanUp on Windows, so we're calling it manually, here, then force exit
+					if (RKRBackend::this_pointer->killed == RKRBackend::ExitNow) RCleanUp (SA_NOSAVE, 0, 0);
+					else RCleanUp (SA_SUICIDE, 1, 0);
+					exit (0);
+#endif
 					return 0;	// jumps out of the event loop!
 				}
 
@@ -358,6 +364,7 @@ void RDoNothing () {
 
 void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 	RK_TRACE (RBACKEND);
+	Q_UNUSED (RunLast);		// R_dot_Last is called while "running" the QuitCommand
 
 	if (RKRBackend::this_pointer->killed == RKRBackend::AlreadyDead) return;	// Nothing to clean up
 
@@ -374,8 +381,7 @@ void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 			RKRBackend::this_pointer->handleRequest (&request);
 		}
 
-		if (RunLast) R_dot_Last ();
-
+		Rf_KillAllDevices ();
 		R_RunExitFinalizers ();
 		R_CleanTempDir ();
 	}
@@ -631,7 +637,8 @@ void RKRBackend::setupCallbacks () {
 	RK_R_Params.Busy = RBusy;
 
 	// TODO: callback mechanism(s) for ChosseFile, ShowFiles, EditFiles
-	// TODO: also for RSuicide / RCleanup? (Less important, obviously, since those should not be triggered, in normal operation).
+	// TODO: also for RSuicide (Less important, obviously, since this should not be triggered, in normal operation).
+	// NOTE: For RCleanUp see RReadConsole RCleanup? 
 
 	RK_R_Params.R_Quiet = (Rboolean) 0;
 	RK_R_Params.R_Interactive = (Rboolean) 1;
@@ -1058,6 +1065,10 @@ void RKRBackend::runCommand (RCommandProxy *command) {
 	if (ctype & RCommand::DirectToOutput) runDirectCommand (".rk.capture.messages()");
 
 	if (ctype & RCommand::QuitCommand) {
+		R_dot_Last ();		// should run while communication with frontend is still possible
+		RBackendRequest req (true, RBackendRequest::BackendExit);
+		req.params["regular"] = QVariant (true);
+		handleRequest (&req);
 		killed = ExitNow;
 	} else if (!(ctype & RCommand::EmptyCommand)) {
 		repl_status.eval_depth++;

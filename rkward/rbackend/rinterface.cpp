@@ -243,8 +243,6 @@ void RInterface::doNextCommand (RCommand *command) {
 				command_logfile.write ("\n");
 			}
 		}
-
-		if (command->type () & RCommand::QuitCommand) backend_dead = true;
 	}
 
 	command_request->command = proxy;
@@ -722,6 +720,7 @@ void RInterface::processRBackendRequest (RBackendRequest *request) {
 			na_real = request->params["na_real"].toDouble ();
 			na_int = request->params["na_int"].toInt ();
 	} else if (type == RBackendRequest::BackendExit) {
+		if (request->params.value ("regular", QVariant (false)).toBool ()) backend_dead = true;		// regular exit via QuitCommand
 		if (!backend_dead) {
 			backend_dead = true;
 			QString message = request->params["message"].toString ();
