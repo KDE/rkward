@@ -367,26 +367,14 @@ void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 	Q_UNUSED (RunLast);		// R_dot_Last is called while "running" the QuitCommand
 
 	if (RKRBackend::this_pointer->killed == RKRBackend::AlreadyDead) return;	// Nothing to clean up
+	if (!RKRBackend::this_pointer->r_running) return;			// prevent recursion (if an error occurs, here, we get jumped to the console repl, again!)
+	RKRBackend::this_pointer->r_running = false;
 
 	// we could be in a signal handler, and the stack base may have changed.
 	uintptr_t old_lim = R_CStackLimit;
 	R_CStackLimit = (uintptr_t)-1;
 
 	if ((status != 0) && (RKRBackend::this_pointer->killed != RKRBackend::ExitNow)) RKRBackend::this_pointer->killed = RKRBackend::EmergencySaveThenExit;
-
-	if (saveact != SA_SUICIDE) {
-		if (!RKRBackend::this_pointer->isKilled ()) {
-			RBackendRequest request (true, RBackendRequest::BackendExit);
-			request.params["message"] = QVariant (i18n ("The R engine has shut down with status: %1").arg (status));
-			RKRBackend::this_pointer->handleRequest (&request);
-		}
-
-		Rf_KillAllDevices ();
-		R_RunExitFinalizers ();
-		R_CleanTempDir ();
-	}
-
-	RKRBackend::this_pointer->r_running = false;	// To signify we have finished everything else and are now trying to create an emergency save (if applicable)
 
 	if (RKRBackend::this_pointer->killed == RKRBackend::EmergencySaveThenExit) {
 		QString filename;
@@ -401,6 +389,18 @@ void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 
 		if (R_DirtyImage) R_SaveGlobalEnvToFile (filename.toLocal8Bit ().data ());
 		qDebug ("Created emergency save file in %s", qPrintable (filename));
+	}
+
+	if (saveact != SA_SUICIDE) {
+		if (!RKRBackend::this_pointer->isKilled ()) {
+			RBackendRequest request (true, RBackendRequest::BackendExit);
+			request.params["message"] = QVariant (i18n ("The R engine has shut down with status: %1").arg (status));
+			RKRBackend::this_pointer->handleRequest (&request);
+		}
+
+		Rf_KillAllDevices ();
+		R_RunExitFinalizers ();
+		R_CleanTempDir ();
 	}
 
 	RKRBackend::this_pointer->killed = RKRBackend::AlreadyDead;	// just in case
