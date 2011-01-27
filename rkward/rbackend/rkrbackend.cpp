@@ -398,8 +398,8 @@ void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 			RKRBackend::this_pointer->handleRequest (&request);
 		}
 
-		Rf_KillAllDevices ();
 		R_RunExitFinalizers ();
+		Rf_KillAllDevices ();
 		R_CleanTempDir ();
 	}
 

@@ -2,7 +2,7 @@
                           rkfrontendtransmitter  -  description
                              -------------------
     begin                : Thu Nov 04 2010
-    copyright            : (C) 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -28,6 +28,7 @@
 #include <QProcess>
 #include <QLocalServer>
 #include <QLocalSocket>
+#include <QDir>
 
 #include "../version.h"
 #include "../debug.h"
@@ -62,8 +63,8 @@ void RKFrontendTransmitter::run () {
 	args.append ("--data-dir " + RKSettingsModuleGeneral::filesPath ());
 	backend->setProcessChannelMode (QProcess::MergedChannels);	// at least for now. Seems difficult to get interleaving right, without this.
 	connect (backend, SIGNAL (finished (int, QProcess::ExitStatus)), this, SLOT (backendExit (int)));
-	QString backend_executable = KStandardDirs::findExe ("rkward.rbackend", QCoreApplication::applicationDirPath () + "/rbackend");
-	if (backend_executable.isEmpty ()) backend_executable = KStandardDirs::findExe ("rkward.rbackend", QCoreApplication::applicationDirPath ());
+	QString backend_executable = KStandardDirs::findExe (QDir::toNativeSeparators (QCoreApplication::applicationDirPath () + "/rkward.rbackend"));
+	if (backend_executable.isEmpty ()) backend_executable = KStandardDirs::findExe (QDir::toNativeSeparators (QCoreApplication::applicationDirPath () + "/rbackend/rkward.rbackend"));	// for running directly from the build-dir
 	RK_ASSERT (!backend_executable.isEmpty ());
 	backend->start (backend_executable, args, QIODevice::ReadOnly);
 
