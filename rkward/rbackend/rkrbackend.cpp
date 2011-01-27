@@ -368,6 +368,7 @@ void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 
 	if (RKRBackend::this_pointer->killed == RKRBackend::AlreadyDead) return;	// Nothing to clean up
 	if (!RKRBackend::this_pointer->r_running) return;			// prevent recursion (if an error occurs, here, we get jumped to the console repl, again!)
+	R_CheckUserInterrupt ();	// if there are any user interrupts pendinging, we want them handled *NOW*
 	RKRBackend::this_pointer->r_running = false;
 
 	// we could be in a signal handler, and the stack base may have changed.
@@ -377,18 +378,22 @@ void RCleanUp (SA_TYPE saveact, int status, int RunLast) {
 	if ((status != 0) && (RKRBackend::this_pointer->killed != RKRBackend::ExitNow)) RKRBackend::this_pointer->killed = RKRBackend::EmergencySaveThenExit;
 
 	if (RKRBackend::this_pointer->killed == RKRBackend::EmergencySaveThenExit) {
-		QString filename;
-		QDir dir (RKRBackendProtocolBackend::dataDir ());
-		int i=0;
-		while (true) {
-			filename = "rkward_recover" + QString::number (i) + ".RData";
-			if (!dir.exists (filename)) break;
-			i++;
-		}
-		filename = dir.absoluteFilePath (filename);
+		if (R_DirtyImage) {
+			QString filename;
+			QDir dir (RKRBackendProtocolBackend::dataDir ());
+			int i=0;
+			while (true) {
+				filename = "rkward_recover" + QString::number (i) + ".RData";
+				if (!dir.exists (filename)) break;
+				i++;
+			}
+			filename = dir.absoluteFilePath (filename);
 
-		if (R_DirtyImage) R_SaveGlobalEnvToFile (filename.toLocal8Bit ().data ());
-		qDebug ("Created emergency save file in %s", qPrintable (filename));
+			R_SaveGlobalEnvToFile (filename.toLocal8Bit ().data ());
+			qDebug ("Created emergency save file in %s", qPrintable (filename));
+		} else {
+			qDebug ("Image not dirty while crashing. No emergency save created.");
+		}
 	}
 
 	if (saveact != SA_SUICIDE) {
