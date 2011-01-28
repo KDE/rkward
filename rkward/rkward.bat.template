@@ -10,6 +10,11 @@ REM This is where the NSIS installer assumes to find it.
 SET R_BINARY=@R_EXECUTABLE@
 
 
+REM Explicit initialization of KDE, in case Windows 7 asks for admin priviledges
+ECHO Initializing KDE
+%~dsp0\kdeinit4.exe
+
+ECHO Starting RKWard
 SET RKWARD.BIN=%~dsp0\rkward.bin.exe
 SET DEBUGGER=
 
