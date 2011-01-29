@@ -1,9 +1,12 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward_console" version="54">
+<kpartgui name="rkward_console" version="540">
 	<MenuBar>
 		<Menu name="file"><text>&amp;File</text>
+			<Separator />
+			<Action name="loadhistory"/>
+			<Action name="savehistory"/>
 			<Action name="file_print"/>
-			<Separator group="print_merge" />
+			<Separator />
 			<Action name="file_export_html"/>
 		</Menu>
 		<Menu name="edit"><text>&amp;Edit</text>

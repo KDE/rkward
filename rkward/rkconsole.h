@@ -175,6 +175,9 @@ public slots:
 /** Adds a chunk of commands to the input buffer
 \param batch a QString containing the batch of commands to be executed */
 	void submitBatch (const QString &batch);
+
+	void userLoadHistory (const KUrl &url=KUrl ());
+	void userSaveHistory (const KUrl &url=KUrl ());
 private:
 /** Commands can be queued in the console in four different places:
 1) The not-yet-executed remainder of a previous incomplete command.

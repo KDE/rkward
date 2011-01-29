@@ -40,6 +40,9 @@
 #include <ktexteditor/configinterface.h>
 #include <ktexteditor/markinterface.h>
 #include <kxmlguifactory.h>
+#include <kfiledialog.h>
+#include <kio/netaccess.h>
+#include <ktemporaryfile.h>
 
 #include "rkglobals.h"
 #include "rkward.h"
@@ -784,7 +787,6 @@ void RKConsole::addCommandToHistory (const QString &command) {
 	RK_TRACE (APP);
 	if ((!command.isEmpty ()) && (commands_history.isEmpty () || commands_history.last() != command)) { // don't add empty or duplicate lines
 		commands_history.append (command);
-		history_editing_line = QString ();
 	}
 
 	if (RKSettingsModuleConsole::maxHistoryLength ()) {
@@ -793,6 +795,10 @@ void RKConsole::addCommandToHistory (const QString &command) {
 			commands_history.pop_front ();
 		}
 	}
+
+	history_editing_line = QString ();
+	commands_history_position = commands_history.constEnd ();
+	command_edited = false;
 }
 
 void RKConsole::setCommandHistory (const QStringList &new_history, bool append) {
@@ -802,6 +808,47 @@ void RKConsole::setCommandHistory (const QStringList &new_history, bool append) 
 	else commands_history = new_history;
 
 	addCommandToHistory (QString ());	// side-effect of checking history length
+}
+
+void RKConsole::userLoadHistory (const KUrl &_url) {
+	RK_TRACE (APP);
+
+	KUrl url = _url;
+	if (url.isEmpty ()) {
+		url = KFileDialog::getOpenUrl (KUrl (), i18n ("*.Rhistory|R history files (*.Rhistory)\n*|All files (*)"), this, i18n ("Select command history file to load"));
+		if (url.isEmpty ()) return;
+	}
+
+	QString tempfile;
+	KIO::NetAccess::download (url, tempfile, this);
+
+	QFile file (tempfile);
+	if (!file.open (QIODevice::Text | QIODevice::ReadOnly)) return;
+	setCommandHistory (QString (file.readAll ()).split ('\n', QString::SkipEmptyParts), false);
+	file.close ();
+
+	KIO::NetAccess::removeTempFile (tempfile);
+}
+
+void RKConsole::userSaveHistory (const KUrl &_url) {
+	RK_TRACE (APP);
+
+	KUrl url = _url;
+	if (url.isEmpty ()) {
+		url = KFileDialog::getSaveUrl (KUrl (), i18n ("*.Rhistory|R history files (*.Rhistory)\n*|All files (*)"), this, i18n ("Select filename to save command history")
+#if KDE_IS_VERSION(4,4,0)
+		                                    , KFileDialog::ConfirmOverwrite
+#endif
+		                                   );
+		if (url.isEmpty ()) return;
+	}
+
+	KTemporaryFile tempfile;
+	tempfile.open ();
+	tempfile.write (QString (commandHistory ().join ("\n") + "\n").toLocal8Bit ().data ());
+	tempfile.close ();
+
+	KIO::NetAccess::upload (tempfile.fileName (), url, this);
 }
 
 QString RKConsole::cleanedSelection () {
@@ -892,6 +939,11 @@ void RKConsole::initializeActions (KActionCollection *ac) {
 	addProxyAction ("view_dynamic_word_wrap");
 	addProxyAction ("view_inc_font_sizes");
 	addProxyAction ("view_dec_font_sizes");
+
+	KAction *action = ac->addAction ("loadhistory", this, SLOT (userLoadHistory ()));
+	action->setText (i18n ("Import command history..."));
+	action = ac->addAction ("savehistory", this, SLOT (userSaveHistory ()));
+	action->setText (i18n ("Export command history..."));
 }
 
 void RKConsole::pipeUserCommand (const QString &command) {
