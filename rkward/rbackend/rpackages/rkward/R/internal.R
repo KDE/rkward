@@ -313,8 +313,9 @@
 }
 
 "setwd" <- function () {
-	eval (body (base::setwd))
-	invisible (.rk.do.call ("wdChange", base::getwd ()));
+	ret <- eval (body (base::setwd))
+	.rk.do.call ("wdChange", base::getwd ())
+	invisible (ret)
 }
 formals (setwd) <- formals (base::setwd)
 
