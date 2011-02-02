@@ -516,7 +516,7 @@ if (exists ("system2", base::.BaseNamespaceEnv)) {
 	})
 	try ({
 		unlockBinding ("system2", base::.BaseNamespaceEnv)
-		assign ("system2", rkward::system, envir=base::.BaseNamespaceEnv)
+		assign ("system2", rkward::system2, envir=base::.BaseNamespaceEnv)
 	})
 	
 	# call separate assignments functions:
