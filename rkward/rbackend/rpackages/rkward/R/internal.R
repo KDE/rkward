@@ -472,12 +472,14 @@ formals (menu) <- formals (utils::menu)
 
 # Add output synchronisation across system(), and system2() calls.
 "system" <- function () {
-	if (intern || ignore.stdout || ignore.stderr) eval (body (.rk.system.default))
-	else {
+	if (!exists ("ignore.stdout", inherits=FALSE)) ignore.stdout <- FALSE	# ignore.stdout was introduced in R 2.12.0
+
+	if (!(intern || (ignore.stdout && ignore.stderr))) {
 		.Call ("rk.sync.output", 0)
 		on.exit (.Call ("rk.sync.output", 1), TRUE)
-		eval (body (.rk.system.default))
 	}
+
+	eval (body (.rk.system.default))
 }
 formals (system) <- formals (base::system)
 .rk.system.default <- base::system
@@ -485,12 +487,11 @@ formals (system) <- formals (base::system)
 # NOTE: system2 was not introduced before R 2.12.0 (or was it 2.11.0?)
 if (exists ("system2", base::.BaseNamespaceEnv)) {
 	"system2" <- function () {
-		if (stdout == "" && stderr == "") eval (body (.rk.system2.default))
-		else {
+		if (stdout != "" || stderr != "") {
 			.Call ("rk.sync.output", 0)
 			on.exit (.Call ("rk.sync.output", 1), TRUE)
-			eval (body (.rk.system2.default))
 		}
+		eval (body (.rk.system2.default))
 	}
 	formals (system2) <- formals (base::system2)
 	.rk.system2.default <- base::system2
