@@ -392,22 +392,6 @@ formals (setwd) <- formals (base::setwd)
 	}
 }
 
-## History manipulation function (overloads for functions by the same name in package utils)
-"loadhistory" <- function (file = ".Rhistory") {
-	invisible (.rk.do.call ("commandHistory", c ("set", readLines (file))))
-}
-
-"savehistory" <- function (file = ".Rhistory") {
-	invisible (writeLines (.rk.do.call ("commandHistory", "get"), file))
-}
-
-"timestamp" <- function (stamp = date(), prefix = "##------ ", suffix = " ------##", quiet = FALSE) {
-	stamp <- paste(prefix, stamp, suffix, sep = "")
-	.rk.do.call (.rk.do.call ("commandHistory", c ("append", stamp)))
-	if (!quiet) cat(stamp, sep = "\n")
-	invisible(stamp)
-}
-
 # retrieve the (expected) "base" url of help files. Most importantly this will be a local port for R 2.10.0 and above, but a local directory for 2.9.x and below. As a side effect, in R 2.10.0 and above, the dynamic help server is started.
 ".rk.getHelpBaseUrl" <- function () {
 	port <- NA
@@ -443,82 +427,111 @@ formals (setwd) <- formals (base::setwd)
 	invisible (TRUE)
 }
 
-"select.list" <- function () {
-	# the "list" parameter was renamed to "choices" in R 2.11.0
-	if (!exists ("list", inherits=FALSE)) list <- choices
-	# the "graphics" parameter was introduced in R 2.11.0, so we cannot rely on its existance
-	if (!exists ("graphics", inherits=FALSE)) graphics <- TRUE
-	if (graphics) {
-		return (rk.select.list (list, preselect, multiple, title))
-	}
+# Tries to replace a function inside its environemnt/namespace.
+# Function formals are copied from the original.
+# A backup of the original is stored as rkward::.rk.FUNCTIONNAME.default
+"rk.replace.function" <- function (functionname, environment, replacement, copy.formals=TRUE) {
+	original <- get (functionname, envir=environment, inherits=FALSE)
 
-	# for text list, use the default implementation
-	eval (body (.rk.select.list.default))
-}
-formals (select.list) <- formals (utils::select.list)
-.rk.select.list.default <- utils::select.list
+	# create a backup
+	backupname <- paste (".rk.", functionname, ".default", sep="")
+	assign (backupname, original, envir=as.environment ("package:rkward"))
 
-"menu" <- function () {
-	if (graphics) {
-		res <- rk.select.list (choices, multiple=FALSE, title=title)
-		return (match(res, choices, nomatch = 0L))
-	}
-
-	# for text menus, use the default implementation
-	eval (body (.rk.menu.default))
-}
-formals (menu) <- formals (utils::menu)
-.rk.menu.default <- utils::menu
-
-# Add output synchronisation across system(), and system2() calls.
-"system" <- function () {
-	if (!exists ("ignore.stdout", inherits=FALSE)) ignore.stdout <- FALSE	# ignore.stdout was introduced in R 2.12.0
-
-	if (!(intern || (ignore.stdout && ignore.stderr))) {
-		.Call ("rk.sync.output", 0)
-		on.exit (.Call ("rk.sync.output", 1), TRUE)
-	}
-
-	eval (body (.rk.system.default))
-}
-formals (system) <- formals (base::system)
-.rk.system.default <- base::system
-
-# NOTE: system2 was not introduced before R 2.12.0 (or was it 2.11.0?)
-if (exists ("system2", base::.BaseNamespaceEnv)) {
-	"system2" <- function () {
-		if (stdout != "" || stderr != "") {
-			.Call ("rk.sync.output", 0)
-			on.exit (.Call ("rk.sync.output", 1), TRUE)
+	if (copy.formals) formals (replacement) <- formals (original)
+	assign (functionname, replacement, envir=as.environment ("package:rkward"))
+	try (
+		if (bindingIsLocked (functionname, environment)) {
+			unlockBinding (functionname, environment)
+			on.exit (lockBinding (functionname, environment))
 		}
-		eval (body (.rk.system2.default))
-	}
-	formals (system2) <- formals (base::system2)
-	.rk.system2.default <- base::system2
+	)
+	try (
+		if (isNamespace (environment)) {
+			assignInNamespace (functionname, replacement, ns=environment)
+		} else {
+			assignInNamespace (functionname, replacement, envir=environment)
+		}
+	)
+	try (
+		assign (functionname, replacement, envir=environment)
+	)
+
+	invisible (NULL)
 }
 
-# where masking is not enough, we need to assign in the namespace. This can only be done after package loading,
+# where masking is not enough, we need to assign in the original environment / namespace. This can only be done after package loading,
 # so we have a separate function for that.
-#NOTE: TODO: By now we are replacing so many functions, that it would make sense to create a generic framework for doing such replacements.
 ".rk.fix.assignments" <- function () {
-	assignInNamespace ("loadhistory", loadhistory, envir=as.environment ("package:utils"))
-	assignInNamespace ("savehistory", savehistory, envir=as.environment ("package:utils"))
-	assignInNamespace ("timestamp", timestamp, envir=as.environment ("package:utils"))
-	assignInNamespace ("menu", menu, envir=as.environment ("package:utils"))
-	assignInNamespace ("select.list", select.list, envir=as.environment ("package:utils"))
-	try ({
-		unlockBinding ("makeActiveBinding", base::.BaseNamespaceEnv)
-		assign ("makeActiveBinding", rkward::makeActiveBinding, envir=base::.BaseNamespaceEnv)
-	})
-	try ({
-		unlockBinding ("system", base::.BaseNamespaceEnv)
-		assign ("system", rkward::system, envir=base::.BaseNamespaceEnv)
-	})
-	try ({
-		unlockBinding ("system2", base::.BaseNamespaceEnv)
-		assign ("system2", rkward::system2, envir=base::.BaseNamespaceEnv)
-	})
-	
+	## History manipulation function (overloads for functions by the same name in package utils)
+	rk.replace.function ("loadhistory",  as.environment ("package:utils"),
+		function (file = ".Rhistory") {
+			invisible (.rk.do.call ("commandHistory", c ("set", readLines (file))))
+		}, copy.formals = FALSE)
+
+	rk.replace.function ("savehistory",  as.environment ("package:utils"),
+		function (file = ".Rhistory") {
+			invisible (writeLines (.rk.do.call ("commandHistory", "get"), file))
+		}, copy.formals = FALSE)
+
+	rk.replace.function ("timestamp",  as.environment ("package:utils"),
+		function (stamp = date(), prefix = "##------ ", suffix = " ------##", quiet = FALSE) {
+			stamp <- paste(prefix, stamp, suffix, sep = "")
+			.rk.do.call (.rk.do.call ("commandHistory", c ("append", stamp)))
+			if (!quiet) cat(stamp, sep = "\n")
+			invisible(stamp)
+		}, copy.formals = FALSE)
+
+	## Interactive menus
+	rk.replace.function ("select.list", as.environment ("package:utils"), 
+		function () {
+			# the "list" parameter was renamed to "choices" in R 2.11.0
+			if (!exists ("list", inherits=FALSE)) list <- choices
+			# the "graphics" parameter was introduced in R 2.11.0, so we cannot rely on its existance
+			if (!exists ("graphics", inherits=FALSE)) graphics <- TRUE
+			if (graphics) {
+				return (rk.select.list (list, preselect, multiple, title))
+			}
+
+			# for text list, use the default implementation
+			eval (body (rkward::.rk.select.list.default))
+		})
+
+	rk.replace.function ("menu", as.environment ("package:utils"),
+		function () {
+			if (graphics) {
+				res <- rk.select.list (choices, multiple=FALSE, title=title)
+				return (match(res, choices, nomatch = 0L))
+			}
+
+			# for text menus, use the default implementation
+			eval (body (.rk.menu.default))
+		})
+
+	## Add output synchronisation across system(), and system2() calls.
+	rk.replace.function ("system", base::.BaseNamespaceEnv,
+		function () {
+			if (!exists ("ignore.stdout", inherits=FALSE)) ignore.stdout <- FALSE	# ignore.stdout was introduced in R 2.12.0
+
+			if (!(intern || (ignore.stdout && ignore.stderr))) {
+				.Call ("rk.sync.output", 0)
+				on.exit (.Call ("rk.sync.output", 1), TRUE)
+			}
+
+			eval (body (.rk.system.default))
+		})
+
+	# NOTE: system2 was not introduced before R 2.12.0 (or was it 2.11.0?)
+	if (exists ("system2", base::.BaseNamespaceEnv)) {
+		rk.replace.function ("system2", base::.BaseNamespaceEnv,
+			function () {
+				if (stdout != "" || stderr != "") {
+					.Call ("rk.sync.output", 0)
+					on.exit (.Call ("rk.sync.output", 1), TRUE)
+				}
+				eval (body (.rk.system2.default))
+			})
+	}
+
 	# call separate assignments functions:
 	if (exists (".rk.fix.assignments.graphics")) eval (body (.rk.fix.assignments.graphics)) # internal_graphics.R
 }

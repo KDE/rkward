@@ -71,51 +71,41 @@ if (base::.Platform$OS.type == "windows") {
 	}
 }
 
-"plot.new" <- function () 
-{
-	if (dev.cur() == 1) rk.screen.device ()
-	if (getOption ("rk.enable.graphics.history")) {
-		.callstr <- sys.call (-sys.parents()[sys.nframe ()])
-		rk.record.plot$record (nextplot.pkg = "graphics", nextplot.call = .callstr)
-	}
-	eval (body (.rk.plot.new.default))
-}
-formals (plot.new) <- formals (graphics::plot.new)
-.rk.plot.new.default <- graphics::plot.new
-
-"dev.off" <- function (which = dev.cur ())
-{
-	if (getOption ("rk.enable.graphics.history"))
-		rk.record.plot$onDelDevice (devId = which)
-	
-	# see http://thread.gmane.org/gmane.comp.statistics.rkward.devel/802
-	.rk.do.call ("killDevice", as.character (which))
-	
-	ret <- eval (body (.rk.dev.off.default))
-	return (ret)
-}
-formals (dev.off) <- formals (grDevices::dev.off)
-.rk.dev.off.default <- grDevices::dev.off
-
-"dev.set" <- function ()
-{
-	ret <- eval (body (.rk.dev.set.default))
-	
-	if (getOption ("rk.enable.graphics.history") && rk.record.plot$.is.device.managed (which))
-		rk.record.plot$.set.trellis.last.object (which)
-	
-	ret
-}
-formals (dev.set) <- formals (grDevices::dev.set)
-.rk.dev.set.default <- grDevices::dev.set
-
 # see .rk.fix.assignmetns () in internal.R
 ".rk.fix.assignments.graphics" <- function ()
 {
-	assignInNamespace ("plot.new", plot.new, envir=as.environment ("package:graphics"))
-	assignInNamespace ("dev.off", dev.off, envir=as.environment ("package:grDevices"))
-	assignInNamespace ("dev.set", dev.set, envir=as.environment ("package:grDevices"))
-	
+	rk.replace.function ("plot.new", as.environment ("package:graphics"),
+		function () {
+			if (dev.cur() == 1) rk.screen.device ()
+			if (getOption ("rk.enable.graphics.history")) {
+				.callstr <- sys.call (-sys.parents()[sys.nframe ()])
+				rk.record.plot$record (nextplot.pkg = "graphics", nextplot.call = .callstr)
+			}
+			eval (body (.rk.plot.new.default))
+		})
+
+	rk.replace.function ("dev.off", as.environment ("package:grDevices"),
+		function (which = dev.cur ()) {
+			if (getOption ("rk.enable.graphics.history"))
+				rk.record.plot$onDelDevice (devId = which)
+			
+			# see http://thread.gmane.org/gmane.comp.statistics.rkward.devel/802
+			.rk.do.call ("killDevice", as.character (which))
+			
+			ret <- eval (body (.rk.dev.off.default))
+			return (ret)
+		})
+
+	rk.replace.function ("dev.set", as.environment ("package:grDevices"),
+		function () {
+			ret <- eval (body (.rk.dev.set.default))
+			
+			if (getOption ("rk.enable.graphics.history") && rk.record.plot$.is.device.managed (which))
+				rk.record.plot$.set.trellis.last.object (which)
+			
+			ret
+		})
+
 	## set a hook defining "print.function" for lattice:
 	setHook (packageEvent ("lattice", "onLoad"),
 		function (...)
