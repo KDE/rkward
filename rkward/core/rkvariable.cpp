@@ -415,12 +415,7 @@ QString RKVariable::getText (int row, bool pretty) const {
 		return (*na_char);
 	}
 
-	if (pretty && (data->value_labels)) {
-		QString otext = getText (row);
-		if (data->value_labels->contains (otext)) {
-			return (*(data->value_labels))[otext];
-		}
-	}
+	if (pretty) return (getLabeled (row));
 
 	if (getDataType () == DataCharacter) {
 		RK_ASSERT (!data->cell_strings.isEmpty ());
@@ -445,7 +440,7 @@ QString RKVariable::getRText (int row) const {
 	if ((cell_state == ValueUnused) || (cell_state == ValueInvalid)) {
 		return ("NA");
 	} else if (getDataType () == DataFactor) {
-		return (rQuote (getLabeled (row)));
+		return (rQuote (getText (row, true)));
 	} else if (getDataType () == DataCharacter) {
 		return (rQuote (getText (row)));
 	} else if (getDataType () == DataLogical) {
@@ -470,48 +465,52 @@ void RKVariable::setText (int row, const QString &text) {
 		data->cell_states[row] = 0;
 	}
 
+	bool valid = true;
 	if (text.isNull ()) {
+		data->cell_states[row] |= RKVarEditData::NA;
+	} else if (text.isEmpty () && getDataType () != DataCharacter) {
 		data->cell_states[row] |= RKVarEditData::NA;
 	} else {
 		if (getDataType () == DataCharacter) {
 			data->cell_strings[row] = text;
-			data->cell_states[row] |= RKVarEditData::Valid;
 		} else if (getDataType () == DataFactor) {
-			if (text.isEmpty ()) {
-				data->cell_states[row] |= RKVarEditData::NA;
-			} else if (data->value_labels && data->value_labels->contains (text)) {
+			if (data->value_labels && data->value_labels->contains (text)) {
 				data->cell_doubles[row] = text.toInt ();
-				data->cell_states[row] |= RKVarEditData::Valid;
 			} else {
-				data->invalid_fields.insert (row, text);
-				data->cell_states[row] |= RKVarEditData::Invalid | RKVarEditData::UnsyncedInvalidState;
+				valid = false;
 			}
+		} else if (getDataType () == DataLogical) {
+			if (text == "0" || text == "F" || text == "FALSE") data->cell_doubles[row] = 0;
+			else if (text == "1" || text == "T" || text == "TRUE") data->cell_doubles[row] = 1;
+			else valid = false;
 		} else {
 			bool ok;
-			if (text.isEmpty ()) {
-				data->cell_states[row] |= RKVarEditData::NA;
-			} else {
-				data->cell_doubles[row] = text.toDouble (&ok);
-				if (ok) {
-					data->cell_states[row] |= RKVarEditData::Valid;
-				} else {
-					data->invalid_fields.insert (row, text);
-					data->cell_states[row] |= RKVarEditData::Invalid | RKVarEditData::UnsyncedInvalidState;
-				}
-			}
+			data->cell_doubles[row] = text.toDouble (&ok);
+			if (!ok) valid = false;
 		}
 	}
+
+	if (valid) {
+		if (!(data->cell_states[row] & RKVarEditData::NA)) data->cell_states[row] |= RKVarEditData::Valid;
+	} else {
+		data->invalid_fields.insert (row, text);
+		data->cell_states[row] |= RKVarEditData::Invalid | RKVarEditData::UnsyncedInvalidState;
+	}
+
 	cellsChanged (row, row);
 }
 
 QString RKVariable::getLabeled (int row) const {
-	if (data->value_labels) {
-		QString otext = getText (row);
+	QString otext = getText (row);
+	if (getDataType () == DataLogical) {
+		if (otext == "0") return "FALSE";
+		else if (otext == "1") return "TRUE";
+	} else if (data->value_labels) {
 		if (data->value_labels->contains (otext)) {
 			return (*(data->value_labels))[otext];
 		}
 	}
-	return getText (row);
+	return otext;
 }
 
 void RKVariable::setNumericFromR (int from_row, int to_row, const QVector<double> &numdata) {
