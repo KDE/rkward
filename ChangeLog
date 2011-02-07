@@ -1,3 +1,4 @@
+--- Version 0.5.5 - XXX-XX-2011
 - Display logical values as "TRUE" and "FALSE" in data editor, and accept "T"/"TRUE"/"F"/"FALSE" in addition to "0"/"1" while editing
 - Add support for R functions loadhistory(), savehistory(), history(), and timestamp ()
 - Do not load .RData file from current directory by default (configurable)
@@ -23,7 +24,7 @@
 - Fixed: Function argument hints would sometimes persist after closing a script window
 - Fixed: Would fail to analyse structure of ReferenceClass-objects
 - Fixed: "Vector" mode in "Paste special" action did not work correctly
-- Attempt to save workspace on crashes		TODO: detect recovery-file at startup, and offer to load it.
+- Attempt to save workspace on crashes
 - Also try to relay SIGABRT and SIGILL to the proper signal handlers
 - Removed the remainder of the PHP scripting backend
 - Fixed: Would crash on tcl/tk events in some cases

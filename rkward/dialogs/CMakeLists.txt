@@ -9,6 +9,7 @@ SET(dialogs_STAT_SRCS
    rkreadlinedialog.cpp
    rkimportdialog.cpp
    rkselectlistdialog.cpp
+   rkrecoverdialog.cpp
    )
 
 QT4_AUTOMOC(${dialogs_STAT_SRCS})

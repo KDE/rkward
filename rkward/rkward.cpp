@@ -66,6 +66,7 @@
 #include "dialogs/startupdialog.h"
 #include "dialogs/rkloadlibsdialog.h"
 #include "dialogs/rkimportdialog.h"
+#include "dialogs/rkrecoverdialog.h"
 #include "agents/rksaveagent.h"
 #include "agents/rkloadagent.h"
 #include "agents/rkquitagent.h"
@@ -235,23 +236,23 @@ void RKWardMainWindow::doPostInit () {
 	setUpdatesEnabled (true);
 	show ();
 
-//	bool recovered = RKRecoverDialog::checkRecoverCrashedWorkspace ();
-//	if (!recovered) {
-		if (!open_url.isEmpty()) {
-			openWorkspace (open_url);
+	KUrl recover_url = RKRecoverDialog::checkRecoverCrashedWorkspace ();
+	if (!recover_url.isEmpty ()) open_url = recover_url;
+
+	if (!open_url.isEmpty()) {
+		openWorkspace (open_url);
+	} else {
+		StartupDialog::StartupDialogResult result = StartupDialog::getStartupAction (this, fileOpenRecentWorkspace);
+		if (!result.open_url.isEmpty ()) {
+			openWorkspace (result.open_url);
 		} else {
-			StartupDialog::StartupDialogResult result = StartupDialog::getStartupAction (this, fileOpenRecentWorkspace);
-			if (!result.open_url.isEmpty ()) {
-				openWorkspace (result.open_url);
-			} else {
-				if (result.result == StartupDialog::ChoseFile) {
-					slotFileOpenWorkspace ();
-				} else if (result.result == StartupDialog::EmptyTable) {
-					RKWorkplace::mainWorkplace ()->editNewDataFrame (i18n ("my.data"));
-				}
+			if (result.result == StartupDialog::ChoseFile) {
+				slotFileOpenWorkspace ();
+			} else if (result.result == StartupDialog::EmptyTable) {
+				RKWorkplace::mainWorkplace ()->editNewDataFrame (i18n ("my.data"));
 			}
 		}
-//	}
+	}
 
 	if (RKSettingsModuleGeneral::workplaceSaveMode () == RKSettingsModuleGeneral::SaveWorkplaceWithSession) {
 		RKWorkplace::mainWorkplace ()->restoreWorkplace (RKSettingsModuleGeneral::getSavedWorkplace (KGlobal::config ().data ()));
