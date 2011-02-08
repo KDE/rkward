@@ -1,4 +1,6 @@
 --- Version 0.5.5 - XXX-XX-2011
+- Fixed: Converting from factor to string in the data editor set values to numeric, internally
+- Allow entering factor labels instead of only numbers, when editing factors in the data editor
 - Display logical values as "TRUE" and "FALSE" in data editor, and accept "T"/"TRUE"/"F"/"FALSE" in addition to "0"/"1" while editing
 - Add support for R functions loadhistory(), savehistory(), history(), and timestamp ()
 - Do not load .RData file from current directory by default (configurable)

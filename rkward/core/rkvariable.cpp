@@ -61,9 +61,11 @@ void RKVariable::setVarType (RObject::RDataType new_type, bool sync) {
 	if (data) {
 		// quick and dirty approach! TODO: make more efficient
 		QStringList list;
-		for (int i=0; i < getLength (); ++i) {
-			list.append (getText (i));
-		}
+#if QT_VERSION >= 0x040700
+		list.reserve (getLength ());
+#endif
+		bool labelled = (new_type == DataCharacter);
+		for (int i=0; i < getLength (); ++i) list.append (getText (i, labelled));
 
 		// all pending changes are moot
 		discardUnsyncedChanges ();
@@ -87,11 +89,8 @@ void RKVariable::setVarType (RObject::RDataType new_type, bool sync) {
 
 		// re-set all data
 		lockSyncing (true);
-		int i = 0;
-		for (QStringList::const_iterator it = list.constBegin (); it != list.constEnd (); ++it) {
-			setText (i, *it);
-			i++;
-		}
+		for (int i = list.size () - 1; i >= 0; --i) setText (i, list[i]);
+
 		if (sync) {
 			QString command = ".rk.set.vector.mode(" + getFullName () + ", ";
 			if (new_type == RObject::DataCharacter) command += "as.character";
@@ -474,19 +473,20 @@ void RKVariable::setText (int row, const QString &text) {
 		if (getDataType () == DataCharacter) {
 			data->cell_strings[row] = text;
 		} else if (getDataType () == DataFactor) {
-			if (data->value_labels && data->value_labels->contains (text)) {
-				data->cell_doubles[row] = text.toInt ();
-			} else {
-				valid = false;
+			if (data->value_labels) {
+				QString realtext = data->value_labels->key (text);
+				if (realtext.isEmpty ()) valid = false;
+				else data->cell_doubles[row] = realtext.toInt ();
+			} else valid = false;
+			if (!valid) {	// setting by lavel failed. Try to set a numeric value, instead
+				data->cell_doubles[row] = text.toDouble (&valid);
 			}
 		} else if (getDataType () == DataLogical) {
 			if (text == "0" || text == "F" || text == "FALSE") data->cell_doubles[row] = 0;
 			else if (text == "1" || text == "T" || text == "TRUE") data->cell_doubles[row] = 1;
 			else valid = false;
 		} else {
-			bool ok;
-			data->cell_doubles[row] = text.toDouble (&ok);
-			if (!ok) valid = false;
+			data->cell_doubles[row] = text.toDouble (&valid);
 		}
 	}
 
