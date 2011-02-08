@@ -102,7 +102,7 @@ void RKVariable::setVarType (RObject::RDataType new_type, bool sync) {
 			if (new_type == RObject::DataFactor) writeValueLabels (0);		// as.factor resets the "levels"-attribute!
 
 			syncDataToR ();
-		}
+		} else discardUnsyncedChanges ();
 		lockSyncing (false);
 	} else {
 		setDataType (new_type);
