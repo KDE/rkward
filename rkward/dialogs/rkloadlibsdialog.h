@@ -2,7 +2,7 @@
                           rkloadlibsdialog  -  description
                              -------------------
     begin                : Mon Sep 6 2004
-    copyright            : (C) 2004, 2006, 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2009, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -79,6 +79,7 @@ protected slots:
 	void installationProcessOutput ();
 	void installationProcessError ();
 	void automatedInstall ();
+	void slotPageChanged ();
 private:
 	void tryDestruct ();
 friend class LoadUnloadWidget;
@@ -106,7 +107,7 @@ To be used in RKLoadLibsDialog
 class LoadUnloadWidget : public QWidget, public RCommandReceiver {
 Q_OBJECT
 public:
-	LoadUnloadWidget (RKLoadLibsDialog *dialog, QWidget *parent);
+	LoadUnloadWidget (RKLoadLibsDialog *dialog);
 	
 	~LoadUnloadWidget ();
 signals:
@@ -145,7 +146,7 @@ Ro be used in RKLoadLibsDialog.
 class UpdatePackagesWidget : public QWidget, public RCommandReceiver {
 Q_OBJECT
 public:
-	UpdatePackagesWidget (RKLoadLibsDialog *dialog, QWidget *parent);
+	UpdatePackagesWidget (RKLoadLibsDialog *dialog);
 	
 	~UpdatePackagesWidget ();
 public slots:
@@ -159,7 +160,6 @@ protected:
 private:
 	void updatePackages (const QStringList &list);
 	QTreeWidget *updateable_view;
-	QTreeWidgetItem *placeholder;
 
 	QPushButton *update_selected_button;
 	QPushButton *update_all_button;
@@ -178,7 +178,7 @@ Ro be used in RKLoadLibsDialog.
 class InstallPackagesWidget : public QWidget, public RCommandReceiver {
 Q_OBJECT
 public:
-	InstallPackagesWidget (RKLoadLibsDialog *dialog, QWidget *parent);
+	InstallPackagesWidget (RKLoadLibsDialog *dialog);
 	
 	~InstallPackagesWidget ();
 	void trySelectPackage (const QString &package_name);
@@ -192,7 +192,6 @@ protected:
 private:
 	void installPackages (const QStringList &list);
 	QTreeWidget *installable_view;
-	QTreeWidgetItem *placeholder;
 
 	QPushButton *install_selected_button;
 	QPushButton *get_list_button;

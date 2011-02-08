@@ -2,7 +2,7 @@
                           rkloadlibsdialog  -  description
                              -------------------
     begin                : Mon Sep 6 2004
-    copyright            : (C) 2004, 2006, 2007, 2008, 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2008, 2009, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -59,21 +59,19 @@ RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool 
 	setCaption (i18n ("Configure Packages"));
 	setButtons (KDialog::Ok | KDialog::Apply | KDialog::Cancel | KDialog::User1);
 
-	KVBox *page = new KVBox ();
-	addPage (page, i18n ("Local packages"));
-	LoadUnloadWidget *luwidget = new LoadUnloadWidget (this, page);
+	LoadUnloadWidget *luwidget = new LoadUnloadWidget (this);
+	addPage (luwidget, i18n ("Local packages"));
 	connect (this, SIGNAL (installedPackagesChanged ()), luwidget, SLOT (updateInstalledPackages ()));
-	
-	page = new KVBox ();
-	addPage (page, i18n ("Update"));
-	new UpdatePackagesWidget (this, page);
 
-	page = new KVBox ();
-	install_packages_pageitem = addPage (page, i18n ("Install"));
-	install_packages_widget = new InstallPackagesWidget (this, page);
+	addPage (new UpdatePackagesWidget (this), i18n ("Update"));
+
+	install_packages_widget = new InstallPackagesWidget (this);
+	install_packages_pageitem = addPage (install_packages_widget, i18n ("Install"));
 
 	setButtonText (KDialog::User1, i18n ("Configure Repositories"));
 
+	connect (this, SIGNAL (currentPageChanged(KPageWidgetItem*,KPageWidgetItem*)), this, SLOT (slotPageChanged()));
+	QTimer::singleShot (0, this, SLOT (slotPageChanged()));
 	num_child_widgets = 3;
 	accepted = false;
 
@@ -85,6 +83,14 @@ RKLoadLibsDialog::~RKLoadLibsDialog () {
 
 	if (accepted) KPageDialog::accept ();
 	else KPageDialog::reject ();
+}
+
+void RKLoadLibsDialog::slotPageChanged () {
+	RK_TRACE (DIALOGS);
+
+	if (!currentPage ()) return;
+	// This, and most other focus operations in this file, is to make the keyboard search feature of the QTreeWidget's work (without having to click the lists, first)
+	currentPage ()->widget ()->setFocus ();
 }
 
 //static
@@ -275,7 +281,7 @@ void RKLoadLibsDialog::processExited (int exitCode, QProcess::ExitStatus exitSta
 #define GET_LOADED_PACKAGES 2
 #define LOAD_PACKAGE_COMMAND 3
 
-LoadUnloadWidget::LoadUnloadWidget (RKLoadLibsDialog *dialog, QWidget *p_widget) : QWidget (p_widget) {
+LoadUnloadWidget::LoadUnloadWidget (RKLoadLibsDialog *dialog) : QWidget (0) {
 	RK_TRACE (DIALOGS);
 	LoadUnloadWidget::parent = dialog;
 	
@@ -301,7 +307,8 @@ LoadUnloadWidget::LoadUnloadWidget (RKLoadLibsDialog *dialog, QWidget *p_widget)
 	installed_view->setSelectionMode (QAbstractItemView::ExtendedSelection);
 	instvbox->addWidget (label);
 	instvbox->addWidget (installed_view);
-	
+	setFocusProxy (installed_view);
+
 	load_button = new QPushButton (RKStandardIcons::getIcon (RKStandardIcons::ActionAddRight), i18n ("Load"), this);
 	connect (load_button, SIGNAL (clicked ()), this, SLOT (loadButtonClicked ()));
 	detach_button = new QPushButton (RKStandardIcons::getIcon (RKStandardIcons::ActionRemoveLeft), i18n ("Unload"), this);
@@ -340,9 +347,6 @@ void LoadUnloadWidget::rCommandDone (RCommand *command) {
 	if (command->getFlags () == GET_INSTALLED_PACKAGES) {
 		RK_ASSERT (command->getDataLength () == 4);
 
-		installed_view->clear ();
-		installed_view->setSortingEnabled (false);
-
 		RData *package = command->getStructureVector ()[0];
 		RData *title = command->getStructureVector ()[1];
 		RData *version = command->getStructureVector ()[2];
@@ -361,10 +365,9 @@ void LoadUnloadWidget::rCommandDone (RCommand *command) {
 		}
 		installed_view->resizeColumnToContents (0);
 		installed_view->setSortingEnabled (true);
+		installed_view->sortItems (0, Qt::AscendingOrder);
 	} else if (command->getFlags () == GET_LOADED_PACKAGES) {
 		RK_ASSERT (command->getDataType () == RData::StringVector);
-
-		loaded_view->clear ();
 
 		for (unsigned int i=0; i < command->getDataLength (); ++i) {
 			QTreeWidgetItem* item = new QTreeWidgetItem (loaded_view);
@@ -378,7 +381,8 @@ void LoadUnloadWidget::rCommandDone (RCommand *command) {
 			}
 		}
 		loaded_view->resizeColumnToContents (0);
-		setEnabled (true);
+		loaded_view->setSortingEnabled (true);
+		loaded_view->sortItems (0, Qt::AscendingOrder);
 		updateCurrentList ();
 	} else if (command->getFlags () == LOAD_PACKAGE_COMMAND) {
 		emit (loadUnloadDone ());
@@ -390,8 +394,9 @@ void LoadUnloadWidget::rCommandDone (RCommand *command) {
 void LoadUnloadWidget::updateInstalledPackages () {
 	RK_TRACE (DIALOGS);
 
-	setEnabled (false);
-	
+	installed_view->clear ();
+	loaded_view->clear ();
+
 	RKGlobals::rInterface ()->issueCommand (".rk.get.installed.packages ()", RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString::null, this, GET_INSTALLED_PACKAGES, parent->chain);
 	RKGlobals::rInterface ()->issueCommand (".packages ()", RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, GET_LOADED_PACKAGES, parent->chain);
 }
@@ -507,7 +512,7 @@ void LoadUnloadWidget::cancel () {
 
 #define FIND_OLD_PACKAGES_COMMAND 1
 
-UpdatePackagesWidget::UpdatePackagesWidget (RKLoadLibsDialog *dialog, QWidget *p_widget) : QWidget (p_widget) {
+UpdatePackagesWidget::UpdatePackagesWidget (RKLoadLibsDialog *dialog) : QWidget (0) {
 	RK_TRACE (DIALOGS);
 	UpdatePackagesWidget::parent = dialog;
 	
@@ -525,6 +530,7 @@ UpdatePackagesWidget::UpdatePackagesWidget (RKLoadLibsDialog *dialog, QWidget *p
 	updateable_view->setHeaderLabels (QStringList () << i18n ("Name") << i18n ("Location") << i18n ("Local Version") << i18n ("Online Version"));
 	updateable_view->setSelectionMode (QAbstractItemView::ExtendedSelection);
 	hbox->addWidget (updateable_view);
+	setFocusProxy (updateable_view);
 	
 	QVBoxLayout *buttonvbox = new QVBoxLayout ();
 	hbox->addLayout (buttonvbox);
@@ -550,9 +556,8 @@ UpdatePackagesWidget::UpdatePackagesWidget (RKLoadLibsDialog *dialog, QWidget *p
 	update_all_button->setEnabled (false);
 	updateable_view->setEnabled (false);
 
-	placeholder = new QTreeWidgetItem (updateable_view);
-	placeholder->setText (0, "...");	// i18n ("[Click \"Fetch list\" for updates]")
-	
+	new QTreeWidgetItem (updateable_view, QStringList ("..."));	// i18n ("[Click \"Fetch list\" for updates]")
+
 	connect (dialog, SIGNAL (okClicked ()), this, SLOT (ok ()));
 	connect (dialog, SIGNAL (cancelClicked ()), this, SLOT (cancel ()));
 	connect (this, SIGNAL (destroyed ()), dialog, SLOT (childDeleted ()));
@@ -560,15 +565,13 @@ UpdatePackagesWidget::UpdatePackagesWidget (RKLoadLibsDialog *dialog, QWidget *p
 
 UpdatePackagesWidget::~UpdatePackagesWidget () {
 	RK_TRACE (DIALOGS);
-	delete placeholder;
 }
 
 void UpdatePackagesWidget::rCommandDone (RCommand *command) {
 	RK_TRACE (DIALOGS);
 	if (command->getFlags () == FIND_OLD_PACKAGES_COMMAND) {
 		if (!command->failed ()) {
-			delete placeholder;
-			placeholder = 0;
+			updateable_view->clear ();
 
 			RK_ASSERT (command->getDataLength () == 5);
 			RData *package = command->getStructureVector ()[0];
@@ -589,14 +592,15 @@ void UpdatePackagesWidget::rCommandDone (RCommand *command) {
 				item->setText (3, reposver->getStringVector ()[i]);
 			}
 
-			updateable_view->setEnabled (true);
-	
 			if (updateable_view->topLevelItemCount ()) {
 				update_selected_button->setEnabled (true);
 				update_all_button->setEnabled (true);
+				updateable_view->setEnabled (true);
+				updateable_view->setFocus ();
+				updateable_view->setSortingEnabled (true);
+				updateable_view->sortItems (0, Qt::AscendingOrder);
 			} else {
-				placeholder = new QTreeWidgetItem (updateable_view);
-				placeholder->setText (0, i18n ("[No updates available]"));
+				new QTreeWidgetItem (updateable_view, QStringList (i18n ("[No updates available]")));
 			}
 			updateable_view->resizeColumnToContents (0);
 
@@ -668,7 +672,7 @@ void UpdatePackagesWidget::cancel () {
 
 #define FIND_AVAILABLE_PACKAGES_COMMAND 1
 
-InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog, QWidget *p_widget) : QWidget (p_widget) {
+InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog) : QWidget (0) {
 	RK_TRACE (DIALOGS);
 	InstallPackagesWidget::parent = dialog;
 	
@@ -685,6 +689,7 @@ InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog, QWidget 
 	installable_view->setHeaderLabels (QStringList () << i18n ("Name") << i18n ("Version"));
 	installable_view->setSelectionMode (QAbstractItemView::ExtendedSelection);
 	hbox->addWidget (installable_view);
+	setFocusProxy (installable_view);
 
 	QVBoxLayout *buttonvbox = new QVBoxLayout ();
 	hbox->addLayout (buttonvbox);
@@ -706,9 +711,8 @@ InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog, QWidget 
 	install_selected_button->setEnabled (false);
 	installable_view->setEnabled (false);
 
-	placeholder = new QTreeWidgetItem (installable_view);
-	placeholder->setText (0, "..."); // i18n ("[Click \"Fetch list\" to see available packages]")
-	
+	new QTreeWidgetItem (installable_view, QStringList ("..."));	// i18n ("[Click \"Fetch list\" to see available packages]")
+
 	connect (dialog, SIGNAL (okClicked ()), this, SLOT (ok ()));
 	connect (dialog, SIGNAL (cancelClicked ()), this, SLOT (cancel ()));
 	connect (this, SIGNAL (destroyed ()), dialog, SLOT (childDeleted ()));
@@ -722,8 +726,7 @@ void InstallPackagesWidget::rCommandDone (RCommand *command) {
 	RK_TRACE (DIALOGS);
 	if (command->getFlags () == FIND_AVAILABLE_PACKAGES_COMMAND) {
 		if (!command->failed ()) {
-			delete placeholder;
-			placeholder = 0;
+			installable_view->clear ();
 
 			RK_ASSERT (command->getDataLength () == 3);
 
@@ -740,13 +743,15 @@ void InstallPackagesWidget::rCommandDone (RCommand *command) {
 				item->setText (0, names->getStringVector ()[i]);
 				item->setText (1, versions->getStringVector ()[i]);
 			}
-			installable_view->setEnabled (true);
 
 			if (installable_view->topLevelItemCount ()) {
 				install_selected_button->setEnabled (true);
+				installable_view->setEnabled (true);
+				installable_view->setFocus ();
+				installable_view->setSortingEnabled (true);
+				installable_view->sortItems (0, Qt::AscendingOrder);
 			} else {
-				placeholder = new QTreeWidgetItem (installable_view);
-				placeholder->setText (0, i18n ("[No packages available]"));
+				new QTreeWidgetItem (installable_view, QStringList (i18n ("[No packages available]")));
 			}
 			installable_view->resizeColumnToContents (0);
 

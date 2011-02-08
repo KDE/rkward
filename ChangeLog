@@ -1,4 +1,5 @@
 --- Version 0.5.5 - XXX-XX-2011
+- All pages in the package installation dialog now support sorting and keyboard search
 - Fixed: Converting from factor to string in the data editor set values to numeric, internally
 - Allow entering factor labels instead of only numbers, when editing factors in the data editor
 - Display logical values as "TRUE" and "FALSE" in data editor, and accept "T"/"TRUE"/"F"/"FALSE" in addition to "0"/"1" while editing
