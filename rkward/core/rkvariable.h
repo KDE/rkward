@@ -2,7 +2,7 @@
                           rkvariable  -  description
                              -------------------
     begin                : Thu Aug 12 2004
-    copyright            : (C) 2004, 2007, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -116,11 +116,6 @@ is set to Unused, if _no_ cell in the row is used, Valid if _all_ cells in the r
 	enum CellAlign { AlignCellLeft=0, AlignCellRight=1 };
 /** returns alignment to use for this variable */
 	CellAlign getAlignment () const;
-
-/// an empty char
-	static QString na_char;
-/// an unknown value
-	static QString unknown_char;
 
 /** creates/parses formatting options from the stored meta-property string. See also: getFormattingOptions () */
 	static FormattingOptions parseFormattingOptionsString (const QString &string);

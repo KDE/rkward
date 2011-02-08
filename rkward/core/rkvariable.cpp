@@ -33,9 +33,6 @@
 
 #include "../debug.h"
 
-QString RKVariable::na_char ("");
-QString RKVariable::unknown_char ("?");
-
 RKVariable::RKVariable (RContainerObject *parent, const QString &name) : RObject (parent, name) {
 	RK_TRACE (OBJECTS);
 	type = Variable;
@@ -406,7 +403,7 @@ void RKVariable::extendToLength (int length) {
 QString RKVariable::getText (int row, bool pretty) const {
 	if (row >= getLength ()) {
 		RK_ASSERT (false);
-		return (unknown_char);
+		return (QString ());
 	}
 
 	if (data->cell_states[row] & RKVarEditData::Invalid) {
@@ -414,9 +411,7 @@ QString RKVariable::getText (int row, bool pretty) const {
 		return (data->invalid_fields.value (row));
 	}
 
-	if (data->cell_states[row] & RKVarEditData::NA) {
-		return (na_char);
-	}
+	if (data->cell_states[row] & RKVarEditData::NA) return (QString ());
 
 	if (pretty) return (getLabeled (row));
 

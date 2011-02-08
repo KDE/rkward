@@ -179,7 +179,6 @@ bool RKVarEditModel::insertRows (int row, int count, const QModelIndex& parent) 
 // TODO: this does not emit any data change notifications to other editors
 		objects[i]->insertRows (row, count);
 	}
-#warning TODO: adjust dimensions of the data.frame!
 	endInsertRows ();
 
 	return true;
