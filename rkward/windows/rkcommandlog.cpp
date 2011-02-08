@@ -165,6 +165,7 @@ void RKCommandLog::rCommandDone (RCommand *command) {
 
 	if (command->type () & RCommand::Console) {
 		if (command->errorIncomplete ()) return;
+		addInputNoCheck (command);
 	}
 
 // the case we have to deal with here, is that the command/output has not been shown, yet, but should, due to errors
