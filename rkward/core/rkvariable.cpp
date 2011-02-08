@@ -2,7 +2,7 @@
                           rkvariable  -  description
                              -------------------
     begin                : Thu Aug 12 2004
-    copyright            : (C) 2004, 2007, 2008, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007, 2008, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -33,8 +33,8 @@
 
 #include "../debug.h"
 
-QString *RKVariable::na_char = new QString ("");
-QString *RKVariable::unknown_char = new QString ("?");
+QString RKVariable::na_char ("");
+QString RKVariable::unknown_char ("?");
 
 RKVariable::RKVariable (RContainerObject *parent, const QString &name) : RObject (parent, name) {
 	RK_TRACE (OBJECTS);
@@ -217,6 +217,10 @@ bool RKVariable::updateType (RData *new_data) {
 		int old_type = type;
 		bool ret = RObject::updateType (new_data);
 		int new_type = type;
+
+		// Convert old values to the new data type.
+		// TODO: This is quite inefficient, as we will update the data from R in a second, anyway.
+		// Still it is a quick, dirty, and safe way to keep the data representation in a suitable format
 		type = old_type;		// needed to read out the old data
 		setVarType (typeToDataType (new_type), false);
 		type = new_type;
@@ -402,7 +406,7 @@ void RKVariable::extendToLength (int length) {
 QString RKVariable::getText (int row, bool pretty) const {
 	if (row >= getLength ()) {
 		RK_ASSERT (false);
-		return (*unknown_char);
+		return (unknown_char);
 	}
 
 	if (data->cell_states[row] & RKVarEditData::Invalid) {
@@ -411,7 +415,7 @@ QString RKVariable::getText (int row, bool pretty) const {
 	}
 
 	if (data->cell_states[row] & RKVarEditData::NA) {
-		return (*na_char);
+		return (na_char);
 	}
 
 	if (pretty) return (getLabeled (row));

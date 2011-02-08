@@ -118,9 +118,9 @@ is set to Unused, if _no_ cell in the row is used, Valid if _all_ cells in the r
 	CellAlign getAlignment () const;
 
 /// an empty char
-	static QString *na_char;
+	static QString na_char;
 /// an unknown value
-	static QString *unknown_char;
+	static QString unknown_char;
 
 /** creates/parses formatting options from the stored meta-property string. See also: getFormattingOptions () */
 	static FormattingOptions parseFormattingOptionsString (const QString &string);
