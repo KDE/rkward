@@ -157,8 +157,8 @@ void RKVariable::rCommandDone (RCommand *command) {
 			QVector<double> dd;
 			dd.reserve (len);
 			for (unsigned int i = 0; i < len; ++i) {
-				if (RInterface::isNaInt (cdata->getIntVector ()[i])) dd[i] = NAN;
-				else dd[i] = (double) cdata->getIntVector ()[i];
+				if (RInterface::isNaInt (cdata->getIntVector ()[i])) dd.append (NAN);
+				else dd.append ((double) cdata->getIntVector ()[i]);
 			}
 			setNumericFromR (0, getLength () - 1, dd);
 		}
@@ -384,6 +384,7 @@ void RKVariable::cellsChanged (int from_row, int to_row) {
 }
 
 void RKVariable::extendToLength (int length) {
+	if (!data) return;
 	RK_TRACE (OBJECTS);
 
 	if (length <= 0) length = 0;

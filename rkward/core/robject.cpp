@@ -440,14 +440,21 @@ bool RObject::updateDimensions (RData *new_data) {
 		if (new_dimensions.isEmpty ()) {
 			if (dimensions != RObjectPrivate::dim_null) {
 				dimensions = RObjectPrivate::dim_null;
-				return true;
+				return (true);
 			}
 		} else {
+#warning TODO: ugly hack. Should be moved to RKVariable, somehow.
+			if (type & Variable) static_cast<RKVariable*> (this)->extendToLength (new_dimensions[0]);
+
 			dimensions = new_dimensions;
-			return true;
+			return (true);
 		}
 	}
-	return false;
+	return (false);
+}
+
+RKEditor *RObject::editor () const {
+	return (RKGlobals::tracker ()->objectEditor (this));
 }
 
 void RObject::rename (const QString &new_short_name) {

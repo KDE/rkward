@@ -2,7 +2,7 @@
                           rkvareditmodel  -  description
                              -------------------
     begin                : Mon Nov 05 2007
-    copyright            : (C) 2007, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -97,6 +97,9 @@ signals:
 	void hasDuplicates (const QStringList& dupes);
 private slots:
 	void checkDuplicatesNow ();
+	void doResetNow ();
+private:
+	bool reset_scheduled;
 protected:
 friend class RKVarEditMetaModel;
 	QList<RKVariable*> objects;

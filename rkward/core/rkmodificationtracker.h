@@ -125,7 +125,7 @@ public:
 /** recursive! */
 	void lockUpdates (bool lock);
 /** returns (the first) editor that is currently active for this object, or 0, if there is no editor */
-	RKEditor* objectEditor (RObject* object);
+	RKEditor* objectEditor (const RObject* object);
 private:
 	int updates_locked;
 /** relay change notifications to connected listeners. This is not pretty, since the arguments change their meanings depending on the type of notification, but for now this is ok */

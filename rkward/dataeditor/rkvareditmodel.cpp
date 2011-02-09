@@ -2,7 +2,7 @@
                           rkvareditmodel  -  description
                              -------------------
     begin                : Mon Nov 05 2007
-    copyright            : (C) 2007, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -40,6 +40,7 @@ RKVarEditModel::RKVarEditModel (QObject *parent) : RKVarEditModelBase (parent), 
 	rownames = 0;
 	header_locked = false;
 	duplicate_check_triggered = false;
+	reset_scheduled = false;
 
 	addNotificationType (RObjectListener::ObjectRemoved);
 	addNotificationType (RObjectListener::MetaChanged);
@@ -133,8 +134,27 @@ void RKVarEditModel::objectMetaChanged (RObject* changed) {
 	int cindex = objects.indexOf (static_cast<RKVariable*> (changed));	// no check for isVariable needed. we only need to look up, if we have this object, and where.
 	if (cindex < 0) return;	// none of our buisiness
 
-	emit (dataChanged (index (0, cindex), index (trueRows (), cindex)));
 	if (meta_model) meta_model->objectMetaChanged (cindex);
+
+	if (!reset_scheduled) {
+		reset_scheduled = true;
+		QTimer::singleShot (0, this, SLOT (doResetNow()));
+#if QT_VERSION >= 0x040600
+		beginResetModel ();
+#endif
+	}
+}
+
+void RKVarEditModel::doResetNow () {
+	RK_TRACE (EDITOR);
+	RK_ASSERT (reset_scheduled);
+
+	reset_scheduled = false;
+#if QT_VERSION >= 0x040600
+	endResetModel ();
+#else
+	reset ();
+#endif
 }
 
 void RKVarEditModel::objectDataChanged (RObject* object, const RObject::ChangeSet *changes) {

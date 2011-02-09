@@ -121,6 +121,8 @@ is set to Unused, if _no_ cell in the row is used, Valid if _all_ cells in the r
 	static FormattingOptions parseFormattingOptionsString (const QString &string);
 /** inverse of parseFormattingOptionsString () */
 	static QString formattingOptionsToString (const FormattingOptions& options);
+/** changes the allocated storage to contain a least length elements. More data may be allocated than acutally needed. This function only ever does upsizing. */
+	void extendToLength (int length);
 protected:
 /** Discards pending unsynced changes. */
 	void discardUnsyncedChanges ();
@@ -165,8 +167,6 @@ protected:
 /** reimplemented from RObject */
 	void endEdit ();
 
-/** changes the allocated storage to contain a least length elements. More data may be allocated than acutally needed. This function only ever does upsizing. */
-	void extendToLength (int length);
 /** takes care of syncing the given range of cells */
 	void cellsChanged (int from_row, int to_row);
 /** writes the given range of cells to the backend (regardless of whether syncing should be immediate) */

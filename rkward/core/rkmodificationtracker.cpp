@@ -225,10 +225,10 @@ void RKModificationTracker::sendListenerNotification (RObjectListener::Notificat
 	}
 }
 
-RKEditor* RKModificationTracker::objectEditor (RObject* object) {
+RKEditor* RKModificationTracker::objectEditor (const RObject* object) {
 	RK_TRACE (OBJECTS);
 
-	QList<RObjectListener*> obj_listeners = listeners.values (object);
+	QList<RObjectListener*> obj_listeners = listeners.values (const_cast<RObject*> (object));
 	for (int i = obj_listeners.size () - 1; i >= 0; --i) {
 		RObjectListener* listener = obj_listeners[i];
 		if (!(listener->listenerType () == RObjectListener::DataModel)) continue;

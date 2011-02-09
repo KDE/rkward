@@ -265,6 +265,7 @@ void RContainerObject::updateRowNamesObject () {
 
 	int childlen = 0;
 	if (!childmap.isEmpty ()) childlen = childmap[0]->getLength ();
+	rownames_object->extendToLength (childlen);	// in case it is being edited
 	rownames_object->dimensions[0] = childlen;
 
 	if (rownames_object->isType (NeedDataUpdate)) {

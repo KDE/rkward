@@ -327,10 +327,11 @@ RKEditor* RKWorkplace::editNewDataFrame (const QString &name) {
 
 RKEditor *RKWorkplace::editObject (RObject *object) {
 	RK_TRACE (APP);
+	RK_ASSERT (object);
 
 	RObject *iobj = object;
 	RKEditor *ed = 0;
-	RKEditor *existing_editor = RKGlobals::tracker ()->objectEditor (object);
+	RKEditor *existing_editor = object->editor ();
 	if (!existing_editor) {
 		if (!iobj->isDataFrame ()) {
 			if (iobj->isVariable () && iobj->getContainer ()->isDataFrame ()) {

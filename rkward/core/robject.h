@@ -109,6 +109,8 @@ public:
 /** mark the data of this object and all of its children as dirty (recursively). Dirty data will be updated *after* the new structure update (if the object is opened for editing) */
 	void markDataDirty ();
 
+/** Returns the editor of this object, if any, or 0 */
+	RKEditor* editor () const;
 	bool canEdit () const;
 	bool canRead () const;
 	bool canRename () const;
