@@ -32,11 +32,12 @@
 	for (i in 1:dim (x)[2]) {
 		attriblist[[names (x)[i]]] <- attributes (x[[i]])
 	}
-	eval (substitute (x <<- x[-index,]))
-	eval (substitute (row.names (x) <<- c (1:dim(x)[1])))
-	for (i in 1:dim (x)[2]) {
-		eval (substitute (attributes (x[[i]]) <<- attriblist[[names (x)[i]]]))
+	newx <- x[-index, , drop=FALSE]
+	row.names (newx) <- c (1:dim(newx)[1])
+	for (i in 1:dim (newx)[2]) {
+		attributes (newx[[i]]) <- attriblist[[names (newx)[i]]]
 	}
+	eval (substitute (x <<- newx))
 }
 
 # function below is only needed to ensure a nice ordering of the columns. Simply adding a new column would be much easier than this.
