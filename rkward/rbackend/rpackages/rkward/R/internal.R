@@ -7,10 +7,11 @@
 	eval (substitute (attr (x, ".rk.meta") <<- m))
 }
 
-".rk.set.invalid.field" <- function (x, r, d) {
+".rk.set.invalid.field" <- function (x, row, value) {
 	l <- attr (x, ".rk.invalid.fields");
 	if (is.null (l)) l <- list ();
-	l[[as.character(r)]] <- d;
+	l[[as.character(row)]] <- value;
+	if (length (l) == 0) l <- NULL
 	eval (substitute (attr (x, ".rk.invalid.fields") <<- l))
 }
 
