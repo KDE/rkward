@@ -293,12 +293,6 @@ QString RKCommandEditorWindow::fullCaption () {
 	}
 }
 
-QString RKCommandEditorWindow::getDescription () {
-	RK_TRACE (COMMANDEDITOR);
-
-	return ("script:" + m_doc->url ().url ());
-}
-
 void RKCommandEditorWindow::closeEvent (QCloseEvent *e) {
 	if (isModified ()) {
 		int status = KMessageBox::warningYesNo (this, i18n ("The document \"%1\" has been modified. Close it anyway?", windowTitle ()), i18n ("File not saved"));

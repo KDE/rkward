@@ -82,9 +82,6 @@ public:
 	virtual QString shortCaption ();
 /** @returns The corresponding KPart for this window */
 	KParts::Part *getPart () { return part; };
-/** This is used in RKWorkplace::saveWorkplace () to save the info about the workplace. Make sure to add corresponding code to RKWorkplace::restoreWorkplace (), so your window(s) get restored when loading a Workspace
-@returns An internal descriptive string. */
-	virtual QString getDescription () { return QString (); };
 /** Is this window attached (or detached)?
 @returns true if attached, false if detached */
 	bool isAttached () const { return (state == Attached); };

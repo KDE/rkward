@@ -145,13 +145,13 @@ Has no effect, if RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsMod
 	void restoreWorkplace (RCommandChain *chain=0);
 /** Like the other restoreWorkplace (), but takes the description as a parameter rather than reading from the R workspace. To be used, when RKSettingsModuleGeneral::workplaceSaveMode () == RKSettingsModuleGeneral::SaveWorkplaceWithSeesion
 @param description workplace description */
-	void restoreWorkplace (const QString &description);
+	void restoreWorkplace (const QStringList &description);
 /** Clear the description as set by saveWorkplace () from the R backend. Simply removes the internal object. Since the description is only needed while the workplace is being saved / restored, this should be called shortly after saveWorkplace () and restoreWorkplace ()
 Has no effect, if RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsModuleGeneral::SaveWorkplaceWithWorkspace
 @param cahin command chain to place the command in */
 	void clearWorkplaceDescription (RCommandChain *chain=0);
 
-	QString makeWorkplaceDescription (const QString &sep, bool quote);
+	QStringList makeWorkplaceDescription ();
 
 /** In the current design there is only ever one workplace. Use this static function to reference it.
 @returns a pointer to the workplace */
@@ -179,7 +179,6 @@ private:
 /** a window was removed. Try to activate some other window. */
 	void windowRemoved ();
 
-	void restoreWorkplaceItem (const QString &desc);
 	RKMDIWindowHistory *history;
 
 	QSplitter *horiz_splitter;

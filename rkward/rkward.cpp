@@ -255,7 +255,7 @@ void RKWardMainWindow::doPostInit () {
 	}
 
 	if (RKSettingsModuleGeneral::workplaceSaveMode () == RKSettingsModuleGeneral::SaveWorkplaceWithSession) {
-		RKWorkplace::mainWorkplace ()->restoreWorkplace (RKSettingsModuleGeneral::getSavedWorkplace (KGlobal::config ().data ()));
+		RKWorkplace::mainWorkplace ()->restoreWorkplace (RKSettingsModuleGeneral::getSavedWorkplace (KGlobal::config ().data ()).split ('\n'));
 	}
 
 	if (RKSettingsModuleGeneral::showHelpOnStartup ()) {
@@ -508,7 +508,7 @@ bool RKWardMainWindow::doQueryQuit () {
 	slotSetStatusBarText (i18n ("Exiting..."));
 	saveOptions ();
 	if (RKSettingsModuleGeneral::workplaceSaveMode () == RKSettingsModuleGeneral::SaveWorkplaceWithSession) {
-		RKSettingsModuleGeneral::setSavedWorkplace (RKWorkplace::mainWorkplace ()->makeWorkplaceDescription ("\n", false), KGlobal::config ().data ());
+		RKSettingsModuleGeneral::setSavedWorkplace (RKWorkplace::mainWorkplace ()->makeWorkplaceDescription ().join ("\n"), KGlobal::config ().data ());
 	}
 
 //	if (!RObjectList::getGlobalEnv ()->isEmpty ()) {

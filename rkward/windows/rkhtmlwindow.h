@@ -2,7 +2,7 @@
                           rkhtmlwindow  -  description
                              -------------------
     begin                : Wed Oct 12 2005
-    copyright            : (C) 2005, 2006, 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2009, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -61,10 +61,11 @@ public:
 /** initialize all actions */
 	void initActions ();
 
-	QString getDescription ();
 	bool isModified ();
 /** Return current url */
 	KUrl url ();
+/** Return current url in a restorable way, i.e. for help pages, abstract the session specific part of the path */
+	KUrl restorableUrl ();
 	void doGotoAnchor (const QString &anchor_name);
 
 	WindowMode mode () { return window_mode; };

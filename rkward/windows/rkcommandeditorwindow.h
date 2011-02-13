@@ -154,8 +154,6 @@ public:
 /** copy current selection. Wrapper for use by external classes */
 	void copy ();
 
-	QString getDescription ();
-
 /** reimplemented from RKMDIWindow to return full path of file (if any) */
 	QString fullCaption ();
 

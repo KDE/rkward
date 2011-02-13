@@ -97,16 +97,10 @@ void RKHTMLWindow::fixupPartGUI () {
 	RKCommonFunctions::removeContainers (khtmlpart, QString ("tools,security,extraToolBar,saveBackground,saveFrame,printFrame,kget_menu").split (','), true);
 }
 
-QString RKHTMLWindow::getDescription () {
+KUrl RKHTMLWindow::restorableUrl () {
 	RK_TRACE (APP);
 
-	if (window_mode == HTMLOutputWindow) {
-		return ("output:" + current_url.url ());
-
-	} else {
-		QString fixed_url = current_url.url ().replace (RKSettingsModuleR::helpBaseUrl(), "rkward://RHELPBASE");
-		return ("help:" + fixed_url);
-	}
+	return (current_url.url ().replace (RKSettingsModuleR::helpBaseUrl(), "rkward://RHELPBASE"));
 }
 
 bool RKHTMLWindow::isModified () {

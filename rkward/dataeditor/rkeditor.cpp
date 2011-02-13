@@ -27,11 +27,4 @@ RKEditor::~RKEditor () {
 //	getObject ()->setObjectOpened (this, false);
 }
 
-QString RKEditor::getDescription () {
-	RK_TRACE (EDITOR);
-	RK_ASSERT (getObject ());
-
-	return ("data:" + getObject ()->getFullName ());
-}
-
 #include "rkeditor.moc"

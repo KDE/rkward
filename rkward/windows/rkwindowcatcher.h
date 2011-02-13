@@ -106,8 +106,6 @@ public:
 	RKCaughtX11Window (WId window_to_embed, int device_number);
 /** dtor */
 	~RKCaughtX11Window ();
-/** TODO */
-	QString getDescription () { return "x11:unimplemented"; };
 /** TODO? */
 	bool isModified () { return false; };
 

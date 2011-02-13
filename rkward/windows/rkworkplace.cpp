@@ -2,7 +2,7 @@
                           rkworkplace  -  description
                              -------------------
     begin                : Thu Sep 21 2006
-    copyright            : (C) 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -27,6 +27,8 @@
 #include <kactioncollection.h>
 #include <krun.h>
 #include <kmimetype.h>
+
+#include <QFileInfo>
 
 #include "detachedwindowcontainer.h"
 #include "rkcommandeditorwindow.h"
@@ -483,23 +485,33 @@ RKMDIWindow *RKWorkplace::activeWindow (RKMDIWindow::State state) {
 	return (ret);
 }
 
-QString RKWorkplace::makeWorkplaceDescription (const QString &sep, bool quote) {
+QStringList RKWorkplace::makeWorkplaceDescription () {
 	RK_TRACE (APP);
+
+	QStringList workplace_description;
+
+	// first, save the base directory of the workplace. This allows us to cope better with moved workspaces while restoring.
+	KUrl base_url = RObjectList::getObjectList ()->getWorkspaceURL ();
+	base_url.setPath (base_url.directory ());
+	if (base_url.isLocalFile () && base_url.hasPath ()) workplace_description.append ("base:" + base_url.url ());
 
 	// window order in the workplace view may have changed with respect to our list. Thus we first generate a properly sorted list
 	RKWorkplaceObjectList list = getObjectList (RKMDIWindow::DocumentWindow, RKMDIWindow::Detached);
 	for (int i=0; i < wview->count (); ++i) {
 		list.append (static_cast<RKMDIWindow*> (wview->widget (i)));
 	}
-	
-	QString workplace_description;
-	bool first = true;
 	foreach (RKMDIWindow *win, list) {
-		if (first) first = false;
-		else workplace_description.append (sep);
-
-		if (!quote) workplace_description.append (win->getDescription ());
-		else workplace_description.append (RObject::rQuote (win->getDescription ()));
+		QString desc;
+		if (win->isType (RKMDIWindow::DataEditorWindow)) {
+			desc = "data:" + static_cast<RKEditor*> (win)->getObject ()->getFullName ();
+		} else if (win->isType (RKMDIWindow::CommandEditorWindow)) {
+			desc = "script:" + static_cast<RKCommandEditorWindow*> (win)->url ().url ();
+		} else if (win->isType (RKMDIWindow::OutputWindow)) {
+			desc = "output:" + static_cast<RKHTMLWindow*> (win)->url ().url ();
+		} else if (win->isType (RKMDIWindow::HelpWindow)) {
+			desc = "help:" + static_cast<RKHTMLWindow*> (win)->restorableUrl ().url ();
+		}
+		if (!desc.isEmpty ()) workplace_description.append (desc);
 	}
 	return workplace_description;
 }
@@ -508,9 +520,11 @@ void RKWorkplace::saveWorkplace (RCommandChain *chain) {
 	RK_TRACE (APP);
 	if (RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsModuleGeneral::SaveWorkplaceWithWorkspace) return;
 
-	QString workplace_description = ".rk.workplace.save <- c (" + makeWorkplaceDescription (", ", true) + ')';
+	QStringList workplace_description = makeWorkplaceDescription ();
+	for (int i=0; i < workplace_description.size (); ++i) workplace_description[i] = RObject::rQuote (workplace_description[i]);
+	QString command = ".rk.workplace.save <- c (" + workplace_description.join (", ") + ')';
 
-	RKGlobals::rInterface ()->issueCommand (workplace_description, RCommand::App | RCommand::Sync, i18n ("Save Workplace layout"), 0, 0, chain); 
+	RKGlobals::rInterface ()->issueCommand (command, RCommand::App | RCommand::Sync, i18n ("Save Workplace layout"), 0, 0, chain); 
 }
 
 void RKWorkplace::restoreWorkplace (RCommandChain *chain) {
@@ -520,12 +534,52 @@ void RKWorkplace::restoreWorkplace (RCommandChain *chain) {
 	RKGlobals::rInterface ()->issueCommand (".rk.workplace.save", RCommand::App | RCommand::Sync | RCommand::GetStringVector, i18n ("Restore Workplace layout"), this, RESTORE_WORKPLACE_COMMAND, chain);
 }
 
-void RKWorkplace::restoreWorkplace (const QString &description) {
+KUrl checkAdjustRestoredUrl (const QString &_url, const QString old_base) {
+	KUrl url (_url);
+
+	if (old_base.isEmpty ()) return (url);
+	KUrl new_base_url = RObjectList::getObjectList ()->getWorkspaceURL ();
+	new_base_url.setPath (new_base_url.directory ());
+	if (new_base_url.isEmpty ()) return (url);
+	KUrl old_base_url (old_base);
+	if (old_base_url == new_base_url) return (url);
+
+	// TODO: Should we also care about non-local files? In theory: yes, but stat'ing remote files for existence can take a long time.
+	if (!(old_base_url.isLocalFile () && new_base_url.isLocalFile () && url.isLocalFile ())) return (url);
+
+	// if the file exists, unadjusted, return it.
+	if (QFileInfo (url.toLocalFile ()).exists ()) return (url);
+
+	// check whether a file exists for the adjusted url
+	KUrl relative = KUrl::fromLocalFile (new_base_url.path () + '/' + KUrl::relativePath (old_base_url.path (), url.path ()));
+	relative.cleanPath ();
+	if (QFileInfo (relative.toLocalFile ()).exists ()) return (relative);
+	return (url);
+}
+
+void RKWorkplace::restoreWorkplace (const QStringList &description) {
 	RK_TRACE (APP);
 
-	QStringList list = description.split ("\n");
-	for (QStringList::const_iterator it = list.constBegin (); it != list.constEnd (); ++it) {
-		restoreWorkplaceItem (*it);
+	QString base;
+	for (int i = 0; i < description.size (); ++i) {
+		QString type = description[i].section (QChar (':'), 0, 0);
+		QString specification = description[i].section (QChar (':'), 1);
+
+		if (type == "base") {
+			RK_ASSERT (i == 0);
+			base = specification;
+		} else if (type == "data") {
+			RObject *object = RObjectList::getObjectList ()->findObject (specification);
+			if (object) editObject (object);
+		} else if (type == "script") {
+			openScriptEditor (checkAdjustRestoredUrl (specification, base));
+		} else if (type == "output") {
+			openOutputWindow (checkAdjustRestoredUrl (specification, base));
+		} else if (type == "help") {
+			openHelpWindow (checkAdjustRestoredUrl (specification, base), true);
+		} else {
+			RK_ASSERT (false);
+		}
 	}
 }
 
@@ -540,31 +594,8 @@ void RKWorkplace::rCommandDone (RCommand *command) {
 	RK_TRACE (APP);
 
 	RK_ASSERT (command->getFlags () == RESTORE_WORKPLACE_COMMAND);
-	for (unsigned int i = 0; i < command->getDataLength (); ++i) {
-		restoreWorkplaceItem (command->getStringVector ()[i]);
-	}
+	restoreWorkplace (command->getStringVector ());
 }
-
-void RKWorkplace::restoreWorkplaceItem (const QString &desc) {
-	RK_TRACE (APP);
-
-	QString type = desc.section (QChar (':'), 0, 0);
-	QString specification = desc.section (QChar (':'), 1);
-
-	if (type == "data") {
-		RObject *object = RObjectList::getObjectList ()->findObject (specification);
-		if (object) editObject (object);
-	} else if (type == "script") {
-		openScriptEditor (specification);
-	} else if (type == "output") {
-		openOutputWindow (specification);
-	} else if (type == "help") {
-		openHelpWindow (specification, true);
-	} else {
-		RK_ASSERT (false);
-	}
-}
-
 
 ///////////////////////// END RKWorkplace ////////////////////////////
 ///////////////////// BEGIN RKMDIWindowHistory ///////////////////////
