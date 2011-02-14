@@ -2,7 +2,7 @@
                           rksaveagent  -  description
                              -------------------
     begin                : Sun Aug 29 2004
-    copyright            : (C) 2004, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2009, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -45,6 +45,7 @@ private:
 	RCommandChain *save_chain;
 	KUrl save_url;
 	KUrl load_url;
+	KUrl previous_url;
 	DoneAction when_done;
 };
 
