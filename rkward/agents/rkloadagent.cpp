@@ -74,7 +74,6 @@ void RKLoadAgent::rCommandDone (RCommand *command) {
 			RObjectList::getObjectList ()->setWorkspaceURL (KUrl());
 		} else {
 			RKWorkplace::mainWorkplace ()->restoreWorkplace ();
-			RKWorkplace::mainWorkplace ()->clearWorkplaceDescription ();
 		}
 		RKWardMainWindow::getMain ()->slotSetStatusReady ();
 		RKWardMainWindow::getMain ()->setCaption (QString::null);	// trigger update of caption

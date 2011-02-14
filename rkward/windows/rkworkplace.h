@@ -2,7 +2,7 @@
                           rkworkplace  -  description
                              -------------------
     begin                : Thu Sep 21 2006
-    copyright            : (C) 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -27,7 +27,6 @@
 #include <kmultitabbar.h>
 
 #include "rkmdiwindow.h"
-#include "../rbackend/rcommandreceiver.h"
 
 class RObject;
 class RCommandChain;
@@ -64,7 +63,7 @@ private:
 
 /** This class (only one instance will probably be around) keeps track of which windows are opened in the workplace, which are detached, etc. Also it is responsible for creating and manipulating those windows.
 It also provides a QWidget (RKWorkplace::view ()), which actually manages the document windows (only those, so far. I.e. this is a half-replacement for KMdi, which will be gone in KDE 4). Currently layout of the document windows is always tabbed. */
-class RKWorkplace : public QWidget, public RCommandReceiver {
+class RKWorkplace : public QWidget {
 	Q_OBJECT
 public:
 /** ctor.
@@ -146,10 +145,6 @@ Has no effect, if RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsMod
 /** Like the other restoreWorkplace (), but takes the description as a parameter rather than reading from the R workspace. To be used, when RKSettingsModuleGeneral::workplaceSaveMode () == RKSettingsModuleGeneral::SaveWorkplaceWithSeesion
 @param description workplace description */
 	void restoreWorkplace (const QStringList &description);
-/** Clear the description as set by saveWorkplace () from the R backend. Simply removes the internal object. Since the description is only needed while the workplace is being saved / restored, this should be called shortly after saveWorkplace () and restoreWorkplace ()
-Has no effect, if RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsModuleGeneral::SaveWorkplaceWithWorkspace
-@param cahin command chain to place the command in */
-	void clearWorkplaceDescription (RCommandChain *chain=0);
 
 	QStringList makeWorkplaceDescription ();
 
@@ -164,9 +159,6 @@ public slots:
 /** When windows are attached to the workplace, their QObject::destroyed () signal is connected to this slot. Thereby deleted objects are removed from the workplace automatically */
 	void windowDestroyed (QObject *window);
 	void saveSettings ();
-protected:
-/** handles the result of the command issued in restoreWorkplace. */
-	void rCommandDone (RCommand *command);
 private:
 /** current list of windows. @See getObjectList () */ 
 	RKWorkplaceObjectList windows;

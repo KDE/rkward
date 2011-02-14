@@ -110,6 +110,10 @@
 	return (.rk.do.call ("get.tempfile.name", c (prefix, extension)))
 }
 
+"rk.get.workspace.url" <- function () {
+	return (.rk.do.call ("getWorkspaceUrl"))
+}
+
 "rk.get.output.html.file" <- function () {
 	return (.rk.output.html.file)
 }
@@ -127,6 +131,36 @@
 
 	# needs to come after initialization, so initialization alone does not trigger an update during startup
 	.rk.do.call ("set.output.file", x);
+}
+
+"rk.save.workplace" <- function (file=NULL) {
+	if (is.null (file)) {
+		file <- rk.get.workspace.url ()
+		if (is.null (file)) file <- rk.get.tempfile.name (prefix="unsaved", extension=".RData")
+		file <- paste (file, "rkworkplace", sep=".")
+	}
+	lines <- .rk.do.call ("workplace.layout", "get")
+	writeLines (lines, file)
+}
+
+"rk.restore.workplace" <- function (file=NULL, close.windows=TRUE) {
+	if (is.null (file)) {
+		if (exists (".rk.workplace.save", envir=globalenv (), inherits=FALSE)) {
+			# For backwards compatibility with workspaces saved by RKWard 0.5.4 and earlier.
+			# TODO: remove in time.
+			lines <- as.character (.GlobalEnv$.rk.workplace.save)
+			rm (list = c (".rk.workplace.save"), envir=globalenv ())
+		} else {
+			file <- rk.get.workspace.url ()
+			if (is.null (file)) file <- rk.get.tempfile.name (prefix="unsaved", extension=".RData")
+			file <- paste (file, "rkworkplace", sep=".")
+		}
+	}
+
+	close <- "close"
+	if (!isTRUE (close.windows)) close <- "noclose"
+	if (!exists ("lines", inherits=FALSE)) lines <- readLines (file)
+	.rk.do.call ("workplace.layout", c ("set", close, lines))
 }
 
 # renames a named object in a data.frame/list without changing it's position

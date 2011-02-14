@@ -51,8 +51,6 @@
 
 #include "../debug.h"
 
-#define RESTORE_WORKPLACE_COMMAND 1
-
 // static
 RKWorkplace *RKWorkplace::main_workplace = 0;
 
@@ -520,18 +518,14 @@ void RKWorkplace::saveWorkplace (RCommandChain *chain) {
 	RK_TRACE (APP);
 	if (RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsModuleGeneral::SaveWorkplaceWithWorkspace) return;
 
-	QStringList workplace_description = makeWorkplaceDescription ();
-	for (int i=0; i < workplace_description.size (); ++i) workplace_description[i] = RObject::rQuote (workplace_description[i]);
-	QString command = ".rk.workplace.save <- c (" + workplace_description.join (", ") + ')';
-
-	RKGlobals::rInterface ()->issueCommand (command, RCommand::App | RCommand::Sync, i18n ("Save Workplace layout"), 0, 0, chain); 
+	RKGlobals::rInterface ()->issueCommand ("rk.save.workplace()", RCommand::App, i18n ("Save Workplace layout"), 0, 0, chain);
 }
 
 void RKWorkplace::restoreWorkplace (RCommandChain *chain) {
 	RK_TRACE (APP);
 	if (RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsModuleGeneral::SaveWorkplaceWithWorkspace) return;
 
-	RKGlobals::rInterface ()->issueCommand (".rk.workplace.save", RCommand::App | RCommand::Sync | RCommand::GetStringVector, i18n ("Restore Workplace layout"), this, RESTORE_WORKPLACE_COMMAND, chain);
+	RKGlobals::rInterface ()->issueCommand ("rk.restore.workplace()", RCommand::App, i18n ("Restore Workplace layout"), 0, 0, chain);
 }
 
 KUrl checkAdjustRestoredUrl (const QString &_url, const QString old_base) {
@@ -581,20 +575,6 @@ void RKWorkplace::restoreWorkplace (const QStringList &description) {
 			RK_ASSERT (false);
 		}
 	}
-}
-
-void RKWorkplace::clearWorkplaceDescription (RCommandChain *chain) {
-	RK_TRACE (APP);
-	if (RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsModuleGeneral::SaveWorkplaceWithWorkspace) return;
-
-	RKGlobals::rInterface ()->issueCommand ("remove (.rk.workplace.save)", RCommand::App | RCommand::Sync | RCommand::ObjectListUpdate, QString::null, 0, 0, chain); 
-}
-
-void RKWorkplace::rCommandDone (RCommand *command) {
-	RK_TRACE (APP);
-
-	RK_ASSERT (command->getFlags () == RESTORE_WORKPLACE_COMMAND);
-	restoreWorkplace (command->getStringVector ());
 }
 
 ///////////////////////// END RKWorkplace ////////////////////////////

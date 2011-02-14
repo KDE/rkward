@@ -48,7 +48,6 @@ RKSaveAgent::RKSaveAgent (KUrl url, bool save_file_as, DoneAction when_done, KUr
 	
 	RKWorkplace::mainWorkplace ()->saveWorkplace (save_chain);
 	RKGlobals::rInterface ()->issueCommand (new RCommand ("save.image (\"" + save_url.toLocalFile () + "\")", RCommand::App, QString::null, this), save_chain);
-	RKWorkplace::mainWorkplace ()->clearWorkplaceDescription (save_chain);
 }
 
 RKSaveAgent::~RKSaveAgent () {

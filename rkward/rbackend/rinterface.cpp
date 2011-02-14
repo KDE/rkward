@@ -469,7 +469,7 @@ void RInterface::processHistoricalSubstackRequest (RBackendRequest* request) {
 
 			issueCommand (".rk.set.reply (\"" + RKCommonFunctions::getUseableRKWardSavefileName (file_prefix, file_extension) + "\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
 		} else {
-			issueCommand (".rk.set.reply (\"Too few arguments in call to get.tempfile.name.\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
+			issueCommand ("stop (\"Too few arguments in call to get.tempfile.name.\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
 		}
 	} else if (call == "set.output.file") {
 		RK_ASSERT (calllist.count () == 2);
@@ -628,8 +628,22 @@ void RInterface::processHistoricalSubstackRequest (RBackendRequest* request) {
 		} else {
 			RK_ASSERT (false);
 		}
+	} else if (call == "getWorkspaceUrl") {
+		KUrl url = RObjectList::getObjectList ()->getWorkspaceURL ();
+		if (!url.isEmpty ()) issueCommand (".rk.set.reply (" + RObject::rQuote (url.url ()) + ")", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
+	} else if (call == "workplace.layout") {
+		if (calllist.value (1) == "set") {
+			if (calllist.value (2) == "close") RKWorkplace::mainWorkplace ()->closeAll ();
+			QStringList list = calllist.mid (3);
+			RKWorkplace::mainWorkplace ()->restoreWorkplace (list);
+		} else {
+			RK_ASSERT (calllist.value (1) == "get");
+			QStringList list = RKWorkplace::mainWorkplace ()->makeWorkplaceDescription ();
+			for (int i = 0; i < list.size (); ++i) list[i] = RObject::rQuote (list[i]);
+			issueCommand (".rk.set.reply (c (" + list.join (", ") + "))", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
+		}
 	} else {
-		issueCommand (".rk.set.reply (\"Unrecognized call '" + call + "'. Ignoring\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
+		issueCommand ("stop (\"Unrecognized call '" + call + "'. Ignoring\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
 	}
 	
 	closeChain (in_chain);
