@@ -99,14 +99,14 @@ public:
 @param read_only Open the document read only? Default is false, i.e. Read-write
 @param force_caption Usually the caption is determined from the url of the file. If you specify a non-empty string here, that is used instead.
 @returns false if a local url could not be opened, true for all remote urls, and on success */
-	bool openScriptEditor (const KUrl &url=KUrl (), const QString& encoding=QString (), bool use_r_highlighting=true, bool read_only=false, const QString &force_caption = QString::null, bool delete_on_close=false);
+	RKMDIWindow* openScriptEditor (const KUrl &url=KUrl (), const QString& encoding=QString (), bool use_r_highlighting=true, bool read_only=false, const QString &force_caption = QString::null, bool delete_on_close=false);
 /** Opens a new help window, starting at the given url
 @param url URL to open
 @param only_once if true, checks whether any help window already shows this URL. If so, raise it, but do not open a new window. Else show the new window */
-	void openHelpWindow (const KUrl &url=KUrl (), bool only_once=false);
+	RKMDIWindow* openHelpWindow (const KUrl &url=KUrl (), bool only_once=false);
 /** Opens a new output window. Currently only a single output window will ever be created. Subsequent calls to the function will not create additional windows right now (but will raise / refresh the output window
 @param url currently ignored! */
-	void openOutputWindow (const KUrl &url=KUrl ());
+	RKMDIWindow* openOutputWindow (const KUrl &url=KUrl ());
 
 	void newX11Window (WId window_to_embed, int device_number);
 	void newObjectViewer (RObject *object);

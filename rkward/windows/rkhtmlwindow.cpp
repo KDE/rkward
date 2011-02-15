@@ -355,7 +355,7 @@ void RKHTMLWindow::useMode (WindowMode new_mode) {
 	if (window_mode == new_mode) return;
 
 	if (new_mode == HTMLOutputWindow) {
-		type = RKMDIWindow::OutputWindow;
+		type = RKMDIWindow::OutputWindow | RKMDIWindow::DocumentWindow;
 		setWindowIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowOutput));
 
 		print->setText (i18n ("Print output"));
@@ -369,7 +369,7 @@ void RKHTMLWindow::useMode (WindowMode new_mode) {
 	} else {
 		RK_ASSERT (new_mode == HTMLHelpWindow);
 
-		type = RKMDIWindow::HelpWindow;
+		type = RKMDIWindow::HelpWindow | RKMDIWindow::DocumentWindow;
 		setWindowIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowHelp));
 
 		print->setText (i18n ("Print page"));

@@ -1,4 +1,5 @@
 --- Version 0.5.5 - XXX-XX-2011
+- Detached windows are now restored in detached state when restoring the workplace layout
 - Workplace layout is now saved in a separate file, instead of in a hidden object inside the .RData file
 - Added R functions rk.save.workplace() and rk.restore.workplace() to save / restore a set of document windows
 - RKWard now tries to detect, when a workspace has been moved to a new directory, and adjust the paths restored script editor windows, accordingly
