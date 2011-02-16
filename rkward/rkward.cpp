@@ -428,6 +428,22 @@ void printActionsRecursive (QAction* action, const QString &prefix) {
 }
 */
 
+void updateEmptyMenuIndicator (QAction* indicator, const QMenu *menu) {
+	if (!menu) indicator->setVisible (false);
+
+	// NOTE: QMenu::isEmpty () does not work, here
+	QList<QAction *> actions = menu->actions ();
+	for (int i = 0; i < actions.size (); ++i) {
+		if (actions[i] == indicator) continue;
+		if (actions[i]->isSeparator ()) continue;
+		if (actions[i]->isVisible ()) {
+			indicator->setVisible (false);
+			return;
+		}
+	}
+	indicator->setVisible (true);
+}
+
 void RKWardMainWindow::partChanged (KParts::Part *part) {
 	RK_TRACE (APP);
 
@@ -438,12 +454,9 @@ void RKWardMainWindow::partChanged (KParts::Part *part) {
 		return;
 	}
 
-	QMenu* menu = dynamic_cast<QMenu*>(guiFactory ()->container ("edit", this));
-	edit_menu_dummy->setVisible (menu && (menu->isEmpty ()));
-	menu = dynamic_cast<QMenu*>(guiFactory ()->container ("view", this));
-	view_menu_dummy->setVisible (menu && (menu->isEmpty ()));
-	menu = dynamic_cast<QMenu*>(guiFactory ()->container ("run", this));
-	run_menu_dummy->setVisible (menu && (menu->isEmpty ()));
+	updateEmptyMenuIndicator (edit_menu_dummy, dynamic_cast<QMenu*>(guiFactory ()->container ("edit", this)));
+	updateEmptyMenuIndicator (view_menu_dummy, dynamic_cast<QMenu*>(guiFactory ()->container ("view", this)));
+	updateEmptyMenuIndicator (run_menu_dummy, dynamic_cast<QMenu*>(guiFactory ()->container ("run", this)));
 
 /*
 	// debug code: prints out all current actions
@@ -458,10 +471,11 @@ void RKWardMainWindow::initStatusBar () {
 	statusBar ()->addWidget (statusbar_ready);
 	statusbar_cwd = new KSqueezedTextLabel (statusBar ());
 	statusbar_cwd->setAlignment (Qt::AlignRight);
+	statusbar_cwd->setToolTip (i18n ("Current working directory"));
 	statusBar ()->addWidget (statusbar_cwd, 10);
 	updateCWD ();
 
-	statusbar_r_status = new QLabel (statusBar ());
+	statusbar_r_status = new QLabel ("&nbsp;<b>R</b>&nbsp;", statusBar ());
 	statusbar_r_status->setFixedHeight (statusBar ()->fontMetrics ().height () + 2);
 	statusBar ()->addPermanentWidget (statusbar_r_status, 0);
 	setRStatus (Starting);
@@ -687,14 +701,14 @@ void RKWardMainWindow::setRStatus (RStatus status) {
 
 	QColor status_color;
 	if (status == Busy) {
-		statusbar_r_status->setText (i18n ("R engine busy"));
 		status_color = QColor (255, 0, 0);
+		statusbar_r_status->setToolTip (i18n ("The <b>R</b> engine is busy."));
 	} else if (status == Idle) {
-		statusbar_r_status->setText (i18n ("R engine idle"));
 		status_color = QColor (0, 255, 0);
+		statusbar_r_status->setToolTip (i18n ("The <b>R</b> engine is idle."));
 	} else {
-		statusbar_r_status->setText (i18n ("R engine starting"));
 		status_color = QColor (255, 255, 0);
+		statusbar_r_status->setToolTip (i18n ("The <b>R</b> engine is being initialized."));
 	}
 	QPalette palette = statusbar_r_status->palette ();
 	palette.setBrush (statusbar_r_status->backgroundRole(), QBrush (status_color));
