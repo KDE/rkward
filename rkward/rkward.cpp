@@ -429,7 +429,10 @@ void printActionsRecursive (QAction* action, const QString &prefix) {
 */
 
 void updateEmptyMenuIndicator (QAction* indicator, const QMenu *menu) {
-	if (!menu) indicator->setVisible (false);
+	if (!menu) {
+		indicator->setVisible (false);
+		return;
+	}
 
 	// NOTE: QMenu::isEmpty () does not work, here
 	QList<QAction *> actions = menu->actions ();
@@ -441,6 +444,7 @@ void updateEmptyMenuIndicator (QAction* indicator, const QMenu *menu) {
 			return;
 		}
 	}
+
 	indicator->setVisible (true);
 }
 
