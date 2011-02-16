@@ -47,6 +47,7 @@
 #include <krecentfilesaction.h>
 #include <khbox.h>
 #include <ktoolbar.h>
+#include <kactionmenu.h>
 
 // application specific includes
 #include "rkward.h"
@@ -307,7 +308,7 @@ void RKWardMainWindow::slotConfigure () {
 void RKWardMainWindow::initActions()
 {  
 	RK_TRACE (APP);
-	KAction *action;
+	KAction *action, *import_data_action = 0;
 
 	// TODO: is there a way to insert actions between standard actions without having to give all standard actions custom ids?
 	new_data_frame = actionCollection ()->addAction ("new_data_frame", this, SLOT (slotNewDataFrame ()));
@@ -320,25 +321,27 @@ void RKWardMainWindow::initActions()
 	new_command_editor->setIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowCommandEditor));
 
 	fileOpen = actionCollection ()->addAction (KStandardAction::Open, "file_openy", this, SLOT(slotOpenCommandEditor()));
-	fileOpen->setText (i18n ("Open R Script File"));
+	fileOpen->setText (i18n ("Open R Script File..."));
 
 	fileOpenRecent = static_cast<KRecentFilesAction*> (actionCollection ()->addAction (KStandardAction::OpenRecent, "file_open_recenty", this, SLOT(slotOpenCommandEditor (const KUrl&))));
+	fileOpenRecent->setText (i18n ("Open Recent R Script File"));
 
 #ifdef Q_WS_WIN
 	// TODO: find the cause and fix it! http://sourceforge.net/tracker/?func=detail&aid=2848341&group_id=50231&atid=459007
 #	warning TODO: import data dialog is disabled on windows due to bug in kdelibs
 #else
-	action = actionCollection ()->addAction ("import_data", this, SLOT (importData()));
+	import_data_action = action = actionCollection ()->addAction ("import_data", this, SLOT (importData()));
 	action->setText (i18n ("Import Data"));
 	action->setStatusTip (i18n ("Import data from a variety of file formats"));
 #endif
 
 	fileOpenWorkspace = actionCollection ()->addAction (KStandardAction::Open, "file_openx", this, SLOT(slotFileOpenWorkspace()));
-	fileOpenWorkspace->setText (i18n ("Open Workspace"));
+	fileOpenWorkspace->setText (i18n ("Open Workspace..."));
 	fileOpenWorkspace->setShortcut (Qt::ControlModifier + Qt::ShiftModifier + Qt::Key_O);
 	fileOpenWorkspace->setStatusTip (i18n ("Opens an existing document"));
 
 	fileOpenRecentWorkspace = static_cast<KRecentFilesAction*> (actionCollection ()->addAction (KStandardAction::OpenRecent, "file_open_recentx", this, SLOT(slotFileOpenRecentWorkspace(const KUrl&))));
+	fileOpenRecentWorkspace->setText (i18n ("Open Recent Workspace"));
 	fileOpenRecentWorkspace->setStatusTip (i18n ("Opens a recently used file"));
 
 	fileSaveWorkspace = actionCollection ()->addAction (KStandardAction::Save, "file_savex", this, SLOT(slotFileSaveWorkspace()));
@@ -390,6 +393,28 @@ void RKWardMainWindow::initActions()
 	run_menu_dummy = actionCollection ()->addAction ("run_menu_dummy", this);
 	run_menu_dummy->setText (edit_menu_dummy->text ());
 	run_menu_dummy->setEnabled (false);
+
+	// collections for the toolbar:
+	KActionMenu* open_any_action = new KActionMenu (KIcon ("document-open-folder"), i18n ("Open..."), this);
+	open_any_action->setDelayed (false);
+	actionCollection ()->addAction ("open_any", open_any_action);
+
+	open_any_action->addAction (fileOpenWorkspace);
+	open_any_action->addAction (fileOpenRecentWorkspace);
+	open_any_action->addSeparator ();
+	open_any_action->addAction (fileOpen);
+	open_any_action->addAction (fileOpenRecent);
+	if (import_data_action) {		// not on Windows, currently.
+		open_any_action->addSeparator ();
+		open_any_action->addAction (import_data_action);
+	}
+
+	KActionMenu* new_any_action = new KActionMenu (KIcon ("document-new"), i18n ("Create..."), this);
+	new_any_action->setDelayed (false);
+	actionCollection ()->addAction ("new_any", new_any_action);
+
+	new_any_action->addAction (new_data_frame);
+	new_any_action->addAction (new_command_editor);
 }
 
 /*
