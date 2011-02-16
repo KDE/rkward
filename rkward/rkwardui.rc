@@ -17,6 +17,7 @@
 			<Separator/>
 			<Merge/>
 		</Menu>
+		<Menu name="export"><text>&amp;Export</text></Menu>
 		<Merge/>
 		<Separator/>
 		<Action name="file_quitx"/>
@@ -91,6 +92,7 @@
 <ToolBar fullWidth="true" name="mainToolBar">
 		<Action name="open_any"/>
 		<Action name="new_any"/>
+		<Action name="save_any"/>
 </ToolBar>
 <ToolBar fullWidth="true" name="mdiToolBar">
 	<DefineGroup name="pretoolbar_actions_merge" append="pretoolbar_actions_merge"/>

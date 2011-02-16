@@ -136,6 +136,9 @@ RKWardMainWindow::RKWardMainWindow (RKWardStartupOptions *options) : KParts::Mai
 	createShellGUI (true);
 	RKXMLGUISyncer::self ()->watchXMLGUIClientUIrc (this);
 
+	proxy_import->setMenu (dynamic_cast<QMenu*>(guiFactory ()->container ("import", this)));
+	proxy_export->setMenu (dynamic_cast<QMenu*>(guiFactory ()->container ("export", this)));
+
 	RKGlobals::mtracker = new RKModificationTracker (this);
 	RKComponentMap::initialize ();
 
@@ -308,7 +311,7 @@ void RKWardMainWindow::slotConfigure () {
 void RKWardMainWindow::initActions()
 {  
 	RK_TRACE (APP);
-	KAction *action, *import_data_action = 0;
+	KAction *action;
 
 	// TODO: is there a way to insert actions between standard actions without having to give all standard actions custom ids?
 	new_data_frame = actionCollection ()->addAction ("new_data_frame", this, SLOT (slotNewDataFrame ()));
@@ -330,7 +333,7 @@ void RKWardMainWindow::initActions()
 	// TODO: find the cause and fix it! http://sourceforge.net/tracker/?func=detail&aid=2848341&group_id=50231&atid=459007
 #	warning TODO: import data dialog is disabled on windows due to bug in kdelibs
 #else
-	import_data_action = action = actionCollection ()->addAction ("import_data", this, SLOT (importData()));
+	action = actionCollection ()->addAction ("import_data", this, SLOT (importData()));
 	action->setText (i18n ("Import Data"));
 	action->setStatusTip (i18n ("Import data from a variety of file formats"));
 #endif
@@ -404,10 +407,9 @@ void RKWardMainWindow::initActions()
 	open_any_action->addSeparator ();
 	open_any_action->addAction (fileOpen);
 	open_any_action->addAction (fileOpenRecent);
-	if (import_data_action) {		// not on Windows, currently.
-		open_any_action->addSeparator ();
-		open_any_action->addAction (import_data_action);
-	}
+	open_any_action->addSeparator ();
+	proxy_import = new KAction (i18n ("Import"), this);
+	open_any_action->addAction (proxy_import);
 
 	KActionMenu* new_any_action = new KActionMenu (KIcon ("document-new"), i18n ("Create..."), this);
 	new_any_action->setDelayed (false);
@@ -415,6 +417,17 @@ void RKWardMainWindow::initActions()
 
 	new_any_action->addAction (new_data_frame);
 	new_any_action->addAction (new_command_editor);
+
+	KActionMenu* save_any_action = new KActionMenu (KIcon ("document-save"), i18n ("Save..."), this);
+	save_any_action->setDelayed (false);
+	actionCollection ()->addAction ("save_any", save_any_action);
+
+	proxy_export = new KAction (i18n ("Export"), this);
+	save_any_action->addAction (fileSaveWorkspace);
+	save_any_action->addAction (fileSaveWorkspaceAs);
+// TODO: A way to add R-script-save actions, dynamically, would be nice
+	save_any_action->addSeparator ();
+	save_any_action->addAction (proxy_export);
 }
 
 /*

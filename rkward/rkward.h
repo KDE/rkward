@@ -162,9 +162,6 @@ private:
 	KAction* close_all_editors;
 	KAction* new_data_frame;
 	KAction* new_command_editor;
-	
-	KAction* editUndo;
-	KAction* editRedo;
 
 	KAction* window_close_all;
 	KAction* window_detach;
@@ -177,6 +174,8 @@ private:
 	KAction* view_menu_dummy;
 	/** used so that if the menu is empty, there is a note in it, explaining that fact */
 	KAction* run_menu_dummy;
+
+	KAction* proxy_export, *proxy_import;
 
 	friend class RKSettingsModule;
 	friend class RKSettingsModulePlugins;
