@@ -21,6 +21,7 @@
 
 #include <QColor>
 #include <QTimer>
+#include <QFont>
 
 #include "../core/rcontainerobject.h"
 #include "../core/rkmodificationtracker.h"
@@ -364,7 +365,8 @@ QVariant RKVarEditModel::headerData (int section, Qt::Orientation orientation, i
 
 	if (orientation == Qt::Horizontal) {
 		if (section >= objects.size ()) return i18n ("#New Variable#");
-		return objects[section]->getShortName ();
+		if (section < var_col_offset) return i18n ("Row names");
+		return (QString::number (section - var_col_offset + 1));
 	}
 
 	if (section < rownames->getLength ()) {
@@ -554,6 +556,12 @@ QVariant RKVarEditMetaModel::data (const QModelIndex& index, int role) const {
 		if (row == LevelsRow) return var->getValueLabelString ();
 	}
 
+	if ((role == Qt::FontRole) && (row == NameRow)) {
+		QFont font;
+		font.setBold (true);
+		return (font);
+	}
+
 	return QVariant ();
 }
 
@@ -661,6 +669,13 @@ QVariant RKVarEditMetaModel::headerData (int section, Qt::Orientation orientatio
 		if (section == TypeRow) return (i18n ("Type"));
 		if (section == FormatRow) return (i18n ("Format"));
 		if (section == LevelsRow) return (i18n ("Levels"));
+	}
+	if (role == Qt::ToolTipRole) {
+		if (section == NameRow) return (i18n ("Edit these fields to rename variables."));
+		if (section == LabelRow) return (i18n ("A descriptive label for each column (optional)."));
+		if (section == TypeRow) return (i18n ("Type of data."));
+		if (section == FormatRow) return (i18n ("Double click on these fields to customize data display."));
+		if (section == LevelsRow) return (i18n ("Double click on these fields to edit factor levels."));
 	}
 
 	return QVariant ();
