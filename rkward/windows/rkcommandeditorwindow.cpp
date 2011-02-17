@@ -178,6 +178,8 @@ QAction *findAction (KTextEditor::View* view, const QString &actionName) {
 		QAction* found = ac->action (actionName);
 		if (found) return found;
 	}
+
+	return 0;
 }
 
 void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
