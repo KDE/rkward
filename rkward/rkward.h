@@ -25,6 +25,7 @@ email                : tfry@users.sourceforge.net
 
 class QLabel;
 class QCloseEvent;
+class KActionMenu;
 // forward declaration of the RKward classes
 class RSettings;
 class RKMenu;
@@ -40,6 +41,7 @@ class RKMDIWindow;
 class RKTopLevelWindowGUI;
 class KRecentFilesAction;
 class KSqueezedTextLabel;
+class QAction;
 
 struct RKWardStartupOptions {
 	KUrl initial_url;	/**< The workspace file to load on startup. If empty, show a dialog asking what to do. **/
@@ -176,6 +178,9 @@ private:
 	KAction* run_menu_dummy;
 
 	KAction* proxy_export, *proxy_import;
+	KActionMenu* save_any_action;
+	QAction* save_actions_plug_point;
+	QList<QPointer <QAction> > plugged_save_actions;
 
 	friend class RKSettingsModule;
 	friend class RKSettingsModulePlugins;

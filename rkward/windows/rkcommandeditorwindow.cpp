@@ -2,7 +2,7 @@
                           rkcommandeditorwindow  -  description
                              -------------------
     begin                : Mon Aug 30 2004
-    copyright            : (C) 2004, 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -169,6 +169,17 @@ void RKCommandEditorWindow::fixupPartGUI () {
 	RKCommonFunctions::moveContainer (m_view, "Menu", "tools", "edit", true);
 }
 
+QAction *findAction (KTextEditor::View* view, const QString &actionName) {
+	// katepart has more than one actionCollection
+	QList<KActionCollection*> acs = view->findChildren<KActionCollection*>();
+	acs.append (view->actionCollection ());
+
+	foreach (KActionCollection* ac, acs) {
+		QAction* found = ac->action (actionName);
+		if (found) return found;
+	}
+}
+
 void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 	RK_TRACE (COMMANDEDITOR);
 
@@ -198,6 +209,11 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 	action_setwd_to_script->setHelpText (i18n ("Change the working directory to the directory of this script"));
 #endif
 	action_setwd_to_script->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionCDToScript));
+
+	file_save = findAction (m_view, "file_save");
+	if (file_save) file_save->setText (i18n ("Save Script..."));
+	file_save_as = findAction (m_view, "file_save_as");
+	if (file_save_as) file_save_as->setText (i18n ("Save Script As..."));
 }
 
 void RKCommandEditorWindow::initBlocks () {

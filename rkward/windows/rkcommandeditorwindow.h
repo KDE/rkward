@@ -2,7 +2,7 @@
                           rkcommandeditorwindow  -  description
                              -------------------
     begin                : Mon Aug 30 2004
-    copyright            : (C) 2004, 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -43,6 +43,7 @@ class QCloseEvent;
 class QFrame;
 class QLabel;
 class KAction;
+class QAction;
 class KActionMenu;
 class RKCommandEditorWindow;
 class KActionCollection;
@@ -191,6 +192,9 @@ public slots:
 
 /** apply our customizations to the katepart GUI */
 	void fixupPartGUI ();
+
+	QAction* fileSaveAction () { return file_save; };
+	QAction* fileSaveAsAction () { return file_save_as; };
 protected:
 /** reimplemented from RKMDIWindow: give the editor window a chance to object to being closed (if unsaved) */
 	void closeEvent (QCloseEvent *e);
@@ -244,6 +248,8 @@ private:
 	void initBlocks ();
 	void addBlock (int index, const KTextEditor::Range& range);
 	void removeBlock (int index, bool was_deleted=false);
+
+	QAction *file_save, *file_save_as;
 
 	KActionMenu* actionmenu_mark_block;
 	KActionMenu* actionmenu_unmark_block;

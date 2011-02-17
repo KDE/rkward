@@ -418,15 +418,16 @@ void RKWardMainWindow::initActions()
 	new_any_action->addAction (new_data_frame);
 	new_any_action->addAction (new_command_editor);
 
-	KActionMenu* save_any_action = new KActionMenu (KIcon ("document-save"), i18n ("Save..."), this);
+	save_any_action = new KActionMenu (KIcon ("document-save"), i18n ("Save..."), this);
 	save_any_action->setDelayed (false);
 	actionCollection ()->addAction ("save_any", save_any_action);
 
 	proxy_export = new KAction (i18n ("Export"), this);
 	save_any_action->addAction (fileSaveWorkspace);
 	save_any_action->addAction (fileSaveWorkspaceAs);
-// TODO: A way to add R-script-save actions, dynamically, would be nice
 	save_any_action->addSeparator ();
+// TODO: A way to add R-script-save actions, dynamically, would be nice
+	save_actions_plug_point = save_any_action->addSeparator ();
 	save_any_action->addAction (proxy_export);
 }
 
@@ -475,6 +476,24 @@ void RKWardMainWindow::partChanged (KParts::Part *part) {
 	updateEmptyMenuIndicator (view_menu_dummy, dynamic_cast<QMenu*>(guiFactory ()->container ("view", this)));
 	updateEmptyMenuIndicator (run_menu_dummy, dynamic_cast<QMenu*>(guiFactory ()->container ("run", this)));
 
+	// plug save file actions into the toolbar collections
+	RK_ASSERT (save_any_action);
+	for (int i = 0; i < plugged_save_actions.size (); ++i) {
+		QAction* a = plugged_save_actions[i].data ();
+		if (a) save_any_action->removeAction (a);
+	}
+	plugged_save_actions.clear ();
+
+	RKMDIWindow *w = RKWorkplace::mainWorkplace ()->activeWindow (RKMDIWindow::Attached);
+	if (w && (w->isType (RKMDIWindow::CommandEditorWindow))) {
+		QAction *a = static_cast<RKCommandEditorWindow*>(w)->fileSaveAction ();
+		if (a) plugged_save_actions.append (a);
+		a = static_cast<RKCommandEditorWindow*>(w)->fileSaveAsAction ();
+		if (a) plugged_save_actions.append (a);
+	}
+	for (int i = 0; i < plugged_save_actions.size (); ++i) {
+		save_any_action->insertAction (save_actions_plug_point, plugged_save_actions[i]);
+	}
 /*
 	// debug code: prints out all current actions
 	foreach (QAction *action, menuBar ()->actions ()) printActionsRecursive (action, QString ());
