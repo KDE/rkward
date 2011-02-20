@@ -354,6 +354,7 @@ void RWriteConsoleEx (const char *buf, int buflen, int type) {
 		}
 	}
 
+	if (RKRBackend::this_pointer->capturing_messages) RKRBackend::this_pointer->captured_messages.append (RKRBackend::this_pointer->current_locale_codec->toUnicode (buf, buflen));
 	RKRBackend::this_pointer->handleOutput (RKRBackend::this_pointer->current_locale_codec->toUnicode (buf, buflen), buflen, type == 0 ? ROutput::Output : ROutput::Warning);
 }
 
@@ -615,6 +616,7 @@ RKRBackend::RKRBackend () {
 
 	current_locale_codec = QTextCodec::codecForLocale ();
 	r_running = false;
+	capturing_messages = false;
 
 	current_command = 0;
 
@@ -1067,7 +1069,10 @@ void RKRBackend::runCommand (RCommandProxy *command) {
 	// running user commands is quite different from all other commands and should have been handled by RReadConsole
 	RK_ASSERT (!(ctype & RCommand::User));
 
-	if (ctype & RCommand::DirectToOutput) runDirectCommand (".rk.capture.messages()");
+	if (ctype & RCommand::DirectToOutput) {
+		printAndClearCapturedMessages ();
+		capturing_messages = true;
+	}
 
 	if (ctype & RCommand::QuitCommand) {
 		R_dot_Last ();		// should run while communication with frontend is still possible
@@ -1099,7 +1104,7 @@ void RKRBackend::runCommand (RCommandProxy *command) {
 		repl_status.eval_depth--;
 	}
 
-	if (ctype & RCommand::DirectToOutput) runDirectCommand (".rk.print.captured.messages()");
+	if (ctype & RCommand::DirectToOutput) printAndClearCapturedMessages ();
 
 	// common error/status handling
 	if (error != NoError) {
@@ -1116,6 +1121,17 @@ void RKRBackend::runCommand (RCommandProxy *command) {
 	}
 }
 
+void RKRBackend::printAndClearCapturedMessages () {
+	RK_TRACE (RBACKEND);
+
+	if (!captured_messages.isEmpty ()) {
+		runDirectCommand (".rk.cat.output (\"<h2>Messages, warnings, or errors:</h2>\\n\")");
+		runDirectCommand ("rk.print.literal (" + RKRSharedFunctionality::quote (captured_messages) + ")");
+		captured_messages.clear ();
+	}
+
+	capturing_messages = false;
+}
 
 void RKRBackend::run () {
 	RK_TRACE (RBACKEND);

@@ -2,7 +2,7 @@
                           rkrbackendprotocol  -  description
                              -------------------
     begin                : Thu Nov 04 2010
-    copyright            : (C) 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -146,3 +146,19 @@ ROutputList RKROutputBuffer::flushOutput (bool forcibly) {
 	return ret;
 }
 
+
+
+QString RKRSharedFunctionality::quote (const QString &string) {
+	QString ret;
+	int s = string.size ();
+	ret.reserve (s + 2);	// typical case: Only quotes added, no escapes needed.
+	ret.append ('\"');
+	for (int i = 0; i < s; ++i) {
+		const QChar c = string[i];
+		if ((c == '\\') || (c == '\"')) ret.append ('\\');
+		ret.append (c);
+	}
+	ret.append ('\"');
+
+	return ret;
+}

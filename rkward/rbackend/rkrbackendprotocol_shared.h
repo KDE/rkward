@@ -2,7 +2,7 @@
                           rkrbackendprotocol  -  description
                              -------------------
     begin                : Thu Nov 04 2010
-    copyright            : (C) 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -149,6 +149,10 @@ private:
 	QMutex output_buffer_mutex;
 /** current length of output. If the backlog of output which has not yet been processed by the frontend becomes too long, output will be paused, automatically */
 	int out_buf_len;
+};
+
+namespace RKRSharedFunctionality {
+	QString quote (const QString &string);
 };
 
 #endif

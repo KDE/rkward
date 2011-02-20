@@ -2,7 +2,7 @@
                           rkrbackend  -  description
                              -------------------
     begin                : Sun Jul 25 2004
-    copyright            : (C) 2004, 2005, 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2005, 2006, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -169,6 +169,10 @@ public:
 /** the main loop. See \ref RKRBackend for a more detailed description */
 	void run ();
 	static void scheduleInterrupt ();
+
+	bool capturing_messages;
+	QString captured_messages;
+	void printAndClearCapturedMessages ();
 protected:
 	RCommandProxy* handleRequest (RBackendRequest *request, bool mayHandleSubstack);
 private:

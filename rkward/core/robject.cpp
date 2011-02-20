@@ -22,6 +22,7 @@
 #include <klocale.h>
 
 #include "../rbackend/rinterface.h"
+#include "../rbackend/rkrbackendprotocol_shared.h"
 #include "../rkglobals.h"
 #include "robjectlist.h"
 #include "rcontainerobject.h"
@@ -505,18 +506,7 @@ RObject::RDataType RObject::textToType (const QString &text) {
 
 //static
 QString RObject::rQuote (const QString &string) {
-	QString ret;
-	int s = string.size ();
-	ret.reserve (s + 2);	// typical case: Only quotes added, no escapes needed.
-	ret.append ('\"');
-	for (int i = 0; i < s; ++i) {
-		const QChar c = string[i];
-		if ((c == '\\') || (c == '\"')) ret.append ('\\');
-		ret.append (c);
-	}
-	ret.append ('\"');
-
-	return ret;
+	return (RKRSharedFunctionality::quote (string));
 }
 
 // static
