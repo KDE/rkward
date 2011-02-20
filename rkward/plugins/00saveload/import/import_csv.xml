@@ -52,8 +52,6 @@
 		<connect client="custom_quote.enabled" governor="customquote" />
 		<connect client="custom_quote.required" governor="custom_quote.enabled" />
 
-		<connect client="rowname.enabled" governor="isrow.state" />
-		
 		<convert id="userow" mode="equals" sources="rowname.string" standard="rowcol" />
 		<convert id="customizerow" mode="equals" sources="rowname.string" standard="custoRow" />
 		<convert id="customizerow2" mode="and" sources="isrow.state;customizerow" standard="custoRow" />
@@ -112,14 +110,15 @@
 				<row>
 					<column>
 						<frame label="Row Specifications">
-							<checkbox value_unchecked="false" checked="false" value="true" id="isrow" label="Customize row names" />
-							<radio id="rowname" label="Rows names" >
-								<option value="NULL" label="Number" />
+							<radio id="rowname" label="Row names" >
+								<option value="auto" checked="true" label="Automatic" />
+								<option value="number" label="Numeric row names" />
 								<option value="rowcol" label="As specified in column x:" />
 								<option value="custoRow" label="Use a vector" />
 							</radio>
 							<input size="small" id="nomrow" initial="1" label="Column number or variable name" />
 							<input id="rownames" label="Vector of row names (quoted)" />
+							<stretch/>
 						</frame>
 					</column>
 					<column>

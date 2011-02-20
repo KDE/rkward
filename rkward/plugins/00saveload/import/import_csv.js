@@ -17,11 +17,11 @@ function calculate () {
 	}
 // Other method is to use read.table and show all the options - more transparent
 	echo ('imported <- read.' + quick + ' (file="' + getValue("file") + '"' + tableOptions + ', '); // doing row names (what a pity...)
-	if (getValue("rowname")!="NULL") {
-		echo ("row.names = ");
-		if (getValue("rowname")=="rowcol") echo (getValue("nomrow") + ",");
-		else echo (getValue("rownames") + ",");
-	}
+	var rowNameMode = getValue ("rowname");
+	if (rowNameMode == "number") echo ("row.names=NULL, ");
+	else if (rowNameMode == "rowcol") echo ("row.names=" + getValue("nomrow") + ", ");
+	else if (rowNameMode == "custoRow") echo ("row.names=" + getValue("rownames") + ", ");
+
 	// doing col names (what a pity...)
 	if (getValue("colname") == "custoCol") echo ( "col.names = " + getValue ("colnames") + ",");
 	// doing col class (what a pity...)
