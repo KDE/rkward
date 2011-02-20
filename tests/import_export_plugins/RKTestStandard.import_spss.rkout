@@ -1,9 +1,13 @@
 <h1>Import SPSS data</h1>
 <h2>Parameters</h2>
-<ul><li>File: ../import_export_plugins_testfile.sav</li>
+<ul><li>File: import_export_plugins_testfile.sav</li>
 <li>Import as: my.spss.data</li>
 </ul>
 DATE<br>
+<h2>Messages, warnings, or errors:</h2>
+<pre>Warning message:
+In read.spss("import_export_plugins_testfile.sav", to.data.frame = TRUE,  :
+  import_export_plugins_testfile.sav: position 1: Variable name character 4 is lowercase letter ß</pre>
 
 
 <p align= center >
