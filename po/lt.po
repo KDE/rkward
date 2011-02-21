@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: lt\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
 "group_id=50231&atid=459007\n"
-"POT-Creation-Date: 2010-10-14 10:23+0200\n"
+"POT-Creation-Date: 2011-02-21 14:44+0100\n"
 "PO-Revision-Date: 2010-08-06 20:28+0300\n"
 "Last-Translator: Mindaugas Baranauskas <embar@users.berlios.de>\n"
 "Language-Team: Lithuanian <embar@users.berlios.de>\n"
@@ -62,99 +62,63 @@ msgstr ""
 msgid "Waiting for R to finish"
 msgstr "Laukiama, kol R baigs bardą"
 
-#: agents/rksaveagent.cpp:63
+#: agents/rksaveagent.cpp:64
 msgid ""
 "No filename given. Your data was NOT saved. Do you still want to proceed?"
 msgstr ""
 "Nenurodytas joks rinkmenos vardas. Duomenys NEBUVO įrašyti. Vis tiek tęsti?"
 
-#: agents/rksaveagent.cpp:75
+#: agents/rksaveagent.cpp:78
 msgid "Saving to file '%1' failed. What do you want to do?"
 msgstr "Nepavyko įrašyti rinkmenos „%1“. Ką norite daryti?"
 
-#: agents/rksaveagent.cpp:75
+#: agents/rksaveagent.cpp:78
 msgid "Save failed"
 msgstr "Nepavyko įrašyti"
 
-#: agents/rksaveagent.cpp:75
+#: agents/rksaveagent.cpp:78
 msgid "Try saving with a different filename"
 msgstr "Pabandykite įrašyti kitokiu rinkmenos vardu."
 
-#: agents/rksaveagent.cpp:75
+#: agents/rksaveagent.cpp:78
 msgid "Saving failed"
 msgstr "Nepavyko įrašyti"
 
-#: agents/rksaveagent.cpp:77
+#: agents/rksaveagent.cpp:80
 msgid ""
 "Saving to file '%1' failed. Do you want to try saving to a different "
 "filename?"
 msgstr "Nepavyko įrašyti rinkmenos „%1“. Ar įrašyti kitu rinkmenos vardu?"
 
-#: agents/showedittextfileagent.cpp:57 misc/rkprogresscontrol.cpp:299
+#: agents/showedittextfileagent.cpp:58 misc/rkprogresscontrol.cpp:299
 #: plugin/rkstandardcomponentgui.cpp:386
 msgid "Done"
 msgstr "Atlikta"
 
-#: agents/showedittextfileagent.cpp:77
+#: agents/showedittextfileagent.cpp:103
 msgid ""
-" For that reason processing has been stopped for now. Press the \"Done\"-"
-"button, or close this dialog once you think it is safe to resume.\n"
-"\n"
+"A command running in the R-engine wants you to see the following file(s):\n"
 msgstr ""
-" Todėl apdorojimas sustabdytas. Spauskite mygtuką „Atlikta“, arba užverkite "
-"šį dialogą, jei manote, kad jau yra saugu tęsti.\n"
-"\n"
 
-#: agents/showedittextfileagent.cpp:78
-msgid ""
-"The file(s) have been opened in text-windows. The following is a list of the "
-"file(s) in question:\n"
-"\n"
-msgstr ""
-"Rinkmenos atvertos tekstiniuose languose. Klausimas susijęs su šiomis "
-"rinkmenomis:\n"
-"\n"
-
-#: agents/showedittextfileagent.cpp:90
+#: agents/showedittextfileagent.cpp:103
 msgid "Showing file(s)"
 msgstr "Rodomos rinkmenos"
 
-#: agents/showedittextfileagent.cpp:91
+#: agents/showedittextfileagent.cpp:108
+#, fuzzy
 msgid ""
-"A command running in the R-engine wants you to see one or more file(s). "
-"RKWard can not determine, whether it is safe to continue processing R "
-"commands, before you have read the file(s) in question."
+"A command running in the R-engine wants you to edit one or more file(s). "
+"Please look at these files, edit them as appriopriate, and save them. When "
+"done, press the \"Done\"-button, or close this dialog to resume.\n"
+"\n"
 msgstr ""
 "R variklyje veikiančiai komanda ketina atverti vienos ar kelių rinkmenų. "
 "RKWard negali nustatyti, ar saugu tęsti vykdyti tokias R komandas, tad "
 "turėtumėte peržiūrėti tas norimas naudoti rinkmenas."
 
-#: agents/showedittextfileagent.cpp:93
+#: agents/showedittextfileagent.cpp:108
 msgid "Edit file(s)"
 msgstr "Redaguoti rinkmenas"
-
-#: agents/showedittextfileagent.cpp:94
-msgid ""
-"A command running in the R-engine wants you to edit one or more file(s). "
-"RKWard can not determine, whether it is safe to continue processing R "
-"commands, before you have read/edited (and saved) the file(s) in question."
-msgstr ""
-"R variklyje veikianti komanda ketina pakeisti vieną ar kelias rinkmenas. "
-"RKWard negali nustatyti, ar saugu tęsti vykdyti tokias R komandas, tad "
-"turėtumėte peržiūrėti tas norimas skaityti/redaguoti (ir įrašyti) rinkmenas."
-
-#: agents/showedittextfileagent.cpp:119
-msgid ""
-"\n"
-"\n"
-"The following of the above files were not readable and have not been "
-"opened:\n"
-"\n"
-msgstr ""
-"\n"
-"\n"
-"Kai kurių aukščiau išvardintų rinkmenų nepavyko nuskaityti ir atverti:\n"
-"\n"
 
 #: core/renvironmentobject.cpp:98
 msgid ""
@@ -211,20 +175,20 @@ msgid ""
 "Do you really want to remove the object '%1'? There's no way to get it back."
 msgstr "Tikrai pašalinti objektą „%1“? Jis bus pašalintas negrįžtamai."
 
-#: core/rkmodificationtracker.cpp:331 dataeditor/rkvareditmodel.cpp:640
-#: dialogs/rkloadlibsdialog.cpp:302 dialogs/rkloadlibsdialog.cpp:318
-#: dialogs/rkloadlibsdialog.cpp:527 dialogs/rkloadlibsdialog.cpp:687
+#: core/rkmodificationtracker.cpp:331 dataeditor/rkvareditmodel.cpp:667
+#: dialogs/rkloadlibsdialog.cpp:306 dialogs/rkloadlibsdialog.cpp:323
+#: dialogs/rkloadlibsdialog.cpp:530 dialogs/rkloadlibsdialog.cpp:689
 #: plugin/rkformula.cpp:81 plugin/rkvarslot.cpp:55
 msgid "Name"
 msgstr "Vardas"
 
 #: core/rkmodificationtracker.cpp:332 dataeditor/editlabelsdialog.cpp:213
-#: dataeditor/rkvareditmodel.cpp:641 misc/rkobjectlistview.cpp:181
+#: dataeditor/rkvareditmodel.cpp:668 misc/rkobjectlistview.cpp:181
 msgid "Label"
 msgstr "Etiketė"
 
-#: core/rkmodificationtracker.cpp:333 dataeditor/rkvareditmodel.cpp:642
-#: misc/rkobjectlistview.cpp:180 rbackend/rcommandstack.cpp:399
+#: core/rkmodificationtracker.cpp:333 dataeditor/rkvareditmodel.cpp:669
+#: misc/rkobjectlistview.cpp:180 rbackend/rcommandstack.cpp:382
 msgid "Type"
 msgstr "Tipas"
 
@@ -241,63 +205,63 @@ msgstr "Mindaugas Baranauskas"
 msgid "new.row"
 msgstr ""
 
-#: core/robject.cpp:118
+#: core/robject.cpp:117
 msgid "Full location:"
 msgstr "Pilnas kelias: "
 
-#: core/robject.cpp:120
+#: core/robject.cpp:119
 msgid "Label:"
 msgstr "Žymė:"
 
-#: core/robject.cpp:121
+#: core/robject.cpp:120
 msgid "Type:"
 msgstr "Tipas:"
 
-#: core/robject.cpp:124
+#: core/robject.cpp:123
 msgid "Function"
 msgstr "Funkcija"
 
-#: core/robject.cpp:125
+#: core/robject.cpp:124
 msgid "Usage: "
 msgstr "Naudojimas: "
 
-#: core/robject.cpp:127
+#: core/robject.cpp:126
 msgid "Data frame"
 msgstr "Duomenų sritis"
 
-#: core/robject.cpp:129
+#: core/robject.cpp:128
 msgid "Array"
 msgstr "Masyvas"
 
-#: core/robject.cpp:131 misc/rkspecialactions.cpp:88
+#: core/robject.cpp:130 misc/rkspecialactions.cpp:88
 msgid "Matrix"
 msgstr "Matrica"
 
-#: core/robject.cpp:133
+#: core/robject.cpp:132
 msgid "List"
 msgstr "Sąrašas"
 
-#: core/robject.cpp:135
+#: core/robject.cpp:134
 msgid "Variable"
 msgstr "Kintamasis"
 
-#: core/robject.cpp:136
+#: core/robject.cpp:135
 msgid "Data Type:"
 msgstr "Duomenų tipas:"
 
-#: core/robject.cpp:138
+#: core/robject.cpp:137
 msgid "Environment"
 msgstr "Aplinka"
 
-#: core/robject.cpp:143
+#: core/robject.cpp:142
 msgid "Length: "
 msgstr "Ilgis:"
 
-#: core/robject.cpp:145
+#: core/robject.cpp:144
 msgid "Dimensions: "
 msgstr "Dimensions : "
 
-#: core/robject.cpp:153
+#: core/robject.cpp:152
 msgid "Class(es):"
 msgstr "Klasė(s) : "
 
@@ -373,26 +337,54 @@ msgstr "Nurodytas vardas arba netinkamas, arba jau yra. Pervadinta į %1"
 msgid "Invalid Name"
 msgstr "Netinkamas vardas"
 
-#: dataeditor/rkvareditmodel.cpp:263 dataeditor/rkvareditmodel.cpp:520
+#: dataeditor/rkvareditmodel.cpp:283 dataeditor/rkvareditmodel.cpp:541
 msgid "Type on these fields to add new columns"
 msgstr ""
 "Norėdami pridėti naujus stulpelius, tiesiog rašykite šiuose laukeliuose"
 
-#: dataeditor/rkvareditmodel.cpp:264
+#: dataeditor/rkvareditmodel.cpp:284
 msgid "Type on these fields to add new rows"
 msgstr "Norėdami pridėti naujas eilutes, tiesiog rašykite šiuose laukeliuose"
 
-#: dataeditor/rkvareditmodel.cpp:347
+#: dataeditor/rkvareditmodel.cpp:367
 msgid "#New Variable#"
 msgstr "# Naujas kintamasis #"
 
-#: dataeditor/rkvareditmodel.cpp:643
+#: dataeditor/rkvareditmodel.cpp:368
+#, fuzzy
+msgid "Row names"
+msgstr "Mindaugas Baranauskas"
+
+#: dataeditor/rkvareditmodel.cpp:670
 msgid "Format"
 msgstr "Formatas"
 
-#: dataeditor/rkvareditmodel.cpp:644
+#: dataeditor/rkvareditmodel.cpp:671
 msgid "Levels"
 msgstr "Lygiai"
+
+#: dataeditor/rkvareditmodel.cpp:674
+msgid "Edit these fields to rename variables."
+msgstr ""
+
+#: dataeditor/rkvareditmodel.cpp:675
+msgid "A descriptive label for each column (optional)."
+msgstr ""
+
+#: dataeditor/rkvareditmodel.cpp:676
+#, fuzzy
+msgid "Type of data."
+msgstr "Įvedimo laukelis"
+
+#: dataeditor/rkvareditmodel.cpp:677
+msgid "Double click on these fields to customize data display."
+msgstr ""
+
+#: dataeditor/rkvareditmodel.cpp:678
+#, fuzzy
+msgid "Double click on these fields to edit factor levels."
+msgstr ""
+"Norėdami pridėti naujus stulpelius, tiesiog rašykite šiuose laukeliuose"
 
 #: dataeditor/twintable.cpp:102
 msgid "Cuts the selected section and puts it to the clipboard"
@@ -482,7 +474,7 @@ msgstr "Neaptikta jokių su „%1“ susijusių papildinių"
 msgid "All Files"
 msgstr "Visos rinkmenos"
 
-#: dialogs/rkloadlibsdialog.cpp:59 rkward.cpp:363
+#: dialogs/rkloadlibsdialog.cpp:59 rkward.cpp:368
 msgid "Configure Packages"
 msgstr "Konfigūruoti paketus"
 
@@ -490,72 +482,72 @@ msgstr "Konfigūruoti paketus"
 msgid "Local packages"
 msgstr "Vietiniai paketai"
 
-#: dialogs/rkloadlibsdialog.cpp:68 robjectviewer.cpp:166
+#: dialogs/rkloadlibsdialog.cpp:66 robjectviewer.cpp:166
 #: windows/robjectbrowser.cpp:117
 msgid "Update"
 msgstr "Atnaujinti"
 
-#: dialogs/rkloadlibsdialog.cpp:72
+#: dialogs/rkloadlibsdialog.cpp:69
 msgid "Install"
 msgstr "Įdiegti"
 
-#: dialogs/rkloadlibsdialog.cpp:75
+#: dialogs/rkloadlibsdialog.cpp:71
 msgid "Configure Repositories"
 msgstr "Konfigūruoti saugyklas"
 
-#: dialogs/rkloadlibsdialog.cpp:230
+#: dialogs/rkloadlibsdialog.cpp:234
 msgid "Please stand by while installing selected packages"
 msgstr "Kantriai palaukite, kol bus įdiegti paketai"
 
-#: dialogs/rkloadlibsdialog.cpp:230
+#: dialogs/rkloadlibsdialog.cpp:234
 msgid "Installing packages"
 msgstr "Diegiami paketai"
 
-#: dialogs/rkloadlibsdialog.cpp:268
+#: dialogs/rkloadlibsdialog.cpp:272
 msgid "Installation process died with exit code %1"
 msgstr "Diegimas nutrūko grąžindamas kodą %1"
 
-#: dialogs/rkloadlibsdialog.cpp:300
+#: dialogs/rkloadlibsdialog.cpp:304
 msgid "Installed packages"
 msgstr "Įdiegti paketai"
 
-#: dialogs/rkloadlibsdialog.cpp:302 windows/rkhelpsearchwindow.cpp:94
-#: windows/rkhelpsearchwindow.cpp:313
+#: dialogs/rkloadlibsdialog.cpp:306 windows/rkhelpsearchwindow.cpp:94
+#: windows/rkhelpsearchwindow.cpp:308
 msgid "Title"
 msgstr "Pavadinimas"
 
-#: dialogs/rkloadlibsdialog.cpp:302 dialogs/rkloadlibsdialog.cpp:687
+#: dialogs/rkloadlibsdialog.cpp:306 dialogs/rkloadlibsdialog.cpp:689
 msgid "Version"
 msgstr "Versija"
 
-#: dialogs/rkloadlibsdialog.cpp:302 dialogs/rkloadlibsdialog.cpp:527
+#: dialogs/rkloadlibsdialog.cpp:306 dialogs/rkloadlibsdialog.cpp:530
 msgid "Location"
 msgstr "Vieta"
 
-#: dialogs/rkloadlibsdialog.cpp:307
+#: dialogs/rkloadlibsdialog.cpp:312
 msgid "Load"
 msgstr "Įkelti"
 
-#: dialogs/rkloadlibsdialog.cpp:309
+#: dialogs/rkloadlibsdialog.cpp:314
 msgid "Unload"
 msgstr "Iškelti"
 
-#: dialogs/rkloadlibsdialog.cpp:316
+#: dialogs/rkloadlibsdialog.cpp:321
 msgid "Loaded packages"
 msgstr "Įkelti paketai"
 
-#: dialogs/rkloadlibsdialog.cpp:463
+#: dialogs/rkloadlibsdialog.cpp:466
 msgid ""
 "There has been an error while trying to load / unload packages. See "
 "transcript below for details"
 msgstr ""
 "Paketo įkėlimo ar iškėlimo klaida. Daugiau informacijos pateikta žemiau."
 
-#: dialogs/rkloadlibsdialog.cpp:463
+#: dialogs/rkloadlibsdialog.cpp:466
 msgid "Error while handling packages"
 msgstr "Paketų apdorojimo klaida"
 
-#: dialogs/rkloadlibsdialog.cpp:518
+#: dialogs/rkloadlibsdialog.cpp:521
 msgid ""
 "In order to find out, which of your installed packaged have an update "
 "available, click \"Fetch List\". This feature requires a working internet "
@@ -564,41 +556,41 @@ msgstr ""
 "Norėdami sužinoti, kuriuos paketus galima atnaujinti, spauskite „Gauti "
 "sąrašą“. Ši funkcija veiks tik tada, jei esate prisijungę prie interneto."
 
-#: dialogs/rkloadlibsdialog.cpp:527
+#: dialogs/rkloadlibsdialog.cpp:530
 msgid "Local Version"
 msgstr "Vietinė versija"
 
-#: dialogs/rkloadlibsdialog.cpp:527
+#: dialogs/rkloadlibsdialog.cpp:530
 msgid "Online Version"
 msgstr "Internetinė versija"
 
-#: dialogs/rkloadlibsdialog.cpp:534 dialogs/rkloadlibsdialog.cpp:694
+#: dialogs/rkloadlibsdialog.cpp:538 dialogs/rkloadlibsdialog.cpp:697
 msgid "Fetch list"
 msgstr "Gauti sąrašą"
 
-#: dialogs/rkloadlibsdialog.cpp:536
+#: dialogs/rkloadlibsdialog.cpp:540
 msgid "Update Selected"
 msgstr "Atnaujinti pasirinktus"
 
-#: dialogs/rkloadlibsdialog.cpp:538
+#: dialogs/rkloadlibsdialog.cpp:542
 msgid "Update All"
 msgstr "Atnaujinti viską"
 
-#: dialogs/rkloadlibsdialog.cpp:601
+#: dialogs/rkloadlibsdialog.cpp:603
 msgid "[No updates available]"
 msgstr "[Nėra prieinamų atnaujinimų]"
 
-#: dialogs/rkloadlibsdialog.cpp:652
+#: dialogs/rkloadlibsdialog.cpp:654
 msgid ""
 "Please stand by while determining, which packages have an update available "
 "online."
 msgstr "Nustatoma, kuriuos paketus įmanoma atnaujinti internetu. Palaukite..."
 
-#: dialogs/rkloadlibsdialog.cpp:652 dialogs/rkloadlibsdialog.cpp:791
+#: dialogs/rkloadlibsdialog.cpp:654 dialogs/rkloadlibsdialog.cpp:794
 msgid "Fetching list"
 msgstr "Gaunamas sąrašas"
 
-#: dialogs/rkloadlibsdialog.cpp:679
+#: dialogs/rkloadlibsdialog.cpp:681
 msgid ""
 "Many packages are available on CRAN (Comprehensive R Archive Network), and "
 "other repositories (click \"Configure Repositories\" to add more sources). "
@@ -610,19 +602,19 @@ msgstr ""
 "saugyklas“). Norėdami sužinoti, kurie paketai pasiekiami, spauskite „Gauti "
 "sąrašą“. Ši funkcija veiks tik tada, jei esate prisijungę prie interneto."
 
-#: dialogs/rkloadlibsdialog.cpp:696
+#: dialogs/rkloadlibsdialog.cpp:699
 msgid "Install Selected"
 msgstr "Įdiegti pasirinktus"
 
-#: dialogs/rkloadlibsdialog.cpp:751
+#: dialogs/rkloadlibsdialog.cpp:754
 msgid "[No packages available]"
 msgstr "[Nėra pasiekimų paketų]"
 
-#: dialogs/rkloadlibsdialog.cpp:791
+#: dialogs/rkloadlibsdialog.cpp:794
 msgid "Please stand by while downloading the list of available packages."
 msgstr "Parsiunčiamas pasiekiamų paketų sąrašas. Palaukite..."
 
-#: dialogs/rkloadlibsdialog.cpp:802
+#: dialogs/rkloadlibsdialog.cpp:805
 msgid ""
 "The package requested by the backend (\"%1\") was not found in the package "
 "repositories. Maybe the package name was mis-spelled. Or maybe you need to "
@@ -632,23 +624,23 @@ msgstr ""
 "Galbūt blogai įrašytas to paketo vardas. O gal reikia pridėti papildomų "
 "saugyklų nuspaudus mygtuką „Konfigūruoti saugyklas“."
 
-#: dialogs/rkloadlibsdialog.cpp:802
+#: dialogs/rkloadlibsdialog.cpp:805
 msgid "Package not available"
 msgstr "Paketas nepasiekiamas"
 
-#: dialogs/rkloadlibsdialog.cpp:831
+#: dialogs/rkloadlibsdialog.cpp:834
 msgid "Install packages to:"
 msgstr "Paketus įdiegti į:"
 
-#: dialogs/rkloadlibsdialog.cpp:836
+#: dialogs/rkloadlibsdialog.cpp:839
 msgid "Include dependencies"
 msgstr "Įtraukti priklausomybes"
 
-#: dialogs/rkloadlibsdialog.cpp:868
+#: dialogs/rkloadlibsdialog.cpp:871
 msgid "Selected library location not writable"
 msgstr "neįmanoma rašyti į pasirinktą bibliotekų vietą"
 
-#: dialogs/rkloadlibsdialog.cpp:869
+#: dialogs/rkloadlibsdialog.cpp:872
 msgid ""
 "The directory you are trying to install to (%1) is not writable with your "
 "current user permissions. You can chose a different library location to "
@@ -661,7 +653,7 @@ msgstr ""
 "nei į vieną negalite rašyti, bandykite nuspausti mygtuką  „Konfigūruoti "
 "saugyklas“ ir atsivėrusiame nurodyti katalogą, į kurį galite rašyti).\n"
 
-#: dialogs/rkloadlibsdialog.cpp:873
+#: dialogs/rkloadlibsdialog.cpp:876
 msgid ""
 "If have access to an administrator account on this machine, you can use that "
 "to install the package(s), or you could change the permissions of '%1'. "
@@ -673,11 +665,11 @@ msgstr ""
 "terpėje RKWard dar neleis automatiškai prisijungti administratoriaus "
 "teisėmis."
 
-#: dialogs/rkloadlibsdialog.cpp:875
+#: dialogs/rkloadlibsdialog.cpp:878
 msgid "Attempt installation, anyway"
 msgstr "Vis tiek bandyti įdiegti"
 
-#: dialogs/rkloadlibsdialog.cpp:878
+#: dialogs/rkloadlibsdialog.cpp:881
 #, fuzzy
 msgid ""
 "If you are the administrator of this machine, you can try to install the "
@@ -686,13 +678,53 @@ msgstr ""
 "Būdami administratoriumi, gali įdiegti paketus root teisėmis (bus paprašyta "
 "įveesti slaptažodį)."
 
-#: dialogs/rkloadlibsdialog.cpp:879
+#: dialogs/rkloadlibsdialog.cpp:882
 msgid "Become root"
 msgstr "Dirbti administratoriaus teisėmis"
 
 #: dialogs/rkreadlinedialog.cpp:55
 msgid "Context:"
 msgstr "Kontekstas:"
+
+#: dialogs/rkrecoverdialog.cpp:35
+msgid "Crash recovery file detected"
+msgstr ""
+
+#: dialogs/rkrecoverdialog.cpp:37
+#, fuzzy
+msgid "Show in file browser"
+msgstr "Rodomos rinkmenos"
+
+#: dialogs/rkrecoverdialog.cpp:38
+msgid "Recover"
+msgstr ""
+
+#: dialogs/rkrecoverdialog.cpp:42
+msgid "<p><b>Crash revocery file detected</b></p>"
+msgstr ""
+
+#: dialogs/rkrecoverdialog.cpp:43
+msgid ""
+"<p>It looks like RKWard has crashed, recently. We are sorry about that! "
+"However, not everything is lost, and with a bit of luck, your data has been "
+"saved in time.</p>"
+msgstr ""
+
+#: dialogs/rkrecoverdialog.cpp:44
+msgid "<p>A workspace recovery file exists in <i>%2</i> as <i>%3</i>.</p>"
+msgid_plural ""
+"<p>%1 workspace recovery files exist in <i>%2</i>, the most recent one of "
+"which is <i>%3</i>.</p>"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+#: dialogs/rkrecoverdialog.cpp:45
+msgid ""
+"<p>Do you want to open this file, now? <b>Note</b>: You will be prompted "
+"again, next time you start RKWard, until you remove/rename the file, "
+"manually.</p>"
+msgstr ""
 
 #: dialogs/rkselectlistdialog.cpp:38
 msgid "<b>Select one or more:</b>"
@@ -702,45 +734,56 @@ msgstr "<b>Pasirinkite bent vieną:</b>"
 msgid "<b>Select one:</b>"
 msgstr "<b>Pasirinkite vieną:</b>"
 
-#: dialogs/startupdialog.cpp:46
+#: dialogs/startupdialog.cpp:47
 msgid "What would you like to do?"
 msgstr "Ką norėtumėte daryti?"
 
-#: dialogs/startupdialog.cpp:58 settings/rksettingsmodulegeneral.cpp:67
+#: dialogs/startupdialog.cpp:59 settings/rksettingsmodulegeneral.cpp:67
 msgid "Start with an empty workspace"
 msgstr "Pradėti dirbti tuščioje darbo erdvėje"
 
-#: dialogs/startupdialog.cpp:60 settings/rksettingsmodulegeneral.cpp:68
+#: dialogs/startupdialog.cpp:61 settings/rksettingsmodulegeneral.cpp:69
 msgid "Start with an empty table"
 msgstr "Pradėti dirbti su tuščia lentele"
 
-#: dialogs/startupdialog.cpp:62
+#: dialogs/startupdialog.cpp:68
+#, fuzzy
+msgid "Load workspace from current directory"
+msgstr "eiti į dabartinio scenarijaus katalogą"
+
+#: dialogs/startupdialog.cpp:69
+msgid ""
+"Load workspace from current directory:\n"
+"%1"
+msgstr ""
+
+#: dialogs/startupdialog.cpp:70
 msgid "Load an existing workspace:"
 msgstr "Įkelti jau esamą darbo erdvę:"
 
-#: dialogs/startupdialog.cpp:70
+#: dialogs/startupdialog.cpp:78
 msgid "<<Open another file>>"
 msgstr "<<Atverti kitą rinkmeną>>"
 
-#: dialogs/startupdialog.cpp:77
+#: dialogs/startupdialog.cpp:85
 msgid "Always do this on startup"
 msgstr "Visuomet taip pradėti darbą"
 
-#: main.cpp:93
+#: main.cpp:104
 msgid ""
 "After starting (and after loading the specified workspace, if applicable), "
 "evaluate the given R code."
 msgstr "Paleidus (ir įkėlus nurodytą darbo erdvę) įvertinti pateiktą R kodą."
 
-#: main.cpp:94
+#: main.cpp:105
 msgid "Verbosity of debug messages (0-5)"
 msgstr "Derinimo pranešimų detalumo lygis (0-5)"
 
-#: main.cpp:95
+#: main.cpp:106
 msgid "Mask for components to debug (see debug.h)"
 msgstr "Derintinų komponentų kaukė (žr. debug.h)"
 
-#: main.cpp:96
+#: main.cpp:107
 msgid ""
 "Debugger (enclose any debugger arguments in single quotes ('') together with "
 "the command)"
@@ -748,106 +791,102 @@ msgstr ""
 "Derintuvė (derintuvės argumentus ir komandas rašykite tarp viengubų kabučių "
 "(''))"
 
-#: main.cpp:97
-msgid "Disable R C stack checking"
-msgstr "Uždrausti R C dėklo tikrinimą"
-
-#: main.cpp:98
+#: main.cpp:108
 msgid "R workspace file to open"
 msgstr "R darbo erdvė, kurią norėtumėte atverti"
 
-#: main.cpp:100
+#: main.cpp:110
 msgid "RKWard"
 msgstr "RKWard"
 
-#: main.cpp:100
+#: main.cpp:110
 msgid "Frontend to the R statistics language"
 msgstr "R statistikos kalbos grafinė naudotojo sąsaja"
 
-#: main.cpp:100
+#: main.cpp:110
 msgid "(c) 2002, 2004, 2005, 2006, 2007, 2008, 2009, 2010"
 msgstr "(c) 2002, 2004, 2005, 2006, 2007, 2008, 2009, 2010"
 
-#: main.cpp:101 main.cpp:102 main.cpp:103 main.cpp:104 main.cpp:106
-#: main.cpp:107 main.cpp:108 main.cpp:109 main.cpp:110 main.cpp:111
-#: main.cpp:112 main.cpp:113 main.cpp:114 main.cpp:115 main.cpp:116
-#: main.cpp:117 main.cpp:118
+#: main.cpp:111 main.cpp:112 main.cpp:113 main.cpp:114 main.cpp:116
+#: main.cpp:117 main.cpp:118 main.cpp:119 main.cpp:120 main.cpp:121
+#: main.cpp:122 main.cpp:123 main.cpp:124 main.cpp:125 main.cpp:126
+#: main.cpp:127 main.cpp:128
 msgid "%1"
 msgstr "%1"
 
-#: main.cpp:101
+#: main.cpp:111
 msgid "Project leader / main developer"
 msgstr "Projekto vadovas / pagrindinis kūrėjas"
 
-#: main.cpp:102
+#: main.cpp:112
 msgid "C++ coder since 0.2.9"
 msgstr "C++ programuotojas nuo 0.2.9 versijos"
 
-#: main.cpp:103
+#: main.cpp:113
 msgid "Many plugins, suggestions, marketing, translations"
 msgstr "Daug papildinių ir pasiūlymų, rinkodara ir vertimai"
 
-#: main.cpp:104 main.cpp:118
+#: main.cpp:114 main.cpp:128
 msgid "Many plugins, suggestions"
 msgstr "Daug papildinių ir pasiūlymų"
 
-#: main.cpp:105
+#: main.cpp:115
 msgid "Contributors in alphabetical order"
 msgstr "Pagalbininkai pagal abėcėlę"
 
-#: main.cpp:106
+#: main.cpp:116
 msgid "Several helpful comments and discussions"
 msgstr "Keletas naudingų patarimų ir aptarimų"
 
-#: main.cpp:107
+#: main.cpp:117
 msgid "Plugins and patches"
 msgstr "Papildiniai ir pataisos"
 
-#: main.cpp:108
+#: main.cpp:118
 msgid "New website"
 msgstr "Nauja svetainė"
 
-#: main.cpp:109
+#: main.cpp:119
 msgid "HP filter plugin, spanish translation"
 msgstr "HP filtro papildinys, vertimas į ispanų kalbą"
 
-#: main.cpp:110
+#: main.cpp:120
 msgid "A cool icon"
 msgstr "Naujas simpatiškas ženkliukas"
 
-#: main.cpp:111
+#: main.cpp:121
 msgid "RKWard logo, many suggestions, help on wording"
 msgstr "RKWard logotipas, daugybė pasiūlymų, pagalba parenkant formuluotes"
 
-#: main.cpp:112
+#: main.cpp:122
 msgid "Several valuable comments, hints and patches"
 msgstr "Keletas vertingų patarimų, užuominų ir pataisų"
 
-#: main.cpp:113
+#: main.cpp:123
 msgid "Translation, Suggestions, plugins"
 msgstr "Vertimas, pasiūlymai, papildiniai"
 
-#: main.cpp:114
+#: main.cpp:124
 msgid "Many comments, useful suggestions, and bug reports"
 msgstr "Daugybė patarimų, naudingų pasiūlymų ir pranešimai apie riktus"
 
-#: main.cpp:115
+#: main.cpp:125
 msgid "German Translation, bug reports"
 msgstr "Vertimas į vokiečių kalbą, pranešimai apie riktus"
 
-#: main.cpp:116
+#: main.cpp:126
 msgid "Some patches"
 msgstr "Kelios pataisos"
 
-#: main.cpp:117
+#: main.cpp:127
 msgid "patches and helpful comments"
 msgstr "pataisos ir naudingi patarimai"
 
-#: main.cpp:119
+#: main.cpp:129
 msgid "Many more people on rkward-devel@lists.sourceforge.net"
 msgstr "Ir dar daug kitų žmonių paminėta rkward-devel@lists.sourceforge.net"
 
-#: main.cpp:119
+#: main.cpp:129
 msgid "Sorry, if we forgot to list you. Please contact us to get added"
 msgstr ""
 "Atleiskite, jei pamiršome jus įtraukti į sąrašą. jei norite būti įtraukti, "
@@ -929,7 +968,7 @@ msgid "Errors / Warnings:"
 msgstr "Klaidos / įspėjimai:"
 
 #: misc/rkprogresscontrol.cpp:247 plugin/rkstandardcomponentgui.cpp:301
-#: rkconsole.cpp:878 robjectviewer.cpp:170
+#: robjectviewer.cpp:170
 msgid "Cancel"
 msgstr "Atšaukti"
 
@@ -1192,7 +1231,7 @@ msgstr "Pasirinkite"
 msgid "Save to:"
 msgstr "Įrašyti į:"
 
-#: plugin/rkpluginsaveobject.cpp:40 rkward.cpp:247
+#: plugin/rkpluginsaveobject.cpp:40 rkward.cpp:252
 msgid "my.data"
 msgstr "manasis.data"
 
@@ -1288,111 +1327,47 @@ msgstr "Naudoti dialogą"
 msgid "Variable:"
 msgstr "Kintamasis:"
 
-#: rbackend/rcommandstack.cpp:350
+#: rbackend/rcommandstack.cpp:335
 msgid "Running"
 msgstr "Veikia"
 
-#: rbackend/rcommandstack.cpp:353
+#: rbackend/rcommandstack.cpp:338
 msgid "Cancelled"
 msgstr "Atšaukta"
 
-#: rbackend/rcommandstack.cpp:364
+#: rbackend/rcommandstack.cpp:349
 msgid "Command Stack"
 msgstr "Komandų dėklas"
 
-#: rbackend/rcommandstack.cpp:366
+#: rbackend/rcommandstack.cpp:351
 msgid "Command Chain"
 msgstr "Komandų grandinė"
 
-#: rbackend/rcommandstack.cpp:368
+#: rbackend/rcommandstack.cpp:353
 msgid "Closed"
 msgstr "Užverta"
 
-#: rbackend/rcommandstack.cpp:369
+#: rbackend/rcommandstack.cpp:354
 msgid "Waiting"
 msgstr "Laukiama"
 
-#: rbackend/rcommandstack.cpp:398
+#: rbackend/rcommandstack.cpp:381
 msgid "Command"
 msgstr "Komanda"
 
-#: rbackend/rcommandstack.cpp:400
+#: rbackend/rcommandstack.cpp:383
 msgid "Status"
 msgstr "Būsena"
 
-#: rbackend/rcommandstack.cpp:401
+#: rbackend/rcommandstack.cpp:384
 msgid "Description"
 msgstr "Aprašas"
 
-#: rbackend/rembedinternal.cpp:141
-msgid ""
-"The R engine has encountered a fatal error:\n"
-"%1"
-msgstr ""
-"R variklis patyrė lemtingą klaidą:\n"
-"%1"
-
-#: rbackend/rembedinternal.cpp:220
-msgid "The R engine has shut down with status: %1"
-msgstr "R variklis sustojo būsenoje %1"
-
-#: rbackend/rembedinternal.cpp:396
-msgid "Message from the R backend"
-msgstr "R variklio pranešimas"
-
-#: rbackend/rembedinternal.cpp:403
-msgid "Question from the R backend"
-msgstr "R variklio klausimas"
-
-#: rbackend/rinterface.cpp:89
+#: rbackend/rinterface.cpp:98
 msgid "R Startup"
 msgstr "R paleidimas"
 
-#: rbackend/rinterface.cpp:227
-msgid ""
-"<p>There was a problem starting the R backend. The following error(s) "
-"occurred:</p>\n"
-msgstr "<p>Nepavyko paleisti R variklio. Klaidos:</p>\n"
-
-#: rbackend/rinterface.cpp:229
-msgid ""
-"</p>\t- The 'rkward' R-library either could not be loaded at all, or not in "
-"the correct version. This may lead to all sorts of errors, from single "
-"missing features to complete failure to function. The most likely cause is "
-"that the last installation did not place all files in the correct place. "
-"However, in some cases, left-overs from a previous installation that was not "
-"cleanly removed may be the cause.</p>\t\t\t<p><b>You should quit RKWard, "
-"now, and fix your installation</b>. For help with that, see <a href=\"http://"
-"p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</p>\n"
-msgstr ""
-"</p>\t- „rkward“ R bibliotekos negalima įkelti arba jos versija yra "
-"netinkama. Dėl to gali kilti daugybė nesklandumų: gali trūkti paskirų "
-"savybių, bet gali neveikti ir visa funkcija. Greičiausiai paskutinio diegimo "
-"metu ne visos rinkmenos buvo ten, kur turėjo būti. O galbūt prieš diegiant "
-"nebuvo išvalytos ankstesnio diegimo rinkmenos.</p>\t\t\t<p><b>Todėl dabar "
-"turėtumėte užverti RKWard ir ištaisyti klaidas</b>. Pasinaudokite "
-"kompiliavimo patarimais, pateiktais <a href=\"http://p.sf.net/rkward/"
-"compiling\">http://p.sf.net/rkward/compiling</a> tinklalapyje.</p>\n"
-
-#: rbackend/rinterface.cpp:233
-#, fuzzy
-msgid ""
-"<p>\t-There was a problem setting up the communication with R. Most likely "
-"this is due to an incorrect version of the 'rkward' R-library or failure to "
-"find that at all. This indicates a broken installation.</p>\t\t\t<p><b>You "
-"should quit RKWard, now, and fix your installation</b>. For help with that, "
-"see <a href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/rkward/"
-"compiling</a>.</p></p>\n"
-msgstr ""
-"<p>RKWard apskritai negali rasti jo šaltinių rinkmenų, arba randa tiktų "
-"rinkmenų senas versijas. Greičiausiai paskutinio diegimo metu ne visos "
-"rinkmenos buvo ten, kur turėjo būti. Dėl to gali kilti daugybė nesklandumų: "
-"gali trūkti paskirų savybių, bet gali neveikti ir visa funkcija.</"
-"p><p><b>Todėl dabar turėtumėte užverti RKWard ir ištaisyti klaidas</b>. "
-"Pasinaudokite kompiliavimo patarimais, pateiktais <a href=\"http://p.sf.net/"
-"rkward/compiling\">http://p.sf.net/rkward/compiling</a> tinklalapyje.</p>"
-
-#: rbackend/rinterface.cpp:237
+#: rbackend/rinterface.cpp:289
 msgid ""
 "<p>\t-An unspecified error occurred that is not yet handled by RKWard. "
 "Likely RKWard will not function properly. Please check your setup.</p>\n"
@@ -1400,11 +1375,17 @@ msgstr ""
 "<p>\t-Įvyko netikėta klaida, kurios RKWard dar negali apdoroti. Tikėtina, "
 "kad nebeveiks tinkamai. Patikrinkite konfigūraciją.</p>\n"
 
-#: rbackend/rinterface.cpp:245
+#: rbackend/rinterface.cpp:291
+msgid ""
+"<p>There was a problem starting the R backend. The following error(s) "
+"occurred:</p>\n"
+msgstr "<p>Nepavyko paleisti R variklio. Klaidos:</p>\n"
+
+#: rbackend/rinterface.cpp:299
 msgid "Error starting R"
 msgstr "R paleidimo klaida"
 
-#: rbackend/rinterface.cpp:366
+#: rbackend/rinterface.cpp:506
 msgid ""
 "The R-backend has indicated that in order to carry out the current task it "
 "needs the package '%1', which is not currently installed. We will open the "
@@ -1415,11 +1396,11 @@ msgstr ""
 "Netrukus bus atverta paketų tvarkytuvė, kurioje galėsite rasti ir įdiegti "
 "reikiamą paketą."
 
-#: rbackend/rinterface.cpp:366
+#: rbackend/rinterface.cpp:506
 msgid "Require package '%1'"
 msgstr "Reikia paketo „%1“"
 
-#: rbackend/rinterface.cpp:403
+#: rbackend/rinterface.cpp:541
 msgid ""
 "A command in the R backend is trying to change the character encoding. While "
 "RKWard offers support for this, and will try to adjust to the new locale, "
@@ -1441,22 +1422,23 @@ msgstr ""
 "savaime nustatoma). Tokiu atveju spauskite „Atšaukti“, užverkite duomenų "
 "langus, įrašykite ir bandykite dar kartą."
 
-#: rbackend/rinterface.cpp:403
+#: rbackend/rinterface.cpp:541
 msgid "Locale change"
 msgstr "Lokalės keitimas"
 
-#: rbackend/rinterface.cpp:548
+#: rbackend/rinterface.cpp:717
 msgid "R backend requests information"
 msgstr "R varikliui reikia informacijos"
 
-#: rbackend/rinterface.cpp:566
+#: rbackend/rinterface.cpp:741
+#, fuzzy
 msgid ""
 "\n"
-"It will be shut down immediately. This means, you can not use any more "
-"functions that rely on the R backend. I.e. you can do hardly anything at "
-"all, not even save the workspace (but if you're lucky, R already did that). "
-"What you can do, however, is save any open command-files, the output, or "
-"copy data out of open data editors. Quit RKWard after that.\n"
+"The R backend will be shut down immediately. This means, you can not use any "
+"more functions that rely on it. I.e. you can do hardly anything at all, not "
+"even save the workspace (but if you're lucky, R already did that). What you "
+"can do, however, is save any open command-files, the output, or copy data "
+"out of open data editors. Quit RKWard after that.\n"
 "Since this should never happen, please write a mail to rkward-devel@lists."
 "sourceforge.net, and tell us, what you were trying to do, when this "
 "happened. Sorry!"
@@ -1470,54 +1452,156 @@ msgstr ""
 "Taip neturėtų būti, tad praneškite apie tai į rkward-devel@lists.sourceforge."
 "net pašto dėžutę nurodydami, ką dabar padarėte, kad taip nutiko. Atsiprašome!"
 
-#: rbackend/rinterface.cpp:567
+#: rbackend/rinterface.cpp:742
 msgid "R engine has died"
 msgstr "R variklis nulūžo"
 
-#: rkconsole.cpp:112
+#: rbackend/rkfrontendtransmitter.cpp:104
+msgid ""
+"Error during handshake with backend process. Expected token '%1', received "
+"token '%2'"
+msgstr ""
+
+#: rbackend/rkfrontendtransmitter.cpp:108
+msgid ""
+"Version mismatch during handshake with backend process. Frontend is version "
+"'%1' while backend is '%2'.\n"
+"Please fix your installation."
+msgstr ""
+
+#: rbackend/rkrbackend.cpp:403
+msgid "The R engine has shut down with status: %1"
+msgstr "R variklis sustojo būsenoje %1"
+
+#: rbackend/rkrbackend.cpp:422
+msgid ""
+"The R engine has encountered a fatal error:\n"
+"%1"
+msgstr ""
+"R variklis patyrė lemtingą klaidą:\n"
+"%1"
+
+#: rbackend/rkrbackend.cpp:589
+msgid "Message from the R backend"
+msgstr "R variklio pranešimas"
+
+#: rbackend/rkrbackend.cpp:597
+msgid "Question from the R backend"
+msgstr "R variklio klausimas"
+
+#: rbackend/rkrbackend.cpp:1246
+#, fuzzy
+msgid ""
+"</p>\t- The 'rkward' R-library either could not be loaded at all, or not in "
+"the correct version. This may lead to all sorts of errors, from single "
+"missing features to complete failure to function. The most likely cause is "
+"that the last installation did not place all files in the correct place. "
+"However, in some cases, left-overs from a previous installation that was not "
+"cleanly removed may be the cause.</p>\t\t<p><b>You should quit RKWard, now, "
+"and fix your installation</b>. For help with that, see <a href=\"http://p.sf."
+"net/rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</p>\n"
+msgstr ""
+"</p>\t- „rkward“ R bibliotekos negalima įkelti arba jos versija yra "
+"netinkama. Dėl to gali kilti daugybė nesklandumų: gali trūkti paskirų "
+"savybių, bet gali neveikti ir visa funkcija. Greičiausiai paskutinio diegimo "
+"metu ne visos rinkmenos buvo ten, kur turėjo būti. O galbūt prieš diegiant "
+"nebuvo išvalytos ankstesnio diegimo rinkmenos.</p>\t\t\t<p><b>Todėl dabar "
+"turėtumėte užverti RKWard ir ištaisyti klaidas</b>. Pasinaudokite "
+"kompiliavimo patarimais, pateiktais <a href=\"http://p.sf.net/rkward/"
+"compiling\">http://p.sf.net/rkward/compiling</a> tinklalapyje.</p>\n"
+
+#: rbackend/rkrbackend.cpp:1250
+#, fuzzy
+msgid ""
+"<p>\t-There was a problem setting up the communication with R. Most likely "
+"this indicates a broken installation.</p>\t\t<p><b>You should quit RKWard, "
+"now, and fix your installation</b>. For help with that, see <a href=\"http://"
+"p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</p></p>\n"
+msgstr ""
+"<p>RKWard apskritai negali rasti jo šaltinių rinkmenų, arba randa tiktų "
+"rinkmenų senas versijas. Greičiausiai paskutinio diegimo metu ne visos "
+"rinkmenos buvo ten, kur turėjo būti. Dėl to gali kilti daugybė nesklandumų: "
+"gali trūkti paskirų savybių, bet gali neveikti ir visa funkcija.</"
+"p><p><b>Todėl dabar turėtumėte užverti RKWard ir ištaisyti klaidas</b>. "
+"Pasinaudokite kompiliavimo patarimais, pateiktais <a href=\"http://p.sf.net/"
+"rkward/compiling\">http://p.sf.net/rkward/compiling</a> tinklalapyje.</p>"
+
+#: rkconsole.cpp:115
 msgid "R Console"
 msgstr "R konsolė"
 
-#: rkconsole.cpp:630
+#: rkconsole.cpp:655
 msgid "Syntax error\n"
 msgstr "Sintaksės klaida\n"
 
-#: rkconsole.cpp:833
+#: rkconsole.cpp:818 rkconsole.cpp:838
+msgid ""
+"*.Rhistory|R history files (*.Rhistory)\n"
+"*|All files (*)"
+msgstr ""
+
+#: rkconsole.cpp:818
+#, fuzzy
+msgid "Select command history file to load"
+msgstr "Įkelti / įrašyti komandų istoriją"
+
+#: rkconsole.cpp:838
+#, fuzzy
+msgid "Select filename to save command history"
+msgstr "Įkelti / įrašyti komandų istoriją"
+
+#: rkconsole.cpp:921
 msgid "Interrupt running command"
 msgstr "Pertraukti vykdomą komandą"
 
-#: rkconsole.cpp:839
+#: rkconsole.cpp:927
 msgid "Copy selection cleaned"
 msgstr "Kopijuoti tvarkingai"
 
-#: rkconsole.cpp:842
+#: rkconsole.cpp:930
 msgid "Copy selection literally"
 msgstr "Kopijuoti pažodžiui"
 
-#: rkconsole.cpp:849
+#: rkconsole.cpp:937
 msgid "Print Console"
 msgstr "Spausdinti konsolę"
 
-#: rkconsole.cpp:878
+#: rkconsole.cpp:944
+#, fuzzy
+msgid "Import command history..."
+msgstr "Įkelti / įrašyti komandų istoriją"
+
+#: rkconsole.cpp:946
+#, fuzzy
+msgid "Export command history..."
+msgstr "Įkelti / įrašyti komandų istoriją"
+
+#: rkconsole.cpp:965
+#, fuzzy
 msgid ""
-"You have configured RKWard to run script commands through the console. "
-"However, the console is currently busy (either a command is running, or you "
-"have started to enter text in the console). Do you want to bypass the "
-"console this one time, or do you want to try again later?"
+"You have configured RKWard to pipe script editor commands through the R "
+"Console. However, another command is currently active in the console. Do you "
+"want to append it to the command in the console, or do you want to reset the "
+"console, first? Press cancel if you do not wish to run the new command, now."
 msgstr ""
 "RKWard programai nurodėte scenarijų vykdyti per konsolę. Tačiau konsolė šiuo "
 "metu užimta (arba vykdoma komanda, arba joje pradėjote vesti tekstą). Ar šį "
 "kartą apeiti konsolę ir įvykdyti komandą, ar bandyti vėliau?"
 
-#: rkconsole.cpp:878
-msgid "Console is busy"
+#: rkconsole.cpp:965
+#, fuzzy
+msgid "R Console is busy"
 msgstr "Konsolė užimta"
 
-#: rkconsole.cpp:878
-msgid "Bypass console"
-msgstr "Apeiti konsolę"
+#: rkconsole.cpp:965
+msgid "Append"
+msgstr ""
 
-#: rkward.cpp:191
+#: rkconsole.cpp:965
+msgid "Reset, then submit"
+msgstr ""
+
+#: rkward.cpp:195
 msgid ""
 "<p>RKWard either could not find its resource files at all, or only an old "
 "version of those files. The most likely cause is that the last installation "
@@ -1535,44 +1619,27 @@ msgstr ""
 "Pasinaudokite kompiliavimo patarimais, pateiktais <a href=\"http://p.sf.net/"
 "rkward/compiling\">http://p.sf.net/rkward/compiling</a> tinklalapyje.</p>"
 
-#: rkward.cpp:191
+#: rkward.cpp:195
 msgid "Broken installation"
 msgstr "Nepavykęs diegimas"
 
-#: rkward.cpp:195
-#, fuzzy
-msgid ""
-"<p>Please note that RKWard is not well tested on Windows, yet.</p><p>There "
-"are all sorts of known issues, and issues yet to be reported. If you'd like "
-"to help: <a href=\"http://p.sf.net/rkward/contact\">http://p.sf.net/rkward/"
-"contact</a>.</p>"
-msgstr ""
-"<p>Atminkite, kad RKWard dar nėra gerai išbandyta Windows terpėje. </"
-"p><p>Jau yra žinoma visokiausių riktų, tikriausiai jų yra ir daugiau. Jei "
-"norėtumėte padėti, apsilankykite <a href=\"http://p.sf.net/rkward/contact"
-"\">http://p.sf.net/rkward/contact</a>.</p>"
-
-#: rkward.cpp:195
-msgid "RKWard on Windows"
-msgstr "RKWard programa Windows terpėje"
-
-#: rkward.cpp:215 settings/rksettingsmoduleobjectbrowser.cpp:128
+#: rkward.cpp:217 settings/rksettingsmoduleobjectbrowser.cpp:128
 msgid "Workspace"
 msgstr "Darbo erdvė"
 
-#: rkward.cpp:219
+#: rkward.cpp:221
 msgid "Files"
 msgstr "Rinkmenos"
 
-#: rkward.cpp:223
+#: rkward.cpp:225
 msgid "Pending Jobs"
 msgstr "Laukiančios užduotys"
 
-#: rkward.cpp:267
+#: rkward.cpp:272
 msgid "Setting up plugins..."
 msgstr "Nustatomi papildiniai..."
 
-#: rkward.cpp:279
+#: rkward.cpp:284
 msgid ""
 "Plugins are needed: you may manage these through \"Settings->Configure RKWard"
 "\".\n"
@@ -1580,156 +1647,198 @@ msgstr ""
 "Reikia papildinių: papildinius galite tvarkyti nuėję per „Nuostatos-"
 ">Konfigūruoti RKWard“.\n"
 
-#: rkward.cpp:279
+#: rkward.cpp:284
 msgid "No (valid) plugins found"
 msgstr "(Tinkamų) papildinių nerasta"
 
-#: rkward.cpp:315
+#: rkward.cpp:318
 msgid "Dataset"
 msgstr "Duomenų lentelė"
 
-#: rkward.cpp:317
+#: rkward.cpp:320
 msgid "Creates new empty dataset and opens it for editing"
 msgstr "Sukurti naują tuščią duomenų lentelę ir atverti jos redagavimo langą"
 
-#: rkward.cpp:320
+#: rkward.cpp:323
 msgid "Script File"
 msgstr "Scenarijaus rinkmena"
 
-#: rkward.cpp:324
-msgid "Open R Script File"
+#: rkward.cpp:327
+#, fuzzy
+msgid "Open R Script File..."
 msgstr "Atverti R scenarijaus rinkmeną..."
 
-#: rkward.cpp:333
+#: rkward.cpp:330
+#, fuzzy
+msgid "Open Recent R Script File"
+msgstr "Atverti R scenarijaus rinkmeną..."
+
+#: rkward.cpp:337
 msgid "Import Data"
 msgstr "Importuoti duomenis"
 
-#: rkward.cpp:334
+#: rkward.cpp:338
 msgid "Import data from a variety of file formats"
 msgstr "Importuoti duomenis iš įvairių rinkmenų formatų"
 
-#: rkward.cpp:338
-msgid "Open Workspace"
+#: rkward.cpp:342
+#, fuzzy
+msgid "Open Workspace..."
 msgstr "Atverti darbo erdvę"
 
-#: rkward.cpp:340
+#: rkward.cpp:344
 msgid "Opens an existing document"
 msgstr "Atverti jau sukurtą dokumentą"
 
-#: rkward.cpp:343
+#: rkward.cpp:347
+#, fuzzy
+msgid "Open Recent Workspace"
+msgstr "Atverti darbo erdvę"
+
+#: rkward.cpp:348
 msgid "Opens a recently used file"
 msgstr "Atverti paskiausiai naudotą rinkmeną"
 
-#: rkward.cpp:346
+#: rkward.cpp:351
 msgid "Save Workspace"
 msgstr "Įrašyti darbo erdvę"
 
-#: rkward.cpp:348
+#: rkward.cpp:353
 msgid "Saves the actual document"
 msgstr "Įrašyti dabartinį dokumentą"
 
-#: rkward.cpp:351
+#: rkward.cpp:356
 msgid "Save Workspace As"
 msgstr "Darbo erdvę įrašyti kaip..."
 
-#: rkward.cpp:352
+#: rkward.cpp:357
 msgid "Saves the actual document as..."
 msgstr "Įrašyti dabartinį dokumentą kaip..."
 
-#: rkward.cpp:355
+#: rkward.cpp:360
 msgid "Quits the application"
 msgstr "Baigti programos darbą"
 
-#: rkward.cpp:359 windows/robjectbrowser.cpp:136
+#: rkward.cpp:364 windows/robjectbrowser.cpp:136
 msgid "Load / Unload Packages"
 msgstr "Įkelti / iškelti paketus"
 
-#: rkward.cpp:370
+#: rkward.cpp:375
 msgid "Close All Data"
 msgstr "Užverti visus duomenų redaktorius"
 
-#: rkward.cpp:371
+#: rkward.cpp:376
 msgid "Closes all open data editors"
 msgstr "Užverti visus atvertus duomenų redaktorius"
 
-#: rkward.cpp:376
+#: rkward.cpp:381
 msgid "Close All"
 msgstr "Užverti visus langus"
 
-#: rkward.cpp:380 windows/rktoolwindowbar.cpp:274
+#: rkward.cpp:385 windows/rktoolwindowbar.cpp:274
 #: windows/rkworkplaceview.cpp:223
 msgid "Detach"
 msgstr "Atskirti langą"
 
-#: rkward.cpp:383
+#: rkward.cpp:388
 msgid "Configure RKWard"
 msgstr "Konfigūruoti RKWard"
 
-#: rkward.cpp:386
+#: rkward.cpp:391
 msgid "[No actions available for current view]"
 msgstr "[Šiam rodiniui nėra veiksmų]"
 
-#: rkward.cpp:417
+#: rkward.cpp:401
+#, fuzzy
+msgid "Open..."
+msgstr "Atverti rinkmeną..."
+
+#: rkward.cpp:411
+#, fuzzy
+msgid "Import"
+msgstr "&Importuoti"
+
+#: rkward.cpp:414
+msgid "Create..."
+msgstr ""
+
+#: rkward.cpp:421
+msgid "Save..."
+msgstr ""
+
+#: rkward.cpp:425
+#, fuzzy
+msgid "Export"
+msgstr "&Importuoti"
+
+#: rkward.cpp:506
 msgid "Ready."
 msgstr "Pasiruošęs."
 
-#: rkward.cpp:489
+#: rkward.cpp:510
+#, fuzzy
+msgid "Current working directory"
+msgstr "eiti į dabartinio scenarijaus katalogą"
+
+#: rkward.cpp:579
 msgid "Exiting..."
 msgstr "Išeinama..."
 
-#: rkward.cpp:497
+#: rkward.cpp:587
 msgid "Quitting RKWard: Do you want to save the workspace?"
 msgstr "Baigiate darbą su RKWard. Ar įrašyti šią darbo erdvę?"
 
-#: rkward.cpp:497 rkward.cpp:559
+#: rkward.cpp:587 rkward.cpp:649
 msgid "Save Workspace?"
 msgstr "Įrašyti darbo erdvę?"
 
-#: rkward.cpp:497
+#: rkward.cpp:587
 msgid "Don't quit"
 msgstr "Neišeiti"
 
-#: rkward.cpp:524
+#: rkward.cpp:614
 msgid "New dataset"
 msgstr "Nauja duomenų lentelė"
 
-#: rkward.cpp:524
+#: rkward.cpp:614
 msgid "Enter name for the new dataset"
 msgstr "Įveskite naujos duomenų lentelės pavadinimą"
 
-#: rkward.cpp:534
+#: rkward.cpp:624
 msgid "Opening workspace..."
 msgstr "Atveriama darbo erdvė..."
 
-#: rkward.cpp:540 rkward.cpp:542
+#: rkward.cpp:630 rkward.cpp:632
 msgid "*|All files"
 msgstr "*|Visos rinkmenos"
 
-#: rkward.cpp:540 rkward.cpp:542
+#: rkward.cpp:630 rkward.cpp:632
 msgid "Open File..."
 msgstr "Atverti rinkmeną..."
 
-#: rkward.cpp:559
+#: rkward.cpp:649
 msgid "Do you want to save the current workspace?"
 msgstr "Ar įrašyti veikiamąją darbo erdvę?"
 
-#: rkward.cpp:650
-msgid "R engine busy"
+#: rkward.cpp:741
+#, fuzzy
+msgid "The <b>R</b> engine is busy."
 msgstr "R variklis užimtas"
 
-#: rkward.cpp:653
-msgid "R engine idle"
+#: rkward.cpp:744
+#, fuzzy
+msgid "The <b>R</b> engine is idle."
 msgstr "R variklis laisvas"
 
-#: rkward.cpp:656
-msgid "R engine starting"
-msgstr "R variklis pradeda dirbti"
+#: rkward.cpp:747
+msgid "The <b>R</b> engine is being initialized."
+msgstr ""
 
-#: rkward.cpp:697 rkward.cpp:699
+#: rkward.cpp:787 rkward.cpp:789
 msgid "Open script file(s)"
 msgstr "Atverti scenarijaus rinkmeną(-as)"
 
-#: rkward.cpp:717
+#: rkward.cpp:807
 msgid "[Unnamed Workspace]"
 msgstr "[Nepavadinta darbo erdvė]"
 
@@ -1954,19 +2063,24 @@ msgstr "Katalogas, kuriame turėtų būti laikomos žurnalų rinkmenos (*)"
 msgid "Startup Action (*)"
 msgstr "Veiksmas, atliekamas paleidus (*)"
 
-#: settings/rksettingsmodulegeneral.cpp:69
+#: settings/rksettingsmodulegeneral.cpp:68
+msgid ""
+"Load .RData-file from current directory, if available (R option '--restore')"
+msgstr ""
+
+#: settings/rksettingsmodulegeneral.cpp:70
 msgid "Ask for a file to open"
 msgstr "Pasiūlyti atverti rinkmeną"
 
-#: settings/rksettingsmodulegeneral.cpp:70
+#: settings/rksettingsmodulegeneral.cpp:71
 msgid "Show selection dialog (default)"
 msgstr "Rodyti pasirinkimų dialogą (numatyta)"
 
-#: settings/rksettingsmodulegeneral.cpp:75
+#: settings/rksettingsmodulegeneral.cpp:76
 msgid "Show RKWard Help on Startup"
 msgstr "Paleidžiant rodyti RKWard pagalbą"
 
-#: settings/rksettingsmodulegeneral.cpp:82
+#: settings/rksettingsmodulegeneral.cpp:83
 msgid ""
 "The workplace layout (i.e. which script-, data-, help-windows are open) may "
 "be saved (and loaded) per R workspace, or independent of the R workspace. "
@@ -1976,11 +2090,11 @@ msgstr ""
 "būti įrašyti (ir įkelti) R darbo erdvėje arba nepriklausomai nuo R darbo "
 "erdvės.Kurį būdą renkatės?"
 
-#: settings/rksettingsmodulegeneral.cpp:91
+#: settings/rksettingsmodulegeneral.cpp:92
 msgid "Save/restore with R workspace, when saving/loading R workspace"
 msgstr "Įrašyti/atstatyti su R darbo erdve, kai įrašoma/įkeliama R darbo erdvė"
 
-#: settings/rksettingsmodulegeneral.cpp:94
+#: settings/rksettingsmodulegeneral.cpp:95
 msgid ""
 "Save/restore independent of R workspace (save at end of RKWard session, "
 "restore at next start)"
@@ -1988,11 +2102,11 @@ msgstr ""
 "Įrašyti/atstatyti nepriklausomai nuo R darbo erdvės (įrašyti RKWard sesijos "
 "pabaigoje, atstatyti sekančio paleidimo metu)"
 
-#: settings/rksettingsmodulegeneral.cpp:97
+#: settings/rksettingsmodulegeneral.cpp:98
 msgid "Do not save/restore workplace layout"
 msgstr "Neįrašyti/neatstatyti darbo erdvės"
 
-#: settings/rksettingsmodulegeneral.cpp:106
+#: settings/rksettingsmodulegeneral.cpp:107
 msgid ""
 "Warn when editing objects with more than this number of fields (0 for no "
 "limit):"
@@ -2000,23 +2114,23 @@ msgstr ""
 "Perspėti, kai redaguojamas objektas turi daugiau laukelių, nei nurodyta (0 "
 "reiškia, kad nebus įspėjama)"
 
-#: settings/rksettingsmodulegeneral.cpp:109
+#: settings/rksettingsmodulegeneral.cpp:110
 msgid "No limit"
 msgstr "Jokių ribų"
 
-#: settings/rksettingsmodulegeneral.cpp:116
+#: settings/rksettingsmodulegeneral.cpp:117
 msgid "MDI window focus behavior"
 msgstr "Polangių aktyvavimas pele"
 
-#: settings/rksettingsmodulegeneral.cpp:119
+#: settings/rksettingsmodulegeneral.cpp:120
 msgid "Click to focus"
 msgstr "Židinys aktyvuojamas spragtelėjimu"
 
-#: settings/rksettingsmodulegeneral.cpp:120
+#: settings/rksettingsmodulegeneral.cpp:121
 msgid "Focus follows mouse"
 msgstr "Židinys seka pelę"
 
-#: settings/rksettingsmodulegeneral.cpp:145
+#: settings/rksettingsmodulegeneral.cpp:146
 msgid "General"
 msgstr "Bendra"
 
@@ -2189,11 +2303,15 @@ msgstr "Numatytasis kodo polangio aukštis (taškais)"
 msgid "Select .pluginmap file(s)"
 msgstr "Pasirinkite .pluginmap rinkmeną(-as)"
 
-#: settings/rksettingsmoduleplugins.cpp:135
+#: settings/rksettingsmoduleplugins.cpp:115
+msgid "Install or uninstall add-on plugin packs"
+msgstr ""
+
+#: settings/rksettingsmoduleplugins.cpp:134
 msgid "Select .pluginmap-file"
 msgstr "Pasirinkite .pluginmap rinkmeną"
 
-#: settings/rksettingsmoduleplugins.cpp:140
+#: settings/rksettingsmoduleplugins.cpp:139
 msgid "Plugins"
 msgstr "Papildiniai"
 
@@ -2432,72 +2550,76 @@ msgstr "Tęsti vykdymą"
 msgid "Script Editor"
 msgstr "Scenarijų redaktorius"
 
-#: windows/rkcommandeditorwindow.cpp:183
+#: windows/rkcommandeditorwindow.cpp:197
 msgid "Run block"
 msgstr "Vykdyti bloką"
 
-#: windows/rkcommandeditorwindow.cpp:187
+#: windows/rkcommandeditorwindow.cpp:201
 msgid "Mark selection as block"
 msgstr "Atranką pažymėti kaip bloką"
 
-#: windows/rkcommandeditorwindow.cpp:190
+#: windows/rkcommandeditorwindow.cpp:204
 msgid "Unmark block"
 msgstr "Panaikinti bloko žymėjimą"
 
-#: windows/rkcommandeditorwindow.cpp:195
+#: windows/rkcommandeditorwindow.cpp:209
 msgid "CD to script directory"
 msgstr "Eiti į scenarijaus katalogą"
 
-#: windows/rkcommandeditorwindow.cpp:197
+#: windows/rkcommandeditorwindow.cpp:211
 msgid "Change the working directory to the directory of this script"
 msgstr "Iš veikiamojo katalogo pereiti į scenarijaus katalogą"
 
-#: windows/rkcommandeditorwindow.cpp:290 windows/rkcommandeditorwindow.cpp:475
+#: windows/rkcommandeditorwindow.cpp:216
+msgid "Save Script..."
+msgstr ""
+
+#: windows/rkcommandeditorwindow.cpp:218
+msgid "Save Script As..."
+msgstr ""
+
+#: windows/rkcommandeditorwindow.cpp:309 windows/rkcommandeditorwindow.cpp:496
 msgid " [modified]"
 msgstr " [pakeista]"
 
-#: windows/rkcommandeditorwindow.cpp:303
+#: windows/rkcommandeditorwindow.cpp:316
 msgid "The document \"%1\" has been modified. Close it anyway?"
 msgstr "Dokumentas „%1“ buvo pakeistas. Vis tiek užverti?"
 
-#: windows/rkcommandeditorwindow.cpp:303
+#: windows/rkcommandeditorwindow.cpp:316
 msgid "File not saved"
 msgstr "Rinkmena neįrašyta"
 
-#: windows/rkcommandeditorwindow.cpp:444
+#: windows/rkcommandeditorwindow.cpp:465
 msgid ""
 "An error occurred while trying to create an autosave of the script file '%1':"
 msgstr ""
 
-#: windows/rkcommandeditorwindow.cpp:474
+#: windows/rkcommandeditorwindow.cpp:495
 msgid "Unnamed"
 msgstr "Nepavadintas"
 
-#: windows/rkcommandeditorwindow.cpp:582
-msgid "cd to current script directory"
-msgstr "eiti į dabartinio scenarijaus katalogą"
-
-#: windows/rkcommandeditorwindow.cpp:701
+#: windows/rkcommandeditorwindow.cpp:722
 msgid "%1 (Active)"
 msgstr "%1 (aktyvus)"
 
-#: windows/rkcommandeditorwindow.cpp:728
+#: windows/rkcommandeditorwindow.cpp:749
 msgid "%1 (Unused)"
 msgstr "%1 (nenaudojamas)"
 
-#: windows/rkcommandlog.cpp:183
+#: windows/rkcommandlog.cpp:185
 msgid "Incomplete statement.\n"
 msgstr "Neužbaigtas sakinys.\n"
 
-#: windows/rkcommandlog.cpp:185
+#: windows/rkcommandlog.cpp:187
 msgid "Syntax error.\n"
 msgstr "Sintaksės klaida.\n"
 
-#: windows/rkcommandlog.cpp:187
+#: windows/rkcommandlog.cpp:189
 msgid "An unspecified error occurred while running the command.\n"
 msgstr "Vykdant komandą įvyko netikėta klaida.\n"
 
-#: windows/rkcommandlog.cpp:285
+#: windows/rkcommandlog.cpp:288
 msgid "Configure"
 msgstr "Konfigūruoti"
 
@@ -2555,7 +2677,7 @@ msgstr "Ieškoti žinyne"
 msgid "Find HTML help for %1"
 msgstr "Ieškoti %1 pagalbos (HTML)"
 
-#: windows/rkhelpsearchwindow.cpp:232
+#: windows/rkhelpsearchwindow.cpp:231
 msgid ""
 "No help found on '%1'. Maybe the corresponding package is not installed/"
 "loaded, or maybe you mistyped the command. Try using Help->Search R Help for "
@@ -2565,52 +2687,52 @@ msgstr ""
 "galbūt suklydote įvesdami komandą. Daugiau parinkčių rasite pagalboje, kurią "
 "atversite per meniu Pagalba -> Ieškoti R pagalbos."
 
-#: windows/rkhelpsearchwindow.cpp:232
+#: windows/rkhelpsearchwindow.cpp:231
 msgid "No help found"
 msgstr "Nerasta jokio žinyno"
 
-#: windows/rkhelpsearchwindow.cpp:312
+#: windows/rkhelpsearchwindow.cpp:307
 msgid "Topic"
 msgstr "Tema"
 
-#: windows/rkhelpsearchwindow.cpp:314
+#: windows/rkhelpsearchwindow.cpp:309
 msgid "Package"
 msgstr "Paketas"
 
-#: windows/rkhtmlwindow.cpp:140
+#: windows/rkhtmlwindow.cpp:134
 msgid "&Flush Output"
 msgstr "&Išvalyti rezultatus"
 
-#: windows/rkhtmlwindow.cpp:144
+#: windows/rkhtmlwindow.cpp:138
 msgid "&Refresh Output"
 msgstr "&Atnaujinti rezultatus"
 
-#: windows/rkhtmlwindow.cpp:326
+#: windows/rkhtmlwindow.cpp:320
 msgid "Output %1"
 msgstr "%1 rezultatai"
 
-#: windows/rkhtmlwindow.cpp:367
+#: windows/rkhtmlwindow.cpp:361
 msgid "Print output"
 msgstr "Spausdinti rezultatus"
 
-#: windows/rkhtmlwindow.cpp:369
+#: windows/rkhtmlwindow.cpp:363
 msgid "Export page as HTML"
 msgstr "Eksportuoti kaip HTML"
 
-#: windows/rkhtmlwindow.cpp:373
+#: windows/rkhtmlwindow.cpp:367
 #, fuzzy
 msgid "Output Window"
 msgstr "Rezultatų lango parinktys"
 
-#: windows/rkhtmlwindow.cpp:381
+#: windows/rkhtmlwindow.cpp:375
 msgid "Print page"
 msgstr "Spausdinti puslapį"
 
-#: windows/rkhtmlwindow.cpp:383
+#: windows/rkhtmlwindow.cpp:377
 msgid "Save Output as HTML"
 msgstr "Rodinį įrašytu HTML formatu"
 
-#: windows/rkhtmlwindow.cpp:402
+#: windows/rkhtmlwindow.cpp:396
 msgid ""
 "<HTML><BODY><H1>RKWard output file could not be found</H1>\n"
 "</BODY></HTML>"
@@ -2618,25 +2740,25 @@ msgstr ""
 "<HTML><BODY><H1>Nepavyko rasti RKWard rezultatų rinkmenos</H1>\n"
 "</BODY></HTML>"
 
-#: windows/rkhtmlwindow.cpp:404
+#: windows/rkhtmlwindow.cpp:398
 msgid "Page does not exist or is broken"
 msgstr "Puslapio nėra arba jis sugadintas"
 
-#: windows/rkhtmlwindow.cpp:412
+#: windows/rkhtmlwindow.cpp:406
 msgid ""
 "Do you really want to flush the output? It will not be possible to restore "
 "it."
 msgstr "Tikrai išvalyti rezultatus? Jų nebebus galima atkurti."
 
-#: windows/rkhtmlwindow.cpp:412
+#: windows/rkhtmlwindow.cpp:406
 msgid "Flush output?"
 msgstr "Išvalyti rezultatus?"
 
-#: windows/rkhtmlwindow.cpp:481
+#: windows/rkhtmlwindow.cpp:475
 msgid "No Title"
 msgstr "Be antraštės"
 
-#: windows/rkhtmlwindow.cpp:494
+#: windows/rkhtmlwindow.cpp:488
 msgid ""
 "<h1>Help page missing</h1>\n"
 "<p>The help page for this component has not yet been written (or is broken). "
@@ -2646,43 +2768,43 @@ msgstr ""
 "<p>The help page for this component has not yet been written (or is broken). "
 "Please consider contributing it.</p>\n"
 
-#: windows/rkhtmlwindow.cpp:499
+#: windows/rkhtmlwindow.cpp:493
 msgid "Use %1 now"
 msgstr "Tuoj pat vykdyti „%1“"
 
-#: windows/rkhtmlwindow.cpp:516
+#: windows/rkhtmlwindow.cpp:510
 msgid "Summary"
 msgstr "Santrauka"
 
-#: windows/rkhtmlwindow.cpp:522
+#: windows/rkhtmlwindow.cpp:516
 msgid "Usage"
 msgstr "Naudojimas"
 
-#: windows/rkhtmlwindow.cpp:539
+#: windows/rkhtmlwindow.cpp:533
 msgid "GUI settings"
 msgstr "Grafinės sąsajos nuostatos"
 
-#: windows/rkhtmlwindow.cpp:547
+#: windows/rkhtmlwindow.cpp:541
 msgid "Unnamed GUI element"
 msgstr "Nepavadintas grafinės sąsajos objektas"
 
-#: windows/rkhtmlwindow.cpp:567
+#: windows/rkhtmlwindow.cpp:561
 msgid "Related functions and pages"
 msgstr "Susijusios funkcijos ir puslapiai"
 
-#: windows/rkhtmlwindow.cpp:574
+#: windows/rkhtmlwindow.cpp:568
 msgid "Technical details"
 msgstr "Techninės detalės"
 
-#: windows/rkhtmlwindow.cpp:580
+#: windows/rkhtmlwindow.cpp:574
 msgid "<h1>On this page:</h1>"
 msgstr "<h1>Šiame puslapyje:</h1>"
 
-#: windows/rkhtmlwindow.cpp:647
+#: windows/rkhtmlwindow.cpp:641
 msgid "R Reference on '%1'"
 msgstr "R apie „%1“"
 
-#: windows/rkhtmlwindow.cpp:662
+#: windows/rkhtmlwindow.cpp:656
 msgid "BROKEN REFERENCE"
 msgstr "NETIKUSI NUORODA"
 
@@ -3085,7 +3207,7 @@ msgstr "Negalima atverti „%1“"
 msgid "Could not open command file"
 msgstr "Nepavyksta atverti komandų rinkmenos"
 
-#: windows/rkworkplace.cpp:348
+#: windows/rkworkplace.cpp:351
 msgid ""
 "You are about to edit object \"%1\", which is very large (%2 fields). RKWard "
 "is not optimized to handle very large objects in the built in data editor. "
@@ -3109,23 +3231,23 @@ msgstr ""
 "per Nuostatos -> Konfigūruoti RKWard -> Bendra.\n"
 "Tikrai redaguoti objektą?"
 
-#: windows/rkworkplace.cpp:348
+#: windows/rkworkplace.cpp:351
 msgid "About to edit very large object"
 msgstr "Apie labai didelių objektų redagavimą"
 
-#: windows/rkworkplace.cpp:512
+#: windows/rkworkplace.cpp:533
 msgid "Save Workplace layout"
 msgstr "Įrašyti darbo erdvę"
 
-#: windows/rkworkplace.cpp:519
+#: windows/rkworkplace.cpp:540
 msgid "Restore Workplace layout"
 msgstr "Atkurti darbo erdvę"
 
-#: windows/rkworkplace.cpp:588
+#: windows/rkworkplace.cpp:646
 msgid "Previous Window"
 msgstr "Ankstesnis langas"
 
-#: windows/rkworkplace.cpp:593
+#: windows/rkworkplace.cpp:651
 msgid "Next Window"
 msgstr "Tolesnis langas"
 
@@ -3220,9 +3342,9 @@ msgstr "Rodyti slepiamus objektus"
 
 #. i18n: file: dataeditor/rkeditordataframepart.rc:4
 #. i18n: ectx: Menu (edit)
-#. i18n: file: rkconsolepart.rc:9
+#. i18n: file: rkconsolepart.rc:12
 #. i18n: ectx: Menu (edit)
-#. i18n: file: rkwardui.rc:35
+#. i18n: file: rkwardui.rc:36
 #. i18n: ectx: Menu (edit)
 #. i18n: file: windows/detachedwindowcontainer.rc:11
 #. i18n: ectx: Menu (edit)
@@ -3234,8 +3356,8 @@ msgstr "Rodyti slepiamus objektus"
 #. i18n: ectx: Menu (edit)
 #. i18n: file: windows/rkoutputwindow.rc:7
 #. i18n: ectx: Menu (edit)
-#: rc.cpp:3 rc.cpp:9 rc.cpp:30 rc.cpp:57 rc.cpp:90 rc.cpp:105 rc.cpp:114
-#: rc.cpp:120
+#: rc.cpp:3 rc.cpp:9 rc.cpp:33 rc.cpp:60 rc.cpp:93 rc.cpp:108 rc.cpp:117
+#: rc.cpp:123
 msgid "&Edit"
 msgstr "&Keisti"
 
@@ -3249,13 +3371,13 @@ msgstr "&Keisti"
 #. i18n: ectx: Menu (file)
 #. i18n: file: windows/rkoutputwindow.rc:4
 #. i18n: ectx: Menu (file)
-#: rc.cpp:6 rc.cpp:18 rc.cpp:51 rc.cpp:111 rc.cpp:117
+#: rc.cpp:6 rc.cpp:18 rc.cpp:54 rc.cpp:114 rc.cpp:120
 msgid "&File"
 msgstr "&Rinkmena"
 
-#. i18n: file: rkconsolepart.rc:27
+#. i18n: file: rkconsolepart.rc:30
 #. i18n: ectx: Menu (view)
-#. i18n: file: rkwardui.rc:49
+#. i18n: file: rkwardui.rc:50
 #. i18n: ectx: Menu (view)
 #. i18n: file: windows/detachedwindowcontainer.rc:24
 #. i18n: ectx: Menu (view)
@@ -3263,13 +3385,13 @@ msgstr "&Rinkmena"
 #. i18n: ectx: Menu (view)
 #. i18n: file: windows/rkoutputwindow.rc:12
 #. i18n: ectx: Menu (view)
-#: rc.cpp:12 rc.cpp:33 rc.cpp:60 rc.cpp:87 rc.cpp:123
+#: rc.cpp:12 rc.cpp:36 rc.cpp:63 rc.cpp:90 rc.cpp:126
 msgid "&View"
 msgstr "&Rodinys"
 
-#. i18n: file: rkconsolepart.rc:32
+#. i18n: file: rkconsolepart.rc:35
 #. i18n: ectx: Menu (run)
-#. i18n: file: rkwardui.rc:52
+#. i18n: file: rkwardui.rc:53
 #. i18n: ectx: Menu (run)
 #. i18n: file: windows/detachedwindowcontainer.rc:30
 #. i18n: ectx: Menu (run)
@@ -3277,7 +3399,7 @@ msgstr "&Rodinys"
 #. i18n: ectx: Menu (run)
 #. i18n: file: windows/rkcommandeditorwindowpart.rc:31
 #. i18n: ectx: Menu (run)
-#: rc.cpp:15 rc.cpp:36 rc.cpp:66 rc.cpp:96 rc.cpp:102
+#: rc.cpp:15 rc.cpp:39 rc.cpp:69 rc.cpp:99 rc.cpp:105
 msgid "&Run"
 msgstr "&Vykdyti"
 
@@ -3293,29 +3415,36 @@ msgstr "&Nauja"
 msgid "&Import"
 msgstr "&Importuoti"
 
-#. i18n: file: rkwardui.rc:25
-#. i18n: ectx: Menu (workspace)
+#. i18n: file: rkwardui.rc:20
+#. i18n: ectx: Menu (export)
 #: rc.cpp:27
+#, fuzzy
+msgid "&Export"
+msgstr "&Importuoti"
+
+#. i18n: file: rkwardui.rc:26
+#. i18n: ectx: Menu (workspace)
+#: rc.cpp:30
 msgid "&Workspace"
 msgstr "&Darbo erdvė"
 
-#. i18n: file: rkwardui.rc:61
+#. i18n: file: rkwardui.rc:62
 #. i18n: ectx: Menu (window)
-#: rc.cpp:39
+#: rc.cpp:42
 msgid "&Windows"
 msgstr "&Langai"
 
-#. i18n: file: rkwardui.rc:67
+#. i18n: file: rkwardui.rc:68
 #. i18n: ectx: Menu (window_activate)
 #. i18n: file: windows/detachedwindowcontainer.rc:42
 #. i18n: ectx: Menu (window_activate)
 #. i18n: file: windows/rktoplevelwindowgui.rc:9
 #. i18n: ectx: Menu (window_activate)
-#: rc.cpp:42 rc.cpp:72 rc.cpp:129
+#: rc.cpp:45 rc.cpp:75 rc.cpp:132
 msgid "&Activate"
 msgstr "&Aktyvuoti"
 
-#. i18n: file: rkwardui.rc:80
+#. i18n: file: rkwardui.rc:81
 #. i18n: ectx: Menu (settings)
 #. i18n: file: windows/detachedwindowcontainer.rc:46
 #. i18n: ectx: Menu (settings)
@@ -3325,17 +3454,17 @@ msgstr "&Aktyvuoti"
 #. i18n: ectx: Menu (settings)
 #. i18n: file: windows/rktoplevelwindowgui.rc:21
 #. i18n: ectx: Menu (settings)
-#: rc.cpp:45 rc.cpp:75 rc.cpp:99 rc.cpp:108 rc.cpp:132
+#: rc.cpp:48 rc.cpp:78 rc.cpp:102 rc.cpp:111 rc.cpp:135
 msgid "&Settings"
 msgstr "&Nuostatos"
 
-#. i18n: file: rkwardui.rc:85
+#. i18n: file: rkwardui.rc:86
 #. i18n: ectx: Menu (help)
 #. i18n: file: windows/detachedwindowcontainer.rc:49
 #. i18n: ectx: Menu (help)
 #. i18n: file: windows/rktoplevelwindowgui.rc:25
 #. i18n: ectx: Menu (help)
-#: rc.cpp:48 rc.cpp:78 rc.cpp:135
+#: rc.cpp:51 rc.cpp:81 rc.cpp:138
 msgid "&Help"
 msgstr "&Pagalba"
 
@@ -3343,7 +3472,7 @@ msgstr "&Pagalba"
 #. i18n: ectx: Menu (device)
 #. i18n: file: windows/rkcatchedx11windowpart.rc:4
 #. i18n: ectx: Menu (device)
-#: rc.cpp:54 rc.cpp:81
+#: rc.cpp:57 rc.cpp:84
 msgid "&Device"
 msgstr "Į&renginys"
 
@@ -3351,7 +3480,7 @@ msgstr "Į&renginys"
 #. i18n: ectx: Menu (history)
 #. i18n: file: windows/rkcatchedx11windowpart.rc:14
 #. i18n: ectx: Menu (history)
-#: rc.cpp:63 rc.cpp:84
+#: rc.cpp:66 rc.cpp:87
 msgid "&History"
 msgstr ""
 
@@ -3359,25 +3488,89 @@ msgstr ""
 #. i18n: ectx: Menu (window)
 #. i18n: file: windows/rktoplevelwindowgui.rc:5
 #. i18n: ectx: Menu (window)
-#: rc.cpp:69 rc.cpp:126
+#: rc.cpp:72 rc.cpp:129
 msgid "&Window"
 msgstr "&Langas"
 
 #. i18n: file: windows/rkcommandeditorwindowpart.rc:5
 #. i18n: ectx: Menu (tools)
-#: rc.cpp:93
+#: rc.cpp:96
 msgid "&Tools Move"
 msgstr "&Judėjimo įrankiai"
 
-#: rc.cpp:136
+#: rc.cpp:139
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr "Mindaugas Baranauskas"
 
-#: rc.cpp:137
+#: rc.cpp:140
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr "embar@users.berlios.de"
+
+#~ msgid ""
+#~ " For that reason processing has been stopped for now. Press the \"Done\"-"
+#~ "button, or close this dialog once you think it is safe to resume.\n"
+#~ "\n"
+#~ msgstr ""
+#~ " Todėl apdorojimas sustabdytas. Spauskite mygtuką „Atlikta“, arba "
+#~ "užverkite šį dialogą, jei manote, kad jau yra saugu tęsti.\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "The file(s) have been opened in text-windows. The following is a list of "
+#~ "the file(s) in question:\n"
+#~ "\n"
+#~ msgstr ""
+#~ "Rinkmenos atvertos tekstiniuose languose. Klausimas susijęs su šiomis "
+#~ "rinkmenomis:\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "A command running in the R-engine wants you to edit one or more file(s). "
+#~ "RKWard can not determine, whether it is safe to continue processing R "
+#~ "commands, before you have read/edited (and saved) the file(s) in question."
+#~ msgstr ""
+#~ "R variklyje veikianti komanda ketina pakeisti vieną ar kelias rinkmenas. "
+#~ "RKWard negali nustatyti, ar saugu tęsti vykdyti tokias R komandas, tad "
+#~ "turėtumėte peržiūrėti tas norimas skaityti/redaguoti (ir įrašyti) "
+#~ "rinkmenas."
+
+#~ msgid ""
+#~ "\n"
+#~ "\n"
+#~ "The following of the above files were not readable and have not been "
+#~ "opened:\n"
+#~ "\n"
+#~ msgstr ""
+#~ "\n"
+#~ "\n"
+#~ "Kai kurių aukščiau išvardintų rinkmenų nepavyko nuskaityti ir atverti:\n"
+#~ "\n"
+
+#~ msgid "Disable R C stack checking"
+#~ msgstr "Uždrausti R C dėklo tikrinimą"
+
+#~ msgid "Bypass console"
+#~ msgstr "Apeiti konsolę"
+
+#, fuzzy
+#~ msgid ""
+#~ "<p>Please note that RKWard is not well tested on Windows, yet.</"
+#~ "p><p>There are all sorts of known issues, and issues yet to be reported. "
+#~ "If you'd like to help: <a href=\"http://p.sf.net/rkward/contact\">http://"
+#~ "p.sf.net/rkward/contact</a>.</p>"
+#~ msgstr ""
+#~ "<p>Atminkite, kad RKWard dar nėra gerai išbandyta Windows terpėje. </"
+#~ "p><p>Jau yra žinoma visokiausių riktų, tikriausiai jų yra ir daugiau. Jei "
+#~ "norėtumėte padėti, apsilankykite <a href=\"http://p.sf.net/rkward/contact"
+#~ "\">http://p.sf.net/rkward/contact</a>.</p>"
+
+#~ msgid "RKWard on Windows"
+#~ msgstr "RKWard programa Windows terpėje"
+
+#~ msgid "R engine starting"
+#~ msgstr "R variklis pradeda dirbti"
 
 #~ msgid ""
 #~ "The support file \"%1\" could not be found or is not readable. Please "
