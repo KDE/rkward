@@ -168,6 +168,9 @@ void RObjectList::updateEnvironments (const QStringList &env_names, bool force_g
 		QString name = env_names[i];
 
 		RObject* obj = findChildByName (name);
+		if (obj && (i > 0) && (env_names.lastIndexOf (name, i-1) > -1)) {		// duplicate environment names can happen (e.g. if a data.frame is attached multiple times)
+			obj = 0;	// only copy the old item once
+		}
 		if (obj) {
 			// for now, we only update the .GlobalEnv. All others we assume to be static
 			if (obj->isType (GlobalEnv) && force_globalenv_update) {

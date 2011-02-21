@@ -1,4 +1,5 @@
 --- Version 0.5.5 - XXX-XX-2011
+- Fixed: Crash when several environments on the search path have the same name
 - Re-organize the default toolbar actions of the main window
 - Detached windows are now restored in detached state when restoring the workplace layout
 - Workplace layout is now saved in a separate file, instead of in a hidden object inside the .RData file
