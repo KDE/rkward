@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ## begin: These may need adjusting!
-TARGETS="natty maverick lucid karmic jaunty"
+TARGETS="natty maverick lucid karmic"
 AUTHOR="Thomas Friedrichsmeier <tfry@users.sourceforge.net>"
 ## end: These may need adjusting!
 
@@ -12,12 +12,12 @@ mkdir $PPATEMPDIR
 
 if [ ${1} = "--stable" ]; then
 	shift
-	PPAID="rkward-stable"
+	PPAIDS="rkward-stable"
 	PPAVERSIONSTRING=".1rkward.stable"
 	# do not re-create tarball
 	VERSION=`${BASEDIR}/scripts/getversion.sh ${1}`
 else
-	PPAID="rkward-devel"
+	PPAIDS="rkward-devel rkward-devel-cran"
 	PPAVERSIONSTRING=".0rkward.devel"
 	# first create source snapshot
 	VERSION=`${BASEDIR}/scripts/getversion.sh ${1}`
@@ -71,5 +71,8 @@ function doSourceUpload {
 
 for TARGET in ${TARGETS}
 do
-	doSourceUpload ${TARGET}
+	for PPAID in ${PPAIDS}
+	do
+		doSourceUpload ${TARGET}
+	done
 done
