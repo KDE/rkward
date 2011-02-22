@@ -302,7 +302,12 @@ QStringList RKSettingsModulePlugins::findPluginMapsRecursive (const QString &bas
 
 	QStringList subdirs = dir.entryList (QDir::Dirs | QDir::NoSymLinks | QDir::NoDotAndDotDot);
 	foreach (const QString subdir, subdirs) {
+#if QT_VERSION >= 0x040500
 		ret.append (findPluginMapsRecursive (dir.absoluteFilePath (subdir)));
+#else
+		QStringList subs = findPluginMapsRecursive (dir.absoluteFilePath (subdir)));
+		foreach (const QString sub, subs) ret.append (sub);
+#endif
 	}
 
 	return ret;
