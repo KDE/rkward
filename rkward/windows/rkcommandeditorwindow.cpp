@@ -617,7 +617,7 @@ void RKCommandEditorWindow::runLine() {
 
 	KTextEditor::Cursor c = m_view->cursorPosition();
 	QString command = m_doc->line (c.line());
-	if (!command.isEmpty ()) RKConsole::pipeUserCommand (command);
+	if (!command.isEmpty ()) RKConsole::pipeUserCommand (command + '\n');
 
 	// advance to next line (NOTE: m_view->down () won't work on auto-wrapped lines)
 	c.setLine(c.line() + 1);
