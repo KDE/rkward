@@ -211,24 +211,6 @@ int RContainerObject::numChildren () const {
 	return childmap.size ();
 }
 
-// KDE4: do we need this? Can't we return the RObjectMap?
-RObject **RContainerObject::children () const {
-	RK_TRACE (OBJECTS);
-	RObject **ret = new RObject *[childmap.size ()];
-
-	for (int i = childmap.size () - 1; i >= 0; --i) {
-		ret[i] = childmap[i];
-	}
-	return ret;
-}
-
-void RContainerObject::writeChildMetaData (RCommandChain *chain) {
-	RK_TRACE (OBJECTS);
-	for (int i = childmap.size () - 1; i >= 0; --i) {
-		childmap[i]->writeMetaData (chain);
-	}
-}
-
 RObject *RContainerObject::findChildByName (const QString &name) const {
 	RK_TRACE (OBJECTS);
 
@@ -415,23 +397,6 @@ QString RContainerObject::renameChildCommand (RObject *object, const QString &ne
 	RK_TRACE (OBJECTS);
 
 	return ("rk.rename.in.container (" + getFullName () + ", \"" + object->getShortName () + "\", \"" + new_name + "\")");
-}
-
-bool RContainerObject::isParentOf (RObject *object, bool recursive) const {
-	RK_TRACE (OBJECTS);
-
-	for (int i = childmap.size () - 1; i >= 0; --i) {
-		RObject *child = childmap[i];
-		if (child == object) {
-			return true;
-		} else if (recursive && child->isContainer ()) {
-			if (static_cast<RContainerObject *>(child)->isParentOf (object, true)) {
-				return true;
-			}
-		}
-	}
-	
-	return false;
 }
 
 QString RContainerObject::validizeName (const QString &child_name, bool unique) const {

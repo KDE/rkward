@@ -315,7 +315,7 @@ REnvironmentObject *RObjectList::getGlobalEnv () {
 	RObjectList *list = getObjectList ();
 	RK_ASSERT (list);
 
-	RK_ASSERT (list->numChildren ());
+	RK_ASSERT (!list->isEmpty ());
 	REnvironmentObject *envobj = static_cast<REnvironmentObject*> (list->childmap[0]);
 	RK_ASSERT (envobj);
 	RK_ASSERT (envobj->isType (RObject::GlobalEnv));

@@ -35,8 +35,6 @@ public:
 
 	~RContainerObject ();
 
-	void writeChildMetaData (RCommandChain *chain);
-
 	/** update the given child with the given data. Since the child may be mismatching, and may need to be recreated, returns a pointer to the child (old or new) */
 	RObject *updateChildStructure (RObject *child, RData *new_data, bool just_created=false);
 	RObject *createChildFromStructure (RData *child_data, const QString &child_name, int position);
@@ -45,8 +43,8 @@ public:
 	bool updateStructure (RData *new_data);
 
 	int numChildren () const;
-// KDE 4: TODO: do we need this? Can't we just return a copy of the objectma?
-	RObject **children () const;
+	/** returns true, if there are no children in this container. Note: of course the object list may not be up to date! */
+	bool isEmpty () const { return childmap.isEmpty (); };
 
 	/** like findObject (), but does not recurse, i.e. only direct children */
 	RObject *findChildByName (const QString &name) const;
@@ -54,15 +52,11 @@ public:
 	RObject *findChildByIndex (int position) const;
 	/** return the index of the given child, or -1 if there is no such child */
 	int getIndexOf (RObject *child) const;
-	bool isParentOf (RObject *object, bool recursive=false) const;
 	
 	/** creates a new child. Right now only RKVariables (false, false), or data.frames (true, true), or unspecified containers (true, false) can be created.
 	API will likely change. The child is NOT created in the workspace. That's your resonsibility. All this function returns is a new RObject* of the given
 	type and with the name (if necessary) changed to a legal value. TODO: checking for and changing illegal names is not yet implemented */
 	RObject *createPendingChild (const QString &name, int position=-1, bool container=false, bool data_frame=false);
-
-	/** returns true, if there are no children in this container. Note: of course the object list may not be up to date! */
-	bool isEmpty () const { return childmap.isEmpty (); };
 
 	/** given child_name, constructs a name which is as close as possible to the orginial but valid (i.e. not already in use, not contaning illegal characters */
 	QString validizeName (const QString &child_name, bool unique=true) const;
