@@ -2,7 +2,7 @@
                           rkstructuregetter  -  description
                              -------------------
     begin                : Wed Apr 11 2007
-    copyright            : (C) 2007, 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -74,7 +74,7 @@ private:
 	bool keep_evalled_promises;
 
 	/** current depth of recursion into environments */
-	int envir_depth;
+	int nesting_depth;
 };
 
 #endif

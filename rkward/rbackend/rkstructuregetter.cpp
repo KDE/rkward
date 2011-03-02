@@ -2,7 +2,7 @@
                           rkstructuregetter  -  description
                              -------------------
     begin                : Wed Apr 11 2007
-    copyright            : (C) 2007, 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -80,8 +80,7 @@ SEXP RKStructureGetter::prefetch_fun (const char *name, bool from_base) {
 RData *RKStructureGetter::getStructure (SEXP toplevel, SEXP name, SEXP envlevel, SEXP namespacename) {
 	RK_TRACE (RBACKEND);
 
-	// TODO: accept an envlevel parameter
-	envir_depth = INTEGER (envlevel)[0];
+	nesting_depth = INTEGER (envlevel)[0];
 
 	QString name_string = RKRSupport::SEXPToString (name);
 
@@ -142,7 +141,8 @@ SEXP RKStructureGetter::resolvePromise (SEXP from) {
 
 	SEXP ret = from;
 	if (TYPEOF (from) == PROMSXP) {
-		if (PRVALUE(from) == R_UnboundValue) {
+		ret = PRVALUE(from);
+		if (ret == R_UnboundValue) {
 			RK_DO (qDebug ("temporarily resolving unbound promise"), RBACKEND, DL_DEBUG);
 
 			PROTECT (from);
@@ -188,7 +188,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 	// get classes
 	SEXP classes_s;
 
-	if (TYPEOF (value) == LANGSXP) {	// if it's a call, we should NEVER send it through eval
+	if ((TYPEOF (value) == LANGSXP) || (TYPEOF (value) == SYMSXP)) {	// if it's a call, we should NEVER send it through eval
 		extern SEXP R_data_class (SEXP, Rboolean);
 		classes_s = R_data_class (value, (Rboolean) 0);
 
@@ -228,10 +228,6 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 			is_container = true;
 			type |= RObject::Environment;
 			is_environment = true;
-			if (++envir_depth >= 2) {
-				no_recurse = true;
-				type |= RObject::Incomplete;
-			}
 		} else {
 			type |= RObject::Variable;
 			if (RKRSupport::callSimpleBool (is_factor_fun, value, R_BaseEnv)) type |= RObject::Factor;
@@ -241,6 +237,13 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 		}
 	}
 	if (misplaced) type |= RObject::Misplaced;
+	if (is_container) {
+		if (++nesting_depth >= 3) {		// TODO: Should be configurable
+			no_recurse = true;
+			type |= RObject::Incomplete;
+			RK_DO (qDebug ("Depth limit reached. Will not recurse into %s", name.toLatin1().data ()), RBACKEND, DL_DEBUG);
+		}
+	}
 
 	// get meta data, if any
 	RData *metadata = new RData;
@@ -301,7 +304,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 	// now add the extra info for containers and functions
 	if (is_container) {
 		bool do_env = (is_environment && (!no_recurse));
-		bool do_cont = is_container && (!is_environment);
+		bool do_cont = is_container && (!is_environment) && (!no_recurse);
 
 		// fetch list of child names
 		SEXP childnames_s;
@@ -401,6 +404,8 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 
 	RK_ASSERT (!res.contains (0));
 	storage->setData (res);
+
+	if (is_container) --nesting_depth;	// Ugly! should be a function parameter, instead
 }
 
 }	/* extern "C" */

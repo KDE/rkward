@@ -1,3 +1,4 @@
+- Be less pro-active about fetching structure information on R objects in the workspace		TODO: verify that this fixes our issues with rXML
 - Allow to browse arbitrarily deeply nested environments in the object browser
 
 --- Version 0.5.5 - XXX-XX-2011
