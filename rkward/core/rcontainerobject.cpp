@@ -2,7 +2,7 @@
                           rcontainerobject  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004, 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -137,6 +137,9 @@ RObject *RContainerObject::createChildFromStructure (RData *child_data, const QS
 
 void RContainerObject::updateChildren (RData *new_children) {
 	RK_TRACE (OBJECTS);
+
+	if (type & Incomplete) return;	// If the (new!) type is "Incomplete", it means, the structure getter simply stopped at this point. Existing child info may or may not be out of date, but probably the old data we have is still more acurate than having nothing.
+
 	RK_ASSERT (new_children->getDataType () == RData::StructureVector);
 	unsigned int new_child_count = new_children->getDataLength ();
 
@@ -279,9 +282,11 @@ RObject *RContainerObject::findObject (const QString &name, bool is_canonified) 
 	return (found->findObject (remainder, true));
 }
 
-void RContainerObject::findObjectsMatching (const QString &partial_name, RObjectSearchMap *current_list, bool name_is_canonified) const {
+void RContainerObject::findObjectsMatching (const QString &partial_name, RObjectSearchMap *current_list, bool name_is_canonified) {
 	RK_TRACE (OBJECTS);
 	RK_ASSERT (current_list);
+
+	fetchMoreIfNeeded ();
 
 	QString canonified = partial_name;
 	if (!name_is_canonified) canonified = canonifyName (partial_name);
@@ -290,13 +295,7 @@ void RContainerObject::findObjectsMatching (const QString &partial_name, RObject
 	QString current_level = canonified.section (QChar ('$'), 0, 0);
 	QString remainder = canonified.section (QChar ('$'), 1);
 
-	if (canonified.endsWith (QChar ('$'))) {
-		RObject* found = findChildByName (current_level);
-		if (found) found->findObjectsMatching (QString (), current_list, true);
-		return;
-	}
-
-	if (remainder.isEmpty ()) {
+	if (remainder.isEmpty () && !canonified.endsWith (QChar ('$'))) {
 		for (int i = 0; i < childmap.size (); ++i) {
 			RObject* child = childmap[i];
 			if (child->getShortName ().startsWith (current_level)) {

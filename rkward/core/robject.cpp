@@ -80,7 +80,7 @@ RObject *RObject::findObject (const QString &, bool) const {
 	return 0;
 }
 
-void RObject::findObjectsMatching (const QString &, RObjectSearchMap *, bool) const {
+void RObject::findObjectsMatching (const QString &, RObjectSearchMap *, bool) {
 	RK_TRACE (OBJECTS);
 	return;
 }
@@ -250,6 +250,21 @@ void RObject::updateFromR (RCommandChain *chain) {
 		command = new RCommand (".rk.get.structure (" + getFullName () + ", " + rQuote (getShortName ()) + ')', RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString::null, this, ROBJECT_UDPATE_STRUCTURE_COMMAND);
 	}
 	RKGlobals::rInterface ()->issueCommand (command, chain);
+
+	type |= Updating;	// will be cleared, implicitly, when the new structure gets set
+}
+
+void RObject::fetchMoreIfNeeded (int levels) {
+	RK_TRACE (OBJECTS);
+
+	if (isType (Updating)) return;
+	if (isType (Incomplete)) updateFromR (0);
+	if (levels <= 0) return;
+	if (!isContainer ()) return;
+	const RObjectMap children = static_cast<RContainerObject*> (this)->childmap;
+	foreach (RObject* child, children) {
+		child->fetchMoreIfNeeded (levels - 1);
+	}
 }
 
 void RObject::rCommandDone (RCommand *command) {

@@ -2,7 +2,7 @@
                           rkmodificationtracker  -  description
                              -------------------
     begin                : Tue Aug 31 2004
-    copyright            : (C) 2004, 2007, 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -335,6 +335,32 @@ QVariant RKObjectListModel::headerData (int section, Qt::Orientation orientation
 
 	RK_ASSERT (false);
 	return QVariant ();
+}
+
+bool RKObjectListModel::hasChildren(const QModelIndex& parent) const {
+	RK_TRACE (OBJECTS);
+
+	RObject* parent_object = 0;
+	if (parent.isValid ()) parent_object = static_cast<RObject*> (parent.internalPointer ());
+	else return true;		// the root item
+
+	if (!(parent_object && parent_object->isContainer ())) return false;
+	return (parent_object->isType (RObject::Incomplete) || static_cast<RContainerObject*> (parent_object)->numChildren ());
+}
+
+bool RKObjectListModel::canFetchMore (const QModelIndex &parent) const {
+	RK_TRACE (OBJECTS);
+
+	RObject *object = static_cast<RObject*> (parent.internalPointer ());
+	return (object && object->isType (RObject::Incomplete));
+}
+
+void RKObjectListModel::fetchMore (const QModelIndex &parent) {
+	RK_TRACE (OBJECTS);
+
+	RObject *object = static_cast<RObject*> (parent.internalPointer ());
+	RK_ASSERT (object && object->isType (RObject::Incomplete));
+	object->fetchMoreIfNeeded ();
 }
 
 QModelIndex RKObjectListModel::indexFor (RObject *object) const {

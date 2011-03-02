@@ -238,7 +238,7 @@ RObject *RObjectList::findObject (const QString &name, bool is_canonified) const
 	return 0;
 }
 
-void RObjectList::findObjectsMatching (const QString &partial_name, RObjectSearchMap *current_list, bool name_is_canonified) const {
+void RObjectList::findObjectsMatching (const QString &partial_name, RObjectSearchMap *current_list, bool name_is_canonified) {
 	RK_TRACE (OBJECTS);
 	RK_ASSERT (current_list);
 

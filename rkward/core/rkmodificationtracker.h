@@ -2,7 +2,7 @@
                           rkmodificationtracker  -  description
                              -------------------
     begin                : Tue Aug 31 2004
-    copyright            : (C) 2004, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -97,6 +97,13 @@ public:
 	QVariant data (const QModelIndex& index, int role = Qt::DisplayRole) const;
 	/** reimplemented from  QAbstractItemModel::headerData() to provide column names */
 	QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
+
+	/** reimplemented from  QAbstractItemModel::canFetchMore() */
+	bool canFetchMore (const QModelIndex &parent) const;
+	/** reimplemented from  QAbstractItemModel::fetchMore() */
+	void fetchMore (const QModelIndex &parent);
+	/** reimplemented from  QAbstractItemModel::hasChildren() */
+	bool hasChildren (const QModelIndex &parent = QModelIndex ()) const; 
 
 	/** convenience function to create an index for a particular object */
 	QModelIndex indexFor (RObject *object) const;

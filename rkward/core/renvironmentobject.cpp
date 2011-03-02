@@ -60,19 +60,24 @@ QString REnvironmentObject::getFullName () const {
 QString REnvironmentObject::makeChildName (const QString &short_child_name, bool misplaced) const {
 	RK_TRACE (OBJECTS);
 
-	if (type & GlobalEnv) {
-		if (irregularShortName (short_child_name)) {
-			return (getShortName () + "$" + RObject::rQuote (short_child_name));
-		}
-		return (short_child_name);
+	QString safe_name;
+	bool irregular = false;
+	if (irregularShortName (short_child_name)) {
+		irregular = true;
+		safe_name = rQuote (short_child_name);
+	} else safe_name = short_child_name;
+
+	if (type & GlobalEnv) {		// don't print as ".GlobalEnv$something" unless childname needs fixing
+		if (irregular) return (getShortName () + "$" + safe_name);
+		return (safe_name);
 	}
 	if (type & ToplevelEnv) {
 /* Some items are placed outside of their native namespace. E.g. in package:boot item "motor". It can be retrieved using as.environment ("package:boot")$motor. This is extremly ugly. We need to give them (and only them) this special treatment. */
 // TODO: hopefully one day operator "::" will work even in those cases. So check back later, and remove after a sufficient amount of backwards compatibility time
-		if ((type & PackageEnv) && (!misplaced)) return (namespace_name + "::" + RObject::rQuote (short_child_name));
-		return (getFullName () + '$' + RObject::rQuote (short_child_name));
+		if ((type & PackageEnv) && (!misplaced)) return (namespace_name + "::" + safe_name);
+		return (getFullName () + '$' + safe_name);
 	}
-	return (name + '$' + short_child_name);
+	return (getFullName () + '$' + safe_name);
 }
 
 QString REnvironmentObject::makeChildBaseName (const QString &short_child_name) const {
@@ -106,6 +111,8 @@ void REnvironmentObject::updateFromR (RCommandChain *chain) {
 
 	RCommand *command = new RCommand (".rk.get.structure (" + getFullName () + ", " + rQuote (getShortName ()) + options + ')', RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString::null, this, ROBJECT_UDPATE_STRUCTURE_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, chain);
+
+	type |= Updating;
 }
 
 void REnvironmentObject::updateFromR (RCommandChain *chain, const QStringList &current_symbols) {

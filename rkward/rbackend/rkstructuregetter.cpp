@@ -170,6 +170,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 	bool is_function = false;
 	bool is_container = false;
 	bool is_environment = false;
+	bool no_recurse = false;
 	unsigned int type = 0;
 
 	RK_DO (qDebug ("fetching '%s': %p, s-type %d", name.toLatin1().data(), val, TYPEOF (val)), RBACKEND, DL_DEBUG);
@@ -227,6 +228,10 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 			is_container = true;
 			type |= RObject::Environment;
 			is_environment = true;
+			if (++envir_depth >= 2) {
+				no_recurse = true;
+				type |= RObject::Incomplete;
+			}
 		} else {
 			type |= RObject::Variable;
 			if (RKRSupport::callSimpleBool (is_factor_fun, value, R_BaseEnv)) type |= RObject::Factor;
@@ -295,7 +300,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 
 	// now add the extra info for containers and functions
 	if (is_container) {
-		bool do_env = (is_environment && (++envir_depth < 2));
+		bool do_env = (is_environment && (!no_recurse));
 		bool do_cont = is_container && (!is_environment);
 
 		// fetch list of child names

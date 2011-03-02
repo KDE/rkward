@@ -2,7 +2,7 @@
                           robject  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004, 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -63,6 +63,8 @@ public:
 		Character=3 << 14,
 		Logical=4 << 14,
 		DataTypeMask=Numeric | Factor | Character | Logical,
+		Updating=1 << 27, /** < The object is about to be updated from R */
+		Incomplete=1 << 28,	/** < The information on this object is not complete (typically, it's children have not been scanned, yet). */
 		NonVisibleObject=1 << 29,	/** < the object is not listed in the object list. Currently, this is only the case for row.names()-objects */
 		NeedDataUpdate=1 << 30,	/** < the object's data should be (re-) fetched from R. The main purpose of this flag is to make sure the data is synced *after* the structure has been synced */
 		Pending=1 << 31		/** < the object is pending, i.e. it has been created in the object list, but we have not seen it in R, yet. This is used by data editors to create the illusion that a new object was added immediately, while in fact it takes some time to create it in the backend. */
@@ -168,7 +170,11 @@ R, only for internal lookup. For submission to R, always use RObject::getFullNam
 @param partial_name The partial name to look up
 @param current_list A pointer to a valid (but probably initially empty) RObjectMap. Matches will be added to this list
 @param name_is_canonified internal parameter. Set to true, if the name to match is already canonfied (else it will be canonified internally) */
-	virtual void findObjectsMatching (const QString &partial_name, RObjectSearchMap *current_list, bool name_is_canonified=false) const;
+	virtual void findObjectsMatching (const QString &partial_name, RObjectSearchMap *current_list, bool name_is_canonified=false);
+
+/** Fetch more levels of object representation (if needed). Note: Data is fetched asynchronously. 
+@param levels levels to recurse (0 = only direct children). */
+	void fetchMoreIfNeeded (int levels=1);
 
 /// For now, the ChangeSet only handles RKVariables!
 	struct ChangeSet {

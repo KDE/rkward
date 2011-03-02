@@ -60,7 +60,7 @@ public:
 	RObject *findObject (const QString &name, bool canonified=false) const;
 
 	/** reimplemented from RContainerObject to search the environments in search order */
-	void findObjectsMatching (const QString &partial_name, RObjectSearchMap *current_list, bool name_is_canonified=false) const;
+	void findObjectsMatching (const QString &partial_name, RObjectSearchMap *current_list, bool name_is_canonified=false);
 
 	KUrl getWorkspaceURL () const { return current_url; };
 

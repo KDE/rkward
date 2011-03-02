@@ -1,3 +1,5 @@
+- Allow to browse arbitrarily deeply nested environments in the object browser
+
 --- Version 0.5.5 - XXX-XX-2011
 - Fixed: Crash when several environments on the search path have the same name
 - Re-organize the default toolbar actions of the main window

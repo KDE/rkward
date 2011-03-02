@@ -65,7 +65,7 @@ public:
 	virtual RObject *findObject (const QString &name, bool is_canonified=false) const;
 
 	/** reimplemented from RObject to actually search for matching objects */
-	void findObjectsMatching (const QString &partial_name, RObjectSearchMap *current_list, bool name_is_canonified=false) const;
+	void findObjectsMatching (const QString &partial_name, RObjectSearchMap *current_list, bool name_is_canonified=false);
 
 	void moveChild (RObject* child, int from_index, int to_index);
 
