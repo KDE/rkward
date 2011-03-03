@@ -138,7 +138,12 @@ RObject *RContainerObject::createChildFromStructure (RData *child_data, const QS
 void RContainerObject::updateChildren (RData *new_children) {
 	RK_TRACE (OBJECTS);
 
-	if (type & Incomplete) return;	// If the (new!) type is "Incomplete", it means, the structure getter simply stopped at this point. Existing child info may or may not be out of date, but probably the old data we have is still more acurate than having nothing.
+	if (type & Incomplete) {
+		// If the (new!) type is "Incomplete", it means, the structure getter simply stopped at this point.
+		// In case we already have child info, we should update it (TODO: perhaps only, if anything is listening for child objects?)
+		if (!(childmap.isEmpty () || isType (Updating))) updateFromR (0);
+		return;
+	}
 
 	RK_ASSERT (new_children->getDataType () == RData::StructureVector);
 	unsigned int new_child_count = new_children->getDataLength ();
