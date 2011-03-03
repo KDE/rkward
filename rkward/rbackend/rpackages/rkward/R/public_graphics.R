@@ -713,6 +713,13 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		
 		paste (substr (.lab.str, 1, l), "...", sep = "")
 	}
+	.plot.new.hook <- function (.callstr) {
+		if (dev.cur() == 1) rk.screen.device ()
+		if (getOption ("rk.enable.graphics.history")) {
+			.callstr <- sys.call (-sys.parents()[sys.nframe ()])
+			record (nextplot.pkg = "graphics", nextplot.call = .callstr)
+		}
+	}
 	
 	## Utility / R - C++ connection functions:
 	.rk.update.hist.actions <- function (devIds = .hP.names, enable.plot.hist = TRUE)

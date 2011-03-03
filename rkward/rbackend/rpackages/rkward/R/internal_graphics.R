@@ -46,7 +46,7 @@ if (base::.Platform$OS.type == "windows") {
 # set from rkward the application:
 # options(device="rk.screen.device")
 
-".rk.preview.devices" <- list ();
+".rk.preview.devices" <- list ()
 
 ".rk.startPreviewDevice" <- function (x) {
 	a <- .rk.preview.devices[[x]]
@@ -76,11 +76,7 @@ if (base::.Platform$OS.type == "windows") {
 {
 	rk.replace.function ("plot.new", as.environment ("package:graphics"),
 		function () {
-			if (dev.cur() == 1) rk.screen.device ()
-			if (getOption ("rk.enable.graphics.history")) {
-				.callstr <- sys.call (-sys.parents()[sys.nframe ()])
-				rk.record.plot$record (nextplot.pkg = "graphics", nextplot.call = .callstr)
-			}
+			rk.record.plot$.plot.new.hook ()
 			eval (body (.rk.plot.new.default))
 		})
 
@@ -123,16 +119,22 @@ if (base::.Platform$OS.type == "windows") {
 				invisible ()
 			})
 	)
-	
+
+	setHook (packageEvent ("ggplot2", "attach"),
+		function (...)
+			rk.replace.function ("print.ggplot", as.environment ("package:ggplot2"),
+				function () {
+					## TODO: add specific support for ggplots?
+					rk.record.plot$.plot.new.hook ()
+					eval (body (.rk.print.ggplot.default))
+				})
+	)
+
 	## persp does not call plot.new (), so set a hook. Fortunately, the hook is placed after drawing the plot.
 	setHook ("persp",
 		function (...)
 		{
-			if (dev.cur() == 1) rk.screen.device ()
-			if (getOption ("rk.enable.graphics.history")) {
-				.callstr <- sys.call (-which.max(sys.parents()))
-				rk.record.plot$record (nextplot.pkg = "graphics", nextplot.call = .callstr)
-			}
+			rk.record.plot$.plot.new.hook ()
 		},
 		action = "append"
 	)
