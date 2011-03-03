@@ -87,22 +87,15 @@ void RObject::findObjectsMatching (const QString &, RObjectSearchMap *, bool) {
 
 QString RObject::getMetaProperty (const QString &id) const {
 	RK_TRACE (OBJECTS);
-	if (meta_map) {
-		RObject::MetaMap::iterator it;
-		if ((it = meta_map->find (id)) != meta_map->end ()) {
-			return (it.value ());
-		}
-	}
+	if (meta_map) return (meta_map->value (id));
 	return QString ();
 }
 
 QString RObject::getDescription () const {
 	RK_TRACE (OBJECTS);
 	if (meta_map) {
-		RObject::MetaMap::iterator it;
-		if ((it = meta_map->find ("label")) != meta_map->end ()) {
-			return (getShortName () + " (" + it.value () + ')');
-		}
+		QString label = meta_map->value ("label");
+		if (!label.isEmpty ()) return (getShortName () + " (" + label + ')');
 	}
 	return getShortName ();;
 }
@@ -162,28 +155,15 @@ void RObject::setLabel (const QString &value, bool sync) {
 void RObject::setMetaProperty (const QString &id, const QString &value, bool sync) {
 	RK_TRACE (OBJECTS);
 	if (value.isEmpty ()) {
-		if (meta_map) {
-			meta_map->remove (id);
-			if (!meta_map->size ()) {
-				delete meta_map;
-				meta_map = 0;
-				type -= (type & HasMetaObject);
-			}
-		}
-		RKGlobals::tracker ()->objectMetaChanged (this);
-		return;
-	}
-	
-	if (meta_map) {
-		RObject::MetaMap::iterator it;
-		if ((it = meta_map->find (id)) != meta_map->end ()) {
-			if (it.value () == value) return;
-		}
+		if (meta_map && meta_map->contains (id)) meta_map->remove (id);
+		else return;
 	} else {
-		meta_map = new MetaMap;
+		if (!meta_map) meta_map = new MetaMap;
+		else if (meta_map->value (id) == value) return;
+
+		meta_map->insert (id, value);
 	}
 
-	meta_map->insert (id, value);
 	if (sync) writeMetaData (0);
 	RKGlobals::tracker ()->objectMetaChanged (this);
 }
@@ -211,29 +191,25 @@ QString RObject::makeChildBaseName (const QString &short_child_name) const {
 
 void RObject::writeMetaData (RCommandChain *chain) {
 	RK_TRACE (OBJECTS);
-	
-	if (!meta_map) {
-		if (hasMetaObject ()) {
-			RCommand *command = new RCommand ("attr (" + getFullName () + ", \".rk.meta\") <- NULL", RCommand::App | RCommand::Sync);
-			RKGlobals::rInterface ()->issueCommand (command, chain);
+
+	if (!meta_map) return;
+
+	QString map_string;
+	if (meta_map->isEmpty ()) {
+		map_string.append ("NULL");
+
+		delete meta_map;	// now that is is synced, delete it
+		meta_map = 0;
+	} else {
+		for (MetaMap::const_iterator it = meta_map->constBegin (); it != meta_map->constEnd (); ++it) {
+			if (!map_string.isEmpty ()) map_string.append (", ");
+			map_string.append (rQuote (it.key ()) + '=' + rQuote (it.value ()));
 		}
-		type -= (type & HasMetaObject);
-		return;
+		map_string = "c (" + map_string + ')';
 	}
-	
-	QString command_string = ".rk.set.meta (" + getFullName () + ", c (";
-	for (MetaMap::const_iterator it = meta_map->constBegin (); it != meta_map->constEnd (); ++it) {
-		if (it != meta_map->constBegin ()) {
-			command_string.append (", ");
-		}
-		command_string.append (rQuote (it.key ()) + '=' + rQuote (it.value ()));
-	}
-	command_string.append ("))");
-	
-	RCommand *command = new RCommand (command_string, RCommand::App | RCommand::Sync);
+
+	RCommand *command = new RCommand (".rk.set.meta (" + getFullName () + ", " + map_string + ')', RCommand::App | RCommand::Sync);
 	RKGlobals::rInterface ()->issueCommand (command, chain);
-	
-	type |= HasMetaObject;
 }
 
 void RObject::updateFromR (RCommandChain *chain) {
@@ -419,11 +395,10 @@ bool RObject::updateMeta (RData *new_data) {
 	RK_ASSERT (new_data->getDataType () == RData::StringVector);
 
 	unsigned int len = new_data->getDataLength ();
-	if (len == 1) len = 0;		// if it's a single element, it's just a dummy
 	bool change = false;
 	if (len) {
 		if (!meta_map) meta_map = new MetaMap;
-		meta_map->clear ();
+		else meta_map->clear ();
 
 		RK_ASSERT (!(len % 2));
 		unsigned int cut = len/2;
@@ -431,7 +406,6 @@ bool RObject::updateMeta (RData *new_data) {
 			meta_map->insert (new_data->getStringVector ()[i], new_data->getStringVector ()[i+cut]);
 		}
 
-		type |= HasMetaObject;
 		// TODO: only signal change, if there really was a change!
 		change = true;
 	} else {		// no meta data received
@@ -440,8 +414,6 @@ bool RObject::updateMeta (RData *new_data) {
 			meta_map = 0;
 			change = true;
 		}
-
-		type -= (type & HasMetaObject);
 	}
 	return change;
 }

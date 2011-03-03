@@ -56,12 +56,11 @@ public:
 		GlobalEnv=1 << 9,
 		ToplevelEnv=1 << 10,
 		PackageEnv=1 << 11,
-		HasMetaObject=1 << 12,
-		Misplaced=1 << 13,		/** < the object is not in the namespace where it would be expected */
-		Numeric=1 << 14,
-		Factor=2 << 14,
-		Character=3 << 14,
-		Logical=4 << 14,
+		Misplaced=1 << 12,		/** < the object is not in the namespace where it would be expected */
+		Numeric=1 << 13,
+		Factor=2 << 13,
+		Character=3 << 13,
+		Logical=4 << 13,
 		DataTypeMask=Numeric | Factor | Character | Logical,
 		Updating=1 << 27, /** < The object is about to be updated from R */
 		Incomplete=1 << 28,	/** < The information on this object is not complete (typically, it's children have not been scanned, yet). */
@@ -100,7 +99,7 @@ public:
 	bool isVariable () const { return (type & Variable); };
 	/** see RObjectType */
 	bool isType (int type) const { return (RObject::type & type); };
-	bool hasMetaObject () const { return (type & HasMetaObject); };
+	bool hasMetaObject () const { return (meta_map); };
 	/** see RObjectType::Pending */
 	bool isPending () const { return type & Pending; };
 
@@ -148,10 +147,10 @@ public:
 
 	RDataType getDataType () const { return (typeToDataType (type)); };
 	int getType () const { return type; };
-	static RDataType typeToDataType (int ftype) { return ((RDataType) ((ftype & DataTypeMask) >> 14)); };
+	static RDataType typeToDataType (int ftype) { return ((RDataType) ((ftype & DataTypeMask) >> 13)); };
 	void setDataType (RDataType new_type) {
 		int n_type = type - (type & DataTypeMask);
-		type = n_type + (new_type << 14);
+		type = n_type + (new_type << 13);
 	};
 /** returns a textual representation of the given RDataType */
 	static QString typeToText (RDataType);

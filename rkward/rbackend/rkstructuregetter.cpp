@@ -248,14 +248,12 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 	// get meta data, if any
 	RData *metadata = new RData;
 	if (!Rf_isNull (Rf_getAttrib (value, meta_attrib))) {
-		type |= RObject::HasMetaObject;
-
 		SEXP meta_s = RKRSupport::callSimpleFun (get_meta_fun, value, R_GlobalEnv);
 		PROTECT (meta_s);
 		metadata->setData (RKRSupport::SEXPToStringList (meta_s));
 		UNPROTECT (1);	/* meta_s */
 	} else {
-		metadata->setData (QStringList (QString ("")));
+		metadata->setData (QStringList ());
 	}
 
 	// store type
