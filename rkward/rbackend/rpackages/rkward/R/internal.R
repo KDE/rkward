@@ -396,6 +396,7 @@ formals (setwd) <- formals (base::setwd)
 	assign (backupname, original, envir=as.environment ("package:rkward"))
 
 	if (copy.formals) formals (replacement) <- formals (original)
+	environment (replacement) <- environment (original)
 	assign (functionname, replacement, envir=as.environment ("package:rkward"))
 	try (
 		if (bindingIsLocked (functionname, environment)) {

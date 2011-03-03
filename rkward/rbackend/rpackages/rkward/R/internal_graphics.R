@@ -120,13 +120,13 @@ if (base::.Platform$OS.type == "windows") {
 			})
 	)
 
-	setHook (packageEvent ("ggplot2", "attach"),
+	setHook (packageEvent ("grid", "attach"),
 		function (...)
-			rk.replace.function ("print.ggplot", as.environment ("package:ggplot2"),
+			rk.replace.function ("grid.newpage", as.environment ("package:grid"),
 				function () {
 					## TODO: add specific support for ggplots?
 					rk.record.plot$.plot.new.hook ()
-					eval (body (.rk.print.ggplot.default))
+					ret <- eval (body (.rk.grid.newpage.default))
 				})
 	)
 
