@@ -91,8 +91,8 @@ public:
 	QString getMetaProperty (const QString &id) const;
 	QString getDescription () const;
 	
-	virtual void setLabel (const QString &value, bool sync=true);
-	virtual void setMetaProperty (const QString &id, const QString &value, bool sync=true);
+	void setLabel (const QString &value, bool sync=true);
+	void setMetaProperty (const QString &id, const QString &value, bool sync=true);
 	
 	bool isContainer () const { return (type & (Container | Environment | Workspace)); };
 	bool isDataFrame () const { return (type & DataFrame); };
