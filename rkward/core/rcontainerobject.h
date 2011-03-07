@@ -2,7 +2,7 @@
                           rcontainerobject  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004, 2006, 2007, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -61,12 +61,6 @@ public:
 	/** given child_name, constructs a name which is as close as possible to the orginial but valid (i.e. not already in use, not contaning illegal characters */
 	QString validizeName (const QString &child_name, bool unique=true) const;
 
-	/** reimplemented from RObject to actually search for the object */
-	virtual RObject *findObject (const QString &name, bool is_canonified=false) const;
-
-	/** reimplemented from RObject to actually search for matching objects */
-	void findObjectsMatching (const QString &partial_name, RObjectSearchMap *current_list, bool name_is_canonified=false);
-
 	void moveChild (RObject* child, int from_index, int to_index);
 
 	/** reimplemented from RObject to do nothing at all, including not raising an assert. This is because container objects do not have any edit data, themselves, but may be opened for editing, e.g. as a data.frame */
@@ -79,6 +73,9 @@ private:
 	/** usually, we do not update the structure of the row.names() from R, as it is always the same. However, we may need to adjust the length, and this hack does that. */
 	void updateRowNamesObject ();
 protected:
+	/** reimplemented from RObject to actually search for matching objects among the children */
+	RObject *findObjects (const QStringList &path, RObjectSearchMap *matches, const QString &op);
+
 	void updateChildren (RData *new_children);
 	RObjectMap childmap;
 	RKRowNames *rownames_object;

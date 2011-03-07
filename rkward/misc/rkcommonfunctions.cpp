@@ -2,7 +2,7 @@
                           rkcommonfunctions  -  description
                              -------------------
     begin                : Mon Oct 17 2005
-    copyright            : (C) 2005, 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -108,31 +108,43 @@ namespace RKCommonFunctions {
 		getCurrentSymbolOffset (context_line, cursor_pos, strict, &current_word_start, &current_word_end);
 	
 		// if both return the same position, we're on a non-word.
-		if (current_word_start == current_word_end) return (QString::null);
+		if (current_word_start == current_word_end) return (QString ());
 
 		return (context_line.mid (current_word_start, current_word_end - current_word_start));
 	}
 
 	void getCurrentSymbolOffset (const QString &context_line, int cursor_pos, bool strict, int *start, int *end) {
-		if (context_line.isEmpty ()) {
-			*start = 0;
-			*end = 0;
-			return;
-		}
+		*start = 0;
 
-		// step 1: find out word under cursor
-		// We want to match any valid R name, that is, everything composed of letters, 0-9, '.'s and '_'s..
-		QRegExp rx_no_word;
-		if (strict) {
-			rx_no_word = QRegExp ("[^A-Za-z0-9\\._]");
-		} else {
-			rx_no_word = QRegExp ("[^A-Za-z0-9\\._\\$\\:\\[\"\\]]");
-		}
+		int line_end = context_line.length () - 1;
+		*end = line_end + 1;
+		if (cursor_pos > line_end) cursor_pos = line_end;
 
-		// find out the next non-word stuff left and right of the current cursor position
-		*start = context_line.lastIndexOf (rx_no_word, cursor_pos-1) + 1;
-		*end = context_line.indexOf (rx_no_word, cursor_pos);
-		if (*end < 0) *end = context_line.length ();
+		QChar quote_char;
+		for (int i=0; i <= line_end; ++i) {
+			QChar c = context_line.at (i);
+			if (!quote_char.isNull ()) {
+				if (c == '\\') ++i;
+				if (c == quote_char) quote_char = QChar ();
+				continue;
+			} else {
+				if (c == '\'' || c == '\"' || c == '`') {
+					quote_char = c;
+					continue;
+				} else if (c.isLetterOrNumber () || c == '.' || c == '_') {
+					continue;
+				} else if (!strict) {
+					if (c == '$' || c == ':' || c == '[' || c == ']' || c == '@') continue;
+				}
+			}
+
+			// if we did not hit a continue, yet, that means we are on a potential symbol boundary
+			if (i < cursor_pos) *start = i+1;
+			else {
+				*end = i;
+				break;
+			}
+		}
 	}
 
 	QString getRKWardDataDir () {

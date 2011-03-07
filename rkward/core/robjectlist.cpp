@@ -2,7 +2,7 @@
                           robjectlist  -  description
                              -------------------
     begin                : Wed Aug 18 2004
-    copyright            : (C) 2004, 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -209,63 +209,27 @@ REnvironmentObject *RObjectList::createTopLevelEnvironment (const QString &name)
 	return envobj;
 }
 
-RObject *RObjectList::findObject (const QString &name, bool is_canonified) const {
+RObject *RObjectList::findObjects (const QStringList &path, RObjectSearchMap *matches, const QString &op) {
 	RK_TRACE (OBJECTS);
+	RK_ASSERT (op == "$");
 
-	QString canonified = name;
-	if (!is_canonified) canonified = canonifyName (name);
-
-	// TODO: there could be objects with "::" in their names!
-	if (canonified.contains ("::")) {
-		QString env = canonified.section ("::", 0, 0);
-		QString remainder = canonified.section ("::", 1);
-
-		RObject *found = findChildByNamespace (env);
-		if (!found) return 0;
-
-		return (found->findObject (remainder, true));
-	} else if (canonified.startsWith (".GlobalEnv$")) {
-		return (getGlobalEnv ()->findObject (canonified.mid (11), true));
-	} else if (canonified == ".GlobalEnv") {
-		return (getGlobalEnv ());
-	}
-
-	// no "::"-qualification given, do normal search in all environments, return first match
-	for (int i = 0; i < childmap.size (); ++i) {
-		RObject *found = childmap[i]->findObject (canonified, true);
-		if (found) return found;
-	}
-	return 0;
-}
-
-void RObjectList::findObjectsMatching (const QString &partial_name, RObjectSearchMap *current_list, bool name_is_canonified) {
-	RK_TRACE (OBJECTS);
-	RK_ASSERT (current_list);
-
-	QString canonified = partial_name;
-	if (!name_is_canonified) canonified = canonifyName (partial_name);
-
-	// TODO: there could be objects with "::" in their names!
-	if (canonified.contains ("::")) {
-		QString env = canonified.section ("::", 0, 0);
-		QString remainder = canonified.section ("::", 1);
-
-		RObject *found = findChildByNamespace (env);
-		if (!found) return;
+	if (path.value (1) == "::") {
+		RObject *environment = findChildByNamespace (path[0]);
+		if (!environment) return 0;
 		
-		found->findObjectsMatching (remainder, current_list, true);
-		return;
-	} else if (canonified.startsWith (".GlobalEnv$")) {
-		getGlobalEnv ()->findObjectsMatching (canonified.mid (11), current_list, true);
-		return;
-	} else if (canonified == ".GlobalEnv") {
-		current_list->insert (canonified, getGlobalEnv());	// but do not return, there will be at least one further match in base
+		return environment->findObjects (path.mid (2), matches, "$");
+	} else if (path.value (0) == ".GlobalEnv") {
+		if (path.length () > 1) return getGlobalEnv ()->findObjects (path.mid (2), matches, "$");
+		else if (matches) matches->insert (path.value (0), getGlobalEnv ());	// no return, here: At least one more match will be found in base
+		else return getGlobalEnv ();
 	}
 
 	// no namespace given. Search all environments for matches
 	for (int i = 0; i < childmap.size (); ++i) {
-		childmap[i]->findObjectsMatching (canonified, current_list, true);
+		RObject *found = childmap[i]->findObjects (path, matches, "$");
+		if (found && !matches) return found;
 	}
+	return 0;
 }
 
 REnvironmentObject* RObjectList::findChildByNamespace (const QString &namespacename) const {

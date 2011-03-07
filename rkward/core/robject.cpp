@@ -75,14 +75,11 @@ QString RObject::getLabel () const {
 	return getMetaProperty ("label");
 }
 
-RObject *RObject::findObject (const QString &, bool) const {
+RObject* RObject::findObjects (const QStringList &, RObjectSearchMap *, const QString &) {
 	RK_TRACE (OBJECTS);
+	// not a container
+	// TODO: handle '@'
 	return 0;
-}
-
-void RObject::findObjectsMatching (const QString &, RObjectSearchMap *, bool) {
-	RK_TRACE (OBJECTS);
-	return;
 }
 
 QString RObject::getMetaProperty (const QString &id) const {
@@ -496,12 +493,76 @@ QString RObject::rQuote (const QString &string) {
 	return (RKRSharedFunctionality::quote (string));
 }
 
-// static
-QString RObject::canonifyName (const QString &from) {
+//static 
+QStringList RObject::parseObjectPath (const QString &path) {
 	RK_TRACE (OBJECTS);
 
-	QString copy = from;
-	return (copy.replace ("[\"", "$").replace ('[', "").replace ("\"]", "").replace (']', ""));
+	QStringList ret;
+	QString fragment;
+
+	int end = path.length ();
+	QChar quote_char;
+	bool escaped = false;
+	bool seek_bracket_end = false;
+	for (int i = 0; i < end; ++i) {
+		QChar c = path.at (i);
+		if (quote_char.isNull ()) {
+			if (c == '\'' || c == '\"' || c == '`') {
+				quote_char = c;
+			} else {
+				if (!seek_bracket_end) {
+					if (c == '$') {
+						ret.append (fragment);
+						ret.append ("$");
+						fragment.clear ();
+					} else if (c == '[') {
+						ret.append (fragment);
+						ret.append ("$");
+						fragment.clear ();
+						if ((i+1 < end) && (path.at (i+1) == '[')) ++i;
+						seek_bracket_end = true;
+					} else if (c == ':') {
+						ret.append (fragment);
+						ret.append ("::");
+						fragment.clear ();
+						if ((i+1 < end) && (path.at (i+1) == ':')) ++i;
+					} else if (c == '@') {
+						ret.append (fragment);
+						ret.append ("@");
+						fragment.clear ();
+					} else {
+						fragment.append (c);
+					}
+				} else {
+					if (c == ']') {
+						if ((i+1 < end) && (path.at (i+1) == ']')) ++i;
+						seek_bracket_end = false;
+						continue;
+					} else {
+						fragment.append (c);
+					}
+				}
+			}
+		} else {	// inside a quote
+			if (c == '\\') escaped = !escaped;
+			else {
+				if (escaped) {
+					if (c == 't') fragment.append ('\t');
+					else if (c == 'n') fragment.append ('\n');
+					else fragment.append ('\\' + c);
+				} else {
+					if (c == quote_char) {
+						quote_char = QChar ();
+					} else {
+						fragment.append (c);
+					}
+				}
+			}
+		}
+	}
+	if (!fragment.isEmpty ()) ret.append (fragment);
+	RK_DO (qDebug ("parsed object path %s into %s", qPrintable (path), qPrintable (ret.join ("-"))), OBJECTS, DL_DEBUG);
+	return ret;
 }
 
 //virtual

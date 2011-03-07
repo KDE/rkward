@@ -428,51 +428,18 @@ void RKConsole::doTabCompletion () {
 	RKCommonFunctions::getCurrentSymbolOffset (current_line, cursor_pos, false, &word_start, &word_end);
 	QString current_symbol = current_line.mid (word_start, word_end - word_start);
 
-	// should we try a file name completion? Let's do some heuristics
-	bool do_file_completion = false;
-	int quote_start = current_line.lastIndexOf ('"', cursor_pos - 1);
-	if (quote_start < 0) quote_start = current_line.lastIndexOf ('\'', cursor_pos - 1);
+	// as a very simple heuristic: If the current symbol starts with a quote, we should probably attempt file name completion, instead of symbol name completion
+	if (current_symbol.startsWith ("\"") || current_symbol.startsWith ("\'") || current_symbol.startsWith ("`")) {
+		KUrlCompletion comp (KUrlCompletion::FileCompletion);
+		comp.setDir (QDir::currentPath ());
+		comp.makeCompletion (current_symbol.mid (1));
 
-	if (quote_start >= 0) {
-		// we found a quoting char at some earlier position on the line, we might need a filename completion
-		do_file_completion = true;
+		if (doTabCompletionHelper (current_line_num, current_line, word_start + 1, word_end, comp.allMatches ())) return;
+	} else if (!current_symbol.isEmpty ()) {
+		RObject::RObjectSearchMap map;
+		RObjectList::getObjectList ()->findObjectsMatching (current_symbol, &map);
 
-		// however, some characters around quotes signify it's probably not really filename string
-		char char_before_quote = ' ';
-		if (quote_start > 1) char_before_quote = current_line.at (quote_start - 1).toLatin1();
-		char char_after_quote = ' ';
-		if (quote_start <= (current_line.length() - 2)) char_after_quote = current_line.at (quote_start + 1).toLatin1();
-		// these signifiy it might be an object in a list somewhere, e.g. my.data$"varname"
-		if ((char_before_quote == '[') || (char_before_quote == '$') || (char_before_quote == ':')) do_file_completion = false;
-		// these indicate, the quote has likely ended rather that started
-		if ((char_after_quote == ',') || (char_after_quote == ')') || (char_after_quote == ' ') || (char_after_quote == ';')) do_file_completion = false;
-
-		if (do_file_completion) {
-			int quote_end = current_line.indexOf ('"', cursor_pos);
-			if (quote_end < 0) quote_end = current_line.indexOf ('\'', cursor_pos);
-			if (quote_end < 0) quote_end = current_line.length ();
-	
-			QString current_name = current_line.mid (quote_start + 1, quote_end - quote_start - 1);
-			KUrlCompletion comp (KUrlCompletion::FileCompletion);
-			comp.setDir (QDir::currentPath ());
-			comp.makeCompletion (current_name);
-	
-			if (doTabCompletionHelper (current_line_num, current_line, quote_start+1, quote_end, comp.allMatches ())) return;
-		}
-	}
-
-	if (!do_file_completion) {
-		if (!current_symbol.isEmpty ()) {		// try object name completion first
-			RObject::RObjectSearchMap map;
-			RObject::RObjectSearchMap::const_iterator it;
-			RObjectList::getObjectList ()->findObjectsMatching (current_symbol, &map);
-	
-			QStringList entries;
-			for (it = map.constBegin (); it != map.constEnd (); ++it) {
-				entries.append (it.key ());
-			}
-			if (doTabCompletionHelper (current_line_num, current_line, word_start, word_end, entries)) return;
-		}
+		if (doTabCompletionHelper (current_line_num, current_line, word_start, word_end, map.keys ())) return;
 	}
 
 	// no completion was possible

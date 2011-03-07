@@ -2,7 +2,7 @@
                           robjectlist  -  description
                              -------------------
     begin                : Wed Aug 18 2004
-    copyright            : (C) 2004, 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -55,12 +55,6 @@ public:
 	QString makeChildName (const QString &short_child_name, bool) const { return short_child_name; };
 	/** reimplemented from RContainerObject: do nothing. The object-list has no meta data. */
 	void writeMetaData (RCommandChain *) {};
-	
-	/** reimplemented from RContainerObject to search the environments in search order */
-	RObject *findObject (const QString &name, bool canonified=false) const;
-
-	/** reimplemented from RContainerObject to search the environments in search order */
-	void findObjectsMatching (const QString &partial_name, RObjectSearchMap *current_list, bool name_is_canonified=false);
 
 	KUrl getWorkspaceURL () const { return current_url; };
 
@@ -82,6 +76,9 @@ signals:
 /** emitted when the workspace Url has changed */
 	void workspaceUrlChanged (const KUrl& url);
 protected:
+/** reimplemented from RContainerObject to search the environments in search order */
+	RObject *findObjects (const QStringList &path, RObjectSearchMap *matches, const QString &op);
+
 /// reimplemented from RContainerObject to call "remove (objectname)" instead of "objectname <- NULL"
 	QString removeChildCommand (RObject *object) const;
 /// reimplemented from RContainerObject to call "remove (objectname)" instead of "objectname <- NULL"

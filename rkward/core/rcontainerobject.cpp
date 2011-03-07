@@ -269,53 +269,33 @@ int RContainerObject::getIndexOf (RObject *child) const {
 	return childmap.indexOf (child);
 }
 
-RObject *RContainerObject::findObject (const QString &name, bool is_canonified) const {
+RObject *RContainerObject::findObjects (const QStringList &path, RObjectSearchMap *matches, const QString &op) {
 	RK_TRACE (OBJECTS);
-
-	QString canonified = name;
-	if (!is_canonified) canonified = canonifyName (name);
-
-	// TODO: there could be objects with "$" in their names!
-	QString current_level = canonified.section (QChar ('$'), 0, 0);
-	QString remainder = canonified.section (QChar ('$'), 1);
-
-	RObject* found = findChildByName (current_level);
-	if (!found) return 0;
-
-	if (remainder.isEmpty ()) return found;
-
-	return (found->findObject (remainder, true));
-}
-
-void RContainerObject::findObjectsMatching (const QString &partial_name, RObjectSearchMap *current_list, bool name_is_canonified) {
-	RK_TRACE (OBJECTS);
-	RK_ASSERT (current_list);
 
 	fetchMoreIfNeeded ();
 
-	QString canonified = partial_name;
-	if (!name_is_canonified) canonified = canonifyName (partial_name);
+	if (op != "$") return RObject::findObjects (path, matches, op);
 
-	// TODO: there could be objects with "$" in their names!
-	QString current_level = canonified.section (QChar ('$'), 0, 0);
-	QString remainder = canonified.section (QChar ('$'), 1);
+	if (path.length () > 1) {
+		RObject* found = findChildByName (path.value (0));
+		if (found) return found->findObjects (path.mid (2), matches, path.value (1));
+	} else {
+		if (!matches) return findChildByName (path.value (0));
 
-	if (remainder.isEmpty () && !canonified.endsWith (QChar ('$'))) {
+		QString partial = path.value (0);
 		for (int i = 0; i < childmap.size (); ++i) {
 			RObject* child = childmap[i];
-			if (child->getShortName ().startsWith (current_level)) {
+			if (partial.isEmpty () || child->getShortName ().startsWith (partial)) {
 				QString base_name = child->getBaseName ();
-				if (current_list->contains (base_name) || irregularShortName (base_name)) {
-					current_list->insert (child->getFullName (), child);
+				if (matches->contains (base_name) || irregularShortName (base_name)) {
+					matches->insert (child->getFullName (), child);
 				} else {
-					current_list->insert (base_name, child);
+					matches->insert (base_name, child);
 				}
 			}
 		}
-	} else {
-		RObject* found = findChildByName (current_level);
-		if (found) found->findObjectsMatching (remainder, current_list, true);
 	}
+	return 0;
 }
 
 RObject *RContainerObject::createPendingChild (const QString &name, int position, bool container, bool data_frame) {

@@ -160,16 +160,18 @@ public:
 	static QString rQuote (const QString &string);
 /** Returns a pretty description of the object, and its most important properties. TODO should this be virtual or not? I suppose, it's a close call. For now, we do all work here with casts */
 	QString getObjectDescription () const;
-/** Returns a canonified name given a non-canoified name. Warning! This is not (necessarily) suitable for submission to
-R, only for internal lookup. For submission to R, always use RObject::getFullName (), as it will apply more complicated (and correct) rules depending on object type */
-	static QString canonifyName (const QString &from);
+/** Parses an object path (such as package::name[["a"]]$b@slot) into its components, returning them as a list (in this case 'package', '::' 'name', '$', 'a', '$', 'b', '@', 'slot'). */
+	static QStringList parseObjectPath (const QString &path);
 /** Tests whether the given name is "irregular", i.e. contains spaces, quotes, operators, or the like. @see RContainerObject::validizeName () */
 	static bool irregularShortName (const QString &name);
-/** Function for code completion: given the partial name, find all objects matching this partial name
+/** try to find the object as a child object of this object.
+@param name of the object (relative to this object)
+@returns a pointer to the object (if found) or 0 if not found */
+	RObject *findObject (const QString &name) { return findObjects (parseObjectPath (name), 0, "$"); };
+	/** Function for code completion: given the partial name, find all objects matching this partial name
 @param partial_name The partial name to look up
-@param current_list A pointer to a valid (but probably initially empty) RObjectMap. Matches will be added to this list
-@param name_is_canonified internal parameter. Set to true, if the name to match is already canonfied (else it will be canonified internally) */
-	virtual void findObjectsMatching (const QString &partial_name, RObjectSearchMap *current_list, bool name_is_canonified=false);
+@param current_list A pointer to a valid (but probably initially empty) RObjectMap. Matches will be added to this list */
+	void findObjectsMatching (const QString &partial_name, RObjectSearchMap *current_list) { findObjects (parseObjectPath (partial_name), current_list, "$"); };
 
 /** Fetch more levels of object representation (if needed). Note: Data is fetched asynchronously. 
 @param levels levels to recurse (0 = only direct children). */
@@ -181,11 +183,6 @@ R, only for internal lookup. For submission to R, always use RObject::getFullNam
 		int to_index;
 	};
 
-/** try to find the object as a child object of this object. Default implementation always returns 0, as this is not a container
-@param name of the object (relative to this object)
-@param is_canonified the object name may usually have to be canonified. Since this function may be called recursively, canonification may already have occurred on a higher level. In this case the argument is set to true to avoid some duplicate work. When calling from outside always leave the default false.
-@returns a pointer to the object (if found) or 0 if not found */
-	virtual RObject *findObject (const QString &name, bool is_canonified=false) const;
 /** generates a (full) name for a child of this object with the given name. */
 	virtual QString makeChildName (const QString &short_child_name, bool misplaced=false) const;
 protected:
@@ -201,6 +198,9 @@ protected:
 	int type;
 	QVector<qint32> dimensions;
 	QStringList classnames;
+
+/** Worker function for findObject() and findObjectsMatching(). If matches != 0, look for partial matches, and store them in the map (findObjectsMatching()). Else look for exact matches and return the first match (findObject()). */
+	virtual RObject *findObjects (const QStringList &path, RObjectSearchMap *matches, const QString &op);
 
 	virtual QString makeChildBaseName (const QString &short_child_name) const;
 
