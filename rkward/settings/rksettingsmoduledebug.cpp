@@ -39,7 +39,7 @@ RKSettingsModuleDebug::RKSettingsModuleDebug (RKSettings *gui, QWidget *parent) 
 
 	QVBoxLayout* main_vbox = new QVBoxLayout (this);
 
-	QLabel* label = new QLabel (i18n ("<b>These settings are for debugging purposes, only.</b> It is safe to leave the untouched. Also, these settings will only apply to the current session, and not be saved."), this);
+	QLabel* label = new QLabel (i18n ("<b>These settings are for debugging purposes, only.</b> It is safe to leave them untouched. Also, these settings will only apply to the current session, and will not be saved."), this);
 	label->setWordWrap (true);
 	main_vbox->addWidget (label);
 
