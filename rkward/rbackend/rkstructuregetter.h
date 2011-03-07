@@ -37,13 +37,14 @@ private:
 		QString name;
 		bool misplaced;
 		RData *storage;
+		int nesting_depth;
 		RKStructureGetter *getter;
 	};
 
-	void getStructureWorker (SEXP value, const QString &name, bool misplaced, RData *storage);
+	void getStructureWorker (SEXP value, const QString &name, bool misplaced, RData *storage, int nesting_depth);
 /** needed to wrap things inside an R_ToplevelExec */
 	static void getStructureWrapper (GetStructureWorkerArgs *data);
-	void getStructureSafe (SEXP value, const QString &name, bool misplaced, RData *storage);
+	void getStructureSafe (SEXP value, const QString &name, bool misplaced, RData *storage, int nesting_depth);
 	SEXP resolvePromise (SEXP from);
 
 	SEXP prefetch_fun (const char *name, bool from_base=true);
@@ -72,9 +73,6 @@ private:
 	int num_prefetched_funs;
 
 	bool keep_evalled_promises;
-
-	/** current depth of recursion into environments */
-	int nesting_depth;
 };
 
 #endif
