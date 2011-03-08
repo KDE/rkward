@@ -264,18 +264,18 @@ bool RObject::updateStructure (RData *new_data) {
 		return false;
 	}
 
-	RK_ASSERT (new_data->getDataLength () >= 5);
+	RK_ASSERT (new_data->getDataLength () >= StorageSizeBasicInfo);
 	RK_ASSERT (new_data->getDataType () == RData::StructureVector);
 
 	if (!canAccommodateStructure (new_data)) return false;
 
 	bool properties_change = false;
 
-	properties_change = updateName (new_data->getStructureVector ()[0]);
-	properties_change = updateType (new_data->getStructureVector ()[1]);
-	properties_change = updateClasses (new_data->getStructureVector ()[2]);
-	properties_change = updateMeta (new_data->getStructureVector ()[3]);
-	properties_change = updateDimensions (new_data->getStructureVector ()[4]);
+	properties_change = updateName (new_data->getStructureVector ()[StoragePositionName]);
+	properties_change = updateType (new_data->getStructureVector ()[StoragePositionType]);
+	properties_change = updateClasses (new_data->getStructureVector ()[StoragePositionClass]);
+	properties_change = updateMeta (new_data->getStructureVector ()[StoragePositionMeta]);
+	properties_change = updateDimensions (new_data->getStructureVector ()[StoragePositionDims]);
 
 	if (properties_change) RKGlobals::tracker ()->objectMetaChanged (this);
 	if (type & NeedDataUpdate) updateDataFromR (0);
@@ -307,11 +307,11 @@ void RObject::markDataDirty () {
 
 bool RObject::canAccommodateStructure (RData *new_data) {
 	RK_TRACE (OBJECTS);
-	RK_ASSERT (new_data->getDataLength () >= 5);
+	RK_ASSERT (new_data->getDataLength () >= StorageSizeBasicInfo);
 	RK_ASSERT (new_data->getDataType () == RData::StructureVector);
 
-	if (!isValidName (new_data->getStructureVector ()[0])) return false;
-	if (!isValidType (new_data->getStructureVector ()[1])) return false;
+	if (!isValidName (new_data->getStructureVector ()[StoragePositionName])) return false;
+	if (!isValidType (new_data->getStructureVector ()[StoragePositionType])) return false;
 	return true;
 }
 

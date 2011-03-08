@@ -63,7 +63,7 @@ RObject *RContainerObject::updateChildStructure (RObject *child, RData *new_data
 			int child_index = getIndexOf (child);
 			RK_ASSERT (child_index >= 0);
 			if (RKGlobals::tracker ()->removeObject (child, 0, true)) {
-				RData *child_name_data = new_data->getStructureVector ()[0];
+				RData *child_name_data = new_data->getStructureVector ()[StoragePositionName];
 				RK_ASSERT (child_name_data->getDataType () == RData::StringVector);
 				RK_ASSERT (child_name_data->getDataLength () >= 1);
 				QString child_name = child_name_data->getStringVector ()[0];
@@ -79,15 +79,15 @@ RObject *RContainerObject::updateChildStructure (RObject *child, RData *new_data
 bool RContainerObject::updateStructure (RData *new_data) {
 	RK_TRACE (OBJECTS);
 	unsigned int data_length = new_data->getDataLength (); 
-	RK_ASSERT (data_length >= 5);
+	RK_ASSERT (data_length >= StorageSizeBasicInfo);
 	RK_ASSERT (new_data->getDataType () == RData::StructureVector);
 
 	if (!RObject::updateStructure (new_data)) return false;
 
-	if (data_length > 5) {
-		RK_ASSERT (data_length == 6);
+	if (data_length > StorageSizeBasicInfo) {
+		RK_ASSERT (data_length == (StorageSizeBasicInfo + 1));
 
-		RData *children_sub = new_data->getStructureVector ()[5];
+		RData *children_sub = new_data->getStructureVector ()[StoragePositionChildren];
 		RK_ASSERT (children_sub->getDataType () == RData::StructureVector);
 		updateChildren (children_sub);
 		updateRowNamesObject ();
@@ -101,9 +101,9 @@ bool RContainerObject::updateStructure (RData *new_data) {
 RObject *RContainerObject::createChildFromStructure (RData *child_data, const QString &child_name, int position) {
 	RK_TRACE (OBJECTS);
 	RK_ASSERT (child_data->getDataType () == RData::StructureVector);
-	RK_ASSERT (child_data->getDataLength () >= 2);		// need to see at least the type at this point
+	RK_ASSERT (child_data->getDataLength () >= (StoragePositionType + 1));		// need to see at least the type at this point
 
-	RData *type_data = child_data->getStructureVector ()[1];
+	RData *type_data = child_data->getStructureVector ()[StoragePositionType];
 	RK_ASSERT (type_data->getDataType () == RData::IntVector);
 	RK_ASSERT (type_data->getDataLength () == 1);
 
@@ -154,8 +154,8 @@ void RContainerObject::updateChildren (RData *new_children) {
 	for (unsigned int i = 0; i < new_child_count; ++i) {
 		RData *child_data = new_children->getStructureVector ()[i];
 		RK_ASSERT (child_data->getDataType () == RData::StructureVector);
-		RK_ASSERT (child_data->getDataLength () >= 1);
-		RData *child_name_data = child_data->getStructureVector ()[0];
+		RK_ASSERT (child_data->getDataLength () >= (StoragePositionName + 1));
+		RData *child_name_data = child_data->getStructureVector ()[StoragePositionName];
 		RK_ASSERT (child_name_data->getDataType () == RData::StringVector);
 		RK_ASSERT (child_name_data->getDataLength () >= 1);
 		QString child_name = child_name_data->getStringVector ()[0];

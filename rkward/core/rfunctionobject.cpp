@@ -48,7 +48,7 @@ QString RFunctionObject::printArgs () const {
 
 bool RFunctionObject::updateStructure (RData *new_data) {
 	RK_TRACE (OBJECTS);
-	RK_ASSERT (new_data->getDataLength () >= 5);
+	RK_ASSERT (new_data->getDataLength () >= StorageSizeBasicInfo);
 	RK_ASSERT (new_data->getDataType () == RData::StructureVector);
 
 	if (!RObject::updateStructure (new_data)) return false;
@@ -60,11 +60,11 @@ bool RFunctionObject::updateStructure (RData *new_data) {
 
 bool RFunctionObject::updateArguments (RData *new_data) {
 	RK_TRACE (OBJECTS);
-	RK_ASSERT (new_data->getDataLength () == 7);
+	RK_ASSERT (new_data->getDataLength () == (StoragePositionFunValues + 1));
 	RK_ASSERT (new_data->getDataType () == RData::StructureVector);
 
-	RData *argnames_data = new_data->getStructureVector ()[5];
-	RData *argvalues_data = new_data->getStructureVector ()[6];
+	RData *argnames_data = new_data->getStructureVector ()[StoragePositionFunArgs];
+	RData *argvalues_data = new_data->getStructureVector ()[StoragePositionFunValues];
 
 	RK_ASSERT (argnames_data->getDataType () == RData::StringVector);
 	RK_ASSERT (argvalues_data->getDataType () == RData::StringVector);

@@ -142,16 +142,16 @@ void REnvironmentObject::updateFromR (RCommandChain *chain, const QStringList &c
 bool REnvironmentObject::updateStructure (RData *new_data) {
 	RK_TRACE (OBJECTS);
 	RK_ASSERT (new_data->getDataType () == RData::StructureVector);
-	RK_ASSERT (new_data->getDataLength () >= 5);
+	RK_ASSERT (new_data->getDataLength () >= StorageSizeBasicInfo);
 
 	if (!(type & ToplevelEnv)) {
 		if (!RObject::updateStructure (new_data)) return false;
 	}
 
-	if (new_data->getDataLength () > 5) {
-		RK_ASSERT (new_data->getDataLength () == 6);
+	if (new_data->getDataLength () > StorageSizeBasicInfo) {
+		RK_ASSERT (new_data->getDataLength () == (StorageSizeBasicInfo + 1));
 
-		RData *children_sub = new_data->getStructureVector ()[5];
+		RData *children_sub = new_data->getStructureVector ()[StoragePositionChildren];
 		RK_ASSERT (children_sub->getDataType () == RData::StructureVector);
 		updateChildren (children_sub);
 	} else {

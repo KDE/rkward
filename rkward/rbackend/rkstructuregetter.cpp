@@ -284,18 +284,18 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 	dimdata->setData (dims);
 
 	// store everything we have so far
-	int storage_length = 5;
+	int storage_length = RObject::StorageSizeBasicInfo;
 	if (is_container) {
-		storage_length = 6;
+		storage_length = RObject::StorageSizeBasicInfo + 1;
 	} else if (is_function) {
-		storage_length = 7;
+		storage_length = RObject::StorageSizeBasicInfo + 2;
 	}
 	RData::RDataStorage res (storage_length, 0);
-	res[0] = namedata;
-	res[1] = typedata;
-	res[2] = classdata;
-	res[3] = metadata;
-	res[4] = dimdata;
+	res[RObject::StoragePositionName] = namedata;
+	res[RObject::StoragePositionType] = typedata;
+	res[RObject::StoragePositionClass] = classdata;
+	res[RObject::StoragePositionMeta] = metadata;
+	res[RObject::StoragePositionDims] = dimdata;
 
 	// now add the extra info for containers and functions
 	if (is_container) {
@@ -375,7 +375,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 
 		RData *childdata = new RData;
 		childdata->setData (children);
-		res[5] = childdata;
+		res[RObject::StoragePositionChildren] = childdata;
 	} else if (is_function) {
 // TODO: get_formals_fun is still the major bottleneck, but no idea, how to improve on this
 		SEXP formals_s = RKRSupport::callSimpleFun (get_formals_fun, value, R_GlobalEnv);
@@ -392,8 +392,8 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 
 		UNPROTECT (2); /* names_s, formals_s */
 
-		res[5] = funargsdata;
-		res[6] = funargvaluesdata;
+		res[RObject::StoragePositionFunArgs] = funargsdata;
+		res[RObject::StoragePositionFunValues] = funargvaluesdata;
 	}
 
 	UNPROTECT (1); /* value */

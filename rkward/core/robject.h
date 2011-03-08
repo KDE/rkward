@@ -80,7 +80,20 @@ public:
 		MaxKnownDataType = DataLogical
 	};
 
-	#define ROBJECT_TYPE_INTERNAL_MASK (RObject::Container | RObject::Variable | RObject::Workspace | RObject::Environment | RObject::Function)
+/** For passing data between RKStructureGetter and RObject. Be very careful about changing the values in this enum. It is for better readability / searchability of the code, only. */
+	enum {
+		StoragePositionName = 0,
+		StoragePositionType = 1,
+		StoragePositionClass = 2,
+		StoragePositionMeta = 3,
+		StoragePositionDims = 4,
+		StoragePositionChildren = 5,
+		StoragePositionFunArgs = 5,
+		StoragePositionFunValues = 6,
+		StorageSizeBasicInfo = 5,
+	};
+
+#define ROBJECT_TYPE_INTERNAL_MASK (RObject::Container | RObject::Variable | RObject::Workspace | RObject::Environment | RObject::Function)
 /** @returns false if an object of the given old type cannot represent an object of the given new type (e.g. (new_type & RObjectType::Variable), but (old_type & RObjectType::Container)). */
 	static bool isMatchingType (int old_type, int new_type) { return ((old_type & ROBJECT_TYPE_INTERNAL_MASK) == (new_type & ROBJECT_TYPE_INTERNAL_MASK)); };
 	
