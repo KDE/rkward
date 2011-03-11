@@ -1,8 +1,15 @@
-rkward (0.5.5-0devel1) unstable; urgency=low
+rkward (0.5.5z-0.5.6-0devel1) unstable; urgency=low
 
   * new upstream release
 
- -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Mon, 04 Oct 2010 14:30:00 +0200
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Tue, 15 Mar 2011 14:30:00 +0200
+
+rkward (0.5.5-1) unstable; urgency=low
+
+  * new upstream release
+  * add man-page link for new binary rkward.rbackend
+
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Tue, 15 Mar 2011 14:30:00 +0200
 
 rkward (0.5.4-1) unstable; urgency=low
 

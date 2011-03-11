@@ -115,8 +115,9 @@ binary-arch: build install
 	dh_installexamples
 	dh_installmenu
 	dh_installman debian/rkward.1
-	# Link manpage for rkward.bin to rkward
+	# Link manpage for rkward.bin and rkward.rbackend to rkward
 	ln -sf rkward.1.gz debian/rkward/usr/share/man/man1/rkward.bin.1.gz
+	ln -sf rkward.1.gz debian/rkward/usr/share/man/man1/rkward.rbackend.1.gz
 	dh_link
 	dh_strip
 	# do not compress KDE HTML help
