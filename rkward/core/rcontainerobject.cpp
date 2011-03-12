@@ -20,6 +20,7 @@
 
 #include "../rbackend/rinterface.h"
 #include "robjectlist.h"
+#include "rslotspseudoobject.h"
 #include "rkvariable.h"
 #include "rfunctionobject.h"
 #include "renvironmentobject.h"
@@ -30,7 +31,7 @@
 
 #include "../debug.h"
 
-RContainerObject::RContainerObject (RContainerObject *parent, const QString &name) : RObject (parent, name) {
+RContainerObject::RContainerObject (RObject *parent, const QString &name) : RObject (parent, name) {
 	RK_TRACE (OBJECTS);
 	type = Container;
 	rownames_object = 0;
@@ -60,7 +61,7 @@ RObject *RContainerObject::updateChildStructure (RObject *child, RData *new_data
 			delete child;
 			return 0;
 		} else {
-			int child_index = getIndexOf (child);
+			int child_index = childmap.indexOf (child);
 			RK_ASSERT (child_index >= 0);
 			if (RKGlobals::tracker ()->removeObject (child, 0, true)) {
 				RData *child_name_data = new_data->getStructureVector ()[StoragePositionName];
@@ -131,19 +132,14 @@ RObject *RContainerObject::createChildFromStructure (RData *child_data, const QS
 		RK_ASSERT (false);
 		return 0;
 	}
-	RKGlobals::tracker ()->addObject (child_object, this, position);
+	RKGlobals::tracker ()->beginAddObject (child_object, this, position);
+	childmap.insert (position, child_object);
+	RKGlobals::tracker ()->endAddObject (child_object, this, position);
 	return child_object;
 }
 
 void RContainerObject::updateChildren (RData *new_children) {
 	RK_TRACE (OBJECTS);
-
-	if (type & Incomplete) {
-		// If the (new!) type is "Incomplete", it means, the structure getter simply stopped at this point.
-		// In case we already have child info, we should update it (TODO: perhaps only, if anything is listening for child objects?)
-		if (!(childmap.isEmpty () || isType (Updating))) updateFromR (0);
-		return;
-	}
 
 	RK_ASSERT (new_children->getDataType () == RData::StructureVector);
 	unsigned int new_child_count = new_children->getDataLength ();
@@ -263,9 +259,10 @@ void RContainerObject::updateRowNamesObject () {
 	}
 }
 
-int RContainerObject::getIndexOf (RObject *child) const {
+int RContainerObject::getObjectModelIndexOf(RObject *child) const {
 	RK_TRACE (OBJECTS);
 
+	if (child == slots_pseudo_object) return childmap.size ();
 	return childmap.indexOf (child);
 }
 
@@ -316,7 +313,9 @@ RObject *RContainerObject::createPendingChild (const QString &name, int position
 
 	if ((position < 0) || (position > childmap.size ())) position = childmap.size ();
 
-	RKGlobals::tracker ()->addObject (ret, this, position);
+	RKGlobals::tracker ()->beginAddObject (ret, this, position);
+	childmap.insert (position, ret);
+	RKGlobals::tracker ()->endAddObject (ret, this, position);
 
 	return ret;
 }
@@ -332,23 +331,18 @@ void RContainerObject::renameChild (RObject *object, const QString &new_name) {
 	object->name = new_name;
 }
 
-void RContainerObject::insertChild (RObject* child, int position) {
-	RK_TRACE (OBJECTS);
-
-	RK_ASSERT (child->getContainer () == this);
-	if ((position < 0) || (position > childmap.size ())) position = childmap.size ();
-	childmap.insert (position, child);
-}
-
 void RContainerObject::removeChildNoDelete (RObject *object) {
 	RK_TRACE (OBJECTS);
 
-	int i = getIndexOf (object);
-	if (i < 0) {
-		RK_ASSERT (false);
-		return;
-	}
-	childmap.removeAt (i);
+	if (!childmap.removeOne (object)) RK_ASSERT (false);
+}
+
+void RContainerObject::insertChild (RObject* child, int position) {
+	RK_TRACE (OBJECTS);
+
+	RK_ASSERT (child->parentObject () == this);
+	if ((position < 0) || (position > childmap.size ())) position = childmap.size ();
+	childmap.insert (position, child);
 }
 
 void RContainerObject::removeChild (RObject *object, bool removed_in_workspace) {

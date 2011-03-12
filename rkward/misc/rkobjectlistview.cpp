@@ -227,8 +227,7 @@ bool RKObjectListViewSettings::filterAcceptsRow (int source_row, const QModelInd
 	if (!source_parent.isValid ()) return true;
 
 	RObject* object = static_cast<RObject*> (source_parent.internalPointer ());
-	RK_ASSERT (object->isContainer ());
-	object = static_cast<RContainerObject*> (object)->findChildByIndex (source_row);
+	object = object->findChildByObjectModelIndex (source_row);
 	RK_ASSERT (object);
 
 	// always show the global env
@@ -263,12 +262,13 @@ bool RKObjectListViewSettings::lessThan (const QModelIndex& left, const QModelIn
 
 	// for top-level environments, always use the search order
 	if (left_object->isType (RObject::ToplevelEnv) && right_object->isType (RObject::ToplevelEnv)) {
-		RContainerObject* left_parent = left_object->getContainer ();
-		RContainerObject* right_parent = right_object->getContainer ();
+		RObject* left_parent = left_object->parentObject ();
+		RObject* right_parent = right_object->parentObject ();
 		if (!(left_parent && right_parent)) return false;
 
-		return (left_parent->getIndexOf (left_object) < right_parent->getIndexOf (right_object));
-	}
+		return (left_parent->getObjectModelIndexOf (left_object) < right_parent->getObjectModelIndexOf (right_object));
+	} else if (left_object->isPseudoObject ()) return false;
+	else if (right_object->isPseudoObject ()) return true;
 
 	return (QSortFilterProxyModel::lessThan (left, right));
 }

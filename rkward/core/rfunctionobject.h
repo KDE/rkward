@@ -29,7 +29,7 @@ Internal representation of function objects in the R workspace
 
 class RFunctionObject : public RObject {
 public:
-	RFunctionObject (RContainerObject *parent, const QString &name);
+	RFunctionObject (RObject *parent, const QString &name);
 	~RFunctionObject ();
 
 /** reimplemented from RObject to handle function arguments */

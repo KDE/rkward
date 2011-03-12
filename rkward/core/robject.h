@@ -24,6 +24,7 @@
 
 #include "../rbackend/rcommandreceiver.h"
 
+class RSlotsPseudoObject;
 class RContainerObject;
 class RCommandChain;
 class RKEditor;
@@ -39,7 +40,7 @@ Base class for representations of objects in the R-workspace. RObject is never u
 
 class RObject : public RCommandReceiver {
 public:
-	RObject (RContainerObject *parent, const QString &name);
+	RObject (RObject *parent, const QString &name);
 	virtual ~RObject ();
 
 /** types of objects, RKWard knows about */
@@ -57,11 +58,13 @@ public:
 		ToplevelEnv=1 << 10,
 		PackageEnv=1 << 11,
 		Misplaced=1 << 12,		/** < the object is not in the namespace where it would be expected */
-		Numeric=1 << 13,
-		Factor=2 << 13,
-		Character=3 << 13,
-		Logical=4 << 13,
+		S4Object=1 << 13,
+		Numeric=1 << 14,
+		Factor=2 << 14,
+		Character=3 << 14,
+		Logical=4 << 14,
 		DataTypeMask=Numeric | Factor | Character | Logical,
+		PseudoObject = 1 << 26, /** < The object is an internal representation, only, and does not exist in R. Currently, this is the case only for the slots-pseudo object */
 		Updating=1 << 27, /** < The object is about to be updated from R */
 		Incomplete=1 << 28,	/** < The information on this object is not complete (typically, it's children have not been scanned, yet). */
 		NonVisibleObject=1 << 29,	/** < the object is not listed in the object list. Currently, this is only the case for row.names()-objects */
@@ -87,10 +90,11 @@ public:
 		StoragePositionClass = 2,
 		StoragePositionMeta = 3,
 		StoragePositionDims = 4,
-		StoragePositionChildren = 5,
-		StoragePositionFunArgs = 5,
-		StoragePositionFunValues = 6,
-		StorageSizeBasicInfo = 5,
+		StoragePositionSlots = 5,
+		StoragePositionChildren = 6,
+		StoragePositionFunArgs = 6,
+		StoragePositionFunValues = 7,
+		StorageSizeBasicInfo = 6,
 	};
 
 #define ROBJECT_TYPE_INTERNAL_MASK (RObject::Container | RObject::Variable | RObject::Workspace | RObject::Environment | RObject::Function)
@@ -112,6 +116,8 @@ public:
 	bool isVariable () const { return (type & Variable); };
 	/** see RObjectType */
 	bool isType (int type) const { return (RObject::type & type); };
+	bool isPseudoObject () const { return isType (PseudoObject); };
+	bool isSlotsPseudoObject () const { return (this && parent && ((void*) parent->slots_pseudo_object == (void*) this)); };
 	bool hasMetaObject () const { return (meta_map); };
 	/** see RObjectType::Pending */
 	bool isPending () const { return type & Pending; };
@@ -145,6 +151,11 @@ public:
 /** short hand for getDimension (0). Meaningful for one-dimensional objects */
 	int getLength () const { return dimensions[0]; };
 
+	/** return the index of the given child, or -1 if there is no such child */
+	virtual int getObjectModelIndexOf (RObject *child) const;
+	int numChildrenForObjectModel () const;
+	RObject *findChildByObjectModelIndex (int) const;
+
 /** A QList of RObjects. Internally the same as RObjectMap, but can be considered "public" */
 	typedef QList<RObject*> ObjectList;
 	typedef QMap<QString, RObject*> RObjectSearchMap;
@@ -155,15 +166,15 @@ public:
 /** write the MetaData to the backend. Commands will be issued in the given chain */
 	virtual void writeMetaData (RCommandChain *chain);
 
-/** Returns the parent / container of this object. All objects have a parent except for the RObjectList (which returns 0) */
-	RContainerObject *getContainer () const { return (parent); };
+/** Returns the parent of this object. All objects have a parent except for the RObjectList (which returns 0) */
+	RObject *parentObject () const { return (parent); };
 
 	RDataType getDataType () const { return (typeToDataType (type)); };
 	int getType () const { return type; };
-	static RDataType typeToDataType (int ftype) { return ((RDataType) ((ftype & DataTypeMask) >> 13)); };
+	static RDataType typeToDataType (int ftype) { return ((RDataType) ((ftype & DataTypeMask) >> 14)); };
 	void setDataType (RDataType new_type) {
 		int n_type = type - (type & DataTypeMask);
-		type = n_type + (new_type << 13);
+		type = n_type + (new_type << 14);
 	};
 /** returns a textual representation of the given RDataType */
 	static QString typeToText (RDataType);
@@ -206,7 +217,8 @@ protected:
 /** A map of objects accessible by index. Used in RContainerObject. Defined here for technical reasons. */
 	typedef QList<RObject*> RObjectMap;
 
-	RContainerObject *parent;
+	RObject *parent;
+	RSlotsPseudoObject *slots_pseudo_object;
 	QString name;
 	int type;
 	QVector<qint32> dimensions;
@@ -248,6 +260,10 @@ protected:
 @param new_data The command. Make sure it really is the dims field of an .rk.get.structure-command to update classes *before* calling this function! WARNING: the new_data object may get changed during this call. Call canAccommodateStructure () before calling this function!
 @returns whether this caused any changes */
 	bool updateDimensions (RData *new_data);
+/** update information on slots of this object (if it is an S4 object)
+@param new_data The command. Make sure it really is the slots field of an .rk.get.structure-command to update classes *before* calling this function! WARNING: the new_data object may get changed during this call. Call canAccommodateStructure () before calling this function!
+@returns whether this caused any changes */
+	bool updateSlots (RData *new_data);
 
 friend class RKModificationTracker;
 /** Notify the object that some model needs its data. The object should take care of fetching the data from the backend, unless it already has the data. The default implementation does nothing (raises an assert). */

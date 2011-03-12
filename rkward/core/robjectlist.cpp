@@ -52,7 +52,11 @@ RObjectList::RObjectList () : RContainerObject (0, QString::null) {
 	type = RObject::Workspace;
 	
 	update_chain = 0;
-	RKGlobals::tracker ()->addObject (createTopLevelEnvironment (".GlobalEnv"), this, 0);
+
+	RObject *globalenv = createTopLevelEnvironment (".GlobalEnv");
+	RKGlobals::tracker ()->beginAddObject (globalenv, this, 0);
+	childmap.insert (0, globalenv);
+	RKGlobals::tracker ()->endAddObject (globalenv, this, 0);
 }
 
 RObjectList::~RObjectList () {
@@ -178,7 +182,9 @@ void RObjectList::updateEnvironments (const QStringList &env_names, bool force_g
 			}
 		} else {
 			obj = createTopLevelEnvironment (name);
-			RKGlobals::tracker ()->addObject (obj, this, i);
+			RKGlobals::tracker ()->beginAddObject (obj, this, i);
+			childmap.insert (i, obj);
+			RKGlobals::tracker ()->endAddObject (obj, this, i);
 		}
 		newchildmap.insert (i, obj);
 	}

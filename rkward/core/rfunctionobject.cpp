@@ -22,7 +22,7 @@
 #include "../rkglobals.h"
 #include "../debug.h"
 
-RFunctionObject::RFunctionObject (RContainerObject *parent, const QString &name) : RObject (parent, name) {
+RFunctionObject::RFunctionObject (RObject *parent, const QString &name) : RObject (parent, name) {
 	RK_TRACE (OBJECTS);
 	type = Function;
 }

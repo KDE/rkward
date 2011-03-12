@@ -200,7 +200,7 @@ QString RKComponentScriptingProxy::getObjectParent (const QString &name) {
 
 	RObject* object = RObjectList::getObjectList ()->findObject (name);
 	if (object) {
-		if (object->getContainer ()) return (object->getContainer ()->getFullName ());
+		if (object->parentObject ()) return (object->parentObject ()->getFullName ());
 	}
 	return (QString ());
 }

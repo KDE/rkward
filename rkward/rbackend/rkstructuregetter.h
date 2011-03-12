@@ -35,16 +35,16 @@ private:
 	struct GetStructureWorkerArgs {
 		SEXP toplevel;
 		QString name;
-		bool misplaced;
+		int add_type_flags;
 		RData *storage;
 		int nesting_depth;
 		RKStructureGetter *getter;
 	};
 
-	void getStructureWorker (SEXP value, const QString &name, bool misplaced, RData *storage, int nesting_depth);
+	void getStructureWorker (SEXP value, const QString &name, int add_type_flags, RData *storage, int nesting_depth);
 /** needed to wrap things inside an R_ToplevelExec */
 	static void getStructureWrapper (GetStructureWorkerArgs *data);
-	void getStructureSafe (SEXP value, const QString &name, bool misplaced, RData *storage, int nesting_depth);
+	void getStructureSafe (SEXP value, const QString &name, int add_type_flags, RData *storage, int nesting_depth);
 	SEXP resolvePromise (SEXP from);
 
 	SEXP prefetch_fun (const char *name, bool from_base=true);
@@ -70,6 +70,7 @@ private:
 	SEXP get_formals_fun;
 	SEXP double_brackets_fun;
 	SEXP length_fun;
+	SEXP rk_get_slots_fun;
 	int num_prefetched_funs;
 
 	bool keep_evalled_promises;

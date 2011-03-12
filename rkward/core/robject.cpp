@@ -26,6 +26,7 @@
 #include "../rkglobals.h"
 #include "robjectlist.h"
 #include "rcontainerobject.h"
+#include "rslotspseudoobject.h"
 #include "rkvariable.h"
 #include "renvironmentobject.h"
 #include "rfunctionobject.h"
@@ -38,13 +39,14 @@ namespace RObjectPrivate {
 	QVector<qint32> dim_null (1, 0);
 }
 
-RObject::RObject (RContainerObject *parent, const QString &name) {
+RObject::RObject (RObject *parent, const QString &name) {
 	RK_TRACE (OBJECTS);
-	
+
 	RObject::parent = parent;
 	RObject::name = name;
 	type = 0;
 	meta_map = 0;
+	slots_pseudo_object = 0;
 	dimensions = RObjectPrivate::dim_null;	// safe initialization
 }
 
@@ -52,6 +54,7 @@ RObject::~RObject () {
 	RK_TRACE (OBJECTS);
 
 	cancelOutstandingCommands ();
+	delete slots_pseudo_object;
 }
 
 bool RObject::irregularShortName (const QString &name) {
@@ -75,11 +78,20 @@ QString RObject::getLabel () const {
 	return getMetaProperty ("label");
 }
 
-RObject* RObject::findObjects (const QStringList &, RObjectSearchMap *, const QString &) {
+RObject* RObject::findObjects (const QStringList &path, RObjectSearchMap *matches, const QString &op) {
 	RK_TRACE (OBJECTS);
 	// not a container
-	// TODO: handle '@'
+	if (op == "@") {
+		if (slots_pseudo_object) return (slots_pseudo_object->findObjects (path, matches, "$"));
+	}
 	return 0;
+}
+
+int RObject::getObjectModelIndexOf (RObject *child) const {
+	RK_TRACE (OBJECTS);
+
+	if (child == slots_pseudo_object) return 0;
+	return -1;
 }
 
 QString RObject::getMetaProperty (const QString &id) const {
@@ -213,7 +225,7 @@ void RObject::updateFromR (RCommandChain *chain) {
 	RK_TRACE (OBJECTS);
 
 	RCommand *command;
-	if (getContainer () == RObjectList::getGlobalEnv ()) {
+	if (parentObject () == RObjectList::getGlobalEnv ()) {
 #warning TODO: find a generic solution
 // We handle objects directly in .GlobalEnv differently. That's to avoid forcing promises, when addressing the object directly. In the long run, .rk.get.structure should be reworked to simply not need the value-argument in any case.
 		 command = new RCommand (".rk.get.structure.global (" + rQuote (getShortName ()) + ')', RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString::null, this, ROBJECT_UDPATE_STRUCTURE_COMMAND);
@@ -231,7 +243,11 @@ void RObject::fetchMoreIfNeeded (int levels) {
 	RK_TRACE (OBJECTS);
 
 	if (isType (Updating)) return;
-	if (isType (Incomplete)) updateFromR (0);
+	if (isType (Incomplete)) {
+		updateFromR (0);
+		return;
+	}
+	if (slots_pseudo_object) slots_pseudo_object->fetchMoreIfNeeded (levels);
 	if (levels <= 0) return;
 	if (!isContainer ()) return;
 	const RObjectMap children = static_cast<RContainerObject*> (this)->childmap;
@@ -250,8 +266,8 @@ void RObject::rCommandDone (RCommand *command) {
 			RKGlobals::tracker ()->removeObject (this, 0, true);
 			return;
 		}
-		if (parent) parent->updateChildStructure (this, command);		// this may result in a delete, so nothing after this!
-		else updateStructure (command);		// if we have no parent, likely we're the RObjectList 
+		if (parent && parent->isContainer ()) static_cast<RContainerObject*> (parent)->updateChildStructure (this, command);		// this may result in a delete, so nothing after this!
+		else updateStructure (command);		// no (container) parent can happen for RObjectList and pseudo objects
 		return;
 	} else {
 		RK_ASSERT (false);
@@ -276,10 +292,18 @@ bool RObject::updateStructure (RData *new_data) {
 	properties_change = updateClasses (new_data->getStructureVector ()[StoragePositionClass]);
 	properties_change = updateMeta (new_data->getStructureVector ()[StoragePositionMeta]);
 	properties_change = updateDimensions (new_data->getStructureVector ()[StoragePositionDims]);
+	properties_change = updateSlots (new_data->getStructureVector ()[StoragePositionSlots]);
 
 	if (properties_change) RKGlobals::tracker ()->objectMetaChanged (this);
 	if (type & NeedDataUpdate) updateDataFromR (0);
 	if (isPending ()) type -= Pending;
+
+	if (type & Incomplete) {
+		// If the (new!) type is "Incomplete", it means, the structure getter simply stopped at this point.
+		// In case we already have child info, we should update it (TODO: perhaps only, if anything is listening for child objects?)
+		if (numChildrenForObjectModel () && (!isType (Updating))) updateFromR (0);
+		return true;
+	}
 
 	return true;
 }
@@ -438,18 +462,75 @@ bool RObject::updateDimensions (RData *new_data) {
 	return (false);
 }
 
+bool RObject::updateSlots (RData *new_data) {
+	RK_TRACE (OBJECTS);
+
+	if (new_data->getDataLength ()) {
+		RK_ASSERT (new_data->getDataType () == RData::StructureVector);
+		bool added = false;
+		if (!slots_pseudo_object) {
+			slots_pseudo_object = new RSlotsPseudoObject (this, QString ());
+			added = true;
+			RKGlobals::tracker ()->lockUpdates (true);
+		}
+		bool ret = slots_pseudo_object->updateStructure (new_data->getStructureVector ()[0]);
+		if (added) {
+			RKGlobals::tracker ()->lockUpdates (false);
+
+			int index = getObjectModelIndexOf (slots_pseudo_object);
+			RSlotsPseudoObject *spo = slots_pseudo_object;
+			slots_pseudo_object = 0;	// HACK: Must not be included in the count during the call to beginAddObject
+			RKGlobals::tracker ()->beginAddObject (slots_pseudo_object, this, index);
+			slots_pseudo_object = spo;
+			RKGlobals::tracker ()->endAddObject (slots_pseudo_object, this, index);
+		}
+		return ret;
+	} else if (slots_pseudo_object) {
+		RKGlobals::tracker ()->removeObject (slots_pseudo_object, 0, true);
+	}
+	return false;
+}
+
+int RObject::numChildrenForObjectModel () const {
+	RK_TRACE (OBJECTS);
+
+	int ret = isContainer () ? static_cast<const RContainerObject*>(this)->numChildren () : 0;
+	if (slots_pseudo_object) return ret + 1;
+	return ret;
+}
+
+RObject *RObject::findChildByObjectModelIndex (int index) const {
+	int offset = index;
+	if (isContainer ()) {
+		const RContainerObject *container = static_cast<const RContainerObject*>(this);
+		if (index < container->numChildren ()) return container->findChildByIndex (index);
+		offset -= container->numChildren ();
+	}
+	if (offset == 0) return slots_pseudo_object;
+	return 0;
+}
+
 RKEditor *RObject::editor () const {
 	return (RKGlobals::tracker ()->objectEditor (this));
 }
 
 void RObject::rename (const QString &new_short_name) {
 	RK_TRACE (OBJECTS);
-	parent->renameChild (this, new_short_name);
+	RK_ASSERT (canRename ());
+	static_cast<RContainerObject*> (parent)->renameChild (this, new_short_name);
 }
 
 void RObject::remove (bool removed_in_workspace) {
 	RK_TRACE (OBJECTS);
-	parent->removeChild (this, removed_in_workspace);
+	RK_ASSERT (canRemove ());
+
+	if (isSlotsPseudoObject ()) {
+		RK_ASSERT (removed_in_workspace);
+		parent->slots_pseudo_object = 0;
+		delete this;
+	} else {
+		static_cast<RContainerObject*> (parent)->removeChild (this, removed_in_workspace);
+	}
 }
 
 //static
@@ -588,10 +669,12 @@ bool RObject::canRead () const {
 
 	return (this != RObjectList::getObjectList ());
 }
-
+ 
 bool RObject::canRename () const {
 	RK_TRACE (OBJECTS);
 
+	if (isPseudoObject ()) return false;
+	if (parent && parent->isSlotsPseudoObject ()) return false;
 	// TODO: find out, if binding is locked:
 	// if (isLocked ()) return false;
 	return (isInGlobalEnv ());
@@ -600,6 +683,8 @@ bool RObject::canRename () const {
 bool RObject::canRemove () const {
 	RK_TRACE (OBJECTS);
 
+	if (isPseudoObject ()) return false;
+	if (parent && parent->isSlotsPseudoObject ()) return false;
 	// TODO: find out, if binding is locked:
 	// if (isLocked ()) return false;
 	return (isInGlobalEnv ());

@@ -311,7 +311,7 @@ bool RKWorkplace::canEditObject (RObject *object) {
 	
 	if (object->isDataFrame ()) {
 		return true;
-	} else if (object->isVariable () && object->getContainer ()->isDataFrame ()) {
+	} else if (object->isVariable () && object->parentObject ()->isDataFrame ()) {
 		return true;
 	}
 	return false;
@@ -336,8 +336,8 @@ RKEditor *RKWorkplace::editObject (RObject *object) {
 	RKEditor *existing_editor = object->editor ();
 	if (!existing_editor) {
 		if (!iobj->isDataFrame ()) {
-			if (iobj->isVariable () && iobj->getContainer ()->isDataFrame ()) {
-				iobj = iobj->getContainer ();
+			if (iobj->isVariable () && iobj->parentObject ()->isDataFrame ()) {
+				iobj = iobj->parentObject ();
 			} else {
 				return 0;
 			}

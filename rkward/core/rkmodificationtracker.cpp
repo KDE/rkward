@@ -61,37 +61,39 @@ bool RKModificationTracker::removeObject (RObject *object, RKEditor *editor, boo
 	RK_ASSERT (!((editor) && (!ed)));
 	RK_ASSERT (!(removed_in_workspace && editor));
 
-	if (removed_in_workspace) {
-		if (ed) {
-			if (KMessageBox::questionYesNo (0, i18n ("The object '%1' was removed from workspace or changed to a different type of object, but is currently opened for editing. Do you want to restore it?", object->getFullName ()), i18n ("Restore object?")) == KMessageBox::Yes) {
-				ed->restoreObject (object);
-				return false;
-			}
-		}
-	} else {
-		if (editor || ed) {
-			if (KMessageBox::questionYesNo (0, i18n ("Do you really want to remove the object '%1'? The object is currently opened for editing, it will be removed in the editor, too. There's no way to get it back.", object->getFullName ()), i18n ("Remove object?")) != KMessageBox::Yes) {
-				return false;
+	if (!object->isPseudoObject ()) {
+		if (removed_in_workspace) {
+			if (ed) {
+				if (KMessageBox::questionYesNo (0, i18n ("The object '%1' was removed from workspace or changed to a different type of object, but is currently opened for editing. Do you want to restore it?", object->getFullName ()), i18n ("Restore object?")) == KMessageBox::Yes) {
+					ed->restoreObject (object);
+					return false;
+				}
 			}
 		} else {
-			// TODO: check for other editors editing this object
-			if (KMessageBox::questionYesNo (0, i18n ("Do you really want to remove the object '%1'? There's no way to get it back.", object->getFullName ()), i18n ("Remove object?")) != KMessageBox::Yes) {
-				return false;
+			if (editor || ed) {
+				if (KMessageBox::questionYesNo (0, i18n ("Do you really want to remove the object '%1'? The object is currently opened for editing, it will be removed in the editor, too. There's no way to get it back.", object->getFullName ()), i18n ("Remove object?")) != KMessageBox::Yes) {
+					return false;
+				}
+			} else {
+				// TODO: check for other editors editing this object
+				if (KMessageBox::questionYesNo (0, i18n ("Do you really want to remove the object '%1'? There's no way to get it back.", object->getFullName ()), i18n ("Remove object?")) != KMessageBox::Yes) {
+					return false;
+				}
 			}
 		}
 	}
 
 	RK_ASSERT (object);
-	RK_ASSERT (object->getContainer ());
+	RK_ASSERT (object->parentObject ());
 
 	if (!updates_locked) {
-		QModelIndex object_index = indexFor (object->getContainer ());
-		int object_row = object->getContainer ()->getIndexOf (object);
+		QModelIndex object_index = indexFor (object->parentObject ());
+		int object_row = object->parentObject ()->getObjectModelIndexOf (object);
 		RK_ASSERT (object_row >= 0);
 		beginRemoveRows (object_index, object_row, object_row);
 	}
 
-	if (!updates_locked) sendListenerNotification (RObjectListener::ObjectRemoved, object, 0, 0, 0);
+	if (!(updates_locked || object->isPseudoObject ())) sendListenerNotification (RObjectListener::ObjectRemoved, object, 0, 0, 0);
 
 	object->remove (removed_in_workspace);
 
@@ -102,6 +104,7 @@ bool RKModificationTracker::removeObject (RObject *object, RKEditor *editor, boo
 
 void RKModificationTracker::moveObject (RContainerObject *parent, RObject* child, int old_index, int new_index) {
 	RK_TRACE (OBJECTS);
+	RK_ASSERT (!child->isPseudoObject ());
 
 	QModelIndex parent_index;
 
@@ -137,18 +140,20 @@ void RKModificationTracker::renameObject (RObject *object, const QString &new_na
 	}
 }
 
-void RKModificationTracker::addObject (RObject *object, RContainerObject* parent, int position) {
+void RKModificationTracker::beginAddObject (RObject *object, RObject* parent, int position) {
 	RK_TRACE (OBJECTS);
 
 	if (!updates_locked) {
 		QModelIndex parent_index = indexFor (parent);
 		beginInsertRows (parent_index, position, position);
 	}
+}
 
-	parent->insertChild (object, position);
+void RKModificationTracker::endAddObject (RObject *object, RObject* parent, int position) {
+	RK_TRACE (OBJECTS);
 
 	if (!updates_locked) {
-		sendListenerNotification (RObjectListener::ChildAdded, parent, position, 0, 0);
+		if (!object->isPseudoObject ()) sendListenerNotification (RObjectListener::ChildAdded, parent, position, 0, 0);
 		endInsertRows ();
 	}
 }
@@ -259,11 +264,9 @@ QModelIndex RKObjectListModel::index (int row, int column, const QModelIndex& pa
 	}
 	RObject* parent_object = static_cast<RObject*> (parent.internalPointer ());
 
-	RK_ASSERT (parent_object->isContainer ());
-	RContainerObject* container = static_cast<RContainerObject*> (parent_object);
-	RK_ASSERT (row < container->numChildren ());
+	RK_ASSERT (row < parent_object->numChildrenForObjectModel ());
 
-	return (createIndex (row, column, container->findChildByIndex (row)));
+	return (createIndex (row, column, parent_object->findChildByObjectModelIndex (row)));
 }
 
 QModelIndex RKObjectListModel::parent (const QModelIndex& index) const {
@@ -272,7 +275,7 @@ QModelIndex RKObjectListModel::parent (const QModelIndex& index) const {
 	if (!index.isValid ()) return QModelIndex ();
 	RObject* child = static_cast<RObject*> (index.internalPointer ());
 	RK_ASSERT (child);
-	return (indexFor (child->getContainer ()));
+	return (indexFor (child->parentObject ()));
 }
 
 int RKObjectListModel::rowCount (const QModelIndex& parent) const {
@@ -282,9 +285,8 @@ int RKObjectListModel::rowCount (const QModelIndex& parent) const {
 	if (parent.isValid ()) parent_object = static_cast<RObject*> (parent.internalPointer ());
 	else return 1;		// the root item
 
-	if (!(parent_object && parent_object->isContainer ())) return 0;
-
-	return (static_cast<RContainerObject*> (parent_object)->numChildren ());
+	if (!parent_object) return 0;
+	return (parent_object->numChildrenForObjectModel ());
 }
 
 int RKObjectListModel::columnCount (const QModelIndex&) const {
@@ -313,6 +315,12 @@ QVariant RKObjectListModel::data (const QModelIndex& index, int role) const {
 		}
 		if (col == ClassColumn) return object->makeClassString ("; ");
 		RK_ASSERT (false);
+	} else if (role == Qt::FontRole) {
+		if (col == NameColumn && object->isPseudoObject ()) {
+			QFont font;
+			font.setItalic (true);
+			return (font);
+		}
 	} else if (role == Qt::DecorationRole) {
 		if (col == NameColumn) return RKStandardIcons::iconForObject (object);
 	} else if (role == Qt::ToolTipRole) {
@@ -344,8 +352,8 @@ bool RKObjectListModel::hasChildren(const QModelIndex& parent) const {
 	if (parent.isValid ()) parent_object = static_cast<RObject*> (parent.internalPointer ());
 	else return true;		// the root item
 
-	if (!(parent_object && parent_object->isContainer ())) return false;
-	return (parent_object->isType (RObject::Incomplete) || static_cast<RContainerObject*> (parent_object)->numChildren ());
+	if (!parent_object) return false;
+	return (parent_object->isType (RObject::Incomplete) || parent_object->numChildrenForObjectModel ());
 }
 
 bool RKObjectListModel::canFetchMore (const QModelIndex &parent) const {
@@ -369,11 +377,11 @@ QModelIndex RKObjectListModel::indexFor (RObject *object) const {
 	if (!object) return QModelIndex ();
 	if (object->isType (RObject::NonVisibleObject)) return QModelIndex ();
 
-	RContainerObject *parent = object->getContainer ();
+	RObject *parent = object->parentObject ();
 	// must cast to RObject, here. Else casting to void* and back will confuse the hell out of GCC 4.2
 	if (!parent) return createIndex (0, 0, static_cast<RObject*> (RObjectList::getObjectList ()));
 
-	int row = parent->getIndexOf (object);
+	int row = parent->getObjectModelIndexOf (object);
 	if (row < 0) {
 		RK_ASSERT (false);
 		return QModelIndex ();

@@ -271,6 +271,13 @@
     r
 }
 
+".rk.get.slots" <- function (x) {
+	slotnames <- methods::slotNames (class (x))
+	ret <- lapply (slotnames, function (slotname) slot (x, slotname))
+	names (ret) <- slotnames
+	ret
+}
+
 ".rk.get.environment.children" <- function (x, envlevel=0, namespacename=NULL) {
 	ret <- list ()
 

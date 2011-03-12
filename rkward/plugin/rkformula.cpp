@@ -166,12 +166,12 @@ void RKFormula::makeModelString () {
 		model_ok = false;
 	}
 	if (dep_var) {
-		container = dep_var->getContainer ();
+		container = dep_var->parentObject ();
 	} else if (!vlist.empty ()) {
-		container = vlist.first ()->getContainer ();
+		container = vlist.first ()->parentObject ();
 	}
 	for (RObject::ObjectList::const_iterator it = vlist.begin (); it != vlist.end (); ++it) {
-		if ((*it)->getContainer () != container) {
+		if ((*it)->parentObject () != container) {
 			multitable = true;
 			break;
 		}

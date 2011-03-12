@@ -233,7 +233,7 @@ void RObjectBrowserInternal::popupRename () {
 	QString name = KInputDialog::getText (i18n ("Rename object"), i18n ("Enter the new name"), list_view->menuObject ()->getShortName (), &ok, this);
 	
 	if (ok) {
-		QString valid = list_view->menuObject ()->getContainer ()->validizeName (name);
+		QString valid = static_cast<RContainerObject*> (list_view->menuObject ()->parentObject ())->validizeName (name);
 		if (valid != name) KMessageBox::sorry (this, i18n ("The name you specified was already in use or not valid. Renamed to %1", valid), i18n ("Invalid Name"));
 		RKGlobals::tracker ()->renameObject (list_view->menuObject (), valid);
 	}

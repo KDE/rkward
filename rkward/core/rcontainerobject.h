@@ -31,7 +31,7 @@ Internal representation of objects in the R-workspace that contain other objects
 
 class RContainerObject : public RObject {
 public:
-	RContainerObject (RContainerObject *parent, const QString &name);
+	RContainerObject (RObject *parent, const QString &name);
 
 	~RContainerObject ();
 
@@ -51,7 +51,7 @@ public:
 	/** fetches the child at the given position. This is very fast. */
 	RObject *findChildByIndex (int position) const;
 	/** return the index of the given child, or -1 if there is no such child */
-	int getIndexOf (RObject *child) const;
+	int getObjectModelIndexOf (RObject *child) const;
 	
 	/** creates a new child. Right now only RKVariables (false, false), or data.frames (true, true), or unspecified containers (true, false) can be created.
 	API will likely change. The child is NOT created in the workspace. That's your resonsibility. All this function returns is a new RObject* of the given

@@ -617,7 +617,10 @@ bool RKVarEditMetaModel::setData (const QModelIndex& index, const QVariant& valu
 
 	if (row == NameRow) {
 		if (var->getShortName () != value.toString ()) {
-			RKGlobals::tracker ()->renameObject (var, var->getContainer ()->validizeName (value.toString ()));
+			if (!var->canRename ()) return false;
+			if (var->parentObject ()->isContainer ()) {
+				RKGlobals::tracker ()->renameObject (var, static_cast<RContainerObject*> (var->parentObject ())->validizeName (value.toString ()));
+			} else return false;
 		}
 	} else if (row == LabelRow) {
 		var->setLabel (value.toString (), true);

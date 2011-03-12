@@ -51,6 +51,7 @@ RKStructureGetter::RKStructureGetter (bool keep_evalled_promises) {
 	dims_fun = prefetch_fun ("dim");
 	names_fun = prefetch_fun ("names");
 	length_fun = prefetch_fun ("length");
+	rk_get_slots_fun = prefetch_fun (".rk.get.slots", false);
 
 	get_formals_fun = prefetch_fun (".rk.get.formals", false);
 }
@@ -100,7 +101,7 @@ RData *RKStructureGetter::getStructure (SEXP toplevel, SEXP name, SEXP envlevel,
 
 	RData *ret = new RData;
 
-	getStructureSafe (toplevel, name_string, false, ret, INTEGER (envlevel)[0]);
+	getStructureSafe (toplevel, name_string, 0, ret, INTEGER (envlevel)[0]);
 
 	if (with_namespace) {
 		UNPROTECT (1);	/* namespace_envir */
@@ -109,13 +110,13 @@ RData *RKStructureGetter::getStructure (SEXP toplevel, SEXP name, SEXP envlevel,
 	return ret;
 }
 
-void RKStructureGetter::getStructureSafe (SEXP value, const QString &name, bool misplaced, RData *storage, int nesting_depth) {
+void RKStructureGetter::getStructureSafe (SEXP value, const QString &name, int add_type_flags, RData *storage, int nesting_depth) {
 	RK_TRACE (RBACKEND);
 
 	GetStructureWorkerArgs args;
 	args.toplevel = value;
 	args.name = name;
-	args.misplaced = misplaced;
+	args.add_type_flags = add_type_flags;
 	args.storage = storage;
 	args.getter = this;
 	args.nesting_depth = nesting_depth;
@@ -125,14 +126,14 @@ void RKStructureGetter::getStructureSafe (SEXP value, const QString &name, bool 
 	if (ok != TRUE) {
 		storage->discardData();
 		Rf_warning ("failure to get object %s", name.toLatin1().data ());
-		getStructureWorker (R_NilValue, name, misplaced, storage, nesting_depth);
+		getStructureWorker (R_NilValue, name, add_type_flags, storage, nesting_depth);
 	}
 }
 
 void RKStructureGetter::getStructureWrapper (GetStructureWorkerArgs *data) {
 	RK_TRACE (RBACKEND);
 
-	data->getter->getStructureWorker (data->toplevel, data->name, data->misplaced, data->storage, data->nesting_depth);
+	data->getter->getStructureWorker (data->toplevel, data->name, data->add_type_flags, data->storage, data->nesting_depth);
 }
 
 SEXP RKStructureGetter::resolvePromise (SEXP from) {
@@ -163,7 +164,7 @@ SEXP RKStructureGetter::resolvePromise (SEXP from) {
 
 extern "C" {
 // TODO: split out some of the large blocks into helper functions, to make this easier to read
-void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool misplaced, RData *storage, int nesting_depth) {
+void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, int add_type_flags, RData *storage, int nesting_depth) {
 	RK_TRACE (RBACKEND);
 
 	bool is_function = false;
@@ -235,7 +236,8 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 			else if (RKRSupport::callSimpleBool (is_logical_fun, value, R_BaseEnv)) type |= RObject::Logical;
 		}
 	}
-	if (misplaced) type |= RObject::Misplaced;
+	type |= add_type_flags;
+
 	if (is_container) {
 		if (no_recurse) {
 			type |= RObject::Incomplete;
@@ -253,10 +255,6 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 	} else {
 		metadata->setData (QStringList ());
 	}
-
-	// store type
-	RData *typedata = new RData;
-	typedata->setData (RData::IntStorage (1, type));
 
 	// get dims
 	RData::IntStorage dims;
@@ -283,6 +281,30 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 	RData *dimdata = new RData;
 	dimdata->setData (dims);
 
+	RData *slotsdata = new RData ();
+	// does it have slots?
+	if (Rf_isS4 (value)) {
+		type |= RObject::S4Object;
+		if (no_recurse) {
+			type |= RObject::Incomplete;
+			RK_DO (qDebug ("Depth limit reached. Will not recurse into slots of %s", name.toLatin1().data ()), RBACKEND, DL_DEBUG);
+		} else {
+			RData::RDataStorage dummy (1, 0);
+			dummy[0] = new RData ();
+
+			SEXP slots_pseudo_object = RKRSupport::callSimpleFun (rk_get_slots_fun, value, R_GlobalEnv);
+			PROTECT (slots_pseudo_object);
+			getStructureSafe (slots_pseudo_object, "SLOTS", RObject::PseudoObject, dummy[0], nesting_depth);	// do not increase depth for this pseudo-object
+			UNPROTECT (1);
+
+			slotsdata->setData (dummy);
+		}
+	}
+
+	// store type
+	RData *typedata = new RData;
+	typedata->setData (RData::IntStorage (1, type));
+
 	// store everything we have so far
 	int storage_length = RObject::StorageSizeBasicInfo;
 	if (is_container) {
@@ -296,6 +318,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 	res[RObject::StoragePositionClass] = classdata;
 	res[RObject::StoragePositionMeta] = metadata;
 	res[RObject::StoragePositionDims] = dimdata;
+	res[RObject::StoragePositionSlots] = slotsdata;
 
 	// now add the extra info for containers and functions
 	if (is_container) {
@@ -341,7 +364,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 					}
 				}
 
-				getStructureSafe (child, childnames[i], child_misplaced, children[i], nesting_depth + 1);
+				getStructureSafe (child, childnames[i], child_misplaced ? RObject::Misplaced : 0, children[i], nesting_depth + 1);
 				UNPROTECT (2); /* current_childname, child */
 			}
 		} else if (do_cont) {
@@ -352,13 +375,13 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 			if (Rf_isList (value) && (!may_be_special)) {		// old style list
 				for (int i = 0; i < childcount; ++i) {
 					SEXP child = CAR (value);
-					getStructureSafe (child, childnames[i], false, children[i], nesting_depth + 1);
+					getStructureSafe (child, childnames[i], 0, children[i], nesting_depth + 1);
 					CDR (value);
 				}
 			} else if (Rf_isNewList (value) && (!may_be_special)) {				// new style list
 				for (int i = 0; i < childcount; ++i) {
 					SEXP child = VECTOR_ELT(value, i);
-					getStructureSafe (child, childnames[i], false, children[i], nesting_depth + 1);
+					getStructureSafe (child, childnames[i], 0, children[i], nesting_depth + 1);
 				}
 			} else {		// probably an S4 object disguised as a list
 				SEXP index = Rf_allocVector(INTSXP, 1);
@@ -366,7 +389,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, bool 
 				for (int i = 0; i < childcount; ++i) {
 					INTEGER (index)[0] = (i + 1);
 					SEXP child = RKRSupport::callSimpleFun2 (double_brackets_fun, value, index, R_BaseEnv);
-					getStructureSafe (child, childnames[i], false, children[i], nesting_depth + 1);
+					getStructureSafe (child, childnames[i], 0, children[i], nesting_depth + 1);
 				}
 				UNPROTECT (1); /* index */
 			}

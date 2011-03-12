@@ -144,9 +144,11 @@ friend class RObjectListener;
 	QMultiHash<RObject*, RObjectListener*> listeners;
 
 friend class RContainerObject;
+friend class RObject;
 friend class RObjectList;
 /** essentially like the above function(s). All objects listening for child additions on the parent will be notified */
-	void addObject (RObject *object, RContainerObject* parent, int position);
+	void beginAddObject (RObject *object, RObject* parent, int position);
+	void endAddObject (RObject *object, RObject* parent, int position);
 /** essentially like the above function(s). All objects listening for child position changed on the parent will be notified */
 	void moveObject (RContainerObject *parent, RObject* child, int old_index, int new_index);
 };
