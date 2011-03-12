@@ -313,8 +313,7 @@ QVariant RKObjectListModel::data (const QModelIndex& index, int role) const {
 			if (object->isVariable ()) return RObject::typeToText (object->getDataType ());
 			return QVariant ();
 		}
-		if (col == ClassColumn) return object->makeClassString ("; ");
-		RK_ASSERT (false);
+		if ((col == ClassColumn) && (!object->isPseudoObject ())) return object->makeClassString ("; ");
 	} else if (role == Qt::FontRole) {
 		if (col == NameColumn && object->isPseudoObject ()) {
 			QFont font;

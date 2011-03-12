@@ -1,4 +1,4 @@
-- Support S4 slots in object name completion and workspace browser		TODO: more testing, better icon
+- Support S4 slots in object name completion and workspace browser		TODO: more testing
 - More correct handling of quotes in object name completion
 - Support plot history for ggplot2 plots
 - Be less pro-active about fetching structure information on R objects in the workspace		TODO: verify that this fixes our issues with rXML

@@ -2,7 +2,7 @@
                           rkstandardicons  -  description
                              -------------------
     begin                : Wed Oct 24 2007
-    copyright            : (C) 2007, 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -89,7 +89,7 @@ void RKStandardIcons::initIcons () {
 	icons[ObjectDataLogical] = QIcon (rkward_icon_base + "data-logical.png");
 	icons[ObjectDataUnknown] = KIcon ("unknown");
 	icons[ObjectDataOther] = icons[ActionDeleteRow];
-	icons[ObjectObjectList] = KIcon ("view-list-tree");
+	icons[ObjectPseudo] = QIcon (rkward_icon_base + "s4_slots.png");
 
 	// windows
 	icons[WindowDataFrameEditor] = icons[ObjectDataFrame];
@@ -100,7 +100,7 @@ void RKStandardIcons::initIcons () {
 	icons[WindowObject] = KIcon ("zoom-original");
 	icons[WindowConsole] = KIcon ("utilities-terminal");
 	icons[WindowCommandLog] = KIcon ("format-justify-left");
-	icons[WindowWorkspaceBrowser] = icons[ObjectObjectList];
+	icons[WindowWorkspaceBrowser] = KIcon ("view-list-tree");
 	icons[WindowSearchHelp] = KIcon ("help-contents");
 	icons[WindowPendingJobs] = KIcon ("system-run");
 	icons[WindowFileBrowser] = KIcon ("folder");
@@ -135,12 +135,12 @@ QIcon RKStandardIcons::iconForObject (const RObject* object) {
 				return icons[ObjectDataOther];
 		}
 	}
+	if (object->isSlotsPseudoObject ()) return icons[ObjectPseudo];
 	if (object->isType (RObject::List)) return icons[ObjectList];
 	if (object->isType (RObject::Function)) return icons[ObjectFunction];
 	if (object->isType (RObject::Matrix)) return icons[ObjectMatrix];
 	if (object->isType (RObject::PackageEnv)) return icons[ObjectPackageEnvironment];
 	if (object->isType (RObject::Environment)) return icons[ObjectEnvironment];
-	if (object == RObjectList::getObjectList ()) return icons[ObjectObjectList];
 
 	return QIcon ();
 }
