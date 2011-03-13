@@ -67,7 +67,7 @@ private:
 	SEXP is_character_fun;
 	SEXP is_logical_fun;
 	SEXP names_fun;
-	SEXP get_formals_fun;
+	SEXP args_fun;
 	SEXP double_brackets_fun;
 	SEXP length_fun;
 	SEXP rk_get_slots_fun;

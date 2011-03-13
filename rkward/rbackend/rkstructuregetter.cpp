@@ -19,6 +19,7 @@
 
 #include "rdata.h"
 #include "rkrsupport.h"
+#include "rkrbackendprotocol_shared.h"
 #include "../core/robject.h"
 
 #include "../debug.h"
@@ -51,9 +52,8 @@ RKStructureGetter::RKStructureGetter (bool keep_evalled_promises) {
 	dims_fun = prefetch_fun ("dim");
 	names_fun = prefetch_fun ("names");
 	length_fun = prefetch_fun ("length");
+	args_fun = prefetch_fun ("args");
 	rk_get_slots_fun = prefetch_fun (".rk.get.slots", false);
-
-	get_formals_fun = prefetch_fun (".rk.get.formals", false);
 }
 
 RKStructureGetter::~RKStructureGetter () {
@@ -400,12 +400,23 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, int a
 		childdata->setData (children);
 		res[RObject::StoragePositionChildren] = childdata;
 	} else if (is_function) {
-// TODO: get_formals_fun is still the major bottleneck, but no idea, how to improve on this
-		SEXP formals_s = RKRSupport::callSimpleFun (get_formals_fun, value, R_GlobalEnv);
+// TODO: getting the formals is still a bit of a bottleneck, but no idea, how to improve on this, any further
+		SEXP formals_s;
+		if (Rf_isPrimitive (value)) formals_s = FORMALS (RKRSupport::callSimpleFun (args_fun, value, R_BaseEnv));	// primitives don't have formals, internally
+		else formals_s = FORMALS (value);
 		PROTECT (formals_s);
-		// the default values
+
+		// get the default values
+		QStringList formals = RKRSupport::SEXPToStringList (formals_s);
+		// for the most part, the implicit as.character in SEXPToStringList does a good on the formals (and it's the fastest of many options that I have tried).
+		// Only for naked strings (as in 'function (a="something")'), we're missing the quotes. So we add quotes, after conversion, as needed:
+		SEXP dummy = formals_s;
+		for (int i = 0; i < Rf_length (dummy); ++i) {
+			if (TYPEOF (CAR (dummy)) == STRSXP) formals[i] = RKRSharedFunctionality::quote (formals[i]);
+			dummy = CDR (dummy);
+		}
 		RData *funargvaluesdata = new RData;
-		funargvaluesdata->setData (RKRSupport::SEXPToStringList (formals_s));
+		funargvaluesdata->setData (formals);
 
 		// the argument names
 		SEXP names_s = Rf_getAttrib (formals_s, R_NamesSymbol);

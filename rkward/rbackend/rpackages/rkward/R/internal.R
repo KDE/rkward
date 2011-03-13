@@ -261,16 +261,6 @@
 	.Call ("rk.get.structure.global", as.character (name), as.integer (envlevel), namespacename)
 }
 
-".rk.get.formals" <- function (x) 
-{
-    f <- formals (x)
-    r <- as.character(lapply(f, function(v) {
-        if (is.character(v)) return(encodeString(v, quote = "\"")) else return(v)
-    }))
-    names (r) <- names (f)
-    r
-}
-
 ".rk.get.slots" <- function (x) {
 	slotnames <- methods::slotNames (class (x))
 	ret <- lapply (slotnames, function (slotname) slot (x, slotname))
