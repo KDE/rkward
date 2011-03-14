@@ -111,7 +111,7 @@ private:
 #if KDE_VERSION_MINOR >= 2
 #	include <ktexteditor/codecompletionmodelcontrollerinterface.h>
 #	if KDE_VERSION_MINOR >= 5
-class RKCodeCompletionModel : public KTextEditor::CodeCompletionModel, public KTextEditor::CodeCompletionModelControllerInferface3 {
+class RKCodeCompletionModel : public KTextEditor::CodeCompletionModel, public KTextEditor::CodeCompletionModelControllerInterface3 {
 	Q_OBJECT
 	Q_INTERFACES(KTextEditor::CodeCompletionModelControllerInterface3)
 public:
