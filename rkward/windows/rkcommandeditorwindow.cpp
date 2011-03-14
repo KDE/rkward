@@ -534,6 +534,7 @@ QString RKCommandEditorWindow::currentCompletionWord () const {
 	return RKCommonFunctions::getCurrentSymbol (current_line, cursor_pos, false);
 }
 
+#if KDE_IS_VERSION(4,2,0)
 KTextEditor::Range RKCodeCompletionModel::completionRange (KTextEditor::View *view, const KTextEditor::Cursor &position) {
 	QString current_line = view->document ()->line (position.line ());
 	int start;
@@ -541,6 +542,7 @@ KTextEditor::Range RKCodeCompletionModel::completionRange (KTextEditor::View *vi
 	RKCommonFunctions::getCurrentSymbolOffset (current_line, position.column (), false, &start, &end);
 	return KTextEditor::Range (position.line (), start, position.line (), end);
 }
+#endif
 
 void RKCommandEditorWindow::tryCompletion () {
 	// TODO: merge this with RKConsole::doTabCompletion () somehow
