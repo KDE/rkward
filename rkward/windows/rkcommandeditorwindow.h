@@ -103,7 +103,31 @@ private:
 };
 
 /** code completion model for RKCommandEditorWindow */
+#include <kdeversion.h>
+#if KDE_VERSION_MAJOR != 4
+#	error Adjust the versioning hack below!
+#endif
+// Unfortunately, MOC is not smart enough to understand the KDE_IS_VERSION macro
+#if KDE_VERSION_MINOR >= 2
+#	include <ktexteditor/codecompletionmodelcontrollerinterface.h>
+#	if KDE_VERSION_MINOR >= 5
+class RKCodeCompletionModel : public KTextEditor::CodeCompletionModel, public KTextEditor::CodeCompletionModelControllerInferface3 {
+	Q_OBJECT
+	Q_INTERFACES(KTextEditor::CodeCompletionModelControllerInterface3)
+public:
+	KTextEditor::Range completionRange (KTextEditor::View *view, const KTextEditor::Cursor &position);
+	QString filterString (KTextEditor::View *, const KTextEditor::Range &, const KTextEditor::Cursor &) { return QString (); };
+#	else
+class RKCodeCompletionModel : public KTextEditor::CodeCompletionModel, public KTextEditor::CodeCompletionModelControllerInterface {
+	Q_OBJECT
+	Q_INTERFACES(KTextEditor::CodeCompletionModelControllerInterface)
+public:
+	KTextEditor::Range completionRange (KTextEditor::View *view, const KTextEditor::Cursor &position);
+	QString filterString (KTextEditor::View *, const KTextEditor::SmartRange &, const KTextEditor::Cursor &) { return QString (); };
+#	endif
+#else
 class RKCodeCompletionModel : public KTextEditor::CodeCompletionModel {
+#endif
 public:
 	RKCodeCompletionModel (RKCommandEditorWindow* parent);
 	~RKCodeCompletionModel ();
