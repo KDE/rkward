@@ -44,4 +44,11 @@ fi
 export LC_NUMERIC="C"
 
 ## Start rkward. Running through R CMD to set all the relevant R enviroment variables
-exec $R_binary CMD $debugger $0.bin "$@"
+if test -x "`dirname $0`/rkward.bin" && test -d "`dirname $0`/CMakeFiles" ; then
+  # for running directly from a build directory. Don't use this, unless you are a developer!
+  rkward_binary="`dirname $0`/rkward.bin"
+else
+  # for regular installations
+  rkward_binary="`dirname $0`/../lib/rkward/bin/rkward.bin"
+fi
+exec $R_binary CMD $debugger ${rkward_binary} "$@"
