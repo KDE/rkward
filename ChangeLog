@@ -6,7 +6,7 @@
 - Be less pro-active about fetching structure information on R objects in the workspace		TODO: verify that this fixes our issues with rXML
 - Allow to browse arbitrarily deeply nested environments in the object browser
 
---- Version 0.5.5 - XXX-XX-2011
+--- Version 0.5.5 - Mar-15-2011
 - Fixed: Crash when several environments on the search path have the same name
 - Re-organize the default toolbar actions of the main window
 - Detached windows are now restored in detached state when restoring the workplace layout
