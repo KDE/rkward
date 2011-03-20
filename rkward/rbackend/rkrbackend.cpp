@@ -1184,7 +1184,7 @@ RCommandProxy* RKRBackend::handleRequest (RBackendRequest *request, bool mayHand
 		if (killed) return 0;
 		// NOTE: processX11Events() may, conceivably, lead to new requests, which may also wait for sub-commands!
 		processX11Events ();
-		if (!request->done) RKRBackendProtocolBackend::msleep (1);
+		if (!request->done) RKRBackendProtocolBackend::msleep (10);
 	}
 
 	RCommandProxy* command = request->takeCommand ();

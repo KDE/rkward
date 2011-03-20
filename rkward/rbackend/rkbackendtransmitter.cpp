@@ -66,7 +66,7 @@ void RKRBackendTransmitter::run () {
 
 	QTimer* flush_timer = new QTimer (this);
 	connect (flush_timer, SIGNAL (timeout()), this, SLOT (flushOutput()));
-	flush_timer->setInterval (50);
+	flush_timer->setInterval (200);
 	flush_timer->start ();
 
 	exec ();
