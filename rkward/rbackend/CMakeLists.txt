@@ -59,7 +59,7 @@ IF(RBACKEND_SPLIT)
 	LINK_DIRECTORIES(${R_SHAREDLIBDIR})
 	KDE4_ADD_EXECUTABLE(rkward.rbackend ${rbackend_BACKEND_SRCS})
 	TARGET_LINK_LIBRARIES(rkward.rbackend ${R_USED_LIBS} ${CMAKE_THREAD_LIBS_INIT} ${KDE4_KDECORE_LIBS} ${QT_QTNETWORK_LIBRARY})
-	INSTALL(TARGETS rkward.rbackend DESTINATION ${BIN_INSTALL_DIR})
+	INSTALL(TARGETS rkward.rbackend DESTINATION ${BIN_INSTALL_DIR}/../lib/rkward/bin/)	# Specified relative to bin_install_dir rather than lib_install_dir, to match the lookup at runtime.
 ELSE(RBACKEND_SPLIT)
 	SET (
 		rbackend_ALL_SRCS
