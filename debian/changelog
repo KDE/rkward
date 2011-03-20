@@ -2,7 +2,14 @@ rkward (0.5.5z-0.5.6-0devel1) unstable; urgency=low
 
   * new upstream release
 
- -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Tue, 15 Mar 2011 14:30:00 +0200
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Tue, 20 Mar 2011 15:30:00 +0200
+
+rkward (0.5.5-2) unstable; urgency=low
+
+  * Remove empty directory rkwardtests/inst
+    fixes FTBFS with (the current alpha of) R 2.13.0
+
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Tue, 20 Mar 2011 14:30:00 +0200
 
 rkward (0.5.5-1) unstable; urgency=low
 
