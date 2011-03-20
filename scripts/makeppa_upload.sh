@@ -10,17 +10,17 @@ BASEDIR=`pwd`
 PPATEMPDIR=$BASEDIR/ppatemp
 mkdir $PPATEMPDIR
 
-if [ ${1} = "--stable" ]; then
+if [ "${1}" == "--stable" ]; then
 	shift
-	PPAIDS="rkward-stable"
+	PPAIDS="rkward-stable rkward-stable-cran"
 	PPAVERSIONSTRING=".1rkward.stable"
 	# do not re-create tarball
-	VERSION=`${BASEDIR}/scripts/getversion.sh ${1}`
+	VERSION=`${BASEDIR}/scripts/getversion.sh ${2}`
 else
 	PPAIDS="rkward-devel rkward-devel-cran"
 	PPAVERSIONSTRING=".0rkward.devel"
 	# first create source snapshot
-	VERSION=`${BASEDIR}/scripts/getversion.sh ${1}`
+	VERSION=`${BASEDIR}/scripts/getversion.sh ${2}`
 	${BASEDIR}/scripts/makedist.sh $VERSION
 fi
 
@@ -53,7 +53,7 @@ function doSourceUpload {
 
 	# build source package
 	cd $PPASOURCEDIR
-	dpkg-buildpackage -S
+	dpkg-buildpackage -S -sa
 
 	# upload
 	cd $PPATEMPDIR
