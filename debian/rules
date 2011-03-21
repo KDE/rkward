@@ -94,11 +94,6 @@ install: build
 	dh_clean -k
 	dh_installdirs
 
-	# Temporary:
-	# Remove empty "inst" dir which was included in the 0.5.5 upstream tarball by accident. It will throw an error with R 2.13.x.
-	rmdir $(CURDIR)/rkward/rbackend/rpackages/rkwardtests/inst/doc
-	rmdir $(CURDIR)/rkward/rbackend/rpackages/rkwardtests/inst
-
 	# Add here commands to install the package into debian/rkward.
 	cd $(CURDIR)/build && $(MAKE) install DESTDIR=$(CURDIR)/debian/rkward
 	# dirty hack to get rid of conflicting r.xml file without adjusting all makefiles
