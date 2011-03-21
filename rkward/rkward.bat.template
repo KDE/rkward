@@ -15,7 +15,7 @@ ECHO Initializing KDE
 %~dsp0\kdeinit4.exe
 
 ECHO Starting RKWard
-SET RKWARD.BIN=%~dsp0\..\lib\rkward\bin\rkward.bin.exe
+SET RKWARD.BIN=%~dsp0\..\lib\kde4\libexec\rkward.frontend.exe
 SET DEBUGGER=
 
 IF NOT "%1" == "--debugger" GOTO run

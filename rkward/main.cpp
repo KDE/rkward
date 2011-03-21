@@ -132,7 +132,7 @@ int main(int argc, char *argv[]) {
 	// This is so it prints "Usage rkward..." instead of "Usage rkward.bin...", etc.
 	// it seems safest to keep a copy, since the shell still owns argv
 	char *argv_copy[argc];
-	argv_copy[0] = qstrdup (QString (argv[0]).remove (".bin").replace (".exe", ".bat").toLocal8Bit ());
+	argv_copy[0] = qstrdup (QString (argv[0]).remove (".frontend").replace (".exe", ".bat").toLocal8Bit ());
 	for (int i = 1; i < argc; ++i) {
 		argv_copy[i] = argv[i];
 	}
