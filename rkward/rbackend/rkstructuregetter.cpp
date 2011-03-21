@@ -87,25 +87,23 @@ RData *RKStructureGetter::getStructure (SEXP toplevel, SEXP name, SEXP envlevel,
 	if (Rf_isNull (namespacename)) {
 		with_namespace = false;
 	} else {
-		with_namespace = true;
-
 		SEXP as_ns_fun = Rf_findFun (Rf_install (".rk.try.get.namespace"),  R_GlobalEnv);
 		PROTECT (as_ns_fun);
 		RK_ASSERT (!Rf_isNull (as_ns_fun));
 
 		namespace_envir = RKRSupport::callSimpleFun (as_ns_fun, namespacename, R_GlobalEnv);
+		with_namespace = !Rf_isNull (namespace_envir);
 		UNPROTECT (1);	/* as_ns_fun */
-
-		PROTECT (namespace_envir);
 	}
+
+	if (with_namespace) PROTECT (namespace_envir);
 
 	RData *ret = new RData;
 
+	toplevel_value = toplevel;
 	getStructureSafe (toplevel, name_string, 0, ret, INTEGER (envlevel)[0]);
 
-	if (with_namespace) {
-		UNPROTECT (1);	/* namespace_envir */
-	}
+	if (with_namespace) UNPROTECT (1);	/* namespace_envir */
 
 	return ret;
 }
@@ -167,6 +165,7 @@ extern "C" {
 void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, int add_type_flags, RData *storage, int nesting_depth) {
 	RK_TRACE (RBACKEND);
 
+	bool at_toplevel = (toplevel_value == val);
 	bool is_function = false;
 	bool is_container = false;
 	bool is_environment = false;
@@ -357,7 +356,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, int a
 				PROTECT (child);
 
 				bool child_misplaced = false;
-				if (with_namespace) {
+				if (at_toplevel && with_namespace) {
 					if (!Rf_isNull (namespace_envir)) {
 						SEXP dummy = Rf_findVarInFrame (namespace_envir, current_childname);
 						if (Rf_isNull (dummy) || (dummy == R_UnboundValue)) child_misplaced = true;
@@ -399,6 +398,24 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, int a
 		RData *childdata = new RData;
 		childdata->setData (children);
 		res[RObject::StoragePositionChildren] = childdata;
+
+		if (is_environment && at_toplevel && with_namespace) {
+			RData *namespacedata = new RData;
+
+			if (no_recurse) {
+				type |= RObject::Incomplete;
+				RK_DO (qDebug ("Depth limit reached. Will not recurse into namespace of %s", name.toLatin1().data ()), RBACKEND, DL_DEBUG);
+			} else {
+				RData::RDataStorage dummy (1, 0);
+				dummy[0] = new RData ();
+
+				getStructureSafe (namespace_envir, "NAMESPACE", RObject::PseudoObject, dummy[0], nesting_depth+99);	// HACK: By default, do not recurse into the children of the namespace, until dealing with the namespace object itself.
+
+				namespacedata->setData (dummy);
+			}
+
+			res.insert (RObject::StoragePositionNamespace, namespacedata);
+		}
 	} else if (is_function) {
 // TODO: getting the formals is still a bit of a bottleneck, but no idea, how to improve on this, any further
 		SEXP formals_s;

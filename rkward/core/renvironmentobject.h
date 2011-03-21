@@ -2,7 +2,7 @@
                           renvironmentobject  -  description
                              -------------------
     begin                : Wed Sep 27 2006
-    copyright            : (C) 2006, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2009, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -41,7 +41,9 @@ public:
 	QString makeChildBaseName (const QString &short_child_name) const;
 /** reimplemented from RContainerObject: If this is an environment var, call RContainerObject::writeMetaData (). Else, do nothing. An environment has no meta data. */
 	void writeMetaData (RCommandChain *chain);
-	QString namespaceName () const { return namespace_name; };
+	QString packageName () const;
+/** For the environment of packages with a namespace, return the namespace. May be NULL! */
+	REnvironmentObject* namespaceEnvironment () const { return namespace_envir; };
 protected:
 	bool updateStructure (RData *new_data);
 /** reimplemented from RContainerObject to raise an assert if this is not the isGlobalEnv (). Otherwise calls "remove (objectname)" instead of objectname <- NULL" */
@@ -50,7 +52,10 @@ protected:
 	QString removeChildCommand (RObject *object) const;
 /// reimplemented from RContainerObject to call "remove (objectname)" instead of "objectname <- NULL"
 	QString renameChildCommand (RObject *object, const QString &new_name) const;
-	QString namespace_name;
+friend class RObject;
+	REnvironmentObject *namespace_envir;
+
+	void updateNamespace (RData *new_data);
 };
  
 #endif

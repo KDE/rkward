@@ -259,13 +259,6 @@ void RContainerObject::updateRowNamesObject () {
 	}
 }
 
-int RContainerObject::getObjectModelIndexOf(RObject *child) const {
-	RK_TRACE (OBJECTS);
-
-	if (child == slots_pseudo_object) return childmap.size ();
-	return childmap.indexOf (child);
-}
-
 RObject *RContainerObject::findObjects (const QStringList &path, RObjectSearchMap *matches, const QString &op) {
 	RK_TRACE (OBJECTS);
 

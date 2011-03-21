@@ -224,6 +224,12 @@ RObject *RObjectList::findObjects (const QStringList &path, RObjectSearchMap *ma
 		if (!environment) return 0;
 		
 		return environment->findObjects (path.mid (2), matches, "$");
+	} else if (path.value (1) == ":::") {
+		RObject *environment = findChildByNamespace (path[0]);
+		if (environment) environment = static_cast<REnvironmentObject*> (environment)->namespaceEnvironment ();
+		if (!environment) return 0;
+
+		return environment->findObjects (path.mid (2), matches, "$");
 	} else if (path.value (0) == ".GlobalEnv") {
 		if (path.length () > 1) return getGlobalEnv ()->findObjects (path.mid (2), matches, "$");
 		else if (matches) matches->insert (path.value (0), getGlobalEnv ());	// no return, here: At least one more match will be found in base
@@ -245,7 +251,7 @@ REnvironmentObject* RObjectList::findChildByNamespace (const QString &namespacen
 		RObject* child = childmap[i];
 		RK_ASSERT (child->isType (Environment));
 		REnvironmentObject* env = static_cast<REnvironmentObject *> (child);
-		if (env->namespaceName () == namespacename) {
+		if (env->packageName () == namespacename) {
 			return env;
 		}
 	}

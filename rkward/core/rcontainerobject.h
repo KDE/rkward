@@ -50,8 +50,6 @@ public:
 	RObject *findChildByName (const QString &name) const;
 	/** fetches the child at the given position. This is very fast. */
 	RObject *findChildByIndex (int position) const;
-	/** return the index of the given child, or -1 if there is no such child */
-	int getObjectModelIndexOf (RObject *child) const;
 	
 	/** creates a new child. Right now only RKVariables (false, false), or data.frames (true, true), or unspecified containers (true, false) can be created.
 	API will likely change. The child is NOT created in the workspace. That's your resonsibility. All this function returns is a new RObject* of the given

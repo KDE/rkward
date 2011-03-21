@@ -2,7 +2,7 @@
                           renvironmentobject  -  description
                              -------------------
     begin                : Wed Sep 27 2006
-    copyright            : (C) 2006, 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2009, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -31,29 +31,34 @@
 REnvironmentObject::REnvironmentObject (RContainerObject *parent, const QString &name) : RContainerObject (parent, name) {
 	RK_TRACE (OBJECTS);
 
+	namespace_envir = 0;
 	type = Environment;
 	if (parent == RObjectList::getObjectList ()) {
 		type |= ToplevelEnv;
 		if (name == ".GlobalEnv") {
 			type |= GlobalEnv;
 		} else if (name.contains (':')) {
-			namespace_name = name.section (':', 1);
 			type |= PackageEnv;
 		}
-	} else {
-		//namespace_name = parent->makeChildName (name);	// not needed, will not be used
 	}
 }
 
 REnvironmentObject::~REnvironmentObject () {
 	RK_TRACE (OBJECTS);
+	delete namespace_envir;
+}
+
+QString REnvironmentObject::packageName () const {
+	RK_ASSERT (isType (PackageEnv));
+	return name.section (':', 1);
 }
 
 QString REnvironmentObject::getFullName () const {
 	RK_TRACE (OBJECTS);
 
 	if (type & GlobalEnv) return name;	// .GlobalEnv
-	if (type & ToplevelEnv) return ("as.environment (\"" + name + "\")");
+	if (type & ToplevelEnv) return ("as.environment (" + rQuote (name) + ")");
+	if (isPackageNamespace ()) return ("asNamespace (" + rQuote (static_cast<REnvironmentObject*>(parent)->packageName ()) + ")");
 	return parent->makeChildName (name, type & Misplaced);
 }
 
@@ -74,9 +79,10 @@ QString REnvironmentObject::makeChildName (const QString &short_child_name, bool
 	if (type & ToplevelEnv) {
 /* Some items are placed outside of their native namespace. E.g. in package:boot item "motor". It can be retrieved using as.environment ("package:boot")$motor. This is extremly ugly. We need to give them (and only them) this special treatment. */
 // TODO: hopefully one day operator "::" will work even in those cases. So check back later, and remove after a sufficient amount of backwards compatibility time
-		if ((type & PackageEnv) && (!misplaced)) return (namespace_name + "::" + safe_name);
+		if ((type & PackageEnv) && (!misplaced)) return (packageName () + "::" + safe_name);
 		return (getFullName () + '$' + safe_name);
 	}
+	if (isPackageNamespace ()) return (static_cast<REnvironmentObject*>(parent)->packageName () + ":::" + safe_name);
 	return (getFullName () + '$' + safe_name);
 }
 
@@ -99,15 +105,15 @@ void REnvironmentObject::writeMetaData (RCommandChain *chain) {
 void REnvironmentObject::updateFromR (RCommandChain *chain) {
 	RK_TRACE (OBJECTS);
 	if (type & PackageEnv) {
-		if (RKSettingsModuleObjectBrowser::isPackageBlacklisted (namespace_name)) {
-			KMessageBox::information (0, i18n ("The package '%1' (probably you just loaded it) is currently blacklisted for retrieving structure information. Practically this means, the objects in this package will not appear in the object browser, and there will be no object name completion or function argument hinting for objects in this package.\nPackages will typically be blacklisted, if they contain huge amount of data, that would take too long to load. To unlist the package, visit Settings->Configure RKWard->Workspace.", namespace_name), i18n("Package blacklisted"), "packageblacklist" + namespace_name);
+		if (RKSettingsModuleObjectBrowser::isPackageBlacklisted (packageName ())) {
+			KMessageBox::information (0, i18n ("The package '%1' (probably you just loaded it) is currently blacklisted for retrieving structure information. Practically this means, the objects in this package will not appear in the object browser, and there will be no object name completion or function argument hinting for objects in this package.\nPackages will typically be blacklisted, if they contain huge amount of data, that would take too long to load. To unlist the package, visit Settings->Configure RKWard->Workspace.", packageName ()), i18n("Package blacklisted"), "packageblacklist" + packageName ());
 			return;
 		}
 	}
 
 	QString options;
 	if (type & GlobalEnv) options = ", envlevel=-1";	// in the .GlobalEnv recurse one more level
-	if (type & ToplevelEnv) options.append (", namespacename=" + rQuote (namespace_name));
+	if (type & PackageEnv) options.append (", namespacename=" + rQuote (packageName ()));
 
 	RCommand *command = new RCommand (".rk.get.structure (" + getFullName () + ", " + rQuote (getShortName ()) + options + ')', RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString::null, this, ROBJECT_UDPATE_STRUCTURE_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, chain);
@@ -149,15 +155,49 @@ bool REnvironmentObject::updateStructure (RData *new_data) {
 	}
 
 	if (new_data->getDataLength () > StorageSizeBasicInfo) {
-		RK_ASSERT (new_data->getDataLength () == (StorageSizeBasicInfo + 1));
-
 		RData *children_sub = new_data->getStructureVector ()[StoragePositionChildren];
 		RK_ASSERT (children_sub->getDataType () == RData::StructureVector);
 		updateChildren (children_sub);
+
+		// a namespace to go with that?
+		if (new_data->getDataLength () > (StorageSizeBasicInfo + 1)) {
+			RK_ASSERT (new_data->getDataLength () == (StorageSizeBasicInfo + 2));
+			updateNamespace (new_data->getStructureVector ()[StoragePositionNamespace]);
+		} else updateNamespace (0);
 	} else {
 		RK_ASSERT (false);
 	}
 	return true;
+}
+
+void REnvironmentObject::updateNamespace (RData* new_data) {
+	RK_TRACE (OBJECTS);
+
+	if (!new_data) {
+		if (namespace_envir) {
+			RKGlobals::tracker ()->removeObject (namespace_envir, 0, true);
+		}
+		return;
+	}
+
+	RK_ASSERT (new_data->getDataType () == RData::StructureVector);
+	bool added = false;
+	if (!namespace_envir) {
+		namespace_envir = new REnvironmentObject (this, "NAMESPACE");
+		added = true;
+		RKGlobals::tracker ()->lockUpdates (true);
+	}
+	namespace_envir->updateStructure (new_data->getStructureVector ()[0]);
+	if (added) {
+		RKGlobals::tracker ()->lockUpdates (false);
+
+		int index = getObjectModelIndexOf (namespace_envir);
+		REnvironmentObject *neo = namespace_envir;
+		namespace_envir = 0;	// HACK: Must not be included in the count during the call to beginAddObject
+		RKGlobals::tracker ()->beginAddObject (neo, this, index);
+		namespace_envir = neo;
+		RKGlobals::tracker ()->endAddObject (neo, this, index);
+	}
 }
 
 void REnvironmentObject::renameChild (RObject *object, const QString &new_name) {

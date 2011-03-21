@@ -87,13 +87,6 @@ RObject* RObject::findObjects (const QStringList &path, RObjectSearchMap *matche
 	return 0;
 }
 
-int RObject::getObjectModelIndexOf (RObject *child) const {
-	RK_TRACE (OBJECTS);
-
-	if (child == slots_pseudo_object) return 0;
-	return -1;
-}
-
 QString RObject::getMetaProperty (const QString &id) const {
 	RK_TRACE (OBJECTS);
 	if (meta_map) return (meta_map->value (id));
@@ -248,6 +241,7 @@ void RObject::fetchMoreIfNeeded (int levels) {
 		return;
 	}
 	if (slots_pseudo_object) slots_pseudo_object->fetchMoreIfNeeded (levels);
+	// Note: We do NOT do the same for any namespaceEnvironment, deliberately
 	if (levels <= 0) return;
 	if (!isContainer ()) return;
 	const RObjectMap children = static_cast<RContainerObject*> (this)->childmap;
@@ -384,6 +378,7 @@ bool RObject::updateType (RData *new_data) {
 
 	bool changed = false;
 	int new_type = new_data->getIntVector ()[0];
+	if (type & PseudoObject) new_type |= PseudoObject;
 	if (type & Misplaced) new_type |= Misplaced;
 	if (type & Pending) new_type |= Pending;	// NOTE: why don't we just clear the pending flag, here? Well, we don't want to generate a change notification for this. TODO: rethink the logic, and maybe use an appropriate mask
 	if (type & NeedDataUpdate) new_type |= NeedDataUpdate;
@@ -480,9 +475,9 @@ bool RObject::updateSlots (RData *new_data) {
 			int index = getObjectModelIndexOf (slots_pseudo_object);
 			RSlotsPseudoObject *spo = slots_pseudo_object;
 			slots_pseudo_object = 0;	// HACK: Must not be included in the count during the call to beginAddObject
-			RKGlobals::tracker ()->beginAddObject (slots_pseudo_object, this, index);
+			RKGlobals::tracker ()->beginAddObject (spo, this, index);
 			slots_pseudo_object = spo;
-			RKGlobals::tracker ()->endAddObject (slots_pseudo_object, this, index);
+			RKGlobals::tracker ()->endAddObject (spo, this, index);
 		}
 		return ret;
 	} else if (slots_pseudo_object) {
@@ -491,11 +486,32 @@ bool RObject::updateSlots (RData *new_data) {
 	return false;
 }
 
+int RObject::getObjectModelIndexOf (RObject *child) const {
+	RK_TRACE (OBJECTS);
+
+	int offset = 0;
+	if (isContainer ()) {
+		int pos = static_cast<const RContainerObject*> (this)->childmap.indexOf (child);
+		if (pos >= 0) return pos + offset;
+		offset += static_cast<const RContainerObject*> (this)->childmap.size ();
+	}
+	if (slots_pseudo_object) {
+		if (child == slots_pseudo_object) return offset;
+		offset += 1;
+	}
+	if (isType (Environment) && static_cast<const REnvironmentObject*> (this)->namespaceEnvironment ()) {
+		if (child == static_cast<const REnvironmentObject*> (this)->namespaceEnvironment ()) return offset;
+		offset += 1;
+	}
+	return -1;
+}
+
 int RObject::numChildrenForObjectModel () const {
 	RK_TRACE (OBJECTS);
 
 	int ret = isContainer () ? static_cast<const RContainerObject*>(this)->numChildren () : 0;
-	if (slots_pseudo_object) return ret + 1;
+	if (slots_pseudo_object) ret += 1;
+	if (isType (PackageEnv) && static_cast<const REnvironmentObject*>(this)->namespaceEnvironment ()) ret += 1;
 	return ret;
 }
 
@@ -505,6 +521,10 @@ RObject *RObject::findChildByObjectModelIndex (int index) const {
 		const RContainerObject *container = static_cast<const RContainerObject*>(this);
 		if (index < container->numChildren ()) return container->findChildByIndex (index);
 		offset -= container->numChildren ();
+		if (isType (PackageEnv)) {
+			if (offset == 0 && slots_pseudo_object) return slots_pseudo_object;
+			return static_cast<const REnvironmentObject*>(this)->namespaceEnvironment ();
+		}
 	}
 	if (offset == 0) return slots_pseudo_object;
 	return 0;
@@ -528,6 +548,10 @@ void RObject::remove (bool removed_in_workspace) {
 		RK_ASSERT (removed_in_workspace);
 		parent->slots_pseudo_object = 0;
 		delete this;
+	} else if (isPackageNamespace ()) {
+		RK_ASSERT (removed_in_workspace);
+		RK_ASSERT (parent->isType (Environment));
+		static_cast<REnvironmentObject*> (parent)->namespace_envir = 0;
 	} else {
 		static_cast<RContainerObject*> (parent)->removeChild (this, removed_in_workspace);
 	}
@@ -604,9 +628,12 @@ QStringList RObject::parseObjectPath (const QString &path) {
 						seek_bracket_end = true;
 					} else if (c == ':') {
 						ret.append (fragment);
-						ret.append ("::");
-						fragment.clear ();
 						if ((i+1 < end) && (path.at (i+1) == ':')) ++i;
+						if ((i+1 < end) && (path.at (i+1) == ':')) {
+							++i;
+							ret.append (":::");
+						} else ret.append ("::");
+						fragment.clear ();
 					} else if (c == '@') {
 						ret.append (fragment);
 						ret.append ("@");

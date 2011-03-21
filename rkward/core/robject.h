@@ -92,6 +92,7 @@ public:
 		StoragePositionDims = 4,
 		StoragePositionSlots = 5,
 		StoragePositionChildren = 6,
+		StoragePositionNamespace = 7,
 		StoragePositionFunArgs = 6,
 		StoragePositionFunValues = 7,
 		StorageSizeBasicInfo = 6,
@@ -118,6 +119,7 @@ public:
 	bool isType (int type) const { return (RObject::type & type); };
 	bool isPseudoObject () const { return isType (PseudoObject); };
 	bool isSlotsPseudoObject () const { return (this && parent && ((void*) parent->slots_pseudo_object == (void*) this)); };
+	bool isPackageNamespace () const { return (this && isPseudoObject () && (name == "NAMESPACE")); };
 	bool hasMetaObject () const { return (meta_map); };
 	/** see RObjectType::Pending */
 	bool isPending () const { return type & Pending; };
@@ -152,7 +154,7 @@ public:
 	int getLength () const { return dimensions[0]; };
 
 	/** return the index of the given child, or -1 if there is no such child */
-	virtual int getObjectModelIndexOf (RObject *child) const;
+	int getObjectModelIndexOf (RObject *child) const;
 	int numChildrenForObjectModel () const;
 	RObject *findChildByObjectModelIndex (int) const;
 

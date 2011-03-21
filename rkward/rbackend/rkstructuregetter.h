@@ -51,6 +51,7 @@ private:
 
 	bool with_namespace;
 	SEXP namespace_envir;
+	SEXP toplevel_value;
 
 	SEXP class_fun;
 	SEXP dims_fun;

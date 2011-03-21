@@ -1,7 +1,8 @@
 - Auxiliary binaries rkward.bin and rkward.rbackend are no longer installed into /usr[/local]/bin/ on Unix
 - Fixed: Object name completion would abort early in the script editor with KDE 4.4
 - Support function argument hinting for R primitives
-- Support S4 slots in object name completion and workspace browser		TODO: more testing, should support namespaces and ":::", too
+- Support package namespaces in object name completion and workspace browser
+- Support S4 slots in object name completion and workspace browser		TODO: more testing
 - More correct handling of quotes in object name completion
 - Support plot history for ggplot2 plots
 - Be less pro-active about fetching structure information on R objects in the workspace		TODO: verify that this fixes our issues with rXML
