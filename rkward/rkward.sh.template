@@ -49,7 +49,6 @@ if test -x "`dirname $0`/rkward.frontend" ; then
   rkward_binary="`dirname $0`/rkward.frontend"
 else
   # for regular installations
-  kde4config="`dirname $0`/kde4-config"
-  rkward_binary="`${kde4config} --path libexec`/rkward.frontend"
+  rkward_binary="@LIBEXEC_INSTALL_DIR@/rkward.frontend"
 fi
 exec $R_binary CMD $debugger ${rkward_binary} "$@"
