@@ -1,3 +1,4 @@
+- File browser context menu gains many more KDE standard actions (KDE 4.3 and above, only)
 - Auxiliary binaries rkward.bin and rkward.rbackend are no longer installed into /usr[/local]/bin/ on Unix
 - Fixed: Object name completion would abort early in the script editor with KDE 4.4
 - Support function argument hinting for R primitives

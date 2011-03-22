@@ -2,7 +2,7 @@
                           rkfilebrowser  -  description
                              -------------------
     begin                : Thu Apr 26 2007
-    copyright            : (C) 2007, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -26,6 +26,8 @@ class KDirOperator;
 class RKFileBrowserWidget;
 class KUrlComboBox;
 class KFileItem;
+class KFileItemActions;
+class QMenu;
 
 /** The file browser (tool) window. In order to save some startup time, the file browser is not really created until it is first shown. Hence, this is mostly just a wrapper around RKFileBrowserWidget */
 class RKFileBrowser : public RKMDIWindow {
@@ -63,9 +65,11 @@ public slots:
 	void urlChangedInCombo (const KUrl &url);
 	void fileActivated (const KFileItem& item);
 	void saveConfig ();
+	void contextMenuHook (const KFileItem &item, QMenu *menu);
 private:
 	KDirOperator *dir;
 	KUrlComboBox *urlbox;
+	KFileItemActions *fi_actions;
 };
 
 #endif

@@ -2,7 +2,7 @@
                           rkfilebrowser  -  description
                              -------------------
     begin                : Thu Apr 26 2007
-    copyright            : (C) 2007, 2008, 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2008, 2009, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -24,6 +24,11 @@
 #include <ktoolbar.h>
 #include <kactioncollection.h>
 #include <kconfiggroup.h>
+#include <kdeversion.h>
+#if KDE_IS_VERSION(4,3,0)
+#	include <kfileitemactions.h>
+#	include <kfileitemlistproperties.h>
+#endif
 
 #include <qdir.h>
 #include <qlayout.h>
@@ -112,6 +117,11 @@ RKFileBrowserWidget::RKFileBrowserWidget (QWidget *parent) : KVBox (parent) {
 	toolbar->addAction (dir->actionCollection ()->action ("detailed view"));
 //	toolbar->addAction (dir->actionCollection ()->action ("detailed tree view"));	// should we have this as well? Trying to avoid crowding in the toolbar
 
+#if KDE_IS_VERSION(4, 3, 0)
+	fi_actions = new KFileItemActions (this);
+	connect (dir, SIGNAL (contextMenuAboutToShow(KFileItem,QMenu*)), this, SLOT (contextMenuHook(KFileItem,QMenu*)));
+#endif
+
 	connect (dir, SIGNAL (urlEntered (const KUrl &)), this, SLOT (urlChangedInView (const KUrl &)));
 	connect (urlbox, SIGNAL (returnPressed (const QString &)), this, SLOT (urlChangedInCombo (const QString &)));
 	connect (urlbox, SIGNAL (urlActivated (const KUrl&)), this, SLOT (urlChangedInCombo (const KUrl&)));
@@ -123,6 +133,17 @@ RKFileBrowserWidget::RKFileBrowserWidget (QWidget *parent) : KVBox (parent) {
 
 RKFileBrowserWidget::~RKFileBrowserWidget () {
 	RK_TRACE (APP);
+}
+
+void RKFileBrowserWidget::contextMenuHook(const KFileItem& item, QMenu* menu) {
+	RK_TRACE (APP);
+#if KDE_IS_VERSION(4,3,0)
+	QList<KFileItem> dummy;
+	dummy.append (item);
+	fi_actions->setItemListProperties (KFileItemListProperties (dummy));
+	fi_actions->addOpenWithActionsTo (menu, QString ());
+	fi_actions->addServiceActionsTo (menu);
+#endif
 }
 
 // does not work in d-tor. Apparently it's too late, then
