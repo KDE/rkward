@@ -2,7 +2,7 @@
                           main.cpp  -  description
                              -------------------
     begin                : Tue Oct 29 20:06:08 CET 2002
-    copyright            : (C) 2002, 2005, 2006, 2007, 2008, 2009, 2010 by Thomas Friedrichsmeier 
+    copyright            : (C) 2002, 2005, 2006, 2007, 2008, 2009, 2010, 2011 by Thomas Friedrichsmeier 
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -54,6 +54,7 @@
 #include <kaboutdata.h>
 #include <klocale.h>
 #include <ktemporaryfile.h>
+#include <kstandarddirs.h>
 
 #include <qstring.h>
 #include <QMutex>
@@ -67,7 +68,6 @@
 
 #ifdef Q_WS_WIN
 	// these are needed for the exit hack.
-#	include <stdio.h>
 #	include <windows.h>
 #endif
 
@@ -164,6 +164,11 @@ int main(int argc, char *argv[]) {
 		new RKWardMainWindow(stoptions);
 	}
 	args->clear();
+
+	// Usually, KDE always adds the current directory to the list of prefixes.
+	// However, since RKWard 0.5.6, the main binary is in KDE's libexec dir, which defies this mechanism. Therefore, RKWARD_ENSURE_PREFIX is set from the wrapper script.
+	char *add_path = getenv ("RKWARD_ENSURE_PREFIX");
+	if (add_path) KGlobal::dirs ()->addPrefix (QString::fromLocal8Bit (add_path));
 
 	// do it!
 	int status = app.exec ();
