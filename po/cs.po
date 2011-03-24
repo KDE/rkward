@@ -10,21 +10,21 @@
 # Stefan Roediger <stefan_roediger@gmx.de>, 2007.
 # Stefan Rödiger <stefan_roediger@gmx.de>, 2007, 2009.
 # Pavel Fric <pavelfric@seznam.cz>, 2009, 2010.
-# Pavel Fric <fripohled@blogspot.com>, 2010.
+# Pavel Fric <fripohled@blogspot.com>, 2010, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
-"Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
-"group_id=50231&atid=459007\n"
-"POT-Creation-Date: 2011-02-21 14:44+0100\n"
-"PO-Revision-Date: 2010-10-06 11:49+0200\n"
-"Last-Translator: Pavel Fric <fripohled@blogspot.com>\n"
+"Report-Msgid-Bugs-To: http://sourceforge."
+"net/tracker/?group_id=50231&atid=459007\n"
+"POT-Creation-Date: 2011-03-10 22:04+0100\n"
+"PO-Revision-Date: 2011-03-23 19:29+0100\n"
+"Last-Translator: Pavel Fric\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.0\n"
+"X-Generator: Lokalize 1.1\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: agents/rkeditobjectagent.cpp:56
@@ -106,23 +106,25 @@ msgstr "Hotovo"
 #: agents/showedittextfileagent.cpp:103
 msgid ""
 "A command running in the R-engine wants you to see the following file(s):\n"
-msgstr ""
+msgstr "Příkaz běžící v jádru R chce, abyste viděl následující soubor(y):\n"
 
 #: agents/showedittextfileagent.cpp:103
 msgid "Showing file(s)"
 msgstr "Ukazuje se soubor(y) "
 
 #: agents/showedittextfileagent.cpp:108
-#, fuzzy
 msgid ""
 "A command running in the R-engine wants you to edit one or more file(s). "
 "Please look at these files, edit them as appriopriate, and save them. When "
 "done, press the \"Done\"-button, or close this dialog to resume.\n"
 "\n"
 msgstr ""
-"Příkaz běžící v jádru R chce, abyste se podíval na jeden nebo více souborů."
-"RKWard nemůže určit, jestli je bezpečné pokračovat ve zpracování příkazů R "
-"předtím, než si přečtete zmíněný(é) soubor(y)."
+"Příkaz běžící v jádru R chce, abyste upravil jeden soubor nebo více souborů."
+"Podívejte se, prosím, na tyto soubory, upravte je, jak náleží, a uložte je. "
+"Až "
+"budete hotov, stiskněte tlačítko \"Hotovo\", nebo zavřete tento dialog, aby "
+"se mohlo pokračovat.\n"
+"\n"
 
 #: agents/showedittextfileagent.cpp:108
 msgid "Edit file(s)"
@@ -359,9 +361,8 @@ msgid "#New Variable#"
 msgstr "#Nová proměnná#"
 
 #: dataeditor/rkvareditmodel.cpp:368
-#, fuzzy
 msgid "Row names"
-msgstr "názvy řádků"
+msgstr "Názvy řádků"
 
 #: dataeditor/rkvareditmodel.cpp:670
 msgid "Format"
@@ -373,25 +374,23 @@ msgstr "Úrovně"
 
 #: dataeditor/rkvareditmodel.cpp:674
 msgid "Edit these fields to rename variables."
-msgstr ""
+msgstr "Upravit tato pole pro přejmenování proměnných."
 
 #: dataeditor/rkvareditmodel.cpp:675
 msgid "A descriptive label for each column (optional)."
-msgstr ""
+msgstr "Popisný štítek pro každý sloupec (volitelné)."
 
 #: dataeditor/rkvareditmodel.cpp:676
-#, fuzzy
 msgid "Type of data."
-msgstr "Pole s typem"
+msgstr "Typ dat."
 
 #: dataeditor/rkvareditmodel.cpp:677
 msgid "Double click on these fields to customize data display."
-msgstr ""
+msgstr "Dvakrát klepněte na tato pole pro upravení zobrazení dat.přizpůsobení"
 
 #: dataeditor/rkvareditmodel.cpp:678
-#, fuzzy
 msgid "Double click on these fields to edit factor levels."
-msgstr "Pište v těchto polích pro přidání nových sloupců"
+msgstr "Dvakrát klepněte na tato pole pro upravení úrovní faktorů."
 
 #: dataeditor/twintable.cpp:102
 msgid "Cuts the selected section and puts it to the clipboard"
@@ -700,20 +699,19 @@ msgstr "Souvislosti:"
 
 #: dialogs/rkrecoverdialog.cpp:35
 msgid "Crash recovery file detected"
-msgstr ""
+msgstr "Zjištěn soubor pro obnovení po pádu"
 
 #: dialogs/rkrecoverdialog.cpp:37
-#, fuzzy
 msgid "Show in file browser"
-msgstr "Ukazuje se soubor(y) "
+msgstr "Ukázat v prohlížeči souborů"
 
 #: dialogs/rkrecoverdialog.cpp:38
 msgid "Recover"
-msgstr ""
+msgstr "Obnovit"
 
 #: dialogs/rkrecoverdialog.cpp:42
 msgid "<p><b>Crash revocery file detected</b></p>"
-msgstr ""
+msgstr "<p><b>Zjištěn soubor pro obnovení po pádu</b></p>"
 
 #: dialogs/rkrecoverdialog.cpp:43
 msgid ""
@@ -721,6 +719,9 @@ msgid ""
 "However, not everything is lost, and with a bit of luck, your data has been "
 "saved in time.</p>"
 msgstr ""
+"<p>Vypadá to, jakoby RKWard nedávno spadl. Je nám to líto! "
+"Nicméně ještě není všechno ztraceno, a s trochou štěstí byla "
+"vaše data zachráněna včas.</p>"
 
 #: dialogs/rkrecoverdialog.cpp:44
 msgid "<p>A workspace recovery file exists in <i>%2</i> as <i>%3</i>.</p>"
@@ -728,7 +729,11 @@ msgid_plural ""
 "<p>%1 workspace recovery files exist in <i>%2</i>, the most recent one of "
 "which is <i>%3</i>.</p>"
 msgstr[0] ""
+"<p>Soubor pro obnovení pracovního prostředí existuje v <i>%2</i> jako <i>%3<"
+"/i>.</p>"
 msgstr[1] ""
+"<p>%1 soubory pro obnovení pracovního prostředí existují v <i>%2</i>, "
+"nejposlednějším je <i>%3</i>.</p>"
 
 #: dialogs/rkrecoverdialog.cpp:45
 msgid ""
@@ -736,6 +741,9 @@ msgid ""
 "again, next time you start RKWard, until you remove/rename the file, "
 "manually.</p>"
 msgstr ""
+"<p>Chcete tento soubor otevřít nyní? <b>Poznámka</b>: Budete vyzván znovu, "
+"až příště spustíte RKWard, dokud soubor neodstraníte/nepřejmenujete ručně.<"
+"/p>"
 
 #: dialogs/rkselectlistdialog.cpp:38
 msgid "<b>Select one or more:</b>"
@@ -758,15 +766,16 @@ msgid "Start with an empty table"
 msgstr "Začít s prázdnou tabulkou"
 
 #: dialogs/startupdialog.cpp:68
-#, fuzzy
 msgid "Load workspace from current directory"
-msgstr "Změnit na adresář s nynějším skriptem"
+msgstr "Nahrát pracovní prostředí z nynějšího adresáře"
 
 #: dialogs/startupdialog.cpp:69
 msgid ""
 "Load workspace from current directory:\n"
 "%1"
 msgstr ""
+"Nahrát pracovní prostředí z nynějšího adresáře:\n"
+"%1"
 
 #: dialogs/startupdialog.cpp:70
 msgid "Load an existing workspace:"
@@ -1447,7 +1456,6 @@ msgid "R backend requests information"
 msgstr "Jádro R požaduje údaje"
 
 #: rbackend/rinterface.cpp:741
-#, fuzzy
 msgid ""
 "\n"
 "The R backend will be shut down immediately. This means, you can not use any "
@@ -1460,8 +1468,9 @@ msgid ""
 "happened. Sorry!"
 msgstr ""
 "\n"
-"Bude zastaveno okamžitě. Znamená to, že dále nemůžete používat "
-"jakékolifunkce závisející na jádru k R. Také jinak řečeno, nemůžete provádět "
+"Jádro R bude zastaveno okamžitě. Znamená to, že dále nemůžete používat "
+"jakékoli funkce závisející na jádru k R. Také jinak řečeno, nemůžete "
+"provádět "
 "vůbec nic, dokonce ani uložit pracovní prostředí. Máte-li štěstí, udělal to "
 "už R. Ovšem to, co můžete udělat, je, že můžete uložit otevřené soubory s "
 "příkazy, výstupy, nebo data z otevřeného editoru dat. Poté ukončete RKWard.\n"
@@ -1478,6 +1487,8 @@ msgid ""
 "Error during handshake with backend process. Expected token '%1', received "
 "token '%2'"
 msgstr ""
+"Chyba při podání ruky s procesem jádra. Očekáván symbol '%1', obdržen "
+"symbol '%2'"
 
 #: rbackend/rkfrontendtransmitter.cpp:108
 msgid ""
@@ -1485,6 +1496,9 @@ msgid ""
 "'%1' while backend is '%2'.\n"
 "Please fix your installation."
 msgstr ""
+"Neshoda ve verzích při podání ruky s procesem jádra. Uživatelské rozhraní je "
+"ve verzi '%1' zatímco jádro je ve verzi '%2'.\n"
+"Opravte, prosím, svou instalaci."
 
 #: rbackend/rkrbackend.cpp:403
 msgid "The R engine has shut down with status: %1"
@@ -1507,7 +1521,6 @@ msgid "Question from the R backend"
 msgstr "Otázka od jádra k R"
 
 #: rbackend/rkrbackend.cpp:1246
-#, fuzzy
 msgid ""
 "</p>\t- The 'rkward' R-library either could not be loaded at all, or not in "
 "the correct version. This may lead to all sorts of errors, from single "
@@ -1519,16 +1532,15 @@ msgid ""
 "net/rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</p>\n"
 msgstr ""
 "</p>\t- Buď se vůbec nepodařilo nahrát knihovnu R pro 'rkward', nebo nikoli "
-"ve správné verzi. Mohlo by to vést ke všem druhům chyb, od chybění "
+"ve správné verzi. Mohlo by to vést ke všem druhům chyb, od chybějících "
 "jednoduchých funkcí po úplné selhání funkčnosti. Většinou jde o to, že při "
 "poslední instalaci nebyly všechny soubory umístěny na správné místo. "
 "Nicméně, někdy toho mohou být příčina zbytky z předchozí instalace, které "
-"nebyly čistě odstraněny.</p>\t\t\t<p><b>Měl byste nyní ukončit RKWard, a "
+"nebyly čistě odstraněny.</p>\t\t<p><b>Měl byste nyní ukončit RKWard, a "
 "opravit svou instalaci</b>. S tímto vám pomůže <a href=\"http://p.sf.net/"
 "rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</p>\n"
 
 #: rbackend/rkrbackend.cpp:1250
-#, fuzzy
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
 "this indicates a broken installation.</p>\t\t<p><b>You should quit RKWard, "
@@ -1536,8 +1548,7 @@ msgid ""
 "p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</p></p>\n"
 msgstr ""
 "<p>\t-Při zřizování spojení s R se vyskytly potíže. Nejpravděpodobněji je to "
-"kvůli nesprávné verzi knihovny R 'rkward', nebo se ji vůbec nepovedlo najít. "
-"Značí to poškozenou instalaci.</p>\t\t\t<p><b>Měl byste nyní RKWard ukončit, "
+"kvůli poškozené instalaci.</p>\t\t<p><b>Měl byste nyní RKWard ukončit, "
 "a svou instalaci opravit</b>. Pro nápovědu k tomu se podívejte na <a href="
 "\"http://p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</"
 "p></p>\n"
@@ -1555,16 +1566,16 @@ msgid ""
 "*.Rhistory|R history files (*.Rhistory)\n"
 "*|All files (*)"
 msgstr ""
+"*.Rhistory|Soubory s historií R (*.Rhistory)\n"
+"*|Všechny soubory (*)"
 
 #: rkconsole.cpp:818
-#, fuzzy
 msgid "Select command history file to load"
-msgstr "Nahrát/Uložit historii příkazů"
+msgstr "Vyberte soubor s historií příkazů, který se má nahrát"
 
 #: rkconsole.cpp:838
-#, fuzzy
 msgid "Select filename to save command history"
-msgstr "Nahrát/Uložit historii příkazů"
+msgstr "Vyberte souborový název, pod nímž se historie příkazů má uložit"
 
 #: rkconsole.cpp:921
 msgid "Interrupt running command"
@@ -1583,40 +1594,39 @@ msgid "Print Console"
 msgstr "Vytisknout konzoli"
 
 #: rkconsole.cpp:944
-#, fuzzy
 msgid "Import command history..."
-msgstr "Nahrát/Uložit historii příkazů"
+msgstr "Zavést historii příkazů..."
 
 #: rkconsole.cpp:946
-#, fuzzy
 msgid "Export command history..."
-msgstr "Nahrát/Uložit historii příkazů"
+msgstr "Vyvést historii příkazů..."
 
 #: rkconsole.cpp:965
-#, fuzzy
 msgid ""
 "You have configured RKWard to pipe script editor commands through the R "
 "Console. However, another command is currently active in the console. Do you "
 "want to append it to the command in the console, or do you want to reset the "
 "console, first? Press cancel if you do not wish to run the new command, now."
 msgstr ""
-"Nastavil jste RKWard na provádění skriptových příkazů přes konzoli. Nicméně "
-"je tento ovládací panel v současnosti zaneprázdněn (buď běží nějaký příkaz, "
-"nebo jste v ovládacím panelu začal zadávat příkaz). Chcete protentokrát "
-"konzoli obejít, nebo se chcete později pokusit ještě jednou?"
+"Nastavil jste RKWard na vedení příkazů skriptovacího editoru přes konzoli R. "
+"Nicméně "
+"je v současnosti  ovládací panel zaneprázdněn jiným činným příkazem. Chcete "
+"jej přidat "
+"k příkazu v ovládacím panelu, nebo chcete konzoli nejprve vymazat? Pokud "
+"nyní nový příkaz "
+"spustit nechcete, stiskněte Zrušit."
 
 #: rkconsole.cpp:965
-#, fuzzy
 msgid "R Console is busy"
-msgstr "Konzole je zaneprázdněna"
+msgstr "Konzole R je zaneprázdněna"
 
 #: rkconsole.cpp:965
 msgid "Append"
-msgstr ""
+msgstr "Přidat"
 
 #: rkconsole.cpp:965
 msgid "Reset, then submit"
-msgstr ""
+msgstr "Vymazat, pak předložit"
 
 #: rkward.cpp:195
 msgid ""
@@ -1681,14 +1691,12 @@ msgid "Script File"
 msgstr "Soubor se skriptem"
 
 #: rkward.cpp:327
-#, fuzzy
 msgid "Open R Script File..."
-msgstr "Otevřít soubor skriptu R"
+msgstr "Otevřít soubor skriptu R..."
 
 #: rkward.cpp:330
-#, fuzzy
 msgid "Open Recent R Script File"
-msgstr "Otevřít soubor skriptu R"
+msgstr "Otevřít nedávný soubor skriptu R"
 
 #: rkward.cpp:337
 msgid "Import Data"
@@ -1699,18 +1707,16 @@ msgid "Import data from a variety of file formats"
 msgstr "Zavést data z různých datových formátů"
 
 #: rkward.cpp:342
-#, fuzzy
 msgid "Open Workspace..."
-msgstr "Otevřít pracovní prostředí"
+msgstr "Otevřít pracovní prostředí..."
 
 #: rkward.cpp:344
 msgid "Opens an existing document"
 msgstr "Otevře stávající dokument"
 
 #: rkward.cpp:347
-#, fuzzy
 msgid "Open Recent Workspace"
-msgstr "Otevřít pracovní prostředí"
+msgstr "Otevřít nedávné pracovní prostředí"
 
 #: rkward.cpp:348
 msgid "Opens a recently used file"
@@ -1766,36 +1772,32 @@ msgid "[No actions available for current view]"
 msgstr "[Pro nynější pohled nejsou dostupné žádné kroky]"
 
 #: rkward.cpp:401
-#, fuzzy
 msgid "Open..."
-msgstr "Otevřít soubor..."
+msgstr "Otevřít..."
 
 #: rkward.cpp:411
-#, fuzzy
 msgid "Import"
-msgstr "&Zavést"
+msgstr "Zavést"
 
 #: rkward.cpp:414
 msgid "Create..."
-msgstr ""
+msgstr "Vytvořit..."
 
 #: rkward.cpp:421
 msgid "Save..."
-msgstr ""
+msgstr "Uložit..."
 
 #: rkward.cpp:425
-#, fuzzy
 msgid "Export"
-msgstr "&Zavést"
+msgstr "Vyvést"
 
 #: rkward.cpp:506
 msgid "Ready."
 msgstr "Připravený."
 
 #: rkward.cpp:510
-#, fuzzy
 msgid "Current working directory"
-msgstr "Změnit na adresář s nynějším skriptem"
+msgstr "Nynější pracovní adresář"
 
 #: rkward.cpp:579
 msgid "Exiting..."
@@ -1838,18 +1840,16 @@ msgid "Do you want to save the current workspace?"
 msgstr "Chcete uložit nynější pracovní prostředí?"
 
 #: rkward.cpp:741
-#, fuzzy
 msgid "The <b>R</b> engine is busy."
-msgstr "Jádro R je zaneprázdněno"
+msgstr "Jádro <b>R</b> je zaneprázdněno."
 
 #: rkward.cpp:744
-#, fuzzy
 msgid "The <b>R</b> engine is idle."
-msgstr "Jádro R je nečinné"
+msgstr "Jádro <b>R</b> je nečinné."
 
 #: rkward.cpp:747
 msgid "The <b>R</b> engine is being initialized."
-msgstr ""
+msgstr "Jádro <b>R</b> je inicializováno."
 
 #: rkward.cpp:787 rkward.cpp:789
 msgid "Open script file(s)"
@@ -2085,6 +2085,8 @@ msgstr "Krok spuštění (*)"
 msgid ""
 "Load .RData-file from current directory, if available (R option '--restore')"
 msgstr ""
+"Nahrát soubor .RData z nynějšího adresáře, je-li dostupný (volba R "
+"'--restore')"
 
 #: settings/rksettingsmodulegeneral.cpp:70
 msgid "Ask for a file to open"
@@ -2322,7 +2324,7 @@ msgstr "Vybrat soubor(y) .pluginmap"
 
 #: settings/rksettingsmoduleplugins.cpp:115
 msgid "Install or uninstall add-on plugin packs"
-msgstr ""
+msgstr "Instalovat nebo odinstalovat doplňkové balíčky s přídavnými moduly"
 
 #: settings/rksettingsmoduleplugins.cpp:134
 msgid "Select .pluginmap-file"
@@ -2587,11 +2589,11 @@ msgstr "Změnit pracovní adresář na adresář s tímto skriptem"
 
 #: windows/rkcommandeditorwindow.cpp:216
 msgid "Save Script..."
-msgstr ""
+msgstr "Uložit skript..."
 
 #: windows/rkcommandeditorwindow.cpp:218
 msgid "Save Script As..."
-msgstr ""
+msgstr "Uložit skript jako..."
 
 #: windows/rkcommandeditorwindow.cpp:309 windows/rkcommandeditorwindow.cpp:496
 msgid " [modified]"
@@ -3232,7 +3234,7 @@ msgstr ""
 "vlastním vestavěném editoru dat. Využije to hodně z paměti a, v závislosti "
 "na vašem systému, může to být velmi pomalé. U velkých předmětů se všeobecně "
 "doporučuje upravovat je s pomocí příkazového řádku, a nebo rozdělit data "
-"před úpravami na maléh kousky. Na druhou stranu, pokud máte dostatek "
+"před úpravami na malé kousky. Na druhou stranu, pokud máte dostatek "
 "paměti , nebo jsou data sdostatek jednoduchá (číselná data se zpracovávají "
 "lépe než faktory), nemusí jít v případě úprav o problém. Toto varování "
 "můžete nastavit (nebo úplně vypnout) pod Nastavení -> Nastavit RKWard -> "
@@ -3425,9 +3427,8 @@ msgstr "&Zavést"
 #. i18n: file: rkwardui.rc:20
 #. i18n: ectx: Menu (export)
 #: rc.cpp:27
-#, fuzzy
 msgid "&Export"
-msgstr "&Zavést"
+msgstr "&Vyvést"
 
 #. i18n: file: rkwardui.rc:26
 #. i18n: ectx: Menu (workspace)
