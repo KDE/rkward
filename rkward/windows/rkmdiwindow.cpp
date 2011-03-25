@@ -164,7 +164,7 @@ bool RKMDIWindow::close (bool also_delete) {
 			}
 			// WORKAROUND end
 
-			deleteLater ();
+			delete this;	// Note: using deleteLater(), here does not work well while restoring workplaces (window is not fully removed from workplace before restoring)
 		}
 		return closed;
 	} else {

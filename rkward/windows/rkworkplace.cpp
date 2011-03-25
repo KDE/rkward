@@ -584,7 +584,7 @@ void RKWorkplace::restoreWorkplace (const QStringList &description) {
 				RK_ASSERT (false);
 				continue;
 			}
-			params = description[i].mid (typeend + 2, specstart - typeend).split (':');
+			params = description[i].mid (typeend + 2, specstart - typeend - 2).split (':', QString::SkipEmptyParts);
 			specification = description[i].mid (specstart + 2);
 		} else {
 			specification = description[i].mid (typeend +1 );
