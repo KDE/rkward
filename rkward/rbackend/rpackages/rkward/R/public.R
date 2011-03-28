@@ -133,13 +133,14 @@
 	.rk.do.call ("set.output.file", x);
 }
 
-"rk.save.workplace" <- function (file=NULL) {
+"rk.save.workplace" <- function (file=NULL, description=NULL) {
 	if (is.null (file)) {
 		file <- rk.get.workspace.url ()
 		if (is.null (file)) file <- rk.get.tempfile.name (prefix="unsaved", extension=".RData")
 		file <- paste (file, "rkworkplace", sep=".")
 	}
-	lines <- .rk.do.call ("workplace.layout", "get")
+	if (is.null (description)) lines <- .rk.do.call ("workplace.layout", "get")
+	else lines <- description
 	writeLines (lines, file)
 }
 

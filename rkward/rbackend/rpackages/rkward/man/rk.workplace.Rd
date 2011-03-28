@@ -8,12 +8,13 @@
 }
 
 \usage{
-rk.save.workplace(file=NULL)
+rk.save.workplace(file=NULL, description=NULL)
 rk.restore.workplace(file=NULL, close.windows=TRUE)
 }
 
 \arguments{
 \item{file}{a character string giving the url of the file to save to, or NULL for automatic selection of a suitable file (see Details).}
+\item{description}{For internal use, only. A character string describing the workplace status to save. Generally, you should leave this as the default value (\code{NULL]).}
 \item{close.windows}{a logical; whether current windows should be closed before restoring.}
 }
 
