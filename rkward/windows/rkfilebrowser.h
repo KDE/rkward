@@ -67,6 +67,7 @@ public slots:
 	void saveConfig ();
 	void contextMenuHook (const KFileItem &item, QMenu *menu);
 private:
+	bool actions_added;
 	KDirOperator *dir;
 	KUrlComboBox *urlbox;
 	KFileItemActions *fi_actions;
