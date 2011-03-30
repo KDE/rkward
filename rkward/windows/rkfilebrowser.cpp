@@ -35,6 +35,7 @@
 #include <QEvent>
 #include <QVBoxLayout>
 #include <QScrollBar>
+#include <QMenu>
 
 #include "rkworkplace.h"
 #include "../rkward.h"
@@ -120,7 +121,6 @@ RKFileBrowserWidget::RKFileBrowserWidget (QWidget *parent) : KVBox (parent) {
 #if KDE_IS_VERSION(4, 3, 0)
 	fi_actions = new KFileItemActions (this);
 	connect (dir, SIGNAL (contextMenuAboutToShow(KFileItem,QMenu*)), this, SLOT (contextMenuHook(KFileItem,QMenu*)));
-	actions_added = false;
 #endif
 
 	connect (dir, SIGNAL (urlEntered (const KUrl &)), this, SLOT (urlChangedInView (const KUrl &)));
@@ -142,10 +142,19 @@ void RKFileBrowserWidget::contextMenuHook(const KFileItem& item, QMenu* menu) {
 	QList<KFileItem> dummy;
 	dummy.append (item);
 	fi_actions->setItemListProperties (KFileItemListProperties (dummy));
-	if (KDE::version () >= KDE_MAKE_VERSION (4,5,0) && actions_added) return;		// in some versions of KDE the actions must be added each time the menu is shown, in others only once
+
+	// some versions of KDE appear to re-use the actions, others don't, and yet other are just plain broken (see this thread: http://www.mail-archive.com/rkward-devel@lists.sourceforge.net/msg01279.html)
+	// Therefore, we remove all actions, explicitly, each time the menu is shown, then add them again.
+	QList<QAction*> menu_actions = menu->actions ();
+	foreach (QAction* act, menu_actions) if (added_service_actions.contains (act)) menu->removeAction (act);
+	added_service_actions.clear ();
+	menu_actions = menu->actions ();
+
 	fi_actions->addOpenWithActionsTo (menu, QString ());
 	fi_actions->addServiceActionsTo (menu);
-	actions_added = true;
+
+	QList<QAction*> menu_actions_after = menu->actions ();
+	foreach (QAction* act, menu_actions_after) if (!menu_actions.contains (act)) added_service_actions.append (act);
 #endif
 }
 

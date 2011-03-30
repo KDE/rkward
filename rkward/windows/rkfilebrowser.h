@@ -22,12 +22,15 @@
 
 #include <kvbox.h>
 
+#include <QList>
+
 class KDirOperator;
 class RKFileBrowserWidget;
 class KUrlComboBox;
 class KFileItem;
 class KFileItemActions;
 class QMenu;
+class QAction;
 
 /** The file browser (tool) window. In order to save some startup time, the file browser is not really created until it is first shown. Hence, this is mostly just a wrapper around RKFileBrowserWidget */
 class RKFileBrowser : public RKMDIWindow {
@@ -67,7 +70,7 @@ public slots:
 	void saveConfig ();
 	void contextMenuHook (const KFileItem &item, QMenu *menu);
 private:
-	bool actions_added;
+	QList<QAction*> added_service_actions;
 	KDirOperator *dir;
 	KUrlComboBox *urlbox;
 	KFileItemActions *fi_actions;
