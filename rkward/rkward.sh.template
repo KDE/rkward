@@ -51,7 +51,7 @@ else
   # for regular installations
   # Usually, KDE always adds the current directory to the list of prefixes.
   # However, since RKWard 0.5.6, the main binary is in KDE's libexec dir, which defies this mechanism. Therefore, we need to make sure, KDEDIRS is set appropriately
-  EFFECTIVE_PREFIX=`readlink -e \`dirname $0\`/..`
+  EFFECTIVE_PREFIX="`dirname $0`/.."
   if [ -z "${KDEDIRS}" ]; then
     export KDEDIRS="${EFFECTIVE_PREFIX}"
   else
