@@ -54,7 +54,6 @@
 #include <kaboutdata.h>
 #include <klocale.h>
 #include <ktemporaryfile.h>
-#include <kstandarddirs.h>
 
 #include <qstring.h>
 #include <QMutex>
@@ -164,11 +163,6 @@ int main(int argc, char *argv[]) {
 		new RKWardMainWindow(stoptions);
 	}
 	args->clear();
-
-	// Usually, KDE always adds the current directory to the list of prefixes.
-	// However, since RKWard 0.5.6, the main binary is in KDE's libexec dir, which defies this mechanism. Therefore, RKWARD_ENSURE_PREFIX is set from the wrapper script.
-	char *add_path = getenv ("RKWARD_ENSURE_PREFIX");
-	if (add_path) KGlobal::dirs ()->addPrefix (QString::fromLocal8Bit (add_path));
 
 	// do it!
 	int status = app.exec ();
