@@ -369,6 +369,7 @@ void RKWardMainWindow::initActions() {
 	interrupt_all_commands->setText (i18n ("Interrupt all commands"));
 	interrupt_all_commands->setShortcut (Qt::ShiftModifier + Qt::Key_Escape);
 	interrupt_all_commands->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionInterrupt));
+	interrupt_all_commands->setEnabled (false);		// enabled from within setRStatus()
 
 	// These two currently do the same thing
 	action = actionCollection ()->addAction ("load_unload_libs", this, SLOT (slotFileLoadLibs()));
@@ -518,9 +519,17 @@ void RKWardMainWindow::initStatusBar () {
 	statusBar ()->addWidget (statusbar_cwd, 10);
 	updateCWD ();
 
-	statusbar_r_status = new QLabel ("&nbsp;<b>R</b>&nbsp;", statusBar ());
+	KHBox *box = new KHBox (statusBar ());
+	box->setSpacing (0);
+	statusbar_r_status = new QLabel ("&nbsp;<b>R</b>&nbsp;", box);
 	statusbar_r_status->setFixedHeight (statusBar ()->fontMetrics ().height () + 2);
-	statusBar ()->addPermanentWidget (statusbar_r_status, 0);
+
+	QToolButton* dummy = new QToolButton (box);
+	dummy->setDefaultAction (interrupt_all_commands);
+	dummy->setFixedHeight (statusbar_r_status->height ());
+	dummy->setAutoRaise (true);
+
+	statusBar ()->addPermanentWidget (box, 0);
 	setRStatus (Starting);
 }
 
