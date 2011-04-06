@@ -70,6 +70,7 @@ public:
 		ActionWindowDuplicate,
 
 		ActionClear,
+		ActionInterrupt,
 
 		ActionDetachWindow,
 		ActionAttachWindow,

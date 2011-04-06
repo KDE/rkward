@@ -70,6 +70,7 @@ void RKStandardIcons::initIcons () {
 	icons[ActionWindowDuplicate] = KIcon ("window-duplicate.png");
 
 	icons[ActionClear] = KIcon ("edit-clear.png");
+	icons[ActionInterrupt] = KIcon ("media-playback-stop");
 
 	icons[ActionDetachWindow] = KIcon ("view-fullscreen");
 	icons[ActionAttachWindow] = KIcon ("view-restore");

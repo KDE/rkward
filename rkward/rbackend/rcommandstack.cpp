@@ -2,7 +2,7 @@
                           rcommandstack  -  description
                              -------------------
     begin                : Mon Sep 6 2004
-    copyright            : (C) 2004, 2007, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -108,6 +108,24 @@ RCommand* RCommandStack::currentCommand () {
 		coc = current_chain->commands.first ();
 	}
 	return coc->commandPointer ();
+}
+
+void RCommandStack::addChainCommandsToList (QList<RCommand*> *list, const RCommandChain *chain) const {
+	RK_TRACE (RBACKEND);
+
+	foreach (RCommandBase* coc, chain->commands) {
+		if (coc->chainPointer ()) addChainCommandsToList (list, coc->chainPointer ());
+		else if (coc->commandPointer ()) list->append (coc->commandPointer ());
+		else RK_ASSERT (false);
+	}
+}
+
+QList<RCommand*> RCommandStack::allCommands () const {
+	RK_TRACE (RBACKEND);
+
+	QList<RCommand*> ret;
+	addChainCommandsToList (&ret, current_chain);
+	return ret;
 }
 
 bool RCommandStack::isEmpty () {

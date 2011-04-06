@@ -2,7 +2,7 @@
                           rkrbackendprotocol  -  description
                              -------------------
     begin                : Thu Nov 04 2010
-    copyright            : (C) 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -36,7 +36,6 @@ friend class RKRBackendThread;
 friend class RKRBackendTransmitter;
 	void sendRequest (RBackendRequest *request);
 	static void msleep (int delay);
-	static void interruptProcessing ();
 	static RKRBackendProtocolBackend* instance () { return _instance; };
 	QString data_dir;
 private:

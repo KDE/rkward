@@ -305,11 +305,17 @@ void RKWardMainWindow::startR () {
 }
 
 void RKWardMainWindow::slotConfigure () {
+	RK_TRACE (APP);
 	RKSettings::configureSettings (RKSettings::NoPage, this);
 }
 
-void RKWardMainWindow::initActions()
-{  
+void RKWardMainWindow::slotCancelAllCommands () {
+	RK_TRACE (APP);
+	RK_ASSERT (RKGlobals::rInterface ());
+	RKGlobals::rInterface ()->cancelAll ();
+}
+
+void RKWardMainWindow::initActions() {  
 	RK_TRACE (APP);
 	KAction *action;
 
@@ -359,6 +365,11 @@ void RKWardMainWindow::initActions()
 	fileQuit = actionCollection ()->addAction (KStandardAction::Quit, "file_quitx", this, SLOT(close()));
 	fileQuit->setStatusTip (i18n ("Quits the application"));
 
+	interrupt_all_commands = actionCollection ()->addAction ("cancel_all_commands", this, SLOT (slotCancelAllCommands()));
+	interrupt_all_commands->setText (i18n ("Interrupt all commands"));
+	interrupt_all_commands->setShortcut (Qt::ShiftModifier + Qt::Key_Escape);
+	interrupt_all_commands->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionInterrupt));
+
 	// These two currently do the same thing
 	action = actionCollection ()->addAction ("load_unload_libs", this, SLOT (slotFileLoadLibs()));
 	action->setText (i18n ("Load / Unload Packages"));
@@ -393,9 +404,6 @@ void RKWardMainWindow::initActions()
 	view_menu_dummy = actionCollection ()->addAction ("view_menu_dummy", this);
 	view_menu_dummy->setText (edit_menu_dummy->text ());
 	view_menu_dummy->setEnabled (false);
-	run_menu_dummy = actionCollection ()->addAction ("run_menu_dummy", this);
-	run_menu_dummy->setText (edit_menu_dummy->text ());
-	run_menu_dummy->setEnabled (false);
 
 	// collections for the toolbar:
 	KActionMenu* open_any_action = new KActionMenu (KIcon ("document-open-folder"), i18n ("Open..."), this);
@@ -474,7 +482,6 @@ void RKWardMainWindow::partChanged (KParts::Part *part) {
 
 	updateEmptyMenuIndicator (edit_menu_dummy, dynamic_cast<QMenu*>(guiFactory ()->container ("edit", this)));
 	updateEmptyMenuIndicator (view_menu_dummy, dynamic_cast<QMenu*>(guiFactory ()->container ("view", this)));
-	updateEmptyMenuIndicator (run_menu_dummy, dynamic_cast<QMenu*>(guiFactory ()->container ("run", this)));
 
 	// plug save file actions into the toolbar collections
 	RK_ASSERT (save_any_action);
@@ -739,9 +746,11 @@ void RKWardMainWindow::setRStatus (RStatus status) {
 	if (status == Busy) {
 		status_color = QColor (255, 0, 0);
 		statusbar_r_status->setToolTip (i18n ("The <b>R</b> engine is busy."));
+		interrupt_all_commands->setEnabled (true);
 	} else if (status == Idle) {
 		status_color = QColor (0, 255, 0);
 		statusbar_r_status->setToolTip (i18n ("The <b>R</b> engine is idle."));
+		interrupt_all_commands->setEnabled (false);
 	} else {
 		status_color = QColor (255, 255, 0);
 		statusbar_r_status->setToolTip (i18n ("The <b>R</b> engine is being initialized."));

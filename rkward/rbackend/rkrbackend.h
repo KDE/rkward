@@ -173,6 +173,10 @@ public:
 	bool capturing_messages;
 	QString captured_messages;
 	void printAndClearCapturedMessages ();
+
+	QMutex all_current_commands_mutex;
+	QList<RCommandProxy*> current_commands_to_cancel;
+	void interruptCommand (int command_id);
 protected:
 	RCommandProxy* handleRequest (RBackendRequest *request, bool mayHandleSubstack);
 private:

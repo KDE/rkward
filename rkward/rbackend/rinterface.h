@@ -2,7 +2,7 @@
                           rinterface.h  -  description
                              -------------------
     begin                : Fri Nov 1 2002
-    copyright            : (C) 2002, 2004, 2005, 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2004, 2005, 2006, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -63,6 +63,8 @@ public:
 /** Ensures that the given command will not be executed, or, if it is already running, interrupts it. Note that commands marked RCommand::Sync can
 not be interrupted. */
 	void cancelCommand (RCommand *command);
+/** Cancels all running or outstanding commands. @See cancelCommand() */
+	void cancelAll ();
 
 /** Pauses process. The current command will continue to run, but no new command will be */
 	void pauseProcessing (bool pause);
@@ -84,8 +86,6 @@ private:
 	RKRBackend *r_thread;
 /** Timer to trigger flushing output */
 	QTimer *flush_timer;
-/** canceling the command that is (or seems to be) currently running is tricky: In order to do so, we need to signal an interrupt to the RThread. We need this pointer to find out, when the command has actually been interrupted, and we can resume processing. */
-	RCommand *running_command_canceled;
 /** Used by the testing framework. see R function rk.record.commands(). */
 	QFile command_logfile;
 	enum {
@@ -99,20 +99,18 @@ private:
 
 /** A list of all commands that have entered, and not yet left, the backend thread */
 	QList<RCommand*> all_current_commands;
-	RCommand* previous_command;
 /** NOTE: processsing R events while waiting for the next command may, conceivably, lead to new requests, which may also wait for sub-commands! Thus we keep a simple stack of requests. */
 	QList<RBackendRequest*> command_requests;
 	RBackendRequest* currentCommandRequest () const { return (command_requests.isEmpty () ? 0 : command_requests.last ()); };
 	void tryNextCommand ();
 	void doNextCommand (RCommand *command);
-	void popPreviousCommand ();
-	void handleCommandOut (RCommandProxy *proxy);
+	RCommand *popPreviousCommand ();
+	void handleCommandOut (RCommand *command);
 	bool previously_idle;
 
 /** @see locked */
 	enum LockType {
-		User=1,		/**< locked on user request */
-		Cancel=2	/**< locked to safely cancel a running command */
+		User=1		/**< locked on user request */
 	};
 
 /** Used for locking the backend, meaning not further commands will be given to the backend. This is used, when the currently running command is to be cancelled. It is used to make sure that the backend thread does not proceed with further commands, before the main thread takes notice. Also it is called, if the RThread is paused on User request. Further, the thread is initially locked so the main thread can check for some conditions before the backend thread may produce

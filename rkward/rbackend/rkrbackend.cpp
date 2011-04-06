@@ -92,7 +92,13 @@ extern "C" {
 #	include <Rinterface.h>
 #endif
 
+#ifndef Q_WS_WIN
+#	include <signal.h>		// needed for pthread_kill
+#	include <pthread.h>		// seems to be needed at least on FreeBSD
+#endif
+
 void RK_scheduleIntr () {
+	RK_DO (qDebug ("interrupt scheduled"), RBACKEND, DL_DEBUG);
 	RKRBackend::repl_status.interrupted = true;
 #ifdef Q_WS_WIN
 	UserBreak = 1;
@@ -103,12 +109,40 @@ void RK_scheduleIntr () {
 
 void RK_doIntr () {
 	RK_scheduleIntr ();
-	RKRBackend::repl_status.interrupted = true;
 	R_CheckUserInterrupt ();
 }
 
 void RKRBackend::scheduleInterrupt () {
-	RK_scheduleIntr ();
+	if (RKRBackendProtocolBackend::inRThread ()) {
+		RK_scheduleIntr ();
+	} else {
+#ifdef Q_WS_WIN
+		RK_scheduleIntr ();		// Thread-safe on windows?!
+#else
+		pthread_kill ((pthread_t) RKRBackendProtocolBackend::instance ()->r_thread_id, SIGUSR1);	// NOTE: SIGUSR1 relays to SIGINT
+#endif
+	}
+}
+
+void RKRBackend::interruptCommand (int command_id) {
+	RK_TRACE (RBACKEND);
+	QMutexLocker lock (&all_current_commands_mutex);
+
+	if (all_current_commands.isEmpty ()) return;
+	if ((command_id == -1) || (all_current_commands.last ()->id == command_id)) {
+		RK_DO (qDebug ("scheduling interrupt for command id %d", command_id), RBACKEND, DL_DEBUG);
+		scheduleInterrupt ();
+	} else {
+		// if the command to cancel is *not* the topmost command, then do not interrupt, yet.
+		foreach (RCommandProxy *candidate, all_current_commands) {
+			if (candidate->id == command_id) {
+				if (!current_commands_to_cancel.contains (candidate)) {
+					RK_DO (qDebug ("scheduling delayed interrupt for command id %d", command_id), RBACKEND, DL_DEBUG);
+					current_commands_to_cancel.append (candidate);
+				}
+			}
+		}
+	}
 }
 
 // some functions we need that are not declared
@@ -752,6 +786,7 @@ SEXP doError (SEXP call) {
 		if (!R_interrupts_pending) {
 			RKRBackend::repl_status.interrupted = false;
 			if (RKRBackend::repl_status.user_command_status != RKRBackend::RKReplStatus::ReplIterationKilled) {	// was interrupted only to step out of the repl iteration
+				QMutexLocker lock (&(RKRBackend::this_pointer->all_current_commands_mutex));
 				foreach (RCommandProxy *command, RKRBackend::this_pointer->all_current_commands) command->status |= RCommand::Canceled;
 				RK_DO (qDebug ("interrupted"), RBACKEND, DL_DEBUG);
 			}
@@ -766,6 +801,8 @@ SEXP doError (SEXP call) {
 
 SEXP doSubstackCall (SEXP call) {
 	RK_TRACE (RBACKEND);
+
+	R_CheckUserInterrupt ();
 
 	QStringList list = RKRSupport::SEXPToStringList (call);
 
@@ -1165,8 +1202,11 @@ void RKRBackend::commandFinished (bool check_object_updates_needed) {
 
 	previous_command = current_command;
 
-	all_current_commands.pop_back();
-	if (!all_current_commands.isEmpty ()) current_command = all_current_commands.last ();
+	{
+		QMutexLocker lock (&all_current_commands_mutex);
+		all_current_commands.pop_back();
+		if (!all_current_commands.isEmpty ()) current_command = all_current_commands.last ();
+	}
 }
 
 RCommandProxy* RKRBackend::handleRequest (RBackendRequest *request, bool mayHandleSubstack) {
@@ -1190,8 +1230,11 @@ RCommandProxy* RKRBackend::handleRequest (RBackendRequest *request, bool mayHand
 	RCommandProxy* command = request->takeCommand ();
 	if (!command) return 0;
 
-	all_current_commands.append (command);
-	current_command = command;
+	{
+		QMutexLocker lock (&all_current_commands_mutex);
+		all_current_commands.append (command);
+		current_command = command;
+	}
 
 	if (!mayHandleSubstack) return command;
 	
@@ -1201,6 +1244,14 @@ RCommandProxy* RKRBackend::handleRequest (RBackendRequest *request, bool mayHand
 
 		command = fetchNextCommand ();
 	};
+
+	{
+		QMutexLocker lock (&all_current_commands_mutex);
+		if (current_commands_to_cancel.contains (current_command)) {
+			RK_DO (qDebug ("will now interrupt parent command"), RBACKEND, DL_DEBUG);
+			scheduleInterrupt ();
+		}
+	}
 
 	return 0;
 }

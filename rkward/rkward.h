@@ -2,7 +2,7 @@
 			rkward.h  -  description
 			-------------------
 begin                : Tue Oct 29 20:06:08 CET 2002 
-copyright            : (C) 2002, 2005, 2006, 2007, 2008, 2009, 2010 by Thomas Friedrichsmeier 
+copyright            : (C) 2002, 2005, 2006, 2007, 2008, 2009, 2010, 2011 by Thomas Friedrichsmeier 
 email                : tfry@users.sourceforge.net
 ***************************************************************************/
 
@@ -111,6 +111,7 @@ public slots:
 	/** Reimplemented from KParts::MainWindow to be more pretty
 	* @param text the text that is displayed in the statusbar
 	*/
+	void slotCancelAllCommands ();
 	void slotSetStatusBarText (const QString &text);
 /** Basically a shortcut to slotSetStatusBarText (QString::null). Needed as a slot without parameters. */
 	void slotSetStatusReady () { slotSetStatusBarText (QString::null); };
@@ -161,6 +162,7 @@ private:
 	KAction* fileSaveWorkspace;
 	KAction* fileSaveWorkspaceAs;
 	KAction* fileQuit;
+	KAction* interrupt_all_commands;
 	KAction* close_all_editors;
 	KAction* new_data_frame;
 	KAction* new_command_editor;
@@ -174,8 +176,6 @@ private:
 	KAction* edit_menu_dummy;
 	/** used so that if the menu is empty, there is a note in it, explaining that fact */
 	KAction* view_menu_dummy;
-	/** used so that if the menu is empty, there is a note in it, explaining that fact */
-	KAction* run_menu_dummy;
 
 	KAction* proxy_export, *proxy_import;
 	KActionMenu* save_any_action;

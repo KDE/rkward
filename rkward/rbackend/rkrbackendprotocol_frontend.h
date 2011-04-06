@@ -2,7 +2,7 @@
                           rkrbackendprotocol  -  description
                              -------------------
     begin                : Thu Nov 04 2010
-    copyright            : (C) 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -32,7 +32,7 @@ public:
 
 	static void setRequestCompleted (RBackendRequest *request);
 	ROutputList flushOutput (bool force);
-	void interruptProcessing ();
+	void interruptCommand (int command_id);
 	void terminateBackend ();
 	void setupBackend ();
 	static RKRBackendProtocolFrontend* instance () { return _instance; };

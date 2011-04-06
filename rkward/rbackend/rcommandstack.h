@@ -2,7 +2,7 @@
                           rcommandstack  -  description
                              -------------------
     begin                : Mon Sep 6 2004
-    copyright            : (C) 2004, 2007, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -50,6 +50,7 @@ public:
 
 /** see pop() */
 	RCommand* currentCommand ();
+	QList<RCommand*> allCommands () const;
 	RCommandChain* currentChain () { return current_chain; };
 
 /** the regular command stack, i.e. not a callback */
@@ -69,6 +70,7 @@ friend class RCommandStackModel;
 /** pointer to any substack. Will only be non-zero, if the substack is active */
 	RCommandStack *sub_stack;
 	void clearFinishedChains ();
+	void addChainCommandsToList (QList<RCommand*> *list, const RCommandChain *chain) const;
 };
 
 #include <QAbstractItemModel>

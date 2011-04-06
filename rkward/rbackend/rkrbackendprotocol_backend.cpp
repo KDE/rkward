@@ -23,10 +23,6 @@
 
 #include <QCoreApplication>
 #include <QThread>
-#ifndef Q_WS_WIN
-#	include <signal.h>		// needed for pthread_kill
-#	include <pthread.h>		// seems to be needed at least on FreeBSD
-#endif
 
 #ifdef RKWARD_THREADED
 #	include "rkrbackendprotocol_frontend.h"
@@ -205,16 +201,4 @@ void RKRBackendProtocolBackend::msleep (int delay) {
 #else
 	static_cast<RKRBackendTransmitter*> (RKRBackendTransmitter::instance ())->publicmsleep (delay);
 #endif
-}
-
-void RKRBackendProtocolBackend::interruptProcessing () {
-	if (inRThread ()) {
-		RKRBackend::scheduleInterrupt ();
-	} else {
-#ifdef Q_WS_WIN
-		RKRBackend::scheduleInterrupt ();		// Thread-safe on windows?!
-#else
-		pthread_kill ((pthread_t) instance ()->r_thread_id, SIGUSR1);	// NOTE: SIGUSR1 relays to SIGINT
-#endif
-	}
 }

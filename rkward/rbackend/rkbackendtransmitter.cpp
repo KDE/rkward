@@ -92,7 +92,7 @@ void RKRBackendTransmitter::requestReceived (RBackendRequest* request) {
 
 	// first check for requests which originated in the frontend
 	if (request->type == RBackendRequest::Interrupt) {
-		RKRBackendProtocolBackend::interruptProcessing ();
+		RKRBackend::this_pointer->interruptCommand (request->params.value ("commandid", -1).toInt ());
 	// requests which originated in the backend below this line
 	} else {
 		if (current_sync_requests.isEmpty ()) {

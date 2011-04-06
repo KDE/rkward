@@ -2,7 +2,7 @@
                           rkrbackendprotocol  -  description
                              -------------------
     begin                : Thu Nov 04 2010
-    copyright            : (C) 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -88,14 +88,15 @@ ROutputList RKRBackendProtocolFrontend::flushOutput (bool force) {
 #endif
 }
 
-void RKRBackendProtocolFrontend::interruptProcessing () {
+void RKRBackendProtocolFrontend::interruptCommand (int command_id) {
 	RK_TRACE (RBACKEND);
 
 #ifdef RKWARD_THREADED
 	RK_ASSERT (!RKRBackendProtocolBackend::inRThread ());
-	RKRBackendProtocolBackend::interruptProcessing ();
+	RKRBackendProtocolBackend::interruptCommand (command_id);
 #else
 	RBackendRequest *req = new RBackendRequest (false, RBackendRequest::Interrupt);
+	req->params.insert ("commandid", QVariant (command_id));
 	qApp->postEvent (RKFrontendTransmitter::instance (), new RKRBackendEvent (req));
 #endif
 }

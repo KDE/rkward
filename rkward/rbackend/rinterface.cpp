@@ -86,11 +86,9 @@ RInterface::RInterface () {
 
 	new RCommandStackModel (this);
 	RCommandStack::regular_stack = new RCommandStack (0);
-	running_command_canceled = 0;
 	startup_phase2_error = false;
 	command_logfile_mode = NotRecordingCommands;
 	previously_idle = false;
-	previous_command = 0;
 	locked = 0;
 	backend_dead = false;
 
@@ -126,13 +124,12 @@ bool RInterface::backendIsIdle () {
 	return (idle);
 }
 
-void RInterface::popPreviousCommand () {
+RCommand *RInterface::popPreviousCommand () {
 	RK_TRACE (RBACKEND);
 
-	RK_ASSERT (previous_command == 0);
 	RK_ASSERT (!all_current_commands.isEmpty ());
-	previous_command = all_current_commands.takeLast ();
 	RCommandStack::currentStack ()->pop ();
+	return all_current_commands.takeLast ();
 }
 
 void RInterface::tryNextCommand () {
@@ -153,8 +150,9 @@ void RInterface::tryNextCommand () {
 				command->status |= RCommand::Failed;
 
 				// notify ourselves...
-				popPreviousCommand ();
-				handleCommandOut (command->makeProxy ());
+				RCommand* dummy = popPreviousCommand ();
+				RK_ASSERT (dummy == command);
+				handleCommandOut (command);
 				return;
 			}
 
@@ -176,13 +174,10 @@ void RInterface::tryNextCommand () {
 	}
 }
 
-void RInterface::handleCommandOut (RCommandProxy *proxy) {
+void RInterface::handleCommandOut (RCommand *command) {
 	RK_TRACE (RBACKEND);
 
-	RK_ASSERT (proxy);
-	RK_ASSERT (previous_command);
-	RCommand* command = previous_command;
-	command->mergeAndDeleteProxy (proxy);
+	RK_ASSERT (command);
 
 	#ifdef RKWARD_DEBUG
 		int dl = DL_WARNING;		// failed application commands are an issue worth reporting, failed user commands are not
@@ -210,15 +205,9 @@ void RInterface::handleCommandOut (RCommandProxy *proxy) {
 		out->output = ("--- interrupted ---");
 		command->output_list.append (out);
 		command->newOutput (out);
-		if (running_command_canceled) {
-			RK_ASSERT (command == running_command_canceled);
-			running_command_canceled = 0;
-			locked -= locked & Cancel;
-		}
 	}
 	command->finished ();
 	delete command;
-	previous_command = 0;
 }
 
 void RInterface::doNextCommand (RCommand *command) {
@@ -309,14 +298,19 @@ void RInterface::handleRequest (RBackendRequest* request) {
 	flushOutput (true);
 	if (request->type == RBackendRequest::CommandOut) {
 		RCommandProxy *cproxy = request->takeCommand ();
+		RCommand *command = 0;
 
 		// NOTE: the order of processing is: first try to submit the next command, then handle the old command.
 		// The reason for doing it this way, instead of the reverse, is that this allows the backend thread / process to continue working, concurrently
 		// NOTE: cproxy should only ever be 0 in the very first cycle
-		if (cproxy) popPreviousCommand ();
+		if (cproxy) command = popPreviousCommand ();
 		command_requests.append (request);
 		tryNextCommand ();
-		if (cproxy) handleCommandOut (cproxy);
+		if (cproxy) {
+			RK_ASSERT (command);
+			command->mergeAndDeleteProxy (cproxy);
+			handleCommandOut (command);
+		}
 		tryNextCommand ();
 	} else if (request->type == RBackendRequest::HistoricalSubstackRequest) {
 		processHistoricalSubstackRequest (request);
@@ -416,26 +410,25 @@ void RInterface::closeChain (RCommandChain *chain) {
 	tryNextCommand ();
 };
 
+void RInterface::cancelAll () {
+	RK_TRACE (RBACKEND);
+
+	QList<RCommand*> all_commands = RCommandStack::regular_stack->allCommands ();
+	foreach (RCommand* command, all_commands) cancelCommand (command);
+}
+
 void RInterface::cancelCommand (RCommand *command) {
 	RK_TRACE (RBACKEND);
-	
+
 	if (!(command->type () & RCommand::Sync)) {
 		command->status |= RCommand::Canceled;
 		if (command->type () && RCommand::Running) {
-#warning This assumption is wrong. Fix command cancellation.
-// In particular, the backend may contain several commands at once. We should tell the backend, exactly which commands to cancel
-			if (running_command_canceled != command) {
-				RK_ASSERT (!running_command_canceled);
-				locked |= Cancel;
-				running_command_canceled = command;
-				RKRBackendProtocolFrontend::instance ()->interruptProcessing ();
-			}
+			RKRBackendProtocolFrontend::instance ()->interruptCommand (command->id ());
 		}
+		RCommandStackModel::getModel ()->itemChange (command);
 	} else {
 		RK_ASSERT (false);
 	}
-
-	RCommandStackModel::getModel ()->itemChange (command);
 }
 
 void RInterface::pauseProcessing (bool pause) {
