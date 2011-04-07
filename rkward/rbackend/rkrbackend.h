@@ -176,7 +176,10 @@ public:
 
 	QMutex all_current_commands_mutex;
 	QList<RCommandProxy*> current_commands_to_cancel;
+	bool too_late_to_interrupt;
 	void interruptCommand (int command_id);
+private:
+	void clearPendingInterrupt ();
 protected:
 	RCommandProxy* handleRequest (RBackendRequest *request, bool mayHandleSubstack);
 private:

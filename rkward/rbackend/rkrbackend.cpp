@@ -130,8 +130,10 @@ void RKRBackend::interruptCommand (int command_id) {
 
 	if (all_current_commands.isEmpty ()) return;
 	if ((command_id == -1) || (all_current_commands.last ()->id == command_id)) {
-		RK_DO (qDebug ("scheduling interrupt for command id %d", command_id), RBACKEND, DL_DEBUG);
-		scheduleInterrupt ();
+		if (!too_late_to_interrupt) {
+			RK_DO (qDebug ("scheduling interrupt for command id %d", command_id), RBACKEND, DL_DEBUG);
+			scheduleInterrupt ();
+		}
 	} else {
 		// if the command to cancel is *not* the topmost command, then do not interrupt, yet.
 		foreach (RCommandProxy *candidate, all_current_commands) {
@@ -143,6 +145,16 @@ void RKRBackend::interruptCommand (int command_id) {
 			}
 		}
 	}
+}
+
+void clearPendingInterrupt_Worker (void *) {
+	R_CheckUserInterrupt ();
+}
+
+void RKRBackend::clearPendingInterrupt () {
+	RK_TRACE (RBACKEND);
+	bool passed = R_ToplevelExec (clearPendingInterrupt_Worker, 0);
+	if (!passed) RK_DO (qDebug ("pending interrupt cleared"), RBACKEND, DL_DEBUG);
 }
 
 // some functions we need that are not declared
@@ -900,6 +912,7 @@ bool RKRBackend::startR () {
 
 	RKSignalSupport::saveDefaultSignalHandlers ();
 
+	too_late_to_interrupt = false;
 	r_running = true;
 	int argc = 3;
 	char* argv[3] = { qstrdup ("--slave"), qstrdup ("--no-save"), qstrdup ("--no-restore") };
@@ -1184,6 +1197,12 @@ void RKRBackend::commandFinished (bool check_object_updates_needed) {
 	RK_TRACE (RBACKEND);
 	RK_DO (qDebug ("done running command"), RBACKEND, DL_DEBUG);
 
+	{
+		QMutexLocker lock (&all_current_commands_mutex);
+		too_late_to_interrupt = true;
+	}
+	clearPendingInterrupt ();	// Mutex must be unlocked for this!
+
 	current_command->status -= (current_command->status & RCommand::Running);
 	current_command->status |= RCommand::WasTried;
 
@@ -1206,6 +1225,7 @@ void RKRBackend::commandFinished (bool check_object_updates_needed) {
 		QMutexLocker lock (&all_current_commands_mutex);
 		all_current_commands.pop_back();
 		if (!all_current_commands.isEmpty ()) current_command = all_current_commands.last ();
+		too_late_to_interrupt = false;
 	}
 }
 
@@ -1249,6 +1269,7 @@ RCommandProxy* RKRBackend::handleRequest (RBackendRequest *request, bool mayHand
 		QMutexLocker lock (&all_current_commands_mutex);
 		if (current_commands_to_cancel.contains (current_command)) {
 			RK_DO (qDebug ("will now interrupt parent command"), RBACKEND, DL_DEBUG);
+			current_commands_to_cancel.removeAll (current_command);
 			scheduleInterrupt ();
 		}
 	}
