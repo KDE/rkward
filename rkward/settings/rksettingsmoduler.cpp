@@ -407,7 +407,7 @@ void RKSettingsModuleRPackages::selectCRANMirror () {
 	
 	RCommand* command = new RCommand ("rk.select.CRAN.mirror()\n", RCommand::App | RCommand::GetStringVector, title, this, SELECT_CRAN_MIRROR_COMMAND);
 
-	RKProgressControl* control = new RKProgressControl (this, title, title, RKProgressControl::StandardCancel);
+	RKProgressControl* control = new RKProgressControl (this, title, title, RKProgressControl::CancellableProgress);
 	control->addRCommand (command, true);
 	RKGlobals::rInterface ()->issueCommand (command);
 	control->doModal (true);

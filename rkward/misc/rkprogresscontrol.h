@@ -2,7 +2,7 @@
                           rkprogresscontol  -  description
                              -------------------
     begin                : Sun Sep 10 2006
-    copyright            : (C) 2006, 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007, 2009, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -61,11 +61,10 @@ public:
 		OutputSwitchable=128,		/**< the textfield with the output can be shown/hidden by the user */
 		ShowAtOnce=256,				/**< dialog is shown at once, instead of only when there is an error/output */
 		PreventClose=512,				/**< do not accept close events */
-		StandardCancel=AllowCancel | ShowAtOnce | OutputSwitchable | PreventClose,
 		StandardError=IncludeErrorOutput | RaiseOnError | OutputShownByDefault,
 		DetailedError=StandardError | IncludeRegularOutput,
 		StandardProgress=DetailedError | OutputSwitchable | RaiseOnRegularOutput,
-		CancellableProgress=(StandardProgress | StandardCancel) - (OutputShownByDefault | RaiseOnRegularOutput)
+		CancellableProgress=(StandardProgress | AllowCancel | AutoCancelCommands | PreventClose | ShowAtOnce) - (RaiseOnRegularOutput | OutputShownByDefault)
 	};
 
 /** show the dialog modal. This will always show the dialog right away

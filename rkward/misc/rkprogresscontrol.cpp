@@ -2,7 +2,7 @@
                           rkprogresscontol  -  description
                              -------------------
     begin                : Sun Sep 10 2006
-    copyright            : (C) 2006, 2007, 2008, 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007, 2008, 2009, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -217,25 +217,24 @@ RKProgressControlDialog::RKProgressControlDialog (const QString &text, const QSt
 	error_indicator->hide ();
 
 	KVBox* output_box = new KVBox ();
-	if (mode_flags & (RKProgressControl::IncludeErrorOutput | RKProgressControl::IncludeRegularOutput)) {
-		QString ocaption;
-		if (mode_flags & RKProgressControl::IncludeRegularOutput) {
-			output_button_text = i18n ("Output");
-			ocaption = i18n ("Output:");
-		} else {
-			output_button_text = i18n ("Errors / Warnings");
-			ocaption = i18n ("Errors / Warnings:");
-		}
-		new QLabel (ocaption, output_box);
-
-		output_text = new QTextEdit (output_box);
-		output_text->setReadOnly (true);
-		output_text->setPlainText (QString ());
-		output_text->setUndoRedoEnabled (false);
-		output_text->setLineWrapMode (QTextEdit::NoWrap);
-		output_text->setMinimumWidth (QFontMetrics (output_text->font ()).averageCharWidth () * RKSettingsModuleR::getDefaultWidth ());
-		output_box->setStretchFactor (output_text, 10);
+	QString ocaption;
+	if (mode_flags & RKProgressControl::IncludeRegularOutput) {
+		output_button_text = i18n ("Output");
+		ocaption = i18n ("Output:");
+	} else {
+		output_button_text = i18n ("Errors / Warnings");
+		ocaption = i18n ("Errors / Warnings:");
 	}
+	new QLabel (ocaption, output_box);
+
+	output_text = new QTextEdit (output_box);
+	output_text->setReadOnly (true);
+	output_text->setPlainText (QString ());
+	output_text->setUndoRedoEnabled (false);
+	output_text->setLineWrapMode (QTextEdit::NoWrap);
+	output_text->setMinimumWidth (QFontMetrics (output_text->font ()).averageCharWidth () * RKSettingsModuleR::getDefaultWidth ());
+	output_box->setStretchFactor (output_text, 10);
+
 	setDetailsWidget (output_box);
 	// it's important to use a queued connection, here. Otherwise, if the details widget gets shown due to error output, scrollDown() would only scroll to the position directly *above* the new output.
 	connect (this, SIGNAL(aboutToShowDetails()), this, SLOT(scrollDown()), Qt::QueuedConnection);
