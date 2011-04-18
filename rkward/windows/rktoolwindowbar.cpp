@@ -326,7 +326,7 @@ void RKToolWindowBar::moveToolWindow(int target) {
 	RKMDIWindow *window = idToWidget (id_of_popup);
 	RK_ASSERT (window);
 
-	RKWorkplace::mainWorkplace ()->placeInToolWindowBar (window, (RKToolWindowList::Placement) target);
+	RKWorkplace::mainWorkplace ()->placeInToolWindowBar (window, target);
 }
 
 

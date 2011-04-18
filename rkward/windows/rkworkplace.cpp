@@ -172,6 +172,7 @@ void RKWorkplace::addWindow (RKMDIWindow *window, bool attached) {
 	windows.append (window);
 	connect (window, SIGNAL (destroyed (QObject *)), this, SLOT (removeWindow (QObject *)));
 	connect (window, SIGNAL (windowActivated(RKMDIWindow*)), history, SLOT (windowActivated(RKMDIWindow*)));
+	if (window->isToolWindow () && !window->tool_window_bar) return;
 	if (attached) attachWindow (window);
 	else detachWindow (window, false);
 }
@@ -184,20 +185,23 @@ void RKWorkplace::placeToolWindows() {
 	}
 }
 
-void RKWorkplace::placeInToolWindowBar (RKMDIWindow *window, RKToolWindowList::Placement position) {
+void RKWorkplace::placeInToolWindowBar (RKMDIWindow *window, int position) {
 	RK_TRACE (APP);
 
 	RK_ASSERT (window->isToolWindow ());
+	if ((position < 0) || (position >= TOOL_WINDOW_BAR_COUNT)) {
+		RK_ASSERT (false);		// but could happen for a broken workplace representation
+		position = RKToolWindowList::Nowhere;
+	}
 	if (position == RKToolWindowList::Nowhere) {
 		if (window->tool_window_bar) window->tool_window_bar->removeWidget (window);
-		return;
 	} else {
 		tool_window_bars[position]->addWidget (window);
 	}
 
 	if (!windows.contains (window)) {	// first time, we see this window?
 		addWindow (window, true);
-		RKWardMainWindow::getMain ()->partManager ()->addPart (window->getPart ());
+		if (window->isAttached () && window->tool_window_bar) RKWardMainWindow::getMain ()->partManager ()->addPart (window->getPart ());
 	}
 }
 
@@ -510,6 +514,7 @@ QStringList RKWorkplace::makeWorkplaceDescription () {
 	for (int i=0; i < wview->count (); ++i) {
 		list.append (static_cast<RKMDIWindow*> (wview->widget (i)));
 	}
+	list.append (getObjectList (RKMDIWindow::ToolWindow, RKMDIWindow::AnyWindowState));
 	foreach (RKMDIWindow *win, list) {
 		QString type, specification;
 		QStringList params;
@@ -525,10 +530,22 @@ QStringList RKWorkplace::makeWorkplaceDescription () {
 		} else if (win->isType (RKMDIWindow::HelpWindow)) {
 			type = "help";
 			specification = static_cast<RKHTMLWindow*> (win)->restorableUrl ().url ();
+		} else if (win->isToolWindow ()) {
+			type = RKToolWindowList::idOfWindow (win);
 		}
 		if (!type.isEmpty ()) {
 			if (!win->isAttached ()) {
 				params.append (QString ("detached,") + QString::number (win->x ()) + ',' + QString::number (win->y ()) + ',' + QString::number (win->width ()) + ',' + QString::number (win->height ()));
+			}
+			if (win->isToolWindow ()) {
+				int sidebar = RKToolWindowList::Nowhere;
+				for (int i = 0; i < TOOL_WINDOW_BAR_COUNT; ++i) {
+					if (win->tool_window_bar == tool_window_bars[i]) {
+						sidebar = i;
+						break;
+					}
+				}
+				params.append (QString ("sidebar,") + QString::number (sidebar));
 			}
 			workplace_description.append (type + "::" + params.join (":") + "::" + specification);
 		}
@@ -597,7 +614,7 @@ void RKWorkplace::restoreWorkplace (const QStringList &description) {
 			params = description[i].mid (typeend + 2, specstart - typeend - 2).split (':', QString::SkipEmptyParts);
 			specification = description[i].mid (specstart + 2);
 		} else {
-			specification = description[i].mid (typeend +1 );
+			specification = description[i].mid (typeend + 1);
 		}
 
 		RKMDIWindow *win = 0;
@@ -614,12 +631,17 @@ void RKWorkplace::restoreWorkplace (const QStringList &description) {
 		} else if (type == "help") {
 			win = openHelpWindow (checkAdjustRestoredUrl (specification, base), true);
 		} else {
-			RK_ASSERT (false);
+			win = RKToolWindowList::findToolWindowById (type);
+			RK_ASSERT (win);
 		}
 
 		// apply generic window parameters
 		if (win) {
 			for (int p = 0; p < params.size (); ++p) {
+				if (params[p].startsWith ("sidebar")) {
+					int position = params[p].section (',', 1).toInt ();
+					placeInToolWindowBar (win, position);
+				}
 				if (params[p].startsWith ("detached")) {
 					QStringList geom = params[p].split (',');
 					win->hide ();

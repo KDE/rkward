@@ -16,6 +16,7 @@
  ***************************************************************************/
 
 #include "rktoolwindowlist.h"
+#include "rkmdiwindow.h"
 
 #include "../debug.h"
 
@@ -59,4 +60,16 @@ void RKToolWindowList::unregisterToolWindow (RKMDIWindow *window) {
 	}
 
 	RK_ASSERT (false);
+}
+
+QString RKToolWindowList::idOfWindow (RKMDIWindow *window) {
+	RK_TRACE (APP);
+
+	for (int i = 0; i < RKToolWindowListPrivate::registered_tool_windows.size (); ++i) {
+		if (RKToolWindowListPrivate::registered_tool_windows[i].window == window) {
+			return RKToolWindowListPrivate::registered_tool_windows[i].id;
+		}
+	}
+	RK_ASSERT (false);
+	return QString ();
 }

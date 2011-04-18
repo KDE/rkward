@@ -1,3 +1,4 @@
+- Include the sidebar position of tool windows when saving / restoring the workplace layout
 - "Pending jobs" tool window is not longer shown in the bottom sidebar by default
 - Support removing individual tool windows from the sidebars, completely
 - Add an action to interrupt all (current and pending) commands

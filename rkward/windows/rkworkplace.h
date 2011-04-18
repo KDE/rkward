@@ -180,7 +180,7 @@ private:
 
 	RKToolWindowBar* tool_window_bars[TOOL_WINDOW_BAR_COUNT];
 friend class RKToolWindowBar;
-	void placeInToolWindowBar (RKMDIWindow *window, RKToolWindowList::Placement position);
+	void placeInToolWindowBar (RKMDIWindow *window, int position);
 };
 
 #endif
