@@ -190,8 +190,8 @@ void RKWorkplace::placeInToolWindowBar (RKMDIWindow *window, int position) {
 
 	RK_ASSERT (window->isToolWindow ());
 	if ((position < 0) || (position >= TOOL_WINDOW_BAR_COUNT)) {
-		RK_ASSERT (false);		// but could happen for a broken workplace representation
-		position = RKToolWindowList::Nowhere;
+		RK_ASSERT (position == RKToolWindowList::Nowhere);	// should never happen...
+		position = RKToolWindowList::Nowhere;		// ... but let's set this explicitly, in case of a broken workplace representation
 	}
 	if (position == RKToolWindowList::Nowhere) {
 		if (window->tool_window_bar) window->tool_window_bar->removeWidget (window);
