@@ -2,7 +2,7 @@
                           rktoolwindowbar  -  description
                              -------------------
     begin                : Fri Oct 12 2007
-    copyright            : (C) 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -23,6 +23,7 @@
 #include <kmenu.h>
 #include <klocale.h>
 #include <kparts/partmanager.h>
+#include <kselectaction.h>
 
 #include <QSplitter>
 #include <QContextMenuEvent>
@@ -35,7 +36,6 @@
 
 #include "../debug.h"
 
-#define CHANGE_ATTACHMENT_ACTION_ID 10
 #define DEFAULT_SPLITTER_SIZE 200
 #define SPLITTER_MIN_SIZE 30
 
@@ -267,49 +267,79 @@ bool RKToolWindowBar::eventFilter (QObject *obj, QEvent *ev) {
 			RKMDIWindow *widget = idToWidget (id_of_popup);
 			RK_ASSERT (widget);
 			if (widget) {
-				KMenu *p = new KMenu (this);
+				KMenu menu (this);
 
-				p->addTitle (i18n("Attachment"));
-				
-				p->addAction (RKStandardIcons::getIcon (widget->isAttached () ? RKStandardIcons::ActionDetachWindow : RKStandardIcons::ActionAttachWindow), widget->isAttached () ? i18n("Detach") : i18n("Attach"))->setData (CHANGE_ATTACHMENT_ACTION_ID);
+				QAction *a = menu.addAction (RKStandardIcons::getIcon (widget->isAttached () ? RKStandardIcons::ActionDetachWindow : RKStandardIcons::ActionAttachWindow), widget->isAttached () ? i18n("Detach") : i18n("Attach"));
+				connect (a, SIGNAL (triggered(bool)), this, SLOT (changeAttachment()));
 
-				p->addTitle (i18n("Move To"));
+				KSelectAction *sel = new KSelectAction (i18n ("Position"), &menu);
+				if (position () != KMultiTabBar::Left) sel->addAction (KIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveLeft)), i18n ("Left Sidebar"));
+				if (position () != KMultiTabBar::Right) sel->addAction (KIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveRight)), i18n ("Right Sidebar"));
+				if (position () != KMultiTabBar::Top) sel->addAction (KIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveUp)), i18n ("Top Sidebar"));
+				if (position () != KMultiTabBar::Bottom) sel->addAction (KIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveDown)), i18n ("Bottom Sidebar"));
+				sel->addAction (KIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionDelete)), i18n ("Not shown in sidebar"));
+				connect (sel, SIGNAL (triggered(int)), this, SLOT (moveToolWindow(int)));
+				menu.addAction (sel);
 	
-				if (position () != KMultiTabBar::Left) p->addAction(RKStandardIcons::getIcon (RKStandardIcons::ActionMoveLeft), i18n("Left Sidebar"))->setData(KMultiTabBar::Left);
-				if (position () != KMultiTabBar::Right) p->addAction(RKStandardIcons::getIcon (RKStandardIcons::ActionMoveRight), i18n("Right Sidebar"))->setData(KMultiTabBar::Right);
-				if (position () != KMultiTabBar::Top) p->addAction(RKStandardIcons::getIcon (RKStandardIcons::ActionMoveUp), i18n("Top Sidebar"))->setData(KMultiTabBar::Top);
-				if (position () != KMultiTabBar::Bottom) p->addAction(RKStandardIcons::getIcon (RKStandardIcons::ActionMoveDown), i18n("Bottom Sidebar"))->setData(KMultiTabBar::Bottom);
-	
-				connect (p, SIGNAL (triggered(QAction *)), this, SLOT (buttonPopupActivate(QAction *)));
-				p->exec (e->globalPos());
-				delete p;
-	
+				menu.exec (e->globalPos());
+
 				return true;
 			}
 		}
 	}
-	
+
 	return false;
 }
 
-void RKToolWindowBar::buttonPopupActivate (QAction *a) {
+void RKToolWindowBar::contextMenuEvent (QContextMenuEvent* event) {
 	RK_TRACE (APP);
 
-	int action = a->data().toInt();
+	KMenu menu (this);
+	foreach (RKToolWindowList::ToolWindowRepresentation rep, RKToolWindowList::registeredToolWindows ()) {
+		QAction *a = menu.addAction (rep.window->windowIcon (), rep.window->shortCaption ());
+		a->setCheckable (true);
+		a->setChecked (rep.window->tool_window_bar == this);
+		a->setData (rep.id);
+	}
+	connect (&menu, SIGNAL (triggered(QAction*)), this, SLOT (addRemoveToolWindow(QAction*)));
+	menu.exec (event->globalPos ());
+
+	event->accept ();
+}
+
+void RKToolWindowBar::changeAttachment () {
+	RK_TRACE (APP);
+
 	RKMDIWindow *window = idToWidget (id_of_popup);
 	RK_ASSERT (window);
 
-	// move to another bar
-	if (action < 4) {
-		// move + show ;)
-		RKWorkplace::mainWorkplace ()->placeInToolWindowBar (window, (KMultiTabBar::KMultiTabBarPosition) action);
-		window->activate ();
-	}
-
 	// toggle attachment
-	if (action == CHANGE_ATTACHMENT_ACTION_ID) {
-		if (window->isAttached ()) RKWorkplace::mainWorkplace ()->detachWindow (window);
-		else RKWorkplace::mainWorkplace ()->attachWindow (window);
+	if (window->isAttached ()) RKWorkplace::mainWorkplace ()->detachWindow (window);
+	else RKWorkplace::mainWorkplace ()->attachWindow (window);
+}
+
+void RKToolWindowBar::moveToolWindow(int target) {
+	RK_TRACE (APP);
+
+	RK_ASSERT (target >= RKToolWindowList::Left);
+	RK_ASSERT (target <= RKToolWindowList::Bottom);
+	RKMDIWindow *window = idToWidget (id_of_popup);
+	RK_ASSERT (window);
+
+	RKWorkplace::mainWorkplace ()->placeInToolWindowBar (window, (RKToolWindowList::Placement) target);
+}
+
+
+void RKToolWindowBar::addRemoveToolWindow (QAction *action) {
+	RK_TRACE (APP);
+	RK_ASSERT (action);
+
+	RKMDIWindow *win = RKToolWindowList::findToolWindowById (action->data ().toString ());
+	if (action->isChecked ()) {
+		addWidget (win);
+	} else {
+		RK_ASSERT (win->tool_window_bar == this);
+		removeWidget (win);
 	}
 }
 

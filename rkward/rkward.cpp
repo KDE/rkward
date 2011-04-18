@@ -80,6 +80,7 @@
 #include "windows/rkhelpsearchwindow.h"
 #include "windows/rktoplevelwindowgui.h"
 #include "windows/rkfilebrowser.h"
+#include "windows/rktoolwindowlist.h"
 #include "rkconsole.h"
 #include "debug.h"
 #include "version.h"
@@ -198,12 +199,12 @@ void RKWardMainWindow::doPostInit () {
 	setUpdatesEnabled (false);
 
 	readOptions();
-	//It's necessary to give a different name to all tool windows, or they won't be properly displayed
-	RObjectBrowser::object_browser = new RObjectBrowser (0, true, "workspace");
+	RObjectBrowser::object_browser = new RObjectBrowser (0, true);
+	RObjectBrowser::mainBrowser ()->setCaption (i18n ("Workspace"));
+	RKToolWindowList::registerToolWindow (RObjectBrowser::mainBrowser (), "workspace", RKToolWindowList::Left);
 
-	RKCommandLog *log = new RKCommandLog (0, true, "Command log");
-	RKWorkplace::mainWorkplace ()->placeInToolWindowBar (log, KMultiTabBar::Bottom);
-	RKCommandLog::rkcommand_log = log;
+	RKCommandLog::rkcommand_log = new RKCommandLog (0, true);
+	RKToolWindowList::registerToolWindow (RKCommandLog::rkcommand_log, "commandlog", RKToolWindowList::Bottom);
 
 	// startup options will be deleted from the R thread (TODO correct this!), so we need to copy the initial_url here, or run into race conditions
 	KUrl open_url = startup_options->initial_url;
@@ -214,24 +215,23 @@ void RKWardMainWindow::doPostInit () {
 	
 	initPlugins ();
 
-	RObjectBrowser::mainBrowser ()->setCaption (i18n ("Workspace"));
-	RKWorkplace::mainWorkplace ()->placeInToolWindowBar (RObjectBrowser::mainBrowser (), KMultiTabBar::Left);
-
-	RKFileBrowser::main_browser = new RKFileBrowser (0, true, "file_browser");
+	RKFileBrowser::main_browser = new RKFileBrowser (0, true);
 	RKFileBrowser::main_browser->setCaption (i18n ("Files"));
-	RKWorkplace::mainWorkplace ()->placeInToolWindowBar (RKFileBrowser::main_browser, KMultiTabBar::Left);
+	RKToolWindowList::registerToolWindow (RKFileBrowser::main_browser, "filebrowser", RKToolWindowList::Left);
 
-	RControlWindow::control_window = new RControlWindow (0, true, "rcontrol");
+	RControlWindow::control_window = new RControlWindow (0, true);
 	RControlWindow::getControl ()->setCaption (i18n ("Pending Jobs"));
-	RKWorkplace::mainWorkplace ()->placeInToolWindowBar (RControlWindow::getControl (), KMultiTabBar::Bottom);
+	RKToolWindowList::registerToolWindow (RControlWindow::getControl (), "pendingjobs", RKToolWindowList::Nowhere);
 
-	RKConsole *console = new RKConsole (0, true, "r_console");
+	RKConsole *console = new RKConsole (0, true);
 	RKConsole::setMainConsole (console);
-	RKWorkplace::mainWorkplace ()->placeInToolWindowBar (console, KMultiTabBar::Bottom);
+	RKToolWindowList::registerToolWindow (console, "console", RKToolWindowList::Bottom);
 
-	RKHelpSearchWindow *help_search = new RKHelpSearchWindow (0, true, "r_help");
+	RKHelpSearchWindow *help_search = new RKHelpSearchWindow (0, true);
 	RKHelpSearchWindow::main_help_search = help_search;
-	RKWorkplace::mainWorkplace ()->placeInToolWindowBar (help_search, KMultiTabBar::Bottom);
+	RKToolWindowList::registerToolWindow (help_search, "helpsearch", RKToolWindowList::Bottom);
+
+	RKWorkplace::mainWorkplace ()->placeToolWindows ();
 
 	setUpdatesEnabled (true);
 	show ();

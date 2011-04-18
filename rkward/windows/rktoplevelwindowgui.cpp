@@ -70,6 +70,7 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI (KXmlGuiWindow *for_window) : QObject (
 
 	// window menu
 	KAction *action;
+	// NOTE: Why don't we just iterate over RKToolWindowList::registeredToolWindows ()? Because that is not yet filled at the time that the RKToplevelWindowGUI for the main window is constructed! What a pity...
 	action = actionCollection ()->addAction ("window_show_workspace", this, SLOT(toggleWorkspace()));
 	action->setText (i18n ("Show/Hide Workspace Browser"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowWorkspaceBrowser));

@@ -52,6 +52,7 @@ public:
 		ActionPasteInsideTable,
 		ActionPasteInsideSelection,
 
+		ActionDelete,
 		ActionAddRight,
 		ActionRemoveLeft,
 

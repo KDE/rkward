@@ -2,7 +2,7 @@
                           rktoolwindowbar  -  description
                              -------------------
     begin                : Fri Oct 12 2007
-    copyright            : (C) 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -52,10 +52,15 @@ public:
 	void saveSize (KConfigGroup &cg) const;
 private slots:
 	void tabClicked (int id);
-	void buttonPopupActivate (QAction *a);
+	void changeAttachment ();
+	void moveToolWindow (int target);
+	void addRemoveToolWindow (QAction* action);
 	void splitterMoved (int, int);
 protected:
+	/** handle RMB clicks on individual buttons */
 	bool eventFilter (QObject *obj, QEvent *ev);
+	/** handle RMB clicks on the bar itself */
+	void contextMenuEvent (QContextMenuEvent *event);
 private:
 friend class RKWorkplace;
 	void reclaimDetached (RKMDIWindow *window);

@@ -52,6 +52,7 @@ void RKStandardIcons::initIcons () {
 	icons[ActionPasteInsideTable] = QIcon (rkward_icon_base + "paste_inside_table.png");
 	icons[ActionPasteInsideSelection] = QIcon (rkward_icon_base + "paste_inside_selection.png");
 
+	icons[ActionDelete] = icons[ActionDeleteRow];
 	icons[ActionAddRight] = KIcon ("arrow-right");
 	icons[ActionRemoveLeft] = KIcon ("arrow-left");
 

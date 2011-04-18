@@ -16,6 +16,7 @@ SET(windows_STAT_SRCS
 	rktoplevelwindowgui.cpp
 	rkfilebrowser.cpp
 	rktoolwindowbar.cpp
+	rktoolwindowlist.cpp
 	robjectbrowser.cpp
 )
 

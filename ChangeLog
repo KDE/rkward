@@ -1,3 +1,5 @@
+- "Pending jobs" tool window is not longer shown in the bottom sidebar by default
+- Support removing individual tool windows from the sidebars, completely
 - Add an action to interrupt all (current and pending) commands
 - Fixed: When saving the workplace while closing the session, the workplace layout would not always be saved correctly
 - File browser context menu gains many more KDE standard actions (KDE 4.3 and above, only)

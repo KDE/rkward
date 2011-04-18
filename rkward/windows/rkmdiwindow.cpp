@@ -2,7 +2,7 @@
                           rkmdiwindow  -  description
                              -------------------
     begin                : Tue Sep 26 2006
-    copyright            : (C) 2006, 2007, 2008, 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007, 2008, 2009, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -32,6 +32,7 @@
 #include "rkworkplace.h"
 #include "rkworkplaceview.h"
 #include "rktoolwindowbar.h"
+#include "rktoolwindowlist.h"
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../misc/rkstandardicons.h"
 #include "../misc/rkxmlguisyncer.h"
@@ -72,6 +73,7 @@ RKMDIWindow::RKMDIWindow (QWidget *parent, int type, bool tool_window, const cha
 RKMDIWindow::~RKMDIWindow () {
 	RK_TRACE (APP);
 
+	if (isToolWindow ()) RKToolWindowList::unregisterToolWindow (this);
 	delete standard_client;
 }
 
@@ -116,8 +118,8 @@ void RKMDIWindow::activate (bool with_focus) {
 	QWidget *old_focus = qApp->focusWidget ();
 
 	if (isToolWindow ()) {
-		RK_ASSERT (tool_window_bar);
-		tool_window_bar->showWidget (this);
+		if (tool_window_bar) tool_window_bar->showWidget (this);
+		else RKWorkplace::mainWorkplace ()->detachWindow (this, true);
 	} else {
 		if (isAttached ()) RKWorkplace::mainWorkplace ()->view ()->setActivePage (this);
 		else {
@@ -148,8 +150,8 @@ bool RKMDIWindow::close (bool also_delete) {
 			RKWorkplace::mainWorkplace ()->attachWindow (this);
 		}
 
-		RK_ASSERT (tool_window_bar);
-		tool_window_bar->hideWidget (this);
+		if (tool_window_bar) tool_window_bar->hideWidget (this);
+		else hide ();
 		return true;
 	}
 
@@ -181,8 +183,7 @@ void RKMDIWindow::prepareToBeDetached () {
 	RK_TRACE (APP);
 
 	if (isToolWindow ()) {
-		RK_ASSERT (tool_window_bar);
-		tool_window_bar->hideWidget (this);
+		if (tool_window_bar) tool_window_bar->hideWidget (this);
 	}
 }
 

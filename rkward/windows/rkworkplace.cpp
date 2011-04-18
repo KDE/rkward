@@ -35,6 +35,7 @@
 #include "rkhtmlwindow.h"
 #include "rkworkplaceview.h"
 #include "rktoolwindowbar.h"
+#include "rktoolwindowlist.h"
 #include "../core/robject.h"
 #include "../core/rcontainerobject.h"
 #include "../core/robjectlist.h"
@@ -63,35 +64,32 @@ RKWorkplace::RKWorkplace (QWidget *parent) : QWidget (parent) {
 	/* Splitter setup contains heavy copying from Kate's katemdi! */
 	KVBox *vbox = new KVBox (this);
 
-	tool_window_bars[KMultiTabBar::Top] = new RKToolWindowBar (KMultiTabBar::Top, vbox);
+	tool_window_bars[RKToolWindowList::Top] = new RKToolWindowBar (KMultiTabBar::Top, vbox);
 	vert_splitter = new QSplitter (Qt::Vertical, vbox);
 	vert_splitter->setOpaqueResize (KGlobalSettings::opaqueResize ());
-	tool_window_bars[KMultiTabBar::Top]->setSplitter (vert_splitter);
+	tool_window_bars[RKToolWindowList::Top]->setSplitter (vert_splitter);
 
 	KHBox *hbox = new KHBox (vert_splitter);
 	vert_splitter->setCollapsible (vert_splitter->indexOf (hbox), false);
 	vert_splitter->setStretchFactor (vert_splitter->indexOf (hbox), 1);
 
-	tool_window_bars[KMultiTabBar::Left] = new RKToolWindowBar (KMultiTabBar::Left, hbox);
+	tool_window_bars[RKToolWindowList::Left] = new RKToolWindowBar (KMultiTabBar::Left, hbox);
 	horiz_splitter = new QSplitter (Qt::Horizontal, hbox);
 	horiz_splitter->setOpaqueResize (KGlobalSettings::opaqueResize ());
-	tool_window_bars[KMultiTabBar::Left]->setSplitter (horiz_splitter);
+	tool_window_bars[RKToolWindowList::Left]->setSplitter (horiz_splitter);
 
 	wview = new RKWorkplaceView (horiz_splitter);
 	horiz_splitter->setCollapsible (horiz_splitter->indexOf (wview), false);
 	horiz_splitter->setStretchFactor(horiz_splitter->indexOf (wview), 1);
 
-	tool_window_bars[KMultiTabBar::Bottom] = new RKToolWindowBar (KMultiTabBar::Bottom, vbox);
-	tool_window_bars[KMultiTabBar::Bottom]->setSplitter (vert_splitter);
+	tool_window_bars[RKToolWindowList::Bottom] = new RKToolWindowBar (KMultiTabBar::Bottom, vbox);
+	tool_window_bars[RKToolWindowList::Bottom]->setSplitter (vert_splitter);
 
-	tool_window_bars[KMultiTabBar::Right] = new RKToolWindowBar (KMultiTabBar::Right, hbox);
-	tool_window_bars[KMultiTabBar::Right]->setSplitter (horiz_splitter);
+	tool_window_bars[RKToolWindowList::Right] = new RKToolWindowBar (KMultiTabBar::Right, hbox);
+	tool_window_bars[RKToolWindowList::Right]->setSplitter (horiz_splitter);
 
 	KConfigGroup toolbar_config = KGlobal::config ()->group ("ToolwindowBars");
-	tool_window_bars[KMultiTabBar::Top]->restoreSize (toolbar_config);
-	tool_window_bars[KMultiTabBar::Left]->restoreSize (toolbar_config);
-	tool_window_bars[KMultiTabBar::Bottom]->restoreSize (toolbar_config);
-	tool_window_bars[KMultiTabBar::Right]->restoreSize (toolbar_config);
+	for (int i = 0; i < TOOL_WINDOW_BAR_COUNT; ++i) tool_window_bars[i]->restoreSize (toolbar_config);
 
 	// now add it all to this widget
 	QVBoxLayout *box = new QVBoxLayout (this);
@@ -113,10 +111,7 @@ void RKWorkplace::saveSettings () {
 	RK_TRACE (APP);
 
 	KConfigGroup toolbar_config = KGlobal::config ()->group ("ToolwindowBars");
-	tool_window_bars[KMultiTabBar::Top]->saveSize (toolbar_config);
-	tool_window_bars[KMultiTabBar::Left]->saveSize (toolbar_config);
-	tool_window_bars[KMultiTabBar::Bottom]->saveSize (toolbar_config);
-	tool_window_bars[KMultiTabBar::Right]->saveSize (toolbar_config);
+	for (int i = 0; i < TOOL_WINDOW_BAR_COUNT; ++i) tool_window_bars[i]->saveSize (toolbar_config);
 }
 
 void RKWorkplace::initActions (KActionCollection *ac, const char *prev_id, const char *next_id, const char *left_id, const char *right_id) {
@@ -141,7 +136,8 @@ void RKWorkplace::attachWindow (RKMDIWindow *window) {
 	// all the rest is done, even if the window was previously "Attached", as this may also mean it was freshly created
 	window->state = RKMDIWindow::Attached;
 	if (window->isToolWindow ()) {
-		window->tool_window_bar->reclaimDetached (window);
+		if (!window->tool_window_bar) placeInToolWindowBar (window, RKToolWindowList::Bottom);
+		else window->tool_window_bar->reclaimDetached (window);
 	} else {
 		view ()->addWindow (window);
 		view ()->topLevelWidget ()->raise ();
@@ -174,18 +170,32 @@ void RKWorkplace::addWindow (RKMDIWindow *window, bool attached) {
 	RK_TRACE (APP);
 
 	windows.append (window);
-	connect (window, SIGNAL (destroyed (QObject *)), this, SLOT (windowDestroyed (QObject *)));
+	connect (window, SIGNAL (destroyed (QObject *)), this, SLOT (removeWindow (QObject *)));
 	connect (window, SIGNAL (windowActivated(RKMDIWindow*)), history, SLOT (windowActivated(RKMDIWindow*)));
 	if (attached) attachWindow (window);
 	else detachWindow (window, false);
 }
 
-void RKWorkplace::placeInToolWindowBar (RKMDIWindow *window, KMultiTabBar::KMultiTabBarPosition position) {
+void RKWorkplace::placeToolWindows() {
+	RK_TRACE (APP);
+
+	foreach (const RKToolWindowList::ToolWindowRepresentation rep, RKToolWindowList::registeredToolWindows ()) {
+		placeInToolWindowBar (rep.window, rep.default_placement);
+	}
+}
+
+void RKWorkplace::placeInToolWindowBar (RKMDIWindow *window, RKToolWindowList::Placement position) {
 	RK_TRACE (APP);
 
 	RK_ASSERT (window->isToolWindow ());
-	tool_window_bars[position]->addWidget (window);
-	if (!windows.contains (window)) {	// must be new
+	if (position == RKToolWindowList::Nowhere) {
+		if (window->tool_window_bar) window->tool_window_bar->removeWidget (window);
+		return;
+	} else {
+		tool_window_bars[position]->addWidget (window);
+	}
+
+	if (!windows.contains (window)) {	// first time, we see this window?
 		addWindow (window, true);
 		RKWardMainWindow::getMain ()->partManager ()->addPart (window->getPart ());
 	}
@@ -378,9 +388,9 @@ void RKWorkplace::closeWindow (RKMDIWindow *window) {
 	RK_ASSERT (windows.contains (window));
 
 	bool tool_window = window->isToolWindow ();
-	window->close (true);		// all the rest should happen in windowDestroyed ()
+	window->close (true);		// all the rest should happen in removeWindow ()
 	
-	if (tool_window) windowRemoved ();	// for regular windows, this happens in windowDestroyed(), already
+	if (tool_window) windowRemoved ();	// for regular windows, this happens in removeWindow(), already
 }
 
 void RKWorkplace::closeActiveWindow () {
@@ -411,12 +421,12 @@ void RKWorkplace::closeAll (int type, int state) {
 	}
 }
 
-void RKWorkplace::windowDestroyed (QObject *object) {
+void RKWorkplace::removeWindow (QObject *object) {
 	RK_TRACE (APP);
 	RKMDIWindow *window = static_cast<RKMDIWindow *> (object);
 
 	// remove from history first (otherwise, we might find it there, when trying to activate a new window)
-	history->windowDestroyed (window);
+	history->removeWindow (window);
 
 	// WARNING: the window is dead. Don't call any functions on it.
 
@@ -723,7 +733,7 @@ void RKMDIWindowHistory::updateActions () {
 	}
 }
 
-void RKMDIWindowHistory::windowDestroyed (QObject *window) {
+void RKMDIWindowHistory::removeWindow (QObject *window) {
 	RK_TRACE (APP);
 
 	back_list.removeAll (static_cast<RKMDIWindow *> (window));

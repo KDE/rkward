@@ -24,9 +24,9 @@
 #include <QSplitter>
 
 #include <kurl.h>
-#include <kmultitabbar.h>
 
 #include "rkmdiwindow.h"
+#include "rktoolwindowlist.h"
 
 class RObject;
 class RCommandChain;
@@ -35,6 +35,8 @@ class RKEditor;
 class KActionCollection;
 class KAction;
 class RKToolWindowBar;
+
+#define TOOL_WINDOW_BAR_COUNT 4
 
 /** Simple class to store the history of recently used RKMDIWindow */
 class RKMDIWindowHistory : public QObject {
@@ -46,7 +48,7 @@ public:
 	void initActions (KActionCollection *ac, const char *prev_id, const char *next_id);
 	bool haveNext ();
 	bool havePrev ();
-	void windowDestroyed (QObject *window);
+	void removeWindow (QObject *window);
 public slots:
 	void next ();
 	void prev ();
@@ -151,13 +153,13 @@ Has no effect, if RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsMod
 /** In the current design there is only ever one workplace. Use this static function to reference it.
 @returns a pointer to the workplace */
 	static RKWorkplace *mainWorkplace () { return main_workplace; };
-	void placeInToolWindowBar (RKMDIWindow *window, KMultiTabBar::KMultiTabBarPosition position);
+	void placeToolWindows ();
 signals:
 /** TODO: For future expansion. This signal is neither emitted nor used so far. It could be used to deactivate some options in the "Window" menu. Or maybe it can be removed? */
 	void lastWindowClosed ();
 public slots:
 /** When windows are attached to the workplace, their QObject::destroyed () signal is connected to this slot. Thereby deleted objects are removed from the workplace automatically */
-	void windowDestroyed (QObject *window);
+	void removeWindow (QObject *window);
 	void saveSettings ();
 private:
 /** current list of windows. @See getObjectList () */ 
@@ -176,7 +178,9 @@ private:
 	QSplitter *horiz_splitter;
 	QSplitter *vert_splitter;
 
-	RKToolWindowBar* tool_window_bars[4];
+	RKToolWindowBar* tool_window_bars[TOOL_WINDOW_BAR_COUNT];
+friend class RKToolWindowBar;
+	void placeInToolWindowBar (RKMDIWindow *window, RKToolWindowList::Placement position);
 };
 
 #endif
