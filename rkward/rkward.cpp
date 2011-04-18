@@ -113,6 +113,7 @@ RKWardMainWindow::RKWardMainWindow (RKWardStartupOptions *options) : KParts::Mai
 	RK_TRACE (APP);
 	RK_ASSERT (rkward_mainwin == 0);
 
+	gui_rebuild_locked = false;
 	rkward_mainwin = this;
 	RKGlobals::rinter = 0;
 	RKSettings::settings_tracker = new RKSettingsTracker (this);
@@ -474,6 +475,7 @@ void updateEmptyMenuIndicator (QAction* indicator, const QMenu *menu) {
 void RKWardMainWindow::partChanged (KParts::Part *part) {
 	RK_TRACE (APP);
 
+	if (gui_rebuild_locked) return;
 	createGUI (part);
 
 	if (!guiFactory ()) {
@@ -506,6 +508,18 @@ void RKWardMainWindow::partChanged (KParts::Part *part) {
 	// debug code: prints out all current actions
 	foreach (QAction *action, menuBar ()->actions ()) printActionsRecursive (action, QString ());
 */
+}
+
+void RKWardMainWindow::lockGUIRebuild (bool lock) {
+	RK_TRACE (APP);
+
+	if (lock) {
+		RK_ASSERT (!gui_rebuild_locked);
+		gui_rebuild_locked = true;
+	} else {
+		gui_rebuild_locked = false;
+		partChanged (part_manager->activePart ());
+	}
 }
 
 void RKWardMainWindow::initStatusBar () {
@@ -610,14 +624,17 @@ bool RKWardMainWindow::doQueryQuit () {
 //	}
 
 	RKWorkplace::RKWorkplaceObjectList map = RKWorkplace::mainWorkplace ()->getObjectList ();
-	for (RKWorkplace::RKWorkplaceObjectList::const_iterator it = map.constBegin (); it != map.constEnd (); ++it){
+	for (RKWorkplace::RKWorkplaceObjectList::const_iterator it = map.constBegin (); it != map.constEnd (); ++it) {
+		lockGUIRebuild (true);
 		if (!(*it)->close (true)) {
 			if (!(*it)->isType (RKMDIWindow::X11Window)) {	// X11 windows have a delayed close
 				// If a child refuses to close, we return false.
 				slotSetStatusReady ();
+				lockGUIRebuild (false);
 				return false;
 			}
 		}
+		lockGUIRebuild (false);
 	}
 
 	return true;

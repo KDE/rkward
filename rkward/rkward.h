@@ -76,6 +76,7 @@ public:
 
 /** (try to) close all windows, and ask whether it is ok to quit */
 	bool doQueryQuit ();
+	void lockGUIRebuild (bool lock);
 protected:
 	void openWorkspace (const KUrl &url);
 	/** save Options/Settings. Includes general Options like all bar positions and status as well as the geometry and the recent file list */
@@ -205,6 +206,7 @@ private:
 	void updateCWD ();
 
 	RKTopLevelWindowGUI *toplevel_actions;
+	bool gui_rebuild_locked;
 };
 
 #endif // RKWARD_H

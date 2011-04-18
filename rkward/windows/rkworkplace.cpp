@@ -419,10 +419,12 @@ RKWorkplace::RKWorkplaceObjectList RKWorkplace::getObjectList (int type, int sta
 void RKWorkplace::closeAll (int type, int state) {
 	RK_TRACE (APP);
 
+	RKWardMainWindow::getMain ()->lockGUIRebuild (true);
 	RKWorkplaceObjectList list_to_close = getObjectList (type, state);
 	for (RKWorkplaceObjectList::const_iterator it = list_to_close.constBegin (); it != list_to_close.constEnd (); ++it) {
 		closeWindow (*it);
 	}
+	RKWardMainWindow::getMain ()->lockGUIRebuild (false);
 }
 
 void RKWorkplace::removeWindow (QObject *object) {
@@ -593,6 +595,7 @@ KUrl checkAdjustRestoredUrl (const QString &_url, const QString old_base) {
 void RKWorkplace::restoreWorkplace (const QStringList &description) {
 	RK_TRACE (APP);
 
+	RKWardMainWindow::getMain ()->lockGUIRebuild (true);
 	QString base;
 	for (int i = 0; i < description.size (); ++i) {
 		// Item format for rkward <= 0.5.4: "type:specification"
@@ -653,6 +656,7 @@ void RKWorkplace::restoreWorkplace (const QStringList &description) {
 			}
 		}
 	}
+	RKWardMainWindow::getMain ()->lockGUIRebuild (false);
 }
 
 ///////////////////////// END RKWorkplace ////////////////////////////
