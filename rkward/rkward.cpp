@@ -113,7 +113,7 @@ RKWardMainWindow::RKWardMainWindow (RKWardStartupOptions *options) : KParts::Mai
 	RK_TRACE (APP);
 	RK_ASSERT (rkward_mainwin == 0);
 
-	gui_rebuild_locked = false;
+	gui_rebuild_locked = true;
 	rkward_mainwin = this;
 	RKGlobals::rinter = 0;
 	RKSettings::settings_tracker = new RKSettingsTracker (this);
@@ -129,6 +129,15 @@ RKWardMainWindow::RKWardMainWindow (RKWardStartupOptions *options) : KParts::Mai
 	setCentralWidget (RKWorkplace::mainWorkplace ());
 	connect (RKWorkplace::mainWorkplace ()->view (), SIGNAL (captionChanged (const QString &)), this, SLOT (setCaption (const QString &)));
 
+	part_manager = new KParts::PartManager (this);
+	// When the manager says the active part changes,
+	// the builder updates (recreates) the GUI
+	connect (partManager (), SIGNAL (activePartChanged (KParts::Part *)), this, SLOT (partChanged (KParts::Part *)));
+
+	readOptions();
+	RKGlobals::mtracker = new RKModificationTracker (this);
+	initToolViewsAndR ();
+
 	///////////////////////////////////////////////////////////////////
 	// build the interface
 
@@ -141,22 +150,12 @@ RKWardMainWindow::RKWardMainWindow (RKWardStartupOptions *options) : KParts::Mai
 	proxy_import->setMenu (dynamic_cast<QMenu*>(guiFactory ()->container ("import", this)));
 	proxy_export->setMenu (dynamic_cast<QMenu*>(guiFactory ()->container ("export", this)));
 
-	RKGlobals::mtracker = new RKModificationTracker (this);
 	RKComponentMap::initialize ();
 
-	if (options) {
-		startup_options = options;
-	} else {
-		startup_options = new RKWardStartupOptions;
-		startup_options->initial_url = KUrl();
-	}
+	startup_options = options;
 
-	QTimer::singleShot (50, this, SLOT (doPostInit ()));
-
-	part_manager = new KParts::PartManager (this);
-	// When the manager says the active part changes,
-	// the builder updates (recreates) the GUI
-	connect (partManager (), SIGNAL (activePartChanged (KParts::Part *)), this, SLOT (partChanged (KParts::Part *)));
+	// stuff which should wait until the event loop is running
+	QTimer::singleShot (0, this, SLOT (doPostInit ()));
 }
 
 RKWardMainWindow::~RKWardMainWindow() {
@@ -197,44 +196,15 @@ void RKWardMainWindow::doPostInit () {
 		KMessageBox::error (this, i18n ("<p>RKWard either could not find its resource files at all, or only an old version of those files. The most likely cause is that the last installation failed to place the files in the correct place. This can lead to all sorts of problems, from single missing features to complete failure to function.</p><p><b>You should quit RKWard, now, and fix your installation</b>. For help with that, see <a href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</p>"), i18n ("Broken installation"), KMessageBox::Notify | KMessageBox::AllowLink);
 	}
 
-	setUpdatesEnabled (false);
-
-	readOptions();
-	RObjectBrowser::object_browser = new RObjectBrowser (0, true);
-	RObjectBrowser::mainBrowser ()->setCaption (i18n ("Workspace"));
-	RKToolWindowList::registerToolWindow (RObjectBrowser::mainBrowser (), "workspace", RKToolWindowList::Left);
-
-	RKCommandLog::rkcommand_log = new RKCommandLog (0, true);
-	RKToolWindowList::registerToolWindow (RKCommandLog::rkcommand_log, "commandlog", RKToolWindowList::Bottom);
-
 	// startup options will be deleted from the R thread (TODO correct this!), so we need to copy the initial_url here, or run into race conditions
-	KUrl open_url = startup_options->initial_url;
-	QString evaluate_code = startup_options->evaluate;
+	KUrl open_url = startup_options ? startup_options->initial_url : KUrl ();
+	QString evaluate_code = startup_options ? startup_options->evaluate : QString ();
 	delete startup_options;
 	startup_options = 0;
-	startR ();
-	
+
 	initPlugins ();
+	gui_rebuild_locked = false;
 
-	RKFileBrowser::main_browser = new RKFileBrowser (0, true);
-	RKFileBrowser::main_browser->setCaption (i18n ("Files"));
-	RKToolWindowList::registerToolWindow (RKFileBrowser::main_browser, "filebrowser", RKToolWindowList::Left);
-
-	RControlWindow::control_window = new RControlWindow (0, true);
-	RControlWindow::getControl ()->setCaption (i18n ("Pending Jobs"));
-	RKToolWindowList::registerToolWindow (RControlWindow::getControl (), "pendingjobs", RKToolWindowList::Nowhere);
-
-	RKConsole *console = new RKConsole (0, true);
-	RKConsole::setMainConsole (console);
-	RKToolWindowList::registerToolWindow (console, "console", RKToolWindowList::Bottom);
-
-	RKHelpSearchWindow *help_search = new RKHelpSearchWindow (0, true);
-	RKHelpSearchWindow::main_help_search = help_search;
-	RKToolWindowList::registerToolWindow (help_search, "helpsearch", RKToolWindowList::Bottom);
-
-	RKWorkplace::mainWorkplace ()->placeToolWindows ();
-
-	setUpdatesEnabled (true);
 	show ();
 
 	KUrl recover_url = RKRecoverDialog::checkRecoverCrashedWorkspace ();
@@ -314,6 +284,37 @@ void RKWardMainWindow::slotCancelAllCommands () {
 	RK_TRACE (APP);
 	RK_ASSERT (RKGlobals::rInterface ());
 	RKGlobals::rInterface ()->cancelAll ();
+}
+
+void RKWardMainWindow::initToolViewsAndR () {
+	RK_TRACE (APP);
+
+	RObjectBrowser::object_browser = new RObjectBrowser (0, true);
+	RObjectBrowser::mainBrowser ()->setCaption (i18n ("Workspace"));
+	RKToolWindowList::registerToolWindow (RObjectBrowser::mainBrowser (), "workspace", RKToolWindowList::Left, Qt::AltModifier + Qt::Key_1);
+
+	RKCommandLog::rkcommand_log = new RKCommandLog (0, true);
+	RKToolWindowList::registerToolWindow (RKCommandLog::rkcommand_log, "commandlog", RKToolWindowList::Bottom, Qt::AltModifier + Qt::Key_3);
+
+	startR ();
+
+	RKFileBrowser::main_browser = new RKFileBrowser (0, true);
+	RKFileBrowser::main_browser->setCaption (i18n ("Files"));
+	RKToolWindowList::registerToolWindow (RKFileBrowser::main_browser, "filebrowser", RKToolWindowList::Left, Qt::AltModifier + Qt::Key_2);
+
+	RControlWindow::control_window = new RControlWindow (0, true);
+	RControlWindow::getControl ()->setCaption (i18n ("Pending Jobs"));
+	RKToolWindowList::registerToolWindow (RControlWindow::getControl (), "pendingjobs", RKToolWindowList::Nowhere, Qt::AltModifier + Qt::Key_4);
+
+	RKConsole *console = new RKConsole (0, true);
+	RKConsole::setMainConsole (console);
+	RKToolWindowList::registerToolWindow (console, "console", RKToolWindowList::Bottom, Qt::AltModifier + Qt::Key_5);
+
+	RKHelpSearchWindow *help_search = new RKHelpSearchWindow (0, true);
+	RKHelpSearchWindow::main_help_search = help_search;
+	RKToolWindowList::registerToolWindow (help_search, "helpsearch", RKToolWindowList::Bottom, Qt::AltModifier + Qt::Key_6);
+
+	RKWorkplace::mainWorkplace ()->placeToolWindows ();
 }
 
 void RKWardMainWindow::initActions() {  

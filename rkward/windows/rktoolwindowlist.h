@@ -37,9 +37,10 @@ namespace RKToolWindowList {
 		RKMDIWindow *window;
 		QString id;
 		Placement default_placement;
+		int default_shortcut;
 	};
 
-	void registerToolWindow (RKMDIWindow *window, const QString &id, Placement default_placement);
+	void registerToolWindow (RKMDIWindow *window, const QString &id, Placement default_placement, int default_shortcut);
 	void unregisterToolWindow (RKMDIWindow *window);
 	RKMDIWindow* findToolWindowById (const QString &id);
 	QString idOfWindow (RKMDIWindow *window);

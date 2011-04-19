@@ -26,18 +26,6 @@ email                : tfry@users.sourceforge.net
 class QLabel;
 class QCloseEvent;
 class KActionMenu;
-// forward declaration of the RKward classes
-class RSettings;
-class RKMenu;
-class RObjectBrowser;
-class RKSettingsModule;
-class RKSettings;
-class RInterface;
-class RKEditorManager;
-class RKMenuList;
-class RKCommandEditorWindow;
-class KMdiToolViewAccessor;
-class RKMDIWindow;
 class RKTopLevelWindowGUI;
 class KRecentFilesAction;
 class KSqueezedTextLabel;
@@ -88,6 +76,8 @@ protected:
 	/** sets up the statusbar for the main window by initialzing a statuslabel.
 	*/
 	void initStatusBar();
+	/** sets up the various tool windows, and starts the R engine */
+	void initToolViewsAndR ();
 	/** reimplemented from KMainWindow to call our doQueryClose (), and then (if quitting was not cancelled), invoke an RKQuitAgent to wait for the R-backend to finish up before actually quitting. */
 	virtual void closeEvent (QCloseEvent *e);
 signals:

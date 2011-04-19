@@ -2,7 +2,7 @@
                           rktoplevelwindowgui  -  description
                              -------------------
     begin                : Tue Apr 24 2007
-    copyright            : (C) 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2009, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -70,31 +70,13 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI (KXmlGuiWindow *for_window) : QObject (
 
 	// window menu
 	KAction *action;
-	// NOTE: Why don't we just iterate over RKToolWindowList::registeredToolWindows ()? Because that is not yet filled at the time that the RKToplevelWindowGUI for the main window is constructed! What a pity...
-	action = actionCollection ()->addAction ("window_show_workspace", this, SLOT(toggleWorkspace()));
-	action->setText (i18n ("Show/Hide Workspace Browser"));
-	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowWorkspaceBrowser));
-	action->setShortcut (Qt::AltModifier + Qt::Key_1);
-	action = actionCollection ()->addAction ("window_show_filebrowser", this, SLOT(toggleFilebrowser()));
-	action->setText (i18n ("Show/Hide Filesystem Browser"));
-	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowFileBrowser));
-	action->setShortcut (Qt::AltModifier + Qt::Key_2);
-	action = actionCollection ()->addAction ("window_show_commandlog", this, SLOT(toggleCommandLog()));
-	action->setText (i18n ("Show/Hide Command Log"));
-	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowCommandLog));
-	action->setShortcut (Qt::AltModifier + Qt::Key_3);
-	action = actionCollection ()->addAction ("window_show_pendingjobs", this, SLOT(togglePendingJobs()));
-	action->setText (i18n ("Show/Hide Pending Jobs"));
-	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowPendingJobs));
-	action->setShortcut (Qt::AltModifier + Qt::Key_4);
-	action = actionCollection ()->addAction ("window_show_console", this, SLOT(toggleConsole()));
-	action->setText (i18n ("Show/Hide Console"));
-	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowConsole));
-	action->setShortcut (Qt::AltModifier + Qt::Key_5);
-	action = actionCollection ()->addAction ("window_show_helpsearch", this, SLOT(toggleHelpSearch()));
-	action->setText (i18n ("Show/Hide R Help Search"));
-	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowSearchHelp));
-	action->setShortcut (Qt::AltModifier + Qt::Key_6);
+	foreach (RKToolWindowList::ToolWindowRepresentation rep, RKToolWindowList::registeredToolWindows ()) {
+		action = actionCollection ()->addAction ("window_show_" + rep.id, this, SLOT (toggleToolView()));
+		action->setText (i18n ("Show/Hide %1", rep.window->shortCaption ()));
+		action->setIcon (rep.window->windowIcon ());
+		action->setShortcut (rep.default_shortcut);
+		action->setData (rep.id);
+	}
 	action = actionCollection ()->addAction ("window_activate_docview", this, SLOT(activateDocumentView()));
 	action->setText (i18n ("Activate Document view"));
 	action->setShortcut (Qt::AltModifier + Qt::Key_0);
@@ -158,9 +140,8 @@ void RKTopLevelWindowGUI::reportRKWardBug () {
 void RKTopLevelWindowGUI::showAboutApplication () {
 	RK_TRACE (APP);
 
-	KAboutApplicationDialog *about = new KAboutApplicationDialog (KCmdLineArgs::aboutData ());
-	about->exec ();
-	delete about;
+	KAboutApplicationDialog about (KCmdLineArgs::aboutData ());
+	about.exec ();
 }
 
 void RKTopLevelWindowGUI::toggleToolView (RKMDIWindow *tool_window) {
@@ -175,6 +156,16 @@ void RKTopLevelWindowGUI::toggleToolView (RKMDIWindow *tool_window) {
 	}
 }
 
+void RKTopLevelWindowGUI::toggleToolView () {
+	RK_TRACE (APP);
+	QAction *act = dynamic_cast<QAction*> (sender ());
+	RK_ASSERT (act);
+
+	RKMDIWindow *win = RKToolWindowList::findToolWindowById (act->data ().toString ());
+	RK_ASSERT (win);
+	toggleToolView (win);
+}
+
 void RKTopLevelWindowGUI::showHelpSearch () {
 	RK_TRACE (APP);
 
@@ -185,42 +176,6 @@ void RKTopLevelWindowGUI::showRKWardHelp () {
 	RK_TRACE (APP);
 
 	RKWorkplace::mainWorkplace ()->openHelpWindow (KUrl ("rkward://page/rkward_welcome"), true);
-}
-
-void RKTopLevelWindowGUI::toggleHelpSearch () {
-	RK_TRACE (APP);
-
-	toggleToolView (RKHelpSearchWindow::mainHelpSearch ());
-}
-
-void RKTopLevelWindowGUI::toggleConsole () {
-	RK_TRACE (APP);
-
-	toggleToolView (RKConsole::mainConsole ());
-}
-
-void RKTopLevelWindowGUI::toggleCommandLog () {
-	RK_TRACE (APP);
-
-	toggleToolView (RKCommandLog::getLog ());
-}
-
-void RKTopLevelWindowGUI::togglePendingJobs () {
-	RK_TRACE (APP);
-
-	toggleToolView (RControlWindow::getControl ());
-}
-
-void RKTopLevelWindowGUI::toggleWorkspace () {
-	RK_TRACE (APP);
-
-	toggleToolView (RObjectBrowser::mainBrowser ());
-}
-
-void RKTopLevelWindowGUI::toggleFilebrowser () {
-	RK_TRACE (APP);
-
-	toggleToolView (RKFileBrowser::getMainBrowser ());
 }
 
 void RKTopLevelWindowGUI::activateDocumentView () {

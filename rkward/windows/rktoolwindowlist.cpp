@@ -28,13 +28,14 @@ QList<RKToolWindowList::ToolWindowRepresentation>& RKToolWindowList::registeredT
 	return RKToolWindowListPrivate::registered_tool_windows;
 }
 
-void RKToolWindowList::registerToolWindow (RKMDIWindow *window, const QString &id, Placement default_placement) {
+void RKToolWindowList::registerToolWindow (RKMDIWindow *window, const QString &id, Placement default_placement, int default_shortcut) {
 	RK_TRACE (APP);
 
 	ToolWindowRepresentation tr;
 	tr.window = window;
 	tr.id = id;
 	tr.default_placement = default_placement;
+	tr.default_shortcut = default_shortcut;
 
 	RKToolWindowListPrivate::registered_tool_windows.append (tr);
 }

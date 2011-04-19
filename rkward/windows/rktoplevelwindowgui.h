@@ -2,7 +2,7 @@
                           rktoplevelwindowgui  -  description
                              -------------------
     begin                : Tue Apr 24 2007
-    copyright            : (C) 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2009, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -35,18 +35,6 @@ public slots:
 	// windows menu
 	/** Raise the help search window */
 	void showHelpSearch ();
-	/** Toggle the help search window */
-	void toggleHelpSearch ();
-	/** Toggle the console window */
-	void toggleConsole ();
-	/** Toggle the command log window */
-	void toggleCommandLog ();
-	/** Toggle the pending jobs window */
-	void togglePendingJobs ();
-	/** Toggle the workspace browser window */
-	void toggleWorkspace ();
-	/** Toggle the filesystem browser window */
-	void toggleFilebrowser ();
 	/** Activate the current (non tools) window in the workspace */
 	void activateDocumentView ();
 	/** ensure output window is shown. */
@@ -69,6 +57,8 @@ public slots:
 	void configureShortcuts ();
 	/** configure key bindings. Reimplemented to show notice before the actual dialog. */
 	void configureToolbars ();
+private slots:
+	void toggleToolView ();
 private:
 	KXmlGuiWindow *for_window;
 	void toggleToolView (RKMDIWindow *tool_window);
