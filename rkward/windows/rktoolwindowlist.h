@@ -25,7 +25,7 @@ class RKMDIWindow;
 
 /** Simple helper functions to keep track of available tool windows. */
 namespace RKToolWindowList {
-	enum Placement {
+	enum Placement {		//NOTE: enum values must match thus in KMultiTabBarPosition
 		Left=0,
 		Right=1,
 		Top=2,

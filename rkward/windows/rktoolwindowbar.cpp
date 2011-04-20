@@ -273,10 +273,10 @@ bool RKToolWindowBar::eventFilter (QObject *obj, QEvent *ev) {
 				connect (a, SIGNAL (triggered(bool)), this, SLOT (changeAttachment()));
 
 				KSelectAction *sel = new KSelectAction (i18n ("Position"), &menu);
-				if (position () != KMultiTabBar::Left) sel->addAction (KIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveLeft)), i18n ("Left Sidebar"));
-				if (position () != KMultiTabBar::Right) sel->addAction (KIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveRight)), i18n ("Right Sidebar"));
-				if (position () != KMultiTabBar::Top) sel->addAction (KIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveUp)), i18n ("Top Sidebar"));
-				if (position () != KMultiTabBar::Bottom) sel->addAction (KIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveDown)), i18n ("Bottom Sidebar"));
+				sel->addAction (KIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveLeft)), i18n ("Left Sidebar"));
+				sel->addAction (KIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveRight)), i18n ("Right Sidebar"));
+				sel->addAction (KIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveUp)), i18n ("Top Sidebar"));
+				sel->addAction (KIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveDown)), i18n ("Bottom Sidebar"));
 				sel->addAction (KIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionDelete)), i18n ("Not shown in sidebar"));
 				connect (sel, SIGNAL (triggered(int)), this, SLOT (moveToolWindow(int)));
 				menu.addAction (sel);
@@ -318,11 +318,12 @@ void RKToolWindowBar::changeAttachment () {
 	else RKWorkplace::mainWorkplace ()->attachWindow (window);
 }
 
-void RKToolWindowBar::moveToolWindow(int target) {
+void RKToolWindowBar::moveToolWindow (int target) {
 	RK_TRACE (APP);
 
 	RK_ASSERT (target >= RKToolWindowList::Left);
 	RK_ASSERT (target <= RKToolWindowList::Bottom);
+	if (target == position ()) return;
 	RKMDIWindow *window = idToWidget (id_of_popup);
 	RK_ASSERT (window);
 
