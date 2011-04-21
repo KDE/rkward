@@ -1,5 +1,9 @@
 #!/bin/sh
 # Shell wrapper for rkward executable.
+error () {
+  echo "ERROR: $*" >&2
+  exit 1
+}
 
 export R_binary="@R_EXECUTABLE@"
 
@@ -24,11 +28,6 @@ fi
 
 # handle --debugger argument (if any)
 # the loop partially copied from the R wrapper script
-error () {
-  echo "ERROR: $*" >&2
-  exit 1
-}
-
 debugger=
 if [ "${1}" = "--debugger" ]; then
   shift
