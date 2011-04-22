@@ -279,7 +279,7 @@ void RInterface::rCommandDone (RCommand *command) {
 		if (!message.isEmpty ()) {
 			message.prepend (i18n ("<p>There was a problem starting the R backend. The following error(s) occurred:</p>\n"));
 
-			QString details = runningCommand()->fullOutput().replace('<', "&lt;").replace('\n', "<br>");
+			QString details = command->fullOutput().replace('<', "&lt;").replace('\n', "<br>");
 			if (!details.isEmpty ()) {
 				// WORKAROUND for stupid KMessageBox behavior. (kdelibs 4.2.3)
 				// If length of details <= 512, it tries to show the details as a QLabel.
