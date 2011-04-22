@@ -41,6 +41,7 @@ QString RKSettingsModuleGeneral::files_path;
 QString RKSettingsModuleGeneral::new_files_path;
 StartupDialog::Result RKSettingsModuleGeneral::startup_action;
 RKSettingsModuleGeneral::WorkplaceSaveMode RKSettingsModuleGeneral::workplace_save_mode;
+bool RKSettingsModuleGeneral::cd_to_workspace_dir_on_load;
 bool RKSettingsModuleGeneral::show_help_on_startup;
 int RKSettingsModuleGeneral::warn_size_object_edit;
 RKSettingsModuleGeneral::RKMDIFocusPolicy RKSettingsModuleGeneral::mdi_focus_policy;
@@ -104,6 +105,13 @@ RKSettingsModuleGeneral::RKSettingsModuleGeneral (RKSettings *gui, QWidget *pare
 
 	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
 
+	cd_to_workspace_dir_on_load_box = new QCheckBox (i18n ("When loading a workspace, change to the corresponding directory."), this);
+	cd_to_workspace_dir_on_load_box->setChecked (cd_to_workspace_dir_on_load);
+	connect (cd_to_workspace_dir_on_load_box, SIGNAL (stateChanged (int)), this, SLOT (boxChanged (int)));
+	main_vbox->addWidget (cd_to_workspace_dir_on_load_box);
+
+	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
+
 	label = new QLabel (i18n ("Warn when editing objects with more than this number of fields (0 for no limit):"), this);
 	warn_size_object_edit_box = new RKSpinBox (this);
 	warn_size_object_edit_box->setIntMode (0, INT_MAX, warn_size_object_edit);
@@ -157,6 +165,7 @@ void RKSettingsModuleGeneral::applyChanges () {
 	startup_action = static_cast<StartupDialog::Result> (startup_action_choser->itemData (startup_action_choser->currentIndex ()).toInt ());
 	show_help_on_startup = show_help_on_startup_box->isChecked ();
 	workplace_save_mode = static_cast<WorkplaceSaveMode> (workplace_save_chooser->checkedId ());
+	cd_to_workspace_dir_on_load = cd_to_workspace_dir_on_load_box->isChecked ();
 	warn_size_object_edit = warn_size_object_edit_box->intValue ();
 	mdi_focus_policy = static_cast<RKMDIFocusPolicy> (mdi_focus_policy_chooser->currentIndex ());
 }
@@ -179,6 +188,7 @@ void RKSettingsModuleGeneral::saveSettings (KConfig *config) {
 
 	cg = config->group ("Workplace");
 	cg.writeEntry ("save mode", (int) workplace_save_mode);
+	cg.writeEntry ("cd to workspace on load", cd_to_workspace_dir_on_load);
 
 	cg = config->group ("Editor");
 	cg.writeEntry ("large object warning limit", warn_size_object_edit);
@@ -200,6 +210,7 @@ void RKSettingsModuleGeneral::loadSettings (KConfig *config) {
 
 	cg = config->group ("Workplace");
 	workplace_save_mode = (WorkplaceSaveMode) cg.readEntry ("save mode", (int) SaveWorkplaceWithWorkspace);
+	cd_to_workspace_dir_on_load = cg.readEntry ("cd to workspace on load", true);
 
 	cg = config->group ("Editor");
 	warn_size_object_edit = cg.readEntry ("large object warning limit", 250000);

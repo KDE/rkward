@@ -2,7 +2,7 @@
                           rksettingsmodulegeneral  -  description
                              -------------------
     begin                : Fri Jul 30 2004
-    copyright            : (C) 2004, 2007, 2008 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007, 2008, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -66,6 +66,7 @@ public:
 	static QString getSavedWorkplace (KConfig *config);
 /** set the saved workplace description. Meaningful only is workplaceSaveMode () == SaveWorkplaceWithSession */
 	static void setSavedWorkplace (const QString &description, KConfig *config);
+	static bool cdToWorkspaceOnLoad () { return cd_to_workspace_dir_on_load; };
 	static unsigned long warnLargeObjectThreshold () { return warn_size_object_edit; };
 	static RKMDIFocusPolicy mdiFocusPolicy () { return mdi_focus_policy; }
 public slots:
@@ -75,6 +76,7 @@ private:
 	GetFileNameWidget *files_choser;
 	QComboBox *startup_action_choser;
 	QButtonGroup *workplace_save_chooser;
+	QCheckBox *cd_to_workspace_dir_on_load_box;
 	QCheckBox *show_help_on_startup_box;
 	RKSpinBox *warn_size_object_edit_box;
 	QComboBox *mdi_focus_policy_chooser;
@@ -84,6 +86,7 @@ private:
 /** since changing the files_path can not easily be done while in an active session, the setting should only take effect on the next start. This string stores a changed setting, while keeping the old one intact as long as RKWard is running */
 	static QString new_files_path;
 	static WorkplaceSaveMode workplace_save_mode;
+	static bool cd_to_workspace_dir_on_load;
 	static bool show_help_on_startup;
 	static int warn_size_object_edit;
 	static RKMDIFocusPolicy mdi_focus_policy;

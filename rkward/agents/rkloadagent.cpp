@@ -28,6 +28,7 @@
 #include "../rbackend/rinterface.h"
 #include "../rkward.h"
 #include "../windows/rkworkplace.h"
+#include "../settings/rksettingsmodulegeneral.h"
 
 #include "../debug.h"
 
@@ -74,6 +75,11 @@ void RKLoadAgent::rCommandDone (RCommand *command) {
 			RObjectList::getObjectList ()->setWorkspaceURL (KUrl());
 		} else {
 			RKWorkplace::mainWorkplace ()->restoreWorkplace ();
+			if (RKSettingsModuleGeneral::cdToWorkspaceOnLoad ()) {
+				if (RObjectList::getObjectList ()->getWorkspaceURL ().isLocalFile ()) {
+					RKGlobals::rInterface ()->issueCommand ("setwd (" + RObject::rQuote (RObjectList::getObjectList ()->getWorkspaceURL ().directory ()) + ")", RCommand::App);
+				}
+			}
 		}
 		RKWardMainWindow::getMain ()->slotSetStatusReady ();
 		RKWardMainWindow::getMain ()->setCaption (QString::null);	// trigger update of caption
