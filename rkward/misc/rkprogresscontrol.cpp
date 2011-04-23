@@ -185,7 +185,13 @@ void RKProgressControl::rCommandDone (RCommand * command) {
 	if (command == done_command) done ();
 }
 
+QString RKProgressControl::fullCommandOutput() {
+	RK_TRACE (MISC);
 
+	QString ret;
+	foreach (ROutput out, output_log) ret.append (out.output);
+	return ret;
+}
 
 //////////////////////////// RKProgressControlDialog ///////////////////////////////////////////7
 

@@ -25,6 +25,7 @@
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../settings/rksettingsmoduleoutput.h"
 #include "../settings/rksettingsmodulegraphics.h"
+#include "../settings/rksettingsmoduledebug.h"
 #include "../core/robjectlist.h"
 #include "../core/renvironmentobject.h"
 #include "../core/rkmodificationtracker.h"
@@ -48,11 +49,13 @@ RKWindowCatcher *window_catcher;
 #endif // DISABLE_RKWINDOWCATCHER
 
 #include "../rkglobals.h"
+#include "../version.h"
 #include "../debug.h"
 
 #include <kmessagebox.h>
 #include <kfiledialog.h>
 #include <klocale.h>
+#include <ktemporaryfile.h>
 
 #include <qdir.h>
 #include <qtimer.h>
@@ -635,6 +638,20 @@ void RInterface::processHistoricalSubstackRequest (RBackendRequest* request) {
 			for (int i = 0; i < list.size (); ++i) list[i] = RObject::rQuote (list[i]);
 			issueCommand (".rk.set.reply (c (" + list.join (", ") + "))", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
 		}
+	} else if (call == "getSessionInfo") {
+		// Non-translatable on purpose. This is meant for posting to the bug tracker, mostly.
+		QStringList lines;
+		lines.append ("RKWard version: " RKWARD_VERSION);
+		lines.append ("KDE version (runtime): " + QString (KDE::versionString ()));
+		lines.append ("KDE version (compile time): " KDE_VERSION_STRING);
+		lines.append (QString());
+		lines.append ("Debug message file(s) in use (these may contain relevant diagnostic output in case of trouble):");
+		lines.append (RKSettingsModuleDebug::debug_file->fileName ());
+		lines.append (calllist.value (1));
+		lines.append (QString ());
+		lines.append ("R version (compile time): " + calllist.value (2));
+		for (int i = 0; i < lines.size (); ++i) lines[i] = RObject::rQuote (lines[i]);
+		issueCommand (".rk.set.reply (c (" + lines.join (",\n") + "))", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
 	} else {
 		issueCommand ("stop (\"Unrecognized call '" + call + "'. Ignoring\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
 	}

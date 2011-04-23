@@ -105,7 +105,7 @@ void RKFrontendTransmitter::connectAndEnterLoop () {
 	if (!con->canReadLine ()) con->waitForReadyRead (1000);
 	QString version_c = QString::fromLocal8Bit (con->readLine ());
 	version_c.chop (1);
-	if (version_c != VERSION) handleTransmissionError (i18n ("Version mismatch during handshake with backend process. Frontend is version '%1' while backend is '%2'.\nPlease fix your installation.").arg (VERSION).arg (version_c));
+	if (version_c != RKWARD_VERSION) handleTransmissionError (i18n ("Version mismatch during handshake with backend process. Frontend is version '%1' while backend is '%2'.\nPlease fix your installation.").arg (RKWARD_VERSION).arg (version_c));
 
 	setConnection (con);
 }

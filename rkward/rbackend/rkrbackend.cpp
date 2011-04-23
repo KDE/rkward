@@ -74,6 +74,7 @@ extern "C" {
 #include <R_ext/eventloop.h>
 #include <R_ext/Callbacks.h>
 #include <R.h>
+#include <Rversion.h>
 #include <Rinternals.h>
 #include <R_ext/Parse.h>
 #include <Rembedded.h>
@@ -1291,7 +1292,14 @@ void RKRBackend::handleHistoricalSubstackRequest (const QStringList &list) {
 	RK_TRACE (RBACKEND);
 
 	RBackendRequest request (true, RBackendRequest::HistoricalSubstackRequest);
-	request.params["call"] = list;
+	if (list.value (0) == "getSessionInfo") {
+		QStringList dummy = list;
+		dummy.append (RKRBackendProtocolBackend::backendDebugFile ());
+		dummy.append (R_MAJOR "." R_MINOR " " R_STATUS " (" R_YEAR "-" R_MONTH "-" R_DAY " r" R_SVN_REVISION ")");
+		request.params["call"] = dummy;
+	} else {
+		request.params["call"] = list;
+	}
 	handleRequest (&request);
 }
 
@@ -1307,7 +1315,7 @@ void RKRBackend::initialize () {
 	bool lib_load_fail = false;
 	bool sink_fail = false;
 	if (!runDirectCommand ("library (\"rkward\")\n")) lib_load_fail = true;
-	if (!runDirectCommand (QString ("stopifnot(.rk.app.version==\"%1\")\n").arg (VERSION))) lib_load_fail = true;
+	if (!runDirectCommand (QString ("stopifnot(.rk.app.version==\"%1\")\n").arg (RKWARD_VERSION))) lib_load_fail = true;
 	if (!runDirectCommand (".rk.fix.assignments ()\n")) sink_fail = true;
 
 // error/output sink and help browser

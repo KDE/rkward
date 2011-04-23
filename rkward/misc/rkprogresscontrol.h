@@ -64,7 +64,8 @@ public:
 		StandardError=IncludeErrorOutput | RaiseOnError | OutputShownByDefault,
 		DetailedError=StandardError | IncludeRegularOutput,
 		StandardProgress=DetailedError | OutputSwitchable | RaiseOnRegularOutput,
-		CancellableProgress=(StandardProgress | AllowCancel | AutoCancelCommands | PreventClose | ShowAtOnce) - (RaiseOnRegularOutput | OutputShownByDefault)
+		CancellableProgress=(StandardProgress | AllowCancel | AutoCancelCommands | PreventClose | ShowAtOnce) - (RaiseOnRegularOutput | OutputShownByDefault),
+		CancellableNoProgress=CancellableProgress - OutputSwitchable
 	};
 
 /** show the dialog modal. This will always show the dialog right away
@@ -78,6 +79,7 @@ public:
 /** add a command to listen to. Warning: You will always first call addRCommand, then submit the command to RInterface, never the other way around. Else there could be a race condition!
 @param done_when_finished If set to true, the done () -slot is auto-called when the given command has completed */
 	void addRCommand (RCommand *command, bool done_when_finished=false);
+	QString fullCommandOutput ();
 signals:
 	void cancelled ();
 public slots:

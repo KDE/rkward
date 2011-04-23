@@ -38,6 +38,7 @@
 #include "../windows/rkhelpsearchwindow.h"
 #include "../windows/rkmdiwindow.h"
 #include "../misc/rkstandardicons.h"
+#include "../misc/rkprogresscontrol.h"
 #include "../plugin/rkcomponentmap.h"
 #include "../rbackend/rinterface.h"
 #include "../rkglobals.h"
@@ -131,10 +132,40 @@ void RKTopLevelWindowGUI::startWhatsThis () {
 void RKTopLevelWindowGUI::reportRKWardBug () {
 	RK_TRACE (APP);
 
-// TOOD: something pretty
-	KMessageBox::information (for_window, i18n ("<p>Please submit your bug reports or wishes at <a href=\"%1\">%1</a> or send email to <a href=\"mailto:%2\">%2</a>.</p>"
-							, QString ("http://sourceforge.net/tracker/?group_id=50231&atid=459007"), QString ("rkward-devel@lists.sourceforge.net")),
-							i18n ("Reporting bugs in RKWard"), QString (), KMessageBox::Notify | KMessageBox::AllowLink);
+	QString report_template = i18n ("---Problem description---\n");
+	report_template.append (i18n ("Please give a brief summary on the problem:\n###Please fill in###\n\n"));
+	report_template.append (i18n ("What - in detail - did you do directly before you encountered this problem?\n###Please fill in###\n\n"));
+	report_template.append (i18n ("When you try to repeat the above, does the problem occur again (no, sometimes, always)?\n###Please fill in###\n\n"));
+	report_template.append (i18n ("If applicable: When doing the same thing in an R session outside of RKWard, do you see the same problem?\n###Please fill in###\n\n"));
+	report_template.append (i18n ("Do you have any further information that might help us to track this problem down? In particular, if applicable, can you provide sample data and sample R code to reproduce this problem?\n###Please fill in###\n\n"));
+
+	RCommand *command = new RCommand ("rk.sessionInfo()", RCommand::App);
+	RKProgressControl *control = new RKProgressControl (this, i18n ("Please stand by while gathering some information on your setup.\nIn case the backend has died or hung up, you may want to press 'Cancel' to skip this step."), i18n ("Gathering setup information"), RKProgressControl::CancellableNoProgress);
+	control->addRCommand (command, true);
+	RKGlobals::rInterface ()->issueCommand (command);
+	bool ok = control->doModal (false);
+
+	report_template.append ("---Session Info---\n");
+	report_template.append (control->fullCommandOutput ());
+	if (!ok) report_template.append ("- not available -");
+	delete control;
+
+	KDialog *dialog = new KDialog (for_window);
+	connect (dialog, SIGNAL (finished(int)), dialog, SLOT (deleteLater()));
+	dialog->setCaption (i18n ("Reporting bugs in RKWard"));
+	dialog->setButtons (KDialog::Ok);
+	KVBox *vbox = new KVBox (dialog);
+	dialog->setMainWidget (vbox);
+	QLabel *label = new QLabel (i18n ("<p><b>Where should I report bugs or wishes?</b></p><p>Please submit your bug reports or wishes at <a href=\"%1\">%1</a> or send email to <a href=\"mailto:%2\">%2</a>.</p>"
+							"<p><b>What information should I provide?</b></p><p>Please copy the information shown below, and fill in the details to the questions.</p>"
+							, QString ("http://sourceforge.net/tracker/?group_id=50231&atid=459007"), QString ("rkward-devel@lists.sourceforge.net")), vbox);
+	label->setWordWrap (true);
+	label->setOpenExternalLinks (true);
+	QTextEdit *details = new QTextEdit (vbox);
+	details->setReadOnly (true);
+	details->setText (report_template);
+
+	dialog->show ();
 }
 
 void RKTopLevelWindowGUI::showAboutApplication () {

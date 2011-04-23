@@ -26,6 +26,7 @@ class RKRBackendProtocolBackend {
 public:
 	static bool inRThread ();
 	static QString dataDir () { return _instance->data_dir; };
+	static QString backendDebugFile ();
 
 	RKRBackendProtocolBackend (const QString &data_dir);
 	~RKRBackendProtocolBackend ();

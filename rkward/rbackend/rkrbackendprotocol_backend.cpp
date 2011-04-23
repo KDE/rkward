@@ -202,3 +202,11 @@ void RKRBackendProtocolBackend::msleep (int delay) {
 	static_cast<RKRBackendTransmitter*> (RKRBackendTransmitter::instance ())->publicmsleep (delay);
 #endif
 }
+
+QString RKRBackendProtocolBackend::backendDebugFile () {
+#ifdef RKWARD_THREADED
+	return (QString ());
+#else
+	return RK_Debug_File->fileName ();
+#endif
+}

@@ -471,3 +471,8 @@ rk.list.plugins <- function () {
 	else return (NULL)	# cancelled
 }
 
+"rk.sessionInfo" <- function () {
+	cat (.rk.do.call ("getSessionInfo"), sep="\n")
+	cat ("R runtime session info:\n")
+	print (sessionInfo())
+}

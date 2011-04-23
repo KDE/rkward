@@ -61,7 +61,7 @@ void RKRBackendTransmitter::run () {
 	// handshake
 	connection->write (token.toLocal8Bit ().data ());
 	connection->write ("\n");
-	connection->write (VERSION);
+	connection->write (RKWARD_VERSION);
 	connection->write ("\n");
 
 	QTimer* flush_timer = new QTimer (this);
