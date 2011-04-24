@@ -391,8 +391,8 @@ void RWriteConsoleEx (const char *buf, int buflen, int type) {
 				RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::UserCommandSyntaxError;
 			}
 		} else if (RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::ReplIterationKilled) {
-			// purge superflous newlines
-			if (QString ("\n") == buf) return;
+			// purge superflous newlines and empty output
+			return;
 		} else {
 			RK_ASSERT (RKRBackend::repl_status.user_command_status != RKRBackend::RKReplStatus::NoUserCommand);
 		}
