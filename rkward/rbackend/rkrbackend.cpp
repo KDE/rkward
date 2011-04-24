@@ -301,8 +301,7 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 					}
 					if (incomplete) RKRBackend::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorIncomplete;
 					RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::ReplIterationKilled;
-#warning TODO: use Rf_error(""), instead?
-					RK_doIntr ();	// to discard the buffer
+					Rf_error ("");	// to discard the buffer
 				} else {
 					RKTransmitNextUserCommandChunk (buf, buflen);
 					return 1;
@@ -333,7 +332,7 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 					// For safety, let's reset and start over.
 					RKRBackend::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorOther;
 					RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::ReplIterationKilled;
-					RK_doIntr ();	// to discard the buffer
+					Rf_error("");	// to discard the buffer
 				} else {
 					// A call to readline(). Will be handled below
 					break;
@@ -364,8 +363,6 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 	RKRBackend::this_pointer->handleRequest (&request);
 	if (request.params["cancelled"].toBool ()) {
 		if (RKRBackend::this_pointer->current_command) RKRBackend::this_pointer->current_command->status |= RCommand::Canceled;
-		RK_doIntr();
-		// threoretically, the above should have got us out of the loop, but for good measure:
 		Rf_error ("cancelled");
 		RK_ASSERT (false);	// should not reach this point.
 	}
@@ -804,7 +801,7 @@ SEXP doError (SEXP call) {
 				RK_DO (qDebug ("interrupted"), RBACKEND, DL_DEBUG);
 			}
 		}
-	} else {
+	} else if (RKRBackend::repl_status.user_command_status != RKRBackend::RKReplStatus::ReplIterationKilled) {
 		QString string = RKRSupport::SEXPToString (call);
 		RKRBackend::this_pointer->handleOutput (string, string.length (), ROutput::Error);
 		RK_DO (qDebug ("error '%s'", qPrintable (string)), RBACKEND, DL_DEBUG);
