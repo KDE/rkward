@@ -18,9 +18,16 @@ For complete crosstabulation of three or more variables against each other (into
 		<setting id="barplot">Should a barplot be produced (for each pair)?</setting>
 		<setting id="preview">Allows to preview the barplot(s). Only the first of the barplots is shown in the preview, even if more than one table is produced.</setting>
 
+		<caption id="margins_tab"/>
+		<setting id="margins">Calculate and show sums / margins</setting>
+		<setting id="prop_row">Calculate and show the proportion (in %) of each cell's count of the corresponding row's total count.</setting>
+		<setting id="prop_column">Calculate and show the proportion (in %) of each cell's count of the corresponding column's total count.</setting>
+		<setting id="prop_total">Calculate and show the proportion (in %) of each cell's count of overall total count.</setting>
+
 		<caption id="chi_options"/>
 		<setting id="simpv">Should Monte-Carlo simulation be used to compute the p-value(s)?</setting>
 		<setting id="B">Number of replicates used in the Monte-Carlo test (if applicable).</setting>
+		<setting id="chisq_expected">Show the chisquare expected values per cell.</setting>
 
 		<caption id="barplot_options"/>
 		<setting id="barplot_embed">Various options controlling the look of the generated barplot(s). See <link href="rkward://component/barplot_embed"/></setting>
