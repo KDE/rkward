@@ -2,7 +2,7 @@
                           rwindowcatcher.h  -  description
                              -------------------
     begin                : Wed May 4 2005
-    copyright            : (C) 2005, 2006, 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2009, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -155,6 +155,7 @@ public slots:
 private slots:
 	void doEmbed ();
 private:
+	void reEmbed ();
 	void rCommandDone (RCommand *command);
 	friend class RKCaughtX11WindowPart;	// needs access to the actions
 	int device_number;

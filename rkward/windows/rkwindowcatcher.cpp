@@ -2,7 +2,7 @@
                           rwindowcatcher.cpp  -  description
                              -------------------
     begin                : Wed May 4 2005
-    copyright            : (C) 2005, 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -138,6 +138,7 @@ QHash<int, RKCaughtX11Window*> RKCaughtX11Window::device_windows;
 RKCaughtX11Window::RKCaughtX11Window (WId window_to_embed, int device_number) : RKMDIWindow (0, X11Window), RCommandReceiver () {
 	RK_TRACE (MISC);
 
+	capture = 0;
 	killed_in_r = false;
 	embedded = window_to_embed;
 	RKCaughtX11Window::device_number = device_number;
@@ -231,7 +232,7 @@ RKCaughtX11Window::~RKCaughtX11Window () {
 	RK_ASSERT (device_windows.contains (device_number));
 	device_windows.remove (device_number);
 
-	capture->close ();
+	close (false);
 #ifdef Q_WS_X11
 	RKWardApplication::getApp ()->unregisterNameWatcher (embedded);
 #endif
@@ -253,18 +254,33 @@ bool RKCaughtX11Window::close (bool also_delete) {
 	return false;
 }
 
+void RKCaughtX11Window::reEmbed () {
+	RK_TRACE (MISC);
+
+#ifdef Q_WS_X11
+	if (!capture) return;
+// somehow, since some version of Qt, the QX11EmbedContainer would loose its client while reparenting. This allows us to circumvent the problem.
+	capture->discardClient ();
+	capture->deleteLater ();
+	RKWardApplication::getApp ()->unregisterNameWatcher (embedded);
+	QTimer::singleShot (0, this, SLOT(doEmbed()));
+#endif
+}
+
 void RKCaughtX11Window::prepareToBeAttached () {
 	RK_TRACE (MISC);
 
 	dynamic_size_action->setChecked (false);
 	fixedSizeToggled ();
 	dynamic_size_action->setEnabled (false);
+	reEmbed ();
 }
 
 void RKCaughtX11Window::prepareToBeDetached () {
 	RK_TRACE (MISC);
 
 	dynamic_size_action->setEnabled (true);
+	reEmbed ();
 }
 
 void RKCaughtX11Window::fixedSizeToggled () {
