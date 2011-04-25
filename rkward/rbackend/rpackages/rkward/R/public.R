@@ -74,6 +74,13 @@
 	}
 }
 
+# Drop-in replacement for list(). Returns a list of the given arguments, but with names set according to rk.get.description
+"rk.list" <- function (...) {
+	ret <- list (...)
+	names (ret) <- rk.get.description (...)
+	ret
+}
+
 # this is basically copied from R-base table (). Returns the arguments passed to ... as a character vector
 "rk.list.names" <- function(..., deparse.level=2) {
 	l <- as.list(substitute(list(...)))[-1]

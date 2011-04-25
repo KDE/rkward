@@ -1,3 +1,4 @@
+- Added convenience R function rk.list() to allow simplification of plugin code		# TODO: ideally, this should be used in all applicable plugins
 - Added stack-based window switching using Ctrl+(Shift)+Tab; this replaces the old "Next Window" and "Previous Window" actions
 - Fixed: Graphics device windows would disappear when trying to attach them to the main window with some versions of Qt
 - Fixed: tcl/tk widgets would locki up after running commands in the R Console

@@ -1,18 +1,14 @@
 function calculate () {
 	var x = getValue ("x") ;
-	var y = "substitute (" + trim (getValue ("y")).replace (/\n/g, "), substitute (") + ")";
+	var y = trim (getValue ("y")).split (/\n/).join (', ');
 
-	echo ('x <- ' + x + "\n");
-	echo ('yvars <- list (' + y + ')\n');
+	echo ('x <- rk.list (' + x + ')\n');
+	echo ('yvars <- rk.list (' + y + ')\n');
 	echo ('results <- list()\n');
-	echo ('descriptions <- list ()\n');
 	echo ('\n');
 	echo ('# calculate crosstabs\n');
 	echo ('for (i in 1:length (yvars)) {\n');
-	echo ('	yvar <- eval (yvars[[i]], envir=globalenv ())\n');
-	echo ('	results[[i]] <- table(x, yvar)\n');
-	echo ('\n');
-	echo ('	descriptions[[i]] <- list (\'Dependent\'=rk.get.description (' + x + '), \'Independent\'=rk.get.description (yvars[[i]], is.substitute=TRUE))\n');
+	echo ('	results[[i]] <- table(x[[1]], yvars[[i]])\n');
 	echo ('}\n');
 	if (getValue ("chisq") == "TRUE") {
 		echo ('\n');
@@ -44,17 +40,17 @@ function doPrintout (full) {
 	if (full) {
 		echo ('rk.header ("Crosstabs (n to 1)", level=1)\n');
 		echo ('for (i in 1:length (results)) {\n');
-		echo ('	rk.header ("Crosstabs (n to 1)", parameters=list ("Dependent", descriptions[[i]][[\'Dependent\']], "Independent", descriptions[[i]][[\'Independent\']]), level=2)\n');
-		echo ('	rk.results (results[[i]], titles=c(descriptions[[i]][[\'Dependent\']], descriptions[[i]][[\'Independent\']]))\n');
+		echo ('	rk.header ("Crosstabs (n to 1)", parameters=list ("Dependent", names (x)[1], "Independent", names (yvars)[i]), level=2)\n');
+		echo ('	rk.results (results[[i]], titles=c(names (x)[1], names (yvars)[i]))\n');
 		if (getValue ("chisq") == "TRUE") {
 			echo ('\n');
-			echo ('	rk.header ("Pearson\'s Chi Square Test for Crosstabs", list ("Dependent", descriptions[[i]][[\'Dependent\']], "Independent", descriptions[[i]][[\'Independent\']], "Method", chisquares[[i]][["method"]]), level=2)\n');
+			echo ('	rk.header ("Pearson\'s Chi Square Test for Crosstabs", list ("Dependent", names (x)[1], "Independent", names (yvars)[i], "Method", chisquares[[i]][["method"]]), level=2)\n');
 			echo ('	rk.results (list (\'Statistic\'=chisquares[[i]][[\'statistic\']], \'df\'=chisquares[[i]][[\'parameter\']], \'p\'=chisquares[[i]][[\'p.value\']]))\n');
 		}
 
 		if (getValue ("barplot") == "TRUE") {
 			echo ('\n');
-			echo ('	rk.header ("Barplot for Crosstabs", list ("Dependent", descriptions[[i]][[\'Dependent\']], "Independent", descriptions[[i]][[\'Independent\']]' + getValue ('barplot_embed.code.preprocess') + '), level=2)\n');
+			echo ('	rk.header ("Barplot for Crosstabs", list ("Dependent", names (x)[1], "Independent", names (yvars)[i]' + getValue ('barplot_embed.code.preprocess') + '), level=2)\n');
 			echo ('	rk.graph.on ()\n');
 			echo ('	try ({\n');
 			printIndented ("\t\t", getValue ('barplot_embed.code.printout'));
@@ -67,6 +63,5 @@ function doPrintout (full) {
 		echo ("i <- 1\n");
 		echo (getValue ('barplot_embed.code.printout'));
 	}
-
 }
 

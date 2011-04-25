@@ -5,6 +5,7 @@
 \alias{rk.get.short.name}
 \alias{rk.get.description}
 \alias{rk.list.names}
+\alias{rk.list}
 
 \title{Various label related utility functions}
 
@@ -14,6 +15,7 @@ rk.set.label(x, label, envir = parent.frame())
 rk.get.short.name(x)
 rk.get.description(..., paste.sep = NULL, is.substitute = FALSE)
 rk.list.names(..., deparse.level = 2)
+rk.list(...)
 }
 
 \arguments{
@@ -34,6 +36,8 @@ rk.list.names(..., deparse.level = 2)
  \code{rk.get.description} creates descriptive string(s) for each of the arguments in "\code{\dots}"; collapsing into a single string using \code{paste.sep} (if not NULL). If \code{is.substitute=TRUE}, the arguments will be deparsed, first, which can be useful when using \code{rk.get.description} inside a function.
 
  \code{rk.list.names} returns the names of the arguments passed as \code{...}; when using \code{rk.list.names} inside a function, it may be necessary to increase the \code{deparse.level} level.
+
+ \code{rk.list} returns a list of its arguments, with \code{names} set as returned by \code{rk.get.description()}. This can be used as a drop-in replacement for \code{\link{list}}.
 }
 
 \value{
@@ -49,6 +53,7 @@ rk.get.short.name (x$a)                   # "x$a"
 rk.get.label (x$a)                        # "First column"
 rk.get.description (x$a)                  # "x$a (First column)"
 rk.list.names (x, x$a, x$b)               # "x" "x$a" "x$b"
+names (rk.list (x$a, x$b))                # "x$a (First column)" "x$b"
 }
 
 \keyword{utilities}
