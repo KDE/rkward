@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward_toplevel" version="54">
+<kpartgui name="rkward_toplevel" version="560">
 	<MenuBar>
 		<Merge/>
 		<Menu name="window"><text>&amp;Window</text>
@@ -7,6 +7,9 @@
 			<Action name="output_show"/>
 			<Separator/>
 			<Menu name="window_activate"><text>&amp;Activate</text>
+				<Action name="prev_window"/>
+				<Action name="next_window"/>
+				<Separator/>
 				<Action name="window_show_workspace"/>
 				<Action name="window_show_filebrowser"/>
 				<Action name="window_show_commandlog"/>

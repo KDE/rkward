@@ -39,6 +39,7 @@
 #include "../windows/rkmdiwindow.h"
 #include "../misc/rkstandardicons.h"
 #include "../misc/rkprogresscontrol.h"
+#include "../misc/rkcommonfunctions.h"
 #include "../plugin/rkcomponentmap.h"
 #include "../rbackend/rinterface.h"
 #include "../rkglobals.h"
@@ -70,6 +71,16 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI (KXmlGuiWindow *for_window) : QObject (
 	show_rkward_help->setStatusTip (i18n ("Show help on RKWard"));
 
 	// window menu
+	// NOTE: enabling / disabling the prev/next actions is not a good idea. It will cause the script windows to "accept" their shortcuts, when disabled
+	prev_action = actionCollection ()->addAction ("prev_window", this, SLOT (previousWindow()));
+	prev_action->setText (i18n ("Previous Window"));
+	prev_action->setIcon (QIcon (RKCommonFunctions::getRKWardDataDir () + "icons/window_back.png"));
+	prev_action->setShortcut (Qt::ControlModifier + Qt::Key_Tab);
+	next_action = actionCollection ()->addAction ("next_window", this, SLOT (nextWindow()));
+	next_action->setText (i18n ("Next Window"));
+	next_action->setIcon (QIcon (RKCommonFunctions::getRKWardDataDir () + "icons/window_forward.png"));
+	next_action->setShortcut (Qt::ControlModifier + Qt::ShiftModifier + Qt::Key_Tab);
+
 	KAction *action;
 	foreach (RKToolWindowList::ToolWindowRepresentation rep, RKToolWindowList::registeredToolWindows ()) {
 		action = actionCollection ()->addAction ("window_show_" + rep.id, this, SLOT (toggleToolView()));
@@ -220,6 +231,19 @@ void RKTopLevelWindowGUI::slotOutputShow () {
 	RK_TRACE (APP);
 
 	RKWorkplace::mainWorkplace ()->openOutputWindow (KUrl ());
+}
+
+void RKTopLevelWindowGUI::nextWindow () {
+	RK_TRACE (APP);
+
+	// well, this is sort of cumbersome, but the switcher widget gets keyboard focus, and so we need to register the window switching actions with it.
+	RKWorkplace::getHistory ()->next (prev_action, next_action);
+}
+
+void RKTopLevelWindowGUI::previousWindow () {
+	RK_TRACE (APP);
+
+	RKWorkplace::getHistory ()->prev (prev_action, next_action);
 }
 
 #include "rktoplevelwindowgui.moc"

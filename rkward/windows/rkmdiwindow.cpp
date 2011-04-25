@@ -119,7 +119,11 @@ void RKMDIWindow::activate (bool with_focus) {
 
 	if (isToolWindow ()) {
 		if (tool_window_bar) tool_window_bar->showWidget (this);
-		else RKWorkplace::mainWorkplace ()->detachWindow (this, true);
+		else if (!isVisible ()) RKWorkplace::mainWorkplace ()->detachWindow (this, true);
+		else {
+			topLevelWidget ()->show ();
+			topLevelWidget ()->raise ();
+		}
 	} else {
 		if (isAttached ()) RKWorkplace::mainWorkplace ()->view ()->setActivePage (this);
 		else {
@@ -128,6 +132,7 @@ void RKMDIWindow::activate (bool with_focus) {
 		}
 	}
 
+	emit (windowActivated (this));
 	if (with_focus) {
 		if (old_focus) old_focus->clearFocus ();
 		topLevelWidget ()->activateWindow ();

@@ -35,6 +35,7 @@ class RKEditor;
 class KActionCollection;
 class KAction;
 class RKToolWindowBar;
+class RKMDIWindowHistoryWidget;
 
 #define TOOL_WINDOW_BAR_COUNT 4
 
@@ -45,22 +46,21 @@ public:
 	RKMDIWindowHistory (QObject *parent);
 	~RKMDIWindowHistory ();
 
-	void initActions (KActionCollection *ac, const char *prev_id, const char *next_id);
-	bool haveNext ();
-	bool havePrev ();
-	void removeWindow (QObject *window);
+	void removeWindow (RKMDIWindow *window);
+/** pops the last window from the list, if it matches the given pointer */
+	void popLastWindow (RKMDIWindow *match);
+	RKMDIWindow *previousDocumentWindow ();
+	void next (KAction *prev_action, KAction *next_action);
+	void prev (KAction *prev_action, KAction *next_action);
 public slots:
-	void next ();
-	void prev ();
 	void windowActivated (RKMDIWindow *window);
+private slots:
+	void switcherDestroyed ();
 private:
-	void updateActions ();
-
-	RKMDIWindow *current;
-	QList<RKMDIWindow *> back_list;
-	QList<RKMDIWindow *> forward_list;
-	KAction *next_action;
-	KAction *prev_action;
+	void updateSwitcher ();
+	QList<RKMDIWindow *> recent_windows;
+	RKMDIWindowHistoryWidget *switcher;
+	RKMDIWindowHistoryWidget *getSwitcher (KAction *prev_action, KAction *next_action);
 };
 
 /** This class (only one instance will probably be around) keeps track of which windows are opened in the workplace, which are detached, etc. Also it is responsible for creating and manipulating those windows.
@@ -72,7 +72,7 @@ public:
 @param parent: The parent widget for the workspace view (see view ()) */
 	explicit RKWorkplace (QWidget *parent);
 	~RKWorkplace ();
-	void initActions (KActionCollection *ac, const char *prev_id, const char *next_id, const char *left_id, const char *right_id);
+	void initActions (KActionCollection *ac, const char *left_id, const char *right_id);
 
 /** @returns a pointer to the view of the workplace. Since possibly the workplace layout might change, better not rely on this pointer being valid for long */
 	RKWorkplaceView *view () { return wview; };
@@ -153,6 +153,7 @@ Has no effect, if RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsMod
 /** In the current design there is only ever one workplace. Use this static function to reference it.
 @returns a pointer to the workplace */
 	static RKWorkplace *mainWorkplace () { return main_workplace; };
+	static RKMDIWindowHistory *getHistory () { return main_workplace->history; };
 	void placeToolWindows ();
 signals:
 /** TODO: For future expansion. This signal is neither emitted nor used so far. It could be used to deactivate some options in the "Window" menu. Or maybe it can be removed? */

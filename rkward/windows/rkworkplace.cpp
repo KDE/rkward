@@ -114,10 +114,9 @@ void RKWorkplace::saveSettings () {
 	for (int i = 0; i < TOOL_WINDOW_BAR_COUNT; ++i) tool_window_bars[i]->saveSize (toolbar_config);
 }
 
-void RKWorkplace::initActions (KActionCollection *ac, const char *prev_id, const char *next_id, const char *left_id, const char *right_id) {
+void RKWorkplace::initActions (KActionCollection *ac, const char *left_id, const char *right_id) {
 	RK_TRACE (APP);
 
-	history->initActions (ac, prev_id, next_id);
 	wview->initActions (ac, left_id, right_id);
 }
 
@@ -164,6 +163,7 @@ void RKWorkplace::detachWindow (RKMDIWindow *window, bool was_attached) {
 
 	DetachedWindowContainer *detached = new DetachedWindowContainer (window);
 	detached->show ();
+	if (!was_attached) window->activate ();
 }
 
 void RKWorkplace::addWindow (RKMDIWindow *window, bool attached) {
@@ -182,6 +182,7 @@ void RKWorkplace::placeToolWindows() {
 
 	foreach (const RKToolWindowList::ToolWindowRepresentation rep, RKToolWindowList::registeredToolWindows ()) {
 		placeInToolWindowBar (rep.window, rep.default_placement);
+		getHistory ()->popLastWindow (rep.window);	// windows send a spurious activation signal triggered from KPartsManager::addPart(), so we pop them, again
 	}
 }
 
@@ -456,11 +457,9 @@ void RKWorkplace::windowRemoved () {
 	}
 
 	// some document window in the history? Try that.
-	if (history->haveNext ()) {
-		history->next ();
-		return;
-	} else if (history->havePrev ()) {
-		history->prev ();
+	window = history->previousDocumentWindow ();
+	if (window) {
+		window->activate (true);
 		return;
 	}
 
@@ -662,110 +661,193 @@ void RKWorkplace::restoreWorkplace (const QStringList &description) {
 ///////////////////////// END RKWorkplace ////////////////////////////
 ///////////////////// BEGIN RKMDIWindowHistory ///////////////////////
 
+#include "../misc/rkstandardicons.h"
+#include <QListWidget>
+
+class RKMDIWindowHistoryWidget : public QListWidget {
+public:
+	RKMDIWindowHistoryWidget () : QListWidget (0) {
+		RK_TRACE (APP);
+
+		current = 0;
+		setFocusPolicy (Qt::StrongFocus);
+		setWindowFlags (Qt::Popup);
+	}
+
+	~RKMDIWindowHistoryWidget () {
+		RK_TRACE (APP);
+	}
+
+	void update (const QList<RKMDIWindow*> windows) {
+		RK_TRACE (APP);
+
+		clear ();
+		_windows = windows;
+		for (int i = windows.count () - 1; i >= 0; --i) {		// most recent top
+			RKMDIWindow *win = windows[i];
+			QListWidgetItem *item = new QListWidgetItem (this);
+			item->setIcon (RKStandardIcons::iconForWindow (win));
+			item->setText (win->windowTitle ());
+		}
+		if (current >= count ()) current = count () - 1;
+		if (current < 0) {
+			hide ();
+			return;
+		}
+		setCurrentRow (current);
+	}
+
+	void next () {
+		RK_TRACE (APP);
+
+		if (--current < 0) current = count () - 1;
+		setCurrentRow (current);
+	}
+
+	void prev () {
+		RK_TRACE (APP);
+
+		if (++current >= count ()) current = 0;
+		setCurrentRow (current);
+	}
+
+private:
+	void focusOutEvent (QFocusEvent *) {
+		RK_TRACE (APP);
+
+		deleteLater ();
+	}
+
+	void keyReleaseEvent (QKeyEvent *ev) {
+		RK_TRACE (APP);
+
+		if (ev->modifiers () == Qt::NoModifier) {
+			commit ();
+		}
+	}
+
+	void mouseReleaseEvent (QMouseEvent *ev) {
+		RK_TRACE (APP);
+
+		// HACK to get by without slots, and the associated moc'ing
+		QListWidget::mouseReleaseEvent (ev);
+		commit ();
+	}
+
+	void commit () {
+		RK_TRACE (APP);
+
+		current = currentRow ();
+		if ((current > 0) && (current < count ())) {
+			RKMDIWindow *win = _windows.value (count () - 1 - current);
+			RK_ASSERT (win);
+			win->activate (true);
+		}
+		deleteLater ();
+	}
+
+	int current;
+	QList<RKMDIWindow*> _windows;
+};
+
 RKMDIWindowHistory::RKMDIWindowHistory (QObject *parent) : QObject (parent) {
 	RK_TRACE (APP);
 
-	current = 0;
-	prev_action = next_action = 0;
+	switcher = 0;
 }
 
 RKMDIWindowHistory::~RKMDIWindowHistory () {
 	RK_TRACE (APP);
 
-	RK_DO (qDebug ("Remaining windows in history: forward: %d, backward: %d", forward_list.count (), back_list.count ()), APP, DL_DEBUG);
-}
-
-void RKMDIWindowHistory::initActions (KActionCollection *ac, const char *prev_id, const char *next_id) {
-	RK_TRACE (APP);
-
-	prev_action = (KAction*) ac->addAction (prev_id, this, SLOT (prev()));
-	prev_action->setText (i18n ("Previous Window"));
-	prev_action->setIcon (QIcon (RKCommonFunctions::getRKWardDataDir () + "icons/window_back.png"));
-	prev_action->setShortcut (KShortcut (Qt::AltModifier + Qt::Key_Less, Qt::AltModifier + Qt::Key_Comma));
-
-	next_action = (KAction*) ac->addAction (next_id, this, SLOT (next()));
-	next_action->setText (i18n ("Next Window"));
-	next_action->setIcon (QIcon (RKCommonFunctions::getRKWardDataDir () + "icons/window_forward.png"));
-	next_action->setShortcut (KShortcut (Qt::AltModifier + Qt::Key_Greater, Qt::AltModifier + Qt::Key_Period));
-
-	updateActions ();
+	RK_DO (qDebug ("Remaining windows in history: %d", recent_windows.count ()), APP, DL_DEBUG);
 }
 
 void RKMDIWindowHistory::windowActivated (RKMDIWindow *window) {
 	RK_TRACE (APP);
 
 	if (!window) return;
-	if (window == current) return;
-	if (window->isToolWindow ()) return;		// exclude tool windows for now. Make configurable?
+	if (!recent_windows.isEmpty () && (window == recent_windows.last ())) return;
 
 	// update lists
-	back_list.removeAll (window);		// remove dupes
-	forward_list.clear ();
-	if (current) back_list.append (current);
-	current = window;
+	recent_windows.removeAll (window);		// remove dupes
+	recent_windows.append (window);
 
-	updateActions ();
+	updateSwitcher ();
 }
 
-void RKMDIWindowHistory::next () {
+void RKMDIWindowHistory::next (KAction* prev_action, KAction *next_action) {
 	RK_TRACE (APP);
 
-	if (!haveNext ()) return;
-	if (current) back_list.append (current);
-	current = forward_list.first ();
-	forward_list.pop_front ();
-
-	updateActions ();
-
-	RK_ASSERT (current);
-	current->activate ();
+	if (recent_windows.isEmpty ()) return;
+	getSwitcher (prev_action, next_action)->next ();
 }
 
-void RKMDIWindowHistory::prev () {
+void RKMDIWindowHistory::prev (KAction* prev_action, KAction *next_action) {
 	RK_TRACE (APP);
 
-	if (!havePrev ()) return;
-	if (current) forward_list.push_front (current);
-	current = back_list.last ();
-	back_list.pop_back ();
-
-	updateActions ();
-
-	RK_ASSERT (current);
-	current->activate ();
+	if (recent_windows.isEmpty ()) return;
+	getSwitcher (prev_action, next_action)->prev ();
 }
 
-bool RKMDIWindowHistory::haveNext () {
+RKMDIWindow* RKMDIWindowHistory::previousDocumentWindow () {
 	RK_TRACE (APP);
 
-	return (!forward_list.isEmpty ());
-}
-
-bool RKMDIWindowHistory::havePrev () {
-	RK_TRACE (APP);
-
-	return (!back_list.isEmpty ());
-}
-
-void RKMDIWindowHistory::updateActions () {
-	RK_TRACE (APP);
-
-	if (next_action) {
-		next_action->setEnabled (haveNext ());
+	for (int i = recent_windows.count () - 1; i >= 0; --i) {
+		if (!recent_windows[i]->isToolWindow ()) return (recent_windows[i]);
 	}
-
-	if (prev_action) {
-		prev_action->setEnabled (havePrev ());
-	}
+	return 0;
 }
 
-void RKMDIWindowHistory::removeWindow (QObject *window) {
+void RKMDIWindowHistory::updateSwitcher () {
 	RK_TRACE (APP);
 
-	back_list.removeAll (static_cast<RKMDIWindow *> (window));
-	forward_list.removeAll (static_cast<RKMDIWindow *> (window));
-	if (current == window) current = 0;
-	updateActions ();
+	if (switcher) switcher->update (recent_windows);
+}
+
+void RKMDIWindowHistory::removeWindow (RKMDIWindow *window) {
+	RK_TRACE (APP);
+
+	recent_windows.removeAll (window);
+	updateSwitcher ();
+}
+
+RKMDIWindowHistoryWidget* RKMDIWindowHistory::getSwitcher (KAction* prev_action, KAction *next_action) {
+	RK_TRACE (APP);
+
+	if (switcher) return switcher;
+
+	switcher = new RKMDIWindowHistoryWidget ();
+	connect (switcher, SIGNAL (destroyed(QObject*)), this, SLOT (switcherDestroyed()));
+	switcher->addAction (prev_action);
+	switcher->addAction (next_action);
+	switcher->update (recent_windows);
+	switcher->show ();
+	QWidget *act = QApplication::activeWindow ();
+	if (act) {
+		int center_x = act->x () + act->width () / 2;
+		int center_y = act->y () + act->height () / 2;
+		switcher->move (center_x - switcher->width () / 2, center_y - switcher->height () / 2);
+	} else {
+		RK_ASSERT (false);
+	}
+	switcher->setFocus ();
+
+	return switcher;
+}
+
+void RKMDIWindowHistory::switcherDestroyed () {
+	RK_TRACE (APP);
+
+	RK_ASSERT (switcher);
+	switcher = 0;
+}
+
+void RKMDIWindowHistory::popLastWindow (RKMDIWindow* match) {
+	RK_TRACE (APP);
+
+	if (recent_windows.isEmpty ()) return;
+	else if (recent_windows.last () == match) recent_windows.removeLast ();
+	updateSwitcher ();
 }
 
 #include "rkworkplace.moc"
