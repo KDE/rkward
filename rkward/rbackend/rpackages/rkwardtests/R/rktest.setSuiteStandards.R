@@ -28,8 +28,8 @@ rktest.setSuiteStandards <- function (suite, testroot=getwd (), file=TRUE) {
 	if (!inherits (suite, "RKTestSuite")) return (result)
 	if (!validObject (suite)) return (result)
 
-	ok <- readline ("You are about to set new standards for this suite. This means you are certain that ALL tests in this suite have produced the expected/correct result on the last run. If you are absolutely sure, enter \"I am sure\" to proceed.");
-	if (ok != "I am sure") stop ("Aborted")
+	ok <- rk.show.question ("You are about to set new standards for this suite. This means you are certain that ALL tests in this suite have produced the expected/correct result on the last run. Are you absolutely sure, that you want to proceed?", caption="Really set new standards?");
+	if (!isTRUE (ok)) stop ("Aborted")
 
 	oldwd = getwd ()
 	on.exit (setwd (oldwd))
