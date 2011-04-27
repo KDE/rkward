@@ -1,6 +1,6 @@
 - Box plot plugin gains support for grouped outcome data
 - Fixed: Pressing Ctrl+C would not reset syntactically incomplete commands in the R console
-- Crosstabs N to 1 plugin gains options to compute proportions and margins (thanks to Andrés Necochea)		TODO: update / add automated test(s)
+- Crosstabs N to 1 plugin gains options to compute proportions and margins (thanks to Andrés Necochea)
 - Added convenience R function rk.list() to allow simplification of plugin code		# TODO: ideally, this should be used in all applicable plugins
 - Added stack-based window switching using Ctrl+(Shift)+Tab; this replaces the old "Next Window" and "Previous Window" actions
 - Fixed: Graphics device windows would disappear when trying to attach them to the main window with some versions of Qt

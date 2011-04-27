@@ -66,3 +66,411 @@ DATE<br>
 </ul>
 <br>
 <img src="graph.png" width="480" height="480"><br>
+<h1>Crosstabs (n to 1)</h1>
+DATE<br>
+<h2>Crosstabs (n to 1)</h2>
+<h3>Parameters</h3>
+<ul><li>Dependent: tension</li>
+<li>Independent: wool</li>
+</ul>
+<br>
+
+
+<p align= center >
+<table cellspacing=0 border=1><caption align=bottom class=captiondataframe></caption>
+<tr><td>
+	<table border=0 class=dataframe>
+	<tbody> 
+<td class=cellinside>           </td>
+<td class=cellinside>           </td>
+<td class=cellinside>           </td>
+<td class=cellinside>      A    </td>
+<td class=cellinside>      B    </td>
+<td class=cellinside>    Sum    </td></tr>
+ 
+<td class=cellinside>           </td>
+<td class=cellinside>statistic  </td>
+<td class=cellinside>           </td>
+<td class=cellinside>           </td>
+<td class=cellinside>           </td>
+<td class=cellinside>           </td></tr>
+ 
+<td class=cellinside>L          </td>
+<td class=cellinside>count      </td>
+<td class=cellinside>           </td>
+<td class=cellinside>  9.000    </td>
+<td class=cellinside>  9.000    </td>
+<td class=cellinside> 18.000    </td></tr>
+ 
+<td class=cellinside>           </td>
+<td class=cellinside>% of row   </td>
+<td class=cellinside>           </td>
+<td class=cellinside> 50.000    </td>
+<td class=cellinside> 50.000    </td>
+<td class=cellinside>     NA    </td></tr>
+ 
+<td class=cellinside>           </td>
+<td class=cellinside>% of column</td>
+<td class=cellinside>           </td>
+<td class=cellinside> 33.333    </td>
+<td class=cellinside> 33.333    </td>
+<td class=cellinside>     NA    </td></tr>
+ 
+<td class=cellinside>           </td>
+<td class=cellinside>% of total </td>
+<td class=cellinside>           </td>
+<td class=cellinside> 16.667    </td>
+<td class=cellinside> 16.667    </td>
+<td class=cellinside> 33.333    </td></tr>
+ 
+<td class=cellinside>           </td>
+<td class=cellinside>expected   </td>
+<td class=cellinside>           </td>
+<td class=cellinside>  9.000    </td>
+<td class=cellinside>  9.000    </td>
+<td class=cellinside>     NA    </td></tr>
+ 
+<td class=cellinside>M          </td>
+<td class=cellinside>count      </td>
+<td class=cellinside>           </td>
+<td class=cellinside>  9.000    </td>
+<td class=cellinside>  9.000    </td>
+<td class=cellinside> 18.000    </td></tr>
+ 
+<td class=cellinside>           </td>
+<td class=cellinside>% of row   </td>
+<td class=cellinside>           </td>
+<td class=cellinside> 50.000    </td>
+<td class=cellinside> 50.000    </td>
+<td class=cellinside>     NA    </td></tr>
+ 
+<td class=cellinside>           </td>
+<td class=cellinside>% of column</td>
+<td class=cellinside>           </td>
+<td class=cellinside> 33.333    </td>
+<td class=cellinside> 33.333    </td>
+<td class=cellinside>     NA    </td></tr>
+ 
+<td class=cellinside>           </td>
+<td class=cellinside>% of total </td>
+<td class=cellinside>           </td>
+<td class=cellinside> 16.667    </td>
+<td class=cellinside> 16.667    </td>
+<td class=cellinside> 33.333    </td></tr>
+ 
+<td class=cellinside>           </td>
+<td class=cellinside>expected   </td>
+<td class=cellinside>           </td>
+<td class=cellinside>  9.000    </td>
+<td class=cellinside>  9.000    </td>
+<td class=cellinside>     NA    </td></tr>
+ 
+<td class=cellinside>H          </td>
+<td class=cellinside>count      </td>
+<td class=cellinside>           </td>
+<td class=cellinside>  9.000    </td>
+<td class=cellinside>  9.000    </td>
+<td class=cellinside> 18.000    </td></tr>
+ 
+<td class=cellinside>           </td>
+<td class=cellinside>% of row   </td>
+<td class=cellinside>           </td>
+<td class=cellinside> 50.000    </td>
+<td class=cellinside> 50.000    </td>
+<td class=cellinside>     NA    </td></tr>
+ 
+<td class=cellinside>           </td>
+<td class=cellinside>% of column</td>
+<td class=cellinside>           </td>
+<td class=cellinside> 33.333    </td>
+<td class=cellinside> 33.333    </td>
+<td class=cellinside>     NA    </td></tr>
+ 
+<td class=cellinside>           </td>
+<td class=cellinside>% of total </td>
+<td class=cellinside>           </td>
+<td class=cellinside> 16.667    </td>
+<td class=cellinside> 16.667    </td>
+<td class=cellinside> 33.333    </td></tr>
+ 
+<td class=cellinside>           </td>
+<td class=cellinside>expected   </td>
+<td class=cellinside>           </td>
+<td class=cellinside>  9.000    </td>
+<td class=cellinside>  9.000    </td>
+<td class=cellinside>     NA    </td></tr>
+ 
+<td class=cellinside>Sum        </td>
+<td class=cellinside>count      </td>
+<td class=cellinside>           </td>
+<td class=cellinside> 27.000    </td>
+<td class=cellinside> 27.000    </td>
+<td class=cellinside> 54.000    </td></tr>
+ 
+<td class=cellinside>           </td>
+<td class=cellinside>% of row   </td>
+<td class=cellinside>           </td>
+<td class=cellinside>     NA    </td>
+<td class=cellinside>     NA    </td>
+<td class=cellinside>     NA    </td></tr>
+ 
+<td class=cellinside>           </td>
+<td class=cellinside>% of column</td>
+<td class=cellinside>           </td>
+<td class=cellinside>     NA    </td>
+<td class=cellinside>     NA    </td>
+<td class=cellinside>     NA    </td></tr>
+ 
+<td class=cellinside>           </td>
+<td class=cellinside>% of total </td>
+<td class=cellinside>           </td>
+<td class=cellinside> 50.000    </td>
+<td class=cellinside> 50.000    </td>
+<td class=cellinside>100.000    </td></tr>
+ 
+<td class=cellinside>           </td>
+<td class=cellinside>expected   </td>
+<td class=cellinside>           </td>
+<td class=cellinside>     NA    </td>
+<td class=cellinside>     NA    </td>
+<td class=cellinside>     NA    </td></tr>
+ 
+	</tbody>
+</table>
+ </td></table>
+ <br>
+<h2>Pearson's Chi Square Test for Crosstabs</h2>
+<h3>Parameters</h3>
+<ul><li>Dependent: tension</li>
+<li>Independent: wool</li>
+<li>Method: Pearson's Chi-squared test</li>
+</ul>
+<br>
+<table border="1">
+<tr><td>Statistic</td><td>df</td><td>p</td></tr>
+<tr><td>0</td><td>2</td><td>1</td></tr>
+</table>
+<h2>Barplot for Crosstabs</h2>
+<h3>Parameters</h3>
+<ul><li>Dependent: tension</li>
+<li>Independent: wool</li>
+<li>colors: rainbow</li>
+<li>Type: juxtaposed</li>
+<li>Legend: FALSE</li>
+</ul>
+<br>
+<img src="graph.png" width="480" height="480"><br>
+<h2>Crosstabs (n to 1)</h2>
+<h3>Parameters</h3>
+<ul><li>Dependent: tension</li>
+<li>Independent: tension</li>
+</ul>
+<br>
+
+
+<p align= center >
+<table cellspacing=0 border=1><caption align=bottom class=captiondataframe></caption>
+<tr><td>
+	<table border=0 class=dataframe>
+	<tbody> 
+<td class=cellinside>           </td>
+<td class=cellinside>           </td>
+<td class=cellinside>           </td>
+<td class=cellinside>      L    </td>
+<td class=cellinside>      M    </td>
+<td class=cellinside>      H    </td>
+<td class=cellinside>    Sum    </td></tr>
+ 
+<td class=cellinside>           </td>
+<td class=cellinside>statistic  </td>
+<td class=cellinside>           </td>
+<td class=cellinside>           </td>
+<td class=cellinside>           </td>
+<td class=cellinside>           </td>
+<td class=cellinside>           </td></tr>
+ 
+<td class=cellinside>L          </td>
+<td class=cellinside>count      </td>
+<td class=cellinside>           </td>
+<td class=cellinside> 18.000    </td>
+<td class=cellinside>  0.000    </td>
+<td class=cellinside>  0.000    </td>
+<td class=cellinside> 18.000    </td></tr>
+ 
+<td class=cellinside>           </td>
+<td class=cellinside>% of row   </td>
+<td class=cellinside>           </td>
+<td class=cellinside>100.000    </td>
+<td class=cellinside>  0.000    </td>
+<td class=cellinside>  0.000    </td>
+<td class=cellinside>     NA    </td></tr>
+ 
+<td class=cellinside>           </td>
+<td class=cellinside>% of column</td>
+<td class=cellinside>           </td>
+<td class=cellinside>100.000    </td>
+<td class=cellinside>  0.000    </td>
+<td class=cellinside>  0.000    </td>
+<td class=cellinside>     NA    </td></tr>
+ 
+<td class=cellinside>           </td>
+<td class=cellinside>% of total </td>
+<td class=cellinside>           </td>
+<td class=cellinside> 33.333    </td>
+<td class=cellinside>  0.000    </td>
+<td class=cellinside>  0.000    </td>
+<td class=cellinside> 33.333    </td></tr>
+ 
+<td class=cellinside>           </td>
+<td class=cellinside>expected   </td>
+<td class=cellinside>           </td>
+<td class=cellinside>  6.000    </td>
+<td class=cellinside>  6.000    </td>
+<td class=cellinside>  6.000    </td>
+<td class=cellinside>     NA    </td></tr>
+ 
+<td class=cellinside>M          </td>
+<td class=cellinside>count      </td>
+<td class=cellinside>           </td>
+<td class=cellinside>  0.000    </td>
+<td class=cellinside> 18.000    </td>
+<td class=cellinside>  0.000    </td>
+<td class=cellinside> 18.000    </td></tr>
+ 
+<td class=cellinside>           </td>
+<td class=cellinside>% of row   </td>
+<td class=cellinside>           </td>
+<td class=cellinside>  0.000    </td>
+<td class=cellinside>100.000    </td>
+<td class=cellinside>  0.000    </td>
+<td class=cellinside>     NA    </td></tr>
+ 
+<td class=cellinside>           </td>
+<td class=cellinside>% of column</td>
+<td class=cellinside>           </td>
+<td class=cellinside>  0.000    </td>
+<td class=cellinside>100.000    </td>
+<td class=cellinside>  0.000    </td>
+<td class=cellinside>     NA    </td></tr>
+ 
+<td class=cellinside>           </td>
+<td class=cellinside>% of total </td>
+<td class=cellinside>           </td>
+<td class=cellinside>  0.000    </td>
+<td class=cellinside> 33.333    </td>
+<td class=cellinside>  0.000    </td>
+<td class=cellinside> 33.333    </td></tr>
+ 
+<td class=cellinside>           </td>
+<td class=cellinside>expected   </td>
+<td class=cellinside>           </td>
+<td class=cellinside>  6.000    </td>
+<td class=cellinside>  6.000    </td>
+<td class=cellinside>  6.000    </td>
+<td class=cellinside>     NA    </td></tr>
+ 
+<td class=cellinside>H          </td>
+<td class=cellinside>count      </td>
+<td class=cellinside>           </td>
+<td class=cellinside>  0.000    </td>
+<td class=cellinside>  0.000    </td>
+<td class=cellinside> 18.000    </td>
+<td class=cellinside> 18.000    </td></tr>
+ 
+<td class=cellinside>           </td>
+<td class=cellinside>% of row   </td>
+<td class=cellinside>           </td>
+<td class=cellinside>  0.000    </td>
+<td class=cellinside>  0.000    </td>
+<td class=cellinside>100.000    </td>
+<td class=cellinside>     NA    </td></tr>
+ 
+<td class=cellinside>           </td>
+<td class=cellinside>% of column</td>
+<td class=cellinside>           </td>
+<td class=cellinside>  0.000    </td>
+<td class=cellinside>  0.000    </td>
+<td class=cellinside>100.000    </td>
+<td class=cellinside>     NA    </td></tr>
+ 
+<td class=cellinside>           </td>
+<td class=cellinside>% of total </td>
+<td class=cellinside>           </td>
+<td class=cellinside>  0.000    </td>
+<td class=cellinside>  0.000    </td>
+<td class=cellinside> 33.333    </td>
+<td class=cellinside> 33.333    </td></tr>
+ 
+<td class=cellinside>           </td>
+<td class=cellinside>expected   </td>
+<td class=cellinside>           </td>
+<td class=cellinside>  6.000    </td>
+<td class=cellinside>  6.000    </td>
+<td class=cellinside>  6.000    </td>
+<td class=cellinside>     NA    </td></tr>
+ 
+<td class=cellinside>Sum        </td>
+<td class=cellinside>count      </td>
+<td class=cellinside>           </td>
+<td class=cellinside> 18.000    </td>
+<td class=cellinside> 18.000    </td>
+<td class=cellinside> 18.000    </td>
+<td class=cellinside> 54.000    </td></tr>
+ 
+<td class=cellinside>           </td>
+<td class=cellinside>% of row   </td>
+<td class=cellinside>           </td>
+<td class=cellinside>     NA    </td>
+<td class=cellinside>     NA    </td>
+<td class=cellinside>     NA    </td>
+<td class=cellinside>     NA    </td></tr>
+ 
+<td class=cellinside>           </td>
+<td class=cellinside>% of column</td>
+<td class=cellinside>           </td>
+<td class=cellinside>     NA    </td>
+<td class=cellinside>     NA    </td>
+<td class=cellinside>     NA    </td>
+<td class=cellinside>     NA    </td></tr>
+ 
+<td class=cellinside>           </td>
+<td class=cellinside>% of total </td>
+<td class=cellinside>           </td>
+<td class=cellinside> 33.333    </td>
+<td class=cellinside> 33.333    </td>
+<td class=cellinside> 33.333    </td>
+<td class=cellinside>100.000    </td></tr>
+ 
+<td class=cellinside>           </td>
+<td class=cellinside>expected   </td>
+<td class=cellinside>           </td>
+<td class=cellinside>     NA    </td>
+<td class=cellinside>     NA    </td>
+<td class=cellinside>     NA    </td>
+<td class=cellinside>     NA    </td></tr>
+ 
+	</tbody>
+</table>
+ </td></table>
+ <br>
+<h2>Pearson's Chi Square Test for Crosstabs</h2>
+<h3>Parameters</h3>
+<ul><li>Dependent: tension</li>
+<li>Independent: tension</li>
+<li>Method: Pearson's Chi-squared test</li>
+</ul>
+<br>
+<table border="1">
+<tr><td>Statistic</td><td>df</td><td>p</td></tr>
+<tr><td>108</td><td>4</td><td>1.9429e-22</td></tr>
+</table>
+<h2>Barplot for Crosstabs</h2>
+<h3>Parameters</h3>
+<ul><li>Dependent: tension</li>
+<li>Independent: tension</li>
+<li>colors: rainbow</li>
+<li>Type: juxtaposed</li>
+<li>Legend: FALSE</li>
+</ul>
+<br>
+<img src="graph.png" width="480" height="480"><br>
