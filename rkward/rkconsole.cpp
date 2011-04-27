@@ -727,7 +727,7 @@ void RKConsole::tryNextInBuffer () {
 			input_buffer.clear ();
 		}
 	}
-	interrupt_command_action->setEnabled (false);
+	interrupt_command_action->setEnabled (!incomplete_command.isEmpty ());
 }
 
 bool RKConsole::isBusy () const {
@@ -863,6 +863,7 @@ void RKConsole::resetConsole () {
 		incomplete_command.clear ();
 
 		showPrompt ();
+		tryNextInBuffer ();		// well, the buffer is empty, but this also sets the interrupt_command_action's state, etc.
 	}
 }
 
