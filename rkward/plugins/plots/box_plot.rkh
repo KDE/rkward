@@ -1,0 +1,37 @@
+<!DOCTYPE rkhelp>
+<document>
+	<summary>
+Creates a box plot of one or more variables.
+	</summary>
+
+	<usage>
+Chose numerical data to be plotted. Data can be organized in separate vectors, or in a single outcome variable and one or more grouping variables.
+	</usage>
+
+	<settings>
+		<caption id="tab_variables"/>
+		<setting id="data_mode">Select the format of your data. This can either be separate numerical vectors, or a single outcome variable split by one or more grouping variables.</setting>
+		<setting id="x">For separate variables mode: Select one or more numerical vectors.</setting>
+		<setting id="outcome">For single(grouped) variable mode: Select one numerical vectors as the outcome variable.</setting>
+		<setting id="groups">For single(grouped) variable mode: Select one or more vectors by which to group the outcome variable. Group variables should have the same length as the outcome variable.</setting>
+		<setting id="names_mode">Method for assigning labels to the plot. "default" means, the labels are chosen automatically. If no labels are available, this will generally print the values. The other options allow you to specify the labels as literal string, or as an R statement (e.g. if the names are stored in a different variable in the workspace).</setting>
+		<caption id="tab_options"/>
+		<setting id="orientation">Orientation of the plot: horizontal or vertical.</setting>
+		<setting id="notch">Whether to draw notches</setting>
+		<setting id="outline">Whether to draw outliers (if any). Outliers are draw as dots, if this option is checked.</setting>
+		<setting id="mean">Whether to draw a mark indicating the mean.</setting>
+		<setting id="pch_mean">If the mean is to be indicated: Symbol to use as mark.</setting>
+		<setting id="sd">Whether to draw a mark indicating the standard deviation.</setting>
+		<setting id="pch_sd_high">If the standard deviation is to be indicated: Symbol to use as mark for the upper sd.</setting>
+		<setting id="pch_sd_low">If the standard deviation is to be indicated: Symbol to use as mark for the lower sd.</setting>
+		<setting id="cex_sd_mean">Size of mean / sd idicators. This option is only availble, if at least one of mean or sd are to be drawn.</setting>
+		<setting id="sd_mean_color">Color of mean / sd idicators. This option is only availble, if at least one of mean or sd are to be drawn.</setting>
+		<setting id="plotoptions" title="General plot Options">Since these settings are reused in further plugins, they are documented on a page of their own: See <link href="rkward://component/plot_options"/>.</setting>
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://component/barplot"/></li>
+			<li><link href="rkward://rhelp/boxplot"/></li>
+		</ul>
+	</related>
+</document>

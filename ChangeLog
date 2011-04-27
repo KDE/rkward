@@ -1,3 +1,4 @@
+- Box plot plugin gains supported for grouped outcome data
 - Fixed: Pressing Ctrl+C would not reset syntactically incomplete commands in the R console
 - Crosstabs N to 1 plugin gains options to compute proportions and margins (thanks to Andrés Necochea)		TODO: update / add automated test(s)
 - Added convenience R function rk.list() to allow simplification of plugin code		# TODO: ideally, this should be used in all applicable plugins
@@ -16,7 +17,7 @@
 - Fixed: Object name completion would abort early in the script editor with KDE 4.4
 - Support function argument hinting for R primitives
 - Support package namespaces in object name completion and workspace browser
-- Support S4 slots in object name completion and workspace browser		TODO: more testing
+- Support S4 slots in object name completion and workspace browser
 - More correct handling of quotes in object name completion
 - Support plot history for ggplot2 plots
 - Be less pro-active about fetching structure information on R objects in the workspace		TODO: verify that this fixes our issues with rXML
