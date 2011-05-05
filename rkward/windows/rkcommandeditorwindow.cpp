@@ -80,6 +80,13 @@ RKCommandEditorWindowPart::~RKCommandEditorWindowPart () {
 #define GET_HELP_URL 1
 #define NUM_BLOCK_RECORDS 6
 
+/** set syntax highlighting-mode to R syntax. Outside of class, in order to allow use from the on demand code highlighter */
+void setRHighlighting (KTextEditor::Document *doc) {
+	RK_TRACE (COMMANDEDITOR);
+
+	if (!doc->setHighlightingMode("R Script")) RK_DO (qDebug ("R syntax highlighting defintion not found!"), COMMANDEDITOR, DL_ERROR);
+}
+
 RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highlighting) : RKMDIWindow (parent, RKMDIWindow::CommandEditorWindow) {
 	RK_TRACE (COMMANDEDITOR);
 
@@ -128,7 +135,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 	cc_iface = 0;
 	hinter = 0;
 	if (use_r_highlighting) {
-		setRHighlighting ();
+		setRHighlighting (m_doc);
 		cc_iface = qobject_cast<KTextEditor::CodeCompletionInterface*> (m_view);
 		if (cc_iface) {
 			cc_iface->setAutomaticInvocationEnabled (true);
@@ -324,14 +331,6 @@ void RKCommandEditorWindow::closeEvent (QCloseEvent *e) {
 	QWidget::closeEvent (e);
 }
 
-// KDE4 TODO: inline
-void RKCommandEditorWindow::setRHighlighting () {
-	RK_TRACE (COMMANDEDITOR);
-
-	// set syntax-highlighting for R
-	if (!m_doc->setHighlightingMode("R Script")) RK_DO (qDebug ("R syntax highlighting defintion not found!"), COMMANDEDITOR, DL_ERROR);
-}
-
 void RKCommandEditorWindow::copy () {
 	RK_TRACE (COMMANDEDITOR);
 
@@ -350,7 +349,7 @@ bool RKCommandEditorWindow::openURL (const KUrl &url, const QString& encoding, b
 	// encoding must be set *before* loading the file
 	if (!encoding.isEmpty ()) m_doc->setEncoding (encoding);
 	if (m_doc->openUrl (url)){
-		if (use_r_highlighting) setRHighlighting ();
+		if (use_r_highlighting) setRHighlighting (m_doc);
 		setReadOnly (read_only);
 
 		updateCaption ();
@@ -1033,5 +1032,131 @@ QVariant RKCodeCompletionModel::data (const QModelIndex& index, int role) const 
 
 	return QVariant ();
 }
+
+
+
+// static
+KTextEditor::Document* RKCommandHighlighter::_doc = 0;
+KTextEditor::Document* RKCommandHighlighter::getDoc () {
+	if (_doc) return _doc;
+
+	RK_TRACE (COMMANDEDITOR);
+	KTextEditor::Editor* editor = KTextEditor::editor("katepart");
+	RK_ASSERT (editor);
+
+	_doc = editor->createDocument (RKWardMainWindow::getMain ());
+// NOTE: In KDE 4.4.5, a (dummy) view is needed to access highlighting attributes. According to a katepart error message, this will be fixed, eventually.
+// TODO: check whether this is fixed in some later version of KDE
+	QWidget* view = _doc->createView (0);
+	view->hide ();
+	RK_ASSERT (_doc);
+	setRHighlighting (_doc);
+	return _doc;
+}
+
+#if KDE_IS_VERSION(4,4,0)
+#	include <ktexteditor/highlightinterface.h>
+#include <QTextDocument>
+
+//////////
+// NOTE: Most of the exporting code is copied from the katepart HTML exporter plugin more or less verbatim! (Source license: LGPL v2)
+//////////
+QString exportText(const QString& text, const KTextEditor::Attribute::Ptr& attrib, const KTextEditor::Attribute::Ptr& m_defaultAttribute) {
+	if ( !attrib || !attrib->hasAnyProperty() || attrib == m_defaultAttribute ) {
+		return (Qt::escape(text));
+	}
+
+	QString ret;
+	if ( attrib->fontBold() ) {
+		ret.append ("<b>");
+	}
+	if ( attrib->fontItalic() ) {
+		ret.append ("<i>");
+	}
+
+	bool writeForeground = attrib->hasProperty(QTextCharFormat::ForegroundBrush)
+		&& (!m_defaultAttribute || attrib->foreground().color() != m_defaultAttribute->foreground().color());
+	bool writeBackground = attrib->hasProperty(QTextCharFormat::BackgroundBrush)
+		&& (!m_defaultAttribute || attrib->background().color() != m_defaultAttribute->background().color());
+
+	if ( writeForeground || writeBackground ) {
+		ret.append (QString("<span style='%1%2'>")
+					.arg(writeForeground ? QString(QLatin1String("color:") + attrib->foreground().color().name() + QLatin1Char(';')) : QString())
+					.arg(writeBackground ? QString(QLatin1String("background:") + attrib->background().color().name() + QLatin1Char(';')) : QString()));
+	}
+
+	ret.append (Qt::escape(text));
+
+	if ( writeBackground || writeForeground ) {
+		ret.append ("</span>");
+	}
+	if ( attrib->fontItalic() ) {
+		ret.append ("</i>");
+	}
+	if ( attrib->fontBold() ) {
+		ret.append ("</b>");
+	}
+
+	return ret;
+}
+
+QString RKCommandHighlighter::commandToHTML (const QString r_command) {
+	KTextEditor::Document* doc = getDoc ();
+	KTextEditor::HighlightInterface *iface = qobject_cast<KTextEditor::HighlightInterface*> (_doc);
+	RK_ASSERT (iface);
+	if (!iface) return (QString ("<pre>") + r_command + "</pre>");
+
+	doc->setText (r_command);
+	setRHighlighting (doc);
+	QString ret;
+	KTextEditor::Attribute::Ptr m_defaultAttribute = iface->defaultStyle(KTextEditor::HighlightInterface::dsNormal);
+	if ( !m_defaultAttribute ) {
+		ret = "<pre>";
+	} else {
+		ret = QString("<pre style='%1%2%3%4'>")
+				.arg(m_defaultAttribute->fontBold() ? "font-weight:bold;" : "")
+				.arg(m_defaultAttribute->fontItalic() ? "text-style:italic;" : "")
+				.arg("color:" + m_defaultAttribute->foreground().color().name() + ';');
+//				.arg("background-color:" + m_defaultAttribute->background().color().name() + ';');
+	}
+
+	const KTextEditor::Attribute::Ptr noAttrib(0);
+
+	for (int i = 0; i < doc->lines (); ++i)
+	{
+		const QString &line = doc->line(i);
+
+		QList<KTextEditor::HighlightInterface::AttributeBlock> attribs = iface->lineAttributes(i);
+
+		int lineStart = 0;
+		int remainingChars = line.length();
+		int handledUntil = lineStart;
+
+		foreach ( const KTextEditor::HighlightInterface::AttributeBlock& block, attribs ) {
+			int start = qMax(block.start, lineStart);
+			if ( start > handledUntil ) {
+				ret += exportText( line.mid( handledUntil, start - handledUntil ), noAttrib, m_defaultAttribute );
+			}
+			int length = qMin(block.length, remainingChars);
+			ret += exportText( line.mid( start, length ), block.attribute, m_defaultAttribute);
+			handledUntil = start + length;
+		}
+
+		if ( handledUntil < lineStart + remainingChars ) {
+			ret += exportText( line.mid( handledUntil, remainingChars ), noAttrib, m_defaultAttribute );
+		}
+
+		if (i < (doc->lines () - 1)) ret.append ("\n");
+	}
+	ret.append ("</pre>\n");
+
+	return ret;
+}
+
+#else	// KDE < 4.4: No Highlighting Interface
+QString RKCommandHighlighter::commandToHTML (const QString r_command) {
+	return (QString ("<pre>") + r_command + "</pre>");
+}
+#endif
 
 #include "rkcommandeditorwindow.moc"

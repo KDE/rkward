@@ -1,5 +1,6 @@
 \name{rk.results}
 \alias{rk.print}
+\alias{rk.print.code}
 \alias{rk.print.literal}
 \alias{rk.header}
 \alias{rk.results}
@@ -14,6 +15,7 @@
 \usage{
 rk.print(x, ...)
 rk.print.literal(x)
+rk.print.code(code)
 rk.header(title, parameters = list(), level = 1)
 rk.results(x, titles = NULL)
 rk.describe.alternative(x)
@@ -21,6 +23,7 @@ rk.describe.alternative(x)
 
 \arguments{
 \item{x}{any R object to be printed/exported. A suitable list in case of \code{rk.describe.alternative}.}
+\item{code}{a character vector (single string) of R code}
 \item{title}{a string, used as a header for the html output}
 \item{level}{an integer, header level. For example, \code{level=2} creates the header with \code{<h2></h>} tag.}
 \item{parameters}{a list, preferably named, giving a list of "parameters" to be printed to the output}
@@ -32,7 +35,9 @@ rk.describe.alternative(x)
 
 \code{rk.print.literal} prints/exports the given object using a \code{paste(x, collapse="\n")} construct to the output (html) file.
 
-\code{rk.header} prints a html header, possibly with parameters, to the output file. See example.
+\code{rk.print.code} applies syntax highlighting to the given code string, and writes it to the output (html) file.
+
+\code{rk.header} prints a header / caption, possibly with parameters, to the output file. See example.
 
 \code{rk.results} is similar to \code{rk.print} but prints in a more tabulated fashion. This has been implemented only for certain types of \code{x}: tables, lists (or data.frames), and vectors. See example.
 
@@ -61,6 +66,7 @@ x2 <- rnorm (100, 2)
 nm <- rk.get.description (x1,x2)
 
 result <- t.test (x1, x2, alternative="less")
+rk.print.code ("result <- t.test (x1, x2, alternative=\"less\")")
 
 rk.header (result$method,
   parameters=list ("Comparing", paste (nm[1], "against", nm[2]),

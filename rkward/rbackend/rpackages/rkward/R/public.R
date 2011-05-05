@@ -193,6 +193,10 @@
 	}
 }
 
+"rk.print.code" <- function(code) {
+	.rk.cat.output (.rk.do.call ("highlightRCode", as.character (code)))
+}
+
 "rk.header" <- function (title, parameters=list (), level=1) {
 	sink (rk.get.output.html.file(), append=TRUE)
 	on.exit (sink ())

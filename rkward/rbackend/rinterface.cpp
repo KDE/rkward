@@ -624,6 +624,8 @@ void RInterface::processHistoricalSubstackRequest (RBackendRequest* request) {
 		} else {
 			RK_ASSERT (false);
 		}
+	} else if (call == "highlightRCode") {
+		issueCommand (".rk.set.reply (" + RObject::rQuote (RKCommandHighlighter::commandToHTML (calllist.value (1))) + ")", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
 	} else if (call == "getWorkspaceUrl") {
 		KUrl url = RObjectList::getObjectList ()->getWorkspaceURL ();
 		if (!url.isEmpty ()) issueCommand (".rk.set.reply (" + RObject::rQuote (url.url ()) + ")", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);

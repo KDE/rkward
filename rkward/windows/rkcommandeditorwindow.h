@@ -251,8 +251,6 @@ private:
 	RKCodeCompletionModel *completion_model;
 
 	QTimer *completion_timer;
-/** set syntax highlighting-mode to R syntax */
-	void setRHighlighting ();
 
 	void initializeActions (KActionCollection* ac);
 
@@ -291,6 +289,15 @@ private:
 	QTimer* autosave_timer;
 
 	KUrl delete_on_close;
+};
+
+/** Simple class to provide HTML highlighting for arbitrary R code. */
+class RKCommandHighlighter {
+public:
+	static QString commandToHTML (const QString r_command);
+private:
+	static KTextEditor::Document* getDoc ();
+	static KTextEditor::Document* _doc;
 };
 
 #endif
