@@ -124,6 +124,17 @@ QStringList RKRSupport::SEXPToStringList (SEXP from_exp) {
 	return list;
 }
 
+SEXP RKRSupport::StringListToSEXP (const QStringList& list) {
+	RK_TRACE (RBACKEND);
+
+	SEXP ret = Rf_allocVector (STRSXP, list.size ());
+	for (int i = 0; i < list.size (); ++i) {
+		// TODO: in R 2.13.0 there is Rf_mkCharCE(). This could be used to set unicode strings, directly. But of course, we'd have to check, when exactly this was introduced.
+		SET_STRING_ELT (ret, i, Rf_mkChar (RKRBackend::this_pointer->current_locale_codec->fromUnicode (list[i]).data ()));
+	}
+	return ret;
+}
+
 RData::IntStorage RKRSupport::SEXPToIntArray (SEXP from_exp) {
 	RK_TRACE (RBACKEND);
 

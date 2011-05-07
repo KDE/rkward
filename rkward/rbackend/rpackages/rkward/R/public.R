@@ -114,7 +114,7 @@
 }
 
 "rk.get.tempfile.name" <- function (prefix="image", extension=".jpg") {
-	return (.rk.do.call ("get.tempfile.name", c (prefix, extension)))
+	return (.rk.do.plain.call ("get.tempfile.name", c (prefix, extension)))
 }
 
 "rk.get.workspace.url" <- function () {
@@ -137,7 +137,7 @@
 	}
 
 	# needs to come after initialization, so initialization alone does not trigger an update during startup
-	.rk.do.call ("set.output.file", x);
+	.rk.do.plain.call ("set.output.file", x, synchronous=FALSE);
 }
 
 "rk.save.workplace" <- function (file=NULL, description=NULL) {
@@ -194,7 +194,7 @@
 }
 
 "rk.print.code" <- function(code) {
-	.rk.cat.output (.rk.do.call ("highlightRCode", as.character (code)))
+	.rk.cat.output (.rk.do.plain.call ("highlightRCode", as.character (code)))
 }
 
 "rk.header" <- function (title, parameters=list (), level=1) {

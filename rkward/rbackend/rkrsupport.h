@@ -35,6 +35,7 @@ namespace RKRSupport {
 	bool callSimpleBool (SEXP fun, SEXP arg, SEXP env);
 
 	QStringList SEXPToStringList (SEXP from_exp);
+	SEXP StringListToSEXP (const QStringList &list);
 	QString SEXPToString (SEXP from_exp);
 	RData::IntStorage SEXPToIntArray (SEXP from_exp);
 	int SEXPToInt (SEXP from_exp, int def_value = INT_MIN);

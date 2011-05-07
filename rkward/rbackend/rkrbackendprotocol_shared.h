@@ -42,6 +42,7 @@ public:
 		EvalRequest,
 		CallbackRequest,
 		HistoricalSubstackRequest,
+		PlainGenericRequest,
 		SetParamsFromBackend,
 		CommandLineIn,	/**< The next line of the current user command has been submitted in the backend. */
 #ifndef RKWARD_THREADED

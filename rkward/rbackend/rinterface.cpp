@@ -317,6 +317,9 @@ void RInterface::handleRequest (RBackendRequest* request) {
 		tryNextCommand ();
 	} else if (request->type == RBackendRequest::HistoricalSubstackRequest) {
 		processHistoricalSubstackRequest (request);
+	} else if (request->type == RBackendRequest::PlainGenericRequest) {
+		request->params["return"] = QVariant (processPlainGenericRequest (request->params["call"].toStringList ()));
+		RKRBackendProtocolFrontend::setRequestCompleted (request);
 	} else if ((request->type == RBackendRequest::Started)) {
 		// The backend thread has finished basic initialization, but we still have more to do...
 		startup_errors = request->params["message"].toString ();
@@ -441,6 +444,30 @@ void RInterface::pauseProcessing (bool pause) {
 	else locked -= locked & User;
 }
 
+QStringList RInterface::processPlainGenericRequest (const QStringList &calllist) {
+	RK_TRACE (RBACKEND);
+
+	QString call = calllist.value (0);
+	if (call == "get.tempfile.name") {
+		RK_ASSERT (calllist.count () == 3);
+		return (QStringList (RKCommonFunctions::getUseableRKWardSavefileName (calllist.value (1), calllist.value (2))));
+	} else if (call == "set.output.file") {
+		RK_ASSERT (calllist.count () == 2);
+		RKOutputWindowManager::self ()->setCurrentOutputPath (calllist.value (1));
+	} else if (call == "wdChange") {
+		// in case of separate processes, apply new working directory in frontend, too.
+		QDir::setCurrent (calllist.value (1));
+		RKWardMainWindow::getMain ()->updateCWD ();
+	} else if (call == "highlightRCode") {
+		return (QStringList (RKCommandHighlighter::commandToHTML (calllist.value (1))));
+	} else {
+		return (QStringList ("Error: unrecognized request '" + call + "'."));
+	}
+
+	// for those calls which were recognized, but do not return anything
+	return QStringList ();
+}
+
 void RInterface::processHistoricalSubstackRequest (RBackendRequest* request) {
 	RK_TRACE (RBACKEND);
 
@@ -451,27 +478,8 @@ void RInterface::processHistoricalSubstackRequest (RBackendRequest* request) {
 
 	QStringList calllist = request->params["call"].toStringList ();
 
-	if (calllist.isEmpty ()) {
-		RK_ASSERT (false);
-		closeChain (in_chain);
-		return;
-	}
-
-	QString call = calllist[0];
-	if (call == "get.tempfile.name") {
-		if (calllist.count () >= 3) {
-			QString file_prefix = calllist[1];
-			QString file_extension = calllist[2];
-
-			issueCommand (".rk.set.reply (\"" + RKCommonFunctions::getUseableRKWardSavefileName (file_prefix, file_extension) + "\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
-		} else {
-			issueCommand ("stop (\"Too few arguments in call to get.tempfile.name.\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
-		}
-	} else if (call == "set.output.file") {
-		RK_ASSERT (calllist.count () == 2);
-
-		RKOutputWindowManager::self ()->setCurrentOutputPath (calllist[1]);
-	} else if (call == "sync") {
+	QString call = calllist.value (0);
+	if (call == "sync") {
 		RK_ASSERT (calllist.count () >= 2);
 
 		for (int i = 1; i < calllist.count (); ++i) {
@@ -491,6 +499,22 @@ void RInterface::processHistoricalSubstackRequest (RBackendRequest* request) {
 	} else if (call == "syncglobal") {
 		RK_DO (qDebug ("triggering update of globalenv"), RBACKEND, DL_DEBUG);
 		RObjectList::getGlobalEnv ()->updateFromR (in_chain, calllist.mid (1));
+#ifndef DISABLE_RKWINDOWCATCHER
+	// NOTE: WARNING: When converting these to PlainGenericRequests, the occasional "error, figure margins too large" starts coming up, again. Not sure, why.
+ 	} else if (call == "startOpenX11") {
+		RK_ASSERT (calllist.count () == 2);
+		window_catcher->start (calllist.value (1).toInt ());
+ 	} else if (call == "endOpenX11") {
+		RK_ASSERT (calllist.count () == 2);
+		window_catcher->stop (calllist.value (1).toInt ());
+	} else if (call == "updateDeviceHistory") {
+		if (calllist.count () >= 2) {
+			window_catcher->updateHistory (calllist.mid (1));
+		}
+	} else if (call == "killDevice") {
+		RK_ASSERT (calllist.count () == 2);
+		window_catcher->killDevice (calllist.value (1).toInt ());
+#endif // DISABLE_RKWINDOWCATCHER
 	} else if (call == "edit") {
 		RK_ASSERT (calllist.count () >= 2);
 
@@ -509,30 +533,6 @@ void RInterface::processHistoricalSubstackRequest (RBackendRequest* request) {
 		RKWardMainWindow::getMain ()->close ();
 		// if we're still alive, quitting was cancelled
 		issueCommand (".rk.set.reply (\"Quitting was cancelled\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
-#ifndef DISABLE_RKWINDOWCATCHER
- 	} else if (call == "startOpenX11") {
-		// TODO: error checking/handling (wrong parameter count/type)
-		if (calllist.count () >= 2) {
-			window_catcher->start (QString (calllist[1]).toInt ());
-		}
- 	} else if (call == "endOpenX11") {
-		// TODO: error checking/handling (wrong parameter count/type)
-		if (calllist.count () >= 2) {
-			window_catcher->stop (QString (calllist[1]).toInt ());
-		}
-	} else if (call == "updateDeviceHistory") {
-		if (calllist.count () >= 2) {
-			window_catcher->updateHistory (calllist.mid (1));
-		}
-	} else if (call == "killDevice") {
-		if (calllist.count () >= 2) {
-			window_catcher->killDevice (calllist[1].toInt ());
-		}
-#endif // DISABLE_RKWINDOWCATCHER
-	} else if (call == "wdChange") {
-		// in case of separate processes, apply new working directory in frontend, too.
-		QDir::setCurrent (calllist.value(1, QString ()));
-		RKWardMainWindow::getMain ()->updateCWD ();
 	} else if (call == "preLocaleChange") {
 		int res = KMessageBox::warningContinueCancel (0, i18n ("A command in the R backend is trying to change the character encoding. While RKWard offers support for this, and will try to adjust to the new locale, this operation may cause subtle bugs, if data windows are currently open. Also the feature is not well tested, yet, and it may be advisable to save your workspace before proceeding.\nIf you have any data editor opened, or in any doubt, it is recommended to close those first (this will probably be auto-detected in later versions of RKWard). In this case, please chose 'Cancel' now, then close the data windows, save, and retry."), i18n ("Locale change"));
 		if (res != KMessageBox::Continue) {
@@ -624,8 +624,6 @@ void RInterface::processHistoricalSubstackRequest (RBackendRequest* request) {
 		} else {
 			RK_ASSERT (false);
 		}
-	} else if (call == "highlightRCode") {
-		issueCommand (".rk.set.reply (" + RObject::rQuote (RKCommandHighlighter::commandToHTML (calllist.value (1))) + ")", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
 	} else if (call == "getWorkspaceUrl") {
 		KUrl url = RObjectList::getObjectList ()->getWorkspaceURL ();
 		if (!url.isEmpty ()) issueCommand (".rk.set.reply (" + RObject::rQuote (url.url ()) + ")", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);

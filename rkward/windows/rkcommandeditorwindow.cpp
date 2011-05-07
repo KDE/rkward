@@ -1111,9 +1111,9 @@ QString RKCommandHighlighter::commandToHTML (const QString r_command) {
 	QString ret;
 	KTextEditor::Attribute::Ptr m_defaultAttribute = iface->defaultStyle(KTextEditor::HighlightInterface::dsNormal);
 	if ( !m_defaultAttribute ) {
-		ret = "<pre>";
+		ret = "<pre class=\"code\">";
 	} else {
-		ret = QString("<pre style='%1%2%3%4'>")
+		ret = QString("<pre style='%1%2%3%4' class=\"code\">")
 				.arg(m_defaultAttribute->fontBold() ? "font-weight:bold;" : "")
 				.arg(m_defaultAttribute->fontItalic() ? "text-style:italic;" : "")
 				.arg("color:" + m_defaultAttribute->foreground().color().name() + ';');
@@ -1155,7 +1155,7 @@ QString RKCommandHighlighter::commandToHTML (const QString r_command) {
 
 #else	// KDE < 4.4: No Highlighting Interface
 QString RKCommandHighlighter::commandToHTML (const QString r_command) {
-	return (QString ("<pre>") + r_command + "</pre>");
+	return (QString ("<pre class=\"code\">") + r_command + "</pre>");
 }
 #endif
 

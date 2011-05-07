@@ -827,10 +827,18 @@ SEXP doSubstackCall (SEXP call) {
 		}
 	}
 
-#warning TODO: extend this by sychronity parameter
 	RKRBackend::this_pointer->handleHistoricalSubstackRequest (list);
 
 	return R_NilValue;
+}
+
+SEXP doPlainGenericRequest (SEXP call, SEXP synchronous) {
+	RK_TRACE (RBACKEND);
+
+	R_CheckUserInterrupt ();
+
+	QStringList ret = RKRBackend::this_pointer->handlePlainGenericRequest (RKRSupport::SEXPToStringList (call), RKRSupport::SEXPToInt (synchronous));
+	return RKRSupport::StringListToSEXP (ret);
 }
 
 void R_CheckStackWrapper (void *) {
@@ -969,6 +977,7 @@ bool RKRBackend::startR () {
 	R_CallMethodDef callMethods [] = {
 		{ "rk.do.error", (DL_FUNC) &doError, 1 },
 		{ "rk.do.command", (DL_FUNC) &doSubstackCall, 1 },
+		{ "rk.do.generic.request", (DL_FUNC) &doPlainGenericRequest, 2 },
 		{ "rk.get.structure", (DL_FUNC) &doGetStructure, 4 },
 		{ "rk.get.structure.global", (DL_FUNC) &doGetGlobalEnvStructure, 3 },
 		{ "rk.copy.no.eval", (DL_FUNC) &doCopyNoEval, 3 },
@@ -1298,6 +1307,15 @@ void RKRBackend::handleHistoricalSubstackRequest (const QStringList &list) {
 		request.params["call"] = list;
 	}
 	handleRequest (&request);
+}
+
+QStringList RKRBackend::handlePlainGenericRequest (const QStringList &parameters, bool synchronous) {
+	RK_TRACE (RBACKEND);
+
+	RBackendRequest request (synchronous, RBackendRequest::PlainGenericRequest);
+	request.params["call"] = parameters;
+	handleRequest (&request);
+	return request.params.value ("return").toStringList ();
 }
 
 void RKRBackend::initialize () {

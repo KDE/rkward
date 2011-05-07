@@ -95,6 +95,7 @@ private:
 	} command_logfile_mode;
 
 	void processHistoricalSubstackRequest (RBackendRequest *request);
+	QStringList processPlainGenericRequest (const QStringList &calllist);
 	void processRBackendRequest (RBackendRequest *request);
 
 /** A list of all commands that have entered, and not yet left, the backend thread */

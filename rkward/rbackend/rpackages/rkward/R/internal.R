@@ -72,6 +72,10 @@
 	return (.rk.rkreply)
 }
 
+".rk.do.plain.call" <- function (x, args=NULL, synchronous=TRUE) {
+	.Call ("rk.do.generic.request", c (x, args), isTRUE (synchronous))
+}
+
 # package information formats may - according to the help - be subject to change. Hence this function to cope with "missing" values
 # also it concatenates everything to a single vector, so we can easily get the whole structure with a single call
 ".rk.get.installed.packages" <- function () {
@@ -311,7 +315,7 @@
 
 "setwd" <- function () {
 	ret <- eval (body (base::setwd))
-	.rk.do.call ("wdChange", base::getwd ())
+	.rk.do.plain.call ("wdChange", base::getwd (), synchronous=FALSE)
 	invisible (ret)
 }
 formals (setwd) <- formals (base::setwd)
