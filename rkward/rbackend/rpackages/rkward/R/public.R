@@ -171,7 +171,7 @@
 	close <- "close"
 	if (!isTRUE (close.windows)) close <- "noclose"
 	if (!exists ("lines", inherits=FALSE)) lines <- readLines (file)
-	.rk.do.plain.call ("workplace.layout", c ("set", close, lines))
+	.rk.do.plain.call ("workplace.layout", c ("set", close, lines), synchronous=FALSE)
 	invisible (NULL)
 }
 
