@@ -118,7 +118,9 @@
 }
 
 "rk.get.workspace.url" <- function () {
-	return (.rk.do.call ("getWorkspaceUrl"))
+	res <- .rk.do.plain.call ("getWorkspaceUrl")
+	if (length (res)) res
+	else NULL
 }
 
 "rk.get.output.html.file" <- function () {
@@ -137,7 +139,8 @@
 	}
 
 	# needs to come after initialization, so initialization alone does not trigger an update during startup
-	.rk.do.plain.call ("set.output.file", x, synchronous=FALSE);
+	.rk.do.plain.call ("set.output.file", x, synchronous=FALSE)
+	invisible (NULL)
 }
 
 "rk.save.workplace" <- function (file=NULL, description=NULL) {
@@ -146,7 +149,7 @@
 		if (is.null (file)) file <- rk.get.tempfile.name (prefix="unsaved", extension=".RData")
 		file <- paste (file, "rkworkplace", sep=".")
 	}
-	if (is.null (description)) lines <- .rk.do.call ("workplace.layout", "get")
+	if (is.null (description)) lines <- .rk.do.plain.call ("workplace.layout", "get")
 	else lines <- description
 	writeLines (lines, file)
 }
@@ -168,7 +171,8 @@
 	close <- "close"
 	if (!isTRUE (close.windows)) close <- "noclose"
 	if (!exists ("lines", inherits=FALSE)) lines <- readLines (file)
-	.rk.do.call ("workplace.layout", c ("set", close, lines))
+	.rk.do.plain.call ("workplace.layout", c ("set", close, lines))
+	invisible (NULL)
 }
 
 # renames a named object in a data.frame/list without changing it's position
@@ -383,7 +387,7 @@
 }
 
 "rk.show.html" <- function (url) {
-	invisible (.rk.do.call ("showHTML", as.character (url)));
+	invisible (.rk.do.plain.call ("showHTML", as.character (url), synchronous=FALSE));
 }
 
 "rk.call.plugin" <- function (plugin, ..., submit.mode = c ("manual", "auto", "submit")) {
@@ -420,7 +424,7 @@
 # list all available plugins in RKWard; this is a companion function for rk.call.plugin:
 # the output provides possible strings for "plugin" argument in rk.call.plugin
 rk.list.plugins <- function () {
-	.rk.do.call ("listPlugins")
+	.rk.do.plain.call ("listPlugins")
 }
 
 # a wrapper around chooseCRANmirror() without changing options ("repos"), permanently
@@ -466,7 +470,7 @@ rk.list.plugins <- function () {
 		}
 	}
 
-	.rk.do.call ("select.list", params)
+	.rk.do.plain.call ("select.list", params)
 }
 
 "rk.show.message" <- function (message, caption = "Information", wait=TRUE) {
@@ -483,7 +487,7 @@ rk.list.plugins <- function () {
 }
 
 "rk.sessionInfo" <- function () {
-	cat (.rk.do.call ("getSessionInfo"), sep="\n")
+	cat (.rk.do.plain.call ("getSessionInfo"), sep="\n")
 	cat ("R runtime session info:\n")
 	print (sessionInfo())
 }

@@ -1298,14 +1298,7 @@ void RKRBackend::handleHistoricalSubstackRequest (const QStringList &list) {
 	RK_TRACE (RBACKEND);
 
 	RBackendRequest request (true, RBackendRequest::HistoricalSubstackRequest);
-	if (list.value (0) == "getSessionInfo") {
-		QStringList dummy = list;
-		dummy.append (RKRBackendProtocolBackend::backendDebugFile ());
-		dummy.append (R_MAJOR "." R_MINOR " " R_STATUS " (" R_YEAR "-" R_MONTH "-" R_DAY " r" R_SVN_REVISION ")");
-		request.params["call"] = dummy;
-	} else {
-		request.params["call"] = list;
-	}
+	request.params["call"] = list;
 	handleRequest (&request);
 }
 
@@ -1313,7 +1306,14 @@ QStringList RKRBackend::handlePlainGenericRequest (const QStringList &parameters
 	RK_TRACE (RBACKEND);
 
 	RBackendRequest request (synchronous, RBackendRequest::PlainGenericRequest);
-	request.params["call"] = parameters;
+	if (parameters.value (0) == "getSessionInfo") {
+		QStringList dummy = parameters;
+		dummy.append (RKRBackendProtocolBackend::backendDebugFile ());
+		dummy.append (R_MAJOR "." R_MINOR " " R_STATUS " (" R_YEAR "-" R_MONTH "-" R_DAY " r" R_SVN_REVISION ")");
+		request.params["call"] = dummy;
+	} else {
+		request.params["call"] = parameters;
+	}
 	handleRequest (&request);
 	return request.params.value ("return").toStringList ();
 }

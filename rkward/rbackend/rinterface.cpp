@@ -460,6 +460,82 @@ QStringList RInterface::processPlainGenericRequest (const QStringList &calllist)
 		RKWardMainWindow::getMain ()->updateCWD ();
 	} else if (call == "highlightRCode") {
 		return (QStringList (RKCommandHighlighter::commandToHTML (calllist.value (1))));
+	} else if (call == "quit") {
+		RKWardMainWindow::getMain ()->close ();
+		// if we're still alive, quitting was cancelled
+		return (QStringList ("FALSE"));
+	} else if (call == "preLocaleChange") {
+		int res = KMessageBox::warningContinueCancel (0, i18n ("A command in the R backend is trying to change the character encoding. While RKWard offers support for this, and will try to adjust to the new locale, this operation may cause subtle bugs, if data windows are currently open. Also the feature is not well tested, yet, and it may be advisable to save your workspace before proceeding.\nIf you have any data editor opened, or in any doubt, it is recommended to close those first (this will probably be auto-detected in later versions of RKWard). In this case, please chose 'Cancel' now, then close the data windows, save, and retry."), i18n ("Locale change"));
+		if (res != KMessageBox::Continue) return (QStringList ("FALSE"));
+	} else if (call == "listPlugins") {
+		RK_ASSERT (calllist.count () == 1);
+		return RKComponentMap::getMap ()->allComponentIds ();
+	} else if (call == "showHTML") {
+		RK_ASSERT (calllist.count () == 2);
+		RKWorkplace::mainWorkplace ()->openHelpWindow (calllist.value (1));
+	} else if (call == "select.list") {
+		QString title = calllist.value (1);
+		bool multiple = (calllist.value (2) == "multi");
+		int num_preselects = calllist.value (3).toInt ();
+		QStringList preselects = calllist.mid (4, num_preselects);
+		QStringList choices = calllist.mid (4 + num_preselects);
+
+		QStringList results = RKSelectListDialog::doSelect (0, title, choices, preselects, multiple);
+		if (results.isEmpty ()) results.append ("");	// R wants to have it that way
+		return (results);
+	} else if (call == "commandHistory") {
+		if (calllist.value (1) == "get") {
+			return (RKConsole::mainConsole ()->commandHistory ());
+		} else {
+			RKConsole::mainConsole ()->setCommandHistory (calllist.mid (2), calllist.value (1) == "append");
+		}
+	} else if (call == "getWorkspaceUrl") {
+		KUrl url = RObjectList::getObjectList ()->getWorkspaceURL ();
+		if (!url.isEmpty ()) return (QStringList (url.url ()));
+	} else if (call == "workplace.layout") {
+		if (calllist.value (1) == "set") {
+			if (calllist.value (2) == "close") RKWorkplace::mainWorkplace ()->closeAll ();
+			QStringList list = calllist.mid (3);
+			RKWorkplace::mainWorkplace ()->restoreWorkplace (list);
+		} else {
+			RK_ASSERT (calllist.value (1) == "get");
+			return (RKWorkplace::mainWorkplace ()->makeWorkplaceDescription ());
+		}
+	} else if (call == "getSessionInfo") {
+		// Non-translatable on purpose. This is meant for posting to the bug tracker, mostly.
+		QStringList lines;
+		lines.append ("RKWard version: " RKWARD_VERSION);
+		lines.append ("KDE version (runtime): " + QString (KDE::versionString ()));
+		lines.append ("KDE version (compile time): " KDE_VERSION_STRING);
+		lines.append (QString());
+		lines.append ("Debug message file(s) in use (these may contain relevant diagnostic output in case of trouble):");
+		lines.append (RKSettingsModuleDebug::debug_file->fileName ());
+		lines.append (calllist.value (1));
+		lines.append (QString ());
+		lines.append ("R version (compile time): " + calllist.value (2));
+		return (lines);
+	} else if (call == "recordCommands") {
+		RK_ASSERT (calllist.count () == 3);
+		QString filename = calllist.value (1);
+		bool with_sync = (calllist.value (2) == "include.sync");
+
+		if (filename.isEmpty ()) {
+			command_logfile_mode = NotRecordingCommands;
+			command_logfile.close ();
+		} else {
+			if (command_logfile_mode != NotRecordingCommands) {
+				return (QStringList ("Attempt to start recording, while already recording commands. Ignoring.)"));
+			} else {
+				command_logfile.setFileName (filename);
+				bool ok = command_logfile.open (QIODevice::WriteOnly | QIODevice::Truncate);
+				if (ok) {
+					command_logfile_mode = RecordingCommands;
+					if (with_sync) command_logfile_mode = RecordingCommandsWithSync;
+				} else {
+					return (QStringList ("Could not open file for writing. Not recording commands"));
+				}
+			}
+		}
 	} else {
 		return (QStringList ("Error: unrecognized request '" + call + "'."));
 	}
@@ -529,15 +605,6 @@ void RInterface::processHistoricalSubstackRequest (RBackendRequest* request) {
 		} else {
 			issueCommand (".rk.set.reply (\"Too few arguments in call to require.\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
 		}
-	} else if (call == "quit") {
-		RKWardMainWindow::getMain ()->close ();
-		// if we're still alive, quitting was cancelled
-		issueCommand (".rk.set.reply (\"Quitting was cancelled\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
-	} else if (call == "preLocaleChange") {
-		int res = KMessageBox::warningContinueCancel (0, i18n ("A command in the R backend is trying to change the character encoding. While RKWard offers support for this, and will try to adjust to the new locale, this operation may cause subtle bugs, if data windows are currently open. Also the feature is not well tested, yet, and it may be advisable to save your workspace before proceeding.\nIf you have any data editor opened, or in any doubt, it is recommended to close those first (this will probably be auto-detected in later versions of RKWard). In this case, please chose 'Cancel' now, then close the data windows, save, and retry."), i18n ("Locale change"));
-		if (res != KMessageBox::Continue) {
-			issueCommand (".rk.set.reply (FALSE)", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
-		}
 	} else if (call == "doPlugin") {
 		if (calllist.count () >= 3) {
 			QString message;
@@ -555,103 +622,6 @@ void RInterface::processHistoricalSubstackRequest (RBackendRequest* request) {
 		} else {
 			RK_ASSERT (false);
 		}
-	} else if (call == "listPlugins") {
-		if (calllist.count () == 1) {
-			QStringList list = RKComponentMap::getMap ()->allComponentIds ();
-			issueCommand (".rk.set.reply (c (\"" + list.join ("\", \"") + "\"))\n", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
-		} else {
-			RK_ASSERT (false);
-		}
-	} else if (call == "showHTML") {
-		if (calllist.count () == 2) {
-			RKWorkplace::mainWorkplace ()->openHelpWindow (calllist[1]);
-		} else {
-			RK_ASSERT (false);
-		}
-	} else if (call == "select.list") {
-		QString title = calllist[1];
-		bool multiple = (calllist[2] == "multi");
-		int num_preselects = calllist[3].toInt ();
-		QStringList preselects = calllist.mid (4, num_preselects);
-		QStringList choices = calllist.mid (4 + num_preselects);
-
-		QStringList results = RKSelectListDialog::doSelect (0, title, choices, preselects, multiple);
-		if (results.isEmpty ()) results.append ("");	// R wants to have it that way
-
-		QString command = ".rk.set.reply (c (";
-		for (int i = 0; i < results.count (); ++i) {
-			if (i > 0) command.append (", ");
-			command.append (RObject::rQuote (results[i]));
-		}
-		command.append ("))");
-
-		issueCommand (command, RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
-	} else if (call == "commandHistory") {
-		if (calllist[1] == "get") {
-			QStringList hist = RKConsole::mainConsole ()->commandHistory ();
-			QString command = (".rk.set.reply (c (");
-			for (int i = 0; i < hist.size (); ++i) {
-				command.append (RObject::rQuote (hist[i]));
-				if (i < (hist.size () - 1)) command.append (",\n");
-			}
-			command.append ("))\n");
-			issueCommand (command, RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
-		} else {
-			RKConsole::mainConsole ()->setCommandHistory (calllist.mid (2), calllist[1] == "append");
-		}
-	} else if (call == "recordCommands") {
-		if (calllist.count () == 3) {
-			QString filename = calllist[1];
-			bool with_sync = (calllist[2] == "include.sync");
-
-			if (filename.isEmpty ()) {
-				command_logfile_mode = NotRecordingCommands;
-				command_logfile.close ();
-			} else {
-				if (command_logfile_mode != NotRecordingCommands) {
-					issueCommand (".rk.set.reply (\"Attempt to start recording, while already recording commands. Ignoring.\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
-				} else {
-					command_logfile.setFileName (filename);
-					bool ok = command_logfile.open (QIODevice::WriteOnly | QIODevice::Truncate);
-					if (ok) {
-						command_logfile_mode = RecordingCommands;
-						if (with_sync) command_logfile_mode = RecordingCommandsWithSync;
-					} else {
-						issueCommand (".rk.set.reply (\"Could not open file for writing. Not recording commands.\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
-					}
-				}
-			}
-		} else {
-			RK_ASSERT (false);
-		}
-	} else if (call == "getWorkspaceUrl") {
-		KUrl url = RObjectList::getObjectList ()->getWorkspaceURL ();
-		if (!url.isEmpty ()) issueCommand (".rk.set.reply (" + RObject::rQuote (url.url ()) + ")", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
-	} else if (call == "workplace.layout") {
-		if (calllist.value (1) == "set") {
-			if (calllist.value (2) == "close") RKWorkplace::mainWorkplace ()->closeAll ();
-			QStringList list = calllist.mid (3);
-			RKWorkplace::mainWorkplace ()->restoreWorkplace (list);
-		} else {
-			RK_ASSERT (calllist.value (1) == "get");
-			QStringList list = RKWorkplace::mainWorkplace ()->makeWorkplaceDescription ();
-			for (int i = 0; i < list.size (); ++i) list[i] = RObject::rQuote (list[i]);
-			issueCommand (".rk.set.reply (c (" + list.join (", ") + "))", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
-		}
-	} else if (call == "getSessionInfo") {
-		// Non-translatable on purpose. This is meant for posting to the bug tracker, mostly.
-		QStringList lines;
-		lines.append ("RKWard version: " RKWARD_VERSION);
-		lines.append ("KDE version (runtime): " + QString (KDE::versionString ()));
-		lines.append ("KDE version (compile time): " KDE_VERSION_STRING);
-		lines.append (QString());
-		lines.append ("Debug message file(s) in use (these may contain relevant diagnostic output in case of trouble):");
-		lines.append (RKSettingsModuleDebug::debug_file->fileName ());
-		lines.append (calllist.value (1));
-		lines.append (QString ());
-		lines.append ("R version (compile time): " + calllist.value (2));
-		for (int i = 0; i < lines.size (); ++i) lines[i] = RObject::rQuote (lines[i]);
-		issueCommand (".rk.set.reply (c (" + lines.join (",\n") + "))", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
 	} else {
 		issueCommand ("stop (\"Unrecognized call '" + call + "'. Ignoring\")", RCommand::App | RCommand::Sync, QString::null, 0, 0, in_chain);
 	}

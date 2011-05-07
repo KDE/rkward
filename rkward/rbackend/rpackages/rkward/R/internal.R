@@ -136,7 +136,8 @@
 
 # overriding q, to ask via GUI instead. Arguments are not interpreted.
 "q" <- function (save = "default", status = 0, runLast = TRUE, ...) {
-	.rk.do.call ("quit")
+	res <- .rk.do.plain.call ("quit")
+	if (length (res) && (res == "FALSE")) stop ("Quitting was cancelled")
 }
 
 "quit" <- function (save = "default", status = 0, runLast = TRUE, ...) {
@@ -299,10 +300,8 @@
 
 "Sys.setlocale" <- function (category = "LC_ALL", locale = "", ...) {
 	if (category == "LC_ALL" || category == "LC_CTYPE" || category == "LANG") {
-		allow <- .rk.do.call ("preLocaleChange", NULL);
-		if (!is.null (allow)) {
-			if (allow == FALSE) stop ("Changing the locale was cancelled by user");
-		}
+		allow <- .rk.do.plain.call ("preLocaleChange", NULL)
+		if (length (allow) && (allow == "FALSE")) stop ("Changing the locale was cancelled by user")
 
 		ret <- base::Sys.setlocale (category, locale, ...)
 
@@ -342,9 +341,9 @@ formals (setwd) <- formals (base::setwd)
 "rk.record.commands" <- function (filename, include.sync.commands = FALSE) {
 	if (is.null (filename)) filename = ""
 
-	res <- .rk.do.call ("recordCommands", c(as.character (filename), if (include.sync.commands) "include.sync" else "normal"))
+	res <- .rk.do.plain.call ("recordCommands", c(as.character (filename), if (include.sync.commands) "include.sync" else "normal"))
 
-	if (is.null (res)) invisible (TRUE)
+	if (!length (res)) invisible (TRUE)
 	else {
 		warning (res)
 		invisible (FALSE)
@@ -425,18 +424,18 @@ formals (setwd) <- formals (base::setwd)
 	## History manipulation function (overloads for functions by the same name in package utils)
 	rk.replace.function ("loadhistory",  as.environment ("package:utils"),
 		function (file = ".Rhistory") {
-			invisible (.rk.do.call ("commandHistory", c ("set", readLines (file))))
+			invisible (.rk.do.plain.call ("commandHistory", c ("set", readLines (file))))
 		}, copy.formals = FALSE)
 
 	rk.replace.function ("savehistory",  as.environment ("package:utils"),
 		function (file = ".Rhistory") {
-			invisible (writeLines (.rk.do.call ("commandHistory", "get"), file))
+			invisible (writeLines (.rk.do.plain.call ("commandHistory", "get"), file))
 		}, copy.formals = FALSE)
 
 	rk.replace.function ("timestamp",  as.environment ("package:utils"),
 		function (stamp = date(), prefix = "##------ ", suffix = " ------##", quiet = FALSE) {
 			stamp <- paste(prefix, stamp, suffix, sep = "")
-			.rk.do.call (.rk.do.call ("commandHistory", c ("append", stamp)))
+			.rk.do.plain.call ("commandHistory", c ("append", stamp))
 			if (!quiet) cat(stamp, sep = "\n")
 			invisible(stamp)
 		}, copy.formals = FALSE)
