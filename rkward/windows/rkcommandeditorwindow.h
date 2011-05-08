@@ -65,11 +65,10 @@ public:
 	RKScriptContextProvider () {};
 	virtual ~RKScriptContextProvider () {};
 
-	/** to be implemented in subclasses. Provide some context (probably a line, but you may provide chunks in arbitrary size). If line_rev is 0, provide the line, the cursor is in. If line_rev is greater than 0, provide context before that.
+	/** to be implemented in subclasses. Provide some context, i.e. text *preceding* the cursor position (probably a line, but you may provide chunks in arbitrary size). If line_rev is 0, provide the line, the cursor is in. If line_rev is greater than 0, provide context before that.
 	@param context Place the context here
-	@param cursor_position if line_rev is 0, set this to the current column of the cursor, else set to -1
-	@returns whether context was available or not */
-	virtual bool provideContext (unsigned int line_rev, QString *context, int *cursor_position) = 0;
+	@returns a chunk of context. A null QString(), if no context was available. */
+	virtual QString provideContext (int line_rev) = 0;
 };
 
 class RObject;
@@ -187,7 +186,7 @@ public:
 /** Return current url */
 	KUrl url ();
 
-	bool provideContext (unsigned int line_rev, QString *context, int *cursor_position);
+	QString provideContext (int line_rev);
 	QString currentCompletionWord () const;
 public slots:
 /** update Tab caption according to the current url. Display the filename-component of the URL, or - if not available - a more elaborate description of the url. Also appends a "[modified]" if appropriate */

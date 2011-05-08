@@ -576,22 +576,17 @@ void RKCommandEditorWindow::tryCompletion () {
 	}
 }
 
-bool RKCommandEditorWindow::provideContext (unsigned int line_rev, QString *context, int *cursor_position) {
+QString RKCommandEditorWindow::provideContext (int line_rev) {
 	RK_TRACE (COMMANDEDITOR);
 
 	KTextEditor::Cursor c = m_view->cursorPosition();
-	uint current_line_num=c.line(); uint cursor_pos=c.column();
+	int current_line_num=c.line(); int cursor_pos=c.column();
 
-	if (line_rev > current_line_num) return false;
+	if (line_rev > current_line_num) return QString ();
 
-	if (line_rev == 0) {
-		*cursor_position = cursor_pos;
-	} else {
-		*cursor_position = -1;
-	}
-	*context = m_doc->line (current_line_num - line_rev);
-
-	return true;
+	QString ret = m_doc->line (current_line_num - line_rev);
+	if (line_rev == 0) ret = ret.left (cursor_pos);
+	return ret;
 }
 
 void RKCommandEditorWindow::paste (const QString& text) {
@@ -828,68 +823,42 @@ void RKFunctionArgHinter::tryArgHint () {
 void RKFunctionArgHinter::tryArgHintNow () {
 	RK_TRACE (COMMANDEDITOR);
 
-	int line_rev;
-	int cursor_pos;
-	QString current_context;
-	QString current_line;
-
-	// fetch the most immediate context line. More will be fetched later, if appropriate
-	bool have_context = provider->provideContext (line_rev = 0, &current_line, &cursor_pos);
-	RK_ASSERT (have_context);
-	RK_ASSERT (cursor_pos >= 0);
-	current_context = current_line;
-
-	// find the corrresponding opening brace
-	int matching_left_brace_pos;
+	// find the active opening brace
+	int line_rev = -1;
 	int brace_level = 1;
-	int i = cursor_pos;
+	int potential_symbol_end = -1;
+	QString full_context;
+	while (potential_symbol_end < 0) {
+		QString context_line = provider->provideContext (++line_rev);
+		if (context_line.isNull ()) break;
 
-	// fix up seems to be needed
-	if (current_context.isEmpty ()) {
-		hideArgHint ();
-		return;
-	}
-	if (i >= current_context.size ()) i = current_context.size () -1;
-	if (i < 0) i = 0;
-
-	while (true) {
-		if (current_context.at (i) == QChar (')')) {
-			brace_level++;
-		} else if (current_context.at (i) == QChar ('(')) {
-			brace_level--;
-			if (!brace_level) break;
-		}
-
-		--i;
-		if (i < 0) {
-			bool have_context = provider->provideContext (++line_rev, &current_line, &cursor_pos);
-			if ((!have_context) || (current_line.isEmpty ())) break;
-
-			RK_ASSERT (cursor_pos < 0);
-			current_context.prepend (current_line);
-			i = current_line.length () - 1;
+		full_context.prepend (context_line);
+		int pos = context_line.length ();
+		while (--pos >= 0) {
+			QChar c = full_context.at (pos);
+			if (c == ')') ++brace_level;
+			else if (c == '(') {
+				--brace_level;
+				if (brace_level == 0) {
+					potential_symbol_end = pos - 1;
+					break;
+				}
+			}
 		}
 	}
 
-	if (!brace_level) matching_left_brace_pos = i;
-	else {
-		hideArgHint ();
-		return;
-	}
-
-	// now find where the symbol to the left ends
+	// now find out where the symbol to the left of the opening brace ends
 	// there cannot be a line-break between the opening brace, and the symbol name (or can there?), so no need to fetch further context
-	int potential_symbol_end = matching_left_brace_pos - 1;
-	while ((potential_symbol_end >= 0) && current_context.at (potential_symbol_end).isSpace ()) {
+	while ((potential_symbol_end >= 0) && full_context.at (potential_symbol_end).isSpace ()) {
 		--potential_symbol_end;
 	}
-	if (potential_symbol_end < 0) {
+	if (potential_symbol_end <= 0) {
 		hideArgHint ();
 		return;
 	}
 
 	// now identify the symbol and object (if any)
-	QString effective_symbol = RKCommonFunctions::getCurrentSymbol (current_context, potential_symbol_end+1);
+	QString effective_symbol = RKCommonFunctions::getCurrentSymbol (full_context, potential_symbol_end+1);
 	if (effective_symbol.isEmpty ()) {
 		hideArgHint ();
 		return;
@@ -937,9 +906,7 @@ bool RKFunctionArgHinter::eventFilter (QObject *, QEvent *e) {
 			tryArgHint ();
 		} else {
 			QString text = k->text ();
-			if (text == "(") {
-				tryArgHint ();
-			} else if (text == ")") {
+			if ((text == "(") || (text == ")") || (text == ",")) {
 				tryArgHint ();
 			}
 		}

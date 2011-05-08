@@ -331,20 +331,18 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 	return false;
 }
 
-bool RKConsole::provideContext (unsigned int line_rev, QString *context, int *cursor_position) {
+QString RKConsole::provideContext (int line_rev) {
 	RK_TRACE (COMMANDEDITOR);
 
-	if (line_rev > 1) return false;
-
-	if (line_rev == 0) {
-		*cursor_position = currentCursorPositionInCommand ();
-		*context = currentEditingLine ();
-	} else {
-		*cursor_position = -1;
-		*context = incomplete_command;
+	QString ret;
+	if (line_rev == 0) ret = currentEditingLine ().left (currentCursorPositionInCommand ()); 
+	else if (!incomplete_command.isEmpty ()) {
+		QStringList lines = incomplete_command.split ("\n");
+		if (lines.size () > line_rev) {
+			ret = lines[lines.size () - line_rev - 1];
+		}
 	}
-
-	return true;
+	return ret;
 }
 
 void RKConsole::insertCompletion (int line_num, int word_start, int word_end, const QString &completion) {

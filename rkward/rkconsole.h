@@ -60,7 +60,7 @@ public:
 /** Returns the current cursor position, within the current command (without taking into account the prefix). Returns -1 if the cursor is not on the line containing the command. */
 	int currentCursorPositionInCommand ();
 	void doTabCompletion ();
-	bool provideContext (unsigned int line_rev, QString *context, int *cursor_position);
+	QString provideContext (int line_rev);
 
 	static RKConsole *mainConsole () { return main_console; };
 	static void setMainConsole (RKConsole *console) { main_console = console; };

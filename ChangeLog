@@ -1,3 +1,4 @@
+- Fixed: Function argument hints would not be shown in some corner cases
 - Added function rk.print.code() to write highlighted R code to the output window		# TODO: Next, implement the 'carbon copy' feature
 - Box plot plugin gains support for grouped outcome data
 - Fixed: Pressing Ctrl+C would not reset syntactically incomplete commands in the R console
