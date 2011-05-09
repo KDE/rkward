@@ -136,7 +136,6 @@ public:
 	enum CommandTypes {
 		User=1,		/**< Command was created directly by the user (e.g. in the console or in a command editor window) */
 		Plugin=2,		/**< Command comes from a plugin */
-		PluginCom=4,	/**< Command comes from a plugin, and is used by the plugin to communicate directly with R (no real use so far) */
 		App=8,			/**< Command comes from the application (e.g. loading / saving the workspace */
 		Sync=16,		/**< Command is used to sync data to or from R-space. Typically used in the editor classes */
 		EmptyCommand=32,		/**< Command is empty and will not be processed (an empty command may be used as a "marker") */

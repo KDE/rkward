@@ -340,11 +340,10 @@ QVariant RCommandStackModel::data (const QModelIndex& index, int role) const {
 			QString ret;
 			if (command->type () & RCommand::User) ret += 'U';
 			if (command->type () & RCommand::Plugin) ret += 'P';
-			if (command->type () & RCommand::PluginCom) ret += 'C';
 			if (command->type () & RCommand::App) ret += 'A';
 			if (command->type () & RCommand::Sync) ret += 'S';
 			if (command->type () & RCommand::EmptyCommand) ret += 'E';
-			if (command->type () & (RCommand::GetIntVector | RCommand::GetRealVector | RCommand::GetStringVector)) ret += 'D';
+			if (command->type () & (RCommand::GetIntVector | RCommand::GetRealVector | RCommand::GetStringVector | RCommand::GetStructuredData)) ret += 'D';
 			if (command->type () & RCommand::DirectToOutput) ret += 'O';
 			return (ret);
 		}
