@@ -2,7 +2,7 @@
                           rkobjectlistview  -  description
                              -------------------
     begin                : Wed Sep 1 2004
-    copyright            : (C) 2004, 2006, 2007, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -69,7 +69,7 @@ public slots:
 	void updateComplete ();
 	void updateStarted ();
 	void selectionChanged (const QItemSelection & selected, const QItemSelection & deselected);
-	void resetWidths ();
+	void settingsChanged ();
 
 	virtual void popupConfigure ();
 protected:
@@ -77,6 +77,7 @@ protected:
 private:
 	QMenu *menu;
 	RObject *menu_object;
+	RObject *root_object;
 
 	RKObjectListViewSettings *settings;
 };

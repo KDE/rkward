@@ -2,7 +2,7 @@
                           rkobjectlistview  -  description
                              -------------------
     begin                : Wed Sep 1 2004
-    copyright            : (C) 2004, 2006, 2007, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -33,6 +33,7 @@
 RKObjectListView::RKObjectListView (QWidget *parent) : QTreeView (parent) {
 	RK_TRACE (APP);
 
+	root_object = 0;
 	settings = new RKObjectListViewSettings (this);
 	setSortingEnabled (true);
 
@@ -66,10 +67,14 @@ void RKObjectListView::setRootObject (RObject *root) {
 	RK_TRACE (APP);
 
 	if (!root) return;
+	root_object = root;
+	if (root == RObjectList::getObjectList () && !settings->getSetting (RKObjectListViewSettings::ShowObjectsAllEnvironments)) root = RObjectList::getGlobalEnv ();
 	QModelIndex index = settings->mapFromSource (RKGlobals::tracker ()->indexFor (root));
 	if (index.isValid ()) {
-		setRootIndex (index);
-		resizeColumnToContents (0);
+		if (index != rootIndex ()) {
+			setRootIndex (index);
+			resizeColumnToContents (0);
+		}
 	} else {
 		RK_ASSERT (false);
 	}
@@ -127,16 +132,15 @@ void RKObjectListView::initialize () {
 	setModel (settings);
 
 	QModelIndex genv = settings->mapFromSource (RKGlobals::tracker ()->indexFor (RObjectList::getGlobalEnv ()));
-	QModelIndex olist = settings->mapFromSource (RKGlobals::tracker ()->indexFor (RObjectList::getObjectList ()));
-	setRootIndex (olist);
+	setRootObject (RObjectList::getObjectList ());
 	setExpanded (genv, true);
 	setMinimumHeight (rowHeight (genv) * 5);
-	resetWidths ();
+	settingsChanged ();
 
 	connect (RObjectList::getObjectList (), SIGNAL (updateComplete ()), this, SLOT (updateComplete ()));
 	connect (RObjectList::getObjectList (), SIGNAL (updateStarted ()), this, SLOT (updateStarted ()));
 	connect (selectionModel (), SIGNAL (selectionChanged(const QItemSelection&, const QItemSelection&)), this, SLOT (selectionChanged(const QItemSelection&, const QItemSelection&)));
-	connect (settings, SIGNAL (settingsChanged()), this, SLOT (resetWidths()));
+	connect (settings, SIGNAL (settingsChanged()), this, SLOT (settingsChanged()));
 
 	updateComplete ();
 }
@@ -153,9 +157,10 @@ void RKObjectListView::updateStarted () {
 	setEnabled (false);
 }
 
-void RKObjectListView::resetWidths () {
+void RKObjectListView::settingsChanged () {
 	RK_TRACE (APP);
 
+	setRootObject (root_object);
 	resizeColumnToContents (0);
 }
 
