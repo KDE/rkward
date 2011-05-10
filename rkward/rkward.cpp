@@ -206,6 +206,18 @@ void RKWardMainWindow::doPostInit () {
 	gui_rebuild_locked = false;
 
 	show ();
+#ifdef Q_WS_WIN
+	// detect and disable the buggy "native" file dialogs
+	KConfigGroup cg = KGlobal::config ().data ()->group ("KFileDialog Settings");
+	if (cg.readEntry ("Native", true)) {
+		int res = KMessageBox::questionYesNo (this, i18n ("Your installation of KDE is configured to use \"native\" file dialogs. This is known to cause issues in some cases, and we recommend to disable \"native\" file dialogs.\nShould \"native\" file dialogs be disabled in RKWard?"),
+							i18n ("Potential problem with your configuration"), KGuiItem (i18n ("Yes, disable")), KGuiItem (i18n ("No, use \"native\" file dialogs")), "windows_native_kfiledialog");
+		if (res != KMessageBox::No) {
+			cg.writeEntry ("Native", false);
+			cg.sync ();
+		}
+	}
+#endif
 
 	KUrl recover_url = RKRecoverDialog::checkRecoverCrashedWorkspace ();
 	if (!recover_url.isEmpty ()) open_url = recover_url;
