@@ -56,6 +56,7 @@ RKWindowCatcher *window_catcher;
 #include <kfiledialog.h>
 #include <klocale.h>
 #include <ktemporaryfile.h>
+#include <kstandarddirs.h>
 
 #include <qdir.h>
 #include <qtimer.h>
@@ -507,6 +508,8 @@ QStringList RInterface::processPlainGenericRequest (const QStringList &calllist)
 		lines.append ("RKWard version: " RKWARD_VERSION);
 		lines.append ("KDE version (runtime): " + QString (KDE::versionString ()));
 		lines.append ("KDE version (compile time): " KDE_VERSION_STRING);
+		lines.append ("Local KDE directory: " + KGlobal::dirs ()->localkdedir ());
+		lines.append ("RKWard storage directory: " + RKSettingsModuleGeneral::filesPath ());
 		lines.append (QString());
 		lines.append ("Debug message file(s) in use (these may contain relevant diagnostic output in case of trouble):");
 		lines.append (RKSettingsModuleDebug::debug_file->fileName ());
