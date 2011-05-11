@@ -134,9 +134,9 @@ QString RObject::getObjectDescription () const {
 
 	if (isType (Container | Variable)) {
 		if (dimensions.size () == 1) {
-			ret.append ("<br><b>" + i18n ("Length: ") + QString::number (dimensions[0]));
+			ret.append ("<br><b>" + i18n ("Length: ") + " </b>"  + QString::number (dimensions[0]));
 		} else if (dimensions.size () > 1) {
-			ret.append ("<br><b>" + i18n ("Dimensions: "));
+			ret.append ("<br><b>" + i18n ("Dimensions: ") + " </b>");
 			for (int i=0; i < dimensions.size (); ++i) {
 				if (i) ret.append (", ");
 				ret.append (QString::number (dimensions[i]));
