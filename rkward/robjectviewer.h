@@ -45,7 +45,8 @@ public:
 
 	enum ViewerPage {
 		SummaryPage = 0,
-		PrintPage = 1
+		PrintPage = 1,
+		StructurePage = 2
 	};
 public slots:
 	void currentTabChanged (int new_current);
@@ -64,6 +65,7 @@ private:
 	QTabWidget* tabs;
 	RObjectViewerWidget* summary_widget;
 	RObjectViewerWidget* print_widget;
+	RObjectViewerWidget* structure_widget;
 
 	RObject *_object;
 };
@@ -117,6 +119,16 @@ public:
 	~RObjectPrintWidget () {};
 
 	/** reimplemented from RObjectViewerWidget to call "print" */
+	void update ();
+};
+
+/** Represents the "str" area in an RObjectViewer */
+class RObjectStructureWidget : public RObjectViewerWidget {
+public:
+	RObjectStructureWidget (QWidget* parent, RObject* object) : RObjectViewerWidget (parent, object) {};
+	~RObjectStructureWidget () {};
+
+	/** reimplemented from RObjectViewerWidget to call "str" */
 	void update ();
 };
 

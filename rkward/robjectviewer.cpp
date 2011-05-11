@@ -57,6 +57,7 @@ RObjectViewer::RObjectViewer (QWidget *parent, RObject *object, ViewerPage initi
 	tabs = new QTabWidget (this);
 	tabs->insertTab (SummaryPage, summary_widget = new RObjectSummaryWidget (tabs, object), i18n ("summary (x)"));
 	tabs->insertTab (PrintPage, print_widget = new RObjectPrintWidget (tabs, object), i18n ("print (x)"));
+	tabs->insertTab (StructurePage, structure_widget = new RObjectStructureWidget (tabs, object), i18n ("str (x)"));
 	layout->addWidget (tabs);
 
 	tabs->setFocusPolicy (Qt::StrongFocus);
@@ -82,10 +83,12 @@ void RObjectViewer::objectRemoved (RObject *object) {
 	if (object == _object) {
 		summary_widget->objectKilled ();
 		print_widget->objectKilled ();
+		structure_widget->objectKilled ();
 
 		QString reason = i18n ("<b>Object was deleted!</b>");
 		summary_widget->invalidate (reason);
 		print_widget->invalidate (reason);
+		structure_widget->invalidate (reason);
 
 		QPalette palette = status_label->palette ();
 		palette.setColor (status_label->foregroundRole (), Qt::red);
@@ -132,6 +135,7 @@ void RObjectViewer::initDescription (bool notify) {
 		QString reason = i18n ("The object was changed. You may want to click \"Update\"");
 		summary_widget->invalidate (reason);
 		print_widget->invalidate (reason);
+		structure_widget->invalidate (reason);
 	}
 }
 
@@ -142,6 +146,8 @@ void RObjectViewer::currentTabChanged (int new_current) {
 		summary_widget->initialize ();
 	} else if (new_current == PrintPage) {
 		print_widget->initialize ();
+	} else if (new_current == StructurePage) {
+		structure_widget->initialize ();
 	} else {
 		RK_ASSERT (false);
 	}
@@ -293,6 +299,22 @@ void RObjectPrintWidget::update () {
 	                                  "\ton.exit(options(width=rk.temp.width.save))\n"
 	                                  "\tprint(" + _object->getFullName () + ")\n"
 	                                  "})", RCommand::App, QString (), this);
+	RKGlobals::rInterface ()->issueCommand (command, 0);
+}
+
+////////////////// structure widget /////////////////
+
+void RObjectStructureWidget::update () {
+	RK_TRACE (APP);
+
+	if (!_object) {
+		RK_ASSERT (false);
+		return;
+	}
+
+	RObjectViewerWidget::update ();
+
+	RCommand *command = new RCommand ("str(" + _object->getFullName () + ")", RCommand::App, QString (), this);
 	RKGlobals::rInterface ()->issueCommand (command, 0);
 }
 
