@@ -2,7 +2,7 @@
                           rksettingsmoduleoutput  -  description
                              -------------------
     begin                : Fri Jul 30 2004
-    copyright            : (C) 2004, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -22,8 +22,49 @@
 #include <QStringList>
 
 class QCheckBox;
+class QGroupBox;
 class QComboBox;
 class KIntSpinBox;
+class RCommand;
+
+/**
+Allows to configure which types of commands should be "carbon copied" to the output window. Like the RKSettingsModules classes, this class encapsulates both, the setting itself,
+and a widget to configure the settings.
+@author Thomas Friedrichsmeier
+*/
+class RKCarbonCopySettings : public QWidget {
+	Q_OBJECT
+public:
+	RKCarbonCopySettings (QWidget* parent);
+	~RKCarbonCopySettings ();
+
+	static void saveSettings (KConfig *config);
+	static void loadSettings (KConfig *config);
+
+	static bool shouldCarbonCopyCommand (const RCommand *command);
+	static bool includeOutputInCarbonCopy () { return (cc_globally_enabled && cc_command_output); };
+	void applyChanges ();
+signals:
+	void changed ();
+private slots:
+	void settingChanged ();
+private:
+	// There can be multiple instances of this widget, which need to be kept in sync.
+	static QList<RKCarbonCopySettings*> instances;
+	void update ();
+
+	QGroupBox *cc_globally_enabled_box;
+	QCheckBox *cc_console_commands_box;
+	QCheckBox *cc_script_commands_box;
+	QCheckBox *cc_app_plugin_commands_box;
+	QCheckBox *cc_command_output_box;
+
+	static bool cc_globally_enabled;
+	static bool cc_console_commands;
+	static bool cc_script_commands;
+	static bool cc_app_plugin_commands;
+	static bool cc_command_output;
+};
 
 /**
 @author Thomas Friedrichsmeier
@@ -49,7 +90,7 @@ public:
 	static bool autoShow () { return auto_show; };
 	static bool autoRaise () { return auto_raise; };
 public slots:
-	void boxChanged (int);
+	void boxChanged ();
 private:
 	QCheckBox *auto_show_box;
 	QCheckBox *auto_raise_box;
@@ -57,6 +98,7 @@ private:
 	KIntSpinBox *graphics_width_box;
 	KIntSpinBox *graphics_height_box;
 	KIntSpinBox *graphics_jpg_quality_box;
+	RKCarbonCopySettings *cc_settings;
 
 	static bool auto_show;
 	static bool auto_raise;

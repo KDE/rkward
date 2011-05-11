@@ -301,6 +301,7 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 					}
 					if (incomplete) RKRBackend::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorIncomplete;
 					RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::ReplIterationKilled;
+					if (RKRBackend::RKRBackend::repl_status.user_command_parsed_up_to <= 0) RKRBackend::this_pointer->startOutputCapture ();	// HACK: No capture active, but commandFinished() will try to end one
 					Rf_error ("");	// to discard the buffer
 				} else {
 					RKTransmitNextUserCommandChunk (buf, buflen);
@@ -309,6 +310,7 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 			} else if (RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::UserCommandSyntaxError) {
 				RKRBackend::this_pointer->current_command->status |= RCommand::Failed | RCommand::ErrorSyntax;
 				RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::NoUserCommand;
+				if (RKRBackend::RKRBackend::repl_status.user_command_parsed_up_to <= 0) RKRBackend::this_pointer->startOutputCapture ();	// HACK: No capture active, but commandFinished() will try to end one
 				RKRBackend::this_pointer->commandFinished ();
 			} else if (RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::UserCommandRunning) {
 				// This can mean three different things:
@@ -398,7 +400,6 @@ void RWriteConsoleEx (const char *buf, int buflen, int type) {
 		}
 	}
 
-	if (RKRBackend::this_pointer->capturing_messages) RKRBackend::this_pointer->captured_messages.append (RKRBackend::this_pointer->current_locale_codec->toUnicode (buf, buflen));
 	RKRBackend::this_pointer->handleOutput (RKRBackend::this_pointer->current_locale_codec->toUnicode (buf, buflen), buflen, type == 0 ? ROutput::Output : ROutput::Warning);
 }
 
@@ -647,6 +648,15 @@ void RBusy (int busy) {
 	// R_ReplIteration calls R_Busy (1) after reading in code (if needed), successfully parsing it, and right before evaluating it.
 	if (busy) {
 		if (RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::UserCommandTransmitted) {
+			if (RKRBackend::this_pointer->current_command->type & RCommand::CCCommand) {
+				QByteArray chunk = RKRBackend::repl_status.user_command_buffer.mid (RKRBackend::repl_status.user_command_parsed_up_to, RKRBackend::repl_status.user_command_transmitted_up_to - RKRBackend::repl_status.user_command_parsed_up_to);
+				RKRBackend::this_pointer->printCommand (RKRBackend::this_pointer->current_locale_codec->toUnicode (chunk));
+			}
+			if (RKRBackend::this_pointer->current_command->type & RCommand::CCOutput) {
+				// flush any previous output caputre and start a new one
+				if (RKRBackend::repl_status.user_command_successful_up_to > 0) RKRBackend::this_pointer->printAndClearCapturedMessages (false);
+				RKRBackend::this_pointer->startOutputCapture ();
+			}
 			RKRBackend::repl_status.user_command_parsed_up_to = RKRBackend::repl_status.user_command_transmitted_up_to;
 			RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::UserCommandRunning;
 		}
@@ -660,7 +670,6 @@ RKRBackend::RKRBackend () {
 
 	current_locale_codec = QTextCodec::codecForLocale ();
 	r_running = false;
-	capturing_messages = false;
 
 	current_command = 0;
 
@@ -1126,10 +1135,8 @@ void RKRBackend::runCommand (RCommandProxy *command) {
 	// running user commands is quite different from all other commands and should have been handled by RReadConsole
 	RK_ASSERT (!(ctype & RCommand::User));
 
-	if (ctype & RCommand::DirectToOutput) {
-		printAndClearCapturedMessages ();
-		capturing_messages = true;
-	}
+	if (ctype & RCommand::CCCommand) printCommand (command->command);
+	if (ctype & RCommand::CCOutput) startOutputCapture ();
 
 	if (ctype & RCommand::QuitCommand) {
 		R_dot_Last ();		// should run while communication with frontend is still possible
@@ -1161,8 +1168,6 @@ void RKRBackend::runCommand (RCommandProxy *command) {
 		repl_status.eval_depth--;
 	}
 
-	if (ctype & RCommand::DirectToOutput) printAndClearCapturedMessages ();
-
 	// common error/status handling
 	if (error != NoError) {
 		command->status |= RCommand::WasTried | RCommand::Failed;
@@ -1178,16 +1183,32 @@ void RKRBackend::runCommand (RCommandProxy *command) {
 	}
 }
 
-void RKRBackend::printAndClearCapturedMessages () {
+void RKRBackend::printCommand (const QString &command) {
 	RK_TRACE (RBACKEND);
 
-	if (!captured_messages.isEmpty ()) {
-		runDirectCommand (".rk.cat.output (\"<h2>Messages, warnings, or errors:</h2>\\n\")");
-		runDirectCommand ("rk.print.literal (" + RKRSharedFunctionality::quote (captured_messages) + ")");
-		captured_messages.clear ();
-	}
+	QStringList params ("highlightRCode");
+	params.append (command);
+	QString highlighted = handlePlainGenericRequest (params, true).value (0);
+	runDirectCommand (".rk.cat.output (" + RKRSharedFunctionality::quote (highlighted) + ")");
+}
 
-	capturing_messages = false;
+void RKRBackend::startOutputCapture () {
+	RK_TRACE (RBACKEND);
+
+	// TODO: One of those days, we need to revisit output handling. This request could be perfectly async, but unfortunately, in that case, output chunks can sneak in front of it.
+	handlePlainGenericRequest (QStringList ("recordOutput"), true);
+}
+
+void RKRBackend::printAndClearCapturedMessages (bool with_header) {
+	RK_TRACE (RBACKEND);
+
+	QStringList params ("recordOutput");
+	params.append ("end");
+	QString out = handlePlainGenericRequest (params, true).value (0);
+
+	if (out.isEmpty ()) return;
+	if (with_header) runDirectCommand (".rk.cat.output (\"<h2>Messages, warnings, or errors:</h2>\\n\")");
+	runDirectCommand (".rk.cat.output (" + RKRSharedFunctionality::quote (out) + ")");
 }
 
 void RKRBackend::run () {
@@ -1210,6 +1231,7 @@ void RKRBackend::commandFinished (bool check_object_updates_needed) {
 	}
 	clearPendingInterrupt ();	// Mutex must be unlocked for this!
 
+	if (current_command->type & RCommand::CCOutput) printAndClearCapturedMessages (current_command->type & RCommand::Plugin);
 	current_command->status -= (current_command->status & RCommand::Running);
 	current_command->status |= RCommand::WasTried;
 

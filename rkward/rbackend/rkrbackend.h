@@ -174,9 +174,9 @@ handleHistoricalSubstackRequest(). Exactly which requests get handled by which f
 	void run ();
 	static void scheduleInterrupt ();
 
-	bool capturing_messages;
-	QString captured_messages;
-	void printAndClearCapturedMessages ();
+	void startOutputCapture ();
+	void printAndClearCapturedMessages (bool with_header);
+	void printCommand (const QString &command);
 
 	QMutex all_current_commands_mutex;
 	QList<RCommandProxy*> current_commands_to_cancel;

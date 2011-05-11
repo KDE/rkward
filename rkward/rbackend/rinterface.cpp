@@ -95,6 +95,8 @@ RInterface::RInterface () {
 	previously_idle = false;
 	locked = 0;
 	backend_dead = false;
+	num_active_output_record_requests = 0;
+	previous_output_type = ROutput::NoOutput;
 
 	// create a fake init command
 	RCommand *fake = new RCommand (i18n ("R Startup"), RCommand::App | RCommand::Sync | RCommand::ObjectListUpdate, i18n ("R Startup"), this, STARTUP_PHASE2_COMPLETE);
@@ -116,6 +118,7 @@ void RInterface::issueCommand (const QString &command, int type, const QString &
 RInterface::~RInterface(){
 	RK_TRACE (RBACKEND);
 
+	if (num_active_output_record_requests) RK_DO (qDebug ("%d requests for recording output still active on interface shutdown", num_active_output_record_requests), RBACKEND, DL_WARNING);
 	delete flush_timer;
 	delete window_catcher;
 }
@@ -123,9 +126,7 @@ RInterface::~RInterface(){
 bool RInterface::backendIsIdle () {
 	RK_TRACE (RBACKEND);
 
-	bool idle;
-	idle = (RCommandStack::regular_stack->isEmpty() && (!runningCommand()));
-	return (idle);
+	return (RCommandStack::regular_stack->isEmpty() && (!runningCommand()));
 }
 
 RCommand *RInterface::popPreviousCommand () {
@@ -362,6 +363,23 @@ void RInterface::flushOutput (bool forced) {
 			RK_DO (qDebug ("output '%s'", qPrintable (output->output)), RBACKEND, DL_DEBUG);
 		}
 
+		if (num_active_output_record_requests) {
+			if (output->type >= previous_output_type) {
+				if (!recorded_output.isEmpty ()) recorded_output.append ("</pre>\n");
+
+				if (output->type == ROutput::Output) recorded_output.append ("<pre class=\"output_normal\">");
+				else if (output->type == ROutput::Warning) recorded_output.append ("<pre class=\"output_warning\">");
+				else if (output->type == ROutput::Error) recorded_output.append ("<pre class=\"output_error\">");
+				else {
+					RK_ASSERT (false);
+					recorded_output.append ("<pre>");
+				}
+
+				previous_output_type = output->type;
+			}
+			recorded_output.append (Qt::escape (output->output));
+		}
+
 		bool first = true;
 		foreach (RCommand* command, all_current_commands) {
 			ROutput *coutput = output;
@@ -398,6 +416,10 @@ void RInterface::issueCommand (RCommand *command, RCommandChain *chain) {
 	RK_TRACE (RBACKEND);
 
 	if (command->command ().isEmpty ()) command->_type |= RCommand::EmptyCommand;
+	if (RKCarbonCopySettings::shouldCarbonCopyCommand (command)) {
+		command->_type |= RCommand::CCCommand;
+		if (RKCarbonCopySettings::includeOutputInCarbonCopy ()) command->_type |= RCommand::CCOutput;
+	}
 	RCommandStack::issueCommand (command, chain);
 	tryNextCommand ();
 }
@@ -538,6 +560,20 @@ QStringList RInterface::processPlainGenericRequest (const QStringList &calllist)
 					return (QStringList ("Could not open file for writing. Not recording commands"));
 				}
 			}
+		}
+	} else if (call == "recordOutput") {
+		// NOTE: requests to record output can overlap (i.e. several can be active at the same time). However, we always clear the buffer, each time a request ends, i.e. then
+		// recorded output does NOT overlap.
+		if (calllist.value (1) == "end") {
+			RK_ASSERT (num_active_output_record_requests > 0);
+			--num_active_output_record_requests;
+			QString dummy = recorded_output;
+			recorded_output.clear ();
+			if (!dummy.isEmpty ()) dummy.append ("</pre>\n");
+			previous_output_type = ROutput::NoOutput;
+			return QStringList (dummy);
+		} else {
+			++num_active_output_record_requests;
 		}
 	} else {
 		return (QStringList ("Error: unrecognized request '" + call + "'."));

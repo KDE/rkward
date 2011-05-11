@@ -344,7 +344,7 @@ QVariant RCommandStackModel::data (const QModelIndex& index, int role) const {
 			if (command->type () & RCommand::Sync) ret += 'S';
 			if (command->type () & RCommand::EmptyCommand) ret += 'E';
 			if (command->type () & (RCommand::GetIntVector | RCommand::GetRealVector | RCommand::GetStringVector | RCommand::GetStructuredData)) ret += 'D';
-			if (command->type () & RCommand::DirectToOutput) ret += 'O';
+			if (command->type () & RCommand::CCOutput) ret += 'O';
 			return (ret);
 		}
 		if ((index.column () == STATUS_COL) && (role == Qt::DisplayRole)) {

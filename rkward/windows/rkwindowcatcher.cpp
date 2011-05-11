@@ -369,7 +369,7 @@ void RKCaughtX11Window::activateDevice () {
 void RKCaughtX11Window::copyDeviceToOutput () {
 	RK_TRACE (MISC);
 
-	RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ")\ndev.copy (device=rk.graph.on)\nrk.graph.off ()", RCommand::App | RCommand::DirectToOutput, i18n ("Copy contents of graphics device number %1 to output", device_number), error_dialog);
+	RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ")\ndev.copy (device=rk.graph.on)\nrk.graph.off ()", RCommand::App | RCommand::CCOutput, i18n ("Copy contents of graphics device number %1 to output", device_number), error_dialog);
 }
 
 void RKCaughtX11Window::printDevice () {

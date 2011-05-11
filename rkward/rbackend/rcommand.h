@@ -68,6 +68,7 @@ friend class RCommandStackModel;
 QString is, that additionally we store information on whether the output was "normal", "warning", or an "error". */
 struct ROutput {
 	enum ROutputType {
+		NoOutput,		/**< No output. Rarely used. */
 		Output,			/**< normal output */
 		Warning,		/**< R warning */
 		Error			/**< R error */
@@ -135,19 +136,21 @@ public:
 	although partially exclusive. See \ref UsingTheInterfaceToR for a overview of what these are used for. TODO: find out, why Canceled is in here, and document that fact. */
 	enum CommandTypes {
 		User=1,		/**< Command was created directly by the user (e.g. in the console or in a command editor window) */
-		Plugin=2,		/**< Command comes from a plugin */
-		App=8,			/**< Command comes from the application (e.g. loading / saving the workspace */
-		Sync=16,		/**< Command is used to sync data to or from R-space. Typically used in the editor classes */
-		EmptyCommand=32,		/**< Command is empty and will not be processed (an empty command may be used as a "marker") */
-		Console=64,	/**< Command originated in the console. These commands will get some extra treatment in RKwatch */
-		Internal=128,	/**< Command is meant to be used in the backend, only. Do not use outside rbackend classes! */
-		GetIntVector=512,			/**< Try to fetch result as an array of integers */
-		GetStringVector=1024,	/**< Try to fetch result as an array of chars */
-		GetRealVector=2048,		/**< Try to fetch result as an array of doubles */
-		GetStructuredData=4096,		/**< Try to fetch result as an RData structure */
-		DirectToOutput=8192,		/**< Append command output to the HTML-output file */
-		ObjectListUpdate=16384,		/**< The command may change the list of objects available. Do an update */
-		QuitCommand=32768		/**< The R backend should be killed */
+		Plugin=1 << 1,		/**< Command comes from a plugin */
+		App=1 << 2,			/**< Command comes from the application (e.g. loading / saving the workspace */
+		Sync=1 << 3,		/**< Command is used to sync data to or from R-space. Typically used in the editor classes */
+		EmptyCommand=1 << 4,		/**< Command is empty and will not be processed (an empty command may be used as a "marker") */
+		Console=1 << 5,	/**< Command originated in the console. These commands will get some extra treatment in RKwatch */
+		Internal=1 << 6,	/**< Command is meant to be used in the backend, only. Do not use outside rbackend classes! */
+		Silent=1 << 7,	/**< Command can be interrupted, but is otherwise an internal command. In particular it should not be carbon copied to the output. */
+		GetIntVector=1 << 8,			/**< Try to fetch result as an array of integers */
+		GetStringVector=1 << 9,	/**< Try to fetch result as an array of chars */
+		GetRealVector=1 << 10,		/**< Try to fetch result as an array of doubles */
+		GetStructuredData=1 << 11,		/**< Try to fetch result as an RData structure */
+		CCOutput=1 << 12,		/**< Append command output to the HTML-output file */
+		CCCommand=1 << 13,		/**< Append the command itself to the HTML-output file */
+		ObjectListUpdate=1 << 14,		/**< The command may change the list of objects available. Do an update */
+		QuitCommand=1 << 15		/**< The R backend should be killed */
 	};
 	enum CommandStatus {
 		Running=1,						/**< command is currently running */

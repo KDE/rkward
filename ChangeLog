@@ -1,7 +1,8 @@
+- R commands and their output can be "carbon copied" to the output window		# TODO: Add a dialog for this in the 'Run' Menu
 - On Windows, RKWard will detect, and offer to disable "native" file system dialogs
 - Object browsers that show only the global environment now hide the ".GlobalEnv" item
 - Fixed: Function argument hints would not be shown in some corner cases
-- Added function rk.print.code() to write highlighted R code to the output window		# TODO: Next, implement the 'carbon copy' feature
+- Added function rk.print.code() to write highlighted R code to the output window
 - Box plot plugin gains support for grouped outcome data
 - Fixed: Pressing Ctrl+C would not reset syntactically incomplete commands in the R console
 - Crosstabs N to 1 plugin gains options to compute proportions and margins (thanks to Andrés Necochea)
