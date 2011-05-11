@@ -649,8 +649,6 @@ void RKWorkplace::restoreWorkplace (const QStringList &description) {
 					win->hide ();
 					win->setGeometry (geom.value (1).toInt (), geom.value (2).toInt (), geom.value (3).toInt (), geom.value (4).toInt ());
 					detachWindow (win);
-				} else {
-					RK_ASSERT (false);
 				}
 			}
 		}

@@ -126,12 +126,13 @@ void RKToolWindowBar::setSplitter (QSplitter *splitter) {
 void RKToolWindowBar::addWidget (RKMDIWindow *window) {
 	RK_TRACE (APP);
 	RK_ASSERT (window);
+	if (window->tool_window_bar == this) return;	// may happen while restoring windows
 	RK_ASSERT (container);
+
 	static int id_count = 0;
 	int id = ++id_count;
 
 	if (window->tool_window_bar) {
-		RK_ASSERT (window->tool_window_bar != this);	// no problem, but would be useless code
 		window->tool_window_bar->removeWidget (window);
 	}
 
