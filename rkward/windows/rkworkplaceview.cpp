@@ -119,7 +119,6 @@ void RKWorkplaceView::addWindow (RKMDIWindow *widget) {
 	RK_TRACE (APP);
 
 	int id = -1;
-	setUpdatesEnabled (false);
 
 	QIcon icon = widget->windowIcon ();
 	if (icon.isNull ()) icon = widget->topLevelWidget ()->windowIcon ();
@@ -133,8 +132,6 @@ void RKWorkplaceView::addWindow (RKMDIWindow *widget) {
 	if (count () > 1) setTabBarHidden (false);
 
 	setCurrentIndex (id);		// activate the new tab
-
-	setUpdatesEnabled (true);
 }
 
 bool RKWorkplaceView::hasWindow (RKMDIWindow *widget) {
@@ -143,8 +140,6 @@ bool RKWorkplaceView::hasWindow (RKMDIWindow *widget) {
 
 void RKWorkplaceView::removeWindow (RKMDIWindow *widget, bool destroyed) {
 	RK_TRACE (APP);
-
-	setUpdatesEnabled (false);
 
 	int id = indexOf (widget);		// which page is it?
 	RK_DO (if (id == -1) qDebug ("did not find page in RKWorkplaceView::removeWindow"), APP, DL_WARNING);
@@ -160,8 +155,6 @@ void RKWorkplaceView::removeWindow (RKMDIWindow *widget, bool destroyed) {
 			emit (currentChanged (-1));
 		}
 	}
-
-	setUpdatesEnabled (true);
 }
 
 // KDE4 TODO: we can use setCurrentWidget, instead.
