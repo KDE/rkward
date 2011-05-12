@@ -146,13 +146,7 @@ void RKWorkplaceView::removeWindow (RKMDIWindow *widget, bool destroyed) {
 	if (!destroyed) disconnect (widget, SIGNAL (captionChanged (RKMDIWindow *)), this, SLOT (childCaptionChanged (RKMDIWindow *)));
 
 	removeTab (id);
-	int new_count = count ();
-	if (new_count <= 1) {
-		setTabBarHidden (true);
-		if (new_count < 1) {
-			currentPageChanged (-1);
-		}
-	}
+	if (count () <= 1) setTabBarHidden (true);
 }
 
 // KDE4 TODO: we can use setCurrentWidget, instead.
