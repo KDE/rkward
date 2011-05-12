@@ -1,4 +1,5 @@
-- R commands and their output can be "carbon copied" to the output window		# TODO: Add a dialog for this in the 'Run' Menu
+- Fix compilation on FreeBSD
+- R commands and their output can be "carbon copied" to the output window
 - On Windows, RKWard will detect, and offer to disable "native" file system dialogs
 - Object browsers that show only the global environment now hide the ".GlobalEnv" item
 - Fixed: Function argument hints would not be shown in some corner cases

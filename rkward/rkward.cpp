@@ -298,6 +298,20 @@ void RKWardMainWindow::slotCancelAllCommands () {
 	RKGlobals::rInterface ()->cancelAll ();
 }
 
+void RKWardMainWindow::configureCarbonCopy () {
+	RK_TRACE (APP);
+
+	KDialog *dialog = new KDialog ();
+	dialog->setCaption (i18n ("Carbon Copy Settings"));
+	RKCarbonCopySettings *settings = new RKCarbonCopySettings (dialog);
+	dialog->setMainWidget (settings);
+	dialog->setButtons (KDialog::Ok | KDialog::Apply | KDialog::Cancel);
+	dialog->setAttribute (Qt::WA_DeleteOnClose);
+	connect (dialog, SIGNAL (okClicked()), settings, SLOT (applyChanges ())); 
+	connect (dialog, SIGNAL (applyClicked()), settings, SLOT (applyChanges ())); 
+	dialog->show ();
+}
+
 void RKWardMainWindow::initToolViewsAndR () {
 	RK_TRACE (APP);
 
@@ -384,6 +398,9 @@ void RKWardMainWindow::initActions() {
 	interrupt_all_commands->setShortcut (Qt::ShiftModifier + Qt::Key_Escape);
 	interrupt_all_commands->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionInterrupt));
 	interrupt_all_commands->setEnabled (false);		// enabled from within setRStatus()
+
+	action = actionCollection ()->addAction ("carbon_copy", this, SLOT (configureCarbonCopy ()));
+	action->setText (i18n ("CC commands to output..."));
 
 	// These two currently do the same thing
 	action = actionCollection ()->addAction ("load_unload_libs", this, SLOT (slotFileLoadLibs()));

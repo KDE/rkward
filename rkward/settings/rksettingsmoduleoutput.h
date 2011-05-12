@@ -43,6 +43,7 @@ public:
 
 	static bool shouldCarbonCopyCommand (const RCommand *command);
 	static bool includeOutputInCarbonCopy () { return (cc_globally_enabled && cc_command_output); };
+public slots:
 	void applyChanges ();
 signals:
 	void changed ();
