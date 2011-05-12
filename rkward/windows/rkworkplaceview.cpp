@@ -150,9 +150,7 @@ void RKWorkplaceView::removeWindow (RKMDIWindow *widget, bool destroyed) {
 	if (new_count <= 1) {
 		setTabBarHidden (true);
 		if (new_count < 1) {
-			// KDE4: is this still needed?
-			setCaption (QString ());
-			emit (currentChanged (-1));
+			currentPageChanged (-1);
 		}
 	}
 }
