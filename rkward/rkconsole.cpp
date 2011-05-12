@@ -125,7 +125,7 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 // KDE4: a way to do this?
 //	doc->setUndoSteps (0);
 	clear ();
-	doc->setHighlightingMode ("R interactive session");
+	RKCommandHighlighter::setHighlighting (doc, RKCommandHighlighter::RInteractiveSession);
 
 	commands_history = RKSettingsModuleConsole::loadCommandHistory ();
 	commands_history_position = commands_history.constEnd ();
@@ -871,6 +871,12 @@ void RKConsole::runSelection () {
 	pipeUserCommand (cleanedSelection ());
 }
 
+void RKConsole::copyLinesToOutput () {
+	RK_TRACE (APP);
+
+	RKCommandHighlighter::copyLinesToOutput (view, RKCommandHighlighter::RInteractiveSession);
+}
+
 void RKConsole::showContextHelp () {
 	RK_TRACE (APP);
 	RKHelpSearchWindow::mainHelpSearch ()->getContextHelp (currentEditingLine (), currentCursorPositionInCommand ());
@@ -879,8 +885,8 @@ void RKConsole::showContextHelp () {
 void RKConsole::initializeActions (KActionCollection *ac) {
 	RK_TRACE (APP);
 
+	RKStandardActions::copyLinesToOutput (this, this, SLOT (copyLinesToOutput()));
 	context_help_action = RKStandardActions::functionHelp (this, this, SLOT(showContextHelp()));
-
 	run_selection_action = RKStandardActions::runSelection (this, this, SLOT (runSelection()));
 
 	interrupt_command_action = ac->addAction ("interrupt", this, SLOT (resetConsole()));

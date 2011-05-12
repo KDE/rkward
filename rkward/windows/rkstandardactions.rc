@@ -1,9 +1,12 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward_standardactions" version="54">
+<kpartgui name="rkward_standardactions" version="560">
 <!-- What is this for, wouldn't it be easier to just inline these actions in the parts where they
      end up? Yes, but then they would be separate actions, internally, and each could be assigned
      a shortcut of its own. This is needed to tie them all together. -->
 	<MenuBar>
+		<Menu name="file">
+			<Action name="copy_lines_to_output"/>
+		</Menu>
 		<Menu name="edit">
 			<Action name="paste_special" group="after_edit_paste_merge"/>
 		</Menu>
@@ -43,6 +46,7 @@
 		<Action name="window_configure" group="ktexteditor_popup_merge2"/>
 	</Menu>
 	<Menu name="rkconsole_context_menu">
+		<Action name="copy_lines_to_output" group="rkconsole_context_merge_copy"/>
 		<Action name="paste_special" group="rkconsole_context_merge_paste"/>
 		<Action name="run_selection" group="rkconsole_context_merge1"/>
 		<Action name="function_reference" group="rkconsole_context_merge2"/>

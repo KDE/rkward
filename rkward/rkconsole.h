@@ -143,6 +143,7 @@ friend class RKConsolePart;
 
 	bool tab_key_pressed_before;
 
+	KAction* copy_lines_to_output_action;
 	KAction* context_help_action;
 	KAction* run_selection_action;
 	KAction* interrupt_command_action;
@@ -171,6 +172,7 @@ public slots:
 /** Cancels the current command, if any, and clears the command buffer(s) */
 	void resetConsole ();
 	void runSelection ();
+	void copyLinesToOutput ();
 
 /** Adds a chunk of commands to the input buffer
 \param batch a QString containing the batch of commands to be executed */

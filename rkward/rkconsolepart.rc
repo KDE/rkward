@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward_console" version="540">
+<kpartgui name="rkward_console" version="560">
 	<MenuBar>
 		<Menu name="file"><text>&amp;File</text>
 			<Separator />
@@ -42,6 +42,7 @@ but avoids the total derangement of the edit menu over time.
 	<Menu name="rkconsole_context_menu">
 		<Action name="rkconsole_copy"/>
 		<Action name="rkconsole_copy_literal"/>
+		<DefineGroup name="rkconsole_context_merge_copy" />
 		<Action name="rkconsole_paste"/>
 		<DefineGroup name="rkconsole_context_merge_paste" />
 		<Separator/>

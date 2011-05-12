@@ -1,4 +1,5 @@
 - Fix compilation on FreeBSD
+- Add "Copy lines to output" action to copy highlighted lines from the R console or script editors to the output window
 - R commands and their output can be "carbon copied" to the output window
 - On Windows, RKWard will detect, and offer to disable "native" file system dialogs
 - Object browsers that show only the global environment now hide the ".GlobalEnv" item

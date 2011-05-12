@@ -56,6 +56,7 @@
 #include "../misc/rkxmlguisyncer.h"
 #include "../misc/rkjobsequence.h"
 #include "../core/robjectlist.h"
+#include "../rbackend/rinterface.h"
 #include "../settings/rksettings.h"
 #include "../settings/rksettingsmodulecommandeditor.h"
 #include "../rkconsole.h"
@@ -79,13 +80,6 @@ RKCommandEditorWindowPart::~RKCommandEditorWindowPart () {
 
 #define GET_HELP_URL 1
 #define NUM_BLOCK_RECORDS 6
-
-/** set syntax highlighting-mode to R syntax. Outside of class, in order to allow use from the on demand code highlighter */
-void setRHighlighting (KTextEditor::Document *doc) {
-	RK_TRACE (COMMANDEDITOR);
-
-	if (!doc->setHighlightingMode("R Script")) RK_DO (qDebug ("R syntax highlighting defintion not found!"), COMMANDEDITOR, DL_ERROR);
-}
 
 RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highlighting) : RKMDIWindow (parent, RKMDIWindow::CommandEditorWindow) {
 	RK_TRACE (COMMANDEDITOR);
@@ -135,7 +129,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 	cc_iface = 0;
 	hinter = 0;
 	if (use_r_highlighting) {
-		setRHighlighting (m_doc);
+		RKCommandHighlighter::setHighlighting (m_doc, RKCommandHighlighter::RScript);
 		cc_iface = qobject_cast<KTextEditor::CodeCompletionInterface*> (m_view);
 		if (cc_iface) {
 			cc_iface->setAutomaticInvocationEnabled (true);
@@ -192,6 +186,7 @@ QAction *findAction (KTextEditor::View* view, const QString &actionName) {
 void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 	RK_TRACE (COMMANDEDITOR);
 
+	RKStandardActions::copyLinesToOutput (this, this, SLOT (copyLinesToOutput()));
 	RKStandardActions::pasteSpecial (this, this, SLOT (paste(const QString&)));
 
 	action_run_all = RKStandardActions::runAll (this, this, SLOT (runAll()));
@@ -349,7 +344,7 @@ bool RKCommandEditorWindow::openURL (const KUrl &url, const QString& encoding, b
 	// encoding must be set *before* loading the file
 	if (!encoding.isEmpty ()) m_doc->setEncoding (encoding);
 	if (m_doc->openUrl (url)){
-		if (use_r_highlighting) setRHighlighting (m_doc);
+		if (use_r_highlighting) RKCommandHighlighter::setHighlighting (m_doc, RKCommandHighlighter::RScript);
 		setReadOnly (read_only);
 
 		updateCaption ();
@@ -628,6 +623,11 @@ void RKCommandEditorWindow::runLine() {
 	m_view->setCursorPosition (c);
 }
 
+void RKCommandEditorWindow::copyLinesToOutput () {
+	RK_TRACE (COMMANDEDITOR);
+
+	RKCommandHighlighter::copyLinesToOutput (m_view, RKCommandHighlighter::RScript);
+}
 
 void RKCommandEditorWindow::runAll () {
 	RK_TRACE (COMMANDEDITOR);
@@ -1017,7 +1017,6 @@ KTextEditor::Document* RKCommandHighlighter::getDoc () {
 	QWidget* view = _doc->createView (0);
 	view->hide ();
 	RK_ASSERT (_doc);
-	setRHighlighting (_doc);
 	return _doc;
 }
 
@@ -1067,20 +1066,22 @@ QString exportText(const QString& text, const KTextEditor::Attribute::Ptr& attri
 	return ret;
 }
 
-QString RKCommandHighlighter::commandToHTML (const QString r_command) {
+QString RKCommandHighlighter::commandToHTML (const QString r_command, HighlightingMode mode) {
 	KTextEditor::Document* doc = getDoc ();
 	KTextEditor::HighlightInterface *iface = qobject_cast<KTextEditor::HighlightInterface*> (_doc);
 	RK_ASSERT (iface);
 	if (!iface) return (QString ("<pre>") + r_command + "</pre>");
 
 	doc->setText (r_command);
-	setRHighlighting (doc);
+	setHighlighting (doc, mode);
 	QString ret;
+
+	QString opening;
 	KTextEditor::Attribute::Ptr m_defaultAttribute = iface->defaultStyle(KTextEditor::HighlightInterface::dsNormal);
 	if ( !m_defaultAttribute ) {
-		ret = "<pre class=\"code\">";
+		opening = "<pre class=\"%5\">";
 	} else {
-		ret = QString("<pre style='%1%2%3%4' class=\"code\">")
+		opening = QString("<pre style='%1%2%3%4' class=\"%5\">")
 				.arg(m_defaultAttribute->fontBold() ? "font-weight:bold;" : "")
 				.arg(m_defaultAttribute->fontItalic() ? "text-style:italic;" : "")
 				.arg("color:" + m_defaultAttribute->foreground().color().name() + ';');
@@ -1089,9 +1090,30 @@ QString RKCommandHighlighter::commandToHTML (const QString r_command) {
 
 	const KTextEditor::Attribute::Ptr noAttrib(0);
 
+	if (mode == RScript) ret = opening.arg ("code");
+	enum {
+		Command,
+		Output,
+		None
+	} previous_chunk = None;
 	for (int i = 0; i < doc->lines (); ++i)
 	{
 		const QString &line = doc->line(i);
+		if (mode == RInteractiveSession) {
+			if (line.startsWith (">") || line.startsWith ("+")) {
+				if (previous_chunk != Command) {
+					if (previous_chunk != None) ret.append ("</pre>");
+					ret.append (opening.arg ("code"));
+					previous_chunk = Command;
+				}
+			} else {
+				if (previous_chunk != Output) {
+					if (previous_chunk != None) ret.append ("</pre>");
+					ret.append (opening.arg ("output_normal"));
+					previous_chunk = Output;
+				}
+			}
+		}
 
 		QList<KTextEditor::HighlightInterface::AttributeBlock> attribs = iface->lineAttributes(i);
 
@@ -1121,9 +1143,40 @@ QString RKCommandHighlighter::commandToHTML (const QString r_command) {
 }
 
 #else	// KDE < 4.4: No Highlighting Interface
-QString RKCommandHighlighter::commandToHTML (const QString r_command) {
+QString RKCommandHighlighter::commandToHTML (const QString r_command, HighlightingMode) {
 	return (QString ("<pre class=\"code\">") + r_command + "</pre>");
 }
 #endif
+
+/** set syntax highlighting-mode to R syntax. Outside of class, in order to allow use from the on demand code highlighter */
+void RKCommandHighlighter::setHighlighting (KTextEditor::Document *doc, HighlightingMode mode) {
+	RK_TRACE (COMMANDEDITOR);
+
+	QString mode_string = "R Script";
+	if (mode == RInteractiveSession) mode_string = "R interactive session";
+	if (!doc->setHighlightingMode (mode_string)) RK_DO (qDebug ("R syntax highlighting defintion ('%s')not found!", qPrintable (mode_string)), COMMANDEDITOR, DL_ERROR);
+}
+
+void RKCommandHighlighter::copyLinesToOutput (KTextEditor::View *view, HighlightingMode mode) {
+	RK_TRACE (COMMANDEDITOR);
+
+	// expand selection to full lines (or current line)
+	KTextEditor::Document *doc = view->document ();
+	KTextEditor::Range sel = view->selectionRange ();
+	if (!sel.isValid ()) {
+		KTextEditor::Cursor pos = view->cursorPosition ();
+		sel.setRange (KTextEditor::Cursor (pos.line (), 0),
+					  KTextEditor::Cursor (pos.line (), doc->lineLength (pos.line ())));
+	} else {
+		sel.setRange (KTextEditor::Cursor (sel.start ().line (), 0),
+					  KTextEditor::Cursor (sel.end ().line (), doc->lineLength (sel.end ().line ())));
+	}
+
+	// highlight and submit
+	QString highlighted = commandToHTML (doc->text (sel), mode);
+	if (!highlighted.isEmpty ()) {
+		RKGlobals::rInterface ()->issueCommand (".rk.cat.output (" + RObject::rQuote (highlighted) + ")\n", RCommand::App | RCommand::Silent);
+	}
+}
 
 #include "rkcommandeditorwindow.moc"

@@ -205,6 +205,7 @@ public slots:
 	void runLine ();
 /** run the entire script */
 	void runAll ();
+	void copyLinesToOutput ();
 
 /** selection has changed. Enable / disable actions accordingly */
 	void selectionChanged (KTextEditor::View* view);
@@ -293,7 +294,13 @@ private:
 /** Simple class to provide HTML highlighting for arbitrary R code. */
 class RKCommandHighlighter {
 public:
-	static QString commandToHTML (const QString r_command);
+	enum HighlightingMode {
+		RInteractiveSession,
+		RScript
+	};
+	static void copyLinesToOutput (KTextEditor::View *view, HighlightingMode mode);
+	static void setHighlighting (KTextEditor::Document *doc, HighlightingMode mode);
+	static QString commandToHTML (const QString r_command, HighlightingMode mode=RScript);
 private:
 	static KTextEditor::Document* getDoc ();
 	static KTextEditor::Document* _doc;

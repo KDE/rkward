@@ -2,7 +2,7 @@
                           rkstandardactions  -  description
                              -------------------
     begin                : Sun Nov 18 2007
-    copyright            : (C) 2007, 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -26,6 +26,14 @@
 #include "../windows/rkmdiwindow.h"
 
 #include "../debug.h"
+
+KAction* RKStandardActions::copyLinesToOutput (RKMDIWindow *window, const QObject *receiver, const char *member) {
+	RK_TRACE (MISC);
+
+	KAction* ret = window->standardActionCollection ()->addAction ("copy_lines_to_output", receiver, member);
+	ret->setText (i18n ("Copy lines to output"));
+	return ret;
+}
 
 KAction* RKStandardActions::pasteSpecial (RKMDIWindow *window, const QObject *receiver, const char *member) {
 	RK_TRACE (MISC);
