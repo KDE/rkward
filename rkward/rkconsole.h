@@ -122,9 +122,9 @@ friend class RKConsolePart;
 
 	QString prefix;
 /** This string stores the regular prefix printed at the beginning of each line. */
-	const char *nprefix;
+	QString nprefix;
 /** This string stores the continuation prefix. */
-	const char *iprefix;
+	QString iprefix;
 
 /** Create a proxy for the katepart action of the same name. The action is added to the actioncollection, automatically. Also any icon and label (but not shorcut) is copied.
 @param actionName Identifier of the action in katepartui.rc and rkconsolepart.rc
@@ -132,7 +132,7 @@ friend class RKConsolePart;
 @returns a pointer to the proxy action */
 	QAction* addProxyAction (const QString& actionName, const QString& label=QString ());
 
-	QString cleanedSelection ();
+	QString cleanSelection (const QString &origin);
 
 	RCommand *current_command;
 	KTextEditor::Document *doc;
@@ -147,7 +147,7 @@ friend class RKConsolePart;
 	KAction* context_help_action;
 	KAction* run_selection_action;
 	KAction* interrupt_command_action;
-	KAction* copy_action;
+	KAction* copy_commands_action;
 	KAction* copy_literal_action;
 	KAction* paste_action;
 
@@ -163,7 +163,7 @@ public slots:
 /** We intercept paste commands and get them executed through submitBatch.
 @sa submitBatch */
 	void paste ();
-	void copy ();
+	void copyCommands ();
 	void literalCopy ();
 /** Clear the view, and add a prompt at the top. */
 	void clear ();

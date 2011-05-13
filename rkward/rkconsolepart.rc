@@ -21,8 +21,8 @@ but avoids the total derangement of the edit menu over time.
 			<Action name="rkconsole_paste" group="edit_paste_merge"/>
 			<Separator/>
 			<Action name="rkconsole_clear"/> -->
-			<Action name="rkconsole_copy"/>
 			<Action name="rkconsole_copy_literal"/>
+			<Action name="rkconsole_copy_commands"/>
 			<Action name="rkconsole_paste"/>
 			<Separator/>
 			<Action name="rkconsole_clear"/>
@@ -40,8 +40,8 @@ but avoids the total derangement of the edit menu over time.
 		<Action name="interrupt" group="postrun_actions_merge"/>
 	</ToolBar>
 	<Menu name="rkconsole_context_menu">
-		<Action name="rkconsole_copy"/>
 		<Action name="rkconsole_copy_literal"/>
+		<Action name="rkconsole_copy_commands"/>
 		<DefineGroup name="rkconsole_context_merge_copy" />
 		<Action name="rkconsole_paste"/>
 		<DefineGroup name="rkconsole_context_merge_paste" />

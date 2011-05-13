@@ -816,23 +816,44 @@ void RKConsole::userSaveHistory (const KUrl &_url) {
 	KIO::NetAccess::upload (tempfile.fileName (), url, this);
 }
 
-QString RKConsole::cleanedSelection () {
+QString RKConsole::cleanSelection (const QString &origin) {
 	RK_TRACE (APP);
 
-	QString ret = view->selectionText ();
-	ret.replace ('\n' + QString (nprefix), "\n");
-	ret.replace ('\n' + QString (iprefix), "\n");
-	if (ret.startsWith (nprefix)) {
-		ret = ret.mid (QString (nprefix).length ());
+	QString ret;
+	ret.reserve (origin.length ());
+	QStringList lines = origin.split ("\n");
+	foreach (QString line, lines) {
+		if (line.startsWith (nprefix)) {
+			ret.append (line.mid (nprefix.length ()));
+		} else if (line.startsWith (iprefix)) {
+			ret.append (line.mid (iprefix.length ()));
+		} else {
+			ret.append (line);
+		}
+		ret.append ('\n');
 	}
 
 	return ret;
 }
 
-void RKConsole::copy () {
+void RKConsole::copyCommands () {
 	RK_TRACE (APP);
 
-	QApplication::clipboard()->setText (cleanedSelection ());
+	KTextEditor::Range sel = view->selectionRange ();
+	if (!sel.isValid ()) return;
+
+	// we use this somewhat cumbersome (and inefficient) approach as it should also be correct in case of blockwise selections
+	QStringList command_lines = view->selectionText ().split ("\n");
+	int i = 0;
+	for (int l = sel.start ().line (); l <= sel.end ().line (); ++l) {
+		QString line = doc->line (l);
+		if (!(line.startsWith (iprefix) || line.startsWith (nprefix))) {
+			command_lines.removeAt (i);
+			--i;
+		}
+		++i;
+	}
+	QApplication::clipboard()->setText (cleanSelection (command_lines.join ("\n")));
 }
 
 void RKConsole::literalCopy () {
@@ -868,7 +889,7 @@ void RKConsole::resetConsole () {
 void RKConsole::runSelection () {
 	RK_TRACE (APP);
 
-	pipeUserCommand (cleanedSelection ());
+	pipeUserCommand (cleanSelection (view->selectionText ()));
 }
 
 void RKConsole::copyLinesToOutput () {
@@ -895,11 +916,11 @@ void RKConsole::initializeActions (KActionCollection *ac) {
 	interrupt_command_action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionInterrupt));
 	interrupt_command_action->setEnabled (false);
 
-	copy_action = ac->addAction ("rkconsole_copy", this, SLOT (copy()));
-	copy_action->setText (i18n ("Copy selection cleaned"));
-
 	copy_literal_action = ac->addAction ("rkconsole_copy_literal", this, SLOT (literalCopy()));
 	copy_literal_action->setText (i18n ("Copy selection literally"));
+
+	copy_commands_action = ac->addAction ("rkconsole_copy_commands", this, SLOT (copyCommands()));
+	copy_commands_action->setText (i18n ("Copy commands, only"));
 
 	RKStandardActions::pasteSpecial (this, this, SLOT (submitBatch(const QString&)));
 
@@ -957,7 +978,7 @@ void RKConsole::pipeCommandThroughConsoleLocal (const QString &command_string) {
 void RKConsole::contextMenuEvent (QContextMenuEvent * event) {
 	RK_TRACE (APP);
 
-	copy_action->setEnabled (view->selection ());
+	copy_commands_action->setEnabled (view->selection ());
 	copy_literal_action->setEnabled (view->selection ());
 	run_selection_action->setEnabled (view->selection ());
 
@@ -965,7 +986,7 @@ void RKConsole::contextMenuEvent (QContextMenuEvent * event) {
 
 	run_selection_action->setEnabled (true);
 	copy_literal_action->setEnabled (true);
-	copy_action->setEnabled (true);
+	copy_commands_action->setEnabled (true);
 }
 
 void RKConsole::activate (bool with_focus) {
