@@ -1139,7 +1139,7 @@ QString RKCommandHighlighter::commandToHTML (const QString r_command, Highlighti
 			ret += exportText( line.mid( handledUntil, remainingChars ), noAttrib, m_defaultAttribute );
 		}
 
-		if (i <= (doc->lines () - 1)) ret.append ("\n");
+		if (i < (doc->lines () - 1)) ret.append ("\n");
 	}
 	ret.append ("</pre>\n");
 
