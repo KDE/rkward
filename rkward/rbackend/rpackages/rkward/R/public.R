@@ -132,10 +132,10 @@
 	assign (".rk.output.html.file", x, as.environment ("package:rkward"))
 
 	if (!file.exists (x)) {
-		.rk.cat.output (paste ("<?xml version=\"1.0\" encoding=\"", .Call ("rk.locale.name"), "\"?>\n", sep=""));
-		.rk.cat.output ("<html><head><title>RKWard Output</title></head>\n<body>\n")
+		.rk.cat.output (paste ("<?xml version=\"1.0\" encoding=\"", .Call ("rk.locale.name"), "\"?>\n", sep=""))
+		.rk.cat.output (paste ("<html><head>\n<title>RKWard Output</title>\n", .rk.do.plain.call ("getCSSlink"), "</head>\n<body>\n", sep=""))
 		# This initial output mostly to indicate the output is really there, just empty for now
-		.rk.cat.output (paste ("<pre>RKWard output initialized on", date (), "</pre>\n"));
+		.rk.cat.output (paste ("<pre>RKWard output initialized on", date (), "</pre>\n"))
 	}
 
 	# needs to come after initialization, so initialization alone does not trigger an update during startup

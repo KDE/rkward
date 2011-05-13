@@ -1,0 +1,25 @@
+pre.code {
+	margin-left: 2em;
+}
+
+pre.code:before {
+	display: block;
+	content: "> ";
+	width: 2em;
+	color: black;
+	float: left;
+	margin-left: -2em;
+}
+
+pre.output_normal {
+	clear: both;	/* make sure never to float around the "> " marker */
+}
+
+pre.output_warning {
+	clear: both;	/* make sure never to float around the "> " marker */
+	background-color: #ffaaaa;
+}
+
+table {
+	border-spacing: 0px;
+}

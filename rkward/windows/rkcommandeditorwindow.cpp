@@ -1073,19 +1073,19 @@ QString RKCommandHighlighter::commandToHTML (const QString r_command, Highlighti
 	if (!iface) return (QString ("<pre>") + r_command + "</pre>");
 
 	doc->setText (r_command);
+	if (r_command.endsWith ("\n")) doc->removeLine (doc->lines () - 1);
 	setHighlighting (doc, mode);
 	QString ret;
 
 	QString opening;
 	KTextEditor::Attribute::Ptr m_defaultAttribute = iface->defaultStyle(KTextEditor::HighlightInterface::dsNormal);
 	if ( !m_defaultAttribute ) {
-		opening = "<pre class=\"%5\">";
+		opening = "<pre class=\"%3\">";
 	} else {
-		opening = QString("<pre style='%1%2%3%4' class=\"%5\">")
+		opening = QString("<pre style='%1%2' class=\"%3\">")
 				.arg(m_defaultAttribute->fontBold() ? "font-weight:bold;" : "")
-				.arg(m_defaultAttribute->fontItalic() ? "text-style:italic;" : "")
-				.arg("color:" + m_defaultAttribute->foreground().color().name() + ';');
-//				.arg("background-color:" + m_defaultAttribute->background().color().name() + ';');
+				.arg(m_defaultAttribute->fontItalic() ? "text-style:italic;" : "");
+				// Note: copying the default text/background colors is pointless in our case, and leads to subtle inconsistencies.
 	}
 
 	const KTextEditor::Attribute::Ptr noAttrib(0);
@@ -1094,13 +1094,18 @@ QString RKCommandHighlighter::commandToHTML (const QString r_command, Highlighti
 	enum {
 		Command,
 		Output,
+		Warning,
 		None
 	} previous_chunk = None;
 	for (int i = 0; i < doc->lines (); ++i)
 	{
 		const QString &line = doc->line(i);
+		QList<KTextEditor::HighlightInterface::AttributeBlock> attribs = iface->lineAttributes(i);
+		int lineStart = 0;
+
 		if (mode == RInteractiveSession) {
-			if (line.startsWith (">") || line.startsWith ("+")) {
+			if (line.startsWith ("> ") || line.startsWith ("+ ")) {
+				lineStart = 2;	// skip the prompt. Prompt will be indicated by the CSS, instead
 				if (previous_chunk != Command) {
 					if (previous_chunk != None) ret.append ("</pre>");
 					ret.append (opening.arg ("code"));
@@ -1112,16 +1117,15 @@ QString RKCommandHighlighter::commandToHTML (const QString r_command, Highlighti
 					ret.append (opening.arg ("output_normal"));
 					previous_chunk = Output;
 				}
+				ret.append (Qt::escape (line) + "\n");	// don't copy output "highlighting". It is set using CSS, instead
+				continue;
 			}
 		}
 
-		QList<KTextEditor::HighlightInterface::AttributeBlock> attribs = iface->lineAttributes(i);
-
-		int lineStart = 0;
-		int remainingChars = line.length();
 		int handledUntil = lineStart;
-
+		int remainingChars = line.length() - handledUntil;
 		foreach ( const KTextEditor::HighlightInterface::AttributeBlock& block, attribs ) {
+			if ((block.start + block.length) <= handledUntil) continue;
 			int start = qMax(block.start, lineStart);
 			if ( start > handledUntil ) {
 				ret += exportText( line.mid( handledUntil, start - handledUntil ), noAttrib, m_defaultAttribute );
@@ -1135,7 +1139,7 @@ QString RKCommandHighlighter::commandToHTML (const QString r_command, Highlighti
 			ret += exportText( line.mid( handledUntil, remainingChars ), noAttrib, m_defaultAttribute );
 		}
 
-		if (i < (doc->lines () - 1)) ret.append ("\n");
+		if (i <= (doc->lines () - 1)) ret.append ("\n");
 	}
 	ret.append ("</pre>\n");
 

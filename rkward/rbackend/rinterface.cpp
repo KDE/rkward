@@ -364,20 +364,21 @@ void RInterface::flushOutput (bool forced) {
 		}
 
 		if (num_active_output_record_requests) {
-			if (output->type >= previous_output_type) {
-				if (!recorded_output.isEmpty ()) recorded_output.append ("</pre>\n");
+			if (output->type != ROutput::Error) {	// NOTE: skip error output. It has already been written as a warning.
+				if (output->type != previous_output_type) {
+					if (!recorded_output.isEmpty ()) recorded_output.append ("</pre>\n");
 
-				if (output->type == ROutput::Output) recorded_output.append ("<pre class=\"output_normal\">");
-				else if (output->type == ROutput::Warning) recorded_output.append ("<pre class=\"output_warning\">");
-				else if (output->type == ROutput::Error) recorded_output.append ("<pre class=\"output_error\">");
-				else {
-					RK_ASSERT (false);
-					recorded_output.append ("<pre>");
+					if (output->type == ROutput::Output) recorded_output.append ("<pre class=\"output_normal\">");
+					else if (output->type == ROutput::Warning) recorded_output.append ("<pre class=\"output_warning\">");
+					else {
+						RK_ASSERT (false);
+						recorded_output.append ("<pre>");
+					}
+
+					previous_output_type = output->type;
 				}
-
-				previous_output_type = output->type;
+				recorded_output.append (Qt::escape (output->output));
 			}
-			recorded_output.append (Qt::escape (output->output));
 		}
 
 		bool first = true;
@@ -477,6 +478,8 @@ QStringList RInterface::processPlainGenericRequest (const QStringList &calllist)
 	} else if (call == "set.output.file") {
 		RK_ASSERT (calllist.count () == 2);
 		RKOutputWindowManager::self ()->setCurrentOutputPath (calllist.value (1));
+	} else if (call == "getCSSlink") {
+		return (QStringList (QString ("<link rel=\"StyleSheet\" type=\"text/css\" href=\"file://" + RKCommonFunctions::getRKWardDataDir () + "pages/rkward_output.css" "\"/>\n")));
 	} else if (call == "wdChange") {
 		// in case of separate processes, apply new working directory in frontend, too.
 		QDir::setCurrent (calllist.value (1));
