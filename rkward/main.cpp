@@ -156,7 +156,10 @@ int main(int argc, char *argv[]) {
 	// install message handler *after* the componentData has been initialized
 	RKSettingsModuleDebug::debug_file = new KTemporaryFile ();
 	RKSettingsModuleDebug::debug_file->setAutoRemove (false);
-	if (RKSettingsModuleDebug::debug_file->open ()) qInstallMsgHandler (RKDebugMessageOutput);
+	if (RKSettingsModuleDebug::debug_file->open ()) {
+		RK_DO (qDebug ("Full debug output is at %s", qPrintable (RKSettingsModuleDebug::debug_file->fileName ())), APP, DL_INFO);
+		qInstallMsgHandler (RKDebugMessageOutput);
+	}
 
 	if (app.isSessionRestored ()) {
 		RESTORE(RKWardMainWindow);	// well, whatever this is supposed to do -> TODO
@@ -174,7 +177,6 @@ int main(int argc, char *argv[]) {
 	int status = app.exec ();
 
 	qInstallMsgHandler (0);
-	RK_DO (qDebug ("Full debug output is at %s", qPrintable (RKSettingsModuleDebug::debug_file->fileName ())), APP, DL_INFO);
 	RKSettingsModuleDebug::debug_file->close ();
 
 #ifdef Q_WS_WIN
