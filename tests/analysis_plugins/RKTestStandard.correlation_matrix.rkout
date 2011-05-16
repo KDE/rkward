@@ -24,6 +24,6 @@ DATE<br>
 DATE<br>
 <table border="1">
 <tr><td>Coefficient</td><td>weight</td><td>height</td></tr>
-<tr><td>weight</td><td>1</td><td>0.9955</td></tr>
-<tr><td>height</td><td>0.9955</td><td>1</td></tr>
+<tr><td>weight</td><td>1</td><td>0.99549</td></tr>
+<tr><td>height</td><td>0.99549</td><td>1</td></tr>
 </table>

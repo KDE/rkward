@@ -4,7 +4,7 @@
 </ul>
 DATE<br>
 <h2>Messages, warnings, or errors:</h2>
-<pre>[1] "ok"
+<pre class="output_normal">[1] &quot;ok&quot;
 </pre>
 <h1>Source R file</h1>
 <h2>Parameters</h2>
@@ -12,9 +12,9 @@ DATE<br>
 </ul>
 DATE<br>
 <h2>Messages, warnings, or errors:</h2>
-<pre>
-> testx <- c (20:30)
+<pre class="output_normal">
+&gt; testx &lt;- c (20:30)
 
-> print ("ok")
-[1] "ok"
+&gt; print (&quot;ok&quot;)
+[1] &quot;ok&quot;
 </pre>
