@@ -1183,6 +1183,8 @@ void RKRBackend::runCommand (RCommandProxy *command) {
 	}
 }
 
+// On Windows, using runDirectCommand (".rk.cat.output ...") is not safe during some places where we call this, e.g. in RBusy.
+// Not a problem on Linux with R 2.13.0, though
 void RKRBackend::catToOutputFile (const QString &out) {
 	RK_TRACE (RBACKEND);
 
