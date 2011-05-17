@@ -177,6 +177,7 @@ handleHistoricalSubstackRequest(). Exactly which requests get handled by which f
 	void startOutputCapture ();
 	void printAndClearCapturedMessages (bool with_header);
 	void printCommand (const QString &command);
+	void catToOutputFile (const QString &out);
 
 	QMutex all_current_commands_mutex;
 	QList<RCommandProxy*> current_commands_to_cancel;
@@ -193,7 +194,7 @@ private:
 	void connectCallbacks ();
 
 	int r_version;
-private:  
+	QString output_file;
 /** A copy of the names of the toplevel environments (as returned by "search ()"). */
 	QStringList toplevel_env_names;
 /** A copy of the names of the toplevel symbols in the .GlobalEnv. */

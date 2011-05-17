@@ -1183,13 +1183,29 @@ void RKRBackend::runCommand (RCommandProxy *command) {
 	}
 }
 
+void RKRBackend::catToOutputFile (const QString &out) {
+	RK_TRACE (RBACKEND);
+
+	if (output_file.isEmpty ()) {
+		RK_ASSERT (false);
+		return;
+	}
+	QFile f (output_file);
+	if (!f.open (QIODevice::WriteOnly | QIODevice::Append)) {
+		RK_ASSERT (false);
+		return;
+	}
+	f.write (current_locale_codec->fromUnicode (out));
+	f.close ();
+}
+
 void RKRBackend::printCommand (const QString &command) {
 	RK_TRACE (RBACKEND);
 
 	QStringList params ("highlightRCode");
 	params.append (command);
 	QString highlighted = handlePlainGenericRequest (params, true).value (0);
-	runDirectCommand (".rk.cat.output (" + RKRSharedFunctionality::quote (highlighted) + ")");
+	catToOutputFile (highlighted);
 }
 
 void RKRBackend::startOutputCapture () {
@@ -1207,8 +1223,8 @@ void RKRBackend::printAndClearCapturedMessages (bool with_header) {
 	QString out = handlePlainGenericRequest (params, true).value (0);
 
 	if (out.isEmpty ()) return;
-	if (with_header) runDirectCommand (".rk.cat.output (\"<h2>Messages, warnings, or errors:</h2>\\n\")");
-	runDirectCommand (".rk.cat.output (" + RKRSharedFunctionality::quote (out) + ")");
+	if (with_header) out.prepend ("<h2>Messages, warnings, or errors:</h2>\n");
+	catToOutputFile (out);
 }
 
 void RKRBackend::run () {
@@ -1333,6 +1349,9 @@ QStringList RKRBackend::handlePlainGenericRequest (const QStringList &parameters
 		dummy.append (RKRBackendProtocolBackend::backendDebugFile ());
 		dummy.append (R_MAJOR "." R_MINOR " " R_STATUS " (" R_YEAR "-" R_MONTH "-" R_DAY " r" R_SVN_REVISION ")");
 		request.params["call"] = dummy;
+	} else if (parameters.value (0) == "set.output.file") {
+		output_file = parameters.value (1);
+		request.params["call"] = parameters;
 	} else {
 		request.params["call"] = parameters;
 	}
