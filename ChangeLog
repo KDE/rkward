@@ -1,3 +1,4 @@
+--- Version 0.5.6 - May-XX-2011
 - Fix compilation on FreeBSD
 - Replace the R console's "Copy selection cleaned" action with "Copy commands, only", which will omit any non-command regions in the copy
 - Add "Copy lines to output" action to copy highlighted lines from the R console or script editors to the output window
@@ -9,7 +10,7 @@
 - Box plot plugin gains support for grouped outcome data
 - Fixed: Pressing Ctrl+C would not reset syntactically incomplete commands in the R console
 - Crosstabs N to 1 plugin gains options to compute proportions and margins (thanks to Andrés Necochea)
-- Added convenience R function rk.list() to allow simplification of plugin code		# TODO: ideally, this should be used in all applicable plugins
+- Added convenience R function rk.list() to allow simplification of plugin code
 - Added stack-based window switching using Ctrl+(Shift)+Tab; this replaces the old "Next Window" and "Previous Window" actions
 - Fixed: Graphics device windows would disappear when trying to attach them to the main window with some versions of Qt
 - Fixed: tcl/tk widgets would locki up after running commands in the R Console
@@ -28,7 +29,7 @@
 - Support S4 slots in object name completion and workspace browser
 - More correct handling of quotes in object name completion
 - Support plot history for ggplot2 plots
-- Be less pro-active about fetching structure information on R objects in the workspace		TODO: verify that this fixes our issues with rXML
+- Be less pro-active about fetching structure information on R objects in the workspace
 - Allow to browse arbitrarily deeply nested environments in the object browser
 
 --- Version 0.5.5 - Mar-15-2011
