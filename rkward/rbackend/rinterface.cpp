@@ -318,7 +318,8 @@ void RInterface::handleRequest (RBackendRequest* request) {
 		}
 		tryNextCommand ();
 	} else if (request->type == RBackendRequest::HistoricalSubstackRequest) {
-		processHistoricalSubstackRequest (request);
+		command_requests.append (request);
+		processHistoricalSubstackRequest (request->params["call"].toStringList ());
 	} else if (request->type == RBackendRequest::PlainGenericRequest) {
 		request->params["return"] = QVariant (processPlainGenericRequest (request->params["call"].toStringList ()));
 		RKRBackendProtocolFrontend::setRequestCompleted (request);
@@ -586,15 +587,17 @@ QStringList RInterface::processPlainGenericRequest (const QStringList &calllist)
 	return QStringList ();
 }
 
-void RInterface::processHistoricalSubstackRequest (RBackendRequest* request) {
+void RInterface::processHistoricalSubstackRequest (const QStringList &calllist) {
 	RK_TRACE (RBACKEND);
 
-	command_requests.append (request);
-	RK_ASSERT (!all_current_commands.isEmpty ());
-	RCommandStack *reply_stack = new RCommandStack (all_current_commands.last ());
-	RCommandChain *in_chain = reply_stack->startChain (reply_stack);
-
-	QStringList calllist = request->params["call"].toStringList ();
+	RCommand *current_command = runningCommand ();
+	RCommandChain *in_chain;
+	if (!current_command) {
+		// This can happen for Tcl events. Create a dummy command on the stack to keep things looping.
+		current_command = new RCommand (QString (), RCommand::App | RCommand::EmptyCommand | RCommand::Sync);
+		issueCommand (current_command);
+	}
+	in_chain = startChain (new RCommandStack (current_command));
 
 	QString call = calllist.value (0);
 	if (call == "sync") {

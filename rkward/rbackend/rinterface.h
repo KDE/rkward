@@ -94,7 +94,7 @@ private:
 		RecordingCommandsWithSync
 	} command_logfile_mode;
 
-	void processHistoricalSubstackRequest (RBackendRequest *request);
+	void processHistoricalSubstackRequest (const QStringList &calllist);
 	QStringList processPlainGenericRequest (const QStringList &calllist);
 	void processRBackendRequest (RBackendRequest *request);
 
