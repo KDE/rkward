@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ## begin: These may need adjusting!
-TARGETS="natty maverick lucid karmic"
+TARGETS="oneiric natty maverick lucid"
 AUTHOR="Thomas Friedrichsmeier <tfry@users.sourceforge.net>"
 ## end: These may need adjusting!
 
