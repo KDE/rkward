@@ -5,6 +5,9 @@ rkward (0.5.5.z+0.5.6-0devel1) unstable; urgency=low
   * remove man page links to rkward.bin and rkward.rbackend. These
     auxilliary binaries are no longer installed in the system path.
   * remove debian man page. Man page is now supplied upstream.
+  * drop explicit depends on cmake and libphonon-dev.
+    closes: #531086
+  * fix lintian warning "description-synopsis-starts-with-article"
   * bump standards version to 3.9.2 (no changes needed)
 
  -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Tue, 20 Mar 2011 15:30:00 +0200

@@ -3,7 +3,7 @@ Section: math
 Priority: optional
 Maintainer: Thomas Friedrichsmeier <tfry@users.sourceforge.net>
 DM-Upload-Allowed: yes
-Build-Depends: debhelper (>= 6.0.0), kdelibs5-dev, cmake, libphonon-dev, r-base-dev (>= 2.7.0), libx11-dev
+Build-Depends: debhelper (>= 6.0.0), kdelibs5-dev, r-base-dev (>= 2.7.0), libx11-dev
 Standards-Version: 3.9.2
 Homepage: http://rkward.sourceforge.net
 
@@ -11,7 +11,7 @@ Package: rkward
 Architecture: any
 Depends: ${rvers}, ${shlibs:Depends}, ${misc:Depends}
 Recommends: r-base-html
-Description: a KDE frontend to the R statistics language
+Description: KDE frontend to the R statistics language
  RKWard aims to become an easy to use, transparent frontend to R,
  a powerful system for statistical computation and graphics.
  Besides a convenient GUI for the most important statistical functions,
