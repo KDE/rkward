@@ -1,0 +1,82 @@
+<?xml version="1.0" ?>
+<!DOCTYPE refentry PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
+<!ENTITY % English "INCLUDE">
+<!ENTITY rkward '<application>RKWard</application>'>
+<!ENTITY R '<application>R</application>'>
+]>
+
+<refentry lang="&language;">
+<refentryinfo>
+<firstname>Thomas</firstname>
+<surname>Friedrichsmeier</surname>
+<affiliation>
+<address><email>rkward-devel@lists.sourceforge.net</email></address>
+</affiliation>
+<date>2011-05-23</date>
+</refentryinfo>
+
+<refmeta>
+<refentrytitle><command>rkward</command></refentrytitle>
+<manvolnum>1</manvolnum>
+</refmeta>
+
+<refnamediv>
+<refname><command>rkward</command></refname>
+<refpurpose>A &kde; frontend to R</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv>
+<cmdsynopsis>
+<command>rkward</command>
+<arg choice="opt"><replaceable>workspace_file</replaceable></arg>
+<group choice="opt"><option>--evaluate</option> <replaceable> Rcode</replaceable></group>
+<group choice="opt"><option>--debug-level</option> <replaceable> level</replaceable></group>
+<group choice="opt"><option>--debug-flags</option> <replaceable> flags</replaceable></group>
+<group choice="opt"><option>--debugger</option> <replaceable> debugger_command</replaceable></group>
+<arg choice="opt">KDE Generic Options</arg>
+<arg choice="opt">Qt Generic Options</arg>
+</cmdsynopsis>
+</refsynopsisdiv>
+
+<refsect1>
+<title>Description</title>
+<para>&rkward; is the a &kde;-based GUI and IDE for the &R; scripting language for statistical computing.</para> 
+<para>For more information, please refer to <ulink url="http://rkward.sf.net/">the &rkward; website</ulink>, and the documentation provided inside &rkward;.</para>
+</refsect1>
+
+<refsect1>
+<title>Options</title>
+
+<variablelist>
+<varlistentry>
+<term><option>--evaluate</option> <replaceable>Rcode</replaceable></term>
+<listitem><para>The given &R; code is evaluated after &rkward; has started, and after any specified workspace is loaded. Mostly useful for automated testing.</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><option>--debug-level</option> <replaceable>level</replaceable></term>
+<listitem><para>Verbosity of debug output. 0-5, where 0 is no output, 5 is all output including function trace information. Default it 2.</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><option>--debug-flags</option> <replaceable>flags</replaceable></term>
+<listitem><para>Allows to configure, which sections of code to debug. Flags are given as a binary number. Refer to the source files for documentation, as this really is an internal option.</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><option>--debugger</option> <replaceable>command</replaceable></term>
+<listitem><para>Run &rkward; through the specified debugger command. To add command line options to the debugger command, enclose them in single quotes ('') together with the command. <emphasis>NOTE:</emphasis> To use the \-\-debugger option, it must be specified as the first option on the command line. Only the frontend process will be debugged, using this option.</para></listitem>
+</varlistentry>
+</variablelist>
+
+</refsect1>
+
+<refsect1>
+<title>See Also</title>
+<para><citerefentry><refentrytitle>R</refentrytitle>
+<manvolnum>1</manvolnum></citerefentry></para>
+</refsect1>
+
+<refsect1>
+<title>Authors</title>
+<para>&rkward; was written by Thomas Friedrichsmeier and the &rkward; team. See <ulink url="http://rkward.sf.net/">the &rkward; website</ulink>.</para>
+</refsect1>
+
+</refentry>

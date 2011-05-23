@@ -1,4 +1,5 @@
 --- Version 0.5.6 - May-XX-2011
+- Add simple man page for command line options
 - Fixed: Potential crash when creating plots from a tcl/tk based GUI
 - Fix compilation on FreeBSD
 - Replace the R console's "Copy selection cleaned" action with "Copy commands, only", which will omit any non-command regions in the copy

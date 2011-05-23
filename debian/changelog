@@ -4,7 +4,7 @@ rkward (0.5.5.z+0.5.6-0devel1) unstable; urgency=low
   * remove empty directory removal rkwardtests/inst. Now fixed upstream.
   * remove man page links to rkward.bin and rkward.rbackend. These
     auxilliary binaries are no longer installed in the system path.
-  * no longer document removed command line option "--disable-stack-check"
+  * remove debian man page. Man page is now supplied upstream.
   * bump standards version to 3.9.2 (no changes needed)
 
  -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Tue, 20 Mar 2011 15:30:00 +0200
