@@ -21,7 +21,12 @@
 #include <kfiledialog.h>
 #include <kmessagebox.h>
 #include <khbox.h>
-#include <knewstuff2/engine.h>
+#include <kdeversion.h>
+#ifdef RKWARD_USE_KNS3
+#	include <knewstuff3/downloaddialog.h>
+#else
+#	include <knewstuff2/engine.h>
+#endif
 #include <ktar.h>
 #include <kzip.h>
 #include <kio/deletejob.h>
@@ -189,19 +194,28 @@ void RKSettingsModulePlugins::downloadPlugins () {
 
 	QStringList oldmaps = plugin_maps;
 
-#warning TODO: temporary hack
-// Somehow KNS is smart enough to remove the .rkward/plugins directory if it is no longer used, but not smart enough to add it back, when needed...
-	QDir::home ().mkpath (".rkward/plugins");
-
+#ifdef RKWARD_USE_KNS3
+	KNS3::DownloadDialog dialog ("rkward.knsrc", 0);
+	dialog.exec ();
+	KNS3::Entry::List list = dialog.changedEntries ();
+#else
 	KNS::Engine engine (0);
 	if (!engine.init ("rkward.knsrc")) return;
 	KNS::Entry::List list = engine.downloadDialogModal (this);
+#endif
 
 	for (int i = 0; i < list.size (); ++i) {
-		foreach (const QString inst, list[i]->installedFiles ()) {
+#ifdef RKWARD_USE_KNS3
+		QStringList installed_files = list[i].installedFiles ();
+		QStringList uninstalled_files = list[i].uninstalledFiles ();
+#else
+		QStringList installed_files = list[i]->installedFiles ();
+		QStringList uninstalled_files = list[i]->uninstalledFiles ();
+#endif
+		foreach (const QString inst, installed_files) {
 			installPluginPack (inst);
 		}
-		foreach (const QString inst, list[i]->uninstalledFiles ()) {
+		foreach (const QString inst, uninstalled_files) {
 			uninstallPluginPack (inst);
 		}
 	}

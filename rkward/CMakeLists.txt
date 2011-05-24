@@ -52,7 +52,8 @@ CONFIGURE_FILE(
 	@ONLY)
 ADD_DEPENDENCIES(rkward.frontend ${RKWARD_WRAPPER_SCRIPT})
 
-TARGET_LINK_LIBRARIES(rkward.frontend ${KDE4_KDECORE_LIBS} windows ${RKWARD_ADDLIBS} agents dialogs plugin settings dataeditor core scriptbackends rbackend misc ktexteditor ${KDE4_KHTML_LIBS} ${KDE4_KFILE_LIBS} ${KDE4_KDEUI_LIBS} ${KDE4_KROSSCORE_LIBS} ${KDE4_KNEWSTUFF2_LIBS} ${QT_QTSCRIPT_LIBRARY} ${QT_QTNETWORK_LIBRARY})
+GET_DIRECTORY_PROPERTY(KNS_LIBS DIRECTORY settings DEFINITION KNS_LIBS)
+TARGET_LINK_LIBRARIES(rkward.frontend ${KDE4_KDECORE_LIBS} windows ${RKWARD_ADDLIBS} agents dialogs plugin settings dataeditor core scriptbackends rbackend misc ktexteditor ${KDE4_KHTML_LIBS} ${KDE4_KFILE_LIBS} ${KDE4_KDEUI_LIBS} ${KDE4_KROSSCORE_LIBS} ${KNS_LIBS} ${QT_QTSCRIPT_LIBRARY} ${QT_QTNETWORK_LIBRARY})
 
 ########### install files ###############
 
