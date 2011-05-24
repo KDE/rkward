@@ -2,7 +2,7 @@
                           rkhelpsearchwindow  -  description
                              -------------------
     begin                : Fri Feb 25 2005
-    copyright            : (C) 2005, 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -38,6 +38,7 @@
 #include "../debug.h"
 #include "../rkglobals.h"
 #include "../rkward.h"
+#include "../core/robject.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkdummypart.h"
 
@@ -161,7 +162,7 @@ void RKHelpSearchWindow::getFunctionHelp (const QString &function_name, const QS
 	RK_TRACE (APP);
 
 	// we use .rk.getHelp() instead of plain help() to receive an error, if no help could be found
-	QString command = ".rk.getHelp(\"" + function_name + '\"';
+	QString command = ".rk.getHelp(" + RObject::rQuote (function_name);
 	if (!package.isEmpty ()) command.append (", package=" + package);
 	command.append (")");
 
@@ -196,7 +197,7 @@ void RKHelpSearchWindow::slotFindButtonClicked () {
 
 	QString fields = fieldsList->itemData (fieldsList->currentIndex ()).toString ();
 
-	QString s = ".rk.get.search.results (\"" + field->currentText () + "\",agrep=" + agrep + ", ignore.case=" + ignoreCase + package + ", fields=" + fields +")";
+	QString s = ".rk.get.search.results (" + RObject::rQuote (field->currentText ()) + ", agrep=" + agrep + ", ignore.case=" + ignoreCase + package + ", fields=" + fields +")";
 	
 	RKGlobals::rInterface ()->issueCommand (s, RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, HELP_SEARCH, 0);
 	setEnabled (false);
@@ -219,6 +220,10 @@ void RKHelpSearchWindow::resultDoubleClicked (const QModelIndex& index) {
 void RKHelpSearchWindow::rCommandDone (RCommand *command) {
 	RK_TRACE (APP);
 	if (command->getFlags () == HELP_SEARCH) {
+		if (command->failed ()) {
+			RK_ASSERT (false);
+			return;
+		}
 		RK_ASSERT ((command->getDataLength () % 3) == 0);
 		RK_ASSERT (command->getDataType () == RData::StringVector);
 
