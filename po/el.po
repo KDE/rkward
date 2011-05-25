@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
 "group_id=50231&atid=459007\n"
-"POT-Creation-Date: 2011-05-17 20:10+0200\n"
+"POT-Creation-Date: 2011-05-25 10:10+0200\n"
 "PO-Revision-Date: 2009-04-29 17:47+0100\n"
 "Last-Translator: \n"
 "Language-Team: en_US <kde-i18n-doc@lists.kde.org>\n"
@@ -518,8 +518,8 @@ msgstr "Η διαδικασία εγκατάστασης τερματίστηκ�
 msgid "Installed packages"
 msgstr "Εγκατεστημένα πακέτα"
 
-#: dialogs/rkloadlibsdialog.cpp:306 windows/rkhelpsearchwindow.cpp:94
-#: windows/rkhelpsearchwindow.cpp:308
+#: dialogs/rkloadlibsdialog.cpp:306 windows/rkhelpsearchwindow.cpp:95
+#: windows/rkhelpsearchwindow.cpp:313
 msgid "Title"
 msgstr "Τίτλος"
 
@@ -2358,7 +2358,7 @@ msgstr "Πλάτος"
 msgid "Height:"
 msgstr "Ύψος"
 
-#: settings/rksettingsmoduleplugins.cpp:59
+#: settings/rksettingsmoduleplugins.cpp:64
 msgid ""
 "Some plugins are available with both, a wizard-like interface and a "
 "traditional dialog interface. If both are available, which mode of "
@@ -2367,43 +2367,43 @@ msgstr ""
 "Μερικά πρόσθετα είναι διαθέσιμα και με διάταξη μάγου και με παραδοσιακή "
 "τύπου διαλόγου. Εάν και οι δύο είναι διαθέσιμες ποια διάταξη προτιμάτε;"
 
-#: settings/rksettingsmoduleplugins.cpp:69
+#: settings/rksettingsmoduleplugins.cpp:74
 msgid "Always prefer dialogs"
 msgstr "Πάντα διάταξη διαλόγου"
 
-#: settings/rksettingsmoduleplugins.cpp:72
+#: settings/rksettingsmoduleplugins.cpp:77
 msgid "Prefer recommended interface"
 msgstr "Προτίμηση συνιστώμενης διάταξης"
 
-#: settings/rksettingsmoduleplugins.cpp:75
+#: settings/rksettingsmoduleplugins.cpp:80
 msgid "Always prefer wizards"
 msgstr "Πάντα διάταξη μάγου"
 
-#: settings/rksettingsmoduleplugins.cpp:87
+#: settings/rksettingsmoduleplugins.cpp:92
 msgid "R syntax display (in dialogs)"
 msgstr "Προβολή σύνταξης R (σε παράθυρα διαλόγων)"
 
-#: settings/rksettingsmoduleplugins.cpp:90
+#: settings/rksettingsmoduleplugins.cpp:95
 msgid "Code shown by default"
 msgstr "Ο κώδικας να φαίνεται από την αρχή"
 
-#: settings/rksettingsmoduleplugins.cpp:96
+#: settings/rksettingsmoduleplugins.cpp:101
 msgid "Default height of code display (pixels)"
 msgstr "Προκαθορισμένο ύψος προβολής κώδικα (εικονοστοιχεία)"
 
-#: settings/rksettingsmoduleplugins.cpp:108
+#: settings/rksettingsmoduleplugins.cpp:113
 msgid "Select .pluginmap file(s)"
 msgstr "Επιλέξτε αρχεία .pluginmap"
 
-#: settings/rksettingsmoduleplugins.cpp:115
+#: settings/rksettingsmoduleplugins.cpp:120
 msgid "Install or uninstall add-on plugin packs"
 msgstr ""
 
-#: settings/rksettingsmoduleplugins.cpp:134
+#: settings/rksettingsmoduleplugins.cpp:139
 msgid "Select .pluginmap-file"
 msgstr "Επιλέξτε αρχείο .pluginmap"
 
-#: settings/rksettingsmoduleplugins.cpp:139
+#: settings/rksettingsmoduleplugins.cpp:144
 msgid "Plugins"
 msgstr "Πρόσθετα"
 
@@ -2721,61 +2721,61 @@ msgstr "Ένα απροσδιόριστο σφάλμα συνέβη κατά τ�
 msgid "Configure"
 msgstr "Ρύθμιση"
 
-#: windows/rkhelpsearchwindow.cpp:70
+#: windows/rkhelpsearchwindow.cpp:71
 msgid "Find:"
 msgstr "Αναζήτηση:"
 
-#: windows/rkhelpsearchwindow.cpp:73
+#: windows/rkhelpsearchwindow.cpp:74
 msgid "Fields:"
 msgstr "Πεδία:"
 
-#: windows/rkhelpsearchwindow.cpp:91 windows/robjectbrowser.cpp:295
+#: windows/rkhelpsearchwindow.cpp:92 windows/robjectbrowser.cpp:295
 msgid "All"
 msgstr "Όλα"
 
-#: windows/rkhelpsearchwindow.cpp:92
+#: windows/rkhelpsearchwindow.cpp:93
 msgid "All but keywords"
 msgstr "Όλα εκτός από τις λέξεις κλειδιά"
 
-#: windows/rkhelpsearchwindow.cpp:93
+#: windows/rkhelpsearchwindow.cpp:94
 msgid "Keywords"
 msgstr "Λέξεις κλειδιά"
 
-#: windows/rkhelpsearchwindow.cpp:97
+#: windows/rkhelpsearchwindow.cpp:98
 msgid "Package:"
 msgstr "Πακέτο:"
 
-#: windows/rkhelpsearchwindow.cpp:103
+#: windows/rkhelpsearchwindow.cpp:104
 #, fuzzy
 msgid "All installed packages"
 msgstr "Εγκατεστημένα πακέτα"
 
-#: windows/rkhelpsearchwindow.cpp:104
+#: windows/rkhelpsearchwindow.cpp:105
 #, fuzzy
 msgid "All loaded packages"
 msgstr "Φορτωμένα πακέτα"
 
-#: windows/rkhelpsearchwindow.cpp:113
+#: windows/rkhelpsearchwindow.cpp:114
 msgid "Case sensitive"
 msgstr "Διάκριση πεζών/κεφαλαίων"
 
-#: windows/rkhelpsearchwindow.cpp:115
+#: windows/rkhelpsearchwindow.cpp:116
 msgid "Fuzzy matching"
 msgstr "Ασαφές ταίριασμα"
 
-#: windows/rkhelpsearchwindow.cpp:119
+#: windows/rkhelpsearchwindow.cpp:120
 msgid "Find"
 msgstr "Αναζήτηση"
 
-#: windows/rkhelpsearchwindow.cpp:136
+#: windows/rkhelpsearchwindow.cpp:137
 msgid "Help search"
 msgstr "Αναζήτηση βοήθειας"
 
-#: windows/rkhelpsearchwindow.cpp:168
+#: windows/rkhelpsearchwindow.cpp:169
 msgid "Find HTML help for %1"
 msgstr ""
 
-#: windows/rkhelpsearchwindow.cpp:231
+#: windows/rkhelpsearchwindow.cpp:236
 msgid ""
 "No help found on '%1'. Maybe the corresponding package is not installed/"
 "loaded, or maybe you mistyped the command. Try using Help->Search R Help for "
@@ -2786,15 +2786,15 @@ msgstr ""
 "εντολή. Προσπαθήστε χρησιμοποιώντας τη Βοήθεια->Αναζήτηση βοήθειας R για "
 "περισσότερες επιλογές."
 
-#: windows/rkhelpsearchwindow.cpp:231
+#: windows/rkhelpsearchwindow.cpp:236
 msgid "No help found"
 msgstr "Δεν βρέθηκε βοήθεια"
 
-#: windows/rkhelpsearchwindow.cpp:307
+#: windows/rkhelpsearchwindow.cpp:312
 msgid "Topic"
 msgstr "Θέμα"
 
-#: windows/rkhelpsearchwindow.cpp:309
+#: windows/rkhelpsearchwindow.cpp:314
 msgid "Package"
 msgstr "Πακέτο"
 

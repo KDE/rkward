@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: yenitr\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
 "group_id=50231&atid=459007\n"
-"POT-Creation-Date: 2011-05-17 20:10+0200\n"
+"POT-Creation-Date: 2011-05-25 10:10+0200\n"
 "PO-Revision-Date: 2007-04-12 10:40+0300\n"
 "Last-Translator: ertugrulerata <ertugrulerata@gmail.com>\n"
 "Language-Team:  <tr@li.org>\n"
@@ -511,8 +511,8 @@ msgstr ""
 msgid "Installed packages"
 msgstr "Kurulan paketler"
 
-#: dialogs/rkloadlibsdialog.cpp:306 windows/rkhelpsearchwindow.cpp:94
-#: windows/rkhelpsearchwindow.cpp:308
+#: dialogs/rkloadlibsdialog.cpp:306 windows/rkhelpsearchwindow.cpp:95
+#: windows/rkhelpsearchwindow.cpp:313
 msgid "Title"
 msgstr "Başlık"
 
@@ -2316,7 +2316,7 @@ msgstr ""
 msgid "Height:"
 msgstr ""
 
-#: settings/rksettingsmoduleplugins.cpp:59
+#: settings/rksettingsmoduleplugins.cpp:64
 msgid ""
 "Some plugins are available with both, a wizard-like interface and a "
 "traditional dialog interface. If both are available, which mode of "
@@ -2325,43 +2325,43 @@ msgstr ""
 "Bazı eklentiler hem kurulum sihirbazına hem de geleneksel diyalog arayüzüne "
 "uygundur. Eğer her ikisi de uygunsa hangi gösterim modunu tercih edersiniz?"
 
-#: settings/rksettingsmoduleplugins.cpp:69
+#: settings/rksettingsmoduleplugins.cpp:74
 msgid "Always prefer dialogs"
 msgstr "Daima diyalogları tercih et"
 
-#: settings/rksettingsmoduleplugins.cpp:72
+#: settings/rksettingsmoduleplugins.cpp:77
 msgid "Prefer recommended interface"
 msgstr "Daima önerilen arayüzü tercih et"
 
-#: settings/rksettingsmoduleplugins.cpp:75
+#: settings/rksettingsmoduleplugins.cpp:80
 msgid "Always prefer wizards"
 msgstr "Daima sihirbazları tercih et"
 
-#: settings/rksettingsmoduleplugins.cpp:87
+#: settings/rksettingsmoduleplugins.cpp:92
 msgid "R syntax display (in dialogs)"
 msgstr "R sözdizimi görünümü "
 
-#: settings/rksettingsmoduleplugins.cpp:90
+#: settings/rksettingsmoduleplugins.cpp:95
 msgid "Code shown by default"
 msgstr "Hangi sütunlar varsayılan olarak gösterilsin?"
 
-#: settings/rksettingsmoduleplugins.cpp:96
+#: settings/rksettingsmoduleplugins.cpp:101
 msgid "Default height of code display (pixels)"
 msgstr " Kod ekranının varsayılan yüksekliği(piksel)"
 
-#: settings/rksettingsmoduleplugins.cpp:108
+#: settings/rksettingsmoduleplugins.cpp:113
 msgid "Select .pluginmap file(s)"
 msgstr "pluginmap dosyası(ları) seç"
 
-#: settings/rksettingsmoduleplugins.cpp:115
+#: settings/rksettingsmoduleplugins.cpp:120
 msgid "Install or uninstall add-on plugin packs"
 msgstr ""
 
-#: settings/rksettingsmoduleplugins.cpp:134
+#: settings/rksettingsmoduleplugins.cpp:139
 msgid "Select .pluginmap-file"
 msgstr "pluginmap-dosya seç"
 
-#: settings/rksettingsmoduleplugins.cpp:139
+#: settings/rksettingsmoduleplugins.cpp:144
 msgid "Plugins"
 msgstr "Eklentiler"
 
@@ -2680,61 +2680,61 @@ msgstr "Komut çalışırken belirlenemeyen bir hata oluştu.\n"
 msgid "Configure"
 msgstr "Rkward'ı yapılandır"
 
-#: windows/rkhelpsearchwindow.cpp:70
+#: windows/rkhelpsearchwindow.cpp:71
 msgid "Find:"
 msgstr "Bul:"
 
-#: windows/rkhelpsearchwindow.cpp:73
+#: windows/rkhelpsearchwindow.cpp:74
 msgid "Fields:"
 msgstr "Alanlar:"
 
-#: windows/rkhelpsearchwindow.cpp:91 windows/robjectbrowser.cpp:295
+#: windows/rkhelpsearchwindow.cpp:92 windows/robjectbrowser.cpp:295
 msgid "All"
 msgstr "Hepsi"
 
-#: windows/rkhelpsearchwindow.cpp:92
+#: windows/rkhelpsearchwindow.cpp:93
 msgid "All but keywords"
 msgstr "Hepsi fakat anahtar kelimeler"
 
-#: windows/rkhelpsearchwindow.cpp:93
+#: windows/rkhelpsearchwindow.cpp:94
 msgid "Keywords"
 msgstr "Anahtar kelimeler"
 
-#: windows/rkhelpsearchwindow.cpp:97
+#: windows/rkhelpsearchwindow.cpp:98
 msgid "Package:"
 msgstr "Paket:"
 
-#: windows/rkhelpsearchwindow.cpp:103
+#: windows/rkhelpsearchwindow.cpp:104
 #, fuzzy
 msgid "All installed packages"
 msgstr "Kurulan paketler"
 
-#: windows/rkhelpsearchwindow.cpp:104
+#: windows/rkhelpsearchwindow.cpp:105
 #, fuzzy
 msgid "All loaded packages"
 msgstr "Yüklenen paketler"
 
-#: windows/rkhelpsearchwindow.cpp:113
+#: windows/rkhelpsearchwindow.cpp:114
 msgid "Case sensitive"
 msgstr "Büyük/küçük harf duyarlı"
 
-#: windows/rkhelpsearchwindow.cpp:115
+#: windows/rkhelpsearchwindow.cpp:116
 msgid "Fuzzy matching"
 msgstr "Bulanık karşılaştırma"
 
-#: windows/rkhelpsearchwindow.cpp:119
+#: windows/rkhelpsearchwindow.cpp:120
 msgid "Find"
 msgstr "Bul"
 
-#: windows/rkhelpsearchwindow.cpp:136
+#: windows/rkhelpsearchwindow.cpp:137
 msgid "Help search"
 msgstr "Yardım ara"
 
-#: windows/rkhelpsearchwindow.cpp:168
+#: windows/rkhelpsearchwindow.cpp:169
 msgid "Find HTML help for %1"
 msgstr ""
 
-#: windows/rkhelpsearchwindow.cpp:231
+#: windows/rkhelpsearchwindow.cpp:236
 msgid ""
 "No help found on '%1'. Maybe the corresponding package is not installed/"
 "loaded, or maybe you mistyped the command. Try using Help->Search R Help for "
@@ -2743,15 +2743,15 @@ msgstr ""
 "'%1' de yardım bulunamadı. Uygun paket kurulmamış/yüklenmemiş olabilir  veya "
 "komut doğru yazılmamış. Yardım->Daha fazla R yardımı kullanmayı deneyin."
 
-#: windows/rkhelpsearchwindow.cpp:231
+#: windows/rkhelpsearchwindow.cpp:236
 msgid "No help found"
 msgstr "Yardım bulunamadı"
 
-#: windows/rkhelpsearchwindow.cpp:307
+#: windows/rkhelpsearchwindow.cpp:312
 msgid "Topic"
 msgstr "Konu"
 
-#: windows/rkhelpsearchwindow.cpp:309
+#: windows/rkhelpsearchwindow.cpp:314
 msgid "Package"
 msgstr "Paket"
 

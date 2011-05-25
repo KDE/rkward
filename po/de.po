@@ -12,9 +12,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
-"Report-Msgid-Bugs-To: http://sourceforge."
-"net/tracker/?group_id=50231&atid=459007\n"
-"POT-Creation-Date: 2011-05-17 20:10+0200\n"
+"Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
+"group_id=50231&atid=459007\n"
+"POT-Creation-Date: 2011-05-25 10:10+0200\n"
 "PO-Revision-Date: 2011-05-17 22:25+0200\n"
 "Last-Translator: Stefan Rödiger <stefan_roediger@gmx.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -122,9 +122,9 @@ msgid ""
 msgstr ""
 "Ein Kommando das in der R-Engine läuft möchte das Sie eine oder mehrere Datei"
 "(en) editieren. Bitte betrachten die diese Dateien, editieren Sie diese "
-"falls notwendig und speichern Sie diese. "
-"Wenn Sie damit fertig sind, dann bitte den \"Erledigt\"-Button drücekn oder "
-"schließen Sie diesen Dialog um ihn erneut zu betrachten.\n"
+"falls notwendig und speichern Sie diese. Wenn Sie damit fertig sind, dann "
+"bitte den \"Erledigt\"-Button drücekn oder schließen Sie diesen Dialog um "
+"ihn erneut zu betrachten.\n"
 "\n"
 
 #: agents/showedittextfileagent.cpp:108
@@ -527,8 +527,8 @@ msgstr "Der Installationsprozess endete mit Code %1"
 msgid "Installed packages"
 msgstr "Installierte Pakete"
 
-#: dialogs/rkloadlibsdialog.cpp:306 windows/rkhelpsearchwindow.cpp:94
-#: windows/rkhelpsearchwindow.cpp:308
+#: dialogs/rkloadlibsdialog.cpp:306 windows/rkhelpsearchwindow.cpp:95
+#: windows/rkhelpsearchwindow.cpp:313
 msgid "Title"
 msgstr "Titel"
 
@@ -735,8 +735,7 @@ msgid ""
 msgstr ""
 "<p>RKWard ist vermutlich vor kurzen abgestürzt. Dies ist bedauerlich! "
 "Möglicherweise ist nicht alles verloren und mit etwas Glück wurden alle "
-"Daten "
-"rechtzeitig gespeichert.</p>"
+"Daten rechtzeitig gespeichert.</p>"
 
 #: dialogs/rkrecoverdialog.cpp:44
 msgid "<p>A workspace recovery file exists in <i>%2</i> as <i>%3</i>.</p>"
@@ -744,8 +743,8 @@ msgid_plural ""
 "<p>%1 workspace recovery files exist in <i>%2</i>, the most recent one of "
 "which is <i>%3</i>.</p>"
 msgstr[0] ""
-"<p>Ein Workspace-Wiederherstellungsdatei existiert in <i>%2</i> als <i>%3</i>"
-".</p>"
+"<p>Ein Workspace-Wiederherstellungsdatei existiert in <i>%2</i> als <i>%3</"
+"i>.</p>"
 msgstr[1] ""
 
 #: dialogs/rkrecoverdialog.cpp:45
@@ -755,9 +754,8 @@ msgid ""
 "manually.</p>"
 msgstr ""
 "<p>Möchten Sie diese Datei nun öffnen? <b>Hinweis</b>: Sie werden beim "
-"nächsten Start von "
-"RKWard wieder daraufhingewiesen, falls Sie die Dateien nicht manuell "
-"entfernen/umbenennen.</p>"
+"nächsten Start von RKWard wieder daraufhingewiesen, falls Sie die Dateien "
+"nicht manuell entfernen/umbenennen.</p>"
 
 #: dialogs/rkselectlistdialog.cpp:38
 msgid "<b>Select one or more:</b>"
@@ -1567,11 +1565,11 @@ msgid ""
 "now, and fix your installation</b>. For help with that, see <a href=\"http://"
 "p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</p></p>\n"
 msgstr ""
-"<p>\t-Ein Problem bei der Kommunikation mit R ist aufgetreten. "
-"Dies deutet auf eine fehlerhafte Installation hin.</p>"
-"\t\t\t<p><b>Sie sollten RKWard nun beenden und die Installation reparieren.</"
-"b>Hilfe finden Sie unter <a href=\"http://p.sf.net/rkward/compiling\">http://"
-"p.sf.net/rkward/compiling</a>.</p>\n"
+"<p>\t-Ein Problem bei der Kommunikation mit R ist aufgetreten. Dies deutet "
+"auf eine fehlerhafte Installation hin.</p>\t\t\t<p><b>Sie sollten RKWard nun "
+"beenden und die Installation reparieren.</b>Hilfe finden Sie unter <a href="
+"\"http://p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</"
+"p>\n"
 
 #: rkconsole.cpp:115
 msgid "R Console"
@@ -1630,8 +1628,7 @@ msgstr ""
 "Jedoch ist gerade ein anderes Kommando in der Konsole aktiv. Wollen Sie das "
 "Kommando in der Konsole anhängen, oder soll die Konsole zunächst zurücksetzt "
 "werden? Abbrechen drücken falls das neue Kommando nun nicht ausgeführt "
-"werden "
-"soll."
+"werden soll."
 
 #: rkconsole.cpp:958
 msgid "R Console is busy"
@@ -1676,10 +1673,8 @@ msgid ""
 "Should \"native\" file dialogs be disabled in RKWard?"
 msgstr ""
 "Ihre KDE-Installation ist so konfiguriert das \"native\" Dateidialoge "
-"verwendet werden. Dies "
-"kann in einigen Fällen Fehler verursachen. Wir empfehlen daher \"native\" "
-"Dateidialoge zu "
-"deaktivieren.\n"
+"verwendet werden. Dies kann in einigen Fällen Fehler verursachen. Wir "
+"empfehlen daher \"native\" Dateidialoge zu deaktivieren.\n"
 "Sollten \"native\" Dateidialoge in RKWard unterdrückt werden?"
 
 #: rkward.cpp:214
@@ -2151,8 +2146,8 @@ msgstr "Startaktion (*)"
 msgid ""
 "Load .RData-file from current directory, if available (R option '--restore')"
 msgstr ""
-"Lade .RData-Datei vom aktuellen Verzeichnis, falls verfügbar (R Option "
-"'--restore')"
+"Lade .RData-Datei vom aktuellen Verzeichnis, falls verfügbar (R Option '--"
+"restore')"
 
 #: settings/rksettingsmodulegeneral.cpp:71
 msgid "Ask for a file to open"
@@ -2377,7 +2372,7 @@ msgstr "Weite:"
 msgid "Height:"
 msgstr "Höhe:"
 
-#: settings/rksettingsmoduleplugins.cpp:59
+#: settings/rksettingsmoduleplugins.cpp:64
 msgid ""
 "Some plugins are available with both, a wizard-like interface and a "
 "traditional dialog interface. If both are available, which mode of "
@@ -2387,43 +2382,43 @@ msgstr ""
 "artigen und einem traditionell Dialog-basierten. Welchen Modus bevorzugen "
 "Sie, falls beide vorhanden sind?"
 
-#: settings/rksettingsmoduleplugins.cpp:69
+#: settings/rksettingsmoduleplugins.cpp:74
 msgid "Always prefer dialogs"
 msgstr "Bevorzuge immer Dialoge"
 
-#: settings/rksettingsmoduleplugins.cpp:72
+#: settings/rksettingsmoduleplugins.cpp:77
 msgid "Prefer recommended interface"
 msgstr "Bevorzuge empfohlene Interfaces"
 
-#: settings/rksettingsmoduleplugins.cpp:75
+#: settings/rksettingsmoduleplugins.cpp:80
 msgid "Always prefer wizards"
 msgstr "Bevorzuge immer Wizards"
 
-#: settings/rksettingsmoduleplugins.cpp:87
+#: settings/rksettingsmoduleplugins.cpp:92
 msgid "R syntax display (in dialogs)"
 msgstr "R-Syntaxanzeige (in Dialogen)"
 
-#: settings/rksettingsmoduleplugins.cpp:90
+#: settings/rksettingsmoduleplugins.cpp:95
 msgid "Code shown by default"
 msgstr "Code standardmäßig anzeigen"
 
-#: settings/rksettingsmoduleplugins.cpp:96
+#: settings/rksettingsmoduleplugins.cpp:101
 msgid "Default height of code display (pixels)"
 msgstr "Standardhöhe vom Code-Display (Pixel)"
 
-#: settings/rksettingsmoduleplugins.cpp:108
+#: settings/rksettingsmoduleplugins.cpp:113
 msgid "Select .pluginmap file(s)"
 msgstr "Wähle .pluginmap-Datei(en )"
 
-#: settings/rksettingsmoduleplugins.cpp:115
+#: settings/rksettingsmoduleplugins.cpp:120
 msgid "Install or uninstall add-on plugin packs"
 msgstr "Installiere oder deinstalliere Add-on Plugin Packete"
 
-#: settings/rksettingsmoduleplugins.cpp:134
+#: settings/rksettingsmoduleplugins.cpp:139
 msgid "Select .pluginmap-file"
 msgstr "Wähle .pluginmap-Datei"
 
-#: settings/rksettingsmoduleplugins.cpp:139
+#: settings/rksettingsmoduleplugins.cpp:144
 msgid "Plugins"
 msgstr "Plugins"
 
@@ -2738,59 +2733,59 @@ msgstr ""
 msgid "Configure"
 msgstr "Konfigurieren"
 
-#: windows/rkhelpsearchwindow.cpp:70
+#: windows/rkhelpsearchwindow.cpp:71
 msgid "Find:"
 msgstr "Finde:"
 
-#: windows/rkhelpsearchwindow.cpp:73
+#: windows/rkhelpsearchwindow.cpp:74
 msgid "Fields:"
 msgstr "Felder:"
 
-#: windows/rkhelpsearchwindow.cpp:91 windows/robjectbrowser.cpp:295
+#: windows/rkhelpsearchwindow.cpp:92 windows/robjectbrowser.cpp:295
 msgid "All"
 msgstr "Alle"
 
-#: windows/rkhelpsearchwindow.cpp:92
+#: windows/rkhelpsearchwindow.cpp:93
 msgid "All but keywords"
 msgstr "Alle außer Schlüsselwörter"
 
-#: windows/rkhelpsearchwindow.cpp:93
+#: windows/rkhelpsearchwindow.cpp:94
 msgid "Keywords"
 msgstr "Schlüsselwörter"
 
-#: windows/rkhelpsearchwindow.cpp:97
+#: windows/rkhelpsearchwindow.cpp:98
 msgid "Package:"
 msgstr "Paket:"
 
-#: windows/rkhelpsearchwindow.cpp:103
+#: windows/rkhelpsearchwindow.cpp:104
 msgid "All installed packages"
 msgstr "Alle installierten Pakete"
 
-#: windows/rkhelpsearchwindow.cpp:104
+#: windows/rkhelpsearchwindow.cpp:105
 msgid "All loaded packages"
 msgstr "Geladene Pakete"
 
-#: windows/rkhelpsearchwindow.cpp:113
+#: windows/rkhelpsearchwindow.cpp:114
 msgid "Case sensitive"
 msgstr "Groß/Kleinschreibung beachten"
 
-#: windows/rkhelpsearchwindow.cpp:115
+#: windows/rkhelpsearchwindow.cpp:116
 msgid "Fuzzy matching"
 msgstr "Fuzzy Übereinstimmung"
 
-#: windows/rkhelpsearchwindow.cpp:119
+#: windows/rkhelpsearchwindow.cpp:120
 msgid "Find"
 msgstr "Finde"
 
-#: windows/rkhelpsearchwindow.cpp:136
+#: windows/rkhelpsearchwindow.cpp:137
 msgid "Help search"
 msgstr "Suche in Hilfe"
 
-#: windows/rkhelpsearchwindow.cpp:168
+#: windows/rkhelpsearchwindow.cpp:169
 msgid "Find HTML help for %1"
 msgstr "Finde HTML-Hilfe für %1"
 
-#: windows/rkhelpsearchwindow.cpp:231
+#: windows/rkhelpsearchwindow.cpp:236
 msgid ""
 "No help found on '%1'. Maybe the corresponding package is not installed/"
 "loaded, or maybe you mistyped the command. Try using Help->Search R Help for "
@@ -2800,15 +2795,15 @@ msgstr ""
 "installiert/geladen, oder vielleicht haben Sie bei dem Befehl vertippt. "
 "Versuchen Sie Hilfe -> Search R Help for more options."
 
-#: windows/rkhelpsearchwindow.cpp:231
+#: windows/rkhelpsearchwindow.cpp:236
 msgid "No help found"
 msgstr "Keine Hilfe gefunden"
 
-#: windows/rkhelpsearchwindow.cpp:307
+#: windows/rkhelpsearchwindow.cpp:312
 msgid "Topic"
 msgstr "Inhalt"
 
-#: windows/rkhelpsearchwindow.cpp:309
+#: windows/rkhelpsearchwindow.cpp:314
 msgid "Package"
 msgstr "Paket"
 
@@ -3071,8 +3066,7 @@ msgid ""
 "\n"
 msgstr ""
 "Falls Sie versuchen den Schritt oberhalb zu wiederholen, tritt dann das "
-"Problem wieder auf (nein, "
-"manchmal, immer)?\n"
+"Problem wieder auf (nein, manchmal, immer)?\n"
 "###Bitte ausfüllen###\n"
 "\n"
 
@@ -3084,8 +3078,7 @@ msgid ""
 "\n"
 msgstr ""
 "Falls zutreffend: Wenn Sie das Selbe in einer R-Sitzung außerhalb von RKWard "
-"durchführen, "
-"treten dann die selben Probleme auf?\n"
+"durchführen, treten dann die selben Probleme auf?\n"
 "###Bitte ausfüllen###\n"
 "\n"
 
@@ -3099,8 +3092,7 @@ msgid ""
 msgstr ""
 "Haben Sie weitere Hinweise die uns helfen können das Problem einzugrenzen? "
 "Insbesondere, falls zutreffend, können Sie uns Probedaten und R-Probekode "
-"zukommen lassen "
-"um dieses Problem reproduzieren zu können?\n"
+"zukommen lassen um dieses Problem reproduzieren zu können?\n"
 "###Bitte ausfüllen###\n"
 "\n"
 
@@ -3112,8 +3104,7 @@ msgid ""
 msgstr ""
 "Bitte warten Sie solange Informationen über Ihr Setup gesammelt werden.\n"
 "Im Fall das Backend ist \"gestorben\" oder sich aufgehangen hat, möchten Sie "
-"möglicherweise "
-"\"Abbrechen\" wählen um diesen Schritt zu überspringen."
+"möglicherweise \"Abbrechen\" wählen um diesen Schritt zu überspringen."
 
 #: windows/rktoplevelwindowgui.cpp:154
 msgid "Gathering setup information"
@@ -3132,13 +3123,10 @@ msgid ""
 "p>"
 msgstr ""
 "<p><b>Wo sollte Ich Bugs oder Wünsche melden?</b></p><p>Bitte übermitteln "
-"Sie Ihre "
-"Bugs oder Wünsche an <a href=\"%1\">%1</a> oder senden Sie eine E-Mail an <a "
-"href=\"mailto:"
-"%2\">%2</a>.</p><p><b>Welche Informationen sollte übermitteln?</b></p><p>"
-"Bitte kopieren Sie "
-"die unten gezeigte Information und füllen Sie Dateils zu den Fragen aus.</"
-"p>"
+"Sie Ihre Bugs oder Wünsche an <a href=\"%1\">%1</a> oder senden Sie eine E-"
+"Mail an <a href=\"mailto:%2\">%2</a>.</p><p><b>Welche Informationen sollte "
+"übermitteln?</b></p><p>Bitte kopieren Sie die unten gezeigte Information und "
+"füllen Sie Dateils zu den Fragen aus.</p>"
 
 #: windows/rkwindowcatcher.cpp:69
 msgid ""

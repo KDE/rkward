@@ -16,16 +16,17 @@ msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
 "group_id=50231&atid=459007\n"
-"POT-Creation-Date: 2011-05-17 20:10+0200\n"
-"PO-Revision-Date: 2011-03-23 19:29+0100\n"
-"Last-Translator: Pavel Fric\n"
+"POT-Creation-Date: 2011-05-25 10:10+0200\n"
+"PO-Revision-Date: 2011-05-19 06:43+0000\n"
+"Last-Translator: fri <pavelfric@seznam.cz>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Lokalize 1.1\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Launchpad-Export-Date: 2011-05-25 08:08+0000\n"
+"X-Generator: Launchpad (build 13085)\n"
 
 #: agents/rkeditobjectagent.cpp:56
 msgid ""
@@ -110,7 +111,7 @@ msgstr "Příkaz běžící v jádru R chce, abyste viděl následující soubor
 
 #: agents/showedittextfileagent.cpp:103
 msgid "Showing file(s)"
-msgstr "Ukazuje se soubor(y) "
+msgstr "Ukazuje se soubor(y)"
 
 #: agents/showedittextfileagent.cpp:108
 msgid ""
@@ -442,7 +443,7 @@ msgstr "Zjištěny zdvojené sloupce"
 
 #: dataeditor/twintable.cpp:191
 msgid " [read-only]"
-msgstr "[pouze ke čtení]"
+msgstr " [pouze ke čtení]"
 
 #: dataeditor/twintable.cpp:236
 msgid "Insert new variable left"
@@ -517,8 +518,8 @@ msgstr "Instalační proces byl ukončen s kódem pro ukončení %1"
 msgid "Installed packages"
 msgstr "Nainstalované balíčky"
 
-#: dialogs/rkloadlibsdialog.cpp:306 windows/rkhelpsearchwindow.cpp:94
-#: windows/rkhelpsearchwindow.cpp:308
+#: dialogs/rkloadlibsdialog.cpp:306 windows/rkhelpsearchwindow.cpp:95
+#: windows/rkhelpsearchwindow.cpp:313
 msgid "Title"
 msgstr "Název"
 
@@ -731,6 +732,9 @@ msgstr[0] ""
 "i>.</p>"
 msgstr[1] ""
 "<p>%1 soubory pro obnovení pracovního prostředí existují v <i>%2</i>, "
+"nejposlednějším je <i>%3</i>.</p>"
+msgstr[2] ""
+"<p>%1 souborů pro obnovení pracovního prostředí existují v <i>%2</i>, "
 "nejposlednějším je <i>%3</i>.</p>"
 
 #: dialogs/rkrecoverdialog.cpp:45
@@ -1087,9 +1091,8 @@ msgid "Insert NAs where needed"
 msgstr "Vložit NA, kde je to potřeba"
 
 #: misc/rkstandardactions.cpp:34
-#, fuzzy
 msgid "Copy lines to output"
-msgstr "Kopírovat do výstupu"
+msgstr "Kopírovat řádky do výstupu"
 
 #: misc/rkstandardactions.cpp:52
 msgid "Run current line"
@@ -1505,7 +1508,7 @@ msgstr ""
 
 #: rbackend/rkrbackend.cpp:448
 msgid "The R engine has shut down with status: %1"
-msgstr "Jádro R bylo zastaveno se stavem: %1 "
+msgstr "Jádro R bylo zastaveno se stavem: %1"
 
 #: rbackend/rkrbackend.cpp:467
 msgid ""
@@ -1589,9 +1592,8 @@ msgid "Copy selection literally"
 msgstr "Kopírovat výběr doslovně"
 
 #: rkconsole.cpp:923
-#, fuzzy
 msgid "Copy commands, only"
-msgstr "Některé příkazy nebyly zrušeny"
+msgstr "Kopírovat pouze příkazy"
 
 #: rkconsole.cpp:930
 msgid "Print Console"
@@ -1658,19 +1660,23 @@ msgid ""
 "\" file dialogs.\n"
 "Should \"native\" file dialogs be disabled in RKWard?"
 msgstr ""
+"Vaše instalace KDE je nastavena tak, aby používala své vlastní souborové "
+"dialogy. Je známo, že tato věc v některých případech vede k určitým známým "
+"potížím, a proto se doporučuje tyto \"původní\" souborové dialogy KDE "
+"zakázat.\n"
+"Mají se v RKWardu tyto \"původní\" souborové dialogy zakázat?"
 
 #: rkward.cpp:214
 msgid "Potential problem with your configuration"
-msgstr ""
+msgstr "Možné potíže s vaším nastavením"
 
 #: rkward.cpp:214
-#, fuzzy
 msgid "Yes, disable"
-msgstr "Náhled zakázán"
+msgstr "Ano, zakázat"
 
 #: rkward.cpp:214
 msgid "No, use \"native\" file dialogs"
-msgstr ""
+msgstr "Ne, používat \"původní\" souborové dialogy"
 
 #: rkward.cpp:255
 msgid "Setting up plugins..."
@@ -1690,7 +1696,7 @@ msgstr "Nenalezeny žádné (platné) přídavné moduly"
 
 #: rkward.cpp:305
 msgid "Carbon Copy Settings"
-msgstr ""
+msgstr "Nastavení Carbon Copy"
 
 #: rkward.cpp:319 settings/rksettingsmoduleobjectbrowser.cpp:128
 msgid "Workspace"
@@ -1766,17 +1772,15 @@ msgstr "Uložit současný dokument jako..."
 
 #: rkward.cpp:394
 msgid "Quits the application"
-msgstr "Ukončí aplikaci"
+msgstr "Ukončí program"
 
 #: rkward.cpp:397
-#, fuzzy
 msgid "Interrupt all commands"
-msgstr "Přerušit prováděný příkaz"
+msgstr "Přerušit všechny příkazy"
 
 #: rkward.cpp:403
-#, fuzzy
 msgid "CC commands to output..."
-msgstr "Kopírovat do výstupu"
+msgstr "Příkazy CC do výstupu"
 
 #: rkward.cpp:407 windows/robjectbrowser.cpp:136
 msgid "Load / Unload Packages"
@@ -1904,9 +1908,8 @@ msgid "print (x)"
 msgstr "Tisk (x)"
 
 #: robjectviewer.cpp:60
-#, fuzzy
 msgid "str (x)"
-msgstr "Shrnutí (x)"
+msgstr "str (x)"
 
 #: robjectviewer.cpp:88
 msgid "<b>Object was deleted!</b>"
@@ -2081,15 +2084,14 @@ msgid "Console"
 msgstr "Ovládací panel neboli konzole"
 
 #: settings/rksettingsmoduledebug.cpp:42
-#, fuzzy
 msgid ""
 "<b>These settings are for debugging purposes, only.</b> It is safe to leave "
 "them untouched. Also, these settings will only apply to the current session, "
 "and will not be saved."
 msgstr ""
-"<b>Tato nastavení tu jsou jen pro účely ladění.</b> Je jistější ponechat je "
-"beze změny. Žádné z těchto nastavení nebude uloženo. Použijí se pouze pro "
-"nynější sezení."
+"<b>Tato nastavení slouží jenom účelu ladění.</b>Je bezpečné ponechat je "
+"nezměněné tak, jak jsou. Tato nastavení se použijí pouze na nynější sezení a "
+"nebudou uložena."
 
 #: settings/rksettingsmoduledebug.cpp:48
 msgid "Debug level"
@@ -2171,9 +2173,9 @@ msgid "Do not save/restore workplace layout"
 msgstr "Neukládat rozvržení pracoviště"
 
 #: settings/rksettingsmodulegeneral.cpp:108
-#, fuzzy
 msgid "When loading a workspace, change to the corresponding directory."
-msgstr "Nahrát pracovní prostředí z nynějšího adresáře"
+msgstr ""
+"Při nahrávání pracovního prostředí se přepnout do odpovídajícího adresáře."
 
 #: settings/rksettingsmodulegeneral.cpp:115
 msgid ""
@@ -2253,7 +2255,7 @@ msgstr "Ukázat funkce"
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:57
 msgid "Show variables"
-msgstr "Ukázat proměnné "
+msgstr "Ukázat proměnné"
 
 #: settings/rksettingsmoduleobjectbrowser.cpp:62
 msgid "Which columns should be shown by default?"
@@ -2284,25 +2286,24 @@ msgid "Add the name of the package that no structure should be fetched for"
 msgstr "Přidat název balíčku, jehož skladba se nemá vyvolat"
 
 #: settings/rksettingsmoduleoutput.cpp:47
-#, fuzzy
 msgid "Carbon copy commands to output"
-msgstr "Kopírovat do výstupu"
+msgstr "Příkazy Carbon Copy do výstupu"
 
 #: settings/rksettingsmoduleoutput.cpp:53
 msgid "Commands entered in the console"
-msgstr ""
+msgstr "Příkazy zadané v konzoli"
 
 #: settings/rksettingsmoduleoutput.cpp:57
 msgid "Commands run via the 'Run' menu"
-msgstr ""
+msgstr "Příkazy spuštěné přes nabídku 'Spustit'"
 
 #: settings/rksettingsmoduleoutput.cpp:61
 msgid "Commands originating from dialogs and plugins"
-msgstr ""
+msgstr "Příkazy pocházející z dialogů a přídavných modulů"
 
 #: settings/rksettingsmoduleoutput.cpp:65
 msgid "Also carbon copy the command ouptut"
-msgstr ""
+msgstr "Také Carbon Copy výstup příkazu"
 
 #: settings/rksettingsmoduleoutput.cpp:157
 msgid "Output Window options"
@@ -2352,7 +2353,7 @@ msgstr "Šířka:"
 msgid "Height:"
 msgstr "Výška:"
 
-#: settings/rksettingsmoduleplugins.cpp:59
+#: settings/rksettingsmoduleplugins.cpp:64
 msgid ""
 "Some plugins are available with both, a wizard-like interface and a "
 "traditional dialog interface. If both are available, which mode of "
@@ -2362,43 +2363,43 @@ msgstr ""
 "rozhraní ve stylu průvodce, a druhým tradiční dialog. V případě, že je "
 "dostupné obojí, dáváte přednost kterému z nich?"
 
-#: settings/rksettingsmoduleplugins.cpp:69
+#: settings/rksettingsmoduleplugins.cpp:74
 msgid "Always prefer dialogs"
 msgstr "Vždy dávat přednost dialogům"
 
-#: settings/rksettingsmoduleplugins.cpp:72
+#: settings/rksettingsmoduleplugins.cpp:77
 msgid "Prefer recommended interface"
 msgstr "Dávat přednost doporučenému rozhraní"
 
-#: settings/rksettingsmoduleplugins.cpp:75
+#: settings/rksettingsmoduleplugins.cpp:80
 msgid "Always prefer wizards"
 msgstr "Vždy dávat přednost průvodcům"
 
-#: settings/rksettingsmoduleplugins.cpp:87
+#: settings/rksettingsmoduleplugins.cpp:92
 msgid "R syntax display (in dialogs)"
 msgstr "Zobrazení skladby R (v dialozích)"
 
-#: settings/rksettingsmoduleplugins.cpp:90
+#: settings/rksettingsmoduleplugins.cpp:95
 msgid "Code shown by default"
 msgstr "Ve výchozím nastavení ukazovat kód"
 
-#: settings/rksettingsmoduleplugins.cpp:96
+#: settings/rksettingsmoduleplugins.cpp:101
 msgid "Default height of code display (pixels)"
 msgstr "Výchozí velikost zobrazovaného kódu (pixely)"
 
-#: settings/rksettingsmoduleplugins.cpp:108
+#: settings/rksettingsmoduleplugins.cpp:113
 msgid "Select .pluginmap file(s)"
 msgstr "Vybrat soubor(y) .pluginmap"
 
-#: settings/rksettingsmoduleplugins.cpp:115
+#: settings/rksettingsmoduleplugins.cpp:120
 msgid "Install or uninstall add-on plugin packs"
 msgstr "Instalovat nebo odinstalovat doplňkové balíčky s přídavnými moduly"
 
-#: settings/rksettingsmoduleplugins.cpp:134
+#: settings/rksettingsmoduleplugins.cpp:139
 msgid "Select .pluginmap-file"
 msgstr "Vybrat soubor .pluginmap"
 
-#: settings/rksettingsmoduleplugins.cpp:139
+#: settings/rksettingsmoduleplugins.cpp:144
 msgid "Plugins"
 msgstr "Přídavné moduly"
 
@@ -2527,7 +2528,7 @@ msgid ""
 "you specify in this list"
 msgstr ""
 "Poznámka: Výchozí nastavení při spuštění se budou vždy používat jako "
-"doplnění k umístění, která stanovíte v tomto seznamu "
+"doplnění k umístění, která stanovíte v tomto seznamu"
 
 #: settings/rksettingsmoduler.cpp:381
 msgid "Add R Library Directory"
@@ -2665,7 +2666,7 @@ msgstr "Uložit skript jako..."
 
 #: windows/rkcommandeditorwindow.cpp:311 windows/rkcommandeditorwindow.cpp:490
 msgid " [modified]"
-msgstr "[změněný]"
+msgstr " [změněný]"
 
 #: windows/rkcommandeditorwindow.cpp:318
 msgid "The document \"%1\" has been modified. Close it anyway?"
@@ -2710,59 +2711,59 @@ msgstr "Během provádění příkazu se vyskytla neurčená chyba.\n"
 msgid "Configure"
 msgstr "Nastavit"
 
-#: windows/rkhelpsearchwindow.cpp:70
+#: windows/rkhelpsearchwindow.cpp:71
 msgid "Find:"
 msgstr "Najít:"
 
-#: windows/rkhelpsearchwindow.cpp:73
+#: windows/rkhelpsearchwindow.cpp:74
 msgid "Fields:"
 msgstr "Pole:"
 
-#: windows/rkhelpsearchwindow.cpp:91 windows/robjectbrowser.cpp:295
+#: windows/rkhelpsearchwindow.cpp:92 windows/robjectbrowser.cpp:295
 msgid "All"
 msgstr "Vše"
 
-#: windows/rkhelpsearchwindow.cpp:92
+#: windows/rkhelpsearchwindow.cpp:93
 msgid "All but keywords"
 msgstr "Vše kromě klíčových slov"
 
-#: windows/rkhelpsearchwindow.cpp:93
+#: windows/rkhelpsearchwindow.cpp:94
 msgid "Keywords"
 msgstr "Klíčová slova"
 
-#: windows/rkhelpsearchwindow.cpp:97
+#: windows/rkhelpsearchwindow.cpp:98
 msgid "Package:"
 msgstr "Balíček:"
 
-#: windows/rkhelpsearchwindow.cpp:103
+#: windows/rkhelpsearchwindow.cpp:104
 msgid "All installed packages"
 msgstr "Všechny nainstalované balíčky"
 
-#: windows/rkhelpsearchwindow.cpp:104
+#: windows/rkhelpsearchwindow.cpp:105
 msgid "All loaded packages"
 msgstr "Všechny nahrané balíčky"
 
-#: windows/rkhelpsearchwindow.cpp:113
+#: windows/rkhelpsearchwindow.cpp:114
 msgid "Case sensitive"
 msgstr "Psaní velkých a malých písmen"
 
-#: windows/rkhelpsearchwindow.cpp:115
+#: windows/rkhelpsearchwindow.cpp:116
 msgid "Fuzzy matching"
 msgstr "Rozhodnutí o shodě podle aktuálních podmínek"
 
-#: windows/rkhelpsearchwindow.cpp:119
+#: windows/rkhelpsearchwindow.cpp:120
 msgid "Find"
 msgstr "Najít"
 
-#: windows/rkhelpsearchwindow.cpp:136
+#: windows/rkhelpsearchwindow.cpp:137
 msgid "Help search"
 msgstr "Hledat v nápovědě"
 
-#: windows/rkhelpsearchwindow.cpp:168
+#: windows/rkhelpsearchwindow.cpp:169
 msgid "Find HTML help for %1"
 msgstr "Najít nápovědu v HTML pro %1"
 
-#: windows/rkhelpsearchwindow.cpp:231
+#: windows/rkhelpsearchwindow.cpp:236
 msgid ""
 "No help found on '%1'. Maybe the corresponding package is not installed/"
 "loaded, or maybe you mistyped the command. Try using Help->Search R Help for "
@@ -2772,15 +2773,15 @@ msgstr ""
 "nainstalován/nahrán, nebo jste udělal překlep při psaní příkazu. Vyzkoušejte "
 "Nápověda -> Hledat nápovědu k R kvůli více podrobnostem."
 
-#: windows/rkhelpsearchwindow.cpp:231
+#: windows/rkhelpsearchwindow.cpp:236
 msgid "No help found"
 msgstr "Nenalezena žádná nápověda"
 
-#: windows/rkhelpsearchwindow.cpp:307
+#: windows/rkhelpsearchwindow.cpp:312
 msgid "Topic"
 msgstr "Obsah"
 
-#: windows/rkhelpsearchwindow.cpp:309
+#: windows/rkhelpsearchwindow.cpp:314
 msgid "Package"
 msgstr "Balíček"
 
@@ -2905,9 +2906,8 @@ msgid "Attach"
 msgstr "Přiložit"
 
 #: windows/rktoolwindowbar.cpp:276
-#, fuzzy
 msgid "Position"
-msgstr "Popis"
+msgstr "Poloha"
 
 #: windows/rktoolwindowbar.cpp:277
 msgid "Left Sidebar"
@@ -2927,7 +2927,7 @@ msgstr "Dolní postranní panel"
 
 #: windows/rktoolwindowbar.cpp:281
 msgid "Not shown in sidebar"
-msgstr ""
+msgstr "Nezobrazeno v postranním panelu"
 
 #: windows/rktoplevelwindowgui.cpp:59
 msgid "Help on R"
@@ -2962,9 +2962,8 @@ msgid "Next Window"
 msgstr "Další okno"
 
 #: windows/rktoplevelwindowgui.cpp:87
-#, fuzzy
 msgid "Show/Hide %1"
-msgstr "Ukázat/Skrýt konzoli neboli ovládací panel"
+msgstr "Ukázat/Skrýt %1"
 
 #: windows/rktoplevelwindowgui.cpp:93
 msgid "Activate Document view"
@@ -3015,7 +3014,7 @@ msgstr ""
 
 #: windows/rktoplevelwindowgui.cpp:146
 msgid "---Problem description---\n"
-msgstr ""
+msgstr "---Popis potíží---\n"
 
 #: windows/rktoplevelwindowgui.cpp:147
 msgid ""
@@ -3023,6 +3022,9 @@ msgid ""
 "###Please fill in###\n"
 "\n"
 msgstr ""
+"Podejte, prosím, krátké shrnutí potíží:\n"
+"###Vyplňte, prosím###\n"
+"\n"
 
 #: windows/rktoplevelwindowgui.cpp:148
 msgid ""
@@ -3030,6 +3032,9 @@ msgid ""
 "###Please fill in###\n"
 "\n"
 msgstr ""
+"Co jste - popsáno podrobně - dělal předtím, než se objevily tyto potíže?\n"
+"###Vyplňte, prosím###\n"
+"\n"
 
 #: windows/rktoplevelwindowgui.cpp:149
 msgid ""
@@ -3038,6 +3043,10 @@ msgid ""
 "###Please fill in###\n"
 "\n"
 msgstr ""
+"Když zkoušíte zopakovat to, co jste popsal výše, nastanou potíže opět (ne, "
+"někdy, vždy)?\n"
+"###Vyplňte, prosím###\n"
+"\n"
 
 #: windows/rktoplevelwindowgui.cpp:150
 msgid ""
@@ -3046,6 +3055,10 @@ msgid ""
 "###Please fill in###\n"
 "\n"
 msgstr ""
+"Je-li to možné zkusit: Když uděláte tu samou věc v sezení R mimo RKWard, "
+"vidíte tu samou potíž?\n"
+"###Vyplňte, prosím###\n"
+"\n"
 
 #: windows/rktoplevelwindowgui.cpp:151
 msgid ""
@@ -3055,6 +3068,11 @@ msgid ""
 "###Please fill in###\n"
 "\n"
 msgstr ""
+"Máte nějaké další informace, které by nám pomohly vysledovat tuto potíž? A "
+"zvláště, pokud je to možné, můžete nám poskytnout vzorek dat a ukázkový kód "
+"R, který by opakoval tyto potíže?\n"
+"###Vyplňte, prosím###\n"
+"\n"
 
 #: windows/rktoplevelwindowgui.cpp:154
 msgid ""
@@ -3062,11 +3080,14 @@ msgid ""
 "In case the backend has died or hung up, you may want to press 'Cancel' to "
 "skip this step."
 msgstr ""
+"Počkejte, prosím, okamžik, dokud se neshromáždí některé údaje vztahující se "
+"k vašemu nastavení.\n"
+"V případě, že jádro zheblo, nebo se zaseklo, můžete stisknout \"Zrušit\" pro "
+"přeskočení tohoto kroku."
 
 #: windows/rktoplevelwindowgui.cpp:154
-#, fuzzy
 msgid "Gathering setup information"
-msgstr "Jádro R požaduje údaje"
+msgstr "Shromažďují se údaje o nastavení"
 
 #: windows/rktoplevelwindowgui.cpp:166
 msgid "Reporting bugs in RKWard"
@@ -3080,6 +3101,11 @@ msgid ""
 "copy the information shown below, and fill in the details to the questions.</"
 "p>"
 msgstr ""
+"<p><b>Kam můžu nahlásit chyby nebo svá přání?</b></p><p>Pošlete, prsím "
+"hlášení o chybách nebo svá přání na <a href=\"%1\">%1</a> nebo pošlete "
+"elektronický dopis <a href=\"mailto:%2\">%2</a>.</p><p><b>Jaké informace "
+"bych měl poskytnout?</b></p><p>Zkopírujte, prosím, informace zobrazené níže, "
+"a vyplňte podrobně odpovědi na otázky.</p>"
 
 #: windows/rkwindowcatcher.cpp:69
 msgid ""
@@ -3110,7 +3136,7 @@ msgstr ""
 
 #: windows/rkwindowcatcher.cpp:69
 msgid "Could not embed R X11 window"
-msgstr "Nepodařilo se vložit okno X11 s R "
+msgstr "Nepodařilo se vložit okno X11 s R"
 
 #: windows/rkwindowcatcher.cpp:148
 msgid "An error occurred"
@@ -3379,9 +3405,8 @@ msgid "R workspace browser"
 msgstr "Prohlížeč pracovního prostředí R"
 
 #: windows/robjectbrowser.cpp:68
-#, fuzzy
 msgid "R Workspace"
-msgstr "Pracovní prostředí"
+msgstr "Pracovní prostředí R"
 
 #: windows/robjectbrowser.cpp:120
 msgid "Search Help"
@@ -3615,15 +3640,26 @@ msgstr "&Přesunutí nástrojů"
 #: rc.cpp:139
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Pavel Fric"
+msgstr "Pavel Fric, ,Launchpad Contributions:,RKWard Team,fri"
 
 #: rc.cpp:140
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "fripohled.blogspot.com"
+msgstr ""
+"fripohled.blogspot.com,,,rkward-tracker@lists.sourceforge.net,"
+"pavelfric@seznam.cz"
 
 #~ msgid "Copy selection cleaned"
 #~ msgstr "Kopírovat výběr vyčištěný"
+
+#~ msgid ""
+#~ "<b>These settings are for debugging purposes, only.</b> It is safe to "
+#~ "leave the untouched. Also, these settings will only apply to the current "
+#~ "session, and not be saved."
+#~ msgstr ""
+#~ "<b>Tato nastavení tu jsou jen pro účely ladění.</b> Je jistější ponechat "
+#~ "je beze změny. Žádné z těchto nastavení nebude uloženo. Použijí se pouze "
+#~ "pro nynější sezení."
 
 #~ msgid "Attachment"
 #~ msgstr "Příloha"
@@ -3642,6 +3678,9 @@ msgstr "fripohled.blogspot.com"
 
 #~ msgid "Show/Hide Pending Jobs"
 #~ msgstr "Ukázat/Skrýt úkoly čekající na vyřízení"
+
+#~ msgid "Show/Hide Console"
+#~ msgstr "Ukázat/Skrýt konzoli neboli ovládací panel"
 
 #~ msgid "Show/Hide R Help Search"
 #~ msgstr "Ukázat/Skrýt okno pro hledání v nápovědě k R"
@@ -3910,3 +3949,13 @@ msgstr "fripohled.blogspot.com"
 
 #~ msgid "R Help"
 #~ msgstr "R Hilfe"
+
+#~ msgid ""
+#~ "_: NAME OF TRANSLATORS\n"
+#~ "Your names"
+#~ msgstr " ,Launchpad Contributions:,RKWard Team,fri"
+
+#~ msgid ""
+#~ "_: EMAIL OF TRANSLATORS\n"
+#~ "Your emails"
+#~ msgstr ",,rkward-tracker@lists.sourceforge.net,pavelfric@seznam.cz"
