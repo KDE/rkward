@@ -1,4 +1,4 @@
---- Version 0.5.6 - May-XX-2011
+--- Version 0.5.6 - May-30-2011
 - Fixed: Would crash when searching for a term with quotes in the help search window
 - Add simple man page for command line options
 - Fixed: Potential crash when creating plots from a tcl/tk based GUI

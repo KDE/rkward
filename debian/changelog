@@ -1,4 +1,10 @@
-rkward (0.5.5.z+0.5.6-0devel1) unstable; urgency=low
+rkward (0.5.6z+0.5.7-0devel1) unstable; urgency=low
+
+  * new upstream release
+
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Tue, 30 May 2011 15:30:00 +0200
+
+rkward (0.5.6-1) unstable; urgency=low
 
   * new upstream release
   * remove empty directory removal rkwardtests/inst. Now fixed upstream.
@@ -9,7 +15,7 @@ rkward (0.5.5.z+0.5.6-0devel1) unstable; urgency=low
   * fix lintian warning "description-synopsis-starts-with-article"
   * bump standards version to 3.9.2 (no changes needed)
 
- -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Tue, 20 Mar 2011 15:30:00 +0200
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Tue, 30 May 2011 15:30:00 +0200
 
 rkward (0.5.5-2) unstable; urgency=low
 
