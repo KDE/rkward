@@ -3,7 +3,7 @@ rkward (0.5.6-1) unstable; urgency=low
   * new upstream release
   * remove empty directory removal rkwardtests/inst. Now fixed upstream.
   * remove man page links to rkward.bin and rkward.rbackend. These
-    auxilliary binaries are no longer installed in the system path.
+    auxiliary binaries are no longer installed in the system path.
   * remove debian man page. Man page is now supplied upstream.
   * drop explicit dependency on libphonon-dev.
   * fix lintian warning "description-synopsis-starts-with-article"
