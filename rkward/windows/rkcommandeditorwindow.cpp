@@ -1123,16 +1123,17 @@ QString RKCommandHighlighter::commandToHTML (const QString r_command, Highlighti
 		}
 
 		int handledUntil = lineStart;
-		int remainingChars = line.length() - handledUntil;
+		int remainingChars = line.length();
 		foreach ( const KTextEditor::HighlightInterface::AttributeBlock& block, attribs ) {
 			if ((block.start + block.length) <= handledUntil) continue;
 			int start = qMax(block.start, lineStart);
 			if ( start > handledUntil ) {
 				ret += exportText( line.mid( handledUntil, start - handledUntil ), noAttrib, m_defaultAttribute );
 			}
-			int length = qMin(block.length, remainingChars);
+			int end = qMin (block.start + block.length, remainingChars);
+			int length = end - start;
 			ret += exportText( line.mid( start, length ), block.attribute, m_defaultAttribute);
-			handledUntil = start + length;
+			handledUntil = end;
 		}
 
 		if ( handledUntil < lineStart + remainingChars ) {
