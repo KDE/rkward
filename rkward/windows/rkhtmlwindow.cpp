@@ -66,6 +66,7 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (par
 	RKXMLGUISyncer::self()->registerChangeListener (khtmlpart, this, SLOT (fixupPartGUI()));
 	khtmlpart->setSelectable (true);
 	setFocusProxy (khtmlpart->widget ());
+	khtmlpart->widget ()->setFocusPolicy (Qt::StrongFocus);
 	
 	khtmlpart->widget ()->setSizePolicy (QSizePolicy::Expanding, QSizePolicy::Expanding);
 	QHBoxLayout *pLayout = new QHBoxLayout (this);
