@@ -1,11 +1,10 @@
 local({
 ## Prepare
 ## Compute
-vars <- list (substitute (women[["height"]]), substitute (test10z))
-results <- data.frame ('Object'=rep (NA, length (vars)))
+vars <- rk.list (women[["height"]], test10z)
+results <- data.frame ('Object'=I(names (vars)))
 for (i in 1:length (vars)) {
-	results[i, 'Object'] <- rk.get.description (vars[[i]], is.substitute=TRUE)
-	var <- eval (vars[[i]], envir=globalenv())	# fetch the real object
+	var <- vars[[i]]
 
 	# we wrap each single call in a "try" statement to always continue on errors.
 	results[i, 'mean'] <- try (mean (var, trim = 0.00, na.rm=TRUE))

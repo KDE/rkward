@@ -2,11 +2,10 @@ local({
 ## Prepare
 require (nortest)
 ## Compute
-vars <- list (substitute (rock[["shape"]]), substitute (rock[["perm"]]))
-results <- data.frame ('Variable Name'=rep (NA, length (vars)), check.names=FALSE)
+vars <- rk.list (rock[["shape"]], rock[["perm"]])
+results <- data.frame ('Variable Name'=I(names (vars)), check.names=FALSE)
 for (i in 1:length (vars)) {
-	results[i, 'Variable Name'] <- rk.get.description (vars[[i]], is.substitute=TRUE)
-	var <- eval (vars[[i]], envir=globalenv())
+	var <- vars[[i]]
 	results[i, 'Length'] <- length (var)
 	results[i, 'NAs'] <- sum (is.na(var))
 	try ({

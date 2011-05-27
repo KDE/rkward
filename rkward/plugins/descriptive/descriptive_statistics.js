@@ -3,16 +3,14 @@ var mad_type;
 var constMad;
 
 function calculate () {
-	var vars = "substitute (" + trim (getValue ("x")).replace (/\n/g, "), substitute (") + ")";
+	var vars = trim (getValue ("x")).split ("\n").join (", ");
 	constMad = getValue ("constMad");
 	mad_type = getValue ("mad_type");
 
-
-	echo ('vars <- list (' + vars + ')\n');
-	echo ('results <- data.frame (\'Object\'=rep (NA, length (vars)))\n');
+	echo ('vars <- rk.list (' + vars + ')\n');
+	echo ('results <- data.frame (\'Object\'=I(names (vars)))\n');
 	echo ('for (i in 1:length (vars)) {\n');
-	echo ('	results[i, \'Object\'] <- rk.get.description (vars[[i]], is.substitute=TRUE)\n');
-	echo ('	var <- eval (vars[[i]], envir=globalenv())	# fetch the real object\n');
+	echo ('	var <- vars[[i]]\n');
 	echo ('\n');
 	echo ('	# we wrap each single call in a "try" statement to always continue on errors.\n');
 	if (getValue ("mean")) {

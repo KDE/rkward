@@ -1,3 +1,6 @@
+- Simplify code produced by several plugins 											# TODO: convert remaining uses of substitute()
+- Fixed: Occasional duplication of first letter of keyword, when using "Copy lines to output" from the console window
+
 --- Version 0.5.6 - May-30-2011
 - Fixed: Would crash when searching for a term with quotes in the help search window
 - Add simple man page for command line options
