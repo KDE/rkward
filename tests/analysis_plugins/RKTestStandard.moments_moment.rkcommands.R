@@ -2,13 +2,10 @@ local({
 ## Prepare
 require(moments)
 ## Compute
-
-objects <- list (substitute (test50z), substitute (test50y), substitute (test50x), substitute (test10z), substitute (test10y), substitute (test10x))
-results <- data.frame ('Variable Name'=rep (NA, length (objects)), check.names=FALSE)
-for (i in 1:length (objects)) {
-	var <- eval (objects[[i]], envir=globalenv ())
-	results[i, 'Variable Name'] <- rk.get.description (objects[[i]], is.substitute=TRUE)
-
+vars <- rk.list (test50z, test50y, test50x, test10z, test10y, test10x)
+results <- data.frame ('Variable Name'=I(names (vars)), check.names=FALSE)
+for (i in 1:length (vars)) {
+	var <- vars[[i]]
 	try (results[i, 'Moment'] <- moment (var, order = 1, central = FALSE, absolute = FALSE, na.rm = TRUE))
 }
 ## Print result

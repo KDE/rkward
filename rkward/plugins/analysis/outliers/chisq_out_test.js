@@ -3,22 +3,20 @@ function preprocess () {
 }
 
 function calculate () {
-	var vars = "substitute (" + trim (getValue ("x")).replace (/\n/g, "), substitute (") + ")";
+	var vars = trim (getValue ("x"));
 
-	echo ('\n');
-	echo ('vars <- list (' + vars + ')\n');
-	echo ('results <- data.frame (\'Variable Name\'=rep (NA, length (vars)), check.names=FALSE)\n');
-	echo ('for (i in 1:length(vars)) {\n');
-	echo ('	results[i, \'Variable Name\'] <- rk.get.description (vars[[i]], is.substitute=TRUE)\n');
+	echo ('vars <- rk.list (' + vars.split ("\n").join (", ") + ')\n');
+	echo ('results <- data.frame (\'Variable Name\'=I(names (vars)), check.names=FALSE)\n');
+	echo ('for (i in 1:length (vars)) {\n');
 	if (getValue ("length")) {
-		echo ('	var <- eval (vars[[i]], envir=globalenv ())\n');
+		echo ('	var <- vars[[i]]\n');
 		echo ('\n');
 		echo ('	results[i, \'Length\'] <- length (var)\n');
 		echo ('	results[i, \'NAs\'] <- sum (is.na(var))\n');
 		echo ('\n');
 		echo ('	var <- na.omit (var) 	# omit NAs for all further calculations\n');
 	} else {
-		echo ('	var <- na.omit (eval (vars[[i]], envir=globalenv ()))\n');
+		echo ('	var <- na.omit (vars[[i]])\n');
 	}
 	echo ('\n');
 	echo ('	results[i, \'Error\'] <- tryCatch ({\n');

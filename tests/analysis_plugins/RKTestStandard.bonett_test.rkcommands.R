@@ -2,13 +2,10 @@ local({
 ## Prepare
 require(moments)
 ## Compute
-
-vars <- list (substitute (test50z), substitute (test50y), substitute (test50x), substitute (test10z), substitute (test10y), substitute (test10x))
-results <- data.frame ('Variable Name'=rep (NA, length (vars)), check.names=FALSE)
-
-for (i in 1:length(vars)) {
-	results[i, 'Variable Name'] <- rk.get.description (vars[[i]], is.substitute=TRUE)
-	var <- eval (vars[[i]], envir=globalenv ())
+vars <- rk.list (test50z, test50y, test50x, test10z, test10y, test10x)
+results <- data.frame ('Variable Name'=I(names (vars)), check.names=FALSE)
+for (i in 1:length (vars)) {
+	var <- vars[[i]]
 	results[i, 'Error'] <- tryCatch ({
 		t <- bonett.test (var, alternative = "two.sided")
 		results[i, 'Kurtosis estimator (tau)'] <- t$statistic["tau"]

@@ -1,12 +1,10 @@
 local({
 ## Prepare
 ## Compute
-vars <- list (substitute (women[["weight"]]), substitute (test50x))
-results <- data.frame ('Variable Name'=rep (NA, length (vars)), check.names=FALSE)
-
-for (i in 1:length (vars))  {
-	var <- eval (vars[[i]], envir=globalenv());
-	results[i, 'Variable Name'] <- rk.get.description(vars[[i]], is.substitute=TRUE)
+vars <- rk.list (women[["weight"]], test50x)
+results <- data.frame ('Variable Name'=I(names (vars)), check.names=FALSE)
+for (i in 1:length (vars)) {
+	var <- vars[[i]]
 
 	results[i, 'Number of obs'] <- length(var)
 	results[i, 'Number of missing values'] <- sum(is.na(var))

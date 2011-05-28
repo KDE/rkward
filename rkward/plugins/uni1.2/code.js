@@ -1,15 +1,12 @@
 function calculate () {
-	var vars = "substitute (" + trim (getValue ("z")).replace (/\n/g, "), substitute (") + ")";
-
 	var narm = "na.rm=FALSE";
 	if (getValue ("narm")) narm = "na.rm=TRUE";
 
-	echo ('vars <- list (' + vars + ')\n');
-	echo ('results <- data.frame (\'Variable Name\'=rep (NA, length (vars)), check.names=FALSE)\n');
-	echo ('\n');
-	echo ('for (i in 1:length (vars))  {\n');
-	echo ('	var <- eval (vars[[i]], envir=globalenv());\n');
-	echo ('	results[i, \'Variable Name\'] <- rk.get.description(vars[[i]], is.substitute=TRUE)\n');
+	var vars = trim (getValue ("z"));
+	echo ('vars <- rk.list (' + vars.split ("\n").join (", ") + ')\n');
+	echo ('results <- data.frame (\'Variable Name\'=I(names (vars)), check.names=FALSE)\n');
+	echo ('for (i in 1:length (vars)) {\n');
+	echo ('	var <- vars[[i]]\n');
 	echo ('\n');
 	if (getValue ("length")) {
 		echo ('	results[i, \'Number of obs\'] <- length(var)\n');

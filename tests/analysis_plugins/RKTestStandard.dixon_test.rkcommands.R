@@ -2,12 +2,10 @@ local({
 ## Prepare
 require(outliers)
 ## Compute
-
-vars <- list (substitute (women[["weight"]]), substitute (women[["height"]]))
-results <- data.frame ('Variable Name'=rep (NA, length (vars)), check.names=FALSE)
-for (i in 1:length(vars)) {
-	results[i, 'Variable Name'] <- rk.get.description (vars[[i]], is.substitute=TRUE)
-	var <- eval (vars[[i]], envir=globalenv ())
+vars <- rk.list (women[["weight"]], women[["height"]])
+results <- data.frame ('Variable Name'=I(names (vars)), check.names=FALSE)
+for (i in 1:length (vars)) {
+	var <- vars[[i]]
 
 	results[i, 'Length'] <- length (var)
 	results[i, 'NAs'] <- sum (is.na(var))
@@ -40,12 +38,10 @@ local({
 ## Prepare
 require(outliers)
 ## Compute
-
-vars <- list (substitute (women[["weight"]]), substitute (women[["height"]]))
-results <- data.frame ('Variable Name'=rep (NA, length (vars)), check.names=FALSE)
-for (i in 1:length(vars)) {
-	results[i, 'Variable Name'] <- rk.get.description (vars[[i]], is.substitute=TRUE)
-	var <- na.omit (eval (vars[[i]], envir=globalenv ()))
+vars <- rk.list (women[["weight"]], women[["height"]])
+results <- data.frame ('Variable Name'=I(names (vars)), check.names=FALSE)
+for (i in 1:length (vars)) {
+	var <- na.omit (vars[[i]])
 
 	results[i, 'Error'] <- tryCatch ({
 		# This is the core of the calculation

@@ -1,12 +1,10 @@
 local({
 ## Prepare
 ## Compute
-vars <- list (substitute (test10x), substitute (women[["height"]]))
-results <- data.frame ('Variable Name'=rep (NA, length (vars)), check.names=FALSE)
-
-for (i in 1:length (vars))  {
-	var <- eval (vars[[i]], envir=globalenv());
-	results[i, 'Variable Name'] <- rk.get.description(vars[[i]], is.substitute=TRUE)
+vars <- rk.list (test10x, women[["height"]])
+results <- data.frame ('Variable Name'=I(names (vars)), check.names=FALSE)
+for (i in 1:length (vars)) {
+	var <- vars[[i]]
 
 	if (length (var) >= 2) {
 		results[i, 'Minimum values'] <- paste (sort(var, decreasing=FALSE, na.last=TRUE)[1:2], collapse=" ")

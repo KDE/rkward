@@ -3,15 +3,12 @@ function preprocess () {
 }
 
 function calculate () {
-	var vars = "substitute (" + trim (getValue ("x")).replace (/\n/g, "), substitute (") + ")";
+	var vars = trim (getValue ("x"));
 
-	echo ('\n');
-	echo ('objects <- list (' + vars + ')\n');
-	echo ('results <- data.frame (\'Variable Name\'=rep (NA, length (objects)), check.names=FALSE)\n');
-	echo ('for (i in 1:length (objects)) {\n');
-	echo ('	var <- eval (objects[[i]], envir=globalenv ())\n');
-	echo ('	results[i, \'Variable Name\'] <- rk.get.description (objects[[i]], is.substitute=TRUE)\n');
-	echo ('\n');
+	echo ('vars <- rk.list (' + vars.split ("\n").join (", ") + ')\n');
+	echo ('results <- data.frame (\'Variable Name\'=I(names (vars)), check.names=FALSE)\n');
+	echo ('for (i in 1:length (vars)) {\n');
+	echo ('	var <- vars[[i]]\n');
 	echo ('	try (results[i, \'Moment\'] <- moment (var, order = ' + getValue ("order") + ', central = ' + getValue ("central") + ', absolute = ' + getValue ("absolute") + ', na.rm = ' + getValue ("narm") + '))\n');
 	if (getValue ("length")) {
 		echo ('\n');

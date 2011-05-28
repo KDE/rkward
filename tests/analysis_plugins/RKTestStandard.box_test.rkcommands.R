@@ -1,11 +1,10 @@
 local({
 ## Prepare
 ## Compute
-objects <- list (substitute (test50x), substitute (test10y))
-results <- data.frame ('Variable Name'=rep (NA, length (objects)), check.names=FALSE)
-for (i in 1:length (objects)) {
-	results[i, 'Variable Name'] <- rk.get.description (objects[[i]], is.substitute=TRUE)
-	var <- eval (objects[[i]], envir=globalenv ())
+vars <- rk.list (test50x, test10y)
+results <- data.frame ('Variable Name'=I(names (vars)), check.names=FALSE)
+for (i in 1:length (vars)) {
+	var <- vars[[i]]
 	results[i, 'Length'] <- length (var)
 	results[i, 'NAs'] <- sum (is.na(var))
 

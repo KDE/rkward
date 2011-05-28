@@ -6,15 +6,13 @@ function preprocess () {
 }
 
 function calculate () {
-	var vars = "substitute (" + trim (getValue ("x")).replace (/\n/g, "), substitute (") + ")";
 	alternative = getValue ("alternative");
+	var vars = trim (getValue ("x"));
 
-	echo ('vars <- list (' + vars + ')\n');
-	echo ('results <- data.frame (\'Variable Name\'=rep (NA, length (vars)), check.names=FALSE)\n');
-	echo ('\n');
-	echo ('for (i in 1:length(vars)) {\n');
-	echo ('	results[i, \'Variable Name\'] <- rk.get.description (vars[[i]], is.substitute=TRUE)\n');
-	echo ('	var <- eval (vars[[i]], envir=globalenv ())\n');
+	echo ('vars <- rk.list (' + vars.split ("\n").join (", ") + ')\n');
+	echo ('results <- data.frame (\'Variable Name\'=I(names (vars)), check.names=FALSE)\n');
+	echo ('for (i in 1:length (vars)) {\n');
+	echo ('	var <- vars[[i]]\n');
 	echo ('	results[i, \'Error\'] <- tryCatch ({\n');
 	echo ('		t <- anscombe.test (var, alternative = "' + alternative + '")\n');
 	echo ('		results[i, \'Kurtosis estimator (tau)\'] <- t$statistic["kurt"]\n');
