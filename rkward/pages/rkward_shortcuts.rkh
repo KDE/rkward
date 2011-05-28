@@ -47,6 +47,7 @@
 			<tr><td>Show/Hide Pending Jobs</td><td>Alt + 3</td></tr>
 			<tr><td>Show/Hide Console</td><td>Alt + 4</td></tr>
 			<tr><td>Show/Hide R Help Search</td><td>Alt + 5</td></tr>
+			<tr><td>Switch between Windows</td><td>Ctrl+Tab</td></tr>
 
 			<tr colspan="2"><td><b>Help Menu</b></td></tr>
 			<tr><td>Start Help</td><td>F1</td></tr>
