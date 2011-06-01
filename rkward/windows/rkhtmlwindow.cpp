@@ -62,6 +62,10 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (par
 	khtmlpart = new KHTMLPart (this, 0, KHTMLPart::BrowserViewGUI);
 	setPart (khtmlpart);
 	fixupPartGUI ();
+// WORKAROUND for annoying kdelibs bug in KDE 4.6: https://sourceforge.net/tracker/?func=detail&atid=459007&aid=3310106&group_id=50231
+	QAction *action = khtmlpart->action ("findAheadText");
+	if (action) action->setShortcutContext (Qt::WidgetWithChildrenShortcut);
+// WORKAROUND end
 	initializeActivationSignals ();
 	RKXMLGUISyncer::self()->registerChangeListener (khtmlpart, this, SLOT (fixupPartGUI()));
 	khtmlpart->setSelectable (true);
