@@ -483,7 +483,7 @@ formals (setwd) <- formals (base::setwd)
 	if (exists ("system2", base::.BaseNamespaceEnv)) {
 		rk.replace.function ("system2", base::.BaseNamespaceEnv,
 			function () {
-				if (stdout != "" || stderr != "") {
+				if ((!is.null (stdout) && stdout == "") || (!is.null (stderr) && stderr == "")) {
 					.Call ("rk.sync.output", 0)
 					on.exit (.Call ("rk.sync.output", 1), TRUE)
 				}
