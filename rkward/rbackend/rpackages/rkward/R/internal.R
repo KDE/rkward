@@ -466,31 +466,6 @@ formals (setwd) <- formals (base::setwd)
 			eval (body (.rk.menu.default))
 		})
 
-	## Add output synchronisation across system(), and system2() calls.
-	rk.replace.function ("system", base::.BaseNamespaceEnv,
-		function () {
-			if (!exists ("ignore.stdout", inherits=FALSE)) ignore.stdout <- FALSE	# ignore.stdout was introduced in R 2.12.0
-
-			if (!(intern || (ignore.stdout && ignore.stderr))) {
-				.Call ("rk.sync.output", 0)
-				on.exit (.Call ("rk.sync.output", 1), TRUE)
-			}
-
-			eval (body (.rk.system.default))
-		})
-
-	# NOTE: system2 was not introduced before R 2.12.0 (or was it 2.11.0?)
-	if (exists ("system2", base::.BaseNamespaceEnv)) {
-		rk.replace.function ("system2", base::.BaseNamespaceEnv,
-			function () {
-				if ((!is.null (stdout) && stdout == "") || (!is.null (stderr) && stderr == "")) {
-					.Call ("rk.sync.output", 0)
-					on.exit (.Call ("rk.sync.output", 1), TRUE)
-				}
-				eval (body (.rk.system2.default))
-			})
-	}
-
 	# call separate assignments functions:
 	if (exists (".rk.fix.assignments.graphics")) eval (body (.rk.fix.assignments.graphics)) # internal_graphics.R
 }

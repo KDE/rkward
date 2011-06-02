@@ -131,29 +131,6 @@ void RKFrontendTransmitter::requestReceived (RBackendRequest* request) {
 		RK_ASSERT (request->synchronous);
 		writeRequest (request);	// to tell the backend, that we are keeping up. Also deletes the request.
 		return;
-	} else if (request->type == RBackendRequest::SyncOutput) {
-		RK_ASSERT (request->synchronous);
-
-		QString token = request->params["endtoken"].toString ();
-		writeRequest (request);
-
-		if (!token.isEmpty ()) {
-			QString buffer;
-
-			disconnect (backend, SIGNAL (readyReadStandardOutput ()), this, SLOT (newProcessOutput ()));
-			for (int i=5; i > 0; --i) {		// don't wait forever for the end-token.
-				buffer.append (QString::fromLocal8Bit (backend->readAll ()));
-				if (buffer.endsWith (token)) {
-					buffer = buffer.left (buffer.size () - token.size ());
-					break;
-				}
-				backend->waitForReadyRead (500);
-			}
-			connect (backend, SIGNAL (readyReadStandardOutput ()), this, SLOT (newProcessOutput ()));
-
-			if (!buffer.isEmpty ()) handleOutput (buffer, buffer.size (), ROutput::Warning);
-		}
-		return;
 	}
 
 	RKRBackendEvent* event = new RKRBackendEvent (request);

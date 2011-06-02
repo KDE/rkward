@@ -114,7 +114,8 @@ void RKRBackendTransmitter::requestReceived (RBackendRequest* request) {
 
 void RKRBackendTransmitter::flushOutput (bool force) {
 	if (!current_sync_requests.isEmpty ()) return;
-	
+
+	if (!RKRBackend::this_pointer->fetchStdoutStderr (force, false)) return;
 	ROutputList out = RKRBackend::this_pointer->flushOutput (force);
 	if (out.isEmpty ()) return;
 

@@ -96,6 +96,8 @@ extern "C" {
 #ifndef Q_WS_WIN
 #	include <signal.h>		// needed for pthread_kill
 #	include <pthread.h>		// seems to be needed at least on FreeBSD
+#	include <unistd.h>		// for non-blocking pipes
+#	include <fcntl.h>
 #endif
 
 void RK_scheduleIntr () {
@@ -381,6 +383,29 @@ int RReadConsoleWin (const char* prompt, char* buf, int buflen, int hist) {
 }
 #endif
 
+bool RKRBackend::fetchStdoutStderr (bool forcibly, bool allow_blocking) {
+#ifndef Q_OS_WIN
+	if (!forcibly) {
+		if (!stdout_stderr_mutex.tryLock ()) return false;
+	} else {
+		stdout_stderr_mutex.lock ();
+	}
+
+	char buffer[1024];
+	while (true) {
+		int bytes = read (stdout_stderr_fd, buffer, 1023);
+		if (bytes < 0) break;
+		if (bytes != 0) {
+			buffer[bytes] = '\0';
+			handleOutput (current_locale_codec->toUnicode (buffer, bytes), bytes, ROutput::Warning, allow_blocking);
+		}
+	}
+
+	stdout_stderr_mutex.unlock ();
+#endif
+	return true;
+}
+
 void RWriteConsoleEx (const char *buf, int buflen, int type) {
 	RK_TRACE (RBACKEND);
 
@@ -400,6 +425,7 @@ void RWriteConsoleEx (const char *buf, int buflen, int type) {
 		}
 	}
 
+	RKRBackend::this_pointer->fetchStdoutStderr (true, true);
 	RKRBackend::this_pointer->handleOutput (RKRBackend::this_pointer->current_locale_codec->toUnicode (buf, buflen), buflen, type == 0 ? ROutput::Output : ROutput::Warning);
 }
 
@@ -864,25 +890,6 @@ SEXP doUpdateLocale () {
 	return R_NilValue;
 }
 
-SEXP doSyncOutput (SEXP flushstdout) {
-	RK_TRACE (RBACKEND);
-
-#if (!defined RKWARD_THREADED) && (!defined Q_OS_WIN)
-	const char* token = "##RKOutputEndTag3210723##";	// should be unique enough for practical purposes
-	bool doflushstdout = (RKRSupport::SEXPToInt (flushstdout) != 0);
-
-	RBackendRequest req (true, RBackendRequest::SyncOutput);
-	if (doflushstdout) req.params["endtoken"] = QString (token);
-	RKRBackend::this_pointer->handleRequest (&req);
-	if (doflushstdout) {
-		printf ("%s", token);
-		fflush (stdout);
-	}
-#endif
-
-	return R_NilValue;
-}
-
 // returns the MIME-name of the current locale encoding (from Qt)
 SEXP doLocaleName () {
 	RK_TRACE (RBACKEND);
@@ -950,6 +957,19 @@ bool RKRBackend::startR () {
 	FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
 #endif
 
+#ifndef Q_OS_WIN
+	// re-direct stdout / stderr to a pipe, so we can read output from system() calls
+	int pfd[2];
+	pipe(pfd);
+	for (int n=0; n<2; n++) {
+		fcntl (pfd[n], F_SETFL, fcntl (pfd[n], F_GETFL, 0) | O_NONBLOCK);
+	}
+	dup2(STDOUT_FILENO, STDERR_FILENO);		// single channel to avoid interleaving hell, for now.
+	dup2(pfd[1], STDOUT_FILENO);
+	close(pfd[1]);
+	stdout_stderr_fd = pfd[0];
+#endif
+
 	setup_Rmainloop ();
 
 #ifndef Q_WS_WIN
@@ -995,7 +1015,6 @@ bool RKRBackend::startR () {
 		{ "rk.dialog", (DL_FUNC) &doDialog, 6 },
 		{ "rk.update.locale", (DL_FUNC) &doUpdateLocale, 0 },
 		{ "rk.locale.name", (DL_FUNC) &doLocaleName, 0 },
-		{ "rk.sync.output", (DL_FUNC) &doSyncOutput, 1 },
 		{ 0, 0, 0 }
 	};
 	R_registerRoutines (R_getEmbeddingDllInfo(), NULL, callMethods, NULL, NULL);

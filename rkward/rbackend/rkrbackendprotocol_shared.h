@@ -48,7 +48,6 @@ public:
 #ifndef RKWARD_THREADED
 		Output,		/**< A piece of output. Note: If the backend runs in a single process, output is handled in a pull fashion, instead of using requests. */
 		Interrupt,	/**< Interrupt evaluation. This request type originates in the frontend, not the backend (the only one so far). */
-		SyncOutput,	/**< Synchronization of output between R output and stdout. Note: If the backend runs in a single process, the stdout/stderr channel is not supported anyway. */
 #endif
 		OtherRequest		/**< Any other type of request. Note: which requests are in the enum, and which are not has mostly historical reasons. @see params */
 	};
@@ -135,7 +134,7 @@ public:
 	virtual ~RKROutputBuffer ();
 
 /** This gets called on normal R output (R_WriteConsole). Used to get at output. */
-	void handleOutput (const QString &output, int len, ROutput::ROutputType type);
+	void handleOutput (const QString &output, int len, ROutput::ROutputType type, bool allow_blocking=true);
 
 /** Flushes current output buffer. Meant to be called from RInterface::flushOutput, only.
 @param forcibly: if true, will always flush the output. If false, will flush the output only if the mutex can be locked without waiting. */
