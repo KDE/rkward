@@ -63,6 +63,7 @@ void RKRBackendTransmitter::run () {
 	connection->write ("\n");
 	connection->write (RKWARD_VERSION);
 	connection->write ("\n");
+	connection->waitForBytesWritten ();
 
 	QTimer* flush_timer = new QTimer (this);
 	connect (flush_timer, SIGNAL (timeout()), this, SLOT (flushOutput()));
@@ -115,7 +116,7 @@ void RKRBackendTransmitter::requestReceived (RBackendRequest* request) {
 void RKRBackendTransmitter::flushOutput (bool force) {
 	if (!current_sync_requests.isEmpty ()) return;
 
-	if (!RKRBackend::this_pointer->fetchStdoutStderr (force, false)) return;
+	RKRBackend::this_pointer->fetchStdoutStderr (force);
 	ROutputList out = RKRBackend::this_pointer->flushOutput (force);
 	if (out.isEmpty ()) return;
 

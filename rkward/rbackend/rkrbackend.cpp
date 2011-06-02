@@ -383,7 +383,7 @@ int RReadConsoleWin (const char* prompt, char* buf, int buflen, int hist) {
 }
 #endif
 
-bool RKRBackend::fetchStdoutStderr (bool forcibly, bool allow_blocking) {
+bool RKRBackend::fetchStdoutStderr (bool forcibly) {
 #ifndef Q_OS_WIN
 	if (!forcibly) {
 		if (!stdout_stderr_mutex.tryLock ()) return false;
@@ -391,14 +391,15 @@ bool RKRBackend::fetchStdoutStderr (bool forcibly, bool allow_blocking) {
 		stdout_stderr_mutex.lock ();
 	}
 
+	// it seems, setting this only once is not always enough.
+	fcntl (stdout_stderr_fd, F_SETFL, fcntl (stdout_stderr_fd, F_GETFL, 0) | O_NONBLOCK);
 	char buffer[1024];
 	while (true) {
 		int bytes = read (stdout_stderr_fd, buffer, 1023);
-		if (bytes < 0) break;
-		if (bytes != 0) {
-			buffer[bytes] = '\0';
-			handleOutput (current_locale_codec->toUnicode (buffer, bytes), bytes, ROutput::Warning, allow_blocking);
-		}
+		if (bytes <= 0) break;
+		buffer[bytes] = '\0';
+		// NOTE: we must not risk blocking inside handleOutput, while the stdout_stderr_mutex is locked!
+		handleOutput (current_locale_codec->toUnicode (buffer, bytes), bytes, ROutput::Warning, false);
 	}
 
 	stdout_stderr_mutex.unlock ();
@@ -425,7 +426,7 @@ void RWriteConsoleEx (const char *buf, int buflen, int type) {
 		}
 	}
 
-	RKRBackend::this_pointer->fetchStdoutStderr (true, true);
+	RKRBackend::this_pointer->fetchStdoutStderr (true);
 	RKRBackend::this_pointer->handleOutput (RKRBackend::this_pointer->current_locale_codec->toUnicode (buf, buflen), buflen, type == 0 ? ROutput::Output : ROutput::Warning);
 }
 
@@ -960,13 +961,10 @@ bool RKRBackend::startR () {
 #ifndef Q_OS_WIN
 	// re-direct stdout / stderr to a pipe, so we can read output from system() calls
 	int pfd[2];
-	pipe(pfd);
-	for (int n=0; n<2; n++) {
-		fcntl (pfd[n], F_SETFL, fcntl (pfd[n], F_GETFL, 0) | O_NONBLOCK);
-	}
-	dup2(STDOUT_FILENO, STDERR_FILENO);		// single channel to avoid interleaving hell, for now.
-	dup2(pfd[1], STDOUT_FILENO);
-	close(pfd[1]);
+	pipe (pfd);
+	dup2 (STDOUT_FILENO, STDERR_FILENO);		// single channel to avoid interleaving hell, for now.
+	dup2 (pfd[1], STDOUT_FILENO);
+	close (pfd[1]);
 	stdout_stderr_fd = pfd[0];
 #endif
 

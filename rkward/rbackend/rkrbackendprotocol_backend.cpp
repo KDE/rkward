@@ -32,6 +32,7 @@
 #	include "kcomponentdata.h"
 #	include "kglobal.h"
 #	include "rktransmitter.h"
+#	include <stdio.h>
 #endif
 
 #ifdef RKWARD_THREADED
@@ -103,6 +104,9 @@
 		QCoreApplication app (argc, argv);
 		KComponentData data ("rkward");
 		KGlobal::locale ();		// to initialize it in the primary thread
+
+		setvbuf (stdout, NULL, _IONBF, 0);
+		setvbuf (stderr, NULL, _IONBF, 0);
 
 		RK_Debug_File = new KTemporaryFile ();
 		RK_Debug_File->setPrefix ("rkward.rbackend");

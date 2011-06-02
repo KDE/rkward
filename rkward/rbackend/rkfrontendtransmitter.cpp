@@ -61,7 +61,6 @@ void RKFrontendTransmitter::run () {
 	args.append ("--debug-level " + QString::number (RK_Debug_Level));
 	args.append ("--server-name " + server->fullServerName ());
 	args.append ("--data-dir " + RKSettingsModuleGeneral::filesPath ());
-	backend->setProcessChannelMode (QProcess::MergedChannels);	// at least for now. Seems difficult to get interleaving right, without this.
 	connect (backend, SIGNAL (finished (int, QProcess::ExitStatus)), this, SLOT (backendExit (int)));
 	QString backend_executable = KStandardDirs::findExe (QDir::toNativeSeparators (QCoreApplication::applicationDirPath () + "/rkward.rbackend"));
 	if (backend_executable.isEmpty ()) backend_executable = KStandardDirs::findExe (QDir::toNativeSeparators (QCoreApplication::applicationDirPath () + "/rbackend/rkward.rbackend"));	// for running directly from the build-dir
@@ -70,14 +69,9 @@ void RKFrontendTransmitter::run () {
 
 	// fetch security token
 	if (!backend->canReadLine ()) backend->waitForReadyRead ();
-	token = QString::fromLocal8Bit (backend->readLine ());
-	token.chop (1);
-#ifdef Q_WS_WIN
-	token.chop (1);	// '\r', I suppose...
-#endif
-
-	connect (backend, SIGNAL (readyReadStandardOutput ()), this, SLOT (newProcessOutput ()));
-	if (backend->bytesAvailable ()) newProcessOutput ();
+	token = QString::fromLocal8Bit (backend->readLine ()).trimmed ();
+	backend->closeReadChannel (QProcess::StandardError);
+	backend->closeReadChannel (QProcess::StandardOutput);
 
 	exec ();
 
@@ -108,13 +102,6 @@ void RKFrontendTransmitter::connectAndEnterLoop () {
 	if (version_c != RKWARD_VERSION) handleTransmissionError (i18n ("Version mismatch during handshake with backend process. Frontend is version '%1' while backend is '%2'.\nPlease fix your installation.").arg (RKWARD_VERSION).arg (version_c));
 
 	setConnection (con);
-}
-
-void RKFrontendTransmitter::newProcessOutput () {
-	RK_TRACE (RBACKEND);
-
-	QString output = QString::fromLocal8Bit (backend->readAll ());
-	handleOutput (output, output.size (), ROutput::Warning);
 }
 
 void RKFrontendTransmitter::requestReceived (RBackendRequest* request) {

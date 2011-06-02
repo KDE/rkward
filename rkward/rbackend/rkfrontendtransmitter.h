@@ -39,7 +39,6 @@ public:
 	void requestReceived (RBackendRequest *request);
 private slots:
 	void connectAndEnterLoop ();
-	void newProcessOutput ();
 	void backendExit (int exitcode);
 private:
 	void handleTransmissionError (const QString &message);
