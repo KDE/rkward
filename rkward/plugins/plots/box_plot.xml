@@ -15,6 +15,7 @@
 		<connect client="outcome.required" governor="data_mode_grouped"/>
 		<connect client="groups.visible" governor="data_mode_grouped"/>
 		<connect client="groups.required" governor="data_mode_grouped"/>
+		<connect client="dodges.visible" governor="data_mode_grouped"/>
 		<connect client="x.visible" governor="data_mode_grouped.not"/>
 		<connect client="x.required" governor="data_mode_grouped.not"/>
 
@@ -44,19 +45,23 @@
 					<varslot multi="true" type="numeric" source="vars" id="x" label="Variable(s):"/>
 					<varslot type="numeric" source="vars" id="outcome" label="Outcome variable:"/>
 					<varslot multi="true" source="vars" id="groups" label="Group variable(s):"/>
+					<spinbox type="integer" id="dodges" label="Dodged groups" min="0" initial="0"/>
 				</column>
-				<stretch/>
-				<frame label="Labels">
-					<radio id="names_mode" label="Labeling" >
-						<option value="default" label="Default labels" checked="true"/>
-						<option value="custom" label="Custom labels"/>
-						<option value="rexp" label="From R expression"/>
-					</radio>
-					<input id="names_exp" label="Expression to use for labels" initial="names (x)"/>
-					<input id="names_custom" label="Labels (separated by ';')" initial="First label;Second label"/>
-				</frame>
+				<column>
+					<frame label="Labels">
+						<radio id="names_mode" label="Labeling" >
+							<option value="default" label="Default labels" checked="true"/>
+							<option value="custom" label="Custom labels"/>
+							<option value="rexp" label="From R expression"/>
+						</radio>
+						<input id="names_exp" label="Expression to use for labels" initial="names (x)"/>
+						<input id="names_custom" label="Labels (separated by ';')" initial="First label;Second label"/>
+					</frame>
+					<spinbox type="real" id="boxwex" label="Box width" min="0" initial="0.8"/>
+					<stretch/>
+					<preview id="preview"/>
+				</column>
 			</row>
-			<preview id="preview"/>
 		</tab>
 		<tab label="Options" id="tab_options">
 			<row>
