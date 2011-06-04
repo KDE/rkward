@@ -2,7 +2,7 @@
                           rkcomponent  -  description
                              -------------------
     begin                : Tue Dec 13 2005
-    copyright            : (C) 2005, 2006, 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2009, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -58,7 +58,7 @@ void RKComponentBase::fetchPropertyValuesRecursive (QMap<QString, QString> *list
 			}
 		} else {
 			RK_ASSERT (it.value ()->isComponent ());
-			if (!static_cast<RKComponent *> (it.value ())->isEnabled ()) continue;
+			if (static_cast<RKComponent *> (it.value ())->isInactive ()) continue;
 			it.value ()->fetchPropertyValuesRecursive (list, true, prefix + it.key () + '.');
 		}
 	}
@@ -167,7 +167,7 @@ RKComponentBase::ComponentStatus RKComponentBase::recursiveStatus () {
 	}
 	if (processing) return Processing;
 	bool req = required;
-	if (isComponent ()) req = req & static_cast<RKComponent*>(this)->isEnabled ();
+	if (isComponent () && static_cast<RKComponent*>(this)->isInactive ()) req = false;
 	if (!req) return Satisfied;
 	if (children_satisfied && isSatisfied ()) return Satisfied;
 	return Unsatisfied;
@@ -246,11 +246,18 @@ void RKComponent::updateEnablednessRecursive () {
 	}
 }
 
+bool RKComponent::isInactive () {
+	if (!isEnabled ()) return true;
+	if (parentWidget () && isHidden ()) return true;	// Note: Components embedded as button may be "hidden" without being inaccessible
+	if (!visibility_property->boolValue ()) return true;	// Note for those, this is the appropriate check
+	return false;
+}
+
 bool RKComponent::isValid () {
 	RK_TRACE (PLUGIN);
 #warning TODO: I do not think we need this. Use recursiveStatus, instead
 
-	if (!isEnabled ()) return true;
+	if (isInactive ()) return true;
 	for (QHash<QString, RKComponentBase*>::const_iterator it = child_map.constBegin (); it != child_map.constEnd (); ++it) {
 		if (!(it.value ()->isSatisfied ())) return false;
 	}

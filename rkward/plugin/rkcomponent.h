@@ -2,7 +2,7 @@
                           rkcomponent  -  description
                              -------------------
     begin                : Tue Dec 13 2005
-    copyright            : (C) 2005, 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -153,6 +153,8 @@ public:
 	virtual RKComponent *addPage ();
 /** For wizardish guis: this gets called to register a component on the current page during construction. The component does not get reparented. It will have to be satisfied in order to move to the next page in the wizard. See isWizardish () see addPage (). Default implementation does nothing. */
 	virtual void addComponentToCurrentPage (RKComponent *component);
+/** @returns true if the component is inactive, i.e. disabled, or hidden in the GUI */
+	bool isInactive ();
 public slots:
 /** This handles changes in the default properties (enabledness, visibility, requiredness). You will use similar slots in derived classes to handle
 specialized properties */
