@@ -158,6 +158,7 @@ RKComponentBase::ComponentStatus RKComponentBase::recursiveStatus () {
 
 	bool processing = false;
 	bool children_satisfied = true;
+	// we always need to interate over all children, since we need to make sure to find any which are dead or processing.
 	for (QHash<QString, RKComponentBase*>::const_iterator it = child_map.constBegin (); it != child_map.constEnd (); ++it) {
 		ComponentStatus s = it.value ()->recursiveStatus ();
 		if (s == Dead) return Dead;
@@ -165,7 +166,9 @@ RKComponentBase::ComponentStatus RKComponentBase::recursiveStatus () {
 		else if (s != Satisfied) children_satisfied = false;
 	}
 	if (processing) return Processing;
-	if (!required) return Satisfied;
+	bool req = required;
+	if (isComponent ()) req = req & static_cast<RKComponent*>(this)->isEnabled ();
+	if (!req) return Satisfied;
 	if (children_satisfied && isSatisfied ()) return Satisfied;
 	return Unsatisfied;
 }
@@ -247,6 +250,7 @@ bool RKComponent::isValid () {
 	RK_TRACE (PLUGIN);
 #warning TODO: I do not think we need this. Use recursiveStatus, instead
 
+	if (!isEnabled ()) return true;
 	for (QHash<QString, RKComponentBase*>::const_iterator it = child_map.constBegin (); it != child_map.constEnd (); ++it) {
 		if (!(it.value ()->isSatisfied ())) return false;
 	}
