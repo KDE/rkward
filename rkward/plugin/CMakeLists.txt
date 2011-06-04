@@ -24,6 +24,7 @@ SET(plugin_STAT_SRCS
    rkpreviewbox.cpp
    rkpluginsaveobject.cpp
    rkabstractoptionselector.cpp
+   rkpluginframe.cpp
    )
 
 QT4_AUTOMOC(${plugin_STAT_SRCS})

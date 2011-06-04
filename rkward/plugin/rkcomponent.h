@@ -57,6 +57,7 @@ public:
 		ComponentDropDown = 2013,
 		ComponentPreviewBox = 2014,
 		ComponentSaveObject = 2015,
+		ComponentFrame = 2016,
 		ComponentStandard = 2100,
 		ComponentContextHandler = 2900,
 		ComponentUser = 3000	/**< for user expansion */

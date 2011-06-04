@@ -53,6 +53,7 @@
 #include "rkpreviewbox.h"
 #include "rktext.h"
 #include "rktabpage.h"
+#include "rkpluginframe.h"
 
 #include "../rkglobals.h"
 
@@ -566,7 +567,7 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 			layout->addWidget (box);
 			buildElement (e, box, false);
 		} else if (e.tagName () == "row") {
-			widget = new RKComponent (component (), parent_widget);		// wrapping this (and column, frame below) inside an RKComponent has the benefit, that it can have an id, and hence can be set to visibile/hidden, enabled/disabled
+			widget = new RKComponent (component (), parent_widget);		// wrapping this (and column, below) inside an RKComponent has the benefit, that it can have an id, and hence can be set to visibile/hidden, enabled/disabled
 			QVBoxLayout *layout = new QVBoxLayout (widget);
 			layout->setContentsMargins (0, 0, 0, 0);
 			KHBox *box = new KHBox (widget);
@@ -586,16 +587,9 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 			layout->addWidget (box);
 			buildElement (e, box, false);
 		} else if (e.tagName () == "frame") {
-			widget = new RKComponent (component (), parent_widget);
-			QVBoxLayout *layout = new QVBoxLayout (widget);
-			layout->setContentsMargins (0, 0, 0, 0);
-			QGroupBox *box = new QGroupBox (e.attribute ("label"), widget);
-			layout->addWidget (box);
-			QVBoxLayout* internal_layout = new QVBoxLayout (box);
-			KVBox* internal_box = new KVBox (box);
-			internal_box->setSpacing (RKGlobals::spacingHint ());
-			internal_layout->addWidget (internal_box);
-			buildElement (e, internal_box, false);
+			RKPluginFrame *frame = new RKPluginFrame (e, component (), parent_widget);
+			widget = frame;
+			buildElement (e, frame->getPage (), false);
 		} else if (e.tagName () == "tabbook") {
 			QTabWidget *tabbook = new QTabWidget (parent_widget);
 			QDomNodeList tabs = e.childNodes ();
