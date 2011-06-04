@@ -17,7 +17,7 @@ rk.print(x, ...)
 rk.print.literal(x)
 rk.print.code(code)
 rk.header(title, parameters = list(), level = 1)
-rk.results(x, titles = NULL)
+rk.results(x, titles = NULL, print.rownames)
 rk.describe.alternative(x)
 }
 
@@ -28,6 +28,7 @@ rk.describe.alternative(x)
 \item{level}{an integer, header level. For example, \code{level=2} creates the header with \code{<h2></h>} tag.}
 \item{parameters}{a list, preferably named, giving a list of "parameters" to be printed to the output}
 \item{titles}{a character vector, giving the column headers for a html table.}
+\item{print.rownames}{controls printing of rownames. TRUE to force printing, FALSE to suppress printing, omitted (default) to print rownames, unless they are plain row numbers.}
 }
 
 \details{

@@ -230,7 +230,7 @@
 	cat ("<br>\n")
 }
 
-"rk.results" <- function (x, titles=NULL) {
+"rk.results" <- function (x, titles=NULL, print.rownames) {
 	sink (rk.get.output.html.file(), append=TRUE)
 	on.exit (sink ())
 
@@ -243,14 +243,20 @@
 		}
 		rn <- c ()   # row names
 		for (row in 1:rows) rn[row] <- paste (titles[1], "=", dimnames(x)[[1]][row])
-		internal <- data.frame (cbind (x))
-		temp <- data.frame (as.character (rn), stringsAsFactors=FALSE)
-		for (col in 1:cols) temp[[col+1]] <- internal[[col]]
+		x <- data.frame (cbind (x))
+		rownames (x) <- as.character (rn)
 		titles <- c ("", paste (titles[2], "=", names (internal)))
-		x <- temp
 	}
 
 	if (is.list (x)) {	# or a data.frame
+		if (is.data.frame (x)) {
+			# by default, print rownames, unless they are just plain row numbering
+			if (missing (print.rownames)) print.rownames <- !isTRUE (all.equal (rownames (x), as.character (1:dim(x)[1])))
+			if (isTRUE (print.rownames)) {
+				x <- cbind (rownames (x), x)
+				names (x)[1] <- '';
+			}
+		}
 		if (is.null (titles)) {
 			titles <- names (x)
 		}
