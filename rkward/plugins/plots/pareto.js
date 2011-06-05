@@ -3,7 +3,7 @@ function preprocess () {
 }
 
 function calculate () {
-	if (!getValue ("tabulate")) {
+	if (!getValue ("tabulate.checked")) {
 		echo ('x <- ' + getValue ("x") + '\n');
 		echo ('title <- rk.get.description (' + getValue ("x") + ')\n');
 		echo ('if (!is.numeric (x)) {\n');
@@ -15,9 +15,11 @@ function calculate () {
 
 	if (getValue ("limit.checked")) {
 		echo ('max.categories <- ' + getValue ("cutoff") + '\n');
-		echo ('if (length (x) > max.categories)\n');
-		echo ('\tx <- sort (x, decreasing=TRUE)\n');
-		echo ('\tx <- c (x[1:max.categories], ' + quote (getValue ("others_label")) + '=sum (x[(cutoff+1):length(x)]))\n');
+		echo ('if (length (x) > max.categories) {\n');
+		echo ('\tx <- sort (x');
+		if (getValue ("sorting") != "lowest") echo (', decreasing=TRUE');
+		echo (')\n');
+		echo ('\tx <- c (x[1:max.categories], ' + quote (getValue ("others_label")) + '=sum (x[(max.categories+1):length(x)]))\n');
 		echo ('}\n');
 	}
 }

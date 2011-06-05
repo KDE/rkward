@@ -1,0 +1,39 @@
+<!DOCTYPE rkhelp>
+<document>
+	<summary>
+		Generic tabulation plugin (single outcome vector). This plugin is designed to be embeded into other plugins.
+	</summary>
+
+	<usage>
+		Allows to tabulate frequencies, or aggregate a single variable, by the levels of one or more grouping variables.
+	</usage>
+
+	<settings>
+		<setting id="groups">Select the grouping variables. Often, these will be factors. The levels of each grouping variable will be crossed.</setting>
+		<setting id="stat">Type of tabulation / statistic to compute. This can be frequency of occurrence, or a function of a separate vector.</setting>
+		<setting id="outcome">When computing a statistic other than frequency, specify the vector containing the underlying data, here.</setting>
+		<setting id="custom_stat">When the statistic is set to "Other:", this allows you to specify an arbitrary function to compute the statistic. The function may take a vector (a sub-group of the variable selected above) as parameter "x", and must return a single numeric value. Typical examples are "mean(x)" or "sd(x)".</setting>
+	</settings>
+
+	<related>
+		<ul>
+			<li><link href="rkward://component/crosstab"/> and</li>
+			<li><link href="rkward://component/crosstab_multi"/> for tabulation of frequencies across many variables.</li>
+			<li><link href="rkward://rhelp/table"/></li>
+			<li><link href="rkward://rhelp/by"/></li>
+		</ul>
+	</related>
+
+	<technical>
+		General users may skip this section of help, this is primarily for developers.
+
+		The following external tags are provided for use in the embedding plugin.
+		<ul>
+			<li><i>outvar</i>: By default, the plugin produces a table in a variable called "x". You can set it to use a different name, here.</li>
+			<li><i>titlevar</i>: If you want the plugin to save a description of the grouping variables in an R variable, set this to an object name to use. Defaults to "", i.e. disabled.</li>
+			<li><i>fun_label</i>: This property will be set to a description of the statistic.</li>
+		</ul>
+		The generated code is available from <i>code.calculate</i>.
+	</technical>
+
+</document>

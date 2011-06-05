@@ -8,16 +8,15 @@
 		<set id="plotoptions.allow_xlim" to="false"/>
 		<set id="plotoptions.allow_log" to="false"/>
 
-		<connect client="tabulate_frame.enabled" governor="tabulate.state"/>
-		<connect client="x.enabled" governor="tabulate.state.not"/>
+		<connect client="x.enabled" governor="tabulate.checked.not"/>
 		<connect client="tabulate_options.varsource.selected" governor="vars.selected" />
 		<set id="tabulate_options.titlevar" to="title" />
 
 		<connect client="plotoptions.default_ylab" governor="tabulate_options.fun_label" />
 		<script><![CDATA[
-			gui.addChangeCommand ("tabulate.state", "updateFunLabel ()");
+			gui.addChangeCommand ("tabulate.checked", "updateFunLabel ()");
 			updateFunLabel = function () {
-				var tabulate = gui.getValue ("tabulate.state");
+				var tabulate = gui.getValue ("tabulate.checked");
 				if (!tabulate) gui.setValue ("tabulate_options.fun_label", quote ("Frequency"));
 			}
 			updateFunLabel ();
@@ -29,21 +28,21 @@
 				<row>
 					<varselector id="vars"/>
 					<column>
-						<checkbox id="tabulate" label="Tabulate data before plotting"/>
-						<varslot min_vars="1" id="x" source="vars" required="true" label="Vector or Factor"/>
-						<frame id="tabulate_frame">
+						<frame id="tabulate" label="Tabulate data before plotting" checkable="true" checked="false">
 							<embed id="tabulate_options" component="rkward::one_var_tabulation" as_button="false" label="Tabulation Options"/>
 						</frame>
+						<varslot min_vars="1" id="x" source="vars" required="true" label="Raw vector to plot"/>
+						<stretch/>
 						<checkbox id="descriptives" label="Print descriptives" value="TRUE" value_unchecked="FALSE" checked="true"/>
 						<stretch/>
 						<preview id="preview"/>
 					</column>
 				</row>
 			</tab>
-			<tab label="Limit" id="tab_plot_options">
+			<tab label="Limit" id="tab_limit_options">
 				<frame id="limit" label="Limit number of groups" checkable="true" checked="false">
 					<row>
-						<spinbox type="integer" id="cutoff" initial="1" min="1" label="Limit"/>
+						<spinbox type="integer" id="cutoff" initial="10" min="1" label="Limit"/>
 						<radio id="sorting" label="Sorting">
 							<option value="lowest" label="Smallest values"/>
 							<option value="highest" checked="true" label="Largest values"/>

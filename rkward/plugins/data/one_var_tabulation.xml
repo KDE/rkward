@@ -5,7 +5,6 @@
 	<logic>
 		<external id="outvar" default="x"/>
 		<external id="titlevar" default=""/>
-		<external id="var_label" default="x"/>
 		<external id="fun_label" default=""/>
 
 		<set id="varsource.visible" to="false"/>

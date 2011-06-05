@@ -10,16 +10,21 @@ Choose a vector or a factor to be plotted. The frequency, cumulative frequency, 
 
 	<settings>
 		<caption id="tab_variables"/>
-		<setting id="x">Select a data vector or a factor to be plotted.</setting>
-		<setting id="tabulate">Whether to tabulate the data before plotting. You will generally use this, if a vector contains raw observations instead of counts of different categories.</setting>
+		<setting id="tabulate">If your data needs to be tabulated / aggregated before plotting, check this option. Refer to <link href="rkward://component/one_var_tabulation"/> for details on the dependent options.</setting>
+		<setting id="x">If your data is already contains defect counts or defect costs, or other data suitable for direct display in a pareto chart, specify it here. Otherwise, leave this empty, and check the "Tabulate" option, above.</setting>
 		<setting id="descriptives">Whether to print the frequency, cumulative frequency, percentage and cumulative percentage below the plot in the output window.</setting>
+		<caption id="tab_limit_options"/>
+		<setting id="limit">If there are very many categories in your data, it may make sense to limit the amount of categories that will be displayed. Check this, if you want to set a limit.</setting>
+		<setting id="cutoff">Maximum number of regular groups to display. One additonal group "others" will be displayed, if appropriate.</setting>
+		<setting id="sorting">Should the largest or the lowest values be kept? For a pareto chart, you will almost certainly want to keep the largest values.</setting>
+		<setting id="others_label">Allows to customize the label for the "others" category.</setting>
 		<caption id="tab_plot_options"/>
 		<setting id="plotoptions">Further options for the plot. Refer to <link href="rkward://component/plot_options"/> for details.</setting>
 	</settings>
 	<related>
 		<ul>
 			<li><link href="rkward://rhelp/pareto.chart"/></li>
-			<li><link href="rkward://rhelp/table"/></li>
+			<li><link href="rkward://component/one_var_tabulation"/></li>
 		</ul>
 	</related>
 </document>
