@@ -139,7 +139,7 @@ function RObjectArray(names) {
 	this._objects = new Array ();
 
 	objs = names.split ('\n');
-	while (objs.length () > 0) {
+	while (objs.count > 0) {
 		this._objects.push (new RObject (objs.shift ()));
 	}
 }

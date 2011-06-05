@@ -47,11 +47,12 @@ void RKComponentScriptingProxy::initialize (const QString& file, const QString& 
 
 	QString _command = command;
 	if (!file.isEmpty ()) {
-		_command.prepend ("include('" + file + "');\n");
+		_command.prepend ("_rkward.include('" + file + "');\n");
 		_scriptfile = file;
 	}
 	QDir files_path (RKCommonFunctions::getRKWardDataDir () + "phpfiles/");
 	_command.prepend ("_rkward.include('" + files_path.absoluteFilePath ("rkcomponentscripting.js") + "');\n");
+	_command.prepend ("_rkward.include('" + files_path.absoluteFilePath ("common.js") + "');\n");
 #if not KDE_IS_VERSION(4,3,0)
 	_command.prepend ("_rk_eval = function (x) { eval (x); }\n");
 #endif
