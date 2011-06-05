@@ -45,7 +45,7 @@ RKPluginFrame::RKPluginFrame (const QDomElement &element, RKComponent *parent_co
 		frame->setCheckable (true);
 		frame->setChecked (xml->getBoolAttribute (element, "checked", false, DL_INFO));
 		initCheckedProperty ();
-		connect (frame, SIGNAL (toggled(bool)), this, SLOT (checkedChanged()));
+		connect (frame, SIGNAL (toggled(bool)), this, SLOT (checkedChanged(bool)));
 	}
 }
 
@@ -61,7 +61,7 @@ void RKPluginFrame::initCheckedProperty () {
 		return;
 	}
 
-	addChild ("checked", checked = new RKComponentPropertyBool (this, false, frame->isChecked ()));
+	addChild ("checked", checked = new RKComponentPropertyBool (this, false, frame->isChecked (), "1", "0"));
 	connect (checked, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (propertyChanged (RKComponentPropertyBase *)));
 	checked->setInternal (true);
 }
@@ -75,14 +75,18 @@ void RKPluginFrame::propertyChanged (RKComponentPropertyBase* property) {
 	RK_TRACE (PLUGIN);
 
 	RK_ASSERT (checked && (property == checked));
-	if (frame->isChecked () != checked->boolValue ()) frame->setChecked (checked->boolValue ());
+	if (frame->isChecked () == checked->boolValue ()) return;
+	frame->setChecked (checked->boolValue ());
+	changed ();
 }
 
-void RKPluginFrame::checkedChanged () {
+void RKPluginFrame::checkedChanged (bool new_state) {
 	RK_TRACE (PLUGIN);
 	RK_ASSERT (checked);
 
-	if (frame->isChecked () != checked->boolValue ()) checked->setBoolValue (frame->isChecked ());
+	if (new_state == checked->boolValue ()) return;
+	checked->setBoolValue (new_state);
+	changed ();
 }
 
 #include "rkpluginframe.moc"

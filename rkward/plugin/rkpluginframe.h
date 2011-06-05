@@ -43,7 +43,7 @@ public:
 private slots:
 /** called when checked property changes */
 	void propertyChanged (RKComponentPropertyBase *property);
-	void checkedChanged ();
+	void checkedChanged (bool new_state);
 private:
 	void initCheckedProperty ();
 	RKComponentPropertyBool *checked;
