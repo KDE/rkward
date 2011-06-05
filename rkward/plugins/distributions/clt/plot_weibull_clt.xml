@@ -14,7 +14,7 @@
 	<logic>
 		<insert snippet="clt_logic"/>
 		<set id="dist_stepfun.default_dopoints" to="false" />
-		<set id="plotoptions.default_main" to="Weibull"/>
+		<set id="plotoptions.default_main" to="&quot;Weibull&quot;"/>
 	</logic>
 	<dialog label="Central Limit Theorem: Weibull to Normal" >
 		<insert snippet="clt_layout"/>

@@ -6,7 +6,7 @@
 		<set id="plotoptions.allow_type" to="false"/>
 		<set id="plotoptions.allow_grid" to="true"/>
 		<set id="plotoptions.allow_ylim" to="false"/>
-		<set id="plotoptions.default_xlab" to="Sample Averages"/>
+		<set id="plotoptions.default_xlab" to="&quot;Sample Averages&quot;"/>
 		
 		<set id="normlinecol.default_color" to="red" />
 		

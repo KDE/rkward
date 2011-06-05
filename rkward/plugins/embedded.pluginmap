@@ -9,6 +9,8 @@
 		<component type="standard" id="histogram_options" file="plots/histogram_options.xml" label="Histogram Options" />
 		<component type="standard" id="barplot_embed" file="plots/barplot_embed.xml" label="Barplot Options" />
 
+		<component type="standard" id="one_var_tabulation" file="data/one_var_tabulation.xml" label="Tabulate" />
+
 		<component type="standard" id="x11grid" file="x11device/grid.xml" label="Draw Grid" />
 	</components>
 </document>

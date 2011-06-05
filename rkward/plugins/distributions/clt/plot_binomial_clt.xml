@@ -14,7 +14,7 @@
 	<logic>
 		<insert snippet="clt_logic"/>
 		<set id="dist_stepfun.default_verticals" to="false" />
-		<set id="plotoptions.default_main" to="Binomial"/>
+		<set id="plotoptions.default_main" to="&quot;Binomial&quot;"/>
 	</logic>
 	<dialog label="Central Limit Theorem: Binomial to Normal" >
 		<insert snippet="clt_layout"/>

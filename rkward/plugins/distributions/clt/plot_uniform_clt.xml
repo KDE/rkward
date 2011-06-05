@@ -14,7 +14,7 @@
 	<logic>
 		<insert snippet="clt_logic"/>
 		<set id="dist_stepfun.default_dopoints" to="false" />
-		<set id="plotoptions.default_main" to="Uniform"/>
+		<set id="plotoptions.default_main" to="&quot;Uniform&quot;"/>
 	</logic>
 	<dialog label="Central Limit Theorem: Uniform to Normal" >
 		<insert snippet="clt_layout"/>

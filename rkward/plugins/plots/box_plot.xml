@@ -12,19 +12,15 @@
 
 		<convert id="data_mode_grouped" mode="equals" sources="data_mode.string" standard="grouped_outcome"/>
 		<connect client="outcome.visible" governor="data_mode_grouped"/>
-		<connect client="outcome.required" governor="data_mode_grouped"/>
 		<connect client="groups.visible" governor="data_mode_grouped"/>
-		<connect client="groups.required" governor="data_mode_grouped"/>
 		<connect client="dodges.visible" governor="data_mode_grouped"/>
 		<connect client="x.visible" governor="data_mode_grouped.not"/>
-		<connect client="x.required" governor="data_mode_grouped.not"/>
 
 		<convert id="custom_names" mode="equals" sources="names_mode.string" standard="custom"/>
 		<convert id="rexp_names" mode="equals" sources="names_mode.string" standard="rexp"/>
 		<connect client="names_custom.visible" governor="rexp_names.not"/>
 		<connect client="names_custom.enabled" governor="custom_names"/>
 		<connect client="names_exp.visible" governor="rexp_names"/>
-		<connect client="names_exp.required" governor="rexp_names"/>
 
 		<connect client="pch_mean.enabled" governor="mean.state"/>
 		<connect client="pch_sd_high.enabled" governor="sd.state"/>
@@ -42,9 +38,9 @@
 						<option value="separate_vars" label="Separate variables" checked="true"/>
 						<option value="grouped_outcome" label="Single (grouped) variable"/>
 					</radio>
-					<varslot multi="true" type="numeric" source="vars" id="x" label="Variable(s):"/>
-					<varslot type="numeric" source="vars" id="outcome" label="Outcome variable:"/>
-					<varslot multi="true" source="vars" id="groups" label="Group variable(s):"/>
+					<varslot multi="true" type="numeric" source="vars" id="x" label="Variable(s):" required="true"/>
+					<varslot type="numeric" source="vars" id="outcome" label="Outcome variable:" required="true"/>
+					<varslot multi="true" source="vars" id="groups" label="Group variable(s):" required="true"/>
 					<spinbox type="integer" id="dodges" label="Dodged groups" min="0" initial="0"/>
 				</column>
 				<column>
@@ -54,8 +50,8 @@
 							<option value="custom" label="Custom labels"/>
 							<option value="rexp" label="From R expression"/>
 						</radio>
-						<input id="names_exp" label="Expression to use for labels" initial="names (x)"/>
-						<input id="names_custom" label="Labels (separated by ';')" initial="First label;Second label"/>
+						<input id="names_exp" label="Expression to use for labels" initial="names (x)" required="true"/>
+						<input id="names_custom" label="Labels (separated by ';')" initial="First label;Second label" required="true"/>
 					</frame>
 					<spinbox type="real" id="boxwex" label="Box width" min="0" initial="0.8"/>
 					<stretch/>

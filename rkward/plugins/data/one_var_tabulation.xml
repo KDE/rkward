@@ -1,0 +1,55 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="one_var_tabulation.js" />
+	<help file="one_var_tabulation.rkh" />
+	<logic>
+		<external id="outvar" default="x"/>
+		<external id="titlevar" default=""/>
+		<external id="var_label" default="x"/>
+		<external id="fun_label" default=""/>
+
+		<set id="varsource.visible" to="false"/>
+
+		<convert id="is_freq" sources="stat.string" mode="equals" standard="freq"/>
+		<connect client="outcome.enabled" governor="is_freq.not"/>
+		<convert id="is_custom" sources="stat.string" mode="equals" standard="custom"/>
+		<connect client="custom_stat.enabled" governor="is_custom"/>
+
+		<script><![CDATA[
+			gui.addChangeCommand ("stat.string", "updateFunLabel ()");
+			gui.addChangeCommand ("custom_stat.text", "updateFunLabel ()");
+			gui.addChangeCommand ("outcome.available", "updateFunLabel ()");
+			updateFunLabel = function () {
+				var stat = gui.getValue ("stat.string");
+				var label;
+				if (stat == "freq") {
+					label = "Frequency";
+				} else {
+					var obj = makeRObject (gui.getValue ("outcome.available"));
+					if (stat == "sum") {
+						label = "Sum of " + obj.objectname;
+					} else if (stat == "custom") {
+						label = gui.getValue ("custom_stat.text") + " of " + obj.objectname;
+					}
+				}
+				gui.setValue ("fun_label", quote (label));
+			}
+			updateFunLabel ();
+		]]></script>
+	</logic>
+	<dialog label="Tabulate" >
+		<varselector id="varsource"/>	<!-- dummy varselector is currently needed to allow the embedding component to connect its own varselector -->
+		<varslot min_vars="1" multi="true" id="groups" source="varsource" required="true" label="Grouping factors"/>
+		<row>
+			<radio id="stat" label="Statistic">
+				<option value="freq" checked="true" label="Frequency"/>
+				<option value="sum" label="Sum"/>
+				<option value="custom" label="Other:"/>
+			</radio>
+			<column>
+				<varslot id="outcome" source="varsource" required="true" label="Values"/>
+				<input id="custom_stat" label="Custom statistic" initial="mean (x)"/>
+			</column>
+		</row>
+	</dialog>
+</document>

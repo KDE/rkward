@@ -3,10 +3,25 @@
 	<code file="pareto.js" />
 	<help file="pareto.rkh" />
 	<logic>
-		<connect client="plotoptions.default_main" governor="x.available" />
+		<set id="plotoptions.default_main" to="title" />
 		<set id="plotoptions.allow_type" to="false"/>
 		<set id="plotoptions.allow_xlim" to="false"/>
 		<set id="plotoptions.allow_log" to="false"/>
+
+		<connect client="tabulate_frame.enabled" governor="tabulate.state"/>
+		<connect client="x.enabled" governor="tabulate.state.not"/>
+		<connect client="tabulate_options.varsource.selected" governor="vars.selected" />
+		<set id="tabulate_options.titlevar" to="title" />
+
+		<connect client="plotoptions.default_ylab" governor="tabulate_options.fun_label" />
+		<script><![CDATA[
+			gui.addChangeCommand ("tabulate.state", "updateFunLabel ()");
+			updateFunLabel = function () {
+				var tabulate = gui.getValue ("tabulate.state");
+				if (!tabulate) gui.setValue ("tabulate_options.fun_label", quote ("Frequency"));
+			}
+			updateFunLabel ();
+		]]></script>
 	</logic>
 	<dialog label="Pareto chart" >
 		<tabbook>
@@ -14,19 +29,35 @@
 				<row>
 					<varselector id="vars"/>
 					<column>
-					<varslot min_vars="1" id="x" source="vars" required="true" label="Vector or Factor"/>
-					<checkbox id="tabulate" label="Tabulate" value="TRUE" value_unchecked="FALSE" checked="false" />
-					<checkbox id="descriptives" label="Print descriptives" value="TRUE" value_unchecked="FALSE" checked="true"/>
-					<stretch/>
-					<preview id="preview"/>
+						<checkbox id="tabulate" label="Tabulate data before plotting"/>
+						<varslot min_vars="1" id="x" source="vars" required="true" label="Vector or Factor"/>
+						<frame id="tabulate_frame">
+							<embed id="tabulate_options" component="rkward::one_var_tabulation" as_button="false" label="Tabulation Options"/>
+						</frame>
+						<checkbox id="descriptives" label="Print descriptives" value="TRUE" value_unchecked="FALSE" checked="true"/>
+						<stretch/>
+						<preview id="preview"/>
 					</column>
 				</row>
 			</tab>
+			<tab label="Limit" id="tab_plot_options">
+				<frame id="limit" label="Limit number of groups" checkable="true" checked="false">
+					<row>
+						<spinbox type="integer" id="cutoff" initial="1" min="1" label="Limit"/>
+						<radio id="sorting" label="Sorting">
+							<option value="lowest" label="Smallest values"/>
+							<option value="highest" checked="true" label="Largest values"/>
+						</radio>
+					</row>
+					<input id="others_label" label="Remainder category label" initial="Other" required="true"/>
+				</frame>
+				<stretch/>
+			</tab>
 			<tab label="Plot Options" id="tab_plot_options">
-				<row>
+				<column>
 					<embed id="plotoptions" component="rkward::plot_options" as_button="false" label="Plot Options" />
 					<stretch/>
-				</row>
+				</column>
 			</tab>
 		</tabbook>
 	</dialog>

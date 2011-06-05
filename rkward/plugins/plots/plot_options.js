@@ -3,7 +3,7 @@ function prepareLabel (labelname) {
 	var label = getValue (labelname);
 	if (label == "") {
 		label = getValue ("default_" + labelname);
-		quoted = true;
+		quoted = false;
 	}
 	if ((label != "") && (quoted)) label = quote (label);
 	if (label != "") label = ", " + labelname + "=" + label;

@@ -1,10 +1,26 @@
 function preprocess () {
 	echo ('require(qcc)\n');
-	if (getValue ("descriptives")=="TRUE") {
-		echo ('require(xtable)\n');
-	}
 }
 
+function calculate () {
+	if (!getValue ("tabulate")) {
+		echo ('x <- ' + getValue ("x") + '\n');
+		echo ('title <- rk.get.description (' + getValue ("x") + ')\n');
+		echo ('if (!is.numeric (x)) {\n');
+		echo ('	warning ("Data may not be numeric, but proceeding as requested.\\nDid you forget to check the tabulate option?")\n');
+		echo ('}\n');
+	} else {
+		echo (getValue ('tabulate_options.code.calculate'));
+	}
+
+	if (getValue ("limit.checked")) {
+		echo ('max.categories <- ' + getValue ("cutoff") + '\n');
+		echo ('if (length (x) > max.categories)\n');
+		echo ('\tx <- sort (x, decreasing=TRUE)\n');
+		echo ('\tx <- c (x[1:max.categories], ' + quote (getValue ("others_label")) + '=sum (x[(cutoff+1):length(x)]))\n');
+		echo ('}\n');
+	}
+}
 
 function printout () {
 	doPrintout (true);
@@ -12,24 +28,13 @@ function printout () {
 
 function preview () {
 	preprocess ();
+	calculate ();
 	doPrintout (false);
 }
 
 function doPrintout (full) {
-	var vars = getValue ("x");
 	var descriptives = getValue ("descriptives")=="TRUE";
-	var tabulate = getValue ("tabulate")=="TRUE";
 
-	if (tabulate) {
-		echo ('x <- table (' + vars + ', exclude=NULL)\n');
-	} else {
-		echo ('x <- ' + vars);
-		echo ('\n');
-		echo ('if (!is.numeric (x)) {\n');
-		echo ('	warning ("Data may not be numeric, but proceeding as requested.\\nDid you forget to check the tabulate option?")\n');
-		echo ('}\n');
-	}
-	echo ('\n');
 	if (full) {
 		echo ('rk.header ("Pareto chart")\n');
 		echo ('\n');
@@ -39,7 +44,7 @@ function doPrintout (full) {
 	echo ('try ({\n');
 	echo ('	descriptives <- pareto.chart(x' + getValue ("plotoptions.code.printout") + ')\n');
 	if (full && descriptives) {
-		echo ('	rk.results(xtable(descriptives))\n');
+		echo ('	rk.results(data.frame(descriptives))\n');
 	}
 	echo ('})\n');
 	if (full) {

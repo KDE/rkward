@@ -13,7 +13,7 @@
 	<logic>
 		<insert snippet="clt_logic"/>
 		<set id="dist_stepfun.default_verticals" to="false" />
-		<set id="plotoptions.default_main" to="Poisson"/>
+		<set id="plotoptions.default_main" to="&quot;Poisson&quot;"/>
 	</logic>
 	<dialog label="Central Limit Theorem: Poisson to Normal" >
 		<insert snippet="clt_layout"/>

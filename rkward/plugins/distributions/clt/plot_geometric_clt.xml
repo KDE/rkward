@@ -13,7 +13,7 @@
 	<logic>
 		<insert snippet="clt_logic"/>
 		<set id="dist_stepfun.default_verticals" to="false" />
-		<set id="plotoptions.default_main" to="Geometric"/>
+		<set id="plotoptions.default_main" to="&quot;Geometric&quot;"/>
 	</logic>
 	<dialog label="Central Limit Theorem: Geometric to Normal" >
 		<insert snippet="clt_layout"/>
