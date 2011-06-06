@@ -1,0 +1,8 @@
+<!DOCTYPE rkplugin>
+
+<document>
+	<code file="run_code.js"/>
+	<dialog label="Internal plugin for automated testing">
+		<input id="codetorun" initial="" size="large"/>
+	</dialog>
+</document>

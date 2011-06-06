@@ -250,6 +250,14 @@ suite <- new ("RKTestSuite", id="rkward_application_tests",
 				plot (rnorm (100), main=paste (i, "/ 100"))
 				dev.off ()
 			}
+		}),
+		new ("RKTest", id="output_capture_interleaving_test", call=function () {
+			rk.call.plugin ("rkward::testing_run_code", codetorun.text='
+				for (i in 1:20) {
+					cat ("A")
+					system ("echo B")
+				}
+			', submit.mode="submit")
 		})
 	# postCalls are run *after* all tests. Use this to clean up
 	), postCalls = list (

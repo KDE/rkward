@@ -12,5 +12,9 @@
 		<component type="standard" id="one_var_tabulation" file="data/one_var_tabulation.xml" label="Tabulate" />
 
 		<component type="standard" id="x11grid" file="x11device/grid.xml" label="Draw Grid" />
+
+		<!-- This plugin does not really belong, here, but nowhere else, either, since it's only for the purpose of testing some things in the
+				automated tests. It definitely should not be shown in the menu, of course. -->
+		<component type="standard" id="testing_run_code" file="testing/run_code.xml" label="Run Code"/>
 	</components>
 </document>
