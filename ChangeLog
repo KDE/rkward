@@ -1,6 +1,6 @@
-- Pareto-plot plugin gains more tabulation options				TODO: also use in piechart; Why doesn't the Y-label update properly, when enabling / disabling tabulation?
+- Pareto-plot plugin gains more tabulation options				TODO: also use in piechart, barplot
 - rk.results() now prints rownames, where appropriate			TODO: test
-- "frame" elements in plugins can now be made checkable			TODO: document; Implement correctly, i.e. with property!
+- "frame" elements in plugins can now be made checkable			TODO: document
 - Disabling or hiding a plugin component makes it non-required, implicitly		TODO: remove explicit connections to component.required in the plugins. Document
 - Boxplot gains option to dogde grouped boxes						TODO: add test; add colors?
 - Simplify internal handling of system() and system2() output					TODO: test on Windows!

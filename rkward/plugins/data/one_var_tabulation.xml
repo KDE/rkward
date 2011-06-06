@@ -5,7 +5,7 @@
 	<logic>
 		<external id="outvar" default="x"/>
 		<external id="titlevar" default=""/>
-		<external id="fun_label" default=""/>
+		<external id="fun_label" default="&quot;Frequency&quot;"/>
 
 		<set id="varsource.visible" to="false"/>
 
@@ -33,7 +33,6 @@
 				}
 				gui.setValue ("fun_label", quote (label));
 			}
-			updateFunLabel ();
 		]]></script>
 	</logic>
 	<dialog label="Tabulate" >

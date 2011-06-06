@@ -28,7 +28,9 @@ function Component(id) {
 	}
 
 	this.getValue = function (id) {
-		return (_rkward.getValue (this.absoluteId (id)));
+		var ret = _rkward.getValue (this.absoluteId (id));
+		if (ret == "0") return (false);
+		return (ret);
 	}
 
 	this.setValue = function (id, value) {

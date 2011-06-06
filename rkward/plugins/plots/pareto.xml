@@ -11,13 +11,15 @@
 		<connect client="x.enabled" governor="tabulate.checked.not"/>
 		<connect client="tabulate_options.varsource.selected" governor="vars.selected" />
 		<set id="tabulate_options.titlevar" to="title" />
-
-		<connect client="plotoptions.default_ylab" governor="tabulate_options.fun_label" />
 		<script><![CDATA[
 			gui.addChangeCommand ("tabulate.checked", "updateFunLabel ()");
+			gui.addChangeCommand ("tabulate_options.fun_label", "updateFunLabel ()");
 			updateFunLabel = function () {
-				var tabulate = gui.getValue ("tabulate.checked");
-				if (!tabulate) gui.setValue ("tabulate_options.fun_label", quote ("Frequency"));
+				if (gui.getValue ("tabulate.checked")) {
+					gui.setValue ("plotoptions.default_ylab", gui.getValue ("tabulate_options.fun_label"));
+				} else {
+					gui.setValue ("plotoptions.default_ylab", quote ("Frequency"));
+				}
 			}
 			updateFunLabel ();
 		]]></script>
@@ -28,6 +30,7 @@
 				<row>
 					<varselector id="vars"/>
 					<column>
+						<text id="dummy" initial="---"/>
 						<frame id="tabulate" label="Tabulate data before plotting" checkable="true" checked="false">
 							<embed id="tabulate_options" component="rkward::one_var_tabulation" as_button="false" label="Tabulation Options"/>
 						</frame>
