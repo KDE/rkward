@@ -171,6 +171,7 @@ namespace RKCommonFunctions {
 			QChar c = in[i];
 			if (c == '\\') out.append ("\\\\");
 			else if (c == '\n') out.append ("\\n");
+			else if (c == '\t') out.append ("\\t");
 			else if (c == '"') out.append ("\\\"");
 			else out.append (c);
 		}
@@ -188,6 +189,7 @@ namespace RKCommonFunctions {
 				if (i >= in.size ()) break;
 				c = in[i];
 				if (c == 'n') c = '\n';
+				if (c == 't') c = '\t';
 				else if (c == '"') c = '"';
 			}
 			out.append (c);
