@@ -1370,6 +1370,10 @@ QStringList RKRBackend::handlePlainGenericRequest (const QStringList &parameters
 		request.params["call"] = dummy;
 	} else if (parameters.value (0) == "set.output.file") {
 		output_file = parameters.value (1);
+		if (parameters.length () > 2) {
+			RK_ASSERT (parameters.value (2) == "SILENT");
+			return QStringList ();		// For automated testing. The frontend should not be notified, here
+		}
 		request.params["call"] = parameters;
 	} else {
 		request.params["call"] = parameters;
