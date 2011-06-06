@@ -52,8 +52,8 @@ as Authors, publish date, the abstract, and Keywords -->
      and in the FDL itself on how to use it. -->
 <legalnotice>&FDLNotice;</legalnotice>
 
-<date>2011-04-27</date>
-<releaseinfo>0.5.6.00</releaseinfo>
+<date>2011-06-06</date>
+<releaseinfo>0.5.7.00</releaseinfo>
 
 <abstract>
 <para>
@@ -371,6 +371,9 @@ Here's yet another layout-element: In order to signal that the two elements belo
 <para>
 Inside the &lt;frame&gt; we place another &lt;checkbox&gt; (using checked="true", we signal that checkbox should be checked by default), and a &lt;spinbox&gt;. The spinbox allows the user to select a value between "min" and "max" with the default/initial value "0.95". Setting the "type" to "real" signals that real numbers are accepted as opposed to type="integer" which would accept integers only.
 </para>
+<para>
+Note: It is also possible, and often preferrable, to make the &lt;frame&gt; itself checkable, instead of adding a &lt;checkbox&gt; inside. See the reference for details. This is not done, here, for illustrational purposes.
+</para>
 <programlisting>
 			&lt;/tab&gt;
 		&lt;/tabbook&gt;
@@ -571,9 +574,9 @@ function calculate () {
 	echo ('x &lt;- &lt;' + getValue ("x") + ')\n');
 	echo ('results &lt;- list ()\n');
 
-	if (getRK_val ("domean")) echo ("results$'Mean value' &lt;- mean (x)\n");
-	if (getRK_val ("domedian")) echo ("results$'Median' &lt;- median (x)\n");
-	if (getRK_val ("dosd")) echo ("results$'Standard deviation' &lt;- sd (x)\n");
+	if (getValue ("domean")) echo ("results$'Mean value' &lt;- mean (x)\n");
+	if (getValue ("domedian")) echo ("results$'Median' &lt;- median (x)\n");
+	if (getValue ("dosd")) echo ("results$'Standard deviation' &lt;- sd (x)\n");
 	//...
 }
 </programlisting>
@@ -681,7 +684,7 @@ function calculate () {
 	
 		&lt;settings&gt;
 			&lt;caption id="id_of_tab_or_frame"/&gt;
-			&lt;setting id="id_of_elementa"&gt;
+			&lt;setting id="id_of_element"&gt;
 	Description of the GUI element identified by the given id
 			&lt;/setting&gt;
 			&lt;setting id="id_of_elementb" title="description"&gt;
@@ -759,10 +762,7 @@ So far so good, but there are a number of problems with this GUI. First, both th
 		&lt;convert id="varmode" mode="equals" sources="mode.string" standard="variable" /&gt;
 		&lt;convert id="constmode" mode="equals" sources="mode.string" standard="constant" /&gt;
 
-		&lt;connect client="y.required" governor="varmode" /&gt;
 		&lt;connect client="y.visible" governor="varmode" /&gt;
-
-		&lt;connect client="constant.required" governor="constmode" /&gt;
 		&lt;connect client="constant.visible" governor="constmode" /&gt;
 	&lt;/logic&gt;
 
@@ -774,7 +774,7 @@ So far so good, but there are a number of problems with this GUI. First, both th
 The first two lines inside the logic section are &lt;conver&gt; tags. Those basically provide two new boolean (on or off, true or false) properties, which can be used later on. The first property ("varmode") is true, whenever the upper radio-button is selected and the second whenever the lower radio-button is selected. How is this done?
 </para>
 <para>
-First, under sources, the "source" properties to work on are listed (in this case only one each; you could list several as sources="mode.string;somethingelse", then varmode would only be true, if both mode.string and somethingelse are equal to the string "variable"). Note that in this case we don't just write "mode" (as we would in getRK("mode"), but "mode.string". This is actually the internal way a radio control works: It has a property "string", which holds its string value. getRK ("mode") is just a shorthand, and equivalent to getRK ("mode.string"). See the reference for all properties of the different GUI elements.
+First, under sources, the "source" properties to work on are listed (in this case only one each; you could list several as sources="mode.string;somethingelse", then varmode would only be true, if both mode.string and somethingelse are equal to the string "variable"). Note that in this case we don't just write "mode" (as we would in getValue("mode"), but "mode.string". This is actually the internal way a radio control works: It has a property "string", which holds its string value. getValue("mode") is just a shorthand, and equivalent to getValue("mode.string"). See the reference for all properties of the different GUI elements.
 </para>
 <para>
 Second, we set the mode of conversion to mode="equals". This means, we want to check, whether the sources are equal to a certain value. Finally standard is the value to compare against, so with standard="variable", we check whether the property mode.string is equal to the string "variable" (the value of the upper radio option). If it is equal, then the property varmode is true, else it is false.
@@ -783,11 +783,17 @@ Second, we set the mode of conversion to mode="equals". This means, we want to c
 The next line is basically the same, but reversed. Here we define a property ("constmode") which becomes true, if the second radio option is selected.
 </para>
 <para>
-Now to the real stuff: We &lt;connect&gt; the "varmode" property to two different properties. Firstly, to y.required. This specifies, whether the varslot "y" is required or not. Secondly, to y.visible, which controls whether the varslot "y" is shown or not. Hence, if the upper radio-option is selected, the varslot "y" is required, and visible. Else it is not required and hidden.
+Now to the real stuff: We &lt;connect&gt; the "varmode" property to y.visible, which controls whether the varslot "y" is shown or not. Note that any element which is made invisible is implicitly non-required. Thus, if the upper radio-option is selected, the varslot "y" is required, and visible. Else it is not required and hidden.
 </para>
 <para>
 We do just the reverse for the spinbox. So in effect, either the varslot is shown and required, <emphasis>or</emphasis> the spinbox is shown and required - depending on which option is selected in the radio control. The GUI is changing itself according to the radio option. Try the example, if you like.
 </para>
+<para>
+Note: In the above example, instead of defining two properties "varmode" and "constmode", we could also have used the negation of "varmode", like this:
+</para>
+<programlisting>
+	&lt;connect client="constant.visible" governor="varmode.not" /&gt;
+</programlisting>
 <para>
 Once again, for a complete list of properties, refer to the <link linkend="reference">reference</link>. One more property, however, is special in that all GUI elements have it: "enabled". This is slightly less drastic that "visible". It does not show/hide the GUI element, but only enables/disables it. Disabled elements are typically shown grayed out, and do not react to user input.
 </para>
@@ -807,9 +813,7 @@ Once again, for a complete list of properties, refer to the <link linkend="refer
 			// this function is called whenever the "mode" was changed
 			modeChanged = function () {
 				var varmode = (gui.getValue ("mode.string") == "variable");
-				gui.setValue ("y.required", varmode);
 				gui.setValue ("y.enabled", varmode);
-				gui.setValue ("constant.required", !varmode);
 				gui.setValue ("constant.enabled", !varmode);
 			}
 		]]&gt;&lt;/script&gt;
@@ -819,7 +823,7 @@ Once again, for a complete list of properties, refer to the <link linkend="refer
 	[...]
 </programlisting>
 <para>
-The first line of code tells RKWard to call the function "modeChanged()" whenever the value of the "mode" radio-box changes. Inside this function, we define a helper-variable "varmode" which is true when the mode is "variable", false is it is "constant". Then we use "gui.setValue()" to set the "required"- and "enabled"-properties of "y" and "constant", in just the same way as we did using &lt;connect&gt;-statements, before.</para>
+The first line of code tells RKWard to call the function "modeChanged()" whenever the value of the "mode" radio-box changes. Inside this function, we define a helper-variable "varmode" which is true when the mode is "variable", false is it is "constant". Then we use "gui.setValue()" to set the and "enabled"-properties of "y" and "constant", in just the same way as we did using &lt;connect&gt;-statements, before.</para>
 <para>
 The scripted approach to GUI logic becomes particularily useful when you want to change the available option according to the type of object that the user has selected. See <link linkend="guilogic_functions">the reference</link> for available functions.
 </para>
@@ -1718,6 +1722,14 @@ At some places in this introduction we've talked about "properties" of GUI eleme
 	<term>&lt;label&gt;</term>
 	<listitem>Caption for the frame (optional)</listitem>
 	</varlistentry>
+	<varlistentry>
+	<term>&lt;checkable&gt;</term>
+	<listitem>Frames can be made checkable. In this case, all contained elements will be disabled when the frame is unchecked, and enabled, when it is checked. (optional, defaults to "false")</listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>&lt;checked&gt;</term>
+	<listitem>For checkable frames only: Should the frame be checked by default? Defaults to "true". Not interpreted for non-checkable frames.</listitem>
+	</varlistentry>
 	</variablelist></listitem>
 </varlistentry>
 <varlistentry>
@@ -1873,6 +1885,12 @@ At some places in this introduction we've talked about "properties" of GUI eleme
 	<listitem>Whether the option should be checked by default "true" or "false" (optional, default to "false")</listitem>
 	</varlistentry>
 	</variablelist></listitem>
+</varlistentry>
+<varlistentry>
+<term>&lt;frame&gt;</term>
+<listitem>The frame element is generally used as a pure layout element, and is listed in the section on <link linend="layoutelements"/>layout elements</link>. However, it can also be
+made checkable, thus acting like a simple checkbox at the same time.
+</listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;input&gt;</term>
@@ -2140,11 +2158,11 @@ At some places in this introduction we've talked about "properties" of GUI eleme
 </varlistentry>
 <varlistentry>
 <term>required</term>
-<listitem>Whether the GUI element is required (to hold a valid setting) or not. If you set an element to not enabled/not visible, you should also set it to not required! (boolean)</listitem>
+<listitem>Whether the GUI element is required (to hold a valid setting) or not. Note that any element which is disabled or hidden is also implicity non-required (boolean).</listitem>
 </varlistentry>
 </variablelist>
 <para>
-In addition to this, some elements have additional properties you can connect to. Most active elements also have a "default" property whose value will be returned on calls to getRK ("..."), if no specific property was named, as described below.
+In addition to this, some elements have additional properties you can connect to. Most active elements also have a "default" property whose value will be returned on calls to getValue ("..."), if no specific property was named, as described below.
 </para>
 <variablelist>
 <varlistentry>
@@ -2234,6 +2252,16 @@ In addition to this, some elements have additional properties you can connect to
 	<varlistentry>
 	<term>state</term>
 	<listitem>State of the checkbox (on or off). Note that useful modifiers of this property (as of all boolean properties) are "not" and "numeric" (see <link linkend="propertytypes">types of properties</link>). (boolean)</listitem>
+	</varlistentry>
+	</variablelist></listitem>
+</varlistentry>
+<varlistentry>
+<term>&lt;frame&gt;</term>
+<listitem>No default property.
+	<variablelist>
+	<varlistentry>
+	<term>checked</term>
+	<listitem>Available for checkable frames, only: state of the checkbox (on or off). Note that useful modifiers of this property (as of all boolean properties) are "not" and "numeric" (see <link linkend="propertytypes">types of properties</link>). (boolean)</listitem>
 	</varlistentry>
 	</variablelist></listitem>
 </varlistentry>

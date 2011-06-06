@@ -43,7 +43,7 @@ RKPluginFrame::RKPluginFrame (const QDomElement &element, RKComponent *parent_co
 	checked = 0;
 	if (xml->getBoolAttribute (element, "checkable", false, DL_INFO)) {
 		frame->setCheckable (true);
-		frame->setChecked (xml->getBoolAttribute (element, "checked", false, DL_INFO));
+		frame->setChecked (xml->getBoolAttribute (element, "checked", true, DL_INFO));
 		initCheckedProperty ();
 		connect (frame, SIGNAL (toggled(bool)), this, SLOT (checkedChanged(bool)));
 	}
