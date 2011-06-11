@@ -71,7 +71,7 @@ FIND_LIBRARY(LIBR_SO
 	PATHS ${R_HOME}/lib ${R_SHAREDLIBDIR} ${R_HOME}/bin
 	NO_DEFAULT_PATH)
 IF(NOT LIBR_SO)
-	MESSAGE(FATAL_ERROR "Not found. Make sure the location of R was detected correctly, above, and R was compiled with the --enable-shlib option")
+	MESSAGE(FATAL_ERROR "Not found. Make sure the location of R was detected correctly, above, and R was compiled with the --enable-R-shlib option")
 ELSE(NOT LIBR_SO)
 	MESSAGE(STATUS "Exists at ${LIBR_SO}")
 	GET_FILENAME_COMPONENT(R_SHAREDLIBDIR ${LIBR_SO}
