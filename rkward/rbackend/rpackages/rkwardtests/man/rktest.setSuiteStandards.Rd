@@ -6,8 +6,8 @@
 \details{Use this function after you plugin passed all tests to set the resulting code,
 output and R messages as the standard that will be compared to during following tests.}
 \alias{rktest.setSuiteStandards}
-\value{The function simply changes the names of the previously created files,
-specifically adding the prefix "RKTestStandard.".}
+\value{The function simply copies the previously created files from the temporary directory to
+the directory with the test standards.}
 \author{Thomas Friedrichsmeier \email{thomas.friedrichsmeier@ruhr-uni-bochum.de}}
 \keyword{utilities}
 \seealso{\code{\link[rkwardtests:RKTestSuite]{RKTestSuite-class}}, \code{\link[rkwardtests:rktest.makeplugintests]{rktest.makeplugintests}}}

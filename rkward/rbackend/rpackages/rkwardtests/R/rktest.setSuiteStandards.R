@@ -10,8 +10,8 @@
 #' @param testroot Path to the test root directory, defaults to the working directory.
 #' @param file Logical: If \code{suite} is already a present R object, set this to FALSE.
 #'        Otherwise it is assumed to be a file and fed to \code{source}.
-#' @return The function simply changes the names of the previously created files,
-#' specifically adding the prefix "RKTestStandard.".
+#' @return The function simply copies the previously created files from the temporary directory
+#'        to the directory containing the test standards (inside the testroot).
 #' @author Thomas Friedrichsmeier \email{thomas.friedrichsmeier@@ruhr-uni-bochum.de}
 #' @keywords utilities
 #' @seealso \code{\link[rkwardtests:RKTestSuite]{RKTestSuite-class}}, \code{\link[rkwardtests:rktest.makeplugintests]{rktest.makeplugintests}}
@@ -38,7 +38,7 @@ rktest.setSuiteStandards <- function (suite, testroot=getwd (), file=TRUE) {
 	temp.suite.dir <- rktest.createTempSuiteDir(suite@id)
 	files <- list.files (temp.suite.dir)
 	files <- grep ("\\.(messages.txt|rkcommands.R|rkout)$", files, value=TRUE)
-	file.copy (file.path(temp.suite.dir, files), paste ("RKTestStandard.", files, sep=""), overwrite=TRUE)
+	file.copy (file.path(temp.suite.dir, files), files, overwrite=TRUE)
 
 	# clean anything that is *not* a standard file
 	rktest.cleanRKTestSuite (suite)

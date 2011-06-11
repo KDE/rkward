@@ -40,7 +40,7 @@ rktest.file <- function (id, extension, suite.id) {
 
 # returns true, if file corresponds to standard.
 rktest.compare.against.standard <- function (file, standard.path, fuzzy=FALSE) {
-	standard_file <- file.path(standard.path, gsub ("^(.*\\/)([^\\/]*)$", "RKTestStandard\\.\\2", file))
+	standard_file <- file.path(standard.path, gsub ("^(.*\\/)", "", file))	# gsub strips any leading directories from the path
 	if (file.exists (file)) {
 		# purge empty files
 		info <- file.info (file)
