@@ -13,5 +13,3 @@ rk.print (paste("Log-likelihood value at convergence:",round(estimates.gpcm$log.
 # keep results in current workspace
 .GlobalEnv$estimates.gpcm <- estimates.gpcm
 })
-.rk.rerun.plugin.link(plugin="rkward::par_est_gpcm", settings="chk_select.state=select\nconstraint.string=rasch\nepshess.real=0.000001\nghk_gpcm.real=21.00\ninp_items.available=Science[[\\\"Work\\\"]]\\nScience[[\\\"Industry\\\"]]\\nScience[[\\\"Future\\\"]]\\nScience[[\\\"Benefit\\\"]]\nirtparam.state=TRUE\niterqn_gpcm.real=150.00\nnaaction.state=\nnumrderiv.string=fd\noptimeth.string=BFGS\noptimizer.string=optim\nsave_name.active=1\nsave_name.objectname=estimates.gpcm\nsave_name.parent=.GlobalEnv\nstartval.string=NULL\nverbose.state=\nx.available=Science", label="Run again")
-.rk.make.hr()

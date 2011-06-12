@@ -9,5 +9,3 @@ rk.header ("Crosstabs (n to n)", parameters=list ("Variables"=datadescription))
 
 rk.print (result)
 })
-.rk.rerun.plugin.link(plugin="rkward::crosstab_multi", settings="exclude_nas.state=1\nx.available=test_table[[\\\"A\\\"]]\\ntest_table[[\\\"B\\\"]]\\ntest_table[[\\\"C\\\"]]\\ntest_table[[\\\"D\\\"]]", label="Run again")
-.rk.make.hr()

@@ -23,5 +23,3 @@ rk.header ("Anscombe-Glynn test of kurtosis",
 	parameters=list ("Alternative Hypothesis", "two.sided"))
 rk.results (results)
 })
-.rk.rerun.plugin.link(plugin="rkward::anscombe_test", settings="alternative.string=two.sided\nlength.state=1\nshow_alternative.state=1\nx.available=warpbreaks[[\\\"breaks\\\"]]\\ntest50z\\ntest10y", label="Run again")
-.rk.make.hr()

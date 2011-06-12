@@ -20,5 +20,3 @@ for (i in 1:length (vars)) {
 rk.header ("Skewness and Kurtosis")
 rk.results (results)
 })
-.rk.rerun.plugin.link(plugin="rkward::skewness_kurtosis", settings="geary.state=1\nkurtosis.state=1\nlength.state=1\nnarm.state=1\nskewness.state=1\nx.available=women[[\\\"weight\\\"]]\\nwomen[[\\\"height\\\"]]\\nwarpbreaks[[\\\"breaks\\\"]]", label="Run again")
-.rk.make.hr()

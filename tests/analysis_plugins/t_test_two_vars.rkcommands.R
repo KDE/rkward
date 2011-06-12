@@ -18,8 +18,6 @@ rk.results (list (
 	'confidence interval percent'=(100 * attr(result$conf.int, "conf.level")),
 	'confidence interval of difference'=result$conf.int ))
 })
-.rk.rerun.plugin.link(plugin="rkward::t_test_two_vars", settings="confint.state=1\nconflevel.real=0.95\nhypothesis.string=two.sided\npaired.state=0\nvarequal.state=0\nx.available=test50x\ny.available=test50y", label="Run again")
-.rk.make.hr()
 local({
 ## Prepare
 names <- rk.get.description (test10y, test10z)
@@ -39,5 +37,3 @@ rk.results (list (
 	'confidence interval percent'=(100 * attr(result$conf.int, "conf.level")),
 	'confidence interval of difference'=result$conf.int ))
 })
-.rk.rerun.plugin.link(plugin="rkward::t_test_two_vars", settings="confint.state=1\nconflevel.real=0.99\nhypothesis.string=less\npaired.state=1\nx.available=test10y\ny.available=test10z", label="Run again")
-.rk.make.hr()

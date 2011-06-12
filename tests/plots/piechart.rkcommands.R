@@ -15,5 +15,3 @@ try ({
 })
 rk.graph.off ()
 })
-.rk.rerun.plugin.link(plugin="rkward::piechart", settings="angle.real=45\nangle_inc.real=6\nclockwise.state=1\ncolors.string=grayscale\ndensity.real=3\ndensity_inc.real=1\nnames_exp.text=names (x)\nnames_mode.string=default\nplotoptions.add_grid.state=0\nplotoptions.asp.real=0.00\nplotoptions.main.text=\nplotoptions.pointcolor.color.string=\nplotoptions.pointtype.string=\nplotoptions.sub.text=\nplotoptions.xaxt.state=\nplotoptions.xlab.text=\nplotoptions.xlog.state=\nplotoptions.xmaxvalue.text=\nplotoptions.xminvalue.text=\nplotoptions.yaxt.state=\nplotoptions.ylab.text=\nplotoptions.ylog.state=\nplotoptions.ymaxvalue.text=\nplotoptions.yminvalue.text=\nradius.real=0.80\ntabulate.state=0\nx.available=test_table[[\\\"A\\\"]]", label="Run again")
-.rk.make.hr()

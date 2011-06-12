@@ -21,5 +21,3 @@ try ({
 })
 rk.graph.off ()
 })
-.rk.rerun.plugin.link(plugin="rkward::plot_normal_clt", settings="dist_stepfun.addtoplot.state=\ndist_stepfun.col_hor.color.string=blue\ndist_stepfun.col_y0.color.string=gold\ndist_stepfun.col_y1.color.string=cyan\ndist_stepfun.do_points.state=\ndist_stepfun.linetype.string=\ndist_stepfun.verticals.state=1\ndrawnorm.state=1\nfunction.string=dist\nmean.real=0.0\nnAvg.real=10.00\nnDist.real=1000.00\nnormlinecol.color.string=red\nnormpointtype.string=l\nplotoptions.add_grid.state=0\nplotoptions.asp.real=0.00\nplotoptions.main.text=\nplotoptions.pointcolor.color.string=\nplotoptions.pointtype.string=\nplotoptions.sub.text=\nplotoptions.xaxt.state=\nplotoptions.xlab.text=\nplotoptions.xlog.state=\nplotoptions.xmaxvalue.text=\nplotoptions.xminvalue.text=\nplotoptions.yaxt.state=\nplotoptions.ylab.text=\nplotoptions.ylog.state=\nplotoptions.ymaxvalue.text=\nplotoptions.yminvalue.text=\nscalenorm.state=0\nsd.real=1.0", label="Run again")
-.rk.make.hr()

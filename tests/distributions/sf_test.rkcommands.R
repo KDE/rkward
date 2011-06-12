@@ -19,5 +19,3 @@ for (i in 1:length (vars)) {
 rk.header ("Shapiro-Francia Normality Test")
 rk.results (results)
 })
-.rk.rerun.plugin.link(plugin="rkward::sf_test", settings="length.state=1\nx.available=rock[[\\\"shape\\\"]]\\nrock[[\\\"perm\\\"]]", label="Run again")
-.rk.make.hr()

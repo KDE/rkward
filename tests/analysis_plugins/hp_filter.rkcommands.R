@@ -25,5 +25,3 @@ try({
 })
 rk.graph.off ()
 })
-.rk.rerun.plugin.link(plugin="rkward::hp_filter", settings="custom.state=0\ncycle_col.color.string=green4\ncycle_lty.string=\ncycle_lwd.real=1.00\ncycle_name.active=1\ncycle_name.objectname=hpcycle\ncycle_name.parent=.GlobalEnv\ndownlab.text=\nlambda.string=1600\nplot_cycle.state=1\nseries_col.color.string=blue\nseries_lty.string=\nseries_lwd.real=1.00\ntrend_col.color.string=red\ntrend_lty.string=\ntrend_lwd.real=1.00\ntrend_name.active=1\ntrend_name.objectname=hptrend\ntrend_name.parent=.GlobalEnv\nuplab.text=\nx.available=co2", label="Run again")
-.rk.make.hr()

@@ -28,8 +28,6 @@ rk.header ("Grubbs tests for one or two outliers in data sample",
 	parameters=list ("Type", "10", "Opposite", "FALSE", "two-sided", "TRUE"))
 rk.results (results)
 })
-.rk.rerun.plugin.link(plugin="rkward::grubbs_test", settings="descriptives.state=0\nlength.state=1\nopposite.state=FALSE\ntwo_sided.state=TRUE\ntype.string=10\nx.available=warpbreaks[[\\\"breaks\\\"]]\\ntest10z", label="Run again")
-.rk.make.hr()
 local({
 ## Prepare
 require(outliers)
@@ -65,5 +63,3 @@ rk.header ("Grubbs tests for one or two outliers in data sample",
 	parameters=list ("Type", "11", "Opposite", "TRUE", "two-sided", "FALSE"))
 rk.results (results)
 })
-.rk.rerun.plugin.link(plugin="rkward::grubbs_test", settings="descriptives.state=1\nlength.state=1\nopposite.state=TRUE\ntwo_sided.state=FALSE\ntype.string=11\nx.available=warpbreaks[[\\\"breaks\\\"]]\\ntest10z", label="Run again")
-.rk.make.hr()

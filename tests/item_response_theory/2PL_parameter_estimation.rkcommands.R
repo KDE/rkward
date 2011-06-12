@@ -13,5 +13,3 @@ rk.print (paste("Log-likelihood value at convergence:",round(estimates.2pl$log.L
 # keep results in current workspace
 .GlobalEnv$estimates.2pl <- estimates.2pl
 })
-.rk.rerun.plugin.link(plugin="rkward::par_est_2pl", settings="constraint.available=\nghk_2pl.real=15.00\ninteract.state=TRUE\nirtparam.state=TRUE\niterem.real=40.00\niterqn_2pl.real=150.00\nnaaction.state=\noptimeth.string=BFGS\nsave_name.active=1\nsave_name.objectname=estimates.2pl\nsave_name.parent=.GlobalEnv\nstartval.string=NULL\nverbose.state=\nx.available=WIRS", label="Run again")
-.rk.make.hr()

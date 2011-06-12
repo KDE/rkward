@@ -14,5 +14,3 @@ rk.print (paste("Conditional log-likelihood:",round(estimates.pcm$loglik, digits
 # keep results in current workspace
 .GlobalEnv$estimates.pcm <- estimates.pcm
 })
-.rk.rerun.plugin.link(plugin="rkward::par_est_pcm", settings="design.string=auto\netastart.string=NULL\nsave_name.active=1\nsave_name.objectname=estimates.pcm\nsave_name.parent=.GlobalEnv\nstderr.state=se\nsumnull.state=sum0\nx.available=pcmdat", label="Run again")
-.rk.make.hr()

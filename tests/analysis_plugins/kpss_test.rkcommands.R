@@ -21,5 +21,3 @@ rk.header ("KPSS Test for Level Stationarity",
 	parameters=list ("null hypothesis"="Trend", "version of truncation lag parameter"="long"))
 rk.results (results)
 })
-.rk.rerun.plugin.link(plugin="rkward::kpss_test", settings="length.state=1\nlshort.string=FALSE\nnarm.state=0\nnull.string=Trend\nx.available=test50x\\ntest50y\\ntest50z", label="Run again")
-.rk.make.hr()

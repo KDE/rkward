@@ -29,5 +29,3 @@ rk.header ("Descriptive statistics", parameters=list (
 
 rk.results (results)
 })
-.rk.rerun.plugin.link(plugin="rkward::descriptive", settings="constMad.real=1.4628\nlength.state=1\nmad.state=1\nmad_type.string=average\nmean.state=1\nmedian.state=1\nprod.state=1\nrange.state=1\nsd.state=1\nsum.state=1\ntrim.real=0.00\nx.available=women[[\\\"height\\\"]]\\ntest10z", label="Run again")
-.rk.make.hr()

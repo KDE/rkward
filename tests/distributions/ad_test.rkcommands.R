@@ -19,5 +19,3 @@ rk.header ("Anderson-Darling Normality Test")
 
 rk.results (results)
 })
-.rk.rerun.plugin.link(plugin="rkward::ad_test", settings="length.state=1\nx.available=rock[[\\\"shape\\\"]]\\nrock[[\\\"perm\\\"]]", label="Run again")
-.rk.make.hr()

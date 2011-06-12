@@ -19,5 +19,3 @@ rk.results (list (
 	'Upper CI'=result$conf.int[2],
 	'ratio of variances'=result$estimate))
 })
-.rk.rerun.plugin.link(plugin="rkward::F_test", settings="alternative.string=two.sided\nconflevel.real=0.95\nratio.real=1.00\nx.available=test50z\ny.available=test50y", label="Run again")
-.rk.make.hr()

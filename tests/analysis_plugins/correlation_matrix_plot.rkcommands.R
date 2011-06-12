@@ -34,5 +34,3 @@ rk.graph.off ()
 
 rk.print("Legend:\t'***': p &lt; 0.001 -- '**': p &lt; 0.01 -- '*': p &lt; 0.05 -- '.'': p &lt; 0.1")
 })
-.rk.rerun.plugin.link(plugin="rkward::cor_graph", settings="digits.real=3.00\nmethod.string=pearson\nscale.state=TRUE\nuse.string=pairwise.complete.obs\nx.available=rock", label="Run again")
-.rk.make.hr()

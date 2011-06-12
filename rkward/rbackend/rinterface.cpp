@@ -232,7 +232,12 @@ void RInterface::doNextCommand (RCommand *command) {
 		RKCommandLog::getLog ()->addInput (command);
 
 		if (command_logfile_mode != NotRecordingCommands) {
-			if ((!(command->type () & RCommand::Sync)) || command_logfile_mode == RecordingCommandsWithSync) {
+			bool record = true;
+			if (command_logfile_mode != RecordingCommandsUnfiltered) {
+				if (command->type () & RCommand::Sync) record = false;
+				else if (command->command ().startsWith (".rk.rerun.plugin.link")) record = false;
+			}
+			if (record) {
 				command_logfile.write (command->command ().toUtf8 ());
 				command_logfile.write ("\n");
 			}
@@ -546,7 +551,7 @@ QStringList RInterface::processPlainGenericRequest (const QStringList &calllist)
 	} else if (call == "recordCommands") {
 		RK_ASSERT (calllist.count () == 3);
 		QString filename = calllist.value (1);
-		bool with_sync = (calllist.value (2) == "include.sync");
+		bool unfiltered = (calllist.value (2) == "include.all");
 
 		if (filename.isEmpty ()) {
 			command_logfile_mode = NotRecordingCommands;
@@ -558,8 +563,8 @@ QStringList RInterface::processPlainGenericRequest (const QStringList &calllist)
 				command_logfile.setFileName (filename);
 				bool ok = command_logfile.open (QIODevice::WriteOnly | QIODevice::Truncate);
 				if (ok) {
-					command_logfile_mode = RecordingCommands;
-					if (with_sync) command_logfile_mode = RecordingCommandsWithSync;
+					if (unfiltered) command_logfile_mode = RecordingCommandsUnfiltered;
+					else command_logfile_mode = RecordingCommands;
 				} else {
 					return (QStringList ("Could not open file for writing. Not recording commands"));
 				}

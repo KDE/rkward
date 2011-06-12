@@ -33,8 +33,6 @@ rk.header ("Chi-squared test for outlier",
 	parameters=list ("Opposite", "FALSE"))
 rk.results (results)
 })
-.rk.rerun.plugin.link(plugin="rkward::chisq_out_test", settings="descriptives.state=1\nlength.state=1\nopposite.state=FALSE\nx.available=rock[[\\\"shape\\\"]]\\nrock[[\\\"perm\\\"]]\\nrock[[\\\"peri\\\"]]\\nrock[[\\\"area\\\"]]", label="Run again")
-.rk.make.hr()
 local({
 ## Prepare
 require(outliers)
@@ -60,5 +58,3 @@ rk.header ("Chi-squared test for outlier",
 	parameters=list ("Opposite", "TRUE"))
 rk.results (results)
 })
-.rk.rerun.plugin.link(plugin="rkward::chisq_out_test", settings="descriptives.state=0\nlength.state=0\nopposite.state=TRUE\nx.available=rock[[\\\"shape\\\"]]\\nrock[[\\\"perm\\\"]]\\nrock[[\\\"peri\\\"]]\\nrock[[\\\"area\\\"]]", label="Run again")
-.rk.make.hr()

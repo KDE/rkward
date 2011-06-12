@@ -21,8 +21,6 @@ rk.results (list (
 	'confidence interval of difference'=result$conf.int,
 	'estimate of the ratio of scales'=result$estimate))
 })
-.rk.rerun.plugin.link(plugin="rkward::ansari_bradley_test", settings="alternative.string=two.sided\nconfint.state=TRUE\nconflevel.real=0.95\nexact.string=yes\nx.available=test50x\ny.available=test10y", label="Run again")
-.rk.make.hr()
 local({
 ## Prepare
 names <- rk.get.description (test50x, test50y)
@@ -42,5 +40,3 @@ rk.results (list (
 	'null.value'=result$null.value,
 	p=result$p.value))
 })
-.rk.rerun.plugin.link(plugin="rkward::ansari_bradley_test", settings="alternative.string=less\nconfint.state=FALSE\nexact.string=automatic\nx.available=test50x\ny.available=test50y", label="Run again")
-.rk.make.hr()

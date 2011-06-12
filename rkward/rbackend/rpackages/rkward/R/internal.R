@@ -334,14 +334,14 @@ formals (setwd) <- formals (base::setwd)
 
 # Start recording commands that are submitted from rkward to R.
 # filename: filename to write to (file will be truncated!).
-# include.sync.commands: Should internal synchronisation commands be included?
+# include.all: By default, some types of command are filtered (internal synchronisation commands, and run again links). Should these be included?
 # To stop recording, supply NULL or "" as filename
 # Currently used for the purpose of automated testing, only. Perhaps in the future
 # this or a similar mechanism could also be added as a user feature.
-"rk.record.commands" <- function (filename, include.sync.commands = FALSE) {
+"rk.record.commands" <- function (filename, include.all = FALSE) {
 	if (is.null (filename)) filename = ""
 
-	res <- .rk.do.plain.call ("recordCommands", c(as.character (filename), if (include.sync.commands) "include.sync" else "normal"))
+	res <- .rk.do.plain.call ("recordCommands", c(as.character (filename), if (include.all) "include.all" else "normal"))
 
 	if (!length (res)) invisible (TRUE)
 	else {

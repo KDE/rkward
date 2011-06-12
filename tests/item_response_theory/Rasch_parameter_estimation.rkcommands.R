@@ -13,5 +13,3 @@ rk.print (paste("Log-likelihood value at convergence:",round(estimates.rasch$log
 # keep results in current workspace
 .GlobalEnv$estimates.rasch <- estimates.rasch
 })
-.rk.rerun.plugin.link(plugin="rkward::par_est_rasch", settings="constraint.available=\nghk_rasch.real=21.00\nirtparam.state=TRUE\niterqn_rasch.real=150.00\nnaaction.state=\noptimeth.string=BFGS\nsave_name.active=1\nsave_name.objectname=estimates.rasch\nsave_name.parent=.GlobalEnv\nstartval.string=NULL\nverbose.state=\nx.available=LSAT", label="Run again")
-.rk.make.hr()

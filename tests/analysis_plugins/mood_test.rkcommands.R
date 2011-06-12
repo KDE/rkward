@@ -13,5 +13,3 @@ rk.results (list (
 	'Z'=result$statistic,
 	'p-value'=result$p.value))
 })
-.rk.rerun.plugin.link(plugin="rkward::mood_test", settings="alternative.string=two.sided\nx.available=test50z\ny.available=test50x", label="Run again")
-.rk.make.hr()

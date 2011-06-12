@@ -24,8 +24,6 @@ rk.header ("Correlation Matrix", parameters=list ("Method", "pearson", "Exclusio
 rk.results (data.frame ("Coefficient"=I(names (data)), result, check.names=FALSE))
 rk.results (data.frame ("n \\ p"=I(names (data)), result.p, check.names=FALSE))
 })
-.rk.rerun.plugin.link(plugin="rkward::corr_matrix", settings="do_p.state=1\nmethod.string=pearson\nuse.string=pairwise\nx.available=test50x\\ntest50y\\ntest50z", label="Run again")
-.rk.make.hr()
 local({
 ## Prepare
 ## Compute
@@ -40,5 +38,3 @@ rk.header ("Correlation Matrix", parameters=list ("Method", "pearson", "Exclusio
 
 rk.results (data.frame ("Coefficient"=I(names (data)), result, check.names=FALSE))
 })
-.rk.rerun.plugin.link(plugin="rkward::corr_matrix", settings="do_p.state=\nmethod.string=pearson\nuse.string=pairwise\nx.available=women[[\\\"weight\\\"]]\\nwomen[[\\\"height\\\"]]", label="Run again")
-.rk.make.hr()

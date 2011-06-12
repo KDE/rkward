@@ -21,5 +21,3 @@ rk.header ("Phillips-Perron Test for Unit Roots",
 
 rk.results (results)
 })
-.rk.rerun.plugin.link(plugin="rkward::PP_test", settings="length.state=1\nlshort.string=FALSE\nnarm.state=0\nx.available=rock[[\\\"shape\\\"]]\\nrock[[\\\"perm\\\"]]\\nrock[[\\\"peri\\\"]]\\nrock[[\\\"area\\\"]]", label="Run again")
-.rk.make.hr()

@@ -9,4 +9,3 @@ local({
 			
 ## Print result
 })
-.rk.make.hr()

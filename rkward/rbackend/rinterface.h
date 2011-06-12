@@ -91,7 +91,7 @@ private:
 	enum {
 		NotRecordingCommands,
 		RecordingCommands,
-		RecordingCommandsWithSync
+		RecordingCommandsUnfiltered
 	} command_logfile_mode;
 
 	void processHistoricalSubstackRequest (const QStringList &calllist);

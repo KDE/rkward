@@ -21,8 +21,6 @@ rk.header ("Pearson chi-square Normality Test",
 	parameters=list ("chi-square distribution with n.classes-3 df (TRUE) or chi-square distribution with n.classes-1 df (FALSE)", "adjust = TRUE"))
 rk.results (results)
 })
-.rk.rerun.plugin.link(plugin="rkward::pearson_test", settings="adjust.string=adjust = TRUE\nlength.state=1\nx.available=rock[[\\\"shape\\\"]]\\nrock[[\\\"perm\\\"]]", label="Run again")
-.rk.make.hr()
 local({
 ## Prepare
 require(nortest)
@@ -46,5 +44,3 @@ rk.header ("Pearson chi-square Normality Test",
 	parameters=list ("chi-square distribution with n.classes-3 df (TRUE) or chi-square distribution with n.classes-1 df (FALSE)", "adjust = FALSE"))
 rk.results (results)
 })
-.rk.rerun.plugin.link(plugin="rkward::pearson_test", settings="adjust.string=adjust = FALSE\nlength.state=1\nx.available=rock[[\\\"shape\\\"]]\\nrock[[\\\"perm\\\"]]", label="Run again")
-.rk.make.hr()

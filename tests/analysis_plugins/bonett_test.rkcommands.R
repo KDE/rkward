@@ -23,5 +23,3 @@ rk.header ("Bonett-Seier test of Geary's kurtosis",
 	parameters=list ("Alternative Hypothesis", "two.sided"))
 rk.results (results)
 })
-.rk.rerun.plugin.link(plugin="rkward::bonett_test", settings="alternative.string=two.sided\nlength.state=1\nshow_alternative.state=1\nx.available=test50z\\ntest50y\\ntest50x\\ntest10z\\ntest10y\\ntest10x", label="Run again")
-.rk.make.hr()

@@ -14,5 +14,3 @@ rk.print (paste("Conditional log-likelihood:",round(estimates.lltm$loglik, digit
 # keep results in current workspace
 .GlobalEnv$estimates.lltm <- estimates.lltm
 })
-.rk.rerun.plugin.link(plugin="rkward::par_est_lltm", settings="design.string=auto\netastart.string=NULL\ngroups.string=1\nmpoints.real=2.00\nsave_name.active=1\nsave_name.objectname=estimates.lltm\nsave_name.parent=.GlobalEnv\nstderr.state=se\nsumnull.state=sum0\nx.available=lltmdat1", label="Run again")
-.rk.make.hr()

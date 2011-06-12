@@ -41,5 +41,3 @@ try ({
 
 rk.graph.off()
 })
-.rk.rerun.plugin.link(plugin="rkward::scatterplot", settings="cex.text=1\ncol.text=c ('black', 'red')\ncolor.string=each\nisCex.string=all\nisPch.string=all\npch.text=1\nplotoptions.add_grid.state=0\nplotoptions.asp.real=0.00\nplotoptions.main.text=\nplotoptions.pointcolor.color.string=\nplotoptions.pointtype.string=\nplotoptions.sub.text=\nplotoptions.xaxt.state=\nplotoptions.xlab.text=\nplotoptions.xlog.state=\nplotoptions.xmaxvalue.text=\nplotoptions.xminvalue.text=\nplotoptions.yaxt.state=\nplotoptions.ylab.text=\nplotoptions.ylog.state=\nplotoptions.ymaxvalue.text=\nplotoptions.yminvalue.text=\npointtype.string=p\ntype_mode.string=all\nx.available=women[[\\\"weight\\\"]]\\nswiss[[\\\"Education\\\"]]\ny.available=women[[\\\"height\\\"]]\\nswiss[[\\\"Catholic\\\"]]", label="Run again")
-.rk.make.hr()

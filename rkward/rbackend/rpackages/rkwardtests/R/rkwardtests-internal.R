@@ -83,7 +83,7 @@ rktest.runRKTest.internal <- function (test, output_file, code_file, message_fil
 			close (message_file_handle)
 		}, add=TRUE)
 
-	rk.record.commands (code_file)
+	rk.record.commands (code_file, include.all=test@record.all.commands)
 	on.exit (rk.record.commands (NULL), add=TRUE)
 
 	old.symbols <- ls (envir=globalenv (), all.names=TRUE)

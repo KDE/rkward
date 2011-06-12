@@ -24,5 +24,3 @@ rk.header ("D'Agostino test of skewness",
 	parameters=list ("Alternative Hypothesis", "two.sided"))
 rk.results (results)
 })
-.rk.rerun.plugin.link(plugin="rkward::agostino_test", settings="alternative.string=two.sided\nlength.state=1\nshow_alternative.state=1\nx.available=warpbreaks[[\\\"breaks\\\"]]\\ntest50z\\ntest10x", label="Run again")
-.rk.make.hr()

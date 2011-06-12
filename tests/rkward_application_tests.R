@@ -258,7 +258,13 @@ suite <- new ("RKTestSuite", id="rkward_application_tests",
 					system ("echo B")
 				}
 			', submit.mode="submit")
-		})
+		}),
+		new ("RKTest", id="run_again_links", call=function () {
+			# usually, commands to generate run-again-links are not included in the command recording, since these can sometimes change at a large scale (e.g. if the plot-options plugin gains a new option), and this is rarely of interest. Here, we do include a test to catch any grave problems. For this purpose, we simply call some complex plugins.
+			rk.call.plugin ("rkward::plot_beta_clt", a.real="2.00", b.real="2.00", drawnorm.state="1", function.string="hist", histogram_opt.addtoplot.state="", histogram_opt.barlabels.state="1", histogram_opt.density.real="-1.00", histogram_opt.doborder.state="1", histogram_opt.freq.state="0", histogram_opt.histbordercol.color.string="", histogram_opt.histbreaksFunction.string="Sturges", histogram_opt.histfillcol.color.string="azure", histogram_opt.histlinetype.string="solid", histogram_opt.rightclosed.state="1", histogram_opt.usefillcol.state="1", nAvg.real="10.00", nDist.real="1000.00", normlinecol.color.string="red", normpointtype.string="l", plotoptions.add_grid.state="0", plotoptions.asp.real="0.00", plotoptions.main.text="", plotoptions.pointcolor.color.string="", plotoptions.pointtype.string="", plotoptions.sub.text="", plotoptions.xaxt.state="", plotoptions.xlab.text="", plotoptions.xlog.state="", plotoptions.xmaxvalue.text="", plotoptions.xminvalue.text="", plotoptions.yaxt.state="", plotoptions.ylab.text="", plotoptions.ylog.state="", plotoptions.ymaxvalue.text="", plotoptions.yminvalue.text="", scalenorm.state="0", submit.mode="submit")
+
+			rk.call.plugin ("rkward::plot_normal_clt", dist_stepfun.addtoplot.state="", dist_stepfun.col_hor.color.string="blue", dist_stepfun.col_vert.color.string="blue", dist_stepfun.col_y0.color.string="gold", dist_stepfun.col_y1.color.string="cyan", dist_stepfun.do_points.state="", dist_stepfun.linetype.string="", dist_stepfun.verticals.state="1", drawnorm.state="1", function.string="dist", mean.real="0.00", nAvg.real="10.00", nDist.real="1000.00", normlinecol.color.string="red", normpointtype.string="l", plotoptions.add_grid.state="0", plotoptions.asp.real="0.00", plotoptions.main.text="", plotoptions.pointcolor.color.string="", plotoptions.pointtype.string="", plotoptions.sub.text="", plotoptions.xaxt.state="", plotoptions.xlab.text="", plotoptions.xlog.state="", plotoptions.xmaxvalue.text="", plotoptions.xminvalue.text="", plotoptions.yaxt.state="", plotoptions.ylab.text="", plotoptions.ylog.state="", plotoptions.ymaxvalue.text="", plotoptions.yminvalue.text="", scalenorm.state="0", sd.real="1.00", submit.mode="submit")
+		}, record.all.commands=TRUE)
 	# postCalls are run *after* all tests. Use this to clean up
 	), postCalls = list (
 		function () {

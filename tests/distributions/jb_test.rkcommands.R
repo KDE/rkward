@@ -20,5 +20,3 @@ for (i in 1:length (vars)) {
 rk.header ("Jarque-Bera Normality Test", parameters=list ("Exclude NAs", "YES"))
 rk.results (results)
 })
-.rk.rerun.plugin.link(plugin="rkward::jb_test", settings="excludenas.state=1\nlength.state=1\nx.available=rock[[\\\"shape\\\"]]\\nrock[[\\\"perm\\\"]]", label="Run again")
-.rk.make.hr()

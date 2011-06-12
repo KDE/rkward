@@ -13,5 +13,3 @@ rk.results (list (
 	'df'=result$parameter,
 	'p-value'=result$p.value))
 })
-.rk.rerun.plugin.link(plugin="rkward::fligner_test", settings="x.available=women[[\\\"weight\\\"]]\\nwomen[[\\\"height\\\"]]\\ntest50z\\ntest50y\\ntest50x\\ntest10z\\ntest10y\\ntest10x", label="Run again")
-.rk.make.hr()

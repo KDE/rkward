@@ -30,8 +30,6 @@ for (i in 1:length (results)) {
 	rk.graph.off ()
 }
 })
-.rk.rerun.plugin.link(plugin="rkward::crosstab", settings="barplot.state=TRUE\nbarplot_embed.colors.string=default\nbarplot_embed.labels.state=0\nbarplot_embed.legend.state=0\nbarplot_embed.plotoptions.add_grid.state=0\nbarplot_embed.plotoptions.asp.real=0.00\nbarplot_embed.plotoptions.main.text=\nbarplot_embed.plotoptions.pointcolor.color.string=\nbarplot_embed.plotoptions.pointtype.string=\nbarplot_embed.plotoptions.sub.text=\nbarplot_embed.plotoptions.xaxt.state=\nbarplot_embed.plotoptions.xlab.text=\nbarplot_embed.plotoptions.xlog.state=\nbarplot_embed.plotoptions.xmaxvalue.text=\nbarplot_embed.plotoptions.xminvalue.text=\nbarplot_embed.plotoptions.yaxt.state=\nbarplot_embed.plotoptions.ylab.text=\nbarplot_embed.plotoptions.ylog.state=\nbarplot_embed.plotoptions.ymaxvalue.text=\nbarplot_embed.plotoptions.yminvalue.text=\nbarplot_embed.type.string=juxtaposed\nchisq.state=TRUE\nchisq_expected.state=FALSE\nmargins.state=FALSE\nprop_column.state=FALSE\nprop_row.state=FALSE\nprop_total.state=FALSE\nsimpv.string=FALSE\nx.available=warpbreaks[[\\\"tension\\\"]]\ny.available=warpbreaks[[\\\"wool\\\"]]\\nwarpbreaks[[\\\"tension\\\"]]", label="Run again")
-.rk.make.hr()
 local({
 ## Prepare
 # convenience function to bind together several two dimensional tables into a single three dimensional table
@@ -81,5 +79,3 @@ for (i in 1:length (results)) {
 	rk.graph.off ()
 }
 })
-.rk.rerun.plugin.link(plugin="rkward::crosstab", settings="barplot.state=TRUE\nbarplot_embed.colors.string=rainbow\nbarplot_embed.labels.state=1\nbarplot_embed.legend.state=0\nbarplot_embed.place.string=3\nbarplot_embed.plotoptions.add_grid.state=0\nbarplot_embed.plotoptions.asp.real=0.00\nbarplot_embed.plotoptions.main.text=\nbarplot_embed.plotoptions.pointcolor.color.string=\nbarplot_embed.plotoptions.pointtype.string=\nbarplot_embed.plotoptions.sub.text=\nbarplot_embed.plotoptions.xaxt.state=\nbarplot_embed.plotoptions.xlab.text=\nbarplot_embed.plotoptions.xlog.state=\nbarplot_embed.plotoptions.xmaxvalue.text=\nbarplot_embed.plotoptions.xminvalue.text=\nbarplot_embed.plotoptions.yaxt.state=\nbarplot_embed.plotoptions.ylab.text=\nbarplot_embed.plotoptions.ylog.state=\nbarplot_embed.plotoptions.ymaxvalue.text=\nbarplot_embed.plotoptions.yminvalue.text=\nbarplot_embed.type.string=juxtaposed\nchisq.state=TRUE\nchisq_expected.state=TRUE\nmargins.state=TRUE\nprop_column.state=TRUE\nprop_row.state=TRUE\nprop_total.state=TRUE\nsimpv.string=FALSE\nx.available=warpbreaks[[\\\"tension\\\"]]\ny.available=warpbreaks[[\\\"wool\\\"]]\\nwarpbreaks[[\\\"tension\\\"]]", label="Run again")
-.rk.make.hr()

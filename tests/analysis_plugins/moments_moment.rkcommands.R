@@ -13,5 +13,3 @@ rk.header ("Statistical Moment",
 	parameters=list ("Order", "1", "Compute central moments", "FALSE", "Compute absolute moments", "FALSE", "Remove missing values", "TRUE"))
 rk.results (results)
 })
-.rk.rerun.plugin.link(plugin="rkward::moment", settings="absolute.state=FALSE\ncentral.state=FALSE\nlength.state=0\nnarm.state=TRUE\norder.real=1.00\nx.available=test50z\\ntest50y\\ntest50x\\ntest10z\\ntest10y\\ntest10x", label="Run again")
-.rk.make.hr()

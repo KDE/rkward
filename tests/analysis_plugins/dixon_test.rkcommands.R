@@ -32,8 +32,6 @@ rk.header ("Dixon test for outlier",
 	parameters=list ("Type", "0", "Opposite", "FALSE", "two-sided", "TRUE"))
 rk.results (results)
 })
-.rk.rerun.plugin.link(plugin="rkward::dixon_test", settings="descriptives.state=1\nlength.state=1\nopposite.state=FALSE\ntwo_sided.state=TRUE\ntype.string=0\nx.available=women[[\\\"weight\\\"]]\\nwomen[[\\\"height\\\"]]", label="Run again")
-.rk.make.hr()
 local({
 ## Prepare
 require(outliers)
@@ -58,5 +56,3 @@ rk.header ("Dixon test for outlier",
 	parameters=list ("Type", "0", "Opposite", "TRUE", "two-sided", "FALSE"))
 rk.results (results)
 })
-.rk.rerun.plugin.link(plugin="rkward::dixon_test", settings="descriptives.state=0\nlength.state=0\nopposite.state=TRUE\ntwo_sided.state=FALSE\ntype.string=0\nx.available=women[[\\\"weight\\\"]]\\nwomen[[\\\"height\\\"]]", label="Run again")
-.rk.make.hr()

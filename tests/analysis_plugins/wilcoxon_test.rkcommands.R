@@ -22,8 +22,6 @@ rk.results (list (
 	'confidence interval of difference'=result$conf.int,
 	'Difference in Location' = result$estimate))
 })
-.rk.rerun.plugin.link(plugin="rkward::wilcoxon_test", settings="alternative.string=two.sided\nconfint.state=TRUE\nconflevel.real=0.95\ncorrect.state=FALSE\nexact.string=yes\nmu.real=0.00\nx.available=test50x\ny.available=", label="Run again")
-.rk.make.hr()
 local({
 ## Prepare
 names = rk.get.description (test50x, test50y)
@@ -45,5 +43,3 @@ rk.results (list (
 	'Hypothesis'=result$alternative,
 	p=result$p.value))
 })
-.rk.rerun.plugin.link(plugin="rkward::wilcoxon_test", settings="alternative.string=less\nconfint.state=FALSE\ncorrect.state=TRUE\nexact.string=automatic\nmu.real=0.00\npaired.state=TRUE\nx.available=test50x\ny.available=test50y", label="Run again")
-.rk.make.hr()

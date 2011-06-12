@@ -11,5 +11,3 @@ try ({
 })
 rk.graph.off ()
 })
-.rk.rerun.plugin.link(plugin="rkward::histogram", settings="adjust.real=4.00\nbw.string=nrd\ncol_density.color.string=blue\ndensity.state=1\nhistogram_opt.addtoplot.state=\nhistogram_opt.barlabels.state=1\nhistogram_opt.density.real=-1.00\nhistogram_opt.doborder.state=1\nhistogram_opt.freq.state=0\nhistogram_opt.histbordercol.color.string=\nhistogram_opt.histbreaksFunction.string=vec\nhistogram_opt.histbreaks_veclength.real=6.00\nhistogram_opt.histlinetype.string=solid\nhistogram_opt.include_lowest.state=1\nhistogram_opt.rightclosed.state=1\nhistogram_opt.usefillcol.state=\nn.real=512.00\nnarm.state=na.rm=TRUE\nplotoptions.add_grid.state=0\nplotoptions.asp.real=0.00\nplotoptions.main.text=\nplotoptions.pointcolor.color.string=\nplotoptions.pointtype.string=\nplotoptions.sub.text=\nplotoptions.xaxt.state=\nplotoptions.xlab.text=\nplotoptions.xlog.state=\nplotoptions.xmaxvalue.text=\nplotoptions.xminvalue.text=\nplotoptions.yaxt.state=\nplotoptions.ylab.text=\nplotoptions.ylog.state=\nplotoptions.ymaxvalue.text=\nplotoptions.yminvalue.text=\nx.available=swiss[[\\\"Education\\\"]]", label="Run again")
-.rk.make.hr()
