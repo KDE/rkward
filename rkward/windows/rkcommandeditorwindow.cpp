@@ -116,14 +116,10 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 	connect (m_doc, SIGNAL (documentUrlChanged (KTextEditor::Document*)), this, SLOT (updateCaption (KTextEditor::Document*)));
 	connect (m_doc, SIGNAL (modifiedChanged (KTextEditor::Document*)), this, SLOT (updateCaption(KTextEditor::Document*)));                // of course most of the time this causes a redundant call to updateCaption. Not if a modification is undone, however.
 	connect (m_doc, SIGNAL (modifiedChanged (KTextEditor::Document*)), this, SLOT (autoSaveHandlerModifiedChanged()));
-	connect (m_doc, SIGNAL (textChanged (KTextEditor::Document*)), this, SLOT (tryCompletionProxy (KTextEditor::Document*)));
 	connect (m_doc, SIGNAL (textChanged (KTextEditor::Document*)), this, SLOT (autoSaveHandlerTextChanged()));
 	connect (m_view, SIGNAL (selectionChanged(KTextEditor::View*)), this, SLOT (selectionChanged(KTextEditor::View*)));
 	// somehow the katepart loses the context menu each time it loses focus
 	connect (m_view, SIGNAL (focusIn(KTextEditor::View*)), this, SLOT (focusIn(KTextEditor::View*)));
-	completion_timer = new QTimer (this);
-	completion_timer->setSingleShot (true);
-	connect (completion_timer, SIGNAL (timeout ()), this, SLOT (tryCompletion()));
 
 	completion_model = 0;
 	cc_iface = 0;
@@ -134,6 +130,10 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 		if (cc_iface) {
 			cc_iface->setAutomaticInvocationEnabled (true);
 			completion_model = new RKCodeCompletionModel (this);
+			completion_timer = new QTimer (this);
+			completion_timer->setSingleShot (true);
+			connect (completion_timer, SIGNAL (timeout ()), this, SLOT (tryCompletion()));
+			connect (m_doc, SIGNAL (textChanged (KTextEditor::Document*)), this, SLOT (tryCompletionProxy (KTextEditor::Document*)));
 		} else {
 			RK_ASSERT (false);
 		}
@@ -509,7 +509,7 @@ void RKCommandEditorWindow::tryCompletionProxy (KTextEditor::Document*) {
 	if (RKSettingsModuleCommandEditor::completionEnabled ()) {
 		if (cc_iface && cc_iface->isCompletionActive ()) {
 			tryCompletion ();
-		} else {
+		} else if (cc_iface) {
 			completion_timer->start (RKSettingsModuleCommandEditor::completionTimeout ());
 		}
 	}
