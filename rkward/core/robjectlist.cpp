@@ -247,7 +247,7 @@ RObject *RObjectList::findObjects (const QStringList &path, RObjectSearchMap *ma
 REnvironmentObject* RObjectList::findChildByNamespace (const QString &namespacename) const {
 	RK_TRACE (OBJECTS);
 
-	for (int i = childmap.size () - 1; i >= 0; --i) {
+	for (int i = childmap.size () - 1; i >= 1; --i) {	// NOTE: childmap[0] is the .GlobalEnv
 		RObject* child = childmap[i];
 		RK_ASSERT (child->isType (Environment));
 		REnvironmentObject* env = static_cast<REnvironmentObject *> (child);
