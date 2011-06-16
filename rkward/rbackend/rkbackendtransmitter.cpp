@@ -19,7 +19,6 @@
 
 #include "rkrbackend.h"
 
-#include <QTimer>
 #include <QLocalSocket>
 
 #include "../version.h"
@@ -45,8 +44,8 @@ RKRBackendTransmitter::~RKRBackendTransmitter () {
 	msleep (1000);
 }
 
-void RKRBackendTransmitter::flushOutput () {
-	// do not trace.
+void RKRBackendTransmitter::timerEvent (QTimerEvent *) {
+	// do not trace
 	flushOutput (false);
 }
 
@@ -65,10 +64,7 @@ void RKRBackendTransmitter::run () {
 	connection->write ("\n");
 	connection->waitForBytesWritten ();
 
-	QTimer* flush_timer = new QTimer (this);
-	connect (flush_timer, SIGNAL (timeout()), this, SLOT (flushOutput()));
-	flush_timer->setInterval (200);
-	flush_timer->start ();
+	startTimer (200);	// calls flushOutput(false), periodically. See timerEvent()
 
 	exec ();
 }

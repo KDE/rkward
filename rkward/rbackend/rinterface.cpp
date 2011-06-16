@@ -59,7 +59,6 @@ RKWindowCatcher *window_catcher;
 #include <kstandarddirs.h>
 
 #include <qdir.h>
-#include <qtimer.h>
 #include <qvalidator.h>
 
 #include <stdlib.h>
@@ -102,9 +101,7 @@ RInterface::RInterface () {
 	RCommand *fake = new RCommand (i18n ("R Startup"), RCommand::App | RCommand::Sync | RCommand::ObjectListUpdate, i18n ("R Startup"), this, STARTUP_PHASE2_COMPLETE);
 	issueCommand (fake);
 
-	flush_timer = new QTimer (this);
-	connect (flush_timer, SIGNAL (timeout ()), this, SLOT (flushOutput ()));
-	flush_timer->start (FLUSH_INTERVAL);
+	startTimer (FLUSH_INTERVAL);	// calls flushOutput (false); see timerEvent ()
 
 	new RKRBackendProtocolFrontend (this);
 	RKRBackendProtocolFrontend::instance ()->setupBackend ();
@@ -119,7 +116,6 @@ RInterface::~RInterface(){
 	RK_TRACE (RBACKEND);
 
 	if (num_active_output_record_requests) RK_DO (qDebug ("%d requests for recording output still active on interface shutdown", num_active_output_record_requests), RBACKEND, DL_WARNING);
-	delete flush_timer;
 	delete window_catcher;
 }
 
@@ -347,10 +343,8 @@ void RInterface::handleRequest (RBackendRequest* request) {
 	}
 }
 
-void RInterface::flushOutput () {
+void RInterface::timerEvent (QTimerEvent *) {
 // do not trace. called periodically
-//	RK_TRACE (RBACKEND);
-
 	flushOutput (false);
 }
 

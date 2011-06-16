@@ -26,7 +26,6 @@
 
 class RCommand;
 class RKWardMainWindow;
-class QTimer;
 class RKRBackend;
 struct RBackendRequest;
 
@@ -76,16 +75,12 @@ not be interrupted. */
 	bool backendIsIdle ();
 	static bool isNaReal (double value) { return na_real == value; };
 	static bool isNaInt (int value) { return na_int == value; };
-private slots:
-/** called periodically to flush output buffer in RThread */
-	void flushOutput ();
 private:
+	void timerEvent (QTimerEvent *);
 /** Calls RThread::flushOutput(), and takes care of adding the output to all applicable commands */
 	void flushOutput (bool forced);
 /** pointer to the RThread */
 	RKRBackend *r_thread;
-/** Timer to trigger flushing output */
-	QTimer *flush_timer;
 /** Used by the testing framework. see R function rk.record.commands(). */
 	QFile command_logfile;
 	enum {
