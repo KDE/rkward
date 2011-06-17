@@ -2,7 +2,7 @@
                           rkhtmlwindow  -  description
                              -------------------
     begin                : Wed Oct 12 2005
-    copyright            : (C) 2005, 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -63,6 +63,7 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (par
 	setPart (khtmlpart);
 	fixupPartGUI ();
 // WORKAROUND for annoying kdelibs bug in KDE 4.6: https://sourceforge.net/tracker/?func=detail&atid=459007&aid=3310106&group_id=50231
+// NOTE: Fixed in KDE 4.7. See http://git.reviewboard.kde.org/r/101491/
 	QAction *action = khtmlpart->action ("findAheadText");
 	if (action) action->setShortcutContext (Qt::WidgetWithChildrenShortcut);
 // WORKAROUND end
