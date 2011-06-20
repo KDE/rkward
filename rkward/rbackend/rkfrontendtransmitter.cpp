@@ -111,7 +111,12 @@ void RKFrontendTransmitter::requestReceived (RBackendRequest* request) {
 		ROutputList* list = request->output;
 		for (int i = 0; i < list->size (); ++i) {
 			ROutput *out = (*list)[i];
-			handleOutput (out->output, out->output.length (), out->type);
+
+			if (handleOutput (out->output, out->output.length (), out->type)) {
+				RKRBackendEvent* event = new RKRBackendEvent (new RBackendRequest (false, RBackendRequest::OutputStartedNotification));
+				qApp->postEvent (RKRBackendProtocolFrontend::instance (), event);
+			}
+
 			delete (out);
 		}
 		request->output = 0;

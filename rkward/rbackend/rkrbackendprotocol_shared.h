@@ -49,6 +49,7 @@ public:
 		Output,		/**< A piece of output. Note: If the backend runs in a single process, output is handled in a pull fashion, instead of using requests. */
 		Interrupt,	/**< Interrupt evaluation. This request type originates in the frontend, not the backend (the only one so far). */
 #endif
+		OutputStartedNotification, /**< Only used in the frontend: Notification that a new bit of output has arrived. Used to trigger flushing after a timeout. */
 		OtherRequest		/**< Any other type of request. Note: which requests are in the enum, and which are not has mostly historical reasons. @see params */
 	};
 
@@ -133,8 +134,9 @@ public:
 	RKROutputBuffer ();
 	virtual ~RKROutputBuffer ();
 
-/** This gets called on normal R output (R_WriteConsole). Used to get at output. */
-	void handleOutput (const QString &output, int len, ROutput::ROutputType type, bool allow_blocking=true);
+/** This gets called on normal R output (R_WriteConsole). Used to get at output.
+    returns true, if a *new* piece of output started, i.e. the buffer was empty before this. */
+	bool handleOutput (const QString &output, int len, ROutput::ROutputType type, bool allow_blocking=true);
 
 /** Flushes current output buffer. Meant to be called from RInterface::flushOutput, only.
 @param forcibly: if true, will always flush the output. If false, will flush the output only if the mutex can be locked without waiting. */

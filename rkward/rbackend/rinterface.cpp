@@ -63,7 +63,7 @@ RKWindowCatcher *window_catcher;
 
 #include <stdlib.h>
 
-// update output (for immediate output commands) at least this often (msecs):
+// flush new pieces of output after this period of time:
 #define FLUSH_INTERVAL 100
 
 #define GET_LIB_PATHS 1
@@ -96,12 +96,11 @@ RInterface::RInterface () {
 	backend_dead = false;
 	num_active_output_record_requests = 0;
 	previous_output_type = ROutput::NoOutput;
+	flush_timer_id = 0;
 
 	// create a fake init command
 	RCommand *fake = new RCommand (i18n ("R Startup"), RCommand::App | RCommand::Sync | RCommand::ObjectListUpdate, i18n ("R Startup"), this, STARTUP_PHASE2_COMPLETE);
 	issueCommand (fake);
-
-	startTimer (FLUSH_INTERVAL);	// calls flushOutput (false); see timerEvent ()
 
 	new RKRBackendProtocolFrontend (this);
 	RKRBackendProtocolFrontend::instance ()->setupBackend ();
@@ -301,6 +300,13 @@ void RInterface::rCommandDone (RCommand *command) {
 void RInterface::handleRequest (RBackendRequest* request) {
 	RK_TRACE (RBACKEND);
 
+	if (request->type == RBackendRequest::OutputStartedNotification) {
+		RK_ASSERT (flush_timer_id == 0);
+		flush_timer_id = startTimer (FLUSH_INTERVAL);	// calls flushOutput (false); see timerEvent ()
+		RKRBackendProtocolFrontend::setRequestCompleted (request);
+		return;
+	}
+
 	flushOutput (true);
 	if (request->type == RBackendRequest::CommandOut) {
 		RCommandProxy *cproxy = request->takeCommand ();
@@ -351,8 +357,15 @@ void RInterface::timerEvent (QTimerEvent *) {
 void RInterface::flushOutput (bool forced) {
 // do not trace. called periodically
 //	RK_TRACE (RBACKEND);
-
 	ROutputList list = RKRBackendProtocolFrontend::instance ()->flushOutput (forced);
+
+	// this must come _after_ the output has been flushed.
+	if (forced || !list.isEmpty ()) {
+		if (flush_timer_id != 0) {
+			killTimer (flush_timer_id);
+			flush_timer_id = 0;
+		}
+	}
 
 	foreach (ROutput *output, list) {
 		if (all_current_commands.isEmpty ()) {

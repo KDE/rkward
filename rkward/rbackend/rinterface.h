@@ -77,6 +77,7 @@ not be interrupted. */
 	static bool isNaInt (int value) { return na_int == value; };
 private:
 	void timerEvent (QTimerEvent *);
+	int flush_timer_id;
 /** Calls RThread::flushOutput(), and takes care of adding the output to all applicable commands */
 	void flushOutput (bool forced);
 /** pointer to the RThread */

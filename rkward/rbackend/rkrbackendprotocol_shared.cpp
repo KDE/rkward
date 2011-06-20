@@ -93,8 +93,8 @@ RKROutputBuffer::~RKROutputBuffer () {
 	RK_TRACE (RBACKEND);
 }
 
-void RKROutputBuffer::handleOutput (const QString &output, int buf_length, ROutput::ROutputType output_type, bool allow_blocking) {
-	if (!buf_length) return;
+bool RKROutputBuffer::handleOutput (const QString &output, int buf_length, ROutput::ROutputType output_type, bool allow_blocking) {
+	if (!buf_length) return false;
 	RK_TRACE (RBACKEND);
 
 	RK_DO (qDebug ("Output type %d: %s", output_type, qPrintable (output)), RBACKEND, DL_DEBUG);
@@ -105,6 +105,7 @@ void RKROutputBuffer::handleOutput (const QString &output, int buf_length, ROutp
 	}
 
 	output_buffer_mutex.lock ();
+	bool previously_empty = (out_buf_len <= 0);
 
 	ROutput *current_output = 0;
 	if (!output_buffer.isEmpty ()) {
@@ -122,6 +123,7 @@ void RKROutputBuffer::handleOutput (const QString &output, int buf_length, ROutp
 	out_buf_len += buf_length;
 
 	output_buffer_mutex.unlock ();
+	return previously_empty;
 }
 
 ROutputList RKROutputBuffer::flushOutput (bool forcibly) {
