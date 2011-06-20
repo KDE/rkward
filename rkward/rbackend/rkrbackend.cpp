@@ -1304,11 +1304,16 @@ RCommandProxy* RKRBackend::handleRequest (RBackendRequest *request, bool mayHand
 		return 0;
 	}
 
+	int i = 0;
 	while (!request->done) {
 		if (killed) return 0;
 		// NOTE: processX11Events() may, conceivably, lead to new requests, which may also wait for sub-commands!
 		processX11Events ();
-		if (!request->done) RKRBackendProtocolBackend::msleep (10);
+		// NOTE: sleeping and waking up again can be surprisingly CPU-intensive (yes: more than the event processing, above. I have profiled it).
+		// However, we really don't want to introduce too much delay, either.
+		// Thus, the logic is this: If there was no reply within 2 seconds, then probably we're waiting for a user event, and can afford some more
+		// latency (not too much, though, as we still need to process events).
+		if (!request->done) RKRBackendProtocolBackend::msleep (++i < 200 ? 10 : 50);
 	}
 
 	RCommandProxy* command = request->takeCommand ();
