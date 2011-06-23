@@ -64,9 +64,6 @@ RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component, 
 		KActionCollection *action_collection = new KActionCollection (this);
 		action_collection->addAction (KStandardAction::Copy, this, SLOT (copyCode()));
 	}
-
-	// HACK: Workaround for this issue (caused by a mysterious Qt bug, apparently): http://www.mail-archive.com/rkward-devel@lists.sourceforge.net/msg01340.html
-	setMinimumSize (QSize (50, 50));
 }
 
 RKStandardComponentGUI::~RKStandardComponentGUI () {
@@ -146,6 +143,10 @@ void RKStandardComponentGUI::showEvent (QShowEvent *e) {
 	RK_TRACE (PLUGIN);
 
 	QWidget::showEvent (e);
+
+	// HACK: Workaround for this issue (caused by a mysterious Qt bug, apparently): http://www.mail-archive.com/rkward-devel@lists.sourceforge.net/msg01340.html
+	QSize min = minimumSize ();
+	setMinimumSize (min.expandedTo (QSize (50, 50)));
 
 	if (toggle_code_button) {	// this is a dialog, not  wizard
 		QTimer::singleShot (0, this, SLOT (toggleCode ()));
