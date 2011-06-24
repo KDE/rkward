@@ -146,6 +146,7 @@ void RKStandardComponentGUI::showEvent (QShowEvent *e) {
 
 	// HACK: Workaround for this issue (caused by a mysterious Qt bug, apparently): http://www.mail-archive.com/rkward-devel@lists.sourceforge.net/msg01340.html
 	QSize min = minimumSize ();
+	if ((min.width () < 50) || (min.height () < 50)) min = sizeHint ();
 	setMinimumSize (min.expandedTo (QSize (50, 50)));
 
 	if (toggle_code_button) {	// this is a dialog, not  wizard
