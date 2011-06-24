@@ -205,6 +205,8 @@ public slots:
 	void runLine ();
 /** run the entire script */
 	void runAll ();
+/** insert line break and run the (previous) line */
+	void enterAndSubmit ();
 	void copyLinesToOutput ();
 
 /** selection has changed. Enable / disable actions accordingly */

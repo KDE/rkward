@@ -193,6 +193,10 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 	action_run_selection = RKStandardActions::runSelection (this, this, SLOT (runSelection()));
 	action_run_selection->setEnabled (false);
 	action_run_line = RKStandardActions::runLine (this, this, SLOT (runLine()));
+	// NOTE: enter_and_submit is not currently added to the menu
+	KAction *action = ac->addAction ("enter_and_submit", this, SLOT (enterAndSubmit()));
+	action->setText (i18n ("Insert linebreak and run"));
+	action->setShortcuts (KShortcut (Qt::ControlModifier + Qt::Key_Return, Qt::ControlModifier + Qt::Key_Enter));
 
 	action_help_function = RKStandardActions::functionHelp (this, this, SLOT (showHelp()));
 
@@ -621,6 +625,16 @@ void RKCommandEditorWindow::runLine() {
 	// advance to next line (NOTE: m_view->down () won't work on auto-wrapped lines)
 	c.setLine(c.line() + 1);
 	m_view->setCursorPosition (c);
+}
+
+void RKCommandEditorWindow::enterAndSubmit () {
+	RK_TRACE (COMMANDEDITOR);
+
+	KTextEditor::Cursor c = m_view->cursorPosition ();
+	int line = c.line ();
+	m_doc->insertText (c, "\n");
+	QString command = m_doc->line (line);
+	if (!command.isEmpty ()) RKConsole::pipeUserCommand (command + '\n');
 }
 
 void RKCommandEditorWindow::copyLinesToOutput () {
