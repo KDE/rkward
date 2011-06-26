@@ -1,3 +1,5 @@
+- Fixed: Some plugin dialogs would not become visible, or be shown in very small size, with some window managers
+- Fixed: Potential crash when using context menus with "focus follows mouse" window activation policy
 - Add shortcut Ctrl+Enter to insert a linebreak and submit from a script editor
 - Reduce CPU usage while idle
 - Pareto-plot plugin gains more tabulation options				TODO: also use in piechart, barplot
