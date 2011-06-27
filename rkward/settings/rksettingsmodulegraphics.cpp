@@ -63,12 +63,12 @@ RKSettingsModuleGraphics::RKSettingsModuleGraphics (RKSettings *gui, QWidget *pa
 	graphics_hist_box->setCheckable (true);
 	graphics_hist_box->setChecked (graphics_hist_enable);
 	group_layout = new QVBoxLayout (graphics_hist_box);
-	connect (graphics_hist_box, SIGNAL (toggled ()), this, SLOT (boxChanged ()));
-	QHBoxLayout *h_layout = new QHBoxLayout (graphics_hist_box);
+	connect (graphics_hist_box, SIGNAL (toggled (bool)), this, SLOT (boxChanged ()));
+	QHBoxLayout *h_layout = new QHBoxLayout ();
 	group_layout->addLayout (h_layout);
 	h_layout->addWidget (new QLabel (i18n ("Maximum number of recorded plots:"), graphics_hist_box));
 	h_layout->addWidget (graphics_hist_max_length_box = new KIntSpinBox (1, 200, 1, graphics_hist_max_length, graphics_hist_box));
-	h_layout = new QHBoxLayout (graphics_hist_box);
+	h_layout = new QHBoxLayout ();
 	group_layout->addLayout (h_layout);
 	h_layout->addWidget (new QLabel (i18n ("Maximum size of a single recorded plot (in KB):"), graphics_hist_box));
 	h_layout->addWidget (graphics_hist_max_plotsize_box = new KIntSpinBox (4, 20000, 4, graphics_hist_max_plotsize, graphics_hist_box));

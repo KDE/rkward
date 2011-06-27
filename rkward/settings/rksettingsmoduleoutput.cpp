@@ -66,8 +66,6 @@ RKCarbonCopySettings::RKCarbonCopySettings (QWidget* parent) : QWidget (parent) 
 	connect (cc_command_output_box, SIGNAL (clicked(bool)), this, SLOT (settingChanged()));
 	group_layout->addWidget (cc_command_output_box);
 
-	cc_globally_enabled_box->setLayout (group_layout);
-
 	update ();
 	instances.append (this);
 }
@@ -168,7 +166,7 @@ RKSettingsModuleOutput::RKSettingsModuleOutput (RKSettings *gui, QWidget *parent
 
 	group = new QGroupBox (i18n ("Graphics"), this);
 	group_layout = new QVBoxLayout (group);
-	QHBoxLayout *h_layout = new QHBoxLayout (group);
+	QHBoxLayout *h_layout = new QHBoxLayout ();
 	group_layout->addLayout (h_layout);
 	h_layout->addWidget (new QLabel (i18n ("File format"), group));
 	h_layout->addWidget (graphics_type_box = new QComboBox (group));
@@ -186,7 +184,7 @@ RKSettingsModuleOutput::RKSettingsModuleOutput (RKSettings *gui, QWidget *parent
 	connect (graphics_jpg_quality_box, SIGNAL (valueChanged (int)), this, SLOT (boxChanged()));
 	h_layout->addStretch ();
 
-	h_layout = new QHBoxLayout (group);
+	h_layout = new QHBoxLayout ();
 	group_layout->addLayout (h_layout);
 	h_layout->addWidget (new QLabel (i18n ("Width:"), group));
 	h_layout->addWidget (graphics_width_box = new KIntSpinBox (1, INT_MAX, 1, graphics_width, group));
