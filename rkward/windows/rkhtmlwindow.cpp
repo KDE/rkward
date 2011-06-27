@@ -96,7 +96,8 @@ RKHTMLWindow::~RKHTMLWindow () {
 // WORKAROUND for annoying kdelibs bug (KDE 4.0 up to at least KDE 4.6): Status bar icons added by plugins typically do not get deleted in case the KParts::StatusBarExtension
 // has already been deleted, first. See http://www.mail-archive.com/rkward-devel@lists.sourceforge.net/msg01345.html . Therefore, delete the plugins, explicitely, while the
 // StatusBarExtension is still alive...
-	foreach (KParts::Plugin *plugin, KParts::Plugin::pluginObjects (khtmlpart)) {
+	QList<KParts::Plugin*> plugins = KParts::Plugin::pluginObjects (khtmlpart);
+	foreach (KParts::Plugin *plugin, plugins) {
 		delete plugin;
 	}
 // I hope this does not come back to bite us one day... If it does, here's a safer variant, which simply hides the problem (the way it is hidden in konqueror, among others):
