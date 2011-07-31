@@ -107,6 +107,8 @@ void RKStandardIcons::initIcons () {
 	icons[WindowPendingJobs] = KIcon ("system-run");
 	icons[WindowFileBrowser] = KIcon ("folder");
 
+	icons[DocumentPDF] = KIcon ("application-pdf");
+
 /*	This does not work, as the icons are not really Null in this case, but some default icon. Any way to really test this?
 	RK_DO ({
 		for (int i = ActionRunAll; i < Last; ++i) {

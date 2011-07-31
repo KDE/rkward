@@ -317,7 +317,7 @@ QVariant RKHelpSearchResultsModel::data (const QModelIndex& index, int role) con
 		} else if ((col == 0) && (role == Qt::DecorationRole)) {
 			if (types[col] == "help") return RKStandardIcons::getIcon (RKStandardIcons::WindowHelp);
 			if (types[col] == "demo") return RKStandardIcons::getIcon (RKStandardIcons::WindowCommandEditor);
-			if (types[col] == "vignette") return RKStandardIcons::getIcon (RKStandardIcons::WindowFileBrowser);		// TODO: find a better icon
+			if (types[col] == "vignette") return RKStandardIcons::getIcon (RKStandardIcons::DocumentPDF);
 		}
 	} else {
 		RK_ASSERT (false);
