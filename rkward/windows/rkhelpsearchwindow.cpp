@@ -163,10 +163,10 @@ void RKHelpSearchWindow::getFunctionHelp (const QString &function_name, const QS
 	RK_TRACE (APP);
 
 	// we use .rk.getHelp() instead of plain help() to receive an error, if no help could be found
-	QString command;
-	if (type.isEmpty () || type == "help") command = ".rk.getHelp(";
-	else if (type == "demo") command = "rk.demo(";
+	QString command = ".rk.getHelp(";
+	if (type == "demo") command = "rk.demo(";
 	else if (type == "vignette") command = "vignette(";
+
 	command.append (RObject::rQuote (function_name));
 	if (!package.isEmpty ()) command.append (", package=" + package);
 	command.append (")");
