@@ -8,8 +8,8 @@
 
 \usage{
 rk.edit(x)
-rk.edit.files(file = file, title = file, name = NULL)
-rk.show.files(file = file, title = file, wtitle = NULL, delete = FALSE)
+rk.edit.files(file = file, title = file, name = NULL, prompt = TRUE)
+rk.show.files(file = file, title = file, wtitle = NULL, delete = FALSE, prompt = TRUE)
 rk.show.html(url)
 }
 
@@ -18,6 +18,7 @@ rk.show.html(url)
   \item{file}{character vector, filenames to show or edit.}
   \item{title}{character vector, of the same length as \code{file}; This can be used to give descriptive titles to each file, which will be displayed to the user.}
   \item{wtitle}{character vector, of length 1. This will be used as the window title.}
+  \item{prompt}{logical of length 1. If TRUE (the default) a prompt is dialog is shown along with the files to show / edit.}
   \item{delete}{a logical (not NA), when \code{TRUE} the shown file(s) are deleted after closing.}
 }
 

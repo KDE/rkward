@@ -2,7 +2,7 @@
                           showedittextfileagent  -  description
                              -------------------
     begin                : Tue Sep 13 2005
-    copyright            : (C) 2005, 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2009, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -79,6 +79,7 @@ void ShowEditTextFileAgent::showEditFiles (RBackendRequest *request) {
 	QStringList files = request->params["files"].toStringList ();
 	QStringList titles = request->params["titles"].toStringList ();
 	QString wtitle = request->params["wtitle"].toString ();
+	bool prompt = request->params["prompt"].toBool ();
 	int count = files.count ();
 	RK_ASSERT (titles.count () == count);
 
@@ -100,12 +101,16 @@ void ShowEditTextFileAgent::showEditFiles (RBackendRequest *request) {
 	if (request->type == RBackendRequest::ShowFiles) {
 		RK_ASSERT (!request->synchronous);
 
-		KMessageBox::informationList (RKWardMainWindow::getMain (), i18n ("A command running in the R-engine wants you to see the following file(s):\n"), display_titles, i18n ("Showing file(s)"), "show_files");
+		if (prompt) KMessageBox::informationList (RKWardMainWindow::getMain (), i18n ("A command running in the R-engine wants you to see the following file(s):\n"), display_titles, i18n ("Showing file(s)"), "show_files");
 
 		delete_files = request->params["delete"].toBool ();
 		RKRBackendProtocolFrontend::setRequestCompleted (request);
 	} else if (request->type == RBackendRequest::EditFiles) {
-		new ShowEditTextFileAgent (request, i18n ("A command running in the R-engine wants you to edit one or more file(s). Please look at these files, edit them as appriopriate, and save them. When done, press the \"Done\"-button, or close this dialog to resume.\n\n") + display_titles.join ("\n"), i18n ("Edit file(s)"));
+		if (prompt) {
+			new ShowEditTextFileAgent (request, i18n ("A command running in the R-engine wants you to edit one or more file(s). Please look at these files, edit them as appriopriate, and save them. When done, press the \"Done\"-button, or close this dialog to resume.\n\n") + display_titles.join ("\n"), i18n ("Edit file(s)"));
+		} else {
+			RKRBackendProtocolFrontend::setRequestCompleted (request);
+		}
 
 		r_highlighting = true;
 		read_only = false;

@@ -41,6 +41,7 @@
 #include "../core/robject.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkdummypart.h"
+#include "../misc/rkstandardicons.h"
 
 #define GET_HELP 1
 #define HELP_SEARCH 2
@@ -158,11 +159,15 @@ void RKHelpSearchWindow::getContextHelp (const QString &context_line, int cursor
 	getFunctionHelp (result);
 }
 
-void RKHelpSearchWindow::getFunctionHelp (const QString &function_name, const QString &package) {
+void RKHelpSearchWindow::getFunctionHelp (const QString &function_name, const QString &package, const QString &type) {
 	RK_TRACE (APP);
 
 	// we use .rk.getHelp() instead of plain help() to receive an error, if no help could be found
-	QString command = ".rk.getHelp(" + RObject::rQuote (function_name);
+	QString command;
+	if (type.isEmpty () || type == "help") command = ".rk.getHelp(";
+	else if (type == "demo") command = "rk.demo(";
+	else if (type == "vignette") command = "vignette(";
+	command.append (RObject::rQuote (function_name));
 	if (!package.isEmpty ()) command.append (", package=" + package);
 	command.append (")");
 
@@ -211,10 +216,11 @@ void RKHelpSearchWindow::resultDoubleClicked (const QModelIndex& index) {
 
 	int row = proxy_model->mapToSource (index).row ();
 	QString topic = results->data (results->index (row, COL_TOPIC)).toString ();
-	QString package = results->data (results->index (row, COL_PACKAGE)).toString ();
 	if (topic.isEmpty ()) return;
+	QString package = results->data (results->index (row, COL_PACKAGE)).toString ();
+	QString type = results->resultsType (row);
 
-	getFunctionHelp (topic, package);
+	getFunctionHelp (topic, package, type);
 }
 
 void RKHelpSearchWindow::rCommandDone (RCommand *command) {
@@ -224,7 +230,6 @@ void RKHelpSearchWindow::rCommandDone (RCommand *command) {
 			RK_ASSERT (false);
 			return;
 		}
-		RK_ASSERT ((command->getDataLength () % 3) == 0);
 		RK_ASSERT (command->getDataType () == RData::StringVector);
 
 		results->setResults (command->getStringVector ());
@@ -258,11 +263,16 @@ RKHelpSearchResultsModel::~RKHelpSearchResultsModel () {
 	RK_TRACE (APP);
 }
 
-void RKHelpSearchResultsModel::setResults (const QStringList &new_results) {
+void RKHelpSearchResultsModel::setResults (const QStringList &results) {
 	RK_TRACE (APP);
 
-	results = new_results;
-	result_count = results.size () / 3;
+	RK_ASSERT ((results.size () % 4) == 0);
+
+	result_count = results.size () / 4;
+	topics = results.mid (0, result_count);
+	titles = results.mid (result_count, result_count);
+	packages = results.mid (result_count*2, result_count);
+	types = results.mid (result_count*3, result_count);
 
 	reset ();
 }
@@ -279,6 +289,16 @@ int RKHelpSearchResultsModel::columnCount (const QModelIndex& parent) const {
 	return COL_COUNT;
 }
 
+QString RKHelpSearchResultsModel::resultsType (int row) {
+	RK_TRACE (APP);
+
+	if (row >= result_count) {
+		RK_ASSERT (false);
+		return QString ();
+	}
+	return types[row];
+}
+
 QVariant RKHelpSearchResultsModel::data (const QModelIndex& index, int role) const {
 	// don't trace
 
@@ -288,14 +308,16 @@ QVariant RKHelpSearchResultsModel::data (const QModelIndex& index, int role) con
 	if (result_count) {
 		if (role == Qt::DisplayRole || role == Qt::ToolTipRole) {
 			if (row < result_count) {
-				if (col < COL_COUNT) {
-					return results[row + col * result_count];
-				} else {
-				
-				}
+				if (col == COL_TOPIC) return topics[row];
+				if (col == COL_TITLE) return titles[row];
+				if (col == COL_PACKAGE) return packages[row];
 			} else {
 				RK_ASSERT (false);
 			}
+		} else if ((col == 0) && (role == Qt::DecorationRole)) {
+			if (types[col] == "help") return RKStandardIcons::getIcon (RKStandardIcons::WindowHelp);
+			if (types[col] == "demo") return RKStandardIcons::getIcon (RKStandardIcons::WindowCommandEditor);
+			if (types[col] == "vignette") return RKStandardIcons::getIcon (RKStandardIcons::WindowFileBrowser);		// TODO: find a better icon
 		}
 	} else {
 		RK_ASSERT (false);

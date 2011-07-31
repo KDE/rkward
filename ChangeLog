@@ -1,6 +1,9 @@
+- Support the results list new help.search() in R 2.14.x, which includes vignettes and demos		# TODO: actually test this with R 2.14!
+- rk.edit.files() and rk.show.files() gain parameter "prompt", which can be used to suppress user prompt
+- Added function rk.demo(), which is similar to demo(), but opens the example script in a script editor window
 - Fixed: Some plugin dialogs would not become visible, or be shown in very small size, with some window managers
 - Fixed: Potential crash when using context menus with "focus follows mouse" window activation policy
-- Add shortcut Ctrl+Enter to insert a linebreak and submit from a script editor
+- Added shortcut Ctrl+Enter to insert a linebreak and submit from a script editor
 - Reduce CPU usage while idle
 - Pareto-plot plugin gains more tabulation options				TODO: also use in piechart, barplot
 - rk.results() now prints rownames, where appropriate			TODO: test

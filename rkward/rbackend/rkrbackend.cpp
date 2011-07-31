@@ -554,7 +554,7 @@ int RChooseFile (int isnew, char *buf, int len) {
 /* There are about one million possible entry points to editing / showing files. We try to cover them all, using the
 following bunch of functions (REditFilesHelper() and doShowEditFiles() are helpers, only) */
 
-void REditFilesHelper (QStringList files, QStringList titles, QString wtitle, RBackendRequest::RCallbackType edit, bool delete_files) {
+void REditFilesHelper (QStringList files, QStringList titles, QString wtitle, RBackendRequest::RCallbackType edit, bool delete_files, bool prompt) {
 	RK_TRACE (RBACKEND);
 
 	RK_ASSERT ((edit == RBackendRequest::ShowFiles) || (edit == RBackendRequest::EditFiles));
@@ -567,6 +567,7 @@ void REditFilesHelper (QStringList files, QStringList titles, QString wtitle, RB
 	request.params["files"] = QVariant (files);
 	request.params["titles"] = QVariant (titles);
 	request.params["wtitle"] = QVariant (wtitle);
+	request.params["prompt"] = QVariant (prompt);
 
 	RKRBackend::this_pointer->handleRequest (&request);
 }
@@ -574,30 +575,31 @@ void REditFilesHelper (QStringList files, QStringList titles, QString wtitle, RB
 int REditFiles (int nfile, const char **file, const char **title, const char *wtitle) {
 	RK_TRACE (RBACKEND);
 
-	REditFilesHelper (charPArrayToQStringList (file, nfile), charPArrayToQStringList (title, nfile), wtitle, RBackendRequest::EditFiles, false);
+	REditFilesHelper (charPArrayToQStringList (file, nfile), charPArrayToQStringList (title, nfile), wtitle, RBackendRequest::EditFiles, false, true);
 
 // default implementation seems to return 1 if nfile <= 0, else 1. No idea, what for. see unix/std-sys.c
 	return (nfile <= 0);
 }
 
-SEXP doShowEditFiles (SEXP files, SEXP titles, SEXP wtitle, SEXP del, RBackendRequest::RCallbackType edit) {
+SEXP doShowEditFiles (SEXP files, SEXP titles, SEXP wtitle, SEXP del, SEXP prompt, RBackendRequest::RCallbackType edit) {
 	RK_TRACE (RBACKEND);
 
 	QStringList file_strings = RKRSupport::SEXPToStringList (files);
 	QStringList title_strings = RKRSupport::SEXPToStringList (titles);
 	QString wtitle_string = RKRSupport::SEXPToString (wtitle);
 	bool del_files = RKRSupport::SEXPToInt (del, 0) != 0;
+	bool do_prompt = RKRSupport::SEXPToInt (prompt, 0) != 0;
 
 	RK_ASSERT (file_strings.size () == title_strings.size ());
 	RK_ASSERT (file_strings.size () >= 1);
 
-	REditFilesHelper (file_strings, title_strings, wtitle_string, edit, del_files);
+	REditFilesHelper (file_strings, title_strings, wtitle_string, edit, del_files, do_prompt);
 
 	return (R_NilValue);
 }
 
-SEXP doEditFiles (SEXP files, SEXP titles, SEXP wtitle) {
-	return (doShowEditFiles (files, titles, wtitle, R_NilValue, RBackendRequest::EditFiles));
+SEXP doEditFiles (SEXP files, SEXP titles, SEXP wtitle, SEXP prompt) {
+	return (doShowEditFiles (files, titles, wtitle, R_NilValue, prompt, RBackendRequest::EditFiles));
 }
 
 int REditFile (const char *buf) {
@@ -610,14 +612,14 @@ int REditFile (const char *buf) {
 	return REditFiles (1, const_cast<const char**> (&buf), &title, editor);
 }
 
-SEXP doShowFiles (SEXP files, SEXP titles, SEXP wtitle, SEXP delete_files) {
-	return (doShowEditFiles (files, titles, wtitle, delete_files, RBackendRequest::ShowFiles));
+SEXP doShowFiles (SEXP files, SEXP titles, SEXP wtitle, SEXP delete_files, SEXP prompt) {
+	return (doShowEditFiles (files, titles, wtitle, delete_files, prompt, RBackendRequest::ShowFiles));
 }
 
 int RShowFiles (int nfile, const char **file, const char **headers, const char *wtitle, Rboolean del, const char */* pager */) {
 	RK_TRACE (RBACKEND);
 
-	REditFilesHelper (charPArrayToQStringList (file, nfile), charPArrayToQStringList (headers, nfile), QString (wtitle), RBackendRequest::ShowFiles, (bool) del);
+	REditFilesHelper (charPArrayToQStringList (file, nfile), charPArrayToQStringList (headers, nfile), QString (wtitle), RBackendRequest::ShowFiles, (bool) del, true);
 
 // default implementation seems to returns 1 on success, 0 on failure. see unix/std-sys.c
 	return 1;
@@ -1008,8 +1010,8 @@ bool RKRBackend::startR () {
 		{ "rk.get.structure", (DL_FUNC) &doGetStructure, 4 },
 		{ "rk.get.structure.global", (DL_FUNC) &doGetGlobalEnvStructure, 3 },
 		{ "rk.copy.no.eval", (DL_FUNC) &doCopyNoEval, 3 },
-		{ "rk.edit.files", (DL_FUNC) &doEditFiles, 3 },
-		{ "rk.show.files", (DL_FUNC) &doShowFiles, 4 },
+		{ "rk.edit.files", (DL_FUNC) &doEditFiles, 4 },
+		{ "rk.show.files", (DL_FUNC) &doShowFiles, 5 },
 		{ "rk.dialog", (DL_FUNC) &doDialog, 6 },
 		{ "rk.update.locale", (DL_FUNC) &doUpdateLocale, 0 },
 		{ "rk.locale.name", (DL_FUNC) &doLocaleName, 0 },

@@ -373,23 +373,23 @@
 	x
 }
 
-"rk.edit.files" <- function (file = file, title = file, name = NULL)
+"rk.edit.files" <- function (file = file, title = file, name = NULL, prompt = TRUE)
 {
 	if (!is.character (file)) {
 		nfile = tempfile()
 		env = environment (file)
 		dput (file, file=nfile, control=c ("useSource", "keepNA", "keepInteger", "showAttributes"))
-		.Call("rk.edit.files", nfile, title, name)
+		.Call("rk.edit.files", nfile, title, name, prompt)
 		x <- dget (nfile)
 		environment (x) <- env
 		return (x)
 	}
-	invisible (.Call ("rk.edit.files", file, title, name))
+	invisible (.Call ("rk.edit.files",  as.character (file),  as.character (title),  as.character (name), isTRUE (prompt)))
 }
 
-"rk.show.files" <- function (file = file, title = file, wtitle = NULL, delete=FALSE)
+"rk.show.files" <- function (file = file, title = file, wtitle = NULL, delete=FALSE, prompt = TRUE)
 {
-	invisible (.Call ("rk.show.files", as.character (file), as.character (title), as.character (wtitle), delete))
+	invisible (.Call ("rk.show.files", as.character (file), as.character (title), as.character (wtitle), delete, isTRUE (prompt)))
 }
 
 "rk.show.html" <- function (url) {

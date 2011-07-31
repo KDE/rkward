@@ -85,12 +85,6 @@
 	return (list (as.character (x$Package), as.character (titles), as.character (x$Version), as.character (x$LibPath)))
 }
 
-# Here we concatenate everything (same as above) to get search results easily
-".rk.get.search.results" <- function (pattern, ...) {
-	H=as.data.frame (help.search(pattern, ...)$matches)
-	return(c(as.vector(H$topic),as.vector(H$title),as.vector(H$Package)))
-}
-
 ".rk.available.packages.cache" <- NULL
 # This function works like available.packages (with no arguments), but does simple caching of the result, and of course uses a cache if available. Cache is only used, if it is less than 1 hour old, and options("repos") is unchanged.
 ".rk.cached.available.packages" <- function () {
@@ -348,41 +342,6 @@ formals (setwd) <- formals (base::setwd)
 		warning (res)
 		invisible (FALSE)
 	}
-}
-
-# retrieve the (expected) "base" url of help files. Most importantly this will be a local port for R 2.10.0 and above, but a local directory for 2.9.x and below. As a side effect, in R 2.10.0 and above, the dynamic help server is started.
-".rk.getHelpBaseUrl" <- function () {
-	port <- NA
-	if (compareVersion (as.character (getRversion()), "2.10.0") >= 0) {
-		try ({
-			port <- tools::startDynamicHelp ()
-		})
-		if (is.na (port)) {
-			try ({
-				port <- tools:::httpdPort
-			})
-		}
-	}
-	if (is.na (port)) {
-		return (paste ("file://", R.home (), sep=""))
-	}
-	return (paste ("http://127.0.0.1", port, sep=":"))
-}
-
-# a simple wrapper around help() that makes it easier to detect in code, whether help was found or not.
-# used from RKHelpSearchWindow::getFunctionHelp
-".rk.getHelp" <- function (...) {
-	if (compareVersion (as.character (getRversion()), "2.10.0") >= 0) {
-		res <- help (..., help_type="html")
-	} else {
-		res <- help (..., chmhelp=FALSE, htmlhelp=TRUE)
-	}
-	if (!length (as.character (res))) {	# this seems undocumented, but it is what utils:::print.help_files_with_topic checks
-		show (res)
-		stop ("No help found")
-	}
-	show (res)
-	invisible (TRUE)
 }
 
 # Tries to replace a function inside its environemnt/namespace.
