@@ -2,7 +2,7 @@
                           rksettingsmoduler  -  description
                              -------------------
     begin                : Wed Jul 28 2004
-    copyright            : (C) 2004, 2007, 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -27,6 +27,7 @@ class QComboBox;
 class QLineEdit;
 class MultiStringSelector;
 class KIntSpinBox;
+class QTextEdit;
 
 /**
 Configure the R-backend
@@ -57,9 +58,7 @@ public:
 
 	static int getDefaultWidth () { return options_width; };
 public slots:
-	void boxChanged (int);
-	void pathChanged ();
-	void textChanged (const QString &);
+	void settingChanged ();
 private:
 	QLineEdit *outdec_input;
 	KIntSpinBox *width_input;
@@ -71,9 +70,9 @@ private:
 	KIntSpinBox *expressions_input;
 	KIntSpinBox *digits_input;
 	QComboBox *checkbounds_input;
-	QLineEdit *printcmd_input;
 	QComboBox *editor_input;
 	QComboBox *pager_input;
+	QTextEdit *further_input;
 
 	static QString options_outdec;
 	static int options_width;
@@ -85,9 +84,9 @@ private:
 	static int options_expressions;
 	static int options_digits;
 	static bool options_checkbounds;
-	static QString options_printcmd;
 	static QString options_editor;
 	static QString options_pager;
+	static QString options_further;
 
 // constants
 	static QString builtin_editor;

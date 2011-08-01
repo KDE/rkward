@@ -2,7 +2,7 @@
                           rksettingsmoduler  -  description
                              -------------------
     begin                : Wed Jul 28 2004
-    copyright            : (C) 2004, 2007, 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -30,6 +30,7 @@
 #include <QVBoxLayout>
 #include <QGridLayout>
 #include <QPushButton>
+#include <QTextEdit>
 
 #include "../core/robject.h"
 #include "../misc/multistringselector.h"
@@ -49,9 +50,9 @@ bool RKSettingsModuleR::options_keepsourcepkgs;
 int RKSettingsModuleR::options_expressions;
 int RKSettingsModuleR::options_digits;
 bool RKSettingsModuleR::options_checkbounds;
-QString RKSettingsModuleR::options_printcmd;
 QString RKSettingsModuleR::options_editor;
 QString RKSettingsModuleR::options_pager;
+QString RKSettingsModuleR::options_further;
 // static constants
 QString RKSettingsModuleR::builtin_editor = "<rkward>";
 // session constants
@@ -81,32 +82,32 @@ RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSett
 	warn_input->insertItem (2, i18n ("Print warnings immediately"));
 	warn_input->insertItem (3, i18n ("Convert warnings to errors"));
 	warn_input->setCurrentIndex (options_warn + 1);
-	connect (warn_input, SIGNAL (activated (int)), this, SLOT (boxChanged (int)));
+	connect (warn_input, SIGNAL (activated (int)), this, SLOT (settingChanged()));
 	grid->addWidget (warn_input, row, 1);
 
 	// options (OutDec)
 	grid->addWidget (new QLabel (i18n ("Decimal character (only for printing)"), this), ++row, 0);
 	outdec_input = new QLineEdit (options_outdec, this);
 	outdec_input->setMaxLength (1);
-	connect (outdec_input, SIGNAL (textChanged (const QString &)), this, SLOT (textChanged (const QString &)));
+	connect (outdec_input, SIGNAL (textChanged (const QString &)), this, SLOT (settingChanged()));
 	grid->addWidget (outdec_input, row, 1);
 
 	// options (width)
 	grid->addWidget (new QLabel (i18n ("Output width (characters)"), this), ++row, 0);
 	width_input = new KIntSpinBox (10, 10000, 1, options_width, this);
-	connect (width_input, SIGNAL (valueChanged (int)), this, SLOT (boxChanged (int)));
+	connect (width_input, SIGNAL (valueChanged (int)), this, SLOT (settingChanged()));
 	grid->addWidget (width_input, row, 1);
 
 	// options (max.print)
 	grid->addWidget (new QLabel (i18n ("Maximum number of elements shown in print"), this), ++row, 0);
 	maxprint_input = new KIntSpinBox (100, INT_MAX, 1, options_maxprint, this);
-	connect (maxprint_input, SIGNAL (valueChanged (int)), this, SLOT (boxChanged (int)));
+	connect (maxprint_input, SIGNAL (valueChanged (int)), this, SLOT (settingChanged()));
 	grid->addWidget (maxprint_input, row, 1);
 
 	// options (warnings.length)
 	grid->addWidget (new QLabel (i18n ("Maximum length of warnings/errors to print"), this), ++row, 0);
 	warningslength_input = new KIntSpinBox (100, 8192, 1, options_warningslength, this);
-	connect (warningslength_input, SIGNAL (valueChanged (int)), this, SLOT (boxChanged (int)));
+	connect (warningslength_input, SIGNAL (valueChanged (int)), this, SLOT (settingChanged()));
 	grid->addWidget (warningslength_input, row, 1);
 
 	// options (keep.source)
@@ -116,7 +117,7 @@ RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSett
 	keepsource_input->addItem (i18n ("TRUE (default)"), true);
 	keepsource_input->addItem (i18n ("FALSE"), false);
 	keepsource_input->setCurrentIndex (options_keepsource ? 0 : 1);
-	connect (keepsource_input, SIGNAL (activated (int)), this, SLOT (boxChanged (int)));
+	connect (keepsource_input, SIGNAL (activated (int)), this, SLOT (settingChanged()));
 	grid->addWidget (keepsource_input, row, 1);
 
 	// options (keep.source.pkgs)
@@ -126,19 +127,19 @@ RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSett
 	keepsourcepkgs_input->addItem (i18n ("TRUE"), true);
 	keepsourcepkgs_input->addItem (i18n ("FALSE (default)"), false);
 	keepsourcepkgs_input->setCurrentIndex (options_keepsourcepkgs ? 0 : 1);
-	connect (keepsourcepkgs_input, SIGNAL (activated (int)), this, SLOT (boxChanged (int)));
+	connect (keepsourcepkgs_input, SIGNAL (activated (int)), this, SLOT (settingChanged()));
 	grid->addWidget (keepsourcepkgs_input, row, 1);
 
 	// options (expressions)
 	grid->addWidget (new QLabel (i18n ("Maximum level of nested expressions"), this), ++row, 0);
 	expressions_input = new KIntSpinBox (25, 500000, 1, options_expressions, this);
-	connect (expressions_input, SIGNAL (valueChanged (int)), this, SLOT (boxChanged (int)));
+	connect (expressions_input, SIGNAL (valueChanged (int)), this, SLOT (settingChanged()));
 	grid->addWidget (expressions_input, row, 1);
 
 	// options (digits)
 	grid->addWidget (new QLabel (i18n ("Default decimal precision in print ()"), this), ++row, 0);
 	digits_input = new KIntSpinBox (1, 22, 1, options_digits, this);
-	connect (digits_input, SIGNAL (valueChanged (int)), this, SLOT (boxChanged (int)));
+	connect (digits_input, SIGNAL (valueChanged (int)), this, SLOT (settingChanged()));
 	grid->addWidget (digits_input, row, 1);
 
 	// options (check.bounds)
@@ -148,13 +149,8 @@ RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSett
 	checkbounds_input->addItem (i18n ("TRUE"), true);
 	checkbounds_input->addItem (i18n ("FALSE (default)"), false);
 	checkbounds_input->setCurrentIndex (options_checkbounds ? 0 : 1);
-	connect (checkbounds_input, SIGNAL (activated (int)), this, SLOT (boxChanged (int)));
+	connect (checkbounds_input, SIGNAL (activated (int)), this, SLOT (settingChanged()));
 	grid->addWidget (checkbounds_input, row, 1);
-
-	grid->addWidget (new QLabel (i18n ("Command used to send files to printer"), this), ++row, 0);
-	printcmd_input = new QLineEdit (options_printcmd, this);
-	connect (printcmd_input, SIGNAL (textChanged (const QString &)), this, SLOT (textChanged (const QString &)));
-	grid->addWidget (printcmd_input, row, 1);
 
 	grid->addWidget (new QLabel (i18n ("Editor command"), this), ++row, 0);
 	editor_input = new QComboBox (this);
@@ -164,7 +160,7 @@ RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSett
 		editor_input->addItem (options_editor);
 		editor_input->setCurrentIndex (1);
 	}
-	connect (editor_input, SIGNAL (editTextChanged (const QString &)), this, SLOT (textChanged (const QString &)));
+	connect (editor_input, SIGNAL (editTextChanged (const QString &)), this, SLOT (settingChanged()));
 	grid->addWidget (editor_input, row, 1);
 
 	grid->addWidget (new QLabel (i18n ("Pager command"), this), ++row, 0);
@@ -175,8 +171,16 @@ RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSett
 		pager_input->addItem (options_pager);
 		pager_input->setCurrentIndex (1);
 	}
-	connect (pager_input, SIGNAL (editTextChanged (const QString &)), this, SLOT (textChanged (const QString &)));
+	connect (pager_input, SIGNAL (editTextChanged (const QString &)), this, SLOT (settingChanged()));
 	grid->addWidget (pager_input, row, 1);
+
+	grid->addWidget (new QLabel (i18n ("Further (option) commands to run in each session"), this), ++row, 0, 1, 2);
+	further_input = new QTextEdit (this);
+	further_input->setWordWrapMode (QTextOption::NoWrap);
+	further_input->setAcceptRichText (false);
+	further_input->setPlainText (options_further);
+	connect (further_input, SIGNAL (textChanged()), this, SLOT (settingChanged()));
+	grid->addWidget (further_input, ++row, 0, 1, 2);
 
 	main_vbox->addStretch ();
 }
@@ -185,17 +189,7 @@ RKSettingsModuleR::~RKSettingsModuleR() {
 	RK_TRACE (SETTINGS);
 }
 
-void RKSettingsModuleR::boxChanged (int) {
-	RK_TRACE (SETTINGS);
-	change ();
-}
-
-void RKSettingsModuleR::pathChanged () {
-	RK_TRACE (SETTINGS);
-	change ();
-}
-
-void RKSettingsModuleR::textChanged (const QString &) {
+void RKSettingsModuleR::settingChanged () {
 	RK_TRACE (SETTINGS);
 	change ();
 }
@@ -223,9 +217,9 @@ void RKSettingsModuleR::applyChanges () {
 	options_expressions = expressions_input->value ();
 	options_digits = digits_input->value ();
 	options_checkbounds = checkbounds_input->itemData (checkbounds_input->currentIndex ()).toBool ();
-	options_printcmd = printcmd_input->text ();
 	options_editor = editor_input->currentText ();
 	options_pager = pager_input->currentText ();
+	options_further = further_input->toPlainText ();
 
 // apply run time options in R
 	QStringList commands = makeRRunTimeOptionCommands ();
@@ -252,11 +246,11 @@ QStringList RKSettingsModuleR::makeRRunTimeOptionCommands () {
 	list.append ("options (digits=" + QString::number (options_digits) + ")\n");
 	if (options_checkbounds) tf = "TRUE"; else tf = "FALSE";
 	list.append ("options (checkbounds=" + tf + ")\n");
-	list.append ("options (printcmd=\"" + options_printcmd + "\")\n");
 	if (options_editor == builtin_editor) list.append ("options (editor=rk.edit.files)\n");
 	else list.append ("options (editor=\"" + options_editor + "\")\n");
 	if (options_pager == builtin_editor) list.append ("options (pager=rk.show.files)\n");
 	else list.append ("options (pager=\"" + options_pager + "\")\n");
+	if (!options_further.isEmpty ()) list.append (options_further + "\n");
 
 #warning TODO make the following options configurable
 	list.append ("options (device=\"rk.screen.device\")\n");
@@ -289,9 +283,9 @@ void RKSettingsModuleR::saveSettings (KConfig *config) {
 	cg.writeEntry ("expressions", options_expressions);
 	cg.writeEntry ("digits", options_digits);
 	cg.writeEntry ("check.bounds", options_checkbounds);
-	cg.writeEntry ("printcmd", options_printcmd);
 	cg.writeEntry ("editor", options_editor);
 	cg.writeEntry ("pager", options_pager);
+	cg.writeEntry ("further init commands", options_further);
 }
 
 void RKSettingsModuleR::loadSettings (KConfig *config) {
@@ -308,9 +302,9 @@ void RKSettingsModuleR::loadSettings (KConfig *config) {
 	options_expressions = cg.readEntry ("expressions", 5000);
 	options_digits = cg.readEntry ("digits", 7);
 	options_checkbounds = cg.readEntry ("check.bounds", false);
-	options_printcmd = cg.readEntry ("printcmd", "kprinter");
 	options_editor = cg.readEntry ("editor", builtin_editor);
 	options_pager = cg.readEntry ("pager", builtin_editor);
+	options_further = cg.readEntry ("further init commands", QString ());
 }
 
 //#################################################

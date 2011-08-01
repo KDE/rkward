@@ -55,6 +55,7 @@
 # Simple wrapper around help.search. Concatenates the relevant fields of the results in order for passing to the frontend.
 ".rk.get.search.results" <- function (pattern, ...) {
 	H=as.data.frame (help.search(pattern, ...)$matches)
+	# NOTE: The field "Type" was added in R 2.14.0. For earlier versions of R, only help pages were returned as results of help.search()
 	if (is.null (H$Type)) H$Type <- "help"
 	c (as.character (H$topic), as.character (H$title), as.character(H$Package), as.character(H$Type))
 }

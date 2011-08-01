@@ -24,6 +24,7 @@
 class QGroupBox;
 class RKSpinBox;
 class KIntSpinBox;
+class QCheckBox;
 
 /**
 @author Thomas Friedrichsmeier
@@ -40,7 +41,10 @@ public:
 
 /** generate the commands needed to set the R run time options */
 	static QStringList makeRRunTimeOptionCommands ();
-	
+
+/** Configured to (attempt to) use KDE printing dialog? */
+	static bool kdePrintingEnabled () { return options_kde_printing; };
+
 	static void saveSettings (KConfig *config);
 	static void loadSettings (KConfig *config);
 	
@@ -58,12 +62,16 @@ private:
 	RKSpinBox *graphics_height_box;
 	RKSpinBox *graphics_width_box;
 
+	QCheckBox *kde_printing_box;
+
 	static bool graphics_hist_enable;
 	static int graphics_hist_max_length;
 	static int graphics_hist_max_plotsize;
 
 	static double graphics_height;
 	static double graphics_width;
+
+	static bool options_kde_printing;
 };
 
 #endif

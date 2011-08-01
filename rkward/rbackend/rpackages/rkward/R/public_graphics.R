@@ -55,6 +55,15 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	ret
 }
 
+# Produces a temporary postscript file and opens a print dialog for it
+# Parameters are passed to postscript(), but typically this is simply used as
+#   dev.print(rk.print.preview)
+"rk.printer.device" <- function(...) {
+	tf <- tempfile (fileext=".ps")
+	postscript (file = tf, ...)
+	.rk.printer.devices[[as.character (dev.cur ())]] <<- tf
+}
+
 "rk.duplicate.device" <- function (devId = dev.cur ())
 {
 	dev.set (devId)

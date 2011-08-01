@@ -34,6 +34,7 @@
 #include "../dialogs/rkreadlinedialog.h"
 #include "../agents/showedittextfileagent.h"
 #include "../agents/rkeditobjectagent.h"
+#include "../agents/rkprintagent.h"
 #include "../windows/rcontrolwindow.h"
 #include "../windows/rkworkplace.h"
 #include "../windows/rkcommandlog.h"
@@ -591,6 +592,8 @@ QStringList RInterface::processPlainGenericRequest (const QStringList &calllist)
 		} else {
 			++num_active_output_record_requests;
 		}
+	} else if (call == "printPreview") {
+		RKPrintAgent::printPostscript (calllist.value (1), true);
 	} else {
 		return (QStringList ("Error: unrecognized request '" + call + "'."));
 	}

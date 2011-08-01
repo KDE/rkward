@@ -1,3 +1,7 @@
+- Removed option to set options("printcmd")
+- New option to run arbitrary (setup) commands in each session
+- Added new pseudo graphics device "rk.printer.device" to provide printing via the KDE printer dialog
+- Fixed: Printing was broken when kprinter is not available
 - Support the results list new help.search() in R 2.14.x, which includes vignettes and demos		# TODO: actually test this with R 2.14!
 - rk.edit.files() and rk.show.files() gain parameter "prompt", which can be used to suppress user prompt
 - Added function rk.demo(), which is similar to demo(), but opens the example script in a script editor window

@@ -38,6 +38,7 @@ double RKSettingsModuleGraphics::graphics_height;
 bool RKSettingsModuleGraphics::graphics_hist_enable;
 int RKSettingsModuleGraphics::graphics_hist_max_length;
 int RKSettingsModuleGraphics::graphics_hist_max_plotsize;
+bool RKSettingsModuleGraphics::options_kde_printing;
 
 RKSettingsModuleGraphics::RKSettingsModuleGraphics (RKSettings *gui, QWidget *parent) : RKSettingsModule(gui, parent) {
 	RK_TRACE (SETTINGS);
@@ -57,7 +58,10 @@ RKSettingsModuleGraphics::RKSettingsModuleGraphics (RKSettings *gui, QWidget *pa
 	connect (graphics_height_box, SIGNAL (valueChanged (int)), this, SLOT (boxChanged ()));
 	main_vbox->addWidget (group);
 
-	main_vbox->addWidget (group);
+	kde_printing_box = new QCheckBox (i18n ("Use KDE printer dialog for printing devices (if available)"), this);
+	kde_printing_box->setChecked (options_kde_printing);
+	connect (kde_printing_box, SIGNAL (stateChanged(int)), this, SLOT (boxChanged()));
+	main_vbox->addWidget (kde_printing_box);
 
 	graphics_hist_box = new QGroupBox (i18n ("Screen device history"), this);
 	graphics_hist_box->setCheckable (true);
@@ -109,6 +113,8 @@ void RKSettingsModuleGraphics::applyChanges () {
 	graphics_hist_max_length = graphics_hist_max_length_box->value ();
 	graphics_hist_max_plotsize = graphics_hist_max_plotsize_box->value ();
 
+	options_kde_printing = kde_printing_box->isChecked ();
+
 	QStringList commands = makeRRunTimeOptionCommands ();
 	for (QStringList::const_iterator it = commands.begin (); it != commands.end (); ++it) {
 		RKGlobals::rInterface ()->issueCommand (*it, RCommand::App, QString::null, 0, 0, commandChain ());
@@ -130,6 +136,7 @@ void RKSettingsModuleGraphics::saveSettings (KConfig *config) {
 	cg.writeEntry ("graphics_hist_enable", graphics_hist_enable);
 	cg.writeEntry ("graphics_hist_max_length", graphics_hist_max_length);
 	cg.writeEntry ("graphics_hist_max_plotsize", graphics_hist_max_plotsize);
+	cg.writeEntry ("kde printing", options_kde_printing);
 }
 
 void RKSettingsModuleGraphics::loadSettings (KConfig *config) {
@@ -141,6 +148,7 @@ void RKSettingsModuleGraphics::loadSettings (KConfig *config) {
 	graphics_hist_enable = cg.readEntry ("graphics_hist_enable", true);
 	graphics_hist_max_length = cg.readEntry ("graphics_hist_max_length", 20);
 	graphics_hist_max_plotsize = cg.readEntry ("graphics_hist_max_plotsize", 1024);
+	options_kde_printing = cg.readEntry ("kde printing", true);
 }
 
 //static

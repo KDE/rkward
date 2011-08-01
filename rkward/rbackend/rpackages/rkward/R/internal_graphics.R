@@ -71,6 +71,8 @@ if (base::.Platform$OS.type == "windows") {
 	}
 }
 
+".rk.printer.devices" <- list ()
+
 # see .rk.fix.assignmetns () in internal.R
 ".rk.fix.assignments.graphics" <- function ()
 {
@@ -89,6 +91,13 @@ if (base::.Platform$OS.type == "windows") {
 			.rk.do.call ("killDevice", as.character (which))
 			
 			ret <- eval (body (.rk.dev.off.default))
+
+			printfile <- .rk.printer.devices[[as.character (which)]]
+			if (!is.null (printfile)) {
+				.rk.do.plain.call ("printPreview", printfile, FALSE)
+				.rk.printer.devices[[as.character (which)]] <<- NULL
+			}
+
 			return (ret)
 		})
 

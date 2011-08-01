@@ -341,11 +341,11 @@ void RKCaughtX11Window::setFixedSizeManual () {
 	KVBox *page = new KVBox (dialog);
 	dialog->setMainWidget (page);
 
-	QLabel *label = new QLabel (i18n ("Width"), page);
+	new QLabel (i18n ("Width"), page);
 	KIntSpinBox *width = new KIntSpinBox (5, 32767, 1, xembed_container->width (), page, 10);
 	width->setEditFocus (true);
 
-	label = new QLabel (i18n ("Height"), page);
+	new QLabel (i18n ("Height"), page);
 	KIntSpinBox *height = new KIntSpinBox (5, 32767, 1, xembed_container->height (), page, 10);
 
 	dialog->exec ();
@@ -375,7 +375,9 @@ void RKCaughtX11Window::copyDeviceToOutput () {
 void RKCaughtX11Window::printDevice () {
 	RK_TRACE (MISC);
 
-	RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ")\ndev.print ()", RCommand::App, i18n ("Print contents of graphics device number %1", device_number), error_dialog);
+	QString printer_device;
+	if (RKSettingsModuleGraphics::kdePrintingEnabled ()) printer_device = "rk.printer.device";
+	RKGlobals::rInterface ()->issueCommand ("dev.set (" + QString::number (device_number) + ")\ndev.print (" + printer_device + ")", RCommand::App, i18n ("Print contents of graphics device number %1", device_number), error_dialog);
 }
 
 void RKCaughtX11Window::copyDeviceToRObject () {
