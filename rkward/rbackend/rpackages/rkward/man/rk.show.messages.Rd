@@ -34,7 +34,7 @@ rk.select.list (list, preselect = NULL, multiple = FALSE, title = NULL)
 \details{
   For \code{rk.show.question}, the R interpreter always waits for the user's choice.
   
-  \code{rk.select.list} replaces \code{utils::select.list} for the running session acting as a drop-in replacement for \code{tk_select.list}. Use \code{.rk.select.list.default} for the original \code{utils::select.list} function (see Examples).
+  \code{rk.select.list} replaces \code{utils::select.list} for the running session acting as a drop-in replacement for \code{tk_select.list}. Use \code{.rk.backups$select.list} for the original \code{utils::select.list} function (see Examples).
 }
 
 \value{
@@ -64,7 +64,7 @@ if (rk.show.question ("Question:\nDo you want to know about RKWard?",
 ## Selection lists:
 rk.select.list (LETTERS, preselect = c("A", "E", "I", "O", "U"), 
   multiple = TRUE, title = "vowels")
-.rk.select.list.default (LETTERS, preselect = c("A", "E", "I", "O", "U"), 
+.rk.backups$select.list (LETTERS, preselect = c("A", "E", "I", "O", "U"), 
   multiple = TRUE, title = "vowels")
 }
 

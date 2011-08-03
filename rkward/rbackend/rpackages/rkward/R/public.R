@@ -124,12 +124,12 @@
 }
 
 "rk.get.output.html.file" <- function () {
-	return (.rk.output.html.file)
+	return (.rk.variables$.rk.output.html.file)
 }
 
 "rk.set.output.html.file" <- function (x) {
 	stopifnot (is.character (x))
-	assign (".rk.output.html.file", x, as.environment ("package:rkward"))
+	assign (".rk.output.html.file", x, .rk.variables)
 
 	if (!file.exists (x)) {
 		.rk.cat.output (paste ("<?xml version=\"1.0\" encoding=\"", .Call ("rk.locale.name"), "\"?>\n", sep=""))

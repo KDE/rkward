@@ -210,7 +210,7 @@ rktest.initializeEnvironment <- function () {
 	# This version of rk.set.output.html.file does not notify the frontend of the change. Without this, you'll get lots of output windows.
 	rktest.replace ("rk.set.output.html.file", function (x) {
 		stopifnot(is.character(x))
-		assign(".rk.output.html.file", x, as.environment("package:rkward"))
+		assign(".rk.output.html.file", x, .rk.variables)
 		.rk.do.plain.call ("set.output.file", c (x, "SILENT"), synchronous=FALSE)
 	})
 	assign("initialized", TRUE, envir=.rktest.tmp.storage)

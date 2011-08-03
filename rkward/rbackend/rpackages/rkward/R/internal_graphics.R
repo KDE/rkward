@@ -79,7 +79,7 @@ if (base::.Platform$OS.type == "windows") {
 	rk.replace.function ("plot.new", as.environment ("package:graphics"),
 		function () {
 			rk.record.plot$.plot.new.hook ()
-			eval (body (.rk.plot.new.default))
+			eval (body (.rk.backups$plot.new))
 		})
 
 	rk.replace.function ("dev.off", as.environment ("package:grDevices"),
@@ -90,7 +90,7 @@ if (base::.Platform$OS.type == "windows") {
 			# see http://thread.gmane.org/gmane.comp.statistics.rkward.devel/802
 			.rk.do.call ("killDevice", as.character (which))
 			
-			ret <- eval (body (.rk.dev.off.default))
+			ret <- eval (body (.rk.backups$dev.off))
 
 			printfile <- .rk.printer.devices[[as.character (which)]]
 			if (!is.null (printfile)) {
@@ -103,7 +103,7 @@ if (base::.Platform$OS.type == "windows") {
 
 	rk.replace.function ("dev.set", as.environment ("package:grDevices"),
 		function () {
-			ret <- eval (body (.rk.dev.set.default))
+			ret <- eval (body (.rk.backups$dev.set))
 			
 			if (getOption ("rk.enable.graphics.history") && rk.record.plot$.is.device.managed (which))
 				rk.record.plot$.set.trellis.last.object (which)
@@ -135,7 +135,7 @@ if (base::.Platform$OS.type == "windows") {
 				function () {
 					## TODO: add specific support for ggplots?
 					rk.record.plot$.plot.new.hook ()
-					ret <- eval (body (.rk.grid.newpage.default))
+					ret <- eval (body (.rk.backups$grid.newpage))
 				})
 	)
 

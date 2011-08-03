@@ -63,13 +63,12 @@
 	}
 }
 
-".rk.rkreply" <- NULL
-".rk.set.reply" <- function (x) .rk.rkreply <<- x
+".rk.set.reply" <- function (x) .rk.variables$.rk.rkreply <- x
 
 ".rk.do.call" <- function (x, args=NULL) {
 	.rk.set.reply (NULL)
 	.Call ("rk.do.command", c (x, args));
-	return (.rk.rkreply)
+	return (.rk.variables$.rk.rkreply)
 }
 
 ".rk.do.plain.call" <- function (x, args=NULL, synchronous=TRUE) {
@@ -290,8 +289,6 @@
 	ret
 }
 
-".rk.output.html.file" <- NULL
-
 "Sys.setlocale" <- function (category = "LC_ALL", locale = "", ...) {
 	if (category == "LC_ALL" || category == "LC_CTYPE" || category == "LANG") {
 		allow <- .rk.do.plain.call ("preLocaleChange", NULL)
@@ -344,19 +341,24 @@ formals (setwd) <- formals (base::setwd)
 	}
 }
 
+# General purpose storage environment (which will hopefully never get locked by R)
+".rk.variables" <- new.env ()
+.rk.variables$.rk.active.device <- 1
+.rk.variables$.rk.output.html.file <- NULL
+.rk.variables$.rk.rkreply <- NULL
+
+".rk.backups" <- new.env ()
 # Tries to replace a function inside its environemnt/namespace.
 # Function formals are copied from the original.
-# A backup of the original is stored as rkward::.rk.FUNCTIONNAME.default
+# A backup of the original is stored as rkward::.rk.backups$FUNCTIONNAME
 "rk.replace.function" <- function (functionname, environment, replacement, copy.formals=TRUE) {
 	original <- get (functionname, envir=environment, inherits=FALSE)
 
 	# create a backup
-	backupname <- paste (".rk.", functionname, ".default", sep="")
-	assign (backupname, original, envir=as.environment ("package:rkward"))
+	assign (functionname, original, envir=.rk.backups)
 
 	if (copy.formals) formals (replacement) <- formals (original)
 	environment (replacement) <- environment (original)
-	assign (functionname, replacement, envir=as.environment ("package:rkward"))
 	try (
 		if (bindingIsLocked (functionname, environment)) {
 			unlockBinding (functionname, environment)
@@ -411,7 +413,7 @@ formals (setwd) <- formals (base::setwd)
 			}
 
 			# for text list, use the default implementation
-			eval (body (rkward::.rk.select.list.default))
+			eval (body (.rk.backups$select.list))
 		})
 
 	rk.replace.function ("menu", as.environment ("package:utils"),
@@ -422,11 +424,10 @@ formals (setwd) <- formals (base::setwd)
 			}
 
 			# for text menus, use the default implementation
-			eval (body (.rk.menu.default))
+			eval (body (.rk.backups$menu))
 		})
 
 	# call separate assignments functions:
 	if (exists (".rk.fix.assignments.graphics")) eval (body (.rk.fix.assignments.graphics)) # internal_graphics.R
 }
 
-.rk.active.device <- 1

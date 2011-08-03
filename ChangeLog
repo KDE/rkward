@@ -1,3 +1,4 @@
+- Add support R 2.14.x
 - Removed option to set options("printcmd")
 - New option to run arbitrary (setup) commands in each session
 - Added new pseudo graphics device "rk.printer.device" to provide printing via the KDE printer dialog

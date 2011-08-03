@@ -8,7 +8,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	if (!is.numeric (height)) height <- 480
 	if (is.null (device.type)) device.type <- "PNG"	# default behavior is PNG for now
 
-	assign (".rk.active.device", dev.cur (), pos = "package:rkward")
+	assign (".rk.active.device", dev.cur (), .rk.variables)
 
 	ret <- NULL
 	if (device.type == "PNG") {
@@ -50,7 +50,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	
 	# dev.off () sets dev.next () as active, which may not have been active before rk.graph.on was called;
 	# so reset the correct device as active:
-	i <- get (".rk.active.device", pos = "package:rkward")
+	i <- get (".rk.active.device", .rk.variables)
 	if ((!is.null (i)) && (i %in% dev.list ())) ret <- dev.set (i)
 	ret
 }
@@ -180,14 +180,14 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		d.cur <- dev.cur ()
 		histPositions <<- list ("1" = .hP.template)
 		for (d in as.character (.osd)) {
-			.rk.dev.set.default (as.numeric (d))
+			.rk.backups$dev.set (as.numeric (d))
 			if (is.null (recordPlot ()[[1]])) # empty device
 				histPositions [[d]] <<- .hP.template
 			else
 				histPositions [[d]] <<- modifyList(.hP.template, 
 					list (is.this.plot.new = TRUE, is.this.dev.new = FALSE, pkg = "unknown"))
 		}
-		.rk.dev.set.default (d.cur)
+		.rk.backups$dev.set (d.cur)
 		.set.hP.names ()
 	}
 	onDelDevice <- function (devId = dev.cur())
@@ -324,9 +324,9 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		unsplot <- NULL
 		unsplot.ls <- NULL
 		if (pkg %in% c("graphics", "unknown")) {
-			.rk.dev.set.default (as.numeric (devId))
+			.rk.backups$dev.set (as.numeric (devId))
 			try (unsplot <- recordPlot(), silent=TRUE)
-			.rk.dev.set.default (devId.cur)
+			.rk.backups$dev.set (devId.cur)
 		} else if  (pkg == "lattice") {
 			unsplot <- histPositions [[devId]]$plot
 			unsplot.ls <- histPositions [[devId]]$tlo.ls
@@ -511,7 +511,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		
 		devId <- as.character (devId)
 		cur.devId <- dev.cur ()
-		.rk.dev.set.default (as.numeric(devId))
+		.rk.backups$dev.set (as.numeric(devId))
 		
 		st <- .sP.index [[n]]
 		pkg <- savedPlots [[st]]$pkg
@@ -532,7 +532,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		histPositions [[devId]] <<- modifyList (.hP.template, 
 			list (is.this.plot.new = FALSE, is.this.dev.new = FALSE, pos.prev = n, pos.cur = n, pkg = pkg, 
 				call = savedPlots [[st]]$call, plot = savedPlots [[st]]$plot, tlo.ls = savedPlots [[st]]$tlo.ls))
-		.rk.dev.set.default (cur.devId)
+		.rk.backups$dev.set (cur.devId)
 		invisible()
 	}
 	
