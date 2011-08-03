@@ -48,10 +48,11 @@
 #define GET_INSTALLED_PACKAGES 3
 
 // result columns
-#define COL_TOPIC 0
-#define COL_TITLE 1
-#define COL_PACKAGE 2
-#define COL_COUNT 3
+#define COL_TYPE 0
+#define COL_TOPIC 1
+#define COL_TITLE 2
+#define COL_PACKAGE 3
+#define COL_COUNT 4
 
 RKHelpSearchWindow* RKHelpSearchWindow::main_help_search = 0;
 
@@ -165,11 +166,12 @@ void RKHelpSearchWindow::getFunctionHelp (const QString &function_name, const QS
 	// we use .rk.getHelp() instead of plain help() to receive an error, if no help could be found
 	QString command = ".rk.getHelp(";
 	if (type == "demo") command = "rk.demo(";
-	else if (type == "vignette") command = "vignette(";
+	else if (type == "vignette") command = "print (vignette(";
 
 	command.append (RObject::rQuote (function_name));
 	if (!package.isEmpty ()) command.append (", package=" + RObject::rQuote (package));
 	command.append (")");
+	if (type == "vignette") command.append (")");
 
 	RKGlobals::rInterface ()->issueCommand (command, RCommand::App | RCommand::GetStringVector, i18n ("Find HTML help for %1").arg (function_name), this, GET_HELP);
 }
@@ -310,6 +312,7 @@ QVariant RKHelpSearchResultsModel::data (const QModelIndex& index, int role) con
 			if (col == COL_TOPIC) return topics[row];
 			if (col == COL_TITLE) return titles[row];
 			if (col == COL_PACKAGE) return packages[row];
+			if (col == COL_TYPE) return types[row];
 		} else if ((col == 0) && (role == Qt::DecorationRole)) {
 			if (types[row] == "help") return RKStandardIcons::getIcon (RKStandardIcons::WindowHelp);
 			if (types[row] == "demo") return RKStandardIcons::getIcon (RKStandardIcons::WindowCommandEditor);
@@ -330,6 +333,7 @@ QVariant RKHelpSearchResultsModel::headerData (int section, Qt::Orientation orie
 			if (section == COL_TOPIC) return (i18n ("Topic"));
 			if (section == COL_TITLE) return (i18n ("Title"));
 			if (section == COL_PACKAGE) return (i18n ("Package"));
+			if (section == COL_TYPE) return (i18n ("Type"));
 		}
 	}
 
