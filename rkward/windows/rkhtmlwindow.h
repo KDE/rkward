@@ -21,6 +21,7 @@
 #include <kurl.h>
 #include <kparts/browserextension.h>
 #include <kxmlguiclient.h>
+#include <kio/jobclasses.h>
 
 #include "../windows/rkmdiwindow.h"
 
@@ -87,6 +88,7 @@ private slots:
 /** This slot is called when the new page has finished loading. Sets scroll position to scroll_position */
 	void loadDone ();
 	void doGotoAnchorNow ();
+	void mimeTypeDetermined (KIO::Job*, const QString& type);
 protected:
 /** Here we store the position of the scroll bar before refresh. Used to scroll to the same position after a reload */
 	int scroll_position;

@@ -206,11 +206,16 @@ void RKWorkplace::placeInToolWindowBar (RKMDIWindow *window, int position) {
 	}
 }
 
-bool RKWorkplace::openAnyUrl (const KUrl &url) {
+bool RKWorkplace::openAnyUrl (const KUrl &url, const QString &known_mimetype) {
 	RK_TRACE (APP);
 
 #warning TODO support rkward:\/\/-protocol, here, too
-	KMimeType::Ptr mimetype = KMimeType::findByUrl (url);
+	KMimeType::Ptr mimetype;
+	if (!known_mimetype.isEmpty ()) mimetype = KMimeType::mimeType (known_mimetype);
+	else mimetype = KMimeType::findByUrl (url);
+
+// NOTE: Currently a known mimetype implies that the URL is local or served from the local machine.
+// Thus, external web pages are *not* opened, here. Which is the behavior we want, although the implementation is ugly
 	if (mimetype->is ("text/html")) {
 		openHelpWindow (url, true);
 		return true;	// TODO

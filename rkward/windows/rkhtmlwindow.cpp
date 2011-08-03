@@ -26,6 +26,7 @@
 #include <kactioncollection.h>
 #include <kdirwatch.h>
 #include <kmimetype.h>
+#include <kio/job.h>
 
 #include <qfileinfo.h>
 #include <qwidget.h>
@@ -265,6 +266,7 @@ bool RKHTMLWindow::openURL (const KUrl &url) {
 	RK_TRACE (APP);
 
 	if (handleRKWardURL (url)) return true;
+
 	if (window_mode == HTMLOutputWindow) {
 		if (url != current_url) {
 			// output window should not change url after initialization
@@ -276,39 +278,50 @@ bool RKHTMLWindow::openURL (const KUrl &url) {
 			current_url = url;	// needs to be set before registering
 			RKOutputWindowManager::self ()->registerWindow (this);
 		}
-	} else {
-		if (!(url.isLocalFile ())) {
-			if (window_mode == HTMLHelpWindow) {
-				// since R 2.10.0, help urls may be on local ports
-				if (url.protocol ().toLower ().startsWith ("http")) {
-					QString host = url.host ();
-					if ((host == "127.0.0.1") || (host == "localhost") || host == QHostInfo::localHostName ()) {
-						khtmlpart->openUrl (url);
-						changeURL (url);
-						return true;
-					}
-				}
-			}
+	}
+
+	if (url.isLocalFile () && (KMimeType::findByUrl (url)->is ("text/html") || window_mode == HTMLOutputWindow)) {
+		QFileInfo out_file (url.toLocalFile ());
+		bool ok = out_file.exists();
+		if (ok)  {
+			khtmlpart->openUrl (url);
+		} else {
+			fileDoesNotExistMessage ();
 		}
-		if (!(url.isLocalFile () && KMimeType::findByUrl (url)->is ("text/html"))) {
-			RKWorkplace::mainWorkplace ()->openAnyUrl (url);
+		changeURL (url);
+		return ok;
+	}
+
+	// special casing for R's dynamic help pages. These should be considered local, even though they are served through http
+	if (url.protocol ().toLower ().startsWith ("http")) {
+		QString host = url.host ();
+		if ((host == "127.0.0.1") || (host == "localhost") || host == QHostInfo::localHostName ()) {
+			KIO::TransferJob *job = KIO::get (url, KIO::Reload);
+			connect (job, SIGNAL (mimetype(KIO::Job*, const QString&)), this, SLOT (mimeTypeDetermined(KIO::Job*, const QString&)));
 			return true;
 		}
 	}
 
-	QFileInfo out_file (url.toLocalFile ());
-	bool ok = out_file.exists();
-	if (ok)  {
-		khtmlpart->openUrl (url);
-	} else {
-		fileDoesNotExistMessage ();
-	}
-	changeURL (url);
-	return ok;
+	RKWorkplace::mainWorkplace ()->openAnyUrl (url);
+	return true;
 }
 
 KUrl RKHTMLWindow::url () {
 	return current_url;
+}
+
+void RKHTMLWindow::mimeTypeDetermined (KIO::Job* job, const QString& type) {
+	RK_TRACE (APP);
+
+	KIO::TransferJob* tj = static_cast<KIO::TransferJob*> (job);
+	KUrl url = tj->url ();
+	tj->putOnHold ();
+	if (type == "text/html") {
+		khtmlpart->openUrl (url);
+		changeURL (url);
+	} else {
+		RKWorkplace::mainWorkplace ()->openAnyUrl (url, type);
+	}
 }
 
 void RKHTMLWindow::changeURL (const KUrl &url) {

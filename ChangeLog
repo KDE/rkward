@@ -1,3 +1,4 @@
+- Fixed: PDFs and many other types of documents linked from help pages would not be opened, correctly
 - Add support R 2.14.x
 - Removed option to set options("printcmd")
 - New option to run arbitrary (setup) commands in each session
