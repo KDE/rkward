@@ -168,7 +168,7 @@ void RKHelpSearchWindow::getFunctionHelp (const QString &function_name, const QS
 	else if (type == "vignette") command = "vignette(";
 
 	command.append (RObject::rQuote (function_name));
-	if (!package.isEmpty ()) command.append (", package=" + package);
+	if (!package.isEmpty ()) command.append (", package=" + RObject::rQuote (package));
 	command.append (")");
 
 	RKGlobals::rInterface ()->issueCommand (command, RCommand::App | RCommand::GetStringVector, i18n ("Find HTML help for %1").arg (function_name), this, GET_HELP);
@@ -305,19 +305,15 @@ QVariant RKHelpSearchResultsModel::data (const QModelIndex& index, int role) con
 	// easier typing
 	int row = index.row ();
 	int col = index.column ();
-	if (result_count) {
+	if (result_count && (row < result_count)) {
 		if (role == Qt::DisplayRole || role == Qt::ToolTipRole) {
-			if (row < result_count) {
-				if (col == COL_TOPIC) return topics[row];
-				if (col == COL_TITLE) return titles[row];
-				if (col == COL_PACKAGE) return packages[row];
-			} else {
-				RK_ASSERT (false);
-			}
+			if (col == COL_TOPIC) return topics[row];
+			if (col == COL_TITLE) return titles[row];
+			if (col == COL_PACKAGE) return packages[row];
 		} else if ((col == 0) && (role == Qt::DecorationRole)) {
-			if (types[col] == "help") return RKStandardIcons::getIcon (RKStandardIcons::WindowHelp);
-			if (types[col] == "demo") return RKStandardIcons::getIcon (RKStandardIcons::WindowCommandEditor);
-			if (types[col] == "vignette") return RKStandardIcons::getIcon (RKStandardIcons::DocumentPDF);
+			if (types[row] == "help") return RKStandardIcons::getIcon (RKStandardIcons::WindowHelp);
+			if (types[row] == "demo") return RKStandardIcons::getIcon (RKStandardIcons::WindowCommandEditor);
+			if (types[row] == "vignette") return RKStandardIcons::getIcon (RKStandardIcons::DocumentPDF);
 		}
 	} else {
 		RK_ASSERT (false);
