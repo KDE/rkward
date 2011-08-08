@@ -71,7 +71,7 @@ if (base::.Platform$OS.type == "windows") {
 	}
 }
 
-".rk.printer.devices" <- list ()
+.rk.variables$.rk.printer.devices <- list ()
 
 # see .rk.fix.assignmetns () in internal.R
 ".rk.fix.assignments.graphics" <- function ()
@@ -92,10 +92,10 @@ if (base::.Platform$OS.type == "windows") {
 			
 			ret <- eval (body (.rk.backups$dev.off))
 
-			printfile <- .rk.printer.devices[[as.character (which)]]
+			printfile <- .rk.variables$.rk.printer.devices[[as.character (which)]]
 			if (!is.null (printfile)) {
 				.rk.do.plain.call ("printPreview", printfile, FALSE)
-				.rk.printer.devices[[as.character (which)]] <<- NULL
+				.rk.variables$.rk.printer.devices[[as.character (which)]] <- NULL
 			}
 
 			return (ret)

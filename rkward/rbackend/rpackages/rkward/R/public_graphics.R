@@ -61,7 +61,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 "rk.printer.device" <- function(...) {
 	tf <- tempfile (fileext=".ps")
 	postscript (file = tf, ...)
-	.rk.printer.devices[[as.character (dev.cur ())]] <<- tf
+	.rk.variables$.rk.printer.devices[[as.character (dev.cur ())]] <- tf
 }
 
 "rk.duplicate.device" <- function (devId = dev.cur ())
