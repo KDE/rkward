@@ -46,15 +46,15 @@ if (base::.Platform$OS.type == "windows") {
 # set from rkward the application:
 # options(device="rk.screen.device")
 
-".rk.preview.devices" <- list ()
+.rk.variables$.rk.preview.devices <- list ()
 
 ".rk.startPreviewDevice" <- function (x) {
-	a <- .rk.preview.devices[[x]]
+	a <- .rk.variables$.rk.preview.devices[[x]]
 	if (is.null (a)) {
 		a <- dev.cur ()
 		x11 (is.preview.device = TRUE)
 		if (a != dev.cur ()) {
-			.rk.preview.devices[[x]] <<- dev.cur ()
+			.rk.variables$.rk.preview.devices[[x]] <- dev.cur ()
 		}
 	} else {
 		dev.set (a)
@@ -62,12 +62,12 @@ if (base::.Platform$OS.type == "windows") {
 }
 
 ".rk.killPreviewDevice" <- function (x) {
-	a <- .rk.preview.devices[[x]]
+	a <- .rk.variables$.rk.preview.devices[[x]]
 	if (!is.null (a)) {
 		if (a %in% dev.list ()) {
 			dev.off (a)
 		}
-		.rk.preview.devices[[x]] <<- NULL
+		.rk.variables$.rk.preview.devices[[x]] <- NULL
 	}
 }
 
