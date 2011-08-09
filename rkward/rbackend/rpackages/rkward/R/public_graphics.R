@@ -59,7 +59,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 # Parameters are passed to postscript(), but typically this is simply used as
 #   dev.print(rk.print.preview)
 "rk.printer.device" <- function(...) {
-	tf <- tempfile (fileext=".ps")
+	tf <- paste (tempfile (), "ps", sep=".")	# NOTE: Up to R 2.12.x, tempfile() did not have "fileext" parameter
 	postscript (file = tf, ...)
 	.rk.variables$.rk.printer.devices[[as.character (dev.cur ())]] <- tf
 }
