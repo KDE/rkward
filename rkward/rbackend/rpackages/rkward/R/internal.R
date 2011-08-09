@@ -78,10 +78,15 @@
 # package information formats may - according to the help - be subject to change. Hence this function to cope with "missing" values
 # also it concatenates everything to a single vector, so we can easily get the whole structure with a single call
 ".rk.get.installed.packages" <- function () {
-	x <- as.data.frame (installed.packages ())
-	try (titles <- as.data.frame (library ()$results)$Title)
-	if (length (titles) != dim (x)[1]) titles <- rep ("", dim (x)[1])
-	return (list (as.character (x$Package), as.character (titles), as.character (x$Version), as.character (x$LibPath)))
+	x <- as.data.frame(installed.packages(fields="Title"))
+	# does a package enhance RKWard, i.e. provide plugins?
+	enhance.rk <- grepl("rkward", x$Enhances)
+	# enhance.rk is just a logical vector. indenpendent of that, check if a main .pluginmap file is provided
+	checkForPluginmaps <- file.path(x$LibPath, x$Package, "rkward", paste(x$Package, ".pluginmap", sep=""))
+	pluginmaps <- ifelse(file_test("-f", checkForPluginmaps), checkForPluginmaps, "")
+	return(list(Package=as.character(x$Package), Title=as.character(x$Title), 
+		Version=as.character(x$Version), LibPath=as.character(x$LibPath),
+		EnhanceRK=as.logical(enhance.rk), Plugins=as.character(pluginmaps)))
 }
 
 ".rk.available.packages.cache" <- NULL
