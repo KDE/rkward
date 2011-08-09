@@ -75,15 +75,25 @@
 	.Call ("rk.do.generic.request", c (x, args), isTRUE (synchronous))
 }
 
+".rk.find.package.pluginmaps" <- function (lib.path, package, all.maps=FALSE) {
+	if(isTRUE(all.maps)){
+		# look for all pluginmaps in the rkward folder
+		pluginmaps <- dir(file.path(lib.path, package, "rkward"), pattern="*.pluginmap", include.dirs=TRUE)
+	} else {
+		# check if a main .pluginmap file is provided
+		checkForPluginmaps <- file.path(lib.path, package, "rkward", paste(package, ".pluginmap", sep=""))
+		pluginmaps <- ifelse(file_test("-f", checkForPluginmaps), checkForPluginmaps, "")
+	}
+	return(pluginmaps)
+}
+
 # package information formats may - according to the help - be subject to change. Hence this function to cope with "missing" values
 # also it concatenates everything to a single vector, so we can easily get the whole structure with a single call
 ".rk.get.installed.packages" <- function () {
 	x <- as.data.frame(installed.packages(fields="Title"))
 	# does a package enhance RKWard, i.e. provide plugins?
-	enhance.rk <- grepl("rkward", x$Enhances)
-	# enhance.rk is just a logical vector. indenpendent of that, check if a main .pluginmap file is provided
-	checkForPluginmaps <- file.path(x$LibPath, x$Package, "rkward", paste(x$Package, ".pluginmap", sep=""))
-	pluginmaps <- ifelse(file_test("-f", checkForPluginmaps), checkForPluginmaps, "")
+	enhance.rk <- ifelse(is.na(x$Enhances), FALSE, grepl("rkward", x$Enhances))
+	pluginmaps <- ifelse(enhance.rk, .rk.find.package.pluginmaps(x$LibPath, x$Package), "")
 	return(list(Package=as.character(x$Package), Title=as.character(x$Title), 
 		Version=as.character(x$Version), LibPath=as.character(x$LibPath),
 		EnhanceRK=as.logical(enhance.rk), Plugins=as.character(pluginmaps)))
