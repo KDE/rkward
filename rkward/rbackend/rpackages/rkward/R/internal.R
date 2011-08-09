@@ -78,7 +78,7 @@
 ".rk.find.package.pluginmaps" <- function (lib.path, package, all.maps=FALSE) {
 	if(isTRUE(all.maps)){
 		# look for all pluginmaps in the rkward folder
-		pluginmaps <- dir(file.path(lib.path, package, "rkward"), pattern="*.pluginmap", include.dirs=TRUE)
+		pluginmaps <- dir(file.path(lib.path, package, "rkward"), pattern="*.pluginmap", full.names=TRUE)
 	} else {
 		# check if a main .pluginmap file is provided
 		checkForPluginmaps <- file.path(lib.path, package, "rkward", paste(package, ".pluginmap", sep=""))
