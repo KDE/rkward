@@ -78,10 +78,14 @@
 ".rk.find.package.pluginmaps" <- function (package, all.maps=FALSE) {
 	if(isTRUE(all.maps)){
 		# look for all pluginmaps in the rkward folder
-		pluginmaps <- dir(system.file("rkward", package=package), pattern="*.pluginmap", full.names=TRUE)
+		pluginmaps <- sapply(package, function(this.package){
+				dir(system.file("rkward", package=this.package), pattern="*.pluginmap", full.names=TRUE)
+			})
 	} else {
 		# check if a main .pluginmap file is provided
-		pluginmaps <- system.file(file.path("rkward", paste(package, ".pluginmap", sep="")), package=package)
+		pluginmaps <-  sapply(package, function(this.package){
+				system.file(file.path("rkward", paste(this.package, ".pluginmap", sep="")), package=this.package)
+			})
 	}
 	return(pluginmaps)
 }
