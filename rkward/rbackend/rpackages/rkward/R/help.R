@@ -1,4 +1,25 @@
 ## Public functions related to help search / display
+#' Opens an R demo script for editing
+#' 
+#' \code{rk.demo} behaves similar to \code{\link{demo}}, but opens the demo
+#' script for editing, instead of sourcing it. Contrary to \code{\link{demo}},
+#' the specification of a topic is mandatory.
+#' 
+#' @param topic topic of the example
+#' @param package package(s) to search for the demo. If NULL (the default), all
+#'   currently loaded packages are searched.
+#' @param lib.loc Library locations.
+#' @return Return \code{NULL}, unconditionally.
+#' @author Thomas Friedrichsmeier \email{rkward-devel@@lists.sourceforge.net}
+#' @seealso \code{\link{rk.edit.files}}, \code{\link{rk.show.files}},
+#'   \code{\link{demo}}
+#' @keywords utilities IO
+#' @rdname rk.demo
+#' @examples
+#' 
+#' ## Not run
+#' rk.demo("graphics")
+#' 
 # Like demo(), but opens the demo in a script editor window
 "rk.demo" <- function (topic, package=NULL, lib.loc=NULL) {
 	if (is.null (package)) {
