@@ -96,7 +96,9 @@
 	x <- as.data.frame(installed.packages(fields="Title"))
 	# does a package enhance RKWard, i.e. provide plugins?
 	enhance.rk <- ifelse(is.na(x$Enhances), FALSE, grepl("rkward", x$Enhances))
-	pluginmaps <- ifelse(enhance.rk, .rk.find.package.pluginmaps(x$Package), "")
+	# check for pluginmaps only in packages which enhance RKWard
+	pluginmaps <- rep("", length(enhance.rk))
+	pluginmaps[enhance.rk] <- .rk.find.package.pluginmaps(x$Package[enhance.rk])
 	return(list(Package=as.character(x$Package), Title=as.character(x$Title), 
 		Version=as.character(x$Version), LibPath=as.character(x$LibPath),
 		EnhanceRK=as.logical(enhance.rk), Plugins=as.character(pluginmaps)))
