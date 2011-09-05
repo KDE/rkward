@@ -1,0 +1,32 @@
+\name{rk.XML.pluginmap}
+\alias{rk.XML.pluginmap}
+\title{Write a pluginmap file for RKWard}
+\usage{
+  rk.XML.pluginmap(name, about, components, plugin.dir =
+  "plugins", hierarchy = "analysis")
+}
+\arguments{
+  \item{name}{Character string, name of the plugin.}
+
+  \item{about}{A list with descriptive information on the
+  plugin,its authors and dependencies. See
+  \code{link[XiMpLe:rk.XML.about]{rk.XML.about}} for
+  details!}
+
+  \item{components}{A character vector with at least one
+  plugin component file name, ending with ".xml".}
+
+  \item{plugin.dir}{Character string, relative path to the
+  component XML and JS files.}
+
+  \item{hierarchy}{A character vector with instructions
+  where to place the plugin in the menu hierarchy, one
+  string for each included component. Valid values are
+  \code{"analysis"}, \code{"plots"} and \code{"data"}. To
+  place your dialogs somewhere else, edit the pluginmap
+  manually.}
+}
+\description{
+  Write a pluginmap file for RKWard
+}
+

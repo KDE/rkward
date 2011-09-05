@@ -1,0 +1,14 @@
+ChangeLog for package rkwardplugdev
+
+## 0.01-1 (2011-09-05)
+  - added rk.JS.scan(), rk.JS.doc(), rk.rkh.scan() and rk.rkh.doc()
+  - shortened package name from "rkwardplugdev" to "rkwarddev"
+  - merged code into RKWard's svn tree
+
+## 0.01-0 (2011-08-30)
+  - forked rk.* functions from XiMpLe package into this one
+  - added functions rk.XML.cbox(), rk.XML.row(), rk.XML.col(), rk.XML.frame(),
+    rk.XML.radio() and rk.XML.vars()
+  - rewrote the ID handling
+  - added docs
+  - initial release via reaktanz.de
