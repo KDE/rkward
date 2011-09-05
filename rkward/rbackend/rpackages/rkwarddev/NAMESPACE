@@ -1,3 +1,4 @@
+export(rk.JS.array)
 export(rk.JS.doc)
 export(rk.JS.scan)
 export(rk.plugin.skeleton)

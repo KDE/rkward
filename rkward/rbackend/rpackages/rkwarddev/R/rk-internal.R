@@ -88,9 +88,9 @@ get.IDs <- function(single.tags, relevant.tags, add.abbrev){
 # (except for the first one) to upper case
 camelCode <- function(words){
 
-	words <- as.vector(sapply(words, function(cur.word){
+	words <- as.vector(unlist(sapply(words, function(cur.word){
 			unlist(strsplit(cur.word, split="\\."))
-		}))
+		})))
 
 	new.words <- sapply(words[-1], function(cur.word){
 		word.vector <- unlist(strsplit(cur.word, split=""))
@@ -103,3 +103,16 @@ camelCode <- function(words){
 
 	return(results)
 } ## end function camelCode()
+
+## function get.JS.vars()
+#   <tag id="my.id" ...>
+# in XML will become
+#   var my.id = getValue("my.id");
+get.JS.vars <- function(JS.var, XML.var=NULL, JS.prefix="", indent.by="", names.only=FALSE){
+	if(isTRUE(names.only)){
+		results <- camelCode(c(JS.prefix, JS.var))
+	} else {
+		results <- paste(indent.by, "var ", camelCode(c(JS.prefix, JS.var)), " = getValue(\"", XML.var, "\");\n", sep="")
+	}
+	return(results)
+} ## function get.JS.vars()

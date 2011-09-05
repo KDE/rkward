@@ -19,6 +19,7 @@ Version: 0.01-1
 Date: 2011-09-05
 Collate:
     'rk-internal.R'
+    'rk.JS.array.R'
     'rk.JS.doc.R'
     'rk.JS.scan.R'
     'rk.plugin.skeleton.R'
