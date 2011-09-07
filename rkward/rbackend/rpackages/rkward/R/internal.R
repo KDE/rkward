@@ -104,21 +104,20 @@
 		EnhanceRK=as.logical(enhance.rk), Plugins=as.character(pluginmaps)))
 }
 
-".rk.available.packages.cache" <- NULL
 # This function works like available.packages (with no arguments), but does simple caching of the result, and of course uses a cache if available. Cache is only used, if it is less than 1 hour old, and options("repos") is unchanged.
 ".rk.cached.available.packages" <- function () {
 	x <- NULL
-	if (exists (".rk.available.packages.cache") && (!is.null (.rk.available.packages.cache))) {
-		if (.rk.available.packages.cache$timestamp > (Sys.time () - 3600)) {
-			if (all (.rk.available.packages.cache$repos$repos == options ("repos")$repos)) {
-				x <- .rk.available.packages.cache$cache
+	if (exists ("available.packages.cache", envir=.rk.variables) && (!is.null (.rk.variables$available.packages.cache))) {
+		if (.rk.variables$available.packages.cache$timestamp > (Sys.time () - 3600)) {
+			if (all (.rk.variables$available.packages.cache$repos$repos == options ("repos")$repos)) {
+				x <- .rk.variables$available.packages.cache$cache
 			}
 		}
 	}
 
 	if (is.null(x)) {
 		x <- available.packages()
-		.rk.available.packages.cache <<- list (cache = x, timestamp = Sys.time (), repos = options ("repos"))
+		.rk.variables$available.packages.cache <- list (cache = x, timestamp = Sys.time (), repos = options ("repos"))
 	}
 
 	return (x)
@@ -214,7 +213,7 @@
 ".rk.unwatch.symbol" <- function (k) {
 	rm (list=k, envir=globalenv ())
 
-	k <<- .rk.watched.symbols$k
+	assign (k, .rk.watched.symbols$k, envir=globalenv ())
 
 	rm (k, envir=.rk.watched.symbols);
 
@@ -366,6 +365,7 @@ formals (setwd) <- formals (base::setwd)
 .rk.variables$.rk.active.device <- 1
 .rk.variables$.rk.output.html.file <- NULL
 .rk.variables$.rk.rkreply <- NULL
+.rk.variables$available.packages.cache <- NULL
 
 ".rk.backups" <- new.env ()
 
