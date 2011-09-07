@@ -26,7 +26,7 @@ rk.XML.dropdown <- function(label, opts=list(label=c(val=NULL, chk=FALSE)), id.n
 		})
 
 	if(identical(id.name, "auto")){
-		id <- auto.ids(label, prefix="drp.")
+		id <- auto.ids(label, prefix=ID.prefix("dropdown"))
 	} else {
 		id <- id.name
 	}

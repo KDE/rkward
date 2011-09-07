@@ -26,7 +26,7 @@ rk.XML.radio <- function(label, opts=list(label=c(val=NULL, chk=FALSE)), id.name
 		})
 
 	if(identical(id.name, "auto")){
-		id <- auto.ids(label, prefix="rad.")
+		id <- auto.ids(label, prefix=ID.prefix("radio"))
 	} else {
 		id <- id.name
 	}

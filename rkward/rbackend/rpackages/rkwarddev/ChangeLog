@@ -2,6 +2,7 @@ ChangeLog for package rkwardplugdev
 
 ## 0.01-1 (2011-09-05)
   - added rk.JS.scan(), rk.JS.doc(), rk.JS.array(), rk.rkh.scan() and rk.rkh.doc()
+  - added rk.XML.browser(),  rk.XML.input(),  rk.XML.saveobj(),  rk.XML.stretch() and  rk.XML.text() 
   - shortened package name from "rkwardplugdev" to "rkwarddev"
   - merged code into RKWard's svn tree
 

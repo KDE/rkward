@@ -15,8 +15,8 @@
 
 rk.XML.vars <- function(label, slot.text=NULL, classes=NULL, horiz=TRUE, id.name="auto"){
 	if(identical(id.name, "auto")){
-		var.sel.attr <- list(id=auto.ids(label, prefix="var."))
-		var.slot.attr <- list(id=auto.ids(label, prefix="vars."))
+		var.sel.attr <- list(id=auto.ids(label, prefix=ID.prefix("varselector", length=3)))
+		var.slot.attr <- list(id=auto.ids(label, prefix=ID.prefix("varslot", length=4)))
 	} else if(!is.null(id.name)){
 		var.sel.attr <- list(id=id.name[[2]])
 		var.slot.attr <- list(id=id.name[[3]])

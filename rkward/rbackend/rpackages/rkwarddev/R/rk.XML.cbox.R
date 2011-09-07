@@ -10,7 +10,7 @@
 
 rk.XML.cbox <- function(label, val, chk=FALSE, id.name="auto"){
 	if(identical(id.name, "auto")){
-		id <- auto.ids(label, prefix="chk.")
+		id <- auto.ids(label, prefix=ID.prefix("checkbox"))
 	} else {
 		id <- id.name
 	}

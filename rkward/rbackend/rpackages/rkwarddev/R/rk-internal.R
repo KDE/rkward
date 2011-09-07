@@ -1,13 +1,13 @@
 # internal functions for the rk.* functions
 
-auto.ids <- function(identifiers, prefix=NULL, chars=8){
+auto.ids <- function(identifiers, prefix=NULL, suffix=NULL, chars=8){
 	identifiers <- gsub("[[:space:]]*[^[:alnum:]]*", "", identifiers)
 	id.names <- ifelse(nchar(identifiers) > 8, abbreviate(identifiers, minlength=chars), identifiers)
 	# check for uniqueness
 	if(any(duplicated(id.names))){
 		warning("IDs are not unique, please check!")
 	} else {}
-	ids <- paste(prefix, id.names, sep="")
+	ids <- paste(prefix, id.names, suffix, sep="")
 	return(ids)
 }
 
@@ -62,8 +62,7 @@ get.IDs <- function(single.tags, relevant.tags, add.abbrev){
 			this.tag.name <- XiMpLe:::XML.tagName(this.tag)
 			this.tag.id <- XiMpLe:::parseXMLAttr(this.tag)[["id"]]
 				if(isTRUE(add.abbrev)){
-					this.tag.abbrev <- abbreviate(this.tag.name, minlength=3, strict=TRUE)
-					this.tag.id.abbrev <- paste(this.tag.abbrev, ".", this.tag.id, sep="")
+					this.tag.id.abbrev <- paste(ID.prefix(this.tag.name), this.tag.id, sep="")
 				} else {
 					this.tag.id.abbrev <- this.tag.id
 				}
@@ -116,3 +115,17 @@ get.JS.vars <- function(JS.var, XML.var=NULL, JS.prefix="", indent.by="", names.
 	}
 	return(results)
 } ## function get.JS.vars()
+
+## function ID.prefix()
+ID.prefix <- function(initial, abbr=TRUE, length=3, dot=TRUE){
+	if(isTRUE(abbr)){
+		prfx <- abbreviate(initial, minlength=length, strict=TRUE)
+	} else {
+		# currently empty, but can later be used to define fixed abbreviations
+		prfx <- NULL
+	}
+	if(isTRUE(dot)){
+		prfx <- paste(prfx, ".", sep="")
+	} else {}
+	return(prfx)
+}

@@ -12,7 +12,7 @@ rk.XML.frame <- function(children=list(), label=NULL, id.name="auto"){
 	if(!is.null(label)){
 		attr.list <- list(label=label)
 		if(identical(id.name, "auto")){
-			attr.list[["id"]] <- list(id=auto.ids(label, prefix="frm."))
+			attr.list[["id"]] <- list(id=auto.ids(label, prefix=ID.prefix("frame")))
 		} else if(!is.null(id.name)){
 			attr.list[["id"]] <- id.name
 		} else {}
