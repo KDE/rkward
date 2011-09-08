@@ -22,11 +22,14 @@
 #include "rcommand.h"
 
 /**
-Use this class as a base for all classes that need to handle RCommands. Most importantly it provides a virtual function (rCommandDone ()) for handling of RCommand-results. Reimplement this to interpret the command-results.
+Use this class as a base for classes that need to handle RCommands. Most importantly it provides a virtual function (rCommandDone ()) for handling of RCommand-results. Reimplement this to interpret the command-results.
 For windows/dialogs which interpret RCommand results, the receiver provides a special mechanism. The problem with those windows/dialogs is, that the user may close them, while there are still RCommands due to come in, i.e. they can't be deleted, but rather need to wait for the remaining results to come in.
 This class will keep track of which RCommands are still out there (and expected to return to this receiver). When deleting the object, it will unregister from all outstanding commands, so there are no invalid pointer operations.
 
 TODO: this mechanism may be slightly costly, if there are *many* commands outstanding. Maybe for special receivers like RKWatch, which are never destroyed at run-time, the mechanism should be disabled.
+
+@Note that the (younger) RCommandNotifier class provides much easier handling based on QObject slots in most situations. Of course, you can also combine both, if you are interested
+in the cancelOutstandingCommands() functionality.
 
 @author Thomas Friedrichsmeier
 */

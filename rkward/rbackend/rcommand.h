@@ -18,9 +18,8 @@
 #ifndef RCOMMAND_H
 #define RCOMMAND_H
 
-#include <qfile.h>
-#include <qstring.h>
-#include <qobject.h>
+#include <QString>
+#include <QObject>
 #include <QList>
 
 #include "rdata.h"
@@ -79,6 +78,23 @@ struct ROutput {
 
 typedef QList<ROutput*> ROutputList;
 
+/** Supplies signals for RCommands.
+ * Obtain an instance of this using RCommand::notifier ();
+ * Currently, only a single signal is available: When the command has finished. Further signals may be added, in the future.
+ *
+ * @Note You can also use this in connection with RCommandReceiver-based classes, if interested in RCommandReceiver::cancelOutstandingCommands().
+ */
+class RCommandNotifier : public QObject {
+	Q_OBJECT
+signals:
+	void commandFinished (RCommand *command);
+private:
+friend class RCommand;
+	RCommandNotifier ();
+	~RCommandNotifier ();
+	void emitFinished (RCommand *command) { emit commandFinished (command); };
+};
+
 /** For introductory information on using RCommand, see \ref UsingTheInterfaceToR 
 
 	This class is used to encapsulate an R-command, so it can be easily identified
@@ -104,7 +120,7 @@ public:
 @param command The command (string) to be run in the backend. This may include newlines and ";". The command should be a complete statement. If it is an incomplete statement, the backend will not wait for the rest of the command to come in, but rather the command will fail with RCommand::errorIncomplete.
 @param type An integer being the result of a bit-wise OR combination of the values in RCommand::CommandTypes. The type-parameter is used to indicate the type of command, and also how the command should retrieve information (as a usual string, or as a data vector). See \ref RCommand::CommandTypes
 @param rk_equiv Not yet used: a short descriptive string attached to the RCommand, that allows the user to make some sense of what this command is all about.
-@param receiver The RCommandReceiver this command should be passed on to, when finished.
+@param receiver The RCommandReceiver this command should be passed on to, when finished. @Note: consider connecting to the notifier(), instead!
 @param flags A freely assignable integer, that you can use to identify what the command was all about. Only the RCommandReceiver handling the results will have to know what exactly the flags mean.
 */
 	explicit RCommand (const QString &command, int type, const QString &rk_equiv = QString::null, RCommandReceiver *receiver=0, int flags=0);
@@ -196,6 +212,9 @@ public:
 /** creates a proxy for this RCommand */
 	RCommandProxy* makeProxy () const;
 	void mergeAndDeleteProxy (RCommandProxy *proxy);
+
+/** returns a notifier for this command (creating it, if needed). You can connect to the notifiers signals. */
+	RCommandNotifier* notifier ();
 private:
 friend class RInterface;
 friend class RCommandStack;
@@ -216,6 +235,8 @@ friend class RCommandStackModel;
 	int _id;
 	static int next_id;
 	RCommandReceiver *receivers[MAX_RECEIVERS_PER_RCOMMAND];
+
+	RCommandNotifier *_notifier;
 };
 
 #endif

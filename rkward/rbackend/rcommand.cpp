@@ -40,6 +40,14 @@ RCommandChain* RCommandBase::chainPointer () {
 }
 
 
+RCommandNotifier::RCommandNotifier () : QObject () {
+	RK_TRACE (RBACKEND);
+}
+
+RCommandNotifier::~RCommandNotifier () {
+	RK_TRACE (RBACKEND);
+}
+
 int RCommand::next_id = 0;
 
 RCommand::RCommand(const QString &command, int type, const QString &rk_equiv, RCommandReceiver *receiver, int flags) : RData (), RCommandBase (false) {
@@ -57,6 +65,7 @@ RCommand::RCommand(const QString &command, int type, const QString &rk_equiv, RC
 	status = 0;
 	has_been_run_up_to = 0;
 	_rk_equiv = rk_equiv;
+	_notifier = 0;
 	for (int i = 0; i < MAX_RECEIVERS_PER_RCOMMAND; ++i) receivers[i] = 0;
 	if (!(type & Internal)) {
 		addReceiver (receiver);
@@ -71,6 +80,17 @@ RCommand::~RCommand(){
 		delete (*it);
 	}
 	// The output_list itself is cleared automatically
+
+	if (_notifier) delete _notifier;
+}
+
+RCommandNotifier* RCommand::notifier () {
+	if (!_notifier) {
+		RK_TRACE (RBACKEND);
+		_notifier = new RCommandNotifier ();
+		RK_ASSERT (_notifier);
+	}
+	return _notifier;
 }
 
 void RCommand::addReceiver (RCommandReceiver *receiver) {
@@ -112,6 +132,7 @@ void RCommand::finished () {
 		receivers[i]->delCommand (this);
 		receivers[i]->rCommandDone (this);
 	}
+	if (_notifier) _notifier->emitFinished (this);
 }
 
 void RCommand::newOutput (ROutput *output) {
@@ -211,3 +232,5 @@ RCommandProxy* RCommand::makeProxy () const {
 	ret->has_been_run_up_to = has_been_run_up_to;
 	return ret;
 }
+
+#include "rcommand.moc"

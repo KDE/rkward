@@ -35,6 +35,7 @@
 
 #include "../rbackend/rinterface.h"
 #include "../rbackend/rcommandreceiver.h"
+#include "../rbackend/rksessionvars.h"
 #include "../debug.h"
 #include "../rkglobals.h"
 #include "../rkward.h"
@@ -45,7 +46,6 @@
 
 #define GET_HELP 1
 #define HELP_SEARCH 2
-#define GET_INSTALLED_PACKAGES 3
 
 // result columns
 #define COL_TYPE 0
@@ -103,12 +103,9 @@ RKHelpSearchWindow::RKHelpSearchWindow (QWidget *parent, bool tool_window, const
 
 	packagesList = new QComboBox (this);
 	packagesList->setEditable (false);
-	packagesList->addItem (i18n("All installed packages"));
-	packagesList->addItem (i18n("All loaded packages"));
-#if QT_VERSION >= 0x040400
-	packagesList->insertSeparator (2);
-#endif
 	fields_packages_layout->addWidget (packagesList);
+	connect (RKSessionVars::instance (), SIGNAL (installedPackagesChanged()), this, SLOT (updateInstalledPackages()));
+	updateInstalledPackages ();
 
 	QVBoxLayout* checkboxes_layout = new QVBoxLayout ();
 	selection_layout->addLayout (checkboxes_layout);
@@ -133,8 +130,6 @@ RKHelpSearchWindow::RKHelpSearchWindow (QWidget *parent, bool tool_window, const
 	results_view->setSortingEnabled (true);
 	connect (results_view, SIGNAL (doubleClicked(const QModelIndex&)), this, SLOT (resultDoubleClicked(const QModelIndex&)));
 	main_layout->addWidget (results_view);
-
-	RKGlobals::rInterface ()->issueCommand (".rk.get.installed.packages ()[[1]]", RCommand::App | RCommand::Sync | RCommand::GetStringVector, QString::null, this, GET_INSTALLED_PACKAGES, 0);
 
 	setCaption (i18n ("Help search"));
 }
@@ -225,6 +220,25 @@ void RKHelpSearchWindow::resultDoubleClicked (const QModelIndex& index) {
 	getFunctionHelp (topic, package, type);
 }
 
+void RKHelpSearchWindow::updateInstalledPackages () {
+	RK_TRACE (APP);
+
+	QString old_value = packagesList->currentText ();
+
+	packagesList->clear ();
+	packagesList->addItem (i18n("All installed packages"));
+	packagesList->addItem (i18n("All loaded packages"));
+#if QT_VERSION >= 0x040400
+	packagesList->insertSeparator (2);
+#endif
+	packagesList->addItems (RKSessionVars::instance ()->installedPackages ());
+
+	int index = 0;
+	if (!old_value.isEmpty ()) index = packagesList->findText (old_value);
+	if (index < 0) index = 0;
+	packagesList->setCurrentIndex (index);
+}
+
 void RKHelpSearchWindow::rCommandDone (RCommand *command) {
 	RK_TRACE (APP);
 	if (command->getFlags () == HELP_SEARCH) {
@@ -241,12 +255,6 @@ void RKHelpSearchWindow::rCommandDone (RCommand *command) {
 	} else if (command->getFlags () == GET_HELP) {
 		if (command->failed ()) {
 			KMessageBox::sorry (this, i18n ("No help found on '%1'. Maybe the corresponding package is not installed/loaded, or maybe you mistyped the command. Try using Help->Search R Help for more options.", command->command ().section ("\"", 1, 1)), i18n ("No help found"));
-		}
-	} else if (command->getFlags () == GET_INSTALLED_PACKAGES) {
-		RK_ASSERT (command->getDataType () == RData::StringVector);
-		unsigned int count = command->getDataLength ();
-		for (unsigned int i=0; i < count; ++i) {
-			packagesList->addItem (command->getStringVector ()[i]);
 		}
 	} else {
 		RK_ASSERT (false);

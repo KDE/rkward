@@ -52,6 +52,7 @@ Will figure out the word under the cursor, and provide help on that (if there is
 public slots:
 	void slotFindButtonClicked();
 	void resultDoubleClicked (const QModelIndex& index);
+	void updateInstalledPackages ();
 protected:
 /** reimplemnented from QWidget to make the input focus default to the input field */
 	void focusInEvent (QFocusEvent *e);

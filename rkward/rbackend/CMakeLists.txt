@@ -32,6 +32,7 @@ SET (
 	rcommandreceiver.cpp
 	rcommandstack.cpp
 	rkrbackendprotocol_frontend.cpp
+	rksessionvars.cpp
 )
 
 SET(RBACKEND_SPLIT 1)

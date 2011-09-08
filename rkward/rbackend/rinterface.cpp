@@ -41,6 +41,7 @@
 #include "../windows/rkhtmlwindow.h"
 #include "../plugin/rkcomponentmap.h"
 #include "../misc/rkcommonfunctions.h"
+#include "rksessionvars.h"
 
 #include "../windows/rkwindowcatcher.h"
 
@@ -102,6 +103,7 @@ RInterface::RInterface () {
 	// create a fake init command
 	RCommand *fake = new RCommand (i18n ("R Startup"), RCommand::App | RCommand::Sync | RCommand::ObjectListUpdate, i18n ("R Startup"), this, STARTUP_PHASE2_COMPLETE);
 	issueCommand (fake);
+	new RKSessionVars (this);
 
 	new RKRBackendProtocolFrontend (this);
 	RKRBackendProtocolFrontend::instance ()->setupBackend ();
