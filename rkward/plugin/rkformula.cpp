@@ -2,7 +2,7 @@
                           rkformula  -  description
                              -------------------
     begin                : Thu Aug 12 2004
-    copyright            : (C) 2004, 2006, 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2009, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -43,9 +43,11 @@ RKFormula::RKFormula (const QDomElement &element, RKComponent *parent_component,
 	fixed_factors = new RKComponentPropertyRObjects (this, true);
 	connect (fixed_factors, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (factorsChanged (RKComponentPropertyBase *)));
 	addChild ("fixed_factors", fixed_factors);
+	fixed_factors->setInternal (true);
 	dependent = new RKComponentPropertyRObjects (this, true);
 	connect (dependent, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (factorsChanged (RKComponentPropertyBase *)));
 	addChild ("dependent", dependent);
+	dependent->setInternal (true);
 	model = new RKComponentPropertyBase (this, true);
 	addChild ("model", model);
 	model->setInternal (true);
