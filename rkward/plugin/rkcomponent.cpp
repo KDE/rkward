@@ -148,6 +148,7 @@ QString RKComponentBase::value (const QString &modifier) {
 bool RKComponentBase::isSatisfied () {
 	RK_TRACE (PLUGIN);
 	if (!required) return true;
+	if (isComponent () && static_cast<RKComponent*>(this)->isInactive ()) return true;
 	if (isValid ()) return true;
  	if (isComponent ()) RK_DO (qDebug ("component not satisfied: %s", qPrintable (static_cast<RKComponent*> (this)->getIdInParent ())), PLUGIN, DL_DEBUG);
 	return false;		// never happens in RKComponentBase, but might in subclasses
@@ -257,7 +258,6 @@ bool RKComponent::isValid () {
 	RK_TRACE (PLUGIN);
 #warning TODO: I do not think we need this. Use recursiveStatus, instead
 
-	if (isInactive ()) return true;
 	for (QHash<QString, RKComponentBase*>::const_iterator it = child_map.constBegin (); it != child_map.constEnd (); ++it) {
 		if (!(it.value ()->isSatisfied ())) return false;
 	}

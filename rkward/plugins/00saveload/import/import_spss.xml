@@ -15,7 +15,6 @@
 		<convert id="other_encoding" mode="equals" standard="other" sources="encoding.string" />
 		<convert id="other_encoding2" mode="and" sources="other_encoding;do_locale_conversion.state" />
 		<connect governor="other_encoding2" client="user_encoding.enabled" />
-		<connect governor="other_encoding2" client="user_encoding.required" />
 	</logic>
 	<dialog label="Import SPSS file">
 		<tabbook>
@@ -58,7 +57,7 @@
 					<option value="ISO8859-16" label="ISO8859-16 Latin-10 South-Eastern European"/>
 					<option value="other" label="Other (specify below)"/>
 				</dropdown>
-				<input id="user_encoding" label="Other encoding" />
+				<input id="user_encoding" label="Other encoding" required="true"/>
 			</tab>
 		</tabbook>
 	</dialog>

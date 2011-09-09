@@ -27,7 +27,6 @@
 		
 		<convert id="customdec" mode="equals" sources="dec.string" standard="other" />
 		<connect client="custom_dec.enabled" governor="customdec" />
-		<connect client="custom_dec.required" governor="custom_dec.enabled" />
 		
 		<convert id="quickNTT2" mode="or" sources="quickNone;quickTAB;quickTAB2"/>
 		<connect client="sep.sepTab.enabled" governor="quickNTT2" />
@@ -41,7 +40,6 @@
 		
 		<convert id="customsep" mode="equals" sources="sep.string" standard="other" />
 		<connect client="custom_sep.enabled" governor="customsep" />
-		<connect client="custom_sep.required" governor="custom_sep.enabled" />
 		
 		<connect client="quote.quoteSingQ.enabled" governor="quickNone" />
 		<connect client="quote.quoteDoubQSingQ.enabled" governor="quickNone" />
@@ -50,22 +48,17 @@
 		
 		<convert id="customquote" mode="equals" sources="quote.string" standard="other" />
 		<connect client="custom_quote.enabled" governor="customquote" />
-		<connect client="custom_quote.required" governor="custom_quote.enabled" />
 
 		<convert id="userow" mode="equals" sources="rowname.string" standard="rowcol" />
 		<convert id="customizerow" mode="equals" sources="rowname.string" standard="custoRow" />
 		<convert id="customizerow2" mode="and" sources="isrow.state;customizerow" standard="custoRow" />
 		<connect client="nomrow.enabled" governor="userow" />
-		<connect client="nomrow.required" governor="userow" />
 		<connect client="rownames.enabled" governor="customizerow" />
-		<connect client="rownames.required" governor="customizerow" />
 
 		<convert id="customizecol" mode="equals" sources="colname.string" standard="custoCol" />
 		<connect client="colnames.enabled" governor="customizecol" />
-		<connect client="colnames.required" governor="customizecol" />
 		<convert id="customizeclasses" mode="equals" sources="colclass.string" standard="custoClass" />
 		<connect client="custoClasses.enabled" governor="customizeclasses" />
-		<connect client="custoClasses.required" governor="customizeclasses" />
 	</logic>
 	<dialog label="Import Text / CSV data" >
 		<tabbook>
@@ -92,7 +85,7 @@
 							<option id="decComma" value="','" label="',' (Comma)" />
 							<option id="decOther" value="other" label="Other (specify below)" />
 						</radio>
-						<input id="custom_dec" label="Specify decimal point character" />
+						<input id="custom_dec" label="Specify decimal point character" required="true"/>
 					</column>
 					<column>
 						<radio id="sep" label="Field separator character" >
@@ -102,7 +95,7 @@
 							<option id="sepSpace" value="' '" label="Space" />
 							<option id="sepOther" value="other" label="Other (specify below)" />
 						</radio>
-						<input id="custom_sep" label="Specify field separator character" />
+						<input id="custom_sep" label="Specify field separator character" required="true"/>
 					</column>
 				</row>
 			</tab>
@@ -116,8 +109,8 @@
 								<option value="rowcol" label="As specified in column x:" />
 								<option value="custoRow" label="Use a vector" />
 							</radio>
-							<input size="small" id="nomrow" initial="1" label="Column number or variable name" />
-							<input id="rownames" label="Vector of row names (quoted)" />
+							<input size="small" id="nomrow" initial="1" label="Column number or variable name" required="true"/>
+							<input id="rownames" label="Vector of row names (quoted)" required="true"/>
 							<stretch/>
 						</frame>
 					</column>
@@ -127,13 +120,13 @@
 								<option value="" label="Default" />
 								<option value="custoCol" label="Use a character vector" />
 							</radio>
-							<input id="colnames" label="Vector of column names (quoted)" />
+							<input id="colnames" label="Vector of column names (quoted)" required="true"/>
 						<checkbox id="flush" label="Skip any further fields" value=", flush=TRUE" value_unchecked="" />
 							<radio id="colclass" label="Classes of columns" >
 								<option value="" label="Default" />
 								<option value="custoClass" label="Use a character vector" />
 							</radio>
-							<input id="custoClasses" label="Vector of column classes (quoted)" />
+							<input id="custoClasses" label="Vector of column classes (quoted)" required="true"/>
 						</frame>
 					</column>
 				</row>
@@ -155,7 +148,7 @@
 						<option id="quoteNone" value="''" label="None / disabled" />
 						<option id="quoteOther" value="other" label="Other (specify below)" />
 					</radio>
-					<input id="custom_quote" label="Specify quoting character(s)" />
+					<input id="custom_quote" label="Specify quoting character(s)" required="true"/>
 				</column>
 				<column>
 						<input size="small" initial="0" id="skip" label="Skip x lines at the start of the file" />

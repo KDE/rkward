@@ -8,7 +8,6 @@
 		<convert id="customsep" mode="equals" sources="sep.string" standard="other" />
 		<convert id="enable_customsep" mode="and" sources="customsep;sep.enables" />
 		<connect client="custom_sep.enabled" governor="enable_customsep" />
-		<connect client="custom_sep.required" governor="custom_sep.enabled" />
 	</logic>
 
 	<dialog label="Write vector / matrix" >
@@ -29,7 +28,7 @@
 							<option id="sepSpace" value=" " label="Space" checked="true" />
 							<option id="sepOther" value="other" label="Other (specify below)" />
 						</radio>
-						<input id="custom_sep" label="Specify field separator character" />
+						<input id="custom_sep" label="Specify field separator character" required="true"/>
 					</column>
 					<column>
 						<spinbox type="integer" initial="1" min="1" id="ncolumns" max="100" label="Number of columns to write" />
