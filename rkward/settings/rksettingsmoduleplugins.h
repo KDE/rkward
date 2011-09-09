@@ -51,6 +51,8 @@ public:
 	static PluginPrefs getInterfacePreference () { return interface_pref; };
 	static bool showCodeByDefault () { return show_code; };
 	static int defaultCodeHeight () { return code_size; };
+	/** register a list of available plugin-maps (which may or may not already be known). New maps are activated, automatically. */
+	static void registerPluginMaps (const QStringList &maps);
 public slots:
 	void settingChanged ();
 	void browseRequest (QStringList* strings);
@@ -61,8 +63,11 @@ private:
 	QButtonGroup *button_group;
 	QCheckBox *show_code_box;
 	RKSpinBox *code_size_box;
-	
+
+	/** active plugin maps */
 	static QStringList plugin_maps;
+	/** plugin maps which are not necessarily active, but have been encountered, before. @see plugin_maps */
+	static QStringList known_plugin_maps;
 	static PluginPrefs interface_pref;
 	static bool show_code;
 	static int code_size;
@@ -71,6 +76,7 @@ private:
 	static void uninstallPluginPack (const QString &archive_file);
 	static QString baseNameOfPluginPack (const QString &archive_file);
 	static QStringList findPluginMapsRecursive (const QString &basedir);
+	static void fixPluginMapLists ();
 };
 
 #endif

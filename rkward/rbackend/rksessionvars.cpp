@@ -28,10 +28,6 @@ RKSessionVars::RKSessionVars (RInterface *parent) : QObject (parent) {
 	RK_ASSERT (!_instance);
 
 	_instance = this;
-
-	RCommand *initc = new RCommand (".rk.get.installed.packages()[[1]]", RCommand::App | RCommand::Sync | RCommand::GetStringVector);
-	connect (initc->notifier (), SIGNAL (commandFinished(RCommand*)), this, SLOT (installedPackagesCommandFinished(RCommand*)));
-	parent->issueCommand (initc);
 }
 
 RKSessionVars::~RKSessionVars () {
@@ -43,17 +39,6 @@ void RKSessionVars::setInstalledPackages (const QStringList &new_list) {
 
 	installed_packages = new_list;
 	emit (installedPackagesChanged ());
-}
-
-void RKSessionVars::installedPackagesCommandFinished (RCommand *command) {
-	RK_TRACE (RBACKEND);
-
-	if (command->succeeded () && (command->getDataType () == RData::StringVector)) {
-		setInstalledPackages (command->getStringVector ());
-		return;
-	}
-
-	RK_ASSERT (false);
 }
 
 #include "rksessionvars.moc"

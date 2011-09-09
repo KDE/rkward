@@ -25,6 +25,7 @@
 #include "../settings/rksettingsmodulegeneral.h"
 #include "../settings/rksettingsmoduleoutput.h"
 #include "../settings/rksettingsmodulegraphics.h"
+#include "../settings/rksettingsmoduleplugins.h"
 #include "../settings/rksettingsmoduledebug.h"
 #include "../core/robjectlist.h"
 #include "../core/renvironmentobject.h"
@@ -103,10 +104,15 @@ RInterface::RInterface () {
 	// create a fake init command
 	RCommand *fake = new RCommand (i18n ("R Startup"), RCommand::App | RCommand::Sync | RCommand::ObjectListUpdate, i18n ("R Startup"), this, STARTUP_PHASE2_COMPLETE);
 	issueCommand (fake);
-	new RKSessionVars (this);
 
+	new RKSessionVars (this);
 	new RKRBackendProtocolFrontend (this);
 	RKRBackendProtocolFrontend::instance ()->setupBackend ();
+
+	// Further initialization commands, which do not necessarily have to run before everything else can be queued, here.
+	RCommand *c = new RCommand (".rk.get.installed.packages()", RCommand::App | RCommand::Sync | RCommand::GetStructuredData);
+	connect (c->notifier (), SIGNAL (commandFinished(RCommand*)), this, SLOT (installedPackagesCommandFinished(RCommand*)));
+	issueCommand (c);
 }
 
 void RInterface::issueCommand (const QString &command, int type, const QString &rk_equiv, RCommandReceiver *receiver, int flags, RCommandChain *chain) {
@@ -245,6 +251,24 @@ void RInterface::doNextCommand (RCommand *command) {
 	command_request->command = proxy;
 	RKRBackendProtocolFrontend::setRequestCompleted (command_request);
 	command_requests.pop_back ();
+}
+
+void RInterface::installedPackagesCommandFinished (RCommand *command) {
+	RK_TRACE (RBACKEND);
+
+	if (command->succeeded () && (command->getDataType () == RData::StructureVector) && (command->getDataLength() >= 6)) {
+		RData *dummy = command->getStructureVector ()[0];
+		if (dummy->getDataType () == RData::StringVector) RKSessionVars::instance ()->setInstalledPackages (dummy->getStringVector ());
+		else RK_ASSERT (false);
+
+		dummy = command->getStructureVector ()[5];
+		if (dummy->getDataType () == RData::StringVector) RKSettingsModulePlugins::registerPluginMaps (dummy->getStringVector ());
+		else RK_ASSERT (false);
+
+		return;
+	}
+
+	RK_ASSERT (false);
 }
 
 void RInterface::rCommandDone (RCommand *command) {

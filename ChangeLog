@@ -1,5 +1,6 @@
+- Added support for RKWard plugins shipped inside R packages 
 - Fixed: PDFs and many other types of documents linked from help pages would not be opened, correctly
-- Add support R 2.14.x
+- Added support R 2.14.x
 - Removed option to set options("printcmd")
 - New option to run arbitrary (setup) commands in each session
 - Added new pseudo graphics device "rk.printer.device" to provide printing via the KDE printer dialog

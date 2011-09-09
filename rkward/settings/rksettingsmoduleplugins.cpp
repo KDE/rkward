@@ -50,6 +50,7 @@
 
 // static members
 QStringList RKSettingsModulePlugins::plugin_maps;
+QStringList RKSettingsModulePlugins::known_plugin_maps;
 RKSettingsModulePlugins::PluginPrefs RKSettingsModulePlugins::interface_pref;
 bool RKSettingsModulePlugins::show_code;
 int RKSettingsModulePlugins::code_size;
@@ -157,6 +158,7 @@ void RKSettingsModulePlugins::applyChanges () {
 	show_code = show_code_box->isChecked ();
 	code_size = code_size_box->intValue ();
 
+	fixPluginMapLists ();
 	RKWardMainWindow::getMain ()->initPlugins();
 }
 
@@ -170,6 +172,7 @@ void RKSettingsModulePlugins::saveSettings (KConfig *config) {
 
 	KConfigGroup cg = config->group ("Plugin Settings");
 	cg.writeEntry ("Plugin Maps", plugin_maps);
+	cg.writeEntry ("All known plugin maps", known_plugin_maps);
 	cg.writeEntry ("Interface Preferences", static_cast<int> (interface_pref));
 	cg.writeEntry ("Code display default", show_code);
 	cg.writeEntry ("Code display size", code_size);
@@ -180,13 +183,53 @@ void RKSettingsModulePlugins::loadSettings (KConfig *config) {
 
 	KConfigGroup cg = config->group ("Plugin Settings");
 	plugin_maps = cg.readEntry ("Plugin Maps", QStringList ());
+	known_plugin_maps = cg.readEntry ("All known plugin maps", QStringList ());
 	if (plugin_maps.isEmpty ()) {
 		plugin_maps.append (RKCommonFunctions::getRKWardDataDir () + "/all.pluginmap");
 	}
+	fixPluginMapLists ();
 
 	interface_pref = static_cast<PluginPrefs> (cg.readEntry ("Interface Preferences", static_cast<int> (PreferRecommended)));
 	show_code = cg.readEntry ("Code display default", false);
 	code_size = cg.readEntry ("Code display size", 40);
+}
+
+// static
+void RKSettingsModulePlugins::registerPluginMaps (const QStringList &maps) {
+	RK_TRACE (SETTINGS);
+
+	bool added = false;
+	foreach (const QString &map, maps) {
+		if (map.isEmpty ()) continue;
+		if (known_plugin_maps.contains (map)) continue;
+		known_plugin_maps.append (map);
+
+		if (plugin_maps.contains (map)) continue;
+		plugin_maps.append (map);
+		added = true;
+	}
+
+	if (added) {
+		KMessageBox::information (RKWardMainWindow::getMain (), i18n ("New RKWard plugin packs have been found. They will be activated, automatically. To de-activate selected plugin packs, use Settings->Configure RKWard->Plugins"), i18n ("New plugins found"), "new_plugins_found");
+		RKWardMainWindow::getMain ()->initPlugins();
+	}
+}
+
+void RKSettingsModulePlugins::fixPluginMapLists () {
+	RK_TRACE (SETTINGS);
+
+	for (int i = 0; i < plugin_maps.size (); ++i) {
+		QFileInfo info (plugin_maps[i]);
+		if (!info.isReadable ()) {
+			known_plugin_maps.removeAll (plugin_maps[i]);
+			plugin_maps.removeAt (i);
+			--i;
+		}
+	}
+
+	foreach (const QString &map, plugin_maps) {
+		if (!known_plugin_maps.contains (map)) known_plugin_maps.append (map);
+	}
 }
 
 void RKSettingsModulePlugins::downloadPlugins () {
@@ -221,13 +264,7 @@ void RKSettingsModulePlugins::downloadPlugins () {
 	}
 
 	// new pluginmaps were already added in installPluginPack. Now let's check, whether there any to be removed:
-	for (int i = 0; i < plugin_maps.size (); ++i) {
-		QFileInfo info (plugin_maps[i]);
-		if (!info.isReadable ()) {
-			plugin_maps.removeAt (i);
-			--i;
-		}
-	}
+	fixPluginMapLists ();
 
 	if (plugin_maps != oldmaps) {
 		map_choser->setValues (plugin_maps);

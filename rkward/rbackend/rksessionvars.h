@@ -41,8 +41,6 @@ private:
 	static RKSessionVars* _instance;
 
 	QStringList installed_packages;
-private slots:
-	void installedPackagesCommandFinished (RCommand *command);
 };
 
 #endif
