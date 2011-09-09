@@ -987,11 +987,11 @@ void RKComponentPropertyRObjects::checkListLengthValid () {
 	RK_TRACE (PLUGIN);
 
 	is_valid = true;	// innocent until proven guilty
-	if (min_num_objects || max_num_objects || min_num_objects_if_any) {
+	if ((min_num_objects > 0) || (max_num_objects > 0) || (min_num_objects_if_any > 0)) {
 		int len = object_list.count ();
 		if (len < min_num_objects) is_valid = false;
 		if (len && (len < min_num_objects_if_any)) is_valid = false;
-		if (max_num_objects && (len > max_num_objects)) is_valid = false;
+		if ((max_num_objects > 0) && (len > max_num_objects)) is_valid = false;
 	}
 }
 

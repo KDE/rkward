@@ -69,10 +69,10 @@ public:
 		NoSuchComponent
 	};
 	enum ComponentStatus {
-		Dead,
-		Processing,
-		Unsatisfied,
-		Satisfied
+		Dead,		/**< one or more components are dead */
+		Processing,		/**< one or more components are still processing. */
+		Unsatisfied,		/**< the component is required, but it or one of its (required) children are not valid. */
+		Satisfied		/**< the component is not required, or it, and all of its children are satisfied. */
 	};
 /** for RTTI. see RKComponentBase::RKComponentTypes */
 	virtual int type () = 0;
@@ -88,13 +88,17 @@ public:
 /** returns true, if this is a property */
 	bool isProperty () { return (type () <= PropertyEnd); };
 	bool isComponent () { return (type () >= ComponentBase); };
-/** returns satisfaction state. see setRequired () */
-	bool isSatisfied ();
-/** returns somewhat more elaborate state than isSatisfied(). (Effectively identical in the base class). */
+/** shorthand for recursiveStatus () == Satisfied */
+	bool isSatisfied () { return (recursiveStatus () == Satisfied); };
+/** returns state of the component. @see ComponentStatus */
 	virtual ComponentStatus recursiveStatus ();
-/** currently valid (i.e. satisfied, even if required)? default implementation always returns true */
+/** currently valid? default implementation always returns true. @see recursiveStatus()
+  * reimplement this in subclasses, if components may become invalid.
+  * 
+  * @note: A component will be "satisfied" even when invalid, if is is not required. Also, a required component is implictily not satisfied, if any of its children are not statisfied.
+  * In general, use isSatisfied() to query the status of components, not isValid(). */
 	virtual bool isValid () { return true; };
-/** set to required: will only be satisfied if it is valid. Else: always satisfied (but subclasses might override to always be dissatisfied on really bad values. By default RKComponentBase is required at construction */
+/** set to required: will only be satisfied if it is valid (and all it's children). Else: always satisfied (but subclasses might override to always be dissatisfied on really bad values. By default RKComponentBase is required at construction */
 	void setRequired (bool require) { required = require; };
 /** simple convenience function to add a child to the map of children */
 	void addChild (const QString &id, RKComponentBase *child);
@@ -138,8 +142,6 @@ public:
 	int type () { return Component; };
 /** change notification mechanism. Call this, if something in the component changed that could result in a change in code/values/satisfaction state. Default implementation propagates the change upwards to parent components, if any, but does not do anything further. Reimplement, for instance, to regenerate code */
 	virtual void changed ();
-/** reimplemented to only return true, if all children are satisfied */
-	bool isValid ();
 /** The component as a wizardish (multi-page) interface. Default implementation returns false */
 	virtual bool isWizardish ();
 /** If the component isWizardish (), returns true, if it has a next/previous page

@@ -145,15 +145,6 @@ QString RKComponentBase::value (const QString &modifier) {
 	return QString ();
 }
 
-bool RKComponentBase::isSatisfied () {
-	RK_TRACE (PLUGIN);
-	if (!required) return true;
-	if (isComponent () && static_cast<RKComponent*>(this)->isInactive ()) return true;
-	if (isValid ()) return true;
- 	if (isComponent ()) RK_DO (qDebug ("component not satisfied: %s", qPrintable (static_cast<RKComponent*> (this)->getIdInParent ())), PLUGIN, DL_DEBUG);
-	return false;		// never happens in RKComponentBase, but might in subclasses
-}
-
 RKComponentBase::ComponentStatus RKComponentBase::recursiveStatus () {
 	RK_TRACE (PLUGIN);
 
@@ -170,7 +161,8 @@ RKComponentBase::ComponentStatus RKComponentBase::recursiveStatus () {
 	bool req = required;
 	if (isComponent () && static_cast<RKComponent*>(this)->isInactive ()) req = false;
 	if (!req) return Satisfied;
-	if (children_satisfied && isSatisfied ()) return Satisfied;
+	if (children_satisfied && isValid ()) return Satisfied;
+ 	if (isComponent ()) RK_DO (qDebug ("component not satisfied: %s", qPrintable (static_cast<RKComponent*> (this)->getIdInParent ())), PLUGIN, DL_DEBUG);
 	return Unsatisfied;
 }
 
@@ -252,17 +244,6 @@ bool RKComponent::isInactive () {
 	if (parentWidget () && isHidden ()) return true;	// Note: Components embedded as button may be "hidden" without being inaccessible
 	if (!visibility_property->boolValue ()) return true;	// Note for those, this is the appropriate check
 	return false;
-}
-
-bool RKComponent::isValid () {
-	RK_TRACE (PLUGIN);
-
-	// TODO: It's sort of lame to iterate over all children, here, as typically this is called indirectly from recursiveStatus(), and that iterates over the children, too.
-	// However, iterating over the children is required to make isSatisfied() return a sensible answer.
-	for (QHash<QString, RKComponentBase*>::const_iterator it = child_map.constBegin (); it != child_map.constEnd (); ++it) {
-		if (!(it.value ()->isSatisfied ())) return false;
-	}
-	return true;
 }
 
 bool RKComponent::isWizardish () {
