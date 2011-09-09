@@ -121,9 +121,12 @@
 		}
 		cat ("</ul>\n")
 	}
-	if (level==1) cat (date ())
+	if (level==1) cat (.rk.date ())
 	cat ("<br />\n")
 }
+
+# Dummy to allow the rkwardtest package to override rk.header() behavior, easily
+".rk.date" <- function () date ()
 
 "rk.results" <- function (x, titles=NULL, print.rownames) {
 	sink (rk.get.output.html.file(), append=TRUE)

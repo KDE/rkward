@@ -167,7 +167,15 @@ rktest.replace <- function (name, replacement, envir=as.environment ("package:rk
 	if (exists (backup.name, envir=.rktest.tmp.storage, inherits=FALSE)) {
 		message ("It looks like ", name, " has already been replaced. Not replacing it again.")
 	} else {
+# 		# Apparently R 2.14.x starts forcing namespaces for all packages, which makes things a bit more difficult
+		if (identical (envir, as.environment ("package:rkward"))) {
+			try (rktest.replace (name, replacement, asNamespace ("rkward"), backup.name))
+		}
+
 		assign (backup.name, get (name, envir), envir=.rktest.tmp.storage)
+
+		environment (replacement) <- envir
+		try (unlockBinding (name, envir))
 		assign (name, replacement, envir)
 	}
 }
@@ -175,6 +183,9 @@ rktest.replace <- function (name, replacement, envir=as.environment ("package:rk
 rktest.restore <- function (name, envir=as.environment ("package:rkward"), backup.name=name) {
 	if (exists (backup.name, envir=.rktest.tmp.storage, inherits=FALSE)) {
 		assign (name, get (backup.name, envir=.rktest.tmp.storage), envir=envir)
+		if (identical (envir, as.environment ("package:rkward"))) {
+			try (assign (name, get (backup.name, envir=.rktest.tmp.storage), envir=asNamespace ("rkward")))
+		}
 	} else {
 		message ("No backup available for ", name, ". Already restored?")
 	}
@@ -195,9 +206,7 @@ rktest.initializeEnvironment <- function () {
 	options (rk.graphics.type="PNG", rk.graphics.width=480, rk.graphics.height=480)
 
 	# HACK: Override date, so we don't get a difference for each call of rk.header ()
-	# TODO: implement a clean solution inside rk.header()
-	# Note: date is in baseenv() and we cannot easily replace it there, so placing an override in globalenv(), instead
-	assign ("date", function () return ("DATE"), envir=globalenv())
+	rktest.replace (".rk.date", function () return ("DATE"))
 
 	# numerical precision is often a problem. To work around this in many places, reduce default printed precision to 5 digits
 	options (digits=5)
@@ -223,7 +232,7 @@ rktest.resetEnvironment <- function () {
 	rktest.restore (".rk.make.hr")
 	rktest.restore ("rk.get.tempfile.name")
 	rktest.restore ("rk.set.output.html.file")
-	rm (date, envir=globalenv())
+	rktest.restore (".rk.date")
 	assign("initialized", FALSE, envir=.rktest.tmp.storage)
 }
 
