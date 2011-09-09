@@ -3,7 +3,7 @@
 \title{Create skeleton for RKWard plugins}
 \usage{
   rk.plugin.skeleton(name, path, about, dialog = list(),
-  dial.require = c(), overwrite = FALSE)
+  dial.require = c(), overwrite = FALSE, tests = TRUE)
 }
 \arguments{
   \item{name}{Character sting, name of the plugin package.}
@@ -25,6 +25,9 @@
 
   \item{overwrite}{Logical, whether existing files should
   be replaced. Defaults to \code{FALSE}.}
+
+  \item{tests}{Logical, whether directories and files for
+  plugin tests should be created. Defaults to \code{TRUE}.}
 }
 \description{
   Create skeleton for RKWard plugins

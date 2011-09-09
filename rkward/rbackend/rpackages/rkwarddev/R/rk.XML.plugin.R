@@ -10,7 +10,20 @@
 #' @param pluginmap Character string, relative path to the pluginmap file, which will then be included in the head of this document.
 #' @return An object of class \code{XiMpLe.doc}.
 #' @export
-# pluginmap must be the relative path to the pluginmap file, which will then be included
+#' @examples
+#' test.checkboxes <- rk.XML.row(rk.XML.col(
+#'   list(
+#'     rk.XML.cbox(label="foo", val="foo1", chk=TRUE),
+#'     rk.XML.cbox(label="bar", val="bar2"))))
+#' test.dropdown <- rk.XML.dropdown("mydrop",
+#'   opts=list("First Option"=c(val="val1"),
+#'   "Second Option"=c(val="val2", chk=TRUE)))
+#' # combine the above into a tabbook
+#' test.tabbook <- rk.XML.tabbook("My Tabbook", tab.labels=c("First Tab",
+#'   "Second Tab"), children=list(test.checkboxes, test.dropdown))
+#' # make a plugin with that tabbook
+#' test.plugin <- rk.XML.plugin("My test", label="Check this out", children=test.tabbook)
+#' cat(pasteXMLNode(test.plugin, shine=1))
 
 rk.XML.plugin <- function(name, label, children=list(), help=TRUE, logic=TRUE, provides=c("dialog"), pluginmap=NULL){
 	name.orig <- name

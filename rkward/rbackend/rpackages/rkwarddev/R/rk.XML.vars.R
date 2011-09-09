@@ -12,6 +12,9 @@
 #'		If \code{"auto"}, IDs will be generated automatically from \code{label} and \code{slot.text}.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
+#' @examples
+#' test.vars <- rk.XML.vars("Select some vars", "Vars go here")
+#' cat(pasteXMLNode(test.vars, shine=1))
 
 rk.XML.vars <- function(label, slot.text=NULL, classes=NULL, horiz=TRUE, id.name="auto"){
 	if(identical(id.name, "auto")){

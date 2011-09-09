@@ -14,4 +14,8 @@
 \description{
   Create XML node "text" for RKWard plugins
 }
+\examples{
+test.text <- rk.XML.text("Added this text.")
+cat(pasteXMLNode(test.text, shine=1))
+}
 

@@ -6,6 +6,10 @@
 #'		If \code{"auto"} and a label was provided, an ID will be generated automatically from the label.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
+#' @examples
+#' test.browser <- rk.XML.browser("Browse here:")
+#' cat(pasteXMLNode(test.browser, shine=1))
+
 
 rk.XML.browser <- function(label, dir=TRUE, id.name="auto"){
 	attr.list <- list(label=label)

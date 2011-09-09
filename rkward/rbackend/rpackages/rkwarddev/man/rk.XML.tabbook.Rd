@@ -29,4 +29,17 @@
 \description{
   Create XML node "tabbook" for RKWard plugins
 }
+\examples{
+test.checkboxes <- rk.XML.row(rk.XML.col(
+list(
+rk.XML.cbox(label="foo", val="foo1", chk=TRUE),
+rk.XML.cbox(label="bar", val="bar2"))))
+test.dropdown <- rk.XML.dropdown("mydrop",
+opts=list("First Option"=c(val="val1"),
+"Second Option"=c(val="val2", chk=TRUE)))
+# combine the above into a tabbook
+test.tabbook <- rk.XML.tabbook("My Tabbook", tab.labels=c("First Tab",
+"Second Tab"), children=list(test.checkboxes, test.dropdown))
+cat(pasteXMLNode(test.tabbook, shine=1))
+}
 

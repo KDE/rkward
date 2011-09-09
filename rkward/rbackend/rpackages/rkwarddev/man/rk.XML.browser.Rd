@@ -22,4 +22,8 @@
 \description{
   Create XML node "browser" for RKWard plugins
 }
+\examples{
+test.browser <- rk.XML.browser("Browse here:")
+cat(pasteXMLNode(test.browser, shine=1))
+}
 

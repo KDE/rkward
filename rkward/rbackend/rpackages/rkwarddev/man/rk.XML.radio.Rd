@@ -26,4 +26,10 @@
 \description{
   Create XML node "radio" for RKWard plugins
 }
+\examples{
+test.radio <- rk.XML.radio("Chose one",
+opts=list("First Option"=c(val="val1"),
+"Second Option"=c(val="val2", chk=TRUE)))
+cat(pasteXMLNode(test.radio, shine=1))
+}
 

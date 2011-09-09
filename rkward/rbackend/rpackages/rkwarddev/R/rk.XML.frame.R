@@ -7,6 +7,11 @@
 #'		If \code{NULL}, no ID will be given.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
+#' @examples
+#' test.dropdown <- rk.XML.dropdown("mydrop",
+#'   opts=list("First Option"=c(val="val1"),
+#'   "Second Option"=c(val="val2", chk=TRUE)))
+#' cat(pasteXMLNode(rk.XML.frame(test.dropdown, label="Some options"), shine=1))
 
 rk.XML.frame <- function(children=list(), label=NULL, id.name="auto"){
 	if(!is.null(label)){

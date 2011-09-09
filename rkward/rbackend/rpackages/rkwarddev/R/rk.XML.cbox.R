@@ -7,6 +7,12 @@
 #'		If \code{"auto"}, an ID will be generated automatically from the label.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
+#' @examples
+#' test.checkboxes <- rk.XML.row(rk.XML.col(
+#'   list(
+#'     rk.XML.cbox(label="foo", val="foo1", chk=TRUE),
+#'     rk.XML.cbox(label="bar", val="bar2"))))
+#' cat(pasteXMLNode(test.checkboxes, shine=1))
 
 rk.XML.cbox <- function(label, val, chk=FALSE, id.name="auto"){
 	if(identical(id.name, "auto")){

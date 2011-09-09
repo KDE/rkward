@@ -9,6 +9,9 @@
 #'		If \code{"auto"} and a label was provided, an ID will be generated automatically from the label.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
+#' @examples
+#' test.saveobj <- rk.XML.saveobj("Save the results")
+#' cat(pasteXMLNode(test.saveobj, shine=1))
 
 rk.XML.saveobj <- function(label, chk=FALSE, checkable=TRUE, initial="auto", id.name="auto"){
 	attr.list <- list(label=label)

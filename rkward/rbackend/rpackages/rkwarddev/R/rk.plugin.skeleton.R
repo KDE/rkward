@@ -8,6 +8,8 @@
 #'		created plugin XML file as the dialog.
 #' @param dial.require A character vector with names of R packages that the dialog requires.
 #' @param overwrite Logical, whether existing files should be replaced. Defaults to \code{FALSE}.
+#' @param tests Logical, whether directories and files for plugin tests should be created.
+#'		Defaults to \code{TRUE}.
 #' @export
 #' @examples
 #' \dontrun{
@@ -60,7 +62,7 @@
 #'   about=about.info, dialog=test.tabbook, overwrite=TRUE)
 #' }
 
-rk.plugin.skeleton <- function(name, path, about, dialog=list(), dial.require=c(), overwrite=FALSE){
+rk.plugin.skeleton <- function(name, path, about, dialog=list(), dial.require=c(), overwrite=FALSE, tests=TRUE){
 	# to besure, remove all non-character symbols from name
 	name.orig <- name
 	name <- gsub("[[:space:]]*[^[:alnum:]]*", "", name)
@@ -76,6 +78,9 @@ rk.plugin.skeleton <- function(name, path, about, dialog=list(), dial.require=c(
 	plugin.xml <- file.path(plugin.dir, paste(name, ".xml", sep=""))
 	plugin.js <- file.path(plugin.dir, paste(name, ".js", sep=""))
 	plugin.rkh <- file.path(plugin.dir, paste(name, ".rkh", sep=""))
+	tests.main.dir <- file.path(rkward.dir, "tests")
+	tests.dir <- file.path(rkward.dir, "tests", name)
+	testsuite.file <- file.path(tests.main.dir, "testsuite.R")
 
 	checkCreateFiles <- function(file.name, ow=overwrite){
 		if(all(file.exists(file.name), as.logical(ow)) | !file.exists(file.name)){
@@ -97,6 +102,10 @@ rk.plugin.skeleton <- function(name, path, about, dialog=list(), dial.require=c(
 	if(!file_test("-d", plugin.dir)){
 		stopifnot(dir.create(plugin.dir, recursive=TRUE))
 		message(paste("Created directory ", plugin.dir, ".", sep=""))
+	} else {}
+	if(isTRUE(tests) & !file_test("-d", tests.dir)){
+		stopifnot(dir.create(tests.dir, recursive=TRUE))
+		message(paste("Created directory ", tests.dir, ".", sep=""))
 	} else {}
 
 	## create plugin.xml
@@ -133,6 +142,12 @@ rk.plugin.skeleton <- function(name, path, about, dialog=list(), dial.require=c(
 			plugin.dir="plugins",
 			hierarchy="analysis")
 		cat(pasteXMLTree(XML.pluginmap), file=plugin.pluginmap)
+	} else {}
+
+	## create testsuite.R
+	if(isTRUE(tests) & isTRUE(checkCreateFiles(testsuite.file))){
+		testsuite.doc <- rk.testsuite.doc(name=name)
+		cat(testsuite.doc, file=testsuite.file)
 	} else {}
 
 	# create DESCRIPTION file

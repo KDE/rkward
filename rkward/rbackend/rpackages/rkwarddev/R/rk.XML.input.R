@@ -5,6 +5,9 @@
 #'		If \code{"auto"}, an ID will be generated automatically from the label.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
+#' @examples
+#' test.input <- rk.XML.input("Type some text")
+#' cat(pasteXMLNode(test.input, shine=1))
 
 #<input id="inpCelexRunWd" label="Number of running words" />
 rk.XML.input <- function(label, id.name="auto"){

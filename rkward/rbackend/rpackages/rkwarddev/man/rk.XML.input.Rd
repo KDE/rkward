@@ -18,4 +18,8 @@
 \description{
   Create XML node "input" for RKWard plugins
 }
+\examples{
+test.input <- rk.XML.input("Type some text")
+cat(pasteXMLNode(test.input, shine=1))
+}
 

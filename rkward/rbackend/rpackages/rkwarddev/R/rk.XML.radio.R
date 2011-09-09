@@ -8,6 +8,11 @@
 #'		If \code{"auto"} and a label was provided, an ID will be generated automatically from the label.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
+#' @examples
+#' test.radio <- rk.XML.radio("Chose one",
+#'   opts=list("First Option"=c(val="val1"),
+#'   "Second Option"=c(val="val2", chk=TRUE)))
+#' cat(pasteXMLNode(test.radio, shine=1))
 
 rk.XML.radio <- function(label, opts=list(label=c(val=NULL, chk=FALSE)), id.name="auto"){
 	num.opt <- length(opts)

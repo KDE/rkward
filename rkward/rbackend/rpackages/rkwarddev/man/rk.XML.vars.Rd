@@ -30,4 +30,8 @@
   This function will create a <frame> node including a
   <varselector> and a <varslot> node.
 }
+\examples{
+test.vars <- rk.XML.vars("Select some vars", "Vars go here")
+cat(pasteXMLNode(test.vars, shine=1))
+}
 

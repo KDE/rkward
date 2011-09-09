@@ -5,6 +5,12 @@
 #'		If \code{NULL}, no ID will be given.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
+#' @examples
+#' test.checkboxes <- rk.XML.row(rk.XML.col(
+#'   list(
+#'     rk.XML.cbox(label="foo", val="foo1", chk=TRUE),
+#'     rk.XML.cbox(label="bar", val="bar2"))))
+#' cat(pasteXMLNode(test.checkboxes, shine=1))
 
 rk.XML.col <- function(children=list(), id.name=NULL){
 	if(!is.null(id.name)){
