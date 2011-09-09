@@ -41,7 +41,7 @@ public:
 	~RKFormula ();
 
 	QString value (const QString &modifier) { return model->value (modifier); };
-	bool isSatisfied ();
+	bool isValid ();
 
 /** RTTI */
 	int type () { return ComponentFormula; };

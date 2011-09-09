@@ -399,7 +399,7 @@ void RKFormula::checkCustomModel () {
 	}
 }
 
-bool RKFormula::isSatisfied () {
+bool RKFormula::isValid () {
 	RK_TRACE (PLUGIN);
 	return (model_ok);
 }

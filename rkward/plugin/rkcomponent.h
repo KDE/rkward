@@ -89,7 +89,7 @@ public:
 	bool isProperty () { return (type () <= PropertyEnd); };
 	bool isComponent () { return (type () >= ComponentBase); };
 /** returns satisfaction state. see setRequired () */
-	virtual bool isSatisfied ();
+	bool isSatisfied ();
 /** returns somewhat more elaborate state than isSatisfied(). (Effectively identical in the base class). */
 	virtual ComponentStatus recursiveStatus ();
 /** currently valid (i.e. satisfied, even if required)? default implementation always returns true */

@@ -256,8 +256,9 @@ bool RKComponent::isInactive () {
 
 bool RKComponent::isValid () {
 	RK_TRACE (PLUGIN);
-#warning TODO: I do not think we need this. Use recursiveStatus, instead
 
+	// TODO: It's sort of lame to iterate over all children, here, as typically this is called indirectly from recursiveStatus(), and that iterates over the children, too.
+	// However, iterating over the children is required to make isSatisfied() return a sensible answer.
 	for (QHash<QString, RKComponentBase*>::const_iterator it = child_map.constBegin (); it != child_map.constEnd (); ++it) {
 		if (!(it.value ()->isSatisfied ())) return false;
 	}
