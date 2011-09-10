@@ -238,8 +238,7 @@ void RInterface::doNextCommand (RCommand *command) {
 		if (command_logfile_mode != NotRecordingCommands) {
 			bool record = true;
 			if (command_logfile_mode != RecordingCommandsUnfiltered) {
-				if (command->type () & RCommand::Sync) record = false;
-				else if (command->command ().startsWith (".rk.rerun.plugin.link")) record = false;
+				if (command->type () & (RCommand::Silent | RCommand::Sync)) record = false;
 			}
 			if (record) {
 				command_logfile.write (command->command ().toUtf8 ());
