@@ -2,7 +2,7 @@
 <h2>Parameters</h2>
 <ul><li>File: source.R</li>
 </ul>
-DATE<br>
+DATE<br />
 <h2>Messages, warnings, or errors:</h2>
 <pre class="output_normal">[1] &quot;ok&quot;
 </pre>
@@ -10,7 +10,7 @@ DATE<br>
 <h2>Parameters</h2>
 <ul><li>File: source.R</li>
 </ul>
-DATE<br>
+DATE<br />
 <h2>Messages, warnings, or errors:</h2>
 <pre class="output_normal">
 &gt; testx &lt;- c (20:30)
