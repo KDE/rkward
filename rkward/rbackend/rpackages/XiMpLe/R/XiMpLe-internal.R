@@ -371,9 +371,9 @@ XML.nodes <- function(single.tags, end.here=NA, start=1){
 		} else {}
 		if(XML.value(this.tag)){
 			children[nxt.child] <- new("XiMpLe.node",
-				name="value",
-				value=this.tag)
-			names(children)[nxt.child] <- "value"
+				name="",
+				value=XML.value(this.tag, get=TRUE))
+			names(children)[nxt.child] <- "!value!"
 			tag.no <- tag.no + 1
 			next
 		} else {
@@ -410,21 +410,13 @@ XML.nodes <- function(single.tags, end.here=NA, start=1){
 		## uncomment to debug:
 		# cat(child.name, ":", tag.no, "-", child.end.tag,"\n")
 			rec.nodes <- XML.nodes(single.tags, end.here=child.name, start=tag.no + 1)
-			# if there's a value element, move the value here
-			if(!is.null(rec.nodes$children[["value"]])){
-				node.value <- rec.nodes$children[["value"]]@value
-				rec.nodes$children[["value"]] <- NULL
-			} else {
-				# this will force the node to remain non-empty.
-				# if value was character() and node had no children,
-				# it would be turned into an empty tag otherwise
-				node.value <- ""
-			}
 			children[nxt.child] <- new("XiMpLe.node",
 				name=child.name,
 				attributes=child.attr,
 				children=rec.nodes$children,
-				value=as.character(node.value))
+				# this value will force the node to remain non-empty if it had no children,
+				# it would be turned into an empty tag otherwise
+				value="")
 			names(children)[nxt.child] <- child.name
 			tag.no <- rec.nodes$tag.no + 1
 			next

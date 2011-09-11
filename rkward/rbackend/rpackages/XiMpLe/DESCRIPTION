@@ -17,10 +17,10 @@ License: GPL (>= 3)
 Encoding: UTF-8
 LazyLoad: yes
 URL: http://rkward.sourceforge.net
-Author@R: c(person(given="Meik", family="Michalke",
-    email="meik.michalke@hhu.de"))
-Version: 0.02-2
-Date: 2011-09-02
+Authors@R: c(person(given="Meik", family="Michalke",
+    email="meik.michalke@hhu.de", role=c("aut", "cre")))
+Version: 0.03-1
+Date: 2011-09-11
 Collate:
     'XiMpLe.node-class.R'
     'XiMpLe.doc-class.R'

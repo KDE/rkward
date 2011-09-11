@@ -19,12 +19,12 @@ setValidity("XiMpLe.node", function(object){
 		obj.name <- object@name
 		obj.attributes <- object@attributes
 		obj.children <- object@children
-#		obj.value <- object@value
+		obj.value <- object@value
 
- 		if(!nchar(obj.name) > 0){
+		if(isTRUE(!nchar(obj.name) > 0) & isTRUE(!nchar(obj.value) > 0)){
 			print(str(object))
- 			stop(simpleError("Invalid object: A node must have a name!"))
- 		} else {}
+			stop(simpleError("Invalid object: A node must at least have a name or a value!"))
+		} else {}
 
 		obj.attributes.names <- names(obj.attributes)
 		# if there are attributes, check that they all have names

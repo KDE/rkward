@@ -41,7 +41,7 @@ pasteXMLNode <- function(node, level=1, shine=2, indent.by="\t"){
 	if(length(node.val) > 0){
 		node.empty <- FALSE
 		if(nchar(node.val) > 0){
-			node.chld <- paste(new.indent, node.val, new.node, node.chld, collapse="", sep="")
+			node.chld <- node.val
 		} else {}
 	} else {}
 

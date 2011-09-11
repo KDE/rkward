@@ -29,7 +29,7 @@ pasteXMLTree <- function(obj, shine=2, indent.by="\t"){
 
 	if(any(nchar(unlist(tree.doctype)) > 0)) {
 		new.node   <- ifelse(shine > 0, "\n", "")
-		doc.doctype <- paste("<!DOCTYPE ", paste(tree.doctype[["doctype"]], tree.doctype[["id"]], sep="", collapse=" "), sep="")
+		doc.doctype <- paste("<!DOCTYPE ", paste(tree.doctype[["doctype"]], tree.doctype[["id"]], sep=" "), sep="")
 		if(length(tree.doctype[["refer"]]) > 0) {
 			if(nchar(tree.doctype[["refer"]]) > 0){
 				doc.doctype <- paste(doc.doctype, " \"",tree.doctype[["refer"]], "\"", sep="")

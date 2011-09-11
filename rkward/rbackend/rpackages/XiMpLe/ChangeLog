@@ -1,5 +1,9 @@
 ChangeLog for package XiMpLe
 
+## 0.03-1 (2011-09-11)
+  - fixed outstanding issue with complex value structures
+  - changed "Author@R" to "Authors@R" in DESCRIPTION (for R >= 2.14)
+
 ## 0.02-2 (2011-09-01)
   - fixed missing "methods" dependecy
   - adjusted docs a little

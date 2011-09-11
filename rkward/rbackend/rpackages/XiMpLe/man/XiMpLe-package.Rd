@@ -2,14 +2,15 @@
 \name{XiMpLe-package}
 \alias{XiMpLe}
 \alias{XiMpLe-package}
+\alias{"XiMpLe-package"}
 \title{A simple XML tree parser and generator.}
 \description{
   A simple XML tree parser and generator.
 }
 \details{
   \tabular{ll}{ Package: \tab XiMpLe\cr Type: \tab
-  Package\cr Version: \tab 0.02-2\cr Date: \tab
-  2011-09-02\cr Depends: \tab R (>= 2.9.0),methods\cr
+  Package\cr Version: \tab 0.03-1\cr Date: \tab
+  2011-09-11\cr Depends: \tab R (>= 2.9.0),methods\cr
   Enhances: \tab rkward\cr Encoding: \tab UTF-8\cr License:
   \tab GPL (>= 3)\cr LazyLoad: \tab yes\cr URL: \tab
   http://rkward.sourceforge.net\cr }

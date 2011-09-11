@@ -1,7 +1,7 @@
 exportClasses(XiMpLe.doc)
 exportClasses(XiMpLe.node)
-exportMethods(node)
 exportMethods("node<-")
+exportMethods(node)
 export(parseXMLTree)
 export(pasteXMLNode)
 export(pasteXMLTag)

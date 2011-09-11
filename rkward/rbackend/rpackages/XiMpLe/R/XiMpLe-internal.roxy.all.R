@@ -1,10 +1,13 @@
 # package description files
+# this internal object can be used by the package roxyPackage to
+# automatically create/update DESCRIPTION and CITATION files
 pckg.dscrptn <- data.frame(
 		Package="XiMpLe",
 		Type="Package",
 		Title="A simple XML tree parser and generator",
 		Author="m.eik michalke <meik.michalke@hhu.de>",
-		AuthorR="c(person(given=\"Meik\", family=\"Michalke\", email=\"meik.michalke@hhu.de\"))",
+		AuthorsR="c(person(given=\"Meik\", family=\"Michalke\", email=\"meik.michalke@hhu.de\",
+			role=c(\"aut\", \"cre\")))",
 		Maintainer="m.eik michalke <meik.michalke@hhu.de>",
 		Depends="R (>= 2.9.0),methods",
 		Enhances="rkward",
