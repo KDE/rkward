@@ -2,7 +2,6 @@
 \name{XiMpLe-package}
 \alias{XiMpLe}
 \alias{XiMpLe-package}
-\alias{"XiMpLe-package"}
 \title{A simple XML tree parser and generator.}
 \description{
   A simple XML tree parser and generator.
