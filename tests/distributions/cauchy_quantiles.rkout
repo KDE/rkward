@@ -6,7 +6,7 @@
 <li>Tail: lower.tail=TRUE</li>
 <li>Probabilities p are given as: log.p = FALSE</li>
 </ul>
-DATE<br>
+DATE<br />
 <h3>Cauchy quantiles: 6.4732</h3><h1>Cauchy quantiles</h1>
 <h2>Parameters</h2>
 <ul><li>Vector of probabilities: c (-1, -2)</li>
@@ -15,5 +15,5 @@ DATE<br>
 <li>Tail: lower.tail=FALSE</li>
 <li>Probabilities p are given as: log.p = TRUE</li>
 </ul>
-DATE<br>
+DATE<br />
 <h3>Cauchy quantiles: 0.45186 2.1844</h3>

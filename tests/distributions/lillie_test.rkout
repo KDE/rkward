@@ -1,5 +1,5 @@
 <h1>Lilliefors (Kolmogorov-Smirnov) Normality test</h1>
-DATE<br>
+DATE<br />
 <table border="1">
 <tr><td>Variable Name</td><td>Length</td><td>NAs</td><td>Statistic</td><td>p-value</td></tr>
 <tr><td>shape</td><td>48</td><td>0</td><td>D = 0.16978665617225</td><td>0.0013779</td></tr>

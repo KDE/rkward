@@ -11,7 +11,7 @@ suite <- new ("RKTestSuite", id="distributions",
 	), tests = list (
 		new ("RKTest", id="shapiro_wilk_test", call=function () {
 			rk.call.plugin ("rkward::shapiro_test", length.state="1", x.available="rock[[\"shape\"]]\nrock[[\"perm\"]]", submit.mode="submit")
-		}),
+		}, fuzzy_output=TRUE),	# unfortunately, part of the output does not get rounded
 		new ("RKTest", id="ad_test", call=function () {
 			rk.call.plugin ("rkward::ad_test", length.state="1", x.available="rock[[\"shape\"]]\nrock[[\"perm\"]]", submit.mode="submit")
 		}, libraries=c("nortest")),

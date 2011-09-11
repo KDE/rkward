@@ -2,7 +2,7 @@
 <h2>Parameters</h2>
 <ul><li>Exclude NAs: YES</li>
 </ul>
-DATE<br>
+DATE<br />
 <table border="1">
 <tr><td>Variable Name</td><td>Length</td><td>NAs</td><td>Statistic</td><td>df</td><td>p-value</td></tr>
 <tr><td>shape</td><td>48</td><td>0</td><td>X-squared = 13.4020992267589</td><td>2</td><td>0.0012296</td></tr>

@@ -6,5 +6,5 @@
 <li>Tail: lower.tail=TRUE</li>
 <li>Probabilities p are given as: log.p = FALSE</li>
 </ul>
-DATE<br>
+DATE<br />
 <h3>Logistic quantiles: 3.9444</h3>

@@ -5,5 +5,5 @@
 <li>Tail: lower.tail=FALSE</li>
 <li>Probabilities p are given as: log.p = TRUE</li>
 </ul>
-DATE<br>
+DATE<br />
 <h3>Exponential quantiles: 1.0476</h3>

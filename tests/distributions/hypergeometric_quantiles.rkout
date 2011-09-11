@@ -7,5 +7,5 @@
 <li>Tail: lower.tail=TRUE</li>
 <li>Probabilities p are given as: log.p = FALSE</li>
 </ul>
-DATE<br>
+DATE<br />
 <h3>Hypergeometric quantiles: 1</h3>

@@ -7,5 +7,5 @@
 <li>Tail: lower.tail=FALSE</li>
 <li>Probabilities p are given as: log.p = FALSE</li>
 </ul>
-DATE<br>
+DATE<br />
 <h3>F quantiles: 0.006194</h3>

@@ -7,5 +7,5 @@
 <li>Tail: lower.tail=TRUE</li>
 <li>Probabilities p are given as: log.p = FALSE</li>
 </ul>
-DATE<br>
+DATE<br />
 <h3>Studentized Range quantiles: 6.0796 4.5007 3.9265 3.6354 3.4605 3.3441 3.2612 3.1992 3.1511 3.1127</h3>

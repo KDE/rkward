@@ -5,5 +5,5 @@
 <li>Tail: lower.tail=TRUE</li>
 <li>Probabilities p are given as: log.p = TRUE</li>
 </ul>
-DATE<br>
+DATE<br />
 <h3>Poisson probabilities: -1.07</h3>
