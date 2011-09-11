@@ -1,7 +1,6 @@
 \docType{package}
 \name{rkwarddev-package}
 \alias{rkwarddev}
-\alias{"rkwarddev-package"}
 \alias{rkwarddev-package}
 \title{A collection of tools for RKWard plugin development.}
 \description{
