@@ -45,6 +45,8 @@ bool RKSettingsModuleGeneral::cd_to_workspace_dir_on_load;
 bool RKSettingsModuleGeneral::show_help_on_startup;
 int RKSettingsModuleGeneral::warn_size_object_edit;
 RKSettingsModuleGeneral::RKMDIFocusPolicy RKSettingsModuleGeneral::mdi_focus_policy;
+RKSettingsModuleGeneral::RKWardConfigVersion RKSettingsModuleGeneral::stored_config_version;
+bool RKSettingsModuleGeneral::config_exists;
 
 RKSettingsModuleGeneral::RKSettingsModuleGeneral (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
 	RK_TRACE (SETTINGS);
@@ -195,10 +197,15 @@ void RKSettingsModuleGeneral::saveSettings (KConfig *config) {
 
 	cg = config->group ("MDI");
 	cg.writeEntry ("focus policy", (int) mdi_focus_policy);
+
+	cg = config->group ("Internal");
+	cg.writeEntry ("config file version", (int) RKWardConfig_Latest);
 }
 
 void RKSettingsModuleGeneral::loadSettings (KConfig *config) {
 	RK_TRACE (SETTINGS);
+
+	config_exists = config->hasGroup ("General");	// one of the very oldest groups in the config
 
 	KConfigGroup cg;
 	cg = config->group ("Logfiles");
@@ -217,6 +224,9 @@ void RKSettingsModuleGeneral::loadSettings (KConfig *config) {
 
 	cg = config->group ("MDI");
 	mdi_focus_policy = (RKMDIFocusPolicy) cg.readEntry ("focus policy", (int) RKMDIClickFocus);
+
+	cg = config->group ("Internal");
+	stored_config_version = (RKWardConfigVersion) cg.readEntry ("config file version", (int) RKWardConfig_Pre0_5_7);
 }
 
 QString RKSettingsModuleGeneral::getSavedWorkplace (KConfig *config) {
