@@ -139,11 +139,11 @@
 		if (is.null(titles)) {
 			titles <- names(dimnames(x))
 		}
-		rn <- c ()   # row names
-		for (row in 1:rows) rn[row] <- paste (titles[1], "=", dimnames(x)[[1]][row])
-		x <- data.frame (cbind (x))
+		rn <- paste (titles[1], "=", dimnames(x)[[1]])
+		titles <- c ("", paste (titles[2], "=", dimnames(x)[[2]]))
+		x <- data.frame (cbind (x), stringsAsFactors=FALSE)
 		rownames (x) <- as.character (rn)
-		titles <- c ("", paste (titles[2], "=", names (internal)))
+		if (missing (print.rownames)) print.rownames <- TRUE
 	}
 
 	if (is.list (x)) {	# or a data.frame
@@ -151,7 +151,7 @@
 			# by default, print rownames, unless they are just plain row numbering
 			if (missing (print.rownames)) print.rownames <- !isTRUE (all.equal (rownames (x), as.character (1:dim(x)[1])))
 			if (isTRUE (print.rownames)) {
-				x <- cbind (rownames (x), x)
+				x <- cbind (rownames (x), x, stringsAsFactors=FALSE)
 				names (x)[1] <- '';
 			}
 		}
