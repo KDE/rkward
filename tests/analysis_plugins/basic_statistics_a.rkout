@@ -9,7 +9,7 @@
 <li>S for Huber estimator: </li>
 <li>Initial value: median</li>
 </ul>
-DATE<br>
+DATE<br />
 <table border="1">
 <tr><td>Variable Name</td><td>Number of obs</td><td>Number of missing values</td><td>Mean</td><td>Variance</td><td>Sd</td><td>Minimum</td><td>Maximum</td><td>Median</td><td>Inter Quartile Range</td><td>Quartiles</td><td>Quantiles</td><td>Trimmed Mean</td><td>Median Absolute Deviation</td><td>Huber M-Estimator</td></tr>
 <tr><td>weight</td><td>15</td><td>0</td><td>136.73</td><td>240.21</td><td>15.499</td><td>115</td><td>164</td><td>135</td><td>23.5</td><td>0%: 115 25%: 124.5 50%: 135 75%: 148 100%: 164</td><td>0%: 115 20%: 122.4 40%: 130.8 60%: 140.2 80%: 150.8 100%: 164</td><td>136.73</td><td>17.554</td><td>3: 143.017677999144</td></tr>

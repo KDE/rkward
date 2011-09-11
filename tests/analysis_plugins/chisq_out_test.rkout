@@ -2,7 +2,7 @@
 <h2>Parameters</h2>
 <ul><li>Opposite: FALSE</li>
 </ul>
-DATE<br>
+DATE<br />
 <table border="1">
 <tr><td>Variable Name</td><td>Length</td><td>NAs</td><td>X-squared</td><td>p-value</td><td>Alternative Hypothesis</td><td>Variance</td><td>Mean</td><td>Standard Deviation</td><td>Median</td><td>Minimum</td><td>Maximum</td></tr>
 <tr><td>shape</td><td>48</td><td>0</td><td>8.6813</td><td>0.0032149</td><td>highest value 0.464125 is an outlier</td><td>0.0069717</td><td>0.21811</td><td>0.083496</td><td>0.19886</td><td>0.09033</td><td>0.46413</td></tr>
@@ -14,10 +14,10 @@ DATE<br>
 <h2>Parameters</h2>
 <ul><li>Opposite: TRUE</li>
 </ul>
-DATE<br>
+DATE<br />
 <table border="1">
 <tr><td>Variable Name</td><td>X-squared</td><td>p-value</td><td>Alternative Hypothesis</td><td>Variance</td></tr>
-<tr><td>shape</td><td>2.3420</td><td>0.12592</td><td>lowest value 0.0903296 is an outlier</td><td>0.0069717</td></tr>
+<tr><td>shape</td><td>2.342</td><td>0.12592</td><td>lowest value 0.0903296 is an outlier</td><td>0.0069717</td></tr>
 <tr><td>perm</td><td>0.87333</td><td>0.35004</td><td>lowest value 6.3 is an outlier</td><td>191685</td></tr>
 <tr><td>peri</td><td>2.3229</td><td>0.12748</td><td>highest value 4864.22 is an outlier</td><td>2049654</td></tr>
 <tr><td>area</td><td>3.5045</td><td>0.061201</td><td>highest value 12212 is an outlier</td><td>7203045</td></tr>

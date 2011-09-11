@@ -1,5 +1,5 @@
 <h1>Fligner-Killeen test of homogeneity of variances</h1>
-DATE<br>
+DATE<br />
 <table border="1">
 <tr><td>Variables</td><td>Fligner-Killeen:med X^2 test statistic</td><td>df</td><td>p-value</td></tr>
 <tr><td>weight

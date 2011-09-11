@@ -4,7 +4,7 @@
 <li>H1: true difference in means is not equal to 0</li>
 <li>Equal variances: not assumed</li>
 </ul>
-DATE<br>
+DATE<br />
 <table border="1">
 <tr><td>Variable Name</td><td>estimated mean</td><td>degrees of freedom</td><td>t</td><td>p</td><td>confidence interval percent</td><td>confidence interval of difference</td></tr>
 <tr><td>test50x
@@ -17,10 +17,10 @@ DATE<br>
 <ul><li>Comparing: test10y against test10z</li>
 <li>H1: true difference in means is less than 0</li>
 </ul>
-DATE<br>
+DATE<br />
 <table border="1">
 <tr><td>Variable Name</td><td>estimated mean</td><td>degrees of freedom</td><td>t</td><td>p</td><td>confidence interval percent</td><td>confidence interval of difference</td></tr>
 <tr><td>test10y
 <br/>test10z</td><td>183.5</td><td>9</td><td>63.886</td><td>1</td><td>99</td><td>-Inf
-<br/>191.60</td></tr>
+<br/>191.6</td></tr>
 </table>

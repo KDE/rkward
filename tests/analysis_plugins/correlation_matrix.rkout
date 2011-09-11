@@ -3,7 +3,7 @@
 <ul><li>Method: pearson</li>
 <li>Exclusion: pairwise.complete.obs</li>
 </ul>
-DATE<br>
+DATE<br />
 <table border="1">
 <tr><td>Coefficient</td><td>test50x</td><td>test50y</td><td>test50z</td></tr>
 <tr><td>test50x</td><td>1</td><td>1</td><td>1</td></tr>
@@ -21,7 +21,7 @@ DATE<br>
 <ul><li>Method: pearson</li>
 <li>Exclusion: pairwise.complete.obs</li>
 </ul>
-DATE<br>
+DATE<br />
 <table border="1">
 <tr><td>Coefficient</td><td>weight</td><td>height</td></tr>
 <tr><td>weight</td><td>1</td><td>0.99549</td></tr>

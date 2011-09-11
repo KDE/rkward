@@ -4,7 +4,7 @@
 <li>Opposite: FALSE</li>
 <li>two-sided: TRUE</li>
 </ul>
-DATE<br>
+DATE<br />
 <table border="1">
 <tr><td>Variable Name</td><td>Length</td><td>NAs</td><td>G</td><td>U</td><td>p-value</td><td>Alternative Hypothesis</td></tr>
 <tr><td>breaks</td><td>54</td><td>0</td><td>3.1709</td><td>0.80671</td><td>0.047523</td><td>highest value 70 is an outlier</td></tr>
@@ -16,7 +16,7 @@ DATE<br>
 <li>Opposite: TRUE</li>
 <li>two-sided: FALSE</li>
 </ul>
-DATE<br>
+DATE<br />
 <table border="1">
 <tr><td>Variable Name</td><td>Length</td><td>NAs</td><td>G</td><td>U</td><td>p-value</td><td>Alternative Hypothesis</td><td>Mean</td><td>Standard Deviation</td><td>Median</td><td>Minimum</td><td>Maximum</td></tr>
 <tr><td>breaks</td><td>54</td><td>0</td><td>4.5459</td><td>0.77345</td><td>1</td><td>10 and 70 are outliers</td><td>28.148</td><td>13.199</td><td>26</td><td>10</td><td>70</td></tr>

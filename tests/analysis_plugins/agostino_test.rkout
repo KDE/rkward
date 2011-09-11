@@ -2,10 +2,10 @@
 <h2>Parameters</h2>
 <ul><li>Alternative Hypothesis: two.sided</li>
 </ul>
-DATE<br>
+DATE<br />
 <table border="1">
 <tr><td>Variable Name</td><td>skewness estimator (skew)</td><td>transformation (z)</td><td>p-value</td><td>Alternative Hypothesis</td><td>Length</td><td>NAs</td></tr>
-<tr><td>breaks</td><td>1.2720</td><td>2.3145</td><td>0.020643</td><td>data have a skewness</td><td>54</td><td>0</td></tr>
+<tr><td>breaks</td><td>1.272</td><td>2.3145</td><td>0.020643</td><td>data have a skewness</td><td>54</td><td>0</td></tr>
 <tr><td>test50z</td><td>0</td><td>0</td><td>1</td><td>data have a skewness</td><td>50</td><td>0</td></tr>
 <tr><td>test10x</td><td>0</td><td>0</td><td>1</td><td>data have a skewness</td><td>11</td><td>1</td></tr>
 </table>

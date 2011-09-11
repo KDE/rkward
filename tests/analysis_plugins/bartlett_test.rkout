@@ -1,5 +1,5 @@
 <h1>Bartlett test of homogeneity of variances</h1>
-DATE<br>
+DATE<br />
 <table border="1">
 <tr><td>Variables</td><td>Bartlett s K-squared</td><td>df</td><td>p-value</td></tr>
 <tr><td>breaks

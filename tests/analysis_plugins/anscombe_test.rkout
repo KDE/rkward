@@ -2,10 +2,10 @@
 <h2>Parameters</h2>
 <ul><li>Alternative Hypothesis: two.sided</li>
 </ul>
-DATE<br>
+DATE<br />
 <table border="1">
 <tr><td>Variable Name</td><td>Kurtosis estimator (tau)</td><td>Transformation (z)</td><td>p-value</td><td>Alternative Hypothesis</td><td>Length</td><td>NAs</td></tr>
 <tr><td>breaks</td><td>4.499</td><td>2.0997</td><td>0.035759</td><td>kurtosis is not equal to 3</td><td>54</td><td>0</td></tr>
-<tr><td>test50z</td><td>1.7990</td><td>-3.2904</td><td>0.0010006</td><td>kurtosis is not equal to 3</td><td>50</td><td>0</td></tr>
+<tr><td>test50z</td><td>1.799</td><td>-3.2904</td><td>0.0010006</td><td>kurtosis is not equal to 3</td><td>50</td><td>0</td></tr>
 <tr><td>test10y</td><td>1.7758</td><td>-0.98164</td><td>0.32628</td><td>kurtosis is not equal to 3</td><td>11</td><td>1</td></tr>
 </table>

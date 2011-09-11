@@ -7,7 +7,7 @@
 <li>Paired test: FALSE</li>
 <li>mu: 0.00</li>
 </ul>
-DATE<br>
+DATE<br />
 <table border="1">
 <tr><td>Variable Names</td><td>statistic</td><td>Location Shift</td><td>Hypothesis</td><td>p</td><td>confidence interval percent</td><td>confidence interval of difference</td><td>Difference in Location</td></tr>
 <tr><td>test50x</td><td>1275</td><td>0</td><td>two.sided</td><td>1.7764e-15</td><td>95</td><td>121
@@ -22,7 +22,7 @@ DATE<br>
 <li>Paired test: TRUE</li>
 <li>mu: 0.00</li>
 </ul>
-DATE<br>
+DATE<br />
 <table border="1">
 <tr><td>Variable Names</td><td>statistic</td><td>Location Shift</td><td>Hypothesis</td><td>p</td></tr>
 <tr><td>test50x

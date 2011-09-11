@@ -4,7 +4,7 @@
 <li>Opposite: FALSE</li>
 <li>two-sided: TRUE</li>
 </ul>
-DATE<br>
+DATE<br />
 <table border="1">
 <tr><td>Variable Name</td><td>Length</td><td>NAs</td><td>Dixon Q-statistic</td><td>p-value</td><td>Alternative Hypothesis</td><td>Mean</td><td>Standard Deviation</td><td>Median</td><td>Minimum</td><td>Maximum</td></tr>
 <tr><td>weight</td><td>15</td><td>0</td><td>0.22727</td><td>0.76454</td><td>highest value 164 is an outlier</td><td>136.73</td><td>15.499</td><td>135</td><td>115</td><td>164</td></tr>
@@ -16,7 +16,7 @@ DATE<br>
 <li>Opposite: TRUE</li>
 <li>two-sided: FALSE</li>
 </ul>
-DATE<br>
+DATE<br />
 <table border="1">
 <tr><td>Variable Name</td><td>Dixon Q-statistic</td><td>p-value</td><td>Alternative Hypothesis</td></tr>
 <tr><td>weight</td><td>0.12821</td><td>0.86257</td><td>lowest value 115 is an outlier</td></tr>

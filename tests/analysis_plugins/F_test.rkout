@@ -3,7 +3,7 @@
 <ul><li>Confidence Level: 0.95</li>
 <li>Alternative Hypothesis: true ratio of variances is not equal to 1</li>
 </ul>
-DATE<br>
+DATE<br />
 <table border="1">
 <tr><td>Variables</td><td>F</td><td>Numerator DF</td><td>Denominator DF</td><td>p-value</td><td>Lower CI</td><td>Upper CI</td><td>ratio of variances</td></tr>
 <tr><td>test50z

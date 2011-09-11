@@ -5,7 +5,7 @@
 <li>Compute absolute moments: FALSE</li>
 <li>Remove missing values: TRUE</li>
 </ul>
-DATE<br>
+DATE<br />
 <table border="1">
 <tr><td>Variable Name</td><td>Moment</td></tr>
 <tr><td>test50z</td><td>102</td></tr>

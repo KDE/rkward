@@ -3,10 +3,10 @@
 <ul><li>response variable: breaks</li>
 <li>groups: tension</li>
 </ul>
-DATE<br>
+DATE<br />
 
 
-<p class='character'><p><b> Levene's Test for Homogeneity of Variance </b></p></p>
+<p class='character'><p><b> Levene's Test for Homogeneity of Variance (center = median) </b></p></p>
 
 
 

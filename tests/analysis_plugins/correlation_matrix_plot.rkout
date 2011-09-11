@@ -5,7 +5,7 @@
 <li>Precision: 3 digits</li>
 <li>Scale text: TRUE</li>
 </ul>
-DATE<br>
+DATE<br />
 <img src="graph.png" width="480" height="480"><br>
 
 <p class='character'>Legend:	'***': p &lt; 0.001 -- '**': p &lt; 0.01 -- '*': p &lt; 0.05 -- '.'': p &lt; 0.1</p>

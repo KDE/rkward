@@ -1,8 +1,8 @@
 <h1>Skewness and Kurtosis</h1>
-DATE<br>
+DATE<br />
 <table border="1">
 <tr><td>Variable Name</td><td>Skewness</td><td>Kurtosis</td><td>Excess Kurtosis</td><td>Geary Kurtosis</td><td>Length</td><td>NAs</td></tr>
 <tr><td>weight</td><td>0.25247</td><td>1.9002</td><td>-1.0998</td><td>0.86258</td><td>15</td><td>0</td></tr>
 <tr><td>height</td><td>0</td><td>1.7893</td><td>-1.2107</td><td>0.8641</td><td>15</td><td>0</td></tr>
-<tr><td>breaks</td><td>1.2720</td><td>4.499</td><td>1.4990</td><td>0.75029</td><td>54</td><td>0</td></tr>
+<tr><td>breaks</td><td>1.272</td><td>4.499</td><td>1.499</td><td>0.75029</td><td>54</td><td>0</td></tr>
 </table>

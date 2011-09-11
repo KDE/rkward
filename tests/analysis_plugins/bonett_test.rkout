@@ -2,7 +2,7 @@
 <h2>Parameters</h2>
 <ul><li>Alternative Hypothesis: two.sided</li>
 </ul>
-DATE<br>
+DATE<br />
 <table border="1">
 <tr><td>Variable Name</td><td>Kurtosis estimator (tau)</td><td>Transformation (z)</td><td>p-value</td><td>Alternative Hypothesis</td><td>Length</td><td>NAs</td></tr>
 <tr><td>test50z</td><td>50</td><td>-2.2224</td><td>0.026254</td><td>kurtosis is not equal to sqrt(2/pi)</td><td>50</td><td>0</td></tr>

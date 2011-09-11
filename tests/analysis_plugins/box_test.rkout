@@ -3,7 +3,7 @@
 <ul><li>lag: 1</li>
 <li>type: Box-Pierce</li>
 </ul>
-DATE<br>
+DATE<br />
 <table border="1">
 <tr><td>Variable Name</td><td>Length</td><td>NAs</td><td>X-squared</td><td>degrees of freedom</td><td>p-value</td></tr>
 <tr><td>test50x</td><td>50</td><td>0</td><td>44.18</td><td>1</td><td>2.9953e-11</td></tr>

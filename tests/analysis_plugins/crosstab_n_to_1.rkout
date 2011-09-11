@@ -1,5 +1,5 @@
 <h1>Crosstabs (n to 1)</h1>
-DATE<br>
+DATE<br />
 <h2>Crosstabs (n to 1)</h2>
 <h3>Parameters</h3>
 <ul><li>Dependent: tension</li>
@@ -67,7 +67,7 @@ DATE<br>
 <br>
 <img src="graph.png" width="480" height="480"><br>
 <h1>Crosstabs (n to 1)</h1>
-DATE<br>
+DATE<br />
 <h2>Crosstabs (n to 1)</h2>
 <h3>Parameters</h3>
 <ul><li>Dependent: tension</li>

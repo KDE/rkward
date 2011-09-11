@@ -2,7 +2,7 @@
 <h2>Parameters</h2>
 <ul><li>Remove Missing values: TRUE</li>
 </ul>
-DATE<br>
+DATE<br />
 <table border="1">
 <tr><td>Variable Name</td><td>Minimum values</td><td>Maximum values</td></tr>
 <tr><td>test10x</td><td>101 102</td><td>110 109 108</td></tr>
