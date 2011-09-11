@@ -2,11 +2,21 @@
 \alias{rk.XML.input}
 \title{Create XML node "input" for RKWard plugins}
 \usage{
-  rk.XML.input(label, id.name = "auto")
+  rk.XML.input(label, initial = NULL, size = "medium",
+  required = FALSE, id.name = "auto")
 }
 \arguments{
   \item{label}{Character string, a text label for this
   plugin element.}
+
+  \item{initial}{Character string, if not \code{NULL} will
+  be used as thi initial value of the input field.}
+
+  \item{size}{One value of either "small", "medium" or
+  "large".}
+
+  \item{required}{Logical, whether an entry is mandatory or
+  not.}
 
   \item{id.name}{Character string, a unique ID for this
   plugin element. If \code{"auto"}, an ID will be generated

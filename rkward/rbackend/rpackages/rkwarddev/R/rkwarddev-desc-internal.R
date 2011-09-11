@@ -1,10 +1,13 @@
 # package description files
+# this internal object can be used by the package roxyPackage to
+# automatically create/update DESCRIPTION and CITATION files
 pckg.dscrptn <- data.frame(
 		Package="rkwarddev",
 		Type="Package",
 		Title="A collection of tools for RKWard plugin development",
 		Author="m.eik michalke <meik.michalke@hhu.de>",
-		AuthorR="c(person(given=\"Meik\", family=\"Michalke\", email=\"meik.michalke@hhu.de\"))",
+		AuthorsR="c(person(given=\"Meik\", family=\"Michalke\", email=\"meik.michalke@hhu.de\",
+			role=c(\"aut\", \"cre\")))",
 		Maintainer="m.eik michalke <meik.michalke@hhu.de>",
 		Depends="R (>= 2.9.0), XiMpLe",
 		Enhances="rkward",

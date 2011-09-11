@@ -2,7 +2,8 @@
 \alias{rk.XML.cbox}
 \title{Create XML node "checkbox" for RKWard plugins}
 \usage{
-  rk.XML.cbox(label, val, chk = FALSE, id.name = "auto")
+  rk.XML.cbox(label, val, un.val = NULL, chk = FALSE,
+  id.name = "auto")
 }
 \arguments{
   \item{label}{Character string, a text label for this
@@ -10,6 +11,9 @@
 
   \item{val}{Character string, the value to submit if the
   element is checked.}
+
+  \item{un.val}{Character string, an optional value for the
+  unchecked option.}
 
   \item{chk}{Logical, whether this element should be
   checked by default.}

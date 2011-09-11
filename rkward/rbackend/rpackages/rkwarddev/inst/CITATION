@@ -1,6 +1,7 @@
 bibentry("Manual",
 		title="rkwarddev: A collection of tools for RKWard plugin development",
-		author=c(person(given="Meik", family="Michalke", email="meik.michalke@hhu.de")),
+		author=c(person(given="Meik", family="Michalke", email="meik.michalke@hhu.de",
+			role=c("aut", "cre"))),
 		year="2011",
 		note="(Version 0.01-1)",
 		url="http://rkward.sourceforge.net",

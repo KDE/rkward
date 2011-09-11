@@ -2,9 +2,14 @@
 \alias{rk.XML.text}
 \title{Create XML node "text" for RKWard plugins}
 \usage{
-  rk.XML.text(text, id.name = NULL)
+  rk.XML.text(text, type = "normal", id.name = NULL)
 }
 \arguments{
+  \item{text}{Character string, the text to be displayed.}
+
+  \item{type}{One value of either "normal", "warning" or
+  "error".}
+
   \item{id.name}{Character string, a unique ID for this
   plugin element.}
 }
