@@ -101,23 +101,19 @@
 	on.exit (sink ())
 
 	cat ("<h", level, ">", title, "</h", level, ">\n", sep="")
-	# legacy handling: parameter=value used to be passed as parameter, value
-	if (!is.null (names (parameters))) {
-		pnames <- names (parameters)
-		p <- list ()
-		for (i in 1:length (parameters)) {
-			p[i*2-1] <- pnames[i]
-			p[i*2] <- parameters[i]
-		}
-		parameters <- p
-	}
 	if (length (parameters)) {
+		# legacy handling: parameter=value used to be passed as parameter, value
+		if (is.null (names (parameters))) {
+			s <- seq.int (1, length (parameters), by=2)
+			pnames <- as.character (parameters[s])
+			parameters <- parameters[s+1]
+		} else {
+			pnames <- names (parameters)
+		}
+
 		cat ("<h", level + 1, ">Parameters</h", level + 1, ">\n<ul>", sep="")
-		len <- length (parameters)
-		i <- 2
-		while (i <= len) {
-			cat ("<li>", parameters[[i-1]], ": ", parameters[[i]], "</li>\n", sep="")
-			i <- i + 2
+		for (i in 1:length (parameters)) {
+			cat ("<li>", pnames[i], ": ", parameters[[i]], "</li>\n", sep="")
 		}
 		cat ("</ul>\n")
 	}
