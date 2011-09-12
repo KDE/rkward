@@ -13,10 +13,7 @@ mkdir $DISTDIR
 $BASEDIR/scripts/set_dist_version.sh $VERSION
 
 # update roxygen documentation just in case we forgot:
-TESTSPACKAGE="${BASEDIR}/rkward/rbackend/rpackages/rkwardtests/"
-/usr/bin/R CMD roxygen "${TESTSPACKAGE}" "${TESTSPACKAGE}"
-rmdir "${TESTSPACKAGE}/inst/doc"
-rmdir "${TESTSPACKAGE}/inst"
+$BASEDIR/scripts/roxygenize.sh
 
 cp -a AUTHORS CMakeLists.txt COPYING ChangeLog TODO INSTALL NOTES README configure $DISTDIR
 mkdir $DISTDIR/doc
@@ -32,9 +29,6 @@ rsync -a --exclude '*~' --exclude '*.svn*' $EXCLUDES $BASEDIR/tests/* $DISTDIR/t
 # make messages
 cd $DISTDIR/po
 ./Messages.sh
-# clean up test-results
-cd $DISTDIR/tests
-find . -mindepth 2 -name 'RKTestStandard.*' -o -exec rm {} \;
 
 cd $BASEDIR/disttemp
 tar -czf rkward-$VERSION.tar.gz $DISTDIRREL

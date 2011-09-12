@@ -1,0 +1,19 @@
+#!/bin/bash
+
+cd `dirname $0`/..
+BASEDIR=`pwd`
+
+echo "
+	library (roxygen2)
+	packages <- c ('${BASEDIR}/rkward/rbackend/rpackages/rkwardtests/',
+					'${BASEDIR}/rkward/rbackend/rpackages/rkwarddev/',
+					'${BASEDIR}/rkward/rbackend/rpackages/XiMpLe/')
+	for (package in packages) {
+		roxygenize (package)
+		possibly_empty_dirs <- paste (package, c ('inst/doc', 'inst'), sep='/')
+		for (dir in possibly_empty_dirs) {
+			if (file.exists (dir)) try (file.remove (dir))
+		}
+	}
+	print (warnings())
+" | /usr/bin/R --no-save
