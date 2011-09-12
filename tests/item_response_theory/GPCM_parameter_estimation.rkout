@@ -1,10 +1,10 @@
 <h1>GPCM parameter estimation</h1>
-DATE<br>
+DATE<br />
 
 <p class='character'>Call:</p>
 <pre>gpcm(data = subset(Science, select = c("Work", "Industry", "Future", "Benefit")), constraint = "rasch")</pre>
 <h4>Coefficients:</h4>
-<br>
+<br />
 
 
 <p align= center >

@@ -1,8 +1,7 @@
 <h1>Andersen's LR test</h1>
-DATE<br>
+DATE<br />
 <img src="graph.png" width="480" height="480"><br>
 <h2>Messages, warnings, or errors:</h2>
-<pre class="output_normal">Warning message: Persons with median raw scores are assigned to the lower raw score group!
-I2 I4 I1 I5 
+<pre class="output_normal">I2 I4 I1 I5 
 Full and subgroup models are estimated without these items!
 </pre>

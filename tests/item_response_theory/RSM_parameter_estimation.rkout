@@ -1,10 +1,10 @@
 <h1>RSM  parameter estimation</h1>
-DATE<br>
+DATE<br />
 
 <p class='character'>Call:</p>
 <pre>RSM(X = rsmdat)</pre>
 <h4>Coefficients:</h4>
-<br>
+<br />
 
 
 <p align= center >

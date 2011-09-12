@@ -1,10 +1,10 @@
 <h1>LLTM  parameter estimation</h1>
-DATE<br>
+DATE<br />
 
 <p class='character'>Call:</p>
 <pre>LLTM(X = lltmdat1, mpoints = 2)</pre>
 <h4>Coefficients:</h4>
-<br>
+<br />
 
 
 <p align= center >

@@ -1,10 +1,10 @@
 <h1>Person-fit statistics (estimates.rasch)</h1>
-DATE<br>
+DATE<br />
 
 <p class='character'>Call:</p>
 <pre>rasch(data = LSAT)</pre>
 <h4>Response patterns, person-fit statistics (L0, Lz) and probabilities for each response pattern (Pr):</h4>
-<br>
+<br />
 
 
 <p align= center >

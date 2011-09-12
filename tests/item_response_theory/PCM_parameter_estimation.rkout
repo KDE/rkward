@@ -1,10 +1,10 @@
 <h1>PCM  parameter estimation</h1>
-DATE<br>
+DATE<br />
 
 <p class='character'>Call:</p>
 <pre>PCM(X = pcmdat)</pre>
 <h4>Coefficients:</h4>
-<br>
+<br />
 
 
 <p align= center >

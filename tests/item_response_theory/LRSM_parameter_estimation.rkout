@@ -1,10 +1,10 @@
 <h1>LRSM  parameter estimation</h1>
-DATE<br>
+DATE<br />
 
 <p class='character'>Call:</p>
 <pre>LRSM(X = lrsmdat, mpoints = 2, se = FALSE, sum0 = FALSE)</pre>
 <h4>Coefficients:</h4>
-<br>
+<br />
 
 
 <p align= center >

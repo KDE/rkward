@@ -1,5 +1,5 @@
 <h1>Item-fit statistics (estimates.rasch)</h1>
-DATE<br>
+DATE<br />
 
 <p class='character'>Call:</p>
 <pre>rasch(data = LSAT)</pre>
@@ -8,7 +8,7 @@ DATE<br>
 
 <p class='character'>Ability Categories: 10</p>
 <h4>Item-Fit Statistics and P-values:</h4>
-<br>
+<br />
 
 
 <p align= center >
