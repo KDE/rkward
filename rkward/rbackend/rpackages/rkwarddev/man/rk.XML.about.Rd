@@ -7,34 +7,34 @@
 }
 \arguments{
   \item{about}{A named list with these elements: \describe{
-  \item{name} {Plugin name} \item{desc} {A short
-  description} \item{version} {Plugin version} \item{date}
-  {Release date} \item{url} {URL for the plugin}
-  \item{license} {License the plugin is distributed under}
-  \item{category} {An optional category} }}
+  \item{name}{Plugin name} \item{desc}{A short description}
+  \item{version}{Plugin version} \item{date}{Release date}
+  \item{url}{URL for the plugin} \item{license}{License the
+  plugin is distributed under} \item{category}{An optional
+  category} }}
 
   \item{author}{A list of named character vectors with
-  these elements: \describe{ \item{name} {Full author name}
-  \item{email} {Author mail address} \item{url} {Author
+  these elements: \describe{ \item{name}{Full author name}
+  \item{email}{Author mail address} \item{url}{Author
   homepage} }}
 
   \item{dependencies}{A named list with these elements:
-  \describe{ \item{rkward.min} {Minimum RKWard version
-  needed for this plugin} \item{rkward.max} {Maximum RKWard
-  version needed for this plugin} \item{R.min} {Minimum R
-  version needed for this plugin} \item{R.max} {Maximum R
+  \describe{ \item{rkward.min}{Minimum RKWard version
+  needed for this plugin} \item{rkward.max}{Maximum RKWard
+  version needed for this plugin} \item{R.min}{Minimum R
+  version needed for this plugin} \item{R.max}{Maximum R
   version needed for this plugin} }}
 
   \item{package}{A list of named character vectors, each
-  with these elements: \describe{ \item{name} {Name of a
-  package this plugin depends on} \item{min} {Minimum
-  version of the package} \item{max} {Maximum version of
-  the package} \item{repository} {Repository to download
-  the package} }}
+  with these elements: \describe{ \item{name}{Name of a
+  package this plugin depends on} \item{min}{Minimum
+  version of the package} \item{max}{Maximum version of the
+  package} \item{repository}{Repository to download the
+  package} }}
 
   \item{pluginmap}{A named list with these elements:
-  \describe{ \item{name} {Identifier of a pluginmap this
-  plugin depends on} \item{url} {URL to get the pluginmap}
+  \describe{ \item{name}{Identifier of a pluginmap this
+  plugin depends on} \item{url}{URL to get the pluginmap}
   }}
 }
 \description{

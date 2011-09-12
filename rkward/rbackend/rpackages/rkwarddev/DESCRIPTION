@@ -16,7 +16,7 @@ URL: http://rkward.sourceforge.net
 Authors@R: c(person(given="Meik", family="Michalke",
     email="meik.michalke@hhu.de", role=c("aut", "cre")))
 Version: 0.01-1
-Date: 2011-09-11
+Date: 2011-09-12
 Collate:
     'rk-internal.R'
     'rk.JS.array.R'
