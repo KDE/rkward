@@ -44,14 +44,7 @@
 			</tab>
 			<tab label="Limit" id="tab_limit_options">
 				<frame id="limit" label="Limit number of groups" checkable="true" checked="false">
-					<row>
-						<spinbox type="integer" id="cutoff" initial="10" min="1" label="Limit"/>
-						<radio id="sorting" label="Sorting">
-							<option value="lowest" label="Smallest values"/>
-							<option value="highest" checked="true" label="Largest values"/>
-						</radio>
-					</row>
-					<input id="others_label" label="Remainder category label" initial="Other" required="true"/>
+					<embed id="limit_options" component="rkward::limit_vector_length" as_button="false" label="Limit Categories"/>
 				</frame>
 				<stretch/>
 			</tab>

@@ -14,13 +14,7 @@ function calculate () {
 	}
 
 	if (getValue ("limit.checked")) {
-		echo ('max.categories <- ' + getValue ("cutoff") + '\n');
-		echo ('if (length (x) > max.categories) {\n');
-		echo ('\tx <- sort (x');
-		if (getValue ("sorting") != "lowest") echo (', decreasing=TRUE');
-		echo (')\n');
-		echo ('\tx <- c (x[1:max.categories], ' + quote (getValue ("others_label")) + '=sum (x[(max.categories+1):length(x)]))\n');
-		echo ('}\n');
+		echo (getValue ('limit_options.code.calculate'));
 	}
 }
 

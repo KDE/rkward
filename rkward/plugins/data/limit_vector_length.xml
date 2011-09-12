@@ -1,0 +1,28 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="limit_vector_length.js" />
+	<help file="limit_vector_length.rkh" />
+	<logic>
+		<external id="invar" default="x"/>
+		<external id="outvar" default="x"/>
+	</logic>
+	<dialog label="Limit Vector Length">
+		<row>
+			<spinbox type="integer" id="cutoff" initial="10" min="1" label="Limit"/>
+			<radio id="sorting" label="Sorting">
+				<option value="lowest" label="Keep smallest values"/>
+				<option value="highest" checked="true" label="Keep largest values"/>
+			</radio>
+		</row>
+		<frame id="include_others" label="Add remainder category" checkable="true" checked="true">
+			<radio id="others_statistic" label="Statistic">
+				<option value="sum" label="Sum" checked="true"/>
+				<option value="mean" label="Mean"/>
+				<option value="custom" label="Other:"/>
+			</radio>
+			<input id="custom_stat" label="Custom statistic (as function of x)" initial="sd (x)"/>
+
+			<input id="others_label" label="Remainder category label" initial="Other"/>
+		</frame>
+	</dialog>
+</document>

@@ -10,6 +10,7 @@
 		<component type="standard" id="barplot_embed" file="plots/barplot_embed.xml" label="Barplot Options" />
 
 		<component type="standard" id="one_var_tabulation" file="data/one_var_tabulation.xml" label="Tabulate" />
+		<component type="standard" id="limit_vector_length" file="data/limit_vector_length.xml" label="Limit Vector Length" />
 
 		<component type="standard" id="x11grid" file="x11device/grid.xml" label="Draw Grid" />
 
