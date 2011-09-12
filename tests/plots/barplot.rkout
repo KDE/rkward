@@ -6,7 +6,7 @@
 <li>Type: juxtaposed</li>
 <li>Legend: FALSE</li>
 </ul>
-DATE<br>
+DATE<br />
 <img src="graph.png" width="480" height="480"><br>
 <h1>Barplot</h1>
 <h2>Parameters</h2>
@@ -16,5 +16,5 @@ DATE<br>
 <li>Type: stacked</li>
 <li>Legend: TRUE</li>
 </ul>
-DATE<br>
+DATE<br />
 <img src="graph.png" width="480" height="480"><br>

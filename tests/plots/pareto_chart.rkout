@@ -1,5 +1,5 @@
 <h1>Pareto chart</h1>
-DATE<br>
+DATE<br />
 <img src="graph.png" width="480" height="480"><br><table border="1">
 <tr><td>Frequency</td><td>Cum.Freq.</td><td>Percentage</td><td>Cum.Percent.</td></tr>
 <tr><td>100</td><td>100</td><td>5.1713</td><td>5.1713</td></tr>
