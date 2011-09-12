@@ -47,9 +47,9 @@ function calculate () {
 function printout () {
 	echo ('rk.header ("Correlation Matrix", parameters=list ("Method", ' + method + ', "Exclusion", ' + use + '))\n');
 	echo ('\n');
-	echo ('rk.results (data.frame ("Coefficient"=I(names (data)), result, check.names=FALSE))\n');
+	echo ('rk.results (data.frame (result, check.names=FALSE), titles=c ("Coefficient", names (data)))\n');
 	if (do_p) {
-		echo ('rk.results (data.frame ("n \\\\ p"=I(names (data)), result.p, check.names=FALSE))\n');
+		echo ('rk.results (data.frame (result.p, check.names=FALSE), titles=c ("n \\\\ p", names (data)))\n');
 	}
 }
 

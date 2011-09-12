@@ -21,8 +21,8 @@ for (i in 1:length (data)) {
 ## Print result
 rk.header ("Correlation Matrix", parameters=list ("Method", "pearson", "Exclusion", "pairwise.complete.obs"))
 
-rk.results (data.frame ("Coefficient"=I(names (data)), result, check.names=FALSE))
-rk.results (data.frame ("n \\ p"=I(names (data)), result.p, check.names=FALSE))
+rk.results (data.frame (result, check.names=FALSE), titles=c ("Coefficient", names (data)))
+rk.results (data.frame (result.p, check.names=FALSE), titles=c ("n \\ p", names (data)))
 })
 local({
 ## Prepare
@@ -36,5 +36,5 @@ result <- cor (data, use="pairwise.complete.obs", method="pearson")
 ## Print result
 rk.header ("Correlation Matrix", parameters=list ("Method", "pearson", "Exclusion", "pairwise.complete.obs"))
 
-rk.results (data.frame ("Coefficient"=I(names (data)), result, check.names=FALSE))
+rk.results (data.frame (result, check.names=FALSE), titles=c ("Coefficient", names (data)))
 })
