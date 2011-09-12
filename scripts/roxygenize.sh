@@ -5,7 +5,8 @@ BASEDIR=`pwd`
 
 echo "
 	library (roxygen2)
-	packages <- c ('${BASEDIR}/rkward/rbackend/rpackages/rkwardtests/',
+	packages <- c ( # '${BASEDIR}/rkward/rbackend/rpackages/rkward/',  # currently excluded due to incomplete conversion to roxygen documentation
+					# '${BASEDIR}/rkward/rbackend/rpackages/rkwardtests/', # currently excluded due to missing support for slots in roxygen2
 					'${BASEDIR}/rkward/rbackend/rpackages/rkwarddev/',
 					'${BASEDIR}/rkward/rbackend/rpackages/XiMpLe/')
 	for (package in packages) {
