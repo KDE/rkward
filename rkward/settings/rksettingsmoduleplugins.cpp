@@ -198,7 +198,7 @@ void RKSettingsModulePlugins::loadSettings (KConfig *config) {
 void RKSettingsModulePlugins::registerPluginMaps (const QStringList &maps) {
 	RK_TRACE (SETTINGS);
 
-	bool added = false;
+	QStringList added;
 	foreach (const QString &map, maps) {
 		if (map.isEmpty ()) continue;
 		if (known_plugin_maps.contains (map)) continue;
@@ -206,11 +206,11 @@ void RKSettingsModulePlugins::registerPluginMaps (const QStringList &maps) {
 
 		if (plugin_maps.contains (map)) continue;
 		plugin_maps.append (map);
-		added = true;
+		added.append (map);
 	}
 
-	if (added) {
-		KMessageBox::information (RKWardMainWindow::getMain (), i18n ("New RKWard plugin packs have been found. They will be activated, automatically. To de-activate selected plugin packs, use Settings->Configure RKWard->Plugins"), i18n ("New plugins found"), "new_plugins_found");
+	if (!added.isEmpty ()) {
+		KMessageBox::informationList (RKWardMainWindow::getMain (), i18n ("New RKWard plugin packs (listed below) have been found, and have been activated, automatically. To de-activate selected plugin packs, use Settings->Configure RKWard->Plugins."), added, i18n ("New plugins found"), "new_plugins_found");
 		RKWardMainWindow::getMain ()->initPlugins();
 	}
 }
