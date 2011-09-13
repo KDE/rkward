@@ -169,7 +169,7 @@ rktest.replace <- function (name, replacement, envir=as.environment ("package:rk
 	} else {
 # 		# Apparently R 2.14.x starts forcing namespaces for all packages, which makes things a bit more difficult
 		if (identical (envir, as.environment ("package:rkward"))) {
-			try (rktest.replace (name, replacement, asNamespace ("rkward"), backup.name))
+			try (rktest.replace (name, replacement, asNamespace ("rkward"), backup.name), silent=TRUE)
 		}
 
 		assign (backup.name, get (name, envir), envir=.rktest.tmp.storage)
@@ -184,7 +184,7 @@ rktest.restore <- function (name, envir=as.environment ("package:rkward"), backu
 	if (exists (backup.name, envir=.rktest.tmp.storage, inherits=FALSE)) {
 		assign (name, get (backup.name, envir=.rktest.tmp.storage), envir=envir)
 		if (identical (envir, as.environment ("package:rkward"))) {
-			try (assign (name, get (backup.name, envir=.rktest.tmp.storage), envir=asNamespace ("rkward")))
+			try (assign (name, get (backup.name, envir=.rktest.tmp.storage), envir=asNamespace ("rkward")), silent=TRUE)
 		}
 	} else {
 		message ("No backup available for ", name, ". Already restored?")
