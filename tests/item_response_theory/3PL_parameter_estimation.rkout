@@ -1,10 +1,10 @@
 <h1>3PL parameter estimation</h1>
-DATE<br>
+DATE<br />
 
 <p class='character'>Call:</p>
 <pre>tpm(data = LSAT)</pre>
 <h4>Coefficients:</h4>
-<br>
+<br />
 
 
 <p align= center >
