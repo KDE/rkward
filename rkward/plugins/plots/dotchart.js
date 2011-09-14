@@ -9,14 +9,14 @@ function preview () {
 function doPrintout (full) {
 	var vars = getValue ("x");
 	var names_mode = getValue ("names_mode");
-	var tabulate = getValue ("tabulate");
 
-	var tabulate_header = "";
-	if (tabulate) {
-		tabulate_header = '"Tabulate", "Yes"';
-	} else {
-		tabulate_header = '"Tabulate", "No"';
-	}
+	var tabulate = getValue ("tabulate.checked");
+	var main_header = '"Variable", rk.get.description (' + vars + ')';
+	if (tabulate) main_header = getValue ('tabulate_options.parameters');
+
+	var limit = getValue ("limit.checked");
+	var limit_header = "";
+	if (limit) limit_header = ", " + getValue ('limit_options.parameters');
 
 	var options = getValue ("plotoptions.code.printout");
 
@@ -24,17 +24,23 @@ function doPrintout (full) {
 	var plotpost = getValue ("plotoptions.code.calculate");
 
 	if (tabulate) {
-		echo ('x <- table (' + vars + ', exclude=NULL)\n');
+		echo (getValue ('tabulate_options.code.calculate'));
+		echo ('x <- as.numeric (x)		# dotchart() is somewhat picky about data type\n');
 	} else {
-		echo ('x <- ' + vars);
-		echo ('\n');
+		echo ('x <- ' + getValue ("x") + '\n');
+		echo ('title <- rk.get.description (' + getValue ("x") + ')\n');
 		echo ('if (!is.numeric (x)) {\n');
-		echo ('	warning ("Data may not be numeric, but proceeding as requested.\\nDid you forget to check the tabulate option?")\n');
+		echo ('	warning ("Data is not numeric, but proceeding as requested.\\nDid you forget to check the tabulate option?")\n');
 		echo ('}\n');
 	}
+
+	if (getValue ("limit.checked")) {
+		echo (getValue ('limit_options.code.calculate'));
+	}
 	echo ('\n');
+
 	if (full) {
-		echo ('rk.header ("Dot chart", parameters=list ("Variable", rk.get.description (' + vars + '), ' + tabulate_header + '))\n');
+		echo ('rk.header ("Dot chart", parameters=list (' + main_header + limit_header + '))\n');
 		echo ('\n');
 		echo ('rk.graph.on ()\n');
 	}

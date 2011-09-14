@@ -8,11 +8,28 @@
 		<connect client="names_custom.visible" governor="rexp_names.not"/>
 		<connect client="names_custom.enabled" governor="custom_names"/>
 		<connect client="names_exp.visible" governor="rexp_names"/>
-		<connect client="names_exp.required" governor="rexp_names"/>
-		
+
 		<set id="plotoptions.allow_ylim" to="false"/>
 		<set id="plotoptions.allow_log" to="false"/>
 		<set id="plotoptions.allow_type" to="false"/>
+
+		<connect client="x.enabled" governor="tabulate.checked.not"/>
+		<connect client="tabulate_options.varsource.selected" governor="vars.selected" />
+
+		<script><![CDATA[
+			gui.addChangeCommand ("tabulate.checked", "updateFunLabel ()");
+			gui.addChangeCommand ("tabulate_options.fun_label", "updateFunLabel ()");
+			updateFunLabel = function () {
+				if (gui.getValue ("tabulate.checked")) {
+					gui.setValue ("plotoptions.default_xlab", gui.getValue ("tabulate_options.fun_label"));
+					gui.setValue ("plotoptions.default_ylab", "title");
+				} else {
+					gui.setValue ("plotoptions.default_xlab", "");
+					gui.setValue ("plotoptions.default_ylab", "");
+				}
+			}
+			updateFunLabel ();
+		]]></script>
 	</logic>
 	<dialog label="Dot chart" >
 		<tabbook>
@@ -20,25 +37,34 @@
 				<row>
 					<varselector id="vars"/>
 					<column>
-					<varslot min_vars="1" id="x" source="vars" required="true" label="Variable"/>
-					<checkbox id="tabulate" label="Tabulate" value="1" value_unchecked="0" checked="false" />
-					<frame label="Labels">
-						<radio id="names_mode" label="Labeling" >
-							<option value="default" label="Default labels" checked="true"/>
-							<option value="custom" label="Custom labels"/>
-							<option value="rexp" label="From R expression"/>
-						</radio>
-						<input id="names_exp" label="Expression to use for labels" initial="names (x)"/>
-						<input id="names_custom" label="Labels (separated by ';')" initial="First label;Second label"/>
-					</frame>
-					<stretch/>
-					<preview id="preview"/>
+						<frame id="tabulate" label="Tabulate data before plotting" checkable="true" checked="false">
+							<embed id="tabulate_options" component="rkward::one_var_tabulation" as_button="false" label="Tabulation Options"/>
+						</frame>
+						<varslot min_vars="1" id="x" source="vars" required="true" label="Variable"/>
+						<stretch/>
+						<preview id="preview"/>
 					</column>
 				</row>
 			</tab>
-			<tab label="Options" id="tab_options">
+			<tab label="Limit" id="tab_limit_options">
+				<frame id="limit" label="Limit number of groups" checkable="true" checked="false">
+					<embed id="limit_options" component="rkward::limit_vector_length" as_button="false" label="Limit Categories"/>
+				</frame>
 				<stretch/>
+			</tab>
+			<tab label="Labels" id="tab_labels">
+				<radio id="names_mode" label="Labels" >
+					<option value="default" label="Default labels" checked="true"/>
+					<option value="custom" label="Custom labels"/>
+					<option value="rexp" label="From R expression"/>
+				</radio>
+				<input id="names_exp" label="Expression to use for labels" initial="names (x)" required="true"/>
+				<input id="names_custom" label="Labels (separated by ';')" initial="First label;Second label"/>
+				<stretch/>
+			</tab>
+			<tab label="Options" id="tab_options">
 				<embed id="plotoptions" component="rkward::plot_options" as_button="false" label="Plot Options"/>
+				<stretch/>
 			</tab>
 		</tabbook>
 	</dialog>

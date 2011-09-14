@@ -51,15 +51,13 @@
 					<stretch/>
 				</tab>
 				<tab label="Bar labels" id="tab_labels">
-					<frame label="Bar labels">
-						<radio id="names_mode" label="Labeling" >
-							<option value="default" label="Default labels" checked="true"/>
-							<option value="custom" label="Custom labels"/>
-							<option value="rexp" label="From R expression"/>
-						</radio>
-						<input id="names_exp" label="Expression to use for labels" initial="names (x)" required="true"/>
-						<input id="names_custom" label="Labels (separated by ';')" initial="First label;Second label"/>
-					</frame>
+					<radio id="names_mode" label="Bar labels" >
+						<option value="default" label="Default labels" checked="true"/>
+						<option value="custom" label="Custom labels"/>
+						<option value="rexp" label="From R expression"/>
+					</radio>
+					<input id="names_exp" label="Expression to use for labels" initial="names (x)" required="true"/>
+					<input id="names_custom" label="Labels (separated by ';')" initial="First label;Second label"/>
 				</tab>
 				<tab label="Options" id="tab_options">
 					<embed id="barplot_embed" component="rkward::barplot_embed"/>
