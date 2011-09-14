@@ -41,7 +41,7 @@
 				gui.setValue ("parameters", '"Tabulation groups"=paste (names (groups), collapse=" by "), "Tabulation statistic"=' + gui.getValue ("fun_label"));
 			}
 			updateFunLabel ();
-	]]></script>
+		]]></script>
 	</logic>
 	<dialog label="Tabulate" >
 		<varselector id="varsource"/>	<!-- dummy varselector is currently needed to allow the embedding component to connect its own varselector -->

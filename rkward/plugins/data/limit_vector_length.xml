@@ -5,13 +5,23 @@
 	<logic>
 		<external id="invar" default="x"/>
 		<external id="outvar" default="x"/>
+		<external id="parameters"/>
+
+		<script><![CDATA[
+				gui.addChangeCommand ("sorting.string", "updateDescription ()");
+				gui.addChangeCommand ("cutoff.int", "updateDescription ()");
+				updateDescription = function () {
+					gui.setValue ("parameters", '"Limit"="' + gui.getValue ("cutoff.int") + ' ' + gui.getValue ("sorting.string") + ' values"');
+				}
+				updateDescription ();
+		]]></script>
 	</logic>
 	<dialog label="Limit Vector Length">
 		<row>
 			<spinbox type="integer" id="cutoff" initial="10" min="1" label="Limit"/>
 			<radio id="sorting" label="Sorting">
-				<option value="lowest" label="Keep smallest values"/>
-				<option value="highest" checked="true" label="Keep largest values"/>
+				<option value="smallest" label="Keep smallest values"/>
+				<option value="largest" checked="true" label="Keep largest values"/>
 			</radio>
 		</row>
 		<frame id="include_others" label="Add remainder category" checkable="true" checked="true">

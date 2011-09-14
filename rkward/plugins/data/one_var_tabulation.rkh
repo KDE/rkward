@@ -27,7 +27,7 @@
 	<technical>
 		General users may skip this section of help, this is primarily for developers.
 
-		The following external tags are provided for use in the embedding plugin.
+		The following external properties are provided for use in the embedding plugin.
 		<ul>
 			<li><i>varsource</i>: The tabulation plugin does not show its own varselector by default. Connect your own to this one (client="embedded_id.varsource.selected", governor="myvarselector_id.selected").</li>
 			<li><i>outvar</i>: By default, the plugin produces a table in a variable called "x". You can set it to use a different name, here.</li>

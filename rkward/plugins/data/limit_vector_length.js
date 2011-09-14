@@ -5,7 +5,7 @@ function calculate () {
 	echo ('max.categories <- ' + getValue ("cutoff") + '\n');
 	echo ('if (length (' + invar + ') > max.categories) {\n');
 	echo ('\t' + invar + ' <- sort (' + invar);
-	if (getValue ("sorting") != "lowest") echo (', decreasing=TRUE');
+	if (getValue ("sorting") != "smallest") echo (', decreasing=TRUE');
 	echo (')\n');
 	if (getValue ("include_others.checked")) {
 		var others_labelling = getValue ("others_label");

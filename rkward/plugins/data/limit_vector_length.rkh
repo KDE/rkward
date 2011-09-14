@@ -16,4 +16,16 @@
 		<setting id="custom_stat">If you chose to use a custom statistic for summarizing the cut off values, specify it, here, as a function of <em>x</em>.</setting>
 		<setting id="others_label">Label to use for the "others" category. Note: If your data is not labeled, emptying this field will sometimes be preferable.</setting>
 	</settings>
+
+	<technical>
+		General users may skip this section of help, this is primarily for developers.
+
+		The following external properties are provided for use in the embedding plugin.
+		<ul>
+			<li><i>invar</i>: Symbol name of the input variable to be limited. Defaults to 'x'.</li>
+			<li><i>outvar</i>: Symbol name to use for the output variable (the limited vector). May be identical to <i>invar</i>. Defaults to 'x'.</li>
+			<li><i>parameters</i>: This property will be set to a string describing the limitation options, suitable for pasting into the "parameters" argument of rk.header().</li>
+		</ul>
+		The generated code is available from <i>code.calculate</i>.
+	</technical>
 </document>
