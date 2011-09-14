@@ -35,6 +35,13 @@
 			<tr><td>Open Workspace</td><td>Ctrl + O</td></tr>
 			<tr><td>Save Workspace</td><td>Ctrl + S</td></tr>
 
+			<tr colspan="2"><td><b>Run Menu</b></td></tr>
+			<tr><td>Run the current line</td><td>Shift + F7</td></tr>
+			<tr><td>Add a linebreak and run the line</td><td>Ctrl + Enter</td></tr>
+			<tr><td>Run the current selection</td><td>Shift + F8</td></tr>
+			<tr><td>Run the current script</td><td>Shift + F9</td></tr>
+			<tr><td>Interrupt all running commands</td><td>Shift + Esc</td></tr>
+
 			<tr colspan="2"><td><b>Windows Menu</b></td></tr>
 			<tr><td>Close Window</td><td>Ctrl + W</td></tr>
 			<tr><td>Previous Window</td><td>Alt + &lt; or Alt + ,</td></tr>

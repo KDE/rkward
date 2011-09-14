@@ -41,6 +41,8 @@ To recall the previous command, simply press the up arrow. Press the up arrow re
 It is also possible to search the command history for lines starting with a specified string. To use this, enter - for example - "print" in the console. Now use Shift+Up / Shift+Down. You will note, that only those recent command lines that started with "print" will be shown.
 
 It is possible to make the second mode of searching the command history the default. In this case, pressing Shift+Up/Down will navigate all commands, while pressing Up/Down without the Shift key will show only matching lines. (see <link href="#settings">Section settings</link>).
+
+You can also save / load a command history at any time during your session, using <i>File->Import / Export command history</i> or the R commands <i>savehistory()</i> and <i>loadhistory()</i>.
 	</section>
 
 	<section id="completion" title="Filename and Object name completion">
