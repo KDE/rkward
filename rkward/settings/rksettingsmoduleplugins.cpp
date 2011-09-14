@@ -45,6 +45,7 @@
 #include "../misc/multistringselector.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkspinbox.h"
+#include "rksettingsmodulegeneral.h"
 
 #include "../debug.h"
 
@@ -191,7 +192,10 @@ void RKSettingsModulePlugins::loadSettings (KConfig *config) {
 
 	interface_pref = static_cast<PluginPrefs> (cg.readEntry ("Interface Preferences", static_cast<int> (PreferRecommended)));
 	show_code = cg.readEntry ("Code display default", false);
-	code_size = cg.readEntry ("Code display size", 40);
+	code_size = cg.readEntry ("Code display size", 250);
+	if (RKSettingsModuleGeneral::storedConfigVersion () <= RKSettingsModuleGeneral::RKWardConfig_Pre0_5_7) {
+		if (code_size == 40) code_size = 250;	// previous default untouched.
+	}
 }
 
 // static

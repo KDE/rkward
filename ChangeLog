@@ -1,3 +1,4 @@
+- Default size of the code display in plugin dialogs has been increased			TODO: bump config version enum
 - Added support for RKWard plugins shipped inside R packages 
 - Fixed: PDFs and many other types of documents linked from help pages would not be opened, correctly
 - Added support R 2.14.x
