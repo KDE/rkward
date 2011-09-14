@@ -4,7 +4,7 @@
 	<help file="one_var_tabulation.rkh" />
 	<logic>
 		<external id="outvar" default="x"/>
-		<external id="titlevar" default=""/>
+		<external id="titlevar" default="title"/>
 		<external id="fun_label" default="&quot;Frequency&quot;"/>
 		<external id="parameters"/>
 

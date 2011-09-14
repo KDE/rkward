@@ -7,6 +7,9 @@
 		<external id="outvar" default="x"/>
 		<external id="parameters"/>
 
+		<convert id="is_custom_stat" sources="others_statistic.string" mode="equals" standard="custom"/>
+		<connect client="custom_stat.enabled" governor="is_custom_stat"/>
+
 		<script><![CDATA[
 				gui.addChangeCommand ("sorting.string", "updateDescription ()");
 				gui.addChangeCommand ("cutoff.int", "updateDescription ()");

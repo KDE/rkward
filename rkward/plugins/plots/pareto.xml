@@ -10,7 +10,6 @@
 
 		<connect client="x.enabled" governor="tabulate.checked.not"/>
 		<connect client="tabulate_options.varsource.selected" governor="vars.selected" />
-		<set id="tabulate_options.titlevar" to="title" />
 		<script><![CDATA[
 			gui.addChangeCommand ("tabulate.checked", "updateFunLabel ()");
 			gui.addChangeCommand ("tabulate_options.fun_label", "updateFunLabel ()");

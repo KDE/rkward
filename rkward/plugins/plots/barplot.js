@@ -9,26 +9,30 @@ function preview () {
 function doPrintout (full) {
 	var varname = getValue ("x");
 	var names_mode = getValue ("names_mode");
-	var tabulate = getValue ("tabulate");
 
-	var tabulate_header = "";
-	if (tabulate) {
-		tabulate_header = '"Tabulate"="Yes"';
-	} else {
-		tabulate_header = '"Tabulate"="No"';
-	}
+	var tabulate = getValue ("tabulate.checked");
+	var main_header = '"Variable", rk.get.description (' + varname + ')';
+	if (tabulate) main_header = getValue ('tabulate_options.parameters');
+
+	var limit = getValue ("limit.checked");
+	var limit_header = "";
+	if (limit) limit_header = ", " + getValue ('limit_options.parameters');
 
 	var barplot_header = getValue ("barplot_embed.code.preprocess");
 	var barplot_main = getValue ("barplot_embed.code.printout");
 
 
-	echo ('x <- ' + varname + "\n");
 	if (tabulate) {
-		echo ('x <- table(x, exclude=NULL)\n');
+		echo (getValue ('tabulate_options.code.calculate'));
 	} else {
+		echo ('x <- ' + varname + "\n");
 		echo ('# barplot is a bit picky about attributes, so we need to convert to vector explicitely\n');
 		echo ('if(!is.matrix(x)) x <- as.vector(x)\n');
 		echo ('if(!is.matrix(x) && is.data.frame(x)) x <- data.matrix(x)\n');
+	}
+
+	if (limit) {
+		echo (getValue ('limit_options.code.calculate'));
 	}
 
 	if (names_mode == "rexp") {
@@ -38,7 +42,7 @@ function doPrintout (full) {
 	}
 
 	if (full) {
-		echo ('rk.header ("Barplot", parameters=list ("Variable", rk.get.description (' + varname + '), ' + tabulate_header + barplot_header + '))\n');
+		echo ('rk.header ("Barplot", parameters=list (' + main_header + limit_header + barplot_header + '))\n');
 		echo ('\n');
 		echo ('rk.graph.on ()\n');
 	}

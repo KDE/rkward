@@ -10,9 +10,15 @@ Choose a matrix, vector or a factor to be plotted. Further options are available
 
 	<settings>
 		<caption id="tab_variables"/>
-		<setting id="x">Select a data matrix, a vector or a factor to be plotted.</setting>
-		<setting id="tabulate">Use tabulate option mainly for factor variables or wherever else applicable</setting>
+		<setting id="tabulate">If your data needs to be tabulated / aggregated before plotting, check this option. Refer to <link href="rkward://component/one_var_tabulation"/> for details on the dependent options.</setting>
+		<setting id="x">If your data is already suitable for plotting, directly, specify it here. Otherwise, leave this empty, and check the "Tabulate" option, above.</setting>
+
+		<caption id="tab_limit_options"/>
+		<setting id="limit">If there are very many categories in your data, it may make sense to limit the amount of categories that will be displayed. Check this, if you want to set a limit. See Refer to <link href="rkward://component/limit_vector_length"/> for details on the dependent options.</setting>
+
+		<caption id="tab_labels"/>
 		<setting id="names_mode">Method for assigning labels to the plot. "default" means, the labels are chosen automatically. If no labels are available, this will generally print the values. The other options allow you to specify the labels as literal string, or as an R statement (e.g. if the names are stored in a different variable in the workspace).</setting>
+
 		<caption id="tab_options"/>
 		<setting id="barplot_embed" title="Barplot Options">Since these settings are reused in further plugins, they are documented on a page of their own: See <link href="rkward://component/barplot_embed"/>.</setting>
 	</settings>
@@ -20,7 +26,7 @@ Choose a matrix, vector or a factor to be plotted. Further options are available
 		<ul>
 			<li><link href="rkward://component/barplot_embed"/></li>
 			<li><link href="rkward://rhelp/barplot"/></li>
-			<li><link href="rkward://rhelp/table"/></li>
+			<li><link href="rkward://component/one_var_tabulation"/></li>
 		</ul>
 	</related>
 </document>

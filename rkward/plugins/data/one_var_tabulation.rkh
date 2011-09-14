@@ -31,7 +31,7 @@
 		<ul>
 			<li><i>varsource</i>: The tabulation plugin does not show its own varselector by default. Connect your own to this one (client="embedded_id.varsource.selected", governor="myvarselector_id.selected").</li>
 			<li><i>outvar</i>: By default, the plugin produces a table in a variable called "x". You can set it to use a different name, here.</li>
-			<li><i>titlevar</i>: If you want the plugin to save a description of the grouping variables in an R variable, set this to an object name to use. Defaults to "", i.e. disabled.</li>
+			<li><i>titlevar</i>: If you want the plugin to save a description of the grouping variables in an R variable, set this to an object name to use. Else set this to "" to disable. Defaults to "title"</li>
 			<li><i>fun_label</i>: This property will be set to a description of the statistic.</li>
 			<li><i>parameters</i>: This property will be set to a string describing the tabulation options, suitable for pasting into the "parameters" argument of rk.header().</li>
 		</ul>
