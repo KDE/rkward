@@ -6,6 +6,7 @@
 		<external id="outvar" default="x"/>
 		<external id="titlevar" default=""/>
 		<external id="fun_label" default="&quot;Frequency&quot;"/>
+		<external id="parameters"/>
 
 		<set id="varsource.visible" to="false"/>
 
@@ -32,8 +33,15 @@
 					}
 				}
 				gui.setValue ("fun_label", quote (label));
+				updateDescription ();
 			}
-		]]></script>
+
+			gui.addChangeCommand ("groups.available", "updateDescription ()");
+			updateDescription = function () {
+				gui.setValue ("parameters", '"Tabulation groups"=paste (names (groups), collapse=" by "), "Statistic"=' + gui.getValue ("fun_label"));
+			}
+			updateFunLabel ();
+	]]></script>
 	</logic>
 	<dialog label="Tabulate" >
 		<varselector id="varsource"/>	<!-- dummy varselector is currently needed to allow the embedding component to connect its own varselector -->

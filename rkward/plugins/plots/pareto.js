@@ -32,8 +32,12 @@ function doPrintout (full) {
 	var descriptives = getValue ("descriptives")=="TRUE";
 
 	if (full) {
-		echo ('rk.header ("Pareto chart")\n');
+		echo ('rk.header ("Pareto chart", parameters=list (');
+		if (getValue ("tabulate.checked")) echo (getValue ('tabulate_options.parameters'));
+		else echo ('"Variable"=title');
+		echo ('))\n');
 		echo ('\n');
+
 		echo ('rk.graph.on ()\n');
 	}
 
