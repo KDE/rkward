@@ -92,7 +92,7 @@ function doPrintout (full) {
 
 		if (getValue ("barplot") == "TRUE") {
 			echo ('\n');
-			echo ('	rk.header ("Barplot for Crosstabs", list ("Dependent", names (x)[1], "Independent", names (yvars)[i]' + getValue ('barplot_embed.code.preprocess') + '), level=2)\n');
+			echo ('	rk.header ("Barplot for Crosstabs", list ("Dependent"=names (x)[1], "Independent"=names (yvars)[i]' + getValue ('barplot_embed.code.preprocess') + '), level=2)\n');
 			echo ('	rk.graph.on ()\n');
 			echo ('	try ({\n');
 			if (any_table_additions) {

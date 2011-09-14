@@ -24,7 +24,7 @@ function preprocess () {
 	// generate and print argument list suitable for display in rk.header
 	if (options['legend']) legend_label = "TRUE";
 	else legend_label = "FALSE";
-	echo (', "colors", "' + options['colors'] + '", "Type", "' + options['type'] + '", "Legend", "' + legend_label + '"');
+	echo (', "colors"="' + options['colors'] + '", "Type"="' + options['type'] + '", "Legend"="' + legend_label + '"');
 }
 
 

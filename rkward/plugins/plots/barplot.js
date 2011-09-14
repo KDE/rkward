@@ -13,9 +13,9 @@ function doPrintout (full) {
 
 	var tabulate_header = "";
 	if (tabulate) {
-		tabulate_header = '"Tabulate", "Yes"';
+		tabulate_header = '"Tabulate"="Yes"';
 	} else {
-		tabulate_header = '"Tabulate", "No"';
+		tabulate_header = '"Tabulate"="No"';
 	}
 
 	var barplot_header = getValue ("barplot_embed.code.preprocess");
