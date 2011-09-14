@@ -30,7 +30,6 @@
 				<row>
 					<varselector id="vars"/>
 					<column>
-						<text id="dummy" initial="---"/>
 						<frame id="tabulate" label="Tabulate data before plotting" checkable="true" checked="false">
 							<embed id="tabulate_options" component="rkward::one_var_tabulation" as_button="false" label="Tabulation Options"/>
 						</frame>
