@@ -37,7 +37,7 @@
 
 			<tr colspan="2"><td><b>Run Menu</b></td></tr>
 			<tr><td>Run the current line</td><td>Shift + F7</td></tr>
-			<tr><td>Add a linebreak and run the line</td><td>Ctrl + Enter</td></tr>
+			<tr><td>Add a line break and run the line</td><td>Ctrl + Enter</td></tr>
 			<tr><td>Run the current selection</td><td>Shift + F8</td></tr>
 			<tr><td>Run the current script</td><td>Shift + F9</td></tr>
 			<tr><td>Interrupt all running commands</td><td>Shift + Esc</td></tr>

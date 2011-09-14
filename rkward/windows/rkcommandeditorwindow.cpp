@@ -195,7 +195,7 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 	action_run_line = RKStandardActions::runLine (this, this, SLOT (runLine()));
 	// NOTE: enter_and_submit is not currently added to the menu
 	KAction *action = ac->addAction ("enter_and_submit", this, SLOT (enterAndSubmit()));
-	action->setText (i18n ("Insert linebreak and run"));
+	action->setText (i18n ("Insert line break and run"));
 	action->setShortcuts (KShortcut (Qt::ControlModifier + Qt::Key_Return, Qt::ControlModifier + Qt::Key_Enter));
 
 	action_help_function = RKStandardActions::functionHelp (this, this, SLOT (showHelp()));

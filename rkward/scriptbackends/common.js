@@ -6,7 +6,7 @@ echo = function (text) {
 
 printIndented = function (indentation, lines) {
 	/** More complex than may seem necessary at first glance. The point is that the
-	final linebreak in the input should *not* be replaced by linebreak + indentation. */
+	final line break in the input should *not* be replaced by line break + indentation. */
 	echo (indentation + lines.replace (/\n(.)/g, "\n" + indentation + "$1"));
 }
 
