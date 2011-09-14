@@ -481,7 +481,7 @@ res &lt;- t.test (
 as plain text. Next we need to fill in the value, the user selected as the first variable. We fetch this using getValue ("x"), and append it to the string to be "echoed". This prints out the value of the GUI-element with id "x": our first &lt;varslot&gt;. Next, we append a ', ', and do the same to fetch the value of the element "y" - the second &lt;varslot&gt;. For the hypothesis (the &lt;radio&gt;-group), and the equal variances-&lt;checkbox&gt;, the procedure is very similar.
 </para>
 <para>
-Note that instead of concatenating the output-snippets with "+", you can also use several echo()-statments. Everything is printed on a single line. To produce a linebreak in the generated code, insert a '\n' in the echoed string. In theory, you can even produce many lines with a single echo-statement, but please keep it to one line (or less) of generated code per echo().
+Note that instead of concatenating the output-snippets with "+", you can also use several echo()-statments. Everything is printed on a single line. To produce a line break in the generated code, insert a '\n' in the echoed string. In theory, you can even produce many lines with a single echo-statement, but please keep it to one line (or less) of generated code per echo().
 </para>
 <para>
 It gets a little more tricky for the confidence level. For reasons of aestethics, we don't want to explicitly specify the confidence level to use, if it corresponds to the default value. Hence, instead of printing the value unconditionally, we first fetch into a variable. Then we check, whether that variable differs from "0.95" and if so print out an additional argument.
@@ -711,7 +711,7 @@ function calculate () {
 	
 		&lt;technical&gt;
 	The technical section (optional, always last) may contain some technical details of the plugin
-	implementation, which are of interest only to RKWard developers. This is particularily relevant
+	implementation, which are of interest only to RKWard developers. This is particularly relevant
 	for plugins that are designed to be embedded in many other plugins, and could detail, which
 	options are available to customize the embedded plugin, and which code sections contain which
 	R code.
@@ -825,7 +825,7 @@ Once again, for a complete list of properties, refer to the <link linkend="refer
 <para>
 The first line of code tells RKWard to call the function "modeChanged()" whenever the value of the "mode" radio-box changes. Inside this function, we define a helper-variable "varmode" which is true when the mode is "variable", false is it is "constant". Then we use "gui.setValue()" to set the and "enabled"-properties of "y" and "constant", in just the same way as we did using &lt;connect&gt;-statements, before.</para>
 <para>
-The scripted approach to GUI logic becomes particularily useful when you want to change the available option according to the type of object that the user has selected. See <link linkend="guilogic_functions">the reference</link> for available functions.
+The scripted approach to GUI logic becomes particularly useful when you want to change the available option according to the type of object that the user has selected. See <link linkend="guilogic_functions">the reference</link> for available functions.
 </para>
 <para>
 Note that the scripted approach to GUI logic can be mixed with &lt;connect&gt; and &lt;convert&gt;-statements if you like. Also note that the &lt;script&gt;-tag allows to specify a script file name in addition to or as an alternative to inlining the script code. Typically, inlining the script code as shown above is most convenient, however.
@@ -1370,7 +1370,7 @@ You can declare two &lt;external&gt; properties in your plugin. "filename" will 
   
   <section id="structure_of_a_package_archive">
   <title>Structure of a package archive</title>
-    <para>For external plugins to install and work propperly, they must follow some structural guidelines regarding their file hierarchy and archive naming. </para>
+    <para>For external plugins to install and work properly, they must follow some structural guidelines regarding their file hierarchy and archive naming. </para>
     
     <section id="file_hierarchy"><title>File hierarchy</title>
       <para>Lets have a look at the prototypic file hierarchy of an elaborate plugin archive. You don’t have to include all of these directories and/or files for a plugin to work (read on to learn what’s absolutely neccessary), consider this a "best practice" example: </para>
@@ -1543,7 +1543,7 @@ At some places in this introduction we've talked about "properties" of GUI eleme
 	<variablelist>
 	<varlistentry>
 	<term>No modifier ("")</term>
-	<listitem>By default the property will the full name of the selected object. If more than one object is selected, the object names will be separated by linebreaks ("\n").</listitem>
+	<listitem>By default the property will the full name of the selected object. If more than one object is selected, the object names will be separated by line breaks ("\n").</listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>"shortname"</term>
@@ -1748,7 +1748,7 @@ At some places in this introduction we've talked about "properties" of GUI eleme
 </varlistentry>
 <varlistentry>
 <term>&lt;text&gt;</term>
-<listitem>Shows the text enclosed in this tag in the GUI. Linebreaks are interpreted as hard linebreaks! Attributes:
+<listitem>Shows the text enclosed in this tag in the GUI. Line breaks are interpreted as hard line breaks! Attributes:
 	<variablelist>
 	<varlistentry>
 	<term>&lt;type&gt;</term>
@@ -2620,7 +2620,7 @@ In addition to this, some elements have additional properties you can connect to
 	</variablelist></listitem>
 </varlistentry>
 <varlistentry><term>Class "RObjectArray"</term>
-<listitem>An array of RObject instances. An instance of this class can be obtained by using <command>makeRObjectArray(objectnames)</command>. It is particularily useful when dealing with varslots which allow to select multiple objects.</listitem>
+<listitem>An array of RObject instances. An instance of this class can be obtained by using <command>makeRObjectArray(objectnames)</command>. It is particularly useful when dealing with varslots which allow to select multiple objects.</listitem>
 </varlistentry>
 <varlistentry><term>include()-function</term>
 <listitem><command>include(filename)</command>can be used to include a separate JS file.</listitem>
