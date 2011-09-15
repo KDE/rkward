@@ -22,7 +22,7 @@ function doPrintout (full) {
 		echo ('\n');
 		echo ('rk.graph.on ()\n');
 	}
-	echo ('try (scatterplot.matrix(data, diagonal="' + getValue("diag") + '", plot.points=' + getValue ("plot_points") + ', smooth=' + getValue ("smooth") + ', ellipse=' + getValue ("ellipse") + '))\n');
+	echo ('try (scatterplotMatrix(data, diagonal="' + getValue("diag") + '", plot.points=' + getValue ("plot_points") + ', smooth=' + getValue ("smooth") + ', ellipse=' + getValue ("ellipse") + '))\n');
 	if (full) {
 		echo ('rk.graph.off ()\n');
 	}

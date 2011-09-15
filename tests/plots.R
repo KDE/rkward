@@ -33,6 +33,9 @@ suite <- new ("RKTestSuite", id="plots",
 			rk.call.plugin ("rkward::box_plot", boxwex.real="0.80", data_mode.string="grouped_outcome", dodges.real="1.00", groups.available="datasets::warpbreaks[[\"tension\"]]\ndatasets::warpbreaks[[\"wool\"]]", mean.state="", names_mode.string="default", notch.state="FALSE", orientation.string="TRUE", outcome.available="datasets::warpbreaks[[\"breaks\"]]", outline.state="FALSE", plotoptions.add_grid.state="0", plotoptions.asp.real="0.00", plotoptions.main.text="", plotoptions.pointcolor.color.string="", plotoptions.pointtype.string="", plotoptions.sub.text="", plotoptions.xaxt.state="", plotoptions.xlab.text="", plotoptions.yaxt.state="", plotoptions.ylab.text="", plotoptions.ymaxvalue.text="", plotoptions.yminvalue.text="", sd.state="", submit.mode="submit")
 		}),
 		new ("RKTest", id="density_plot", call=function () {
+			# Get rid of the warning about results differing from R < 2.2 from sample()
+			suppressWarnings (sample (rnorm (500), 500, TRUE, rep (.1, length.out=500)))
+
 			rk.call.plugin ("rkward::density_plot", adjust.real="1.00", bw.string="nrd0", kern.string="gaussian", n.real="512.00", narm.state="na.rm=TRUE", plot_type.string="hdr_plot", plotoptions.add_grid.state="0", plotoptions.asp.real="0.00", plotoptions.main.text="", plotoptions.pointcolor.color.string="", plotoptions.pointtype.string="", plotoptions.sub.text="", plotoptions.xaxt.state="", plotoptions.xlab.text="", plotoptions.xlog.state="", plotoptions.xmaxvalue.text="", plotoptions.xminvalue.text="", plotoptions.yaxt.state="", plotoptions.ylab.text="", plotoptions.ylog.state="", plotoptions.ymaxvalue.text="", plotoptions.yminvalue.text="", rug.state="0", x.available="women[[\"height\"]]", submit.mode="submit")
 		}, libraries = c ("hdrcde")),
 		new ("RKTest", id="dotchart", call=function () {
