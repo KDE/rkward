@@ -24,8 +24,9 @@ rk.XML.pluginmap <- function(name, about, components, plugin.dir="plugins", hier
 	# - components
 	# - hierarchy
 	about.XML <- rk.XML.about(
-		about=about[["about"]],
+		name=name.orig,
 		author=about[["author"]],
+		about=about[["about"]],
 		dependencies=about[["dependencies"]],
 		package=about[["package"]],
 		pluginmap=about[["pluginmap"]])

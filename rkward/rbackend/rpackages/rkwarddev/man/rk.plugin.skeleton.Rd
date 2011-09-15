@@ -2,19 +2,21 @@
 \alias{rk.plugin.skeleton}
 \title{Create skeleton for RKWard plugins}
 \usage{
-  rk.plugin.skeleton(name, path, about, dialog = list(),
-  dial.require = c(), overwrite = FALSE, tests = TRUE)
+  rk.plugin.skeleton(name, about, path = tempdir(), dialog
+  = list(), dial.require = c(), overwrite = FALSE, tests =
+  TRUE, lazyLoad = TRUE)
 }
 \arguments{
   \item{name}{Character sting, name of the plugin package.}
 
+  \item{about}{A list with descriptive information on the
+  plugin, its authors and dependencies. At the very least
+  you must specify \code{name} and \code{author}. See
+  \code{\link[XiMpLe:rk.XML.about]{rk.XML.about}} for
+  details and a full list of elements!}
+
   \item{path}{Character sting, path to the main directory
   where the skeleton should be created.}
-
-  \item{about}{A list with descriptive information on the
-  plugin,its authors and dependencies. See
-  \code{\link[XiMpLe:rk.XML.about]{rk.XML.about}} for
-  details!}
 
   \item{dialog}{A list of objects of class XiMpLe.node. If
   provided, will be included in the created plugin XML file
@@ -34,21 +36,34 @@
 }
 \examples{
 \dontrun{
+# a simple example with only basic information
 about.info <- list(
-about=list(
 name="Square the circle",
+author=c(
+person(given="E.A.", family="Dölle",
+email="doelle@eternalwondermaths.example.org", role="aut"),
+person(given="A.", family="Assistant",
+email="alterego@eternalwondermaths.example.org", role=c("cre","ctb"))
+))
+
+rk.plugin.skeleton("Square the Circle", about=about.info)
+
+# a more complex example, already including some dialog elements
+about.info <- list(
+name="Square the circle",
+author=c(
+person(given="E.A.", family="Dölle",
+email="doelle@eternalwondermaths.example.org", role="aut"),
+person(given="A.", family="Assistant",
+email="alterego@eternalwondermaths.example.org", role=c("cre","ctb"))
+),
+about=list(
 desc="Squares the circle using Heisenberg compensation.",
 version="0.1-3",
 date=Sys.Date(),
 url="http://eternalwondermaths.example.org/23/stc.html",
 license="GPL",
 category="Geometry"),
-author=list(
-c(name="E.A. Dölle", email="doelle@eternalwondermaths.example.org",
-url="http://eternalwondermaths.example.org"),
-c(name="A. Assistant", email="alterego@eternalwondermaths.example.org",
-url="http://eternalwondermaths.example.org/staff/")
-),
 dependencies=list(
 rkward.min="0.5.3",
 rkward.max="",
@@ -62,9 +77,6 @@ pluginmap=list(
 c(name="heisenberg.pluginmap", url="http://eternalwondermaths.example.org/hsb"))
 )
 
-rk.plugin.skeleton("Square the Circle", path="/tmp", about=about.info)
-
-# a more complex example, already including some dialog elements
 test.dropdown <- rk.XML.dropdown("mydrop",
 opts=list("First Option"=c(val="val1"),
 "Second Option"=c(val="val2", chk=TRUE)))
@@ -79,8 +91,8 @@ test.tabbook <- rk.XML.tabbook("My Tabbook", tab.labels=c("First Tab",
 test.plugin <- rk.XML.plugin("My test", label="Check this out",
 children=test.tabbook)
 
-rk.plugin.skeleton("Square the Circle", path="/tmp",
-about=about.info, dialog=test.tabbook, overwrite=TRUE)
+rk.plugin.skeleton("Square the Circle", about=about.info,
+dialog=test.tabbook, overwrite=TRUE)
 }
 }
 

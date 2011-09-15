@@ -1,9 +1,10 @@
 #' Create skeleton for RKWard plugins
 #'
 #' @param name Character sting, name of the plugin package.
+#' @param about A list with descriptive information on the plugin, its authors and dependencies.
+#'		At the very least you must specify \code{name} and \code{author}.
+#'		See \code{\link[XiMpLe:rk.XML.about]{rk.XML.about}} for details and a full list of elements!
 #' @param path Character sting, path to the main directory where the skeleton should be created.
-#' @param about A list with descriptive information on the plugin,its authors and dependencies.
-#'		See \code{\link[XiMpLe:rk.XML.about]{rk.XML.about}} for details!
 #' @param dialog A list of objects of class XiMpLe.node. If provided, will be included in the
 #'		created plugin XML file as the dialog.
 #' @param dial.require A character vector with names of R packages that the dialog requires.
@@ -13,21 +14,34 @@
 #' @export
 #' @examples
 #' \dontrun{
+#' # a simple example with only basic information
 #' about.info <- list(
+#' 	name="Square the circle",
+#' 	author=c(
+#' 		person(given="E.A.", family="Dölle",
+#' 			email="doelle@@eternalwondermaths.example.org", role="aut"),
+#' 		person(given="A.", family="Assistant",
+#' 			email="alterego@@eternalwondermaths.example.org", role=c("cre","ctb"))
+#' 		))
+#' 
+#' rk.plugin.skeleton("Square the Circle", about=about.info)
+#' 
+#' # a more complex example, already including some dialog elements
+#' about.info <- list(
+#' 	name="Square the circle",
+#' 	author=c(
+#' 		person(given="E.A.", family="Dölle",
+#' 			email="doelle@@eternalwondermaths.example.org", role="aut"),
+#' 		person(given="A.", family="Assistant",
+#' 			email="alterego@@eternalwondermaths.example.org", role=c("cre","ctb"))
+#' 		),
 #' 	about=list(
-#' 		name="Square the circle",
 #' 		desc="Squares the circle using Heisenberg compensation.",
 #' 		version="0.1-3",
 #' 		date=Sys.Date(),
 #' 		url="http://eternalwondermaths.example.org/23/stc.html",
 #' 		license="GPL",
 #' 		category="Geometry"),
-#' 	author=list(
-#' 		c(name="E.A. Dölle", email="doelle@@eternalwondermaths.example.org",
-#' 			url="http://eternalwondermaths.example.org"),
-#' 		c(name="A. Assistant", email="alterego@@eternalwondermaths.example.org",
-#' 			url="http://eternalwondermaths.example.org/staff/")
-#' 		),
 #' 	dependencies=list(
 #' 		rkward.min="0.5.3",
 #' 		rkward.max="",
@@ -40,10 +54,7 @@
 #' 	pluginmap=list(
 #' 		c(name="heisenberg.pluginmap", url="http://eternalwondermaths.example.org/hsb"))
 #' )
-#' 
-#' rk.plugin.skeleton("Square the Circle", path="/tmp", about=about.info)
-#' 
-#' # a more complex example, already including some dialog elements
+#'
 #' test.dropdown <- rk.XML.dropdown("mydrop",
 #'   opts=list("First Option"=c(val="val1"),
 #'   "Second Option"=c(val="val2", chk=TRUE)))
@@ -58,17 +69,26 @@
 #' test.plugin <- rk.XML.plugin("My test", label="Check this out",
 #'   children=test.tabbook)
 #' 
-#' rk.plugin.skeleton("Square the Circle", path="/tmp",
-#'   about=about.info, dialog=test.tabbook, overwrite=TRUE)
+#' rk.plugin.skeleton("Square the Circle", about=about.info,
+#'   dialog=test.tabbook, overwrite=TRUE)
 #' }
 
-rk.plugin.skeleton <- function(name, path, about, dialog=list(), dial.require=c(), overwrite=FALSE, tests=TRUE){
+rk.plugin.skeleton <- function(name, about, path=tempdir(), dialog=list(), dial.require=c(), overwrite=FALSE, tests=TRUE, lazyLoad=TRUE){
 	# to besure, remove all non-character symbols from name
 	name.orig <- name
 	name <- gsub("[[:space:]]*[^[:alnum:]]*", "", name)
 	if(!identical(name.orig, name)){
 		message(paste("For filenames ", sQuote(name.orig), " was renamed to ", sQuote(name), ".", sep=""))
 	} else {}
+	# create an about.node, which probably has some default values
+	about.node <- rk.XML.about(
+		name=about[["name"]],
+		author=about[["author"]],
+		about=about[["about"]],
+		dependencies=about[["dependencies"]],
+		package=about[["package"]],
+		pluginmap=about[["pluginmap"]]
+	)
 	# define paths an file names
 	main.dir <- file.path(path, name)
 	description.file <- file.path(main.dir, "DESCRIPTION")
@@ -136,7 +156,7 @@ rk.plugin.skeleton <- function(name, path, about, dialog=list(), dial.require=c(
 	## create plugin.pluginmap
 	if(isTRUE(checkCreateFiles(plugin.pluginmap))){
 		XML.pluginmap <- rk.XML.pluginmap(
-			name=name,
+			name=name.orig,
 			about=about,
 			components=paste(name, ".xml", sep=""),
 			plugin.dir="plugins",
@@ -152,29 +172,34 @@ rk.plugin.skeleton <- function(name, path, about, dialog=list(), dial.require=c(
 
 	# create DESCRIPTION file
 	if(isTRUE(checkCreateFiles(description.file))){
-		all.authors <- paste(
-			sapply(about.info[["author"]], function(this.author){
-				paste(this.author[["name"]], " <", this.author[["email"]], ">", sep="")
-			}),
-		collapse=", ")
+		all.authors <- format(get.by.role(about[["author"]], role="aut"),
+			include=c("given", "family", "email"), braces=list(email=c("<", ">")))
+		all.maintainers <- format(get.by.role(about[["author"]], role="cre"),
+			include=c("given", "family", "email"), braces=list(email=c("<", ">")))
+
 ## TODO: check and add the commented values here:
 		desc <- data.frame(
 			Package=name,
 			Type="Package",
-			Title=about[["about"]][["name"]],
-			Version=about[["about"]][["version"]],
-			Date=about[["about"]][["date"]],
+			Title=about.node@attributes[["name"]],
+			Version=about.node@attributes[["version"]],
+			Date=about.node@attributes[["releasedate"]],
 			Author=all.authors,
-#			AuthorR="c(person(given=\"X\", family=\"YZ\", email=\"some@example.de\"))",
-			Maintainer=all.authors,
+			AuthorsR=paste(deparse(about.info[["author"]]), collapse=" "),
+			Maintainer=all.maintainers,
 #			Depends="R (>= 2.9.0)",
 			Enhances="rkward",
-			Description=about[["about"]][["desc"]],
-			License=about[["about"]][["license"]],
+			Description=about.node@attributes[["shortinfo"]],
+			License=about.node@attributes[["license"]],
 #			Encoding="UTF-8",
-#			LazyLoad="yes",
-			URL=about[["about"]][["url"]],
+			LazyLoad=ifelse(isTRUE(lazyLoad), "yes", "no"),
+			URL=about.node@attributes[["url"]],
 			stringsAsFactors=FALSE)
+
+		# i have no clue how to circumvent this workaround:
+		desc$`Authors@R` <- desc[["AuthorsR"]]
+		desc <- subset(desc, select=-AuthorsR)
+
 		write.dcf(desc, file=description.file)
 	} else {}
 

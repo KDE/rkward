@@ -114,7 +114,7 @@ get.JS.vars <- function(JS.var, XML.var=NULL, JS.prefix="", indent.by="", names.
 		results <- paste(indent.by, "var ", camelCode(c(JS.prefix, JS.var)), " = getValue(\"", XML.var, "\");\n", sep="")
 	}
 	return(results)
-} ## function get.JS.vars()
+} ## end function get.JS.vars()
 
 ## function ID.prefix()
 ID.prefix <- function(initial, abbr=TRUE, length=3, dot=TRUE){
@@ -128,4 +128,12 @@ ID.prefix <- function(initial, abbr=TRUE, length=3, dot=TRUE){
 		prfx <- paste(prfx, ".", sep="")
 	} else {}
 	return(prfx)
-}
+} ## end function ID.prefix()
+
+## function get.by.role()
+# filters a vector with person objects by roles
+get.by.role <- function(persons, role="aut"){
+	role.filter <- function(x){is.null(r <- x$role) | role %in% r}
+	filtered.persons <- Filter(role.filter, persons)
+	return(filtered.persons)
+} ## end function get.by.role()

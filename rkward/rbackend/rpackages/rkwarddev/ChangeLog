@@ -1,4 +1,8 @@
-ChangeLog for package rkwardplugdev
+ChangeLog for package rkwarddev
+
+## 0.01-2 (2011-09-15)
+  - reworked rk.XML.about() to use person class objects for authors, and need less info to
+    produce usable output
 
 ## 0.01-1 (2011-09-05)
   - added rk.JS.scan(), rk.JS.doc(), rk.JS.array(), rk.rkh.scan() and rk.rkh.doc()
