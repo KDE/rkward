@@ -38,7 +38,6 @@ pasteXMLTag <- function(tag, attr=NULL, child=NULL, empty=TRUE, level=1, allow.e
 
 	# three special cases: value pseudotags, comments and CDATA
 	if(isTRUE(nchar(tag) == 0) | length(tag) == 0){
-cat("tag: ", tag, "\nshine: ", shine, "\nlevel: ", level, "\nchild: ", child, "\n")
 		full.tag <- paste(new.indent, child, new.node, sep="")
 	} else if(identical(tag, "!--")){
 		full.tag <- paste(new.indent, "<!-- ", new.attr, new.cmmt.indent, if(!is.null(child)){trim(child)}, " ", new.attr, new.attr.indent, "-->", new.node, sep="")

@@ -4,8 +4,8 @@
 #' Package: \tab XiMpLe\cr
 #' Type: \tab Package\cr
 #' Version: \tab 0.03-1\cr
-#' Date: \tab 2011-09-11\cr
-#' Depends: \tab R (>= 2.9.0),methods\cr
+#' Date: \tab 2011-09-12\cr
+#' Depends: \tab R (>= 2.9.0)\cr
 #' Enhances: \tab rkward\cr
 #' Encoding: \tab UTF-8\cr
 #' License: \tab GPL (>= 3)\cr
