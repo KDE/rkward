@@ -25,10 +25,9 @@ function doPrintout (full) {
 
 	if (tabulate) {
 		echo (getValue ('tabulate_options.code.calculate'));
-		echo ('x <- as.numeric (x)		# dotchart() is somewhat picky about data type\n');
+		echo ('n <- names (x); x <- as.numeric (x); names (x) <- n		# dotchart() is somewhat picky about data type\n');
 	} else {
 		echo ('x <- ' + getValue ("x") + '\n');
-		echo ('title <- rk.get.description (' + getValue ("x") + ')\n');
 		echo ('if (!is.numeric (x)) {\n');
 		echo ('	warning ("Data is not numeric, but proceeding as requested.\\nDid you forget to check the tabulate option?")\n');
 		echo ('}\n');

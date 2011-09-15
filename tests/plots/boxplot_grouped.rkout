@@ -5,3 +5,10 @@
 </ul>
 DATE<br />
 <img src="graph.png" width="480" height="480"><br>
+<h1>Boxplot</h1>
+<h2>Parameters</h2>
+<ul><li>Outcome variable: breaks</li>
+<li>Grouping variable(s): tension, wool</li>
+</ul>
+DATE<br />
+<img src="graph.png" width="480" height="480"><br>
