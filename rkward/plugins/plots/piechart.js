@@ -51,7 +51,6 @@ function doPrintout (full) {
 		echo (getValue ('tabulate_options.code.calculate'));
 	} else {
 		echo ('x <- ' + getValue ("x") + '\n');
-		echo ('title <- rk.get.description (' + getValue ("x") + ')\n');
 		echo ('if (!is.numeric (x)) {\n');
 		echo ('	warning ("Data is not numeric, but proceeding as requested.\\nDid you forget to check the tabulate option?")\n');
 		echo ('}\n');
