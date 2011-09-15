@@ -5,13 +5,20 @@ Draw a pie chart
 	</summary>
 
 	<usage>
-Choose a matrix, vector or a factor to be plotted. Further options are available on the second tab.
+Draws a pie chart from numerical data, or from tabulated data. Further options are available on the second tab.
 	</usage>
 
 	<settings>
 		<caption id="tab_variables"/>
-		<setting id="x">Matrix, vector or a factor. Data needs to be numeric unless the tabulate option is checked, below.</setting>
-		<setting id="tabulate">Use tabulate option mainly for factor variables or wherever else applicable.</setting>
+		<setting id="tabulate">If your data needs to be tabulated / aggregated before plotting, check this option. Refer to <link href="rkward://component/one_var_tabulation"/> for details on the dependent options.</setting>
+		<setting id="x">If your data is already suitable for plotting, directly, specify it here. Otherwise, leave this empty, and check the "Tabulate" option, above.</setting>
+
+		<caption id="tab_limit_options"/>
+		<setting id="limit">If there are very many categories in your data, it may make sense to limit the amount of categories that will be displayed. Check this, if you want to set a limit. See Refer to <link href="rkward://component/limit_vector_length"/> for details on the dependent options.</setting>
+
+		<caption id="tab_labels"/>
+		<setting id="names_mode">Method for assigning labels to the plot. "default" means, the labels are chosen automatically. If no labels are available, this will generally print the values. The other options allow you to specify the labels as literal string, or as an R statement (e.g. if the names are stored in a different variable in the workspace).</setting>
+
 		<caption id="tab_options"/>
 		<setting id="colors">Type of colors to use.</setting>
 		<setting id="names_mode">Method for assigning labels to the plot. "default" means, the labels are chosen automatically. If no labels are available, this will generally print the values. The other options allow you to specify the labels as literal string, or as an R statement (e.g. if the names are stored in a different variable in the workspace).</setting>
@@ -28,7 +35,7 @@ Choose a matrix, vector or a factor to be plotted. Further options are available
 			<li><link href="rkward://component/barplot"/></li>
 			<li><link href="rkward://component/plot_options"/></li>
 			<li><link href="rkward://rhelp/pie"/></li>
-			<li><link href="rkward://rhelp/table"/></li>
+			<li><link href="rkward://component/one_var_tabulation"/></li>
 		</ul>
 	</related>
 </document>
