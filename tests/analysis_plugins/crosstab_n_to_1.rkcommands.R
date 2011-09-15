@@ -21,7 +21,7 @@ for (i in 1:length (results)) {
 	rk.header ("Pearson's Chi Square Test for Crosstabs", list ("Dependent", names (x)[1], "Independent", names (yvars)[i], "Method", chisquares[[i]][["method"]]), level=2)
 	rk.results (list ('Statistic'=chisquares[[i]][['statistic']], 'df'=chisquares[[i]][['parameter']], 'p'=chisquares[[i]][['p.value']]))
 
-	rk.header ("Barplot for Crosstabs", list ("Dependent", names (x)[1], "Independent", names (yvars)[i], "colors", "default", "Type", "juxtaposed", "Legend", "FALSE"), level=2)
+	rk.header ("Barplot for Crosstabs", list ("Dependent"=names (x)[1], "Independent"=names (yvars)[i], "colors"="default", "Type"="juxtaposed", "Legend"="FALSE"), level=2)
 	rk.graph.on ()
 	try ({
 		counts <- results[[i]]
@@ -65,7 +65,7 @@ for (i in 1:length (results)) {
 	rk.header ("Pearson's Chi Square Test for Crosstabs", list ("Dependent", names (x)[1], "Independent", names (yvars)[i], "Method", chisquares[[i]][["method"]]), level=2)
 	rk.results (list ('Statistic'=chisquares[[i]][['statistic']], 'df'=chisquares[[i]][['parameter']], 'p'=chisquares[[i]][['p.value']]))
 
-	rk.header ("Barplot for Crosstabs", list ("Dependent", names (x)[1], "Independent", names (yvars)[i], "colors", "rainbow", "Type", "juxtaposed", "Legend", "FALSE"), level=2)
+	rk.header ("Barplot for Crosstabs", list ("Dependent"=names (x)[1], "Independent"=names (yvars)[i], "colors"="rainbow", "Type"="juxtaposed", "Legend"="FALSE"), level=2)
 	rk.graph.on ()
 	try ({
 		counts <- results[[i]][, , "count"]

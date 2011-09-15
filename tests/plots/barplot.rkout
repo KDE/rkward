@@ -1,7 +1,6 @@
 <h1>Barplot</h1>
 <h2>Parameters</h2>
 <ul><li>Variable: Catholic</li>
-<li>Tabulate: No</li>
 <li>colors: rainbow</li>
 <li>Type: juxtaposed</li>
 <li>Legend: FALSE</li>
@@ -11,9 +10,18 @@ DATE<br />
 <h1>Barplot</h1>
 <h2>Parameters</h2>
 <ul><li>Variable: test_table</li>
-<li>Tabulate: No</li>
 <li>colors: default</li>
 <li>Type: stacked</li>
+<li>Legend: TRUE</li>
+</ul>
+DATE<br />
+<img src="graph.png" width="480" height="480"><br>
+<h1>Barplot</h1>
+<h2>Parameters</h2>
+<ul><li>Tabulation groups: wool by tension</li>
+<li>Tabulation statistic: Sum of warpbreaks[["breaks"]]</li>
+<li>colors: rainbow</li>
+<li>Type: juxtaposed</li>
 <li>Legend: TRUE</li>
 </ul>
 DATE<br />

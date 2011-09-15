@@ -14,11 +14,11 @@
 - Fixed: Potential crash when using context menus with "focus follows mouse" window activation policy
 - Added shortcut Ctrl+Enter to insert a line break and submit from a script editor
 - Reduce CPU usage while idle
-- Barplot, dot chart, pie chart, and Pareto plot plugins gain more tabulation options				TODO: add and update tests
+- Bar plot, dot chart, pie chart, and Pareto plot plugins gain more tabulation options				TODO: add and update tests
 - rk.results() now prints rownames, where appropriate
 - "frame" elements in plugins can now be made checkable
 - Disabling or hiding a plugin component makes it non-required, implicitly
-- Boxplot gains option to dogde grouped boxes						TODO: add test; add colors?
+- Box plot gains option to dogde grouped boxes						TODO: add test; add colors?
 - Simplify internal handling of system() and system2() output					TODO: test on Windows!
 - Simplify code produced by several plugins
 - Fixed: Occasional duplication of first letter of keyword, when using "Copy lines to output" from the console window

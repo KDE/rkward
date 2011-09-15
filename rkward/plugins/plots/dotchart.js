@@ -11,7 +11,7 @@ function doPrintout (full) {
 	var names_mode = getValue ("names_mode");
 
 	var tabulate = getValue ("tabulate.checked");
-	var main_header = '"Variable", rk.get.description (' + vars + ')';
+	var main_header = '"Variable"=rk.get.description (' + vars + ')';
 	if (tabulate) main_header = getValue ('tabulate_options.parameters');
 
 	var limit = getValue ("limit.checked");

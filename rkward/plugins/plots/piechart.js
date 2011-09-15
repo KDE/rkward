@@ -10,7 +10,7 @@ function doPrintout (full) {
 	var vars = getValue ("x");
 
 	var tabulate = getValue ("tabulate.checked");
-	var main_header = '"Variable", rk.get.description (' + vars + ')';
+	var main_header = '"Variable"=rk.get.description (' + vars + ')';
 	if (tabulate) main_header = getValue ('tabulate_options.parameters');
 
 	var limit = getValue ("limit.checked");
