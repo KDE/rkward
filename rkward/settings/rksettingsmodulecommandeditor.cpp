@@ -127,7 +127,6 @@ RKSettingsModuleCommandEditor::RKSettingsModuleCommandEditor (RKSettings *gui, Q
 	label = new QLabel (i18n ("R script file filters (separated by spaces)"), group);
 	script_file_filter_box = new QLineEdit (group);
 	RKCommonFunctions::setTips (i18n ("A list of filters (file name extensions) that should be treated as R script files. Most importantly, files matching one of these filters will always be opened with R syntax highlighting.<br>Filters are case insensitive."), script_file_filter_box, label);
-	label->setToolTip (script_file_filter_box->toolTip ());
 	connect (script_file_filter_box, SIGNAL (textChanged(QString)), this, SLOT (settingChanged()));
 	box_layout->addWidget (label);
 	box_layout->addWidget (script_file_filter_box);
