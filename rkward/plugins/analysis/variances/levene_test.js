@@ -3,7 +3,7 @@ function preprocess () {
 }
 
 function calculate () {
-	echo ('result <- levene.test (' + getValue ("y") + ', ' + getValue ("group") + ')\n');
+	echo ('result <- leveneTest (' + getValue ("y") + ', ' + getValue ("group") + ')\n');
 }
 
 function printout () {

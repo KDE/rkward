@@ -2,7 +2,7 @@ local({
 ## Prepare
 require(car)
 ## Compute
-result <- levene.test (warpbreaks[["breaks"]], warpbreaks[["tension"]])
+result <- leveneTest (warpbreaks[["breaks"]], warpbreaks[["tension"]])
 ## Print result
 names <- rk.get.description (warpbreaks[["breaks"]], warpbreaks[["tension"]])
 

@@ -14,7 +14,7 @@
 	</settings>
 	<related>
 		<ul>
-			<li><link href="rkward://rhelp/levene.test"/></li>
+			<li><link href="rkward://rhelp/leveneTest"/></li>
 			<li><link href="rkward://rhelp/bartlett.test"/></li>
 			<li>Levene, H. (1960). In Contributions to Probability and Statistics: Essays in Honor of Harold Hotelling, I. Olkin et al. eds., Stanford University Press, pp. 278-292.</li>
 		</ul>
