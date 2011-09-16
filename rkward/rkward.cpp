@@ -57,6 +57,7 @@
 #include "settings/rksettingsmoduleplugins.h"
 #include "settings/rksettingsmodulegeneral.h"
 #include "settings/rksettingsmoduleoutput.h"
+#include "settings/rksettingsmodulecommandeditor.h"
 #include "rbackend/rinterface.h"
 #include "core/robjectlist.h"
 #include "core/renvironmentobject.h"
@@ -627,12 +628,13 @@ void RKWardMainWindow::readOptions () {
 	}
 	resize (size);
 
+	RKSettings::loadSettings (config);
+	RK_ASSERT (config == KGlobal::config ().data ());	// not messing with config groups
+
 	// initialize the recent file list
 	fileOpenRecentWorkspace->loadEntries (config->group ("Recent Files"));
+	fileOpenRecent->setMaxItems (RKSettingsModuleCommandEditor::maxNumRecentFiles ());
 	fileOpenRecent->loadEntries (config->group ("Recent Command Files"));
-
-	// do this last, since we may be setting some different config-group(s) in the process
-	RKSettings::loadSettings (config);
 }
 
 bool RKWardMainWindow::doQueryQuit () {
@@ -851,9 +853,9 @@ void RKWardMainWindow::slotOpenCommandEditor () {
 #ifdef Q_WS_WIN
 	// getOpenUrls(KUrl("kfiledialog:///<rfiles>"), ...) causes a hang on windows (KDElibs 4.2.3).
 #	warning Track this bug down and/or report it
-	res = KEncodingFileDialog::getOpenUrlsAndEncoding (QString (), QString (), "*.R *.r *.S *.s *.q|R Script Files (*.R *.r *.S *.s *.q)\n*|All Files (*)", this, i18n ("Open script file(s)"));
+	res = KEncodingFileDialog::getOpenUrlsAndEncoding (QString (), QString (), QString ("%1|R Script Files (%1)\n*|All Files (*)").arg (RKSettingsModuleCommandEditor::scriptFileFilter ()), this, i18n ("Open script file(s)"));
 #else
-	res = KEncodingFileDialog::getOpenUrlsAndEncoding (QString (), "kfiledialog:///<rfiles>", "*.R *.r *.S *.s *.q|R Script Files (*.R *.r *.S *.s *.q)\n*|All Files (*)", this, i18n ("Open script file(s)"));
+	res = KEncodingFileDialog::getOpenUrlsAndEncoding (QString (), "kfiledialog:///<rfiles>", QString ("%1|R Script Files (%1)\n*|All Files (*)").arg (RKSettingsModuleCommandEditor::scriptFileFilter ()), this, i18n ("Open script file(s)"));
 #endif
 	for (it = res.URLs.begin() ; it != res.URLs.end() ; ++it) {
 		slotOpenCommandEditor (*it, res.encoding);

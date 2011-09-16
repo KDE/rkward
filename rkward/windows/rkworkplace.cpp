@@ -43,6 +43,7 @@
 #include "../dataeditor/rkeditordataframe.h"
 #include "../robjectviewer.h"
 #include "../settings/rksettingsmodulegeneral.h"
+#include "../settings/rksettingsmodulecommandeditor.h"
 #include "../rbackend/rinterface.h"
 #include "../windows/rkwindowcatcher.h"
 #include "../rbackend/rcommand.h"
@@ -225,7 +226,7 @@ bool RKWorkplace::openAnyUrl (const KUrl &url, const QString &known_mimetype) {
 		return true;	// TODO
 	}
 	if (mimetype->name ().startsWith ("text")) {
-		return (openScriptEditor (url, QString (), false));
+		return (openScriptEditor (url, QString (), RKSettingsModuleCommandEditor::matchesScriptFileFilter (url.fileName())));
 	}
 
 	if (KMessageBox::questionYesNo (this, i18n ("The url you are trying to open ('%1') is not a local file or the filetype is not supported by RKWard. Do you want to open the url in the default application?", url.prettyUrl ()), i18n ("Open in default application?")) != KMessageBox::Yes) {

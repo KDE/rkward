@@ -2,7 +2,7 @@
                           rksettingsmodulecommandeditor  -  description
                              -------------------
     begin                : Tue Oct 23 2007
-    copyright            : (C) 2007, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -55,6 +55,10 @@ public:
 	static bool autosaveKeep () { return autosave_keep; };
 	static int autosaveInterval () { return autosave_interval; };
 	static QString autosaveSuffix () { return ".rkward_autosave"; };
+
+	static int maxNumRecentFiles () { return num_recent_files; };
+	static QString scriptFileFilter () { return script_file_filter; };
+	static bool matchesScriptFileFilter (const QString &filename);
 public slots:
 	void settingChanged ();
 private:
@@ -71,12 +75,15 @@ private:
 	static bool autosave_enabled;
 	static bool autosave_keep;
 	static int autosave_interval;
-//	static QString autosave_suffix;
 
 	QGroupBox* autosave_enabled_box;
 	QCheckBox* autosave_keep_box;
 	RKSpinBox* autosave_interval_box;
-//	QLineEdit* autosave_suffix_edit;
+
+	RKSpinBox* num_recent_files_box;
+	QLineEdit* script_file_filter_box;
+	static int num_recent_files;
+	static QString script_file_filter;
 };
 
 #endif

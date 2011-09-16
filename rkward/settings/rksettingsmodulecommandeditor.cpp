@@ -2,7 +2,7 @@
                           rksettingsmodulecommandeditor  -  description
                              -------------------
     begin                : Tue Oct 23 2007
-    copyright            : (C) 2007, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -28,6 +28,7 @@
 #include <QLineEdit>
 
 #include "../misc/rkspinbox.h"
+#include "../misc/rkcommonfunctions.h"
 #include "../rkglobals.h"
 #include "../debug.h"
 
@@ -39,12 +40,17 @@ bool RKSettingsModuleCommandEditor::arghinting_enabled;
 bool RKSettingsModuleCommandEditor::autosave_enabled;
 bool RKSettingsModuleCommandEditor::autosave_keep;
 int RKSettingsModuleCommandEditor::autosave_interval;
-//QString RKSettingsModuleCommandEditor::autosave_suffix;
+int RKSettingsModuleCommandEditor::num_recent_files;
+QString RKSettingsModuleCommandEditor::script_file_filter;
 
 RKSettingsModuleCommandEditor::RKSettingsModuleCommandEditor (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
 	RK_TRACE (SETTINGS);
 
 	QVBoxLayout* main_vbox = new QVBoxLayout (this);
+	QLabel *label = new QLabel (i18n ("Settings marked with (*) do not take effect until you restart RKWard"), this);
+	label->setWordWrap (true);
+	main_vbox->addWidget (label);
+	main_vbox->addSpacing (2 * RKGlobals::spacingHint ());
 
 	QGroupBox* group = new QGroupBox (i18n ("Code Completion"), this);
 	QVBoxLayout* box_layout = new QVBoxLayout (group);
@@ -56,7 +62,7 @@ RKSettingsModuleCommandEditor::RKSettingsModuleCommandEditor (RKSettings *gui, Q
 
 	box_layout->addSpacing (RKGlobals::spacingHint ());
 
-	QLabel* label = new QLabel (i18n ("Minimum number of characters before completion is attempted"), group);
+	label = new QLabel (i18n ("Minimum number of characters before completion is attempted"), group);
 	label->setWordWrap (true);
 	completion_min_chars_box = new RKSpinBox (group);
 	completion_min_chars_box->setIntMode (1, INT_MAX, completion_min_chars);
@@ -99,17 +105,33 @@ RKSettingsModuleCommandEditor::RKSettingsModuleCommandEditor (RKSettings *gui, Q
 	box_layout->addWidget (autosave_interval_box);
 	box_layout->addSpacing (RKGlobals::spacingHint ());
 
-/*	label = new QLabel (i18n ("Filename suffix for autosave files"), group);
-	autosave_suffix_edit = new QLineEdit (autosave_suffix, group);
-	connect (autosave_suffix_edit, SIGNAL (textChanged(const QString&)), this, SLOT (settingChanged()));
-	box_layout->addWidget (label);
-	box_layout->addWidget (autosave_suffix_edit);
-	box_layout->addSpacing (RKGlobals::spacingHint ()); */
-
 	autosave_keep_box = new QCheckBox (i18n ("Keep autosave file after manual save"), group);
 	autosave_keep_box->setChecked (autosave_keep);
 	connect (autosave_keep_box, SIGNAL (stateChanged(int)), this, SLOT (settingChanged()));
 	box_layout->addWidget (autosave_keep_box);
+
+	main_vbox->addWidget (group);
+
+	main_vbox->addSpacing (2 * RKGlobals::spacingHint ());
+
+	group = new QGroupBox (i18n ("Opening script files"), this);
+	box_layout = new QVBoxLayout (group);
+	label = new QLabel (i18n ("Number of scripts in recent file lists (*)"), group);
+	num_recent_files_box = new RKSpinBox (group);
+	num_recent_files_box->setIntMode (1, INT_MAX, num_recent_files);
+	connect (num_recent_files_box, SIGNAL (valueChanged(int)), this, SLOT (settingChanged()));
+	box_layout->addWidget (label);
+	box_layout->addWidget (num_recent_files_box);
+	box_layout->addSpacing (RKGlobals::spacingHint ());
+
+	label = new QLabel (i18n ("R script file filters (separated by spaces)"), group);
+	script_file_filter_box = new QLineEdit (group);
+	RKCommonFunctions::setTips (i18n ("A list of filters (file name extensions) that should be treated as R script files. Most importantly, files matching one of these filters will always be opened with R syntax highlighting.<br>Filters are case insensitive."), script_file_filter_box, label);
+	label->setToolTip (script_file_filter_box->toolTip ());
+	connect (script_file_filter_box, SIGNAL (textChanged(QString)), this, SLOT (settingChanged()));
+	box_layout->addWidget (label);
+	box_layout->addWidget (script_file_filter_box);
+	box_layout->addSpacing (RKGlobals::spacingHint ());
 
 	main_vbox->addWidget (group);
 
@@ -149,9 +171,9 @@ void RKSettingsModuleCommandEditor::applyChanges () {
 	autosave_enabled = autosave_enabled_box->isChecked ();
 	autosave_keep = autosave_keep_box->isChecked ();
 	autosave_interval = autosave_interval_box->intValue ();
-/*	autosave_suffix = autosave_suffix_edit->text ();
-	// prevent user from shooting themselves in the foot
-	if (autosave_suffix.isEmpty ()) autosave_suffix = ".autosave"; */
+
+	num_recent_files = num_recent_files_box->intValue ();
+	script_file_filter = script_file_filter_box->text ();
 }
 
 void RKSettingsModuleCommandEditor::save (KConfig *config) {
@@ -171,7 +193,9 @@ void RKSettingsModuleCommandEditor::saveSettings (KConfig *config) {
 	cg.writeEntry ("Autosave enabled", autosave_enabled);
 	cg.writeEntry ("Autosave keep saves", autosave_keep);
 	cg.writeEntry ("Autosave interval", autosave_interval);
-//	cg.writeEntry ("Autosave suffix", autosave_suffix);
+
+	cg.writeEntry ("Max number of recent files", num_recent_files);
+	cg.writeEntry ("Script file filter", script_file_filter);
 }
 
 void RKSettingsModuleCommandEditor::loadSettings (KConfig *config) {
@@ -186,7 +210,21 @@ void RKSettingsModuleCommandEditor::loadSettings (KConfig *config) {
 	autosave_enabled = cg.readEntry ("Autosave enabled", true);
 	autosave_keep = cg.readEntry ("Autosave keep saves", false);
 	autosave_interval = cg.readEntry ("Autosave interval", 5);
-//	autosave_suffix = cg.readEntry ("Autosave suffix", ".rkward_autosave");
+
+	num_recent_files = cg.readEntry ("Max number of recent files", 10);
+	script_file_filter = cg.readEntry ("Script file filter", "*.R *.S *.q *.Rhistory");
+}
+
+// static
+bool RKSettingsModuleCommandEditor::matchesScriptFileFilter (const QString &filename) {
+	RK_TRACE (SETTINGS);
+
+	const QStringList exts = script_file_filter.split (' ');
+	foreach (const QString ext, exts) {
+		QRegExp reg (ext, Qt::CaseInsensitive, QRegExp::Wildcard);
+		if (reg.exactMatch (filename)) return true;
+	}
+	return false;
 }
 
 #include "rksettingsmodulecommandeditor.moc"

@@ -2,7 +2,7 @@
                           rkcommonfunctions  -  description
                              -------------------
     begin                : Mon Oct 17 2005
-    copyright            : (C) 2005, 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -51,6 +51,9 @@ namespace RKCommonFunctions {
 	QString escape (const QString &in);
 /** reverse of escape () */
 	QString unescape (const QString &in);
+
+/** simultaneously sets tool tips and what's this tips on up to three QWidgets */
+	void setTips (const QString tip, QWidget *first, QWidget *second=0, QWidget *third=0);
 };
 
 #endif
