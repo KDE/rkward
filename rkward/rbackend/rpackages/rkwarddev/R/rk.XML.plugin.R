@@ -23,7 +23,7 @@
 #'   "Second Tab"), children=list(test.checkboxes, test.dropdown))
 #' # make a plugin with that tabbook
 #' test.plugin <- rk.XML.plugin("My test", label="Check this out", children=test.tabbook)
-#' cat(pasteXMLNode(test.plugin, shine=1))
+#' cat(pasteXMLTree(test.plugin, shine=1))
 
 rk.XML.plugin <- function(name, label, children=list(), help=TRUE, logic=TRUE, provides=c("dialog"), pluginmap=NULL){
 	name.orig <- name
@@ -79,13 +79,19 @@ rk.XML.plugin <- function(name, label, children=list(), help=TRUE, logic=TRUE, p
 
 	if("wizard" %in% provides){
 		## TODO: wizard code
-		plugin.wizard <- new("XiMpLe.node",
-				name="wizard",
+		# create a first page for the wizard section
+		plugin.wizard.page <- new("XiMpLe.node",
+				name="page",
 				attributes=list(label=label),
 				value="")
 		if(length(children) > 0){
-			plugin.wizard@children <- child.list(children)
+			plugin.wizard.page@children <- child.list(children)
 		} else {}
+		plugin.wizard <- new("XiMpLe.node",
+				name="wizard",
+				attributes=list(label=label),
+				children=child.list(plugin.wizard.page),
+				value="")
 		all.children[[length(all.children)+1]]	<- plugin.wizard
 	}
 

@@ -9,6 +9,8 @@
 #'		created plugin XML file as the dialog.
 #' @param dial.require A character vector with names of R packages that the dialog requires.
 #' @param overwrite Logical, whether existing files should be replaced. Defaults to \code{FALSE}.
+#' @param wizard Logical, whether a \code{<wizard>} section should be added to the \code{<dialog>} section.
+#'		Defaults to \code{FALSE}.
 #' @param tests Logical, whether directories and files for plugin tests should be created.
 #'		Defaults to \code{TRUE}.
 #' @export
@@ -73,7 +75,7 @@
 #'   dialog=test.tabbook, overwrite=TRUE)
 #' }
 
-rk.plugin.skeleton <- function(name, about, path=tempdir(), dialog=list(), dial.require=c(), overwrite=FALSE, tests=TRUE, lazyLoad=TRUE){
+rk.plugin.skeleton <- function(name, about, path=tempdir(), dialog=list(), dial.require=c(), overwrite=FALSE, wizard=FALSE, tests=TRUE, lazyLoad=TRUE){
 	# to besure, remove all non-character symbols from name
 	name.orig <- name
 	name <- gsub("[[:space:]]*[^[:alnum:]]*", "", name)
@@ -130,10 +132,16 @@ rk.plugin.skeleton <- function(name, about, path=tempdir(), dialog=list(), dial.
 
 	## create plugin.xml
 	if(isTRUE(checkCreateFiles(plugin.xml))){
+		if(isTRUE(wizard))
+			plugin.provides <- c("dialog","wizard")
+		else {
+			plugin.provides <- "dialog"
+		}
 		XML.plugin <- rk.XML.plugin(
 			name=name,
 			label=name.orig,
 			children=dialog,
+			provides=plugin.provides,
 			pluginmap=paste("../", name, ".pluginmap", sep=""))
 		cat(pasteXMLTree(XML.plugin, shine=1), file=plugin.xml)
 	} else {}

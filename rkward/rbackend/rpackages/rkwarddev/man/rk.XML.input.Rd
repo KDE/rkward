@@ -10,7 +10,7 @@
   plugin element.}
 
   \item{initial}{Character string, if not \code{NULL} will
-  be used as thi initial value of the input field.}
+  be used as the initial value of the input field.}
 
   \item{size}{One value of either "small", "medium" or
   "large".}

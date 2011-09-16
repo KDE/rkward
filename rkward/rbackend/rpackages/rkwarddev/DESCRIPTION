@@ -15,8 +15,8 @@ LazyLoad: yes
 URL: http://rkward.sourceforge.net
 Authors@R: c(person(given="Meik", family="Michalke",
     email="meik.michalke@hhu.de", role=c("aut", "cre")))
-Version: 0.01-2
-Date: 2011-09-15
+Version: 0.01-3
+Date: 2011-09-16
 Collate:
     'rk-internal.R'
     'rk.JS.array.R'
@@ -28,7 +28,6 @@ Collate:
     'rk.testsuite.doc.R'
     'rkwarddev-desc-internal.R'
     'rkwarddev-package.R'
-    'rkwardplugdev-package.R'
     'rk.XML.about.R'
     'rk.XML.browser.R'
     'rk.XML.cbox.R'
@@ -41,6 +40,7 @@ Collate:
     'rk.XML.radio.R'
     'rk.XML.row.R'
     'rk.XML.saveobj.R'
+    'rk.XML.spinbox.R'
     'rk.XML.stretch.R'
     'rk.XML.tabbook.R'
     'rk.XML.text.R'

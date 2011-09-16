@@ -1,7 +1,7 @@
 #' Create XML node "input" for RKWard plugins
 #'
 #' @param label Character string, a text label for this plugin element.
-#' @param initial Character string, if not \code{NULL} will be used as thi initial value of the input field.
+#' @param initial Character string, if not \code{NULL} will be used as the initial value of the input field.
 #' @param size One value of either "small", "medium" or "large".
 #' @param required Logical, whether an entry is mandatory or not.
 #' @param id.name Character string, a unique ID for this plugin element.

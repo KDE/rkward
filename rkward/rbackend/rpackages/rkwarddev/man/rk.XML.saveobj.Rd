@@ -3,7 +3,7 @@
 \title{Create XML node "saveobject" for RKWard plugins}
 \usage{
   rk.XML.saveobj(label, chk = FALSE, checkable = TRUE,
-  initial = "auto", id.name = "auto")
+  initial = "auto", required = FALSE, id.name = "auto")
 }
 \arguments{
   \item{label}{Character string, a text label for this
@@ -20,6 +20,9 @@
   the object should be saved to. If \code{"auto"} and a
   label was provided, an name will be generated
   automatically from the label.}
+
+  \item{required}{Logical, whether an entry is mandatory or
+  not.}
 
   \item{id.name}{Character string, a unique ID for this
   plugin element. If \code{"auto"} and a label was

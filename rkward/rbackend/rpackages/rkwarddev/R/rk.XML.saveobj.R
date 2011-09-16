@@ -5,6 +5,7 @@
 #' @param checkable Logical, if \code{TRUE} the option can be switched on and off.
 #' @param intitial Character string, the default name for the object should be saved to.
 #'		If \code{"auto"} and a label was provided, an name will be generated automatically from the label.
+#' @param required Logical, whether an entry is mandatory or not.
 #' @param id.name Character string, a unique ID for this plugin element.
 #'		If \code{"auto"} and a label was provided, an ID will be generated automatically from the label.
 #' @return An object of class \code{XiMpLe.node}.
@@ -13,7 +14,7 @@
 #' test.saveobj <- rk.XML.saveobj("Save the results")
 #' cat(pasteXMLNode(test.saveobj, shine=1))
 
-rk.XML.saveobj <- function(label, chk=FALSE, checkable=TRUE, initial="auto", id.name="auto"){
+rk.XML.saveobj <- function(label, chk=FALSE, checkable=TRUE, initial="auto", required=FALSE, id.name="auto"){
 	attr.list <- list(label=label)
 
 	if(isTRUE(checkable)){
@@ -29,6 +30,9 @@ rk.XML.saveobj <- function(label, chk=FALSE, checkable=TRUE, initial="auto", id.
 		attr.list[["initial"]] <- auto.ids(label, suffix=".obj")
 	} else if(!is.null(id.name)){
 		attr.list[["initial"]] <- initial
+	} else {}
+	if(isTRUE(required)){
+		attr.list[["required"]] <- "true"
 	} else {}
 
 
