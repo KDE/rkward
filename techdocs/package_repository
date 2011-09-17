@@ -1,0 +1,67 @@
+** Notes on maintaining a repository for RKWard plugins **
+
+RKWard 0.5.7 introduced a new method for distributing and updating (external) plugins. They are basically valid R packages of their own, providing the plugin payload in $PACKAGE/inst/rkward, which after installation becomes $RLIBS/$PACKAGE/rkward. This means, to host such plugins, an R package repository can and should be used. This doc outlines what needs to be done to achieve this.
+
+
+** R package repository structure **
+
+A repository for R packages is simply a structure of directories, made publicly availabe by a web server (you don't need directory listings). It mainly has three trees:
+ - source packages go to $REPOROOT/src/contrib
+ - Mac OS X binaries go to $REPOROOT/bin/macosx/leopard/contrib/$R_VERSION
+ - MS Windows binaries go to $REPOROOT/bin/windows/contrib/$R_VERSION
+
+Each tree must have an index of the available packages, in a file called PACKAGES. It's recommended to also provide this file gzipped, since if that's found it is preferred which saves traffic. This file, however, is crucial, because it serves all information on available packages to your R installation if you want to install or update a package. All together, a repository structure looks like this:
+
+  $REPOROOT
+  │
+  ├── bin
+  │   ├── macosx
+  │   │   └── leopard
+  │   │       └── contrib
+  │   │           └── 2.13
+  │   │               ├── PACKAGES
+  │   │               ├── PACKAGES.gz
+  │   │               ├── ...
+  │   │               ├── rkwarddev_0.01-1.tgz
+  │   │               └── XiMpLe_0.03-1.tgz
+  │   └── windows
+  │       └── contrib
+  │           └── 2.13
+  │               ├── PACKAGES
+  │               ├── PACKAGES.gz
+  │               ├── ...
+  │               ├── rkwarddev_0.01-1.zip
+  │               └── XiMpLe_0.03-1.zip
+  └── src
+      └── contrib
+          ├── PACKAGES
+          ├── PACKAGES.gz
+          ├── ...
+          ├── rkwarddev_0.01-1.tar.gz
+          └── XiMpLe_0.03-1.tar.gz
+
+
+** Precompiled binaries **
+
+GNU/Linux systems usually install the package sources. Mac OS X and MS Windows on the other hand install precompiled binaries by default. They can be forced to attempt source installation as well -- e.g., by calling install.packages(..., type="source") --, but they won't try that automatically.
+
+It depends on the package's content whether building binary archives is simple or difficult. If the sources include code in languages other than R (like C++ or FORTRAN), they can only be build in appropriately set-up environments. Luckily for us, RKWard plugin packages shouldn't need that, which means the creation of a binary comes down to these simple steps:
+ - install the package from its sources
+ - compress the *installed* package tree, using zip for Windows and tar/gzip for Mac OS
+
+Unfortunately, these builds will be specific for the R version they were made with. So if your Windows machine runs R 2.12 and the repository has packages only for R 2.13, install.packages() will not even find the packages and fail.
+
+
+** Creating the PACKAGES files **
+
+The PACKAGES files can be updated with the function write_PACKAGES() from the tools package:
+
+  write_PACKAGES(REPO_SUB_DIR, type=XXX, latestOnly=FALSE)
+
+where REPO_SUB_DIR points to one of the three package trees mentioned above, and XXX must be one of "source", "mac.binary" or "win.binary", respectively. This will include all package archives present in REPO_SUB_DIR in the relevant PACKAGES files. So in order to create usable PACKAGES files, all packages which should be available must be present in the scanned folder. Therefore, you'd either have to run the command on the server (which might be difficult), or have an up-to-date local copy of the full repository, update the index files and sync them with the server.
+
+
+** Helpful tools **
+
+The package roxyPackage was written to automatically build packages and maintain local repositories. Amongst other things, it can zip up simple Windows and Mac OS binaries like RKWard plugins, and keep the PACKAGES indices up-to-date:
+ o http://reaktanz.de/?c=hacking&s=roxyPackage
