@@ -4,7 +4,7 @@ Title: A simple XML tree parser and generator
 Author: m.eik michalke <meik.michalke@hhu.de>
 Maintainer: m.eik michalke <meik.michalke@hhu.de>
 Depends:
-    R (>= 2.9.0)
+    R (>= 2.9.0),methods
 Enhances: rkward
 Description: This package provides a simple XML tree
     parser/generator. It includes functions to read XML
@@ -17,10 +17,10 @@ License: GPL (>= 3)
 Encoding: UTF-8
 LazyLoad: yes
 URL: http://rkward.sourceforge.net
-Author@R: c(person(given="Meik", family="Michalke",
-    email="meik.michalke@hhu.de"))
-Version: 0.03-1
-Date: 2011-09-12
+Authors@R: c(person(given="Meik", family="Michalke",
+    email="meik.michalke@hhu.de", role=c("aut", "cre")))
+Version: 0.03-2
+Date: 2011-09-17
 Collate:
     'XiMpLe.node-class.R'
     'XiMpLe.doc-class.R'

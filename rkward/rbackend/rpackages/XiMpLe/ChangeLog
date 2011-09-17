@@ -1,5 +1,8 @@
 ChangeLog for package XiMpLe
 
+## 0.03-2 (2011-09-17)
+  - added docs for classed XiMpLe.doc and XiMpLe.node
+
 ## 0.03-1 (2011-09-11)
   - fixed outstanding issue with complex value structures
   - changed "Author@R" to "Authors@R" in DESCRIPTION (for R >= 2.14)
