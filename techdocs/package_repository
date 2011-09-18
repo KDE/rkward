@@ -5,7 +5,7 @@ RKWard 0.5.7 introduced a new method for distributing and updating (external) pl
 
 ** R package repository structure **
 
-A repository for R packages is simply a structure of directories, made publicly availabe by a web server (you don't need directory listings). It mainly has three trees:
+A repository for R packages is simply a structure of directories, made publicly available by a web server (you don't need directory listings). It mainly has three trees:
  - source packages go to $REPOROOT/src/contrib
  - Mac OS X binaries go to $REPOROOT/bin/macosx/leopard/contrib/$R_VERSION
  - MS Windows binaries go to $REPOROOT/bin/windows/contrib/$R_VERSION
