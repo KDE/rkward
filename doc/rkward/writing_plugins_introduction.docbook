@@ -1358,8 +1358,8 @@ You can declare two &lt;external&gt; properties in your plugin. "filename" will 
 
 <chapter id="external_plugins">
 <title>External plugins</title>
-  <para>As of version 0.5.5, &kapp; provides a confortable way to install additional third party plugins which do not belong to the core package itself. We call these "external plugins". They come in form of a .tar.gz archive and can be managed directly via a dialoge in &kapp;’s configuration. </para>
-  <para>This section of the documentation describes how external plugin archives are to be packaged, so that &kapp; can use them. The plugin creation itself is of course identical to the previous sections. That is, you should probably first write a working plugin, and then check back here to learn how to distribute it. </para>
+  <para>As of version 0.5.5, &kapp; provides a confortable way to install additional third party plugins which do not belong to the core package itself. We call these "external plugins". They come in form of an R package and can be managed directly via the usual package management features of R and/or &kapp;. </para>
+  <para>This section of the documentation describes how external plugins are to be packaged, so that &kapp; can use them. The plugin creation itself is of course identical to the previous sections. That is, you should probably first write a working plugin, and then check back here to learn how to distribute it. </para>
   <para>Since external plugins are a relatively young feature, details of this might probably change in future releases. You’re welcome to contribute your ideas to improve the process. </para>
   
   <section id="why_external_plugins">
@@ -1368,40 +1368,44 @@ You can declare two &lt;external&gt; properties in your plugin. "filename" will 
     <para>As a rule of thumb, plugins that seem to serve a widely used purpose (e.g. t-Tests) should become part of the core package, while those who serve a rather limited group of people with special interests should be provided as an optional package. For you as a plugin author it’s best practice to just start with an external plugin. </para>
   </section>
   
-  <section id="structure_of_a_package_archive">
-  <title>Structure of a package archive</title>
-    <para>For external plugins to install and work properly, they must follow some structural guidelines regarding their file hierarchy and archive naming. </para>
+  <section id="structure_of_a_plugin_package">
+  <title>Structure of a plugin package</title>
+    <para>For external plugins to install and work properly, they must follow some structural guidelines regarding their file hierarchy. </para>
     
     <section id="file_hierarchy"><title>File hierarchy</title>
       <para>Lets have a look at the prototypic file hierarchy of an elaborate plugin archive. You don’t have to include all of these directories and/or files for a plugin to work (read on to learn what’s absolutely neccessary), consider this a "best practice" example: </para>
       <programlisting>
-    plugin_name/
-      plugins/
-      plugin_name.xml
-      plugin_name.js
-      plugin_name.rkh
-      ...
-    tests/
-      testsuite_name/
-	RKTestStandards.sometest_name.rkcommands.R
-	RKTestStandards.sometest_name.rkout
-	...
-      testsuite.R
-    plugin_name.pluginmap
-    ChangeLog
-    README
-    AUTHORS
-    LICENSE
-    ...
+	plugin_name/
+		inst/
+			rkward/
+				plugins/
+					plugin_name.xml
+					plugin_name.js
+					plugin_name.rkh
+					...
+				tests/
+					testsuite_name/
+						RKTestStandards.sometest_name.rkcommands.R
+						RKTestStandards.sometest_name.rkout
+						...
+					testsuite.R
+				plugin_name.pluginmap
+				...
+	ChangeLog
+	README
+	AUTHORS
+	LICENSE
+	DESCRIPTION
       </programlisting>
       <para>(Please note: In this example, all occasions of "plugin_name", "testsuite_name" and "sometest_name" are to be replaced with their correct names, accordingly.) </para>
       <section id="basic_plugin_components">
       <title>Basic plugin components</title>
-	<para>It is mandatory to include at least three files: a .pluginmap, a plugin .xml description and a plugin .js file. That is, even the "plugins" directory is optional. It might just help to give your files some order, especially if you include more that one plugin/dialog in the archive, which is of course no problem. You can have as many directories for the actual plugin files as you see fit, they just have to resemble the .pluginmap, respectively. It is also possible to even include several .pluginmap files, if it fits your needs. </para>
+		<para>It is mandatory to include at least three files: a .pluginmap, a plugin .xml description and a plugin .js file. That is, even the "plugins" directory is optional. It might just help to give your files some order, especially if you include more that one plugin/dialog in the archive, which is of course no problem. You can have as many directories for the actual plugin files as you see fit, they just have to resemble the .pluginmap, respectively. It is also possible to even include several .pluginmap files, if it fits your needs, but you should include them all in "plugin_name.pluginmap" then. </para>
       </section>
       <section id="additional_information">
       <title>Additional information (optional)</title>
-	<para>ChangeLog, README, AUTHORS, LICENSE should be self-explaining and are entirely optional. Actually, they won’t be interpreted by &kapp;, so they are rather meant to carry additional information that might be relevant e.g. for distributors. Most of their relevant content (author credits, licence terms etc.) will be included in the actual plugin files anyway, though (see the section on meta-information below). </para>
+	<para>ChangeLog, README, AUTHORS, LICENSE should be self-explaining and are entirely optional. Actually, they won’t be interpreted by &kapp;, so they are rather meant to carry additional information that might be relevant e.g. for distributors. Most of their relevant content (author credits, licence terms etc.) will be included in the actual plugin files anyway, though (see the section on meta-information below). Note that all of these files could also be placed somewhere in the "inst" directory, if you want them not only to be present in the source archive but the installed package as well. </para>
+	<para>Each R package must have a valid DESCRIPTION file, which is also crucial for &kapp; recognizing it as a plugin provider. </para>
       </section>
       <section id="automated_plugin_testing">
       <title>Automated plugin testing (optional)</title>
