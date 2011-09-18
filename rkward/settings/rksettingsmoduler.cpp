@@ -32,6 +32,7 @@
 #include <QPushButton>
 #include <QTextEdit>
 
+#include "rksettingsmodulegeneral.h"
 #include "../core/robject.h"
 #include "../misc/multistringselector.h"
 #include "../misc/rkprogresscontrol.h"
@@ -489,8 +490,12 @@ void RKSettingsModuleRPackages::loadSettings (KConfig *config) {
 	KConfigGroup cg = config->group ("R Settings");
 
 	cran_mirror_url = cg.readEntry ("CRAN mirror url", "@CRAN@");
-	package_repositories = cg.readEntry ("Repositories", QStringList ());
-	package_repositories.removeAll ("@CRAN@");	// COMPAT: Cran mirror was part of this list before 0.5.3
+	const QString rkward_repo ("http://rkward.sf.net/R/");
+	package_repositories = cg.readEntry ("Repositories", QStringList (rkward_repo));
+	if (RKSettingsModuleGeneral::storedConfigVersion () <= RKSettingsModuleGeneral::RKWardConfig_Pre0_5_7) {
+		package_repositories.removeAll ("@CRAN@");	// COMPAT: Cran mirror was part of this list before 0.5.3
+		package_repositories.append (rkward_repo);
+	}
 
 	liblocs = cg.readEntry ("LibraryLocations", QStringList ());
 	archive_packages = cg.readEntry ("archive packages", false);
