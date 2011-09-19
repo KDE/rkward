@@ -74,7 +74,7 @@ This is a guide to writing plugins for &rkward;.
 <title>Introduction</title>
 
 <para>
-Documentation as of &kapp; release 0.5.6.
+Documentation as of &kapp; release 0.5.7.
 </para>
 <para>
 This document describes how to write your own plugins. Note, that at the time of this writing, some of the concepts are not yet set it stone. Therefore, this document should be regarded as an introduction to the current approach, and as a basis for discussion. All sorts of comments are welcome.
@@ -1357,24 +1357,25 @@ You can declare two &lt;external&gt; properties in your plugin. "filename" will 
 </chapter>
 
 <chapter id="external_plugins">
-<title>External plugins</title>
-  <para>As of version 0.5.5, &kapp; provides a comfortable way to install additional third party plugins which do not belong to the core package itself. We call these "external plugins". They come in form of an R package and can be managed directly via the usual package management features of R and/or &kapp;. </para>
-  <para>This section of the documentation describes how external plugins are to be packaged, so that &kapp; can use them. The plugin creation itself is of course identical to the previous sections. That is, you should probably first write a working plugin, and then check back here to learn how to distribute it. </para>
-  <para>Since external plugins are a relatively young feature, details of this might probably change in future releases. You’re welcome to contribute your ideas to improve the process. </para>
+	<title>External plugins</title>
+	<para>As of version 0.5.5, &kapp; provides a comfortable way to install additional third party plugins which do not belong to the core package itself. We call these "external plugins". They come in form of an R package and can be managed directly via the usual package management features of R and/or &kapp;. </para>
+	<para>This section of the documentation describes how external plugins are to be packaged, so that &kapp; can use them. The plugin creation itself is of course identical to the previous sections. That is, you should probably first write a working plugin, and then check back here to learn how to distribute it. </para>
+	<para>Since external plugins are a relatively young feature, details of this might probably change in future releases. You’re welcome to contribute your ideas to improve the process. </para>
+	<para><emphasis>Note:</emphasis> These docs explain the details of external plugins so you can learn how they work. In addition to that, also have a look at the <link linkend="rkwarddev">"rkwarddev" package</link>, which was designed to automate a lot of the writing process. </para>
   
-  <section id="why_external_plugins">
-  <title>Why external plugins?</title>
-    <para>The number of packages to extend the functionality of R is immense already, and climbing. On one hand, we want to encourage you to write plugins for even the most specialised tasks you need solved. On the other hand, the average user should not get lost in huge menu trees full of unknown statistical terms. Therefore it seemed reasonable to keep the plugin handling in &kapp; quite modular as well. </para>
-    <para>As a rule of thumb, plugins that seem to serve a widely used purpose (e.g. t-Tests) should become part of the core package, while those who serve a rather limited group of people with special interests should be provided as an optional package. For you as a plugin author it’s best practice to just start with an external plugin. </para>
-  </section>
+	<section id="why_external_plugins">
+		<title>Why external plugins?</title>
+		<para>The number of packages to extend the functionality of R is immense already, and climbing. On one hand, we want to encourage you to write plugins for even the most specialised tasks you need solved. On the other hand, the average user should not get lost in huge menu trees full of unknown statistical terms. Therefore it seemed reasonable to keep the plugin handling in &kapp; quite modular as well. </para>
+		<para>As a rule of thumb, plugins that seem to serve a widely used purpose (e.g. t-Tests) should become part of the core package, while those who serve a rather limited group of people with special interests should be provided as an optional package. For you as a plugin author it’s best practice to just start with an external plugin. </para>
+	</section>
   
-  <section id="structure_of_a_plugin_package">
-  <title>Structure of a plugin package</title>
-    <para>For external plugins to install and work properly, they must follow some structural guidelines regarding their file hierarchy. </para>
+	<section id="structure_of_a_plugin_package">
+		<title>Structure of a plugin package</title>
+		<para>For external plugins to install and work properly, they must follow some structural guidelines regarding their file hierarchy. </para>
     
-    <section id="file_hierarchy"><title>File hierarchy</title>
-      <para>Lets have a look at the prototypic file hierarchy of an elaborate plugin archive. You don’t have to include all of these directories and/or files for a plugin to work (read on to learn what’s absolutely neccessary), consider this a "best practice" example: </para>
-      <programlisting>
+		<section id="file_hierarchy"><title>File hierarchy</title>
+			<para>Lets have a look at the prototypic file hierarchy of an elaborate plugin archive. You don’t have to include all of these directories and/or files for a plugin to work (read on to learn what’s absolutely neccessary), consider this a "best practice" example: </para>
+			<programlisting>
 	plugin_name/
 		inst/
 			rkward/
@@ -1396,103 +1397,165 @@ You can declare two &lt;external&gt; properties in your plugin. "filename" will 
 	AUTHORS
 	LICENSE
 	DESCRIPTION
-      </programlisting>
-      <para>(Please note: In this example, all occasions of "plugin_name", "testsuite_name" and "sometest_name" are to be replaced with their correct names, accordingly.) </para>
-      <section id="basic_plugin_components">
-      <title>Basic plugin components</title>
-		<para>It is mandatory to include at least three files: a .pluginmap, a plugin .xml description and a plugin .js file. That is, even the "plugins" directory is optional. It might just help to give your files some order, especially if you include more that one plugin/dialog in the archive, which is of course no problem. You can have as many directories for the actual plugin files as you see fit, they just have to resemble the .pluginmap, respectively. It is also possible to even include several .pluginmap files, if it fits your needs, but you should include them all in "plugin_name.pluginmap" then. </para>
-      </section>
-      <section id="additional_information">
-      <title>Additional information (optional)</title>
-	<para>ChangeLog, README, AUTHORS, LICENSE should be self-explaining and are entirely optional. Actually, they won’t be interpreted by &kapp;, so they are rather meant to carry additional information that might be relevant e.g. for distributors. Most of their relevant content (author credits, licence terms etc.) will be included in the actual plugin files anyway, though (see the section on meta-information below). Note that all of these files could also be placed somewhere in the "inst" directory, if you want them not only to be present in the source archive but the installed package as well. </para>
-	<para>Each R package must have a valid DESCRIPTION file, which is also crucial for &kapp; recognizing it as a plugin provider. </para>
-      </section>
-      <section id="automated_plugin_testing">
-      <title>Automated plugin testing (optional)</title>
-	<para>Another optional directory is "tests", which is meant to provide files needed for automated plugin testing. These tests are helpful to quickly check if your plugins still work with new versions of R or &kapp;. If you want to include tests, you should really restrain yourself to the naming scheme and hierarchy shown here. That is, tests should reside in a directory called "tests", which includes a file "testsuite.R" and a folder with tests standards named after the appropriate test suite. You can, however, provide more than one test suite; in that case, if you don’t want to append them all in the one "testsuite.R" file, you can split them in e.g. one file for each test suite and create one "testsuite.R" with "source()" calls for each suite file. In either case, create seperate subdirectories with test standards for each defined suite. </para>
-	<para>The benefits of upholding to this structure is that plugin tests can be run simply by calling "rktests.makplugintests()" from the tests directory without additional arguments. </para>
-	
-	<para>Naming the archive   An external plugin should follow the naming convention "plugin_name-version.tar.gz". "plugin_name" should be replaced with a proper name, which shouldn’t contain strange symbols or space characters, and definitely mustn’t contain any occurrence of the minus sign "-". That’s important because internally anything after the first "-" is interpreted as the version number of your plugin archive. </para>
-	<para>That said, versioning begins with a "-" and might also contain additional dashes, so "squaring_circles-0.2-3b.tar.gz" would be a valid archive name, whereas "squaring-circles_0.2-3b.tar.gz" would not. </para>
-      </section>
-    </section>
-  </section>
+			</programlisting>
+			<para><emphasis>Note:</emphasis> In this example, all occasions of "plugin_name", "testsuite_name" and "sometest_name" are to be replaced with their correct names, accordingly. You also don't have to create this file hierarchy by hand. If you use the function <code>rk.plugin.skeleton()</code> from the <link linkend="rkwarddev">"rkwarddev" package</link>, it will automatically create all necessary files and directories for you.</para>
+			<section id="basic_plugin_components">
+				<title>Basic plugin components</title>
+				<para>It is mandatory to include at least three files: a .pluginmap, a plugin .xml description and a plugin .js file. That is, even the "plugins" directory is optional. It might just help to give your files some order, especially if you include more that one plugin/dialog in the archive, which is of course no problem. You can have as many directories for the actual plugin files as you see fit, they just have to resemble the .pluginmap, respectively. It is also possible to even include several .pluginmap files, if it fits your needs, but you should include them all in "plugin_name.pluginmap" then. </para>
+				<para>Each R package must have a valid DESCRIPTION file, which is also crucial for &kapp; recognizing it as a plugin provider. Most of the information it carries is also needed in the plugin <link linkend="meta-information">Meta-information</link>, but in a different format (the R documentation explains <ulink url="http://cran.r-project.org/doc/manuals/R-exts.html#The-DESCRIPTION-file">the DESCRIPTION file in detail</ulink>).</para>
+				<para>In addition to the general contents of a DESCRIPTIONS file, make sure to also include the line "Enhances: rkward". This will cause &kapp; to automatically scan the package for plugins if it is installed. An example DESCRIPTION file looks like this:</para>
+			<programlisting>
+	Package: SquaretheCircle
+	Type: Package
+	Title: Square the circle
+	Version: 0.1-3
+	Date: 2011-09-19
+	Author: E.A. Dölle &lt;doelle@eternalwondermaths.example.org&gt;
+	Maintainer: A. Assistant &lt;alterego@eternalwondermaths.example.org&gt;
+	Enhances: rkward
+	Description: Squares the circle using Heisenberg compensation.
+	License: GPL
+	LazyLoad: yes
+	URL: http://eternalwondermaths.example.org/23/stc.html
+	Authors@R: c(person(given="E.A.", family="Dölle", role="aut",
+			email="doelle@eternalwondermaths.example.org"),
+			person(given="A.", family="Assistant", role=c("cre",
+			"ctb"), email="alterego@eternalwondermaths.example.org"))
+			</programlisting>
+			<para><emphasis>Note:</emphasis> You don't have to write this file by hand. If you use the function <code>rk.plugin.skeleton()</code> from the <link linkend="rkwarddev">"rkwarddev" package</link> and provide all necessary information via the "about" option, it will automatically create a working DESCRIPTION file for you.</para>
+
+			</section>
+			<section id="additional_information">
+				<title>Additional information (optional)</title>
+				<para>ChangeLog, README, AUTHORS, LICENSE should be self-explaining and are entirely optional. Actually, they won’t be interpreted by &kapp;, so they are rather meant to carry additional information that might be relevant e.g. for distributors. Most of their relevant content (author credits, licence terms etc.) will be included in the actual plugin files anyway, though (see the section on meta-information below). Note that all of these files could also be placed somewhere in the "inst" directory, if you want them not only to be present in the source archive but the installed package as well. </para>
+			</section>
+			<section id="automated_plugin_testing">
+				<title>Automated plugin testing (optional)</title>
+				<para>Another optional directory is "tests", which is meant to provide files needed for automated plugin testing. These tests are helpful to quickly check if your plugins still work with new versions of R or &kapp;. If you want to include tests, you should really restrain yourself to the naming scheme and hierarchy shown here. That is, tests should reside in a directory called "tests", which includes a file "testsuite.R" and a folder with tests standards named after the appropriate test suite. You can, however, provide more than one test suite; in that case, if you don’t want to append them all in the one "testsuite.R" file, you can split them in e.g. one file for each test suite and create one "testsuite.R" with "source()" calls for each suite file. In either case, create seperate subdirectories with test standards for each defined suite. </para>
+				<para>The benefits of upholding to this structure is that plugin tests can be run simply by calling "rktests.makplugintests()" from the tests directory without additional arguments. </para>
+			</section>
+		</section>
+	</section>
   
-  <section id="meta-information">
-  <title>Meta-information</title>
-    <para>Each plugin archive should provide some basic meta information on what it deals with, where to find more information, who maintians it, if it relies on specific R packages or other plugins, etc. </para>
-    <para>This information is given at least once in your .pluginmap, and can then be included or overwritten in each plugin .xml file (which might be useful if that particular plugin file was contributed by someone else, for instance). </para>
-    <para>To achieve this, the &lt;about&gt; tag is used. The overall structure of this tag looks something like this: </para>
-    <programlisting>
-  &lt;about&gt;
-    &lt;author /&gt;
-    &lt;author /&gt;
-    ...
-    &lt;dependencies&gt;
-      &lt;package /&gt;
-      &lt;package /&gt;
-      ...
-      &lt;pluginmap /&gt;
-      &lt;pluginmap /&gt;
-      ...
-    &lt;/dependencies&gt;
-  &lt;/about&gt;
-    </programlisting>
-    <para>That is, the &lt;about&gt; tag contains &lt;author&gt; and &lt;dependencies&gt;, and &lt;dependencies&gt; contains &lt;package&gt; and &lt;pluginmap&gt;. Each of these five tags knows in turn several further arguments (see below). </para>
-    <para>As you can see, you can have more than one entry on authors, needed R packages and &kapp; pluginmaps. </para>
-    <para>A full-blown example would look like this: </para>
- <programlisting>
-&lt;document base_prefix="" namespace="rkward"
-  id="squaring_circles"&gt;
-&lt;about
-  name="Square the circle"
-  shortinfo="Squares the circle using Heisenberg compensation."
-  version="0.1-3"
-  releasedate="2010-10-20"
-  url="http://eternalwondermaths.example.org/23/stc.html"
-  license="GPL"
-  category="Geometry"&gt;
+	<section id="meta-information">
+		<title>Meta-information</title>
+		<para>Each plugin archive should provide some basic meta information on what it deals with, where to find more information, who maintians it, if it relies on specific R packages or other plugins, etc. </para>
+		<para>This information is given at least once in your .pluginmap, and can then be included or overwritten in each plugin .xml file (which might be useful if that particular plugin file was contributed by someone else, for instance). </para>
+		<para>To achieve this, the &lt;about&gt; tag is used. The overall structure of this tag looks something like this: </para>
+		<programlisting>
+	&lt;about&gt;
+		&lt;author /&gt;
+		&lt;author /&gt;
+		...
+		&lt;dependencies&gt;
+			&lt;package /&gt;
+			&lt;package /&gt;
+			...
+			&lt;pluginmap /&gt;
+			&lt;pluginmap /&gt;
+			...
+		&lt;/dependencies&gt;
+	&lt;/about&gt;
+		</programlisting>
+		<para>That is, the &lt;about&gt; tag contains &lt;author&gt; and &lt;dependencies&gt;, and &lt;dependencies&gt; contains &lt;package&gt; and &lt;pluginmap&gt;. Each of these five tags knows in turn several further attributes (see below). </para>
+		<para>As you can see, you can have more than one entry on authors, needed R packages and &kapp; pluginmaps. </para>
+		<para>A full-blown example would look like this: </para>
+		<programlisting>
+&lt;document 
+	namespace="rkward"
+	id="SquaretheCircle_rkward"
+&gt;
+	&lt;about 
+		name="Square the Circle"
+		shortinfo="Squares the circle using Heisenberg compensation."
+		version="0.1-3"
+		releasedate="2011-09-19"
+		url="http://eternalwondermaths.example.org/23/stc.html"
+		license="GPL"
+		category="Geometry"
+	&gt;
+		&lt;author 
+			given="E.A."
+			family="Dölle"
+			email="doelle@eternalwondermaths.example.org"
+			role="aut"
+		 /&gt;
+		&lt;author 
+			given="A."
+			family="Assistant"
+			email="alterego@eternalwondermaths.example.org"
+			role="cre, ctb"
+		 /&gt;
+		&lt;dependencies 
+			rkward_min_version="0.5.3"
+			R_min_verion="2.10"
+		&gt;
+			&lt;package 
+				name="heisenberg"
+				min_version="0.11-2"
+				repository="http://rforge.r-project.org"
+			 /&gt;
+			&lt;package 
+				name="DreamsOfPi"
+				min_version="0.2"
+			 /&gt;
+			&lt;pluginmap 
+				name="heisenberg.pluginmap"
+				url="http://eternalwondermaths.example.org/hsb"
+			 /&gt;
+		&lt;/dependencies&gt;
+	&lt;/about&gt;
+	&lt;components&gt;
+		&lt;component 
+			type="standard"
+			id="SquaretheCircle.SquaretheCircle"
+			file="plugins/SquaretheCircle.xml"
+			label="SquaretheCircle"
+		 /&gt;
+	&lt;/components&gt;
+	&lt;hierarchy&gt;
+		&lt;menu 
+			id="analysis"
+			label="Analysis"
+		&gt;
+			&lt;menu 
+				id="menu_SquaretheCircle.SquaretheCircle"
+				label="Square the Circle"
+			&gt;
+				&lt;entry component="SquaretheCircle.SquaretheCircle" /&gt;
+			&lt;/menu&gt;
+		&lt;/menu&gt;
+	&lt;/hierarchy&gt;
+&lt;/document&gt;
+		</programlisting>
+		<para><emphasis>Note:</emphasis> You don't have to write this XML code by hand. If you use the function <code>rk.plugin.skeleton()</code> from the <link linkend="rkwarddev">"rkwarddev" package</link> and provide all necessary information via the "about" option, it will automatically create a .pluginmap file with a working &lt;about&gt; section for you.</para>
+		<para>Most of this should explain itself, so we’ll not discuss each and every tag element. But let’s look at some details that probably need some commentary for easier understanding. </para>
+		<para>The "category" element in &lt;about&gt; can be defined rather freely, but should be meaningful, as it’s thought to be used to order plugins into groups. All other attributes in this opening tag are mandatory and must be filled with reasonable content. </para>
+		<para>At least one &lt;author&gt; with a valid e-mail address and the role "aut" ("author") must also be given. In case your plugin causes problems or someone would like to share its gratitude with you, it should be easy to contact someone who’s involved. For further information on other valid roles, like "ctb" for code contributors or "cre" for package maintenance, please refer to the <ulink url="http://stat.ethz.ch/R-manual/R-patched/library/utils/html/person.html">R documentation on <code>person()</code></ulink>. </para>
+		<para>Actually the whole &lt;dependencies&gt; might be left empty if your plugin is supposed to run with any &kapp; version and standard R installation. But please be reasonable here as well. The inclusion of any &lt;package&gt; or &lt;pluginmap&gt; tags is of course optional as well, depending on the needs of your plugins. All the "min_version" and "max_version" information can be omitted, as well. They are obviously useful if your plugin is known to rely on certain versions of an R package, for instance. </para>
+		<para>If you need an R package that is probably not hosted on an official CRAN mirror, you can specify a repository where it can be found in the &lt;package&gt; tag. &kapp; will check whether this repository is already defined in its configuration, and if not, add it, but only after the user has given its explicit permission to that. </para>
+		<para>The "id" element in the &lt;pluginmap&gt; tag refers to the ID given in the top level &lt;document&gt; tag of the pluginmap that you need. </para>
+	</section>
+	<section id="building_the_plugin_package">
+		<title>Building the plugin package</title>
+		<para>As explained earlier, external RKWard plugins are in effect R packages, and therefore the packaging process is identical. In contrast to "real" R packages, a pure plugin package doesn't carry any further R code (although you can of course add RKWard plugins to usual R packages as well, using the same methods explained here). This should make it even easier to create a functioning package, as long as you have a valid DESCRIPTION file and adhere to the file hierarchy explained in previous sections.</para>
+		<para>The easiest way to actually build and test your plugin is to use the <code>R</code> command on the command line, for example:</para>
+		<programlisting>
+	R CMD build SquaretheCircle
+	R CMD INSTALL SquaretheCircle_0.1-3.tar.gz
+		</programlisting>
+	</section>
+</chapter>
 
-  &lt;author
-    name="E.A Dölle"
-    email="doelle@eternalwondermaths.example.org"
-    url="http://eternalwondermaths.example.org"
-  /&gt;
-  &lt;author
-    name="Timothy Struppi"
-    email="struppi@eternalwondermaths.example.org"
-    url="http://eternalwondermaths.example.org/~staff"
-  /&gt;
-
-  &lt;dependencies
-    rkward_min_version="0.5.3"
-    rkward_max_version=""
-    R_min_verion="2.10"
-    R_max_verion=""&gt;
-
-    &lt;package
-      name="heisenberg"
-      min_version="0.11-2"
-      max_version=""
-      repository="http://rforge.r-project.org"
-    /&gt;
-
-    &lt;pluginmap
-      id="dreams_of_pi"
-      min_version="0.11-2"
-      max_version=""
-      url="http://eternalwondermaths.example.org/23/stc.html"
-    /&gt;
-  &lt;/dependencies&gt;
-&lt;/about&gt;
-</programlisting>
-    <para>Most of this should explain itself, so we’ll not discuss each and every tag element. But let’s look at some details that probably need some commentary for easier understanding. </para>
-    <para>The "category" element in &lt;about&gt; can be defined rather freely, but should be meaningful, as it’s thought to be used to order plugins into groups. All elements in this opening tag are mandatory and must be filled with reasonable content. </para>
-    <para>At least one &lt;author&gt; with a valid e-mail address must also be given. In case your plugin causes problems or someone would like to share its gratitude with you, it should be easy to contact someone who’s involved. However, the URL element can be omitted. </para>
-    <para>Actually the whole &lt;dependencies&gt; might be left empty if your plugin is supposed to run with any &kapp; version and standard R installation. But please be reasonable here as well. The inclusion of any &lt;package&gt; or &lt;pluginmap&gt; tags is of course optional as well, depending on the needs of your plugins. All the "min_version" and "max_version" information can be omitted, as well. They are obviously useful if your plugin is known to rely on certain versions of an R package, for instance. </para>
-    <para>If you need an R package that is probably not hosted on an official CRAN mirror, you can specify a repository where it can be found in the &lt;package&gt; tag. &kapp; will check whether this repository is already defined in its configuration, and if not, add it, but only after the user has given its explicit permission to that. </para>
-    <para>The "id" element in the &lt;pluginmap&gt; tag refers to the ID given in the top level &lt;document&gt; tag of the pluginmap that you need. </para>
-</section>
+<chapter id="rkwarddev">
+	<title>Plugin development with the "rkwarddev" package</title>
+	<para>Writing external plugins involves writing files in three languages (XML, JavaScript and R) and the creation of a standardized hierarchy of directories. To make this a lot easier for willing plugin developers, we're providing the "rkwarddev" package. It provides a number of simple R functions to create the XML code for most dialog elements like tabbooks, checkboxes, dropdownlists or filebrowsers, as well as functions to create JavaScript code and RKWard help files to start with. The function <code>rk.plugin.skeleton()</code> creates the expected directory tree and all necessary files where they are supposed to be.</para>
+	<para>This package is not installed by default, but has to be installed manually from <ulink url="http://rkward.sourceforge.net/R/">RKWard's own repository</ulink>. You can either do that by using the GUI interface (Settings -> Configure packages), or from any running R session:</para>
+	<programlisting>
+	install.packages("rkwarddev", repos="http://rkward.sf.net/R")
+	library(rkwarddev)
+	</programlisting>
+	<para>The full <ulink url="http://rkward.sourceforge.net/R/pckg/rkwarddev/rkwarddev.pdf">documentation in PDF format</ulink> can also be found there.</para>
 </chapter>
 
 <appendix id="reference">
@@ -1892,7 +1955,7 @@ At some places in this introduction we've talked about "properties" of GUI eleme
 </varlistentry>
 <varlistentry>
 <term>&lt;frame&gt;</term>
-<listitem>The frame element is generally used as a pure layout element, and is listed in the section on <link linend="layoutelements"/>layout elements</link>. However, it can also be
+<listitem>The frame element is generally used as a pure layout element, and is listed in the section on <link linkend="layoutelements">layout elements</link>. However, it can also be
 made checkable, thus acting like a simple checkbox at the same time.
 </listitem>
 </varlistentry>
