@@ -8,6 +8,7 @@
 	<section title="Plugins" id="plugins">
 	<ul>
 		<li>Call or list available plugins: For automated testing of plugins see <link href="rkward://rhelp/rk.call.plugin"/>.</li>
+		<li>To write and share your own GUI dialogs, see the online <link href="http://rkward.sourceforge.net/documents/devel/plugins/index.html">Introduction to Writing Plugins for RKWard</link>.</li>
 	</ul>
 	</section>
 
