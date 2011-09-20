@@ -92,7 +92,7 @@ public:
 	RKMDIWindow *activeWindow (RKMDIWindow::State state);
 
 /** Opens the given url in the appropriate way. */
-	bool openAnyUrl (const KUrl &url, const QString &known_mimetype = QString ());
+	bool openAnyUrl (const KUrl &url, const QString &known_mimetype = QString (), bool force_external=false);
 
 /** Opens a new script editor
 @param url URL to load. Default option is to open an empty document

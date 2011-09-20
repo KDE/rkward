@@ -298,11 +298,15 @@ bool RKHTMLWindow::openURL (const KUrl &url) {
 		if ((host == "127.0.0.1") || (host == "localhost") || host == QHostInfo::localHostName ()) {
 			KIO::TransferJob *job = KIO::get (url, KIO::Reload);
 			connect (job, SIGNAL (mimetype(KIO::Job*, const QString&)), this, SLOT (mimeTypeDetermined(KIO::Job*, const QString&)));
-			return true;
 		}
+		return true;
+	} else if (url.protocol ().toLower ().startsWith ("help")) {
+		khtmlpart->openUrl (url);
+		changeURL (url);
+		return true;
 	}
 
-	RKWorkplace::mainWorkplace ()->openAnyUrl (url);
+	RKWorkplace::mainWorkplace ()->openAnyUrl (url, QString (), KMimeType::findByUrl (url)->is ("text/html"));	// NOTE: text/html type urls, which we have not handled, above, are forced to be opened externally, to avoid recursion. E.g. help:// protocol urls.
 	return true;
 }
 

@@ -207,7 +207,7 @@ void RKWorkplace::placeInToolWindowBar (RKMDIWindow *window, int position) {
 	}
 }
 
-bool RKWorkplace::openAnyUrl (const KUrl &url, const QString &known_mimetype) {
+bool RKWorkplace::openAnyUrl (const KUrl &url, const QString &known_mimetype, bool force_external) {
 	RK_TRACE (APP);
 
 #warning TODO support rkward:\/\/-protocol, here, too
@@ -215,18 +215,20 @@ bool RKWorkplace::openAnyUrl (const KUrl &url, const QString &known_mimetype) {
 	if (!known_mimetype.isEmpty ()) mimetype = KMimeType::mimeType (known_mimetype);
 	else mimetype = KMimeType::findByUrl (url);
 
-// NOTE: Currently a known mimetype implies that the URL is local or served from the local machine.
-// Thus, external web pages are *not* opened, here. Which is the behavior we want, although the implementation is ugly
-	if (mimetype->is ("text/html")) {
-		openHelpWindow (url, true);
-		return true;	// TODO
-	}
-	if (url.fileName ().toLower ().endsWith (".rdata")) {
-		RKWardMainWindow::getMain ()->fileOpenAskSave (url);
-		return true;	// TODO
-	}
-	if (mimetype->name ().startsWith ("text")) {
-		return (openScriptEditor (url, QString (), RKSettingsModuleCommandEditor::matchesScriptFileFilter (url.fileName())));
+	if (!force_external) {
+	// NOTE: Currently a known mimetype implies that the URL is local or served from the local machine.
+	// Thus, external web pages are *not* opened, here. Which is the behavior we want, although the implementation is ugly
+		if (mimetype->is ("text/html")) {
+			openHelpWindow (url, true);
+			return true;	// TODO
+		}
+		if (url.fileName ().toLower ().endsWith (".rdata")) {
+			RKWardMainWindow::getMain ()->fileOpenAskSave (url);
+			return true;	// TODO
+		}
+		if (mimetype->name ().startsWith ("text")) {
+			return (openScriptEditor (url, QString (), RKSettingsModuleCommandEditor::matchesScriptFileFilter (url.fileName())));
+		}
 	}
 
 	if (KMessageBox::questionYesNo (this, i18n ("The url you are trying to open ('%1') is not a local file or the filetype is not supported by RKWard. Do you want to open the url in the default application?", url.prettyUrl ()), i18n ("Open in default application?")) != KMessageBox::Yes) {

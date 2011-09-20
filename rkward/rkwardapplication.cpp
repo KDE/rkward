@@ -68,6 +68,8 @@ RKWardApplication::RKWardApplication () : KApplication () {
 
 	// Don't complain when linking rkward://-pages from Rd pages
 	KAuthorized::allowUrlAction ("redirect", KUrl ("http://"), KUrl ("rkward://"));
+	// Don't complain when trying to open help pages
+	KAuthorized::allowUrlAction ("redirect", KUrl ("rkward://"), KUrl ("help:"));
 
 	rkapp = this;
 	detect_x11_creations = false;

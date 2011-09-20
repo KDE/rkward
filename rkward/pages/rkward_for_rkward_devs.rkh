@@ -22,7 +22,7 @@
 <ul>
 	<li>For more functions of interest see: <link href="rkward://page/rkward_public_functions"/></li>
 	<li>Do read the the online <link href="http://sourceforge.net/apps/mediawiki/rkward/index.php?title=Developer_Information">wiki</link> as well.</li>
-	<li>To write and share your own GUI dialogs, see the online <link href="http://rkward.sourceforge.net/documents/devel/plugins/index.html">Introduction to Writing Plugins for RKWard</link>.</li>
+	<li>To write and share your own GUI dialogs, see the online <link href="help:rkwardplugins/">Introduction to Writing Plugins for RKWard</link>.</li>
 </ul>
 	</related>
 
