@@ -21,6 +21,7 @@
 #include <qregexp.h>
 #include <QDir>
 
+#include <klocale.h>
 #include <kxmlguiclient.h>
 #include <kglobal.h>
 #include <kstandarddirs.h>
@@ -209,4 +210,9 @@ namespace RKCommonFunctions {
 			w->setWhatsThis (tip);
 		}
 	}
+
+	QString noteSettingsTakesEffectAfterRestart () {
+		return (i18n ("<p><em>Note:</em> This setting does not take effect until you restart RKWard.</p>"));
+	}
+
 }	// namespace

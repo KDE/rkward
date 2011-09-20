@@ -54,6 +54,7 @@ namespace RKCommonFunctions {
 
 /** simultaneously sets tool tips and what's this tips on up to three QWidgets */
 	void setTips (const QString tip, QWidget *first, QWidget *second=0, QWidget *third=0);
+	QString noteSettingsTakesEffectAfterRestart ();
 };
 
 #endif
