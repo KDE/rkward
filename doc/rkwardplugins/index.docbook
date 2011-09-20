@@ -1,6 +1,7 @@
 <?xml version="1.0" ?>
 <!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
   <!ENTITY rkward '<application>RKWard</application>'>
+  <!ENTITY r '<application>R</application>'>
   <!ENTITY kapp "&rkward;"><!-- replace rkward here -->
   <!ENTITY % addindex "IGNORE">
   <!ENTITY % English "INCLUDE"><!-- change language only here -->
@@ -88,19 +89,19 @@ For questions and comments, please write to the &kapp; development mailing list.
 <para>
 Writing a standard plugin is basically a four-step process:
 <itemizedlist>
-<listitem><link linkend="pluginmap">Placing a new Action in the menu-hierarchy</link></listitem>
-<listitem><link linkend="mainxml">Describing the looks and behavior of the plugin-GUI</link></listitem>
-<listitem><link linkend="jstemplate">Defining, how R-code is to be generated from the settings, the user makes in the GUI</link></listitem>
-<listitem><link linkend="pluginhelp">Adding a help page to your plugin</link></listitem>
+<listitem><para><link linkend="pluginmap">Placing a new Action in the menu-hierarchy</link></para></listitem>
+<listitem><para><link linkend="mainxml">Describing the looks and behavior of the plugin-GUI</link></para></listitem>
+<listitem><para><link linkend="jstemplate">Defining, how R-code is to be generated from the settings, the user makes in the GUI</link></para></listitem>
+<listitem><para><link linkend="pluginhelp">Adding a help page to your plugin</link></para></listitem>
 </itemizedlist>
 Those will be dealt with in turn.
 </para>
 <para>
 Some advanced concepts may be used in those four steps, but are dealt with in separate chapters, to keep things simple:
 <itemizedlist>
-<listitem><link linkend="logic">GUI logic</link></listitem>
-<listitem><link linkend="embedding">Embedding Plugins into Plugins</link></listitem>
-<listitem><link linkend="plugin_series">Useful concepts for creating many series of similar plugins</link></listitem>
+<listitem><para><link linkend="logic">GUI logic</link></para></listitem>
+<listitem><para><link linkend="embedding">Embedding Plugins into Plugins</link></para></listitem>
+<listitem><para><link linkend="plugin_series">Useful concepts for creating many series of similar plugins</link></para></listitem>
 </itemizedlist>
 </para>
 <para>
@@ -256,7 +257,7 @@ Confused? The easiest way to get started is probably taking some of the existing
 <chapter id="mainxml">
 <title>Defining the GUI</title>
 <para>
-In the <link linked="pluginmap">previous chapter</link> you've seen how to register a plugin with &kapp;. The most important ingredient was specifying the path to an XML file with a description of what the plugin actually looks like. In this chapter you'll learn how to create this XML file.
+In the <link linkend="pluginmap">previous chapter</link> you've seen how to register a plugin with &kapp;. The most important ingredient was specifying the path to an XML file with a description of what the plugin actually looks like. In this chapter you'll learn how to create this XML file.
 </para>
 <para>
 Once again we'll walk you through an example. The example is a (slightly simplified) version of the independent samples t-test.
@@ -1398,7 +1399,7 @@ You can declare two &lt;external&gt; properties in your plugin. "filename" will 
 	LICENSE
 	DESCRIPTION
 			</programlisting>
-			<para><emphasis>Note:</emphasis> In this example, all occasions of "plugin_name", "testsuite_name" and "sometest_name" are to be replaced with their correct names, accordingly. You also don't have to create this file hierarchy by hand. If you use the function <code>rk.plugin.skeleton()</code> from the <link linkend="rkwarddev">"rkwarddev" package</link>, it will automatically create all necessary files and directories for you.</para>
+			<para><emphasis>Note:</emphasis> In this example, all occasions of "plugin_name", "testsuite_name" and "sometest_name" are to be replaced with their correct names, accordingly. You also don't have to create this file hierarchy by hand. If you use the function <function>rk.plugin.skeleton()</function> from the <link linkend="rkwarddev">"rkwarddev" package</link>, it will automatically create all necessary files and directories for you.</para>
 			<section id="basic_plugin_components">
 				<title>Basic plugin components</title>
 				<para>It is mandatory to include at least three files: a .pluginmap, a plugin .xml description and a plugin .js file. That is, even the "plugins" directory is optional. It might just help to give your files some order, especially if you include more that one plugin/dialog in the archive, which is of course no problem. You can have as many directories for the actual plugin files as you see fit, they just have to resemble the .pluginmap, respectively. It is also possible to even include several .pluginmap files, if it fits your needs, but you should include them all in "plugin_name.pluginmap" then. </para>
@@ -1422,7 +1423,7 @@ You can declare two &lt;external&gt; properties in your plugin. "filename" will 
 			person(given="A.", family="Assistant", role=c("cre",
 			"ctb"), email="alterego@eternalwondermaths.example.org"))
 			</programlisting>
-			<para><emphasis>Note:</emphasis> You don't have to write this file by hand. If you use the function <code>rk.plugin.skeleton()</code> from the <link linkend="rkwarddev">"rkwarddev" package</link> and provide all necessary information via the "about" option, it will automatically create a working DESCRIPTION file for you.</para>
+			<para><emphasis>Note:</emphasis> You don't have to write this file by hand. If you use the function <function>rk.plugin.skeleton()</function> from the <link linkend="rkwarddev">"rkwarddev" package</link> and provide all necessary information via the "about" option, it will automatically create a working DESCRIPTION file for you.</para>
 
 			</section>
 			<section id="additional_information">
@@ -1528,10 +1529,10 @@ You can declare two &lt;external&gt; properties in your plugin. "filename" will 
 	&lt;/hierarchy&gt;
 &lt;/document&gt;
 		</programlisting>
-		<para><emphasis>Note:</emphasis> You don't have to write this XML code by hand. If you use the function <code>rk.plugin.skeleton()</code> from the <link linkend="rkwarddev">"rkwarddev" package</link> and provide all necessary information via the "about" option, it will automatically create a .pluginmap file with a working &lt;about&gt; section for you.</para>
+		<para><emphasis>Note:</emphasis> You don't have to write this XML code by hand. If you use the function <function>rk.plugin.skeleton()</function> from the <link linkend="rkwarddev">"rkwarddev" package</link> and provide all necessary information via the "about" option, it will automatically create a .pluginmap file with a working &lt;about&gt; section for you.</para>
 		<para>Most of this should explain itself, so we’ll not discuss each and every tag element. But let’s look at some details that probably need some commentary for easier understanding. </para>
 		<para>The "category" element in &lt;about&gt; can be defined rather freely, but should be meaningful, as it’s thought to be used to order plugins into groups. All other attributes in this opening tag are mandatory and must be filled with reasonable content. </para>
-		<para>At least one &lt;author&gt; with a valid e-mail address and the role "aut" ("author") must also be given. In case your plugin causes problems or someone would like to share its gratitude with you, it should be easy to contact someone who’s involved. For further information on other valid roles, like "ctb" for code contributors or "cre" for package maintenance, please refer to the <ulink url="http://stat.ethz.ch/R-manual/R-patched/library/utils/html/person.html">R documentation on <code>person()</code></ulink>. </para>
+		<para>At least one &lt;author&gt; with a valid e-mail address and the role "aut" ("author") must also be given. In case your plugin causes problems or someone would like to share its gratitude with you, it should be easy to contact someone who’s involved. For further information on other valid roles, like "ctb" for code contributors or "cre" for package maintenance, please refer to the <ulink url="http://stat.ethz.ch/R-manual/R-patched/library/utils/html/person.html">R documentation on <function>person()</function></ulink>. </para>
 		<para>Actually the whole &lt;dependencies&gt; might be left empty if your plugin is supposed to run with any &kapp; version and standard R installation. But please be reasonable here as well. The inclusion of any &lt;package&gt; or &lt;pluginmap&gt; tags is of course optional as well, depending on the needs of your plugins. All the "min_version" and "max_version" information can be omitted, as well. They are obviously useful if your plugin is known to rely on certain versions of an R package, for instance. </para>
 		<para>If you need an R package that is probably not hosted on an official CRAN mirror, you can specify a repository where it can be found in the &lt;package&gt; tag. &kapp; will check whether this repository is already defined in its configuration, and if not, add it, but only after the user has given its explicit permission to that. </para>
 		<para>The "id" element in the &lt;pluginmap&gt; tag refers to the ID given in the top level &lt;document&gt; tag of the pluginmap that you need. </para>
@@ -1539,7 +1540,7 @@ You can declare two &lt;external&gt; properties in your plugin. "filename" will 
 	<section id="building_the_plugin_package">
 		<title>Building the plugin package</title>
 		<para>As explained earlier, external RKWard plugins are in effect R packages, and therefore the packaging process is identical. In contrast to "real" R packages, a pure plugin package doesn't carry any further R code (although you can of course add RKWard plugins to usual R packages as well, using the same methods explained here). This should make it even easier to create a functioning package, as long as you have a valid DESCRIPTION file and adhere to the file hierarchy explained in previous sections.</para>
-		<para>The easiest way to actually build and test your plugin is to use the <code>R</code> command on the command line, for example:</para>
+		<para>The easiest way to actually build and test your plugin is to use the &r; command on the command line, for example:</para>
 		<programlisting>
 	R CMD build SquaretheCircle
 	R CMD INSTALL SquaretheCircle_0.1-3.tar.gz
@@ -1549,7 +1550,7 @@ You can declare two &lt;external&gt; properties in your plugin. "filename" will 
 
 <chapter id="rkwarddev">
 	<title>Plugin development with the "rkwarddev" package</title>
-	<para>Writing external plugins involves writing files in three languages (XML, JavaScript and R) and the creation of a standardized hierarchy of directories. To make this a lot easier for willing plugin developers, we're providing the "rkwarddev" package. It provides a number of simple R functions to create the XML code for most dialog elements like tabbooks, checkboxes, dropdownlists or filebrowsers, as well as functions to create JavaScript code and RKWard help files to start with. The function <code>rk.plugin.skeleton()</code> creates the expected directory tree and all necessary files where they are supposed to be.</para>
+	<para>Writing external plugins involves writing files in three languages (XML, JavaScript and R) and the creation of a standardized hierarchy of directories. To make this a lot easier for willing plugin developers, we're providing the "rkwarddev" package. It provides a number of simple R functions to create the XML code for most dialog elements like tabbooks, checkboxes, dropdownlists or filebrowsers, as well as functions to create JavaScript code and RKWard help files to start with. The function <function>rk.plugin.skeleton()</function> creates the expected directory tree and all necessary files where they are supposed to be.</para>
 	<para>This package is not installed by default, but has to be installed manually from <ulink url="http://rkward.sourceforge.net/R/">RKWard's own repository</ulink>. You can either do that by using the GUI interface (Settings -> Configure packages), or from any running R session:</para>
 	<programlisting>
 	install.packages("rkwarddev", repos="http://rkward.sf.net/R")
@@ -1568,85 +1569,85 @@ At some places in this introduction we've talked about "properties" of GUI eleme
 <variablelist>
 <varlistentry>
 <term>String properties</term>
-<listitem>The most simple type of property, used to simply hold a piece of text. It does not provide any modifiers. If you attempt to fetch modified values from the JS template, it will return the usual value, and a warning will be written to the terminal you're running rkward from.</listitem>
+<listitem><para>The most simple type of property, used to simply hold a piece of text. It does not provide any modifiers. If you attempt to fetch modified values from the JS template, it will return the usual value, and a warning will be written to the terminal you're running rkward from.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term>Boolean properties</term>
-<listitem>Properties that can either be on or off, true or false. For instance the properties created by &lt;convert&gt;-tags, also the property accompanying a &lt;checkbox&gt; (see below). The following values will be returned according to the given modifier:
+<listitem><para>Properties that can either be on or off, true or false. For instance the properties created by &lt;convert&gt;-tags, also the property accompanying a &lt;checkbox&gt; (see below). The following values will be returned according to the given modifier:
 	<variablelist>
 	<varlistentry>
 	<term>No modifier ("")</term>
-	<listitem>By default the property will return the string "TRUE", if it is true, and "FALSE" otherwise. Boolean properties attached to a checkbox behave slightly differently, and return the strings you specified in the "value" and "value_unchecked" attributes.</listitem>
+	<listitem><para>By default the property will return the string "TRUE", if it is true, and "FALSE" otherwise. Boolean properties attached to a checkbox behave slightly differently, and return the strings you specified in the "value" and "value_unchecked" attributes.</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>"true"</term>
-	<listitem>Return the string as if the property was true, even if it is false</listitem>
+	<listitem><para>Return the string as if the property was true, even if it is false</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>"false"</term>
-	<listitem>Return the string as if the property was false, even if it is true</listitem>
+	<listitem><para>Return the string as if the property was false, even if it is true</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>"not"</term>
-	<listitem>This actually returns another Boolean property, which is the reverse of the current (i.e. false if true, true if false)</listitem>
+	<listitem><para>This actually returns another Boolean property, which is the reverse of the current (i.e. false if true, true if false)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>"numeric"</term>
-	<listitem>Return the string "1" if the property is true, or "0" if it is false</listitem>
+	<listitem><para>Return the string "1" if the property is true, or "0" if it is false</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry>
 <term>Integer properties</term>
-<listitem>A property designed to hold an integer value (but of course it still returns a numeric character string to the JS-template). It does not accept any modifiers. Used in &lt;spinbox&gt;es (see below)</listitem>
+<listitem><para>A property designed to hold an integer value (but of course it still returns a numeric character string to the JS-template). It does not accept any modifiers. Used in &lt;spinbox&gt;es (see below)</para></listitem>
 </varlistentry>
 <varlistentry>
 <term>Real number properties</term>
-<listitem>A property designed to hold a real number value (but of course it still returns a numeric character string to the JS-template). It does not accept any modifiers. Used in &lt;spinbox&gt;es (see below)</listitem>
+<listitem><para>A property designed to hold a real number value (but of course it still returns a numeric character string to the JS-template). It does not accept any modifiers. Used in &lt;spinbox&gt;es (see below)</para></listitem>
 </varlistentry>
 <varlistentry>
 <term>RObject properties</term>
-<listitem>A property designed a selection of one or more R objects. Used most porminently in varselectors and varslots.  The following values will be returned according to the given modifier:
+<listitem><para>A property designed a selection of one or more R objects. Used most porminently in varselectors and varslots.  The following values will be returned according to the given modifier:
 	<variablelist>
 	<varlistentry>
 	<term>No modifier ("")</term>
-	<listitem>By default the property will the full name of the selected object. If more than one object is selected, the object names will be separated by line breaks ("\n").</listitem>
+	<listitem><para>By default the property will the full name of the selected object. If more than one object is selected, the object names will be separated by line breaks ("\n").</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>"shortname"</term>
-	<listitem>Like above, but returns only short name(s) for the object(s). For instance an object inside a list would only be given the name it has inside the list, without the name of the list.</listitem>
+	<listitem><para>Like above, but returns only short name(s) for the object(s). For instance an object inside a list would only be given the name it has inside the list, without the name of the list.</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>"label"</term>
-	<listitem>Like above, but returns the &kapp; label(s) of the object(s) (if no label availabe, this is the same as shortname)</listitem>
+	<listitem><para>Like above, but returns the &kapp; label(s) of the object(s) (if no label availabe, this is the same as shortname)</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry>
 <term>Code properties</term>
-<listitem>A property held by plugins that generated code. This is important for embedding plugins, in order to embed the code generated by the embedded plugin into the code generated by the embedding (top-level) plugin. The following values will be returned according to the given modifier:
+<listitem><para>A property held by plugins that generated code. This is important for embedding plugins, in order to embed the code generated by the embedded plugin into the code generated by the embedding (top-level) plugin. The following values will be returned according to the given modifier:
 	<variablelist>
 	<varlistentry>
 	<term>No modifier ("")</term>
-	<listitem>Returns the full code, i.e. the sections "preprocess", "calculate", "printout", and (but not "preview") concatenated to one string.</listitem>
+	<listitem><para>Returns the full code, i.e. the sections "preprocess", "calculate", "printout", and (but not "preview") concatenated to one string.</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>"preprocess"</term>
-	<listitem>Returns only the preprocess section of the code</listitem>
+	<listitem><para>Returns only the preprocess section of the code</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>"calculate"</term>
-	<listitem>Returns only the calculate section of the code</listitem>
+	<listitem><para>Returns only the calculate section of the code</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>"printout"</term>
-	<listitem>Returns only the printout section of the code</listitem>
+	<listitem><para>Returns only the printout section of the code</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>"preview"</term>
-	<listitem>Returns the preview section of the code</listitem>
+	<listitem><para>Returns the preview section of the code</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 </variablelist>
 </section>
@@ -1656,37 +1657,37 @@ At some places in this introduction we've talked about "properties" of GUI eleme
 	<variablelist>
 	<varlistentry>
 	<term>&lt;snippets&gt;</term>
-	<listitem>Allowed as a direct child of the &lt;document&gt; node and only there. Should be placed near the top of the file. See <link linkend="snippets">section on using snippets</link>. Only one &lt;snippets&gt; element may be present. Optional, no attributes.</listitem>
+	<listitem><para>Allowed as a direct child of the &lt;document&gt; node and only there. Should be placed near the top of the file. See <link linkend="snippets">section on using snippets</link>. Only one &lt;snippets&gt; element may be present. Optional, no attributes.</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;snippet&gt;</term>
-	<listitem>Defines a single snippet. Allowed only as a direct child of the &lt;snippets/&gt; element. Attributes:
+	<listitem><para>Defines a single snippet. Allowed only as a direct child of the &lt;snippets/&gt; element. Attributes:
 		<variablelist>
 		<varlistentry>
 		<term>&lt;id&gt;</term>
-		<listitem>An identifier string for the snippet. Required.</listitem>
+		<listitem><para>An identifier string for the snippet. Required.</para></listitem>
 		</varlistentry>
-		</variablelist></listitem>
+		</variablelist></para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;insert&gt;</term>
-	<listitem>Insert the contents of a &lt;snippet&gt;. Allowed anywhere. Attributes:
+	<listitem><para>Insert the contents of a &lt;snippet&gt;. Allowed anywhere. Attributes:
 		<variablelist>
 		<varlistentry>
 		<term>&lt;snippet&gt;</term>
-		<listitem>The identifier string of the snippet to insert. Required.</listitem>
+		<listitem><para>The identifier string of the snippet to insert. Required.</para></listitem>
 		</varlistentry>
-		</variablelist></listitem>
+		</variablelist></para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;include&gt;</term>
-	<listitem>Include the contents of another xml file (everything inside the &lt;document&gt; element of that file). Allowed anywhere. Attributes:
+	<listitem><para>Include the contents of another xml file (everything inside the &lt;document&gt; element of that file). Allowed anywhere. Attributes:
 		<variablelist>
 		<varlistentry>
 		<term>&lt;file&gt;</term>
-		<listitem>The filename, relative to the directory, the current file is in. Required.</listitem>
+		<listitem><para>The filename, relative to the directory, the current file is in. Required.</para></listitem>
 		</varlistentry>
-		</variablelist></listitem>
+		</variablelist></para></listitem>
 	</varlistentry>
 	</variablelist>
 </section>
@@ -1698,41 +1699,41 @@ At some places in this introduction we've talked about "properties" of GUI eleme
 <variablelist>
 <varlistentry>
 <term>&lt;document&gt;</term>
-<listitem>Needs to be present in each description.xml-file as the root-node. No special function. No attributes</listitem>
+<listitem><para>Needs to be present in each description.xml-file as the root-node. No special function. No attributes</para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;code&gt;</term>
-<listitem>Defines where to look for the JS template to the plugin. Use only once per file, as a direct child of the document-tag. Attributes:
+<listitem><para>Defines where to look for the JS template to the plugin. Use only once per file, as a direct child of the document-tag. Attributes:
 	<variablelist>
 	<varlistentry>
 	<term>&lt;file&gt;</term>
-	<listitem>Filename of the JS template, relative to the directory the plugin-xml is in</listitem>
+	<listitem><para>Filename of the JS template, relative to the directory the plugin-xml is in</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;help&gt;</term>
-<listitem>Defines where to look for the help file for the plugin. Use only once per file, as a direct child of the document-tag. Attributes:
+<listitem><para>Defines where to look for the help file for the plugin. Use only once per file, as a direct child of the document-tag. Attributes:
 	<variablelist>
 	<varlistentry>
 	<term>&lt;file&gt;</term>
-	<listitem>Filename of the help file, relative to the directory the plugin-xml is in</listitem>
+	<listitem><para>Filename of the help file, relative to the directory the plugin-xml is in</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;copy&gt;</term>
-<listitem>Can be used as a child (direct or indirect) of the main layout elements, i.e. &lt;dialog&gt; and &lt;wizard&gt;. This is used to copy an entire block a xml elements 1:1. Attributes:
+<listitem><para>Can be used as a child (direct or indirect) of the main layout elements, i.e. &lt;dialog&gt; and &lt;wizard&gt;. This is used to copy an entire block a xml elements 1:1. Attributes:
 	<variablelist>
 	<varlistentry>
 	<term>&lt;id&gt;</term>
-	<listitem>The id to look for. The &lt;copy&gt; tag will look for a previous XML element that has been given the same id, and copy it including all descendent elements.</listitem>
+	<listitem><para>The id to look for. The &lt;copy&gt; tag will look for a previous XML element that has been given the same id, and copy it including all descendent elements.</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;copy_element_tag_name&gt;</term>
-	<listitem>In some few cases, you will want an almost literal copy, but change the tag-name of the element to copy. The most important example of this is, when you want to copy an entire &lt;tab&gt; from a dialog interface to the &lt;page&gt; of a wizard interface. In this case, you'd set coyp_elemnent_tag_name="page" to do this conversion automatically.</listitem>
+	<listitem><para>In some few cases, you will want an almost literal copy, but change the tag-name of the element to copy. The most important example of this is, when you want to copy an entire &lt;tab&gt; from a dialog interface to the &lt;page&gt; of a wizard interface. In this case, you'd set coyp_elemnent_tag_name="page" to do this conversion automatically.</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 </variablelist>
 </section>
@@ -1741,23 +1742,23 @@ At some places in this introduction we've talked about "properties" of GUI eleme
 <variablelist>
 <varlistentry>
 <term>&lt;dialog&gt;</term>
-<listitem>Defines a dialog-type interface. Place the GUI-definition inside this tag. Use only once per file, as a direct child of the document-tag. At least one of "dialog" or "wizard" tags is required for a plugin. Attributes:
+<listitem><para>Defines a dialog-type interface. Place the GUI-definition inside this tag. Use only once per file, as a direct child of the document-tag. At least one of "dialog" or "wizard" tags is required for a plugin. Attributes:
 	<variablelist>
 	<varlistentry>
 	<term>&lt;label&gt;</term>
-	<listitem>Caption for the dialog</listitem>
+	<listitem><para>Caption for the dialog</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;wizard&gt;</term>
-<listitem>Defines a wizard-type interface. Place the GUI-definition inside this tag. Use only once per file, as a direct child of the document-tag. At least one of "dialog" or "wizard" tags is required for a plugin. Accepts only &lt;page&gt; or &lt;embed&gt;-tags as direct children. Attributes:
+<listitem><para>Defines a wizard-type interface. Place the GUI-definition inside this tag. Use only once per file, as a direct child of the document-tag. At least one of "dialog" or "wizard" tags is required for a plugin. Accepts only &lt;page&gt; or &lt;embed&gt;-tags as direct children. Attributes:
 	<variablelist>
 	<varlistentry>
 	<term>&lt;label&gt;</term>
-	<listitem>Caption for the wizard</listitem>
+	<listitem><para>Caption for the wizard</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 </variablelist>
 </section>
@@ -1767,61 +1768,61 @@ At some places in this introduction we've talked about "properties" of GUI eleme
 <variablelist>
 <varlistentry>
 <term>&lt;page&gt;</term>
-<listitem>Defines a new page inside a wizard. Only allowed as a direct child of a &lt;wizard&gt; element.</listitem>
+<listitem><para>Defines a new page inside a wizard. Only allowed as a direct child of a &lt;wizard&gt; element.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;row&gt;</term>
-<listitem>All direct children of a "row" tag will be placed left-to-right.</listitem>
+<listitem><para>All direct children of a "row" tag will be placed left-to-right.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;column&gt;</term>
-<listitem>All direct children of a "column" tag will be placed top-to-bottom.</listitem>
+<listitem><para>All direct children of a "column" tag will be placed top-to-bottom.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;stretch&gt;</term>
-<listitem>By default, elements in the GUI take up all the space that's available. For instance, if you have two columns side by side, the left one is packed with elements, but the right one only contains a lonely &lt;radio&gt;, the &lt;radio&gt; control will expand vertically, even though it does not really need the available space, and it will look ugly. In this case you really want to add a "blank" below the &lt;radio&gt;. For this, use the &lt;stretch&gt; element. It will simply use up some space. Don't overuse this element, usually it's a good idea for GUI elements to get all the available space, only sometimes will the layout become spaced out. The &lt;stretch&gt; element does not take any arguments, not even an "id". Also you can place no children inside the &lt;stretch&gt; element (in other words, you'll only ever use it as "&lt;stretch/&gt;")</listitem>
+<listitem><para>By default, elements in the GUI take up all the space that's available. For instance, if you have two columns side by side, the left one is packed with elements, but the right one only contains a lonely &lt;radio&gt;, the &lt;radio&gt; control will expand vertically, even though it does not really need the available space, and it will look ugly. In this case you really want to add a "blank" below the &lt;radio&gt;. For this, use the &lt;stretch&gt; element. It will simply use up some space. Don't overuse this element, usually it's a good idea for GUI elements to get all the available space, only sometimes will the layout become spaced out. The &lt;stretch&gt; element does not take any arguments, not even an "id". Also you can place no children inside the &lt;stretch&gt; element (in other words, you'll only ever use it as "&lt;stretch/&gt;")</para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;frame&gt;</term>
-<listitem>Draws a frame/box around its direct children. Can be used to visually group related options. Layout inside a frame is top-to-bottom, unless you place a &lt;row&gt; inside. Attributes:
+<listitem><para>Draws a frame/box around its direct children. Can be used to visually group related options. Layout inside a frame is top-to-bottom, unless you place a &lt;row&gt; inside. Attributes:
 	<variablelist>
 	<varlistentry>
 	<term>&lt;label&gt;</term>
-	<listitem>Caption for the frame (optional)</listitem>
+	<listitem><para>Caption for the frame (optional)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;checkable&gt;</term>
-	<listitem>Frames can be made checkable. In this case, all contained elements will be disabled when the frame is unchecked, and enabled, when it is checked. (optional, defaults to "false")</listitem>
+	<listitem><para>Frames can be made checkable. In this case, all contained elements will be disabled when the frame is unchecked, and enabled, when it is checked. (optional, defaults to "false")</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;checked&gt;</term>
-	<listitem>For checkable frames only: Should the frame be checked by default? Defaults to "true". Not interpreted for non-checkable frames.</listitem>
+	<listitem><para>For checkable frames only: Should the frame be checked by default? Defaults to "true". Not interpreted for non-checkable frames.</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;tabbook&gt;</term>
-<listitem>Organizes elements in a tabbook. Accepts only &lt;tab&gt;-tags as direct children.</listitem>
+<listitem><para>Organizes elements in a tabbook. Accepts only &lt;tab&gt;-tags as direct children.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;tab&gt;</term>
-<listitem>Defines a page in a tabbook. Place the GUI-definition for the tab inside this tag. May be used only as a direct child of a &lt;tabbook&gt; tag. A &lt;tabbook&gt; should have at least two defined tabs. Attributes:
+<listitem><para>Defines a page in a tabbook. Place the GUI-definition for the tab inside this tag. May be used only as a direct child of a &lt;tabbook&gt; tag. A &lt;tabbook&gt; should have at least two defined tabs. Attributes:
 	<variablelist>
 	<varlistentry>
 	<term>&lt;label&gt;</term>
-	<listitem>Caption for the tab page (required)</listitem>
+	<listitem><para>Caption for the tab page (required)</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;text&gt;</term>
-<listitem>Shows the text enclosed in this tag in the GUI. Line breaks are interpreted as hard line breaks! Attributes:
+<listitem><para>Shows the text enclosed in this tag in the GUI. Line breaks are interpreted as hard line breaks! Attributes:
 	<variablelist>
 	<varlistentry>
 	<term>&lt;type&gt;</term>
-	<listitem>Type of the text. One of "normal", "warning" or "error". This influences the look of the text (optional, defaults to normal)</listitem>
+	<listitem><para>Type of the text. One of "normal", "warning" or "error". This influences the look of the text (optional, defaults to normal)</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 </variablelist>
 </section>
@@ -1831,287 +1832,287 @@ At some places in this introduction we've talked about "properties" of GUI eleme
 <variablelist>
 <varlistentry>
 <term>&lt;varselector&gt;</term>
-<listitem>Provides a list of availabe objects from which the user can select one or more. Requires one or more &lt;varslot&gt;s as a counterpart to be useful. Attributes:
+<listitem><para>Provides a list of availabe objects from which the user can select one or more. Requires one or more &lt;varslot&gt;s as a counterpart to be useful. Attributes:
 	<variablelist>
 	<varlistentry>
 	<term>&lt;label&gt;</term>
-	<listitem>Label for the varselector (optional, defaults to "Select variable(s)")</listitem>
+	<listitem><para>Label for the varselector (optional, defaults to "Select variable(s)")</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;varslot&gt;</term>
-<listitem>Used in conjunction with a "varselector" to allow the user to select one or more variables. Attributes:
+<listitem><para>Used in conjunction with a "varselector" to allow the user to select one or more variables. Attributes:
 	<variablelist>
 	<varlistentry>
 	<term>&lt;label&gt;</term>
-	<listitem>Label for the varslot (recommended, defaults to "Variable:")</listitem>
+	<listitem><para>Label for the varslot (recommended, defaults to "Variable:")</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;source&gt;</term>
-	<listitem>The varselector to fetch the selection from (required, unless you connect manually)</listitem>
+	<listitem><para>The varselector to fetch the selection from (required, unless you connect manually)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;required&gt;</term>
-	<listitem>Whether - for submitting the code - it is required that this varslot holds a valid value. See <link linkend="elementproperties">required-property</link> (optional, defaults to false)</listitem>
+	<listitem><para>Whether - for submitting the code - it is required that this varslot holds a valid value. See <link linkend="elementproperties">required-property</link> (optional, defaults to false)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;multi&gt;</term>
-	<listitem>Whether the varslot holds only one (default, "false"), or several objects</listitem>
+	<listitem><para>Whether the varslot holds only one (default, "false"), or several objects</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;min_vars&gt;</term>
-	<listitem>Only meaningful if multi="true": Minimum number of vars to be selected for the selection to be considered valid (optional, defaults to "1")</listitem>
+	<listitem><para>Only meaningful if multi="true": Minimum number of vars to be selected for the selection to be considered valid (optional, defaults to "1")</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;min_vars_if_any&gt;</term>
-	<listitem>Only meaningful if multi="true": Some varslots may be considered valid, if, for instance, the varslot is either empty, or holds at least two values. This specifies how many variables have to be selected if any at all (2 in the example). (optional, defaults to "1")</listitem>
+	<listitem><para>Only meaningful if multi="true": Some varslots may be considered valid, if, for instance, the varslot is either empty, or holds at least two values. This specifies how many variables have to be selected if any at all (2 in the example). (optional, defaults to "1")</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;max_vars&gt;</term>
-	<listitem>Only meaningful if multi="true": Maximum number of variables to select (optional, defaults to "0", which means no maximum)</listitem>
+	<listitem><para>Only meaningful if multi="true": Maximum number of variables to select (optional, defaults to "0", which means no maximum)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;classes&gt;</term>
-	<listitem>If you specify one or more R classnames (separated by spaces (" ")), here, the varslot will only accept objects belonging to those classes (otional, <emphasis>use with great care</emphasis>, the user should not be prevented from making valid choices, and R has <emphasis>a lot</emphasis> of different classes!)</listitem>
+	<listitem><para>If you specify one or more R classnames (separated by spaces (" ")), here, the varslot will only accept objects belonging to those classes (otional, <emphasis>use with great care</emphasis>, the user should not be prevented from making valid choices, and R has <emphasis>a lot</emphasis> of different classes!)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;types&gt;</term>
-	<listitem>If you specify one or more variables types (separated by spaced (" ")), here, the varslot will only accept objects of those types. Valid types are "unknown", "number", "string", "factor", "invalid". (Optional, <emphasis>use with great care</emphasis>, the user should not be prevented from making valid choices, and rkward does not always know the type of a variable)</listitem>
+	<listitem><para>If you specify one or more variables types (separated by spaced (" ")), here, the varslot will only accept objects of those types. Valid types are "unknown", "number", "string", "factor", "invalid". (Optional, <emphasis>use with great care</emphasis>, the user should not be prevented from making valid choices, and rkward does not always know the type of a variable)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;num_dimensions&gt;</term>
-	<listitem>The number of dimensions, an object needs to have. "0" (the default) means, any number of dimensions is acceptable. (optional, defaults to "0")</listitem>
+	<listitem><para>The number of dimensions, an object needs to have. "0" (the default) means, any number of dimensions is acceptable. (optional, defaults to "0")</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;min_length&gt;</term>
-	<listitem>The minimum length, an object needs to have in order to be acceptable. (optional, defaults to "0")</listitem>
+	<listitem><para>The minimum length, an object needs to have in order to be acceptable. (optional, defaults to "0")</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;max_length&gt;</term>
-	<listitem>The maximum length, an object needs to have in order to be acceptable. (optional, defaults to the largest integer number representable on the system)</listitem>
+	<listitem><para>The maximum length, an object needs to have in order to be acceptable. (optional, defaults to the largest integer number representable on the system)</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;radio&gt;</term>
-<listitem>Defines a group of radio-exclusive buttons (only one can be selected at a time). Requires at least two &lt;option&gt;-tags as direct children. No other tags are allowed as children. Attributes:
+<listitem><para>Defines a group of radio-exclusive buttons (only one can be selected at a time). Requires at least two &lt;option&gt;-tags as direct children. No other tags are allowed as children. Attributes:
 	<variablelist>
 	<varlistentry>
 	<term>&lt;label&gt;</term>
-	<listitem>Label for the radio control (recommended, defaults to "Select one:")</listitem>
+	<listitem><para>Label for the radio control (recommended, defaults to "Select one:")</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;dropdown&gt;</term>
-<listitem>Defines a group of options of which one and only one can be selected at the same time, using a dropdown list. This is functionaly equivalent to a &lt;radio&gt;, but looks different. Requires at least two &lt;option&gt;-tags as direct children. No other tags are allowed as children. Attributes:
+<listitem><para>Defines a group of options of which one and only one can be selected at the same time, using a dropdown list. This is functionaly equivalent to a &lt;radio&gt;, but looks different. Requires at least two &lt;option&gt;-tags as direct children. No other tags are allowed as children. Attributes:
 	<variablelist>
 	<varlistentry>
 	<term>&lt;label&gt;</term>
-	<listitem>Label for the dropdown list (recommended, defaults to "Select one:")</listitem>
+	<listitem><para>Label for the dropdown list (recommended, defaults to "Select one:")</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;option&gt;</term>
-<listitem>Can only be used as a direct child of a &lt;radio&gt; or &lt;dropdown&gt; element. Represents one selectable option in a radio control or dropdown list. Specifying the "id" parameter for the &lt;option&gt; elements is optional (and in fact it's recommended, not to set an "id", unless you plan to really use it to disable single options). Only the parent element (&lt;radio&gt; or &lt;dropdown&gt;) needs one. Attributes:
+<listitem><para>Can only be used as a direct child of a &lt;radio&gt; or &lt;dropdown&gt; element. Represents one selectable option in a radio control or dropdown list. Specifying the "id" parameter for the &lt;option&gt; elements is optional (and in fact it's recommended, not to set an "id", unless you plan to really use it to disable single options). Only the parent element (&lt;radio&gt; or &lt;dropdown&gt;) needs one. Attributes:
 	<variablelist>
 	<varlistentry>
 	<term>&lt;label&gt;</term>
-	<listitem>Label for the option (required)</listitem>
+	<listitem><para>Label for the option (required)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;value&gt;</term>
-	<listitem>The string value the parent element will return if this option is checked/selected (required)</listitem>
+	<listitem><para>The string value the parent element will return if this option is checked/selected (required)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;checked&gt;</term>
-	<listitem>Whether the option should be checked/selected by default "true" or "false". Only one button in a &lt;radio&gt; may be set to checked="true". If no option is set to checked, the first option in the parent element will be checked/selected automatically. (optional, default to "false")</listitem>
+	<listitem><para>Whether the option should be checked/selected by default "true" or "false". Only one button in a &lt;radio&gt; may be set to checked="true". If no option is set to checked, the first option in the parent element will be checked/selected automatically. (optional, default to "false")</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;checkbox&gt;</term>
-<listitem>Defines a checkbox, i.e. a single option that can either be set to on or off. Attributes:
+<listitem><para>Defines a checkbox, i.e. a single option that can either be set to on or off. Attributes:
 	<variablelist>
 	<varlistentry>
 	<term>&lt;label&gt;</term>
-	<listitem>Label for the checkbox (required)</listitem>
+	<listitem><para>Label for the checkbox (required)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;value&gt;</term>
-	<listitem>The value the checkbox will return if checked (required)</listitem>
+	<listitem><para>The value the checkbox will return if checked (required)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;value_unchecked&gt;</term>
-	<listitem>The value that will be returned if the checkbox is not checked (optional, defauls to "", i.e. an empty string)</listitem>
+	<listitem><para>The value that will be returned if the checkbox is not checked (optional, defauls to "", i.e. an empty string)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;checked&gt;</term>
-	<listitem>Whether the option should be checked by default "true" or "false" (optional, default to "false")</listitem>
+	<listitem><para>Whether the option should be checked by default "true" or "false" (optional, default to "false")</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;frame&gt;</term>
-<listitem>The frame element is generally used as a pure layout element, and is listed in the section on <link linkend="layoutelements">layout elements</link>. However, it can also be
+<listitem><para>The frame element is generally used as a pure layout element, and is listed in the section on <link linkend="layoutelements">layout elements</link>. However, it can also be
 made checkable, thus acting like a simple checkbox at the same time.
-</listitem>
+</para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;input&gt;</term>
-<listitem>Defines a free text input field. Attributes:
+<listitem><para>Defines a free text input field. Attributes:
 	<variablelist>
 	<varlistentry>
 	<term>&lt;label&gt;</term>
-	<listitem>Label for the input field (required)</listitem>
+	<listitem><para>Label for the input field (required)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;initial&gt;</term>
-	<listitem>Initial text of the text field (optional, defaults to "", i.e. an empty string)</listitem>
+	<listitem><para>Initial text of the text field (optional, defaults to "", i.e. an empty string)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;size&gt;</term>
-	<listitem>One of "small", "medium", or "large". "large" defines a multi-line input field, "small", and "medium" are single line fields (optional, defaults to "medium")</listitem>
+	<listitem><para>One of "small", "medium", or "large". "large" defines a multi-line input field, "small", and "medium" are single line fields (optional, defaults to "medium")</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;required&gt;</term>
-	<listitem>Whether - for submitting the code - it is required that this input is not empty. See <link linkend="elementproperties">required-property</link> (optional, defaults to false)</listitem>
+	<listitem><para>Whether - for submitting the code - it is required that this input is not empty. See <link linkend="elementproperties">required-property</link> (optional, defaults to false)</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;browser&gt;</term>
-<listitem>An element designed to select a single filename (or directory name). Note that this field will take any string, even though it is meant to be used for files, only:
+<listitem><para>An element designed to select a single filename (or directory name). Note that this field will take any string, even though it is meant to be used for files, only:
 	<variablelist>
 	<varlistentry>
 	<term>&lt;label&gt;</term>
-	<listitem>Label for the browser (optinal, defaults to "Enter filename")</listitem>
+	<listitem><para>Label for the browser (optinal, defaults to "Enter filename")</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;initial&gt;</term>
-	<listitem>Initial text of the browser (optional, defaults to "", i.e. an empty string)</listitem>
+	<listitem><para>Initial text of the browser (optional, defaults to "", i.e. an empty string)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;type&gt;</term>
-	<listitem>One of "file", "dir", or "savefile". To select an existing file, existing directory, or non-existing file, respectively (optional, defaults to "file")</listitem>
+	<listitem><para>One of "file", "dir", or "savefile". To select an existing file, existing directory, or non-existing file, respectively (optional, defaults to "file")</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;allow_urls&gt;</term>
-	<listitem>Whether (non-local) urls can be selected (optional, defaults to "false")</listitem>
+	<listitem><para>Whether (non-local) urls can be selected (optional, defaults to "false")</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;filter&gt;</term>
-	<listitem>File type filter, e.g. ("*.txt *.csv" for .txt and .csv files. Try not to induce limits unless absolutely needed, though) (optional, defaults to "", i.e. all files)</listitem>
+	<listitem><para>File type filter, e.g. ("*.txt *.csv" for .txt and .csv files. Try not to induce limits unless absolutely needed, though) (optional, defaults to "", i.e. all files)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;required&gt;</term>
-	<listitem>Whether - for submitting the code - it is required that the field is not empty. Note that this does not necessarily mean, the selected filename is valid! See <link linkend="elementproperties">required-property</link> (optional, defaults to true)</listitem>
+	<listitem><para>Whether - for submitting the code - it is required that the field is not empty. Note that this does not necessarily mean, the selected filename is valid! See <link linkend="elementproperties">required-property</link> (optional, defaults to true)</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;saveobject&gt;</term>
-<listitem>An element designed to select the name of an R object to save to (i.e. generally not already existing, in contrast to a varslot):
+<listitem><para>An element designed to select the name of an R object to save to (i.e. generally not already existing, in contrast to a varslot):
 	<variablelist>
 	<varlistentry>
 	<term>&lt;label&gt;</term>
-	<listitem>Label for the input (optinal, defaults to "Save to:")</listitem>
+	<listitem><para>Label for the input (optinal, defaults to "Save to:")</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;initial&gt;</term>
-	<listitem>Initial text of the input (optional, defaults to "my.data")</listitem>
+	<listitem><para>Initial text of the input (optional, defaults to "my.data")</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;required&gt;</term>
-	<listitem>Whether - for submitting the code - it is required that the field holds a permissible object name. See <link linkend="elementproperties">required-property</link> (optional, defaults to true)</listitem>
+	<listitem><para>Whether - for submitting the code - it is required that the field holds a permissible object name. See <link linkend="elementproperties">required-property</link> (optional, defaults to true)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;checkable&gt;</term>
-	<listitem>In many use cases, saving to an R object is optional. In these cases, a checkbox can be integrated into the saveobject-element using this attribute. When set to true, the saveobject will be activated / deactivated by the checkbox. See the <link linkend="elementproperties">active-property</link> of saveobject (optional, defaults to false)</listitem>
+	<listitem><para>In many use cases, saving to an R object is optional. In these cases, a checkbox can be integrated into the saveobject-element using this attribute. When set to true, the saveobject will be activated / deactivated by the checkbox. See the <link linkend="elementproperties">active-property</link> of saveobject (optional, defaults to false)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;checked&gt;</term>
-	<listitem>For checkable saveobject-elements, only: Whether the control is checked/enabled by default (optional, defaults to false)</listitem>
+	<listitem><para>For checkable saveobject-elements, only: Whether the control is checked/enabled by default (optional, defaults to false)</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;spinbox&gt;</term>
-<listitem>A spinbox in which the user can select a numeric value, using either direct keyboard input or small up/down arrows. Attributes:
+<listitem><para>A spinbox in which the user can select a numeric value, using either direct keyboard input or small up/down arrows. Attributes:
 	<variablelist>
 	<varlistentry>
 	<term>&lt;label&gt;</term>
-	<listitem>Label for the spinbox (recommend, default to "Enter value:")</listitem>
+	<listitem><para>Label for the spinbox (recommend, default to "Enter value:")</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;min&gt;</term>
-	<listitem>The lowest value the user is allowed to enter in the spinbox (optional, defaults to the lowest value technically representable in the spinbox)</listitem>
+	<listitem><para>The lowest value the user is allowed to enter in the spinbox (optional, defaults to the lowest value technically representable in the spinbox)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;max&gt;</term>
-	<listitem>The largest value the user is allowed to enter in the spinbox (optional, defaults to the highest value technically representable in the spinbox)</listitem>
+	<listitem><para>The largest value the user is allowed to enter in the spinbox (optional, defaults to the highest value technically representable in the spinbox)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;initial&gt;</term>
-	<listitem>The initial value shown in the spinbox (optional, defaults to "0")</listitem>
+	<listitem><para>The initial value shown in the spinbox (optional, defaults to "0")</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;type&gt;</term>
-	<listitem>One of "real" or "integer". Whether the spinbox will accept real numbers or only integers (optional, defaults to "real")</listitem>
+	<listitem><para>One of "real" or "integer". Whether the spinbox will accept real numbers or only integers (optional, defaults to "real")</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;default_precision&gt;</term>
-	<listitem>Only meaningful if the spinbox is of type="real". Specifies the default number of decimal places shown in the spinbox (only this many trailing zeros will be shown). When the user presses the up/down arrows, this decimal place will be changed. The user may still be able to enter values with a higher precision, however (see below) (optional, defaults to "2")</listitem>
+	<listitem><para>Only meaningful if the spinbox is of type="real". Specifies the default number of decimal places shown in the spinbox (only this many trailing zeros will be shown). When the user presses the up/down arrows, this decimal place will be changed. The user may still be able to enter values with a higher precision, however (see below) (optional, defaults to "2")</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;max_precision&gt;</term>
-	<listitem>The maximum number of digits that can be meaningfully represented (optional, defaults to "8")</listitem>
+	<listitem><para>The maximum number of digits that can be meaningfully represented (optional, defaults to "8")</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;formula&gt;</term>
-<listitem>This advanced element allows the user to select a formula/set of interactions from selected variables. For instance for a GLM, this element can be used to allow the user to specify the interaction-terms in the model. Attributes:
+<listitem><para>This advanced element allows the user to select a formula/set of interactions from selected variables. For instance for a GLM, this element can be used to allow the user to specify the interaction-terms in the model. Attributes:
 	<variablelist>
 	<varlistentry>
 	<term>&lt;fixed_factors&gt;</term>
-	<listitem>The id of the varslot holding the selected fixed factors (required)</listitem>
+	<listitem><para>The id of the varslot holding the selected fixed factors (required)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;dependent&gt;</term>
-	<listitem>The id of the varslot holding the selected dependent variable (required)</listitem>
+	<listitem><para>The id of the varslot holding the selected dependent variable (required)</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;embed&gt;</term>
-<listitem>Embed a different plugin into this one (see <link linkend="embedding">chapter on embedding</link>). Attributes:
+<listitem><para>Embed a different plugin into this one (see <link linkend="embedding">chapter on embedding</link>). Attributes:
 	<variablelist>
 	<varlistentry>
 	<term>&lt;component&gt;</term>
-	<listitem>The registered name of the component to embed (see <link linkend="pluginmap">chapter on registering components</link> (required)</listitem>
+	<listitem><para>The registered name of the component to embed (see <link linkend="pluginmap">chapter on registering components</link> (required)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;as_button&gt;</term>
-	<listitem>If set to "true", only a pushbutton will be placed in the embedding GUI, the embedded GUI will only be shown (in a separate window) when the pushbutton is pressed (optional, default is "false")</listitem>
+	<listitem><para>If set to "true", only a pushbutton will be placed in the embedding GUI, the embedded GUI will only be shown (in a separate window) when the pushbutton is pressed (optional, default is "false")</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;label&gt;</term>
-	<listitem>Only meaningful if as_button="true": The label of the button (recommend, default is "Options")</listitem>
+	<listitem><para>Only meaningful if as_button="true": The label of the button (recommend, default is "Options")</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;preview&gt;</term>
-<listitem>Checkbox to toggle preview functionality (see <link linkend="preview_plots">chapter on graph previews</link>). Attributes:
+<listitem><para>Checkbox to toggle preview functionality (see <link linkend="preview_plots">chapter on graph previews</link>). Attributes:
 	<variablelist>
 	<varlistentry>
 	<term>&lt;label&gt;</term>
-	<listitem>Label of the box (optional, default is "Preview")</listitem>
+	<listitem><para>Label of the box (optional, default is "Preview")</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 </variablelist>
 </section>
@@ -2120,91 +2121,91 @@ made checkable, thus acting like a simple checkbox at the same time.
 <variablelist>
 <varlistentry>
 <term>&lt;logic&gt;</term>
-<listitem>The containing element for the logic section. All elements below are allowed only inside the &lt;logic&gt; element. Only one &lt;logic&gt; element is allowed per document, as a direct child of the &lt;document&gt; element. The logic section applies to both &lt;dialog&gt; and &lt;wizard&gt; GUIs in the same way.</listitem>
+<listitem><para>The containing element for the logic section. All elements below are allowed only inside the &lt;logic&gt; element. Only one &lt;logic&gt; element is allowed per document, as a direct child of the &lt;document&gt; element. The logic section applies to both &lt;dialog&gt; and &lt;wizard&gt; GUIs in the same way.</para></listitem>
 </varlistentry>
 
 <varlistentry>
 <term>&lt;external&gt;</term>
-<listitem>Creates a new (string) property that is supposed to be connected to an outside property if the plugin gets embedded. See <link linkend="embedding_incomplete">section on "incomplete" plugins</link>. Attributes:
+<listitem><para>Creates a new (string) property that is supposed to be connected to an outside property if the plugin gets embedded. See <link linkend="embedding_incomplete">section on "incomplete" plugins</link>. Attributes:
 	<variablelist>
 	<varlistentry>
 	<term>&lt;id&gt;</term>
-	<listitem>The id of the new property (required)</listitem>
+	<listitem><para>The id of the new property (required)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;default&gt;</term>
-	<listitem>The default string value of the new property, i.e. the value used, if the property is not connected to an outside property (optional, defaults to an empty string)</listitem>
+	<listitem><para>The default string value of the new property, i.e. the value used, if the property is not connected to an outside property (optional, defaults to an empty string)</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 
 <varlistentry>
 <term>&lt;set&gt;</term>
-<listitem>Set a property to a fixed value (of course, if you additionally connect the property to some other property, the value does not remain fixed). For instance, if you embed a plugin, but want to hide some of its elements, you might set the visibility property of those elements to false. Useful esp. for embedded/embedding plugins. Attributes:
+<listitem><para>Set a property to a fixed value (of course, if you additionally connect the property to some other property, the value does not remain fixed). For instance, if you embed a plugin, but want to hide some of its elements, you might set the visibility property of those elements to false. Useful esp. for embedded/embedding plugins. Attributes:
 	<variablelist>
 	<varlistentry>
 	<term>&lt;id&gt;</term>
-	<listitem>The id of the property to set (required)</listitem>
+	<listitem><para>The id of the property to set (required)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;to&gt;</term>
-	<listitem>The string value to set the property to (required). Note: For boolean properties such as visibility, enabledness, you'll typically set the to attribute to either to="true" or to="false".</listitem>
+	<listitem><para>The string value to set the property to (required). Note: For boolean properties such as visibility, enabledness, you'll typically set the to attribute to either to="true" or to="false".</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 
 <varlistentry>
 <term>&lt;convert&gt;</term>
-<listitem>Create a new boolean properties that depends on the state of one or more different properties. Attributes:
+<listitem><para>Create a new boolean properties that depends on the state of one or more different properties. Attributes:
 	<variablelist>
 	<varlistentry>
 	<term>&lt;id&gt;</term>
-	<listitem>The id of the new property (required)</listitem>
+	<listitem><para>The id of the new property (required)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;sources&gt;</term>
-	<listitem>The ids of the properties this property will depend on. One or more properties may be specified, separated by ";" (required)</listitem>
+	<listitem><para>The ids of the properties this property will depend on. One or more properties may be specified, separated by ";" (required)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;mode&gt;</term>
-	<listitem>The mode of conversion/operation. One of "equals", "notequals", "range", "and", "or". If in mode equals, the property will only be true, if the value of all of its sources equals the attribute standard (see below). If in at mode notequals, the property will only be true, if the value of all of its sources are different from the attribute standard (see below). If in mode range, the sources have to be numeric (integer or real). The property will only be true, if all sources are in the range specified by the attributes min and max (see below). If in mode and, the sources have to be boolean properties. The property will only be true, if all the sources are true simultaniously. If in mode or, the sources have to be boolean properties. The property will only be true, if at least one of the sources is true. (required)</listitem>
+	<listitem><para>The mode of conversion/operation. One of "equals", "notequals", "range", "and", "or". If in mode equals, the property will only be true, if the value of all of its sources equals the attribute standard (see below). If in at mode notequals, the property will only be true, if the value of all of its sources are different from the attribute standard (see below). If in mode range, the sources have to be numeric (integer or real). The property will only be true, if all sources are in the range specified by the attributes min and max (see below). If in mode and, the sources have to be boolean properties. The property will only be true, if all the sources are true simultaniously. If in mode or, the sources have to be boolean properties. The property will only be true, if at least one of the sources is true. (required)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;standard&gt;</term>
-	<listitem>Only meaningful in modes equals or notequals: the string value to compare against (required if in one of these modes)</listitem>
+	<listitem><para>Only meaningful in modes equals or notequals: the string value to compare against (required if in one of these modes)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;min&gt;</term>
-	<listitem>Only meaningful in mode range: the minimum value to compare against (optional, defaults to the lowest floating point number representable on the machine)</listitem>
+	<listitem><para>Only meaningful in mode range: the minimum value to compare against (optional, defaults to the lowest floating point number representable on the machine)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;max&gt;</term>
-	<listitem>Only meaningful in mode range: the maximum value to compare against (optional, defaults to the largest floating point number representable on the machine)</listitem>
+	<listitem><para>Only meaningful in mode range: the maximum value to compare against (optional, defaults to the largest floating point number representable on the machine)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;require_true&gt;</term>
-	<listitem>If set to "true", the property will become required, and will only be considered valid, if its state is true/on. Hence, if the property is false, it will block the submit button (optional, defaults to "false". <emphasis>Caution:</emphasis> If you use this, make sure the user can easily detect what's wrong, such as by showing an explanatory &lt;text&gt;)</listitem>
+	<listitem><para>If set to "true", the property will become required, and will only be considered valid, if its state is true/on. Hence, if the property is false, it will block the submit button (optional, defaults to "false". <emphasis>Caution:</emphasis> If you use this, make sure the user can easily detect what's wrong, such as by showing an explanatory &lt;text&gt;)</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 
 <varlistentry>
 <term>&lt;connect&gt;</term>
-<listitem>Connects two properties. The client property will be changed whenever the governor property changes (but not the other way around!). Attributes:
+<listitem><para>Connects two properties. The client property will be changed whenever the governor property changes (but not the other way around!). Attributes:
 	<variablelist>
 	<varlistentry>
 	<term>&lt;client&gt;</term>
-	<listitem>The id of the client property, i.e. the property that will be adjusted (required)</listitem>
+	<listitem><para>The id of the client property, i.e. the property that will be adjusted (required)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;governor&gt;</term>
-	<listitem>The id of the governor property, i.e. the property that will adjusts the client property. This may include a modifier (required)</listitem>
+	<listitem><para>The id of the governor property, i.e. the property that will adjusts the client property. This may include a modifier (required)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;reconcile&gt;</term>
-	<listitem>If "true", the client property will make adjust the governor property on connection in such a way that the governor property will only accept values that are also acceptable by the client (e.g. suppose the governor is a numeric property with min value "0", and the client is a numeric property with min value "100". The min of both properties will be adjusted to 100, if reconcile="true"). Generally works only for properties of the same basic type (optional, default to "false")</listitem>
+	<listitem><para>If "true", the client property will make adjust the governor property on connection in such a way that the governor property will only accept values that are also acceptable by the client (e.g. suppose the governor is a numeric property with min value "0", and the client is a numeric property with min value "100". The min of both properties will be adjusted to 100, if reconcile="true"). Generally works only for properties of the same basic type (optional, default to "false")</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 </variablelist>
 </section>
@@ -2217,15 +2218,15 @@ made checkable, thus acting like a simple checkbox at the same time.
 <variablelist>
 <varlistentry>
 <term>visible</term>
-<listitem>Whether the GUI element is visible or not (boolean)</listitem>
+<listitem><para>Whether the GUI element is visible or not (boolean)</para></listitem>
 </varlistentry>
 <varlistentry>
 <term>enabled</term>
-<listitem>Whether the GUI element is enabled or not (boolean)</listitem>
+<listitem><para>Whether the GUI element is enabled or not (boolean)</para></listitem>
 </varlistentry>
 <varlistentry>
 <term>required</term>
-<listitem>Whether the GUI element is required (to hold a valid setting) or not. Note that any element which is disabled or hidden is also implicity non-required (boolean).</listitem>
+<listitem><para>Whether the GUI element is required (to hold a valid setting) or not. Note that any element which is disabled or hidden is also implicity non-required (boolean).</para></listitem>
 </varlistentry>
 </variablelist>
 <para>
@@ -2234,209 +2235,209 @@ In addition to this, some elements have additional properties you can connect to
 <variablelist>
 <varlistentry>
 <term>&lt;text&gt;</term>
-<listitem>Default property is text
+<listitem><para>Default property is text
 	<variablelist>
 	<varlistentry>
 	<term>text</term>
-	<listitem>The text displayed (text)</listitem>
+	<listitem><para>The text displayed (text)</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;varselector&gt;</term>
-<listitem>No default property
+<listitem><para>No default property
 	<variablelist>
 	<varlistentry>
 	<term>selected</term>
-	<listitem>The objects currently selected. You probably do not want to use this. Used internally (RObject)</listitem>
+	<listitem><para>The objects currently selected. You probably do not want to use this. Used internally (RObject)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>root</term>
-	<listitem>The root/parent object of the objects offered for selection (RObject)</listitem>
+	<listitem><para>The root/parent object of the objects offered for selection (RObject)</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;varslot&gt;</term>
-<listitem>Default property is "available"
+<listitem><para>Default property is "available"
 	<variablelist>
 	<varlistentry>
 	<term>available</term>
-	<listitem>All objects held in the varslot (RObject)</listitem>
+	<listitem><para>All objects held in the varslot (RObject)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>selected</term>
-	<listitem>Of the objects held in the varslot, those that are currently selected. You probably do not want to use this. Used internally (RObject)</listitem>
+	<listitem><para>Of the objects held in the varslot, those that are currently selected. You probably do not want to use this. Used internally (RObject)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>source</term>
-	<listitem>A copy of the objects selected in the corresponding varselector. You probably do not want to use this. Used internally (RObject)</listitem>
+	<listitem><para>A copy of the objects selected in the corresponding varselector. You probably do not want to use this. Used internally (RObject)</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;radio&gt;</term>
-<listitem>Default property is "string"
+<listitem><para>Default property is "string"
 	<variablelist>
 	<varlistentry>
 	<term>string</term>
-	<listitem>The value of the currently selected option (string)</listitem>
+	<listitem><para>The value of the currently selected option (string)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>number</term>
-	<listitem>The number of the currently selected option (options are numbered top-to-bottom, starting at 0) (integer)</listitem>
+	<listitem><para>The number of the currently selected option (options are numbered top-to-bottom, starting at 0) (integer)</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;dropdown&gt;</term>
-<listitem>Default property is "string"
+<listitem><para>Default property is "string"
 	<variablelist>
 	<varlistentry>
 	<term>string</term>
-	<listitem>The value of the currently selected option (string)</listitem>
+	<listitem><para>The value of the currently selected option (string)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>number</term>
-	<listitem>The number of the currently selected option (options are numbered top-to-bottom, starting at 0) (integer)</listitem>
+	<listitem><para>The number of the currently selected option (options are numbered top-to-bottom, starting at 0) (integer)</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;option&gt;</term>
-<listitem>No default property. "enabled" is the *only* proptery. It does not have the "visible" or "required" properties.
+<listitem><para>No default property. "enabled" is the *only* proptery. It does not have the "visible" or "required" properties.
 	<variablelist>
 	<varlistentry>
 	<term>enabled</term>
-	<listitem>Whether this single option should be enabled or disabled. In most cases you will enable/disable the entire &lt;radio&lt; or &lt;dropdown&lt;, instead. But this can be used to dynamically set the enabledness of a single option inside a &lt;radio&lt; or &lt;dropdown&lt; (bool)</listitem>
+	<listitem><para>Whether this single option should be enabled or disabled. In most cases you will enable/disable the entire &lt;radio&lt; or &lt;dropdown&lt;, instead. But this can be used to dynamically set the enabledness of a single option inside a &lt;radio&lt; or &lt;dropdown&lt; (bool)</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;checkbox&gt;</term>
-<listitem>Default property is "state"
+<listitem><para>Default property is "state"
 	<variablelist>
 	<varlistentry>
 	<term>state</term>
-	<listitem>State of the checkbox (on or off). Note that useful modifiers of this property (as of all boolean properties) are "not" and "numeric" (see <link linkend="propertytypes">types of properties</link>). (boolean)</listitem>
+	<listitem><para>State of the checkbox (on or off). Note that useful modifiers of this property (as of all boolean properties) are "not" and "numeric" (see <link linkend="propertytypes">types of properties</link>). (boolean)</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;frame&gt;</term>
-<listitem>No default property.
+<listitem><para>No default property.
 	<variablelist>
 	<varlistentry>
 	<term>checked</term>
-	<listitem>Available for checkable frames, only: state of the checkbox (on or off). Note that useful modifiers of this property (as of all boolean properties) are "not" and "numeric" (see <link linkend="propertytypes">types of properties</link>). (boolean)</listitem>
+	<listitem><para>Available for checkable frames, only: state of the checkbox (on or off). Note that useful modifiers of this property (as of all boolean properties) are "not" and "numeric" (see <link linkend="propertytypes">types of properties</link>). (boolean)</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;input&gt;</term>
-<listitem>Default property is "text"
+<listitem><para>Default property is "text"
 	<variablelist>
 	<varlistentry>
 	<term>text</term>
-	<listitem>Current text in the input field (string)</listitem>
+	<listitem><para>Current text in the input field (string)</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;browser&gt;</term>
-<listitem>Default property is "selection"
+<listitem><para>Default property is "selection"
 	<variablelist>
 	<varlistentry>
 	<term>selection</term>
-	<listitem>Current text (selected file name) in the browser (string)</listitem>
+	<listitem><para>Current text (selected file name) in the browser (string)</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;saveobject&gt;</term>
-<listitem>Default property is "selection"
+<listitem><para>Default property is "selection"
 	<variablelist>
 	<varlistentry>
 	<term>selection</term>
-	<listitem>Full name of the selected object (string; read-only - to set this programmatically, use "parent", and "objectname")</listitem>
+	<listitem><para>Full name of the selected object (string; read-only - to set this programmatically, use "parent", and "objectname")</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>parent</term>
-	<listitem>The parent object of the selected object. This is always an existing R object of a type that can contain other objects (e.g. a list or data.frame). When set to an empty string or an invalid object, ".GlobalEnv" is assumed (RObject)</listitem>
+	<listitem><para>The parent object of the selected object. This is always an existing R object of a type that can contain other objects (e.g. a list or data.frame). When set to an empty string or an invalid object, ".GlobalEnv" is assumed (RObject)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>objectname</term>
-	<listitem>The base-name of the selected object, i.e. the string entered by the user (changed to a valid R name, if necessary) (string)</listitem>
+	<listitem><para>The base-name of the selected object, i.e. the string entered by the user (changed to a valid R name, if necessary) (string)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>active</term>
-	<listitem>For checkable saveobjects, only: Whether the control is checked/enabled. Always true for non-checkable saveobjects (bool)</listitem>
+	<listitem><para>For checkable saveobjects, only: Whether the control is checked/enabled. Always true for non-checkable saveobjects (bool)</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;spinbox&gt;</term>
-<listitem>Default property is either "int" or "real" depending on the spinbox's mode
+<listitem><para>Default property is either "int" or "real" depending on the spinbox's mode
 	<variablelist>
 	<varlistentry>
 	<term>int</term>
-	<listitem>Integer value held by the spinbox, or nearest integer, if in real mode (integer)</listitem>
+	<listitem><para>Integer value held by the spinbox, or nearest integer, if in real mode (integer)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>real</term>
-	<listitem>Real value held by the spinbox (and integer, if in integer) (real)</listitem>
+	<listitem><para>Real value held by the spinbox (and integer, if in integer) (real)</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;formula&gt;</term>
-<listitem>Default property is "model"
+<listitem><para>Default property is "model"
 	<variablelist>
 	<varlistentry>
 	<term>model</term>
-	<listitem>The current model string (string)</listitem>
+	<listitem><para>The current model string (string)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>table</term>
-	<listitem>The data.frame holding the required variables. If variables from only one data.frame are used, the name of that data.frame is returned. Otherwise a new data.frame is constructed as required (string)</listitem>
+	<listitem><para>The data.frame holding the required variables. If variables from only one data.frame are used, the name of that data.frame is returned. Otherwise a new data.frame is constructed as required (string)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>labels</term>
-	<listitem>If variables from multiple data.frames are involved, their names may get mangled (for instance, if both data.frames contain a variable named "x"). This returns a list with the mangled names as indices and the descriptive label as value (string)</listitem>
+	<listitem><para>If variables from multiple data.frames are involved, their names may get mangled (for instance, if both data.frames contain a variable named "x"). This returns a list with the mangled names as indices and the descriptive label as value (string)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>fixed_factors</term>
-	<listitem>The fixed factors. You probably do not want to use this. Used internally (RObject)</listitem>
+	<listitem><para>The fixed factors. You probably do not want to use this. Used internally (RObject)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>dependent</term>
-	<listitem>The dependent variable(s). You probably do not want to use this. Used internally (RObject)</listitem>
+	<listitem><para>The dependent variable(s). You probably do not want to use this. Used internally (RObject)</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;embed&gt;</term>
-<listitem>No default property
+<listitem><para>No default property
 	<variablelist>
 	<varlistentry>
 	<term>code</term>
-	<listitem>The code generated by the embedded plugin (code)</listitem>
+	<listitem><para>The code generated by the embedded plugin (code)</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;preview&gt;</term>
-<listitem>Default property is "state"
+<listitem><para>Default property is "state"
 	<variablelist>
 	<varlistentry>
 	<term>state</term>
-	<listitem>Whether the preview box is checked (not necessarily whether the preview has already been shown) (boolean)</listitem>
+	<listitem><para>Whether the preview box is checked (not necessarily whether the preview has already been shown) (boolean)</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;convert&gt;</term>
-<listitem>This element (used in the &lt;logic&gt; section) is special, in that is technically *is* a property, instead of just holding one or more properties. It is of boolean kind. Note that useful modifiers of this property (as of all boolean properties) are "not" and "numeric" (see <link linkend="propertytypes">types of properties</link>)</listitem>
+<listitem><para>This element (used in the &lt;logic&gt; section) is special, in that is technically *is* a property, instead of just holding one or more properties. It is of boolean kind. Note that useful modifiers of this property (as of all boolean properties) are "not" and "numeric" (see <link linkend="propertytypes">types of properties</link>)</para></listitem>
 </varlistentry>
 </variablelist>
 </section>
@@ -2445,117 +2446,117 @@ In addition to this, some elements have additional properties you can connect to
 <variablelist>
 <varlistentry>
 <term>&lt;document&gt;</term>
-<listitem>Needs to be present in each .pluginmap file as the root-node (exactly once). Attributes:
+<listitem><para>Needs to be present in each .pluginmap file as the root-node (exactly once). Attributes:
 	<variablelist>
 	<varlistentry>
 	<term>base_prefix</term>
-	<listitem>Filenames specified in the pluginmap file are assumed to be relative to the directory of the .pluginmap-file + the prefix you specify here. Useful, esp., if all your components are located below a single subdirectory.	</listitem>
+	<listitem><para>Filenames specified in the pluginmap file are assumed to be relative to the directory of the .pluginmap-file + the prefix you specify here. Useful, esp., if all your components are located below a single subdirectory.	</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>namespace</term>
-	<listitem>A namespace for the component ids. When looking up components for embedding, the components will beretrievable via a string "namespace::component_id". Set to "rkward" for now.</listitem>
+	<listitem><para>A namespace for the component ids. When looking up components for embedding, the components will beretrievable via a string "namespace::component_id". Set to "rkward" for now.</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;components&gt;</term>
-<listitem>Needs to be present exactly once as a direct child of the &lt;document&gt; element. Contains the individual &lt;component&gt;-elements described below. No attributes.</listitem>
+<listitem><para>Needs to be present exactly once as a direct child of the &lt;document&gt; element. Contains the individual &lt;component&gt;-elements described below. No attributes.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;component&gt;</term>
-<listitem>One or more &lt;component&gt; elements should be given as direct children of the &lt;components&gt; element (and only there). Registers a component/plugin with rkward. Attributes:
+<listitem><para>One or more &lt;component&gt; elements should be given as direct children of the &lt;components&gt; element (and only there). Registers a component/plugin with rkward. Attributes:
 	<variablelist>
 	<varlistentry>
 	<term>type</term>
-	<listitem>For future extension: The type of component/plugin. Always set to "standard" for now (the only type currently supported).</listitem>
+	<listitem><para>For future extension: The type of component/plugin. Always set to "standard" for now (the only type currently supported).</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>id</term>
-	<listitem>The id by which this component can be retrieved (for placing it in the menu (see below), or for embedding). See &lt;document/gt;-namespace above.</listitem>
+	<listitem><para>The id by which this component can be retrieved (for placing it in the menu (see below), or for embedding). See &lt;document/gt;-namespace above.</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>file</term>
-	<listitem>Required at least for components of type="standard": The filename of the XML file describing the GUI.</listitem>
+	<listitem><para>Required at least for components of type="standard": The filename of the XML file describing the GUI.</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>label</term>
-	<listitem>The label for this component, when placed in the menu hierarchy.</listitem>
+	<listitem><para>The label for this component, when placed in the menu hierarchy.</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;attribute&gt;</term>
-<listitem>Defines an attribute of a component. Only meaningful for <link linkend="context_import">import plugins</link> so far. Only allowed as a direct child of &lt;component&gt;. Attributes:
+<listitem><para>Defines an attribute of a component. Only meaningful for <link linkend="context_import">import plugins</link> so far. Only allowed as a direct child of &lt;component&gt;. Attributes:
 	<variablelist>
 	<varlistentry>
 	<term>id</term>
-	<listitem>Id of the attribute</listitem>
+	<listitem><para>Id of the attribute</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>value</term>
-	<listitem>Value of the attribute</listitem>
+	<listitem><para>Value of the attribute</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>labels</term>
-	<listitem>Label associated with the attribute</listitem>
+	<listitem><para>Label associated with the attribute</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;hierarchy&gt;</term>
-<listitem>Needs to be present exactly once as a direct child of the &lt;document&gt; element. Described where the components declared above should be placed in the menu hierarchy. Accepts only &lt;menu&gt; elements as direct children. No attributes.</listitem>
+<listitem><para>Needs to be present exactly once as a direct child of the &lt;document&gt; element. Described where the components declared above should be placed in the menu hierarchy. Accepts only &lt;menu&gt; elements as direct children. No attributes.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;menu&gt;</term>
-<listitem>One or more &lt;menu&gt; elements should be given as direct children of the &lt;hierarchy&gt; element. Declares a new (sub-)menu. If a menu by the given id (see below) already exists, the two menus are merged. The &lt;menu&gt; element is allowed either as a direct child of the &lt;hierarchy&gt; element (top level menu), or as the direct child on any other &lt;menu&gt; element (sub-menu). Conversely, the &lt;menu&gt; element accepts other &lt;menu&gt; elements or &lt;entry&gt; elements as children. Attributes:
+<listitem><para>One or more &lt;menu&gt; elements should be given as direct children of the &lt;hierarchy&gt; element. Declares a new (sub-)menu. If a menu by the given id (see below) already exists, the two menus are merged. The &lt;menu&gt; element is allowed either as a direct child of the &lt;hierarchy&gt; element (top level menu), or as the direct child on any other &lt;menu&gt; element (sub-menu). Conversely, the &lt;menu&gt; element accepts other &lt;menu&gt; elements or &lt;entry&gt; elements as children. Attributes:
 	<variablelist>
 	<varlistentry>
 	<term>id</term>
-	<listitem>An identifier string of the menu. Useful, when menu-definitions are read from several .pluginmap-files, to make sure plugins can be placed in the same menu(s). Some menu-ids such as "file" refer to predefined menus (in this case the "File" menu). Be sure to check with existing .pluginmap-files to use consistent ids.</listitem>
+	<listitem><para>An identifier string of the menu. Useful, when menu-definitions are read from several .pluginmap-files, to make sure plugins can be placed in the same menu(s). Some menu-ids such as "file" refer to predefined menus (in this case the "File" menu). Be sure to check with existing .pluginmap-files to use consistent ids.</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>label</term>
-	<listitem>A label for the menu.</listitem>
+	<listitem><para>A label for the menu.</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>index</term>
-	<listitem>Useful, when menu-definitions are read from several .pluginmap-files, to have control over the order in which (sub-)menus are placed inside a hierarchy level. Note that the index is not absolute (since more than one .pluginmap file may be read, more than one element at this hierarchy level may have the same id), but you can safely assume that an element with index="4" will be placed somewhere below an element which index="3" and above one with index="5" (optional, default is "-1", for add at end).</listitem>
+	<listitem><para>Useful, when menu-definitions are read from several .pluginmap-files, to have control over the order in which (sub-)menus are placed inside a hierarchy level. Note that the index is not absolute (since more than one .pluginmap file may be read, more than one element at this hierarchy level may have the same id), but you can safely assume that an element with index="4" will be placed somewhere below an element which index="3" and above one with index="5" (optional, default is "-1", for add at end).</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;entry&gt;</term>
-<listitem>A menu entry, i.e. a menu-option to invoke a plugin. May be used only as a direct child of a &lt;menu&gt; element, accepts no child elements. Attributes:
+<listitem><para>A menu entry, i.e. a menu-option to invoke a plugin. May be used only as a direct child of a &lt;menu&gt; element, accepts no child elements. Attributes:
 	<variablelist>
 	<varlistentry>
 	<term>component</term>
-	<listitem>The id of the component that should be invoked, when this menu entry is activated.</listitem>
+	<listitem><para>The id of the component that should be invoked, when this menu entry is activated.</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>index</term>
-	<listitem>See &lt;menu index="..."&gt; above.</listitem>
+	<listitem><para>See &lt;menu index="..."&gt; above.</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;context&gt;</term>
-<listitem>Declares the entries in a <link linkend="contextualized_plugins">context</link>. Only allowed as a direct child of the &lt;document&gt; tag. Accepts only &lt;menu&gt; tags as direct children. Attributes:
+<listitem><para>Declares the entries in a <link linkend="contextualized_plugins">context</link>. Only allowed as a direct child of the &lt;document&gt; tag. Accepts only &lt;menu&gt; tags as direct children. Attributes:
 	<variablelist>
 	<varlistentry>
 	<term>id</term>
-	<listitem>The id of the context. Only two contexts are implemented so far: "x11" and "import".</listitem>
+	<listitem><para>The id of the context. Only two contexts are implemented so far: "x11" and "import".</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;require&gt;</term>
-<listitem>Include another .pluginmap file. This .pluginmap file is only loaded once, even if it is &lt;require&gt;d from several other files. The most important use case is to include a pluginmap file, which declares some comopnents, which are embedded by components declared in this .pluginmap. &lt;require&gt;-elements are only allowed as direct children of the &lt;document&gt;-node. Attributes:
+<listitem><para>Include another .pluginmap file. This .pluginmap file is only loaded once, even if it is &lt;require&gt;d from several other files. The most important use case is to include a pluginmap file, which declares some comopnents, which are embedded by components declared in this .pluginmap. &lt;require&gt;-elements are only allowed as direct children of the &lt;document&gt;-node. Attributes:
 	<variablelist>
 	<varlistentry>
 	<term>file</term>
-	<listitem>The filename of the .pluginmap to include. This is seen relative to the directory of the current .pluginmap file + the base_prefix (see above, &lt;document&gt;-element).</listitem>
+	<listitem><para>The filename of the .pluginmap to include. This is seen relative to the directory of the current .pluginmap file + the base_prefix (see above, &lt;document&gt;-element).</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 </variablelist>
 </section>
@@ -2564,91 +2565,91 @@ In addition to this, some elements have additional properties you can connect to
 <variablelist>
 <varlistentry>
 <term>&lt;document&gt;</term>
-<listitem>Needs to be present in each .rkh file as the root-node (exactly once). No attributes.</listitem>
+<listitem><para>Needs to be present in each .rkh file as the root-node (exactly once). No attributes.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;title&gt;</term>
-<listitem>Title of the help page. This is <emphasis>not</emphasis> interpreted for help pages for a plugin (this takes the title from the plugin itself), only for stand-alone pages. No attributes. The text contained within the &lt;title&gt; tag will become the caption of the help page. May only be defined once, as a direct child of the &lt;document&gt; node.</listitem>
+<listitem><para>Title of the help page. This is <emphasis>not</emphasis> interpreted for help pages for a plugin (this takes the title from the plugin itself), only for stand-alone pages. No attributes. The text contained within the &lt;title&gt; tag will become the caption of the help page. May only be defined once, as a direct child of the &lt;document&gt; node.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;summary&gt;</term>
-<listitem>A short summary of the help page (or what this plugin is used for). This will always be shown at the top of the help page. No attributes. The text contained within the &lt;summary&gt; tag will be displayed. Recommended but not required. May only be defined once, as a direct child of the &lt;document&gt; node.</listitem>
+<listitem><para>A short summary of the help page (or what this plugin is used for). This will always be shown at the top of the help page. No attributes. The text contained within the &lt;summary&gt; tag will be displayed. Recommended but not required. May only be defined once, as a direct child of the &lt;document&gt; node.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;usage&gt;</term>
-<listitem>A slightly more elaborate summary of the usage. This will always be shown directly after the &lt;summary&gt;. No attributes. The text contained within the &lt;usage&gt; tag will be displayed. Recommended for plugin help pages, but not required. May only be defined once, as a direct child of the &lt;document&gt; node.</listitem>
+<listitem><para>A slightly more elaborate summary of the usage. This will always be shown directly after the &lt;summary&gt;. No attributes. The text contained within the &lt;usage&gt; tag will be displayed. Recommended for plugin help pages, but not required. May only be defined once, as a direct child of the &lt;document&gt; node.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;section&gt;</term>
-<listitem>A general purposes section. May be used any number of times as a direct child of the &lt;document&gt; node. These sections are displayed in the order of their definition, but all <emphasis>after</emphasis> the &lt;usage&gt; section and <emphasis>before</emphasis> the &lt;settings&gt; section. The text contained within the &lt;sectoin&gt; tag will be displayed.
+<listitem><para>A general purposes section. May be used any number of times as a direct child of the &lt;document&gt; node. These sections are displayed in the order of their definition, but all <emphasis>after</emphasis> the &lt;usage&gt; section and <emphasis>before</emphasis> the &lt;settings&gt; section. The text contained within the &lt;sectoin&gt; tag will be displayed.
 	<variablelist>
 	<varlistentry>
 	<term>id</term>
-	<listitem>An identifier needed to jump to this section from the navigation bar (or a link). Needs to be unique within the file. Required, no default.</listitem>
+	<listitem><para>An identifier needed to jump to this section from the navigation bar (or a link). Needs to be unique within the file. Required, no default.</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>title</term>
-	<listitem>The title (caption) of this section. Required, no default.</listitem>
+	<listitem><para>The title (caption) of this section. Required, no default.</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>short_title</term>
-	<listitem>A short title suitable to be displayed in the navigation bar. Optional, defaults to the full title.</listitem>
+	<listitem><para>A short title suitable to be displayed in the navigation bar. Optional, defaults to the full title.</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;settings&gt;</term>
-<listitem>Defines the section containing reference on the various GUI settings. Only meaningful and only used for plugin related help pages. Use as a direct child of the &lt;document&gt;. May contain only &lt;setting&gt; and &lt;caption&gt; elements as direct children. No attributes.</listitem>
+<listitem><para>Defines the section containing reference on the various GUI settings. Only meaningful and only used for plugin related help pages. Use as a direct child of the &lt;document&gt;. May contain only &lt;setting&gt; and &lt;caption&gt; elements as direct children. No attributes.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;setting&gt;</term>
-<listitem>Explains a single setting in the GUI. Only allowed as a direct child of the &lt;settings&gt; element. The text contained within the element is displayed.
+<listitem><para>Explains a single setting in the GUI. Only allowed as a direct child of the &lt;settings&gt; element. The text contained within the element is displayed.
 	<variablelist>
 	<varlistentry>
 	<term>id</term>
-	<listitem>The id of the setting in the plugin .xml. Required, no default.</listitem>
+	<listitem><para>The id of the setting in the plugin .xml. Required, no default.</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>title</term>
-	<listitem>An optional title for the setting. If omitted (omission is recommended in most cases), the title will be taken from the plugin .xml.</listitem>
+	<listitem><para>An optional title for the setting. If omitted (omission is recommended in most cases), the title will be taken from the plugin .xml.</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;caption&gt;</term>
-<listitem>A caption to visually group several settings. May only be used as a direct child of the &lt;settings&gt; element.
+<listitem><para>A caption to visually group several settings. May only be used as a direct child of the &lt;settings&gt; element.
 	<variablelist>
 	<varlistentry>
 	<term>id</term>
-	<listitem>The id of the corresponding element (typically a &lt;frame&gt;, &lt;page&gt; or &lt;tab&gt;) in the plugin .xml.</listitem>
+	<listitem><para>The id of the corresponding element (typically a &lt;frame&gt;, &lt;page&gt; or &lt;tab&gt;) in the plugin .xml.</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>title</term>
-	<listitem>An optional title for the caption. If omitted (omission is recommended in most cases), the title will be taken from the plugin .xml.</listitem>
+	<listitem><para>An optional title for the caption. If omitted (omission is recommended in most cases), the title will be taken from the plugin .xml.</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;related&gt;</term>
-<listitem>Defines a section containing links to further related information. Will always be displayed after the &lt;settings&gt; section. Use as a direct child of the &lt;document&gt;. May contain only &lt;setting&gt; and &lt;caption&gt; elements as direct children. No attributes.</listitem>
+<listitem><para>Defines a section containing links to further related information. Will always be displayed after the &lt;settings&gt; section. Use as a direct child of the &lt;document&gt;. May contain only &lt;setting&gt; and &lt;caption&gt; elements as direct children. No attributes.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;technical&gt;</term>
-<listitem>Defines a section containing technical information of no relevance to end users (such as internal structure of the plugin). Will always be displayed last in a help page. Use as a direct child of the &lt;document&gt;. May contain only &lt;setting&gt; and &lt;caption&gt; elements as direct children. No attributes.</listitem>
+<listitem><para>Defines a section containing technical information of no relevance to end users (such as internal structure of the plugin). Will always be displayed last in a help page. Use as a direct child of the &lt;document&gt;. May contain only &lt;setting&gt; and &lt;caption&gt; elements as direct children. No attributes.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;link&gt;</term>
-<listitem>A link. Can be used in any of the sections described above.
+<listitem><para>A link. Can be used in any of the sections described above.
 	<variablelist>
 	<varlistentry>
 	<term>href</term>
-	<listitem>The target url. Note that several rkward specific URLs are available. See <link linkend="pluginhelp">section on writing help pages</link> for details.</listitem>
+	<listitem><para>The target url. Note that several rkward specific URLs are available. See <link linkend="pluginhelp">section on writing help pages</link> for details.</para></listitem>
 	</varlistentry>
-	</variablelist></listitem>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;various html tags&gt;</term>
-<listitem>Most basic html tags are allowed within the sections. Please keep manual formatting to a minimum, however.</listitem>
+<listitem><para>Most basic html tags are allowed within the sections. Please keep manual formatting to a minimum, however.</para></listitem>
 </varlistentry>
 </variablelist>
 </section>
@@ -2656,41 +2657,41 @@ In addition to this, some elements have additional properties you can connect to
 <section id="guilogic_functions"><title>Functions available for GUI logic scripting</title>
 <variablelist>
 <varlistentry><term>Class "Component"</term>
-<listitem>Class which represents a single component or component-property. The most important instance of this class is the variable "gui" which is predefined as the root property of the current component. The following methods are available for instances of class "Component":
+<listitem><para>Class which represents a single component or component-property. The most important instance of this class is the variable "gui" which is predefined as the root property of the current component. The following methods are available for instances of class "Component":
 	<variablelist>
-	<varlistentry><term>absoluteId(base_id)</term><listitem>Returns the absolute id of <emphasis>base_id</emphasis>, or - if base_id is omitted - the identifier of the component.</listitem></varlistentry>
-	<varlistentry><term>getValue(id)</term><listitem>Returns the value of the given child property. Returns the value of this property, if id is omitted.</listitem></varlistentry>
-	<varlistentry><term>setValue(id, value)</term><listitem>Set the value of the given child property to <emphasis>value</emphasis>.</listitem></varlistentry>
-	<varlistentry><term>getChild(id)</term><listitem>Return an instance of the child-property with the given <emphasis>id</emphasis>.</listitem></varlistentry>
-	<varlistentry><term>addChangeCommand(id, command)</term><listitem>Execute <emphasis>command</emphasis> whenever the child property given by <emphasis>id</emphasis> changes.</listitem></varlistentry>
-	</variablelist></listitem>
+	<varlistentry><term>absoluteId(base_id)</term><listitem><para>Returns the absolute id of <emphasis>base_id</emphasis>, or - if base_id is omitted - the identifier of the component.</para></listitem></varlistentry>
+	<varlistentry><term>getValue(id)</term><listitem><para>Returns the value of the given child property. Returns the value of this property, if id is omitted.</para></listitem></varlistentry>
+	<varlistentry><term>setValue(id, value)</term><listitem><para>Set the value of the given child property to <emphasis>value</emphasis>.</para></listitem></varlistentry>
+	<varlistentry><term>getChild(id)</term><listitem><para>Return an instance of the child-property with the given <emphasis>id</emphasis>.</para></listitem></varlistentry>
+	<varlistentry><term>addChangeCommand(id, command)</term><listitem><para>Execute <emphasis>command</emphasis> whenever the child property given by <emphasis>id</emphasis> changes.</para></listitem></varlistentry>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry><term>Class "RObject"</term>
-<listitem>Class which represents a single R object. An instance of this class can be obtained by using <command>makeRObject(objectname)</command>. The following methods are available for instances of class "RObject": <warning>If any commands are still pending in the backend, the information provided by these methods can be out-of-date by the time that the plugin code is run. Do <emphasis>not</emphasis> rely on it for critical operations (risking loss of data).</warning>
+<listitem><para>Class which represents a single R object. An instance of this class can be obtained by using <command>makeRObject(objectname)</command>. The following methods are available for instances of class "RObject": <warning><remark>If any commands are still pending in the backend, the information provided by these methods can be out-of-date by the time that the plugin code is run. Do <emphasis>not</emphasis> rely on it for critical operations (risking loss of data).</remark></warning>
 	<variablelist>
-	<varlistentry><term>getName()</term><listitem>Returns the absolute name of the object.</listitem></varlistentry>
-	<varlistentry><term>exists()</term><listitem>Returns whether the object exists. You should generally check this before using any of the methods listed below.</listitem></varlistentry>
-	<varlistentry><term>dimensions()</term><listitem>Returns an array of dimensions (similar to <command>dim()</command> in R).</listitem></varlistentry>
-	<varlistentry><term>classes()</term><listitem>Returns an array of classes (similar to <command>class()</command> in R).</listitem></varlistentry>
-	<varlistentry><term>isClass(class)</term><listitem>Returns true, if the object is of class <emphasis>class</emphasis>.</listitem></varlistentry>
-	<varlistentry><term>isDataFrame()</term><listitem>Returns true, if the object is a data.frame.</listitem></varlistentry>
-	<varlistentry><term>isMatrix()</term><listitem>Returns true, if the object is a matrix.</listitem></varlistentry>
-	<varlistentry><term>isList()</term><listitem>Returns true, if the object is a list.</listitem></varlistentry>
-	<varlistentry><term>isFunction()</term><listitem>Returns true, if the object is a function.</listitem></varlistentry>
-	<varlistentry><term>isEnvironment()</term><listitem>Returns true, if the object is an environment.</listitem></varlistentry>
-	<varlistentry><term>isDataNumeric()</term><listitem>Returns true, if the object is a vector of numeric data.</listitem></varlistentry>
-	<varlistentry><term>isDataFactor()</term><listitem>Returns true, if the object is a vector of factor data.</listitem></varlistentry>
-	<varlistentry><term>isDataCharacter()</term><listitem>Returns true, if the object is a vector of character data.</listitem></varlistentry>
-	<varlistentry><term>isDataLogical()</term><listitem>Returns true, if the object is a vector of logical data.</listitem></varlistentry>
-	<varlistentry><term>parent()</term><listitem>Returns an instance of "RObject" representing the parent of this object.</listitem></varlistentry>
-	<varlistentry><term>child(childname)</term><listitem>Returns an instance of "RObject" representing the child <emphasis>childname</emphasis> of this object.</listitem></varlistentry>
-	</variablelist></listitem>
+	<varlistentry><term>getName()</term><listitem><para>Returns the absolute name of the object.</para></listitem></varlistentry>
+	<varlistentry><term>exists()</term><listitem><para>Returns whether the object exists. You should generally check this before using any of the methods listed below.</para></listitem></varlistentry>
+	<varlistentry><term>dimensions()</term><listitem><para>Returns an array of dimensions (similar to <command>dim()</command> in R).</para></listitem></varlistentry>
+	<varlistentry><term>classes()</term><listitem><para>Returns an array of classes (similar to <command>class()</command> in R).</para></listitem></varlistentry>
+	<varlistentry><term>isClass(class)</term><listitem><para>Returns true, if the object is of class <emphasis>class</emphasis>.</para></listitem></varlistentry>
+	<varlistentry><term>isDataFrame()</term><listitem><para>Returns true, if the object is a data.frame.</para></listitem></varlistentry>
+	<varlistentry><term>isMatrix()</term><listitem><para>Returns true, if the object is a matrix.</para></listitem></varlistentry>
+	<varlistentry><term>isList()</term><listitem><para>Returns true, if the object is a list.</para></listitem></varlistentry>
+	<varlistentry><term>isFunction()</term><listitem><para>Returns true, if the object is a function.</para></listitem></varlistentry>
+	<varlistentry><term>isEnvironment()</term><listitem><para>Returns true, if the object is an environment.</para></listitem></varlistentry>
+	<varlistentry><term>isDataNumeric()</term><listitem><para>Returns true, if the object is a vector of numeric data.</para></listitem></varlistentry>
+	<varlistentry><term>isDataFactor()</term><listitem><para>Returns true, if the object is a vector of factor data.</para></listitem></varlistentry>
+	<varlistentry><term>isDataCharacter()</term><listitem><para>Returns true, if the object is a vector of character data.</para></listitem></varlistentry>
+	<varlistentry><term>isDataLogical()</term><listitem><para>Returns true, if the object is a vector of logical data.</para></listitem></varlistentry>
+	<varlistentry><term>parent()</term><listitem><para>Returns an instance of "RObject" representing the parent of this object.</para></listitem></varlistentry>
+	<varlistentry><term>child(childname)</term><listitem><para>Returns an instance of "RObject" representing the child <emphasis>childname</emphasis> of this object.</para></listitem></varlistentry>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry><term>Class "RObjectArray"</term>
-<listitem>An array of RObject instances. An instance of this class can be obtained by using <command>makeRObjectArray(objectnames)</command>. It is particularly useful when dealing with varslots which allow to select multiple objects.</listitem>
+<listitem><para>An array of RObject instances. An instance of this class can be obtained by using <command>makeRObjectArray(objectnames)</command>. It is particularly useful when dealing with varslots which allow to select multiple objects.</para></listitem>
 </varlistentry>
 <varlistentry><term>include()-function</term>
-<listitem><command>include(filename)</command>can be used to include a separate JS file.</listitem>
+<listitem><para><command>include(filename)</command>can be used to include a separate JS file.</para></listitem>
 </varlistentry>
 </variablelist>
 </section>
