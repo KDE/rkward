@@ -89,6 +89,7 @@ private slots:
 	void loadDone ();
 	void doGotoAnchorNow ();
 	void mimeTypeDetermined (KIO::Job*, const QString& type);
+	void internalNavigation ();
 protected:
 /** Here we store the position of the scroll bar before refresh. Used to scroll to the same position after a reload */
 	int scroll_position;
@@ -99,7 +100,12 @@ protected:
 /** called from openURL. Takes care of updating caption, and updating back/forward actions, if available */
 	void changeURL (const KUrl &url);
 private:
-	QList<KUrl> url_history;
+	struct VisitedLocation {
+		KUrl url;
+		int y_offset;
+	};
+	QList<VisitedLocation> url_history;
+	void openLocationFromHistory (const VisitedLocation &loc);
 	int current_history_position;
 	bool url_change_is_from_history;	// dirty!!!
 

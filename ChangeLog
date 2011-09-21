@@ -1,3 +1,4 @@
+- Fixed: Integrated help browser would not update navigation history when following page internal links
 - Documentation on writing RKWard plugins is now accessible, locally
 - The file filter for R script files is now configurable, and includes *.Rhistory, by default
 - More obvious coloring of variable entry fields requiring user input in plugins

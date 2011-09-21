@@ -82,6 +82,7 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (par
 	// We have to connect this in order to allow browsing.
 	connect (khtmlpart->browserExtension (), SIGNAL (openUrlRequestDelayed (const KUrl&, const KParts::OpenUrlArguments&, const KParts::BrowserArguments&)), this, SLOT (slotOpenUrl (const KUrl&, const KParts::OpenUrlArguments&, const KParts::BrowserArguments&)));
 	connect (khtmlpart, SIGNAL (completed ()), this, SLOT (loadDone ()));
+	connect (khtmlpart->browserExtension (), SIGNAL (openUrlNotify()), this, SLOT (internalNavigation()));	// to catch internal navigation on a page
 
 	current_history_position = -1;
 	url_change_is_from_history = false;
@@ -192,35 +193,44 @@ void RKHTMLWindow::slotPrint () {
 	khtmlpart->view ()->print ();
 }
 
-void RKHTMLWindow::slotForward () {
+void RKHTMLWindow::openLocationFromHistory (const VisitedLocation &loc) {
 	RK_TRACE (APP);
 	RK_ASSERT (window_mode == HTMLHelpWindow);
 
-	url_change_is_from_history = true;
+	int history_last = url_history.count () - 1;
+	RK_ASSERT (current_history_position >= 0);
+	RK_ASSERT (current_history_position <= history_last);
+	if (loc.url == khtmlpart->url ()) {
+		khtmlpart->view()->setContentsPos (0, loc.y_offset);
+	} else {
+		url_change_is_from_history = true;
+		KParts::OpenUrlArguments args;
+		args.setYOffset (loc.y_offset);
+		khtmlpart->setArguments (args);
+		openURL (loc.url);
+		url_change_is_from_history = false;
+	}
+
+	back->setEnabled (current_history_position > 0);
+	forward->setEnabled (current_history_position < history_last);
+}
+
+void RKHTMLWindow::slotForward () {
+	RK_TRACE (APP);
 
 	++current_history_position;
-	int history_last = url_history.count () - 1;
-	RK_ASSERT (current_history_position > 0);
-	RK_ASSERT (current_history_position <= history_last);
-	openURL (url_history[current_history_position]);
-
-	back->setEnabled (true);
-	forward->setEnabled (current_history_position < history_last);
-	url_change_is_from_history = false;
+	openLocationFromHistory (url_history[current_history_position]);
 }
 
 void RKHTMLWindow::slotBack () {
 	RK_TRACE (APP);
-	RK_ASSERT (window_mode == HTMLHelpWindow);
 
-	url_change_is_from_history = true;
+	if (current_history_position >= (url_history.count () - 1)) {
+		changeURL (khtmlpart->url ());
+		--current_history_position;
+	}
 	--current_history_position;
-	RK_ASSERT (current_history_position >= 0);
-	openURL (url_history[current_history_position]);
-
-	forward->setEnabled (true);
-	back->setEnabled (current_history_position > 0);
-	url_change_is_from_history = false;
+	openLocationFromHistory (url_history[current_history_position]);
 }
 
 bool RKHTMLWindow::handleRKWardURL (const KUrl &url) {
@@ -234,13 +244,16 @@ bool RKHTMLWindow::handleRKWardURL (const KUrl &url) {
 			RKComponentMap::invokeComponent (path.left (sep), path.mid (sep+1).split ('\n', QString::SkipEmptyParts));
 			return true;
 		} else {
-			bool ok = false;
-			if (url.host () == "component") {
-				ok = renderRKHelp (url);
-			} else if (url.host () == "rhelp") {
+			if (url.host () == "rhelp") {
 				// TODO: find a nice solution to render this in the current window
 				RKHelpSearchWindow::mainHelpSearch ()->getFunctionHelp (url.path ().mid (1));
 				return true;
+			}
+
+			changeURL (url);
+			bool ok = false;
+			if (url.host () == "component") {
+				ok = renderRKHelp (url);
 			} else if (url.host () == "page") {
 				ok = renderRKHelp (url);
 			} else if (url.host ().toUpper () == "RHELPBASE") {	// NOTE: QUrl () may lowercase the host part, internally
@@ -250,12 +263,10 @@ bool RKHTMLWindow::handleRKWardURL (const KUrl &url) {
 				if (url.hasFragment ()) fixed_url.setFragment (url.fragment ());
 				ok = openURL (fixed_url);
 			}
-		
+
 			if (!ok) {
 				fileDoesNotExistMessage ();
 			}
-		
-			changeURL (url);
 			return true;
 		}
 	}
@@ -281,6 +292,7 @@ bool RKHTMLWindow::openURL (const KUrl &url) {
 	}
 
 	if (url.isLocalFile () && (KMimeType::findByUrl (url)->is ("text/html") || window_mode == HTMLOutputWindow)) {
+		changeURL (url);
 		QFileInfo out_file (url.toLocalFile ());
 		bool ok = out_file.exists();
 		if (ok)  {
@@ -288,13 +300,12 @@ bool RKHTMLWindow::openURL (const KUrl &url) {
 		} else {
 			fileDoesNotExistMessage ();
 		}
-		changeURL (url);
 		return ok;
 	}
 
 	if (url_change_is_from_history || url.protocol ().toLower ().startsWith ("help")) {	// handle help pages, and any page that we have previously handled (from history)
-		khtmlpart->openUrl (url);
 		changeURL (url);
+		khtmlpart->openUrl (url);
 		return true;
 	}
 
@@ -323,11 +334,17 @@ void RKHTMLWindow::mimeTypeDetermined (KIO::Job* job, const QString& type) {
 	KUrl url = tj->url ();
 	tj->putOnHold ();
 	if (type == "text/html") {
-		khtmlpart->openUrl (url);
 		changeURL (url);
+		khtmlpart->openUrl (url);
 	} else {
 		RKWorkplace::mainWorkplace ()->openAnyUrl (url, type);
 	}
+}
+
+void RKHTMLWindow::internalNavigation () {
+	RK_TRACE (APP);
+
+	changeURL (khtmlpart->url ());
 }
 
 void RKHTMLWindow::changeURL (const KUrl &url) {
@@ -336,14 +353,18 @@ void RKHTMLWindow::changeURL (const KUrl &url) {
 
 	if (!url_change_is_from_history) {
 		if (window_mode == HTMLHelpWindow) {
-			int history_last = url_history.count () - 1;
-			for (int i = history_last; i > current_history_position; --i) {
-				url_history.removeLast ();
+			if (current_history_position >= 0) {	// skip initial blank page
+				url_history = url_history.mid (0, current_history_position);
+
+				VisitedLocation loc;
+				loc.url = khtmlpart->url ();
+				KParts::OpenUrlArguments args = khtmlpart->arguments ();
+				loc.y_offset = args.yOffset ();
+				url_history.append (loc);
 			}
 
-			url_history.append (url);
 			++current_history_position;
-			back->setEnabled (current_history_position > 0);	// may be false, if this is the very first page to be added to the history
+ 			back->setEnabled (current_history_position > 0);
 			forward->setEnabled (false);
 		}
 	}
@@ -380,6 +401,7 @@ void RKHTMLWindow::loadDone () {
 		khtmlpart->view ()->setContentsPos (0, khtmlpart->view ()->contentsHeight ());
 	} else {	// scroll to previous pos
 		if (scroll_position >= 0) khtmlpart->view()->setContentsPos (0, scroll_position);
+		scroll_position = -1;
 	}
 }
 
