@@ -292,6 +292,12 @@ bool RKHTMLWindow::openURL (const KUrl &url) {
 		return ok;
 	}
 
+	if (url_change_is_from_history || url.protocol ().toLower ().startsWith ("help")) {	// handle help pages, and any page that we have previously handled (from history)
+		khtmlpart->openUrl (url);
+		changeURL (url);
+		return true;
+	}
+
 	// special casing for R's dynamic help pages. These should be considered local, even though they are served through http
 	if (url.protocol ().toLower ().startsWith ("http")) {
 		QString host = url.host ();
@@ -300,10 +306,6 @@ bool RKHTMLWindow::openURL (const KUrl &url) {
 			connect (job, SIGNAL (mimetype(KIO::Job*, const QString&)), this, SLOT (mimeTypeDetermined(KIO::Job*, const QString&)));
 			return true;
 		}
-	} else if (url.protocol ().toLower ().startsWith ("help")) {
-		khtmlpart->openUrl (url);
-		changeURL (url);
-		return true;
 	}
 
 	RKWorkplace::mainWorkplace ()->openAnyUrl (url, QString (), KMimeType::findByUrl (url)->is ("text/html"));	// NOTE: text/html type urls, which we have not handled, above, are forced to be opened externally, to avoid recursion. E.g. help:// protocol urls.
