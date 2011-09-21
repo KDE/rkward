@@ -13,7 +13,7 @@
   \item{about}{A list with descriptive information on the
   plugin, its authors and dependencies. At the very least
   you must specify \code{name} and \code{author}. See
-  \code{\link[XiMpLe:rk.XML.about]{rk.XML.about}} for
+  \code{\link[rkwarddev:rk.XML.about]{rk.XML.about}} for
   details and a full list of elements!}
 
   \item{path}{Character sting, path to the main directory

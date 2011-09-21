@@ -3,7 +3,7 @@
 #' @param name Character sting, name of the plugin package.
 #' @param about A list with descriptive information on the plugin, its authors and dependencies.
 #'		At the very least you must specify \code{name} and \code{author}.
-#'		See \code{\link[XiMpLe:rk.XML.about]{rk.XML.about}} for details and a full list of elements!
+#'		See \code{\link[rkwarddev:rk.XML.about]{rk.XML.about}} for details and a full list of elements!
 #' @param path Character sting, path to the main directory where the skeleton should be created.
 #' @param dialog A list of objects of class XiMpLe.node. If provided, will be included in the
 #'		created plugin XML file as the dialog.
