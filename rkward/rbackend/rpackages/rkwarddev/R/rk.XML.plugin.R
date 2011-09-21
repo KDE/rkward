@@ -2,7 +2,9 @@
 #'
 #' @param name Character string, the name of the plugin.
 #' @param label Character string, a text label for the plugin's top level, i.e. the window title of the dialog.
-#' @param children An optional list with objects of class \code{XiMpLe.node}. Will be included inside the top level node.
+#' @param children An optional list with objects of class \code{XiMpLe.node}. Will be included inside the top level node as the dialog code.
+#' @param wiz.children An optional list with objects of class \code{XiMpLe.node}. Will be included inside the top level node as the wizard code
+#'		(but only if \code{provides} includes \code{"wizard"} as well).
 #' @param help Logical, if \code{TRUE} an include tag for a help file named \emph{"<name>.rkh"} will be added to the header.
 #' @param logic Logical, if \code{TRUE} a logic section will be added to the document.
 #'		This must be edited manually, it is therefore commented out.
@@ -25,7 +27,7 @@
 #' test.plugin <- rk.XML.plugin("My test", label="Check this out", children=test.tabbook)
 #' cat(pasteXMLTree(test.plugin, shine=1))
 
-rk.XML.plugin <- function(name, label, children=list(), help=TRUE, logic=TRUE, provides=c("dialog"), pluginmap=NULL){
+rk.XML.plugin <- function(name, label, children=list(), wiz.children=list(), help=TRUE, logic=TRUE, provides=c("dialog"), pluginmap=NULL){
 	name.orig <- name
 	name <- gsub("[[:space:]]*[^[:alnum:]]*", "", name)
 	if(!identical(name.orig, name)){
@@ -84,8 +86,8 @@ rk.XML.plugin <- function(name, label, children=list(), help=TRUE, logic=TRUE, p
 				name="page",
 				attributes=list(label=label),
 				value="")
-		if(length(children) > 0){
-			plugin.wizard.page@children <- child.list(children)
+		if(length(wiz.children) > 0){
+			plugin.wizard.page@children <- child.list(wiz.children)
 		} else {}
 		plugin.wizard <- new("XiMpLe.node",
 				name="wizard",

@@ -1,5 +1,8 @@
 ChangeLog for package rkwarddev
 
+## 0.01-4 (2011-09-21)
+  - added wizard code option to rk.XML.plugin()
+
 ## 0.01-3 (2011-09-16)
   - added rk.XML.spinbox() and missing options to rk.XML.browser() and rk.XML.saveobj()
   - corrected browser default type in rk.XML.browser()

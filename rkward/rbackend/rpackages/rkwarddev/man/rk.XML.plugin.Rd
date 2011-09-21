@@ -2,9 +2,9 @@
 \alias{rk.XML.plugin}
 \title{Create XML document for RKWard plugins}
 \usage{
-  rk.XML.plugin(name, label, children = list(), help =
-  TRUE, logic = TRUE, provides = c("dialog"), pluginmap =
-  NULL)
+  rk.XML.plugin(name, label, children = list(),
+  wiz.children = list(), help = TRUE, logic = TRUE,
+  provides = c("dialog"), pluginmap = NULL)
 }
 \arguments{
   \item{name}{Character string, the name of the plugin.}
@@ -14,7 +14,12 @@
 
   \item{children}{An optional list with objects of class
   \code{XiMpLe.node}. Will be included inside the top level
-  node.}
+  node as the dialog code.}
+
+  \item{wiz.children}{An optional list with objects of
+  class \code{XiMpLe.node}. Will be included inside the top
+  level node as the wizard code (but only if
+  \code{provides} includes \code{"wizard"} as well).}
 
   \item{help}{Logical, if \code{TRUE} an include tag for a
   help file named \emph{"<name>.rkh"} will be added to the
