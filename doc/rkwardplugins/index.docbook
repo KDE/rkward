@@ -130,7 +130,7 @@ Read on in the next chapters to see how this is done.
 <para>
 When you create a new plugin, you need to tell &kapp; about it. So the first thing to do, is to write a .pluginmap-file (or modify an existing one). The format of .pluginmap is XML. I'll walk you through an example (also of course, be sure you have &kapp; configured to load your pluginmap – Settings->Configure &kapp;->Plugins):
 </para>
-<tip>After reading this chapter, have a look at the <link linkend="rkwarddev"><quote>rkwarddev</quote> package</link> as well. It provides some R functions to create most of RKWard's XML tags for you.</tip>
+<tip><para>After reading this chapter, have a look at the <link linkend="rkwarddev"><quote>rkwarddev</quote> package</link> as well. It provides some R functions to create most of RKWard's XML tags for you.</para></tip>
 <programlisting>
 &lt;!DOCTYPE rkpluginmap&gt;
 </programlisting>
@@ -141,7 +141,7 @@ The doctype is not really interpreted, but set it to <quote>rkpluginmap</quote> 
 &lt;document base_prefix="" namespace="rkward"&gt;
 </programlisting>
 <para>
-	The <code>base_prefix</code>-attribute can be used, if all your plugins reside in a common directory. Basically, then, you can omit that directory from the filenames specified below. As you will see below, all plugins get a unique identifier. The <code>namespace</code> is a way to organize those ids, and make it less likely to create a duplicate identifier accidentally. Internally, basically the namespace and then a <quote>::</quote> gets prepended to all the identifiers you specify below. If unsure, leave these at <quote></quote> and <quote>rkward</quote>.
+	The <parameter>base_prefix</parameter>-attribute can be used, if all your plugins reside in a common directory. Basically, then, you can omit that directory from the filenames specified below. As you will see below, all plugins get a unique identifier. The <parameter>namespace</parameter> is a way to organize those ids, and make it less likely to create a duplicate identifier accidentally. Internally, basically the namespace and then a <quote>::</quote> gets prepended to all the identifiers you specify below. If unsure, leave these at <quote></quote> and <quote>rkward</quote>.
 </para>
 <programlisting>
 	&lt;components&gt;
@@ -153,7 +153,7 @@ Components? Aren't we talking about plugins? Yes, but in the future, plugins wil
 		&lt;component type="standard" id="independent_samples_t_test" file="means/ttests/independent_samples.xml" label="Independent Samples" /&gt;
 </programlisting>
 <para>
-	First the <code>type</code>-attribute: Leave this to <quote>standard</quote> for now. Further types are not yet implemented. The <code>id</code> I've already hinted at. Each component has to be given a unique (in its namespace) identifier. Pick one that is easily recognizable. Avoid spaces and any special characters. Those are not banned, so far, but might have special meanings. With the <code>file</code> attribute, you specify where the <link linkend="mainxml">description of the actual plugin itself</link> is located. This is relative to the directory the .pluginmap-file is in, and the <code>base_prefix</code> above. Finally, give the component a label. This label will be shown whereever the plugin is placed in the menu (or in the future perhaps in other places as well).
+	First the <parameter>type</parameter>-attribute: Leave this to <quote>standard</quote> for now. Further types are not yet implemented. The <parameter>id</parameter> I've already hinted at. Each component has to be given a unique (in its namespace) identifier. Pick one that is easily recognizable. Avoid spaces and any special characters. Those are not banned, so far, but might have special meanings. With the <parameter>file</parameter> attribute, you specify where the <link linkend="mainxml">description of the actual plugin itself</link> is located. This is relative to the directory the .pluginmap-file is in, and the <parameter>base_prefix</parameter> above. Finally, give the component a label. This label will be shown whereever the plugin is placed in the menu (or in the future perhaps in other places as well).
 </para>
 <para>
 Typically a .pluginmap-file will contain several components, so here are a few more:
@@ -174,8 +174,8 @@ Ok, this was the first step. &kapp; now knows those plugins exist. But how to in
 		&lt;menu id="analysis" label="Analysis" index="4"&gt;
 </programlisting>
 <para>
-	Right below the &lt;hierarchy&gt;-tag, you start describing, in which menu, your plugins should go. With the above line, you basically say, that your plugin should be in the <quote>Analysis</quote> menu (not necessarily directly there, but in a submenu). The <quote>Analysis</quote> menu is standard in &kapp;, so it does not actually have to be created from scratch. However, if it did not exist yet, using the <code>label</code> attribute you'd give it its name. The <code>index</code> attribute says, that the menu (if newly created) should be placed at the fourth position in the menubar.
-		Finally, the <code>id</code> once again identifies this menu. This is needed, so several .pluginmap-files can place their plugins in the same menus. They do this by looking for a menu with the given <code>id</code>. If the id does not yet exist, a new menu will be created. Otherwise the entries will be added to the existing menu.
+	Right below the &lt;hierarchy&gt;-tag, you start describing, in which menu, your plugins should go. With the above line, you basically say, that your plugin should be in the <quote>Analysis</quote> menu (not necessarily directly there, but in a submenu). The <quote>Analysis</quote> menu is standard in &kapp;, so it does not actually have to be created from scratch. However, if it did not exist yet, using the <parameter>label</parameter> attribute you'd give it its name. The <parameter>index</parameter> attribute says, that the menu (if newly created) should be placed at the fourth position in the menubar.
+	Finally, the <parameter>id</parameter> once again identifies this menu. This is needed, so several .pluginmap-files can place their plugins in the same menus. They do this by looking for a menu with the given <parameter>id</parameter>. If the id does not yet exist, a new menu will be created. Otherwise the entries will be added to the existing menu.
 </para>
 <programlisting>
 			&lt;menu id="means" label="Means" index="1"&gt;
@@ -187,13 +187,13 @@ Basically the same thing here: Now we define a submenu to the <quote>Analysis</q
 				&lt;menu id="ttests" label="T-Tests"&gt;
 </programlisting>
 <para>
-	And a final level in the menu-hierarchy: A sub-menu of the sub-menu <quote>Means</quote>. Note, that if you omit the <code>index</code> parameter, the new entry will be placed below any already existing ones.
+	And a final level in the menu-hierarchy: A sub-menu of the sub-menu <quote>Means</quote>. Note, that if you omit the <parameter>index</parameter> parameter, the new entry will be placed below any already existing ones.
 </para>
 <programlisting>
 					&lt;entry component="independent_samples_t_test" /&gt;
 </programlisting>
 <para>
-	Now, finally, this is the menu, we want to place the plugin in. The &lt;entry&gt;-tag signals, this actually is the real thing, instead of another submenu. The <code>component</code> attribute refers to the <code>id</code> you gave the plugin/component above.
+	Now, finally, this is the menu, we want to place the plugin in. The &lt;entry&gt;-tag signals, this actually is the real thing, instead of another submenu. The <parameter>component</parameter> attribute refers to the <parameter>id</parameter> you gave the plugin/component above.
 </para>
 <programlisting>
 					&lt;entry component="fictional_t_test" /&gt;
@@ -214,7 +214,7 @@ In case you have lost track: This is another submenu to the <quote>Analysis</quo
 		&lt;/menu&gt;
 </programlisting>
 <para>
-These are the final entries visible in the screenshots below. Note, that you don't need to define the entries in the order they should have in the menu. Use the <code>index</code> attribute instead.
+These are the final entries visible in the screenshots below. Note, that you don't need to define the entries in the order they should have in the menu. Use the <parameter>index</parameter> attribute instead.
 </para>
 <programlisting>
 		&lt;menu id="plots" label="Plots" index="5"&gt;
@@ -230,7 +230,7 @@ Of course you can also place your plugins in menus other than <quote>Analysis</q
 		&lt;/menu&gt;
 </programlisting>
 <para>
-	Even in standard-menus such as <quote>File</quote>. All you need is the correct <code>id</code>.
+	Even in standard-menus such as <quote>File</quote>. All you need is the correct <parameter>id</parameter>.
 </para>
 <programlisting>
 	&lt;/hierarchy&gt;	
@@ -260,7 +260,7 @@ Confused? The easiest way to get started is probably taking some of the existing
 <para>
 In the <link linkend="pluginmap">previous chapter</link> you've seen how to register a plugin with &kapp;. The most important ingredient was specifying the path to an XML file with a description of what the plugin actually looks like. In this chapter you'll learn how to create this XML file.
 </para>
-<tip>After reading this chapter, have a look at the <link linkend="rkwarddev"><quote>rkwarddev</quote> package</link> as well. It provides some R functions to create most of RKWard's XML tags for you.</tip>
+<tip><para>After reading this chapter, have a look at the <link linkend="rkwarddev"><quote>rkwarddev</quote> package</link> as well. It provides some R functions to create most of RKWard's XML tags for you.</para></tip>
 <para>
 Once again we'll walk you through an example. The example is a (slightly simplified) version of the independent samples t-Test.
 </para>
@@ -287,26 +287,26 @@ It is usually a good idea to also provide a help page for your plugin. The filen
 	&lt;dialog label="Independent Samples t-Test"&gt;
 </programlisting>
 <para>
-	As you know, plugins may have either a dialog or a wizard interface or both. Here we start definining a dialog interface. the <code>label</code> attribute specifies the caption of the dialog.
+	As you know, plugins may have either a dialog or a wizard interface or both. Here we start definining a dialog interface. the <parameter>label</parameter> attribute specifies the caption of the dialog.
 </para>
 <programlisting>
 		&lt;tabbook&gt;
 			&lt;tab label="Basic settings"&gt;
 </programlisting>
 <para>
-GUI elements can be organized using a tabbook. Here we define a tabbook as the first element in the dialog. Use &lt;tabbook&gt;[...]&lt;/tabbook&gt; to define the tabbook and then for each page in the tabbook use &lt;tab&gt;[...]&lt;/tab&gt;. The <code>label</code> attribute in the &lt;tab&gt; element allows you to specify a caption for that page of the tabbook.
+GUI elements can be organized using a tabbook. Here we define a tabbook as the first element in the dialog. Use &lt;tabbook&gt;[...]&lt;/tabbook&gt; to define the tabbook and then for each page in the tabbook use &lt;tab&gt;[...]&lt;/tab&gt;. The <parameter>label</parameter> attribute in the &lt;tab&gt; element allows you to specify a caption for that page of the tabbook.
 </para>
 <programlisting>
 				&lt;row id="main_settings_row"&gt;
 </programlisting>
 <para>
-The &lt;row&gt; and &lt;column&gt; tags specify the layout of the GUI elements. Here you say, that you'd like to place some elements side-by-side (left to right). The <code>id</code> attribute is not strictly necessary, but we'll use it later on, when adding a wizard interface to our plugin. The first element to place in the row, is:
+The &lt;row&gt; and &lt;column&gt; tags specify the layout of the GUI elements. Here you say, that you'd like to place some elements side-by-side (left to right). The <parameter>id</parameter> attribute is not strictly necessary, but we'll use it later on, when adding a wizard interface to our plugin. The first element to place in the row, is:
 </para>
 <programlisting>
 					&lt;varselector id="vars"/&gt;
 </programlisting>
 <para>
-Using this simple tag you create a list from which the user can select variables. You have to specify an id for this element, so RKWard knows how to find it. Note that you may NOT use a dot (.) in the <code>id</code> string.
+Using this simple tag you create a list from which the user can select variables. You have to specify an id for this element, so RKWard knows how to find it. Note that you may NOT use a dot (.) in the <parameter>id</parameter> string.
 </para>
 <programlisting>
 					&lt;column&gt;
@@ -319,7 +319,7 @@ Next, we nest a &lt;column&gt; inside the row. I.e. the following elements will 
 						&lt;varslot type="numeric" id="y" source="vars" required="true" label="against"/&gt;
 </programlisting>
 <para>
-	These elements are the counterpart to the &lt;varselector&gt;. They represent <quote>slots</quote> into which the user can put variables. You will note that the <code>source</code> is set to the same value as the <code>id</code> of the &lt;varselector&gt;. This means, the &lt;varslot&gt;s will each take their variables from the varselector. The &lt;varslot&gt;s also have to be given an <code>id</code>. They may have a label, and they may be set to <quote>required</quote>. This means that the <quote>submit</quote> button will not be enabled until the &lt;varslot&gt; holds a valid value. Finally the <code>type</code> attribute is not interpreted, yet, but it will be used to take care that only the correct types of variables will be allowed in the &lt;varslot&gt;.
+	These elements are the counterpart to the &lt;varselector&gt;. They represent <quote>slots</quote> into which the user can put variables. You will note that the <parameter>source</parameter> is set to the same value as the <parameter>id</parameter> of the &lt;varselector&gt;. This means, the &lt;varslot&gt;s will each take their variables from the varselector. The &lt;varslot&gt;s also have to be given an <parameter>id</parameter>. They may have a label, and they may be set to <quote>required</quote>. This means that the <quote>submit</quote> button will not be enabled until the &lt;varslot&gt; holds a valid value. Finally the <parameter>type</parameter> attribute is not interpreted, yet, but it will be used to take care that only the correct types of variables will be allowed in the &lt;varslot&gt;.
 </para>
 <programlisting>
 						&lt;radio id="hypothesis" label="using test hypothesis"&gt;
@@ -329,7 +329,7 @@ Next, we nest a &lt;column&gt; inside the row. I.e. the following elements will 
 						&lt;/radio&gt;
 </programlisting>
 <para>
-Here, you define a group of &lt;radio&gt;-exclusive buttons. The group has a <code>label</code> and an <code>id</code>. Each &lt;option&gt; (button) has a label and is assigned a value. This is the value the &lt;radio&gt;-element will return when the option is selected.
+Here, you define a group of &lt;radio&gt;-exclusive buttons. The group has a <parameter>label</parameter> and an <parameter>id</parameter>. Each &lt;option&gt; (button) has a label and is assigned a value. This is the value the &lt;radio&gt;-element will return when the option is selected.
 </para>
 <programlisting>
 					&lt;/column&gt;
@@ -358,13 +358,13 @@ Each tag has to be closed. We've put all the elements we wanted (the two &lt;var
 				&lt;checkbox id="varequal" label="assume equal variances" value=", var.equal=TRUE"/&gt;
 </programlisting>
 <para>
-By default elements will be placed top-to-bottom like in a &lt;column&gt;. Since that is what we want here, we don't have to explicitly state a &lt;row&gt; or &lt;column&gt;-layout. The first element we define is a checkbox. Just like the &lt;radio&gt;&lt;option&gt;s, the checkbox has a <code>label</code> and a <code>value</code>. The <code>value</code> is what gets returned, if the checkbox is checked. Of course the checkbox also needs an <code>id</code>.
+By default elements will be placed top-to-bottom like in a &lt;column&gt;. Since that is what we want here, we don't have to explicitly state a &lt;row&gt; or &lt;column&gt;-layout. The first element we define is a checkbox. Just like the &lt;radio&gt;&lt;option&gt;s, the checkbox has a <parameter>label</parameter> and a <parameter>value</parameter>. The <parameter>value</parameter> is what gets returned, if the checkbox is checked. Of course the checkbox also needs an <parameter>id</parameter>.
 </para>
 <programlisting>
 				&lt;frame label="Confidence Interval" id="frame_conf_int"&gt;
 </programlisting>
 <para>
-Here's yet another layout element: In order to signal that the two elements below  belong together, we draw a &lt;frame&gt; (box). That frame may have a caption. Since the frame is just a passive layout-element, it does not need an <code>id</code>, we still define one here, as we'll refer to it later, when defining an additional wizard interface.
+Here's yet another layout element: In order to signal that the two elements below  belong together, we draw a &lt;frame&gt; (box). That frame may have a caption. Since the frame is just a passive layout-element, it does not need an <parameter>id</parameter>, we still define one here, as we'll refer to it later, when defining an additional wizard interface.
 </para>
 <programlisting>
 					&lt;checkbox id="confint" label="print confidence interval" value="1" checked="true"/&gt;
@@ -372,11 +372,11 @@ Here's yet another layout element: In order to signal that the two elements belo
 				&lt;/frame&gt;
 </programlisting>
 <para>
-	Inside the &lt;frame&gt; we place another &lt;checkbox&gt; (using <code>checked=<quote>true</quote></code>, we signal that checkbox should be checked by default), and a &lt;spinbox&gt;. The spinbox allows the user to select a value between <quote>min</quote> and <quote>max</quote> with the default/initial value <quote>0.95</quote>. Setting the <code>type</code> to <quote>real</quote> signals that real numbers are accepted as opposed to <code>type=<quote>integer</quote></code> which would accept integers only.
+	Inside the &lt;frame&gt; we place another &lt;checkbox&gt; (using <markup>checked="true"</markup>, we signal that checkbox should be checked by default), and a &lt;spinbox&gt;. The spinbox allows the user to select a value between <quote>min</quote> and <quote>max</quote> with the default/initial value <quote>0.95</quote>. Setting the <parameter>type</parameter> to <quote>real</quote> signals that real numbers are accepted as opposed to <markup>type="integer"</markup> which would accept integers only.
 </para>
-<note>
+<note><para>
 It is also possible, and often preferrable, to make the &lt;frame&gt; itself checkable, instead of adding a &lt;checkbox&gt; inside. See the reference for details. This is not done, here, for illustrational purposes.
-</note>
+</para></note>
 <programlisting>
 			&lt;/tab&gt;
 		&lt;/tabbook&gt;
@@ -406,7 +406,7 @@ But how does R syntax get generated from the GUI-settings? I'll deal with that i
 			&lt;/page&gt;
 	</programlisting>
 	<para>
-	Some of this is pretty self explanatory: We add a &lt;wizard&gt; tag with a label for the wizard. Since a wizard can hold several pages that are shown one after another, we next define the first page, and put an explanatory text note in there. Then we use a &lt;copy&gt;-tag. What this does, is really it saves us having to define yet again, what we already wrote for the &lt;dialog&gt;: The copy tag looks for another tag with the same <code>id</code> earlier in the .xml. This happens to be defined in the &lt;dialog&gt; section, and is a &lt;row&gt; in which there are the &lt;varselector&gt;, &lt;varslots&gt; and the "hypothesis" &lt;radio&gt;-control. All of this is copied 1:1 and inserted right at the &lt;copy&gt; element.
+	Some of this is pretty self explanatory: We add a &lt;wizard&gt; tag with a label for the wizard. Since a wizard can hold several pages that are shown one after another, we next define the first page, and put an explanatory text note in there. Then we use a &lt;copy&gt;-tag. What this does, is really it saves us having to define yet again, what we already wrote for the &lt;dialog&gt;: The copy tag looks for another tag with the same <parameter>id</parameter> earlier in the .xml. This happens to be defined in the &lt;dialog&gt; section, and is a &lt;row&gt; in which there are the &lt;varselector&gt;, &lt;varslots&gt; and the "hypothesis" &lt;radio&gt;-control. All of this is copied 1:1 and inserted right at the &lt;copy&gt; element.
 	</para>
 	<para>
 	Now to the second page:
@@ -424,7 +424,7 @@ But how does R syntax get generated from the GUI-settings? I'll deal with that i
 	Much of the same thing here. We add some texts, and in between that &lt;copy&gt; further sections from the dialog interface.
 	</para>
 	<para>
-	You may of course make the wizard interface look very different to the plain dialog, and not use the &lt;copy&gt; tag at all. Be sure, however, to assign corresponding elements the same <code>id</code> in both interfaces. This is not only used to transfer settings from the dialog interface to the wizard-interface and back, when the user switches interfaces (which does not yet happen in the current version of RKWard), but also simplifies writing your code-template (see below).
+	You may of course make the wizard interface look very different to the plain dialog, and not use the &lt;copy&gt; tag at all. Be sure, however, to assign corresponding elements the same <parameter>id</parameter> in both interfaces. This is not only used to transfer settings from the dialog interface to the wizard-interface and back, when the user switches interfaces (which does not yet happen in the current version of RKWard), but also simplifies writing your code-template (see below).
 	</para>
 </sect1>
 
@@ -454,7 +454,7 @@ But how does R syntax get generated from the GUI-settings? I'll deal with that i
 <para>
 	Now we have a GUI defined, but we still need to generate some R code from that. For that, we need another text-file, <quote>code.js</quote>, located in the same directory as the <link linkend="mainxml">description.xml</link>. You may or may not be familiar with JavaScript (or, to be technically precise: ECMA-script). Documentation on JS can be found in abundance, both in printed form, and on the internet (e.g.: <ulink url="https://developer.mozilla.org/en/Core_JavaScript_1.5_Guide">https://developer.mozilla.org/en/Core_JavaScript_1.5_Guide</ulink>). But for most purposes you will not need to know much about JS at all, as we'll only use some very basic features.
 </para>
-<tip>After reading this chapter, have a look at the <link linkend="rkwarddev"><quote>rkwarddev</quote> package</link> as well. It provides some R functions to create JavaScript code commonly used in RKWard. For instance, it can autodetect variables used in a plugin XML file and create basic JavaScript code from that for you to start with.</tip>
+<tip><para>After reading this chapter, have a look at the <link linkend="rkwarddev"><quote>rkwarddev</quote> package</link> as well. It provides some R functions to create JavaScript code commonly used in RKWard. For instance, it can autodetect variables used in a plugin XML file and create basic JavaScript code from that for you to start with.</para></tip>
 <para>
 For the independent samples t-test, the code.js file looks as follows (with comments in between):
 </para>
@@ -617,7 +617,7 @@ function calculate () {
 	<para>
 	When your plugin basically works, the time has come to provide a help page. While typically you will not want to explain all the underlying concepts in depth, you may want to add some more explanation for some of the options, and link to related plugins and R functions.
 	</para>
-	<tip>After reading this chapter, have a look at the <link linkend="rkwarddev"><quote>rkwarddev</quote> package</link> as well. It provides some R functions to create most of RKWard's XML tags for you. It's also capable of creating basic help file skeletons from existing plugin XML files for you to start with.</tip>
+	<tip><para>After reading this chapter, have a look at the <link linkend="rkwarddev"><quote>rkwarddev</quote> package</link> as well. It provides some R functions to create most of RKWard's XML tags for you. It's also capable of creating basic help file skeletons from existing plugin XML files for you to start with.</para></tip>
 	<para>
 	You may recall putting this inside your plugin-xml (if you haven't put this in, do so now):
 	</para>
@@ -792,9 +792,9 @@ Now to the real stuff: We &lt;connect&gt; the "varmode" property to y.visible, w
 <para>
 We do just the reverse for the spinbox. So in effect, either the varslot is shown and required, <emphasis>or</emphasis> the spinbox is shown and required - depending on which option is selected in the radio control. The GUI is changing itself according to the radio option. Try the example, if you like.
 </para>
-<note>
+<note><para>
 In the above example, instead of defining two properties "varmode" and "constmode", we could also have used the negation of "varmode", like this:
-</note>
+</para></note>
 <programlisting>
 	&lt;connect client="constant.visible" governor="varmode.not" /&gt;
 </programlisting>
@@ -1365,7 +1365,7 @@ You can declare two &lt;external&gt; properties in your plugin. "filename" will 
 	<para>As of version 0.5.5, &kapp; provides a comfortable way to install additional third party plugins which do not belong to the core package itself. We call these "external plugins". They come in form of an R package and can be managed directly via the usual package management features of R and/or &kapp;. </para>
 	<para>This section of the documentation describes how external plugins are to be packaged, so that &kapp; can use them. The plugin creation itself is of course identical to the previous sections. That is, you should probably first write a working plugin, and then check back here to learn how to distribute it. </para>
 	<para>Since external plugins are a relatively young feature, details of this might probably change in future releases. You’re welcome to contribute your ideas to improve the process. </para>
-	<tip>These docs explain the details of external plugins so you can learn how they work. In addition to that, also have a look at the <link linkend="rkwarddev"><quote>rkwarddev</quote> package</link>, which was designed to automate a lot of the writing process. </tip>
+	<tip><para>These docs explain the details of external plugins so you can learn how they work. In addition to that, also have a look at the <link linkend="rkwarddev"><quote>rkwarddev</quote> package</link>, which was designed to automate a lot of the writing process. </para></tip>
   
 	<sect1 id="why_external_plugins">
 		<title>Why external plugins?</title>
@@ -1402,8 +1402,8 @@ You can declare two &lt;external&gt; properties in your plugin. "filename" will 
 	LICENSE
 	DESCRIPTION
 			</programlisting>
-			<note> In this example, all occasions of <code><quote>plugin_name</quote></code>, <code><quote>testsuite_name</quote></code> and <code><quote>sometest_name</quote></code> are to be replaced with their correct names, accordingly.</note>
-			<tip> You don't have to create this file hierarchy by hand. If you use the function <code>rk.plugin.skeleton()</code> from the <link linkend="rkwarddev"><quote>rkwarddev</quote> package</link>, it will automatically create all necessary files and directories for you.</tip>
+			<note><para> In this example, all occasions of <token>plugin_name</token>, <token>testsuite_name</token> and <token>sometest_name</token> are to be replaced with their correct names, accordingly.</para></note>
+			<tip><para>You don't have to create this file hierarchy by hand. If you use the function <function>rk.plugin.skeleton()</function> from the <link linkend="rkwarddev"><quote>rkwarddev</quote> package</link>, it will automatically create all necessary files and directories for you.</para></tip>
 			<sect3 id="basic_plugin_components">
 				<title>Basic plugin components</title>
 				<para>It is mandatory to include at least three files: a <link linkend="pluginmap">.pluginmap</link>, a plugin <link linkend="mainxml">.xml</link> description and a plugin <link linkend="jstemplate">.js</link> file. That is, even the "plugins" directory is optional. It might just help to give your files some order, especially if you include more that one plugin/dialog in the archive, which is of course no problem. You can have as many directories for the actual plugin files as you see fit, they just have to resemble the <link linkend="pluginmap">.pluginmap</link>, respectively. It is also possible to even include several .pluginmap files, if it fits your needs, but you should include them all in "plugin_name.pluginmap" then. </para>
@@ -1427,7 +1427,7 @@ You can declare two &lt;external&gt; properties in your plugin. "filename" will 
 			person(given="A.", family="Assistant", role=c("cre",
 			"ctb"), email="alterego@eternalwondermaths.example.org"))
 			</programlisting>
-			<tip> You don't have to write this file by hand. If you use the function <code>rk.plugin.skeleton()</code> from the <link linkend="rkwarddev"><quote>rkwarddev</quote> package</link> and provide all necessary information via the "about" option, it will automatically create a working DESCRIPTION file for you.</tip>
+			<tip><para> You don't have to write this file by hand. If you use the function <function>rk.plugin.skeleton()</function> from the <link linkend="rkwarddev"><quote>rkwarddev</quote> package</link> and provide all necessary information via the "about" option, it will automatically create a working DESCRIPTION file for you.</para></tip>
 
 			</sect3>
 			<sect3 id="additional_information">
@@ -1437,7 +1437,7 @@ You can declare two &lt;external&gt; properties in your plugin. "filename" will 
 			<sect3 id="automated_plugin_testing">
 				<title>Automated plugin testing (optional)</title>
 				<para>Another optional directory is "tests", which is meant to provide files needed for <ulink url="http://sourceforge.net/apps/mediawiki/rkward/index.php?title=Automated_Plugin_Testing">automated plugin testing</ulink>. These tests are helpful to quickly check if your plugins still work with new versions of R or &kapp;. If you want to include tests, you should really restrain yourself to the naming scheme and hierarchy shown here. That is, tests should reside in a directory called "tests", which includes a file "testsuite.R" and a folder with tests standards named after the appropriate test suite. You can, however, provide more than one test suite; in that case, if you don’t want to append them all in the one "testsuite.R" file, you can split them in e.g. one file for each test suite and create one "testsuite.R" with "source()" calls for each suite file. In either case, create separate subdirectories with test standards for each defined suite. </para>
-				<para>The benefits of upholding to this structure is that plugin tests can be run simply by calling <code>rktests.makplugintests()</code> from the "rkwardtests" package without additional arguments. Have a look at the online documentation on <ulink url="http://sourceforge.net/apps/mediawiki/rkward/index.php?title=Automated_Plugin_Testing">Automated Plugin Testing</ulink> for further details. </para>
+				<para>The benefits of upholding to this structure is that plugin tests can be run simply by calling <function>rktests.makplugintests()</function> from the "rkwardtests" package without additional arguments. Have a look at the online documentation on <ulink url="http://sourceforge.net/apps/mediawiki/rkward/index.php?title=Automated_Plugin_Testing">Automated Plugin Testing</ulink> for further details. </para>
 			</sect3>
 		</sect2>
 	</sect1>
@@ -1533,7 +1533,7 @@ You can declare two &lt;external&gt; properties in your plugin. "filename" will 
 	&lt;/hierarchy&gt;
 &lt;/document&gt;
 		</programlisting>
-		<tip>You don't have to write this XML code by hand. If you use the function <code>rk.plugin.skeleton()</code> from the <link linkend="rkwarddev"><quote>rkwarddev</quote> package</link> and provide all necessary information via the "about" option, it will automatically create a .pluginmap file with a working &lt;about&gt; section for you.</tip>
+		<tip><para>You don't have to write this XML code by hand. If you use the function <function>rk.plugin.skeleton()</function> from the <link linkend="rkwarddev"><quote>rkwarddev</quote> package</link> and provide all necessary information via the "about" option, it will automatically create a .pluginmap file with a working &lt;about&gt; section for you.</para></tip>
 		<para>Most of this should explain itself, so we’ll not discuss each and every tag element. But let’s look at some details that probably need some commentary for easier understanding. </para>
 		<para>The "category" element in &lt;about&gt; can be defined rather freely, but should be meaningful, as it’s thought to be used to order plugins into groups. All other attributes in this opening tag are mandatory and must be filled with reasonable content. </para>
 		<para>At least one &lt;author&gt; with a valid e-mail address and the role "aut" ("author") must also be given. In case your plugin causes problems or someone would like to share its gratitude with you, it should be easy to contact someone who’s involved. For further information on other valid roles, like "ctb" for code contributors or "cre" for package maintenance, please refer to the <ulink url="http://stat.ethz.ch/R-manual/R-patched/library/utils/html/person.html">R documentation on <function>person()</function></ulink>. </para>
@@ -1544,7 +1544,7 @@ You can declare two &lt;external&gt; properties in your plugin. "filename" will 
 	<sect1 id="building_the_plugin_package">
 		<title>Building the plugin package</title>
 		<para>As explained earlier, external RKWard plugins are in effect R packages, and therefore the packaging process is identical. In contrast to "real" R packages, a pure plugin package doesn't carry any further R code (although you can of course add RKWard plugins to usual R packages as well, using the same methods explained here). This should make it even easier to create a functioning package, as long as you have a valid DESCRIPTION file and adhere to the file hierarchy explained in <link linkend="structure_of_a_plugin_package">previous sections</link>.</para>
-		<para>The easiest way to actually build and test your plugin is to use the <code>R</code> command on the command line, for example:</para>
+		<para>The easiest way to actually build and test your plugin is to use the <application>R</application> command on the command line, for example:</para>
 		<para><userinput>
 			<command>R</command> <option>CMD build</option> <parameter><filename>SquaretheCircle</filename></parameter>
 		</userinput></para>
@@ -1556,7 +1556,7 @@ You can declare two &lt;external&gt; properties in your plugin. "filename" will 
 
 <chapter id="rkwarddev">
 	<title>Plugin development with the <quote>rkwarddev</quote> package</title>
-	<para>Writing external plugins involves writing files in three languages (XML, JavaScript and R) and the creation of a standardized hierarchy of directories. To make this a lot easier for willing plugin developers, we're providing the <quote>rkwarddev</quote> package. It provides a number of simple R functions to create the XML code for most dialog elements like tabbooks, checkboxes, dropdownlists or filebrowsers, as well as functions to create JavaScript code and RKWard help files to start with. The function <code>rk.plugin.skeleton()</code> creates the expected directory tree and all necessary files where they are supposed to be.</para>
+	<para>Writing external plugins involves writing files in three languages (XML, JavaScript and R) and the creation of a standardized hierarchy of directories. To make this a lot easier for willing plugin developers, we're providing the <quote>rkwarddev</quote> package. It provides a number of simple R functions to create the XML code for most dialog elements like tabbooks, checkboxes, dropdownlists or filebrowsers, as well as functions to create JavaScript code and RKWard help files to start with. The function <function>rk.plugin.skeleton()</function> creates the expected directory tree and all necessary files where they are supposed to be.</para>
 	<para>This package is not installed by default, but has to be installed manually from <ulink url="http://rkward.sourceforge.net/R/">RKWard's own repository</ulink>. You can either do that by using the GUI interface (Settings -> Configure packages), or from any running R session:</para>
 	<programlisting>
 	install.packages("rkwarddev", repos="http://rkward.sf.net/R")
