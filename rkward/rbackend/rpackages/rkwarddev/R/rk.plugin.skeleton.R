@@ -7,6 +7,7 @@
 #' @param path Character sting, path to the main directory where the skeleton should be created.
 #' @param dialog A list of objects of class XiMpLe.node. If provided, will be included in the
 #'		created plugin XML file as the dialog.
+#' @param wiz.dialog Like \code{dialog}, but will be included as the wizard dialog code (and only if \code{wizard=TRUE} as well).
 #' @param dial.require A character vector with names of R packages that the dialog requires.
 #' @param overwrite Logical, whether existing files should be replaced. Defaults to \code{FALSE}.
 #' @param wizard Logical, whether a \code{<wizard>} section should be added to the \code{<dialog>} section.
@@ -75,7 +76,7 @@
 #'   dialog=test.tabbook, overwrite=TRUE)
 #' }
 
-rk.plugin.skeleton <- function(name, about, path=tempdir(), dialog=list(), dial.require=c(), overwrite=FALSE, wizard=FALSE, tests=TRUE, lazyLoad=TRUE){
+rk.plugin.skeleton <- function(name, about, path=tempdir(), dialog=list(), wiz.dialog=list(), dial.require=c(), overwrite=FALSE, wizard=FALSE, tests=TRUE, lazyLoad=TRUE){
 	# to besure, remove all non-character symbols from name
 	name.orig <- name
 	name <- gsub("[[:space:]]*[^[:alnum:]]*", "", name)
@@ -141,6 +142,7 @@ rk.plugin.skeleton <- function(name, about, path=tempdir(), dialog=list(), dial.
 			name=name,
 			label=name.orig,
 			children=dialog,
+			wiz.children=wiz.dialog,
 			provides=plugin.provides,
 			pluginmap=paste("../", name, ".pluginmap", sep=""))
 		cat(pasteXMLTree(XML.plugin, shine=1), file=plugin.xml)

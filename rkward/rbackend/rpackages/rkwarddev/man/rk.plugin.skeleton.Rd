@@ -3,8 +3,9 @@
 \title{Create skeleton for RKWard plugins}
 \usage{
   rk.plugin.skeleton(name, about, path = tempdir(), dialog
-  = list(), dial.require = c(), overwrite = FALSE, wizard =
-  FALSE, tests = TRUE, lazyLoad = TRUE)
+  = list(), wiz.dialog = list(), dial.require = c(),
+  overwrite = FALSE, wizard = FALSE, tests = TRUE, lazyLoad
+  = TRUE)
 }
 \arguments{
   \item{name}{Character sting, name of the plugin package.}
@@ -21,6 +22,10 @@
   \item{dialog}{A list of objects of class XiMpLe.node. If
   provided, will be included in the created plugin XML file
   as the dialog.}
+
+  \item{wiz.dialog}{Like \code{dialog}, but will be
+  included as the wizard dialog code (and only if
+  \code{wizard=TRUE} as well).}
 
   \item{dial.require}{A character vector with names of R
   packages that the dialog requires.}
