@@ -298,8 +298,8 @@ bool RKHTMLWindow::openURL (const KUrl &url) {
 		if ((host == "127.0.0.1") || (host == "localhost") || host == QHostInfo::localHostName ()) {
 			KIO::TransferJob *job = KIO::get (url, KIO::Reload);
 			connect (job, SIGNAL (mimetype(KIO::Job*, const QString&)), this, SLOT (mimeTypeDetermined(KIO::Job*, const QString&)));
+			return true;
 		}
-		return true;
 	} else if (url.protocol ().toLower ().startsWith ("help")) {
 		khtmlpart->openUrl (url);
 		changeURL (url);

@@ -1,3 +1,4 @@
+- Documentation on writing RKWard plugins is now accessible, locally
 - The file filter for R script files is now configurable, and includes *.Rhistory, by default
 - More obvious coloring of variable entry fields requiring user input in plugins
 - Default size of the code display in plugin dialogs has been increased
