@@ -5,7 +5,9 @@
   rk.plugin.skeleton(name, about, path = tempdir(), dialog
   = list(), wiz.dialog = list(), dial.require = c(),
   overwrite = FALSE, wizard = FALSE, tests = TRUE, lazyLoad
-  = TRUE, JS.prep = NULL, JS.calc = NULL, JS.prnt = NULL)
+  = TRUE, JS.prep = NULL, JS.calc = NULL, JS.prnt = NULL,
+  create = c("pmap", "xml", "js", "rkh", "desc"), edit =
+  FALSE)
 }
 \arguments{
   \item{name}{Character sting, name of the plugin package.}
@@ -58,6 +60,23 @@
   be included in the \code{printout()} function. This
   string will be pasted as-is, see
   \code{\link[rkwarddev:rk.JS.doc]{rk.JS.doc}}.}
+
+  \item{create}{A character vector with one or more of
+  these possible entries: \describe{
+  \item{\code{"pmap"}}{Create the \code{.pluginmap} file.}
+  \item{\code{"xml"}}{Create the plugin \code{.xml} XML
+  file skeleton.} \item{\code{"js"}}{Create the plugin
+  \code{.js} JavaScript file skeleton.}
+  \item{\code{"rkh"}}{Create the plugin \code{.rkh} help
+  file skeleton.} \item{\code{"desc"}}{Create the
+  \code{DESCRIPTION} file.} } Default is to create all of
+  these files. Existing files will only be overwritten if
+  \code{overwrite=TRUE}.}
+
+  \item{edit}{Logical, if \code{TRUE} RKWard will
+  automatically open the created files for editing, by
+  calling \code{rk.edit.files}. This applies to all files
+  defined in \code{create}.}
 }
 \description{
   Create skeleton for RKWard plugins

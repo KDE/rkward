@@ -9,7 +9,7 @@ pckg.dscrptn <- data.frame(
 		AuthorsR="c(person(given=\"Meik\", family=\"Michalke\", email=\"meik.michalke@hhu.de\",
 			role=c(\"aut\", \"cre\")))",
 		Maintainer="m.eik michalke <meik.michalke@hhu.de>",
-		Depends="R (>= 2.9.0), XiMpLe",
+		Depends="R (>= 2.9.0),XiMpLe,rkward",
 		Enhances="rkward",
 		Description="Provides functions to create plugin skeletons and XML structures for RKWard.",
 		License="GPL (>= 3)",

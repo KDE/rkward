@@ -5,7 +5,7 @@
 #' Type: \tab Package\cr
 #' Version: \tab 0.01-4\cr
 #' Date: \tab 2011-09-22\cr
-#' Depends: \tab R (>= 2.9.0), XiMpLe\cr
+#' Depends: \tab R (>= 2.9.0),XiMpLe,rkward\cr
 #' Enhances: \tab rkward\cr
 #' Encoding: \tab UTF-8\cr
 #' License: \tab GPL (>= 3)\cr
