@@ -225,6 +225,7 @@ void RKHTMLWindow::slotForward () {
 void RKHTMLWindow::slotBack () {
 	RK_TRACE (APP);
 
+	// if going back from the end of the history, save that position, first.
 	if (current_history_position >= (url_history.count () - 1)) {
 		changeURL (khtmlpart->url ());
 		--current_history_position;
