@@ -88,7 +88,7 @@ get.IDs <- function(single.tags, relevant.tags, add.abbrev){
 camelCode <- function(words){
 
 	words <- as.vector(unlist(sapply(words, function(cur.word){
-			unlist(strsplit(cur.word, split="\\."))
+			unlist(strsplit(cur.word, split="[._]"))
 		})))
 
 	new.words <- sapply(words[-1], function(cur.word){
@@ -117,7 +117,7 @@ get.JS.vars <- function(JS.var, XML.var=NULL, JS.prefix="", indent.by="", names.
 } ## end function get.JS.vars()
 
 ## function ID.prefix()
-ID.prefix <- function(initial, abbr=TRUE, length=3, dot=TRUE){
+ID.prefix <- function(initial, abbr=TRUE, length=3, dot=FALSE){
 	if(isTRUE(abbr)){
 		prfx <- abbreviate(initial, minlength=length, strict=TRUE)
 	} else {
@@ -126,7 +126,9 @@ ID.prefix <- function(initial, abbr=TRUE, length=3, dot=TRUE){
 	}
 	if(isTRUE(dot)){
 		prfx <- paste(prfx, ".", sep="")
-	} else {}
+	} else {
+		prfx <- paste(prfx, "_", sep="")
+	}
 	return(prfx)
 } ## end function ID.prefix()
 

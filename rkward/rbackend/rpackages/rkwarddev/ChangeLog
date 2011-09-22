@@ -2,7 +2,13 @@ ChangeLog for package rkwarddev
 
 ## 0.01-4 (2011-09-21)
   - fixed wrong doc link in rk.plugin.skeleton()
+  - fixed attribute typo in rk.XML.vars()
+  - fixed issue with auto-generated IDs (now using "_" instead of ".")
   - added wizard code options to rk.XML.plugin() and rk.plugin.skeleton()
+  - added function rk.XML.varslot()
+  - added possibility to add custom XML nodes to the varslot in rk.XML.vars()
+  - added possibility to paste ready-to-use JavaScript code directly to the preprocess(),
+    calculate() and printout() functions, respectively
 
 ## 0.01-3 (2011-09-16)
   - added rk.XML.spinbox() and missing options to rk.XML.browser() and rk.XML.saveobj()

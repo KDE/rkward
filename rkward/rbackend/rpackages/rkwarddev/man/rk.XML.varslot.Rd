@@ -1,18 +1,20 @@
-\name{rk.XML.vars}
-\alias{rk.XML.vars}
-\title{Create a variable selector for RKWard plugins}
+\name{rk.XML.varslot}
+\alias{rk.XML.varslot}
+\title{Create a XML node "varslot" for RKWard plugins}
 \usage{
-  rk.XML.vars(label, slot.text, required = FALSE, multi =
+  rk.XML.varslot(label, source, required = FALSE, multi =
   FALSE, min = 1, any = 1, max = 0, dim = 0, min.len = 0,
-  max.len = NULL, classes = NULL, types = NULL, horiz =
-  TRUE, add.nodes = NULL, id.name = "auto")
+  max.len = NULL, classes = NULL, types = NULL, src.label =
+  FALSE, id.name = "auto")
 }
 \arguments{
-  \item{label}{Character string, a text label for the whole
-  frame.}
+  \item{label}{Character string, a text label for the
+  varslot.}
 
-  \item{slot.text}{Character string, a text label for the
-  variable selection slot.}
+  \item{source}{Character string with either the \code{id}
+  name of the \code{varselector} to select variables from,
+  or the label value used for that \code{varselector} (if
+  \code{src.label=TRUE}).}
 
   \item{required}{Logical, whether the selection of
   variables is mandatory or not.}
@@ -50,26 +52,29 @@
   user should not be prevented from making valid choices,
   and rkward does not always know the type of a variable!}
 
-  \item{horiz}{Logical. If \code{TRUE}, the varslot will be
-  placed next to the selector, if \code{FALSE} below it.}
+  \item{src.label}{Logical, determines how to treat
+  \code{source}. If \code{TRUE}, the value of \code{source}
+  is assumed to be the label rather than the ID of the
+  corresponding \code{varselector}. The ID is then
+  generated automatically, using the same heuristics as
+  \code{\link[rkwarddev:rk.XML.vars]{rk.XML.vars}}. This
+  ensures the IDs are identical without needing to know
+  them beforehand.}
 
-  \item{add.nodes}{A list of objects of class
-  \code{XiMpLe.node} to be placed after the varslot.}
-
-  \item{id.name}{Character vector, unique IDs for the frame
-  (first entry), the varselector (second entry) and varslot
-  (third entry). If \code{"auto"}, IDs will be generated
-  automatically from \code{label} and \code{slot.text}.}
+  \item{id.name}{Character vector, unique ID for the
+  varslot. If \code{"auto"}, the ID will be generated
+  automatically from \code{label}.}
 }
 \value{
   An object of class \code{XiMpLe.node}.
 }
 \description{
-  This function will create a <frame> node including a
-  <varselector> and a <varslot> node.
+  Create a XML node "varslot" for RKWard plugins
 }
 \examples{
-test.vars <- rk.XML.vars("Select some vars", "Vars go here")
-cat(pasteXMLNode(test.vars, shine=1))
+\dontrun{
+test.varslot <- rk.XML.varslot("Vars go here", sources=c("selector.id"))
+cat(pasteXMLNode(test.varslot, shine=1))
+}
 }
 

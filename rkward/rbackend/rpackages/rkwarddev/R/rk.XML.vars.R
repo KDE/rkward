@@ -23,6 +23,7 @@
 #'		of a variable!
 #' @param horiz Logical. If \code{TRUE}, the varslot will be placed next to the selector,
 #'		if \code{FALSE} below it.
+#' @param add.nodes A list of objects of class \code{XiMpLe.node} to be placed after the varslot.
 #' @param id.name Character vector, unique IDs for the frame (first entry), the varselector (second entry)
 #'		and varslot (third entry).
 #'		If \code{"auto"}, IDs will be generated automatically from \code{label} and \code{slot.text}.
@@ -32,67 +33,50 @@
 #' test.vars <- rk.XML.vars("Select some vars", "Vars go here")
 #' cat(pasteXMLNode(test.vars, shine=1))
 
-rk.XML.vars <- function(label, slot.text=NULL, required=FALSE, multi=FALSE, min=1, any=1, max=0,
-	dim=0, min.len=0, max.len=NULL, classes=NULL, types=NULL, horiz=TRUE, id.name="auto"){
+rk.XML.vars <- function(label, slot.text, required=FALSE, multi=FALSE, min=1, any=1, max=0,
+	dim=0, min.len=0, max.len=NULL, classes=NULL, types=NULL, horiz=TRUE, add.nodes=NULL, id.name="auto"){
 	if(identical(id.name, "auto")){
+		## if this ID generation get's changed, change it in rk.XML.varslot(), too!
 		var.sel.attr <- list(id=auto.ids(label, prefix=ID.prefix("varselector", length=3)))
-		var.slot.attr <- list(id=auto.ids(label, prefix=ID.prefix("varslot", length=4)))
+		var.slot.id <- auto.ids(label, prefix=ID.prefix("varslot", length=4))
 	} else if(!is.null(id.name)){
 		var.sel.attr <- list(id=id.name[[2]])
-		var.slot.attr <- list(id=id.name[[3]])
+		var.slot.id <- id.name[[3]]
 	} else {}
 	
 	v.selector <- new("XiMpLe.node",
 		name="varselector",
 		attributes=var.sel.attr)
 
-	if(!is.null(slot.text)){
-		var.slot.attr[["label"]] <- slot.text
-	} else {}
+	v.slot <- rk.XML.varslot(
+		label=slot.text,
+		source=var.sel.attr[["id"]],
+		required=required,
+		multi=multi,
+		min=min,
+		any=any,
+		max=max,
+		dim=dim,
+		min.len=min.len,
+		max.len=max.len,
+		classes=classes,
+		types=types,
+		id.name=var.slot.id)
 
-	var.slot.attr[["sources"]] <- var.sel.attr[["id"]]
-	if(!is.null(classes)){
-		var.slot.attr[["classes"]] <- paste(classes, collapse=" ")
+	# do we need to add extra nodes to the varslot?
+	slot.content <- list(v.slot)
+	if(!is.null(add.nodes)){
+		for (this.node in add.nodes) {
+			slot.content[[length(slot.content)+1]] <- this.node
+		}
 	} else {}
-	if(!is.null(types)){
-		valid.types <- types[types %in% c("unknown", "number", "string", "factor", "invalid")]
-		var.slot.attr[["types"]] <- paste(valid.types, collapse=" ")
-	} else {}
-	if(isTRUE(required)){
-		var.slot.attr[["required"]] <- "true"
-	} else {}
-	if(isTRUE(multi)){
-		var.slot.attr[["multi"]] <- "true"
-		if(min > 1){
-			var.slot.attr[["min_vars"]] <- min
-		} else {}
-		if(any > 1){
-			var.slot.attr[["min_vars_if_any"]] <- any
-		} else {}
-		if(max > 0){
-			var.slot.attr[["max_vars"]] <- max
-		} else {}
-	} else {}
-
-	if(dim > 0){
-		var.slot.attr[["num_dimensions"]] <- dim
-	} else {}
-	if(min.len > 0){
-		var.slot.attr[["min_length"]] <- min.len
-	} else {}
-	if(!is.null(max.len)){
-		var.slot.attr[["max_length"]] <- max.len
-	} else {}
-
-	v.slot <- new("XiMpLe.node",
-		name="varslot",
-		attributes=var.slot.attr)
 
 	if(isTRUE(horiz)){
-		aligned.chld <- rk.XML.row(list(rk.XML.col(v.selector), rk.XML.col(v.slot)))
+		aligned.chld <- rk.XML.row(list(rk.XML.col(v.selector), rk.XML.col(slot.content)))
 	} else {
-		aligned.chld <- list(v.selector, v.slot)
+		aligned.chld <- list(v.selector, unlist(slot.content))
 	}
+
 	vars.frame <- rk.XML.frame(
 		children=child.list(aligned.chld),
 		label=label,

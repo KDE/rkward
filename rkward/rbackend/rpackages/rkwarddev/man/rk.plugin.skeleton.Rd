@@ -5,7 +5,7 @@
   rk.plugin.skeleton(name, about, path = tempdir(), dialog
   = list(), wiz.dialog = list(), dial.require = c(),
   overwrite = FALSE, wizard = FALSE, tests = TRUE, lazyLoad
-  = TRUE)
+  = TRUE, JS.prep = NULL, JS.calc = NULL, JS.prnt = NULL)
 }
 \arguments{
   \item{name}{Character sting, name of the plugin package.}
@@ -39,6 +39,25 @@
 
   \item{tests}{Logical, whether directories and files for
   plugin tests should be created. Defaults to \code{TRUE}.}
+
+  \item{lazyLoad}{Logical, whether the package should be
+  prepared for lazy loading or not. Should be left
+  \code{TRUE}, unless you have very good reasons not to.}
+
+  \item{JS.prep}{A character string with JavaScript code to
+  be included in the \code{preprocess()} function. This
+  string will be pasted as-is, see
+  \code{\link[rkwarddev:rk.JS.doc]{rk.JS.doc}}.}
+
+  \item{JS.calc}{A character string with JavaScript code to
+  be included in the \code{calculate()} function. This
+  string will be pasted as-is, see
+  \code{\link[rkwarddev:rk.JS.doc]{rk.JS.doc}}.}
+
+  \item{JS.prnt}{A character string with JavaScript code to
+  be included in the \code{printout()} function. This
+  string will be pasted as-is, see
+  \code{\link[rkwarddev:rk.JS.doc]{rk.JS.doc}}.}
 }
 \description{
   Create skeleton for RKWard plugins

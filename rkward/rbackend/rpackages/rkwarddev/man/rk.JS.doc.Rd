@@ -3,7 +3,8 @@
 \title{Create JavaScript outline from RKWard plugin XML}
 \usage{
   rk.JS.doc(require = c(), variables = NULL, results.header
-  = NULL, indent.by = "\t")
+  = NULL, preprocess = NULL, calculate = NULL, printout =
+  NULL, indent.by = "\t")
 }
 \arguments{
   \item{require}{A character vector with names of R
@@ -17,6 +18,18 @@
   \item{results.header}{A character string to headline the
   printed results.}
 
+  \item{preprocess}{A character string to be included in
+  the \code{preprocess()} function. This string will be
+  pasted as-is, after \code{require} has been evaluated.}
+
+  \item{calculate}{A character string to be included in the
+  \code{calculate()} function. This string will be pasted
+  as-is, after \code{variables} has been evaluated.}
+
+  \item{printout}{A character string to be included in the
+  \code{printout()} function. This string will be pasted
+  as-is, after \code{results.header} has been evaluated.}
+
   \item{indent.by}{A character string defining how
   indentation should be done.}
 }
@@ -25,5 +38,8 @@
 }
 \description{
   Create JavaScript outline from RKWard plugin XML
+}
+\note{
+  The JavaScript
 }
 

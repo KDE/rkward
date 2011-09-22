@@ -14,6 +14,14 @@
 #'		Defaults to \code{FALSE}.
 #' @param tests Logical, whether directories and files for plugin tests should be created.
 #'		Defaults to \code{TRUE}.
+#' @param lazyLoad Logical, whether the package should be prepared for lazy loading or not. Should be left \code{TRUE},
+#'		unless you have very good reasons not to.
+#' @param JS.prep A character string with JavaScript code to be included in the \code{preprocess()} function. This string will be
+#'		pasted as-is, see \code{\link[rkwarddev:rk.JS.doc]{rk.JS.doc}}.
+#' @param JS.calc A character string with JavaScript code to be included in the \code{calculate()} function. This string will be
+#'		pasted as-is, see \code{\link[rkwarddev:rk.JS.doc]{rk.JS.doc}}.
+#' @param JS.prnt A character string with JavaScript code to be included in the \code{printout()} function. This string will be
+#'		pasted as-is, see \code{\link[rkwarddev:rk.JS.doc]{rk.JS.doc}}.
 #' @export
 #' @examples
 #' \dontrun{
@@ -76,7 +84,9 @@
 #'   dialog=test.tabbook, overwrite=TRUE)
 #' }
 
-rk.plugin.skeleton <- function(name, about, path=tempdir(), dialog=list(), wiz.dialog=list(), dial.require=c(), overwrite=FALSE, wizard=FALSE, tests=TRUE, lazyLoad=TRUE){
+rk.plugin.skeleton <- function(name, about, path=tempdir(), dialog=list(), wiz.dialog=list(),
+	dial.require=c(), overwrite=FALSE, wizard=FALSE, tests=TRUE, lazyLoad=TRUE,
+	JS.prep=NULL, JS.calc=NULL, JS.prnt=NULL){
 	# to besure, remove all non-character symbols from name
 	name.orig <- name
 	name <- gsub("[[:space:]]*[^[:alnum:]]*", "", name)
@@ -153,7 +163,10 @@ rk.plugin.skeleton <- function(name, about, path=tempdir(), dialog=list(), wiz.d
 		JS.code <- rk.JS.doc(
 			require=dial.require,
 			variables=rk.JS.scan(XML.plugin),
-			results.header=paste(name.orig, " results", sep=""))
+			results.header=paste(name.orig, " results", sep=""),
+			preprocess=JS.prep,
+			calculate=JS.calc,
+			printout=JS.prnt)
 		cat(JS.code, file=plugin.js)
 	} else {}
 
