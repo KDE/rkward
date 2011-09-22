@@ -31,6 +31,6 @@
 	</section>
 
 	<section title="Missing something?" id="missing_something">
-	Are you missing a particular GUI dialog in the current menu? Check out our online <link href="help:rkwardplugins">Introduction to Writing Plugins for RKWard</link> to learn how easy it is to enhance RKWard with your custom dialogs. And if you like, how to share your work with the community of RKWard users.
+	Are you missing a particular GUI dialog in the current menu? Check out the <link href="help:rkwardplugins">Introduction to Writing Plugins for RKWard</link> to learn how easy it is to enhance RKWard with your custom dialogs. And if you like, how to share your work with the community of RKWard users.
 	</section>
 </document>
