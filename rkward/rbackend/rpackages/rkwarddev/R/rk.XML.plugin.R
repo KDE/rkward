@@ -6,9 +6,9 @@
 #' @param wiz.children An optional list with objects of class \code{XiMpLe.node}. Will be included inside the top level node as the wizard code
 #'		(but only if \code{provides} includes \code{"wizard"} as well).
 #' @param help Logical, if \code{TRUE} an include tag for a help file named \emph{"<name>.rkh"} will be added to the header.
-#' @param logic Logical, if \code{TRUE} a logic section will be added to the document.
-#'		This must be edited manually, it is therefore commented out.
-#' @param provides Character vector with at least one entry of \code{"dialog"} or \code{"wizard"}, defining what the document provides.
+#' @param logic Character string, will be pasted as-is inside the \code{<logic>} section (but only if \code{provides} includes \code{"logic"} as well). 
+#' @param provides Character vector with at least one entry of \code{"logic"}, \code{"dialog"} or \code{"wizard"}, defining what the document provides.
+#'		If \code{"logic"} is specified, a logic section will be added to the document. If \code{logic=NULL}, must be edited manually and is therefore commented out.
 #' @param pluginmap Character string, relative path to the pluginmap file, which will then be included in the head of this document.
 #' @return An object of class \code{XiMpLe.doc}.
 #' @export
@@ -27,7 +27,7 @@
 #' test.plugin <- rk.XML.plugin("My test", label="Check this out", children=test.tabbook)
 #' cat(pasteXMLTree(test.plugin, shine=1))
 
-rk.XML.plugin <- function(name, label, children=list(), wiz.children=list(), help=TRUE, logic=TRUE, provides=c("dialog"), pluginmap=NULL){
+rk.XML.plugin <- function(name, label, children=list(), wiz.children=list(), help=TRUE, logic=NULL, provides=c("logic", "dialog"), pluginmap=NULL){
 	name.orig <- name
 	name <- gsub("[[:space:]]*[^[:alnum:]]*", "", name)
 	if(!identical(name.orig, name)){
@@ -53,18 +53,27 @@ rk.XML.plugin <- function(name, label, children=list(), wiz.children=list(), hel
 		)
 	} else {}
 
-	if(isTRUE(logic)){
+	if("logic" %in% provides){
+		if(is.null(logic)){
+			lgc.children <- list(
+					new("XiMpLe.node",
+						# add these as comments because they need editing
+						name="!--",
+						value="<convert id=\"!edit!\", mode=\"!edit!\", sources=\"!edit!\", standard=\"!edit!\" />"),
+					new("XiMpLe.node",
+						name="!--",
+						value="<connect client=\"!edit!\", governor=\"!edit!\" />")
+				)
+		} else {
+			lgc.children <- list(
+					new("XiMpLe.node",
+						name="",
+						value=logic)
+				)
+		}
 		all.children[[length(all.children)+1]] <- new("XiMpLe.node",
 			name="logic",
-			children=list(
-				new("XiMpLe.node",
-					# add these as comments because they need editing
-					name="!--",
-					value="<convert id=\"!edit!\", mode=\"!edit!\", sources=\"!edit!\", standard=\"!edit!\" />"),
-				new("XiMpLe.node",
-					name="!--",
-					value="<connect client=\"!edit!\", governor=\"!edit!\" />")
-			)
+			children=lgc.children
 		)
 	} else {}
 

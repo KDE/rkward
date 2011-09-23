@@ -3,8 +3,8 @@
 \title{Create XML document for RKWard plugins}
 \usage{
   rk.XML.plugin(name, label, children = list(),
-  wiz.children = list(), help = TRUE, logic = TRUE,
-  provides = c("dialog"), pluginmap = NULL)
+  wiz.children = list(), help = TRUE, logic = NULL,
+  provides = c("logic", "dialog"), pluginmap = NULL)
 }
 \arguments{
   \item{name}{Character string, the name of the plugin.}
@@ -25,13 +25,16 @@
   help file named \emph{"<name>.rkh"} will be added to the
   header.}
 
-  \item{logic}{Logical, if \code{TRUE} a logic section will
-  be added to the document. This must be edited manually,
-  it is therefore commented out.}
+  \item{logic}{Character string, will be pasted as-is
+  inside the \code{<logic>} section (but only if
+  \code{provides} includes \code{"logic"} as well).}
 
   \item{provides}{Character vector with at least one entry
-  of \code{"dialog"} or \code{"wizard"}, defining what the
-  document provides.}
+  of \code{"logic"}, \code{"dialog"} or \code{"wizard"},
+  defining what the document provides. If \code{"logic"} is
+  specified, a logic section will be added to the document.
+  If \code{logic=NULL}, must be edited manually and is
+  therefore commented out.}
 
   \item{pluginmap}{Character string, relative path to the
   pluginmap file, which will then be included in the head

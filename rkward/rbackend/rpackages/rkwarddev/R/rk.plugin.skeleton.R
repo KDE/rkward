@@ -16,6 +16,7 @@
 #'		Defaults to \code{TRUE}.
 #' @param lazyLoad Logical, whether the package should be prepared for lazy loading or not. Should be left \code{TRUE},
 #'		unless you have very good reasons not to.
+#' @param logic A character string with logic XML code, will be pasted as-is inside the \code{<logic>} section. 
 #' @param JS.prep A character string with JavaScript code to be included in the \code{preprocess()} function. This string will be
 #'		pasted as-is, see \code{\link[rkwarddev:rk.JS.doc]{rk.JS.doc}}.
 #' @param JS.calc A character string with JavaScript code to be included in the \code{calculate()} function. This string will be
@@ -96,7 +97,7 @@
 #' }
 
 rk.plugin.skeleton <- function(name, about, path=tempdir(), dialog=list(), wiz.dialog=list(),
-	dial.require=c(), overwrite=FALSE, wizard=FALSE, tests=TRUE, lazyLoad=TRUE,
+	dial.require=c(), overwrite=FALSE, wizard=FALSE, tests=TRUE, lazyLoad=TRUE, logic=NULL,
 	JS.prep=NULL, JS.calc=NULL, JS.prnt=NULL, create=c("pmap", "xml", "js", "rkh", "desc"), edit=FALSE){
 	# to besure, remove all non-character symbols from name
 	name.orig <- name
@@ -161,15 +162,16 @@ rk.plugin.skeleton <- function(name, about, path=tempdir(), dialog=list(), wiz.d
 	## create plugin.xml
 	if("xml" %in% create & isTRUE(checkCreateFiles(plugin.xml))){
 		if(isTRUE(wizard))
-			plugin.provides <- c("dialog","wizard")
+			plugin.provides <- c("logic","dialog","wizard")
 		else {
-			plugin.provides <- "dialog"
+			plugin.provides <- c("logic","dialog")
 		}
 		XML.plugin <- rk.XML.plugin(
 			name=name,
 			label=name.orig,
 			children=dialog,
 			wiz.children=wiz.dialog,
+			logic=logic,
 			provides=plugin.provides,
 			pluginmap=paste("../", name, ".pluginmap", sep=""))
 		cat(pasteXMLTree(XML.plugin, shine=1), file=plugin.xml)

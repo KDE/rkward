@@ -5,9 +5,9 @@
   rk.plugin.skeleton(name, about, path = tempdir(), dialog
   = list(), wiz.dialog = list(), dial.require = c(),
   overwrite = FALSE, wizard = FALSE, tests = TRUE, lazyLoad
-  = TRUE, JS.prep = NULL, JS.calc = NULL, JS.prnt = NULL,
-  create = c("pmap", "xml", "js", "rkh", "desc"), edit =
-  FALSE)
+  = TRUE, logic = NULL, JS.prep = NULL, JS.calc = NULL,
+  JS.prnt = NULL, create = c("pmap", "xml", "js", "rkh",
+  "desc"), edit = FALSE)
 }
 \arguments{
   \item{name}{Character sting, name of the plugin package.}
@@ -45,6 +45,9 @@
   \item{lazyLoad}{Logical, whether the package should be
   prepared for lazy loading or not. Should be left
   \code{TRUE}, unless you have very good reasons not to.}
+
+  \item{logic}{A character string with logic XML code, will
+  be pasted as-is inside the \code{<logic>} section.}
 
   \item{JS.prep}{A character string with JavaScript code to
   be included in the \code{preprocess()} function. This
