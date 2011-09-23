@@ -19,6 +19,11 @@ ifeq ("$(DISTRO)","Ubuntu 8.04")
 	UNPATCHTARGET = unpatch
 endif
 
+# For CXXFLAGS and CFLAGS.
+# See http://lists.debian.org/debian-devel-announce/2011/09/msg00001.html 
+DPKG_EXPORT_BUILDFLAGS = 1
+-include /usr/share/dpkg/buildflags.mk
+
 # These are used for cross-compiling and for saving the configure script
 # from having to guess our platform (since we know it already)
 DEB_HOST_GNU_TYPE   ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
