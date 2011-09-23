@@ -27,6 +27,8 @@
 #include <qtimer.h>
 #include <qtextstream.h>
 #include <QCloseEvent>
+#include <QSortFilterProxyModel>
+#include <QApplication>
 
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -63,10 +65,8 @@ RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool 
 	addPage (luwidget, i18n ("Local packages"));
 	connect (this, SIGNAL (installedPackagesChanged ()), luwidget, SLOT (updateInstalledPackages ()));
 
-	addPage (new UpdatePackagesWidget (this), i18n ("Update"));
-
 	install_packages_widget = new InstallPackagesWidget (this);
-	install_packages_pageitem = addPage (install_packages_widget, i18n ("Install"));
+	install_packages_pageitem = addPage (install_packages_widget, i18n ("Install / Update / Remove"));
 
 	setButtonText (KDialog::User1, i18n ("Configure Repositories"));
 
@@ -172,7 +172,7 @@ void RKLoadLibsDialog::rCommandDone (RCommand *command) {
 	}
 }
 
-bool RKLoadLibsDialog::installPackages (const QStringList &packages, const QString &to_libloc, bool install_dependencies, bool as_root) {
+bool RKLoadLibsDialog::installPackages (const QStringList &packages, const QString &to_libloc, bool install_dependencies, bool as_root, const QStringList& repos) {
 	RK_TRACE (DIALOGS);
 
 	if (packages.isEmpty ()) return false;
@@ -185,6 +185,13 @@ bool RKLoadLibsDialog::installPackages (const QStringList &packages, const QStri
 	if (install_dependencies) command_string += ", dependencies=TRUE";
 	command_string += ")\n";
 
+	QString repos_string = "options (repos= c(";
+	for (int i = 0; i < repos.count (); ++i) {
+		if (i) repos_string.append (", ");
+		repos_string.append (RObject::rQuote (repos[i]));
+	}
+	repos_string.append ("))\n");
+
 // TODO: won't work with some versions of GCC (which ones exactly)?
 //	QFile file (QDir (RKSettingsModuleGeneral::filesPath ()).filePath ("install_script.R"));
 // WORKAROUND:
@@ -193,7 +200,7 @@ bool RKLoadLibsDialog::installPackages (const QStringList &packages, const QStri
 // WORKADOUND END
 	if (file.open (QIODevice::WriteOnly)) {
 		QTextStream stream (&file);
-		stream << "options (repos=" + repos_string + ")\n" + command_string;
+		stream << repos_string + command_string;
 		if (as_root) {
 #ifdef Q_WS_WIN
 			RK_ASSERT (false);
@@ -510,169 +517,8 @@ void LoadUnloadWidget::cancel () {
 	deleteLater ();
 }
 
-/////////////////////// UpdatePackagesWidget //////////////////////////
-
-#define FIND_OLD_PACKAGES_COMMAND 1
-
-UpdatePackagesWidget::UpdatePackagesWidget (RKLoadLibsDialog *dialog) : QWidget (0) {
-	RK_TRACE (DIALOGS);
-	UpdatePackagesWidget::parent = dialog;
-	
-	QVBoxLayout *mvbox = new QVBoxLayout (this);
-	mvbox->setContentsMargins (0, 0, 0, 0);
-	QLabel *label = new QLabel (i18n ("In order to find out, which of your installed packaged have an update available, click \"Fetch List\". This feature requires a working internet connection."), this);
-	label->setWordWrap (true);
-	mvbox->addWidget (label);
-	
-	QHBoxLayout *hbox = new QHBoxLayout ();
-	mvbox->addLayout (hbox);
-	hbox->setContentsMargins (0, 0, 0, 0);
-	
-	updateable_view = new QTreeWidget (this);
-	updateable_view->setHeaderLabels (QStringList () << i18n ("Name") << i18n ("Location") << i18n ("Local Version") << i18n ("Online Version"));
-	updateable_view->setSelectionMode (QAbstractItemView::ExtendedSelection);
-	hbox->addWidget (updateable_view);
-	setFocusProxy (updateable_view);
-	
-	QVBoxLayout *buttonvbox = new QVBoxLayout ();
-	hbox->addLayout (buttonvbox);
-	buttonvbox->setContentsMargins (0, 0, 0, 0);
-	get_list_button = new QPushButton (i18n ("Fetch list"), this);
-	connect (get_list_button, SIGNAL (clicked ()), this, SLOT (getListButtonClicked ()));
-	update_selected_button = new QPushButton (i18n ("Update Selected"), this);
-	connect (update_selected_button, SIGNAL (clicked ()), this, SLOT (updateSelectedButtonClicked ()));
-	update_all_button = new QPushButton (i18n ("Update All"), this);
-	connect (update_all_button, SIGNAL (clicked ()), this, SLOT (updateAllButtonClicked ()));
-	install_params = new PackageInstallParamsWidget (this, false);
-	connect (parent, SIGNAL (libraryLocationsChanged (const QStringList &)), install_params, SLOT (liblocsChanged (const QStringList &)));
-
-	buttonvbox->addWidget (get_list_button);
-	buttonvbox->addStretch (1);
-	buttonvbox->addWidget (update_selected_button);
-	buttonvbox->addWidget (update_all_button);
-	buttonvbox->addStretch (1);
-	buttonvbox->addWidget (install_params);
-	buttonvbox->addStretch (1);
-	
-	update_selected_button->setEnabled (false);
-	update_all_button->setEnabled (false);
-	updateable_view->setEnabled (false);
-
-	new QTreeWidgetItem (updateable_view, QStringList ("..."));	// i18n ("[Click \"Fetch list\" for updates]")
-
-	connect (dialog, SIGNAL (okClicked ()), this, SLOT (ok ()));
-	connect (dialog, SIGNAL (cancelClicked ()), this, SLOT (cancel ()));
-	connect (this, SIGNAL (destroyed ()), dialog, SLOT (childDeleted ()));
-}
-
-UpdatePackagesWidget::~UpdatePackagesWidget () {
-	RK_TRACE (DIALOGS);
-}
-
-void UpdatePackagesWidget::rCommandDone (RCommand *command) {
-	RK_TRACE (DIALOGS);
-	if (command->getFlags () == FIND_OLD_PACKAGES_COMMAND) {
-		if (!command->failed ()) {
-			updateable_view->clear ();
-
-			RK_ASSERT (command->getDataLength () == 5);
-			RData *package = command->getStructureVector ()[0];
-			RData *libpath = command->getStructureVector ()[1];
-			RData *installed = command->getStructureVector ()[2];
-			RData *reposver = command->getStructureVector ()[3];
-			RData *reposstring = command->getStructureVector ()[4];
-
-			unsigned int count = package->getDataLength ();
-			RK_ASSERT (count == libpath->getDataLength ());
-			RK_ASSERT (count == installed->getDataLength ());
-			RK_ASSERT (count == reposver->getDataLength ());
-			for (unsigned int i=0; i < count; ++i) {
-				QTreeWidgetItem* item = new QTreeWidgetItem (updateable_view);
-				item->setText (0, package->getStringVector ()[i]);
-				item->setText (1, libpath->getStringVector ()[i]);
-				item->setText (2, installed->getStringVector ()[i]);
-				item->setText (3, reposver->getStringVector ()[i]);
-			}
-
-			if (updateable_view->topLevelItemCount ()) {
-				update_selected_button->setEnabled (true);
-				update_all_button->setEnabled (true);
-				updateable_view->setEnabled (true);
-				updateable_view->setFocus ();
-				updateable_view->setSortingEnabled (true);
-				updateable_view->sortItems (0, Qt::AscendingOrder);
-			} else {
-				new QTreeWidgetItem (updateable_view, QStringList (i18n ("[No updates available]")));
-			}
-			updateable_view->resizeColumnToContents (0);
-
-			RK_ASSERT (reposstring->getDataLength () == 1);
-			// this is after the repository was chosen. Update the repository string.
-			parent->repos_string = reposstring->getStringVector ()[0];
-		} else {
-			get_list_button->setEnabled (true);
-		}
-	} else {
-		RK_ASSERT (false);
-	}
-}
-
-void UpdatePackagesWidget::updatePackages (const QStringList &list) {
-	RK_TRACE (DIALOGS);
-	bool as_root = false;
-
-	if (list.isEmpty ()) return;
-	if (!install_params->checkWritable (&as_root)) return;
-
-	parent->installPackages (list, install_params->libraryLocation (), install_params->installDependencies (), as_root);
-}
-
-void UpdatePackagesWidget::updateSelectedButtonClicked () {
-	RK_TRACE (DIALOGS);
-	QStringList list;
-	QList<QTreeWidgetItem*> selected = updateable_view->selectedItems ();
-	for (int i = 0; i < selected.count (); ++i) {
-		list.append (selected[i]->text (0));
-	}
-	updatePackages (list);
-}
-
-void UpdatePackagesWidget::updateAllButtonClicked () {
-	RK_TRACE (DIALOGS);
-	QStringList list;
-	for (int i = 0; i < updateable_view->topLevelItemCount (); ++i) {
-		list.append (updateable_view->topLevelItem (i)->text (0));
-	}
-	updatePackages (list);
-}
-
-void UpdatePackagesWidget::getListButtonClicked () {
-	RK_TRACE (DIALOGS);
-
-	get_list_button->setEnabled (false);
-
-	RCommand *command = new RCommand (".rk.get.old.packages ()", RCommand::App | RCommand::GetStructuredData, QString::null, this, FIND_OLD_PACKAGES_COMMAND);
-
-	RKProgressControl *control = new RKProgressControl (this, i18n ("Please stand by while determining, which packages have an update available online."), i18n ("Fetching list"), RKProgressControl::CancellableProgress | RKProgressControl::AutoCancelCommands);
-	control->addRCommand (command, true);
-	RKGlobals::rInterface ()->issueCommand (command, parent->chain);
-	control->doModal (true);
-}
-
-void UpdatePackagesWidget::ok () {
-	RK_TRACE (DIALOGS);
-	deleteLater ();
-}
-
-void UpdatePackagesWidget::cancel () {
-	RK_TRACE (DIALOGS);
-	deleteLater ();
-}
-
 
 /////////////////////// InstallPackagesWidget //////////////////////////
-
-#define FIND_AVAILABLE_PACKAGES_COMMAND 1
 
 InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog) : QWidget (0) {
 	RK_TRACE (DIALOGS);
@@ -686,36 +532,33 @@ InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog) : QWidge
 	QHBoxLayout *hbox = new QHBoxLayout ();
 	mvbox->addLayout (hbox);
 	hbox->setContentsMargins (0, 0, 0, 0);
-	
-	installable_view = new QTreeWidget (this);
-	installable_view->setHeaderLabels (QStringList () << i18n ("Name") << i18n ("Version"));
-	installable_view->setSelectionMode (QAbstractItemView::ExtendedSelection);
-	hbox->addWidget (installable_view);
-	setFocusProxy (installable_view);
+
+	packages_status = new RKRPackageInstallationStatus (this);
+	packages_view = new QTreeView (this);
+	packages_view->setSortingEnabled (true);
+	model = new QSortFilterProxyModel (this);
+	model->setSourceModel (packages_status);
+	packages_view->setModel (model);
+	hbox->addWidget (packages_view);
+	setFocusProxy (packages_view);
 
 	QVBoxLayout *buttonvbox = new QVBoxLayout ();
 	hbox->addLayout (buttonvbox);
 	buttonvbox->setContentsMargins (0, 0, 0, 0);
 	get_list_button = new QPushButton (i18n ("Fetch list"), this);
 	connect (get_list_button, SIGNAL (clicked ()), this, SLOT (getListButtonClicked ()));
-	install_selected_button = new QPushButton (i18n ("Install Selected"), this);
-	connect (install_selected_button, SIGNAL (clicked ()), this, SLOT (installSelectedButtonClicked ()));
 	install_params = new PackageInstallParamsWidget (this, true);
 	connect (parent, SIGNAL (libraryLocationsChanged (const QStringList &)), install_params, SLOT (liblocsChanged (const QStringList &)));
 
 	buttonvbox->addWidget (get_list_button);
 	buttonvbox->addStretch (1);
-	buttonvbox->addWidget (install_selected_button);
-	buttonvbox->addStretch (1);
 	buttonvbox->addWidget (install_params);
 	buttonvbox->addStretch (1);
 	
-	install_selected_button->setEnabled (false);
-	installable_view->setEnabled (false);
-
-	new QTreeWidgetItem (installable_view, QStringList ("..."));	// i18n ("[Click \"Fetch list\" to see available packages]")
+	packages_view->setEnabled (false);
 
 	connect (dialog, SIGNAL (okClicked ()), this, SLOT (ok ()));
+	connect (dialog, SIGNAL (applyClicked ()), this, SLOT (apply ()));
 	connect (dialog, SIGNAL (cancelClicked ()), this, SLOT (cancel ()));
 	connect (this, SIGNAL (destroyed ()), dialog, SLOT (childDeleted ()));
 }
@@ -724,48 +567,6 @@ InstallPackagesWidget::~InstallPackagesWidget () {
 	RK_TRACE (DIALOGS);
 }
 
-void InstallPackagesWidget::rCommandDone (RCommand *command) {
-	RK_TRACE (DIALOGS);
-	if (command->getFlags () == FIND_AVAILABLE_PACKAGES_COMMAND) {
-		if (!command->failed ()) {
-			installable_view->clear ();
-
-			RK_ASSERT (command->getDataLength () == 3);
-
-			RData *names = command->getStructureVector ()[0];
-			RData *versions = command->getStructureVector ()[1];
-			RData *repos = command->getStructureVector ()[2];
-
-			unsigned int count = names->getDataLength ();
-			RK_ASSERT (count == versions->getDataLength ());
-			RK_ASSERT (repos->getDataLength () == 1);
-
-			for (unsigned int i=0; i < count; ++i) {
-				QTreeWidgetItem* item = new QTreeWidgetItem (installable_view);
-				item->setText (0, names->getStringVector ()[i]);
-				item->setText (1, versions->getStringVector ()[i]);
-			}
-
-			if (installable_view->topLevelItemCount ()) {
-				install_selected_button->setEnabled (true);
-				installable_view->setEnabled (true);
-				installable_view->setFocus ();
-				installable_view->setSortingEnabled (true);
-				installable_view->sortItems (0, Qt::AscendingOrder);
-			} else {
-				new QTreeWidgetItem (installable_view, QStringList (i18n ("[No packages available]")));
-			}
-			installable_view->resizeColumnToContents (0);
-
-			// this is after the repository was chosen. Update the repository string.
-			parent->repos_string = repos->getStringVector ()[0];
-		} else {
-			get_list_button->setEnabled (true);
-		}
-	} else {
-		RK_ASSERT (false);
-	}
-}
 
 void InstallPackagesWidget::installPackages (const QStringList &list) {
 	RK_TRACE (DIALOGS);
@@ -774,47 +575,40 @@ void InstallPackagesWidget::installPackages (const QStringList &list) {
 	if (list.isEmpty ()) return;
 	if (!install_params->checkWritable (&as_root)) return;
 
-	parent->installPackages (list, install_params->libraryLocation (), install_params->installDependencies (), as_root);
-}
-
-void InstallPackagesWidget::installSelectedButtonClicked () {
-	RK_TRACE (DIALOGS);
-	QStringList list;
-	QList<QTreeWidgetItem*> selected = installable_view->selectedItems ();
-	for (int i = 0; i < selected.count (); ++i) {
-		list.append (selected[i]->text (0));
-	}
-	installPackages (list);
+	parent->installPackages (list, install_params->libraryLocation (), install_params->installDependencies (), as_root, packages_status->currentRepositories ());
 }
 
 void InstallPackagesWidget::getListButtonClicked () {
 	RK_TRACE (DIALOGS);
 
+	packages_status->initialize (parent->chain);
 	get_list_button->setEnabled (false);
-
-	RCommand *command = new RCommand (".rk.get.available.packages ()", RCommand::App | RCommand::GetStructuredData, QString::null, this, FIND_AVAILABLE_PACKAGES_COMMAND);
-	RKProgressControl *control = new RKProgressControl (this, i18n ("Please stand by while downloading the list of available packages."), i18n ("Fetching list"), RKProgressControl::CancellableProgress | RKProgressControl::AutoCancelCommands);
-	control->addRCommand (command, true);
-	RKGlobals::rInterface ()->issueCommand (command, parent->chain);
-	control->doModal (true);
+	packages_view->setEnabled (true);
+	for (int i = 0; i <= RKRPackageInstallationStatus::PackageName; ++i) packages_view->resizeColumnToContents (i);
 }
 
 void InstallPackagesWidget::trySelectPackage (const QString &package_name) {
 	RK_TRACE (DIALOGS);
 
-	QList<QTreeWidgetItem*> found = installable_view->findItems (package_name, Qt::MatchExactly, 0);
-	if (found.isEmpty ()) {
+	QModelIndex index = packages_status->markPackageForInstallation (package_name);
+	if (!index.isValid ()) {
 		KMessageBox::sorry (0, i18n ("The package requested by the backend (\"%1\") was not found in the package repositories. Maybe the package name was mis-spelled. Or maybe you need to add additional repositories via the \"Configure Repositories\"-button.", package_name), i18n ("Package not available"));
 	} else {
-		RK_ASSERT (found.count () == 1);
-		installable_view->setCurrentItem (found[0]);
-		found[0]->setSelected (true);
-		installable_view->scrollToItem (found[0]);
+		packages_view->scrollTo (model->mapFromSource (index));
 	}
+}
+
+void InstallPackagesWidget::apply () {
+	RK_TRACE (DIALOGS);
+
+	installPackages (packages_status->packagesToInstall ());
+	packages_status->clearStatus ();
 }
 
 void InstallPackagesWidget::ok () {
 	RK_TRACE (DIALOGS);
+
+	apply ();
 	deleteLater ();
 }
 
@@ -899,6 +693,301 @@ void PackageInstallParamsWidget::liblocsChanged (const QStringList &newlist) {
 
 	libloc_selector->clear ();
 	libloc_selector->insertItems (0, newlist);
+}
+
+/////////// RKRPackageInstallationStatus /////////////////
+
+RKRPackageInstallationStatus::RKRPackageInstallationStatus (QObject* parent) : QAbstractItemModel (parent) {
+	RK_TRACE (DIALOGS);
+}
+
+RKRPackageInstallationStatus::~RKRPackageInstallationStatus () {
+	RK_TRACE (DIALOGS);
+}
+
+QModelIndex RKRPackageInstallationStatus::markPackageForInstallation (const QString& package_name) {
+	RK_TRACE (DIALOGS);
+
+	// is the package available at all?
+	QModelIndex pindex;
+	int row = available_packages.indexOf (package_name);
+	if (row < 0) return pindex;
+
+	// find out, whether it is a new or and updateable package
+	QModelIndex parent;
+	int urow = updateable_packages_in_available.indexOf (row);
+	if (urow >= 0) {
+		parent = index (UpdateablePackages, 0);
+		row = urow;
+	} else {
+		row = new_packages_in_available.indexOf (row);
+		parent = index (NewPackages, 0);
+	}
+	if (row < 0) {
+		RK_ASSERT (false);
+		return pindex;
+	}
+
+	// mark for installation
+	pindex = index (row, InstallationStatus, parent);
+	setData (pindex, QVariant (Qt::Checked), Qt::CheckStateRole);
+	return pindex;
+}
+
+void RKRPackageInstallationStatus::initialize (RCommandChain *chain) {
+	RK_TRACE (DIALOGS);
+
+	RCommand *command = new RCommand (".rk.get.package.intallation.state ()", RCommand::App | RCommand::GetStructuredData);
+	connect (command->notifier (), SIGNAL (commandFinished(RCommand*)), this, SLOT (statusCommandFinished(RCommand*)));
+	RKProgressControl *control = new RKProgressControl (this, i18n ("Please stand by while downloading the list of available packages."), i18n ("Fetching list"), RKProgressControl::CancellableProgress | RKProgressControl::AutoCancelCommands);
+	control->addRCommand (command, true);
+	RKGlobals::rInterface ()->issueCommand (command, chain);
+	control->doModal (true);
+}
+
+void RKRPackageInstallationStatus::statusCommandFinished (RCommand *command) {
+	RK_TRACE (DIALOGS);
+
+	if (!command->succeeded ()) {
+		RK_ASSERT (false);
+		return;
+	}
+	RK_ASSERT (command->getDataType () == RCommand::StructureVector);
+	RK_ASSERT (command->getDataLength () == 4);
+
+	RData::RDataStorage top = command->getStructureVector ();
+	RData::RDataStorage available = top[0]->getStructureVector ();
+	available_packages = available[0]->getStringVector ();
+	available_titles = available[1]->getStringVector ();
+	available_versions = available[2]->getStringVector ();
+	available_repos = available[3]->getStringVector ();
+	enhance_rk_in_available = available[4]->getIntVector ();
+
+	RData::RDataStorage installed = top[1]->getStructureVector ();
+	installed_packages = installed[0]->getStringVector ();
+	installed_titles = installed[1]->getStringVector ();
+	installed_versions = installed[2]->getStringVector ();
+	installed_libpaths = installed[3]->getStringVector ();
+	enhance_rk_in_installed = installed[4]->getIntVector ();
+	installed_has_update.fill (false, installed_packages.count ());
+
+	new_packages_in_available = top[2]->getIntVector ();
+	RData::RDataStorage updateable = top[3]->getStructureVector ();
+	updateable_packages_in_installed = updateable[0]->getIntVector ();
+	updateable_packages_in_available = updateable[1]->getIntVector ();
+
+	for (int i = updateable_packages_in_installed.count () - 1; i >= 0; --i) {
+		installed_has_update[updateable_packages_in_installed[i]] = true;
+	}
+
+	current_repos = top[4]->getStringVector ();
+
+	clearStatus ();
+}
+
+void RKRPackageInstallationStatus::clearStatus () {
+	RK_TRACE (DIALOGS);
+
+	available_status.fill (NoAction, available_packages.count ());
+	installed_status.fill (NoAction, installed_packages.count ());
+	reset ();
+}
+
+QVariant RKRPackageInstallationStatus::headerData (int section, Qt::Orientation orientation, int role) const {
+	if (orientation != Qt::Horizontal) return QVariant ();
+
+	if ((role == Qt::DecorationRole) && (section == EnhancesRKWard)) return QApplication::windowIcon ();
+
+	if (role == Qt::DisplayRole) {
+		if (section == InstallationStatus) return QVariant (i18n ("Status"));
+		if (section == PackageName) return QVariant (i18n ("Name"));
+		if (section == PackageTitle) return QVariant (i18n ("Title"));
+		if (section == Version) return QVariant (i18n ("Version"));
+		if (section == Location) return QVariant (i18n ("Location"));
+	}
+	return QVariant ();
+}
+
+int RKRPackageInstallationStatus::rowCount (const QModelIndex &parent) const {
+	if (!parent.isValid ()) return TOPLEVELITEM_COUNT;	// top level
+	if (parent.parent ().isValid ()) return 0;			// model has exactly two levels
+
+	int row = parent.row ();
+	if (row == UpdateablePackages) return updateable_packages_in_available.count ();
+	if (row == NewPackages) return available_packages.count ();
+	if (row == InstalledPackages) return installed_packages.count ();
+
+	RK_ASSERT (false);
+	return 0;
+}
+
+QVariant RKRPackageInstallationStatus::data (const QModelIndex &index, int role) const {
+	if (!index.isValid ()) return QVariant ();
+	if (!index.parent ().isValid ()) {	// top level item
+		int row = index.row ();
+		if (row == UpdateablePackages) {
+			if ((role == Qt::DisplayRole) && (index.column () == PackageName)) return QVariant (i18n ("Updateable Packages"));
+			if (role == Qt::ToolTipRole) return QVariant (i18n ("Packages for which an update is available. This may include packages which were merely built against a newer version of R."));
+		} else if (row == NewPackages) {
+			if ((role == Qt::DisplayRole) && (index.column () == PackageName)) return QVariant (i18n ("New Packages"));
+			if (role == Qt::ToolTipRole) return QVariant (i18n ("Packages for which available for installation, but which are not currently installed."));
+		} else if (row == InstalledPackages) {
+			if ((role == Qt::DisplayRole) && (index.column () == PackageName)) return QVariant (i18n ("Installed Packages"));
+			if (role == Qt::ToolTipRole) return QVariant (i18n ("Packages for which installed locally. Note that updates may be available for these packages."));
+		}
+		if (role == Qt::BackgroundColorRole) return QVariant (QColor (200, 200, 200));
+	} else if (!index.parent ().parent ().isValid ()) {		// model has exactly two levels
+		int col = index.column ();
+		int prow = index.parent ().row ();
+		int arow, irow;		// row numbers in the lists of available_packages / installed_packages
+		if (prow == UpdateablePackages) {
+			arow = updateable_packages_in_available.value (index.row ());
+			irow = updateable_packages_in_installed.value (index.row ());
+		} else if (prow == NewPackages) arow = new_packages_in_available.value (index.row ());
+		else irow = index.row ();
+
+		if (col == InstallationStatus) {
+			PackageStatusChange stat;
+			if (prow == InstalledPackages) stat = installed_status.value (irow, NoAction);
+			else stat = available_status.value (arow, NoAction);
+			if (stat == NoAction) {
+				if (role == Qt::CheckStateRole) {
+					if (prow == InstalledPackages) return Qt::PartiallyChecked;
+					return Qt::Unchecked;
+				}
+			} else if (stat == Install) {
+				if (role == Qt::CheckStateRole) return Qt::Checked;
+				if (role == Qt::DisplayRole) return QVariant (i18n ("Install"));
+			} else {
+				if (role == Qt::CheckStateRole) return Qt::Unchecked;
+				if (role == Qt::DisplayRole) return QVariant (i18n ("Remove"));
+			}
+		} else if (col == EnhancesRKWard) {
+			if (role == Qt::DisplayRole) return QVariant (QString (" "));	// must have a placeholder, here, or Qt will collapse the column
+			if (role == Qt::DecorationRole) {
+				bool enhance_rk;
+				if (prow == InstalledPackages) enhance_rk = enhance_rk_in_installed.value (irow);
+				else enhance_rk = enhance_rk_in_available.value (arow);
+				if (enhance_rk) return QApplication::windowIcon ();
+			}
+		} else if (col == PackageName) {
+			if (role == Qt::DisplayRole) {
+				if (prow == InstalledPackages) return installed_packages.value (irow);
+				else return available_packages.value (arow);
+			}
+		} else if (col == PackageTitle) {
+			if (role == Qt::DisplayRole) {
+				if (prow == InstalledPackages) return installed_titles.value (irow);
+				else return available_titles.value (arow);
+			}
+		} else if (col == Version) {
+			if (role == Qt::DisplayRole) {
+				if (prow == InstalledPackages) return installed_versions.value (irow);
+				else if (prow == NewPackages) return available_versions.value (arow);
+				else return QVariant (installed_versions.value (irow) + " -> " + available_versions.value (arow));
+			}
+		} else if (col == Location) {
+			if (role == Qt::DisplayRole) {
+				if (prow == InstalledPackages) return installed_libpaths.value (irow);
+				else if (prow == NewPackages) return available_repos.value (arow);
+				else return QVariant (installed_libpaths.value (irow) + " -> " + available_repos.value (arow));
+			}
+		}
+	}
+	return QVariant ();
+}
+
+Qt::ItemFlags RKRPackageInstallationStatus::flags (const QModelIndex &index) const {
+	qint64 pos = index.internalId ();
+	Qt::ItemFlags flags = Qt::ItemIsSelectable | Qt::ItemIsEnabled;
+	if (pos >= 0) flags |= Qt::ItemIsUserCheckable;
+	if (pos == InstalledPackages) flags |= Qt::ItemIsTristate;
+	return flags;
+}
+
+QModelIndex RKRPackageInstallationStatus::index (int row, int column, const QModelIndex &parent) const {
+	if (!parent.isValid ()) return createIndex (row, column, -1);	// toplevel items
+	return createIndex (row, column, parent.row ());				// parent.row () identifies, which toplevel item is the parent.
+}
+
+QModelIndex RKRPackageInstallationStatus::parent (const QModelIndex& index) const {
+	if (index.internalId () == -1) return QModelIndex ();
+	return (RKRPackageInstallationStatus::index (index.internalId (), 0, QModelIndex ()));
+}
+
+bool RKRPackageInstallationStatus::setData (const QModelIndex &index, const QVariant &value, int role) {
+	RK_TRACE (DIALOGS);
+
+	if (role != Qt::CheckStateRole) return false;
+	if (!index.isValid ()) return false;
+	if (!index.parent ().isValid ()) return false;
+	QModelIndex bindex;
+
+	PackageStatusChange stat = NoAction;
+	int irow = -1;
+	int arow = -1;
+	if (value.toInt () == Qt::Checked) stat = Install;
+	else if (value.toInt () == Qt::Unchecked) stat = Remove;
+
+	if (index.internalId () == InstalledPackages) {
+		irow = index.row ();
+		if ((stat == Install) && (installed_status[irow] == Remove)) stat = NoAction;
+		if (installed_has_update.value (irow, false)) {
+			// NOTE: installed, and updatable packages are coupled
+			int urow = updateable_packages_in_installed.indexOf (irow);
+			RK_ASSERT (urow >= 0);
+			arow = updateable_packages_in_available.value (urow);
+			bindex = RKRPackageInstallationStatus::index (urow, InstallationStatus, RKRPackageInstallationStatus::index (UpdateablePackages, 0));
+		}
+	} else {
+		if (stat == Remove) stat = NoAction;
+		if (index.internalId () == UpdateablePackages) {
+			// NOTE: installed, and updatable packages are coupled
+			irow = updateable_packages_in_installed.value (index.row ());
+			arow = updateable_packages_in_available.value (index.row ());
+			bindex = RKRPackageInstallationStatus::index (irow, InstallationStatus, RKRPackageInstallationStatus::index (InstalledPackages, 0));
+		} else {
+			arow = new_packages_in_available.value (index.row ());
+		}
+	}
+
+	if (irow >= 0) installed_status[irow] = stat;
+	if (arow >= 0) available_status[arow] = stat;
+
+	dataChanged (index, index);
+	if (bindex.isValid ()) dataChanged (bindex, bindex);
+
+	return true;
+}
+
+QStringList RKRPackageInstallationStatus::packagesToInstall () const {
+	RK_TRACE (DIALOGS);
+
+	QStringList ret;
+	for (int i = installed_status.count () - 1; i >= 0; --i) {
+		if (installed_status[i] == Install) ret.append (installed_packages[i]);
+	}
+	for (int i = available_status.count () - 1; i >= 0; --i) {
+		if (available_status[i] == Install) {
+			QString package = available_packages[i];
+			if (!ret.contains (package)) ret.append (package);
+		}
+	}
+	return ret;
+}
+
+bool RKRPackageInstallationStatus::packagesToRemove (QStringList *packages, QStringList *liblocs) {
+	RK_TRACE (DIALOGS);
+
+	bool anyfound = false;
+	for (int i = installed_status.count () - 1; i >= 0; --i) {
+		if (installed_status[i] == Remove) {
+			packages->append (installed_packages[i]);
+			liblocs->append (installed_libpaths[i]);
+			anyfound = true;
+		}
+	}
+	return anyfound;
 }
 
 #include "rkloadlibsdialog.moc"

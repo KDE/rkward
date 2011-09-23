@@ -25,8 +25,9 @@
 #include "../settings/rksettingsmoduler.h"
 #include "../rbackend/rcommandreceiver.h"
 
+class QTreeView;
 class QTreeWidget;
-class QTreeWidgetItem;
+class QSortFilterProxyModel;
 class QComboBox;
 class QPushButton;
 class RKProgressControl;
@@ -54,7 +55,7 @@ public:
 
 	~RKLoadLibsDialog ();
 
-	bool installPackages (const QStringList &packages, const QString &to_libloc, bool install_dependencies, bool as_root);
+	bool installPackages (const QStringList &packages, const QString &to_libloc, bool install_dependencies, bool as_root, const QStringList& repos);
 
 /** opens a modal RKLoadLibsDialog with the "Install new Packages" tab on front (To be used when a require () fails in the R backend
 @param parent parent QWidget. The dialog will be centered there
@@ -83,7 +84,6 @@ protected slots:
 private:
 	void tryDestruct ();
 friend class LoadUnloadWidget;
-friend class UpdatePackagesWidget;
 friend class InstallPackagesWidget;
 	RCommandChain *chain;
 
@@ -93,7 +93,6 @@ friend class InstallPackagesWidget;
 	QString auto_install_package;
 	int num_child_widgets;
 	bool accepted;
-	QString repos_string;
 
 	QProcess* installation_process;
 };
@@ -137,45 +136,81 @@ private:
 	RKLoadLibsDialog *parent;
 };
 
-/**
-Shows which packages are can be updated from CRAN.
-Ro be used in RKLoadLibsDialog.
-
-@author Thomas Friedrichsmeier
-*/
-class UpdatePackagesWidget : public QWidget, public RCommandReceiver {
-Q_OBJECT
+/** Item model and encapsulation for package status (used in InstallPackagesWidget) */
+class RKRPackageInstallationStatus : public QAbstractItemModel {
+	Q_OBJECT
 public:
-	UpdatePackagesWidget (RKLoadLibsDialog *dialog);
-	
-	~UpdatePackagesWidget ();
-public slots:
-	void updateSelectedButtonClicked ();
-	void updateAllButtonClicked ();
-	void getListButtonClicked ();
-	void ok ();
-	void cancel ();
-protected:
-	void rCommandDone (RCommand *command);
-private:
-	void updatePackages (const QStringList &list);
-	QTreeWidget *updateable_view;
+	RKRPackageInstallationStatus (QObject* parent);
+	~RKRPackageInstallationStatus ();
 
-	QPushButton *update_selected_button;
-	QPushButton *update_all_button;
-	QPushButton *get_list_button;
-	PackageInstallParamsWidget *install_params;
-	
-	RKLoadLibsDialog *parent;
+	void initialize (RCommandChain *chain);
+
+	enum Columns {
+		EnhancesRKWard,
+		InstallationStatus,
+		PackageName,
+		PackageTitle,
+		Version,
+		Location,
+		COLUMN_COUNT
+	};
+	enum ToplevelItems {
+		UpdateablePackages,
+		NewPackages,
+		InstalledPackages,
+		TOPLEVELITEM_COUNT
+	};
+	enum PackageStatusChange {
+		Install,
+		Remove,
+		NoAction
+	};
+
+/* Item model implementation */
+	int rowCount (const QModelIndex &parent = QModelIndex()) const;
+	int columnCount (const QModelIndex &) const { return COLUMN_COUNT; };
+	QVariant data (const QModelIndex &index, int role=Qt::DisplayRole) const;
+	QVariant headerData (int section, Qt::Orientation orientation, int role=Qt::DisplayRole) const;
+	Qt::ItemFlags flags (const QModelIndex &index) const;
+	QModelIndex index (int row, int column, const QModelIndex &parent=QModelIndex()) const;
+	QModelIndex parent (const QModelIndex &index) const;
+	bool setData (const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
+
+/** returns a list of packages selected for installation / update */
+	QStringList packagesToInstall () const;
+/** fills a list of packages selected for removal, and a parallel list of the locations, from which to remove.
+ * @return true, if any packages are marked for removal, false otherwise. */
+	bool packagesToRemove (QStringList *packages, QStringList *liblocs);
+/** mark a package for installation.
+ * @returns the index of the package, if the package is available, an invalid index, if it is not available */
+	QModelIndex markPackageForInstallation (const QString& package_name);
+/** reset all installation states to NoAction */
+	void clearStatus ();
+	QStringList currentRepositories () const { return current_repos; };
+private slots:
+	void statusCommandFinished (RCommand *command);
+private:
+	QStringList available_packages, available_titles, available_versions, available_repos;
+	QStringList installed_packages, installed_titles, installed_versions, installed_libpaths;
+	RData::IntStorage enhance_rk_in_available;
+	RData::IntStorage enhance_rk_in_installed;
+	RData::IntStorage new_packages_in_available;
+	RData::IntStorage updateable_packages_in_available;
+	RData::IntStorage updateable_packages_in_installed;
+	QVector<PackageStatusChange> installed_status;
+	QVector<PackageStatusChange> available_status;
+	QVector<bool> installed_has_update;
+
+	QStringList current_repos;
 };
 
 /**
-Allows the user to install further R packages. For now only packages from CRAN.
-Ro be used in RKLoadLibsDialog.
+Allows the user to update / install R packages.
+To be used in RKLoadLibsDialog.
 
 @author Thomas Friedrichsmeier
 */
-class InstallPackagesWidget : public QWidget, public RCommandReceiver {
+class InstallPackagesWidget : public QWidget {
 Q_OBJECT
 public:
 	InstallPackagesWidget (RKLoadLibsDialog *dialog);
@@ -183,17 +218,16 @@ public:
 	~InstallPackagesWidget ();
 	void trySelectPackage (const QString &package_name);
 public slots:
-	void installSelectedButtonClicked ();
 	void getListButtonClicked ();
 	void ok ();
+	void apply ();
 	void cancel ();
-protected:
-	void rCommandDone (RCommand *command);
 private:
 	void installPackages (const QStringList &list);
-	QTreeWidget *installable_view;
+	QTreeView *packages_view;
+	RKRPackageInstallationStatus *packages_status;
+	QSortFilterProxyModel *model;
 
-	QPushButton *install_selected_button;
 	QPushButton *get_list_button;
 	PackageInstallParamsWidget *install_params;
 	

@@ -90,6 +90,29 @@
 	return(pluginmaps)
 }
 
+# Gather status information on installed and available packages.
+# Return value is used in class RKRPackageInstallationStatus of the frontend
+".rk.get.package.intallation.state" <- function () {
+	# fetch all status information
+	available <- .rk.cached.available.packages ()
+	inst <- installed.packages (fields="Title")
+	old <- as.data.frame (old.packages (available=available), stringsAsFactors=FALSE)
+	new <- new.packages (instPkgs=inst, available=available)
+
+	# convert info to a more suitable format
+	available <- as.data.frame (available, stringsAsFactors=FALSE)
+	inst <- as.data.frame (inst, stringsAsFactors=FALSE)
+	oldinst <- match (paste (old$Package, old$LibPath), paste (inst$Package, inst$LibPath))	# convert package names to position with in the installed packages info
+	oldavail <- match (old$Package, available$Package)	# convert package names to position with in the available packages info
+	new <- match (new, available$Package)	# same for new packages
+
+	list ("available" = list (available$Package, available$Title, available$Version, available$Repository, grepl ("rkward", available$Enhances)),
+		"installed" = list (inst$Package, inst$Title, inst$Version, inst$LibPath, grepl ("rkward", inst$Enhances)),
+		"new" = as.integer (new - 1),
+		"old" = list (as.integer (oldinst - 1), as.integer (oldavail - 1)),
+		"repos" = as.character (options("repos")$repos))
+}
+
 # package information formats may - according to the help - be subject to change. Hence this function to cope with "missing" values
 # also it concatenates everything to a single vector, so we can easily get the whole structure with a single call
 ".rk.get.installed.packages" <- function () {
@@ -121,16 +144,6 @@
 	}
 
 	return (x)
-}
-
-".rk.get.old.packages" <- function () {
-	x <- old.packages (available=.rk.cached.available.packages ())
-	return (list (as.character (x[,"Package"]), as.character (x[,"LibPath"]), as.character (x[,"Installed"]), as.character (x[,"ReposVer"]), rk.make.repos.string ()))
-}
-
-".rk.get.available.packages" <- function () {
-	x <- .rk.cached.available.packages ()
-	return (list (as.character (x[,1]), as.character (x[,2]), rk.make.repos.string ()))
 }
 
 "require" <- function (package, quietly = FALSE, character.only = FALSE, ...)

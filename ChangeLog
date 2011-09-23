@@ -1,3 +1,4 @@
+- Reworked package installation / update dialog			TODO: implement removing, "check all updateable", clean layout, fix size, more tips, fix sorting
 - Fixed: Integrated help browser would not update navigation history when following page internal links
 - Documentation on writing RKWard plugins is now accessible, locally
 - The file filter for R script files is now configurable, and includes *.Rhistory, by default
