@@ -15,7 +15,7 @@ URL: http://rkward.sourceforge.net
 Authors@R: c(person(given="Meik", family="Michalke",
     email="meik.michalke@hhu.de", role=c("aut", "cre")))
 Version: 0.01-5
-Date: 2011-09-23
+Date: 2011-09-24
 Collate:
     'rk-internal.R'
     'rk.JS.array.R'
@@ -31,10 +31,13 @@ Collate:
     'rk.XML.browser.R'
     'rk.XML.cbox.R'
     'rk.XML.col.R'
+    'rk.XML.connect.R'
+    'rk.XML.convert.R'
     'rk.XML.dropdown.R'
     'rk.XML.formula.R'
     'rk.XML.frame.R'
     'rk.XML.input.R'
+    'rk.XML.logic.R'
     'rk.XML.pluginmap.R'
     'rk.XML.plugin.R'
     'rk.XML.radio.R'

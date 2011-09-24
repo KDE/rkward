@@ -26,7 +26,7 @@ rk.XML.browser <- function(label, type="file", initial=NULL, urls=FALSE, filter=
 	}
 
 	if(identical(id.name, "auto")){
-		attr.list[["id"]] <- list(id=auto.ids(label, prefix=ID.prefix("browser")))
+		attr.list[["id"]] <- auto.ids(label, prefix=ID.prefix("browser"))
 	} else if(!is.null(id.name)){
 		attr.list[["id"]] <- id.name
 	} else {}
