@@ -29,6 +29,7 @@
 #include <QCloseEvent>
 #include <QSortFilterProxyModel>
 #include <QApplication>
+#include <QLineEdit>
 
 #include <klocale.h>
 #include <kmessagebox.h>
@@ -89,8 +90,7 @@ void RKLoadLibsDialog::slotPageChanged () {
 	RK_TRACE (DIALOGS);
 
 	if (!currentPage ()) return;
-	// This, and most other focus operations in this file, is to make the keyboard search feature of the QTreeWidget's work (without having to click the lists, first)
-	currentPage ()->widget ()->setFocus ();
+	QTimer::singleShot (0, currentPage ()->widget (), SLOT (activated()));
 }
 
 //static
@@ -108,7 +108,7 @@ void RKLoadLibsDialog::showInstallPackagesModal (QWidget *parent, RCommandChain 
 void RKLoadLibsDialog::automatedInstall () {
 	RK_TRACE (DIALOGS);
 
-	install_packages_widget->getListButtonClicked ();
+	install_packages_widget->initialize ();
 	install_packages_widget->trySelectPackage (auto_install_package);
 }
 
@@ -314,7 +314,6 @@ LoadUnloadWidget::LoadUnloadWidget (RKLoadLibsDialog *dialog) : QWidget (0) {
 	installed_view->setSelectionMode (QAbstractItemView::ExtendedSelection);
 	instvbox->addWidget (label);
 	instvbox->addWidget (installed_view);
-	setFocusProxy (installed_view);
 
 	load_button = new QPushButton (RKStandardIcons::getIcon (RKStandardIcons::ActionAddRight), i18n ("Load"), this);
 	connect (load_button, SIGNAL (clicked ()), this, SLOT (loadButtonClicked ()));
@@ -346,6 +345,12 @@ LoadUnloadWidget::LoadUnloadWidget (RKLoadLibsDialog *dialog) : QWidget (0) {
 
 LoadUnloadWidget::~LoadUnloadWidget () {
 	RK_TRACE (DIALOGS);
+}
+
+void LoadUnloadWidget::activated () {
+	RK_TRACE (DIALOGS);
+
+	installed_view->setFocus ();
 }
 
 void LoadUnloadWidget::rCommandDone (RCommand *command) {
@@ -526,8 +531,7 @@ InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog) : QWidge
 	
 	QVBoxLayout *mvbox = new QVBoxLayout (this);
 	mvbox->setContentsMargins (0, 0, 0, 0);
-	QLabel *label = new QLabel (i18n ("Many packages are available on CRAN (Comprehensive R Archive Network), and other repositories (click \"Configure Repositories\" to add more sources). Click \"Fetch List\" to find out, which packages are available. This feature requires a working internet connection."), this);
-	label->setWordWrap (true);
+	QLabel *label = new QLabel (i18n ("Many packages are available on CRAN (Comprehensive R Archive Network), and other repositories<br>(click \"Configure Repositories\" to add more sources)."), this);
 	mvbox->addWidget (label);
 	QHBoxLayout *hbox = new QHBoxLayout ();
 	mvbox->addLayout (hbox);
@@ -536,26 +540,36 @@ InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog) : QWidge
 	packages_status = new RKRPackageInstallationStatus (this);
 	packages_view = new QTreeView (this);
 	packages_view->setSortingEnabled (true);
-	model = new QSortFilterProxyModel (this);
+	model = new RKRPackageInstallationStatusSortFilterModel (this);
 	model->setSourceModel (packages_status);
+	model->setFilterCaseSensitivity (Qt::CaseInsensitive);
+	model->setSortCaseSensitivity (Qt::CaseInsensitive);
 	packages_view->setModel (model);
+	packages_view->setEnabled (false);
+	packages_view->setMinimumHeight (packages_view->sizeHintForRow (0) * 15);	// force a decent height
 	hbox->addWidget (packages_view);
-	setFocusProxy (packages_view);
 
 	QVBoxLayout *buttonvbox = new QVBoxLayout ();
 	hbox->addLayout (buttonvbox);
 	buttonvbox->setContentsMargins (0, 0, 0, 0);
-	get_list_button = new QPushButton (i18n ("Fetch list"), this);
-	connect (get_list_button, SIGNAL (clicked ()), this, SLOT (getListButtonClicked ()));
+	label = new QLabel (i18n ("Show only packages matching:"), this);
+	filter_edit = new QLineEdit ("*", this);
+	connect (filter_edit, SIGNAL (textChanged(const QString&)), this, SLOT (filterStringChanged(const QString&)));
+	filterStringChanged (filter_edit->text ());
+
+	mark_all_updates_button = new QPushButton (i18n ("Select all updates"), this);
+	connect (mark_all_updates_button, SIGNAL (clicked()), this, SLOT (markAllUpdates()));
+
 	install_params = new PackageInstallParamsWidget (this, true);
 	connect (parent, SIGNAL (libraryLocationsChanged (const QStringList &)), install_params, SLOT (liblocsChanged (const QStringList &)));
 
-	buttonvbox->addWidget (get_list_button);
+	buttonvbox->addWidget (label);
+	buttonvbox->addWidget (filter_edit);
+	buttonvbox->addStretch (1);
+	buttonvbox->addWidget (mark_all_updates_button);
 	buttonvbox->addStretch (1);
 	buttonvbox->addWidget (install_params);
 	buttonvbox->addStretch (1);
-	
-	packages_view->setEnabled (false);
 
 	connect (dialog, SIGNAL (okClicked ()), this, SLOT (ok ()));
 	connect (dialog, SIGNAL (applyClicked ()), this, SLOT (apply ()));
@@ -567,6 +581,12 @@ InstallPackagesWidget::~InstallPackagesWidget () {
 	RK_TRACE (DIALOGS);
 }
 
+void InstallPackagesWidget::activated () {
+	RK_TRACE (DIALOGS);
+
+	filter_edit->setFocus ();
+	if (!packages_status->initialized ()) initialize ();
+}
 
 void InstallPackagesWidget::installPackages (const QStringList &list) {
 	RK_TRACE (DIALOGS);
@@ -578,13 +598,20 @@ void InstallPackagesWidget::installPackages (const QStringList &list) {
 	parent->installPackages (list, install_params->libraryLocation (), install_params->installDependencies (), as_root, packages_status->currentRepositories ());
 }
 
-void InstallPackagesWidget::getListButtonClicked () {
+void InstallPackagesWidget::initialize () {
 	RK_TRACE (DIALOGS);
 
 	packages_status->initialize (parent->chain);
-	get_list_button->setEnabled (false);
 	packages_view->setEnabled (true);
 	for (int i = 0; i <= RKRPackageInstallationStatus::PackageName; ++i) packages_view->resizeColumnToContents (i);
+}
+
+void InstallPackagesWidget::filterStringChanged (const QString& new_filter) {
+	RK_TRACE (DIALOGS);
+
+	QString f = new_filter;
+	if (f.isEmpty ()) f = "*";
+	model->setFilterWildcard (f);
 }
 
 void InstallPackagesWidget::trySelectPackage (const QString &package_name) {
@@ -598,17 +625,32 @@ void InstallPackagesWidget::trySelectPackage (const QString &package_name) {
 	}
 }
 
-void InstallPackagesWidget::apply () {
+void InstallPackagesWidget::markAllUpdates () {
+	RK_TRACE (DIALOGS);
+
+	QModelIndex index = packages_status->markAllUpdatesForInstallation ();
+	packages_view->setExpanded (model->mapFromSource (index), true);
+	packages_view->scrollTo (model->mapFromSource (index));
+}
+
+void InstallPackagesWidget::doInstall () {
 	RK_TRACE (DIALOGS);
 
 	installPackages (packages_status->packagesToInstall ());
 	packages_status->clearStatus ();
 }
 
+void InstallPackagesWidget::apply () {
+	RK_TRACE (DIALOGS);
+
+	doInstall ();
+	initialize ();	// refresh list
+}
+
 void InstallPackagesWidget::ok () {
 	RK_TRACE (DIALOGS);
 
-	apply ();
+	doInstall ();
 	deleteLater ();
 }
 
@@ -699,10 +741,21 @@ void PackageInstallParamsWidget::liblocsChanged (const QStringList &newlist) {
 
 RKRPackageInstallationStatus::RKRPackageInstallationStatus (QObject* parent) : QAbstractItemModel (parent) {
 	RK_TRACE (DIALOGS);
+	_initialized = false;
 }
 
 RKRPackageInstallationStatus::~RKRPackageInstallationStatus () {
 	RK_TRACE (DIALOGS);
+}
+
+QModelIndex RKRPackageInstallationStatus::markAllUpdatesForInstallation () {
+	RK_TRACE (DIALOGS);
+
+	// inefficient, but so what...
+	for (int i = updateable_packages_in_installed.count (); i >= 0; --i) {
+		markPackageForInstallation (installed_packages[updateable_packages_in_installed[i]]);
+	}
+	return index (UpdateablePackages, 0, QModelIndex ());
 }
 
 QModelIndex RKRPackageInstallationStatus::markPackageForInstallation (const QString& package_name) {
@@ -737,9 +790,11 @@ QModelIndex RKRPackageInstallationStatus::markPackageForInstallation (const QStr
 void RKRPackageInstallationStatus::initialize (RCommandChain *chain) {
 	RK_TRACE (DIALOGS);
 
+	_initialized = true;	// will be re-set to false, should the command fail / be cancelled
+
 	RCommand *command = new RCommand (".rk.get.package.intallation.state ()", RCommand::App | RCommand::GetStructuredData);
 	connect (command->notifier (), SIGNAL (commandFinished(RCommand*)), this, SLOT (statusCommandFinished(RCommand*)));
-	RKProgressControl *control = new RKProgressControl (this, i18n ("Please stand by while downloading the list of available packages."), i18n ("Fetching list"), RKProgressControl::CancellableProgress | RKProgressControl::AutoCancelCommands);
+	RKProgressControl *control = new RKProgressControl (this, i18n ("<p>Please stand by while searching for installed and available packages.</p><p><strong>Note:</strong> This requires a working internet connection.</p>"), i18n ("Searching for packages"), RKProgressControl::CancellableProgress | RKProgressControl::AutoCancelCommands);
 	control->addRCommand (command, true);
 	RKGlobals::rInterface ()->issueCommand (command, chain);
 	control->doModal (true);
@@ -750,6 +805,7 @@ void RKRPackageInstallationStatus::statusCommandFinished (RCommand *command) {
 
 	if (!command->succeeded ()) {
 		RK_ASSERT (false);
+		_initialized = false;
 		return;
 	}
 	RK_ASSERT (command->getDataType () == RCommand::StructureVector);
@@ -814,7 +870,7 @@ int RKRPackageInstallationStatus::rowCount (const QModelIndex &parent) const {
 
 	int row = parent.row ();
 	if (row == UpdateablePackages) return updateable_packages_in_available.count ();
-	if (row == NewPackages) return available_packages.count ();
+	if (row == NewPackages) return new_packages_in_available.count ();
 	if (row == InstalledPackages) return installed_packages.count ();
 
 	RK_ASSERT (false);
@@ -864,10 +920,11 @@ QVariant RKRPackageInstallationStatus::data (const QModelIndex &index, int role)
 			}
 		} else if (col == EnhancesRKWard) {
 			if (role == Qt::DisplayRole) return QVariant (QString (" "));	// must have a placeholder, here, or Qt will collapse the column
-			if (role == Qt::DecorationRole) {
+			if ((role == Qt::DecorationRole) || (role == Qt::UserRole)) {
 				bool enhance_rk;
 				if (prow == InstalledPackages) enhance_rk = enhance_rk_in_installed.value (irow);
 				else enhance_rk = enhance_rk_in_available.value (arow);
+				if (role == Qt::UserRole) return QVariant (enhance_rk);
 				if (enhance_rk) return QApplication::windowIcon ();
 			}
 		} else if (col == PackageName) {
@@ -988,6 +1045,35 @@ bool RKRPackageInstallationStatus::packagesToRemove (QStringList *packages, QStr
 		}
 	}
 	return anyfound;
+}
+
+
+RKRPackageInstallationStatusSortFilterModel::RKRPackageInstallationStatusSortFilterModel (QObject* parent) : QSortFilterProxyModel (parent) {
+	RK_TRACE (DIALOGS);
+}
+
+RKRPackageInstallationStatusSortFilterModel::~RKRPackageInstallationStatusSortFilterModel () {
+	RK_TRACE (DIALOGS);
+}
+
+bool RKRPackageInstallationStatusSortFilterModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
+	if (!left.parent ().isValid ()) {		// Disable sorting for the top level items
+		return (left.row () > right.row ());
+	}
+	if (left.column () == RKRPackageInstallationStatus::EnhancesRKWard) {
+		return (!left.data (Qt::UserRole).toBool ());
+	}
+	return QSortFilterProxyModel::lessThan (left, right);
+}
+
+bool RKRPackageInstallationStatusSortFilterModel::filterAcceptsRow (int source_row, const QModelIndex &source_parent) const {
+	if (!source_parent.isValid ()) return true;		// Never filter the top level item
+
+// filter on Name and Title
+	QString name = source_parent.child (source_row, RKRPackageInstallationStatus::PackageName).data ().toString ();
+	if (filterRegExp ().exactMatch (name)) return true;
+	QString title = source_parent.child (source_row, RKRPackageInstallationStatus::PackageTitle).data ().toString ();
+	return (filterRegExp ().exactMatch (title));
 }
 
 #include "rkloadlibsdialog.moc"

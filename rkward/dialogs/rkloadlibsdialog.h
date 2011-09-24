@@ -21,10 +21,12 @@
 
 #include <qstringlist.h>
 #include <QProcess>
+#include <QSortFilterProxyModel>
 
 #include "../settings/rksettingsmoduler.h"
 #include "../rbackend/rcommandreceiver.h"
 
+class QLineEdit;
 class QTreeView;
 class QTreeWidget;
 class QSortFilterProxyModel;
@@ -119,6 +121,7 @@ public slots:
 	void cancel ();
 	void updateInstalledPackages ();
 	void updateButtons ();
+	void activated ();
 protected:
 	void rCommandDone (RCommand *command);
 private:
@@ -184,9 +187,13 @@ public:
 /** mark a package for installation.
  * @returns the index of the package, if the package is available, an invalid index, if it is not available */
 	QModelIndex markPackageForInstallation (const QString& package_name);
+/** mark all available updates for installation.
+ * @returns the index of the "Updateable Packages" item */
+	QModelIndex markAllUpdatesForInstallation ();
 /** reset all installation states to NoAction */
 	void clearStatus ();
 	QStringList currentRepositories () const { return current_repos; };
+	bool initialized () const { return _initialized; };
 private slots:
 	void statusCommandFinished (RCommand *command);
 private:
@@ -200,8 +207,18 @@ private:
 	QVector<PackageStatusChange> installed_status;
 	QVector<PackageStatusChange> available_status;
 	QVector<bool> installed_has_update;
+	bool _initialized;
 
 	QStringList current_repos;
+};
+
+class RKRPackageInstallationStatusSortFilterModel : public QSortFilterProxyModel {
+public:
+	RKRPackageInstallationStatusSortFilterModel (QObject* parent = 0);
+	~RKRPackageInstallationStatusSortFilterModel ();
+protected:
+	bool lessThan (const QModelIndex &left, const QModelIndex &right) const;
+	bool filterAcceptsRow (int source_row, const QModelIndex &source_parent) const;
 };
 
 /**
@@ -217,18 +234,23 @@ public:
 	
 	~InstallPackagesWidget ();
 	void trySelectPackage (const QString &package_name);
+	void initialize ();
 public slots:
-	void getListButtonClicked ();
 	void ok ();
 	void apply ();
 	void cancel ();
+	void filterStringChanged (const QString &new_filter);
+	void activated ();
+	void markAllUpdates ();
 private:
+	void doInstall ();
 	void installPackages (const QStringList &list);
 	QTreeView *packages_view;
 	RKRPackageInstallationStatus *packages_status;
 	QSortFilterProxyModel *model;
 
-	QPushButton *get_list_button;
+	QPushButton *mark_all_updates_button;
+	QLineEdit *filter_edit;
 	PackageInstallParamsWidget *install_params;
 	
 	RKLoadLibsDialog *parent;
