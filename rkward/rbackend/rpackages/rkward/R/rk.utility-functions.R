@@ -90,3 +90,42 @@
 
 	return (as.character (getOption ("repos")["CRAN"]))
 }
+
+#' Slightly smarter variant of old.packages()
+#'
+#' For most purposes, this function is identical to old.packages(). However, if the same
+#' package is installed to different locations, in different versions, old.packages() will
+#' treat each of these installations separately. Thus, e.g. if lib.loc == c("A", "B") and
+#' package X is installed in B at an outdated version 0.1, but in A at the most recent version 0.2,
+#' old.packages() will report package X at B as old. In contrast rk.old.packages() will recognize
+#' that the current version is higher up in the path, and not report package X as old.
+#'
+#' @return a character vector of packages which are really old
+#'
+#' @author Thomas Friedrichsmeier \email{rkward-devel@@lists.sourceforge.net}
+#' @keywords attribute misc utilities
+#' @rdname rk.misc
+#' @examples
+#' 
+#' ## NOT RUN
+#' rk.old.packages()
+#' 
+"rk.old.packages" <- function (lib.loc = NULL, repos = getOption("repos"), contriburl = contrib.url(repos, type), instPkgs = installed.packages(lib.loc = lib.loc),
+                             method, available = NULL, checkBuilt = FALSE, type = getOption("pkgType")) {
+	if (is.null (lib.loc)) lib.loc <- .libPaths ()
+	if (is.null (available)) available <- available.packages ()
+
+	seen.packages <- character (0)
+	old <- NULL
+	for (l in lib.loc) {
+		# check packages in one location at a time
+		inst <- instPkgs[instPkgs[,"LibPath"] == l,]
+		old <- rbind (old, 
+			old.packages (lib.loc=l, repos=repos, contriburl=contriburl, instPkgs=inst, method=method, available=available, checkBuilt=checkBuilt, type=type))
+
+		# and discard any which are masked, before looking at further locations
+		seen.packages <- c (seen.packages, inst[, "Package"])
+		instPkgs <- instPkgs[!(instPkgs[, "Package"] %in% seen.packages),]
+	}
+	old
+}

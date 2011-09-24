@@ -96,7 +96,7 @@
 	# fetch all status information
 	available <- .rk.cached.available.packages ()
 	inst <- installed.packages (fields="Title")
-	old <- as.data.frame (old.packages (available=available), stringsAsFactors=FALSE)
+	old <- as.data.frame (rk.old.packages (available=available), stringsAsFactors=FALSE)
 	new <- new.packages (instPkgs=inst, available=available)
 
 	# convert info to a more suitable format
@@ -139,7 +139,7 @@
 	}
 
 	if (is.null(x)) {
-		x <- available.packages()
+		x <- available.packages(fields="Title")
 		.rk.variables$available.packages.cache <- list (cache = x, timestamp = Sys.time (), repos = options ("repos"))
 	}
 
