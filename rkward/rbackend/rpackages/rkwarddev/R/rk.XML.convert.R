@@ -1,9 +1,10 @@
 #' Create XML node convert for RKWard plugins
 #'
-#' @param sources A character vector with at least one value, resembling the \code{id} of
-#'		an existing element to be queried. If you want to examine the state or string value
-#'		specificly, just name the value accoringly, e.g.,
-#'		\code{sources=c("vars0", string="input1", state="chkbx2")}.
+#' @param sources A list with at least one value, either resembling the \code{id} of
+#'		an existing element to be queried as a character string, or a previously defined object
+#'		of class \code{XiMpLe.node} (whose \code{id} will be extracted and used). If you want
+#'		to examine the state or string value specificly, just name the value accoringly, e.g.,
+#'		\code{sources=list("vars0", string="input1", state="chkbx2")}.
 #' @param mode A named vector with either exactly one of the following elements:
 #'		\itemize{
 #'			\item{\code{equals}}{True if \code{sources} equals this value.}
@@ -64,9 +65,9 @@ rk.XML.convert <- function(sources, mode=c(), required=FALSE, id.name="auto"){
 		sources <- as.character(sapply(1:length(src.names), function(src.no){
 				this.modifier <- src.names[src.no]
 				if(nchar(this.modifier) > 0){
-					new.value <- paste(sources[src.no], this.modifier, sep=".")
+					new.value <- paste(check.ID(sources[[src.no]]), this.modifier, sep=".")
 				} else {
-					new.value <- sources[src.no]
+					new.value <- check.ID(sources[[src.no]])
 				}
 				return(new.value)
 			}))

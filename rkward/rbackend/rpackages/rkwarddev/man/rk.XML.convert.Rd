@@ -6,12 +6,14 @@
   id.name = "auto")
 }
 \arguments{
-  \item{sources}{A character vector with at least one
-  value, resembling the \code{id} of an existing element to
-  be queried. If you want to examine the state or string
-  value specificly, just name the value accoringly, e.g.,
-  \code{sources=c("vars0", string="input1",
-  state="chkbx2")}.}
+  \item{sources}{A list with at least one value, either
+  resembling the \code{id} of an existing element to be
+  queried as a character string, or a previously defined
+  object of class \code{XiMpLe.node} (whose \code{id} will
+  be extracted and used). If you want to examine the state
+  or string value specificly, just name the value
+  accoringly, e.g., \code{sources=list("vars0",
+  string="input1", state="chkbx2")}.}
 
   \item{mode}{A named vector with either exactly one of the
   following elements: \itemize{ \item{\code{equals}}{True

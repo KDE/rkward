@@ -16,7 +16,8 @@
 #'		Defaults to \code{TRUE}.
 #' @param lazyLoad Logical, whether the package should be prepared for lazy loading or not. Should be left \code{TRUE},
 #'		unless you have very good reasons not to.
-#' @param logic A character string with logic XML code, will be pasted as-is inside the \code{<logic>} section. 
+#' @param logic An object of class \code{XiMpLe.node} to be pasted as the \code{<logic>} section (see
+#'		\code{\link[rkwarddev:rk.XML.logic]{rk.XML.logic}}.
 #' @param JS.prep A character string with JavaScript code to be included in the \code{preprocess()} function. This string will be
 #'		pasted as-is, see \code{\link[rkwarddev:rk.JS.doc]{rk.JS.doc}}.
 #' @param JS.calc A character string with JavaScript code to be included in the \code{calculate()} function. This string will be

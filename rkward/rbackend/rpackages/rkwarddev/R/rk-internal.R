@@ -139,3 +139,25 @@ get.by.role <- function(persons, role="aut"){
 	filtered.persons <- Filter(role.filter, persons)
 	return(filtered.persons)
 } ## end function get.by.role()
+
+## function check.ID()
+check.ID <- function(node){
+	if(is.list(node)){
+		return(sapply(node, check.ID))
+	} else {}
+
+	if(inherits(node, "XiMpLe.node")){
+		node.ID <- node@attributes[["id"]]
+	} else if(is.character(node)){
+		node.ID <- node
+	} else {
+		stop(simpleError("Can't find an ID!"))
+	}
+
+	if(is.null(node.ID)){
+		warning("ID is NULL!")
+	} else {}
+
+	return(node.ID)
+}
+## end function check.ID()

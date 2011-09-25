@@ -1,7 +1,8 @@
 #' Create XML node "connect" for RKWard plugins
 #'
-#' @param governor Character string, the \code{id} if the property whose state should control
-#'		the \code{client}. Usually a \code{<convert>} node defined earlier (see
+#' @param governor Either a character string (the \code{id} of the property whose state should control
+#'		the \code{client}), or an object of class \code{XiMpLe.node} (whose \code{id} will be extracted
+#'		and used). Usually a \code{<convert>} node defined earlier (see
 #'		\code{\link[rkwarddev:rk.XML.convert]{rk.XML.convert}}), or the ".state" value of some
 #'		apropriate node.
 #' @param client Character string, the \code{id} if the element to be controlled by \code{governor}.
@@ -25,13 +26,23 @@ rk.XML.connect <- function(governor, client, set="enabled", reconcile=FALSE){
 		stop(simpleError("'governor' and 'client' must be of length 1!"))
 	} else {}
 
-	attr.list <- list(governor=as.character(governor))
+	# let's see if we need to extract IDs first
+	client.id <- check.ID(client)
+	governor.id <- check.ID(governor)
+	# if governor is an XML node but not <convert>, append ".state"
+	if(inherits(governor, "XiMpLe.node")){
+		if(!identical(governor@name, "convert")){
+			governor.id <- paste(governor.id, "state", sep=".")
+		} else {}
+	} else {}
+
+	attr.list <- list(governor=as.character(governor.id))
 
 	invalid.sets <- !set %in% c("enabled", "visible", "required")
 	if(length(set) > 1 | any(invalid.sets)){
 		stop(simpleError(paste("Invalid value for 'set': ", set, sep="")))
 	} else {
-		attr.list[["client"]] <- paste(client, set, sep=".")
+		attr.list[["client"]] <- paste(client.id, set, sep=".")
 	}
 
 	if(isTRUE(reconcile)){

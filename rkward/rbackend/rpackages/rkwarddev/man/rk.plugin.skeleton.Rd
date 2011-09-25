@@ -46,8 +46,9 @@
   prepared for lazy loading or not. Should be left
   \code{TRUE}, unless you have very good reasons not to.}
 
-  \item{logic}{A character string with logic XML code, will
-  be pasted as-is inside the \code{<logic>} section.}
+  \item{logic}{An object of class \code{XiMpLe.node} to be
+  pasted as the \code{<logic>} section (see
+  \code{\link[rkwarddev:rk.XML.logic]{rk.XML.logic}}.}
 
   \item{JS.prep}{A character string with JavaScript code to
   be included in the \code{preprocess()} function. This

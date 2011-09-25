@@ -6,9 +6,11 @@
   reconcile = FALSE)
 }
 \arguments{
-  \item{governor}{Character string, the \code{id} if the
-  property whose state should control the \code{client}.
-  Usually a \code{<convert>} node defined earlier (see
+  \item{governor}{Either a character string (the \code{id}
+  of the property whose state should control the
+  \code{client}), or an object of class \code{XiMpLe.node}
+  (whose \code{id} will be extracted and used). Usually a
+  \code{<convert>} node defined earlier (see
   \code{\link[rkwarddev:rk.XML.convert]{rk.XML.convert}}),
   or the ".state" value of some apropriate node.}
 

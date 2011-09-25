@@ -6,7 +6,9 @@
 #' @param wiz.children An optional list with objects of class \code{XiMpLe.node}. Will be included inside the top level node as the wizard code
 #'		(but only if \code{provides} includes \code{"wizard"} as well).
 #' @param help Logical, if \code{TRUE} an include tag for a help file named \emph{"<name>.rkh"} will be added to the header.
-#' @param logic Character string, will be pasted as-is inside the \code{<logic>} section (but only if \code{provides} includes \code{"logic"} as well). 
+#' @param logic An object of class \code{XiMpLe.node} to be pasted as the \code{<logic>} section
+#'		(but only if \code{provides} includes \code{"logic"} as well). See
+#'		\code{\link[rkwarddev:rk.XML.logic]{rk.XML.logic}} for details.
 #' @param provides Character vector with at least one entry of \code{"logic"}, \code{"dialog"} or \code{"wizard"}, defining what the document provides.
 #'		If \code{"logic"} is specified, a logic section will be added to the document. If \code{logic=NULL}, must be edited manually and is therefore commented out.
 #' @param pluginmap Character string, relative path to the pluginmap file, which will then be included in the head of this document.
@@ -64,17 +66,22 @@ rk.XML.plugin <- function(name, label, children=list(), wiz.children=list(), hel
 						name="!--",
 						value="<connect client=\"!edit!\", governor=\"!edit!\" />")
 				)
+			all.children[[length(all.children)+1]] <- new("XiMpLe.node",
+				name="logic",
+				children=lgc.children
+			)
 		} else {
-			lgc.children <- list(
-					new("XiMpLe.node",
-						name="",
-						value=logic)
-				)
+			# check if this is *really* a logic section, otherwise quit and go dancing
+			if(inherits(logic, "XiMpLe.node")){
+				logic.node.name <- logic@name
+			} else {
+				logic.node.name <- "yougottabekiddingme"
+			}
+			if(!identical(logic.node.name, "logic")){
+				stop(simpleError("I don't know what this is, but 'logic' is not a logic section!"))
+			} else {}
+			all.children[[length(all.children)+1]] <- logic
 		}
-		all.children[[length(all.children)+1]] <- new("XiMpLe.node",
-			name="logic",
-			children=lgc.children
-		)
 	} else {}
 
 	if("dialog" %in% provides){

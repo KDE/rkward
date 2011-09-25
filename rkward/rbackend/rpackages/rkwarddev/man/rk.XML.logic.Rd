@@ -12,13 +12,14 @@
   A list of objects of class \code{XiMpLe.node}.
 }
 \description{
-  This function will create a logic section with "convert"
-  and "connect" nodes.
+  This function will create a logic section with "convert",
+  "connect" ,"external" and "set" nodes.
 }
 \examples{
 test.convert <- rk.XML.convert(c(string="foo"), mode=c(notequals="bar"), id.name="lgc_foobar")
 test.connect <- rk.XML.connect(governor="lgc_foobar", client="frame_bar")
-test.logic <- rk.XML.logic(nodes=list(test.convert, test.connect))
+test.external <- rk.XML.external(id="ext_property", default="none")
+test.logic <- rk.XML.logic(nodes=list(test.convert, test.connect, test.external))
 cat(pasteXMLNode(test.logic, shine=1))
 }
 

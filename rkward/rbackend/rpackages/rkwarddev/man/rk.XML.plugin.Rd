@@ -25,9 +25,11 @@
   help file named \emph{"<name>.rkh"} will be added to the
   header.}
 
-  \item{logic}{Character string, will be pasted as-is
-  inside the \code{<logic>} section (but only if
-  \code{provides} includes \code{"logic"} as well).}
+  \item{logic}{An object of class \code{XiMpLe.node} to be
+  pasted as the \code{<logic>} section (but only if
+  \code{provides} includes \code{"logic"} as well). See
+  \code{\link[rkwarddev:rk.XML.logic]{rk.XML.logic}} for
+  details.}
 
   \item{provides}{Character vector with at least one entry
   of \code{"logic"}, \code{"dialog"} or \code{"wizard"},
