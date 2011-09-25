@@ -113,19 +113,19 @@
 "rk.old.packages" <- function (lib.loc = NULL, repos = getOption("repos"), contriburl = contrib.url(repos, type), instPkgs = installed.packages(lib.loc = lib.loc),
                              method, available = NULL, checkBuilt = FALSE, type = getOption("pkgType")) {
 	if (is.null (lib.loc)) lib.loc <- .libPaths ()
-	if (is.null (available)) available <- available.packages ()
+	if (is.null (available)) available <- available.packages (contriburl=contriburl, method=method)
 
 	seen.packages <- character (0)
 	old <- NULL
 	for (l in lib.loc) {
 		# check packages in one location at a time
-		inst <- instPkgs[instPkgs[,"LibPath"] == l,]
+		inst <- instPkgs[instPkgs[,"LibPath"] == l, , drop=FALSE]
 		old <- rbind (old, 
 			old.packages (lib.loc=l, repos=repos, contriburl=contriburl, instPkgs=inst, method=method, available=available, checkBuilt=checkBuilt, type=type))
 
 		# and discard any which are masked, before looking at further locations
 		seen.packages <- c (seen.packages, inst[, "Package"])
-		instPkgs <- instPkgs[!(instPkgs[, "Package"] %in% seen.packages),]
+		instPkgs <- instPkgs[!(instPkgs[, "Package"] %in% seen.packages), , drop=FALSE]
 	}
 	old
 }
