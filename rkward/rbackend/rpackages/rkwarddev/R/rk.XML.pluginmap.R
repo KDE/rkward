@@ -2,7 +2,7 @@
 #'
 #' @param name Character string, name of the plugin.
 #' @param about A list with descriptive information on the plugin,its authors and dependencies.
-#'		See \code{link[XiMpLe:rk.XML.about]{rk.XML.about}} for details!
+#'		See \code{link[XiMpLe:rk.XML.about]{rk.XML.about}} for details! Skipped if \code{NULL}.
 #' @param components A character vector with at least one plugin component file name,
 #'		ending with ".xml".
 #' @param plugin.dir Character string, relative path to the component XML and JS files.
@@ -11,7 +11,7 @@
 #'		\code{"data"}. To place your dialogs somewhere else, edit the pluginmap manually.
 #' @export
 
-rk.XML.pluginmap <- function(name, about, components, plugin.dir="plugins", hierarchy="analysis"){
+rk.XML.pluginmap <- function(name, about=NULL, components, plugin.dir="plugins", hierarchy="analysis"){
 	# to besure, remove all non-character symbols from name
 	name.orig <- name
 	name <- gsub("[[:space:]]*[^[:alnum:]]*", "", name)
@@ -23,6 +23,7 @@ rk.XML.pluginmap <- function(name, about, components, plugin.dir="plugins", hier
 	# - about
 	# - components
 	# - hierarchy
+	if(!is.null(about)){
 	about.XML <- rk.XML.about(
 		name=name.orig,
 		author=about[["author"]],
@@ -30,6 +31,11 @@ rk.XML.pluginmap <- function(name, about, components, plugin.dir="plugins", hier
 		dependencies=about[["dependencies"]],
 		package=about[["package"]],
 		pluginmap=about[["pluginmap"]])
+	} else {
+		about.XML <- new("XiMpLe.node",
+		name="!--",
+		value="<about></about>")
+	}
 
 	components.XML <- new("XiMpLe.node",
 		name="components",

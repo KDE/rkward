@@ -6,6 +6,7 @@ ChangeLog for package rkwarddev
   - added possibility to add custom XML code to the logic section with rk.XML.plugin()
     and rk.plugin.skeleton()
   - fixed id setting in rk.XML.browser()
+  - simplified rk.plugin.skeleton() and rk.XML.pluginmap() by making "about" entirely optional
 
 ## 0.01-4 (2011-09-22)
   - fixed wrong doc link and one wrong object name in rk.plugin.skeleton()

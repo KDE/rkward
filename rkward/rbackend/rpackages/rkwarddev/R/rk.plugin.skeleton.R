@@ -4,6 +4,7 @@
 #' @param about A list with descriptive information on the plugin, its authors and dependencies.
 #'		At the very least you must specify \code{name} and \code{author}.
 #'		See \code{\link[rkwarddev:rk.XML.about]{rk.XML.about}} for details and a full list of elements!
+#'		If \code{NULL}, no \code{DESCRIPTION} file will be created either.
 #' @param path Character sting, path to the main directory where the skeleton should be created.
 #' @param dialog A list of objects of class XiMpLe.node. If provided, will be included in the
 #'		created plugin XML file as the dialog.
@@ -97,7 +98,7 @@
 #'   dialog=test.tabbook, overwrite=TRUE)
 #' }
 
-rk.plugin.skeleton <- function(name, about, path=tempdir(), dialog=list(), wiz.dialog=list(),
+rk.plugin.skeleton <- function(name, about=NULL, path=tempdir(), dialog=list(), wiz.dialog=list(),
 	dial.require=c(), overwrite=FALSE, wizard=FALSE, tests=TRUE, lazyLoad=TRUE, logic=NULL,
 	JS.prep=NULL, JS.calc=NULL, JS.prnt=NULL, create=c("pmap", "xml", "js", "rkh", "desc"), edit=FALSE){
 	# to besure, remove all non-character symbols from name
@@ -106,15 +107,23 @@ rk.plugin.skeleton <- function(name, about, path=tempdir(), dialog=list(), wiz.d
 	if(!identical(name.orig, name)){
 		message(paste("For filenames ", sQuote(name.orig), " was renamed to ", sQuote(name), ".", sep=""))
 	} else {}
-	# create an about.node, which probably has some default values
-	about.node <- rk.XML.about(
-		name=about[["name"]],
-		author=about[["author"]],
-		about=about[["about"]],
-		dependencies=about[["dependencies"]],
-		package=about[["package"]],
-		pluginmap=about[["pluginmap"]]
-	)
+
+	if(!is.null(about)){
+		# create an about.node, which probably has some default values
+		about.node <- rk.XML.about(
+			name=about[["name"]],
+			author=about[["author"]],
+			about=about[["about"]],
+			dependencies=about[["dependencies"]],
+			package=about[["package"]],
+			pluginmap=about[["pluginmap"]]
+		)
+	} else {
+		about.node <- NULL
+		# also stop creation of DESCRIPTION file
+		create <- create[!create %in% "desc"]
+	}
+
 	# define paths an file names
 	main.dir <- file.path(path, name)
 	description.file <- file.path(main.dir, "DESCRIPTION")
@@ -225,7 +234,7 @@ rk.plugin.skeleton <- function(name, about, path=tempdir(), dialog=list(), wiz.d
 		cat(testsuite.doc, file=testsuite.file)
 	} else {}
 
-	# create DESCRIPTION file
+	## create DESCRIPTION file
 	if("desc" %in% create & isTRUE(checkCreateFiles(description.file))){
 		all.authors <- format(get.by.role(about[["author"]], role="aut"),
 			include=c("given", "family", "email"), braces=list(email=c("<", ">")))

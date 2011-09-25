@@ -2,8 +2,8 @@
 \alias{rk.plugin.skeleton}
 \title{Create skeleton for RKWard plugins}
 \usage{
-  rk.plugin.skeleton(name, about, path = tempdir(), dialog
-  = list(), wiz.dialog = list(), dial.require = c(),
+  rk.plugin.skeleton(name, about = NULL, path = tempdir(),
+  dialog = list(), wiz.dialog = list(), dial.require = c(),
   overwrite = FALSE, wizard = FALSE, tests = TRUE, lazyLoad
   = TRUE, logic = NULL, JS.prep = NULL, JS.calc = NULL,
   JS.prnt = NULL, create = c("pmap", "xml", "js", "rkh",
@@ -16,7 +16,8 @@
   plugin, its authors and dependencies. At the very least
   you must specify \code{name} and \code{author}. See
   \code{\link[rkwarddev:rk.XML.about]{rk.XML.about}} for
-  details and a full list of elements!}
+  details and a full list of elements! If \code{NULL}, no
+  \code{DESCRIPTION} file will be created either.}
 
   \item{path}{Character sting, path to the main directory
   where the skeleton should be created.}
