@@ -49,7 +49,10 @@ rk.XML.convert <- function(sources, mode=c(), required=FALSE, id.name="auto"){
 	} else {}
 
 	if(identical(id.name, "auto")){
-		attr.list <- list(id=auto.ids(paste(paste(sources, collapse=""), mode, sep=""), prefix=ID.prefix("logic")))
+		sourceValsForID <- sapply(sources, function(this.source){
+					return(check.ID(this.source))
+			})
+		attr.list <- list(id=auto.ids(paste(paste(sourceValsForID, collapse=""), mode, sep=""), prefix=ID.prefix("logic")))
 	} else if(!is.null(id.name)){
 		attr.list <- list(id=id.name)
 	} else {
