@@ -1,5 +1,8 @@
 #' Create XML node "connect" for RKWard plugins
 #'
+#' If you define a \code{XiMpLe.node} object as \code{governor} which is not a \code{<convert>} node,
+#' the function will automatically append ".state" to its \code{id}.
+#'
 #' @param governor Either a character string (the \code{id} of the property whose state should control
 #'		the \code{client}), or an object of class \code{XiMpLe.node} (whose \code{id} will be extracted
 #'		and used). Usually a \code{<convert>} node defined earlier (see
@@ -16,6 +19,11 @@
 #'		the \code{client} as well.
 #' @return A list of objects of class \code{XiMpLe.node}.
 #' @export
+#' @seealso
+#'		\code{\link[rkwarddev:rk.XML.convert]{rk.XML.convert}},
+#'		\code{\link[rkwarddev:rk.XML.external]{rk.XML.external}},
+#'		\code{\link[rkwarddev:rk.XML.logic]{rk.XML.logic}}
+#'		\code{\link[rkwarddev:rk.XML.set]{rk.XML.set}}
 #' @examples
 #' test.connect <- rk.XML.connect(governor="lgc_foobar", client="frame_bar")
 #' cat(pasteXMLNode(test.connect, shine=1))

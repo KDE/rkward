@@ -19,12 +19,17 @@
 #'			\item{\code{min}}{True if \code{sources} is at least this value. They must be numeric.}
 #'			\item{\code{max}}{True if \code{sources} is below this value. They must be numeric.}
 #'		}
-#' @param required Logical, sets the state of the \code{required\_true} attribute. If \code{TRUE},
+#' @param required Logical, sets the state of the \code{required_true} attribute. If \code{TRUE},
 #'		the plugin submit button is only enabled if this property is true.
 #' @param id.name Character string, a unique ID for this plugin element.
 #'		If \code{"auto"}, an ID will be generated automatically from the sources and mode value.
 #' @return A list of objects of class \code{XiMpLe.node}.
 #' @export
+#' @seealso
+#'		\code{\link[rkwarddev:rk.XML.connect]{rk.XML.connect}},
+#'		\code{\link[rkwarddev:rk.XML.external]{rk.XML.external}},
+#'		\code{\link[rkwarddev:rk.XML.logic]{rk.XML.logic}}
+#'		\code{\link[rkwarddev:rk.XML.set]{rk.XML.set}}
 #' @examples
 #' test.convert <- rk.XML.convert(c(string="foo"), mode=c(notequals="bar"))
 #' cat(pasteXMLNode(test.convert, shine=1))

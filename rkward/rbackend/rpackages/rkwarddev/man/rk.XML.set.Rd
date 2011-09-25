@@ -29,4 +29,10 @@
 test.set <- rk.XML.set(id="input_foo", set="required", to=TRUE)
 cat(pasteXMLNode(test.set, shine=1))
 }
+\seealso{
+  \code{\link[rkwarddev:rk.XML.convert]{rk.XML.convert}},
+  \code{\link[rkwarddev:rk.XML.connect]{rk.XML.connect}},
+  \code{\link[rkwarddev:rk.XML.external]{rk.XML.external}},
+  \code{\link[rkwarddev:rk.XML.logic]{rk.XML.logic}}
+}
 

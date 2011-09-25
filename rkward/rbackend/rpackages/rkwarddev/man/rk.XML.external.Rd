@@ -20,4 +20,10 @@
 test.external <- rk.XML.external(id="ext_property", default="none")
 cat(pasteXMLNode(test.external, shine=1))
 }
+\seealso{
+  \code{\link[rkwarddev:rk.XML.convert]{rk.XML.convert}},
+  \code{\link[rkwarddev:rk.XML.connect]{rk.XML.connect}},
+  \code{\link[rkwarddev:rk.XML.logic]{rk.XML.logic}}
+  \code{\link[rkwarddev:rk.XML.set]{rk.XML.set}}
+}
 

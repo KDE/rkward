@@ -33,10 +33,19 @@
   A list of objects of class \code{XiMpLe.node}.
 }
 \description{
-  Create XML node "connect" for RKWard plugins
+  If you define a \code{XiMpLe.node} object as
+  \code{governor} which is not a \code{<convert>} node, the
+  function will automatically append ".state" to its
+  \code{id}.
 }
 \examples{
 test.connect <- rk.XML.connect(governor="lgc_foobar", client="frame_bar")
 cat(pasteXMLNode(test.connect, shine=1))
+}
+\seealso{
+  \code{\link[rkwarddev:rk.XML.convert]{rk.XML.convert}},
+  \code{\link[rkwarddev:rk.XML.external]{rk.XML.external}},
+  \code{\link[rkwarddev:rk.XML.logic]{rk.XML.logic}}
+  \code{\link[rkwarddev:rk.XML.set]{rk.XML.set}}
 }
 

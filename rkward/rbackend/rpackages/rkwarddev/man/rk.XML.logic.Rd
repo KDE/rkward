@@ -16,10 +16,25 @@
   "connect" ,"external" and "set" nodes.
 }
 \examples{
-test.convert <- rk.XML.convert(c(string="foo"), mode=c(notequals="bar"), id.name="lgc_foobar")
-test.connect <- rk.XML.connect(governor="lgc_foobar", client="frame_bar")
-test.external <- rk.XML.external(id="ext_property", default="none")
-test.logic <- rk.XML.logic(nodes=list(test.convert, test.connect, test.external))
+# define an input field and two checkboxes
+test.input <- rk.XML.input("Type some text")
+test.cbox1 <- rk.XML.cbox(label="Want to type?", val="true")
+test.cbox2 <- rk.XML.cbox(label="Are you shure?", val="true")
+# now create some logic so that the input field is only enabled when both boxes are checked
+test.convert <- rk.XML.convert(c(state=test.cbox1,state=test.cbox2), mode=c(and=""))
+test.connect <- rk.XML.connect(governor=test.convert, client=test.input, set="enabled")
+test.logic <- rk.XML.logic(nodes=list(test.convert, test.connect))
 cat(pasteXMLNode(test.logic, shine=1))
+
+# with only one checkbox, you can directly query if it's checked
+test.connect2 <- rk.XML.connect(governor=test.cbox1, client=test.input, set="enabled")
+test.logic2 <- rk.XML.logic(nodes=list(test.connect2))
+cat(pasteXMLNode(test.logic2, shine=1))
+}
+\seealso{
+  \code{\link[rkwarddev:rk.XML.convert]{rk.XML.convert}},
+  \code{\link[rkwarddev:rk.XML.connect]{rk.XML.connect}},
+  \code{\link[rkwarddev:rk.XML.external]{rk.XML.external}},
+  \code{\link[rkwarddev:rk.XML.set]{rk.XML.set}}
 }
 
