@@ -1,7 +1,7 @@
 #' Create XML node "connect" for RKWard plugins
 #'
-#' If you define a \code{XiMpLe.node} object as \code{governor} which is not a \code{<convert>} node,
-#' the function will automatically append ".state" to its \code{id}.
+#' If you define a \code{XiMpLe.node} object as \code{governor} which is not a \code{<convert>} node
+#' and \code{not=FALSE}, the function will automatically append ".state" to its \code{id}.
 #'
 #' @param governor Either a character string (the \code{id} of the property whose state should control
 #'		the \code{client}), or an object of class \code{XiMpLe.node} (whose \code{id} will be extracted
@@ -9,6 +9,7 @@
 #'		\code{\link[rkwarddev:rk.XML.convert]{rk.XML.convert}}), or the ".state" value of some
 #'		apropriate node.
 #' @param client Character string, the \code{id} if the element to be controlled by \code{governor}.
+#' @param not Logical, if \code{TRUE}, the state of \code{governor} (\code{TRUE/FALSE}) will be inversed.
 #' @param set Character string, one of the following values:
 #'		\itemize{
 #'			\item{\code{"enabled"}}{If \code{governor} becomes true, \code{client} is enabled.}
@@ -28,7 +29,7 @@
 #' test.connect <- rk.XML.connect(governor="lgc_foobar", client="frame_bar")
 #' cat(pasteXMLNode(test.connect, shine=1))
 
-rk.XML.connect <- function(governor, client, set="enabled", reconcile=FALSE){
+rk.XML.connect <- function(governor, client, set="enabled", not=FALSE, reconcile=FALSE){
 
 	if(length(governor) > 1 | length(client) > 1){
 		stop(simpleError("'governor' and 'client' must be of length 1!"))
@@ -39,9 +40,12 @@ rk.XML.connect <- function(governor, client, set="enabled", reconcile=FALSE){
 	governor.id <- check.ID(governor)
 	# if governor is an XML node but not <convert>, append ".state"
 	if(inherits(governor, "XiMpLe.node")){
-		if(!identical(governor@name, "convert")){
+		if(!identical(governor@name, "convert") & !isTRUE(not)){
 			governor.id <- paste(governor.id, "state", sep=".")
 		} else {}
+	} else {}
+	if(isTRUE(not)){
+		governor.id <- paste(governor.id, "not", sep=".")
 	} else {}
 
 	attr.list <- list(governor=as.character(governor.id))

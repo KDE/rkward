@@ -10,8 +10,8 @@
   resembling the \code{id} of an existing element to be
   queried as a character string, or a previously defined
   object of class \code{XiMpLe.node} (whose \code{id} will
-  be extracted and used). If you want to examine the state
-  or string value specificly, just name the value
+  be extracted and used). If you want to examine e.g. the
+  state or string value specificly, just name the value
   accoringly, e.g., \code{sources=list("vars0",
   string="input1", state="chkbx2")}.}
 
@@ -44,7 +44,19 @@
   A list of objects of class \code{XiMpLe.node}.
 }
 \description{
-  Create XML node convert for RKWard plugins
+  The recognized property names for \code{sources} are the
+  following: \code{string}, \code{state}, \code{text},
+  \code{selected}, \code{root}, \code{available},
+  \code{source}, \code{number}, \code{enabled},
+  \code{checked}, \code{selection}, \code{parent},
+  \code{objectname}, \code{active}, \code{int},
+  \code{real}, \code{model}, \code{table}, \code{labels},
+  \code{fixed_factors}, \code{dependent} and \code{code}.
+  They are not globally valid for all XML elements, see the
+  section on "Properties of plugin elements" to see which
+  is useful for what tag. If \code{sources} holds
+  \code{XiMpLe.node} objects, the validity of properties is
+  automatically checked for that tag.
 }
 \examples{
 test.convert <- rk.XML.convert(c(string="foo"), mode=c(notequals="bar"))

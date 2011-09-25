@@ -161,3 +161,74 @@ check.ID <- function(node){
 	return(node.ID)
 }
 ## end function check.ID()
+
+## function prop.validity()
+# checks if a property is valid for an XML node, if source is XiMpLe.node
+# if bool=FALSE, returns the property or ""
+prop.validity <- function(source, property, ignore.empty=TRUE, warn.only=TRUE, bool=TRUE){
+	if(identical(property, "") & isTRUE(ignore.empty)){
+		if(isTRUE(bool)){
+			return(TRUE)
+		} else {
+			return(property)
+		}
+	} else {}
+
+	if(inherits(source, "XiMpLe.node")){
+		tag.name <- source@name
+	} else {
+		if(isTRUE(bool)){
+			return(TRUE)
+		} else {
+			return(property)
+		}
+	}
+
+	all.valid.props <- list(
+			all=c("visible", "enabled", "required"),
+			text=c("text"),
+			varselector=c("selected", "root"),
+			varslot=c("available", "selected", "source"),
+			radio=c("string", "number"),
+			dropdown=c("string", "number"),
+			# option=c(),
+			checkbox=c("state"),
+			frame=c("checked"),
+			input=c("text"),
+			browser=c("selection"),
+			saveobject=c("selection", "parent", "objectname", "active"),
+			spinbox=c("int", "real"),
+			formula=c("model", "table", "labels", "fixed_factors", "dependent"),
+			embed=c("code"),
+			preview=c("state")
+		)
+
+	if(tag.name %in% names(all.valid.props)){
+		valid.props <- c(all.valid.props[["all"]], all.valid.props[[tag.name]])
+	} else {
+		valid.props <- c(all.valid.props[["all"]])
+	}
+
+	invalid.prop <- !property %in% valid.props
+	if(any(invalid.prop)){
+		if(isTRUE(warn.only)){
+			warning(paste("Some property you provided is invalid for '",tag.name,"' and was ignored: ",
+				paste(property[invalid.prop], collapse=", "), sep=""))
+			if(isTRUE(bool)){
+				return(FALSE)
+			} else {
+				return("")
+			}
+		} else {
+			stop(simpleError(paste("Some property you provided is invalid for '",tag.name,"' and was ignored: ",
+				paste(property[invalid.prop], collapse=", "), sep="")))
+		}
+	} else {
+		if(isTRUE(bool)){
+			return(TRUE)
+		} else {
+			return(property)
+		}
+	}
+}
+## end function prop.validity()

@@ -2,8 +2,8 @@
 \alias{rk.XML.connect}
 \title{Create XML node "connect" for RKWard plugins}
 \usage{
-  rk.XML.connect(governor, client, set = "enabled",
-  reconcile = FALSE)
+  rk.XML.connect(governor, client, set = "enabled", not =
+  FALSE, reconcile = FALSE)
 }
 \arguments{
   \item{governor}{Either a character string (the \code{id}
@@ -16,6 +16,9 @@
 
   \item{client}{Character string, the \code{id} if the
   element to be controlled by \code{governor}.}
+
+  \item{not}{Logical, if \code{TRUE}, the state of
+  \code{governor} (\code{TRUE/FALSE}) will be inversed.}
 
   \item{set}{Character string, one of the following values:
   \itemize{ \item{\code{"enabled"}}{If \code{governor}
@@ -34,9 +37,9 @@
 }
 \description{
   If you define a \code{XiMpLe.node} object as
-  \code{governor} which is not a \code{<convert>} node, the
-  function will automatically append ".state" to its
-  \code{id}.
+  \code{governor} which is not a \code{<convert>} node and
+  \code{not=FALSE}, the function will automatically append
+  ".state" to its \code{id}.
 }
 \examples{
 test.connect <- rk.XML.connect(governor="lgc_foobar", client="frame_bar")
