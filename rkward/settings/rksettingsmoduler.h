@@ -121,6 +121,8 @@ public:
 	static QStringList makeRRunTimeOptionCommands ();
 
 	static bool archivePackages () { return archive_packages; }
+	static void addLibraryLocation (const QString& new_loc, RCommandChain *chain);
+	static QStringList libraryLocations () { return (liblocs + defaultliblocs); };
 
 /** returns the list of packages which are essential to rkward. This is hard-coded. */
 	static QStringList essentialPackages () { return essential_packages.split ("\n"); };
@@ -134,6 +136,8 @@ public slots:
 protected:
 	void rCommandDone (RCommand *command);
 private:
+	static QString libLocsCommand ();
+
 	MultiStringSelector *libloc_selector;
 	QCheckBox *archive_packages_box;
 	MultiStringSelector *repository_selector;

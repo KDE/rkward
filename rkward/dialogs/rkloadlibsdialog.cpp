@@ -162,18 +162,30 @@ void RKLoadLibsDialog::rCommandDone (RCommand *command) {
 	if (command->getFlags () == GET_CURRENT_LIBLOCS_COMMAND) {
 		RK_ASSERT (command->getDataType () == RData::StringVector);
 		RK_ASSERT (command->getDataLength () > 0);
-		QStringList current_library_locations;
+		library_locations.clear ();
 		for (unsigned int i=0; i < command->getDataLength (); ++i) {
-			current_library_locations.append (command->getStringVector ()[i]);
+			library_locations.append (command->getStringVector ()[i]);
 		}
-		emit (libraryLocationsChanged (current_library_locations));
+		emit (libraryLocationsChanged (library_locations));
 	} else {
 		RK_ASSERT (false);
 	}
 }
 
+void RKLoadLibsDialog::addLibraryLocation (const QString& new_loc) {
+	RK_TRACE (DIALOGS);
+
+	if (library_locations.contains (new_loc)) return;
+
+	if (QDir ().mkpath (new_loc)) RKSettingsModuleRPackages::addLibraryLocation (new_loc, chain);
+	library_locations.prepend (new_loc);
+	emit (libraryLocationsChanged (library_locations));
+}
+
 bool RKLoadLibsDialog::installPackages (const QStringList &packages, const QString &to_libloc, bool install_dependencies, bool as_root, const QStringList& repos) {
 	RK_TRACE (DIALOGS);
+
+	addLibraryLocation (to_libloc);
 
 	if (packages.isEmpty ()) return false;
 	QString command_string = "install.packages (pkgs=c (\"" + packages.join ("\", \"") + "\")" + ", lib=\"" + to_libloc + "\"";
@@ -548,6 +560,7 @@ InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog) : QWidge
 	packages_view->setEnabled (false);
 	packages_view->setMinimumHeight (packages_view->sizeHintForRow (0) * 15);	// force a decent height
 	hbox->addWidget (packages_view);
+	hbox->setStretchFactor (packages_view, 2);
 
 	QVBoxLayout *buttonvbox = new QVBoxLayout ();
 	hbox->addLayout (buttonvbox);
@@ -560,7 +573,7 @@ InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog) : QWidge
 	mark_all_updates_button = new QPushButton (i18n ("Select all updates"), this);
 	connect (mark_all_updates_button, SIGNAL (clicked()), this, SLOT (markAllUpdates()));
 
-	install_params = new PackageInstallParamsWidget (this, true);
+	install_params = new PackageInstallParamsWidget (this);
 	connect (parent, SIGNAL (libraryLocationsChanged (const QStringList &)), install_params, SLOT (liblocsChanged (const QStringList &)));
 
 	buttonvbox->addWidget (label);
@@ -586,16 +599,6 @@ void InstallPackagesWidget::activated () {
 
 	filter_edit->setFocus ();
 	if (!packages_status->initialized ()) initialize ();
-}
-
-void InstallPackagesWidget::installPackages (const QStringList &list) {
-	RK_TRACE (DIALOGS);
-	bool as_root = false;
-
-	if (list.isEmpty ()) return;
-	if (!install_params->checkWritable (&as_root)) return;
-
-	parent->installPackages (list, install_params->libraryLocation (), install_params->installDependencies (), as_root, packages_status->currentRepositories ());
 }
 
 void InstallPackagesWidget::initialize () {
@@ -633,24 +636,34 @@ void InstallPackagesWidget::markAllUpdates () {
 	packages_view->scrollTo (model->mapFromSource (index));
 }
 
-void InstallPackagesWidget::doInstall () {
+void InstallPackagesWidget::doInstall (bool refresh) {
 	RK_TRACE (DIALOGS);
 
-	installPackages (packages_status->packagesToInstall ());
-	packages_status->clearStatus ();
+	QStringList install = packages_status->packagesToInstall ();
+	if (!install.isEmpty ()) {
+		bool as_root = false;
+
+		QString dest = install_params->getInstallLocation (&as_root, parent->chain);
+		if (!dest.isEmpty ()) {
+			parent->installPackages (install, dest, install_params->installDependencies (), as_root, packages_status->currentRepositories ());
+			if (refresh) {
+				packages_status->clearStatus ();
+				initialize ();
+			}
+		}
+	}
 }
 
 void InstallPackagesWidget::apply () {
 	RK_TRACE (DIALOGS);
 
-	doInstall ();
-	initialize ();	// refresh list
+	doInstall (true);
 }
 
 void InstallPackagesWidget::ok () {
 	RK_TRACE (DIALOGS);
 
-	doInstall ();
+	doInstall (false);
 	deleteLater ();
 }
 
@@ -664,7 +677,7 @@ void InstallPackagesWidget::cancel () {
 #include <qcombobox.h>
 #include <qfileinfo.h>
 
-PackageInstallParamsWidget::PackageInstallParamsWidget (QWidget *parent, bool ask_depends) : QWidget (parent) {
+PackageInstallParamsWidget::PackageInstallParamsWidget (QWidget *parent) : QWidget (parent) {
 	RK_TRACE (DIALOGS);
 
 	QVBoxLayout *vbox = new QVBoxLayout (this);
@@ -673,14 +686,10 @@ PackageInstallParamsWidget::PackageInstallParamsWidget (QWidget *parent, bool as
 	libloc_selector = new QComboBox (this);
 	vbox->addWidget (libloc_selector);
 
-	if (ask_depends) {
-		dependencies = new QCheckBox (i18n ("Include dependencies"), this);
-		dependencies->setChecked (true);
-		vbox->addStretch ();
-		vbox->addWidget (dependencies);
-	} else {
-		dependencies = 0;
-	}
+	dependencies = new QCheckBox (i18n ("Include dependencies"), this);
+	dependencies->setChecked (true);
+	vbox->addStretch ();
+	vbox->addWidget (dependencies);
 }
 
 PackageInstallParamsWidget::~PackageInstallParamsWidget () {
@@ -690,44 +699,36 @@ PackageInstallParamsWidget::~PackageInstallParamsWidget () {
 bool PackageInstallParamsWidget::installDependencies () {
 	RK_TRACE (DIALOGS);
 
-	if (!dependencies) return false;
 	return dependencies->isChecked ();
 }
 
-QString PackageInstallParamsWidget::libraryLocation () {
-	RK_TRACE (DIALOGS);
-
-	return (libloc_selector->currentText ());
-}
-
-bool PackageInstallParamsWidget::checkWritable (bool *as_root) {
+QString PackageInstallParamsWidget::getInstallLocation (bool *as_root, RCommandChain *chain) {
 	RK_TRACE (DIALOGS);
 	RK_ASSERT (as_root);
 
-	QFileInfo fi = QFileInfo (libraryLocation ());
+	*as_root = false;
+	QString libloc = libloc_selector->currentText ();
+	QString altlibloc = QDir (RKSettingsModuleGeneral::filesPath ()).absoluteFilePath ("library");
+	QFileInfo fi = QFileInfo (libloc);
 	if (!fi.isWritable ()) {
 		QString mcaption = i18n ("Selected library location not writable");
-		QString message = i18n ("The directory you are trying to install to (%1) is not writable with your current user permissions. "
-			"You can chose a different library location to install to (if none are wirtable, you will probably want to use the "
-			"\"Configure Repositories\"-button to set up a writable directory to install package to).\n", libraryLocation ());
+		QString message = i18n ("<p>The directory you have selected for installation (%1) is not writable with your current user permissions.</p>"
+			"<p>Would you like to install to %2, instead (you can also press \"Cancel\" and use the \"Configure Repositories\"-button to set up a different directory)?</p>", libloc, altlibloc);
 #ifdef Q_WS_WIN
-		message.append (i18n ("If have access to an administrator account on this machine, you can use that to install the package(s), or "
-			"you could change the permissions of '%1'. Sorry, automatic switching to Administrator is not yet supported in RKWard on Windows", libraryLocation ()));
-		int res = KMessageBox::warningContinueCancel (this, message, mcaption, KGuiItem (i18n ("Attempt installation, anyway")));
-		if (res == KMessageBox::Continue) return true;
+		message.append (i18n ("<p>Alternatively, if you have access to an administrator account on this machine, you can use that to install the package(s), or "
+			"you could change the permissions of '%1'. Sorry, automatic switching to Administrator is not yet supported in RKWard on Windows.</p>", libloc));
+		int res = KMessageBox::warningContinueCancel (this, message, mcaption, KGuiItem (i18n ("Install to %1", altlibloc)));
+		if (res == KMessageBox::Continue) libloc = altlibloc;
 #else
-		message.append (i18n ("If you are the administrator of this machine, you can try to install the packages as root (you'll be prompted for the root password)."));
-		int res = KMessageBox::warningContinueCancel (this, message, mcaption, KGuiItem (i18n ("Become root")));
-		if (res == KMessageBox::Continue) {
-			*as_root = true;
-			return true;
-		}
+		message.append (i18n ("<p>Alternatively, if you are the administrator of this machine, you can try to install the packages as root (you'll be prompted for the root password).</p>"));
+		int res = KMessageBox::warningYesNoCancel (this, message, mcaption, KGuiItem (i18n ("Install to %1", altlibloc)), KGuiItem (i18n ("Become root")));
+		if (res == KMessageBox::Yes) libloc = altlibloc;
+		if (res == KMessageBox::No) *as_root = true;
 #endif
-		return false;
+		if (res == KMessageBox::Cancel) libloc = QString ();
 	}
 
-	*as_root = false;
-	return true;
+	return libloc;
 }
 
 void PackageInstallParamsWidget::liblocsChanged (const QStringList &newlist) {

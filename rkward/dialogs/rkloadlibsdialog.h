@@ -64,10 +64,11 @@ public:
 @param chain RCommandChain to run the necessary commands in
 @param package_name name of the required package */
 	static void showInstallPackagesModal (QWidget *parent, RCommandChain *chain, const QString &package_name);
+	QStringList currentLibraryLocations ()  const { return library_locations; };
 signals:
 	void downloadComplete ();
 	void installationComplete ();
-	void libraryLocationsChanged (const QStringList &);
+	void libraryLocationsChanged (const QStringList &liblocs);
 	void installationOutput (const QString &output);
 	void installationError (const QString &error);
 	void installedPackagesChanged ();
@@ -84,6 +85,7 @@ protected slots:
 	void automatedInstall ();
 	void slotPageChanged ();
 private:
+	void addLibraryLocation (const QString &new_loc);
 	void tryDestruct ();
 friend class LoadUnloadWidget;
 friend class InstallPackagesWidget;
@@ -91,6 +93,8 @@ friend class InstallPackagesWidget;
 
 	InstallPackagesWidget *install_packages_widget;	// needed for automated installation
 	KPageWidgetItem *install_packages_pageitem;
+
+	QStringList library_locations;
 
 	QString auto_install_package;
 	int num_child_widgets;
@@ -243,8 +247,7 @@ public slots:
 	void activated ();
 	void markAllUpdates ();
 private:
-	void doInstall ();
-	void installPackages (const QStringList &list);
+	void doInstall (bool refresh);
 	QTreeView *packages_view;
 	RKRPackageInstallationStatus *packages_status;
 	QSortFilterProxyModel *model;
@@ -264,13 +267,12 @@ Simple helper class for RKLoadLibsDialog to allow selection of installation para
 class PackageInstallParamsWidget : public QWidget {
 Q_OBJECT
 public:
-	PackageInstallParamsWidget (QWidget *parent, bool ask_depends);
+	PackageInstallParamsWidget (QWidget *parent);
 	
 	~PackageInstallParamsWidget ();
 
 	bool installDependencies ();
-	QString libraryLocation ();
-	bool checkWritable (bool *as_root);
+	QString getInstallLocation (bool *as_root, RCommandChain *chain);
 public slots:
 	void liblocsChanged (const QStringList &newlist);
 private:

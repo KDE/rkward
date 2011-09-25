@@ -366,6 +366,15 @@ RKSettingsModuleRPackages::~RKSettingsModuleRPackages () {
 	RK_TRACE (SETTINGS);
 }
 
+void RKSettingsModuleRPackages::addLibraryLocation (const QString& new_loc, RCommandChain *chain) {
+	RK_TRACE (SETTINGS);
+
+	if (!libraryLocations ().contains (new_loc)) liblocs.append (new_loc);
+
+	// update the backend in any case. User might have changed liblocs, there.
+	RKGlobals::rInterface ()->issueCommand (".libPaths (unique (c (" + RObject::rQuote (new_loc) + ", .libPaths ())))", RCommand::App | RCommand::Sync, QString (), 0, 0, chain);
+}
+
 void RKSettingsModuleRPackages::settingChanged () {
 	RK_TRACE (SETTINGS);
 	change ();
@@ -421,8 +430,25 @@ void RKSettingsModuleRPackages::rCommandDone (RCommand *command) {
 	}
 }
 
+QString RKSettingsModuleRPackages::libLocsCommand () {
+	RK_TRACE (SETTINGS);
+
+	QString command = ".libPaths (unique (c (";
+	bool first = true;
+	QStringList ll = libraryLocations ();
+	foreach (const QString libloc, ll) {
+		if (first) first = false;
+		else command.append (", ");
+		command.append (RObject::rQuote (libloc));
+	}
+	command.append (")))");
+
+	return command;
+}
+
 //static
 QStringList RKSettingsModuleRPackages::makeRRunTimeOptionCommands () {
+	RK_TRACE (SETTINGS);
 	QStringList list;
 
 // package repositories
@@ -433,20 +459,7 @@ QStringList RKSettingsModuleRPackages::makeRRunTimeOptionCommands () {
 	list.append (command + "))\n");
 
 // library locations
-	command = ".libPaths (unique (c (";
-	bool first = true;
-	for (QStringList::const_iterator it = liblocs.begin (); it != liblocs.end (); ++it) {
-		if (first) first = false;
-		else command.append (", ");
-		command.append ("\"" + *it + "\"");
-	}
-	for (QStringList::const_iterator it = defaultliblocs.begin (); it != defaultliblocs.end (); ++it) {
-		if (first) first = false;
-		else command.append (", ");
-		command.append ("\"" + *it + "\"");
-	}
-	command.append (")))");
-	list.append (command);
+	list.append (libLocsCommand ());
 
 	return list;
 }
