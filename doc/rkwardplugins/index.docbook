@@ -402,7 +402,7 @@ But how does R syntax get generated from the GUI-settings? I'll deal with that i
 		&lt;wizard label="Independent Samples T-Test"&gt;
 			&lt;page id="firstpage"&gt;
 				&lt;text&gt;As a first step, select the two variables you want to compare against each other. And specify, which one you theorize to be greater. Select two-sided, if your theory does not tell you, which variable is greater.&lt;/text&gt;
-				&lt;copy id="main_settings_row/&gt;
+				&lt;copy id="main_settings_row"/&gt;
 			&lt;/page&gt;
 	</programlisting>
 	<para>
