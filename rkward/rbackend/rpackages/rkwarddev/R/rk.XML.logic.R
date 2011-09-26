@@ -28,13 +28,13 @@
 
 rk.XML.logic <- function(nodes){
 	# check the node names and allow only valid ones
-	node.names <- sapply(nodes, function(this.node){
+	node.names <- sapply(child.list(nodes), function(this.node){
 			this.node@name
 		})
 
 	invalid.sets <- !node.names %in% c("connect", "convert","external","set")
 	if(any(invalid.sets)){
-		stop(simpleError(paste("Invalid XML nodes for logic section: ", paste(invalid.sets, collapse=", "), sep="")))
+		stop(simpleError(paste("Invalid XML nodes for logic section: ", paste(node.names[invalid.sets], collapse=", "), sep="")))
 	} else {}
 
 	node <- new("XiMpLe.node",

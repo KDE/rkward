@@ -4,17 +4,18 @@
 \usage{
   rk.XML.varslot(label, source, required = FALSE, multi =
   FALSE, min = 1, any = 1, max = 0, dim = 0, min.len = 0,
-  max.len = NULL, classes = NULL, types = NULL, src.label =
-  FALSE, id.name = "auto")
+  max.len = NULL, classes = NULL, types = NULL, id.name =
+  "auto")
 }
 \arguments{
   \item{label}{Character string, a text label for the
   varslot.}
 
-  \item{source}{Character string with either the \code{id}
-  name of the \code{varselector} to select variables from,
-  or the label value used for that \code{varselector} (if
-  \code{src.label=TRUE}).}
+  \item{source}{Either a character string (the \code{id}
+  name of the \code{varselector} to select variables from),
+  or an object of class \code{XiMpLe.node} (whose \code{id}
+  will be extracted and used, must be a
+  \code{<varselector>} node).}
 
   \item{required}{Logical, whether the selection of
   variables is mandatory or not.}
@@ -52,15 +53,6 @@
   user should not be prevented from making valid choices,
   and rkward does not always know the type of a variable!}
 
-  \item{src.label}{Logical, determines how to treat
-  \code{source}. If \code{TRUE}, the value of \code{source}
-  is assumed to be the label rather than the ID of the
-  corresponding \code{varselector}. The ID is then
-  generated automatically, using the same heuristics as
-  \code{\link[rkwarddev:rk.XML.vars]{rk.XML.vars}}. This
-  ensures the IDs are identical without needing to know
-  them beforehand.}
-
   \item{id.name}{Character vector, unique ID for the
   varslot. If \code{"auto"}, the ID will be generated
   automatically from \code{label}.}
@@ -73,8 +65,13 @@
 }
 \examples{
 \dontrun{
-test.varslot <- rk.XML.varslot("Vars go here", sources=c("selector.id"))
+test.varselector <- rk.XML.varselector("Select some vars")
+test.varslot <- rk.XML.varslot("Vars go here", source=test.varselector)
 cat(pasteXMLNode(test.varslot, shine=1))
 }
+}
+\seealso{
+  \code{\link[rkwarddev:rk.XML.vars]{rk.XML.vars}},
+  \code{\link[rkwarddev:rk.XML.varselector]{rk.XML.varselector}}
 }
 

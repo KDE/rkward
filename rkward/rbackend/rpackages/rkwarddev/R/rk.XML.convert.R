@@ -31,7 +31,8 @@
 #' @param required Logical, sets the state of the \code{required_true} attribute. If \code{TRUE},
 #'		the plugin submit button is only enabled if this property is true.
 #' @param id.name Character string, a unique ID for this plugin element.
-#'		If \code{"auto"}, an ID will be generated automatically from the sources and mode value.
+#'		If \code{"auto"}, an ID will be generated automatically from the \code{sources}
+#'		and \code{mode} value.
 #' @return A list of objects of class \code{XiMpLe.node}.
 #' @export
 #' @seealso

@@ -6,19 +6,23 @@
 #'		See \code{\link[rkwarddev:rk.XML.about]{rk.XML.about}} for details and a full list of elements!
 #'		If \code{NULL}, no \code{DESCRIPTION} file will be created either.
 #' @param path Character sting, path to the main directory where the skeleton should be created.
-#' @param dialog A list of objects of class XiMpLe.node. If provided, will be included in the
-#'		created plugin XML file as the dialog.
-#' @param wiz.dialog Like \code{dialog}, but will be included as the wizard dialog code (and only if \code{wizard=TRUE} as well).
+#' @param dialog An object of class \code{XiMpLe.node} to be pasted as the \code{<dialog>} section
+#'		(but only if \code{provides} includes \code{"dialog"} as well). See
+#'		\code{\link[rkwarddev:rk.XML.dialog]{rk.XML.dialog}} for details.
+#' @param wizard An object of class \code{XiMpLe.node} to be pasted as the \code{<wizard>} section
+#'		(but only if \code{provides} includes \code{"wizard"} as well). See
+#'		\code{\link[rkwarddev:rk.XML.wizard]{rk.XML.wizard}} for details.
+#' @param logic An object of class \code{XiMpLe.node} to be pasted as the \code{<logic>} section
+#'		(but only if \code{provides} includes \code{"logic"} as well). See
+#'		\code{\link[rkwarddev:rk.XML.logic]{rk.XML.logic}} for details.
+#' @param provides Character vector with at least one entry of \code{"logic"}, \code{"dialog"} or \code{"wizard"}, defining what the plugin XML provides.
+#'		If \code{"logic"} is specified, a logic section will be added to the document. If \code{logic=NULL}, must be edited manually and is therefore commented out.
 #' @param dial.require A character vector with names of R packages that the dialog requires.
 #' @param overwrite Logical, whether existing files should be replaced. Defaults to \code{FALSE}.
-#' @param wizard Logical, whether a \code{<wizard>} section should be added to the \code{<dialog>} section.
-#'		Defaults to \code{FALSE}.
 #' @param tests Logical, whether directories and files for plugin tests should be created.
 #'		Defaults to \code{TRUE}.
 #' @param lazyLoad Logical, whether the package should be prepared for lazy loading or not. Should be left \code{TRUE},
 #'		unless you have very good reasons not to.
-#' @param logic An object of class \code{XiMpLe.node} to be pasted as the \code{<logic>} section (see
-#'		\code{\link[rkwarddev:rk.XML.logic]{rk.XML.logic}}.
 #' @param JS.prep A character string with JavaScript code to be included in the \code{preprocess()} function. This string will be
 #'		pasted as-is, see \code{\link[rkwarddev:rk.JS.doc]{rk.JS.doc}}.
 #' @param JS.calc A character string with JavaScript code to be included in the \code{calculate()} function. This string will be
@@ -89,17 +93,15 @@
 #'     rk.XML.cbox(label="bar", val="bar2"))
 #'   ))
 #' test.vars <- rk.XML.vars("select some vars", "vars go here")
-#' test.tabbook <- rk.XML.tabbook("My Tabbook", tab.labels=c("First Tab",
-#'   "Second Tab"), children=list(test.checkboxes, test.vars))
-#' test.plugin <- rk.XML.plugin("My test", label="Check this out",
-#'   children=test.tabbook)
+#' test.tabbook <- rk.XML.dialog(rk.XML.tabbook("My Tabbook", tab.labels=c("First Tab",
+#'   "Second Tab"), children=list(test.checkboxes, test.vars)))
 #' 
 #' rk.plugin.skeleton("Square the Circle", about=about.info,
 #'   dialog=test.tabbook, overwrite=TRUE)
 #' }
 
-rk.plugin.skeleton <- function(name, about=NULL, path=tempdir(), dialog=list(), wiz.dialog=list(),
-	dial.require=c(), overwrite=FALSE, wizard=FALSE, tests=TRUE, lazyLoad=TRUE, logic=NULL,
+rk.plugin.skeleton <- function(name, about=NULL, path=tempdir(), dialog=NULL, wizard=NULL, logic=NULL,
+	provides=c("logic", "dialog"), dial.require=c(), overwrite=FALSE, tests=TRUE, lazyLoad=TRUE,
 	JS.prep=NULL, JS.calc=NULL, JS.prnt=NULL, create=c("pmap", "xml", "js", "rkh", "desc"), edit=FALSE){
 	# to besure, remove all non-character symbols from name
 	name.orig <- name
@@ -171,18 +173,13 @@ rk.plugin.skeleton <- function(name, about=NULL, path=tempdir(), dialog=list(), 
 
 	## create plugin.xml
 	if("xml" %in% create & isTRUE(checkCreateFiles(plugin.xml))){
-		if(isTRUE(wizard))
-			plugin.provides <- c("logic","dialog","wizard")
-		else {
-			plugin.provides <- c("logic","dialog")
-		}
 		XML.plugin <- rk.XML.plugin(
 			name=name,
 			label=name.orig,
-			children=dialog,
-			wiz.children=wiz.dialog,
+			dialog=dialog,
+			wizard=wizard,
 			logic=logic,
-			provides=plugin.provides,
+			provides=provides,
 			pluginmap=paste("../", name, ".pluginmap", sep=""))
 		cat(pasteXMLTree(XML.plugin, shine=1), file=plugin.xml)
 		if(isTRUE(edit)){

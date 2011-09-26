@@ -1,8 +1,9 @@
 #' Create a XML node "varslot" for RKWard plugins
 #'
 #' @param label Character string, a text label for the varslot.
-#' @param source Character string with either the \code{id} name of the \code{varselector} to select variables
-#'		from, or the label value used for that \code{varselector} (if \code{src.label=TRUE}).
+#' @param source Either a character string (the \code{id} name of the \code{varselector} to select variables
+#'		from), or an object of class \code{XiMpLe.node} (whose \code{id} will be extracted and used, must be
+#'		a \code{<varselector>} node).
 #' @param required Logical, whether the selection of variables is mandatory or not.
 #' @param multi Logical, whether the varslot holds only one or several objects.
 #' @param min If \code{multi=TRUE} defines how many objects must be selected.
@@ -20,22 +21,29 @@
 #'		types. Valid types are "unknown", "number", "string", "factor", "invalid". Optional, use with great care,
 #'		the user should not be prevented from making valid choices, and rkward does not always know the type
 #'		of a variable!
-#' @param src.label Logical, determines how to treat \code{source}. If \code{TRUE}, the value of \code{source}
-#'		is assumed to be the label rather than the ID of the corresponding \code{varselector}. The ID is then generated
-#'		automatically, using the same heuristics as \code{\link[rkwarddev:rk.XML.vars]{rk.XML.vars}}. This
-#'		ensures the IDs are identical without needing to know them beforehand.
 #' @param id.name Character vector, unique ID for the varslot.
 #'		If \code{"auto"}, the ID will be generated automatically from \code{label}.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
+#' @seealso
+#'		\code{\link[rkwarddev:rk.XML.vars]{rk.XML.vars}},
+#'		\code{\link[rkwarddev:rk.XML.varselector]{rk.XML.varselector}}
 #' @examples
 #' \dontrun{
-#' test.varslot <- rk.XML.varslot("Vars go here", sources=c("selector.id"))
+#' test.varselector <- rk.XML.varselector("Select some vars")
+#' test.varslot <- rk.XML.varslot("Vars go here", source=test.varselector)
 #' cat(pasteXMLNode(test.varslot, shine=1))
 #' }
 
 rk.XML.varslot <- function(label, source, required=FALSE, multi=FALSE, min=1, any=1, max=0,
-	dim=0, min.len=0, max.len=NULL, classes=NULL, types=NULL, src.label=FALSE, id.name="auto"){
+	dim=0, min.len=0, max.len=NULL, classes=NULL, types=NULL, id.name="auto"){
+	if(inherits(source, "XiMpLe.node")){
+		source.name <- source@name
+		if(!identical(source.name, "varselector")){
+			stop(simpleError(paste("'source' must be a <varselector> node! You provided: <", source.name, ">", sep="")))
+		} else {}
+	} else {}
+
 	if(identical(id.name, "auto")){
 		var.slot.attr <- list(id=auto.ids(label, prefix=ID.prefix("varslot", length=4)))
 	} else if(!is.null(id.name)){
@@ -44,12 +52,7 @@ rk.XML.varslot <- function(label, source, required=FALSE, multi=FALSE, min=1, an
 	
 	var.slot.attr[["label"]] <- label
 
-	if(isTRUE(src.label)){
-		# grab this from rk.XML.vars()
-		var.slot.attr[["source"]] <- auto.ids(source, prefix=ID.prefix("varselector", length=3))
-	} else {
-		var.slot.attr[["source"]] <- source
-	}
+	var.slot.attr[["source"]] <- check.ID(source)
 
 	if(!is.null(classes)){
 		var.slot.attr[["classes"]] <- paste(classes, collapse=" ")

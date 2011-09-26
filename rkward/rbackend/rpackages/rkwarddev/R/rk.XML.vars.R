@@ -1,8 +1,11 @@
 #' Create a variable selector for RKWard plugins
 #'
-#' This function will create a <frame> node including a <varselector> and a <varslot> node.
+#' This function will create a <frame> node including a <varselector> and a <varslot> node. It is
+#' actually a wrapper for \code{\link[rkwarddev:rk.XML.varslot]{rk.XML.varslot}} and
+#' \code{\link[rkwarddev:rk.XML.varselector]{rk.XML.varselector}}, since you usually won't define one
+#' without the other.
 #'
-#' @param label Character string, a text label for the whole frame.
+#' @param label Character string, a text label for the variable browser.
 #' @param slot.text Character string, a text label for the variable selection slot.
 #' @param required Logical, whether the selection of variables is mandatory or not.
 #' @param multi Logical, whether the varslot holds only one or several objects.
@@ -24,33 +27,39 @@
 #' @param horiz Logical. If \code{TRUE}, the varslot will be placed next to the selector,
 #'		if \code{FALSE} below it.
 #' @param add.nodes A list of objects of class \code{XiMpLe.node} to be placed after the varslot.
+#' @param frame.label Character string, a text label for the whole frame.
 #' @param id.name Character vector, unique IDs for the frame (first entry), the varselector (second entry)
 #'		and varslot (third entry).
 #'		If \code{"auto"}, IDs will be generated automatically from \code{label} and \code{slot.text}.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
+#' @seealso
+#'		\code{\link[rkwarddev:rk.XML.varslot]{rk.XML.varslot}},
+#'		\code{\link[rkwarddev:rk.XML.varselector]{rk.XML.varselector}}
 #' @examples
 #' test.vars <- rk.XML.vars("Select some vars", "Vars go here")
 #' cat(pasteXMLNode(test.vars, shine=1))
 
 rk.XML.vars <- function(label, slot.text, required=FALSE, multi=FALSE, min=1, any=1, max=0,
-	dim=0, min.len=0, max.len=NULL, classes=NULL, types=NULL, horiz=TRUE, add.nodes=NULL, id.name="auto"){
+	dim=0, min.len=0, max.len=NULL, classes=NULL, types=NULL, horiz=TRUE, add.nodes=NULL, frame.label=NULL, id.name="auto"){
 	if(identical(id.name, "auto")){
 		## if this ID generation get's changed, change it in rk.XML.varslot(), too!
 		var.sel.attr <- list(id=auto.ids(label, prefix=ID.prefix("varselector", length=3)))
-		var.slot.id <- auto.ids(label, prefix=ID.prefix("varslot", length=4))
+		var.slot.id <- auto.ids(slot.text, prefix=ID.prefix("varslot", length=4))
 	} else if(!is.null(id.name)){
 		var.sel.attr <- list(id=id.name[[2]])
 		var.slot.id <- id.name[[3]]
 	} else {}
-	
-	v.selector <- new("XiMpLe.node",
-		name="varselector",
-		attributes=var.sel.attr)
+
+	var.sel.attr[["label"]] <- label
+
+	v.selector <- rk.XML.varselector(
+		label=label,
+		id.name=var.sel.attr[["id"]])
 
 	v.slot <- rk.XML.varslot(
 		label=slot.text,
-		source=var.sel.attr[["id"]],
+		source=v.selector,
 		required=required,
 		multi=multi,
 		min=min,
@@ -79,7 +88,7 @@ rk.XML.vars <- function(label, slot.text, required=FALSE, multi=FALSE, min=1, an
 
 	vars.frame <- rk.XML.frame(
 		children=child.list(aligned.chld),
-		label=label,
+		label=frame.label,
 		id.name=id.name[[1]])
 
 	return(vars.frame)

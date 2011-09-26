@@ -5,11 +5,12 @@
   rk.XML.vars(label, slot.text, required = FALSE, multi =
   FALSE, min = 1, any = 1, max = 0, dim = 0, min.len = 0,
   max.len = NULL, classes = NULL, types = NULL, horiz =
-  TRUE, add.nodes = NULL, id.name = "auto")
+  TRUE, add.nodes = NULL, frame.label = NULL, id.name =
+  "auto")
 }
 \arguments{
-  \item{label}{Character string, a text label for the whole
-  frame.}
+  \item{label}{Character string, a text label for the
+  variable browser.}
 
   \item{slot.text}{Character string, a text label for the
   variable selection slot.}
@@ -56,6 +57,9 @@
   \item{add.nodes}{A list of objects of class
   \code{XiMpLe.node} to be placed after the varslot.}
 
+  \item{frame.label}{Character string, a text label for the
+  whole frame.}
+
   \item{id.name}{Character vector, unique IDs for the frame
   (first entry), the varselector (second entry) and varslot
   (third entry). If \code{"auto"}, IDs will be generated
@@ -66,10 +70,19 @@
 }
 \description{
   This function will create a <frame> node including a
-  <varselector> and a <varslot> node.
+  <varselector> and a <varslot> node. It is actually a
+  wrapper for
+  \code{\link[rkwarddev:rk.XML.varslot]{rk.XML.varslot}}
+  and
+  \code{\link[rkwarddev:rk.XML.varselector]{rk.XML.varselector}},
+  since you usually won't define one without the other.
 }
 \examples{
 test.vars <- rk.XML.vars("Select some vars", "Vars go here")
 cat(pasteXMLNode(test.vars, shine=1))
+}
+\seealso{
+  \code{\link[rkwarddev:rk.XML.varslot]{rk.XML.varslot}},
+  \code{\link[rkwarddev:rk.XML.varselector]{rk.XML.varselector}}
 }
 

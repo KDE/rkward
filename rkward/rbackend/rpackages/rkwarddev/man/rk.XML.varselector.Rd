@@ -1,0 +1,28 @@
+\name{rk.XML.varselector}
+\alias{rk.XML.varselector}
+\title{Create node "varselector" for RKWard plugins}
+\usage{
+  rk.XML.varselector(label, id.name = "auto")
+}
+\arguments{
+  \item{label}{Character string, a text label for the
+  variable selection slot.}
+
+  \item{id.name}{Character vector, unique ID for this
+  element.}
+}
+\value{
+  An object of class \code{XiMpLe.node}.
+}
+\description{
+  Create node "varselector" for RKWard plugins
+}
+\examples{
+test.varselector <- rk.XML.varselector("Select some vars")
+cat(pasteXMLNode(test.varselector, shine=1))
+}
+\seealso{
+  \code{\link[rkwarddev:rk.XML.varslot]{rk.XML.varslot}},
+  \code{\link[rkwarddev:rk.XML.vars]{rk.XML.vars}}
+}
+

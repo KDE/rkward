@@ -38,7 +38,8 @@
 
   \item{id.name}{Character string, a unique ID for this
   plugin element. If \code{"auto"}, an ID will be generated
-  automatically from the sources and mode value.}
+  automatically from the \code{sources} and \code{mode}
+  value.}
 }
 \value{
   A list of objects of class \code{XiMpLe.node}.
