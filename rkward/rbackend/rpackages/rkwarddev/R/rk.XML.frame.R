@@ -9,7 +9,7 @@
 #' @export
 #' @examples
 #' test.dropdown <- rk.XML.dropdown("mydrop",
-#'   opts=list("First Option"=c(val="val1"),
+#'   options=list("First Option"=c(val="val1"),
 #'   "Second Option"=c(val="val2", chk=TRUE)))
 #' cat(pasteXMLNode(rk.XML.frame(test.dropdown, label="Some options"), shine=1))
 

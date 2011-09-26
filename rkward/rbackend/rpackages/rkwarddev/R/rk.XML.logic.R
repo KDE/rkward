@@ -13,8 +13,8 @@
 #' @examples
 #' # define an input field and two checkboxes
 #' test.input <- rk.XML.input("Type some text")
-#' test.cbox1 <- rk.XML.cbox(label="Want to type?", val="true")
-#' test.cbox2 <- rk.XML.cbox(label="Are you shure?", val="true")
+#' test.cbox1 <- rk.XML.cbox(label="Want to type?", value="true")
+#' test.cbox2 <- rk.XML.cbox(label="Are you shure?", value="true")
 #' # now create some logic so that the input field is only enabled when both boxes are checked
 #' test.convert <- rk.XML.convert(c(state=test.cbox1,state=test.cbox2), mode=c(and=""))
 #' test.connect <- rk.XML.connect(governor=test.convert, client=test.input, set="enabled")

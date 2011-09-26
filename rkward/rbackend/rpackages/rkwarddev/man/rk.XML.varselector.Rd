@@ -2,11 +2,12 @@
 \alias{rk.XML.varselector}
 \title{Create node "varselector" for RKWard plugins}
 \usage{
-  rk.XML.varselector(label, id.name = "auto")
+  rk.XML.varselector(label = NULL, id.name = "auto")
 }
 \arguments{
   \item{label}{Character string, a text label for the
-  variable selection slot.}
+  variable selection slot. Must be set if
+  \code{id.name="auto"}.}
 
   \item{id.name}{Character vector, unique ID for this
   element.}

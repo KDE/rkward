@@ -17,7 +17,7 @@
 #' @param max.len The maximum length, an object needs to have. If \code{NULL}, defaults to the largest
 #'		integer number representable on the system.
 #' @param classes An optional character vector, defining class names to which the selection must be limited.
-#' @param types If you specify one or more variables types here, the varslot will only accept objects of those
+#' @param type If you specify one or more variables types here, the varslot will only accept objects of those
 #'		types. Valid types are "unknown", "number", "string", "factor", "invalid". Optional, use with great care,
 #'		the user should not be prevented from making valid choices, and rkward does not always know the type
 #'		of a variable!
@@ -36,7 +36,7 @@
 #' }
 
 rk.XML.varslot <- function(label, source, required=FALSE, multi=FALSE, min=1, any=1, max=0,
-	dim=0, min.len=0, max.len=NULL, classes=NULL, types=NULL, id.name="auto"){
+	dim=0, min.len=0, max.len=NULL, classes=NULL, type=NULL, id.name="auto"){
 	if(inherits(source, "XiMpLe.node")){
 		source.name <- source@name
 		if(!identical(source.name, "varselector")){
@@ -57,9 +57,14 @@ rk.XML.varslot <- function(label, source, required=FALSE, multi=FALSE, min=1, an
 	if(!is.null(classes)){
 		var.slot.attr[["classes"]] <- paste(classes, collapse=" ")
 	} else {}
-	if(!is.null(types)){
-		valid.types <- types[types %in% c("unknown", "number", "string", "factor", "invalid")]
-		var.slot.attr[["types"]] <- paste(valid.types, collapse=" ")
+	if(!is.null(type)){
+		valid.types <- c("unknown", "numeric", "string", "factor", "invalid")
+		invalid.type <- !type %in% valid.types
+		if(invalid.type){
+			warning(paste("You provided invalid types for varslot, they were ignored: ", paste(type, collapse=", "), sep=""))
+			type <- ""
+		} else {}
+		var.slot.attr[["type"]] <- paste(type, collapse=" ")
 	} else {}
 	if(isTRUE(required)){
 		var.slot.attr[["required"]] <- "true"

@@ -2,15 +2,15 @@
 \alias{rk.XML.dropdown}
 \title{Create XML node "dropdown" for RKWard plugins}
 \usage{
-  rk.XML.dropdown(label, opts = list(label = c(val = NULL,
-  chk = FALSE)), id.name = "auto")
+  rk.XML.dropdown(label, options = list(label = c(val =
+  NULL, chk = FALSE)), id.name = "auto")
 }
 \arguments{
   \item{label}{Character string, a text label for this
   plugin element.}
 
-  \item{opts}{A named list with options to choose from. The
-  names of the list elements will become labels of the
+  \item{options}{A named list with options to choose from.
+  The names of the list elements will become labels of the
   options, \code{val} defines the value to submit if the
   option is checked, and \code{chk=TRUE} should be set in
   the one option which is checked by default.}
@@ -28,7 +28,7 @@
 }
 \examples{
 test.dropdown <- rk.XML.dropdown("mydrop",
-opts=list("First Option"=c(val="val1"),
+options=list("First Option"=c(val="val1"),
 "Second Option"=c(val="val2", chk=TRUE)))
 cat(pasteXMLNode(test.dropdown, shine=1))
 }
