@@ -15,8 +15,8 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
 "group_id=50231&atid=459007\n"
 "POT-Creation-Date: 2011-09-26 15:48+0200\n"
-"PO-Revision-Date: 2011-09-19 01:46+0000\n"
-"Last-Translator: Stefan Rödiger <Unknown>\n"
+"PO-Revision-Date: 2011-09-26 22:49+0200\n"
+"Last-Translator: Stefan Rödiger <stefan_roediger@gmx.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -24,7 +24,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Launchpad-Export-Date: 2011-09-20 05:14+0000\n"
-"X-Generator: Launchpad (build 13980)\n"
+"X-Generator: Lokalize 1.2\n"
 
 #: agents/rkeditobjectagent.cpp:56
 msgid ""
@@ -64,9 +64,8 @@ msgid ""
 msgstr ""
 
 #: agents/rkprintagent.cpp:70
-#, fuzzy
 msgid "Unable to open KDE print dialog"
-msgstr "\"%1\" konnte nicht geöffnet werden"
+msgstr "KDE Druckdialog kann nicht geöffnet werden"
 
 #: agents/rkquitagent.cpp:41
 msgid ""
@@ -515,7 +514,7 @@ msgstr "Lokale Pakete"
 
 #: dialogs/rkloadlibsdialog.cpp:71
 msgid "Install / Update / Remove"
-msgstr ""
+msgstr "Installieren / Aktualisieren / Entfernen"
 
 #: dialogs/rkloadlibsdialog.cpp:73
 msgid "Configure Repositories"
@@ -523,9 +522,8 @@ msgstr "Konfiguriere Repositories"
 
 #: dialogs/rkloadlibsdialog.cpp:195 dialogs/rkloadlibsdialog.cpp:202
 #: dialogs/rkloadlibsdialog.cpp:233
-#, fuzzy
 msgid "Package %1 at %2"
-msgstr "Paket"
+msgstr "Pakete %1 bei %2"
 
 #: dialogs/rkloadlibsdialog.cpp:208
 msgid ""
@@ -537,17 +535,20 @@ msgstr ""
 
 #: dialogs/rkloadlibsdialog.cpp:208
 msgid "Not removing certain packages"
-msgstr ""
+msgstr "Entferne bestimmte Pakete nicht"
 
 #: dialogs/rkloadlibsdialog.cpp:214
 msgid ""
 "Your current user permissions do not allow removing the following packages. "
 "These will be skipped."
 msgstr ""
+"Ihre gegenwärtigen Nutzerrechte erlauben nicht das entfernen der folgenden "
+"Pakete. "
+"Diese werden übersprungen."
 
 #: dialogs/rkloadlibsdialog.cpp:214 dialogs/rkloadlibsdialog.cpp:217
 msgid "Insufficient user permissions"
-msgstr ""
+msgstr "Ungenügende Nutzerbefugnisse"
 
 #: dialogs/rkloadlibsdialog.cpp:217
 msgid ""
@@ -561,21 +562,21 @@ msgid ""
 "You are about to remove the following packages. Are you sure you want to "
 "proceed?"
 msgstr ""
+"Sie beabsichtigen die folgenden Pakete zu entfernen. Sind Sie sicher das Sie "
+"fortfahren "
+"wollen?"
 
 #: dialogs/rkloadlibsdialog.cpp:239
-#, fuzzy
 msgid "About to remove packages"
-msgstr "Geladene Pakete"
+msgstr "Beabsichtige Pakete zu entfernen"
 
 #: dialogs/rkloadlibsdialog.cpp:242
-#, fuzzy
 msgid "Please stand by while removing selected packages"
-msgstr "Bitte warten Sie während die gewählten Pakete installiert werden"
+msgstr "Bitte warten Sie während die gewählten Pakete entfernt werden"
 
 #: dialogs/rkloadlibsdialog.cpp:242
-#, fuzzy
 msgid "Removing packages"
-msgstr "Installiere Pakete"
+msgstr "Entferne Pakete"
 
 #: dialogs/rkloadlibsdialog.cpp:256
 msgid "Selected library location not writable"
@@ -696,7 +697,7 @@ msgstr ""
 
 #: dialogs/rkloadlibsdialog.cpp:655
 msgid "Show only packages matching:"
-msgstr ""
+msgstr "Zeige nur Pakete mit folgender Übereinstimmung:"
 
 #: dialogs/rkloadlibsdialog.cpp:657
 msgid ""
@@ -707,7 +708,7 @@ msgstr ""
 
 #: dialogs/rkloadlibsdialog.cpp:661
 msgid "Select all updates"
-msgstr ""
+msgstr "Wähle alle Updates"
 
 #: dialogs/rkloadlibsdialog.cpp:716
 msgid ""
@@ -741,9 +742,8 @@ msgid ""
 msgstr ""
 
 #: dialogs/rkloadlibsdialog.cpp:874
-#, fuzzy
 msgid "Searching for packages"
-msgstr "Installiere Pakete"
+msgstr "Suche nach Paketen"
 
 #: dialogs/rkloadlibsdialog.cpp:935 rbackend/rcommandstack.cpp:400
 msgid "Status"
@@ -773,16 +773,15 @@ msgstr ""
 
 #: dialogs/rkloadlibsdialog.cpp:946
 msgid "<p>Installed and / or available version of the package</p>"
-msgstr ""
+msgstr "<p>Installierte und / oder verfügbare Versionen von diesem Paket</p>"
 
 #: dialogs/rkloadlibsdialog.cpp:947
 msgid "<p>Location where the package is installed / available</p>"
-msgstr ""
+msgstr "<p>Ort wo das Paket installiert / verfügbar ist</p>"
 
 #: dialogs/rkloadlibsdialog.cpp:970
-#, fuzzy
 msgid "Updateable Packages"
-msgstr "Installierte Pakete"
+msgstr "Aktualisierbare Pakete"
 
 #: dialogs/rkloadlibsdialog.cpp:971
 msgid ""
@@ -791,9 +790,8 @@ msgid ""
 msgstr ""
 
 #: dialogs/rkloadlibsdialog.cpp:973
-#, fuzzy
 msgid "New Packages"
-msgstr "Paket"
+msgstr "Neue Pakete"
 
 #: dialogs/rkloadlibsdialog.cpp:974
 msgid ""
@@ -802,7 +800,6 @@ msgid ""
 msgstr ""
 
 #: dialogs/rkloadlibsdialog.cpp:976
-#, fuzzy
 msgid "Installed Packages"
 msgstr "Installierte Pakete"
 
@@ -856,7 +853,9 @@ msgid_plural ""
 "<p>%1 workspace recovery files exist in <i>%2</i>, the most recent one of "
 "which is <i>%3</i>.</p>"
 msgstr[0] ""
-"<p>Eine Workspace-Wiederherstellung existiert in <i>%2</i> als <i>%3</i>.</p>"
+"<p>Eine Workspace-Wiederherstellungsdateis existiert in <i>%2</i> als <i>%3<"
+"/i>.</p>"
+msgstr[1] ""
 
 #: dialogs/rkrecoverdialog.cpp:45
 msgid ""
@@ -1691,7 +1690,7 @@ msgstr ""
 
 #: rkconsole.cpp:75
 msgid "'katepart' component could not be found"
-msgstr ""
+msgstr "'katepart' Komponente konnte nicht gefunden werden"
 
 #: rkconsole.cpp:119
 msgid "R Console"
@@ -2182,23 +2181,22 @@ msgstr ""
 "Behalte automatisch gespeicherte Dateien (Backups) nach manueller Speicherung"
 
 #: settings/rksettingsmodulecommandeditor.cpp:117
-#, fuzzy
 msgid "Opening script files"
-msgstr "Öffne R-Skriptdatei(en)"
+msgstr "Öffne Skriptdatei(en)"
 
 #: settings/rksettingsmodulecommandeditor.cpp:119
 msgid "Number of scripts in recent file lists (*)"
-msgstr ""
+msgstr "Anzahl von Skripten in der Liste zuletzt geöffneter Dateien (*)"
 
 #: settings/rksettingsmodulecommandeditor.cpp:122
 msgid ""
 "<p>The number of recent files to remember (in the Open Recent R Script File "
 "menu).</p>"
-msgstr ""
+msgstr "<p>Anzahl der letzten Dateien (im Öffne letzte Skriptdatei Menü)</p>"
 
 #: settings/rksettingsmodulecommandeditor.cpp:128
 msgid "R script file filters (separated by spaces)"
-msgstr ""
+msgstr "R-Skript Dateifilter (getrennt mit Leerzeichen)"
 
 #: settings/rksettingsmodulecommandeditor.cpp:131
 msgid ""
@@ -2393,7 +2391,7 @@ msgstr "Standardhöhe (Zoll (inches))"
 
 #: settings/rksettingsmodulegraphics.cpp:61
 msgid "Use KDE printer dialog for printing devices (if available)"
-msgstr ""
+msgstr "Nutze KDE-Druckerdiaglog für Druckergeräte (falls verfügbar)"
 
 #: settings/rksettingsmodulegraphics.cpp:66
 msgid "Screen device history"
@@ -2590,9 +2588,8 @@ msgid ""
 msgstr ""
 
 #: settings/rksettingsmoduleplugins.cpp:217
-#, fuzzy
 msgid "New plugins found"
-msgstr "Keine (gültigen) Plugins gefunden"
+msgstr "Neue Plugins gefunden"
 
 #: settings/rksettingsmoduler.cpp:69
 msgid ""
@@ -2685,6 +2682,7 @@ msgstr "Pager-Kommando"
 #: settings/rksettingsmoduler.cpp:178
 msgid "Further (option) commands to run in each session"
 msgstr ""
+"Weitere (Optionen) Kommandos die in jeder Sitzung ausgeführt werden sollen"
 
 #: settings/rksettingsmoduler.cpp:200
 msgid "R-Backend"
@@ -2830,7 +2828,7 @@ msgstr "Skripteditor"
 
 #: windows/rkcommandeditorwindow.cpp:198
 msgid "Insert line break and run"
-msgstr ""
+msgstr "Füge Zeilenumbruch ein und führe aus"
 
 #: windows/rkcommandeditorwindow.cpp:203
 msgid "Run block"
