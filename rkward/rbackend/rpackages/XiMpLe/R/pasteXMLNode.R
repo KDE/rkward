@@ -38,10 +38,11 @@ pasteXMLNode <- function(node, level=1, shine=2, indent.by="\t"){
 		node.empty <- TRUE
 	}
 
+	# take care of text value
 	if(length(node.val) > 0){
 		node.empty <- FALSE
 		if(nchar(node.val) > 0){
-			node.chld <- node.val
+			node.chld <- paste(new.indent, paste(node.val, collapse=" "), new.node, sep="")
 		} else {}
 	} else {}
 

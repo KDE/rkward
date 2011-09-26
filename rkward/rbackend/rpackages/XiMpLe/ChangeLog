@@ -1,5 +1,8 @@
 ChangeLog for package XiMpLe
 
+## 0.03-3 (2011-09-26)
+  - changed handling of 'value' in pasteXMLNode(), now reflects 'shine' setting/indentation
+
 ## 0.03-2 (2011-09-17)
   - added docs for classed XiMpLe.doc and XiMpLe.node
 
