@@ -9,8 +9,6 @@ Bugs outside RKWard:
 	- KDE 4
 		- why is the icon style only honored for mainToolBar (in KXMLGUIBuilder)? It looks like this is done on purpose, but why???
 			- http://lists.kde.org/?l=kde-core-devel&m=103307809508725&w=2
-		- Windows:
-			- KStandardDirs::findExe() does not find .bat or .com (prevents rkward icon from inclusion in KDE menu)
 
 Bugs:
 	- XMLGUI:
@@ -49,10 +47,8 @@ UI-stuff
 		- pre-defined snippets to base scripts on
 		- custom snippets
 		- can be categorized by keywords / search
-	- Check for existence of php binary on startup, not only when loading a plugin
 	- RKEditorDataFrame
 		- undo/redo
-			- KDE4
 		- deletion of multiple columns in one step
 		- when pasting a large array, rows should not be added one by one. Suggested algorithm:
 			- if we find out we've already pasted 100 rows, first check, how many more are to come and add this many both to the variable and to the R workspace. Can potentially avoid *lots* of work
@@ -69,24 +65,16 @@ UI-stuff
 			- delay of factor-level popup
 		- highlighting of value ranges
 	- Create an editor for single vectors/factors, or rework RKEditorDataFrame to handle those as well
-	- Rework package management dialog
-		- the UI should probably be simplified somehow. But how? All in a single list with "filter"? Ask for ideas/look at other apps
-			- this will be very hard to do with the current Qt. We'd really need several checkboxes *within* a QListViewItem. Tackle this when/after porting to Qt4
-		- add option to remove packages
-		- smooth handling of updating packages installed in different repositories
+	- Package management dialog
 		- auto-updating functionality (every x days, every new session, never; see https://sourceforge.net/mailarchive/message.php?msg_id=37960665)
+		- What about the checkBuilt-option to old.packages()
 	- RObjectListView
 		- double click action should be configurable: View, Edit, insert name into current script, insert name into console, nothing
-		- context menu action "detach" for package environments (probably with a warning, at least for base packages)
 	- RKConsole:
 		- is tab completion for file names still crashy?
 			- currently, problem seems to be inside KUrlCompletion
-		- one additional newline character printed with every line
-		- Console should start a command chain when submitting a batch of pasted commands
-		- Better yet, the commands might be autosplit in the backend. Need to think about how to design this correctly, though
-		- Allow pasting at other positions than line end
+		- Fix pasting at other positions than line end
 		- Prevent cursor from venturing into lines other than the last line
-		- When inside a string, should offer tab-completion for system paths (will maybe have to wait for KDE4, when we get better clues, what context we are currently in)
 		- Allow multi-line command editing?
 	- Script editor:
 		- code completion
@@ -96,15 +84,12 @@ UI-stuff
 		- deal better with overlapping blocks in the script editor (brush merging?)
 	- RKConsole / Script editor:
 		- highlight only valid function names
-	- RKHelpSerachWindow:
-		- call .rk.get.installed.packages, and update package selection drop down on every show, but not on startup? Really? Maybe both.
 	- RKVarslot:
 		- when adding vars to a multi varslot, these should become selected (so you can removed them again with a single click)
 	- RKVarselector:
 		- pop-up-able selectors (maybe more generic, not only for varselectors): Like a "Browse" button
 	- RKCommandLog:
 		- optionally keep a file log!
-	- hot-key/permanent icon to cancel current command / hold processing. Perhaps in the busy/idle indicator?
 	- find out how to save toolbar states properly in parts-GUI
 		- also setting the toolbar state for all windows with that toolbar
 	- David's usability items
@@ -132,8 +117,6 @@ UI-stuff
 		- R-Backend-Settings:
 			- the options should gain a "use default" checkbox to cope with changing R option defaults
 			- tooltips for the options on "R-Backend" tab about the internal R-function call
-		- option for a default CRAN mirror, so as not to load the tcl/tk interface everytime
-			- may be have a drop down menu for the available mirrors instead of tcl/tk which can be fetched just once
 	- UI geometry:
 		- see https://sourceforge.net/mailarchive/forum.php?thread_name=200704181922.07780.michellang%40gmail.com&forum_name=rkward-devel
 		- save size/proportions of R script file, R console, Workspace browser...
@@ -141,7 +124,6 @@ UI-stuff
 	- project/session handling: files, workspace, current working directory.
 	- file system browser tab
 		- a way to inline pdf/ps/jpg/png files like in KDevelop?
-	- provide a menu action / shortcut to switch to the directory of the current script file.
 	- Quitting:
 		- instead of closing windows one by one, and asking to save changes if necessary, first list all windows that might need to be saved, let the user chose to save them, then close all windows without further questions.
 	- Vignettes:
@@ -149,21 +131,12 @@ UI-stuff
 		- Add a vignettes browser to the help menu
 		- Add context menu with vignettes to package environments in object browser
 			- likely, package environments should try to fetch vignettes, when "updating"
-	- rcontrolwindow:
-		- this does not really need to be a top-level tool window any more. Since it's rarely used, it might be hidden somewhere.
 
 Internal stuff:
 	- RCommand deletion
 		- dealing synchronously with commands (e.g. via a modal RKProgressControl) would be so much easier, if the commands would not be deleted quite as soon!
 	- rklocalesupport:
 		- does locale switching / detection work? Does Qt have something, yet?
-	- Workspace browser / code completion
-		- we might make this a bit less pro-active:
-			- only objects directly on the search path need to be fetched at once
-			- children of these objects do not need to be investigated until we first try to access a child of the object.
-			- i.e. RContainerobject::children() should handle fetching the child structure (numChildren() should probably be populated pro-actively).
-			- isParentOf() should not be affected, as this can only be true for a child object that has previously been investigated
-			- need to make sure, completions are not blocking
 	- Handling fonts:
 		- http://sourceforge.net/mailarchive/forum.php?thread_id=31631211&forum_id=12970
 	- Look at package odfWeave, and find out, how to use this
@@ -173,7 +146,6 @@ Internal stuff:
 		- True Support for Logicals
 		- In the current design, RKVariable would not handle storage mode changes from outside well at all
 		- use QIntDict instead of string-map for value-labels / factor levels? Qt4: QHash
-	- call toplevel handlers for user/console commands?
 	RCommandReceiver:
 		- add virtual rCommandStarted () function, so receivers can find out, when their command becomes active
 	REmbedInternal:
@@ -194,7 +166,6 @@ Internal stuff:
 		- Detection of commands that run for a suspiciously long time
 			- Show "do you want to cancel ..." option after configurable amount of time
 	- use R_DirtyImage to determine, whether workspace needs to be saved
-	- in REmbedInternal, add extractTemporaryStrings (), for strings that do not have to be copied
 	- Object editing / modification tracking:
 		- functions to set double/int/string-vectors directly. Use in paste-operations
 	- error-handling/raising in .rk.do.call
@@ -204,11 +175,7 @@ Internal stuff:
 	- give informative feedback on syntax errors (line numbers, etc.)!
 	- .rk.get.available.packages ()
 		- use external (file) storage for cache to save mem
-	- can the mutex be made non-recursive? I think so, but don't recall
-	- the whole idea of having a single mutex for everything is flawed. We should use several specialized ones
-	- When saving workplace layout, save it relative to the workspace file. Allows to move the workspace, easier
-		- KURL::relativeUrl()
-		- How to deal with workplaces saved in the config (and not bound to a workspace file?)
+	- Always save workplace layout to a file, never to config. Even for the "global" option.
 	- all RKComponents:
 		- in the documentation we call the return value of value() the "default property". Why not simply define a "default property" for each component, instead of reimplementing value()?
 
@@ -254,9 +221,6 @@ R plugins:
 		- provide the set of enclosed options for each of the selected variables
 		- will provide dynamic properties based on which variables are selected in the source
 		- how to determine default values?
-
-Documentation:
-	- add an example to show rkward-specific commands (rk.print, rk.graph)
 
 API documentation:
 	- add page containing a rough overview of general architecture
