@@ -369,7 +369,7 @@ RKSettingsModuleRPackages::~RKSettingsModuleRPackages () {
 void RKSettingsModuleRPackages::addLibraryLocation (const QString& new_loc, RCommandChain *chain) {
 	RK_TRACE (SETTINGS);
 
-	if (!libraryLocations ().contains (new_loc)) liblocs.append (new_loc);
+	if (!libraryLocations ().contains (new_loc)) liblocs.prepend (new_loc);
 
 	// update the backend in any case. User might have changed liblocs, there.
 	RKGlobals::rInterface ()->issueCommand (".libPaths (unique (c (" + RObject::rQuote (new_loc) + ", .libPaths ())))", RCommand::App | RCommand::Sync, QString (), 0, 0, chain);

@@ -57,7 +57,8 @@ public:
 
 	~RKLoadLibsDialog ();
 
-	bool installPackages (const QStringList &packages, const QString &to_libloc, bool install_dependencies, bool as_root, const QStringList& repos);
+	bool installPackages (const QStringList &packages, QString to_libloc, bool install_dependencies, const QStringList& repos);
+	bool removePackages (QStringList packages, QStringList from_liblocs);
 
 /** opens a modal RKLoadLibsDialog with the "Install new Packages" tab on front (To be used when a require () fails in the R backend
 @param parent parent QWidget. The dialog will be centered there
@@ -87,6 +88,7 @@ protected slots:
 private:
 	void addLibraryLocation (const QString &new_loc);
 	void tryDestruct ();
+	void runInstallationCommand (const QString& command, bool as_root, const QString& message, const QString& title);
 friend class LoadUnloadWidget;
 friend class InstallPackagesWidget;
 	RCommandChain *chain;
@@ -272,7 +274,7 @@ public:
 	~PackageInstallParamsWidget ();
 
 	bool installDependencies ();
-	QString getInstallLocation (bool *as_root, RCommandChain *chain);
+	QString installLocation ();
 public slots:
 	void liblocsChanged (const QStringList &newlist);
 private:

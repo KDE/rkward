@@ -44,6 +44,7 @@
 #include "../core/robjectlist.h"
 #include "../misc/rkprogresscontrol.h"
 #include "../misc/rkstandardicons.h"
+#include "../misc/rkcommonfunctions.h"
 
 #include "../debug.h"
 
@@ -182,12 +183,95 @@ void RKLoadLibsDialog::addLibraryLocation (const QString& new_loc) {
 	emit (libraryLocationsChanged (library_locations));
 }
 
-bool RKLoadLibsDialog::installPackages (const QStringList &packages, const QString &to_libloc, bool install_dependencies, bool as_root, const QStringList& repos) {
+bool RKLoadLibsDialog::removePackages (QStringList packages, QStringList from_liblocs) {
 	RK_TRACE (DIALOGS);
+
+	bool as_root = false;
+	QStringList not_removing;
+	QStringList not_writable;
+	QList<int> not_writable_int;
+	for (int i = 0; i < packages.count (); ++i) {
+		if (RKSettingsModuleRPackages::essentialPackages ().contains (packages[i])) {
+			not_removing.append (i18n ("Package %1 at %2", packages[i], from_liblocs[i]));
+			packages.removeAt (i);
+			from_liblocs.removeAt (i);
+			--i;
+		} else {
+			QFileInfo fi (from_liblocs[i]);
+			if (!fi.isWritable ()) {
+				not_writable.append (i18n ("Package %1 at %2", packages[i], from_liblocs[i]));
+				not_writable_int.append (i);
+			}
+		}
+	}
+	if (!not_removing.isEmpty ()) {
+		KMessageBox::informationList (this, i18n ("The following packages, which you have selected for removal, are essential to the operation of RKWard, and will not be removed. If you are absolutely sure, that you want to remove these packages, please do so on the R command line."), not_removing, i18n ("Not removing certain packages"));
+	}
+	if (packages.isEmpty ()) return false;
+
+	if (!not_writable.isEmpty ()) {
+#ifdef Q_OS_WIN
+		KMessageBox::informationList (this, i18n ("Your current user permissions do not allow removing the following packages. These will be skipped."), not_writable, i18n ("Insufficient user permissions"));
+		int res = KMessageBox::No;
+#else
+		int res = KMessageBox::questionYesNoList (this, i18n ("Your current user permissions do not allow removing the following packages. Do you want to skip these packages, or do you want to proceed with administrator privileges (you will be prompted for the password)?"), not_writable, i18n ("Insufficient user permissions"), KGuiItem ("Become root"), KGuiItem ("Skip these packages"));
+#endif
+		if (res == KMessageBox::Yes) as_root = true;
+		else {
+			for (int i = not_writable_int.count () - 1; i >= 0; --i) {
+				packages.removeAt (not_writable_int[i]);
+				from_liblocs.removeAt (not_writable_int[i]);
+			}
+		}
+	}
+	if (packages.isEmpty ()) return false;
+	RK_ASSERT (packages.count () == from_liblocs.count ());
+
+	QStringList descriptions;
+	QString command;
+	for (int i = 0; i < packages.count (); ++i) {
+		descriptions.append (i18n ("Package %1 at %2", packages[i], from_liblocs[i]));
+		// NOTE: the "lib"-parameter to remove.packages is NOT matched to the pkgs-parameter. Therefore, we simply concatenate a bunch of single removals.
+		command.append ("remove.packages (" + RObject::rQuote (packages[i]) + ", " + RObject::rQuote (from_liblocs[i]) + ")\n");
+	}
+
+	// last check. This may be an annoying third dialog, in the worst case, but at least it can be turned off.
+	int res = KMessageBox::warningContinueCancelList (this, i18n ("You are about to remove the following packages. Are you sure you want to proceed?"), descriptions, i18n ("About to remove packages"), KStandardGuiItem::cont(), KStandardGuiItem::cancel(), "remove_packages_warning");
+	if (res != KMessageBox::Continue) return false;
+
+	runInstallationCommand (command, as_root, i18n ("Please stand by while removing selected packages"), i18n ("Removing packages"));
+
+	return true;
+}
+
+bool RKLoadLibsDialog::installPackages (const QStringList &packages, QString to_libloc, bool install_dependencies, const QStringList& repos) {
+	RK_TRACE (DIALOGS);
+
+	if (packages.isEmpty ()) return false;
+
+	bool as_root = false;
+	QString altlibloc = QDir (RKSettingsModuleGeneral::filesPath ()).absoluteFilePath ("library");
+	QFileInfo fi = QFileInfo (to_libloc);
+	if (!fi.isWritable ()) {
+		QString mcaption = i18n ("Selected library location not writable");
+		QString message = i18n ("<p>The directory you have selected for installation (%1) is not writable with your current user permissions.</p>"
+			"<p>Would you like to install to %2, instead (you can also press \"Cancel\" and use the \"Configure Repositories\"-button to set up a different directory)?</p>", to_libloc, altlibloc);
+#ifdef Q_WS_WIN
+		message.append (i18n ("<p>Alternatively, if you have access to an administrator account on this machine, you can use that to install the package(s), or "
+			"you could change the permissions of '%1'. Sorry, automatic switching to Administrator is not yet supported in RKWard on Windows.</p>", to_libloc));
+		int res = KMessageBox::warningContinueCancel (this, message, mcaption, KGuiItem (i18n ("Install to %1", altlibloc)));
+		if (res == KMessageBox::Continue) to_libloc = altlibloc;
+#else
+		message.append (i18n ("<p>Alternatively, if you are the administrator of this machine, you can try to install the packages as root (you'll be prompted for the root password).</p>"));
+		int res = KMessageBox::warningYesNoCancel (this, message, mcaption, KGuiItem (i18n ("Install to %1", altlibloc)), KGuiItem (i18n ("Become root")));
+		if (res == KMessageBox::Yes) to_libloc = altlibloc;
+		if (res == KMessageBox::No) as_root = true;
+#endif
+		if (res == KMessageBox::Cancel) return false;
+	}
 
 	addLibraryLocation (to_libloc);
 
-	if (packages.isEmpty ()) return false;
 	QString command_string = "install.packages (pkgs=c (\"" + packages.join ("\", \"") + "\")" + ", lib=\"" + to_libloc + "\"";
 	QString downloaddir = QDir (RKSettingsModuleGeneral::filesPath ()).filePath ("package_archive");
 	if (RKSettingsModuleRPackages::archivePackages ()) {
@@ -204,7 +288,20 @@ bool RKLoadLibsDialog::installPackages (const QStringList &packages, const QStri
 	}
 	repos_string.append ("))\n");
 
-// TODO: won't work with some versions of GCC (which ones exactly)?
+	if (as_root) {
+		KUser user;
+		command_string.append ("system (\"chown " + user.loginName() + ' ' + downloaddir + "/*\")\n");
+	}
+
+	runInstallationCommand (repos_string + command_string, as_root, i18n ("Please stand by while installing selected packages"), i18n ("Installing packages"));
+
+	return true;
+}
+
+void RKLoadLibsDialog::runInstallationCommand (const QString& command, bool as_root, const QString& message, const QString& title) {
+	RK_TRACE (DIALOGS);
+
+	// TODO: won't work with some versions of GCC (which ones exactly)?
 //	QFile file (QDir (RKSettingsModuleGeneral::filesPath ()).filePath ("install_script.R"));
 // WORKAROUND:
 	QDir dir = RKSettingsModuleGeneral::filesPath ();
@@ -212,15 +309,7 @@ bool RKLoadLibsDialog::installPackages (const QStringList &packages, const QStri
 // WORKADOUND END
 	if (file.open (QIODevice::WriteOnly)) {
 		QTextStream stream (&file);
-		stream << repos_string + command_string;
-		if (as_root) {
-#ifdef Q_WS_WIN
-			RK_ASSERT (false);
-#else
-			KUser user;
-			stream << QString ("system (\"chown ") + user.loginName() + ' ' + downloaddir + "/*\")\n";
-#endif
-		}
+		stream << command;
 		stream << "q ()\n";
 		file.close();
 	} else {
@@ -250,7 +339,7 @@ bool RKLoadLibsDialog::installPackages (const QStringList &packages, const QStri
 	connect (installation_process, SIGNAL (readyReadStandardOutput()), this, SLOT (installationProcessOutput()));
 	connect (installation_process, SIGNAL (readyReadStandardError()), this, SLOT (installationProcessError()));
 
-	RKProgressControl *installation_progress = new RKProgressControl (this, i18n ("Please stand by while installing selected packages"), i18n ("Installing packages"), RKProgressControl::CancellableProgress);
+	RKProgressControl *installation_progress = new RKProgressControl (this, message, title, RKProgressControl::CancellableProgress);
 	connect (this, SIGNAL (installationComplete()), installation_progress, SLOT (done()));
 	connect (this, SIGNAL (installationOutput(const QString&)), installation_progress, SLOT (newOutput(const QString&)));
 	connect (this, SIGNAL (installationError(const QString&)), installation_progress, SLOT (newError(const QString&)));
@@ -265,9 +354,7 @@ bool RKLoadLibsDialog::installPackages (const QStringList &packages, const QStri
 	file.remove ();
 	delete installation_process;
 	installation_process = 0;
-
 	emit (installedPackagesChanged ());
-	return true;
 }
 
 void RKLoadLibsDialog::installationProcessOutput () {
@@ -567,6 +654,7 @@ InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog) : QWidge
 	buttonvbox->setContentsMargins (0, 0, 0, 0);
 	label = new QLabel (i18n ("Show only packages matching:"), this);
 	filter_edit = new QLineEdit ("*", this);
+	RKCommonFunctions::setTips (i18n ("<p>You can limit the packages displayed in the list to with names or titles matching a filter string.</p><p><b>Note:</b> To search for partial strings, add '*' to the start and / or end of the filter, e.g. '*stat*'.</p>"), label, filter_edit);
 	connect (filter_edit, SIGNAL (textChanged(const QString&)), this, SLOT (filterStringChanged(const QString&)));
 	filterStringChanged (filter_edit->text ());
 
@@ -598,7 +686,10 @@ void InstallPackagesWidget::activated () {
 	RK_TRACE (DIALOGS);
 
 	filter_edit->setFocus ();
-	if (!packages_status->initialized ()) initialize ();
+	if (!packages_status->initialized ()) {
+		initialize ();
+		packages_view->sortByColumn (RKRPackageInstallationStatus::PackageName, Qt::AscendingOrder);
+	}
 }
 
 void InstallPackagesWidget::initialize () {
@@ -639,18 +730,26 @@ void InstallPackagesWidget::markAllUpdates () {
 void InstallPackagesWidget::doInstall (bool refresh) {
 	RK_TRACE (DIALOGS);
 
+	bool changed = false;
+	QStringList remove;
+	QStringList remove_locs;
+	packages_status->packagesToRemove (&remove, &remove_locs);
+	if (!remove.isEmpty ()) {
+		RK_ASSERT (remove.count () == remove_locs.count ());
+		changed |= parent->removePackages (remove, remove_locs);
+	}
+
 	QStringList install = packages_status->packagesToInstall ();
 	if (!install.isEmpty ()) {
-		bool as_root = false;
-
-		QString dest = install_params->getInstallLocation (&as_root, parent->chain);
+		QString dest = install_params->installLocation ();
 		if (!dest.isEmpty ()) {
-			parent->installPackages (install, dest, install_params->installDependencies (), as_root, packages_status->currentRepositories ());
-			if (refresh) {
-				packages_status->clearStatus ();
-				initialize ();
-			}
+			changed |= parent->installPackages (install, dest, install_params->installDependencies (), packages_status->currentRepositories ());
 		}
+	}
+
+	if (changed) {
+		packages_status->clearStatus ();
+		initialize ();
 	}
 }
 
@@ -702,33 +801,10 @@ bool PackageInstallParamsWidget::installDependencies () {
 	return dependencies->isChecked ();
 }
 
-QString PackageInstallParamsWidget::getInstallLocation (bool *as_root, RCommandChain *chain) {
+QString PackageInstallParamsWidget::installLocation () {
 	RK_TRACE (DIALOGS);
-	RK_ASSERT (as_root);
 
-	*as_root = false;
-	QString libloc = libloc_selector->currentText ();
-	QString altlibloc = QDir (RKSettingsModuleGeneral::filesPath ()).absoluteFilePath ("library");
-	QFileInfo fi = QFileInfo (libloc);
-	if (!fi.isWritable ()) {
-		QString mcaption = i18n ("Selected library location not writable");
-		QString message = i18n ("<p>The directory you have selected for installation (%1) is not writable with your current user permissions.</p>"
-			"<p>Would you like to install to %2, instead (you can also press \"Cancel\" and use the \"Configure Repositories\"-button to set up a different directory)?</p>", libloc, altlibloc);
-#ifdef Q_WS_WIN
-		message.append (i18n ("<p>Alternatively, if you have access to an administrator account on this machine, you can use that to install the package(s), or "
-			"you could change the permissions of '%1'. Sorry, automatic switching to Administrator is not yet supported in RKWard on Windows.</p>", libloc));
-		int res = KMessageBox::warningContinueCancel (this, message, mcaption, KGuiItem (i18n ("Install to %1", altlibloc)));
-		if (res == KMessageBox::Continue) libloc = altlibloc;
-#else
-		message.append (i18n ("<p>Alternatively, if you are the administrator of this machine, you can try to install the packages as root (you'll be prompted for the root password).</p>"));
-		int res = KMessageBox::warningYesNoCancel (this, message, mcaption, KGuiItem (i18n ("Install to %1", altlibloc)), KGuiItem (i18n ("Become root")));
-		if (res == KMessageBox::Yes) libloc = altlibloc;
-		if (res == KMessageBox::No) *as_root = true;
-#endif
-		if (res == KMessageBox::Cancel) libloc = QString ();
-	}
-
-	return libloc;
+	return libloc_selector->currentText ();
 }
 
 void PackageInstallParamsWidget::liblocsChanged (const QStringList &newlist) {
@@ -861,6 +937,14 @@ QVariant RKRPackageInstallationStatus::headerData (int section, Qt::Orientation 
 		if (section == PackageTitle) return QVariant (i18n ("Title"));
 		if (section == Version) return QVariant (i18n ("Version"));
 		if (section == Location) return QVariant (i18n ("Location"));
+	}
+	if ((role == Qt::ToolTipRole) || (role == Qt::WhatsThisRole)) {
+		if (section == EnhancesRKWard) return QVariant (i18n ("Packages marked with an RKWard icon in this column provide enhancements to RKWard, typically in the form of additional graphical dialogs."));
+		if (section == InstallationStatus) return QVariant (i18n ("You can select packages for installation / removal by checking / unchecking the corresponding boxes in this column."));
+		if (section == PackageName) return QVariant (i18n ("The name of the package."));
+		if (section == PackageTitle) return QVariant (i18n ("A descriptive title for the package. Currently this is not available for packages in non-local repositories."));
+		if (section == Version) return QVariant (i18n ("Installed and / or available version of the package"));
+		if (section == Location) return QVariant (i18n ("Location where the package is installed / available"));
 	}
 	return QVariant ();
 }
@@ -1078,3 +1162,4 @@ bool RKRPackageInstallationStatusSortFilterModel::filterAcceptsRow (int source_r
 }
 
 #include "rkloadlibsdialog.moc"
+

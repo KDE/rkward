@@ -1,5 +1,5 @@
 - Offer to add a new library location, automatically, if location selected for installation is not writable
-- Reworked package installation / update dialog			TODO: implement removing, more tips
+- Reworked package installation / update dialog
 - Fixed: Integrated help browser would not update navigation history when following page internal links
 - Documentation on writing RKWard plugins is now accessible, locally
 - The file filter for R script files is now configurable, and includes *.Rhistory, by default
