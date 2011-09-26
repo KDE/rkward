@@ -939,12 +939,12 @@ QVariant RKRPackageInstallationStatus::headerData (int section, Qt::Orientation 
 		if (section == Location) return QVariant (i18n ("Location"));
 	}
 	if ((role == Qt::ToolTipRole) || (role == Qt::WhatsThisRole)) {
-		if (section == EnhancesRKWard) return QVariant (i18n ("Packages marked with an RKWard icon in this column provide enhancements to RKWard, typically in the form of additional graphical dialogs."));
-		if (section == InstallationStatus) return QVariant (i18n ("You can select packages for installation / removal by checking / unchecking the corresponding boxes in this column."));
-		if (section == PackageName) return QVariant (i18n ("The name of the package."));
-		if (section == PackageTitle) return QVariant (i18n ("A descriptive title for the package. Currently this is not available for packages in non-local repositories."));
-		if (section == Version) return QVariant (i18n ("Installed and / or available version of the package"));
-		if (section == Location) return QVariant (i18n ("Location where the package is installed / available"));
+		if (section == EnhancesRKWard) return QVariant (i18n ("<p>Packages marked with an RKWard icon in this column provide enhancements to RKWard, typically in the form of additional graphical dialogs.</p>"));
+		if (section == InstallationStatus) return QVariant (i18n ("<p>You can select packages for installation / removal by checking / unchecking the corresponding boxes in this column.</p>"));
+		if (section == PackageName) return QVariant (i18n ("<p>The name of the package.</p>"));
+		if (section == PackageTitle) return QVariant (i18n ("<p>A descriptive title for the package. Currently this is not available for packages in non-local repositories.</p>"));
+		if (section == Version) return QVariant (i18n ("<p>Installed and / or available version of the package</p>"));
+		if (section == Location) return QVariant (i18n ("<p>Location where the package is installed / available</p>"));
 	}
 	return QVariant ();
 }
