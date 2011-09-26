@@ -7,25 +7,25 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: lala\n"
-"Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
-"group_id=50231&atid=459007\n"
+"Report-Msgid-Bugs-To: "
+"http://sourceforge.net/tracker/?group_id=50231&atid=459007\n"
 "POT-Creation-Date: 2011-05-25 10:10+0200\n"
-"PO-Revision-Date: 2008-01-17 09:48+0800\n"
-"Last-Translator: Roy Qu <royqh1979@gmail.com>\n"
+"PO-Revision-Date: 2011-05-17 06:03+0000\n"
+"Last-Translator: royqh <Unknown>\n"
 "Language-Team: Simplified Chinese\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Launchpad-Export-Date: 2011-05-26 04:55+0000\n"
+"X-Generator: Launchpad (build 12959)\n"
+"Language: \n"
 
 #: agents/rkeditobjectagent.cpp:56
 msgid ""
 "The object '%1', could not be opened for editing. Either it does not exist, "
 "or RKWard does not support editing this type of object, yet."
-msgstr ""
-"无法打开要编辑的对象\"%1\"。这可能是因为该对象并不存在，也可能是因为RKWard目"
-"前尚不支持编辑此类对象。"
+msgstr "无法打开要编辑的对象\"%1\"。这可能是因为该对象并不存在，也可能是因为RKWard目前尚不支持编辑此类对象。"
 
 #: agents/rkeditobjectagent.cpp:56
 msgid "Cannot edit '%1'"
@@ -51,9 +51,7 @@ msgstr "载入工作区时出错"
 msgid ""
 "Waiting for remaining R commands to finish. To quit immediately, press "
 "Cancel (WARNING: This may result in loss of data)"
-msgstr ""
-"正在等待剩下的R命令结束执行。如果想立即退出，请按“取消”键。（警告！这可能会导"
-"致数据丢失！）"
+msgstr "正在等待剩下的R命令结束执行。如果想立即退出，请按“取消”键。（警告！这可能会导致数据丢失！）"
 
 #: agents/rkquitagent.cpp:41
 msgid "Waiting for R to finish"
@@ -101,15 +99,12 @@ msgid "Showing file(s)"
 msgstr "正在显示文件"
 
 #: agents/showedittextfileagent.cpp:108
-#, fuzzy
 msgid ""
 "A command running in the R-engine wants you to edit one or more file(s). "
 "Please look at these files, edit them as appriopriate, and save them. When "
 "done, press the \"Done\"-button, or close this dialog to resume.\n"
 "\n"
 msgstr ""
-"R引擎中正在运行的命令需要您查看一个或多个文件。RKWard无法判断，在您阅读完毕这"
-"些文件之前，继续处理R命令是否安全。"
 
 #: agents/showedittextfileagent.cpp:108
 msgid "Edit file(s)"
@@ -126,11 +121,10 @@ msgid ""
 "that would take too long to load. To unlist the package, visit Settings-"
 ">Configure RKWard->Workspace."
 msgstr ""
-"函数包\"%1\"（它可能已经背载入）目前已被列入黑名单，因此无法获取结构信息。 这"
-"通常意味着，该包中的对象将不会显示在对象浏览器中，也没有对象名自动补全及函数"
-"参数提示。 通常，如果函数包中含有过于巨量的数据，载入所需的时间过长时，它就会"
-"被列入黑名单。 如果要将它从黑名单中删除，请访问“配置RKWard”对话框的“工作区”标"
-"签页。"
+"函数包\"%1\"（它可能已经背载入）目前已被列入黑名单，因此无法获取结构信息。 "
+"这通常意味着，该包中的对象将不会显示在对象浏览器中，也没有对象名自动补全及函数参数提示。 "
+"通常，如果函数包中含有过于巨量的数据，载入所需的时间过长时，它就会被列入黑名单。 "
+"如果要将它从黑名单中删除，请访问“配置RKWard”对话框的“工作区”标签页。"
 
 #: core/renvironmentobject.cpp:109
 msgid "Package blacklisted"
@@ -140,9 +134,7 @@ msgstr "函数包已被列入黑名单"
 msgid ""
 "The object '%1' was removed from workspace or changed to a different type of "
 "object, but is currently opened for editing. Do you want to restore it?"
-msgstr ""
-"对象\"%1\"已从工作区中删除，或被改成了不同类型的对象。但它当前正处于被编辑状"
-"态。您希望恢复它吗？"
+msgstr "对象\"%1\"已从工作区中删除，或被改成了不同类型的对象。但它当前正处于被编辑状态。您希望恢复它吗？"
 
 #: core/rkmodificationtracker.cpp:67
 msgid "Restore object?"
@@ -153,9 +145,7 @@ msgid ""
 "Do you really want to remove the object '%1'? The object is currently opened "
 "for editing, it will be removed in the editor, too. There's no way to get it "
 "back."
-msgstr ""
-"您真的想删除对象\"%1\"？该对象当前正在被编辑，将会从编辑器中一并删除它。一旦"
-"删除，将无法再恢复。"
+msgstr "您真的想删除对象\"%1\"？该对象当前正在被编辑，将会从编辑器中一并删除它。一旦删除，将无法再恢复。"
 
 #: core/rkmodificationtracker.cpp:74 core/rkmodificationtracker.cpp:79
 msgid "Remove object?"
@@ -188,9 +178,8 @@ msgid "Class"
 msgstr "种类"
 
 #: core/rkrownames.cpp:40
-#, fuzzy
 msgid "row names"
-msgstr "Roy Qu"
+msgstr ""
 
 #: core/rkrownames.cpp:105
 msgid "new.row"
@@ -214,7 +203,7 @@ msgstr "函数"
 
 #: core/robject.cpp:119
 msgid "Usage: "
-msgstr "用途："
+msgstr "用途： "
 
 #: core/robject.cpp:121
 msgid "Data frame"
@@ -246,11 +235,11 @@ msgstr "环境"
 
 #: core/robject.cpp:137
 msgid "Length: "
-msgstr "长度："
+msgstr "长度： "
 
 #: core/robject.cpp:139
 msgid "Dimensions: "
-msgstr "维度："
+msgstr "维度： "
 
 #: core/robject.cpp:147
 msgid "Class(es):"
@@ -307,9 +296,7 @@ msgid ""
 "Levels can be assigned only to consecutive integers starting with 1 (the "
 "index column is read only). To remove levels at the end of the list, just "
 "set them to empty."
-msgstr ""
-"级别只能赋给从1开始的连续整数（索引列是只读的）。如果要从列表的末尾删除级别，"
-"只需将它们设成空白。"
+msgstr "级别只能赋给从1开始的连续整数（索引列是只读的）。如果要从列表的末尾删除级别，只需将它们设成空白。"
 
 #: dataeditor/editlabelsdialog.cpp:229
 msgid "Levels / Value labels for '%1'"
@@ -338,9 +325,8 @@ msgid "#New Variable#"
 msgstr "#新变量#"
 
 #: dataeditor/rkvareditmodel.cpp:368
-#, fuzzy
 msgid "Row names"
-msgstr "Roy Qu"
+msgstr ""
 
 #: dataeditor/rkvareditmodel.cpp:673
 msgid "Format"
@@ -359,18 +345,16 @@ msgid "A descriptive label for each column (optional)."
 msgstr ""
 
 #: dataeditor/rkvareditmodel.cpp:679
-#, fuzzy
 msgid "Type of data."
-msgstr "类型"
+msgstr ""
 
 #: dataeditor/rkvareditmodel.cpp:680
 msgid "Double click on these fields to customize data display."
 msgstr ""
 
 #: dataeditor/rkvareditmodel.cpp:681
-#, fuzzy
 msgid "Double click on these fields to edit factor levels."
-msgstr "在这些格中输入任意内容，以增加新的列"
+msgstr ""
 
 #: dataeditor/twintable.cpp:102
 msgid "Cuts the selected section and puts it to the clipboard"
@@ -381,40 +365,35 @@ msgid "Copies the selected section to the clipboard"
 msgstr "将选中区域拷贝到剪贴磅"
 
 #: dataeditor/twintable.cpp:107
-#, fuzzy
 msgid "Pastes the clipboard contents to current position"
-msgstr "将剪贴板中的内容粘贴到实际的位置"
+msgstr ""
 
 #: dataeditor/twintable.cpp:110
-#, fuzzy
 msgid "Paste inside table"
-msgstr "在表格内粘贴"
+msgstr ""
 
 #: dataeditor/twintable.cpp:112
-#, fuzzy
 msgid ""
 "Pastes the clipboard contents to current position, but not beyond the "
 "table's boundaries"
-msgstr "将剪贴板中的内容粘贴到实际的位置，但不超出当前表格的边界。"
+msgstr ""
 
 #: dataeditor/twintable.cpp:115
-#, fuzzy
 msgid "Paste inside selection"
-msgstr "在选中区域中黏贴"
+msgstr ""
 
 #: dataeditor/twintable.cpp:117
-#, fuzzy
 msgid ""
 "Pastes the clipboard contents to current position, but not beyond the "
 "boundaries of the current selection"
-msgstr "将剪贴板中的内容粘贴到实际的位置，但不超出当前选择区域的边界。"
+msgstr ""
 
 #: dataeditor/twintable.cpp:182
 msgid ""
 "The editor '%1' contains the following duplicate columns. Editing this table "
 "may not be safe, and has been disabled. You may re-enable editing if you "
-"know what you are doing, but you are strongly advised to fix the table, and/"
-"or backup your data, first."
+"know what you are doing, but you are strongly advised to fix the table, "
+"and/or backup your data, first."
 msgstr ""
 
 #: dataeditor/twintable.cpp:182
@@ -451,7 +430,7 @@ msgstr "插入剪贴磅内容..."
 
 #: dialogs/rkimportdialog.cpp:35
 msgid "File format: "
-msgstr "文件格式："
+msgstr "文件格式： "
 
 #: dialogs/rkimportdialog.cpp:46
 msgid "No plugins defined for context '%1'"
@@ -538,9 +517,7 @@ msgid ""
 "In order to find out, which of your installed packaged have an update "
 "available, click \"Fetch List\". This feature requires a working internet "
 "connection."
-msgstr ""
-"为了找出您安装的函数包中哪个有可用的更新，请点击\"获取列表\"。此功能需要可用"
-"的因特网连接。"
+msgstr "为了找出您安装的函数包中哪个有可用的更新，请点击\"获取列表\"。此功能需要可用的因特网连接。"
 
 #: dialogs/rkloadlibsdialog.cpp:530
 msgid "Local Version"
@@ -583,9 +560,9 @@ msgid ""
 "Click \"Fetch List\" to find out, which packages are available. This feature "
 "requires a working internet connection."
 msgstr ""
-"在CRAN(Comprehensive R Archive Network，全面R归档网络)以及其它函数仓库(点击"
-"\"配置函数仓库\"以添加更多来源)中有许多函数包可用。点击\"获取列表\"以查找哪些"
-"函数包可用。此选项需要可用的因特网连接。"
+"在CRAN(Comprehensive R Archive "
+"Network，全面R归档网络)以及其它函数仓库(点击\"配置函数仓库\"以添加更多来源)中有许多函数包可用。点击\"获取列表\"以查找哪些函数包可用。此"
+"选项需要可用的因特网连接。"
 
 #: dialogs/rkloadlibsdialog.cpp:699
 msgid "Install Selected"
@@ -605,8 +582,7 @@ msgid ""
 "repositories. Maybe the package name was mis-spelled. Or maybe you need to "
 "add additional repositories via the \"Configure Repositories\"-button."
 msgstr ""
-"未能在函数仓库中找到后台请求的函数包(\"%1\")。这可能是因为包名拼写错误，也可"
-"能是需要您通过\"配置函数仓库\"按钮来添加额外的函数仓库。"
+"未能在函数仓库中找到后台请求的函数包(\"%1\")。这可能是因为包名拼写错误，也可能是需要您通过\"配置函数仓库\"按钮来添加额外的函数仓库。"
 
 #: dialogs/rkloadlibsdialog.cpp:805
 msgid "Package not available"
@@ -625,7 +601,6 @@ msgid "Selected library location not writable"
 msgstr "选中的函数库保存地点不可写"
 
 #: dialogs/rkloadlibsdialog.cpp:872
-#, fuzzy
 msgid ""
 "The directory you are trying to install to (%1) is not writable with your "
 "current user permissions. You can chose a different library location to "
@@ -633,10 +608,6 @@ msgid ""
 "\"Configure Repositories\"-button to set up a writable directory to install "
 "package to).\n"
 msgstr ""
-"您试图安装到目录(%1)，但您没有该目录的写权限。如果您是该机器的管理员， 可以尝"
-"试使用root帐号来安装函数包(将会提示您输入root帐号的密码)。 否则，您也可以选择"
-"安装到其它的函数库地点。(如果没有可写的函数库地点，您 可以通过使用\"配置函数"
-"仓库\"按钮来设置一个可写的函数库地点)。"
 
 #: dialogs/rkloadlibsdialog.cpp:876
 msgid ""
@@ -669,9 +640,8 @@ msgid "Crash recovery file detected"
 msgstr ""
 
 #: dialogs/rkrecoverdialog.cpp:37
-#, fuzzy
 msgid "Show in file browser"
-msgstr "正在显示文件"
+msgstr ""
 
 #: dialogs/rkrecoverdialog.cpp:38
 msgid "Recover"
@@ -708,9 +678,8 @@ msgid "<b>Select one or more:</b>"
 msgstr ""
 
 #: dialogs/rkselectlistdialog.cpp:39
-#, fuzzy
 msgid "<b>Select one:</b>"
-msgstr "选择一个："
+msgstr ""
 
 #: dialogs/startupdialog.cpp:47
 msgid "What would you like to do?"
@@ -725,9 +694,8 @@ msgid "Start with an empty table"
 msgstr "以空白表格开始"
 
 #: dialogs/startupdialog.cpp:68
-#, fuzzy
 msgid "Load workspace from current directory"
-msgstr "配置脚本编辑器"
+msgstr ""
 
 #: dialogs/startupdialog.cpp:69
 msgid ""
@@ -768,9 +736,8 @@ msgid ""
 msgstr "调试器(使用单引号('')将命令与调试参数一起括起来)"
 
 #: main.cpp:108
-#, fuzzy
 msgid "R workspace file to open"
-msgstr "让用户选择一个文件打开"
+msgstr ""
 
 #: main.cpp:110
 msgid "RKWard"
@@ -781,9 +748,8 @@ msgid "Frontend to the R statistics language"
 msgstr "R统计语言前端"
 
 #: main.cpp:110
-#, fuzzy
 msgid "(c) 2002, 2004, 2005, 2006, 2007, 2008, 2009, 2010"
-msgstr "(c) 2002, 2004, 2005, 2006, 2007"
+msgstr ""
 
 #: main.cpp:111 main.cpp:112 main.cpp:113 main.cpp:114 main.cpp:116
 #: main.cpp:117 main.cpp:118 main.cpp:119 main.cpp:120 main.cpp:121
@@ -951,14 +917,12 @@ msgid "Change"
 msgstr ""
 
 #: misc/rksaveobjectchooser.cpp:92
-#, fuzzy
 msgid "Parent object: %1"
-msgstr "重命名对象"
+msgstr ""
 
 #: misc/rksaveobjectchooser.cpp:103
-#, fuzzy
 msgid "Select parent object"
-msgstr "恢复对象？"
+msgstr ""
 
 #: misc/rksaveobjectchooser.cpp:178
 msgid "Overwrite? (The given object name already exists)"
@@ -977,9 +941,8 @@ msgid "Paste mode"
 msgstr ""
 
 #: misc/rkspecialactions.cpp:82
-#, fuzzy
 msgid "Single string"
-msgstr "R引擎正在启动"
+msgstr ""
 
 #: misc/rkspecialactions.cpp:85
 msgid "Vector"
@@ -994,14 +957,12 @@ msgid "Tab"
 msgstr ""
 
 #: misc/rkspecialactions.cpp:104
-#, fuzzy
 msgid "Comma"
-msgstr "命令"
+msgstr ""
 
 #: misc/rkspecialactions.cpp:108
-#, fuzzy
 msgid "Single space"
-msgstr "保存工作区"
+msgstr ""
 
 #: misc/rkspecialactions.cpp:111
 msgid "Any whitespace"
@@ -1048,9 +1009,8 @@ msgid "Insert NAs where needed"
 msgstr ""
 
 #: misc/rkstandardactions.cpp:34
-#, fuzzy
 msgid "Copy lines to output"
-msgstr "拷贝到输出"
+msgstr ""
 
 #: misc/rkstandardactions.cpp:52
 msgid "Run current line"
@@ -1076,9 +1036,7 @@ msgstr "无法打开想读的文件"
 msgid ""
 "Error parsing XML-file. Error-message was: '%1' in line '%2', column '%3'. "
 "Expect further errors to be reported below"
-msgstr ""
-"解析XML文件失败。错误信息为：在行\"%2\"，列\"%3\"中\"%1\"。 在下面可以看到更"
-"多的错误报告。"
+msgstr "解析XML文件失败。错误信息为：在行\"%2\"，列\"%3\"中\"%1\"。 在下面可以看到更多的错误报告。"
 
 #: misc/xmlhelper.cpp:176
 msgid "Trying to retrieve children of invalid element"
@@ -1110,7 +1068,7 @@ msgstr "非法属性值。只允许使用属性值\"%1\"或\"%2\"。"
 
 #: misc/xmlhelper.cpp:319
 msgid "XML-parsing '%1' "
-msgstr "正在解析XML文件\"%1\""
+msgstr "正在解析XML文件\"%1\" "
 
 #: plugin/rkcomponentmap.cpp:107 plugin/rkcomponentmap.cpp:366
 msgid "(no label)"
@@ -1154,9 +1112,8 @@ msgid ""
 msgstr ""
 
 #: plugin/rkcomponentmap.cpp:306
-#, fuzzy
 msgid "Could not submit"
-msgstr "无法创建插件"
+msgstr ""
 
 #: plugin/rkdropdown.cpp:42 plugin/rkradio.cpp:45
 msgid "Select one:"
@@ -1269,9 +1226,8 @@ msgid "Code"
 msgstr "代码"
 
 #: plugin/rkstandardcomponentgui.cpp:170
-#, fuzzy
 msgid "Run again"
-msgstr "运行全部"
+msgstr ""
 
 #: plugin/rkstandardcomponentgui.cpp:257
 msgid "Processing. Please wait"
@@ -1340,20 +1296,16 @@ msgid "R Startup"
 msgstr "R已启动"
 
 #: rbackend/rinterface.cpp:283
-#, fuzzy
 msgid ""
 "<p>\t-An unspecified error occurred that is not yet handled by RKWard. "
 "Likely RKWard will not function properly. Please check your setup.</p>\n"
 msgstr ""
-"\t-发生了一个未特别指定的错误，RKWard尚无法处理它。 这可能会导致RKWard无法正"
-"确运行。请检查您的安装设置是否正确。\n"
 
 #: rbackend/rinterface.cpp:285
-#, fuzzy
 msgid ""
 "<p>There was a problem starting the R backend. The following error(s) "
 "occurred:</p>\n"
-msgstr "启动R后台失败。发生了如下的错误：\n"
+msgstr ""
 
 #: rbackend/rinterface.cpp:293
 msgid "Error starting R"
@@ -1371,13 +1323,10 @@ msgid ""
 "RKWard). In this case, please chose 'Cancel' now, then close the data "
 "windows, save, and retry."
 msgstr ""
-"R后台中的一个命令正试图修改字符集设置。虽然RKWard提供了对这个功能 的支持，并"
-"将会尝试调整到新的语言环境，但如果数据窗口当前已打开， 此操作可能会导致微妙的"
-"bug。 并且，由于此功能尚未被很好的测试过，因此建议 您在继续操作前先保存您的工"
-"作区。\n"
-"如果您当前有已打开的数据编辑窗口，或者担心可能会出现问题，我们推荐 您先关闭此"
-"命令（在新版本的RKWard中可能会支持自动检测此类问题）。请选择\"取消\"键， 关闭"
-"数据窗口，保存，然后再次尝试。"
+"R后台中的一个命令正试图修改字符集设置。虽然RKWard提供了对这个功能 的支持，并将会尝试调整到新的语言环境，但如果数据窗口当前已打开， "
+"此操作可能会导致微妙的bug。 并且，由于此功能尚未被很好的测试过，因此建议 您在继续操作前先保存您的工作区。\n"
+"如果您当前有已打开的数据编辑窗口，或者担心可能会出现问题，我们推荐 "
+"您先关闭此命令（在新版本的RKWard中可能会支持自动检测此类问题）。请选择\"取消\"键， 关闭数据窗口，保存，然后再次尝试。"
 
 #: rbackend/rinterface.cpp:495
 msgid "Locale change"
@@ -1390,8 +1339,7 @@ msgid ""
 "package-management tool, and there you can try to locate and install the "
 "needed package."
 msgstr ""
-"R后台提示说它需要函数包\"%1\"来执行当前的任务，但该包尚未被安装。 我们将为您"
-"打开函数包管理工具，然后您可以尝试定位和安装所需的函数包。"
+"R后台提示说它需要函数包\"%1\"来执行当前的任务，但该包尚未被安装。 我们将为您打开函数包管理工具，然后您可以尝试定位和安装所需的函数包。"
 
 #: rbackend/rinterface.cpp:647
 msgid "Require package '%1'"
@@ -1402,7 +1350,6 @@ msgid "R backend requests information"
 msgstr "R后台需要信息"
 
 #: rbackend/rinterface.cpp:766
-#, fuzzy
 msgid ""
 "\n"
 "The R backend will be shut down immediately. This means, you can not use any "
@@ -1410,17 +1357,10 @@ msgid ""
 "even save the workspace (but if you're lucky, R already did that). What you "
 "can do, however, is save any open command-files, the output, or copy data "
 "out of open data editors. Quit RKWard after that.\n"
-"Since this should never happen, please write a mail to rkward-devel@lists."
-"sourceforge.net, and tell us, what you were trying to do, when this "
-"happened. Sorry!"
+"Since this should never happen, please write a mail to rkward-"
+"devel@lists.sourceforge.net, and tell us, what you were trying to do, when "
+"this happened. Sorry!"
 msgstr ""
-"\n"
-"它将立即被关闭。这意味着您将无法再使用任何依赖于R后台的功能。实际上， 您将几"
-"乎无法再做包括保存工作区内的任何事情。幸运的是，R已经保存过了 工作区。您现在"
-"唯一能做的是保存任何 已打开的命令文件和输出，以及从 打开的数据编辑器里拷贝数"
-"据。在完成上述操作后，请退出RKWard。\n"
-"既然这种情况本不应该发生，所以如果它发生了，请写信给rkward-devel@lists. "
-"sourceforge.net，告诉我们您当时正在做什么。很抱歉！"
 
 #: rbackend/rinterface.cpp:767
 msgid "R engine has died"
@@ -1440,25 +1380,22 @@ msgid ""
 msgstr ""
 
 #: rbackend/rkrbackend.cpp:448
-#, fuzzy
 msgid "The R engine has shut down with status: %1"
-msgstr "R引擎已终止，状态值为："
+msgstr ""
 
 #: rbackend/rkrbackend.cpp:467
-#, fuzzy
 msgid ""
 "The R engine has encountered a fatal error:\n"
 "%1"
-msgstr "R引擎发生了致命错误：\n"
+msgstr ""
 
 #: rbackend/rkrbackend.cpp:634
 msgid "Message from the R backend"
 msgstr "R后台消息"
 
 #: rbackend/rkrbackend.cpp:642
-#, fuzzy
 msgid "Question from the R backend"
-msgstr "R后台消息"
+msgstr ""
 
 #: rbackend/rkrbackend.cpp:1384
 msgid ""
@@ -1468,16 +1405,18 @@ msgid ""
 "that the last installation did not place all files in the correct place. "
 "However, in some cases, left-overs from a previous installation that was not "
 "cleanly removed may be the cause.</p>\t\t<p><b>You should quit RKWard, now, "
-"and fix your installation</b>. For help with that, see <a href=\"http://p.sf."
-"net/rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</p>\n"
+"and fix your installation</b>. For help with that, see <a "
+"href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a"
+">.</p>\n"
 msgstr ""
 
 #: rbackend/rkrbackend.cpp:1388
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
 "this indicates a broken installation.</p>\t\t<p><b>You should quit RKWard, "
-"now, and fix your installation</b>. For help with that, see <a href=\"http://"
-"p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</p></p>\n"
+"now, and fix your installation</b>. For help with that, see <a "
+"href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a"
+">.</p></p>\n"
 msgstr ""
 
 #: rkconsole.cpp:115
@@ -1495,14 +1434,12 @@ msgid ""
 msgstr ""
 
 #: rkconsole.cpp:783
-#, fuzzy
 msgid "Select command history file to load"
-msgstr "载入/保存命令历史"
+msgstr ""
 
 #: rkconsole.cpp:803
-#, fuzzy
 msgid "Select filename to save command history"
-msgstr "载入/保存命令历史"
+msgstr ""
 
 #: rkconsole.cpp:914
 msgid "Interrupt running command"
@@ -1513,41 +1450,32 @@ msgid "Copy selection literally"
 msgstr "复制选中的文本"
 
 #: rkconsole.cpp:923
-#, fuzzy
 msgid "Copy commands, only"
-msgstr "部分命令未被取消"
+msgstr ""
 
 #: rkconsole.cpp:930
-#, fuzzy
 msgid "Print Console"
-msgstr "R控制台"
+msgstr ""
 
 #: rkconsole.cpp:937
-#, fuzzy
 msgid "Import command history..."
-msgstr "载入/保存命令历史"
+msgstr ""
 
 #: rkconsole.cpp:939
-#, fuzzy
 msgid "Export command history..."
-msgstr "载入/保存命令历史"
+msgstr ""
 
 #: rkconsole.cpp:958
-#, fuzzy
 msgid ""
 "You have configured RKWard to pipe script editor commands through the R "
 "Console. However, another command is currently active in the console. Do you "
 "want to append it to the command in the console, or do you want to reset the "
 "console, first? Press cancel if you do not wish to run the new command, now."
 msgstr ""
-"您配置RKWard通过主控台来运行脚本命令。但是，当前主控台正忙(可能是有命令 正在"
-"运行，也可能是您在主控台中输入了文字)。是忽略主控台继续执行呢，还是 以后再"
-"试？"
 
 #: rkconsole.cpp:958
-#, fuzzy
 msgid "R Console is busy"
-msgstr "主控台正忙"
+msgstr ""
 
 #: rkconsole.cpp:958
 msgid "Append"
@@ -1562,10 +1490,11 @@ msgid ""
 "<p>RKWard either could not find its resource files at all, or only an old "
 "version of those files. The most likely cause is that the last installation "
 "failed to place the files in the correct place. This can lead to all sorts "
-"of problems, from single missing features to complete failure to function.</"
-"p><p><b>You should quit RKWard, now, and fix your installation</b>. For help "
-"with that, see <a href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/"
-"rkward/compiling</a>.</p>"
+"of problems, from single missing features to complete failure to "
+"function.</p><p><b>You should quit RKWard, now, and fix your "
+"installation</b>. For help with that, see <a "
+"href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a"
+">.</p>"
 msgstr ""
 
 #: rkward.cpp:196
@@ -1575,8 +1504,8 @@ msgstr ""
 #: rkward.cpp:213
 msgid ""
 "Your installation of KDE is configured to use \"native\" file dialogs. This "
-"is known to cause issues in some cases, and we recommend to disable \"native"
-"\" file dialogs.\n"
+"is known to cause issues in some cases, and we recommend to disable "
+"\"native\" file dialogs.\n"
 "Should \"native\" file dialogs be disabled in RKWard?"
 msgstr ""
 
@@ -1585,9 +1514,8 @@ msgid "Potential problem with your configuration"
 msgstr ""
 
 #: rkward.cpp:214
-#, fuzzy
 msgid "Yes, disable"
-msgstr "预览已关闭"
+msgstr ""
 
 #: rkward.cpp:214
 msgid "No, use \"native\" file dialogs"
@@ -1599,8 +1527,8 @@ msgstr "正在设置插件..."
 
 #: rkward.cpp:267
 msgid ""
-"Plugins are needed: you may manage these through \"Settings->Configure RKWard"
-"\".\n"
+"Plugins are needed: you may manage these through \"Settings->Configure "
+"RKWard\".\n"
 msgstr "需要插件：您可以通过\"设置\"->\"配置RKWard\"来管理它们。\n"
 
 #: rkward.cpp:267
@@ -1636,14 +1564,12 @@ msgid "Script File"
 msgstr "脚本文件"
 
 #: rkward.cpp:361
-#, fuzzy
 msgid "Open R Script File..."
-msgstr "打开R脚本文件"
+msgstr ""
 
 #: rkward.cpp:364
-#, fuzzy
 msgid "Open Recent R Script File"
-msgstr "打开R脚本文件"
+msgstr ""
 
 #: rkward.cpp:371
 msgid "Import Data"
@@ -1654,18 +1580,16 @@ msgid "Import data from a variety of file formats"
 msgstr "从各种文件格式中导入数据"
 
 #: rkward.cpp:376
-#, fuzzy
 msgid "Open Workspace..."
-msgstr "打开工作区"
+msgstr ""
 
 #: rkward.cpp:378
 msgid "Opens an existing document"
 msgstr "打开已存在的文档"
 
 #: rkward.cpp:381
-#, fuzzy
 msgid "Open Recent Workspace"
-msgstr "打开工作区"
+msgstr ""
 
 #: rkward.cpp:382
 msgid "Opens a recently used file"
@@ -1692,19 +1616,16 @@ msgid "Quits the application"
 msgstr "退出应用程序"
 
 #: rkward.cpp:397
-#, fuzzy
 msgid "Interrupt all commands"
-msgstr "中断正在运行的命令"
+msgstr ""
 
 #: rkward.cpp:403
-#, fuzzy
 msgid "CC commands to output..."
-msgstr "拷贝到输出"
+msgstr ""
 
 #: rkward.cpp:407 windows/robjectbrowser.cpp:136
-#, fuzzy
 msgid "Load / Unload Packages"
-msgstr "已载入的函数包"
+msgstr ""
 
 #: rkward.cpp:418
 msgid "Close All Data"
@@ -1732,14 +1653,12 @@ msgid "[No actions available for current view]"
 msgstr "[当前视图没有可用的动作]"
 
 #: rkward.cpp:441
-#, fuzzy
 msgid "Open..."
-msgstr "打开文件..."
+msgstr ""
 
 #: rkward.cpp:451
-#, fuzzy
 msgid "Import"
-msgstr "导入(&I)"
+msgstr ""
 
 #: rkward.cpp:454
 msgid "Create..."
@@ -1750,18 +1669,16 @@ msgid "Save..."
 msgstr ""
 
 #: rkward.cpp:465
-#, fuzzy
 msgid "Export"
-msgstr "导入(&I)"
+msgstr ""
 
 #: rkward.cpp:558
 msgid "Ready."
 msgstr "就绪。"
 
 #: rkward.cpp:562
-#, fuzzy
 msgid "Current working directory"
-msgstr "配置脚本编辑器"
+msgstr ""
 
 #: rkward.cpp:639
 msgid "Exiting..."
@@ -1804,23 +1721,20 @@ msgid "Do you want to save the current workspace?"
 msgstr "您想要保存当前工作区吗？"
 
 #: rkward.cpp:804
-#, fuzzy
 msgid "The <b>R</b> engine is busy."
-msgstr "R引擎正忙"
+msgstr ""
 
 #: rkward.cpp:808
-#, fuzzy
 msgid "The <b>R</b> engine is idle."
-msgstr "R引擎空闲"
+msgstr ""
 
 #: rkward.cpp:812
 msgid "The <b>R</b> engine is being initialized."
 msgstr ""
 
 #: rkward.cpp:852 rkward.cpp:854
-#, fuzzy
 msgid "Open script file(s)"
-msgstr "打开R脚本文件"
+msgstr ""
 
 #: rkward.cpp:872
 msgid "[Unnamed Workspace]"
@@ -1835,9 +1749,8 @@ msgid "print (x)"
 msgstr "打印(x)"
 
 #: robjectviewer.cpp:60
-#, fuzzy
 msgid "str (x)"
-msgstr "概要(x)"
+msgstr ""
 
 #: robjectviewer.cpp:88
 msgid "<b>Object was deleted!</b>"
@@ -1864,16 +1777,14 @@ msgid "Ready"
 msgstr "就绪"
 
 #: scriptbackends/qtscriptbackend.cpp:114
-#, fuzzy
 msgid ""
 "The QtScript-backend has reported an error:\n"
 "%1"
-msgstr "R引擎发生了致命错误：\n"
+msgstr ""
 
 #: scriptbackends/qtscriptbackend.cpp:114
-#, fuzzy
 msgid "Scripting error"
-msgstr "脚本编辑器"
+msgstr ""
 
 #: scriptbackends/qtscriptbackend.cpp:200
 msgid ""
@@ -1883,11 +1794,10 @@ msgid ""
 msgstr ""
 
 #: scriptbackends/qtscriptbackend.cpp:219
-#, fuzzy
 msgid ""
 "The file \"%1\" (needed by \"%2\") could not be found. Please check your "
 "installation."
-msgstr "未能找到支持文件\"%1\"，或者该文件不可读。请检查您的安装是否正确。"
+msgstr ""
 
 #: scriptbackends/rkcomponentscripting.cpp:70
 msgid ""
@@ -1898,11 +1808,10 @@ msgid ""
 msgstr ""
 
 #: scriptbackends/rkcomponentscripting.cpp:88
-#, fuzzy
 msgid ""
 "error ('The file \"%1\" (needed by \"%2\") could not be found. Please check "
 "your installation.');\n"
-msgstr "未能找到支持文件\"%1\"，或者该文件不可读。请检查您的安装是否正确。"
+msgstr ""
 
 #: scriptbackends/scriptbackend.cpp:91
 msgid "## Prepare\n"
@@ -1991,9 +1900,8 @@ msgid "Add only if single line"
 msgstr ""
 
 #: settings/rksettingsmoduleconsole.cpp:78
-#, fuzzy
 msgid "Add all commands"
-msgstr "用户命令"
+msgstr ""
 
 #: settings/rksettingsmoduleconsole.cpp:86
 msgid "Command history is context sensitive by default"
@@ -2004,14 +1912,11 @@ msgid "Console"
 msgstr "控制台"
 
 #: settings/rksettingsmoduledebug.cpp:42
-#, fuzzy
 msgid ""
 "<b>These settings are for debugging purposes, only.</b> It is safe to leave "
 "them untouched. Also, these settings will only apply to the current session, "
 "and will not be saved."
 msgstr ""
-"<b>这些设置仅用于调试。</b>最安全的做法就是让它们保持初始状态。 同时，这些设"
-"置只对当前会话有效，也不会被保存。"
 
 #: settings/rksettingsmoduledebug.cpp:48
 msgid "Debug level"
@@ -2038,9 +1943,8 @@ msgid "Settings marked with (*) do not take effect until you restart RKWard"
 msgstr "被\"*\"标记的设置只有在您重新启动RKWard后才会生效。"
 
 #: settings/rksettingsmodulegeneral.cpp:59
-#, fuzzy
 msgid "Directory where rkward may store files (*)"
-msgstr "存放日志文件的目录(*)"
+msgstr ""
 
 #: settings/rksettingsmodulegeneral.cpp:65
 msgid "Startup Action (*)"
@@ -2068,9 +1972,7 @@ msgid ""
 "The workplace layout (i.e. which script-, data-, help-windows are open) may "
 "be saved (and loaded) per R workspace, or independent of the R workspace. "
 "Which do you prefer?"
-msgstr ""
-"可以为每个工作区单独保存工作区布局(即哪些脚本、数据、帮助窗口应该被打开)设"
-"置，或者也可以使用全局设置。您想用那种方式？"
+msgstr "可以为每个工作区单独保存工作区布局(即哪些脚本、数据、帮助窗口应该被打开)设置，或者也可以使用全局设置。您想用那种方式？"
 
 #: settings/rksettingsmodulegeneral.cpp:93
 msgid "Save/restore with R workspace, when saving/loading R workspace"
@@ -2087,9 +1989,8 @@ msgid "Do not save/restore workplace layout"
 msgstr "不保存/恢复工作区设置"
 
 #: settings/rksettingsmodulegeneral.cpp:108
-#, fuzzy
 msgid "When loading a workspace, change to the corresponding directory."
-msgstr "配置脚本编辑器"
+msgstr ""
 
 #: settings/rksettingsmodulegeneral.cpp:115
 msgid ""
@@ -2122,23 +2023,20 @@ msgid "Default window size"
 msgstr ""
 
 #: settings/rksettingsmodulegraphics.cpp:49
-#, fuzzy
 msgid "Default width (inches):"
-msgstr "输出宽度(字符)"
+msgstr ""
 
 #: settings/rksettingsmodulegraphics.cpp:53
-#, fuzzy
 msgid "Default height (inches)"
-msgstr "代码显示的缺省高度(以像素为单位)"
+msgstr ""
 
 #: settings/rksettingsmodulegraphics.cpp:62
 msgid "Screen device history"
 msgstr ""
 
 #: settings/rksettingsmodulegraphics.cpp:69
-#, fuzzy
 msgid "Maximum number of recorded plots:"
-msgstr "在打印时最多显示的元素个数"
+msgstr ""
 
 #: settings/rksettingsmodulegraphics.cpp:73
 msgid "Maximum size of a single recorded plot (in KB):"
@@ -2201,9 +2099,8 @@ msgid "Add the name of the package that no structure should be fetched for"
 msgstr "添加不应读取其结构信息的函数包名称"
 
 #: settings/rksettingsmoduleoutput.cpp:47
-#, fuzzy
 msgid "Carbon copy commands to output"
-msgstr "拷贝到输出"
+msgstr ""
 
 #: settings/rksettingsmoduleoutput.cpp:53
 msgid "Commands entered in the console"
@@ -2238,14 +2135,12 @@ msgid "Graphics"
 msgstr ""
 
 #: settings/rksettingsmoduleoutput.cpp:173
-#, fuzzy
 msgid "File format"
-msgstr "文件格式："
+msgstr ""
 
 #: settings/rksettingsmoduleoutput.cpp:175
-#, fuzzy
 msgid "<Default>"
-msgstr "缺省值"
+msgstr ""
 
 #: settings/rksettingsmoduleoutput.cpp:176
 msgid "PNG"
@@ -2264,23 +2159,19 @@ msgid "JPG quality"
 msgstr ""
 
 #: settings/rksettingsmoduleoutput.cpp:191
-#, fuzzy
 msgid "Width:"
-msgstr "宽度"
+msgstr ""
 
 #: settings/rksettingsmoduleoutput.cpp:194
-#, fuzzy
 msgid "Height:"
-msgstr "高度"
+msgstr ""
 
 #: settings/rksettingsmoduleplugins.cpp:64
 msgid ""
 "Some plugins are available with both, a wizard-like interface and a "
 "traditional dialog interface. If both are available, which mode of "
 "presentation do you prefer?"
-msgstr ""
-"某些插件同时提供向导界面和传统的对话框界面。如果同时存在两种界面，您希望使用"
-"哪一种？"
+msgstr "某些插件同时提供向导界面和传统的对话框界面。如果同时存在两种界面，您希望使用哪一种？"
 
 #: settings/rksettingsmoduleplugins.cpp:74
 msgid "Always prefer dialogs"
@@ -2381,9 +2272,8 @@ msgid "Keep comments in packages"
 msgstr "保留函数包中的注释"
 
 #: settings/rksettingsmoduler.cpp:126 settings/rksettingsmoduler.cpp:148
-#, fuzzy
 msgid "TRUE"
-msgstr "真"
+msgstr ""
 
 #: settings/rksettingsmoduler.cpp:127 settings/rksettingsmoduler.cpp:149
 msgid "FALSE (default)"
@@ -2406,14 +2296,12 @@ msgid "Command used to send files to printer"
 msgstr "将文件发送到打印机所用的命令"
 
 #: settings/rksettingsmoduler.cpp:159
-#, fuzzy
 msgid "Editor command"
-msgstr "用户命令"
+msgstr ""
 
 #: settings/rksettingsmoduler.cpp:170
-#, fuzzy
 msgid "Pager command"
-msgstr "用户命令"
+msgstr ""
 
 #: settings/rksettingsmoduler.cpp:205
 msgid "R-Backend"
@@ -2424,23 +2312,20 @@ msgid "CRAN download mirror (leave empty to be prompted once each session):"
 msgstr ""
 
 #: settings/rksettingsmoduler.cpp:342
-#, fuzzy
 msgid "Select mirror"
-msgstr "选择一个："
+msgstr ""
 
 #: settings/rksettingsmoduler.cpp:346
-#, fuzzy
 msgid "Additional package repositories (where libraries are downloaded from)"
-msgstr "函数包仓库(从哪里下载函数库)"
+msgstr ""
 
 #: settings/rksettingsmoduler.cpp:352
 msgid "Archive downloaded packages"
 msgstr "归档下载的函数包"
 
 #: settings/rksettingsmoduler.cpp:359
-#, fuzzy
 msgid "R Library locations (where libraries get installed to, locally)"
-msgstr "R函数库地点(函数库被安装到了哪个本地目录中）"
+msgstr ""
 
 #: settings/rksettingsmoduler.cpp:364
 msgid ""
@@ -2457,9 +2342,8 @@ msgid "Add repository"
 msgstr "添加仓库"
 
 #: settings/rksettingsmoduler.cpp:389
-#, fuzzy
 msgid "Add URL of new repository"
-msgstr "添加仓库"
+msgstr ""
 
 #: settings/rksettingsmoduler.cpp:395
 msgid "R-Packages"
@@ -2533,12 +2417,10 @@ msgstr "取消选中的命令"
 
 #: windows/rcontrolwindow.cpp:133
 msgid ""
-"Some of the commands you were trying to cancel are marked as \"sync"
-"\" (letter 'S' in the type column). Cancelling such commands could lead to "
-"loss of data. These commands have _not_ been cancelled."
-msgstr ""
-"在您试图取消的命令中，有些被标记为\"同步的\"(在类型栏中以\"S\"标记)。取消这类"
-"命令可能会导致数据丢失。因此这些命令并未被取消。"
+"Some of the commands you were trying to cancel are marked as \"sync\" "
+"(letter 'S' in the type column). Cancelling such commands could lead to loss "
+"of data. These commands have _not_ been cancelled."
+msgstr "在您试图取消的命令中，有些被标记为\"同步的\"(在类型栏中以\"S\"标记)。取消这类命令可能会导致数据丢失。因此这些命令并未被取消。"
 
 #: windows/rcontrolwindow.cpp:133
 msgid "Some commands not cancelled"
@@ -2549,9 +2431,8 @@ msgid "Resume execution"
 msgstr "恢复执行"
 
 #: windows/rkcommandeditorwindow.cpp:107
-#, fuzzy
 msgid "Script Editor"
-msgstr "脚本编辑器"
+msgstr ""
 
 #: windows/rkcommandeditorwindow.cpp:199
 msgid "Run block"
@@ -2566,9 +2447,8 @@ msgid "Unmark block"
 msgstr "取消代码块标记"
 
 #: windows/rkcommandeditorwindow.cpp:211
-#, fuzzy
 msgid "CD to script directory"
-msgstr "脚本编辑器"
+msgstr ""
 
 #: windows/rkcommandeditorwindow.cpp:213
 msgid "Change the working directory to the directory of this script"
@@ -2584,7 +2464,7 @@ msgstr ""
 
 #: windows/rkcommandeditorwindow.cpp:311 windows/rkcommandeditorwindow.cpp:490
 msgid " [modified]"
-msgstr "[有改动]"
+msgstr " [有改动]"
 
 #: windows/rkcommandeditorwindow.cpp:318
 msgid "The document \"%1\" has been modified. Close it anyway?"
@@ -2652,14 +2532,12 @@ msgid "Package:"
 msgstr "包："
 
 #: windows/rkhelpsearchwindow.cpp:104
-#, fuzzy
 msgid "All installed packages"
-msgstr "已安装的函数包"
+msgstr ""
 
 #: windows/rkhelpsearchwindow.cpp:105
-#, fuzzy
 msgid "All loaded packages"
-msgstr "已载入的函数包"
+msgstr ""
 
 #: windows/rkhelpsearchwindow.cpp:114
 msgid "Case sensitive"
@@ -2683,12 +2561,11 @@ msgstr ""
 
 #: windows/rkhelpsearchwindow.cpp:236
 msgid ""
-"No help found on '%1'. Maybe the corresponding package is not installed/"
-"loaded, or maybe you mistyped the command. Try using Help->Search R Help for "
-"more options."
+"No help found on '%1'. Maybe the corresponding package is not "
+"installed/loaded, or maybe you mistyped the command. Try using Help->Search "
+"R Help for more options."
 msgstr ""
-"未找到关于\"%1\"的帮助。或许对应的函数包未被安装或载入。也可能是您输错了命"
-"令。 请使用\"帮助\"->\"查找R帮助\"以获取更多选项。"
+"未找到关于\"%1\"的帮助。或许对应的函数包未被安装或载入。也可能是您输错了命令。 请使用\"帮助\"->\"查找R帮助\"以获取更多选项。"
 
 #: windows/rkhelpsearchwindow.cpp:236
 msgid "No help found"
@@ -2711,42 +2588,34 @@ msgid "&Refresh Output"
 msgstr "刷新输出(&R)"
 
 #: windows/rkhtmlwindow.cpp:320
-#, fuzzy
 msgid "Output %1"
-msgstr "输出"
+msgstr ""
 
 #: windows/rkhtmlwindow.cpp:361
-#, fuzzy
 msgid "Print output"
-msgstr "打印输出"
+msgstr ""
 
 #: windows/rkhtmlwindow.cpp:363
 msgid "Export page as HTML"
 msgstr ""
 
 #: windows/rkhtmlwindow.cpp:367
-#, fuzzy
 msgid "Output Window"
-msgstr "输出窗口选项"
+msgstr ""
 
 #: windows/rkhtmlwindow.cpp:375
-#, fuzzy
 msgid "Print page"
-msgstr "打印帮助"
+msgstr ""
 
 #: windows/rkhtmlwindow.cpp:377
 msgid "Save Output as HTML"
 msgstr "以HTML格式保存输出"
 
 #: windows/rkhtmlwindow.cpp:396
-#, fuzzy
 msgid ""
 "<HTML><BODY><H1>RKWard output file could not be found</H1>\n"
 "</BODY></HTML>"
 msgstr ""
-"<HTML><BODY><H1>RKWard输出</H1>\n"
-"<P>输出为空。</P>\n"
-"</BODY></HTML>"
 
 #: windows/rkhtmlwindow.cpp:398
 msgid "Page does not exist or is broken"
@@ -2814,23 +2683,20 @@ msgid "BROKEN REFERENCE"
 msgstr "损坏的引用"
 
 #: windows/rkmdiwindow.cpp:282
-#, fuzzy
 msgid "Help on %1"
-msgstr "关于R的帮助"
+msgstr ""
 
 #: windows/rkmdiwindow.cpp:286
-#, fuzzy
 msgid "Configure %1"
-msgstr "配置"
+msgstr ""
 
 #: windows/rktoolwindowbar.cpp:273
 msgid "Attach"
 msgstr "附加"
 
 #: windows/rktoolwindowbar.cpp:276
-#, fuzzy
 msgid "Position"
-msgstr "描述"
+msgstr ""
 
 #: windows/rktoolwindowbar.cpp:277
 msgid "Left Sidebar"
@@ -2885,9 +2751,8 @@ msgid "Next Window"
 msgstr "下一个窗口"
 
 #: windows/rktoplevelwindowgui.cpp:87
-#, fuzzy
 msgid "Show/Hide %1"
-msgstr "显示/隐藏控制台"
+msgstr ""
 
 #: windows/rktoplevelwindowgui.cpp:93
 msgid "Activate Document view"
@@ -2908,14 +2773,12 @@ msgid ""
 msgstr ""
 
 #: windows/rktoplevelwindowgui.cpp:112 windows/rktoplevelwindowgui.cpp:125
-#, fuzzy
 msgid "Note"
-msgstr "无标题"
+msgstr ""
 
 #: windows/rktoplevelwindowgui.cpp:118
-#, fuzzy
 msgid "RKWard Plugins"
-msgstr "插件"
+msgstr ""
 
 #: windows/rktoplevelwindowgui.cpp:125
 msgid ""
@@ -2977,9 +2840,8 @@ msgid ""
 msgstr ""
 
 #: windows/rktoplevelwindowgui.cpp:154
-#, fuzzy
 msgid "Gathering setup information"
-msgstr "R后台需要信息"
+msgstr ""
 
 #: windows/rktoplevelwindowgui.cpp:166
 msgid "Reporting bugs in RKWard"
@@ -2988,10 +2850,10 @@ msgstr ""
 #: windows/rktoplevelwindowgui.cpp:170
 msgid ""
 "<p><b>Where should I report bugs or wishes?</b></p><p>Please submit your bug "
-"reports or wishes at <a href=\"%1\">%1</a> or send email to <a href=\"mailto:"
-"%2\">%2</a>.</p><p><b>What information should I provide?</b></p><p>Please "
-"copy the information shown below, and fill in the details to the questions.</"
-"p>"
+"reports or wishes at <a href=\"%1\">%1</a> or send email to <a "
+"href=\"mailto:%2\">%2</a>.</p><p><b>What information should I "
+"provide?</b></p><p>Please copy the information shown below, and fill in the "
+"details to the questions.</p>"
 msgstr ""
 
 #: windows/rkwindowcatcher.cpp:69
@@ -3008,13 +2870,11 @@ msgid ""
 "devel@lists.sourceforge.net with details on your setup, so we can try to fix "
 "this in future versions of RKWard."
 msgstr ""
-"您已经在R中创建了一个新的X11设备窗口。通常，RKWard会试图自动检测此类窗口，接"
-"管对它们的控制，并在它们中添加菜单栏。 但是，现在，RKWard检测窗口创建的试图失"
-"败了，因此无法嵌入它。 如果您是在别的屏幕或X11显示器中创建了此窗口，就会出现"
-"这种情况。您应该考虑修改选项(\"显示器\")。 如果您在同一个屏幕中看到了X11窗口"
-"和本消息，这说明RKWard本身工作得还不够好。在这种情况下，请您通过 邮件列表"
-"rkward-devel@lists.sourceforge.net向我们说明具体情况，这样我们可以在以后的"
-"RKWard版本中对它进行改进。"
+"您已经在R中创建了一个新的X11设备窗口。通常，RKWard会试图自动检测此类窗口，接管对它们的控制，并在它们中添加菜单栏。 "
+"但是，现在，RKWard检测窗口创建的试图失败了，因此无法嵌入它。 "
+"如果您是在别的屏幕或X11显示器中创建了此窗口，就会出现这种情况。您应该考虑修改选项(\"显示器\")。 "
+"如果您在同一个屏幕中看到了X11窗口和本消息，这说明RKWard本身工作得还不够好。在这种情况下，请您通过 邮件列表rkward-"
+"devel@lists.sourceforge.net向我们说明具体情况，这样我们可以在以后的RKWard版本中对它进行改进。"
 
 #: windows/rkwindowcatcher.cpp:69
 msgid "Could not embed R X11 window"
@@ -3036,14 +2896,12 @@ msgid ""
 msgstr ""
 
 #: windows/rkwindowcatcher.cpp:226
-#, fuzzy
 msgid "Large window"
-msgstr "显示/唤出窗口"
+msgstr ""
 
 #: windows/rkwindowcatcher.cpp:250
-#, fuzzy
 msgid "Shutting down device number %1"
-msgstr "激活图像设备号码%1"
+msgstr ""
 
 #: windows/rkwindowcatcher.cpp:251
 msgid "Closing device (saving history)"
@@ -3090,46 +2948,38 @@ msgid "Duplicate graphics device number %1"
 msgstr "复制图像设备号码%1"
 
 #: windows/rkwindowcatcher.cpp:419
-#, fuzzy
 msgid "Load next plot in device number %1"
-msgstr "打印图像设备号码%1中的内容"
+msgstr ""
 
 #: windows/rkwindowcatcher.cpp:420 windows/rkwindowcatcher.cpp:428
 #: windows/rkwindowcatcher.cpp:436 windows/rkwindowcatcher.cpp:444
 #: windows/rkwindowcatcher.cpp:452
-#, fuzzy
 msgid "Loading plot from history"
-msgstr "载入/保存命令历史"
+msgstr ""
 
 #: windows/rkwindowcatcher.cpp:427
-#, fuzzy
 msgid "Load previous plot in device number %1"
-msgstr "复制图像设备号码%1"
+msgstr ""
 
 #: windows/rkwindowcatcher.cpp:435
-#, fuzzy
 msgid "Load first plot in device number %1"
-msgstr "激活图像设备号码%1"
+msgstr ""
 
 #: windows/rkwindowcatcher.cpp:443
-#, fuzzy
 msgid "Load last plot in device number %1"
-msgstr "复制图像设备号码%1"
+msgstr ""
 
 #: windows/rkwindowcatcher.cpp:451
-#, fuzzy
 msgid "Load plot %1 in device number %2"
-msgstr "复制图像设备号码%1"
+msgstr ""
 
 #: windows/rkwindowcatcher.cpp:459
-#, fuzzy
 msgid "Append this plot to history (device number %1)"
-msgstr "打印图像设备号码%1中的内容"
+msgstr ""
 
 #: windows/rkwindowcatcher.cpp:465
-#, fuzzy
 msgid "Remove current plot from history (device number %1)"
-msgstr "打印图像设备号码%1中的内容"
+msgstr ""
 
 #: windows/rkwindowcatcher.cpp:471
 msgid ""
@@ -3142,9 +2992,8 @@ msgid "Clear plot history"
 msgstr ""
 
 #: windows/rkwindowcatcher.cpp:479
-#, fuzzy
 msgid "Plot properties (device number %1)"
-msgstr "复制图像设备号码%1"
+msgstr ""
 
 #: windows/rkwindowcatcher.cpp:493
 msgid "<Unsaved plot>"
@@ -3171,18 +3020,16 @@ msgid "Set specified fixed size..."
 msgstr "设定指定的固定尺寸..."
 
 #: windows/rkwindowcatcher.cpp:559
-#, fuzzy
 msgid "Previous plot"
-msgstr "前一个窗口"
+msgstr ""
 
 #: windows/rkwindowcatcher.cpp:563
 msgid "First plot"
 msgstr ""
 
 #: windows/rkwindowcatcher.cpp:567
-#, fuzzy
 msgid "Next plot"
-msgstr "下一步 >"
+msgstr ""
 
 #: windows/rkwindowcatcher.cpp:571
 msgid "Last plot"
@@ -3197,9 +3044,8 @@ msgid "Append this plot"
 msgstr ""
 
 #: windows/rkwindowcatcher.cpp:585
-#, fuzzy
 msgid "Remove this plot"
-msgstr "删除对象？"
+msgstr ""
 
 #: windows/rkwindowcatcher.cpp:591
 msgid "Clear history"
@@ -3226,13 +3072,11 @@ msgid "Duplicate"
 msgstr "复制"
 
 #: windows/rkworkplace.cpp:226
-#, fuzzy
 msgid ""
 "The url you are trying to open ('%1') is not a local file or the filetype is "
 "not supported by RKWard. Do you want to open the url in the default "
 "application?"
 msgstr ""
-"您正要打开的URL(\"%1\")不是一个本地文件。您想用缺省的应用程序打开并处理它吗？"
 
 #: windows/rkworkplace.cpp:226
 msgid "Open in default application?"
@@ -3259,12 +3103,10 @@ msgid ""
 ">Configure RKWard->General.\n"
 "Really edit object?"
 msgstr ""
-"您将要编辑一个很大的对象\"%1\"(有%2个字段)。RKWard内置的数据编辑器并未对处理"
-"很大对象的操作进行优化。这将会使用大量的内存，并且──根据您系统的具体配置情况"
-"──可能会很慢。 因此，对于大对象，最好使用命令行，或者将它们分割成小块之后再进"
-"行编辑。另一方面，如果您的内存足够大，或者对象里面的数据足够简单，编辑它们通"
-"常也不会有问题。您可以在\"设置\"->\"配置RKWard\"->\"常规\"中设置或关闭此警告"
-"信息。 真的要编辑此对象吗？"
+"您将要编辑一个很大的对象\"%1\"(有%2个字段)。RKWard内置的数据编辑器并未对处理很大对象的操作进行优化。这将会使用大量的内存，并且──根据您系"
+"统的具体配置情况──可能会很慢。 "
+"因此，对于大对象，最好使用命令行，或者将它们分割成小块之后再进行编辑。另一方面，如果您的内存足够大，或者对象里面的数据足够简单，编辑它们通常也不会有问题。"
+"您可以在\"设置\"->\"配置RKWard\"->\"常规\"中设置或关闭此警告信息。 真的要编辑此对象吗？"
 
 #: windows/rkworkplace.cpp:366
 msgid "About to edit very large object"
@@ -3287,14 +3129,12 @@ msgid "Window Right"
 msgstr "窗口右侧"
 
 #: windows/robjectbrowser.cpp:65
-#, fuzzy
 msgid "R workspace browser"
-msgstr "显示/隐藏工作区浏览器"
+msgstr ""
 
 #: windows/robjectbrowser.cpp:68
-#, fuzzy
 msgid "R Workspace"
-msgstr "工作区"
+msgstr ""
 
 #: windows/robjectbrowser.cpp:120
 msgid "Search Help"
@@ -3325,9 +3165,8 @@ msgid "Delete"
 msgstr "删除"
 
 #: windows/robjectbrowser.cpp:134
-#, fuzzy
 msgid "Unload Package"
-msgstr "已载入的函数包"
+msgstr ""
 
 #: windows/robjectbrowser.cpp:187
 msgid "Copy object"
@@ -3445,9 +3284,8 @@ msgstr "导入(&I)"
 #. i18n: file: rkwardui.rc:20
 #. i18n: ectx: Menu (export)
 #: rc.cpp:27
-#, fuzzy
 msgid "&Export"
-msgstr "导入(&I)"
+msgstr ""
 
 #. i18n: file: rkwardui.rc:26
 #. i18n: ectx: Menu (workspace)
@@ -3528,15 +3366,31 @@ msgstr "工具移动(&T)"
 #: rc.cpp:139
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Roy Qu"
+msgstr "Roy Qu, ,Launchpad Contributions:,royqh"
 
 #: rc.cpp:140
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "royqh1979@gmail.com"
+msgstr "royqh1979@gmail.com,,,"
+
+#~ msgid ""
+#~ "_: NAME OF TRANSLATORS\n"
+#~ "Your names"
+#~ msgstr " ,Launchpad Contributions:,royqh"
+
+#~ msgid ""
+#~ "_: EMAIL OF TRANSLATORS\n"
+#~ "Your emails"
+#~ msgstr ",,"
 
 #~ msgid "Copy selection cleaned"
 #~ msgstr "复制清理后的选中内容"
+
+#~ msgid ""
+#~ "<b>These settings are for debugging purposes, only.</b> It is safe to leave "
+#~ "the untouched. Also, these settings will only apply to the current session, "
+#~ "and not be saved."
+#~ msgstr "<b>这些设置仅用于调试。</b>最安全的做法就是让它们保持初始状态。 同时，这些设置只对当前会话有效，也不会被保存。"
 
 #~ msgid "Attachment"
 #~ msgstr "附件"
@@ -3556,6 +3410,9 @@ msgstr "royqh1979@gmail.com"
 #~ msgid "Show/Hide Pending Jobs"
 #~ msgstr "显示/隐藏挂起的任务"
 
+#~ msgid "Show/Hide Console"
+#~ msgstr "显示/隐藏控制台"
+
 #~ msgid "Show/Hide R Help Search"
 #~ msgstr "显示/隐藏R帮助查找"
 
@@ -3567,12 +3424,12 @@ msgstr "royqh1979@gmail.com"
 #~ "button, or close this dialog once you think it is safe to resume.\n"
 #~ "\n"
 #~ msgstr ""
-#~ "因此当前处理已被暂停。在您认为可以安全的继续处理时，按\"完成\"按钮或者关闭"
-#~ "此对话框。\n"
+#~ " 因此当前处理已被暂停。在您认为可以安全的继续处理时，按\"完成\"按钮或者关闭此对话框。\n"
+#~ "\n"
 
 #~ msgid ""
-#~ "The file(s) have been opened in text-windows. The following is a list of "
-#~ "the file(s) in question:\n"
+#~ "The file(s) have been opened in text-windows. The following is a list of the "
+#~ "file(s) in question:\n"
 #~ "\n"
 #~ msgstr ""
 #~ "该文件已经在文本窗口中被打开。以下是关于这些文件的列表：\n"
@@ -3582,9 +3439,7 @@ msgstr "royqh1979@gmail.com"
 #~ "A command running in the R-engine wants you to edit one or more file(s). "
 #~ "RKWard can not determine, whether it is safe to continue processing R "
 #~ "commands, before you have read/edited (and saved) the file(s) in question."
-#~ msgstr ""
-#~ "R引擎中正在运行的命令需要您编辑一个或多个文件。RKWard无法判断，在您编辑完"
-#~ "这些文件之前，继续处理R命令是否安全。"
+#~ msgstr "R引擎中正在运行的命令需要您编辑一个或多个文件。RKWard无法判断，在您编辑完这些文件之前，继续处理R命令是否安全。"
 
 #~ msgid ""
 #~ "\n"
@@ -3604,16 +3459,12 @@ msgstr "royqh1979@gmail.com"
 #~ msgid "Bypass console"
 #~ msgstr "忽略主控台"
 
-#, fuzzy
-#~ msgid "RKWard on Windows"
-#~ msgstr "插件"
-
 #~ msgid "R engine starting"
 #~ msgstr "R引擎正在启动"
 
 #~ msgid ""
-#~ "The support file \"%1\" could not be found or is not readable. Please "
-#~ "check your installation."
+#~ "The support file \"%1\" could not be found or is not readable. Please check "
+#~ "your installation."
 #~ msgstr "未能找到支持文件\"%1\"，或者该文件不可读。请检查您的安装是否正确。"
 
 #~ msgid "PHP-Error"
@@ -3622,30 +3473,26 @@ msgstr "royqh1979@gmail.com"
 #~ msgid ""
 #~ "There has been an error\n"
 #~ "(\"%1\")\n"
-#~ "while starting up the PHP backend. Most likely this is due to either a "
-#~ "bug in RKWard or a problem with your PHP installation. Check the settings "
+#~ "while starting up the PHP backend. Most likely this is due to either a bug "
+#~ "in RKWard or a problem with your PHP installation. Check the settings "
 #~ "(Settings->Configure Settings->PHP backend) and try again."
 #~ msgstr ""
-#~ "在启动PHP后台时出错(\"%1\")。 这很有可能是因为RKWard中有bug，也可能是因为"
-#~ "PHP安装又问题。 请检查设置(\"设置\"->\"配置RKWard\"->PHP后台)之后重试。"
+#~ "在启动PHP后台时出错(\"%1\")。 这很有可能是因为RKWard中有bug，也可能是因为PHP安装又问题。 请检查设置(\"设置\"-"
+#~ ">\"配置RKWard\"->PHP后台)之后重试。"
 
 #~ msgid ""
 #~ "The PHP-backend has reported an error\n"
 #~ "(\"%1\")\n"
-#~ "and has been shut down. This is most likely due to a bug in the plugin. "
-#~ "But of course you may want to try to close and restart the plugin to see "
-#~ "whether it works with different settings."
-#~ msgstr ""
-#~ "PHP后台在报告出错之后退出。这可能是由于插件中存在bug。 您可以尝试用不同的"
-#~ "设置关闭并重启该插件，检测它是否能正常工作。"
+#~ "and has been shut down. This is most likely due to a bug in the plugin. But "
+#~ "of course you may want to try to close and restart the plugin to see whether "
+#~ "it works with different settings."
+#~ msgstr "PHP后台在报告出错之后退出。这可能是由于插件中存在bug。 您可以尝试用不同的设置关闭并重启该插件，检测它是否能正常工作。"
 
 #~ msgid ""
 #~ "The PHP backend could not be started. Check whether you have correctly "
-#~ "configured the location of the PHP-binary (Settings->Configure Settings-"
-#~ ">PHP backend)"
-#~ msgstr ""
-#~ "无法启动PHP后台。请检查您是否正确配置了PHP可执行文件的路径(\"设置\"->\"配"
-#~ "置RKWard\"->\"PHP后台\")"
+#~ "configured the location of the PHP-binary (Settings->Configure Settings->PHP "
+#~ "backend)"
+#~ msgstr "无法启动PHP后台。请检查您是否正确配置了PHP可执行文件的路径(\"设置\"->\"配置RKWard\"->\"PHP后台\")"
 
 #~ msgid ""
 #~ "The PHP-backend has died unexpectedly. The current output buffer is shown "
@@ -3685,18 +3532,6 @@ msgstr "royqh1979@gmail.com"
 #~ msgid "Object name to save to"
 #~ msgstr "要保存到的对象名"
 
-#, fuzzy
-#~ msgid ""
-#~ "<p>\t-There was a problem opening the files needed for communication with "
-#~ "R. Most likely this is due to an incorrect setting for the location of "
-#~ "these files. Check whether you have correctly configured the location of "
-#~ "the log-files (Settings->Configure Settings->Logfiles) and restart RKWard."
-#~ "</p>\n"
-#~ msgstr ""
-#~ "\t-打开与R通讯所需要的文件时出错。 这通常是由于这些文件所在的路径设置有"
-#~ "误。请您检查是否正确设置了日志文件的地址（\"设置\" ->配置RKWard->日志文"
-#~ "件)，然后重启RKWard。\n"
-
 #~ msgid "Configure Script Editor"
 #~ msgstr "配置脚本编辑器"
 
@@ -3715,8 +3550,7 @@ msgstr "royqh1979@gmail.com"
 #~ "unloading \"rkward\" will prevent this application from running properly. "
 #~ "Please be careful about the packages you unload."
 #~ msgstr ""
-#~ "不存在任何安全机制以防止删除必要的函数包。例如，卸载\"rkward\"函数包将导致"
-#~ "本程序无法正常运行。因此，在卸载函数包时请三思而后行。"
+#~ "不存在任何安全机制以防止删除必要的函数包。例如，卸载\"rkward\"函数包将导致本程序无法正常运行。因此，在卸载函数包时请三思而后行。"
 
 #~ msgid "&Cancel"
 #~ msgstr "取消(&C)"
@@ -3728,51 +3562,44 @@ msgstr "royqh1979@gmail.com"
 #~ msgstr "显示函数包%2中%1的帮助"
 
 #~ msgid ""
-#~ "Please submit your bug reports or wishes at http://sourceforge.net/"
-#~ "tracker/?group_id=50231&atid=459007 or send email to rkward-devel@lists."
-#~ "sourceforge.net"
+#~ "Please submit your bug reports or wishes at "
+#~ "http://sourceforge.net/tracker/?group_id=50231&atid=459007 or send email to "
+#~ "rkward-devel@lists.sourceforge.net"
 #~ msgstr ""
-#~ "请将您的bug报告或希望提交到http://sourceforge.net/tracker/?"
-#~ "group_id=50231&atid=459007， 或者发送邮件到rkward-devel@lists.sourceforge."
-#~ "net"
+#~ "请将您的bug报告或希望提交到http://sourceforge.net/tracker/?group_id=50231&atid=459007， "
+#~ "或者发送邮件到rkward-devel@lists.sourceforge.net"
 
 #~ msgid ""
-#~ "\t- The 'rkward' R-library could not be loaded. This library is needed "
-#~ "for communication between R and RKWard and many things will not work "
-#~ "properly if this library is not present. Likely RKWard will even crash. "
-#~ "The 'rkward' R-library should have been included in your distribution or "
-#~ "RKWard, and should have been set up when you ran 'make install'. Please "
-#~ "try 'make install' again and check for any errors. You should quit RKWard "
-#~ "now.\n"
+#~ "\t- The 'rkward' R-library could not be loaded. This library is needed for "
+#~ "communication between R and RKWard and many things will not work properly if "
+#~ "this library is not present. Likely RKWard will even crash. The 'rkward' R-"
+#~ "library should have been included in your distribution or RKWard, and should "
+#~ "have been set up when you ran 'make install'. Please try 'make install' "
+#~ "again and check for any errors. You should quit RKWard now.\n"
 #~ msgstr ""
-#~ "\t-无法载入R函数包\"rkword\"。R和RKWard之间的通讯需要此函数包，如果此函数"
-#~ "包不存在， 很多功能将无法正常工作，甚至RKWard本身都有可能会崩溃。在正常情"
-#~ "况下，R函数包\"rkward\" 应该和RKWard一起被发行和安装。请退出RKWard并重新尝"
-#~ "试安装RKWard。\n"
+#~ "\t-无法载入R函数包\"rkword\"。R和RKWard之间的通讯需要此函数包，如果此函数包不存在， "
+#~ "很多功能将无法正常工作，甚至RKWard本身都有可能会崩溃。在正常情况下，R函数包\"rkward\" "
+#~ "应该和RKWard一起被发行和安装。请退出RKWard并重新尝试安装RKWard。\n"
 
 #~ msgid ""
 #~ "It will be shut down immediately. This means, you can not use any more "
 #~ "functions that rely on the R backend. I.e. you can do hardly anything at "
-#~ "all, not even save the workspace. What you can do, however, is save any "
-#~ "open command-files, the output, or copy data out of open data editors. "
-#~ "Quit RKWard after that. Sorry!"
+#~ "all, not even save the workspace. What you can do, however, is save any open "
+#~ "command-files, the output, or copy data out of open data editors. Quit "
+#~ "RKWard after that. Sorry!"
 #~ msgstr ""
-#~ "它将立即被关闭。这意味着您将无法再使用任何依赖于R后台的功能。实际上， 您将"
-#~ "几乎无法再做包括保存工作区内的任何事情。您唯一能做的是保存任何 已打开的命"
-#~ "令文件和输出，以及从打开的数据编辑器里拷贝数据。在完成上述 操作后，请退出"
-#~ "RKWard。很抱歉！"
+#~ "它将立即被关闭。这意味着您将无法再使用任何依赖于R后台的功能。实际上， 您将几乎无法再做包括保存工作区内的任何事情。您唯一能做的是保存任何 "
+#~ "已打开的命令文件和输出，以及从打开的数据编辑器里拷贝数据。在完成上述 操作后，请退出RKWard。很抱歉！"
 
 #~ msgid ""
 #~ "RKWard has made great progress in the past few months and it is already "
-#~ "helpful for many tasks, but some features may be lacking. You can help us "
-#~ "by filing bug reports, feature requests, or providing feedback in any "
-#~ "other form. Please visit http://rkward.sourceforge.net for more "
-#~ "information."
+#~ "helpful for many tasks, but some features may be lacking. You can help us by "
+#~ "filing bug reports, feature requests, or providing feedback in any other "
+#~ "form. Please visit http://rkward.sourceforge.net for more information."
 #~ msgstr ""
-#~ "在过去的几个月里，RKWard取得了很大的进步，已经能够完成很多工作。但它仍然还"
-#~ "有很多欠缺的地方。 您可以通过填写bug报告，提出功能需求，或者提供各类反馈信"
-#~ "息等行动来帮助我们的开发。请访问 网站http://rkward.sourceforge.net以获取进"
-#~ "一步的信息。"
+#~ "在过去的几个月里，RKWard取得了很大的进步，已经能够完成很多工作。但它仍然还有很多欠缺的地方。 "
+#~ "您可以通过填写bug报告，提出功能需求，或者提供各类反馈信息等行动来帮助我们的开发。请访问 "
+#~ "网站http://rkward.sourceforge.net以获取进一步的信息。"
 
 #~ msgid "What to expect of RKWard"
 #~ msgstr "对RKWard的期待"

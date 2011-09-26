@@ -8,19 +8,19 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: it\n"
-"Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
-"group_id=50231&atid=459007\n"
+"Report-Msgid-Bugs-To: "
+"http://sourceforge.net/tracker/?group_id=50231&atid=459007\n"
 "POT-Creation-Date: 2011-05-25 10:10+0200\n"
-"PO-Revision-Date: 2011-05-19 19:18+0000\n"
-"Last-Translator: Luciano Bertuccelli <Unknown>\n"
+"PO-Revision-Date: 2011-09-09 11:27+0000\n"
+"Last-Translator: simone.sandri <lexluxsox@hotmail.it>\n"
 "Language-Team: Italian <it@li.org>\n"
-"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-05-25 08:08+0000\n"
-"X-Generator: Launchpad (build 13085)\n"
+"X-Launchpad-Export-Date: 2011-09-10 05:13+0000\n"
+"X-Generator: Launchpad (build 13900)\n"
+"Language: it\n"
 
 #: agents/rkeditobjectagent.cpp:56
 msgid ""
@@ -202,15 +202,15 @@ msgstr "Etichetta:"
 
 #: core/robject.cpp:115
 msgid "Type:"
-msgstr ""
+msgstr "Tipo:"
 
 #: core/robject.cpp:118
 msgid "Function"
-msgstr ""
+msgstr "Funzione"
 
 #: core/robject.cpp:119
 msgid "Usage: "
-msgstr ""
+msgstr "Uso: "
 
 #: core/robject.cpp:121
 msgid "Data frame"
@@ -226,11 +226,11 @@ msgstr ""
 
 #: core/robject.cpp:127
 msgid "List"
-msgstr ""
+msgstr "Lista"
 
 #: core/robject.cpp:129
 msgid "Variable"
-msgstr ""
+msgstr "Variabile"
 
 #: core/robject.cpp:130
 msgid "Data Type:"
@@ -246,7 +246,7 @@ msgstr ""
 
 #: core/robject.cpp:139
 msgid "Dimensions: "
-msgstr ""
+msgstr "Dimensioni: "
 
 #: core/robject.cpp:147
 msgid "Class(es):"
@@ -268,15 +268,15 @@ msgstr "Allineamento"
 
 #: dataeditor/editformatdialog.cpp:45
 msgid "Default"
-msgstr ""
+msgstr "Predefinito"
 
 #: dataeditor/editformatdialog.cpp:47
 msgid "Left"
-msgstr ""
+msgstr "Sinistra"
 
 #: dataeditor/editformatdialog.cpp:49
 msgid "Right"
-msgstr ""
+msgstr "Destra"
 
 #: dataeditor/editformatdialog.cpp:54
 msgid "Decimal Places"
@@ -329,11 +329,11 @@ msgstr ""
 
 #: dataeditor/rkvareditmodel.cpp:367
 msgid "#New Variable#"
-msgstr ""
+msgstr "#Nuova Variabile#"
 
 #: dataeditor/rkvareditmodel.cpp:368
 msgid "Row names"
-msgstr ""
+msgstr "Nome righe"
 
 #: dataeditor/rkvareditmodel.cpp:673
 msgid "Format"
@@ -399,8 +399,8 @@ msgstr ""
 msgid ""
 "The editor '%1' contains the following duplicate columns. Editing this table "
 "may not be safe, and has been disabled. You may re-enable editing if you "
-"know what you are doing, but you are strongly advised to fix the table, and/"
-"or backup your data, first."
+"know what you are doing, but you are strongly advised to fix the table, "
+"and/or backup your data, first."
 msgstr ""
 
 #: dataeditor/twintable.cpp:182
@@ -1357,9 +1357,9 @@ msgid ""
 "even save the workspace (but if you're lucky, R already did that). What you "
 "can do, however, is save any open command-files, the output, or copy data "
 "out of open data editors. Quit RKWard after that.\n"
-"Since this should never happen, please write a mail to rkward-devel@lists."
-"sourceforge.net, and tell us, what you were trying to do, when this "
-"happened. Sorry!"
+"Since this should never happen, please write a mail to rkward-"
+"devel@lists.sourceforge.net, and tell us, what you were trying to do, when "
+"this happened. Sorry!"
 msgstr ""
 
 #: rbackend/rinterface.cpp:767
@@ -1405,16 +1405,18 @@ msgid ""
 "that the last installation did not place all files in the correct place. "
 "However, in some cases, left-overs from a previous installation that was not "
 "cleanly removed may be the cause.</p>\t\t<p><b>You should quit RKWard, now, "
-"and fix your installation</b>. For help with that, see <a href=\"http://p.sf."
-"net/rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</p>\n"
+"and fix your installation</b>. For help with that, see <a "
+"href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a"
+">.</p>\n"
 msgstr ""
 
 #: rbackend/rkrbackend.cpp:1388
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
 "this indicates a broken installation.</p>\t\t<p><b>You should quit RKWard, "
-"now, and fix your installation</b>. For help with that, see <a href=\"http://"
-"p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</p></p>\n"
+"now, and fix your installation</b>. For help with that, see <a "
+"href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a"
+">.</p></p>\n"
 msgstr ""
 
 #: rkconsole.cpp:115
@@ -1488,10 +1490,11 @@ msgid ""
 "<p>RKWard either could not find its resource files at all, or only an old "
 "version of those files. The most likely cause is that the last installation "
 "failed to place the files in the correct place. This can lead to all sorts "
-"of problems, from single missing features to complete failure to function.</"
-"p><p><b>You should quit RKWard, now, and fix your installation</b>. For help "
-"with that, see <a href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/"
-"rkward/compiling</a>.</p>"
+"of problems, from single missing features to complete failure to "
+"function.</p><p><b>You should quit RKWard, now, and fix your "
+"installation</b>. For help with that, see <a "
+"href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a"
+">.</p>"
 msgstr ""
 
 #: rkward.cpp:196
@@ -1501,8 +1504,8 @@ msgstr ""
 #: rkward.cpp:213
 msgid ""
 "Your installation of KDE is configured to use \"native\" file dialogs. This "
-"is known to cause issues in some cases, and we recommend to disable \"native"
-"\" file dialogs.\n"
+"is known to cause issues in some cases, and we recommend to disable "
+"\"native\" file dialogs.\n"
 "Should \"native\" file dialogs be disabled in RKWard?"
 msgstr ""
 
@@ -1524,8 +1527,8 @@ msgstr "Impostazione dei plugin..."
 
 #: rkward.cpp:267
 msgid ""
-"Plugins are needed: you may manage these through \"Settings->Configure RKWard"
-"\".\n"
+"Plugins are needed: you may manage these through \"Settings->Configure "
+"RKWard\".\n"
 msgstr ""
 
 #: rkward.cpp:267
@@ -2414,9 +2417,9 @@ msgstr ""
 
 #: windows/rcontrolwindow.cpp:133
 msgid ""
-"Some of the commands you were trying to cancel are marked as \"sync"
-"\" (letter 'S' in the type column). Cancelling such commands could lead to "
-"loss of data. These commands have _not_ been cancelled."
+"Some of the commands you were trying to cancel are marked as \"sync\" "
+"(letter 'S' in the type column). Cancelling such commands could lead to loss "
+"of data. These commands have _not_ been cancelled."
 msgstr ""
 
 #: windows/rcontrolwindow.cpp:133
@@ -2558,9 +2561,9 @@ msgstr ""
 
 #: windows/rkhelpsearchwindow.cpp:236
 msgid ""
-"No help found on '%1'. Maybe the corresponding package is not installed/"
-"loaded, or maybe you mistyped the command. Try using Help->Search R Help for "
-"more options."
+"No help found on '%1'. Maybe the corresponding package is not "
+"installed/loaded, or maybe you mistyped the command. Try using Help->Search "
+"R Help for more options."
 msgstr ""
 
 #: windows/rkhelpsearchwindow.cpp:236
@@ -2846,10 +2849,10 @@ msgstr ""
 #: windows/rktoplevelwindowgui.cpp:170
 msgid ""
 "<p><b>Where should I report bugs or wishes?</b></p><p>Please submit your bug "
-"reports or wishes at <a href=\"%1\">%1</a> or send email to <a href=\"mailto:"
-"%2\">%2</a>.</p><p><b>What information should I provide?</b></p><p>Please "
-"copy the information shown below, and fill in the details to the questions.</"
-"p>"
+"reports or wishes at <a href=\"%1\">%1</a> or send email to <a "
+"href=\"mailto:%2\">%2</a>.</p><p><b>What information should I "
+"provide?</b></p><p>Please copy the information shown below, and fill in the "
+"details to the questions.</p>"
 msgstr ""
 
 #: windows/rkwindowcatcher.cpp:69
@@ -3353,279 +3356,11 @@ msgstr ""
 #: rc.cpp:139
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr " ,Launchpad Contributions:,Danielsan474,Luciano Bertuccelli"
+msgstr ""
+",Launchpad Contributions:,Danielsan474,Luciano Bertuccelli, ,Launchpad "
+"Contributions:,Luciano Bertuccelli,simone.sandri"
 
 #: rc.cpp:140
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ",,,"
-
-#~ msgid "Objects in the R workspace"
-#~ msgstr "Oggetti nell'area di lavoro"
-
-#~ msgid "PHP-Error"
-#~ msgstr "Errore di PHP"
-
-#~ msgid "Changes in this section take effect the next time you start a plugin"
-#~ msgstr ""
-#~ "I cambiamenti in questa sezione avranno luogo la prossima volta che "
-#~ "avvierai un plugin"
-
-#~ msgid "File-location of the PHP binary"
-#~ msgstr "Posizione del binario di PHP"
-
-#~ msgid "PHP backend"
-#~ msgstr "Backend PHP"
-
-#~ msgid "Cutting selection..."
-#~ msgstr "Taglio della selezione..."
-
-#~ msgid "Copying selection to clipboard..."
-#~ msgstr "Copia della selezione negli appunti..."
-
-#~ msgid "Insert new variable right"
-#~ msgstr "Inserisci una nuova variabile a destra"
-
-#~ msgid "file to open"
-#~ msgstr "file da aprire"
-
-#~ msgid "Default for type '%1'"
-#~ msgstr "Predefinito per il tipo '%1'"
-
-#~ msgid "Ok"
-#~ msgstr "Ok"
-
-#~ msgid "[Objects]"
-#~ msgstr "[Oggetti]"
-
-#~ msgid "Existing objects in your workspace."
-#~ msgstr "Oggetti nell'area di lavoro."
-
-#~ msgid "starting R engine"
-#~ msgstr "avvio in corso del motore R"
-
-#~ msgid ""
-#~ "_: NAME OF TRANSLATORS\n"
-#~ "Your names"
-#~ msgstr ""
-#~ "Daniele Medri, ,Launchpad Contributions:,Danielsan474,Luciano Bertuccelli"
-
-#~ msgid ""
-#~ "_: EMAIL OF TRANSLATORS\n"
-#~ "Your emails"
-#~ msgstr "daniele@medri.org,,,,"
-
-#~ msgid "R-Error"
-#~ msgstr "Errore di R"
-
-#~ msgid "Browse"
-#~ msgstr "Sfoglia"
-
-#~ msgid "Object name: "
-#~ msgstr "Nome oggetto: "
-
-#~ msgid ""
-#~ "\n"
-#~ "Full location: "
-#~ msgstr ""
-#~ "\n"
-#~ "Percorso completo: "
-
-#~ msgid ""
-#~ "\n"
-#~ "Dimensions: "
-#~ msgstr ""
-#~ "\n"
-#~ "Dimensioni: "
-
-#~ msgid ")':\n"
-#~ msgstr ")':\n"
-
-#~ msgid " - Waiting for results from R..."
-#~ msgstr " - Aspettando risultati da R..."
-
-#~ msgid "Directory, where the PHP support files are located"
-#~ msgstr "Directory dove sono posizionati i file di supporto per PHP"
-
-#~ msgid "Error installing packages"
-#~ msgstr "Errore durante l'installazione dei pacchetti"
-
-#~ msgid "Local"
-#~ msgstr "Locale"
-
-#~ msgid "Online"
-#~ msgstr "In linea"
-
-#~ msgid "As \"root\" user"
-#~ msgstr "Come utente \"root\""
-
-#~ msgid "Please, stand by while downloading the list of packages."
-#~ msgstr "Attendere prego, sto scaricando la lista dei pacchetti."
-
-#~ msgid "Saving to file '"
-#~ msgstr "Salvataggio file '"
-
-#~ msgid "Open Command File"
-#~ msgstr "Apri file file di comandi"
-
-#~ msgid "'? There's no way to get it back."
-#~ msgstr "'? Non c'è modo di ripristinare lo stato iniziale."
-
-#~ msgid "Index"
-#~ msgstr "Indice"
-
-#~ msgid ""
-#~ "The R-backend has reported one or more error(s) while processing the "
-#~ "plugin "
-#~ msgstr ""
-#~ "Il motore di R ha riportato uno o più errori durante l'esecuzione del "
-#~ "plugin "
-
-#~ msgid " - You have to select a variable for the \""
-#~ msgstr " ' - Hai selezionato una variabile per il \""
-
-#~ msgid "\"-field\n"
-#~ msgstr "\"-campo\n"
-
-#~ msgid ""
-#~ "There has been an error\n"
-#~ "(\""
-#~ msgstr ""
-#~ "C'è stato un errore\n"
-#~ "(\""
-
-#~ msgid "Prints out the actual document"
-#~ msgstr "Stampa il documento corrente"
-
-#~ msgid "Enables/disables the statusbar"
-#~ msgstr "Abilita/disabilita la barra di stato"
-
-#~ msgid "Printing..."
-#~ msgstr "Stampa..."
-
-#~ msgid "Toggling statusbar..."
-#~ msgstr "Commuta la barra di stato..."
-
-#~ msgid "Please, stand by while downloading packages from CRAN."
-#~ msgstr "Attendere per favore, scaricamento pacchetti da CRAN in corso."
-
-#~ msgid "R_HOME not set"
-#~ msgstr "R_HOME non impostata"
-
-#~ msgid "Conflicting settings for R_HOME"
-#~ msgstr "Impostazioni in conflitto per R_HOME"
-
-#~ msgid "RKLoadAgent"
-#~ msgstr "RKLoadAgent"
-
-#~ msgid "0.3.1"
-#~ msgstr "0.3.1"
-
-#~ msgid "&Clear"
-#~ msgstr "&Pulisci"
-
-#~ msgid "Enables/disables the toolbar"
-#~ msgstr "Abilita/disabilita la barra degli strumenti"
-
-#~ msgid "Toggling toolbar..."
-#~ msgstr "Commutazione barra degli strumenti..."
-
-#~ msgid "Issuing command:\n"
-#~ msgstr "Esecuzione comando:\n"
-
-#~ msgid "Got reply:"
-#~ msgstr "Replica:"
-
-#~ msgid "TwinTableDataMember"
-#~ msgstr "TwinTableDataMember"
-
-#~ msgid "TwinTableMember"
-#~ msgstr "TwinTableMember"
-
-#~ msgid "TwinTable"
-#~ msgstr "TwinTable"
-
-#~ msgid "RKEditorDataFrame"
-#~ msgstr "RKEditorDataFrame"
-
-#~ msgid "TwinTableMetaMember"
-#~ msgstr "TwinTableMetaMember"
-
-#~ msgid "RKObjectListView"
-#~ msgstr "RKObjectListView"
-
-#~ msgid "RKCheckBox"
-#~ msgstr "RKCheckBox"
-
-#~ msgid "RKVarSlot"
-#~ msgstr "RKVarSlot"
-
-#~ msgid "RKPluginSpinBox"
-#~ msgstr "RKPluginSpinBox"
-
-#~ msgid "RKRadio"
-#~ msgstr "RKRadio"
-
-#~ msgid "RKPluginWidget"
-#~ msgstr "RKPluginWidget"
-
-#~ msgid "RInterface"
-#~ msgstr "RInterface"
-
-#~ msgid "PHPBackend"
-#~ msgstr "PHPBackend"
-
-#~ msgid ""
-#~ "For now, when you change the setting for the location of the logfiles, "
-#~ "RKWard will not function properly until you restart the application!"
-#~ msgstr ""
-#~ "Per ora, quando cambi le impostazioni per la posizione dei file di log,"
-#~ "RKWard non funzionerà propriamente fino al prossimo riavvio!"
-
-#~ msgid "Logfiles"
-#~ msgstr "File di log"
-
-#~ msgid "Column 1"
-#~ msgstr "Colonna 1"
-
-#~ msgid "RKwardApp"
-#~ msgstr "RKwardApp"
-
-#~ msgid "RKwatch"
-#~ msgstr "RKwatch"
-
-#~ msgid "Save Command File"
-#~ msgstr "Salva file di comandi"
-
-#~ msgid "Close current editor"
-#~ msgstr "Chiudi l'editor attuale"
-
-#~ msgid "&Show / Refresh"
-#~ msgstr "Mo&stra / Aggiorna"
-
-#~ msgid "Closes the current data editor"
-#~ msgstr "Chiudi l'editor dati corrente"
-
-#~ msgid "You specified a file that is not on local system"
-#~ msgstr "Hai indicato un file che non è sul filesystem locale"
-
-#~ msgid "Cannot open file"
-#~ msgstr "Non è possibile aprire il file"
-
-#~ msgid "Error!"
-#~ msgstr "Errore!"
-
-#~ msgid "Open file"
-#~ msgstr "Apri file"
-
-#~ msgid "Save file"
-#~ msgstr "Salva file"
-
-#~ msgid "Directory where the plugins are located"
-#~ msgstr "Directory dove sono posizionati i plugin"
-
-#~ msgid "Program to use as a pager (e.g. for R-help)"
-#~ msgstr "Programma da utilizzare come pager (es. per la guida di R)"
-
-#~ msgid "RKKonsole"
-#~ msgstr "RKKConsole"
+msgstr ",,,,,,,lexluxsox@hotmail.it"
