@@ -871,7 +871,7 @@ void RKRPackageInstallationStatus::initialize (RCommandChain *chain) {
 
 	RCommand *command = new RCommand (".rk.get.package.intallation.state ()", RCommand::App | RCommand::GetStructuredData);
 	connect (command->notifier (), SIGNAL (commandFinished(RCommand*)), this, SLOT (statusCommandFinished(RCommand*)));
-	RKProgressControl *control = new RKProgressControl (this, i18n ("<p>Please stand by while searching for installed and available packages.</p><p><strong>Note:</strong> This requires a working internet connection.</p>"), i18n ("Searching for packages"), RKProgressControl::CancellableProgress | RKProgressControl::AutoCancelCommands);
+	RKProgressControl *control = new RKProgressControl (this, i18n ("<p>Please stand by while searching for installed and available packages.</p><p><strong>Note:</strong> This requires a working internet connection, and may take some time, esp. if one or more repositories are temporarily unavailable.</p>"), i18n ("Searching for packages"), RKProgressControl::CancellableProgress | RKProgressControl::AutoCancelCommands);
 	control->addRCommand (command, true);
 	RKGlobals::rInterface ()->issueCommand (command, chain);
 	control->doModal (true);
