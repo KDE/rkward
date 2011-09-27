@@ -5,6 +5,7 @@ ChangeLog for package rkwarddev
     unfortunately, this breaks backwards compatibility!
   - added functions rk.XML.varselector(), rk.XML.copy(), rk.XML.dialog(), rk.XML.page() and
     rk.XML.wizard()
+  - added "id.name" and "label" to various functions
   - updated rk.XML.formula()
 
 ## 0.01-5 (2011-09-25)

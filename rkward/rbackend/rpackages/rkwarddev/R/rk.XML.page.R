@@ -4,7 +4,8 @@
 #' "column", "copy", "dropdown", "formula", "frame", "input", "page", "radio", "row", "saveobject",
 #' "spinbox", "stretch", "tabbook", "text", "varselector" and "varslot".
 #'
-#' @param nodes A (list of) objects of class \code{XiMpLe.node}. 
+#' @param nodes A (list of) objects of class \code{XiMpLe.node}.
+#' @param id.name Character string, a unique ID for this plugin element.
 #' @return A list of objects of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
@@ -18,7 +19,7 @@
 #' test.wizard <- rk.XML.wizard(rk.XML.page(list(test.text, test.copy)))
 #' cat(pasteXMLNode(test.wizard, shine=1))
 
-rk.XML.page <- function(nodes){
+rk.XML.page <- function(nodes, id.name=NULL){
 	# check the node names and allow only valid ones
 	node.names <- sapply(child.list(nodes), function(this.node){
 			this.node@name
@@ -33,6 +34,7 @@ rk.XML.page <- function(nodes){
 
 	node <- new("XiMpLe.node",
 			name="page",
+			attributes=list(id=id.name),
 			children=child.list(nodes)
 		)
 

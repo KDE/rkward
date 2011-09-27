@@ -1,7 +1,6 @@
 #' Create XML document for RKWard plugins
 #'
 #' @param name Character string, the name of the plugin.
-#' @param label Character string, a text label for the plugin's top level, i.e. the window title of the dialog.
 #' @param dialog An object of class \code{XiMpLe.node} to be pasted as the \code{<dialog>} section
 #'		(but only if \code{provides} includes \code{"dialog"} as well). See
 #'		\code{\link[rkwarddev:rk.XML.dialog]{rk.XML.dialog}} for details.
@@ -15,6 +14,8 @@
 #'		If \code{"logic"} is specified, a logic section will be added to the document. If \code{logic=NULL}, must be edited manually and is therefore commented out.
 #' @param help Logical, if \code{TRUE} an include tag for a help file named \emph{"<name>.rkh"} will be added to the header.
 #' @param pluginmap Character string, relative path to the pluginmap file, which will then be included in the head of this document.
+#' @param label Character string, a text label for the plugin's top level, i.e. the window title of the dialog.
+#'		Will only be used if \code{dialog} or \code{wizard} are \code{NULL}.
 #' @return An object of class \code{XiMpLe.doc}.
 #' @export
 #' @examples
@@ -32,7 +33,7 @@
 #' test.plugin <- rk.XML.plugin("My test", label="Check this out", dialog=test.tabbook)
 #' cat(pasteXMLTree(test.plugin, shine=1))
 
-rk.XML.plugin <- function(name, label, dialog=NULL, wizard=NULL, logic=NULL, provides=c("logic", "dialog"), help=TRUE, pluginmap=NULL){
+rk.XML.plugin <- function(name, dialog=NULL, wizard=NULL, logic=NULL, provides=c("logic", "dialog"), help=TRUE, pluginmap=NULL, label=NULL){
 	name.orig <- name
 	name <- gsub("[[:space:]]*[^[:alnum:]]*", "", name)
 	if(!identical(name.orig, name)){

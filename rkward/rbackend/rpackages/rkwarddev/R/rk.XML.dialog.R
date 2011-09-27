@@ -5,6 +5,7 @@
 #' "spinbox", "stretch", "tabbook", "text", "varselector" and "varslot".
 #'
 #' @param nodes A (list of) objects of class \code{XiMpLe.node}. 
+#' @param label Character string, a text label for this plugin element.
 #' @return A list of objects of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
@@ -18,7 +19,7 @@
 #' test.dialog <- rk.XML.dialog(rk.XML.col(list(test.input, test.cbox1, test.cbox2)))
 #' cat(pasteXMLNode(test.dialog, shine=1))
 
-rk.XML.dialog <- function(nodes){
+rk.XML.dialog <- function(nodes, label=NULL){
 	# check the node names and allow only valid ones
 	node.names <- sapply(child.list(nodes), function(this.node){
 			this.node@name
@@ -33,6 +34,7 @@ rk.XML.dialog <- function(nodes){
 
 	node <- new("XiMpLe.node",
 			name="dialog",
+			attributes=list(label=label),
 			children=child.list(nodes)
 		)
 
