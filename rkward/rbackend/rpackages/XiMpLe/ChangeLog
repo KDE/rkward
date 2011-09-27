@@ -1,6 +1,9 @@
 ChangeLog for package XiMpLe
 
-## 0.03-3 (2011-09-26)
+## 0.03-3 (2011-09-27)
+  - changed default 'shine' value of pasteXMLNode() and pasteXMLTree() from 2 to 1
+  - pasteXMLNode() and pasteXMLTree() now try to call each other if fed with the wrong class object,
+    but a warning is given
   - changed handling of 'value' in pasteXMLNode(), now reflects 'shine' setting/indentation
 
 ## 0.03-2 (2011-09-17)

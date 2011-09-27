@@ -10,9 +10,15 @@
 #' @param indent.by A charachter string defining how indentation should be done. Defaults to tab.
 #' @include XiMpLe.doc-class.R
 #' @export
-pasteXMLTree <- function(obj, shine=2, indent.by="\t"){
+pasteXMLTree <- function(obj, shine=1, indent.by="\t"){
 	if(!inherits(obj, "XiMpLe.doc")){
-		stop(simpleError("'obj' must be of class XiMpLe.doc!"))
+		if(inherits(obj, "XiMpLe.node")){
+			# hand over to pasteXMLNode()
+			warning("'node' is of class XiMpLe.node, called pasteXMLNode() instead.")
+			return(pasteXMLNode(node=obj, shine=shine, indent.by=indent.by))
+		} else {
+			stop(simpleError("'obj' must be of class XiMpLe.doc!"))
+		}
 	} else {}
 
 	filename <- slot(obj, "file")

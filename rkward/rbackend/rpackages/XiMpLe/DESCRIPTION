@@ -20,7 +20,7 @@ URL: http://rkward.sourceforge.net
 Authors@R: c(person(given="Meik", family="Michalke",
     email="meik.michalke@hhu.de", role=c("aut", "cre")))
 Version: 0.03-3
-Date: 2011-09-26
+Date: 2011-09-27
 Collate:
     'XiMpLe.node-class.R'
     'XiMpLe.doc-class.R'
