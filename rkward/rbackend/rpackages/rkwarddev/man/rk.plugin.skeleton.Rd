@@ -23,29 +23,26 @@
   where the skeleton should be created.}
 
   \item{dialog}{An object of class \code{XiMpLe.node} to be
-  pasted as the \code{<dialog>} section (but only if
-  \code{provides} includes \code{"dialog"} as well). See
+  pasted as the \code{<dialog>} section. See
   \code{\link[rkwarddev:rk.XML.dialog]{rk.XML.dialog}} for
   details.}
 
   \item{wizard}{An object of class \code{XiMpLe.node} to be
-  pasted as the \code{<wizard>} section (but only if
-  \code{provides} includes \code{"wizard"} as well). See
+  pasted as the \code{<wizard>} section. See
   \code{\link[rkwarddev:rk.XML.wizard]{rk.XML.wizard}} for
   details.}
 
   \item{logic}{An object of class \code{XiMpLe.node} to be
-  pasted as the \code{<logic>} section (but only if
-  \code{provides} includes \code{"logic"} as well). See
+  pasted as the \code{<logic>} section. See
   \code{\link[rkwarddev:rk.XML.logic]{rk.XML.logic}} for
   details.}
 
-  \item{provides}{Character vector with at least one entry
-  of \code{"logic"}, \code{"dialog"} or \code{"wizard"},
-  defining what the plugin XML provides. If \code{"logic"}
-  is specified, a logic section will be added to the
-  document. If \code{logic=NULL}, must be edited manually
-  and is therefore commented out.}
+  \item{provides}{Character vector with possible entries of
+  \code{"logic"}, \code{"dialog"} or \code{"wizard"},
+  defining what sections the document should provide even
+  if \code{dialog}, \code{wizard} and \code{logic} are
+  \code{NULL}. These sections must be edited manually and
+  some parts are therefore commented out.}
 
   \item{dial.require}{A character vector with names of R
   packages that the dialog requires.}

@@ -9,14 +9,14 @@
 #' @param hierarchy A character vector with instructions where to place the plugin in the menu hierarchy,
 #'		one string for each included component. Valid values are \code{"analysis"},  \code{"plots"} and  
 #'		\code{"data"}. To place your dialogs somewhere else, edit the pluginmap manually.
+#' @param clean.name Logical, if \code{TRUE}, all non-alphanumeric characters except the underscore (\code{"_"}) will be removed from \code{name}.
 #' @export
 
-rk.XML.pluginmap <- function(name, about=NULL, components, plugin.dir="plugins", hierarchy="analysis"){
-	# to besure, remove all non-character symbols from name
-	name.orig <- name
-	name <- gsub("[[:space:]]*[^[:alnum:]]*", "", name)
-	if(!identical(name.orig, name)){
-		message(paste("For filenames ", sQuote(name.orig), " was renamed to ", sQuote(name), ".", sep=""))
+rk.XML.pluginmap <- function(name, about=NULL, components, plugin.dir="plugins", hierarchy="analysis", clean.name=TRUE){
+	if(isTRUE(clean.name)){
+		# to besure, remove all non-character symbols from name
+		name.orig <- name
+		name <- clean.name(name)
 	} else {}
 
 	# .pluginmap has three children in <document>:

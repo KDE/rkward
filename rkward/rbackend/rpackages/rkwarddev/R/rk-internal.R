@@ -232,3 +232,31 @@ prop.validity <- function(source, property, ignore.empty=TRUE, warn.only=TRUE, b
 	}
 }
 ## end function prop.validity()
+
+## function check.type()
+check.type <- function(value, type, var.name, warn.only=TRUE){
+	if(inherits(value, type)){
+		return(invisible(NULL))
+	} else {
+		msg.text <- paste(sQuote(var.name), " should be of type ", type, "!", sep="")
+		if(isTRUE(warn.only)){
+			warning(msg.text)
+		} else {
+			stop(simpleError(msg.text))
+		}
+	}
+}
+## end function check.type()
+
+## function clean.name()
+clean.name <- function(name, message=TRUE){
+	name.orig <- name
+	name <- gsub("[[:space:]]*[^[:alnum:]_]*", "", name)
+	if(!identical(name.orig, name)){
+		if(isTRUE(message)){
+			message(paste("For filenames ", sQuote(name.orig), " was renamed to ", sQuote(name), ".", sep=""))
+		} else {}
+	} else {}
+	return(name)
+}
+## end function clean.name()

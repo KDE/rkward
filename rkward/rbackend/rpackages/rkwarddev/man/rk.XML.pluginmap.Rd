@@ -3,7 +3,8 @@
 \title{Write a pluginmap file for RKWard}
 \usage{
   rk.XML.pluginmap(name, about = NULL, components,
-  plugin.dir = "plugins", hierarchy = "analysis")
+  plugin.dir = "plugins", hierarchy = "analysis",
+  clean.name = TRUE)
 }
 \arguments{
   \item{name}{Character string, name of the plugin.}
@@ -25,6 +26,10 @@
   \code{"analysis"}, \code{"plots"} and \code{"data"}. To
   place your dialogs somewhere else, edit the pluginmap
   manually.}
+
+  \item{clean.name}{Logical, if \code{TRUE}, all
+  non-alphanumeric characters except the underscore
+  (\code{"_"}) will be removed from \code{name}.}
 }
 \description{
   Write a pluginmap file for RKWard

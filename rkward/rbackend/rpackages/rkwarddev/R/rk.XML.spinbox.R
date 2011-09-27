@@ -25,23 +25,28 @@ rk.XML.spinbox <- function(label, min=NULL, max=NULL, initial=0, real=TRUE, prec
 		attr.list[["id"]] <- id.name
 	} else {}
 
-	if(is.numeric(initial) & initial != 0){
-		attr.list[["initial"]] <- initial
+	if(initial != 0){
+		check.type(initial, "numeric", "initial")
+		attr.list[["initial"]] <- as.numeric(initial)
 	} else {}
 	if(!is.null(min)){
-		attr.list[["min"]] <- min
+		check.type(min, "numeric", "min")
+		attr.list[["min"]] <- as.numeric(min)
 	} else {}
 	if(!is.null(max)){
-		attr.list[["max"]] <- max
+		check.type(max, "numeric", "max")
+		attr.list[["max"]] <- as.numeric(max)
 	} else {}
 	if(!isTRUE(real)){
 		attr.list[["type"]] <- "integer"
 	} else {}
-	if(is.numeric(precision) & precision != 2){
-		attr.list[["precision"]] <- precision
+	if(precision != 2){
+		check.type(precision, "numeric", "precision")
+		attr.list[["precision"]] <- as.numeric(precision)
 	} else {}
-	if(is.numeric(max.precision) & max.precision != 8){
-		attr.list[["max.precision"]] <- max.precision
+	if(max.precision != 8){
+		check.type(max.precision, "numeric", "max.precision")
+		attr.list[["max.precision"]] <- as.numeric(max.precision)
 	} else {}
 
 	node <- new("XiMpLe.node",

@@ -6,17 +6,15 @@
 #'		See \code{\link[rkwarddev:rk.XML.about]{rk.XML.about}} for details and a full list of elements!
 #'		If \code{NULL}, no \code{DESCRIPTION} file will be created either.
 #' @param path Character sting, path to the main directory where the skeleton should be created.
-#' @param dialog An object of class \code{XiMpLe.node} to be pasted as the \code{<dialog>} section
-#'		(but only if \code{provides} includes \code{"dialog"} as well). See
+#' @param dialog An object of class \code{XiMpLe.node} to be pasted as the \code{<dialog>} section. See
 #'		\code{\link[rkwarddev:rk.XML.dialog]{rk.XML.dialog}} for details.
-#' @param wizard An object of class \code{XiMpLe.node} to be pasted as the \code{<wizard>} section
-#'		(but only if \code{provides} includes \code{"wizard"} as well). See
+#' @param wizard An object of class \code{XiMpLe.node} to be pasted as the \code{<wizard>} section. See
 #'		\code{\link[rkwarddev:rk.XML.wizard]{rk.XML.wizard}} for details.
-#' @param logic An object of class \code{XiMpLe.node} to be pasted as the \code{<logic>} section
-#'		(but only if \code{provides} includes \code{"logic"} as well). See
+#' @param logic An object of class \code{XiMpLe.node} to be pasted as the \code{<logic>} section. See
 #'		\code{\link[rkwarddev:rk.XML.logic]{rk.XML.logic}} for details.
-#' @param provides Character vector with at least one entry of \code{"logic"}, \code{"dialog"} or \code{"wizard"}, defining what the plugin XML provides.
-#'		If \code{"logic"} is specified, a logic section will be added to the document. If \code{logic=NULL}, must be edited manually and is therefore commented out.
+#' @param provides Character vector with possible entries of \code{"logic"}, \code{"dialog"} or \code{"wizard"}, defining what
+#'		sections the document should provide even if \code{dialog}, \code{wizard} and \code{logic} are \code{NULL}.
+#'		These sections must be edited manually and some parts are therefore commented out.
 #' @param dial.require A character vector with names of R packages that the dialog requires.
 #' @param overwrite Logical, whether existing files should be replaced. Defaults to \code{FALSE}.
 #' @param tests Logical, whether directories and files for plugin tests should be created.
@@ -105,10 +103,7 @@ rk.plugin.skeleton <- function(name, about=NULL, path=tempdir(), dialog=NULL, wi
 	JS.prep=NULL, JS.calc=NULL, JS.prnt=NULL, create=c("pmap", "xml", "js", "rkh", "desc"), edit=FALSE){
 	# to besure, remove all non-character symbols from name
 	name.orig <- name
-	name <- gsub("[[:space:]]*[^[:alnum:]]*", "", name)
-	if(!identical(name.orig, name)){
-		message(paste("For filenames ", sQuote(name.orig), " was renamed to ", sQuote(name), ".", sep=""))
-	} else {}
+	name <- clean.name(name)
 
 	if(!is.null(about)){
 		# create an about.node, which probably has some default values
