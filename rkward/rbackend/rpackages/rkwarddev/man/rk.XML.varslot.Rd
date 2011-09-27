@@ -4,7 +4,7 @@
 \usage{
   rk.XML.varslot(label, source, required = FALSE, multi =
   FALSE, min = 1, any = 1, max = 0, dim = 0, min.len = 0,
-  max.len = NULL, classes = NULL, type = NULL, id.name =
+  max.len = NULL, classes = NULL, types = NULL, id.name =
   "auto")
 }
 \arguments{
@@ -46,7 +46,7 @@
   \item{classes}{An optional character vector, defining
   class names to which the selection must be limited.}
 
-  \item{type}{If you specify one or more variables types
+  \item{types}{If you specify one or more variables types
   here, the varslot will only accept objects of those
   types. Valid types are "unknown", "number", "string",
   "factor", "invalid". Optional, use with great care, the
