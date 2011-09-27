@@ -2,11 +2,14 @@
 \alias{rk.XML.dialog}
 \title{Create XML dialog section for RKWard plugins}
 \usage{
-  rk.XML.dialog(nodes)
+  rk.XML.dialog(nodes, label = NULL)
 }
 \arguments{
   \item{nodes}{A (list of) objects of class
   \code{XiMpLe.node}.}
+
+  \item{label}{Character string, a text label for this
+  plugin element.}
 }
 \value{
   A list of objects of class \code{XiMpLe.node}.

@@ -2,11 +2,14 @@
 \alias{rk.XML.wizard}
 \title{Create XML wizard section for RKWard plugins}
 \usage{
-  rk.XML.wizard(nodes)
+  rk.XML.wizard(nodes, label = NULL)
 }
 \arguments{
   \item{nodes}{A (list of) objects of class
-  \code{XiMpLe.node}.}
+  \code{XiMpLe.node}}
+
+  \item{label}{Character string, a text label for this
+  plugin element.}
 }
 \value{
   A list of objects of class \code{XiMpLe.node}.

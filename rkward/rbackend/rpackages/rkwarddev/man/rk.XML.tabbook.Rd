@@ -2,12 +2,12 @@
 \alias{rk.XML.tabbook}
 \title{Create XML node "tabbook" for RKWard plugins}
 \usage{
-  rk.XML.tabbook(label, tab.labels, children = list(),
-  id.name = "auto")
+  rk.XML.tabbook(label = NULL, tab.labels, children =
+  list(), id.name = "auto")
 }
 \arguments{
   \item{label}{Character string, a text label for this
-  plugin element.}
+  plugin element. Must be set if \code{id.name="auto"}.}
 
   \item{tab.labels}{Character vector, where each string
   defines the name of one tab. The number of

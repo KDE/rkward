@@ -2,15 +2,12 @@
 \alias{rk.XML.plugin}
 \title{Create XML document for RKWard plugins}
 \usage{
-  rk.XML.plugin(name, label, dialog = NULL, wizard = NULL,
-  logic = NULL, provides = c("logic", "dialog"), help =
-  TRUE, pluginmap = NULL)
+  rk.XML.plugin(name, dialog = NULL, wizard = NULL, logic =
+  NULL, provides = c("logic", "dialog"), help = TRUE,
+  pluginmap = NULL, label = NULL)
 }
 \arguments{
   \item{name}{Character string, the name of the plugin.}
-
-  \item{label}{Character string, a text label for the
-  plugin's top level, i.e. the window title of the dialog.}
 
   \item{dialog}{An object of class \code{XiMpLe.node} to be
   pasted as the \code{<dialog>} section (but only if
@@ -44,6 +41,11 @@
   \item{pluginmap}{Character string, relative path to the
   pluginmap file, which will then be included in the head
   of this document.}
+
+  \item{label}{Character string, a text label for the
+  plugin's top level, i.e. the window title of the dialog.
+  Will only be used if \code{dialog} or \code{wizard} are
+  \code{NULL}.}
 }
 \value{
   An object of class \code{XiMpLe.doc}.

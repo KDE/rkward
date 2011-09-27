@@ -5,8 +5,8 @@
   rk.XML.vars(label, slot.text, required = FALSE, multi =
   FALSE, min = 1, any = 1, max = 0, dim = 0, min.len = 0,
   max.len = NULL, classes = NULL, types = NULL, horiz =
-  TRUE, add.nodes = NULL, frame.label = NULL, id.name =
-  "auto")
+  TRUE, add.nodes = NULL, frame.label = NULL,
+  formula.dependent = NULL, id.name = "auto")
 }
 \arguments{
   \item{label}{Character string, a text label for the
@@ -60,9 +60,19 @@
   \item{frame.label}{Character string, a text label for the
   whole frame.}
 
+  \item{formula.dependent}{Character string, if not
+  \code{NULL} will cause the addition of a second varslot
+  for the dependent variable(s), using the text of
+  \code{formula.dependent} as the label. Also a
+  \code{<formula>} node will be added, using both varslots
+  for \code{fixed_factors} and \code{dependent}
+  respectively.}
+
   \item{id.name}{Character vector, unique IDs for the frame
   (first entry), the varselector (second entry) and varslot
-  (third entry). If \code{"auto"}, IDs will be generated
+  (third entry). If \code{formula.dependent} is not
+  \code{NULL}, a fourth entry is needed for the formula
+  node as well. If \code{"auto"}, IDs will be generated
   automatically from \code{label} and \code{slot.text}.}
 }
 \value{

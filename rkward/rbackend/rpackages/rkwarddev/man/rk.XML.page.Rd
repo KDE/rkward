@@ -2,11 +2,14 @@
 \alias{rk.XML.page}
 \title{Create XML page node for RKWard plugins}
 \usage{
-  rk.XML.page(nodes)
+  rk.XML.page(nodes, id.name = NULL)
 }
 \arguments{
   \item{nodes}{A (list of) objects of class
   \code{XiMpLe.node}.}
+
+  \item{id.name}{Character string, a unique ID for this
+  plugin element.}
 }
 \value{
   A list of objects of class \code{XiMpLe.node}.
