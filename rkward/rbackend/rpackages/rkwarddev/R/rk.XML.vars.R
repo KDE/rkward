@@ -28,8 +28,13 @@
 #'		if \code{FALSE} below it.
 #' @param add.nodes A list of objects of class \code{XiMpLe.node} to be placed after the varslot.
 #' @param frame.label Character string, a text label for the whole frame.
+#' @param formula.dependent Character string, if not \code{NULL} will cause the addition of a second
+#'		varslot for the dependent variable(s), using the text of \code{formula.dependent} as the label. Also
+#'		a \code{<formula>} node will be added, using both varslots for \code{fixed_factors} and \code{dependent}
+#'		respectively.
 #' @param id.name Character vector, unique IDs for the frame (first entry), the varselector (second entry)
-#'		and varslot (third entry).
+#'		and varslot (third entry). If \code{formula.dependent} is not \code{NULL}, a fourth entry is needed for
+#'		the formula node as well.
 #'		If \code{"auto"}, IDs will be generated automatically from \code{label} and \code{slot.text}.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
@@ -41,14 +46,22 @@
 #' cat(pasteXMLNode(test.vars, shine=1))
 
 rk.XML.vars <- function(label, slot.text, required=FALSE, multi=FALSE, min=1, any=1, max=0,
-	dim=0, min.len=0, max.len=NULL, classes=NULL, types=NULL, horiz=TRUE, add.nodes=NULL, frame.label=NULL, id.name="auto"){
+	dim=0, min.len=0, max.len=NULL, classes=NULL, types=NULL, horiz=TRUE, add.nodes=NULL,
+	frame.label=NULL, formula.dependent=NULL, id.name="auto"){
+
 	if(identical(id.name, "auto")){
 		## if this ID generation get's changed, change it in rk.XML.varslot(), too!
 		var.sel.attr <- list(id=auto.ids(label, prefix=ID.prefix("varselector", length=3)))
 		var.slot.id <- auto.ids(slot.text, prefix=ID.prefix("varslot", length=4))
+		if(!is.null(formula.dependent)){
+			var.dep.id <- auto.ids(formula.dependent, prefix=ID.prefix("varslot", length=4))
+		} else {}
 	} else if(!is.null(id.name)){
 		var.sel.attr <- list(id=id.name[[2]])
 		var.slot.id <- id.name[[3]]
+		if(!is.null(formula.dependent)){
+			var.dep.id <- id.name[[4]]
+		} else {}
 	} else {}
 
 	var.sel.attr[["label"]] <- label
@@ -71,6 +84,26 @@ rk.XML.vars <- function(label, slot.text, required=FALSE, multi=FALSE, min=1, an
 		classes=classes,
 		types=types,
 		id.name=var.slot.id)
+
+		if(!is.null(formula.dependent)){
+			# var.dep.id
+			dep.slot <- rk.XML.varslot(
+				label=formula.dependent,
+				source=v.selector,
+				required=required,
+				multi=multi,
+				min=min,
+				any=any,
+				max=max,
+				dim=dim,
+				min.len=min.len,
+				max.len=max.len,
+				classes=classes,
+				types=types,
+				id.name=var.dep.id)
+		} else {
+			dep.slot <- NULL
+		}
 
 	# do we need to add extra nodes to the varslot?
 	slot.content <- list(v.slot)
