@@ -1883,8 +1883,8 @@ At some places in this introduction we've talked about "properties" of GUI eleme
 	<listitem><para>If you specify one or more R classnames (separated by spaces (" ")), here, the varslot will only accept objects belonging to those classes (otional, <emphasis>use with great care</emphasis>, the user should not be prevented from making valid choices, and R has <emphasis>a lot</emphasis> of different classes!)</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;types&gt;</term>
-	<listitem><para>If you specify one or more variables types (separated by spaced (" ")), here, the varslot will only accept objects of those types. Valid types are "unknown", "number", "string", "factor", "invalid". (Optional, <emphasis>use with great care</emphasis>, the user should not be prevented from making valid choices, and rkward does not always know the type of a variable)</para></listitem>
+	<term>&lt;type&gt;</term>
+	<listitem><para>If you specify one or more variables types (separated by spaced (" ")), here, the varslot will only accept objects of those types. Valid types are "unknown", "numeric", "string", "factor", "invalid". (Optional, <emphasis>use with great care</emphasis>, the user should not be prevented from making valid choices, and rkward does not always know the type of a variable)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;num_dimensions&gt;</term>
