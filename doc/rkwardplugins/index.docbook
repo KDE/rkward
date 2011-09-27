@@ -315,8 +315,8 @@ Using this simple tag you create a list from which the user can select variables
 Next, we nest a &lt;column&gt; inside the row. I.e. the following elements will be place above each other (top-to-bottom), and all will be to the right of the &lt;varselector&gt;.
 </para>
 <programlisting>
-						&lt;varslot type="numeric" id="x" source="vars" required="true" label="compare"/&gt;
-						&lt;varslot type="numeric" id="y" source="vars" required="true" label="against"/&gt;
+						&lt;varslot types="number" id="x" source="vars" required="true" label="compare"/&gt;
+						&lt;varslot types="number" id="y" source="vars" required="true" label="against"/&gt;
 </programlisting>
 <para>
 	These elements are the counterpart to the &lt;varselector&gt;. They represent <quote>slots</quote> into which the user can put variables. You will note that the <parameter>source</parameter> is set to the same value as the <parameter>id</parameter> of the &lt;varselector&gt;. This means, the &lt;varslot&gt;s will each take their variables from the varselector. The &lt;varslot&gt;s also have to be given an <parameter>id</parameter>. They may have a label, and they may be set to <quote>required</quote>. This means that the <quote>submit</quote> button will not be enabled until the &lt;varslot&gt; holds a valid value. Finally the <parameter>type</parameter> attribute is not interpreted, yet, but it will be used to take care that only the correct types of variables will be allowed in the &lt;varslot&gt;.
@@ -742,12 +742,12 @@ For instance, suppose you want to extend the t-test example used in this documen
 		&lt;row&gt;
 			&lt;varselector id="vars"/&gt;
 			&lt;column&gt;
-				&lt;varslot id="x" type="numeric" source="vars" required="true" label="compare"/&gt;
+				&lt;varslot id="x" types="number" source="vars" required="true" label="compare"/&gt;
 				&lt;radio id="mode" label="Compare against"&gt;
 					&lt;option value="variable" checked="true" label="another variable (select below)"/&gt;
 					&lt;option value="constant" label="a constant value (set below)"/&gt;
 				&lt;/radio&gt;
-				&lt;varslot id="y" type="numeric" source="vars" required="true" label="variable"/&gt;
+				&lt;varslot id="y" types="number" source="vars" required="true" label="variable"/&gt;
 				&lt;spinbox id="constant" initial="0" label="constant" /&gt;
 			&lt;/column&gt;
 		&lt;/row&gt;
@@ -1883,8 +1883,8 @@ At some places in this introduction we've talked about "properties" of GUI eleme
 	<listitem><para>If you specify one or more R classnames (separated by spaces (" ")), here, the varslot will only accept objects belonging to those classes (otional, <emphasis>use with great care</emphasis>, the user should not be prevented from making valid choices, and R has <emphasis>a lot</emphasis> of different classes!)</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;type&gt;</term>
-	<listitem><para>If you specify one or more variables types (separated by spaced (" ")), here, the varslot will only accept objects of those types. Valid types are "unknown", "numeric", "string", "factor", "invalid". (Optional, <emphasis>use with great care</emphasis>, the user should not be prevented from making valid choices, and rkward does not always know the type of a variable)</para></listitem>
+	<term>&lt;types&gt;</term>
+	<listitem><para>If you specify one or more variables types (separated by spaced (" ")), here, the varslot will only accept objects of those types. Valid types are "unknown", "number", "string", "factor", "invalid". (Optional, <emphasis>use with great care</emphasis>, the user should not be prevented from making valid choices, and rkward does not always know the type of a variable)</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;num_dimensions&gt;</term>
