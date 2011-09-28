@@ -6,11 +6,11 @@
 #'		a \code{<varselector>} node).
 #' @param required Logical, whether the selection of variables is mandatory or not.
 #' @param multi Logical, whether the varslot holds only one or several objects.
-#' @param min If \code{multi=TRUE} defines how many objects must be selected.
+#' @param min If \code{multi=TRUE} defines how many objects must be selected. Sets \code{multi=TRUE}.
 #' @param any If \code{multi=TRUE} defines how many objects must be selected at least if any
-#'		are selected at all.
+#'		are selected at all. Sets \code{multi=TRUE}.
 #' @param max If \code{multi=TRUE} defines how many objects can be selected in total
-#'		(0 means any number).
+#'		(0 means any number). Sets \code{multi=TRUE}.
 #' @param dim The number of dimensions, an object needs to have. If \code{dim=0} any number
 #'		of dimensions is acceptable.
 #' @param min.len The minimum length, an object needs to have.
@@ -69,7 +69,9 @@ rk.XML.varslot <- function(label, source, required=FALSE, multi=FALSE, min=1, an
 	if(isTRUE(required)){
 		var.slot.attr[["required"]] <- "true"
 	} else {}
-	if(isTRUE(multi)){
+
+	# "multi" is mandatory if min, max or any are set
+	if(isTRUE(multi) | min > 1 | any > 1 | max > 0){
 		var.slot.attr[["multi"]] <- "true"
 		if(min > 1){
 			var.slot.attr[["min_vars"]] <- min

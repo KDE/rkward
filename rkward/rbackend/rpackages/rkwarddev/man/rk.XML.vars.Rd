@@ -6,7 +6,8 @@
   FALSE, min = 1, any = 1, max = 0, dim = 0, min.len = 0,
   max.len = NULL, classes = NULL, types = NULL, horiz =
   TRUE, add.nodes = NULL, frame.label = NULL,
-  formula.dependent = NULL, id.name = "auto")
+  formula.dependent = NULL, dep.options = list(), id.name =
+  "auto")
 }
 \arguments{
   \item{label}{Character string, a text label for the
@@ -63,16 +64,26 @@
   \item{formula.dependent}{Character string, if not
   \code{NULL} will cause the addition of a second varslot
   for the dependent variable(s), using the text of
-  \code{formula.dependent} as the label. Also a
+  \code{formula.dependent} as its label. Also a
   \code{<formula>} node will be added, using both varslots
   for \code{fixed_factors} and \code{dependent}
   respectively.}
 
+  \item{dep.options}{A named list with optional attributes
+  for the \code{dependent} varslot, if
+  \code{formula.dependent} is not \code{NULL}. Valid
+  options are \code{required}, \code{multi}, \code{min},
+  \code{any}, \code{max}, \code{dim}, \code{min.len},
+  \code{max.len}, \code{classes} and \code{types}. If an
+  options is undefined, it defaults to the same values like
+  the main options of this function.}
+
   \item{id.name}{Character vector, unique IDs for the frame
   (first entry), the varselector (second entry) and varslot
   (third entry). If \code{formula.dependent} is not
-  \code{NULL}, a fourth entry is needed for the formula
-  node as well. If \code{"auto"}, IDs will be generated
+  \code{NULL}, a fourth and fifth entry is needed as well,
+  for the dependent varslot and the formula node,
+  respectively. If \code{"auto"}, IDs will be generated
   automatically from \code{label} and \code{slot.text}.}
 }
 \value{

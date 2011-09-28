@@ -24,13 +24,15 @@
   or several objects.}
 
   \item{min}{If \code{multi=TRUE} defines how many objects
-  must be selected.}
+  must be selected. Sets \code{multi=TRUE}.}
 
   \item{any}{If \code{multi=TRUE} defines how many objects
-  must be selected at least if any are selected at all.}
+  must be selected at least if any are selected at all.
+  Sets \code{multi=TRUE}.}
 
   \item{max}{If \code{multi=TRUE} defines how many objects
-  can be selected in total (0 means any number).}
+  can be selected in total (0 means any number). Sets
+  \code{multi=TRUE}.}
 
   \item{dim}{The number of dimensions, an object needs to
   have. If \code{dim=0} any number of dimensions is

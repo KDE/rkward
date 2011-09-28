@@ -1,5 +1,9 @@
 ChangeLog for package rkwarddev
 
+## 0.02-1 (2011-09-28)
+  - included formula node into rk.XML.vars() wrapper
+  - rk.XML.varslot() now automatically sets "multi=TRUE" if "min", "max" or "any" are set
+
 ## 0.02-0 (2011-09-27)
   - redesigned options for rk.XML.plugin() and rk.plugin.skeleton() for more consistency.
     unfortunately, this breaks backwards compatibility!
