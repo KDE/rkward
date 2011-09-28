@@ -22,7 +22,7 @@
 #' # combine the above into a tabbook
 #' test.tabbook <- rk.XML.tabbook("My Tabbook", tab.labels=c("First Tab",
 #'   "Second Tab"), children=list(test.checkboxes, test.dropdown))
-#' cat(pasteXMLNode(test.tabbook, shine=1))
+#' cat(pasteXMLNode(test.tabbook))
 
 rk.XML.tabbook <- function(label=NULL, tab.labels, children=list(), id.name="auto"){
 	if(is.null(label)){

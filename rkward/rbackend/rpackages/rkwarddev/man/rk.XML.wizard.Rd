@@ -17,9 +17,10 @@
 \description{
   This function will create a wizard section with optional
   child nodes "browser", "checkbox", "column", "copy",
-  "dropdown", "formula", "frame", "input", "page", "radio",
-  "row", "saveobject", "spinbox", "stretch", "tabbook",
-  "text", "varselector" and "varslot".
+  "dropdown", "embed", "formula", "frame", "include",
+  "input", "insert", "page", "preview", "radio", "row",
+  "saveobject", "spinbox", "stretch", "tabbook", "text",
+  "varselector" and "varslot".
 }
 \examples{
 # define a checkbox for the actual dialog
@@ -28,7 +29,7 @@ test.cbox1 <- rk.XML.cbox(label="More than 30 subjects", val="true")
 test.text <- rk.XML.text("Did you test more than 30 subjects?")
 test.copy <- rk.XML.copy(id=test.cbox1)
 test.wizard <- rk.XML.wizard(rk.XML.page(list(test.text, test.copy)))
-cat(pasteXMLNode(test.wizard, shine=1))
+cat(pasteXMLNode(test.wizard))
 }
 \seealso{
   \code{\link[rkwarddev:rk.XML.plugin]{rk.XML.plugin}},

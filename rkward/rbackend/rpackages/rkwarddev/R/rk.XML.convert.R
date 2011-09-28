@@ -42,7 +42,7 @@
 #'		\code{\link[rkwarddev:rk.XML.set]{rk.XML.set}}
 #' @examples
 #' test.convert <- rk.XML.convert(c(string="foo"), mode=c(notequals="bar"))
-#' cat(pasteXMLNode(test.convert, shine=1))
+#' cat(pasteXMLNode(test.convert))
 
 rk.XML.convert <- function(sources, mode=c(), required=FALSE, id.name="auto"){
 

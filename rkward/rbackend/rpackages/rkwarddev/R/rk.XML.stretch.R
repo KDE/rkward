@@ -9,7 +9,7 @@
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @examples
-#' cat(pasteXMLNode(rk.XML.stretch(), shine=1))
+#' cat(pasteXMLNode(rk.XML.stretch()))
 
 #<stretch />
 rk.XML.stretch <- function(before=NULL, after=NULL){

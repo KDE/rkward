@@ -10,7 +10,7 @@
 #'   list(
 #'     rk.XML.cbox(label="foo", val="foo1", chk=TRUE),
 #'     rk.XML.cbox(label="bar", val="bar2"))))
-#' cat(pasteXMLNode(test.checkboxes, shine=1))
+#' cat(pasteXMLNode(test.checkboxes))
 
 rk.XML.row <- function(children=list(), id.name=NULL){
 	if(!is.null(id.name)){

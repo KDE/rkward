@@ -1,8 +1,8 @@
 #' Create XML wizard section for RKWard plugins
 #'
 #' This function will create a wizard section with optional child nodes "browser", "checkbox",
-#' "column", "copy", "dropdown", "formula", "frame", "input", "page", "radio", "row", "saveobject",
-#' "spinbox", "stretch", "tabbook", "text", "varselector" and "varslot".
+#' "column", "copy", "dropdown", "embed", "formula", "frame", "include", "input", "insert",
+#' "page", "preview", "radio", "row", "saveobject", "spinbox", "stretch", "tabbook", "text", "varselector" and "varslot".
 #'
 #' @param nodes A (list of) objects of class \code{XiMpLe.node}
 #' @param label Character string, a text label for this plugin element.
@@ -18,7 +18,7 @@
 #' test.text <- rk.XML.text("Did you test more than 30 subjects?")
 #' test.copy <- rk.XML.copy(id=test.cbox1)
 #' test.wizard <- rk.XML.wizard(rk.XML.page(list(test.text, test.copy)))
-#' cat(pasteXMLNode(test.wizard, shine=1))
+#' cat(pasteXMLNode(test.wizard))
 
 rk.XML.wizard <- function(nodes, label=NULL){
 	# check the node names and allow only valid ones
@@ -27,8 +27,9 @@ rk.XML.wizard <- function(nodes, label=NULL){
 		})
 
 	invalid.sets <- !node.names %in% c("browser", "checkbox", "column", "copy",
-		"dropdown", "formula", "frame", "input", "page", "radio", "row", "saveobject",
-		"spinbox", "stretch", "tabbook", "text", "varselector", "varslot")
+		"dropdown", "embed", "formula", "frame", "include", "input", "insert",
+		"page", "preview", "radio", "row", "saveobject", "spinbox", "stretch",
+		"tabbook", "text", "varselector", "varslot")
 	if(any(invalid.sets)){
 		stop(simpleError(paste("Invalid XML nodes for wizard section: ", paste(node.names[invalid.sets], collapse=", "), sep="")))
 	} else {}

@@ -32,7 +32,7 @@
 #' \dontrun{
 #' test.varselector <- rk.XML.varselector("Select some vars")
 #' test.varslot <- rk.XML.varslot("Vars go here", source=test.varselector)
-#' cat(pasteXMLNode(test.varslot, shine=1))
+#' cat(pasteXMLNode(test.varslot))
 #' }
 
 rk.XML.varslot <- function(label, source, required=FALSE, multi=FALSE, min=1, any=1, max=0,

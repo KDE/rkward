@@ -17,7 +17,7 @@
 #' test.text <- rk.XML.text("Did you test more than 30 subjects?")
 #' test.copy <- rk.XML.copy(id.name=test.cbox1)
 #' test.wizard <- rk.XML.wizard(rk.XML.page(list(test.text, test.copy)))
-#' cat(pasteXMLNode(test.wizard, shine=1))
+#' cat(pasteXMLNode(test.wizard))
 
 rk.XML.page <- function(nodes, id.name=NULL){
 	# check the node names and allow only valid ones

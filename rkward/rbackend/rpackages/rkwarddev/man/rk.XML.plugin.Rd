@@ -70,6 +70,6 @@ test.tabbook <- rk.XML.tabbook("My Tabbook", tab.labels=c("First Tab",
 "Second Tab"), dialog=list(test.checkboxes, test.dropdown))
 # make a plugin with that tabbook
 test.plugin <- rk.XML.plugin("My test", dialog=test.tabbook)
-cat(pasteXMLTree(test.plugin, shine=1))
+cat(pasteXMLTree(test.plugin))
 }
 

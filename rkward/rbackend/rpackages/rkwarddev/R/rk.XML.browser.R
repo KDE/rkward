@@ -13,7 +13,7 @@
 #' @export
 #' @examples
 #' test.browser <- rk.XML.browser("Browse here:")
-#' cat(pasteXMLNode(test.browser, shine=1))
+#' cat(pasteXMLNode(test.browser))
 
 
 rk.XML.browser <- function(label, type="file", initial=NULL, urls=FALSE, filter=NULL, required=FALSE, id.name="auto"){

@@ -11,13 +11,14 @@
 #' @export
 #' @seealso
 #'		\code{\link[rkwarddev:rk.XML.varselector]{rk.XML.varselector}},
-#'		\code{\link[rkwarddev:rk.XML.varslot]{rk.XML.varslot}}
+#'		\code{\link[rkwarddev:rk.XML.varslot]{rk.XML.varslot}},
+#'		\code{\link[rkwarddev:rk.XML.vars]{rk.XML.vars}} (a wrapper, including formula)
 #' @examples
 #' test.varselector <- rk.XML.varselector("Select some vars")
 #' test.varslot1 <- rk.XML.varslot("Fixed factors", source=test.varselector)
 #' test.varslot2 <- rk.XML.varslot("Dependent variables", source=test.varselector)
 #' test.formula <- rk.XML.formula(fixed=test.varslot1, dependent=test.varslot2)
-#' cat(pasteXMLNode(test.formula, shine=1))
+#' cat(pasteXMLNode(test.formula))
 
 rk.XML.formula <- function(fixed, dependent, id.name="auto"){
 	# check if these are actually varslots

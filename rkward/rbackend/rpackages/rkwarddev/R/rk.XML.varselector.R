@@ -10,7 +10,7 @@
 #'		\code{\link[rkwarddev:rk.XML.vars]{rk.XML.vars}}
 #' @examples
 #' test.varselector <- rk.XML.varselector("Select some vars")
-#' cat(pasteXMLNode(test.varselector, shine=1))
+#' cat(pasteXMLNode(test.varselector))
 
 rk.XML.varselector <- function(label=NULL, id.name="auto"){
 	if(identical(id.name, "auto")){

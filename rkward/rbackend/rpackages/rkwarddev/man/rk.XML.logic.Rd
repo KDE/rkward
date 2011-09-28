@@ -13,7 +13,8 @@
 }
 \description{
   This function will create a logic section with "convert",
-  "connect" ,"external" and "set" nodes.
+  "connect", "include", "insert", "external" and "set"
+  nodes.
 }
 \examples{
 # define an input field and two checkboxes
@@ -24,12 +25,12 @@ test.cbox2 <- rk.XML.cbox(label="Are you shure?", value="true")
 test.convert <- rk.XML.convert(c(state=test.cbox1,state=test.cbox2), mode=c(and=""))
 test.connect <- rk.XML.connect(governor=test.convert, client=test.input, set="enabled")
 test.logic <- rk.XML.logic(nodes=list(test.convert, test.connect))
-cat(pasteXMLNode(test.logic, shine=1))
+cat(pasteXMLNode(test.logic))
 
 # with only one checkbox, you can directly query if it's checked
 test.connect2 <- rk.XML.connect(governor=test.cbox1, client=test.input, set="enabled")
 test.logic2 <- rk.XML.logic(nodes=list(test.connect2))
-cat(pasteXMLNode(test.logic2, shine=1))
+cat(pasteXMLNode(test.logic2))
 }
 \seealso{
   \code{\link[rkwarddev:rk.XML.convert]{rk.XML.convert}},

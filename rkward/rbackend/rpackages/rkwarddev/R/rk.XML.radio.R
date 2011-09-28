@@ -12,7 +12,7 @@
 #' test.radio <- rk.XML.radio("Chose one",
 #'   options=list("First Option"=c(val="val1"),
 #'   "Second Option"=c(val="val2", chk=TRUE)))
-#' cat(pasteXMLNode(test.radio, shine=1))
+#' cat(pasteXMLNode(test.radio))
 
 rk.XML.radio <- function(label, options=list(label=c(val=NULL, chk=FALSE)), id.name="auto"){
 	num.opt <- length(options)

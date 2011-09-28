@@ -47,7 +47,7 @@
 #'		\code{\link[rkwarddev:rk.XML.varselector]{rk.XML.varselector}}
 #' @examples
 #' test.vars <- rk.XML.vars("Select some vars", "Vars go here")
-#' cat(pasteXMLNode(test.vars, shine=1))
+#' cat(pasteXMLNode(test.vars))
 
 rk.XML.vars <- function(label, slot.text, required=FALSE, multi=FALSE, min=1, any=1, max=0,
 	dim=0, min.len=0, max.len=NULL, classes=NULL, types=NULL, horiz=TRUE, add.nodes=NULL,

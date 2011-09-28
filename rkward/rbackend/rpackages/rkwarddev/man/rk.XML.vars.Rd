@@ -100,7 +100,7 @@
 }
 \examples{
 test.vars <- rk.XML.vars("Select some vars", "Vars go here")
-cat(pasteXMLNode(test.vars, shine=1))
+cat(pasteXMLNode(test.vars))
 }
 \seealso{
   \code{\link[rkwarddev:rk.XML.varslot]{rk.XML.varslot}},

@@ -27,7 +27,7 @@
 #'		\code{\link[rkwarddev:rk.XML.set]{rk.XML.set}}
 #' @examples
 #' test.connect <- rk.XML.connect(governor="lgc_foobar", client="frame_bar")
-#' cat(pasteXMLNode(test.connect, shine=1))
+#' cat(pasteXMLNode(test.connect))
 
 rk.XML.connect <- function(governor, client, set="enabled", not=FALSE, reconcile=FALSE){
 

@@ -7,7 +7,7 @@
 #' @export
 #' @examples
 #' test.text <- rk.XML.text("Added this text.")
-#' cat(pasteXMLNode(test.text, shine=1))
+#' cat(pasteXMLNode(test.text))
 
 rk.XML.text <- function(text, type="normal", id.name=NULL){
 	if(!is.null(id.name)){

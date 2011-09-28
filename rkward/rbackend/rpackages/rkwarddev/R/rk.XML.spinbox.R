@@ -13,7 +13,7 @@
 #' @export
 #' @examples
 #' test.spinbox <- rk.XML.spinbox("Spin this:")
-#' cat(pasteXMLNode(test.spinbox, shine=1))
+#' cat(pasteXMLNode(test.spinbox))
 
 
 rk.XML.spinbox <- function(label, min=NULL, max=NULL, initial=0, real=TRUE, precision=2, max.precision=8, id.name="auto"){

@@ -20,7 +20,7 @@
 }
 \examples{
 test.varselector <- rk.XML.varselector("Select some vars")
-cat(pasteXMLNode(test.varselector, shine=1))
+cat(pasteXMLNode(test.varselector))
 }
 \seealso{
   \code{\link[rkwarddev:rk.XML.varslot]{rk.XML.varslot}},

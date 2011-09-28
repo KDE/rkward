@@ -33,6 +33,6 @@ test.checkboxes <- rk.XML.row(rk.XML.col(
 list(
 rk.XML.cbox(label="foo", value="foo1", chk=TRUE),
 rk.XML.cbox(label="bar", value="bar2"))))
-cat(pasteXMLNode(test.checkboxes, shine=1))
+cat(pasteXMLNode(test.checkboxes))
 }
 

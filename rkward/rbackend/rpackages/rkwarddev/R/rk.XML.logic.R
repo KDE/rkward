@@ -1,6 +1,6 @@
 #' Create XML logic section for RKWard plugins
 #'
-#' This function will create a logic section with "convert", "connect" ,"external" and "set" nodes.
+#' This function will create a logic section with "convert", "connect", "include", "insert", "external" and "set" nodes.
 #'
 #' @param nodes A list of objects of class \code{XiMpLe.node}. 
 #' @return A list of objects of class \code{XiMpLe.node}.
@@ -19,12 +19,12 @@
 #' test.convert <- rk.XML.convert(c(state=test.cbox1,state=test.cbox2), mode=c(and=""))
 #' test.connect <- rk.XML.connect(governor=test.convert, client=test.input, set="enabled")
 #' test.logic <- rk.XML.logic(nodes=list(test.convert, test.connect))
-#' cat(pasteXMLNode(test.logic, shine=1))
+#' cat(pasteXMLNode(test.logic))
 #' 
 #' # with only one checkbox, you can directly query if it's checked
 #' test.connect2 <- rk.XML.connect(governor=test.cbox1, client=test.input, set="enabled")
 #' test.logic2 <- rk.XML.logic(nodes=list(test.connect2))
-#' cat(pasteXMLNode(test.logic2, shine=1))
+#' cat(pasteXMLNode(test.logic2))
 
 rk.XML.logic <- function(nodes){
 	# check the node names and allow only valid ones
@@ -32,7 +32,7 @@ rk.XML.logic <- function(nodes){
 			this.node@name
 		})
 
-	invalid.sets <- !node.names %in% c("connect", "convert","external","set")
+	invalid.sets <- !node.names %in% c("connect", "convert","include","insert","external","set")
 	if(any(invalid.sets)){
 		stop(simpleError(paste("Invalid XML nodes for logic section: ", paste(node.names[invalid.sets], collapse=", "), sep="")))
 	} else {}

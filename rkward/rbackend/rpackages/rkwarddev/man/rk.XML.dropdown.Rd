@@ -30,6 +30,6 @@
 test.dropdown <- rk.XML.dropdown("mydrop",
 options=list("First Option"=c(val="val1"),
 "Second Option"=c(val="val2", chk=TRUE)))
-cat(pasteXMLNode(test.dropdown, shine=1))
+cat(pasteXMLNode(test.dropdown))
 }
 

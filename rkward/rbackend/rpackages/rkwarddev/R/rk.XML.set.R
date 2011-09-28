@@ -18,7 +18,7 @@
 #'		\code{\link[rkwarddev:rk.XML.logic]{rk.XML.logic}}
 #' @examples
 #' test.set <- rk.XML.set(id="input_foo", set="required", to=TRUE)
-#' cat(pasteXMLNode(test.set, shine=1))
+#' cat(pasteXMLNode(test.set))
 
 rk.XML.set <- function(id, set=NULL, to){
 

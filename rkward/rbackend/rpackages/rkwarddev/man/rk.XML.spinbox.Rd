@@ -43,6 +43,6 @@
 }
 \examples{
 test.spinbox <- rk.XML.spinbox("Spin this:")
-cat(pasteXMLNode(test.spinbox, shine=1))
+cat(pasteXMLNode(test.spinbox))
 }
 

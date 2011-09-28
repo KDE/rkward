@@ -12,7 +12,7 @@
 #' @export
 #' @examples
 #' test.saveobj <- rk.XML.saveobj("Save the results")
-#' cat(pasteXMLNode(test.saveobj, shine=1))
+#' cat(pasteXMLNode(test.saveobj))
 
 rk.XML.saveobj <- function(label, chk=FALSE, checkable=TRUE, initial="auto", required=FALSE, id.name="auto"){
 	attr.list <- list(label=label)

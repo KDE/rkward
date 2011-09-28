@@ -82,6 +82,6 @@ pluginmap=list(
 c(name="heisenberg.pluginmap", url="http://eternalwondermaths.example.org/hsb"))
 )
 
-cat(pasteXMLNode(about.node))
+cat(pasteXMLNode(about.node, shine=2))
 }
 

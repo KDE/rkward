@@ -11,7 +11,7 @@
 #'		\code{\link[rkwarddev:rk.XML.set]{rk.XML.set}}
 #' @examples
 #' test.external <- rk.XML.external(id="ext_property", default="none")
-#' cat(pasteXMLNode(test.external, shine=1))
+#' cat(pasteXMLNode(test.external))
 
 rk.XML.external <- function(id, default=NULL){
 	attr.list <- list(id=id)

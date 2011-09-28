@@ -132,6 +132,18 @@ ID.prefix <- function(initial, abbr=TRUE, length=3, dot=FALSE){
 	return(prfx)
 } ## end function ID.prefix()
 
+## function node.soup()
+# pastes the nodes as XML, only alphanumeric characters, e.g. to generate auto-IDs
+node.soup <- function(nodes){
+	if(inherits(nodes, "XiMpLe.node")){
+		the.soup <- gsub("[^[:alnum:]]", "", pasteXMLNode(nodes, shine=0))
+	} else {
+		stop(simpleError("Nodes must be of class XiMpLe.node!"))
+	}
+	return(the.soup)
+}
+## end function node.soup()
+
 ## function get.by.role()
 # filters a vector with person objects by roles
 get.by.role <- function(persons, role="aut"){

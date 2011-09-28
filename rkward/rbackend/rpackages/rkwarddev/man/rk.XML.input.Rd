@@ -30,6 +30,6 @@
 }
 \examples{
 test.input <- rk.XML.input("Type some text")
-cat(pasteXMLNode(test.input, shine=1))
+cat(pasteXMLNode(test.input))
 }
 

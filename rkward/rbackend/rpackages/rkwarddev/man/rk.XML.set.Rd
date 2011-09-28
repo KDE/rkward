@@ -27,7 +27,7 @@
 }
 \examples{
 test.set <- rk.XML.set(id="input_foo", set="required", to=TRUE)
-cat(pasteXMLNode(test.set, shine=1))
+cat(pasteXMLNode(test.set))
 }
 \seealso{
   \code{\link[rkwarddev:rk.XML.convert]{rk.XML.convert}},

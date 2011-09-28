@@ -12,7 +12,7 @@
 #' test.dropdown <- rk.XML.dropdown("mydrop",
 #'   options=list("First Option"=c(val="val1"),
 #'   "Second Option"=c(val="val2", chk=TRUE)))
-#' cat(pasteXMLNode(test.dropdown, shine=1))
+#' cat(pasteXMLNode(test.dropdown))
 
 rk.XML.dropdown <- function(label, options=list(label=c(val=NULL, chk=FALSE)), id.name="auto"){
 	num.opt <- length(options)
