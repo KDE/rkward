@@ -12,6 +12,8 @@
 #'		\code{\link[rkwarddev:rk.XML.wizard]{rk.XML.wizard}} for details.
 #' @param logic An object of class \code{XiMpLe.node} to be pasted as the \code{<logic>} section. See
 #'		\code{\link[rkwarddev:rk.XML.logic]{rk.XML.logic}} for details.
+#' @param snippets An object of class \code{XiMpLe.node} to be pasted as the \code{<snippets>} section. See
+#'		\code{\link[rkwarddev:rk.XML.snippets]{rk.XML.snippets}} for details.
 #' @param provides Character vector with possible entries of \code{"logic"}, \code{"dialog"} or \code{"wizard"}, defining what
 #'		sections the document should provide even if \code{dialog}, \code{wizard} and \code{logic} are \code{NULL}.
 #'		These sections must be edited manually and some parts are therefore commented out.
@@ -98,7 +100,7 @@
 #'   dialog=test.tabbook, overwrite=TRUE)
 #' }
 
-rk.plugin.skeleton <- function(name, about=NULL, path=tempdir(), dialog=NULL, wizard=NULL, logic=NULL,
+rk.plugin.skeleton <- function(name, about=NULL, path=tempdir(), dialog=NULL, wizard=NULL, logic=NULL, snippets=NULL,
 	provides=c("logic", "dialog"), dial.require=c(), overwrite=FALSE, tests=TRUE, lazyLoad=TRUE,
 	JS.prep=NULL, JS.calc=NULL, JS.prnt=NULL, create=c("pmap", "xml", "js", "rkh", "desc"), edit=FALSE){
 	# to besure, remove all non-character symbols from name
@@ -174,6 +176,7 @@ rk.plugin.skeleton <- function(name, about=NULL, path=tempdir(), dialog=NULL, wi
 			dialog=dialog,
 			wizard=wizard,
 			logic=logic,
+			snippets=snippets,
 			provides=provides,
 			pluginmap=paste("../", name, ".pluginmap", sep=""))
 		cat(pasteXMLTree(XML.plugin, shine=1), file=plugin.xml)

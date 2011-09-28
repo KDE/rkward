@@ -3,11 +3,11 @@
 \title{Create skeleton for RKWard plugins}
 \usage{
   rk.plugin.skeleton(name, about = NULL, path = tempdir(),
-  dialog = NULL, wizard = NULL, logic = NULL, provides =
-  c("logic", "dialog"), dial.require = c(), overwrite =
-  FALSE, tests = TRUE, lazyLoad = TRUE, JS.prep = NULL,
-  JS.calc = NULL, JS.prnt = NULL, create = c("pmap", "xml",
-  "js", "rkh", "desc"), edit = FALSE)
+  dialog = NULL, wizard = NULL, logic = NULL, snippets =
+  NULL, provides = c("logic", "dialog"), dial.require =
+  c(), overwrite = FALSE, tests = TRUE, lazyLoad = TRUE,
+  JS.prep = NULL, JS.calc = NULL, JS.prnt = NULL, create =
+  c("pmap", "xml", "js", "rkh", "desc"), edit = FALSE)
 }
 \arguments{
   \item{name}{Character sting, name of the plugin package.}
@@ -36,6 +36,11 @@
   pasted as the \code{<logic>} section. See
   \code{\link[rkwarddev:rk.XML.logic]{rk.XML.logic}} for
   details.}
+
+  \item{snippets}{An object of class \code{XiMpLe.node} to
+  be pasted as the \code{<snippets>} section. See
+  \code{\link[rkwarddev:rk.XML.snippets]{rk.XML.snippets}}
+  for details.}
 
   \item{provides}{Character vector with possible entries of
   \code{"logic"}, \code{"dialog"} or \code{"wizard"},

@@ -8,6 +8,8 @@
 #'		\code{\link[rkwarddev:rk.XML.wizard]{rk.XML.wizard}} for details.
 #' @param logic An object of class \code{XiMpLe.node} to be pasted as the \code{<logic>} section. See
 #'		\code{\link[rkwarddev:rk.XML.logic]{rk.XML.logic}} for details.
+#' @param snippets An object of class \code{XiMpLe.node} to be pasted as the \code{<snippets>} section. See
+#'		\code{\link[rkwarddev:rk.XML.snippets]{rk.XML.snippets}} for details.
 #' @param provides Character vector with possible entries of \code{"logic"}, \code{"dialog"} or \code{"wizard"}, defining what
 #'		sections the document should provide even if \code{dialog}, \code{wizard} and \code{logic} are \code{NULL}.
 #'		These sections must be edited manually and some parts are therefore commented out.
@@ -33,7 +35,7 @@
 #' test.plugin <- rk.XML.plugin("My test", dialog=test.tabbook)
 #' cat(pasteXMLTree(test.plugin))
 
-rk.XML.plugin <- function(name, dialog=NULL, wizard=NULL, logic=NULL, provides=NULL, help=TRUE, pluginmap=NULL, label=NULL, clean.name=TRUE){
+rk.XML.plugin <- function(name, dialog=NULL, wizard=NULL, logic=NULL, snippets=NULL, provides=NULL, help=TRUE, pluginmap=NULL, label=NULL, clean.name=TRUE){
 	if(isTRUE(clean.name)){
 		name.orig <- name
 		name <- clean.name(name)
@@ -56,6 +58,19 @@ rk.XML.plugin <- function(name, dialog=NULL, wizard=NULL, logic=NULL, provides=N
 			name="include",
 			attributes=list(file=pluginmap)
 		)
+	} else {}
+
+	if(!is.null(snippets)){
+		# check if this is *really* a snippets section, otherwise quit and go dancing
+		if(inherits(snippets, "XiMpLe.node")){
+			snippets.node.name <- snippets@name
+		} else {
+			snippets.node.name <- "yougottabekiddingme"
+		}
+		if(!identical(snippets.node.name, "snippets")){
+			stop(simpleError("I don't know what this is, but 'snippets' is not a snippets section!"))
+		} else {}
+		all.children[[length(all.children)+1]] <- snippets
 	} else {}
 
 	if(is.null(logic)){

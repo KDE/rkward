@@ -3,6 +3,7 @@ ChangeLog for package rkwarddev
 ## 0.02-1 (2011-09-28)
   - added functions rk.XML.insert(), rk.XML.include(), rk.XML.embed(), rk.XML.preview(),
     rk.XML.snippet(), and rk.XML.snippets()
+  - added support for snippets section to rk.XML.plugin() and rk.plugin.skeleton()
   - included formula node into rk.XML.vars() wrapper
   - rk.XML.varslot() now automatically sets "multi=TRUE" if "min", "max" or "any" are set
 

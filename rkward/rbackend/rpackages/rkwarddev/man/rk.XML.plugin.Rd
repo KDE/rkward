@@ -3,8 +3,8 @@
 \title{Create XML document for RKWard plugins}
 \usage{
   rk.XML.plugin(name, dialog = NULL, wizard = NULL, logic =
-  NULL, provides = NULL, help = TRUE, pluginmap = NULL,
-  label = NULL, clean.name = TRUE)
+  NULL, snippets = NULL, provides = NULL, help = TRUE,
+  pluginmap = NULL, label = NULL, clean.name = TRUE)
 }
 \arguments{
   \item{name}{Character string, the name of the plugin.
@@ -26,6 +26,11 @@
   pasted as the \code{<logic>} section. See
   \code{\link[rkwarddev:rk.XML.logic]{rk.XML.logic}} for
   details.}
+
+  \item{snippets}{An object of class \code{XiMpLe.node} to
+  be pasted as the \code{<snippets>} section. See
+  \code{\link[rkwarddev:rk.XML.snippets]{rk.XML.snippets}}
+  for details.}
 
   \item{provides}{Character vector with possible entries of
   \code{"logic"}, \code{"dialog"} or \code{"wizard"},
