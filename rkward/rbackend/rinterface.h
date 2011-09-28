@@ -75,9 +75,6 @@ not be interrupted. */
 	bool backendIsIdle ();
 	static bool isNaReal (double value) { return na_real == value; };
 	static bool isNaInt (int value) { return na_int == value; };
-public slots:
-/** Public for hacky reasons. Can be connected to .rk.get.installed.packages() */
-	void installedPackagesCommandFinished (RCommand *command);
 private:
 	void timerEvent (QTimerEvent *);
 	int flush_timer_id;

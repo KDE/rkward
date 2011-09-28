@@ -99,3 +99,36 @@ rk.list.plugins <- function () {
 
 	invisible (TRUE)
 }
+
+#' (Re-)load the given pluginmap files into the RKWard GUI
+#'
+#' @param pluginmap.files a character vector of file names to add. This may be left empty,
+#'                        if the only desired effect is to reload all active pluginmaps.
+#' @param force.add logical. Whether the pluginmap files should also be added, if they had
+#'                  been previously de-selected in the settings menu. In scripted usage, this
+#'                  should generally be set to FALSE.
+#' @param force.reload logical. By default the active pluginmaps are reloaded, only if any new ones
+#'                     were added. If set to TRUE, pluginmaps are reloaded in any case. In
+#'                     scripted usage, this should generally be set to FALSE. NOTE: Since
+#'                     a reload always means reloading _all_ active pluginmaps, This may be
+#'                     slow, and should be used with care.
+#'
+#' \bold{Note}: It is not necessary to reload the pluginmap, in order to refresh an individual
+#'              plugin (e.g. after modifying the dialog), as plugins are not kept in memory after closing.
+#'              Any currently opened plugins are not affected by this function. 
+#'
+#' @author Thomas Friedrichsmeier \email{rkward-devel@@lists.sourceforge.net}
+#' @seealso \code{\link{rk.call.plugin}}, @seealso \code{\link{rkwarddev::rk.plugin.skeleton}}
+#' @keywords utilities
+#'
+#' @examples
+#' 
+#' ## NOT RUN
+#'
+#' ## reload all active pluginmaps
+#' rk.load.pluginmaps()
+#'
+#' END NOT RUN
+"rk.load.pluginmaps" <- function (pluginmap.files=NULL, force.add = TRUE, force.reload = TRUE) {
+	.rk.do.plain.call ("loadPluginMaps", c (as.character (isTRUE (force.add)), as.character (isTRUE (force.reload)), as.character (pluginmap.files)), synchronous=FALSE)
+}

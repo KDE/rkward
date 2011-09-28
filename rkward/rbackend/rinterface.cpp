@@ -109,10 +109,9 @@ RInterface::RInterface () {
 	new RKRBackendProtocolFrontend (this);
 	RKRBackendProtocolFrontend::instance ()->setupBackend ();
 
-	// Further initialization commands, which do not necessarily have to run before everything else can be queued, here.
-	RCommand *c = new RCommand (".rk.get.installed.packages()", RCommand::App | RCommand::Sync | RCommand::GetStructuredData);
-	connect (c->notifier (), SIGNAL (commandFinished(RCommand*)), this, SLOT (installedPackagesCommandFinished(RCommand*)));
-	issueCommand (c);
+	/////// Further initialization commands, which do not necessarily have to run before everything else can be queued, here. ///////
+	// NOTE: will receive the list as a call plain generic request from the backend ("updateInstalledPackagesList")
+	issueCommand (".rk.get.installed.packages()", RCommand::App | RCommand::Sync);
 }
 
 void RInterface::issueCommand (const QString &command, int type, const QString &rk_equiv, RCommandReceiver *receiver, int flags, RCommandChain *chain) {
@@ -250,24 +249,6 @@ void RInterface::doNextCommand (RCommand *command) {
 	command_request->command = proxy;
 	RKRBackendProtocolFrontend::setRequestCompleted (command_request);
 	command_requests.pop_back ();
-}
-
-void RInterface::installedPackagesCommandFinished (RCommand *command) {
-	RK_TRACE (RBACKEND);
-
-	if (command->succeeded () && (command->getDataType () == RData::StructureVector) && (command->getDataLength() >= 6)) {
-		RData *dummy = command->getStructureVector ()[0];
-		if (dummy->getDataType () == RData::StringVector) RKSessionVars::instance ()->setInstalledPackages (dummy->getStringVector ());
-		else RK_ASSERT (false);
-
-		dummy = command->getStructureVector ()[5];
-		if (dummy->getDataType () == RData::StringVector) RKSettingsModulePlugins::registerPluginMaps (dummy->getStringVector ());
-		else RK_ASSERT (false);
-
-		return;
-	}
-
-	RK_ASSERT (false);
 }
 
 void RInterface::rCommandDone (RCommand *command) {
@@ -535,6 +516,12 @@ QStringList RInterface::processPlainGenericRequest (const QStringList &calllist)
 	} else if (call == "listPlugins") {
 		RK_ASSERT (calllist.count () == 1);
 		return RKComponentMap::getMap ()->allComponentIds ();
+	} else if (call == "loadPluginMaps") {
+		bool force = (calllist.value (1) == "force");
+		bool reload = (calllist.value (2) == "reload");
+		RKSettingsModulePlugins::registerPluginMaps (calllist.mid (3), force, reload);
+	} else if (call == "updateInstalledPackagesList") {
+		RKSessionVars::instance ()->setInstalledPackages (calllist.mid (1));
 	} else if (call == "showHTML") {
 		RK_ASSERT (calllist.count () == 2);
 		RKWorkplace::mainWorkplace ()->openHelpWindow (calllist.value (1));

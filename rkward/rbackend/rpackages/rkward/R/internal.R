@@ -106,6 +106,9 @@
 	oldavail <- match (old$Package, available$Package)	# convert package names to position with in the available packages info
 	new <- match (new, available$Package)	# same for new packages
 
+	# as a side effect, we update the list of known installed packages in the frontend
+	.rk.do.plain.call ("updateInstalledPackagesList", sort (unique (as.character (inst$Package))), synchronous=FALSE)
+
 	list ("available" = list (available$Package, available$Title, available$Version, available$Repository, grepl ("rkward", available$Enhances)),
 		"installed" = list (inst$Package, inst$Title, inst$Version, inst$LibPath, grepl ("rkward", inst$Enhances)),
 		"new" = as.integer (new - 1),
@@ -119,12 +122,15 @@
 	x <- as.data.frame(installed.packages(fields="Title"))
 	# does a package enhance RKWard, i.e. provide plugins?
 	enhance.rk <- ifelse(is.na(x$Enhances), FALSE, grepl("rkward", x$Enhances))
+
+	# as a side effect, we update the list of known installed packages in the frontend
+	.rk.do.plain.call ("updateInstalledPackagesList", sort (unique (as.character (x$Package))), synchronous=FALSE)
 	# check for pluginmaps only in packages which enhance RKWard
-	pluginmaps <- rep("", length(enhance.rk))
-	pluginmaps[enhance.rk] <- .rk.find.package.pluginmaps(x$Package[enhance.rk])
+	rk.load.pluginmaps (.rk.find.package.pluginmaps(x$Package[enhance.rk]), force.add=FALSE, force.reload=FALSE)
+
 	return(list(Package=as.character(x$Package), Title=as.character(x$Title), 
 		Version=as.character(x$Version), LibPath=as.character(x$LibPath),
-		EnhanceRK=as.logical(enhance.rk), Plugins=as.character(pluginmaps)))
+		EnhanceRK=as.logical(enhance.rk)))
 }
 
 # This function works like available.packages (with no arguments), but does simple caching of the result, and of course uses a cache if available. Cache is only used, if it is less than 1 hour old, and options("repos") is unchanged.

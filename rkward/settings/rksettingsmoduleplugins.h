@@ -51,8 +51,12 @@ public:
 	static PluginPrefs getInterfacePreference () { return interface_pref; };
 	static bool showCodeByDefault () { return show_code; };
 	static int defaultCodeHeight () { return code_size; };
-	/** register a list of available plugin-maps (which may or may not already be known). New maps are activated, automatically. */
-	static void registerPluginMaps (const QStringList &maps);
+	/** register a list of available plugin-maps (which may or may not already be known). New maps are activated, automatically.
+	 * @param maps Plugin maps (filenames) to add
+	 * @param force_add If true, maps are added, even if they are not "new", and had previously been disabled by the user
+	 * @param force_reload If true, plugin maps are always reloaded, even if no maps were added
+	 */
+	static void registerPluginMaps (const QStringList &maps, bool force_add, bool force_reload);
 public slots:
 	void settingChanged ();
 	void browseRequest (QStringList* strings);
