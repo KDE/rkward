@@ -7,7 +7,8 @@
   NULL, provides = c("logic", "dialog"), dial.require =
   c(), overwrite = FALSE, tests = TRUE, lazyLoad = TRUE,
   JS.prep = NULL, JS.calc = NULL, JS.prnt = NULL, create =
-  c("pmap", "xml", "js", "rkh", "desc"), edit = FALSE)
+  c("pmap", "xml", "js", "rkh", "desc"), edit = FALSE, load
+  = FALSE, show = FALSE)
 }
 \arguments{
   \item{name}{Character sting, name of the plugin package.}
@@ -93,6 +94,17 @@
   automatically open the created files for editing, by
   calling \code{rk.edit.files}. This applies to all files
   defined in \code{create}.}
+
+  \item{load}{Logical, if \code{TRUE} and \code{"pmap"} in
+  \code{create}, RKWard will automatically add the created
+  .pluginmap file to its menu structure by calling
+  \code{rk.load.pluginmaps}. You can then try the plugin
+  immediately.}
+
+  \item{show}{Logical, if \code{TRUE} and \code{"pmap"} in
+  \code{create}, RKWard will automatically call the created
+  plugin after it was loaded (i.e., this implies and also
+  sets \code{load=TRUE}).}
 }
 \description{
   Create skeleton for RKWard plugins

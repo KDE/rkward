@@ -40,6 +40,10 @@
 #'		Default is to create all of these files. Existing files will only be overwritten if \code{overwrite=TRUE}.
 #' @param edit Logical, if \code{TRUE} RKWard will automatically open the created files for editing, by calling \code{rk.edit.files}.
 #'		This applies to all files defined in \code{create}.
+#' @param load Logical, if \code{TRUE} and \code{"pmap"} in \code{create}, RKWard will automatically add the created .pluginmap file
+#'		to its menu structure by calling \code{rk.load.pluginmaps}. You can then try the plugin immediately.
+#' @param show Logical, if \code{TRUE} and \code{"pmap"} in \code{create}, RKWard will automatically call the created plugin after
+#'		it was loaded (i.e., this implies and also sets \code{load=TRUE}).
 #' @export
 #' @examples
 #' \dontrun{
@@ -102,7 +106,7 @@
 
 rk.plugin.skeleton <- function(name, about=NULL, path=tempdir(), dialog=NULL, wizard=NULL, logic=NULL, snippets=NULL,
 	provides=c("logic", "dialog"), dial.require=c(), overwrite=FALSE, tests=TRUE, lazyLoad=TRUE,
-	JS.prep=NULL, JS.calc=NULL, JS.prnt=NULL, create=c("pmap", "xml", "js", "rkh", "desc"), edit=FALSE){
+	JS.prep=NULL, JS.calc=NULL, JS.prnt=NULL, create=c("pmap", "xml", "js", "rkh", "desc"), edit=FALSE, load=FALSE, show=FALSE){
 	# to besure, remove all non-character symbols from name
 	name.orig <- name
 	name <- clean.name(name)
@@ -217,9 +221,16 @@ rk.plugin.skeleton <- function(name, about=NULL, path=tempdir(), dialog=NULL, wi
 			components=paste(name, ".xml", sep=""),
 			plugin.dir="plugins",
 			hierarchy="analysis")
-		cat(pasteXMLTree(XML.pluginmap), file=plugin.pluginmap)
+		cat(pasteXMLTree(XML.pluginmap, shine=2), file=plugin.pluginmap)
 		if(isTRUE(edit)){
 			rk.edit.files(plugin.pluginmap, title=plugin.fname.pluginmap, prompt=FALSE)
+		} else {}
+		if(isTRUE(load) | isTRUE(show)){
+			rk.load.pluginmaps(plugin.pluginmap)
+			if(isTRUE(show)){
+				# call the plugin; reconstructed the ID generation from rk.XML.pluginmap()
+				rk.call.plugin(paste("rkward::", name, ".", name, sep=""))
+			} else {}
 		} else {}
 	} else {}
 
@@ -237,6 +248,7 @@ rk.plugin.skeleton <- function(name, about=NULL, path=tempdir(), dialog=NULL, wi
 			include=c("given", "family", "email"), braces=list(email=c("<", ">")))
 
 ## TODO: check and add the commented values here:
+## especially dependencies must be created from 'about'
 		desc <- data.frame(
 			Package=name,
 			Type="Package",

@@ -44,6 +44,7 @@ rk.XML.pluginmap <- function(name, about=NULL, components, plugin.dir="plugins",
 					name="component",
 					attributes=list(
 						type="standard",
+						# if this ID get's a change, also change it in rk.plugin.skeleton(show=TRUE)!
 						id=paste(name, ".", gsub(".xml", "", this.comp), sep=""),
 						file=paste(plugin.dir, "/", this.comp, sep=""),
 						label=gsub(".xml", "", this.comp))

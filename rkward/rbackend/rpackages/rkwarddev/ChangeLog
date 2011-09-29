@@ -1,5 +1,8 @@
 ChangeLog for package rkwarddev
 
+## 0.02-2 (2011-09-29)
+  - added "load" and "show" options to rk.plugin.skeleton() to call rk.load.pluginmaps() and the plugin itself
+
 ## 0.02-1 (2011-09-28)
   - added functions rk.XML.insert(), rk.XML.include(), rk.XML.embed(), rk.XML.preview(),
     rk.XML.snippet(), and rk.XML.snippets()
