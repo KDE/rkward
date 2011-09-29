@@ -44,6 +44,7 @@
 #'		to its menu structure by calling \code{rk.load.pluginmaps}. You can then try the plugin immediately.
 #' @param show Logical, if \code{TRUE} and \code{"pmap"} in \code{create}, RKWard will automatically call the created plugin after
 #'		it was loaded (i.e., this implies and also sets \code{load=TRUE}).
+#' @return Character string with the path to the plugin root directory.
 #' @export
 #' @examples
 #' \dontrun{
@@ -285,5 +286,5 @@ rk.plugin.skeleton <- function(name, about=NULL, path=tempdir(), dialog=NULL, wi
 		} else {}
 	} else {}
 
-	return(invisible(NULL))
+	return(main.dir)
 }

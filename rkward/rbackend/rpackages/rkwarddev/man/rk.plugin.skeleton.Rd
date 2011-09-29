@@ -106,6 +106,10 @@
   plugin after it was loaded (i.e., this implies and also
   sets \code{load=TRUE}).}
 }
+\value{
+  Character string with the path to the plugin root
+  directory.
+}
 \description{
   Create skeleton for RKWard plugins
 }
