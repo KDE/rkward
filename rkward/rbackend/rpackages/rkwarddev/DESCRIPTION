@@ -17,6 +17,7 @@ Authors@R: c(person(given="Meik", family="Michalke",
 Version: 0.02-2
 Date: 2011-09-29
 Collate:
+    'rk.build.plugin.R'
     'rk-internal.R'
     'rk.JS.array.R'
     'rk.JS.doc.R'

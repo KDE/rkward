@@ -173,55 +173,63 @@ rk.plugin.skeleton <- function(name, about=NULL, path=tempdir(), dialog=NULL, wi
 	} else {}
 
 	## create plugin.xml
-	if("xml" %in% create & isTRUE(checkCreateFiles(plugin.xml))){
-		XML.plugin <- rk.XML.plugin(
-			name=name,
-			label=name.orig,
-			dialog=dialog,
-			wizard=wizard,
-			logic=logic,
-			snippets=snippets,
-			provides=provides,
-			pluginmap=paste("../", name, ".pluginmap", sep=""))
-		cat(pasteXMLTree(XML.plugin, shine=1), file=plugin.xml)
+	if("xml" %in% create){
+		if(isTRUE(checkCreateFiles(plugin.xml))){
+			XML.plugin <- rk.XML.plugin(
+				name=name,
+				label=name.orig,
+				dialog=dialog,
+				wizard=wizard,
+				logic=logic,
+				snippets=snippets,
+				provides=provides,
+				pluginmap=paste("../", name, ".pluginmap", sep=""))
+			cat(pasteXMLTree(XML.plugin, shine=1), file=plugin.xml)
+		} else {}
 		if(isTRUE(edit)){
 			rk.edit.files(plugin.xml, title=plugin.fname.xml, prompt=FALSE)
 		} else {}
 	} else {}
 
 	## create plugin.js
-	if("js" %in% create & isTRUE(checkCreateFiles(plugin.js))){
-		JS.code <- rk.JS.doc(
-			require=dial.require,
-			variables=rk.JS.scan(XML.plugin),
-			results.header=paste(name.orig, " results", sep=""),
-			preprocess=JS.prep,
-			calculate=JS.calc,
-			printout=JS.prnt)
-		cat(JS.code, file=plugin.js)
+	if("js" %in% create){
+		if(isTRUE(checkCreateFiles(plugin.js))){
+			JS.code <- rk.JS.doc(
+				require=dial.require,
+				variables=rk.JS.scan(XML.plugin),
+				results.header=paste(name.orig, " results", sep=""),
+				preprocess=JS.prep,
+				calculate=JS.calc,
+				printout=JS.prnt)
+			cat(JS.code, file=plugin.js)
+		} else {}
 		if(isTRUE(edit)){
 			rk.edit.files(plugin.js, title=plugin.fname.js, prompt=FALSE)
 		} else {}
 	} else {}
 
 	## create plugin.rkh
-	if("rkh" %in% create & isTRUE(checkCreateFiles(plugin.rkh))){
-		rkh.doc <- rk.rkh.doc(settings=rk.rkh.scan(XML.plugin))
-		cat(pasteXMLTree(rkh.doc, shine=1), file=plugin.rkh)
+	if("rkh" %in% create){
+		if(isTRUE(checkCreateFiles(plugin.rkh))){
+			rkh.doc <- rk.rkh.doc(settings=rk.rkh.scan(XML.plugin))
+			cat(pasteXMLTree(rkh.doc, shine=1), file=plugin.rkh)
+		} else {}
 		if(isTRUE(edit)){
 			rk.edit.files(plugin.rkh, title=plugin.fname.rkh, prompt=FALSE)
 		} else {}
 	} else {}
 
 	## create plugin.pluginmap
-	if("pmap" %in% create & isTRUE(checkCreateFiles(plugin.pluginmap))){
-		XML.pluginmap <- rk.XML.pluginmap(
-			name=name.orig,
-			about=about,
-			components=paste(name, ".xml", sep=""),
-			plugin.dir="plugins",
-			hierarchy="analysis")
-		cat(pasteXMLTree(XML.pluginmap, shine=2), file=plugin.pluginmap)
+	if("pmap" %in% create){
+		if(isTRUE(checkCreateFiles(plugin.pluginmap))){
+			XML.pluginmap <- rk.XML.pluginmap(
+				name=name.orig,
+				about=about,
+				components=paste(name, ".xml", sep=""),
+				plugin.dir="plugins",
+				hierarchy="analysis")
+			cat(pasteXMLTree(XML.pluginmap, shine=2), file=plugin.pluginmap)
+		} else {}
 		if(isTRUE(edit)){
 			rk.edit.files(plugin.pluginmap, title=plugin.fname.pluginmap, prompt=FALSE)
 		} else {}
