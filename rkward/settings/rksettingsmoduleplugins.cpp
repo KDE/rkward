@@ -216,12 +216,14 @@ void RKSettingsModulePlugins::registerPluginMaps (const QStringList &maps, bool 
 		added.append (map);
 	}
 
-	if (!added.isEmpty ()) {
-		KMessageBox::informationList (RKWardMainWindow::getMain (), i18n ("New RKWard plugin packs (listed below) have been found, and have been activated, automatically. To de-activate selected plugin packs, use Settings->Configure RKWard->Plugins."), added, i18n ("New plugins found"), "new_plugins_found");
-		force_reload = true;
+	if (force_reload || (!added.isEmpty ())) {
+		// NOTE: Do this *before* showing the dialog, which is modal, i.e. has an event loop. Otherwise, subsequent calls e.g. to rk.call.plugin() could sneak in front of this
+		RKWardMainWindow::getMain ()->initPlugins();
 	}
 
-	if (force_reload) RKWardMainWindow::getMain ()->initPlugins();
+	if (!added.isEmpty ()) {
+		KMessageBox::informationList (RKWardMainWindow::getMain (), i18n ("New RKWard plugin packs (listed below) have been found, and have been activated, automatically. To de-activate selected plugin packs, use Settings->Configure RKWard->Plugins."), added, i18n ("New plugins found"), "new_plugins_found");
+	}
 }
 
 void RKSettingsModulePlugins::fixPluginMapLists () {
