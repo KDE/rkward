@@ -250,37 +250,39 @@ rk.plugin.skeleton <- function(name, about=NULL, path=tempdir(), dialog=NULL, wi
 	} else {}
 
 	## create DESCRIPTION file
-	if("desc" %in% create & isTRUE(checkCreateFiles(description.file))){
-		all.authors <- format(get.by.role(about[["author"]], role="aut"),
-			include=c("given", "family", "email"), braces=list(email=c("<", ">")))
-		all.maintainers <- format(get.by.role(about[["author"]], role="cre"),
-			include=c("given", "family", "email"), braces=list(email=c("<", ">")))
+	if("desc" %in% create){
+		if(isTRUE(checkCreateFiles(description.file))){
+			all.authors <- format(get.by.role(about[["author"]], role="aut"),
+				include=c("given", "family", "email"), braces=list(email=c("<", ">")))
+			all.maintainers <- format(get.by.role(about[["author"]], role="cre"),
+				include=c("given", "family", "email"), braces=list(email=c("<", ">")))
 
 ## TODO: check and add the commented values here:
 ## especially dependencies must be created from 'about'
-		desc <- data.frame(
-			Package=name,
-			Type="Package",
-			Title=about.node@attributes[["name"]],
-			Version=about.node@attributes[["version"]],
-			Date=about.node@attributes[["releasedate"]],
-			Author=all.authors,
-			AuthorsR=paste(deparse(about[["author"]]), collapse=" "),
-			Maintainer=all.maintainers,
-#			Depends="R (>= 2.9.0)",
-			Enhances="rkward",
-			Description=about.node@attributes[["shortinfo"]],
-			License=about.node@attributes[["license"]],
-#			Encoding="UTF-8",
-			LazyLoad=ifelse(isTRUE(lazyLoad), "yes", "no"),
-			URL=about.node@attributes[["url"]],
-			stringsAsFactors=FALSE)
+			desc <- data.frame(
+				Package=name,
+				Type="Package",
+				Title=about.node@attributes[["name"]],
+				Version=about.node@attributes[["version"]],
+				Date=about.node@attributes[["releasedate"]],
+				Author=all.authors,
+				AuthorsR=paste(deparse(about[["author"]]), collapse=" "),
+				Maintainer=all.maintainers,
+#				Depends="R (>= 2.9.0)",
+				Enhances="rkward",
+				Description=about.node@attributes[["shortinfo"]],
+				License=about.node@attributes[["license"]],
+#				Encoding="UTF-8",
+				LazyLoad=ifelse(isTRUE(lazyLoad), "yes", "no"),
+				URL=about.node@attributes[["url"]],
+				stringsAsFactors=FALSE)
 
-		# i have no clue how to circumvent this workaround:
-		desc$`Authors@R` <- desc[["AuthorsR"]]
-		desc <- subset(desc, select=-AuthorsR)
+			# i have no clue how to circumvent this workaround:
+			desc$`Authors@R` <- desc[["AuthorsR"]]
+			desc <- subset(desc, select=-AuthorsR)
 
-		write.dcf(desc, file=description.file)
+			write.dcf(desc, file=description.file)
+		} else {}
 		if(isTRUE(edit)){
 			rk.edit.files(description.file, title="DESCRIPTION", prompt=FALSE)
 		} else {}
