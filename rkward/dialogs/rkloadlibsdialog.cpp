@@ -456,7 +456,7 @@ void LoadUnloadWidget::rCommandDone (RCommand *command) {
 	RK_TRACE (DIALOGS);
 	if (command->failed ()) return;
 	if (command->getFlags () == GET_INSTALLED_PACKAGES) {
-		RK_ASSERT (command->getDataLength () == 6);
+		RK_ASSERT (command->getDataLength () == 5);
 
 		RData *package = command->getStructureVector ()[0];
 		RData *title = command->getStructureVector ()[1];
@@ -884,7 +884,7 @@ void RKRPackageInstallationStatus::statusCommandFinished (RCommand *command) {
 		return;
 	}
 	RK_ASSERT (command->getDataType () == RCommand::StructureVector);
-	RK_ASSERT (command->getDataLength () == 4);
+	RK_ASSERT (command->getDataLength () == 5);
 
 	RData::RDataStorage top = command->getStructureVector ();
 	RData::RDataStorage available = top[0]->getStructureVector ();
