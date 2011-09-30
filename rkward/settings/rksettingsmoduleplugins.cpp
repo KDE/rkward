@@ -22,11 +22,6 @@
 #include <kmessagebox.h>
 #include <khbox.h>
 #include <kdeversion.h>
-#ifdef RKWARD_USE_KNS3
-#	include <knewstuff3/downloaddialog.h>
-#else
-#	include <knewstuff2/engine.h>
-#endif
 #include <ktar.h>
 #include <kzip.h>
 #include <kio/deletejob.h>
@@ -117,11 +112,6 @@ RKSettingsModulePlugins::RKSettingsModulePlugins (RKSettings *gui, QWidget *pare
 	connect (map_choser, SIGNAL (getNewStrings (QStringList*)), this, SLOT (browseRequest (QStringList*)));
 	connect (map_choser, SIGNAL (listChanged ()), this, SLOT (settingChanged ()));
 	main_vbox->addWidget (map_choser);
-
-	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
-	button = new QPushButton (i18n ("Install or uninstall add-on plugin packs"), this);
-	main_vbox->addWidget (button);
-	connect (button, SIGNAL (clicked()), this, SLOT (downloadPlugins()));
 
 	main_vbox->addStretch ();
 }
@@ -240,46 +230,6 @@ void RKSettingsModulePlugins::fixPluginMapLists () {
 
 	foreach (const QString &map, plugin_maps) {
 		if (!known_plugin_maps.contains (map)) known_plugin_maps.append (map);
-	}
-}
-
-void RKSettingsModulePlugins::downloadPlugins () {
-	RK_TRACE (SETTINGS);
-
-	QStringList oldmaps = plugin_maps;
-
-#ifdef RKWARD_USE_KNS3
-	KNS3::DownloadDialog dialog ("rkward.knsrc", 0);
-	dialog.exec ();
-	KNS3::Entry::List list = dialog.changedEntries ();
-#else
-	KNS::Engine engine (0);
-	if (!engine.init ("rkward.knsrc")) return;
-	KNS::Entry::List list = engine.downloadDialogModal (this);
-#endif
-
-	for (int i = 0; i < list.size (); ++i) {
-#ifdef RKWARD_USE_KNS3
-		QStringList installed_files = list[i].installedFiles ();
-		QStringList uninstalled_files = list[i].uninstalledFiles ();
-#else
-		QStringList installed_files = list[i]->installedFiles ();
-		QStringList uninstalled_files = list[i]->uninstalledFiles ();
-#endif
-		foreach (const QString inst, installed_files) {
-			installPluginPack (inst);
-		}
-		foreach (const QString inst, uninstalled_files) {
-			uninstallPluginPack (inst);
-		}
-	}
-
-	// new pluginmaps were already added in installPluginPack. Now let's check, whether there any to be removed:
-	fixPluginMapLists ();
-
-	if (plugin_maps != oldmaps) {
-		map_choser->setValues (plugin_maps);
-		change ();
 	}
 }
 

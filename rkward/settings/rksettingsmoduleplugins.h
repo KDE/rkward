@@ -60,8 +60,6 @@ public:
 public slots:
 	void settingChanged ();
 	void browseRequest (QStringList* strings);
-	/** Invoke the plugin download dialog. */
-	void downloadPlugins ();
 private:
 	MultiStringSelector *map_choser;
 	QButtonGroup *button_group;
@@ -76,6 +74,7 @@ private:
 	static bool show_code;
 	static int code_size;
 
+/* TODO: These are currently unused (leftovers of GHNS-based plugin installation), but might still be of interest */
 	static void installPluginPack (const QString &archive_file);
 	static void uninstallPluginPack (const QString &archive_file);
 	static QString baseNameOfPluginPack (const QString &archive_file);

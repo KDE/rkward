@@ -1,9 +1,0 @@
-[KNewStuff2]
-ProvidersUrl=http://R.reaktanz.de/GHNS/reaktanz-provider.xml
-Uncompress=never
-TargetDir=rkward/plugins/
-
-[KNewStuff3]
-ProvidersUrl=http://R.reaktanz.de/GHNS/reaktanz-provider.xml
-Uncompress=never
-TargetDir=rkward/plugins/
