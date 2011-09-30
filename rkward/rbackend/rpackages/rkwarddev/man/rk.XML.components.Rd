@@ -2,7 +2,7 @@
 \alias{rk.XML.components}
 \title{Create XML "components" node for RKWard plugins}
 \usage{
-  rk.XML.components(nodes = NULL)
+  rk.XML.components(nodes)
 }
 \arguments{
   \item{nodes}{A (list of) objects of class
@@ -14,10 +14,12 @@
 }
 \description{
   This function will create a components node for a
-  .pluginmap file, with optional child nodes "component".
+  .pluginmap file, with mandatory child nodes "component".
 }
-\note{
-  NOT WORKING YET
+\examples{
+test.component <- rk.XML.component("My GUI dialog", "plugins/MyGUIdialog.xml")
+test.components <- rk.XML.components(test.component)
+cat(pasteXMLNode(test.components))
 }
 \seealso{
   \code{\link[rkwarddev:rk.XML.pluginmap]{rk.XML.pluginmap}}

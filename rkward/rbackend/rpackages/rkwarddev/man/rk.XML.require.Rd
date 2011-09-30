@@ -5,7 +5,8 @@
   rk.XML.require(file)
 }
 \arguments{
-  \item{file}{A file name.}
+  \item{file}{Character string, file name of another
+  .pluginmap file to be included.}
 }
 \value{
   A list of objects of class \code{XiMpLe.node}.
@@ -14,7 +15,8 @@
   This function will create a require node for .pluginmap
   files.
 }
-\note{
-  NOT WORKING YET
+\examples{
+test.require <- rk.XML.require("another.pluginmap")
+cat(pasteXMLNode(test.require))
 }
 

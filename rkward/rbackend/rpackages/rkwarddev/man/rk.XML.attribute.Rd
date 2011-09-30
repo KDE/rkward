@@ -2,29 +2,36 @@
 \alias{rk.XML.attribute}
 \title{Create XML "attribute" node for RKWard plugins}
 \usage{
-  rk.XML.attribute(label, value, id.name = "auto")
+  rk.XML.attribute(id, value = NULL, label = NULL)
 }
 \arguments{
-  \item{label}{A label.}
+  \item{id}{Either a character string (the \code{id} of the
+  property whose attribute should be set), or an object of
+  class \code{XiMpLe.node} (whose \code{id} will be
+  extracted and used).}
 
-  \item{value}{A value.}
+  \item{value}{Character string, new value for the
+  attribute.}
 
-  \item{id.name}{Character string, a unique ID for this
-  plugin element. If \code{"auto"}, an ID will be generated
-  automatically from the tag names and IDs of the given
-  nodes.}
+  \item{label}{Character string, label associated with the
+  attribute.}
 }
 \value{
   A list of objects of class \code{XiMpLe.node}.
 }
 \description{
   This function will create a attribute node for component
-  sections in .pluginmap files.
+  sections in .pluginmap files. Only meaningful for import
+  plugins.
 }
-\note{
-  NOT WORKING YET
+\examples{
+# define a formula section with varselector and varslots
+test.checkbox <- rk.XML.cbox(label="foo", value="foo1", chk=TRUE)
+# re-set the attribute
+test.attribute <- rk.XML.attribute(test.checkbox, value="bar2", label="bar")
+cat(pasteXMLNode(test.attribute))
 }
 \seealso{
-  \code{\link[rkwarddev:rk.XML.attributes]{rk.XML.attributes}}
+  \code{\link[rkwarddev:rk.XML.components]{rk.XML.components}}
 }
 

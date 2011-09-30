@@ -6,16 +6,23 @@
 }
 \arguments{
   \item{nodes}{A (list of) objects of class
-  \code{XiMpLe.node}.}
+  \code{XiMpLe.node}, must all be "menu".}
 }
 \value{
   A list of objects of class \code{XiMpLe.node}.
 }
 \description{
-  This function will create a hierarchy section with
-  optional child nodes "menu".
+  This function will create a hierarchy section for
+  .pluginmap files, with mandatory child nodes "menu".
 }
-\note{
-  NOT WORKING YET
+\examples{
+test.component <- rk.XML.component("My GUI dialog", "plugins/MyGUIdialog.xml")
+test.entry <- rk.XML.entry(test.component)
+test.menu <- rk.XML.menu("Analysis", nodes=test.entry, id.name="analysis")
+test.hierarchy <- rk.XML.hierarchy(test.menu)
+cat(pasteXMLNode(test.hierarchy))
+}
+\seealso{
+  \code{\link[rkwarddev:rk.XML.menu]{rk.XML.menu}}
 }
 

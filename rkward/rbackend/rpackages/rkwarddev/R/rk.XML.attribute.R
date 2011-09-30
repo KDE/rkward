@@ -1,37 +1,41 @@
 #' Create XML "attribute" node for RKWard plugins
 #'
 #' This function will create a attribute node for component sections in .pluginmap files.
-#' 
-#' @note NOT WORKING YET
+#' Only meaningful for import plugins.
 #'
-#' @param label A label.
-#' @param value A value.
-#' @param id.name Character string, a unique ID for this plugin element.
-#'		If \code{"auto"}, an ID will be generated automatically from the tag names and
-#'		IDs of the given nodes.
+#' @param id Either a character string (the \code{id} of the property whose attribute should be set),
+#'		or an object of class \code{XiMpLe.node} (whose \code{id} will be extracted and used).
+#' @param value Character string, new value for the attribute.
+#' @param label Character string, label associated with the attribute.
 #' @return A list of objects of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
-#'		\code{\link[rkwarddev:rk.XML.attributes]{rk.XML.attributes}}
-# @examples
-# # define a formula section with varselector and varslots
-# test.formula <- rk.XML.vars("Variables", "Fixed", formula.dependent="Dependent")
-# # define the attribute
-# test.attribute <- rk.XML.attribute(test.formula)
-# cat(pasteXMLNode(test.attribute))
+#'		\code{\link[rkwarddev:rk.XML.components]{rk.XML.components}}
+#' @examples
+#' # define a formula section with varselector and varslots
+#' test.checkbox <- rk.XML.cbox(label="foo", value="foo1", chk=TRUE)
+#' # re-set the attribute
+#' test.attribute <- rk.XML.attribute(test.checkbox, value="bar2", label="bar")
+#' cat(pasteXMLNode(test.attribute))
 
-rk.XML.attribute <- function(label, value, id.name="auto"){
-	if(identical(id.name, "auto")){
-		# try autogenerating some id
-		id.name <- auto.ids(node.soup(nodes), prefix=ID.prefix("attribute"), chars=10)
-	} else if(is.null(id.name)){
-		stop(simpleError("Components need an ID!"))
+rk.XML.attribute <- function(id, value=NULL, label=NULL){
+	# let's see if we need to extract IDs first
+	attr.list <- list(id=check.ID(id))
+
+	if(all(is.null(value), is.null(label))){
+		stop(simpleError("You must at least specity either one of 'value' or 'label'!"))
+	} else {}
+	
+	if(!is.null(value)){
+		attr.list[["value"]] <- value
+	} else {}
+	if(!is.null(label)){
+		attr.list[["label"]] <- label
 	} else {}
 
 	node <- new("XiMpLe.node",
 			name="attribute",
-			attributes=list(id=id.name),
-			children=child.list(nodes)
+			attributes=attr.list
 		)
 
 	return(node)

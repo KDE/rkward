@@ -20,6 +20,7 @@ rk.XML.snippets <- function(nodes=NULL){
 	if(!is.null(nodes)){
 		# check the node names and allow only valid ones
 		sapply(child.list(nodes), function(this.node){
+				stopifnot(inherits(this.node, "XiMpLe.node"))
 				node.name <- this.node@name
 				if(!identical(node.name, "snippet")){
 					stop(simpleError(paste("Invalid XML nodes for snippets section: ", node.name, sep="")))

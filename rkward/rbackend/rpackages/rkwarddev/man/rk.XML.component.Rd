@@ -6,14 +6,15 @@
   "standard")
 }
 \arguments{
-  \item{label}{A label.}
+  \item{label}{Character string, a label for the
+  component.}
 
-  \item{file}{A file name.}
+  \item{file}{Character string, file name of a plugin XML
+  file defining the GUI.}
 
   \item{id.name}{Character string, a unique ID for this
   plugin element. If \code{"auto"}, an ID will be generated
-  automatically from the tag names and IDs of the given
-  nodes.}
+  automatically from the label.}
 
   \item{type}{Character string, type of component. As of
   now, only "standard" is supported. The option is just
@@ -24,10 +25,11 @@
 }
 \description{
   This function will create a component node for components
-  sections.
+  sections of .pluginmap files.
 }
-\note{
-  NOT WORKING YET
+\examples{
+test.component <- rk.XML.component("My GUI dialog", "plugins/MyGUIdialog.xml")
+cat(pasteXMLNode(test.component))
 }
 \seealso{
   \code{\link[rkwarddev:rk.XML.components]{rk.XML.components}}

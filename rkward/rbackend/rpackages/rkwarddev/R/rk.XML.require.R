@@ -2,19 +2,17 @@
 #'
 #' This function will create a require node for .pluginmap files.
 #' 
-#' @note NOT WORKING YET
-#'
-#' @param file A file name.
+#' @param file Character string, file name of another .pluginmap file to be included.
 #' @return A list of objects of class \code{XiMpLe.node}.
 #' @export
-# @examples
-# # define a formula section with varselector and varslots
-# test.formula <- rk.XML.vars("Variables", "Fixed", formula.dependent="Dependent")
-# # define the require
-# test.require <- rk.XML.require(test.formula)
-# cat(pasteXMLNode(test.require))
+#' @examples
+#' test.require <- rk.XML.require("another.pluginmap")
+#' cat(pasteXMLNode(test.require))
 
 rk.XML.require <- function(file){
+	if(length(file) > 1 | !is.character(file)){
+		stop(simpleError("'file' must be a character string!"))
+	} else {}
 
 	node <- new("XiMpLe.node",
 			name="require",

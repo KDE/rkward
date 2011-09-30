@@ -1,34 +1,40 @@
 #' Create XML "entry" node for RKWard plugins
 #'
-#' This function will create a entry node for .pluginmap files.
+#' This function will create a entry node for menu sections in .pluginmap files.
 #' 
-#' @note NOT WORKING YET
-#'
 #' @param component An ID.
-#' @param index An index.
+#' @param index Integer number to influence the level of menu placement.
 #' @return A list of objects of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
-#'		\code{\link[rkwarddev:rk.XML.entrys]{rk.XML.entrys}}
-# @examples
-# # define a formula section with varselector and varslots
-# test.formula <- rk.XML.vars("Variables", "Fixed", formula.dependent="Dependent")
-# # define the entry
-# test.entry <- rk.XML.entry(test.formula)
-# cat(pasteXMLNode(test.entry))
+#'		\code{\link[rkwarddev:rk.XML.menu]{rk.XML.menu}}
+#' @examples
+#' test.component <- rk.XML.component("My GUI dialog", "plugins/MyGUIdialog.xml")
+#' test.entry <- rk.XML.entry(test.component)
+#' cat(pasteXMLNode(test.entry))
 
-rk.XML.entry <- function(component, index=1){
-	if(identical(id.name, "auto")){
-		# try autogenerating some id
-		id.name <- auto.ids(node.soup(nodes), prefix=ID.prefix("entry"), chars=10)
-	} else if(is.null(id.name)){
-		stop(simpleError("Components need an ID!"))
+rk.XML.entry <- function(component, index=-1){
+	if(length(component) > 1){
+		stop(simpleError("'component' must be of length 1!"))
+	} else {}
+
+	# check the node names and allow only valid ones
+	if(inherits(component, "XiMpLe.node")){
+		node.name <- component@name
+		if(!identical(node.name, "component")){
+			stop(simpleError(paste("Invalid XML node for 'entry': ", node.name, sep="")))
+		} else {}
+	} else {}
+
+	attr.list <- list(component=check.ID(component))
+
+	if(!identical(index, -1)){
+		attr.list[["index"]] <- index
 	} else {}
 
 	node <- new("XiMpLe.node",
 			name="entry",
-			attributes=list(id=id.name),
-			children=child.list(nodes)
+			attributes=attr.list
 		)
 
 	return(node)

@@ -2,19 +2,26 @@
 \alias{rk.XML.context}
 \title{Create XML "context" node for RKWard plugins}
 \usage{
-  rk.XML.context(id = "x11")
+  rk.XML.context(nodes, id = "x11")
 }
 \arguments{
-  \item{id}{Either "x11" or "import".}
+  \item{nodes}{A (list of) objects of class
+  \code{XiMpLe.node}, must all be "menu".}
+
+  \item{id}{Character string, either "x11" or "import".}
 }
 \value{
   A list of objects of class \code{XiMpLe.node}.
 }
 \description{
   This function will create a context node for .pluginmap
-  files.
+  files, with mandatory child nodes "menu".
 }
-\note{
-  NOT WORKING YET
+\examples{
+test.component <- rk.XML.component("My GUI dialog", "plugins/MyGUIdialog.xml")
+test.entry <- rk.XML.entry(test.component)
+test.menu <- rk.XML.menu("Analysis", nodes=test.entry, id.name="analysis")
+test.context <- rk.XML.context(test.menu)
+cat(pasteXMLNode(test.context))
 }
 

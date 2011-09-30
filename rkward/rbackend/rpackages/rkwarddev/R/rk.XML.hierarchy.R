@@ -1,19 +1,19 @@
 #' Create XML hierarchy section for RKWard plugins
 #'
-#' This function will create a hierarchy section with optional child nodes "menu".
+#' This function will create a hierarchy section for .pluginmap files,
+#' with mandatory child nodes "menu".
 #'
-#' @note NOT WORKING YET
-#'
-#' @param nodes A (list of) objects of class \code{XiMpLe.node}. 
+#' @param nodes A (list of) objects of class \code{XiMpLe.node}, must all be "menu".
 #' @return A list of objects of class \code{XiMpLe.node}.
 #' @export
-# @examples
-# # define an input field and two checkboxes
-# test.input <- rk.XML.input("Type some text")
-# test.cbox1 <- rk.XML.cbox(label="Want to type?", val="true")
-# test.cbox2 <- rk.XML.cbox(label="Are you shure?", val="true")
-# test.hierarchy <- rk.XML.hierarchy(rk.XML.col(list(test.input, test.cbox1, test.cbox2)))
-# cat(pasteXMLNode(test.hierarchy))
+#' @seealso
+#'		\code{\link[rkwarddev:rk.XML.menu]{rk.XML.menu}}
+#' @examples
+#' test.component <- rk.XML.component("My GUI dialog", "plugins/MyGUIdialog.xml")
+#' test.entry <- rk.XML.entry(test.component)
+#' test.menu <- rk.XML.menu("Analysis", nodes=test.entry, id.name="analysis")
+#' test.hierarchy <- rk.XML.hierarchy(test.menu)
+#' cat(pasteXMLNode(test.hierarchy))
 
 rk.XML.hierarchy <- function(nodes){
 	# check the node names and allow only valid ones
@@ -23,7 +23,8 @@ rk.XML.hierarchy <- function(nodes){
 
 	invalid.sets <- !node.names %in% c("menu")
 	if(any(invalid.sets)){
-		stop(simpleError(paste("Invalid XML nodes for hierarchy section: ", paste(node.names[invalid.sets], collapse=", "), sep="")))
+		stop(simpleError(paste("Invalid XML nodes for hierarchy section: ",
+			paste(node.names[invalid.sets], collapse=", "), sep="")))
 	} else {}
 
 	node <- new("XiMpLe.node",

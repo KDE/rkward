@@ -1,24 +1,39 @@
 #' Create XML "context" node for RKWard plugins
 #'
-#' This function will create a context node for .pluginmap files.
+#' This function will create a context node for .pluginmap files,
+#' with mandatory child nodes "menu".
 #' 
-#' @note NOT WORKING YET
-#'
-#' @param id Either "x11" or "import".
+#' @param nodes A (list of) objects of class \code{XiMpLe.node}, must all be "menu".
+#' @param id Character string, either "x11" or "import".
 #' @return A list of objects of class \code{XiMpLe.node}.
 #' @export
-# @examples
-# # define a formula section with varselector and varslots
-# test.formula <- rk.XML.vars("Variables", "Fixed", formula.dependent="Dependent")
-# # define the context
-# test.context <- rk.XML.context(test.formula)
-# cat(pasteXMLNode(test.context))
+#' @examples
+#' test.component <- rk.XML.component("My GUI dialog", "plugins/MyGUIdialog.xml")
+#' test.entry <- rk.XML.entry(test.component)
+#' test.menu <- rk.XML.menu("Analysis", nodes=test.entry, id.name="analysis")
+#' test.context <- rk.XML.context(test.menu)
+#' cat(pasteXMLNode(test.context))
 
-rk.XML.context <- function(id="x11"){
+rk.XML.context <- function(nodes, id="x11"){
+	# check the node names and allow only valid ones
+	node.names <- sapply(child.list(nodes), function(this.node){
+			this.node@name
+		})
+
+	if(!id %in% c("x11", "import")){
+		stop(simpleError(paste("Invalid ID: ", id, sep="")))
+	} else {}
+		
+	invalid.sets <- !node.names %in% c("menu")
+	if(any(invalid.sets)){
+		stop(simpleError(paste("Invalid XML nodes for context section: ",
+			paste(node.names[invalid.sets], collapse=", "), sep="")))
+	} else {}
 
 	node <- new("XiMpLe.node",
 			name="context",
-			attributes=list(id=id.name)
+			attributes=list(id=id),
+			children=child.list(nodes)
 		)
 
 	return(node)

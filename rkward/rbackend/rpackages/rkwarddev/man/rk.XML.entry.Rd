@@ -2,24 +2,27 @@
 \alias{rk.XML.entry}
 \title{Create XML "entry" node for RKWard plugins}
 \usage{
-  rk.XML.entry(component, index = 1)
+  rk.XML.entry(component, index = -1)
 }
 \arguments{
   \item{component}{An ID.}
 
-  \item{index}{An index.}
+  \item{index}{Integer number to influence the level of
+  menu placement.}
 }
 \value{
   A list of objects of class \code{XiMpLe.node}.
 }
 \description{
-  This function will create a entry node for .pluginmap
-  files.
+  This function will create a entry node for menu sections
+  in .pluginmap files.
 }
-\note{
-  NOT WORKING YET
+\examples{
+test.component <- rk.XML.component("My GUI dialog", "plugins/MyGUIdialog.xml")
+test.entry <- rk.XML.entry(test.component)
+cat(pasteXMLNode(test.entry))
 }
 \seealso{
-  \code{\link[rkwarddev:rk.XML.entrys]{rk.XML.entrys}}
+  \code{\link[rkwarddev:rk.XML.menu]{rk.XML.menu}}
 }
 
