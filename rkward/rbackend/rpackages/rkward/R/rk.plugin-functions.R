@@ -128,7 +128,7 @@ rk.list.plugins <- function () {
 #' ## reload all active pluginmaps
 #' rk.load.pluginmaps()
 #'
-#' END NOT RUN
+#' ## END NOT RUN
 "rk.load.pluginmaps" <- function (pluginmap.files=NULL, force.add = TRUE, force.reload = TRUE) {
 	.rk.do.plain.call ("loadPluginMaps", c (ifelse (isTRUE (force.add), "force", "noforce"), ifelse (isTRUE (force.reload), "reload", "noreload"), as.character (pluginmap.files)), synchronous=FALSE)
 }
