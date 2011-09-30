@@ -6,9 +6,9 @@
   dialog = NULL, wizard = NULL, logic = NULL, snippets =
   NULL, provides = c("logic", "dialog"), dial.require =
   c(), overwrite = FALSE, tests = TRUE, lazyLoad = TRUE,
-  JS.prep = NULL, JS.calc = NULL, JS.prnt = NULL, create =
-  c("pmap", "xml", "js", "rkh", "desc"), edit = FALSE, load
-  = FALSE, show = FALSE)
+  menu = "test", JS.prep = NULL, JS.calc = NULL, JS.prnt =
+  NULL, create = c("pmap", "xml", "js", "rkh", "desc"),
+  edit = FALSE, load = FALSE, show = FALSE)
 }
 \arguments{
   \item{name}{Character sting, name of the plugin package.}
@@ -62,6 +62,15 @@
   \item{lazyLoad}{Logical, whether the package should be
   prepared for lazy loading or not. Should be left
   \code{TRUE}, unless you have very good reasons not to.}
+
+  \item{menu}{A character string with instructions where to
+  place the plugin in the menu hierarchy, Valid values are
+  \code{"file"}, \code{"edit"}, \code{"view"},
+  \code{"workspace"}, \code{"run"}, \code{"data"},
+  \code{"analysis"}, \code{"plots"},
+  \code{"distributions"}, \code{"windows"},
+  \code{"settings"} and \code{"help"}. Anything else will
+  place it in a "test" menu.}
 
   \item{JS.prep}{A character string with JavaScript code to
   be included in the \code{preprocess()} function. This

@@ -6,7 +6,7 @@
 #' @return A list of objects of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
-#'		\code{\link[rkwarddev:rk.XML.pluginmap]{rk.XML.pluginmap}}
+#'		\code{\link[rkwarddev:rk.XML.pluginmap]{rk.XML.pluginmap}},
 #'		\code{\link[rkwarddev:rk.XML.component]{rk.XML.component}}
 #' @examples
 #' test.component <- rk.XML.component("My GUI dialog", "plugins/MyGUIdialog.xml")

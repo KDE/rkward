@@ -23,6 +23,10 @@
 #'		Defaults to \code{TRUE}.
 #' @param lazyLoad Logical, whether the package should be prepared for lazy loading or not. Should be left \code{TRUE},
 #'		unless you have very good reasons not to.
+#' @param menu A character string with instructions where to place the plugin in the menu hierarchy, Valid values are
+#'		\code{"file"}, \code{"edit"}, \code{"view"}, \code{"workspace"}, \code{"run"}, \code{"data"},
+#'		\code{"analysis"}, \code{"plots"}, \code{"distributions"}, \code{"windows"}, \code{"settings"} and \code{"help"}.
+#'		Anything else will place it in a "test" menu.
 #' @param JS.prep A character string with JavaScript code to be included in the \code{preprocess()} function. This string will be
 #'		pasted as-is, see \code{\link[rkwarddev:rk.JS.doc]{rk.JS.doc}}.
 #' @param JS.calc A character string with JavaScript code to be included in the \code{calculate()} function. This string will be
@@ -106,7 +110,7 @@
 #' }
 
 rk.plugin.skeleton <- function(name, about=NULL, path=tempdir(), dialog=NULL, wizard=NULL, logic=NULL, snippets=NULL,
-	provides=c("logic", "dialog"), dial.require=c(), overwrite=FALSE, tests=TRUE, lazyLoad=TRUE,
+	provides=c("logic", "dialog"), dial.require=c(), overwrite=FALSE, tests=TRUE, lazyLoad=TRUE, menu="test",
 	JS.prep=NULL, JS.calc=NULL, JS.prnt=NULL, create=c("pmap", "xml", "js", "rkh", "desc"), edit=FALSE, load=FALSE, show=FALSE){
 	# to besure, remove all non-character symbols from name
 	name.orig <- name
@@ -226,9 +230,9 @@ rk.plugin.skeleton <- function(name, about=NULL, path=tempdir(), dialog=NULL, wi
 			XML.pluginmap <- rk.XML.pluginmap(
 				name=name.orig,
 				about=about,
-				components=paste(name, ".xml", sep=""),
-				plugin.dir="plugins",
-				hierarchy="analysis")
+				components=paste("plugins/", name, ".xml", sep=""),
+				hierarchy=as.character(menu),
+				hints=TRUE)
 			cat(pasteXMLTree(XML.pluginmap, shine=2), file=plugin.pluginmap)
 		} else {}
 		if(isTRUE(edit)){
@@ -238,7 +242,8 @@ rk.plugin.skeleton <- function(name, about=NULL, path=tempdir(), dialog=NULL, wi
 			rk.load.pluginmaps(plugin.pluginmap)
 			if(isTRUE(show)){
 				# call the plugin; reconstructed the ID generation from rk.XML.pluginmap()
-				rk.call.plugin(paste("rkward::", name, ".", name, sep=""))
+				plugin.ID <- auto.ids(paste(name, name, sep=""), prefix=ID.prefix("component"), chars=25)
+				rk.call.plugin(paste("rkward::", plugin.ID, sep=""))
 			} else {}
 		} else {}
 	} else {}

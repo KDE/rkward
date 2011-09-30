@@ -24,4 +24,9 @@ test.menu <- rk.XML.menu("Analysis", nodes=test.entry, id.name="analysis")
 test.context <- rk.XML.context(test.menu)
 cat(pasteXMLNode(test.context))
 }
+\seealso{
+  \code{\link[rkwarddev:rk.XML.menu]{rk.XML.menu}},
+  \code{\link[rkwarddev:rk.XML.entry]{rk.XML.entry}},
+  \code{\link[rkwarddev:rk.XML.component]{rk.XML.component}},
+}
 

@@ -1,6 +1,6 @@
 #' Create XML "menu" node for RKWard plugins
 #'
-#' This function will create a menu node for entry sections.
+#' This function will create a menu node for hierarchy sections.
 #' Use same \code{id} values to place entries in the same menu.
 #' 
 #' @param label Character string, a label for the menu.
@@ -13,7 +13,10 @@
 #' @return A list of objects of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
-#'		\code{\link[rkwarddev:rk.XML.menus]{rk.XML.menus}}
+#'		\code{\link[rkwarddev:rk.XML.hierarchy]{rk.XML.hierarchy}},
+#'		\code{\link[rkwarddev:rk.XML.entry]{rk.XML.entry}},
+#'		\code{\link[rkwarddev:rk.XML.component]{rk.XML.component}},
+#'		\code{\link[rkwarddev:rk.XML.components]{rk.XML.components}}
 #' @examples
 #' test.component <- rk.XML.component("My GUI dialog", "plugins/MyGUIdialog.xml")
 #' test.entry <- rk.XML.entry(test.component)

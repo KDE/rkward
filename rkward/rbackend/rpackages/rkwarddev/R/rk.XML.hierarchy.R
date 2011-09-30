@@ -7,7 +7,10 @@
 #' @return A list of objects of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
-#'		\code{\link[rkwarddev:rk.XML.menu]{rk.XML.menu}}
+#'		\code{\link[rkwarddev:rk.XML.menu]{rk.XML.menu}},
+#'		\code{\link[rkwarddev:rk.XML.entry]{rk.XML.entry}},
+#'		\code{\link[rkwarddev:rk.XML.component]{rk.XML.component}},
+#'		\code{\link[rkwarddev:rk.XML.components]{rk.XML.components}}
 #' @examples
 #' test.component <- rk.XML.component("My GUI dialog", "plugins/MyGUIdialog.xml")
 #' test.entry <- rk.XML.entry(test.component)

@@ -23,6 +23,9 @@ test.entry <- rk.XML.entry(test.component)
 cat(pasteXMLNode(test.entry))
 }
 \seealso{
-  \code{\link[rkwarddev:rk.XML.menu]{rk.XML.menu}}
+  \code{\link[rkwarddev:rk.XML.menu]{rk.XML.menu}},
+  \code{\link[rkwarddev:rk.XML.hierarchy]{rk.XML.hierarchy}},
+  \code{\link[rkwarddev:rk.XML.component]{rk.XML.component}},
+  \code{\link[rkwarddev:rk.XML.components]{rk.XML.components}}
 }
 

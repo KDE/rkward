@@ -22,9 +22,9 @@
   A list of objects of class \code{XiMpLe.node}.
 }
 \description{
-  This function will create a menu node for entry sections.
-  Use same \code{id} values to place entries in the same
-  menu.
+  This function will create a menu node for hierarchy
+  sections. Use same \code{id} values to place entries in
+  the same menu.
 }
 \examples{
 test.component <- rk.XML.component("My GUI dialog", "plugins/MyGUIdialog.xml")
@@ -33,6 +33,9 @@ test.menu <- rk.XML.menu("Analysis", nodes=test.entry, id.name="analysis")
 cat(pasteXMLNode(test.menu))
 }
 \seealso{
-  \code{\link[rkwarddev:rk.XML.menus]{rk.XML.menus}}
+  \code{\link[rkwarddev:rk.XML.hierarchy]{rk.XML.hierarchy}},
+  \code{\link[rkwarddev:rk.XML.entry]{rk.XML.entry}},
+  \code{\link[rkwarddev:rk.XML.component]{rk.XML.component}},
+  \code{\link[rkwarddev:rk.XML.components]{rk.XML.components}}
 }
 
