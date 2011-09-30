@@ -273,6 +273,7 @@ void RKProgressControlDialog::addOutput (const ROutput *output) {
 	if (bar && (bar->value () < bar->maximum ())) at_end = false;
 
 	if (output->type != last_output_type) {
+		last_output_type = output->type;
 		output_text->insertPlainText ("\n");
 
 		if (output->type == ROutput::Output) {

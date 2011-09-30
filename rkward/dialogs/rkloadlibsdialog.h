@@ -43,8 +43,6 @@ class InstallPackagesWidget;
 /**
 Dialog which excapsulates widgets to load/unload, update and install R packages
 
-TODO: The logic of passing on the button presses (ok, cancel, etc.) is rather surprising and a bit confusing. This should be made more straight-forward.
-
 @author Thomas Friedrichsmeier
 */
 
