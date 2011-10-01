@@ -1,5 +1,8 @@
 ChangeLog for package XiMpLe
 
+## 0.03-4 (2011-10-01)
+  - added show methods for objects of class XiMpLe.doc and XiMpLe.node
+
 ## 0.03-3 (2011-09-27)
   - changed default 'shine' value of pasteXMLNode() and pasteXMLTree() from 2 to 1
   - pasteXMLNode() and pasteXMLTree() now try to call each other if fed with the wrong class object,
