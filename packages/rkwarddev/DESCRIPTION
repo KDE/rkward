@@ -1,0 +1,73 @@
+Package: rkwarddev
+Type: Package
+Title: A collection of tools for RKWard plugin development
+Author: m.eik michalke <meik.michalke@hhu.de>
+Maintainer: m.eik michalke <meik.michalke@hhu.de>
+Depends:
+    R (>= 2.9.0),XiMpLe,rkward (>= 0.5.6)
+Enhances: rkward
+Description: Provides functions to create plugin skeletons
+    and XML structures for RKWard.
+License: GPL (>= 3)
+Encoding: UTF-8
+LazyLoad: yes
+URL: http://rkward.sourceforge.net
+Authors@R: c(person(given="Meik", family="Michalke",
+    email="meik.michalke@hhu.de", role=c("aut", "cre")))
+Version: 0.02-3
+Date: 2011-09-30
+Collate:
+    'rk.build.plugin.R'
+    'rk-internal.R'
+    'rk.JS.array.R'
+    'rk.JS.doc.R'
+    'rk.JS.scan.R'
+    'rk.plugin.skeleton.R'
+    'rk.rkh.doc.R'
+    'rk.rkh.scan.R'
+    'rk.testsuite.doc.R'
+    'rkwarddev-desc-internal.R'
+    'rkwarddev-package.R'
+    'rk.XML.about.R'
+    'rk.XML.attribute.R'
+    'rk.XML.browser.R'
+    'rk.XML.cbox.R'
+    'rk.XML.col.R'
+    'rk.XML.component.R'
+    'rk.XML.components.R'
+    'rk.XML.connect.R'
+    'rk.XML.context.R'
+    'rk.XML.convert.R'
+    'rk.XML.copy.R'
+    'rk.XML.dialog.R'
+    'rk.XML.dropdown.R'
+    'rk.XML.embed.R'
+    'rk.XML.entry.R'
+    'rk.XML.external.R'
+    'rk.XML.formula.R'
+    'rk.XML.frame.R'
+    'rk.XML.hierarchy.R'
+    'rk.XML.include.R'
+    'rk.XML.input.R'
+    'rk.XML.insert.R'
+    'rk.XML.logic.R'
+    'rk.XML.menu.R'
+    'rk.XML.page.R'
+    'rk.XML.pluginmap.R'
+    'rk.XML.plugin.R'
+    'rk.XML.preview.R'
+    'rk.XML.radio.R'
+    'rk.XML.require.R'
+    'rk.XML.row.R'
+    'rk.XML.saveobj.R'
+    'rk.XML.set.R'
+    'rk.XML.snippet.R'
+    'rk.XML.snippets.R'
+    'rk.XML.spinbox.R'
+    'rk.XML.stretch.R'
+    'rk.XML.tabbook.R'
+    'rk.XML.text.R'
+    'rk.XML.varselector.R'
+    'rk.XML.varslot.R'
+    'rk.XML.vars.R'
+    'rk.XML.wizard.R'

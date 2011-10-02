@@ -1,0 +1,73 @@
+ChangeLog for package rkwarddev
+
+## 0.02-3 (2011-09-30)
+  - added functions rk.XML.attribute(), rk.XML.component(), rk.XML.components(), rk.XML.context(),
+    rk.XML.entry(), rk.XML.hierarchy(), rk.XML.menu() and rk.XML.require()
+  - rk.plugin.skeleton() and rk.XML.pluginmap() now use the new functions, which makes them much more flexible
+  - added option "menu" to rk.plugin.skeleton()
+  - added options "require", "x11.context", "import.context" and "hints" to rk.XML.pluginmap()
+  - removed now superfluous option "plugin.dir" from rk.XML.pluginmap()
+  - tuned rk.plugin.skeleton() to only skip file writing if they exist
+  
+## 0.02-2 (2011-09-29)
+  - added "load" and "show" options to rk.plugin.skeleton() to call rk.load.pluginmaps() and the plugin itself
+  - added function rk.build.plugin()
+
+## 0.02-1 (2011-09-28)
+  - added functions rk.XML.insert(), rk.XML.include(), rk.XML.embed(), rk.XML.preview(),
+    rk.XML.snippet(), and rk.XML.snippets()
+  - added support for snippets section to rk.XML.plugin() and rk.plugin.skeleton()
+  - included formula node into rk.XML.vars() wrapper
+  - rk.XML.varslot() now automatically sets "multi=TRUE" if "min", "max" or "any" are set
+
+## 0.02-0 (2011-09-27)
+  - redesigned options for rk.XML.plugin() and rk.plugin.skeleton() for more consistency.
+    unfortunately, this breaks backwards compatibility!
+  - added functions rk.XML.varselector(), rk.XML.copy(), rk.XML.dialog(), rk.XML.page() and
+    rk.XML.wizard()
+  - added type checks to rk.XML.spinbox()
+  - added "id.name" and "label" to various functions
+  - updated rk.XML.formula()
+
+## 0.01-5 (2011-09-25)
+  - added functions rk.XML.formula(), rk.XML.convert(), rk.XML.connect(), rk.XML.logic(),
+    rk.XML.set() and rk.XML.external()
+  - added possibility to add custom XML code to the logic section with rk.XML.plugin()
+    and rk.plugin.skeleton()
+  - fixed id setting in rk.XML.browser()
+  - simplified rk.plugin.skeleton() and rk.XML.pluginmap() by making "about" entirely optional
+
+## 0.01-4 (2011-09-22)
+  - fixed wrong doc link and one wrong object name in rk.plugin.skeleton()
+  - fixed attribute typo in rk.XML.vars()
+  - fixed issue with auto-generated IDs (now using "_" instead of ".")
+  - added wizard code options to rk.XML.plugin() and rk.plugin.skeleton()
+  - added "edit" and "create" options to rk.plugin.skeleton()
+  - added function rk.XML.varslot()
+  - added possibility to add custom XML nodes to the varslot in rk.XML.vars()
+  - added possibility to paste ready-to-use JavaScript code directly to the preprocess(),
+    calculate() and printout() functions, respectively
+
+## 0.01-3 (2011-09-16)
+  - added rk.XML.spinbox() and missing options to rk.XML.browser() and rk.XML.saveobj()
+  - corrected browser default type in rk.XML.browser()
+  - added wizard option to rk.plugin.skeleton()
+
+## 0.01-2 (2011-09-15)
+  - reworked rk.XML.about() to use person class objects for authors, and need less info to
+    produce usable output
+
+## 0.01-1 (2011-09-05)
+  - added rk.JS.scan(), rk.JS.doc(), rk.JS.array(), rk.rkh.scan() and rk.rkh.doc()
+  - added rk.XML.browser(),  rk.XML.input(),  rk.XML.saveobj(),  rk.XML.stretch() and  rk.XML.text()
+  - added rk.testsuite.doc()
+  - shortened package name from "rkwardplugdev" to "rkwarddev"
+  - merged code into RKWard's svn tree
+
+## 0.01-0 (2011-08-30)
+  - forked rk.* functions from XiMpLe package into this one
+  - added functions rk.XML.cbox(), rk.XML.row(), rk.XML.col(), rk.XML.frame(),
+    rk.XML.radio() and rk.XML.vars()
+  - rewrote the ID handling
+  - added docs
+  - initial release via reaktanz.de

@@ -1,0 +1,60 @@
+ChangeLog for package XiMpLe
+
+## 0.03-4 (2011-10-01)
+  - added show methods for objects of class XiMpLe.doc and XiMpLe.node
+
+## 0.03-3 (2011-09-27)
+  - changed default 'shine' value of pasteXMLNode() and pasteXMLTree() from 2 to 1
+  - pasteXMLNode() and pasteXMLTree() now try to call each other if fed with the wrong class object,
+    but a warning is given
+  - changed handling of 'value' in pasteXMLNode(), now reflects 'shine' setting/indentation
+
+## 0.03-2 (2011-09-17)
+  - added docs for classed XiMpLe.doc and XiMpLe.node
+
+## 0.03-1 (2011-09-11)
+  - fixed outstanding issue with complex value structures
+  - changed "Author@R" to "Authors@R" in DESCRIPTION (for R >= 2.14)
+
+## 0.02-2 (2011-09-01)
+  - fixed missing "methods" dependecy
+  - adjusted docs a little
+
+## 0.02-1 (2011-08-30)
+  - added option "indent.by" to the paste functions, in case one prefers space over tab.
+  - moved all rk.* functions out of this package and into its own (rkwardplugdev)
+
+## 0.01-9 (2011-08-28)
+  - tiny improvements to XML formatting
+  - added functions rk.XML.tabbook(), rk.XML.dropdown(), rk.XML.plugin()
+    rk.XML.pluginmap() and rk.plugin.skeleton() [to be moved again]
+
+## 0.01-8 (2011-08-26)
+  - improved handling of comments a lot
+
+## 0.01-7 (2011-08-24)
+  - fixed typo bug in XML.single.tags()
+  - improved support for comments and CDATA
+  - improved XML formatting
+
+## 0.01-6 (2011-08-23)
+  - added functions pasteXMLTree() and pasteXMLNode()
+  - added validity checks for classes XiMpLe.doc and XiMpLe.node
+  - added function rk.XML.about() [which will probably be moved out of the package]
+
+## 0.01-5 (2011-08-22)
+  - writing new node values with node<-() partly works
+
+## 0.01-4 (2011-08-21)
+  - rewrote and renamed getNode() to node()
+
+## 0.01-3 (2011-08-18)
+  - checks XML and DTD declaration now
+  - added getNode() method
+
+## 0.01-2 (2011-08-15)
+  - iterating through an XML tree actually works now
+
+## 0.01-1 (2011-08-14)
+  - initial release via reaktanz.de
+ 

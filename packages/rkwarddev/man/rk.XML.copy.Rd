@@ -1,0 +1,37 @@
+\name{rk.XML.copy}
+\alias{rk.XML.copy}
+\title{Create XML copy node for RKWard plugins}
+\usage{
+  rk.XML.copy(id, as = NULL)
+}
+\arguments{
+  \item{id}{Either a character string (the \code{id} of the
+  property to be copied), or an object of class
+  \code{XiMpLe.node} (whose \code{id} will be extracted and
+  used).}
+
+  \item{as}{A character string resembling the
+  \code{copy_element_tag_name} value. I.e., must be a valid
+  tag name. Will cause a change of tag name of the
+  \code{id} (e.g. "tab") to \code{as} (e.g. "page").}
+}
+\value{
+  A list of objects of class \code{XiMpLe.node}.
+}
+\description{
+  Create XML copy node for RKWard plugins
+}
+\examples{
+# define a checkbox for the actual dialog
+test.cbox1 <- rk.XML.cbox(label="More than 30 subjects", val="true")
+# define the wizard
+test.text <- rk.XML.text("Did you test more than 30 subjects?")
+test.copy <- rk.XML.copy(id=test.cbox1)
+test.wizard <- rk.XML.wizard(rk.XML.page(list(test.text, test.copy)))
+cat(pasteXMLNode(test.wizard))
+}
+\seealso{
+  \code{\link[rkwarddev:rk.XML.plugin]{rk.XML.plugin}},
+  \code{\link[rkwarddev:rk.plugin.skeleton]{rk.plugin.skeleton}}
+}
+

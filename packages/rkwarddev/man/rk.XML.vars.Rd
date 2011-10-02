@@ -1,0 +1,109 @@
+\name{rk.XML.vars}
+\alias{rk.XML.vars}
+\title{Create a variable selector for RKWard plugins}
+\usage{
+  rk.XML.vars(label, slot.text, required = FALSE, multi =
+  FALSE, min = 1, any = 1, max = 0, dim = 0, min.len = 0,
+  max.len = NULL, classes = NULL, types = NULL, horiz =
+  TRUE, add.nodes = NULL, frame.label = NULL,
+  formula.dependent = NULL, dep.options = list(), id.name =
+  "auto")
+}
+\arguments{
+  \item{label}{Character string, a text label for the
+  variable browser.}
+
+  \item{slot.text}{Character string, a text label for the
+  variable selection slot.}
+
+  \item{required}{Logical, whether the selection of
+  variables is mandatory or not.}
+
+  \item{multi}{Logical, whether the varslot holds only one
+  or several objects.}
+
+  \item{min}{If \code{multi=TRUE} defines how many objects
+  must be selected.}
+
+  \item{any}{If \code{multi=TRUE} defines how many objects
+  must be selected at least if any are selected at all.}
+
+  \item{max}{If \code{multi=TRUE} defines how many objects
+  can be selected in total (0 means any number).}
+
+  \item{dim}{The number of dimensions, an object needs to
+  have. If \code{dim=0} any number of dimensions is
+  acceptable.}
+
+  \item{min.len}{The minimum length, an object needs to
+  have.}
+
+  \item{max.len}{The maximum length, an object needs to
+  have. If \code{NULL}, defaults to the largest integer
+  number representable on the system.}
+
+  \item{classes}{An optional character vector, defining
+  class names to which the selection must be limited.}
+
+  \item{types}{If you specify one or more variables types
+  here, the varslot will only accept objects of those
+  types. Valid types are "unknown", "number", "string",
+  "factor", "invalid". Optional, use with great care, the
+  user should not be prevented from making valid choices,
+  and rkward does not always know the type of a variable!}
+
+  \item{horiz}{Logical. If \code{TRUE}, the varslot will be
+  placed next to the selector, if \code{FALSE} below it.}
+
+  \item{add.nodes}{A list of objects of class
+  \code{XiMpLe.node} to be placed after the varslot.}
+
+  \item{frame.label}{Character string, a text label for the
+  whole frame.}
+
+  \item{formula.dependent}{Character string, if not
+  \code{NULL} will cause the addition of a second varslot
+  for the dependent variable(s), using the text of
+  \code{formula.dependent} as its label. Also a
+  \code{<formula>} node will be added, using both varslots
+  for \code{fixed_factors} and \code{dependent}
+  respectively.}
+
+  \item{dep.options}{A named list with optional attributes
+  for the \code{dependent} varslot, if
+  \code{formula.dependent} is not \code{NULL}. Valid
+  options are \code{required}, \code{multi}, \code{min},
+  \code{any}, \code{max}, \code{dim}, \code{min.len},
+  \code{max.len}, \code{classes} and \code{types}. If an
+  options is undefined, it defaults to the same values like
+  the main options of this function.}
+
+  \item{id.name}{Character vector, unique IDs for the frame
+  (first entry), the varselector (second entry) and varslot
+  (third entry). If \code{formula.dependent} is not
+  \code{NULL}, a fourth and fifth entry is needed as well,
+  for the dependent varslot and the formula node,
+  respectively. If \code{"auto"}, IDs will be generated
+  automatically from \code{label} and \code{slot.text}.}
+}
+\value{
+  An object of class \code{XiMpLe.node}.
+}
+\description{
+  This function will create a <frame> node including a
+  <varselector> and a <varslot> node. It is actually a
+  wrapper for
+  \code{\link[rkwarddev:rk.XML.varslot]{rk.XML.varslot}}
+  and
+  \code{\link[rkwarddev:rk.XML.varselector]{rk.XML.varselector}},
+  since you usually won't define one without the other.
+}
+\examples{
+test.vars <- rk.XML.vars("Select some vars", "Vars go here")
+cat(pasteXMLNode(test.vars))
+}
+\seealso{
+  \code{\link[rkwarddev:rk.XML.varslot]{rk.XML.varslot}},
+  \code{\link[rkwarddev:rk.XML.varselector]{rk.XML.varselector}}
+}
+
