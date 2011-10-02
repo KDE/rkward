@@ -3,8 +3,8 @@
 #' \tabular{ll}{
 #' Package: \tab rkwarddev\cr
 #' Type: \tab Package\cr
-#' Version: \tab 0.02-3\cr
-#' Date: \tab 2011-09-30\cr
+#' Version: \tab 0.02-4\cr
+#' Date: \tab 2011-10-03\cr
 #' Depends: \tab R (>= 2.9.0),XiMpLe,rkward (>= 0.5.6)\cr
 #' Enhances: \tab rkward\cr
 #' Encoding: \tab UTF-8\cr
