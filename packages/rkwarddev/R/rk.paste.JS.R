@@ -10,8 +10,8 @@
 rk.paste.JS <- function(object, level=1, indent.by="\t"){
 	stopifnot(level > 0)
 	# check indentation
-	main.indent <- paste(rep(indent.by, level-1), collapse="")
-	scnd.indent <- paste(rep(indent.by, level), collapse="")
+	main.indent <- indent(level, by=indent.by)
+	scnd.indent <- indent(level+1, by=indent.by)
 
 	if(inherits(object, "rk.JS.ite")){
 		ifJS <- paste(main.indent, "if(", object@ifJS, ") {\n", sep="")

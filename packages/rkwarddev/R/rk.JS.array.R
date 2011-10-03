@@ -18,12 +18,12 @@
 #' @examples
 #' cat(rk.JS.array("my.option", variables=c("frst.var", "scnd.var")))
 
-rk.JS.array <- function(option, variables=NULL, list=FALSE, def.vars=TRUE, var.prefix="chc", indent.by="\t"){
+rk.JS.array <- function(option, variables=NULL, list=FALSE, def.vars=FALSE, var.prefix=NULL, indent.by="\t"){
 	arr.name <- camelCode(c("arr", option))
 	opt.name <- camelCode(c("opt", option))
 
 	if(isTRUE(def.vars)){
-		JS.vars <- paste(unlist(sapply(variables, function(this.var){get.JS.vars(
+		JS.vars <- paste(unlist(sapply(child.list(variables), function(this.var){get.JS.vars(
 							JS.var=this.var,
 							XML.var=this.var,
 							JS.prefix=var.prefix,
@@ -36,7 +36,7 @@ rk.JS.array <- function(option, variables=NULL, list=FALSE, def.vars=TRUE, var.p
 	JS.array <- paste(
 		indent(2, by=indent.by), "var ", arr.name, " = new Array();\n",
 		indent(2, by=indent.by), arr.name, ".push(",
-		paste(unlist(sapply(variables, function(this.var){get.JS.vars(
+		paste(unlist(sapply(child.list(variables), function(this.var){get.JS.vars(
 							JS.var=this.var,
 							JS.prefix=var.prefix,
 							names.only=TRUE)

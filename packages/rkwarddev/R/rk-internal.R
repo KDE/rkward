@@ -52,15 +52,35 @@ get.single.tags <- function(XML.obj, drop=NULL){
 
 ## function get.IDs()
 # scans XML tags for defined IDs, returns a matrix with columns "id" and "abbrev"
-get.IDs <- function(single.tags, relevant.tags, add.abbrev){
+# 'single.tags' can also contain XiMpLe.node objects
+get.IDs <- function(single.tags, relevant.tags, add.abbrev=FALSE){
 
-	single.tags <- single.tags[tolower(XiMpLe:::XML.tagName(single.tags)) %in% relevant.tags]
-	# we're only interested in entries with an ID
-	single.tags <- single.tags[grepl("[[:space:]]+id=", single.tags)]
+	# filter for relevant tags
+	cleaned.tags <- list()
+	for(this.tag in child.list(single.tags)){
+		if(inherits(this.tag, "XiMpLe.node")){
+			this.tag.name <- this.tag@name
+			if(this.tag.name %in% relevant.tags & "id" %in% names(this.tag@attributes)){
+				cleaned.tags[length(cleaned.tags)+1] <- this.tag
+			} else {}
+		} else {
+			this.tag.name <- tolower(XiMpLe:::XML.tagName(this.tag))
+			# we're only interested in entries with an ID
+			if(this.tag.name %in% relevant.tags & grepl("[[:space:]]+id=", this.tag)){
+				cleaned.tags[length(cleaned.tags)+1] <- this.tag
+			} else {}
+		}
+	}
 
-	ids <- t(sapply(single.tags, function(this.tag){
-			this.tag.name <- XiMpLe:::XML.tagName(this.tag)
-			this.tag.id <- XiMpLe:::parseXMLAttr(this.tag)[["id"]]
+	ids <- t(sapply(cleaned.tags, function(this.tag){
+				if(inherits(this.tag, "XiMpLe.node")){
+					this.tag.name <- this.tag@name
+					this.tag.id <- this.tag@attributes["id"]
+				} else {
+					this.tag.name <- XiMpLe:::XML.tagName(this.tag)
+					this.tag.id <- XiMpLe:::parseXMLAttr(this.tag)[["id"]]
+				}
+
 				if(isTRUE(add.abbrev)){
 					this.tag.id.abbrev <- paste(ID.prefix(this.tag.name), this.tag.id, sep="")
 				} else {
@@ -108,6 +128,11 @@ camelCode <- function(words){
 # in XML will become
 #   var my.id = getValue("my.id");
 get.JS.vars <- function(JS.var, XML.var=NULL, JS.prefix="", indent.by="", names.only=FALSE){
+	# check for XiMpLe nodes
+	JS.var <- check.ID(JS.var)
+	if(!is.null(XML.var)){
+		XML.var <- check.ID(XML.var)
+	} else {}
 	if(isTRUE(names.only)){
 		results <- camelCode(c(JS.prefix, JS.var))
 	} else {
