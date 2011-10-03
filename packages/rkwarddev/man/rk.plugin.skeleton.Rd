@@ -6,9 +6,10 @@
   dialog = NULL, wizard = NULL, logic = NULL, snippets =
   NULL, provides = c("logic", "dialog"), dial.require =
   c(), overwrite = FALSE, tests = TRUE, lazyLoad = TRUE,
-  menu = "test", JS.prep = NULL, JS.calc = NULL, JS.prnt =
-  NULL, create = c("pmap", "xml", "js", "rkh", "desc"),
-  edit = FALSE, load = FALSE, show = FALSE)
+  menu = "test", results.header = NULL, JS.prep = NULL,
+  JS.calc = NULL, JS.prnt = NULL, create = c("pmap", "xml",
+  "js", "rkh", "desc"), edit = FALSE, load = FALSE, show =
+  FALSE)
 }
 \arguments{
   \item{name}{Character sting, name of the plugin package.}
@@ -71,6 +72,9 @@
   \code{"distributions"}, \code{"windows"},
   \code{"settings"} and \code{"help"}. Anything else will
   place it in a "test" menu.}
+
+  \item{results.header}{A character string to headline the
+  printed results.}
 
   \item{JS.prep}{A character string with JavaScript code to
   be included in the \code{preprocess()} function. This

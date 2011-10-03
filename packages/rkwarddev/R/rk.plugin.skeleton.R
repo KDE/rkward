@@ -27,6 +27,7 @@
 #'		\code{"file"}, \code{"edit"}, \code{"view"}, \code{"workspace"}, \code{"run"}, \code{"data"},
 #'		\code{"analysis"}, \code{"plots"}, \code{"distributions"}, \code{"windows"}, \code{"settings"} and \code{"help"}.
 #'		Anything else will place it in a "test" menu.
+#' @param results.header A character string to headline the printed results.
 #' @param JS.prep A character string with JavaScript code to be included in the \code{preprocess()} function. This string will be
 #'		pasted as-is, see \code{\link[rkwarddev:rk.JS.doc]{rk.JS.doc}}.
 #' @param JS.calc A character string with JavaScript code to be included in the \code{calculate()} function. This string will be
@@ -110,7 +111,7 @@
 #' }
 
 rk.plugin.skeleton <- function(name, about=NULL, path=tempdir(), dialog=NULL, wizard=NULL, logic=NULL, snippets=NULL,
-	provides=c("logic", "dialog"), dial.require=c(), overwrite=FALSE, tests=TRUE, lazyLoad=TRUE, menu="test",
+	provides=c("logic", "dialog"), dial.require=c(), overwrite=FALSE, tests=TRUE, lazyLoad=TRUE, menu="test", results.header=NULL,
 	JS.prep=NULL, JS.calc=NULL, JS.prnt=NULL, create=c("pmap", "xml", "js", "rkh", "desc"), edit=FALSE, load=FALSE, show=FALSE){
 	# to besure, remove all non-character symbols from name
 	name.orig <- name
@@ -199,10 +200,13 @@ rk.plugin.skeleton <- function(name, about=NULL, path=tempdir(), dialog=NULL, wi
 	## create plugin.js
 	if("js" %in% create){
 		if(isTRUE(checkCreateFiles(plugin.js))){
+			if(is.null(results.header)){
+				results.header <- paste(name.orig, " results", sep="")
+			} else {}
 			JS.code <- rk.JS.doc(
 				require=dial.require,
 				variables=rk.JS.scan(XML.plugin),
-				results.header=paste(name.orig, " results", sep=""),
+				results.header=results.header,
 				preprocess=JS.prep,
 				calculate=JS.calc,
 				printout=JS.prnt)

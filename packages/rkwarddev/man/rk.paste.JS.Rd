@@ -1,13 +1,13 @@
 \name{rk.paste.JS}
 \alias{rk.paste.JS}
-\title{Paste objects of class rk.JS.ite}
+\title{Paste JavaScript objects and character strings}
 \usage{
-  rk.paste.JS(object, level = 1, indent.by = "\t", funct =
+  rk.paste.JS(..., level = 1, indent.by = "\t", funct =
   NULL)
 }
 \arguments{
-  \item{object}{An object of class \code{rk.JS.ite} or
-  \code{rk.JS.arr}}
+  \item{...}{Objects of class \code{rk.JS.ite},
+  \code{rk.JS.arr} or character.}
 
   \item{level}{Integer, which indentation level to use,
   minimum is 1.}
@@ -24,7 +24,7 @@
   A character string.
 }
 \description{
-  Paste objects of class rk.JS.ite
+  Paste JavaScript objects and character strings
 }
 \seealso{
   \code{\link[rkwarddev:rk.JS.array]{rk.JS.array}},

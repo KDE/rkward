@@ -24,7 +24,7 @@ rk.XML.cbox <- function(label, value, un.value=NULL, chk=FALSE, id.name="auto"){
 
 	attr.list <- list(id=id, label=label, value=value)
 	if(!is.null(un.value)){
-		attr.list[["unchecked_value"]] <- un.value
+		attr.list[["value_unchecked"]] <- un.value
 	} else {}
 	if(isTRUE(chk)){
 		attr.list[["checked"]] <- "true"
