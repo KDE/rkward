@@ -1,9 +1,10 @@
 ChangeLog for package rkwarddev
 
-## 0.02-4 (2011-10-02)
+## 0.02-4 (2011-10-03)
   - some experimental JavaScript generator tools added, might very well be changed soon again:
-    - added functions echo(), id(), ite() and rk.paste.JS() to help generate JavaScript code
-    - added class rk.JS.ite and show method for it
+    - added functions rk.JS.vars(), echo(), id(), ite() and rk.paste.JS() to help generate JavaScript code
+    - added classes rk.JS.ite, rk.JS.arr and show methods for them
+    - function rk.JS.array() now returns an object of class rk.JS.arr (use rk.paste.JS() on that)
 
 ## 0.02-3 (2011-09-30)
   - added functions rk.XML.attribute(), rk.XML.component(), rk.XML.components(), rk.XML.context(),

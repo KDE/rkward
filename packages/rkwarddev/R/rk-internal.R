@@ -1,5 +1,6 @@
 # internal functions for the rk.* functions
 
+## function auto.ids()
 auto.ids <- function(identifiers, prefix=NULL, suffix=NULL, chars=8){
 	identifiers <- gsub("[[:space:]]*[^[:alnum:]]*", "", identifiers)
 	id.names <- ifelse(nchar(identifiers) > 8, abbreviate(identifiers, minlength=chars), identifiers)
@@ -9,15 +10,16 @@ auto.ids <- function(identifiers, prefix=NULL, suffix=NULL, chars=8){
 	} else {}
 	ids <- paste(prefix, id.names, suffix, sep="")
 	return(ids)
-}
+} ## end function auto.ids()
 
+## function child.list()
 # convenience function to let single children be provided without list()
 child.list <- function(children){
 	if(inherits(children, "XiMpLe.node")){
 		children <- list(children)
 	} else {}
 	return(children)
-}
+} ## end function child.list()
 
 ## function trim()
 # cuts off space at start and end of a character string
@@ -196,8 +198,7 @@ check.ID <- function(node){
 	} else {}
 
 	return(node.ID)
-}
-## end function check.ID()
+} ## end function check.ID()
 
 ## function prop.validity()
 # checks if a property is valid for an XML node, if source is XiMpLe.node
@@ -267,8 +268,7 @@ prop.validity <- function(source, property, ignore.empty=TRUE, warn.only=TRUE, b
 			return(property)
 		}
 	}
-}
-## end function prop.validity()
+} ## end function prop.validity()
 
 ## function check.type()
 check.type <- function(value, type, var.name, warn.only=TRUE){
@@ -282,8 +282,7 @@ check.type <- function(value, type, var.name, warn.only=TRUE){
 			stop(simpleError(msg.text))
 		}
 	}
-}
-## end function check.type()
+} ## end function check.type()
 
 ## function clean.name()
 clean.name <- function(name, message=TRUE){
@@ -295,5 +294,69 @@ clean.name <- function(name, message=TRUE){
 		} else {}
 	} else {}
 	return(name)
-}
-## end function clean.name()
+} ## end function clean.name()
+
+## function paste.JS.ite()
+paste.JS.ite <- function(object, level=1, indent.by="\t", recurse=FALSE){
+	stopifnot(inherits(object, "rk.JS.ite"))
+	# check indentation
+	main.indent <- indent(level, by=indent.by)
+	scnd.indent <- indent(level+1, by=indent.by)
+
+	# if this is not a single "if" but an "else if", do not indent
+	if(isTRUE(recurse)){
+		ifJS <- paste("if(", object@ifJS, ") {\n", sep="")
+	} else {
+		ifJS <- paste(main.indent, "if(", object@ifJS, ") {\n", sep="")
+	}
+	thenJS <- paste(scnd.indent, object@thenJS, "\n", main.indent, "}", sep="")
+	if(nchar(object@elseJS) > 0) {
+		elseJS <- paste(" else {\n", scnd.indent, object@elseJS, "\n", main.indent, "}", sep="")
+	} else {
+		# if there is another rk.JS.ite object, call with recursion
+		if(length(object@elifJS) == 1){
+			if(inherits(object@elifJS[[1]], "rk.JS.ite")){
+				elseJS <- paste(" else ", paste.JS.ite(object@elifJS[[1]], level=level, indent.by=indent.by, recurse=TRUE), sep="")
+			} else {
+				elseJS <- " else {}"
+			}
+		} else {
+			# close for sure with an empty "else"
+			elseJS <- " else {}"
+		}
+	}
+	result <- paste(ifJS, thenJS, elseJS, collapse="", sep="")
+
+	return(result)
+} ## end function paste.JS.ite()
+
+## function paste.JS.array()
+paste.JS.array <- function(object, level=2, indent.by="\t", funct=NULL){
+	stopifnot(inherits(object, "rk.JS.arr"))
+	# check indentation
+	main.indent <- indent(level, by=indent.by)
+	scnd.indent <- indent(level+1, by=indent.by)
+
+	arr.name  <- object@arr.name
+	opt.name  <- object@opt.name
+	variables <- object@variables
+	option    <- object@option
+	if(is.null(funct)){
+		funct <- object@funct
+	} else {}
+
+	JS.array <- paste(
+		main.indent, "var ", arr.name, " = new Array();\n",
+		main.indent, arr.name, ".push(",
+		paste(variables, collapse=", "), ");\n",
+		main.indent, arr.name, " = ", arr.name, ".filter(String);\n",
+		main.indent, "if(", arr.name, ".length > 0) {\n",
+		scnd.indent, "var ", opt.name, " = \", ", option,"=",
+		funct, "(\" + ", arr.name, ".join(\", \") + \")\";\n",
+		main.indent, "} else {\n",
+		scnd.indent, "var ", opt.name, " = \"\";\n",
+		main.indent, "}\n",
+		sep="")
+
+	return(JS.array)
+} ## end function paste.JS.array()

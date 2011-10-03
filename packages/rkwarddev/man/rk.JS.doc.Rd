@@ -42,4 +42,12 @@
 \note{
   The JavaScript
 }
+\seealso{
+  \code{\link[rkwarddev:rk.paste.JS]{rk.paste.JS}},
+  \code{\link[rkwarddev:rk.JS.vars]{rk.JS.vars}},
+  \code{\link[rkwarddev:rk.JS.array]{rk.JS.array}},
+  \code{\link[rkwarddev:ite]{ite}},
+  \code{\link[rkwarddev:echo]{echo}},
+  \code{\link[rkwarddev:id]{id}}
+}
 

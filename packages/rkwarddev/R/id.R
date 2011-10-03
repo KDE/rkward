@@ -12,6 +12,13 @@
 #' @param collapse Character string, defining if and how the individual elements should be glued together.
 #' @return A character string.
 #' @export
+#' @seealso \code{\link[rkwarddev:rk.JS.vars]{rk.JS.vars}},
+#'		\code{\link[rkwarddev:rk.JS.array]{rk.JS.array}},
+#'		\code{\link[rkwarddev:echo]{echo}},
+#' @examples
+#' # an example checkbox XML node
+#' cbox1 <- rk.XML.cbox(label="foo", value="foo1", id.name="CheckboxFoo.ID")
+#' id("The ID is: ", cbox1, "!", quote=TRUE, collapse=" + ")
 
 id <- function(..., quote=FALSE, collapse=""){
 	full.content <- list(...)

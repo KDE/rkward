@@ -22,4 +22,14 @@
   generate a ready-to-run JavaScript \code{echo();} call
   from it.
 }
+\examples{
+cbox1 <- rk.XML.cbox(label="foo", value="foo1", id.name="CheckboxFoo.ID")
+echo("bar <- \\"", cbox1, "\\"")
+}
+\seealso{
+  \code{\link[rkwarddev:rk.JS.vars]{rk.JS.vars}},
+  \code{\link[rkwarddev:rk.JS.array]{rk.JS.array}},
+  \code{\link[rkwarddev:ite]{ite}},
+  \code{\link[rkwarddev:id]{id}}
+}
 

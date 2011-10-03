@@ -7,11 +7,13 @@ setClass("rk.JS.ite",
 	representation=representation(
 		ifJS="character",
 		thenJS="character",
-		elseJS="character"
+		elseJS="character",
+		elifJS="list"
 	),
 	prototype(
 		ifJS=character(),
 		thenJS=character(),
-		elseJS=character()
+		elseJS=character(),
+		elifJS=list()
 	)
 )

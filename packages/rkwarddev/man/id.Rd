@@ -27,4 +27,14 @@
   \code{id} value, and combine these replacements with
   character strings.
 }
+\examples{
+# an example checkbox XML node
+cbox1 <- rk.XML.cbox(label="foo", value="foo1", id.name="CheckboxFoo.ID")
+id("The ID is: ", cbox1, "!", quote=TRUE, collapse=" + ")
+}
+\seealso{
+  \code{\link[rkwarddev:rk.JS.vars]{rk.JS.vars}},
+  \code{\link[rkwarddev:rk.JS.array]{rk.JS.array}},
+  \code{\link[rkwarddev:echo]{echo}},
+}
 

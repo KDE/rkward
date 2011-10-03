@@ -2,32 +2,28 @@
 \alias{rk.JS.array}
 \title{Create a simple JavaScript array}
 \usage{
-  rk.JS.array(option, variables = NULL, list = FALSE,
-  def.vars = TRUE, var.prefix = "chc", indent.by = "\t")
+  rk.JS.array(option, variables = list(), funct = "c",
+  var.prefix = NULL)
 }
 \arguments{
-  \item{option}{A character string, naming the option of,
-  e.g., an R function which should be constructed from
-  several variables.}
+  \item{option}{A character string, naming, e.g., an option
+  of an R function which should be constructed from several
+  variables.}
 
-  \item{variables}{A character vector, the names of the
-  variables to combine to a vector or list.}
+  \item{variables}{A list with either character strings
+  (the names of the variables to combine to a vector or
+  list), of objects of class \code{XiMpLe.node} with plugin
+  XML nodes (whose ID will be extracted and used).}
 
-  \item{list}{Logical, if \code{TRUE} the option will be
-  constructed by \code{list()}, otherwise by \code{c()}.}
+  \item{funct}{Character string, name of the R function to
+  be called to combine the options, e.g. "list" for
+  \code{list()}, or "c" for \code{c()}.}
 
-  \item{def.vars}{Logical, if \code{TRUE} the provided
-  variables will also be defined.}
-
-  \item{var.prefix}{A character string. If
-  \code{def.vars=TRUE}, this string will be used as a
-  prefix for the JS variable names.}
-
-  \item{indent.by}{A character string defining how
-  indentation should be done.}
+  \item{var.prefix}{A character string. sets a global
+  string to be used as a prefix for the JS variable names.}
 }
 \value{
-  A character string.
+  An object of class \code{rk.JS.arr}.
 }
 \description{
   If you need to combine multiple options (like values of
@@ -37,6 +33,17 @@
   desired argument type.
 }
 \examples{
-cat(rk.JS.array("my.option", variables=c("frst.var", "scnd.var")))
+# create three checkboxes for independent options
+checkA <- rk.XML.cbox(label="Run Test A", value="A")
+checkB <- rk.XML.cbox(label="Run Test B", value="B")
+checkC <- rk.XML.cbox(label="Run Test C", value="C")
+# combine them into one list of options via JavaScript
+rk.JS.array("run.tests", variables=list(checkA, checkB, checkC), funct="list")
+}
+\seealso{
+  \code{\link[rkwarddev:rk.paste.JS]{rk.paste.JS}},
+  \code{\link[rkwarddev:rk.JS.vars]{rk.JS.vars}},
+  \code{\link[rkwarddev:echo]{echo}},
+  \code{\link[rkwarddev:id]{id}}
 }
 

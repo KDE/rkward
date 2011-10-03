@@ -14,3 +14,8 @@ setGeneric("show")
 setMethod("show", signature(object="rk.JS.ite"), function(object){
 	cat(rk.paste.JS(object))
 })
+
+#' @rdname show-methods
+setMethod("show", signature(object="rk.JS.arr"), function(object){
+	cat(rk.paste.JS(object))
+})
