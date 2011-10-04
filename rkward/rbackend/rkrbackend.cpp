@@ -426,6 +426,7 @@ void RWriteConsoleEx (const char *buf, int buflen, int type) {
 		}
 	}
 
+	if (RKRBackend::this_pointer->killed == RKRBackend::AlreadyDead) return;	// this check is mostly for fork()ed clients
 	RKRBackend::this_pointer->fetchStdoutStderr (true);
 	RKRBackend::this_pointer->handleOutput (RKRBackend::this_pointer->current_locale_codec->toUnicode (buf, buflen), buflen, type == 0 ? ROutput::Output : ROutput::Warning);
 }
@@ -1065,6 +1066,7 @@ void completeForkMaster () {
 
 void completeForkChild () {
 	RKRBackendProtocolBackend::instance ()->r_thread_id = QThread::currentThreadId();
+	RKRBackend::this_pointer->killed = RKRBackend::AlreadyDead;	// Not quite accurate, but disables all communication with the frontend
 }
 #endif
 
