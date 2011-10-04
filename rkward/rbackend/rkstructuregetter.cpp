@@ -215,7 +215,6 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, int a
 	}
 
 	if (RKRSupport::callSimpleBool (is_matrix_fun, value, R_BaseEnv)) type |= RObject::Matrix;
-	if (RKRSupport::callSimpleBool (is_array_fun, value, R_BaseEnv)) type |= RObject::Array;
 	if (RKRSupport::callSimpleBool (is_list_fun, value, R_BaseEnv)) type |= RObject::List;
 
 	if (type != 0) {
@@ -235,6 +234,8 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, int a
 			else if (RKRSupport::callSimpleBool (is_numeric_fun, value, R_BaseEnv)) type |= RObject::Numeric;
 			else if (RKRSupport::callSimpleBool (is_character_fun, value, R_BaseEnv)) type |= RObject::Character;
 			else if (RKRSupport::callSimpleBool (is_logical_fun, value, R_BaseEnv)) type |= RObject::Logical;
+
+			if (RKRSupport::callSimpleBool (is_array_fun, value, R_BaseEnv)) type |= RObject::Array;
 		}
 	}
 	type |= add_type_flags;
