@@ -135,6 +135,8 @@ void RKRowNames::setText (int row, const QString &text) {
 bool RKRowNames::makeUnique (QString *text, bool non_sequentials_only) {
 	RK_TRACE (OBJECTS);
 
+	if (!check_duplicates) return true;
+
 	bool from_index = 0;
 	if (non_sequentials_only) from_index = is_sequential_up_to_row + 1;
 
