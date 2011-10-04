@@ -1,5 +1,8 @@
 ChangeLog for package rkwarddev
 
+## 0.02-5 (2011-10-04)
+  - added support for properties to rk.JS.vars() 
+
 ## 0.02-4 (2011-10-03)
   - some experimental JavaScript generator tools added, might very well be changed soon again:
     - added functions rk.JS.vars(), echo(), id(), ite() and rk.paste.JS() to help generate JavaScript code

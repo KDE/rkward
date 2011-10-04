@@ -118,7 +118,7 @@ camelCode <- function(words){
 		word.vector[1] <- toupper(word.vector[1])
 		word.new <- paste(word.vector, collapse="")
 		return(word.new)
-		})
+	})
 
 	results <- paste(words[1], paste(new.words, collapse=""), sep="")
 
@@ -129,17 +129,55 @@ camelCode <- function(words){
 #   <tag id="my.id" ...>
 # in XML will become
 #   var my.id = getValue("my.id");
-get.JS.vars <- function(JS.var, XML.var=NULL, JS.prefix="", indent.by="", names.only=FALSE){
+get.JS.vars <- function(JS.var, XML.var=NULL, JS.prefix="", indent.by="", names.only=FALSE, properties=NULL, default=FALSE){
 	# check for XiMpLe nodes
 	JS.var <- check.ID(JS.var)
 	if(!is.null(XML.var)){
+		# check validity of properties value
+		if(!is.null(properties)){
+			if(identical(properties, "all")){
+					if(inherits(XML.var, "XiMpLe.node")){
+						tag.name <- XML.var@name
+					} else {
+						tag.name <- XML.var
+					}
+				if(tag.name %in% names(all.valid.props)){
+					properties <- all.valid.props[[tag.name]]
+				} else {
+					properties <- NULL
+				}
+			} else {
+				properties <- sapply(child.list(properties), function(this.prop){
+					prop.validity(XML.var, property=this.prop, warn.only=TRUE, bool=FALSE)
+				})
+				properties <- properties[!"" %in% properties]
+			}
+		} else {}
 		XML.var <- check.ID(XML.var)
 	} else {}
-	if(isTRUE(names.only)){
-		results <- camelCode(c(JS.prefix, JS.var))
-	} else {
-		results <- paste(indent.by, "var ", camelCode(c(JS.prefix, JS.var)), " = getValue(\"", XML.var, "\");\n", sep="")
+
+	results <- c()
+	if(is.null(properties) | isTRUE(default)){
+		if(isTRUE(names.only)){
+			results <- camelCode(c(JS.prefix, JS.var))
+		} else {
+			results <- paste(indent.by, "var ", camelCode(c(JS.prefix, JS.var)), " = getValue(\"", XML.var, "\");\n", sep="")
+		}
+	} else {}
+	if(!is.null(properties)){
+		if(isTRUE(names.only)){
+			results <- c(results,
+				sapply(properties, function(this.prop){camelCode(c(JS.prefix, JS.var, this.prop))})
+			)
+		} else {
+			results <- c(results,
+				sapply(properties, function(this.prop){
+					paste(indent.by, "var ", camelCode(c(JS.prefix, JS.var, this.prop)), " = getValue(\"", XML.var, ".", this.prop, "\");\n", sep="")
+				})
+			)
+		}
 	}
+
 	return(results)
 } ## end function get.JS.vars()
 
@@ -200,6 +238,26 @@ check.ID <- function(node){
 	return(node.ID)
 } ## end function check.ID()
 
+## list with valid properties
+all.valid.props <- list(
+	all=c("visible", "enabled", "required"),
+	text=c("text"),
+	varselector=c("selected", "root"),
+	varslot=c("available", "selected", "source"),
+	radio=c("string", "number"),
+	dropdown=c("string", "number"),
+	# option=c(),
+	checkbox=c("state"),
+	frame=c("checked"),
+	input=c("text"),
+	browser=c("selection"),
+	saveobject=c("selection", "parent", "objectname", "active"),
+	spinbox=c("int", "real"),
+	formula=c("model", "table", "labels", "fixed_factors", "dependent"),
+	embed=c("code"),
+	preview=c("state")
+) ## end list with valid properties
+
 ## function prop.validity()
 # checks if a property is valid for an XML node, if source is XiMpLe.node
 # if bool=FALSE, returns the property or ""
@@ -222,25 +280,6 @@ prop.validity <- function(source, property, ignore.empty=TRUE, warn.only=TRUE, b
 		}
 	}
 
-	all.valid.props <- list(
-			all=c("visible", "enabled", "required"),
-			text=c("text"),
-			varselector=c("selected", "root"),
-			varslot=c("available", "selected", "source"),
-			radio=c("string", "number"),
-			dropdown=c("string", "number"),
-			# option=c(),
-			checkbox=c("state"),
-			frame=c("checked"),
-			input=c("text"),
-			browser=c("selection"),
-			saveobject=c("selection", "parent", "objectname", "active"),
-			spinbox=c("int", "real"),
-			formula=c("model", "table", "labels", "fixed_factors", "dependent"),
-			embed=c("code"),
-			preview=c("state")
-		)
-
 	if(tag.name %in% names(all.valid.props)){
 		valid.props <- c(all.valid.props[["all"]], all.valid.props[[tag.name]])
 	} else {
@@ -251,7 +290,7 @@ prop.validity <- function(source, property, ignore.empty=TRUE, warn.only=TRUE, b
 	if(any(invalid.prop)){
 		if(isTRUE(warn.only)){
 			warning(paste("Some property you provided is invalid for '",tag.name,"' and was ignored: ",
-				paste(property[invalid.prop], collapse=", "), sep=""))
+				paste(property[invalid.prop], collapse=", "), sep=""), call.=FALSE)
 			if(isTRUE(bool)){
 				return(FALSE)
 			} else {

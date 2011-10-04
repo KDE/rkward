@@ -2,8 +2,8 @@
 \alias{rk.JS.vars}
 \title{Define variables in JavaScript code}
 \usage{
-  rk.JS.vars(variables, var.prefix = NULL, level = 2,
-  indent.by = "\t")
+  rk.JS.vars(variables, var.prefix = NULL, properties =
+  NULL, default = FALSE, level = 2, indent.by = "\t")
 }
 \arguments{
   \item{variables}{A list with either character strings
@@ -14,6 +14,13 @@
   \item{var.prefix}{A character string. If
   \code{def.vars=TRUE}, this string will be used as a
   prefix for the JS variable names.}
+
+  \item{properties}{A character vector with properties
+  you'd like to get of the XML node.}
+
+  \item{default}{Logical, if \code{TRUE} the default value
+  (no special property) of the node will also be defined.
+  Does nothing if \code{properties=NULL}.}
 
   \item{level}{Integer, which indentation level to use,
   minimum is 1.}
