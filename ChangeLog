@@ -1,4 +1,5 @@
 --- Version 0.5.7 - Oct-XX-2011
+- Do not analyse more than 100000 name child-objects per object (avoids hangs on such extreme data)
 - Fix problems with using mclapply() inside RKWard
 - Offer to add a new library location, automatically, if location selected for installation is not writable
 - Reworked package installation / update dialog

@@ -24,6 +24,8 @@
 
 #include "../debug.h"
 
+#define NAMED_CHILDREN_LIMIT 100000
+
 RKStructureGetter::RKStructureGetter (bool keep_evalled_promises) {
 	RK_TRACE (RBACKEND);
 
@@ -336,6 +338,10 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, int a
 		PROTECT (childnames_s);
 		QStringList childnames = RKRSupport::SEXPToStringList (childnames_s);
 		int childcount = childnames.size ();
+		if (childcount > NAMED_CHILDREN_LIMIT) {
+			RK_DO (qDebug ("object %s has %d named children. Will only retrieve the first %d", name.toLatin1().data (), childcount, NAMED_CHILDREN_LIMIT), RBACKEND, DL_WARNING);
+			childcount = NAMED_CHILDREN_LIMIT;
+		}
 
 		RData::RDataStorage children (childcount, 0);
 		for (int i = 0; i < childcount; ++i) {
