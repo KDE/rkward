@@ -188,12 +188,13 @@ handleHistoricalSubstackRequest(). Exactly which requests get handled by which f
  *  @param forcibly: if false, and the other thread currently has a lock on the mutex, do nothing, and return false.
  *  @returns: true, if output was actually fetched (or no output was available), false, if the function gave up on a locked mutex. */
 	bool fetchStdoutStderr (bool forcibly);
+/** public for technical reasons */
+	QMutex stdout_stderr_mutex;
 private:
 	void clearPendingInterrupt ();
 protected:
 	RCommandProxy* handleRequest (RBackendRequest *request, bool mayHandleSubstack);
 private:
-	QMutex stdout_stderr_mutex;
 	int stdout_stderr_fd;
 /** set up R standard callbacks */
 	void setupCallbacks ();

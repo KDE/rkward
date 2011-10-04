@@ -1,3 +1,5 @@
+--- Version 0.5.7 - Oct-XX-2011
+- Fix problems with using mclapply() inside RKWard
 - Offer to add a new library location, automatically, if location selected for installation is not writable
 - Reworked package installation / update dialog
 - Fixed: Integrated help browser would not update navigation history when following page internal links

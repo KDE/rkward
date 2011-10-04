@@ -43,6 +43,7 @@ private:
 	static RKRBackendProtocolBackend* _instance;
 	QThread *r_thread;
 #ifndef Q_WS_WIN
+	friend void completeForkChild ();
 	Qt::HANDLE r_thread_id;
 #endif
 };

@@ -694,7 +694,8 @@ void RBusy (int busy) {
 
 // ############## R Standard callback overrides END ####################
 
-RKRBackend::RKRBackend () {
+// NOTE: stdout_stderr_mutex is recursive to support fork()s, better
+RKRBackend::RKRBackend () : stdout_stderr_mutex (QMutex::Recursive) {
 	RK_TRACE (RBACKEND);
 
 	current_locale_codec = QTextCodec::codecForLocale ();
@@ -1035,8 +1036,44 @@ bool RKRBackend::startR () {
 	return true;
 }
 
+#ifndef Q_OS_WIN
+static bool backend_was_forked = false;
+void prepareFork () {
+	if (!RKRBackendProtocolBackend::inRThread ()) return;
+
+	// we need to make sure that the transmitter thread does not hold a lock on the mutex!
+	RKRBackend::this_pointer->stdout_stderr_mutex.lock ();
+}
+
+void completeForkMaster () {
+	if (!RKRBackendProtocolBackend::inRThread ()) return;
+
+	RKRBackend::this_pointer->stdout_stderr_mutex.unlock ();
+
+	if (backend_was_forked) return;
+	backend_was_forked = true;
+
+	// Block SIGCLD in the main thread from now on. I don't fully understand, why, but otherwise, these signals
+	// interrupt the select() call in the fork()ing code of library(parallel)
+	sigset_t new_set;
+	sigemptyset (&new_set);
+	sigaddset (&new_set, SIGCLD);
+	pthread_sigmask (SIG_BLOCK, &new_set, NULL);
+
+	RKRBackend::this_pointer->handlePlainGenericRequest (QStringList ("forkNotification"), false);
+}
+
+void completeForkChild () {
+	RKRBackendProtocolBackend::instance ()->r_thread_id = QThread::currentThreadId();
+}
+#endif
+
 void RKRBackend::enterEventLoop () {
 	RK_TRACE (RBACKEND);
+
+#ifndef Q_OS_WIN
+	pthread_atfork (prepareFork, completeForkMaster, completeForkChild);
+#endif
 
 	run_Rmainloop ();
 	// NOTE: Do NOT run Rf_endEmbeddedR(). It does more that we want. We rely on RCleanup, instead.
