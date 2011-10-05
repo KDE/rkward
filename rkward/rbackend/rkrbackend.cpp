@@ -1040,6 +1040,7 @@ bool RKRBackend::startR () {
 #ifndef Q_OS_WIN
 static bool backend_was_forked = false;
 void prepareFork () {
+	RK_TRACE (RBACKEND);
 	if (!RKRBackendProtocolBackend::inRThread ()) return;
 
 	// we need to make sure that the transmitter thread does not hold a lock on the mutex!
@@ -1047,6 +1048,7 @@ void prepareFork () {
 }
 
 void completeForkMaster () {
+	RK_TRACE (RBACKEND);
 	if (!RKRBackendProtocolBackend::inRThread ()) return;
 
 	RKRBackend::this_pointer->stdout_stderr_mutex.unlock ();
@@ -1056,6 +1058,8 @@ void completeForkMaster () {
 
 	// Block SIGCLD in the main thread from now on. I don't fully understand, why, but otherwise, these signals
 	// interrupt the select() call in the fork()ing code of library(parallel)
+	// NOTE: If this turns out to be a problem, another try might be to add restarts to the SIGCLD handler, as
+	// suggested, here: https://bugreports.qt.nokia.com/browse/QTBUG-1787
 	sigset_t new_set;
 	sigemptyset (&new_set);
 	sigaddset (&new_set, SIGCLD);
