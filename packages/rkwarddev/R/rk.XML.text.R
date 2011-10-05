@@ -5,6 +5,8 @@
 #' @param id.name Character string, a unique ID for this plugin element.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
+#' @seealso
+#'		\href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' test.text <- rk.XML.text("Added this text.")
 #' cat(pasteXMLNode(test.text))

@@ -77,4 +77,8 @@ test.tabbook <- rk.XML.tabbook("My Tabbook", tab.labels=c("First Tab",
 test.plugin <- rk.XML.plugin("My test", dialog=test.tabbook)
 cat(pasteXMLTree(test.plugin))
 }
+\seealso{
+  \href{help:rkwardplugins}{Introduction to Writing Plugins
+  for RKWard}
+}
 

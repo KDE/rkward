@@ -13,7 +13,8 @@
 #' @export
 #' @seealso \code{\link[rkwarddev:rk.JS.array]{rk.JS.array}},
 #'		\code{\link[rkwarddev:echo]{echo}},
-#'		\code{\link[rkwarddev:id]{id}}
+#'		\code{\link[rkwarddev:id]{id}},
+#'		and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' # create three checkboxes
 #' checkA <- rk.XML.cbox(label="Run Test A", value="A")

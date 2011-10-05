@@ -7,8 +7,9 @@
 #' @return A list of objects of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
-#'		\code{\link[rkwarddev:rk.XML.snippets]{rk.XML.snippets}}
-#'		\code{\link[rkwarddev:rk.XML.snippet]{rk.XML.snippet}}
+#'		\code{\link[rkwarddev:rk.XML.snippets]{rk.XML.snippets}},
+#'		\code{\link[rkwarddev:rk.XML.snippet]{rk.XML.snippet}},
+#'		and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' # define a formula section with varselector and varslots
 #' test.formula <- rk.XML.vars("Variables", "Fixed", formula.dependent="Dependent")

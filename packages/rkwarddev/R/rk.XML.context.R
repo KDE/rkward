@@ -11,6 +11,7 @@
 #'		\code{\link[rkwarddev:rk.XML.menu]{rk.XML.menu}},
 #'		\code{\link[rkwarddev:rk.XML.entry]{rk.XML.entry}},
 #'		\code{\link[rkwarddev:rk.XML.component]{rk.XML.component}},
+#'		and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' test.component <- rk.XML.component("My GUI dialog", "plugins/MyGUIdialog.xml")
 #' test.entry <- rk.XML.entry(test.component)

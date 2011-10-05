@@ -8,6 +8,7 @@
 #'		If \code{"auto"}, an ID will be generated automatically from the label.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
+#' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' test.checkboxes <- rk.XML.row(rk.XML.col(
 #'   list(

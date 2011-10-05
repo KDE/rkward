@@ -28,6 +28,8 @@ test.snippet <- rk.XML.snippet(test.formula)
 cat(pasteXMLNode(test.snippet))
 }
 \seealso{
-  \code{\link[rkwarddev:rk.XML.snippets]{rk.XML.snippets}}
+  \code{\link[rkwarddev:rk.XML.snippets]{rk.XML.snippets}},
+  and the \href{help:rkwardplugins}{Introduction to Writing
+  Plugins for RKWard}
 }
 

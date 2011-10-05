@@ -24,6 +24,8 @@ cat(pasteXMLNode(test.varselector))
 }
 \seealso{
   \code{\link[rkwarddev:rk.XML.varslot]{rk.XML.varslot}},
-  \code{\link[rkwarddev:rk.XML.vars]{rk.XML.vars}}
+  \code{\link[rkwarddev:rk.XML.vars]{rk.XML.vars}}, and the
+  \href{help:rkwardplugins}{Introduction to Writing Plugins
+  for RKWard}
 }
 

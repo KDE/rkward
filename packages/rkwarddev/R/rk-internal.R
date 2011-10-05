@@ -354,11 +354,7 @@ paste.JS.ite <- function(object, level=1, indent.by="\t", recurse=FALSE){
 	} else {
 		# if there is another rk.JS.ite object, call with recursion
 		if(length(object@elifJS) == 1){
-			if(inherits(object@elifJS[[1]], "rk.JS.ite")){
-				elseJS <- paste(" else ", paste.JS.ite(object@elifJS[[1]], level=level, indent.by=indent.by, recurse=TRUE), sep="")
-			} else {
-				elseJS <- " else {}"
-			}
+			elseJS <- paste(" else ", paste.JS.ite(object@elifJS[[1]], level=level, indent.by=indent.by, recurse=TRUE), sep="")
 		} else {
 			# close for sure with an empty "else"
 			elseJS <- " else {}"
@@ -399,3 +395,44 @@ paste.JS.array <- function(object, level=2, indent.by="\t", funct=NULL){
 
 	return(JS.array)
 } ## end function paste.JS.array()
+
+# 	var options = ", alternative=\"" + hypothesis + "\"";
+# 	if (paired) options += ", paired=TRUE";
+# 	if ((!paired) && varequal) options += ", var.equal=TRUE";
+# 	if (conflevel != "0.95") options += ", conf.level=" + conflevel;
+# 
+# 	echo ('result <- t.test (' + x + ", " + y + options + ')\n');
+
+## function paste.JS.options()
+paste.JS.options <- function(object, level=2, indent.by="\t"){
+	stopifnot(inherits(object, "rk.JS.opt"))
+	# check indentation
+	main.indent <- indent(level, by=indent.by)
+	scnd.indent <- indent(level+1, by=indent.by)
+
+	option    <- object@option
+	ifs       <- object@ifs
+
+	# a function to add the object stuff to ite objects
+	add.opts <- function(this.ite){
+		this.ite@thenJS <- paste(option, " += \", ", this.ite@thenJS,"\";", sep="")
+		if(length(this.ite@elifJS) == 1){
+			this.ite@elifJS <- list(add.opts(this.ite@elifJS[[1]]))
+		} else {}
+		return(this.ite)
+	}
+
+	# the object class makes sure this is a list of rk.JS.ite objects
+	ifs.pasted <- sapply(ifs, function(thisIf){
+		paste.JS.ite(add.opts(thisIf), level=level, indent.by=indent.by)
+	})
+
+#return(ifs.pasted)
+
+	JS.options <- paste(
+		main.indent, "var ", option, ";\n",
+		paste(ifs.pasted, sep="", collapse="\n"), "\n",
+		sep="")
+
+	return(JS.options)
+} ## end function paste.JS.options()

@@ -11,7 +11,8 @@
 #' @return A list of objects of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
-#'		\code{\link[rkwarddev:rk.XML.components]{rk.XML.components}}
+#'		\code{\link[rkwarddev:rk.XML.components]{rk.XML.components}},
+#'		and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' test.component <- rk.XML.component("My GUI dialog", "plugins/MyGUIdialog.xml")
 #' cat(pasteXMLNode(test.component))

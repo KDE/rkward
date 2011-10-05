@@ -32,4 +32,8 @@
 test.input <- rk.XML.input("Type some text")
 cat(pasteXMLNode(test.input))
 }
+\seealso{
+  \href{help:rkwardplugins}{Introduction to Writing Plugins
+  for RKWard}
+}
 

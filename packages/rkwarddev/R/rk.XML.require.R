@@ -5,6 +5,7 @@
 #' @param file Character string, file name of another .pluginmap file to be included.
 #' @return A list of objects of class \code{XiMpLe.node}.
 #' @export
+#' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' test.require <- rk.XML.require("another.pluginmap")
 #' cat(pasteXMLNode(test.require))

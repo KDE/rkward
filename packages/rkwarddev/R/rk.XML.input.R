@@ -7,6 +7,8 @@
 #' @param id.name Character string, a unique ID for this plugin element.
 #'		If \code{"auto"}, an ID will be generated automatically from the label.
 #' @return An object of class \code{XiMpLe.node}.
+#' @seealso
+#'		\href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @export
 #' @examples
 #' test.input <- rk.XML.input("Type some text")

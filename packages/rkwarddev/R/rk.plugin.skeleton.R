@@ -50,6 +50,7 @@
 #' @param show Logical, if \code{TRUE} and \code{"pmap"} in \code{create}, RKWard will automatically call the created plugin after
 #'		it was loaded (i.e., this implies and also sets \code{load=TRUE}).
 #' @return Character string with the path to the plugin root directory.
+#' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @export
 #' @examples
 #' \dontrun{

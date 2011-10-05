@@ -42,4 +42,8 @@ test.tabbook <- rk.XML.tabbook("My Tabbook", tab.labels=c("First Tab",
 "Second Tab"), children=list(test.checkboxes, test.dropdown))
 cat(pasteXMLNode(test.tabbook))
 }
+\seealso{
+  \href{help:rkwardplugins}{Introduction to Writing Plugins
+  for RKWard}
+}
 

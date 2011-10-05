@@ -4,6 +4,7 @@
 #' @param help Logical, if \code{TRUE} a list of XiMpLe.node objects will be returned, otherwise a character
 #'		vector with only the relevant ID names.
 #' @return A character vector or a list of XiMpLe.node objects.
+#' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @export
 
 rk.rkh.scan <- function(pXML, help=TRUE){

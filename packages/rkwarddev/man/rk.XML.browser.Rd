@@ -42,4 +42,8 @@
 test.browser <- rk.XML.browser("Browse here:")
 cat(pasteXMLNode(test.browser))
 }
+\seealso{
+  \href{help:rkwardplugins}{Introduction to Writing Plugins
+  for RKWard}
+}
 

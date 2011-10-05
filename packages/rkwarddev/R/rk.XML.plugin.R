@@ -20,6 +20,7 @@
 #' @param clean.name Logical, if \code{TRUE}, all non-alphanumeric characters except the underscore (\code{"_"}) will be removed from \code{name}.
 #' @return An object of class \code{XiMpLe.doc}.
 #' @export
+#' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' test.checkboxes <- rk.XML.row(rk.XML.col(
 #'   list(

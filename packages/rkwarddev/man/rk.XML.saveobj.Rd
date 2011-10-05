@@ -39,4 +39,8 @@
 test.saveobj <- rk.XML.saveobj("Save the results")
 cat(pasteXMLNode(test.saveobj))
 }
+\seealso{
+  \href{help:rkwardplugins}{Introduction to Writing Plugins
+  for RKWard}
+}
 

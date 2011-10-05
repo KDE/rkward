@@ -28,4 +28,8 @@
 \description{
   Create JavaScript variables from plugin XML
 }
+\seealso{
+  \href{help:rkwardplugins}{Introduction to Writing Plugins
+  for RKWard}
+}
 

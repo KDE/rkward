@@ -9,6 +9,7 @@
 #' @param related A list of objects of class \code{XiMpLe.node} or a character string with the content of the Related section.
 #' @param technical A list of objects of class \code{XiMpLe.node} or a character string with the content of the technical section.
 #' @return An object of class \code{XiMpLe.doc}.
+#' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @export
 
 rk.rkh.doc <- function(summary=NULL, usage=NULL, settings=NULL, related=NULL, technical=NULL){

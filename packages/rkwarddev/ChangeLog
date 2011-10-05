@@ -1,7 +1,10 @@
 ChangeLog for package rkwarddev
 
-## 0.02-5 (2011-10-04)
-  - added support for properties to rk.JS.vars() 
+## 0.02-5 (2011-10-05)
+  - added support for properties to rk.JS.vars()
+  - added function rk.JS.options() to generate code for JS variables holding multiple options
+  - added class rk.JS.opt and a show method for it (use rk.paste.JS() on that)
+  - linked "Introduction to Writing Plugins for RKWard" locally to the manual pages
 
 ## 0.02-4 (2011-10-03)
   - some experimental JavaScript generator tools added, might very well be changed soon again:

@@ -38,8 +38,9 @@
 #' @seealso
 #'		\code{\link[rkwarddev:rk.XML.connect]{rk.XML.connect}},
 #'		\code{\link[rkwarddev:rk.XML.external]{rk.XML.external}},
-#'		\code{\link[rkwarddev:rk.XML.logic]{rk.XML.logic}}
-#'		\code{\link[rkwarddev:rk.XML.set]{rk.XML.set}}
+#'		\code{\link[rkwarddev:rk.XML.logic]{rk.XML.logic}},
+#'		\code{\link[rkwarddev:rk.XML.set]{rk.XML.set}},
+#'		and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' test.convert <- rk.XML.convert(c(string="foo"), mode=c(notequals="bar"))
 #' cat(pasteXMLNode(test.convert))

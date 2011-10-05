@@ -8,6 +8,7 @@
 #'		If \code{"auto"} and a label was provided, an ID will be generated automatically from the label.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
+#' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' test.radio <- rk.XML.radio("Chose one",
 #'   options=list("First Option"=c(val="val1"),

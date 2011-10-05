@@ -9,7 +9,8 @@
 #'		\code{\link[rkwarddev:rk.JS.vars]{rk.JS.vars}},
 #'		\code{\link[rkwarddev:rk.JS.array]{rk.JS.array}},
 #'		\code{\link[rkwarddev:echo]{echo}},
-#'		\code{\link[rkwarddev:id]{id}}
+#'		\code{\link[rkwarddev:id]{id}},
+#'		and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @export
 #' @examples
 #' # first create an example checkbox XML node

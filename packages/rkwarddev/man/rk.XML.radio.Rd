@@ -32,4 +32,8 @@ options=list("First Option"=c(val="val1"),
 "Second Option"=c(val="val2", chk=TRUE)))
 cat(pasteXMLNode(test.radio))
 }
+\seealso{
+  \href{help:rkwardplugins}{Introduction to Writing Plugins
+  for RKWard}
+}
 

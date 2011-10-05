@@ -22,6 +22,7 @@
 #'		\code{\link[rkwarddev:rk.XML.context]{rk.XML.context}} for details.
 #' @param clean.name Logical, if \code{TRUE}, all non-alphanumeric characters except the underscore (\code{"_"}) will be removed from \code{name}.
 #' @param hints Logical, if \code{TRUE} and you leave out optional entries (like \code{about=NULL}), dummy sections will be added as comments.
+#' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @export
 
 rk.XML.pluginmap <- function(name, about=NULL, components, hierarchy="test",

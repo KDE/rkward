@@ -7,7 +7,7 @@
 }
 \arguments{
   \item{...}{Objects of class \code{rk.JS.ite},
-  \code{rk.JS.arr} or character.}
+  \code{rk.JS.arr}, \code{rk.JS.opt} or character.}
 
   \item{level}{Integer, which indentation level to use,
   minimum is 1.}
@@ -28,6 +28,9 @@
 }
 \seealso{
   \code{\link[rkwarddev:rk.JS.array]{rk.JS.array}},
-  \code{\link[rkwarddev:ite]{ite}}
+  \code{\link[rkwarddev:rk.JS.options]{rk.JS.options}},
+  \code{\link[rkwarddev:ite]{ite}}, and the
+  \href{help:rkwardplugins}{Introduction to Writing Plugins
+  for RKWard}
 }
 

@@ -8,6 +8,7 @@
 #'		probably better to add this in the XML code in the first place.
 #' @param indent.by Character string used to indent each entry if \code{js=TRUE}.
 #' @return A character vector.
+#' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @export
 
 rk.JS.scan <- function(pXML, js=TRUE, add.abbrev=FALSE, indent.by="\t"){

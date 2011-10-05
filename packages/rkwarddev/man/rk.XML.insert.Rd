@@ -26,7 +26,9 @@ test.insert <- rk.XML.insert(test.snippet)
 cat(pasteXMLNode(test.insert))
 }
 \seealso{
-  \code{\link[rkwarddev:rk.XML.snippets]{rk.XML.snippets}}
-  \code{\link[rkwarddev:rk.XML.snippet]{rk.XML.snippet}}
+  \code{\link[rkwarddev:rk.XML.snippets]{rk.XML.snippets}},
+  \code{\link[rkwarddev:rk.XML.snippet]{rk.XML.snippet}},
+  and the \href{help:rkwardplugins}{Introduction to Writing
+  Plugins for RKWard}
 }
 

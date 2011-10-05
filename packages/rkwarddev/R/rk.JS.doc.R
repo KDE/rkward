@@ -19,7 +19,8 @@
 #'		\code{\link[rkwarddev:rk.JS.array]{rk.JS.array}},
 #'		\code{\link[rkwarddev:ite]{ite}},
 #'		\code{\link[rkwarddev:echo]{echo}},
-#'		\code{\link[rkwarddev:id]{id}}
+#'		\code{\link[rkwarddev:id]{id}},
+#'		and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @export
 
 rk.JS.doc <- function(require=c(), variables=NULL, results.header=NULL,

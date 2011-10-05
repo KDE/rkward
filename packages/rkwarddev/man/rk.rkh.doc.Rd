@@ -34,4 +34,8 @@
 \description{
   Create RKWard help file skeleton
 }
+\seealso{
+  \href{help:rkwardplugins}{Introduction to Writing Plugins
+  for RKWard}
+}
 

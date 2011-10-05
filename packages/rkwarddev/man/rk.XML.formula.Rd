@@ -35,6 +35,8 @@ cat(pasteXMLNode(test.formula))
   \code{\link[rkwarddev:rk.XML.varselector]{rk.XML.varselector}},
   \code{\link[rkwarddev:rk.XML.varslot]{rk.XML.varslot}},
   \code{\link[rkwarddev:rk.XML.vars]{rk.XML.vars}} (a
-  wrapper, including formula)
+  wrapper, including formula), and the
+  \href{help:rkwardplugins}{Introduction to Writing Plugins
+  for RKWard}
 }
 

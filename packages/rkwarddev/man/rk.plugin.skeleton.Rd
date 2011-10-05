@@ -185,4 +185,8 @@ rk.plugin.skeleton("Square the Circle", about=about.info,
 dialog=test.tabbook, overwrite=TRUE)
 }
 }
+\seealso{
+  \href{help:rkwardplugins}{Introduction to Writing Plugins
+  for RKWard}
+}
 

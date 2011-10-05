@@ -32,6 +32,8 @@ test.wizard <- rk.XML.wizard(rk.XML.page(list(test.text, test.copy)))
 cat(pasteXMLNode(test.wizard))
 }
 \seealso{
-  \code{\link[rkwarddev:rk.XML.wizard]{rk.XML.wizard}}
+  \code{\link[rkwarddev:rk.XML.wizard]{rk.XML.wizard}}, and
+  the \href{help:rkwardplugins}{Introduction to Writing
+  Plugins for RKWard}
 }
 

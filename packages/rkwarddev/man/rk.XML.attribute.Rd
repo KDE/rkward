@@ -32,6 +32,8 @@ test.attribute <- rk.XML.attribute(test.checkbox, value="bar2", label="bar")
 cat(pasteXMLNode(test.attribute))
 }
 \seealso{
-  \code{\link[rkwarddev:rk.XML.components]{rk.XML.components}}
+  \code{\link[rkwarddev:rk.XML.components]{rk.XML.components}},
+  and the \href{help:rkwardplugins}{Introduction to Writing
+  Plugins for RKWard}
 }
 

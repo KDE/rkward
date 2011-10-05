@@ -6,6 +6,8 @@
 #'		If \code{"auto"} and a label was provided, an ID will be generated automatically from the label.
 #'		If \code{NULL}, no ID will be given.
 #' @return An object of class \code{XiMpLe.node}.
+#' @seealso
+#'		\href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @export
 #' @examples
 #' test.dropdown <- rk.XML.dropdown("mydrop",

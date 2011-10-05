@@ -67,4 +67,8 @@
 \description{
   Write a pluginmap file for RKWard
 }
+\seealso{
+  \href{help:rkwardplugins}{Introduction to Writing Plugins
+  for RKWard}
+}
 

@@ -49,6 +49,8 @@ cat(pasteXMLNode(test.connect))
   \code{\link[rkwarddev:rk.XML.convert]{rk.XML.convert}},
   \code{\link[rkwarddev:rk.XML.external]{rk.XML.external}},
   \code{\link[rkwarddev:rk.XML.logic]{rk.XML.logic}}
-  \code{\link[rkwarddev:rk.XML.set]{rk.XML.set}}
+  \code{\link[rkwarddev:rk.XML.set]{rk.XML.set}}, and the
+  \href{help:rkwardplugins}{Introduction to Writing Plugins
+  for RKWard}
 }
 

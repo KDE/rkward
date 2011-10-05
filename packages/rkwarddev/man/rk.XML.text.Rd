@@ -23,4 +23,8 @@
 test.text <- rk.XML.text("Added this text.")
 cat(pasteXMLNode(test.text))
 }
+\seealso{
+  \href{help:rkwardplugins}{Introduction to Writing Plugins
+  for RKWard}
+}
 

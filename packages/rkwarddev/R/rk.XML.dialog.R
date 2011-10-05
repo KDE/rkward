@@ -10,7 +10,8 @@
 #' @export
 #' @seealso
 #'		\code{\link[rkwarddev:rk.XML.plugin]{rk.XML.plugin}},
-#'		\code{\link[rkwarddev:rk.plugin.skeleton]{rk.plugin.skeleton}}
+#'		\code{\link[rkwarddev:rk.plugin.skeleton]{rk.plugin.skeleton}},
+#'		and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' # define an input field and two checkboxes
 #' test.input <- rk.XML.input("Type some text")

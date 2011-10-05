@@ -9,7 +9,8 @@
 #' @return A list of objects of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
-#'		\code{\link[rkwarddev:rk.XML.wizard]{rk.XML.wizard}}
+#'		\code{\link[rkwarddev:rk.XML.wizard]{rk.XML.wizard}},
+#'		and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' # define a checkbox for the actual dialog
 #' test.cbox1 <- rk.XML.cbox(label="More than 30 subjects", val="true")

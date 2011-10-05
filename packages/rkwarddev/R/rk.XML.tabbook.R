@@ -11,6 +11,8 @@
 #'		If \code{NULL}, no IDs will be given.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
+#' @seealso
+#'		\href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' test.checkboxes <- rk.XML.row(rk.XML.col(
 #'   list(

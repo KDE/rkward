@@ -30,4 +30,8 @@ plugin.dir <- rk.plugin.skeleton("MyPlugin", dialog=full.dialog, wizard=full.wiz
 rk.build.plugin(plugin.dir, R.libs="~/R", check=TRUE)
 }
 }
+\seealso{
+  \href{help:rkwardplugins}{Introduction to Writing Plugins
+  for RKWard}
+}
 

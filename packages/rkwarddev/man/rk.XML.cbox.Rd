@@ -35,4 +35,8 @@ rk.XML.cbox(label="foo", value="foo1", chk=TRUE),
 rk.XML.cbox(label="bar", value="bar2"))))
 cat(pasteXMLNode(test.checkboxes))
 }
+\seealso{
+  \href{help:rkwardplugins}{Introduction to Writing Plugins
+  for RKWard}
+}
 

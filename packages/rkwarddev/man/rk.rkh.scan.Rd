@@ -18,4 +18,8 @@
 \description{
   Create RKWard help nodes from plugin XML
 }
+\seealso{
+  \href{help:rkwardplugins}{Introduction to Writing Plugins
+  for RKWard}
+}
 

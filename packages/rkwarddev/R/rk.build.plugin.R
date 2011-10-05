@@ -8,6 +8,7 @@
 #' @param R.libs A character string, path to local R packages, used by \code{install} to figure
 #'		out where to install to.
 #' @export
+#' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' \dontrun{
 #' plugin.dir <- rk.plugin.skeleton("MyPlugin", dialog=full.dialog, wizard=full.wizard)

@@ -23,4 +23,8 @@
 \examples{
 cat(pasteXMLNode(rk.XML.stretch()))
 }
+\seealso{
+  \href{help:rkwardplugins}{Introduction to Writing Plugins
+  for RKWard}
+}
 

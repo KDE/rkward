@@ -38,6 +38,7 @@
 #'			\item{url}{URL to get the pluginmap (optional)}
 #'		}
 #' @export
+#' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' about.node <- rk.XML.about(
 #' 	name="Square the circle",

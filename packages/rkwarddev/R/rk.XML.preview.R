@@ -3,6 +3,7 @@
 #' @param label A character string, text label for the preview checkbox.
 #' @return A list of objects of class \code{XiMpLe.node}.
 #' @export
+#' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' test.preview <- rk.XML.preview("See a preview?")
 #' cat(pasteXMLNode(test.preview))

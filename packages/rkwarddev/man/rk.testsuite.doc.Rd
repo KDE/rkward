@@ -14,4 +14,8 @@
 \description{
   Create testsuite outline to test an RKWard plugin
 }
+\seealso{
+  \href{help:rkwardplugins}{Introduction to Writing Plugins
+  for RKWard}
+}
 
