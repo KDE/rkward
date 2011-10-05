@@ -1,4 +1,4 @@
---- Version 0.5.7 - Oct-XX-2011
+--- Version 0.5.7 - Oct-23-2011
 - Do not treat arrays (which are not a matrix) as hierarchical named objects in the object browser
 - Do not analyse more than 100000 name child-objects per object (avoids hangs on such extreme data)
 - Fix problems with using mclapply() inside RKWard

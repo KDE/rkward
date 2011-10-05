@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
 "group_id=50231&atid=459007\n"
-"POT-Creation-Date: 2011-09-26 15:48+0200\n"
+"POT-Creation-Date: 2011-10-05 19:02+0200\n"
 "PO-Revision-Date: 2011-05-17 06:02+0000\n"
 "Last-Translator: Launchpad Translations Administrators <rosetta@launchpad."
 "net>\n"
@@ -104,7 +104,7 @@ msgstr ""
 "Der opstod en fejl med at gemme fil '%1'. Vil du forsøge at gemme under et "
 "andet filnavn?"
 
-#: agents/showedittextfileagent.cpp:58 misc/rkprogresscontrol.cpp:304
+#: agents/showedittextfileagent.cpp:58 misc/rkprogresscontrol.cpp:305
 #: plugin/rkstandardcomponentgui.cpp:391
 msgid "Done"
 msgstr "Færdig"
@@ -187,7 +187,7 @@ msgstr "Vil du virkelig slette objektet '%1'? Det kan ikke genskabes."
 
 #: core/rkmodificationtracker.cpp:338 dataeditor/rkvareditmodel.cpp:670
 #: dialogs/rkloadlibsdialog.cpp:412 dialogs/rkloadlibsdialog.cpp:428
-#: dialogs/rkloadlibsdialog.cpp:936 plugin/rkformula.cpp:83
+#: dialogs/rkloadlibsdialog.cpp:934 plugin/rkformula.cpp:83
 #: plugin/rkvarslot.cpp:55
 msgid "Name"
 msgstr "Navn"
@@ -597,16 +597,16 @@ msgstr "Installation blev afbrudt med exit kode %1"
 msgid "Installed packages"
 msgstr "Installerede pakker"
 
-#: dialogs/rkloadlibsdialog.cpp:412 dialogs/rkloadlibsdialog.cpp:937
+#: dialogs/rkloadlibsdialog.cpp:412 dialogs/rkloadlibsdialog.cpp:935
 #: windows/rkhelpsearchwindow.cpp:97 windows/rkhelpsearchwindow.cpp:342
 msgid "Title"
 msgstr "Titel"
 
-#: dialogs/rkloadlibsdialog.cpp:412 dialogs/rkloadlibsdialog.cpp:938
+#: dialogs/rkloadlibsdialog.cpp:412 dialogs/rkloadlibsdialog.cpp:936
 msgid "Version"
 msgstr "Version"
 
-#: dialogs/rkloadlibsdialog.cpp:412 dialogs/rkloadlibsdialog.cpp:939
+#: dialogs/rkloadlibsdialog.cpp:412 dialogs/rkloadlibsdialog.cpp:937
 msgid "Location"
 msgstr "Sti"
 
@@ -622,7 +622,7 @@ msgstr "Fjern"
 msgid "Loaded packages"
 msgstr "Indlæste pakker"
 
-#: dialogs/rkloadlibsdialog.cpp:579
+#: dialogs/rkloadlibsdialog.cpp:577
 msgid ""
 "There has been an error while trying to load / unload packages. See "
 "transcript below for details"
@@ -630,11 +630,11 @@ msgstr ""
 "Der opstod en fejl under indlæsning/fjerning af en eller flere pakker. Se "
 "transskription nedenunder for yderlige detaljer"
 
-#: dialogs/rkloadlibsdialog.cpp:579
+#: dialogs/rkloadlibsdialog.cpp:577
 msgid "Error while handling packages"
 msgstr "Der opstod en fejl i håndteringen ad pakkerne"
 
-#: dialogs/rkloadlibsdialog.cpp:633
+#: dialogs/rkloadlibsdialog.cpp:631
 #, fuzzy
 msgid ""
 "Many packages are available on CRAN (Comprehensive R Archive Network), and "
@@ -645,22 +645,22 @@ msgstr ""
 "kilder). Klik \"Hent Liste\" for at få en oversigt over tilgængelige pakker. "
 "Dette kræver en aktiv internetforbindelse."
 
-#: dialogs/rkloadlibsdialog.cpp:655
+#: dialogs/rkloadlibsdialog.cpp:653
 msgid "Show only packages matching:"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:657
+#: dialogs/rkloadlibsdialog.cpp:655
 msgid ""
 "<p>You can limit the packages displayed in the list to with names or titles "
 "matching a filter string.</p><p><b>Note:</b> To search for partial strings, "
 "add '*' to the start and / or end of the filter, e.g. '*stat*'.</p>"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:661
+#: dialogs/rkloadlibsdialog.cpp:659
 msgid "Select all updates"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:716
+#: dialogs/rkloadlibsdialog.cpp:714
 msgid ""
 "The package requested by the backend (\"%1\") was not found in the package "
 "repositories. Maybe the package name was mis-spelled. Or maybe you need to "
@@ -670,19 +670,19 @@ msgstr ""
 "blev navnet på pakken forkært stavet. Eller muligvis må du tilføje flere "
 "arkiver ved at klikke på \"Konfigurér arkiver\" knappen."
 
-#: dialogs/rkloadlibsdialog.cpp:716
+#: dialogs/rkloadlibsdialog.cpp:714
 msgid "Package not available"
 msgstr "Pakke er ikke tilgængelig"
 
-#: dialogs/rkloadlibsdialog.cpp:784
+#: dialogs/rkloadlibsdialog.cpp:782
 msgid "Install packages to:"
 msgstr "Installér pakker i:"
 
-#: dialogs/rkloadlibsdialog.cpp:788
+#: dialogs/rkloadlibsdialog.cpp:786
 msgid "Include dependencies"
 msgstr "Inkludér afhængige pakker"
 
-#: dialogs/rkloadlibsdialog.cpp:874
+#: dialogs/rkloadlibsdialog.cpp:872
 msgid ""
 "<p>Please stand by while searching for installed and available packages.</"
 "p><p><strong>Note:</strong> This requires a working internet connection, and "
@@ -690,83 +690,83 @@ msgid ""
 "unavailable.</p>"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:874
+#: dialogs/rkloadlibsdialog.cpp:872
 #, fuzzy
 msgid "Searching for packages"
 msgstr "Installerer pakker"
 
-#: dialogs/rkloadlibsdialog.cpp:935 rbackend/rcommandstack.cpp:400
+#: dialogs/rkloadlibsdialog.cpp:933 rbackend/rcommandstack.cpp:400
 msgid "Status"
 msgstr "Status"
 
-#: dialogs/rkloadlibsdialog.cpp:942
+#: dialogs/rkloadlibsdialog.cpp:940
 msgid ""
 "<p>Packages marked with an RKWard icon in this column provide enhancements "
 "to RKWard, typically in the form of additional graphical dialogs.</p>"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:943
+#: dialogs/rkloadlibsdialog.cpp:941
 msgid ""
 "<p>You can select packages for installation / removal by checking / "
 "unchecking the corresponding boxes in this column.</p>"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:944
+#: dialogs/rkloadlibsdialog.cpp:942
 msgid "<p>The name of the package.</p>"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:945
+#: dialogs/rkloadlibsdialog.cpp:943
 msgid ""
 "<p>A descriptive title for the package. Currently this is not available for "
 "packages in non-local repositories.</p>"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:946
+#: dialogs/rkloadlibsdialog.cpp:944
 msgid "<p>Installed and / or available version of the package</p>"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:947
+#: dialogs/rkloadlibsdialog.cpp:945
 msgid "<p>Location where the package is installed / available</p>"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:970
+#: dialogs/rkloadlibsdialog.cpp:968
 #, fuzzy
 msgid "Updateable Packages"
 msgstr "Installerede pakker"
 
-#: dialogs/rkloadlibsdialog.cpp:971
+#: dialogs/rkloadlibsdialog.cpp:969
 msgid ""
 "Packages for which an update is available. This may include packages which "
 "were merely built against a newer version of R."
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:973
+#: dialogs/rkloadlibsdialog.cpp:971
 #, fuzzy
 msgid "New Packages"
 msgstr "Pakke"
 
-#: dialogs/rkloadlibsdialog.cpp:974
+#: dialogs/rkloadlibsdialog.cpp:972
 msgid ""
 "Packages for which available for installation, but which are not currently "
 "installed."
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:976
+#: dialogs/rkloadlibsdialog.cpp:974
 #, fuzzy
 msgid "Installed Packages"
 msgstr "Installerede pakker"
 
-#: dialogs/rkloadlibsdialog.cpp:977
+#: dialogs/rkloadlibsdialog.cpp:975
 msgid ""
 "Packages for which installed locally. Note that updates may be available for "
 "these packages."
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:1001
+#: dialogs/rkloadlibsdialog.cpp:999
 msgid "Install"
 msgstr "Installér"
 
-#: dialogs/rkloadlibsdialog.cpp:1004 misc/multistringselector.cpp:58
+#: dialogs/rkloadlibsdialog.cpp:1002 misc/multistringselector.cpp:58
 msgid "Remove"
 msgstr "Fjern"
 
@@ -1446,23 +1446,23 @@ msgstr "Beskrivelse"
 msgid "R Startup"
 msgstr "R Opstart"
 
-#: rbackend/rinterface.cpp:309
+#: rbackend/rinterface.cpp:290
 msgid ""
 "<p>\t-An unspecified error occurred that is not yet handled by RKWard. "
 "Likely RKWard will not function properly. Please check your setup.</p>\n"
 msgstr ""
 
-#: rbackend/rinterface.cpp:311
+#: rbackend/rinterface.cpp:292
 msgid ""
 "<p>There was a problem starting the R backend. The following error(s) "
 "occurred:</p>\n"
 msgstr ""
 
-#: rbackend/rinterface.cpp:319
+#: rbackend/rinterface.cpp:300
 msgid "Error starting R"
 msgstr "En fejl opstod under opstart af R"
 
-#: rbackend/rinterface.cpp:533
+#: rbackend/rinterface.cpp:514
 msgid ""
 "A command in the R backend is trying to change the character encoding. While "
 "RKWard offers support for this, and will try to adjust to the new locale, "
@@ -1483,11 +1483,29 @@ msgstr ""
 "blive detekteret i senere versioner af RKWard). Dette gøres ved at vælge "
 "Annuller , lukke datavinduerne, gemme og forsøge igen."
 
-#: rbackend/rinterface.cpp:533
+#: rbackend/rinterface.cpp:514
 msgid "Locale change"
 msgstr "Skift lokalitet"
 
-#: rbackend/rinterface.cpp:687
+#: rbackend/rinterface.cpp:517
+msgid ""
+"<p>A command running in the R backend has caused the R backend process to "
+"\"fork\". Typically this is done to spread computations onto several CPU "
+"cores. We try our best to support this in RKWard, despite some technical "
+"problems inherent in forking a multi-library, multi-threaded application. "
+"However, it is entirely possible that this causes trouble / broken features "
+"in some cases, particularly in combination with further R libraries. If you "
+"observe any such adverse effects after forking, please send us a bug report."
+"</p><p>If you have a choice, consider using a different technique of "
+"parallelization, e.g. the 'PSOCK' method of R packages <i>snow</i> or "
+"<i>parallel</i>.</p>"
+msgstr ""
+
+#: rbackend/rinterface.cpp:518
+msgid "Backend has forked"
+msgstr ""
+
+#: rbackend/rinterface.cpp:677
 msgid ""
 "The R-backend has indicated that in order to carry out the current task it "
 "needs the package '%1', which is not currently installed. We will open the "
@@ -1498,15 +1516,15 @@ msgstr ""
 "Pakket er ikke installeret, og vi vil derfor åbne pakke-håndteringsværktøjet "
 "hvorfra du kan finde og installere den pågældende pakke."
 
-#: rbackend/rinterface.cpp:687
+#: rbackend/rinterface.cpp:677
 msgid "Require package '%1'"
 msgstr "Pakke '%1' kræves"
 
-#: rbackend/rinterface.cpp:782
+#: rbackend/rinterface.cpp:772
 msgid "R backend requests information"
 msgstr "R kræver information"
 
-#: rbackend/rinterface.cpp:806
+#: rbackend/rinterface.cpp:796
 msgid ""
 "\n"
 "The R backend will be shut down immediately. This means, you can not use any "
@@ -1519,7 +1537,7 @@ msgid ""
 "happened. Sorry!"
 msgstr ""
 
-#: rbackend/rinterface.cpp:807
+#: rbackend/rinterface.cpp:797
 msgid "R engine has died"
 msgstr "R døde"
 
@@ -1536,25 +1554,25 @@ msgid ""
 "Please fix your installation."
 msgstr ""
 
-#: rbackend/rkrbackend.cpp:475
+#: rbackend/rkrbackend.cpp:476
 msgid "The R engine has shut down with status: %1"
 msgstr ""
 
-#: rbackend/rkrbackend.cpp:494
+#: rbackend/rkrbackend.cpp:495
 msgid ""
 "The R engine has encountered a fatal error:\n"
 "%1"
 msgstr ""
 
-#: rbackend/rkrbackend.cpp:663
+#: rbackend/rkrbackend.cpp:664
 msgid "Message from the R backend"
 msgstr "Besked fra R"
 
-#: rbackend/rkrbackend.cpp:671
+#: rbackend/rkrbackend.cpp:672
 msgid "Question from the R backend"
 msgstr ""
 
-#: rbackend/rkrbackend.cpp:1412
+#: rbackend/rkrbackend.cpp:1455
 msgid ""
 "</p>\t- The 'rkward' R-library either could not be loaded at all, or not in "
 "the correct version. This may lead to all sorts of errors, from single "
@@ -1566,7 +1584,7 @@ msgid ""
 "net/rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</p>\n"
 msgstr ""
 
-#: rbackend/rkrbackend.cpp:1416
+#: rbackend/rkrbackend.cpp:1459
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
 "this indicates a broken installation.</p>\t\t<p><b>You should quit RKWard, "
@@ -2377,7 +2395,7 @@ msgstr ""
 msgid "Height:"
 msgstr ""
 
-#: settings/rksettingsmoduleplugins.cpp:66
+#: settings/rksettingsmoduleplugins.cpp:61
 msgid ""
 "Some plugins are available with both, a wizard-like interface and a "
 "traditional dialog interface. If both are available, which mode of "
@@ -2387,54 +2405,50 @@ msgstr ""
 "dialogboks interface. Hvilken tilgang foretrækker du som udgangspunkt for "
 "plugins som tilbyder begge muligheder?"
 
-#: settings/rksettingsmoduleplugins.cpp:76
+#: settings/rksettingsmoduleplugins.cpp:71
 msgid "Always prefer dialogs"
 msgstr "Foretræk altid dialogbokse"
 
-#: settings/rksettingsmoduleplugins.cpp:79
+#: settings/rksettingsmoduleplugins.cpp:74
 msgid "Prefer recommended interface"
 msgstr "Foretræk anbefallet burgerflade"
 
-#: settings/rksettingsmoduleplugins.cpp:82
+#: settings/rksettingsmoduleplugins.cpp:77
 msgid "Always prefer wizards"
 msgstr "Fortræk altid guides"
 
-#: settings/rksettingsmoduleplugins.cpp:94
+#: settings/rksettingsmoduleplugins.cpp:89
 msgid "R syntax display (in dialogs)"
 msgstr "R syntaks oversigt (i dialogbokse)"
 
-#: settings/rksettingsmoduleplugins.cpp:97
+#: settings/rksettingsmoduleplugins.cpp:92
 msgid "Code shown by default"
 msgstr "Kode som vises som standard"
 
-#: settings/rksettingsmoduleplugins.cpp:103
+#: settings/rksettingsmoduleplugins.cpp:98
 msgid "Default height of code display (pixels)"
 msgstr "Standard højde af kodeoversigt (i pixels)"
 
-#: settings/rksettingsmoduleplugins.cpp:115
+#: settings/rksettingsmoduleplugins.cpp:110
 msgid "Select .pluginmap file(s)"
 msgstr "Vælg .pluginmap fil(er)"
 
-#: settings/rksettingsmoduleplugins.cpp:122
-msgid "Install or uninstall add-on plugin packs"
-msgstr ""
-
-#: settings/rksettingsmoduleplugins.cpp:141
+#: settings/rksettingsmoduleplugins.cpp:131
 msgid "Select .pluginmap-file"
 msgstr "Vælg .pluginmap-fil"
 
-#: settings/rksettingsmoduleplugins.cpp:146
+#: settings/rksettingsmoduleplugins.cpp:136
 msgid "Plugins"
 msgstr "Plugins"
 
-#: settings/rksettingsmoduleplugins.cpp:217
+#: settings/rksettingsmoduleplugins.cpp:215
 msgid ""
 "New RKWard plugin packs (listed below) have been found, and have been "
 "activated, automatically. To de-activate selected plugin packs, use Settings-"
 ">Configure RKWard->Plugins."
 msgstr ""
 
-#: settings/rksettingsmoduleplugins.cpp:217
+#: settings/rksettingsmoduleplugins.cpp:215
 #, fuzzy
 msgid "New plugins found"
 msgstr "Ingen (brugbare) plugins fundet"
