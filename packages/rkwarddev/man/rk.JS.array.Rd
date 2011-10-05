@@ -42,6 +42,7 @@ rk.JS.array("run.tests", variables=list(checkA, checkB, checkC), funct="list")
 }
 \seealso{
   \code{\link[rkwarddev:rk.paste.JS]{rk.paste.JS}},
+  \code{\link[rkwarddev:rk.JS.options]{rk.JS.options}},
   \code{\link[rkwarddev:rk.JS.vars]{rk.JS.vars}},
   \code{\link[rkwarddev:echo]{echo}},
   \code{\link[rkwarddev:id]{id}}, and the

@@ -5,11 +5,11 @@
 
 setClass("rk.JS.opt",
 	representation=representation(
-		option="character",
+		opt.name="character",
 		ifs="list"
 	),
 	prototype(
-		option=character(),
+		opt.name=character(),
 		ifs=list()
 	)
 )

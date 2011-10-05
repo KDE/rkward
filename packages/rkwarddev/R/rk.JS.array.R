@@ -14,6 +14,7 @@
 #' @return An object of class \code{rk.JS.arr}.
 #' @export
 #' @seealso \code{\link[rkwarddev:rk.paste.JS]{rk.paste.JS}},
+#'		\code{\link[rkwarddev:rk.JS.options]{rk.JS.options}},
 #'		\code{\link[rkwarddev:rk.JS.vars]{rk.JS.vars}},
 #'		\code{\link[rkwarddev:echo]{echo}},
 #'		\code{\link[rkwarddev:id]{id}},

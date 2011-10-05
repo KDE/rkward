@@ -1,11 +1,11 @@
 #' Generate JavaScript echo command call
 #' 
 #' This function will take several elements, either character strings, or objects of class \code{XiMpLe.node}
-#' which hold an XML node of some plugin GUI definition, or objects of class \code{rk.JS.opt},
-#' and generate a ready-to-run JavaScript \code{echo();} call from it.
+#' which hold an XML node of some plugin GUI definition, or objects of classes \code{rk.JS.arr} or \code{rk.JS.opt}.
+#' From those, it will generate a ready-to-run JavaScript \code{echo();} call from it.
 #' 
 #' @param ... One or several character strings and/or \code{XiMpLe.node} objects with plugin nodes,
-#'		and/or objects of class \code{rk.JS.opt}, simply separated by comma.
+#'		and/or objects of classes \code{rk.JS.arr} or \code{rk.JS.opt}, simply separated by comma.
 #' @param newline Character string, can be set to e.g. \code{"\n"} to force a newline after the call.
 #' @return A character string.
 #' @seealso \code{\link[rkwarddev:rk.JS.vars]{rk.JS.vars}},

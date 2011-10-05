@@ -410,12 +410,14 @@ paste.JS.options <- function(object, level=2, indent.by="\t"){
 	main.indent <- indent(level, by=indent.by)
 	scnd.indent <- indent(level+1, by=indent.by)
 
-	option    <- object@option
+	option    <- object@opt.name
 	ifs       <- object@ifs
 
 	# a function to add the object stuff to ite objects
 	add.opts <- function(this.ite){
-		this.ite@thenJS <- paste(option, " += \", ", this.ite@thenJS,"\";", sep="")
+		# remove quotes, we'll add them ourselves where needed
+		to.add <-  gsub("(.*)(\")$", "\\1", gsub("(^\")(.*)", "\\2", this.ite@thenJS, perl=TRUE), perl=TRUE)
+		this.ite@thenJS <- paste(option, " += \"", to.add,"\";", sep="")
 		if(length(this.ite@elifJS) == 1){
 			this.ite@elifJS <- list(add.opts(this.ite@elifJS[[1]]))
 		} else {}

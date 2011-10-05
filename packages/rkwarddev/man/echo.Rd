@@ -7,8 +7,8 @@
 \arguments{
   \item{...}{One or several character strings and/or
   \code{XiMpLe.node} objects with plugin nodes, and/or
-  objects of class \code{rk.JS.opt}, simply separated by
-  comma.}
+  objects of classes \code{rk.JS.arr} or \code{rk.JS.opt},
+  simply separated by comma.}
 
   \item{newline}{Character string, can be set to e.g.
   \code{"\n"} to force a newline after the call.}
@@ -20,8 +20,9 @@
   This function will take several elements, either
   character strings, or objects of class \code{XiMpLe.node}
   which hold an XML node of some plugin GUI definition, or
-  objects of class \code{rk.JS.opt}, and generate a
-  ready-to-run JavaScript \code{echo();} call from it.
+  objects of classes \code{rk.JS.arr} or \code{rk.JS.opt}.
+  From those, it will generate a ready-to-run JavaScript
+  \code{echo();} call from it.
 }
 \examples{
 cbox1 <- rk.XML.cbox(label="foo", value="foo1", id.name="CheckboxFoo.ID")

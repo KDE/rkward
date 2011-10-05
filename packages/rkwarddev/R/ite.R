@@ -16,7 +16,7 @@
 #' # first create an example checkbox XML node
 #' cbox1 <- rk.XML.cbox(label="foo", value="foo1", id.name="CheckboxFoo.ID")
 #' # now some JavaScript generation
-#' ite(id(cbox1), echo("bar <- \"", cbox1, "\""), echo("bar <- NULL"))
+#' ite(cbox1, echo("bar <- \"", cbox1, "\""), echo("bar <- NULL"))
 
 ite <- function(ifjs, thenjs, elsejs=NULL){
 	#check for recursion
@@ -30,7 +30,7 @@ ite <- function(ifjs, thenjs, elsejs=NULL){
 		} else {}
 	}
 	result <- new("rk.JS.ite",
-		ifJS=ifjs,
+		ifJS=id(ifjs),
 		thenJS=thenjs,
 		elseJS=elsejs,
 		elifJS=elifJS
