@@ -1,12 +1,13 @@
 ChangeLog for package rkwarddev
 
-## 0.02-5 (2011-10-05)
+## 0.02-5 (2011-10-06)
   - added functions rk.rkh.caption(), rk.rkh.link(), rk.rkh.related(), rk.rkh.section(), rk.rkh.setting(),
     rk.rkh.settings(), rk.rkh.summary(), rk.rkh.technical(), rk.rkh.title() and rk.rkh.usage()
   - rk.rkh.doc() now only accepts nodes of the above functions as input (and gained support for title and sections)
   - rk.rkh.scan() now also looks for captions
   - added full help page support to rk.plugin.skeleton()
   - added support for properties to rk.JS.vars()
+  - added function rk.JS.saveobj() to generate JS code for saveobject nodes.
   - added function rk.JS.options() to generate code for JS variables holding multiple options
   - added class rk.JS.opt and a show method for it (use rk.paste.JS() on that)
   - id() and echo() now also replace objects of classes rk.JS.opt and rk.JS.arr with their relevant ID

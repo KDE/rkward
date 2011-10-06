@@ -7,8 +7,9 @@
   NULL, provides = c("logic", "dialog"), dial.require =
   c(), overwrite = FALSE, tests = TRUE, lazyLoad = TRUE,
   menu = "test", results.header = NULL, JS.prep = NULL,
-  JS.calc = NULL, JS.prnt = NULL, summary = NULL, usage =
-  NULL, sections = NULL, settings = "scan", related = NULL,
+  JS.calc = NULL, JS.prnt = NULL, var.scan = TRUE,
+  saveobj.scan = TRUE, summary = NULL, usage = NULL,
+  sections = NULL, settings = "scan", related = NULL,
   technical = NULL, create = c("pmap", "xml", "js", "rkh",
   "desc"), edit = FALSE, load = FALSE, show = FALSE)
 }
@@ -82,15 +83,25 @@
   .js file. This string will be pasted as-is, see
   \code{\link[rkwarddev:rk.JS.doc]{rk.JS.doc}}.}
 
-  \item{JS.calc}{A character string with JavaScript code to
-  be included in the \code{calculate()} function of the .js
-  file. This string will be pasted as-is, see
+  \item{JS.calc}{Either a character string with JavaScript
+  code to be included in the \code{calculate()} function of
+  the .js file. This string will be pasted as-is, see
   \code{\link[rkwarddev:rk.JS.doc]{rk.JS.doc}}.}
 
   \item{JS.prnt}{A character string with JavaScript code to
   be included in the \code{printout()} function of the .js
   file. This string will be pasted as-is, see
   \code{\link[rkwarddev:rk.JS.doc]{rk.JS.doc}}.}
+
+  \item{var.scan}{Logical, if \code{TRUE}
+  \code{\link{rk.JS.scan}} will be called automatically to
+  to define the needed variables which will be added to the
+  code in the \code{calculate()} function.}
+
+  \item{saveobj.scan}{Logical, if \code{TRUE}
+  \code{\link{rk.JS.saveobj}} will be called automatically
+  to generate code to save R results which will be appended
+  to the code in the \code{printout()} function.}
 
   \item{summary}{An object of class \code{XiMpLe.node} to
   be pasted as the \code{<summary>} section of the help

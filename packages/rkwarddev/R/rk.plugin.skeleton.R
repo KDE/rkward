@@ -30,10 +30,14 @@
 #' @param results.header A character string to headline the printed results.
 #' @param JS.prep A character string with JavaScript code to be included in the \code{preprocess()} function of the .js file. This string will be
 #'		pasted as-is, see \code{\link[rkwarddev:rk.JS.doc]{rk.JS.doc}}.
-#' @param JS.calc A character string with JavaScript code to be included in the \code{calculate()} function of the .js file. This string will be
+#' @param JS.calc Either a character string with JavaScript code to be included in the \code{calculate()} function of the .js file. This string will be
 #'		pasted as-is, see \code{\link[rkwarddev:rk.JS.doc]{rk.JS.doc}}.
 #' @param JS.prnt A character string with JavaScript code to be included in the \code{printout()} function of the .js file. This string will be
 #'		pasted as-is, see \code{\link[rkwarddev:rk.JS.doc]{rk.JS.doc}}.
+#' @param var.scan Logical, if \code{TRUE} \code{\link{rk.JS.scan}} will be called automatically to  to define the needed variables
+#'		which will be added to the code in the \code{calculate()} function.
+#' @param saveobj.scan Logical, if \code{TRUE} \code{\link{rk.JS.saveobj}} will be called automatically to generate code to save R results
+#'		which will be appended to the code in the \code{printout()} function.
 #' @param summary An object of class \code{XiMpLe.node} to be pasted as the \code{<summary>} section of the help file. See
 #'		\code{\link[rkwarddev:rk.rkh.summary]{rk.rkh.summary}} for details.
 #' @param usage An object of class \code{XiMpLe.node} to be pasted as the \code{<usage>} section of the help file. See
@@ -126,7 +130,7 @@
 
 rk.plugin.skeleton <- function(name, about=NULL, path=tempdir(), dialog=NULL, wizard=NULL, logic=NULL, snippets=NULL,
 	provides=c("logic", "dialog"), dial.require=c(), overwrite=FALSE, tests=TRUE, lazyLoad=TRUE, menu="test", results.header=NULL,
-	JS.prep=NULL, JS.calc=NULL, JS.prnt=NULL,
+	JS.prep=NULL, JS.calc=NULL, JS.prnt=NULL, var.scan=TRUE, saveobj.scan=TRUE,
 	summary=NULL, usage=NULL, sections=NULL, settings="scan", related=NULL, technical=NULL,
 	create=c("pmap", "xml", "js", "rkh", "desc"), edit=FALSE, load=FALSE, show=FALSE){
 	# to besure, remove all non-character symbols from name
@@ -219,9 +223,17 @@ rk.plugin.skeleton <- function(name, about=NULL, path=tempdir(), dialog=NULL, wi
 			if(is.null(results.header)){
 				results.header <- paste(name.orig, " results", sep="")
 			} else {}
+			if(isTRUE(var.scan)){
+				variables <- rk.JS.scan(XML.plugin)
+			} else {
+				variables <- NULL
+			}
+			if(isTRUE(saveobj.scan)){
+				JS.prnt <- paste(JS.prnt, rk.JS.saveobj(XML.plugin), sep="\n")
+			} else {}
 			JS.code <- rk.JS.doc(
 				require=dial.require,
-				variables=rk.JS.scan(XML.plugin),
+				variables=variables,
 				results.header=results.header,
 				preprocess=JS.prep,
 				calculate=JS.calc,

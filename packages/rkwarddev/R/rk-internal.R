@@ -69,8 +69,10 @@ get.IDs <- function(single.tags, relevant.tags, add.abbrev=FALSE, tag.names=FALS
 		} else {
 			this.tag.name <- tolower(XiMpLe:::XML.tagName(this.tag))
 			# we're only interested in entries with an ID
-			if(this.tag.name %in% relevant.tags & grepl("[[:space:]]+id=", this.tag)){
-				cleaned.tags[length(cleaned.tags)+1] <- this.tag
+			if(this.tag.name %in% relevant.tags){
+				if("id" %in% names(XiMpLe:::parseXMLAttr(this.tag))){
+					cleaned.tags[length(cleaned.tags)+1] <- this.tag
+				} else {}
 			} else {}
 		}
 	}

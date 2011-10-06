@@ -28,6 +28,7 @@ Collate:
     'rk.JS.doc.R'
     'rk.JS.opt-class.R'
     'rk.JS.options.R'
+    'rk.JS.saveobj.R'
     'rk.JS.scan.R'
     'rk.JS.vars.R'
     'rk.paste.JS.R'
