@@ -1058,14 +1058,14 @@ void completeForkMaster () {
 
 	// Block SIGCLD in the main thread from now on. I don't fully understand, why, but otherwise, these signals
 	// interrupt the select() call in the fork()ing code of library(parallel)
-	// NOTE: If this turns out to be a problem, another try might be to add restarts to the SIGCLD handler, as
-	// suggested, here: https://bugreports.qt.nokia.com/browse/QTBUG-1787
 	sigset_t new_set;
 	sigemptyset (&new_set);
 	sigaddset (&new_set, SIGCLD);
 	pthread_sigmask (SIG_BLOCK, &new_set, NULL);
 
-	RKRBackend::this_pointer->handlePlainGenericRequest (QStringList ("forkNotification"), false);
+//	This was used to show a warning message. Unfortunately, however, forks also occur on every popen (i.e. in system(..., intern=TRUE).
+//	RKRBackend::this_pointer->handlePlainGenericRequest (QStringList ("forkNotification"), false);
+	RK_DO (qDebug ("Backend process forked (for the first time, this session)"), RBACKEND, DL_WARNING);
 }
 
 void completeForkChild () {
