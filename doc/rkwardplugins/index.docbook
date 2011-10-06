@@ -2637,11 +2637,11 @@ In addition to this, some elements have additional properties you can connect to
 </varlistentry>
 <varlistentry>
 <term>&lt;related&gt;</term>
-<listitem><para>Defines a section containing links to further related information. Will always be displayed after the &lt;settings&gt; section. Use as a direct child of the &lt;document&gt;. May contain only &lt;setting&gt; and &lt;caption&gt; elements as direct children. No attributes.</para></listitem>
+<listitem><para>Defines a section containing links to further related information. Will always be displayed after the &lt;settings&gt; section. No attributes. The text contained within the &lt;related&gt; tag will be displayed. Typically this will contain an HTML-style list. Recommended for plugin help pages, but not required. May only be defined once, as a direct child of the &lt;document&gt; node.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;technical&gt;</term>
-<listitem><para>Defines a section containing technical information of no relevance to end users (such as internal structure of the plugin). Will always be displayed last in a help page. Use as a direct child of the &lt;document&gt;. May contain only &lt;setting&gt; and &lt;caption&gt; elements as direct children. No attributes.</para></listitem>
+<listitem><para>Defines a section containing technical information of no relevance to end users (such as internal structure of the plugin). Will always be displayed last in a help page. No attributes. The text contained within the &lt;related&gt; tag will be displayed. Not required, and not recommended for most plugin help pages. May only be defined once, as a direct child of the &lt;document&gt; node.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;link&gt;</term>
