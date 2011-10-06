@@ -4,6 +4,8 @@
 !include nsDialogs.nsh
 !include LogicLib.nsh
 !include TextFunc.nsh
+!include WordFunc.nsh
+!insertmacro "VersionCompare"
 !include rkward_version.nsh
 
 Name "RKWard"
@@ -22,11 +24,14 @@ Var FileBrowseInstructionText
 Var FileBrowseValidateFunc
 Var FileBrowseStatusLabel
 Var MyTemp
+Var MyTempB
 Var RHomeOk
 Var KDEPrefixOk
 Var DownloadLinkText
 Var DownloadLinkDest
 Var RDll_location
+Var Libktexteditor_dll_location
+Var INST_KDE_VERSION
 
 # pages
 Page custom WelcomeCreate
@@ -158,17 +163,30 @@ Function RHomeLeave
 	${EndIf}
 FunctionEnd
 
+!macro RunSimpleQuery Query Default
+	StrCpy $MyTemp "${Default}"
+
+	ClearErrors
+	GetTempFileName $R0
+	ExecWait 'cmd.exe /C ${Query} > $R0'
+	IfErrors skip
+
+	FileOpen $MyTempB $R0 r
+	FileSeek $MyTempB 0 SET
+	FileRead $MyTempB $MyTemp
+	${TrimNewLines} $MyTemp $MyTemp
+	FileClose $MyTempB
+	ClearErrors
+
+	skip:
+
+	Push $MyTemp
+!macroend
+
 Function KDEHomeCreate
 	${If} $INST_KDEPREFIX == ""
-		StrCpy $INST_KDEPREFIX "C:\KDE2"
-		ExecWait 'cmd.exe /C kde4-config --prefix > "$PLUGINSDIR\kdeprefix.txt"'
-		ClearErrors
-		FileOpen $0 "$PLUGINSDIR\kdeprefix.txt" r
-		IfErrors notinpath
-		FileRead $0 $INST_KDEPREFIX
-		${TrimNewLines} $INST_KDEPREFIX $INST_KDEPREFIX
-		FileClose $0
-		notinpath:
+		!insertmacro RunSimpleQuery "kde4-config.exe --prefix" "C:\KDE"
+		Pop $INST_KDEPREFIX
 	${EndIf}
 
 	StrCpy $FileSelectCurrent $INST_KDEPREFIX
@@ -192,6 +210,9 @@ Function ValidateKDEPrefix
 	Var /Global KDEPrefixOk_count
 	StrCpy $KDEPrefixOk_count 0
 	StrCpy $KDEPrefixOk "no"
+	StrCpy $1 ""
+	StrCpy $2 ""
+	StrCpy $Libktexteditor_dll_location $FileSelectCurrent\lib\libktexteditor.dll.a
 
 	IfFileExists $FileSelectCurrent\bin bindir_found
 		StrCpy $0 "Directory $FileSelectCurrent\bin does not exist"
@@ -199,21 +220,34 @@ Function ValidateKDEPrefix
 	bindir_found:
 		StrCpy $0 "Directory $FileSelectCurrent\bin exists"
 		IntOp $KDEPrefixOk_count $KDEPrefixOk_count + 1
+
 	NextCheck:
-	IfFileExists $FileSelectCurrent\share sharedir_found
-		StrCpy $1 "Directory $FileSelectCurrent\share does not exist"
+	IfFileExists $Libktexteditor_dll_location libktexteditor_dll_found
+		StrCpy $1 "$Libktexteditor_dll_location does not exist"
 	Goto done
-	sharedir_Found:
-		StrCpy $1 "Directory $FileSelectCurrent\share exists"
-		IntOp $KDEPrefixOk_count $KDEPrefixOk_count + 1
+	libktexteditor_dll_found:
+		StrCpy $1 "$Libktexteditor_dll_location exists"
+
+		!insertmacro RunSimpleQuery "$FileSelectCurrent\bin\kde4-config.exe --kde-version" "UNKNOWN"
+		Pop $INST_KDE_VERSION
+
+		!insertmacro VersionCompareCall $INST_KDE_VERSION "4.7.0" $MyTemp
+		${If} $MyTemp < 2
+			StrCpy $2 "Version $INST_KDE_VERSION should be ok"
+			IntOp $KDEPrefixOk_count $KDEPrefixOk_count + 1
+		${Else}
+			StrCpy $2 "Version $INST_KDE_VERSION is too old (4.7.0 or later is required)"
+			Goto done
+		${EndIf}
+
 	done:
 	${If} $KDEPrefixOk_count >= 2
-		StrCpy $2 "This looks ok."
+		StrCpy $3 "This looks ok."
 		StrCpy $KDEPrefixOk "yes"
 	${Else}
-		StrCpy $2 "This looks wrong."
+		StrCpy $3 "This looks wrong."
 	${EndIf}
-	${NSD_SetText} $FileBrowseStatusLabel "$0$\r$\n$1$\r$\n$\r$\n$2"
+	${NSD_SetText} $FileBrowseStatusLabel "$0$\r$\n$1$\r$\n$2$\r$\n$\r$\n$3"
 
 	StrCpy $INST_KDEPREFIX $FileSelectCurrent
 FunctionEnd
