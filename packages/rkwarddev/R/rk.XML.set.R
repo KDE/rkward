@@ -9,7 +9,7 @@
 #'			\item{\code{"required"}}{Set the \code{id} requirement state.}
 #'		}
 #' @param to Character string or logical, the value the property should be set to.
-#' @return A list of objects of class \code{XiMpLe.node}.
+#' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
 #'		\code{\link[rkwarddev:rk.XML.convert]{rk.XML.convert}},

@@ -9,7 +9,7 @@
   \code{XiMpLe.node}.}
 }
 \value{
-  A list of objects of class \code{XiMpLe.node}.
+  An object of class \code{XiMpLe.node}.
 }
 \description{
   This function will create a logic section with "convert",

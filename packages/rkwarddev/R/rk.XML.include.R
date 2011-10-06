@@ -1,7 +1,7 @@
 #' Create XML node "include" for RKWard plugins
 #'
 #' @param file A character string, the file name to be included.
-#' @return A list of objects of class \code{XiMpLe.node}.
+#' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
 #'		\href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}

@@ -11,7 +11,7 @@
   \item{id}{Character string, either "x11" or "import".}
 }
 \value{
-  A list of objects of class \code{XiMpLe.node}.
+  An object of class \code{XiMpLe.node}.
 }
 \description{
   This function will create a context node for .pluginmap

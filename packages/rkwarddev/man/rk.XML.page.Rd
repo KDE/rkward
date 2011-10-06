@@ -1,6 +1,6 @@
 \name{rk.XML.page}
 \alias{rk.XML.page}
-\title{Create XML page node for RKWard plugins}
+\title{Create XML "page" node for RKWard plugins}
 \usage{
   rk.XML.page(nodes, id.name = NULL)
 }
@@ -12,7 +12,7 @@
   plugin element.}
 }
 \value{
-  A list of objects of class \code{XiMpLe.node}.
+  An object of class \code{XiMpLe.node}.
 }
 \description{
   This function will create a page node for wizard

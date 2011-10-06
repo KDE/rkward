@@ -53,9 +53,10 @@ get.single.tags <- function(XML.obj, drop=NULL){
 
 
 ## function get.IDs()
-# scans XML tags for defined IDs, returns a matrix with columns "id" and "abbrev"
+# scans XML tags for defined IDs, returns a matrix with columns "id" and "abbrev",
+# and optional "tag"
 # 'single.tags' can also contain XiMpLe.node objects
-get.IDs <- function(single.tags, relevant.tags, add.abbrev=FALSE){
+get.IDs <- function(single.tags, relevant.tags, add.abbrev=FALSE, tag.names=FALSE){
 
 	# filter for relevant tags
 	cleaned.tags <- list()
@@ -88,7 +89,11 @@ get.IDs <- function(single.tags, relevant.tags, add.abbrev=FALSE){
 				} else {
 					this.tag.id.abbrev <- this.tag.id
 				}
-			return(c(id=this.tag.id, abbrev=this.tag.id.abbrev))
+			if(isTRUE(tag.names)){
+				return(c(id=this.tag.id, abbrev=this.tag.id.abbrev, tag=this.tag.name))
+			} else {
+				return(c(id=this.tag.id, abbrev=this.tag.id.abbrev))
+			}
 		}
 	))
 	rownames(ids) <- NULL

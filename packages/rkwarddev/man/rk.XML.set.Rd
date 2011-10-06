@@ -20,7 +20,7 @@
   property should be set to.}
 }
 \value{
-  A list of objects of class \code{XiMpLe.node}.
+  An object of class \code{XiMpLe.node}.
 }
 \description{
   Create XML node "set" for RKWard plugins

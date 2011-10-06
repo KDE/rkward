@@ -6,7 +6,7 @@
 #'
 #' @param nodes A (list of) objects of class \code{XiMpLe.node}
 #' @param label Character string, a text label for this plugin element.
-#' @return A list of objects of class \code{XiMpLe.node}.
+#' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
 #'		\code{\link[rkwarddev:rk.XML.plugin]{rk.XML.plugin}},

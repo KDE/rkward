@@ -42,7 +42,7 @@
   value.}
 }
 \value{
-  A list of objects of class \code{XiMpLe.node}.
+  An object of class \code{XiMpLe.node}.
 }
 \description{
   The recognized property names for \code{sources} are the

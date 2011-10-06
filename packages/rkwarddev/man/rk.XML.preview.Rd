@@ -9,7 +9,7 @@
   preview checkbox.}
 }
 \value{
-  A list of objects of class \code{XiMpLe.node}.
+  An object of class \code{XiMpLe.node}.
 }
 \description{
   Create XML node "preview" for RKWard plugins

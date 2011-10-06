@@ -11,7 +11,7 @@
   used; must be a snippet!).}
 }
 \value{
-  A list of objects of class \code{XiMpLe.node}.
+  An object of class \code{XiMpLe.node}.
 }
 \description{
   This function creates an insert node to use snippets.

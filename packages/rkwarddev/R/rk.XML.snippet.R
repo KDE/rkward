@@ -6,7 +6,7 @@
 #' @param id.name Character string, a unique ID for this plugin element.
 #'		If \code{"auto"}, an ID will be generated automatically from the tag names and
 #'		IDs of the given nodes.
-#' @return A list of objects of class \code{XiMpLe.node}.
+#' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
 #'		\code{\link[rkwarddev:rk.XML.snippets]{rk.XML.snippets}},

@@ -2,7 +2,7 @@
 \alias{rk.rkh.scan}
 \title{Create RKWard help nodes from plugin XML}
 \usage{
-  rk.rkh.scan(pXML, help = TRUE)
+  rk.rkh.scan(pXML, help = TRUE, captions = TRUE)
 }
 \arguments{
   \item{pXML}{Either an object of class \code{XiMpLe.doc}
@@ -11,6 +11,9 @@
   \item{help}{Logical, if \code{TRUE} a list of XiMpLe.node
   objects will be returned, otherwise a character vector
   with only the relevant ID names.}
+
+  \item{captions}{Logical, if \code{TRUE} captions will be
+  generated for all "page", "tab" and "frame" nodes.}
 }
 \value{
   A character vector or a list of XiMpLe.node objects.

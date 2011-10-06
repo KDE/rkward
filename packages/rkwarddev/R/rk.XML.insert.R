@@ -4,7 +4,7 @@
 #'
 #' @param snippet Either a character string (the \code{id} of the snippet to be inserted),
 #'		or an object of class \code{XiMpLe.node} (whose \code{id} will be extracted and used; must be a snippet!).
-#' @return A list of objects of class \code{XiMpLe.node}.
+#' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
 #'		\code{\link[rkwarddev:rk.XML.snippets]{rk.XML.snippets}},

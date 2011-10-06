@@ -1,4 +1,4 @@
-#' Create XML page node for RKWard plugins
+#' Create XML "page" node for RKWard plugins
 #'
 #' This function will create a page node for wizard sections, with optional child nodes "browser", "checkbox",
 #' "column", "copy", "dropdown", "formula", "frame", "input", "page", "radio", "row", "saveobject",
@@ -6,7 +6,7 @@
 #'
 #' @param nodes A (list of) objects of class \code{XiMpLe.node}.
 #' @param id.name Character string, a unique ID for this plugin element.
-#' @return A list of objects of class \code{XiMpLe.node}.
+#' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
 #'		\code{\link[rkwarddev:rk.XML.wizard]{rk.XML.wizard}},

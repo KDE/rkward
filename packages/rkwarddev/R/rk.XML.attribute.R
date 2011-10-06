@@ -7,7 +7,7 @@
 #'		or an object of class \code{XiMpLe.node} (whose \code{id} will be extracted and used).
 #' @param value Character string, new value for the attribute.
 #' @param label Character string, label associated with the attribute.
-#' @return A list of objects of class \code{XiMpLe.node}.
+#' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
 #'		\code{\link[rkwarddev:rk.XML.components]{rk.XML.components}},

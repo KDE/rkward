@@ -3,7 +3,7 @@
 #' This function will create a snippets node for the document section, with optional child nodes "snippet".
 #'
 #' @param nodes A (list of) objects of class \code{XiMpLe.node}. They must all have the name "snippet".
-#' @return A list of objects of class \code{XiMpLe.node}.
+#' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
 #'		\code{\link[rkwarddev:rk.XML.plugin]{rk.XML.plugin}}

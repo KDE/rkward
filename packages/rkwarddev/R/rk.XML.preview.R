@@ -1,7 +1,7 @@
 #' Create XML node "preview" for RKWard plugins
 #'
 #' @param label A character string, text label for the preview checkbox.
-#' @return A list of objects of class \code{XiMpLe.node}.
+#' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples

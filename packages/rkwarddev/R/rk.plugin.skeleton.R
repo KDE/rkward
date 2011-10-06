@@ -28,12 +28,25 @@
 #'		\code{"analysis"}, \code{"plots"}, \code{"distributions"}, \code{"windows"}, \code{"settings"} and \code{"help"}.
 #'		Anything else will place it in a "test" menu.
 #' @param results.header A character string to headline the printed results.
-#' @param JS.prep A character string with JavaScript code to be included in the \code{preprocess()} function. This string will be
+#' @param JS.prep A character string with JavaScript code to be included in the \code{preprocess()} function of the .js file. This string will be
 #'		pasted as-is, see \code{\link[rkwarddev:rk.JS.doc]{rk.JS.doc}}.
-#' @param JS.calc A character string with JavaScript code to be included in the \code{calculate()} function. This string will be
+#' @param JS.calc A character string with JavaScript code to be included in the \code{calculate()} function of the .js file. This string will be
 #'		pasted as-is, see \code{\link[rkwarddev:rk.JS.doc]{rk.JS.doc}}.
-#' @param JS.prnt A character string with JavaScript code to be included in the \code{printout()} function. This string will be
+#' @param JS.prnt A character string with JavaScript code to be included in the \code{printout()} function of the .js file. This string will be
 #'		pasted as-is, see \code{\link[rkwarddev:rk.JS.doc]{rk.JS.doc}}.
+#' @param summary An object of class \code{XiMpLe.node} to be pasted as the \code{<summary>} section of the help file. See
+#'		\code{\link[rkwarddev:rk.rkh.summary]{rk.rkh.summary}} for details.
+#' @param usage An object of class \code{XiMpLe.node} to be pasted as the \code{<usage>} section of the help file. See
+#'		\code{\link[rkwarddev:rk.rkh.usage]{rk.rkh.usage}} for details.
+#' @param sections A (list of) objects of class \code{XiMpLe.node} to be pasted as \code{<section>} sections of the help file. See
+#'		\code{\link[rkwarddev:rk.rkh.section]{rk.rkh.section}} for details.
+#' @param settings Either an object of class \code{XiMpLe.node} to be pasted as the \code{<settings>} section of the help file (see
+#'		\code{\link[rkwarddev:rk.rkh.settings]{rk.rkh.settings}} for details), or the special value "scan", in which case
+#'		\code{\link{rk.rkh.scan}} will be called automatically to prepare empty \code{<setting>} nodes according to the plugin structure.
+#' @param related An object of class \code{XiMpLe.node} to be pasted as the \code{<related>} section. See
+#'		\code{\link[rkwarddev:rk.rkh.related]{rk.rkh.related}} for details.
+#' @param technical An object of class \code{XiMpLe.node} to be pasted as the \code{<technical>} section. See
+#'		\code{\link[rkwarddev:rk.rkh.technical]{rk.rkh.technical}} for details.
 #' @param create A character vector with one or more of these possible entries:
 #'		\describe{
 #'			\item{\code{"pmap"}}{Create the \code{.pluginmap} file.}
@@ -113,7 +126,9 @@
 
 rk.plugin.skeleton <- function(name, about=NULL, path=tempdir(), dialog=NULL, wizard=NULL, logic=NULL, snippets=NULL,
 	provides=c("logic", "dialog"), dial.require=c(), overwrite=FALSE, tests=TRUE, lazyLoad=TRUE, menu="test", results.header=NULL,
-	JS.prep=NULL, JS.calc=NULL, JS.prnt=NULL, create=c("pmap", "xml", "js", "rkh", "desc"), edit=FALSE, load=FALSE, show=FALSE){
+	JS.prep=NULL, JS.calc=NULL, JS.prnt=NULL,
+	summary=NULL, usage=NULL, sections=NULL, settings="scan", related=NULL, technical=NULL,
+	create=c("pmap", "xml", "js", "rkh", "desc"), edit=FALSE, load=FALSE, show=FALSE){
 	# to besure, remove all non-character symbols from name
 	name.orig <- name
 	name <- clean.name(name)
@@ -221,7 +236,17 @@ rk.plugin.skeleton <- function(name, about=NULL, path=tempdir(), dialog=NULL, wi
 	## create plugin.rkh
 	if("rkh" %in% create){
 		if(isTRUE(checkCreateFiles(plugin.rkh))){
-			rkh.doc <- rk.rkh.doc(settings=rk.rkh.scan(XML.plugin))
+			if(identical(settings, "scan")){
+				settings <- rk.rkh.settings(rk.rkh.scan(XML.plugin))
+			} else {}
+			rkh.doc <- rk.rkh.doc(
+				summary=summary,
+				usage=usage,
+				sections=sections,
+				settings=settings,
+				related=related,
+				technical=technical,
+				title=rk.rkh.title(name.orig))
 			cat(pasteXMLTree(rkh.doc, shine=1), file=plugin.rkh)
 		} else {}
 		if(isTRUE(edit)){

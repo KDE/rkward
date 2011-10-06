@@ -5,7 +5,7 @@
 #' @param as A character string resembling the \code{copy_element_tag_name} value. I.e., must be
 #'		a valid tag name. Will cause a change of tag name of the \code{id} (e.g. "tab") to \code{as}
 #'		(e.g. "page").
-#' @return A list of objects of class \code{XiMpLe.node}.
+#' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
 #'		\code{\link[rkwarddev:rk.XML.plugin]{rk.XML.plugin}},

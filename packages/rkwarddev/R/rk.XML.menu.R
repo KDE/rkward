@@ -10,7 +10,7 @@
 #' @param id.name Character string, a unique ID for this plugin element.
 #'		If \code{"auto"}, an ID will be generated automatically from the label.
 #'		Used to place the menu in the global menu hierarchy.
-#' @return A list of objects of class \code{XiMpLe.node}.
+#' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
 #'		\code{\link[rkwarddev:rk.XML.hierarchy]{rk.XML.hierarchy}},

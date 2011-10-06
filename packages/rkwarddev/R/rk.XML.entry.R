@@ -4,7 +4,7 @@
 #' 
 #' @param component An ID.
 #' @param index Integer number to influence the level of menu placement.
-#' @return A list of objects of class \code{XiMpLe.node}.
+#' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
 #'		\code{\link[rkwarddev:rk.XML.menu]{rk.XML.menu}},

@@ -7,9 +7,10 @@
   NULL, provides = c("logic", "dialog"), dial.require =
   c(), overwrite = FALSE, tests = TRUE, lazyLoad = TRUE,
   menu = "test", results.header = NULL, JS.prep = NULL,
-  JS.calc = NULL, JS.prnt = NULL, create = c("pmap", "xml",
-  "js", "rkh", "desc"), edit = FALSE, load = FALSE, show =
-  FALSE)
+  JS.calc = NULL, JS.prnt = NULL, summary = NULL, usage =
+  NULL, sections = NULL, settings = "scan", related = NULL,
+  technical = NULL, create = c("pmap", "xml", "js", "rkh",
+  "desc"), edit = FALSE, load = FALSE, show = FALSE)
 }
 \arguments{
   \item{name}{Character sting, name of the plugin package.}
@@ -77,19 +78,55 @@
   printed results.}
 
   \item{JS.prep}{A character string with JavaScript code to
-  be included in the \code{preprocess()} function. This
-  string will be pasted as-is, see
+  be included in the \code{preprocess()} function of the
+  .js file. This string will be pasted as-is, see
   \code{\link[rkwarddev:rk.JS.doc]{rk.JS.doc}}.}
 
   \item{JS.calc}{A character string with JavaScript code to
-  be included in the \code{calculate()} function. This
-  string will be pasted as-is, see
+  be included in the \code{calculate()} function of the .js
+  file. This string will be pasted as-is, see
   \code{\link[rkwarddev:rk.JS.doc]{rk.JS.doc}}.}
 
   \item{JS.prnt}{A character string with JavaScript code to
-  be included in the \code{printout()} function. This
-  string will be pasted as-is, see
+  be included in the \code{printout()} function of the .js
+  file. This string will be pasted as-is, see
   \code{\link[rkwarddev:rk.JS.doc]{rk.JS.doc}}.}
+
+  \item{summary}{An object of class \code{XiMpLe.node} to
+  be pasted as the \code{<summary>} section of the help
+  file. See
+  \code{\link[rkwarddev:rk.rkh.summary]{rk.rkh.summary}}
+  for details.}
+
+  \item{usage}{An object of class \code{XiMpLe.node} to be
+  pasted as the \code{<usage>} section of the help file.
+  See \code{\link[rkwarddev:rk.rkh.usage]{rk.rkh.usage}}
+  for details.}
+
+  \item{sections}{A (list of) objects of class
+  \code{XiMpLe.node} to be pasted as \code{<section>}
+  sections of the help file. See
+  \code{\link[rkwarddev:rk.rkh.section]{rk.rkh.section}}
+  for details.}
+
+  \item{settings}{Either an object of class
+  \code{XiMpLe.node} to be pasted as the \code{<settings>}
+  section of the help file (see
+  \code{\link[rkwarddev:rk.rkh.settings]{rk.rkh.settings}}
+  for details), or the special value "scan", in which case
+  \code{\link{rk.rkh.scan}} will be called automatically to
+  prepare empty \code{<setting>} nodes according to the
+  plugin structure.}
+
+  \item{related}{An object of class \code{XiMpLe.node} to
+  be pasted as the \code{<related>} section. See
+  \code{\link[rkwarddev:rk.rkh.related]{rk.rkh.related}}
+  for details.}
+
+  \item{technical}{An object of class \code{XiMpLe.node} to
+  be pasted as the \code{<technical>} section. See
+  \code{\link[rkwarddev:rk.rkh.technical]{rk.rkh.technical}}
+  for details.}
 
   \item{create}{A character vector with one or more of
   these possible entries: \describe{

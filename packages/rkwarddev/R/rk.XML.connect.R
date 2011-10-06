@@ -18,7 +18,7 @@
 #'		}
 #' @param reconcile Logical, forces the \code{governor} to only accept values which are valid for
 #'		the \code{client} as well.
-#' @return A list of objects of class \code{XiMpLe.node}.
+#' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
 #'		\code{\link[rkwarddev:rk.XML.convert]{rk.XML.convert}},

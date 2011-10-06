@@ -5,7 +5,7 @@
 #' 
 #' @param nodes A (list of) objects of class \code{XiMpLe.node}, must all be "menu".
 #' @param id Character string, either "x11" or "import".
-#' @return A list of objects of class \code{XiMpLe.node}.
+#' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
 #'		\code{\link[rkwarddev:rk.XML.menu]{rk.XML.menu}},

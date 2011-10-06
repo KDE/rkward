@@ -16,7 +16,7 @@
   \code{id} (e.g. "tab") to \code{as} (e.g. "page").}
 }
 \value{
-  A list of objects of class \code{XiMpLe.node}.
+  An object of class \code{XiMpLe.node}.
 }
 \description{
   Create XML copy node for RKWard plugins

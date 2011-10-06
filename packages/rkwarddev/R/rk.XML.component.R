@@ -8,7 +8,7 @@
 #'		If \code{"auto"}, an ID will be generated automatically from the label.
 #' @param type Character string, type of component. As of now, only "standard" is supported. The option is
 #'		just implemented for completeness.
-#' @return A list of objects of class \code{XiMpLe.node}.
+#' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
 #'		\code{\link[rkwarddev:rk.XML.components]{rk.XML.components}},

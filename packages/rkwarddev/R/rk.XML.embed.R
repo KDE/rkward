@@ -3,7 +3,7 @@
 #' @param component A character string, registered name (\code{id} in pluginmap file) of the component to be embedded.
 #' @param button Logical, whether the plugin should be embedded as a button and appear if it's pressed.
 #' @param label A character string, text label for the button (only used if \code{button=TRUE}).
-#' @return A list of objects of class \code{XiMpLe.node}.
+#' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples

@@ -17,7 +17,7 @@
   button (only used if \code{button=TRUE}).}
 }
 \value{
-  A list of objects of class \code{XiMpLe.node}.
+  An object of class \code{XiMpLe.node}.
 }
 \description{
   Create XML node "embed" for RKWard plugins

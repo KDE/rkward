@@ -33,7 +33,7 @@
   as well.}
 }
 \value{
-  A list of objects of class \code{XiMpLe.node}.
+  An object of class \code{XiMpLe.node}.
 }
 \description{
   If you define a \code{XiMpLe.node} object as
