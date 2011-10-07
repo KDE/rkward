@@ -230,10 +230,16 @@ rk.plugin.skeleton <- function(name, about=NULL, path=tempdir(),
 				js[["results.header"]] <- paste(name.orig, " results", sep="")
 			} else {}
 			if("var" %in% scan){
-				js[["variables"]] <- paste(js[["variables"]], rk.JS.scan(XML.plugin), sep="\n")
+				var.scanned <- rk.JS.scan(XML.plugin)
+				if(!is.null(var.scanned)){
+					js[["variables"]] <- paste(js[["variables"]], var.scanned, sep="\n")
+				} else {}
 			} else {}
 			if("saveobj" %in% scan){
-				js[["printout"]] <- paste(js[["printout"]], rk.JS.saveobj(XML.plugin), sep="\n")
+				saveobj.scanned <- rk.JS.saveobj(XML.plugin)
+				if(!is.null(saveobj.scanned)){
+					js[["printout"]] <- paste(js[["printout"]], saveobj.scanned, sep="\n")
+				} else {}
 			} else {}
 			JS.code <- rk.JS.doc(
 				require=js[["require"]],
