@@ -1,5 +1,9 @@
 ChangeLog for package rkwarddev
 
+## 0.03-0 (2011-10-07)
+  - redesigned options for rk.plugin.skeleton() again, to make them more intuitive and flexible
+    at the same time. unfortunately, this breaks backwards compatibility again.
+
 ## 0.02-5 (2011-10-06)
   - added functions rk.rkh.caption(), rk.rkh.link(), rk.rkh.related(), rk.rkh.section(), rk.rkh.setting(),
     rk.rkh.settings(), rk.rkh.summary(), rk.rkh.technical(), rk.rkh.title() and rk.rkh.usage()

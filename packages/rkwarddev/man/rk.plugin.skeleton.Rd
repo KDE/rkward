@@ -1,17 +1,14 @@
 \name{rk.plugin.skeleton}
 \alias{rk.plugin.skeleton}
-\title{Create skeleton for RKWard plugins}
+\title{Generate skeletons for RKWard plugins}
 \usage{
   rk.plugin.skeleton(name, about = NULL, path = tempdir(),
-  dialog = NULL, wizard = NULL, logic = NULL, snippets =
-  NULL, provides = c("logic", "dialog"), dial.require =
-  c(), overwrite = FALSE, tests = TRUE, lazyLoad = TRUE,
-  menu = "test", results.header = NULL, JS.prep = NULL,
-  JS.calc = NULL, JS.prnt = NULL, var.scan = TRUE,
-  saveobj.scan = TRUE, summary = NULL, usage = NULL,
-  sections = NULL, settings = "scan", related = NULL,
-  technical = NULL, create = c("pmap", "xml", "js", "rkh",
-  "desc"), edit = FALSE, load = FALSE, show = FALSE)
+  provides = c("logic", "dialog"), scan = c("var",
+  "saveobj", "settings"), xml = list(), js = list(),
+  pluginmap = list(), rkh = list(), overwrite = FALSE,
+  tests = TRUE, lazyLoad = TRUE, create = c("pmap", "xml",
+  "js", "rkh", "desc"), edit = FALSE, load = FALSE, show =
+  FALSE, indent.by = "\t")
 }
 \arguments{
   \item{name}{Character sting, name of the plugin package.}
@@ -26,35 +23,74 @@
   \item{path}{Character sting, path to the main directory
   where the skeleton should be created.}
 
-  \item{dialog}{An object of class \code{XiMpLe.node} to be
-  pasted as the \code{<dialog>} section. See
-  \code{\link[rkwarddev:rk.XML.dialog]{rk.XML.dialog}} for
-  details.}
-
-  \item{wizard}{An object of class \code{XiMpLe.node} to be
-  pasted as the \code{<wizard>} section. See
-  \code{\link[rkwarddev:rk.XML.wizard]{rk.XML.wizard}} for
-  details.}
-
-  \item{logic}{An object of class \code{XiMpLe.node} to be
-  pasted as the \code{<logic>} section. See
-  \code{\link[rkwarddev:rk.XML.logic]{rk.XML.logic}} for
-  details.}
-
-  \item{snippets}{An object of class \code{XiMpLe.node} to
-  be pasted as the \code{<snippets>} section. See
-  \code{\link[rkwarddev:rk.XML.snippets]{rk.XML.snippets}}
-  for details.}
-
   \item{provides}{Character vector with possible entries of
   \code{"logic"}, \code{"dialog"} or \code{"wizard"},
-  defining what sections the document should provide even
-  if \code{dialog}, \code{wizard} and \code{logic} are
+  defining what sections the GUI XML file should provide
+  even if \code{dialog}, \code{wizard} and \code{logic} are
   \code{NULL}. These sections must be edited manually and
   some parts are therefore commented out.}
 
-  \item{dial.require}{A character vector with names of R
-  packages that the dialog requires.}
+  \item{scan}{A character vector to trigger various
+  automatic scans of the generated GUI XML file. Valid
+  enties are: \itemize{ \item{\code{"var"}}{Calls
+  \code{\link{rk.JS.scan}} to define all needed variables
+  in the \code{calculate()} function of the JavaScript
+  file. These variables will be added to variables defined
+  by the \code{js} option, if any (see below).}
+  \item{\code{"saveobj"}}{Calls \code{\link{rk.JS.saveobj}}
+  to generate code to save R results in the
+  \code{printout()} function of the JavaScript file. This
+  code will be added to the code defined by the \code{js}
+  option, if any (see below).}
+  \item{\code{"settings"}}{Calls \code{\link{rk.rkh.scan}}
+  to generate \code{<setting>} sections for each relevant
+  GUI element in the \code{<settings>} section of the help
+  file. This option will be overruled if you provide that
+  section manually by the \code{rkh} option (see below).}
+  }}
+
+  \item{xml}{A named list of options to be forwarded to
+  \code{\link[rkwarddev:rk.XML.plugin]{rk.XML.plugin}}, to
+  generate the GUI XML file. Not all options are supported
+  because some don't make sense in this context. Valid
+  options are: \code{"dialog"}, \code{"wizard"},
+  \code{"logic"} and \code{"snippets"}. If not set, their
+  default values are used. See
+  \code{\link[rkwarddev:rk.XML.plugin]{rk.XML.plugin}} for
+  details.}
+
+  \item{js}{A named list of options to be forwarded to
+  \code{\link[rkwarddev:rk.JS.doc]{rk.JS.doc}}, to generate
+  the JavaScript file. Not all options are supported
+  because some don't make sense in this context. Valid
+  options are: \code{"require"}, \code{"results.header"},
+  \code{"variables"}, \code{"preprocess"},
+  \code{"calculate"} and \code{"printout"}. If not set,
+  their default values are used. See
+  \code{\link[rkwarddev:rk.JS.doc]{rk.JS.doc}} for
+  details.}
+
+  \item{pluginmap}{A named list of options to be forwarded
+  to
+  \code{\link[rkwarddev:rk.XML.pluginmap]{rk.XML.pluginmap}},
+  to generate the pluginmap file. Not all options are
+  supported because some don't make sense in this context.
+  Valid options are: \code{"hierarchy"} and
+  \code{"require"}. If not set, their default values are
+  used. See
+  \code{\link[rkwarddev:rk.XML.pluginmap]{rk.XML.pluginmap}}
+  for details.}
+
+  \item{rkh}{A named list of options to be forwarded to
+  \code{\link[rkwarddev:rk.rkh.doc]{rk.rkh.doc}}, to
+  generate the help file. Not all options are supported
+  because some don't make sense in this context. Valid
+  options are: \code{"summary"}, \code{"usage"},
+  \code{"sections"}, \code{"settings"}, \code{"related"}
+  and \code{"technical"}. If not set, their default values
+  are used. See
+  \code{\link[rkwarddev:rk.rkh.doc]{rk.rkh.doc}} for
+  details.}
 
   \item{overwrite}{Logical, whether existing files should
   be replaced. Defaults to \code{FALSE}.}
@@ -65,79 +101,6 @@
   \item{lazyLoad}{Logical, whether the package should be
   prepared for lazy loading or not. Should be left
   \code{TRUE}, unless you have very good reasons not to.}
-
-  \item{menu}{A character string with instructions where to
-  place the plugin in the menu hierarchy, Valid values are
-  \code{"file"}, \code{"edit"}, \code{"view"},
-  \code{"workspace"}, \code{"run"}, \code{"data"},
-  \code{"analysis"}, \code{"plots"},
-  \code{"distributions"}, \code{"windows"},
-  \code{"settings"} and \code{"help"}. Anything else will
-  place it in a "test" menu.}
-
-  \item{results.header}{A character string to headline the
-  printed results.}
-
-  \item{JS.prep}{A character string with JavaScript code to
-  be included in the \code{preprocess()} function of the
-  .js file. This string will be pasted as-is, see
-  \code{\link[rkwarddev:rk.JS.doc]{rk.JS.doc}}.}
-
-  \item{JS.calc}{Either a character string with JavaScript
-  code to be included in the \code{calculate()} function of
-  the .js file. This string will be pasted as-is, see
-  \code{\link[rkwarddev:rk.JS.doc]{rk.JS.doc}}.}
-
-  \item{JS.prnt}{A character string with JavaScript code to
-  be included in the \code{printout()} function of the .js
-  file. This string will be pasted as-is, see
-  \code{\link[rkwarddev:rk.JS.doc]{rk.JS.doc}}.}
-
-  \item{var.scan}{Logical, if \code{TRUE}
-  \code{\link{rk.JS.scan}} will be called automatically to
-  to define the needed variables which will be added to the
-  code in the \code{calculate()} function.}
-
-  \item{saveobj.scan}{Logical, if \code{TRUE}
-  \code{\link{rk.JS.saveobj}} will be called automatically
-  to generate code to save R results which will be appended
-  to the code in the \code{printout()} function.}
-
-  \item{summary}{An object of class \code{XiMpLe.node} to
-  be pasted as the \code{<summary>} section of the help
-  file. See
-  \code{\link[rkwarddev:rk.rkh.summary]{rk.rkh.summary}}
-  for details.}
-
-  \item{usage}{An object of class \code{XiMpLe.node} to be
-  pasted as the \code{<usage>} section of the help file.
-  See \code{\link[rkwarddev:rk.rkh.usage]{rk.rkh.usage}}
-  for details.}
-
-  \item{sections}{A (list of) objects of class
-  \code{XiMpLe.node} to be pasted as \code{<section>}
-  sections of the help file. See
-  \code{\link[rkwarddev:rk.rkh.section]{rk.rkh.section}}
-  for details.}
-
-  \item{settings}{Either an object of class
-  \code{XiMpLe.node} to be pasted as the \code{<settings>}
-  section of the help file (see
-  \code{\link[rkwarddev:rk.rkh.settings]{rk.rkh.settings}}
-  for details), or the special value "scan", in which case
-  \code{\link{rk.rkh.scan}} will be called automatically to
-  prepare empty \code{<setting>} nodes according to the
-  plugin structure.}
-
-  \item{related}{An object of class \code{XiMpLe.node} to
-  be pasted as the \code{<related>} section. See
-  \code{\link[rkwarddev:rk.rkh.related]{rk.rkh.related}}
-  for details.}
-
-  \item{technical}{An object of class \code{XiMpLe.node} to
-  be pasted as the \code{<technical>} section. See
-  \code{\link[rkwarddev:rk.rkh.technical]{rk.rkh.technical}}
-  for details.}
 
   \item{create}{A character vector with one or more of
   these possible entries: \describe{
@@ -166,13 +129,16 @@
   \code{create}, RKWard will automatically call the created
   plugin after it was loaded (i.e., this implies and also
   sets \code{load=TRUE}).}
+
+  \item{indent.by}{A character string defining the
+  indentation string to use.}
 }
 \value{
   Character string with the path to the plugin root
   directory.
 }
 \description{
-  Create skeleton for RKWard plugins
+  Generate skeletons for RKWard plugins
 }
 \examples{
 \dontrun{
@@ -230,7 +196,7 @@ test.tabbook <- rk.XML.dialog(rk.XML.tabbook("My Tabbook", tab.labels=c("First T
 "Second Tab"), children=list(test.checkboxes, test.vars)))
 
 rk.plugin.skeleton("Square the Circle", about=about.info,
-dialog=test.tabbook, overwrite=TRUE)
+xml=list(dialog=test.tabbook), overwrite=TRUE)
 }
 }
 \seealso{
