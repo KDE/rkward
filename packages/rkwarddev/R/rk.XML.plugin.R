@@ -80,10 +80,10 @@ rk.XML.plugin <- function(name, dialog=NULL, wizard=NULL, logic=NULL, snippets=N
 					new("XiMpLe.node",
 						# add these as comments because they need editing
 						name="!--",
-						value="<convert id=\"!edit!\", mode=\"!edit!\", sources=\"!edit!\", standard=\"!edit!\" />"),
+						value="convert id=\"!edit!\", mode=\"!edit!\", sources=\"!edit!\", standard=\"!edit!\" /"),
 					new("XiMpLe.node",
 						name="!--",
-						value="<connect client=\"!edit!\", governor=\"!edit!\" />")
+						value="connect client=\"!edit!\", governor=\"!edit!\" /")
 				)
 			all.children[[length(all.children)+1]] <- new("XiMpLe.node",
 				name="logic",

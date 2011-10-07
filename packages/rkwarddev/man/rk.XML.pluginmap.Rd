@@ -9,12 +9,10 @@
 \arguments{
   \item{name}{Character string, name of the plugin.}
 
-  \item{about}{Either an object of class \code{XiMpLe.node}
-  to be pasted as the \code{<about>} section, or a list
-  with descriptive information on the plugin,its authors
-  and dependencies. See
+  \item{about}{An object of class \code{XiMpLe.node} to be
+  pasted as the \code{<about>} section, See
   \code{link[XiMpLe:rk.XML.about]{rk.XML.about}} for
-  details! Skipped if \code{NULL}.}
+  details. Skipped if \code{NULL}.}
 
   \item{components}{Either an object of class
   \code{XiMpLe.node} to be pasted as the

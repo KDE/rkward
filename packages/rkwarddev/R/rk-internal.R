@@ -213,8 +213,47 @@ node.soup <- function(nodes){
 		stop(simpleError("Nodes must be of class XiMpLe.node!"))
 	}
 	return(the.soup)
-}
-## end function node.soup()
+} ## end function node.soup()
+
+## function XML2person()
+# extracts the person/author info from XML "about" nodes
+XML2person <- function(node, eval=FALSE){
+		if(inherits(node, "XiMpLe.node")){
+			# check if this is *really* a about section, otherwise die of boredom
+			if(!identical(node@name, "about")){
+				stop(simpleError("I don't know what this is, but 'about' is not an about section!"))
+			} else {}
+		} else {
+			stop(simpleError("'about' must be a XiMpLe.node, see ?rk.XML.about()!"))
+		}
+	make.vector <- function(value){
+		if(grepl(",", value)){
+			value <- paste("c(\"", paste(trim(unlist(strsplit(value, ","))), collapse="\", \""), "\")", sep="")
+		} else {
+			value <- paste("\"", value, "\"", sep="")
+		}
+		return(value)
+	}
+	all.authors <- c()
+	for (this.child in node@children){
+		if(identical(this.child@name, "author")){
+			attrs <- this.child@attributes
+			given <- make.vector(attrs[["given"]])
+			family <- make.vector(attrs[["family"]])
+			email <- make.vector(attrs[["email"]])
+			role <- make.vector(attrs[["role"]])
+			this.author <- paste("person(given=", given, ", family=", family, ", email=", email, ", role=", role, ")", sep="")
+			all.authors[length(all.authors) + 1] <- this.author
+		} else {}
+	}
+	if(length(all.authors) > 1){
+		all.authors <- paste("c(", paste(all.authors, collapse=", "), ")", sep="")
+	} else {}
+	if(isTRUE(eval)){
+		all.authors <- eval(parse(text=all.authors))
+	} else {}
+	return(all.authors)
+} ## end function XML2person()
 
 ## function get.by.role()
 # filters a vector with person objects by roles

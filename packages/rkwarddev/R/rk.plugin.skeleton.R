@@ -1,16 +1,15 @@
 #' Generate skeletons for RKWard plugins
 #'
 #' @param name Character sting, name of the plugin package.
-#' @param about A list with descriptive information on the plugin, its authors and dependencies.
-#'		At the very least you must specify \code{name} and \code{author}.
-#'		See \code{\link[rkwarddev:rk.XML.about]{rk.XML.about}} for details and a full list of elements!
+#' @param about An object of class \code{XiMpLe.node} with descriptive information on the plugin, its authors and dependencies,
+#'		see \code{link[XiMpLe:rk.XML.about]{rk.XML.about}} for details. Skipped if \code{NULL}.
 #'		If \code{NULL}, no \code{DESCRIPTION} file will be created either.
 #' @param path Character sting, path to the main directory where the skeleton should be created.
 #' @param provides Character vector with possible entries of \code{"logic"}, \code{"dialog"} or \code{"wizard"}, defining what
 #'		sections the GUI XML file should provide even if \code{dialog}, \code{wizard} and \code{logic} are \code{NULL}.
 #'		These sections must be edited manually and some parts are therefore commented out.
 #' @param scan A character vector to trigger various automatic scans of the generated GUI XML file. Valid enties are:
-#'		\itemize{
+#'		\describe{
 #'			\item{\code{"var"}}{Calls \code{\link{rk.JS.scan}} to define all needed variables in the \code{calculate()} function
 #'				of the JavaScript file. These variables will be added to variables defined by the \code{js} option, if any (see below).}
 #'			\item{\code{"saveobj"}}{Calls \code{\link{rk.JS.saveobj}} to generate code to save R results in the \code{printout()}
@@ -35,7 +34,6 @@
 #'		Not all options are supported because some don't make sense in this context. Valid options are:
 #'		\code{"summary"}, \code{"usage"}, \code{"sections"}, \code{"settings"}, \code{"related"} and \code{"technical"}.
 #'		If not set, their default values are used. See \code{\link[rkwarddev:rk.rkh.doc]{rk.rkh.doc}} for details.
-
 #' @param overwrite Logical, whether existing files should be replaced. Defaults to \code{FALSE}.
 #' @param tests Logical, whether directories and files for plugin tests should be created.
 #'		Defaults to \code{TRUE}.
@@ -63,7 +61,7 @@
 #' @examples
 #' \dontrun{
 #' # a simple example with only basic information
-#' about.info <- list(
+#' about.info <- rk.XML.about(
 #' 	name="Square the circle",
 #' 	author=c(
 #' 		person(given="E.A.", family="Dölle",
@@ -75,7 +73,7 @@
 #' rk.plugin.skeleton("Square the Circle", about=about.info)
 #' 
 #' # a more complex example, already including some dialog elements
-#' about.info <- list(
+#' about.info <- rk.XML.about(
 #' 	name="Square the circle",
 #' 	author=c(
 #' 		person(given="E.A.", family="Dölle",
@@ -140,15 +138,7 @@ rk.plugin.skeleton <- function(name, about=NULL, path=tempdir(),
 				about.node <- about
 			}
 		} else {
-			# create an about.node, which probably has some default values
-			about.node <- rk.XML.about(
-				name=about[["name"]],
-				author=about[["author"]],
-				about=about[["about"]],
-				dependencies=about[["dependencies"]],
-				package=about[["package"]],
-				pluginmap=about[["pluginmap"]]
-			)
+			stop(simpleError("'about' must be a XiMpLe.node, see ?rk.XML.about()!"))
 		}
 	} else {
 		about.node <- NULL
@@ -329,9 +319,10 @@ rk.plugin.skeleton <- function(name, about=NULL, path=tempdir(),
 	## create DESCRIPTION file
 	if("desc" %in% create){
 		if(isTRUE(checkCreateFiles(description.file))){
-			all.authors <- format(get.by.role(about[["author"]], role="aut"),
+			authors <- XML2person(about.node, eval=TRUE)
+			all.authors <- format(get.by.role(authors, role="aut"),
 				include=c("given", "family", "email"), braces=list(email=c("<", ">")))
-			all.maintainers <- format(get.by.role(about[["author"]], role="cre"),
+			all.maintainers <- format(get.by.role(authors, role="cre"),
 				include=c("given", "family", "email"), braces=list(email=c("<", ">")))
 
 ## TODO: check and add the commented values here:
@@ -343,7 +334,7 @@ rk.plugin.skeleton <- function(name, about=NULL, path=tempdir(),
 				Version=about.node@attributes[["version"]],
 				Date=about.node@attributes[["releasedate"]],
 				Author=all.authors,
-				AuthorsR=paste(deparse(about[["author"]]), collapse=" "),
+				AuthorsR=XML2person(about.node, eval=FALSE),
 				Maintainer=all.maintainers,
 #				Depends="R (>= 2.9.0)",
 				Enhances="rkward",

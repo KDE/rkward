@@ -13,11 +13,11 @@
 \arguments{
   \item{name}{Character sting, name of the plugin package.}
 
-  \item{about}{A list with descriptive information on the
-  plugin, its authors and dependencies. At the very least
-  you must specify \code{name} and \code{author}. See
-  \code{\link[rkwarddev:rk.XML.about]{rk.XML.about}} for
-  details and a full list of elements! If \code{NULL}, no
+  \item{about}{An object of class \code{XiMpLe.node} with
+  descriptive information on the plugin, its authors and
+  dependencies, see
+  \code{link[XiMpLe:rk.XML.about]{rk.XML.about}} for
+  details. Skipped if \code{NULL}. If \code{NULL}, no
   \code{DESCRIPTION} file will be created either.}
 
   \item{path}{Character sting, path to the main directory
@@ -32,7 +32,7 @@
 
   \item{scan}{A character vector to trigger various
   automatic scans of the generated GUI XML file. Valid
-  enties are: \itemize{ \item{\code{"var"}}{Calls
+  enties are: \describe{ \item{\code{"var"}}{Calls
   \code{\link{rk.JS.scan}} to define all needed variables
   in the \code{calculate()} function of the JavaScript
   file. These variables will be added to variables defined
@@ -143,7 +143,7 @@
 \examples{
 \dontrun{
 # a simple example with only basic information
-about.info <- list(
+about.info <- rk.XML.about(
 name="Square the circle",
 author=c(
 person(given="E.A.", family="Dölle",
@@ -155,7 +155,7 @@ email="alterego@eternalwondermaths.example.org", role=c("cre","ctb"))
 rk.plugin.skeleton("Square the Circle", about=about.info)
 
 # a more complex example, already including some dialog elements
-about.info <- list(
+about.info <- rk.XML.about(
 name="Square the circle",
 author=c(
 person(given="E.A.", family="Dölle",

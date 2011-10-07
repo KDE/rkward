@@ -1,9 +1,8 @@
 #' Write a pluginmap file for RKWard
 #'
 #' @param name Character string, name of the plugin.
-#' @param about Either an object of class \code{XiMpLe.node} to be pasted as the \code{<about>} section,
-#'		or a list with descriptive information on the plugin,its authors and dependencies.
-#'		See \code{link[XiMpLe:rk.XML.about]{rk.XML.about}} for details! Skipped if \code{NULL}.
+#' @param about An object of class \code{XiMpLe.node} to be pasted as the \code{<about>} section,
+#'		See \code{link[XiMpLe:rk.XML.about]{rk.XML.about}} for details. Skipped if \code{NULL}.
 #' @param components Either an object of class \code{XiMpLe.node} to be pasted as the \code{<components>} section (see
 #'		\code{\link[rkwarddev:rk.XML.components]{rk.XML.components}} for details). Or a character vector with at least
 #'		one plugin component file name, relative path from the pluginmap file and ending with ".xml".
@@ -61,15 +60,7 @@ rk.XML.pluginmap <- function(name, about=NULL, components, hierarchy="test",
 				all.children <- list(about)
 			}
 		} else {
-			about.XML <- rk.XML.about(
-				name=name.orig,
-				author=about[["author"]],
-				about=about[["about"]],
-				dependencies=about[["dependencies"]],
-				package=about[["package"]],
-				pluginmap=about[["pluginmap"]])
-			# initialize all.children list
-			all.children <- list(about.XML)
+			stop(simpleError("'about' must be a XiMpLe.node, see ?rk.XML.about()!"))
 		}
 	} else {
 		if(isTRUE(hints)){
