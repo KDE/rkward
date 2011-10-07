@@ -254,12 +254,16 @@ rk.plugin.skeleton <- function(name, about=NULL, path=tempdir(),
 	if("rkh" %in% create){
 		if(isTRUE(checkCreateFiles(plugin.rkh))){
 			# summary=NULL, usage=NULL, sections=NULL, settings="scan", related=NULL, technical=NULL
-			got.rkh.options <- names(js)
+			got.rkh.options <- names(rkh)
 			# if settings were defined manually, this overwrites the scan
-			if("settings" %in% scan & !"settings" %in% got.rkh.options){
-				rkh[["settings"]] <- rk.rkh.settings(rk.rkh.scan(XML.plugin))
+			if(!"settings" %in% got.rkh.options){
+				if("settings" %in% scan){
+					rkh[["settings"]] <- rk.rkh.settings(rk.rkh.scan(XML.plugin))
+				} else {
+					rkh[["settings"]] <- eval(formals(rk.rkh.doc)[["settings"]])
+				}
 			} else {}
-			for (this.opt in c("summary", "usage", "sections", "settings", "related", "technical")){
+			for (this.opt in c("summary", "usage", "sections", "related", "technical")){
 				if(!this.opt %in% got.rkh.options) {
 					rkh[[this.opt]] <- eval(formals(rk.rkh.doc)[[this.opt]])
 				} else {}
