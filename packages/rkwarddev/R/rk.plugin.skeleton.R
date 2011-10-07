@@ -131,15 +131,25 @@ rk.plugin.skeleton <- function(name, about=NULL, path=tempdir(),
 	name <- clean.name(name)
 
 	if(!is.null(about)){
-		# create an about.node, which probably has some default values
-		about.node <- rk.XML.about(
-			name=about[["name"]],
-			author=about[["author"]],
-			about=about[["about"]],
-			dependencies=about[["dependencies"]],
-			package=about[["package"]],
-			pluginmap=about[["pluginmap"]]
-		)
+		if(inherits(about, "XiMpLe.node")){
+			about.node.name <- about@name
+			# check if this is *really* a about section, otherwise quit and go dancing
+			if(!identical(about.node.name, "about")){
+				stop(simpleError("I don't know what this is, but 'about' is not an about section!"))
+			} else {
+				about.node <- about
+			}
+		} else {
+			# create an about.node, which probably has some default values
+			about.node <- rk.XML.about(
+				name=about[["name"]],
+				author=about[["author"]],
+				about=about[["about"]],
+				dependencies=about[["dependencies"]],
+				package=about[["package"]],
+				pluginmap=about[["pluginmap"]]
+			)
+		}
 	} else {
 		about.node <- NULL
 		# also stop creation of DESCRIPTION file
