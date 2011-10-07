@@ -31,12 +31,12 @@ XML.single.tags <- function(tree, drop=NULL){
 			ifelse(is.null(treat.this), next, TRUE)
 			# steps are as follows, to be sure:
 			# - cut stream at beginning CDATA/comment entries
-			cut.trees <- unlist(strsplit(tree, split=treat.this[["split.start"]]))
+			cut.trees <- trim(unlist(strsplit(tree, split=treat.this[["split.start"]])))
 			# - re-add the cut-off CDATA/comment start
 			got.cut <- grep(treat.this[["split.end"]], cut.trees)
 			cut.trees[got.cut] <- paste(treat.this[["prefix"]], cut.trees[got.cut], sep="")
 			# - cut stream at ending CDATA/comment entries
-			cut.trees <- unlist(strsplit(cut.trees, split=treat.this[["split.end"]]))
+			cut.trees <- trim(unlist(strsplit(cut.trees, split=treat.this[["split.end"]])))
 			# - re-add the cut-off CDATA/comment ending
 			got.cut <- grep(treat.this[["split.start"]], cut.trees)
 			cut.trees[got.cut] <- paste(cut.trees[got.cut], treat.this[["suffix"]], sep="")
@@ -51,7 +51,7 @@ XML.single.tags <- function(tree, drop=NULL){
 				} else {
 					split.me <- TRUE
 				}
-				if(isTRUE(split.me)){
+				if(isTRUE(split.me) & grepl("(.*)<(.*)>(.*)", this.tree)){
 					return(paste(unlist(strsplit(trim(this.tree), split=">[[:space:]]*")), ">", sep=""))
 				} else {
 					return(this.tree)
@@ -60,6 +60,7 @@ XML.single.tags <- function(tree, drop=NULL){
 	} else {
 		single.tags <- paste(unlist(strsplit(tree, split=">[[:space:]]*")), ">", sep="")
 	}
+	names(single.tags) <- NULL
 	# if there's values between tags, they do now precede them
 	has.value <- grepl("^[^<]", single.tags)
 	if(any(has.value)){

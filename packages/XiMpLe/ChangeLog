@@ -1,5 +1,9 @@
 ChangeLog for package XiMpLe
 
+## 0.03-5 (2011-10-07)
+  - fixed tree parsing bug (in rare cases, comment and CDATA entries caused parsing to choke on
+    empty lines)
+
 ## 0.03-4 (2011-10-01)
   - added show methods for objects of class XiMpLe.doc and XiMpLe.node
 
