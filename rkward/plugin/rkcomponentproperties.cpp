@@ -2,7 +2,7 @@
                           rkcomponentproperties  -  description
                              -------------------
     begin                : Fri Nov 25 2005
-    copyright            : (C) 2005, 2006, 2007, 2008, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2008, 2009, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -92,6 +92,8 @@ the specialized properties (e.g. RKComponentPropertyInt::intValue () always retu
 */
 
 #include "rkcomponentproperties.h"
+
+#include <klocale.h>
 
 #include "../debug.h"
 
@@ -652,24 +654,33 @@ void RKComponentPropertyRObjects::setListLength (int min_num_objects, int min_nu
 bool RKComponentPropertyRObjects::addObjectValue (RObject *object) {
 	RK_TRACE (PLUGIN);
 
-	if (object && isObjectValid (object)) {
-		if (!object_list.contains (object)) {
-			object_list.append (object);
-			listenForObject (object);
-			checkListLengthValid ();
-			emit (valueChanged (this));
-		}
+	if (appendObject (object)) {
+		updateValidity ();
+		emit (valueChanged (this));
 		return isValid ();
 	}
 	return false;
 }
 
+bool RKComponentPropertyRObjects::appendObject (RObject *object) {
+	if ((!object) || object_list.contains (object)) return false;
+
+	object_list.append (object);
+	QString probs = checkObjectProblems (object);
+	if (!probs.isEmpty ()) problems.insert (object, probs);
+	listenForObject (object);
+	return true;
+}
+
 void RKComponentPropertyRObjects::objectRemoved (RObject *object) {
 	RK_TRACE (PLUGIN);
 
-	if (object_list.removeAll (object)) {
+	int index = object_list.indexOf (object);
+	if (index >= 0) {
+		object_list.removeAt (index);
+		problems.remove (object);
 		stopListenForObject (object);
-		checkListLengthValid ();
+		updateValidity ();
 		emit (valueChanged (this));
 	}
 }
@@ -700,6 +711,7 @@ void RKComponentPropertyRObjects::setDimensionFilter (int dimensionality, int mi
 bool RKComponentPropertyRObjects::setObjectValue (RObject *object) {
 	RK_TRACE (PLUGIN);
 
+	problems.clear ();
 	while (!object_list.isEmpty ()) {
 		stopListenForObject (object_list.takeAt (0));
 	}
@@ -715,6 +727,7 @@ void RKComponentPropertyRObjects::setObjectList (const RObject::ObjectList &newl
 	for (int i = 0; i < object_list.size (); ++i) {
 		if (!newlist.contains (object_list[i])) {
 			stopListenForObject (object_list.takeAt (i));
+			problems.remove (object_list[i]);
 			--i;
 			changes = true;
 		}
@@ -723,32 +736,32 @@ void RKComponentPropertyRObjects::setObjectList (const RObject::ObjectList &newl
 	// now add items from the new list that are not in the old list
 	for (int i = 0; i < newlist.size (); ++i) {
 		RObject *obj = newlist[i];
-		if (!object_list.contains (obj)) {
-			if (isObjectValid (obj)) {
-				object_list.append (obj);
-				listenForObject (obj);
-				changes = true;
-			}
-		}
+		if (appendObject (obj)) changes = true;
 	}
 
 	// emit a signal if there have been any changes
 	if (changes) {
-		checkListLengthValid ();
+		updateValidity ();
 		emit (valueChanged (this));
 	}
 }
 
-bool RKComponentPropertyRObjects::isObjectValid (RObject *object) {
+QString RKComponentPropertyRObjects::objectProblems (int list_index) const {
+	return problems.value (object_list.value (list_index));
+}
+
+QString RKComponentPropertyRObjects::checkObjectProblems (RObject *object) const {
 	RK_TRACE (PLUGIN);
+
+	QStringList probs;
 
 	// first check dimensionality
 	if (dims > 0) {
-		if (object->getDimensions ().size () != dims) return false;
+		if (object->getDimensions ().size () != dims) probs.append (i18n ("This object has %1 dimension(s), but %2 dimension(s) is/are expected.", object->getDimensions().size(), dims));
 	}
 	int olength = object->getLength ();
-	if ((min_length > 0) && (olength < min_length)) return false;
-	if ((max_length >= 0) && (olength > max_length)) return false;
+	if ((min_length > 0) && (olength < min_length)) probs.append (i18n ("This object has a length of %1, but a minimum length of %2 is expected.", olength, min_length));
+	if ((max_length >= 0) && (olength > max_length)) probs.append (i18n ("This object has a length of %1, but a maximum length of %2 is expected.", olength, max_length));
 
 	// next, check classes
 	if (!classes.isEmpty ()) {
@@ -760,22 +773,19 @@ bool RKComponentPropertyRObjects::isObjectValid (RObject *object) {
 			}
 			++it;
 		}
-		if (!ok) return false;
+		if (!ok) probs.append (i18n ("This object does not appear to belong to any of the classes <i>%1</i>.", classes.join (", ")));
 	}
 
 	// finally, check type
 	if (!types.isEmpty ()) {
-		// TODO: this is not entirely correct, yet
-		if (object->isVariable ()) {
-			if (!types.contains (RObject::typeToText (object->getDataType ()).toLower ())) {
-				return false;
-			}
-		} else {
-			return false;
+		QString type = RObject::typeToText (object->getDataType ()).toLower ();
+		if (!types.contains (type)) {
+			probs.append (i18n ("This object's data type is <i>%1</i>, while allowed type(s) is/are <i>%2</i>.", type, types.join (", ")));
 		}
 	}
 
-	return true;
+	if (probs.isEmpty ()) return QString ();
+	return (QString ("<ul><li>") + probs.join ("</li><li>") + "</li></ul>");
 }
 
 RObject *RKComponentPropertyRObjects::objectValue () {
@@ -823,15 +833,10 @@ bool RKComponentPropertyRObjects::setValue (const QString &value) {
 
 	for (QStringList::const_iterator it = slist.begin (); it != slist.end (); ++it) {
 		RObject *obj = RObjectList::getObjectList ()->findObject (*it);
-		if (obj && isObjectValid (obj)) {
-			object_list.append (obj);
-			listenForObject (obj);
-		} else {
-			ok = false;
-		}
+		ok = ok && appendObject (obj);
 	}
 
-	checkListLengthValid ();
+	updateValidity ();
 	emit (valueChanged (this));
 	return (isValid () && ok);
 }
@@ -843,7 +848,7 @@ bool RKComponentPropertyRObjects::isStringValid (const QString &value) {
 
 	for (QStringList::const_iterator it = slist.begin (); it != slist.end (); ++it) {
 		RObject *obj = RObjectList::getObjectList ()->findObject (*it);
-		if (!(obj && isObjectValid (obj))) {
+		if (!(obj && checkObjectProblems (obj).isEmpty ())) {
 			return false;
 		}
 	}
@@ -953,12 +958,14 @@ void RKComponentPropertyRObjects::governorValueChanged (RKComponentPropertyBase 
 void RKComponentPropertyRObjects::objectMetaChanged (RObject *object) {
 	RK_TRACE (PLUGIN);
 
-	// if object list contains this object, check whether it is still valid. Otherwise remove it, revalidize and signal change.
+	// if object list contains this object, check whether it is still valid. Otherwise check, whether it's problem set has changed, revalidize and signal change.
 	int index = object_list.indexOf (object);
 	if (index >= 0) {
-		if (!isObjectValid (object)) {
-			stopListenForObject (object_list.takeAt (index));
-			checkListLengthValid ();
+		QString probs = checkObjectProblems (object);
+		if (probs != problems.value (object)) {
+			if (probs.isEmpty ()) problems.remove (object);
+			else problems.insert (object, probs);
+			updateValidity ();
 			emit (valueChanged (this));
 		}
 	}
@@ -970,24 +977,28 @@ void RKComponentPropertyRObjects::validizeAll (bool silent) {
 	bool changes = false;
 
 	for (int i = 0; i < object_list.size (); ++i) {
-		if (!isObjectValid (object_list[i])) {
-			stopListenForObject (object_list.takeAt (i));
-			--i;
+		RObject *object = object_list[i];
+		QString probs = checkObjectProblems (object);
+		if (probs != problems.value (object)) {
+			if (probs.isEmpty ()) problems.remove (object);
+			else problems.insert (object, probs);
 			changes = true;
 		}
 	}
 
-	checkListLengthValid ();		// we should do this even if there are no changes in the list. There might have still been changes in the filter!
+	updateValidity ();		// we should do this even if there are no changes in the list. There might have still been changes in the filter!
 	if (changes) {
 		if (!silent) emit (valueChanged (this));
 	}
 }
 
-void RKComponentPropertyRObjects::checkListLengthValid () {
+void RKComponentPropertyRObjects::updateValidity () {
 	RK_TRACE (PLUGIN);
 
 	is_valid = true;	// innocent until proven guilty
-	if ((min_num_objects > 0) || (max_num_objects > 0) || (min_num_objects_if_any > 0)) {
+
+	if (!problems.isEmpty ()) is_valid = false;
+	else if ((min_num_objects > 0) || (max_num_objects > 0) || (min_num_objects_if_any > 0)) {
 		int len = object_list.count ();
 		if (len < min_num_objects) is_valid = false;
 		if (len && (len < min_num_objects_if_any)) is_valid = false;

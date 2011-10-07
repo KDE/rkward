@@ -130,14 +130,18 @@ void RKVarSlot::availablePropertyChanged (RKComponentPropertyBase *) {
 	RK_DO (qDebug ("contained in varslot: %s", available->value ().toLatin1 ().data ()), PLUGIN, DL_DEBUG);
 
 	RObject::ObjectList objlist = available->objectList ();
-	RObject::ObjectList::const_iterator it = objlist.begin ();
-	int i = 1;
-	while (it != objlist.end ()) {
+	for (int i = 0; i < objlist.count (); ++i) {
+		RObject *object = objlist[i];
+
 		QTreeWidgetItem *new_item = new QTreeWidgetItem (list);
-		new_item->setText (0, QString::number (i++));
-		new_item->setText (1, (*it)->getShortName ());
-		item_map.insert (new_item, *it);
-		++it;
+		new_item->setText (0, QString::number (i + 1));
+		new_item->setText (1, object->getShortName ());
+		QString probs = available->objectProblems (i);
+		if (!probs.isEmpty ()) {
+			new_item->setToolTip (1, i18n ("<p>This object is not allowed, here, for the following reason(s):</p>") + probs);
+			new_item->setIcon (1, RKStandardIcons::getIcon (RKStandardIcons::ActionDeleteVar));
+		}
+		item_map.insert (new_item, object);
 	}
 	if (multi) list->resizeColumnToContents (0);
 

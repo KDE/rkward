@@ -1066,6 +1066,8 @@ void completeForkMaster () {
 //	This was used to show a warning message. Unfortunately, however, forks also occur on every popen (i.e. in system(..., intern=TRUE).
 //	RKRBackend::this_pointer->handlePlainGenericRequest (QStringList ("forkNotification"), false);
 	RK_DO (qDebug ("Backend process forked (for the first time, this session)"), RBACKEND, DL_WARNING);
+//	NOTE: perhaps we can heuristically differentiate from popen by checking sys.calls() for something with "fork" in it. 
+//	esp., in case we discover adverse side-effects of blocking SIGCLD, we should attempt this
 }
 
 void completeForkChild () {

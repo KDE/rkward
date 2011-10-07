@@ -2,7 +2,7 @@
                           rkcomponentproperties  -  description
                              -------------------
     begin                : Fri Nov 25 2005
-    copyright            : (C) 2005, 2006, 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2009, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -246,9 +246,8 @@ public:
 	bool setObjectValue (RObject *object);
 /** set all the objects in the given new list (if valid), and only those. Emit a signal if there was any change */
 	void setObjectList (const RObject::ObjectList &newlist);
-/** Check whether an object is valid for this property.
-@returns false if the object does not qualify as a valid selection according to current settings (class/type/dimensions), true otherwise */
-	bool isObjectValid (RObject *object);
+/** Return a string describing the problems with the item at position list_index in the objectList(). An empty string, if there is nothing wrong with the object. */
+	QString objectProblems (int list_index) const;
 /** Get current object. If the property can hold several objects, only the first is returned. See objectList ().
 @returns 0 if no valid object is selected */
 	RObject *objectValue ();
@@ -279,11 +278,17 @@ protected:
 /** reimplemented from RObjectListener::objectMetaChanged (). This is so we get notified if the object currently selected is changed */
 	void objectMetaChanged (RObject *changed);
 private:
-/** check all objects currently in the list for validity. Remove invalid objects. Determine validity state depending on how many (valid) objects remain in the list. If the list was changed during validation, and silent!=false a valueChanged () signal is emitted */
+/** check all objects currently in the list for validity. And set validity state accordingly. */
 	void validizeAll (bool silent=false);
-/** simple helper function: Check whether the number of objects currently selected (and only that!), and set the valid state accordingly */
-	void checkListLengthValid ();
+/** simple helper function: Check whether the the list is valid (*after* each object had been validized!), and set the valid state accordingly */
+	void updateValidity ();
+/** internal helper to add the object (and check it for problems).
+ * @returns true, if the list was changed, false, if the object was already in the list or is 0. */
+	bool appendObject (RObject *object);
+/** Check any object for problems */
+	QString checkObjectProblems (RObject *object) const;
 	RObject::ObjectList object_list;
+	QMap<RObject*, QString> problems;
 	int dims;
 	int min_length;
 	int max_length;
