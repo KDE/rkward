@@ -6,6 +6,7 @@ ChangeLog for package rkwarddev
   - rk.plugin.skeleton() and rk.XML.pluginmap() now only accept rk.XML.about() made objects
     for "about"
   - rk.plugin.skeleton() uses internal function XML2person() to create nicer Authors@R entries in DESCRIPTION
+  - fixed bug in id() (now generates JS variable names, not XML IDs)
 
 ## 0.02-5 (2011-10-06)
   - added functions rk.rkh.caption(), rk.rkh.link(), rk.rkh.related(), rk.rkh.section(), rk.rkh.setting(),
