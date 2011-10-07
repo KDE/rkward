@@ -26,13 +26,13 @@
   to replace objects of class \code{XiMpLe.node} which hold
   an XML node of some plugin GUI definition, and objects of
   classes \code{rk.JS.arr} or \code{rk.JS.opt} with their
-  ID, and combine these replacements with character
-  strings.
+  ID (or JS variable name), and combine these replacements
+  with character strings.
 }
 \examples{
 # an example checkbox XML node
 cbox1 <- rk.XML.cbox(label="foo", value="foo1", id.name="CheckboxFoo.ID")
-id("The ID is: ", cbox1, "!", quote=TRUE, collapse=" + ")
+id("The variable name is: ", cbox1, "!", quote=TRUE, collapse=" + ")
 }
 \seealso{
   \code{\link[rkwarddev:rk.JS.vars]{rk.JS.vars}},

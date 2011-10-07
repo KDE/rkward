@@ -3,7 +3,7 @@
 #' This function is intended to be used for generating JavaScript code for
 #' RKWard plugins. Its sole purpose is to replace objects of class \code{XiMpLe.node}
 #' which hold an XML node of some plugin GUI definition, and objects of classes \code{rk.JS.arr} or \code{rk.JS.opt}
-#' with their ID, and combine these replacements with character strings.
+#' with their ID (or JS variable name), and combine these replacements with character strings.
 #' 
 #' @param ... One or several character strings and/or \code{XiMpLe.node} objects with plugin nodes,
 #' 	and/or objects of classes \code{rk.JS.arr} or \code{rk.JS.opt}, simply separated by comma.
@@ -20,13 +20,13 @@
 #' @examples
 #' # an example checkbox XML node
 #' cbox1 <- rk.XML.cbox(label="foo", value="foo1", id.name="CheckboxFoo.ID")
-#' id("The ID is: ", cbox1, "!", quote=TRUE, collapse=" + ")
+#' id("The variable name is: ", cbox1, "!", quote=TRUE, collapse=" + ")
 
 id <- function(..., quote=FALSE, collapse=""){
 	full.content <- list(...)
 	ID.content <- sapply(full.content, function(this.part){
 			if(inherits(this.part, "XiMpLe.node")){
-				node.id <- this.part@attributes$id
+				node.id <- camelCode(this.part@attributes$id)
 				return(node.id)
 			} else if(inherits(this.part, "rk.JS.arr") | inherits(this.part, "rk.JS.opt")){
 				node.id <- this.part@opt.name
