@@ -3,8 +3,10 @@
 #' @param ... Objects of class \code{rk.JS.ite}, \code{rk.JS.arr}, \code{rk.JS.opt} or character.
 #' @param level Integer, which indentation level to use, minimum is 1.
 #' @param indent.by A character string defining the indentation string to use.
-#' @param funct For \code{rk.JS.arr} objects only: Character string, name of the R function
+#' @param funct For \code{rk.JS.arr} and \code{rk.JS.opt} objects only: Character string, name of the R function
 #' 	to be called to combine the options, e.g. "list" for \code{list()}, or "c" for \code{c()}.
+#' @param array For \code{rk.JS.opt} objects only: Logical, whether the options should be collected
+#'		in an array or a concatenated character string.
 #' @return A character string.
 #' @include rk.JS.ite-class.R
 #' @include rk.JS.arr-class.R
@@ -16,7 +18,7 @@
 #'		and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @export
 
-rk.paste.JS <- function(..., level=1, indent.by="\t", funct=NULL){
+rk.paste.JS <- function(..., level=1, indent.by="\t", funct=NULL, array=NULL){
 	stopifnot(level > 0)
 	all.objects <- list(...)
 	
@@ -28,7 +30,7 @@ rk.paste.JS <- function(..., level=1, indent.by="\t", funct=NULL){
 			# done by an internal function, to ease handling of recursions
 			result <- paste.JS.array(this.object, level=level, indent.by=indent.by, funct=funct)
 		} else if(inherits(this.object, "rk.JS.opt")){
-			result <- paste.JS.options(this.object, level=level, indent.by=indent.by)
+			result <- paste.JS.options(this.object, level=level, indent.by=indent.by, array=array, funct=funct)
 		} else {
 			result <- paste(indent(level, by=indent.by), this.object, sep="")
 		}

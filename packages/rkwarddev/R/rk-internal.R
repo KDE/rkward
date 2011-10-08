@@ -427,10 +427,13 @@ paste.JS.array <- function(object, level=2, indent.by="\t", funct=NULL){
 	} else {}
 
 	JS.array <- paste(
+		main.indent, "// define the array ", arr.name, " for values of R option \"", option, "\"\n",
 		main.indent, "var ", arr.name, " = new Array();\n",
 		main.indent, arr.name, ".push(",
 		paste(variables, collapse=", "), ");\n",
+		main.indent, "// clean array ", arr.name, " from empty strings\n",
 		main.indent, arr.name, " = ", arr.name, ".filter(String);\n",
+		main.indent, "// set the actual variable ", opt.name, " for R option \"", option, "=", funct, "()\"\n",
 		main.indent, "if(", arr.name, ".length > 0) {\n",
 		scnd.indent, "var ", opt.name, " = \", ", option,"=",
 		funct, "(\" + ", arr.name, ".join(\", \") + \")\";\n",
@@ -449,21 +452,53 @@ paste.JS.array <- function(object, level=2, indent.by="\t", funct=NULL){
 # 
 # 	echo ('result <- t.test (' + x + ", " + y + options + ')\n');
 
+# array solution:
+# 	var arrAuthor = new Array();
+# 	if(inpGivennam) {
+# 		arrAuthor.push("given=\"" + inpGivennam + "\"");
+# 	} else {}
+# 	if(inpFamilynm) {
+# 		arrAuthor.push("family=\"" + inpFamilynm + "\"");
+# 	} else {}
+# 	if(inpEmail) {
+# 		arrAuthor.push("email=\"" + inpEmail + "\"");
+# 	} else {}
+# 	arrAuthor = arrAuthor.filter(String);
+# 
+# 	if(arrAuthor.length > 0) {
+# 		var author = ", author=person(" + arrAuthor.join(", ") + ")";
+# 	} else {
+# 		var author = "";
+# 	}
+
 ## function paste.JS.options()
-paste.JS.options <- function(object, level=2, indent.by="\t"){
+paste.JS.options <- function(object, level=2, indent.by="\t", array=NULL, funct=NULL){
 	stopifnot(inherits(object, "rk.JS.opt"))
 	# check indentation
 	main.indent <- indent(level, by=indent.by)
 	scnd.indent <- indent(level+1, by=indent.by)
 
+	variable  <- object@var.name
 	option    <- object@opt.name
+	arr.name  <- camelCode(c("arr", variable))
+	collapse  <- object@collapse
 	ifs       <- object@ifs
+	if(is.null(array)){
+		array  <- object@array
+	} else {}
+	if(is.null(funct)){
+		funct <- object@funct
+	} else {}
 
 	# a function to add the object stuff to ite objects
-	add.opts <- function(this.ite){
+	add.opts <- function(this.ite, collapse, array){
 		# remove quotes, we'll add them ourselves where needed
 		to.add <-  gsub("(.*)(\")$", "\\1", gsub("(^\")(.*)", "\\2", this.ite@thenJS, perl=TRUE), perl=TRUE)
-		this.ite@thenJS <- paste(option, " += \"", to.add,"\";", sep="")
+		if(isTRUE(array)){
+			this.ite@thenJS <- paste(arr.name, ".push(\"", to.add,"\");", sep="")
+		} else {
+			this.ite@thenJS <- paste(variable, " += \"", collapse, to.add,"\";", sep="")
+		}
 		if(length(this.ite@elifJS) == 1){
 			this.ite@elifJS <- list(add.opts(this.ite@elifJS[[1]]))
 		} else {}
@@ -471,15 +506,41 @@ paste.JS.options <- function(object, level=2, indent.by="\t"){
 	}
 
 	# the object class makes sure this is a list of rk.JS.ite objects
-	ifs.pasted <- sapply(ifs, function(thisIf){
-		paste.JS.ite(add.opts(thisIf), level=level, indent.by=indent.by)
+	ifs.pasted <- sapply(1:length(ifs), function(thisIf.num){
+		thisIf <- ifs[[thisIf.num]]
+		# skip the first collapse
+		if(thisIf.num > 1){
+			this.collapse <- collapse
+		} else {
+			this.collapse <- ""
+		}
+		paste.JS.ite(add.opts(thisIf, collapse=this.collapse, array=array), level=level+1, indent.by=indent.by)
 	})
 
 #return(ifs.pasted)
 
 	JS.options <- paste(
-		main.indent, "var ", option, ";\n",
+		if(isTRUE(array)){
+			paste(
+				main.indent, "// define the array ", arr.name, " for values of R option \"", option, "\"\n",
+				main.indent, "var ", arr.name, " = new Array();\n", sep="")
+		} else {
+			paste(main.indent, "var ", variable, " = \"\";\n", sep="")
+		},
 		paste(ifs.pasted, sep="", collapse="\n"), "\n",
+		if(isTRUE(array)){
+			paste(
+				main.indent, "// clean array ", arr.name, " from empty strings\n",
+				main.indent, arr.name, " = ", arr.name, ".filter(String);\n",
+				main.indent, "// set the actual variable ", variable, " with all values for R option \"", option, "\"\n",
+				main.indent, "if(", arr.name, ".length > 0) {\n",
+				scnd.indent, "var ", variable, " = \", ", option,"=",
+				funct, "(\" + ", arr.name, ".join(\", \") + \")\";\n",
+				main.indent, "} else {\n",
+				scnd.indent, "var ", variable, " = \"\";\n",
+				main.indent, "}\n",
+				sep="")
+		} else {},
 		sep="")
 
 	return(JS.options)

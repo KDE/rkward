@@ -10,6 +10,7 @@
 #'		\code{\link[rkwarddev:rk.JS.array]{rk.JS.array}},
 #'		\code{\link[rkwarddev:echo]{echo}},
 #'		\code{\link[rkwarddev:id]{id}},
+#'		\code{\link[rkwarddev:qp]{qp}},
 #'		and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @export
 #' @examples
@@ -30,7 +31,7 @@ ite <- function(ifjs, thenjs, elsejs=NULL){
 		} else {}
 	}
 	result <- new("rk.JS.ite",
-		ifJS=id(ifjs),
+		ifJS=id(ifjs, js=TRUE),
 		thenJS=thenjs,
 		elseJS=elsejs,
 		elifJS=elifJS

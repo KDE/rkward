@@ -10,26 +10,35 @@
 #' @param quote Logical, it the character strings sould be deparsed, so they come out "as-is" when
 #'		written to files, e.g. by \code{cat}.
 #' @param collapse Character string, defining if and how the individual elements should be glued together.
+#' @param js Logical, if \code{TRUE} returns JavaScript varaible names for \code{XiMpLe.node} objects.
+#'		Otherwise their actual ID is returned.
 #' @return A character string.
 #' @export
 #' @seealso \code{\link[rkwarddev:rk.JS.vars]{rk.JS.vars}},
 #'		\code{\link[rkwarddev:rk.JS.array]{rk.JS.array}},
 #'		\code{\link[rkwarddev:rk.JS.options]{rk.JS.options}},
 #'		\code{\link[rkwarddev:echo]{echo}},
+#'		\code{\link[rkwarddev:qp]{qp}} (a shortcut for \code{id} with different defaults),
 #'		and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' # an example checkbox XML node
 #' cbox1 <- rk.XML.cbox(label="foo", value="foo1", id.name="CheckboxFoo.ID")
-#' id("The variable name is: ", cbox1, "!", quote=TRUE, collapse=" + ")
+#' id("The variable name is: ", cbox1, "!", js=TRUE)
 
-id <- function(..., quote=FALSE, collapse=""){
+id <- function(..., quote=FALSE, collapse="", js=FALSE){
 	full.content <- list(...)
 	ID.content <- sapply(full.content, function(this.part){
 			if(inherits(this.part, "XiMpLe.node")){
-				node.id <- camelCode(this.part@attributes$id)
+				node.id <- this.part@attributes$id
+					if(isTRUE(js)){
+						node.id <- camelCode(node.id)
+					} else {}
 				return(node.id)
-			} else if(inherits(this.part, "rk.JS.arr") | inherits(this.part, "rk.JS.opt")){
+			} else if(inherits(this.part, "rk.JS.arr")){
 				node.id <- this.part@opt.name
+				return(node.id)
+			} else if(inherits(this.part, "rk.JS.opt")){
+				node.id <- this.part@var.name
 				return(node.id)
 			}else {
 				if(isTRUE(quote)){

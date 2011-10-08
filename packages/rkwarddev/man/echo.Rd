@@ -33,7 +33,8 @@ echo("bar <- \\"", cbox1, "\\"")
   \code{\link[rkwarddev:rk.JS.array]{rk.JS.array}},
   \code{\link[rkwarddev:rk.JS.options]{rk.JS.options}},
   \code{\link[rkwarddev:ite]{ite}},
-  \code{\link[rkwarddev:id]{id}}, and the
+  \code{\link[rkwarddev:id]{id}},
+  \code{\link[rkwarddev:id]{qp}}, and the
   \href{help:rkwardplugins}{Introduction to Writing Plugins
   for RKWard}
 }

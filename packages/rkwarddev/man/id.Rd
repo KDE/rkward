@@ -2,7 +2,7 @@
 \alias{id}
 \title{Replace XiMpLe.node objects with their ID value}
 \usage{
-  id(..., quote = FALSE, collapse = "")
+  id(..., quote = FALSE, collapse = "", js = FALSE)
 }
 \arguments{
   \item{...}{One or several character strings and/or
@@ -16,6 +16,10 @@
 
   \item{collapse}{Character string, defining if and how the
   individual elements should be glued together.}
+
+  \item{js}{Logical, if \code{TRUE} returns JavaScript
+  varaible names for \code{XiMpLe.node} objects. Otherwise
+  their actual ID is returned.}
 }
 \value{
   A character string.
@@ -32,13 +36,15 @@
 \examples{
 # an example checkbox XML node
 cbox1 <- rk.XML.cbox(label="foo", value="foo1", id.name="CheckboxFoo.ID")
-id("The variable name is: ", cbox1, "!", quote=TRUE, collapse=" + ")
+id("The variable name is: ", cbox1, "!", js=TRUE)
 }
 \seealso{
   \code{\link[rkwarddev:rk.JS.vars]{rk.JS.vars}},
   \code{\link[rkwarddev:rk.JS.array]{rk.JS.array}},
   \code{\link[rkwarddev:rk.JS.options]{rk.JS.options}},
-  \code{\link[rkwarddev:echo]{echo}}, and the
+  \code{\link[rkwarddev:echo]{echo}},
+  \code{\link[rkwarddev:qp]{qp}} (a shortcut for \code{id}
+  with different defaults), and the
   \href{help:rkwardplugins}{Introduction to Writing Plugins
   for RKWard}
 }

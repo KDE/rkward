@@ -13,6 +13,7 @@
 #'		\code{\link[rkwarddev:rk.JS.options]{rk.JS.options}},
 #'		\code{\link[rkwarddev:ite]{ite}},
 #'		\code{\link[rkwarddev:id]{id}},
+#'		\code{\link[rkwarddev:id]{qp}},
 #'		and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @export
 #' @examples
@@ -20,7 +21,7 @@
 #' echo("bar <- \"", cbox1, "\"")
 
 echo <- function(..., newline=""){
-	ID.content <- id(..., quote=TRUE,  collapse=" + ")
+	ID.content <- qp(...)
 	result <- paste("echo(", ID.content, ");", newline, sep="")
 	return(result)
 }

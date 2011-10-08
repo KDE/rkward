@@ -2,7 +2,8 @@
 \alias{rk.JS.options}
 \title{Combine several options in one JavaScript variable}
 \usage{
-  rk.JS.options(var, ...)
+  rk.JS.options(var, ..., collapse = ", ", option = NULL,
+  funct = "c", array = TRUE)
 }
 \arguments{
   \item{var}{Character string, name of the JavaScript
@@ -11,9 +12,25 @@
   \item{...}{A list of objects of class \code{rk.JS.ite}
   (see \code{\link[rkwarddev:ite]{ite}}). Use the
   \code{thenjs} element only to define the value to add to
-  the option (e.g., \code{", paired=TRUE"} or \code{id(",
-  conf.level=\"", conflevel, "\"", quote=TRUE, collapse= "
-  + ")}.}
+  the option (e.g., \code{"paired=TRUE"} or
+  \code{qp("conf.level=\"", conflevel, "\"")}.}
+
+  \item{collapse}{Character string, how all options should
+  be concatenated on the R code level.}
+
+  \item{option}{A character string, naming, e.g., an option
+  of an R function which should be constructed from several
+  variables. Only used if \code{array=TRUE}.}
+
+  \item{funct}{Character string, name of the R function to
+  be called to combine the options, e.g. "list" for
+  \code{list()}, or "c" for \code{c()}. Only used if
+  \code{array=TRUE}.}
+
+  \item{array}{Logical, if \code{TRUE} will generate the
+  options as an array, otherwise in one concatenated
+  character string (probably only useful for mandatory
+  options).}
 }
 \value{
   An object of class \code{rk.JS.opt}, use
@@ -28,7 +45,7 @@ checkA <- rk.XML.cbox(label="Run Test A", value="A")
 checkB <- rk.XML.cbox(label="Run it fast", value="true")
 # combine them into one JavaScript options variable
 rk.JS.options("optionsTestA",
-ite(checkA, id("test=\\"", checkA, "\\"", quote=TRUE, collapse= " + ")),
+ite(checkA, qp("test=\\"", checkA, "\\"")),
 ite(checkB, "fast=TRUE")
 )
 }

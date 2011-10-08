@@ -1,5 +1,11 @@
 ChangeLog for package rkwarddev
 
+## 0.03-1 (2011-10-08)
+  - added new shortcut function qp() -- "quote + plus" -- for id()
+  - added option to create arrays with rk.JS.options()
+  - enhanced class rk.JS.opt
+  - rk.paste.JS() now adds some comments to the generated code
+
 ## 0.03-0 (2011-10-07)
   - redesigned options for rk.plugin.skeleton() again, to make them more intuitive and flexible
     at the same time. unfortunately, this breaks backwards compatibility again.
