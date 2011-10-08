@@ -29,8 +29,6 @@
 #else
 #	include <QLocalSocket>
 #	include <QMutex>
-#	include "kcomponentdata.h"
-#	include "kglobal.h"
 #	include "rktransmitter.h"
 #	include <stdio.h>
 #endif
@@ -81,13 +79,15 @@
 	RKRBackendThread* RKRBackendThread::instance = 0;
 #else
 #	include "rkbackendtransmitter.h"
+#	include <QUuid>		// mis-used as a random-string generator
+#	include <QTemporaryFile>
+#	include <QDir>
 
-#	include "ktemporaryfile.h"
-#	include "krandom.h"
+	extern "C" void RK_setupGettext (const char*);
 	int RK_Debug_Level = 2;
 	int RK_Debug_Flags = ALL;
 	QMutex RK_Debug_Mutex;
-	KTemporaryFile* RK_Debug_File;
+	QTemporaryFile* RK_Debug_File;
 
 	void RKDebugMessageOutput (QtMsgType type, const char *msg) {
 		RK_Debug_Mutex.lock ();
@@ -102,28 +102,27 @@
 
 	int main(int argc, char *argv[]) {
 		QCoreApplication app (argc, argv);
-		KComponentData data ("rkward");
-		KGlobal::locale ();		// to initialize it in the primary thread
 
 		setvbuf (stdout, NULL, _IONBF, 0);
 		setvbuf (stderr, NULL, _IONBF, 0);
 
-		RK_Debug_File = new KTemporaryFile ();
-		RK_Debug_File->setPrefix ("rkward.rbackend");
+		RK_Debug_File = new QTemporaryFile (QDir::tempPath () + "/rkward.rbackend");
 		RK_Debug_File->setAutoRemove (false);
 		if (RK_Debug_File->open ()) qInstallMsgHandler (RKDebugMessageOutput);
 
 		QString servername;
-		QString data_dir;
+		QString data_dir, locale_dir;
 		QStringList args = app.arguments ();
 		for (int i = 1; i < args.count (); ++i) {
 			if (args[i].startsWith ("--debug-level")) {
-				RK_Debug_Level = args[i].section (' ', 1).toInt ();
+				RK_Debug_Level = args[i].section ('=', 1).toInt ();
 			} else if (args[i].startsWith ("--server-name")) {
-				servername = args[i].section (' ', 1);
+				servername = args[i].section ('=', 1);
 			} else if (args[i].startsWith ("--data-dir")) {
 #warning What about paths with spaces?!
-				data_dir = args[i].section (' ', 1);
+				data_dir = args[i].section ('=', 1);
+			} else if (args[i].startsWith ("--locale-dir")) {
+				locale_dir = args[i].section ('=', 1);
 			} else {
 				printf ("unkown argument %s", qPrintable (args[i]));
 			}
@@ -133,16 +132,16 @@
 			return 1;
 		}
 
-		// a simple security token to all the frontend to make sure that it is really talking to the backend process that it started in the local socket connection.
+		// a simple security token to send to the frontend to make sure that it is really talking to the backend process that it started in the local socket connection.
 		// this token is sent both via stdout and the local socket connection. The frontend simply compares both values.
-		QString token = KRandom::randomString (32);
+		QString token = QUuid::createUuid ().toString ();
 		printf ("%s\n", token.toLocal8Bit ().data ());
 		fflush (stdout);
 
 		RKRBackendTransmitter transmitter (servername, token);
 		RKRBackendProtocolBackend backend (data_dir);
 		transmitter.start ();
-		RKRBackend::this_pointer->run ();
+		RKRBackend::this_pointer->run (locale_dir);
 		transmitter.quit ();
 		transmitter.wait (5000);
 

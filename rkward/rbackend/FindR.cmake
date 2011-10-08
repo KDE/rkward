@@ -68,7 +68,7 @@ ENDIF(NOT R_H)
 MESSAGE(STATUS "Checking for existence of R shared library")
 FIND_LIBRARY(LIBR_SO
 	R
-	PATHS ${R_HOME}/lib ${R_SHAREDLIBDIR} ${R_HOME}/bin
+	PATHS ${R_HOME}/lib ${R_SHAREDLIBDIR} ${R_HOME}/bin ${R_HOME}/bin/i386
 	NO_DEFAULT_PATH)
 IF(NOT LIBR_SO)
 	MESSAGE(FATAL_ERROR "Not found. Make sure the location of R was detected correctly, above, and R was compiled with the --enable-R-shlib option")

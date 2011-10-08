@@ -53,11 +53,12 @@
 #include <kcmdlineargs.h>
 #include <kaboutdata.h>
 #include <klocale.h>
-#include <ktemporaryfile.h>
 #include <kstandarddirs.h>
 
 #include <qstring.h>
 #include <QMutex>
+#include <QTemporaryFile>
+#include <QDir>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -154,7 +155,7 @@ int main(int argc, char *argv[]) {
 
 	RKWardApplication app;
 	// install message handler *after* the componentData has been initialized
-	RKSettingsModuleDebug::debug_file = new KTemporaryFile ();
+	RKSettingsModuleDebug::debug_file = new QTemporaryFile (QDir::tempPath () + "/rkward.frontend");
 	RKSettingsModuleDebug::debug_file->setAutoRemove (false);
 	if (RKSettingsModuleDebug::debug_file->open ()) {
 		RK_DO (qDebug ("Full debug output is at %s", qPrintable (RKSettingsModuleDebug::debug_file->fileName ())), APP, DL_INFO);

@@ -19,7 +19,6 @@
 #include <klocale.h>
 #include <kconfig.h>
 #include <kconfiggroup.h>
-#include <ktemporaryfile.h>
 
 #include <qlayout.h>
 #include <qlabel.h>
@@ -27,12 +26,13 @@
 #include <QCheckBox>
 #include <QGroupBox>
 #include <QButtonGroup>
+#include <QTemporaryFile>
 
 #include "../misc/rkspinbox.h"
 #include "../rkglobals.h"
 #include "../debug.h"
 
-KTemporaryFile* RKSettingsModuleDebug::debug_file = 0;
+QTemporaryFile* RKSettingsModuleDebug::debug_file = 0;
 
 RKSettingsModuleDebug::RKSettingsModuleDebug (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
 	RK_TRACE (SETTINGS);

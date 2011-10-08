@@ -21,7 +21,7 @@
 
 class RKSpinBox;
 class QButtonGroup;
-class KTemporaryFile;
+class QTemporaryFile;
 
 /**
 configuration for the Command Editor windows
@@ -49,7 +49,7 @@ public slots:
 	void settingChanged (int);
 public:
 	// public for internal reason, only! Do not mess with this!
-	static KTemporaryFile* debug_file;
+	static QTemporaryFile* debug_file;
 private:
 	RKSpinBox* command_timeout_box;
 	RKSpinBox* debug_level_box;

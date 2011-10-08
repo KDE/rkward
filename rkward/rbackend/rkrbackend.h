@@ -87,7 +87,7 @@ public:
 
 /** initializes the R-backend. Emits an RCallbackType::Started-request (with any error messages) when done.
 Note that you should call initialize only once in a application */
-	void initialize ();
+	void initialize (const char* locale_dir);
 
 	void enterEventLoop ();
 protected:
@@ -171,7 +171,7 @@ handleHistoricalSubstackRequest(). Exactly which requests get handled by which f
 /** A list of symbols that have been assigned new values during the current command */
 	QStringList changed_symbol_names;
 /** the main loop. See \ref RKRBackend for a more detailed description */
-	void run ();
+	void run (const QString &locale_dir);
 	static void scheduleInterrupt ();
 
 	void startOutputCapture ();

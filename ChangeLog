@@ -1,3 +1,4 @@
+- The backend executable is no longer linked against KDE libraries
 - Objects, which are not acceptable in a varslot, will still be shown, there, with a warning		TODO: add a UI to override
 
 --- Version 0.5.7 - Oct-23-2011

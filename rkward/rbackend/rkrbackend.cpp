@@ -39,7 +39,6 @@ void* RKRBackend::default_global_context = 0;
 #include <QThread>
 #include <QDir>
 #include <qtextcodec.h>
-#include <klocale.h>
 
 #include "../core/robject.h"
 #include "../version.h"
@@ -100,6 +99,23 @@ extern "C" {
 #	include <fcntl.h>
 #endif
 
+///// i18n
+#if (defined ENABLE_NLS) && (!defined RKWARD_THREADED)		// ENABLE_NLS is from Rconfig.h
+#	include <libintl.h>
+#	define RK_MSG_DOMAIN "rkward"
+	// define i18n to be compatible with the easiest usage in KDE
+#	define i18n(msgid) QString::fromUtf8(dgettext(RK_MSG_DOMAIN, msgid))
+	void RK_setupGettext (const char* locale_dir) {
+		bindtextdomain (RK_MSG_DOMAIN, locale_dir);
+		bind_textdomain_codeset (RK_MSG_DOMAIN, "UTF-8");
+	}
+#else
+#	define i18n(msgid) QString(msgid)
+	void RK_setupGettext (const char*) {};
+#endif
+
+
+///// interrupting R
 void RK_scheduleIntr () {
 	RK_DO (qDebug ("interrupt scheduled"), RBACKEND, DL_DEBUG);
 	RKRBackend::repl_status.interrupted = true;
@@ -1293,12 +1309,12 @@ void RKRBackend::printAndClearCapturedMessages (bool with_header) {
 	catToOutputFile (out);
 }
 
-void RKRBackend::run () {
+void RKRBackend::run (const QString &locale_dir) {
 	RK_TRACE (RBACKEND);
 	killed = NotKilled;
 	previous_command = 0;
 
-	initialize ();
+	initialize (QFile::encodeName (locale_dir));
 
 	enterEventLoop ();
 }
@@ -1434,7 +1450,7 @@ QStringList RKRBackend::handlePlainGenericRequest (const QStringList &parameters
 	return request.params.value ("return").toStringList ();
 }
 
-void RKRBackend::initialize () {
+void RKRBackend::initialize (const char *locale_dir) {
 	RK_TRACE (RBACKEND);
 
 	// in RInterface::RInterface() we have created a fake RCommand to capture all the output/errors during startup. Fetch it
@@ -1446,6 +1462,7 @@ void RKRBackend::initialize () {
 	bool lib_load_fail = false;
 	bool sink_fail = false;
 	if (!runDirectCommand ("library (\"rkward\")\n")) lib_load_fail = true;
+	RK_setupGettext (locale_dir);	// must happen *after* package loading, since R will re-set it
 	if (!runDirectCommand (QString ("stopifnot(.rk.app.version==\"%1\")\n").arg (RKWARD_VERSION))) lib_load_fail = true;
 	if (!runDirectCommand (".rk.fix.assignments ()\n")) sink_fail = true;
 

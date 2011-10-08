@@ -57,10 +57,19 @@ void RKFrontendTransmitter::run () {
 
 	// start backend
 	backend = new QProcess (this);
+
+	// Try to synchronize language selection in frontend and backend
+	QStringList env = QProcess::systemEnvironment ();
+	int index = env.indexOf (QRegExp("^LANGUAGE=.*", Qt::CaseInsensitive));
+	if (index >= 0) env.removeAt (index);
+	env.append ("LANGUAGE=" + KGlobal::locale ()->language ());
+	backend->setEnvironment (env);
+
 	QStringList args;
-	args.append ("--debug-level " + QString::number (RK_Debug_Level));
-	args.append ("--server-name " + server->fullServerName ());
-	args.append ("--data-dir " + RKSettingsModuleGeneral::filesPath ());
+	args.append ("--debug-level=" + QString::number (RK_Debug_Level));
+	args.append ("--server-name=" + server->fullServerName ());
+	args.append ("--data-dir=" + RKSettingsModuleGeneral::filesPath ());
+	args.append ("--locale-dir=" + KGlobal::dirs()->findResourceDir ("locale", KGlobal::locale ()->language () + "/LC_MESSAGES/rkward.mo"));
 	connect (backend, SIGNAL (finished (int, QProcess::ExitStatus)), this, SLOT (backendExit (int)));
 	QString backend_executable = KStandardDirs::findExe (QDir::toNativeSeparators (QCoreApplication::applicationDirPath () + "/rkward.rbackend"));
 	if (backend_executable.isEmpty ()) backend_executable = KStandardDirs::findExe (QDir::toNativeSeparators (QCoreApplication::applicationDirPath () + "/rbackend/rkward.rbackend"));	// for running directly from the build-dir
