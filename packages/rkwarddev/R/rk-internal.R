@@ -425,6 +425,13 @@ paste.JS.array <- function(object, level=2, indent.by="\t", funct=NULL){
 	if(is.null(funct)){
 		funct <- object@funct
 	} else {}
+	if(is.null(funct) | identical(funct, "")){
+		funct.start <- ""
+		funct.end <- ""
+	} else {
+		funct.start <- paste("=", funct, "(", sep="")
+		funct.end <- ")"
+	}
 
 	JS.array <- paste(
 		main.indent, "// define the array ", arr.name, " for values of R option \"", option, "\"\n",
@@ -433,10 +440,13 @@ paste.JS.array <- function(object, level=2, indent.by="\t", funct=NULL){
 		paste(variables, collapse=", "), ");\n",
 		main.indent, "// clean array ", arr.name, " from empty strings\n",
 		main.indent, arr.name, " = ", arr.name, ".filter(String);\n",
-		main.indent, "// set the actual variable ", opt.name, " for R option \"", option, "=", funct, "()\"\n",
+		main.indent, "// set the actual variable ", opt.name,
+		ifelse(identical(option, ""), "", paste(" for R option \"", option, sep="")),
+		ifelse(identical(funct, ""), "\"", paste("=", funct, "()\"", sep="")), "\n",
 		main.indent, "if(", arr.name, ".length > 0) {\n",
-		scnd.indent, "var ", opt.name, " = \", ", option,"=",
-		funct, "(\" + ", arr.name, ".join(\", \") + \")\";\n",
+		scnd.indent, "var ", opt.name, " = \", ",
+		ifelse(identical(option, ""), "", paste(option, "=", sep="")),
+		funct.start, "\" + ", arr.name, ".join(\", \") + \"",funct.end,"\";\n",
 		main.indent, "} else {\n",
 		scnd.indent, "var ", opt.name, " = \"\";\n",
 		main.indent, "}\n",
@@ -489,15 +499,24 @@ paste.JS.options <- function(object, level=2, indent.by="\t", array=NULL, funct=
 	if(is.null(funct)){
 		funct <- object@funct
 	} else {}
+	if(is.null(funct) | identical(funct, "")){
+		funct.start <- ""
+		funct.end <- ""
+	} else {
+		funct.start <- paste(funct, "(", sep="")
+		funct.end <- ")"
+	}
 
 	# a function to add the object stuff to ite objects
 	add.opts <- function(this.ite, collapse, array){
-		# remove quotes, we'll add them ourselves where needed
-		to.add <-  gsub("(.*)(\")$", "\\1", gsub("(^\")(.*)", "\\2", this.ite@thenJS, perl=TRUE), perl=TRUE)
+#		# remove quotes, we'll add them ourselves where needed
+#		to.add <-  gsub("(.*)(\")$", "\\1", gsub("(^\")(.*)", "\\2", this.ite@thenJS, perl=TRUE), perl=TRUE)
 		if(isTRUE(array)){
-			this.ite@thenJS <- paste(arr.name, ".push(\"", to.add,"\");", sep="")
+#			this.ite@thenJS <- paste(arr.name, ".push(\"", to.add,"\");", sep="")
+			this.ite@thenJS <- paste(arr.name, ".push(", this.ite@thenJS,");", sep="")
 		} else {
-			this.ite@thenJS <- paste(variable, " += \"", collapse, to.add,"\";", sep="")
+#			this.ite@thenJS <- paste(variable, " += \"", collapse, to.add,"\";", sep="")
+			this.ite@thenJS <- paste(variable, " += ", collapse, this.ite@thenJS,";", sep="")
 		}
 		if(length(this.ite@elifJS) == 1){
 			this.ite@elifJS <- list(add.opts(this.ite@elifJS[[1]]))
@@ -534,8 +553,9 @@ paste.JS.options <- function(object, level=2, indent.by="\t", array=NULL, funct=
 				main.indent, arr.name, " = ", arr.name, ".filter(String);\n",
 				main.indent, "// set the actual variable ", variable, " with all values for R option \"", option, "\"\n",
 				main.indent, "if(", arr.name, ".length > 0) {\n",
-				scnd.indent, "var ", variable, " = \", ", option,"=",
-				funct, "(\" + ", arr.name, ".join(\", \") + \")\";\n",
+				scnd.indent, "var ", variable, " = \"", collapse,
+				ifelse(identical(option, ""), "", paste(option, "=", sep="")),
+				funct.start, "\" + ", arr.name, ".join(\", \") + \"",funct.end,"\";\n",
 				main.indent, "} else {\n",
 				scnd.indent, "var ", variable, " = \"\";\n",
 				main.indent, "}\n",

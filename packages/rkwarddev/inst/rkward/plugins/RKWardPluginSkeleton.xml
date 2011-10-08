@@ -1,0 +1,109 @@
+<!DOCTYPE rkplugin >
+<document>
+	<code file="RKWardPluginSkeleton.js" />
+	<help file="RKWardPluginSkeleton.rkh" />
+	<include file="../RKWardPluginSkeleton.pluginmap" />
+	<logic>
+		<connect governor="chc_Dfndpndn.state" client="frm_DpndsRKW.enabled" />
+		<connect governor="chc_Dfndpndn.state" client="frm_DpndsnRv.enabled" />
+	</logic>
+	<dialog label="RKWard Plugin Skeleton">
+		<tabbook id="tbbk_PlgnSklt" label="Plugin Skeleton">
+			<tab label="About the plugin" id="tbb_Abtthplg">
+				<column>
+					<frame label="About the plugin" id="frm_Abtthplg">
+						<row>
+							<input label="Plugin name" id="inp_Pluginnm" size="small" required="true" />
+							<input label="License" id="inp_License" initial="GPL (&gt;= 3)" required="true" />
+						</row>
+						<row>
+							<input label="Short description" id="inp_Shrtdscr" required="true" />
+						</row>
+						<row>
+							<input label="Version number" id="inp_Vrsnnmbr" initial="0.01-0" required="true" />
+							<input label="Release date (empty for today)" id="inp_Rlsdtmpt" />
+						</row>
+						<row>
+							<input label="Homepage" id="inp_Homepage" />
+							<input label="Category" id="inp_Category" />
+						</row>
+					</frame>
+					<frame label="Plugin author" id="frm_Plugnthr">
+						<row>
+							<column>
+								<input label="Given name" id="inp_Givennam" required="true" />
+								<input label="Family name" id="inp_Familynm" required="true" />
+								<input label="E-mail" id="inp_Email" required="true" />
+								<stretch />
+							</column>
+							<column>
+								<frame label="Author roles" id="frm_Authrrls">
+									<checkbox id="chc_Author" label="Author" value="aut" checked="true" />
+									<checkbox id="chc_Maintanr" label="Maintainer" value="cre" checked="true" />
+									<stretch />
+								</frame>
+							</column>
+						</row>
+					</frame>
+				</column>
+			</tab>
+			<tab label="Create options" id="tbb_Cretptns">
+				<column>
+					<frame>
+						<row>
+							<browser label="Directory to save to (empty for $TEMPDIR)" type="dir" id="brw_DTEMPDIR" required="false" />
+						</row>
+						<row>
+							<column>
+								<checkbox id="chc_Ovrwrtxs" label="Overwrite existing files" value="true" />
+								<checkbox id="chc_Addwzrds" label="Add wizard section" value="true" />
+								<checkbox id="chc_Incldplg" label="Include plugin tests" value="true" checked="true" />
+								<stretch />
+							</column>
+							<column>
+								<checkbox id="chc_Opnflsfr" label="Open files for editing" value="true" checked="true" />
+								<checkbox id="chc_AddplRKW" label="Add plugin to RKWard configuration" value="true" checked="true" />
+								<checkbox id="chc_Shwthplg" label="Show the plugin" value="true" />
+								<stretch />
+							</column>
+						</row>
+						<row>
+							<dropdown id="drp_Plcntpmn" label="Place in top menu">
+								<option label="Test (created if needed)" value="test" checked="true" />
+								<option label="File" value="file" />
+								<option label="Edit" value="edit" />
+								<option label="View" value="view" />
+								<option label="Workspace" value="workspace" />
+								<option label="Run" value="run" />
+								<option label="Data" value="data" />
+								<option label="Analysis" value="analysis" />
+								<option label="Plots" value="plots" />
+								<option label="Distributions" value="distributions" />
+								<option label="Windows" value="windows" />
+								<option label="Settings" value="settings" />
+								<option label="Help" value="help" />
+							</dropdown>
+						</row>
+					</frame>
+					<frame label="Dependencies" id="frm_Depndncs">
+						<row>
+							<checkbox id="chc_Dfndpndn" label="Define dependencies" value="true" />
+						</row>
+						<row>
+							<frame label="Depends on RKWard version" id="frm_DpndsRKW">
+								<input label="RKWard min" id="inp_RKWardmn" size="small" />
+								<input label="RKWard max" id="inp_RKWardmx" size="small" />
+								<stretch />
+							</frame>
+							<frame label="Depends on R version" id="frm_DpndsnRv">
+								<input label="R min" id="inp_Rmin" size="small" />
+								<input label="R max" id="inp_Rmax" size="small" />
+								<stretch />
+							</frame>
+						</row>
+					</frame>
+				</column>
+			</tab>
+		</tabbook>
+	</dialog>
+</document>

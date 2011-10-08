@@ -3,7 +3,7 @@
 \title{Create XML node "browser" for RKWard plugins}
 \usage{
   rk.XML.browser(label, type = "file", initial = NULL, urls
-  = FALSE, filter = NULL, required = FALSE, id.name =
+  = FALSE, filter = NULL, required = TRUE, id.name =
   "auto")
 }
 \arguments{

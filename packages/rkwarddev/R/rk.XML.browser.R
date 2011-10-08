@@ -17,7 +17,7 @@
 #' cat(pasteXMLNode(test.browser))
 
 
-rk.XML.browser <- function(label, type="file", initial=NULL, urls=FALSE, filter=NULL, required=FALSE, id.name="auto"){
+rk.XML.browser <- function(label, type="file", initial=NULL, urls=FALSE, filter=NULL, required=TRUE, id.name="auto"){
 	attr.list <- list(label=label)
 
 	if(length(type) == 1 & type %in% c("dir", "file", "savefile")){
@@ -40,8 +40,8 @@ rk.XML.browser <- function(label, type="file", initial=NULL, urls=FALSE, filter=
 	if(!is.null(filter)){
 		attr.list[["filter"]] <- paste(filter, collapse=" ")
 	} else {}
-	if(isTRUE(required)){
-		attr.list[["required"]] <- "true"
+	if(!isTRUE(required)){
+		attr.list[["required"]] <- "false"
 	} else {}
 
 	node <- new("XiMpLe.node",

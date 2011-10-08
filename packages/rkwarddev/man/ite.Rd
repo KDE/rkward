@@ -5,11 +5,17 @@
   ite(ifjs, thenjs, elsejs = NULL)
 }
 \arguments{
-  \item{ifjs}{A character string, to be placed in the
-  brackets if an \code{if()} statement.}
+  \item{ifjs}{Either a character string to be placed in the
+  brackets if an \code{if()} statement, or an object of
+  class \code{XiMpLe.node}. \code{rk.JS.arr} or
+  \code{rk.JS.opt} (whose identifier will be used).}
 
-  \item{thenjs}{A character string, the code to be executed
-  in case the \code{if()} statement is true.}
+  \item{thenjs}{Either a character string, the code to be
+  executed in case the \code{if()} statement is true, or an
+  object of class \code{XiMpLe.node}. \code{rk.JS.arr} or
+  \code{rk.JS.opt} (whose identifier will be used). The
+  latter is especially useful in combination with
+  \code{\link[rkwarddev:rk.JS.options]{rk.JS.options}}.}
 
   \item{elsejs}{A character string, the code to be executed
   in case the \code{if()} statement is not true.}
@@ -30,6 +36,7 @@ ite(cbox1, echo("bar <- \\"", cbox1, "\\""), echo("bar <- NULL"))
   \code{\link[rkwarddev:rk.paste.JS]{rk.paste.JS}},
   \code{\link[rkwarddev:rk.JS.vars]{rk.JS.vars}},
   \code{\link[rkwarddev:rk.JS.array]{rk.JS.array}},
+  \code{\link[rkwarddev:rk.JS.options]{rk.JS.options}},
   \code{\link[rkwarddev:echo]{echo}},
   \code{\link[rkwarddev:id]{id}},
   \code{\link[rkwarddev:qp]{qp}}, and the
