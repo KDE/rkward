@@ -23,9 +23,9 @@
 #' @examples
 #' # an example checkbox XML node
 #' cbox1 <- rk.XML.cbox(label="foo", value="foo1", id.name="CheckboxFoo.ID")
-#' id("The variable name is: ", cbox1, "!", js=TRUE)
+#' id("The variable name is: ", cbox1, "!")
 
-id <- function(..., quote=FALSE, collapse="", js=FALSE){
+id <- function(..., quote=FALSE, collapse="", js=TRUE){
 	full.content <- list(...)
 	ID.content <- sapply(full.content, function(this.part){
 			if(inherits(this.part, "XiMpLe.node")){

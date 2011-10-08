@@ -2,7 +2,7 @@
 \alias{id}
 \title{Replace XiMpLe.node objects with their ID value}
 \usage{
-  id(..., quote = FALSE, collapse = "", js = FALSE)
+  id(..., quote = FALSE, collapse = "", js = TRUE)
 }
 \arguments{
   \item{...}{One or several character strings and/or
@@ -36,7 +36,7 @@
 \examples{
 # an example checkbox XML node
 cbox1 <- rk.XML.cbox(label="foo", value="foo1", id.name="CheckboxFoo.ID")
-id("The variable name is: ", cbox1, "!", js=TRUE)
+id("The variable name is: ", cbox1, "!")
 }
 \seealso{
   \code{\link[rkwarddev:rk.JS.vars]{rk.JS.vars}},
