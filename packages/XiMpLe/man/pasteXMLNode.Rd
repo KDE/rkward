@@ -3,7 +3,7 @@
 \title{Paste an XML node from a XiMpLe.node object}
 \usage{
   pasteXMLNode(node, level = 1, shine = 1, indent.by =
-  "\t")
+  "\t", tidy = TRUE)
 }
 \arguments{
   \item{node}{An object of class \code{XiMpLe.node}.}
@@ -18,6 +18,10 @@
 
   \item{indent.by}{A charachter string defining how
   indentation should be done. Defaults to tab.}
+
+  \item{tidy}{Logical, if \code{TRUE} the special
+  characters "<" and ">" will be replaced with the entities
+  "&lt;" and "gt;" in attributes and text values.}
 }
 \description{
   Paste an XML node from a XiMpLe.node object

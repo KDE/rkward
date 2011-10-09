@@ -103,6 +103,18 @@ indent <- function(level, by="\t"){
 	paste(rep(by, level-1), collapse="")
 } ## end function indent()
 
+## function xml.tidy()
+# replace special character < and > from attributes or text values
+# with harmless entities
+xml.tidy <- function(text){
+	if(is.character(text)){
+		tidy.text <- gsub("<", "&lt;", gsub(">", "&gt;", text))
+	} else {
+		return(text)
+	}
+	return(tidy.text)
+} ## function xml.tidy()
+
 ## function lookupAttrName()
 # takes the original input element names and returns
 # the according XML attribute name
@@ -117,9 +129,13 @@ lookupAttrName <- function(tag, attr, rename){
 
 ## function pasteXMLAttr()
 # pastes all attributes in a nicely readable way
-pasteXMLAttr <- function(attr=NULL, tag=NULL, level=1, rename=NULL, shine=2, indent.by="\t"){
+pasteXMLAttr <- function(attr=NULL, tag=NULL, level=1, rename=NULL, shine=2, indent.by="\t", tidy=FALSE){
 	if(is.null(attr)){
 		return("")
+	} else {}
+
+	if(isTRUE(tidy)){
+		attr <- sapply(attr, xml.tidy)
 	} else {}
 
 	new.indent <- ifelse(shine > 1, indent(level+1, by=indent.by), "")

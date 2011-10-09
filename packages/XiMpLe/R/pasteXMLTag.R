@@ -20,10 +20,12 @@
 #'			\item{2}{Nodes will be indented and each attribute gets a new line.}
 #'		}
 #' @param indent.by A charachter string defining how indentation should be done. Defaults to tab.
+#' @param tidy Logical, if \code{TRUE} the special characters "<" and ">" will be replaced with the entities
+#'		"&lt;" and "gt;" in attribute values.
 #' @export
-pasteXMLTag <- function(tag, attr=NULL, child=NULL, empty=TRUE, level=1, allow.empty=FALSE, rename=NULL, shine=2, indent.by="\t"){
+pasteXMLTag <- function(tag, attr=NULL, child=NULL, empty=TRUE, level=1, allow.empty=FALSE, rename=NULL, shine=2, indent.by="\t", tidy=TRUE){
 	# what attributes do we have?
-	all.attributes <- pasteXMLAttr(attr, tag=tag, level=level, rename=rename, shine=shine, indent.by=indent.by)
+	all.attributes <- pasteXMLAttr(attr, tag=tag, level=level, rename=rename, shine=shine, indent.by=indent.by, tidy=tidy)
 	# probaly don't produce empty tags
 	if(!isTRUE(allow.empty) & is.null(all.attributes)){
 		return("")

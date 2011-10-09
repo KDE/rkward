@@ -4,7 +4,7 @@
 \usage{
   pasteXMLTag(tag, attr = NULL, child = NULL, empty = TRUE,
   level = 1, allow.empty = FALSE, rename = NULL, shine = 2,
-  indent.by = "\t")
+  indent.by = "\t", tidy = TRUE)
 }
 \arguments{
   \item{tag}{Character string, name of the XML tag.}
@@ -37,6 +37,10 @@
 
   \item{indent.by}{A charachter string defining how
   indentation should be done. Defaults to tab.}
+
+  \item{tidy}{Logical, if \code{TRUE} the special
+  characters "<" and ">" will be replaced with the entities
+  "&lt;" and "gt;" in attribute values.}
 }
 \description{
   Creates a whole XML tag with attributes and, if it is a

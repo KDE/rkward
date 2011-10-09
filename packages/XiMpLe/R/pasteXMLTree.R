@@ -8,14 +8,16 @@
 #'			\item{2}{Nodes will be indented and each attribute gets a new line.}
 #'		}
 #' @param indent.by A charachter string defining how indentation should be done. Defaults to tab.
+#' @param tidy Logical, if \code{TRUE} the special characters "<" and ">" will be replaced with the entities
+#'		"&lt;" and "gt;" in attributes and text values.
 #' @include XiMpLe.doc-class.R
 #' @export
-pasteXMLTree <- function(obj, shine=1, indent.by="\t"){
+pasteXMLTree <- function(obj, shine=1, indent.by="\t", tidy=TRUE){
 	if(!inherits(obj, "XiMpLe.doc")){
 		if(inherits(obj, "XiMpLe.node")){
 			# hand over to pasteXMLNode()
 			warning("'node' is of class XiMpLe.node, called pasteXMLNode() instead.")
-			return(pasteXMLNode(node=obj, shine=shine, indent.by=indent.by))
+			return(pasteXMLNode(node=obj, shine=shine, indent.by=indent.by, tidy=tidy))
 		} else {
 			stop(simpleError("'obj' must be of class XiMpLe.doc!"))
 		}
@@ -27,7 +29,7 @@ pasteXMLTree <- function(obj, shine=1, indent.by="\t"){
 	tree.nodes <- slot(obj, "children")
 
 	if(any(nchar(unlist(tree.xml)) > 0)) {
-		doc.xml <- pasteXMLTag("?xml", attr=tree.xml, child=NULL, empty=TRUE, level=1, allow.empty=FALSE, rename=NULL, shine=min(1, shine), indent.by=indent.by)
+		doc.xml <- pasteXMLTag("?xml", attr=tree.xml, child=NULL, empty=TRUE, level=1, allow.empty=FALSE, rename=NULL, shine=min(1, shine), indent.by=indent.by, tidy=tidy)
 		doc.xml <- gsub("/>", "\\?>", doc.xml)
 	} else {
 		doc.xml <- ""
@@ -48,7 +50,7 @@ pasteXMLTree <- function(obj, shine=1, indent.by="\t"){
 
 	if(length(tree.nodes) > 0) {
 		doc.nodes <- paste(unlist(sapply(tree.nodes, function(this.node){
-			return(pasteXMLNode(this.node, level=1, shine=shine, indent.by=indent.by))})), collapse="", sep="")
+			return(pasteXMLNode(this.node, level=1, shine=shine, indent.by=indent.by, tidy=tidy))})), collapse="", sep="")
 	} else {
 		doc.nodes <- ""
 	}

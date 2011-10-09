@@ -1,5 +1,9 @@
 ChangeLog for package XiMpLe
 
+## 0.03-6 (2011-10-09)
+  - added "tidy" option to the paste functions, which is TRUE by default since "<" and ">" are
+    invalid in attributes and text anyway
+
 ## 0.03-5 (2011-10-07)
   - fixed tree parsing bug (in rare cases, comment and CDATA entries caused parsing to choke on
     empty lines)
