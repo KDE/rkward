@@ -4,7 +4,7 @@
 #' "column", "copy", "dropdown", "embed", "formula", "frame", "include", "input", "insert",
 #' "preview", "radio", "row", "saveobject", "spinbox", "stretch", "tabbook", "text", "varselector" and "varslot".
 #'
-#' @param nodes A (list of) objects of class \code{XiMpLe.node}. 
+#' @param ... Objects of class \code{XiMpLe.node}.
 #' @param label Character string, a text label for this plugin element.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
@@ -17,10 +17,12 @@
 #' test.input <- rk.XML.input("Type some text")
 #' test.cbox1 <- rk.XML.cbox(label="Want to type?", val="true")
 #' test.cbox2 <- rk.XML.cbox(label="Are you shure?", val="true")
-#' test.dialog <- rk.XML.dialog(rk.XML.col(list(test.input, test.cbox1, test.cbox2)))
+#' test.dialog <- rk.XML.dialog(rk.XML.col(test.input, test.cbox1, test.cbox2))
 #' cat(pasteXMLNode(test.dialog))
 
-rk.XML.dialog <- function(nodes, label=NULL){
+rk.XML.dialog <- function(..., label=NULL){
+	nodes <- list(...)
+
 	# check the node names and allow only valid ones
 	node.names <- sapply(child.list(nodes), function(this.node){
 			this.node@name
@@ -34,10 +36,17 @@ rk.XML.dialog <- function(nodes, label=NULL){
 		stop(simpleError(paste("Invalid XML nodes for dialog section: ", paste(node.names[invalid.sets], collapse=", "), sep="")))
 	} else {}
 
+	if(!is.null(label)){
+		attr.list <- list(label=label)
+	} else {
+		attr.list <- list()
+	}
+
 	node <- new("XiMpLe.node",
 			name="dialog",
-			attributes=list(label=label),
-			children=child.list(nodes)
+			attributes=attr.list,
+			children=child.list(nodes),
+			value=""
 		)
 
 	return(node)

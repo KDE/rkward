@@ -2,11 +2,10 @@
 \alias{rk.XML.snippet}
 \title{Create XML "snippet" node for RKWard plugins}
 \usage{
-  rk.XML.snippet(nodes, id.name = "auto")
+  rk.XML.snippet(..., id.name = "auto")
 }
 \arguments{
-  \item{nodes}{A (list of) objects of class
-  \code{XiMpLe.node}.}
+  \item{...}{Objects of class \code{XiMpLe.node}.}
 
   \item{id.name}{Character string, a unique ID for this
   plugin element. If \code{"auto"}, an ID will be generated

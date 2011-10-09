@@ -2,14 +2,15 @@
 \alias{rk.XML.page}
 \title{Create XML "page" node for RKWard plugins}
 \usage{
-  rk.XML.page(nodes, id.name = NULL)
+  rk.XML.page(..., id.name = "auto")
 }
 \arguments{
-  \item{nodes}{A (list of) objects of class
-  \code{XiMpLe.node}.}
+  \item{...}{Objects of class \code{XiMpLe.node}.}
 
   \item{id.name}{Character string, a unique ID for this
-  plugin element.}
+  plugin element. If \code{"auto"}, an ID will be generated
+  automatically from the objects in \code{...}. If
+  \code{NULL}, no ID will be given.}
 }
 \value{
   An object of class \code{XiMpLe.node}.
@@ -27,8 +28,8 @@
 test.cbox1 <- rk.XML.cbox(label="More than 30 subjects", val="true")
 # define the wizard
 test.text <- rk.XML.text("Did you test more than 30 subjects?")
-test.copy <- rk.XML.copy(id.name=test.cbox1)
-test.wizard <- rk.XML.wizard(rk.XML.page(list(test.text, test.copy)))
+test.copy <- rk.XML.copy(id=test.cbox1)
+test.wizard <- rk.XML.wizard(rk.XML.page(test.text, test.copy))
 cat(pasteXMLNode(test.wizard))
 }
 \seealso{

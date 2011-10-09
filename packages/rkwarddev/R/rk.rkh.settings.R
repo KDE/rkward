@@ -2,7 +2,7 @@
 #'
 #' This function will create a settings node for the document section, with optional child nodes "setting" and "caption".
 #'
-#' @param nodes A (list of) objects of class \code{XiMpLe.node}. They must all have the name "setting" or "caption".
+#' @param ... Objects of class \code{XiMpLe.node}. They must all have the name "setting" or "caption".
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
@@ -10,7 +10,7 @@
 #'		\code{\link[rkwarddev:rk.rkh.setting]{rk.rkh.setting}},
 #'		\code{\link[rkwarddev:rk.rkh.caption]{rk.rkh.caption}},
 #'		and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
-# @examples
+#' @examples
 #' # define a sample frame
 #' test.dropdown <- rk.XML.dropdown("mydrop",
 #'   options=list("First Option"=c(val="val1"),
@@ -22,20 +22,18 @@
 #' test.settings <- rk.rkh.settings(list(test.caption, test.setting))
 # cat(pasteXMLNode(test.settings))
 
-rk.rkh.settings <- function(nodes=NULL){
-	if(!is.null(nodes)){
-		# check the node names and allow only valid ones
-		node.names <- sapply(child.list(nodes), function(this.node){
-				this.node@name
-			})
+rk.rkh.settings <- function(...){
+	nodes <- list(...)
 
-		invalid.sets <- !node.names %in% c("setting", "caption")
-		if(any(invalid.sets)){
-			stop(simpleError(paste("Invalid XML nodes for settings section: ", paste(node.names[invalid.sets], collapse=", "), sep="")))
-		} else {}
-	} else {
-		nodes <- list()
-	}
+	# check the node names and allow only valid ones
+	node.names <- sapply(child.list(nodes), function(this.node){
+			this.node@name
+		})
+
+	invalid.sets <- !node.names %in% c("setting", "caption")
+	if(any(invalid.sets)){
+		stop(simpleError(paste("Invalid XML nodes for settings section: ", paste(node.names[invalid.sets], collapse=", "), sep="")))
+	} else {}
 
 	node <- new("XiMpLe.node",
 			name="settings",

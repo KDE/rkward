@@ -2,12 +2,11 @@
 \alias{rk.XML.snippets}
 \title{Create XML "snippets" node for RKWard plugins}
 \usage{
-  rk.XML.snippets(nodes = NULL)
+  rk.XML.snippets(...)
 }
 \arguments{
-  \item{nodes}{A (list of) objects of class
-  \code{XiMpLe.node}. They must all have the name
-  "snippet".}
+  \item{...}{Objects of class \code{XiMpLe.node}. They must
+  all have the name "snippet".}
 }
 \value{
   An object of class \code{XiMpLe.node}.

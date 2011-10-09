@@ -1,5 +1,15 @@
 ChangeLog for package rkwarddev
 
+## 0.03-3 (2011-10-09)
+  - replaced most of the "nodes" and "children" options with "..." in functions rk.rkh.related(), rk.rkh.settings(),
+    rk.XML.col(), rk.XML.components(), rk.XML.context(), rk.XML.dialog(), rk.XML.frame(), rk.XML.hierarchy(), rk.XML.logic(),
+    rk.XML.page(), rk.XML.row(), rk.XML.snippet(), rk.XML.snippets() and rk.XML.wizard(). therefore, you don't
+    need to list() objects any more.
+  - any function which generates an ID now has an automation mechanism for it, which is also the default.
+
+## 0.03-2 (2011-10-09)
+  - fixed skeleton GUI pluginmap not being found
+
 ## 0.03-1 (2011-10-08)
   - added new shortcut function qp() -- "quote + plus" -- for id()
   - added option to create arrays with rk.JS.options()

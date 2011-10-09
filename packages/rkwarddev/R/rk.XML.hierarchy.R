@@ -3,7 +3,7 @@
 #' This function will create a hierarchy section for .pluginmap files,
 #' with mandatory child nodes "menu".
 #'
-#' @param nodes A (list of) objects of class \code{XiMpLe.node}, must all be "menu".
+#' @param ... Objects of class \code{XiMpLe.node}, must all be "menu".
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
@@ -19,7 +19,9 @@
 #' test.hierarchy <- rk.XML.hierarchy(test.menu)
 #' cat(pasteXMLNode(test.hierarchy))
 
-rk.XML.hierarchy <- function(nodes){
+rk.XML.hierarchy <- function(...){
+	nodes <- list(...)
+
 	# check the node names and allow only valid ones
 	node.names <- sapply(child.list(nodes), function(this.node){
 			this.node@name
@@ -33,7 +35,8 @@ rk.XML.hierarchy <- function(nodes){
 
 	node <- new("XiMpLe.node",
 			name="hierarchy",
-			children=child.list(nodes)
+			children=child.list(nodes),
+			value=""
 		)
 
 	return(node)

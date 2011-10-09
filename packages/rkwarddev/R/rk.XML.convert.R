@@ -42,7 +42,7 @@
 #'		\code{\link[rkwarddev:rk.XML.set]{rk.XML.set}},
 #'		and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
-#' test.convert <- rk.XML.convert(c(string="foo"), mode=c(notequals="bar"))
+#' test.convert <- rk.XML.convert(list(string="foo"), mode=c(notequals="bar"))
 #' cat(pasteXMLNode(test.convert))
 
 rk.XML.convert <- function(sources, mode=c(), required=FALSE, id.name="auto"){

@@ -44,7 +44,7 @@ rk.XML.tabbook <- function(label=NULL, tab.labels, children=list(), id.name="aut
 	}
 
 	if(identical(id.name, "auto")){
-		tab.ids <- auto.ids(tab.labels, prefix=ID.prefix("tabbook", length=3))
+		tab.ids <- auto.ids(tab.labels, prefix=ID.prefix("tab", length=3))
 	} else {}
 	tabs <- sapply(1:num.tabs, function(this.num){
 			this.tab <- tab.labels[[this.num]]

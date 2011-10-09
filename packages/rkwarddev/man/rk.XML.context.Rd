@@ -2,11 +2,11 @@
 \alias{rk.XML.context}
 \title{Create XML "context" node for RKWard plugins}
 \usage{
-  rk.XML.context(nodes, id = "x11")
+  rk.XML.context(..., id = "x11")
 }
 \arguments{
-  \item{nodes}{A (list of) objects of class
-  \code{XiMpLe.node}, must all be "menu".}
+  \item{...}{Objects of class \code{XiMpLe.node}, must all
+  be "menu".}
 
   \item{id}{Character string, either "x11" or "import".}
 }

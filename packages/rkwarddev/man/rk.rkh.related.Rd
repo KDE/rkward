@@ -2,11 +2,11 @@
 \alias{rk.rkh.related}
 \title{Create XML "related" node for RKWard help pages}
 \usage{
-  rk.rkh.related(links = NULL, text = NULL)
+  rk.rkh.related(..., text = NULL)
 }
 \arguments{
-  \item{links}{A (list of) objects of class
-  \code{XiMpLe.node}. They must all have the name "link".}
+  \item{...}{Objects of class \code{XiMpLe.node}. They must
+  all have the name "link".}
 
   \item{text}{Character string, the text to be displayed.}
 }
@@ -15,6 +15,11 @@
 }
 \description{
   Create XML "related" node for RKWard help pages
+}
+\examples{
+package.link <- rk.rkh.link("Spice")
+plugin.related <- rk.rkh.related(package.link)
+cat(pasteXMLNode(plugin.related))
 }
 \seealso{
   \code{\link[rkwarddev:rk.rkh.doc]{rk.rkh.doc}} and the

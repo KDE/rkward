@@ -2,7 +2,7 @@
 #'
 #' This function will create a components node for a .pluginmap file, with mandatory child nodes "component".
 #'
-#' @param nodes A (list of) objects of class \code{XiMpLe.node}. They must all have the name "component".
+#' @param ... Objects of class \code{XiMpLe.node}. They must all have the name "component".
 #' @return A list of objects of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
@@ -14,7 +14,9 @@
 #' test.components <- rk.XML.components(test.component)
 #' cat(pasteXMLNode(test.components))
 
-rk.XML.components <- function(nodes){
+rk.XML.components <- function(...){
+	nodes <- list(...)
+
 	# check the node names and allow only valid ones
 	sapply(child.list(nodes), function(this.node){
 			node.name <- this.node@name
@@ -25,7 +27,8 @@ rk.XML.components <- function(nodes){
 
 	node <- new("XiMpLe.node",
 			name="components",
-			children=child.list(nodes)
+			children=child.list(nodes),
+			value=""
 		)
 
 	return(node)

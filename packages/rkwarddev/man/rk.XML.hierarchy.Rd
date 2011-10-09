@@ -2,11 +2,11 @@
 \alias{rk.XML.hierarchy}
 \title{Create XML hierarchy section for RKWard plugins}
 \usage{
-  rk.XML.hierarchy(nodes)
+  rk.XML.hierarchy(...)
 }
 \arguments{
-  \item{nodes}{A (list of) objects of class
-  \code{XiMpLe.node}, must all be "menu".}
+  \item{...}{Objects of class \code{XiMpLe.node}, must all
+  be "menu".}
 }
 \value{
   An object of class \code{XiMpLe.node}.

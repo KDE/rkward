@@ -17,7 +17,14 @@ auto.ids <- function(identifiers, prefix=NULL, suffix=NULL, chars=8){
 child.list <- function(children){
 	if(inherits(children, "XiMpLe.node")){
 		children <- list(children)
-	} else {}
+	} else {
+		# if already a list, check if it's a list in a list and get it out
+		if(inherits(children, "list") & length(children) == 1){
+			if(inherits(children[[1]], "list")){
+				children <- children[[1]]
+			} else {}
+		} else {}
+	}
 	return(children)
 } ## end function child.list()
 
@@ -207,11 +214,13 @@ ID.prefix <- function(initial, abbr=TRUE, length=3, dot=FALSE){
 ## function node.soup()
 # pastes the nodes as XML, only alphanumeric characters, e.g. to generate auto-IDs
 node.soup <- function(nodes){
-	if(inherits(nodes, "XiMpLe.node")){
-		the.soup <- gsub("[^[:alnum:]]", "", pasteXMLNode(nodes, shine=0))
-	} else {
-		stop(simpleError("Nodes must be of class XiMpLe.node!"))
-	}
+	the.soup <- paste(unlist(sapply(child.list(nodes), function(this.node){
+			if(inherits(this.node, "XiMpLe.node")){
+				return(gsub("[^[:alnum:]]", "", pasteXMLNode(this.node, shine=0)))
+			} else {
+				stop(simpleError("Nodes must be of class XiMpLe.node!"))
+			}
+		})), sep="", collapse="")
 	return(the.soup)
 } ## end function node.soup()
 

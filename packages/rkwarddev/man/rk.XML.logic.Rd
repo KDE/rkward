@@ -2,11 +2,10 @@
 \alias{rk.XML.logic}
 \title{Create XML logic section for RKWard plugins}
 \usage{
-  rk.XML.logic(nodes)
+  rk.XML.logic(...)
 }
 \arguments{
-  \item{nodes}{A list of objects of class
-  \code{XiMpLe.node}.}
+  \item{...}{Objects of class \code{XiMpLe.node}.}
 }
 \value{
   An object of class \code{XiMpLe.node}.
@@ -24,12 +23,12 @@ test.cbox2 <- rk.XML.cbox(label="Are you shure?", value="true")
 # now create some logic so that the input field is only enabled when both boxes are checked
 test.convert <- rk.XML.convert(c(state=test.cbox1,state=test.cbox2), mode=c(and=""))
 test.connect <- rk.XML.connect(governor=test.convert, client=test.input, set="enabled")
-test.logic <- rk.XML.logic(nodes=list(test.convert, test.connect))
+test.logic <- rk.XML.logic(test.convert, test.connect)
 cat(pasteXMLNode(test.logic))
 
 # with only one checkbox, you can directly query if it's checked
 test.connect2 <- rk.XML.connect(governor=test.cbox1, client=test.input, set="enabled")
-test.logic2 <- rk.XML.logic(nodes=list(test.connect2))
+test.logic2 <- rk.XML.logic(test.connect2)
 cat(pasteXMLNode(test.logic2))
 }
 \seealso{

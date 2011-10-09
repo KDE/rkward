@@ -4,7 +4,7 @@
 #' "column", "copy", "dropdown", "embed", "formula", "frame", "include", "input", "insert",
 #' "page", "preview", "radio", "row", "saveobject", "spinbox", "stretch", "tabbook", "text", "varselector" and "varslot".
 #'
-#' @param nodes A (list of) objects of class \code{XiMpLe.node}
+#' @param ... Objects of class \code{XiMpLe.node}
 #' @param label Character string, a text label for this plugin element.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
@@ -21,7 +21,9 @@
 #' test.wizard <- rk.XML.wizard(rk.XML.page(list(test.text, test.copy)))
 #' cat(pasteXMLNode(test.wizard))
 
-rk.XML.wizard <- function(nodes, label=NULL){
+rk.XML.wizard <- function(..., label=NULL){
+	nodes <- list(...)
+
 	# check the node names and allow only valid ones
 	node.names <- sapply(child.list(nodes), function(this.node){
 			this.node@name
@@ -35,10 +37,17 @@ rk.XML.wizard <- function(nodes, label=NULL){
 		stop(simpleError(paste("Invalid XML nodes for wizard section: ", paste(node.names[invalid.sets], collapse=", "), sep="")))
 	} else {}
 
+	if(!is.null(label)){
+		attr.list <- list(label=label)
+	} else {
+		attr.list <- list()
+	}
+
 	node <- new("XiMpLe.node",
 			name="wizard",
-			attributes=list(label=label),
-			children=child.list(nodes)
+			attributes=attr.list,
+			children=child.list(nodes),
+			value=""
 		)
 
 	return(node)

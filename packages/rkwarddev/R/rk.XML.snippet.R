@@ -2,7 +2,7 @@
 #'
 #' This function will create a snippet node for snippets sections.
 #'
-#' @param nodes A (list of) objects of class \code{XiMpLe.node}.
+#' @param ... Objects of class \code{XiMpLe.node}.
 #' @param id.name Character string, a unique ID for this plugin element.
 #'		If \code{"auto"}, an ID will be generated automatically from the tag names and
 #'		IDs of the given nodes.
@@ -18,7 +18,9 @@
 #' test.snippet <- rk.XML.snippet(test.formula)
 #' cat(pasteXMLNode(test.snippet))
 
-rk.XML.snippet <- function(nodes, id.name="auto"){
+rk.XML.snippet <- function(..., id.name="auto"){
+	nodes <- list(...)
+
 	if(identical(id.name, "auto")){
 		# try autogenerating some id
 		id.name <- auto.ids(node.soup(nodes), prefix=ID.prefix("snippet"), chars=10)
@@ -29,7 +31,8 @@ rk.XML.snippet <- function(nodes, id.name="auto"){
 	node <- new("XiMpLe.node",
 			name="snippet",
 			attributes=list(id=id.name),
-			children=child.list(nodes)
+			children=child.list(nodes),
+			value=""
 		)
 
 	return(node)

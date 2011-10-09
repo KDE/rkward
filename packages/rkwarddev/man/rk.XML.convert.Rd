@@ -60,7 +60,7 @@
   automatically checked for that tag.
 }
 \examples{
-test.convert <- rk.XML.convert(c(string="foo"), mode=c(notequals="bar"))
+test.convert <- rk.XML.convert(list(string="foo"), mode=c(notequals="bar"))
 cat(pasteXMLNode(test.convert))
 }
 \seealso{

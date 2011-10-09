@@ -3,7 +3,7 @@
 #' This function will create a context node for .pluginmap files,
 #' with mandatory child nodes "menu".
 #' 
-#' @param nodes A (list of) objects of class \code{XiMpLe.node}, must all be "menu".
+#' @param ... Objects of class \code{XiMpLe.node}, must all be "menu".
 #' @param id Character string, either "x11" or "import".
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
@@ -19,7 +19,9 @@
 #' test.context <- rk.XML.context(test.menu)
 #' cat(pasteXMLNode(test.context))
 
-rk.XML.context <- function(nodes, id="x11"){
+rk.XML.context <- function(..., id="x11"){
+	nodes <- list(...)
+
 	# check the node names and allow only valid ones
 	node.names <- sapply(child.list(nodes), function(this.node){
 			this.node@name
@@ -38,7 +40,8 @@ rk.XML.context <- function(nodes, id="x11"){
 	node <- new("XiMpLe.node",
 			name="context",
 			attributes=list(id=id),
-			children=child.list(nodes)
+			children=child.list(nodes),
+			value=""
 		)
 
 	return(node)

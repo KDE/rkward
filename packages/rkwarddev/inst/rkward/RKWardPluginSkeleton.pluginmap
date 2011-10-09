@@ -6,8 +6,8 @@
 	<about 
 		name="Plugin Skeleton"
 		shortinfo="GUI interface to create RKWard plugin skeletons"
-		version="0.03-1"
-		releasedate="2011-10-08"
+		version="0.03-3"
+		releasedate="2011-10-09"
 		url="http://rkward.sf.net"
 		license="GPL (>= 3)"
 	>

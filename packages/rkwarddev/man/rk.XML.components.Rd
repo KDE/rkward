@@ -2,12 +2,11 @@
 \alias{rk.XML.components}
 \title{Create XML "components" node for RKWard plugins}
 \usage{
-  rk.XML.components(nodes)
+  rk.XML.components(...)
 }
 \arguments{
-  \item{nodes}{A (list of) objects of class
-  \code{XiMpLe.node}. They must all have the name
-  "component".}
+  \item{...}{Objects of class \code{XiMpLe.node}. They must
+  all have the name "component".}
 }
 \value{
   A list of objects of class \code{XiMpLe.node}.
