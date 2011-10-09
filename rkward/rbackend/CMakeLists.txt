@@ -61,7 +61,13 @@ IF(RBACKEND_SPLIT)
 	ADD_EXECUTABLE(rkward.rbackend ${rbackend_BACKEND_SRCS})
 	FIND_PACKAGE(Gettext REQUIRED)
 	TARGET_LINK_LIBRARIES(rkward.rbackend ${R_USED_LIBS} ${CMAKE_THREAD_LIBS_INIT} ${QT_QTNETWORK_LIBRARY} ${QT_QTCORE_LIBRARY} ${GETTEXT_LIBRARIES})
-	INSTALL(TARGETS rkward.rbackend DESTINATION ${LIBEXEC_INSTALL_DIR})
+	IF(WIN32)
+		# on Widows, we install to the rbackend subdirectory, because 1) LIBEXEC_INSTALL_DIR == BIN_INSTALL_DIR and 2) we don't want the backend to pick up
+		# all the KDE library versions, first, when loading DLLs
+		INSTALL(TARGETS rkward.rbackend DESTINATION ${BIN_INSTALL_DIR}/rbackend)
+	ELSE(WIN32)
+		INSTALL(TARGETS rkward.rbackend DESTINATION ${LIBEXEC_INSTALL_DIR})
+	ENDIF(WIN32)
 ELSE(RBACKEND_SPLIT)
 	SET (
 		rbackend_ALL_SRCS

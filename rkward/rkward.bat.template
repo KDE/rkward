@@ -17,6 +17,7 @@ ECHO Initializing KDE
 ECHO Starting RKWard
 SET RKWARD.BIN=%~dsp0\rkward.frontend.exe
 SET RKWARD_ENSURE_PREFIX=%~dsp0\..
+SET PATH=%~dsp0;%PATH%
 SET DEBUGGER=
 
 IF NOT "%1" == "--debugger" GOTO run
