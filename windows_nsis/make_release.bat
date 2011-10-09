@@ -1,9 +1,10 @@
 SET KDEPREFIXDRIVE=c:
 SET KDEPREFIX=KDE
-SET RHOMEDRIVE=F:
-SET RHOME=KDE/lib/R
+SET RHOMEDRIVE=C:
+SET RHOME=Programme/R/R-2.12.0
 
 SET SH_PATH=C:\Rtools\bin
+SET MINGW_PATH=C:\Mingw\bin
 SET MAKENSIS=c:/programme/nsis/makensis.exe
 
 REM --------------------------------------------
@@ -26,9 +27,14 @@ cmake %SOURCE_DIR% -G "MinGW Makefiles" -DCMAKE_INSTALL_PREFIX=%KDEPREFIXDRIVE%/
 REM sh.exe must not be in path during cmake call, but must be in path for R package install...
 SET PATH=%PATH%;%SH_PATH%
 mingw32-make install DESTDIR=%INSTALL_DIR%
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 move %INSTALL_DIR%/%RHOME% %INSTALL_DIR%/_RHOME_
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 move %INSTALL_DIR%/%KDEPREFIX% %INSTALL_DIR%/_KDEPREFIX_
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
+copy /Y %MINGW_PATH%\libgcc_s_dw2-1.dll %RELEASE_DIR%\install\_KDEPREFIX_\bin\
+IF %ERRORLEVEL% NEQ 0 GOTO ERROR
 
 REM Prepare Version info for use in NSIS
 echo !define RKWARD_VERSION \ > %RELEASE_DIR%/rkward_version.nsh
@@ -40,3 +46,10 @@ svg2ico "%SOURCE_DIR%\rkward\icons\app-icon\hisc-app-rkward.svgz" "%RELEASE_DIR%
 
 cd %RELEASE_DIR%
 "%MAKENSIS%" installer.nsi
+
+GOTO END
+
+:ERROR
+echo "There has been an error. Aborting."
+
+:END
