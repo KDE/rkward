@@ -58,18 +58,6 @@ rk.rkh.doc <- function(summary=NULL, usage=NULL, sections=NULL, settings=NULL, r
 		all.children[[length(all.children)+1]] <- summary
 	}
 
-# 	rkh.summary <- new("XiMpLe.node",
-# 			name="summary")
-# 	if(is.null(summary)){
-# 		rkh.summary@value <- ""
-# 	} else if(is.list(summary)){
-# 		rkh.summary@children <- summary
-# 	} else if(inherits(summary, "XiMpLe.node")){
-# 		rkh.summary@children <- list(summary)
-# 	} else {
-# 		rkh.summary@value <- summary
-# 	}
-
 	if(is.null(usage)){
 		all.children[[length(all.children)+1]] <- rk.rkh.usage()
 	} else {
@@ -84,18 +72,6 @@ rk.rkh.doc <- function(summary=NULL, usage=NULL, sections=NULL, settings=NULL, r
 		} else {}
 		all.children[[length(all.children)+1]] <- usage
 	}
-
-# 	rkh.usage <- new("XiMpLe.node",
-# 			name="usage")
-# 	if(is.null(usage)){
-# 		rkh.usage@value <- ""
-# 	} else if(is.list(usage)){
-# 		rkh.usage@children <- usage
-# 	} else if(inherits(usage, "XiMpLe.node")){
-# 		rkh.usage@children <- list(usage)
-# 	} else {
-# 		rkh.usage@value <- usage
-# 	}
 
 	if(is.null(sections)){
 		all.children[[length(all.children)+1]] <- new("XiMpLe.node",
@@ -132,18 +108,6 @@ rk.rkh.doc <- function(summary=NULL, usage=NULL, sections=NULL, settings=NULL, r
 		all.children[[length(all.children)+1]] <- settings
 	}
 
-# 	rkh.settings <- new("XiMpLe.node",
-# 			name="settings")
-# 	if(is.null(settings)){
-# 		rkh.settings@value <- ""
-# 	} else if(is.list(settings)){
-# 		rkh.settings@children <- settings
-# 	} else if(inherits(settings, "XiMpLe.node")){
-# 		rkh.settings@children <- list(settings)
-# 	} else {
-# 		rkh.settings@value <- settings
-# 	}
-
 	if(is.null(related)){
 		all.children[[length(all.children)+1]] <- new("XiMpLe.node",
  				name="!--",
@@ -161,20 +125,6 @@ rk.rkh.doc <- function(summary=NULL, usage=NULL, sections=NULL, settings=NULL, r
 		all.children[[length(all.children)+1]] <- related
 	}
 
-# 	rkh.related <- new("XiMpLe.node",
-# 			name="related")
-# 	if(is.null(related)){
-# 		rkh.related@children <- list(new("XiMpLe.node",
-# 				name="!--",
-# 				value="<ul><li><link href=\"rkward://rhelp/...\"/></li></ul>"))
-# 	} else if(is.list(related)){
-# 		rkh.related@children <- related
-# 	} else if(inherits(related, "XiMpLe.node")){
-# 		rkh.related@children <- list(related)
-# 	} else {
-# 		rkh.related@value <- related
-# 	}
-
 	if(is.null(technical)){
 		all.children[[length(all.children)+1]] <- rk.rkh.technical()
 	} else {
@@ -189,18 +139,6 @@ rk.rkh.doc <- function(summary=NULL, usage=NULL, sections=NULL, settings=NULL, r
 		} else {}
 		all.children[[length(all.children)+1]] <- technical
 	}
-
-# 	rkh.technical <- new("XiMpLe.node",
-# 			name="technical")
-# 	if(is.null(technical)){
-# 		rkh.technical@value <- ""
-# 	} else if(is.list(technical)){
-# 		rkh.technical@children <- technical
-# 	} else if(inherits(technical, "XiMpLe.node")){
-# 		rkh.technical@children <- list(technical)
-# 	} else {
-# 		rkh.technical@value <- technical
-# 	}
 
 	rkh.document <- new("XiMpLe.node",
 			name="document",

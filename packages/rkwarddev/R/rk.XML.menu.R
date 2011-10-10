@@ -4,7 +4,7 @@
 #' Use same \code{id} values to place entries in the same menu.
 #' 
 #' @param label Character string, a label for the menu.
-#' @param nodes A (list of) objects of class \code{XiMpLe.node}, must be either
+#' @param ... Objects of class \code{XiMpLe.node}, must be either
 #'		"menu" or "entry".
 #' @param index Integer number to influence the level of menu placement.
 #' @param id.name Character string, a unique ID for this plugin element.
@@ -21,10 +21,12 @@
 #' @examples
 #' test.component <- rk.XML.component("My GUI dialog", "plugins/MyGUIdialog.xml")
 #' test.entry <- rk.XML.entry(test.component)
-#' test.menu <- rk.XML.menu("Analysis", nodes=test.entry, id.name="analysis")
+#' test.menu <- rk.XML.menu("Analysis", test.entry, id.name="analysis")
 #' cat(pasteXMLNode(test.menu))
 
-rk.XML.menu <- function(label, nodes, index=-1, id.name="auto"){
+rk.XML.menu <- function(label, ..., index=-1, id.name="auto"){
+	nodes <- list(...)
+
 	# check the node names and allow only valid ones
 	sapply(child.list(nodes), function(this.node){
 			stopifnot(inherits(this.node, "XiMpLe.node"))

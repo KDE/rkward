@@ -290,6 +290,8 @@ check.ID <- function(node){
 		warning("ID is NULL!")
 	} else {}
 
+	names(node.ID) <- NULL
+
 	return(node.ID)
 } ## end function check.ID()
 

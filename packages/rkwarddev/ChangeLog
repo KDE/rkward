@@ -1,5 +1,12 @@
 ChangeLog for package rkwarddev
 
+## 0.03-4 (2011-10-10)
+  - added functions rk.XML.code() and rk.XML.help()
+  - fixed bug in internal function check.ID() (produced false entry nodes under certain circumstances)
+  - fixed bug in rk.XML.pluginmap() for automatic component IDs
+  - cleaned up rk.XML.pluginmap() and rk.XML.plugin() hint code
+  - changed "nodes" option to "..." also in rk.XML.menu()
+
 ## 0.03-3 (2011-10-09)
   - replaced most of the "nodes" and "children" options with "..." in functions rk.rkh.related(), rk.rkh.settings(),
     rk.XML.col(), rk.XML.components(), rk.XML.context(), rk.XML.dialog(), rk.XML.frame(), rk.XML.hierarchy(), rk.XML.logic(),

@@ -66,7 +66,7 @@ rk.XML.pluginmap <- function(name, about=NULL, components, hierarchy="test",
 		if(isTRUE(hints)){
 			about.XML <- new("XiMpLe.node",
 				name="!--",
-				value="<about></about>")
+				children=list(new("XiMpLe.node", name="about", value="")))
 			# initialize all.children list
 			all.children <- list(about.XML)
 		} else {
@@ -98,7 +98,7 @@ rk.XML.pluginmap <- function(name, about=NULL, components, hierarchy="test",
 		if(isTRUE(hints)){
 			require.XML <- new("XiMpLe.node",
 				name="!--",
-				value="<require file=\"path/file.pluginmap\" />")
+				children=list(rk.XML.require("path/file.pluginmap")))
 			all.children[[length(all.children)+1]] <- require.XML
 		} else {}
 	}
@@ -117,7 +117,7 @@ rk.XML.pluginmap <- function(name, about=NULL, components, hierarchy="test",
 		components.XML <- rk.XML.components(
 			as.list(sapply(components, function(this.comp){
 				# remove any directory names and .EXT endings
-				xml.basename <- gsub("(.*/)?([[:alnum:]]*).+(.*)?", "\\2", this.comp, perl=TRUE)
+				xml.basename <- gsub("(.*/)?([[:alnum:]_]*).+(.*)?", "\\2", this.comp, perl=TRUE)
 				rk.XML.component(
 					label=xml.basename,
 					file=this.comp,
@@ -154,18 +154,18 @@ rk.XML.pluginmap <- function(name, about=NULL, components, hierarchy="test",
 
 			entry.XML <- rk.XML.menu(
 				label=name.orig,
-				nodes=rk.XML.entry(component=this.comp),
+				rk.XML.entry(component=this.comp),
 				id.name=auto.ids(paste(name, this.comp, sep=""), prefix=ID.prefix("menu"), chars=12))
 
 			if(this.hier %in% names(main.menu)){
 				hier.XML <- rk.XML.menu(
 					label=main.menu[this.hier],
-					nodes=entry.XML,
+					entry.XML,
 					id.name=this.hier)
 			} else {
 				hier.XML <- rk.XML.menu(
 					label="Test",
-					nodes=entry.XML,
+					entry.XML,
 					id.name="test")
 			}
 			return(hier.XML)
@@ -191,7 +191,7 @@ rk.XML.pluginmap <- function(name, about=NULL, components, hierarchy="test",
 		if(isTRUE(hints)){
 			context.x11.XML <- new("XiMpLe.node",
 				name="!--",
-				value="<context id=\"x11\"></context>")
+				children=list(rk.XML.context(id="x11")))
 			all.children[[length(all.children)+1]] <- context.x11.XML
 		} else {}
 	}
@@ -213,7 +213,7 @@ rk.XML.pluginmap <- function(name, about=NULL, components, hierarchy="test",
 		if(isTRUE(hints)){
 			context.import.XML <- new("XiMpLe.node",
 				name="!--",
-				value="<context id=\"import\"></context>")
+				children=list(rk.XML.context(id="import")))
 			all.children[[length(all.children)+1]] <- context.import.XML
 		} else {}
 	}

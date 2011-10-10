@@ -42,23 +42,14 @@ rk.XML.plugin <- function(name, dialog=NULL, wizard=NULL, logic=NULL, snippets=N
 		name <- clean.name(name)
 	} else {}
 
-	all.children <- list(new("XiMpLe.node",
-		name="code",
-		attributes=list(file=paste(name, ".js", sep=""))
-	))
+	all.children <- list(rk.XML.code(file=paste(name, ".js", sep="")))
 
 	if(isTRUE(help)){
-		all.children[[length(all.children)+1]] <- new("XiMpLe.node",
-			name="help",
-			attributes=list(file=paste(name, ".rkh", sep=""))
-		)
+		all.children[[length(all.children)+1]] <- rk.XML.help(file=paste(name, ".rkh", sep=""))
 	} else {}
 
 	if(!is.null(pluginmap)){
-		all.children[[length(all.children)+1]] <- new("XiMpLe.node",
-			name="include",
-			attributes=list(file=pluginmap)
-		)
+		all.children[[length(all.children)+1]] <- rk.XML.include(file=pluginmap)
 	} else {}
 
 	if(!is.null(snippets)){
@@ -80,10 +71,10 @@ rk.XML.plugin <- function(name, dialog=NULL, wizard=NULL, logic=NULL, snippets=N
 					new("XiMpLe.node",
 						# add these as comments because they need editing
 						name="!--",
-						value="<convert id=\"!edit!\", mode=\"!edit!\", sources=\"!edit!\", standard=\"!edit!\" />"),
+						children=list(rk.XML.convert(sources="!edit!", mode=c(equals="!edit!"), id.name="!edit!"))),
 					new("XiMpLe.node",
 						name="!--",
-						value="<connect client=\"!edit!\", governor=\"!edit!\" />")
+						children=list(rk.XML.connect(governor="!edit!", client="!edit!")))
 				)
 			all.children[[length(all.children)+1]] <- new("XiMpLe.node",
 				name="logic",
@@ -105,10 +96,7 @@ rk.XML.plugin <- function(name, dialog=NULL, wizard=NULL, logic=NULL, snippets=N
 
 	if(is.null(dialog)){
 		if("dialog" %in% provides){
-			all.children[[length(all.children)+1]] <- new("XiMpLe.node",
-					name="dialog",
-					attributes=list(label=label),
-					value="")
+			all.children[[length(all.children)+1]] <- rk.XML.dialog(label=label)
 		} else {}
 	} else {
 		# check if this is *really* a dialog section
@@ -126,15 +114,8 @@ rk.XML.plugin <- function(name, dialog=NULL, wizard=NULL, logic=NULL, snippets=N
 	if(is.null(wizard)){
 		if("wizard" %in% provides){
 			# create a first page for the wizard section
-			plugin.wizard.page <- new("XiMpLe.node",
-					name="page",
-					attributes=list(label=label),
-					value="")
-			plugin.wizard <- new("XiMpLe.node",
-					name="wizard",
-					attributes=list(label=label),
-					children=child.list(plugin.wizard.page),
-					value="")
+			plugin.wizard.page <- rk.XML.page(id.name=auto.ids(label, prefix=ID.prefix("page")))
+			plugin.wizard <- rk.XML.wizard(plugin.wizard.page, label=label)
 			all.children[[length(all.children)+1]] <- plugin.wizard
 		} else {}
 	} else {
