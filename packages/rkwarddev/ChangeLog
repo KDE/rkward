@@ -8,6 +8,7 @@ ChangeLog for package rkwarddev
     files need to be generated
   - cleaned up rk.XML.pluginmap() and rk.XML.plugin() hint code
   - changed "nodes" option to "..." also in rk.XML.menu()
+  - added beginnings of a vignette (to be continued...)
 
 ## 0.03-3 (2011-10-09)
   - replaced most of the "nodes" and "children" options with "..." in functions rk.rkh.related(), rk.rkh.settings(),
