@@ -210,7 +210,10 @@ rk.plugin.skeleton <- function(name, about=NULL, path=tempdir(),
 				provides=provides,
 				pluginmap=paste("../", name, ".pluginmap", sep=""))
 			cat(pasteXMLTree(XML.plugin, shine=1, indent.by=indent.by), file=plugin.xml)
-		} else {}
+		} else {
+			# set a variable for the other sections to use as XML input
+			XML.plugin <- plugin.xml
+		}
 		if(isTRUE(edit)){
 			rk.edit.files(plugin.xml, title=plugin.fname.xml, prompt=FALSE)
 		} else {}
