@@ -1,0 +1,30 @@
+\documentclass[a4paper,10pt]{scrartcl}
+\usepackage[utf8x]{inputenc}
+\usepackage{apacite}
+
+%opening
+\title{RKWard plugin development with the \code{rkwarddev} package}
+%\VignetteIndexEntry{RKWard plugin development with the rkwarddev package}
+\author{m.eik michalke}
+
+\begin{document}
+
+\maketitle
+
+%  \begin{abstract}
+%  \end{abstract}
+
+%  \section{}
+
+%  \begin{Schunk}
+%  	\begin{Sinput}
+%  	\end{Sinput}
+%  	\begin{Soutput}
+%  	\end{Soutput}
+%  \end{Schunk}
+
+%  \bibliographystyle{apacite}
+%  \addcontentsline{toc}{chapter}{\bibname}
+%  \bibliography{rkwarddev_lit}
+
+\end{document}
