@@ -1551,6 +1551,7 @@ You can declare two &lt;external&gt; properties in your plugin. <quote>filename<
 		<para><userinput>
 			<command>R</command> <option>CMD INSTALL</option> <parameter><filename>SquaretheCircle_0.1-3.tar.gz</filename></parameter>
 		</userinput></para>
+		<tip><para>You don't have to build the package like this on the command line. If you use the function <function>rk.build.package()</function> from the <link linkend="rkwarddev"><quote>rkwarddev</quote> package</link>, it will build and/or check your plugin package for you.</para></tip>
 	</sect1>
 </chapter>
 
@@ -1715,10 +1716,77 @@ plugin.dir &lt;- rk.plugin.skeleton("t_test",
 		printout=JS.print),
 	load=TRUE,
 	edit=TRUE,
-	show=TRUE,
-	overwrite=TRUE)
+	show=TRUE)
 			</programlisting>
 			<para>The files will be created in a temporal directory by default. The last three options are not necessary, but very handy: <markup>load=TRUE</markup> will automatically add the new plugin to &kapp;s configuration (since it's in a temp dir, it wil also automatically be removed again after&kapp; was restarted), <markup>edit=TRUE</markup> will open all created files for editing in &kapp; editor tabs, and <markup>show=TRUE</markup> will attemt to directly launch the plugin, so you can expect what it looks like without a klick. You might consider adding <markup>overwrite=TRUE</markup> if you're about to run your script repeatedly (e.g. after changes to the code), as by default no files will be overwritten.</para>
+			<para>The result object <quote>plugin.dir</quote> contains the path to the directory in which the plugin was created. This can be useful in combination with the function <function>rk.build.package()</function>, to build an actual R package to share your plugin with others.</para>
+		</sect2>
+		<sect2 id="rkdev_ttest_script"><title>The full script</title>
+		<para>So, to recapitulate all of the above, here's the full script to create the working t-test example. Adding to the already explained code, it also loads the package if needed, and it uses the <function>local()</function> environment, so all the objects will not be created in your global environment (except for <quote>plugin.dir</quote>):</para>
+		<programlisting>
+require(rkwarddev)
+
+local({
+	variables &lt;- rk.XML.varselector(id.name="vars")
+	var.x &lt;- rk.XML.varslot("compare", source=variables, types="number", required=TRUE)
+	var.y &lt;- rk.XML.varslot("against", source=variables, types="number", required=TRUE)
+	test.hypothesis &lt;- rk.XML.radio("using test hypothesis",
+		options=list(
+			"Two-sided"=c(val="two.sided"),
+			"First is greater"=c(val="greater"),
+			"Second is greater"=c(val="less")
+		)
+	)
+	check.paired &lt;- rk.XML.cbox("Paired sample", value="1", un.value="0")
+	basic.settings &lt;- rk.XML.row(variables, rk.XML.col(var.x, var.y, test.hypothesis, check.paired))
+
+	check.eqvar &lt;- rk.XML.cbox("assume equal variances", value="1", un.value="0")
+	conf.level &lt;- rk.XML.spinbox("confidence level", min=0, max=1, initial=0.95)
+	check.conf &lt;- rk.XML.cbox("print confidence interval", val="1", chk=TRUE)
+	conf.frame &lt;- rk.XML.frame(conf.level, check.conf, rk.XML.stretch(), label="Confidence Interval")
+
+	full.dialog &lt;- rk.XML.dialog(
+		label="Independent Samples t-Test",
+		rk.XML.tabbook(
+			tab.labels=c("Basic settings", "Options"),
+			children=list(basic.settings, list(check.eqvar, conf.frame))
+		)
+	)
+
+	full.wizard &lt;- rk.XML.wizard(
+			label="Independent Samples T-Test",
+			rk.XML.page(
+				rk.XML.text("As a first step, select the two variables you want to compare against each other. And specify, which one you theorize to be greater. Select two-sided, if your theory does not tell you, which variable is greater."),
+				rk.XML.copy(basic.settings)),
+			rk.XML.page(
+				rk.XML.text("Below are some advanced options. It's generally safe not to assume the variables have equal variances. An appropriate correction will be applied then. Chosing \"assume equal variances\" may increase test-strength, however."),
+				rk.XML.copy(check.eqvar),
+				rk.XML.text("Sometimes it's helpful to get an estimate of the confidence interval of the difference in means. Below you can specify whether one should be shown, and which confidence-level should be applied (95% corresponds to a 5% level of significance)."),
+				rk.XML.copy(conf.frame)))
+
+	JS.calc &lt;- rk.paste.JS(
+		echo("res &lt;- t.test (x=", var.x, ", y=", var.y, ", hypothesis=\"", test.hypothesis, "\""),
+		ite(id(check.paired), echo(", paired=TRUE")),
+		ite(id("!", check.paired, " &amp;&amp; ", check.eqvar), echo(", var.equal=TRUE")),
+		ite(id(conf.level, " != \"0.95\""), echo(", conf.level=", conf.level)),
+		echo(")\n"), level=2)
+
+	JS.print &lt;- rk.paste.JS(echo("rk.print (res)\n"), level=2)
+
+	plugin.dir &lt;&lt;- rk.plugin.skeleton("t_test",
+		xml=list(
+			dialog=full.dialog,
+			wizard=full.wizard),
+		js=list(
+			results.header="Independent samples t test",
+			calculate=JS.calc,
+			printout=JS.print),
+		load=TRUE,
+		edit=TRUE,
+		show=TRUE,
+		overwrite=TRUE)
+})
+		</programlisting>
 		</sect2>
 
 	</sect1>
