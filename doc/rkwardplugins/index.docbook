@@ -1641,10 +1641,7 @@ conf.frame &lt;- rk.XML.frame(conf.level, check.conf, rk.XML.stretch(), label="C
 		<programlisting>
 full.dialog &lt;- rk.XML.dialog(
 	label="Independent Samples t-Test",
-	rk.XML.tabbook(
-		tab.labels=c("Basic settings", "Options"),
-		children=list(basic.settings, list(check.eqvar, conf.frame))
-	)
+	rk.XML.tabbook(tabs=list("Basic settings"=basic.settings, "Options"=list(check.eqvar, conf.frame)))
 )
 		</programlisting>
 		<para>We can also create the wizard section with its two pages using the same objects, so their IDs will be extracted for the &lt;copy&gt; tags:</para>
@@ -1751,10 +1748,7 @@ local({
 
 	full.dialog &lt;- rk.XML.dialog(
 		label="Independent Samples t-Test",
-		rk.XML.tabbook(
-			tab.labels=c("Basic settings", "Options"),
-			children=list(basic.settings, list(check.eqvar, conf.frame))
-		)
+		rk.XML.tabbook(tabs=list("Basic settings"=basic.settings, "Options"=list(check.eqvar, conf.frame)))
 	)
 
 	full.wizard &lt;- rk.XML.wizard(
