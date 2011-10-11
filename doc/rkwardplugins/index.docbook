@@ -1556,13 +1556,172 @@ You can declare two &lt;external&gt; properties in your plugin. <quote>filename<
 
 <chapter id="rkwarddev">
 	<title>Plugin development with the <quote>rkwarddev</quote> package</title>
-	<para>Writing external plugins involves writing files in three languages (XML, JavaScript and R) and the creation of a standardized hierarchy of directories. To make this a lot easier for willing plugin developers, we're providing the <quote>rkwarddev</quote> package. It provides a number of simple R functions to create the XML code for most dialog elements like tabbooks, checkboxes, dropdownlists or filebrowsers, as well as functions to create JavaScript code and RKWard help files to start with. The function <function>rk.plugin.skeleton()</function> creates the expected directory tree and all necessary files where they are supposed to be.</para>
-	<para>This package is not installed by default, but has to be installed manually from <ulink url="http://rkward.sourceforge.net/R/">RKWard's own repository</ulink>. You can either do that by using the GUI interface (Settings -> Configure packages), or from any running R session:</para>
-	<programlisting>
-	install.packages("rkwarddev", repos="http://rkward.sf.net/R")
-	library(rkwarddev)
-	</programlisting>
-	<para>The full <ulink url="http://rkward.sourceforge.net/R/pckg/rkwarddev/rkwarddev.pdf">documentation in PDF format</ulink> can also be found there.</para>
+	<sect1 id="rkdev_overview"><title>Overview</title>
+		<para>Writing external plugins involves writing files in three languages (XML, JavaScript and R) and the creation of a standardized hierarchy of directories. To make this a lot easier for willing plugin developers, we're providing the <quote>rkwarddev</quote> package. It provides a number of simple R functions to create the XML code for all dialog elements like tabbooks, checkboxes, dropdownlists or filebrowsers, as well as functions to create JavaScript code and RKWard help files to start with. The function <function>rk.plugin.skeleton()</function> creates the expected directory tree and all necessary files where they are supposed to be.</para>
+		<para>This package is not installed by default, but has to be installed manually from <ulink url="http://rkward.sourceforge.net/R/">RKWard's own repository</ulink>. You can either do that by using the GUI interface (Settings -> Configure packages), or from any running R session:</para>
+		<programlisting>
+		install.packages("rkwarddev", repos="http://rkward.sf.net/R")
+		library(rkwarddev)
+		</programlisting>
+		<para><quote>rkwarddev</quote> depends on another small package called <quote>XiMpLe</quote>, which is a very simple XML parser and generator.</para>
+		<para>The full <ulink url="http://rkward.sourceforge.net/R/pckg/rkwarddev/rkwarddev.pdf">documentation in PDF format</ulink> can also be found there. A more detailed introduction to working with the package can be found in the <ulink url="http://rkward.sourceforge.net/R/pckg/rkwarddev/rkwarddev_vignette.pdf">rkwarddev vignette</ulink>.</para>
+	</sect1>
+
+	<sect1 id="rkdev_example"><title>Practical example</title>
+		<para>To get you an idea how <quote>scripting a plugin</quote> looks like, compared to the direct approach you have seen in the previous chapters, we'll create the full t-test plugin once again -- this time only with the R functions of the <quote>rkwarddev</quote> package.</para>
+
+		<sect2 id="rkdev_gui"><title>GUI description</title>
+		<para>You will imediately notice that the workflow is considerably different: Contrary to writing the XML code directly, you do not begin with the &lt;document&gt; definition, but directly with the plugin elements you'd like to have in the dialog. You can assign each interface element -- be it checkboxes, dropdown menus, variable slots or anything else -- to individual R objects, and then combine these objects to the actual GUI. The package has functions for <link linkend="interfaceelements">each XML tag</link> that can be used to define the plugin GUI, and most of them even have the same name, only with the prefix <quote>rk.XML.</quote>. For example, defining a &lt;varselector&gt; and two &lt;varslot&gt; elements for the <quote>x</quote> and <quote>y</quote> variable of the t-test example can be done by:</para>
+		<programlisting>
+variables &lt;- rk.XML.varselector(id.name="vars")
+var.x &lt;- rk.XML.varslot("compare", source=variables, types="number", required=TRUE, id.name="x")
+var.y &lt;- rk.XML.varslot("against", source=variables, types="number", required=TRUE, id.name="y")
+		</programlisting>
+		<para>The most interesting detail is probably <markup>source=variables</markup>: A prominent feature of the package is that all functions can generate automatic IDs, so you don't have to bother with either thinking of <quote>id</quote> values or remembering them to refer to a specific plugin element. You can simply give the R objects as reference, as all functions who need an ID from some other element can also read it from these objects. <function>rk.XML.varselector()</function> is a little special, as it usually has no specific content to make an ID from (it can, but only if you specify a label), so we have to set an ID name. But <function>rk.XML.varslot()</function> wouldn't need the <quote>id.name</quote> arguments here, so this would suffice:</para>
+		<programlisting>
+variables &lt;- rk.XML.varselector(id.name="vars")
+var.x &lt;- rk.XML.varslot("compare", source=variables, types="number", required=TRUE)
+var.y &lt;- rk.XML.varslot("against", source=variables, types="number", required=TRUE)
+		</programlisting>
+		<para>In order to recreate the example code to the point, you'd have to set all ID values manually. But since the package shall make our lives easier, from now on we will no longer care about that.</para>
+		<para>If you want to see how the XML code of the defined element looks like if you exported it to a file, you can just call the object by its name. So, if you now called <quote>var.x</quote> in your R session, you should see something like this:</para>
+		<programlisting>
+&lt;varslot id="vrsl_compare" label="compare" source="vars" types="number" required="true" /&gt;
+		</programlisting>
+		<para>Some tags are only useful in the context of others. Therefore, for instance, you won't find a function for the &lt;option&gt; tag. Instead, both radio buttons and dropdown lists are defined including their options as a named list, where the names represent the labels to be shown in the dialog, and their value is a named vector which can have two entries, <quote>val</quote> for the value of an options and the boolean <quote>chk</quote> to specify if this options is checked by default.</para>
+		<programlisting>
+test.hypothesis &lt;- rk.XML.radio("using test hypothesis",
+	options=list(
+		"Two-sided"=c(val="two.sided"),
+		"First is greater"=c(val="greater"),
+		"Second is greater"=c(val="less")
+	)
+)
+		</programlisting>
+		<para>The result looks like this:</para>
+		<programlisting>
+&lt;radio id="rad_usngtsth" label="using test hypothesis"&gt;
+	&lt;option label="Two-sided" value="two.sided" /&gt;
+	&lt;option label="First is greater" value="greater" /&gt;
+	&lt;option label="Second is greater" value="less" /&gt;
+&lt;/radio&gt;
+		</programlisting>
+		<para>All that's missing from the elements of the <quote>Basic settings</quote> tab is the checkbox for paired samples, and the structuring of all of these elements in rows and column:</para>
+		<programlisting>
+check.paired &lt;- rk.XML.cbox("Paired sample", value="1", un.value="0")
+basic.settings &lt;- rk.XML.row(variables, rk.XML.col(var.x, var.y, test.hypothesis, check.paired))
+		</programlisting>
+		<para><function>rk.XML.cbox()</function> is a rare exception where the function name does not contain the full tag name, to save some typing for this often used element. This is what <quote>basic.settings</quote> now contains:</para>
+		<programlisting>
+&lt;row id="row_vTFSPP10TF"&gt;
+	&lt;varselector id="vars" /&gt;
+	&lt;column id="clm_vrsTFSPP10"&gt;
+		&lt;varslot id="vrsl_compare" label="compare" source="vars" types="number" required="true" /&gt;
+		&lt;varslot id="vrsl_against" label="against" source="vars" types="number" required="true" /&gt;
+		&lt;radio id="rad_usngtsth" label="using test hypothesis"&gt;
+			&lt;option label="Two-sided" value="two.sided" /&gt;
+			&lt;option label="First is greater" value="greater" /&gt;
+			&lt;option label="Second is greater" value="less" /&gt;
+		&lt;/radio&gt;
+		&lt;checkbox id="chc_Pardsmpl" label="Paired sample" value="1" value_unchecked="0" /&gt;
+	&lt;/column&gt;
+&lt;/row&gt;
+		</programlisting>
+		<para>In a similar manner, the next lines will create R objects for the elements of the <quote>Options</quote> tab, introducing the functions for spinboxes, frames an stretch:</para>
+		<programlisting>
+check.eqvar &lt;- rk.XML.cbox("assume equal variances", value="1", un.value="0")
+conf.level &lt;- rk.XML.spinbox("confidence level", min=0, max=1, initial=0.95)
+check.conf &lt;- rk.XML.cbox("print confidence interval", val="1", chk=TRUE)
+conf.frame &lt;- rk.XML.frame(conf.level, check.conf, rk.XML.stretch(), label="Confidence Interval")
+		</programlisting>
+		<para>Now all we need to do is to put the objects together in a tabbook, and place that in a dialog section:</para>
+		<programlisting>
+full.dialog &lt;- rk.XML.dialog(
+	label="Independent Samples t-Test",
+	rk.XML.tabbook(
+		tab.labels=c("Basic settings", "Options"),
+		children=list(basic.settings, list(check.eqvar, conf.frame))
+	)
+)
+		</programlisting>
+		<para>We can also create the wizard section with its two pages using the same objects, so their IDs will be extracted for the &lt;copy&gt; tags:</para>
+		<programlisting>
+full.wizard &lt;- rk.XML.wizard(
+		label="Independent Samples T-Test",
+		rk.XML.page(
+			rk.XML.text("As a first step, select the two variables you want to compare against each other. And specify, which one you theorize to be greater. Select two-sided, if your theory does not tell you, which variable is greater."),
+			rk.XML.copy(basic.settings)),
+		rk.XML.page(
+			rk.XML.text("Below are some advanced options. It's generally safe not to assume the variables have equal variances. An appropriate correction will be applied then. Chosing \"assume equal variances\" may increase test-strength, however."),
+			rk.XML.copy(check.eqvar),
+			rk.XML.text("Sometimes it's helpful to get an estimate of the confidence interval of the difference in means. Below you can specify whether one should be shown, and which confidence-level should be applied (95% corresponds to a 5% level of significance)."),
+			rk.XML.copy(conf.frame)))
+		</programlisting>
+		<para>That's it for the GUI. The global document will be combined in the end by <function>rk.plugin.skeleton()</function>.</para>
+		</sect2>
+
+		<sect2 id="rkdev_jscode"><title>JavaScript code</title>
+			<para>Until now, using the <quote>rkwarddev</quote> package might not seem to have helped so much. This is going to change right now.</para>
+			<para>First of all, just like we didn't have to care about IDs for elements when defining the GUI layout, we don't have to care about JavaScript variable names in the next step. If you want more control, you can write plain JavaScript code and have it pasted to the generated file. But it's probably much more efficient to do it the <quote>rkwarddev</quote> way.</para>
+			<para>Most notably you don't have to define any variable yourself, as <function>rk.plugin.skeleton()</function> can scan you XML code and automatically define all variables you will plobably need -- for instance, you wouldn't bother to include a checkbox if you don't use its value or state afterwards (btw, you can also scan existing XML files). So we can start writing the actual R code generating JS immediately.</para>
+			<para>The package has some functions for JS code constructs that are commonly used in RKWard plugins, like the <function>echo()</function> function or <function>if() {...} else {...}</function> conditions. There are some differences between JS and R, e.g., <function>paste()</function> in R uses the comma to combine its parts, whereas <function>echo()</function> in JS uses <quote>+</quote>, and lines must end with a semicolon. By using the R functions, you can almost forget about these differences and keep writing R code.</para>
+			<para>These functions can take different classes of input objects: Either plain text, R objects with XML code like above, or in turn results of some other JS functions of the package. In the end, you will allways call <function>rk.paste.JS()</function>, which behaves similar to <function>paste()</function>, but depending on the input objects it will replace them with their XML ID, JavaScript variable name or even complete JavaScript code blocks.</para>
+			<para>For the t-test example, we need two JS objects: One to calculate the results, and one to print it in the <function>printout()</function> function:</para>
+		<programlisting>
+JS.calc &lt;- rk.paste.JS(
+	echo("res &lt;- t.test (x=", var.x, ", y=", var.y, ", hypothesis=\"", test.hypothesis, "\""),
+	ite(id(check.paired), echo(", paired=TRUE")),
+	ite(id("!", check.paired, " &amp;&amp; ", check.eqvar), echo(", var.equal=TRUE")),
+	ite(id(conf.level, " != \"0.95\""), echo(", conf.level=", conf.level)),
+	echo(")\n"), level=2)
+
+JS.print &lt;- rk.paste.JS(echo("rk.print (res)\n"), level=2)
+		</programlisting>
+		<para>As you can see, <quote>rkwarddev</quote> also provides an R implementation of the <function>echo()</function> function. It returns exactly one character string with a valid JS version of itself. You might also notice that all of the R objects here are the ones we created earlier. They will automatically be replaced with their variable names, so this should be quite intuitive. Whenever you need just this replacement, the function <function>id()</function> can be used, which also will return exatly one character string from all the objects it was given.</para>
+		<para>The function name <function>ite()</function> is an abbreviation for "if, then, else", and these three conditional statements are exactly what its three optional arguments are for. Maybe it's best to just look at the above <quote>JS.calc</quote> object, which now contains a character string with this content:</para>
+		<programlisting>
+	echo("res &lt;- t.test (x=" + vrslCompare + ", y=" + vrslAgainst + ", hypothesis=\"" + radUsngtsth + "\"");
+	if(chcPardsmpl) {
+		echo(", paired=TRUE");
+	} else {}
+	if(!chcPardsmpl &amp;&amp; chcAssmqlvr) {
+		echo(", var.equal=TRUE");
+	} else {}
+	if(spnCnfdnclv != "0.95") {
+		echo(", conf.level=" + spnCnfdnclv);
+	} else {}
+	echo(")\n");
+		</programlisting>
+		</sect2>
+
+		<sect2 id="rkdev_pluginmap"><title>Plugin map</title>
+			<para>This section is very short: We don't need to write a pluginmap at all, as it can be generated automatically by <function>rk.plugin.skeleton()</function>.</para>
+		</sect2>
+
+		<sect2 id="rkdev_rkh"><title>Help page</title>
+			<para>This section is very short as well: <function>rk.plugin.skeleton()</function> can't write a whole help page from the information it has. But it can scan the XML document also for elements which probably deserve a help page entry, and automatically create a help page template for our plugin. All we have to do afterwards is to write some lines for each listed section.</para>
+		</sect2>
+
+		<sect2 id="rkdev_plugin_generator"><title>Generate the plugin files</title>
+			<para>Now comes the final step, in which we'll hand over all generated objects to <function>rk.plugin.skeleton()</function>:</para>
+			<programlisting>
+plugin.dir &lt;- rk.plugin.skeleton("t_test",
+	xml=list(
+		dialog=full.dialog,
+		wizard=full.wizard),
+	js=list(
+		results.header="Independent samples t test",
+		calculate=JS.calc,
+		printout=JS.print),
+	load=TRUE,
+	edit=TRUE,
+	show=TRUE,
+	overwrite=TRUE)
+			</programlisting>
+			<para>The files will be created in a temporal directory by default. The last three options are not necessary, but very handy: <markup>load=TRUE</markup> will automatically add the new plugin to &kapp;s configuration (since it's in a temp dir, it wil also automatically be removed again after&kapp; was restarted), <markup>edit=TRUE</markup> will open all created files for editing in &kapp; editor tabs, and <markup>show=TRUE</markup> will attemt to directly launch the plugin, so you can expect what it looks like without a klick. You might consider adding <markup>overwrite=TRUE</markup> if you're about to run your script repeatedly (e.g. after changes to the code), as by default no files will be overwritten.</para>
+		</sect2>
+
+	</sect1>
 </chapter>
 
 <appendix id="reference">
