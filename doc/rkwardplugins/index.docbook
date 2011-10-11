@@ -372,7 +372,7 @@ Here's yet another layout element: In order to signal that the two elements belo
 				&lt;/frame&gt;
 </programlisting>
 <para>
-	Inside the &lt;frame&gt; we place another &lt;checkbox&gt; (using <markup>checked="true"</markup>, we signal that checkbox should be checked by default), and a &lt;spinbox&gt;. The spinbox allows the user to select a value between <quote>min</quote> and <quote>max</quote> with the default/initial value <quote>0.95</quote>. Setting the <parameter>type</parameter> to <quote>real</quote> signals that real numbers are accepted as opposed to <markup>type="integer"</markup> which would accept integers only.
+	Inside the &lt;frame&gt; we place another &lt;checkbox&gt; (using <markup>checked="true"</markup>, we signal that checkbox should be checked by default), and a &lt;spinbox&gt;. The spinbox allows the user to select a value between <quote>min</quote> and <quote>max</quote> with the default/initial value <quote>0.95</quote>. Setting the <parameter>type</parameter> to <quote>real</quote> signals that real numbers are accepted as opposed to <parameter>type=</parameter><markup>"integer"</markup> which would accept integers only.
 </para>
 <note><para>
 It is also possible, and often preferrable, to make the &lt;frame&gt; itself checkable, instead of adding a &lt;checkbox&gt; inside. See the reference for details. This is not done, here, for illustrational purposes.
@@ -530,7 +530,7 @@ More often than not you will have to create one or more temporary R objects in t
 If the user explicitely asks for a variable to be saved, you will need to assign to that object using <quote>.GlobalEnv$objectname &lt;- value</quote>. In general, do not use the <quote>&lt;&lt;-</quote> operator. It will not necessarily assign in .GlobalEnv.
 </para>
 <para>
-One important pitfall is using <function>eval()</function>. Here, you need to note that eval will by default use the current environment for evaluation, i.e. the local one. This will work well most of the times, but but not always. Thus, if you need to use <function>eval()</function>, you will probably want to specify the <quote>envir</quote> parameter: <function>eval(..., envir=globalenv()</function>).
+One important pitfall is using <function>eval()</function>. Here, you need to note that eval will by default use the current environment for evaluation, i.e. the local one. This will work well most of the times, but but not always. Thus, if you need to use <function>eval()</function>, you will probably want to specify the <parameter>envir</parameter> parameter: <function>eval(..., envir=globalenv()</function>).
 </para>
 </sect2>
 
@@ -778,10 +778,10 @@ So far so good, but there are a number of problems with this GUI. First, both th
 The first two lines inside the logic section are &lt;conver&gt; tags. Those basically provide two new boolean (on or off, true or false) properties, which can be used later on. The first property (<quote>varmode</quote>) is true, whenever the upper radio-button is selected and the second whenever the lower radio-button is selected. How is this done?
 </para>
 <para>
-	First, under sources, the <quote>source</quote> properties to work on are listed (in this case only one each; you could list several as <markup>sources="mode.string;somethingelse"</markup>, then varmode would only be true, if both mode.string and somethingelse are equal to the string <quote>variable</quote>). Note that in this case we don't just write <quote>mode</quote> (as we would in <function>getValue("mode")</function>, but <quote>mode.string</quote>. This is actually the internal way a radio control works: It has a property <quote>string</quote>, which holds its string value. <function>getValue("mode")</function> is just a shorthand, and equivalent to <function>getValue("mode.string")</function>. See the reference for all properties of the different GUI elements.
+	First, under <parameter>sources</parameter>, the source properties to work on are listed (in this case only one each; you could list several as <parameter>sources=</parameter><markup>"mode.string;somethingelse"</markup>, then <quote>varmode</quote> would only be true, if both <quote>mode.string</quote> and <quote>somethingelse</quote> are equal to the string <quote>variable</quote>). Note that in this case we don't just write <quote>mode</quote> (as we would in <function>getValue("mode")</function>, but <quote>mode.string</quote>. This is actually the internal way a radio control works: It has a property <quote>string</quote>, which holds its string value. <function>getValue("mode")</function> is just a shorthand, and equivalent to <function>getValue("mode.string")</function>. See the reference for all properties of the different GUI elements.
 </para>
 <para>
-	Second, we set the mode of conversion to <markup>mode="equals"</markup>. This means, we want to check, whether the sources are equal to a certain value. Finally standard is the value to compare against, so with standard="variable", we check whether the property mode.string is equal to the string <quote>variable</quote> (the value of the upper radio option). If it is equal, then the property varmode is true, else it is false.
+	Second, we set the mode of conversion to <parameter>mode=</parameter><markup>"equals"</markup>. This means, we want to check, whether the sources are equal to a certain value. Finally standard is the value to compare against, so with <parameter>standard=</parameter><markup>"variable"</markup>, we check whether the property <quote>mode.string</quote> is equal to the string <quote>variable</quote> (the value of the upper radio option). If it is equal, then the property varmode is true, else it is false.
 </para>
 <para>
 The next line is basically the same, but reversed. Here we define a property (<quote>constmode</quote>) which becomes true, if the second radio option is selected.
@@ -1069,7 +1069,7 @@ Basically the same feature of including files is also available for use in the .
 &lt;/document&gt;
 	</programlisting>
 	<para>
-The attribute <quote>file</quote> is the filename relative to the directory the current file is located in.
+The attribute <parameter>file</parameter> is the filename relative to the directory the current file is located in.
 	</para>
 	</sect1>
 
@@ -1221,7 +1221,7 @@ Adding a &lt;preview&gt; checkbox is simple. Just place the following somewhere 
 And that's it for the GUI definition.
 	</para>
 	<para>
-		Adjusting the JS template is a little more work. You will have to create a new function called <quote>preview</quote> in addition to the <quote>preprocess</quote>, <quote>calculate</quote>, etc. functions. This function should generate the code needed to produce the plot, and only that. Esp. no printing of headers, <function>rk.graphics.on()</function>, or similar calls. Below is an example of the typical pattern that you will use:
+		Adjusting the JS template is a little more work. You will have to create a new function called <function>preview()</function> in addition to the <function>preprocess()</function>, <function>calculate()</function>, etc. functions. This function should generate the code needed to produce the plot, and only that. Esp. no printing of headers, <function>rk.graphics.on()</function>, or similar calls. Below is an example of the typical pattern that you will use:
 	</para>
 	<programlisting>
 function preprocess () {
@@ -1319,7 +1319,7 @@ In the <link linkend="logic">logic section of the plugin xml</link>, you can now
 Before reading this section, please make sure to read the section on the <link linkend="context_x11">X11 device context</link>, as that explains the basic concepts.
 		</para>
 		<para>
-			The <quote>import</quote> context is used to declare import file filter plugins. You simply place those in a context with <markup>id="import"</markup> in the .pluginmap file. However, there is one additional twist when declaring these plugins: In order to offer a unified file selection dialog for all supported file types, you need to declare one additional bit of information on your component:
+			The <quote>import</quote> context is used to declare import file filter plugins. You simply place those in a context with <parameter>id=</parameter><markup>"import"</markup> in the .pluginmap file. However, there is one additional twist when declaring these plugins: In order to offer a unified file selection dialog for all supported file types, you need to declare one additional bit of information on your component:
 		</para>
 		<programlisting>
 &lt;document [...]&gt;
@@ -1535,11 +1535,11 @@ You can declare two &lt;external&gt; properties in your plugin. <quote>filename<
 		</programlisting>
 		<tip><para>You don't have to write this XML code by hand. If you use the function <function>rk.plugin.skeleton()</function> from the <link linkend="rkwarddev"><quote>rkwarddev</quote> package</link> and provide all necessary information via the <quote>about</quote> option, it will automatically create a .pluginmap file with a working &lt;about&gt; section for you.</para></tip>
 		<para>Most of this should explain itself, so we’ll not discuss each and every tag element. But let’s look at some details that probably need some commentary for easier understanding. </para>
-		<para>The <quote>category</quote> element in &lt;about&gt; can be defined rather freely, but should be meaningful, as it’s thought to be used to order plugins into groups. All other attributes in this opening tag are mandatory and must be filled with reasonable content. </para>
+		<para>The <parameter>category</parameter> element in &lt;about&gt; can be defined rather freely, but should be meaningful, as it’s thought to be used to order plugins into groups. All other attributes in this opening tag are mandatory and must be filled with reasonable content. </para>
 		<para>At least one &lt;author&gt; with a valid e-mail address and the role <quote>aut</quote> (<quote>author</quote>) must also be given. In case your plugin causes problems or someone would like to share its gratitude with you, it should be easy to contact someone who’s involved. For further information on other valid roles, like <quote>ctb</quote> for code contributors or <quote>cre</quote> for package maintenance, please refer to the <ulink url="http://stat.ethz.ch/R-manual/R-patched/library/utils/html/person.html">R documentation on <function>person()</function></ulink>. </para>
-		<para>Actually the whole &lt;dependencies&gt; might be left empty if your plugin is supposed to run with any &kapp; version and standard R installation. But please be reasonable here as well. The inclusion of any &lt;package&gt; or &lt;pluginmap&gt; tags is of course optional as well, depending on the needs of your plugins. All the <quote>min_version</quote> and <quote>max_version</quote> information can be omitted, as well. They are obviously useful if your plugin is known to rely on certain versions of an R package, for instance. </para>
+		<para>Actually the whole &lt;dependencies&gt; might be left empty if your plugin is supposed to run with any &kapp; version and standard R installation. But please be reasonable here as well. The inclusion of any &lt;package&gt; or &lt;pluginmap&gt; tags is of course optional as well, depending on the needs of your plugins. All the <parameter>min_version</parameter> and <parameter>max_version</parameter> information can be omitted, as well. They are obviously useful if your plugin is known to rely on certain versions of an R package, for instance. </para>
 		<para>If you need an R package that is probably not hosted on an official CRAN mirror, you can specify a repository where it can be found in the &lt;package&gt; tag. &kapp; will check whether this repository is already defined in its configuration, and if not, add it, but only after the user has given its explicit permission to that. </para>
-		<para>The <quote>id</quote>" element in the &lt;pluginmap&gt; tag refers to the ID given in the top level &lt;document&gt; tag of the pluginmap that you need. </para>
+		<para>The <parameter>id</parameter>" element in the &lt;pluginmap&gt; tag refers to the ID given in the top level &lt;document&gt; tag of the pluginmap that you need. </para>
 	</sect1>
 	<sect1 id="building_the_plugin_package">
 		<title>Building the plugin package</title>
@@ -1564,7 +1564,7 @@ You can declare two &lt;external&gt; properties in your plugin. <quote>filename<
 		install.packages("rkwarddev", repos="http://rkward.sf.net/R")
 		library(rkwarddev)
 		</programlisting>
-		<para><quote>rkwarddev</quote> depends on another small package called <quote>XiMpLe</quote>, which is a very simple XML parser and generator.</para>
+		<para><quote>rkwarddev</quote> depends on another small package called <quote>XiMpLe</quote>, which is a very simple XML parser and generator and also present in the same repository.</para>
 		<para>The full <ulink url="http://rkward.sourceforge.net/R/pckg/rkwarddev/rkwarddev.pdf">documentation in PDF format</ulink> can also be found there. A more detailed introduction to working with the package can be found in the <ulink url="http://rkward.sourceforge.net/R/pckg/rkwarddev/rkwarddev_vignette.pdf">rkwarddev vignette</ulink>.</para>
 	</sect1>
 
@@ -1574,13 +1574,13 @@ You can declare two &lt;external&gt; properties in your plugin. <quote>filename<
 		<tip><para>The package will add a new GUI dialog to RKWard in the <quote>File</quote> menu, called <quote>RKWard Plugin Skeleton</quote>. Like the name suggests, you can create plugin skeletons for further editing with it. This dialog itself was in turn generated by an <quote>rkwarddev</quote> script which you can find in the <quote>demo</quote> directory of the installed package and package sources, as an additional example. You can also run it by calling <function>demo("skeleton_dialog")</function></para></tip>
 
 		<sect2 id="rkdev_gui"><title>GUI description</title>
-		<para>You will imediately notice that the workflow is considerably different: Contrary to writing the XML code directly, you do not begin with the &lt;document&gt; definition, but directly with the plugin elements you'd like to have in the dialog. You can assign each interface element -- be it checkboxes, dropdown menus, variable slots or anything else -- to individual R objects, and then combine these objects to the actual GUI. The package has functions for <link linkend="interfaceelements">each XML tag</link> that can be used to define the plugin GUI, and most of them even have the same name, only with the prefix <quote>rk.XML.</quote>. For example, defining a &lt;varselector&gt; and two &lt;varslot&gt; elements for the <quote>x</quote> and <quote>y</quote> variable of the t-test example can be done by:</para>
+		<para>You will imediately notice that the workflow is considerably different: Contrary to writing the XML code directly, you do not begin with the &lt;document&gt; definition, but directly with the plugin elements you'd like to have in the dialog. You can assign each interface element -- be it checkboxes, dropdown menus, variable slots or anything else -- to individual R objects, and then combine these objects to the actual GUI. The package has functions for <link linkend="interfaceelements">each XML tag</link> that can be used to define the plugin GUI, and most of them even have the same name, only with the prefix <function>rk.XML.*</function>. For example, defining a &lt;varselector&gt; and two &lt;varslot&gt; elements for the <quote>x</quote> and <quote>y</quote> variable of the t-test example can be done by:</para>
 		<programlisting>
 variables &lt;- rk.XML.varselector(id.name="vars")
 var.x &lt;- rk.XML.varslot("compare", source=variables, types="number", required=TRUE, id.name="x")
 var.y &lt;- rk.XML.varslot("against", source=variables, types="number", required=TRUE, id.name="y")
 		</programlisting>
-		<para>The most interesting detail is probably <markup>source=variables</markup>: A prominent feature of the package is that all functions can generate automatic IDs, so you don't have to bother with either thinking of <quote>id</quote> values or remembering them to refer to a specific plugin element. You can simply give the R objects as reference, as all functions who need an ID from some other element can also read it from these objects. <function>rk.XML.varselector()</function> is a little special, as it usually has no specific content to make an ID from (it can, but only if you specify a label), so we have to set an ID name. But <function>rk.XML.varslot()</function> wouldn't need the <quote>id.name</quote> arguments here, so this would suffice:</para>
+		<para>The most interesting detail is probably <parameter>source=</parameter><markup>variables</markup>: A prominent feature of the package is that all functions can generate automatic IDs, so you don't have to bother with either thinking of <parameter>id</parameter> values or remembering them to refer to a specific plugin element. You can simply give the R objects as reference, as all functions who need an ID from some other element can also read it from these objects. <function>rk.XML.varselector()</function> is a little special, as it usually has no specific content to make an ID from (it can, but only if you specify a label), so we have to set an ID name. But <function>rk.XML.varslot()</function> wouldn't need the <parameter>id.name</parameter> arguments here, so this would suffice:</para>
 		<programlisting>
 variables &lt;- rk.XML.varselector(id.name="vars")
 var.x &lt;- rk.XML.varslot("compare", source=variables, types="number", required=TRUE)
@@ -1591,7 +1591,7 @@ var.y &lt;- rk.XML.varslot("against", source=variables, types="number", required
 		<programlisting>
 &lt;varslot id="vrsl_compare" label="compare" source="vars" types="number" required="true" /&gt;
 		</programlisting>
-		<para>Some tags are only useful in the context of others. Therefore, for instance, you won't find a function for the &lt;option&gt; tag. Instead, both radio buttons and dropdown lists are defined including their options as a named list, where the names represent the labels to be shown in the dialog, and their value is a named vector which can have two entries, <quote>val</quote> for the value of an option and the boolean <quote>chk</quote> to specify if this option is checked by default.</para>
+		<para>Some tags are only useful in the context of others. Therefore, for instance, you won't find a function for the &lt;option&gt; tag. Instead, both radio buttons and dropdown lists are defined including their options as a named list, where the names represent the labels to be shown in the dialog, and their value is a named vector which can have two entries, <parameter>val</parameter> for the value of an option and the boolean <parameter>chk</parameter> to specify if this option is checked by default.</para>
 		<programlisting>
 test.hypothesis &lt;- rk.XML.radio("using test hypothesis",
 	options=list(
@@ -1614,7 +1614,7 @@ test.hypothesis &lt;- rk.XML.radio("using test hypothesis",
 check.paired &lt;- rk.XML.cbox("Paired sample", value="1", un.value="0")
 basic.settings &lt;- rk.XML.row(variables, rk.XML.col(var.x, var.y, test.hypothesis, check.paired))
 		</programlisting>
-		<para><function>rk.XML.cbox()</function> is a rare exception where the function name does not contain the full tag name, to save some typing for this often used element. This is what <quote>basic.settings</quote> now contains:</para>
+		<para><function>rk.XML.cbox()</function> is a rare exception where the function name does not contain the full tag name, to save some typing for this often used element. This is what <function>basic.settings</function> now contains:</para>
 		<programlisting>
 &lt;row id="row_vTFSPP10TF"&gt;
 	&lt;varselector id="vars" /&gt;
