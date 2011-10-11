@@ -21,7 +21,7 @@ rk.XML.spinbox <- function(label, min=NULL, max=NULL, initial=0, real=TRUE, prec
 	attr.list <- list(label=label)
 
 	if(identical(id.name, "auto")){
-		attr.list[["id"]] <- list(id=auto.ids(label, prefix=ID.prefix("spinbox")))
+		attr.list[["id"]] <- auto.ids(label, prefix=ID.prefix("spinbox"))
 	} else if(!is.null(id.name)){
 		attr.list[["id"]] <- id.name
 	} else {}

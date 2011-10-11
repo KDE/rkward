@@ -1,5 +1,9 @@
 ChangeLog for package rkwarddev
 
+## 0.03-5 (2011-10-11)
+  - rk.XML.tabbook() can now autogenerate IDs without a label
+  - fixed bug in autogeneration of IDs in rk.XML.spinbox()
+
 ## 0.03-4 (2011-10-10)
   - added functions rk.XML.code() and rk.XML.help()
   - fixed bug in internal function check.ID() (produced false entry nodes under certain circumstances)

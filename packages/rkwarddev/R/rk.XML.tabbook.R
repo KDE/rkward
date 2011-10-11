@@ -1,7 +1,6 @@
 #' Create XML node "tabbook" for RKWard plugins
 #'
 #' @param label Character string, a text label for this plugin element.
-#'		Must be set if \code{id.name="auto"}.
 #' @param tab.labels Character vector, where each string defines the name of one tab.
 #'		The number of \code{tab.labels} also defines the number of tabs.
 #' @param children An optional list with objects of class \code{XiMpLe.node} (or a list of these objects).
@@ -27,12 +26,6 @@
 #' cat(pasteXMLNode(test.tabbook))
 
 rk.XML.tabbook <- function(label=NULL, tab.labels, children=list(), id.name="auto"){
-	if(is.null(label)){
-		if(identical(id.name, "auto")){
-			stop(simpleError("If id.name=\"auto\", then 'label' must have a value!"))
-		} else {}
-	} else {}
-
 	num.tabs <-  length(tab.labels)
 	# check if number of children fits
 	if(length(children) > 0){
@@ -68,14 +61,22 @@ rk.XML.tabbook <- function(label=NULL, tab.labels, children=list(), id.name="aut
 
 
 	if(identical(id.name, "auto")){
-		tb.id <- auto.ids(label, prefix=ID.prefix("tabbook", length=4))
+		if(!is.null(label)){
+			tb.id <- auto.ids(label, prefix=ID.prefix("tabbook", length=4))
+		} else {
+			# try autogenerating some id
+			tb.id <- auto.ids(tab.labels, prefix=ID.prefix("tabbook", length=4))
+		}
 	} else if(!is.null(id.name)){
 		tb.id <- id.name[[1]]
 	} else {
 		tb.id <- NULL
 	}
 
-	tbk.attr.list <- list(id=tb.id, label=label)
+	tbk.attr.list <- list(id=tb.id)
+	if(!is.null(label)){
+		tbk.attr.list[["label"]] <- label
+	} else {}
 
 	tabbook <- new("XiMpLe.node",
 			name="tabbook",

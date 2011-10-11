@@ -7,7 +7,7 @@
 }
 \arguments{
   \item{label}{Character string, a text label for this
-  plugin element. Must be set if \code{id.name="auto"}.}
+  plugin element.}
 
   \item{tab.labels}{Character vector, where each string
   defines the name of one tab. The number of
