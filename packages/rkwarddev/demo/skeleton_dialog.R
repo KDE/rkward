@@ -109,8 +109,8 @@ tab3.children <- rk.XML.col(rk.XML.row(children.text), rk.XML.row(children.var))
 # 	tab.labels=c("About the plugin", "Create options", "XML content"),
 # 	children=list(tab1.about, tab2.create, tab3.children)), label="RKWard Plugin Skeleton")
 sklt.tabbook <- rk.XML.dialog(rk.XML.tabbook("Plugin Skeleton",
-	tab.labels=c("About the plugin", "Create options"),
-	children=list(tab1.about, tab2.create)), label="RKWard Plugin Skeleton")
+	tabs=list("About the plugin"=tab1.about, "Create options"=tab2.create)),
+	label="RKWard Plugin Skeleton")
 
 ## some logic
 logic.section <- rk.XML.logic(
