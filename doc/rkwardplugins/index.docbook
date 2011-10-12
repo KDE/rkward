@@ -372,7 +372,7 @@ Here's yet another layout element: In order to signal that the two elements belo
 				&lt;/frame&gt;
 </programlisting>
 <para>
-	Inside the &lt;frame&gt; we place another &lt;checkbox&gt; (using <markup>checked="true"</markup>, we signal that checkbox should be checked by default), and a &lt;spinbox&gt;. The spinbox allows the user to select a value between <quote>min</quote> and <quote>max</quote> with the default/initial value <quote>0.95</quote>. Setting the <parameter>type</parameter> to <quote>real</quote> signals that real numbers are accepted as opposed to <markup>type="integer"</markup> which would accept integers only.
+	Inside the &lt;frame&gt; we place another &lt;checkbox&gt; (using <markup>checked="true"</markup>, we signal that checkbox should be checked by default), and a &lt;spinbox&gt;. The spinbox allows the user to select a value between <quote>min</quote> and <quote>max</quote> with the default/initial value <quote>0.95</quote>. Setting the <parameter>type</parameter> to <quote>real</quote> signals that real numbers are accepted as opposed to <parameter>type=</parameter><markup>"integer"</markup> which would accept integers only.
 </para>
 <note><para>
 It is also possible, and often preferrable, to make the &lt;frame&gt; itself checkable, instead of adding a &lt;checkbox&gt; inside. See the reference for details. This is not done, here, for illustrational purposes.
@@ -406,7 +406,7 @@ But how does R syntax get generated from the GUI-settings? I'll deal with that i
 			&lt;/page&gt;
 	</programlisting>
 	<para>
-	Some of this is pretty self explanatory: We add a &lt;wizard&gt; tag with a label for the wizard. Since a wizard can hold several pages that are shown one after another, we next define the first page, and put an explanatory text note in there. Then we use a &lt;copy&gt;-tag. What this does, is really it saves us having to define yet again, what we already wrote for the &lt;dialog&gt;: The copy tag looks for another tag with the same <parameter>id</parameter> earlier in the .xml. This happens to be defined in the &lt;dialog&gt; section, and is a &lt;row&gt; in which there are the &lt;varselector&gt;, &lt;varslots&gt; and the "hypothesis" &lt;radio&gt;-control. All of this is copied 1:1 and inserted right at the &lt;copy&gt; element.
+	Some of this is pretty self explanatory: We add a &lt;wizard&gt; tag with a label for the wizard. Since a wizard can hold several pages that are shown one after another, we next define the first page, and put an explanatory text note in there. Then we use a &lt;copy&gt;-tag. What this does, is really it saves us having to define yet again, what we already wrote for the &lt;dialog&gt;: The copy tag looks for another tag with the same <parameter>id</parameter> earlier in the .xml. This happens to be defined in the &lt;dialog&gt; section, and is a &lt;row&gt; in which there are the &lt;varselector&gt;, &lt;varslots&gt; and the <quote>hypothesis</quote> &lt;radio&gt;-control. All of this is copied 1:1 and inserted right at the &lt;copy&gt; element.
 	</para>
 	<para>
 	Now to the second page:
@@ -475,20 +475,20 @@ function calculate () {
 </programlisting>
 <para>
 This function generates the actual R-syntax to be run from the GUI-settings. Let's look at this in detail:
-The code to be used is generated using "echo"-statement. Looking at the echo() statement step by step, the first part of it is
+	The code to be used is generated using <function>echo</function> statement. Looking at the <function>echo()</function> statement step by step, the first part of it is
 </para>
 <screen>
 res &lt;- t.test (
 </screen>
 <para>
-as plain text. Next we need to fill in the value, the user selected as the first variable. We fetch this using getValue ("x"), and append it to the string to be "echoed". This prints out the value of the GUI-element with id "x": our first &lt;varslot&gt;. Next, we append a ', ', and do the same to fetch the value of the element "y" - the second &lt;varslot&gt;. For the hypothesis (the &lt;radio&gt;-group), and the equal variances-&lt;checkbox&gt;, the procedure is very similar.
+	as plain text. Next we need to fill in the value, the user selected as the first variable. We fetch this using <function>getValue ("x")</function>, and append it to the string to be <quote>echoed</quote>. This prints out the value of the GUI-element with id <quote>x</quote>: our first &lt;varslot&gt;. Next, we append a ', ', and do the same to fetch the value of the element <quote>y</quote> - the second &lt;varslot&gt;. For the hypothesis (the &lt;radio&gt;-group), and the equal variances-&lt;checkbox&gt;, the procedure is very similar.
 </para>
 <para>
-Note that instead of concatenating the output-snippets with "+", you can also use several echo()-statments. Everything is printed on a single line. To produce a line break in the generated code, insert a '\n' in the echoed string. In theory, you can even produce many lines with a single echo-statement, but please keep it to one line (or less) of generated code per echo().
+Note that instead of concatenating the output-snippets with <quote>+</quote>, you can also use several <function>echo()</function>-statments. Everything is printed on a single line. To produce a line break in the generated code, insert a <quote>\n</quote> in the echoed string. In theory, you can even produce many lines with a single echo-statement, but please keep it to one line (or less) of generated code per <function>echo()</function>.
 </para>
 <para>
 It gets a little more tricky for the confidence level. For reasons of aestethics, we don't want to explicitly specify the confidence level to use, if it corresponds to the default value. Hence, instead of printing the value unconditionally, we first fetch into a variable. Then we check, whether that variable differs from "0.95" and if so print out an additional argument.
-Finally, we echo a closing bracket and a line break: ')\n'. That's all for the calculate-function.
+Finally, we echo a closing bracket and a line break: <quote>)\n</quote>. That's all for the calculate-function.
 </para>
 <programlisting>
 function printout () {
@@ -497,7 +497,7 @@ function printout () {
 }
 </programlisting>
 <para>
-And this was all there is to the printout function in most cases. rk.header () prints a standard headline for the results. You can also add some more information to this, if you like, e.g.:
+And this was all there is to the printout function in most cases. <function>rk.header ()</function> prints a standard headline for the results. You can also add some more information to this, if you like, e.g.:
 </para>
 <programlisting>
 function printout () {
@@ -506,10 +506,10 @@ function printout () {
 }
 </programlisting>
 <para>
-rk.print () utilizes the R2HTML package to provide HTML formatted output. Another helpful function is rk.results (), which can also output different kinds of result tables. If in doubt, however, just use rk.print (), and be done with. makeHeaderCode () is a Js-level helper function to create a call to rk.header () (just take a look at the generated code). In some cases you may want to call "echo ('rk.header (...)')" directly to print a header for your output.
+	<function>rk.print()</function> utilizes the R2HTML package to provide HTML formatted output. Another helpful function is <function>rk.results()</function>, which can also output different kinds of result tables. If in doubt, however, just use <function>rk.print()</function>, and be done with. <function>makeHeaderCode()</function> is a JS level helper function to create a call to <function>rk.header()</function> (just take a look at the generated code). In some cases you may want to call <function>echo ('rk.header (...)')</function> directly to print a header for your output.
 </para>
 <para>
-Note that internally, the output is just a plain HTML document at this point of time. Therefore you might be tempted to add custom HTML using rk.cat.output (). While this will work, please don't do this. The output format may change (e.g. to ODF) in the future, so it's best not to introduce HTML specific code. Rather keep things simple with rk.header (), rk.print (), rk.results (), and - if needed - rk.print.literal(). If those don't seem to satisfy your formatting needs, contact us on the mailing list for help.
+Note that internally, the output is just a plain HTML document at this point of time. Therefore you might be tempted to add custom HTML using <function>rk.cat.output ()</function>. While this will work, please don't do this. The output format may change (e.g. to ODF) in the future, so it's best not to introduce HTML specific code. Rather keep things simple with <function>rk.header ()</function>, <function>rk.print ()</function>, <function>rk.results ()</function>, and - if needed - <function>rk.print.literal()</function>. If those don't seem to satisfy your formatting needs, contact us on the mailing list for help.
 </para>
 <para>
 Congratulations! You created your first plugin. Read on in the next chapters for more advanced concepts.
@@ -518,19 +518,19 @@ Congratulations! You created your first plugin. Read on in the next chapters for
 <sect1 id="jsconventions">
 <title>Conventions, policies, and background</title>
 <para>
-There are many ways to write R code for a certain task, and there are even more ways to generate this R code from Js. How exactly you do it, is left up to you. Still there are a number of considerations that you should follow, and background information you should understand.
+There are many ways to write R code for a certain task, and there are even more ways to generate this R code from JS. How exactly you do it, is left up to you. Still there are a number of considerations that you should follow, and background information you should understand.
 </para>
 
 <sect2 id="policylocal">
-<title>Understanding the local() environment</title>
+<title>Understanding the <function>local()</function> environment</title>
 <para>
-More often than not you will have to create one or more temporary R objects in the code generated by your plugin. Normally, you do not want those to be placed in the user's workspace, potentially even overwriting user variables. Hence, all plugin generated code is run in a local() environment (see R help page on function local()). This means, all variables you create are temporary and will not be saved permanently.
+More often than not you will have to create one or more temporary R objects in the code generated by your plugin. Normally, you do not want those to be placed in the user's workspace, potentially even overwriting user variables. Hence, all plugin generated code is run in a <function>local()</function> environment (see R help page on function <function>local()</function>). This means, all variables you create are temporary and will not be saved permanently.
 </para>
 <para>
-If the user explicitely asks for a variable to be saved, you will need to assign to that object using ".GlobalEnv$objectname &lt;- value". In general, do not use the "&lt;&lt;-"-operator. It will not necessarily assign in .GlobalEnv.
+If the user explicitely asks for a variable to be saved, you will need to assign to that object using <quote>.GlobalEnv$objectname &lt;- value</quote>. In general, do not use the <quote>&lt;&lt;-</quote> operator. It will not necessarily assign in .GlobalEnv.
 </para>
 <para>
-One important pitfall is using eval(). Here, you need to note that eval will by default use the current environment for evaluation, i.e. the local one. This will work well most of the times, but but not always. Thus, if you need to use eval(), you will probably want to specify the "envir" parameter: eval(..., envir=globalenv()).
+One important pitfall is using <function>eval()</function>. Here, you need to note that eval will by default use the current environment for evaluation, i.e. the local one. This will work well most of the times, but but not always. Thus, if you need to use <function>eval()</function>, you will probably want to specify the <parameter>envir</parameter> parameter: <function>eval(..., envir=globalenv()</function>).
 </para>
 </sect2>
 
@@ -570,7 +570,7 @@ if (my.rotation &gt; wobble.rotation.limit (x)) {
 <sect2 id="policysimplicity">
 <title>Dealing with complex options</title>
 <para>
-Many plugins can do more than one thing. For instance, the "Descriptive Statistics" plugin can compute mean, range, sum, product, median, length, etc. However, typically the user will only chose to have some of those calculations performed. In this case, please try to keep the generated code as simple as possible. It should only contain portions relevant to the options that are actually selected. To achieve this, here is an example of a common design patterns as you would use it (in JS):
+Many plugins can do more than one thing. For instance, the <quote>Descriptive Statistics</quote> plugin can compute mean, range, sum, product, median, length, etc. However, typically the user will only chose to have some of those calculations performed. In this case, please try to keep the generated code as simple as possible. It should only contain portions relevant to the options that are actually selected. To achieve this, here is an example of a common design patterns as you would use it (in JS):
 </para>
 <programlisting>
 function calculate () {
@@ -629,7 +629,7 @@ function calculate () {
 	&lt;/document&gt;
 	</programlisting>
 	<para>
-	Where, obviously, you'd replace "filename" with a more appropriate name. Now it's time to create this .rkh file. Here is a self-descriptive example:
+	Where, obviously, you'd replace <quote>filename</quote> with a more appropriate name. Now it's time to create this .rkh file. Here is a self-descriptive example:
 	</para>
 	<programlisting>
 	&lt;!DOCTYPE rkhelp&gt;
@@ -728,7 +728,7 @@ function calculate () {
 <chapter id="logic">
 <title>GUI logic</title>
 <para>
-All the basic concepts of creating a plugin for &kapp; have been described in the previous chapters. Those basic concepts should be sufficient for many - if not most - cases. However, sometimes you want more control over how your plugin's GUI behaves.
+All the basic concepts of creating a plugin for &kapp; have been described in the previous chapters. Those basic concepts should be sufficient for many -- if not most -- cases. However, sometimes you want more control over how your plugin's GUI behaves.
 </para>
 <para>
 For instance, suppose you want to extend the t-test example used in this documentation to allow both: comparing a variable against another variable (as shown), and comparing a variable against a constant value. Now, one way of doing this would be to add a radio-control that switches between the two modes, and adding a spinbox to enter the constant value to compare against. Consider this simplified example:
@@ -775,31 +775,31 @@ So far so good, but there are a number of problems with this GUI. First, both th
 </programlisting>
 </para>
 <para>
-The first two lines inside the logic section are &lt;conver&gt; tags. Those basically provide two new boolean (on or off, true or false) properties, which can be used later on. The first property ("varmode") is true, whenever the upper radio-button is selected and the second whenever the lower radio-button is selected. How is this done?
+The first two lines inside the logic section are &lt;conver&gt; tags. Those basically provide two new boolean (on or off, true or false) properties, which can be used later on. The first property (<quote>varmode</quote>) is true, whenever the upper radio-button is selected and the second whenever the lower radio-button is selected. How is this done?
 </para>
 <para>
-First, under sources, the "source" properties to work on are listed (in this case only one each; you could list several as sources="mode.string;somethingelse", then varmode would only be true, if both mode.string and somethingelse are equal to the string "variable"). Note that in this case we don't just write "mode" (as we would in getValue("mode"), but "mode.string". This is actually the internal way a radio control works: It has a property "string", which holds its string value. getValue("mode") is just a shorthand, and equivalent to getValue("mode.string"). See the reference for all properties of the different GUI elements.
+	First, under <parameter>sources</parameter>, the source properties to work on are listed (in this case only one each; you could list several as <parameter>sources=</parameter><markup>"mode.string;somethingelse"</markup>, then <quote>varmode</quote> would only be true, if both <quote>mode.string</quote> and <quote>somethingelse</quote> are equal to the string <quote>variable</quote>). Note that in this case we don't just write <quote>mode</quote> (as we would in <function>getValue("mode")</function>, but <quote>mode.string</quote>. This is actually the internal way a radio control works: It has a property <quote>string</quote>, which holds its string value. <function>getValue("mode")</function> is just a shorthand, and equivalent to <function>getValue("mode.string")</function>. See the reference for all properties of the different GUI elements.
 </para>
 <para>
-Second, we set the mode of conversion to mode="equals". This means, we want to check, whether the sources are equal to a certain value. Finally standard is the value to compare against, so with standard="variable", we check whether the property mode.string is equal to the string "variable" (the value of the upper radio option). If it is equal, then the property varmode is true, else it is false.
+	Second, we set the mode of conversion to <parameter>mode=</parameter><markup>"equals"</markup>. This means, we want to check, whether the sources are equal to a certain value. Finally standard is the value to compare against, so with <parameter>standard=</parameter><markup>"variable"</markup>, we check whether the property <quote>mode.string</quote> is equal to the string <quote>variable</quote> (the value of the upper radio option). If it is equal, then the property varmode is true, else it is false.
 </para>
 <para>
-The next line is basically the same, but reversed. Here we define a property ("constmode") which becomes true, if the second radio option is selected.
+The next line is basically the same, but reversed. Here we define a property (<quote>constmode</quote>) which becomes true, if the second radio option is selected.
 </para>
 <para>
-Now to the real stuff: We &lt;connect&gt; the "varmode" property to y.visible, which controls whether the varslot "y" is shown or not. Note that any element which is made invisible is implicitly non-required. Thus, if the upper radio-option is selected, the varslot "y" is required, and visible. Else it is not required and hidden.
+Now to the real stuff: We &lt;connect&gt; the <quote>varmode</quote> property to y.visible, which controls whether the varslot <quote>y</quote> is shown or not. Note that any element which is made invisible is implicitly non-required. Thus, if the upper radio-option is selected, the varslot <quote>y</quote> is required, and visible. Else it is not required and hidden.
 </para>
 <para>
 We do just the reverse for the spinbox. So in effect, either the varslot is shown and required, <emphasis>or</emphasis> the spinbox is shown and required - depending on which option is selected in the radio control. The GUI is changing itself according to the radio option. Try the example, if you like.
 </para>
 <note><para>
-In the above example, instead of defining two properties "varmode" and "constmode", we could also have used the negation of "varmode", like this:
+In the above example, instead of defining two properties <quote>varmode</quote> and <quote>constmode</quote>, we could also have used the negation of <quote>varmode</quote>, like this:
 </para></note>
 <programlisting>
 	&lt;connect client="constant.visible" governor="varmode.not" /&gt;
 </programlisting>
 <para>
-Once again, for a complete list of properties, refer to the <link linkend="reference">reference</link>. One more property, however, is special in that all GUI elements have it: "enabled". This is slightly less drastic that "visible". It does not show/hide the GUI element, but only enables/disables it. Disabled elements are typically shown grayed out, and do not react to user input.
+	Once again, for a complete list of properties, refer to the <link linkend="reference">reference</link>. One more property, however, is special in that all GUI elements have it: <quote>enabled</quote>. This is slightly less drastic that <quote>visible</quote>. It does not show/hide the GUI element, but only enables/disables it. Disabled elements are typically shown grayed out, and do not react to user input.
 </para>
 <sect1 id="logic_scripted">
 <title>Scripted GUI logic</title>
@@ -827,7 +827,7 @@ Once again, for a complete list of properties, refer to the <link linkend="refer
 	[...]
 </programlisting>
 <para>
-The first line of code tells RKWard to call the function "modeChanged()" whenever the value of the "mode" radio-box changes. Inside this function, we define a helper-variable "varmode" which is true when the mode is "variable", false is it is "constant". Then we use "gui.setValue()" to set the and "enabled"-properties of "y" and "constant", in just the same way as we did using &lt;connect&gt;-statements, before.</para>
+The first line of code tells RKWard to call the function <function>modeChanged()</function> whenever the value of the <quote>mode</quote> radio-box changes. Inside this function, we define a helper-variable <quote>varmode</quote> which is true when the mode is <quote>variable</quote>, false is it is <quote>constant</quote>. Then we use <function>gui.setValue()</function> to set the and <quote>enabled</quote>-properties of <quote>y</quote> and <quote>constant</quote>, in just the same way as we did using &lt;connect&gt;-statements, before.</para>
 <para>
 The scripted approach to GUI logic becomes particularly useful when you want to change the available option according to the type of object that the user has selected. See <link linkend="guilogic_functions">the reference</link> for available functions.
 </para>
@@ -869,7 +869,7 @@ Ok, enough said. How does it work? Simple: Just use the &lt;embed&gt; tag. Here'
 What happens here, is that the entire GUI or the plot options plugin (except of course for the standard elements like submit-button, etc.) is embedded right into your plugin (try it!).
 </para>
 <para>
-As you can see the syntax of the &lt;embed&gt;-tag is fairly simple. It takes an id as most elements. The parameter component specifies which plugin to embed, as defined in the <link linkend="pluginmap">.pluginmap</link> file ("rkward::plot_options" is the result of concatenating the namespace "rkward", a separator "::", and the name of the component "plot_options").
+As you can see the syntax of the &lt;embed&gt;-tag is fairly simple. It takes an id as most elements. The parameter component specifies which plugin to embed, as defined in the <link linkend="pluginmap">.pluginmap</link> file (<quote>rkward::plot_options</quote> is the result of concatenating the namespace <quote>rkward</quote>, a separator <quote>::</quote>, and the name of the component <quote>plot_options</quote>).
 </para>
 </sect1>
 <sect1 id="embedding_code">
@@ -885,7 +885,7 @@ function printout () {
 }
 </programlisting>
 <para>
-So essentially, we're fetching the code generated by the embedded plugin just like we're fetchting any other GUI setting. Here the string "plotoptions.code.printout" can be deparsed to: "The printout section of the generated code of the element with the id plotoptions" (plotoptions is the id we gave for the &lt;embed&gt;-tag above). And yes, if you want advanced control, you can even fetch the values of individual GUI elements inside the embedded plugin (but not the other way around, as the embedded plugin does not know anything about its surroundings).
+So essentially, we're fetching the code generated by the embedded plugin just like we're fetchting any other GUI setting. Here the string <quote>plotoptions.code.printout</quote> can be deparsed to: <quote>The printout section of the generated code of the element with the id plotoptions</quote> (plotoptions is the id we gave for the &lt;embed&gt;-tag above). And yes, if you want advanced control, you can even fetch the values of individual GUI elements inside the embedded plugin (but not the other way around, as the embedded plugin does not know anything about its surroundings).
 </para>
 </sect1>
 <sect1 id="embedding_wizard">
@@ -913,7 +913,7 @@ If the embedded plugin provides a wizard interface, its pages will be inserted r
 <sect1 id="embedding_as_button">
 <title>Less embedded embedding: Further options button</title>
 <para>
-While embedding is cool, you should be careful not to overdo it. Too many functions inside a GUI just make it hard to find the relevant options. Of course, sometimes you may want to embed a great deal of options (like all the options to plot ()), but as those are really optional, you don't want them prominently in your GUI.
+While embedding is cool, you should be careful not to overdo it. Too many functions inside a GUI just make it hard to find the relevant options. Of course, sometimes you may want to embed a great deal of options (like all the options to <function>plot()</function>), but as those are really optional, you don't want them prominently in your GUI.
 </para>
 <para>
 An alternative is to embed those options "as a button":
@@ -931,16 +931,16 @@ An alternative is to embed those options "as a button":
 &lt;/dialog&gt;
 </programlisting>
 <para>
-In this case, a single push button will be added to your plugin, labelled "Specify plotting options". When you press that button, a separate dialog will come up, with all the options of the embedded plugin. Even while this embedded GUI is not visible most of the time, you can fetch its settings just as described <link linkend="embedding_code">above</link>.
+In this case, a single push button will be added to your plugin, labelled <quote>Specify plotting options</quote>. When you press that button, a separate dialog will come up, with all the options of the embedded plugin. Even while this embedded GUI is not visible most of the time, you can fetch its settings just as described <link linkend="embedding_code">above</link>.
 </para>
 <para>
-<emphasis>Caution:</emphasis> Probably the "button" approach should only ever be used for plugins that can never be invalid (for missing/bad settings). Otherwise the user would not be able to submit the code, but might have a hard time finding out, the reason for that is hidden behind some button.
+<emphasis>Caution:</emphasis> Probably the <quote>button</quote> approach should only ever be used for plugins that can never be invalid (for missing/bad settings). Otherwise the user would not be able to submit the code, but might have a hard time finding out, the reason for that is hidden behind some button.
 </para>
 </sect1>
 <sect1 id="embedding_incomplete">
 <title>Embedding/defining incomplete plugins</title>
 <para>
-Some plugins - and as a matter of fact, the plot_options used as an example above, is one of them - are not complete by themselves. They simply do not have the GUI elements to select some important values. They are meant to be used only embedded into other plugins.
+Some plugins -- and as a matter of fact, the plot_options used as an example above, is one of them -- are not complete by themselves. They simply do not have the GUI elements to select some important values. They are meant to be used only embedded into other plugins.
 </para>
 <para>
 In how far is the plot_options plugin incomplete? Well, for some option settings, it needs to know the name of the objects/expressions for the x and y axes (actually it will do fine if it only has either, but it needs at least one to function properly). However, it does not have a mechansim of selecting those objects, or entering them any other way. So how does it know about them?
@@ -957,7 +957,7 @@ In the logic section of the plot_options plugin there are two additional lines, 
 	&lt;/logic&gt;
 </programlisting>
 <para>
-This defines two additional properties in the plot_options plugin, whose sole purpose is to be connected to some (yet unknown) properties of the embedding plugin. In the plot_options plugin those two properties are simply used like any other, and for instance there are calls to getValue("xvar") in the plot_options JS template.
+	This defines two additional properties in the plot_options plugin, whose sole purpose is to be connected to some (yet unknown) properties of the embedding plugin. In the plot_options plugin those two properties are simply used like any other, and for instance there are calls to <function>getValue("xvar")</function> in the plot_options JS template.
 </para>
 <para>
 Now, for the incomplete plugin there is no way of knowing, where it will be embedded, and what the relevant settings in the embedding plugin will be called. So we need to add two additional lines in the embedding plugin's logic section as well:
@@ -971,7 +971,7 @@ Now, for the incomplete plugin there is no way of knowing, where it will be embe
 	&lt;/logic&gt;
 </programlisting>
 <para>
-This is nothing new in principle, we've covered &lt;connect&gt; statements in the <link linkend="logic">chapter of GUI logic</link>. You simply connect the values in two varlots (called "xvarslot" and "yvarslot" in this example) to the receiving "external" properties of the embedded plugin. That's it. Everything else is taken care of automatically.
+This is nothing new in principle, we've covered &lt;connect&gt; statements in the <link linkend="logic">chapter of GUI logic</link>. You simply connect the values in two varlots (called <quote>xvarslot</quote> and <quote>yvarslot</quote> in this example) to the receiving <quote>external</quote> properties of the embedded plugin. That's it. Everything else is taken care of automatically.
 </para>
 </sect1>
 </chapter>
@@ -985,7 +985,7 @@ Sometimes, you may wish to develop plugins for a series of similar functions. As
 The naive approach to this is to develop one plugin, then basically copy and paste the entire contents of the .js, .xml, and .rkh files, then changing the few portions that are different. However, what if sometime later you find a spelling mistake that has been copied and pasted to all plugins? What if you want to add support for a new feature? You'd have to visit all plugins again, and change each single one. A tiresome and tedious process.
 </para>
 <para>
-A second approach would be to use <link linkend="embedding">embedding</link>. However, in some cases this does not lend itself well to the problem at hand, mostly because the "chunks" you can embed are sometimes too large to be useful, and it places some constraints on the layout. For these cases, the concepts <link linkend="include_js">including .js files</link> <link linkend="include_xml">including .xml files</link> and <link linkend="snippets">snippets</link> can be very useful (but see the <link linkend="include_snippets_vs_embedding">thoughts on when it is preferrable to use embedding</link>).
+A second approach would be to use <link linkend="embedding">embedding</link>. However, in some cases this does not lend itself well to the problem at hand, mostly because the <quote>chunks</quote> you can embed are sometimes too large to be useful, and it places some constraints on the layout. For these cases, the concepts <link linkend="include_js">including .js files</link> <link linkend="include_xml">including .xml files</link> and <link linkend="snippets">snippets</link> can be very useful (but see the <link linkend="include_snippets_vs_embedding">thoughts on when it is preferrable to use embedding</link>).
 </para>
 <para>
 One word of caution, before you begin reading, though: These concepts can help making it simpler to deal with many similar plugins, and can improve maintainability and readability of those plugins. However, overdoing it can easily lead to the reverse effect. Use with some caution.
@@ -1020,7 +1020,7 @@ function calculate () {
 }
 	</programlisting>
 	<para>
-Note that sometimes it's even more useful to reverse this, and define the "skeleton" of preproces(), calculate(), and printout() functions is a common file, and make these call back for those part which are different across plugins. E.g.:
+Note that sometimes it's even more useful to reverse this, and define the <quote>skeleton</quote> of <function>preproces()</function>, <function>calculate()</function>, and <function>printout()</function> functions is a common file, and make these call back for those part which are different across plugins. E.g.:
 	</para>
 	<programlisting>
 // this is a file called "common_functions.js"
@@ -1069,7 +1069,7 @@ Basically the same feature of including files is also available for use in the .
 &lt;/document&gt;
 	</programlisting>
 	<para>
-The attribute "file" is the filename relative to the directory the current file is located in.
+The attribute <parameter>file</parameter> is the filename relative to the directory the current file is located in.
 	</para>
 	</sect1>
 
@@ -1184,10 +1184,10 @@ At first glance, &lt;include&gt; and &lt;snippets&gt; provides functionality rat
 The key difference between these concepts is that embeddable plugins are a more tight bundle. They combine a complete GUI, code to generate R code from this, and a help page. In contrast, include and insert allow much more fine grained control, but at the price of less modularity.
 	</para>
 	<para>
-That is, a plugin embedding another plugin will typically not need to know much about the internal details of the embedded plugin. A prime example is the plot_options plugin. Plugins wishing to embed this do not necessarily need to know about all the options provided, or how they are provided. This is a good thing, as otherwise a change in the plot_options plugin might make it necessary to adjust all plugins embedding this (a lot). In contrast, include and insert really exposes all the internal details, and plugins using this will - for example - need to know the exact ids and perhaps even the type of the elements used.
+That is, a plugin embedding another plugin will typically not need to know much about the internal details of the embedded plugin. A prime example is the plot_options plugin. Plugins wishing to embed this do not necessarily need to know about all the options provided, or how they are provided. This is a good thing, as otherwise a change in the plot_options plugin might make it necessary to adjust all plugins embedding this (a lot). In contrast, include and insert really exposes all the internal details, and plugins using this will -- for example -- need to know the exact ids and perhaps even the type of the elements used.
 	</para>
 	<para>
-Hence the rule of thumb is this: include and insert are great if the relevant options are only needed for a clearly limited group of plugins. Embedded plugins are better, if the group of plugins it may be useful to is not clearly defined, and if the functionality can easily be modularized. Another rule of thumb: If you can put the common portions into a single "chunk", then do so, and use embedding. If you need lots of small snippets to define the common portions - well, use &lt;snippets&gt;. A final way to look at it: If all plugins provide <emphasis>highly</emphasis> similar functionality, includes and inserts are probably a good idea. If they merely share one or two common "modules", embedding is likely better.
+Hence the rule of thumb is this: include and insert are great if the relevant options are only needed for a clearly limited group of plugins. Embedded plugins are better, if the group of plugins it may be useful to is not clearly defined, and if the functionality can easily be modularized. Another rule of thumb: If you can put the common portions into a single <quote>chunk</quote>, then do so, and use embedding. If you need lots of small snippets to define the common portions -- well, use &lt;snippets&gt;. A final way to look at it: If all plugins provide <emphasis>highly</emphasis> similar functionality, includes and inserts are probably a good idea. If they merely share one or two common <quote>modules</quote>, embedding is likely better.
 	</para>
 	</sect1>
 </chapter>
@@ -1201,10 +1201,10 @@ This chapter contains information on some topics that are useful only to certain
 <sect1 id="preview_plots">
 	<title>Preview functionality for graphing plugins</title>
 	<para>
-A very useful feature for all plugins generating a plot / graph is to provide an automatically updating preview. To do so, you will need two things: Adding a &lt;preview&gt;-checkbox to your <link linkend="mainxml">GUI definition</link>, and adjusting the <link linkend="jstemplate">generated code</link> for the preview. We will deal with both in turn.
+A very useful feature for all plugins generating a plot/graph is to provide an automatically updating preview. To do so, you will need two things: Adding a &lt;preview&gt; checkbox to your <link linkend="mainxml">GUI definition</link>, and adjusting the <link linkend="jstemplate">generated code</link> for the preview. We will deal with both in turn.
 	</para>
 	<para>
-Adding a &lt;preview&gt;-checkbox is simple. Just place the following somewhere in your GUI. It will take care of all the behind-the-scenes magic of creating a preview device, updaing the preview whenever the setting have changed, etc. Example:
+Adding a &lt;preview&gt; checkbox is simple. Just place the following somewhere in your GUI. It will take care of all the behind-the-scenes magic of creating a preview device, updaing the preview whenever the setting have changed, etc. Example:
 	</para>
 	<programlisting>
 &lt;document&gt;
@@ -1221,7 +1221,7 @@ Adding a &lt;preview&gt;-checkbox is simple. Just place the following somewhere 
 And that's it for the GUI definition.
 	</para>
 	<para>
-Adjusting the JS template is a little more work. You will have to create a new function called "preview" in addition to the "preprocess", "calculate", etc. functions. This function should generate the code needed to produce the plot, and only that. Esp. no printing of headers, rk.graphics.on(), or similar calls. Below is an example of the typical pattern that you will use:
+		Adjusting the JS template is a little more work. You will have to create a new function called <function>preview()</function> in addition to the <function>preprocess()</function>, <function>calculate()</function>, etc. functions. This function should generate the code needed to produce the plot, and only that. Esp. no printing of headers, <function>rk.graphics.on()</function>, or similar calls. Below is an example of the typical pattern that you will use:
 	</para>
 	<programlisting>
 function preprocess () {
@@ -1277,7 +1277,7 @@ We call such plugins context-dependent. Correspondingly, in the <link linkend="p
 	<sect2 id="context_x11">
 		<title>X11 device context</title>
 		<para>
-To use a plugin in the context of an x11 device - that is place it in the menu bar of the window you get when you call "x11 ()" in the cosonle, first declare it as usual in the <link linkend="pluginmap">.pluginmap file</link>:
+To use a plugin in the context of an x11 device - that is place it in the menu bar of the window you get when you call <function>x11()</function> in the cosonle, first declare it as usual in the <link linkend="pluginmap">.pluginmap file</link>:
 		</para>
 		<programlisting>
 &lt;document [...]&gt;
@@ -1309,7 +1309,7 @@ Instead, add a definition of the "x11" context, and add it to the menus there:
 &lt;/document&gt;
 		</programlisting>
 		<para>
-In the <link linkend="logic">logic section of the plugin xml</link>, you can now declare two &lt;external&gt; properties: "devnum" and "context". Context (if declared) will be set to "x11" when the plugin is invoked in this context. "devnum" will be set to the number of the graphics device to operate on. And that's all.
+In the <link linkend="logic">logic section of the plugin xml</link>, you can now declare two &lt;external&gt; properties: <quote>devnum</quote> and <quote>context</quote>. Context (if declared) will be set to <quote>x11</quote> when the plugin is invoked in this context. <quote>devnum</quote> will be set to the number of the graphics device to operate on. And that's all.
 		</para>
 	</sect2>
 
@@ -1319,7 +1319,7 @@ In the <link linkend="logic">logic section of the plugin xml</link>, you can now
 Before reading this section, please make sure to read the section on the <link linkend="context_x11">X11 device context</link>, as that explains the basic concepts.
 		</para>
 		<para>
-The "import" context is used to declare import file filter plugins. You simply place those in a context with id="import" in the .pluginmap file. However, there is one additional twist when declaring these plugins: In order to offer a unified file selection dialog for all supported file types, you need to declare one additional bit of information on your component:
+			The <quote>import</quote> context is used to declare import file filter plugins. You simply place those in a context with <parameter>id=</parameter><markup>"import"</markup> in the .pluginmap file. However, there is one additional twist when declaring these plugins: In order to offer a unified file selection dialog for all supported file types, you need to declare one additional bit of information on your component:
 		</para>
 		<programlisting>
 &lt;document [...]&gt;
@@ -1344,25 +1344,25 @@ The "import" context is used to declare import file filter plugins. You simply p
 &lt;/document&gt;
 		</programlisting>
 		<para>
-The attribute line simply says, that the associate filename extensions for XYZ files are *.xyz or *.zyx, and that the filter should be labelled "XYZ data files" in the file selection dialog.
+The attribute line simply says, that the associate filename extensions for XYZ files are *.xyz or *.zyx, and that the filter should be labelled <quote>XYZ data files</quote> in the file selection dialog.
 		</para>
 		<para>
-You can declare two &lt;external&gt; properties in your plugin. "filename" will be set to the selected file name, and "context" will be set to "import".
+You can declare two &lt;external&gt; properties in your plugin. <quote>filename</quote> will be set to the selected file name, and <quote>context</quote> will be set to <quote>import</quote>.
 		</para>
 	</sect2>
 </sect1>
 
 <sect1 id="current_object">
 <title>Referencing the current object</title>
-<para>For many plugins it is desirable to work on the "current" object. For instance a "sort" plugin could pre-select the data.frame that is currently being edited for sorting. The name of the current object is available to plugins as a pre-defined property called "current_object". You can connect to this property in the usual way. If no object is current, the property equates to an empty string.</para>
-<para>Currently the "current_object" can only be of class data.frame, but please do not rely on this, since this will be extended to other types of data in the future. Therefore please check any requirements by using appropriate constraints on your &lt;varslot&gt;s, or by using <link linkend="logic_scripted">GUI logic scripting</link>.</para>
+<para>For many plugins it is desirable to work on the <quote>current</quote> object. For instance a <quote>sort</quote> plugin could pre-select the data.frame that is currently being edited for sorting. The name of the current object is available to plugins as a pre-defined property called <quote>current_object</quote>. You can connect to this property in the usual way. If no object is current, the property equates to an empty string.</para>
+<para>Currently the <quote>current_object</quote> can only be of class data.frame, but please do not rely on this, since this will be extended to other types of data in the future. Therefore please check any requirements by using appropriate constraints on your &lt;varslot&gt;s, or by using <link linkend="logic_scripted">GUI logic scripting</link>.</para>
 </sect1>
 
 </chapter>
 
 <chapter id="external_plugins">
 	<title>External plugins</title>
-	<para>As of version 0.5.5, &kapp; provides a comfortable way to install additional third party plugins which do not belong to the core package itself. We call these "external plugins". They come in form of an R package and can be managed directly via the usual package management features of R and/or &kapp;. </para>
+	<para>As of version 0.5.5, &kapp; provides a comfortable way to install additional third party plugins which do not belong to the core package itself. We call these <quote>external plugins</quote>. They come in form of an R package and can be managed directly via the usual package management features of R and/or &kapp;. </para>
 	<para>This section of the documentation describes how external plugins are to be packaged, so that &kapp; can use them. The plugin creation itself is of course identical to the previous sections. That is, you should probably first write a working plugin, and then check back here to learn how to distribute it. </para>
 	<para>Since external plugins are a relatively young feature, details of this might probably change in future releases. You’re welcome to contribute your ideas to improve the process. </para>
 	<tip><para>These docs explain the details of external plugins so you can learn how they work. In addition to that, also have a look at the <link linkend="rkwarddev"><quote>rkwarddev</quote> package</link>, which was designed to automate a lot of the writing process. </para></tip>
@@ -1378,7 +1378,7 @@ You can declare two &lt;external&gt; properties in your plugin. "filename" will 
 		<para>For external plugins to install and work properly, they must follow some structural guidelines regarding their file hierarchy. </para>
     
 		<sect2 id="file_hierarchy"><title>File hierarchy</title>
-			<para>Lets have a look at the prototypic file hierarchy of an elaborate plugin archive. You don’t have to include all of these directories and/or files for a plugin to work (read on to learn what’s absolutely necessary), consider this a "best practice" example: </para>
+			<para>Lets have a look at the prototypic file hierarchy of an elaborate plugin archive. You don’t have to include all of these directories and/or files for a plugin to work (read on to learn what’s absolutely necessary), consider this a <quote>best practice</quote> example: </para>
 			<programlisting>
 	plugin_name/
 		inst/
@@ -1406,9 +1406,9 @@ You can declare two &lt;external&gt; properties in your plugin. "filename" will 
 			<tip><para>You don't have to create this file hierarchy by hand. If you use the function <function>rk.plugin.skeleton()</function> from the <link linkend="rkwarddev"><quote>rkwarddev</quote> package</link>, it will automatically create all necessary files and directories for you.</para></tip>
 			<sect3 id="basic_plugin_components">
 				<title>Basic plugin components</title>
-				<para>It is mandatory to include at least three files: a <link linkend="pluginmap">.pluginmap</link>, a plugin <link linkend="mainxml">.xml</link> description and a plugin <link linkend="jstemplate">.js</link> file. That is, even the "plugins" directory is optional. It might just help to give your files some order, especially if you include more that one plugin/dialog in the archive, which is of course no problem. You can have as many directories for the actual plugin files as you see fit, they just have to resemble the <link linkend="pluginmap">.pluginmap</link>, respectively. It is also possible to even include several .pluginmap files, if it fits your needs, but you should include them all in "plugin_name.pluginmap" then. </para>
+				<para>It is mandatory to include at least three files: a <link linkend="pluginmap">.pluginmap</link>, a plugin <link linkend="mainxml">.xml</link> description and a plugin <link linkend="jstemplate">.js</link> file. That is, even the "plugins" directory is optional. It might just help to give your files some order, especially if you include more that one plugin/dialog in the archive, which is of course no problem. You can have as many directories for the actual plugin files as you see fit, they just have to resemble the <link linkend="pluginmap">.pluginmap</link>, respectively. It is also possible to even include several .pluginmap files, if it fits your needs, but you should include them all in <quote>plugin_name.pluginmap</quote> then. </para>
 				<para>Each R package must have a valid DESCRIPTION file, which is also crucial for &kapp; recognizing it as a plugin provider. Most of the information it carries is also needed in the plugin <link linkend="meta-information">Meta-information</link>, but in a different format (the R documentation explains <ulink url="http://cran.r-project.org/doc/manuals/R-exts.html#The-DESCRIPTION-file">the DESCRIPTION file in detail</ulink>).</para>
-				<para>In addition to the general contents of a DESCRIPTIONS file, make sure to also include the line "Enhances: rkward". This will cause &kapp; to automatically scan the package for plugins if it is installed. An example DESCRIPTION file looks like this:</para>
+				<para>In addition to the general contents of a DESCRIPTIONS file, make sure to also include the line <quote>Enhances: rkward</quote>. This will cause &kapp; to automatically scan the package for plugins if it is installed. An example DESCRIPTION file looks like this:</para>
 			<programlisting>
 	Package: SquaretheCircle
 	Type: Package
@@ -1427,7 +1427,7 @@ You can declare two &lt;external&gt; properties in your plugin. "filename" will 
 			person(given="A.", family="Assistant", role=c("cre",
 			"ctb"), email="alterego@eternalwondermaths.example.org"))
 			</programlisting>
-			<tip><para> You don't have to write this file by hand. If you use the function <function>rk.plugin.skeleton()</function> from the <link linkend="rkwarddev"><quote>rkwarddev</quote> package</link> and provide all necessary information via the "about" option, it will automatically create a working DESCRIPTION file for you.</para></tip>
+			<tip><para> You don't have to write this file by hand. If you use the function <function>rk.plugin.skeleton()</function> from the <link linkend="rkwarddev"><quote>rkwarddev</quote> package</link> and provide all necessary information via the <quote>about</quote> option, it will automatically create a working DESCRIPTION file for you.</para></tip>
 
 			</sect3>
 			<sect3 id="additional_information">
@@ -1436,7 +1436,7 @@ You can declare two &lt;external&gt; properties in your plugin. "filename" will 
 			</sect3>
 			<sect3 id="automated_plugin_testing">
 				<title>Automated plugin testing (optional)</title>
-				<para>Another optional directory is "tests", which is meant to provide files needed for <ulink url="http://sourceforge.net/apps/mediawiki/rkward/index.php?title=Automated_Plugin_Testing">automated plugin testing</ulink>. These tests are helpful to quickly check if your plugins still work with new versions of R or &kapp;. If you want to include tests, you should really restrain yourself to the naming scheme and hierarchy shown here. That is, tests should reside in a directory called "tests", which includes a file "testsuite.R" and a folder with tests standards named after the appropriate test suite. You can, however, provide more than one test suite; in that case, if you don’t want to append them all in the one "testsuite.R" file, you can split them in e.g. one file for each test suite and create one "testsuite.R" with "source()" calls for each suite file. In either case, create separate subdirectories with test standards for each defined suite. </para>
+				<para>Another optional directory is "tests", which is meant to provide files needed for <ulink url="http://sourceforge.net/apps/mediawiki/rkward/index.php?title=Automated_Plugin_Testing">automated plugin testing</ulink>. These tests are helpful to quickly check if your plugins still work with new versions of R or &kapp;. If you want to include tests, you should really restrain yourself to the naming scheme and hierarchy shown here. That is, tests should reside in a directory called <quote>tests</quote>, which includes a file <quote>testsuite.R</quote> and a folder with tests standards named after the appropriate test suite. You can, however, provide more than one test suite; in that case, if you don’t want to append them all in the one <quote>testsuite.R</quote> file, you can split them in e.g. one file for each test suite and create one <quote>testsuite.R</quote> with <function>source()</function> calls for each suite file. In either case, create separate subdirectories with test standards for each defined suite. </para>
 				<para>The benefits of upholding to this structure is that plugin tests can be run simply by calling <function>rktests.makplugintests()</function> from the "rkwardtests" package without additional arguments. Have a look at the online documentation on <ulink url="http://sourceforge.net/apps/mediawiki/rkward/index.php?title=Automated_Plugin_Testing">Automated Plugin Testing</ulink> for further details. </para>
 			</sect3>
 		</sect2>
@@ -1533,13 +1533,13 @@ You can declare two &lt;external&gt; properties in your plugin. "filename" will 
 	&lt;/hierarchy&gt;
 &lt;/document&gt;
 		</programlisting>
-		<tip><para>You don't have to write this XML code by hand. If you use the function <function>rk.plugin.skeleton()</function> from the <link linkend="rkwarddev"><quote>rkwarddev</quote> package</link> and provide all necessary information via the "about" option, it will automatically create a .pluginmap file with a working &lt;about&gt; section for you.</para></tip>
+		<tip><para>You don't have to write this XML code by hand. If you use the function <function>rk.plugin.skeleton()</function> from the <link linkend="rkwarddev"><quote>rkwarddev</quote> package</link> and provide all necessary information via the <quote>about</quote> option, it will automatically create a .pluginmap file with a working &lt;about&gt; section for you.</para></tip>
 		<para>Most of this should explain itself, so we’ll not discuss each and every tag element. But let’s look at some details that probably need some commentary for easier understanding. </para>
-		<para>The "category" element in &lt;about&gt; can be defined rather freely, but should be meaningful, as it’s thought to be used to order plugins into groups. All other attributes in this opening tag are mandatory and must be filled with reasonable content. </para>
-		<para>At least one &lt;author&gt; with a valid e-mail address and the role "aut" ("author") must also be given. In case your plugin causes problems or someone would like to share its gratitude with you, it should be easy to contact someone who’s involved. For further information on other valid roles, like "ctb" for code contributors or "cre" for package maintenance, please refer to the <ulink url="http://stat.ethz.ch/R-manual/R-patched/library/utils/html/person.html">R documentation on <function>person()</function></ulink>. </para>
-		<para>Actually the whole &lt;dependencies&gt; might be left empty if your plugin is supposed to run with any &kapp; version and standard R installation. But please be reasonable here as well. The inclusion of any &lt;package&gt; or &lt;pluginmap&gt; tags is of course optional as well, depending on the needs of your plugins. All the "min_version" and "max_version" information can be omitted, as well. They are obviously useful if your plugin is known to rely on certain versions of an R package, for instance. </para>
+		<para>The <parameter>category</parameter> element in &lt;about&gt; can be defined rather freely, but should be meaningful, as it’s thought to be used to order plugins into groups. All other attributes in this opening tag are mandatory and must be filled with reasonable content. </para>
+		<para>At least one &lt;author&gt; with a valid e-mail address and the role <quote>aut</quote> (<quote>author</quote>) must also be given. In case your plugin causes problems or someone would like to share its gratitude with you, it should be easy to contact someone who’s involved. For further information on other valid roles, like <quote>ctb</quote> for code contributors or <quote>cre</quote> for package maintenance, please refer to the <ulink url="http://stat.ethz.ch/R-manual/R-patched/library/utils/html/person.html">R documentation on <function>person()</function></ulink>. </para>
+		<para>Actually the whole &lt;dependencies&gt; might be left empty if your plugin is supposed to run with any &kapp; version and standard R installation. But please be reasonable here as well. The inclusion of any &lt;package&gt; or &lt;pluginmap&gt; tags is of course optional as well, depending on the needs of your plugins. All the <parameter>min_version</parameter> and <parameter>max_version</parameter> information can be omitted, as well. They are obviously useful if your plugin is known to rely on certain versions of an R package, for instance. </para>
 		<para>If you need an R package that is probably not hosted on an official CRAN mirror, you can specify a repository where it can be found in the &lt;package&gt; tag. &kapp; will check whether this repository is already defined in its configuration, and if not, add it, but only after the user has given its explicit permission to that. </para>
-		<para>The "id" element in the &lt;pluginmap&gt; tag refers to the ID given in the top level &lt;document&gt; tag of the pluginmap that you need. </para>
+		<para>The <parameter>id</parameter>" element in the &lt;pluginmap&gt; tag refers to the ID given in the top level &lt;document&gt; tag of the pluginmap that you need. </para>
 	</sect1>
 	<sect1 id="building_the_plugin_package">
 		<title>Building the plugin package</title>
@@ -1551,26 +1551,251 @@ You can declare two &lt;external&gt; properties in your plugin. "filename" will 
 		<para><userinput>
 			<command>R</command> <option>CMD INSTALL</option> <parameter><filename>SquaretheCircle_0.1-3.tar.gz</filename></parameter>
 		</userinput></para>
+		<tip><para>You don't have to build the package like this on the command line. If you use the function <function>rk.build.package()</function> from the <link linkend="rkwarddev"><quote>rkwarddev</quote> package</link>, it will build and/or check your plugin package for you.</para></tip>
 	</sect1>
 </chapter>
 
 <chapter id="rkwarddev">
 	<title>Plugin development with the <quote>rkwarddev</quote> package</title>
-	<para>Writing external plugins involves writing files in three languages (XML, JavaScript and R) and the creation of a standardized hierarchy of directories. To make this a lot easier for willing plugin developers, we're providing the <quote>rkwarddev</quote> package. It provides a number of simple R functions to create the XML code for most dialog elements like tabbooks, checkboxes, dropdownlists or filebrowsers, as well as functions to create JavaScript code and RKWard help files to start with. The function <function>rk.plugin.skeleton()</function> creates the expected directory tree and all necessary files where they are supposed to be.</para>
-	<para>This package is not installed by default, but has to be installed manually from <ulink url="http://rkward.sourceforge.net/R/">RKWard's own repository</ulink>. You can either do that by using the GUI interface (Settings -> Configure packages), or from any running R session:</para>
-	<programlisting>
-	install.packages("rkwarddev", repos="http://rkward.sf.net/R")
-	library(rkwarddev)
-	</programlisting>
-	<para>The full <ulink url="http://rkward.sourceforge.net/R/pckg/rkwarddev/rkwarddev.pdf">documentation in PDF format</ulink> can also be found there.</para>
+	<sect1 id="rkdev_overview"><title>Overview</title>
+		<para>Writing external plugins involves writing files in three languages (XML, JavaScript and R) and the creation of a standardized hierarchy of directories. To make this a lot easier for willing plugin developers, we're providing the <quote>rkwarddev</quote> package. It provides a number of simple R functions to create the XML code for all dialog elements like tabbooks, checkboxes, dropdownlists or filebrowsers, as well as functions to create JavaScript code and RKWard help files to start with. The function <function>rk.plugin.skeleton()</function> creates the expected directory tree and all necessary files where they are supposed to be.</para>
+		<para>This package is not installed by default, but has to be installed manually from <ulink url="http://rkward.sourceforge.net/R/">RKWard's own repository</ulink>. You can either do that by using the GUI interface (Settings -> Configure packages), or from any running R session:</para>
+		<programlisting>
+		install.packages("rkwarddev", repos="http://rkward.sf.net/R")
+		library(rkwarddev)
+		</programlisting>
+		<para><quote>rkwarddev</quote> depends on another small package called <quote>XiMpLe</quote>, which is a very simple XML parser and generator and also present in the same repository.</para>
+		<para>The full <ulink url="http://rkward.sourceforge.net/R/pckg/rkwarddev/rkwarddev.pdf">documentation in PDF format</ulink> can also be found there. A more detailed introduction to working with the package can be found in the <ulink url="http://rkward.sourceforge.net/R/pckg/rkwarddev/rkwarddev_vignette.pdf">rkwarddev vignette</ulink>.</para>
+	</sect1>
+
+	<sect1 id="rkdev_example"><title>Practical example</title>
+		<para>To get you an idea how <quote>scripting a plugin</quote> looks like, compared to the direct approach you have seen in the previous chapters, we'll create the full t-test plugin once again -- this time only with the R functions of the <quote>rkwarddev</quote> package.</para>
+
+		<tip><para>The package will add a new GUI dialog to RKWard in the <quote>File</quote> menu, called <quote>RKWard Plugin Skeleton</quote>. Like the name suggests, you can create plugin skeletons for further editing with it. This dialog itself was in turn generated by an <quote>rkwarddev</quote> script which you can find in the <quote>demo</quote> directory of the installed package and package sources, as an additional example. You can also run it by calling <function>demo("skeleton_dialog")</function></para></tip>
+
+		<sect2 id="rkdev_gui"><title>GUI description</title>
+		<para>You will imediately notice that the workflow is considerably different: Contrary to writing the XML code directly, you do not begin with the &lt;document&gt; definition, but directly with the plugin elements you'd like to have in the dialog. You can assign each interface element -- be it checkboxes, dropdown menus, variable slots or anything else -- to individual R objects, and then combine these objects to the actual GUI. The package has functions for <link linkend="interfaceelements">each XML tag</link> that can be used to define the plugin GUI, and most of them even have the same name, only with the prefix <function>rk.XML.*</function>. For example, defining a &lt;varselector&gt; and two &lt;varslot&gt; elements for the <quote>x</quote> and <quote>y</quote> variable of the t-test example can be done by:</para>
+		<programlisting>
+variables &lt;- rk.XML.varselector(id.name="vars")
+var.x &lt;- rk.XML.varslot("compare", source=variables, types="number", required=TRUE, id.name="x")
+var.y &lt;- rk.XML.varslot("against", source=variables, types="number", required=TRUE, id.name="y")
+		</programlisting>
+		<para>The most interesting detail is probably <parameter>source=</parameter><markup>variables</markup>: A prominent feature of the package is that all functions can generate automatic IDs, so you don't have to bother with either thinking of <parameter>id</parameter> values or remembering them to refer to a specific plugin element. You can simply give the R objects as reference, as all functions who need an ID from some other element can also read it from these objects. <function>rk.XML.varselector()</function> is a little special, as it usually has no specific content to make an ID from (it can, but only if you specify a label), so we have to set an ID name. But <function>rk.XML.varslot()</function> wouldn't need the <parameter>id.name</parameter> arguments here, so this would suffice:</para>
+		<programlisting>
+variables &lt;- rk.XML.varselector(id.name="vars")
+var.x &lt;- rk.XML.varslot("compare", source=variables, types="number", required=TRUE)
+var.y &lt;- rk.XML.varslot("against", source=variables, types="number", required=TRUE)
+		</programlisting>
+		<para>In order to recreate the example code to the point, you'd have to set all ID values manually. But since the package shall make our lives easier, from now on we will no longer care about that.</para>
+		<para>If you want to see how the XML code of the defined element looks like if you exported it to a file, you can just call the object by its name. So, if you now called <quote>var.x</quote> in your R session, you should see something like this:</para>
+		<programlisting>
+&lt;varslot id="vrsl_compare" label="compare" source="vars" types="number" required="true" /&gt;
+		</programlisting>
+		<para>Some tags are only useful in the context of others. Therefore, for instance, you won't find a function for the &lt;option&gt; tag. Instead, both radio buttons and dropdown lists are defined including their options as a named list, where the names represent the labels to be shown in the dialog, and their value is a named vector which can have two entries, <parameter>val</parameter> for the value of an option and the boolean <parameter>chk</parameter> to specify if this option is checked by default.</para>
+		<programlisting>
+test.hypothesis &lt;- rk.XML.radio("using test hypothesis",
+	options=list(
+		"Two-sided"=c(val="two.sided"),
+		"First is greater"=c(val="greater"),
+		"Second is greater"=c(val="less")
+	)
+)
+		</programlisting>
+		<para>The result looks like this:</para>
+		<programlisting>
+&lt;radio id="rad_usngtsth" label="using test hypothesis"&gt;
+	&lt;option label="Two-sided" value="two.sided" /&gt;
+	&lt;option label="First is greater" value="greater" /&gt;
+	&lt;option label="Second is greater" value="less" /&gt;
+&lt;/radio&gt;
+		</programlisting>
+		<para>All that's missing from the elements of the <quote>Basic settings</quote> tab is the checkbox for paired samples, and the structuring of all of these elements in rows and columns:</para>
+		<programlisting>
+check.paired &lt;- rk.XML.cbox("Paired sample", value="1", un.value="0")
+basic.settings &lt;- rk.XML.row(variables, rk.XML.col(var.x, var.y, test.hypothesis, check.paired))
+		</programlisting>
+		<para><function>rk.XML.cbox()</function> is a rare exception where the function name does not contain the full tag name, to save some typing for this often used element. This is what <function>basic.settings</function> now contains:</para>
+		<programlisting>
+&lt;row id="row_vTFSPP10TF"&gt;
+	&lt;varselector id="vars" /&gt;
+	&lt;column id="clm_vrsTFSPP10"&gt;
+		&lt;varslot id="vrsl_compare" label="compare" source="vars" types="number" required="true" /&gt;
+		&lt;varslot id="vrsl_against" label="against" source="vars" types="number" required="true" /&gt;
+		&lt;radio id="rad_usngtsth" label="using test hypothesis"&gt;
+			&lt;option label="Two-sided" value="two.sided" /&gt;
+			&lt;option label="First is greater" value="greater" /&gt;
+			&lt;option label="Second is greater" value="less" /&gt;
+		&lt;/radio&gt;
+		&lt;checkbox id="chc_Pardsmpl" label="Paired sample" value="1" value_unchecked="0" /&gt;
+	&lt;/column&gt;
+&lt;/row&gt;
+		</programlisting>
+		<para>In a similar manner, the next lines will create R objects for the elements of the <quote>Options</quote> tab, introducing functions for spinboxes, frames and stretch:</para>
+		<programlisting>
+check.eqvar &lt;- rk.XML.cbox("assume equal variances", value="1", un.value="0")
+conf.level &lt;- rk.XML.spinbox("confidence level", min=0, max=1, initial=0.95)
+check.conf &lt;- rk.XML.cbox("print confidence interval", val="1", chk=TRUE)
+conf.frame &lt;- rk.XML.frame(conf.level, check.conf, rk.XML.stretch(), label="Confidence Interval")
+		</programlisting>
+		<para>Now all we need to do is to put the objects together in a tabbook, and place that in a dialog section:</para>
+		<programlisting>
+full.dialog &lt;- rk.XML.dialog(
+	label="Independent Samples t-Test",
+	rk.XML.tabbook(tabs=list("Basic settings"=basic.settings, "Options"=list(check.eqvar, conf.frame)))
+)
+		</programlisting>
+		<para>We can also create the wizard section with its two pages using the same objects, so their IDs will be extracted for the &lt;copy&gt; tags:</para>
+		<programlisting>
+full.wizard &lt;- rk.XML.wizard(
+		label="Independent Samples T-Test",
+		rk.XML.page(
+			rk.XML.text("As a first step, select the two variables you want to compare against each other. And specify, which one you theorize to be greater. Select two-sided, if your theory does not tell you, which variable is greater."),
+			rk.XML.copy(basic.settings)),
+		rk.XML.page(
+			rk.XML.text("Below are some advanced options. It's generally safe not to assume the variables have equal variances. An appropriate correction will be applied then. Chosing \"assume equal variances\" may increase test-strength, however."),
+			rk.XML.copy(check.eqvar),
+			rk.XML.text("Sometimes it's helpful to get an estimate of the confidence interval of the difference in means. Below you can specify whether one should be shown, and which confidence-level should be applied (95% corresponds to a 5% level of significance)."),
+			rk.XML.copy(conf.frame)))
+		</programlisting>
+		<para>That's it for the GUI. The global document will be combined in the end by <function>rk.plugin.skeleton()</function>.</para>
+		</sect2>
+
+		<sect2 id="rkdev_jscode"><title>JavaScript code</title>
+			<para>Until now, using the <quote>rkwarddev</quote> package might not seem to have helped so much. This is going to change right now.</para>
+			<para>First of all, just like we didn't have to care about IDs for elements when defining the GUI layout, we don't have to care about JavaScript variable names in the next step. If you want more control, you can write plain JavaScript code and have it pasted to the generated file. But it's probably much more efficient to do it the <quote>rkwarddev</quote> way.</para>
+			<para>Most notably you don't have to define any variable yourself, as <function>rk.plugin.skeleton()</function> can scan your XML code and automatically define all variables you will probably need -- for instance, you wouldn't bother to include a checkbox if you don't use its value or state afterwards. So we can start writing the actual R code generating JS immediately.</para>
+			<tip><para>The function <function>rk.JS.scan()</function> can also scan existing XML files for variables.</para></tip>
+			<para>The package has some functions for JS code constructs that are commonly used in RKWard plugins, like the <function>echo()</function> function or <function>if() {...} else {...}</function> conditions. There are some differences between JS and R, e.g., for <function>paste()</function> in R you use the comma to concatenate character strings, whereas for <function>echo()</function> in JS you use <quote>+</quote>, and lines must end with a semicolon. By using the R functions, you can almost forget about these differences and keep writing R code.</para>
+			<para>These functions can take different classes of input objects: Either plain text, R objects with XML code like above, or in turn results of some other JS functions of the package. In the end, you will allways call <function>rk.paste.JS()</function>, which behaves similar to <function>paste()</function>, but depending on the input objects it will replace them with their XML ID, JavaScript variable name or even complete JavaScript code blocks.</para>
+			<para>For the t-test example, we need two JS objects: One to calculate the results, and one to print them in the <function>printout()</function> function:</para>
+		<programlisting>
+JS.calc &lt;- rk.paste.JS(
+	echo("res &lt;- t.test (x=", var.x, ", y=", var.y, ", hypothesis=\"", test.hypothesis, "\""),
+	ite(id(check.paired), echo(", paired=TRUE")),
+	ite(id("!", check.paired, " &amp;&amp; ", check.eqvar), echo(", var.equal=TRUE")),
+	ite(id(conf.level, " != \"0.95\""), echo(", conf.level=", conf.level)),
+	echo(")\n"), level=2)
+
+JS.print &lt;- rk.paste.JS(echo("rk.print (res)\n"), level=2)
+		</programlisting>
+		<para>As you can see, <quote>rkwarddev</quote> also provides an R implementation of the <function>echo()</function> function. It returns exactly one character string with a valid JS version of itself. You might also notice that all of the R objects here are the ones we created earlier. They will automatically be replaced with their variable names, so this should be quite intuitive. Whenever you need just this replacement, the function <function>id()</function> can be used, which also will return exatly one character string from all the objects it was given (you could say it behaves like <function>paste()</function> with a very specific object substitution).</para>
+		<para>The function name <function>ite()</function> is an abbreviation for <quote>if, then, else</quote>, and these three conditional statements are exactly what its three optional arguments are for -- although our example only uses two, so we're dealing with three <quote>if, then</quote> conditions here. Maybe it's best to just look at the above <quote>JS.calc</quote> object, which now contains a character string with this content:</para>
+		<programlisting>
+	echo("res &lt;- t.test (x=" + vrslCompare + ", y=" + vrslAgainst + ", hypothesis=\"" + radUsngtsth + "\"");
+	if(chcPardsmpl) {
+		echo(", paired=TRUE");
+	} else {}
+	if(!chcPardsmpl &amp;&amp; chcAssmqlvr) {
+		echo(", var.equal=TRUE");
+	} else {}
+	if(spnCnfdnclv != "0.95") {
+		echo(", conf.level=" + spnCnfdnclv);
+	} else {}
+	echo(")\n");
+		</programlisting>
+		</sect2>
+
+		<sect2 id="rkdev_pluginmap"><title>Plugin map</title>
+			<para>This section is very short: We don't need to write a pluginmap at all, as it can be generated automatically by <function>rk.plugin.skeleton()</function>.</para>
+		</sect2>
+
+		<sect2 id="rkdev_rkh"><title>Help page</title>
+			<para>This section is very short as well: <function>rk.plugin.skeleton()</function> can't write a whole help page from the information it has. But it can scan the XML document also for elements which probably deserve a help page entry, and automatically create a help page template for our plugin. All we have to do afterwards is to write some lines for each listed section.</para>
+			<tip><para>The function <function>rk.rkh.scan()</function> can also scan existing XML files to create a help file skeleton.</para></tip>
+		</sect2>
+
+		<sect2 id="rkdev_plugin_generator"><title>Generate the plugin files</title>
+			<para>Now comes the final step, in which we'll hand over all generated objects to <function>rk.plugin.skeleton()</function>:</para>
+			<programlisting>
+plugin.dir &lt;- rk.plugin.skeleton("t_test",
+	xml=list(
+		dialog=full.dialog,
+		wizard=full.wizard),
+	js=list(
+		results.header="Independent samples t test",
+		calculate=JS.calc,
+		printout=JS.print),
+	load=TRUE,
+	edit=TRUE,
+	show=TRUE)
+			</programlisting>
+			<para>The files will be created in a temporal directory by default. The last three options are not necessary, but very handy: <parameter>load=</parameter><markup>TRUE</markup> will automatically add the new plugin to &kapp;s configuration (since it's in a temp dir and hence will cease to exist when &kapp; is closed, it will automatically be removed again by &kapp; during its next start), <parameter>edit=</parameter><markup>TRUE</markup> will open all created files for editing in &kapp; editor tabs, and <parameter>show=</parameter><markup>TRUE</markup> will attempt to directly launch the plugin, so you can examine what it looks like without a klick. You might consider adding <parameter>overwrite=</parameter><markup>TRUE</markup> if you're about to run your script repeatedly (e.g. after changes to the code), as by default no files will be overwritten.</para>
+			<para>The result object <quote>plugin.dir</quote> contains the path to the directory in which the plugin was created. This can be useful in combination with the function <function>rk.build.package()</function>, to build an actual R package to share your plugin with others -- e.g. by sending it to the RKWard development team to be added to our plugin repository.</para>
+		</sect2>
+		<sect2 id="rkdev_ttest_script"><title>The full script</title>
+		<para>To recapitulate all of the above, here's the full script to create the working t-test example. Adding to the already explained code, it also loads the package if needed, and it uses the <function>local()</function> environment, so all the objects will not be created in your global environment (except for <quote>plugin.dir</quote>):</para>
+		<programlisting>
+require(rkwarddev)
+
+local({
+	variables &lt;- rk.XML.varselector(id.name="vars")
+	var.x &lt;- rk.XML.varslot("compare", source=variables, types="number", required=TRUE)
+	var.y &lt;- rk.XML.varslot("against", source=variables, types="number", required=TRUE)
+	test.hypothesis &lt;- rk.XML.radio("using test hypothesis",
+		options=list(
+			"Two-sided"=c(val="two.sided"),
+			"First is greater"=c(val="greater"),
+			"Second is greater"=c(val="less")
+		)
+	)
+	check.paired &lt;- rk.XML.cbox("Paired sample", value="1", un.value="0")
+	basic.settings &lt;- rk.XML.row(variables, rk.XML.col(var.x, var.y, test.hypothesis, check.paired))
+
+	check.eqvar &lt;- rk.XML.cbox("assume equal variances", value="1", un.value="0")
+	conf.level &lt;- rk.XML.spinbox("confidence level", min=0, max=1, initial=0.95)
+	check.conf &lt;- rk.XML.cbox("print confidence interval", val="1", chk=TRUE)
+	conf.frame &lt;- rk.XML.frame(conf.level, check.conf, rk.XML.stretch(), label="Confidence Interval")
+
+	full.dialog &lt;- rk.XML.dialog(
+		label="Independent Samples t-Test",
+		rk.XML.tabbook(tabs=list("Basic settings"=basic.settings, "Options"=list(check.eqvar, conf.frame)))
+	)
+
+	full.wizard &lt;- rk.XML.wizard(
+			label="Independent Samples T-Test",
+			rk.XML.page(
+				rk.XML.text("As a first step, select the two variables you want to compare against each other. And specify, which one you theorize to be greater. Select two-sided, if your theory does not tell you, which variable is greater."),
+				rk.XML.copy(basic.settings)),
+			rk.XML.page(
+				rk.XML.text("Below are some advanced options. It's generally safe not to assume the variables have equal variances. An appropriate correction will be applied then. Chosing \"assume equal variances\" may increase test-strength, however."),
+				rk.XML.copy(check.eqvar),
+				rk.XML.text("Sometimes it's helpful to get an estimate of the confidence interval of the difference in means. Below you can specify whether one should be shown, and which confidence-level should be applied (95% corresponds to a 5% level of significance)."),
+				rk.XML.copy(conf.frame)))
+
+	JS.calc &lt;- rk.paste.JS(
+		echo("res &lt;- t.test (x=", var.x, ", y=", var.y, ", hypothesis=\"", test.hypothesis, "\""),
+		ite(id(check.paired), echo(", paired=TRUE")),
+		ite(id("!", check.paired, " &amp;&amp; ", check.eqvar), echo(", var.equal=TRUE")),
+		ite(id(conf.level, " != \"0.95\""), echo(", conf.level=", conf.level)),
+		echo(")\n"), level=2)
+
+	JS.print &lt;- rk.paste.JS(echo("rk.print (res)\n"), level=2)
+
+	plugin.dir &lt;&lt;- rk.plugin.skeleton("t_test",
+		xml=list(
+			dialog=full.dialog,
+			wizard=full.wizard),
+		js=list(
+			results.header="Independent samples t test",
+			calculate=JS.calc,
+			printout=JS.print),
+		load=TRUE,
+		edit=TRUE,
+		show=TRUE,
+		overwrite=TRUE)
+})
+		</programlisting>
+		</sect2>
+
+	</sect1>
 </chapter>
 
 <appendix id="reference">
 <title>Reference</title>
 
-<sect1 id="propertytypes"><title>Types of properties / Modifiers</title>
+<sect1 id="propertytypes"><title>Types of properties/Modifiers</title>
 <para>
-At some places in this introduction we've talked about "properties" of GUI elements or otherwise. In fact there are several different types of properties. Usually you do not need to worry about this, as you can use common sense to connect any property to any other property. However, internally, there are different types of properties. What this matters for, is when fetching some special values in the JS-template. In getValue ("id") statements you can also specify some so called "modifiers" like this: getValue ("id.modifier"). This modifier will affect, in which way the value is printed. Read on for the list of properties, and the modifiers they each make available:
+	At some places in this introduction we've talked about <quote>properties</quote> of GUI elements or otherwise. In fact there are several different types of properties. Usually you do not need to worry about this, as you can use common sense to connect any property to any other property. However, internally, there are different types of properties. What this matters for, is when fetching some special values in the JS-template. In getValue ("id") statements you can also specify some so called <quote>modifiers</quote> like this: <function>getValue ("id.modifier")</function>. This modifier will affect, in which way the value is printed. Read on for the list of properties, and the modifiers they each make available:
 </para>
 <variablelist>
 <varlistentry>
@@ -2637,11 +2862,11 @@ In addition to this, some elements have additional properties you can connect to
 </varlistentry>
 <varlistentry>
 <term>&lt;related&gt;</term>
-<listitem><para>Defines a section containing links to further related information. Will always be displayed after the &lt;settings&gt; section. Use as a direct child of the &lt;document&gt;. May contain only &lt;setting&gt; and &lt;caption&gt; elements as direct children. No attributes.</para></listitem>
+<listitem><para>Defines a section containing links to further related information. Will always be displayed after the &lt;settings&gt; section. No attributes. The text contained within the &lt;related&gt; tag will be displayed. Typically this will contain an HTML-style list. Recommended for plugin help pages, but not required. May only be defined once, as a direct child of the &lt;document&gt; node.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;technical&gt;</term>
-<listitem><para>Defines a section containing technical information of no relevance to end users (such as internal structure of the plugin). Will always be displayed last in a help page. Use as a direct child of the &lt;document&gt;. May contain only &lt;setting&gt; and &lt;caption&gt; elements as direct children. No attributes.</para></listitem>
+<listitem><para>Defines a section containing technical information of no relevance to end users (such as internal structure of the plugin). Will always be displayed last in a help page. No attributes. The text contained within the &lt;related&gt; tag will be displayed. Not required, and not recommended for most plugin help pages. May only be defined once, as a direct child of the &lt;document&gt; node.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;link&gt;</term>
