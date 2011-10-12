@@ -809,7 +809,7 @@ RKFunctionArgHinter::RKFunctionArgHinter (RKScriptContextProvider *provider, KTe
 	arghints_popup->setMargin (2);
 	QPalette p = QToolTip::palette ();		// HACK to trick the style into using the correct color
 	p.setColor (QPalette::Inactive, QPalette::Window, p.color (QPalette::Inactive, QPalette::ToolTipBase));
-	p.setColor (QPalette::Inactive, QPalette::Text, p.color (QPalette::Inactive, QPalette::ToolTipText));
+	p.setColor (QPalette::Inactive, QPalette::WindowText, p.color (QPalette::Inactive, QPalette::ToolTipText));
 	arghints_popup->setPalette (p);
 	arghints_popup->setFrameStyle (QFrame::Box);
 	arghints_popup->setLineWidth (1);

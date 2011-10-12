@@ -1,7 +1,8 @@
 --- Version 0.5.7 - Oct-23-2011
+- Fixed: Would not system-defined text color for argument hints
 - Do not treat arrays (which are not a matrix) as hierarchical named objects in the object browser
 - Do not analyse more than 100000 name child-objects per object (avoids hangs on such extreme data)
-- Fix problems with using mclapply() inside RKWard
+- Fixed: Problems with using mclapply() inside RKWard
 - Offer to add a new library location, automatically, if location selected for installation is not writable
 - Reworked package installation / update dialog
 - Fixed: Integrated help browser would not update navigation history when following page internal links
