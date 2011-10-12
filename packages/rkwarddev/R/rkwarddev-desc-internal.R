@@ -9,10 +9,7 @@ pckg.dscrptn <- data.frame(
 		AuthorsR="c(person(given=\"Meik\", family=\"Michalke\", email=\"meik.michalke@hhu.de\",
 			role=c(\"aut\", \"cre\")))",
 		Maintainer="m.eik michalke <meik.michalke@hhu.de>",
-## TODO:
-## need this for rk.load.pluginmaps()
-## 		Depends="R (>= 2.9.0),XiMpLe,rkward (>= 0.5.7)",
-		Depends="R (>= 2.9.0),XiMpLe,rkward (>= 0.5.6)",
+		Depends="R (>= 2.9.0),XiMpLe,rkward (>= 0.5.7)",
 		Enhances="rkward",
 		Description="Provides functions to create plugin skeletons and XML structures for RKWard.",
 		License="GPL (>= 3)",
