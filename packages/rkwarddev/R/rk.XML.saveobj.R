@@ -38,7 +38,7 @@ rk.XML.saveobj <- function(label, chk=FALSE, checkable=TRUE, initial="auto", req
 
 
 	if(identical(id.name, "auto")){
-		attr.list[["id"]] <- list(id=auto.ids(label, prefix=ID.prefix("saveobject")))
+		attr.list[["id"]] <- auto.ids(label, prefix=ID.prefix("saveobject"))
 	} else if(!is.null(id.name)){
 		attr.list[["id"]] <- id.name
 	} else {}

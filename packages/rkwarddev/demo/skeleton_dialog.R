@@ -8,7 +8,7 @@ about.info <- rk.XML.about(
 		person(given="Meik", family="Michalke",
 			email="meik.michalke@hhu.de", role=c("aut","cre"))),
 	about=list(desc="GUI interface to create RKWard plugin skeletons",
-		version="0.03-3", url="http://rkward.sf.net"),
+		version="0.03-6", url="http://rkward.sf.net"),
 	dependencies=list(rkward.min="0.5.7")
 	)
 
@@ -200,7 +200,7 @@ rk.plugin.skeleton("RKWard Plugin Skeleton",
 	js=list(
 		require="rkwarddev",
 		calculate=JS.calculate),
-#	pluginmap=list(hierarchy="file"),
+#	pluginmap=list(name="Create RKWard plugin skeleton", hierarchy=list(list("file", "export"))),
 #	overwrite=TRUE,
 	create=c("pmap","xml","js","desc"),
 	tests=FALSE,

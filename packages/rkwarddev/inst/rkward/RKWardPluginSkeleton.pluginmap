@@ -1,15 +1,15 @@
 <!DOCTYPE rkpluginmap >
 <document 
 	namespace="rkward"
-	id="RKWardPluginSkeleton_rkward"
+	id="CreateRKWardpluginskeleton_rkward"
 >
 	<about 
 		name="Plugin Skeleton"
 		shortinfo="GUI interface to create RKWard plugin skeletons"
-		version="0.03-3"
-		releasedate="2011-10-09"
+		version="0.03-6"
+		releasedate="2011-10-13"
 		url="http://rkward.sf.net"
-		license="GPL (>= 3)"
+		license="GPL (&gt;= 3)"
 	>
 		<author 
 			given="Meik"
@@ -43,8 +43,8 @@
 	-->
 	<components>
 		<component 
-			id="cmp_RKWrdPlgnSkltnRKWrdPlgnSk"
-			label="RKWardPluginSkeleton"
+			id="cmp_CrtRKWrdplgnskltnCrtRKWrd"
+			label="Create RKWard plugin skeleton"
 			type="standard"
 			file="plugins/RKWardPluginSkeleton.xml"
 		 />
@@ -52,20 +52,22 @@
 	<hierarchy>
 		<menu 
 			id="file"
-			label="File"
+			label.file="File"
 		>
 			<menu 
-				id="men_RKWPSRKWPSRK"
-				label="RKWard Plugin Skeleton"
+				id="export"
+				label="export"
 			>
-				<entry component="cmp_RKWrdPlgnSkltnRKWrdPlgnSk" />
+				<entry component="cmp_CrtRKWrdplgnskltnCrtRKWrd" />
 			</menu>
 		</menu>
 	</hierarchy>
 	<!-- 
-		<context id="x11"></context> 
+		<context id="x11">
+		</context> 
 	-->
 	<!-- 
-		<context id="import"></context> 
+		<context id="import">
+		</context> 
 	-->
 </document>

@@ -27,14 +27,15 @@
   section (see
   \code{\link[rkwarddev:rk.XML.hierarchy]{rk.XML.hierarchy}}
   for details). Or a character vector with instructions
-  where to place the plugin in the menu hierarchy, one
-  string for each included component. Valid values are
-  \code{"file"}, \code{"edit"}, \code{"view"},
+  where to place the plugin in the menu hierarchy, one list
+  or string for each included component. Valid single
+  values are \code{"file"}, \code{"edit"}, \code{"view"},
   \code{"workspace"}, \code{"run"}, \code{"data"},
   \code{"analysis"}, \code{"plots"},
   \code{"distributions"}, \code{"windows"},
-  \code{"settings"} and \code{"help"}. Anything else will
-  place it in a "test" menu.}
+  \code{"settings"} and \code{"help"}, anything else will
+  place it in a "test" menu. If \code{hierarchy} is a list,
+  each entry represents the label of a menu level.}
 
   \item{require}{Either a (list of) objects of class
   \code{XiMpLe.node} to be pasted as a \code{<require>}

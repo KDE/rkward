@@ -28,7 +28,7 @@
 #'		If not set, their default values are used. See \code{\link[rkwarddev:rk.JS.doc]{rk.JS.doc}} for details.
 #' @param pluginmap A named list of options to be forwarded to \code{\link[rkwarddev:rk.XML.pluginmap]{rk.XML.pluginmap}}, to generate the pluginmap file.
 #'		Not all options are supported because some don't make sense in this context. Valid options are:
-#'		\code{"hierarchy"} and \code{"require"}.
+#'		\code{"name"}, \code{"hierarchy"} and \code{"require"}.
 #'		If not set, their default values are used. See \code{\link[rkwarddev:rk.XML.pluginmap]{rk.XML.pluginmap}} for details.
 #' @param rkh A named list of options to be forwarded to \code{\link[rkwarddev:rk.rkh.doc]{rk.rkh.doc}}, to generate the help file.
 #'		Not all options are supported because some don't make sense in this context. Valid options are:
@@ -301,15 +301,22 @@ rk.plugin.skeleton <- function(name, about=NULL, path=tempdir(),
 					pluginmap[[this.opt]] <- eval(formals(rk.XML.pluginmap)[[this.opt]])
 				} else {}
 			}
+			if(!"name" %in% got.pm.options){
+				pluginmap[["name"]] <- name.orig
+			} else {}
 			XML.pluginmap <- rk.XML.pluginmap(
-				name=name.orig,
+				name=pluginmap[["name"]],
 				about=about,
 				components=paste("plugins/", name, ".xml", sep=""),
 				hierarchy=pluginmap[["hierarchy"]],
 				require=pluginmap[["require"]],
 				hints=TRUE)
 			cat(pasteXMLTree(XML.pluginmap, shine=2, indent.by=indent.by), file=plugin.pluginmap)
-		} else {}
+			# needed for "show"
+			pm.id.name <- pluginmap[["name"]]
+		} else {
+			pm.id.name <- name
+		}
 		if(isTRUE(edit)){
 			rk.edit.files(plugin.pluginmap, title=plugin.fname.pluginmap, prompt=FALSE)
 		} else {}
@@ -317,7 +324,7 @@ rk.plugin.skeleton <- function(name, about=NULL, path=tempdir(),
 			rk.load.pluginmaps(plugin.pluginmap)
 			if(isTRUE(show)){
 				# call the plugin; reconstructed the ID generation from rk.XML.pluginmap()
-				plugin.ID <- auto.ids(paste(name, name, sep=""), prefix=ID.prefix("component"), chars=25)
+				plugin.ID <- auto.ids(paste(pm.id.name, pm.id.name, sep=""), prefix=ID.prefix("component"), chars=25)
 				rk.call.plugin(paste("rkward::", plugin.ID, sep=""))
 			} else {}
 		} else {}

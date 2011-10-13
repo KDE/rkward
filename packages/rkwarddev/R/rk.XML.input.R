@@ -18,7 +18,7 @@ rk.XML.input <- function(label, initial=NULL, size="medium", required=FALSE, id.
 	attr.list <- list(label=label)
 
 	if(identical(id.name, "auto")){
-		attr.list[["id"]] <- list(id=auto.ids(label, prefix=ID.prefix("input")))
+		attr.list[["id"]] <- auto.ids(label, prefix=ID.prefix("input"))
 	} else if(!is.null(id.name)){
 		attr.list[["id"]] <- id.name
 	} else {}

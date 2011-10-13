@@ -8,10 +8,10 @@
 #'		one plugin component file name, relative path from the pluginmap file and ending with ".xml".
 #' @param hierarchy Either an object of class \code{XiMpLe.node} to be pasted as the \code{<hierarchy>} section (see
 #'		\code{\link[rkwarddev:rk.XML.hierarchy]{rk.XML.hierarchy}} for details). Or a character vector with instructions
-#'		where to place the plugin in the menu hierarchy, one string for each included component. Valid values are
+#'		where to place the plugin in the menu hierarchy, one list or string for each included component. Valid single values are
 #'		\code{"file"}, \code{"edit"}, \code{"view"}, \code{"workspace"}, \code{"run"}, \code{"data"},
-#'		\code{"analysis"}, \code{"plots"}, \code{"distributions"}, \code{"windows"}, \code{"settings"} and \code{"help"}.
-#'		Anything else will place it in a "test" menu.
+#'		\code{"analysis"}, \code{"plots"}, \code{"distributions"}, \code{"windows"}, \code{"settings"} and \code{"help"},
+#'		anything else will place it in a "test" menu. If \code{hierarchy} is a list, each entry represents the label of a menu level.
 #' @param require Either a (list of) objects of class \code{XiMpLe.node} to be pasted as a \code{<require>} section (see
 #'		\code{\link[rkwarddev:rk.XML.require]{rk.XML.require}} for details). Or a character vector with at least
 #'		one .pluginmap filename to be included in this one.
@@ -117,7 +117,11 @@ rk.XML.pluginmap <- function(name, about=NULL, components, hierarchy="test",
 		components.XML <- rk.XML.components(
 			as.list(sapply(components, function(this.comp){
 				# remove any directory names and .EXT endings
-				xml.basename <- gsub("(.*/)?([[:alnum:]_]*).+(.*)?", "\\2", this.comp, perl=TRUE)
+				if(length(components) > 1) {
+					xml.basename <- gsub("(.*/)?([[:alnum:]_]*).+(.*)?", "\\2", this.comp, perl=TRUE)
+				} else {
+					xml.basename <- name.orig
+				}
 				rk.XML.component(
 					label=xml.basename,
 					file=this.comp,
@@ -139,6 +143,11 @@ rk.XML.pluginmap <- function(name, about=NULL, components, hierarchy="test",
 		} else {}
 		all.children[[length(all.children)+1]] <- hierarchy
 	} else {
+		# correct for cases with one component and a list
+		if(length(component.IDs) == 1 & is.list(hierarchy)){
+			if(!is.list(hierarchy[[1]]))
+			hierarchy <- list(hierarchy)
+		} else {}
 		# check if the numbers fit
 		if(length(hierarchy) != length(component.IDs)){
 			stop(simpleError("Length of 'hierarchy' and number of components must be the same!"))
@@ -150,23 +159,46 @@ rk.XML.pluginmap <- function(name, about=NULL, components, hierarchy="test",
 
 		hier.comp.XML <- sapply(1:length(hierarchy), function(this.dial){
 			this.comp <- component.IDs[this.dial]
-			this.hier <- hierarchy[this.dial]
-
-			entry.XML <- rk.XML.menu(
-				label=name.orig,
-				rk.XML.entry(component=this.comp),
-				id.name=auto.ids(paste(name, this.comp, sep=""), prefix=ID.prefix("menu"), chars=12))
-
-			if(this.hier %in% names(main.menu)){
-				hier.XML <- rk.XML.menu(
-					label=main.menu[this.hier],
-					entry.XML,
-					id.name=this.hier)
+			if(is.list(hierarchy)){
+				this.hier <- hierarchy[[this.dial]]
 			} else {
-				hier.XML <- rk.XML.menu(
-					label="Test",
-					entry.XML,
-					id.name="test")
+				this.hier <- hierarchy[this.dial]
+			}
+
+			# hierachy can either be a list with menu paths, or predefined
+			if(is.list(this.hier)){
+				new.hierarchy <- this.hier[2:length(this.hier)]
+				new.hierarchy[[length(new.hierarchy) + 1]] <- this.comp
+				if(this.hier[[1]] %in% names(main.menu)){
+					id.names <- sapply(this.hier, function(hier.id){
+							return(clean.name(hier.id))
+						})
+					hier.XML <- rk.XML.menu(
+						label=unlist(main.menu[this.hier[[1]]]),
+						new.hierarchy,
+						id.name=id.names)
+				} else {
+					hier.XML <- rk.XML.menu(
+						label=this.hier[[1]],
+						new.hierarchy)
+				}
+			} else {
+				entry.XML <- rk.XML.menu(
+					label=name.orig,
+					rk.XML.entry(component=this.comp),
+					id.name=auto.ids(paste(name, this.comp, sep=""), prefix=ID.prefix("menu"), chars=12))
+
+				if(this.hier %in% names(main.menu)){
+					hier.XML <- rk.XML.menu(
+						label=main.menu[this.hier],
+						entry.XML,
+						id.name=this.hier)
+				} else {
+					hier.XML <- rk.XML.menu(
+						label="Test",
+						entry.XML,
+						id.name="test")
+				}
 			}
 			return(hier.XML)
 		})

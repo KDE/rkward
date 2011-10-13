@@ -5,7 +5,8 @@
   rk.XML.entry(component, index = -1)
 }
 \arguments{
-  \item{component}{An ID.}
+  \item{component}{A "component" object of class
+  \code{XiMpLe.node}, or an ID.}
 
   \item{index}{Integer number to influence the level of
   menu placement.}

@@ -7,16 +7,24 @@
 \arguments{
   \item{label}{Character string, a label for the menu.}
 
-  \item{...}{Objects of class \code{XiMpLe.node}, must be
-  either "menu" or "entry".}
+  \item{...}{Eithet objects of class \code{XiMpLe.node},
+  must be either "menu" or "entry", or a list of character
+  strings representing the menu path, with the last element
+  being the \code{component} value for
+  \code{\link[rkwarddev:rk.XML.entry]{rk.XML.entry}}.}
 
   \item{index}{Integer number to influence the level of
-  menu placement.}
+  menu placement. If \code{...} is a list, \code{index} can
+  also be a vector of the same length + 1, so indices will
+  be set in the same order to the menu levels, the last
+  value is for the entry.}
 
-  \item{id.name}{Character string, a unique ID for this
-  plugin element. If \code{"auto"}, an ID will be generated
-  automatically from the label. Used to place the menu in
-  the global menu hierarchy.}
+  \item{id.name}{Character, a unique ID for this plugin
+  element. If \code{"auto"}, an ID will be generated
+  automatically from the label. Otherwise, if \code{...} is
+  a list, \code{id.name} must have the same length and will
+  be set in the same order to the menu levels. Used to
+  place the menu in the global menu hierarchy.}
 }
 \value{
   An object of class \code{XiMpLe.node}.
@@ -31,6 +39,8 @@ test.component <- rk.XML.component("My GUI dialog", "plugins/MyGUIdialog.xml")
 test.entry <- rk.XML.entry(test.component)
 test.menu <- rk.XML.menu("Analysis", test.entry, id.name="analysis")
 cat(pasteXMLNode(test.menu))
+# manual definition of a menu path by a list:
+test.menu <- rk.XML.menu("Analysis", list("Level 1", "Level 2", test.component))
 }
 \seealso{
   \code{\link[rkwarddev:rk.XML.hierarchy]{rk.XML.hierarchy}},

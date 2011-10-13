@@ -2,7 +2,7 @@
 #'
 #' This function will create a entry node for menu sections in .pluginmap files.
 #' 
-#' @param component An ID.
+#' @param component A "component" object of class \code{XiMpLe.node}, or an ID.
 #' @param index Integer number to influence the level of menu placement.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export

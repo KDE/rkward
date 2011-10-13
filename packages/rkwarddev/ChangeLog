@@ -1,7 +1,9 @@
 ChangeLog for package rkwarddev
 
-## 0.03-6 (2011-10-12)
+## 0.03-6 (2011-10-13)
   - lifted rkward package dependecies to 0.5.7 (needed for rk.load.pluginmaps())
+  - rk.XML.menu() and rk.plugin.skeleton() can now recursively generate deeper menu structures if you provide it with a list
+  - fixed bug in autogeneration of IDs in rk.XML.input() and rk.XML.saveobj()
 
 ## 0.03-5 (2011-10-11)
   - rk.XML.tabbook() can now autogenerate IDs without a label

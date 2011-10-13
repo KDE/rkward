@@ -75,7 +75,7 @@
   \code{\link[rkwarddev:rk.XML.pluginmap]{rk.XML.pluginmap}},
   to generate the pluginmap file. Not all options are
   supported because some don't make sense in this context.
-  Valid options are: \code{"hierarchy"} and
+  Valid options are: \code{"name"}, \code{"hierarchy"} and
   \code{"require"}. If not set, their default values are
   used. See
   \code{\link[rkwarddev:rk.XML.pluginmap]{rk.XML.pluginmap}}
