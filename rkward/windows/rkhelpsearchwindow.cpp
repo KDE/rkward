@@ -242,13 +242,14 @@ void RKHelpSearchWindow::updateInstalledPackages () {
 void RKHelpSearchWindow::rCommandDone (RCommand *command) {
 	RK_TRACE (APP);
 	if (command->getFlags () == HELP_SEARCH) {
+		QStringList res;
 		if (command->failed ()) {
 			RK_ASSERT (false);
-			return;
+		} else {
+			RK_ASSERT (command->getDataType () == RData::StringVector);
+			res = command->getStringVector ();
 		}
-		RK_ASSERT (command->getDataType () == RData::StringVector);
-
-		results->setResults (command->getStringVector ());
+		results->setResults (res);
 
 		for (int i = 0; i < COL_COUNT; ++i) results_view->resizeColumnToContents (i);
 		setEnabled(true);
