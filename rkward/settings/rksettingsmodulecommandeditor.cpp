@@ -73,7 +73,7 @@ RKSettingsModuleCommandEditor::RKSettingsModuleCommandEditor (RKSettings *gui, Q
 
 	main_vbox->addSpacing (RKGlobals::spacingHint ());
 
-	label = new QLabel (i18n ("Timeout (milli seconds) before completion is attempted"), group);
+	label = new QLabel (i18n ("Timeout (milliseconds) before completion is attempted"), group);
 	label->setWordWrap (true);
 	completion_timeout_box = new RKSpinBox (group);
 	completion_timeout_box->setIntMode (0, INT_MAX, completion_timeout);

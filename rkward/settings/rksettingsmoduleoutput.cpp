@@ -62,7 +62,7 @@ RKCarbonCopySettings::RKCarbonCopySettings (QWidget* parent) : QWidget (parent) 
 	connect (cc_app_plugin_commands_box, SIGNAL (clicked(bool)), this, SLOT (settingChanged()));
 	group_layout->addWidget (cc_app_plugin_commands_box);
 
-	cc_command_output_box = new QCheckBox (i18n ("Also carbon copy the command ouptut"), cc_globally_enabled_box);
+	cc_command_output_box = new QCheckBox (i18n ("Also carbon copy the command output"), cc_globally_enabled_box);
 	connect (cc_command_output_box, SIGNAL (clicked(bool)), this, SLOT (settingChanged()));
 	group_layout->addWidget (cc_command_output_box);
 

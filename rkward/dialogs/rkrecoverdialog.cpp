@@ -39,7 +39,7 @@ RKRecoverDialog::RKRecoverDialog (const QStringList &recovery_files) {
 	connect (this, SIGNAL (user1Clicked()), this, SLOT (showButtonClicked ()));
 
 	QLabel *label = new QLabel (this);
-	QString text = i18n ("<p><b>Crash revocery file detected</b></p>");
+	QString text = i18n ("<p><b>Crash recovery file detected</b></p>");
 	text.append (i18n ("<p>It looks like RKWard has crashed, recently. We are sorry about that! However, not everything is lost, and with a bit of luck, your data has been saved in time.</p>"));
 	text.append (i18np ("<p>A workspace recovery file exists in <i>%2</i> as <i>%3</i>.</p>", "<p>%1 workspace recovery files exist in <i>%2</i>, the most recent one of which is <i>%3</i>.</p>", recovery_files.count (), RKSettingsModuleGeneral::filesPath (), recovery_files.first ()));
 	text.append (i18n ("<p>Do you want to open this file, now? <b>Note</b>: You will be prompted again, next time you start RKWard, until you remove/rename the file, manually.</p>"));
