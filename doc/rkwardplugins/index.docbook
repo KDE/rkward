@@ -391,7 +391,7 @@ This is a guide to writing plugins for &rkward;.
 		Inside the <command>&lt;frame&gt;</command> we place another <command>&lt;checkbox&gt;</command> (using <parameter>checked=</parameter><replaceable>"true"</replaceable>, we signal that checkbox should be checked by default), and a <command>&lt;spinbox&gt;</command>. The spinbox allows the user to select a value between <replaceable>"min"</replaceable> and <replaceable>"max"</replaceable> with the default/initial value <replaceable>"0.95"</replaceable>. Setting the <parameter>type</parameter> to <replaceable>"real"</replaceable> signals that real numbers are accepted as opposed to <parameter>type=</parameter><replaceable>"integer"</replaceable> which would accept integers only.
 	</para>
 	<note><para>
-		It is also possible, and often preferrable, to make the <command>&lt;frame&gt;</command> itself checkable, instead of adding a <command>&lt;checkbox&gt;</command> inside. See the reference for details. This is not done here, for illustrational purposes.
+		It is also possible, and often preferable, to make the <command>&lt;frame&gt;</command> itself checkable, instead of adding a <command>&lt;checkbox&gt;</command> inside. See the reference for details. This is not done here, for illustrational purposes.
 	</para></note>
 	<programlisting>
 			&lt;/tab&gt;
@@ -459,9 +459,9 @@ This is a guide to writing plugins for &rkward;.
 			If you find yourself creating a <command>&lt;radio&gt;</command> or <command>&lt;dropdown&gt;</command> with only two options, ask yourself, whether the question is essentially a yes / no type of question. E.g. a choice between <quote>adjust results</quote> and <quote>do not adjust results</quote>, or between <quote>remove missing values</quote> and <quote>keep missing values</quote>. In this case a <command>&lt;checkbox&gt;</command> is the best choice: It uses little space, will have the least words of labels, and is easiest to read for the user. There are very few situations where you should chose a <command>&lt;radio&gt;</command> over a <command>&lt;checkbox&gt;</command>, when there are only two options. An example of that might be: <quote>Method of calculation: 'pearson'/'spearman'</quote>. Here, more methods might be thinkable, and they don't really form a pair of opposites.
 		</para>
 		<para>
-			Chosing between a <command>&lt;radio&gt;</command> and a <command>&lt;dropdown&gt;</command> is mostly a question of space. The <command>&lt;dropdown&gt;</command> has the advantage of using little space, even if there are a lot of options to chose from. On the other hand, a <command>&lt;radio&gt;</command> has the advantage of making all possible choices visible to the user at once, without clicking on the dropdown arrow. Generally, if there are six or more options to chose from, a <command>&lt;dropdown&gt;</command> is preferrable. If there are five or less options, a <command>&lt;radio&gt;</command> is the better choice.
+			Chosing between a <command>&lt;radio&gt;</command> and a <command>&lt;dropdown&gt;</command> is mostly a question of space. The <command>&lt;dropdown&gt;</command> has the advantage of using little space, even if there are a lot of options to chose from. On the other hand, a <command>&lt;radio&gt;</command> has the advantage of making all possible choices visible to the user at once, without clicking on the dropdown arrow. Generally, if there are six or more options to chose from, a <command>&lt;dropdown&gt;</command> is preferable. If there are five or less options, a <command>&lt;radio&gt;</command> is the better choice.
 		</para>
-	</sect2>	
+	</sect2>
 </sect1>
 </chapter>
 
@@ -510,7 +510,7 @@ res &lt;- t.test (
 			Note that instead of concatenating the output snippets with <quote>+</quote>, you can also use several <function>echo()</function> statments. Everything is printed on a single line. To produce a line break in the generated code, insert a <replaceable>"\n"</replaceable> in the echoed string. In theory, you can even produce many lines with a single echo-statement, but please keep it to one line (or less) of generated code per <function>echo()</function>.
 		</para>
 		<para>
-			It gets a little more tricky for the confidence level. For reasons of aestethics, we don't want to explicitly specify the confidence level to use, if it corresponds to the default value. Hence, instead of printing the value unconditionally, we first fetch into a variable. Then we check, whether that variable differs from <replaceable>"0.95"</replaceable> and if so print out an additional argument. Finally, we echo a closing bracket and a line break: <replaceable>")\n"</replaceable>. That's all for the calculate function.
+			It gets a little more tricky for the confidence level. For reasons of aesthetics, we don't want to explicitly specify the confidence level to use, if it corresponds to the default value. Hence, instead of printing the value unconditionally, we first fetch into a variable. Then we check, whether that variable differs from <replaceable>"0.95"</replaceable> and if so print out an additional argument. Finally, we echo a closing bracket and a line break: <replaceable>")\n"</replaceable>. That's all for the calculate function.
 		</para>
 	</sect2>
 	<sect2 id="sect_JS_printout"><title>printout()</title>
@@ -553,7 +553,7 @@ function printout () {
 			More often than not you will have to create one or more temporary &r; objects in the code generated by your plugin. Normally, you do not want those to be placed in the user's workspace, potentially even overwriting user variables. Hence, all plugin generated code is run in a <function>local()</function> environment (see &r; help page on function <function>local()</function>). This means, all variables you create are temporary and will not be saved permanently.
 		</para>
 		<para>
-			If the user explicitely asks for a variable to be saved, you will need to assign to that object using <quote>.GlobalEnv$objectname &lt;- value</quote>. In general, do not use the <quote>&lt;&lt;-</quote> operator. It will not necessarily assign in .GlobalEnv.
+			If the user explicitly asks for a variable to be saved, you will need to assign to that object using <quote>.GlobalEnv$objectname &lt;- value</quote>. In general, do not use the <quote>&lt;&lt;-</quote> operator. It will not necessarily assign in .GlobalEnv.
 		</para>
 		<para>
 			One important pitfall is using <function>eval()</function>. Here, you need to note that eval will by default use the current environment for evaluation, i.e. the local one. This will work well most of the times, but but not always. Thus, if you need to use <function>eval()</function>, you will probably want to specify the <parameter>envir</parameter> parameter: <function>eval(..., envir=globalenv()</function>).
@@ -921,7 +921,7 @@ function printout () {
 }
 	</programlisting>
 	<para>
-		So essentially, we're fetching the code generated by the embedded plugin just like we're fetchting any other GUI setting. Here the string <replaceable>"plotoptions.code.printout"</replaceable> can be deparsed to: <quote>The printout section of the generated code of the element with the <parameter>id</parameter> plotoptions</quote> (plotoptions is the ID we gave for the <command>&lt;embed&gt;</command> tag above). And yes, if you want advanced control, you can even fetch the values of individual GUI elements inside the embedded plugin (but not the other way around, as the embedded plugin does not know anything about its surroundings).
+		So essentially, we're fetching the code generated by the embedded plugin just like we're fetching any other GUI setting. Here the string <replaceable>"plotoptions.code.printout"</replaceable> can be deparsed to: <quote>The printout section of the generated code of the element with the <parameter>id</parameter> plotoptions</quote> (plotoptions is the ID we gave for the <command>&lt;embed&gt;</command> tag above). And yes, if you want advanced control, you can even fetch the values of individual GUI elements inside the embedded plugin (but not the other way around, as the embedded plugin does not know anything about its surroundings).
 	</para>
 </sect1>
 <sect1 id="embedding_wizard">
@@ -1006,8 +1006,8 @@ function printout () {
 	&lt;logic&gt;
 		[...]
 
-		&lt;connnect client="plotoptions.xvar" governor="xvarslot.available" /&gt;
-		&lt;connnect client="plotoptions.yvar" governor="yvarslot.available" /&gt;
+		&lt;connect client="plotoptions.xvar" governor="xvarslot.available" /&gt;
+		&lt;connect client="plotoptions.yvar" governor="yvarslot.available" /&gt;
 	&lt;/logic&gt;
 	</programlisting>
 	<para>
@@ -1026,7 +1026,7 @@ function printout () {
 		The naive approach to this is to develop one plugin, then basically copy and paste the entire contents of the <literal role="extension">.js</literal>, <literal role="extension">.xml</literal>, and <literal role="extension">.rkh</literal> files, then changing the few portions that are different. However, what if sometime later you find a spelling mistake that has been copied and pasted to all plugins? What if you want to add support for a new feature? You'd have to visit all plugins again, and change each single one. A tiresome and tedious process.
 	</para>
 	<para>
-		A second approach would be to use <link linkend="embedding">embedding</link>. However, in some cases this does not lend itself well to the problem at hand, mostly because the <quote>chunks</quote> you can embed are sometimes too large to be useful, and it places some constraints on the layout. For these cases, the concepts <link linkend="include_js">including <literal role="extension">.js</literal> files</link> <link linkend="include_xml">including <literal role="extension">.xml</literal> files</link> and <link linkend="snippets">snippets</link> can be very useful (but see the <link linkend="include_snippets_vs_embedding">thoughts on when it is preferrable to use embedding</link>).
+		A second approach would be to use <link linkend="embedding">embedding</link>. However, in some cases this does not lend itself well to the problem at hand, mostly because the <quote>chunks</quote> you can embed are sometimes too large to be useful, and it places some constraints on the layout. For these cases, the concepts <link linkend="include_js">including <literal role="extension">.js</literal> files</link> <link linkend="include_xml">including <literal role="extension">.xml</literal> files</link> and <link linkend="snippets">snippets</link> can be very useful (but see the <link linkend="include_snippets_vs_embedding">thoughts on when it is preferable to use embedding</link>).
 	</para>
 	<para>
 		One word of caution, before you begin reading, though: These concepts can help making it simpler to deal with many similar plugins, and can improve maintainability and readability of those plugins. However, overdoing it can easily lead to the reverse effect. Use with some caution.
@@ -1062,7 +1062,7 @@ function calculate () {
 }
 	</programlisting>
 	<para>
-		Note that sometimes it's even more useful to reverse this, and define the <quote>skeleton</quote> of <function>preproces()</function>, <function>calculate()</function>, and <function>printout()</function> functions is a common file, and make these call back for those part which are different across plugins. E.g.:
+		Note that sometimes it's even more useful to reverse this, and define the <quote>skeleton</quote> of <function>preprocess()</function>, <function>calculate()</function>, and <function>printout()</function> functions is a common file, and make these call back for those part which are different across plugins. E.g.:
 	</para>
 	<programlisting>
 // this is a file called "common_functions.js"
@@ -1319,7 +1319,7 @@ function doPrintout (full) {
 	<sect2 id="context_x11">
 		<title>X11 device context</title>
 		<para>
-			To use a plugin in the context of an x11 device - that is place it in the menu bar of the window you get when you call <function>x11()</function> in the cosonle, first declare it as usual in the <link linkend="pluginmap">.pluginmap file</link>:
+			To use a plugin in the context of an x11 device - that is place it in the menu bar of the window you get when you call <function>x11()</function> in the console, first declare it as usual in the <link linkend="pluginmap">.pluginmap file</link>:
 		</para>
 		<programlisting>
 &lt;document [...]&gt;
@@ -1420,7 +1420,7 @@ function doPrintout (full) {
 	</para>
 	<tip>
 		<para>
-			These docs explain the details of external plugins so you can learn how they work. In addition to that, also have a look at the <link linkend="rkwarddev"><application>rkwarddev</application> package</link>, which was designed to automate a lot of the writing process. 
+			These docs explain the details of external plugins so you can learn how they work. In addition to that, also have a look at the <link linkend="rkwarddev"><application>rkwarddev</application> package</link>, which was designed to automate a lot of the writing process.
 		</para>
 	</tip>
 </sect1>
@@ -1752,7 +1752,7 @@ full.wizard &lt;- rk.XML.wizard(
 			<para>Most notably you don't have to define any variable yourself, as <function>rk.plugin.skeleton()</function> can scan your XML code and automatically define all variables you will probably need -- for instance, you wouldn't bother to include a checkbox if you don't use its value or state afterwards. So we can start writing the actual &r; code generating JS immediately.</para>
 			<tip><para>The function <function>rk.JS.scan()</function> can also scan existing XML files for variables.</para></tip>
 			<para>The package has some functions for JS code constructs that are commonly used in &rkward; plugins, like the <function>echo()</function> function or <function>if() {...} else {...}</function> conditions. There are some differences between JS and R, e.g., for <function>paste()</function> in &r; you use the comma to concatenate character strings, whereas for <function>echo()</function> in JS you use <quote>+</quote>, and lines must end with a semicolon. By using the &r; functions, you can almost forget about these differences and keep writing &r; code.</para>
-			<para>These functions can take different classes of input objects: Either plain text, &r; objects with XML code like above, or in turn results of some other JS functions of the package. In the end, you will allways call <function>rk.paste.JS()</function>, which behaves similar to <function>paste()</function>, but depending on the input objects it will replace them with their XML ID, JavaScript variable name or even complete JavaScript code blocks.</para>
+			<para>These functions can take different classes of input objects: Either plain text, &r; objects with XML code like above, or in turn results of some other JS functions of the package. In the end, you will always call <function>rk.paste.JS()</function>, which behaves similar to <function>paste()</function>, but depending on the input objects it will replace them with their XML ID, JavaScript variable name or even complete JavaScript code blocks.</para>
 			<para>For the t-test example, we need two JS objects: One to calculate the results, and one to print them in the <function>printout()</function> function:</para>
 		<programlisting>
 JS.calc &lt;- rk.paste.JS(
@@ -1764,7 +1764,7 @@ JS.calc &lt;- rk.paste.JS(
 
 JS.print &lt;- rk.paste.JS(echo("rk.print (res)\n"), level=2)
 		</programlisting>
-		<para>As you can see, <application>rkwarddev</application> also provides an &r; implementation of the <function>echo()</function> function. It returns exactly one character string with a valid JS version of itself. You might also notice that all of the &r; objects here are the ones we created earlier. They will automatically be replaced with their variable names, so this should be quite intuitive. Whenever you need just this replacement, the function <function>id()</function> can be used, which also will return exatly one character string from all the objects it was given (you could say it behaves like <function>paste()</function> with a very specific object substitution).</para>
+		<para>As you can see, <application>rkwarddev</application> also provides an &r; implementation of the <function>echo()</function> function. It returns exactly one character string with a valid JS version of itself. You might also notice that all of the &r; objects here are the ones we created earlier. They will automatically be replaced with their variable names, so this should be quite intuitive. Whenever you need just this replacement, the function <function>id()</function> can be used, which also will return exactly one character string from all the objects it was given (you could say it behaves like <function>paste()</function> with a very specific object substitution).</para>
 		<para>The function name <function>ite()</function> is an abbreviation for <quote>if, then, else</quote>, and these three conditional statements are exactly what its three optional arguments are for -- although our example only uses two, so we're dealing with three <quote>if, then</quote> conditions here. Maybe it's best to just look at the above <quote>JS.calc</quote> object, which now contains a character string with this content:</para>
 		<programlisting>
 	echo("res &lt;- t.test (x=" + vrslCompare + ", y=" + vrslAgainst + ", hypothesis=\"" + radUsngtsth + "\"");
@@ -1924,7 +1924,7 @@ local({
 </varlistentry>
 <varlistentry>
 <term>RObject properties</term>
-<listitem><para>A property designed a selection of one or more &r; objects. Used most porminently in varselectors and varslots.  The following values will be returned according to the given modifier:
+<listitem><para>A property designed a selection of one or more &r; objects. Used most prominently in varselectors and varslots.  The following values will be returned according to the given modifier:
 	<variablelist>
 	<varlistentry>
 	<term>No modifier ("")</term>
@@ -2044,7 +2044,7 @@ local({
 	<variablelist>
 	<varlistentry>
 	<term>&lt;id&gt;</term>
-	<listitem><para>The ID to look for. The &lt;copy&gt; tag will look for a previous XML element that has been given the same ID, and copy it including all descendent elements.</para></listitem>
+	<listitem><para>The ID to look for. The &lt;copy&gt; tag will look for a previous XML element that has been given the same ID, and copy it including all descendant elements.</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;copy_element_tag_name&gt;</term>
@@ -2149,7 +2149,7 @@ local({
 <variablelist>
 <varlistentry>
 <term>&lt;varselector&gt;</term>
-<listitem><para>Provides a list of availabe objects from which the user can select one or more. Requires one or more &lt;varslot&gt;s as a counterpart to be useful. Attributes:
+<listitem><para>Provides a list of available objects from which the user can select one or more. Requires one or more &lt;varslot&gt;s as a counterpart to be useful. Attributes:
 	<variablelist>
 	<varlistentry>
 	<term>&lt;label&gt;</term>
@@ -2223,7 +2223,7 @@ local({
 </varlistentry>
 <varlistentry>
 <term>&lt;dropdown&gt;</term>
-<listitem><para>Defines a group of options of which one and only one can be selected at the same time, using a dropdown list. This is functionaly equivalent to a &lt;radio&gt;, but looks different. Requires at least two &lt;option&gt;-tags as direct children. No other tags are allowed as children. Attributes:
+<listitem><para>Defines a group of options of which one and only one can be selected at the same time, using a dropdown list. This is functionally equivalent to a &lt;radio&gt;, but looks different. Requires at least two &lt;option&gt;-tags as direct children. No other tags are allowed as children. Attributes:
 	<variablelist>
 	<varlistentry>
 	<term>&lt;label&gt;</term>
@@ -2305,7 +2305,7 @@ made checkable, thus acting like a simple checkbox at the same time.
 	<variablelist>
 	<varlistentry>
 	<term>&lt;label&gt;</term>
-	<listitem><para>Label for the browser (optinal, defaults to "Enter filename")</para></listitem>
+	<listitem><para>Label for the browser (optional, defaults to "Enter filename")</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;initial&gt;</term>
@@ -2335,7 +2335,7 @@ made checkable, thus acting like a simple checkbox at the same time.
 	<variablelist>
 	<varlistentry>
 	<term>&lt;label&gt;</term>
-	<listitem><para>Label for the input (optinal, defaults to "Save to:")</para></listitem>
+	<listitem><para>Label for the input (optional, defaults to "Save to:")</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;initial&gt;</term>
@@ -2623,7 +2623,7 @@ In addition to this, some elements have additional properties you can connect to
 </varlistentry>
 <varlistentry>
 <term>&lt;option&gt;</term>
-<listitem><para>No default property. "enabled" is the *only* proptery. It does not have the "visible" or "required" properties.
+<listitem><para>No default property. "enabled" is the *only* property. It does not have the "visible" or "required" properties.
 	<variablelist>
 	<varlistentry>
 	<term>enabled</term>
