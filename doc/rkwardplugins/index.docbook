@@ -1834,7 +1834,7 @@ plugin.dir &lt;- rk.plugin.skeleton("t-Test",
 			<para>The result object <quote>plugin.dir</quote> contains the path to the directory in which the plugin was created. This can be useful in combination with the function <function>rk.build.package()</function>, to build an actual &r; package to share your plugin with others -- e.g. by sending it to the &rkward; development team to be added to our plugin repository.</para>
 		</sect2>
 		<sect2 id="rkdev_ttest_script"><title>The full script</title>
-		<para>To recapitulate all of the above, here's the full script to create the working t-test example. Adding to the already explained code, it also loads the package if needed, and it uses the <function>local()</function> environment, so all the objects will not be created in your global environment (except for <quote>plugin.dir</quote>):</para>
+		<para>To recapitulate all of the above, here's the full script to create the working t-test example. Adding to the already explained code, it also loads the package if needed, and it uses the <function>local()</function> environment, so all the created objects will not end up in your current workspace (except for <quote>plugin.dir</quote>):</para>
 		<programlisting>
 require(rkwarddev)
 
