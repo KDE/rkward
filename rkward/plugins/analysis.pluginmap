@@ -79,7 +79,7 @@
 			<menu id="regression" label="Regression" index="8">
 				<entry component="linear_regression"/>
 			</menu>
-			<menu id="variances" label="VariancesSS / Scale" index="10">
+			<menu id="variances" label="Variances / Scale" index="10">
 				<menu id="variances_parametric" label="Parametric tests">
 					<entry component="bartlett_test"/>
 					<entry component="F_test"/>
