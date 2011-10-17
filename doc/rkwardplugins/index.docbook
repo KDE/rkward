@@ -53,7 +53,7 @@ as Authors, publish date, the abstract, and Keywords -->
      and in the FDL itself on how to use it. -->
 <legalnotice>&FDLNotice;</legalnotice>
 
-<date>2011-10-12</date>
+<date>2011-10-17</date>
 <releaseinfo>0.5.7.00</releaseinfo>
 
 <abstract>
@@ -156,7 +156,7 @@ This is a guide to writing plugins for &rkward;.
 		Components? Aren't we talking about plugins? Yes, but in the future, plugins will be no more than a special class of components. What we do here, then, is to register all components/plugins with &rkward;. Let's look at an example entry:
 	</para>
 	<programlisting>
-		&lt;component type="standard" id="independent_samples_t_test" file="means/ttests/independent_samples.xml" label="Independent Samples" /&gt;
+		&lt;component type="standard" id="independent_samples_t_test" file="means/ttests/independent_samples.xml" label="Two Variable t-Test" /&gt;
 	</programlisting>
 	<para>
 		First the <parameter>type</parameter> attribute: Leave this to <replaceable>"standard"</replaceable> for now. Further types are not yet implemented. The <parameter>id</parameter> we've already hinted at. Each component has to be given a unique (in its namespace) identifier. Pick one that is easily recognizable. Avoid spaces and any special characters. Those are not banned, so far, but might have special meanings. With the <parameter>file</parameter> attribute, you specify where the <link linkend="mainxml">description of the actual plugin itself</link> is located. This is relative to the directory the <literal role="extension">.pluginmap</literal> file is in, and the <parameter>base_prefix</parameter> above. Finally, give the component a label. This label will be shown whereever the plugin is placed in the menu (or in the future perhaps in other places as well).
@@ -190,7 +190,7 @@ This is a guide to writing plugins for &rkward;.
 		Basically the same thing here: Now we define a submenu to the <menuchoice><guimenu>Analysis</guimenu></menuchoice> menu. It is to be called <menuchoice><guimenuitem>Means</guimenuitem></menuchoice>.
 	</para>
 	<programlisting>
-				&lt;menu id="ttests" label="T-Tests"&gt;
+				&lt;menu id="ttests" label="t-Tests"&gt;
 	</programlisting>
 	<para>
 		And a final level in the menu-hierarchy: A sub-menu of the sub-menu <menuchoice><guimenuitem>Means</guimenuitem></menuchoice>. Note, that if you omit the <parameter>index</parameter> parameter, the new entry will be placed below any already existing ones.
