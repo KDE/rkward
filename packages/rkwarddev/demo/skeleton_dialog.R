@@ -200,7 +200,7 @@ rk.plugin.skeleton("RKWard Plugin Skeleton",
 	js=list(
 		require="rkwarddev",
 		calculate=JS.calculate),
-#	pluginmap=list(name="Create RKWard plugin skeleton", hierarchy=list(list("file", "export"))),
+#	pluginmap=list(name="Create RKWard plugin skeleton", hierarchy=list("file", "export")),
 #	overwrite=TRUE,
 	create=c("pmap","xml","js","desc"),
 	tests=FALSE,
