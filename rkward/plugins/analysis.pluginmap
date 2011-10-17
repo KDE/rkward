@@ -6,31 +6,31 @@
 		<component type="standard" id="corr_matrix" file="analysis/corr_matrix.xml" label="Correlation Matrix" />
 		<component type="standard" id="cor_graph" file="plots/cor_graph.xml" label="Correlation Matrix Plot" />
 		<component type="standard" id="descriptive" file="descriptive/descriptive_statistics.xml" label="Descriptive Statistics" />
-		<component type="standard" id="t_test_two_vars" file="analysis/t_test_two_vars.xml" label="Two Variable t-test" />
+		<component type="standard" id="t_test_two_vars" file="analysis/t_test_two_vars.xml" label="Two Variable t-Test" />
 		<component type="standard" id="wilcoxon_test" file="analysis/wilcoxon/wilcoxon_test.xml" label="Wilcoxon Test" />
-		<component type="standard" id="wilcoxon_exact_test" file="analysis/wilcoxon/wilcoxon_exact_test.xml" label="Wilcoxon exact test" />
+		<component type="standard" id="wilcoxon_exact_test" file="analysis/wilcoxon/wilcoxon_exact_test.xml" label="Wilcoxon Exact Test" />
 
 		<!-- moments -->
 		<component type="standard" id="moment" file="analysis/moments/moment.xml" label="Moment" />
-		<component type="standard" id="bonett_test" file="analysis/moments/bonett_test.xml" label="Bonett-Seier test of Geary's kurtosis" />
-		<component type="standard" id="agostino_test" file="analysis/moments/agostino_test.xml" label="D'Agostino test of skewness" />
-		<component type="standard" id="anscombe_test" file="analysis/moments/anscombe_test.xml" label="Anscombe-Glynn test of kurtosis" />
+		<component type="standard" id="bonett_test" file="analysis/moments/bonett_test.xml" label="Bonett-Seier Test of Geary's Kurtosis" />
+		<component type="standard" id="agostino_test" file="analysis/moments/agostino_test.xml" label="D'Agostino Test of Skewness" />
+		<component type="standard" id="anscombe_test" file="analysis/moments/anscombe_test.xml" label="Anscombe-Glynn Test of Kurtosis" />
 		<component type="standard" id="skewness_kurtosis" file="analysis/moments/skewness_kurtosis_test.xml" label="Skewness and Kurtosis" />
 
 		<!-- variances / scale -->
-		<component type="standard" id="F_test" file="analysis/variances/F_test.xml" label="F test" />
-		<component type="standard" id="fligner_test" file="analysis/variances/fligner_test.xml" label="Fligner-Killeen test" />
-		<component type="standard" id="bartlett_test" file="analysis/variances/bartlett_test.xml" label="Bartlett test" />
+		<component type="standard" id="F_test" file="analysis/variances/F_test.xml" label="F-Test" />
+		<component type="standard" id="fligner_test" file="analysis/variances/fligner_test.xml" label="Fligner-Killeen Test" />
+		<component type="standard" id="bartlett_test" file="analysis/variances/bartlett_test.xml" label="Bartlett Test" />
 		<component type="standard" id="levene_test" file="analysis/variances/levene_test.xml" label="Levene's Test" />
-		<component type="standard" id="ansari_bradley_test" file="analysis/ansari_bradley/ansari_bradley_test.xml" label="Ansari-Bradley two-sample test" />
-		<component type="standard" id="ansari_bradley_exact_test" file="analysis/ansari_bradley/ansari_bradley_exact_test.xml" label="Ansari-Bradley two-sample exact test" />
+		<component type="standard" id="ansari_bradley_test" file="analysis/ansari_bradley/ansari_bradley_test.xml" label="Ansari-Bradley Two-Sample Test" />
+		<component type="standard" id="ansari_bradley_exact_test" file="analysis/ansari_bradley/ansari_bradley_exact_test.xml" label="Ansari-Bradley Two-Sample Exact Test" />
 		<component type="standard" id="mood_test" file="analysis/TESTS/mood_test.xml" label="Mood Two-Sample Test" />
 
 		<!-- outliers -->
-		<component type="standard" id="chisq_out_test" file="analysis/outliers/chisq_out_test.xml" label="Chi-squared test for outlier" />
-		<component type="standard" id="dixon_test" file="analysis/outliers/dixon_test.xml" label="Dixon test" />
-		<component type="standard" id="outlier" file="analysis/outliers/outlier.xml" label="Find outlier" />
-		<component type="standard" id="grubbs_test" file="analysis/outliers/grubbs_test.xml" label="Grubbs test" />
+		<component type="standard" id="chisq_out_test" file="analysis/outliers/chisq_out_test.xml" label="Chi-squared Test for Outlier" />
+		<component type="standard" id="dixon_test" file="analysis/outliers/dixon_test.xml" label="Dixon Test" />
+		<component type="standard" id="outlier" file="analysis/outliers/outlier.xml" label="Find Outlier" />
+		<component type="standard" id="grubbs_test" file="analysis/outliers/grubbs_test.xml" label="Grubbs Test" />
 
 		<!-- crosstabulation -->
 		<component type="standard" id="crosstab" file="analysis/crosstab.xml" label="N to 1 Crosstabulation" />
@@ -79,7 +79,7 @@
 			<menu id="regression" label="Regression" index="8">
 				<entry component="linear_regression"/>
 			</menu>
-			<menu id="variances" label="Variances / Scale" index="10">
+			<menu id="variances" label="VariancesSS / Scale" index="10">
 				<menu id="variances_parametric" label="Parametric tests">
 					<entry component="bartlett_test"/>
 					<entry component="F_test"/>
