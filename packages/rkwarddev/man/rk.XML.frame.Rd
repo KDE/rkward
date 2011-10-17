@@ -2,13 +2,21 @@
 \alias{rk.XML.frame}
 \title{Create XML node "column" for RKWard plugins}
 \usage{
-  rk.XML.frame(..., label = NULL, id.name = "auto")
+  rk.XML.frame(..., label = NULL, checkable = FALSE, chk =
+  FALSE, id.name = "auto")
 }
 \arguments{
   \item{...}{Objects of class \code{XiMpLe.node}.}
 
   \item{label}{Character string, a text label for this
   plugin element.}
+
+  \item{checkable}{Logical, if \code{TRUE} the frame can be
+  switched on and off.}
+
+  \item{chk}{Logical, if \code{TRUE} and
+  \code{checkable=TRUE} the frame is checkable and active
+  by default.}
 
   \item{id.name}{Character string, a unique ID for this
   plugin element. If \code{"auto"} and a label was

@@ -2,6 +2,8 @@
 #'
 #' @param ... Objects of class \code{XiMpLe.node}.
 #' @param label Character string, a text label for this plugin element.
+#' @param checkable Logical, if \code{TRUE} the frame can be switched on and off.
+#' @param chk Logical, if \code{TRUE} and \code{checkable=TRUE} the frame is checkable and active by default.
 #' @param id.name Character string, a unique ID for this plugin element.
 #'		If \code{"auto"} and a label was provided, an ID will be generated automatically from the label
 #'		if presen, otherwise from the objects in the frame.
@@ -16,13 +18,22 @@
 #'   "Second Option"=c(val="val2", chk=TRUE)))
 #' cat(pasteXMLNode(rk.XML.frame(test.dropdown, label="Some options")))
 
-rk.XML.frame <- function(..., label=NULL, id.name="auto"){
+rk.XML.frame <- function(..., label=NULL, checkable=FALSE, chk=FALSE, id.name="auto"){
 	nodes <- list(...)
 
 	if(!is.null(label)){
 		attr.list <- list(label=label)
 	} else {
 		attr.list <- list()
+	}
+
+	if(isTRUE(checkable)){
+		attr.list[["checkable"]] <- "true"
+		if(isTRUE(chk)){
+			attr.list[["checked"]] <- "true"
+		} else {}
+	} else {
+		attr.list[["checkable"]] <- "false"
 	}
 
 	if(identical(id.name, "auto")){
