@@ -147,7 +147,7 @@ This is a guide to writing plugins for &rkward;.
 &lt;document base_prefix="" namespace="rkward"&gt;
 	</programlisting>
 	<para>
-		The <parameter>base_prefix</parameter>-attribute can be used, if all your plugins reside in a common directory. Basically, then, you can omit that directory from the filenames specified below. As you will see below, all plugins get a unique identifier. The <parameter>namespace</parameter> is a way to organize those ids, and make it less likely to create a duplicate identifier accidentally. Internally, basically the namespace and then a <quote>::</quote> gets prepended to all the identifiers you specify below. If unsure, leave these at <replaceable>""</replaceable> and <replaceable>"rkward"</replaceable>.
+		The <parameter>base_prefix</parameter> attribute can be used, if all your plugins reside in a common directory. Basically, then you can omit that directory from the filenames specified below. As you will see below, all plugins get a unique identifier, <parameter>id</parameter>. The <parameter>namespace</parameter> is a way to organize those IDs, and make it less likely to create a duplicate identifier accidentally. Internally, basically the namespace and then a <quote>::</quote> gets prepended to all the identifiers you specify below. If unsure, leave these at <replaceable>""</replaceable> and <replaceable>"rkward"</replaceable>.
 	</para>
 	<programlisting>
 	&lt;components&gt;
@@ -156,7 +156,7 @@ This is a guide to writing plugins for &rkward;.
 		Components? Aren't we talking about plugins? Yes, but in the future, plugins will be no more than a special class of components. What we do here, then, is to register all components/plugins with &rkward;. Let's look at an example entry:
 	</para>
 	<programlisting>
-		&lt;component type="standard" id="independent_samples_t_test" file="means/ttests/independent_samples.xml" label="Two Variable t-Test" /&gt;
+		&lt;component type="standard" id="t_test_two_vars" file="t_test_two_vars.xml" label="Two Variable t-Test" /&gt;
 	</programlisting>
 	<para>
 		First the <parameter>type</parameter> attribute: Leave this to <replaceable>"standard"</replaceable> for now. Further types are not yet implemented. The <parameter>id</parameter> we've already hinted at. Each component has to be given a unique (in its namespace) identifier. Pick one that is easily recognizable. Avoid spaces and any special characters. Those are not banned, so far, but might have special meanings. With the <parameter>file</parameter> attribute, you specify where the <link linkend="mainxml">description of the actual plugin itself</link> is located. This is relative to the directory the <literal role="extension">.pluginmap</literal> file is in, and the <parameter>base_prefix</parameter> above. Finally, give the component a label. This label will be shown whereever the plugin is placed in the menu (or in the future perhaps in other places as well).
@@ -180,8 +180,8 @@ This is a guide to writing plugins for &rkward;.
 		&lt;menu id="analysis" label="Analysis" index="4"&gt;
 	</programlisting>
 	<para>
-		Right below the <command>&lt;hierarchy&gt;</command> tag, you start describing, in which menu, your plugins should go. With the above line, you basically say, that your plugin should be in the <menuchoice><guimenu>Analysis</guimenu></menuchoice> menu (not necessarily directly there, but in a submenu). The <menuchoice><guimenu>Analysis</guimenu></menuchoice> menu is standard in &rkward;, so it does not actually have to be created from scratch. However, if it did not exist yet, using the <parameter>label</parameter> attribute you'd give it its name. The <parameter>index</parameter> attribute says, that the menu (if newly created) should be placed at the fourth position in the menubar.
-		Finally, the <parameter>id</parameter> once again identifies this menu. This is needed, so several <literal role="extension">.pluginmap</literal> files can place their plugins in the same menus. They do this by looking for a menu with the given <parameter>id</parameter>. If the ID does not yet exist, a new menu will be created. Otherwise the entries will be added to the existing menu.
+		Right below the <command>&lt;hierarchy&gt;</command> tag, you start describing, in which <command>&lt;menu&gt;</command> your plugins should go. With the above line, you basically say, that your plugin should be in the <menuchoice><guimenu>Analysis</guimenu></menuchoice> menu (not necessarily directly there, but in a submenu). The <menuchoice><guimenu>Analysis</guimenu></menuchoice> menu is standard in &rkward;, so it does not actually have to be created from scratch. However, if it did not exist yet, using the <parameter>label</parameter> attribute you'd give it its name. The <parameter>index</parameter> attribute says, that the menu (if newly created) should be placed at the fourth position in the menubar.
+		Finally, the <parameter>id</parameter> once again identifies this <command>&lt;menu&gt;</command>. This is needed, so several <literal role="extension">.pluginmap</literal> files can place their plugins in the same menus. They do this by looking for a <command>&lt;menu&gt;</command> with the given <parameter>id</parameter>. If the ID does not yet exist, a new menu will be created. Otherwise the entries will be added to the existing menu.
 	</para>
 	<programlisting>
 			&lt;menu id="means" label="Means" index="1"&gt;
@@ -193,13 +193,13 @@ This is a guide to writing plugins for &rkward;.
 				&lt;menu id="ttests" label="t-Tests"&gt;
 	</programlisting>
 	<para>
-		And a final level in the menu-hierarchy: A sub-menu of the sub-menu <menuchoice><guimenuitem>Means</guimenuitem></menuchoice>. Note, that if you omit the <parameter>index</parameter> parameter, the new entry will be placed below any already existing ones.
+		And a final level in the menu hierarchy: A submenu of the submenu <menuchoice><guimenuitem>Means</guimenuitem></menuchoice>. Note, that if you omit the <parameter>index</parameter> parameter, the new entry will be placed below any already existing ones.
 	</para>
 	<programlisting>
-					&lt;entry component="independent_samples_t_test" /&gt;
+					&lt;entry component="t_test_two_vars" /&gt;
 	</programlisting>
 	<para>
-		Now, finally, this is the menu, we want to place the plugin in. The <command>&lt;entry&gt;</command> tag signals, this actually is the real thing, instead of another submenu. The <parameter>component</parameter> attribute refers to the <parameter>id</parameter> you gave the plugin/component above.
+		Now, finally, this is the menu we want to place the plugin in. The <command>&lt;entry&gt;</command> tag signals, this actually is the real thing, instead of another submenu. The <parameter>component</parameter> attribute refers to the <parameter>id</parameter> you gave the plugin/component above.
 	</para>
 	<programlisting>
 					&lt;entry component="fictional_t_test" /&gt;
@@ -273,7 +273,7 @@ This is a guide to writing plugins for &rkward;.
 		</para>
 	</tip>
 	<para>
-		Once again we'll walk you through an example. The example is a (slightly simplified) version of the independent samples t-Test.
+		Once again we'll walk you through an example. The example is a (slightly simplified) version of the two variable t-Test.
 	</para>
 	<programlisting>
 &lt;!DOCTYPE rkplugin&gt;
@@ -283,19 +283,19 @@ This is a guide to writing plugins for &rkward;.
 	</para>
 	<programlisting>
 &lt;document&gt;
-	&lt;code file="t_test.js"/&gt;
+	&lt;code file="t_test_two_vars.js"/&gt;
 	</programlisting>
 	<para>
 		All plugins generate some code. Currently the only way to do so is using JS, as detailed in <link linkend="jstemplate">the next chapter</link>. This defines, where to look for the JS code. The filename is relative to the directory the plugin XML is in.
 	</para>
 	<programlisting>
-	&lt;help file="t_test.rkh"/&gt;
+	&lt;help file="t_test_two_vars.rkh"/&gt;
 	</programlisting>
 	<para>
 		It is usually a good idea to also provide a help page for your plugin. The filename of that help page is given, here, relative to the directory, the plugin XML is in. Writing help pages is documented <link linkend="pluginhelp">here</link>. If you do not provide a help file, omit this line.
 	</para>
 	<programlisting>
-	&lt;dialog label="Independent Samples t-Test"&gt;
+	&lt;dialog label="Two Variable t-Test"&gt;
 	</programlisting>
 	<para>
 		As you know, plugins may have either a dialog or a wizard interface or both. Here we start definining a dialog interface. the <parameter>label</parameter> attribute specifies the caption of the dialog.
@@ -356,13 +356,13 @@ This is a guide to writing plugins for &rkward;.
 		Each tag has to be closed. We've put all the elements we wanted (the two <command>&lt;varslots&gt;</command> and the <command>&lt;radio&gt;</command>) in the <command>&lt;column&gt;</command>. We put all elements we wanted (the <command>&lt;varselector&gt;</command> and the <command>&lt;column&gt;</command> with those elements) in the <command>&lt;row&gt;</command>. And we've put all the elements we wanted into the first page in the <command>&lt;tabbook&gt;</command>. We're not yet done defining the <command>&lt;tabbook&gt;</command> (more pages to come), and of course there's more to come in the <command>&lt;dialog&gt;</command>, too. But this screenshot is basically what we've done so far:
 	</para>
 	<screenshot>
-	<screeninfo>T test plugin</screeninfo>
+	<screeninfo>t-Test plugin</screeninfo>
 		<mediaobject>
 		<imageobject>
 			<imagedata fileref="t_test_plugin_example.png" format="PNG"/>
 		</imageobject>
 		<textobject>
-			<phrase>T test plugin</phrase>
+			<phrase>t-Test plugin</phrase>
 		</textobject>
 		</mediaobject>
 	</screenshot>
@@ -399,7 +399,7 @@ This is a guide to writing plugins for &rkward;.
 	&lt;/dialog&gt;
 	</programlisting>
 	<para>
-		That's all for the second page of the <command>&lt;tabbook&gt;</command>, all pages in the <command>&lt;tabbook&gt;</command> and all elements in the<command> &lt;dialog&gt;</command>. We're finished defining what the dialog looks like.
+		That's all for the second page of the <command>&lt;tabbook&gt;</command>, all pages in the <command>&lt;tabbook&gt;</command> and all elements in the <command>&lt;dialog&gt;</command>. We're finished defining what the dialog looks like.
 	</para>
 	<programlisting>
 &lt;/document&gt;
@@ -415,23 +415,30 @@ This is a guide to writing plugins for &rkward;.
 		Actually we don't have to define an additional <command>&lt;wizard&gt;</command> interface, but here's how that would be done. To add a wizard interface, you'll add a <command>&lt;wizard&gt;</command> tag at the same level as the <command>&lt;dialog&gt;</command> tag:
 	</para>
 	<programlisting>
-		&lt;wizard label="Independent Samples t-Test"&gt;
+		&lt;wizard label="Two Variable t-Test"&gt;
 			&lt;page id="firstpage"&gt;
-				&lt;text&gt;As a first step, select the two variables you want to compare against each other. And specify, which one you theorize to be greater. Select two-sided, if your theory does not tell you, which variable is greater.&lt;/text&gt;
+				&lt;text&gt;As a first step, select the two variables you want to compare against
+					each other. And specify, which one you theorize to be greater. Select two-sided,
+					if your theory does not tell you, which variable is greater.&lt;/text&gt;
 				&lt;copy id="main_settings_row"/&gt;
 			&lt;/page&gt;
 	</programlisting>
 	<para>
-		Some of this is pretty self explanatory: We add a <command>&lt;wizard&gt;</command> tag with a label for the wizard. Since a wizard can hold several pages that are shown one after another, we next define the first <command>&lt;page&gt;</command>, and put an explanatory <command>&lt;text&gt;</command> note in there. Then we use a <command>&lt;copy&gt;</command> tag. What this does, is really it saves us having to define yet again, what we already wrote for the <command>&lt;dialog&gt;</command>: The copy tag looks for another tag with the same <parameter>id</parameter> earlier in the .xml. This happens to be defined in the <command>&lt;dialog&gt;</command> section, and is a <command>&lt;row&gt;</command> in which there are the <command>&lt;varselector&gt;</command>, <command>&lt;varslots&gt;</command> and the <quote>hypothesis</quote> <command>&lt;radio&gt;</command> control. All of this is copied 1:1 and inserted right at the <command>&lt;copy&gt;</command> element.
+		Some of this is pretty self explanatory: We add a <command>&lt;wizard&gt;</command> tag with a <parameter>label</parameter> for the wizard. Since a wizard can hold several pages that are shown one after another, we next define the first <command>&lt;page&gt;</command>, and put an explanatory <command>&lt;text&gt;</command> note in there. Then we use a <command>&lt;copy&gt;</command> tag. What this does, is really it saves us having to define yet again, what we already wrote for the <command>&lt;dialog&gt;</command>: The copy tag looks for another tag with the same <parameter>id</parameter> earlier in the XML. This happens to be defined in the <command>&lt;dialog&gt;</command> section, and is a <command>&lt;row&gt;</command> in which there are the <command>&lt;varselector&gt;</command>, <command>&lt;varslots&gt;</command> and the <quote>hypothesis</quote> <command>&lt;radio&gt;</command> control. All of this is copied 1:1 and inserted right at the <command>&lt;copy&gt;</command> element.
 	</para>
 	<para>
 		Now to the second page:
 	</para>
 	<programlisting>
 			&lt;page id="secondpage"&gt;
-				&lt;text&gt;Below are some advanced options. It's generally safe not to assume the variables have equal variances. An appropriate correction will be applied then. Chosing "assume equal variances" may increase test-strength, however.&lt;/text&gt;
+				&lt;text&gt;Below are some advanced options. It's generally safe not to assume the
+					variables have equal variances. An appropriate correction will be applied then.
+					Chosing "assume equal variances" may increase test-strength, however.&lt;/text&gt;
 				&lt;copy id="varequal"/&gt;
-				&lt;text&gt;Sometimes it's helpful to get an estimate of the confidence interval of the difference in means. Below you can specify whether one should be shown, and which confidence-level should be applied (95% corresponds to a 5% level of significance).&lt;/text&gt;
+				&lt;text&gt;Sometimes it's helpful to get an estimate of the confidence interval of
+					the difference in means. Below you can specify whether one should be shown, and
+					which confidence-level should be applied (95% corresponds to a 5% level of
+					significance).&lt;/text&gt;
 				&lt;copy id="frame_conf_int"/&gt;
 			&lt;/page&gt;
 		&lt;/wizard&gt;
@@ -440,7 +447,7 @@ This is a guide to writing plugins for &rkward;.
 		Much of the same thing here. We add some texts, and in between that <command>&lt;copy&gt;</command> further sections from the dialog interface.
 	</para>
 	<para>
-		You may of course make the wizard interface look very different to the plain dialog, and not use the <command>&lt;copy&gt;</command> tag at all. Be sure, however, to assign corresponding elements the same <parameter>id</parameter> in both interfaces. This is not only used to transfer settings from the dialog interface to the wizard interface and back, when the user switches interfaces (which does not yet happen in the current version of &rkward;), but also simplifies writing your code-template (see below).
+		You may of course make the wizard interface look very different to the plain dialog, and not use the <command>&lt;copy&gt;</command> tag at all. Be sure, however, to assign corresponding elements the same <parameter>id</parameter> in both interfaces. This is not only used to transfer settings from the dialog interface to the wizard interface and back, when the user switches interfaces (which does not yet happen in the current version of &rkward;), but also simplifies writing your code template (see below).
 	</para>
 </sect1>
 
@@ -477,7 +484,7 @@ This is a guide to writing plugins for &rkward;.
 		</para>
 	</tip>
 	<para>
-		For the independent samples t-test, the <filename>code.js</filename> file looks as follows (with comments in between):
+		For the two variable t-test, the <filename>code.js</filename> file looks as follows (with comments in between):
 	</para>
 	<sect2 id="sect_JS_preprocess"><title>preprocess()</title>
 		<programlisting>
@@ -516,7 +523,7 @@ res &lt;- t.test (
 	<sect2 id="sect_JS_printout"><title>printout()</title>
 		<programlisting>
 function printout () {
-	echo ('rk.header ("Independent samples t test")\n');
+	echo ('rk.header ("Two Variable t-Test")\n');
 	echo ('rk.print (res)\n');
 }
 		</programlisting>
@@ -525,7 +532,8 @@ function printout () {
 		</para>
 		<programlisting>
 function printout () {
-	makeHeaderCode ("Independent samples t test", new Array ("Assume equal variances", getValue ("varequal"), "Confidence level", getValue ("conflevel")))
+	makeHeaderCode ("Two Variable t-Test", new Array ("Assume equal variances",
+		getValue ("varequal"), "Confidence level", getValue ("conflevel")))
 	echo ('rk.print (res)\n');
 }
 		</programlisting>
@@ -1726,21 +1734,28 @@ conf.frame &lt;- rk.XML.frame(conf.level, check.conf, rk.XML.stretch(), label="C
 		<para>Now all we need to do is to put the objects together in a tabbook, and place that in a dialog section:</para>
 		<programlisting>
 full.dialog &lt;- rk.XML.dialog(
-	label="Independent Samples t-Test",
+	label="Two Variable t-Test",
 	rk.XML.tabbook(tabs=list("Basic settings"=basic.settings, "Options"=list(check.eqvar, conf.frame)))
 )
 		</programlisting>
 		<para>We can also create the wizard section with its two pages using the same objects, so their IDs will be extracted for the <command>&lt;copy&gt;</command> tags:</para>
 		<programlisting>
 full.wizard &lt;- rk.XML.wizard(
-		label="Independent Samples T-Test",
+		label="Two Variable t-Test",
 		rk.XML.page(
-			rk.XML.text("As a first step, select the two variables you want to compare against each other. And specify, which one you theorize to be greater. Select two-sided, if your theory does not tell you, which variable is greater."),
+			rk.XML.text("As a first step, select the two variables you want to compare against
+				each other. And specify, which one you theorize to be greater. Select two-sided,
+				if your theory does not tell you, which variable is greater."),
 			rk.XML.copy(basic.settings)),
 		rk.XML.page(
-			rk.XML.text("Below are some advanced options. It's generally safe not to assume the variables have equal variances. An appropriate correction will be applied then. Chosing \"assume equal variances\" may increase test-strength, however."),
+			rk.XML.text("Below are some advanced options. It's generally safe not to assume the
+				variables have equal variances. An appropriate correction will be applied then.
+				Chosing \"assume equal variances\" may increase test-strength, however."),
 			rk.XML.copy(check.eqvar),
-			rk.XML.text("Sometimes it's helpful to get an estimate of the confidence interval of the difference in means. Below you can specify whether one should be shown, and which confidence-level should be applied (95% corresponds to a 5% level of significance)."),
+			rk.XML.text("Sometimes it's helpful to get an estimate of the confidence interval of
+				the difference in means. Below you can specify whether one should be shown, and
+				which confidence-level should be applied (95% corresponds to a 5% level of
+				significance)."),
 			rk.XML.copy(conf.frame)))
 		</programlisting>
 		<para>That's it for the GUI. The global document will be combined in the end by <function>rk.plugin.skeleton()</function>.</para>
@@ -1782,7 +1797,14 @@ JS.print &lt;- rk.paste.JS(echo("rk.print (res)\n"), level=2)
 		</sect2>
 
 		<sect2 id="rkdev_pluginmap"><title>Plugin map</title>
-			<para>This section is very short: We don't need to write a pluginmap at all, as it can be generated automatically by <function>rk.plugin.skeleton()</function>.</para>
+		<para>This section is very short: We don't need to write a pluginmap at all, as it can be generated automatically by <function>rk.plugin.skeleton()</function>. The menu hierarchy can be specified via the <parameter>pluginmap</parameter> option:</para>
+			<programlisting>
+	[...]
+	pluginmap=list(
+		name="Two Variable t-Test",
+		hierarchy=list("analysis", "means", "t-Test"))
+	[...]
+			</programlisting>
 		</sect2>
 
 		<sect2 id="rkdev_rkh"><title>Help page</title>
@@ -1793,14 +1815,17 @@ JS.print &lt;- rk.paste.JS(echo("rk.print (res)\n"), level=2)
 		<sect2 id="rkdev_plugin_generator"><title>Generate the plugin files</title>
 			<para>Now comes the final step, in which we'll hand over all generated objects to <function>rk.plugin.skeleton()</function>:</para>
 			<programlisting>
-plugin.dir &lt;- rk.plugin.skeleton("t_test",
+plugin.dir &lt;- rk.plugin.skeleton("t-Test",
 	xml=list(
 		dialog=full.dialog,
 		wizard=full.wizard),
 	js=list(
-		results.header="Independent samples t test",
+		results.header="Two Variable t-Test",
 		calculate=JS.calc,
 		printout=JS.print),
+	pluginmap=list(
+		name="Two Variable t-Test",
+		hierarchy=list("analysis", "means", "t-Test")),
 	load=TRUE,
 	edit=TRUE,
 	show=TRUE)
@@ -1833,19 +1858,26 @@ local({
 	conf.frame &lt;- rk.XML.frame(conf.level, check.conf, rk.XML.stretch(), label="Confidence Interval")
 
 	full.dialog &lt;- rk.XML.dialog(
-		label="Independent Samples t-Test",
+		label="Two Variable t-Test",
 		rk.XML.tabbook(tabs=list("Basic settings"=basic.settings, "Options"=list(check.eqvar, conf.frame)))
 	)
 
 	full.wizard &lt;- rk.XML.wizard(
-			label="Independent Samples T-Test",
+			label="Two Variable t-Test",
 			rk.XML.page(
-				rk.XML.text("As a first step, select the two variables you want to compare against each other. And specify, which one you theorize to be greater. Select two-sided, if your theory does not tell you, which variable is greater."),
+				rk.XML.text("As a first step, select the two variables you want to compare against
+					each other. And specify, which one you theorize to be greater. Select two-sided,
+					if your theory does not tell you, which variable is greater."),
 				rk.XML.copy(basic.settings)),
 			rk.XML.page(
-				rk.XML.text("Below are some advanced options. It's generally safe not to assume the variables have equal variances. An appropriate correction will be applied then. Chosing \"assume equal variances\" may increase test-strength, however."),
+				rk.XML.text("Below are some advanced options. It's generally safe not to assume the
+					variables have equal variances. An appropriate correction will be applied then.
+					Chosing \"assume equal variances\" may increase test-strength, however."),
 				rk.XML.copy(check.eqvar),
-				rk.XML.text("Sometimes it's helpful to get an estimate of the confidence interval of the difference in means. Below you can specify whether one should be shown, and which confidence-level should be applied (95% corresponds to a 5% level of significance)."),
+				rk.XML.text("Sometimes it's helpful to get an estimate of the confidence interval of
+					the difference in means. Below you can specify whether one should be shown, and
+					which confidence-level should be applied (95% corresponds to a 5% level of
+					significance)."),
 				rk.XML.copy(conf.frame)))
 
 	JS.calc &lt;- rk.paste.JS(
@@ -1857,14 +1889,17 @@ local({
 
 	JS.print &lt;- rk.paste.JS(echo("rk.print (res)\n"), level=2)
 
-	plugin.dir &lt;&lt;- rk.plugin.skeleton("t_test",
+	plugin.dir &lt;&lt;- rk.plugin.skeleton("t-Test",
 		xml=list(
 			dialog=full.dialog,
 			wizard=full.wizard),
 		js=list(
-			results.header="Independent samples t test",
+			results.header="Two Variable t-Test",
 			calculate=JS.calc,
 			printout=JS.print),
+		pluginmap=list(
+			name="Two Variable t-Test",
+			hierarchy=list("analysis", "means", "t-Test")),
 		load=TRUE,
 		edit=TRUE,
 		show=TRUE,
