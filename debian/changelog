@@ -1,10 +1,16 @@
 rkward (0.5.7z+0.5.8-0devel1) unstable; urgency=low
 
   * new upstream release
+
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Mon, 24 Oct 2011 15:30:00 +0200
+
+rkward (0.5.7-1) unstable; urgency=low
+
+  * new upstream release
   * provide build-arch and build-indep targets
   * include buildflags as instructed by the dpkg developers
 
- -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Tue, 30 May 2011 15:30:00 +0200
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Sun, 23 Oct 2011 15:30:00 +0200
 
 rkward (0.5.6-1) unstable; urgency=low
 
