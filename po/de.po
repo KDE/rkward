@@ -12,19 +12,19 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
-"Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
-"group_id=50231&atid=459007\n"
-"POT-Creation-Date: 2011-09-26 15:48+0200\n"
-"PO-Revision-Date: 2011-09-26 22:49+0200\n"
-"Last-Translator: Stefan Rödiger <stefan_roediger@gmx.de>\n"
+"Report-Msgid-Bugs-To: "
+"http://sourceforge.net/tracker/?group_id=50231&atid=459007\n"
+"POT-Creation-Date: 2011-10-05 19:03+0200\n"
+"PO-Revision-Date: 2011-09-27 02:27+0000\n"
+"Last-Translator: Stefan Rödiger <Unknown>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
-"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-09-20 05:14+0000\n"
-"X-Generator: Lokalize 1.2\n"
+"X-Launchpad-Export-Date: 2011-10-06 04:45+0000\n"
+"X-Generator: Launchpad (build 14085)\n"
+"Language: de\n"
 
 #: agents/rkeditobjectagent.cpp:56
 msgid ""
@@ -58,9 +58,9 @@ msgstr "Fehler beim Laden des Workspace"
 #: agents/rkprintagent.cpp:70
 msgid ""
 "No service was found to provide a KDE print dialog for postscript files. We "
-"will try to open a generic postscript viewer (if any), instead."
-"<br><br>Consider installing 'okular', or configure RKWard not to attempt to "
-"print using a KDE print dialog."
+"will try to open a generic postscript viewer (if any), "
+"instead.<br><br>Consider installing 'okular', or configure RKWard not to "
+"attempt to print using a KDE print dialog."
 msgstr ""
 
 #: agents/rkprintagent.cpp:70
@@ -110,7 +110,7 @@ msgstr ""
 "Speichern in Datei '%1' gescheitert. Wollen Sie versuchen, die Datei unter "
 "einem anderen Dateinamen zu speichern?"
 
-#: agents/showedittextfileagent.cpp:58 misc/rkprogresscontrol.cpp:304
+#: agents/showedittextfileagent.cpp:58 misc/rkprogresscontrol.cpp:305
 #: plugin/rkstandardcomponentgui.cpp:391
 msgid "Done"
 msgstr "Erledigt"
@@ -133,8 +133,8 @@ msgid ""
 "done, press the \"Done\"-button, or close this dialog to resume.\n"
 "\n"
 msgstr ""
-"Ein Kommando das in der R-Engine läuft möchte das Sie eine oder mehrere Datei"
-"(en) editieren. Bitte betrachten die diese Dateien, editieren Sie diese "
+"Ein Kommando das in der R-Engine läuft möchte das Sie eine oder mehrere "
+"Datei(en) editieren. Bitte betrachten die diese Dateien, editieren Sie diese "
 "falls notwendig und speichern Sie diese. Wenn Sie damit fertig sind, dann "
 "bitte den \"Erledigt\"-Button drücekn oder schließen Sie diesen Dialog um "
 "ihn erneut zu betrachten.\n"
@@ -205,7 +205,7 @@ msgstr ""
 
 #: core/rkmodificationtracker.cpp:338 dataeditor/rkvareditmodel.cpp:670
 #: dialogs/rkloadlibsdialog.cpp:412 dialogs/rkloadlibsdialog.cpp:428
-#: dialogs/rkloadlibsdialog.cpp:936 plugin/rkformula.cpp:83
+#: dialogs/rkloadlibsdialog.cpp:934 plugin/rkformula.cpp:83
 #: plugin/rkvarslot.cpp:55
 msgid "Name"
 msgstr "Name"
@@ -451,8 +451,8 @@ msgstr ""
 msgid ""
 "The editor '%1' contains the following duplicate columns. Editing this table "
 "may not be safe, and has been disabled. You may re-enable editing if you "
-"know what you are doing, but you are strongly advised to fix the table, and/"
-"or backup your data, first."
+"know what you are doing, but you are strongly advised to fix the table, "
+"and/or backup your data, first."
 msgstr ""
 "Der Editor '%1' enthält folgende doppelte Spaltennamen. Das Editieren dieser "
 "Tabelle ist möglicherweise nicht sicher und wurde deaktiviert. Sie können es "
@@ -543,8 +543,7 @@ msgid ""
 "These will be skipped."
 msgstr ""
 "Ihre gegenwärtigen Nutzerrechte erlauben nicht das entfernen der folgenden "
-"Pakete. "
-"Diese werden übersprungen."
+"Pakete. Diese werden übersprungen."
 
 #: dialogs/rkloadlibsdialog.cpp:214 dialogs/rkloadlibsdialog.cpp:217
 msgid "Insufficient user permissions"
@@ -563,8 +562,7 @@ msgid ""
 "proceed?"
 msgstr ""
 "Sie beabsichtigen die folgenden Pakete zu entfernen. Sind Sie sicher das Sie "
-"fortfahren "
-"wollen?"
+"fortfahren wollen?"
 
 #: dialogs/rkloadlibsdialog.cpp:239
 msgid "About to remove packages"
@@ -583,49 +581,31 @@ msgid "Selected library location not writable"
 msgstr "Gewählter Speicherort für Bibliotheken ist nicht beschreibbar"
 
 #: dialogs/rkloadlibsdialog.cpp:257
-#, fuzzy
 msgid ""
 "<p>The directory you have selected for installation (%1) is not writable "
 "with your current user permissions.</p><p>Would you like to install to %2, "
-"instead (you can also press \"Cancel\" and use the \"Configure Repositories"
-"\"-button to set up a different directory)?</p>"
+"instead (you can also press \"Cancel\" and use the \"Configure "
+"Repositories\"-button to set up a different directory)?</p>"
 msgstr ""
-"Mit den gegenwärtigen Nutzerrechten haben keine Schreibrechte um in das "
-"Verzeichnis (%1) zu installieren. Sie können einen anderen Speicherort für "
-"Ihre Bibliotheken finden in den Sie installieren können (wenn keiner "
-"beschreibbar ist, dann möchten Sie möglicherweise den \"Konfiguriere "
-"Repositories\"-Button verwenden um ein beschreibbares Verzeichnis für die "
-"Installation Ihrer Pakete zu wählen).\n"
 
 #: dialogs/rkloadlibsdialog.cpp:260
-#, fuzzy
 msgid ""
 "<p>Alternatively, if you have access to an administrator account on this "
 "machine, you can use that to install the package(s), or you could change the "
 "permissions of '%1'. Sorry, automatic switching to Administrator is not yet "
 "supported in RKWard on Windows.</p>"
 msgstr ""
-"Falls Sie zugriff auf den Administrator-Account dieses Computers haben, denn "
-"können Sie dies nutzen um die Pakete zu installieren, oder Sie können die "
-"Zugriffsrechte von '%1' ändern. Entschuldigen Sie bitte, das automatische "
-"wechseln zum Administrator-Account wird von RKWard unter Windows noch nicht "
-"unterstützt."
 
 #: dialogs/rkloadlibsdialog.cpp:262 dialogs/rkloadlibsdialog.cpp:266
-#, fuzzy
 msgid "Install to %1"
-msgstr "Installieren"
+msgstr ""
 
 #: dialogs/rkloadlibsdialog.cpp:265
-#, fuzzy
 msgid ""
 "<p>Alternatively, if you are the administrator of this machine, you can try "
-"to install the packages as root (you'll be prompted for the root password).</"
-"p>"
+"to install the packages as root (you'll be prompted for the root "
+"password).</p>"
 msgstr ""
-"Wenn Sie der Administrator dieses Computers sind, dann können Sie versuchen "
-"die Packte mit Administratorrechten zu installieren (Sie werden "
-"wahrscheinlich nach dem Administratorpasswort gefragt)."
 
 #: dialogs/rkloadlibsdialog.cpp:266
 msgid "Become root"
@@ -647,16 +627,16 @@ msgstr "Der Installationsprozess endete mit Code %1"
 msgid "Installed packages"
 msgstr "Installierte Pakete"
 
-#: dialogs/rkloadlibsdialog.cpp:412 dialogs/rkloadlibsdialog.cpp:937
+#: dialogs/rkloadlibsdialog.cpp:412 dialogs/rkloadlibsdialog.cpp:935
 #: windows/rkhelpsearchwindow.cpp:97 windows/rkhelpsearchwindow.cpp:342
 msgid "Title"
 msgstr "Titel"
 
-#: dialogs/rkloadlibsdialog.cpp:412 dialogs/rkloadlibsdialog.cpp:938
+#: dialogs/rkloadlibsdialog.cpp:412 dialogs/rkloadlibsdialog.cpp:936
 msgid "Version"
 msgstr "Version"
 
-#: dialogs/rkloadlibsdialog.cpp:412 dialogs/rkloadlibsdialog.cpp:939
+#: dialogs/rkloadlibsdialog.cpp:412 dialogs/rkloadlibsdialog.cpp:937
 msgid "Location"
 msgstr "Speicherstelle"
 
@@ -672,7 +652,7 @@ msgstr "Entfernen"
 msgid "Loaded packages"
 msgstr "Geladene Pakete"
 
-#: dialogs/rkloadlibsdialog.cpp:579
+#: dialogs/rkloadlibsdialog.cpp:577
 msgid ""
 "There has been an error while trying to load / unload packages. See "
 "transcript below for details"
@@ -680,37 +660,32 @@ msgstr ""
 "Beim Versuch zu laden / entladen ist ein Fehler aufgetreten /. Bitte "
 "Transkript unterhalb für Details ansehen"
 
-#: dialogs/rkloadlibsdialog.cpp:579
+#: dialogs/rkloadlibsdialog.cpp:577
 msgid "Error while handling packages"
 msgstr "Fehler beim bearbeiten der Pakete"
 
-#: dialogs/rkloadlibsdialog.cpp:633
-#, fuzzy
+#: dialogs/rkloadlibsdialog.cpp:631
 msgid ""
 "Many packages are available on CRAN (Comprehensive R Archive Network), and "
 "other repositories<br>(click \"Configure Repositories\" to add more sources)."
 msgstr ""
-"Es sind viele Pakete bei CRAN (Comprehensive R Archive Network) und anderen "
-"Repositories verfügbar (wähle \"Konfiguriere Pakete\" um mehr Quellen "
-"hinzuzufügen). Klicke \"Hole Liste\" um herauszufinden welche Pakete "
-"verfügbar sind. Diese Funktion setzt eine Internetverbindung voraus."
 
-#: dialogs/rkloadlibsdialog.cpp:655
+#: dialogs/rkloadlibsdialog.cpp:653
 msgid "Show only packages matching:"
 msgstr "Zeige nur Pakete mit folgender Übereinstimmung:"
 
-#: dialogs/rkloadlibsdialog.cpp:657
+#: dialogs/rkloadlibsdialog.cpp:655
 msgid ""
 "<p>You can limit the packages displayed in the list to with names or titles "
 "matching a filter string.</p><p><b>Note:</b> To search for partial strings, "
 "add '*' to the start and / or end of the filter, e.g. '*stat*'.</p>"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:661
+#: dialogs/rkloadlibsdialog.cpp:659
 msgid "Select all updates"
 msgstr "Wähle alle Updates"
 
-#: dialogs/rkloadlibsdialog.cpp:716
+#: dialogs/rkloadlibsdialog.cpp:714
 msgid ""
 "The package requested by the backend (\"%1\") was not found in the package "
 "repositories. Maybe the package name was mis-spelled. Or maybe you need to "
@@ -721,99 +696,99 @@ msgstr ""
 "oder Sie müssen zusätzliche Repositories mittels dem \"Konfiguriere "
 "Repositories\"-Button angeben."
 
-#: dialogs/rkloadlibsdialog.cpp:716
+#: dialogs/rkloadlibsdialog.cpp:714
 msgid "Package not available"
 msgstr "Pakete nicht verfügbar"
 
-#: dialogs/rkloadlibsdialog.cpp:784
+#: dialogs/rkloadlibsdialog.cpp:782
 msgid "Install packages to:"
 msgstr "Installierte Pakete in:"
 
-#: dialogs/rkloadlibsdialog.cpp:788
+#: dialogs/rkloadlibsdialog.cpp:786
 msgid "Include dependencies"
 msgstr "Beinhalte Abhängigkeiten"
 
-#: dialogs/rkloadlibsdialog.cpp:874
+#: dialogs/rkloadlibsdialog.cpp:872
 msgid ""
-"<p>Please stand by while searching for installed and available packages.</"
-"p><p><strong>Note:</strong> This requires a working internet connection, and "
-"may take some time, esp. if one or more repositories are temporarily "
-"unavailable.</p>"
+"<p>Please stand by while searching for installed and available "
+"packages.</p><p><strong>Note:</strong> This requires a working internet "
+"connection, and may take some time, esp. if one or more repositories are "
+"temporarily unavailable.</p>"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:874
+#: dialogs/rkloadlibsdialog.cpp:872
 msgid "Searching for packages"
 msgstr "Suche nach Paketen"
 
-#: dialogs/rkloadlibsdialog.cpp:935 rbackend/rcommandstack.cpp:400
+#: dialogs/rkloadlibsdialog.cpp:933 rbackend/rcommandstack.cpp:400
 msgid "Status"
 msgstr "Status"
 
-#: dialogs/rkloadlibsdialog.cpp:942
+#: dialogs/rkloadlibsdialog.cpp:940
 msgid ""
 "<p>Packages marked with an RKWard icon in this column provide enhancements "
 "to RKWard, typically in the form of additional graphical dialogs.</p>"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:943
+#: dialogs/rkloadlibsdialog.cpp:941
 msgid ""
 "<p>You can select packages for installation / removal by checking / "
 "unchecking the corresponding boxes in this column.</p>"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:944
+#: dialogs/rkloadlibsdialog.cpp:942
 msgid "<p>The name of the package.</p>"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:945
+#: dialogs/rkloadlibsdialog.cpp:943
 msgid ""
 "<p>A descriptive title for the package. Currently this is not available for "
 "packages in non-local repositories.</p>"
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:946
+#: dialogs/rkloadlibsdialog.cpp:944
 msgid "<p>Installed and / or available version of the package</p>"
 msgstr "<p>Installierte und / oder verfügbare Versionen von diesem Paket</p>"
 
-#: dialogs/rkloadlibsdialog.cpp:947
+#: dialogs/rkloadlibsdialog.cpp:945
 msgid "<p>Location where the package is installed / available</p>"
 msgstr "<p>Ort wo das Paket installiert / verfügbar ist</p>"
 
-#: dialogs/rkloadlibsdialog.cpp:970
+#: dialogs/rkloadlibsdialog.cpp:968
 msgid "Updateable Packages"
 msgstr "Aktualisierbare Pakete"
 
-#: dialogs/rkloadlibsdialog.cpp:971
+#: dialogs/rkloadlibsdialog.cpp:969
 msgid ""
 "Packages for which an update is available. This may include packages which "
 "were merely built against a newer version of R."
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:973
+#: dialogs/rkloadlibsdialog.cpp:971
 msgid "New Packages"
 msgstr "Neue Pakete"
 
-#: dialogs/rkloadlibsdialog.cpp:974
+#: dialogs/rkloadlibsdialog.cpp:972
 msgid ""
 "Packages for which available for installation, but which are not currently "
 "installed."
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:976
+#: dialogs/rkloadlibsdialog.cpp:974
 msgid "Installed Packages"
 msgstr "Installierte Pakete"
 
-#: dialogs/rkloadlibsdialog.cpp:977
+#: dialogs/rkloadlibsdialog.cpp:975
 msgid ""
 "Packages for which installed locally. Note that updates may be available for "
 "these packages."
 msgstr ""
 
-#: dialogs/rkloadlibsdialog.cpp:1001
+#: dialogs/rkloadlibsdialog.cpp:999
 msgid "Install"
 msgstr "Installieren"
 
-#: dialogs/rkloadlibsdialog.cpp:1004 misc/multistringselector.cpp:58
+#: dialogs/rkloadlibsdialog.cpp:1002 misc/multistringselector.cpp:58
 msgid "Remove"
 msgstr "Entfernen"
 
@@ -853,9 +828,11 @@ msgid_plural ""
 "<p>%1 workspace recovery files exist in <i>%2</i>, the most recent one of "
 "which is <i>%3</i>.</p>"
 msgstr[0] ""
-"<p>Eine Workspace-Wiederherstellungsdateis existiert in <i>%2</i> als <i>%3<"
-"/i>.</p>"
+"<p>Eine Workspace-Wiederherstellungsdatei existiert in <i>%2</i> als "
+"<i>%3</i>.</p>"
 msgstr[1] ""
+"<p>%1 Workspace-Wiederherstellungsdateien existieren in <i>%2</i>. Die "
+"aktuellste davon ist <i>%3</i>.</p>"
 
 #: dialogs/rkrecoverdialog.cpp:45
 msgid ""
@@ -1053,13 +1030,10 @@ msgid "Down"
 msgstr "Runter"
 
 #: misc/rkcommonfunctions.cpp:215
-#, fuzzy
 msgid ""
-"<p><em>Note:</em> This setting does not take effect until you restart RKWard."
-"</p>"
+"<p><em>Note:</em> This setting does not take effect until you restart "
+"RKWard.</p>"
 msgstr ""
-"Einstellungen die mit einem (*) markiert sind, werden erst nach einem "
-"Neustart von RKWard wirksam"
 
 #: misc/rkobjectlistview.cpp:43
 msgid "Configure Defaults"
@@ -1521,7 +1495,7 @@ msgstr "Beschreibung"
 msgid "R Startup"
 msgstr "R Start"
 
-#: rbackend/rinterface.cpp:309
+#: rbackend/rinterface.cpp:290
 msgid ""
 "<p>\t-An unspecified error occurred that is not yet handled by RKWard. "
 "Likely RKWard will not function properly. Please check your setup.</p>\n"
@@ -1530,7 +1504,7 @@ msgstr ""
 "RKWard gehandhabt werden kann. Wahrscheinlich wird RKWard nicht richtig "
 "funktionieren. Bitte überprüfen Sie ihr Setup.</p>\n"
 
-#: rbackend/rinterface.cpp:311
+#: rbackend/rinterface.cpp:292
 msgid ""
 "<p>There was a problem starting the R backend. The following error(s) "
 "occurred:</p>\n"
@@ -1538,11 +1512,11 @@ msgstr ""
 "<p>Es gab ein Problem beim Start vom R-Backend. Die folgenden Fehler traten "
 "auf:</p>\n"
 
-#: rbackend/rinterface.cpp:319
+#: rbackend/rinterface.cpp:300
 msgid "Error starting R"
 msgstr "Fehler beim Start von R"
 
-#: rbackend/rinterface.cpp:533
+#: rbackend/rinterface.cpp:514
 msgid ""
 "A command in the R backend is trying to change the character encoding. While "
 "RKWard offers support for this, and will try to adjust to the new locale, "
@@ -1564,11 +1538,29 @@ msgstr ""
 "automatisch geschehen). In diesem Fall wählen Sie bitte 'Abbrechen', dann "
 "schließen Sie das Datenfenster, sichern alles und versuchen es nochmals."
 
-#: rbackend/rinterface.cpp:533
+#: rbackend/rinterface.cpp:514
 msgid "Locale change"
 msgstr "Lokale Änderung"
 
-#: rbackend/rinterface.cpp:687
+#: rbackend/rinterface.cpp:517
+msgid ""
+"<p>A command running in the R backend has caused the R backend process to "
+"\"fork\". Typically this is done to spread computations onto several CPU "
+"cores. We try our best to support this in RKWard, despite some technical "
+"problems inherent in forking a multi-library, multi-threaded application. "
+"However, it is entirely possible that this causes trouble / broken features "
+"in some cases, particularly in combination with further R libraries. If you "
+"observe any such adverse effects after forking, please send us a bug "
+"report.</p><p>If you have a choice, consider using a different technique of "
+"parallelization, e.g. the 'PSOCK' method of R packages <i>snow</i> or "
+"<i>parallel</i>.</p>"
+msgstr ""
+
+#: rbackend/rinterface.cpp:518
+msgid "Backend has forked"
+msgstr ""
+
+#: rbackend/rinterface.cpp:677
 msgid ""
 "The R-backend has indicated that in order to carry out the current task it "
 "needs the package '%1', which is not currently installed. We will open the "
@@ -1579,15 +1571,15 @@ msgstr ""
 "durchzuführen. Es wird das Paket-Management-Tool geöffnet. Von dort können "
 "Sie versuchen, das benötigte Paket zu finden und zu installieren."
 
-#: rbackend/rinterface.cpp:687
+#: rbackend/rinterface.cpp:677
 msgid "Require package '%1'"
 msgstr "Benötige Paket '%1'"
 
-#: rbackend/rinterface.cpp:782
+#: rbackend/rinterface.cpp:772
 msgid "R backend requests information"
 msgstr "R-Backend erbittet Informationen"
 
-#: rbackend/rinterface.cpp:806
+#: rbackend/rinterface.cpp:796
 msgid ""
 "\n"
 "The R backend will be shut down immediately. This means, you can not use any "
@@ -1595,9 +1587,9 @@ msgid ""
 "even save the workspace (but if you're lucky, R already did that). What you "
 "can do, however, is save any open command-files, the output, or copy data "
 "out of open data editors. Quit RKWard after that.\n"
-"Since this should never happen, please write a mail to rkward-devel@lists."
-"sourceforge.net, and tell us, what you were trying to do, when this "
-"happened. Sorry!"
+"Since this should never happen, please write a mail to rkward-"
+"devel@lists.sourceforge.net, and tell us, what you were trying to do, when "
+"this happened. Sorry!"
 msgstr ""
 "\n"
 "Es wird unverzüglich geschlossen werden. Dies bedeutet das Sie nunmehr keine "
@@ -1610,7 +1602,7 @@ msgstr ""
 "aussagekräftige E-Mail mit der Beschreibung was passierte an rkward-"
 "devel@lists.sourceforge.net. Entschuldigung!"
 
-#: rbackend/rinterface.cpp:807
+#: rbackend/rinterface.cpp:797
 msgid "R engine has died"
 msgstr "R-Engine ist 'gestorben'"
 
@@ -1627,11 +1619,11 @@ msgid ""
 "Please fix your installation."
 msgstr ""
 
-#: rbackend/rkrbackend.cpp:475
+#: rbackend/rkrbackend.cpp:476
 msgid "The R engine has shut down with status: %1"
 msgstr "Die R-Engine wurde beendet mit dem Status: %1"
 
-#: rbackend/rkrbackend.cpp:494
+#: rbackend/rkrbackend.cpp:495
 msgid ""
 "The R engine has encountered a fatal error:\n"
 "%1"
@@ -1639,15 +1631,15 @@ msgstr ""
 "Die R-Engine ist auf einen fatalen Fehler getroffen:\n"
 "%1"
 
-#: rbackend/rkrbackend.cpp:663
+#: rbackend/rkrbackend.cpp:664
 msgid "Message from the R backend"
 msgstr "Benachrichtigung vom R-Backend"
 
-#: rbackend/rkrbackend.cpp:671
+#: rbackend/rkrbackend.cpp:672
 msgid "Question from the R backend"
 msgstr "Benachrichtigung vom R-Backend"
 
-#: rbackend/rkrbackend.cpp:1412
+#: rbackend/rkrbackend.cpp:1455
 msgid ""
 "</p>\t- The 'rkward' R-library either could not be loaded at all, or not in "
 "the correct version. This may lead to all sorts of errors, from single "
@@ -1655,8 +1647,9 @@ msgid ""
 "that the last installation did not place all files in the correct place. "
 "However, in some cases, left-overs from a previous installation that was not "
 "cleanly removed may be the cause.</p>\t\t<p><b>You should quit RKWard, now, "
-"and fix your installation</b>. For help with that, see <a href=\"http://p.sf."
-"net/rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</p>\n"
+"and fix your installation</b>. For help with that, see <a "
+"href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a"
+">.</p>\n"
 msgstr ""
 "</p>\t- Die 'rkward' R-library konnte entweder nicht geladen werden oder "
 "liegt nicht in der korrekten Version vor. Das kann zu einer ganzen Reihe von "
@@ -1666,21 +1659,23 @@ msgstr ""
 "hinterlegt hat. Es ist aber auch möglich das von einer vorherigen "
 "Installation Dateien nicht sauber entfernt wurden.</p>\t\t\t<p><b>Sie "
 "sollten RKWard nun beenden und die Probleme beheben</b>. Für Hilfe wenden "
-"Sie sich bitte an <a href=\"http://p.sf.net/rkward/compiling\">http://p.sf."
-"net/rkward/compiling</a>.</p>\n"
+"Sie sich bitte an <a "
+"href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a"
+">.</p>\n"
 
-#: rbackend/rkrbackend.cpp:1416
+#: rbackend/rkrbackend.cpp:1459
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
 "this indicates a broken installation.</p>\t\t<p><b>You should quit RKWard, "
-"now, and fix your installation</b>. For help with that, see <a href=\"http://"
-"p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</p></p>\n"
+"now, and fix your installation</b>. For help with that, see <a "
+"href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a"
+">.</p></p>\n"
 msgstr ""
 "<p>\t-Ein Problem bei der Kommunikation mit R ist aufgetreten. Dies deutet "
 "auf eine fehlerhafte Installation hin.</p>\t\t\t<p><b>Sie sollten RKWard nun "
-"beenden und die Installation reparieren.</b>Hilfe finden Sie unter <a href="
-"\"http://p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</"
-"p>\n"
+"beenden und die Installation reparieren.</b>Hilfe finden Sie unter <a "
+"href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a"
+">.</p>\n"
 
 #: rkconsole.cpp:75
 msgid ""
@@ -1770,19 +1765,21 @@ msgid ""
 "<p>RKWard either could not find its resource files at all, or only an old "
 "version of those files. The most likely cause is that the last installation "
 "failed to place the files in the correct place. This can lead to all sorts "
-"of problems, from single missing features to complete failure to function.</"
-"p><p><b>You should quit RKWard, now, and fix your installation</b>. For help "
-"with that, see <a href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/"
-"rkward/compiling</a>.</p>"
+"of problems, from single missing features to complete failure to "
+"function.</p><p><b>You should quit RKWard, now, and fix your "
+"installation</b>. For help with that, see <a "
+"href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a"
+">.</p>"
 msgstr ""
 "<p>Der RKWard-Editor konnte entweder die Ressourcendateien nicht finden, "
 "oder nur eine alte Version von diesen Dateien. Die wahrscheinlichste Ursache "
 "dafür ist, dass die letzte Installation die Dateien nicht am richtigen "
 "Speicherort abgelegt hat. Das kann zu einer Reihe von Problemen führen, die "
-"vom fehlen einzelner Funktionen bis zum Komplettausfall reichen.</"
-"p><p><b>Sie sollten RKWard nun beenden und die Installation reparieren.</"
-"b>Hilfe finden Sie unter <a href=\"http://p.sf.net/rkward/compiling\">http://"
-"p.sf.net/rkward/compiling</a>.</p>"
+"vom fehlen einzelner Funktionen bis zum Komplettausfall "
+"reichen.</p><p><b>Sie sollten RKWard nun beenden und die Installation "
+"reparieren.</b>Hilfe finden Sie unter <a "
+"href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a"
+">.</p>"
 
 #: rkward.cpp:199
 msgid "Broken installation"
@@ -1791,8 +1788,8 @@ msgstr "Fehlerhafte Installation"
 #: rkward.cpp:216
 msgid ""
 "Your installation of KDE is configured to use \"native\" file dialogs. This "
-"is known to cause issues in some cases, and we recommend to disable \"native"
-"\" file dialogs.\n"
+"is known to cause issues in some cases, and we recommend to disable "
+"\"native\" file dialogs.\n"
 "Should \"native\" file dialogs be disabled in RKWard?"
 msgstr ""
 "Ihre KDE-Installation ist so konfiguriert das \"native\" Dateidialoge "
@@ -1818,8 +1815,8 @@ msgstr "Einstellung Plugins ..."
 
 #: rkward.cpp:270
 msgid ""
-"Plugins are needed: you may manage these through \"Settings->Configure RKWard"
-"\".\n"
+"Plugins are needed: you may manage these through \"Settings->Configure "
+"RKWard\".\n"
 msgstr ""
 "Plugins werden benötigt: Sie können dies durch \"Einstellungen->Konfiguriere "
 "RKWard\" bewerkstelligen.\n"
@@ -2530,7 +2527,7 @@ msgstr "Weite:"
 msgid "Height:"
 msgstr "Höhe:"
 
-#: settings/rksettingsmoduleplugins.cpp:66
+#: settings/rksettingsmoduleplugins.cpp:61
 msgid ""
 "Some plugins are available with both, a wizard-like interface and a "
 "traditional dialog interface. If both are available, which mode of "
@@ -2540,54 +2537,50 @@ msgstr ""
 "artigen und einem traditionell Dialog-basierten. Welchen Modus bevorzugen "
 "Sie, falls beide vorhanden sind?"
 
-#: settings/rksettingsmoduleplugins.cpp:76
+#: settings/rksettingsmoduleplugins.cpp:71
 msgid "Always prefer dialogs"
 msgstr "Bevorzuge immer Dialoge"
 
-#: settings/rksettingsmoduleplugins.cpp:79
+#: settings/rksettingsmoduleplugins.cpp:74
 msgid "Prefer recommended interface"
 msgstr "Bevorzuge empfohlene Interfaces"
 
-#: settings/rksettingsmoduleplugins.cpp:82
+#: settings/rksettingsmoduleplugins.cpp:77
 msgid "Always prefer wizards"
 msgstr "Bevorzuge immer Wizards"
 
-#: settings/rksettingsmoduleplugins.cpp:94
+#: settings/rksettingsmoduleplugins.cpp:89
 msgid "R syntax display (in dialogs)"
 msgstr "R-Syntaxanzeige (in Dialogen)"
 
-#: settings/rksettingsmoduleplugins.cpp:97
+#: settings/rksettingsmoduleplugins.cpp:92
 msgid "Code shown by default"
 msgstr "Code standardmäßig anzeigen"
 
-#: settings/rksettingsmoduleplugins.cpp:103
+#: settings/rksettingsmoduleplugins.cpp:98
 msgid "Default height of code display (pixels)"
 msgstr "Standardhöhe vom Code-Display (Pixel)"
 
-#: settings/rksettingsmoduleplugins.cpp:115
+#: settings/rksettingsmoduleplugins.cpp:110
 msgid "Select .pluginmap file(s)"
 msgstr "Wähle .pluginmap-Datei(en )"
 
-#: settings/rksettingsmoduleplugins.cpp:122
-msgid "Install or uninstall add-on plugin packs"
-msgstr "Installiere oder deinstalliere Add-on Plugin Packete"
-
-#: settings/rksettingsmoduleplugins.cpp:141
+#: settings/rksettingsmoduleplugins.cpp:131
 msgid "Select .pluginmap-file"
 msgstr "Wähle .pluginmap-Datei"
 
-#: settings/rksettingsmoduleplugins.cpp:146
+#: settings/rksettingsmoduleplugins.cpp:136
 msgid "Plugins"
 msgstr "Plugins"
 
-#: settings/rksettingsmoduleplugins.cpp:217
+#: settings/rksettingsmoduleplugins.cpp:215
 msgid ""
 "New RKWard plugin packs (listed below) have been found, and have been "
 "activated, automatically. To de-activate selected plugin packs, use Settings-"
 ">Configure RKWard->Plugins."
 msgstr ""
 
-#: settings/rksettingsmoduleplugins.cpp:217
+#: settings/rksettingsmoduleplugins.cpp:215
 msgid "New plugins found"
 msgstr "Neue Plugins gefunden"
 
@@ -2806,12 +2799,12 @@ msgstr "Gewählte Kommandos zurücknehmen"
 
 #: windows/rcontrolwindow.cpp:133
 msgid ""
-"Some of the commands you were trying to cancel are marked as \"sync"
-"\" (letter 'S' in the type column). Cancelling such commands could lead to "
-"loss of data. These commands have _not_ been cancelled."
+"Some of the commands you were trying to cancel are marked as \"sync\" "
+"(letter 'S' in the type column). Cancelling such commands could lead to loss "
+"of data. These commands have _not_ been cancelled."
 msgstr ""
-"Einige Kommandos die Sie versuchen zurückzunehmen wurden als \"sync"
-"\" (Buchstabe 'S' in Typ-Spalte). Abbrechen solcher Kommandos könnte zu "
+"Einige Kommandos die Sie versuchen zurückzunehmen wurden als \"sync\" "
+"(Buchstabe 'S' in Typ-Spalte). Abbrechen solcher Kommandos könnte zu "
 "Datenverlust führen. Diese Kommandos sind nicht zurückgenommen wurden."
 
 #: windows/rcontrolwindow.cpp:133
@@ -2961,9 +2954,9 @@ msgstr "Geladene Pakete"
 
 #: windows/rkhelpsearchwindow.cpp:257
 msgid ""
-"No help found on '%1'. Maybe the corresponding package is not installed/"
-"loaded, or maybe you mistyped the command. Try using Help->Search R Help for "
-"more options."
+"No help found on '%1'. Maybe the corresponding package is not "
+"installed/loaded, or maybe you mistyped the command. Try using Help->Search "
+"R Help for more options."
 msgstr ""
 "Keine Hilfe gefunden für '%1'. Möglicherweise ist entsprechendes Paket nicht "
 "installiert/geladen, oder vielleicht haben Sie bei dem Befehl vertippt. "
@@ -3291,10 +3284,10 @@ msgstr "Fehler in RKWard melden"
 #: windows/rktoplevelwindowgui.cpp:170
 msgid ""
 "<p><b>Where should I report bugs or wishes?</b></p><p>Please submit your bug "
-"reports or wishes at <a href=\"%1\">%1</a> or send email to <a href=\"mailto:"
-"%2\">%2</a>.</p><p><b>What information should I provide?</b></p><p>Please "
-"copy the information shown below, and fill in the details to the questions.</"
-"p>"
+"reports or wishes at <a href=\"%1\">%1</a> or send email to <a "
+"href=\"mailto:%2\">%2</a>.</p><p><b>What information should I "
+"provide?</b></p><p>Please copy the information shown below, and fill in the "
+"details to the questions.</p>"
 msgstr ""
 "<p><b>Wo sollte Ich Bugs oder Wünsche melden?</b></p><p>Bitte übermitteln "
 "Sie Ihre Bugs oder Wünsche an <a href=\"%1\">%1</a> oder senden Sie eine E-"
@@ -3325,10 +3318,10 @@ msgstr ""
 "Sie die Einstellung der Option (\"display\") anpassen.\n"
 "Falls Sie das geöffnete X11 Fenster jedoch auf dem selben Bildschirm sehen, "
 "wie diese Meldung, dann ist das ein Fall, in dem RKWard besser funktionieren "
-"sollte. In diesem Fall kontaktieren sie uns bitte unter rkward-devel@lists."
-"sourceforge.net und teilen Sie uns Informationen zu Ihrem System mit, damit "
-"wir versuchen können, diese Fehler in kommenden Versionen von RKWard zu "
-"beheben."
+"sollte. In diesem Fall kontaktieren sie uns bitte unter rkward-"
+"devel@lists.sourceforge.net und teilen Sie uns Informationen zu Ihrem System "
+"mit, damit wir versuchen können, diese Fehler in kommenden Versionen von "
+"RKWard zu beheben."
 
 #: windows/rkwindowcatcher.cpp:69
 msgid "Could not embed R X11 window"
@@ -3840,356 +3833,11 @@ msgstr "&Werkzeuge Bewegen"
 #: rc.cpp:139
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr "Stefan Rödiger, Jannis Vajen, ,Launchpad Contributions:,Stefan Rödiger"
+msgstr ""
+"Stefan Rödiger, Jannis Vajen, ,Launchpad Contributions:,Stefan Rödiger, "
+",Launchpad Contributions:"
 
 #: rc.cpp:140
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr "stefan_roediger@gmx.de, jvajen@googlemail.com,,,"
-
-#~ msgid ""
-#~ "In order to find out, which of your installed packaged have an update "
-#~ "available, click \"Fetch List\". This feature requires a working internet "
-#~ "connection."
-#~ msgstr ""
-#~ "Um herauszufinden von welchen Paketen ein Update verfügbar ist wählen Sie "
-#~ "bitte \"Hole Liste\". Diese Funktion setzt eine Internetverbindung voraus."
-
-#~ msgid "Local Version"
-#~ msgstr "Lokale Version"
-
-#~ msgid "Online Version"
-#~ msgstr "Online Version"
-
-#~ msgid "Fetch list"
-#~ msgstr "Rufe Liste ab"
-
-#~ msgid "Update Selected"
-#~ msgstr "Aktualisiere Auswahl"
-
-#~ msgid "Update All"
-#~ msgstr "Aktualisiere Alle"
-
-#~ msgid "[No updates available]"
-#~ msgstr "[Keine aktuellere Version verfügbar]"
-
-#~ msgid ""
-#~ "Please stand by while determining, which packages have an update "
-#~ "available online."
-#~ msgstr ""
-#~ "Bitte haben Sie etwas Geduld während online überprüft wird von welchen "
-#~ "Paketen eine aktualisierte Version vorliegt."
-
-#~ msgid "Fetching list"
-#~ msgstr "Abrufen der Liste"
-
-#~ msgid "Install Selected"
-#~ msgstr "Installiere Auswahl"
-
-#~ msgid "[No packages available]"
-#~ msgstr "[Keine Pakete verfügbar]"
-
-#~ msgid "Please stand by while downloading the list of available packages."
-#~ msgstr ""
-#~ "Bitte haben Sie etwas Geduld während die Liste verfügbarer Pakete "
-#~ "heruntergeladen wird."
-
-#~ msgid "Attempt installation, anyway"
-#~ msgstr "Versuche dennoch Installation"
-
-#~ msgid "Command used to send files to printer"
-#~ msgstr "Befehl, um Dateien zum Drucker zu senden"
-
-#~ msgid "Copy selection cleaned"
-#~ msgstr "Kopiere Auswahl bereinigt"
-
-#~ msgid "Attachment"
-#~ msgstr "Anhang"
-
-#~ msgid "Move To"
-#~ msgstr "Bewegen nach"
-
-#~ msgid "Show/Hide Workspace Browser"
-#~ msgstr "Zeige/Verberge Workspace-Browser"
-
-#~ msgid "Show/Hide Filesystem Browser"
-#~ msgstr "Zeige/Verberge Dateisystem-Browser"
-
-#~ msgid "Show/Hide Command Log"
-#~ msgstr "Zeige/Verberge Kommando Log"
-
-#~ msgid "Show/Hide Pending Jobs"
-#~ msgstr "Zeige/Verberge Schwebende Aufgaben"
-
-#~ msgid "Show/Hide R Help Search"
-#~ msgstr "Zeige/Verberge Fenster zur R-Hilfe"
-
-#~ msgid ""
-#~ "<p>Please submit your bug reports or wishes at <a href=\"%1\">%1</a> or "
-#~ "send email to <a href=\"mailto:%2\">%2</a>.</p>"
-#~ msgstr ""
-#~ "<p>Bitte übermitteln Sie ihre Fehlerberichte oder Wünsche an <a href="
-#~ "\"%1\">%1</a> oder senden Sie eine E-Mail an <a href=\"mailto:%2\">%2</a>."
-#~ "</p>"
-
-#~ msgid "Objects in the R workspace"
-#~ msgstr "Objekte im R-Workspace"
-
-#~ msgid ""
-#~ " For that reason processing has been stopped for now. Press the \"Done\"-"
-#~ "button, or close this dialog once you think it is safe to resume.\n"
-#~ "\n"
-#~ msgstr ""
-#~ " Aus diesem Grund wurde die Ausführung vorerst gestoppt. Drücken Sie den "
-#~ "\"Erledigt\"-Button, oder um diesen Dialog zu schließen, sobald Sie "
-#~ "denken,dass es sicher ist, fortzufahren.\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "The file(s) have been opened in text-windows. The following is a list of "
-#~ "the file(s) in question:\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Die Datei(en) wurden in den Text-Fenstern geöffnet. Die folgende ist eine "
-#~ "Liste der fraglichen Datei(en):\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "A command running in the R-engine wants you to edit one or more file(s). "
-#~ "RKWard can not determine, whether it is safe to continue processing R "
-#~ "commands, before you have read/edited (and saved) the file(s) in question."
-#~ msgstr ""
-#~ "Ein Kommando das in der R-Engine läuft möchte das Sie eine oder mehrere "
-#~ "Datei(en) bearbeiten. RKWard kann nicht bestimmen ob es sicher ist die R "
-#~ "Kommandos fortzusetzen, bevor Sie die fraglichen Datei(en) gelesen/"
-#~ "bearbeitet (und gespeichert) haben."
-
-#~ msgid ""
-#~ "\n"
-#~ "\n"
-#~ "The following of the above files were not readable and have not been "
-#~ "opened:\n"
-#~ "\n"
-#~ msgstr ""
-#~ "\n"
-#~ "\n"
-#~ "Die folgenden der obigen Dateien waren nicht lesbar und wurden nicht "
-#~ "geöffnet:\n"
-#~ "\n"
-
-#~ msgid "Disable R C stack checking"
-#~ msgstr "Schalte R C Stack Check ab"
-
-#~ msgid "Bypass console"
-#~ msgstr "Konsole umgehen"
-
-#~ msgid ""
-#~ "<p>Please note that RKWard is not well tested on Windows, yet.</"
-#~ "p><p>There are all sorts of known issues, and issues yet to be reported. "
-#~ "If you'd like to help: <a href=\"http://p.sf.net/rkward/contact\">http://"
-#~ "p.sf.net/rkward/contact</a>.</p>"
-#~ msgstr ""
-#~ "<p>Hinweis. RKWard wurde unter Windows noch nicht ausführlich getestet.</"
-#~ "p><p>Es gibt eine Reihe bekannter und unbekannter Probleme. Wenn Sie "
-#~ "helfen möchten: <a href=\"http://p.sf.net/rkward/contact\">http://p.sf."
-#~ "net/rkward/contact</a>.</p>"
-
-#~ msgid "RKWard on Windows"
-#~ msgstr "RKWard unter Windows"
-
-#~ msgid "R engine starting"
-#~ msgstr "R-Engine wird gestartet"
-
-#~ msgid ""
-#~ "The support file \"%1\" could not be found or is not readable. Please "
-#~ "check your installation."
-#~ msgstr ""
-#~ "Die unterstützende Datei \"%1\" konnte nicht gefunden werden oder ist "
-#~ "nicht lesbar. Bitte überprüfen Sie ihre Installation."
-
-#~ msgid "PHP-Error"
-#~ msgstr "PHP-Fehler"
-
-#~ msgid ""
-#~ "There has been an error\n"
-#~ "(\"%1\")\n"
-#~ "while starting up the PHP backend. Most likely this is due to either a "
-#~ "bug in RKWard or a problem with your PHP installation. Check the settings "
-#~ "(Settings->Configure Settings->PHP backend) and try again."
-#~ msgstr ""
-#~ "Es ist ein Fehler\n"
-#~ "(\"%1\")\n"
-#~ "während des Starts des PHP-Backend aufgetreten. Ursache ist "
-#~ "wahrscheinlich ein Bug in RKWard, oder ein Problem mit Ihrer PHP-"
-#~ "Installation. Überprüfen Sie diese Einstellungen (Einstellungen-"
-#~ ">Konfiguriere Einstellungen->PHP-Backend) und versuchen Sie es nochmals."
-
-#~ msgid ""
-#~ "The PHP-backend has reported an error\n"
-#~ "(\"%1\")\n"
-#~ "and has been shut down. This is most likely due to a bug in the plugin. "
-#~ "But of course you may want to try to close and restart the plugin to see "
-#~ "whether it works with different settings."
-#~ msgstr ""
-#~ "Das PHP-Backende hat einen Fehler berichtet(\"%1\")\n"
-#~ "und wurde geschlossen. Dies lässt sich meistens auf ein Bug im Plugin "
-#~ "zurückführen. Aber selbstverständlich können Sie das Plugin schließen und "
-#~ "erneut starten, um zu überprüfen ob es mit anderen Einstellungen "
-#~ "funktioniert."
-
-#~ msgid ""
-#~ "The PHP backend could not be started. Check whether you have correctly "
-#~ "configured the location of the PHP-binary (Settings->Configure Settings-"
-#~ ">PHP backend)"
-#~ msgstr ""
-#~ "Das PHP Backend konnte nicht gestartet werden. Überprüfen Sie bitte ob "
-#~ "Sie den Speicherort der PHP- Binary korrekt angegeben haben "
-#~ "(Einstellungen->Konfiguriere Einstellungen->PHP Backend)"
-
-#~ msgid ""
-#~ "The PHP-backend has died unexpectedly. The current output buffer is shown "
-#~ "below:\n"
-#~ "%1"
-#~ msgstr ""
-#~ "Das PHP-Backend wurde unerwartet beendet. Der gegenwärtige Ausgabepuffer "
-#~ "wird unten angezeigt:\n"
-#~ "%1"
-
-#~ msgid "PHP Process exited"
-#~ msgstr "PHP-Prozess beendet"
-
-#~ msgid "Changes in this section take effect the next time you start a plugin"
-#~ msgstr ""
-#~ "Änderungen in diesen Sektionen werden erst beim nächsten Start des "
-#~ "Plugins wirksam"
-
-#~ msgid "File-location of the PHP binary"
-#~ msgstr "Adresse, wo PHP-Binärdatei zu finden ist"
-
-#~ msgid "PHP backend"
-#~ msgstr "PHP-Backend"
-
-#~ msgid "Cutting selection..."
-#~ msgstr "Auswahl ausschneiden..."
-
-#~ msgid "Copying selection to clipboard..."
-#~ msgstr "Kopiere Auswahl in Zwischenablage..."
-
-#~ msgid "Enable editing"
-#~ msgstr "Bearbeiten anschalten"
-
-#~ msgid "Insert new variable right"
-#~ msgstr "Füge rechts eine neue Variable ein"
-
-#~ msgid "Insert new case below (at %1)"
-#~ msgstr "Füge neuen Fall unterhalb ein (bei %1)"
-
-#~ msgid "Object name to save to"
-#~ msgstr "Objektname, wohin gespeichert werden soll"
-
-#~ msgid ""
-#~ "<p>\t-There was a problem opening the files needed for communication with "
-#~ "R. Most likely this is due to an incorrect setting for the location of "
-#~ "these files. Check whether you have correctly configured the location of "
-#~ "the log-files (Settings->Configure Settings->Logfiles) and restart RKWard."
-#~ "</p>\n"
-#~ msgstr ""
-#~ "<p>\t-Es gab ein Problem beim öffnen der Dateien die für die "
-#~ "Kommunikation mit R notwendig sind. Dies ist meistens auf die Angabe "
-#~ "eines falschen Speicherorts für diese Dateien zurückzuführen. Überprüfen "
-#~ "Sie bitte ob Sie den den Speicherort der log-Dateien (Einstellungen-"
-#~ ">Konfiguriere Einstellungen->Logfiles) konfiguriert haben und starten Sie "
-#~ "RKWard erneut.</p>\n"
-
-#~ msgid "Configure Script Editor"
-#~ msgstr "Konfiguriere Skripteditor"
-
-#~ msgid "Open command file(s)"
-#~ msgstr "Öffne Befehls Dateie(n)"
-
-#~ msgid ""
-#~ "Add URL of new repository\n"
-#~ "(Enter \"@CRAN@\" for the standard CRAN-mirror)"
-#~ msgstr ""
-#~ "Füge ein URL eines neuen Repository\n"
-#~ "(Enter \"@CRAN@\" für den Standard CRAN-mirror)"
-
-#~ msgid ""
-#~ "There are no safeguards against removing essential packages. For example, "
-#~ "unloading \"rkward\" will prevent this application from running properly. "
-#~ "Please be careful about the packages you unload."
-#~ msgstr ""
-#~ "Es gibt keinen Schutz gegen das entfernen essentieller Pakete. Zum "
-#~ "Beispiel das Entfernen von \"rkward\" wird ein korrektes funktionieren "
-#~ "der Anwendung unterbinden. Bitte seien Sie vorsichtig beim entfernen von "
-#~ "Paketen."
-
-#~ msgid "&Cancel"
-#~ msgstr "&Abbrechen"
-
-#~ msgid "file to open"
-#~ msgstr "zu öffnende Datei"
-
-#~ msgid "Show help for %1 in package %2"
-#~ msgstr "Hilfe für %1 in Paket %2 anzeigen"
-
-#~ msgid ""
-#~ "Please submit your bug reports or wishes at http://sourceforge.net/"
-#~ "tracker/?group_id=50231&atid=459007 or send email to rkward-devel@lists."
-#~ "sourceforge.net"
-#~ msgstr ""
-#~ "Bitte senden Sie Fehlermeldungen oder Wünsche unter http://sourceforge."
-#~ "net/tracker/?group_id=50231&atid=459007 ein, oder schicken Sie uns eine E-"
-#~ "Mail an rkward-devel@lists.sourceforge.net"
-
-#~ msgid ""
-#~ "\t- The 'rkward' R-library could not be loaded. This library is needed "
-#~ "for communication between R and RKWard and many things will not work "
-#~ "properly if this library is not present. Likely RKWard will even crash. "
-#~ "The 'rkward' R-library should have been included in your distribution or "
-#~ "RKWard, and should have been set up when you ran 'make install'. Please "
-#~ "try 'make install' again and check for any errors. You should quit RKWard "
-#~ "now.\n"
-#~ msgstr ""
-#~ "\t- Die'rkward' R-Bibliothek konnte nicht geladen werden. Diese "
-#~ "Bibliothek wird für die Kommunikation zwischen R und RKWard benötigt. "
-#~ "Vieles wird nicht korrekt funktionieren, wenn diese Bibliothek nicht "
-#~ "vorhanden ist. Wahrscheinlich wird RKWard sogar abstürzen. Die 'rkward' R-"
-#~ "Bibliothek sollte in Ihrer Distribution oder RKWard enthalten sein und "
-#~ "sollte angelegt werden, wenn Sie 'make install'ausführen. Bitte versuchen "
-#~ "Sie 'make install' nochmals und schauen Sie nochmals nach irgendwelchen "
-#~ "Fehlern.Sie sollten RKWard nun beenden.\n"
-
-#~ msgid ""
-#~ "It will be shut down immediately. This means, you can not use any more "
-#~ "functions that rely on the R backend. I.e. you can do hardly anything at "
-#~ "all, not even save the workspace. What you can do, however, is save any "
-#~ "open command-files, the output, or copy data out of open data editors. "
-#~ "Quit RKWard after that. Sorry!"
-#~ msgstr ""
-#~ "Es wir unverzüglich beendet. Dies bedeutet das Sie nunmehr keine "
-#~ "Funktionen die vom R backend abhängig sind weiter verwenden können. "
-#~ "Insbesondere können Sie nichts weiter ausführen, nicht einmal den "
-#~ "Workspace speichern. Möglicherweise hat R bereits den Workspace "
-#~ "gespeichert. Sie können allerdings jegliche offene Befehls-Dateien, "
-#~ "Ausgaben, oder Daten aus dem offenen Daten-Editoren sichern. Beenden Sie "
-#~ "RKWard hiernach. Sorry!"
-
-#~ msgid ""
-#~ "RKWard has made great progress in the past few months and it is already "
-#~ "helpful for many tasks, but some features may be lacking. You can help us "
-#~ "by filing bug reports, feature requests, or providing feedback in any "
-#~ "other form. Please visit http://rkward.sourceforge.net for more "
-#~ "information."
-#~ msgstr ""
-#~ "RKWard hat in den vergangenen Monaten große Fortschritte gemacht und ist "
-#~ "bereits sehr hilfreich für viele Aufgaben. Aber viele Funktionen fehlen "
-#~ "noch. Sie können uns durch Übermittlung von Fehlerberichten, Feature "
-#~ "Nachfragen oder Feedback in anderer Form helfen. Bitte besuchen Sie "
-#~ "http://rkward.sourceforge.net für mehr Informationen."
-
-#~ msgid "What to expect of RKWard"
-#~ msgstr "Was kann von RKWard erwartet werden"
-
-#~ msgid "R Help"
-#~ msgstr "R Hilfe"
+msgstr "stefan_roediger@gmx.de, jvajen@googlemail.com,,,,,"
