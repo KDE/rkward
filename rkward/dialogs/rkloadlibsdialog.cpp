@@ -745,7 +745,7 @@ void InstallPackagesWidget::doInstall (bool refresh) {
 		}
 	}
 
-	if (changed) {
+	if (changed && refresh) {
 		packages_status->clearStatus ();
 		initialize ();
 	}
