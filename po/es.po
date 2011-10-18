@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
 "group_id=50231&atid=459007\n"
-"POT-Creation-Date: 2011-10-05 19:02+0200\n"
-"PO-Revision-Date: 2011-08-30 00:15+0000\n"
+"POT-Creation-Date: 2011-10-18 10:21+0200\n"
+"PO-Revision-Date: 2011-09-26 20:38+0000\n"
 "Last-Translator: Fitoschido <fitoschido@gmail.com>\n"
 "Language-Team: Spanish <rkward-devel@lists.sourceforge.net>\n"
 "Language: es\n"
@@ -19,8 +19,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2011-08-31 04:55+0000\n"
-"X-Generator: Launchpad (build 13815)\n"
+"X-Launchpad-Export-Date: 2011-10-06 04:45+0000\n"
+"X-Generator: Launchpad (build 14085)\n"
 
 #: agents/rkeditobjectagent.cpp:56
 msgid ""
@@ -59,9 +59,8 @@ msgid ""
 msgstr ""
 
 #: agents/rkprintagent.cpp:70
-#, fuzzy
 msgid "Unable to open KDE print dialog"
-msgstr "No ha sido posible abrir «%1»"
+msgstr ""
 
 #: agents/rkquitagent.cpp:41
 msgid ""
@@ -206,7 +205,7 @@ msgstr "Etiqueta"
 
 #: core/rkmodificationtracker.cpp:340 dataeditor/rkvareditmodel.cpp:672
 #: misc/rkobjectlistview.cpp:185 rbackend/rcommandstack.cpp:399
-#: windows/rkhelpsearchwindow.cpp:344
+#: windows/rkhelpsearchwindow.cpp:345
 msgid "Type"
 msgstr "Tipo"
 
@@ -511,9 +510,8 @@ msgstr "Configurar repositorios"
 
 #: dialogs/rkloadlibsdialog.cpp:195 dialogs/rkloadlibsdialog.cpp:202
 #: dialogs/rkloadlibsdialog.cpp:233
-#, fuzzy
 msgid "Package %1 at %2"
-msgstr "Paquete"
+msgstr ""
 
 #: dialogs/rkloadlibsdialog.cpp:208
 msgid ""
@@ -551,65 +549,47 @@ msgid ""
 msgstr ""
 
 #: dialogs/rkloadlibsdialog.cpp:239
-#, fuzzy
 msgid "About to remove packages"
-msgstr "Todos los paquetes cargados"
+msgstr ""
 
 #: dialogs/rkloadlibsdialog.cpp:242
-#, fuzzy
 msgid "Please stand by while removing selected packages"
-msgstr "Por favor espere mientras se instalan los paquetes."
+msgstr ""
 
 #: dialogs/rkloadlibsdialog.cpp:242
-#, fuzzy
 msgid "Removing packages"
-msgstr "Instalando paquetes"
+msgstr ""
 
 #: dialogs/rkloadlibsdialog.cpp:256
 msgid "Selected library location not writable"
 msgstr "Sin permisos de escritura en la ubicación seleccionada"
 
 #: dialogs/rkloadlibsdialog.cpp:257
-#, fuzzy
 msgid ""
 "<p>The directory you have selected for installation (%1) is not writable "
 "with your current user permissions.</p><p>Would you like to install to %2, "
 "instead (you can also press \"Cancel\" and use the \"Configure Repositories"
 "\"-button to set up a different directory)?</p>"
 msgstr ""
-"No tiene permiso de escritura en el directorio donde intenta instalar (%1). "
-"Puede seleccionar una ubicación diferente para la instalación (si no tiene "
-"permisos de escritura en ninguna, probablemente desee usar el botón "
-"«Configurar repositorios» e indicar un directorio con los permisos adecuados "
-"para instalar los paquetes).\n"
 
 #: dialogs/rkloadlibsdialog.cpp:260
-#, fuzzy
 msgid ""
 "<p>Alternatively, if you have access to an administrator account on this "
 "machine, you can use that to install the package(s), or you could change the "
 "permissions of '%1'. Sorry, automatic switching to Administrator is not yet "
 "supported in RKWard on Windows.</p>"
 msgstr ""
-"Si posee acceso a una cuenta de administrador en esta máquina, puede usarla "
-"para instalar el(los) paquete(s), o puede cambiar los permisos de «%1». Lo "
-"sentimos, el cambio automático a Administrador todavía no es soportado en "
-"RKWard para Windows."
 
 #: dialogs/rkloadlibsdialog.cpp:262 dialogs/rkloadlibsdialog.cpp:266
-#, fuzzy
 msgid "Install to %1"
-msgstr "Instalar"
+msgstr ""
 
 #: dialogs/rkloadlibsdialog.cpp:265
-#, fuzzy
 msgid ""
 "<p>Alternatively, if you are the administrator of this machine, you can try "
 "to install the packages as root (you'll be prompted for the root password).</"
 "p>"
 msgstr ""
-"Si usted es el administrador de este equipo puede intentar instalar el "
-"paquete como superusuario (le será solicitada la contraseña de root)."
 
 #: dialogs/rkloadlibsdialog.cpp:266
 msgid "Become root"
@@ -632,7 +612,7 @@ msgid "Installed packages"
 msgstr "Paquetes instalados"
 
 #: dialogs/rkloadlibsdialog.cpp:412 dialogs/rkloadlibsdialog.cpp:935
-#: windows/rkhelpsearchwindow.cpp:97 windows/rkhelpsearchwindow.cpp:342
+#: windows/rkhelpsearchwindow.cpp:97 windows/rkhelpsearchwindow.cpp:343
 msgid "Title"
 msgstr "Título"
 
@@ -669,15 +649,10 @@ msgid "Error while handling packages"
 msgstr "Error en la gestión de paquetes"
 
 #: dialogs/rkloadlibsdialog.cpp:631
-#, fuzzy
 msgid ""
 "Many packages are available on CRAN (Comprehensive R Archive Network), and "
 "other repositories<br>(click \"Configure Repositories\" to add more sources)."
 msgstr ""
-"Hay muchos paquetes disponibles en CRAN (Comprehensive R Archive Network) y "
-"en otros repositorios (pulse «Configurar repositorios» para añadir más "
-"fuentes). Pulse «Obtener lista» para averiguar qué paquetes están "
-"disponibles. Esto requiere una conexión a internet activa."
 
 #: dialogs/rkloadlibsdialog.cpp:653
 msgid "Show only packages matching:"
@@ -725,9 +700,8 @@ msgid ""
 msgstr ""
 
 #: dialogs/rkloadlibsdialog.cpp:872
-#, fuzzy
 msgid "Searching for packages"
-msgstr "Instalando paquetes"
+msgstr ""
 
 #: dialogs/rkloadlibsdialog.cpp:933 rbackend/rcommandstack.cpp:400
 msgid "Status"
@@ -764,9 +738,8 @@ msgid "<p>Location where the package is installed / available</p>"
 msgstr ""
 
 #: dialogs/rkloadlibsdialog.cpp:968
-#, fuzzy
 msgid "Updateable Packages"
-msgstr "Paquetes instalados"
+msgstr ""
 
 #: dialogs/rkloadlibsdialog.cpp:969
 msgid ""
@@ -775,9 +748,8 @@ msgid ""
 msgstr ""
 
 #: dialogs/rkloadlibsdialog.cpp:971
-#, fuzzy
 msgid "New Packages"
-msgstr "Paquete"
+msgstr ""
 
 #: dialogs/rkloadlibsdialog.cpp:972
 msgid ""
@@ -786,9 +758,8 @@ msgid ""
 msgstr ""
 
 #: dialogs/rkloadlibsdialog.cpp:974
-#, fuzzy
 msgid "Installed Packages"
-msgstr "Paquetes instalados"
+msgstr ""
 
 #: dialogs/rkloadlibsdialog.cpp:975
 msgid ""
@@ -1042,12 +1013,10 @@ msgid "Down"
 msgstr "Abajo"
 
 #: misc/rkcommonfunctions.cpp:215
-#, fuzzy
 msgid ""
 "<p><em>Note:</em> This setting does not take effect until you restart RKWard."
 "</p>"
 msgstr ""
-"Los ajustes marcados con (*) no tienen efecto hasta que se reinicia RKWard"
 
 #: misc/rkobjectlistview.cpp:43
 msgid "Configure Defaults"
@@ -1550,25 +1519,7 @@ msgstr ""
 msgid "Locale change"
 msgstr "Configuración regional"
 
-#: rbackend/rinterface.cpp:517
-msgid ""
-"<p>A command running in the R backend has caused the R backend process to "
-"\"fork\". Typically this is done to spread computations onto several CPU "
-"cores. We try our best to support this in RKWard, despite some technical "
-"problems inherent in forking a multi-library, multi-threaded application. "
-"However, it is entirely possible that this causes trouble / broken features "
-"in some cases, particularly in combination with further R libraries. If you "
-"observe any such adverse effects after forking, please send us a bug report."
-"</p><p>If you have a choice, consider using a different technique of "
-"parallelization, e.g. the 'PSOCK' method of R packages <i>snow</i> or "
-"<i>parallel</i>.</p>"
-msgstr ""
-
-#: rbackend/rinterface.cpp:518
-msgid "Backend has forked"
-msgstr ""
-
-#: rbackend/rinterface.cpp:677
+#: rbackend/rinterface.cpp:674
 msgid ""
 "The R-backend has indicated that in order to carry out the current task it "
 "needs the package '%1', which is not currently installed. We will open the "
@@ -1579,15 +1530,15 @@ msgstr ""
 "«%1», actualmente no instalado. Se abrirá la herramienta de gestión de "
 "paquetes y allí podrá intentar ubicar e instalar el paquete solicitado."
 
-#: rbackend/rinterface.cpp:677
+#: rbackend/rinterface.cpp:674
 msgid "Require package '%1'"
 msgstr "Requerir el paquete «%1»"
 
-#: rbackend/rinterface.cpp:772
+#: rbackend/rinterface.cpp:769
 msgid "R backend requests information"
 msgstr "El motor R solicita información"
 
-#: rbackend/rinterface.cpp:796
+#: rbackend/rinterface.cpp:793
 msgid ""
 "\n"
 "The R backend will be shut down immediately. This means, you can not use any "
@@ -1609,7 +1560,7 @@ msgstr ""
 "rkward-devel@lists.sourceforge.net contando lo que intentaba hacer cuando "
 "esto ocurrió. ¡Lo sentimos!"
 
-#: rbackend/rinterface.cpp:797
+#: rbackend/rinterface.cpp:794
 msgid "R engine has died"
 msgstr "El motor R ha muerto"
 
@@ -2178,9 +2129,8 @@ msgstr ""
 "Conservar el archivo guardado automáticamente, después del guardado manual"
 
 #: settings/rksettingsmodulecommandeditor.cpp:117
-#, fuzzy
 msgid "Opening script files"
-msgstr "Abrir archivo(s) de guiones"
+msgstr ""
 
 #: settings/rksettingsmodulecommandeditor.cpp:119
 msgid "Number of scripts in recent file lists (*)"
@@ -2577,9 +2527,8 @@ msgid ""
 msgstr ""
 
 #: settings/rksettingsmoduleplugins.cpp:215
-#, fuzzy
 msgid "New plugins found"
-msgstr "No se encontraron complementos (válidos)"
+msgstr ""
 
 #: settings/rksettingsmoduler.cpp:69
 msgid ""
@@ -2946,7 +2895,7 @@ msgstr "Todos los paquetes instalados"
 msgid "All loaded packages"
 msgstr "Todos los paquetes cargados"
 
-#: windows/rkhelpsearchwindow.cpp:257
+#: windows/rkhelpsearchwindow.cpp:258
 msgid ""
 "No help found on '%1'. Maybe the corresponding package is not installed/"
 "loaded, or maybe you mistyped the command. Try using Help->Search R Help for "
@@ -2956,15 +2905,15 @@ msgstr ""
 "correspondiente no está instalado/cargado o escribió mal el comando. Pruebe "
 "usando Ayuda->Buscar en la ayuda de R para más opciones."
 
-#: windows/rkhelpsearchwindow.cpp:257
+#: windows/rkhelpsearchwindow.cpp:258
 msgid "No help found"
 msgstr "No se encontró ayuda"
 
-#: windows/rkhelpsearchwindow.cpp:341
+#: windows/rkhelpsearchwindow.cpp:342
 msgid "Topic"
 msgstr "Campo"
 
-#: windows/rkhelpsearchwindow.cpp:343
+#: windows/rkhelpsearchwindow.cpp:344
 msgid "Package"
 msgstr "Paquete"
 
@@ -3829,6 +3778,7 @@ msgid "Your names"
 msgstr ""
 "Marcelino Villarino, Germán Márquez Mejía, ,Launchpad Contributions:,Germán "
 "Márquez Mejía,RKWard Team, ,Launchpad Contributions:,Fitoschido,Germán "
+"Márquez Mejía,RKWard Team, ,Launchpad Contributions:,Fitoschido,Germán "
 "Márquez Mejía,RKWard Team"
 
 #: rc.cpp:140
@@ -3837,60 +3787,4 @@ msgid "Your emails"
 msgstr ""
 "mvillarino@users.sourceforge.net, manchito@users.sourceforge.net,,,,rkward-"
 "tracker@lists.sourceforge.net,,,fitoschido@gmail.com,,rkward-tracker@lists."
-"sourceforge.net"
-
-#~ msgid "Install or uninstall add-on plugin packs"
-#~ msgstr "Instalar o desinstalar paquetes de complementos"
-
-#~ msgid ""
-#~ "In order to find out, which of your installed packaged have an update "
-#~ "available, click \"Fetch List\". This feature requires a working internet "
-#~ "connection."
-#~ msgstr ""
-#~ "Para averiguar cuáles de los paquetes que tiene instalados tienen "
-#~ "actualizaciones disponibles pulse «Obtener lista». Esto requiere una "
-#~ "conexión a internet activa."
-
-#~ msgid "Local Version"
-#~ msgstr "Versión local"
-
-#~ msgid "Online Version"
-#~ msgstr "Versión remota"
-
-#~ msgid "Fetch list"
-#~ msgstr "Obtener lista"
-
-#~ msgid "Update Selected"
-#~ msgstr "Actualizar seleccionados"
-
-#~ msgid "Update All"
-#~ msgstr "Actualizar todo"
-
-#~ msgid "[No updates available]"
-#~ msgstr "[No hay actualizaciones disponibles]"
-
-#~ msgid ""
-#~ "Please stand by while determining, which packages have an update "
-#~ "available online."
-#~ msgstr ""
-#~ "Por favor espere mientras se determina cuáles paquetes tienen "
-#~ "actualizaciones disponibles"
-
-#~ msgid "Fetching list"
-#~ msgstr "Obteniendo la lista"
-
-#~ msgid "Install Selected"
-#~ msgstr "Instalar seleccionados"
-
-#~ msgid "[No packages available]"
-#~ msgstr "[No hay paquetes disponibles]"
-
-#~ msgid "Please stand by while downloading the list of available packages."
-#~ msgstr ""
-#~ "Por favor espere mientras se descarga la lista de paquetes disponibles"
-
-#~ msgid "Attempt installation, anyway"
-#~ msgstr "Intentar la instalación de todos modos"
-
-#~ msgid "Command used to send files to printer"
-#~ msgstr "Comando usado para enviar archivos a la impresora"
+"sourceforge.net,,,fitoschido@gmail.com,,rkward-tracker@lists.sourceforge.net"

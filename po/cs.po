@@ -11,13 +11,14 @@
 # Stefan Rödiger <stefan_roediger@gmx.de>, 2007, 2009.
 # Pavel Fric <pavelfric@seznam.cz>, 2009, 2010.
 # Pavel Fric <fripohled@blogspot.com>, 2010, 2011.
+# Pavel Fric <fripohled.blogspot.com>, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
 "group_id=50231&atid=459007\n"
-"POT-Creation-Date: 2011-10-05 19:02+0200\n"
-"PO-Revision-Date: 2011-05-25 19:19+0000\n"
+"POT-Creation-Date: 2011-10-18 10:21+0200\n"
+"PO-Revision-Date: 2011-10-09 11:30+0000\n"
 "Last-Translator: fri <pavelfric@seznam.cz>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "Language: cs\n"
@@ -25,8 +26,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2011-05-26 04:54+0000\n"
-"X-Generator: Launchpad (build 12959)\n"
+"X-Launchpad-Export-Date: 2011-10-10 05:18+0000\n"
+"X-Generator: Launchpad (build 14123)\n"
 
 #: agents/rkeditobjectagent.cpp:56
 msgid ""
@@ -63,11 +64,14 @@ msgid ""
 "<br><br>Consider installing 'okular', or configure RKWard not to attempt to "
 "print using a KDE print dialog."
 msgstr ""
+"Nebyla nalezena žádná služba, která by poskytla tiskový dialog KDE pro "
+"postscriptové soubory. Pokusíme se namísto toho otevřít obecný prohlížeč "
+"postscriptových souborů, je-li jaký.<br><br>Zvažte instalaci Okularu, nebo "
+"RKWard nastavte tak, aby se nepokoušel používat tiskový dialog KDE."
 
 #: agents/rkprintagent.cpp:70
-#, fuzzy
 msgid "Unable to open KDE print dialog"
-msgstr "Nelze otevřít soubor \"%1\""
+msgstr "Nelze otevřít tiskový dialog KDE"
 
 #: agents/rkquitagent.cpp:41
 msgid ""
@@ -213,7 +217,7 @@ msgstr "Značka"
 
 #: core/rkmodificationtracker.cpp:340 dataeditor/rkvareditmodel.cpp:672
 #: misc/rkobjectlistview.cpp:185 rbackend/rcommandstack.cpp:399
-#: windows/rkhelpsearchwindow.cpp:344
+#: windows/rkhelpsearchwindow.cpp:345
 msgid "Type"
 msgstr "Typ"
 
@@ -505,7 +509,7 @@ msgstr "Místní balíčky"
 
 #: dialogs/rkloadlibsdialog.cpp:71
 msgid "Install / Update / Remove"
-msgstr ""
+msgstr "Instalovat / Aktualizovat / Odstranit"
 
 #: dialogs/rkloadlibsdialog.cpp:73
 msgid "Configure Repositories"
@@ -513,9 +517,8 @@ msgstr "Nastavit zdroje"
 
 #: dialogs/rkloadlibsdialog.cpp:195 dialogs/rkloadlibsdialog.cpp:202
 #: dialogs/rkloadlibsdialog.cpp:233
-#, fuzzy
 msgid "Package %1 at %2"
-msgstr "Balíček"
+msgstr "Balíček %1 v %2"
 
 #: dialogs/rkloadlibsdialog.cpp:208
 msgid ""
@@ -524,20 +527,25 @@ msgid ""
 "sure, that you want to remove these packages, please do so on the R command "
 "line."
 msgstr ""
+"Následující balíčky, které jste vybral k odstranění, jsou pro chod RKWardu "
+"nepostradatelné a nebudou odstraněny. Pokud si jste naprosto jist, že tyto "
+"balíčky chcete odstranit, udělejte tak, prosím, v příkazovém řádku R."
 
 #: dialogs/rkloadlibsdialog.cpp:208
 msgid "Not removing certain packages"
-msgstr ""
+msgstr "Jisté balíčky se neodstraňují"
 
 #: dialogs/rkloadlibsdialog.cpp:214
 msgid ""
 "Your current user permissions do not allow removing the following packages. "
 "These will be skipped."
 msgstr ""
+"Vaše současná uživatelská oprávnění nedovolují odstranění následujících "
+"balíčků. Budou přeskočeny."
 
 #: dialogs/rkloadlibsdialog.cpp:214 dialogs/rkloadlibsdialog.cpp:217
 msgid "Insufficient user permissions"
-msgstr ""
+msgstr "Nedostatečná uživatelská oprávnění"
 
 #: dialogs/rkloadlibsdialog.cpp:217
 msgid ""
@@ -545,73 +553,71 @@ msgid ""
 "Do you want to skip these packages, or do you want to proceed with "
 "administrator privileges (you will be prompted for the password)?"
 msgstr ""
+"Vaše současná uživatelská oprávnění nedovolují odstranění následujících "
+"balíčků. Chcete tyto balíčky přeskočit, nebo chcete pokračovat s právy "
+"správce systému (budete vyzván k zadání hesla)?"
 
 #: dialogs/rkloadlibsdialog.cpp:239
 msgid ""
 "You are about to remove the following packages. Are you sure you want to "
 "proceed?"
 msgstr ""
+"Chystáte se odstranit následující balíčky. Jste si jistý, že chcete "
+"pokračovat?"
 
 #: dialogs/rkloadlibsdialog.cpp:239
-#, fuzzy
 msgid "About to remove packages"
-msgstr "Všechny nahrané balíčky"
+msgstr "Chystané odstranění balíčků"
 
 #: dialogs/rkloadlibsdialog.cpp:242
-#, fuzzy
 msgid "Please stand by while removing selected packages"
-msgstr "Počkejte, prosím, zatímco jsou instalovány vybrané balíčky"
+msgstr "Počkejte, prosím, zatímco jsou odstraňovány vybrané balíčky"
 
 #: dialogs/rkloadlibsdialog.cpp:242
-#, fuzzy
 msgid "Removing packages"
-msgstr "Instalují se balíčky"
+msgstr "Odstraňují se balíčky"
 
 #: dialogs/rkloadlibsdialog.cpp:256
 msgid "Selected library location not writable"
 msgstr "Vybrané umístění knihovny není zapisovatelné"
 
 #: dialogs/rkloadlibsdialog.cpp:257
-#, fuzzy
 msgid ""
 "<p>The directory you have selected for installation (%1) is not writable "
 "with your current user permissions.</p><p>Would you like to install to %2, "
 "instead (you can also press \"Cancel\" and use the \"Configure Repositories"
 "\"-button to set up a different directory)?</p>"
 msgstr ""
-"Adresář, do něhož se chystáte provést instalaci (%1) není zapisovatelný s "
-"vašimi nynějšími uživatelskými oprávněními. Můžete si vybrat jiné umístění "
-"pro instalaci knihovny (pokud není žádné zapisovatelné, pravděpodobně budete "
-"chtít použít tlačítko \"Nastavit zdroje\", abyste nastavil zapisovatelný "
-"adresář, a do něho balíček nainstaloval.\n"
+"<p>Adresář, který jste zvolil pro instalaci (%1) není s vašimi současnými "
+"uživatelskými oprávněními zapisovatelný.</p><p>Chtěl byste namísto něj "
+"instalovat do %2, (taktéž můžete stisknout \"Zrušit\" a použít tlačítko "
+"\"Nastavit zdroje\" pro nastavení jiného adresáře)?</p>"
 
 #: dialogs/rkloadlibsdialog.cpp:260
-#, fuzzy
 msgid ""
 "<p>Alternatively, if you have access to an administrator account on this "
 "machine, you can use that to install the package(s), or you could change the "
 "permissions of '%1'. Sorry, automatic switching to Administrator is not yet "
 "supported in RKWard on Windows.</p>"
 msgstr ""
-"Pokud máte přístup k správcovskému účtu na tomto stroji, můžete jej použít "
-"pro zavedení balíčků, nebo byste mohl změnit rozsah oprávnění '%1'. "
-"Promiňte, ale automatické přepnutí do režimu správce systému dosud není v "
-"RKWardu podporováno na OS Windows."
+"<p>V náhradu za to, pokud na tomto stroji máte přístup k účtu správce "
+"systému, můžete pro nainstalování balíčků použít tento, anebo byste mohl "
+"změnit oprávnění pro '%1'. Promiňte, že v operačním systému Windows není v "
+"RKWardu automatické přepínání na účet správce ještě podporováno.</p>"
 
 #: dialogs/rkloadlibsdialog.cpp:262 dialogs/rkloadlibsdialog.cpp:266
-#, fuzzy
 msgid "Install to %1"
-msgstr "Instalovat"
+msgstr "Nainstalovat do %1"
 
 #: dialogs/rkloadlibsdialog.cpp:265
-#, fuzzy
 msgid ""
 "<p>Alternatively, if you are the administrator of this machine, you can try "
 "to install the packages as root (you'll be prompted for the root password).</"
 "p>"
 msgstr ""
-"Jestliže jste správcem tohoto stroje, můžete zkusit nainstalovat balíčky "
-"jako superuživatel (bude po vás požadováno heslo pro superuživatele)."
+"<p>V náhradu za to, pokud jste na tomto stroji správcem systému, můžete "
+"zkusit instalaci balíčků pod účtem superuživatele (budete vyzván k zadání "
+"hesla superuživatele.</p>"
 
 #: dialogs/rkloadlibsdialog.cpp:266
 msgid "Become root"
@@ -634,7 +640,7 @@ msgid "Installed packages"
 msgstr "Nainstalované balíčky"
 
 #: dialogs/rkloadlibsdialog.cpp:412 dialogs/rkloadlibsdialog.cpp:935
-#: windows/rkhelpsearchwindow.cpp:97 windows/rkhelpsearchwindow.cpp:342
+#: windows/rkhelpsearchwindow.cpp:97 windows/rkhelpsearchwindow.cpp:343
 msgid "Title"
 msgstr "Název"
 
@@ -671,19 +677,17 @@ msgid "Error while handling packages"
 msgstr "Chyba při nakládání s balíčky"
 
 #: dialogs/rkloadlibsdialog.cpp:631
-#, fuzzy
 msgid ""
 "Many packages are available on CRAN (Comprehensive R Archive Network), and "
 "other repositories<br>(click \"Configure Repositories\" to add more sources)."
 msgstr ""
-"Mnoho balíčků je dostupných na CRAN (Comprehensive R Archive Network) a pro "
-"další sklady s balíčky zvolte \"Nastavit zdroje\" pro přidání více zdrojů. "
-"Klepněte na \"Získat seznam\", aby se zjistilo, které balíčky jsou dostupné. "
-"Tato funkce předpokládá internetové spojení v provozu."
+"Mnoho balíčků je dostupných na CRAN (Comprehensive R Archive Network), a v "
+"dalších skladištích<br>(pro přidání dalších zdrojů klepněte na \"Nastavit "
+"zdroje\")."
 
 #: dialogs/rkloadlibsdialog.cpp:653
 msgid "Show only packages matching:"
-msgstr ""
+msgstr "Ukázat pouze balíčky odpovídající:"
 
 #: dialogs/rkloadlibsdialog.cpp:655
 msgid ""
@@ -691,10 +695,13 @@ msgid ""
 "matching a filter string.</p><p><b>Note:</b> To search for partial strings, "
 "add '*' to the start and / or end of the filter, e.g. '*stat*'.</p>"
 msgstr ""
+"<p>Balíčky zobrazené v seznamu můžete omezit na ty, jejichž názvy odpovídají "
+"řetězci filtru.</p><p><b>Poznámka:</b> Pro hledání neúplných řetězců "
+"přidejte '*' na začátek a/nebo konec filtru, např. '*stat*'.</p>"
 
 #: dialogs/rkloadlibsdialog.cpp:659
 msgid "Select all updates"
-msgstr ""
+msgstr "Vybrat všechny aktualizace"
 
 #: dialogs/rkloadlibsdialog.cpp:714
 msgid ""
@@ -725,11 +732,14 @@ msgid ""
 "may take some time, esp. if one or more repositories are temporarily "
 "unavailable.</p>"
 msgstr ""
+"<p>Čekejte, prosím, zatímco se hledají nainstalované a dostupné balíčky.</"
+"p><p><strong>Poznámka:</strong> Toto hledání vyžaduje pracující internetové "
+"spojení a může nějakou dobu trvat, zejména pokud je jedno nebo i více "
+"skladišť balíčků dočasně nedostupných.</p>"
 
 #: dialogs/rkloadlibsdialog.cpp:872
-#, fuzzy
 msgid "Searching for packages"
-msgstr "Instalují se balíčky"
+msgstr "Vyhledávají se balíčky"
 
 #: dialogs/rkloadlibsdialog.cpp:933 rbackend/rcommandstack.cpp:400
 msgid "Status"
@@ -740,55 +750,61 @@ msgid ""
 "<p>Packages marked with an RKWard icon in this column provide enhancements "
 "to RKWard, typically in the form of additional graphical dialogs.</p>"
 msgstr ""
+"<p>Balíčky označené ikonou RKWardu v tomto sloupci poskytují vylepšení pro "
+"RKWard, typicky v podobě dodatečných grafických dialogů.</p>"
 
 #: dialogs/rkloadlibsdialog.cpp:941
 msgid ""
 "<p>You can select packages for installation / removal by checking / "
 "unchecking the corresponding boxes in this column.</p>"
 msgstr ""
+"<p>Balíčky pro instalaci/odstranění vyberete zaškrtnutím/zrušením zaškrtnutí "
+"odpovídajících políček v tomto sloupci.</p>"
 
 #: dialogs/rkloadlibsdialog.cpp:942
 msgid "<p>The name of the package.</p>"
-msgstr ""
+msgstr "<p>Název balíčku.</p>"
 
 #: dialogs/rkloadlibsdialog.cpp:943
 msgid ""
 "<p>A descriptive title for the package. Currently this is not available for "
 "packages in non-local repositories.</p>"
 msgstr ""
+"<p>Popisné záhlaví pro balíček. V současnosti toto u balíčků uložených ve "
+"skladištích, co nejsou místní, není dostupné.</p>"
 
 #: dialogs/rkloadlibsdialog.cpp:944
 msgid "<p>Installed and / or available version of the package</p>"
-msgstr ""
+msgstr "<p>Nainstalovaná a/nebo dostupná verze balíčku</p>"
 
 #: dialogs/rkloadlibsdialog.cpp:945
 msgid "<p>Location where the package is installed / available</p>"
-msgstr ""
+msgstr "<p>Místo, kde je balíček nainstalován/dostupný</p>"
 
 #: dialogs/rkloadlibsdialog.cpp:968
-#, fuzzy
 msgid "Updateable Packages"
-msgstr "Nainstalované balíčky"
+msgstr "Aktualizovatelné balíčky"
 
 #: dialogs/rkloadlibsdialog.cpp:969
 msgid ""
 "Packages for which an update is available. This may include packages which "
 "were merely built against a newer version of R."
 msgstr ""
+"Balíčky, pro které je dostupná aktualizace. Může to zahrnovat balíčky, které "
+"prostě byly sestaveny proti novější verzi R."
 
 #: dialogs/rkloadlibsdialog.cpp:971
-#, fuzzy
 msgid "New Packages"
-msgstr "Balíček"
+msgstr "Nové balíčky"
 
 #: dialogs/rkloadlibsdialog.cpp:972
 msgid ""
 "Packages for which available for installation, but which are not currently "
 "installed."
 msgstr ""
+"Balíčky dostupné pro instalaci, ale které v současnosti nainstalovány nejsou."
 
 #: dialogs/rkloadlibsdialog.cpp:974
-#, fuzzy
 msgid "Installed Packages"
 msgstr "Nainstalované balíčky"
 
@@ -797,6 +813,8 @@ msgid ""
 "Packages for which installed locally. Note that updates may be available for "
 "these packages."
 msgstr ""
+"Balíčky nainstalovány místně. Všimněte si, že pro tyto balíčky mohou být "
+"dostupné aktualizace"
 
 #: dialogs/rkloadlibsdialog.cpp:999
 msgid "Install"
@@ -1046,11 +1064,12 @@ msgid "Down"
 msgstr "Dolů"
 
 #: misc/rkcommonfunctions.cpp:215
-#, fuzzy
 msgid ""
 "<p><em>Note:</em> This setting does not take effect until you restart RKWard."
 "</p>"
-msgstr "Nastavení označená (*) začnou působit až po novém spuštění RKWardu"
+msgstr ""
+"<p><em>Poznámka:</em> Toto nastavení se neprojeví, dokud RKWard nespustíte "
+"znovu.</p>"
 
 #: misc/rkobjectlistview.cpp:43
 msgid "Configure Defaults"
@@ -1554,25 +1573,7 @@ msgstr ""
 msgid "Locale change"
 msgstr "Místní změna"
 
-#: rbackend/rinterface.cpp:517
-msgid ""
-"<p>A command running in the R backend has caused the R backend process to "
-"\"fork\". Typically this is done to spread computations onto several CPU "
-"cores. We try our best to support this in RKWard, despite some technical "
-"problems inherent in forking a multi-library, multi-threaded application. "
-"However, it is entirely possible that this causes trouble / broken features "
-"in some cases, particularly in combination with further R libraries. If you "
-"observe any such adverse effects after forking, please send us a bug report."
-"</p><p>If you have a choice, consider using a different technique of "
-"parallelization, e.g. the 'PSOCK' method of R packages <i>snow</i> or "
-"<i>parallel</i>.</p>"
-msgstr ""
-
-#: rbackend/rinterface.cpp:518
-msgid "Backend has forked"
-msgstr ""
-
-#: rbackend/rinterface.cpp:677
+#: rbackend/rinterface.cpp:674
 msgid ""
 "The R-backend has indicated that in order to carry out the current task it "
 "needs the package '%1', which is not currently installed. We will open the "
@@ -1583,15 +1584,15 @@ msgstr ""
 "současnosti není nainstalován. Bude otevřen nástroj pro správu balíčků. Z "
 "něj se můžete pokusit o nalezení a nainstalování nezbytného balíčku."
 
-#: rbackend/rinterface.cpp:677
+#: rbackend/rinterface.cpp:674
 msgid "Require package '%1'"
 msgstr "Vyžadován balíček '%1'"
 
-#: rbackend/rinterface.cpp:772
+#: rbackend/rinterface.cpp:769
 msgid "R backend requests information"
 msgstr "Jádro R požaduje údaje"
 
-#: rbackend/rinterface.cpp:796
+#: rbackend/rinterface.cpp:793
 msgid ""
 "\n"
 "The R backend will be shut down immediately. This means, you can not use any "
@@ -1614,7 +1615,7 @@ msgstr ""
 "popisem toho, co se přihodilo a co jste prováděl, na adresu rkward-"
 "devel@lists.sourceforge.net. Prominutí!"
 
-#: rbackend/rinterface.cpp:797
+#: rbackend/rinterface.cpp:794
 msgid "R engine has died"
 msgstr "Jádro R 'vytuhlo'"
 
@@ -1694,10 +1695,12 @@ msgid ""
 "The 'katepart' component could not be loaded. RKWard cannot run without "
 "katepart, and will exit, now. Please install katepart, and try again."
 msgstr ""
+"Součást 'katepart' se nepodařilo nahrát. RKWard bez katepart nemůže běžet a "
+"bude nyní ukončen. Nainstalujte, prosím, katepart, a pak to zkuste znovu."
 
 #: rkconsole.cpp:75
 msgid "'katepart' component could not be found"
-msgstr ""
+msgstr "Součást 'katepart' se nepodařilo najít"
 
 #: rkconsole.cpp:119
 msgid "R Console"
@@ -2183,23 +2186,24 @@ msgid "Keep autosave file after manual save"
 msgstr "Nechat soubor s automatickým ukládáním po ručním uložení"
 
 #: settings/rksettingsmodulecommandeditor.cpp:117
-#, fuzzy
 msgid "Opening script files"
-msgstr "Otevřít soubor(y) skriptu"
+msgstr "Otevírají se soubory se skripty"
 
 #: settings/rksettingsmodulecommandeditor.cpp:119
 msgid "Number of scripts in recent file lists (*)"
-msgstr ""
+msgstr "Počet skriptů v nedávných seznamech souborů (*)"
 
 #: settings/rksettingsmodulecommandeditor.cpp:122
 msgid ""
 "<p>The number of recent files to remember (in the Open Recent R Script File "
 "menu).</p>"
 msgstr ""
+"<p>Počet nedávných souborů k zapamatování (v nabídce Otevřít nedávný soubor "
+"skriptu R).</p>"
 
 #: settings/rksettingsmodulecommandeditor.cpp:128
 msgid "R script file filters (separated by spaces)"
-msgstr ""
+msgstr "Filtry souborů se skripty R (oddělené mezerami)"
 
 #: settings/rksettingsmodulecommandeditor.cpp:131
 msgid ""
@@ -2208,6 +2212,10 @@ msgid ""
 "always be opened with R syntax highlighting.</p><p>Filters are case "
 "insensitive.</p>"
 msgstr ""
+"<p>Seznam filtrů (přípony souborových názvů), se kterými se má zacházet jako "
+"se soubory skriptů R. Především soubory odpovídající jednomu z těchto filtrů "
+"budou vždy otevřeny se zvýrazněním skladby R.</p><p>Filtry rozlišují velká a "
+"malá písmena.</p>"
 
 #: settings/rksettingsmodulecommandeditor.cpp:156
 msgid "Script editor"
@@ -2391,7 +2399,7 @@ msgstr "Výchozí výška (palce):"
 
 #: settings/rksettingsmodulegraphics.cpp:61
 msgid "Use KDE printer dialog for printing devices (if available)"
-msgstr ""
+msgstr "Použít tiskový dialog KDE pro tisková zařízení (je-li dostupný)"
 
 #: settings/rksettingsmodulegraphics.cpp:66
 msgid "Screen device history"
@@ -2581,11 +2589,13 @@ msgid ""
 "activated, automatically. To de-activate selected plugin packs, use Settings-"
 ">Configure RKWard->Plugins."
 msgstr ""
+"Byly nalezeny nové balíčky s přídavnými moduly pro RKWard (uvedeny v seznamu "
+"níže). Tyto byly automaticky zapnuty. Pro vypnutí vybraných balíčků s "
+"přídavnými moduly, použijte Nastavení->Nastavit RKWard->Přídavné moduly."
 
 #: settings/rksettingsmoduleplugins.cpp:215
-#, fuzzy
 msgid "New plugins found"
-msgstr "Nenalezeny žádné (platné) přídavné moduly"
+msgstr "Nalezeny nové přídavné moduly"
 
 #: settings/rksettingsmoduler.cpp:69
 msgid ""
@@ -2677,7 +2687,7 @@ msgstr "Příkaz pro \"pager\""
 
 #: settings/rksettingsmoduler.cpp:178
 msgid "Further (option) commands to run in each session"
-msgstr ""
+msgstr "Další (možnost) příkazy ke spuštění v každém sezení"
 
 #: settings/rksettingsmoduler.cpp:200
 msgid "R-Backend"
@@ -2822,7 +2832,7 @@ msgstr "Editor skriptů"
 
 #: windows/rkcommandeditorwindow.cpp:198
 msgid "Insert line break and run"
-msgstr ""
+msgstr "Vložit zalomení řádku a provést"
 
 #: windows/rkcommandeditorwindow.cpp:203
 msgid "Run block"
@@ -2951,7 +2961,7 @@ msgstr "Všechny nainstalované balíčky"
 msgid "All loaded packages"
 msgstr "Všechny nahrané balíčky"
 
-#: windows/rkhelpsearchwindow.cpp:257
+#: windows/rkhelpsearchwindow.cpp:258
 msgid ""
 "No help found on '%1'. Maybe the corresponding package is not installed/"
 "loaded, or maybe you mistyped the command. Try using Help->Search R Help for "
@@ -2961,15 +2971,15 @@ msgstr ""
 "nainstalován/nahrán, nebo jste udělal překlep při psaní příkazu. Vyzkoušejte "
 "Nápověda -> Hledat nápovědu k R kvůli více podrobnostem."
 
-#: windows/rkhelpsearchwindow.cpp:257
+#: windows/rkhelpsearchwindow.cpp:258
 msgid "No help found"
 msgstr "Nenalezena žádná nápověda"
 
-#: windows/rkhelpsearchwindow.cpp:341
+#: windows/rkhelpsearchwindow.cpp:342
 msgid "Topic"
 msgstr "Obsah"
 
-#: windows/rkhelpsearchwindow.cpp:343
+#: windows/rkhelpsearchwindow.cpp:344
 msgid "Package"
 msgstr "Balíček"
 
@@ -3830,7 +3840,7 @@ msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr ""
 "Pavel Fric, ,Launchpad Contributions:,RKWard Team,fri, ,Launchpad "
-"Contributions:,RKWard Team,fri"
+"Contributions:,RKWard Team,fri, ,Launchpad Contributions:,RKWard Team,fri"
 
 #: rc.cpp:140
 msgctxt "EMAIL OF TRANSLATORS"
@@ -3838,374 +3848,30 @@ msgid "Your emails"
 msgstr ""
 "fripohled.blogspot.com,,,rkward-tracker@lists.sourceforge.net,"
 "pavelfric@seznam.cz,,,rkward-tracker@lists.sourceforge.net,pavelfric@seznam."
-"cz"
-
-#~ msgid "Install or uninstall add-on plugin packs"
-#~ msgstr "Instalovat nebo odinstalovat doplňkové balíčky s přídavnými moduly"
+"cz,,,rkward-tracker@lists.sourceforge.net,pavelfric@seznam.cz"
 
 #~ msgid ""
-#~ "In order to find out, which of your installed packaged have an update "
-#~ "available, click \"Fetch List\". This feature requires a working internet "
-#~ "connection."
+#~ "<p>A command running in the R backend has caused the R backend process to "
+#~ "\"fork\". Typically this is done to spread computations onto several CPU "
+#~ "cores. We try our best to support this in RKWard, despite some technical "
+#~ "problems inherent in forking a multi-library, multi-threaded application. "
+#~ "However, it is entirely possible that this causes trouble / broken "
+#~ "features in some cases, particularly in combination with further R "
+#~ "libraries. If you observe any such adverse effects after forking, please "
+#~ "send us a bug report.</p><p>If you have a choice, consider using a "
+#~ "different technique of parallelization, e.g. the 'PSOCK' method of R "
+#~ "packages <i>snow</i> or <i>parallel</i>.</p>"
 #~ msgstr ""
-#~ "Aby se zjistilo, pro který z instalovaných balíčků je dostupná "
-#~ "aktualizace, vyberte, prosím,  \"Získat seznam\". Tato funkce vyžaduje, "
-#~ "aby připojení k internetu bylo v provozu."
-
-#~ msgid "Local Version"
-#~ msgstr "Místní verze"
-
-#~ msgid "Online Version"
-#~ msgstr "Verze na internetu"
-
-#~ msgid "Fetch list"
-#~ msgstr "Získat seznam"
-
-#~ msgid "Update Selected"
-#~ msgstr "Obnovit vybrané"
-
-#~ msgid "Update All"
-#~ msgstr "Obnovit vše"
-
-#~ msgid "[No updates available]"
-#~ msgstr "[Není dostupná žádná novější verze]"
-
-#~ msgid ""
-#~ "Please stand by while determining, which packages have an update "
-#~ "available online."
-#~ msgstr ""
-#~ "Počkejte, prosím, zatím co se zjišťuje, které balíčky mají přes internet "
-#~ "dostupnou aktualizaci."
-
-#~ msgid "Fetching list"
-#~ msgstr "Získává se seznam"
-
-#~ msgid "Install Selected"
-#~ msgstr "Instalovat vybrané"
-
-#~ msgid "[No packages available]"
-#~ msgstr "[Není dostupný žádný balíček]"
-
-#~ msgid "Please stand by while downloading the list of available packages."
-#~ msgstr "Počkejte, prosím, zatím co se stahuje seznam dostupných balíčků."
-
-#~ msgid "Attempt installation, anyway"
-#~ msgstr "Každopádně se pokusit o instalaci"
-
-#~ msgid "Command used to send files to printer"
-#~ msgstr "Příkaz používaný pro poslání souborů tiskárně"
-
-#~ msgid "Copy selection cleaned"
-#~ msgstr "Kopírovat výběr vyčištěný"
-
-#~ msgid ""
-#~ "<b>These settings are for debugging purposes, only.</b> It is safe to "
-#~ "leave the untouched. Also, these settings will only apply to the current "
-#~ "session, and not be saved."
-#~ msgstr ""
-#~ "<b>Tato nastavení tu jsou jen pro účely ladění.</b> Je jistější ponechat "
-#~ "je beze změny. Žádné z těchto nastavení nebude uloženo. Použijí se pouze "
-#~ "pro nynější sezení."
-
-#~ msgid "Attachment"
-#~ msgstr "Příloha"
-
-#~ msgid "Move To"
-#~ msgstr "Přesunout do"
-
-#~ msgid "Show/Hide Workspace Browser"
-#~ msgstr "Ukázat/Skrýt prohlížeč pracovního prostředí"
-
-#~ msgid "Show/Hide Filesystem Browser"
-#~ msgstr "Ukázat/Skrýt prohlížeč souborového systému"
-
-#~ msgid "Show/Hide Command Log"
-#~ msgstr "Ukázat/Skrýt výpis příkazů"
-
-#~ msgid "Show/Hide Pending Jobs"
-#~ msgstr "Ukázat/Skrýt úkoly čekající na vyřízení"
-
-#~ msgid "Show/Hide Console"
-#~ msgstr "Ukázat/Skrýt konzoli neboli ovládací panel"
-
-#~ msgid "Show/Hide R Help Search"
-#~ msgstr "Ukázat/Skrýt okno pro hledání v nápovědě k R"
-
-#~ msgid ""
-#~ "<p>Please submit your bug reports or wishes at <a href=\"%1\">%1</a> or "
-#~ "send email to <a href=\"mailto:%2\">%2</a>.</p>"
-#~ msgstr ""
-#~ "<p>Svá hlášení o chybách a přání předejte, prosím, na <a href=\"%1\">%1</"
-#~ "a> nebo pošlete e-mail na adresu <a href=\"mailto:%2\">%2</a>.</p>"
-
-#~ msgid "Objects in the R workspace"
-#~ msgstr "Předměty v pracovním prostředí R"
-
-#~ msgid ""
-#~ " For that reason processing has been stopped for now. Press the \"Done\"-"
-#~ "button, or close this dialog once you think it is safe to resume.\n"
-#~ "\n"
-#~ msgstr ""
-#~ " Z toho důvodu bylo zpracování pro tuto chvíli zastaveno. Stiskněte "
-#~ "tlačítko\"Hotovo\", nebo zavřete tento dialog, jakmile si budete myslet, "
-#~ "že je bezpečnépokračovat.\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "The file(s) have been opened in text-windows. The following is a list of "
-#~ "the file(s) in question:\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Soubor(y) byly otevřeny v textových oknech. Následuje seznam zmíněného"
-#~ "(ých) souboru(ů):\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "A command running in the R-engine wants you to edit one or more file(s). "
-#~ "RKWard can not determine, whether it is safe to continue processing R "
-#~ "commands, before you have read/edited (and saved) the file(s) in question."
-#~ msgstr ""
-#~ "Příkaz běžící v jádru R chce, abyste upravil jeden nebo více souborů. "
-#~ "RKWard nemůže určit, jestli je bezpečné pokračovat ve zpracování příkazů "
-#~ "R předtím, než si přečtete/upravíte (a uložíte) zmíněný(é) soubor(y)."
-
-#~ msgid ""
-#~ "\n"
-#~ "\n"
-#~ "The following of the above files were not readable and have not been "
-#~ "opened:\n"
-#~ "\n"
-#~ msgstr ""
-#~ "\n"
-#~ "\n"
-#~ "Následující ze souborů výše nebyly čitelné a nebyly otevřeny:\n"
-#~ "\n"
-
-#~ msgid "Disable R C stack checking"
-#~ msgstr "Zakázat R C ověření zásobníku"
-
-#~ msgid "Bypass console"
-#~ msgstr "Obejít konzoli"
-
-#~ msgid ""
-#~ "<p>Please note that RKWard is not well tested on Windows, yet.</"
-#~ "p><p>There are all sorts of known issues, and issues yet to be reported. "
-#~ "If you'd like to help: <a href=\"http://p.sf.net/rkward/contact\">http://"
-#~ "p.sf.net/rkward/contact</a>.</p>"
-#~ msgstr ""
-#~ "<p>Povšimněte si, prosím, že RKWard stále není dobře vyzkoušen s OS "
-#~ "Windows.</p><p>Jsou tu všechny druhy problémů a problémů, které teprve "
-#~ "budou nahlášeny. Pokud byste rád pomohl: <a href=\"http://p.sf.net/rkward/"
-#~ "contact\">http://p.sf.net/rkward/contact</a>.</p>"
-
-#~ msgid "RKWard on Windows"
-#~ msgstr "RKWard na Windows"
-
-#~ msgid "R engine starting"
-#~ msgstr "Spouští se jádro R"
-
-#~ msgid ""
-#~ "The support file \"%1\" could not be found or is not readable. Please "
-#~ "check your installation."
-#~ msgstr ""
-#~ "Podpůrný soubor\"%1\" se nepodařilo najít, nebo je nečitelný. "
-#~ "Zkontrolujte, prosím, svou instalaci."
-
-#~ msgid "PHP-Error"
-#~ msgstr "Chyba PHP"
-
-#~ msgid ""
-#~ "There has been an error\n"
-#~ "(\"%1\")\n"
-#~ "while starting up the PHP backend. Most likely this is due to either a "
-#~ "bug in RKWard or a problem with your PHP installation. Check the settings "
-#~ "(Settings->Configure Settings->PHP backend) and try again."
-#~ msgstr ""
-#~ "Při spouštění jádra pro PHP\n"
-#~ "(\"%1\")\n"
-#~ "se vyskytla se chyba. Příčinou je pravděpodobně chyba v RKWardu, nebo "
-#~ "nějaké potíže s vaší instalací PHP. Ověřte nastavení (Nastavení->Nastavit "
-#~ "nastavení->Jádro pro PHP) a zkuste to ještě jednou."
-
-#~ msgid ""
-#~ "The PHP-backend has reported an error\n"
-#~ "(\"%1\")\n"
-#~ "and has been shut down. This is most likely due to a bug in the plugin. "
-#~ "But of course you may want to try to close and restart the plugin to see "
-#~ "whether it works with different settings."
-#~ msgstr ""
-#~ "Jádro pro PHP ohlásilo chybu\n"
-#~ "(\"%1\")\n"
-#~ "a bylo zastaveno. Většinou je to způsobeno chybou v přídavném modulu. Ale "
-#~ "samozřejmě můžete zkusit přídavný modul zavřít a znovu jej spustit, "
-#~ "abyste se dozvěděl, zda pracuje s jiným nastavením."
-
-#~ msgid ""
-#~ "The PHP backend could not be started. Check whether you have correctly "
-#~ "configured the location of the PHP-binary (Settings->Configure Settings-"
-#~ ">PHP backend)"
-#~ msgstr ""
-#~ "Jádro pro PHP se nepodařilo spustit. Ověřte, prosím, zda máte správně "
-#~ "nastaveno umístění binárky PHP (Nastavení->Nastavit nastavení->Jádro pro "
-#~ "PHP)"
-
-#~ msgid ""
-#~ "The PHP-backend has died unexpectedly. The current output buffer is shown "
-#~ "below:\n"
-#~ "%1"
-#~ msgstr ""
-#~ "Jádro pro PHP bylo neočekávaně ukončeno. Současná výstupní vyrovnávací "
-#~ "paměť se ukazuje dole:\n"
-#~ "%1"
-
-#~ msgid "PHP Process exited"
-#~ msgstr "Proces PHP ukončen"
-
-#~ msgid "Changes in this section take effect the next time you start a plugin"
-#~ msgstr ""
-#~ "Změny v této části začnou působit teprve při příštím spuštění přídavného "
-#~ "modulu"
-
-#~ msgid "File-location of the PHP binary"
-#~ msgstr "Umístění s PHP binárním souborem"
-
-#~ msgid "PHP backend"
-#~ msgstr "Jádro pro PHP"
-
-#~ msgid "Cutting selection..."
-#~ msgstr "Vyjímá se výběr..."
-
-#~ msgid "Copying selection to clipboard..."
-#~ msgstr "Kopíruje se výběr do schránky..."
-
-#~ msgid "Enable editing"
-#~ msgstr "Povolit úpravy"
-
-#~ msgid "Insert new variable right"
-#~ msgstr "Novou proměnnou vložit vpravo"
-
-#~ msgid "Insert new case below (at %1)"
-#~ msgstr "Vložit nový případ níže (při %1)"
-
-#~ msgid "Object name to save to"
-#~ msgstr "Název předmětu, pod kterým se má uložit"
-
-#~ msgid ""
-#~ "<p>\t-There was a problem opening the files needed for communication with "
-#~ "R. Most likely this is due to an incorrect setting for the location of "
-#~ "these files. Check whether you have correctly configured the location of "
-#~ "the log-files (Settings->Configure Settings->Logfiles) and restart RKWard."
-#~ "</p>\n"
-#~ msgstr ""
-#~ "<p>\t-Při otevírání souborů nutných pro spojení se s R se objevily "
-#~ "potíže. Většinou se tak stává při nesprávném nastavení umístění těchto "
-#~ "souborů. Ověřte, že nastavení umístění souborů se zápisy je správné "
-#~ "(Nastavení->Nastavit nastavení->Soubory se zápisy) a spusťte RKWard znovu."
-#~ "</p>\n"
-
-#~ msgid "Configure Script Editor"
-#~ msgstr "Nastavit editor skriptů"
-
-#~ msgid "Open command file(s)"
-#~ msgstr "Otevřít soubor s příkazem(y)"
-
-#~ msgid ""
-#~ "Add URL of new repository\n"
-#~ "(Enter \"@CRAN@\" for the standard CRAN-mirror)"
-#~ msgstr ""
-#~ "Přidat adresu (URL) nového zdroje\n"
-#~ "(Napsat \"@CRAN@\" pro běžné zrcadlo CRAN)"
-
-#~ msgid ""
-#~ "There are no safeguards against removing essential packages. For example, "
-#~ "unloading \"rkward\" will prevent this application from running properly. "
-#~ "Please be careful about the packages you unload."
-#~ msgstr ""
-#~ "Es gibt keinen Schutz gegen das entfernen essentieller Pakete. Zum "
-#~ "Beispiel das Entfernen von \"rkward\" wird ein korrektes funktionieren "
-#~ "der Anwendung unterbinden. Bitte seien Sie vorsichtig beim entfernen von "
-#~ "Paketen."
-
-#~ msgid "&Cancel"
-#~ msgstr "&Abbrechen"
-
-#~ msgid "file to open"
-#~ msgstr "zu öffnende Datei"
-
-#~ msgid "Show help for %1 in package %2"
-#~ msgstr "Hilfe für %1 in Paket %2 anzeigen"
-
-#~ msgid ""
-#~ "Please submit your bug reports or wishes at http://sourceforge.net/"
-#~ "tracker/?group_id=50231&atid=459007 or send email to rkward-devel@lists."
-#~ "sourceforge.net"
-#~ msgstr ""
-#~ "Bitte senden Sie Fehlermeldungen oder Wünsche unter http://sourceforge."
-#~ "net/tracker/?group_id=50231&atid=459007 ein, oder schicken Sie uns eine E-"
-#~ "Mail an rkward-devel@lists.sourceforge.net"
-
-#~ msgid ""
-#~ "\t- The 'rkward' R-library could not be loaded. This library is needed "
-#~ "for communication between R and RKWard and many things will not work "
-#~ "properly if this library is not present. Likely RKWard will even crash. "
-#~ "The 'rkward' R-library should have been included in your distribution or "
-#~ "RKWard, and should have been set up when you ran 'make install'. Please "
-#~ "try 'make install' again and check for any errors. You should quit RKWard "
-#~ "now.\n"
-#~ msgstr ""
-#~ "\t- Die'rkward' R-Bibliothek konnte nicht geladen werden. Diese "
-#~ "Bibliothek wird für die Kommunikation zwischen R und RKWard benötigt. "
-#~ "Vieles wird nicht korrekt funktionieren, wenn diese Bibliothek nicht "
-#~ "vorhanden ist. Wahrscheinlich wird RKWard sogar abstürzen. Die 'rkward' R-"
-#~ "Bibliothek sollte in Ihrer Distribution oder RKWard enthalten sein und "
-#~ "sollte angelegt werden, wenn Sie 'make install'ausführen. Bitte versuchen "
-#~ "Sie 'make install' nochmals und schauen Sie nochmals nach irgendwelchen "
-#~ "Fehlern.Sie sollten RKWard nun beenden.\n"
-
-#~ msgid ""
-#~ "It will be shut down immediately. This means, you can not use any more "
-#~ "functions that rely on the R backend. I.e. you can do hardly anything at "
-#~ "all, not even save the workspace. What you can do, however, is save any "
-#~ "open command-files, the output, or copy data out of open data editors. "
-#~ "Quit RKWard after that. Sorry!"
-#~ msgstr ""
-#~ "Es wir unverzüglich beendet. Dies bedeutet das Sie nunmehr keine "
-#~ "Funktionen die vom R backend abhängig sind weiter verwenden können. "
-#~ "Insbesondere können Sie nichts weiter ausführen, nicht einmal den "
-#~ "Workspace speichern. Möglicherweise hat R bereits den Workspace "
-#~ "gespeichert. Sie können allerdings jegliche offene Befehls-Dateien, "
-#~ "Ausgaben, oder Daten aus dem offenen Daten-Editoren sichern. Beenden Sie "
-#~ "RKWard hiernach. Sorry!"
-
-#~ msgid ""
-#~ "RKWard has made great progress in the past few months and it is already "
-#~ "helpful for many tasks, but some features may be lacking. You can help us "
-#~ "by filing bug reports, feature requests, or providing feedback in any "
-#~ "other form. Please visit http://rkward.sourceforge.net for more "
-#~ "information."
-#~ msgstr ""
-#~ "RKWard hat in den vergangenen Monaten große Fortschritte gemacht und ist "
-#~ "bereits sehr hilfreich für viele Aufgaben. Aber viele Funktionen fehlen "
-#~ "noch. Sie können uns durch Übermittlung von Fehlerberichten, Feature "
-#~ "Nachfragen oder Feedback in anderer Form helfen. Bitte besuchen Sie "
-#~ "http://rkward.sourceforge.net für mehr Informationen."
-
-#~ msgid "What to expect of RKWard"
-#~ msgstr "Was kann von RKWard erwartet werden"
-
-#~ msgid "R Help"
-#~ msgstr "R Hilfe"
-
-#~ msgid ""
-#~ "_: NAME OF TRANSLATORS\n"
-#~ "Your names"
-#~ msgstr ""
-#~ ",Launchpad Contributions:,RKWard Team,fri, ,Launchpad Contributions:,"
-#~ "RKWard Team,fri"
-
-#~ msgid ""
-#~ "_: EMAIL OF TRANSLATORS\n"
-#~ "Your emails"
-#~ msgstr ""
-#~ ",,rkward-tracker@lists.sourceforge.net,pavelfric@seznam.cz,,,rkward-"
-#~ "tracker@lists.sourceforge.net,pavelfric@seznam.cz"
+#~ "<p>Příkaz běžící v jádru R způsobil, že se proces jádra R \"rozvětvil\". "
+#~ "Typicky se to dělá pro rozšíření výpočtů na několik jader CPU. cores. "
+#~ "Snažíme se, jak můžeme, abysme tuto věc podpořili v RKWardu, navzdory "
+#~ "některým technickým potížím spojeným s odnožováním víceknihovního, "
+#~ "vícevláknového programu. Nicméně je dost dobře možné, že to v některých "
+#~ "případech způsobí potíže/rozbité vlastnosti, zvláště ve spojení s dalšími "
+#~ "knihovnami R. Pokud po rozvětvení nějaký takový neblahý účinek "
+#~ "zpozorujete, pošlete nám, prosím, hlášení o chybě.</p><p>Pokud máte na "
+#~ "výběr, zvažte použití jiné techniky paralelizace, např. metodu 'PSOCK' "
+#~ "balíčků R <i>sníh</i> nebo <i>paralelní zpracování</i>.</p>"
+
+#~ msgid "Backend has forked"
+#~ msgstr "Jádro se rozvětvilo"
