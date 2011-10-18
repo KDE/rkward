@@ -1,6 +1,6 @@
 ChangeLog for package rkwarddev
 
-## 0.03-7 (2011-10-17)
+## 0.03-7 (2011-10-18)
   - added "checkable" and "checked" options to rk.XML.frame()
   - set rk.paste.JS() default level to 2
   - fixed bug in rk.JS.array() (superfluous "=" in generated code)
