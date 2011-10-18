@@ -27,20 +27,20 @@ rk.JS.doc <- function(require=c(), variables=NULL, results.header=NULL,
 	preprocess=NULL, calculate=NULL, printout=NULL, indent.by="\t"){
 
 	js.require <- unlist(sapply(require, function(this.req){
-			paste(indent(2, by=indent.by), "echo(\"require(", this.req, ")\\n\");", sep="")
+			paste(indent(2, by=indent.by), "echo(\"require(", this.req, ")\\n\");\n", sep="")
 		}))
 	js.preprocess <- paste("function preprocess(){\n",
-		indent(2, by=indent.by), "// add requirements etc. here.\n",
-		paste(js.require, collapse="\n"), "\n",
-		ifelse(is.null(preprocess), "", preprocess),
-		"\n}", sep="")
+		indent(2, by=indent.by), "// add requirements etc. here\n",
+		paste(js.require, collapse=""),
+		ifelse(is.null(preprocess), "", paste(preprocess, "\n", sep="")),
+		"}", sep="")
 
 	js.calculate <- paste("function calculate(){\n",
 			indent(2, by=indent.by), "// read in variables from dialog\n",
-			paste(variables, collapse=""), "\n",
-			indent(2, by=indent.by), "// put the R code to be evaluated here.\n",
-			ifelse(is.null(calculate), "", calculate),
-			"\n}", sep="")
+			ifelse(is.null(variables), "\n", paste(paste(variables, collapse=""), "\n", sep="")),
+			indent(2, by=indent.by), "// put the R code to be evaluated here\n",
+			ifelse(is.null(calculate), "", paste(calculate, "\n", sep="")),
+			"}", sep="")
 		
 	js.printout <- paste("function printout(){\n",
 				indent(2, by=indent.by), "// printout the results\n",

@@ -235,7 +235,10 @@ rk.plugin.skeleton <- function(name, about=NULL, path=tempdir(),
 			if("var" %in% scan){
 				var.scanned <- rk.JS.scan(XML.plugin)
 				if(!is.null(var.scanned)){
-					js[["variables"]] <- paste(js[["variables"]], var.scanned, sep="\n")
+					js[["variables"]] <- paste(
+						ifelse(is.null(js[["variables"]]), "", paste(js[["variables"]], "\n", sep="")),
+						var.scanned,
+						sep="")
 				} else {}
 			} else {}
 			if("saveobj" %in% scan){
