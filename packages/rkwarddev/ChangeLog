@@ -3,6 +3,7 @@ ChangeLog for package rkwarddev
 ## 0.03-7 (2011-10-17)
   - added "checkable" and "checked" options to rk.XML.frame()
   - set rk.paste.JS() default level to 2
+  - fixed bug in rk.JS.array() (superfluous "=" in generated code)
 
 ## 0.03-6 (2011-10-13)
   - lifted rkward package dependecies to 0.5.7 (needed for rk.load.pluginmaps())

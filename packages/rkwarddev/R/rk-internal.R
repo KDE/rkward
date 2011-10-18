@@ -440,7 +440,7 @@ paste.JS.array <- function(object, level=2, indent.by="\t", funct=NULL){
 		funct.start <- ""
 		funct.end <- ""
 	} else {
-		funct.start <- paste("=", funct, "(", sep="")
+		funct.start <- paste(funct, "(", sep="")
 		funct.end <- ")"
 	}
 
@@ -465,32 +465,6 @@ paste.JS.array <- function(object, level=2, indent.by="\t", funct=NULL){
 
 	return(JS.array)
 } ## end function paste.JS.array()
-
-# 	var options = ", alternative=\"" + hypothesis + "\"";
-# 	if (paired) options += ", paired=TRUE";
-# 	if ((!paired) && varequal) options += ", var.equal=TRUE";
-# 	if (conflevel != "0.95") options += ", conf.level=" + conflevel;
-# 
-# 	echo ('result <- t.test (' + x + ", " + y + options + ')\n');
-
-# array solution:
-# 	var arrAuthor = new Array();
-# 	if(inpGivennam) {
-# 		arrAuthor.push("given=\"" + inpGivennam + "\"");
-# 	} else {}
-# 	if(inpFamilynm) {
-# 		arrAuthor.push("family=\"" + inpFamilynm + "\"");
-# 	} else {}
-# 	if(inpEmail) {
-# 		arrAuthor.push("email=\"" + inpEmail + "\"");
-# 	} else {}
-# 	arrAuthor = arrAuthor.filter(String);
-# 
-# 	if(arrAuthor.length > 0) {
-# 		var author = ", author=person(" + arrAuthor.join(", ") + ")";
-# 	} else {
-# 		var author = "";
-# 	}
 
 ## function paste.JS.options()
 paste.JS.options <- function(object, level=2, indent.by="\t", array=NULL, funct=NULL){
