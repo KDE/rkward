@@ -2,7 +2,7 @@
 \alias{rk.paste.JS}
 \title{Paste JavaScript objects and character strings}
 \usage{
-  rk.paste.JS(..., level = 1, indent.by = "\t", funct =
+  rk.paste.JS(..., level = 2, indent.by = "\t", funct =
   NULL, array = NULL)
 }
 \arguments{

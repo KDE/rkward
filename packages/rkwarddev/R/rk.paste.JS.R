@@ -18,7 +18,7 @@
 #'		and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @export
 
-rk.paste.JS <- function(..., level=1, indent.by="\t", funct=NULL, array=NULL){
+rk.paste.JS <- function(..., level=2, indent.by="\t", funct=NULL, array=NULL){
 	stopifnot(level > 0)
 	all.objects <- list(...)
 	
