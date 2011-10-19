@@ -92,27 +92,3 @@ split = function (by, text) {
 function str_replace (needle, replacement, haystack) {
 	return (haystack.split (needle).join (replacement));
 }
-
-// should behave similar to rk.get.short.name()
-shortName = function (variables) {
-	var snArray = variables.split("\n");
-	var snArrayShort = new Array();
-	for(var i=0, len=snArray.length; value=snArray[i], i<len; i++) {
-		var loopTmp = value.slice(value.lastIndexOf("[[\"")+3, value.lastIndexOf("\"]]"));
-		if(loopTmp == "") {
-			snArrayShort.push(value);
-		} else {
-			snArrayShort.push(loopTmp);
-		}
-	}
-	return(snArrayShort);
-}
-
-// shortcut to get shortnames from varslots directly, as a
-// replacement for getValue()
-// append '.join(", ")' to get then in a comma separated string
-getValueShort = function (variable) {
-	var gvsVar = getValue(variable);
-	gvsVar = shortName(gvsVar);
-	return(gvsVar);
-}
