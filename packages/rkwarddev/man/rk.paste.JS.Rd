@@ -3,7 +3,8 @@
 \title{Paste JavaScript objects and character strings}
 \usage{
   rk.paste.JS(..., level = 2, indent.by = "\t", funct =
-  NULL, array = NULL)
+  NULL, array = NULL, var.prefix = NULL, properties = NULL,
+  default = NULL, join = NULL)
 }
 \arguments{
   \item{...}{Objects of class \code{rk.JS.ite},
@@ -23,6 +24,26 @@
   \item{array}{For \code{rk.JS.opt} objects only: Logical,
   whether the options should be collected in an array or a
   concatenated character string.}
+
+  \item{var.prefix}{For \code{rk.JS.var} objects only: A
+  character string. will be used as a prefix for the JS
+  variable names.}
+
+  \item{properties}{For \code{rk.JS.var} objects only: A
+  character vector with properties you'd like to get of the
+  XML node.}
+
+  \item{default}{For \code{rk.JS.var} objects only:
+  Logical, if \code{TRUE} the default value (no special
+  property) of the node will also be defined. Does nothing
+  if \code{properties=NULL}.}
+
+  \item{join}{For \code{rk.JS.var} objects only: A
+  character string, useful for GUI elements which accept
+  multiple objects (i.e., multi-varslots). If \code{join}
+  is something other than \code{""}, these objects will be
+  collapsed into one string when pasted, joined by this
+  string.}
 }
 \value{
   A character string.
@@ -33,6 +54,7 @@
 \seealso{
   \code{\link[rkwarddev:rk.JS.array]{rk.JS.array}},
   \code{\link[rkwarddev:rk.JS.options]{rk.JS.options}},
+  \code{\link[rkwarddev:rk.JS.vars]{rk.JS.vars}},
   \code{\link[rkwarddev:ite]{ite}}, and the
   \href{help:rkwardplugins}{Introduction to Writing Plugins
   for RKWard}

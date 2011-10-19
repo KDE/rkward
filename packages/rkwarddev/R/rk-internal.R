@@ -143,53 +143,60 @@ camelCode <- function(words){
 #   <tag id="my.id" ...>
 # in XML will become
 #   var my.id = getValue("my.id");
-get.JS.vars <- function(JS.var, XML.var=NULL, JS.prefix="", indent.by="", names.only=FALSE, properties=NULL, default=FALSE){
+get.JS.vars <- function(JS.var, XML.var=NULL, JS.prefix="", names.only=FALSE, properties=NULL, default=FALSE, join=""){
 	# check for XiMpLe nodes
 	JS.var <- check.ID(JS.var)
 	if(!is.null(XML.var)){
 		# check validity of properties value
 		if(!is.null(properties)){
 			if(identical(properties, "all")){
-					if(inherits(XML.var, "XiMpLe.node")){
-						tag.name <- XML.var@name
-					} else {
-						tag.name <- XML.var
-					}
+				if(inherits(XML.var, "XiMpLe.node")){
+					tag.name <- XML.var@name
+				} else {
+					tag.name <- XML.var
+				}
 				if(tag.name %in% names(all.valid.props)){
 					properties <- all.valid.props[[tag.name]]
 				} else {
 					properties <- NULL
 				}
 			} else {
-				properties <- sapply(child.list(properties), function(this.prop){
-					prop.validity(XML.var, property=this.prop, warn.only=TRUE, bool=FALSE)
-				})
-				properties <- properties[!"" %in% properties]
+				if(inherits(XML.var, "XiMpLe.node")){
+					prop.tag.name <- tag.name
+				} else {
+					prop.tag.name <- "all"
+				}
+				properties <- properties[prop.validity(prop.tag.name, property=child.list(properties), warn.only=TRUE, bool=TRUE)]
 			}
 		} else {}
 		XML.var <- check.ID(XML.var)
 	} else {}
 
-	results <- c()
-	if(is.null(properties) | isTRUE(default)){
-		if(isTRUE(names.only)){
-			results <- camelCode(c(JS.prefix, JS.var))
-		} else {
-			results <- paste(indent.by, "var ", camelCode(c(JS.prefix, JS.var)), " = getValue(\"", XML.var, "\");\n", sep="")
-		}
+	if(is.null(JS.prefix)){
+		JS.prefix <- ""
 	} else {}
-	if(!is.null(properties)){
-		if(isTRUE(names.only)){
+	if(is.null(properties)){
+		properties <- list()
+	} else {}
+
+	if(isTRUE(names.only)){
+		results <- c()
+		if(is.null(properties) | isTRUE(default)){
+			results <- camelCode(c(JS.prefix, JS.var))
+		} else {}
+		if(!is.null(properties)){
 			results <- c(results,
 				sapply(properties, function(this.prop){camelCode(c(JS.prefix, JS.var, this.prop))})
 			)
-		} else {
-			results <- c(results,
-				sapply(properties, function(this.prop){
-					paste(indent.by, "var ", camelCode(c(JS.prefix, JS.var, this.prop)), " = getValue(\"", XML.var, ".", this.prop, "\");\n", sep="")
-				})
-			)
-		}
+		} else {}
+	} else {
+		results <- new("rk.JS.var",
+			JS.var=JS.var,
+			XML.var=XML.var,
+			prefix=JS.prefix,
+			properties=child.list(properties),
+			default=default,
+			join=join)
 	}
 
 	return(results)
@@ -300,7 +307,7 @@ all.valid.props <- list(
 	all=c("visible", "enabled", "required"),
 	text=c("text"),
 	varselector=c("selected", "root"),
-	varslot=c("available", "selected", "source"),
+	varslot=c("available", "selected", "source", "shortname", "label"),
 	radio=c("string", "number"),
 	dropdown=c("string", "number"),
 	# option=c(),
@@ -329,6 +336,8 @@ prop.validity <- function(source, property, ignore.empty=TRUE, warn.only=TRUE, b
 
 	if(inherits(source, "XiMpLe.node")){
 		tag.name <- source@name
+	} else if(identical(source, "all")){
+		tag.name <- "<any tag>"
 	} else {
 		if(isTRUE(bool)){
 			return(TRUE)
@@ -339,17 +348,19 @@ prop.validity <- function(source, property, ignore.empty=TRUE, warn.only=TRUE, b
 
 	if(tag.name %in% names(all.valid.props)){
 		valid.props <- c(all.valid.props[["all"]], all.valid.props[[tag.name]])
+	} else if(identical(tag.name, "<any tag>")){
+		valid.props <- unique(unlist(all.valid.props))
 	} else {
 		valid.props <- c(all.valid.props[["all"]])
 	}
 
-	invalid.prop <- !property %in% valid.props
+	invalid.prop <- !unlist(property) %in% valid.props
 	if(any(invalid.prop)){
 		if(isTRUE(warn.only)){
 			warning(paste("Some property you provided is invalid for '",tag.name,"' and was ignored: ",
 				paste(property[invalid.prop], collapse=", "), sep=""), call.=FALSE)
 			if(isTRUE(bool)){
-				return(FALSE)
+				return(!invalid.prop)
 			} else {
 				return("")
 			}
@@ -359,7 +370,7 @@ prop.validity <- function(source, property, ignore.empty=TRUE, warn.only=TRUE, b
 		}
 	} else {
 		if(isTRUE(bool)){
-			return(TRUE)
+			return(!invalid.prop)
 		} else {
 			return(property)
 		}
@@ -549,4 +560,62 @@ paste.JS.options <- function(object, level=2, indent.by="\t", array=NULL, funct=
 		sep="")
 
 	return(JS.options)
+} ## end function paste.JS.options()
+
+## function paste.JS.var()
+paste.JS.var <- function(object, level=2, indent.by="\t", JS.prefix=NULL, properties=NULL, default=NULL, join=NULL){
+	# paste several objects
+	results <- paste(unlist(sapply(object@vars, function(this.obj){
+			paste.JS.var(this.obj,
+					level=level,
+					indent.by=indent.by,
+					JS.prefix=JS.prefix,
+					properties=properties,
+					default=default,
+					join=join)})),
+	collapse="")
+
+	stopifnot(inherits(object, "rk.JS.var"))
+	# check indentation
+	main.indent <- indent(level, by=indent.by)
+
+	JS.var         <- object@JS.var
+	XML.var        <- object@XML.var
+	if(is.null(JS.prefix)){
+		JS.prefix  <- object@prefix
+	} else {}
+	if(is.null(properties)){
+		properties  <- object@properties
+	} else {}
+	if(is.null(default)){
+		default     <- object@default
+	} else {}
+	if(is.null(join)){
+		join        <- object@join
+	} else {}
+
+	if(!identical(join, "")){
+		join.code <- paste(".split(\"\\n\").join(\"", join, "\")", sep="")
+	} else {
+		join.code <- ""
+	}
+
+	# only paste something if there's variables outside the 'vars' slot
+	if(length(nchar(JS.var)) > 0 & length(nchar(XML.var)) > 0){
+		if(length(properties) == 0 | isTRUE(default)){
+			results <- paste(results, main.indent, "var ", camelCode(c(JS.prefix, JS.var)), " = getValue(\"", XML.var, "\")", join.code, ";\n", sep="")
+		} else {}
+		if(length(properties) > 0){
+			# check properties
+			properties <- properties[prop.validity(source="all", property=properties, ignore.empty=TRUE, warn.only=TRUE, bool=TRUE)]
+			results <- c(results,
+				sapply(properties, function(this.prop){
+					paste(main.indent, "var ", camelCode(c(JS.prefix, JS.var, this.prop)), " = getValue(\"", XML.var, ".", this.prop, "\")", join.code, ";\n", sep="")
+				})
+			)
+		}
+	} else {}
+
+	results <- paste(results, collapse="")
+	return(results)
 } ## end function paste.JS.options()

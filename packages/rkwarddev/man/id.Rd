@@ -7,8 +7,8 @@
 \arguments{
   \item{...}{One or several character strings and/or
   \code{XiMpLe.node} objects with plugin nodes, and/or
-  objects of classes \code{rk.JS.arr} or \code{rk.JS.opt},
-  simply separated by comma.}
+  objects of classes \code{rk.JS.arr}, \code{rk.JS.opt} or
+  \code{rk.JS.var}, simply separated by comma.}
 
   \item{quote}{Logical, it the character strings sould be
   deparsed, so they come out "as-is" when written to files,
@@ -29,9 +29,9 @@
   JavaScript code for RKWard plugins. Its sole purpose is
   to replace objects of class \code{XiMpLe.node} which hold
   an XML node of some plugin GUI definition, and objects of
-  classes \code{rk.JS.arr} or \code{rk.JS.opt} with their
-  ID (or JS variable name), and combine these replacements
-  with character strings.
+  classes \code{rk.JS.arr}, \code{rk.JS.opt} or
+  \code{rk.JS.var} with their ID (or JS variable name), and
+  combine these replacements with character strings.
 }
 \examples{
 # an example checkbox XML node

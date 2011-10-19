@@ -2,11 +2,12 @@
 #' 
 #' This function is intended to be used for generating JavaScript code for
 #' RKWard plugins. Its sole purpose is to replace objects of class \code{XiMpLe.node}
-#' which hold an XML node of some plugin GUI definition, and objects of classes \code{rk.JS.arr} or \code{rk.JS.opt}
-#' with their ID (or JS variable name), and combine these replacements with character strings.
+#' which hold an XML node of some plugin GUI definition, and objects of classes \code{rk.JS.arr},
+#' \code{rk.JS.opt} or \code{rk.JS.var} with their ID (or JS variable name), and combine these
+#' replacements with character strings.
 #' 
 #' @param ... One or several character strings and/or \code{XiMpLe.node} objects with plugin nodes,
-#' 	and/or objects of classes \code{rk.JS.arr} or \code{rk.JS.opt}, simply separated by comma.
+#' 	and/or objects of classes \code{rk.JS.arr}, \code{rk.JS.opt} or \code{rk.JS.var}, simply separated by comma.
 #' @param quote Logical, it the character strings sould be deparsed, so they come out "as-is" when
 #'		written to files, e.g. by \code{cat}.
 #' @param collapse Character string, defining if and how the individual elements should be glued together.
@@ -40,7 +41,23 @@ id <- function(..., quote=FALSE, collapse="", js=TRUE){
 			} else if(inherits(this.part, "rk.JS.opt")){
 				node.id <- this.part@var.name
 				return(node.id)
-			}else {
+			} else if(inherits(this.part, "rk.JS.var")){
+				# can hold multiple IDs, but we'll only return the first valid one
+				node.id <- this.part@JS.var
+				if(length(node.id) > 0){
+					if(length(this.part@vars) > 0){
+						warning(paste("Object contained more than one ID, only the first one was used: ", node.id, sep=""), call.=FALSE)
+					} else {}
+				} else {
+					if(length(this.part@vars) > 0){
+							node.id <- this.part@vars[[1]]@JS.var
+						if(length(this.part@vars) > 1){
+							warning(paste("Object contained more than one ID, only the first one was used: ", node.id, sep=""), call.=FALSE)
+						} else {}
+					} else {}
+				}
+				return(node.id)
+			} else {
 				if(isTRUE(quote)){
 					text.part <- deparse(this.part)
 				} else {

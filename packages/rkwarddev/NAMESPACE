@@ -1,6 +1,7 @@
 exportClasses(rk.JS.arr)
 exportClasses(rk.JS.ite)
 exportClasses(rk.JS.opt)
+exportClasses(rk.JS.var)
 export(echo)
 export(id)
 export(ite)
