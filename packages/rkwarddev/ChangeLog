@@ -1,9 +1,12 @@
 ChangeLog for package rkwarddev
 
-## 0.03-8 (2011-10-19)
+## 0.04-0 (2011-10-19)
+  - for accurcy and consistency with the docs, the "properties" option changed to "modifiers" in rk.JS.vars()
+  - added further property modifiers to the internal validation
   - added class rk.JS.var, including show method
   - added support for class rk.JS.var in rk.paste.JS() an id()
   - rk.JS.vars() now returns a list of class rk.JS.var
+  - added support for all valid modifiers to rk.XML.convert() and rk.XML.connect()
 
 ## 0.03-7 (2011-10-18)
   - added "checkable" and "checked" options to rk.XML.frame()

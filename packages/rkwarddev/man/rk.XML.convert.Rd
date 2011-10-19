@@ -45,19 +45,14 @@
   An object of class \code{XiMpLe.node}.
 }
 \description{
-  The recognized property names for \code{sources} are the
-  following: \code{string}, \code{state}, \code{text},
-  \code{selected}, \code{root}, \code{available},
-  \code{source}, \code{number}, \code{enabled},
-  \code{checked}, \code{selection}, \code{parent},
-  \code{objectname}, \code{active}, \code{int},
-  \code{real}, \code{model}, \code{table}, \code{labels},
-  \code{fixed_factors}, \code{dependent} and \code{code}.
-  They are not globally valid for all XML elements, see the
-  section on "Properties of plugin elements" to see which
-  is useful for what tag. If \code{sources} holds
-  \code{XiMpLe.node} objects, the validity of properties is
-  automatically checked for that tag.
+  If \code{sources} holds \code{XiMpLe.node} objects, the
+  validity of modifiers is automatically checked for that
+  tag.
+}
+\note{
+  To get a list of the implemented modifiers for
+  \code{sources} in this package, call
+  \code{rkwarddev:::all.valid.modifiers}.
 }
 \examples{
 test.convert <- rk.XML.convert(list(string="foo"), mode=c(notequals="bar"))

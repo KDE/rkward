@@ -1,13 +1,8 @@
 #' Create XML node convert for RKWard plugins
 #'
-#' The recognized property names for \code{sources} are the following:
-#' \code{string}, \code{state}, \code{text}, \code{selected}, \code{root},
-#' \code{available}, \code{source}, \code{number}, \code{enabled}, \code{checked}, \code{selection},
-#' \code{parent}, \code{objectname}, \code{active}, \code{int}, \code{real}, \code{model},
-#' \code{table}, \code{labels}, \code{fixed_factors}, \code{dependent} and \code{code}.
-#' They are not globally valid for all XML elements, see the section on "Properties of plugin elements"
-#' to see which is useful for what tag. If \code{sources} holds \code{XiMpLe.node}
-#' objects, the validity of properties is automatically checked for that tag.
+#' If \code{sources} holds \code{XiMpLe.node} objects, the validity of modifiers is automatically checked for that tag.
+#'
+#' @note To get a list of the implemented modifiers for \code{sources} in this package, call \code{rkwarddev:::all.valid.modifiers}.
 #'
 #' @param sources A list with at least one value, either resembling the \code{id} of
 #'		an existing element to be queried as a character string, or a previously defined object
@@ -74,21 +69,18 @@ rk.XML.convert <- function(sources, mode=c(), required=FALSE, id.name="auto"){
 	# for RKWard, like string="foo" should actually be "foo.string"
 	src.names <- names(sources)
 	if(!is.null(src.names)){
-		# check these names if they're valid properties here
-		invalid.names <- !src.names %in% c("", "string", "state", "text", "selected", "root",
-			"available", "source", "number", "enabled", "checked", "selection", "parent",
-			"objectname", "active", "int", "real", "model", "table", "labels",
-			"fixed_factors", "dependent", "code")
+		# check these names if they're valid modifiers here
+		invalid.names <- !src.names %in% unique(unlist(all.valid.modifiers))
 		if(any(invalid.names)){
-			warning(paste("Some of the property names you provided are invalid and were ignored: ",
+			warning(paste("Some of the modifier names you provided are invalid and were ignored: ",
 				paste(src.names[invalid.names], collapse=", "), sep=""))
 				src.names[invalid.names] <- ""
 		} else {}
 		sources <- as.character(sapply(1:length(src.names), function(src.no){
-				this.prop <- src.names[src.no]
-				valid.prop <- prop.validity(source=sources[[src.no]], property=this.prop, bool=FALSE)
-				if(nchar(valid.prop) > 0){
-					new.value <- paste(check.ID(sources[[src.no]]), this.prop, sep=".")
+				this.modif <- src.names[src.no]
+				valid.modif <- modif.validity(source=sources[[src.no]], modifier=this.modif, bool=FALSE)
+				if(nchar(valid.modif) > 0){
+					new.value <- paste(check.ID(sources[[src.no]]), this.modif, sep=".")
 				} else {
 					new.value <- check.ID(sources[[src.no]])
 				}

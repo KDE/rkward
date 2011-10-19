@@ -4,6 +4,8 @@
 #'		or an object of class \code{XiMpLe.node} (whose \code{id} will be extracted and used).
 #' @param set Character string, can be one of the following values:
 #'		\itemize{
+#'			\item{\code{"state"}}{Set the \code{id} boolean state.}
+#'			\item{\code{"string"}}{Set the \code{id} string value.}
 #'			\item{\code{"enabled"}}{Set the \code{id} enabled state.}
 #'			\item{\code{"visible"}}{Set the \code{id} visibility state.}
 #'			\item{\code{"required"}}{Set the \code{id} requirement state.}
@@ -32,7 +34,7 @@ rk.XML.set <- function(id, set=NULL, to){
 
 	if(!is.null(set)){
 		if(!set %in% c("state","string","enabled","required","visible")){
-			stop(simpleError(paste("The 'set' property you provided is invalid: ", set, sep="")))
+			stop(simpleError(paste("The 'set' modifier you provided is invalid: ", set, sep="")))
 		} else {
 			prop.id <- paste(prop.id, set, sep=".")
 		}

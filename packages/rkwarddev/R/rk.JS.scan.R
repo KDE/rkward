@@ -27,11 +27,11 @@ rk.JS.scan <- function(pXML, js=TRUE, add.abbrev=FALSE, indent.by="\t"){
 			# will become
 			#   var my.id = getValue("my.id");
 			JS.lines <- paste(unlist(sapply(1:nrow(JS.id), function(this.id){
-					return(get.JS.vars(
+					return(rk.paste.JS(get.JS.vars(
 						JS.var=JS.id[this.id,"abbrev"],
-						XML.var=JS.id[this.id,"id"],
-						indent.by=indent.by))
-				})), collapse="")
+						XML.var=JS.id[this.id,"id"]),
+						level=2, indent.by=indent.by))
+				})), collapse="\n")
 		} else {
 			JS.lines <- JS.id[,"id"]
 			names(JS.lines) <- NULL

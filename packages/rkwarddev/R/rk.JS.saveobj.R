@@ -44,16 +44,17 @@ rk.JS.saveobj <- function(pXML, R.objects="initial", vars=TRUE, add.abbrev=FALSE
 			JS.vars <- paste(unlist(sapply(1:num.tags, function(this.tagnum){
 					this.tag <- cleaned.tags[this.tagnum]
 					if(XiMpLe:::parseXMLAttr(this.tag)[["checkable"]] %in% c("T", "true", "TRUE", "1")){
-						properties=c("active", "parent")
+						modifiers=c("active", "parent")
 					} else {
-						properties="parent"
+						modifiers="parent"
 					}
 					JS.id <- get.IDs(single.tags=this.tag, relevant.tags="saveobject", add.abbrev=add.abbrev)
-					return(get.JS.vars(
+					return(rk.paste.JS(get.JS.vars(
 						JS.var=JS.id[1,"abbrev"],
 						XML.var=JS.id[1,"id"],
-						properties=properties,
-						default=TRUE,
+						modifiers=as.list(modifiers),
+						default=TRUE),
+						level=2,
 						indent.by=indent.by))
 				})), collapse="")
 		} else {

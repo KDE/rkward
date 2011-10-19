@@ -143,58 +143,60 @@ camelCode <- function(words){
 #   <tag id="my.id" ...>
 # in XML will become
 #   var my.id = getValue("my.id");
-get.JS.vars <- function(JS.var, XML.var=NULL, JS.prefix="", names.only=FALSE, properties=NULL, default=FALSE, join=""){
+get.JS.vars <- function(JS.var, XML.var=NULL, JS.prefix="", names.only=FALSE, modifiers=NULL, default=FALSE, join=""){
 	# check for XiMpLe nodes
 	JS.var <- check.ID(JS.var)
 	if(!is.null(XML.var)){
-		# check validity of properties value
-		if(!is.null(properties)){
-			if(identical(properties, "all")){
+		# check validity of modifiers value
+		if(!is.null(modifiers)){
+			if(identical(modifiers, "all")){
 				if(inherits(XML.var, "XiMpLe.node")){
 					tag.name <- XML.var@name
 				} else {
 					tag.name <- XML.var
 				}
-				if(tag.name %in% names(all.valid.props)){
-					properties <- all.valid.props[[tag.name]]
+				if(tag.name %in% names(all.valid.modifiers)){
+					modifiers <- all.valid.modifiers[[tag.name]]
 				} else {
-					properties <- NULL
+					modifiers <- NULL
 				}
 			} else {
 				if(inherits(XML.var, "XiMpLe.node")){
-					prop.tag.name <- tag.name
+					modif.tag.name <- XML.var@name
 				} else {
-					prop.tag.name <- "all"
+					modif.tag.name <- "all"
 				}
-				properties <- properties[prop.validity(prop.tag.name, property=child.list(properties), warn.only=TRUE, bool=TRUE)]
+				modifiers <- modifiers[modif.validity(modif.tag.name, modifier=child.list(modifiers), warn.only=TRUE, bool=TRUE)]
 			}
 		} else {}
 		XML.var <- check.ID(XML.var)
-	} else {}
+	} else {
+		XML.var <- check.ID(JS.var)
+	}
 
 	if(is.null(JS.prefix)){
 		JS.prefix <- ""
 	} else {}
-	if(is.null(properties)){
-		properties <- list()
-	} else {}
 
 	if(isTRUE(names.only)){
 		results <- c()
-		if(is.null(properties) | isTRUE(default)){
+		if(is.null(modifiers) | isTRUE(default)){
 			results <- camelCode(c(JS.prefix, JS.var))
 		} else {}
-		if(!is.null(properties)){
+		if(!is.null(modifiers)){
 			results <- c(results,
-				sapply(properties, function(this.prop){camelCode(c(JS.prefix, JS.var, this.prop))})
+				sapply(modifiers, function(this.modif){camelCode(c(JS.prefix, JS.var, this.modif))})
 			)
 		} else {}
 	} else {
+		if(is.null(modifiers)){
+			 modifiers <- list()
+		} else {}
 		results <- new("rk.JS.var",
 			JS.var=JS.var,
 			XML.var=XML.var,
 			prefix=JS.prefix,
-			properties=child.list(properties),
+			modifiers=as.list(modifiers),
 			default=default,
 			join=join)
 	}
@@ -302,9 +304,10 @@ check.ID <- function(node){
 	return(node.ID)
 } ## end function check.ID()
 
-## list with valid properties
-all.valid.props <- list(
-	all=c("visible", "enabled", "required"),
+## list with valid modifiers
+all.valid.modifiers <- list(
+	all=c("visible", "enabled", "required", "true", "false", "not", "numeric",
+	"preprocess", "calculate", "printout", "preview"),
 	text=c("text"),
 	varselector=c("selected", "root"),
 	varslot=c("available", "selected", "source", "shortname", "label"),
@@ -320,17 +323,17 @@ all.valid.props <- list(
 	formula=c("model", "table", "labels", "fixed_factors", "dependent"),
 	embed=c("code"),
 	preview=c("state")
-) ## end list with valid properties
+) ## end list with valid modifiers
 
-## function prop.validity()
-# checks if a property is valid for an XML node, if source is XiMpLe.node
-# if bool=FALSE, returns the property or ""
-prop.validity <- function(source, property, ignore.empty=TRUE, warn.only=TRUE, bool=TRUE){
-	if(identical(property, "") & isTRUE(ignore.empty)){
+## function modif.validity()
+# checks if a modifier is valid for an XML node, if source is XiMpLe.node
+# if bool=FALSE, returns the modifier or ""
+modif.validity <- function(source, modifier, ignore.empty=TRUE, warn.only=TRUE, bool=TRUE){
+	if(identical(modifier, "") & isTRUE(ignore.empty)){
 		if(isTRUE(bool)){
 			return(TRUE)
 		} else {
-			return(property)
+			return(modifier)
 		}
 	} else {}
 
@@ -342,40 +345,40 @@ prop.validity <- function(source, property, ignore.empty=TRUE, warn.only=TRUE, b
 		if(isTRUE(bool)){
 			return(TRUE)
 		} else {
-			return(property)
+			return(modifier)
 		}
 	}
 
-	if(tag.name %in% names(all.valid.props)){
-		valid.props <- c(all.valid.props[["all"]], all.valid.props[[tag.name]])
+	if(tag.name %in% names(all.valid.modifiers)){
+		valid.modifs <- c(all.valid.modifiers[["all"]], all.valid.modifiers[[tag.name]])
 	} else if(identical(tag.name, "<any tag>")){
-		valid.props <- unique(unlist(all.valid.props))
+		valid.modifs <- unique(unlist(all.valid.modifiers))
 	} else {
-		valid.props <- c(all.valid.props[["all"]])
+		valid.modifs <- c(all.valid.modifiers[["all"]])
 	}
 
-	invalid.prop <- !unlist(property) %in% valid.props
-	if(any(invalid.prop)){
+	invalid.modif <- !unlist(modifier) %in% valid.modifs
+	if(any(invalid.modif)){
 		if(isTRUE(warn.only)){
-			warning(paste("Some property you provided is invalid for '",tag.name,"' and was ignored: ",
-				paste(property[invalid.prop], collapse=", "), sep=""), call.=FALSE)
+			warning(paste("Some modifier you provided is invalid for '",tag.name,"' and was ignored: ",
+				paste(modifier[invalid.modif], collapse=", "), sep=""), call.=FALSE)
 			if(isTRUE(bool)){
-				return(!invalid.prop)
+				return(!invalid.modif)
 			} else {
 				return("")
 			}
 		} else {
-			stop(simpleError(paste("Some property you provided is invalid for '",tag.name,"' and was ignored: ",
-				paste(property[invalid.prop], collapse=", "), sep="")))
+			stop(simpleError(paste("Some modifier you provided is invalid for '",tag.name,"' and was ignored: ",
+				paste(modifier[invalid.modif], collapse=", "), sep="")))
 		}
 	} else {
 		if(isTRUE(bool)){
-			return(!invalid.prop)
+			return(!invalid.modif)
 		} else {
-			return(property)
+			return(modifier)
 		}
 	}
-} ## end function prop.validity()
+} ## end function modif.validity()
 
 ## function check.type()
 check.type <- function(value, type, var.name, warn.only=TRUE){
@@ -563,17 +566,20 @@ paste.JS.options <- function(object, level=2, indent.by="\t", array=NULL, funct=
 } ## end function paste.JS.options()
 
 ## function paste.JS.var()
-paste.JS.var <- function(object, level=2, indent.by="\t", JS.prefix=NULL, properties=NULL, default=NULL, join=NULL){
+paste.JS.var <- function(object, level=2, indent.by="\t", JS.prefix=NULL, modifiers=NULL, default=NULL, join=NULL, names.only=FALSE){
 	# paste several objects
-	results <- paste(unlist(sapply(object@vars, function(this.obj){
+	results <- unlist(sapply(object@vars, function(this.obj){
 			paste.JS.var(this.obj,
 					level=level,
 					indent.by=indent.by,
 					JS.prefix=JS.prefix,
-					properties=properties,
+					modifiers=modifiers,
 					default=default,
-					join=join)})),
-	collapse="")
+					join=join,
+					names.only=names.only)}))
+	if(!isTRUE(names.only)){
+		results <- paste(results, collapse="")
+	} else {}
 
 	stopifnot(inherits(object, "rk.JS.var"))
 	# check indentation
@@ -584,8 +590,8 @@ paste.JS.var <- function(object, level=2, indent.by="\t", JS.prefix=NULL, proper
 	if(is.null(JS.prefix)){
 		JS.prefix  <- object@prefix
 	} else {}
-	if(is.null(properties)){
-		properties  <- object@properties
+	if(is.null(modifiers)){
+		modifiers  <- object@modifiers
 	} else {}
 	if(is.null(default)){
 		default     <- object@default
@@ -602,20 +608,34 @@ paste.JS.var <- function(object, level=2, indent.by="\t", JS.prefix=NULL, proper
 
 	# only paste something if there's variables outside the 'vars' slot
 	if(length(nchar(JS.var)) > 0 & length(nchar(XML.var)) > 0){
-		if(length(properties) == 0 | isTRUE(default)){
-			results <- paste(results, main.indent, "var ", camelCode(c(JS.prefix, JS.var)), " = getValue(\"", XML.var, "\")", join.code, ";\n", sep="")
+		if(length(modifiers) == 0 | isTRUE(default)){
+			if(isTRUE(names.only)){
+				results <- c(results, camelCode(c(JS.prefix, JS.var)))
+			} else {
+				results <- paste(results, main.indent, "var ", camelCode(c(JS.prefix, JS.var)), " = getValue(\"", XML.var, "\")", join.code, ";", sep="")
+			}
 		} else {}
-		if(length(properties) > 0){
-			# check properties
-			properties <- properties[prop.validity(source="all", property=properties, ignore.empty=TRUE, warn.only=TRUE, bool=TRUE)]
+		if(length(modifiers) > 0){
+			# check modifiers
+			modifiers <- modifiers[modif.validity(source="all", modifier=modifiers, ignore.empty=TRUE, warn.only=TRUE, bool=TRUE)]
 			results <- c(results,
-				sapply(properties, function(this.prop){
-					paste(main.indent, "var ", camelCode(c(JS.prefix, JS.var, this.prop)), " = getValue(\"", XML.var, ".", this.prop, "\")", join.code, ";\n", sep="")
+				sapply(modifiers, function(this.modif){
+					if(isTRUE(names.only)){
+						return(camelCode(c(JS.prefix, JS.var, this.modif)))
+					} else {
+						return(paste(main.indent, "var ", camelCode(c(JS.prefix, JS.var, this.modif)),
+							" = getValue(\"", XML.var, ".", this.modif, "\")", join.code, ";", sep=""))
+					}
 				})
 			)
 		}
 	} else {}
 
-	results <- paste(results, collapse="")
+	if(isTRUE(names.only)){
+		results <- c(results)
+	} else {
+		results <- paste(results, collapse="")
+	}
+	
 	return(results)
-} ## end function paste.JS.options()
+} ## end function paste.JS.var()

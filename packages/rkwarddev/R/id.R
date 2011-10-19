@@ -43,19 +43,11 @@ id <- function(..., quote=FALSE, collapse="", js=TRUE){
 				return(node.id)
 			} else if(inherits(this.part, "rk.JS.var")){
 				# can hold multiple IDs, but we'll only return the first valid one
-				node.id <- this.part@JS.var
-				if(length(node.id) > 0){
-					if(length(this.part@vars) > 0){
-						warning(paste("Object contained more than one ID, only the first one was used: ", node.id, sep=""), call.=FALSE)
-					} else {}
-				} else {
-					if(length(this.part@vars) > 0){
-							node.id <- this.part@vars[[1]]@JS.var
-						if(length(this.part@vars) > 1){
-							warning(paste("Object contained more than one ID, only the first one was used: ", node.id, sep=""), call.=FALSE)
-						} else {}
-					} else {}
-				}
+				node.id <- paste.JS.var(this.part, names.only=TRUE)
+				if(length(node.id) > 1){
+					node.id <- node.id[1]
+					warning(paste("Object contained more than one ID, only the first one was used: ", node.id, sep=""), call.=FALSE)
+				} else {}
 				return(node.id)
 			} else {
 				if(isTRUE(quote)){

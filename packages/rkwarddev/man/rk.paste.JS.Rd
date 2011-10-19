@@ -3,7 +3,7 @@
 \title{Paste JavaScript objects and character strings}
 \usage{
   rk.paste.JS(..., level = 2, indent.by = "\t", funct =
-  NULL, array = NULL, var.prefix = NULL, properties = NULL,
+  NULL, array = NULL, var.prefix = NULL, modifiers = NULL,
   default = NULL, join = NULL)
 }
 \arguments{
@@ -29,14 +29,14 @@
   character string. will be used as a prefix for the JS
   variable names.}
 
-  \item{properties}{For \code{rk.JS.var} objects only: A
-  character vector with properties you'd like to get of the
-  XML node.}
+  \item{modifiers}{For \code{rk.JS.var} objects only: A
+  character vector with modifiers you'd like to apply the
+  XML node's property.}
 
   \item{default}{For \code{rk.JS.var} objects only:
   Logical, if \code{TRUE} the default value (no special
-  property) of the node will also be defined. Does nothing
-  if \code{properties=NULL}.}
+  modifier) of the node will also be defined. Does nothing
+  if \code{modifiers=NULL}.}
 
   \item{join}{For \code{rk.JS.var} objects only: A
   character string, useful for GUI elements which accept
@@ -50,6 +50,10 @@
 }
 \description{
   Paste JavaScript objects and character strings
+}
+\note{
+  To get a list of the implemented modifiers in this
+  package, call \code{rkwarddev:::all.valid.modifiers}.
 }
 \seealso{
   \code{\link[rkwarddev:rk.JS.array]{rk.JS.array}},

@@ -1,5 +1,7 @@
 #' Paste JavaScript objects and character strings
 #'
+#' @note To get a list of the implemented modifiers in this package, call \code{rkwarddev:::all.valid.modifiers}.
+#'
 #' @param ... Objects of class \code{rk.JS.ite}, \code{rk.JS.arr}, \code{rk.JS.opt} or character.
 #' @param level Integer, which indentation level to use, minimum is 1.
 #' @param indent.by A character string defining the indentation string to use.
@@ -9,9 +11,9 @@
 #'		in an array or a concatenated character string.
 #' @param var.prefix For \code{rk.JS.var} objects only: A character string. will be used as a prefix
 #'		for the JS variable names.
-#' @param properties For \code{rk.JS.var} objects only: A character vector with properties you'd like to get of the XML node.
-#' @param default For \code{rk.JS.var} objects only: Logical, if \code{TRUE} the default value (no special property) of the node will
-#'		also be defined. Does nothing if \code{properties=NULL}.
+#' @param modifiers For \code{rk.JS.var} objects only: A character vector with modifiers you'd like to apply the XML node's property.
+#' @param default For \code{rk.JS.var} objects only: Logical, if \code{TRUE} the default value (no special modifier) of the node will
+#'		also be defined. Does nothing if \code{modifiers=NULL}.
 #' @param join For \code{rk.JS.var} objects only: A character string, useful for GUI elements which accept multiple objects
 #'		(i.e., multi-varslots). If \code{join} is something other than \code{""}, these objects will be collapsed into one string
 #'		when pasted, joined by this string.
@@ -29,7 +31,7 @@
 #' @export
 
 rk.paste.JS <- function(..., level=2, indent.by="\t", funct=NULL, array=NULL,
-	var.prefix=NULL, properties=NULL, default=NULL, join=NULL){
+	var.prefix=NULL, modifiers=NULL, default=NULL, join=NULL){
 	stopifnot(level > 0)
 	all.objects <- list(...)
 
@@ -44,7 +46,7 @@ rk.paste.JS <- function(..., level=2, indent.by="\t", funct=NULL, array=NULL,
 			result <- paste.JS.options(this.object, level=level, indent.by=indent.by, array=array, funct=funct)
 		} else if(inherits(this.object, "rk.JS.var")){
 			result <- paste.JS.var(this.object, level=level, indent.by=indent.by, JS.prefix=var.prefix,
-				properties=properties, default=default, join=join)
+				modifiers=modifiers, default=default, join=join)
 		} else {
 			result <- paste(indent(level, by=indent.by), this.object, sep="")
 		}

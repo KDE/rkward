@@ -2,7 +2,7 @@
 \alias{rk.JS.vars}
 \title{Define variables in JavaScript code}
 \usage{
-  rk.JS.vars(..., var.prefix = NULL, properties = NULL,
+  rk.JS.vars(..., var.prefix = NULL, modifiers = NULL,
   default = FALSE, join = "")
 }
 \arguments{
@@ -14,12 +14,12 @@
   \item{var.prefix}{A character string. will be used as a
   prefix for the JS variable names.}
 
-  \item{properties}{A character vector with properties
-  you'd like to get of the XML node.}
+  \item{modifiers}{A character vector with modifiers you'd
+  like to apply to the XML node property.}
 
   \item{default}{Logical, if \code{TRUE} the default value
-  (no special property) of the node will also be defined.
-  Does nothing if \code{properties=NULL}.}
+  (no special modifier) of the node will also be defined.
+  Does nothing if \code{modifiers=NULL}.}
 
   \item{join}{A character string, useful for GUI elements
   which accept multiple objects (i.e., multi-varslots). If
@@ -32,6 +32,10 @@
 }
 \description{
   Define variables in JavaScript code
+}
+\note{
+  To get a list of the implemented modifiers in this
+  package, call \code{rkwarddev:::all.valid.modifiers}.
 }
 \examples{
 # create three checkboxes

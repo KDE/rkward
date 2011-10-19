@@ -11,10 +11,12 @@
   extracted and used).}
 
   \item{set}{Character string, can be one of the following
-  values: \itemize{ \item{\code{"enabled"}}{Set the
-  \code{id} enabled state.} \item{\code{"visible"}}{Set the
-  \code{id} visibility state.} \item{\code{"required"}}{Set
-  the \code{id} requirement state.} }}
+  values: \itemize{ \item{\code{"state"}}{Set the \code{id}
+  boolean state.} \item{\code{"string"}}{Set the \code{id}
+  string value.} \item{\code{"enabled"}}{Set the \code{id}
+  enabled state.} \item{\code{"visible"}}{Set the \code{id}
+  visibility state.} \item{\code{"required"}}{Set the
+  \code{id} requirement state.} }}
 
   \item{to}{Character string or logical, the value the
   property should be set to.}

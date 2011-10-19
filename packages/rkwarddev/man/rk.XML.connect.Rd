@@ -2,8 +2,8 @@
 \alias{rk.XML.connect}
 \title{Create XML node "connect" for RKWard plugins}
 \usage{
-  rk.XML.connect(governor, client, set = "enabled", not =
-  FALSE, reconcile = FALSE)
+  rk.XML.connect(governor, client, get = "state", set =
+  "enabled", not = FALSE, reconcile = FALSE)
 }
 \arguments{
   \item{governor}{Either a character string (the \code{id}
@@ -11,22 +11,21 @@
   \code{client}), or an object of class \code{XiMpLe.node}
   (whose \code{id} will be extracted and used). Usually a
   \code{<convert>} node defined earlier (see
-  \code{\link[rkwarddev:rk.XML.convert]{rk.XML.convert}}),
-  or the ".state" value of some apropriate node.}
+  \code{\link[rkwarddev:rk.XML.convert]{rk.XML.convert}}).}
 
   \item{client}{Character string, the \code{id} if the
   element to be controlled by \code{governor}.}
 
+  \item{get}{Character string, a valid modifier for the
+  node property of \code{governor}, often the ".state"
+  value of some apropriate node.}
+
+  \item{set}{Character string, a valid modifier for the
+  node property of \code{client}, usually one of
+  \code{"enabled"}, \code{"visible"} or \code{"required"}.}
+
   \item{not}{Logical, if \code{TRUE}, the state of
   \code{governor} (\code{TRUE/FALSE}) will be inversed.}
-
-  \item{set}{Character string, one of the following values:
-  \itemize{ \item{\code{"enabled"}}{If \code{governor}
-  becomes true, \code{client} is enabled.}
-  \item{\code{"visible"}}{If \code{governor} becomes true,
-  \code{client} is visible.} \item{\code{"required"}}{If
-  \code{governor} becomes true, \code{client} is required.}
-  }}
 
   \item{reconcile}{Logical, forces the \code{governor} to
   only accept values which are valid for the \code{client}
@@ -39,7 +38,11 @@
   If you define a \code{XiMpLe.node} object as
   \code{governor} which is not a \code{<convert>} node and
   \code{not=FALSE}, the function will automatically append
-  ".state" to its \code{id}.
+  to its \code{id}.
+}
+\note{
+  To get a list of the implemented modifiers in this
+  package, call \code{rkwarddev:::all.valid.modifiers}.
 }
 \examples{
 test.connect <- rk.XML.connect(governor="lgc_foobar", client="frame_bar")
