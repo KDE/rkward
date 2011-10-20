@@ -31,7 +31,7 @@
 
 // statics
 RKRBackend *RKRBackend::this_pointer = 0;
-RKRBackend::RKReplStatus RKRBackend::repl_status = { QByteArray (), 0, true, 0, 0, RKRBackend::RKReplStatus::NoUserCommand, 0, false, false };
+RKRBackend::RKReplStatus RKRBackend::repl_status = { QByteArray (), 0, true, 0, 0, RKRBackend::RKReplStatus::NoUserCommand, 0, RKRBackend::RKReplStatus::NotInBrowserContext, false };
 void* RKRBackend::default_global_context = 0;
 
 #include <qstring.h>
@@ -195,7 +195,7 @@ Rboolean RKToplevelStatementFinishedCallback (SEXP expr, SEXP value, Rboolean su
 	Q_UNUSED (value);
 	Q_UNUSED (visible);
 
-	if ((RKRBackend::repl_status.eval_depth == 0) && (!RKRBackend::repl_status.in_browser_context)) {		// Yes, toplevel-handlers _do_ get called in a browser context!
+	if ((RKRBackend::repl_status.eval_depth == 0) && (!RKRBackend::repl_status.browser_context)) {		// Yes, toplevel-handlers _do_ get called in a browser context!
 		RK_ASSERT (RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::UserCommandRunning);
 		if (succeeded) {
 			RKRBackend::repl_status.user_command_successful_up_to = RKRBackend::repl_status.user_command_parsed_up_to;
@@ -265,14 +265,14 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 	RK_ASSERT (buf && buflen);
 	RK_ASSERT (RKRBackend::repl_status.eval_depth >= 0);
 
-	if (RKRBackend::repl_status.in_browser_context) {		// previously we were in a browser context. Check, whether we've left that.
+	if (RKRBackend::repl_status.browser_context) {		// previously we were in a browser context. Check, whether we've left that.
 		if (RKRBackend::default_global_context == R_GlobalContext) {
-			RKRBackend::repl_status.in_browser_context = false;
-			RK_ASSERT (!hist);
+			RKRBackend::repl_status.browser_context = RKRBackend::RKReplStatus::NotInBrowserContext;
+			RKRBackend::this_pointer->handlePlainGenericRequest (QStringList ("endBrowserContext"), false);
 		}
 	}
 	
-	if ((!RKRBackend::repl_status.in_browser_context) && (RKRBackend::repl_status.eval_depth == 0)) {
+	if ((!RKRBackend::repl_status.browser_context) && (RKRBackend::repl_status.eval_depth == 0)) {
 		while (1) {
 			if (RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::NoUserCommand) {
 				RCommandProxy *command = RKRBackend::this_pointer->fetchNextCommand ();
@@ -371,14 +371,38 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 
 	// here, we handle readline() calls and such, i.e. not the regular prompt for code
 	// browser() also takes us here.
+	QVariantMap params;
+	RBackendRequest::RCallbackType request_type = RBackendRequest::ReadLine;
+	params["prompt"] = QVariant (prompt);
+	params["cancelled"] = QVariant (false);
+
+	// add info for browser requests
 	if (hist && (RKRBackend::default_global_context != R_GlobalContext)) {
-		// TODO: give browser() special handling!
-		RKRBackend::repl_status.in_browser_context = true;
+		if (RKRBackend::repl_status.browser_context == RKRBackend::RKReplStatus::InBrowserContextPreventRecursion) {
+			qstrncpy ((char *) buf, "n\n", buflen);	// skip this, by feeding the browser() a continue
+			return 1;
+		} else {
+			RKRBackend::repl_status.browser_context = RKRBackend::RKReplStatus::InBrowserContextPreventRecursion;
+			RCommandProxy *dummy = RKRBackend::this_pointer->runDirectCommand (".rk.callstack.info()", RCommand::GetStructuredData);
+
+			request_type = RBackendRequest::Debugger;
+			if ((dummy->getDataType () == RData::StructureVector) && (dummy->getDataLength () >= 4)) {
+				params["calls"] = QVariant (dummy->getStructureVector ()[0]->getStringVector ());
+				params["funs"] = QVariant (dummy->getStructureVector ()[1]->getStringVector ());
+				params["envs"] = QVariant (dummy->getStructureVector ()[2]->getStringVector ());
+				params["locals"] = QVariant (dummy->getStructureVector ()[3]->getStringVector ());
+			} else {
+				RK_ASSERT (false);
+			}
+
+			RKRBackend::repl_status.browser_context = RKRBackend::RKReplStatus::InBrowserContext;
+		}
+
+		RK_ASSERT (RKRBackend::repl_status.browser_context == RKRBackend::RKReplStatus::InBrowserContext);
 	}
 
-	RBackendRequest request (true, RBackendRequest::ReadLine);
-	request.params["prompt"] = QVariant (prompt);
-	request.params["cancelled"] = QVariant (false);
+	RBackendRequest request (true, request_type);
+	request.params = params;
 
 	RKRBackend::this_pointer->handleRequest (&request);
 	if (request.params["cancelled"].toBool ()) {
@@ -427,7 +451,7 @@ void RWriteConsoleEx (const char *buf, int buflen, int type) {
 	RK_TRACE (RBACKEND);
 
 	// output while nothing else is running (including handlers?) -> This may be a syntax error.
-	if ((RKRBackend::repl_status.eval_depth == 0) && (!RKRBackend::repl_status.in_browser_context) && (!RKRBackend::this_pointer->isKilled ())) {
+	if ((RKRBackend::repl_status.eval_depth == 0) && (!RKRBackend::repl_status.browser_context) && (!RKRBackend::this_pointer->isKilled ())) {
 		if (RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::UserCommandTransmitted) {
 			// status UserCommandTransmitted might have been set from RKToplevelStatementFinishedHandler, too, in which case all is fine
 			// (we're probably inside another task handler at this point, then)
@@ -443,6 +467,7 @@ void RWriteConsoleEx (const char *buf, int buflen, int type) {
 	}
 
 	if (RKRBackend::this_pointer->killed == RKRBackend::AlreadyDead) return;	// this check is mostly for fork()ed clients
+	if (RKRBackend::repl_status.browser_context == RKRBackend::RKReplStatus::InBrowserContextPreventRecursion) return;
 	RKRBackend::this_pointer->fetchStdoutStderr (true);
 	RKRBackend::this_pointer->handleOutput (RKRBackend::this_pointer->current_locale_codec->toUnicode (buf, buflen), buflen, type == 0 ? ROutput::Output : ROutput::Warning);
 }
@@ -843,7 +868,7 @@ LibExtern int R_interrupts_pending;
 SEXP doError (SEXP call) {
 	RK_TRACE (RBACKEND);
 
-	if ((RKRBackend::repl_status.eval_depth == 0) && (!RKRBackend::repl_status.in_browser_context) && (!RKRBackend::this_pointer->isKilled ()) && (RKRBackend::repl_status.user_command_status != RKRBackend::RKReplStatus::ReplIterationKilled)) {
+	if ((RKRBackend::repl_status.eval_depth == 0) && (!RKRBackend::repl_status.browser_context) && (!RKRBackend::this_pointer->isKilled ()) && (RKRBackend::repl_status.user_command_status != RKRBackend::RKReplStatus::ReplIterationKilled)) {
 		RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::UserCommandFailed;
 	}
 	if (RKRBackend::repl_status.interrupted) {

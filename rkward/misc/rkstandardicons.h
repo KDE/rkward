@@ -102,6 +102,8 @@ public:
 		WindowSearchHelp,
 		WindowPendingJobs,
 		WindowFileBrowser,
+		WindowDebugConsole,
+		WindowCallstackViewer,
 
 		DocumentPDF,
 

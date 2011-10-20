@@ -82,6 +82,8 @@
 #include "windows/rktoplevelwindowgui.h"
 #include "windows/rkfilebrowser.h"
 #include "windows/rktoolwindowlist.h"
+#include "windows/rkdebugconsole.h"
+#include "windows/rkcallstackviewer.h"
 #include "rkconsole.h"
 #include "debug.h"
 #include "version.h"
@@ -342,6 +344,15 @@ void RKWardMainWindow::initToolViewsAndR () {
 	RKHelpSearchWindow *help_search = new RKHelpSearchWindow (0, true);
 	RKHelpSearchWindow::main_help_search = help_search;
 	RKToolWindowList::registerToolWindow (help_search, "helpsearch", RKToolWindowList::Bottom, Qt::AltModifier + Qt::Key_6);
+
+	RKCallstackViewer::_instance = new RKCallstackViewer (0, true);
+	RKCallstackViewer::instance ()->setCaption (i18n ("Debugger Frames"));
+	RKToolWindowList::registerToolWindow (RKCallstackViewer::instance (), "debugframes", RKToolWindowList::Right, Qt::AltModifier + Qt::Key_8);
+
+	// HACK: Creating this _after_ the callstackviewer is important, so the debug console will end up the active window when entering a debug context
+	RKDebugConsole::_instance = new RKDebugConsole (0, true);
+	RKDebugConsole::instance ()->setCaption (i18n ("Debugger Console"));
+	RKToolWindowList::registerToolWindow (RKDebugConsole::instance (), "debugconsole", RKToolWindowList::Nowhere, Qt::AltModifier + Qt::Key_7);
 
 	RKWorkplace::mainWorkplace ()->placeToolWindows ();
 }

@@ -152,7 +152,12 @@ bool RKMDIWindow::close (bool also_delete) {
 		if (!isAttached ()) {
 			topLevelWidget ()->deleteLater ();
 			// flee the dying DetachedWindowContainer
-			RKWorkplace::mainWorkplace ()->attachWindow (this);
+			if (tool_window_bar) RKWorkplace::mainWorkplace ()->attachWindow (this);
+			else {
+				state = Attached;
+				hide ();
+				setParent (0);
+			}
 		}
 
 		if (tool_window_bar) tool_window_bar->hideWidget (this);

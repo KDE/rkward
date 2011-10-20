@@ -483,7 +483,9 @@ void RKCommandEditorWindow::insertText (const QString &text) {
 
 void RKCommandEditorWindow::setText (const QString &text) {
 	RK_TRACE (COMMANDEDITOR);
+	m_doc->setReadWrite (true);
 	m_doc->setText (text);
+	m_doc->setReadWrite (false);
 }
 
 void RKCommandEditorWindow::updateCaption (KTextEditor::Document*) {

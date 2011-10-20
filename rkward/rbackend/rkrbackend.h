@@ -160,7 +160,11 @@ handleHistoricalSubstackRequest(). Exactly which requests get handled by which f
 			ReplIterationKilled
 		} user_command_status;
 		int eval_depth;		// Number (depth) of non-user commands currently running. User commands can only run at depth 0
-		bool in_browser_context;
+		enum {
+			NotInBrowserContext = 0,
+			InBrowserContext,
+			InBrowserContextPreventRecursion
+		} browser_context;
 		bool interrupted;
 	};
 	static RKReplStatus repl_status;

@@ -44,6 +44,7 @@ public:
 		HistoricalSubstackRequest,
 		PlainGenericRequest,
 		SetParamsFromBackend,
+		Debugger,
 		CommandLineIn,	/**< The next line of the current user command has been submitted in the backend. */
 #ifndef RKWARD_THREADED
 		Output,		/**< A piece of output. Note: If the backend runs in a single process, output is handled in a pull fashion, instead of using requests. */

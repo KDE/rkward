@@ -36,6 +36,7 @@
 #include "../agents/showedittextfileagent.h"
 #include "../agents/rkeditobjectagent.h"
 #include "../agents/rkprintagent.h"
+#include "../agents/rkdebughandler.h"
 #include "../windows/rcontrolwindow.h"
 #include "../windows/rkworkplace.h"
 #include "../windows/rkcommandlog.h"
@@ -106,6 +107,7 @@ RInterface::RInterface () {
 	issueCommand (fake);
 
 	new RKSessionVars (this);
+	new RKDebugHandler (this);
 	new RKRBackendProtocolFrontend (this);
 	RKRBackendProtocolFrontend::instance ()->setupBackend ();
 
@@ -606,6 +608,8 @@ QStringList RInterface::processPlainGenericRequest (const QStringList &calllist)
 		}
 	} else if (call == "printPreview") {
 		RKPrintAgent::printPostscript (calllist.value (1), true);
+	} else if (call == "endBrowserContext") {
+		RKDebugHandler::instance ()->endDebug ();
 	} else {
 		return (QStringList ("Error: unrecognized request '" + call + "'."));
 	}
@@ -766,11 +770,15 @@ void RInterface::processRBackendRequest (RBackendRequest *request) {
 			dummy_command = true;
 		}
 
+
 		bool ok = RKReadLineDialog::readLine (0, i18n ("R backend requests information"), request->params["prompt"].toString (), command, &result);
 		request->params["result"] = QVariant (result);
 
 		if (dummy_command) delete command;
 		if (!ok) request->params["cancelled"] = QVariant (true);
+	} else if (type == RBackendRequest::Debugger) {
+		RKDebugHandler::instance ()->debugCall (request, runningCommand ());
+		return;		// request will be closed by the debug handler
 	} else if ((type == RBackendRequest::ShowFiles) || (type == RBackendRequest::EditFiles)) {
 		ShowEditTextFileAgent::showEditFiles (request);
 		return;		// we are not done, yet!

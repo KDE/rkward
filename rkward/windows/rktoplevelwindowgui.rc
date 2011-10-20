@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward_toplevel" version="560">
+<kpartgui name="rkward_toplevel" version="580">
 	<MenuBar>
 		<Merge/>
 		<Menu name="window"><text>&amp;Window</text>
@@ -16,6 +16,8 @@
 				<Action name="window_show_pendingjobs"/>
 				<Action name="window_show_console"/>
 				<Action name="window_show_helpsearch"/>
+				<Action name="window_show_debugconsole"/>
+				<Action name="window_show_debugframes"/>
 				<Separator/>
 				<Action name="window_activate_docview"/>
 			</Menu>

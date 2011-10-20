@@ -106,6 +106,8 @@ void RKStandardIcons::initIcons () {
 	icons[WindowSearchHelp] = KIcon ("help-contents");
 	icons[WindowPendingJobs] = KIcon ("system-run");
 	icons[WindowFileBrowser] = KIcon ("folder");
+	icons[WindowDebugConsole] = KIcon ("view-process-system");
+	icons[WindowCallstackViewer] = KIcon ("view-sort-ascending");
 
 	icons[DocumentPDF] = KIcon ("application-pdf");
 
@@ -165,6 +167,8 @@ QIcon RKStandardIcons::iconForWindow (const RKMDIWindow* window) {
 	if (window->isType (RKMDIWindow::SearchHelpWindow)) return icons[WindowSearchHelp];
 	if (window->isType (RKMDIWindow::PendingJobsWindow)) return icons[WindowPendingJobs];
 	if (window->isType (RKMDIWindow::FileBrowserWindow)) return icons[WindowFileBrowser];
+	if (window->isType (RKMDIWindow::DebugConsoleWindow)) return icons[WindowDebugConsole];
+	if (window->isType (RKMDIWindow::CallstackViewerWindow)) return icons[WindowCallstackViewer];
 
 	RK_ASSERT (false);
 	return QIcon ();

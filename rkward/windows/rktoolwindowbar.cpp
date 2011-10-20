@@ -170,6 +170,11 @@ void RKToolWindowBar::removeWidget (RKMDIWindow *widget) {
 	widget_to_id.remove (widget);
 	widget->tool_window_bar = 0;
 
+	if (widget->isAttached ()) {
+		widget->setParent (0);
+		widget->hide ();
+	}
+
 	if (was_active_in_bar) {
 		RK_ASSERT (widget->isAttached ());
 		container->hide ();
@@ -237,7 +242,8 @@ void RKToolWindowBar::tabClicked (int id) {
 	RK_ASSERT (widget);
 
 	if (widget->isActive ()) {
-		widget->close (false);
+		if (!widget->isAttached ()) widget->close (false);
+		else hideWidget (widget);
 	} else {
 		widget->activate (true);
 	}

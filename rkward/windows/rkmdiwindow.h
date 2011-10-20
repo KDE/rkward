@@ -53,9 +53,11 @@ public:
 		SearchHelpWindow=1 << 13,
 		PendingJobsWindow=1 << 14,
 		FileBrowserWindow=1 << 15,
+		DebugConsoleWindow=1 << 16,
+		CallstackViewerWindow=1 << 17,
 
-		DocumentWindow=1 << 20,
-		ToolWindow=1 << 21,
+		DocumentWindow=1 << 29,
+		ToolWindow=1 << 30,
 		AnyType=DocumentWindow | ToolWindow
 	};
 
