@@ -212,7 +212,7 @@ Function ValidateKDEPrefix
 	StrCpy $KDEPrefixOk "no"
 	StrCpy $1 ""
 	StrCpy $2 ""
-	StrCpy $Libktexteditor_dll_location $FileSelectCurrent\lib\libktexteditor.dll.a
+	StrCpy $Libktexteditor_dll_location $FileSelectCurrent\bin\libktexteditor.dll
 
 	IfFileExists $FileSelectCurrent\bin bindir_found
 		StrCpy $0 "Directory $FileSelectCurrent\bin does not exist"
@@ -302,6 +302,7 @@ section
 
 	setOutPath $INST_KDEPREFIX\bin
 	File "rkward.ico"
+	setOutPath %USERPROFILE%
 	CreateShortCut "$DESKTOP\RKWard.lnk" "$INST_KDEPREFIX\bin\rkward.bat" "" "$INST_KDEPREFIX\bin\rkward.ico"
 
 #	writeUninstaller $INST_KDEPREFIX\uninstaller.exe
