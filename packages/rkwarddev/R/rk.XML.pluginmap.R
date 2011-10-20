@@ -114,21 +114,30 @@ rk.XML.pluginmap <- function(name, about=NULL, components, hierarchy="test",
 		# get the IDs for hierarchy section
 		component.IDs <- sapply(components@children, function(this.comp){this.comp@attributes$id})
 	} else {
-		components.XML <- rk.XML.components(
-			as.list(sapply(components, function(this.comp){
-				# remove any directory names and .EXT endings
-				if(length(components) > 1) {
-					xml.basename <- gsub("(.*/)?([[:alnum:]_]*).+(.*)?", "\\2", this.comp, perl=TRUE)
+			components.XML.list <- list()
+			num.compos <- length(components)
+			compo.names <- names(components)
+			for (this.comp.num in 1:num.compos){
+				this.comp <- components[this.comp.num]
+				if(num.compos > 1) {
+					# let's see if we have entry names
+					if(length(compo.names) == length(components)){
+						xml.basename <- compo.names[this.comp.num]
+					} else {
+						# remove any directory names and .EXT endings
+						xml.basename <- gsub("(.*/)?([[:alnum:]_]*).+(.*)?", "\\2", this.comp, perl=TRUE)
+					}
 				} else {
 					xml.basename <- name.orig
 				}
-				rk.XML.component(
+				components.XML.list[[length(components.XML.list) + 1]] <- rk.XML.component(
 					label=xml.basename,
 					file=this.comp,
 					# if this ID get's a change, also change it in rk.plugin.skeleton(show=TRUE)!
 					id.name=auto.ids(paste(name, xml.basename, sep=""), prefix=ID.prefix("component"), chars=25))
-				}))
-		)
+				}
+		components.XML <- rk.XML.components(components.XML.list)
+
 		all.children[[length(all.children)+1]] <- components.XML
 		# get the IDs for hierarchy section
 		component.IDs <- sapply(components.XML@children, function(this.comp){this.comp@attributes$id})

@@ -131,14 +131,16 @@ rk.XML.about <- function(name, author, about=list(desc="SHORT_DESCRIPTION", vers
 			))
 	} else {
 		xml.package <- sapply(package, function(this.package){
+				pck.options <- names(this.package)
+				pck.attributes <- list(name=this.package[["name"]])
+				for (this.option in c("min", "max","repository" )){
+					if(this.option %in% pck.options){
+						pck.attributes[[this.option]] <- this.package[[this.option]]
+					} else {}
+				}
 				result <- new("XiMpLe.node",
 					name="package",
-					attributes=list(
-						name=this.package[["name"]],
-						"min_version"=this.package[["min"]],
-						"max_version"=this.package[["max"]],
-						repository=this.package[["repository"]]
-					))
+					attributes=pck.attributes)
 				return(result)
 			})
 	}
@@ -205,14 +207,23 @@ rk.XML.about <- function(name, author, about=list(desc="SHORT_DESCRIPTION", vers
 					value=""
 			)
 	} else {
+		dep.options <- names(dependencies)
+		dep.attributes <- list()
+		if("rkward.min" %in% dep.options){
+			dep.attributes[["rkward_min_version"]] <- dependencies[["rkward.min"]]
+		} else {}
+		if("rkward.max" %in% dep.options){
+			dep.attributes[["rkward_max_version"]] <- dependencies[["rkward.max"]]
+		} else {}
+		if("R.min" %in% dep.options){
+			dep.attributes[["R_min_verion"]] <- dependencies[["R.min"]]
+		} else {}
+		if("R.max" %in% dep.options){
+			dep.attributes[["R_max_verion"]] <- dependencies[["R.max"]]
+		} else {}
 		xml.dependencies <- new("XiMpLe.node",
 					name="dependencies",
-					attributes=list(
-						"rkward_min_version"=dependencies[["rkward.min"]],
-						"rkward_max_version"=dependencies[["rkward.max"]],
-						"R_min_verion"=dependencies[["R.min"]],
-						"R_max_verion"=dependencies[["R.max"]]
-					),
+					attributes=dep.attributes,
 					children=xml.package,
 					value=""
 			)
