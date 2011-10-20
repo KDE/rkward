@@ -64,6 +64,14 @@ DetachedWindowContainer::DetachedWindowContainer (RKMDIWindow *widget_to_capture
 // NOTE: If the window has not been shown, before, its geometry() is always 640*480, unconditionally.
 	setGeometry (widget_to_capture->frameGeometry ());
 	if (!widget_to_capture->isWindow ()) move (widget_to_capture->mapToGlobal (widget_to_capture->pos ()));
+#ifdef Q_WS_WIN
+	// fix for detached tool windows positioned with the frame outside the screen
+	ensurePolished ();
+	QPoint adjust = pos ();
+	if (adjust.x () < 0) adjust.setX (0);
+	if (adjust.y () < 0) adjust.setY (0);
+	if (adjust != pos ()) move (adjust);
+#endif
 	widget_to_capture->setParent (this);
 	setCentralWidget (widget_to_capture);
 	widget_to_capture->show ();

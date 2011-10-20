@@ -1,3 +1,4 @@
+- Fixed: On Windows, detached windows would sometimes be positioned with the menubar outside the upper screen edge
 - Add GUI support for inspecting the call stack during debugging
 - The backend executable is no longer linked against KDE libraries
 - Objects, which are not acceptable in a varslot, will still be shown, there, with a warning		TODO: add a UI to override
