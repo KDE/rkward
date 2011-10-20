@@ -14,8 +14,8 @@ LazyLoad: yes
 URL: http://rkward.sourceforge.net
 Authors@R: c(person(given="Meik", family="Michalke",
     email="meik.michalke@hhu.de", role=c("aut", "cre")))
-Version: 0.04-0
-Date: 2011-10-19
+Version: 0.04-1
+Date: 2011-10-20
 Collate:
     'echo.R'
     'id.R'
@@ -34,9 +34,12 @@ Collate:
     'rk.JS.var-class.R'
     'rk.JS.vars.R'
     'rk.paste.JS.R'
+    'rk.rkh.doc.R'
+    'rk.XML.plugin.R'
+    'rk.plug.comp-class.R'
+    'rk.plugin.component.R'
     'rk.plugin.skeleton.R'
     'rk.rkh.caption.R'
-    'rk.rkh.doc.R'
     'rk.rkh.link.R'
     'rk.rkh.related.R'
     'rk.rkh.scan.R'
@@ -78,7 +81,6 @@ Collate:
     'rk.XML.menu.R'
     'rk.XML.page.R'
     'rk.XML.pluginmap.R'
-    'rk.XML.plugin.R'
     'rk.XML.preview.R'
     'rk.XML.radio.R'
     'rk.XML.require.R'

@@ -1,5 +1,10 @@
 ChangeLog for package rkwarddev
 
+## 0.04-1 (2011-10-20)
+  - added "about" option to rk.XML.plugin() to overrule pluginmap defaults
+  - added rk.plugin.component(), i.e. modularized the component generation, to allow for more than one
+    component in rk.plugin.skeleton(), wich subsequently gained the new option "components"
+
 ## 0.04-0 (2011-10-19)
   - for accurcy and consistency with the docs, the "properties" option changed to "modifiers" in rk.JS.vars()
   - added further property modifiers to the internal validation

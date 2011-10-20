@@ -18,6 +18,9 @@
 #' @param label Character string, a text label for the plugin's top level, i.e. the window title of the dialog.
 #'		Will only be used if \code{dialog} or \code{wizard} are \code{NULL}.
 #' @param clean.name Logical, if \code{TRUE}, all non-alphanumeric characters except the underscore (\code{"_"}) will be removed from \code{name}.
+#' @param about An object of class \code{XiMpLe.node} with descriptive information on the plugin, its authors and dependencies,
+#'		see \code{link[XiMpLe:rk.XML.about]{rk.XML.about}} for details. Only useful for information that differs from the \code{<about>}
+#'		section of the \code{.pluginmap} file. Skipped if \code{NULL}.
 #' @return An object of class \code{XiMpLe.doc}.
 #' @export
 #' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
@@ -36,7 +39,7 @@
 #' test.plugin <- rk.XML.plugin("My test", dialog=test.tabbook)
 #' cat(pasteXMLTree(test.plugin))
 
-rk.XML.plugin <- function(name, dialog=NULL, wizard=NULL, logic=NULL, snippets=NULL, provides=NULL, help=TRUE, pluginmap=NULL, label=NULL, clean.name=TRUE){
+rk.XML.plugin <- function(name, dialog=NULL, wizard=NULL, logic=NULL, snippets=NULL, provides=NULL, help=TRUE, pluginmap=NULL, label=NULL, clean.name=TRUE, about=NULL){
 	if(isTRUE(clean.name)){
 		name.orig <- name
 		name <- clean.name(name)
@@ -50,6 +53,20 @@ rk.XML.plugin <- function(name, dialog=NULL, wizard=NULL, logic=NULL, snippets=N
 
 	if(!is.null(pluginmap)){
 		all.children[[length(all.children)+1]] <- rk.XML.include(file=pluginmap)
+	} else {}
+
+	if(!is.null(about)){
+		if(inherits(about, "XiMpLe.node")){
+			about.node.name <- about@name
+			# check if this is *really* a about section, otherwise quit and go dancing
+			if(!identical(about.node.name, "about")){
+				stop(simpleError("I don't know what this is, but 'about' is not an about section!"))
+			} else {
+				all.children[[length(all.children)+1]] <- about
+			}
+		} else {
+			stop(simpleError("'about' must be a XiMpLe.node, see ?rk.XML.about()!"))
+		}
 	} else {}
 
 	if(!is.null(snippets)){

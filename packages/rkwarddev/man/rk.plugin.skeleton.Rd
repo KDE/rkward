@@ -7,8 +7,8 @@
   "saveobj", "settings"), xml = list(), js = list(),
   pluginmap = list(), rkh = list(), overwrite = FALSE,
   tests = TRUE, lazyLoad = TRUE, create = c("pmap", "xml",
-  "js", "rkh", "desc"), edit = FALSE, load = FALSE, show =
-  FALSE, indent.by = "\t")
+  "js", "rkh", "desc"), components = list(), edit = FALSE,
+  load = FALSE, show = FALSE, indent.by = "\t")
 }
 \arguments{
   \item{name}{Character sting, name of the plugin package.}
@@ -128,7 +128,8 @@
   \item{show}{Logical, if \code{TRUE} and \code{"pmap"} in
   \code{create}, RKWard will automatically call the created
   plugin after it was loaded (i.e., this implies and also
-  sets \code{load=TRUE}).}
+  sets \code{load=TRUE}). This will only work on the main
+  component, though.}
 
   \item{indent.by}{A character string defining the
   indentation string to use.}
@@ -138,7 +139,12 @@
   directory.
 }
 \description{
-  Generate skeletons for RKWard plugins
+  With this function you can write everything from a basic
+  skeleton structure to a complete functional plugin,
+  including several components/dialogs. You should always
+  define one main component (by \code{xml}, \code{js},
+  \code{rkh} etc.) before you provide additional features
+  by \code{components}.
 }
 \examples{
 \dontrun{

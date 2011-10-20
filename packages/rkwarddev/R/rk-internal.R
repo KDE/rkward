@@ -12,6 +12,7 @@ auto.ids <- function(identifiers, prefix=NULL, suffix=NULL, chars=8){
 	return(ids)
 } ## end function auto.ids()
 
+
 ## function child.list()
 # convenience function to let single children be provided without list()
 child.list <- function(children){
@@ -28,6 +29,7 @@ child.list <- function(children){
 	return(children)
 } ## end function child.list()
 
+
 ## function trim()
 # cuts off space at start and end of a character string
 trim <- function(char){
@@ -36,11 +38,25 @@ trim <- function(char){
 	return(char)
 } ## end function trim()
 
+
 ## function indent()
 # will create tabs to format the output
 indent <- function(level, by="\t"){
 	paste(rep(by, level-1), collapse="")
 } ## end function indent()
+
+
+## function checkCreateFiles()
+# used by rk.plugin.skeleton()
+checkCreateFiles <- function(file.name, ow){
+	if(all(file.exists(file.name), as.logical(ow)) | !file.exists(file.name)){
+		return(TRUE)
+	} else {
+		warning(paste("Skipping existing file ", file.name, ".", sep=""))
+		return(FALSE)
+	}
+} ## end function checkCreateFiles()
+
 
 ## function get.single.tags()
 get.single.tags <- function(XML.obj, drop=NULL){
@@ -118,6 +134,7 @@ get.IDs <- function(single.tags, relevant.tags, add.abbrev=FALSE, tag.names=FALS
 	return(ids)
 } ## end function get.IDs()
 
+
 ## function camelCode()
 # changes the first letter of each string
 # (except for the first one) to upper case
@@ -138,6 +155,7 @@ camelCode <- function(words){
 
 	return(results)
 } ## end function camelCode()
+
 
 ## function get.JS.vars()
 #   <tag id="my.id" ...>
@@ -204,6 +222,7 @@ get.JS.vars <- function(JS.var, XML.var=NULL, JS.prefix="", names.only=FALSE, mo
 	return(results)
 } ## end function get.JS.vars()
 
+
 ## function ID.prefix()
 ID.prefix <- function(initial, abbr=TRUE, length=3, dot=FALSE){
 	if(isTRUE(abbr)){
@@ -220,6 +239,7 @@ ID.prefix <- function(initial, abbr=TRUE, length=3, dot=FALSE){
 	return(prfx)
 } ## end function ID.prefix()
 
+
 ## function node.soup()
 # pastes the nodes as XML, only alphanumeric characters, e.g. to generate auto-IDs
 node.soup <- function(nodes){
@@ -232,6 +252,7 @@ node.soup <- function(nodes){
 		})), sep="", collapse="")
 	return(the.soup)
 } ## end function node.soup()
+
 
 ## function XML2person()
 # extracts the person/author info from XML "about" nodes
@@ -273,6 +294,7 @@ XML2person <- function(node, eval=FALSE){
 	return(all.authors)
 } ## end function XML2person()
 
+
 ## function get.by.role()
 # filters a vector with person objects by roles
 get.by.role <- function(persons, role="aut"){
@@ -280,6 +302,7 @@ get.by.role <- function(persons, role="aut"){
 	filtered.persons <- Filter(role.filter, persons)
 	return(filtered.persons)
 } ## end function get.by.role()
+
 
 ## function check.ID()
 check.ID <- function(node){
@@ -304,6 +327,7 @@ check.ID <- function(node){
 	return(node.ID)
 } ## end function check.ID()
 
+
 ## list with valid modifiers
 all.valid.modifiers <- list(
 	all=c("visible", "enabled", "required", "true", "false", "not", "numeric",
@@ -324,6 +348,7 @@ all.valid.modifiers <- list(
 	embed=c("code"),
 	preview=c("state")
 ) ## end list with valid modifiers
+
 
 ## function modif.validity()
 # checks if a modifier is valid for an XML node, if source is XiMpLe.node
@@ -380,6 +405,7 @@ modif.validity <- function(source, modifier, ignore.empty=TRUE, warn.only=TRUE, 
 	}
 } ## end function modif.validity()
 
+
 ## function check.type()
 check.type <- function(value, type, var.name, warn.only=TRUE){
 	if(inherits(value, type)){
@@ -394,6 +420,7 @@ check.type <- function(value, type, var.name, warn.only=TRUE){
 	}
 } ## end function check.type()
 
+
 ## function clean.name()
 clean.name <- function(name, message=TRUE){
 	name.orig <- name
@@ -405,6 +432,7 @@ clean.name <- function(name, message=TRUE){
 	} else {}
 	return(name)
 } ## end function clean.name()
+
 
 ## function paste.JS.ite()
 paste.JS.ite <- function(object, level=1, indent.by="\t", recurse=FALSE){
@@ -435,6 +463,7 @@ paste.JS.ite <- function(object, level=1, indent.by="\t", recurse=FALSE){
 
 	return(result)
 } ## end function paste.JS.ite()
+
 
 ## function paste.JS.array()
 paste.JS.array <- function(object, level=2, indent.by="\t", funct=NULL){
@@ -479,6 +508,7 @@ paste.JS.array <- function(object, level=2, indent.by="\t", funct=NULL){
 
 	return(JS.array)
 } ## end function paste.JS.array()
+
 
 ## function paste.JS.options()
 paste.JS.options <- function(object, level=2, indent.by="\t", array=NULL, funct=NULL){
@@ -564,6 +594,7 @@ paste.JS.options <- function(object, level=2, indent.by="\t", array=NULL, funct=
 
 	return(JS.options)
 } ## end function paste.JS.options()
+
 
 ## function paste.JS.var()
 paste.JS.var <- function(object, level=2, indent.by="\t", JS.prefix=NULL, modifiers=NULL, default=NULL, join=NULL, names.only=FALSE){

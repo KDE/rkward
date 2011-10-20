@@ -1,4 +1,8 @@
 #' Generate skeletons for RKWard plugins
+#' 
+#' With this function you can write everything from a basic skeleton structure to a complete functional plugin, including several
+#' components/dialogs. You should always define one main component (by \code{xml}, \code{js}, \code{rkh} etc.) before you provide
+#' additional features by \code{components}.
 #'
 #' @param name Character sting, name of the plugin package.
 #' @param about An object of class \code{XiMpLe.node} with descriptive information on the plugin, its authors and dependencies,
@@ -53,7 +57,7 @@
 #' @param load Logical, if \code{TRUE} and \code{"pmap"} in \code{create}, RKWard will automatically add the created .pluginmap file
 #'		to its menu structure by calling \code{rk.load.pluginmaps}. You can then try the plugin immediately.
 #' @param show Logical, if \code{TRUE} and \code{"pmap"} in \code{create}, RKWard will automatically call the created plugin after
-#'		it was loaded (i.e., this implies and also sets \code{load=TRUE}).
+#'		it was loaded (i.e., this implies and also sets \code{load=TRUE}). This will only work on the main component, though.
 #' @param indent.by A character string defining the indentation string to use.
 #' @return Character string with the path to the plugin root directory.
 #' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
@@ -123,7 +127,7 @@ rk.plugin.skeleton <- function(name, about=NULL, path=tempdir(),
 	xml=list(), js=list(), pluginmap=list(), rkh=list(),
 	overwrite=FALSE, tests=TRUE, lazyLoad=TRUE,
 	create=c("pmap", "xml", "js", "rkh", "desc"),
-	edit=FALSE, load=FALSE, show=FALSE, indent.by="\t"){
+	components=list(), edit=FALSE, load=FALSE, show=FALSE, indent.by="\t"){
 	# to besure, remove all non-character symbols from name
 	name.orig <- name
 	name <- clean.name(name)
@@ -153,26 +157,11 @@ rk.plugin.skeleton <- function(name, about=NULL, path=tempdir(),
 	plugin.dir <- file.path(rkward.dir, "plugins")
 	# the basic file names
 	plugin.fname.pluginmap <- paste(name, ".pluginmap", sep="")
-	plugin.fname.xml <- paste(name, ".xml", sep="")
-	plugin.fname.js <- paste(name, ".js", sep="")
-	plugin.fname.rkh <- paste(name, ".rkh", sep="")
 	# file names with paths
 	plugin.pluginmap <- file.path(rkward.dir, plugin.fname.pluginmap)
-	plugin.xml <- file.path(plugin.dir, plugin.fname.xml)
-	plugin.js <- file.path(plugin.dir, plugin.fname.js)
-	plugin.rkh <- file.path(plugin.dir, plugin.fname.rkh)
 	tests.main.dir <- file.path(rkward.dir, "tests")
 	tests.dir <- file.path(rkward.dir, "tests", name)
 	testsuite.file <- file.path(tests.main.dir, "testsuite.R")
-
-	checkCreateFiles <- function(file.name, ow=overwrite){
-		if(all(file.exists(file.name), as.logical(ow)) | !file.exists(file.name)){
-			return(TRUE)
-		} else {
-			warning(paste("Skipping existing file ", file.name, ".", sep=""))
-			return(FALSE)
-		}
-	}
 
 	# check if we can access the given root directory
 	# create it, if necessary
@@ -191,127 +180,97 @@ rk.plugin.skeleton <- function(name, about=NULL, path=tempdir(),
 		message(paste("Created directory ", tests.dir, ".", sep=""))
 	} else {}
 
-	## create plugin.xml
-	if("xml" %in% create){
-		if(isTRUE(checkCreateFiles(plugin.xml))){
-			got.XML.options <- names(xml)
-			for (this.opt in c("dialog", "wizard", "logic", "snippets")){
-				if(!this.opt %in% got.XML.options) {
-					xml[[this.opt]] <- eval(formals(rk.XML.plugin)[[this.opt]])
-				} else {}
-			}
-			XML.plugin <- rk.XML.plugin(
-				name=name,
-				label=name.orig,
-				dialog=xml[["dialog"]],
-				wizard=xml[["wizard"]],
-				logic=xml[["logic"]],
-				snippets=xml[["snippets"]],
-				provides=provides,
-				pluginmap=paste("../", name, ".pluginmap", sep=""))
-			cat(pasteXMLTree(XML.plugin, shine=1, indent.by=indent.by), file=plugin.xml)
+	## create the main component
+	got.pm.options <- names(pluginmap)
+	if(!"hierarchy" %in% got.pm.options) {
+		pluginmap[["hierarchy"]] <- eval(formals(rk.XML.pluginmap)[["hierarchy"]])
+	} else {}
+	main.component <- rk.plugin.component(
+		name=name.orig,
+		xml=xml,
+		js=js,
+		rkh=rkh,
+		provides=provides,
+		scan=scan,
+		hierarchy=pluginmap[["hierarchy"]],
+		pluginmap=paste("../", name, ".pluginmap", sep=""),
+		create=create[create %in% c("xml", "js", "rkh")],
+		indent.by=indent.by)
+	components[[length(components)+1]] <- main.component
+
+	# check for components
+	sapply(components, function(this.comp){
+		if(!inherits(this.comp, "rk.plug.comp")){
+			warning("An element of list 'components' was not of class rk.plug.comp and ignored!", call.=FALSE)
 		} else {
-			# set a variable for the other sections to use as XML input
-			XML.plugin <- plugin.xml
+			comp.name <- clean.name(this.comp@name)
+			create <- this.comp@create
+			XML.plugin <- this.comp@xml
+			JS.code <- this.comp@js
+			rkh.doc <- this.comp@rkh
+
+			# the basic file names
+			plugin.fname.xml <- paste(comp.name, ".xml", sep="")
+			plugin.fname.js <- paste(comp.name, ".js", sep="")
+			plugin.fname.rkh <- paste(comp.name, ".rkh", sep="")
+			# file names with paths
+			plugin.xml <- file.path(plugin.dir, plugin.fname.xml)
+			plugin.js <- file.path(plugin.dir, plugin.fname.js)
+			plugin.rkh <- file.path(plugin.dir, plugin.fname.rkh)
+
+			## create plugin.xml
+			if("xml" %in% create){
+				if(isTRUE(checkCreateFiles(plugin.xml, ow=overwrite))){
+					cat(pasteXMLTree(XML.plugin, shine=1, indent.by=indent.by), file=plugin.xml)
+				} else {}
+				if(isTRUE(edit)){
+					rk.edit.files(plugin.xml, title=plugin.fname.xml, prompt=FALSE)
+				} else {}
+			} else {}
+
+			## create plugin.js
+			if("js" %in% create){
+				if(isTRUE(checkCreateFiles(plugin.js, ow=overwrite))){
+					cat(JS.code, file=plugin.js)
+				} else {}
+				if(isTRUE(edit)){
+					rk.edit.files(plugin.js, title=plugin.fname.js, prompt=FALSE)
+				} else {}
+			} else {}
+
+			## create plugin.rkh
+			if("rkh" %in% create){
+				if(isTRUE(checkCreateFiles(plugin.rkh, ow=overwrite))){
+					cat(pasteXMLTree(rkh.doc, shine=1, indent.by=indent.by), file=plugin.rkh)
+				} else {}
+				if(isTRUE(edit)){
+					rk.edit.files(plugin.rkh, title=plugin.fname.rkh, prompt=FALSE)
+				} else {}
+			} else {}
 		}
-		if(isTRUE(edit)){
-			rk.edit.files(plugin.xml, title=plugin.fname.xml, prompt=FALSE)
-		} else {}
-	} else {}
-
-	## create plugin.js
-	if("js" %in% create){
-		if(isTRUE(checkCreateFiles(plugin.js))){
-			# require=c(), variables=NULL, preprocess=NULL, calculate=NULL, printout=NULL, results.header=NULL
-			got.JS.options <- names(js)
-			for (this.opt in c("require", "variables", "preprocess", "calculate", "printout")){
-				if(!this.opt %in% got.JS.options) {
-					js[[this.opt]] <- eval(formals(rk.JS.doc)[[this.opt]])
-				} else {}
-			}
-			if(!"results.header" %in% got.JS.options) {
-				js[["results.header"]] <- paste(name.orig, " results", sep="")
-			} else {}
-			if("var" %in% scan){
-				var.scanned <- rk.JS.scan(XML.plugin)
-				if(!is.null(var.scanned)){
-					js[["variables"]] <- paste(
-						ifelse(is.null(js[["variables"]]), "", paste(js[["variables"]], "\n", sep="")),
-						var.scanned,
-						sep="")
-				} else {}
-			} else {}
-			if("saveobj" %in% scan){
-				saveobj.scanned <- rk.JS.saveobj(XML.plugin)
-				if(!is.null(saveobj.scanned)){
-					js[["printout"]] <- paste(js[["printout"]], saveobj.scanned, sep="\n")
-				} else {}
-			} else {}
-			JS.code <- rk.JS.doc(
-				require=js[["require"]],
-				variables=js[["variables"]],
-				results.header=js[["results.header"]],
-				preprocess=js[["preprocess"]],
-				calculate=js[["calculate"]],
-				printout=js[["printout"]],
-				indent.by=indent.by)
-			cat(JS.code, file=plugin.js)
-		} else {}
-		if(isTRUE(edit)){
-			rk.edit.files(plugin.js, title=plugin.fname.js, prompt=FALSE)
-		} else {}
-	} else {}
-
-	## create plugin.rkh
-	if("rkh" %in% create){
-		if(isTRUE(checkCreateFiles(plugin.rkh))){
-			# summary=NULL, usage=NULL, sections=NULL, settings="scan", related=NULL, technical=NULL
-			got.rkh.options <- names(rkh)
-			# if settings were defined manually, this overwrites the scan
-			if(!"settings" %in% got.rkh.options){
-				if("settings" %in% scan){
-					rkh[["settings"]] <- rk.rkh.settings(rk.rkh.scan(XML.plugin))
-				} else {
-					rkh[["settings"]] <- eval(formals(rk.rkh.doc)[["settings"]])
-				}
-			} else {}
-			for (this.opt in c("summary", "usage", "sections", "related", "technical")){
-				if(!this.opt %in% got.rkh.options) {
-					rkh[[this.opt]] <- eval(formals(rk.rkh.doc)[[this.opt]])
-				} else {}
-			}
-			rkh.doc <- rk.rkh.doc(
-				summary=rkh[["summary"]],
-				usage=rkh[["usage"]],
-				sections=rkh[["sections"]],
-				settings=rkh[["settings"]],
-				related=rkh[["related"]],
-				technical=rkh[["technical"]],
-				title=rk.rkh.title(name.orig))
-			cat(pasteXMLTree(rkh.doc, shine=1, indent.by=indent.by), file=plugin.rkh)
-		} else {}
-		if(isTRUE(edit)){
-			rk.edit.files(plugin.rkh, title=plugin.fname.rkh, prompt=FALSE)
-		} else {}
-	} else {}
+	})
 
 	## create plugin.pluginmap
 	if("pmap" %in% create){
-		if(isTRUE(checkCreateFiles(plugin.pluginmap))){
-			got.pm.options <- names(pluginmap)
-			for (this.opt in c("hierarchy", "require")){
-				if(!this.opt %in% got.pm.options) {
-					pluginmap[[this.opt]] <- eval(formals(rk.XML.pluginmap)[[this.opt]])
-				} else {}
-			}
+		if(isTRUE(checkCreateFiles(plugin.pluginmap, ow=overwrite))){
+			if(!"require" %in% got.pm.options) {
+				pluginmap[["require"]] <- eval(formals(rk.XML.pluginmap)[["require"]])
+			} else {}
 			if(!"name" %in% got.pm.options){
 				pluginmap[["name"]] <- name.orig
 			} else {}
+			# get components and hierarchy info from the components list
+			all.components <- sapply(components, function(this.comp){
+					paste("plugins/", clean.name(this.comp@name), ".xml", sep="")
+				})
+			all.hierarchies <- lapply(components, function(this.comp){
+					this.comp@hierarchy
+				})
 			XML.pluginmap <- rk.XML.pluginmap(
 				name=pluginmap[["name"]],
 				about=about,
-				components=paste("plugins/", name, ".xml", sep=""),
-				hierarchy=pluginmap[["hierarchy"]],
+				components=all.components,
+				hierarchy=all.hierarchies,
 				require=pluginmap[["require"]],
 				hints=TRUE)
 			cat(pasteXMLTree(XML.pluginmap, shine=2, indent.by=indent.by), file=plugin.pluginmap)
@@ -334,14 +293,14 @@ rk.plugin.skeleton <- function(name, about=NULL, path=tempdir(),
 	} else {}
 
 	## create testsuite.R
-	if(isTRUE(tests) & isTRUE(checkCreateFiles(testsuite.file))){
+	if(isTRUE(tests) & isTRUE(checkCreateFiles(testsuite.file, ow=overwrite))){
 		testsuite.doc <- rk.testsuite.doc(name=name)
 		cat(testsuite.doc, file=testsuite.file)
 	} else {}
 
 	## create DESCRIPTION file
 	if("desc" %in% create){
-		if(isTRUE(checkCreateFiles(description.file))){
+		if(isTRUE(checkCreateFiles(description.file, ow=overwrite))){
 			authors <- XML2person(about.node, eval=TRUE)
 			all.authors <- format(get.by.role(authors, role="aut"),
 				include=c("given", "family", "email"), braces=list(email=c("<", ">")))

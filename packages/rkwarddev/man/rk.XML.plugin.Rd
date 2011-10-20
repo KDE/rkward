@@ -4,7 +4,8 @@
 \usage{
   rk.XML.plugin(name, dialog = NULL, wizard = NULL, logic =
   NULL, snippets = NULL, provides = NULL, help = TRUE,
-  pluginmap = NULL, label = NULL, clean.name = TRUE)
+  pluginmap = NULL, label = NULL, clean.name = TRUE, about
+  = NULL)
 }
 \arguments{
   \item{name}{Character string, the name of the plugin.
@@ -55,6 +56,14 @@
   \item{clean.name}{Logical, if \code{TRUE}, all
   non-alphanumeric characters except the underscore
   (\code{"_"}) will be removed from \code{name}.}
+
+  \item{about}{An object of class \code{XiMpLe.node} with
+  descriptive information on the plugin, its authors and
+  dependencies, see
+  \code{link[XiMpLe:rk.XML.about]{rk.XML.about}} for
+  details. Only useful for information that differs from
+  the \code{<about>} section of the \code{.pluginmap} file.
+  Skipped if \code{NULL}.}
 }
 \value{
   An object of class \code{XiMpLe.doc}.
