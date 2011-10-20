@@ -180,8 +180,8 @@ rk.XML.about <- function(name, author, about=list(desc="SHORT_DESCRIPTION", vers
 	## dependencies
 	# - rkward.min="rkward_min_version",
 	# - rkward.max="rkward_max_version",
-	# - R.min="R_min_verion",
-	# - R.max="R_max_verion"
+	# - R.min="R_min_version",
+	# - R.max="R_max_version"
 	# + package
 	# + pluginmap
 	for (pmap in xml.pluginmap){
@@ -200,8 +200,8 @@ rk.XML.about <- function(name, author, about=list(desc="SHORT_DESCRIPTION", vers
 					attributes=list(
 						"rkward_min_version"=.rk.app.version,
 						"rkward_max_version"="CHANGE_ME_OR_DELETE_ME",
-						"R_min_verion"=paste(R.v$major, R.v$minor, sep="."),
-						"R_max_verion"="CHANGE_ME_OR_DELETE_ME"
+						"R_min_version"=paste(R.v$major, R.v$minor, sep="."),
+						"R_max_version"="CHANGE_ME_OR_DELETE_ME"
 					),
 					children=xml.package,
 					value=""
@@ -216,10 +216,10 @@ rk.XML.about <- function(name, author, about=list(desc="SHORT_DESCRIPTION", vers
 			dep.attributes[["rkward_max_version"]] <- dependencies[["rkward.max"]]
 		} else {}
 		if("R.min" %in% dep.options){
-			dep.attributes[["R_min_verion"]] <- dependencies[["R.min"]]
+			dep.attributes[["R_min_version"]] <- dependencies[["R.min"]]
 		} else {}
 		if("R.max" %in% dep.options){
-			dep.attributes[["R_max_verion"]] <- dependencies[["R.max"]]
+			dep.attributes[["R_max_version"]] <- dependencies[["R.max"]]
 		} else {}
 		xml.dependencies <- new("XiMpLe.node",
 					name="dependencies",

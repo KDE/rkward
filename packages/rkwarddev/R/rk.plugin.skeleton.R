@@ -182,11 +182,15 @@ rk.plugin.skeleton <- function(name, about=NULL, path=tempdir(),
 
 	## create the main component
 	got.pm.options <- names(pluginmap)
+	# check for name of main component. if it's set, use it
+	if(!"name" %in% got.pm.options){
+		pluginmap[["name"]] <- name.orig
+	} else {}
 	if(!"hierarchy" %in% got.pm.options) {
 		pluginmap[["hierarchy"]] <- eval(formals(rk.XML.pluginmap)[["hierarchy"]])
 	} else {}
 	main.component <- rk.plugin.component(
-		name=name.orig,
+		name=pluginmap[["name"]],
 		xml=xml,
 		js=js,
 		rkh=rkh,
@@ -261,7 +265,10 @@ rk.plugin.skeleton <- function(name, about=NULL, path=tempdir(),
 			} else {}
 			# get components and hierarchy info from the components list
 			all.components <- sapply(components, function(this.comp){
-					paste("plugins/", clean.name(this.comp@name), ".xml", sep="")
+					named.compo <- paste("plugins/", clean.name(this.comp@name), ".xml", sep="")
+					# we'll name the component, to nicen the menu entry
+					names(named.compo) <- this.comp@name
+					return(named.compo)
 				})
 			all.hierarchies <- lapply(components, function(this.comp){
 					this.comp@hierarchy
@@ -308,7 +315,6 @@ rk.plugin.skeleton <- function(name, about=NULL, path=tempdir(),
 				include=c("given", "family", "email"), braces=list(email=c("<", ">")))
 
 ## TODO: check and add the commented values here:
-## especially dependencies must be created from 'about'
 			desc <- data.frame(
 				Package=name,
 				Type="Package",
@@ -318,7 +324,7 @@ rk.plugin.skeleton <- function(name, about=NULL, path=tempdir(),
 				Author=all.authors,
 				AuthorsR=XML2person(about.node, eval=FALSE),
 				Maintainer=all.maintainers,
-#				Depends="R (>= 2.9.0)",
+				Depends=XML2dependencies(about.node),
 				Enhances="rkward",
 				Description=about.node@attributes[["shortinfo"]],
 				License=about.node@attributes[["license"]],

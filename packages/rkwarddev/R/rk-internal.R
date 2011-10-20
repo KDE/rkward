@@ -295,6 +295,63 @@ XML2person <- function(node, eval=FALSE){
 } ## end function XML2person()
 
 
+## function XML2dependencies()
+# extracts the package dependencies info from XML "about" nodes
+XML2dependencies <- function(node){
+	if(inherits(node, "XiMpLe.node")){
+		# check if this is *really* a about section, otherwise die of boredom
+		if(!identical(node@name, "about")){
+			stop(simpleError("I don't know what this is, but 'about' is not an about section!"))
+		} else {}
+	} else {
+		stop(simpleError("'about' must be a XiMpLe.node, see ?rk.XML.about()!"))
+	}
+	check.deps <- sapply(node@children, function(this.child){identical(this.child@name, "dependencies")})
+	if(any(check.deps)){
+		got.deps <- node@children[[which(check.deps)]]
+		deps.packages <- list()
+		# first see if RKWard and R versions are given
+		deps.RkR <- got.deps@attributes
+		deps.RkR.options  <- names(deps.RkR)
+		R.min <- ifelse("R_min_version" %in% deps.RkR.options, paste(">= ", deps.RkR[["R_min_version"]], sep=""), "")
+		R.max <- ifelse("R_max_version" %in% deps.RkR.options, paste("< ", deps.RkR[["R_max_version"]], sep=""), "")
+		R.version.indices <- sum(!identical(R.min, ""), !identical(R.max, ""))
+		if(R.version.indices > 0){
+			deps.packages[[length(deps.packages) + 1]] <- paste("R (", R.min, ifelse(R.version.indices > 1, ", ", ""), R.max, ")", sep="")
+		} else {}
+		Rk.min <- ifelse("rkward_min_version" %in% deps.RkR.options, paste(">= ", deps.RkR[["rkward_min_version"]], sep=""), "")
+		Rk.max <- ifelse("rkward_max_version" %in% deps.RkR.options, paste("< ", deps.RkR[["rkward_max_version"]], sep=""), "")
+		Rk.version.indices <- sum(!identical(Rk.min, ""), !identical(Rk.max, ""))
+		if(Rk.version.indices > 0){
+			deps.packages[[length(deps.packages) + 1]] <- paste("rkward (", Rk.min, ifelse(Rk.version.indices > 1, ", ", ""), Rk.max, ")", sep="")
+		} else {}
+		check.deps.pckg <- sapply(got.deps@children, function(this.child){identical(this.child@name, "package")})
+		if(any(check.deps.pckg)){
+			deps.packages[[length(deps.packages) + 1]] <- paste(sapply(which(check.deps.pckg), function(this.pckg){
+					this.pckg.dep <- got.deps@children[[this.pckg]]@attributes
+					pckg.options <- names(this.pckg.dep)
+					pckg.name <- this.pckg.dep[["name"]]
+					pckg.min <- ifelse("min" %in% pckg.options, paste(">= ", this.pckg.dep[["min"]], sep=""), "")
+					pckg.max <- ifelse("max" %in% pckg.options, paste("< ", this.pckg.dep[["max"]], sep=""), "")
+					version.indices <- sum(!identical(pckg.min, ""), !identical(pckg.max, ""))
+					if(version.indices > 0){
+						pckg.version <- paste(" (", pckg.min, ifelse(version.indices > 1, ", ", ""), pckg.max, ")", sep="")
+					} else {
+						pckg.version <- NULL
+					}
+					return(paste(pckg.name, pckg.version, sep=""))
+				}), collapse=", ")
+			results <- paste(unlist(deps.packages), collapse=", ")
+		} else {
+			results <- ""
+		}
+	} else {
+		results <- ""
+	}
+	return(results)
+} ## end function XML2dependencies()
+
+
 ## function get.by.role()
 # filters a vector with person objects by roles
 get.by.role <- function(persons, role="aut"){
@@ -424,7 +481,7 @@ check.type <- function(value, type, var.name, warn.only=TRUE){
 ## function clean.name()
 clean.name <- function(name, message=TRUE){
 	name.orig <- name
-	name <- gsub("[[:space:]]*[^[:alnum:]_]*", "", name)
+	name <- gsub("[[:space:]]*[^[:alnum:]_.]*", "", name)
 	if(!identical(name.orig, name)){
 		if(isTRUE(message)){
 			message(paste("For filenames ", sQuote(name.orig), " was renamed to ", sQuote(name), ".", sep=""))

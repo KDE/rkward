@@ -130,6 +130,7 @@ rk.XML.pluginmap <- function(name, about=NULL, components, hierarchy="test",
 				} else {
 					xml.basename <- name.orig
 				}
+				names(this.comp) <- NULL
 				components.XML.list[[length(components.XML.list) + 1]] <- rk.XML.component(
 					label=xml.basename,
 					file=this.comp,
