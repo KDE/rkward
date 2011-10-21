@@ -2,23 +2,23 @@
 \alias{rk.plugin.skeleton}
 \title{Generate skeletons for RKWard plugins}
 \usage{
-  rk.plugin.skeleton(name, about = NULL, path = tempdir(),
-  provides = c("logic", "dialog"), scan = c("var",
-  "saveobj", "settings"), xml = list(), js = list(),
-  pluginmap = list(), rkh = list(), overwrite = FALSE,
-  tests = TRUE, lazyLoad = TRUE, create = c("pmap", "xml",
-  "js", "rkh", "desc"), components = list(), edit = FALSE,
-  load = FALSE, show = FALSE, indent.by = "\t")
+  rk.plugin.skeleton(about, path = tempdir(), provides =
+  c("logic", "dialog"), scan = c("var", "saveobj",
+  "settings"), xml = list(), js = list(), pluginmap =
+  list(), rkh = list(), overwrite = FALSE, tests = TRUE,
+  lazyLoad = TRUE, create = c("pmap", "xml", "js", "rkh",
+  "desc"), suggest.required = TRUE, components = list(),
+  edit = FALSE, load = FALSE, show = FALSE, indent.by =
+  "\t")
 }
 \arguments{
-  \item{name}{Character sting, name of the plugin package.}
-
-  \item{about}{An object of class \code{XiMpLe.node} with
-  descriptive information on the plugin, its authors and
-  dependencies, see
+  \item{about}{Either an object of class \code{XiMpLe.node}
+  with descriptive information on the plugin, its authors
+  and dependencies (see
   \code{link[XiMpLe:rk.XML.about]{rk.XML.about}} for
-  details. Skipped if \code{NULL}. If \code{NULL}, no
-  \code{DESCRIPTION} file will be created either.}
+  details), or a character string with the name of the
+  plugin package. If the latter, no \code{DESCRIPTION} file
+  will be created.}
 
   \item{path}{Character sting, path to the main directory
   where the skeleton should be created.}
@@ -114,6 +114,11 @@
   these files. Existing files will only be overwritten if
   \code{overwrite=TRUE}.}
 
+  \item{suggest.required}{Logical, if \code{TRUE} R package
+  dependencies in \code{about} will be added to the
+  \code{Suggests:} field of the \code{DESCRIPTION} file,
+  otherwise to the \code{Depends:} field.}
+
   \item{edit}{Logical, if \code{TRUE} RKWard will
   automatically open the created files for editing, by
   calling \code{rk.edit.files}. This applies to all files
@@ -158,7 +163,7 @@ person(given="A.", family="Assistant",
 email="alterego@eternalwondermaths.example.org", role=c("cre","ctb"))
 ))
 
-rk.plugin.skeleton("Square the Circle", about=about.info)
+rk.plugin.skeleton(about.info)
 
 # a more complex example, already including some dialog elements
 about.info <- rk.XML.about(
@@ -201,8 +206,8 @@ test.vars <- rk.XML.vars("select some vars", "vars go here")
 test.tabbook <- rk.XML.dialog(rk.XML.tabbook("My Tabbook", tab.labels=c("First Tab",
 "Second Tab"), children=list(test.checkboxes, test.vars)))
 
-rk.plugin.skeleton("Square the Circle", about=about.info,
-xml=list(dialog=test.tabbook), overwrite=TRUE)
+rk.plugin.skeleton(about.info, xml=list(dialog=test.tabbook),
+overwrite=TRUE)
 }
 }
 \seealso{

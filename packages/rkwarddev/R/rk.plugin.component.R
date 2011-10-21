@@ -1,9 +1,8 @@
 #' Generate RKWard plugin components
 #'
-#' @param name Character sting, name of this plugin component.
-#' @param about An object of class \code{XiMpLe.node} with descriptive information on the plugin, its authors and dependencies,
-#'		see \code{link[XiMpLe:rk.XML.about]{rk.XML.about}} for details. Only useful for information that differs from the \code{<about>}
-#'		section of the \code{.pluginmap} file. Skipped if \code{NULL}.
+#' @param about Either a character string with the name of this plugin component, or an object of class \code{XiMpLe.node}
+#'		with further descriptive information on it, like its authors and dependencies (see \code{link[XiMpLe:rk.XML.about]{rk.XML.about}}
+#'		for details). This is only useful for information that differs from the \code{<about>} section of the \code{.pluginmap} file.
 #' @param xml A named list of options to be forwarded to \code{\link[rkwarddev:rk.XML.plugin]{rk.XML.plugin}}, to generate the GUI XML file.
 #'		Not all options are supported because some don't make sense in this context. Valid options are:
 #'		\code{"dialog"}, \code{"wizard"}, \code{"logic"} and \code{"snippets"}.
@@ -62,28 +61,32 @@
 #'   xml=list(dialog=test.tabbook))
 #' }
 
-rk.plugin.component <- function(name, about=NULL, xml=list(), js=list(), rkh=list(),
+rk.plugin.component <- function(about, xml=list(), js=list(), rkh=list(),
 	provides=c("logic", "dialog"), scan=c("var", "saveobj", "settings"), hierarchy="test",
 	pluginmap=NULL, create=c("xml", "js", "rkh"), indent.by="\t"){
+
+	if(inherits(about, "XiMpLe.node")){
+		about.node.name <- about@name
+		# check if this is *really* a about section, otherwise quit and go dancing
+		if(!identical(about.node.name, "about")){
+			stop(simpleError("I don't know what this is, but 'about' is not an about section!"))
+		} else {
+			# fetch the plugin name
+			name <- about@attributes[["name"]]
+			about.node <- about
+		}
+	} else if(is.character(about) & length(about) == 1) {
+		name <- about
+		about.node <- NULL
+		# also stop creation of DESCRIPTION file
+		create <- create[!create %in% "desc"]
+	} else {
+		stop(simpleError("'about' must be a character string or XiMpLe.node, see ?rk.XML.about()!"))
+	}
+
 	# to besure, remove all non-character symbols from name
 	name.orig <- name
 	name <- clean.name(name)
-
-	if(!is.null(about)){
-		if(inherits(about, "XiMpLe.node")){
-			about.node.name <- about@name
-			# check if this is *really* a about section, otherwise quit and go dancing
-			if(!identical(about.node.name, "about")){
-				stop(simpleError("I don't know what this is, but 'about' is not an about section!"))
-			} else {
-				about.node <- about
-			}
-		} else {
-			stop(simpleError("'about' must be a XiMpLe.node, see ?rk.XML.about()!"))
-		}
-	} else {
-		about.node <- NULL
-	}
 
 	# check hierarchy
 	if(is.null(hierarchy)){

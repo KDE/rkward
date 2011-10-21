@@ -4,10 +4,9 @@
 #' components/dialogs. You should always define one main component (by \code{xml}, \code{js}, \code{rkh} etc.) before you provide
 #' additional features by \code{components}.
 #'
-#' @param name Character sting, name of the plugin package.
-#' @param about An object of class \code{XiMpLe.node} with descriptive information on the plugin, its authors and dependencies,
-#'		see \code{link[XiMpLe:rk.XML.about]{rk.XML.about}} for details. Skipped if \code{NULL}.
-#'		If \code{NULL}, no \code{DESCRIPTION} file will be created either.
+#' @param about Either an object of class \code{XiMpLe.node} with descriptive information on the plugin, its authors and dependencies
+#'		(see \code{link[XiMpLe:rk.XML.about]{rk.XML.about}} for details), or a character string with the name of the plugin package.
+#'		If the latter, no \code{DESCRIPTION} file will be created.
 #' @param path Character sting, path to the main directory where the skeleton should be created.
 #' @param provides Character vector with possible entries of \code{"logic"}, \code{"dialog"} or \code{"wizard"}, defining what
 #'		sections the GUI XML file should provide even if \code{dialog}, \code{wizard} and \code{logic} are \code{NULL}.
@@ -52,6 +51,8 @@
 #'			\item{\code{"desc"}}{Create the \code{DESCRIPTION} file.}
 #'		}
 #'		Default is to create all of these files. Existing files will only be overwritten if \code{overwrite=TRUE}.
+#' @param suggest.required Logical, if \code{TRUE} R package dependencies in \code{about} will be added to the \code{Suggests:}
+#'		field of the \code{DESCRIPTION} file, otherwise to the \code{Depends:} field.
 #' @param edit Logical, if \code{TRUE} RKWard will automatically open the created files for editing, by calling \code{rk.edit.files}.
 #'		This applies to all files defined in \code{create}.
 #' @param load Logical, if \code{TRUE} and \code{"pmap"} in \code{create}, RKWard will automatically add the created .pluginmap file
@@ -74,7 +75,7 @@
 #' 			email="alterego@@eternalwondermaths.example.org", role=c("cre","ctb"))
 #' 		))
 #' 
-#' rk.plugin.skeleton("Square the Circle", about=about.info)
+#' rk.plugin.skeleton(about.info)
 #' 
 #' # a more complex example, already including some dialog elements
 #' about.info <- rk.XML.about(
@@ -117,38 +118,40 @@
 #' test.tabbook <- rk.XML.dialog(rk.XML.tabbook("My Tabbook", tab.labels=c("First Tab",
 #'   "Second Tab"), children=list(test.checkboxes, test.vars)))
 #' 
-#' rk.plugin.skeleton("Square the Circle", about=about.info,
-#'   xml=list(dialog=test.tabbook), overwrite=TRUE)
+#' rk.plugin.skeleton(about.info, xml=list(dialog=test.tabbook),
+#'   overwrite=TRUE)
 #' }
 
-rk.plugin.skeleton <- function(name, about=NULL, path=tempdir(),
+rk.plugin.skeleton <- function(about, path=tempdir(),
 	provides=c("logic", "dialog"),
 	scan=c("var", "saveobj", "settings"),
 	xml=list(), js=list(), pluginmap=list(), rkh=list(),
 	overwrite=FALSE, tests=TRUE, lazyLoad=TRUE,
-	create=c("pmap", "xml", "js", "rkh", "desc"),
+	create=c("pmap", "xml", "js", "rkh", "desc"), suggest.required=TRUE,
 	components=list(), edit=FALSE, load=FALSE, show=FALSE, indent.by="\t"){
-	# to besure, remove all non-character symbols from name
-	name.orig <- name
-	name <- clean.name(name)
 
-	if(!is.null(about)){
-		if(inherits(about, "XiMpLe.node")){
-			about.node.name <- about@name
-			# check if this is *really* a about section, otherwise quit and go dancing
-			if(!identical(about.node.name, "about")){
-				stop(simpleError("I don't know what this is, but 'about' is not an about section!"))
-			} else {
-				about.node <- about
-			}
+	if(inherits(about, "XiMpLe.node")){
+		about.node.name <- about@name
+		# check if this is *really* a about section, otherwise quit and go dancing
+		if(!identical(about.node.name, "about")){
+			stop(simpleError("I don't know what this is, but 'about' is not an about section!"))
 		} else {
-			stop(simpleError("'about' must be a XiMpLe.node, see ?rk.XML.about()!"))
+			# fetch the plugin name
+			name <- about@attributes[["name"]]
+			about.node <- about
 		}
-	} else {
+	} else if(is.character(about) & length(about) == 1) {
+		name <- about
 		about.node <- NULL
 		# also stop creation of DESCRIPTION file
 		create <- create[!create %in% "desc"]
+	} else {
+		stop(simpleError("'about' must be a character string or XiMpLe.node, see ?rk.XML.about()!"))
 	}
+
+	# to besure, remove all non-character symbols from name
+	name.orig <- name
+	name <- clean.name(name)
 
 	# define paths an file names
 	main.dir <- file.path(path, name)
@@ -190,7 +193,7 @@ rk.plugin.skeleton <- function(name, about=NULL, path=tempdir(),
 		pluginmap[["hierarchy"]] <- eval(formals(rk.XML.pluginmap)[["hierarchy"]])
 	} else {}
 	main.component <- rk.plugin.component(
-		name=pluginmap[["name"]],
+		about=pluginmap[["name"]],
 		xml=xml,
 		js=js,
 		rkh=rkh,
@@ -324,7 +327,8 @@ rk.plugin.skeleton <- function(name, about=NULL, path=tempdir(),
 				Author=all.authors,
 				AuthorsR=XML2person(about.node, eval=FALSE),
 				Maintainer=all.maintainers,
-				Depends=XML2dependencies(about.node),
+				Depends=XML2dependencies(about.node, suggest=suggest.required, mode="depends"),
+				Suggests=XML2dependencies(about.node, suggest=suggest.required, mode="suggest"),
 				Enhances="rkward",
 				Description=about.node@attributes[["shortinfo"]],
 				License=about.node@attributes[["license"]],
@@ -332,6 +336,12 @@ rk.plugin.skeleton <- function(name, about=NULL, path=tempdir(),
 				LazyLoad=ifelse(isTRUE(lazyLoad), "yes", "no"),
 				URL=about.node@attributes[["url"]],
 				stringsAsFactors=FALSE)
+
+			for(this.entry in c("Depends","Suggests")){
+				if(desc[[this.entry]] == ""){
+					desc[[this.entry]] <- NULL
+				} else {}
+			}
 
 			# i have no clue how to circumvent this workaround:
 			desc$`Authors@R` <- desc[["AuthorsR"]]

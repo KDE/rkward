@@ -297,7 +297,13 @@ XML2person <- function(node, eval=FALSE){
 
 ## function XML2dependencies()
 # extracts the package dependencies info from XML "about" nodes
-XML2dependencies <- function(node){
+# in "suggest" mode only suggestions will be returned, in "depends" mode only dependencies.
+# suggest=TRUE: Depends: R & RKWard; Suggests: packages
+# suggest=FALSE: Depends: R & RKWard & packages; suggests: none
+XML2dependencies <- function(node, suggest=TRUE, mode="suggest"){
+	if(!isTRUE(suggest) & identical(mode, "suggest")){
+		return("")
+	} else {}
 	if(inherits(node, "XiMpLe.node")){
 		# check if this is *really* a about section, otherwise die of boredom
 		if(!identical(node@name, "about")){
@@ -316,17 +322,17 @@ XML2dependencies <- function(node){
 		R.min <- ifelse("R_min_version" %in% deps.RkR.options, paste(">= ", deps.RkR[["R_min_version"]], sep=""), "")
 		R.max <- ifelse("R_max_version" %in% deps.RkR.options, paste("< ", deps.RkR[["R_max_version"]], sep=""), "")
 		R.version.indices <- sum(!identical(R.min, ""), !identical(R.max, ""))
-		if(R.version.indices > 0){
+		if(R.version.indices > 0 & identical(mode, "depends")){
 			deps.packages[[length(deps.packages) + 1]] <- paste("R (", R.min, ifelse(R.version.indices > 1, ", ", ""), R.max, ")", sep="")
 		} else {}
 		Rk.min <- ifelse("rkward_min_version" %in% deps.RkR.options, paste(">= ", deps.RkR[["rkward_min_version"]], sep=""), "")
 		Rk.max <- ifelse("rkward_max_version" %in% deps.RkR.options, paste("< ", deps.RkR[["rkward_max_version"]], sep=""), "")
 		Rk.version.indices <- sum(!identical(Rk.min, ""), !identical(Rk.max, ""))
-		if(Rk.version.indices > 0){
+		if(Rk.version.indices > 0 & identical(mode, "depends")){
 			deps.packages[[length(deps.packages) + 1]] <- paste("rkward (", Rk.min, ifelse(Rk.version.indices > 1, ", ", ""), Rk.max, ")", sep="")
 		} else {}
 		check.deps.pckg <- sapply(got.deps@children, function(this.child){identical(this.child@name, "package")})
-		if(any(check.deps.pckg)){
+		if(any(check.deps.pckg & ((isTRUE(suggest) & identical(mode, "suggest")) | !isTRUE(suggest)))){
 			deps.packages[[length(deps.packages) + 1]] <- paste(sapply(which(check.deps.pckg), function(this.pckg){
 					this.pckg.dep <- got.deps@children[[this.pckg]]@attributes
 					pckg.options <- names(this.pckg.dep)
@@ -337,14 +343,12 @@ XML2dependencies <- function(node){
 					if(version.indices > 0){
 						pckg.version <- paste(" (", pckg.min, ifelse(version.indices > 1, ", ", ""), pckg.max, ")", sep="")
 					} else {
-						pckg.version <- NULL
+						pckg.version <- ""
 					}
 					return(paste(pckg.name, pckg.version, sep=""))
 				}), collapse=", ")
-			results <- paste(unlist(deps.packages), collapse=", ")
-		} else {
-			results <- ""
-		}
+		} else {}
+		results <- paste(unlist(deps.packages), collapse=", ")
 	} else {
 		results <- ""
 	}

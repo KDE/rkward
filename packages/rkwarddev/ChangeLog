@@ -1,12 +1,16 @@
 ChangeLog for package rkwarddev
 
 ## 0.04-2 (2011-10-21)
+  - removed the superfluous "name" option from rk.plugin.skeleton() and rk.plugin.component(); names are now
+    always provided by "about", either as an <about> node or just the name.
   - result headers now start at level 1 by default in rk.JS.doc()
+  - added option "suggest.required" to rk.plugin.skeleton() to add package requirements as suggestions,
+    not dependencies
 
 ## 0.04-1 (2011-10-20)
   - added "about" option to rk.XML.plugin() to overrule pluginmap defaults
   - added rk.plugin.component(), i.e. modularized the component generation, to allow for more than one
-    component in rk.plugin.skeleton(), wich subsequently gained the new option "components"
+    component in rk.plugin.skeleton(), which subsequently gained the new option "components"
   - improved dependency support, rk.plugin.skeleton() writes dependencies from <about> to DESCRIPTION now
   - fixed dependency definition in rk.XML.about()
   - fixed "verion" typo in rk.XML.about()

@@ -2,23 +2,21 @@
 \alias{rk.plugin.component}
 \title{Generate RKWard plugin components}
 \usage{
-  rk.plugin.component(name, about = NULL, xml = list(), js
-  = list(), rkh = list(), provides = c("logic", "dialog"),
-  scan = c("var", "saveobj", "settings"), hierarchy =
-  "test", pluginmap = NULL, create = c("xml", "js", "rkh"),
+  rk.plugin.component(about, xml = list(), js = list(), rkh
+  = list(), provides = c("logic", "dialog"), scan =
+  c("var", "saveobj", "settings"), hierarchy = "test",
+  pluginmap = NULL, create = c("xml", "js", "rkh"),
   indent.by = "\t")
 }
 \arguments{
-  \item{name}{Character sting, name of this plugin
-  component.}
-
-  \item{about}{An object of class \code{XiMpLe.node} with
-  descriptive information on the plugin, its authors and
-  dependencies, see
+  \item{about}{Either a character string with the name of
+  this plugin component, or an object of class
+  \code{XiMpLe.node} with further descriptive information
+  on it, like its authors and dependencies (see
   \code{link[XiMpLe:rk.XML.about]{rk.XML.about}} for
-  details. Only useful for information that differs from
-  the \code{<about>} section of the \code{.pluginmap} file.
-  Skipped if \code{NULL}.}
+  details). This is only useful for information that
+  differs from the \code{<about>} section of the
+  \code{.pluginmap} file.}
 
   \item{xml}{A named list of options to be forwarded to
   \code{\link[rkwarddev:rk.XML.plugin]{rk.XML.plugin}}, to
