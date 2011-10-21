@@ -44,7 +44,7 @@ rk.JS.doc <- function(require=c(), variables=NULL, results.header=NULL,
 		
 	js.printout <- paste("function printout(){\n",
 				indent(2, by=indent.by), "// printout the results\n",
-				indent(2, by=indent.by), "echo(\"rk.header(\\\"", results.header,"\\\", level=2)\\n\");\n",
+				indent(2, by=indent.by), "echo(\"rk.header(\\\"", results.header,"\\\", level=1)\\n\");\n",
 				ifelse(is.null(printout), paste(indent(2, by=indent.by), "echo(\"rk.print(\\\"\\\")\\n\");", sep=""), printout),
 				"\n}", sep="")
 
