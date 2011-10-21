@@ -3,12 +3,12 @@ require(rkwarddev)
 
 local({
 about.info <- rk.XML.about(
-	name="Plugin Skeleton",
+	name="RKWard Plugin Skeleton",
 	author=c(
 		person(given="Meik", family="Michalke",
 			email="meik.michalke@hhu.de", role=c("aut","cre"))),
 	about=list(desc="GUI interface to create RKWard plugin skeletons",
-		version="0.03-6", url="http://rkward.sf.net"),
+		version="0.04-2", url="http://rkward.sf.net"),
 	dependencies=list(rkward.min="0.5.7")
 	)
 
@@ -148,20 +148,10 @@ js.opt.about.dep <- rk.JS.options("optDependencies",
 	ite(id(dep.checkbox, " && ", dep.rmax), qp("R.max=\"",dep.rmax,"\"")),
 	funct="list", option="dependencies", collapse=",\\n\\t")
 
-# 	"package"
-# 		"name"
-# 		"min"
-# 		"max"
-# 		"repository"
-
-# 	"pluginmap"
-# 		"name"
-# 		"url"
 js.opt.skel.pluginmap <- rk.JS.options("optPluginmap",
 	ite(id(pl.hier, "!= \"test\""), qp("hierarchy=\"", pl.hier, "\"")),
 	funct="list", option="pluginmap", collapse="")
 js.opt.skeleton <- rk.JS.options("optSkeleton",
-	ite(pl.name, qp("\n\tname=\"", pl.name, "\"")),
 	ite(pl.dir, qp("\n\tpath=\"", pl.dir, "\"")),
 	ite(pl.wiz, qp("\n\tprovides=c(\"logic\", \"dialog\", \"wizard\")")),
 	ite(js.opt.skel.pluginmap, qp("\n\t", js.opt.skel.pluginmap)),
@@ -191,8 +181,8 @@ JS.calculate <- rk.paste.JS(
 	level=2)
 
 ## the main call
-#plugin.dir <<- rk.plugin.skeleton("RKWard Plugin Skeleton",
-rk.plugin.skeleton("RKWard Plugin Skeleton",
+#plugin.dir <<- rk.plugin.skeleton(
+rk.plugin.skeleton(
 	about=about.info,
 	xml=list(
 		dialog=sklt.tabbook,
@@ -200,8 +190,8 @@ rk.plugin.skeleton("RKWard Plugin Skeleton",
 	js=list(
 		require="rkwarddev",
 		calculate=JS.calculate),
-#	pluginmap=list(name="Create RKWard plugin skeleton", hierarchy=list("file", "export")),
-#	overwrite=TRUE,
+	pluginmap=list(name="Create RKWard plugin skeleton", hierarchy=list("file", "export")),
+	overwrite=TRUE,
 	create=c("pmap","xml","js","desc"),
 	tests=FALSE,
 	show=TRUE,

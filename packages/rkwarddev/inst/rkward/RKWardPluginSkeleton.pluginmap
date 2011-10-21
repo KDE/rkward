@@ -4,10 +4,10 @@
 	id="CreateRKWardpluginskeleton_rkward"
 >
 	<about 
-		name="Plugin Skeleton"
+		name="RKWard Plugin Skeleton"
 		shortinfo="GUI interface to create RKWard plugin skeletons"
-		version="0.03-6"
-		releasedate="2011-10-13"
+		version="0.04-2"
+		releasedate="2011-10-21"
 		url="http://rkward.sf.net"
 		license="GPL (&gt;= 3)"
 	>
@@ -17,9 +17,7 @@
 			email="meik.michalke@hhu.de"
 			role="aut, cre"
 		 />
-		<dependencies 
-			rkward_min_version="0.5.7"
-		>
+		<dependencies rkward_min_version="0.5.7">
 			<!-- 
 				<package 
 					name="CHANGE_ME_OR_DELETE_ME"
@@ -46,7 +44,7 @@
 			id="cmp_CrtRKWrdplgnskltnCrtRKWrd"
 			label="Create RKWard plugin skeleton"
 			type="standard"
-			file="plugins/RKWardPluginSkeleton.xml"
+			file="plugins/CreateRKWardpluginskeleton.xml"
 		 />
 	</components>
 	<hierarchy>

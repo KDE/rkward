@@ -6,6 +6,7 @@ ChangeLog for package rkwarddev
   - result headers now start at level 1 by default in rk.JS.doc()
   - added option "suggest.required" to rk.plugin.skeleton() to add package requirements as suggestions,
     not dependencies
+  - updated skeleton GUI dialog
 
 ## 0.04-1 (2011-10-20)
   - added "about" option to rk.XML.plugin() to overrule pluginmap defaults

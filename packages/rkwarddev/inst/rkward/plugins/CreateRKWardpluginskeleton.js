@@ -1,12 +1,10 @@
 function preprocess(){
-	// add requirements etc. here.
+	// add requirements etc. here
 	echo("require(rkwarddev)\n");
-
 }
 
 function calculate(){
 	// read in variables from dialog
-
 	var inpPluginnm = getValue("inp_Pluginnm");
 	var inpLicense = getValue("inp_License");
 	var inpShrtdscr = getValue("inp_Shrtdscr");
@@ -32,8 +30,7 @@ function calculate(){
 	var inpRKWardmx = getValue("inp_RKWardmx");
 	var inpRmin = getValue("inp_Rmin");
 	var inpRmax = getValue("inp_Rmax");
-
-	// put the R code to be evaluated here.
+	// put the R code to be evaluated here
 	// define the array arrOptAuthorRole for values of R option "role"
 	var arrOptAuthorRole = new Array();
 		if(chcAuthor) {
@@ -142,9 +139,6 @@ function calculate(){
 
 	// define the array arrOptSkeleton for values of R option ""
 	var arrOptSkeleton = new Array();
-		if(inpPluginnm) {
-			arrOptSkeleton.push("\n\tname=\"" + inpPluginnm + "\"");
-		} else {}
 		if(brwDTEMPDIR) {
 			arrOptSkeleton.push("\n\tpath=\"" + brwDTEMPDIR + "\"");
 		} else {}
@@ -193,6 +187,6 @@ function calculate(){
 
 function printout(){
 	// printout the results
-	echo("rk.header(\"RKWard Plugin Skeleton results\", level=2)\n");
+	echo("rk.header(\"Create RKWard plugin skeleton results\", level=1)\n");
 	echo("rk.print(\"\")\n");
 }
