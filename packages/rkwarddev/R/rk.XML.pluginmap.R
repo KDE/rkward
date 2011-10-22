@@ -183,6 +183,7 @@ rk.XML.pluginmap <- function(name, about=NULL, components, hierarchy="test",
 					id.names <- sapply(this.hier, function(hier.id){
 							return(clean.name(hier.id))
 						})
+
 					hier.XML <- rk.XML.menu(
 						label=unlist(main.menu[this.hier[[1]]]),
 						new.hierarchy,

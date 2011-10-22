@@ -27,7 +27,7 @@ rk.XML.hierarchy <- function(...){
 			this.node@name
 		})
 
-	invalid.sets <- !node.names %in% c("menu")
+	invalid.sets <- !node.names %in% c("menu", "!--")
 	if(any(invalid.sets)){
 		stop(simpleError(paste("Invalid XML nodes for hierarchy section: ",
 			paste(node.names[invalid.sets], collapse=", "), sep="")))

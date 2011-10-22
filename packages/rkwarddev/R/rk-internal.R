@@ -161,7 +161,7 @@ camelCode <- function(words){
 #   <tag id="my.id" ...>
 # in XML will become
 #   var my.id = getValue("my.id");
-get.JS.vars <- function(JS.var, XML.var=NULL, JS.prefix="", names.only=FALSE, modifiers=NULL, default=FALSE, join=""){
+get.JS.vars <- function(JS.var, XML.var=NULL, JS.prefix="", names.only=FALSE, modifiers=NULL, default=FALSE, join="", check.modifiers=TRUE){
 	# check for XiMpLe nodes
 	JS.var <- check.ID(JS.var)
 	if(!is.null(XML.var)){
@@ -184,7 +184,9 @@ get.JS.vars <- function(JS.var, XML.var=NULL, JS.prefix="", names.only=FALSE, mo
 				} else {
 					modif.tag.name <- "all"
 				}
-				modifiers <- modifiers[modif.validity(modif.tag.name, modifier=child.list(modifiers), warn.only=TRUE, bool=TRUE)]
+				if(isTRUE(check.modifiers)){
+					modifiers <- modifiers[modif.validity(modif.tag.name, modifier=child.list(modifiers), warn.only=TRUE, bool=TRUE)]
+				} else {}
 			}
 		} else {}
 		XML.var <- check.ID(XML.var)
@@ -406,7 +408,8 @@ all.valid.modifiers <- list(
 	saveobject=c("selection", "parent", "objectname", "active"),
 	spinbox=c("int", "real"),
 	formula=c("model", "table", "labels", "fixed_factors", "dependent"),
-	embed=c("code"),
+# removed embed, can be all sorts of stuff, see e.g. generic plot options
+#	embed=c("code"),
 	preview=c("state")
 ) ## end list with valid modifiers
 
@@ -425,6 +428,14 @@ modif.validity <- function(source, modifier, ignore.empty=TRUE, warn.only=TRUE, 
 
 	if(inherits(source, "XiMpLe.node")){
 		tag.name <- source@name
+		# embedded plugins can have all sorts of modifiers
+		if(identical(tag.name, "embed")){
+			if(isTRUE(bool)){
+				return(TRUE)
+			} else {
+				return(modifier)
+			}
+		} else {}
 	} else if(identical(source, "all")){
 		tag.name <- "<any tag>"
 	} else {

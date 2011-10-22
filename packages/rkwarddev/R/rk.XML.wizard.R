@@ -32,7 +32,7 @@ rk.XML.wizard <- function(..., label=NULL){
 	invalid.sets <- !node.names %in% c("browser", "checkbox", "column", "copy",
 		"dropdown", "embed", "formula", "frame", "include", "input", "insert",
 		"page", "preview", "radio", "row", "saveobject", "spinbox", "stretch",
-		"tabbook", "text", "varselector", "varslot")
+		"tabbook", "text", "varselector", "varslot", "!--")
 	if(any(invalid.sets)){
 		stop(simpleError(paste("Invalid XML nodes for wizard section: ", paste(node.names[invalid.sets], collapse=", "), sep="")))
 	} else {}

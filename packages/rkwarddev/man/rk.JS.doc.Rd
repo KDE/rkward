@@ -4,7 +4,7 @@
 \usage{
   rk.JS.doc(require = c(), variables = NULL, results.header
   = NULL, preprocess = NULL, calculate = NULL, printout =
-  NULL, indent.by = "\t")
+  NULL, doPrintout = NULL, indent.by = "\t")
 }
 \arguments{
   \item{require}{A character vector with names of R
@@ -28,7 +28,15 @@
 
   \item{printout}{A character string to be included in the
   \code{printout()} function. This string will be pasted
-  as-is, after \code{results.header} has been evaluated.}
+  as-is, after \code{results.header} has been evaluated.
+  Ignored if \code{doPrintout} is set.}
+
+  \item{doPrintout}{A character string to be included in
+  the \code{doPrintout()} function. This string will be
+  pasted as-is. You don't need to define a \code{preview()}
+  function, as this will be added automatically. Use
+  \code{ite("full", ...)} style JavaScript code to include
+  headers etc.}
 
   \item{indent.by}{A character string defining how
   indentation should be done.}

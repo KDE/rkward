@@ -30,12 +30,20 @@
 rk.XML.logic <- function(...){
 	nodes <- list(...)
 
+	# transform "!--" comment nodes into "![CDATA[" for scripting logic
+	nodes <- sapply(child.list(nodes), function(this.node){
+			if(identical(this.node@name, "!--")){
+				this.node@name <- "![CDATA["
+			} else {}
+			return(this.node)
+		})
+
 	# check the node names and allow only valid ones
 	node.names <- sapply(child.list(nodes), function(this.node){
 			this.node@name
 		})
 
-	invalid.sets <- !node.names %in% c("connect", "convert","include","insert","external","set")
+	invalid.sets <- !node.names %in% c("connect", "convert","include","insert","external","set","![CDATA[")
 	if(any(invalid.sets)){
 		stop(simpleError(paste("Invalid XML nodes for logic section: ", paste(node.names[invalid.sets], collapse=", "), sep="")))
 	} else {}

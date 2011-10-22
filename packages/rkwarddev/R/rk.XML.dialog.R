@@ -31,7 +31,7 @@ rk.XML.dialog <- function(..., label=NULL){
 	invalid.sets <- !node.names %in% c("browser", "checkbox", "column", "copy",
 		"dropdown", "embed", "formula", "frame", "include", "input", "insert",
 		"preview", "radio", "row", "saveobject", "spinbox", "stretch", "tabbook",
-		"text", "varselector", "varslot")
+		"text", "varselector", "varslot", "!--")
 	if(any(invalid.sets)){
 		stop(simpleError(paste("Invalid XML nodes for dialog section: ", paste(node.names[invalid.sets], collapse=", "), sep="")))
 	} else {}

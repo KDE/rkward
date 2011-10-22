@@ -24,7 +24,7 @@ rk.XML.snippets <- function(...){
 	sapply(child.list(nodes), function(this.node){
 			stopifnot(inherits(this.node, "XiMpLe.node"))
 			node.name <- this.node@name
-			if(!identical(node.name, "snippet")){
+			if(!identical(node.name, "snippet", "!--")){
 				stop(simpleError(paste("Invalid XML nodes for snippets section: ", node.name, sep="")))
 			} else {}
 		})

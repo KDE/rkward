@@ -31,7 +31,7 @@ rk.XML.context <- function(..., id="x11"){
 		stop(simpleError(paste("Invalid ID: ", id, sep="")))
 	} else {}
 		
-	invalid.sets <- !node.names %in% c("menu")
+	invalid.sets <- !node.names %in% c("menu", "!--")
 	if(any(invalid.sets)){
 		stop(simpleError(paste("Invalid XML nodes for context section: ",
 			paste(node.names[invalid.sets], collapse=", "), sep="")))

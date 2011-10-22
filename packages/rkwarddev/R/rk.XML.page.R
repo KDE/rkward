@@ -32,7 +32,7 @@ rk.XML.page <- function(..., id.name="auto"){
 
 	invalid.sets <- !node.names %in% c("browser", "checkbox", "column", "copy",
 		"dropdown", "formula", "frame", "input", "page", "radio", "row", "saveobject",
-		"spinbox", "stretch", "tabbook", "text", "varselector", "varslot")
+		"spinbox", "stretch", "tabbook", "text", "varselector", "varslot", "!--")
 	if(any(invalid.sets)){
 		stop(simpleError(paste("Invalid XML nodes for page/wizard section: ", paste(node.names[invalid.sets], collapse=", "), sep="")))
 	} else {}

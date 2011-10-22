@@ -87,7 +87,7 @@ rk.XML.menu <- function(label, ..., index=-1, id.name="auto"){
 	sapply(child.list(nodes), function(this.node){
 			stopifnot(inherits(this.node, "XiMpLe.node"))
 			node.name <- this.node@name
-			if(!node.name %in% c("entry", "menu")){
+			if(!node.name %in% c("entry", "menu", "!--")){
 				stop(simpleError(paste("Invalid XML nodes for menu section: ", node.name, sep="")))
 			} else {}
 		})

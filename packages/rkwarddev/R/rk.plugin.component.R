@@ -9,7 +9,7 @@
 #'		If not set, their default values are used. See \code{\link[rkwarddev:rk.XML.plugin]{rk.XML.plugin}} for details.
 #' @param js A named list of options to be forwarded to \code{\link[rkwarddev:rk.JS.doc]{rk.JS.doc}}, to generate the JavaScript file.
 #'		Not all options are supported because some don't make sense in this context. Valid options are:
-#'		\code{"require"}, \code{"results.header"}, \code{"variables"}, \code{"preprocess"}, \code{"calculate"} and \code{"printout"}.
+#'		\code{"require"}, \code{"results.header"}, \code{"variables"}, \code{"preprocess"}, \code{"calculate"}, \code{"printout"} and \code{"doPrintout"}.
 #'		If not set, their default values are used. See \code{\link[rkwarddev:rk.JS.doc]{rk.JS.doc}} for details.
 #' @param rkh A named list of options to be forwarded to \code{\link[rkwarddev:rk.rkh.doc]{rk.rkh.doc}}, to generate the help file.
 #'		Not all options are supported because some don't make sense in this context. Valid options are:
@@ -128,7 +128,7 @@ rk.plugin.component <- function(about, xml=list(), js=list(), rkh=list(),
 	## create plugin.js
 	if("js" %in% create & length(js) > 0){
 		got.JS.options <- names(js)
-		for (this.opt in c("require", "variables", "preprocess", "calculate", "printout")){
+		for (this.opt in c("require", "variables", "preprocess", "calculate", "printout", "doPrintout")){
 			if(!this.opt %in% got.JS.options) {
 				js[[this.opt]] <- eval(formals(rk.JS.doc)[[this.opt]])
 			} else {}
@@ -158,6 +158,7 @@ rk.plugin.component <- function(about, xml=list(), js=list(), rkh=list(),
 			preprocess=js[["preprocess"]],
 			calculate=js[["calculate"]],
 			printout=js[["printout"]],
+			doPrintout=js[["doPrintout"]],
 			indent.by=indent.by)
 		this.component@js <- JS.code
 	} else {

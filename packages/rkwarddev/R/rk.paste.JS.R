@@ -3,6 +3,8 @@
 #' @note To get a list of the implemented modifiers in this package, call \code{rkwarddev:::all.valid.modifiers}.
 #'
 #' @param ... Objects of class \code{rk.JS.ite}, \code{rk.JS.arr}, \code{rk.JS.opt} or character.
+#'		Another special case is XiMpLe nodes created by \code{rk.comment()}, which will be turned
+#'		into JavaScript comments (i.e., lines starting with "//").
 #' @param level Integer, which indentation level to use, minimum is 1.
 #' @param indent.by A character string defining the indentation string to use.
 #' @param funct For \code{rk.JS.arr} and \code{rk.JS.opt} objects only: Character string, name of the R function
@@ -47,6 +49,14 @@ rk.paste.JS <- function(..., level=2, indent.by="\t", funct=NULL, array=NULL,
 		} else if(inherits(this.object, "rk.JS.var")){
 			result <- paste.JS.var(this.object, level=level, indent.by=indent.by, JS.prefix=var.prefix,
 				modifiers=modifiers, default=default, join=join)
+		} else if(inherits(this.object, "XiMpLe.node")){
+			if(identical(this.object@name, "!--")){
+				result <- paste(indent(level, by=indent.by),
+					"// ",
+					gsub("\n", paste("\n", indent(level, by=indent.by), "//", sep=""), this.object@value), sep="")
+			} else {
+				stop(simpleError("XiMpLe.node objects are only valid if they are comments!"))
+			}
 		} else {
 			result <- paste(indent(level, by=indent.by), this.object, sep="")
 		}

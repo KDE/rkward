@@ -30,7 +30,7 @@ rk.rkh.settings <- function(...){
 			this.node@name
 		})
 
-	invalid.sets <- !node.names %in% c("setting", "caption")
+	invalid.sets <- !node.names %in% c("setting", "caption", "!--")
 	if(any(invalid.sets)){
 		stop(simpleError(paste("Invalid XML nodes for settings section: ", paste(node.names[invalid.sets], collapse=", "), sep="")))
 	} else {}

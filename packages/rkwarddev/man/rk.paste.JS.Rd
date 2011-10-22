@@ -8,7 +8,10 @@
 }
 \arguments{
   \item{...}{Objects of class \code{rk.JS.ite},
-  \code{rk.JS.arr}, \code{rk.JS.opt} or character.}
+  \code{rk.JS.arr}, \code{rk.JS.opt} or character. Another
+  special case is XiMpLe nodes created by
+  \code{rk.comment()}, which will be turned into JavaScript
+  comments (i.e., lines starting with "//").}
 
   \item{level}{Integer, which indentation level to use,
   minimum is 1.}
