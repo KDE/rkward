@@ -35,6 +35,7 @@ public:
 
 	void debugCall (RBackendRequest *request, RCommand *command);
 	void submitDebugString (const QString &command);
+	void sendCancel ();
 	void endDebug ();
 
 	enum DebugState {
@@ -50,9 +51,11 @@ public:
 	QStringList environments () const { return _environments; };
 	QStringList locals () const { return _locals; };
 	QString debugPrompt () const { return _prompt; };
+	RCommand *command () const { return _command; };
 signals:
 	void newDebugState ();
 private:
+	RCommand *_command;
 	QStringList _calls, _functions, _environments, _locals;
 	QString _prompt, _output_context;
 	DebugState _state;

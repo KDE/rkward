@@ -28,6 +28,7 @@ RKDebugHandler::RKDebugHandler (QObject *parent) : QObject (parent) {
 
 	_state = NotInDebugger;
 	_request = 0;
+	_command = 0;
 	_instance = this;
 }
 
@@ -38,6 +39,7 @@ RKDebugHandler::~RKDebugHandler () {
 void RKDebugHandler::debugCall (RBackendRequest *request, RCommand *command) {
 	RK_TRACE (APP);
 
+	_command = command;
 	_request = request;
 	if (command) _output_context = command->fullOutput ();
 	else _output_context.clear ();
@@ -52,6 +54,13 @@ void RKDebugHandler::debugCall (RBackendRequest *request, RCommand *command) {
 	newDebugState ();
 }
 
+void RKDebugHandler::sendCancel () {
+	RK_TRACE (APP);
+
+	RK_ASSERT (_request);
+	submitDebugString ("Q\n");
+}
+
 void RKDebugHandler::submitDebugString (const QString &command) {
 	RK_TRACE (APP);
 
@@ -64,6 +73,7 @@ void RKDebugHandler::submitDebugString (const QString &command) {
 
 	RKRBackendProtocolFrontend::setRequestCompleted (_request);
 
+	_command = 0;
 	_state = InDebugRun;
 	newDebugState ();
 }
@@ -71,10 +81,10 @@ void RKDebugHandler::submitDebugString (const QString &command) {
 void RKDebugHandler::endDebug () {
 	RK_TRACE (APP);
 
+	_command = 0;
 	_request = 0;
 	_state = NotInDebugger;
 	newDebugState ();
 }
 
 #include "rkdebughandler.moc"
-

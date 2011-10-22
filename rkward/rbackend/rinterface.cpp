@@ -475,7 +475,11 @@ void RInterface::cancelCommand (RCommand *command) {
 	if (!(command->type () & RCommand::Sync)) {
 		command->status |= RCommand::Canceled;
 		if (command->type () && RCommand::Running) {
-			RKRBackendProtocolFrontend::instance ()->interruptCommand (command->id ());
+			if ((RKDebugHandler::instance ()->state () == RKDebugHandler::InDebugPrompt) && (command == RKDebugHandler::instance ()->command ())) {
+				RKDebugHandler::instance ()->sendCancel ();
+			} else {
+				RKRBackendProtocolFrontend::instance ()->interruptCommand (command->id ());
+			}
 		}
 		RCommandStackModel::getModel ()->itemChange (command);
 	} else {

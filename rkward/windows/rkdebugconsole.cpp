@@ -129,7 +129,7 @@ void RKDebugConsole::continueButtonClicked () {
 void RKDebugConsole::cancelButtonClicked () {
 	RK_TRACE (APP);
 
-	sendReply ("Q\n");
+	RKDebugHandler::instance ()->sendCancel ();
 }
 
 void RKDebugConsole::sendReply (const QString &reply) {
