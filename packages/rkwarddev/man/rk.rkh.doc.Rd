@@ -4,7 +4,7 @@
 \usage{
   rk.rkh.doc(summary = NULL, usage = NULL, sections = NULL,
   settings = NULL, related = NULL, technical = NULL, title
-  = NULL)
+  = NULL, gen.info = TRUE)
 }
 \arguments{
   \item{summary}{An object of class \code{XiMpLe.node} to
@@ -44,6 +44,11 @@
   pasted as the \code{<title>} section. See
   \code{\link[rkwarddev:rk.rkh.title]{rk.rkh.title}} for
   details.}
+
+  \item{gen.info}{Logical, if \code{TRUE} a comment note
+  will be written into the document, that it was generated
+  by \code{rkwarddev} and changes should be done to the
+  script.}
 }
 \value{
   An object of class \code{XiMpLe.doc}.

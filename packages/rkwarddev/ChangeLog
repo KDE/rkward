@@ -6,7 +6,10 @@ ChangeLog for package rkwarddev
   - added function rk.comment() to add comments to the generated code. it's a <!-- comment --> node
     by default, but will be turned into // comment by rk.paste.JS() and <![CDATA[ comment ]]> for
     logic sections automatically
+  - added option "gen.info" to all file producing functions, to add a comment note that the file
+    was generated and changes should be made to the script rather than the code directly
   - fixed missing "id.name" option in rk.XML.embed()
+  - fixed automatic menu hierarchy generation for lists of legth 1 in rk.XML.pluginmap()
 
 ## 0.04-2 (2011-10-21)
   - removed the superfluous "name" option from rk.plugin.skeleton() and rk.plugin.component(); names are now

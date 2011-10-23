@@ -5,7 +5,7 @@
   rk.XML.plugin(name, dialog = NULL, wizard = NULL, logic =
   NULL, snippets = NULL, provides = NULL, help = TRUE,
   pluginmap = NULL, label = NULL, clean.name = TRUE, about
-  = NULL)
+  = NULL, gen.info = TRUE)
 }
 \arguments{
   \item{name}{Character string, the name of the plugin.
@@ -64,6 +64,11 @@
   details. Only useful for information that differs from
   the \code{<about>} section of the \code{.pluginmap} file.
   Skipped if \code{NULL}.}
+
+  \item{gen.info}{Logical, if \code{TRUE} a comment note
+  will be written into the document, that it was generated
+  by \code{rkwarddev} and changes should be done to the
+  script.}
 }
 \value{
   An object of class \code{XiMpLe.doc}.

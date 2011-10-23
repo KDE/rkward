@@ -4,7 +4,8 @@
 \usage{
   rk.XML.pluginmap(name, about = NULL, components,
   hierarchy = "test", require = NULL, x11.context = NULL,
-  import.context = NULL, clean.name = TRUE, hints = FALSE)
+  import.context = NULL, clean.name = TRUE, hints = FALSE,
+  gen.info = TRUE)
 }
 \arguments{
   \item{name}{Character string, name of the plugin.}
@@ -62,6 +63,14 @@
   \item{hints}{Logical, if \code{TRUE} and you leave out
   optional entries (like \code{about=NULL}), dummy sections
   will be added as comments.}
+
+  \item{gen.info}{Logical, if \code{TRUE} a comment note
+  will be written into the document, that it was generated
+  by \code{rkwarddev} and changes should be done to the
+  script.}
+}
+\value{
+  An object of class \code{XiMpLe.node}.
 }
 \description{
   Write a pluginmap file for RKWard

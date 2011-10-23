@@ -1,5 +1,9 @@
 # internal functions for the rk.* functions
 
+# info message
+generator.info <- rk.comment(paste("this code was generated using the rkwarddev package.\n",
+			"perhaps don't make changes here, but in the rkwarddev script instead!", sep=""))
+
 ## function auto.ids()
 auto.ids <- function(identifiers, prefix=NULL, suffix=NULL, chars=8){
 	identifiers <- gsub("[[:space:]]*[^[:alnum:]]*", "", identifiers)
