@@ -43,21 +43,24 @@ rk.JS.doc <- function(require=c(), variables=NULL, results.header=NULL,
 		"}", sep="")
 
 	js.calculate <- paste("function calculate(){\n",
-			ifelse(is.null(variables), "", paste(
-				indent(2, by=indent.by), "// read in variables from dialog\n", 
-				paste(variables, collapse=""), "\n\n", sep="")),
-			ifelse(is.null(calculate),
-				paste(indent(2, by=indent.by), "// put the R code to be evaluated here\n", sep=""),
-				paste(calculate, "\n", sep="")),
-			"}", sep="")
+			# for plots we only need something here if calculate is not empty
+			if(is.null(doPrintout) | !is.null(calculate)){paste(
+				ifelse(is.null(variables), "", paste(
+					indent(2, by=indent.by), "// read in variables from dialog\n",
+					paste(variables, collapse=""), "\n\n", sep="")),
+				ifelse(is.null(calculate),
+					paste(indent(2, by=indent.by), "// generate the R code to be evaluated here\n", sep=""),
+					paste(indent(2, by=indent.by), "// the R code to be evaluated\n",calculate, "\n", sep="")),
+				sep="")
+			} else {}, "}", sep="")
 		
 	js.printout <- paste("function printout(){\n",
 			if(is.null(doPrintout)){
 				paste(
 					indent(2, by=indent.by), "// printout the results\n",
-					indent(2, by=indent.by), echo(id("rk.header(\"", results.header, "\", level=1)")),
+					indent(2, by=indent.by), echo(id("rk.header(\"", results.header, "\", level=1)\n")),
 					"\n",
-					ifelse(is.null(printout), echo("rk.print(\"\")"), paste("\n", printout, sep="")),
+					ifelse(is.null(printout), echo("rk.print(\"\")\n"), paste("\n", printout, sep="")),
 					"\n",
 				sep="")
 				} else {
@@ -84,7 +87,7 @@ rk.JS.doc <- function(require=c(), variables=NULL, results.header=NULL,
 						indent(2, by=indent.by), "// read in variables from dialog\n", 
 						paste(variables, collapse=""), "\n\n", sep="")),
 					indent(2, by=indent.by), "// create the plot\n",
-					rk.paste.JS(ite("full", echo(id("rk.header(\"", results.header,"\", level=1)")))),
+					rk.paste.JS(ite("full", echo(id("rk.header(\"", results.header,"\", level=1)\n")))),
 					"\n\n",
 					doPrintout,
 					"\n}",
