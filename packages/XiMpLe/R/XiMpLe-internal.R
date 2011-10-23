@@ -108,7 +108,7 @@ indent <- function(level, by="\t"){
 # with harmless entities
 xml.tidy <- function(text){
 	if(is.character(text)){
-		tidy.text <- gsub("<", "&lt;", gsub(">", "&gt;", text))
+		tidy.text <- gsub("<", "&lt;", gsub(">", "&gt;", gsub("([[:space:]])&([[:space:]])", "\\1&amp;\\2", text, perl=TRUE)))
 	} else {
 		return(text)
 	}

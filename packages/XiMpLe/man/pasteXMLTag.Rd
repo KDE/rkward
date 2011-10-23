@@ -39,8 +39,10 @@
   indentation should be done. Defaults to tab.}
 
   \item{tidy}{Logical, if \code{TRUE} the special
-  characters "<" and ">" will be replaced with the entities
-  "&lt;" and "gt;" in attribute values.}
+  characters "<", ">" and "&" will be replaced with the
+  entities "&lt;", "&gt;" and "&amp;" in attribute values.
+  For comment or CDATA tags, if the text includes newline
+  characters they will also be indented.}
 }
 \description{
   Creates a whole XML tag with attributes and, if it is a

@@ -20,8 +20,9 @@
 #'			\item{2}{Nodes will be indented and each attribute gets a new line.}
 #'		}
 #' @param indent.by A charachter string defining how indentation should be done. Defaults to tab.
-#' @param tidy Logical, if \code{TRUE} the special characters "<" and ">" will be replaced with the entities
-#'		"&lt;" and "gt;" in attribute values.
+#' @param tidy Logical, if \code{TRUE} the special characters "<", ">" and "&" will be replaced with the entities
+#'		"&lt;", "&gt;" and "&amp;" in attribute values. For comment or CDATA tags, if the text includes newline characters
+#'		they will also be indented.
 #' @export
 pasteXMLTag <- function(tag, attr=NULL, child=NULL, empty=TRUE, level=1, allow.empty=FALSE, rename=NULL, shine=2, indent.by="\t", tidy=TRUE){
 	# what attributes do we have?
@@ -37,14 +38,33 @@ pasteXMLTag <- function(tag, attr=NULL, child=NULL, empty=TRUE, level=1, allow.e
 	new.attr.indent <- ifelse(shine > 1, indent(level, by=indent.by), "")
 	attr.space <- ifelse(nchar(all.attributes) > 0, " ", "")
 	new.cmmt.indent <- ifelse(shine > 1, indent(level + 1, by=indent.by), "")
+	comment.indent <- ifelse(shine > 0, indent(level + 1, by=indent.by), "")
 
 	# three special cases: value pseudotags, comments and CDATA
 	if(isTRUE(nchar(tag) == 0) | length(tag) == 0){
 		full.tag <- paste(new.indent, child, new.node, sep="")
 	} else if(identical(tag, "!--")){
-		full.tag <- paste(new.indent, "<!-- ", new.attr, new.cmmt.indent, if(!is.null(child)){trim(child)}, " ", new.attr, new.attr.indent, "-->", new.node, sep="")
+		# clean up value if needed
+		if(!is.null(child)){
+			child <- trim(child)
+			if(isTRUE(tidy)){
+				child <- gsub("\n", paste("\n", comment.indent, sep=""), child)
+			}
+		} else {}
+		full.tag <- paste(new.indent, "<!-- ", new.attr, new.cmmt.indent,
+			child, " ", new.attr, new.attr.indent,
+			"-->", new.node, sep="")
 	} else if(identical(tag, "![CDATA[")){
-		full.tag <- paste(new.indent, "<![CDATA[ ", new.attr, new.cmmt.indent, if(!is.null(child)){trim(child)}, " ", new.attr, new.attr.indent, "]]>", new.node, sep="")
+		# clean up value if needed
+		if(!is.null(child)){
+			child <- trim(child)
+			if(isTRUE(tidy)){
+				child <- gsub("\n", paste("\n", comment.indent, sep=""), child)
+			}
+		} else {}
+		full.tag <- paste(new.indent, "<![CDATA[ ", new.attr, new.cmmt.indent,
+			child, " ", new.attr, new.attr.indent,
+			"]]>", new.node, sep="")
 	} else {
 		# only put attributes in new lines if there's more than one
 		new.attr <- ifelse((length(attr) > 1), new.attr, "")

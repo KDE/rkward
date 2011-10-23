@@ -2,12 +2,12 @@ bibentry("Manual",
 		title="XiMpLe: A simple XML tree parser and generator",
 		author="Meik Michalke",
 		year="2011",
-		note="(Version 0.03-6)",
+		note="(Version 0.03-7)",
 		url="http://rkward.sourceforge.net",
 
 		textVersion =
 		paste("Michalke, M. (2011). ",
-				"XiMpLe: A simple XML tree parser and generator (Version 0.03-6). ",
+				"XiMpLe: A simple XML tree parser and generator (Version 0.03-7). ",
 				"Available from http://rkward.sourceforge.net",
 				sep=""),
 
