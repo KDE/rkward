@@ -517,7 +517,7 @@ QStringList RInterface::processPlainGenericRequest (const QStringList &calllist)
 		// if we're still alive, quitting was cancelled
 		return (QStringList ("FALSE"));
 	} else if (call == "preLocaleChange") {
-		int res = KMessageBox::warningContinueCancel (0, i18n ("A command in the R backend is trying to change the character encoding. While RKWard offers support for this, and will try to adjust to the new locale, this operation may cause subtle bugs, if data windows are currently open. Also the feature is not well tested, yet, and it may be advisable to save your workspace before proceeding.\nIf you have any data editor opened, or in any doubt, it is recommended to close those first (this will probably be auto-detected in later versions of RKWard). In this case, please chose 'Cancel' now, then close the data windows, save, and retry."), i18n ("Locale change"));
+		int res = KMessageBox::warningContinueCancel (0, i18n ("A command in the R backend is trying to change the character encoding. While RKWard offers support for this, and will try to adjust to the new locale, this operation may cause subtle bugs, if data windows are currently open. Also the feature is not well tested, yet, and it may be advisable to save your workspace before proceeding.\nIf you have any data editor opened, or in any doubt, it is recommended to close those first (this will probably be auto-detected in later versions of RKWard). In this case, please choose 'Cancel' now, then close the data windows, save, and retry."), i18n ("Locale change"));
 		if (res != KMessageBox::Continue) return (QStringList ("FALSE"));
 	} else if (call == "listPlugins") {
 		RK_ASSERT (calllist.count () == 1);
