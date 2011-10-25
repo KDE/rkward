@@ -1,3 +1,11 @@
+rkward (0.5.7-2) unstable; urgency=low
+
+  * new upload to force rebuild against R 2.14.0~x on i386
+    closes: #646047 (failure to load rkward package)
+  * add dependency on r-base-core < 2.14 if built against R < 2.14.0
+
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Tue, 25 Oct 2011 14:30:00 +0200
+
 rkward (0.5.7-1) unstable; urgency=low
 
   * new upstream release

@@ -130,15 +130,18 @@ binary-arch: build install
 	dh_installdeb
 	dh_shlibdeps
 	# unfortunately, the r-base-core dependency can not be found by dh_shlibdeps, so we need to get at the version manually
-	@if [ "$(RMAJOR)" -eq "2" ] && [ "$(RMINOR)" -ge "9" ] ; then \
+	@if [ "$(RMAJOR)" -eq "2" ] && [ "$(RMINOR)" -ge "14" ] ; then \
 		echo "rvers=r-base-core (>= 2.9.0)" >> $(CURDIR)/debian/rkward.substvars ; \
+	else \
+		if [ "$(RMAJOR)" -eq "2" ] && [ "$(RMINOR)" -ge "9" ] ; then \
+		echo "rvers=r-base-core (<< 2.14.0), r-base-core (>= 2.9.0)" >> $(CURDIR)/debian/rkward.substvars ; \
 	else \
 		if [ "$(RMAJOR)" -eq "2" ] && [ "$(RMINOR)" -ge "8" ] ; then \
 		echo "rvers=r-base-core (<< 2.9.0), r-base-core (>= 2.8.0)" >> $(CURDIR)/debian/rkward.substvars ; \
 	else \
 		if [ "$(RMAJOR)" -eq "2" ] && [ "$(RMINOR)" -ge "7" ] ; then \
 		echo "rvers=r-base-core (<< 2.8.0), r-base-core (>= 2.7.0)" >> $(CURDIR)/debian/rkward.substvars ; \
-	fi ; fi ; fi
+	fi ; fi ; fi ; fi
 	dh_gencontrol
 	dh_md5sums
 	dh_builddeb
