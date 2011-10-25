@@ -139,14 +139,10 @@ void RObjectList::rCommandDone (RCommand *command) {
 	RK_TRACE (OBJECTS);
 
 	if (command->getFlags () == ROBJECTLIST_UDPATE_ENVIRONMENTS_COMMAND) {
-		unsigned int num_new_environments = command->getDataLength ();
 		RK_ASSERT (command->getDataType () == RData::StringVector);
-		RK_ASSERT (num_new_environments >= 2);
+		QStringList new_environments = command->stringVector ();
+		RK_ASSERT (new_environments.size () >= 2);
 
-		QStringList new_environments;
-		for (unsigned int i = 0; i < num_new_environments; ++i) {
-			new_environments.append (command->getStringVector ()[i]);
-		}
 		updateEnvironments (new_environments, true);
 
 		RKGlobals::rInterface ()->issueCommand (QString (), RCommand::App | RCommand::Sync | RCommand::EmptyCommand, QString (), this, ROBJECTLIST_UDPATE_COMPLETE_COMMAND, update_chain);

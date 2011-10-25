@@ -42,14 +42,38 @@ public:
 	RDataType getDataType () const { return datatype; };
 /** returns the length (size) of the data array. @see RCommand::GetStringVector @see RCommand::GetRealVector @see RCommand::GetIntVector @see RCommand:GetStructure */
 	unsigned int getDataLength () const;
-/** returns an array of double, if that is the type of data contained (else 0). @see RCommand::GetRealVector @see RData::getDataLength () @see RData::getDataType () */
-	RealStorage &getRealVector () const;
-/** returns an array of int, if that is the type of data contained (else 0). @see RCommand::GetIntVector @see RData::getDataLength () @see RData::getDataType () */
-	IntStorage &getIntVector () const;
-/** returns an array of QString, if that is the type of data contained (else 0). @see RCommand::GetStringVector @see RData::getDataLength () @see RData::getDataType () */
-	StringStorage &getStringVector () const;
-/** returns an array of RData*, if that is the type of data contained (else 0). @see RCommand::GetStructureVector @see RData::getDataLength () @see RData::getDataType () */
-	RDataStorage &getStructureVector () const;
+/** returns a vector of double, if that is the type of data contained (else, an assert is raised, and an empty vector is returned). Can be used safely on a null RData pointer (but raises an assert in this case). @see RCommand::GetRealVector @see RData::getDataType () */
+	const RealStorage realVector () const {
+		if (this && (datatype == RealVector)) {
+			return (*static_cast<RealStorage *> (data));
+		}
+		doAssert (RealVector);
+		return RealStorage ();
+	}
+/** returns a vector of int, if that is the type of data contained (else, an assert is raised, and an empty vector is returned). Can be used safely on a null RData pointer (but raises an assert in this case). @see RCommand::GetIntVector @see RData::getDataType () */
+	const IntStorage intVector () const {
+		if (this && (datatype == IntVector)) {
+			return (*static_cast<IntStorage *> (data));
+		}
+		doAssert (IntVector);
+		return IntStorage ();
+	}
+/** returns a QStringList, if that is the type of data contained (else, an assert is raised, and an empty vector is returned). Can be used safely on a null RData pointer (but raises an assert in this case). @see RCommand::GetStringVector @see RData::getDataType () */
+	const StringStorage stringVector () const {
+		if (this && (datatype == StringVector)) {
+			return (*static_cast<StringStorage *> (data));
+		}
+		doAssert (StringVector);
+		return StringStorage ();
+	}
+/** returns a vector of RData*, if that is the type of data contained (else, an assert is raised, and an empty vector is returned). Can be used safely on a null RData pointer (but raises an assert in this case). @see RCommand::GetStructureVector @see RData::getDataType () */
+	const RDataStorage structureVector () const {
+		if (this && (datatype == StructureVector)) {
+			return (*static_cast<RDataStorage *> (data));
+		}
+		doAssert (StructureVector);
+		return RDataStorage ();
+	}
 	void discardData ();
 /** purely for debugging! */
 	void printStructure (const QString &prefix);
@@ -61,6 +85,7 @@ public:
 /** public for technical reasons only. Do not use! Move data from the given RData to this RData. The source RData is emptied! */
 	void swallowData (RData &from);
 private:
+	void doAssert (RDataType requested_type) const;
 	RDataType datatype;
 	void *data;
 };

@@ -33,27 +33,19 @@ RData::~RData () {
 	discardData ();
 }
 
-RData::RealStorage &RData::getRealVector () const {
-	return (*static_cast<RealStorage *> (data));
-}
-
-RData::IntStorage &RData::getIntVector () const {
-	return (*static_cast<IntStorage *> (data));
-}
-
-RData::StringStorage &RData::getStringVector () const {
-	return (*static_cast<StringStorage *> (data));
-}
-
-RData::RDataStorage &RData::getStructureVector () const {
-	return (*static_cast<RDataStorage *> (data));
+void RData::doAssert(RData::RDataType requested_type) const {
+	if (this == 0) {
+		RK_DO (qDebug ("Requested data from a NULL RData"), RBACKEND, DL_ERROR);
+	} else { 
+		RK_DO (qDebug ("Reqeusted data of type %d, while %p has type %d", requested_type, this, datatype), RBACKEND, DL_ERROR);
+	}
 }
 
 void RData::discardData () {
 	RK_TRACE (RBACKEND);
 
 	if (datatype == StructureVector) {
-		RDataStorage sdata = getStructureVector ();
+		RDataStorage sdata = *(static_cast<RDataStorage *> (data));
 		for (int i=sdata.size ()-1; i >= 0; --i) {
 			delete (sdata[i]);
 		}
@@ -73,10 +65,11 @@ void RData::discardData () {
 }
 
 unsigned int RData::getDataLength() const {
-	if (datatype == RealVector) return (getRealVector ().size ());
-	if (datatype == IntVector) return (getIntVector ().size ());
-	if (datatype == StringVector) return (getStringVector ().size ());
-	if (datatype == StructureVector) return (getStructureVector ().size ());
+	if (!this) return 0;
+	if (datatype == RealVector) return (static_cast<RealStorage *> (data)->size ());
+	if (datatype == IntVector) return (static_cast<IntStorage *> (data)->size ());
+	if (datatype == StringVector) return (static_cast<StringStorage *> (data)->size ());
+	if (datatype == StructureVector) return (static_cast<RDataStorage *> (data)->size ());
 	return 0;
 }
 
@@ -109,37 +102,35 @@ void RData::setData (const StringStorage &from) {
 }
 
 void RData::printStructure (const QString &prefix) {
-	switch (datatype) {
-		case NoData:
-			qDebug ("%s: NoData, length %d", prefix.toLatin1().data(), getDataLength ());
-			break;
-		case IntVector:
-			qDebug ("%s: IntVector, length %d", prefix.toLatin1().data(), getDataLength ());
-			for (unsigned int i = 0; i < getDataLength (); ++i) {
-				qDebug ("%s%d: %d", prefix.toLatin1().data(), i, getIntVector ()[i]);
-			}
-			break;
-		case RealVector:
-			qDebug ("%s: RealVector, length %d", prefix.toLatin1().data(), getDataLength ());
-			for (unsigned int i = 0; i < getDataLength (); ++i) {
-				qDebug ("%s%d: %f", prefix.toLatin1().data(), i, getRealVector ()[i]);
-			}
-			break;
-		case StringVector:
-			qDebug ("%s: StringVector, length %d", prefix.toLatin1().data(), getDataLength ());
-			for (unsigned int i = 0; i < getDataLength (); ++i) {
-				qDebug ("%s%d: %s", prefix.toLatin1().data(), i, getStringVector ()[i].toLatin1().data());
-			}
-			break;
-		case StructureVector:
-			qDebug ("%s: StructureVector, length %d", prefix.toLatin1().data(), getDataLength ());
-			for (unsigned int i = 0; i < getDataLength (); ++i) {
-				QString sub_prefix = prefix + QString::number (i);
-				getStructureVector ()[i]->printStructure (sub_prefix);
-			}
-			break;
-		default:
-			qDebug ("%s: INVALID %d, length %d", prefix.toLatin1().data(), datatype, getDataLength ());
+	if (datatype == NoData) {
+		qDebug ("%s: NoData, length %d", prefix.toLatin1().data(), getDataLength ());
+	} else if (datatype == IntVector) {
+		qDebug ("%s: IntVector, length %d", prefix.toLatin1().data(), getDataLength ());
+		IntStorage data = intVector ();
+		for (int i = 0; i < data.size (); ++i) {
+			qDebug ("%s%d: %d", prefix.toLatin1().data(), i, data.at (i));
+		}
+	} else if (datatype == RealVector) {
+		qDebug ("%s: RealVector, length %d", prefix.toLatin1().data(), getDataLength ());
+		RealStorage data = realVector ();
+		for (int i = 0; i < data.size (); ++i) {
+			qDebug ("%s%d: %f", prefix.toLatin1().data(), i, data.at (i));
+		}
+	} else if (datatype == StringVector) {
+		qDebug ("%s: StringVector, length %d", prefix.toLatin1().data(), getDataLength ());
+		StringStorage data = stringVector ();
+		for (int i = 0; i < data.size (); ++i) {
+			qDebug ("%s%d: %s", prefix.toLatin1().data(), i, qPrintable (data.at (i)));
+		}
+	} else if (datatype == StructureVector) {
+		qDebug ("%s: StructureVector, length %d", prefix.toLatin1().data(), getDataLength ());
+		RDataStorage data = structureVector ();
+		for (int i = 0; i < data.size (); ++i) {
+			QString sub_prefix = prefix + QString::number (i);
+			data.at (i)->printStructure (sub_prefix);
+		}
+	} else {
+		qDebug ("%s: INVALID %d, length %d", prefix.toLatin1().data(), datatype, getDataLength ());
 	}
 	qDebug ("%s: END\n\n", prefix.toLatin1 ().data());
 }

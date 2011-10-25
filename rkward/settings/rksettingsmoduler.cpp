@@ -423,7 +423,7 @@ void RKSettingsModuleRPackages::rCommandDone (RCommand *command) {
 	if (command->getFlags () == SELECT_CRAN_MIRROR_COMMAND) {
 		if (command->succeeded ()) {
 			RK_ASSERT (command->getDataLength () >= 1);
-			cran_mirror_input->setText (command->getStringVector ()[0]);
+			cran_mirror_input->setText (command->stringVector ().value (0));
 		}
 	} else {
 		RK_ASSERT (false);

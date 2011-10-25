@@ -247,7 +247,7 @@ void RKHelpSearchWindow::rCommandDone (RCommand *command) {
 			RK_ASSERT (false);
 		} else {
 			RK_ASSERT (command->getDataType () == RData::StringVector);
-			res = command->getStringVector ();
+			res = command->stringVector ();
 		}
 		results->setResults (res);
 

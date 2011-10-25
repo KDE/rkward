@@ -263,9 +263,7 @@ void RInterface::rCommandDone (RCommand *command) {
 
 	if (command->getFlags () == GET_LIB_PATHS) {
 		RK_ASSERT (command->getDataType () == RData::StringVector);
-		for (unsigned int i = 0; i < command->getDataLength (); ++i) {
-			RKSettingsModuleRPackages::defaultliblocs.append (command->getStringVector ()[i]);
-		}
+		RKSettingsModuleRPackages::defaultliblocs += command->stringVector ();
 
 		RCommandStack *stack = RCommandStack::currentStack ();
 		RCommandChain *chain = stack->currentChain ();
@@ -284,7 +282,7 @@ void RInterface::rCommandDone (RCommand *command) {
 	} else if (command->getFlags () == GET_HELP_BASE) {
 		RK_ASSERT (command->getDataType () == RData::StringVector);
 		RK_ASSERT (command->getDataLength () == 1);
-		RKSettingsModuleR::help_base_url = command->getStringVector ()[0];
+		RKSettingsModuleR::help_base_url = command->stringVector ().value (0);
 	} else if (command->getFlags () == SET_RUNTIME_OPTS) {
 		// no special handling. In case of failures, staturt_fail was set to true, above.
 	} else if (command->getFlags () == STARTUP_PHASE2_COMPLETE) {

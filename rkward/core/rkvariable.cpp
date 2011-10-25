@@ -127,21 +127,23 @@ void RKVariable::rCommandDone (RCommand *command) {
 		RK_ASSERT (command->getDataType () == RData::StructureVector);
 		RK_ASSERT (command->getDataLength () == 3);
 
-		RData *cdata = command->getStructureVector ()[0];
-		RData *levels = command->getStructureVector ()[1];
-		RData *invalids = command->getStructureVector ()[2];
+		RData::RDataStorage top = command->structureVector ();
+		RData *cdata = top.at (0);
+		RData *levels = top.at (1);
+		RData *invalids = top.at (2);
 
 		// set factor levels first
 		RK_ASSERT (levels->getDataType () == RData::StringVector);
-		unsigned int levels_len = levels->getDataLength ();
+		QStringList new_levels = levels->stringVector ();
+		int levels_len = new_levels.size ();
 		RK_ASSERT (levels_len >= 1);
 		delete data->value_labels;
 		data->value_labels = new RObject::ValueLabels;
-		if ((levels_len == 1) && levels->getStringVector ()[0].isEmpty ()) {
+		if ((levels_len == 1) && new_levels.at (0).isEmpty ()) {
 			// no levels
 		} else {
-			for (unsigned int i=0; i < levels_len; ++i) {
-				data->value_labels->insert (QString::number (i+1), levels->getStringVector ()[i]);
+			for (int i=0; i < levels_len; ++i) {
+				data->value_labels->insert (QString::number (i+1), new_levels.at (i));
 			}
 		}
 
@@ -149,16 +151,17 @@ void RKVariable::rCommandDone (RCommand *command) {
 		RK_ASSERT (cdata->getDataLength () == (unsigned int) getLength ()); // not really a problem due to the line below, I'd still like to know if / when this happens.
 		extendToLength (cdata->getDataLength ());
 		if (cdata->getDataType () == RData::StringVector) {
-			setCharacterFromR (0, getLength () - 1, cdata->getStringVector ());
+			setCharacterFromR (0, getLength () - 1, cdata->stringVector ());
 		} else if (cdata->getDataType () == RData::RealVector) {
-			setNumericFromR (0, getLength () - 1, cdata->getRealVector ());
+			setNumericFromR (0, getLength () - 1, cdata->realVector ());
 		} else if (cdata->getDataType () == RData::IntVector) {
+			RData::IntStorage int_data = cdata->intVector ();
 			unsigned int len = getLength ();
 			QVector<double> dd;
 			dd.reserve (len);
 			for (unsigned int i = 0; i < len; ++i) {
-				if (RInterface::isNaInt (cdata->getIntVector ()[i])) dd.append (NAN);
-				else dd.append ((double) cdata->getIntVector ()[i]);
+				if (RInterface::isNaInt (int_data.at (i))) dd.append (NAN);
+				else dd.append ((double) int_data.at (i));
 			}
 			setNumericFromR (0, getLength () - 1, dd);
 		}
@@ -169,13 +172,14 @@ void RKVariable::rCommandDone (RCommand *command) {
 			// no invalids
 		} else {
 			RK_ASSERT (invalids->getDataType () == RData::StringVector);
-			unsigned int invalids_length = invalids->getDataLength ();
+			QStringList invalids_list = invalids->stringVector ();
+			int invalids_length = invalids_list.size ();
 			RK_ASSERT ((invalids_length % 2) == 0);
-			unsigned int invalids_count = invalids_length / 2;
-			for (unsigned int i=0; i < invalids_count; ++i) {
-				int row = invalids->getStringVector ()[i].toInt () - 1;
+			int invalids_count = invalids_length / 2;
+			for (int i=0; i < invalids_count; ++i) {
+				int row = invalids_list.at (i).toInt () - 1;
 				if (data->cell_states[row] & RKVarEditData::NA) {
-					setText (row, invalids->getStringVector ()[invalids_count + i]);
+					setText (row, invalids_list.at (invalids_count + i));
 				}
 			}
 		}

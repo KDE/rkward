@@ -63,14 +63,9 @@ bool RFunctionObject::updateArguments (RData *new_data) {
 	RK_ASSERT (new_data->getDataLength () == (StoragePositionFunValues + 1));
 	RK_ASSERT (new_data->getDataType () == RData::StructureVector);
 
-	RData *argnames_data = new_data->getStructureVector ()[StoragePositionFunArgs];
-	RData *argvalues_data = new_data->getStructureVector ()[StoragePositionFunValues];
-
-	RK_ASSERT (argnames_data->getDataType () == RData::StringVector);
-	RK_ASSERT (argvalues_data->getDataType () == RData::StringVector);
-
-	QStringList new_argnames = argnames_data->getStringVector ();
-	QStringList new_argvalues = argvalues_data->getStringVector ();
+	RData::RDataStorage new_data_data = new_data->structureVector ();
+	QStringList new_argnames = new_data_data.at (StoragePositionFunArgs)->stringVector ();
+	QStringList new_argvalues = new_data_data.at (StoragePositionFunValues)->stringVector ();
 	RK_ASSERT (new_argnames.size () == new_argvalues.size ());
 
 	if ((new_argnames != argnames) || (new_argvalues != argvalues)) {

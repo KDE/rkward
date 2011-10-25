@@ -343,7 +343,7 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 				int n_frames = 0;
 				RCommandProxy *dummy = RKRBackend::this_pointer->runDirectCommand ("sys.nframe()", RCommand::GetIntVector);
 				if ((dummy->getDataType () == RData::IntVector) && (dummy->getDataLength () == 1)) {
-					n_frames = dummy->getIntVector ()[0];
+					n_frames = dummy->intVector ().at (0);
 				}
 				// What the ??? Why does this simple version always return 0?
 				//int n_frames = RKRSupport::SEXPToInt (RKRSupport::callSimpleFun0 (Rf_install ("sys.nframe"), R_GlobalEnv));
@@ -387,10 +387,11 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 
 			request_type = RBackendRequest::Debugger;
 			if ((dummy->getDataType () == RData::StructureVector) && (dummy->getDataLength () >= 4)) {
-				params["calls"] = QVariant (dummy->getStructureVector ()[0]->getStringVector ());
-				params["funs"] = QVariant (dummy->getStructureVector ()[1]->getStringVector ());
-				params["envs"] = QVariant (dummy->getStructureVector ()[2]->getStringVector ());
-				params["locals"] = QVariant (dummy->getStructureVector ()[3]->getStringVector ());
+				RData::RDataStorage dummy_data = dummy->structureVector ();
+				params["calls"] = QVariant (dummy_data.at (0)->stringVector ());
+				params["funs"] = QVariant (dummy_data.at (1)->stringVector ());
+				params["envs"] = QVariant (dummy_data.at (2)->stringVector ());
+				params["locals"] = QVariant (dummy_data.at (3)->stringVector ());
 			} else {
 				RK_ASSERT (false);
 			}
@@ -1069,7 +1070,7 @@ bool RKRBackend::startR () {
 	// get info on R runtime version
 	RCommandProxy *dummy = runDirectCommand ("as.numeric (R.version$major) * 1000 + as.numeric (R.version$minor) * 10", RCommand::GetIntVector);
 	if ((dummy->getDataType () == RData::IntVector) && (dummy->getDataLength () == 1)) {
-		r_version = dummy->getIntVector ()[0];
+		r_version = dummy->intVector ().at (0);
 	} else {
 		RK_ASSERT (false);
 		r_version = 0;
@@ -1528,14 +1529,14 @@ void RKRBackend::checkObjectUpdatesNeeded (bool check_list) {
 	// TODO: avoid parsing this over and over again
 		RK_DO (qDebug ("checkObjectUpdatesNeeded: getting search list"), RBACKEND, DL_TRACE);
 		RCommandProxy *dummy = runDirectCommand ("search ()\n", RCommand::GetStringVector);
-		if (dummy->getStringVector () != toplevel_env_names) search_update_needed = true;
-		if (search_update_needed) toplevel_env_names = dummy->getStringVector ();
+		if (dummy->stringVector () != toplevel_env_names) search_update_needed = true;
+		if (search_update_needed) toplevel_env_names = dummy->stringVector ();
 		delete dummy;
 	
 	// TODO: avoid parsing this over and over again
 		RK_DO (qDebug ("checkObjectUpdatesNeeded: getting globalenv symbols"), RBACKEND, DL_TRACE);
 		dummy = runDirectCommand ("ls (globalenv (), all.names=TRUE)\n", RCommand::GetStringVector);
-		QStringList new_globalenv_toplevel_names = dummy->getStringVector ();
+		QStringList new_globalenv_toplevel_names = dummy->stringVector ();
 		if (new_globalenv_toplevel_names.count () != global_env_toplevel_names.count ()) {
 			globalenv_update_needed = true;
 		} else {

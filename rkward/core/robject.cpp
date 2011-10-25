@@ -281,12 +281,13 @@ bool RObject::updateStructure (RData *new_data) {
 
 	bool properties_change = false;
 
-	properties_change = updateName (new_data->getStructureVector ()[StoragePositionName]);
-	properties_change = updateType (new_data->getStructureVector ()[StoragePositionType]);
-	properties_change = updateClasses (new_data->getStructureVector ()[StoragePositionClass]);
-	properties_change = updateMeta (new_data->getStructureVector ()[StoragePositionMeta]);
-	properties_change = updateDimensions (new_data->getStructureVector ()[StoragePositionDims]);
-	properties_change = updateSlots (new_data->getStructureVector ()[StoragePositionSlots]);
+	RData::RDataStorage new_data_data = new_data->structureVector ();
+	properties_change = updateName (new_data_data.at (StoragePositionName));
+	properties_change = updateType (new_data_data.at (StoragePositionType));
+	properties_change = updateClasses (new_data_data.at (StoragePositionClass));
+	properties_change = updateMeta (new_data_data.at (StoragePositionMeta));
+	properties_change = updateDimensions (new_data_data.at (StoragePositionDims));
+	properties_change = updateSlots (new_data_data.at (StoragePositionSlots));
 
 	if (properties_change) RKGlobals::tracker ()->objectMetaChanged (this);
 	if (type & NeedDataUpdate) updateDataFromR (0);
@@ -328,8 +329,9 @@ bool RObject::canAccommodateStructure (RData *new_data) {
 	RK_ASSERT (new_data->getDataLength () >= StorageSizeBasicInfo);
 	RK_ASSERT (new_data->getDataType () == RData::StructureVector);
 
-	if (!isValidName (new_data->getStructureVector ()[StoragePositionName])) return false;
-	if (!isValidType (new_data->getStructureVector ()[StoragePositionType])) return false;
+	RData::RDataStorage new_data_data = new_data->structureVector ();
+	if (!isValidName (new_data_data.at (StoragePositionName))) return false;
+	if (!isValidType (new_data_data.at (StoragePositionType))) return false;
 	return true;
 }
 
@@ -338,9 +340,10 @@ bool RObject::isValidName (RData *new_data) {
 	RK_ASSERT (new_data->getDataLength () == 1);
 	RK_ASSERT (new_data->getDataType () == RData::StringVector);
 
-	if (name != new_data->getStringVector ()[0]) {
+	QString new_name = new_data->stringVector ().at (0);
+	if (name != new_name) {
 		RK_ASSERT (false);
-		name = new_data->getStringVector ()[0];
+		name = new_name;
 		return false;
 	}
 	return true;
@@ -352,10 +355,11 @@ bool RObject::updateName (RData *new_data) {
 	RK_ASSERT (new_data->getDataType () == RData::StringVector);
 
 	bool changed = false;
-	if (name != new_data->getStringVector ()[0]) {
+	QString new_name = new_data->stringVector ().at (0);
+	if (name != new_name) {
 		changed = true;
 		RK_ASSERT (false);
-		name = new_data->getStringVector ()[0];
+		name = new_name;
 	}
 	return changed;
 }
@@ -365,7 +369,7 @@ bool RObject::isValidType (RData *new_data) const {
 	RK_ASSERT (new_data->getDataLength () == 1);
 	RK_ASSERT (new_data->getDataType () == RData::IntVector);
 
-	int new_type = new_data->getIntVector ()[0];
+	int new_type = new_data->intVector ().at (0);
 	if (!isMatchingType (type, new_type)) return false;
 
 	return true;
@@ -377,7 +381,7 @@ bool RObject::updateType (RData *new_data) {
 	RK_ASSERT (new_data->getDataType () == RData::IntVector);
 
 	bool changed = false;
-	int new_type = new_data->getIntVector ()[0];
+	int new_type = new_data->intVector ().at (0);
 	if (type & PseudoObject) new_type |= PseudoObject;
 	if (type & Misplaced) new_type |= Misplaced;
 	if (type & Pending) new_type |= Pending;	// NOTE: why don't we just clear the pending flag, here? Well, we don't want to generate a change notification for this. TODO: rethink the logic, and maybe use an appropriate mask
@@ -396,7 +400,7 @@ bool RObject::updateClasses (RData *new_data) {
 
 	bool change = false;
 
-	QStringList new_classes = new_data->getStringVector ();
+	QStringList new_classes = new_data->stringVector ();
 	if (new_classes != classnames) {
 		change = true;
 		classnames = new_classes;
@@ -410,16 +414,17 @@ bool RObject::updateMeta (RData *new_data) {
 
 	RK_ASSERT (new_data->getDataType () == RData::StringVector);
 
-	unsigned int len = new_data->getDataLength ();
+	QStringList data= new_data->stringVector ();
+	int len = data.size ();
 	bool change = false;
 	if (len) {
 		if (!meta_map) meta_map = new MetaMap;
 		else meta_map->clear ();
 
 		RK_ASSERT (!(len % 2));
-		unsigned int cut = len/2;
-		for (unsigned int i=0; i < cut; ++i) {
-			meta_map->insert (new_data->getStringVector ()[i], new_data->getStringVector ()[i+cut]);
+		int cut = len/2;
+		for (int i=0; i < cut; ++i) {
+			meta_map->insert (data.at (i), data.at (i+cut));
 		}
 
 		// TODO: only signal change, if there really was a change!
@@ -439,7 +444,7 @@ bool RObject::updateDimensions (RData *new_data) {
 	RK_ASSERT (new_data->getDataLength () >= 1);
 	RK_ASSERT (new_data->getDataType () == RData::IntVector);
 
-	QVector<qint32> new_dimensions = new_data->getIntVector ();
+	QVector<qint32> new_dimensions = new_data->intVector ();
 	if (new_dimensions != dimensions) {
 		if (new_dimensions.isEmpty ()) {
 			if (dimensions != RObjectPrivate::dim_null) {
@@ -468,7 +473,7 @@ bool RObject::updateSlots (RData *new_data) {
 			added = true;
 			RKGlobals::tracker ()->lockUpdates (true);
 		}
-		bool ret = slots_pseudo_object->updateStructure (new_data->getStructureVector ()[0]);
+		bool ret = slots_pseudo_object->updateStructure (new_data->structureVector ().at (0));
 		if (added) {
 			RKGlobals::tracker ()->lockUpdates (false);
 

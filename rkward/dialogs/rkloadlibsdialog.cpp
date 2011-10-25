@@ -163,10 +163,7 @@ void RKLoadLibsDialog::rCommandDone (RCommand *command) {
 	if (command->getFlags () == GET_CURRENT_LIBLOCS_COMMAND) {
 		RK_ASSERT (command->getDataType () == RData::StringVector);
 		RK_ASSERT (command->getDataLength () > 0);
-		library_locations.clear ();
-		for (unsigned int i=0; i < command->getDataLength (); ++i) {
-			library_locations.append (command->getStringVector ()[i]);
-		}
+		library_locations = command->stringVector ();
 		emit (libraryLocationsChanged (library_locations));
 	} else {
 		RK_ASSERT (false);
@@ -458,32 +455,33 @@ void LoadUnloadWidget::rCommandDone (RCommand *command) {
 	if (command->getFlags () == GET_INSTALLED_PACKAGES) {
 		RK_ASSERT (command->getDataLength () == 5);
 
-		RData *package = command->getStructureVector ()[0];
-		RData *title = command->getStructureVector ()[1];
-		RData *version = command->getStructureVector ()[2];
-		RData *libpath = command->getStructureVector ()[3];
+		RData::RDataStorage data = command->structureVector ();
+		QStringList package = data.at (0)->stringVector ();
+		QStringList title = data.at (1)->stringVector ();
+		QStringList version = data.at (2)->stringVector ();
+		QStringList libpath = data.at (3)->stringVector ();
 
-		unsigned int count = package->getDataLength ();
-		RK_ASSERT (count == title->getDataLength ());
-		RK_ASSERT (count == version->getDataLength ());
-		RK_ASSERT (count == libpath->getDataLength ());
-		for (unsigned int i=0; i < count; ++i) {
+		int count = package.size ();
+		RK_ASSERT (count == title.size ());
+		RK_ASSERT (count == version.size ());
+		RK_ASSERT (count == libpath.size ());
+		for (int i=0; i < count; ++i) {
 			QTreeWidgetItem* item = new QTreeWidgetItem (installed_view);
-			item->setText (0, package->getStringVector ()[i]);
-			item->setText (1, title->getStringVector ()[i]);
-			item->setText (2, version->getStringVector ()[i]);
-			item->setText (3, libpath->getStringVector ()[i]);
+			item->setText (0, package.at (i));
+			item->setText (1, title.at (i));
+			item->setText (2, version.at (i));
+			item->setText (3, libpath.at (i));
 		}
 		installed_view->resizeColumnToContents (0);
 		installed_view->setSortingEnabled (true);
 		installed_view->sortItems (0, Qt::AscendingOrder);
 	} else if (command->getFlags () == GET_LOADED_PACKAGES) {
 		RK_ASSERT (command->getDataType () == RData::StringVector);
-
-		for (unsigned int i=0; i < command->getDataLength (); ++i) {
+		QStringList data = command->stringVector ();
+		for (int i=0; i < data.size (); ++i) {
 			QTreeWidgetItem* item = new QTreeWidgetItem (loaded_view);
-			item->setText (0, command->getStringVector ()[i]);
-			if (RKSettingsModuleRPackages::essentialPackages ().contains (command->getStringVector ()[i])) {
+			item->setText (0, data.at (i));
+			if (RKSettingsModuleRPackages::essentialPackages ().contains (data.at (i))) {
 #if QT_VERSION >= 0x040400
 				item->setFlags (Qt::NoItemFlags);
 #else
@@ -886,32 +884,32 @@ void RKRPackageInstallationStatus::statusCommandFinished (RCommand *command) {
 	RK_ASSERT (command->getDataType () == RCommand::StructureVector);
 	RK_ASSERT (command->getDataLength () == 5);
 
-	RData::RDataStorage top = command->getStructureVector ();
-	RData::RDataStorage available = top[0]->getStructureVector ();
-	available_packages = available[0]->getStringVector ();
-	available_titles = available[1]->getStringVector ();
-	available_versions = available[2]->getStringVector ();
-	available_repos = available[3]->getStringVector ();
-	enhance_rk_in_available = available[4]->getIntVector ();
+	RData::RDataStorage top = command->structureVector ();
+	RData::RDataStorage available = top[0]->structureVector ();
+	available_packages = available[0]->stringVector ();
+	available_titles = available[1]->stringVector ();
+	available_versions = available[2]->stringVector ();
+	available_repos = available[3]->stringVector ();
+	enhance_rk_in_available = available[4]->intVector ();
 
-	RData::RDataStorage installed = top[1]->getStructureVector ();
-	installed_packages = installed[0]->getStringVector ();
-	installed_titles = installed[1]->getStringVector ();
-	installed_versions = installed[2]->getStringVector ();
-	installed_libpaths = installed[3]->getStringVector ();
-	enhance_rk_in_installed = installed[4]->getIntVector ();
+	RData::RDataStorage installed = top[1]->structureVector ();
+	installed_packages = installed[0]->stringVector ();
+	installed_titles = installed[1]->stringVector ();
+	installed_versions = installed[2]->stringVector ();
+	installed_libpaths = installed[3]->stringVector ();
+	enhance_rk_in_installed = installed[4]->intVector ();
 	installed_has_update.fill (false, installed_packages.count ());
 
-	new_packages_in_available = top[2]->getIntVector ();
-	RData::RDataStorage updateable = top[3]->getStructureVector ();
-	updateable_packages_in_installed = updateable[0]->getIntVector ();
-	updateable_packages_in_available = updateable[1]->getIntVector ();
+	new_packages_in_available = top[2]->intVector ();
+	RData::RDataStorage updateable = top[3]->structureVector ();
+	updateable_packages_in_installed = updateable[0]->intVector ();
+	updateable_packages_in_available = updateable[1]->intVector ();
 
 	for (int i = updateable_packages_in_installed.count () - 1; i >= 0; --i) {
 		installed_has_update[updateable_packages_in_installed[i]] = true;
 	}
 
-	current_repos = top[4]->getStringVector ();
+	current_repos = top[4]->stringVector ();
 
 	clearStatus ();
 }

@@ -105,11 +105,11 @@ void RKRBackendSerializer::serializeData (const RData &data, QDataStream &stream
 
 	RData::RDataType type = data.getDataType ();
 	stream << (qint8) type;
-	if (type == RData::IntVector) stream << data.getIntVector ();
-	else if (type == RData::StringVector) stream << data.getStringVector ();
-	else if (type == RData::RealVector) stream << data.getRealVector ();
+	if (type == RData::IntVector) stream << data.intVector ();
+	else if (type == RData::StringVector) stream << data.stringVector ();
+	else if (type == RData::RealVector) stream << data.realVector ();
 	else if (type == RData::StructureVector) {
-		RData::RDataStorage list = data.getStructureVector ();
+		RData::RDataStorage list = data.structureVector ();
 		qint32 len = list.size ();
 		stream << len;
 		for (qint32 i = 0; i < list.size (); ++i) {

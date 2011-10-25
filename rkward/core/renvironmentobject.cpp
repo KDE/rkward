@@ -154,15 +154,16 @@ bool REnvironmentObject::updateStructure (RData *new_data) {
 		if (!RObject::updateStructure (new_data)) return false;
 	}
 
+	RData::RDataStorage new_data_data = new_data->structureVector ();
 	if (new_data->getDataLength () > StorageSizeBasicInfo) {
-		RData *children_sub = new_data->getStructureVector ()[StoragePositionChildren];
+		RData *children_sub = new_data_data.at (StoragePositionChildren);
 		RK_ASSERT (children_sub->getDataType () == RData::StructureVector);
 		updateChildren (children_sub);
 
 		// a namespace to go with that?
 		if (new_data->getDataLength () > (StorageSizeBasicInfo + 1)) {
 			RK_ASSERT (new_data->getDataLength () == (StorageSizeBasicInfo + 2));
-			updateNamespace (new_data->getStructureVector ()[StoragePositionNamespace]);
+			updateNamespace (new_data_data.at (StoragePositionNamespace));
 		} else updateNamespace (0);
 	} else {
 		RK_ASSERT (false);
@@ -187,7 +188,7 @@ void REnvironmentObject::updateNamespace (RData* new_data) {
 		added = true;
 		RKGlobals::tracker ()->lockUpdates (true);
 	}
-	namespace_envir->updateStructure (new_data->getStructureVector ()[0]);
+	namespace_envir->updateStructure (new_data->structureVector ().at (0));
 	if (added) {
 		RKGlobals::tracker ()->lockUpdates (false);
 

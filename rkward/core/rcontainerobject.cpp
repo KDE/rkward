@@ -64,10 +64,10 @@ RObject *RContainerObject::updateChildStructure (RObject *child, RData *new_data
 			int child_index = childmap.indexOf (child);
 			RK_ASSERT (child_index >= 0);
 			if (RKGlobals::tracker ()->removeObject (child, 0, true)) {
-				RData *child_name_data = new_data->getStructureVector ()[StoragePositionName];
+				RData *child_name_data = new_data->structureVector ().at (StoragePositionName);
 				RK_ASSERT (child_name_data->getDataType () == RData::StringVector);
 				RK_ASSERT (child_name_data->getDataLength () >= 1);
-				QString child_name = child_name_data->getStringVector ()[0];
+				QString child_name = child_name_data->stringVector ().at (0);
 
 				return (createChildFromStructure (new_data, child_name, child_index));
 			} else {
@@ -88,7 +88,7 @@ bool RContainerObject::updateStructure (RData *new_data) {
 	if (data_length > StorageSizeBasicInfo) {
 		RK_ASSERT (data_length == (StorageSizeBasicInfo + 1));
 
-		RData *children_sub = new_data->getStructureVector ()[StoragePositionChildren];
+		RData *children_sub = new_data->structureVector ().at (StoragePositionChildren);
 		RK_ASSERT (children_sub->getDataType () == RData::StructureVector);
 		updateChildren (children_sub);
 		updateRowNamesObject ();
@@ -104,11 +104,11 @@ RObject *RContainerObject::createChildFromStructure (RData *child_data, const QS
 	RK_ASSERT (child_data->getDataType () == RData::StructureVector);
 	RK_ASSERT (child_data->getDataLength () >= (StoragePositionType + 1));		// need to see at least the type at this point
 
-	RData *type_data = child_data->getStructureVector ()[StoragePositionType];
+	RData *type_data = child_data->structureVector ().at (StoragePositionType);
 	RK_ASSERT (type_data->getDataType () == RData::IntVector);
 	RK_ASSERT (type_data->getDataLength () == 1);
 
-	int child_type = type_data->getIntVector ()[0];
+	int child_type = type_data->intVector ().at (0);
 
 	RObject *child_object;
 	if (child_type & RObject::Environment) {
@@ -147,14 +147,15 @@ void RContainerObject::updateChildren (RData *new_children) {
 	// first find out, which children are now available, copy the old ones, create the new ones
 	RObjectMap new_childmap, old_childmap;
 	old_childmap = childmap;
+	RData::RDataStorage nc_data = new_children->structureVector ();
 	for (unsigned int i = 0; i < new_child_count; ++i) {
-		RData *child_data = new_children->getStructureVector ()[i];
+		RData *child_data = nc_data.at (i);
 		RK_ASSERT (child_data->getDataType () == RData::StructureVector);
 		RK_ASSERT (child_data->getDataLength () >= (StoragePositionName + 1));
-		RData *child_name_data = child_data->getStructureVector ()[StoragePositionName];
+		RData *child_name_data = child_data->structureVector ().at (StoragePositionName);
 		RK_ASSERT (child_name_data->getDataType () == RData::StringVector);
 		RK_ASSERT (child_name_data->getDataLength () >= 1);
-		QString child_name = child_name_data->getStringVector ()[0];
+		QString child_name = child_name_data->stringVector ().at (0);
 
 		RObject *child_object = 0;
 		for (int j = 0; j < old_childmap.size (); ++j) {
