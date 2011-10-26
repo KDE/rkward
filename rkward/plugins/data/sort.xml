@@ -4,12 +4,10 @@
 	<logic>
 		<set id="vectormode" to="0"/>
 		<connect governor="current_dataframe" client="object.available"/>
-		<connect governor="object.available" client="sortby_selector.root"/>
 		<convert id="isok" mode="equals" sources="notice.text" standard="" require_true="true"/>
 
 		<convert id="saveto_other_object" mode="equals" sources="saveto_select.string" standard="other"/>
 		<connect governor="saveto_other_object" client="saveto.enabled"/>
-		<connect governor="saveto_other_object" client="saveto.required"/>
 		<script><![CDATA[
 			// the top-level block is called only once
 			gui.addChangeCommand ("object.available", "objectChanged ()");
@@ -17,8 +15,9 @@
 			// this function is called on every change of the saveto's parent
 			objectChanged = function () {
 				object = makeRObject (gui.getValue ("object.available"));
-				gui.setValue ("sortby_frame.enabled", object.isDataFrame ());
-				gui.setValue ("sortby.required", object.isDataFrame ());
+				gui.setValue ("sortby.enabled", object.isDataFrame ());
+				if (object.isDataFrame ()) gui.setValue ("selector.root", object.getName ());
+				else gui.setValue ("selector.root", "");
 
 				if (!object.exists() || object.isDataFrame() || object.dimensions().length == 1) {
 					gui.setValue ("notice.text", "");
@@ -30,27 +29,17 @@
 			]]></script>
 	</logic>
 	<dialog label="Sort data">
-		<frame>
-			<row>
-				<varselector label="Select the object to be sorted" id="selector"/>
-				<column>
-					<varslot id="object" source="selector" required="true"/>
-					<text id="notice" type="warning"></text>
-					<stretch/>
-				</column>
-			</row>
-		</frame>
 		<row>
-			<frame id="sortby_frame">
-				<varselector label="Sort by" id="sortby_selector"/>
-				<varslot source="sortby_selector" id="sortby" required="true"/>
-			</frame>
+			<varselector id="selector"/>
 			<column>
+				<varslot id="object" source="selector" label="Object to be sorted" required="true"/>
+				<text id="notice" type="warning"></text>
+				<stretch/>
+				<varslot source="selector" id="sortby" label="Sort by" required="true"/>
 				<radio id="order" label="Order">
 					<option label="Ascending" value="" checked="true"/>
 					<option label="Descending" value=", decreasing=TRUE"/>
 				</radio>
-				<stretch/>
 			</column>
 		</row>
 		<row>
