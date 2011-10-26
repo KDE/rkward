@@ -1,5 +1,10 @@
 ChangeLog for package rkwarddev
 
+## 0.04-4 (2011-10-26)
+  - fixed bug in check for valid modifiers (used to warn when mixed lists with/without modifiers were given)
+  - fixed bug in rk.XML.convert() (false output if provided with list without modifiers)
+  - added option "check.modifiers" to rk.JS.vars()
+
 ## 0.04-3 (2011-10-22)
   - added support for definint doPrintout() JS functions to rk.JS.doc(), rk.plugin.skeleton() and
     rk.plugin.component()

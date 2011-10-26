@@ -397,7 +397,7 @@ check.ID <- function(node){
 
 ## list with valid modifiers
 all.valid.modifiers <- list(
-	all=c("visible", "enabled", "required", "true", "false", "not", "numeric",
+	all=c("", "visible", "enabled", "required", "true", "false", "not", "numeric",
 	"preprocess", "calculate", "printout", "preview"),
 	text=c("text"),
 	varselector=c("selected", "root"),
@@ -673,7 +673,7 @@ paste.JS.options <- function(object, level=2, indent.by="\t", array=NULL, funct=
 
 
 ## function paste.JS.var()
-paste.JS.var <- function(object, level=2, indent.by="\t", JS.prefix=NULL, modifiers=NULL, default=NULL, join=NULL, names.only=FALSE){
+paste.JS.var <- function(object, level=2, indent.by="\t", JS.prefix=NULL, modifiers=NULL, default=NULL, join=NULL, names.only=FALSE, check.modifiers=FALSE){
 	# paste several objects
 	results <- unlist(sapply(object@vars, function(this.obj){
 			paste.JS.var(this.obj,
@@ -723,8 +723,10 @@ paste.JS.var <- function(object, level=2, indent.by="\t", JS.prefix=NULL, modifi
 			}
 		} else {}
 		if(length(modifiers) > 0){
-			# check modifiers
-			modifiers <- modifiers[modif.validity(source="all", modifier=modifiers, ignore.empty=TRUE, warn.only=TRUE, bool=TRUE)]
+			if(isTRUE(check.modifiers)){
+				# check modifiers
+				modifiers <- modifiers[modif.validity(source="all", modifier=modifiers, ignore.empty=TRUE, warn.only=TRUE, bool=TRUE)]
+			} else {}
 			results <- c(results,
 				sapply(modifiers, function(this.modif){
 					if(isTRUE(names.only)){

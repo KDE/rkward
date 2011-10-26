@@ -86,7 +86,9 @@ rk.XML.convert <- function(sources, mode=c(), required=FALSE, id.name="auto"){
 				}
 				return(new.value)
 			}))
-	} else {}
+	} else {
+		sources <- as.character(sapply(sources, check.ID))
+	}
 
 	attr.list[["sources"]] <- paste(sources, collapse=";")
 

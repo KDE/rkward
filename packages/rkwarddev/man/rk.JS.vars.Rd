@@ -3,7 +3,7 @@
 \title{Define variables in JavaScript code}
 \usage{
   rk.JS.vars(..., var.prefix = NULL, modifiers = NULL,
-  default = FALSE, join = "")
+  default = FALSE, join = "", check.modifiers = TRUE)
 }
 \arguments{
   \item{...}{Either one or more character strings (the
@@ -26,6 +26,10 @@
   \code{join} is something other than \code{""}, these
   objects will be collapsed into one string when pasted,
   joined by this string.}
+
+  \item{check.modifiers}{Logical, if \code{TRUE} the given
+  modifiers will be checked for validity. Should only be
+  turned off if you know what you're doing.}
 }
 \value{
   An object of class \code{rk.JS.var}.
