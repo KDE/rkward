@@ -2,10 +2,10 @@
 <document>
 	<code file="sort.js"/>
 	<logic>
-		<connect governor="current_object" client="object.available"/>
+		<connect governor="current_dataframe" client="object.available"/>
 		<connect governor="object.available" client="sortby_selector.root"/>
 		<convert id="isok" mode="equals" sources="notice.text" standard="" require_true="true"/>
-		<convert id="no_current_object" mode="equals" sources="current_object" standard=""/>
+		<convert id="no_current_object" mode="equals" sources="current_dataframe" standard=""/>
 		<connect governor="no_current_object" client="object_select.visible"/>
 
 		<convert id="saveto_other_object" mode="equals" sources="saveto_select.string" standard="other"/>

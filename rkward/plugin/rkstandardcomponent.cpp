@@ -2,7 +2,7 @@
                           rkstandardcomponent  -  description
                              -------------------
     begin                : Sun Feb 19 2006
-    copyright            : (C) 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -75,11 +75,15 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 	addChild ("code", code = new RKComponentPropertyCode (this, true));		// do not change this name!
 	code->setInternal (true);
 
-	RKComponentPropertyBase *current_object_property = new RKComponentPropertyBase (this, false);
+	RKComponentPropertyRObjects *current_object_property = new RKComponentPropertyRObjects (this, false);
+	RKComponentPropertyRObjects *current_dataframe_property = new RKComponentPropertyRObjects (this, false);
 	current_object_property->setInternal (true);
+	current_dataframe_property->setInternal (true);
 	RKMDIWindow *w = RKWorkplace::mainWorkplace ()->activeWindow (RKMDIWindow::AnyWindowState);
 	if (w) current_object_property->setValue (w->globalContextProperty ("current_object"));
+	if (current_object_property->objectValue () && current_object_property->objectValue ()->isDataFrame ()) current_dataframe_property->setObjectValue (current_object_property->objectValue ());
 	addChild ("current_object", current_object_property);
+	addChild ("current_dataframe", current_dataframe_property);
 
 	// open the main description file for parsing
 	XMLHelper* xml = XMLHelper::getStaticHelper ();

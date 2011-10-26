@@ -3,7 +3,7 @@
 	<code file="sort.js"/>
 	<logic>
 		<set id="vectormode" to="0"/>
-		<connect governor="current_object" client="object.available"/>
+		<connect governor="current_dataframe" client="object.available"/>
 		<connect governor="object.available" client="sortby_selector.root"/>
 		<convert id="isok" mode="equals" sources="notice.text" standard="" require_true="true"/>
 

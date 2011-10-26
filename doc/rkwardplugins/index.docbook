@@ -1408,7 +1408,7 @@ function doPrintout (full) {
 		For many plugins it is desirable to work on the <quote>current</quote> object. For instance a <quote>sort</quote> plugin could pre-select the data.frame that is currently being edited for sorting. The name of the current object is available to plugins as a pre-defined property called <parameter>current_object</parameter>. You can connect to this property in the usual way. If no object is current, the property equates to an empty string.
 	</para>
 	<para>
-		Currently the <parameter>current_object</parameter> can only be of class <function>data.frame</function>, but please do not rely on this, since this will be extended to other types of data in the future. Therefore please check any requirements by using appropriate constraints on your <command>&lt;varslot&gt;</command>s, or by using <link linkend="logic_scripted">GUI logic scripting</link>.
+		Currently the <parameter>current_object</parameter> can only be of class <function>data.frame</function>, but please do not rely on this, since this will be extended to other types of data in the future. If you are interested in <function>data.frame</function> objects, only, connect to the <parameter>current_dataframe</parameter> property, instead. Alternatively, you can enforce type requirements by using appropriate constraints on your <command>&lt;varslot&gt;</command>s, or by using <link linkend="logic_scripted">GUI logic scripting</link>.
 	</para>
 </sect1>
 
