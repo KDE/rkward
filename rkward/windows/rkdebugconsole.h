@@ -41,6 +41,7 @@ public slots:
 private slots:
 	void sendReply ();
 	void stepButtonClicked ();
+	void stepOutButtonClicked ();
 	void continueButtonClicked ();
 	void cancelButtonClicked ();
 private:
@@ -51,6 +52,7 @@ private:
 	QLabel* prompt_label;
 
 	QPushButton* step_button;
+	QPushButton* step_out_button;
 	QPushButton* continue_button;
 	QPushButton* cancel_button;
 

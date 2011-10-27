@@ -29,6 +29,7 @@
 
 #include "../agents/rkdebughandler.h"
 #include "../misc/rkdummypart.h"
+#include "../misc/rkcommonfunctions.h"
 
 #include "../debug.h"
 
@@ -52,6 +53,10 @@ RKDebugConsole::RKDebugConsole (QWidget *parent, bool tool_window, const char *n
 	step_button = new QPushButton (i18n ("Next"), this);
 	connect (step_button, SIGNAL (clicked()), this, SLOT (stepButtonClicked()));
 	button_layout->addWidget (step_button);
+	step_out_button = new QPushButton (i18n ("Step out"), this);
+	connect (step_out_button, SIGNAL (clicked()), this, SLOT (stepOutButtonClicked()));
+	RKCommonFunctions::setTips (i18n ("Continue until the caller of this function is reached (unless another debug statement is hit, earlier)"), step_out_button);
+	button_layout->addWidget (step_out_button);
 	continue_button = new QPushButton (i18n ("Continue"), this);
 	connect (continue_button, SIGNAL (clicked()), this, SLOT (continueButtonClicked()));
 	button_layout->addWidget (continue_button);
@@ -103,6 +108,7 @@ void RKDebugConsole::newDebugState () {
 
 	setEnabled (true);
 	step_button->setEnabled (enable);
+	step_out_button->setEnabled (enable);
 	continue_button->setEnabled (enable);
 	cancel_button->setEnabled (enable);
 }
@@ -112,6 +118,12 @@ void RKDebugConsole::sendReply () {
 
 	sendReply (reply_edit->text ());
 	reply_edit->clear ();
+}
+
+void RKDebugConsole::stepOutButtonClicked () {
+	RK_TRACE (APP);
+
+	sendReply ("browserSetDebug(1)\ncont\n");
 }
 
 void RKDebugConsole::stepButtonClicked () {
