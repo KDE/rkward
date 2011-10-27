@@ -1,6 +1,7 @@
 <!DOCTYPE rkplugin>
 <document>
 	<code file="sort.js"/>
+	<help file="sort.rkh"/>
 	<logic>
 		<set id="vectormode" to="0"/>
 		<connect governor="current_dataframe" client="object.available"/>

@@ -1,0 +1,24 @@
+<!DOCTYPE rkhelp >
+<document>
+	<summary>
+Sort data. Currently data.frames, or individual vectors can be sorted.
+	</summary>
+	<usage>
+Select the object to be sorted. For data.frames, also specify the column to sort by. By default the object to be sorted is replaced with the sorted variant, but you can also specify to
+save to a separate object.
+	</usage>
+	<settings>
+		<setting id="object">The object to sort. If a data.frame editor window is currently active, the corresponding object name will be filled in as a default.</setting>
+		<setting id="sortby">Only for data.frame objects. Select the column to sort by.</setting>
+		<setting id="order">Sort in ascending or descending order.</setting>
+		<setting id="saveto_select">Chose "Same object" (the default) to replace the object to be sorted with the sorted variant. If, instead, you want to keep the unsorted object, chose "Another object" to save the sorted object, separately.</setting>
+		<setting id="saveto">Only, if you selected "Another object", above: Specify the object to save to.</setting>
+	</settings>
+	<related>
+		<ul>
+			<li>
+				<link href="rkward://rhelp/order" />
+			</li>
+		</ul>
+	</related>
+</document>
