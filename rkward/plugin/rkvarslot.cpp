@@ -2,7 +2,7 @@
                           rkvarslot.cpp  -  description
                              -------------------
     begin                : Thu Nov 7 2002
-    copyright            : (C) 2002, 2007, 2008, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2007, 2008, 2009, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -74,10 +74,11 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 
 		// make it look like a line-edit
 		list->header ()->hide ();
-		QTreeWidgetItem* dummy = new QTreeWidgetItem (list);
-		dummy->setText (0, " ");
-		list->setFixedHeight (list->visualItemRect (dummy).height () + 2*list->visualItemRect (dummy).top () + 4);
-		delete dummy;
+		QTreeWidgetItem dummy (list);
+		dummy.setText (0, "Tg");
+		int top, left, bottom, right;
+		list->getContentsMargins (&left, &top, &right, &bottom);
+		list->setFixedHeight (list->visualItemRect (&dummy).height () + 2*list->visualItemRect (&dummy).top () + top + bottom);
 		list->header ()->setStretchLastSection (true);
 		list->hideColumn (0);
 		list->setHorizontalScrollBarPolicy (Qt::ScrollBarAlwaysOff);
