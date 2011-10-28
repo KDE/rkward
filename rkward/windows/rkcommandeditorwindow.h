@@ -188,6 +188,9 @@ public:
 
 	QString provideContext (int line_rev);
 	QString currentCompletionWord () const;
+
+	void highlightLine (int linenum);
+	void clearLineHighlights ();
 public slots:
 /** update Tab caption according to the current url. Display the filename-component of the URL, or - if not available - a more elaborate description of the url. Also appends a "[modified]" if appropriate */
 	void updateCaption (KTextEditor::Document* = 0);

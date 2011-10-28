@@ -49,6 +49,9 @@ void RKDebugHandler::debugCall (RBackendRequest *request, RCommand *command) {
 	_environments = request->params["envs"].toStringList ();
 	_locals = request->params["locals"].toStringList ();
 	_prompt = request->params["prompt"].toString ();
+	QStringList dummy = request->params["relsrclines"].toStringList ();
+	_rel_src_lines.clear ();
+	for (int i = 0; i < dummy.size (); ++i) _rel_src_lines.append (dummy.at (i).toInt ());
 
 	_state = InDebugPrompt;
 	newDebugState ();

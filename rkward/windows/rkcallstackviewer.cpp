@@ -146,6 +146,12 @@ void RKCallstackViewerWidget::frameChanged (int frame_number) {
 									Qt::escape (RKDebugHandler::instance ()->environments ().value (frame_number)),
 									Qt::escape (RKDebugHandler::instance ()->locals ().value (frame_number).split ('\n').join (", "))));
 	frame_source->setText (RKDebugHandler::instance ()->functions ().value (frame_number));
+	int line = RKDebugHandler::instance ()->relativeSourceLines ().value (frame_number, 0);
+	frame_source->clearLineHighlights ();
+	if (line > 0) frame_source->highlightLine (line -1);
+	else {
+		// TODO: some clever heuristics
+	}
 }
 
 #include "rkcallstackviewer.moc"

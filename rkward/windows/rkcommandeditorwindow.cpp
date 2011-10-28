@@ -22,6 +22,7 @@
 #include <ktexteditor/sessionconfiginterface.h>
 #include <ktexteditor/editorchooser.h>
 #include <ktexteditor/modificationinterface.h>
+#include <ktexteditor/markinterface.h>
 
 #include <qlayout.h>
 #include <qapplication.h>
@@ -486,6 +487,32 @@ void RKCommandEditorWindow::setText (const QString &text) {
 	bool old_rw = m_doc->isReadWrite ();
 	if (!old_rw) m_doc->setReadWrite (true);
 	m_doc->setText (text);
+	if (!old_rw) m_doc->setReadWrite (false);
+}
+
+void RKCommandEditorWindow::highlightLine (int linenum) {
+	RK_TRACE (COMMANDEDITOR);
+
+	KTextEditor::MarkInterface *markiface = qobject_cast<KTextEditor::MarkInterface*> (m_doc);
+	if (!markiface) {
+		RK_ASSERT (markiface);
+		return;
+	}
+	bool old_rw = m_doc->isReadWrite ();
+	if (!old_rw) m_doc->setReadWrite (true);
+	markiface->addMark (linenum, KTextEditor::MarkInterface::BreakpointActive);
+	if (!old_rw) m_doc->setReadWrite (false);
+}
+
+void RKCommandEditorWindow::clearLineHighlights() {
+	KTextEditor::MarkInterface *markiface = qobject_cast<KTextEditor::MarkInterface*> (m_doc);
+	if (!markiface) {
+		RK_ASSERT (markiface);
+		return;
+	}
+	bool old_rw = m_doc->isReadWrite ();
+	if (!old_rw) m_doc->setReadWrite (true);
+	markiface->clearMarks ();
 	if (!old_rw) m_doc->setReadWrite (false);
 }
 

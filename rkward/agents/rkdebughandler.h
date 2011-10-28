@@ -50,6 +50,7 @@ public:
 	QStringList functions () const { return _functions; };
 	QStringList environments () const { return _environments; };
 	QStringList locals () const { return _locals; };
+	QList<int> relativeSourceLines () const { return _rel_src_lines; };
 	QString debugPrompt () const { return _prompt; };
 	RCommand *command () const { return _command; };
 signals:
@@ -57,6 +58,7 @@ signals:
 private:
 	RCommand *_command;
 	QStringList _calls, _functions, _environments, _locals;
+	QList<int> _rel_src_lines;
 	QString _prompt, _output_context;
 	DebugState _state;
 	RBackendRequest *_request;

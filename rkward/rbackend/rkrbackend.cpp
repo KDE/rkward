@@ -392,6 +392,7 @@ int RReadConsole (const char* prompt, unsigned char* buf, int buflen, int hist) 
 				params["funs"] = QVariant (dummy_data.at (1)->stringVector ());
 				params["envs"] = QVariant (dummy_data.at (2)->stringVector ());
 				params["locals"] = QVariant (dummy_data.at (3)->stringVector ());
+				params["relsrclines"] = QVariant (dummy_data.at (4)->stringVector ());		// hacky: passing a QList<int> is not supported by QVariant
 			} else {
 				RK_ASSERT (false);
 			}
