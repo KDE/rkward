@@ -55,7 +55,9 @@ RKDebugConsole::RKDebugConsole (QWidget *parent, bool tool_window, const char *n
 	button_layout->addWidget (step_button);
 	step_out_button = new QPushButton (i18n ("Step out"), this);
 	connect (step_out_button, SIGNAL (clicked()), this, SLOT (stepOutButtonClicked()));
-	RKCommonFunctions::setTips (i18n ("Continue until the caller of this function is reached (unless another debug statement is hit, earlier)"), step_out_button);
+	RKCommonFunctions::setTips (i18n ("<p>Continue until the caller of this function is reached (unless another debug statement is hit, earlier)</p>"
+	                                  "<p><b>Note:</b> In some cases, the calling function will never be reached, because the call was the last step in the caller."
+	                                  "In these cases, the behavior is identical to 'Continue'.</p>"), step_out_button);
 	button_layout->addWidget (step_out_button);
 	continue_button = new QPushButton (i18n ("Continue"), this);
 	connect (continue_button, SIGNAL (clicked()), this, SLOT (continueButtonClicked()));
