@@ -4,6 +4,8 @@ ChangeLog for package rkwarddev
   - set dependency of rkward to >= 0.5.6 to work around a glitch in rkward's package versioning.
     this can cause errors on real 0.5.6 installations because they lack functions introduced
     in 0.5.7 (to add & load a plugin automatically), but shouldn't really break anything
+  - added support to turn off modifier checks to rk.XML.set()
+  - added option "load.silencer" to rk.JS.doc(), to easily add a switch to turn off package load messages in output.
 
 ## 0.04-4 (2011-10-26)
   - fixed bug in check for valid modifiers (used to warn when mixed lists with/without modifiers were given)

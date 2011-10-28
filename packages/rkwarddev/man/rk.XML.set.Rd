@@ -2,7 +2,7 @@
 \alias{rk.XML.set}
 \title{Create XML node "set" for RKWard plugins}
 \usage{
-  rk.XML.set(id, set = NULL, to)
+  rk.XML.set(id, set = NULL, to, check.modifiers = TRUE)
 }
 \arguments{
   \item{id}{Either a character string (the \code{id} of the
@@ -10,16 +10,14 @@
   class \code{XiMpLe.node} (whose \code{id} will be
   extracted and used).}
 
-  \item{set}{Character string, can be one of the following
-  values: \itemize{ \item{\code{"state"}}{Set the \code{id}
-  boolean state.} \item{\code{"string"}}{Set the \code{id}
-  string value.} \item{\code{"enabled"}}{Set the \code{id}
-  enabled state.} \item{\code{"visible"}}{Set the \code{id}
-  visibility state.} \item{\code{"required"}}{Set the
-  \code{id} requirement state.} }}
+  \item{set}{Character string, a valid modifier.}
 
   \item{to}{Character string or logical, the value the
   property should be set to.}
+
+  \item{check.modifiers}{Logical, if \code{TRUE} the given
+  modifiers will be checked for validity. Should only be
+  turned off if you know what you're doing.}
 }
 \value{
   An object of class \code{XiMpLe.node}.

@@ -4,8 +4,8 @@
 \usage{
   rk.JS.doc(require = c(), variables = NULL, results.header
   = NULL, preprocess = NULL, calculate = NULL, printout =
-  NULL, doPrintout = NULL, gen.info = TRUE, indent.by =
-  "\t")
+  NULL, doPrintout = NULL, load.silencer = NULL, gen.info =
+  TRUE, indent.by = "\t")
 }
 \arguments{
   \item{require}{A character vector with names of R
@@ -38,6 +38,14 @@
   function, as this will be added automatically. Use
   \code{ite("full", ...)} style JavaScript code to include
   headers etc.}
+
+  \item{load.silencer}{Either a character string (ID of
+  probably a checkbox), or an object of class
+  \code{XiMpLe.node}. This defines a switch you can add to
+  your plugin, to set the \code{require()} call inside
+  \code{suppressMessages()}, hence suppressing all load
+  messages (except for warnings and errors) of required
+  packages in the output.}
 
   \item{gen.info}{Logical, if \code{TRUE} a comment note
   will be written into the document, that it was generated

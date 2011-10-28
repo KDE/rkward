@@ -2,15 +2,10 @@
 #'
 #' @param id Either a character string (the \code{id} of the property whose value should be set),
 #'		or an object of class \code{XiMpLe.node} (whose \code{id} will be extracted and used).
-#' @param set Character string, can be one of the following values:
-#'		\itemize{
-#'			\item{\code{"state"}}{Set the \code{id} boolean state.}
-#'			\item{\code{"string"}}{Set the \code{id} string value.}
-#'			\item{\code{"enabled"}}{Set the \code{id} enabled state.}
-#'			\item{\code{"visible"}}{Set the \code{id} visibility state.}
-#'			\item{\code{"required"}}{Set the \code{id} requirement state.}
-#'		}
+#' @param set Character string, a valid modifier.
 #' @param to Character string or logical, the value the property should be set to.
+#' @param check.modifiers Logical, if \code{TRUE} the given modifiers will be checked for validity. Should only be
+#'		turned off if you know what you're doing.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
@@ -23,7 +18,7 @@
 #' test.set <- rk.XML.set(id="input_foo", set="required", to=TRUE)
 #' cat(pasteXMLNode(test.set))
 
-rk.XML.set <- function(id, set=NULL, to){
+rk.XML.set <- function(id, set=NULL, to, check.modifiers=TRUE){
 
 	if(length(id) > 1 | length(to) > 1){
 		stop(simpleError("'id' and 'to' must be of length 1!"))
@@ -33,11 +28,10 @@ rk.XML.set <- function(id, set=NULL, to){
 	prop.id <- check.ID(id)
 
 	if(!is.null(set)){
-		if(!set %in% c("state","string","enabled","required","visible")){
-			stop(simpleError(paste("The 'set' modifier you provided is invalid: ", set, sep="")))
-		} else {
-			prop.id <- paste(prop.id, set, sep=".")
-		}
+		if(isTRUE(check.modifiers)){
+			modif.validity(id, modifier=set, ignore.empty=TRUE, warn.only=FALSE, bool=TRUE)
+		} else {}
+		prop.id <- paste(prop.id, set, sep=".")
 	} else {}
 
 	attr.list <- list(id=as.character(prop.id))

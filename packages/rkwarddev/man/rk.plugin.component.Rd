@@ -34,10 +34,11 @@
   because some don't make sense in this context. Valid
   options are: \code{"require"}, \code{"results.header"},
   \code{"variables"}, \code{"preprocess"},
-  \code{"calculate"}, \code{"printout"} and
-  \code{"doPrintout"}. If not set, their default values are
-  used. See \code{\link[rkwarddev:rk.JS.doc]{rk.JS.doc}}
-  for details.}
+  \code{"calculate"}, \code{"printout"},
+  \code{"doPrintout"} and \code{"load.silencer"}. If not
+  set, their default values are used. See
+  \code{\link[rkwarddev:rk.JS.doc]{rk.JS.doc}} for
+  details.}
 
   \item{rkh}{A named list of options to be forwarded to
   \code{\link[rkwarddev:rk.rkh.doc]{rk.rkh.doc}}, to
