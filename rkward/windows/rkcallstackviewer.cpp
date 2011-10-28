@@ -145,12 +145,18 @@ void RKCallstackViewerWidget::frameChanged (int frame_number) {
 									Qt::escape (RKDebugHandler::instance ()->calls ().value (frame_number)),
 									Qt::escape (RKDebugHandler::instance ()->environments ().value (frame_number)),
 									Qt::escape (RKDebugHandler::instance ()->locals ().value (frame_number).split ('\n').join (", "))));
-	frame_source->setText (RKDebugHandler::instance ()->functions ().value (frame_number));
+	frame_source->setText (RKDebugHandler::instance ()->functions ().value (frame_number) + "\n");
 	int line = RKDebugHandler::instance ()->relativeSourceLines ().value (frame_number, 0);
-	frame_source->clearLineHighlights ();
-	if (line > 0) frame_source->highlightLine (line -1);
-	else {
-		// TODO: some clever heuristics
+	if (line > 0) frame_source->highlightLine (line - 1);
+	else if (frame_number < RKDebugHandler::instance ()->calls ().size () - 1) {
+		// no (valid) source reference available? Make an effort to locate (candidate line(s) for) the call
+		QStringList lines = RKDebugHandler::instance ()->functions ().value (frame_number).split ('\n');
+		QString call = RKDebugHandler::instance ()->calls ().value (frame_number + 1);
+		call = call.left (call.indexOf ('(')).trimmed ();
+		QRegExp call_exp (QRegExp::escape (call) + "\\s*\\(");
+		for (int i = lines.size () - 1; i >= 0; --i) {
+			if (lines.at (i).contains (call_exp)) frame_source->highlightLine (i);
+		}
 	}
 }
 

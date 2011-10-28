@@ -487,6 +487,8 @@ void RKCommandEditorWindow::setText (const QString &text) {
 	bool old_rw = m_doc->isReadWrite ();
 	if (!old_rw) m_doc->setReadWrite (true);
 	m_doc->setText (text);
+	KTextEditor::MarkInterface *markiface = qobject_cast<KTextEditor::MarkInterface*> (m_doc);
+	if (markiface) markiface->clearMarks ();
 	if (!old_rw) m_doc->setReadWrite (false);
 }
 
@@ -500,19 +502,8 @@ void RKCommandEditorWindow::highlightLine (int linenum) {
 	}
 	bool old_rw = m_doc->isReadWrite ();
 	if (!old_rw) m_doc->setReadWrite (true);
-	markiface->addMark (linenum, KTextEditor::MarkInterface::BreakpointActive);
-	if (!old_rw) m_doc->setReadWrite (false);
-}
-
-void RKCommandEditorWindow::clearLineHighlights() {
-	KTextEditor::MarkInterface *markiface = qobject_cast<KTextEditor::MarkInterface*> (m_doc);
-	if (!markiface) {
-		RK_ASSERT (markiface);
-		return;
-	}
-	bool old_rw = m_doc->isReadWrite ();
-	if (!old_rw) m_doc->setReadWrite (true);
-	markiface->clearMarks ();
+	markiface->addMark (linenum, KTextEditor::MarkInterface::Execution);
+	m_view->setCursorPosition (KTextEditor::Cursor (linenum, 0));
 	if (!old_rw) m_doc->setReadWrite (false);
 }
 
