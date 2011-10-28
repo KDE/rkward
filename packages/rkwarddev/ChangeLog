@@ -1,5 +1,10 @@
 ChangeLog for package rkwarddev
 
+## 0.04-5 (2011-10-28)
+  - set dependency of rkward to >= 0.5.6 to work around a glitch in rkward's package versioning.
+    this can cause errors on real 0.5.6 installations because they lack functions introduced
+    in 0.5.7 (to add & load a plugin automatically), but shouldn't really break anything
+
 ## 0.04-4 (2011-10-26)
   - fixed bug in check for valid modifiers (used to warn when mixed lists with/without modifiers were given)
   - fixed bug in rk.XML.convert() (false output if provided with list without modifiers)
