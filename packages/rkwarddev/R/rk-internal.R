@@ -743,7 +743,7 @@ paste.JS.var <- function(object, level=2, indent.by="\t", JS.prefix=NULL, modifi
 	if(isTRUE(names.only)){
 		results <- c(results)
 	} else {
-		results <- paste(results, collapse="")
+		results <- paste(results, collapse="\n")
 	}
 	
 	return(results)

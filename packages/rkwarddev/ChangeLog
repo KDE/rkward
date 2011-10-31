@@ -1,5 +1,8 @@
 ChangeLog for package rkwarddev
 
+## 0.04-6 (2011-10-31)
+  - improved output of rk.JS.var class objects by rk.paste.JS()
+
 ## 0.04-5 (2011-10-28)
   - set dependency of rkward to >= 0.5.6 to work around a glitch in rkward's package versioning.
     this can cause errors on real 0.5.6 installations because they lack functions introduced
