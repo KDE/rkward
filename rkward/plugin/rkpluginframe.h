@@ -37,6 +37,8 @@ public:
 /** returns the page child elements should be drawn in */
 	KVBox *getPage () { return page; };
 	int type () { return ComponentFrame; };
+/** reimplemented to return the value of the checked property by default */
+	QString value (const QString &modifier);
 
 /** re-implemented to create "checked" property on demand. */
 	RKComponentBase* lookupComponent (const QString &identifier, QString *remainder);

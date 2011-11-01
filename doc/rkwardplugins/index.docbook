@@ -2678,7 +2678,7 @@ In addition to this, some elements have additional properties you can connect to
 </varlistentry>
 <varlistentry>
 <term>&lt;frame&gt;</term>
-<listitem><para>No default property.
+<listitem><para>Default property is "checked", if - and only if - the frame is checkable. For non-checkable frames, there is no default property.
 	<variablelist>
 	<varlistentry>
 	<term>checked</term>

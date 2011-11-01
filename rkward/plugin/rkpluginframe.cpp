@@ -70,6 +70,12 @@ RKComponentBase* RKPluginFrame::lookupComponent (const QString& identifier, QStr
 	return RKComponentBase::lookupComponent(identifier, remainder);
 }
 
+QString RKPluginFrame::value (const QString &modifier) {
+	if (!frame->isCheckable ()) return RKComponent::value (modifier);
+	if (!checked) initCheckedProperty();
+	return checked->value (modifier);
+}
+
 void RKPluginFrame::propertyChanged (RKComponentPropertyBase* property) {
 	RK_TRACE (PLUGIN);
 
