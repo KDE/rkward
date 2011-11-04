@@ -972,17 +972,17 @@ void RKCodeCompletionModel::updateCompletionList (const QString& symbol) {
 	RObjectList::getObjectList ()->findObjectsMatching (symbol, &map);
 
 	int count = map.size ();
-	list.clear ();
-	list_names.clear ();
-	list.reserve (count);
-	list_names.reserve (count);
-	// this is silly, but we need an int indexable storage, so we copy the map to a list
+	icons.clear ();
+	names.clear ();
+#if QT_VERSION >= 0x040700
+	icons.reserve (count);
+	names.reserve (count);
+#endif
+	// copy the map to two lists. For one thing, we need an int indexable storage, for another, caching this information is safer
+	// in case objects are removed while the completion mode is active.
 	for (RObject::RObjectSearchMap::const_iterator it = map.constBegin (); it != map.constEnd (); ++it) {
-		list.append (it.value ());
-		// the second list is used to store the name that should be used for completion.
-		// This may be object->getBaseName() or object->getFullName () depending on whether the object is
-		// masked or not.
-		list_names.append (it.key ());
+		icons.append (RKStandardIcons::iconForObject (it.value ()));
+		names.append (it.value ()->getBaseName ());
 	}
 
 	setRowCount (count);
@@ -1006,9 +1006,9 @@ void RKCodeCompletionModel::completionInvoked (KTextEditor::View*, const KTextEd
 void RKCodeCompletionModel::executeCompletionItem (KTextEditor::Document *document, const KTextEditor::Range &word, int row) const {
 	RK_TRACE (COMMANDEDITOR);
 
-	RK_ASSERT (list_names.size () > row);
+	RK_ASSERT (names.size () > row);
 
-	document->replaceText (word, list_names[row]);
+	document->replaceText (word, names[row]);
 }
 
 QVariant RKCodeCompletionModel::data (const QModelIndex& index, int role) const {
@@ -1017,18 +1017,14 @@ QVariant RKCodeCompletionModel::data (const QModelIndex& index, int role) const 
 	int row = index.row ();
 
 	if (index.parent ().isValid ()) return QVariant ();
-	if (row >= list.count ()) return QVariant ();
-
-	RObject* object = list[row];
-	RK_ASSERT (object);
 
 	if ((role == Qt::DisplayRole) || (role==KTextEditor::CodeCompletionModel::CompletionRole)) {
 		if (col == KTextEditor::CodeCompletionModel::Name) {
-			return (object->getBaseName ());
+			return (names.value (row));
 		}
 	} else if (role == Qt::DecorationRole) {
 		if (col == KTextEditor::CodeCompletionModel::Icon) {
-			return RKStandardIcons::iconForObject (object);
+			return (icons.value (row));
 		}
 	}
 

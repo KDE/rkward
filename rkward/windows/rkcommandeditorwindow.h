@@ -136,10 +136,10 @@ public:
 	void executeCompletionItem (KTextEditor::Document *document, const KTextEditor::Range &word, int row) const;
 	QVariant data (const QModelIndex& index, int role=Qt::DisplayRole) const;
 
-	bool isEmpty () const { return list.isEmpty (); };
+	bool isEmpty () const { return names.isEmpty (); };
 private:
-	QVector<RObject*> list;
-	QVector<QString> list_names;
+	QList<QIcon> icons;
+	QStringList names;
 	QString current_symbol;
 	RKCommandEditorWindow *command_editor;
 };
