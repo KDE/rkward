@@ -825,7 +825,7 @@ QModelIndex RKRPackageInstallationStatus::markAllUpdatesForInstallation () {
 	RK_TRACE (DIALOGS);
 
 	// inefficient, but so what...
-	for (int i = updateable_packages_in_installed.count (); i >= 0; --i) {
+	for (int i = updateable_packages_in_installed.count () - 1; i >= 0; --i) {
 		markPackageForInstallation (installed_packages[updateable_packages_in_installed[i]]);
 	}
 	return index (UpdateablePackages, 0, QModelIndex ());

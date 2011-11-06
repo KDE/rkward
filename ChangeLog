@@ -1,3 +1,5 @@
+- Fixed: potential crash when clicking "Select all updates" in the package installation dialog
+- Fixed: potential crash in object name completion under certain conditions
 - Simplified the "Sort Data" plugin, and added a help page
 - Fixed: On Windows, detached windows would sometimes be positioned with the menubar outside the upper screen edge
 - Add GUI support for inspecting the call stack during debugging
