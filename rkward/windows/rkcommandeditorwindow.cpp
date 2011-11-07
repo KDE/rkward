@@ -482,6 +482,23 @@ void RKCommandEditorWindow::insertText (const QString &text) {
 	setFocus();
 }
 
+void RKCommandEditorWindow::restoreScrollPosition () {
+	RK_TRACE (COMMANDEDITOR);
+
+	KTextEditor::Cursor c = saved_scroll_position;
+	c.setLine (qMin (c.line (), m_doc->lines () - 1));
+	if (c.column () >= m_doc->lineLength (c.line ())) c.setColumn (0);
+	m_view->setCursorPosition (c);
+}
+
+void RKCommandEditorWindow::saveScrollPosition () {
+	RK_TRACE (COMMANDEDITOR);
+
+	KTextEditor::Cursor c = m_view->cursorPosition ();
+	if (!c.isValid ()) c = KTextEditor::Cursor::start ();
+	saved_scroll_position = c;
+}
+
 void RKCommandEditorWindow::setText (const QString &text) {
 	RK_TRACE (COMMANDEDITOR);
 	bool old_rw = m_doc->isReadWrite ();

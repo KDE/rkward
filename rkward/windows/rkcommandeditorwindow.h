@@ -175,6 +175,10 @@ public:
 	void insertText (const QString &text);
 /** set the current text (clear all previous text, and sets new text) */
 	void setText (const QString &text);
+/** @see restoreScrollPosition (). Note: Currently this saves/restored the cursor position, not necessarily the scroll position. */
+	void saveScrollPosition ();
+/** @see saveScrollPosition (). Note: Currently this saves/restored the cursor position, not necessarily the scroll position. */
+	void restoreScrollPosition ();
 /** copy current selection. Wrapper for use by external classes */
 	void copy ();
 
@@ -243,6 +247,7 @@ private slots:
 /** handle any errors during auto-saving */
 	void autoSaveHandlerJobFinished (RKJobSequence* seq);
 private:
+	KTextEditor::Cursor saved_scroll_position;
 	KTextEditor::Document *m_doc;
 	KTextEditor::View *m_view;
 	KTextEditor::CodeCompletionInterface *cc_iface;

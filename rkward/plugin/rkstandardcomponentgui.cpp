@@ -256,12 +256,17 @@ void RKStandardComponentGUI::updateCode () {
 
 void RKStandardComponentGUI::updateCodeNow () {
 	RK_TRACE (PLUGIN);
+	static bool was_valid = false;
+	if (was_valid) code_display->saveScrollPosition ();
 
 	if (!code_property->isValid ()) {
 		code_display->setText (i18n ("Processing. Please wait"));
 		RK_DO (qDebug ("code not ready to be displayed: pre %d, cal %d, pri %d", !code_property->preprocess ().isNull (), !code_property->calculate ().isNull (), !code_property->printout ().isNull ()), PLUGIN, DL_DEBUG);
+		was_valid = false;
 	} else {
 		code_display->setText ("local({\n" + code_property->preprocess () + code_property->calculate () + code_property->printout () + "})\n");
+		code_display->restoreScrollPosition ();
+		was_valid = true;
 	}
 }
 
