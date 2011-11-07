@@ -12,7 +12,7 @@
 						<option id="xvar" label="X" governor="xsel.available"/>
 						<option id="yvar" label="Y" governor="ysel.available"/>
 						<option id="custom_color" governor="colorframe.checked"/> <!-- unlabeled columns will not be shown in the optiondisplay -->
-						<option id="color.color" governor="color.string"/>
+						<option id="color" governor="color.color.string"/>
 						<content>
 							<optiondisplay show_index="true"/>
 							<varslot source="selector" id="xsel" label="X Variable" required="true"/>

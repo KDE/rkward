@@ -2,7 +2,7 @@
                           scriptbackend  -  description
                              -------------------
     begin                : Sun Aug 15 2004
-    copyright            : (C) 2004, 2006, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2009, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -87,14 +87,15 @@ void ScriptBackend::commandFinished (const QString &output) {
 	if (current_type != Ignore) {
 		if (code_property) {
 			if (_output.isNull ()) _output = "";			// must not be null for the code property!
+			bool add_header = add_headings && (!_output.isEmpty ());
 			if (current_type == Preprocess) {
-				if (add_headings) code_property->setPreprocess (i18n ("## Prepare\n") + _output);
+				if (add_header) code_property->setPreprocess (i18n ("## Prepare\n") + _output);
 				else code_property->setPreprocess (_output);
 			} else if (current_type == Calculate) {
-				if (add_headings) code_property->setCalculate (i18n ("## Compute\n") + _output);
+				if (add_header) code_property->setCalculate (i18n ("## Compute\n") + _output);
 				else code_property->setCalculate (_output);
 			} else if (current_type == Printout) {
-				if (add_headings) code_property->setPrintout (i18n ("## Print result\n") + _output);
+				if (add_header) code_property->setPrintout (i18n ("## Print result\n") + _output);
 				else code_property->setPrintout (_output);
 			} else if (current_type == Preview) {
 				// no heading for the preview code (not shown in the code box)
