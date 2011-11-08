@@ -26,6 +26,7 @@
 #include "../core/robjectlist.h"
 #include "../rkglobals.h"
 #include "../rkward.h"
+#include "../settings/rksettingsmodulegeneral.h"
 #include "../windows/rkworkplace.h"
 
 #include "../debug.h"
@@ -58,7 +59,7 @@ RKSaveAgent::~RKSaveAgent () {
 
 bool RKSaveAgent::askURL () {
 	RK_TRACE (APP);
-	save_url = KFileDialog::getSaveFileName (save_url, "*.RData *.rdata *.rda|R Data Files (*.RData *.rdata *.rda)\n*|All Files (*)");
+	save_url = KFileDialog::getSaveFileName (save_url, i18n ("%1|R Workspace Files (%1)\n*|All files", RKSettingsModuleGeneral::workspaceFilenameFilter ()));
 	if (save_url.isEmpty ()) {
 		if (when_done != DoNothing) {
 			if (KMessageBox::warningYesNo (0, i18n ("No filename given. Your data was NOT saved. Do you still want to proceed?")) != KMessageBox::Yes) when_done = DoNothing;

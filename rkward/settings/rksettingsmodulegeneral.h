@@ -69,6 +69,7 @@ public:
 	static bool cdToWorkspaceOnLoad () { return cd_to_workspace_dir_on_load; };
 	static unsigned long warnLargeObjectThreshold () { return warn_size_object_edit; };
 	static RKMDIFocusPolicy mdiFocusPolicy () { return mdi_focus_policy; }
+	static QString workspaceFilenameFilter () { return ("*.RData *.RDA"); };
 
 	enum RKWardConfigVersion {
 		RKWardConfig_Pre0_5_7,

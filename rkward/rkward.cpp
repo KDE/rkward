@@ -705,9 +705,9 @@ void RKWardMainWindow::fileOpenNoSave (const KUrl &url) {
 #ifdef Q_WS_WIN
 	// getOpenUrl(KUrl("kfiledialog:///<rfiles>"), ...) causes a hang on windows (KDElibs 4.2.3).
 #	warning Track this bug down and/or report it
-		lurl = KFileDialog::getOpenUrl (KUrl (), i18n("*.RData *.RDA|R Workspace Files (*.RData *.RDA)\n*|All files"), this, i18n("Select workspace to open..."));
+		lurl = KFileDialog::getOpenUrl (KUrl (), i18n("%1|R Workspace Files (%1)\n*|All files", RKSettingsModuleGeneral::workspaceFilenameFilter ()), this, i18n("Select workspace to open..."));
 #else
-		lurl = KFileDialog::getOpenUrl (KUrl ("kfiledialog:///<rfiles>"), i18n("*.RData *.RDA|R Workspace Files (*.RData *.RDA)\n*|All files"), this, i18n("Select workspace to open..."));
+		lurl = KFileDialog::getOpenUrl (KUrl ("kfiledialog:///<rfiles>"), i18n("%1|R Workspace Files (%1)\n*|All files", RKSettingsModuleGeneral::workspaceFilenameFilter ()), this, i18n("Select workspace to open..."));
 #endif
 	}
 	if (!lurl.isEmpty ()) {
