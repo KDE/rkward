@@ -18,7 +18,7 @@
 #'   "Second Option"=c(val="val2", chk=TRUE)))
 #' cat(pasteXMLNode(rk.XML.frame(test.dropdown, label="Some options")))
 
-rk.XML.frame <- function(..., label=NULL, checkable=FALSE, chk=FALSE, id.name="auto"){
+rk.XML.frame <- function(..., label=NULL, checkable=FALSE, chk=TRUE, id.name="auto"){
 	nodes <- list(...)
 
 	if(!is.null(label)){
@@ -29,12 +29,10 @@ rk.XML.frame <- function(..., label=NULL, checkable=FALSE, chk=FALSE, id.name="a
 
 	if(isTRUE(checkable)){
 		attr.list[["checkable"]] <- "true"
-		if(isTRUE(chk)){
-			attr.list[["checked"]] <- "true"
+		if(!isTRUE(chk)){
+			attr.list[["checked"]] <- "false"
 		} else {}
-	} else {
-		attr.list[["checkable"]] <- "false"
-	}
+	} else {}
 
 	if(identical(id.name, "auto")){
 		if(!is.null(label)){

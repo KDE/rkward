@@ -83,7 +83,7 @@ get.single.tags <- function(XML.obj, drop=NULL){
 # scans XML tags for defined IDs, returns a matrix with columns "id" and "abbrev",
 # and optional "tag"
 # 'single.tags' can also contain XiMpLe.node objects
-get.IDs <- function(single.tags, relevant.tags, add.abbrev=FALSE, tag.names=FALSE){
+get.IDs <- function(single.tags, relevant.tags, add.abbrev=FALSE, tag.names=FALSE, only.checkable=FALSE){
 
 	# filter for relevant tags
 	cleaned.tags <- list()
@@ -91,14 +91,30 @@ get.IDs <- function(single.tags, relevant.tags, add.abbrev=FALSE, tag.names=FALS
 		if(inherits(this.tag, "XiMpLe.node")){
 			this.tag.name <- this.tag@name
 			if(this.tag.name %in% relevant.tags & "id" %in% names(this.tag@attributes)){
-				cleaned.tags[length(cleaned.tags)+1] <- this.tag
+				if(isTRUE(only.checkable) & this.tag.name %in% "frame"){
+					if("checkable" %in% names(this.tag@attributes)){
+						if(identical(this.tag@attributes[["checkable"]], "true")){
+							cleaned.tags[length(cleaned.tags)+1] <- this.tag
+						} else {}
+					} else {}
+				} else {
+					cleaned.tags[length(cleaned.tags)+1] <- this.tag
+				}
 			} else {}
 		} else {
 			this.tag.name <- tolower(XiMpLe:::XML.tagName(this.tag))
 			# we're only interested in entries with an ID
 			if(this.tag.name %in% relevant.tags){
 				if("id" %in% names(XiMpLe:::parseXMLAttr(this.tag))){
-					cleaned.tags[length(cleaned.tags)+1] <- this.tag
+					if(isTRUE(only.checkable) & this.tag.name %in% "frame"){
+						if("checkable" %in% names(XiMpLe:::parseXMLAttr(this.tag))){
+							if(identical(XiMpLe:::parseXMLAttr(this.tag)[["checkable"]], "true")){
+								cleaned.tags[length(cleaned.tags)+1] <- this.tag
+							} else {}
+						} else {}
+					} else {
+						cleaned.tags[length(cleaned.tags)+1] <- this.tag
+					}
 				} else {}
 			} else {}
 		}

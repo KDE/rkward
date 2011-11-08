@@ -1,6 +1,10 @@
 ChangeLog for package rkwarddev
 
+## 0.04-7 (2011-11-08)
+  - added long description support to rk.XML.about(), used for the DESCRIPTION file
+
 ## 0.04-6 (2011-10-31)
+  - added <frame> to the tags which are scanned by rk.JS.scan(), they're considered only if checkable
   - improved output of rk.JS.var class objects by rk.paste.JS()
 
 ## 0.04-5 (2011-10-28)

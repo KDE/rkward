@@ -15,7 +15,7 @@ rk.JS.scan <- function(pXML, js=TRUE, add.abbrev=FALSE, indent.by="\t"){
 
 	JS.relevant.tags <- c("radio", "varslot", "browser", "dropdown",
 		"checkbox", "saveobject", "input", "spinbox")
-
+	
 	single.tags <- get.single.tags(XML.obj=pXML, drop=c("comments","cdata", "declarations", "doctype"))
 
 	JS.id <- get.IDs(single.tags=single.tags, relevant.tags=JS.relevant.tags, add.abbrev=add.abbrev)
@@ -39,6 +39,24 @@ rk.JS.scan <- function(pXML, js=TRUE, add.abbrev=FALSE, indent.by="\t"){
 	} else {
 		JS.lines <- NULL
 	}
+
+	# special tags: must be chackable and get "checked" property
+	JS.special.tags <- c("frame")
+	JS.special.id <- get.IDs(single.tags=single.tags, relevant.tags=JS.special.tags, add.abbrev=add.abbrev, only.checkable=TRUE)
+	if("id" %in% colnames(JS.special.id)){
+		if(isTRUE(js)){
+			JS.lines <- paste(JS.lines, paste(unlist(sapply(1:nrow(JS.special.id), function(this.id){
+					return(rk.paste.JS(get.JS.vars(
+						JS.var=JS.special.id[this.id,"abbrev"],
+						XML.var=JS.special.id[this.id,"id"],
+						modifiers="checked"),
+						level=2, indent.by=indent.by))
+				})), collapse=""))
+		} else {
+			JS.lines <- c(JS.lines, JS.special.id[,"id"])
+			names(JS.lines) <- NULL
+		}
+	} else {}
 
 	return(JS.lines)
 }

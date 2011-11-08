@@ -3,7 +3,7 @@
 \title{Create XML node "column" for RKWard plugins}
 \usage{
   rk.XML.frame(..., label = NULL, checkable = FALSE, chk =
-  FALSE, id.name = "auto")
+  TRUE, id.name = "auto")
 }
 \arguments{
   \item{...}{Objects of class \code{XiMpLe.node}.}

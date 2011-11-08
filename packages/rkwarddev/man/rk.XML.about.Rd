@@ -5,8 +5,8 @@
   rk.XML.about(name, author, about = list(desc =
   "SHORT_DESCRIPTION", version = "0.01-0", date =
   Sys.Date(), url = "http://EXAMPLE.com", license = "GPL
-  (>= 3)"), dependencies = NULL, package = NULL, pluginmap
-  = NULL)
+  (>= 3)", long.desc = NULL), dependencies = NULL, package
+  = NULL, pluginmap = NULL)
 }
 \arguments{
   \item{name}{A character string with the plugin name.}
@@ -27,7 +27,8 @@
   \item{date}{Release date (mandatory)} \item{url}{URL for
   the plugin (optional)} \item{license}{License the plugin
   is distributed under (mandatory)} \item{category}{A
-  category for this plugin (optional)} }}
+  category for this plugin (optional)} \item{long.desc}{A
+  long description (optional, defaults to \code{desc})} }}
 
   \item{dependencies}{A named list with these elements:
   \describe{ \item{rkward.min}{Minimum RKWard version

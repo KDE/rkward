@@ -17,6 +17,7 @@
 #'			\item{url}{URL for the plugin (optional)}
 #'			\item{license}{License the plugin is distributed under (mandatory)}
 #'			\item{category}{A category for this plugin (optional)}
+#'			\item{long.desc}{A long description (optional, defaults to \code{desc})}
 #'		}
 #' @param dependencies A named list with these elements:
 #'		\describe{
@@ -71,7 +72,7 @@
 #' cat(pasteXMLNode(about.node, shine=2))
 
 
-rk.XML.about <- function(name, author, about=list(desc="SHORT_DESCRIPTION", version="0.01-0", date=Sys.Date(), url="http://EXAMPLE.com", license="GPL (>= 3)"), dependencies=NULL, package=NULL, pluginmap=NULL){
+rk.XML.about <- function(name, author, about=list(desc="SHORT_DESCRIPTION", version="0.01-0", date=Sys.Date(), url="http://EXAMPLE.com", license="GPL (>= 3)", long.desc=NULL), dependencies=NULL, package=NULL, pluginmap=NULL){
 	# sanity checks
 	stopifnot(all(length(name), length(author)) > 0)
 	if(is.null(about)){
@@ -91,6 +92,9 @@ rk.XML.about <- function(name, author, about=list(desc="SHORT_DESCRIPTION", vers
 	} else {}
 	if(!"license" %in% names(about)){
 		about[["license"]] <- "GPL (>= 3)"
+	} else {}
+	if(!"long.desc" %in% names(about) | is.null(about[["long.desc"]])){
+		about[["long.desc"]] <- about[["desc"]]
 	} else {}
 
 	## author
@@ -248,6 +252,7 @@ rk.XML.about <- function(name, author, about=list(desc="SHORT_DESCRIPTION", vers
 				attributes=list(
 					name=name,
 					"shortinfo"=about[["desc"]],
+					"longinfo"=about[["long.desc"]],
 					version=about[["version"]],
 					"releasedate"=about[["date"]],
 					url=about[["url"]],
