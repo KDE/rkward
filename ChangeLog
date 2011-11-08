@@ -1,3 +1,5 @@
+- When asking for workspace file to open, use appropriate file filter
+- When configured to ask for workspace to open on startup, don't prompt to save, first
 - Fixed: potential crash when clicking "Select all updates" in the package installation dialog
 - Fixed: potential crash in object name completion under certain conditions
 - Simplified the "Sort Data" plugin, and added a help page

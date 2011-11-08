@@ -235,7 +235,7 @@ void RKWardMainWindow::doPostInit () {
 			openWorkspace (result.open_url);
 		} else {
 			if (result.result == StartupDialog::ChoseFile) {
-				slotFileOpenWorkspace ();
+				fileOpenNoSave (KUrl());
 			} else if (result.result == StartupDialog::EmptyTable) {
 				RKWorkplace::mainWorkplace ()->editNewDataFrame (i18n ("my.data"));
 			}
@@ -705,9 +705,9 @@ void RKWardMainWindow::fileOpenNoSave (const KUrl &url) {
 #ifdef Q_WS_WIN
 	// getOpenUrl(KUrl("kfiledialog:///<rfiles>"), ...) causes a hang on windows (KDElibs 4.2.3).
 #	warning Track this bug down and/or report it
-		lurl = KFileDialog::getOpenUrl (KUrl (), i18n("*|All files"), this, i18n("Open File..."));
+		lurl = KFileDialog::getOpenUrl (KUrl (), i18n("*.RData *.RDA|R Workspace Files (*.RData *.RDA)\n*|All files"), this, i18n("Select workspace to open..."));
 #else
-		lurl = KFileDialog::getOpenUrl (KUrl ("kfiledialog:///<rfiles>"), i18n("*|All files"), this, i18n("Open File..."));
+		lurl = KFileDialog::getOpenUrl (KUrl ("kfiledialog:///<rfiles>"), i18n("*.RData *.RDA|R Workspace Files (*.RData *.RDA)\n*|All files"), this, i18n("Select workspace to open..."));
 #endif
 	}
 	if (!lurl.isEmpty ()) {
