@@ -16,7 +16,7 @@ Description: This package provides a simple XML tree
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyLoad: yes
-URL: http://rkward.sourceforge.net
+URL: http://reaktanz.de/?c=hacking&s=XiMpLe
 Authors@R: c(person(given="Meik", family="Michalke",
     email="meik.michalke@hhu.de", role=c("aut", "cre")))
 Version: 0.03-7

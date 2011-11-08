@@ -10,7 +10,7 @@
 #' Encoding: \tab UTF-8\cr
 #' License: \tab GPL (>= 3)\cr
 #' LazyLoad: \tab yes\cr
-#' URL: \tab http://rkward.sourceforge.net\cr
+#' URL: \tab http://reaktanz.de/?c=hacking&s=XiMpLe\cr
 #' }
 #'
 #' This package provides a simple XML tree parser/generator. It includes functions to read XML files into R objects,

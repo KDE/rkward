@@ -18,5 +18,5 @@ pckg.dscrptn <- data.frame(
 		License="GPL (>= 3)",
 		Encoding="UTF-8",
 		LazyLoad="yes",
-		URL="http://rkward.sourceforge.net",
+		URL="http://reaktanz.de/?c=hacking&s=XiMpLe",
 		stringsAsFactors=FALSE)

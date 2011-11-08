@@ -12,7 +12,7 @@
   2011-10-23\cr Depends: \tab R (>= 2.9.0),methods\cr
   Enhances: \tab rkward\cr Encoding: \tab UTF-8\cr License:
   \tab GPL (>= 3)\cr LazyLoad: \tab yes\cr URL: \tab
-  http://rkward.sourceforge.net\cr }
+  http://reaktanz.de/?c=hacking&s=XiMpLe\cr }
 
   This package provides a simple XML tree parser/generator.
   It includes functions to read XML files into R objects,
