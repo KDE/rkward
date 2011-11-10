@@ -158,7 +158,9 @@ rk.plugin.skeleton <- function(about, path=tempdir(),
 
 	# define paths an file names
 	main.dir <- file.path(path, name)
+	R.dir <- file.path(main.dir, "R")
 	description.file <- file.path(main.dir, "DESCRIPTION")
+	namespace.file <- file.path(main.dir, "NAMESPACE")
 	rkward.dir <- file.path(main.dir, "inst", "rkward")
 	plugin.dir <- file.path(rkward.dir, "plugins")
 	# the basic file names
@@ -174,6 +176,12 @@ rk.plugin.skeleton <- function(about, path=tempdir(),
 	if(!file_test("-d", main.dir)){
 		stopifnot(dir.create(main.dir, recursive=TRUE))
 		message(paste("Created directory ", main.dir, ".", sep=""))
+	} else {}
+
+	# create empty R directory, e.g. for smooth roxyPackage runs
+	if(!file_test("-d", R.dir)){
+		stopifnot(dir.create(R.dir, recursive=TRUE))
+		message(paste("Created directory ", R.dir, ".", sep=""))
 	} else {}
 
 	# create directory structure
@@ -343,6 +351,8 @@ rk.plugin.skeleton <- function(about, path=tempdir(),
 #				Encoding="UTF-8",
 				LazyLoad=ifelse(isTRUE(lazyLoad), "yes", "no"),
 				URL=about.node@attributes[["url"]],
+#				# R 2.14 seems to add "Namespace: auto", which invalidates source packages for R < 2.14
+#				Namespace=name,
 				stringsAsFactors=FALSE)
 
 			for(this.entry in c("Depends","Suggests")){
@@ -359,6 +369,11 @@ rk.plugin.skeleton <- function(about, path=tempdir(),
 		} else {}
 		if(isTRUE(edit)){
 			rk.edit.files(description.file, title="DESCRIPTION", prompt=FALSE)
+		} else {}
+		# create empty NAMESPACE file for R 2.14 compatibility
+		if(!file_test("-f", namespace.file)){
+			cat("", file=namespace.file)
+			message(paste("Created empty file ", namespace.file, " for R 2.14 compatibility.", sep=""))
 		} else {}
 	} else {}
 
