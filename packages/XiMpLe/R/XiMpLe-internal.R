@@ -1,5 +1,47 @@
 ## internal functions, not exported
 
+## function split.chars()
+# used to split a character string into parts at each occurrence of the start and end of a regex pattern
+split.chars <- function(txt, pattern, perl=FALSE){
+	found.pattern <- gregexpr(pattern, text=txt, perl=perl)
+	found.pattern.start <- found.pattern[[1]]
+	found.pattern.end <- found.pattern.start + attr(found.pattern[[1]], "match.length") - 1
+	# returned -1 if pattern wasn't found
+	if(found.pattern.start[1] == -1){
+		return(txt)
+	} else {
+		txt.length <- nchar(txt)
+		num.found.patterns <- length(found.pattern.start)
+		result <- unlist(sapply(0:num.found.patterns, function(pat.idx){
+				# 0: chars before first match
+				if(pat.idx == 0){
+					if(found.pattern.start[1] > 1){
+						return(substr(txt, 1, found.pattern.start[1] - 1))
+					} else {}
+				} else {
+					result.match <- substr(txt, found.pattern.start[pat.idx], found.pattern.end[pat.idx])
+					# check if there's stuff between two matches
+					aft.match <- found.pattern.end[pat.idx] + 1
+						if(pat.idx < num.found.patterns){
+							nxt.match <- found.pattern.start[pat.idx + 1]
+						} else {
+							nxt.match <- txt.length + 1
+						}
+					if(aft.match < nxt.match){
+						result.aft.match <- trim(substr(txt, aft.match, nxt.match - 1))
+						# remove empty space
+						if(!identical("", result.aft.match)){
+							result.match <- c(result.match, result.aft.match)
+						} else {}
+					} else {}
+					return(result.match)
+				}
+			}))
+		return(result)
+	}
+} ## end function split.chars()
+
+
 ## function XML.single.tags()
 # Splits one character string or vector with an XML tree into a vector with its single tags.
 # - tree: The XML tree, must be character.
@@ -17,71 +59,17 @@ XML.single.tags <- function(tree, drop=NULL){
 
 	## the main splitting process
 	# CDATA or comments can contain stuff which might ruin the outcome. we'll deal with those parts first.
-	# this solution is perhaps a little too complex... it should rarely be needed, though
-	special.treatment <- list(cdata=NULL, comments=NULL)
-	if(grepl("<!\\[CDATA\\[(.*)>(.*)\\]\\]>", tree)){
-		special.treatment[["cdata"]] <- c(split.start="<!\\[CDATA\\[", split.end="\\]\\]>", prefix="<![CDATA[", suffix="]]>")
-	} else {}
-	if(grepl("<!--(.*)>(.*)-->", tree)){
-		special.treatment[["comments"]] <- c(split.start="<!--", split.end="-->", prefix="<!--", suffix="-->")
-	} else {}
-	if(any(!sapply(special.treatment, is.null))){
-		for (treat.this in special.treatment){
-			# skip NULL entries
-			ifelse(is.null(treat.this), next, TRUE)
-			# steps are as follows, to be sure:
-			# - cut stream at beginning CDATA/comment entries
-			cut.trees <- trim(unlist(strsplit(tree, split=treat.this[["split.start"]])))
-			# - re-add the cut-off CDATA/comment start
-			got.cut <- grep(treat.this[["split.end"]], cut.trees)
-			cut.trees[got.cut] <- paste(treat.this[["prefix"]], cut.trees[got.cut], sep="")
-			# - cut stream at ending CDATA/comment entries
-			cut.trees <- trim(unlist(strsplit(cut.trees, split=treat.this[["split.end"]])))
-			# - re-add the cut-off CDATA/comment ending
-			got.cut <- grep(treat.this[["split.start"]], cut.trees)
-			cut.trees[got.cut] <- paste(cut.trees[got.cut], treat.this[["suffix"]], sep="")
-		}
-		# now do the splitting
-		single.tags <- unlist(sapply(cut.trees, function(this.tree){
-				if(
-					(!is.null(special.treatment[["cdata"]]) & grepl("<!\\[CDATA\\[", this.tree)) |
-					(!is.null(special.treatment[["comments"]]) & grepl("<!--", this.tree))
-				) {
-					split.me <- FALSE
-				} else {
-					split.me <- TRUE
-				}
-				if(isTRUE(split.me) & grepl("(.*)<(.*)>(.*)", this.tree)){
-					return(paste(unlist(strsplit(trim(this.tree), split=">[[:space:]]*")), ">", sep=""))
-				} else {
+	tree <- split.chars(txt=tree, pattern="<!\\[CDATA\\[(.*?)\\]\\]>|<!--(.*?)-->", perl=TRUE)
+	# now do the splitting
+	single.tags <- unlist(sapply(tree, function(this.tree){
+				# exclude the already cut our comments an CDATA entries
+				if(XML.comment(this.tree) | XML.cdata(this.tree)){
 					return(this.tree)
+				} else {
+					return(split.chars(txt=this.tree, "<(.*?)>"))
 				}
 			}))
-	} else {
-		single.tags <- paste(unlist(strsplit(tree, split=">[[:space:]]*")), ">", sep="")
-	}
 	names(single.tags) <- NULL
-	# if there's values between tags, they do now precede them
-	has.value <- grepl("^[^<]", single.tags)
-	if(any(has.value)){
-		# each fix will add an entry, so we must correct for that
-		already.fixed <- 0
-		for (needs.split in which(has.value)){
-			tags.length <- length(single.tags)
-			split.me <- unlist(strsplit(single.tags[needs.split + already.fixed], split="[[:space:]]*<"))
-			if(length(split.me) != 2){ # malformated XML?
-				stop(simpleError(paste("Ouch, choking on input... malformatted XML? Don't know how to handle this:\n  ", single.tags[needs.split + already.fixed], sep="")))
- 			} else {}
-			# return the cut of "<"
-			split.me[2] <- paste("<", split.me[2], sep="")
-			if("value" %in% drop){
-				single.tags[needs.split + already.fixed] <- split.me[2]
-			} else {
-				single.tags <- c(single.tags[1:(needs.split + already.fixed - 1)], split.me, single.tags[(needs.split + already.fixed + 1):tags.length])
-			}
-			already.fixed <- already.fixed + 1
-		}
-	} else {}
 	if("comments" %in% drop){
 		single.tags <- single.tags[!XML.comment(single.tags)]
 	} else {}
@@ -96,6 +84,7 @@ XML.single.tags <- function(tree, drop=NULL){
 	} else {}
 	return(single.tags)
 } ## end function XML.single.tags()
+
 
 ## function indent()
 # will create tabs to format the output

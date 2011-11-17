@@ -1,5 +1,9 @@
 ChangeLog for package XiMpLe
 
+## 0.03-8 (2011-11-17)
+  - rewrote large parts of internal function XML.single.tags() for more efficiency, allthough it's still quite
+    lethargic when handling huge XML trees
+
 ## 0.03-7 (2011-10-23)
   - added "&" to the special characters for "tidy" (only applies if theres space before and after)
   - "tidy" now also indents text in comments and CDATA if it includes the newline character

@@ -19,8 +19,8 @@ LazyLoad: yes
 URL: http://reaktanz.de/?c=hacking&s=XiMpLe
 Authors@R: c(person(given="Meik", family="Michalke",
     email="meik.michalke@hhu.de", role=c("aut", "cre")))
-Version: 0.03-7
-Date: 2011-10-23
+Version: 0.03-8
+Date: 2011-11-17
 Collate:
     'XiMpLe.node-class.R'
     'XiMpLe.doc-class.R'
