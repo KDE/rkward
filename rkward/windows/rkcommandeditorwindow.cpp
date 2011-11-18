@@ -828,6 +828,7 @@ void RKCommandEditorWindow::selectionChanged (KTextEditor::View* view) {
 //////////////////////// RKFunctionArgHinter //////////////////////////////
 
 #include <QToolTip>
+#include <QStyle>
 
 #include "../core/rfunctionobject.h"
 
@@ -848,10 +849,13 @@ RKFunctionArgHinter::RKFunctionArgHinter (RKScriptContextProvider *provider, KTe
 	QPalette p = QToolTip::palette ();		// HACK to trick the style into using the correct color
 	p.setColor (QPalette::Inactive, QPalette::Window, p.color (QPalette::Inactive, QPalette::ToolTipBase));
 	p.setColor (QPalette::Inactive, QPalette::WindowText, p.color (QPalette::Inactive, QPalette::ToolTipText));
+	arghints_popup->setForegroundRole (QPalette::ToolTipText);
+	arghints_popup->setBackgroundRole (QPalette::ToolTipBase);
 	arghints_popup->setPalette (p);
 	arghints_popup->setFrameStyle (QFrame::Box);
 	arghints_popup->setLineWidth (1);
 	arghints_popup->setWordWrap (true);
+	arghints_popup->setWindowOpacity (arghints_popup->style ()->styleHint (QStyle::SH_ToolTipLabel_Opacity, 0, arghints_popup) / 255.0);
 	arghints_popup->hide ();
 	active = false;
 
