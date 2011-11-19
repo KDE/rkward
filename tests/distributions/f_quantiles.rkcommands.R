@@ -1,5 +1,4 @@
 local({
-## Prepare
 ## Compute
 result <- (qf (p = c (0.95), df1 = 1.00, df2 = 1.00, ncp = 0.00, lower.tail=FALSE, log.p = FALSE))
 ## Print result

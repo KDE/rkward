@@ -1,6 +1,4 @@
 local({
-## Prepare
-## Compute
 ## Print result
 # parameters:
 df1 <- 5.0; df2 <- 5.0; ncp <- 0.0;

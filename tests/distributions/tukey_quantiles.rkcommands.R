@@ -1,5 +1,4 @@
 local({
-## Prepare
 ## Compute
 result <- (qtukey (p = c (0.95), nmeans = 2, df = 2:11, nranges = 1, lower.tail=TRUE, log.p = FALSE))
 ## Print result

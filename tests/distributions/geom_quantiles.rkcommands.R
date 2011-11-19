@@ -1,5 +1,4 @@
 local({
-## Prepare
 ## Compute
 result <- (qgeom (p = c (0.95), prob = 0.50, lower.tail=TRUE, log.p = FALSE))
 ## Print result

@@ -1,5 +1,4 @@
 local({
-## Prepare
 ## Compute
 result <- log(qweibull (p = c (0.95), shape = 1.00, scale = 1.00, lower.tail=FALSE, log.p = FALSE))
 ## Print result

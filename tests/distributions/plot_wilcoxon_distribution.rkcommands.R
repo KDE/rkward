@@ -1,6 +1,4 @@
 local({
-## Prepare
-## Compute
 ## Print result
 rk.header ("Binomial density function", list ("Lower quantile", "0", "Upper quantile", "24", "First sample size", "4", "Second sample size", "6", "Scale", "normal", "Function", "dwilcox"));
 

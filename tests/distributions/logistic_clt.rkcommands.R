@@ -1,6 +1,4 @@
 local({
-## Prepare
-## Compute
 ## Print result
 # parameters:
 loc <- 0.0; scale <- 3.0;

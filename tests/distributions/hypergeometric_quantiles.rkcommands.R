@@ -1,5 +1,4 @@
 local({
-## Prepare
 ## Compute
 result <- (qhyper (p = c (0.95), m = 1, n = 1, k = 1, lower.tail=TRUE, log.p = FALSE))
 ## Print result

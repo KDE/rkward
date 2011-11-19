@@ -1,5 +1,4 @@
 local({
-## Prepare
 ## Compute
 vars <- rk.list (rock[["shape"]], rock[["perm"]])
 results <- data.frame ('Variable Name'=I(names (vars)), check.names=FALSE)

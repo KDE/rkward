@@ -1,5 +1,4 @@
 local({
-## Prepare
 ## Compute
 result <- (plnorm (q = c (0.95), meanlog = 0.00, sdlog = 1.00, lower.tail=TRUE, log.p = FALSE))
 ## Print result

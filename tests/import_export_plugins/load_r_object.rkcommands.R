@@ -1,5 +1,4 @@
 local({
-## Prepare
 ## Compute
 load (file="women.RData", envir=globalenv())
 ## Print result

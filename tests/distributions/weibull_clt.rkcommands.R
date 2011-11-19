@@ -1,6 +1,4 @@
 local({
-## Prepare
-## Compute
 ## Print result
 # parameters:
 scale <- 1.0; shape <- 2.0;

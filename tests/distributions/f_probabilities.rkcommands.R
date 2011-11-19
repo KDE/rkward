@@ -1,5 +1,4 @@
 local({
-## Prepare
 ## Compute
 result <- (pf (q = c (.1, .2), df1 = 1.02, df2 = 1.11,  ncp = 0.02, lower.tail=TRUE, log.p = FALSE))
 ## Print result

@@ -1,5 +1,4 @@
 local({
-## Prepare
 ## Compute
 result <- mood.test (test50z, test50x, alternative = "two.sided")
 ## Print result

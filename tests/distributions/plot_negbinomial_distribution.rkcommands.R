@@ -1,6 +1,4 @@
 local({
-## Prepare
-## Compute
 ## Print result
 rk.header ("Negative Binomial density function", list ("Lower quantile", "0", "Upper quantile", "24", "Target for number of successful trials", "12", "Probability of success in each trial", "0.75", "Scale", "normal", "Function", "dnbinom"));
 

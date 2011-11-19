@@ -1,5 +1,4 @@
 local({
-## Prepare
 ## Compute
 result <- (pgamma (q = c (0.95), shape = 1.00, rate = 1.00, lower.tail=TRUE, log.p = FALSE))
 ## Print result

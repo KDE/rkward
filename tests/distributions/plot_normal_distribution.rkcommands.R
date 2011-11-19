@@ -1,6 +1,4 @@
 local({
-## Prepare
-## Compute
 ## Print result
 rk.header ("Normal density function", list ("Number of Observations", "100", "Lower quantile", "-3.29", "Upper quantile", "3.29", "Mean", "0.00", "Standard Deviation", "1.00", "Scale", "normal", "Function", "dnorm"));
 

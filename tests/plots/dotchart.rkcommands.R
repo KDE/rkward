@@ -1,6 +1,4 @@
 local({
-## Prepare
-## Compute
 ## Print result
 x <- women[["height"]]
 if (!is.numeric (x)) {
@@ -17,8 +15,6 @@ names(x) <- women$weight
 rk.graph.off ()
 })
 local({
-## Prepare
-## Compute
 ## Print result
 groups <- rk.list (warpbreaks[["tension"]], warpbreaks[["wool"]])
 title <- paste (names (groups), collapse=" by ")

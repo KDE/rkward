@@ -1,5 +1,4 @@
 local({
-## Prepare
 ## Compute
 x <- rk.list (warpbreaks[["tension"]])
 yvars <- rk.list (warpbreaks[["wool"]], warpbreaks[["tension"]])

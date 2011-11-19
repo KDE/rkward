@@ -1,6 +1,4 @@
 local({
-## Prepare
-## Compute
 ## Print result
 # parameters:
 size <- 12; prob <- 0.28;

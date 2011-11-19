@@ -1,5 +1,4 @@
 local({
-## Prepare
 ## Compute
 result <- (pweibull (q = exp(c (0.95)), shape = 1.03, scale = 1.04, lower.tail=TRUE, log.p = FALSE))
 ## Print result

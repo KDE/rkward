@@ -1,5 +1,4 @@
 local({
-## Prepare
 ## Compute
 result <- (pwilcox (q = c (0.95), m = 2, n = 1, lower.tail=TRUE, log.p = FALSE))
 ## Print result

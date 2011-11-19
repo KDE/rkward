@@ -1,5 +1,4 @@
 local({
-## Prepare
 ## Compute
 
 				for (i in 1:20) {

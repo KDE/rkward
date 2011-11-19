@@ -1,5 +1,4 @@
 local({
-## Prepare
 ## Compute
 result <- (ppois (q = c (0.95), lambda = 1.07, lower.tail=TRUE, log.p = TRUE))
 ## Print result

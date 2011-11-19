@@ -1,6 +1,4 @@
 local({
-## Prepare
-## Compute
 ## Print result
 rk.header ("F density function", list ("Number of Observations", "100", "Lower quantile", "0.001", "Upper quantile", "25.00", "Numerator degrees of freedom", "5.00", "Denominator degrees of freedom", "5.00", "Non-centrality", "0", "Scale", "logarithmic", "Function", "df"));
 

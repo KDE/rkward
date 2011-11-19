@@ -1,5 +1,4 @@
 local({
-## Prepare
 ## Compute
 Xvars <- list(women[["weight"]],swiss[["Education"]])
 Yvars <- list(women[["height"]],swiss[["Catholic"]])

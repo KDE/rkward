@@ -1,6 +1,4 @@
 local({
-## Prepare
-## Compute
 ## Print result
 # parameters:
 shape1 <- 2.0; shape2 <- 2.0;
@@ -28,8 +26,6 @@ rk.graph.off ()
 .rk.rerun.plugin.link(plugin="rkward::plot_beta_clt", settings="a.real=2.0\nb.real=2.0\ndrawnorm.state=1\nfunction.string=hist\nhistogram_opt.barlabels.state=1\nhistogram_opt.density.real=-1.00\nhistogram_opt.doborder.state=1\nhistogram_opt.histbordercol.color.string=\nhistogram_opt.histbreaksFunction.string=Sturges\nhistogram_opt.histfillcol.color.string=azure\nhistogram_opt.histlinetype.string=solid\nhistogram_opt.rightclosed.state=1\nhistogram_opt.usefillcol.state=1\nnAvg.real=10.00\nnDist.real=1000.00\nnormlinecol.color.string=red\nnormpointtype.string=l\nplotoptions.add_grid.state=0\nplotoptions.asp.real=0.00\nplotoptions.main.text=\nplotoptions.pointcolor.color.string=\nplotoptions.pointtype.string=\nplotoptions.sub.text=\nplotoptions.xaxt.state=\nplotoptions.xlab.text=\nplotoptions.xmaxvalue.text=\nplotoptions.xminvalue.text=\nplotoptions.yaxt.state=\nplotoptions.ylab.text=\nscalenorm.state=0", label="Run again")
 .rk.make.hr()
 local({
-## Prepare
-## Compute
 ## Print result
 # parameters:
 mean <- 0.0; sd <- 1.0;

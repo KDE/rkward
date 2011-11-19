@@ -1,5 +1,4 @@
 local({
-## Prepare
 ## Compute
 result <- (pbinom (q = c (0.95, 2), size = 3, prob = 0.50, lower.tail=TRUE, log.p = FALSE))
 ## Print result

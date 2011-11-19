@@ -1,6 +1,4 @@
 local({
-## Prepare
-## Compute
 ## Print result
 # parameters:
 shape1 <- 2.0; shape2 <- 2.0;

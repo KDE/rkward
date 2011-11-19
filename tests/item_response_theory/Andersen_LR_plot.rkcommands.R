@@ -1,7 +1,6 @@
 local({
 ## Prepare
 require(eRm)
-## Compute
 ## Print result
 rk.header("Andersen's LR test")
 

@@ -1,5 +1,4 @@
 local({
-## Prepare
 ## Compute
 result <- (phyper (q = c (0, 1, 2, 3, 4, 5), m = 5, n = 4, k = 4, lower.tail=FALSE, log.p = FALSE))
 ## Print result

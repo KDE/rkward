@@ -1,6 +1,4 @@
 local({
-## Prepare
-## Compute
 ## Print result
 x <- swiss[["Catholic"]]
 # barplot is a bit picky about attributes, so we need to convert to vector explicitely
@@ -21,8 +19,6 @@ try ({
 rk.graph.off ()
 })
 local({
-## Prepare
-## Compute
 ## Print result
 x <- test_table
 # barplot is a bit picky about attributes, so we need to convert to vector explicitely
@@ -37,8 +33,6 @@ try ({
 rk.graph.off ()
 })
 local({
-## Prepare
-## Compute
 ## Print result
 groups <- rk.list (warpbreaks[["wool"]], warpbreaks[["tension"]])
 title <- paste (names (groups), collapse=" by ")

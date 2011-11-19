@@ -1,6 +1,4 @@
 local({
-## Prepare
-## Compute
 ## Print result
 rk.header ("Stem-and-Leaf Plot",
 	parameters=list ("Variable", paste (rk.get.description (swiss[["Fertility"]])), "Plot Length", "1.50","Plot Width", "80.00", "Tolerance", "0.01"))

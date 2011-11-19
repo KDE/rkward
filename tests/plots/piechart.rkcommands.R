@@ -1,6 +1,4 @@
 local({
-## Prepare
-## Compute
 ## Print result
 x <- test_table[["A"]]
 if (!is.numeric (x)) {
@@ -16,8 +14,6 @@ try ({
 rk.graph.off ()
 })
 local({
-## Prepare
-## Compute
 ## Print result
 groups <- rk.list (test_table[["A"]], test_table[["B"]], test_table[["C"]])
 title <- paste (names (groups), collapse=" by ")

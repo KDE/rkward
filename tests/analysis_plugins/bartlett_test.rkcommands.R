@@ -1,5 +1,4 @@
 local({
-## Prepare
 ## Compute
 result <- bartlett.test (list (warpbreaks[["breaks"]], test50z, test50y, test50x, test10z, test10y, test10x))
 ## Print result

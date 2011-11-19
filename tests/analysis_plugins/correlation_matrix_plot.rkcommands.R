@@ -20,7 +20,6 @@ cor.graph <- function(x) {
 
 	pairs(x, lower.panel=panel.smooth, upper.panel=panel.cor)
 }
-## Compute
 ## Print result
 data <- data.frame (rock)
 

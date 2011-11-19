@@ -1,6 +1,4 @@
 local({
-## Prepare
-## Compute
 ## Print result
 rk.header ("Uniform density function", list ("Number of Observations", "100", "Lower quantile", "-1.00", "Upper quantile", "2.00", "Minimum", "0.00", "Maximum", "1.00", "Scale", "normal", "Function", "dunif"));
 

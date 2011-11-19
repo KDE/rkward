@@ -1,5 +1,4 @@
 local({
-## Prepare
 ## Compute
 result <- (qchisq (p = c (0.95), df = 1.00, ncp = 0.00, lower.tail=TRUE, log.p = FALSE))
 ## Print result
@@ -7,7 +6,6 @@ rk.header ("Chi-squared quantile", list ("Vector of probabilities", "c (0.95)", 
 rk.results (result, titles="Chi-squared quantiles")
 })
 local({
-## Prepare
 ## Compute
 result <- (qchisq (p = c (-1, -2), df = 1.02, ncp = 3.00, lower.tail=FALSE, log.p = TRUE))
 ## Print result

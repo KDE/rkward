@@ -1,7 +1,6 @@
 local({
 ## Prepare
 require(car)
-## Compute
 ## Print result
 data <- data.frame (swiss)
 

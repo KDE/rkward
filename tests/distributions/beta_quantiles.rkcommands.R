@@ -1,5 +1,4 @@
 local({
-## Prepare
 ## Compute
 result <- (qbeta (p = c (0.95), shape1 = 1.00, shape2 = 1.00, ncp = 0.00, lower.tail=TRUE, log.p = FALSE))
 ## Print result
@@ -7,7 +6,6 @@ rk.header ("Beta quantiles", list ("Vector of probabilities", "c (0.95)", "Shape
 rk.results (result, titles="Beta quantiles")
 })
 local({
-## Prepare
 ## Compute
 result <- (qbeta (p = c (-1), shape1 = 1.04, shape2 = 1.03, ncp = 0.08, lower.tail=FALSE, log.p = TRUE))
 ## Print result

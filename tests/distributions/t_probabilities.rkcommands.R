@@ -1,5 +1,4 @@
 local({
-## Prepare
 ## Compute
 result <- (pt (q = c (0.95), df = 1.00, ncp = 0.00, lower.tail=TRUE, log.p = FALSE))
 ## Print result

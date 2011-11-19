@@ -1,5 +1,4 @@
 local({
-## Prepare
 ## Compute
 result <- (qlnorm (p = c (0.95), meanlog = 0.00, sdlog = 1.00, lower.tail=FALSE, log.p = FALSE))
 ## Print result

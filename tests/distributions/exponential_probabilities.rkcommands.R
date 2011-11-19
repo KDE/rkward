@@ -1,5 +1,4 @@
 local({
-## Prepare
 ## Compute
 result <- (pexp (q = c (0.96), rate = 1.07, lower.tail=TRUE, log.p = FALSE))
 ## Print result

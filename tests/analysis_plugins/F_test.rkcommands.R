@@ -1,5 +1,4 @@
 local({
-## Prepare
 ## Compute
 result <- var.test (test50z, test50y, alternative = "two.sided", ratio = 1.00)
 

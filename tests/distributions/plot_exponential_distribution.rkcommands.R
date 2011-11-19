@@ -1,6 +1,4 @@
 local({
-## Prepare
-## Compute
 ## Print result
 rk.header ("Exponential distribution function", list ("Number of Observations", "100", "Lower quantile", "0.00", "Upper quantile", "10.00", "Rate", "1.00", "Scale", "normal", "Tail","Upper", "Function", "pexp"));
 

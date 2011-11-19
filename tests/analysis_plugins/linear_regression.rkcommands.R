@@ -1,5 +1,4 @@
 local({
-## Prepare
 ## Compute
 results <- summary.lm (lm (warpbreaks[["breaks"]] ~ warpbreaks[["tension"]] + warpbreaks[["wool"]]))
 ## Print result

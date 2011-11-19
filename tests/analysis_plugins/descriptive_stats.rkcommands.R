@@ -1,5 +1,4 @@
 local({
-## Prepare
 ## Compute
 vars <- rk.list (women[["height"]], test10z)
 results <- data.frame ('Object'=I(names (vars)))

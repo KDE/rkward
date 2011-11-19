@@ -1,6 +1,4 @@
 local({
-## Prepare
-## Compute
 ## Print result
 rk.header ("Beta distribution function", list ("Number of Observations", "100", "Lower quantile", "0.00", "Upper quantile", "1.00", "Shape1", "2.00", "Shape2", "2.00", "Non-centrality parameter", "0.00", "Scale", "logarithmic", "Tail","Lower", "Function", "pbeta"));
 

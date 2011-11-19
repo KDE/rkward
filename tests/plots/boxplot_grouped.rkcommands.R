@@ -1,6 +1,4 @@
 local({
-## Prepare
-## Compute
 ## Print result
 groups <- rk.list (warpbreaks[["tension"]], warpbreaks[["wool"]])
 data_list <- split (warpbreaks[["breaks"]], groups)		#split sample by grouping variables
@@ -10,8 +8,6 @@ try (boxplot (data_list, notch = FALSE, outline = FALSE, horizontal = TRUE)) #ac
 rk.graph.off ()
 })
 local({
-## Prepare
-## Compute
 ## Print result
 groups <- rk.list (datasets::warpbreaks[["tension"]], datasets::warpbreaks[["wool"]])
 data_list <- split (datasets::warpbreaks[["breaks"]], groups)		#split sample by grouping variables

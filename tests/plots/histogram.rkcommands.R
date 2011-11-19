@@ -1,6 +1,4 @@
 local({
-## Prepare
-## Compute
 ## Print result
 rk.header ("Histogram", list ("Variable", rk.get.description (swiss[["Education"]]) , "Density bandwidth", "nrd", "Density adjust", 4.00, "Density resolution", 512.00, "Density Remove missing values", na.rm=TRUE  , "Break points", "Equally spaced vector of length 6", "Right closed", "TRUE", "Include in lowest cell", "TRUE", "Scale", "Density"))
 

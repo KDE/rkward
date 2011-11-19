@@ -1,5 +1,4 @@
 local({
-## Prepare
 ## Compute
 result <- (qlogis (p = c (0.95), location = 1.00, scale = 1.00, lower.tail=TRUE, log.p = FALSE))
 ## Print result

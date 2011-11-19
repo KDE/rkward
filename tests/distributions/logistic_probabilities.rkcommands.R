@@ -1,5 +1,4 @@
 local({
-## Prepare
 ## Compute
 result <- (plogis (q = c (0.95), location = 1.04, scale = 1.00, lower.tail=TRUE, log.p = TRUE))
 ## Print result

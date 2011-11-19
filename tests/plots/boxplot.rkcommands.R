@@ -1,6 +1,4 @@
 local({
-## Prepare
-## Compute
 ## Print result
 data_list <- rk.list (women[["weight"]], women[["height"]])		#convert single sample variables to list
 rk.header ("Boxplot", list ("Variable(s)", paste (names (data_list), collapse=", ")))

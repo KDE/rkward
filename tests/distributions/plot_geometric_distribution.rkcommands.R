@@ -1,6 +1,4 @@
 local({
-## Prepare
-## Compute
 ## Print result
 rk.header ("Geometric density function", list ("Lower quantile", "0", "Upper quantile", "12", "Probability of success on each trial", "0.50", "Scale", "normal", "Function", "dgeom"));
 

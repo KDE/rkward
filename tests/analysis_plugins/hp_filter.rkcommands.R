@@ -1,6 +1,4 @@
 local({
-## Prepare
-## Compute
 ## Print result
 rk.header ("Hodrick-Prescott Filter", parameters=list("Lambda", 1600))
 x <- co2

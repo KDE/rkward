@@ -1,5 +1,4 @@
 local({
-## Prepare
 ## Compute
 result <- (punif (q = c (0.95), min = 0.00, max = 1.00, lower.tail=TRUE, log.p = FALSE))
 ## Print result

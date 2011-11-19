@@ -1,5 +1,4 @@
 local({
-## Prepare
 ## Compute
 result <- (ptukey (q = c (0.95), nmeans = 2, df = 5, nranges = 1, lower.tail=TRUE, log.p = FALSE))
 ## Print result

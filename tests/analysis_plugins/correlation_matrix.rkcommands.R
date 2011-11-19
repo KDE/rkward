@@ -1,5 +1,4 @@
 local({
-## Prepare
 ## Compute
 # cor requires all objects to be inside the same data.frame.
 # Here we construct such a temporary frame from the input variables
@@ -25,7 +24,6 @@ rk.results (data.frame (result, check.names=FALSE), titles=c ("Coefficient", nam
 rk.results (data.frame (result.p, check.names=FALSE), titles=c ("n \\ p", names (data)))
 })
 local({
-## Prepare
 ## Compute
 # cor requires all objects to be inside the same data.frame.
 # Here we construct such a temporary frame from the input variables

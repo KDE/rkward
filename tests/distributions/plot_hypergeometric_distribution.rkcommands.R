@@ -1,6 +1,4 @@
 local({
-## Prepare
-## Compute
 ## Print result
 rk.header ("Hypergeometric distribution function", list ("Lower quantile", "0", "Upper quantile", "12", "Number of white balls", "12", "Number of black balls", "12", "Number of balls drawn", "15", "Scale", "normal", "Tail","Lower", "Function", "phyper"));
 

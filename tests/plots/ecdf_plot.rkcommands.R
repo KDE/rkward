@@ -3,7 +3,6 @@ local({
 yrange <- range (swiss[["Catholic"]], na.rm=TRUE)
 data.mean <- mean (swiss[["Catholic"]], na.rm=TRUE)
 data.sd <- sd (swiss[["Catholic"]], na.rm=TRUE)
-## Compute
 ## Print result
 rk.header ("Empirical Cumulative Distribution Function", list ("Variable", rk.get.description (swiss[["Catholic"]]), "Minimum", yrange[1], "Maximum", yrange[2]))
 

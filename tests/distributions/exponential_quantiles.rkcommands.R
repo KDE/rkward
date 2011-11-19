@@ -1,5 +1,4 @@
 local({
-## Prepare
 ## Compute
 result <- (qexp (p = c (-1.1), rate = 1.05, lower.tail=FALSE, log.p = TRUE))
 ## Print result

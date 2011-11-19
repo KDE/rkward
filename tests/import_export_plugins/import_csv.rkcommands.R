@@ -1,5 +1,4 @@
 local({
-## Prepare
 ## Compute
 imported <- read.csv (file="women.csv", row.names=1,  na.strings = "NA", nrows = -1, skip = 0, check.names = TRUE, strip.white = FALSE, blank.lines.skip = TRUE)
 

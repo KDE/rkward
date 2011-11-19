@@ -1,5 +1,4 @@
 local({
-## Prepare
 ## Compute
 result <- (qpois (p = c (0.95), lambda = 1.00, lower.tail=TRUE, log.p = FALSE))
 ## Print result
