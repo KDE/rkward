@@ -75,7 +75,7 @@ SET(R_INCLUDEDIR ${R_INCLUDEDIR} ${R_INCLUDEDIR}/${R_ARCH})
 MESSAGE(STATUS "Checking for existence of R shared library")
 FIND_LIBRARY(LIBR_SO
 	R
-	PATHS ${R_HOME}/lib ${R_SHAREDLIBDIR} ${R_HOME}/bin ${R_HOME}/bin/${R_ARCH}
+	PATHS ${R_HOME}/lib ${R_SHAREDLIBDIR} ${R_HOME}/bin ${R_HOME}/bin/${R_ARCH} ${R_HOME}/lib/${R_ARCH}
 	NO_DEFAULT_PATH)
 IF(NOT LIBR_SO)
 	MESSAGE(FATAL_ERROR "Not found. Make sure the location of R was detected correctly, above, and R was compiled with the --enable-R-shlib option")
