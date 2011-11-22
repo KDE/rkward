@@ -52,7 +52,7 @@ ELSE(NOT R_INCLUDEDIR)
 ENDIF(NOT R_INCLUDEDIR)
 
 IF(NOT R_INCLUDEDIR)
-	SET(R_INCLUDEDIR ${R_HOME}/include ${R_HOME}/include/${R_ARCH})
+	SET(R_INCLUDEDIR ${R_HOME}/include)
 	MESSAGE(STATUS "Not findable via R. Guessing")
 ENDIF(NOT R_INCLUDEDIR)
 MESSAGE(STATUS "Include files should be at ${R_INCLUDEDIR}. Checking for R.h")
@@ -68,6 +68,7 @@ ELSE(NOT R_H)
 	GET_FILENAME_COMPONENT(R_INCLUDEDIR ${R_H}
 				PATH)
 ENDIF(NOT R_H)
+SET(R_INCLUDEDIR ${R_INCLUDEDIR} ${R_INCLUDEDIR}/${R_ARCH})
 
 # check for existence of libR.so
 
