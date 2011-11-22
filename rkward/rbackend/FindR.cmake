@@ -12,6 +12,12 @@ ELSE(R_EXECUTABLE-NOTFOUND)
 	MESSAGE(STATUS "Using R at ${R_EXECUTABLE}")
 ENDIF(R_EXECUTABLE-NOTFOUND)
 
+# find out about R architecture (needed for some paths)
+EXECUTE_PROCESS(
+	COMMAND ${R_EXECUTABLE} "--slave" "--no-save" "-e" "cat(R.version$arch)"
+	OUTPUT_VARIABLE R_ARCH)
+MESSAGE (STATUS "R architecture is ${R_ARCH}")
+
 # find R_HOME
 
 MESSAGE(STATUS "Looking for R_HOME")
@@ -46,7 +52,7 @@ ELSE(NOT R_INCLUDEDIR)
 ENDIF(NOT R_INCLUDEDIR)
 
 IF(NOT R_INCLUDEDIR)
-	SET(R_INCLUDEDIR ${R_HOME}/include)
+	SET(R_INCLUDEDIR ${R_HOME}/include ${R_HOME}/include/${R_ARCH})
 	MESSAGE(STATUS "Not findable via R. Guessing")
 ENDIF(NOT R_INCLUDEDIR)
 MESSAGE(STATUS "Include files should be at ${R_INCLUDEDIR}. Checking for R.h")
@@ -68,7 +74,7 @@ ENDIF(NOT R_H)
 MESSAGE(STATUS "Checking for existence of R shared library")
 FIND_LIBRARY(LIBR_SO
 	R
-	PATHS ${R_HOME}/lib ${R_SHAREDLIBDIR} ${R_HOME}/bin ${R_HOME}/bin/i386
+	PATHS ${R_HOME}/lib ${R_SHAREDLIBDIR} ${R_HOME}/bin ${R_HOME}/bin/${R_ARCH}
 	NO_DEFAULT_PATH)
 IF(NOT LIBR_SO)
 	MESSAGE(FATAL_ERROR "Not found. Make sure the location of R was detected correctly, above, and R was compiled with the --enable-R-shlib option")
