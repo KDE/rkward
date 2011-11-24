@@ -43,6 +43,9 @@ In some cases you may want to set the following options:
 	R home directory. Almost certainly this option is not needed.
 -DR_INCLUDEDIR
 	path to R include files. Almost certainly this option is not needed.
+-DNO_R_XML
+	When packaging RKWard for binary distribution, it may be necessary to exclude the R syntax highlighting defintion "r.xml"
+	from installation, as it may already be provided other packages. In this case, you can use: -DNO_R_XML=1
 
 Further generic options are listed on http://www.cmake.org/Wiki/CMake_Useful_Variables .
 

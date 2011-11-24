@@ -1,8 +1,5 @@
-INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${KDE4_INCLUDE_DIR} ${QT_INCLUDES}  )
+INSTALL(FILES rkward.xml DESTINATION ${DATA_INSTALL_DIR}/katepart/syntax/)
 
-
-########### install files ###############
-
-INSTALL(FILES   r.xml rkward.xml DESTINATION ${DATA_INSTALL_DIR}/katepart/syntax/ )
-
-# r-syntax-test.R is not installed
+IF(NOT NO_R_XML)
+	INSTALL(FILES r.xml DESTINATION ${DATA_INSTALL_DIR}/katepart/syntax/)
+ENDIF(NOT NO_R_XML)
