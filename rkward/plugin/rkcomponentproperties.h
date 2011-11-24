@@ -69,6 +69,35 @@ protected:
 };
 
 
+/////////////////////////////////////////////// StringList /////////////////////////////////////////////////////
+/** RKComponentProperty, which can handle lists of strings, better */
+class RKComponentPropertyStringList : public RKComponentPropertyBase {
+public:
+	RKComponentPropertyStringList (QObject *parent, bool required);
+/** destructor */
+	~RKComponentPropertyStringList ();
+/** for RTTI. see RKComponentBase::RKComponentTypes */
+	int type () { return PropertyStringList; };
+/** change separator string when concatenating strings for value (). Default separator string is "\n" */
+	void setSeparator (const QString &separator) { sep = separator; doChange (); };
+/** reimplemented to return all current strings joined by current separator (setSeparator) */
+	QString value (const QString &modifier=QString::null);
+/** return the string at the given index */
+	const QString valueAt (int index) const { return storage.value (index); };
+/** set the values in string form (values will be split by the current separator)
+@returns false if the value is illegal (in this property, all strings are legal) */
+	bool setValue (const QString &string) { setValues (string.split (sep)); return true; };
+/** change only the string at the given index. List will be expanded, as necessary. */
+	void setValueAt (int index, const QString &value);
+/** get all current strings as a QStringList */
+	const QStringList& values () const { return storage; };
+/** set current strings as a QStringList */
+	void setValues (const QStringList &new_values) { storage = new_values; doChange (); };
+private:
+	void doChange () { _value.clear (); emit (valueChanged (this)); };
+	QString sep;
+	QStringList storage;
+};
 
 ///////////////////////////////////////////////// Bool ////////////////////////////////////////////////////////
 

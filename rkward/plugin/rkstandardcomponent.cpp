@@ -502,7 +502,7 @@ void RKStandardComponent::addComponentToCurrentPage (RKComponent *component) {
 
 #include <qpushbutton.h>
 
-RKComponentBuilder::RKComponentBuilder (RKStandardComponent *parent_component, const QDomElement &document_element) {
+RKComponentBuilder::RKComponentBuilder (RKComponent *parent_component, const QDomElement &document_element) {
 	RK_TRACE (PLUGIN);
 	parent = parent_component;
 	doc_elem = document_element;
@@ -510,6 +510,19 @@ RKComponentBuilder::RKComponentBuilder (RKStandardComponent *parent_component, c
 
 RKComponentBuilder::~RKComponentBuilder () {
 	RK_TRACE (PLUGIN);
+}
+
+RKStandardComponent *RKComponentBuilder::standardComponent (QString *id_adjust) {
+	RK_TRACE (PLUGIN);
+
+	RKComponent *p = parent;
+	while (p) {
+		if (p->type () == RKComponent::ComponentStandard) return static_cast<RKStandardComponent*> (p);
+		if (id_adjust) id_adjust->prepend (p->getIdInParent () + '.');
+		p = p->parentComponent ();
+	}
+	RK_ASSERT (false);
+	return 0;
 }
 
 QDomElement RKComponentBuilder::doElementCopy (const QString id, const QDomElement &copy) {
@@ -659,7 +672,8 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 			layout->setContentsMargins (0, 0, 0, 0);
 			KVBox *box = new KVBox (widget);
 			layout->addWidget (box);
-			component ()->scriptingProxy ()->addScriptableWidget (id, widget);
+			QString id_adjust;
+			standardComponent (&id_adjust)->scriptingProxy ()->addScriptableWidget (id_adjust + id, widget);
 		} else {
 			xml->displayError (&e, QString ("Invalid tagname '%1'").arg (e.tagName ()), DL_ERROR);
 		}
@@ -729,7 +743,7 @@ void RKComponentBuilder::parseLogic (const QDomElement &element) {
 	if (!e.isNull ()) {
 		QString file = xml->getStringAttribute (e, "file", QString (), DL_INFO);
 		QString inline_command = e.text ();
-		component ()->scriptingProxy ()->initialize (file, inline_command);
+		standardComponent ()->scriptingProxy ()->initialize (file, inline_command);
 	}
 }
 

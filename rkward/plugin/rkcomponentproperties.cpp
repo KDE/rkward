@@ -149,6 +149,37 @@ void RKComponentPropertyBase::warnModifierNotRecognized (const QString &modifier
 	RK_DO (qDebug ("Modifier '%s' not recognized.", modifier.toLatin1 (). data ()), PLUGIN, DL_ERROR);
 }
 
+
+///////////////////////////////////////// StringList ///////////////////////////////////////
+
+RKComponentPropertyStringList::RKComponentPropertyStringList (QObject *parent, bool required) : RKComponentPropertyBase (parent, required) {
+	RK_TRACE (PLUGIN);
+	sep = "\n";
+}
+
+RKComponentPropertyStringList::~RKComponentPropertyStringList () {
+	RK_TRACE (PLUGIN);
+}
+
+QString RKComponentPropertyStringList::value (const QString &modifier) {
+	RK_TRACE (PLUGIN);
+
+	if (!modifier.isEmpty ()) {
+		warnModifierNotRecognized (modifier);
+		return QString ();
+	}
+	if (_value.isNull ()) _value = storage.join (sep);	// _value acts as a cache
+	return _value;
+}
+
+void RKComponentPropertyStringList::setValueAt (int index, const QString& value) {
+	RK_TRACE (PLUGIN);
+	
+	while (index >= storage.size ()) storage.append (QString ());	// expand as needed
+	storage[index] = value;
+	doChange ();
+}
+
 ///////////////////////////////////////////// Bool //////////////////////////////////////////
 
 RKComponentPropertyBool::RKComponentPropertyBool (QObject *parent, bool required, bool default_state, const QString &value_true, const QString &value_false) : RKComponentPropertyBase (parent, required) {

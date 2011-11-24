@@ -140,18 +140,18 @@ Reminder to the twisted brain: Typically inside a standard-component, *all* chil
 @author Thomas Friedrichsmeier */
 class RKComponentBuilder {
 public:
-	RKComponentBuilder (RKStandardComponent *parent_component, const QDomElement &document_element);
+	RKComponentBuilder (RKComponent *parent_component, const QDomElement &document_element);
 	~RKComponentBuilder ();
 	void buildElement (const QDomElement &element, QWidget *parent_widget, bool allow_pages);
 	void parseLogic (const QDomElement &element);
 	void makeConnections ();
-	RKStandardComponent *component () const { return parent; };
+	RKComponent *component () const { return parent; };
 private:
 /** internal convenience function to schedule a property connection */
 	void addConnection (const QString &client_id, const QString &client_property, const QString &governor_id, const QString &governor_property, bool reconcile, const QDomElement &origin);
 	QDomElement doElementCopy (const QString id, const QDomElement &copy);
 	QDomElement doc_elem;
-	RKStandardComponent *parent;
+	RKComponent *parent;
 	struct RKComponentPropertyConnection {
 		QString governor_property;
 		QString client_property;
@@ -161,6 +161,7 @@ private:
 	typedef QList <RKComponentPropertyConnection> ConnectionList;
 	ConnectionList connection_list;
 	QMap<QString, QString> initial_values;
+	RKStandardComponent *standardComponent (QString *id_adjust=0);
 };
 
 #endif
