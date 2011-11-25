@@ -49,6 +49,6 @@ if test -x "`dirname $0`/rkward.frontend" ; then
 else
   # for regular installations
   export RKWARD_ENSURE_PREFIX="`dirname $0`/.."
-  rkward_binary="@LIBEXEC_INSTALL_DIR@/rkward.frontend"
+  rkward_binary="@RKWARD_FRONTEND_LOCATION@/rkward.frontend"
 fi
 exec $R_binary CMD $debugger ${rkward_binary} "$@"

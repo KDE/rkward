@@ -66,7 +66,11 @@ IF(RBACKEND_SPLIT)
 		# all the KDE library versions, first, when loading DLLs
 		INSTALL(TARGETS rkward.rbackend DESTINATION ${BIN_INSTALL_DIR}/rbackend)
 	ELSE(WIN32)
-		INSTALL(TARGETS rkward.rbackend DESTINATION ${LIBEXEC_INSTALL_DIR})
+		IF(APPLE)
+			INSTALL(TARGETS rkward.rbackend DESTINATION ${BIN_INSTALL_DIR}/rkward.frontend.app/Contents/MacOS)
+		ELSE(APPLE)
+			INSTALL(TARGETS rkward.rbackend DESTINATION ${LIBEXEC_INSTALL_DIR})
+		ENDIF(APPLE)
 	ENDIF(WIN32)
 ELSE(RBACKEND_SPLIT)
 	SET (
