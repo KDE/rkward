@@ -33,7 +33,7 @@ public:
 	RKOptionSet (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget, RKStandardComponentBuilder *builder);
 	~RKOptionSet ();
 	int type () { return ComponentOptionSet; };
-	QWidget *createDisplay (bool show_index);
+	QWidget *createDisplay (bool show_index, QWidget *parent);
 private slots:
 	void governingPropertyChanged (RKComponentPropertyBase *property);
 	void columnPropertyChanged (RKComponentPropertyBase *property);
@@ -41,16 +41,20 @@ private slots:
 	void addRow ();
 	void removeRow (int index);
 private:
+	void initDisplay ();
+
 	QMap<QString, QString> defaults;
 /** for option sets which are "driven" (i.e. the user cannot simply add / remove rows, directly), this holds the key column, controlling addition / removal of rows in the set.
   * if this length (or order) is changed in this row, it will also be changed in the other rows. */
 	QString keycolumn;
-	struct ModifierAndColumn {
-		QString modifier;
+	QMultiMap<RKComponentPropertyBase *, RKComponentPropertyStringList *> columns_to_update;
+	struct ColumnInfo {
 		QString column_name;
+		QString column_label;
+		int display_index;
+		QString display_modifier;
 	};
-	QMultiMap<RKComponentPropertyBase *, ModifierAndColumn> property_to_column_map;
-	QMap<RKComponentPropertyStringList *, int> column_to_display_index_map;
+	QMap<RKComponentPropertyStringList *, ColumnInfo> column_map;
 	RKComponent *container;
 	QTableWidget *display;
 	bool display_show_index;
@@ -60,6 +64,10 @@ private:
 	int min_rows;
 	int min_rows_if_any;
 	int max_rows;
+
+	bool updating_from_contents;
+	bool changing_row;
+	QStringList columns_which_have_been_updated_externally;
 };
 
 #endif

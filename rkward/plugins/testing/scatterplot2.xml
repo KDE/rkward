@@ -9,10 +9,10 @@
 				<row>
 					<varselector id="selector" />
 					<optionset id="vars">  <!-- for auto-mode: keycolumn="..." -->
-						<option id="xvar" label="X" governor="xsel.available"/>
-						<option id="yvar" label="Y" governor="ysel.available"/>
-						<option id="custom_color" governor="colorframe.checked"/> <!-- unlabeled columns will not be shown in the optiondisplay -->
-						<option id="color" governor="color.color.string"/>
+						<option id="xvar" label="X" connect="xsel.available" display_modifier="shortname"/>
+						<option id="yvar" label="Y" connect="ysel.available" display_modifier="shortname"/>
+						<option id="custom_color" connect="colorframe.checked"/> <!-- unlabeled columns will not be shown in the optiondisplay -->
+						<option id="color" connect="color.color.string"/>
 						<content>
 							<optiondisplay show_index="true"/>
 							<varslot source="selector" id="xsel" label="X Variable" required="true"/>
