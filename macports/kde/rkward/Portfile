@@ -7,8 +7,8 @@ fetch.type          svn
 svn.url             http://rkward.svn.sourceforge.net/svnroot/rkward/trunk
 worksrcdir          ${workpath}/trunk/rkward
 
-name                rkward
-version             0.5.8
+name                rkward-devel
+version             0.5.7+0.5.8-svn
 categories          kde kde4 math science
 maintainers         hhu.de:meik.michalke
 license             GPL-2
@@ -24,10 +24,9 @@ homepage            http://rkward.sourceforge.net
 
 master_sites        https://sourceforge.net/projects/rkward/files/Current_Stable_Releases
 
-depends_build       port:kdesdk4 \
+depends_lib         port:kde4-baseapps \
+                    port:kate \
                     port:R
-
-depends_lib         port:kate
 
 if {${configure.compiler} == "clang"} {
         configure.compiler llvm-gcc-4.2
@@ -40,7 +39,9 @@ pre-configure {
 configure.dir       ${worksrcdir}/build
 configure.pre_args-delete --prefix=${prefix}
 configure.pre_args-append -DCMAKE_INSTALL_PREFIX=${prefix}
-configure.args-append     -DNO_R_XML=1
+configure.args-append \
+        -DNO_R_XML=1 \
+        -DBUNDLE_INSTALL_DIR=${applications_dir}
 configure.cmd       cmake ..
 
 # remove r.xml from installation, conflicts with the kate port
