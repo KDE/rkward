@@ -1,0 +1,48 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="import_xls.js" />
+	<help file="import_xls.rkh" />
+
+	<logic>
+		<external id="filename"/>
+		<connect governor="filename" client="file.selection"/>
+	</logic>
+	<dialog label="Import Microsoft EXCEL sheet">
+		<tabbook>
+			<tab id="tab_general" label="General">
+				<browser type="file" allow_urls="true" id="file" label="File name" />
+				<stretch/>
+				<row>
+					<saveobject id="saveto" initial="my.xls.data" label="Object to save to"/>
+					<checkbox id="doedit" value="1" value_unchecked="0" label="Edit Object" checked="true" />
+				</row>
+				<stretch/>
+				<frame label="Options">
+		  		      	<spinbox type="integer" id="sheet" label="Sheet within the Excel file from which data are to be read" min="1" initial="1"/>
+				</frame>
+			</tab>
+			<tab id="tab_further_options" label="Further Options" >
+				<column>
+				  	<checkbox id="header" value="TRUE" value_unchecked="FALSE" checked="false" label="Column names in first row"/>
+					<input size="small" initial="-1" id="nrows" label="Max number of rows to read (-1 for no limit)" />
+					<input size="small" initial="-1" id="skip" label="Number of rows to skip" />
+					<input size="small" initial="NA" id="na" label="Character for missing values" />
+					<radio id="strings_as_factors" label="Convert character columns to factors" >
+					  <option value=", stringsAsFactors=TRUE" label="Convert to factor" />
+					  <option value="" label="Default" checked="true" />
+					  <option value=", stringsAsFactors=FALSE" label="Do not convert" />
+					</radio>
+					<checkbox id="fill" checked="false" value="TRUE" value_unchecked="FALSE" label="Fill the rows if unequal length" />
+					<checkbox value_unchecked="FALSE" checked="true" value="TRUE" id="checkname" label="Check syntax of the variables names" />
+					<checkbox value_unchecked="FALSE" checked="false" value="TRUE" id="stripwhite" label="Strip white values" />
+		
+					<frame label="Error handling">
+						<row>
+						      <checkbox id="verbose" value="TRUE" value_unchecked="FALSE" checked="false" label="Print details as the file is processed"/>
+						</row>
+					</frame>
+				</column>
+			</tab>
+		</tabbook>
+	</dialog>
+</document>

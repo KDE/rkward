@@ -1,0 +1,30 @@
+<!DOCTYPE rkhelp>
+<document>
+	<summary>
+Import a sheet of a Microsoft Excel file into a data frame.
+	</summary>
+
+	<usage>
+Choose the Microsoft Excel file (XLS (Excel 97-2004), XLSX (Excel 2007+)) to import a sheet from. An R object containing the data will be created. See <link href="rkward://rhelp/read.table" />.
+Note: The this plugin requires a properly working Perl setup.  See <link href="rkward://rhelp/read.xls" /> for details.
+	</usage>
+
+	<settings>
+		<caption id="tab_general"/>
+		<setting id="file">The filename of the file to import</setting>
+		<setting id="name">The name of an R object to store the imported data in. If you chose an existing symbol name, you will be prompted, whether to overwrite this object.</setting>
+		<setting id="sheet">Specifies the sheet which is imported from a Microsoft EXCEL file</setting>
+		<setting id="verbose">Print details as the file is processed</setting>
+		<setting id="skip">Defines a number of rows to skip</setting>
+		<setting id="skip">Defines a number of rows to skip</setting>
+		<setting id="doedit">Whether the object should be opened for editing after it was imported</setting>		
+		<setting id="header">Whether the first row of the file contains should be interpreted as column names</setting>
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://rhelp/read.xls"/></li>
+			<li><link href="rkward://component/import_csv"/></li>
+			<li><link href="rkward://rhelp/read.table"/></li>
+		</ul>
+	</related>
+</document>
