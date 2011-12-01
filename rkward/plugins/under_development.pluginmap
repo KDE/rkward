@@ -10,6 +10,10 @@
 		<component type="standard" id="qtscript_test1" file="testing/test1.xml" label="QtScript Test 1" />
 		<component type="standard" id="qtscript_test2" file="testing/test2.xml" label="QtScript Test 2" />
 <!-- End -->
+
+		<component type="standard" id="import_xls" file="00saveload/import/import_xls.xml" label="Import MS EXCEL">
+			<attribute id="format" value="*.xls *.xlsx" label="MS EXCEL sheet"/>
+		</component>
 	</components>
 
 	<hierarchy>
@@ -39,6 +43,7 @@
 
 	<context id="import">
 		<menu id="import" label="Import">
+			<entry component="import_xls"/>
 		</menu>
 	</context>
 </document>
