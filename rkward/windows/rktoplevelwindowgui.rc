@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward_toplevel" version="580">
+<kpartgui name="rkward_toplevel" version="581">
 	<MenuBar>
 		<Merge/>
 		<Menu name="window"><text>&amp;Window</text>
@@ -24,8 +24,8 @@
 			<Merge/>
 		</Menu>
 		<Menu name="settings"><text>&amp;Settings</text>
-			<Action name="options_configure_keybinding"/>
-			<Action name="options_configure_toolbars"/>
+			<Action name="options_configure_keybinding" group="configure_merge_group"/>
+			<Action name="options_configure_toolbars" group="configure_merge_group"/>
 		</Menu>
 		<Menu name="help"><text>&amp;Help</text>
 			<Action name="rkward_help" group="prehelp_actions_merge"/>
