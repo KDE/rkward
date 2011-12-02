@@ -20,6 +20,7 @@
 		<menu id="file" label="File">
 			<menu id="import" label="Import" index="4">
 				<menu id="import_format" label="Import format">
+					<entry component="import_xls"/>
 				</menu>
 			</menu>
 			<menu id="export" label="Export" index="5">
