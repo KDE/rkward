@@ -422,7 +422,7 @@ void RKWardMainWindow::initActions() {
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionConfigurePackages));
 
 	action = actionCollection ()->addAction ("configure_packages", this, SLOT (slotFileLoadLibs()));
-	action->setText (i18n ("Configure Packages..."));
+	action->setText (i18n ("Manage installed R packages..."));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionConfigurePackages));
 
 	setStandardToolBarMenuEnabled (true);
@@ -441,8 +441,7 @@ void RKWardMainWindow::initActions() {
 	window_detach->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionDetachWindow));
 	window_detach->setText (i18n ("Detach"));
 
-	configure = actionCollection ()->addAction ("options_configure", this, SLOT (slotConfigure()));
-	configure->setText (i18n ("Configure RKWard..."));
+	configure = actionCollection ()->addAction (KStandardAction::Preferences, "options_configure", this, SLOT (slotConfigure()));
 
 	edit_menu_dummy = actionCollection ()->addAction ("edit_menu_dummy", this);
 	edit_menu_dummy->setText (i18n ("[No actions available for current view]"));
