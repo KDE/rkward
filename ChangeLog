@@ -1,3 +1,4 @@
+- Fixed: Saving / restoring workplace layout would fail when saving to directories with unusual characters
 - Only install translations which are at least 80% complete (not counting strings in plugins, which are not yet translatable)
 - When asking for workspace file to open, use appropriate file filter
 - When configured to ask for workspace to open on startup, don't prompt to save, first

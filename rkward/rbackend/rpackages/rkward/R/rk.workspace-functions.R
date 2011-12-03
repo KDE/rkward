@@ -37,7 +37,7 @@
 #' 
 "rk.save.workplace" <- function (file=NULL, description=NULL) {
 	if (is.null (file)) {
-		file <- rk.get.workspace.url ()
+		file <- URLdecode (rk.get.workspace.url ())
 		if (is.null (file)) file <- rk.get.tempfile.name (prefix="unsaved", extension=".RData")
 		file <- paste (file, "rkworkplace", sep=".")
 	}
@@ -54,7 +54,7 @@
 			lines <- as.character (.GlobalEnv$.rk.workplace.save)
 			rm (list = c (".rk.workplace.save"), envir=globalenv ())
 		} else {
-			file <- rk.get.workspace.url ()
+			file <- URLdecode (rk.get.workspace.url ())
 			if (is.null (file)) file <- rk.get.tempfile.name (prefix="unsaved", extension=".RData")
 			file <- paste (file, "rkworkplace", sep=".")
 		}
