@@ -149,7 +149,7 @@ int main(int argc, char *argv[]) {
 
 	RKWardStartupOptions *stoptions = new RKWardStartupOptions;
 	if (args->count ()) {
-		stoptions->initial_url = KUrl (args->makeURL (args->arg (0).toLatin1()));
+		stoptions->initial_url = args->url (0);
 	}
 	stoptions->evaluate = args->getOption ("evaluate");
 
