@@ -2,10 +2,10 @@
 \alias{rk.XML.varslot}
 \title{Create a XML node "varslot" for RKWard plugins}
 \usage{
-  rk.XML.varslot(label, source, required = FALSE, multi =
-  FALSE, min = 1, any = 1, max = 0, dim = 0, min.len = 0,
-  max.len = NULL, classes = NULL, types = NULL, id.name =
-  "auto")
+  rk.XML.varslot(label, source, required = FALSE,
+    multi = FALSE, min = 1, any = 1, max = 0, dim = 0,
+    min.len = 0, max.len = NULL, classes = NULL,
+    types = NULL, id.name = "auto")
 }
 \arguments{
   \item{label}{Character string, a text label for the
@@ -56,7 +56,7 @@
   and rkward does not always know the type of a variable!}
 
   \item{id.name}{Character vector, unique ID for the
-  varslot. If \code{"auto"}, the ID will be generated
+  varslot.  If \code{"auto"}, the ID will be generated
   automatically from \code{label}.}
 }
 \value{

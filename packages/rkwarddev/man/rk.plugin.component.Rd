@@ -2,11 +2,12 @@
 \alias{rk.plugin.component}
 \title{Generate RKWard plugin components}
 \usage{
-  rk.plugin.component(about, xml = list(), js = list(), rkh
-  = list(), provides = c("logic", "dialog"), scan =
-  c("var", "saveobj", "settings"), hierarchy = "test",
-  pluginmap = NULL, create = c("xml", "js", "rkh"),
-  gen.info = TRUE, indent.by = "\t")
+  rk.plugin.component(about, xml = list(), js = list(),
+    rkh = list(), provides = c("logic", "dialog"),
+    scan = c("var", "saveobj", "settings"),
+    hierarchy = "test", pluginmap = NULL,
+    create = c("xml", "js", "rkh"), gen.info = TRUE,
+    indent.by = "\t")
 }
 \arguments{
   \item{about}{Either a character string with the name of
@@ -20,33 +21,33 @@
 
   \item{xml}{A named list of options to be forwarded to
   \code{\link[rkwarddev:rk.XML.plugin]{rk.XML.plugin}}, to
-  generate the GUI XML file. Not all options are supported
+  generate the GUI XML file.  Not all options are supported
   because some don't make sense in this context. Valid
   options are: \code{"dialog"}, \code{"wizard"},
-  \code{"logic"} and \code{"snippets"}. If not set, their
+  \code{"logic"} and \code{"snippets"}.  If not set, their
   default values are used. See
   \code{\link[rkwarddev:rk.XML.plugin]{rk.XML.plugin}} for
   details.}
 
   \item{js}{A named list of options to be forwarded to
   \code{\link[rkwarddev:rk.JS.doc]{rk.JS.doc}}, to generate
-  the JavaScript file. Not all options are supported
+  the JavaScript file.  Not all options are supported
   because some don't make sense in this context. Valid
   options are: \code{"require"}, \code{"results.header"},
   \code{"variables"}, \code{"preprocess"},
   \code{"calculate"}, \code{"printout"},
-  \code{"doPrintout"} and \code{"load.silencer"}. If not
+  \code{"doPrintout"} and \code{"load.silencer"}.  If not
   set, their default values are used. See
   \code{\link[rkwarddev:rk.JS.doc]{rk.JS.doc}} for
   details.}
 
   \item{rkh}{A named list of options to be forwarded to
   \code{\link[rkwarddev:rk.rkh.doc]{rk.rkh.doc}}, to
-  generate the help file. Not all options are supported
+  generate the help file.  Not all options are supported
   because some don't make sense in this context. Valid
   options are: \code{"summary"}, \code{"usage"},
   \code{"sections"}, \code{"settings"}, \code{"related"}
-  and \code{"technical"}. If not set, their default values
+  and \code{"technical"}.  If not set, their default values
   are used. See
   \code{\link[rkwarddev:rk.rkh.doc]{rk.rkh.doc}} for
   details.}
@@ -55,7 +56,7 @@
   \code{"logic"}, \code{"dialog"} or \code{"wizard"},
   defining what sections the GUI XML file should provide
   even if \code{dialog}, \code{wizard} and \code{logic} are
-  \code{NULL}. These sections must be edited manually and
+  \code{NULL}.  These sections must be edited manually and
   some parts are therefore commented out.}
 
   \item{scan}{A character vector to trigger various
@@ -79,7 +80,7 @@
 
   \item{hierarchy}{A character vector with instructions
   where to place this component in the menu hierarchy, one
-  list or string. Valid single values are \code{"file"},
+  list or string.  Valid single values are \code{"file"},
   \code{"edit"}, \code{"view"}, \code{"workspace"},
   \code{"run"}, \code{"data"}, \code{"analysis"},
   \code{"plots"}, \code{"distributions"}, \code{"windows"},
@@ -116,19 +117,19 @@
 \examples{
 \dontrun{
 test.dropdown <- rk.XML.dropdown("mydrop",
-opts=list("First Option"=c(val="val1"),
-"Second Option"=c(val="val2", chk=TRUE)))
+  opts=list("First Option"=c(val="val1"),
+  "Second Option"=c(val="val2", chk=TRUE)))
 test.checkboxes <- rk.XML.row(rk.XML.col(
-list(test.dropdown,
-rk.XML.cbox(label="foo", val="foo1", chk=TRUE),
-rk.XML.cbox(label="bar", val="bar2"))
-))
+  list(test.dropdown,
+    rk.XML.cbox(label="foo", val="foo1", chk=TRUE),
+    rk.XML.cbox(label="bar", val="bar2"))
+  ))
 test.vars <- rk.XML.vars("select some vars", "vars go here")
 test.tabbook <- rk.XML.dialog(rk.XML.tabbook("My Tabbook", tab.labels=c("First Tab",
-"Second Tab"), children=list(test.checkboxes, test.vars)))
+  "Second Tab"), children=list(test.checkboxes, test.vars)))
 
 rk.plugin.component("Square the Circle",
-xml=list(dialog=test.tabbook))
+  xml=list(dialog=test.tabbook))
 }
 }
 \seealso{

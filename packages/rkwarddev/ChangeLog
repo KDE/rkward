@@ -1,5 +1,8 @@
 ChangeLog for package rkwarddev
 
+## 0.04-9 (2011-12-03)
+  - left over stuff from JS printout() function is now added to doPrintout()
+
 ## 0.04-8 (2011-11-10)
   - R 2.14 creates source archives which are incompatible with earlier versions. attempt to deal with this
     by adding empty R directory and NAMESPACE file

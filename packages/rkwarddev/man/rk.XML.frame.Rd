@@ -2,8 +2,8 @@
 \alias{rk.XML.frame}
 \title{Create XML node "column" for RKWard plugins}
 \usage{
-  rk.XML.frame(..., label = NULL, checkable = FALSE, chk =
-  TRUE, id.name = "auto")
+  rk.XML.frame(..., label = NULL, checkable = FALSE,
+    chk = TRUE, id.name = "auto")
 }
 \arguments{
   \item{...}{Objects of class \code{XiMpLe.node}.}
@@ -19,7 +19,7 @@
   by default.}
 
   \item{id.name}{Character string, a unique ID for this
-  plugin element. If \code{"auto"} and a label was
+  plugin element.  If \code{"auto"} and a label was
   provided, an ID will be generated automatically from the
   label if presen, otherwise from the objects in the frame.
   If \code{NULL}, no ID will be given.}
@@ -32,8 +32,8 @@
 }
 \examples{
 test.dropdown <- rk.XML.dropdown("mydrop",
-options=list("First Option"=c(val="val1"),
-"Second Option"=c(val="val2", chk=TRUE)))
+  options=list("First Option"=c(val="val1"),
+  "Second Option"=c(val="val2", chk=TRUE)))
 cat(pasteXMLNode(rk.XML.frame(test.dropdown, label="Some options")))
 }
 \seealso{

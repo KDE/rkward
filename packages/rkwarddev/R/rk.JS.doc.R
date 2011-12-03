@@ -104,6 +104,9 @@ rk.JS.doc <- function(require=c(), variables=NULL, results.header=NULL,
 					rk.paste.JS(ite("full", echo(id("rk.header(\"", results.header,"\", level=1)\n")))),
 					"\n\n",
 					doPrintout,
+					if(!is.null(printout)){
+						paste("\n\n", indent(2, by=indent.by), "// left over from the printout function\n", printout, "\n\n", sep="")
+					} else {},
 					"\n}",
 				sep="")
 	}

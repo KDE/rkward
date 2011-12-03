@@ -3,7 +3,7 @@
 \title{Create JavaScript saveobject code from plugin XML}
 \usage{
   rk.JS.saveobj(pXML, R.objects = "initial", vars = TRUE,
-  add.abbrev = FALSE, indent.by = "\t")
+    add.abbrev = FALSE, indent.by = "\t")
 }
 \arguments{
   \item{pXML}{Either an object of class \code{XiMpLe.doc}

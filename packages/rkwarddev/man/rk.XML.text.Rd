@@ -11,9 +11,9 @@
   "error".}
 
   \item{id.name}{Character string, a unique ID for this
-  plugin element. If \code{"auto"}, an ID will be generated
-  automatically from \code{text}. If \code{NULL}, no ID
-  will be given.}
+  plugin element.  If \code{"auto"}, an ID will be
+  generated automatically from \code{text}.  If
+  \code{NULL}, no ID will be given.}
 }
 \value{
   An object of class \code{XiMpLe.node}.

@@ -6,7 +6,7 @@
 }
 \arguments{
   \item{label}{Character string, a text label for the
-  variable selection slot. Must be set if
+  variable selection slot.  Must be set if
   \code{id.name="auto"}.}
 
   \item{id.name}{Character vector, unique ID for this

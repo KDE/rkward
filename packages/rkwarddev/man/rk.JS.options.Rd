@@ -3,14 +3,14 @@
 \title{Combine several options in one JavaScript variable}
 \usage{
   rk.JS.options(var, ..., collapse = ", ", option = NULL,
-  funct = NULL, array = TRUE)
+    funct = NULL, array = TRUE)
 }
 \arguments{
   \item{var}{Character string, name of the JavaScript
   variable to use in the script code.}
 
   \item{...}{A list of objects of class \code{rk.JS.ite}
-  (see \code{\link[rkwarddev:ite]{ite}}). Use the
+  (see \code{\link[rkwarddev:ite]{ite}}).  Use the
   \code{thenjs} element to define only the value to add to
   the option, without commas (e.g., \code{"paired=TRUE"} or
   \code{qp("conf.level=\"", conflevel, "\"")}.}
@@ -29,7 +29,7 @@
   \item{funct}{Character string, name of the R function to
   be called to combine the options, e.g. "list" for
   \code{list()}, or "c" for \code{c()}. Set to \code{NULL}
-  to drop. Only used if \code{array=TRUE}.}
+  to drop.  Only used if \code{array=TRUE}.}
 
   \item{array}{Logical, if \code{TRUE} will generate the
   options as an array, otherwise in one concatenated
@@ -49,8 +49,8 @@ checkA <- rk.XML.cbox(label="Run Test A", value="A")
 checkB <- rk.XML.cbox(label="Run it fast", value="true")
 # combine them into one JavaScript options variable
 rk.JS.options("optionsTestA",
-ite(checkA, qp("test=\\"", checkA, "\\"")),
-ite(checkB, "fast=TRUE")
+  ite(checkA, qp("test=\\"", checkA, "\\"")),
+  ite(checkB, "fast=TRUE")
 )
 }
 \seealso{

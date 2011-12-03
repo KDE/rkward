@@ -3,7 +3,7 @@
 \title{Define variables in JavaScript code}
 \usage{
   rk.JS.vars(..., var.prefix = NULL, modifiers = NULL,
-  default = FALSE, join = "", check.modifiers = TRUE)
+    default = FALSE, join = "", check.modifiers = TRUE)
 }
 \arguments{
   \item{...}{Either one or more character strings (the
@@ -22,7 +22,7 @@
   Does nothing if \code{modifiers=NULL}.}
 
   \item{join}{A character string, useful for GUI elements
-  which accept multiple objects (i.e., multi-varslots). If
+  which accept multiple objects (i.e., multi-varslots).  If
   \code{join} is something other than \code{""}, these
   objects will be collapsed into one string when pasted,
   joined by this string.}

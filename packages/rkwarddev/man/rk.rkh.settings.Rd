@@ -19,8 +19,8 @@
 \examples{
 # define a sample frame
 test.dropdown <- rk.XML.dropdown("mydrop",
-options=list("First Option"=c(val="val1"),
-"Second Option"=c(val="val2", chk=TRUE)))
+  options=list("First Option"=c(val="val1"),
+  "Second Option"=c(val="val2", chk=TRUE)))
 test.frame <- rk.XML.frame(test.dropdown, label="Some options")
 # create the caption
 test.caption <- rk.rkh.caption(test.frame)

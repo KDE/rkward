@@ -3,7 +3,7 @@
 \title{Create XML node convert for RKWard plugins}
 \usage{
   rk.XML.convert(sources, mode = c(), required = FALSE,
-  id.name = "auto")
+    id.name = "auto")
 }
 \arguments{
   \item{sources}{A list with at least one value, either
@@ -37,9 +37,9 @@
   true.}
 
   \item{id.name}{Character string, a unique ID for this
-  plugin element. If \code{"auto"}, an ID will be generated
-  automatically from the \code{sources} and \code{mode}
-  value.}
+  plugin element.  If \code{"auto"}, an ID will be
+  generated automatically from the \code{sources} and
+  \code{mode} value.}
 }
 \value{
   An object of class \code{XiMpLe.node}.

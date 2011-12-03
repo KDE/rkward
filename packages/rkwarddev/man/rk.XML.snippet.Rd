@@ -8,9 +8,9 @@
   \item{...}{Objects of class \code{XiMpLe.node}.}
 
   \item{id.name}{Character string, a unique ID for this
-  plugin element. If \code{"auto"}, an ID will be generated
-  automatically from the tag names and IDs of the given
-  nodes.}
+  plugin element.  If \code{"auto"}, an ID will be
+  generated automatically from the tag names and IDs of the
+  given nodes.}
 }
 \value{
   An object of class \code{XiMpLe.node}.

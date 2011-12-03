@@ -2,8 +2,8 @@
 \alias{rk.JS.scan}
 \title{Create JavaScript variables from plugin XML}
 \usage{
-  rk.JS.scan(pXML, js = TRUE, add.abbrev = FALSE, indent.by
-  = "\t")
+  rk.JS.scan(pXML, js = TRUE, add.abbrev = FALSE,
+    indent.by = "\t")
 }
 \arguments{
   \item{pXML}{Either an object of class \code{XiMpLe.doc}

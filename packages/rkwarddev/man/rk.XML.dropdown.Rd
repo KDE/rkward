@@ -2,8 +2,9 @@
 \alias{rk.XML.dropdown}
 \title{Create XML node "dropdown" for RKWard plugins}
 \usage{
-  rk.XML.dropdown(label, options = list(label = c(val =
-  NULL, chk = FALSE)), id.name = "auto")
+  rk.XML.dropdown(label,
+    options = list(label = c(val = NULL, chk = FALSE)),
+    id.name = "auto")
 }
 \arguments{
   \item{label}{Character string, a text label for this
@@ -16,7 +17,7 @@
   the one option which is checked by default.}
 
   \item{id.name}{Character string, a unique ID for this
-  plugin element. If \code{"auto"} and a label was
+  plugin element.  If \code{"auto"} and a label was
   provided, an ID will be generated automatically from the
   label.}
 }
@@ -28,8 +29,8 @@
 }
 \examples{
 test.dropdown <- rk.XML.dropdown("mydrop",
-options=list("First Option"=c(val="val1"),
-"Second Option"=c(val="val2", chk=TRUE)))
+  options=list("First Option"=c(val="val1"),
+  "Second Option"=c(val="val2", chk=TRUE)))
 cat(pasteXMLNode(test.dropdown))
 }
 \seealso{

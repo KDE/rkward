@@ -2,9 +2,9 @@
 \alias{rk.XML.spinbox}
 \title{Create XML node "spinbox" for RKWard plugins}
 \usage{
-  rk.XML.spinbox(label, min = NULL, max = NULL, initial =
-  0, real = TRUE, precision = 2, max.precision = 8, id.name
-  = "auto")
+  rk.XML.spinbox(label, min = NULL, max = NULL,
+    initial = 0, real = TRUE, precision = 2,
+    max.precision = 8, id.name = "auto")
 }
 \arguments{
   \item{label}{Character string, a text label for this
@@ -31,7 +31,7 @@
   that can be meaningfully represented.}
 
   \item{id.name}{Character string, a unique ID for this
-  plugin element. If \code{"auto"} and a label was
+  plugin element.  If \code{"auto"} and a label was
   provided, an ID will be generated automatically from the
   label.}
 }

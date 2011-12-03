@@ -3,7 +3,7 @@
 \title{Create XML node "input" for RKWard plugins}
 \usage{
   rk.XML.input(label, initial = NULL, size = "medium",
-  required = FALSE, id.name = "auto")
+    required = FALSE, id.name = "auto")
 }
 \arguments{
   \item{label}{Character string, a text label for this
@@ -19,8 +19,8 @@
   not.}
 
   \item{id.name}{Character string, a unique ID for this
-  plugin element. If \code{"auto"}, an ID will be generated
-  automatically from the label.}
+  plugin element.  If \code{"auto"}, an ID will be
+  generated automatically from the label.}
 }
 \value{
   An object of class \code{XiMpLe.node}.

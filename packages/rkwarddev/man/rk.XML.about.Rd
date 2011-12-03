@@ -2,11 +2,9 @@
 \alias{rk.XML.about}
 \title{Create XML node "about" for RKWard pluginmaps}
 \usage{
-  rk.XML.about(name, author, about = list(desc =
-  "SHORT_DESCRIPTION", version = "0.01-0", date =
-  Sys.Date(), url = "http://EXAMPLE.com", license = "GPL
-  (>= 3)", long.desc = NULL), dependencies = NULL, package
-  = NULL, pluginmap = NULL)
+  rk.XML.about(name, author,
+    about = list(desc = "SHORT_DESCRIPTION", version = "0.01-0", date = Sys.Date(), url = "http://EXAMPLE.com", license = "GPL (>= 3)", long.desc = NULL),
+    dependencies = NULL, package = NULL, pluginmap = NULL)
 }
 \arguments{
   \item{name}{A character string with the plugin name.}
@@ -56,31 +54,31 @@
 }
 \examples{
 about.node <- rk.XML.about(
-name="Square the circle",
-author=c(
-person(given="E.A.", family="Dölle",
-email="doelle@eternalwondermaths.example.org", role="aut"),
-person(given="A.", family="Assistant",
-email="alterego@eternalwondermaths.example.org", role=c("cre","ctb"))
-),
-about=list(
-desc="Squares the circle using Heisenberg compensation.",
-version="0.1-3",
-date=Sys.Date(),
-url="http://eternalwondermaths.example.org/23/stc.html",
-license="GPL",
-category="Geometry"),
-dependencies=list(
-rkward.min="0.5.3",
-rkward.max="",
-R.min="2.10",
-R.max=""),
-package=list(
-c(name="heisenberg", min="0.11-2", max="",
-repository="http://rforge.r-project.org"),
-c(name="DreamsOfPi", min="0.2", max="", repository="")),
-pluginmap=list(
-c(name="heisenberg.pluginmap", url="http://eternalwondermaths.example.org/hsb"))
+	name="Square the circle",
+	author=c(
+		person(given="E.A.", family="Dölle",
+			email="doelle@eternalwondermaths.example.org", role="aut"),
+		person(given="A.", family="Assistant",
+			email="alterego@eternalwondermaths.example.org", role=c("cre","ctb"))
+		),
+	about=list(
+		desc="Squares the circle using Heisenberg compensation.",
+		version="0.1-3",
+		date=Sys.Date(),
+		url="http://eternalwondermaths.example.org/23/stc.html",
+		license="GPL",
+		category="Geometry"),
+	dependencies=list(
+		rkward.min="0.5.3",
+		rkward.max="",
+		R.min="2.10",
+		R.max=""),
+	package=list(
+		c(name="heisenberg", min="0.11-2", max="",
+			repository="http://rforge.r-project.org"),
+		c(name="DreamsOfPi", min="0.2", max="", repository="")),
+	pluginmap=list(
+		c(name="heisenberg.pluginmap", url="http://eternalwondermaths.example.org/hsb"))
 )
 
 cat(pasteXMLNode(about.node, shine=2))

@@ -2,8 +2,8 @@
 \alias{rk.rkh.section}
 \title{Create XML "section" node for RKWard help pages}
 \usage{
-  rk.rkh.section(title, text = NULL, short = NULL, id.name
-  = "auto")
+  rk.rkh.section(title, text = NULL, short = NULL,
+    id.name = "auto")
 }
 \arguments{
   \item{title}{Character string, title to be displayed.}
@@ -14,7 +14,7 @@
   for links to this section.}
 
   \item{id.name}{Character string, a unique ID for this
-  element. If \code{"auto"}, an ID will be generated
+  element.  If \code{"auto"}, an ID will be generated
   automatically from the \code{title} value.}
 }
 \value{

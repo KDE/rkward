@@ -2,8 +2,8 @@
 \alias{rk.XML.component}
 \title{Create XML "component" node for RKWard plugins}
 \usage{
-  rk.XML.component(label, file, id.name = "auto", type =
-  "standard")
+  rk.XML.component(label, file, id.name = "auto",
+    type = "standard")
 }
 \arguments{
   \item{label}{Character string, a label for the
@@ -13,8 +13,8 @@
   file defining the GUI.}
 
   \item{id.name}{Character string, a unique ID for this
-  plugin element. If \code{"auto"}, an ID will be generated
-  automatically from the label.}
+  plugin element.  If \code{"auto"}, an ID will be
+  generated automatically from the label.}
 
   \item{type}{Character string, type of component. As of
   now, only "standard" is supported. The option is just

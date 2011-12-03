@@ -2,10 +2,10 @@
 \alias{rk.XML.plugin}
 \title{Create XML document for RKWard plugins}
 \usage{
-  rk.XML.plugin(name, dialog = NULL, wizard = NULL, logic =
-  NULL, snippets = NULL, provides = NULL, help = TRUE,
-  pluginmap = NULL, label = NULL, clean.name = TRUE, about
-  = NULL, gen.info = TRUE)
+  rk.XML.plugin(name, dialog = NULL, wizard = NULL,
+    logic = NULL, snippets = NULL, provides = NULL,
+    help = TRUE, pluginmap = NULL, label = NULL,
+    clean.name = TRUE, about = NULL, gen.info = TRUE)
 }
 \arguments{
   \item{name}{Character string, the name of the plugin.
@@ -37,7 +37,7 @@
   \code{"logic"}, \code{"dialog"} or \code{"wizard"},
   defining what sections the document should provide even
   if \code{dialog}, \code{wizard} and \code{logic} are
-  \code{NULL}. These sections must be edited manually and
+  \code{NULL}.  These sections must be edited manually and
   some parts are therefore commented out.}
 
   \item{help}{Logical, if \code{TRUE} an include tag for a
@@ -78,15 +78,15 @@
 }
 \examples{
 test.checkboxes <- rk.XML.row(rk.XML.col(
-list(
-rk.XML.cbox(label="foo", val="foo1", chk=TRUE),
-rk.XML.cbox(label="bar", val="bar2"))))
+  list(
+    rk.XML.cbox(label="foo", val="foo1", chk=TRUE),
+    rk.XML.cbox(label="bar", val="bar2"))))
 test.dropdown <- rk.XML.dropdown("mydrop",
-opts=list("First Option"=c(val="val1"),
-"Second Option"=c(val="val2", chk=TRUE)))
+  opts=list("First Option"=c(val="val1"),
+  "Second Option"=c(val="val2", chk=TRUE)))
 # combine the above into a tabbook
 test.tabbook <- rk.XML.tabbook("My Tabbook", tab.labels=c("First Tab",
-"Second Tab"), dialog=list(test.checkboxes, test.dropdown))
+  "Second Tab"), dialog=list(test.checkboxes, test.dropdown))
 # make a plugin with that tabbook
 test.plugin <- rk.XML.plugin("My test", dialog=test.tabbook)
 cat(pasteXMLTree(test.plugin))

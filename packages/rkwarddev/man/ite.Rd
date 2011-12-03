@@ -13,7 +13,7 @@
   \item{thenjs}{Either a character string, the code to be
   executed in case the \code{if()} statement is true, or an
   object of class \code{XiMpLe.node}. \code{rk.JS.arr} or
-  \code{rk.JS.opt} (whose identifier will be used). The
+  \code{rk.JS.opt} (whose identifier will be used).  The
   latter is especially useful in combination with
   \code{\link[rkwarddev:rk.JS.options]{rk.JS.options}}.}
 

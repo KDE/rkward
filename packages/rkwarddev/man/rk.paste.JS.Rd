@@ -2,13 +2,13 @@
 \alias{rk.paste.JS}
 \title{Paste JavaScript objects and character strings}
 \usage{
-  rk.paste.JS(..., level = 2, indent.by = "\t", funct =
-  NULL, array = NULL, var.prefix = NULL, modifiers = NULL,
-  default = NULL, join = NULL)
+  rk.paste.JS(..., level = 2, indent.by = "\t",
+    funct = NULL, array = NULL, var.prefix = NULL,
+    modifiers = NULL, default = NULL, join = NULL)
 }
 \arguments{
   \item{...}{Objects of class \code{rk.JS.ite},
-  \code{rk.JS.arr}, \code{rk.JS.opt} or character. Another
+  \code{rk.JS.arr}, \code{rk.JS.opt} or character.  Another
   special case is XiMpLe nodes created by
   \code{rk.comment()}, which will be turned into JavaScript
   comments (i.e., lines starting with "//").}

@@ -3,8 +3,8 @@
 \title{Create RKWard help file skeleton}
 \usage{
   rk.rkh.doc(summary = NULL, usage = NULL, sections = NULL,
-  settings = NULL, related = NULL, technical = NULL, title
-  = NULL, gen.info = TRUE)
+    settings = NULL, related = NULL, technical = NULL,
+    title = NULL, gen.info = TRUE)
 }
 \arguments{
   \item{summary}{An object of class \code{XiMpLe.node} to
@@ -26,7 +26,7 @@
   \item{settings}{An object of class \code{XiMpLe.node} to
   be pasted as the \code{<settings>} section. See
   \code{\link[rkwarddev:rk.rkh.settings]{rk.rkh.settings}}
-  for details. Refer to \code{\link{rk.rkh.scan}} for a
+  for details.  Refer to \code{\link{rk.rkh.scan}} for a
   function to create this from an existing plugin XML
   file.}
 

@@ -3,9 +3,9 @@
 \title{Write a pluginmap file for RKWard}
 \usage{
   rk.XML.pluginmap(name, about = NULL, components,
-  hierarchy = "test", require = NULL, x11.context = NULL,
-  import.context = NULL, clean.name = TRUE, hints = FALSE,
-  gen.info = TRUE)
+    hierarchy = "test", require = NULL, x11.context = NULL,
+    import.context = NULL, clean.name = TRUE,
+    hints = FALSE, gen.info = TRUE)
 }
 \arguments{
   \item{name}{Character string, name of the plugin.}

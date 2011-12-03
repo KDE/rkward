@@ -3,7 +3,7 @@
 \title{Build an RKWard plugin package}
 \usage{
   rk.build.plugin(plugin, check = FALSE, install = FALSE,
-  R.libs = NULL)
+    R.libs = NULL)
 }
 \arguments{
   \item{plugin}{A character string, path to the plugin

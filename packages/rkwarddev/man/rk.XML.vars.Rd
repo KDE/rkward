@@ -2,12 +2,12 @@
 \alias{rk.XML.vars}
 \title{Create a variable selector for RKWard plugins}
 \usage{
-  rk.XML.vars(label, slot.text, required = FALSE, multi =
-  FALSE, min = 1, any = 1, max = 0, dim = 0, min.len = 0,
-  max.len = NULL, classes = NULL, types = NULL, horiz =
-  TRUE, add.nodes = NULL, frame.label = NULL,
-  formula.dependent = NULL, dep.options = list(), id.name =
-  "auto")
+  rk.XML.vars(label, slot.text, required = FALSE,
+    multi = FALSE, min = 1, any = 1, max = 0, dim = 0,
+    min.len = 0, max.len = NULL, classes = NULL,
+    types = NULL, horiz = TRUE, add.nodes = NULL,
+    frame.label = NULL, formula.dependent = NULL,
+    dep.options = list(), id.name = "auto")
 }
 \arguments{
   \item{label}{Character string, a text label for the
@@ -83,7 +83,7 @@
   (third entry). If \code{formula.dependent} is not
   \code{NULL}, a fourth and fifth entry is needed as well,
   for the dependent varslot and the formula node,
-  respectively. If \code{"auto"}, IDs will be generated
+  respectively.  If \code{"auto"}, IDs will be generated
   automatically from \code{label} and \code{slot.text}.}
 }
 \value{

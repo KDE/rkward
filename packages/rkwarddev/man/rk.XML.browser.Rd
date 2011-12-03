@@ -2,9 +2,9 @@
 \alias{rk.XML.browser}
 \title{Create XML node "browser" for RKWard plugins}
 \usage{
-  rk.XML.browser(label, type = "file", initial = NULL, urls
-  = FALSE, filter = NULL, required = TRUE, id.name =
-  "auto")
+  rk.XML.browser(label, type = "file", initial = NULL,
+    urls = FALSE, filter = NULL, required = TRUE,
+    id.name = "auto")
 }
 \arguments{
   \item{label}{Character string, a text label for this
@@ -21,14 +21,14 @@
 
   \item{filter}{Character vector, file type filter, e.g.
   \code{filter=c("*.txt", "*.csv")} for .txt and .csv
-  files. Try not to induce limits unless absolutely needed,
-  though.}
+  files.  Try not to induce limits unless absolutely
+  needed, though.}
 
   \item{required}{Logical, whether an entry is mandatory or
   not.}
 
   \item{id.name}{Character string, a unique ID for this
-  plugin element. If \code{"auto"} and a label was
+  plugin element.  If \code{"auto"} and a label was
   provided, an ID will be generated automatically from the
   label.}
 }

@@ -20,10 +20,10 @@
   value is for the entry.}
 
   \item{id.name}{Character, a unique ID for this plugin
-  element. If \code{"auto"}, an ID will be generated
+  element.  If \code{"auto"}, an ID will be generated
   automatically from the label. Otherwise, if \code{...} is
   a list, \code{id.name} must have the same length and will
-  be set in the same order to the menu levels. Used to
+  be set in the same order to the menu levels.  Used to
   place the menu in the global menu hierarchy.}
 }
 \value{

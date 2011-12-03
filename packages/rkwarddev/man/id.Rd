@@ -18,7 +18,7 @@
   individual elements should be glued together.}
 
   \item{js}{Logical, if \code{TRUE} returns JavaScript
-  varaible names for \code{XiMpLe.node} objects. Otherwise
+  varaible names for \code{XiMpLe.node} objects.  Otherwise
   their actual ID is returned.}
 }
 \value{

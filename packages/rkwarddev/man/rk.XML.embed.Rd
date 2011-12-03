@@ -2,8 +2,8 @@
 \alias{rk.XML.embed}
 \title{Create XML node "embed" for RKWard plugins}
 \usage{
-  rk.XML.embed(component, button = FALSE, label =
-  "Options", id.name = "auto")
+  rk.XML.embed(component, button = FALSE,
+    label = "Options", id.name = "auto")
 }
 \arguments{
   \item{component}{A character string, registered name
@@ -17,8 +17,9 @@
   button (only used if \code{button=TRUE}).}
 
   \item{id.name}{Character string, a unique ID for this
-  plugin element. If \code{"auto"}, an ID will be generated
-  automatically from the label and component strings.}
+  plugin element.  If \code{"auto"}, an ID will be
+  generated automatically from the label and component
+  strings.}
 }
 \value{
   An object of class \code{XiMpLe.node}.
