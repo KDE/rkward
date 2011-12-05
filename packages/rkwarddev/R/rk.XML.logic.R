@@ -1,6 +1,9 @@
 #' Create XML logic section for RKWard plugins
 #'
 #' This function will create a logic section with "convert", "connect", "include", "insert", "external" and "set" nodes.
+#' You can also include JavaScript code to use the locig scripting features of RKWard, if you place it in a comment
+#' with \code{\link[rkwarddev:rk.comment]{rk.comment}}: Its contents will automatically be placed inside a
+#' \code{<script><![CDATA[ ]]></script>} node.
 #'
 #' @param ... Objects of class \code{XiMpLe.node}.
 #' @return An object of class \code{XiMpLe.node}.
@@ -34,6 +37,11 @@ rk.XML.logic <- function(...){
 	nodes <- sapply(child.list(nodes), function(this.node){
 			if(identical(this.node@name, "!--")){
 				this.node@name <- "![CDATA["
+				this.node <- new("XiMpLe.node",
+						name="script",
+						children=child.list(this.node),
+						value=""
+					)
 			} else {}
 			return(this.node)
 		})
@@ -43,7 +51,7 @@ rk.XML.logic <- function(...){
 			this.node@name
 		})
 
-	invalid.sets <- !node.names %in% c("connect", "convert","include","insert","external","set","![CDATA[")
+	invalid.sets <- !node.names %in% c("connect", "convert","include","insert","external","set","script")
 	if(any(invalid.sets)){
 		stop(simpleError(paste("Invalid XML nodes for logic section: ", paste(node.names[invalid.sets], collapse=", "), sep="")))
 	} else {}

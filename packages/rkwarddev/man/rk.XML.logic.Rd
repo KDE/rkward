@@ -13,7 +13,12 @@
 \description{
   This function will create a logic section with "convert",
   "connect", "include", "insert", "external" and "set"
-  nodes.
+  nodes. You can also include JavaScript code to use the
+  locig scripting features of RKWard, if you place it in a
+  comment with
+  \code{\link[rkwarddev:rk.comment]{rk.comment}}: Its
+  contents will automatically be placed inside a
+  \code{<script><![CDATA[ ]]></script>} node.
 }
 \examples{
 # define an input field and two checkboxes
