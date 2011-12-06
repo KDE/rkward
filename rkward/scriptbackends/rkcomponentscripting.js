@@ -86,7 +86,7 @@ function RObject(objectname) {
 	}
 
 	this.isClass = function (classname) {
-		return (this._classes.contains (classname));
+		return (this._classes.indexOf(classname) != -1);
 	}
 
 	this.isDataFrame = function () {
