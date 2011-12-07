@@ -237,18 +237,22 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 
 	previous_chunk_was_piped = false;
 
+	// Apparently, on MacOSX, additional modifiers may sometimes be present (KeypadModifier?), which we want to ignore.
+	const int modifier_mask = Qt::ShiftModifier | Qt::ControlModifier | Qt::AltModifier;
+	Qt::KeyboardModifiers modifier = e->modifiers () & modifier_mask;
+
 	if (e->key () == Qt::Key_Up) {
-		commandsListUp (RKSettingsModuleConsole::shouldDoHistoryContextSensitive (e->modifiers ()));
+		commandsListUp (RKSettingsModuleConsole::shouldDoHistoryContextSensitive (modifier));
 		return true;
 	}
 	else if (e->key () == Qt::Key_Down) {
-		commandsListDown (RKSettingsModuleConsole::shouldDoHistoryContextSensitive (e->modifiers ()));
+		commandsListDown (RKSettingsModuleConsole::shouldDoHistoryContextSensitive (modifier));
 		return true;
 	}
 	command_edited = true; // all other keys are considered as "editing" the current comand
 
 	if (e->key () == Qt::Key_Home) {
-		if (e->modifiers () == Qt::ShiftModifier) {
+		if (modifier == Qt::ShiftModifier) {
 			int lastline = doc->lines () - 1;
 			int firstcol = prefix.length ();
 			KTextEditor::Range newrange (lastline, firstcol, lastline, pos);
@@ -266,7 +270,7 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 		cursorAtTheBeginning ();
 		return true;
 	} else if (e->key () == Qt::Key_End) {
-		if (e->modifiers () == Qt::ShiftModifier) {
+		if (modifier == Qt::ShiftModifier) {
 			int lastline = doc->lines () - 1;
 			int lastcol = doc->lineLength (lastline);
 			KTextEditor::Range newrange (lastline, pos, lastline, lastcol);
@@ -291,20 +295,20 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 	} else if (e->key () == Qt::Key_Left){
 		if (pos <= prefix.length ()) return true;
 
-		if (e->modifiers () == Qt::NoModifier) setCursorClear (para, pos - 1);
-		else if (e->modifiers () == Qt::ShiftModifier) triggerEditAction ("select_char_left");
-		else if (e->modifiers () == Qt::ControlModifier) triggerEditAction ("word_left");
-		else if (e->modifiers () == (Qt::ControlModifier + Qt::ShiftModifier)) triggerEditAction ("select_word_left");
+		if (modifier == Qt::NoModifier) setCursorClear (para, pos - 1);
+		else if (modifier == Qt::ShiftModifier) triggerEditAction ("select_char_left");
+		else if (modifier == Qt::ControlModifier) triggerEditAction ("word_left");
+		else if (modifier == (Qt::ControlModifier + Qt::ShiftModifier)) triggerEditAction ("select_word_left");
 		else return false;
 
 		return true;
 	} else if (e->key () == Qt::Key_Right){
 		if (pos >= doc->lineLength (para)) return true;
 
-		if (e->modifiers () == Qt::NoModifier) setCursorClear (para, pos + 1);
-		else if (e->modifiers () == Qt::ShiftModifier) triggerEditAction ("select_char_right");
-		else if (e->modifiers () == Qt::ControlModifier) triggerEditAction ("word_right");
-		else if (e->modifiers () == (Qt::ControlModifier + Qt::ShiftModifier)) triggerEditAction ("select_word_right");
+		if (modifier == Qt::NoModifier) setCursorClear (para, pos + 1);
+		else if (modifier == Qt::ShiftModifier) triggerEditAction ("select_char_right");
+		else if (modifier == Qt::ControlModifier) triggerEditAction ("word_right");
+		else if (modifier == (Qt::ControlModifier + Qt::ShiftModifier)) triggerEditAction ("select_word_right");
 		else return false;
 
 		return true;
