@@ -1010,8 +1010,6 @@ void RKCodeCompletionModel::updateCompletionList (const QString& symbol) {
 	current_symbol = symbol;
 
 	reset ();
-
-#warning deal with object removals while the completion model is active! Maybe cache all information?
 }
 
 void RKCodeCompletionModel::completionInvoked (KTextEditor::View*, const KTextEditor::Range&, InvocationType) {
