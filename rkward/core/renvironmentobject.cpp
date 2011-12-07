@@ -89,9 +89,8 @@ QString REnvironmentObject::makeChildName (const QString &short_child_name, bool
 QString REnvironmentObject::makeChildBaseName (const QString &short_child_name) const {
 	RK_TRACE (OBJECTS);
 
-	if (type & ToplevelEnv) {
-		return (short_child_name);
-	}
+	if (type & ToplevelEnv) return (short_child_name);
+	if (isPackageNamespace ()) return (static_cast<REnvironmentObject*>(parent)->packageName () + ":::" + short_child_name);
 	return (name + '$' + short_child_name);
 }
 
