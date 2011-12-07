@@ -214,13 +214,9 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 		KTextEditor::Range selrange = view->selectionRange ();
 		if (selrange.start ().line () < (doc->lines () - 1) || selrange.start ().column () < prefix.length ()) {
 			// There is a selection outside the command line
-			// If it's a modifier key, that's quite ok. Otherwise, we need to take off the selection, before handling the key press
-			if (!is_modifier_key) {
-				KApplication::kApplication ()->beep ();
-				view->setSelection (KTextEditor::Range ());
-			} else {
-				return true;
-			}
+			// If it's a modifier key, that's quite ok. Otherwise, we need to take off the selection, then proceed to handling the key press
+			if (is_modifier_key) return true;
+			view->setSelection (KTextEditor::Range ());
 		}
 	}
 

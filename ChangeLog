@@ -1,3 +1,4 @@
+- Improve keypress handling issues in the R Console, when the cursor or a selection is outside the editable range
 - Fixed: Failure to open workspaces with non-latin1 filenames from the command line
 - Fixed: Saving / restoring workplace layout would fail when saving to directories with unusual characters
 - Only install translations which are at least 80% complete (not counting strings in plugins, which are not yet translatable)
