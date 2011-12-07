@@ -207,27 +207,25 @@ void RKConsole::setCursorClear (int line, int col) {
 bool RKConsole::handleKeyPress (QKeyEvent *e) {
 	KTextEditor::Cursor c = view->cursorPosition ();
 	int para=c.line (); int pos=c.column ();
-
-	if (para < doc->lines () - 1 || pos < prefix.length ()) {	// not inside the last line?
-		int key = e->key ();
-		if ((key != Qt::Key_Shift) && (key != Qt::Key_Control) && (key != Qt::Key_Meta) && (key != Qt::Key_Alt)) {
-			int t = (int) pos;					// adjust position before interpreting non-modifier keystroke
-			if (prefix.length()>pos) t=prefix.length ();
-			view->setCursorPosition (KTextEditor::Cursor (doc->lines () -1, t));
-		}
-	}
-
+	int key = e->key ();
+	bool is_modifier_key = ((key == Qt::Key_Shift) || (key == Qt::Key_Control) || (key == Qt::Key_Meta) || (key == Qt::Key_Alt));
+	
 	if (view->selection ()) {
 		KTextEditor::Range selrange = view->selectionRange ();
 		if (selrange.start ().line () < (doc->lines () - 1) || selrange.start ().column () < prefix.length ()) {
 			// There is a selection outside the command line
-			// Eat the key and beep (unless it's just a modifier key). Otherwise it might overwrite or delete the selection
-			if (e->key () - (e->key () & (Qt::ShiftModifier | Qt::ControlModifier | Qt::AltModifier | Qt::MetaModifier | Qt::KeypadModifier | Qt::GroupSwitchModifier))) {
+			// If it's a modifier key, that's quite ok. Otherwise, we need to take off the selection, before handling the key press
+			if (!is_modifier_key) {
 				KApplication::kApplication ()->beep ();
-				e->ignore ();
+				view->setSelection (KTextEditor::Range ());
+			} else {
+				return true;
 			}
-			return true;
 		}
+	}
+
+	if (para < doc->lines () - 1 || pos < prefix.length ()) {	// not inside the last line?
+		if (!is_modifier_key) cursorAtTheEnd ();	// adjust position before interpreting non-modifier keystroke
 	}
 
 	if (current_command) {
@@ -241,17 +239,17 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 	const int modifier_mask = Qt::ShiftModifier | Qt::ControlModifier | Qt::AltModifier;
 	Qt::KeyboardModifiers modifier = e->modifiers () & modifier_mask;
 
-	if (e->key () == Qt::Key_Up) {
+	if (key == Qt::Key_Up) {
 		commandsListUp (RKSettingsModuleConsole::shouldDoHistoryContextSensitive (modifier));
 		return true;
 	}
-	else if (e->key () == Qt::Key_Down) {
+	else if (key == Qt::Key_Down) {
 		commandsListDown (RKSettingsModuleConsole::shouldDoHistoryContextSensitive (modifier));
 		return true;
 	}
 	command_edited = true; // all other keys are considered as "editing" the current comand
 
-	if (e->key () == Qt::Key_Home) {
+	if (key == Qt::Key_Home) {
 		if (modifier == Qt::ShiftModifier) {
 			int lastline = doc->lines () - 1;
 			int firstcol = prefix.length ();
@@ -269,7 +267,7 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 		}
 		cursorAtTheBeginning ();
 		return true;
-	} else if (e->key () == Qt::Key_End) {
+	} else if (key == Qt::Key_End) {
 		if (modifier == Qt::ShiftModifier) {
 			int lastline = doc->lines () - 1;
 			int lastcol = doc->lineLength (lastline);
@@ -287,12 +285,12 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 		}
 		cursorAtTheEnd ();
 		return true;
-	} else if (e->key() == Qt::Key_Enter || e->key() == Qt::Key_Return) {
+	} else if (key == Qt::Key_Enter || key == Qt::Key_Return) {
 		hinter->hideArgHint ();
 		addCommandToHistory (currentEditingLine ());
 		submitCommand ();
 		return true;
-	} else if (e->key () == Qt::Key_Left){
+	} else if (key == Qt::Key_Left){
 		if (pos <= prefix.length ()) return true;
 
 		if (modifier == Qt::NoModifier) setCursorClear (para, pos - 1);
@@ -302,7 +300,7 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 		else return false;
 
 		return true;
-	} else if (e->key () == Qt::Key_Right){
+	} else if (key == Qt::Key_Right){
 		if (pos >= doc->lineLength (para)) return true;
 
 		if (modifier == Qt::NoModifier) setCursorClear (para, pos + 1);
@@ -312,7 +310,7 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 		else return false;
 
 		return true;
-	} else if (e->key () == Qt::Key_Backspace){
+	} else if (key == Qt::Key_Backspace){
 		if(pos<=prefix.length ()) return true;
 
 		if (view->selection ()) {
@@ -322,7 +320,7 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 			doc->removeText (KTextEditor::Range (para, pos, para, pos-1));
 		}
 		return true;
-	} else if (e->key () == Qt::Key_Delete) {
+	} else if (key == Qt::Key_Delete) {
 		// not currently handled by an action in kateview internal, but better not rely on that fact!
 		if (view->selection ()) {
 			doc->removeText (view->selectionRange ());
@@ -331,7 +329,7 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 			doc->removeText (KTextEditor::Range (para, pos, para, pos + 1));
 		}
 		return true;
-	} else if (e->key () == Qt::Key_Tab) {
+	} else if (key == Qt::Key_Tab) {
 		doTabCompletion ();
 		return true;
 	}
