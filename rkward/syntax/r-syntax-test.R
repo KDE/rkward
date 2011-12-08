@@ -30,8 +30,10 @@ for( i in 2:5 ) {
 try ( {
 	x <<- 1
 	x <<<- 1		# syntax error
+	x <- * 1		# syntax error
 	x += 1 -= x1 *= x2	# syntax error
-	x =+ 1 =- x1 =* x2	# syntax error
+	x =* 1 =/ x1 // x2	# syntax error
+	x =+ 1 =- x1		# These look misleading, but are legal
 	"%my 1st infix%" <- function (x, y) { x + y }		# legal infix
 	3 %my 1st infix% 4
 	"%my%infix%" <- function (x, y) { x + y }		# illegal infix
