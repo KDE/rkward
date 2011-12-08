@@ -439,7 +439,8 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, int a
 		// for the most part, the implicit as.character in SEXPToStringList does a good on the formals (and it's the fastest of many options that I have tried).
 		// Only for naked strings (as in 'function (a="something")'), we're missing the quotes. So we add quotes, after conversion, as needed:
 		SEXP dummy = formals_s;
-		for (int i = 0; i < Rf_length (dummy); ++i) {
+		const int formals_len = Rf_length (formals_s);
+		for (int i = 0; i < formals_len; ++i) {
 			if (TYPEOF (CAR (dummy)) == STRSXP) formals[i] = RKRSharedFunctionality::quote (formals[i]);
 			dummy = CDR (dummy);
 		}
