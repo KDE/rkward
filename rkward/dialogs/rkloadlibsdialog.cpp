@@ -693,7 +693,13 @@ void InstallPackagesWidget::initialize () {
 
 	packages_status->initialize (parent->chain);
 	packages_view->setEnabled (true);
-	for (int i = 0; i <= RKRPackageInstallationStatus::PackageName; ++i) packages_view->resizeColumnToContents (i);
+	for (int i = 0; i <= RKRPackageInstallationStatus::PackageName; ++i) {
+		packages_view->resizeColumnToContents (i);
+#ifdef Q_WS_MAC
+		// HACK: Without this, the column is just too narrow on MacOS X, and the icon is hidden
+		if (i == RKRPackageInstallationStatus::EnhancesRKWard) packages_view->setColumnWidth (i, packages_view->columnWidth (i) + 16);
+#endif
+	}
 }
 
 void InstallPackagesWidget::filterStringChanged (const QString& new_filter) {
