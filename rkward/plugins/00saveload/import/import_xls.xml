@@ -11,7 +11,7 @@
 		<tabbook>
 			<tab id="tab_general" label="General">
 				<browser type="file" allow_urls="true" id="file" label="File name" />
-	  		      	<spinbox type="integer" id="sheet" label="Sheet within the Excel file from which data are to be read" min="1" initial="1"/>
+				<input label="Name of sheet" id="sheetname" initial="1" size="medium" />
 				<stretch/>
 				<row>
 					<saveobject id="saveto" initial="my.xls.data" label="Object to save to"/>
@@ -22,8 +22,10 @@
 			<tab id="tab_further_options" label="Further Options" >
 				<column>
 				  	<checkbox id="header" value="TRUE" value_unchecked="FALSE" checked="false" label="Column names in first row"/>
-					<input size="small" initial="-1" id="nrows" label="Max number of rows to read (-1 for no limit)" />
-					<input size="small" initial="-1" id="skip" label="Number of rows to skip" />
+					<row>
+					      <input size="small" initial="-1" id="nrows" label="Max number of rows to read (-1 for no limit)" />
+					      <input size="small" initial="-1" id="skip" label="Number of rows to skip" />
+					</row>
 					<input size="small" initial="NA" id="na" label="Character for missing values" />
 					<radio id="strings_as_factors" label="Convert character columns to factors" >
 					  <option value=", stringsAsFactors=TRUE" label="Convert to factor" />
