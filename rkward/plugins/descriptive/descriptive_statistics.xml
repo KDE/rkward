@@ -14,21 +14,28 @@
 						<varslot multi="true" type="numeric" source="vars" id="x" num_dimensions="1" label="variable(s):" required="true" />
 					</column>
 				</row>
+					<checkbox value_unchecked="0" checked="flase" value="1" id="save_to_file" label="Save results to file" />
+					<browser type="savefile" size="small" id="file" filter="*.csv" initial="data" label="Name of the file" />
 			</tab>
 			<tab label="Mean Standard Deviation" id="tab_mean_sd">
 				<column>
-					<checkbox value_unchecked="0" checked="true" value="1" id="mean" label="mean" />
-					<spinbox type="real" initial="0" min="0" id="trim" max="0.5" label="trim" />
+					<frame>
+					      <checkbox value_unchecked="0" checked="true" value="1" id="mean" label="Mean" />
+					      <spinbox type="real" initial="0" min="0" id="trim" max="0.5" label="Trim of mean" />
+					</frame>    
+					<checkbox value_unchecked="0" checked="false" value="1" id="geo_mean" label="Geometric mean" />
+					<checkbox value_unchecked="0" checked="false" value="1" id="interquantile_mean" label="Interquantile mean" />
+					<checkbox value_unchecked="0" checked="false" value="1" id="harmonic_mean" label="Harmonic mean" />
 				</column>
 				<column>
-					<checkbox value_unchecked="0" checked="true" value="1" id="sd" label="standard deviation" />
+					<checkbox value_unchecked="0" checked="true" value="1" id="sd" label="Standard deviation" />
 				</column>
 				<stretch/>
 			</tab>
 			<tab label="Median, MAD" id="tab_median_mad">
 				<column>
 					<frame label="Median" >
-						<checkbox value_unchecked="0" value="1" id="median" label="median" />
+						<checkbox value_unchecked="0" value="1" id="median" label="Median" />
 					</frame>
 					<frame label="Median Absolute Deviation (mad)" >
 						<checkbox value_unchecked="0" value="1" id="mad" label="mad" />

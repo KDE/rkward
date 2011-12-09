@@ -17,6 +17,18 @@ function calculate () {
 		// trim is the fraction (0 to 0.5) of observations to be trimmed from each end of x before the mean is computed
 		echo ('	results[i, \'mean\'] <- try (mean (var, trim = ' + getValue ("trim") + ', na.rm=TRUE))\n');
 	}
+	if (getValue ("geo_mean")) {
+		// compute the geometric mean
+		echo ('	results[i, \'geometric mean\'] <- try (prod (na.omit(var))^(1 / length (na.omit(var))))\n');
+	}
+	if (getValue ("interquantile_mean")) {
+		// compute the quartile (25% and 75%) mean
+		echo ('	results[i, \'interquantile mean\'] <- try (sum(quantile(var, probs=c(0.25), na.rm=T), quantile(var, probs=c(0.75), na.rm=TRUE)) / 2)\n');
+	}
+	if (getValue ("harmonic_mean")) {
+		// compute the harmonic mean
+		echo ('	results[i, \'harmonic mean\'] <- try (1 / mean(1 / na.omit(var)))\n');
+	}
 	if (getValue ("median")) {
 		echo ('	results[i, \'median\'] <- try (median (var, na.rm=TRUE))\n');
 	}
@@ -63,6 +75,7 @@ function printout () {
 	echo ('))\n');
 	echo ('\n');
 	echo ('rk.results (results)\n');
+	if (getValue ("save_to_file")) echo ('write.csv(file="' + getValue ("file") + '", results)\n');
 }
 
 

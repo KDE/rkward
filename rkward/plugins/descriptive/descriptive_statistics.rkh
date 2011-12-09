@@ -17,6 +17,8 @@
 		<caption id="tab_mean_sd"/>
 		<setting id="mean">Should the mean value be computed?</setting>
 		<setting id="trim">Trim of the mean. See <link href="rkward://rhelp/mean"/></setting>
+		<setting id="geo_mean">Should the geometric mean value be computed?</setting>
+		<setting id="interquantile_mean">Should the interquantile mean value be computed?</setting>
 		<setting id="sd">Compute the standard deviation?</setting>
 		<caption id="tab_median_mad"/>
 		<setting id="median">Should the median value be computed?</setting>
