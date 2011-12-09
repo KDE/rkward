@@ -15,6 +15,18 @@ function calculate () {
 	if (getValue ("mean")) {
 		echo ('	results[i, \'Mean\'] <- mean(var,' + narm + ')\n');
 	}
+		if (getValue ("geo_mean")) {
+		// compute the geometric mean
+		echo ('	results[i, \'geometric mean\'] <- try (prod (na.omit(var))^(1 / length (na.omit(var))))\n');
+	}
+	if (getValue ("interquantile_mean")) {
+		// compute the quartile (25% and 75%) mean
+		echo ('	results[i, \'interquantile mean\'] <- try (sum(quantile(var, probs=c(0.25), na.rm=T), quantile(var, probs=c(0.75), na.rm=TRUE)) / 2)\n');
+	}
+	if (getValue ("harmonic_mean")) {
+		// compute the harmonic mean
+		echo ('	results[i, \'harmonic mean\'] <- try (1 / mean(1 / na.omit(var)))\n');
+	}
 	if (getValue ("vari")) {
 		echo ('	results[i, \'Variance\'] <- var(var,' + narm + ')\n');
 	}
@@ -106,5 +118,6 @@ function printout () {
 	echo ('))\n');
 	echo ('\n');
 	echo ('rk.results (results)\n');
+	if (getValue ("save_to_file")) echo ('write.csv(file="' + getValue ("file") + '", results)\n');
 }
 
