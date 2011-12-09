@@ -472,7 +472,7 @@ void LoadUnloadWidget::rCommandDone (RCommand *command) {
 			item->setText (2, version.at (i));
 			item->setText (3, libpath.at (i));
 		}
-		installed_view->resizeColumnToContents (0);
+		installed_view->setColumnWidth (0, installed_view->iconSize ().width ());
 		installed_view->setSortingEnabled (true);
 		installed_view->sortItems (0, Qt::AscendingOrder);
 	} else if (command->getFlags () == GET_LOADED_PACKAGES) {
@@ -1000,7 +1000,6 @@ QVariant RKRPackageInstallationStatus::data (const QModelIndex &index, int role)
 				if (role == Qt::DisplayRole) return QVariant (i18n ("Remove"));
 			}
 		} else if (col == EnhancesRKWard) {
-			if (role == Qt::DisplayRole) return QVariant (QString (" "));	// must have a placeholder, here, or Qt will collapse the column
 			if ((role == Qt::DecorationRole) || (role == Qt::UserRole)) {
 				bool enhance_rk;
 				if (prow == InstalledPackages) enhance_rk = enhance_rk_in_installed.value (irow);
