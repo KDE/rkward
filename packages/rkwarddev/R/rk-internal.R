@@ -539,7 +539,16 @@ paste.JS.ite <- function(object, level=1, indent.by="\t", recurse=FALSE){
 	} else {
 		ifJS <- paste(main.indent, "if(", object@ifJS, ") {\n", sep="")
 	}
-	thenJS <- paste(scnd.indent, object@thenJS, "\n", main.indent, "}", sep="")
+
+	if(nchar(object@thenJS) > 0) {
+		thenJS <- paste(scnd.indent, object@thenJS, "\n", main.indent, "}", sep="")
+	} else {
+		# if there is another rk.JS.ite object, call with recursion
+		if(length(object@thenifJS) == 1){
+			thenJS <- paste(paste.JS.ite(object@thenifJS[[1]], level=level+1, indent.by=indent.by), "\n", main.indent, "}", sep="")
+		} else {}
+	}
+
 	if(nchar(object@elseJS) > 0) {
 		elseJS <- paste(" else {\n", scnd.indent, object@elseJS, "\n", main.indent, "}", sep="")
 	} else {
@@ -551,6 +560,7 @@ paste.JS.ite <- function(object, level=1, indent.by="\t", recurse=FALSE){
 			elseJS <- " else {}"
 		}
 	}
+
 	result <- paste(ifJS, thenJS, elseJS, collapse="", sep="")
 
 	return(result)

@@ -1,5 +1,8 @@
 ChangeLog for package rkwarddev
 
+## 0.04-11 (2011-12-10)
+  - ite() now supports full recursion also for the "thenjs" option.
+
 ## 0.04-10 (2011-12-05)
   - when using rk.comment() for logic scripting, its contents will automatically be placed inside a <script> node now
 

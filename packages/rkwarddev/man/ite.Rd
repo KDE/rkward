@@ -15,9 +15,11 @@
   object of class \code{XiMpLe.node}. \code{rk.JS.arr} or
   \code{rk.JS.opt} (whose identifier will be used).  The
   latter is especially useful in combination with
-  \code{\link[rkwarddev:rk.JS.options]{rk.JS.options}}.}
+  \code{\link[rkwarddev:rk.JS.options]{rk.JS.options}}.
+  You can also give another object of class
+  \code{rk.JS.ite}.}
 
-  \item{elsejs}{A character string, the code to be executed
+  \item{elsejs}{Like \code{thenjs}, the code to be executed
   in case the \code{if()} statement is not true.}
 }
 \value{
