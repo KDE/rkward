@@ -17,6 +17,8 @@ rk.JS.saveobj <- function(pXML, R.objects="initial", vars=TRUE, add.abbrev=FALSE
 
 	single.tags <- get.single.tags(XML.obj=pXML, drop=c("comments","cdata", "declarations", "doctype"))
 
+	main.indent <- indent(2, by=indent.by)
+
 	# filter for relevant tags
 	cleaned.tags <- list()
 	for(this.tag in child.list(single.tags)){
@@ -57,9 +59,12 @@ rk.JS.saveobj <- function(pXML, R.objects="initial", vars=TRUE, add.abbrev=FALSE
 						level=2,
 						indent.by=indent.by))
 				})), collapse="")
+			# clean up: remove empty elements
+			JS.vars <- JS.vars[!grepl("^[[:space:]]*$", JS.vars)]
 		} else {
 			JS.vars <- NULL
 		}
+
 		JS.assign <- paste(unlist(sapply(1:num.tags, function(this.tagnum){
 				this.tag <- cleaned.tags[this.tagnum]
 				JS.id <- get.IDs(single.tags=this.tag, relevant.tags="saveobject", add.abbrev=add.abbrev)
@@ -96,7 +101,10 @@ rk.JS.saveobj <- function(pXML, R.objects="initial", vars=TRUE, add.abbrev=FALSE
 # 		echo("assign(\""+saveFreqName+"\", REPLACE.ME.obj, envir="+saveFreqEnv+")\n");
 # 	}
 
-	results <- paste(JS.vars, "\n", JS.assign, sep="")
+	results <- paste(main.indent, "//// save result object\n",
+		if(!is.null(JS.vars)) {
+			paste(main.indent, "// read in saveobject variables\n", JS.vars, "\n", sep="")
+		} else {}, main.indent, "// assign object to chosen environment\n", JS.assign, sep="")
 
 	return(results)
 }

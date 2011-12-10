@@ -45,13 +45,13 @@ rk.JS.scan <- function(pXML, js=TRUE, add.abbrev=FALSE, indent.by="\t"){
 	JS.special.id <- get.IDs(single.tags=single.tags, relevant.tags=JS.special.tags, add.abbrev=add.abbrev, only.checkable=TRUE)
 	if("id" %in% colnames(JS.special.id)){
 		if(isTRUE(js)){
-			JS.lines <- paste(JS.lines, paste(unlist(sapply(1:nrow(JS.special.id), function(this.id){
+			JS.lines <- paste(JS.lines, "\n", paste(unlist(sapply(1:nrow(JS.special.id), function(this.id){
 					return(rk.paste.JS(get.JS.vars(
 						JS.var=JS.special.id[this.id,"abbrev"],
 						XML.var=JS.special.id[this.id,"id"],
 						modifiers="checked"),
 						level=2, indent.by=indent.by))
-				})), collapse=""))
+				})), collapse="\n"), sep="")
 		} else {
 			JS.lines <- c(JS.lines, JS.special.id[,"id"])
 			names(JS.lines) <- NULL

@@ -541,7 +541,9 @@ paste.JS.ite <- function(object, level=1, indent.by="\t", recurse=FALSE){
 	}
 
 	if(nchar(object@thenJS) > 0) {
-		thenJS <- paste(scnd.indent, object@thenJS, "\n", main.indent, "}", sep="")
+		# chop off beginning indent strings, otherwiese they ruin the code layout
+		thenJS.clean <- gsub(paste("^", indent.by, "*", sep=""), "", object@thenJS)
+		thenJS <- paste(scnd.indent, thenJS.clean, "\n", main.indent, "}", sep="")
 	} else {
 		# if there is another rk.JS.ite object, call with recursion
 		if(length(object@thenifJS) == 1){
@@ -550,7 +552,9 @@ paste.JS.ite <- function(object, level=1, indent.by="\t", recurse=FALSE){
 	}
 
 	if(nchar(object@elseJS) > 0) {
-		elseJS <- paste(" else {\n", scnd.indent, object@elseJS, "\n", main.indent, "}", sep="")
+		# chop off beginning indent strings, otherwiese they ruin the code layout
+		elseJS.clean <- gsub(paste("^", indent.by, "*", sep=""), "", object@elseJS)
+		elseJS <- paste(" else {\n", scnd.indent, elseJS.clean, "\n", main.indent, "}", sep="")
 	} else {
 		# if there is another rk.JS.ite object, call with recursion
 		if(length(object@elifJS) == 1){
@@ -753,8 +757,7 @@ paste.JS.var <- function(object, level=2, indent.by="\t", JS.prefix=NULL, modifi
 				# check modifiers
 				modifiers <- modifiers[modif.validity(source="all", modifier=modifiers, ignore.empty=TRUE, warn.only=TRUE, bool=TRUE)]
 			} else {}
-			results <- c(results,
-				sapply(modifiers, function(this.modif){
+			modif.results <- sapply(modifiers, function(this.modif){
 					if(isTRUE(names.only)){
 						return(camelCode(c(JS.prefix, JS.var, this.modif)))
 					} else {
@@ -762,7 +765,11 @@ paste.JS.var <- function(object, level=2, indent.by="\t", JS.prefix=NULL, modifi
 							" = getValue(\"", XML.var, ".", this.modif, "\")", join.code, ";", sep=""))
 					}
 				})
-			)
+			if(!identical(results, "")){
+				results <- c(results, modif.results)
+			} else {
+				results <- modif.results
+			}
 		}
 	} else {}
 

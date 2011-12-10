@@ -58,6 +58,8 @@ rk.paste.JS <- function(..., level=2, indent.by="\t", funct=NULL, array=NULL,
 				stop(simpleError("XiMpLe.node objects are only valid if they are comments!"))
 			}
 		} else {
+			# chop off beginning indent strings, otherwiese they ruin the code layout
+			this.object <- gsub(paste("^", indent.by, "*", sep=""), "", this.object)
 			result <- paste(indent(level, by=indent.by), this.object, sep="")
 		}
 		return(result)
