@@ -99,3 +99,4 @@ Collate:
     'rk.XML.vars.R'
     'rk.XML.wizard.R'
     'show-methods.R'
+    'tf.R'
