@@ -69,7 +69,7 @@ function doPrintout (full) {
 		}
 
 		if (horizontal) {
-		  echo ('	try (points(1:length(data_list) ~ sapply(data_list,interq_mean), pch=' + pch_mean + ', cex = ' + getValue ("cex_sd_mean") + getValue ("sd_mean_color.code.printout") + ')) #calculates the mean for all data and adds a point at the corresponding position\n');
+		  echo ('	try (points(1:length(data_list) ~ sapply(data_list,' + mean_fun + '), pch=' + pch_mean + ', cex = ' + getValue ("cex_sd_mean") + getValue ("sd_mean_color.code.printout") + ')) #calculates the mean for all data and adds a point at the corresponding position\n');
 		} else {
 		  echo ('	try (points(sapply(data_list,' + mean_fun + '), pch=' + pch_mean + ', cex = ' + getValue ("cex_sd_mean") + getValue ("sd_mean_color.code.printout") + ')) #calculates the mean for all data and adds a point at the corresponding position\n');
 		}
