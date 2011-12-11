@@ -282,13 +282,11 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 		cursorAtTheEnd ();
 		return true;
 	} else if (key == Qt::Key_Enter || key == Qt::Key_Return) {
-		KTextEditor::CodeCompletionInterface *iface =
-		qobject_cast<KTextEditor::CodeCompletionInterface*> (view);
-		if (iface) {
-			if (iface->isCompletionActive ()) {
-				iface->forceCompletion ();
-				return true;
-			}
+		// currently, these are auto-text hints, only
+		KTextEditor::CodeCompletionInterface *iface = qobject_cast<KTextEditor::CodeCompletionInterface*> (view);
+		if (iface && iface->isCompletionActive ()) {
+			iface->forceCompletion ();
+			return true;
 		}
 
 		hinter->hideArgHint ();
