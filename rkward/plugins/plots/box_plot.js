@@ -55,36 +55,24 @@ function doPrintout (full) {
 		echo ('rk.graph.on()\n');
 	}
 	echo ('try (boxplot (data_list' + boxwex + positions + ', notch = ' + getValue ("notch") + ', outline = ' + getValue("outline") + ', horizontal = ' + getValue("orientation") + getValue ("plotoptions.code.printout") + ')) #actual boxplot function\n');
-	if (mean == "TRUE" & (getValue ("type_of_mean") =="arithmetic_mean")) {
-		if (horizontal) {
-			echo ('	try (points(1:length(data_list) ~ sapply(data_list,mean,na.rm = TRUE), pch=' + pch_mean + ', cex = ' + getValue ("cex_sd_mean") + getValue ("sd_mean_color.code.printout") + ')) #calculates the mean for all data and adds a point at the corresponding position\n');
-		} else {
-			echo ('	try (points(sapply(data_list,mean,na.rm = TRUE), pch=' + pch_mean + ', cex = ' + getValue ("cex_sd_mean") + getValue ("sd_mean_color.code.printout") + ')) #calculates the mean for all data and adds a point at the corresponding position\n');
+	if (mean == "TRUE") {
+		var mean_fun = "mean";	// arithmetic mean
+		if (getValue ("type_of_mean") =="geometric_mean") {
+			echo('	geo_mean <- function (x) {prod(na.omit(x))^1/length(na.omit(x))}	#Calculate geometric mean\n');
+			mean_fun = "geo_mean";
+		} else if (getValue ("type_of_mean") =="harmonic_mean") {
+			echo('	har_mean <- function (x) {(1 / mean(1 / na.omit(x)))}	#Calculate harmonic mean\n');
+			mean_fun = "har_mean";
+		} else if (getValue ("type_of_mean") =="interquantile_mean") {
+			echo('	interq_mean <- function (x) {sum(quantile(x, probs=c(0.25), na.rm=TRUE), quantile(x, probs=c(0.75), na.rm=TRUE)) / 2}	#Calculate interquantile mean\n');
+			mean_fun = "interq_mean";
 		}
-	}
-	if (mean == "TRUE" & (getValue ("type_of_mean") =="geometric_mean")) {
-	  echo('	geo_mean <- function (x) {prod(na.omit(x))^1/length(na.omit(x))}	#Calculate geometric mean\n');
-	  if (horizontal) {
-	    echo ('	try (points(1:length(data_list) ~ sapply(data_list,geo_mean), pch=' + pch_mean + ', cex = ' + getValue ("cex_sd_mean") + getValue ("sd_mean_color.code.printout") + ')) #calculates the mean for all data and adds a point at the corresponding position\n');
-	  } else {
-	    echo ('	try (points(sapply(data_list,geo_mean), pch=' + pch_mean + ', cex = ' + getValue ("cex_sd_mean") + getValue ("sd_mean_color.code.printout") + ')) #calculates the mean for all data and adds a point at the corresponding position\n');
-	  }
-	}
-	if (mean == "TRUE" & (getValue ("type_of_mean") =="harmonic_mean")) {
-	  echo('	har_mean <- function (x) {(1 / mean(1 / na.omit(x)))}	#Calculate harmonic mean\n');
-	  if (horizontal) {
-	    echo ('	try (points(1:length(data_list) ~ sapply(data_list,har_mean), pch=' + pch_mean + ', cex = ' + getValue ("cex_sd_mean") + getValue ("sd_mean_color.code.printout") + ')) #calculates the mean for all data and adds a point at the corresponding position\n');
-	  } else {
-	    echo ('	try (points(sapply(data_list,har_mean), pch=' + pch_mean + ', cex = ' + getValue ("cex_sd_mean") + getValue ("sd_mean_color.code.printout") + ')) #calculates the mean for all data and adds a point at the corresponding position\n');
-	  }
-	}
-	if (mean == "TRUE" & (getValue ("type_of_mean") =="interquantile_mean")) {
-	  echo('	interq_mean <- function (x) {sum(quantile(x, probs=c(0.25), na.rm=T), quantile(x, probs=c(0.75), na.rm=TRUE)) / 2}	#Calculate interquantile mean\n');
-	  if (horizontal) {
-	    echo ('	try (points(1:length(data_list) ~ sapply(data_list,interq_mean), pch=' + pch_mean + ', cex = ' + getValue ("cex_sd_mean") + getValue ("sd_mean_color.code.printout") + ')) #calculates the mean for all data and adds a point at the corresponding position\n');
-	  } else {
-	    echo ('	try (points(sapply(data_list,interq_mean), pch=' + pch_mean + ', cex = ' + getValue ("cex_sd_mean") + getValue ("sd_mean_color.code.printout") + ')) #calculates the mean for all data and adds a point at the corresponding position\n');
-	  }
+
+		if (horizontal) {
+		  echo ('	try (points(1:length(data_list) ~ sapply(data_list,interq_mean), pch=' + pch_mean + ', cex = ' + getValue ("cex_sd_mean") + getValue ("sd_mean_color.code.printout") + ')) #calculates the mean for all data and adds a point at the corresponding position\n');
+		} else {
+		  echo ('	try (points(sapply(data_list,' + mean_fun + '), pch=' + pch_mean + ', cex = ' + getValue ("cex_sd_mean") + getValue ("sd_mean_color.code.printout") + ')) #calculates the mean for all data and adds a point at the corresponding position\n');
+		}
 	}
 
 	if (sd == "TRUE") {

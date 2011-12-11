@@ -22,6 +22,7 @@
 		<connect client="names_custom.enabled" governor="custom_names"/>
 		<connect client="names_exp.visible" governor="rexp_names"/>
 
+		<connect client="type_of_mean.enabled" governor="mean.state"/>
 		<connect client="pch_mean.enabled" governor="mean.state"/>
 		<connect client="pch_sd_high.enabled" governor="sd.state"/>
 		<connect client="pch_sd_low.enabled" governor="sd.state"/>
