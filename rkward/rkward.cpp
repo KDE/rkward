@@ -418,11 +418,11 @@ void RKWardMainWindow::initActions() {
 
 	// These two currently do the same thing
 	action = actionCollection ()->addAction ("load_unload_libs", this, SLOT (slotFileLoadLibs()));
-	action->setText (i18n ("Manage installed R packages..."));
+	action->setText (i18n ("Manage R packages..."));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionConfigurePackages));
 
 	action = actionCollection ()->addAction ("configure_packages", this, SLOT (slotFileLoadLibs()));
-	action->setText (i18n ("Manage installed R packages..."));
+	action->setText (i18n ("Manage R packages..."));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionConfigurePackages));
 
 	setStandardToolBarMenuEnabled (true);
