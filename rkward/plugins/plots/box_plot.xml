@@ -78,6 +78,12 @@
 					<frame label="Mean">
 						<checkbox id="mean" checked="false" value="TRUE" label="show mean" />
 						<spinbox type="integer" id="pch_mean" label="mean symbol" initial="15"/>
+						<radio id="type_of_mean" label="Type of mean" >
+						  <option value="arithmetic_mean" label="Arithmetic mean" checked="true" />
+						  <option value="geometric_mean" label="Geometric mean" />
+						  <option value="harmonic_mean" label="Harmonic mean" />
+						  <option value="interquantile_mean" label="Interquantile mean" />
+						</radio>
 					</frame>
 					<frame label="SD">
 						<checkbox id="sd" checked="false" value="TRUE" label="show standard deviation" />
