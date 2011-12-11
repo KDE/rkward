@@ -293,7 +293,7 @@ rk.plugin.skeleton <- function(about, path=tempdir(),
 
 			XML.pluginmap <- rk.XML.pluginmap(
 				name=pluginmap[["name"]],
-				about=about,
+				about=about.node,
 				components=all.components,
 				hierarchy=all.hierarchies,
 				require=pluginmap[["require"]],

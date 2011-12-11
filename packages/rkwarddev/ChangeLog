@@ -1,5 +1,8 @@
 ChangeLog for package rkwarddev
 
+## 0.04-12 (2011-12-11)
+  - fixed issue with "about" not being an XML node in rk.plugin.skeleton()
+
 ## 0.04-11 (2011-12-10)
   - ite() now supports full recursion also for the "thenjs" option.
   - fixed superfluous first newline in rk.JS.vars()

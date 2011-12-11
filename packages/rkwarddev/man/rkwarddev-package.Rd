@@ -11,7 +11,7 @@
 }
 \details{
   \tabular{ll}{ Package: \tab rkwarddev\cr Type: \tab
-  Package\cr Version: \tab 0.04-11\cr Date: \tab
+  Package\cr Version: \tab 0.04-12\cr Date: \tab
   2011-12-11\cr Depends: \tab R (>= 2.9.0),XiMpLe,rkward
   (>= 0.5.6)\cr Enhances: \tab rkward\cr Encoding: \tab
   UTF-8\cr License: \tab GPL (>= 3)\cr LazyLoad: \tab
