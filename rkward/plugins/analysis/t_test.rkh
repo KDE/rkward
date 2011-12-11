@@ -1,17 +1,19 @@
 <!DOCTYPE rkhelp>
 <document>
 	<summary>
-Two variable t-test (paired or independent samples).
+t-Test (two variable paired or independent samples, or one variable).
 	</summary>
 
 	<usage>
-Chose two numeric vectors to compare against each other. Specify, whether the variables are paired or independent samples. For details, see below.
+Chose two numeric vectors or one vector an a constant to compare against each other. For two samples, specify whether the variables are paired or independent samples. For details, see below.
 	</usage>
 
 	<settings>
 		<caption id="tab_variables"/>
+		<setting id="test_form">Chose if you want a two samples test, or test against a constant</setting>
 		<setting id="x">A numeric vector for the first variable</setting>
-		<setting id="y">A numeric vector for the second variable</setting>
+		<setting id="y">A numeric vector for the second variable. Available for two samples tests only.</setting>
+		<setting id="mu">A numeric constant. Available for tests agains constant only.</setting>
 		<setting id="hypothesis">Alternative hypothesis (H1) of the test.</setting>
 		<setting id="paired">Whether the variables are paired (repeated measurements on the same subject) or independent samples. For a paired test, if the two vectors are not of equal length, there will be an error.</setting>
 		<caption id="tab_options"/>

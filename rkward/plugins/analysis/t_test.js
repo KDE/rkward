@@ -1,14 +1,22 @@
 // globals
 var x;
 var y;
+var mu;
+var testForm;
 var varequal;
 var paired;
 
 function preprocess () {
 	x = getValue ("x");
 	y = getValue ("y");
+	mu = getValue ("mu");
+	testForm = getValue ("test_form");
 
-	echo ('names <- rk.get.description (' + x + ", " + y + ')\n');
+	if (testForm == "vars") {
+		echo ('names <- rk.get.description (' + x + ", " + y + ')\n');
+	} else {
+		echo ('names <- rk.get.description (' + x + ')\n');
+	}
 }
 
 function calculate () {
@@ -19,16 +27,26 @@ function calculate () {
 	var hypothesis = getValue ("hypothesis");
 
 	var options = ", alternative=\"" + hypothesis + "\"";
-	if (paired) options += ", paired=TRUE";
-	if ((!paired) && varequal) options += ", var.equal=TRUE";
+	if (testForm == "vars" && paired) options += ", paired=TRUE";
+	if (testForm == "vars" && (!paired) && varequal) options += ", var.equal=TRUE";
 	if (conflevel != "0.95") options += ", conf.level=" + conflevel;
 
-	echo ('result <- t.test (' + x + ", " + y + options + ')\n');
+	echo('result <- t.test (x=' + x);
+	if(testForm == "vars") {
+		echo(', y=' + y);
+	} else {
+		echo(', mu=' + mu);
+	}
+	echo (options + ')\n');
 }
 
 function printout () {
 	echo ('rk.header (result$method, \n');
-	echo ('	parameters=list ("Comparing", paste (names[1], "against", names[2]),\n');
+	if (testForm == "vars") {
+		echo ('	parameters=list ("Comparing", paste (names[1], "against", names[2]),\n');
+	} else {
+		echo ('	parameters=list ("Comparing", paste (names[1], "against constant"),\n');
+	}
 	echo ('	"H1", rk.describe.alternative (result)');
 	if (!paired) {
 		echo (',\n');

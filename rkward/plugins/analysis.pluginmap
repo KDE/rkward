@@ -6,7 +6,7 @@
 		<component type="standard" id="corr_matrix" file="analysis/corr_matrix.xml" label="Correlation Matrix" />
 		<component type="standard" id="cor_graph" file="plots/cor_graph.xml" label="Correlation Matrix Plot" />
 		<component type="standard" id="descriptive" file="descriptive/descriptive_statistics.xml" label="Descriptive Statistics" />
-		<component type="standard" id="t_test_two_vars" file="analysis/t_test_two_vars.xml" label="Two Variable t-Test" />
+		<component type="standard" id="t_test" file="analysis/t_test.xml" label="t-Test" />
 		<component type="standard" id="wilcoxon_test" file="analysis/wilcoxon/wilcoxon_test.xml" label="Wilcoxon Test" />
 		<component type="standard" id="wilcoxon_exact_test" file="analysis/wilcoxon/wilcoxon_exact_test.xml" label="Wilcoxon Exact Test" />
 
@@ -60,7 +60,7 @@
 			<entry component="descriptive" index="3"/>
 			<menu id="means" label="Means" index="4">
 				<menu id="ttests" label="t-Tests" index="0">
-					<entry component="t_test_two_vars" />
+					<entry component="t_test" />
 				</menu>
 			</menu>
 			<menu id="moments" label="Moments" index="6">
