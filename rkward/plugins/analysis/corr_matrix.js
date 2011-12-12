@@ -8,6 +8,7 @@ function calculate () {
 
 	var exclude_whole = "";
 	var vars = trim (getValue ("x"));
+	var toNumeric = getValue ("to_numeric");
 	use = getValue ("use");
 	if (use == "pairwise") {
 		exclude_whole = false;
@@ -20,7 +21,12 @@ function calculate () {
 
 	echo ('# cor requires all objects to be inside the same data.frame.\n');
 	echo ('# Here we construct such a temporary frame from the input variables\n');
-	echo ('data <- as.data.frame (rk.list (' + vars.split ("\n").join (", ") + '), check.names=FALSE)\n');
+	echo ('data.list <- rk.list (' + vars.split ("\n").join (", ") + ')\n');
+	if(toNumeric) {
+		echo ('# Non-numeric variables will be treated as ordered data and transformed into numeric ranks\n');
+		echo ('data.list <- lapply(data.list, function(x){\n\tif(!is.numeric(x)){\n\t\treturn(xtfrm(x))\n\t} else {\n\t\treturn(x)\n\t}})\n');
+	} else {}
+	echo ('data <- as.data.frame (data.list, check.names=FALSE)\n');
 	echo ('\n');
 	echo ('# calculate correlation matrix\n');
 	echo ('result <- cor (data, use=' + use + ', method=' + method + ')\n');

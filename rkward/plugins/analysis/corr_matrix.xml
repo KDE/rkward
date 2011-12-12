@@ -13,16 +13,17 @@
 				</row>
 			</tab>
 			<tab id="tab_options" label="Options">
-				<checkbox id="do_p" label="Calculate p values" checked="true"/>
+				<checkbox id="do_p" label="Calculate p values" value="true" checked="true" />
 				<radio id="method" label="Method">
-					<option value="pearson" label="Pearson"/>
-					<option value="kendall" label="Kendall"/>
-					<option value="spearman" label="Spearman"/>
+					<option label="Pearson's product-moment correlation" value="pearson" checked="true" />
+					<option label="Kendall's tau" value="kendall" />
+					<option label="Spearman's rho" value="spearman" />
 				</radio>
 				<radio id="use" label="Exclude missing values">
-					<option value="complete" label="whole cases"/>
-					<option value="pairwise" label="pairwise" checked="true"/>
+					<option label="whole cases" value="complete" />
+					<option label="pairwise" value="pairwise" checked="true" />
 				</radio>
+				<checkbox id="to_numeric" label="Transform ordered categorial variables to numeric ranks" value="true" />
 			</tab>
 		</tabbook>
 	</dialog>
