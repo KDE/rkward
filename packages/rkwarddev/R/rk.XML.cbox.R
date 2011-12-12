@@ -16,7 +16,7 @@
 #'     rk.XML.cbox(label="bar", value="bar2"))))
 #' cat(pasteXMLNode(test.checkboxes))
 
-rk.XML.cbox <- function(label, value, un.value=NULL, chk=FALSE, id.name="auto"){
+rk.XML.cbox <- function(label, value="true", un.value=NULL, chk=FALSE, id.name="auto"){
 	if(identical(id.name, "auto")){
 		id <- auto.ids(label, prefix=ID.prefix("checkbox"))
 	} else {

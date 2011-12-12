@@ -2,8 +2,8 @@
 \alias{rk.XML.cbox}
 \title{Create XML node "checkbox" for RKWard plugins}
 \usage{
-  rk.XML.cbox(label, value, un.value = NULL, chk = FALSE,
-    id.name = "auto")
+  rk.XML.cbox(label, value = "true", un.value = NULL,
+    chk = FALSE, id.name = "auto")
 }
 \arguments{
   \item{label}{Character string, a text label for this
