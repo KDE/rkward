@@ -56,7 +56,7 @@ function doPrintout (full) {
 	}
 	echo ('try (boxplot (data_list' + boxwex + positions + ', notch = ' + getValue ("notch") + ', outline = ' + getValue("outline") + ', horizontal = ' + getValue("orientation") + getValue ("plotoptions.code.printout") + ')) #actual boxplot function\n');
 	if (mean == "TRUE") {
-		var mean_fun = "mean";	// arithmetic mean
+		var mean_fun = "mean" + ", trim=" + getValue("trim");	// arithmetic mean
 		if (getValue ("type_of_mean") =="geometric_mean") {
 			echo('	geo_mean <- function (x) {prod(na.omit(x))^1/length(na.omit(x))}	#Calculate geometric mean\n');
 			mean_fun = "geo_mean";

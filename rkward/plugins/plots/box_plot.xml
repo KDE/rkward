@@ -23,6 +23,7 @@
 		<connect client="names_exp.visible" governor="rexp_names"/>
 
 		<connect client="type_of_mean.enabled" governor="mean.state"/>
+		<connect client="trim.enabled" governor="mean.state"/>
 		<connect client="pch_mean.enabled" governor="mean.state"/>
 		<connect client="pch_sd_high.enabled" governor="sd.state"/>
 		<connect client="pch_sd_low.enabled" governor="sd.state"/>
@@ -77,8 +78,11 @@
 				</column>
 				<column>
 					<frame label="Mean">
+					  <row>
 						<checkbox id="mean" checked="false" value="TRUE" label="show mean" />
 						<spinbox type="integer" id="pch_mean" label="mean symbol" initial="15"/>
+						<spinbox id="trim" label="Trim of arithmetic mean" type="real" min="0" max="0.5" initial="0.0" />
+					  </row>
 						<radio id="type_of_mean" label="Type of mean" >
 						  <option value="arithmetic_mean" label="Arithmetic mean" checked="true" />
 						  <option value="geometric_mean" label="Geometric mean" />
