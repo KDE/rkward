@@ -2,6 +2,7 @@ ChangeLog for package rkwarddev
 
 ## 0.04-13 (2011-12-12)
   - set default value of checked checkboxes to "true" in rk.XML.cbox()
+  - rk.XML.connect() now correctly supports 'governor="<ID>.<modifier>.not"'
 
 ## 0.04-12 (2011-12-11)
   - added function tf() for even quicker JavaScript code generation from checkboxes

@@ -41,7 +41,7 @@ rk.XML.connect <- function(governor, client, get="state", set="enabled", not=FAL
 	# if governor is an XML node but not <convert>, append ".state"
 	if(inherits(governor, "XiMpLe.node")){
 		node.name <- governor@name
-		if(!identical(node.name, "convert") & !isTRUE(not)){
+		if(!identical(node.name, "convert")){
 			# validate get modifier
 			if(modif.validity(governor, modifier=get)){
 				governor.id <- paste(governor.id, get, sep=".")
