@@ -19,11 +19,11 @@
 					<option label="Kendall's tau" value="kendall" />
 					<option label="Spearman's rho" value="spearman" />
 				</radio>
+				<checkbox id="to_numeric" label="Transform ordered categorial variables to numeric ranks" value="true" />
 				<radio id="use" label="Exclude missing values">
 					<option label="whole cases" value="complete" />
 					<option label="pairwise" value="pairwise" checked="true" />
 				</radio>
-				<checkbox id="to_numeric" label="Transform ordered categorial variables to numeric ranks" value="true" />
 			</tab>
 		</tabbook>
 	</dialog>

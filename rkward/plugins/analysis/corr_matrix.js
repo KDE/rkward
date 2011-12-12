@@ -2,13 +2,14 @@
 var use;
 var method;
 var do_p;
+var toNumeric;
 
 function calculate () {
 	do_p = getValue ("do_p");
 
 	var exclude_whole = "";
 	var vars = trim (getValue ("x"));
-	var toNumeric = getValue ("to_numeric");
+	toNumeric = getValue ("to_numeric");
 	use = getValue ("use");
 	if (use == "pairwise") {
 		exclude_whole = false;
@@ -22,9 +23,20 @@ function calculate () {
 	echo ('# cor requires all objects to be inside the same data.frame.\n');
 	echo ('# Here we construct such a temporary frame from the input variables\n');
 	echo ('data.list <- rk.list (' + vars.split ("\n").join (", ") + ')\n');
-	if(toNumeric) {
+	if (toNumeric) {
 		echo ('# Non-numeric variables will be treated as ordered data and transformed into numeric ranks\n');
-		echo ('data.list <- lapply(data.list, function(x){\n\tif(!is.numeric(x)){\n\t\treturn(xtfrm(x))\n\t} else {\n\t\treturn(x)\n\t}})\n');
+		echo ('transformed.vars <- list()\n');
+		echo ('for (i in names(data.list)) {\n');
+		echo ('	if(!is.numeric(data.list[[i]])){\n');
+		echo ('		before.vars <- as.character(unique(data.list[[i]]))\n');
+		echo ('		data.list[[i]] <- xtfrm(data.list[[i]])\n');
+		echo ('		after.vars <- unique(data.list[[i]])\n');
+		echo ('		names(after.vars) <- before.vars\n');
+		echo ('		# Keep track of all transformations\n');
+		echo ('		transformed.vars[[i]] <- data.frame(rank=sort(after.vars))\n');
+		echo ('	} else {}\n');
+		echo ('}\n');
+		echo ('# Finally combine the actual data\n');
 	} else {}
 	echo ('data <- as.data.frame (data.list, check.names=FALSE)\n');
 	echo ('\n');
@@ -57,6 +69,13 @@ function printout () {
 	if (do_p) {
 		echo ('rk.results (data.frame (result.p, check.names=FALSE), titles=c ("n \\\\ p", names (data)))\n');
 	}
+	if (toNumeric) {
+		echo ('if(length(transformed.vars) > 0){\n');
+		echo ('	rk.header("Variables transformed into numeric ranks", level=4)\n');
+		echo ('	for (i in names(transformed.vars)) {\n');
+		echo ('		rk.print(paste("Variable:<b>", i, "</b>"))\n');
+		echo ('		rk.results(transformed.vars[[i]], titles=c("original value", "assigned rank"))\n');
+		echo ('	}\n');
+		echo ('} else {}\n');
+	} else {}
 }
-
-
