@@ -23,7 +23,7 @@
 					<varselector id="vars"/>
 					<column>
 						<dropdown id="test_form" label="Test form">
-							<option label="compare two varaiables" value="vars" checked="true" />
+							<option label="compare two variables" value="vars" checked="true" />
 							<option label="compare variable against constant" value="const" />
 						</dropdown>
 						<varslot id="x" label="compare" source="vars" types="number" required="true" />
