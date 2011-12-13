@@ -4,45 +4,43 @@
 	<help file="t_test.rkh"/>
 
 	<logic>
-		<convert id="two_vars" sources="test_form.string" mode="equals" standard="vars" />
-		<connect governor="two_vars" client="y.visible" />
-		<connect governor="two_vars" client="y.required" />
-		<connect governor="two_vars.not" client="mu.visible" />
-		<connect governor="two_vars" client="paired.enabled" />
-		<connect governor="two_vars" client="varequal.enabled" />
-		<convert id="notpaired" sources="paired.state" mode="equals" standard="0" />
-		<connect governor="notpaired" client="varequal.enabled" />
-		<convert id="noteqvars" sources="varequal.state" mode="equals" standard="0" />
-		<connect governor="noteqvars" client="paired.enabled" />
+		<convert id="indep_samples" sources="test_form.string" mode="equals" standard="indep" />
+		<convert id="single_sample" sources="test_form.string" mode="equals" standard="const" />
+		<connect governor="single_sample.not" client="y.visible" />
+		<connect governor="indep_samples" client="varequal.visible" />
+		<connect governor="single_sample" client="mu.visible" />
 	</logic>
 
 	<dialog label="t-Test">
 		<tabbook>
 			<tab label="Basic settings" id="tab_variables">
+				<row>
+					<stretch/>
+					<dropdown id="test_form" label="Test form">
+						<option label="Independent samples" value="indep" checked="true" />
+						<option label="Paired samples" value="paired" />
+						<option label="Single sample (test against constant)" value="const" />
+					</dropdown>
+					<stretch/>
+				</row>
 				<row id="basic_settings_row">
 					<varselector id="vars"/>
 					<column>
-						<dropdown id="test_form" label="Test form">
-							<option label="compare two variables" value="vars" checked="true" />
-							<option label="compare variable against constant" value="const" />
-						</dropdown>
 						<varslot id="x" label="compare" source="vars" types="number" required="true" />
-						<varslot id="y" label="against" source="vars" types="number" />
+						<varslot id="y" label="against" source="vars" types="number" required="true" />
+						<checkbox id="varequal" label="assume equal variances" value="1" value_unchecked="0"/>
 						<spinbox label="against" id="mu" initial="0" />
 						<radio id="hypothesis" label="using test hypothesis">
 							<option value="two.sided" label="Two-sided"/>
 							<option value="greater" label="First is greater"/>
 							<option value="less" label="Second is greater"/>
 						</radio>
-						<checkbox id="paired" label="Paired sample" value="1" value_unchecked="0" />
 					</column>
 				</row>
 			</tab>
 			<tab label="Options" id="tab_options">
-				<checkbox id="varequal" label="assume equal variances" value="1" value_unchecked="0"/>
-				<frame label="Confidence Interval" id="confint_frame">
+				<frame label="Show Confidence Interval" id="confint" checkable="true" checked="true">
 					<spinbox type="real" id="conflevel" label="confidence level" min="0" max="1" initial="0.95"/>
-					<checkbox id="confint" label="print confidence interval" value="1" checked="true"/>
 				</frame>
 				<stretch/>
 			</tab>
@@ -51,23 +49,21 @@
 	<wizard label="Two Variable t-Test">
 		<page>
 			<text>
-				As a first step, chose if you want to compare two variable mean or one variable mean against
-				a constant value. Then select the variables/values you want to compare against each other.
-				And specify, which one you theorize to be greater. Select two-sided, if your theory does not tell you,
-				which variable is greater.</text>
-			<copy id="basic_settings_row"/>
+				As a first step, select the type of test to conduct. Select "Independent samples" when comparing data
+				from two different populations (e.g. treatment group vs. control group). For comparing matched pairs
+				or repeated measures on the same subject, select "Paired samples". Finally, you can also test a
+				single sample against a constant value.</text>
+			<copy id="test_form"/>
 		</page>
 		<page>
 			<text>
-				Below are some advanced options. It's generally safe not to assume the variables have equal variances.
-				An appropriate correction will be applied then. Chosing "assume equal variances" may increase
-				test power, however.</text>
-			<copy id="varequal"/>
+				Select the parameters of the t-test. If your hypothesis is directed, selecting a directional test hypothesis may increase test power.</text>
+			<copy id="basic_settings_row"/>
 			<text>
 				Sometimes it's helpful to get an estimate of the confidence interval of the difference in means.
 				Below you can specify whether one should be shown, and which confidence-level should be applied
 				(95% corresponds to a 5% level of significance).</text>
-			<copy id="confint_frame"/>
+			<copy id="confint"/>
 			<stretch/>
 		</page>
 	</wizard>
