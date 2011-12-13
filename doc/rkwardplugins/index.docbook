@@ -2168,7 +2168,7 @@ local({
 </varlistentry>
 <varlistentry>
 <term>&lt;text&gt;</term>
-<listitem><para>Shows the text enclosed in this tag in the GUI. Line breaks are interpreted as hard line breaks! Attributes:
+<listitem><para>Shows the text enclosed in this tag in the GUI. Some simple HTML-style markup is supported (notably <markup>&lt;b&gt;</markup>, <markup>&lt;i&gt;</markup>, <markup>&lt;p&gt;</markup>, and <markup>&lt;br/&gt;</markup>). Please keep formatting to a minimum, however. Inserting a completely empty line adds a hard line break. Attributes:
 	<variablelist>
 	<varlistentry>
 	<term>&lt;type&gt;</term>

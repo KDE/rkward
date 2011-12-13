@@ -1,3 +1,4 @@
+- Allow some markup inside <text> elements in plugins, and auto-add breaks only for duplicate newlines.		TODO: document
 - Reorganized t-test plugin, and add support for single sample t-tests			TODO: adjust test(s)
 - Fixed: Function argument hints for the second half of the parameter list would not be quoted, correctly
 - Improve keypress handling issues in the R Console, when the cursor or a selection is outside the editable range
