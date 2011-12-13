@@ -24,18 +24,18 @@ one  \texttt{R} script.
 \section{About the package}
 You might ask why you should write R scripts to generate plugins, if you could just directly write the XML
 and JavaScript files. First of all, you don't have to use this package at all, it's totally fine to code your
-plugins however you like. The main reason why I wrote this package is that I like to really concentrate on
-what I'm doing, so this is my attempt to avoid the need to switch between three different languages all the
-time. I wanted to be able to constantly ''think in  \texttt{R}`` while working on a plugin. As a side effect, a
-lot of useful automation was implemented, and using this package will definitely save you quite some amount of
-typing.
+plugins how ever you like. The main reason why I wrote this package is that I like to really concentrate on
+what I'm doing, so this is my attempt to avoid the need to switch between several files in three different languages all the
+time. I wanted to be able to constantly ''think in  \texttt{R}`` while working on a plugin, and to oversee everything
+that matters in one script. As a side effect, a lot of useful automation was implemented, so using this package
+will definitely save you quite some amount of typing.
 
 \section{Before we start}
 It is important to undertsand that while  \texttt{rkwarddev} can help you to make designing new plugins
 much easier, you still need to know how the generated XML and JavaScript files work and interact. That is, if
 you didn't yet read the \textit{Introduction to Writing Plugins for
 RKWard},\footnote{\url{http://rkward.sourceforge.net/documents/devel/plugins/index.html}} please do so before
-you start working with this package. Once you're sure you understand how plugins in  \texttt{RKWard} actually
+you start working with this package. Once you're sure you understand how plugins in \texttt{RKWard} actually
 work, just come back here.
 
 \section{Ingredients}
@@ -52,35 +52,182 @@ roughly be classified into their specific ''area`` of plugin development:
 	\item  \texttt{rk.rkh.*()}: XML code for help pages
 \end{itemize}
 
-In short, you should find a  \texttt{rk.XML.*()} equivalent to every XML tag explained in the
+In short, you should find a \texttt{rk.XML.*()} equivalent to every XML tag explained in the
 \textit{Introduction to Writing Plugins for
 RKWard},\footnote{\url{http://rkward.sourceforge.net/documents/devel/plugins/index.html}}
-e.\,g.  \texttt{rk.XML.dropdown()} to generate a  \texttt{<dropdown>} menu node. There are a few functions for
+e.\,g. \texttt{rk.XML.dropdown()} to generate a \texttt{<dropdown>} menu node. There are a few functions for
 JavaScript generation which fall out of this scheme. That is because firstly they should be intuitively to use
-just like their JavaScript equivalent (like  \texttt{echo()}), and secondly they are likely to be used very often
-in a script, so short names seemed to be a blessing here (like  \texttt{id()} or  \texttt{qp()}).
+just like their JavaScript equivalent (like \texttt{echo()}), and secondly they are likely to be used very often
+in a script, so short names seemed to be a blessing here (like \texttt{id()} or \texttt{tf()}).
 
 Adding to that, there are some special functions, which will all be explained later, but here's the list,
 roughly ordered by the development stage they're used for:
 
 \begin{itemize}
-	\item  \texttt{rk.paste.JS()}: Paste JavaScript code from  \texttt{R} objects
+	\item  \texttt{rk.paste.JS()}: Paste JavaScript code from  \texttt{rkwarddev} objects
 	\item  \texttt{rk.XML.plugin()}: Combine XML objects into one plugin GUI object
-	\item  \texttt{rk.JS.scan()}: Scan a GUI XML file (or  \texttt{R} object) and generate JavaScript code
+	\item  \texttt{rk.JS.scan()}: Scan a GUI XML file (or  \texttt{rkwarddev} object) and generate JavaScript code
 		(define all relevant variables)
-	\item  \texttt{rk.JS.saveobj()}: Scan a GUI XML file (or  \texttt{R} object) and generate JavaScript code
+	\item  \texttt{rk.JS.saveobj()}: Scan a GUI XML file (or  \texttt{rkwarddev} object) and generate JavaScript code
 		(save result objects)
 	\item  \texttt{rk.JS.doc()}: Combine JavaScript parts into one plugin JavaScript file object
-	\item  \texttt{rk.rkh.scan()}: Scan a GUI XML file (or  \texttt{R} object) and generate a help page skeleton
+	\item  \texttt{rk.rkh.scan()}: Scan a GUI XML file (or  \texttt{rkwarddev} object) and generate a help page skeleton
 	\item  \texttt{rk.rkh.doc()}: Combine XML objects into one help page object
+	\item  \texttt{rk.plugin.component()}: Combine XML, JavaScript and help file objects into one plugin component object
+		(i.\,e. one dialog, so \textit{one} plugin can provide \textit{several} dialogs in one package)
 	\item  \texttt{rk.testsuite.doc()}: Paste a testsuite skeleton
 	\item  \texttt{rk.XML.pluginmap()}: Combine XML objects into one plugin map object
-	\item  \texttt{rk.plugin.skeleton()}: Generate actual plugin files from the plugin GUI, JavaScript, help page,
+	\item  \texttt{rk.plugin.skeleton()}: Generate actual plugin files from the component,
 		testsuite and plugin map objects (i.\,e., put all of the above together)
 	\item  \texttt{rk.build.plugin()}: Compress the generated files into an installable  \texttt{R} package for
 		distribution
 \end{itemize}
 
+\subsection{Exceptions to the rule}
+As said before, there are some functions that fall out of the explained name scheme,i.\,e. they don't start with
+\texttt{rk.<XML|JS|rkh>.*()}. They are all relevant for the generation of JavaScript code, and this is just a short overview,
+how you use them will also be explained later on:
+
+\begin{itemize}
+	\item  \texttt{echo()}: Produces an equivalent of the JavaScript \texttt{echo()} function
+	\item  \texttt{id()}: Similar to paste, but replaces \texttt{rkwarddev} objects with their ID value
+	\item  \texttt{ite()}: Short for ''\textbf{i}f, \textbf{t}hen, \textbf{e}lse``, a shortcut to generate JavaScript \texttt{if() \{\} else \{\}} conditions
+	\item  \texttt{qp()}: Short for ''\textbf{q}uote \& \textbf{p}lus``, like \texttt{id()}, but with different replacement defaults
+	\item  \texttt{tf()}: Short for ''\textbf{t}rue/\textbf{f}alse``, a shortcut to \texttt{ite()} for XML checkbox objects
+	\item  \texttt{rk.comment()}: Creates a comment object to show up in the generated code -- works for both XML and JavaScript generation
+\end{itemize}
+
+
+\section{Writing a plugin}
+The previously mentioned \textit{Introduction to Writing Plugins for RKWard}\footnote{\url{http://rkward.sourceforge.net/documents/devel/plugins/index.html}}
+has a chapter on \texttt{rkwarddev} as well, which also includes a full example plugin already. This section will not so much repeat what you can learn there,
+but rather explain the basic steps to create a plugin ''the \texttt{rkwarddev} way`` in general. While doing that, we'll explore some of the alternative options
+you have when using different functions.
+
+Some of them might not be so obvious at first, but I believe that once you know them, you'll learn to like them, too.
+
+To begin with some background info, this package makes use of another \texttt{R} package I wrote, called
+\texttt{XiMpLe}\footnote{\url{http://reaktanz.de/?c=hacking\&s=XiMpLe}}. It is a \textit{very} simple XML parser/generator, hence its name.
+All \texttt{rkwarddev} functions dealing with XML utilize tools of this package, that is, the XML objects created are most likely of class
+\texttt{XiMpLe.node}, if not some other \texttt{XiMpLe} class.\footnote{The machanism for JavaScript is basically the same, but those classes and tools
+are all part of \texttt{rkwarddev} itself.}
+
+\subsection{What you see is what you get, in the end}
+
+Both packages also come with \texttt{show} methods for their objects. This means that the object you create and how it looks when called
+in an R session are not the same: What you will see in your terminal is what the object \textit{would} look like if you \textit{pasted} it
+to a file, using the \texttt{paste} functions of the packages:
+
+	\begin{Schunk}
+		\begin{Sinput}
+> rk.XML.frame(label="Example XML object")
+		\end{Sinput}
+		\begin{Soutput}
+<frame label="Example XML object" id="frm_ExmplXML">
+</frame>
+		\end{Soutput}
+	\end{Schunk}
+
+If you examine the actual structure of the created object with \texttt{str()}, you can see the gory details:
+
+	\begin{Schunk}
+		\begin{Sinput}
+> str(rk.XML.frame(label="Example XML object"))
+		\end{Sinput}
+		\begin{Soutput}
+Formal class 'XiMpLe.node' [package "XiMpLe"] with 4 slots
+  ..@ name      : chr "frame"
+  ..@ attributes:List of 2
+  .. ..$ label: chr "Example XML object"
+  .. ..$ id   : chr "frm_ExmplXML"
+  ..@ children  : list()
+  ..@ value     : chr ""
+		\end{Soutput}
+	\end{Schunk}
+
+Most of the time, you won't ever have to worry about that, since the objects will be handled by the package functions automatically.
+But it's important to understand that the results of these functions aren't simple character strings, allthough it might look like it
+at a first glance.
+
+\subsection{Generating XML code}
+In the section before, we have already generated our first XML object: the \texttt{rkwarddev} function \texttt{rk.XML.frame()} produced
+a \texttt{<frame>} node. I guess this is pretty straight forward. Usually, a frame needs some content nodes to make sense, so we'll now
+create two simple checkbox\footnote{As an almost unique exception, the name of \texttt{rk.XML.cbox()} does not match the name of the
+generated XML node, ''checkbox``. Don't worry about that.} objects, put them inside the frame and look at the result:
+
+	\begin{Schunk}
+		\begin{Sinput}
+> myCheckbox <- rk.XML.cbox(label="Check me!")
+> myCheckbox2 <- rk.XML.cbox(label="No, check me!!!", chk=TRUE)
+> myFrame <- rk.XML.frame(myCheckbox, myCheckbox2, label="Example XML object")
+> myFrame
+		\end{Sinput}
+		\begin{Soutput}
+<frame label="Example XML object" id="frm_ExmplXML">
+	<checkbox id="chc_Checkme" label="Check me!" value="true" />
+	<checkbox id="chc_Nocheckm" label="No, check me!!!" value="true" checked="true" />
+</frame>
+		\end{Soutput}
+	\end{Schunk}
+
+What we can see here is that the generated code will automatically be indented, so the result will not only work, but still be human readable
+and look nice (and probably even better than what some might come up with otherwise...). We can also learn how nodes are made nested children
+of other nodes: All \texttt{rkwarddev} functions which can create parent to more than one node have the special ''dots`` parameter in their
+signature (\texttt{...}). That way you can give them arbitrary numbers of XML objects, and they just know what you want them to do with them.
+
+\subsubsection{IDs}
+If you have a closer look you can also see one of the packages' automatic features: The node objects automatically received
+ID values, allthough we didn't specify any. By default, allmost all functions supporting IDs have \texttt{id.name="auto"} set,
+which as we've seen will not cause the ID to become \texttt{"auto"}, but a generated value. Usually an auto-ID is combined
+of the abbreviated node type and the abbreviated label given. So here, our \texttt{<frame>} node labelled ''Example XML object`` got the
+ID \texttt{frm\_ExmplXML}. If we wanted a node to have some specific ID, we can use the \texttt{id.name} argument:
+
+	\begin{Schunk}
+		\begin{Sinput}
+> rk.XML.cbox(label="Check me!", id.name="specificID")
+		\end{Sinput}
+		\begin{Soutput}
+<checkbox id="specificID" label="Check me!" value="true" />
+		\end{Soutput}
+	\end{Schunk}
+
+Now, the fact that these nodes are actually objects of class \texttt{XiMpLe.node} gives us direct access to their attributes, including the ID:
+
+	\begin{Schunk}
+		\begin{Sinput}
+> myCheckbox <- rk.XML.cbox(label="Check me!")
+> myCheckbox@attributes[["id"]]
+		\end{Sinput}
+		\begin{Soutput}
+[1] "chc_Checkme"
+		\end{Soutput}
+	\end{Schunk}
+
+Again, mere mortals probably won't use this directly, but this makes it easy for functions read the IDs of XML nodes and use them. For example,
+if you wanted to define a varselector and a varslot, so the latter can take objects from the former, you need to give the varselector an ID and
+define that as the source in the varslot. If you wrote XML directly, you would give the \texttt{source} attribute the actual ID. With this package,
+you \textit{can} do that too, but there is a much more elegant solution: Give the whole XML object and let the function extract the ID itself:
+
+	\begin{Schunk}
+		\begin{Sinput}
+> (myVarselector <- rk.XML.varselector(id.name="my_vars"))
+		\end{Sinput}
+		\begin{Soutput}
+<varselector id="my_vars" />
+		\end{Soutput}
+		\begin{Sinput}
+> (myVars <- rk.XML.varslot(label="Chose a variable", source=myVarselector))
+		\end{Sinput}
+		\begin{Soutput}
+<varslot id="vrsl_Chosvrbl" label="Chose a variable" source="my_vars" />
+		\end{Soutput}
+	\end{Schunk}
+
+So basically you define an XML object and then re-use this single object throughout your plugin script, be it for actual XML generation or, as
+in this case, only for getting its ID. This means, in other words, you can tell the varslot ''take variables from this object``, you don't have
+to worry about IDs \textit{at all}. Just remember how you named an object and you can do all kinds of things with it.
+
+This context dependent object handling will become even more useful when we get to the JavaScript part.
 
 %  \begin{Schunk}
 %  	\begin{Sinput}
