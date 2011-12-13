@@ -82,7 +82,7 @@
 								<option value="arithmetic_mean" label="Arithmetic mean" checked="true" />
 								<option value="geometric_mean" label="Geometric mean" />
 								<option value="harmonic_mean" label="Harmonic mean" />
-								<option value="interquantile_mean" label="Interquantile mean" />
+								<option value="interquartile_mean" label="Interquartile mean (IQM)" />
 							</radio>
 							<spinbox id="trim" label="Trim of arithmetic mean" type="real" min="0" max="0.5" initial="0.0" />
 						</row>

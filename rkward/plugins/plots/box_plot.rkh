@@ -24,7 +24,7 @@ Chose numerical data to be plotted. Data can be organized in separate vectors, o
 		<setting id="mean">Whether to draw a mark indicating the mean.</setting>
 		<setting id="trim">Trim applies only to the arithmetic mean. By default trim is set to zero. It defines the fraction of observations to be trimmed from each end of a variable before the arithmetic mean is computed.</setting>
 		<setting id="pch_mean">If the mean is to be indicated: Symbol to use as mark.</setting>
-		<setting id="type_of_mean">Use this option to select a specific type of mean. The arithmetic mean is the default. Others include the geometric mean, the harmonic mean and interquantile mean.</setting>
+		<setting id="type_of_mean">Use this option to select a specific type of mean. The arithmetic mean is the default. Others include the geometric mean, the harmonic mean and interquartile mean (IQM).</setting>
 		<setting id="sd">Whether to draw a mark indicating the standard deviation.</setting>
 		<setting id="pch_sd_high">If the standard deviation is to be indicated: Symbol to use as mark for the upper sd.</setting>
 		<setting id="pch_sd_low">If the standard deviation is to be indicated: Symbol to use as mark for the lower sd.</setting>

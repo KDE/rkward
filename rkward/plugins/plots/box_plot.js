@@ -58,13 +58,13 @@ function doPrintout (full) {
 	if (do_mean) {
 		var mean_fun = "mean";
 		if (getValue ("type_of_mean") =="geometric_mean") {
-			echo('	geo_mean <- function (x) {prod(na.omit(x))^1/length(na.omit(x))}	#Calculate geometric mean\n');
+			echo('	geo_mean <- function (x) {prod(na.omit(x))^(1/length(na.omit(x)))}	#Calculate geometric mean\n');
 			mean_fun = "geo_mean";
 		} else if (getValue ("type_of_mean") =="harmonic_mean") {
 			echo('	har_mean <- function (x) {(1 / mean(1 / na.omit(x)))}	#Calculate harmonic mean\n');
 			mean_fun = "har_mean";
-		} else if (getValue ("type_of_mean") =="interquantile_mean") {
-			echo('	interq_mean <- function (x) {sum(quantile(x, probs=c(0.25), na.rm=TRUE), quantile(x, probs=c(0.75), na.rm=TRUE)) / 2}	#Calculate interquantile mean\n');
+		} else if (getValue ("type_of_mean") =="interquartile_mean") {
+		  echo('	interq_mean <- function (x) {sum(quantile(x, probs=c(0.25), na.rm=TRUE), quantile(x, probs=c(0.75), na.rm=TRUE)) / 2}	#Calculate the interquartile mean\n');
 			mean_fun = "interq_mean";
 		} else {	// arithmetic mean
 			var trim = getValue("trim");
