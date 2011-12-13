@@ -41,14 +41,9 @@ RKText::RKText (const QDomElement &element, RKComponent *parent_component, QWidg
 	label->setWordWrap (true);
 	vbox->addWidget (label);
 
-	QString initial_text;
-	QStringList lines = element.text ().split ("\n");
-	for (int i=0; i < lines.count (); i++) {
-		QString line = lines[i].trimmed ();
-		if (!line.isEmpty ()) {
-			initial_text.append (line + '\n');
-		}
-	}
+	QString initial_text = xml->getRawContents (element, DL_ERROR);
+	if (!initial_text.isEmpty ()) initial_text = "<p>" + initial_text + "</p>";
+	initial_text.replace ("\n\n", "</p>\n<p>");
 
 	int type = xml->getMultiChoiceAttribute (element, "type", "normal;warning;error", 0, DL_INFO);
 	if (type != 0) {

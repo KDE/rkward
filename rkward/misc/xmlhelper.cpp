@@ -2,7 +2,7 @@
                           xmlhelper.cpp  -  description
                              -------------------
     begin                : Fri May 6 2005
-    copyright            : (C) 2005, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2007, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -23,6 +23,7 @@
 #include <qfile.h>
 #include <qfileinfo.h>
 #include <qdir.h>
+#include <QTextStream>
 
 #include "../debug.h"
 
@@ -307,6 +308,24 @@ bool XMLHelper::getBoolAttribute (const QDomElement &element, const QString &nam
 
 	displayError (&element, i18n ("Illegal attribute value. Allowed values are '%1' or '%2', only.", QString ("true"), QString ("false")), debug_level, DL_ERROR);
 	return def;
+}
+
+QString XMLHelper::getRawContents (const QDomElement &element, int debug_level) {
+	RK_TRACE (XML);
+
+	QString ret;
+	QTextStream stream (&ret);
+
+	if (!element.isNull()) {
+		QTextStream stream (&ret, QIODevice::WriteOnly);
+		for (QDomNode node = element.firstChild (); !node.isNull (); node = node.nextSibling ()) {
+			node.save (stream, 0);
+		}
+	} else {
+		displayError (&element, i18n ("Trying to retrieve contents of invalid element"), debug_level);
+	}
+
+	return ret;
 }
 
 void XMLHelper::displayError (const QDomNode *in_node, const QString &message, int debug_level, int message_level) {

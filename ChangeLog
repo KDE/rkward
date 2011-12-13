@@ -1,3 +1,4 @@
+- Reorganized t-test plugin, and add support for single sample t-tests			TODO: adjust test(s)
 - Fixed: Function argument hints for the second half of the parameter list would not be quoted, correctly
 - Improve keypress handling issues in the R Console, when the cursor or a selection is outside the editable range
 - Fixed: Failure to open workspaces with non-latin1 filenames from the command line

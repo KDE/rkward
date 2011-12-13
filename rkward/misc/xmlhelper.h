@@ -2,7 +2,7 @@
                           xmlhelper.h  -  description
                              -------------------
     begin                : Fri May 6 2005
-    copyright            : (C) 2005, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2007, 2011 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -127,6 +127,12 @@ When calling this function, highestError () will be reset to 0.
 @param debug_level level of debug message to generate in case of failure (i.e. no such attribute was found. Note that if the given attribute is found, but is not a valid boolean, an error-message will be shown regardless of this setting, but highestError () will still use debug_level)
 @returns true or false based on the value of the given attribute or the given default */
 	bool getBoolAttribute (const QDomElement &element, const QString &name, bool def, int debug_level);
+
+/** Gets a string representation of whatever is *inside* the element. Contrary to QDomElement::text(), this includes child tags.
+ * @param element the element of interest
+ * @param debug_level level of debug message to generate in case of failure (i.e. the element is null)
+ * @returns the contents as a QString (may be empty) */
+	QString getRawContents (const QDomElement &element, int debug_level);
 
 /** @returns the level of the most severe error since the last call to openXMLFile () (based on the debug_level options passed to XMLHelper () */
 	int highestError () { return (highest_error); };

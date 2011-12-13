@@ -50,20 +50,26 @@
 		<page>
 			<text>
 				As a first step, select the type of test to conduct.
-				Select "Independent samples" when comparing data from two different populations (e.g. treatment group vs. control group). For comparing matched pairs or repeated measures on the same subject, select "Paired samples". Finally, you can also test a single sample against a constant value.</text>
+
+				Select "Independent samples" when comparing data from two different populations (e.g. treatment group
+				vs. control group). For comparing matched pairs or repeated measures on the same subject, select
+				"Paired samples". Finally, you can also test a single sample against a constant value.</text>
 			<copy id="test_form"/>
 			<stretch/>
 		</page>
 		<page>
 			<text>
-				Select the parameters of the t-test. If your hypothesis is directed, selecting a directional test hypothesis may increase test power.</text>
+				Select the parameters of the t-test. If your hypothesis is directed, selecting a directional test
+				hypothesis may increase test power.</text>
 			<copy id="basic_settings_row"/>
 			<stretch/>
 		</page>
 		<page>
 			<text>
 				Sometimes it's helpful to get an estimate of the confidence interval of the difference in means.
-				Below you can specify whether one should be shown, and which confidence-level should be applied (95% corresponds to a 5% level of significance).</text>
+
+				Below you can specify whether one should be shown, and which confidence-level should be applied (95%
+				corresponds to a 5% level of significance).</text>
 			<copy id="confint"/>
 			<stretch/>
 		</page>

@@ -58,8 +58,8 @@ A duplicate option has to be tested-->
 						</radio>
 						<column>
 							<text>
-					Enter value - for diff.col. enter a vector -
-					eg:  c(1,2) or c('red','green')
+						Enter value - for diff.col. enter a vector -<br/>
+						eg:  c(1,2) or c('red','green')
 							</text>
 							<input size="small" id="col" initial="'black'" label=" " />
 						</column>
