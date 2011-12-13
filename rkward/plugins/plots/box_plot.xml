@@ -22,12 +22,11 @@
 		<connect client="names_custom.enabled" governor="custom_names"/>
 		<connect client="names_exp.visible" governor="rexp_names"/>
 
-		<connect client="type_of_mean.enabled" governor="mean.state"/>
-		<connect client="trim.enabled" governor="mean.state"/>
-		<connect client="pch_mean.enabled" governor="mean.state"/>
-		<connect client="pch_sd_high.enabled" governor="sd.state"/>
-		<connect client="pch_sd_low.enabled" governor="sd.state"/>
-		<convert id="sd_or_mean" mode="or" sources="mean.state;sd.state"/>
+		<connect client="type_of_mean.enabled" governor="mean.checked"/>
+		<convert id="arith_mean" mode="equals" sources="type_of_mean.string" standard="arithmetic_mean" />
+		<connect client="trim.enabled" governor="arith_mean"/>
+		<connect client="pch_mean.enabled" governor="mean.checked"/>
+		<convert id="sd_or_mean" mode="or" sources="mean.checked;sd.checked"/>
 		<connect client="size_and_color_frame.enabled" governor="sd_or_mean"/>
 	</logic>
 	<dialog label="Boxplot" >
@@ -77,21 +76,19 @@
 					</frame>
 				</column>
 				<column>
-					<frame label="Mean">
-					  <row>
-						<checkbox id="mean" checked="false" value="TRUE" label="show mean" />
+					<frame id="mean" label="Show mean" checkable="true" checked="false">
 						<spinbox type="integer" id="pch_mean" label="mean symbol" initial="15"/>
-						<spinbox id="trim" label="Trim of arithmetic mean" type="real" min="0" max="0.5" initial="0.0" />
-					  </row>
-						<radio id="type_of_mean" label="Type of mean" >
-						  <option value="arithmetic_mean" label="Arithmetic mean" checked="true" />
-						  <option value="geometric_mean" label="Geometric mean" />
-						  <option value="harmonic_mean" label="Harmonic mean" />
-						  <option value="interquantile_mean" label="Interquantile mean" />
-						</radio>
+						<row>
+							<radio id="type_of_mean" label="Type of mean" >
+								<option value="arithmetic_mean" label="Arithmetic mean" checked="true" />
+								<option value="geometric_mean" label="Geometric mean" />
+								<option value="harmonic_mean" label="Harmonic mean" />
+								<option value="interquantile_mean" label="Interquantile mean" />
+							</radio>
+							<spinbox id="trim" label="Trim of arithmetic mean" type="real" min="0" max="0.5" initial="0.0" />
+						</row>
 					</frame>
-					<frame label="SD">
-						<checkbox id="sd" checked="false" value="TRUE" label="show standard deviation" />
+					<frame id="sd" label="show standard deviation" checked="false" checkable="true">
 						<spinbox type="integer" id="pch_sd_high" label="standard deviation symbol (upper)" initial="3"/>
 						<spinbox type="integer" id="pch_sd_low" label="standard deviation symbol (lower)" initial="3"/>
 					</frame>

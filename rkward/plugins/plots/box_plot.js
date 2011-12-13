@@ -10,9 +10,9 @@ function doPrintout (full) {
 	var grouped_mode = getValue ("data_mode_grouped.numeric");
 	var dodged = grouped_mode && getValue ("dodges");
 	var names_mode = getValue ("names_mode");
-	var mean = getValue ("mean");
+	var do_mean = getValue ("mean.checked");
 	var pch_mean = getValue ("pch_mean");
-	var sd = getValue ("sd");
+	var do_sd = getValue ("sd.checked");
 	var pch_sd_high = getValue ("pch_sd_high");
 	var pch_sd_low = getValue ("pch_sd_low");
 	var horizontal = getValue ("orientation") == "TRUE";
@@ -55,8 +55,8 @@ function doPrintout (full) {
 		echo ('rk.graph.on()\n');
 	}
 	echo ('try (boxplot (data_list' + boxwex + positions + ', notch = ' + getValue ("notch") + ', outline = ' + getValue("outline") + ', horizontal = ' + getValue("orientation") + getValue ("plotoptions.code.printout") + ')) #actual boxplot function\n');
-	if (mean == "TRUE") {
-		var mean_fun = "mean" + ", trim=" + getValue("trim");	// arithmetic mean
+	if (do_mean) {
+		var mean_fun = "mean";
 		if (getValue ("type_of_mean") =="geometric_mean") {
 			echo('	geo_mean <- function (x) {prod(na.omit(x))^1/length(na.omit(x))}	#Calculate geometric mean\n');
 			mean_fun = "geo_mean";
@@ -66,6 +66,9 @@ function doPrintout (full) {
 		} else if (getValue ("type_of_mean") =="interquantile_mean") {
 			echo('	interq_mean <- function (x) {sum(quantile(x, probs=c(0.25), na.rm=TRUE), quantile(x, probs=c(0.75), na.rm=TRUE)) / 2}	#Calculate interquantile mean\n');
 			mean_fun = "interq_mean";
+		} else {	// arithmetic mean
+			var trim = getValue("trim");
+			if (trim != 0) mean_fun += ", trim=" + trim;
 		}
 
 		if (horizontal) {
@@ -75,7 +78,7 @@ function doPrintout (full) {
 		}
 	}
 
-	if (sd == "TRUE") {
+	if (do_sd) {
 		echo ('	sd_low <- (sapply(data_list,mean,na.rm = TRUE)) - (sapply(data_list,sd,na.rm = TRUE))\n');
 		echo ('	sd_high <- (sapply(data_list,mean,na.rm = TRUE)) + (sapply(data_list,sd,na.rm = TRUE))\n');
 		if (horizontal) {
