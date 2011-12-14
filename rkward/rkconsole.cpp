@@ -235,14 +235,25 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 	const int modifier_mask = Qt::ShiftModifier | Qt::ControlModifier | Qt::AltModifier;
 	Qt::KeyboardModifiers modifier = e->modifiers () & modifier_mask;
 
-	if (key == Qt::Key_Up) {
-		commandsListUp (RKSettingsModuleConsole::shouldDoHistoryContextSensitive (modifier));
+	if ((key == Qt::Key_Up) || (key == Qt::Key_Down)) {
+		KTextEditor::CodeCompletionInterface *iface = qobject_cast<KTextEditor::CodeCompletionInterface*> (view);
+		if (iface && iface->isCompletionActive ()) {
+			if (key == Qt::Key_Up) triggerEditAction ("move_line_up");
+			else triggerEditAction ("move_line_down");
+			return true;
+		}
+
+		// showing completion list during history navigation is not a good idea, since it uses the same keys
+		bool auto_inv = (iface && iface->isAutomaticInvocationEnabled ());
+		if (iface) iface->setAutomaticInvocationEnabled (false);
+
+		if (key == Qt::Key_Up) commandsListUp (RKSettingsModuleConsole::shouldDoHistoryContextSensitive (modifier));
+		else commandsListDown (RKSettingsModuleConsole::shouldDoHistoryContextSensitive (modifier));
+
+		if (iface) iface->setAutomaticInvocationEnabled (auto_inv);
 		return true;
 	}
-	else if (key == Qt::Key_Down) {
-		commandsListDown (RKSettingsModuleConsole::shouldDoHistoryContextSensitive (modifier));
-		return true;
-	}
+
 	command_edited = true; // all other keys are considered as "editing" the current comand
 
 	if (key == Qt::Key_Home) {
@@ -460,7 +471,7 @@ bool RKConsole::eventFilter (QObject *o, QEvent *e) {
 
 	if (e->type () == QEvent::KeyPress) {
 		QKeyEvent *k = (QKeyEvent *)e;
-		return handleKeyPress (k);
+		return (handleKeyPress (k));
 	} else if (e->type () == QEvent::MouseButtonPress) {
 		// we seem to need this, as the kateview will swallow the contextMenuEvent, otherwise
 		QMouseEvent *m = (QMouseEvent *)e;

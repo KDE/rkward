@@ -33,9 +33,10 @@ try ( {
 	x <- * 1		# syntax error
 	x += 1 -= x1 *= x2	# syntax error
 	x =* 1 =/ x1 // x2	# syntax error
+	x +!= y +-= z +!/ 2	# syntax error
 	x =+ 1 =- x1		# These look misleading, but are legal
 	1 +-!-++--!!+ 1		# Crazy, but legal
-	x +!= y +-= z +!/ 2	# These are illegal, again
+	x <- ~1			# ERROR: Actually, this is legal, but it's marked up as an error
 	"%my 1st infix%" <- function (x, y) { x + y }		# legal infix
 	3 %my 1st infix% 4
 	"%my%infix%" <- function (x, y) { x + y }	# illegal infix
