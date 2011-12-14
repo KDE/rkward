@@ -138,7 +138,7 @@ rk.plugin.component <- function(about, xml=list(), js=list(), rkh=list(),
 			} else {}
 		}
 		if(!"results.header" %in% got.JS.options) {
-			js[["results.header"]] <- paste(name.orig, " results", sep="")
+			js[["results.header"]] <- paste("\"", name.orig, " results\"", sep="")
 		} else {}
 		if("var" %in% scan){
 			var.scanned <- rk.JS.scan(XML.plugin)

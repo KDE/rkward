@@ -478,7 +478,7 @@ For filenames 'Example plugin' was renamed to 'Exampleplugin'.
 		\end{Soutput}
 	\end{Schunk}
 
-Now the plugin actually changes the generated code of you select an object from the workspace and toggle the checkboxes:
+Now the plugin actually changes the generated code if you select an object from the workspace and toggle the checkboxes:
 
 \begin{center}
  \includegraphics{./RKWard_vign_example_dialog_wcode_JS.png}
