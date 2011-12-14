@@ -3,19 +3,26 @@
 \title{Create JavaScript outline from RKWard plugin XML}
 \usage{
   rk.JS.doc(require = c(), variables = NULL,
-    results.header = NULL, preprocess = NULL,
-    calculate = NULL, printout = NULL, doPrintout = NULL,
-    load.silencer = NULL, gen.info = TRUE,
-    indent.by = "\t")
+    globals = NULL, results.header = NULL,
+    preprocess = NULL, calculate = NULL, printout = NULL,
+    doPrintout = NULL, load.silencer = NULL,
+    gen.info = TRUE, indent.by = "\t")
 }
 \arguments{
   \item{require}{A character vector with names of R
   packages that the dialog depends on.}
 
-  \item{variables}{A character string to be included to
-  read in all needed variables from the dialog.  Refer to
-  \code{\link{rk.JS.scan}} for a function to create this
-  from an existing plugin XML file.}
+  \item{variables}{Either a character string to be included
+  to read in all needed variables from the dialog (see
+  \code{\link{rk.JS.scan}}), or an object of class
+  \code{rk.JS.var} which will be coerced into character.
+  These variables will be defined in the \code{calculate()}
+  and/or \code{doPrintout()} functions.}
+
+  \item{globals}{Like \code{variables}, but these variables
+  will be defined globally. If \code{variables} is set as
+  well, the function tries to remove duplicate
+  definitions.}
 
   \item{results.header}{A character string to headline the
   printed results. Include escapes quotes (\\") if needed.

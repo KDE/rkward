@@ -3,6 +3,9 @@ ChangeLog for package rkwarddev
 ## 0.05-0 (2011-12-14)
   - "result.header" now doesn't add quotes by itself in rk.JS.doc(), so you can have R objects pasted.
     previous scripts need to be adapted accordingly! the headers can also be deactivated by setting to FALSE or ""
+  - fixed show method for objects of class rk.JS.var with more than one variable object
+  - added support for global variables to rk.JS.doc() and rk.plugin.component(), and therefore also rk.plugin.skeleton()
+  - "variables" and "globals" in rk.JS.doc() can now also be given as objects of class rk.JS.var
   - worked on the vignette
 
 ## 0.04-13 (2011-12-12)

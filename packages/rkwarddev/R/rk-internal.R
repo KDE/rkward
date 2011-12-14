@@ -714,6 +714,9 @@ paste.JS.var <- function(object, level=2, indent.by="\t", JS.prefix=NULL, modifi
 					default=default,
 					join=join,
 					names.only=names.only)}))
+	if(!isTRUE(names.only) & !is.null(results)){
+		results <- paste(results, collapse="\n")
+	}
 	if(!isTRUE(names.only)){
 		results <- paste(results, collapse="")
 	} else {}
@@ -749,7 +752,7 @@ paste.JS.var <- function(object, level=2, indent.by="\t", JS.prefix=NULL, modifi
 			if(isTRUE(names.only)){
 				results <- c(results, camelCode(c(JS.prefix, JS.var)))
 			} else {
-				results <- paste(results, main.indent, "var ", camelCode(c(JS.prefix, JS.var)), " = getValue(\"", XML.var, "\")", join.code, ";", sep="")
+				results <- paste(main.indent, "var ", camelCode(c(JS.prefix, JS.var)), " = getValue(\"", XML.var, "\")", join.code, ";", sep="")
 			}
 		} else {}
 		if(length(modifiers) > 0){
@@ -765,10 +768,10 @@ paste.JS.var <- function(object, level=2, indent.by="\t", JS.prefix=NULL, modifi
 							" = getValue(\"", XML.var, ".", this.modif, "\")", join.code, ";", sep=""))
 					}
 				})
-			if(!identical(results, "")){
-				results <- c(results, modif.results)
-			} else {
+			if(identical(results, "")){
 				results <- modif.results
+			} else {
+				results <- c(results, modif.results)
 			}
 		}
 	} else {}

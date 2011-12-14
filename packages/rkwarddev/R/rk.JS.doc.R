@@ -3,8 +3,11 @@
 #' @note The JavaScript
 #'
 #' @param require A character vector with names of R packages that the dialog depends on.
-#' @param variables A character string to be included to read in all needed variables from the dialog.
-#'		Refer to \code{\link{rk.JS.scan}} for a function to create this from an existing plugin XML file. 
+#' @param variables Either a character string to be included to read in all needed variables from the dialog (see \code{\link{rk.JS.scan}}),
+#'		or an object of class \code{rk.JS.var} which will be coerced into character. These variables will be defined in
+#'		the \code{calculate()} and/or \code{doPrintout()} functions.
+#' @param globals Like \code{variables}, but these variables will be defined globally. If \code{variables} is set as well,
+#'		the function tries to remove duplicate definitions.
 #' @param results.header A character string to headline the printed results. Include escapes quotes (\\") if needed.
 #'		Set to \code{FALSE} or \code{""} if you need more control and want to define the header section in \code{printout}.
 #' @param preprocess A character string to be included in the \code{preprocess()} function. This string will be
@@ -32,10 +35,39 @@
 #'		and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @export
 
-rk.JS.doc <- function(require=c(), variables=NULL, results.header=NULL,
+rk.JS.doc <- function(require=c(), variables=NULL, globals=NULL, results.header=NULL,
 	preprocess=NULL, calculate=NULL, printout=NULL, doPrintout=NULL, load.silencer=NULL, gen.info=TRUE, indent.by="\t"){
 
+	# some data transformation
+	if(inherits(variables, "rk.JS.var")){
+		variables <- rk.paste.JS(variables)
+	} else {}
+	if(inherits(globals, "rk.JS.var")){
+		globals <- rk.paste.JS(globals, level=1)
+	} else {}
+
 	js.gen.info <- ifelse(isTRUE(gen.info), rk.paste.JS(generator.info, level=1), "")
+
+	if(!is.null(globals)){
+		js.globals <- paste(
+			"// define variables globally\n",
+			paste(globals, collapse=""), sep="")
+		if(!is.null(variables)){
+			# remove globals from variables, if duplicate
+			# we'll split them by semicolon
+			split.globs <- unlist(strsplit(rk.paste.JS(globals), ";"))
+			split.vars <- unlist(strsplit(rk.paste.JS(variables), ";"))
+			# for better comparison, remove all spaces
+			stripped.globs <- gsub("[[:space:]]", "", split.globs)
+			stripped.vars <- gsub("[[:space:]]", "", split.vars)
+			# leave only variables *not* found in globals
+			ok.vars <- split.vars[!stripped.vars %in% stripped.globs]
+			# finally, glue back the semicolon and make one string again
+			variables <- gsub("^\n*", "", paste(paste(ok.vars, ";", sep=""), collapse=""))
+		} else {}
+	} else {
+		js.globals <- NULL
+	}
 
 	js.require <- unlist(sapply(require, function(this.req){
 			if(is.null(load.silencer)){
@@ -116,7 +148,7 @@ rk.JS.doc <- function(require=c(), variables=NULL, results.header=NULL,
 				sep="")
 	}
 
-	JS.doc <- paste(js.gen.info, js.preprocess, js.calculate, js.printout, js.doPrintout, sep="\n\n")
+	JS.doc <- paste(js.gen.info, js.globals, js.preprocess, js.calculate, js.printout, js.doPrintout, sep="\n\n")
 
 	return(JS.doc)
 }
