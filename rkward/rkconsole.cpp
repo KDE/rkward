@@ -344,6 +344,10 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 		}
 		return true;
 	} else if (key == Qt::Key_Tab) {
+		KTextEditor::CodeCompletionInterface *iface = qobject_cast<KTextEditor::CodeCompletionInterface*> (view);
+		if (iface && iface->isCompletionActive ()) {
+			return false;
+		}
 		doTabCompletion ();
 		return true;
 	}
