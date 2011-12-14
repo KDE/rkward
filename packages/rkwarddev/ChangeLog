@@ -1,5 +1,10 @@
 ChangeLog for package rkwarddev
 
+## 0.05-0 (2011-12-14)
+  - "result.header" now doesn't add quotes by itself in rk.JS.doc(), so you can have R objects pasted.
+    previous scripts need to be adapted accordingly! the headers can also be deactivated by setting to FALSE or ""
+  - worked on the vignette
+
 ## 0.04-13 (2011-12-12)
   - set default value of checked checkboxes to "true" in rk.XML.cbox()
   - rk.XML.connect() now correctly supports 'governor="<ID>.<modifier>.not"'

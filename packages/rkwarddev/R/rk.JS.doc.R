@@ -5,7 +5,8 @@
 #' @param require A character vector with names of R packages that the dialog depends on.
 #' @param variables A character string to be included to read in all needed variables from the dialog.
 #'		Refer to \code{\link{rk.JS.scan}} for a function to create this from an existing plugin XML file. 
-#' @param results.header A character string to headline the printed results.
+#' @param results.header A character string to headline the printed results. Include escapes quotes (\\") if needed.
+#'		Set to \code{FALSE} or \code{""} if you need more control and want to define the header section in \code{printout}.
 #' @param preprocess A character string to be included in the \code{preprocess()} function. This string will be
 #'		pasted as-is, after \code{require} has been evaluated.
 #' @param calculate A character string to be included in the \code{calculate()} function. This string will be
@@ -72,7 +73,9 @@ rk.JS.doc <- function(require=c(), variables=NULL, results.header=NULL,
 			if(is.null(doPrintout)){
 				paste(
 					indent(2, by=indent.by), "// printout the results\n",
-					indent(2, by=indent.by), echo(id("rk.header(\"", results.header, "\", level=1)\n")),
+					if(is.character(results.header) && !identical(results.header, "")){
+						paste(indent(2, by=indent.by), echo(id("rk.header(", results.header, ", level=1)\n")), sep="")
+					} else {},
 					"\n",
 					ifelse(is.null(printout), echo("rk.print(\"\")\n"), paste("\n", printout, sep="")),
 					"\n",
@@ -101,7 +104,9 @@ rk.JS.doc <- function(require=c(), variables=NULL, results.header=NULL,
 						indent(2, by=indent.by), "// read in variables from dialog\n", 
 						paste(variables, collapse=""), "\n\n", sep="")),
 					indent(2, by=indent.by), "// create the plot\n",
-					rk.paste.JS(ite("full", echo(id("rk.header(\"", results.header,"\", level=1)\n")))),
+					if(is.character(results.header) && !identical(results.header, "")){
+						rk.paste.JS(ite("full", echo(id("rk.header(", results.header,", level=1)\n"))))
+					} else {},
 					"\n\n",
 					doPrintout,
 					if(!is.null(printout)){

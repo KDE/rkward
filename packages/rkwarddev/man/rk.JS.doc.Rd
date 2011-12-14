@@ -18,7 +18,10 @@
   from an existing plugin XML file.}
 
   \item{results.header}{A character string to headline the
-  printed results.}
+  printed results. Include escapes quotes (\\") if needed.
+  Set to \code{FALSE} or \code{""} if you need more control
+  and want to define the header section in
+  \code{printout}.}
 
   \item{preprocess}{A character string to be included in
   the \code{preprocess()} function. This string will be
