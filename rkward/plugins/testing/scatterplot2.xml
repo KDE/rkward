@@ -9,9 +9,11 @@
 				<row>
 					<varselector id="selector" />
 					<optionset id="vars">  <!-- for auto-mode: keycolumn="..." -->
-						<option id="xvar" label="X" connect="xsel.available" display_modifier="shortname"/>
-						<option id="yvar" label="Y" connect="ysel.available" display_modifier="shortname"/>
-						<option id="custom_color" connect="colorframe.checked"/> <!-- unlabeled columns will not be shown in the optiondisplay -->
+						<option id="xvar" connect="xsel.available" /> <!-- unlabeled columns will not be shown in the optiondisplay -->
+						<option id="xvar_disp" label="X" connect="xsel.available.shortname" restorable="false" /> <!-- This column is shown, but it cannot be restored (i.e. written back to the real widget) -->
+						<option id="yvar" connect="ysel.available" />
+						<option id="yvar_disp" label="Y" connect="ysel.available.shortname" restorable="false"  />
+						<option id="custom_color" connect="colorframe.checked"/>
 						<option id="color" connect="color.color.string"/>
 						<content>
 							<optiondisplay show_index="true"/>

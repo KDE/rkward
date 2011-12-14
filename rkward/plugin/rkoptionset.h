@@ -51,8 +51,10 @@ private:
 	struct ColumnInfo {
 		QString column_name;
 		QString column_label;
+		QString governor;
+		QString governor_modifier;
 		int display_index;
-		QString display_modifier;
+		bool restorable;
 	};
 	QMap<RKComponentPropertyStringList *, ColumnInfo> column_map;
 	RKComponent *container;

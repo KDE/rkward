@@ -59,13 +59,12 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	XMLChildList options = xml->getChildElements (element, "option", DL_WARNING);
 
 	int visible_columns = 0;
-	QMap<RKComponentPropertyStringList *, QString> columns_to_governors;
 	for (int i = 0; i < options.size (); ++i) {
 		const QDomElement &e = options.at (i);
 		QString id = xml->getStringAttribute (e, "id", QString (), DL_ERROR);
 		QString label = xml->getStringAttribute (e, "label", QString (), DL_DEBUG);
 		QString governor = xml->getStringAttribute (e, "connect", QString (), DL_WARNING);
-		QString display_modifier = xml->getStringAttribute (e, "display_modifier", QString (), DL_WARNING);
+		bool restorable = xml->getBoolAttribute (e, "restorable", true, DL_INFO);
 
 		while (columns_to_governors.contains (id) || child_map.contains (id)) {
 			RK_DO (qDebug ("optionset already contains a property named %s. Renaming to _%s", qPrintable (id), qPrintable (id)), PLUGIN, DL_ERROR);
@@ -74,10 +73,11 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 
 		ColumnInfo col_inf;
 		col_inf.column_name = id;
+		col_inf.restorable = restorable;
+		col_inf.governor = governor;
 		if (!label.isEmpty ()) {
 			col_inf.display_index = visible_columns++;
 			col_inf.column_label = label;
-			col_inf.display_modifier = display_modifier;
 		} else {
 			col_inf.display_index = -1;
 		}
@@ -85,7 +85,6 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 		RKComponentPropertyStringList *column_property = new RKComponentPropertyStringList (this, false);
 		addChild (id, column_property);
 		connect (column_property, SIGNAL (valueChanged(RKComponentPropertyBase *)), this, SLOT (columnPropertyChanged(RKComponentPropertyBase *)));
-		columns_to_governors.insert (column_property, governor);
 		column_map.insert (column_property, col_inf);
 	}
 
@@ -99,25 +98,27 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 		}
 	}
 
-	QMap<RKComponentPropertyStringList *, QString>::const_iterator it = columns_to_governors.constBegin ();
-	for (; it != columns_to_governors.constEnd (); ++it) {
-		if (!it ().value ().isEmpty ()) {		// there *can* be columns without governor. This allows to connect two option-sets, e.g. on different pages of a tabbook.
+	QMap<RKComponentPropertyStringList *, ColumnInfo>::const_iterator it = column_map.constBegin ();
+	for (; it != column_map.constEnd (); ++it) {
+		ColumnInfo &ci = it.value ();
+		if (!ci.governor.isEmpty ()) {		// there *can* be columns without governor. This allows to connect two option-sets, e.g. on different pages of a tabbook, manually
 			// Establish connections between columns and their respective governors. Since the format differs, the connection is done indirectly, through this component.
 			// So, here, we set up a map of properties to columns, and connect to the change signals.
-			QString modifier;
-			RKComponentBase *governor = container->lookupComponent (it.value (), &modifier);
+			RKComponentBase *governor = container->lookupComponent (ci.governor, &ci.governor_modifier);
 			if (governor && governor->isProperty ()) {
 				RKComponentPropertyBase *gov_prop = static_cast<RKComponentPropertyBase*> (governor);
-				if (!modifier.isEmpty ()) {
-					RK_DO (qDebug ("Cannot connect column in optionset to property with modifier (%s). Use display_modifier, instead.", qPrintable (it.value ()), qPrintable (it.key ())), PLUGIN, DL_ERROR);
-				} else if (gov_prop->isInternal ()) {
-					RK_DO (qDebug ("Cannot connect column in optionset to property (%s), which is marked 'internal'.", qPrintable (it.value ())), PLUGIN, DL_ERROR);
-				} else {
-					columns_to_update.insertMulti (gov_prop, it.key ());
-					connect (gov_prop, SIGNAL (valueChanged(RKComponentPropertyBase *)), this, SLOT (governingPropertyChanged(RKComponentPropertyBase *)));
+				if (ci.restorable) {
+					if (!modifier.isEmpty ()) {
+						RK_DO (qDebug ("Cannot connect restorable column '%s' in optionset to property with modifier (%s). Add an auxiliary non-restorable column, instead.", qPrintable (ci.column_name), qPrintable (ci.governor)), PLUGIN, DL_ERROR);
+					} else if (gov_prop->isInternal ()) {
+						RK_DO (qDebug ("Cannot connect restorable column '%s' in optionset to property (%s), which is marked 'internal'. Add an auxiliary non-restorable column, instead.", qPrintable (ci.column_name), qPrintable (ci.governor)), PLUGIN, DL_ERROR);
+					}
+					continue;
 				}
+				columns_to_update.insertMulti (gov_prop, it.key ());
+				connect (gov_prop, SIGNAL (valueChanged(RKComponentPropertyBase *)), this, SLOT (governingPropertyChanged(RKComponentPropertyBase *)));
 			} else {
-				RK_DO (qDebug ("did not find governing property %s for column %s of optionset", qPrintable (it.value ()), qPrintable (it.key ())), PLUGIN, DL_ERROR);
+				RK_DO (qDebug ("did not find governing property %s for column %s of optionset", qPrintable (ci.governor), qPrintable (ci.column_name)), PLUGIN, DL_ERROR);
 			}
 		}
 	}
@@ -168,20 +169,12 @@ void RKOptionSet::governingPropertyChanged (RKComponentPropertyBase *property) {
 
 	QList<RKComponentPropertyStringList *> cols = columns_to_update.values (property);
 	for (int i = 0; i < cols.size (); ++i) {
-		const ColumnInfo &inf = cols.at (i);
-		RKComponentPropertyBase *t = child_map.value (inf.column_name);
-		if ((!t) || (t->type () != RKComponent::PropertyStringList)) {
-			RK_ASSERT (false);
-			continue;
-		}
-
-		RKComponentPropertyStringList *target = static_cast<RKComponentPropertyStringList *> (t);
-		target->setValueAt (row, property->value ());
-
-		if (!display) continue;
+		RKComponentPropertyStringList *target = cols.at (i);
 		const ColumnInfo &inf = column_map[target];
-		if (inf.display_index >= 0) {
-			QString value = property->value (inf.display_modifier);
+		QString value = property->value (inf.governor_modifier);
+		target->setValueAt (row, value);
+
+		if (display && (inf.display_index >= 0)) {
 			display->setItem (row, inf.display_index, new QTableWidgetItem (value));
 		}
 	}
@@ -193,6 +186,13 @@ void RKOptionSet::columnPropertyChanged (RKComponentPropertyBase *property) {
 	RK_TRACE (PLUGIN);
 
 	if (updating_from_contents) return;
+
+	const ColumnInfo &inf = column_map[target];
+	if (inf.display_index >= 0) {
+		QString value = property->value (inf.display_modifier);
+		display->setItem (row, inf.display_index, new QTableWidgetItem (value));
+	}
+
 #error TODO
 }
 
