@@ -161,7 +161,6 @@ private:
 	typedef QList <RKComponentPropertyConnection> ConnectionList;
 	ConnectionList connection_list;
 	QMap<QString, QString> initial_values;
-	RKStandardComponent *standardComponent (QString *id_adjust=0);
 };
 
 #endif

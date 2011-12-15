@@ -28,11 +28,13 @@
 
 #include "../debug.h"
 
-RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget, RKStandardComponentBuilder *builder) {
+RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget, RKStandardComponentBuilder *builder) : RKComponent (parent_component, parent_widget) {
 	RK_TRACE (PLUGIN);
 
 	XMLHelper *xml = XMLHelper::getStaticHelper ();
 	updating_from_contents = changing_row = false;
+
+	connect (standardComponent (), SIGNAL (componentChanged(RKComponent*)), this, SLOT (componentChangeComplete(RKComponent*)));
 
 	// create some meta properties
 	current_row = new RKComponentPropertyInt (this, false, -1);

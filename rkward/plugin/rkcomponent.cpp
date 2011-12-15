@@ -17,6 +17,7 @@
 
 #include "rkcomponent.h"
 
+#include "rkstandardcomponent.h"
 #include "../misc/rkcommonfunctions.h"
 
 #include "../debug.h"
@@ -290,6 +291,19 @@ void RKComponent::changed () {
 	}
 
 	emit (componentChanged (this));
+}
+
+RKStandardComponent *RKComponent::standardComponent (QString *id_adjust) {
+	RK_TRACE (PLUGIN);
+
+	RKComponent *p = this;
+	while (p) {
+		if (p->type () == RKComponent::ComponentStandard) return static_cast<RKStandardComponent*> (p);
+		if (id_adjust) id_adjust->prepend (p->getIdInParent () + '.');
+		p = p->parentComponent ();
+	}
+	RK_ASSERT (false);
+	return 0;
 }
 
 void RKComponent::removeFromParent () {

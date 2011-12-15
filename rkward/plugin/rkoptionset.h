@@ -40,13 +40,14 @@ private slots:
 	void currentRowPropertyChanged (RKComponentPropertyBase *property);
 	void addRow ();
 	void removeRow (int index);
+	void componentChangeComplete (RKComponent *component);
 private:
 	void initDisplay ();
 
 	QMap<QString, QString> defaults;
 /** for option sets which are "driven" (i.e. the user cannot simply add / remove rows, directly), this holds the key column, controlling addition / removal of rows in the set.
   * if this length (or order) is changed in this row, it will also be changed in the other rows. */
-	QString keycolumn;
+	RKComponentPropertyStringList *keycolumn;
 	QMultiMap<RKComponentPropertyBase *, RKComponentPropertyStringList *> columns_to_update;
 	struct ColumnInfo {
 		QString column_name;

@@ -23,6 +23,7 @@
 #include <qwidget.h>
 
 class RKComponentPropertyBase;
+class RKStandardComponent;
 
 /** a very low level base for RKComponent and RKComponentProperty. */
 class RKComponentBase {
@@ -180,6 +181,8 @@ public:
 
 /** The parent of this component. Should be notified, whenever isSatisfied () or isReady ()-state changed. */
 	RKComponent *parentComponent () const { return _parent; };
+/** The standard component containing this component (if any). If @param id_adjust is given, it will be set to a relative path to the standard component. */
+	RKStandardComponent *standardComponent (QString *id_adjust=0);
 
 /** Is the component "ready"? I.e. it is up to date according to current settings. Does not imply it is also satisfied. Default implementation always returns true. */
 	virtual bool isReady () { return true; };

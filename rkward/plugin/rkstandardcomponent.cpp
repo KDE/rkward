@@ -512,19 +512,6 @@ RKComponentBuilder::~RKComponentBuilder () {
 	RK_TRACE (PLUGIN);
 }
 
-RKStandardComponent *RKComponentBuilder::standardComponent (QString *id_adjust) {
-	RK_TRACE (PLUGIN);
-
-	RKComponent *p = parent;
-	while (p) {
-		if (p->type () == RKComponent::ComponentStandard) return static_cast<RKStandardComponent*> (p);
-		if (id_adjust) id_adjust->prepend (p->getIdInParent () + '.');
-		p = p->parentComponent ();
-	}
-	RK_ASSERT (false);
-	return 0;
-}
-
 QDomElement RKComponentBuilder::doElementCopy (const QString id, const QDomElement &copy) {
 	RK_TRACE (PLUGIN);
 
@@ -673,7 +660,7 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 			KVBox *box = new KVBox (widget);
 			layout->addWidget (box);
 			QString id_adjust;
-			standardComponent (&id_adjust)->scriptingProxy ()->addScriptableWidget (id_adjust + id, widget);
+			parent->standardComponent (&id_adjust)->scriptingProxy ()->addScriptableWidget (id_adjust + id, widget);
 		} else {
 			xml->displayError (&e, QString ("Invalid tagname '%1'").arg (e.tagName ()), DL_ERROR);
 		}
@@ -743,7 +730,7 @@ void RKComponentBuilder::parseLogic (const QDomElement &element) {
 	if (!e.isNull ()) {
 		QString file = xml->getStringAttribute (e, "file", QString (), DL_INFO);
 		QString inline_command = e.text ();
-		standardComponent ()->scriptingProxy ()->initialize (file, inline_command);
+		parent->standardComponent ()->scriptingProxy ()->initialize (file, inline_command);
 	}
 }
 
