@@ -71,7 +71,7 @@ function printout () {
 	}
 	if (toNumeric) {
 		echo ('if(length(transformed.vars) > 0){\n');
-		echo ('	rk.header("Variables transformed into numeric ranks", level=4)\n');
+		echo ('	rk.header("Variables treated as numeric ranks", level=4)\n');
 		echo ('	for (i in names(transformed.vars)) {\n');
 		echo ('		rk.print(paste("Variable:<b>", i, "</b>"))\n');
 		echo ('		rk.results(transformed.vars[[i]], titles=c("original value", "assigned rank"))\n');

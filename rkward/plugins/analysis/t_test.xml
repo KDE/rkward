@@ -7,8 +7,9 @@
 		<convert id="indep_samples" sources="test_form.string" mode="equals" standard="indep" />
 		<convert id="single_sample" sources="test_form.string" mode="equals" standard="const" />
 		<connect governor="single_sample.not" client="y.visible" />
-		<connect governor="indep_samples" client="varequal.visible" />
+		<connect governor="indep_samples" client="varequal.enabled" />
 		<connect governor="single_sample" client="mu.visible" />
+		<connect governor="single_sample.not" client="varequal.visible" />
 	</logic>
 
 	<dialog label="t-Test">
