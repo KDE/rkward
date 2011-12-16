@@ -1,0 +1,51 @@
+<!DOCTYPE rkplugin >
+<document>
+	<code file="wilcoxon_tests.js" />
+	<help file="wilcoxon_tests.rkh" />
+	<logic>
+		<convert id="y_specified" sources="y.available" mode="notequals" />
+		<connect governor="y_specified" client="paired.enabled" />
+	</logic>
+	<dialog label="Wilcoxon/Mann-Whitney Test">
+		<tabbook id="auto">
+			<tab label="Basic settings" id="tab_variables">
+				<row id="row_vTFFPSSTFF">
+					<varselector id="vars" />
+					<column id="clm_vrslTFFPSS">
+						<varslot id="x" label="compare" source="vars" types="number" required="true" />
+						<varslot id="y" label="against (optional)" source="vars" types="number" />
+						<radio id="alternative" label="using test hypothesis">
+							<option label="Two-sided" value="two.sided" />
+							<option label="First is greater" value="greater" />
+							<option label="First is less" value="less" />
+						</radio>
+						<checkbox id="paired" label="Paired test" value="true" />
+						<stretch />
+						<saveobject label="Save results to workspace" checkable="true" initial="wcox.result" id="svb_Svrsltst" />
+					</column>
+				</row>
+			</tab>
+			<tab label="Options" id="tab_options">
+				<frame label="Compute confidence interval" checkable="true" id="confint">
+					<spinbox label="Confidence level" id="conflevel" initial="0.95" min="0" max="1" />
+				</frame>
+				<spinbox label="Location (shift) to test against (mu)" id="mu" />
+				<frame label="p-value options" id="frm_pvalptns">
+					<radio id="exact" label="Compute exact p-value">
+						<option label="Always" value="TRUE" />
+						<option label="Automatic" value="automatic" checked="true" />
+						<option label="Never" value="FALSE" />
+					</radio>
+					<row id="row_clmndcAAII">
+						<column id="clm_chckbxdcrA">
+							<checkbox id="correct" label="Apply continuity correction" value="correct" checked="true" />
+						</column>
+						<column id="clm_chckbxdtsI">
+							<checkbox id="ties" label="Allow ties" value="true" />
+						</column>
+					</row>
+				</frame>
+			</tab>
+		</tabbook>
+	</dialog>
+</document>
