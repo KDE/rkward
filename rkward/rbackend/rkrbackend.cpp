@@ -1009,8 +1009,8 @@ bool RKRBackend::startR () {
 	// re-direct stdout / stderr to a pipe, so we can read output from system() calls
 	int pfd[2];
 	pipe (pfd);
-	dup2 (STDOUT_FILENO, STDERR_FILENO);		// single channel to avoid interleaving hell, for now.
 	dup2 (pfd[1], STDOUT_FILENO);
+	dup2 (pfd[1], STDERR_FILENO);		// forward both to a single channel to avoid interleaving hell, for now.
 	close (pfd[1]);
 	stdout_stderr_fd = pfd[0];
 #endif
