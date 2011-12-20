@@ -4,6 +4,14 @@
 	<code file="corr_matrix.js"/>
 	<help file="corr_matrix.rkh"/>
 
+	<logic>
+		<convert id="polyser" sources="method.string" mode="notequals" standard="polyserial" />
+		<convert id="polycho" sources="method.string" mode="notequals" standard="polychoric" />
+		<convert id="polycor" sources="polyser;polycho" mode="and" />
+		<connect governor="polycor" client="use.enabled" />
+		<connect governor="polycor" client="to_numeric.enabled" />
+	</logic>
+
 	<dialog label="Correlation matrix">
 		<tabbook>
 			<tab id="tab_variables" label="Variables">
@@ -12,14 +20,17 @@
 					<varslot type="numeric" min_vars="2" multi="true" id="x" source="vars" required="true" label="variable(s):" num_dimensions="1"/>
 				</row>
 			</tab>
-			<tab id="tab_options" label="Options">
+			<tab label="Options" id="tab_Options">
 				<checkbox id="do_p" label="Calculate p values" value="true" checked="true" />
 				<radio id="method" label="Method">
 					<option label="Pearson's product-moment correlation" value="pearson" checked="true" />
 					<option label="Kendall's tau" value="kendall" />
 					<option label="Spearman's rho" value="spearman" />
+					<option label="Polyserial correlation" value="polyserial" />
+					<option label="Polychoric correlation" value="polychoric" />
 				</radio>
 				<checkbox id="to_numeric" label="Treat ordered categorial variables as numeric ranks" value="true" />
+				<stretch />
 				<radio id="use" label="Exclude missing values">
 					<option label="whole cases" value="complete" />
 					<option label="pairwise" value="pairwise" checked="true" />

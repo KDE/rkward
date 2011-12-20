@@ -10,16 +10,19 @@ Chose the vectors to calculate correlations for. A correlation is calculated for
 
 	<settings>
 		<caption id="tab_variables"/>
-		<setting id="x">Select the vectors to be correlated. The vectors need to be numeric, and of equal length.</setting>
+		<setting id="x">Select the vectors to be correlated. For Pearson, Kendall and Spearman, the vectors need to be numeric (see below), and of equal length. Polyserial correlations are calculated between pairs of numeric and categorial variables, and polychoric correlations between categorial variables. If the categorial variables are dichotomous, polyserial/polychoric is equivalent to biserial/tetrachoric correlations. </setting>
 		<caption id="tab_options"/>
-		<setting id="do_p">If checked, an additional table with the (two-sided) significance values is calculated and printed.</setting>
-		<setting id="method">Method of correlation to be used</setting>
+		<setting id="do_p">If checked, an additional table with the (two-sided) significance values is calculated and printed. For polyserial/polychoric correlations, Chi-squared tests of bivariate normality are conducted, and also the standard errors are reported.</setting>
+		<setting id="method">Method of correlation to be used.</setting>
+		<setting id="to_numeric">For Kendall and Spearman, if some variables are not numeric but ordered categorial variables, have them treated as numeric ranks.</setting>
 		<setting id="use">In case of missing values, should be row be excluded from all calculation (i.e. even for those pairs of variables, where neither value is missing), or should they only be excluded for those pairs where it is actually missing?</setting>
 	</settings>
 	<related>
 		<ul>
 			<li><link href="rkward://rhelp/cor"/></li>
 			<li><link href="rkward://rhelp/cor.test"/></li>
+			<li><link href="rkward://rhelp/polyserial"/></li>
+			<li><link href="rkward://rhelp/polychor"/></li>
 		</ul>
 	</related>
 </document>
