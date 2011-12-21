@@ -5,11 +5,10 @@
 	<help file="corr_matrix.rkh"/>
 
 	<logic>
-		<convert id="polyser" sources="method.string" mode="notequals" standard="polyserial" />
-		<convert id="polycho" sources="method.string" mode="notequals" standard="polychoric" />
-		<convert id="polycor" sources="polyser;polycho" mode="and" />
-		<connect governor="polycor" client="use.enabled" />
-		<connect governor="polycor" client="to_numeric.enabled" />
+		<convert id="polyser" sources="method.string" mode="equals" standard="polyserial" />
+		<convert id="polycho" sources="method.string" mode="equals" standard="polychoric" />
+		<convert id="polycor" sources="polyser;polycho" mode="or" />
+		<connect governor="polycor.not" client="to_numeric.enabled" />
 	</logic>
 
 	<dialog label="Correlation matrix">

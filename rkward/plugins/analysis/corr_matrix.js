@@ -26,10 +26,18 @@ function calculate () {
 	use = getValue ("use");
 	if (use == "pairwise") {
 		exclude_whole = false;
-		use = "\"pairwise.complete.obs\"";
+		if (!polyCorr) {
+			use = "\"pairwise.complete.obs\"";
+		} else {
+			use = "\"pairwise\"";
+		}
 	} else {
 		exclude_whole = true;
-		use = "\"complete.obs\"";
+		if (!polyCorr) {
+			use = "\"complete.obs\"";
+		} else {
+			use = "\"complete cases\"";
+		}
 	}
 
 	echo ('# cor requires all objects to be inside the same data.frame.\n');
@@ -61,9 +69,9 @@ function calculate () {
 	if (do_p || polyCorr) {
 		echo ('# calculate matrix of probabilities\n');
 		echo ('result.p <- matrix (nrow = length (data), ncol = length (data), dimnames=list (names (data), names (data)))\n');
-		if (!polyCorr && exclude_whole) {
+		if (exclude_whole) {
 			echo ('# as we need to do pairwise comparisons for technical reasons,\n');
-			echo ('# we need to exclude incomplete cases first to match the use="complete.obs" parameter to cor()\n');
+			echo ('# we need to exclude incomplete cases first to match the use="complete.obs" parameter in cor()\n');
 			echo ('data <- data[complete.cases (data),]\n');
 		} else {}
 		echo ('for (i in 1:length (data)) {\n');
@@ -83,7 +91,7 @@ function calculate () {
 					echo(', std.err=TRUE');
 				} else {}
 				echo(')\n			} else {\n');
-				echo('				t <- NULL\n');
+				echo('				next\n');
 				echo('			}\n');
 			} else {
 				echo('			t <- polychor(data[[i]], data[[j]]');
@@ -94,11 +102,9 @@ function calculate () {
 				}
 			}
 			if (do_p) {
-				echo ('			if(length(t) > 0){\n');
-				echo ('				result[j, i] <- result[i, j] <- t$rho\n');
-				echo ('				result.p[j, i] <- paste("Chisq=", t$chisq, ",<br />df=", t$df, ",<br />p=", pchisq(t$chisq, t$df, lower.tail=FALSE), sep="")\n');
-				echo ('				result.p[i, j] <- paste("se=", sqrt(diag(t$var)), ",<br />n=", t$n, sep="")\n');
-				echo ('			} else {}\n');
+				echo ('			result[j, i] <- result[i, j] <- t$rho\n');
+				echo ('			result.p[j, i] <- paste("Chisq=", t$chisq, ",<br />df=", t$df, ",<br />p=", pchisq(t$chisq, t$df, lower.tail=FALSE), sep="")\n');
+				echo ('			result.p[i, j] <- paste("se=", sqrt(diag(t$var)), ",<br />n=", t$n, sep="")\n');
 			} else {
 				echo ('			result[i, j] <- result[j, i] <- t\n');
 			}
@@ -114,11 +120,7 @@ function calculate () {
 }
 
 function printout () {
-	echo ('rk.header ("Correlation Matrix", parameters=list ("Method", ' + method);
-	if (!polyCorr) {
-		echo(', "Exclusion", ' + use);
-	} else {}
-	echo ('))\n\n');
+	echo ('rk.header ("Correlation Matrix", parameters=list ("Method", ' + method + ', "Exclusion", ' + use + '))\n\n');
 	echo ('rk.results (data.frame (result, check.names=FALSE), titles=c ("Coefficient", names (data)))\n');
 	if (do_p) {
 		if (polyCorr) {
