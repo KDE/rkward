@@ -87,7 +87,7 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI (KXmlGuiWindow *for_window) : QObject (
 		action->setText (i18n ("Show/Hide %1", rep.window->shortCaption ()));
 		action->setIcon (rep.window->windowIcon ());
 		action->setShortcut (rep.default_shortcut);
-		action->setData (rep.id);
+		action->setProperty ("rk_toolwindow_id", rep.id);
 	}
 	action = actionCollection ()->addAction ("window_activate_docview", this, SLOT(activateDocumentView()));
 	action->setText (i18n ("Activate Document view"));
@@ -203,7 +203,7 @@ void RKTopLevelWindowGUI::toggleToolView () {
 	QAction *act = dynamic_cast<QAction*> (sender ());
 	RK_ASSERT (act);
 
-	RKMDIWindow *win = RKToolWindowList::findToolWindowById (act->data ().toString ());
+	RKMDIWindow *win = RKToolWindowList::findToolWindowById (act->property ("rk_toolwindow_id").toString ());
 	RK_ASSERT (win);
 	toggleToolView (win);
 }
