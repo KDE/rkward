@@ -106,7 +106,7 @@ rk.JS.doc <- function(require=c(), variables=NULL, globals=NULL, results.header=
 				paste(
 					indent(2, by=indent.by), "// printout the results\n",
 					if(is.character(results.header) && !identical(results.header, "")){
-						paste(indent(2, by=indent.by), echo(id("rk.header(", results.header, ", level=1)\n")), sep="")
+						paste(indent(2, by=indent.by), echo(id("rk.header(", results.header, ")\n")), sep="")
 					} else {},
 					"\n",
 					ifelse(is.null(printout), echo("rk.print(\"\")\n"), paste("\n", printout, sep="")),
@@ -137,7 +137,7 @@ rk.JS.doc <- function(require=c(), variables=NULL, globals=NULL, results.header=
 						paste(variables, collapse=""), "\n\n", sep="")),
 					indent(2, by=indent.by), "// create the plot\n",
 					if(is.character(results.header) && !identical(results.header, "")){
-						rk.paste.JS(ite("full", echo(id("rk.header(", results.header,", level=1)\n"))))
+						rk.paste.JS(ite("full", echo(id("rk.header(", results.header,")\n"))))
 					} else {},
 					"\n\n",
 					doPrintout,

@@ -79,8 +79,8 @@ rk.JS.saveobj <- function(pXML, R.objects="initial", vars=TRUE, add.abbrev=FALSE
 						this.obj <- R.objects[this.tagnum]
 					}
 				}
-				# this can't be done by echo() because aof the substitution
-				echo.code <- paste("echo(\"assign(\\\"\" + ", JS.var, " + \"\\\", ", this.obj, ", envir=\" + ", JS.var.parent, " + \")\\n\");", sep="")
+				# this can't be done by echo() because of the substitution
+				echo.code <- id("echo(\".GlobalEnv$\" + ", JS.var, " + \" <- ", this.obj, "\\n\");")
 				if(XiMpLe:::parseXMLAttr(this.tag)[["checkable"]] %in% c("T", "true", "TRUE", "1")){
 					JS.var.active <- camelCode(c(JS.id[1,"abbrev"], "active"))
 					JS.code <- ite(JS.var.active, echo.code)
@@ -89,22 +89,13 @@ rk.JS.saveobj <- function(pXML, R.objects="initial", vars=TRUE, add.abbrev=FALSE
 				}
 				return(rk.paste.JS(JS.code, level=2, indent.by=indent.by))
 			})), collapse="\n")
+
+		results <- paste(main.indent, "//// save result object\n",
+			if(!is.null(JS.vars)) {
+				paste(main.indent, "// read in saveobject variables\n", JS.vars, "\n", sep="")
+			} else {}, main.indent, "// assign object to chosen environment\n", JS.assign, sep="")
+		return(results)
 	} else {
 		return(invisible(NULL))
 	}
-
-# 	var saveCorpFreq			= getValue("saveCorpFreq.active");
-# 	var saveCorpFreqName		= getValue("saveCorpFreq");
-# 	var saveCorpFreqEnv		= getValue("saveCorpFreq.parent");
-
-# 	if (saveFreq) {
-# 		echo("assign(\""+saveFreqName+"\", REPLACE.ME.obj, envir="+saveFreqEnv+")\n");
-# 	}
-
-	results <- paste(main.indent, "//// save result object\n",
-		if(!is.null(JS.vars)) {
-			paste(main.indent, "// read in saveobject variables\n", JS.vars, "\n", sep="")
-		} else {}, main.indent, "// assign object to chosen environment\n", JS.assign, sep="")
-
-	return(results)
 }

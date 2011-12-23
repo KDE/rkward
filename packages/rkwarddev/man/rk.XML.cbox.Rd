@@ -28,6 +28,10 @@
 \description{
   Create XML node "checkbox" for RKWard plugins
 }
+\note{
+  There's also a simple wrapper function
+  \code{rk.XML.checkbox}.
+}
 \examples{
 test.checkboxes <- rk.XML.row(rk.XML.col(
   list(

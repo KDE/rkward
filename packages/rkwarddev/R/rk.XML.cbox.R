@@ -7,6 +7,7 @@
 #' @param id.name Character string, a unique ID for this plugin element.
 #'		If \code{"auto"}, an ID will be generated automatically from the label.
 #' @return An object of class \code{XiMpLe.node}.
+#' @note There's also a simple wrapper function \code{rk.XML.checkbox}.
 #' @export
 #' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
@@ -36,4 +37,10 @@ rk.XML.cbox <- function(label, value="true", un.value=NULL, chk=FALSE, id.name="
 		attributes=attr.list)
 
 	return(checkbox)
+}
+
+## wrapper for name scheme consistency
+#' @export
+rk.XML.checkbox <- function(label, value="true", un.value=NULL, chk=FALSE, id.name="auto"){
+	rk.XML.cbox(label=label, value=value, un.value=un.value, chk=chk, id.name=id.name)
 }
