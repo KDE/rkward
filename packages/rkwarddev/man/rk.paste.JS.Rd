@@ -4,7 +4,8 @@
 \usage{
   rk.paste.JS(..., level = 2, indent.by = "\t",
     funct = NULL, array = NULL, var.prefix = NULL,
-    modifiers = NULL, default = NULL, join = NULL)
+    modifiers = NULL, default = NULL, join = NULL,
+    empty.e = FALSE)
 }
 \arguments{
   \item{...}{Objects of class \code{rk.JS.ite},
@@ -47,6 +48,12 @@
   is something other than \code{""}, these objects will be
   collapsed into one string when pasted, joined by this
   string.}
+
+  \item{empty.e}{For \code{rk.JS.ite} objects only:
+  Logical, if \code{TRUE} will force to add empty
+  \code{else \{\}} brackets when there is no \code{else}
+  statement defined, which is considered to enhance code
+  readability by some.}
 }
 \value{
   A character string.

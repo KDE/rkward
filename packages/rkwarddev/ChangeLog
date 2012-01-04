@@ -4,6 +4,7 @@ ChangeLog for package rkwarddev
   - removed superfluous "level=1" arguments from automatic "rk.header()"s in rk.JS.doc()
   - added wrapper function rk.XML.checkbox() for rk.XML.cbox()
   - changed rk.JS.saveobj() to use ".GlobalEnv$" instead of "assign()" in the resulting code
+  - added option to toggle the addition of empty "else {}" statements in rk.JS.ite objects to rk.paste.JS()
 
 ## 0.05-0 (2011-12-14)
   - "result.header" now doesn't add quotes by itself in rk.JS.doc(), so you can have R objects pasted.

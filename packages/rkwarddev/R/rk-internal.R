@@ -527,7 +527,7 @@ clean.name <- function(name, message=TRUE){
 
 
 ## function paste.JS.ite()
-paste.JS.ite <- function(object, level=1, indent.by="\t", recurse=FALSE){
+paste.JS.ite <- function(object, level=1, indent.by="\t", recurse=FALSE, empty.e=FALSE){
 	stopifnot(inherits(object, "rk.JS.ite"))
 	# check indentation
 	main.indent <- indent(level, by=indent.by)
@@ -560,8 +560,12 @@ paste.JS.ite <- function(object, level=1, indent.by="\t", recurse=FALSE){
 		if(length(object@elifJS) == 1){
 			elseJS <- paste(" else ", paste.JS.ite(object@elifJS[[1]], level=level, indent.by=indent.by, recurse=TRUE), sep="")
 		} else {
-			# close for sure with an empty "else"
-			elseJS <- " else {}"
+			if(isTRUE(empty.e)){
+				# close for sure with an empty "else"
+				elseJS <- " else {}"
+			} else {
+				elseJS <- NULL
+			}
 		}
 	}
 

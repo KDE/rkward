@@ -19,6 +19,8 @@
 #' @param join For \code{rk.JS.var} objects only: A character string, useful for GUI elements which accept multiple objects
 #'		(i.e., multi-varslots). If \code{join} is something other than \code{""}, these objects will be collapsed into one string
 #'		when pasted, joined by this string.
+#' @param empty.e For \code{rk.JS.ite} objects only: Logical, if \code{TRUE} will force to add empty \code{else \{\}} brackets when
+#'		there is no \code{else} statement defined, which is considered to enhance code readability by some.
 #' @return A character string.
 #' @include rk.JS.arr-class.R
 #' @include rk.JS.ite-class.R
@@ -33,14 +35,14 @@
 #' @export
 
 rk.paste.JS <- function(..., level=2, indent.by="\t", funct=NULL, array=NULL,
-	var.prefix=NULL, modifiers=NULL, default=NULL, join=NULL){
+	var.prefix=NULL, modifiers=NULL, default=NULL, join=NULL, empty.e=FALSE){
 	stopifnot(level > 0)
 	all.objects <- list(...)
 
 	paste.results <- paste(sapply(all.objects, function(this.object){
 		if(inherits(this.object, "rk.JS.ite")){
 			# done by an internal function, to ease handling of recursions
-			result <- paste.JS.ite(this.object, level=level, indent.by=indent.by)
+			result <- paste.JS.ite(this.object, level=level, indent.by=indent.by, empty.e=empty.e)
 		} else if(inherits(this.object, "rk.JS.arr")){
 			# done by an internal function, to ease handling of recursions
 			result <- paste.JS.array(this.object, level=level, indent.by=indent.by, funct=funct)
