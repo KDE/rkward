@@ -1,6 +1,6 @@
 ChangeLog for package rkwarddev
 
-## 0.05-1 (2011-12-23)
+## 0.05-1 (2012-01-04)
   - removed superfluous "level=1" arguments from automatic "rk.header()"s in rk.JS.doc()
   - added wrapper function rk.XML.checkbox() for rk.XML.cbox()
   - changed rk.JS.saveobj() to use ".GlobalEnv$" instead of "assign()" in the resulting code

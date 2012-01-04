@@ -1,12 +1,12 @@
 bibentry("Manual",
 		title="rkwarddev: A collection of tools for RKWard plugin development",
 		author="Meik Michalke",
-		year="2011",
+		year="2012",
 		note="(Version 0.05-1)",
 		url="http://rkward.sourceforge.net",
 
 		textVersion =
-		paste("Michalke, M. (2011). ",
+		paste("Michalke, M. (2012). ",
 				"rkwarddev: A collection of tools for RKWard plugin development (Version 0.05-1). ",
 				"Available from http://rkward.sourceforge.net",
 				sep=""),

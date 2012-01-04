@@ -4,7 +4,7 @@
 #' Package: \tab rkwarddev\cr
 #' Type: \tab Package\cr
 #' Version: \tab 0.05-1\cr
-#' Date: \tab 2011-12-23\cr
+#' Date: \tab 2012-01-04\cr
 #' Depends: \tab R (>= 2.9.0),XiMpLe,rkward (>= 0.5.6)\cr
 #' Enhances: \tab rkward\cr
 #' Encoding: \tab UTF-8\cr
