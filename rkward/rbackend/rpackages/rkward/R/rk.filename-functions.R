@@ -69,9 +69,30 @@
 
 	if (!file.exists (x)) {
 		.rk.cat.output (paste ("<?xml version=\"1.0\" encoding=\"", .Call ("rk.locale.name"), "\"?>\n", sep=""))
-		.rk.cat.output (paste ("<html><head>\n<title>RKWard Output</title>\n", .rk.do.plain.call ("getCSSlink"), "</head>\n<body>\n", sep=""))
+		.rk.cat.output (paste ("<html><head>\n<title>RKWard Output</title>\n", .rk.do.plain.call ("getCSSlink"), sep=""))
+		# the next part defines a JavaScript function to add individual results to a global menu in the document
+		.rk.cat.output (paste ("\t<script type=\"text/javascript\">
+		function addToMenu(id){
+			var fullHeader = document.getElementById(id);
+			var resultsMenu = document.getElementById('RKWardResultsMenu');
+			var headerName = fullHeader.getAttribute('name');
+			var headerText = fullHeader.firstChild.data;
+			// create new anchor for menu
+			var newAnchor = document.createElement('a');
+			var newLine = document.createElement('br');
+			var anchorRef = document.createAttribute('href');
+			var anchorText = document.createTextNode(headerText);
+			anchorRef.nodeValue = '#' + headerName;
+			newAnchor.setAttributeNode(anchorRef);
+			newAnchor.appendChild(anchorText);
+			resultsMenu.appendChild(newAnchor);
+			resultsMenu.appendChild(newLine);
+		}\n\t</script>\n", sep=""))
+		.rk.cat.output (paste ("</head>\n<body>\n", sep=""))
 		# This initial output mostly to indicate the output is really there, just empty for now
 		.rk.cat.output (paste ("<pre>RKWard output initialized on", date (), "</pre>\n"))
+		# an empty <div> where the menu gets added to dynamically
+		.rk.cat.output (paste ("<div id=\"RKWardResultsMenu\"><!-- the menu goes here --></div>", sep=""))
 	}
 
 	# needs to come after initialization, so initialization alone does not trigger an update during startup
