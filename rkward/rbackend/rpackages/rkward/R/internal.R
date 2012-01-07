@@ -358,6 +358,7 @@ formals (setwd) <- formals (base::setwd)
 }
 
 ".rk.make.hr" <- function () {
+	.rk.cat.output ("<a href=\"#top\">Go to top</a>\n");
 	.rk.cat.output ("<hr>\n");
 }
 

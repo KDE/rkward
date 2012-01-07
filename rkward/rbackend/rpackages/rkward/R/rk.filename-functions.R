@@ -90,9 +90,9 @@
 		}\n\t</script>\n", sep=""))
 		.rk.cat.output (paste ("</head>\n<body>\n", sep=""))
 		# This initial output mostly to indicate the output is really there, just empty for now
-		.rk.cat.output (paste ("<pre>RKWard output initialized on", date (), "</pre>\n"))
+		.rk.cat.output (paste ("<a name=\"top\"></a>\n<pre>RKWard output initialized on", date (), "</pre>\n"))
 		# an empty <div> where the menu gets added to dynamically
-		.rk.cat.output (paste ("<div id=\"RKWardResultsMenu\"><!-- the menu goes here --></div>", sep=""))
+		.rk.cat.output (paste ("<div id=\"RKWardResultsMenu\"><!-- the menu goes here --></div>\n", sep=""))
 	}
 
 	# needs to come after initialization, so initialization alone does not trigger an update during startup
