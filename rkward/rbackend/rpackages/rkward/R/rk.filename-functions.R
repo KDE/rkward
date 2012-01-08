@@ -107,15 +107,15 @@
 			}
 		}
 		function maxLevel(level){
-			if(level >= 3){
-				showMLevel(document.getElementsByClassName('level3'));
-			} else {
-				hideMLevel(document.getElementsByClassName('level3'));
+			if(level > 5){
+				return false;
 			}
-			if(level >= 2){
-				showMLevel(document.getElementsByClassName('level2'));
-			} else {
-				hideMLevel(document.getElementsByClassName('level2'));
+			for(var i=1; i < 6; i++) {
+				if(i <= level){
+					showMLevel(document.getElementsByClassName('level' + i));
+				} else {
+					hideMLevel(document.getElementsByClassName('level' + i));
+				}
 			}
 		}\n\t</script>\n", sep=""))
 		# positioning of the TOC is done by CSS, default state is hidden
@@ -127,11 +127,11 @@
 		.rk.cat.output (paste (
 			"<div id=\"RKWardResultsTOCShown\" class=\"RKTOC\">\n",
 			"\t<a onclick=\"javascript:switchVisible('RKWardResultsTOCHidden','RKWardResultsTOCShown'); return false;\" href=\"\" class=\"toggleTOC\">Hide TOC</a>\n",
-			"\t<span class=\"right\"><a href=\"#top\" class=\"toggleTOC\">Go to top</a><br />",
-			"\t\tMax. level: <a onclick=\"javascript:maxLevel('1'); return false;\" href=\"\" >1</a>\n",
-			"\t\t<a onclick=\"javascript:maxLevel('2'); return false;\" href=\"\" >2</a>\n",
-			"\t\t<a onclick=\"javascript:maxLevel('3'); return false;\" href=\"\" >3</a>\n",
-			"</span>\n",
+			"\t<span class=\"right\"><a href=\"#top\" class=\"toggleTOC\">Go to top</a></span>\n<br />",
+			"\t\t<span class=\"center\">\n\t\t\t<a onclick=\"javascript:maxLevel('1'); return false;\" href=\"\" title=\"TOC level 1\">1</a> &bull;\n",
+			"\t\t\t<a onclick=\"javascript:maxLevel('2'); return false;\" href=\"\" title=\"TOC level 2\">2</a> &bull;\n",
+			"\t\t\t<a onclick=\"javascript:maxLevel('3'); return false;\" href=\"\" title=\"TOC level 3\">3</a> &bull;\n",
+			"\t\t\t<a onclick=\"javascript:maxLevel('4'); return false;\" href=\"\" title=\"TOC level 4\">4</a>\n\t\t</span>\n",
 			"\t<!-- the TOC menu goes here -->\n</div>\n",
 			"<div id=\"RKWardResultsTOCHidden\" class=\"RKTOC RKTOChidden\">\n",
 			"\t<a onclick=\"javascript:switchVisible('RKWardResultsTOCShown','RKWardResultsTOCHidden'); return false;\" href=\"\" class=\"toggleTOC\">Show TOC</a>\n",

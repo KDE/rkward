@@ -53,4 +53,13 @@ table {
 	right: 7px;
 	text-align: right;
 }
+
+.center {
+	position: absolute;
+	right: 25%;
+	left: 25%;
+	top: 7px;
+	text-align: center;
+}
+
 /* end TOC menu */
