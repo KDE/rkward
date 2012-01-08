@@ -1,3 +1,4 @@
+- Added dynamically generated table-of-contents menu to output document
 - Fixed: Would not show output of system() commands to stderr on the console (on Unix-like systems)
 - Allow some markup inside <text> elements in plugins, and auto-add breaks only for duplicate newlines.
 - Reorganized t-test plugin, and add support for single sample t-tests			TODO: adjust test(s)
