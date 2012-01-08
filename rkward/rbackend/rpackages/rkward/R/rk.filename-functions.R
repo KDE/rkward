@@ -98,7 +98,7 @@
 		}
 		function showMLevel(nodes){
 			for(var i=0; i < nodes.length; i++) {
-				nodes[i].style.display = 'inline';
+				nodes[i].style.display = 'block';
 			}
 		}
 		function hideMLevel(nodes){
