@@ -38,9 +38,9 @@
 #'   the header with \code{<h2></h>} tag.
 #' @param parameters a list, preferably named, giving a list of "parameters" to
 #'   be printed to the output
-#' @param menu If \code{NULL}, the default, \code{rk.header()} will automatically
-#'   add h1 headers to the menu. \code{TRUE} will always add the header, and
-#'   \code{FALSE} will suppress it.
+#' @param toc If \code{NULL}, the default, \code{rk.header()} will automatically
+#'   add h1 headers to the TOC menu of the output document. \code{TRUE} will always
+#'   add the header, and \code{FALSE} will suppress it.
 #' @param titles a character vector, giving the column headers for a html
 #'   table.
 #' @param print.rownames controls printing of rownames. TRUE to force printing,
@@ -99,20 +99,21 @@
 	.rk.cat.output (.rk.do.plain.call ("highlightRCode", as.character (code)))
 }
 
-"rk.header" <- function (title, parameters=list (), level=1, menu=NULL) {
+"rk.header" <- function (title, parameters=list (), level=1, toc=NULL) {
 	sink (rk.get.output.html.file(), append=TRUE)
 	on.exit (sink ())
 
 	# give header a name to be able to set anchors
-	# it's just a time string down to the fraction of a second: yyyymmddHHMMSS.ssssss
-	header.id <- format(Sys.time(), "%Y%m%d%H%M%OS6")
-	# add 'id' and 'name' attributes to the header
-	cat ("<h", level, "><a  id=\"", header.id,"\" name=\"", header.id,"n\">", title, "</a></h", level, ">\n", sep="")
-	# if 'menu' is true, also add a javascript function call to add this header to the results menu
-	# the function addToMenu() will be defined in the document head
+	# it's just a time string down to the fraction of a second: yyyy-mm-dd HH:MM:SS.ssssss
+	header.id <- format(Sys.time(), "%Y-%m-%d_%H:%M:%OS6")
+	header.title <- format(Sys.time(), "%Y-%m-%d&nbsp;%H:%M:%S")
+	# add 'id', 'name' and 'title' attributes to the header
+	cat ("<h", level, "><a  id=\"", header.id,"\" name=\"", header.id,"n\" title=\"", header.title,"\">", title, "</a></h", level, ">\n", sep="")
+	# if 'toc' is true, also add a javascript function call to add this header to the TOC menu
+	# the function addToTOC() will be defined in the document head
 	# see rk.set.output.html.file() in rk.filename-functions.R
-	if (isTRUE(menu) || (is.null(menu) && level == 1)){
-		cat("<script>\n\t<!--\n\t\taddToMenu('", header.id,"');\n\t-->\n</script>\n", sep="")
+	if (isTRUE(toc) || (is.null(toc) && level == 1)){
+		cat("<script>\n\t<!--\n\t\taddToTOC('", header.id,"');\n\t-->\n</script>\n", sep="")
 	}
 	if (length (parameters)) {
 		# legacy handling: parameter=value used to be passed as parameter, value

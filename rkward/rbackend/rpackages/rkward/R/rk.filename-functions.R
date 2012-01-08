@@ -70,29 +70,73 @@
 	if (!file.exists (x)) {
 		.rk.cat.output (paste ("<?xml version=\"1.0\" encoding=\"", .Call ("rk.locale.name"), "\"?>\n", sep=""))
 		.rk.cat.output (paste ("<html><head>\n<title>RKWard Output</title>\n", .rk.do.plain.call ("getCSSlink"), sep=""))
-		# the next part defines a JavaScript function to add individual results to a global menu in the document
+		# the next part defines a JavaScript function to add individual results to a global table of contents menu in the document
 		.rk.cat.output (paste ("\t<script type=\"text/javascript\">
-		function addToMenu(id){
+		function addToTOC(id){
 			var fullHeader = document.getElementById(id);
-			var resultsMenu = document.getElementById('RKWardResultsMenu');
+			var resultsTOC = document.getElementById('RKWardResultsTOCShown');
 			var headerName = fullHeader.getAttribute('name');
 			var headerText = fullHeader.firstChild.data;
-			// create new anchor for menu
+			var headerTitle = fullHeader.getAttribute('title');
+			// create new anchor for TOC
 			var newAnchor = document.createElement('a');
 			var newLine = document.createElement('br');
+			// add the reference to link to
 			var anchorRef = document.createAttribute('href');
-			var anchorText = document.createTextNode(headerText);
 			anchorRef.nodeValue = '#' + headerName;
 			newAnchor.setAttributeNode(anchorRef);
+			// add a 'title' attribute
+			var anchorTitle = document.createAttribute('title');
+			anchorTitle.nodeValue = headerTitle;
+			newAnchor.setAttributeNode(anchorTitle);
+			// make header text the anchor text
+			var anchorText = document.createTextNode(headerText);
 			newAnchor.appendChild(anchorText);
-			resultsMenu.appendChild(newAnchor);
-			resultsMenu.appendChild(newLine);
+			resultsTOC.appendChild(newAnchor);
+			resultsTOC.appendChild(newLine);
+		}
+		function switchVisible(show, hide) {
+			document.getElementById(show).style.display = 'inline';
+			document.getElementById(hide).style.display = 'none';
 		}\n\t</script>\n", sep=""))
+		# positioning the TOC with CSS
+		# default state is hidden
+		.rk.cat.output (paste ("\t<style type=\"text/css\">
+		.RKTOC {
+			background-color: #eeeeff;
+			position: fixed;
+			top: 0px;
+			right: 0px;
+			height: 100%;
+			width: 25%;
+			padding: 7px;
+			display: none;
+		}
+		.RKTOChidden {
+			display: inline;
+			height: 1em;
+		}
+		.toggleTOC:link, .toggleTOC:visited {
+			color: blue;
+			font-weight: bold;
+		}
+		.right {
+			position: absolute;
+			right: 7px;
+		}\n\t</style>\n", sep=""))
 		.rk.cat.output (paste ("</head>\n<body>\n", sep=""))
 		# This initial output mostly to indicate the output is really there, just empty for now
 		.rk.cat.output (paste ("<a name=\"top\"></a>\n<pre>RKWard output initialized on", date (), "</pre>\n"))
-		# an empty <div> where the menu gets added to dynamically
-		.rk.cat.output (paste ("<div id=\"RKWardResultsMenu\"><!-- the menu goes here --></div>\n", sep=""))
+		# an empty <div> where the TOC menu gets added to dynamically, and a second one to toggle show/hide
+		.rk.cat.output (paste (
+			"<div id=\"RKWardResultsTOCShown\" class=\"RKTOC\">\n",
+			"\t<a onclick=\"javascript:switchVisible('RKWardResultsTOCHidden','RKWardResultsTOCShown')\" href=\"\" class=\"toggleTOC\">Hide TOC</a>\n",
+			"\t<span class=\"right\"><a href=\"#top\"class=\"toggleTOC\">Go to top</a></span><br />\n",
+			"\t<!-- the TOC menu goes here -->\n</div>\n",
+			"<div id=\"RKWardResultsTOCHidden\" class=\"RKTOC RKTOChidden\">\n",
+			"\t<a onclick=\"javascript:switchVisible('RKWardResultsTOCShown','RKWardResultsTOCHidden')\" href=\"\" class=\"toggleTOC\">Show TOC</a>\n",
+			"\t<span class=\"right\"><a href=\"#top\" class=\"toggleTOC\">Go to top</a></span><br />\n",
+			"</div>\n", sep=""))
 	}
 
 	# needs to come after initialization, so initialization alone does not trigger an update during startup
