@@ -39,7 +39,7 @@
 #' @param parameters a list, preferably named, giving a list of "parameters" to
 #'   be printed to the output
 #' @param toc If \code{NULL}, the default, \code{rk.header()} will automatically
-#'   add h1 headers to the TOC menu of the output document. \code{TRUE} will always
+#'   add h1 and h2 headers to the TOC menu of the output document. \code{TRUE} will always
 #'   add the header, and \code{FALSE} will suppress it.
 #' @param titles a character vector, giving the column headers for a html
 #'   table.
@@ -108,12 +108,12 @@
 	header.id <- format(Sys.time(), "%Y-%m-%d_%H:%M:%OS6")
 	header.title <- format(Sys.time(), "%Y-%m-%d&nbsp;%H:%M:%S")
 	# add 'id', 'name' and 'title' attributes to the header
-	cat ("<h", level, "><a  id=\"", header.id,"\" name=\"", header.id,"n\" title=\"", header.title,"\">", title, "</a></h", level, ">\n", sep="")
+	cat ("<h", level, "><a id=\"", header.id,"\" name=\"", header.id,"n\" title=\"", header.title,"\">", title, "</a></h", level, ">\n", sep="")
 	# if 'toc' is true, also add a javascript function call to add this header to the TOC menu
 	# the function addToTOC() will be defined in the document head
 	# see rk.set.output.html.file() in rk.filename-functions.R
-	if (isTRUE(toc) || (is.null(toc) && level == 1)){
-		cat("<script>\n\t<!--\n\t\taddToTOC('", header.id,"');\n\t-->\n</script>\n", sep="")
+	if (isTRUE(toc) || (is.null(toc) && level <= 2)){
+		cat("<script>\n\t<!--\n\t\taddToTOC('",header.id,"','",level,"');\n\t-->\n</script>\n", sep="")
 	}
 	if (length (parameters)) {
 		# legacy handling: parameter=value used to be passed as parameter, value

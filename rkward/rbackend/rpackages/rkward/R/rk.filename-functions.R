@@ -72,70 +72,70 @@
 		.rk.cat.output (paste ("<html><head>\n<title>RKWard Output</title>\n", .rk.do.plain.call ("getCSSlink"), sep=""))
 		# the next part defines a JavaScript function to add individual results to a global table of contents menu in the document
 		.rk.cat.output (paste ("\t<script type=\"text/javascript\">
-		function addToTOC(id){
+		function addToTOC(id, level){
 			var fullHeader = document.getElementById(id);
 			var resultsTOC = document.getElementById('RKWardResultsTOCShown');
 			var headerName = fullHeader.getAttribute('name');
 			var headerText = fullHeader.firstChild.data;
 			var headerTitle = fullHeader.getAttribute('title');
+			var newDiv = document.createElement('div');
 			// create new anchor for TOC
-			var newAnchor = document.createElement('a');
-			var newLine = document.createElement('br');
-			// add the reference to link to
-			var anchorRef = document.createAttribute('href');
-			anchorRef.nodeValue = '#' + headerName;
-			newAnchor.setAttributeNode(anchorRef);
-			// add a 'title' attribute
-			var anchorTitle = document.createAttribute('title');
-			anchorTitle.nodeValue = headerTitle;
-			newAnchor.setAttributeNode(anchorTitle);
-			// make header text the anchor text
-			var anchorText = document.createTextNode(headerText);
-			newAnchor.appendChild(anchorText);
-			resultsTOC.appendChild(newAnchor);
-			resultsTOC.appendChild(newLine);
+			var newAnchor = '<a href=\"#' + headerName + '\" title=\"' + headerTitle + '\"';
+			// indent anchor depending on header level
+			if(level > 1){
+				newDiv.style.textIndent = level-1 + 'em';
+				newDiv.className = 'level' + level;
+				newAnchor = '&bull; ' + newAnchor + '>' + headerText + '</a>';
+			} else {
+				newAnchor = newAnchor + '>' + headerText + '</a>';
+			}
+			newDiv.innerHTML = newAnchor;
+			resultsTOC.appendChild(newDiv);
 		}
 		function switchVisible(show, hide) {
 			document.getElementById(show).style.display = 'inline';
 			document.getElementById(hide).style.display = 'none';
+		}
+		function showMLevel(nodes){
+			for(var i=0; i < nodes.length; i++) {
+				nodes[i].style.display = 'inline';
+			}
+		}
+		function hideMLevel(nodes){
+			for(var i=0; i < nodes.length; i++) {
+				nodes[i].style.display = 'none';
+			}
+		}
+		function maxLevel(level){
+			if(level >= 3){
+				showMLevel(document.getElementsByClassName('level3'));
+			} else {
+				hideMLevel(document.getElementsByClassName('level3'));
+			}
+			if(level >= 2){
+				showMLevel(document.getElementsByClassName('level2'));
+			} else {
+				hideMLevel(document.getElementsByClassName('level2'));
+			}
 		}\n\t</script>\n", sep=""))
-		# positioning the TOC with CSS
-		# default state is hidden
-		.rk.cat.output (paste ("\t<style type=\"text/css\">
-		.RKTOC {
-			background-color: #eeeeff;
-			position: fixed;
-			top: 0px;
-			right: 0px;
-			height: 100%;
-			width: 25%;
-			padding: 7px;
-			display: none;
-		}
-		.RKTOChidden {
-			display: inline;
-			height: 1em;
-		}
-		.toggleTOC:link, .toggleTOC:visited {
-			color: blue;
-			font-weight: bold;
-		}
-		.right {
-			position: absolute;
-			right: 7px;
-		}\n\t</style>\n", sep=""))
+		# positioning of the TOC is done by CSS, default state is hidden
+		# see $SRC/rkward/pages/rkward_output.css
 		.rk.cat.output (paste ("</head>\n<body>\n", sep=""))
 		# This initial output mostly to indicate the output is really there, just empty for now
 		.rk.cat.output (paste ("<a name=\"top\"></a>\n<pre>RKWard output initialized on", date (), "</pre>\n"))
 		# an empty <div> where the TOC menu gets added to dynamically, and a second one to toggle show/hide
 		.rk.cat.output (paste (
 			"<div id=\"RKWardResultsTOCShown\" class=\"RKTOC\">\n",
-			"\t<a onclick=\"javascript:switchVisible('RKWardResultsTOCHidden','RKWardResultsTOCShown')\" href=\"\" class=\"toggleTOC\">Hide TOC</a>\n",
-			"\t<span class=\"right\"><a href=\"#top\"class=\"toggleTOC\">Go to top</a></span><br />\n",
+			"\t<a onclick=\"javascript:switchVisible('RKWardResultsTOCHidden','RKWardResultsTOCShown'); return false;\" href=\"\" class=\"toggleTOC\">Hide TOC</a>\n",
+			"\t<span class=\"right\"><a href=\"#top\" class=\"toggleTOC\">Go to top</a><br />",
+			"\t\tMax. level: <a onclick=\"javascript:maxLevel('1'); return false;\" href=\"\" >1</a>\n",
+			"\t\t<a onclick=\"javascript:maxLevel('2'); return false;\" href=\"\" >2</a>\n",
+			"\t\t<a onclick=\"javascript:maxLevel('3'); return false;\" href=\"\" >3</a>\n",
+			"</span>\n",
 			"\t<!-- the TOC menu goes here -->\n</div>\n",
 			"<div id=\"RKWardResultsTOCHidden\" class=\"RKTOC RKTOChidden\">\n",
-			"\t<a onclick=\"javascript:switchVisible('RKWardResultsTOCShown','RKWardResultsTOCHidden')\" href=\"\" class=\"toggleTOC\">Show TOC</a>\n",
-			"\t<span class=\"right\"><a href=\"#top\" class=\"toggleTOC\">Go to top</a></span><br />\n",
+			"\t<a onclick=\"javascript:switchVisible('RKWardResultsTOCShown','RKWardResultsTOCHidden'); return false;\" href=\"\" class=\"toggleTOC\">Show TOC</a>\n",
+			"\t<span class=\"right\"><a href=\"#top\" class=\"toggleTOC\">Go to top</a></span>\n",
 			"</div>\n", sep=""))
 	}
 

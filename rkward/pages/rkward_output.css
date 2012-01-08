@@ -23,3 +23,34 @@ pre.output_warning {
 table {
 	border-spacing: 0px;
 }
+
+/* TOC menu */
+.RKTOC {
+	background-color: #eeeeff;
+	position: fixed;
+	top: 0px;
+	right: 0px;
+	height: 100%;
+	width: 25%;
+	padding: 7px;
+	display: none;
+	overflow: auto;
+}
+
+.RKTOChidden {
+	display: inline;
+	height: 1em;
+	overflow: hidden;
+}
+
+.toggleTOC:link, .toggleTOC:visited {
+	color: blue;
+	font-weight: bold;
+}
+
+.right {
+	position: absolute;
+	right: 7px;
+	text-align: right;
+}
+/* end TOC menu */
