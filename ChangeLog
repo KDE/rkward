@@ -1,3 +1,4 @@
+- Added MacPorts support, see README.MacPorts and bundle build script in the macports folder
 - Added dynamically generated table-of-contents menu to output document
 - Fixed: Would not show output of system() commands to stderr on the console (on Unix-like systems)
 - Allow some markup inside <text> elements in plugins, and auto-add breaks only for duplicate newlines.

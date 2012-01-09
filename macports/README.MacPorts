@@ -1,0 +1,42 @@
+AFTER THE INSTALLATION
+======================
+
+KDE needs dbus to run. Therefore, after you installed the bundle image, run these command *once* in a terminal session:
+
+  sudo launchctl load -w /opt/rkward/Library/LaunchDaemons/org.freedesktop.dbus-system.plist
+  launchctl load -w /opt/rkward/Library/LaunchAgents/org.freedesktop.dbus-session.plist
+
+The bundle installs mostly to /opt/rkward. To launch all newly installed applications directly (e.g., R), you probably want to add this to the PATH environment variable, by adding this to ~/.profile (create it, if not present):
+
+  export PATH=/opt/rkward/bin:/opt/rkward/sbin:$PATH
+
+
+LOCALIZATION
+============
+
+Support for other localizations than english are available for all KDE applications, if the environment variable LANG is set accordingly. To acheive that temporarily for your running session, call the following (example for german):
+
+  launchctl setenv LANG de_DE.UTF-8
+
+To set the variable permanently, you can create or edit the file ~/.MacOSX/environment.plist (you need to login again for the changes to take effect):
+
+  <?xml version="1.0" encoding="UTF-8"?>
+  <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+  <plist version="1.0">
+      <dict>
+          <key>LANG</key>
+          <string>de_DE.UTF-8</string>
+      </dict>
+  </plist>
+
+
+UPDATES/UNINSTALL
+=================
+
+There is no real update for binary bundles yet. That is, you need to uninstall and install the new version. Your personal settings should survive that, as they are sored in your personal directory (including manually installed R packages, if you didn't install them to /opt/rkward):
+
+1. pull the "RKWard" folder from Applications to Trash
+2. remove the directory /opt/rkward:
+  sudo rm -rf /opt/rkward
+
+Afterwards, you can install the new bundle.
