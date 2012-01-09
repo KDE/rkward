@@ -39,7 +39,7 @@
 #' @param parameters a list, preferably named, giving a list of "parameters" to
 #'   be printed to the output
 #' @param toc If \code{NULL}, the default, \code{rk.header()} will automatically
-#'   add h1 and h2 headers to the TOC menu of the output document. \code{TRUE} will always
+#'   add headers h1 to h4 to the TOC menu of the output document. \code{TRUE} will always
 #'   add the header, and \code{FALSE} will suppress it.
 #' @param titles a character vector, giving the column headers for a html
 #'   table.
@@ -112,7 +112,7 @@
 	# if 'toc' is true, also add a javascript function call to add this header to the TOC menu
 	# the function addToTOC() will be defined in the document head
 	# see rk.set.output.html.file() in rk.filename-functions.R
-	if (isTRUE(toc) || (is.null(toc) && level <= 2)){
+	if (isTRUE(toc) || (is.null(toc) && level <= 4)){
 		cat("<script>\n\t<!--\n\t\taddToTOC('",header.id,"','",level,"');\n\t-->\n</script>\n", sep="")
 	}
 	if (length (parameters)) {
