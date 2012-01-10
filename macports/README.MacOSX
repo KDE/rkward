@@ -1,7 +1,7 @@
 AFTER THE INSTALLATION
 ======================
 
-KDE needs dbus to run. Therefore, after you installed the bundle image, run these command *once* in a terminal session:
+KDE needs dbus to run. Therefore, after you installed the bundle image, run these commands *once* in a terminal session:
 
   sudo launchctl load -w /opt/rkward/Library/LaunchDaemons/org.freedesktop.dbus-system.plist
   launchctl load -w /opt/rkward/Library/LaunchAgents/org.freedesktop.dbus-session.plist
