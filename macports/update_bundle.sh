@@ -1,7 +1,11 @@
 #!/bin/bash
+# get SVN revision number
+echo "get SVN revision number..."
+SVNREV=$(svn info http://rkward.svn.sourceforge.net/svnroot/rkward/trunk 2>&1 | grep "^Revision:" | sed -e 's/[^[:digit:]]*//g')
+echo "Revision: $SVNREV"
 SRCDATE=$(date +%Y-%m-%d)
 SRCPATH=/opt/ports
-SRCFILE=${SRCPATH}/sources_bundle_${SRCDATE}.tar
+SRCFILE=${SRCPATH}/sources_bundle_svn$SVNREV_${SRCDATE}.tar
 # specify macports installation path
 MPTINST=/opt/rkward
 # specify work directory
@@ -66,15 +70,21 @@ if [[ $UPRKWARD ]] ; then
   sudo port -v install $PTARGET
 fi
 
+# set some variables
+if [[ $COPYMDMD ]] ; then
+  # get version information of installed ports
+  PORTVERS=$(port list $PTARGET | sed -e "s/.*@//;s/[[:space:]].*//")
+  KDEVERS=$(port list kde4-baseapps | sed -e "s/.*@//;s/[[:space:]].*//")
+  RVERS=$(port list R | sed -e "s/.*@//;s/[[:space:]].*//")
+fi
+
 # make meta-package including dependencies
 if [[ $MAKEMDMD ]] ; then
   sudo port -v mdmg $PTARGET
   # copy the image file to a public directory
   if [[ $COPYMDMD ]] ; then
-    # get version information of installed port
-    PORTVERS=$(port list $PTARGET | sed -e "s/.*@//;s/[[:space:]].*//")
     MDMGFILE=${WORKDIR}/${PTARGET}-${PORTVERS}.dmg
-    TRGTFILE=${LPUBDIR}/${PTARGET}-${PORTVERS}_${SRCDATE}.dmg
+    TRGTFILE=${LPUBDIR}/RKWard-${PORTVERS}${SVNREV}_R-${RVERS}_KDE-${KDEVERS}_MacOSX_bundle.dmg
     echo "copying: $MDMGFILE to $TRGTFILE ..."
     cp -av $MDMGFILE $TRGTFILE
     echo "done."
@@ -89,8 +99,7 @@ if [[ $MKSRCTAR ]] ; then
   tar cvf $SRCFILE ${MPTINST}/var/macports/distfiles || exit 1
   # copy the source archive to a public directory
   if [[ $COPYMDMD ]] ; then
-    PORTVERS=$(port list $PTARGET | sed -e "s/.*@//;s/[[:space:]].*//")
-    TRGSFILE=${LPUBDIR}/${PTARGET}-${PORTVERS}_${SRCDATE}_src.tar
+    TRGSFILE=${LPUBDIR}/RKWard-${PORTVERS}${SVNREV}_R-${RVERS}_KDE-${KDEVERS}_src.tar
     echo "copying: $SRCFILE to $TRGSFILE ..."
     cp -av $SRCFILE $TRGSFILE
     echo "done."

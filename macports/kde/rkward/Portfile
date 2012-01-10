@@ -44,7 +44,4 @@ configure.args-append \
         -DBUNDLE_INSTALL_DIR=${applications_dir}
 configure.cmd       cmake ..
 
-# remove r.xml from installation, conflicts with the kate port
-#patchfiles          patch-rkward-syntax-CMakeLists.txt.diff
-
 build.dir           ${worksrcdir}/build

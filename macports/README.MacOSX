@@ -6,10 +6,9 @@ KDE needs dbus to run. Therefore, after you installed the bundle image, run thes
   sudo launchctl load -w /opt/rkward/Library/LaunchDaemons/org.freedesktop.dbus-system.plist
   launchctl load -w /opt/rkward/Library/LaunchAgents/org.freedesktop.dbus-session.plist
 
-The bundle installs mostly to /opt/rkward. To launch all newly installed applications directly (e.g., R), you probably want to add this to the PATH environment variable, by adding this to ~/.profile (create it, if not present):
+The bundle installs mostly to /opt/rkward. To launch all newly installed applications directly (e.g., R), you probably want to add this to the PATH environment variable, by adding it to ~/.profile:
 
-  export PATH=/opt/rkward/bin:/opt/rkward/sbin:$PATH
-
+  echo "export PATH=/opt/rkward/bin:/opt/rkward/sbin:\$PATH" >> ~/.profile
 
 LOCALIZATION
 ============
@@ -20,15 +19,23 @@ Support for other localizations than english are available for all KDE applicati
 
 To set the variable permanently, you can create or edit the file ~/.MacOSX/environment.plist (you need to login again for the changes to take effect):
 
-  <?xml version="1.0" encoding="UTF-8"?>
-  <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-  <plist version="1.0">
-      <dict>
-          <key>LANG</key>
-          <string>de_DE.UTF-8</string>
-      </dict>
-  </plist>
+  1. If it doesn't exist, create the folder:
+     mkdir ~/.MacOSX
 
+  2. Open/create the file with a text editor, e.g.:
+     nano ~/.MacOSX/environment.plist
+
+  3. If the file is new/empty, paste this to it (change the language string to your needs):
+    <?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+    <plist version="1.0">
+        <dict>
+            <key>LANG</key>
+            <string>de_DE.UTF-8</string>
+        </dict>
+    </plist>
+    
+    If the file does already exist, only add the above key and string nodes accordingly.
 
 UPDATES/UNINSTALL
 =================
@@ -37,6 +44,6 @@ There is no real update for binary bundles yet. That is, you need to uninstall a
 
 1. pull the "RKWard" folder from Applications to Trash
 2. remove the directory /opt/rkward:
-  sudo rm -rf /opt/rkward
+   sudo rm -rf /opt/rkward
 
-Afterwards, you can install the new bundle.
+Afterwards, you can install the new bundle. You don't need to repeat the steps outlined in "After the installation" and "Localization".
