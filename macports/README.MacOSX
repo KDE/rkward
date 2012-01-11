@@ -1,19 +1,36 @@
+RKWard Mac OSX installation bundle
+==================================
+
+This is a bundle of KDE for Mac OSX, R for Mac OSX, and RKWard for Mac OSX, built with MacPorts (http://www.macports.org). The purpose is to make installation of RKWard as easy as possible on Mac OSX.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+NOTE: As of now, this bundle is made available for BETA TESTING purposes. It is the first time the RKWard team releases Mac OSX versions of this software. It is not considered a stable release, but built from the current development sources. In case you run into problems, please give us feedback:
+ o https://sourceforge.net/apps/mediawiki/rkward/index.php?title=Contact
+
+
+INSTALLATION
+============
+To install, simply double click the .dmg, and double click the therein appearing archive as well. An installation dialog should appear and ask you for the device to install to (where you should probably select your system harddrive). The contents of this bundle will be installed to /opt/rkward, and the programs will be available at Applications/RKWard.
+
+NOTE: This bundle will NOT install MacPorts itself. It also doesn't touch the MacPorts default directory, so you should be able to use MacPorts in parallel without problems.
+
+
 AFTER THE INSTALLATION
 ======================
-
-KDE needs dbus to run. Therefore, after you installed the bundle image, run these commands *once* in a terminal session:
+Mandatory: RKWard is a KDE program, and KDE needs a service called dbus to run. Therefore, after you installed the bundle image, run these commands *once* in a terminal session:
 
   sudo launchctl load -w /opt/rkward/Library/LaunchDaemons/org.freedesktop.dbus-system.plist
   launchctl load -w /opt/rkward/Library/LaunchAgents/org.freedesktop.dbus-session.plist
 
-The bundle installs mostly to /opt/rkward. To launch all newly installed applications directly (e.g., R), you probably want to add this to the PATH environment variable, by adding it to ~/.profile:
+Optional: As explained, the bundle installs mostly to /opt/rkward. If you want to launch all newly installed applications directly (e.g., R), you probably want to add this to the PATH environment variable, by adding it to ~/.profile:
 
   echo "export PATH=/opt/rkward/bin:/opt/rkward/sbin:\$PATH" >> ~/.profile
 
+
 LOCALIZATION
 ============
-
-Support for other localizations than english are available for all KDE applications, if the environment variable LANG is set accordingly. To acheive that temporarily for your running session, call the following (example for german):
+Support for other localizations than english is available for all KDE applications, if the environment variable LANG is set accordingly. To acheive that temporarily for your running session, call the following (example for german):
 
   launchctl setenv LANG de_DE.UTF-8
 
@@ -37,13 +54,40 @@ To set the variable permanently, you can create or edit the file ~/.MacOSX/envir
     
     If the file does already exist, only add the above key and string nodes accordingly.
 
+
+RUNNING RKWARD
+==============
+Double click the "RKWard" icon in your Applications/RKWard folder.
+
+
 UPDATES/UNINSTALL
 =================
+There is no real update for binary bundles yet. That is, you need to uninstall and install the new version. Your personal settings should survive that, as they are sored in your personal directory (including manually installed R packages, if you didn't install them to /opt/rkward). To uninstall:
 
-There is no real update for binary bundles yet. That is, you need to uninstall and install the new version. Your personal settings should survive that, as they are sored in your personal directory (including manually installed R packages, if you didn't install them to /opt/rkward):
+  1. Pull the "RKWard" folder from Applications to Trash
 
-1. pull the "RKWard" folder from Applications to Trash
-2. remove the directory /opt/rkward:
-   sudo rm -rf /opt/rkward
+  2. Remove the directory /opt/rkward:
+     sudo rm -rf /opt/rkward
 
 Afterwards, you can install the new bundle. You don't need to repeat the steps outlined in "After the installation" and "Localization".
+
+
+TROUBLESHOOTING
+===============
+For problems with RKWard on Mac OSX, refer to
+ o https://sourceforge.net/apps/mediawiki/rkward/index.php?title=RKWard_on_Mac
+For problems specific to KDE or R, please refer to http://www.kde.org, and http://www.r-project.org, respectively.
+
+
+COPYING
+=======
+This bundle may be copied, modified, and redistributed subject to the terms of the General Public Licence (GPL) version 2 (http://www.gnu.org/licenses/gpl-2.0.html, also available from Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA). Individual portions of this bundle may also allow redristibution under alternative terms, but you should refer to their sources for details.
+
+
+SOURCES
+=======
+Source code for all portions of this bundle should be available from the same source where you downloaded this bundle. (Redistributors, if needed, provide your own instructions, here, in accordance with §3 of the GPL version 2). However, if you are interested in the source distribution for practical, rather than legal, reasons, we recommend you refer to the following places, instead:
+
+ o For KDE, the main page is http://www.kde.org. Technical documentation is available from http://techbase.kde.org. Information specifically about the Mac port of KDE is at http://mac.kde.org. At the time of this writing, the recommended way to obtain and build sources for KDE on Mac OSX is using MacPorts (http://www.macports.org).
+ o For R, the main project page is http://www.r-project.org. Current and historical sources are linked from that page. For up-to-date instructions on installing or compiling R on Mac OSX, refer to http://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html.
+ o For RKWard, the official source releases are linked from http://p.sf.net/rkward/downloads. This page also contains links to up-to-date instructions on compiling on various systems, as well as instructions on retrieving the most recent development sources.
