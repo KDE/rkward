@@ -1,24 +1,4 @@
-# set version number
-SET(RKVERSION_NUMBER 0.5.7z+0.5.8+devel1)
-# replace placeholders with version number in several files
-SET(RKWARD_VERSION_H_TEMPLATE version.h.in)
-SET(RKWARD_VERSION_H ${CMAKE_SOURCE_DIR}/rkward/version.h)
-CONFIGURE_FILE(
-	${RKWARD_VERSION_H_TEMPLATE}
-	${RKWARD_VERSION_H}
-	@ONLY)
-SET(RKWARD_VER_R_TEMPLATE ver.R.in)
-SET(RKWARD_VER_R ${CMAKE_SOURCE_DIR}/rkward/rbackend/rpackages/rkward/R/ver.R)
-CONFIGURE_FILE(
-	${RKWARD_VER_R_TEMPLATE}
-	${RKWARD_VER_R}
-	@ONLY)
-SET(RKWARD_RESOURCE_VER_TEMPLATE resource.ver.in)
-SET(RKWARD_RESOURCE_VER ${CMAKE_SOURCE_DIR}/rkward/resource.ver)
-CONFIGURE_FILE(
-	${RKWARD_RESOURCE_VER_TEMPLATE}
-	${RKWARD_RESOURCE_VER}
-	@ONLY)
+INCLUDE(SetVersionNumber.cmake)
 
 IF(Q_WS_MAC)
 	SET(RKWARD_FRONTEND_LOCATION ${BIN_INSTALL_DIR}/rkward.frontend.app/Contents/MacOS)

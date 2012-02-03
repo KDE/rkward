@@ -6,7 +6,7 @@ ENDIF(NOT WIN32)
 
 ADD_SUBDIRECTORY( rpackages )
 
-INCLUDE_DIRECTORIES( ${R_INCLUDEDIR} ${CMAKE_CURRENT_BINARY_DIR} ${KDE4_INCLUDE_DIR} ${QT_INCLUDES}  )
+INCLUDE_DIRECTORIES( ${R_INCLUDEDIR} ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR} ${KDE4_INCLUDE_DIR} ${QT_INCLUDES}  )
 
 SET (
 	rbackend_shared_SRCS
@@ -61,6 +61,7 @@ IF(RBACKEND_SPLIT)
 	ADD_EXECUTABLE(rkward.rbackend ${rbackend_BACKEND_SRCS})
 	FIND_PACKAGE(Gettext REQUIRED)
 	TARGET_LINK_LIBRARIES(rkward.rbackend ${R_USED_LIBS} ${CMAKE_THREAD_LIBS_INIT} ${QT_QTNETWORK_LIBRARY} ${QT_QTCORE_LIBRARY} ${GETTEXT_LIBRARIES})
+
 	IF(WIN32)
 		# on Widows, we install to the rbackend subdirectory, because 1) LIBEXEC_INSTALL_DIR == BIN_INSTALL_DIR and 2) we don't want the backend to pick up
 		# all the KDE library versions, first, when loading DLLs

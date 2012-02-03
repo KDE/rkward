@@ -7,7 +7,4 @@ VERSION=${1}
 cd `dirname $0`/..
 BASEDIR=`pwd`
 
-echo "/* Version number of package */" > $BASEDIR/rkward/version.h
-echo "#define RKWARD_VERSION \"$VERSION\"" >> $BASEDIR/rkward/version.h
-echo "\".rk.app.version\" <- \"$VERSION\"" > $BASEDIR/rkward/rbackend/rpackages/rkward/R/ver.R
-echo "$VERSION" > $BASEDIR/rkward/resource.ver
+echo "SET(RKVERSION_NUMBER $VERSION)" > $BASEDIR/VERSION.cmake
