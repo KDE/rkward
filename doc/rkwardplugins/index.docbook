@@ -1820,7 +1820,7 @@ plugin.dir &lt;- rk.plugin.skeleton("t-Test",
 		dialog=full.dialog,
 		wizard=full.wizard),
 	js=list(
-		results.header="Two Variable t-Test",
+		results.header="\"Two Variable t-Test\"",
 		calculate=JS.calc,
 		printout=JS.print),
 	pluginmap=list(
@@ -1894,7 +1894,7 @@ local({
 			dialog=full.dialog,
 			wizard=full.wizard),
 		js=list(
-			results.header="Two Variable t-Test",
+			results.header="\"Two Variable t-Test\"",
 			calculate=JS.calc,
 			printout=JS.print),
 		pluginmap=list(
