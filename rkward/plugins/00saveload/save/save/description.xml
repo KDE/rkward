@@ -2,22 +2,52 @@
 <document>
 	<code file="code.js"/>
 
-	<dialog label="Save R objects" >
+	<logic>
+		<convert id="lgc_compress" sources="compress.string" mode="notequals" />
+		<convert id="lgc_cmprssxz" sources="compress.string" mode="equals" standard="xz" />
+		<connect governor="lgc_compress" client="complevel.enabled" />
+		<connect governor="lgc_cmprssxz" client="xzextreme.enabled" />
+		<script>
+			<![CDATA[ gui.addChangeCommand("compress.string", "compressionChanged()");
+					// try to set compression level dynamically
+					// run each time the compression method is changed
+					compressionChanged = function(){
+							var thisObject = gui.getValue("compress.string");
+							 if(thisObject == "bzip2" | thisObject == "xz"){
+								gui.setValue("complevel.int", 9);
+							} else {
+								gui.setValue("complevel.int", 6);
+							}
+						} ]]>
+		</script>
+	</logic>
+	<dialog label="Save R objects">
 		<tabbook>
-			<tab label="Select variables" >
+			<tab label="Select variables">
 				<column>
 					<row>
 						<varselector id="vars" />
-						<varslot multi="true" id="data" source="vars" label="Object" required="true" />
+						<varslot id="data" label="Object" source="vars" required="true" multi="true" />
 					</row>
 				</column>
-				<frame label="Options" >
-					<row>
-						<browser type="savefile" size="small" initial="my.RData" id="file" label="File name" />
-						<checkbox value_unchecked="FALSE" checked="false" value="TRUE" id="ascii" label="Ascii" />
-						<checkbox value_unchecked="FALSE" checked="false" value="TRUE" id="compress" label="Compress" />
-					</row>
-				</frame>
+				<row>
+					<frame label="Save to" id="frm_Saveto">
+						<browser label="File name" type="savefile" id="file" initial="my.RData" />
+						<stretch />
+					</frame>
+					<frame label="Options" id="frm_Options">
+						<checkbox id="ascii" label="Ascii" value="true" />
+						<dropdown id="compress" label="Compression">
+							<option label="None" checked="true" />
+							<option label="gzip" value="gzip" />
+							<option label="bzip2" value="bzip2" />
+							<option label="xz" value="xz" />
+						</dropdown>
+						<spinbox label="Compression level" id="complevel" initial="6" min="1" max="9" type="integer" />
+						<checkbox id="xzextreme" label="Enable xz extreme compression" value="true" />
+						<stretch />
+					</frame>
+				</row>
 			</tab>
 		</tabbook>
 	</dialog>
