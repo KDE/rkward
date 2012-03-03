@@ -1,3 +1,6 @@
+- combined all Wilcoxon/Mann-Whitney-tests in one plugin (from previously two separate plugins)			TODO: adjust test(s)
+- Added polyserial/polychoric correlations to correlation matrix plugin			TODO: adjust test(s)
+- Added more compression options to the "Save objects as R code" plugin			TODO: adjust test(s)
 - Added MacPorts support, see README.MacPorts and bundle build script in the macports folder
 - Added dynamically generated table-of-contents menu to output document
 - Fixed: Would not show output of system() commands to stderr on the console (on Unix-like systems)
