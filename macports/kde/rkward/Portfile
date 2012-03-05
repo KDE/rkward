@@ -2,13 +2,13 @@
 # $Id$
 
 PortSystem          1.0
-
 fetch.type          svn
 svn.url             http://rkward.svn.sourceforge.net/svnroot/rkward/trunk
+svn.revision        4163
 worksrcdir          ${workpath}/trunk/rkward
 
 name                rkward-devel
-version             0.5.7+0.5.8-svn
+version             0.5.7-svn${svn.revision}
 categories          kde kde4 math science
 maintainers         hhu.de:meik.michalke
 license             GPL-2
@@ -24,6 +24,7 @@ homepage            http://rkward.sourceforge.net
 
 master_sites        https://sourceforge.net/projects/rkward/files/Current_Stable_Releases
 
+PortGroup           cmake 1.0
 depends_lib         port:kde4-baseapps \
                     port:kate \
                     port:R
@@ -32,15 +33,16 @@ if {${configure.compiler} == "clang"} {
         configure.compiler llvm-gcc-4.2
 }
 
-pre-configure {
-        system "mkdir ${worksrcdir}/build"
+post-extract {
+        # creates the build dir if it doesn't exist
+        # this won't return errors if directory is already there
+        file mkdir ${worksrcdir}/build
 }
 
 configure.dir       ${worksrcdir}/build
-configure.pre_args-delete --prefix=${prefix}
-configure.pre_args-append -DCMAKE_INSTALL_PREFIX=${prefix}
 configure.args-append \
         -DNO_R_XML=1 \
+        -DRKVERSION_NUMBER=${version} \
         -DBUNDLE_INSTALL_DIR=${applications_dir}
 configure.cmd       cmake ..
 

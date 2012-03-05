@@ -1,11 +1,6 @@
 #!/bin/bash
-# get SVN revision number
-echo "get SVN revision number..."
-SVNREV=$(svn info http://rkward.svn.sourceforge.net/svnroot/rkward/trunk 2>&1 | grep "^Revision:" | sed -e 's/[^[:digit:]]*//g')
-echo "Revision: $SVNREV"
 SRCDATE=$(date +%Y-%m-%d)
 SRCPATH=/opt/ports
-SRCFILE=${SRCPATH}/sources_bundle_svn$SVNREV_${SRCDATE}.tar
 # specify macports installation path
 MPTINST=/opt/rkward
 # specify work directory
@@ -52,6 +47,13 @@ while getopts ":fprmsc" OPT; do
   esac
 done
 
+if [[ $UPRKWARD || $MKSRCTAR || $COPYMDMD ]] ; then
+  # get SVN revision number
+  echo "get SVN revision number..."
+  SVNREV=$(svn info http://rkward.svn.sourceforge.net/svnroot/rkward/trunk 2>&1 | grep "^Revision:" | sed -e 's/[^[:digit:]]*//g')
+  echo "Revision: $SVNREV"
+  SRCFILE=${SRCPATH}/sources_bundle_svn$SVNREV_${SRCDATE}.tar
+fi
 
 # update installed ports
 if [[ $UPMPORTS ]] ; then
