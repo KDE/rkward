@@ -7,4 +7,6 @@ VERSION=${1}
 cd `dirname $0`/..
 BASEDIR=`pwd`
 
-echo "SET(RKVERSION_NUMBER $VERSION)" > $BASEDIR/VERSION.cmake
+echo "# DO NOT CHANGE THIS FILE MANUALLY!
+# It will be overwritten by scripts/set_dist_version.sh
+SET(RKVERSION_NUMBER $VERSION)" > $BASEDIR/VERSION.cmake

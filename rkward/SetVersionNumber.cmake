@@ -1,5 +1,9 @@
-# set version number
-INCLUDE(${CMAKE_SOURCE_DIR}/VERSION.cmake)
+# the IF condition enables manual setting of the version number string
+# which allows for different versioning needed for MacPorts
+IF(NOT RKVERSION_NUMBER)
+	# set version number
+	INCLUDE(${CMAKE_SOURCE_DIR}/VERSION.cmake)
+ENDIF(NOT RKVERSION_NUMBER)
 
 # replace placeholders with version number in several files
 CONFIGURE_FILE(
