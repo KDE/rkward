@@ -1,6 +1,13 @@
 <!DOCTYPE rkpluginmap>
 
 <document base_prefix="00saveload/" namespace="rkward">
+
+	<about>
+		<!-- "save_r" needs at least R 2.10 for bzip2/xz compression -->
+		<dependencies R_min_version="2.10.0">
+		</dependencies>
+	</about>
+
 	<components>
 		<component type="standard" id="load_r_object" file="import/load_data.xml" label="Load R data file" />
 		<component type="standard" id="load_source" file="import/source.xml" label="Source an R file" />
