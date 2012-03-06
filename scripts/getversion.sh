@@ -8,7 +8,7 @@ cd `dirname $0`/..
 BASEDIR=`pwd`
 
 if [ -z ${SPECIFIEDVERSION} ]; then
-	awk '{ sub(/SET\(RKVERSION_NUMBER /, ""); sub(/\)/, ""); printf "%s", $0; next }' VERSION.cmake
+	awk '{ if ($0 ~ /^SET/) { sub(/SET\(RKVERSION_NUMBER /, ""); sub(/\)/, ""); printf "%s", $0; }; next }' VERSION.cmake
 elif [ ${SPECIFIEDVERSION} = "SVN" ]; then
 	VERSION=`${BASEDIR}/scripts/getversion.sh`
 	cd ${BASEDIR}
