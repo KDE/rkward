@@ -14,7 +14,7 @@
   \item{what}{A character string, must be a valid slot name
   of class \code{XiMpLe.node}, like \code{"attributes"} or
   \code{"value"}. If not \code{NULL}, only that part of a
-  node will be returned. There's also two special
+  node will be returned.  There's also two special
   properties for this option: \code{what="@path"} will not
   return the node or it's contents, but a character string
   with the "path" to it in the object;
@@ -22,7 +22,7 @@
   \code{obj} substituted with the object's name.}
 
   \item{cond.attr}{A named character string, to further
-  filter the returned results. If not \code{NULL}, only
+  filter the returned results.  If not \code{NULL}, only
   nodes with fully matching attributes will be considered.}
 
   \item{cond.value}{A character string, similar to

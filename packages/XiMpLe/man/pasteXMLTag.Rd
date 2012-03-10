@@ -3,8 +3,8 @@
 \title{Write an XML tag}
 \usage{
   pasteXMLTag(tag, attr = NULL, child = NULL, empty = TRUE,
-  level = 1, allow.empty = FALSE, rename = NULL, shine = 2,
-  indent.by = "\t", tidy = TRUE)
+    level = 1, allow.empty = FALSE, rename = NULL,
+    shine = 2, indent.by = "\t", tidy = TRUE)
 }
 \arguments{
   \item{tag}{Character string, name of the XML tag.}
@@ -23,7 +23,7 @@
 
   \item{rename}{An optional named list if the attributes in
   XML need to be renamed from their list names in
-  \code{attr}. This list must in turn have a list element
+  \code{attr}.  This list must in turn have a list element
   named after \code{tag}, containing named character
   elements, where the names represent the element names in
   \code{attr} and their values the names the XML attribute

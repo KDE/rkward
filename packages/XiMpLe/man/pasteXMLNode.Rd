@@ -2,8 +2,8 @@
 \alias{pasteXMLNode}
 \title{Paste an XML node from a XiMpLe.node object}
 \usage{
-  pasteXMLNode(node, level = 1, shine = 1, indent.by =
-  "\t", tidy = TRUE)
+  pasteXMLNode(node, level = 1, shine = 1,
+    indent.by = "\t", tidy = TRUE)
 }
 \arguments{
   \item{node}{An object of class \code{XiMpLe.node}.}

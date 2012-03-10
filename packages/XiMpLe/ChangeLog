@@ -1,76 +1,79 @@
 ChangeLog for package XiMpLe
 
-## 0.03-8 (2011-11-17)
+changes in version 0.03-9 (2012-03-10)
+  - re-formatted the ChangeLog so roxyPackage can translate it into a NEWS.Rd file
+
+changes in version 0.03-8 (2011-11-17)
   - rewrote large parts of internal function XML.single.tags() for more efficiency, allthough it's still quite
     lethargic when handling huge XML trees
 
-## 0.03-7 (2011-10-23)
+changes in version 0.03-7 (2011-10-23)
   - added "&" to the special characters for "tidy" (only applies if theres space before and after)
   - "tidy" now also indents text in comments and CDATA if it includes the newline character
 
-## 0.03-6 (2011-10-09)
+changes in version 0.03-6 (2011-10-09)
   - added "tidy" option to the paste functions, which is TRUE by default since "<" and ">" are
     invalid in attributes and text anyway
 
-## 0.03-5 (2011-10-07)
+changes in version 0.03-5 (2011-10-07)
   - fixed tree parsing bug (in rare cases, comment and CDATA entries caused parsing to choke on
     empty lines)
 
-## 0.03-4 (2011-10-01)
+changes in version 0.03-4 (2011-10-01)
   - added show methods for objects of class XiMpLe.doc and XiMpLe.node
 
-## 0.03-3 (2011-09-27)
+changes in version 0.03-3 (2011-09-27)
   - changed default 'shine' value of pasteXMLNode() and pasteXMLTree() from 2 to 1
   - pasteXMLNode() and pasteXMLTree() now try to call each other if fed with the wrong class object,
     but a warning is given
   - changed handling of 'value' in pasteXMLNode(), now reflects 'shine' setting/indentation
 
-## 0.03-2 (2011-09-17)
+changes in version 0.03-2 (2011-09-17)
   - added docs for classed XiMpLe.doc and XiMpLe.node
 
-## 0.03-1 (2011-09-11)
+changes in version 0.03-1 (2011-09-11)
   - fixed outstanding issue with complex value structures
   - changed "Author@R" to "Authors@R" in DESCRIPTION (for R >= 2.14)
 
-## 0.02-2 (2011-09-01)
+changes in version 0.02-2 (2011-09-01)
   - fixed missing "methods" dependecy
   - adjusted docs a little
 
-## 0.02-1 (2011-08-30)
+changes in version 0.02-1 (2011-08-30)
   - added option "indent.by" to the paste functions, in case one prefers space over tab.
   - moved all rk.* functions out of this package and into its own (rkwardplugdev)
 
-## 0.01-9 (2011-08-28)
+changes in version 0.01-9 (2011-08-28)
   - tiny improvements to XML formatting
   - added functions rk.XML.tabbook(), rk.XML.dropdown(), rk.XML.plugin()
     rk.XML.pluginmap() and rk.plugin.skeleton() [to be moved again]
 
-## 0.01-8 (2011-08-26)
+changes in version 0.01-8 (2011-08-26)
   - improved handling of comments a lot
 
-## 0.01-7 (2011-08-24)
+changes in version 0.01-7 (2011-08-24)
   - fixed typo bug in XML.single.tags()
   - improved support for comments and CDATA
   - improved XML formatting
 
-## 0.01-6 (2011-08-23)
+changes in version 0.01-6 (2011-08-23)
   - added functions pasteXMLTree() and pasteXMLNode()
   - added validity checks for classes XiMpLe.doc and XiMpLe.node
   - added function rk.XML.about() [which will probably be moved out of the package]
 
-## 0.01-5 (2011-08-22)
+changes in version 0.01-5 (2011-08-22)
   - writing new node values with node<-() partly works
 
-## 0.01-4 (2011-08-21)
+changes in version 0.01-4 (2011-08-21)
   - rewrote and renamed getNode() to node()
 
-## 0.01-3 (2011-08-18)
+changes in version 0.01-3 (2011-08-18)
   - checks XML and DTD declaration now
   - added getNode() method
 
-## 0.01-2 (2011-08-15)
+changes in version 0.01-2 (2011-08-15)
   - iterating through an XML tree actually works now
 
-## 0.01-1 (2011-08-14)
+changes in version 0.01-1 (2011-08-14)
   - initial release via reaktanz.de
  

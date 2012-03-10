@@ -2,8 +2,8 @@
 \alias{pasteXMLTree}
 \title{Paste an XML tree structure from a XiMpLe.doc object}
 \usage{
-  pasteXMLTree(obj, shine = 1, indent.by = "\t", tidy =
-  TRUE)
+  pasteXMLTree(obj, shine = 1, indent.by = "\t",
+    tidy = TRUE)
 }
 \arguments{
   \item{obj}{An object of class \code{XiMpLe.doc}.}
