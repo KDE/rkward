@@ -54,6 +54,7 @@
 #'		Default is to create all of these files. Existing files will only be overwritten if \code{overwrite=TRUE}.
 #' @param suggest.required Logical, if \code{TRUE} R package dependencies in \code{about} will be added to the \code{Suggests:}
 #'		field of the \code{DESCRIPTION} file, otherwise to the \code{Depends:} field.
+#' @param components A list of plugin components. See \code{\link[rkwarddev:rk.XML.component]{rk.XML.component}} for details.
 #' @param edit Logical, if \code{TRUE} RKWard will automatically open the created files for editing, by calling \code{rk.edit.files}.
 #'		This applies to all files defined in \code{create}.
 #' @param load Logical, if \code{TRUE} and \code{"pmap"} in \code{create}, RKWard will automatically add the created .pluginmap file
@@ -363,6 +364,8 @@ rk.plugin.skeleton <- function(about, path=tempdir(),
 
 			# i have no clue how to circumvent this workaround:
 			desc$`Authors@R` <- desc[["AuthorsR"]]
+			# satisfy NOTE from R CMD check
+			AuthorsR <- NULL
 			desc <- subset(desc, select=-AuthorsR)
 
 			write.dcf(desc, file=description.file)

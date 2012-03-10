@@ -9,6 +9,7 @@
 #' @return An object of class \code{XiMpLe.node}.
 #' @note There's also a simple wrapper function \code{rk.XML.checkbox}.
 #' @export
+#' @aliases rk.XML.checkbox
 #' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' test.checkboxes <- rk.XML.row(rk.XML.col(

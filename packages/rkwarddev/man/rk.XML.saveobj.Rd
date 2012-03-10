@@ -16,10 +16,10 @@
   \item{checkable}{Logical, if \code{TRUE} the option can
   be switched on and off.}
 
-  \item{intitial}{Character string, the default name for
-  the object should be saved to.  If \code{"auto"} and a
-  label was provided, an name will be generated
-  automatically from the label.}
+  \item{initial}{Character string, the default name for the
+  object should be saved to.  If \code{"auto"} and a label
+  was provided, an name will be generated automatically
+  from the label.}
 
   \item{required}{Logical, whether an entry is mandatory or
   not.}

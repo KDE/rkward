@@ -3,7 +3,7 @@
 #' @param label Character string, a text label for this plugin element.
 #' @param chk Logical, if \code{TRUE} and \code{checkable=TRUE} the option is checkable and active by default.
 #' @param checkable Logical, if \code{TRUE} the option can be switched on and off.
-#' @param intitial Character string, the default name for the object should be saved to.
+#' @param initial Character string, the default name for the object should be saved to.
 #'		If \code{"auto"} and a label was provided, an name will be generated automatically from the label.
 #' @param required Logical, whether an entry is mandatory or not.
 #' @param id.name Character string, a unique ID for this plugin element.

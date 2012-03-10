@@ -27,19 +27,20 @@
 #' @export
 #' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
+#' \dontrun{
 #' test.checkboxes <- rk.XML.row(rk.XML.col(
 #'   list(
 #'     rk.XML.cbox(label="foo", val="foo1", chk=TRUE),
 #'     rk.XML.cbox(label="bar", val="bar2"))))
 #' test.dropdown <- rk.XML.dropdown("mydrop",
-#'   opts=list("First Option"=c(val="val1"),
+#'   options=list("First Option"=c(val="val1"),
 #'   "Second Option"=c(val="val2", chk=TRUE)))
 #' # combine the above into a tabbook
-#' test.tabbook <- rk.XML.tabbook("My Tabbook", tab.labels=c("First Tab",
-#'   "Second Tab"), dialog=list(test.checkboxes, test.dropdown))
+#' test.tabbook <- rk.XML.tabbook("My Tabbook", tabs=c(
+#'   "First Tab"=test.checkboxes, "Second Tab"=test.dropdown))
 #' # make a plugin with that tabbook
-#' test.plugin <- rk.XML.plugin("My test", dialog=test.tabbook)
-#' cat(pasteXMLTree(test.plugin))
+#' test.plugin <- rk.XML.plugin("My test", dialog=rk.XML.dialog(test.tabbook))
+#' }
 
 rk.XML.plugin <- function(name, dialog=NULL, wizard=NULL, logic=NULL, snippets=NULL, provides=NULL, help=TRUE, pluginmap=NULL, label=NULL, clean.name=TRUE, about=NULL, gen.info=TRUE){
 	if(isTRUE(clean.name)){

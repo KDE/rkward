@@ -1,5 +1,6 @@
 \name{rk.XML.cbox}
 \alias{rk.XML.cbox}
+\alias{rk.XML.checkbox}
 \title{Create XML node "checkbox" for RKWard plugins}
 \usage{
   rk.XML.cbox(label, value = "true", un.value = NULL,

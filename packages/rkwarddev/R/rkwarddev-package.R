@@ -3,9 +3,9 @@
 #' \tabular{ll}{
 #' Package: \tab rkwarddev\cr
 #' Type: \tab Package\cr
-#' Version: \tab 0.05-1\cr
-#' Date: \tab 2012-01-04\cr
-#' Depends: \tab R (>= 2.9.0),XiMpLe,rkward (>= 0.5.6)\cr
+#' Version: \tab 0.05-2\cr
+#' Date: \tab 2012-03-10\cr
+#' Depends: \tab R (>= 2.9.0),methods,XiMpLe,rkward (>= 0.5.6)\cr
 #' Enhances: \tab rkward\cr
 #' Encoding: \tab UTF-8\cr
 #' License: \tab GPL (>= 3)\cr
@@ -21,5 +21,4 @@
 #' @title A collection of tools for RKWard plugin development.
 #' @author m.eik michalke \email{meik.michalke@@hhu.de}
 #' @keywords package
-roxygen <- function() NULL
-roxygen()
+NULL

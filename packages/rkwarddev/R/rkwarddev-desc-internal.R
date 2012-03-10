@@ -10,7 +10,7 @@ pckg.dscrptn <- data.frame(
 			role=c(\"aut\", \"cre\")))",
 		Maintainer="m.eik michalke <meik.michalke@hhu.de>",
 		## revert to rkward (>= 0.5.7) later...
-		Depends="R (>= 2.9.0),XiMpLe,rkward (>= 0.5.6)",
+		Depends="R (>= 2.9.0),methods,XiMpLe,rkward (>= 0.5.6)",
 		Enhances="rkward",
 		Description="Provides functions to create plugin skeletons and XML structures for RKWard.",
 		License="GPL (>= 3)",

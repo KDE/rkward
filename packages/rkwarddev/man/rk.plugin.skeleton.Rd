@@ -123,6 +123,10 @@
   \code{Suggests:} field of the \code{DESCRIPTION} file,
   otherwise to the \code{Depends:} field.}
 
+  \item{components}{A list of plugin components. See
+  \code{\link[rkwarddev:rk.XML.component]{rk.XML.component}}
+  for details.}
+
   \item{edit}{Logical, if \code{TRUE} RKWard will
   automatically open the created files for editing, by
   calling \code{rk.edit.files}.  This applies to all files
