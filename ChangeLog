@@ -1,3 +1,4 @@
+- Fixed: If the rkward package was loaded in a plain R session, q() and quit() still work
 - combined all Wilcoxon/Mann-Whitney-tests in one plugin (from previously two separate plugins)			TODO: adjust test(s)
 - Added polyserial/polychoric correlations to correlation matrix plugin			TODO: adjust test(s)
 - Added more compression options to the "Save objects as R code" plugin			TODO: adjust test(s)
