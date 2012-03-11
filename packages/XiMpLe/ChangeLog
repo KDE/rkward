@@ -1,5 +1,9 @@
 ChangeLog for package XiMpLe
 
+changes in version 0.03-10 (2012-03-11)
+  - fixed bug in parsing of attributes, their names are now all quoted by default o not run into issues
+    if they contain R-sensitive characters (like "http-equiv")
+
 changes in version 0.03-9 (2012-03-10)
   - re-formatted the ChangeLog so roxyPackage can translate it into a NEWS.Rd file
 

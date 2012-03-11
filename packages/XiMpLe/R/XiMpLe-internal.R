@@ -179,6 +179,8 @@ parseXMLAttr <- function(tag){
 		stripped.tag <- gsub("[/?]*>$", "", stripped.tag, perl=TRUE)
 		# fill in commas, so we can evaluate this as elements of a named list
 		separated.tag <- gsub("=[[:space:]]*\"([^\"]*)\"[[:space:]]+([^[:space:]=]+)", "=\"\\1\", \\2", stripped.tag, perl=TRUE)
+		# to be on the safe side, escape all list names, in case there's unexpected special characters in them
+		separated.tag <- gsub("( ,)?([^[:space:],\"]*)=\"", "\\1\"\\2\"=\"", separated.tag, perl=TRUE)
 		parsed.list <- eval(parse(text=paste("list(", separated.tag, ")")))
 	}
 	if(XML.declaration(tag)){

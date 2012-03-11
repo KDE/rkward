@@ -1,6 +1,12 @@
 \name{NEWS}
 \title{News for Package 'XiMpLe'}
 \encoding{UTF-8}
+\section{Changes in XiMpLe version 0.03-10 (2012-03-11)}{
+  \itemize{
+    \item fixed bug in parsing of attributes, their names are now all quoted by default o not run into issues
+      if they contain R-sensitive characters (like "http-equiv")
+  }
+}
 \section{Changes in XiMpLe version 0.03-9 (2012-03-10)}{
   \itemize{
     \item re-formatted the ChangeLog so roxyPackage can translate it into a NEWS.Rd file
