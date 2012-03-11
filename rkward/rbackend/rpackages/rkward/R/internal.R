@@ -209,7 +209,10 @@
 	function (value) {
 		if (!missing (value)) {
 			assign (k, value, envir=.rk.watched.symbols)
-			.rk.do.call ("ws", k);
+			.Call ("rk.do.command", c ("ws", k));
+#			NOTE: the above is essentially the same a
+#				.rk.do.call ("ws", k);
+#			only minimally faster.
 			invisible (value)
 		} else {
 			get (k, envir=.rk.watched.symbols)
