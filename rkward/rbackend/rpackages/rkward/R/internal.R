@@ -165,10 +165,25 @@
 	}
 }
 
+# this function shall test if the rkward package was loaded in a running RKWard session
+.rk.inside.rkward.session <- function(warn = FALSE){
+	inside.rkward <- is.loaded("rk.do.generic.request")
+	if(isTRUE(warn) & !isTRUE(inside.rkward)){
+		warning("You've loaded the package 'rkward', but RKWard doesn't appear to be running. If this causes trouble, try detach(\"package:rkward\").",
+		call. = FALSE)
+	}
+	return(inside.rkward)
+}
+
 # overriding q, to ask via GUI instead. Arguments are not interpreted.
 "q" <- function (save = "default", status = 0, runLast = TRUE, ...) {
-	res <- .rk.do.plain.call ("quit")
-	if (length (res) && (res == "FALSE")) stop ("Quitting was cancelled")
+	# test if this is running in RKWard, otherwise pass through to the actual q()
+	if (isTRUE(.rk.inside.rkward.session())){
+		res <- .rk.do.plain.call ("quit")
+		if (length (res) && (res == "FALSE")) stop ("Quitting was cancelled")
+	} else {
+		base:::q(save = save, status = status, runLast = runLast)
+	}
 }
 
 "quit" <- function (save = "default", status = 0, runLast = TRUE, ...) {
