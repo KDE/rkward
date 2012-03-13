@@ -53,7 +53,7 @@ pasteXMLNode <- function(node, level=1, shine=1, indent.by="\t", tidy=TRUE){
 			if(isTRUE(tidy)){
 				node.val <- sapply(node.val, xml.tidy)
 			} else {}
-			node.chld <- paste(new.indent, paste(node.val, collapse=" "), new.node, sep="")
+			node.chld <- paste(new.indent, paste(node.val, collapse=" "), sep="")
 		} else {}
 	} else {}
 

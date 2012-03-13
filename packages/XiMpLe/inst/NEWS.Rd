@@ -1,6 +1,13 @@
 \name{NEWS}
 \title{News for Package 'XiMpLe'}
 \encoding{UTF-8}
+\section{Changes in XiMpLe version 0.03-11 (2012-03-13)}{
+  \itemize{
+    \item added opton \code{"object"} to \code{parseXMLTree()}, to be able to parse XML trees not only from files, but also character vectors
+    \item output of internal function \code{XML.single.tags()} has no colname any more
+    \item text values of nodes are no longer followed by an empty newline in \code{pasteXMLNode()}
+  }
+}
 \section{Changes in XiMpLe version 0.03-10 (2012-03-11)}{
   \itemize{
     \item fixed bug in parsing of attributes, their names are now all quoted by default o not run into issues

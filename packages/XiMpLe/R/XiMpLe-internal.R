@@ -69,7 +69,7 @@ XML.single.tags <- function(tree, drop=NULL){
 					return(split.chars(txt=this.tree, "<(.*?)>"))
 				}
 			}))
-	names(single.tags) <- NULL
+	colnames(single.tags) <- NULL
 	if("comments" %in% drop){
 		single.tags <- single.tags[!XML.comment(single.tags)]
 	} else {}

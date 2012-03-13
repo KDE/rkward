@@ -4,9 +4,11 @@
 #' @param drop Character vector with the possible values \code{"comments"}, \code{"cdata"}
 #'		\code{"declarations"} and \code{"doctype"}, defining element classes to be dropped
 #'		from the resulting object.
+#' @param object Logical, if \code{TRUE}, \code{file} will not be treated as a path name but as a
+#'		character vector to be parsed as XML directly.
 #' @return An object of class \code{XiMpLe.doc} with four slots:
 #'		\describe{
-#'			\item{\code{file}:}{Full path to the parsed file.}
+#'			\item{\code{file}:}{Full path to the parsed file, or \code{"object"} if \code{object=TRUE}.}
 #'			\item{\code{xml}:}{XML declaration, if found.}
 #'			\item{\code{dtd}:}{Doctype definition, if found.}
 #'			\item{\code{children}:}{A list of objects of class \code{XiMpLe.node}, with the elements
@@ -16,8 +18,14 @@
 #'		}
 #' @export
 
-parseXMLTree <- function(file, drop=NULL){
-	xml.raw <- paste(readLines(file), collapse=" ")
+parseXMLTree <- function(file, drop=NULL, object=FALSE){
+	if(isTRUE(object)){
+		xml.raw <- paste(file, collapse=" ")
+		filePath <- "object"
+	} else {
+		xml.raw <- paste(readLines(file), collapse=" ")
+		filePath <- normalizePath(file)
+	}
 
 	single.tags <- XML.single.tags(xml.raw, drop=drop)
 
@@ -38,7 +46,7 @@ parseXMLTree <- function(file, drop=NULL){
 	children <- XML.nodes(single.tags)[["children"]]
 	
 	results <- new("XiMpLe.doc",
-		file=normalizePath(file),
+		file=filePath,
 		xml=XML.decl,
 		dtd=XML.doct,
 		children=children)
