@@ -1,5 +1,23 @@
 ## internal functions, not exported
 
+
+## function child.list()
+# convenience function to let single children be provided without list()
+child.list <- function(children){
+	if(inherits(children, "XiMpLe.node")){
+		children <- list(children)
+	} else {
+		# if already a list, check if it's a list in a list and get it out
+		if(inherits(children, "list") & length(children) == 1){
+			if(inherits(children[[1]], "list")){
+				children <- children[[1]]
+			} else {}
+		} else {}
+	}
+	return(children)
+} ## end function child.list()
+
+
 ## function split.chars()
 # used to split a character string into parts at each occurrence of the start and end of a regex pattern
 split.chars <- function(txt, pattern, perl=FALSE){

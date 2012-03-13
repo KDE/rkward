@@ -6,9 +6,9 @@
 # This class is used for objects that are returned by \code{\link[XiMpLe:parseXMLTree]{parseXMLTree}}.
 #
 # @title S4 class XiMpLe.doc
-# @slot file Name of the file.
-# @slot xml XML declaration of the file.
-# @slot dtd Doctype definition of the file.
+# @slot file Character string, Name of the file.
+# @slot xml A named list, XML declaration of the file.
+# @slot dtd A named list, Doctype definition of the file.
 # @slot children A list of objects of class XiMpLe.node, representing the DOM structure of the XML document.
 # @name XiMpLe.doc,-class
 # @aliases XiMpLe.doc-class XiMpLe.doc,-class

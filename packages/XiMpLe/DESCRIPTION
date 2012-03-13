@@ -18,7 +18,7 @@ URL: http://reaktanz.de/?c=hacking&s=XiMpLe
 Authors@R: c(person(given="Meik", family="Michalke",
     email="meik.michalke@hhu.de", role=c("aut", "cre")))
 Version: 0.03-11
-Date: 2012-03-13
+Date: 2012-03-14
 Collate:
     'XiMpLe.node-class.R'
     'XiMpLe.doc-class.R'
@@ -32,3 +32,5 @@ Collate:
     'XiMpLe-internal.R'
     'XiMpLe-internal.roxy.all.R'
     'XiMpLe-package.R'
+    'XMLNode.R'
+    'XMLTree.R'
