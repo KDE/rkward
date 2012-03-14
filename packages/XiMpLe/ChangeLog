@@ -1,6 +1,6 @@
 ChangeLog for package XiMpLe
 
-changes in version 0.03-11 (2012-03-13)
+changes in version 0.03-11 (2012-03-14)
   - added functions XMLNode() and XMLTree() as constructor functions for XML nodes and trees.
   - added opton "object" to parseXMLTree(), to be able to parse XML trees not only from files, but also character vectors
   - output of internal function XML.single.tags() has no colname any more

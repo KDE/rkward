@@ -1,7 +1,7 @@
 \name{NEWS}
 \title{News for Package 'XiMpLe'}
 \encoding{UTF-8}
-\section{Changes in XiMpLe version 0.03-11 (2012-03-13)}{
+\section{Changes in XiMpLe version 0.03-11 (2012-03-14)}{
   \itemize{
     \item added functions \code{XMLNode()} and \code{XMLTree()} as constructor functions for XML nodes and trees.
     \item added opton \code{"object"} to \code{parseXMLTree()}, to be able to parse XML trees not only from files, but also character vectors
