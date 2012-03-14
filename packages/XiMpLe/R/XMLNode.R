@@ -2,6 +2,8 @@
 #' 
 #' Can be used to create XML nodes.
 #' 
+#' To generate a CDATA node, set \code{name="![CDATA["}, to create a comment, set \code{name="!--"}.
+#' 
 #' @param name Character string, the tag name.
 #' @param ... Optional children for the tag. Must be either objects of class XiMpLe.node or character strings,
 #'		which are treated as simple text values. If this is empty, the tag will be treated as an empty tag. To

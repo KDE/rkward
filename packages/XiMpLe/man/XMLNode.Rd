@@ -29,4 +29,8 @@
 \description{
   Can be used to create XML nodes.
 }
+\details{
+  To generate a CDATA node, set \code{name="![CDATA["}, to
+  create a comment, set \code{name="!--"}.
+}
 
