@@ -1,3 +1,18 @@
+# check the context in which this package is loaded
+.onAttach <- function(...) {
+	.rk.inside.rkward.session(warn = TRUE)
+}
+
+# this function shall test if the rkward package was loaded in a running RKWard session
+.rk.inside.rkward.session <- function(warn = FALSE){
+	inside.rkward <- is.loaded("rk.do.generic.request")
+	if(isTRUE(warn) & !isTRUE(inside.rkward)){
+		warning("You've loaded the package 'rkward', but RKWard doesn't appear to be running. If this causes trouble, try detach(\"package:rkward\").",
+		call. = FALSE)
+	}
+	return(inside.rkward)
+}
+
 ".rk.get.meta" <- function (x) {
 	y <- attr (x, ".rk.meta");
 	c (names (y), as.character (y))
@@ -152,44 +167,6 @@
 	return (x)
 }
 
-"require" <- function (package, quietly = FALSE, character.only = FALSE, ...)
-{
-	if (!character.only) {
-		package <- as.character(substitute(package))
-	}
-	if (!base::require(as.character(package), quietly = quietly, character.only = TRUE, ...)) {
-		.rk.do.call("require", as.character(package))
-		invisible(base::require(as.character(package), quietly = TRUE, character.only = TRUE, ...))
-	} else {
-		invisible(TRUE)
-	}
-}
-
-# this function shall test if the rkward package was loaded in a running RKWard session
-.rk.inside.rkward.session <- function(warn = FALSE){
-	inside.rkward <- is.loaded("rk.do.generic.request")
-	if(isTRUE(warn) & !isTRUE(inside.rkward)){
-		warning("You've loaded the package 'rkward', but RKWard doesn't appear to be running. If this causes trouble, try detach(\"package:rkward\").",
-		call. = FALSE)
-	}
-	return(inside.rkward)
-}
-
-# overriding q, to ask via GUI instead. Arguments are not interpreted.
-"q" <- function (save = "default", status = 0, runLast = TRUE, ...) {
-	# test if this is running in RKWard, otherwise pass through to the actual q()
-	if (isTRUE(.rk.inside.rkward.session())){
-		res <- .rk.do.plain.call ("quit")
-		if (length (res) && (res == "FALSE")) stop ("Quitting was cancelled")
-	} else {
-		base:::q(save = save, status = status, runLast = runLast)
-	}
-}
-
-"quit" <- function (save = "default", status = 0, runLast = TRUE, ...) {
-	q (save, status, runLast, ...)
-}
-
 #".rk.init.handlers" <- function () {
 #	options (warning.expression = expression ())
 #	.Internal (.addCondHands (c ("message", "warning", "error"), list (function (m) { .Call ("rk.do.condition", c ("m", conditionMessage (m))) }, function (w) { .Call ("rk.do.condition", c ("w", conditionMessage (w))) }, function (e) { .Call ("rk.do.condition", c ("e", conditionMessage (e))) }), globalenv (), NULL, TRUE))
@@ -197,18 +174,6 @@
 
 # these functions can be used to track assignments to R objects. The main interfaces are .rk.watch.symbol (k) and .rk.unwatch.symbol (k). This works by copying the symbol to a backup environment, removing it, and replacing it by an active binding to the backup location
 ".rk.watched.symbols" <- new.env ()
-
-# override makeActiveBinding: If active bindings are created in globalenv (), watch them properly
-.rk.makeActiveBinding.default <- base::makeActiveBinding
-"makeActiveBinding" <- function (sym, fun, env, ...) {
-	if (identical (env, globalenv ())) {
-		.rk.makeActiveBinding.default (sym, fun, .rk.watched.symbols, ...)
-		f <- .rk.make.watch.f (sym)
-		.rk.makeActiveBinding.default (sym, f, globalenv (), ...)
-	} else {
-		.rk.makeActiveBinding.default (sym, fun, env, ...)
-	}
-}
 
 ".rk.make.watch.f" <- function (k) {
 	# we need to make sure, the functions we use are *not* looked up as symbols in .GlobalEnv.
@@ -345,27 +310,6 @@
 	ret
 }
 
-"Sys.setlocale" <- function (category = "LC_ALL", locale = "", ...) {
-	if (category == "LC_ALL" || category == "LC_CTYPE" || category == "LANG") {
-		allow <- .rk.do.plain.call ("preLocaleChange", NULL)
-		if (length (allow) && (allow == "FALSE")) stop ("Changing the locale was cancelled by user")
-
-		ret <- base::Sys.setlocale (category, locale, ...)
-
-		.Call ("rk.update.locale")
-		ret
-	} else {
-		base::Sys.setlocale (category, locale, ...)
-	}
-}
-
-"setwd" <- function () {
-	ret <- eval (body (base::setwd))
-	.rk.do.plain.call ("wdChange", base::getwd (), synchronous=FALSE)
-	invisible (ret)
-}
-formals (setwd) <- formals (base::setwd)
-
 # hidden, as this is not portable to different output formats
 ".rk.cat.output" <- function (x) {
 	cat (x, file = rk.get.output.html.file(), append = TRUE)
@@ -377,24 +321,6 @@ formals (setwd) <- formals (base::setwd)
 
 ".rk.make.hr" <- function () {
 	.rk.cat.output ("<hr>\n");
-}
-
-# Start recording commands that are submitted from rkward to R.
-# filename: filename to write to (file will be truncated!).
-# include.all: By default, some types of command are filtered (internal synchronisation commands, and run again links). Should these be included?
-# To stop recording, supply NULL or "" as filename
-# Currently used for the purpose of automated testing, only. Perhaps in the future
-# this or a similar mechanism could also be added as a user feature.
-"rk.record.commands" <- function (filename, include.all = FALSE) {
-	if (is.null (filename)) filename = ""
-
-	res <- .rk.do.plain.call ("recordCommands", c(as.character (filename), if (include.all) "include.all" else "normal"))
-
-	if (!length (res)) invisible (TRUE)
-	else {
-		warning (res)
-		invisible (FALSE)
-	}
 }
 
 # General purpose storage environment (which will hopefully never get locked by R)

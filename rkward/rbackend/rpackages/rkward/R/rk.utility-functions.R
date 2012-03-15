@@ -38,6 +38,7 @@
 #' 
 # renames a named object in a data.frame/list without changing it's position
 # TODO: create a generic function instead, that can handle all kinds of renames
+#' @export
 "rk.rename.in.container" <- function (x, old_name, new_name, envir=parent.frame()) {
 	temp <- (names (x) == old_name)
 	i = 1;
@@ -51,6 +52,7 @@
 	error ("Could not find column with given name")
 }
 
+#' @export
 "rk.make.repos.string" <- function () {
 	x <- getOption ("repos")
 	len <- length (x)
@@ -73,6 +75,7 @@
 }
 
 # a wrapper around chooseCRANmirror() without changing options ("repos"), permanently
+#' @export
 "rk.select.CRAN.mirror" <- function () {
 	old_repos <- getOption("repos")
 	on.exit (options (repos=old_repos))
@@ -110,6 +113,7 @@
 #' ## NOT RUN
 #' rk.old.packages()
 #' 
+#' @export
 "rk.old.packages" <- function (lib.loc = NULL, repos = getOption("repos"), contriburl = contrib.url(repos, type), instPkgs = installed.packages(lib.loc = lib.loc),
                              method, available = NULL, checkBuilt = FALSE, type = getOption("pkgType")) {
 	if (is.null (lib.loc)) lib.loc <- .libPaths ()
@@ -128,4 +132,24 @@
 		instPkgs <- instPkgs[!(instPkgs[, "Package"] %in% seen.packages), , drop=FALSE]
 	}
 	old
+}
+
+
+# Start recording commands that are submitted from rkward to R.
+# filename: filename to write to (file will be truncated!).
+# include.all: By default, some types of command are filtered (internal synchronisation commands, and run again links). Should these be included?
+# To stop recording, supply NULL or "" as filename
+# Currently used for the purpose of automated testing, only. Perhaps in the future
+# this or a similar mechanism could also be added as a user feature.
+#' @export
+"rk.record.commands" <- function (filename, include.all = FALSE) {
+	if (is.null (filename)) filename = ""
+
+	res <- .rk.do.plain.call ("recordCommands", c(as.character (filename), if (include.all) "include.all" else "normal"))
+
+	if (!length (res)) invisible (TRUE)
+	else {
+		warning (res)
+		invisible (FALSE)
+	}
 }
