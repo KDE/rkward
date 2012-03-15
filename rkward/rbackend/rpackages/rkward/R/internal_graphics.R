@@ -2,6 +2,7 @@
 ## These functions are _not_ supposed to be called by the end user.
 
 # overriding x11 to get informed, when a new x11 window is opened
+#' @export
 "rk.screen.device" <- function (..., is.being.duplicated = FALSE, is.preview.device = FALSE) {
 	.rk.do.call ("startOpenX11", as.character (dev.cur ()));
 
@@ -34,8 +35,10 @@
 	invisible (x)
 }
 
+#' @export
 "x11" <- rk.screen.device
 
+#' @export
 "X11" <- x11
 
 if (base::.Platform$OS.type == "windows") {
@@ -45,9 +48,10 @@ if (base::.Platform$OS.type == "windows") {
 
 # set from rkward the application:
 # options(device="rk.screen.device")
+#' @include internal.R
+assign(".rk.preview.devices", list (), envir=.rk.variables)
 
-.rk.variables$.rk.preview.devices <- list ()
-
+#' @export
 ".rk.startPreviewDevice" <- function (x) {
 	a <- .rk.variables$.rk.preview.devices[[x]]
 	if (is.null (a)) {
@@ -61,6 +65,7 @@ if (base::.Platform$OS.type == "windows") {
 	}
 }
 
+#' @export
 ".rk.killPreviewDevice" <- function (x) {
 	a <- .rk.variables$.rk.preview.devices[[x]]
 	if (!is.null (a)) {
@@ -74,6 +79,7 @@ if (base::.Platform$OS.type == "windows") {
 .rk.variables$.rk.printer.devices <- list ()
 
 # see .rk.fix.assignmetns () in internal.R
+#' @export
 ".rk.fix.assignments.graphics" <- function ()
 {
 	rk.replace.function ("plot.new", as.environment ("package:graphics"),

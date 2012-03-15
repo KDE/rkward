@@ -324,11 +324,12 @@
 }
 
 # General purpose storage environment (which will hopefully never get locked by R)
+#' @export
 ".rk.variables" <- new.env ()
-.rk.variables$.rk.active.device <- 1
-.rk.variables$.rk.output.html.file <- NULL
-.rk.variables$.rk.rkreply <- NULL
-.rk.variables$available.packages.cache <- NULL
+assign(".rk.active.device", 1, envir=.rk.variables)
+assign(".rk.output.html.file", NULL, envir=.rk.variables)
+assign(".rk.rkreply", NULL, envir=.rk.variables)
+assign("available.packages.cache", NULL, envir=.rk.variables)
 
 ".rk.backups" <- new.env ()
 
