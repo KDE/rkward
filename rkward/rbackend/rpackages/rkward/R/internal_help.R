@@ -1,6 +1,7 @@
 ## Internal functions related to help search / display
 
 # retrieve the (expected) "base" url of help files. Most importantly this will be a local port for R 2.10.0 and above, but a local directory for 2.9.x and below. As a side effect, in R 2.10.0 and above, the dynamic help server is started.
+#' @export
 ".rk.getHelpBaseUrl" <- function () {
 	port <- NA
 	if (compareVersion (as.character (getRversion()), "2.10.0") >= 0) {
@@ -21,6 +22,7 @@
 
 # a simple wrapper around help() that makes it easier to detect in code, whether help was found or not.
 # used from RKHelpSearchWindow::getFunctionHelp
+#' @export
 ".rk.getHelp" <- function (...) {
 	if (compareVersion (as.character (getRversion()), "2.10.0") >= 0) {
 		res <- help (..., help_type="html")
@@ -36,6 +38,7 @@
 }
 
 # Simple wrapper around help.search. Concatenates the relevant fields of the results in order for passing to the frontend.
+#' @export
 ".rk.get.search.results" <- function (pattern, ...) {
 	H=as.data.frame (help.search(pattern, ...)$matches)
 	# NOTE: The field "Type" was added in R 2.14.0. For earlier versions of R, only help pages were returned as results of help.search()

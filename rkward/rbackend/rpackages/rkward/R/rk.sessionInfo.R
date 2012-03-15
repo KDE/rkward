@@ -12,6 +12,7 @@
 #' @author Thomas Friedrichsmeier \email{rkward-devel@@lists.sourceforge.net}
 #' @seealso \code{\link{sessionInfo}}
 #' @keywords utilities misc
+#' @export
 #' @rdname rk.sessionInf
 #' @examples
 #' 

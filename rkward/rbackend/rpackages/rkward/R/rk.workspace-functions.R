@@ -35,6 +35,7 @@
 #' rk.restore.workplace ()
 #' ## End not run
 #' 
+#' @export
 "rk.save.workplace" <- function (file=NULL, description=NULL) {
 	if (is.null (file)) {
 		file <- URLdecode (rk.get.workspace.url ())
@@ -46,6 +47,7 @@
 	writeLines (lines, file)
 }
 
+#' @export
 "rk.restore.workplace" <- function (file=NULL, close.windows=TRUE) {
 	if (is.null (file)) {
 		if (exists (".rk.workplace.save", envir=globalenv (), inherits=FALSE)) {

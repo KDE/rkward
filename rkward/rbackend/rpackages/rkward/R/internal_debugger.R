@@ -1,5 +1,6 @@
 # gather debug information.
 # Note: subsequent browser() calls should be suppressed while inside this function!
+#' @export
 .rk.callstack.info <- function () {
 	nframes <- sys.nframe() - 1	# strip this function call
 	calls <- character (0)

@@ -26,12 +26,14 @@
 #' rk.sync (rkward::rk.record.plot)
 #' 
 # should this really be public?
+#' @export
 "rk.sync" <- function (x) {
 	object <- deparse (substitute (x))
 	.rk.do.call ("sync", object)
 }
 
 # should this really be public?
+#' @export
 "rk.sync.global" <- function () {
 	.rk.do.call("syncglobal", ls (envir=globalenv (), all.names=TRUE))
 }

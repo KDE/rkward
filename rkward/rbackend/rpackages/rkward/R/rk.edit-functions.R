@@ -37,11 +37,13 @@
 #' x <- data.frame (a=c(1:3), b=c(2:4))
 #' rk.edit(x)
 
+#' @export
 "rk.edit" <- function (x) {
 	object <- deparse (substitute (x))
 	.rk.do.call ("edit", object)
 }
 
+#' @export
 "rk.edit.files" <- function (file = file, title = file, name = NULL, prompt = TRUE)
 {
 	if (!is.character (file)) {
@@ -56,11 +58,13 @@
 	invisible (.Call ("rk.edit.files",  as.character (file),  as.character (title),  as.character (name), isTRUE (prompt)))
 }
 
+#' @export
 "rk.show.files" <- function (file = file, title = file, wtitle = NULL, delete=FALSE, prompt = TRUE)
 {
 	invisible (.Call ("rk.show.files", as.character (file), as.character (title), as.character (wtitle), delete, isTRUE (prompt)))
 }
 
+#' @export
 "rk.show.html" <- function (url) {
 	invisible (.rk.do.plain.call ("showHTML", as.character (url), synchronous=FALSE));
 }

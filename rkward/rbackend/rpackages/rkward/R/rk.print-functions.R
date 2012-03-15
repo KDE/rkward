@@ -88,6 +88,7 @@
 #'   'confidence interval of difference'=result$conf.int ))
 #' })
 #' 
+#' @export
 "rk.print" <- function(x,...) {
 	htmlfile <- rk.get.output.html.file()
 	if(require("R2HTML")==TRUE) {
@@ -95,10 +96,12 @@
 	}
 }
 
+#' @export
 "rk.print.code" <- function(code) {
 	.rk.cat.output (.rk.do.plain.call ("highlightRCode", as.character (code)))
 }
 
+#' @export
 "rk.header" <- function (title, parameters=list (), level=1, toc=NULL) {
 	sink (rk.get.output.html.file(), append=TRUE)
 	on.exit (sink ())
@@ -138,6 +141,7 @@
 # Dummy to allow the rkwardtest package to override rk.header() behavior, easily
 ".rk.date" <- function () date ()
 
+#' @export
 "rk.results" <- function (x, titles=NULL, print.rownames) {
 	sink (rk.get.output.html.file(), append=TRUE)
 	on.exit (sink ())
@@ -208,12 +212,14 @@
 	}
 }
 
+#' @export
 "rk.print.literal" <- function (x) {
 	cat ("<pre>", paste (x, collapse="\n"), "</pre>\n", sep="", file=rk.get.output.html.file(), append=TRUE);
 }
 
 # Describe the alternative (H1) of an htest.
 # This code adapted from stats:::print.htest
+#' @export
 "rk.describe.alternative" <- function (x) {
 	res <- ""
 	if (!is.null(x$alternative)) {

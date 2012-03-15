@@ -44,6 +44,7 @@
 #' 
 
 # retrieve the rkward label (if any) of the given object
+#' @export
 "rk.get.label" <- function (x) {
 	if (is.call (x) || is.name (x)) {
 		ret <- attr (eval (x), ".rk.meta")[names (attr (eval (x), ".rk.meta")) == "label"]
@@ -54,6 +55,7 @@
 }
 
 # set rkward label
+#' @export
 "rk.set.label" <- function (x, label, envir=parent.frame()) {
 	if (is.call (x) || is.name (x)) {
 		meta <- attr (eval (x, envir=envir), ".rk.meta")
@@ -65,6 +67,7 @@
 }
 
 # get a short name for the given object
+#' @export
 "rk.get.short.name" <- function (x) {
 	if (is.call (x) || is.name (x)) {
 		.rk.make.short.name (deparse (x))
@@ -75,6 +78,7 @@
 
 # make a short name from the given arg (a character string)
 # e.g. return "b" for a[["b"]] (but 'a::"b"' for a::"b"
+#' @export
 ".rk.make.short.name" <- function (x) {
 	splt <- strsplit (x, "[[\"", fixed=TRUE)[[1]]
 	spltlen <- length (splt)
@@ -86,6 +90,7 @@
 }
 
 # get descriptive strings for each of the arguments in ...
+#' @export
 "rk.get.description" <- function (..., paste.sep=NULL, is.substitute=FALSE) {
 	args <- list(...)
 	if (is.substitute) {
@@ -120,6 +125,7 @@
 }
 
 # Drop-in replacement for list(). Returns a list of the given arguments, but with names set according to rk.get.description
+#' @export
 "rk.list" <- function (...) {
 	ret <- list (...)
 	names (ret) <- rk.get.description (...)
@@ -127,6 +133,7 @@
 }
 
 # this is basically copied from R-base table (). Returns the arguments passed to ... as a character vector
+#' @export
 "rk.list.names" <- function(..., deparse.level=2) {
 	l <- as.list(substitute(list(...)))[-1]
 	nm <- names(l)

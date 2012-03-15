@@ -25,6 +25,7 @@
 #' @author Thomas Friedrichsmeier \email{rkward-devel@@lists.sourceforge.net}
 #' @seealso \code{\link{assignInNamespace}}, \code{\link{debug}}
 #' @keywords utilities IO
+#' @export
 #' @rdname rk.replace.function
 #' @examples
 #' 

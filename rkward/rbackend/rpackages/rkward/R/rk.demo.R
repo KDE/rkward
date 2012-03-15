@@ -14,6 +14,7 @@
 #'   \code{\link{demo}}
 #' @keywords utilities IO
 #' @rdname rk.demo
+#' @export
 #' @examples
 #' 
 #' ## Not run

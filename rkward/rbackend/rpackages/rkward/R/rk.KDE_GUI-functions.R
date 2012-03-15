@@ -59,12 +59,14 @@
 #' .rk.backups$select.list (LETTERS, preselect = c("A", "E", "I", "O", "U"), 
 #'   multiple = TRUE, title = "vowels")
 
+#' @export
 "rk.show.message" <- function (message, caption = "Information", wait=TRUE) {
 	.Call ("rk.dialog", caption, message, "ok", "", "", isTRUE (wait))
 	invisible (TRUE)
 }
 
 # to disable a button, set it to ""
+#' @export
 "rk.show.question" <- function (message, caption = "Question", button.yes = "yes", button.no = "no", button.cancel = "cancel") {
 	res <- .Call ("rk.dialog", caption, message, button.yes, button.no, button.cancel, TRUE)
 	if (res > 0) return (TRUE)
@@ -73,6 +75,7 @@
 }
 
 # drop-in-replacement for tk_select.list()
+#' @export
 "rk.select.list" <- function (list, preselect = NULL, multiple = FALSE, title = NULL) {
 	preselect <- as.character (preselect)
 	preselect.len = length (preselect)

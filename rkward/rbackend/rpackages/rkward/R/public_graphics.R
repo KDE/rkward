@@ -2,6 +2,7 @@
 ## These functions are accessible to the user.
 
 # Requests a graph to be written.
+#' @export
 rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOption ("rk.graphics.width"), height=getOption ("rk.graphics.height"), quality, ...) 
 {
 	if (!is.numeric (width)) width <- 480
@@ -44,6 +45,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	invisible (ret)
 }
 
+#' @export
 "rk.graph.off" <- function(){
 	.rk.cat.output ("\n")	# so the output will be auto-refreshed
 	ret <- dev.off()
@@ -71,6 +73,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 #'   \code{\link{rk.graph.on}}
 #' @keywords utilities device
 #' @rdname rk.printer.device
+#' @export
 #' @examples
 #' 
 #' ## Not run:
@@ -86,6 +89,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	.rk.variables$.rk.printer.devices[[as.character (dev.cur ())]] <- tf
 }
 
+#' @export
 "rk.duplicate.device" <- function (devId = dev.cur ())
 {
 	dev.set (devId)
@@ -93,6 +97,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 }
 
 # A global history of various graphics calls;
+#' @export
 "rk.record.plot" <- function ()
 {
 	env <- environment()
@@ -798,6 +803,7 @@ rk.record.plot <- rk.record.plot ()
 
 # Users should use only these wrappers:
 # 1 is always the null device
+#' @export
 "rk.toggle.plot.history" <- function (x = TRUE)
 {
 	if (x) {
@@ -808,56 +814,67 @@ rk.record.plot <- rk.record.plot ()
 	options ("rk.enable.graphics.history" = x)
 	invisible ()
 }
+#' @export
 "rk.first.plot" <- function (devId = dev.cur ())
 {
 	if (!getOption ("rk.enable.graphics.history")) return (invisible ())
 	rk.record.plot$showFirst (devId)
 }
+#' @export
 "rk.previous.plot" <- function (devId = dev.cur ())
 {
 	if (!getOption ("rk.enable.graphics.history")) return (invisible ())
 	rk.record.plot$showPrevious (devId)
 }
+#' @export
 "rk.next.plot" <- function (devId = dev.cur ())
 {
 	if (!getOption ("rk.enable.graphics.history")) return (invisible ())
 	rk.record.plot$showNext (devId)
 }
+#' @export
 "rk.last.plot" <- function (devId = dev.cur ())
 {
 	if (!getOption ("rk.enable.graphics.history")) return (invisible ())
 	rk.record.plot$showLast (devId)
 }
+#' @export
 "rk.goto.plot" <- function (devId = dev.cur (), index=1)
 {
 	if (!getOption ("rk.enable.graphics.history")) return (invisible ())
 	rk.record.plot$showPlot (devId, index)
 }
+#' @export
 "rk.force.append.plot" <- function (devId = dev.cur ())
 {
 	if (!getOption ("rk.enable.graphics.history")) return (invisible ())
 	rk.record.plot$forceAppend (devId)
 }
+#' @export
 "rk.removethis.plot" <- function (devId = dev.cur ())
 {
 	if (!getOption ("rk.enable.graphics.history")) return (invisible ())
 	rk.record.plot$removePlot (devId)
 }
+#' @export
 "rk.clear.plot.history" <- function ()
 {
 	if (!getOption ("rk.enable.graphics.history")) return (invisible ())
 	rk.record.plot$clearHistory ()
 }
+#' @export
 "rk.show.plot.info" <- function (devId = dev.cur ())
 {
 	if (!getOption ("rk.enable.graphics.history")) return (invisible ())
 	rk.record.plot$showPlotInfo (devId)
 }
+#' @export
 "rk.verify.plot.hist.limits" <- function (lmax)
 {
 	if (!getOption ("rk.enable.graphics.history")) return (invisible ())
 	rk.record.plot$.verify.hist.limits (as.integer (lmax))
 }
+#' @export
 "rk.plot.history.summary" <- function (which = NULL, type = c ("devices", "history"))
 {
 	ret <- NULL

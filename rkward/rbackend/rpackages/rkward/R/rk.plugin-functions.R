@@ -65,10 +65,12 @@
 #'
 # list all available plugins in RKWard; this is a companion function for rk.call.plugin:
 # the output provides possible strings for "plugin" argument in rk.call.plugin
+#' @export
 rk.list.plugins <- function () {
 	.rk.do.plain.call ("listPlugins")
 }
 
+#' @export
 "rk.call.plugin" <- function (plugin, ..., submit.mode = c ("manual", "auto", "submit")) {
 	# prepare arguments
 	settings <- list (...)
@@ -129,6 +131,7 @@ rk.list.plugins <- function () {
 #' rk.load.pluginmaps()
 #'
 #' ## END NOT RUN
+#' @export
 "rk.load.pluginmaps" <- function (pluginmap.files=NULL, force.add = TRUE, force.reload = TRUE) {
 	.rk.do.plain.call ("loadPluginMaps", c (ifelse (isTRUE (force.add), "force", "noforce"), ifelse (isTRUE (force.reload), "reload", "noreload"), as.character (pluginmap.files)), synchronous=FALSE)
 }

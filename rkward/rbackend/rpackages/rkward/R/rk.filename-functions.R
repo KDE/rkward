@@ -49,20 +49,24 @@
 #' rk.show.html(rk.get.output.html.file())
 #' rk.set.output.html.file(outfile)
 #' 
+#' @export
 "rk.get.tempfile.name" <- function (prefix="image", extension=".jpg") {
 	return (.rk.do.plain.call ("get.tempfile.name", c (prefix, extension)))
 }
 
+#' @export
 "rk.get.workspace.url" <- function () {
 	res <- .rk.do.plain.call ("getWorkspaceUrl")
 	if (length (res)) res
 	else NULL
 }
 
+#' @export
 "rk.get.output.html.file" <- function () {
 	return (.rk.variables$.rk.output.html.file)
 }
 
+#' @export
 "rk.set.output.html.file" <- function (x) {
 	stopifnot (is.character (x))
 	assign (".rk.output.html.file", x, .rk.variables)
