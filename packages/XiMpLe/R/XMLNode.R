@@ -17,7 +17,11 @@
 
 XMLNode <- function(name, ..., attrs=NULL, namespace="", namespaceDefinitions=NULL, .children=list(...)){
 
-	if(identical(.children, list(""))){
+	# text node?
+	if(identical(name, "") & all(unlist(lapply(.children, is.character)))){
+		all.children <- list()
+		value <- paste(..., sep=" ")
+	} else if(identical(.children, list(""))){
 		all.children <- list()
 		value <- ""
 	} else {

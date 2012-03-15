@@ -1,5 +1,9 @@
 ChangeLog for package XiMpLe
 
+changes in version 0.03-12 (2012-03-15)
+  - node() now also works with single XiMpLe.node objects (not only full trees)
+  - fixed dropped text value if node also had child nodes in pasteXMLNode()
+
 changes in version 0.03-11 (2012-03-14)
   - added functions XMLNode() and XMLTree() as constructor functions for XML nodes and trees.
   - added opton "object" to parseXMLTree(), to be able to parse XML trees not only from files, but also character vectors

@@ -1,6 +1,12 @@
 \name{NEWS}
 \title{News for Package 'XiMpLe'}
 \encoding{UTF-8}
+\section{Changes in XiMpLe version 0.03-12 (2012-03-15)}{
+  \itemize{
+    \item \code{node()} now also works with single XiMpLe.node objects (not only full trees)
+    \item fixed dropped text value if node also had child nodes in \code{pasteXMLNode()}
+  }
+}
 \section{Changes in XiMpLe version 0.03-11 (2012-03-14)}{
   \itemize{
     \item added functions \code{XMLNode()} and \code{XMLTree()} as constructor functions for XML nodes and trees.

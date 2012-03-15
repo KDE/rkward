@@ -70,13 +70,14 @@ pasteXMLTag <- function(tag, attr=NULL, child=NULL, empty=TRUE, level=1, allow.e
 		new.attr <- ifelse((length(attr) > 1), new.attr, "")
 		new.attr.indent <- ifelse((length(attr) > 1), new.attr.indent, "")
 		new.cmmt.indent <- ifelse((length(attr) > 1), new.cmmt.indent, "")
+		val.indent <- ifelse(shine > 1, indent(level + 1, by=indent.by), "")
 		# empty decides whether this is a empty tag or a pair of start and end tags
 		if(isTRUE(empty)){
 			full.tag <- paste(new.indent, "<", tag, attr.space, new.attr, new.cmmt.indent, all.attributes, new.attr, new.attr.indent, " />", new.node, sep="")
 		} else {
 			full.tag <- paste(
 				new.indent, "<", tag, attr.space, new.attr, new.cmmt.indent, all.attributes, new.attr, new.attr.indent, ">", new.node,
-				if(!is.null(child)){child},
+				if(!is.null(child)){paste(val.indent, child, sep="")},
 				new.indent, "</", tag, ">", new.node, sep="")
 		}
 	}

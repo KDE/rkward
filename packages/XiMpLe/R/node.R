@@ -2,7 +2,7 @@
 #'
 #' This method can be used to get parts of a parsed XML tree object, or to fill it with new values.
 #'
-#' @param obj An object of class \code{XiMpLe.doc}
+#' @param obj An object of class \code{XiMpLe.doc} or \code{XiMpLe.node}.
 #' @param node A list of node names (or their numeric values), where each element is
 #'		the child of its previous element. duplicate matches will be returned as a list.
 #' @param what A character string, must be a valid slot name of class \code{XiMpLe.node}, like
@@ -28,15 +28,29 @@
 #' @export
 setGeneric("node", function(obj, node=list(), what=NULL, cond.attr=NULL, cond.value=NULL, element=NULL){standardGeneric("node")})
 
+# define class union to make life easier
+setClassUnion("XiMpLe.XML", members=c("XiMpLe.node", "XiMpLe.doc"))
+
 setMethod("node",
-	signature(obj="XiMpLe.doc"),
+	signature(obj="XiMpLe.XML"),
 	function(obj, node=list(), what=NULL, cond.attr=NULL, cond.value=NULL, element=NULL){
 
+		# check top level if this is a node, not a tree
+		if(inherits(obj, "XiMpLe.node")){
+			got.this <- identical(slot(obj, "name"), node[[1]])
+			if(!isTRUE(got.this)){
+				# apparently, this node doesn't exist
+				stop(simpleError(paste("Can't find node ", node[[1]], " in ", sQuote(deparse(substitute(obj))), "!", sep="")))
+			} else {
+				# remove first element in list node
+				node[[1]] <- NULL
+			}
+		} else {}
 		result.node.path <- "obj"
 		for (this.node in node){
 			for (this.path in result.node.path){
 				this.node.part <- eval(parse(text=this.path))
-				got.this <-  names(this.node.part@children) %in% this.node
+				got.this <- lapply(slot(this.node.part, "children"), function(this.child){slot(this.child, "name")}) %in% this.node
 				if(!any(got.this)){
 					# apparently, this node doesn't exist
 					stop(simpleError(paste("Can't find node ", sQuote(this.node), " in ", sQuote(deparse(substitute(obj))), "!", sep="")))
@@ -101,6 +115,14 @@ setMethod("node",
 			result <- unlist(lapply(result.node.path, function(this.path){
 					this.node <- eval(parse(text=this.path))
 					results <- slot(this.node, what)
+					# special case: text values can either be directly in the value slot of a node,
+					# or in a pseudo tag as a child node, so we check both
+					if(identical(what, "value")){
+						for (this.child in slot(this.node, "children")){
+								if(identical(slot(this.child, "name"), "") & isTRUE(nchar(slot(this.child, "value")) > 0))
+									results <- c(results, slot(this.child, "value"))
+							}
+					} else {}
 					if(!is.null(element)){
 						results <- results[element]
 					} else {}
@@ -131,7 +153,7 @@ setMethod("node",
 setGeneric("node<-", function(obj, node=list(), what=NULL, cond.attr=NULL, cond.value=NULL, element=NULL, value){standardGeneric("node<-")})
 
 setMethod("node<-",
-	signature(obj="XiMpLe.doc"),
+	signature(obj="XiMpLe.XML"),
 	function(obj, node=list(), what=NULL, cond.attr=NULL, cond.value=NULL, element=NULL, value){
 
 	# get path to node in object

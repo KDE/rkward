@@ -5,7 +5,8 @@
 \alias{node,XiMpLe.doc-method}
 \title{Extract/manipulate a node or parts of it from an XML tree}
 \arguments{
-  \item{obj}{An object of class \code{XiMpLe.doc}}
+  \item{obj}{An object of class \code{XiMpLe.doc} or
+  \code{XiMpLe.node}.}
 
   \item{node}{A list of node names (or their numeric
   values), where each element is the child of its previous
