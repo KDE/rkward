@@ -17,24 +17,24 @@
 
 XMLNode <- function(name, ..., attrs=NULL, namespace="", namespaceDefinitions=NULL, .children=list(...)){
 
+	all.children <- list()
+
 	# text node?
 	if(identical(name, "") &
 			(all(unlist(lapply(.children, is.character)))) |
 			all(unlist(lapply(.children, is.numeric)))){
-		all.children <- list()
 		value <- paste(..., sep=" ")
 	} else if(identical(.children, list(""))){
-		all.children <- list()
 		value <- ""
 	} else {
 		# remove NULLs
 		.children <- .children[unlist(lapply(.children, length) != 0)]
 		# check for text values
 		all.children <- sapply(child.list(.children), function(this.child){
-			if(is.character(this.child)){
+			if(is.character(this.child) | is.numeric(this.child)){
 				this.child <- new("XiMpLe.node",
 						name="",
-						value=this.child
+						value=as.character(this.child)
 					)
 			} else {}
 			return(this.child)

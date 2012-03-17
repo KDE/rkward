@@ -1,7 +1,7 @@
 #' Paste methods for XiMpLe XML objects
 #' 
-#' These methods can be used to paste objects if class \code{\link[XiMpLe:XiMpLe.node]{XiMpLe.node}}
-#' or \code{\link[XiMpLe:XiMpLe.doc]{XiMpLe.doc}}.
+#' These methods can be used to paste objects if class \code{\link[XiMpLe:XiMpLe.node-class]{XiMpLe.node}}
+#' or \code{\link[XiMpLe:XiMpLe.doc-class]{XiMpLe.doc}}.
 #'
 #' @note The functions pasteXMLNode() and pasteXMLTree() have been replaced by the pasteXML methods.
 #'		They should no longer be used.
@@ -55,7 +55,12 @@ setMethod("pasteXML",
 
 		if(length(node.chld) > 0){
 			node.chld <- paste(unlist(sapply(node.chld, function(this.node){
-				return(pasteXMLNode(this.node, level=(level + 1), shine=shine, indent.by=indent.by, tidy=tidy))})), collapse="", sep="")
+				if(slot(this.node, "name") == ""){
+					this.node.pasted <- paste(new.indent, pasteXML(this.node, level=level, shine=shine, indent.by=indent.by, tidy=tidy), sep="")
+				} else {
+					this.node.pasted <- pasteXML(this.node, level=(level + 1), shine=shine, indent.by=indent.by, tidy=tidy)
+				}
+				return(this.node.pasted)})), collapse="", sep="")
 			node.empty <- FALSE
 		} else {
 			node.chld <- NULL
@@ -69,7 +74,7 @@ setMethod("pasteXML",
 				if(isTRUE(tidy)){
 					node.val <- sapply(node.val, xml.tidy)
 				} else {}
-				node.chld <- paste(node.chld, paste(new.indent, node.val, new.node, collapse=" "), sep="")
+				node.chld <- paste(node.chld, paste(node.val, new.node, collapse=" "), sep="")
 			} else {}
 		} else {}
 
@@ -101,12 +106,14 @@ setMethod("pasteXML",
 
 		if(any(nchar(unlist(tree.doctype)) > 0)) {
 			new.node   <- ifelse(shine > 0, "\n", "")
-			doc.doctype <- paste("<!DOCTYPE ", paste(tree.doctype[["doctype"]], tree.doctype[["id"]], sep=" "), sep="")
-			if(length(tree.doctype[["refer"]]) > 0) {
-				if(nchar(tree.doctype[["refer"]]) > 0){
-					doc.doctype <- paste(doc.doctype, " \"",tree.doctype[["refer"]], "\"", sep="")
+			doc.doctype <- paste("<!DOCTYPE ", tree.doctype[["doctype"]], sep="")
+			for (elmt in c("id", "refer")){
+				if(length(tree.doctype[[elmt]]) > 0) {
+					if(nchar(tree.doctype[[elmt]]) > 0){
+						doc.doctype <- paste(doc.doctype, " \"",tree.doctype[[elmt]], "\"", sep="")
+					} else {}
 				} else {}
-			} else {}
+			}
 			doc.doctype <- paste(doc.doctype, ">", new.node, sep="")
 		} else {
 			doc.doctype <- ""
@@ -114,7 +121,7 @@ setMethod("pasteXML",
 
 		if(length(tree.nodes) > 0) {
 			doc.nodes <- paste(unlist(sapply(tree.nodes, function(this.node){
-				return(pasteXMLNode(this.node, level=1, shine=shine, indent.by=indent.by, tidy=tidy))})), collapse="", sep="")
+				return(pasteXML(this.node, level=1, shine=shine, indent.by=indent.by, tidy=tidy))})), collapse="", sep="")
 		} else {
 			doc.nodes <- ""
 		}

@@ -1,11 +1,12 @@
 ChangeLog for package XiMpLe
 
-changes in version 0.03-12 (2012-03-16)
+changes in version 0.03-12 (2012-03-17)
   - node() now also works with single XiMpLe.node objects (not only full trees)
   - added pasteXML methods to paste objects of classes XiMpLe.node and XiMpLe.doc in a more
     general manner. the former functions pasteXMLNode() and pasteXMLTree() are replaced by mere
     wrapper frunctions to pasteXML() and should not be used any longer.
   - fixed dropped text value if node also had child nodes in pasteXML()
+  - fixed missing quotes in DOCTYPE id (pasteXML())
 
 changes in version 0.03-11 (2012-03-14)
   - added functions XMLNode() and XMLTree() as constructor functions for XML nodes and trees.

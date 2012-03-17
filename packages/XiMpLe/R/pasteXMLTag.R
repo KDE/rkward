@@ -42,7 +42,7 @@ pasteXMLTag <- function(tag, attr=NULL, child=NULL, empty=TRUE, level=1, allow.e
 
 	# three special cases: value pseudotags, comments and CDATA
 	if(isTRUE(nchar(tag) == 0) | length(tag) == 0){
-		full.tag <- paste(new.indent, child, new.node, sep="")
+		full.tag <- paste(child, " ", sep="")
 	} else if(identical(tag, "!--")){
 		# clean up value if needed
 		if(!is.null(child)){
@@ -70,14 +70,14 @@ pasteXMLTag <- function(tag, attr=NULL, child=NULL, empty=TRUE, level=1, allow.e
 		new.attr <- ifelse((length(attr) > 1), new.attr, "")
 		new.attr.indent <- ifelse((length(attr) > 1), new.attr.indent, "")
 		new.cmmt.indent <- ifelse((length(attr) > 1), new.cmmt.indent, "")
-		val.indent <- ifelse(shine > 1, indent(level + 1, by=indent.by), "")
+		val.indent <- ifelse(shine > 0, indent(level + 1, by=indent.by), "")
 		# empty decides whether this is a empty tag or a pair of start and end tags
 		if(isTRUE(empty)){
 			full.tag <- paste(new.indent, "<", tag, attr.space, new.attr, new.cmmt.indent, all.attributes, new.attr, new.attr.indent, " />", new.node, sep="")
 		} else {
 			full.tag <- paste(
 				new.indent, "<", tag, attr.space, new.attr, new.cmmt.indent, all.attributes, new.attr, new.attr.indent, ">", new.node,
-				if(!is.null(child)){paste(val.indent, child, sep="")},
+				if(!is.null(child)){paste(val.indent, trim(child), new.node, sep="")},
 				new.indent, "</", tag, ">", new.node, sep="")
 		}
 	}

@@ -27,8 +27,8 @@
 }
 \description{
   These methods can be used to paste objects if class
-  \code{\link[XiMpLe:XiMpLe.node]{XiMpLe.node}} or
-  \code{\link[XiMpLe:XiMpLe.doc]{XiMpLe.doc}}.
+  \code{\link[XiMpLe:XiMpLe.node-class]{XiMpLe.node}} or
+  \code{\link[XiMpLe:XiMpLe.doc-class]{XiMpLe.doc}}.
 }
 \note{
   The functions pasteXMLNode() and pasteXMLTree() have been
