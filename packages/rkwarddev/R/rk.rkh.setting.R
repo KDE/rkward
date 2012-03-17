@@ -18,7 +18,7 @@
 #' test.checkbox <- rk.XML.cbox(label="foo", value="foo1", chk=TRUE)
 #' # explain the option
 #' test.setting <- rk.rkh.setting(test.checkbox, text="Check this to do Foo.")
-#' cat(pasteXMLNode(test.setting))
+#' cat(pasteXML(test.setting))
 
 rk.rkh.setting <- function(id, text=NULL, title=NULL){
 	# let's see if we need to extract IDs first
@@ -32,11 +32,7 @@ rk.rkh.setting <- function(id, text=NULL, title=NULL){
 		text <- ""
 	} else {}
 
-	node <- new("XiMpLe.node",
-			name="setting",
-			attributes=attr.list,
-			value=text
-		)
+	node <- XMLNode("setting", text, attrs=attr.list)
 
 	return(node)
 }

@@ -1,5 +1,10 @@
 ChangeLog for package rkwarddev
 
+changes in version 0.05-3 (2012-03-17)
+  - fixed: rk.XML.text() now preserves XML tags in the text value
+  - began to use XiMpLe::XMLNode() and XiMpLe::XMLTree() constructors in functions, and to rename
+    pasteXMLNode() and pasteXMLTree() into pasteXML()
+
 changes in version 0.05-2 (2012-03-10)
   - added missing dependency to package methods
   - fixed docs in rk.XML.plugin(), rk.XML.saveobj() and rk.plugin.skeleton()

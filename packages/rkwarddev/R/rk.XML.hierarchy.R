@@ -17,7 +17,7 @@
 #' test.entry <- rk.XML.entry(test.component)
 #' test.menu <- rk.XML.menu("Analysis", nodes=test.entry, id.name="analysis")
 #' test.hierarchy <- rk.XML.hierarchy(test.menu)
-#' cat(pasteXMLNode(test.hierarchy))
+#' cat(pasteXML(test.hierarchy))
 
 rk.XML.hierarchy <- function(...){
 	nodes <- list(...)

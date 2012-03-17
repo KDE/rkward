@@ -15,7 +15,7 @@
 #' @examples
 #' test.section <- rk.rkh.section("General background", text="Some important notes...",
 #' short="Background")
-#' cat(pasteXMLNode(test.section))
+#' cat(pasteXML(test.section))
 
 rk.rkh.section <- function(title, text=NULL, short=NULL, id.name="auto"){
 	if(identical(id.name, "auto")){
@@ -35,11 +35,7 @@ rk.rkh.section <- function(title, text=NULL, short=NULL, id.name="auto"){
 		text <- ""
 	} else {}
 
-	node <- new("XiMpLe.node",
-			name="section",
-			attributes=attr.list,
-			value=text
-		)
+	node <- XMLNode("section", text, attrs=attr.list)
 
 	return(node)
 }

@@ -27,7 +27,7 @@
 #'		and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' test.connect <- rk.XML.connect(governor="lgc_foobar", client="frame_bar")
-#' cat(pasteXMLNode(test.connect))
+#' cat(pasteXML(test.connect))
 
 rk.XML.connect <- function(governor, client, get="state", set="enabled", not=FALSE, reconcile=FALSE){
 

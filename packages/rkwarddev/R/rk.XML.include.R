@@ -7,7 +7,7 @@
 #'		\href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' test.include <- rk.XML.include("../some_file.xml")
-#' cat(pasteXMLNode(test.include))
+#' cat(pasteXML(test.include))
 
 rk.XML.include <- function(file){
 	node <- new("XiMpLe.node",

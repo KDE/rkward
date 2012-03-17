@@ -69,7 +69,7 @@
 \dontrun{
 test.varselector <- rk.XML.varselector("Select some vars")
 test.varslot <- rk.XML.varslot("Vars go here", source=test.varselector)
-cat(pasteXMLNode(test.varslot))
+cat(pasteXML(test.varslot))
 }
 }
 \seealso{

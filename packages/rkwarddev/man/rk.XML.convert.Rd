@@ -56,7 +56,7 @@
 }
 \examples{
 test.convert <- rk.XML.convert(list(string="foo"), mode=c(notequals="bar"))
-cat(pasteXMLNode(test.convert))
+cat(pasteXML(test.convert))
 }
 \seealso{
   \code{\link[rkwarddev:rk.XML.connect]{rk.XML.connect}},

@@ -39,7 +39,7 @@ rk.rkh.doc <- function(summary=NULL, usage=NULL, sections=NULL, settings=NULL, r
 	if(!is.null(title)){
 		# check if this is *really* a title section
 		if(inherits(title, "XiMpLe.node")){
-			title.node.name <- title@name
+			title.node.name <- slot(title, "name")
 		} else {
 			title.node.name <- "yougottabekiddingme"
 		}
@@ -54,7 +54,7 @@ rk.rkh.doc <- function(summary=NULL, usage=NULL, sections=NULL, settings=NULL, r
 	} else {
 		# check if this is *really* a summary section
 		if(inherits(summary, "XiMpLe.node")){
-			summary.node.name <- summary@name
+			summary.node.name <- slot(summary, "name")
 		} else {
 			summary.node.name <- "yougottabekiddingme"
 		}
@@ -69,7 +69,7 @@ rk.rkh.doc <- function(summary=NULL, usage=NULL, sections=NULL, settings=NULL, r
 	} else {
 		# check if this is *really* a usage section
 		if(inherits(usage, "XiMpLe.node")){
-			usage.node.name <- usage@name
+			usage.node.name <- slot(usage, "name")
 		} else {
 			usage.node.name <- "yougottabekiddingme"
 		}
@@ -80,14 +80,13 @@ rk.rkh.doc <- function(summary=NULL, usage=NULL, sections=NULL, settings=NULL, r
 	}
 
 	if(is.null(sections)){
-		all.children[[length(all.children)+1]] <- new("XiMpLe.node",
-				name="!--",
-				children=list(rk.rkh.section("EDIT OR DELETE ME", text="EDIT OR DELETE ME")))
+		all.children[[length(all.children)+1]] <- XMLNode("!--",
+				rk.rkh.section("EDIT OR DELETE ME", text="EDIT OR DELETE ME"))
 	} else {
 		for(this.section in sections){
 			# check if this is *really* a section
 			if(inherits(this.section, "XiMpLe.node")){
-				this.section.node.name <- this.section@name
+				this.section.node.name <- slot(this.section, "name")
 			} else {
 				this.section.node.name <- "yougottabekiddingme"
 			}
@@ -104,7 +103,7 @@ rk.rkh.doc <- function(summary=NULL, usage=NULL, sections=NULL, settings=NULL, r
 	} else {
 		# check if this is *really* a settings section
 		if(inherits(settings, "XiMpLe.node")){
-			settings.node.name <- settings@name
+			settings.node.name <- slot(settings, "name")
 		} else {
 			settings.node.name <- "yougottabekiddingme"
 		}
@@ -115,13 +114,11 @@ rk.rkh.doc <- function(summary=NULL, usage=NULL, sections=NULL, settings=NULL, r
 	}
 
 	if(is.null(related)){
-		all.children[[length(all.children)+1]] <- new("XiMpLe.node",
- 				name="!--",
- 				children=list(rk.rkh.related( rk.rkh.link("..."))))
+		all.children[[length(all.children)+1]] <- XMLNode("!--", rk.rkh.related(rk.rkh.link("...")))
 	} else {
 		# check if this is *really* a related section
 		if(inherits(related, "XiMpLe.node")){
-			related.node.name <- related@name
+			related.node.name <- slot(related, "name")
 		} else {
 			related.node.name <- "yougottabekiddingme"
 		}
@@ -136,7 +133,7 @@ rk.rkh.doc <- function(summary=NULL, usage=NULL, sections=NULL, settings=NULL, r
 	} else {
 		# check if this is *really* a technical section
 		if(inherits(technical, "XiMpLe.node")){
-			technical.node.name <- technical@name
+			technical.node.name <- slot(technical, "name")
 		} else {
 			technical.node.name <- "yougottabekiddingme"
 		}
@@ -146,14 +143,9 @@ rk.rkh.doc <- function(summary=NULL, usage=NULL, sections=NULL, settings=NULL, r
 		all.children[[length(all.children)+1]] <- technical
 	}
 
-	rkh.document <- new("XiMpLe.node",
-			name="document",
-			children=all.children,
-			value="")
+	rkh.document <- XMLNode("document", .children=child.list(all.children, empty=FALSE))
 
-	rkh.main <- new("XiMpLe.doc",
-			dtd=list(doctype="rkhelp"),
-			children=list(rkh.document))
+	rkh.main <- XMLTree(rkh.document, dtd=list(doctype="rkhelp"))
 
 	return(rkh.main)
 }

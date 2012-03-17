@@ -18,7 +18,7 @@
 #' test.cbox1 <- rk.XML.cbox(label="Want to type?", val="true")
 #' test.cbox2 <- rk.XML.cbox(label="Are you shure?", val="true")
 #' test.dialog <- rk.XML.dialog(rk.XML.col(test.input, test.cbox1, test.cbox2))
-#' cat(pasteXMLNode(test.dialog))
+#' cat(pasteXML(test.dialog))
 
 rk.XML.dialog <- function(..., label=NULL){
 	nodes <- list(...)

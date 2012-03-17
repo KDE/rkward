@@ -19,7 +19,7 @@
 #' test.varslot1 <- rk.XML.varslot("Fixed factors", source=test.varselector)
 #' test.varslot2 <- rk.XML.varslot("Dependent variables", source=test.varselector)
 #' test.formula <- rk.XML.formula(fixed=test.varslot1, dependent=test.varslot2)
-#' cat(pasteXMLNode(test.formula))
+#' cat(pasteXML(test.formula))
 
 rk.XML.formula <- function(fixed, dependent, id.name="auto"){
 	# check if these are actually varslots

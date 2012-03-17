@@ -81,7 +81,7 @@ about.node <- rk.XML.about(
 		c(name="heisenberg.pluginmap", url="http://eternalwondermaths.example.org/hsb"))
 )
 
-cat(pasteXMLNode(about.node, shine=2))
+cat(pasteXML(about.node, shine=2))
 }
 \seealso{
   \href{help:rkwardplugins}{Introduction to Writing Plugins

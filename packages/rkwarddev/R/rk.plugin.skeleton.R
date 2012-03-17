@@ -241,7 +241,7 @@ rk.plugin.skeleton <- function(about, path=tempdir(),
 			## create plugin.xml
 			if("xml" %in% create){
 				if(isTRUE(checkCreateFiles(plugin.xml, ow=overwrite))){
-					cat(pasteXMLTree(XML.plugin, shine=1, indent.by=indent.by), file=plugin.xml)
+					cat(pasteXML(XML.plugin, shine=1, indent.by=indent.by), file=plugin.xml)
 				} else {}
 				if(isTRUE(edit)){
 					rk.edit.files(plugin.xml, title=plugin.fname.xml, prompt=FALSE)
@@ -261,7 +261,7 @@ rk.plugin.skeleton <- function(about, path=tempdir(),
 			## create plugin.rkh
 			if("rkh" %in% create){
 				if(isTRUE(checkCreateFiles(plugin.rkh, ow=overwrite))){
-					cat(pasteXMLTree(rkh.doc, shine=1, indent.by=indent.by), file=plugin.rkh)
+					cat(pasteXML(rkh.doc, shine=1, indent.by=indent.by), file=plugin.rkh)
 				} else {}
 				if(isTRUE(edit)){
 					rk.edit.files(plugin.rkh, title=plugin.fname.rkh, prompt=FALSE)
@@ -300,7 +300,7 @@ rk.plugin.skeleton <- function(about, path=tempdir(),
 				require=pluginmap[["require"]],
 				hints=TRUE,
 				gen.info=gen.info)
-			cat(pasteXMLTree(XML.pluginmap, shine=2, indent.by=indent.by), file=plugin.pluginmap)
+			cat(pasteXML(XML.pluginmap, shine=2, indent.by=indent.by), file=plugin.pluginmap)
 			# needed for "show"
 			pm.id.name <- pluginmap[["name"]]
 		} else {

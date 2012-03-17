@@ -16,7 +16,7 @@
 }
 \examples{
 test.preview <- rk.XML.preview("See a preview?")
-cat(pasteXMLNode(test.preview))
+cat(pasteXML(test.preview))
 }
 \seealso{
   \href{help:rkwardplugins}{Introduction to Writing Plugins

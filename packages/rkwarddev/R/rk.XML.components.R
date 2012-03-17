@@ -12,7 +12,7 @@
 #' @examples
 #' test.component <- rk.XML.component("My GUI dialog", "plugins/MyGUIdialog.xml")
 #' test.components <- rk.XML.components(test.component)
-#' cat(pasteXMLNode(test.components))
+#' cat(pasteXML(test.components))
 
 rk.XML.components <- function(...){
 	nodes <- list(...)

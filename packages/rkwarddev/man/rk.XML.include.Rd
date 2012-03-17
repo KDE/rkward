@@ -16,7 +16,7 @@
 }
 \examples{
 test.include <- rk.XML.include("../some_file.xml")
-cat(pasteXMLNode(test.include))
+cat(pasteXML(test.include))
 }
 \seealso{
   \href{help:rkwardplugins}{Introduction to Writing Plugins

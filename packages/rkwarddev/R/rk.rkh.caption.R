@@ -20,7 +20,7 @@
 #' test.frame <- rk.XML.frame(test.dropdown, label="Some options")
 #' # create the caption
 #' test.caption <- rk.rkh.caption(test.frame)
-#' cat(pasteXMLNode(test.caption))
+#' cat(pasteXML(test.caption))
 
 rk.rkh.caption <- function(id, title=NULL){
 	# let's see if we need to extract IDs first
@@ -30,10 +30,7 @@ rk.rkh.caption <- function(id, title=NULL){
 		attr.list[["title"]] <- title
 	} else {}
 
-	node <- new("XiMpLe.node",
-			name="caption",
-			attributes=attr.list
-		)
+	node <- XMLNode(name="caption", attrs=attr.list)
 
 	return(node)
 }

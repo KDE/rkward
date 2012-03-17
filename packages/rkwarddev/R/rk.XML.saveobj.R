@@ -13,7 +13,7 @@
 #' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' test.saveobj <- rk.XML.saveobj("Save the results")
-#' cat(pasteXMLNode(test.saveobj))
+#' cat(pasteXML(test.saveobj))
 
 rk.XML.saveobj <- function(label, chk=FALSE, checkable=TRUE, initial="auto", required=FALSE, id.name="auto"){
 	attr.list <- list(label=label)

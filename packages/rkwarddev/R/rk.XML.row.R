@@ -11,7 +11,7 @@
 #' test.checkboxes <- rk.XML.row(rk.XML.col(
 #'     rk.XML.cbox(label="foo", val="foo1", chk=TRUE),
 #'     rk.XML.cbox(label="bar", val="bar2")))
-#' cat(pasteXMLNode(test.checkboxes))
+#' cat(pasteXML(test.checkboxes))
 
 rk.XML.row <- function(..., id.name="auto"){
 	nodes <- list(...)

@@ -7,7 +7,7 @@
 #'		\href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' test.help <- rk.XML.help("some_file.rkh")
-#' cat(pasteXMLNode(test.help))
+#' cat(pasteXML(test.help))
 
 rk.XML.help <- function(file){
 	node <- new("XiMpLe.node",

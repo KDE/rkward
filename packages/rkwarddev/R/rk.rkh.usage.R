@@ -8,16 +8,13 @@
 #'		and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' plugin.usage <- rk.rkh.usage("First do this, then do that ...")
-#' cat(pasteXMLNode(plugin.usage))
 
 rk.rkh.usage <- function(text=NULL){
 	if(is.null(text)){
 		text <- ""
 	} else {}
 
-	node <- new("XiMpLe.node",
-			name="usage",
-			value=text)
+	node <- XMLNode("usage", text)
 
 	return(node)
 }

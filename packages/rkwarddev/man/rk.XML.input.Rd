@@ -30,7 +30,7 @@
 }
 \examples{
 test.input <- rk.XML.input("Type some text")
-cat(pasteXMLNode(test.input))
+cat(pasteXML(test.input))
 }
 \seealso{
   \href{help:rkwardplugins}{Introduction to Writing Plugins

@@ -7,7 +7,7 @@
 #'		\href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' test.code <- rk.XML.code("some_file.js")
-#' cat(pasteXMLNode(test.code))
+#' cat(pasteXML(test.code))
 
 rk.XML.code <- function(file){
 	node <- new("XiMpLe.node",

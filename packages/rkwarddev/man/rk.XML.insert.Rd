@@ -23,7 +23,7 @@ test.formula <- rk.XML.vars("Variables", "Fixed", formula.dependent="Dependent")
 test.snippet <- rk.XML.snippet(test.formula)
 # now to insert the snippet
 test.insert <- rk.XML.insert(test.snippet)
-cat(pasteXMLNode(test.insert))
+cat(pasteXML(test.insert))
 }
 \seealso{
   \code{\link[rkwarddev:rk.XML.snippets]{rk.XML.snippets}},

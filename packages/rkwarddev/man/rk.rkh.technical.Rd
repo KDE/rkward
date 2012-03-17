@@ -15,7 +15,7 @@
 }
 \examples{
 plugin.technical <- rk.rkh.technical("<b>TODO</b>: Implement sandworm detector.")
-cat(pasteXMLNode(plugin.technical))
+cat(pasteXML(plugin.technical))
 }
 \seealso{
   \code{\link[rkwarddev:rk.rkh.doc]{rk.rkh.doc}} and the

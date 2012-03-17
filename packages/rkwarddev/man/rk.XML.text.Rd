@@ -23,7 +23,7 @@
 }
 \examples{
 test.text <- rk.XML.text("Added this text.")
-cat(pasteXMLNode(test.text))
+cat(pasteXML(test.text))
 }
 \seealso{
   \href{help:rkwardplugins}{Introduction to Writing Plugins

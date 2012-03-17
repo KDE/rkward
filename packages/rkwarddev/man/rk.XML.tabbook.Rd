@@ -35,7 +35,7 @@ test.dropdown <- rk.XML.dropdown("mydrop",
 # combine the above into a tabbook
 test.tabbook <- rk.XML.tabbook("My Tabbook",
   tabs=list("First Tab"=test.checkboxes, "Second Tab"=test.dropdown))
-cat(pasteXMLNode(test.tabbook))
+cat(pasteXML(test.tabbook))
 }
 \seealso{
   \href{help:rkwardplugins}{Introduction to Writing Plugins

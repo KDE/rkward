@@ -69,7 +69,7 @@
 #' 		c(name="heisenberg.pluginmap", url="http://eternalwondermaths.example.org/hsb"))
 #' )
 #' 
-#' cat(pasteXMLNode(about.node, shine=2))
+#' cat(pasteXML(about.node, shine=2))
 
 
 rk.XML.about <- function(name, author, about=list(desc="SHORT_DESCRIPTION", version="0.01-0", date=Sys.Date(), url="http://EXAMPLE.com", license="GPL (>= 3)", long.desc=NULL), dependencies=NULL, package=NULL, pluginmap=NULL){

@@ -11,7 +11,7 @@
 #'		and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' test.varselector <- rk.XML.varselector("Select some vars")
-#' cat(pasteXMLNode(test.varselector))
+#' cat(pasteXML(test.varselector))
 
 rk.XML.varselector <- function(label=NULL, id.name="auto"){
 	if(identical(id.name, "auto")){

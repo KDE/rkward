@@ -29,7 +29,7 @@
 test.checkbox <- rk.XML.cbox(label="foo", value="foo1", chk=TRUE)
 # re-set the attribute
 test.attribute <- rk.XML.attribute(test.checkbox, value="bar2", label="bar")
-cat(pasteXMLNode(test.attribute))
+cat(pasteXML(test.attribute))
 }
 \seealso{
   \code{\link[rkwarddev:rk.XML.components]{rk.XML.components}},

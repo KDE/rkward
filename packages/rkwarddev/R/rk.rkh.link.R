@@ -18,7 +18,7 @@
 #'		and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' package.link <- rk.rkh.link("Spice")
-#' cat(pasteXMLNode(package.link))
+#' cat(pasteXML(package.link))
 
 rk.rkh.link <- function(href, text=NULL, type="R"){
 	if(identical(type, "url")){
@@ -36,10 +36,7 @@ rk.rkh.link <- function(href, text=NULL, type="R"){
 		text <- character()
 	} else {}
 
-	node <- new("XiMpLe.node",
-			name="link",
-			attributes=list(href=link),
-			value=text)
+	node <- XMLNode(name="link", text, attrs=list(href=link))
 
 	return(node)
 }

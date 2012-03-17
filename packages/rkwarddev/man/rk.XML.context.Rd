@@ -22,7 +22,7 @@ test.component <- rk.XML.component("My GUI dialog", "plugins/MyGUIdialog.xml")
 test.entry <- rk.XML.entry(test.component)
 test.menu <- rk.XML.menu("Analysis", nodes=test.entry, id.name="analysis")
 test.context <- rk.XML.context(test.menu)
-cat(pasteXMLNode(test.context))
+cat(pasteXML(test.context))
 }
 \seealso{
   \code{\link[rkwarddev:rk.XML.menu]{rk.XML.menu}},

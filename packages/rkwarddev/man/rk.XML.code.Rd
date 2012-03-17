@@ -16,7 +16,7 @@
 }
 \examples{
 test.code <- rk.XML.code("some_file.js")
-cat(pasteXMLNode(test.code))
+cat(pasteXML(test.code))
 }
 \seealso{
   \href{help:rkwardplugins}{Introduction to Writing Plugins

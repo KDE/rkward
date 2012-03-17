@@ -12,7 +12,7 @@
 #'		and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' test.external <- rk.XML.external(id="ext_property", default="none")
-#' cat(pasteXMLNode(test.external))
+#' cat(pasteXML(test.external))
 
 rk.XML.external <- function(id, default=NULL){
 	attr.list <- list(id=id)

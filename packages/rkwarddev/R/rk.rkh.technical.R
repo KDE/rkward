@@ -8,16 +8,14 @@
 #'		and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' plugin.technical <- rk.rkh.technical("<b>TODO</b>: Implement sandworm detector.")
-#' cat(pasteXMLNode(plugin.technical))
+#' cat(pasteXML(plugin.technical))
 
 rk.rkh.technical <- function(text=NULL){
 	if(is.null(text)){
 		text <- ""
 	} else {}
 
-	node <- new("XiMpLe.node",
-			name="technical",
-			value=text)
+	node <- XMLNode("technical", text)
 
 	return(node)
 }

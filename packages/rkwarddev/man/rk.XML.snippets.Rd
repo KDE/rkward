@@ -21,7 +21,7 @@ test.formula <- rk.XML.vars("Variables", "Fixed", formula.dependent="Dependent")
 # define the snippets section
 test.snippet <- rk.XML.snippet(test.formula)
 test.snippets <- rk.XML.snippets(test.snippet)
-cat(pasteXMLNode(test.snippets))
+cat(pasteXML(test.snippets))
 }
 \seealso{
   \code{\link[rkwarddev:rk.XML.plugin]{rk.XML.plugin}}

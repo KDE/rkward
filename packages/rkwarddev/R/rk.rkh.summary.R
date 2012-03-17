@@ -8,7 +8,7 @@
 #'		and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' plugin.summary <- rk.rkh.summary("This plugin folds space, using the spice package.")
-#' cat(pasteXMLNode(plugin.summary))
+#' cat(pasteXML(plugin.summary))
 
 rk.rkh.summary <- function(text=NULL){
 
@@ -16,9 +16,7 @@ rk.rkh.summary <- function(text=NULL){
 		text <- ""
 	} else {}
 
-	node <- new("XiMpLe.node",
-			name="summary",
-			value=text)
+	node <- XMLNode("summary", text)
 
 	return(node)
 }

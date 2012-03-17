@@ -14,7 +14,7 @@
 #' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' test.browser <- rk.XML.browser("Browse here:")
-#' cat(pasteXMLNode(test.browser))
+#' cat(pasteXML(test.browser))
 
 
 rk.XML.browser <- function(label, type="file", initial=NULL, urls=FALSE, filter=NULL, required=TRUE, id.name="auto"){

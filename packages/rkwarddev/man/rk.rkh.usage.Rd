@@ -15,7 +15,6 @@
 }
 \examples{
 plugin.usage <- rk.rkh.usage("First do this, then do that ...")
-cat(pasteXMLNode(plugin.usage))
 }
 \seealso{
   \code{\link[rkwarddev:rk.rkh.doc]{rk.rkh.doc}} and the

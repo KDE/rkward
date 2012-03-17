@@ -20,7 +20,7 @@
 #' test.text <- rk.XML.text("Did you test more than 30 subjects?")
 #' test.copy <- rk.XML.copy(id=test.cbox1)
 #' test.wizard <- rk.XML.wizard(rk.XML.page(test.text, test.copy))
-#' cat(pasteXMLNode(test.wizard))
+#' cat(pasteXML(test.wizard))
 
 rk.XML.page <- function(..., id.name="auto"){
 	nodes <- list(...)

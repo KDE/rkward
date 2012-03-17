@@ -14,7 +14,7 @@
 #' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' test.spinbox <- rk.XML.spinbox("Spin this:")
-#' cat(pasteXMLNode(test.spinbox))
+#' cat(pasteXML(test.spinbox))
 
 
 rk.XML.spinbox <- function(label, min=NULL, max=NULL, initial=0, real=TRUE, precision=2, max.precision=8, id.name="auto"){

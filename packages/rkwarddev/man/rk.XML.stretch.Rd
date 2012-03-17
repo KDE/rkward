@@ -21,7 +21,7 @@
   elements defined there.
 }
 \examples{
-cat(pasteXMLNode(rk.XML.stretch()))
+cat(pasteXML(rk.XML.stretch()))
 }
 \seealso{
   \href{help:rkwardplugins}{Introduction to Writing Plugins

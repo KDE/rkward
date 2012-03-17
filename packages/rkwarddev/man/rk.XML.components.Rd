@@ -18,7 +18,7 @@
 \examples{
 test.component <- rk.XML.component("My GUI dialog", "plugins/MyGUIdialog.xml")
 test.components <- rk.XML.components(test.component)
-cat(pasteXMLNode(test.components))
+cat(pasteXML(test.components))
 }
 \seealso{
   \code{\link[rkwarddev:rk.XML.pluginmap]{rk.XML.pluginmap}},

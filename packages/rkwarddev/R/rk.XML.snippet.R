@@ -16,7 +16,7 @@
 #' test.formula <- rk.XML.vars("Variables", "Fixed", formula.dependent="Dependent")
 #' # define the snippet
 #' test.snippet <- rk.XML.snippet(test.formula)
-#' cat(pasteXMLNode(test.snippet))
+#' cat(pasteXML(test.snippet))
 
 rk.XML.snippet <- function(..., id.name="auto"){
 	nodes <- list(...)

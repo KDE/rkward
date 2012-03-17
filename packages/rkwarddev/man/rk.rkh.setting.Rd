@@ -28,7 +28,7 @@
 test.checkbox <- rk.XML.cbox(label="foo", value="foo1", chk=TRUE)
 # explain the option
 test.setting <- rk.rkh.setting(test.checkbox, text="Check this to do Foo.")
-cat(pasteXMLNode(test.setting))
+cat(pasteXML(test.setting))
 }
 \seealso{
   \code{\link[rkwarddev:rk.rkh.doc]{rk.rkh.doc}},

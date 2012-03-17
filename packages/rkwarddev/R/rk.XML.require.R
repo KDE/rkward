@@ -8,7 +8,7 @@
 #' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' test.require <- rk.XML.require("another.pluginmap")
-#' cat(pasteXMLNode(test.require))
+#' cat(pasteXML(test.require))
 
 rk.XML.require <- function(file){
 	if(length(file) > 1 | !is.character(file)){

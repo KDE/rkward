@@ -29,7 +29,7 @@
 }
 \examples{
 package.link <- rk.rkh.link("Spice")
-cat(pasteXMLNode(package.link))
+cat(pasteXML(package.link))
 }
 \seealso{
   \code{\link[rkwarddev:rk.rkh.doc]{rk.rkh.doc}} and the

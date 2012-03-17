@@ -12,7 +12,7 @@
 #' @export
 #' @examples
 #' test.input <- rk.XML.input("Type some text")
-#' cat(pasteXMLNode(test.input))
+#' cat(pasteXML(test.input))
 
 rk.XML.input <- function(label, initial=NULL, size="medium", required=FALSE, id.name="auto"){
 	attr.list <- list(label=label)

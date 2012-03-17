@@ -19,7 +19,8 @@ auto.ids <- function(identifiers, prefix=NULL, suffix=NULL, chars=8){
 
 ## function child.list()
 # convenience function to let single children be provided without list()
-child.list <- function(children){
+# 'empty' van be used to make sure a tag is non-empty without actual value
+child.list <- function(children, empty=TRUE){
 	if(inherits(children, "XiMpLe.node")){
 		children <- list(children)
 	} else {
@@ -28,6 +29,8 @@ child.list <- function(children){
 			if(inherits(children[[1]], "list")){
 				children <- children[[1]]
 			} else {}
+		} else if(identical(children, list()) & !isTRUE(empty)){
+			children <- list("")
 		} else {}
 	}
 	return(children)
@@ -68,7 +71,7 @@ get.single.tags <- function(XML.obj, drop=NULL){
 	if(inherits(XML.obj, "XiMpLe.doc")){
 		single.tags <- trim(unlist(strsplit(pasteXMLTree(XML.obj, shine=1, indent.by=""), split="\n")))
 	} else if(inherits(XML.obj, "XiMpLe.node")){
-		single.tags <- trim(unlist(strsplit(pasteXMLNode(XML.obj, shine=1, indent.by=""), split="\n")))
+		single.tags <- trim(unlist(strsplit(pasteXML(XML.obj, shine=1, indent.by=""), split="\n")))
 	} else {
 		xml.raw <- paste(readLines(XML.obj), collapse=" ")
 		single.tags <- XiMpLe:::XML.single.tags(xml.raw, drop=drop)
@@ -267,7 +270,7 @@ ID.prefix <- function(initial, abbr=TRUE, length=3, dot=FALSE){
 node.soup <- function(nodes){
 	the.soup <- paste(unlist(sapply(child.list(nodes), function(this.node){
 			if(inherits(this.node, "XiMpLe.node")){
-				return(gsub("[^[:alnum:]]", "", pasteXMLNode(this.node, shine=0)))
+				return(gsub("[^[:alnum:]]", "", pasteXML(this.node, shine=0)))
 			} else {
 				stop(simpleError("Nodes must be of class XiMpLe.node!"))
 			}

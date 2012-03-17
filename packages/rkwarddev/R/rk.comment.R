@@ -5,12 +5,9 @@
 #' @export
 #' @examples
 #' test.comment <- rk.comment("Added this text.")
-#' cat(pasteXMLNode(test.comment))
+#' cat(pasteXML(test.comment))
 
 rk.comment <- function(text){
-	node <- new("XiMpLe.node",
-			name="!--",
-			value=text)
-
+	node <- XMLNode(name="!--", text)
 	return(node)
 }

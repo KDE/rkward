@@ -15,7 +15,7 @@
 #'		and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' test.component <- rk.XML.component("My GUI dialog", "plugins/MyGUIdialog.xml")
-#' cat(pasteXMLNode(test.component))
+#' cat(pasteXML(test.component))
 
 rk.XML.component <- function(label, file, id.name="auto", type="standard"){
 	if(identical(id.name, "auto")){

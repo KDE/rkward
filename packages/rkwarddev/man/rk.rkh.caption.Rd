@@ -29,7 +29,7 @@ test.dropdown <- rk.XML.dropdown("mydrop",
 test.frame <- rk.XML.frame(test.dropdown, label="Some options")
 # create the caption
 test.caption <- rk.rkh.caption(test.frame)
-cat(pasteXMLNode(test.caption))
+cat(pasteXML(test.caption))
 }
 \seealso{
   \code{\link[rkwarddev:rk.rkh.doc]{rk.rkh.doc}},

@@ -15,7 +15,7 @@
 #' @examples
 #' test.component <- rk.XML.component("My GUI dialog", "plugins/MyGUIdialog.xml")
 #' test.entry <- rk.XML.entry(test.component)
-#' cat(pasteXMLNode(test.entry))
+#' cat(pasteXML(test.entry))
 
 rk.XML.entry <- function(component, index=-1){
 	if(length(component) > 1){

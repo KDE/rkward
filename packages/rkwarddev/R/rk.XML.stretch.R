@@ -11,7 +11,7 @@
 #' @seealso
 #'		\href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
-#' cat(pasteXMLNode(rk.XML.stretch()))
+#' cat(pasteXML(rk.XML.stretch()))
 
 #<stretch />
 rk.XML.stretch <- function(before=NULL, after=NULL){

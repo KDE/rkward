@@ -20,7 +20,7 @@
 #' test.caption <- rk.rkh.caption(test.frame)
 #' test.setting <- rk.rkh.setting(test.dropdown, text="Chose one of the options.")
 #' test.settings <- rk.rkh.settings(list(test.caption, test.setting))
-# cat(pasteXMLNode(test.settings))
+# cat(pasteXML(test.settings))
 
 rk.rkh.settings <- function(...){
 	nodes <- list(...)
@@ -35,11 +35,7 @@ rk.rkh.settings <- function(...){
 		stop(simpleError(paste("Invalid XML nodes for settings section: ", paste(node.names[invalid.sets], collapse=", "), sep="")))
 	} else {}
 
-	node <- new("XiMpLe.node",
-			name="settings",
-			children=child.list(nodes),
-			value=""
-		)
+	node <- XMLNode("settings", .children=child.list(nodes, empty=FALSE))
 
 	return(node)
 }

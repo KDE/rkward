@@ -17,7 +17,7 @@
 #' test.checkbox <- rk.XML.cbox(label="foo", value="foo1", chk=TRUE)
 #' # re-set the attribute
 #' test.attribute <- rk.XML.attribute(test.checkbox, value="bar2", label="bar")
-#' cat(pasteXMLNode(test.attribute))
+#' cat(pasteXML(test.attribute))
 
 rk.XML.attribute <- function(id, value=NULL, label=NULL){
 	# let's see if we need to extract IDs first

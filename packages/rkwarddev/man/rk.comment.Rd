@@ -15,6 +15,6 @@
 }
 \examples{
 test.comment <- rk.comment("Added this text.")
-cat(pasteXMLNode(test.comment))
+cat(pasteXML(test.comment))
 }
 

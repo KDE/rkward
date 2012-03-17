@@ -10,7 +10,7 @@
 #' @examples
 #' package.link <- rk.rkh.link("Spice")
 #' plugin.related <- rk.rkh.related(package.link)
-#' cat(pasteXMLNode(plugin.related))
+#' cat(pasteXML(plugin.related))
 
 rk.rkh.related <- function(..., text=NULL){
 	links <- list(...)
@@ -20,27 +20,14 @@ rk.rkh.related <- function(..., text=NULL){
 			if(!identical(this.node@name, "link")){
 				stop(simpleError(paste("Invalid XML nodes for links section: ", this.node@name, sep="")))
 			} else {
-				li.element <- new("XiMpLe.node",
-						name="li",
-						children=child.list(this.node),
-						value="")
+				li.element <- XMLNode("li", .children=child.list(this.node, empty=FALSE))
 			}
 			return(li.element)
 		})
 
-	ul <- new("XiMpLe.node",
-			name="ul",
-			children=child.list(li.elements),
-			value="")
+	ul <- XMLNode("ul", .children=child.list(li.elements, empty=FALSE))
 
-	if(is.null(text)){
-		text <- ""
-	} else {}
-
-	node <- new("XiMpLe.node",
-			name="related",
-			children=child.list(ul),
-			value=text)
+	node <- XMLNode("related", text, ul)
 
 	return(node)
 }

@@ -15,7 +15,7 @@
 }
 \examples{
 plugin.summary <- rk.rkh.summary("This plugin folds space, using the spice package.")
-cat(pasteXMLNode(plugin.summary))
+cat(pasteXML(plugin.summary))
 }
 \seealso{
   \code{\link[rkwarddev:rk.rkh.doc]{rk.rkh.doc}} and the

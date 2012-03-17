@@ -16,7 +16,7 @@
 #' test.dropdown <- rk.XML.dropdown("mydrop",
 #'   options=list("First Option"=c(val="val1"),
 #'   "Second Option"=c(val="val2", chk=TRUE)))
-#' cat(pasteXMLNode(rk.XML.frame(test.dropdown, label="Some options")))
+#' cat(pasteXML(rk.XML.frame(test.dropdown, label="Some options")))
 
 rk.XML.frame <- function(..., label=NULL, checkable=FALSE, chk=TRUE, id.name="auto"){
 	nodes <- list(...)

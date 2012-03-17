@@ -31,7 +31,7 @@
 test.radio <- rk.XML.radio("Chose one",
   options=list("First Option"=c(val="val1"),
   "Second Option"=c(val="val2", chk=TRUE)))
-cat(pasteXMLNode(test.radio))
+cat(pasteXML(test.radio))
 }
 \seealso{
   \href{help:rkwardplugins}{Introduction to Writing Plugins

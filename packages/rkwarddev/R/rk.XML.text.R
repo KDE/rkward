@@ -11,7 +11,7 @@
 #'		\href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' test.text <- rk.XML.text("Added this text.")
-#' cat(pasteXMLNode(test.text))
+#' cat(pasteXML(test.text))
 
 rk.XML.text <- function(text, type="normal", id.name="auto"){
 	if(identical(id.name, "auto")){
@@ -27,10 +27,18 @@ rk.XML.text <- function(text, type="normal", id.name="auto"){
 		attr.list[["type"]] <- type
 	} else {}
 
-	node <- new("XiMpLe.node",
-			name="text",
-			attributes=attr.list,
-			value=text)
+	# preserve markup in the text
+	if(grepl("<(.*)>", text)){
+		textAsTree <- parseXMLTree(text, object=TRUE)
+		node <- XMLNode("text",
+				.children=slot(textAsTree, "children"),
+				attrs=attr.list)
+	} else {
+		node <- XMLNode("text",
+				text,
+				attrs=attr.list)
+	}
+
 
 	return(node)
 }

@@ -46,7 +46,7 @@
 }
 \examples{
 test.connect <- rk.XML.connect(governor="lgc_foobar", client="frame_bar")
-cat(pasteXMLNode(test.connect))
+cat(pasteXML(test.connect))
 }
 \seealso{
   \code{\link[rkwarddev:rk.XML.convert]{rk.XML.convert}},

@@ -15,7 +15,7 @@
 #' # define the snippets section
 #' test.snippet <- rk.XML.snippet(test.formula)
 #' test.snippets <- rk.XML.snippets(test.snippet)
-#' cat(pasteXMLNode(test.snippets))
+#' cat(pasteXML(test.snippets))
 
 rk.XML.snippets <- function(...){
 	nodes <- list(...)

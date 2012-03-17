@@ -15,7 +15,7 @@
 }
 \examples{
 plugin.title <- rk.rkh.title("Spice")
-cat(pasteXMLNode(plugin.title))
+cat(pasteXML(plugin.title))
 }
 \seealso{
   \code{\link[rkwarddev:rk.rkh.doc]{rk.rkh.doc}} and the

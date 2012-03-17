@@ -19,7 +19,7 @@
 \examples{
 package.link <- rk.rkh.link("Spice")
 plugin.related <- rk.rkh.related(package.link)
-cat(pasteXMLNode(plugin.related))
+cat(pasteXML(plugin.related))
 }
 \seealso{
   \code{\link[rkwarddev:rk.rkh.doc]{rk.rkh.doc}} and the

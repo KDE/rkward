@@ -16,7 +16,7 @@
 #'		and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' test.set <- rk.XML.set(id="input_foo", set="required", to=TRUE)
-#' cat(pasteXMLNode(test.set))
+#' cat(pasteXML(test.set))
 
 rk.XML.set <- function(id, set=NULL, to, check.modifiers=TRUE){
 

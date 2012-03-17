@@ -27,7 +27,7 @@
 \examples{
 test.section <- rk.rkh.section("General background", text="Some important notes...",
 short="Background")
-cat(pasteXMLNode(test.section))
+cat(pasteXML(test.section))
 }
 \seealso{
   \code{\link[rkwarddev:rk.rkh.doc]{rk.rkh.doc}} and the

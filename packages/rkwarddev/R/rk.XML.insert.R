@@ -17,7 +17,7 @@
 #' test.snippet <- rk.XML.snippet(test.formula)
 #' # now to insert the snippet
 #' test.insert <- rk.XML.insert(test.snippet)
-#' cat(pasteXMLNode(test.insert))
+#' cat(pasteXML(test.insert))
 
 rk.XML.insert <- function(snippet){
 	if(length(snippet) > 1){

@@ -38,7 +38,7 @@
 test.component <- rk.XML.component("My GUI dialog", "plugins/MyGUIdialog.xml")
 test.entry <- rk.XML.entry(test.component)
 test.menu <- rk.XML.menu("Analysis", test.entry, id.name="analysis")
-cat(pasteXMLNode(test.menu))
+cat(pasteXML(test.menu))
 # manual definition of a menu path by a list:
 test.menu <- rk.XML.menu("Analysis", list("Level 1", "Level 2", test.component))
 }

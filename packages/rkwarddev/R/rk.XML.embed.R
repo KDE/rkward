@@ -10,7 +10,7 @@
 #' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' test.embed <- rk.XML.embed("someComponent")
-#' cat(pasteXMLNode(test.embed))
+#' cat(pasteXML(test.embed))
 
 rk.XML.embed <- function(component, button=FALSE, label="Options", id.name="auto"){
 	attr.list <- list(component=component)

@@ -1,6 +1,13 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
+\section{Changes in rkwarddev version 0.05-3 (2012-03-17)}{
+  \itemize{
+    \item fixed: \code{rk.XML.text()} now preserves XML tags in the text value
+    \item began to use \code{XiMpLe::XMLNode()} and \code{XiMpLe::XMLTree()} constructors in functions, and to rename
+      \code{pasteXMLNode()} and \code{pasteXMLTree()} into \code{pasteXML()}
+  }
+}
 \section{Changes in rkwarddev version 0.05-2 (2012-03-10)}{
   \itemize{
     \item added missing dependency to package methods

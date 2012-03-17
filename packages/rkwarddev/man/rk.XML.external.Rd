@@ -18,7 +18,7 @@
 }
 \examples{
 test.external <- rk.XML.external(id="ext_property", default="none")
-cat(pasteXMLNode(test.external))
+cat(pasteXML(test.external))
 }
 \seealso{
   \code{\link[rkwarddev:rk.XML.convert]{rk.XML.convert}},

@@ -17,7 +17,7 @@
 }
 \examples{
 test.require <- rk.XML.require("another.pluginmap")
-cat(pasteXMLNode(test.require))
+cat(pasteXML(test.require))
 }
 \seealso{
   \href{help:rkwardplugins}{Introduction to Writing Plugins

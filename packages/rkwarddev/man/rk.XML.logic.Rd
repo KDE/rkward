@@ -29,12 +29,12 @@ test.cbox2 <- rk.XML.cbox(label="Are you shure?", value="true")
 test.convert <- rk.XML.convert(c(state=test.cbox1,state=test.cbox2), mode=c(and=""))
 test.connect <- rk.XML.connect(governor=test.convert, client=test.input, set="enabled")
 test.logic <- rk.XML.logic(test.convert, test.connect)
-cat(pasteXMLNode(test.logic))
+cat(pasteXML(test.logic))
 
 # with only one checkbox, you can directly query if it's checked
 test.connect2 <- rk.XML.connect(governor=test.cbox1, client=test.input, set="enabled")
 test.logic2 <- rk.XML.logic(test.connect2)
-cat(pasteXMLNode(test.logic2))
+cat(pasteXML(test.logic2))
 }
 \seealso{
   \code{\link[rkwarddev:rk.XML.convert]{rk.XML.convert}},
