@@ -2,7 +2,6 @@
 #'
 #' Can be used to create full XML trees.
 #'
-#' @param name Character string, the tag name.
 #' @param ... Optional children for the XML tree. Must be either objects of class XiMpLe.node or character strings,
 #'		which are treated as simple text values.
 #' @param xml A named list, XML declaration of the XML tree. Currently just pasted, no checking is done.

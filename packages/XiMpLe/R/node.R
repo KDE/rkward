@@ -18,8 +18,16 @@
 #'		elements will be returned.
 #' @include XiMpLe.doc-class.R
 #' @include XiMpLe.node-class.R
+#' @include XiMpLe-internal.R
 #' @import methods
-#' @aliases node,XiMpLe.doc-method node<- node<-,XiMpLe.doc-method
+#' @aliases
+#'		node,XiMpLe.doc-method
+#'		node,XiMpLe.node-method
+#'		node,XiMpLe.XML-method
+#'		node<-
+#'		node<-,XiMpLe.doc-method
+#'		node<-,XiMpLe.node-method
+#'		node<-,XiMpLe.XML-method
 #' @examples
 #' \dontrun{
 #' node(my.xml.tree, node=list("html","body"), what="attributes")

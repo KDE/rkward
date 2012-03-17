@@ -6,8 +6,6 @@
     .children = list(...))
 }
 \arguments{
-  \item{name}{Character string, the tag name.}
-
   \item{...}{Optional children for the XML tree. Must be
   either objects of class XiMpLe.node or character strings,
   which are treated as simple text values.}

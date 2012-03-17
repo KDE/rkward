@@ -3,22 +3,19 @@
 \alias{show,-methods}
 \alias{show,XiMpLe.doc-method}
 \alias{show,XiMpLe.node-method}
-\title{Show method for objects of class XiMpLe.doc}
+\alias{show,XiMpLe.XML-method}
+\title{Shows method for S4 objects of XiMpLe XML classes}
 \arguments{
-  \item{object}{An object of class \code{XiMpLe.doc}}
-
-  \item{object}{An object of class \code{XiMpLe.node}}
+  \item{object}{An object of class \code{XiMpLe.doc} or
+  \code{XiMpLe.node}}
 }
 \description{
-  Show method for S4 objects of class
-  \code{\link[XiMpLe:XiMpLe.doc-class]{XiMpLe.doc}}
-
-  Show method for S4 objects of class
+  Used to display objects of class
+  \code{\link[XiMpLe:XiMpLe.doc-class]{XiMpLe.doc}} and
   \code{\link[XiMpLe:XiMpLe.node-class]{XiMpLe.node}}
 }
 \seealso{
   \code{\link[XiMpLe:XiMpLe.doc-class]{XiMpLe.doc}}
-
   \code{\link[XiMpLe:XiMpLe.node-class]{XiMpLe.node}}
 }
 \keyword{methods}

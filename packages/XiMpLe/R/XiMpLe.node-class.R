@@ -23,6 +23,7 @@
 # @keywords classes
 #' @noRd
 # @rdname XiMpLe.node-class
+#' @include XiMpLe.doc-class.R
 # @exportClass XiMpLe.node
 #' @export
 

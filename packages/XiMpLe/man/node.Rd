@@ -3,6 +3,10 @@
 \alias{node<-}
 \alias{node<-,XiMpLe.doc-method}
 \alias{node,XiMpLe.doc-method}
+\alias{node<-,XiMpLe.node-method}
+\alias{node,XiMpLe.node-method}
+\alias{node<-,XiMpLe.XML-method}
+\alias{node,XiMpLe.XML-method}
 \title{Extract/manipulate a node or parts of it from an XML tree}
 \arguments{
   \item{obj}{An object of class \code{XiMpLe.doc} or

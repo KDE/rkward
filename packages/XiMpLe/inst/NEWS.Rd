@@ -1,10 +1,13 @@
 \name{NEWS}
 \title{News for Package 'XiMpLe'}
 \encoding{UTF-8}
-\section{Changes in XiMpLe version 0.03-12 (2012-03-15)}{
+\section{Changes in XiMpLe version 0.03-12 (2012-03-16)}{
   \itemize{
     \item \code{node()} now also works with single XiMpLe.node objects (not only full trees)
-    \item fixed dropped text value if node also had child nodes in \code{pasteXMLNode()}
+    \item added pasteXML methods to paste objects of classes XiMpLe.node and XiMpLe.doc in a more
+      general manner. the former functions \code{pasteXMLNode()} and \code{pasteXMLTree()} are replaced by mere
+      wrapper frunctions to \code{pasteXML()} and should not be used any longer.
+    \item fixed dropped text value if node also had child nodes in \code{pasteXML()}
   }
 }
 \section{Changes in XiMpLe version 0.03-11 (2012-03-14)}{

@@ -1,0 +1,43 @@
+\name{pasteXML}
+\alias{pasteXML}
+\alias{pasteXML,-methods}
+\alias{pasteXMLNode}
+\alias{pasteXMLTree}
+\alias{pasteXML,XiMpLe.doc-method}
+\alias{pasteXML,XiMpLe.node-method}
+\title{Paste methods for XiMpLe XML objects}
+\arguments{
+  \item{obj}{An object of class \code{XiMpLe.node} or
+  \code{XiMpLe.doc}.}
+
+  \item{level}{Indentation level.}
+
+  \item{shine}{Integer, controlling if the output should be
+  formatted for better readability. Possible values:
+  \describe{ \item{0}{No formatting.} \item{1}{Nodes will
+  be indented.} \item{2}{Nodes will be indented and each
+  attribute gets a new line.} }}
+
+  \item{indent.by}{A charachter string defining how
+  indentation should be done. Defaults to tab.}
+
+  \item{tidy}{Logical, if \code{TRUE} the special
+  characters "<" and ">" will be replaced with the entities
+  "&lt;" and "gt;" in attributes and text values.}
+}
+\description{
+  These methods can be used to paste objects if class
+  \code{\link[XiMpLe:XiMpLe.node]{XiMpLe.node}} or
+  \code{\link[XiMpLe:XiMpLe.doc]{XiMpLe.doc}}.
+}
+\note{
+  The functions pasteXMLNode() and pasteXMLTree() have been
+  replaced by the pasteXML methods.  They should no longer
+  be used.
+}
+\seealso{
+  \code{\link[XiMpLe:XiMpLe.node-class]{XiMpLe.node}}
+  \code{\link[XiMpLe:XiMpLe.doc-class]{XiMpLe.doc}}
+}
+\keyword{methods}
+

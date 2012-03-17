@@ -1,6 +1,5 @@
 ## internal functions, not exported
 
-
 ## function child.list()
 # convenience function to let single children be provided without list()
 child.list <- function(children){
