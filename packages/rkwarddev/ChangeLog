@@ -1,10 +1,12 @@
 ChangeLog for package rkwarddev
 
-changes in version 0.05-3 (2012-03-17)
+changes in version 0.05-3 (2012-03-18)
   - fixed: rk.XML.text() now preserves XML tags in the text value
-  - functions now call XiMpLe::XMLNode() and XiMpLe::XMLTree() constructors instead of new(), and
-    pasteXMLNode() and pasteXMLTree() were globally renamed into pasteXML()
+  - internally, functions now call XiMpLe::XMLNode() and XiMpLe::XMLTree() constructors instead of new(),
+    and pasteXMLNode() and pasteXMLTree() were globally renamed into pasteXML()
   - internally, replaced object@node with slot(object, "node")
+  - internally, moved checks for valid child and parent nodes to an internal functions,
+    valid.child() and valid.parent()
 
 changes in version 0.05-2 (2012-03-10)
   - added missing dependency to package methods

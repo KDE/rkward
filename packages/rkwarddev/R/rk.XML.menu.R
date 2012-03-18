@@ -84,13 +84,7 @@ rk.XML.menu <- function(label, ..., index=-1, id.name="auto"){
 	} else {}
 
 	# check the node names and allow only valid ones
-	sapply(child.list(nodes), function(this.node){
-			stopifnot(inherits(this.node, "XiMpLe.node"))
-			node.name <- slot(this.node, "name")
-			if(!node.name %in% c("entry", "menu", "!--")){
-				stop(simpleError(paste("Invalid XML nodes for menu section: ", node.name, sep="")))
-			} else {}
-		})
+	valid.child("menu", children=nodes)
 
 	if(identical(id.name, "auto")){
 		# try autogenerating some id

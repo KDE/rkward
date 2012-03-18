@@ -26,16 +26,7 @@ rk.XML.page <- function(..., id.name="auto"){
 	nodes <- list(...)
 
 	# check the node names and allow only valid ones
-	node.names <- sapply(child.list(nodes), function(this.node){
-			slot(this.node, "name")
-		})
-
-	invalid.sets <- !node.names %in% c("browser", "checkbox", "column", "copy",
-		"dropdown", "formula", "frame", "input", "page", "radio", "row", "saveobject",
-		"spinbox", "stretch", "tabbook", "text", "varselector", "varslot", "!--")
-	if(any(invalid.sets)){
-		stop(simpleError(paste("Invalid XML nodes for page/wizard section: ", paste(node.names[invalid.sets], collapse=", "), sep="")))
-	} else {}
+	valid.child("page", children=nodes, section="page/wizard")
 
 	if(identical(id.name, "auto")){
 		# try autogenerating some id

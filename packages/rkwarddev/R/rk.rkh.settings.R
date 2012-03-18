@@ -26,14 +26,7 @@ rk.rkh.settings <- function(...){
 	nodes <- list(...)
 
 	# check the node names and allow only valid ones
-	node.names <- sapply(child.list(nodes), function(this.node){
-			slot(this.node, "name")
-		})
-
-	invalid.sets <- !node.names %in% c("setting", "caption", "!--")
-	if(any(invalid.sets)){
-		stop(simpleError(paste("Invalid XML nodes for settings section: ", paste(node.names[invalid.sets], collapse=", "), sep="")))
-	} else {}
+	valid.child("settings", children=nodes)
 
 	node <- XMLNode("settings", .children=child.list(nodes, empty=FALSE))
 

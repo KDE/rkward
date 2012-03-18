@@ -65,29 +65,14 @@ rk.XML.plugin <- function(name, dialog=NULL, wizard=NULL, logic=NULL, snippets=N
 	} else {}
 
 	if(!is.null(about)){
-		if(inherits(about, "XiMpLe.node")){
-			about.node.name <- slot(about, "name")
-			# check if this is *really* a about section, otherwise quit and go dancing
-			if(!identical(about.node.name, "about")){
-				stop(simpleError("I don't know what this is, but 'about' is not an about section!"))
-			} else {
-				all.children[[length(all.children)+1]] <- about
-			}
-		} else {
-			stop(simpleError("'about' must be a XiMpLe.node, see ?rk.XML.about()!"))
-		}
+		# check if this is *really* an about section, otherwise quit and go dancing
+		valid.parent("about", node=about, see="rk.XML.about")
+		all.children[[length(all.children)+1]] <- about
 	} else {}
 
 	if(!is.null(snippets)){
 		# check if this is *really* a snippets section, otherwise quit and go dancing
-		if(inherits(snippets, "XiMpLe.node")){
-			snippets.node.name <- slot(snippets, "name")
-		} else {
-			snippets.node.name <- "yougottabekiddingme"
-		}
-		if(!identical(snippets.node.name, "snippets")){
-			stop(simpleError("I don't know what this is, but 'snippets' is not a snippets section!"))
-		} else {}
+		valid.parent("snippets", node=snippets, see="rk.XML.snippets")
 		all.children[[length(all.children)+1]] <- snippets
 	} else {}
 
@@ -102,14 +87,7 @@ rk.XML.plugin <- function(name, dialog=NULL, wizard=NULL, logic=NULL, snippets=N
 		} else {}
 	} else {
 		# check if this is *really* a logic section, otherwise quit and go dancing
-		if(inherits(logic, "XiMpLe.node")){
-			logic.node.name <- slot(logic, "name")
-		} else {
-			logic.node.name <- "yougottabekiddingme"
-		}
-		if(!identical(logic.node.name, "logic")){
-			stop(simpleError("I don't know what this is, but 'logic' is not a logic section!"))
-		} else {}
+		valid.parent("logic", node=logic, see="rk.XML.logic")
 		all.children[[length(all.children)+1]] <- logic
 	}
 
@@ -119,14 +97,7 @@ rk.XML.plugin <- function(name, dialog=NULL, wizard=NULL, logic=NULL, snippets=N
 		} else {}
 	} else {
 		# check if this is *really* a dialog section
-		if(inherits(dialog, "XiMpLe.node")){
-			dialog.node.name <- slot(dialog, "name")
-		} else {
-			dialog.node.name <- "yougottabekiddingme"
-		}
-		if(!identical(dialog.node.name, "dialog")){
-			stop(simpleError("I don't know what this is, but 'dialog' is not a dialog section!"))
-		} else {}
+		valid.parent("dialog", node=dialog, see="rk.XML.dialog")
 		all.children[[length(all.children)+1]] <- dialog
 	}
 
@@ -139,14 +110,7 @@ rk.XML.plugin <- function(name, dialog=NULL, wizard=NULL, logic=NULL, snippets=N
 		} else {}
 	} else {
 		# check if this is *really* a wizard section
-		if(inherits(wizard, "XiMpLe.node")){
-			wizard.node.name <- slot(wizard, "name")
-		} else {
-			wizard.node.name <- "yougottabekiddingme"
-		}
-		if(!identical(wizard.node.name, "wizard")){
-			stop(simpleError("I don't know what this is, but 'wizard' is not a wizard section!"))
-		} else {}
+		valid.parent("wizard", node=wizard, see="rk.XML.wizard")
 		all.children[[length(all.children)+1]] <- wizard
 	}
 

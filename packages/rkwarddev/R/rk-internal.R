@@ -501,6 +501,98 @@ modif.validity <- function(source, modifier, ignore.empty=TRUE, warn.only=TRUE, 
 } ## end function modif.validity()
 
 
+## list with valid child nodes
+# important for certain parent nodes, as long as
+# XiMpLe doesn't interpret doctypes
+all.valid.children <- list(
+	# 'as' is not a node, but an attribute of <copy>
+	as=c("browser", "checkbox", "column", "copy",
+		"dropdown", "formula", "frame", "input", "page", "radio", "row", "saveobject",
+		"spinbox", "stretch", "tabbook", "text", "varselector", "varslot"),
+	components=c("component"),
+	context=c("menu", "!--"),
+	dialog=c("browser", "checkbox", "column", "copy",
+		"dropdown", "embed", "formula", "frame", "include", "input", "insert",
+		"preview", "radio", "row", "saveobject", "spinbox", "stretch", "tabbook",
+		"text", "varselector", "varslot", "!--"),
+	hierarchy=c("menu", "!--"),
+	logic=c("connect", "convert","include","insert","external","set","script"),
+	menu=c("entry", "menu", "!--"),
+	page=c("browser", "checkbox", "column", "copy",
+		"dropdown", "formula", "frame", "input", "page", "radio", "row", "saveobject",
+		"spinbox", "stretch", "tabbook", "text", "varselector", "varslot", "!--"),
+	settings=c("setting", "caption", "!--"),
+	wizard=c("browser", "checkbox", "column", "copy",
+		"dropdown", "embed", "formula", "frame", "include", "input", "insert",
+		"page", "preview", "radio", "row", "saveobject", "spinbox", "stretch",
+		"tabbook", "text", "varselector", "varslot", "!--")
+) ## end list with valid child nodes
+
+
+## function valid.child()
+# - parent: character string, name of the parent node
+# - children: (list of) XiMpLe.node objects, child nodes to check
+# - warn: warning or stop?
+# - section: an optional name for the section for the warning/error
+#   (if it shouldn't be the parent name)
+# - node names: can alternatively be given instead of 'children', as character vector
+valid.child <- function(parent, children, warn=FALSE, section=parent, node.names=NULL){
+	if(is.null(node.names)){
+		# check the node names and allow only valid ones
+		node.names <- sapply(child.list(children), function(this.child){
+				if(inherits(this.child, "XiMpLe.node")){
+					return(slot(this.child, "name"))
+				} else {
+					stop(simpleError(paste("Invalid object for ", section, " section, must be of class XiMpLe.node, but got class ", class(this.child), "!", sep="")))
+				}
+			})
+	} else {}
+
+	invalid.sets <- !node.names %in% all.valid.children[[parent]]
+	if(any(invalid.sets)){
+		return.message <- paste("Invalid XML nodes for ", section, " section: ", paste(node.names[invalid.sets], collapse=", "), sep="")
+		if(isTRUE(warn)){
+			warning(return.message)
+			return(FALSE)
+		} else {
+			stop(simpleError(return.message))
+		}
+	} else {
+		return(TRUE)
+	}
+} ## end function valid.child()
+
+
+## function valid.parent()
+# checks if a node is what it's supposed to be
+# - parent: character string, name of the parent node
+# - node: a XiMpLe.node object to check
+# - warn: warning or stop?
+# - see: name of the function to check docs for
+valid.parent <- function(parent, node, warn=FALSE, see=NULL){
+	if(inherits(node, "XiMpLe.node")){
+		node.name <- slot(node, "name")
+		if(identical(node.name, parent)){
+			return(TRUE)
+		} else {
+			return.message <- paste("I don't know what this is, but '", parent, "' is not a <", parent, "> section!", sep="")
+			if(isTRUE(warn)){
+				warning(return.message)
+				return(FALSE)
+			} else {
+				stop(simpleError(return.message))
+			}
+		}
+	} else {
+		stop(simpleError(
+				paste("'", parent, "' must be a XiMpLe.node",
+					if(!is.null(see)){paste(", see ?", see, sep="")},
+					"!", sep=""))
+			)
+	}
+} ## end function valid.parent()
+
+
 ## function check.type()
 check.type <- function(value, type, var.name, warn.only=TRUE){
 	if(inherits(value, type)){

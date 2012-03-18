@@ -43,14 +43,7 @@ rk.XML.logic <- function(...){
 		})
 
 	# check the node names and allow only valid ones
-	node.names <- sapply(child.list(nodes), function(this.node){
-			slot(this.node, "name")
-		})
-
-	invalid.sets <- !node.names %in% c("connect", "convert","include","insert","external","set","script")
-	if(any(invalid.sets)){
-		stop(simpleError(paste("Invalid XML nodes for logic section: ", paste(node.names[invalid.sets], collapse=", "), sep="")))
-	} else {}
+	valid.child("logic", children=nodes)
 
 	node <- XMLNode("logic", .children=child.list(nodes, empty=FALSE))
 

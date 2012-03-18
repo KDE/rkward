@@ -1,12 +1,14 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
-\section{Changes in rkwarddev version 0.05-3 (2012-03-17)}{
+\section{Changes in rkwarddev version 0.05-3 (2012-03-18)}{
   \itemize{
     \item fixed: \code{rk.XML.text()} now preserves XML tags in the text value
-    \item functions now call \code{XiMpLe::XMLNode()} and \code{XiMpLe::XMLTree()} constructors instead of \code{new()}, and
-      \code{pasteXMLNode()} and \code{pasteXMLTree()} were globally renamed into \code{pasteXML()}
+    \item internally, functions now call \code{XiMpLe::XMLNode()} and \code{XiMpLe::XMLTree()} constructors instead of \code{new()},
+      and \code{pasteXMLNode()} and \code{pasteXMLTree()} were globally renamed into \code{pasteXML()}
     \item internally, replaced object@node with slot(object, \code{"node"})
+    \item internally, moved checks for valid child and parent nodes to an internal functions,
+      \code{valid.child()} and \code{valid.parent()}
   }
 }
 \section{Changes in rkwarddev version 0.05-2 (2012-03-10)}{

@@ -25,17 +25,7 @@ rk.XML.wizard <- function(..., label=NULL){
 	nodes <- list(...)
 
 	# check the node names and allow only valid ones
-	node.names <- sapply(child.list(nodes), function(this.node){
-			slot(this.node, "name")
-		})
-
-	invalid.sets <- !node.names %in% c("browser", "checkbox", "column", "copy",
-		"dropdown", "embed", "formula", "frame", "include", "input", "insert",
-		"page", "preview", "radio", "row", "saveobject", "spinbox", "stretch",
-		"tabbook", "text", "varselector", "varslot", "!--")
-	if(any(invalid.sets)){
-		stop(simpleError(paste("Invalid XML nodes for wizard section: ", paste(node.names[invalid.sets], collapse=", "), sep="")))
-	} else {}
+	valid.child("wizard", children=nodes)
 
 	if(!is.null(label)){
 		attr.list <- list(label=label)

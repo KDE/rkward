@@ -8,6 +8,5 @@
 #' cat(pasteXML(test.comment))
 
 rk.comment <- function(text){
-	node <- XMLNode(name="!--", text)
-	return(node)
+	return(XMLNode(name="!--", text))
 }

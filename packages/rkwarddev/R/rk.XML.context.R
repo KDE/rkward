@@ -23,20 +23,12 @@ rk.XML.context <- function(..., id="x11"){
 	nodes <- list(...)
 
 	# check the node names and allow only valid ones
-	node.names <- sapply(child.list(nodes), function(this.node){
-			slot(this.node, "name")
-		})
+	valid.child("context", children=nodes)
 
 	if(!id %in% c("x11", "import")){
 		stop(simpleError(paste("Invalid ID: ", id, sep="")))
 	} else {}
 		
-	invalid.sets <- !node.names %in% c("menu", "!--")
-	if(any(invalid.sets)){
-		stop(simpleError(paste("Invalid XML nodes for context section: ",
-			paste(node.names[invalid.sets], collapse=", "), sep="")))
-	} else {}
-
 	node <- XMLNode("context",
 			attrs=list(id=id),
 			.children=child.list(nodes, empty=FALSE)

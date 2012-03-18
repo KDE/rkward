@@ -30,14 +30,9 @@ rk.XML.copy <- function(id, as=NULL){
 	attr.list <- list(id=id.name)
 
 	if(!is.null(as)){
-		invalid.sets <- !as %in% c("browser", "checkbox", "column", "copy",
-			"dropdown", "formula", "frame", "input", "page", "radio", "row", "saveobject",
-			"spinbox", "stretch", "tabbook", "text", "varselector", "varslot")
-		if(any(invalid.sets)){
-			stop(simpleError(paste("Invalid XML nodes ('as') for wizard/dialog section: ", paste(as, collapse=", "), sep="")))
-		} else {
-				attr.list[["as"]] <- as.character(as)
-		}
+		# check the validity
+		valid.child("as", node.names=as, section="wizard/dialog (copy/'as')")
+		attr.list[["as"]] <- as.character(as)
 	} else {}
 
 	node <- XMLNode("copy", attrs=attr.list)

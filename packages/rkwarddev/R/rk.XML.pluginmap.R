@@ -59,18 +59,10 @@ rk.XML.pluginmap <- function(name, about=NULL, components, hierarchy="test",
 
 	## about section
 	if(!is.null(about)){
-		if(inherits(about, "XiMpLe.node")){
-			about.node.name <- slot(about, "name")
-			# check if this is *really* a about section, otherwise quit and go dancing
-			if(!identical(about.node.name, "about")){
-				stop(simpleError("I don't know what this is, but 'about' is not an about section!"))
-			} else {
-				# initialize all.children list
-				all.children[[length(all.children)+1]] <- about
-			}
-		} else {
-			stop(simpleError("'about' must be a XiMpLe.node, see ?rk.XML.about()!"))
-		}
+		# check if this is *really* a about section, otherwise quit and go dancing
+		valid.parent("about", node=about, see="rk.XML.about")
+		# initialize all.children list
+		all.children[[length(all.children)+1]] <- about
 	} else {
 		if(isTRUE(hints)){
 			about.XML <- XMLNode("!--", XMLNode("about", ""))
@@ -84,12 +76,8 @@ rk.XML.pluginmap <- function(name, about=NULL, components, hierarchy="test",
 		# check if this is *really* require nodes
 		for(this.child in child.list(require)){
 				if(inherits(this.child, "XiMpLe.node")){
-					node.name <- slot(this.child, "name")
-					if(!identical(node.name, "require")){
-						stop(simpleError("I don't know what this is, but 'require' is not made of require nodes!"))
-					} else {
-						all.children[[length(all.children)+1]] <- this.child
-					}
+					valid.parent("require", node=this.child, see="rk.XML.require")
+					all.children[[length(all.children)+1]] <- this.child
 				} else {
 					if(grepl(".pluginmap", this.child)){
 						all.children[[length(all.children)+1]] <- rk.XML.require(file=this.child)
@@ -107,11 +95,8 @@ rk.XML.pluginmap <- function(name, about=NULL, components, hierarchy="test",
 
 	## components section
 	if(inherits(components, "XiMpLe.node")){
-		components.node.name <- slot(components, "name")
 		# check if this is *really* a components section, otherwise quit and go dancing
-		if(!identical(components.node.name, "components")){
-			stop(simpleError("I don't know what this is, but 'components' is not a components section!"))
-		} else {}
+		valid.parent("components", node=components, see="rk.XML.components")
 		all.children[[length(all.children)+1]] <- components
 		# get the IDs for hierarchy section
 		component.IDs <- sapply(slot(components, "children"), function(this.comp){
@@ -152,11 +137,8 @@ rk.XML.pluginmap <- function(name, about=NULL, components, hierarchy="test",
 
 	## hierachy section
 	if(inherits(hierarchy, "XiMpLe.node")){
-		hierarchy.node.name <- slot(hierarchy, "name")
 		# check if this is *really* a hierarchy section, otherwise quit and go dancing
-		if(!identical(hierarchy.node.name, "hierarchy")){
-			stop(simpleError("I don't know what this is, but 'hierarchy' is not a hierarchy section!"))
-		} else {}
+		valid.parent("hierarchy", node=hierarchy, see="rk.XML.hierarchy")
 		all.children[[length(all.children)+1]] <- hierarchy
 	} else {
 		# correct for cases with one component and a list
