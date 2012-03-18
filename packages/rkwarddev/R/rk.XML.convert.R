@@ -117,10 +117,7 @@ rk.XML.convert <- function(sources, mode=c(), required=FALSE, id.name="auto"){
 			attr.list[["required_true"]] <- "true"
 	} else {}
 
-	node <- new("XiMpLe.node",
-			name="convert",
-			attributes=attr.list
-		)
+	node <- XMLNode("convert", attrs=attr.list)
 
 	return(node)
 }

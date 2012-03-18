@@ -29,9 +29,7 @@ rk.XML.varselector <- function(label=NULL, id.name="auto"){
 		} else {}
 	}
 
-	node <- new("XiMpLe.node",
-		name="varselector",
-		attributes=attr.list)
+	node <- XMLNode("varselector", attrs=attr.list)
 
 	return(node)
 }

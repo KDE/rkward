@@ -69,13 +69,13 @@ rk.plugin.component <- function(about, xml=list(), js=list(), rkh=list(),
 	pluginmap=NULL, create=c("xml", "js", "rkh"), gen.info=TRUE, indent.by="\t"){
 
 	if(inherits(about, "XiMpLe.node")){
-		about.node.name <- about@name
+		about.node.name <- slot(about, "name")
 		# check if this is *really* a about section, otherwise quit and go dancing
 		if(!identical(about.node.name, "about")){
 			stop(simpleError("I don't know what this is, but 'about' is not an about section!"))
 		} else {
 			# fetch the plugin name
-			name <- about@attributes[["name"]]
+			name <- slot(about, "attributes")[["name"]]
 			about.node <- about
 		}
 	} else if(is.character(about) & length(about) == 1) {
@@ -124,9 +124,9 @@ rk.plugin.component <- function(about, xml=list(), js=list(), rkh=list(),
 			pluginmap=pluginmap,
 			about=about.node,
 			gen.info=gen.info)
-		this.component@xml <- XML.plugin
+		slot(this.component, "xml") <- XML.plugin
 	} else {
-		this.component@xml <- rk.XML.plugin("")
+		slot(this.component, "xml") <- rk.XML.plugin("")
 	}
 
 	## create plugin.js
@@ -167,9 +167,9 @@ rk.plugin.component <- function(about, xml=list(), js=list(), rkh=list(),
 			gen.info=gen.info,
 			load.silencer=js[["load.silencer"]],
 			indent.by=indent.by)
-		this.component@js <- JS.code
+		slot(this.component, "js") <- JS.code
 	} else {
-		this.component@js <- rk.JS.doc()
+		slot(this.component, "js") <- rk.JS.doc()
 	}
 
 	## create plugin.rkh
@@ -197,9 +197,9 @@ rk.plugin.component <- function(about, xml=list(), js=list(), rkh=list(),
 			technical=rkh[["technical"]],
 			title=rk.rkh.title(name.orig),
 			gen.info=gen.info)
-		this.component@rkh <- rkh.doc
+		slot(this.component, "rkh") <- rkh.doc
 	} else {
-		this.component@rkh <- rk.rkh.doc()
+		slot(this.component, "rkh") <- rk.rkh.doc()
 	}
 
 	return(this.component)

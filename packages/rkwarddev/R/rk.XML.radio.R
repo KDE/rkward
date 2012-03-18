@@ -26,9 +26,7 @@ rk.XML.radio <- function(label, options=list(label=c(val=NULL, chk=FALSE)), id.n
 					attr.list[["checked"]] <- "true"
 				} else {}
 			} else {}
-			new("XiMpLe.node",
-				name="option",
-				attributes=attr.list)
+			return(XMLNode("option", attrs=attr.list))
 		})
 
 	if(identical(id.name, "auto")){
@@ -38,10 +36,9 @@ rk.XML.radio <- function(label, options=list(label=c(val=NULL, chk=FALSE)), id.n
 	}
 	rd.attr.list <- list(id=id, label=label)
 
-	radio <- new("XiMpLe.node",
-			name="radio",
-			attributes=rd.attr.list,
-			children=child.list(rd.options)
+	radio <- XMLNode("radio",
+			attrs=rd.attr.list,
+			.children=child.list(rd.options, empty=FALSE)
 		)
 
 	return(radio)

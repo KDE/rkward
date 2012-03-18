@@ -25,11 +25,9 @@ rk.XML.col <- function(..., id.name="auto"){
 		attr.list <- list(id=id.name)
 	}
 
-	col <- new("XiMpLe.node",
-		name="column",
-		attributes=attr.list,
-		children=child.list(nodes),
-		value="")
+	col <- XMLNode("column",
+		attrs=attr.list,
+		.children=child.list(nodes, empty=FALSE))
 
 	return(col)
 }

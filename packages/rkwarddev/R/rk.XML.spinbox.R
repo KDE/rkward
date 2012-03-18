@@ -50,9 +50,7 @@ rk.XML.spinbox <- function(label, min=NULL, max=NULL, initial=0, real=TRUE, prec
 		attr.list[["max.precision"]] <- as.numeric(max.precision)
 	} else {}
 
-	node <- new("XiMpLe.node",
-			name="spinbox",
-			attributes=attr.list)
+	node <- XMLNode("spinbox", attrs=attr.list)
 
 	return(node)
 }

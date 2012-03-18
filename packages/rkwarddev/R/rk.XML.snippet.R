@@ -28,11 +28,9 @@ rk.XML.snippet <- function(..., id.name="auto"){
 		stop(simpleError("Snippets need an ID!"))
 	} else {}
 
-	node <- new("XiMpLe.node",
-			name="snippet",
-			attributes=list(id=id.name),
-			children=child.list(nodes),
-			value=""
+	node <- XMLNode("snippet",
+			attrs=list(id=id.name),
+			.children=child.list(nodes, empty=FALSE)
 		)
 
 	return(node)

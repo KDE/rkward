@@ -39,7 +39,7 @@
 rk.XML.varslot <- function(label, source, required=FALSE, multi=FALSE, min=1, any=1, max=0,
 	dim=0, min.len=0, max.len=NULL, classes=NULL, types=NULL, id.name="auto"){
 	if(inherits(source, "XiMpLe.node")){
-		source.name <- source@name
+		source.name <- slot(source, "name")
 		if(!identical(source.name, "varselector")){
 			stop(simpleError(paste("'source' must be a <varselector> node! You provided: <", source.name, ">", sep="")))
 		} else {}
@@ -95,9 +95,7 @@ rk.XML.varslot <- function(label, source, required=FALSE, multi=FALSE, min=1, an
 		var.slot.attr[["max_length"]] <- max.len
 	} else {}
 
-	v.slot <- new("XiMpLe.node",
-		name="varslot",
-		attributes=var.slot.attr)
+	v.slot <- XMLNode("varslot", attrs=var.slot.attr)
 
 	return(v.slot)
 }

@@ -10,10 +10,6 @@
 #' cat(pasteXML(test.code))
 
 rk.XML.code <- function(file){
-	node <- new("XiMpLe.node",
-			name="code",
-			attributes=list(file=as.character(file))
-		)
-
+	node <- XMLNode("code", attrs=list(file=as.character(file)))
 	return(node)
 }

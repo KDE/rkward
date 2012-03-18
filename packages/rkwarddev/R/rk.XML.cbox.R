@@ -33,9 +33,7 @@ rk.XML.cbox <- function(label, value="true", un.value=NULL, chk=FALSE, id.name="
 		attr.list[["checked"]] <- "true"
 	} else {}
 
-	checkbox <- new("XiMpLe.node",
-		name="checkbox",
-		attributes=attr.list)
+	checkbox <- XMLNode("checkbox", attrs=attr.list)
 
 	return(checkbox)
 }

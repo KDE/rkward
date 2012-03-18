@@ -86,7 +86,7 @@ rk.XML.menu <- function(label, ..., index=-1, id.name="auto"){
 	# check the node names and allow only valid ones
 	sapply(child.list(nodes), function(this.node){
 			stopifnot(inherits(this.node, "XiMpLe.node"))
-			node.name <- this.node@name
+			node.name <- slot(this.node, "name")
 			if(!node.name %in% c("entry", "menu", "!--")){
 				stop(simpleError(paste("Invalid XML nodes for menu section: ", node.name, sep="")))
 			} else {}
@@ -105,10 +105,9 @@ rk.XML.menu <- function(label, ..., index=-1, id.name="auto"){
 		attr.list[["index"]] <- index
 	} else {}
 
-	node <- new("XiMpLe.node",
-			name="menu",
-			attributes=attr.list,
-			children=child.list(nodes)
+	node <- XMLNode("menu",
+			attrs=attr.list,
+			.children=child.list(nodes)
 		)
 
 	return(node)

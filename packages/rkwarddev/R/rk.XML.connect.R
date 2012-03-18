@@ -40,7 +40,7 @@ rk.XML.connect <- function(governor, client, get="state", set="enabled", not=FAL
 	governor.id <- check.ID(governor)
 	# if governor is an XML node but not <convert>, append ".state"
 	if(inherits(governor, "XiMpLe.node")){
-		node.name <- governor@name
+		node.name <- slot(governor, "name")
 		if(!identical(node.name, "convert")){
 			# validate get modifier
 			if(modif.validity(governor, modifier=get)){
@@ -63,10 +63,7 @@ rk.XML.connect <- function(governor, client, get="state", set="enabled", not=FAL
 			attr.list[["reconcile"]] <- "true"
 	} else {}
 
-	node <- new("XiMpLe.node",
-			name="connect",
-			attributes=attr.list
-		)
+	node <- XMLNode("connect", attrs=attr.list)
 
 	return(node)
 }

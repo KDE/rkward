@@ -25,7 +25,7 @@ rk.XML.dialog <- function(..., label=NULL){
 
 	# check the node names and allow only valid ones
 	node.names <- sapply(child.list(nodes), function(this.node){
-			this.node@name
+			slot(this.node, "name")
 		})
 
 	invalid.sets <- !node.names %in% c("browser", "checkbox", "column", "copy",
@@ -42,11 +42,9 @@ rk.XML.dialog <- function(..., label=NULL){
 		attr.list <- list()
 	}
 
-	node <- new("XiMpLe.node",
-			name="dialog",
-			attributes=attr.list,
-			children=child.list(nodes),
-			value=""
+	node <- XMLNode("dialog",
+			attrs=attr.list,
+			.children=child.list(nodes, empty=FALSE)
 		)
 
 	return(node)

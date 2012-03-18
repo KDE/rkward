@@ -27,7 +27,7 @@ rk.rkh.settings <- function(...){
 
 	# check the node names and allow only valid ones
 	node.names <- sapply(child.list(nodes), function(this.node){
-			this.node@name
+			slot(this.node, "name")
 		})
 
 	invalid.sets <- !node.names %in% c("setting", "caption", "!--")

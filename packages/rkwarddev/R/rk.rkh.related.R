@@ -17,7 +17,7 @@ rk.rkh.related <- function(..., text=NULL){
 
 	# check the node names and allow only valid ones
 	li.elements <- sapply(child.list(links), function(this.node){
-			if(!identical(this.node@name, "link")){
+			if(!identical(slot(this.node, "name"), "link")){
 				stop(simpleError(paste("Invalid XML nodes for links section: ", this.node@name, sep="")))
 			} else {
 				li.element <- XMLNode("li", .children=child.list(this.node, empty=FALSE))

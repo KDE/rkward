@@ -92,11 +92,11 @@ get.IDs <- function(single.tags, relevant.tags, add.abbrev=FALSE, tag.names=FALS
 	cleaned.tags <- list()
 	for(this.tag in child.list(single.tags)){
 		if(inherits(this.tag, "XiMpLe.node")){
-			this.tag.name <- this.tag@name
-			if(this.tag.name %in% relevant.tags & "id" %in% names(this.tag@attributes)){
+			this.tag.name <- slot(this.tag, "name")
+			if(this.tag.name %in% relevant.tags & "id" %in% names(slot(this.tag, "attributes"))){
 				if(isTRUE(only.checkable) & this.tag.name %in% "frame"){
-					if("checkable" %in% names(this.tag@attributes)){
-						if(identical(this.tag@attributes[["checkable"]], "true")){
+					if("checkable" %in% names(slot(this.tag, "attributes"))){
+						if(identical(slot(this.tag, "attributes")[["checkable"]], "true")){
 							cleaned.tags[length(cleaned.tags)+1] <- this.tag
 						} else {}
 					} else {}
@@ -125,8 +125,8 @@ get.IDs <- function(single.tags, relevant.tags, add.abbrev=FALSE, tag.names=FALS
 
 	ids <- t(sapply(cleaned.tags, function(this.tag){
 				if(inherits(this.tag, "XiMpLe.node")){
-					this.tag.name <- this.tag@name
-					this.tag.id <- this.tag@attributes["id"]
+					this.tag.name <- slot(this.tag, "name")
+					this.tag.id <- slot(this.tag, "attributes")["id"]
 				} else {
 					this.tag.name <- XiMpLe:::XML.tagName(this.tag)
 					this.tag.id <- XiMpLe:::parseXMLAttr(this.tag)[["id"]]
@@ -192,7 +192,7 @@ get.JS.vars <- function(JS.var, XML.var=NULL, JS.prefix="", names.only=FALSE, mo
 		if(!is.null(modifiers)){
 			if(identical(modifiers, "all")){
 				if(inherits(XML.var, "XiMpLe.node")){
-					tag.name <- XML.var@name
+					tag.name <- slot(XML.var, "name")
 				} else {
 					tag.name <- XML.var
 				}
@@ -203,7 +203,7 @@ get.JS.vars <- function(JS.var, XML.var=NULL, JS.prefix="", names.only=FALSE, mo
 				}
 			} else {
 				if(inherits(XML.var, "XiMpLe.node")){
-					modif.tag.name <- XML.var@name
+					modif.tag.name <- slot(XML.var, "name")
 				} else {
 					modif.tag.name <- "all"
 				}
@@ -284,7 +284,7 @@ node.soup <- function(nodes){
 XML2person <- function(node, eval=FALSE){
 		if(inherits(node, "XiMpLe.node")){
 			# check if this is *really* a about section, otherwise die of boredom
-			if(!identical(node@name, "about")){
+			if(!identical(slot(node, "name"), "about")){
 				stop(simpleError("I don't know what this is, but 'about' is not an about section!"))
 			} else {}
 		} else {
@@ -299,9 +299,9 @@ XML2person <- function(node, eval=FALSE){
 		return(value)
 	}
 	all.authors <- c()
-	for (this.child in node@children){
-		if(identical(this.child@name, "author")){
-			attrs <- this.child@attributes
+	for (this.child in slot(node, "children")){
+		if(identical(slot(this.child, "name"), "author")){
+			attrs <- slot(this.child, "attributes")
 			given <- make.vector(attrs[["given"]])
 			family <- make.vector(attrs[["family"]])
 			email <- make.vector(attrs[["email"]])
@@ -331,18 +331,18 @@ XML2dependencies <- function(node, suggest=TRUE, mode="suggest"){
 	} else {}
 	if(inherits(node, "XiMpLe.node")){
 		# check if this is *really* a about section, otherwise die of boredom
-		if(!identical(node@name, "about")){
+		if(!identical(slot(node, "name"), "about")){
 			stop(simpleError("I don't know what this is, but 'about' is not an about section!"))
 		} else {}
 	} else {
 		stop(simpleError("'about' must be a XiMpLe.node, see ?rk.XML.about()!"))
 	}
-	check.deps <- sapply(node@children, function(this.child){identical(this.child@name, "dependencies")})
+	check.deps <- sapply(slot(node, "children"), function(this.child){identical(slot(this.child, "name"), "dependencies")})
 	if(any(check.deps)){
-		got.deps <- node@children[[which(check.deps)]]
+		got.deps <- slot(node, "children")[[which(check.deps)]]
 		deps.packages <- list()
 		# first see if RKWard and R versions are given
-		deps.RkR <- got.deps@attributes
+		deps.RkR <- slot(got.deps, "attributes")
 		deps.RkR.options  <- names(deps.RkR)
 		R.min <- ifelse("R_min_version" %in% deps.RkR.options, paste(">= ", deps.RkR[["R_min_version"]], sep=""), "")
 		R.max <- ifelse("R_max_version" %in% deps.RkR.options, paste("< ", deps.RkR[["R_max_version"]], sep=""), "")
@@ -356,10 +356,10 @@ XML2dependencies <- function(node, suggest=TRUE, mode="suggest"){
 		if(Rk.version.indices > 0 & identical(mode, "depends")){
 			deps.packages[[length(deps.packages) + 1]] <- paste("rkward (", Rk.min, ifelse(Rk.version.indices > 1, ", ", ""), Rk.max, ")", sep="")
 		} else {}
-		check.deps.pckg <- sapply(got.deps@children, function(this.child){identical(this.child@name, "package")})
+		check.deps.pckg <- sapply(slot(got.deps, "children"), function(this.child){identical(slot(this.child, "name"), "package")})
 		if(any(check.deps.pckg & ((isTRUE(suggest) & identical(mode, "suggest")) | !isTRUE(suggest)))){
 			deps.packages[[length(deps.packages) + 1]] <- paste(sapply(which(check.deps.pckg), function(this.pckg){
-					this.pckg.dep <- got.deps@children[[this.pckg]]@attributes
+					this.pckg.dep <- slot(slot(got.deps, "children")[[this.pckg]], "attributes")
 					pckg.options <- names(this.pckg.dep)
 					pckg.name <- this.pckg.dep[["name"]]
 					pckg.min <- ifelse("min" %in% pckg.options, paste(">= ", this.pckg.dep[["min"]], sep=""), "")
@@ -397,7 +397,7 @@ check.ID <- function(node){
 	} else {}
 
 	if(inherits(node, "XiMpLe.node")){
-		node.ID <- node@attributes[["id"]]
+		node.ID <- slot(node, "attributes")[["id"]]
 	} else if(is.character(node)){
 		node.ID <- node
 	} else {
@@ -450,7 +450,7 @@ modif.validity <- function(source, modifier, ignore.empty=TRUE, warn.only=TRUE, 
 	} else {}
 
 	if(inherits(source, "XiMpLe.node")){
-		tag.name <- source@name
+		tag.name <- slot(source, "name")
 		# embedded plugins can have all sorts of modifiers
 		if(identical(tag.name, "embed")){
 			if(isTRUE(bool)){
@@ -538,30 +538,30 @@ paste.JS.ite <- function(object, level=1, indent.by="\t", recurse=FALSE, empty.e
 
 	# if this is not a single "if" but an "else if", do not indent
 	if(isTRUE(recurse)){
-		ifJS <- paste("if(", object@ifJS, ") {\n", sep="")
+		ifJS <- paste("if(", slot(object, "ifJS"), ") {\n", sep="")
 	} else {
-		ifJS <- paste(main.indent, "if(", object@ifJS, ") {\n", sep="")
+		ifJS <- paste(main.indent, "if(", slot(object, "ifJS"), ") {\n", sep="")
 	}
 
-	if(nchar(object@thenJS) > 0) {
+	if(nchar(slot(object, "thenJS")) > 0) {
 		# chop off beginning indent strings, otherwiese they ruin the code layout
-		thenJS.clean <- gsub(paste("^", indent.by, "*", sep=""), "", object@thenJS)
+		thenJS.clean <- gsub(paste("^", indent.by, "*", sep=""), "", slot(object, "thenJS"))
 		thenJS <- paste(scnd.indent, thenJS.clean, "\n", main.indent, "}", sep="")
 	} else {
 		# if there is another rk.JS.ite object, call with recursion
-		if(length(object@thenifJS) == 1){
-			thenJS <- paste(paste.JS.ite(object@thenifJS[[1]], level=level+1, indent.by=indent.by), "\n", main.indent, "}", sep="")
+		if(length(slot(object, "thenifJS")) == 1){
+			thenJS <- paste(paste.JS.ite(slot(object, "thenifJS")[[1]], level=level+1, indent.by=indent.by), "\n", main.indent, "}", sep="")
 		} else {}
 	}
 
-	if(nchar(object@elseJS) > 0) {
+	if(nchar(slot(object, "elseJS")) > 0) {
 		# chop off beginning indent strings, otherwiese they ruin the code layout
-		elseJS.clean <- gsub(paste("^", indent.by, "*", sep=""), "", object@elseJS)
+		elseJS.clean <- gsub(paste("^", indent.by, "*", sep=""), "", slot(object, "elseJS"))
 		elseJS <- paste(" else {\n", scnd.indent, elseJS.clean, "\n", main.indent, "}", sep="")
 	} else {
 		# if there is another rk.JS.ite object, call with recursion
-		if(length(object@elifJS) == 1){
-			elseJS <- paste(" else ", paste.JS.ite(object@elifJS[[1]], level=level, indent.by=indent.by, recurse=TRUE), sep="")
+		if(length(slot(object, "elifJS")) == 1){
+			elseJS <- paste(" else ", paste.JS.ite(slot(object, "elifJS")[[1]], level=level, indent.by=indent.by, recurse=TRUE), sep="")
 		} else {
 			if(isTRUE(empty.e)){
 				# close for sure with an empty "else"
@@ -585,12 +585,12 @@ paste.JS.array <- function(object, level=2, indent.by="\t", funct=NULL){
 	main.indent <- indent(level, by=indent.by)
 	scnd.indent <- indent(level+1, by=indent.by)
 
-	arr.name  <- object@arr.name
-	opt.name  <- object@opt.name
-	variables <- object@variables
-	option    <- object@option
+	arr.name  <- slot(object, "arr.name")
+	opt.name  <- slot(object, "opt.name")
+	variables <- slot(object, "variables")
+	option    <- slot(object, "option")
 	if(is.null(funct)){
-		funct <- object@funct
+		funct <- slot(object, "funct")
 	} else {}
 	if(is.null(funct) | identical(funct, "")){
 		funct.start <- ""
@@ -630,16 +630,16 @@ paste.JS.options <- function(object, level=2, indent.by="\t", array=NULL, funct=
 	main.indent <- indent(level, by=indent.by)
 	scnd.indent <- indent(level+1, by=indent.by)
 
-	variable  <- object@var.name
-	option    <- object@opt.name
+	variable  <- slot(object, "var.name")
+	option    <- slot(object, "opt.name")
 	arr.name  <- camelCode(c("arr", variable))
-	collapse  <- object@collapse
-	ifs       <- object@ifs
+	collapse  <- slot(object, "collapse")
+	ifs       <- slot(object, "ifs")
 	if(is.null(array)){
-		array  <- object@array
+		array  <- slot(object, "array")
 	} else {}
 	if(is.null(funct)){
-		funct <- object@funct
+		funct <- slot(object, "funct")
 	} else {}
 	if(is.null(funct) | identical(funct, "")){
 		funct.start <- ""
@@ -651,17 +651,13 @@ paste.JS.options <- function(object, level=2, indent.by="\t", array=NULL, funct=
 
 	# a function to add the object stuff to ite objects
 	add.opts <- function(this.ite, collapse, array){
-#		# remove quotes, we'll add them ourselves where needed
-#		to.add <-  gsub("(.*)(\")$", "\\1", gsub("(^\")(.*)", "\\2", this.ite@thenJS, perl=TRUE), perl=TRUE)
 		if(isTRUE(array)){
-#			this.ite@thenJS <- paste(arr.name, ".push(\"", to.add,"\");", sep="")
-			this.ite@thenJS <- paste(arr.name, ".push(", this.ite@thenJS,");", sep="")
+			slot(this.ite, "thenJS") <- paste(arr.name, ".push(", slot(this.ite, "thenJS"),");", sep="")
 		} else {
-#			this.ite@thenJS <- paste(variable, " += \"", collapse, to.add,"\";", sep="")
-			this.ite@thenJS <- paste(variable, " += ", collapse, this.ite@thenJS,";", sep="")
+			slot(this.ite, "thenJS") <- paste(variable, " += ", collapse, slot(this.ite, "thenJS"),";", sep="")
 		}
-		if(length(this.ite@elifJS) == 1){
-			this.ite@elifJS <- list(add.opts(this.ite@elifJS[[1]]))
+		if(length(slot(this.ite, "elifJS")) == 1){
+			slot(this.ite, "elifJS") <- list(add.opts(slot(this.ite, "elifJS")[[1]]))
 		} else {}
 		return(this.ite)
 	}
@@ -712,7 +708,7 @@ paste.JS.options <- function(object, level=2, indent.by="\t", array=NULL, funct=
 ## function paste.JS.var()
 paste.JS.var <- function(object, level=2, indent.by="\t", JS.prefix=NULL, modifiers=NULL, default=NULL, join=NULL, names.only=FALSE, check.modifiers=FALSE){
 	# paste several objects
-	results <- unlist(sapply(object@vars, function(this.obj){
+	results <- unlist(sapply(slot(object, "vars"), function(this.obj){
 			paste.JS.var(this.obj,
 					level=level,
 					indent.by=indent.by,
@@ -732,19 +728,19 @@ paste.JS.var <- function(object, level=2, indent.by="\t", JS.prefix=NULL, modifi
 	# check indentation
 	main.indent <- indent(level, by=indent.by)
 
-	JS.var         <- object@JS.var
-	XML.var        <- object@XML.var
+	JS.var         <- slot(object, "JS.var")
+	XML.var        <- slot(object, "XML.var")
 	if(is.null(JS.prefix)){
-		JS.prefix  <- object@prefix
+		JS.prefix  <- slot(object, "prefix")
 	} else {}
 	if(is.null(modifiers)){
-		modifiers  <- object@modifiers
+		modifiers  <- slot(object, "modifiers")
 	} else {}
 	if(is.null(default)){
-		default     <- object@default
+		default     <- slot(object, "default")
 	} else {}
 	if(is.null(join)){
-		join        <- object@join
+		join        <- slot(object, "join")
 	} else {}
 
 	if(!identical(join, "")){

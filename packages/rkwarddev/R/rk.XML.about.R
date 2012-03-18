@@ -108,9 +108,13 @@ rk.XML.about <- function(name, author, about=list(desc="SHORT_DESCRIPTION", vers
 			author.family <- format(this.author, include="family")
 			author.email  <- format(this.author, include="email", braces=list(email=""))
 			author.role   <- format(this.author, include="role", braces=list(role=""), collapse=list(role=", "))
-			result <- new("XiMpLe.node",
-				name="author",
-				attributes=list(given=author.given, family=author.family, email=author.email, role=author.role))
+			result <- XMLNode("author",
+				attrs=list(
+					given=author.given,
+					family=author.family,
+					email=author.email,
+					role=author.role
+				))
 			return(result)
 		}))
 
@@ -121,18 +125,14 @@ rk.XML.about <- function(name, author, about=list(desc="SHORT_DESCRIPTION", vers
 	# - repository
 	# create example, if empty
 	if(is.null(package)){
-		xml.package.example <- new("XiMpLe.node",
-				name="package",
-				attributes=list(
-					name="CHANGE_ME_OR_DELETE_ME",
-					"min_version"="CHANGE_ME_OR_DELETE_ME",
-					"max_version"="CHANGE_ME_OR_DELETE_ME",
-					repository="CHANGE_ME_OR_DELETE_ME"
-					))
-		xml.package <- list(new("XiMpLe.node",
-					name="!--",
-					children=list(xml.package.example)
+		xml.package.example <- XMLNode("package",
+			attrs=list(
+				name="CHANGE_ME_OR_DELETE_ME",
+				"min_version"="CHANGE_ME_OR_DELETE_ME",
+				"max_version"="CHANGE_ME_OR_DELETE_ME",
+				repository="CHANGE_ME_OR_DELETE_ME"
 			))
+		xml.package <- list(XMLNode("!--", xml.package.example))
 	} else {
 		xml.package <- sapply(package, function(this.package){
 				pck.options <- names(this.package)
@@ -142,9 +142,7 @@ rk.XML.about <- function(name, author, about=list(desc="SHORT_DESCRIPTION", vers
 						pck.attributes[[this.option]] <- this.package[[this.option]]
 					} else {}
 				}
-				result <- new("XiMpLe.node",
-					name="package",
-					attributes=pck.attributes)
+				result <- XMLNode("package", attrs=pck.attributes)
 				return(result)
 			})
 	}
@@ -154,26 +152,17 @@ rk.XML.about <- function(name, author, about=list(desc="SHORT_DESCRIPTION", vers
 	# - url
 	# create example, if empty
 	if(is.null(pluginmap)){
-		xml.pluginmap.text <- new("XiMpLe.node",
-					name="",
-					value="If this plugin depends on other pluginmaps, edit this part to your needs:"
-		)
-		xml.pluginmap.example <- new("XiMpLe.node",
-					name="pluginmap",
-					attributes=list(
-						name="CHANGE_ME_OR_DELETE_ME",
-						url="CHANGE_ME_OR_DELETE_ME"
-					)
-			)
-		xml.pluginmap <- list(new("XiMpLe.node",
-					name="!--",
-					children=list(xml.pluginmap.text, xml.pluginmap.example)
+		xml.pluginmap.text <- XMLNode("", "If this plugin depends on other pluginmaps, edit this part to your needs:")
+		xml.pluginmap.example <- XMLNode("pluginmap",
+			attrs=list(
+				name="CHANGE_ME_OR_DELETE_ME",
+				url="CHANGE_ME_OR_DELETE_ME"
 			))
+		xml.pluginmap <- list(XMLNode("!--", xml.pluginmap.text, xml.pluginmap.example))
 	} else {
 		xml.pluginmap <- sapply(pluginmap, function(this.pluginmap){
-				result <- new("XiMpLe.node",
-					name="pluginmap",
-					attributes=list(
+				result <- XMLNode("pluginmap",
+					attrs=list(
 						name=this.pluginmap[["name"]],
 						url=this.pluginmap[["url"]]
 					))
@@ -194,22 +183,16 @@ rk.XML.about <- function(name, author, about=list(desc="SHORT_DESCRIPTION", vers
 	# comment out an example dependency listing if it has no entries
 	if(is.null(dependencies)){
 		R.v <- R.Version()
-		xml.dependencies.text <- new("XiMpLe.node",
-					name="!--",
-					value="If this plugin has dependencies, edit this part to your needs:"
-		)
+		xml.dependencies.text <- XMLNode("!--", "If this plugin has dependencies, edit this part to your needs:")
 		xml.authors[[length(xml.authors)+1]] <- xml.dependencies.text
-		xml.dependencies <- new("XiMpLe.node",
-					name="dependencies",
-					attributes=list(
-						"rkward_min_version"=.rk.app.version,
-						"rkward_max_version"="CHANGE_ME_OR_DELETE_ME",
-						"R_min_version"=paste(R.v$major, R.v$minor, sep="."),
-						"R_max_version"="CHANGE_ME_OR_DELETE_ME"
-					),
-					children=xml.package,
-					value=""
-			)
+		xml.dependencies <- XMLNode("dependencies",
+			attrs=list(
+				"rkward_min_version"=.rk.app.version,
+				"rkward_max_version"="CHANGE_ME_OR_DELETE_ME",
+				"R_min_version"=paste(R.v$major, R.v$minor, sep="."),
+				"R_max_version"="CHANGE_ME_OR_DELETE_ME"
+			),
+			.children=child.list(xml.package, empty=FALSE))
 	} else {
 		dep.options <- names(dependencies)
 		dep.attributes <- list()
@@ -225,12 +208,9 @@ rk.XML.about <- function(name, author, about=list(desc="SHORT_DESCRIPTION", vers
 		if("R.max" %in% dep.options){
 			dep.attributes[["R_max_version"]] <- dependencies[["R.max"]]
 		} else {}
-		xml.dependencies <- new("XiMpLe.node",
-					name="dependencies",
-					attributes=dep.attributes,
-					children=xml.package,
-					value=""
-			)
+		xml.dependencies <- XMLNode("dependencies",
+			attrs=dep.attributes,
+			.children=child.list(xml.package, empty=FALSE))
 	}
 
 	## about
@@ -247,20 +227,18 @@ rk.XML.about <- function(name, author, about=list(desc="SHORT_DESCRIPTION", vers
 	if(is.null(xml.authors)){
 		xml.authors <- list()
 	} else {}
-	xml.about <-  new("XiMpLe.node",
-				name="about",
-				attributes=list(
-					name=name,
-					"shortinfo"=about[["desc"]],
-					"longinfo"=about[["long.desc"]],
-					version=about[["version"]],
-					"releasedate"=about[["date"]],
-					url=about[["url"]],
-					license=about[["license"]],
-					category=about[["category"]]
-				),
-				children=xml.authors
-		)
+	xml.about <-  XMLNode("about",
+		attrs=list(
+			name=name,
+			"shortinfo"=about[["desc"]],
+			"longinfo"=about[["long.desc"]],
+			version=about[["version"]],
+			"releasedate"=about[["date"]],
+			url=about[["url"]],
+			license=about[["license"]],
+			category=about[["category"]]
+		),
+		.children=xml.authors)
 
 	return(xml.about)
 }

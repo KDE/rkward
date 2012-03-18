@@ -27,7 +27,7 @@ rk.XML.page <- function(..., id.name="auto"){
 
 	# check the node names and allow only valid ones
 	node.names <- sapply(child.list(nodes), function(this.node){
-			this.node@name
+			slot(this.node, "name")
 		})
 
 	invalid.sets <- !node.names %in% c("browser", "checkbox", "column", "copy",
@@ -46,11 +46,9 @@ rk.XML.page <- function(..., id.name="auto"){
 		attr.list <- list(id=id.name)
 	}
 
-	node <- new("XiMpLe.node",
-			name="page",
-			attributes=attr.list,
-			children=child.list(nodes),
-			value=""
+	node <- XMLNode("page",
+			attrs=attr.list,
+			.children=child.list(nodes, empty=FALSE)
 		)
 
 	return(node)

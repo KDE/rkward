@@ -34,10 +34,7 @@ rk.XML.attribute <- function(id, value=NULL, label=NULL){
 		attr.list[["label"]] <- label
 	} else {}
 
-	node <- new("XiMpLe.node",
-			name="attribute",
-			attributes=attr.list
-		)
+	node <- XMLNode("attribute", attrs=attr.list)
 
 	return(node)
 }

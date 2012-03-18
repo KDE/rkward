@@ -15,7 +15,7 @@
 #'   "Second Option"=c(val="val2", chk=TRUE)))
 #' cat(pasteXML(test.dropdown))
 
-rk.XML.dropdown <- function(label, options=list(label=c(val=NULL, chk=FALSE)), id.name="auto"){
+rk.XML.dropdown <- function(label, options=list(label=c(val="", chk=FALSE)), id.name="auto"){
 	num.opt <- length(options)
 	dd.options <- sapply(1:num.opt, function(this.num){
 			this.element <- names(options)[[this.num]]
@@ -26,9 +26,7 @@ rk.XML.dropdown <- function(label, options=list(label=c(val=NULL, chk=FALSE)), i
 					attr.list[["checked"]] <- "true"
 				} else {}
 			} else {}
-			new("XiMpLe.node",
-				name="option",
-				attributes=attr.list)
+			return(XMLNode("option", attrs=attr.list))
 		})
 
 	if(identical(id.name, "auto")){
@@ -38,10 +36,9 @@ rk.XML.dropdown <- function(label, options=list(label=c(val=NULL, chk=FALSE)), i
 	}
 	drp.attr.list <- list(id=id, label=label)
 
-	dropdown <- new("XiMpLe.node",
-			name="dropdown",
-			attributes=drp.attr.list,
-			children=dd.options
+	dropdown <- XMLNode("dropdown",
+			attrs=drp.attr.list,
+			.children=child.list(dd.options, empty=FALSE)
 		)
 
 	return(dropdown)

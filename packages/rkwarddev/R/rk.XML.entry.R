@@ -24,7 +24,7 @@ rk.XML.entry <- function(component, index=-1){
 
 	# check the node names and allow only valid ones
 	if(inherits(component, "XiMpLe.node")){
-		node.name <- component@name
+		node.name <- slot(component ,"name")
 		if(!identical(node.name, "component")){
 			stop(simpleError(paste("Invalid XML node for 'entry': ", node.name, sep="")))
 		} else {}
@@ -36,10 +36,7 @@ rk.XML.entry <- function(component, index=-1){
 		attr.list[["index"]] <- index
 	} else {}
 
-	node <- new("XiMpLe.node",
-			name="entry",
-			attributes=attr.list
-		)
+	node <- XMLNode("entry", attrs=attr.list)
 
 	return(node)
 }

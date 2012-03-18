@@ -23,17 +23,13 @@ rk.XML.snippets <- function(...){
 	# check the node names and allow only valid ones
 	sapply(child.list(nodes), function(this.node){
 			stopifnot(inherits(this.node, "XiMpLe.node"))
-			node.name <- this.node@name
+			node.name <- slot(this.node, "name")
 			if(!node.name %in% c("snippet", "!--")){
 				stop(simpleError(paste("Invalid XML nodes for snippets section: ", node.name, sep="")))
 			} else {}
 		})
 
-	node <- new("XiMpLe.node",
-			name="snippets",
-			children=child.list(nodes),
-			value=""
-		)
+	node <- XMLNode("snippets", .children=child.list(nodes, empty=FALSE))
 
 	return(node)
 }

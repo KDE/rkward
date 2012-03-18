@@ -10,10 +10,6 @@
 #' cat(pasteXML(test.help))
 
 rk.XML.help <- function(file){
-	node <- new("XiMpLe.node",
-			name="help",
-			attributes=list(file=as.character(file))
-		)
-
+	node <- XMLNode("help", attrs=list(file=as.character(file)))
 	return(node)
 }

@@ -43,9 +43,7 @@ rk.XML.saveobj <- function(label, chk=FALSE, checkable=TRUE, initial="auto", req
 		attr.list[["id"]] <- id.name
 	} else {}
 
-	node <- new("XiMpLe.node",
-			name="saveobject",
-			attributes=attr.list)
+	node <- XMLNode("saveobject", attrs=attr.list)
 
 	return(node)
 }

@@ -10,10 +10,5 @@
 #' cat(pasteXML(test.include))
 
 rk.XML.include <- function(file){
-	node <- new("XiMpLe.node",
-			name="include",
-			attributes=list(file=as.character(file))
-		)
-
-	return(node)
+	return(XMLNode("include", attrs=list(file=as.character(file))))
 }

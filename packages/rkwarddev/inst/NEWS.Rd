@@ -4,8 +4,9 @@
 \section{Changes in rkwarddev version 0.05-3 (2012-03-17)}{
   \itemize{
     \item fixed: \code{rk.XML.text()} now preserves XML tags in the text value
-    \item began to use \code{XiMpLe::XMLNode()} and \code{XiMpLe::XMLTree()} constructors in functions, and to rename
-      \code{pasteXMLNode()} and \code{pasteXMLTree()} into \code{pasteXML()}
+    \item functions now call \code{XiMpLe::XMLNode()} and \code{XiMpLe::XMLTree()} constructors instead of \code{new()}, and
+      \code{pasteXMLNode()} and \code{pasteXMLTree()} were globally renamed into \code{pasteXML()}
+    \item internally, replaced object@node with slot(object, \code{"node"})
   }
 }
 \section{Changes in rkwarddev version 0.05-2 (2012-03-10)}{
@@ -75,6 +76,7 @@
 }
 \section{Changes in rkwarddev version 0.04-6 (2011-10-31)}{
   \itemize{
+    \item added <frame> to the tags which are scanned by \code{rk.JS.scan()}, they're considered only if checkable
     \item added <frame> to the tags which are scanned by \code{rk.JS.scan()}, they're considered only if checkable
     \item improved output of rk.JS.var class objects by \code{rk.paste.JS()}
   }

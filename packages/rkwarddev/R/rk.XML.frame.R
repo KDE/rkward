@@ -45,11 +45,10 @@ rk.XML.frame <- function(..., label=NULL, checkable=FALSE, chk=TRUE, id.name="au
 		attr.list[["id"]] <- id.name
 	} else {}
 
-	frame <- new("XiMpLe.node",
-		name="frame",
-		attributes=attr.list,
-		children=child.list(nodes),
-		value="")
+	frame <- XMLNode("frame",
+			attributes=attr.list,
+			.children=child.list(nodes, empty=FALSE)
+		)
 
 	return(frame)
 }

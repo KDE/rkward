@@ -19,17 +19,13 @@ rk.XML.components <- function(...){
 
 	# check the node names and allow only valid ones
 	sapply(child.list(nodes), function(this.node){
-			node.name <- this.node@name
+			node.name <- slot(this.node, "name")
 			if(!identical(node.name, "component")){
 				stop(simpleError(paste("Invalid XML nodes for components section: ", node.name, sep="")))
 			} else {}
 		})
 
-	node <- new("XiMpLe.node",
-			name="components",
-			children=child.list(nodes),
-			value=""
-		)
+	node <- XMLNode("components", .children=child.list(nodes, empty=FALSE))
 
 	return(node)
 }

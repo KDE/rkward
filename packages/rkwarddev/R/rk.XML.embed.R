@@ -29,10 +29,7 @@ rk.XML.embed <- function(component, button=FALSE, label="Options", id.name="auto
 		attr.list[["id"]] <- id.name
 	}
 
-	node <- new("XiMpLe.node",
-			name="embed",
-			attributes=attr.list
-		)
+	node <- XMLNode("embed", attrs=attr.list)
 
 	return(node)
 }

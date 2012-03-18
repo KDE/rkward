@@ -2,8 +2,9 @@ ChangeLog for package rkwarddev
 
 changes in version 0.05-3 (2012-03-17)
   - fixed: rk.XML.text() now preserves XML tags in the text value
-  - began to use XiMpLe::XMLNode() and XiMpLe::XMLTree() constructors in functions, and to rename
-    pasteXMLNode() and pasteXMLTree() into pasteXML()
+  - functions now call XiMpLe::XMLNode() and XiMpLe::XMLTree() constructors instead of new(), and
+    pasteXMLNode() and pasteXMLTree() were globally renamed into pasteXML()
+  - internally, replaced object@node with slot(object, "node")
 
 changes in version 0.05-2 (2012-03-10)
   - added missing dependency to package methods
@@ -51,6 +52,7 @@ changes in version 0.04-7 (2011-11-08)
   - added long description support to rk.XML.about(), used for the DESCRIPTION file
 
 changes in version 0.04-6 (2011-10-31)
+  - added <frame> to the tags which are scanned by rk.JS.scan(), they're considered only if checkable
   - added <frame> to the tags which are scanned by rk.JS.scan(), they're considered only if checkable
   - improved output of rk.JS.var class objects by rk.paste.JS()
 

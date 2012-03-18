@@ -24,7 +24,7 @@ rk.XML.context <- function(..., id="x11"){
 
 	# check the node names and allow only valid ones
 	node.names <- sapply(child.list(nodes), function(this.node){
-			this.node@name
+			slot(this.node, "name")
 		})
 
 	if(!id %in% c("x11", "import")){
@@ -37,11 +37,9 @@ rk.XML.context <- function(..., id="x11"){
 			paste(node.names[invalid.sets], collapse=", "), sep="")))
 	} else {}
 
-	node <- new("XiMpLe.node",
-			name="context",
-			attributes=list(id=id),
-			children=child.list(nodes),
-			value=""
+	node <- XMLNode("context",
+			attrs=list(id=id),
+			.children=child.list(nodes, empty=FALSE)
 		)
 
 	return(node)

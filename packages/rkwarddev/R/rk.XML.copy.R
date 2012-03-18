@@ -40,10 +40,7 @@ rk.XML.copy <- function(id, as=NULL){
 		}
 	} else {}
 
-	node <- new("XiMpLe.node",
-			name="copy",
-			attributes=attr.list
-		)
+	node <- XMLNode("copy", attrs=attr.list)
 
 	return(node)
 }

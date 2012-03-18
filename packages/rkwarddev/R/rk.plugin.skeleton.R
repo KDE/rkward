@@ -135,13 +135,13 @@ rk.plugin.skeleton <- function(about, path=tempdir(),
 	components=list(), edit=FALSE, load=FALSE, show=FALSE, gen.info=TRUE, indent.by="\t"){
 
 	if(inherits(about, "XiMpLe.node")){
-		about.node.name <- about@name
+		about.node.name <- slot(about, "name")
 		# check if this is *really* a about section, otherwise quit and go dancing
 		if(!identical(about.node.name, "about")){
 			stop(simpleError("I don't know what this is, but 'about' is not an about section!"))
 		} else {
 			# fetch the plugin name
-			name <- about@attributes[["name"]]
+			name <- slot(about, "attributes")[["name"]]
 			about.node <- about
 		}
 	} else if(is.character(about) & length(about) == 1) {
@@ -223,11 +223,11 @@ rk.plugin.skeleton <- function(about, path=tempdir(),
 		if(!inherits(this.comp, "rk.plug.comp")){
 			warning("An element of list 'components' was not of class rk.plug.comp and ignored!", call.=FALSE)
 		} else {
-			comp.name <- clean.name(this.comp@name)
-			create <- this.comp@create
-			XML.plugin <- this.comp@xml
-			JS.code <- this.comp@js
-			rkh.doc <- this.comp@rkh
+			comp.name <- clean.name(slot(this.comp, "name"))
+			create <- slot(this.comp, "create")
+			XML.plugin <- slot(this.comp, "xml")
+			JS.code <- slot(this.comp, "js")
+			rkh.doc <- slot(this.comp, "rkh")
 
 			# the basic file names
 			plugin.fname.xml <- paste(comp.name, ".xml", sep="")
@@ -281,14 +281,14 @@ rk.plugin.skeleton <- function(about, path=tempdir(),
 			} else {}
 			# get components and hierarchy info from the components list
 			all.components <- sapply(components, function(this.comp){
-					comp.name <- this.comp@name
+					comp.name <- slot(this.comp, "name")
 					named.compo <- paste("plugins/", clean.name(comp.name), ".xml", sep="")
 					# we'll name the component, to nicen the menu entry
 					names(named.compo) <- comp.name
 					return(named.compo)
 				})
 			all.hierarchies <- lapply(components, function(this.comp){
-					comp.hier <- this.comp@hierarchy
+					comp.hier <- slot(this.comp, "hierarchy")
 					return(comp.hier)
 				})
 
@@ -338,20 +338,20 @@ rk.plugin.skeleton <- function(about, path=tempdir(),
 			desc <- data.frame(
 				Package=name,
 				Type="Package",
-				Title=about.node@attributes[["shortinfo"]],
-				Version=about.node@attributes[["version"]],
-				Date=about.node@attributes[["releasedate"]],
+				Title=slot(about.node, "attributes")[["shortinfo"]],
+				Version=slot(about.node, "attributes")[["version"]],
+				Date=slot(about.node, "attributes")[["releasedate"]],
 				Author=all.authors,
 				AuthorsR=XML2person(about.node, eval=FALSE),
 				Maintainer=all.maintainers,
 				Depends=XML2dependencies(about.node, suggest=suggest.required, mode="depends"),
 				Suggests=XML2dependencies(about.node, suggest=suggest.required, mode="suggest"),
 				Enhances="rkward",
-				Description=about.node@attributes[["longinfo"]],
-				License=about.node@attributes[["license"]],
+				Description=slot(about.node, "attributes")[["longinfo"]],
+				License=slot(about.node, "attributes")[["license"]],
 #				Encoding="UTF-8",
 				LazyLoad=ifelse(isTRUE(lazyLoad), "yes", "no"),
-				URL=about.node@attributes[["url"]],
+				URL=slot(about.node, "attributes")[["url"]],
 #				# R 2.14 seems to add "Namespace: auto", which invalidates source packages for R < 2.14
 #				Namespace=name,
 				stringsAsFactors=FALSE)

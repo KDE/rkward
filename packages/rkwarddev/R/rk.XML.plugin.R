@@ -66,7 +66,7 @@ rk.XML.plugin <- function(name, dialog=NULL, wizard=NULL, logic=NULL, snippets=N
 
 	if(!is.null(about)){
 		if(inherits(about, "XiMpLe.node")){
-			about.node.name <- about@name
+			about.node.name <- slot(about, "name")
 			# check if this is *really* a about section, otherwise quit and go dancing
 			if(!identical(about.node.name, "about")){
 				stop(simpleError("I don't know what this is, but 'about' is not an about section!"))
@@ -81,7 +81,7 @@ rk.XML.plugin <- function(name, dialog=NULL, wizard=NULL, logic=NULL, snippets=N
 	if(!is.null(snippets)){
 		# check if this is *really* a snippets section, otherwise quit and go dancing
 		if(inherits(snippets, "XiMpLe.node")){
-			snippets.node.name <- snippets@name
+			snippets.node.name <- slot(snippets, "name")
 		} else {
 			snippets.node.name <- "yougottabekiddingme"
 		}
@@ -94,23 +94,16 @@ rk.XML.plugin <- function(name, dialog=NULL, wizard=NULL, logic=NULL, snippets=N
 	if(is.null(logic)){
 		if("logic" %in% provides){
 			lgc.children <- list(
-					new("XiMpLe.node",
-						# add these as comments because they need editing
-						name="!--",
-						children=list(rk.XML.convert(sources="!edit!", mode=c(equals="!edit!"), id.name="!edit!"))),
-					new("XiMpLe.node",
-						name="!--",
-						children=list(rk.XML.connect(governor="!edit!", client="!edit!")))
+					# add these as comments because they need editing
+					XMLNode("!--", rk.XML.convert(sources="!edit!", mode=c(equals="!edit!"), id.name="!edit!")),
+					XMLNode("!--", rk.XML.connect(governor="!edit!", client="!edit!"))
 				)
-			all.children[[length(all.children)+1]] <- new("XiMpLe.node",
-				name="logic",
-				children=lgc.children
-			)
+			all.children[[length(all.children)+1]] <- XMLNode("logic", .children=lgc.children)
 		} else {}
 	} else {
 		# check if this is *really* a logic section, otherwise quit and go dancing
 		if(inherits(logic, "XiMpLe.node")){
-			logic.node.name <- logic@name
+			logic.node.name <- slot(logic, "name")
 		} else {
 			logic.node.name <- "yougottabekiddingme"
 		}
@@ -127,7 +120,7 @@ rk.XML.plugin <- function(name, dialog=NULL, wizard=NULL, logic=NULL, snippets=N
 	} else {
 		# check if this is *really* a dialog section
 		if(inherits(dialog, "XiMpLe.node")){
-			dialog.node.name <- dialog@name
+			dialog.node.name <- slot(dialog, "name")
 		} else {
 			dialog.node.name <- "yougottabekiddingme"
 		}
@@ -147,7 +140,7 @@ rk.XML.plugin <- function(name, dialog=NULL, wizard=NULL, logic=NULL, snippets=N
 	} else {
 		# check if this is *really* a wizard section
 		if(inherits(wizard, "XiMpLe.node")){
-			wizard.node.name <- wizard@name
+			wizard.node.name <- slot(wizard, "name")
 		} else {
 			wizard.node.name <- "yougottabekiddingme"
 		}
@@ -157,15 +150,12 @@ rk.XML.plugin <- function(name, dialog=NULL, wizard=NULL, logic=NULL, snippets=N
 		all.children[[length(all.children)+1]] <- wizard
 	}
 
-	top.doc <- new("XiMpLe.node",
-		name="document",
-		children=child.list(all.children)
-	)
+	top.doc <- XMLNode("document", .children=child.list(all.children))
 
-	plugin <- new("XiMpLe.doc",
+	plugin <- XMLTree(
 			dtd=list(doctype="rkplugin"),
-			children=child.list(top.doc)
-	)
+			.children=child.list(top.doc)
+		)
 
 	return(plugin)
 }

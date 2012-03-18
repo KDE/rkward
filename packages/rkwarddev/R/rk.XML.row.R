@@ -25,11 +25,10 @@ rk.XML.row <- function(..., id.name="auto"){
 		attr.list <- list(id=id.name)
 	}
 
-	row <- new("XiMpLe.node",
-		name="row",
-		attributes=attr.list,
-		children=child.list(nodes),
-		value="")
+	row <- XMLNode("row",
+			attrs=attr.list,
+			.children=child.list(nodes, empty=FALSE)
+		)
 
 	return(row)
 }

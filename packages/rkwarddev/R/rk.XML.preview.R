@@ -15,10 +15,7 @@ rk.XML.preview <- function(label="Preview"){
 		attr.list <- list()
 	}
 
-	node <- new("XiMpLe.node",
-			name="preview",
-			attributes=attr.list
-		)
+	node <- XMLNode("preview", attrs=attr.list)
 
 	return(node)
 }

@@ -47,11 +47,10 @@ rk.XML.tabbook <- function(label=NULL, tabs=list(), id.name="auto"){
 			} else {
 				child <- list()
 			}
-			new("XiMpLe.node",
-				name="tab",
-				attributes=attr.list,
-				children=child.list(child),
-				value="")
+			return(XMLNode("tab",
+					attrs=attr.list,
+					.children=child.list(child, empty=FALSE))
+				)
 		})
 
 
@@ -73,10 +72,9 @@ rk.XML.tabbook <- function(label=NULL, tabs=list(), id.name="auto"){
 		tbk.attr.list[["label"]] <- label
 	} else {}
 
-	tabbook <- new("XiMpLe.node",
-			name="tabbook",
-			attributes=tbk.attr.list,
-			children=child.list(tabs)
+	tabbook <- XMLNode("tabbook",
+			attrs=tbk.attr.list,
+			.children=child.list(tabs, empty=FALSE)
 		)
 
 	return(tabbook)

@@ -42,10 +42,7 @@ rk.XML.set <- function(id, set=NULL, to, check.modifiers=TRUE){
 		attr.list[["to"]] <- as.character(to)
 	}
 
-	node <- new("XiMpLe.node",
-			name="set",
-			attributes=attr.list
-		)
+	node <- XMLNode("set", attrs=attr.list)
 
 	return(node)
 }

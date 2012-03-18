@@ -24,7 +24,7 @@ rk.XML.hierarchy <- function(...){
 
 	# check the node names and allow only valid ones
 	node.names <- sapply(child.list(nodes), function(this.node){
-			this.node@name
+			slot(this.node, "name")
 		})
 
 	invalid.sets <- !node.names %in% c("menu", "!--")
@@ -33,11 +33,7 @@ rk.XML.hierarchy <- function(...){
 			paste(node.names[invalid.sets], collapse=", "), sep="")))
 	} else {}
 
-	node <- new("XiMpLe.node",
-			name="hierarchy",
-			children=child.list(nodes),
-			value=""
-		)
+	node <- XMLNode("hierarchy", .children=child.list(nodes, empty=FALSE))
 
 	return(node)
 }

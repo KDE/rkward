@@ -33,9 +33,7 @@ rk.XML.input <- function(label, initial=NULL, size="medium", required=FALSE, id.
 		attr.list[["required"]] <- "true"
 	} else {}
 
-	node <- new("XiMpLe.node",
-			name="input",
-			attributes=attr.list)
+	node <- XMLNode("input", attrs=attr.list)
 
 	return(node)
 }

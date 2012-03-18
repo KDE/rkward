@@ -35,20 +35,16 @@ rk.XML.logic <- function(...){
 
 	# transform "!--" comment nodes into "![CDATA[" for scripting logic
 	nodes <- sapply(child.list(nodes), function(this.node){
-			if(identical(this.node@name, "!--")){
-				this.node@name <- "![CDATA["
-				this.node <- new("XiMpLe.node",
-						name="script",
-						children=child.list(this.node),
-						value=""
-					)
+			if(identical(slot(this.node, "name"), "!--")){
+				slot(this.node, "name") <- "![CDATA["
+				this.node <- XMLNode("script", .children=child.list(this.node, empty=FALSE))
 			} else {}
 			return(this.node)
 		})
 
 	# check the node names and allow only valid ones
 	node.names <- sapply(child.list(nodes), function(this.node){
-			this.node@name
+			slot(this.node, "name")
 		})
 
 	invalid.sets <- !node.names %in% c("connect", "convert","include","insert","external","set","script")
@@ -56,11 +52,7 @@ rk.XML.logic <- function(...){
 		stop(simpleError(paste("Invalid XML nodes for logic section: ", paste(node.names[invalid.sets], collapse=", "), sep="")))
 	} else {}
 
-	node <- new("XiMpLe.node",
-			name="logic",
-			children=child.list(nodes),
-			value=""
-		)
+	node <- XMLNode("logic", .children=child.list(nodes, empty=FALSE))
 
 	return(node)
 }

@@ -26,7 +26,7 @@ rk.XML.wizard <- function(..., label=NULL){
 
 	# check the node names and allow only valid ones
 	node.names <- sapply(child.list(nodes), function(this.node){
-			this.node@name
+			slot(this.node, "name")
 		})
 
 	invalid.sets <- !node.names %in% c("browser", "checkbox", "column", "copy",
@@ -43,11 +43,9 @@ rk.XML.wizard <- function(..., label=NULL){
 		attr.list <- list()
 	}
 
-	node <- new("XiMpLe.node",
-			name="wizard",
-			attributes=attr.list,
-			children=child.list(nodes),
-			value=""
+	node <- XMLNode("wizard",
+			attrs=attr.list,
+			.children=child.list(nodes, empty=FALSE)
 		)
 
 	return(node)

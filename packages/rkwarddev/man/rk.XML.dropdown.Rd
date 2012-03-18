@@ -3,7 +3,7 @@
 \title{Create XML node "dropdown" for RKWard plugins}
 \usage{
   rk.XML.dropdown(label,
-    options = list(label = c(val = NULL, chk = FALSE)),
+    options = list(label = c(val = "", chk = FALSE)),
     id.name = "auto")
 }
 \arguments{

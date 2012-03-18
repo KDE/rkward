@@ -15,7 +15,7 @@
 
 #<stretch />
 rk.XML.stretch <- function(before=NULL, after=NULL){
-	strch <- new("XiMpLe.node", name="stretch")
+	strch <- XMLNode("stretch")
 
 	# if called without furter objects, just return the node
 	if(is.null(c(before, after))){

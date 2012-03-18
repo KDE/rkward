@@ -21,9 +21,7 @@ rk.XML.external <- function(id, default=NULL){
 		attr.list[["default"]] <- as.character(default)
 	} else {}
 
-	node <- new("XiMpLe.node",
-			name="external",
-			attributes=attr.list)
+	node <- XMLNode("external", attrs=attr.list)
 
 	return(node)
 }

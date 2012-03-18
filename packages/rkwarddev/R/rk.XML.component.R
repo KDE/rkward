@@ -36,10 +36,7 @@ rk.XML.component <- function(label, file, id.name="auto", type="standard"){
 		attr.list[["file"]] <- file
 	} else {}
 
-	node <- new("XiMpLe.node",
-			name="component",
-			attributes=attr.list
-		)
+	node <- XMLNode("component", attrs=attr.list)
 
 	return(node)
 }

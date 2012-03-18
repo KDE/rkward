@@ -44,9 +44,7 @@ rk.XML.browser <- function(label, type="file", initial=NULL, urls=FALSE, filter=
 		attr.list[["required"]] <- "false"
 	} else {}
 
-	node <- new("XiMpLe.node",
-			name="browser",
-			attributes=attr.list)
+	node <- XMLNode("browser", attrs=attr.list)
 
 	return(node)
 }

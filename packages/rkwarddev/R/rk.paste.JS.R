@@ -52,7 +52,7 @@ rk.paste.JS <- function(..., level=2, indent.by="\t", funct=NULL, array=NULL,
 			result <- paste.JS.var(this.object, level=level, indent.by=indent.by, JS.prefix=var.prefix,
 				modifiers=modifiers, default=default, join=join)
 		} else if(inherits(this.object, "XiMpLe.node")){
-			if(identical(this.object@name, "!--")){
+			if(identical(slot(this.object, "name"), "!--")){
 				result <- paste(indent(level, by=indent.by),
 					"// ",
 					gsub("\n", paste("\n", indent(level, by=indent.by), "//", sep=""), this.object@value), sep="")

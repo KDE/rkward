@@ -15,10 +15,7 @@ rk.XML.require <- function(file){
 		stop(simpleError("'file' must be a character string!"))
 	} else {}
 
-	node <- new("XiMpLe.node",
-			name="require",
-			attributes=list(file=file)
-		)
+	node <- XMLNode("require", attrs=list(file=file))
 
 	return(node)
 }
