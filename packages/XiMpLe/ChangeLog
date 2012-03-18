@@ -1,6 +1,6 @@
 ChangeLog for package XiMpLe
 
-changes in version 0.03-12 (2012-03-17)
+changes in version 0.03-12 (2012-03-18)
   - node() now also works with single XiMpLe.node objects (not only full trees)
   - added pasteXML methods to paste objects of classes XiMpLe.node and XiMpLe.doc in a more
     general manner. the former functions pasteXMLNode() and pasteXMLTree() are replaced by mere

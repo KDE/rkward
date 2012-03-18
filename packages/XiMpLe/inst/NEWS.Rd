@@ -1,7 +1,7 @@
 \name{NEWS}
 \title{News for Package 'XiMpLe'}
 \encoding{UTF-8}
-\section{Changes in XiMpLe version 0.03-12 (2012-03-17)}{
+\section{Changes in XiMpLe version 0.03-12 (2012-03-18)}{
   \itemize{
     \item \code{node()} now also works with single XiMpLe.node objects (not only full trees)
     \item added pasteXML methods to paste objects of classes XiMpLe.node and XiMpLe.doc in a more

@@ -4,7 +4,7 @@
 #' Package: \tab XiMpLe\cr
 #' Type: \tab Package\cr
 #' Version: \tab 0.03-12\cr
-#' Date: \tab 2012-03-17\cr
+#' Date: \tab 2012-03-18\cr
 #' Depends: \tab R (>= 2.9.0),methods\cr
 #' Enhances: \tab rkward\cr
 #' Encoding: \tab UTF-8\cr
