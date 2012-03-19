@@ -47,6 +47,7 @@
 	writeLines (lines, file)
 }
 
+#' @rdname rk.workplace
 #' @export
 "rk.restore.workplace" <- function (file=NULL, close.windows=TRUE) {
 	if (is.null (file)) {

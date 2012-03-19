@@ -31,7 +31,7 @@
 #'   the label" while the others return a character vector.
 #' @author Thomas Friedrichsmeier \email{rkward-devel@@lists.sourceforge.net}
 #' @keywords utilities
-#' @rdname rk.get.label
+#' @rdname rk.label
 #' @examples
 #' 
 #' x <- data.frame(a=c(1:3), b=c(2:4))
@@ -55,6 +55,7 @@
 }
 
 # set rkward label
+#' @rdname rk.label
 #' @export
 "rk.set.label" <- function (x, label, envir=parent.frame()) {
 	if (is.call (x) || is.name (x)) {
@@ -67,6 +68,7 @@
 }
 
 # get a short name for the given object
+#' @rdname rk.label
 #' @export
 "rk.get.short.name" <- function (x) {
 	if (is.call (x) || is.name (x)) {
@@ -90,6 +92,7 @@
 }
 
 # get descriptive strings for each of the arguments in ...
+#' @rdname rk.label
 #' @export
 "rk.get.description" <- function (..., paste.sep=NULL, is.substitute=FALSE) {
 	args <- list(...)
@@ -125,6 +128,7 @@
 }
 
 # Drop-in replacement for list(). Returns a list of the given arguments, but with names set according to rk.get.description
+#' @rdname rk.label
 #' @export
 "rk.list" <- function (...) {
 	ret <- list (...)
@@ -133,6 +137,7 @@
 }
 
 # this is basically copied from R-base table (). Returns the arguments passed to ... as a character vector
+#' @rdname rk.label
 #' @export
 "rk.list.names" <- function(..., deparse.level=2) {
 	l <- as.list(substitute(list(...)))[-1]

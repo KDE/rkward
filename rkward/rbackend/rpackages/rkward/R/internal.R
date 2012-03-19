@@ -1,9 +1,11 @@
 # check the context in which this package is loaded
+#' @export
 .onAttach <- function(...) {
 	.rk.inside.rkward.session(warn = TRUE)
 }
 
 # this function shall test if the rkward package was loaded in a running RKWard session
+#' @export
 .rk.inside.rkward.session <- function(warn = FALSE){
 	inside.rkward <- is.loaded("rk.do.generic.request")
 	if(isTRUE(warn) & !isTRUE(inside.rkward)){
@@ -13,15 +15,18 @@
 	return(inside.rkward)
 }
 
+#' @export
 ".rk.get.meta" <- function (x) {
 	y <- attr (x, ".rk.meta");
 	c (names (y), as.character (y))
 }
 
+#' @export
 ".rk.set.meta" <- function (x, m) {
 	eval (substitute (attr (x, ".rk.meta") <<- m))
 }
 
+#' @export
 ".rk.set.invalid.field" <- function (x, row, value) {
 	l <- attr (x, ".rk.invalid.fields");
 	if (is.null (l)) l <- list ();
@@ -30,6 +35,7 @@
 	eval (substitute (attr (x, ".rk.invalid.fields") <<- l))
 }
 
+#' @export
 ".rk.data.frame.insert.row" <- function (x, index=0) {
 	if ((index == 0) || (index > dim (x)[1])) {	# insert row at end
 		eval (substitute (x[dim(x)[1]+1,] <<- c (NA)))
@@ -43,6 +49,7 @@
 }
 
 # TODO: is there a nice way to get rid of a row without removing the meta-data?
+#' @export
 ".rk.data.frame.delete.row" <- function (x, index) {
 	attriblist <- list ()
 	for (i in 1:dim (x)[2]) {
@@ -57,6 +64,7 @@
 }
 
 # function below is only needed to ensure a nice ordering of the columns. Simply adding a new column would be much easier than this.
+#' @export
 ".rk.data.frame.insert.column" <- function (x, label, index=0) {
 	column <- rep (as.numeric (NA), times=dim (x)[1])
 	if ((index == 0) || (index > dim (x)[2])) {	# insert column at end
@@ -71,6 +79,7 @@
 	}
 }
 
+#' @export
 ".rk.do.error" <- function () {
 # comment in R sources says, it may not be good to query options during error handling. But what can we do, if R_ShowErrorMessages is not longer exported?
 	if (getOption ("show.error.messages")) {
@@ -78,18 +87,22 @@
 	}
 }
 
+#' @export
 ".rk.set.reply" <- function (x) .rk.variables$.rk.rkreply <- x
 
+#' @export
 ".rk.do.call" <- function (x, args=NULL) {
 	.rk.set.reply (NULL)
 	.Call ("rk.do.command", c (x, args));
 	return (.rk.variables$.rk.rkreply)
 }
 
+#' @export
 ".rk.do.plain.call" <- function (x, args=NULL, synchronous=TRUE) {
 	.Call ("rk.do.generic.request", c (x, args), isTRUE (synchronous))
 }
 
+#' @export
 ".rk.find.package.pluginmaps" <- function (package, all.maps=FALSE) {
 	if(isTRUE(all.maps)){
 		# look for all pluginmaps in the rkward folder
@@ -107,6 +120,7 @@
 
 # Gather status information on installed and available packages.
 # Return value is used in class RKRPackageInstallationStatus of the frontend
+#' @export
 ".rk.get.package.intallation.state" <- function () {
 	# fetch all status information
 	available <- .rk.cached.available.packages ()
@@ -133,6 +147,7 @@
 
 # package information formats may - according to the help - be subject to change. Hence this function to cope with "missing" values
 # also it concatenates everything to a single vector, so we can easily get the whole structure with a single call
+#' @export
 ".rk.get.installed.packages" <- function () {
 	x <- as.data.frame(installed.packages(fields="Title"))
 	# does a package enhance RKWard, i.e. provide plugins?
@@ -149,6 +164,7 @@
 }
 
 # This function works like available.packages (with no arguments), but does simple caching of the result, and of course uses a cache if available. Cache is only used, if it is less than 1 hour old, and options("repos") is unchanged.
+#' @export
 ".rk.cached.available.packages" <- function () {
 	x <- NULL
 	if (exists ("available.packages.cache", envir=.rk.variables) && (!is.null (.rk.variables$available.packages.cache))) {
@@ -173,8 +189,10 @@
 #}
 
 # these functions can be used to track assignments to R objects. The main interfaces are .rk.watch.symbol (k) and .rk.unwatch.symbol (k). This works by copying the symbol to a backup environment, removing it, and replacing it by an active binding to the backup location
+#' @export
 ".rk.watched.symbols" <- new.env ()
 
+#' @export
 ".rk.make.watch.f" <- function (k) {
 	# we need to make sure, the functions we use are *not* looked up as symbols in .GlobalEnv.
 	# else, for instance, if the user names a symbol "missing", and we try to resolve it in the
@@ -200,6 +218,7 @@
 	}
 }
 
+#' @export
 ".rk.watch.symbol" <- function (k) {
 	f <- .rk.make.watch.f (k)
 	.Call ("rk.copy.no.eval", k, globalenv(), .rk.watched.symbols);
@@ -212,6 +231,7 @@
 }
 
 # not needed by rkward but provided for completeness
+#' @export
 ".rk.unwatch.symbol" <- function (k) {
 	rm (list=k, envir=globalenv ())
 
@@ -222,6 +242,7 @@
 	invisible (TRUE)
 }
 
+#' @export
 ".rk.watch.globalenv" <- function () {
 	newlist <- ls (globalenv (), all.names=TRUE)
 	oldlist <- ls (.rk.watched.symbols, all.names=TRUE)
@@ -238,6 +259,7 @@
 	}
 }
 
+#' @export
 ".rk.get.vector.data" <- function (x) {
 	ret <- list ();
 	ret$data <- as.vector (unclass (x));
@@ -251,6 +273,7 @@
 
 # Change storage type of x to mode newmode.
 # Most attributes will be kept, but the data is erased!
+#' @export
 ".rk.set.vector.mode" <- function (x, fun, envir=parent.frame ()) {
 	old_attr <- attributes (x)
 	old_attr$class <- NULL
@@ -268,18 +291,22 @@
 	eval (substitute (x <- y), envir=envir)
 }
 
+#' @export
 ".rk.get.structure" <- function (x, name, envlevel=0, namespacename=NULL) {
 	.Call ("rk.get.structure", x, as.character (name), as.integer (envlevel), namespacename)
 }
 
+#' @export
 ".rk.try.get.namespace" <- function (name) {
 	tryCatch (asNamespace (name), error = function(e) NULL)
 }
 
+#' @export
 ".rk.get.structure.global" <- function (name, envlevel=0, namespacename=NULL) {
 	.Call ("rk.get.structure.global", as.character (name), as.integer (envlevel), namespacename)
 }
 
+#' @export
 ".rk.get.slots" <- function (x) {
 	slotnames <- methods::slotNames (class (x))
 	ret <- lapply (slotnames, function (slotname) slot (x, slotname))
@@ -287,6 +314,7 @@
 	ret
 }
 
+#' @export
 ".rk.get.environment.children" <- function (x, envlevel=0, namespacename=NULL) {
 	ret <- list ()
 
@@ -311,14 +339,17 @@
 }
 
 # hidden, as this is not portable to different output formats
+#' @export
 ".rk.cat.output" <- function (x) {
 	cat (x, file = rk.get.output.html.file(), append = TRUE)
 }
 
+#' @export
 ".rk.rerun.plugin.link" <- function (plugin, settings, label) {
 	.rk.cat.output (paste ("<a href=\"rkward://runplugin/", plugin, "/", URLencode (settings), "\">", label, "</a>", sep=""))
 }
 
+#' @export
 ".rk.make.hr" <- function () {
 	.rk.cat.output ("<hr>\n");
 }
@@ -331,10 +362,12 @@ assign(".rk.output.html.file", NULL, envir=.rk.variables)
 assign(".rk.rkreply", NULL, envir=.rk.variables)
 assign("available.packages.cache", NULL, envir=.rk.variables)
 
+#' @export
 ".rk.backups" <- new.env ()
 
 # where masking is not enough, we need to assign in the original environment / namespace. This can only be done after package loading,
 # so we have a separate function for that.
+#' @export
 ".rk.fix.assignments" <- function () {
 	## History manipulation function (overloads for functions by the same name in package utils)
 	rk.replace.function ("loadhistory",  as.environment ("package:utils"),

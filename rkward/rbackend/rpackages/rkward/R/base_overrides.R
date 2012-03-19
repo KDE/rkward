@@ -70,4 +70,3 @@
 	invisible (ret)
 }
 formals (setwd) <- formals (base::setwd)
-
