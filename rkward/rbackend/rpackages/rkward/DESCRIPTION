@@ -1,7 +1,42 @@
 Package: rkward
+Type: Package
 Title: Provides functions related to the RKWard GUI
-Version: 0.5.8
-Author: Thomas Friedrichsmeier and the RKWard Team
-Description: This package contains functions which are useful in combination with the RKWard GUI. Many of these functions only needed for the internal communication between RKWard and R, but some are also useful in user scripts.
+Author: Thomas Friedrichsmeier <thomas.friedrichsmeier@ruhr-uni-bochum.de>,
+    with contributions from the RKWard Team
 Maintainer: RKWard-devel mailing list <rkward-devel@lists.sourceforge.net>
-License: GNU GPL version 2 or newer
+Depends:
+    R (>= 2.9.0),methods
+Description: This package contains functions which are useful in combination
+    with the RKWard GUI. Many of these functions only needed for the internal
+    communication between RKWard and R, but some are also useful in user
+    scripts.
+License: GPL (>= 2)
+Encoding: UTF-8
+LazyLoad: yes
+URL: http://rkward.sourceforge.net
+Authors@R: c(person(given="Thomas", family="Friedrichsmeier",
+    email="thomas.friedrichsmeier@ruhr-uni-bochum.de", role=c("aut")),
+    person(given="RKWard-devel", family="mailing list",
+    email="rkward-devel@lists.sourceforge.net", role=c("cre")))
+Version: 0.5.8
+Date: 2012-03-19
+Collate:
+    'base_overrides.R'
+    'internal_debugger.R'
+    'internal.R'
+    'internal_graphics.R'
+    'internal_help.R'
+    'public_graphics.R'
+    'rk.demo.R'
+    'rk.edit-functions.R'
+    'rk.filename-functions.R'
+    'rk.KDE_GUI-functions.R'
+    'rk.label-functions.R'
+    'rk.plugin-functions.R'
+    'rk.print-functions.R'
+    'rk.replace.function.R'
+    'rk.sessionInfo.R'
+    'rk.sync-functions.R'
+    'rk.utility-functions.R'
+    'rkward-package.R'
+    'rk.workspace-functions.R'
