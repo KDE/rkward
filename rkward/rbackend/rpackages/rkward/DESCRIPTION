@@ -40,3 +40,4 @@ Collate:
     'rk.utility-functions.R'
     'rkward-package.R'
     'rk.workspace-functions.R'
+    'ver.R'
