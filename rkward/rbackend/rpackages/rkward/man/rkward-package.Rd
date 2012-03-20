@@ -9,7 +9,7 @@
 \details{
   \tabular{ll}{ Package: \tab rkward\cr Type: \tab
   Package\cr Version: \tab 0.5.8\cr Date: \tab
-  2012-03-19\cr Depends: \tab R (>= 2.9.0),methods\cr
+  2012-03-20\cr Depends: \tab R (>= 2.9.0),methods\cr
   Encoding: \tab UTF-8\cr License: \tab GPL (>= 2)\cr
   LazyLoad: \tab yes\cr URL: \tab
   http://rkward.sourceforge.net\cr }
