@@ -3,4 +3,4 @@ ADD_CUSTOM_TARGET (plugintests
 	WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
 # This will hopefully run *after* everything is installed
-INSTALL(CODE "MESSAGE(STATUS \"\n--------------------\nInstallation appears to be complete (unfortunately it is hard to tell in CMake).\nConsider running\n    make plugintests\nfor some automated functionality tests.\nIn case of errors, consult the file 'INSTALL'.\n--------------------\")")
+INSTALL(CODE "MESSAGE(STATUS \"\n--------------------\nInstallation appears to be complete (unfortunately it is hard to tell in CMake).\nIn case of errors, please make sure to consult the file 'INSTALL'.\n--------------------\")")

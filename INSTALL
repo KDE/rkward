@@ -19,9 +19,6 @@ The recommended way to build from source is:
 > make
 > sudo make install
 
-Then, optionally:
-> make plugintests	# see section "Automated tests" below
-
 
 CMake options (configuring)
 ===================
@@ -60,19 +57,19 @@ As root run:
 Make sure you have set the correct path in cmake (the -DCMAKE_INSTALL_PREFIX option).
 
 
-Automated tests
-==================
-
-While not required, you are encouraged to run 'make plugintests' *after* completing the installation. This will run a series of automated diagnostics, covering various functionality.
-
-If all or most tests fail, this will typically indicate a problem in your installation. In this case, please make sure, you have followed all above instructions diligently.
-
-If individual tests fails, this may indicate a problem in RKWard. Please report such failures to rkward-devel AT lists DOT sourceforge DOT net, including details on your installed versions of KDE, R, and RKWard.
-
-
 Running
 ==================
 
 For now it's recommended to run RKWard from the command-line for debug-output. For the few available command-line options see
 
 > rkward --help
+
+If an error occurs directly after starting, this will typically indicate a problem in your installation. In this case, please make sure, you have followed all above instructions diligently.
+
+
+Automated tests
+==================
+
+A series of automated functionality tests can be run unsing 'make plugintests' *after* completing the installation. Unfortunately, these tests are rather prone to false alarms, and thus end users are not currently encouraged to run the tests. However, esp. developers, and packagers patching the sources should run 'make plugintests' after doing their changes. For failed tests, please take some time trying to understand, exactly how the test failed. Often it's just a harmless difference in rounding or formatting of output.
+
+If you see a genuine test failure, unrelated to your patches, please report this to rkward-devel AT lists DOT sourceforge DOT net, including details on your installed versions of KDE, R, and RKWard.
