@@ -80,7 +80,7 @@ protected:
 	// why do I need this to make it compile?!
 	friend class RObjectList;
 	friend class RObject;
-	virtual void renameChild (RObject *object, const QString &new_name);
+	void renameChild (RObject *object, const QString &new_name);
 	void removeChild (RObject *object, bool removed_in_workspace);
 	virtual QString removeChildCommand (RObject *object) const;
 	virtual QString renameChildCommand (RObject *object, const QString &new_name) const;

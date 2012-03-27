@@ -318,6 +318,10 @@ void RContainerObject::renameChild (RObject *object, const QString &new_name) {
 	RK_TRACE (OBJECTS);
 
 	RK_ASSERT (findChildByName (object->getShortName ()) == object);
+	if (isType (Environment) && (!isType (GlobalEnv))) {
+		RK_ASSERT (false);
+		return;
+	}
 
 	RCommand *command = new RCommand (renameChildCommand (object, new_name), RCommand::App | RCommand::Sync);
 	RKGlobals::rInterface ()->issueCommand (command, 0);

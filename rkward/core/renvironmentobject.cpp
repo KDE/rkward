@@ -200,16 +200,6 @@ void REnvironmentObject::updateNamespace (RData* new_data) {
 	}
 }
 
-void REnvironmentObject::renameChild (RObject *object, const QString &new_name) {
-	RK_TRACE (OBJECTS);
-
-	if (type & GlobalEnv) {
-		RContainerObject::renameChild (object, new_name);
-	} else {
-		RK_ASSERT (false);
-	}
-}
-
 QString REnvironmentObject::renameChildCommand (RObject *object, const QString &new_name) const {
 	RK_TRACE (OBJECTS);
 
