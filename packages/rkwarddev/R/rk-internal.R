@@ -55,11 +55,14 @@ indent <- function(level, by="\t"){
 
 ## function checkCreateFiles()
 # used by rk.plugin.skeleton()
-checkCreateFiles <- function(file.name, ow){
+checkCreateFiles <- function(file.name, ow, action=NULL){
 	if(all(file.exists(file.name), as.logical(ow)) | !file.exists(file.name)){
 		return(TRUE)
 	} else {
-		warning(paste("Skipping existing file ", file.name, ".", sep=""))
+		if(!is.null(action)){
+			action <- paste(action, ": ", sep="")
+		} else {}
+		warning(paste(action, "Skipping existing file ", file.name, ".", sep=""), call.=FALSE)
 		return(FALSE)
 	}
 } ## end function checkCreateFiles()

@@ -50,6 +50,7 @@
 #'			\item{\code{"js"}}{Create the plugin \code{.js} JavaScript file skeleton.}
 #'			\item{\code{"rkh"}}{Create the plugin \code{.rkh} help file skeleton.}
 #'			\item{\code{"desc"}}{Create the \code{DESCRIPTION} file.}
+#'			\item{\code{"clog"}}{Create the \code{ChangeLog} file (only if none exists).}
 #'		}
 #'		Default is to create all of these files. Existing files will only be overwritten if \code{overwrite=TRUE}.
 #' @param suggest.required Logical, if \code{TRUE} R package dependencies in \code{about} will be added to the \code{Suggests:}
@@ -131,7 +132,7 @@ rk.plugin.skeleton <- function(about, path=tempdir(),
 	scan=c("var", "saveobj", "settings"),
 	xml=list(), js=list(), pluginmap=list(), rkh=list(),
 	overwrite=FALSE, tests=TRUE, lazyLoad=TRUE,
-	create=c("pmap", "xml", "js", "rkh", "desc"), suggest.required=TRUE,
+	create=c("pmap", "xml", "js", "rkh", "desc", "clog"), suggest.required=TRUE,
 	components=list(), edit=FALSE, load=FALSE, show=FALSE, gen.info=TRUE, indent.by="\t"){
 
 	if(inherits(about, "XiMpLe.node")){
@@ -147,8 +148,8 @@ rk.plugin.skeleton <- function(about, path=tempdir(),
 	} else if(is.character(about) & length(about) == 1) {
 		name <- about
 		about.node <- NULL
-		# also stop creation of DESCRIPTION file
-		create <- create[!create %in% "desc"]
+		# also stop creation of DESCRIPTION and ChangeLog files
+		create <- create[!create %in% c("desc", "clog")]
 	} else {
 		stop(simpleError("'about' must be a character string or XiMpLe.node, see ?rk.XML.about()!"))
 	}
@@ -162,6 +163,7 @@ rk.plugin.skeleton <- function(about, path=tempdir(),
 	R.dir <- file.path(main.dir, "R")
 	description.file <- file.path(main.dir, "DESCRIPTION")
 	namespace.file <- file.path(main.dir, "NAMESPACE")
+	changelog.file <- file.path(main.dir, "ChangeLog")
 	rkward.dir <- file.path(main.dir, "inst", "rkward")
 	plugin.dir <- file.path(rkward.dir, "plugins")
 	# the basic file names
@@ -240,7 +242,7 @@ rk.plugin.skeleton <- function(about, path=tempdir(),
 
 			## create plugin.xml
 			if("xml" %in% create){
-				if(isTRUE(checkCreateFiles(plugin.xml, ow=overwrite))){
+				if(isTRUE(checkCreateFiles(plugin.xml, ow=overwrite, action="xml"))){
 					cat(pasteXML(XML.plugin, shine=1, indent.by=indent.by), file=plugin.xml)
 				} else {}
 				if(isTRUE(edit)){
@@ -250,7 +252,7 @@ rk.plugin.skeleton <- function(about, path=tempdir(),
 
 			## create plugin.js
 			if("js" %in% create){
-				if(isTRUE(checkCreateFiles(plugin.js, ow=overwrite))){
+				if(isTRUE(checkCreateFiles(plugin.js, ow=overwrite, action="js"))){
 					cat(JS.code, file=plugin.js)
 				} else {}
 				if(isTRUE(edit)){
@@ -260,7 +262,7 @@ rk.plugin.skeleton <- function(about, path=tempdir(),
 
 			## create plugin.rkh
 			if("rkh" %in% create){
-				if(isTRUE(checkCreateFiles(plugin.rkh, ow=overwrite))){
+				if(isTRUE(checkCreateFiles(plugin.rkh, ow=overwrite, action="rkh"))){
 					cat(pasteXML(rkh.doc, shine=1, indent.by=indent.by), file=plugin.rkh)
 				} else {}
 				if(isTRUE(edit)){
@@ -272,7 +274,7 @@ rk.plugin.skeleton <- function(about, path=tempdir(),
 
 	## create plugin.pluginmap
 	if("pmap" %in% create){
-		if(isTRUE(checkCreateFiles(plugin.pluginmap, ow=overwrite))){
+		if(isTRUE(checkCreateFiles(plugin.pluginmap, ow=overwrite, action="pmap"))){
 			if(!"require" %in% got.pm.options) {
 				pluginmap[["require"]] <- eval(formals(rk.XML.pluginmap)[["require"]])
 			} else {}
@@ -320,14 +322,14 @@ rk.plugin.skeleton <- function(about, path=tempdir(),
 	} else {}
 
 	## create testsuite.R
-	if(isTRUE(tests) & isTRUE(checkCreateFiles(testsuite.file, ow=overwrite))){
+	if(isTRUE(tests) & isTRUE(checkCreateFiles(testsuite.file, ow=overwrite, action="tests"))){
 		testsuite.doc <- rk.testsuite.doc(name=name)
 		cat(testsuite.doc, file=testsuite.file)
 	} else {}
 
 	## create DESCRIPTION file
 	if("desc" %in% create){
-		if(isTRUE(checkCreateFiles(description.file, ow=overwrite))){
+		if(isTRUE(checkCreateFiles(description.file, ow=overwrite, action="desc"))){
 			authors <- XML2person(about.node, eval=TRUE)
 			all.authors <- format(get.by.role(authors, role="aut"),
 				include=c("given", "family", "email"), braces=list(email=c("<", ">")))
@@ -377,6 +379,20 @@ rk.plugin.skeleton <- function(about, path=tempdir(),
 		if(!file_test("-f", namespace.file)){
 			cat("", file=namespace.file)
 			message(paste("Created empty file ", namespace.file, " for R 2.14 compatibility.", sep=""))
+		} else {}
+	} else {}
+
+	## create ChangeLog file (if none exists)
+	if("clog" %in% create){
+		if(isTRUE(checkCreateFiles(changelog.file, ow=FALSE, action="clog"))){
+			changelog.text <- paste("ChangeLog for package ", name,
+				"\n\nChanges in version ", slot(about.node, "attributes")[["version"]],
+				" (", slot(about.node, "attributes")[["releasedate"]],")",
+				"\nChanges:\n  - initial package build\nAdded:\n  - added a ChangeLog file\nFixed:\n  - ...\n", sep="")
+			cat(changelog.text, file=changelog.file)
+		} else {}
+		if(isTRUE(edit)){
+			rk.edit.files(changelog.file, title="ChangeLog", prompt=FALSE)
 		} else {}
 	} else {}
 

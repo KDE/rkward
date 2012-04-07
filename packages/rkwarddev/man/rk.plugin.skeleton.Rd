@@ -7,7 +7,7 @@
     scan = c("var", "saveobj", "settings"), xml = list(),
     js = list(), pluginmap = list(), rkh = list(),
     overwrite = FALSE, tests = TRUE, lazyLoad = TRUE,
-    create = c("pmap", "xml", "js", "rkh", "desc"),
+    create = c("pmap", "xml", "js", "rkh", "desc", "clog"),
     suggest.required = TRUE, components = list(),
     edit = FALSE, load = FALSE, show = FALSE,
     gen.info = TRUE, indent.by = "\t")
@@ -114,9 +114,10 @@
   \code{.js} JavaScript file skeleton.}
   \item{\code{"rkh"}}{Create the plugin \code{.rkh} help
   file skeleton.} \item{\code{"desc"}}{Create the
-  \code{DESCRIPTION} file.} } Default is to create all of
-  these files. Existing files will only be overwritten if
-  \code{overwrite=TRUE}.}
+  \code{DESCRIPTION} file.} \item{\code{"clog"}}{Create the
+  \code{ChangeLog} file (only if none exists).} } Default
+  is to create all of these files. Existing files will only
+  be overwritten if \code{overwrite=TRUE}.}
 
   \item{suggest.required}{Logical, if \code{TRUE} R package
   dependencies in \code{about} will be added to the

@@ -1,6 +1,26 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
+\section{Changes in rkwarddev version 0.05-5 (2012-04-07)}{
+  \subsection{added}{
+    \itemize{
+      \item \code{rk.plugin.skeleton()} can now also generate initial ChangeLog files (but won't overwrite existing ones)
+    }
+  }
+  \subsection{changed}{
+    \itemize{
+      \item if files are being skipped by \code{rk.plugin.skeleton()}, the corresponding warning will now include the 'create'
+        actions that these files belong to
+    }
+  }
+}
+\section{Changes in rkwarddev version 0.05-4 (2012-04-06)}{
+  \subsection{fixed}{
+    \itemize{
+      \item \code{rk.XML.frame()} didn't generate attributes due to a typo
+    }
+  }
+}
 \section{Changes in rkwarddev version 0.05-3 (2012-03-18)}{
   \itemize{
     \item fixed: \code{rk.XML.text()} now preserves XML tags in the text value

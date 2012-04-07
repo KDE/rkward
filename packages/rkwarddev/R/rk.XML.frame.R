@@ -46,7 +46,7 @@ rk.XML.frame <- function(..., label=NULL, checkable=FALSE, chk=TRUE, id.name="au
 	} else {}
 
 	frame <- XMLNode("frame",
-			attributes=attr.list,
+			attrs=attr.list,
 			.children=child.list(nodes, empty=FALSE)
 		)
 

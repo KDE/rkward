@@ -1,5 +1,16 @@
 ChangeLog for package rkwarddev
 
+changes in version 0.05-5 (2012-04-07)
+added:
+  - rk.plugin.skeleton() can now also generate initial ChangeLog files (but won't overwrite existing ones)
+changed:
+  - if files are being skipped by rk.plugin.skeleton(), the corresponding warning will now include the 'create'
+    actions that these files belong to
+
+changes in version 0.05-4 (2012-04-06)
+fixed:
+  - rk.XML.frame() didn't generate attributes due to a typo
+
 changes in version 0.05-3 (2012-03-18)
   - fixed: rk.XML.text() now preserves XML tags in the text value
   - internally, functions now call XiMpLe::XMLNode() and XiMpLe::XMLTree() constructors instead of new(),
