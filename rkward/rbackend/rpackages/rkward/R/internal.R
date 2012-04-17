@@ -351,7 +351,7 @@
 
 #' @export
 ".rk.make.hr" <- function () {
-	.rk.cat.output ("<hr>\n");
+	.rk.cat.output ("<hr />\n");
 }
 
 # General purpose storage environment (which will hopefully never get locked by R)

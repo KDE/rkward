@@ -76,52 +76,54 @@
 		.rk.cat.output (paste ("<html><head>\n<title>RKWard Output</title>\n", .rk.do.plain.call ("getCSSlink"), sep=""))
 		# the next part defines a JavaScript function to add individual results to a global table of contents menu in the document
 		.rk.cat.output (paste ("\t<script type=\"text/javascript\">
-		function addToTOC(id, level){
-			var fullHeader = document.getElementById(id);
-			var resultsTOC = document.getElementById('RKWardResultsTOCShown');
-			var headerName = fullHeader.getAttribute('name');
-			var headerText = fullHeader.firstChild.data;
-			var headerTitle = fullHeader.getAttribute('title');
-			var newDiv = document.createElement('div');
-			// create new anchor for TOC
-			var newAnchor = '<a href=\"#' + headerName + '\" title=\"' + headerTitle + '\"';
-			// indent anchor depending on header level
-			if(level > 1){
-				newDiv.style.textIndent = level-1 + 'em';
-				newDiv.className = 'level' + level;
-				newAnchor = '&bull; ' + newAnchor + '>' + headerText + '</a>';
-			} else {
-				newAnchor = newAnchor + '>' + headerText + '</a>';
-			}
-			newDiv.innerHTML = newAnchor;
-			resultsTOC.appendChild(newDiv);
-		}
-		function switchVisible(show, hide) {
-			document.getElementById(show).style.display = 'inline';
-			document.getElementById(hide).style.display = 'none';
-		}
-		function showMLevel(nodes){
-			for(var i=0; i < nodes.length; i++) {
-				nodes[i].style.display = 'block';
-			}
-		}
-		function hideMLevel(nodes){
-			for(var i=0; i < nodes.length; i++) {
-				nodes[i].style.display = 'none';
-			}
-		}
-		function maxLevel(level){
-			if(level > 5){
-				return false;
-			}
-			for(var i=1; i < 6; i++) {
-				if(i <= level){
-					showMLevel(document.getElementsByClassName('level' + i));
+		<!--
+			function addToTOC(id, level){
+				var fullHeader = document.getElementById(id);
+				var resultsTOC = document.getElementById('RKWardResultsTOCShown');
+				var headerName = fullHeader.getAttribute('name');
+				var headerText = fullHeader.firstChild.data;
+				var headerTitle = fullHeader.getAttribute('title');
+				var newDiv = document.createElement('div');
+				// create new anchor for TOC
+				var newAnchor = '<a href=\"#' + headerName + '\" title=\"' + headerTitle + '\"';
+				// indent anchor depending on header level
+				if(level > 1){
+					newDiv.style.textIndent = level-1 + 'em';
+					newDiv.className = 'level' + level;
+					newAnchor = '&bull; ' + newAnchor + '>' + headerText + '</a>';
 				} else {
-					hideMLevel(document.getElementsByClassName('level' + i));
+					newAnchor = newAnchor + '>' + headerText + '</a>';
+				}
+				newDiv.innerHTML = newAnchor;
+				resultsTOC.appendChild(newDiv);
+			}
+			function switchVisible(show, hide) {
+				document.getElementById(show).style.display = 'inline';
+				document.getElementById(hide).style.display = 'none';
+			}
+			function showMLevel(nodes){
+				for(var i=0; i < nodes.length; i++) {
+					nodes[i].style.display = 'block';
 				}
 			}
-		}\n\t</script>\n", sep=""))
+			function hideMLevel(nodes){
+				for(var i=0; i < nodes.length; i++) {
+					nodes[i].style.display = 'none';
+				}
+			}
+			function maxLevel(level){
+				if(level > 5){
+					return false;
+				}
+				for(var i=1; i < 6; i++) {
+					if(i <= level){
+						showMLevel(document.getElementsByClassName('level' + i));
+					} else {
+						hideMLevel(document.getElementsByClassName('level' + i));
+					}
+				}
+			}
+		// -->\n\t</script>\n", sep=""))
 		# positioning of the TOC is done by CSS, default state is hidden
 		# see $SRC/rkward/pages/rkward_output.css
 		.rk.cat.output (paste ("</head>\n<body>\n", sep=""))
