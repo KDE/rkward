@@ -20,11 +20,20 @@
 
 parseXMLTree <- function(file, drop=NULL, object=FALSE){
 	if(isTRUE(object)){
-		xml.raw <- paste(file, collapse=" ")
+		xml.raw <- paste(file, collapse="\n")
 		filePath <- "object"
+	} else if(inherits(file, "connection")){
+		xml.raw <- paste(readLines(file), collapse="\n")
+		# is there a way to get the friggin' "description" out of a connection object?!
+		filePath <- "connection"
 	} else {
-		xml.raw <- paste(readLines(file), collapse=" ")
-		filePath <- normalizePath(file)
+		xml.raw <- paste(readLines(file), collapse="\n")
+		# try to detect if 'file' is like a weblink, not a regular file
+		if(grepl("^[[:alpha:]]+://", file, ignore.case=TRUE)){
+			filePath <- file
+		} else {
+			filePath <- normalizePath(file)
+		}
 	}
 
 	single.tags <- XML.single.tags(xml.raw, drop=drop)

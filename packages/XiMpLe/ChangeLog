@@ -1,10 +1,17 @@
 ChangeLog for package XiMpLe
 
-changes in version 0.03-13 (2012-04-15)
+changes in version 0.03-13 (2012-04-17)
 added:
   - added a LICENSE file
   - debianized the sources
-
+changed:
+  - parseXMLTree() now takes connections as "file" parameter
+  - commented CDATA tags (like they're used in XHTML) can now be detected and pasted
+  - pasteXMLTag() adjusts indentation level of value tags and comments
+fixed:
+  - feeding internet addresses to parseXMLTree() no longer throws an error, skipping normalize.path() then now
+  - parseXMLTree() now preserves newlines in value tags and comments
+  
 changes in version 0.03-12 (2012-03-18)
   - node() now also works with single XiMpLe.node objects (not only full trees)
   - added pasteXML methods to paste objects of classes XiMpLe.node and XiMpLe.doc in a more

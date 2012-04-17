@@ -9,6 +9,8 @@
 # 			\code{\link[XiMpLe:pasteXMLNode]{pasteXMLNode}} will paste its \code{value} as plain text.}
 # 		\item{\code{name="!--"}}{Creates a comment tag, i.e., this will comment out all its \code{children}.}
 # 		\item{\code{name="![CDATA["}}{Creates a CDATA section and places all its \code{children} in it.}
+# 		\item{\code{name="*![CDATA["}}{Creates a CDATA section and places all its \code{children} in it, where the CDATA markers are
+# 			commented out by \code{/* */}, as is used for JavaScript in XHTML.}
 # }
 #
 # @title S4 class XiMpLe.node

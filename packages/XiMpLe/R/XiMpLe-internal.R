@@ -76,16 +76,19 @@ XML.single.tags <- function(tree, drop=NULL){
 
 	## the main splitting process
 	# CDATA or comments can contain stuff which might ruin the outcome. we'll deal with those parts first.
-	tree <- split.chars(txt=tree, pattern="<!\\[CDATA\\[(.*?)\\]\\]>|<!--(.*?)-->", perl=TRUE)
+	tree <- split.chars(txt=tree, pattern="<!\\[CDATA\\[((?s).*?)\\]\\]>|/\\*[[:space:]]*<!\\[CDATA\\[[[:space:]]*\\*/((?s).*?)/\\*[[:space:]]*\\]\\]>[[:space:]]*\\*/|<!--((?s).*?)-->", perl=TRUE)
 	# now do the splitting
-	single.tags <- unlist(sapply(tree, function(this.tree){
+	single.tags <- as.character(unlist(sapply(tree, function(this.tree){
 				# exclude the already cut our comments an CDATA entries
-				if(XML.comment(this.tree) | XML.cdata(this.tree)){
+				if(XML.comment(this.tree) | XML.cdata(this.tree) | XML.commcdata(this.tree)){
 					return(this.tree)
 				} else {
-					return(split.chars(txt=this.tree, "<(.*?)>"))
+					these.tags <- split.chars(txt=this.tree, "<((?s).*?)>", perl=TRUE)
+					# remove probably troublesome content like newlines
+					these.tags[!XML.value(these.tags)] <- gsub("[[:space:]]+", " ", these.tags[!XML.value(these.tags)])
+					return(these.tags)
 				}
-			}))
+			})))
 	colnames(single.tags) <- NULL
 	if("comments" %in% drop){
 		single.tags <- single.tags[!XML.comment(single.tags)]
@@ -103,11 +106,29 @@ XML.single.tags <- function(tree, drop=NULL){
 } ## end function XML.single.tags()
 
 
+## function setMinIndent()
+# takes a string, determines the minimum number of grouped \t strings,
+# and adjusts it globally to the given level
+setMinIndent <- function(tag, level=1, indent.by="\t"){
+	currentMinIndent <- min(nchar(unlist(strsplit(tag, "[^\t]+"))))
+	indentDiff <- currentMinIndent - level
+	# if currentMinIndent is greater than level, reduce indentation
+	if(indentDiff > 0){
+		tag <- gsub(paste("(^|[^\t]+)(\t){", indentDiff, "}", sep=""), "\\1", tag, perl=TRUE)
+	} else if(indentDiff < 0){
+		tag <- gsub("(^|[^\t]+)(\t)", paste("\\1", indent(level + 1, by=indent.by), sep=""), tag, perl=TRUE)
+	} else {}
+
+	return(tag)
+} ## end function setMinIndent()
+
+
 ## function indent()
 # will create tabs to format the output
 indent <- function(level, by="\t"){
 	paste(rep(by, level-1), collapse="")
 } ## end function indent()
+
 
 ## function xml.tidy()
 # replace special character < and > from attributes or text values
@@ -120,6 +141,7 @@ xml.tidy <- function(text){
 	}
 	return(tidy.text)
 } ## function xml.tidy()
+
 
 ## function lookupAttrName()
 # takes the original input element names and returns
@@ -257,9 +279,9 @@ XML.endTag <- function(tag, get=FALSE){
 # checks if a tag is a comment, returns TRUE or FALSE, or the comment (TRUE & get=TRUE)
 XML.comment <- function(tag, get=FALSE, trim=TRUE){
 	comment.tags <- sapply(tag, function(this.tag){
-			comment <- grepl("<!--(.*)-->", this.tag)
+			comment <- grepl("<!--((?s).*)-->", this.tag, perl=TRUE)
 			if(isTRUE(get)){
-				result <- ifelse(isTRUE(comment), gsub("<!--(.*)-->", "\\1", this.tag, perl=TRUE), "")
+				result <- ifelse(isTRUE(comment), gsub("<!--((?s).*)-->", "\\1", this.tag, perl=TRUE), "")
 				if(isTRUE(trim)){result <- trim(result)} else {}
 			} else {
 				result <- comment
@@ -274,9 +296,9 @@ XML.comment <- function(tag, get=FALSE, trim=TRUE){
 # checks if a tag is a CDATA declaration, returns TRUE or FALSE, or the data (TRUE & get=TRUE)
 XML.cdata <- function(tag, get=FALSE, trim=TRUE){
 	cdata.tags <- sapply(tag, function(this.tag){
-			cdata <- grepl("<!\\[CDATA\\[(.*)\\]\\]>", this.tag)
+			cdata <- grepl("<!\\[CDATA\\[((?s).*)\\]\\]>", this.tag, perl=TRUE)
 			if(isTRUE(get)){
-				result <- ifelse(isTRUE(cdata), gsub("<!\\[CDATA\\[(.*)\\]\\]>", "\\1", this.tag, perl=TRUE), "")
+				result <- ifelse(isTRUE(cdata), gsub("<!\\[CDATA\\[((?s).*)\\]\\]>", "\\1", this.tag, perl=TRUE), "")
 				if(isTRUE(trim)){result <- trim(result)} else {}
 			} else {
 				result <- cdata
@@ -286,6 +308,23 @@ XML.cdata <- function(tag, get=FALSE, trim=TRUE){
 	names(cdata.tags) <- NULL
 	return(cdata.tags)
 } ## end function XML.cdata()
+
+## function XML.commcdata()
+# checks if a tag is a /* CDATA */ declaration, returns TRUE or FALSE, or the data (TRUE & get=TRUE)
+XML.commcdata <- function(tag, get=FALSE, trim=TRUE){
+	commcdata.tags <- sapply(tag, function(this.tag){
+			commcdata <- grepl("/\\*[[:space:]]*<!\\[CDATA\\[[[:space:]]*\\*/((?s).*?)/\\*[[:space:]]*\\]\\]>[[:space:]]*\\*/", this.tag, perl=TRUE)
+			if(isTRUE(get)){
+				result <- ifelse(isTRUE(commcdata), gsub("/\\*[[:space:]]*<!\\[CDATA\\[[[:space:]]*\\*/((?s).*?)/\\*[[:space:]]*\\]\\]>[[:space:]]*\\*/", "\\1", this.tag, perl=TRUE), "")
+				if(isTRUE(trim)){result <- trim(result)} else {}
+			} else {
+				result <- commcdata
+			}
+			return(result)
+		})
+	names(commcdata.tags) <- NULL
+	return(commcdata.tags)
+} ## end function XML.commcdata()
 
 ## function XML.value()
 # checks if 'tag' is actually not a tag but value/content/data. returns TRUE or FALSE, or the value (TRUE & get=TRUE)
@@ -393,6 +432,15 @@ XML.nodes <- function(single.tags, end.here=NA, start=1){
 		## uncomment to debug:
 		# cat(this.tag, ": break (",tag.no,")\n")
 			break
+		} else {}
+		# we must test for commented CDATA first, because XML.value() would be TRUE, too
+		if(XML.commcdata(this.tag)){
+			children[nxt.child] <- new("XiMpLe.node",
+				name="*![CDATA[",
+				value=XML.commcdata(this.tag, get=TRUE))
+			names(children)[nxt.child] <- "*![CDATA["
+			tag.no <- tag.no + 1
+			next
 		} else {}
 		if(XML.value(this.tag)){
 			children[nxt.child] <- new("XiMpLe.node",
