@@ -116,7 +116,7 @@
 	# the function addToTOC() will be defined in the document head
 	# see rk.set.output.html.file() in rk.filename-functions.R
 	if (isTRUE(toc) || (is.null(toc) && level <= 4)){
-		cat("<script type=\"text/javascript\">\n\t<!--\n\t\taddToTOC('",header.id,"','",level,"');\n\t>// -->\n</script>\n", sep="")
+		cat("<script type=\"text/javascript\">\n\t<!--\n\t\taddToTOC('",header.id,"','",level,"');\n\t// -->\n</script>\n", sep="")
 	}
 	if (length (parameters)) {
 		# legacy handling: parameter=value used to be passed as parameter, value
