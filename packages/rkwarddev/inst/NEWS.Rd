@@ -1,6 +1,19 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
+\section{Changes in rkwarddev version 0.05-6 (2012-04-17)}{
+  \subsection{added}{
+    \itemize{
+      \item added a LICENSE file to the sources
+      \item sources were initially debianized by roxyPackage
+    }
+  }
+  \subsection{fixed}{
+    \itemize{
+      \item \code{rk.paste.JS()} pastes \code{rk.comment()} objects correctly again
+    }
+  }
+}
 \section{Changes in rkwarddev version 0.05-5 (2012-04-07)}{
   \subsection{added}{
     \itemize{
