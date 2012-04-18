@@ -1,29 +1,23 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
-\section{Changes in rkwarddev version 0.05-6 (2012-04-17)}{
-  \subsection{added}{
-    \itemize{
-      \item added a LICENSE file to the sources
-      \item sources were initially debianized by roxyPackage
-    }
-  }
-  \subsection{fixed}{
-    \itemize{
-      \item \code{rk.paste.JS()} pastes \code{rk.comment()} objects correctly again
-    }
-  }
-}
-\section{Changes in rkwarddev version 0.05-5 (2012-04-07)}{
+\section{Changes in rkwarddev version 0.05-5 (2012-04-18)}{
   \subsection{added}{
     \itemize{
       \item \code{rk.plugin.skeleton()} can now also generate initial ChangeLog files (but won't overwrite existing ones)
+      \item added a LICENSE file to the sources
+      \item sources were initially debianized by roxyPackage
     }
   }
   \subsection{changed}{
     \itemize{
       \item if files are being skipped by \code{rk.plugin.skeleton()}, the corresponding warning will now include the 'create'
         actions that these files belong to
+    }
+  }
+  \subsection{fixed}{
+    \itemize{
+      \item \code{rk.paste.JS()} pastes \code{rk.comment()} objects correctly again
     }
   }
 }

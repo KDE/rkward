@@ -1,18 +1,15 @@
 ChangeLog for package rkwarddev
 
-changes in version 0.05-6 (2012-04-17)
-added:
-  - added a LICENSE file to the sources
-  - sources were initially debianized by roxyPackage
-fixed:
-  - rk.paste.JS() pastes rk.comment() objects correctly again
-
-changes in version 0.05-5 (2012-04-07)
+changes in version 0.05-5 (2012-04-18)
 added:
   - rk.plugin.skeleton() can now also generate initial ChangeLog files (but won't overwrite existing ones)
+  - added a LICENSE file to the sources
+  - sources were initially debianized by roxyPackage
 changed:
   - if files are being skipped by rk.plugin.skeleton(), the corresponding warning will now include the 'create'
     actions that these files belong to
+fixed:
+  - rk.paste.JS() pastes rk.comment() objects correctly again
 
 changes in version 0.05-4 (2012-04-06)
 fixed:
