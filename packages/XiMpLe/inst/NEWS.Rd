@@ -1,7 +1,7 @@
 \name{NEWS}
 \title{News for Package 'XiMpLe'}
 \encoding{UTF-8}
-\section{Changes in XiMpLe version 0.03-13 (2012-04-17)}{
+\section{Changes in XiMpLe version 0.03-13 (2012-04-19)}{
   \subsection{added}{
     \itemize{
       \item added a LICENSE file
