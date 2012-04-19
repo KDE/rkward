@@ -1,6 +1,6 @@
 ChangeLog for package rkwarddev
 
-changes in version 0.05-5 (2012-04-18)
+changes in version 0.05-5 (2012-04-19)
 added:
   - rk.plugin.skeleton() can now also generate initial ChangeLog files (but won't overwrite existing ones)
   - added a LICENSE file to the sources

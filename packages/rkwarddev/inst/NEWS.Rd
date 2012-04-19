@@ -1,7 +1,7 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
-\section{Changes in rkwarddev version 0.05-5 (2012-04-18)}{
+\section{Changes in rkwarddev version 0.05-5 (2012-04-19)}{
   \subsection{added}{
     \itemize{
       \item \code{rk.plugin.skeleton()} can now also generate initial ChangeLog files (but won't overwrite existing ones)
