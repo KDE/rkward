@@ -501,8 +501,9 @@ RKComponent *RKStandardComponentStack::addPage (RKComponent *parent) {
 	RK_TRACE (PLUGIN);
 
 	PageDef *def = new PageDef;
-	def->page = new RKComponent (parent, this);
-	setCurrentIndex (addWidget (def->page));
+	KVBox *wrap = new KVBox (this);
+	def->page = new RKComponent (parent, wrap);
+	setCurrentIndex (addWidget (wrap));
 	pages.append (def);
 
 	return def->page;

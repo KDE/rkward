@@ -1,3 +1,4 @@
+- Fixed: Dynamic pages in a wizard would cause a layout bug on the first page
 - Do not offer to restore individual removed columns of a data.frame opened for editing
 - Fixed: Plot history and graphical menus broken in some cases with R 2.15.0		TODO: backport? (r4182)
 - Fixed: If the rkward package was loaded in a plain R session, q() and quit() still work
