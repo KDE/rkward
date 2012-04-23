@@ -12,6 +12,7 @@
 		<external id="default_sub" default="" />
 		<external id="default_xlab" default="" />
 		<external id="default_ylab" default="" />
+		<external id="default_ticklblrot" default="" />
 
 		<external id="allow_log" default="true" />
 		<external id="allow_type" default="true" />
@@ -65,6 +66,9 @@
 		<connect client="tab_grid.visible" governor="allow_grid"/>
 		<convert id="grid_enable" sources="tab_grid.visible;add_grid.state" mode="and"/>
 		<connect client="grid_options.enabled" governor="grid_enable" />
+
+		<external id="allow_ann" default="true" />
+		<connect client="tab_ann.visible" governor="allow_ann"/>
 	</logic>
 	<dialog label="Default plot options" >
 		<tabbook>
@@ -116,6 +120,19 @@
 					</frame>
 					<stretch/>
 				</column>
+			</tab>
+			<tab id="tab_ann" label="Annotations" >
+				<dropdown id="ticklblrot" label="Tick label orientation" >
+					<option value="" label="default" checked="true" />
+					<option value="0" label="Always parallel to the axis " />
+					<option value="1" label="Always horizontal " />
+					<option value="2" label="Always perpendicular to the axis " />
+					<option value="3" label="Always vertical " />
+				</dropdown>
+						<row>
+							<input id="cexaxis" label="Tick label scale (relative to cex))" />
+						</row>
+				<stretch/>
 			</tab>
 			<tab id="pointtypepage" label="Points / Lines">
 				<dropdown id="pointtype" label="Type of points/lines" >

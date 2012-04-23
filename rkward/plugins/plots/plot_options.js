@@ -39,6 +39,8 @@ function printout () {
 	var type = "";
 	var col = "";
 	var asp = "";
+	var las = "";
+	var cexaxis = "";
 	var options = "";
 
 	xvars = getValue ("xvar").split ("\n");
@@ -102,6 +104,15 @@ function printout () {
 	}
 
 
+	// las : axis tick label orientation
+	las = getValue ("ticklblrot")
+	if (las == "") las = getValue ("default_ticklblrot");
+	if (las != "") las = ", las=" + las;
+
+	// cex.axis : axis tick label scale
+	cexaxis = getValue ("cexaxis")
+	if (cexaxis != "") cexaxis = ", cex.axis=" + cexaxis;
+
 	// final touches
 	if (log != "") log = ", log=\"" + log + "\"";
 
@@ -122,7 +133,7 @@ function printout () {
 	else asp = "";
 
 	// make option string
-	options = type + col + xaxt + yaxt + log + xlim + ylim + xlab + ylab + main + sub + asp;
+	options = type + col + xaxt + yaxt + log + xlim + ylim + xlab + ylab + main + sub + asp + las + cexaxis;
 
 	echo (options);
 }
