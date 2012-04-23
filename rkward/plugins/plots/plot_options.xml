@@ -122,31 +122,35 @@
 				</column>
 			</tab>
 			<tab id="tab_ann" label="Annotations" >
-				<dropdown id="ticklblrot" label="Tick label orientation" >
-					<option value="" label="default" checked="true" />
-					<option value="0" label="Always parallel to the axis " />
-					<option value="1" label="Always horizontal " />
-					<option value="2" label="Always perpendicular to the axis " />
-					<option value="3" label="Always vertical " />
-				</dropdown>
-						<row>
-							<input id="cexaxis" label="Tick label scale (relative to cex))" />
-						</row>
-				<stretch/>
+				<frame><!--- TODO: This frame is a dummy to work around a layout bug! -->
+					<dropdown id="ticklblrot" label="Tick label orientation" >
+						<option value="" label="default" checked="true" />
+						<option value="0" label="Always parallel to the axis " />
+						<option value="1" label="Always horizontal " />
+						<option value="2" label="Always perpendicular to the axis " />
+						<option value="3" label="Always vertical " />
+					</dropdown>
+					<row>
+						<input id="cexaxis" label="Tick label scale (relative to cex))" />
+					</row>
+					<stretch/>
+				</frame>
 			</tab>
 			<tab id="pointtypepage" label="Points / Lines">
-				<dropdown id="pointtype" label="Type of points/lines" >
-					<option value="" label="default" checked="true" />
-					<option value="p" label="Plot individual points " />
-					<option value="l" label="Plot lines " />
-					<option value="b" label="Plot points connected by lines (both)" />
-					<option value="o" label="Plot points overlaid by lines " />
-					<option value="h" label="Plot vertical lines from points to the zero axis (high-density)" />
-					<option value="s" label="Step-function plots: the left edge defines the point" />
-					<option value="S" label="Step-function plots: the right edge defines the point" />
-				</dropdown>
-				<embed id="pointcolor" component="rkward::color_chooser" label="Color" />
-				<stretch/>
+				<frame><!--- TODO: This frame is a dummy to work around a layout bug! -->
+					<dropdown id="pointtype" label="Type of points/lines" >
+						<option value="" label="default" checked="true" />
+						<option value="p" label="Plot individual points " />
+						<option value="l" label="Plot lines " />
+						<option value="b" label="Plot points connected by lines (both)" />
+						<option value="o" label="Plot points overlaid by lines " />
+						<option value="h" label="Plot vertical lines from points to the zero axis (high-density)" />
+						<option value="s" label="Step-function plots: the left edge defines the point" />
+						<option value="S" label="Step-function plots: the right edge defines the point" />
+					</dropdown>
+					<embed id="pointcolor" component="rkward::color_chooser" label="Color" />
+					<stretch/>
+				</frame>
 			</tab>
 			<tab id="aspectratio" label="Aspect ratio y/x">
 				<column>
