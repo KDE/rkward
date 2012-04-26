@@ -43,15 +43,19 @@ pasteXMLTag <- function(tag, attr=NULL, child=NULL, empty=TRUE, level=1, allow.e
 
 	# three special cases: value pseudotags, comments and CDATA
 	if(isTRUE(nchar(tag) == 0) | length(tag) == 0){
+		if(isTRUE(tidy)){
+			child <- trim(child)
+			child <- gsub("\n", new.cmmt, setMinIndent(child, level=level, indent.by=indent.by, shine=shine))
+		}
 		full.tag <- paste(child, " ", sep="")
 	} else {
 	switch(tag,
 		"!--"={
 			# clean up value if needed
 			if(!is.null(child)){
-				child <- trim(child)
 				if(isTRUE(tidy)){
-					child <- gsub("\n", new.cmmt, setMinIndent(child, level=level + 1, indent.by=indent.by, shine=shine))
+					child <- trim(child)
+					child <- gsub("\n", new.cmmt, setMinIndent(child, level=level, indent.by=indent.by, shine=shine))
 				}
 			} else {}
 			full.tag <- paste(new.indent, "<!-- ", new.attr, new.cmmt.indent,
@@ -62,7 +66,7 @@ pasteXMLTag <- function(tag, attr=NULL, child=NULL, empty=TRUE, level=1, allow.e
 			if(!is.null(child)){
 				child <- trim(child)
 				if(isTRUE(tidy)){
-					child <- gsub("\n", new.cmmt, setMinIndent(child, level=level + 1, indent.by=indent.by))
+					child <- gsub("\n", new.cmmt, setMinIndent(child, level=level, indent.by=indent.by))
 				}
 			} else {}
 			full.tag <- paste(new.indent, "<![CDATA[ ", new.cmmt, comment.indent,
@@ -73,7 +77,7 @@ pasteXMLTag <- function(tag, attr=NULL, child=NULL, empty=TRUE, level=1, allow.e
 			if(!is.null(child)){
 				child <- trim(child)
 				if(isTRUE(tidy)){
-					child <- gsub("\n", new.cmmt, setMinIndent(child, level=level + 1, indent.by=indent.by))
+					child <- gsub("\n", new.cmmt, setMinIndent(child, level=level, indent.by=indent.by))
 				}
 			} else {}
 			# 

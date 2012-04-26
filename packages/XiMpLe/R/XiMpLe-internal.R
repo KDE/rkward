@@ -110,16 +110,16 @@ XML.single.tags <- function(tree, drop=NULL){
 # takes a string, determines the minimum number of grouped \t strings,
 # and adjusts it globally to the given level
 setMinIndent <- function(tag, level=1, indent.by="\t", shine=0){
-	currentMinIndent <- min(nchar(unlist(strsplit(tag, "[^\t]+"))))
 	if(shine > 0){
-		tag <- gsub("\n([^\t]+)", "\n\t\\1", tag, perl=TRUE)
+		tag <- gsub("\n([^\t])", "\n\t\\1", tag, perl=TRUE)
 	} else {}
+	currentMinIndent <- min(nchar(unlist(strsplit(tag, "[^\t]+"))))
 	indentDiff <- currentMinIndent - level
 	# if currentMinIndent is greater than level, reduce indentation
 	if(indentDiff > 0){
-		tag <- gsub(paste("(^|[^\t]+)(\t){", indentDiff, "}", sep=""), "\\1", tag, perl=TRUE)
+		tag <- gsub(paste("(^|\n)(\t){", indentDiff, "}", sep=""), "\\1", tag, perl=TRUE)
 	} else if(indentDiff < 0){
-		tag <- gsub("(^|[^\t]+)(\t)", paste("\\1", indent(level + 1, by=indent.by), sep=""), tag, perl=TRUE)
+		tag <- gsub("(^|\n)(\t)", paste("\\1", indent(level + 1, by=indent.by), sep=""), tag, perl=TRUE)
 	} else {}
 
 	return(tag)
