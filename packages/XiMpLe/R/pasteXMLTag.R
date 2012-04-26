@@ -51,7 +51,7 @@ pasteXMLTag <- function(tag, attr=NULL, child=NULL, empty=TRUE, level=1, allow.e
 			if(!is.null(child)){
 				child <- trim(child)
 				if(isTRUE(tidy)){
-					child <- gsub("\n", new.cmmt, setMinIndent(child, level=level + 1, indent.by=indent.by))
+					child <- gsub("\n", new.cmmt, setMinIndent(child, level=level + 1, indent.by=indent.by, shine=shine))
 				}
 			} else {}
 			full.tag <- paste(new.indent, "<!-- ", new.attr, new.cmmt.indent,

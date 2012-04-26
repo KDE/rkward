@@ -109,8 +109,11 @@ XML.single.tags <- function(tree, drop=NULL){
 ## function setMinIndent()
 # takes a string, determines the minimum number of grouped \t strings,
 # and adjusts it globally to the given level
-setMinIndent <- function(tag, level=1, indent.by="\t"){
+setMinIndent <- function(tag, level=1, indent.by="\t", shine=0){
 	currentMinIndent <- min(nchar(unlist(strsplit(tag, "[^\t]+"))))
+	if(shine > 0){
+		tag <- gsub("\n([^\t]+)", "\n\t\\1", tag, perl=TRUE)
+	} else {}
 	indentDiff <- currentMinIndent - level
 	# if currentMinIndent is greater than level, reduce indentation
 	if(indentDiff > 0){
