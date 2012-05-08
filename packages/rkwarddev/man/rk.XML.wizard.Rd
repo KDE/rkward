@@ -2,13 +2,16 @@
 \alias{rk.XML.wizard}
 \title{Create XML wizard section for RKWard plugins}
 \usage{
-  rk.XML.wizard(..., label = NULL)
+  rk.XML.wizard(..., label = NULL, recommended = FALSE)
 }
 \arguments{
   \item{...}{Objects of class \code{XiMpLe.node}}
 
   \item{label}{Character string, a text label for this
   plugin element.}
+
+  \item{recommended}{Logical, whether the wizard should be
+  the recommended appearance of the dialog.}
 }
 \value{
   An object of class \code{XiMpLe.node}.

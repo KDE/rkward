@@ -6,6 +6,7 @@
 #'
 #' @param ... Objects of class \code{XiMpLe.node}
 #' @param label Character string, a text label for this plugin element.
+#' @param recommended Logical, whether the wizard should be the recommended appearance of the dialog.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
@@ -21,7 +22,7 @@
 #' test.wizard <- rk.XML.wizard(rk.XML.page(list(test.text, test.copy)))
 #' cat(pasteXML(test.wizard))
 
-rk.XML.wizard <- function(..., label=NULL){
+rk.XML.wizard <- function(..., label=NULL, recommended=FALSE){
 	nodes <- list(...)
 
 	# check the node names and allow only valid ones
@@ -33,6 +34,10 @@ rk.XML.wizard <- function(..., label=NULL){
 		attr.list <- list()
 	}
 
+	if(isTRUE(recommended)){
+		attr.list[["recommended"]] <- "true"
+	} else {}
+	
 	node <- XMLNode("wizard",
 			attrs=attr.list,
 			.children=child.list(nodes, empty=FALSE)

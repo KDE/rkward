@@ -14,8 +14,8 @@ LazyLoad: yes
 URL: http://rkward.sourceforge.net
 Authors@R: c(person(given="Meik", family="Michalke",
     email="meik.michalke@hhu.de", role=c("aut", "cre")))
-Version: 0.05-5
-Date: 2012-04-19
+Version: 0.05-6
+Date: 2012-05-08
 Collate:
     'echo.R'
     'id.R'

@@ -1,5 +1,9 @@
 ChangeLog for package rkwarddev
 
+changes in version 0.05-6 (2012-05-08)
+added:
+  - rk.XML.wizard() can now set the "recommended" attribute
+
 changes in version 0.05-5 (2012-04-19)
 added:
   - rk.plugin.skeleton() can now also generate initial ChangeLog files (but won't overwrite existing ones)
