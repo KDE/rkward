@@ -2,7 +2,7 @@
                           rkstandardcomponent  -  description
                              -------------------
     begin                : Sun Feb 19 2006
-    copyright            : (C) 2006, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007, 2009, 2010, 2011, 2012 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -226,15 +226,18 @@ bool RKStandardComponent::createTopLevel (const QDomElement &doc_element, int fo
 
 	dialog_element = xml->getChildElement (doc_element, "dialog", DL_INFO);
 	wizard_element = xml->getChildElement (doc_element, "wizard", DL_INFO);
-	if (!wizard_element.isNull ()) {
-		build_wizard = xml->getBoolAttribute (wizard_element, "recommended", false, DL_INFO);
-	}
 
 	if (force_mode == 0) {
-		if (RKSettingsModulePlugins::getInterfacePreference () == RKSettingsModulePlugins::PreferDialog) {
-			if (!dialog_element.isNull ()) build_wizard = false;
-		} else if (RKSettingsModulePlugins::getInterfacePreference () == RKSettingsModulePlugins::PreferWizard) {
-			if (!wizard_element.isNull ()) build_wizard = true;
+		if (wizard_element.isNull ()) build_wizard = false;
+		else if (dialog_element.isNull ()) build_wizard = true;
+		else {	// both are given
+			if (RKSettingsModulePlugins::getInterfacePreference () == RKSettingsModulePlugins::PreferDialog) {
+				build_wizard = false;
+			} else if (RKSettingsModulePlugins::getInterfacePreference () == RKSettingsModulePlugins::PreferWizard) {
+				build_wizard = true;
+			} else {
+				build_wizard = xml->getBoolAttribute (wizard_element, "recommended", false, DL_INFO);
+			}
 		}
 	} else if (force_mode == 1) {
 		build_wizard = false;
