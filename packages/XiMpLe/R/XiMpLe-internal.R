@@ -504,6 +504,8 @@ XML.nodes <- function(single.tags, end.here=NA, start=1){
 			tag.no <- tag.no + 1
 			next
 		}
+		# force garbage collection
+		gc()
 		## uncomment to debug:
 		# })
 		# cat("system.time:", time.spent, "\n")

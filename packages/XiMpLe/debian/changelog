@@ -1,3 +1,9 @@
+r-other-reaktanz-ximple (0.03-14-1) unstable; urgency=low
+
+  * new upstream release
+
+ -- m.eik michalke <meik.michalke@hhu.de>  Sun, 29 Apr 2012 13:31:22 +0000
+
 r-other-reaktanz-ximple (0.03-13-1) unstable; urgency=low
 
   * initial debian package
