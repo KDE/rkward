@@ -44,16 +44,18 @@ private slots:
 private:
 	void initDisplay ();
 
-	QMap<QString, QString> defaults;
+	QMap<QString, QString> content_defaults;
 /** for option sets which are "driven" (i.e. the user cannot simply add / remove rows, directly), this holds the key column, controlling addition / removal of rows in the set.
   * if this length (or order) is changed in this row, it will also be changed in the other rows. */
 	RKComponentPropertyStringList *keycolumn;
+	QStringList old_keys;
 	QMultiMap<RKComponentPropertyBase *, RKComponentPropertyStringList *> columns_to_update;
 	struct ColumnInfo {
 		QString column_name;
 		QString column_label;
 		QString governor;
 		QString governor_modifier;
+		QString default_value;
 		int display_index;
 		bool restorable;
 	};
@@ -70,7 +72,7 @@ private:
 
 	bool updating_from_contents;
 	bool changing_row;
-	QStringList columns_which_have_been_updated_externally;
+	QSet<RKComponentPropertyStringList *> columns_which_have_been_updated_externally;
 };
 
 #endif

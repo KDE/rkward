@@ -2,7 +2,7 @@
                           rkoptionset  -  description
                              -------------------
     begin                : Mon Oct 31 2011
-    copyright            : (C) 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2011, 2012 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -54,8 +54,9 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	container = new RKComponent (this, contents_box);
 	RKComponentBuilder *builder = new RKComponentBuilder (container, QDomElement ());
 	builder->buildElement (xml->getChildElement (element, "content", DL_ERROR), contents_box, false);
-	// take a snapshot of the default state
-	container->fetchPropertyValuesRecursive (&defaults);
+#warning TOOD: do we need this? or is the per-column default good enough?
+	// take a snapshot of the default state of the contents
+	container->fetchPropertyValuesRecursive (&content_defaults);
 
 	// create columns
 	XMLChildList options = xml->getChildElements (element, "option", DL_WARNING);
@@ -77,6 +78,8 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 		col_inf.column_name = id;
 		col_inf.restorable = restorable;
 		col_inf.governor = governor;
+#warning TODO: Do we have to wait for the parent component to settle before (re-)fetching defaults?
+		if (!governor.isEmpty ()) col_inf.default_value = fetchStringValue (governor);
 		if (!label.isEmpty ()) {
 			col_inf.display_index = visible_columns++;
 			col_inf.column_label = label;
@@ -112,10 +115,11 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 				if (ci.restorable) {
 					if (!modifier.isEmpty ()) {
 						RK_DO (qDebug ("Cannot connect restorable column '%s' in optionset to property with modifier (%s). Add an auxiliary non-restorable column, instead.", qPrintable (ci.column_name), qPrintable (ci.governor)), PLUGIN, DL_ERROR);
+						continue;
 					} else if (gov_prop->isInternal ()) {
 						RK_DO (qDebug ("Cannot connect restorable column '%s' in optionset to property (%s), which is marked 'internal'. Add an auxiliary non-restorable column, instead.", qPrintable (ci.column_name), qPrintable (ci.governor)), PLUGIN, DL_ERROR);
+						continue;
 					}
-					continue;
 				}
 				columns_to_update.insertMulti (gov_prop, it.key ());
 				connect (gov_prop, SIGNAL (valueChanged(RKComponentPropertyBase *)), this, SLOT (governingPropertyChanged(RKComponentPropertyBase *)));
@@ -157,6 +161,7 @@ QWidget *RKOptionSet::createDisplay (bool show_index, QWidget *parent) {
 	return (display);
 }
 
+// This function is called when a property of the current row of the optionset changes
 void RKOptionSet::governingPropertyChanged (RKComponentPropertyBase *property) {
 	RK_TRACE (PLUGIN);
 
@@ -180,21 +185,74 @@ void RKOptionSet::governingPropertyChanged (RKComponentPropertyBase *property) {
 			display->setItem (row, inf.display_index, new QTableWidgetItem (value));
 		}
 	}
+	if (keycolumn) old_keys = keycolumn->values ();
 
 	updating_from_contents = false;
 }
 
+// This function is called, when a column of the set is changed, typically from external logic
 void RKOptionSet::columnPropertyChanged (RKComponentPropertyBase *property) {
 	RK_TRACE (PLUGIN);
 
 	if (updating_from_contents) return;
 
+	RKComponentPropertyStringList *target = static_cast<RKComponentPropertyStringList *> (property);
 	const ColumnInfo &inf = column_map[target];
 	if (inf.display_index >= 0) {
 		QString value = property->value (inf.display_modifier);
 		display->setItem (row, inf.display_index, new QTableWidgetItem (value));
 	}
 
+	if (target == keycolumn) {
+		QStringList new_keys = property->values ();;
+		QMap<int, int> position_changes;
+
+		for (int new_pos = 0; new_pos < new_keys.size (); ++new_pos) {
+			QString key = new_keys[new_pos];
+			if (old_keys.value (new_pos) != key) {	// NOTE: old_keys could be shorter than new_keys!
+				int old_pos = old_keys.indexOf (key);	// NOTE: -1 for key no longer present
+				position_changes.insert (new_pos, old_pos);
+			}
+		}
+
+		if (position_changes.isEmpty () && (old_keys.size () == new_keys.size ())) return;	// no change
+
+		QMap<RKComponentPropertyStringList *, ColumnInfo>::const_iterator it = column_map.constBegin ();
+		for (; it != column_map.constEnd (); ++it) {
+			RKComponentPropertyStringList* col = it.key ();
+			ColumnInfo &column = it.value ();
+			if (columns_which_have_been_updated_externally.contains (col)) {
+				continue;
+			}
+
+			// Ok, we'll have to adjust this column. We start by copying the old values, and padding to the
+			// new length (if that is greater than the old).
+			QStringList old_values = col->values ();
+			QStringList new_values = old_values;
+			for (int i = (new_keys.size () - new_values.size ()); i > 0; --i) new_values.append (QString ());
+
+			// adjust all positions that have changed
+			for (int pos = 0; pos < new_keys.size (); ++pos) {
+				QMap<int, int>::const_iterator pit = position_changes.find (pos);
+				if (pit != position_changes.constEnd ()) {	// some change
+					int old_pos = pit.value ();
+					if (old_pos < 0) {	// a new key
+						new_values[pos] = column.default_value;
+#warning TODO: should also allow scripted defaults
+					} else {	// old key changed position
+						new_values[pos] = old_values (old_pos);
+					}
+				}
+			}
+
+			// strip excess length (if any), and apply
+			new_values = new_values.left (new_keys.size ());
+			col->setValues (new_values);
+		}
+	} else {
+		columns_which_have_been_updated_externally.insert (target);
+#error TODO: single shot timer to clear this list? 
+	}
 #error TODO
 }
 
