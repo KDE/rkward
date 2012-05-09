@@ -2102,7 +2102,7 @@ local({
 	</varlistentry>
 	<varlistentry>
 	<term>&lt;recommended&gt;</term>
-	<listitem><para>Should the dialog be used as the "recommended" interface (i.e. the interface that will be shown by default, unless the user has configured RKWard to default to a specific interface)? This attribute does not currently have and effect, as it is implicitly "true", unless the wizard is recommended.</para></listitem>
+	<listitem><para>Should the dialog be used as the "recommended" interface (i.e. the interface that will be shown by default, unless the user has configured RKWard to default to a specific interface)? This attribute does not currently have an effect, as it is implicitly "true", unless the wizard is recommended.</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
