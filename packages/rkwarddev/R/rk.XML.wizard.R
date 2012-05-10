@@ -6,7 +6,8 @@
 #'
 #' @param ... Objects of class \code{XiMpLe.node}
 #' @param label Character string, a text label for this plugin element.
-#' @param recommended Logical, whether the wizard should be the recommended appearance of the dialog.
+#' @param recommended Logical, whether the wizard should be the recommended interface (unless the user has configured
+#'		RKWard to default to a specific interface).
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso

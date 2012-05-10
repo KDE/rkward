@@ -6,6 +6,9 @@
 #'
 #' @param ... Objects of class \code{XiMpLe.node}.
 #' @param label Character string, a text label for this plugin element.
+#' @param recommended Logical, whether the dialog should be the recommended interface (unless the user has configured
+#'		RKWard to default to a specific interface). This attribute currently has no effect, as it is implicitly "true",
+#'		unless the wizard is recommended.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
@@ -20,7 +23,7 @@
 #' test.dialog <- rk.XML.dialog(rk.XML.col(test.input, test.cbox1, test.cbox2))
 #' cat(pasteXML(test.dialog))
 
-rk.XML.dialog <- function(..., label=NULL){
+rk.XML.dialog <- function(..., label=NULL, recommended=FALSE){
 	nodes <- list(...)
 
 	# check the node names and allow only valid ones
@@ -31,6 +34,10 @@ rk.XML.dialog <- function(..., label=NULL){
 	} else {
 		attr.list <- list()
 	}
+
+	if(isTRUE(recommended)){
+		attr.list[["recommended"]] <- "true"
+	} else {}
 
 	node <- XMLNode("dialog",
 			attrs=attr.list,

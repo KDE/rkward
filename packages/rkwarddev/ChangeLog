@@ -1,8 +1,8 @@
 ChangeLog for package rkwarddev
 
-changes in version 0.05-6 (2012-05-08)
+changes in version 0.05-6 (2012-05-10)
 added:
-  - rk.XML.wizard() can now set the "recommended" attribute
+  - rk.XML.wizard() and rk.XML.dialog() can now set the "recommended" attribute
 
 changes in version 0.05-5 (2012-04-19)
 added:

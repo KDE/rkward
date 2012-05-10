@@ -11,7 +11,8 @@
   plugin element.}
 
   \item{recommended}{Logical, whether the wizard should be
-  the recommended appearance of the dialog.}
+  the recommended interface (unless the user has configured
+  RKWard to default to a specific interface).}
 }
 \value{
   An object of class \code{XiMpLe.node}.

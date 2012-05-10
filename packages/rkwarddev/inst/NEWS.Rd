@@ -1,10 +1,10 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
-\section{Changes in rkwarddev version 0.05-6 (2012-05-08)}{
+\section{Changes in rkwarddev version 0.05-6 (2012-05-10)}{
   \subsection{added}{
     \itemize{
-      \item \code{rk.XML.wizard()} can now set the \code{"recommended"} attribute
+      \item \code{rk.XML.wizard()} and \code{rk.XML.dialog()} can now set the \code{"recommended"} attribute
     }
   }
 }
