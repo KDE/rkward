@@ -1,7 +1,7 @@
 \name{NEWS}
 \title{News for Package 'XiMpLe'}
 \encoding{UTF-8}
-\section{Changes in XiMpLe version 0.03-14 (2012-05-08)}{
+\section{Changes in XiMpLe version 0.03-14 (2012-05-11)}{
   \subsection{added}{
     \itemize{
       \item forcing garbage collection \code{gc()} in internal function \code{XML.nodes()}, which iterates through parsed XML trees

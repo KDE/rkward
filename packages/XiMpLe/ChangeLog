@@ -1,6 +1,6 @@
 ChangeLog for package XiMpLe
 
-changes in version 0.03-14 (2012-05-08)
+changes in version 0.03-14 (2012-05-11)
 added:
   - forcing garbage collection gc() in internal function XML.nodes(), which iterates through parsed XML trees
 changed:
