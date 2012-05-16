@@ -104,7 +104,7 @@ public:
 /** set to required: will only be satisfied if it is valid (and all it's children). Else: always satisfied (but subclasses might override to always be dissatisfied on really bad values. By default RKComponentBase is required at construction */
 	void setRequired (bool require) { required = require; };
 /** simple convenience function to add a child to the map of children */
-	void addChild (const QString &id, RKComponentBase *child);
+	virtual void addChild (const QString &id, RKComponentBase *child);
 
 /** serialize the state of this component / property and all its children. Note: Only the non-internal property-values are serialzed, not the components / properties themselves. @see fetchPropertyValuesRecursive() */
 	QString serializeState () const;
