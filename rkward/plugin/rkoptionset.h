@@ -40,7 +40,7 @@ private slots:
 	void currentRowPropertyChanged (RKComponentPropertyBase *property);
 	void addRow ();
 	void removeRow (int index);
-	void componentChangeComplete (RKComponent *component);
+	void updateContents ();
 private:
 	void initDisplay ();
 
@@ -60,18 +60,19 @@ private:
 		bool restorable;
 	};
 	QMap<RKComponentPropertyStringList *, ColumnInfo> column_map;
-	RKComponent *container;
+	RKComponent *contents_container;
 	QTableWidget *display;
 	bool display_show_index;
 	RKComponentPropertyInt *current_row;
 	RKComponentPropertyInt *row_count;
+	QTimer update_timer;
 
 	int min_rows;
 	int min_rows_if_any;
 	int max_rows;
 
 	bool updating_from_contents;
-	bool changing_row;
+	bool udpating_from_storage;
 	QSet<RKComponentPropertyStringList *> columns_which_have_been_updated_externally;
 };
 

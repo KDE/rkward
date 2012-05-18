@@ -32,18 +32,23 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	RK_TRACE (PLUGIN);
 
 	XMLHelper *xml = XMLHelper::getStaticHelper ();
-	updating_from_contents = changing_row = false;
+	updating_from_contents = updating_from_storage = false;
+	connect (&update_timer, SIGNAL (timeout()), this, SLOT (updateContents()));
+	update_timer->setSingleShot (true);
+	update_timer->setTimeout (0);
 
-	connect (standardComponent (), SIGNAL (componentChanged(RKComponent*)), this, SLOT (componentChangeComplete(RKComponent*)));
+	min_rows = xml->getIntAttribute (e, "min_rows", 0, DL_INFO);
+	min_rows_if_any = xml->getIntAttribute (e, "min_rows_if_any", 0, DL_INFO);
+	max_rows = xml->getIntAttribute (e, "max", INT_MAX, DL_INFO);
 
 	// create some meta properties
 	current_row = new RKComponentPropertyInt (this, false, -1);
 	row_count->setInternal (true);
-	addChild ("current_row", current_row);
+	addChild ("current_row", current_row);		// NOTE: read-write
 	connect (current_row, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (currentRowPropertyChanged(RKComponentPropertyBase*)));
 	row_count = new RKComponentPropertyInt (this, false, 0);
 	row_count->setInternal (true);
-	addChild ("row_count", row_count);
+	addChild ("row_count", row_count);		// NOTE: read-only
 
 	// first build the contents, as we will need to refer to the elements inside, later
 	QVBoxLayout *layout = new QVBoxLayout (this);
@@ -51,12 +56,13 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	layout->addWidget (contents_box);
 
 	display = 0;	// will be created from the builder, on demand -> createDisplay ()
-	container = new RKComponent (this, contents_box);
-	RKComponentBuilder *builder = new RKComponentBuilder (container, QDomElement ());
+	contents_container = new RKComponent (this, contents_box);
+	RKComponentBuilder *builder = new RKComponentBuilder (contents_container, QDomElement ());
 	builder->buildElement (xml->getChildElement (element, "content", DL_ERROR), contents_box, false);
 #warning TOOD: do we need this? or is the per-column default good enough?
+#warning TOOD: should we wait until the (top level) plugin initial state has settled, before fetching the defaults?
 	// take a snapshot of the default state of the contents
-	container->fetchPropertyValuesRecursive (&content_defaults);
+	contents_container->fetchPropertyValuesRecursive (&content_defaults);
 
 	// create columns
 	XMLChildList options = xml->getChildElements (element, "option", DL_WARNING);
@@ -79,7 +85,8 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 		col_inf.restorable = restorable;
 		col_inf.governor = governor;
 #warning TODO: Do we have to wait for the parent component to settle before (re-)fetching defaults?
-		if (!governor.isEmpty ()) col_inf.default_value = fetchStringValue (governor);
+		if (e.hasAttribute ("default")) col_inf.default_value = xml->getStringAttribute (e, "default", QString (), DL_ERROR);
+		else if (!governor.isEmpty ()) col_inf.default_value = fetchStringValue (governor);
 		if (!label.isEmpty ()) {
 			col_inf.display_index = visible_columns++;
 			col_inf.column_label = label;
@@ -109,7 +116,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 		if (!ci.governor.isEmpty ()) {		// there *can* be columns without governor. This allows to connect two option-sets, e.g. on different pages of a tabbook, manually
 			// Establish connections between columns and their respective governors. Since the format differs, the connection is done indirectly, through this component.
 			// So, here, we set up a map of properties to columns, and connect to the change signals.
-			RKComponentBase *governor = container->lookupComponent (ci.governor, &ci.governor_modifier);
+			RKComponentBase *governor = contents_container->lookupComponent (ci.governor, &ci.governor_modifier);
 			if (governor && governor->isProperty ()) {
 				RKComponentPropertyBase *gov_prop = static_cast<RKComponentPropertyBase*> (governor);
 				if (ci.restorable) {
@@ -165,7 +172,7 @@ QWidget *RKOptionSet::createDisplay (bool show_index, QWidget *parent) {
 void RKOptionSet::governingPropertyChanged (RKComponentPropertyBase *property) {
 	RK_TRACE (PLUGIN);
 
-	if (changing_row) return;
+	if (updating_from_storage) return;
 	updating_from_contents = true;
 
 	int row = current_row->intValue ();
@@ -195,13 +202,19 @@ void RKOptionSet::columnPropertyChanged (RKComponentPropertyBase *property) {
 	RK_TRACE (PLUGIN);
 
 	if (updating_from_contents) return;
-
+	
 	RKComponentPropertyStringList *target = static_cast<RKComponentPropertyStringList *> (property);
+	RK_ASSERT (column_map.contains (target));
 	const ColumnInfo &inf = column_map[target];
-	if (inf.display_index >= 0) {
-		QString value = property->value (inf.display_modifier);
-		display->setItem (row, inf.display_index, new QTableWidgetItem (value));
+	if (display && (inf.display_index >= 0)) {
+		display->removeColumn (inf.display_index);
+		display->insertColumn (inf.display_index);
+		QStringList values = property->values ();
+		for (int row = 0; row < values.size (); ++row) {
+			display->setItem (row, inf.display_index, new QTableWidgetItem (values[row]));
+		}
 	}
+	if (inf.restorable) update_timer.start ();
 
 	if (target == keycolumn) {
 		QStringList new_keys = property->values ();;
@@ -215,13 +228,16 @@ void RKOptionSet::columnPropertyChanged (RKComponentPropertyBase *property) {
 			}
 		}
 
-		if (position_changes.isEmpty () && (old_keys.size () == new_keys.size ())) return;	// no change
+		if (position_changes.isEmpty () && (old_keys.size () == new_keys.size ())) {
+			columns_which_have_been_updated_externally.clear ();
+			return;	// no change
+		}
 
 		QMap<RKComponentPropertyStringList *, ColumnInfo>::const_iterator it = column_map.constBegin ();
 		for (; it != column_map.constEnd (); ++it) {
 			RKComponentPropertyStringList* col = it.key ();
 			ColumnInfo &column = it.value ();
-			if (columns_which_have_been_updated_externally.contains (col)) {
+			if (columns_which_have_been_updated_externally.contains (col) || col == keycolumn) {
 				continue;
 			}
 
@@ -248,12 +264,56 @@ void RKOptionSet::columnPropertyChanged (RKComponentPropertyBase *property) {
 			// strip excess length (if any), and apply
 			new_values = new_values.left (new_keys.size ());
 			col->setValues (new_values);
+			// NOTE: this will recurse into the current function, triggering an update of display and contents
 		}
+
+		columns_which_have_been_updated_externally.clear ();
+
+		int nrows = new_keys.size ();
+		row_count->setIntValue (nrows);
+		int crow = current_row->intValue ();
+		if ((crow < 0) && nrows) current_row->setIntValue (0);
+		else if (crow >= nrows) current_row->setIntValue (nrows - 1);
 	} else {
+		if (!columns_which_have_been_updated_externally.isEmpty ()) {	// add clearing timer for the first entry, only
+			update_timer.start ();		 // NOTE: only has an effect, if column is neither restorable nor shown in the display. Otherwise, an update has already been triggered
+		}
 		columns_which_have_been_updated_externally.insert (target);
-#error TODO: single shot timer to clear this list? 
 	}
-#error TODO
 }
 
-void RKOptionSet::currentRowPropertyChanged (RKComponentPropertyBase *property);
+void RKOptionSet::updateContents () {
+	RK_TRACE (PLUGIN);
+	columns_which_have_been_updated_externally.clear ();
+
+	RK_ASSERT (!updating_from_contents);
+	RK_ASSERT (!updating_from_storage);
+	updating_from_storage = true;
+
+	int row = current_row->intValue ();
+	if (row < 0) {
+		contents_container->setPropertyValuesRecursive (defaults);
+	} else {
+		QMap<RKComponentPropertyStringList *, ColumnInfo>::const_iterator it = column_map.constBegin ();
+		for (; it != column_map.constEnd (); ++it) {
+			RKComponentPropertyStringList* col = it.key ();
+			ColumnInfo &ci = it.value ();
+			if (!ci.restorable) continue;
+			RKComponentBase *governor = contents_container->lookupComponent (ci.governor);
+			if (governor) {
+				governor->setValue (col->valueAt (row));
+			} else {
+				RK_ASSERT (false);
+			}
+		}
+	}
+
+	updating_from_storage = false;
+}
+
+void RKOptionSet::currentRowPropertyChanged (RKComponentPropertyBase *property) {
+	RK_TRACE (PLUGIN);
+
+	RK_ASSERT (property == current_row);
+	update_timer.start ();
+}
