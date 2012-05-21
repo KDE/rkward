@@ -21,6 +21,9 @@
 #include <rkcomponent.h>
 
 #include <qmap.h>
+#include <QDomElement>
+#include <QTimer>
+#include <QSet>
 
 class QTableWidget;
 
@@ -30,10 +33,11 @@ class QTableWidget;
 class RKOptionSet : public RKComponent {
 	Q_OBJECT
 public:
-	RKOptionSet (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget, RKStandardComponentBuilder *builder);
+	RKOptionSet (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
 	~RKOptionSet ();
 	int type () { return ComponentOptionSet; };
 	QWidget *createDisplay (bool show_index, QWidget *parent);
+	bool isValid ();
 private slots:
 	void governingPropertyChanged (RKComponentPropertyBase *property);
 	void columnPropertyChanged (RKComponentPropertyBase *property);
@@ -72,7 +76,7 @@ private:
 	int max_rows;
 
 	bool updating_from_contents;
-	bool udpating_from_storage;
+	bool updating_from_storage;
 	QSet<RKComponentPropertyStringList *> columns_which_have_been_updated_externally;
 };
 

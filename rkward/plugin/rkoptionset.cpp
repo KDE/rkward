@@ -19,6 +19,7 @@
 
 #include <QVBoxLayout>
 #include <QTableWidget>
+#include <QHeaderView>
 
 #include <klocale.h>
 #include <kvbox.h>
@@ -28,18 +29,18 @@
 
 #include "../debug.h"
 
-RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget, RKStandardComponentBuilder *builder) : RKComponent (parent_component, parent_widget) {
+RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget) : RKComponent (parent_component, parent_widget) {
 	RK_TRACE (PLUGIN);
 
 	XMLHelper *xml = XMLHelper::getStaticHelper ();
 	updating_from_contents = updating_from_storage = false;
 	connect (&update_timer, SIGNAL (timeout()), this, SLOT (updateContents()));
-	update_timer->setSingleShot (true);
-	update_timer->setTimeout (0);
+	update_timer.setSingleShot (true);
+	update_timer.setInterval (0);
 
-	min_rows = xml->getIntAttribute (e, "min_rows", 0, DL_INFO);
-	min_rows_if_any = xml->getIntAttribute (e, "min_rows_if_any", 0, DL_INFO);
-	max_rows = xml->getIntAttribute (e, "max", INT_MAX, DL_INFO);
+	min_rows = xml->getIntAttribute (element, "min_rows", 0, DL_INFO);
+	min_rows_if_any = xml->getIntAttribute (element, "min_rows_if_any", 1, DL_INFO);
+	max_rows = xml->getIntAttribute (element, "max", INT_MAX, DL_INFO);
 
 	// create some meta properties
 	current_row = new RKComponentPropertyInt (this, false, -1);
@@ -75,7 +76,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 		QString governor = xml->getStringAttribute (e, "connect", QString (), DL_WARNING);
 		bool restorable = xml->getBoolAttribute (e, "restorable", true, DL_INFO);
 
-		while (columns_to_governors.contains (id) || child_map.contains (id)) {
+		while (child_map.contains (id)) {
 			RK_DO (qDebug ("optionset already contains a property named %s. Renaming to _%s", qPrintable (id), qPrintable (id)), PLUGIN, DL_ERROR);
 			id = "_" + id;
 		}
@@ -103,15 +104,15 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	keycolumn = 0;
 	QString keycol = xml->getStringAttribute (element, "keycolumn", QString (), DL_DEBUG);
 	if (!keycol.isEmpty ()) {
-		if (!columns_to_governors.contains (keycol)) {
+		keycolumn = static_cast<RKComponentPropertyStringList*> (child_map.value (keycol));
+		if (!column_map.contains (keycolumn)) {
 			RK_DO (qDebug ("optionset does not contain a column named %s. Falling back to manual insertion mode", qPrintable (keycol)), PLUGIN, DL_ERROR);
-		} else {
-			keycolumn = static_cast<RKComponentPropertyStringList*> (child_map[keycol]);
+			keycolumn = 0;
 		}
 	}
 
-	QMap<RKComponentPropertyStringList *, ColumnInfo>::const_iterator it = column_map.constBegin ();
-	for (; it != column_map.constEnd (); ++it) {
+	QMap<RKComponentPropertyStringList *, ColumnInfo>::iterator it = column_map.begin ();
+	for (; it != column_map.end (); ++it) {
 		ColumnInfo &ci = it.value ();
 		if (!ci.governor.isEmpty ()) {		// there *can* be columns without governor. This allows to connect two option-sets, e.g. on different pages of a tabbook, manually
 			// Establish connections between columns and their respective governors. Since the format differs, the connection is done indirectly, through this component.
@@ -120,7 +121,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 			if (governor && governor->isProperty ()) {
 				RKComponentPropertyBase *gov_prop = static_cast<RKComponentPropertyBase*> (governor);
 				if (ci.restorable) {
-					if (!modifier.isEmpty ()) {
+					if (!ci.governor_modifier.isEmpty ()) {
 						RK_DO (qDebug ("Cannot connect restorable column '%s' in optionset to property with modifier (%s). Add an auxiliary non-restorable column, instead.", qPrintable (ci.column_name), qPrintable (ci.governor)), PLUGIN, DL_ERROR);
 						continue;
 					} else if (gov_prop->isInternal ()) {
@@ -209,7 +210,7 @@ void RKOptionSet::columnPropertyChanged (RKComponentPropertyBase *property) {
 	if (display && (inf.display_index >= 0)) {
 		display->removeColumn (inf.display_index);
 		display->insertColumn (inf.display_index);
-		QStringList values = property->values ();
+		QStringList values = target->values ();
 		for (int row = 0; row < values.size (); ++row) {
 			display->setItem (row, inf.display_index, new QTableWidgetItem (values[row]));
 		}
@@ -217,7 +218,7 @@ void RKOptionSet::columnPropertyChanged (RKComponentPropertyBase *property) {
 	if (inf.restorable) update_timer.start ();
 
 	if (target == keycolumn) {
-		QStringList new_keys = property->values ();;
+		QStringList new_keys = target->values ();;
 		QMap<int, int> position_changes;
 
 		for (int new_pos = 0; new_pos < new_keys.size (); ++new_pos) {
@@ -236,7 +237,7 @@ void RKOptionSet::columnPropertyChanged (RKComponentPropertyBase *property) {
 		QMap<RKComponentPropertyStringList *, ColumnInfo>::const_iterator it = column_map.constBegin ();
 		for (; it != column_map.constEnd (); ++it) {
 			RKComponentPropertyStringList* col = it.key ();
-			ColumnInfo &column = it.value ();
+			const ColumnInfo &column = it.value ();
 			if (columns_which_have_been_updated_externally.contains (col) || col == keycolumn) {
 				continue;
 			}
@@ -256,13 +257,13 @@ void RKOptionSet::columnPropertyChanged (RKComponentPropertyBase *property) {
 						new_values[pos] = column.default_value;
 #warning TODO: should also allow scripted defaults
 					} else {	// old key changed position
-						new_values[pos] = old_values (old_pos);
+						new_values[pos] = old_values[old_pos];
 					}
 				}
 			}
 
 			// strip excess length (if any), and apply
-			new_values = new_values.left (new_keys.size ());
+			new_values = new_values.mid (0, new_keys.size ());
 			col->setValues (new_values);
 			// NOTE: this will recurse into the current function, triggering an update of display and contents
 		}
@@ -290,23 +291,29 @@ void RKOptionSet::updateContents () {
 	RK_ASSERT (!updating_from_storage);
 	updating_from_storage = true;
 
+	int count = -1;
 	int row = current_row->intValue ();
 	if (row < 0) {
-		contents_container->setPropertyValuesRecursive (defaults);
+		contents_container->setPropertyValues (&content_defaults);
 	} else {
 		QMap<RKComponentPropertyStringList *, ColumnInfo>::const_iterator it = column_map.constBegin ();
 		for (; it != column_map.constEnd (); ++it) {
 			RKComponentPropertyStringList* col = it.key ();
-			ColumnInfo &ci = it.value ();
+			const ColumnInfo &ci = it.value ();
+			if (it == column_map.constBegin ()) count = col->values ().size ();
 			if (!ci.restorable) continue;
-			RKComponentBase *governor = contents_container->lookupComponent (ci.governor);
-			if (governor) {
-				governor->setValue (col->valueAt (row));
+			QString dummy;
+			RKComponentBase *governor = contents_container->lookupComponent (ci.governor, &dummy);
+			if (governor && governor->isProperty ()) {
+				RK_ASSERT (dummy.isEmpty ());
+				static_cast<RKComponentPropertyBase*> (governor)->setValue (col->valueAt (row));
 			} else {
 				RK_ASSERT (false);
 			}
 		}
 	}
+	row_count->setIntValue (count);
+ 	changed ();	// needed, for the unlikely case that no change notification was triggered above, since isValid() returns false while updating
 
 	updating_from_storage = false;
 }
@@ -316,4 +323,13 @@ void RKOptionSet::currentRowPropertyChanged (RKComponentPropertyBase *property) 
 
 	RK_ASSERT (property == current_row);
 	update_timer.start ();
+}
+
+bool RKOptionSet::isValid () {
+	if (update_timer.isActive ()) return (false);	// actually, this signifies "processing" state
+	int count = row_count->intValue ();
+	if (count < min_rows) return false;
+	if ((count > 0) && (count < min_rows_if_any)) return false;
+	if (count > max_rows) return false;
+	return true;
 }
