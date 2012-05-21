@@ -2,7 +2,7 @@
                           rkoptionset  -  description
                              -------------------
     begin                : Mon Oct 31 2011
-    copyright            : (C) 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2011, 2012 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -25,7 +25,8 @@
 #include <QTimer>
 #include <QSet>
 
-class QTableWidget;
+class QTreeWidget;
+class QTreeWidgetItem;
 
 /** An RKOptionSet provides a group of options for an arbitrary number of "rows". E.g. different line colors for each of a group of variables.
   *@author Thomas Friedrichsmeier
@@ -36,15 +37,16 @@ public:
 	RKOptionSet (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
 	~RKOptionSet ();
 	int type () { return ComponentOptionSet; };
-	QWidget *createDisplay (bool show_index, QWidget *parent);
+	RKComponent *createDisplay (bool show_index, QWidget *parent);
 	bool isValid ();
 private slots:
 	void governingPropertyChanged (RKComponentPropertyBase *property);
 	void columnPropertyChanged (RKComponentPropertyBase *property);
 	void currentRowPropertyChanged (RKComponentPropertyBase *property);
-	void addRow ();
-	void removeRow (int index);
+//	void addRow ();
+//	void removeRow (int index);
 	void updateContents ();
+	void currentRowChanged (QTreeWidgetItem *item);
 private:
 	void initDisplay ();
 
@@ -65,7 +67,7 @@ private:
 	};
 	QMap<RKComponentPropertyStringList *, ColumnInfo> column_map;
 	RKComponent *contents_container;
-	QTableWidget *display;
+	QTreeWidget *display;
 	bool display_show_index;
 	RKComponentPropertyInt *current_row;
 	RKComponentPropertyInt *row_count;

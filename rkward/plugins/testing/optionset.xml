@@ -1,0 +1,42 @@
+<!DOCTYPE rkplugin>
+
+<document>
+	<code file="optionset.js"/>
+
+	<logic>
+		<set id="set.dummyslot.enabled" to="false"/>  <!-- TODO: does not work, yet -->
+		<connect governor="x.available" client="set.var" />
+		<connect governor="x.available.shortname" client="set.varname" />
+	</logic>
+
+	<dialog label="Testing Optionset">
+		<text id="text">
+			This plugin is bogus! Do not use!
+		</text>
+		<tabbook>
+			<tab label="Driven set">
+				<row>
+					<column>
+						<varselector id="vars"/>
+						<varslot type="numeric" id="x" source="vars" required="true" label="variables" multi="true"/>
+					</column>
+					<optionset id="set" min_rows="1" keycolumn="var">
+						<content>
+							<frame>
+								<optiondisplay index="true"/>
+								<varslot id="dummyslot"/>
+								<input id="commenta" label="Comment A"/>
+								<input id="commentb" label="Comment B"/>
+							</frame>
+						</content>
+						<option id="var" label="test" connect="dummyslot.available" restorable="true"/>
+						<option id="varname" label="Varname" restorable="false"/>
+						<option id="ca" label="Comment A" connect="commenta.text" restorable="true"/>
+						<option id="cb" connect="commentb.text" restorable="true"/>
+					</optionset>
+				</row>
+			</tab>
+		</tabbook>
+	</dialog>
+
+</document> 

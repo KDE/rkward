@@ -18,7 +18,7 @@
 #include "rkoptionset.h"
 
 #include <QVBoxLayout>
-#include <QTableWidget>
+#include <QTreeWidget>
 #include <QHeaderView>
 
 #include <klocale.h>
@@ -44,7 +44,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 
 	// create some meta properties
 	current_row = new RKComponentPropertyInt (this, false, -1);
-	row_count->setInternal (true);
+	current_row->setInternal (true);
 	addChild ("current_row", current_row);		// NOTE: read-write
 	connect (current_row, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (currentRowPropertyChanged(RKComponentPropertyBase*)));
 	row_count = new RKComponentPropertyInt (this, false, 0);
@@ -68,7 +68,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	// create columns
 	XMLChildList options = xml->getChildElements (element, "option", DL_WARNING);
 
-	int visible_columns = 0;
+	QStringList visible_column_labels;
 	for (int i = 0; i < options.size (); ++i) {
 		const QDomElement &e = options.at (i);
 		QString id = xml->getStringAttribute (e, "id", QString (), DL_ERROR);
@@ -89,8 +89,9 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 		if (e.hasAttribute ("default")) col_inf.default_value = xml->getStringAttribute (e, "default", QString (), DL_ERROR);
 		else if (!governor.isEmpty ()) col_inf.default_value = fetchStringValue (governor);
 		if (!label.isEmpty ()) {
-			col_inf.display_index = visible_columns++;
+			col_inf.display_index = visible_column_labels.size ();
 			col_inf.column_label = label;
+			visible_column_labels.append (label);
 		} else {
 			col_inf.display_index = -1;
 		}
@@ -138,18 +139,11 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	}
 
 	if (display) {		// may or may not have been created
-		QVector<QString> headers (visible_columns, QString ());
-		QMap<RKComponentPropertyStringList *, ColumnInfo>::const_iterator it = column_map.constBegin ();
-		for (; it != column_map.constEnd (); ++it) {
-			const ColumnInfo &inf = it.value ();
-			if (inf.display_index >= 0) {
-				RK_ASSERT (headers.size () >= inf.display_index);
-				headers[inf.display_index] = inf.column_label;
-			}
-		}
-		display->setColumnCount (headers.size ());
-		display->setHorizontalHeaderLabels (QStringList (headers.toList ()));
-		display->verticalHeader ()->setVisible (display_show_index);
+		display->setColumnCount (visible_column_labels.size ());
+		display->setHeaderLabels (visible_column_labels);
+#warning TODO: implement index
+//		display->verticalHeader ()->setVisible (display_show_index);
+		connect (display, SIGNAL (currentItemChanged (QTreeWidgetItem*, QTreeWidgetItem*)), this, SLOT (currentRowChanged (QTreeWidgetItem*)));
 	}
 }
 
@@ -157,16 +151,23 @@ RKOptionSet::~RKOptionSet () {
 	RK_TRACE (PLUGIN);
 }
 
-QWidget *RKOptionSet::createDisplay (bool show_index, QWidget *parent) {
+RKComponent *RKOptionSet::createDisplay (bool show_index, QWidget *parent) {
 	RK_TRACE (PLUGIN);
+
+	RKComponent* dummy = new RKComponent (this, parent);
+	QVBoxLayout *layout = new QVBoxLayout (dummy);
+	layout->setContentsMargins (0, 0, 0, 0);
+	KHBox *box = new KHBox (dummy);
+	layout->addWidget (box);
 
 	if (display) {
 		RK_DO (qDebug ("cannot create more than one optiondisplay per optionset"), PLUGIN, DL_ERROR);
 	} else {
-		display = new QTableWidget (parent);
+		display = new QTreeWidget (box);
 		display_show_index = show_index;
 	}
-	return (display);
+
+	return (dummy);
 }
 
 // This function is called when a property of the current row of the optionset changes
@@ -183,17 +184,20 @@ void RKOptionSet::governingPropertyChanged (RKComponentPropertyBase *property) {
 	}
 
 	QList<RKComponentPropertyStringList *> cols = columns_to_update.values (property);
+	QTreeWidgetItem *display_item = 0;
+	if (display) display_item = display->topLevelItem (row);
 	for (int i = 0; i < cols.size (); ++i) {
 		RKComponentPropertyStringList *target = cols.at (i);
 		const ColumnInfo &inf = column_map[target];
 		QString value = property->value (inf.governor_modifier);
 		target->setValueAt (row, value);
 
-		if (display && (inf.display_index >= 0)) {
-			display->setItem (row, inf.display_index, new QTableWidgetItem (value));
+		if (display_item && (inf.display_index >= 0)) {
+			display_item->setText (inf.display_index, value);
 		}
+
+		if (target == keycolumn) old_keys = keycolumn->values ();
 	}
-	if (keycolumn) old_keys = keycolumn->values ();
 
 	updating_from_contents = false;
 }
@@ -208,11 +212,20 @@ void RKOptionSet::columnPropertyChanged (RKComponentPropertyBase *property) {
 	RK_ASSERT (column_map.contains (target));
 	const ColumnInfo &inf = column_map[target];
 	if (display && (inf.display_index >= 0)) {
-		display->removeColumn (inf.display_index);
-		display->insertColumn (inf.display_index);
 		QStringList values = target->values ();
+		while (display->topLevelItemCount () != values.size ()) {
+			// row count has changed. Ultimately, this means, all values will be updated, so a crude adjustment
+			// of row count is good enough, here
+			if (values.size () > display->topLevelItemCount ()) {
+				display->addTopLevelItem (new QTreeWidgetItem (QStringList ()));
+			} else {
+				delete (display->takeTopLevelItem (0));
+			}
+		}
 		for (int row = 0; row < values.size (); ++row) {
-			display->setItem (row, inf.display_index, new QTableWidgetItem (values[row]));
+			QTreeWidgetItem *item = display->topLevelItem (row);
+			if (item) item->setText (inf.display_index, values[row]);
+			else RK_ASSERT (false);
 		}
 	}
 	if (inf.restorable) update_timer.start ();
@@ -269,6 +282,7 @@ void RKOptionSet::columnPropertyChanged (RKComponentPropertyBase *property) {
 		}
 
 		columns_which_have_been_updated_externally.clear ();
+		old_keys = new_keys;
 
 		int nrows = new_keys.size ();
 		row_count->setIntValue (nrows);
@@ -325,6 +339,14 @@ void RKOptionSet::currentRowPropertyChanged (RKComponentPropertyBase *property) 
 	update_timer.start ();
 }
 
+void RKOptionSet::currentRowChanged (QTreeWidgetItem *new_row) {
+	RK_TRACE (PLUGIN);
+
+	RK_ASSERT (display);
+	current_row->setIntValue (display->indexOfTopLevelItem (new_row));
+	update_timer.start ();
+}
+
 bool RKOptionSet::isValid () {
 	if (update_timer.isActive ()) return (false);	// actually, this signifies "processing" state
 	int count = row_count->intValue ();
@@ -333,3 +355,5 @@ bool RKOptionSet::isValid () {
 	if (count > max_rows) return false;
 	return true;
 }
+
+#include "rkoptionset.moc"

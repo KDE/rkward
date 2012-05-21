@@ -54,6 +54,7 @@
 #include "rktext.h"
 #include "rktabpage.h"
 #include "rkpluginframe.h"
+#include "rkoptionset.h"
 
 #include "../rkglobals.h"
 
@@ -655,6 +656,15 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 				}
 			} else {
 				xml->displayError (&e, QString ("Could not embed component '%1'. Not found").arg (component_id), DL_ERROR);
+			}
+		} else if (e.tagName () == "optionset") {
+			widget = new RKOptionSet (e, component (), parent_widget);
+		} else if (e.tagName () == "optiondisplay") {
+			RKComponent *set = component ()->parentComponent ();
+			if (set->type () == RKComponentBase::ComponentOptionSet) {
+				widget = static_cast<RKOptionSet *> (set)->createDisplay (xml->getBoolAttribute (e, "index", true, DL_INFO), parent_widget);
+			} else {
+				xml->displayError (&e, QString ("optiondisplay element is not allowed outside of an optionset"), DL_ERROR);
 			}
 		} else if (e.tagName () == "scriptable") {
 			widget = new RKComponent (component (), parent_widget);

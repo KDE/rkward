@@ -9,6 +9,7 @@
 <!-- These are purely for testing: -->
 		<component type="standard" id="qtscript_test1" file="testing/test1.xml" label="QtScript Test 1" />
 		<component type="standard" id="qtscript_test2" file="testing/test2.xml" label="QtScript Test 2" />
+		<component type="standard" id="optionset_test" file="testing/optionset.xml" label="Optionset Test" />
 <!-- End -->
 
 		<component type="standard" id="import_xls" file="00saveload/import/import_xls.xml" label="Import MS EXCEL">
@@ -34,6 +35,7 @@
 		<menu id="analysis" label="Analysis" index="4">
 			<entry component="simple_anova" index="9"/>
 			<entry component="qtscript_test1" index="1"/>
+			<entry component="optionset_test" index="1"/>
 		</menu>
 		<menu id="plots" label="Plots" index="5">
 			<entry component="sieve_plot" />
