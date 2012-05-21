@@ -27,6 +27,7 @@
 
 class QTreeWidget;
 class QTreeWidgetItem;
+class QPushButton;
 
 /** An RKOptionSet provides a group of options for an arbitrary number of "rows". E.g. different line colors for each of a group of variables.
   *@author Thomas Friedrichsmeier
@@ -43,12 +44,13 @@ private slots:
 	void governingPropertyChanged (RKComponentPropertyBase *property);
 	void columnPropertyChanged (RKComponentPropertyBase *property);
 	void currentRowPropertyChanged (RKComponentPropertyBase *property);
-//	void addRow ();
-//	void removeRow (int index);
+	void addRow ();
+	void removeRow ();
 	void updateContents ();
 	void currentRowChanged (QTreeWidgetItem *item);
 private:
 	void initDisplay ();
+	void updateVisuals ();
 
 	QMap<QString, QString> content_defaults;
 /** for option sets which are "driven" (i.e. the user cannot simply add / remove rows, directly), this holds the key column, controlling addition / removal of rows in the set.
@@ -68,6 +70,9 @@ private:
 	QMap<RKComponentPropertyStringList *, ColumnInfo> column_map;
 	RKComponent *contents_container;
 	QTreeWidget *display;
+	QWidget *display_buttons;
+	QPushButton *remove_button;
+	QPushButton *add_button;
 	bool display_show_index;
 	RKComponentPropertyInt *current_row;
 	RKComponentPropertyInt *row_count;

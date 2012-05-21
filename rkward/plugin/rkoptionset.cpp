@@ -20,11 +20,13 @@
 #include <QVBoxLayout>
 #include <QTreeWidget>
 #include <QHeaderView>
+#include <QPushButton>
 
 #include <klocale.h>
 #include <kvbox.h>
 
 #include "rkstandardcomponent.h"
+#include "../misc/rkstandardicons.h"
 #include "../misc/xmlhelper.h"
 
 #include "../debug.h"
@@ -60,6 +62,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	contents_container = new RKComponent (this, contents_box);
 	RKComponentBuilder *builder = new RKComponentBuilder (contents_container, QDomElement ());
 	builder->buildElement (xml->getChildElement (element, "content", DL_ERROR), contents_box, false);
+	builder->makeConnections ();
 #warning TOOD: do we need this? or is the per-column default good enough?
 #warning TOOD: should we wait until the (top level) plugin initial state has settled, before fetching the defaults?
 	// take a snapshot of the default state of the contents
@@ -68,12 +71,12 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	// create columns
 	XMLChildList options = xml->getChildElements (element, "option", DL_WARNING);
 
-	QStringList visible_column_labels;
+	QStringList visible_column_labels ("#");	// Optionally hidden first row for index
 	for (int i = 0; i < options.size (); ++i) {
 		const QDomElement &e = options.at (i);
 		QString id = xml->getStringAttribute (e, "id", QString (), DL_ERROR);
 		QString label = xml->getStringAttribute (e, "label", QString (), DL_DEBUG);
-		QString governor = xml->getStringAttribute (e, "connect", QString (), DL_WARNING);
+		QString governor = xml->getStringAttribute (e, "connect", QString (), DL_INFO);
 		bool restorable = xml->getBoolAttribute (e, "restorable", true, DL_INFO);
 
 		while (child_map.contains (id)) {
@@ -115,7 +118,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	QMap<RKComponentPropertyStringList *, ColumnInfo>::iterator it = column_map.begin ();
 	for (; it != column_map.end (); ++it) {
 		ColumnInfo &ci = it.value ();
-		if (!ci.governor.isEmpty ()) {		// there *can* be columns without governor. This allows to connect two option-sets, e.g. on different pages of a tabbook, manually
+		if (!ci.governor.isEmpty ()) {		// there *can* be columns without governor for driven or connected option sets
 			// Establish connections between columns and their respective governors. Since the format differs, the connection is done indirectly, through this component.
 			// So, here, we set up a map of properties to columns, and connect to the change signals.
 			RKComponentBase *governor = contents_container->lookupComponent (ci.governor, &ci.governor_modifier);
@@ -141,9 +144,17 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	if (display) {		// may or may not have been created
 		display->setColumnCount (visible_column_labels.size ());
 		display->setHeaderLabels (visible_column_labels);
-#warning TODO: implement index
-//		display->verticalHeader ()->setVisible (display_show_index);
+		display->setItemsExpandable (false);
+		display->setRootIsDecorated (false);
+		if (display_show_index) display->resizeColumnToContents (0);
+		else display->setColumnHidden (0, true);
 		connect (display, SIGNAL (currentItemChanged (QTreeWidgetItem*, QTreeWidgetItem*)), this, SLOT (currentRowChanged (QTreeWidgetItem*)));
+
+		if (keycolumn) display_buttons->setVisible (false);
+		else {
+			connect (add_button, SIGNAL (clicked()), this, SLOT (addRow()));
+			connect (remove_button, SIGNAL (clicked()), this, SLOT (removeRow()));
+		}
 	}
 }
 
@@ -167,7 +178,54 @@ RKComponent *RKOptionSet::createDisplay (bool show_index, QWidget *parent) {
 		display_show_index = show_index;
 	}
 
+	display_buttons = new KHBox (dummy);
+	layout->addWidget (display_buttons);
+	add_button = new QPushButton (RKStandardIcons::getIcon (RKStandardIcons::ActionInsertRow), QString (), display_buttons);
+	remove_button = new QPushButton (RKStandardIcons::getIcon (RKStandardIcons::ActionDeleteRow), QString (), display_buttons);
+
 	return (dummy);
+}
+
+void RKOptionSet::addRow () {
+	RK_TRACE (PLUGIN);
+
+	int row = current_row->intValue () + 1;	// append feels more natural than insert, here
+	if (row <= 0) row = row_count->intValue ();
+
+	QMap<RKComponentPropertyStringList *, ColumnInfo>::const_iterator it = column_map.constBegin ();
+	for (; it != column_map.constEnd (); ++it) {
+		RKComponentPropertyStringList* col = it.key ();
+		const ColumnInfo &column = it.value ();
+		QStringList values = col->values ();
+#warning TODO: scriptable defaults?
+		values.insert (row, column.default_value);
+		col->setValues (values);
+	}
+
+	current_row->setIntValue (row);
+}
+
+void RKOptionSet::removeRow () {
+	RK_TRACE (PLUGIN);
+
+	int row = current_row->intValue ();
+	int nrow = row_count->intValue ();
+	if (row < 0) {
+		RK_ASSERT (false);
+		return;
+	}
+
+	QMap<RKComponentPropertyStringList *, ColumnInfo>::const_iterator it = column_map.constBegin ();
+	for (; it != column_map.constEnd (); ++it) {
+		RKComponentPropertyStringList* col = it.key ();
+		QStringList values = col->values ();
+		values.removeAt (row);
+		col->setValues (values);
+	}
+
+	--row;
+	if ((row < 0) && (nrow > 1)) row = 0;
+	current_row->setIntValue (row);
 }
 
 // This function is called when a property of the current row of the optionset changes
@@ -307,14 +365,14 @@ void RKOptionSet::updateContents () {
 
 	int count = -1;
 	int row = current_row->intValue ();
+	QMap<RKComponentPropertyStringList *, ColumnInfo>::const_iterator it = column_map.constBegin ();
+	if (it != column_map.constEnd ()) count = it.key ()->values ().size ();
 	if (row < 0) {
 		contents_container->setPropertyValues (&content_defaults);
 	} else {
-		QMap<RKComponentPropertyStringList *, ColumnInfo>::const_iterator it = column_map.constBegin ();
 		for (; it != column_map.constEnd (); ++it) {
 			RKComponentPropertyStringList* col = it.key ();
 			const ColumnInfo &ci = it.value ();
-			if (it == column_map.constBegin ()) count = col->values ().size ();
 			if (!ci.restorable) continue;
 			QString dummy;
 			RKComponentBase *governor = contents_container->lookupComponent (ci.governor, &dummy);
@@ -326,16 +384,50 @@ void RKOptionSet::updateContents () {
 			}
 		}
 	}
+
 	row_count->setIntValue (count);
- 	changed ();	// needed, for the unlikely case that no change notification was triggered above, since isValid() returns false while updating
+#warning TODO: why doesn't this have an effect?
+	contents_container->enablednessProperty ()->setBoolValue (row >= 0);
+	updateVisuals ();
+	changed ();	// needed, for the unlikely case that no change notification was triggered above, since isValid() returns false while updating
 
 	updating_from_storage = false;
+}
+
+void RKOptionSet::updateVisuals () {
+	RK_TRACE (PLUGIN);
+
+	if (!display) return;
+
+	if (display_show_index) {
+		for (int row = display->topLevelItemCount () - 1; row >= 0; --row) {
+			display->topLevelItem (row)->setText (0, QString::number (row + 1));
+		}
+	}
+
+	QPalette palette = display->header ()->palette ();
+	if (!isSatisfied ()) {		// implies that it is enabled
+		palette.setColor (QPalette::Window, QColor (255, 0, 0));
+	} else {
+		if (isEnabled ()) {
+			palette.setColor (QPalette::Window, QColor (255, 255, 255));
+		} else {
+			palette.setColor (QPalette::Window, QColor (200, 200, 200));
+		}
+	}
+	display->header ()->setPalette (palette);
 }
 
 void RKOptionSet::currentRowPropertyChanged (RKComponentPropertyBase *property) {
 	RK_TRACE (PLUGIN);
 
 	RK_ASSERT (property == current_row);
+	if (display) {
+		QTreeWidgetItem *item = 0;
+		int row = current_row->intValue ();
+		if (row >= 0) item = display->topLevelItem (row);
+		if (item != display->currentItem ()) display->setCurrentItem (item);
+	}
 	update_timer.start ();
 }
 
@@ -344,7 +436,7 @@ void RKOptionSet::currentRowChanged (QTreeWidgetItem *new_row) {
 
 	RK_ASSERT (display);
 	current_row->setIntValue (display->indexOfTopLevelItem (new_row));
-	update_timer.start ();
+	// --> currentRowPropertyChanged ()
 }
 
 bool RKOptionSet::isValid () {

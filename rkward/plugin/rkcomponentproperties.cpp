@@ -172,6 +172,12 @@ QString RKComponentPropertyStringList::value (const QString &modifier) {
 	return _value;
 }
 
+bool RKComponentPropertyStringList::setValue (const QString &string) {
+	if (string.isNull ()) setValues (QStringList ());
+	else setValues (string.split (sep));
+	return true;
+}
+
 void RKComponentPropertyStringList::setValueAt (int index, const QString& value) {
 	RK_TRACE (PLUGIN);
 	

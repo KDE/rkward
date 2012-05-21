@@ -14,12 +14,34 @@
 			This plugin is bogus! Do not use!
 		</text>
 		<tabbook>
+			<tab label="Manual set">
+				<optionset id="mset">
+					<content>
+						<frame>
+							<optiondisplay index="true"/>
+							<row>
+								<varselector id="vars"/>
+								<column>
+									<varslot type="numeric" id="x" source="vars" required="false" label="Pick an object"/>
+									<input id="summary" label="Enter a summary" size="large"/>
+									<stretch/>
+								</column>
+							</row>
+						</frame>
+					</content>
+					<option id="object" connect="x.available" restorable="true"/>
+					<option id="objshort" label="Object" connect="x.available.shortname" restorable="false"/>
+					<option id="summary" connect="summary.text" restorable="true"/>
+				</optionset>
+			</tab>
 			<tab label="Driven set">
+				<text>First, select some objects, here (it doesn't matter, what you pick).</text>
 				<row>
-					<column>
-						<varselector id="vars"/>
-						<varslot type="numeric" id="x" source="vars" required="true" label="variables" multi="true"/>
-					</column>
+					<varselector id="vars"/>
+					<varslot type="numeric" id="x" source="vars" required="false" label="variables" multi="true"/>
+				</row>
+				<text><p>&nbsp;</p><p>Next, see how the controls allow you to specify "Comments" for each object.</p></text>
+				<row>
 					<optionset id="set" min_rows="1" keycolumn="var">
 						<content>
 							<frame>
@@ -29,7 +51,7 @@
 								<input id="commentb" label="Comment B"/>
 							</frame>
 						</content>
-						<option id="var" label="test" connect="dummyslot.available" restorable="true"/>
+						<option id="var" label="test" restorable="true"/>
 						<option id="varname" label="Varname" restorable="false"/>
 						<option id="ca" label="Comment A" connect="commenta.text" restorable="true"/>
 						<option id="cb" connect="commentb.text" restorable="true"/>

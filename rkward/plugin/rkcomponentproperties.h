@@ -86,7 +86,7 @@ public:
 	const QString valueAt (int index) const { return storage.value (index); };
 /** set the values in string form (values will be split by the current separator)
 @returns false if the value is illegal (in this property, all strings are legal) */
-	bool setValue (const QString &string) { setValues (string.split (sep)); return true; };
+	bool setValue (const QString &string);
 /** change only the string at the given index. List will be expanded, as necessary. */
 	void setValueAt (int index, const QString &value);
 /** get all current strings as a QStringList */
