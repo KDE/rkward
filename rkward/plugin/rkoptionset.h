@@ -52,7 +52,6 @@ private:
 	void initDisplay ();
 	void updateVisuals ();
 
-	QMap<QString, QString> content_defaults;
 /** for option sets which are "driven" (i.e. the user cannot simply add / remove rows, directly), this holds the key column, controlling addition / removal of rows in the set.
   * if this length (or order) is changed in this row, it will also be changed in the other rows. */
 	RKComponentPropertyStringList *keycolumn;
@@ -85,6 +84,8 @@ private:
 	bool updating_from_contents;
 	bool updating_from_storage;
 	QSet<RKComponentPropertyStringList *> columns_which_have_been_updated_externally;
+
+	friend QString getDefaultValue (const ColumnInfo& ci, int row);
 };
 
 #endif

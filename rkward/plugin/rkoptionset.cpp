@@ -26,6 +26,7 @@
 #include <kvbox.h>
 
 #include "rkstandardcomponent.h"
+#include "../misc/rkcommonfunctions.h"
 #include "../misc/rkstandardicons.h"
 #include "../misc/xmlhelper.h"
 
@@ -63,10 +64,6 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	RKComponentBuilder *builder = new RKComponentBuilder (contents_container, QDomElement ());
 	builder->buildElement (xml->getChildElement (element, "content", DL_ERROR), contents_box, false);	// NOTE that parent widget != parent component, here, by intention. The point is that the display should not be disabled along with the contents
 	builder->makeConnections ();
-#warning TOOD: do we need this? or is the per-column default good enough?
-#warning TOOD: should we wait until the (top level) plugin initial state has settled, before fetching the defaults?
-	// take a snapshot of the default state of the contents
-	contents_container->fetchPropertyValuesRecursive (&content_defaults);
 	addChild ("contents", contents_container);
 
 	// create columns
@@ -91,7 +88,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 		col_inf.governor = governor;
 #warning TODO: Do we have to wait for the parent component to settle before (re-)fetching defaults?
 		if (e.hasAttribute ("default")) col_inf.default_value = xml->getStringAttribute (e, "default", QString (), DL_ERROR);
-		else if (!governor.isEmpty ()) col_inf.default_value = fetchStringValue (governor);
+		else if (!governor.isEmpty ()) col_inf.default_value = contents_container->fetchStringValue (governor);
 		if (!label.isEmpty ()) {
 			col_inf.display_index = visible_column_labels.size ();
 			col_inf.column_label = label;
@@ -184,7 +181,9 @@ RKComponent *RKOptionSet::createDisplay (bool show_index, QWidget *parent) {
 	display_buttons = new KHBox (dummy);
 	layout->addWidget (display_buttons);
 	add_button = new QPushButton (RKStandardIcons::getIcon (RKStandardIcons::ActionInsertRow), QString (), display_buttons);
+	RKCommonFunctions::setTips (i18n ("Add a row / element"), add_button);
 	remove_button = new QPushButton (RKStandardIcons::getIcon (RKStandardIcons::ActionDeleteRow), QString (), display_buttons);
+	RKCommonFunctions::setTips (i18n ("Remove a row / element"), remove_button);
 
 	return (dummy);
 }
@@ -200,8 +199,7 @@ void RKOptionSet::addRow () {
 		RKComponentPropertyStringList* col = it.key ();
 		const ColumnInfo &column = it.value ();
 		QStringList values = col->values ();
-#warning TODO: scriptable defaults?
-		values.insert (row, column.default_value);
+		values.insert (row, getDefaultValue (column, row));
 		col->setValues (values);
 	}
 
@@ -229,6 +227,13 @@ void RKOptionSet::removeRow () {
 	--row;
 	if ((row < 0) && (nrow > 1)) row = 0;
 	current_row->setIntValue (row);
+}
+
+QString getDefaultValue (const RKOptionSet::ColumnInfo& ci, int row) {
+	// let's not trace this simple helper fun
+	Q_UNUSED (row);
+#warning TODO: should also allow scripted defaults
+	return ci.default_value;
 }
 
 // This function is called when a property of the current row of the optionset changes
@@ -268,6 +273,7 @@ void RKOptionSet::columnPropertyChanged (RKComponentPropertyBase *property) {
 	RK_TRACE (PLUGIN);
 
 	if (updating_from_contents) return;
+	int activate_row = current_row->intValue ();
 	
 	RKComponentPropertyStringList *target = static_cast<RKComponentPropertyStringList *> (property);
 	RK_ASSERT (column_map.contains (target));
@@ -279,8 +285,10 @@ void RKOptionSet::columnPropertyChanged (RKComponentPropertyBase *property) {
 			// of row count is good enough, here
 			if (values.size () > display->topLevelItemCount ()) {
 				display->addTopLevelItem (new QTreeWidgetItem (QStringList ()));
+				activate_row = values.size () - 1;
 			} else {
 				delete (display->takeTopLevelItem (0));
+				activate_row = qMax (values.size (), activate_row);
 			}
 		}
 		for (int row = 0; row < values.size (); ++row) {
@@ -328,8 +336,8 @@ void RKOptionSet::columnPropertyChanged (RKComponentPropertyBase *property) {
 				if (pit != position_changes.constEnd ()) {	// some change
 					int old_pos = pit.value ();
 					if (old_pos < 0) {	// a new key
-						new_values[pos] = column.default_value;
-#warning TODO: should also allow scripted defaults
+						new_values[pos] = getDefaultValue (column, pos);
+						activate_row = pos;
 					} else {	// old key changed position
 						new_values[pos] = old_values[old_pos];
 					}
@@ -347,15 +355,14 @@ void RKOptionSet::columnPropertyChanged (RKComponentPropertyBase *property) {
 
 		int nrows = new_keys.size ();
 		row_count->setIntValue (nrows);
-		int crow = current_row->intValue ();
-		if ((crow < 0) && nrows) current_row->setIntValue (0);
-		else if (crow >= nrows) current_row->setIntValue (nrows - 1);
 	} else {
 		if (!columns_which_have_been_updated_externally.isEmpty ()) {	// add clearing timer for the first entry, only
 			update_timer.start ();		 // NOTE: only has an effect, if column is neither restorable nor shown in the display. Otherwise, an update has already been triggered
 		}
 		columns_which_have_been_updated_externally.insert (target);
 	}
+
+	current_row->setIntValue (activate_row);
 }
 
 void RKOptionSet::updateContents () {
@@ -370,28 +377,28 @@ void RKOptionSet::updateContents () {
 	int row = current_row->intValue ();
 	QMap<RKComponentPropertyStringList *, ColumnInfo>::const_iterator it = column_map.constBegin ();
 	if (it != column_map.constEnd ()) count = it.key ()->values ().size ();
-	if (row < 0) {
-		contents_container->setPropertyValues (&content_defaults);
-	} else {
-		for (; it != column_map.constEnd (); ++it) {
-			RKComponentPropertyStringList* col = it.key ();
-			const ColumnInfo &ci = it.value ();
-			if (!ci.restorable) continue;
-			QString dummy;
-			RKComponentBase *governor = contents_container->lookupComponent (ci.governor, &dummy);
-			if (governor && governor->isProperty ()) {
-				RK_ASSERT (dummy.isEmpty ());
-				static_cast<RKComponentPropertyBase*> (governor)->setValue (col->valueAt (row));
-			} else {
-				RK_ASSERT (false);
-			}
+	for (; it != column_map.constEnd (); ++it) {
+		RKComponentPropertyStringList* col = it.key ();
+		const ColumnInfo &ci = it.value ();
+		if (!ci.restorable) continue;
+		QString dummy;
+		RKComponentBase *governor = contents_container->lookupComponent (ci.governor, &dummy);
+		if (governor && governor->isProperty ()) {
+			RK_ASSERT (dummy.isEmpty ());
+
+			QString value;
+			if (row >= 0) value = col->valueAt (row);
+			else value = getDefaultValue (ci, row);
+
+			static_cast<RKComponentPropertyBase*> (governor)->setValue (value);
+		} else {
+			RK_DO (qDebug ("Lookup error with trying to restore row %d of optionset: %s. Remainder: %s", row, qPrintable (ci.governor), qPrintable (dummy)), PLUGIN, DL_WARNING);
+			RK_ASSERT (false);
 		}
 	}
 
 	row_count->setIntValue (count);
-#warning TODO: why doesn't this have an effect?
 	contents_container->enablednessProperty ()->setBoolValue (row >= 0);
-//	contents_container->setEnabled (false);
 	updateVisuals ();
 	changed ();	// needed, for the unlikely case that no change notification was triggered above, since isValid() returns false while updating
 
@@ -432,6 +439,7 @@ void RKOptionSet::currentRowPropertyChanged (RKComponentPropertyBase *property) 
 		if (row >= 0) item = display->topLevelItem (row);
 		if (item != display->currentItem ()) display->setCurrentItem (item);
 	}
+#warning: What if the current row is invalid. Should we refuse to switch? Or simply keep track of the fact? What if it is still processing?
 	update_timer.start ();
 }
 
