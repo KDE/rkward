@@ -2,7 +2,7 @@
                           rkcomponent  -  description
                              -------------------
     begin                : Tue Dec 13 2005
-    copyright            : (C) 2005, 2006, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2009, 2010, 2011, 2012 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -203,8 +203,8 @@ protected:
 	RKComponent *_parent;
 /** usually happens during construction, so you don't need to call this - unless you're RKStandardComponent, and discard the children at some point of time */
 	void createDefaultProperties ();
-/** This function is needed internally, to set the Qt enabledness of this widget, and all child component widgets. Note that the enabledness as stored in the enabledness_property is not necessarily the same as the enabledness in the GUI (and is not affected by this call). In general, a component is enabled in the GUI, if and only if both it's enabledness_property is set to true, and the its parent widget is enabled in Qt. */
-	void updateEnablednessRecursive ();
+/** This function is needed internally, to set the Qt enabledness of this widget, and all child component widgets. Note that the enabledness as stored in the enabledness_property is not necessarily the same as the enabledness in the GUI (and is not affected by this call). In general, a component is enabled in the GUI, if and only if a) it's enabledness_property is set to true, b) its parent widget is enabled in Qt, and c) it's parent component is also enabled. */
+	void updateEnablednessRecursive (bool parent_component_enabled);
 };
 
 #endif

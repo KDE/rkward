@@ -4,9 +4,11 @@
 	<code file="optionset.js"/>
 
 	<logic>
-		<set id="set.dummyslot.enabled" to="false"/>  <!-- TODO: does not work, yet -->
+		<set id="set.contents.dummyslot.enabled" to="false"/>
 		<connect governor="x.available" client="set.var" />
 		<connect governor="x.available.shortname" client="set.varname" />
+		<connect governor="mset.object" client="cset.object" />
+		<connect governor="mset.objshort" client="cset.objshort" />
 	</logic>
 
 	<dialog label="Testing Optionset">
@@ -22,7 +24,7 @@
 							<row>
 								<varselector id="vars"/>
 								<column>
-									<varslot type="numeric" id="x" source="vars" required="false" label="Pick an object"/>
+									<varslot type="numeric" id="x" source="vars" required="true" label="Pick an object"/>	<!-- NOTE: requiredness does not work, correctly, yet -->
 									<input id="summary" label="Enter a summary" size="large"/>
 									<stretch/>
 								</column>
@@ -31,6 +33,20 @@
 					</content>
 					<option id="object" connect="x.available" restorable="true"/>
 					<option id="objshort" label="Object" connect="x.available.shortname" restorable="false"/>
+					<option id="summary" connect="summary.text" restorable="true"/>
+				</optionset>
+			</tab>
+			<tab label="Connected driven set">
+				<text>This option set is connected to the set on the first tab.</text>
+				<optionset id="cset" keycolumn="object">
+					<content>
+						<frame>
+							<optiondisplay index="true"/>
+							<input id="summary" label="Enter another summary" size="large"/>
+						</frame>
+					</content>
+					<option id="object" restorable="false"/>
+					<option id="objshort" label="Object" restorable="false"/>
 					<option id="summary" connect="summary.text" restorable="true"/>
 				</optionset>
 			</tab>
@@ -45,7 +61,7 @@
 					<optionset id="set" min_rows="1" keycolumn="var">
 						<content>
 							<frame>
-								<optiondisplay index="true"/>
+								<optiondisplay index="false"/>
 								<varslot id="dummyslot"/>
 								<input id="commenta" label="Comment A"/>
 								<input id="commentb" label="Comment B"/>

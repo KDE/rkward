@@ -2,7 +2,7 @@
                           rkcomponent  -  description
                              -------------------
     begin                : Tue Dec 13 2005
-    copyright            : (C) 2005, 2006, 2009, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2009, 2010, 2011, 2012 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -213,28 +213,26 @@ void RKComponent::propertyValueChanged (RKComponentPropertyBase *property) {
 			if (!isHidden ()) hide ();
 		}
 	} else if (property == enabledness_property) {
-		updateEnablednessRecursive ();
+		updateEnablednessRecursive ((!parentComponent ()) || (parentComponent ()->isEnabled ()));
 	} else if (property == requiredness_property) {
 		required = requiredness_property->boolValue ();
 		changed ();
 	}
 }
 
-void RKComponent::updateEnablednessRecursive () {
+void RKComponent::updateEnablednessRecursive (bool parent_enabled) {
 	RK_TRACE (PLUGIN);
 
-	bool enabled;
-	if (enabledness_property->boolValue ()) {
-		enabled = ((!parentComponent ()) || (parentComponent ()->isEnabled ()));
-	} else {
-		enabled = false;
-	}
+	bool enabled = (enabledness_property->boolValue () && parent_enabled);
+	bool changed = (enabled != isEnabled ());
 
-	setEnabled (enabled);	/* We do this, even if the state *seems* to be unchanged. This is needed, as isEnabled () also returns false, if the parent QWidget is not enabled. However, the parent QWidget may not always be the parent component. */
-	if (enabled != isEnabled ()) {
+	setEnabled (enabled);
+	/* RKComponent hierarchy does not always correspond to QWidget hierarchy (although in _most_ cases, it does. For this reason,
+	 * we need to update enabledness of all child components. */
+	if (changed) {
 		for (QHash<QString, RKComponentBase*>::const_iterator it = child_map.constBegin (); it != child_map.constEnd (); ++it) {
 			if (it.value ()->isComponent()) {
-				static_cast<RKComponent*> (it.value ())->updateEnablednessRecursive ();
+				static_cast<RKComponent*> (it.value ())->updateEnablednessRecursive (enabled);
 			}
 		}
 	}

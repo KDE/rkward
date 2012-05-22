@@ -61,12 +61,13 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	display = 0;	// will be created from the builder, on demand -> createDisplay ()
 	contents_container = new RKComponent (this, contents_box);
 	RKComponentBuilder *builder = new RKComponentBuilder (contents_container, QDomElement ());
-	builder->buildElement (xml->getChildElement (element, "content", DL_ERROR), contents_box, false);
+	builder->buildElement (xml->getChildElement (element, "content", DL_ERROR), contents_box, false);	// NOTE that parent widget != parent component, here, by intention. The point is that the display should not be disabled along with the contents
 	builder->makeConnections ();
 #warning TOOD: do we need this? or is the per-column default good enough?
 #warning TOOD: should we wait until the (top level) plugin initial state has settled, before fetching the defaults?
 	// take a snapshot of the default state of the contents
 	contents_container->fetchPropertyValuesRecursive (&content_defaults);
+	addChild ("contents", contents_container);
 
 	// create columns
 	XMLChildList options = xml->getChildElements (element, "option", DL_WARNING);
@@ -156,6 +157,8 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 			connect (remove_button, SIGNAL (clicked()), this, SLOT (removeRow()));
 		}
 	}
+
+	update_timer.start ();
 }
 
 RKOptionSet::~RKOptionSet () {
@@ -388,6 +391,7 @@ void RKOptionSet::updateContents () {
 	row_count->setIntValue (count);
 #warning TODO: why doesn't this have an effect?
 	contents_container->enablednessProperty ()->setBoolValue (row >= 0);
+//	contents_container->setEnabled (false);
 	updateVisuals ();
 	changed ();	// needed, for the unlikely case that no change notification was triggered above, since isValid() returns false while updating
 
