@@ -230,8 +230,9 @@ void RKTransmitNextUserCommandChunk (unsigned char* buf, int buflen) {
 
 	bool reached_eof = false;
 	int pos = 0;
+	const int max_pos = buflen - 2;	// one for the termination
 	bool reached_newline = false;
-	while (pos < (buflen-1)) {
+	while (true) {
 		buf[pos] = *current_buffer;
 		if (*current_buffer == '\n') {
 			reached_newline = true;
@@ -241,6 +242,7 @@ void RKTransmitNextUserCommandChunk (unsigned char* buf, int buflen) {
 			reached_eof = true;
 			break;
 		}
+		if (pos >= max_pos) break;
 		++current_buffer;
 		++pos;
 	}
