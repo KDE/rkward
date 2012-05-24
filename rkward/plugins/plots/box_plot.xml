@@ -24,7 +24,7 @@
 
 		<connect client="type_of_mean.enabled" governor="mean.checked"/>
 		<convert id="arith_mean" mode="equals" sources="type_of_mean.string" standard="arithmetic_mean" />
-		<connect client="trim.enabled" governor="arith_mean"/>
+		<connect client="trim.visible" governor="arith_mean"/>
 		<convert id="sd_or_mean" mode="or" sources="mean.checked;sd.checked"/>
 		<connect client="size_and_color_frame.enabled" governor="sd_or_mean"/>
 	</logic>
