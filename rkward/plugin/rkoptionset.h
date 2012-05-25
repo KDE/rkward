@@ -40,22 +40,28 @@ public:
 	int type () { return ComponentOptionSet; };
 	RKComponent *createDisplay (bool show_index, QWidget *parent);
 	bool isValid ();
+	/** reimplemented from RKComponent */
+	ComponentStatus recursiveStatus ();
 private slots:
 	void governingPropertyChanged (RKComponentPropertyBase *property);
 	void columnPropertyChanged (RKComponentPropertyBase *property);
 	void currentRowPropertyChanged (RKComponentPropertyBase *property);
 	void addRow ();
 	void removeRow ();
-	void updateContents ();
+	void updateStatusAndDisplay ();
 	void currentRowChanged (QTreeWidgetItem *item);
 private:
 	void initDisplay ();
 	void updateVisuals ();
 
+	RKComponentPropertyInt *current_row;
+	RKComponentPropertyInt *row_count;
+
 /** for option sets which are "driven" (i.e. the user cannot simply add / remove rows, directly), this holds the key column, controlling addition / removal of rows in the set.
   * if this length (or order) is changed in this row, it will also be changed in the other rows. */
 	RKComponentPropertyStringList *keycolumn;
-	QStringList old_keys;
+
+	/** Map of properties (in the contents region) to columns which need to be updated, when the property changes. */
 	QMultiMap<RKComponentPropertyBase *, RKComponentPropertyStringList *> columns_to_update;
 	struct ColumnInfo {
 		QString column_name;
@@ -65,16 +71,21 @@ private:
 		QString default_value;
 		int display_index;
 		bool restorable;
+		QStringList old_values;
 	};
+	/** Map of all columns to their meta info */
 	QMap<RKComponentPropertyStringList *, ColumnInfo> column_map;
+	/** Rows which have been not yet been processed, fully */
+	QSet<int> unfinished_rows;
+	/** Rows which have been fully processed but were invalid (contents component was not satisfied) */
+	QSet<int> invalid_rows;
+
 	RKComponent *contents_container;
 	QTreeWidget *display;
 	QWidget *display_buttons;
 	QPushButton *remove_button;
 	QPushButton *add_button;
 	bool display_show_index;
-	RKComponentPropertyInt *current_row;
-	RKComponentPropertyInt *row_count;
 	QTimer update_timer;
 
 	int min_rows;
@@ -83,8 +94,14 @@ private:
 
 	bool updating_from_contents;
 	bool updating_from_storage;
+/** When keys in the key column change, all other columns have to be updated, accordingly. */
+	void handleKeycolumnUpdate ();
+/** Sets the contents from the values in given row */
+	void setContentsForRow (int row);
+/** Columns which have already been updated before an update of the keycolumn, and thus do not need re-sorting, if the keycolumn is updated */
 	QSet<RKComponentPropertyStringList *> columns_which_have_been_updated_externally;
 
+/** get the default value for the given column, row. */
 	friend QString getDefaultValue (const ColumnInfo& ci, int row);
 };
 

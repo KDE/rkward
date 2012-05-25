@@ -37,7 +37,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 
 	XMLHelper *xml = XMLHelper::getStaticHelper ();
 	updating_from_contents = updating_from_storage = false;
-	connect (&update_timer, SIGNAL (timeout()), this, SLOT (updateContents()));
+	connect (&update_timer, SIGNAL (timeout()), this, SLOT (updateStatusAndDisplay()));
 	update_timer.setSingleShot (true);
 	update_timer.setInterval (0);
 
@@ -160,6 +160,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 
 RKOptionSet::~RKOptionSet () {
 	RK_TRACE (PLUGIN);
+qDebug ("Optionset deleted");
 }
 
 RKComponent *RKOptionSet::createDisplay (bool show_index, QWidget *parent) {
@@ -248,13 +249,14 @@ void RKOptionSet::governingPropertyChanged (RKComponentPropertyBase *property) {
 		RK_ASSERT (false);
 		return;
 	}
+	unfinished_rows.insert (row);
 
 	QList<RKComponentPropertyStringList *> cols = columns_to_update.values (property);
 	QTreeWidgetItem *display_item = 0;
 	if (display) display_item = display->topLevelItem (row);
 	for (int i = 0; i < cols.size (); ++i) {
 		RKComponentPropertyStringList *target = cols.at (i);
-		const ColumnInfo &inf = column_map[target];
+		ColumnInfo &inf = column_map[target];
 		QString value = property->value (inf.governor_modifier);
 		target->setValueAt (row, value);
 
@@ -262,7 +264,7 @@ void RKOptionSet::governingPropertyChanged (RKComponentPropertyBase *property) {
 			display_item->setText (inf.display_index, value);
 		}
 
-		if (target == keycolumn) old_keys = keycolumn->values ();
+		inf.old_values = target->values ();
 	}
 
 	updating_from_contents = false;
@@ -273,114 +275,113 @@ void RKOptionSet::columnPropertyChanged (RKComponentPropertyBase *property) {
 	RK_TRACE (PLUGIN);
 
 	if (updating_from_contents) return;
-	int activate_row = current_row->intValue ();
-	
+
 	RKComponentPropertyStringList *target = static_cast<RKComponentPropertyStringList *> (property);
 	RK_ASSERT (column_map.contains (target));
-	const ColumnInfo &inf = column_map[target];
-	if (display && (inf.display_index >= 0)) {
-		QStringList values = target->values ();
-		while (display->topLevelItemCount () != values.size ()) {
-			// row count has changed. Ultimately, this means, all values will be updated, so a crude adjustment
-			// of row count is good enough, here
-			if (values.size () > display->topLevelItemCount ()) {
-				display->addTopLevelItem (new QTreeWidgetItem (QStringList ()));
-				activate_row = values.size () - 1;
-			} else {
-				delete (display->takeTopLevelItem (0));
-				activate_row = qMax (values.size (), activate_row);
-			}
-		}
-		for (int row = 0; row < values.size (); ++row) {
-			QTreeWidgetItem *item = display->topLevelItem (row);
-			if (item) item->setText (inf.display_index, values[row]);
-			else RK_ASSERT (false);
-		}
-	}
-	if (inf.restorable) update_timer.start ();
+	update_timer.start ();
 
 	if (target == keycolumn) {
-		QStringList new_keys = target->values ();;
-		QMap<int, int> position_changes;
-
-		for (int new_pos = 0; new_pos < new_keys.size (); ++new_pos) {
-			QString key = new_keys[new_pos];
-			if (old_keys.value (new_pos) != key) {	// NOTE: old_keys could be shorter than new_keys!
-				int old_pos = old_keys.indexOf (key);	// NOTE: -1 for key no longer present
-				position_changes.insert (new_pos, old_pos);
-			}
-		}
-
-		if (position_changes.isEmpty () && (old_keys.size () == new_keys.size ())) {
-			columns_which_have_been_updated_externally.clear ();
-			return;	// no change
-		}
-
-		QMap<RKComponentPropertyStringList *, ColumnInfo>::const_iterator it = column_map.constBegin ();
-		for (; it != column_map.constEnd (); ++it) {
-			RKComponentPropertyStringList* col = it.key ();
-			const ColumnInfo &column = it.value ();
-			if (columns_which_have_been_updated_externally.contains (col) || col == keycolumn) {
-				continue;
-			}
-
-			// Ok, we'll have to adjust this column. We start by copying the old values, and padding to the
-			// new length (if that is greater than the old).
-			QStringList old_values = col->values ();
-			QStringList new_values = old_values;
-			for (int i = (new_keys.size () - new_values.size ()); i > 0; --i) new_values.append (QString ());
-
-			// adjust all positions that have changed
-			for (int pos = 0; pos < new_keys.size (); ++pos) {
-				QMap<int, int>::const_iterator pit = position_changes.find (pos);
-				if (pit != position_changes.constEnd ()) {	// some change
-					int old_pos = pit.value ();
-					if (old_pos < 0) {	// a new key
-						new_values[pos] = getDefaultValue (column, pos);
-						activate_row = pos;
-					} else {	// old key changed position
-						new_values[pos] = old_values[old_pos];
-					}
-				}
-			}
-
-			// strip excess length (if any), and apply
-			new_values = new_values.mid (0, new_keys.size ());
-			col->setValues (new_values);
-			// NOTE: this will recurse into the current function, triggering an update of display and contents
-		}
-
-		columns_which_have_been_updated_externally.clear ();
-		old_keys = new_keys;
-
-		int nrows = new_keys.size ();
-		row_count->setIntValue (nrows);
+		handleKeycolumnUpdate ();
 	} else {
-		if (!columns_which_have_been_updated_externally.isEmpty ()) {	// add clearing timer for the first entry, only
-			update_timer.start ();		 // NOTE: only has an effect, if column is neither restorable nor shown in the display. Otherwise, an update has already been triggered
-		}
 		columns_which_have_been_updated_externally.insert (target);
 	}
+}
 
+void RKOptionSet::handleKeycolumnUpdate () {
+	RK_TRACE (PLUGIN);
+
+	int activate_row = current_row->intValue ();
+	QStringList new_keys = keycolumn->values ();
+	QStringList old_keys = column_map[keycolumn].old_values;
+	QMap<int, int> position_changes;
+
+	int pos;
+	for (pos = 0; pos < new_keys.size (); ++pos) {
+		QString key = new_keys[pos];
+		if (old_keys.value (pos) != key) {	// NOTE: old_keys could be shorter than new_keys!
+			int old_pos = old_keys.indexOf (key);	// NOTE: -1 for key no longer present
+			position_changes.insert (pos, old_pos);
+		}
+	}
+	for (; pos < old_keys.size (); ++pos) {
+		invalid_rows.remove (pos);
+		unfinished_rows.remove (pos);
+	}
+
+	if (position_changes.isEmpty () && (old_keys.size () == new_keys.size ())) {
+		columns_which_have_been_updated_externally.clear ();
+		return;	// no change
+	}
+
+	// update all columns
+	QMap<RKComponentPropertyStringList *, ColumnInfo>::iterator it = column_map.begin ();
+	for (; it != column_map.end (); ++it) {
+		RKComponentPropertyStringList* col = it.key ();
+		ColumnInfo &column = it.value ();
+		if (col == keycolumn) continue;
+
+		// Ok, we'll have to adjust this column. We start by copying the old values, and padding to the
+		// new length (if that is greater than the old).
+		QStringList old_values = column.old_values;
+		QStringList new_values = old_values;
+		for (int i = (new_keys.size () - new_values.size ()); i > 0; --i) new_values.append (QString ());
+
+		// adjust all positions that have changed
+		for (int pos = 0; pos < new_keys.size (); ++pos) {
+			QMap<int, int>::const_iterator pit = position_changes.find (pos);
+			if (pit != position_changes.constEnd ()) {	// some change
+				int old_pos = pit.value ();
+				if (old_pos < 0) {	// a new key
+					new_values[pos] = getDefaultValue (column, pos);
+					activate_row = pos;
+				} else {	// old key changed position
+					new_values[pos] = old_values[old_pos];
+				} // NOTE: not visible: old key is gone without replacement
+			}
+		}
+
+		// strip excess length (if any), and apply
+		new_values = new_values.mid (0, new_keys.size ());
+		column.old_values = new_values;		// Because these were not actually changed, but merely re-sorted!
+		if (!columns_which_have_been_updated_externally.contains (col)) col->setValues (new_values);
+	}
+
+	// update status info
+	QSet<int> new_unfinished_rows;
+	QSet<int> new_invalid_rows;
+	for (int pos = 0; pos < new_keys.size (); ++pos) {
+		QMap<int, int>::const_iterator pit = position_changes.find (pos);
+		if (pit != position_changes.constEnd ()) {	// some change
+			int old_pos = pit.value ();
+			if (old_pos < 0) {	// a new key
+				new_unfinished_rows.insert (pos);
+			} else {	// old key changed position
+				if (unfinished_rows.contains (old_pos)) new_unfinished_rows.insert (pos);
+				if (invalid_rows.contains (old_pos)) new_invalid_rows.insert (pos);
+			} // NOTE: not visible: old key is gone without replacement
+		}
+	}
+	unfinished_rows = new_unfinished_rows;
+	invalid_rows = new_invalid_rows;
+
+	columns_which_have_been_updated_externally.clear ();
+	column_map[keycolumn].old_values = new_keys;
+
+	int nrows = new_keys.size ();
+	row_count->setIntValue (nrows);
+	activate_row = qMax (new_keys.size () - 1, activate_row);
 	current_row->setIntValue (activate_row);
 }
 
-void RKOptionSet::updateContents () {
+void RKOptionSet::setContentsForRow (int row) {
 	RK_TRACE (PLUGIN);
-	columns_which_have_been_updated_externally.clear ();
 
-	RK_ASSERT (!updating_from_contents);
-	RK_ASSERT (!updating_from_storage);
-	updating_from_storage = true;
-
-	int count = -1;
-	int row = current_row->intValue ();
 	QMap<RKComponentPropertyStringList *, ColumnInfo>::const_iterator it = column_map.constBegin ();
-	if (it != column_map.constEnd ()) count = it.key ()->values ().size ();
 	for (; it != column_map.constEnd (); ++it) {
 		RKComponentPropertyStringList* col = it.key ();
 		const ColumnInfo &ci = it.value ();
 		if (!ci.restorable) continue;
+
 		QString dummy;
 		RKComponentBase *governor = contents_container->lookupComponent (ci.governor, &dummy);
 		if (governor && governor->isProperty ()) {
@@ -392,15 +393,67 @@ void RKOptionSet::updateContents () {
 
 			static_cast<RKComponentPropertyBase*> (governor)->setValue (value);
 		} else {
-			RK_DO (qDebug ("Lookup error with trying to restore row %d of optionset: %s. Remainder: %s", row, qPrintable (ci.governor), qPrintable (dummy)), PLUGIN, DL_WARNING);
+			RK_DO (qDebug ("Lookup error while trying to restore row %d of optionset: %s. Remainder: %s", row, qPrintable (ci.governor), qPrintable (dummy)), PLUGIN, DL_WARNING);
 			RK_ASSERT (false);
 		}
 	}
+}
+
+void RKOptionSet::updateStatusAndDisplay () {
+	RK_TRACE (PLUGIN);
+#warning TODO: way too many updates are going on
+qDebug ("Optionset update");
+	columns_which_have_been_updated_externally.clear ();
+
+	RK_ASSERT (!updating_from_contents);
+	RK_ASSERT (!updating_from_storage);
+	updating_from_storage = true;
+
+	int count = -1;
+	int activate_row = current_row->intValue ();
+	QMap<RKComponentPropertyStringList *, ColumnInfo>::iterator it = column_map.begin ();
+
+	// first make sure the display has correct number of rows
+	if (it != column_map.end ()) count = it.key ()->values ().size ();
+	if (display) {
+		while (display->topLevelItemCount () != count) {
+			if (count > display->topLevelItemCount ()) {
+				display->addTopLevelItem (new QTreeWidgetItem (QStringList ()));
+				activate_row = count - 1;
+			} else {
+				delete (display->takeTopLevelItem (0));
+				activate_row = qMax (count - 1, activate_row);
+			}
+		}
+	}
+
+	// now check for any changed values, updating display and row status
+	for (; it != column_map.end (); ++it) {
+		RKComponentPropertyStringList* col = it.key ();
+		ColumnInfo &ci = it.value ();
+
+		QStringList values = col->values ();
+		for (int row = values.size () - 1; row >= 0; --row) {
+			if (display && (ci.display_index >= 0)) {	// NOTE: Updating the display is done for all rows, even seemingly unchanged ones. Rows may still have been shuffled to a new position, and we did not keep track of that.
+				display->topLevelItem (row)->setText (ci.display_index, values[row]);
+			}
+
+			// NOTE: However, internal status info should have been adjusted to the new indices, already
+			if (values[row] != ci.old_values.value (row)) {
+				unfinished_rows.insert (row);
+			}
+		}
+		ci.old_values = values;
+	}
+
+#warning TODO: duplicate update
+	current_row->setIntValue (activate_row);
+	setContentsForRow (activate_row);
 
 	row_count->setIntValue (count);
-	contents_container->enablednessProperty ()->setBoolValue (row >= 0);
+	contents_container->enablednessProperty ()->setBoolValue (activate_row >= 0);
 	updateVisuals ();
-	changed ();	// needed, for the unlikely case that no change notification was triggered above, since isValid() returns false while updating
+	changed ();	// needed, for the unlikely case that no change notification was triggered above, since recursiveStatus() returns Processing while updating
 
 	updating_from_storage = false;
 }
@@ -451,8 +504,20 @@ void RKOptionSet::currentRowChanged (QTreeWidgetItem *new_row) {
 	// --> currentRowPropertyChanged ()
 }
 
+/** reimplemented from RKComponent */
+RKComponent::ComponentStatus RKOptionSet::recursiveStatus () {
+	RK_TRACE (PLUGIN);
+
+	ComponentStatus s = RKComponent::recursiveStatus ();
+	if (s == Dead) return s;
+#warning TODO
+//	if (!unfinished_rows.isEmpty ()) return Processing;
+//	if (update_timer.isActive ()) return Processing;
+	return s;
+}
+
 bool RKOptionSet::isValid () {
-	if (update_timer.isActive ()) return (false);	// actually, this signifies "processing" state
+	if (!invalid_rows.isEmpty ()) return false;
 	int count = row_count->intValue ();
 	if (count < min_rows) return false;
 	if ((count > 0) && (count < min_rows_if_any)) return false;
