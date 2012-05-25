@@ -167,7 +167,7 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 RKStandardComponent::~RKStandardComponent () {
 	RK_TRACE (PLUGIN);
 
-	if (gui) gui->deleteLater ();
+	if (gui) delete gui;	// NOTE: *NOT* using gui->deleteLater (). Destructing the GUI immediately is necessary to get rid of child components, immediately. Otherwise these could try to access their (destroyed) parent, e.g. if they have a timer running that gets triggered before the deletion event arrives.
 	backend->destroy ();	// it will self-destruct, when it has closed the process.
 }
 
