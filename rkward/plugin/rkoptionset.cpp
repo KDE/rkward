@@ -193,16 +193,25 @@ void RKOptionSet::addRow () {
 	RK_TRACE (PLUGIN);
 
 	int row = current_row->intValue () + 1;	// append feels more natural than insert, here
-	if (row <= 0) row = row_count->intValue ();
+	int nrows = row_count->intValue ();
+	if (row <= 0) row = nrows;
 
-	QMap<RKComponentPropertyStringList *, ColumnInfo>::const_iterator it = column_map.constBegin ();
-	for (; it != column_map.constEnd (); ++it) {
+	// adjust values
+	QMap<RKComponentPropertyStringList *, ColumnInfo>::iterator it = column_map.begin ();
+	for (; it != column_map.end (); ++it) {
 		RKComponentPropertyStringList* col = it.key ();
-		const ColumnInfo &column = it.value ();
+		ColumnInfo &column = it.value ();
 		QStringList values = col->values ();
 		values.insert (row, getDefaultValue (column, row));
 		col->setValues (values);
+		column.old_values = values;
 	}
+	// adjust status info
+	for (int i = nrows - 1; i > row; --i) {
+		if (unfinished_rows.remove (i)) unfinished_rows.insert (i+1);
+		if (invalid_rows.remove (i)) invalid_rows.insert (i+1);
+	}
+	unfinished_rows.insert (row);
 
 	current_row->setIntValue (row);
 }
@@ -211,22 +220,32 @@ void RKOptionSet::removeRow () {
 	RK_TRACE (PLUGIN);
 
 	int row = current_row->intValue ();
-	int nrow = row_count->intValue ();
+	int nrows = row_count->intValue ();
 	if (row < 0) {
 		RK_ASSERT (false);
 		return;
 	}
 
-	QMap<RKComponentPropertyStringList *, ColumnInfo>::const_iterator it = column_map.constBegin ();
-	for (; it != column_map.constEnd (); ++it) {
+	// adjust values
+	QMap<RKComponentPropertyStringList *, ColumnInfo>::iterator it = column_map.begin ();
+	for (; it != column_map.end (); ++it) {
 		RKComponentPropertyStringList* col = it.key ();
+		ColumnInfo &column = it.value ();
 		QStringList values = col->values ();
 		values.removeAt (row);
 		col->setValues (values);
+		column.old_values = values;
+	}
+	// adjust status info
+	invalid_rows.remove (row);
+	unfinished_rows.remove (row);
+	for (int i = row + 1; i < nrows; ++i) {
+		if (unfinished_rows.remove (i)) unfinished_rows.insert (i-1);
+		if (invalid_rows.remove (i)) invalid_rows.insert (i-1);
 	}
 
 	--row;
-	if ((row < 0) && (nrow > 1)) row = 0;
+	if ((row < 0) && (nrows > 1)) row = 0;
 	current_row->setIntValue (row);
 }
 
@@ -470,14 +489,12 @@ void RKOptionSet::updateVisuals () {
 	}
 
 	QPalette palette = display->header ()->palette ();
-	if (!isSatisfied ()) {		// implies that it is enabled
+	if (isInactive ()) {
+		palette.setColor (QPalette::Window, QColor (200, 200, 200));
+	} else if (!isSatisfied ()) {
 		palette.setColor (QPalette::Window, QColor (255, 0, 0));
 	} else {
-		if (isEnabled ()) {
-			palette.setColor (QPalette::Window, QColor (255, 255, 255));
-		} else {
-			palette.setColor (QPalette::Window, QColor (200, 200, 200));
-		}
+		palette.setColor (QPalette::Window, QColor (255, 255, 255));
 	}
 	display->header ()->setPalette (palette);
 }
@@ -510,9 +527,8 @@ RKComponent::ComponentStatus RKOptionSet::recursiveStatus () {
 
 	ComponentStatus s = RKComponent::recursiveStatus ();
 	if (s == Dead) return s;
-#warning TODO
-//	if (!unfinished_rows.isEmpty ()) return Processing;
-//	if (update_timer.isActive ()) return Processing;
+	if (!unfinished_rows.isEmpty ()) return Processing;
+	if (update_timer.isActive ()) return Processing;
 	return s;
 }
 
