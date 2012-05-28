@@ -46,8 +46,6 @@ public:
 	~RKStandardComponent ();
 /** reimplemented to update code on changes*/
 	void changed ();
-/** reimplemented to return true only when the backend is idle */
-	bool isReady ();
 /** reimplemented to return true, if the RKStandardComponent is in Wizard mode */
 	bool isWizardish ();
 /** reimplemented to actually answer the question (if in Wizard mode) */

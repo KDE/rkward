@@ -406,13 +406,6 @@ void RKStandardComponent::handleChange () {
 	RKComponent::changed ();
 }
 
-bool RKStandardComponent::isReady () {
-	RK_TRACE (PLUGIN);
-	RK_ASSERT (backend);
-
-	return (!(backend->isBusy ()));
-}
-
 void RKStandardComponent::backendIdle () {
 	RK_TRACE (PLUGIN);
 

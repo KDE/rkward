@@ -2,7 +2,7 @@
                           rkpreviewbox  -  description
                              -------------------
     begin                : Wed Jan 24 2007
-    copyright            : (C) 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2009, 2012 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -120,10 +120,6 @@ void RKPreviewBox::tryPreviewNow () {
 	if (!parentComponent ()->isSatisfied ()) {
 		return;
 	}
-	if (!parentComponent ()->isReady ()) {
-		tryPreview ();
-		return;
-	}
 
 	if (!last_plot_done) {		// if the last plot is not done, yet, wait before starting the next.
 		new_plot_pending = true;
@@ -169,7 +165,7 @@ void RKPreviewBox::updateStatusLabel () {
 	if (!toggle_preview_box->isChecked ()) {
 		status_label->setText (i18n ("Preview disabled"));
 	} else {
-		if (parentComponent ()->isSatisfied () && parentComponent ()->isReady ()) {
+		if (parentComponent ()->isSatisfied ()) {
 			if (last_plot_done && (!new_plot_pending)) {
 				status_label->setText (i18n ("Preview up to date"));
 			} else {
