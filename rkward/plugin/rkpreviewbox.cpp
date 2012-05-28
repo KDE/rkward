@@ -117,7 +117,9 @@ void RKPreviewBox::tryPreviewNow () {
 	RK_TRACE (PLUGIN);
 
 	if (!code_property) return;
-	if (!parentComponent ()->isSatisfied ()) {
+	ComponentStatus s = parentComponent ()->recursiveStatus ();
+	if (s != Satisfied) {
+		if (s == Processing) tryPreview ();
 		return;
 	}
 
