@@ -1,0 +1,14 @@
+Source: r-other-rkward-rkwardtests
+Section: math
+Priority: optional
+Maintainer: m.eik michalke <meik.michalke@hhu.de>
+Build-Depends-Indep: debhelper (>> 4.1.0), r-base-dev (>= 2.10.0), cdbs, r-cran-roxygen2 | r-other-reaktanz-roxygen2
+Standards-Version: 3.9.3.1
+Homepage: http://rkward.sourceforge.net
+
+Package: r-other-rkward-rkwardtests
+Architecture: all
+Section: math
+Depends: r-base (>= 2.15.0)
+Description: GNU R package: A set of functions, classes and methods to test plugins that were written for RKWard.
+Homepage: http://rkward.sourceforge.net
