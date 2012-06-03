@@ -108,8 +108,15 @@
 
 	# give header a name to be able to set anchors
 	# it's just a time string down to the fraction of a second: yyyy-mm-dd HH:MM:SS.ssssss
-	header.id <- format(Sys.time(), "%Y-%m-%d_%H:%M:%OS6")
-	header.title <- format(Sys.time(), "%Y-%m-%d&nbsp;%H:%M:%S")
+	# but to enable proper plugin tests, first check if we're running in a test environment
+	if(tryCatch(
+		is.environment(rkwardtests::.rktest.tmp.storage) && exists(".rk.date", envir=rkwardtests::.rktest.tmp.storage, inherits=FALSE),
+		error=function(e) return(FALSE))){
+		header.id <- header.title <- "test"
+	} else {
+		header.id <- format(Sys.time(), "%Y-%m-%d_%H:%M:%OS6")
+		header.title <- format(Sys.time(), "%Y-%m-%d&nbsp;%H:%M:%S")
+	}
 	# add 'id', 'name' and 'title' attributes to the header
 	cat ("<h", level, "><a id=\"", header.id,"\" name=\"", header.id,"n\" title=\"", header.title,"\">", title, "</a></h", level, ">\n", sep="")
 	# if 'toc' is true, also add a javascript function call to add this header to the TOC menu

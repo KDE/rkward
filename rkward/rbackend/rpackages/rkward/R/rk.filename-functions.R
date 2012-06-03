@@ -128,7 +128,7 @@
 		# see $SRC/rkward/pages/rkward_output.css
 		.rk.cat.output (paste ("</head>\n<body>\n", sep=""))
 		# This initial output mostly to indicate the output is really there, just empty for now
-		.rk.cat.output (paste ("<a name=\"top\"></a>\n<pre>RKWard output initialized on", date (), "</pre>\n"))
+		.rk.cat.output (paste ("<a name=\"top\"></a>\n<pre>RKWard output initialized on", .rk.date (), "</pre>\n"))
 		# an empty <div> where the TOC menu gets added to dynamically, and a second one to toggle show/hide
 		.rk.cat.output (paste (
 			"<div id=\"RKWardResultsTOCShown\" class=\"RKTOC\">\n",
