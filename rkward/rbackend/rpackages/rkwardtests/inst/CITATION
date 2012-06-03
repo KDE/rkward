@@ -6,21 +6,7 @@ bibentry("Manual",
 		url="http://rkward.sourceforge.net",
 
 		textVersion =
-		paste("Friedrichsmeier, T. &  (2012). ",
-				"rkwardtests: RKWard Plugin Test Suite Framework (Version 0.5.7). ",
-				"Available from http://rkward.sourceforge.net",
-				sep=""),
-
-		mheader = "To cite rkwardtests in publications use:")
- bibentry("Manual",
-		title="rkwardtests: RKWard Plugin Test Suite Framework",
-		author="Thomas Friedrichsmeier and Meik Michalke",
-		year="2012",
-		note="(Version 0.5.7)",
-		url="http://rkward.sourceforge.net",
-
-		textVersion =
-		paste("Michalke, M. (2012). ",
+		paste("Friedrichsmeier, T. & Michalke, M. (2012). ",
 				"rkwardtests: RKWard Plugin Test Suite Framework (Version 0.5.7). ",
 				"Available from http://rkward.sourceforge.net",
 				sep=""),

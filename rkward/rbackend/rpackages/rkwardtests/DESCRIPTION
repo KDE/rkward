@@ -29,5 +29,4 @@ Collate:
     'RKTestSuite-class.R'
     'rkwardtests-internal.R'
     'rkwardtests-package.R'
-    'roxyPackage-package.R'
     'show-method.R'
