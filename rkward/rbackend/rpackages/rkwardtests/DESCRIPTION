@@ -1,13 +1,33 @@
 Package: rkwardtests
 Type: Package
 Title: RKWard Plugin Test Suite Framework
-Version: 0.5.5
-Date: 2010-10-14
 Author: Thomas Friedrichsmeier, Meik Michalke
-Maintainer: Thomas Friedrichsmeier <thomas.friedrichsmeier@ruhr-uni-bochum.de>, Meik Michalke <meik.michalke@uni-duesseldorf.de>
-Depends: R (>= 2.9.0),methods
-Description: A set of functions, classes and methods to test plugins that were written for RKWard.
+Maintainer: Thomas Friedrichsmeier <thomas.friedrichsmeier@ruhr-uni-bochum.de>,
+    Meik Michalke <meik.michalke@uni-duesseldorf.de>
+Depends:
+    R (>= 2.9.0),methods
+Description: A set of functions, classes and methods to test plugins that were
+    written for RKWard.
 License: GPL (>= 2)
 Encoding: UTF-8
 LazyLoad: yes
 URL: http://rkward.sourceforge.net
+Authors@R: c(person(given="Thomas", family="Friedrichsmeier",
+    email="thomas.friedrichsmeier@ruhr-uni-bochum.de", role=c("aut", "cre")),
+    person(given="Meik", family="Michalke", email="meik.michalke@hhu.de",
+    role=c("aut", "cre")))
+Version: 0.5.7
+Date: 2012-06-03
+Collate:
+    'RKTest-class.R'
+    'rktest.getTempDir.R'
+    'rktest.makeplugintests.R'
+    'rktest.replaceRunAgainLink.R'
+    'RKTestResult-class.R'
+    'rktest.runRKTestSuite.R'
+    'rktest.setSuiteStandards.R'
+    'RKTestSuite-class.R'
+    'rkwardtests-internal.R'
+    'rkwardtests-package.R'
+    'roxyPackage-package.R'
+    'show-method.R'
