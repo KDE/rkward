@@ -163,33 +163,47 @@ rktest.cleanRKTestSuite <- function (suite) {
 }
 
 ## Convenience functions for replacing / restoring functions for the test runs
-rktest.replace <- function (name, replacement, envir=as.environment ("package:rkward"), backup.name=name) {
-	if (exists (backup.name, envir=.rktest.tmp.storage, inherits=FALSE)) {
+rktest.replace <- function (name, replacement, envir=as.environment ("package:rkward"), backup.name=name, targetEnv=.rktest.tmp.storage) {
+	if (exists (backup.name, envir=targetEnv, inherits=FALSE)) {
 		message ("It looks like ", name, " has already been replaced. Not replacing it again.")
 	} else {
 # 		# Apparently R 2.14.x starts forcing namespaces for all packages, which makes things a bit more difficult
 		if (identical (envir, as.environment ("package:rkward"))) {
-			try (rktest.replace (name, replacement, asNamespace ("rkward"), backup.name), silent=TRUE)
+			replacementWorked <- tryCatch(
+				rktest.replace (name, replacement, asNamespace ("rkward"), backup.name),
+				error=function(e) return(FALSE)
+			)
+			if(is.null(replacementWorked)){
+				return(invisible(NULL))
+			}
 		}
 
-		assign (backup.name, get (name, envir), envir=.rktest.tmp.storage)
+		assign (backup.name, get (name, envir), envir=targetEnv)
 
 		environment (replacement) <- envir
 		try (unlockBinding (name, envir))
 		assign (name, replacement, envir)
 	}
+	return(invisible(NULL))
 }
 
-rktest.restore <- function (name, envir=as.environment ("package:rkward"), backup.name=name) {
-	if (exists (backup.name, envir=.rktest.tmp.storage, inherits=FALSE)) {
-		assign (name, get (backup.name, envir=.rktest.tmp.storage), envir=envir)
+rktest.restore <- function (name, envir=as.environment ("package:rkward"), backup.name=name, targetEnv=.rktest.tmp.storage) {
+	if (exists (backup.name, envir=targetEnv, inherits=FALSE)) {
 		if (identical (envir, as.environment ("package:rkward"))) {
-			try (assign (name, get (backup.name, envir=.rktest.tmp.storage), envir=asNamespace ("rkward")), silent=TRUE)
+			replacementWorked <- tryCatch(
+				rktest.restore (name, envir=asNamespace ("rkward"), backup.name),
+				error=function(e) return(FALSE)
+			)
+			if(is.null(replacementWorked)){
+				return(invisible(NULL))
+			}
 		}
+		assign (name, get (backup.name, envir=targetEnv), envir=envir)
+		rm (list=backup.name, envir=targetEnv)
 	} else {
 		message ("No backup available for ", name, ". Already restored?")
 	}
-	rm (list=backup.name, envir=.rktest.tmp.storage)
+	return(invisible(NULL))
 }
 
 ## Initialize test environment
@@ -213,7 +227,10 @@ rktest.initializeEnvironment <- function () {
 
 	# Make sure i18n does not get in the way
 	invisible (Sys.setenv (LANGUAGE="C"))
-	if (.Platform$OS.type == "unix") invisible (Sys.setlocale ("LC_MESSAGES", "C"))
+	invisible (Sys.setenv (LANG="C"))
+	if (.Platform$OS.type == "unix"){
+		invisible (Sys.setlocale (category="LC_MESSAGES", locale="C"))
+	}
 	options (useFancyQuotes=FALSE)
 
 	# This version of rk.set.output.html.file does not notify the frontend of the change. Without this, you'll get lots of output windows.
