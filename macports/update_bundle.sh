@@ -18,11 +18,12 @@ if [[ $1 == "" ]] ; then
            -r (update port ${PTARGET})
            -m (create .mdmg of ${PTARGET})
            -s (create sources .tar)
-           -c (copy .mdmg and src.tar to ${LPUBDIR}, if created)"
+           -c (copy .mdmg and src.tar to ${LPUBDIR}, if created)
+           -x (completely!!! wipe \$MACPORTS/var/macports/distfiles)"
 fi
 
 # get the options
-while getopts ":fprmsc" OPT; do
+while getopts ":fprmscx" OPT; do
   case $OPT in
     f)
        UPMPORTS=TRUE >&2
@@ -30,12 +31,14 @@ while getopts ":fprmsc" OPT; do
        MAKEMDMD=TRUE >&2
        MKSRCTAR=TRUE >&2
        COPYMDMD=TRUE >&2
+       WIPEDSTF=TRUE >&2
        ;;
     p) UPMPORTS=TRUE >&2 ;;
     r) UPRKWARD=TRUE >&2 ;;
     m) MAKEMDMD=TRUE >&2 ;;
     s) MKSRCTAR=TRUE >&2 ;;
     c) COPYMDMD=TRUE >&2 ;;
+    x) WIPEDSTF=TRUE >&2 ;;
     \?)
       echo "Invalid option: -$OPTARG" >&2
       exit 1
@@ -46,6 +49,11 @@ while getopts ":fprmsc" OPT; do
       ;;
   esac
 done
+
+# prepare for a clean installation, remove all cached sources
+if [[ $WIPEDSTF ]] ; then
+  sudo rm -rf ${MPTINST}/var/macports/distfiles/*
+fi
 
 # update installed ports
 if [[ $UPMPORTS ]] ; then
