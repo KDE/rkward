@@ -18,8 +18,6 @@
 
 #include <kxmlguifactory.h>
 
-#include <ktexteditor/configinterface.h>
-#include <ktexteditor/sessionconfiginterface.h>
 #include <ktexteditor/editorchooser.h>
 #include <ktexteditor/modificationinterface.h>
 #include <ktexteditor/markinterface.h>
@@ -97,6 +95,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 	if (em_iface) em_iface->setModifiedOnDiskWarning (true);
 	else RK_ASSERT (false);
 	m_view = m_doc->createView (this);
+	m_doc->editor ()->readConfig ();
 
 	setFocusProxy (m_view);
 	setFocusPolicy (Qt::StrongFocus);
@@ -158,6 +157,9 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 
 RKCommandEditorWindow::~RKCommandEditorWindow () {
 	RK_TRACE (COMMANDEDITOR);
+
+	m_doc->editor ()->writeConfig ();
+
 	delete hinter;
 	delete m_doc;
 	if (!delete_on_close.isEmpty ()) KIO::del (delete_on_close)->start ();

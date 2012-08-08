@@ -1,3 +1,4 @@
+- Fixed: Changed configuration settings would not be saved for script editor
 - Fixed: One character missing in R commands on lines longer than 4096 characters
 - Fixed: "Next"-button in wizards would remain enabled while settings are missing on a page
 - Fixed: Dynamic pages in a wizard would cause a layout bug on the first page
