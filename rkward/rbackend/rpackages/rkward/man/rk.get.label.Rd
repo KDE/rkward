@@ -2,6 +2,7 @@
 
 \alias{rk.get.label}
 \alias{rk.set.label}
+\alias{rk.list.labels}
 \alias{rk.get.short.name}
 \alias{rk.get.description}
 \alias{rk.list.names}
@@ -12,6 +13,7 @@
 \usage{
 rk.get.label(x)
 rk.set.label(x, label, envir = parent.frame())
+rk.list.labels (x, fill=FALSE)
 rk.get.short.name(x)
 rk.get.description(..., paste.sep = NULL, is.substitute = FALSE)
 rk.list.names(..., deparse.level = 2)
@@ -22,6 +24,7 @@ rk.list(...)
   \item{x}{any R object}
   \item{label}{a string, to set the label attribute of an object}
   \item{envir}{an environment, where the attribute is evaluated}
+  \item{fill}{a logical or character. See Details.}
   \item{paste.sep}{a string, used as the \code{collapse} argument for paste}
   \item{is.substitute}{a logical (not NA). See Details.}
 }
@@ -31,6 +34,8 @@ rk.list(...)
 
  \code{rk.set.label} sets the rkward label for the given object.
 
+ \code{rk.list.labels} retrieves the rkward labels for a list of objects. Most importantly, this can be used for extracting all column labels in a \code{data.frame}, conveniently. The parameter \code{fill} controls, what happens, when no rkward labels have been assigned. The default (\code{FALSE}) is to return empty strings for any missing labels. For \code{fill=TRUE}, missing labels will be filled with the short names of the object. You can also pass a character vector of default labels to use as the \code{fill} parameter.
+ 
  \code{rk.get.short.name} creates a short name for the given object.
 
  \code{rk.get.description} creates descriptive string(s) for each of the arguments in "\code{\dots}"; collapsing into a single string using \code{paste.sep} (if not NULL). If \code{is.substitute=TRUE}, the arguments will be deparsed, first, which can be useful when using \code{rk.get.description} inside a function.
@@ -52,6 +57,8 @@ rk.set.label(x[["a"]], "First column")
 rk.get.short.name (x$a)                   # "x$a"
 rk.get.label (x$a)                        # "First column"
 rk.get.description (x$a)                  # "x$a (First column)"
+rk.list.labels (x)                        # "First column" ""
+rk.list.labels (x, TRUE)                  # "First column" "b"
 rk.list.names (x, x$a, x$b)               # "x" "x$a" "x$b"
 names (rk.list (x$a, x$b))                # "x$a (First column)" "x$b"
 }

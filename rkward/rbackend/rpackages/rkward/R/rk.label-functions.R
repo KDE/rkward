@@ -3,7 +3,15 @@
 #' \code{rk.get.label} retrieves the rkward label (if any) of the given object.
 #' 
 #' \code{rk.set.label} sets the rkward label for the given object.
-#' 
+#'
+#' \code{rk.list.labels} retrieves the rkward labels for a list of objects.
+#' Most importantly, this can be used for extracting all column labels in a
+#' \code{data.frame}, conveniently. The parameter \code{fill} controls, what
+#' happens, when no rkward labels have been assigned. The default (\code{FALSE})
+#' is to return empty strings for any missing labels. For \code{fill=TRUE}, missing
+#' labels will be filled with the short names of the object. You can also pass
+#' a character vector of default labels to use as the \code{fill} parameter.
+#'
 #' \code{rk.get.short.name} creates a short name for the given object.
 #' 
 #' \code{rk.get.description} creates descriptive string(s) for each of the
@@ -25,6 +33,7 @@
 #' @param x any R object
 #' @param label a string, to set the label attribute of an object
 #' @param envir an environment, where the attribute is evaluated
+#' @param fill a logical or character. See Details.
 #' @param paste.sep a string, used as the \code{collapse} argument for paste
 #' @param is.substitute a logical (not NA). See Details.
 #' @return \code{rk.set.label} returns the result of the evaluation of "setting
@@ -39,6 +48,8 @@
 #' rk.get.short.name (x$a)                   # "x$a"
 #' rk.get.label (x$a)                        # "First column"
 #' rk.get.description (x$a)                  # "x$a (First column)"
+#' rk.list.labels (x)                        # "First column" ""
+#' rk.list.labels (x, TRUE)                  # "First column" "b"
 #' rk.list.names (x, x$a, x$b)               # "x" "x$a" "x$b"
 #' names (rk.list (x$a, x$b))                # "x$a (First column)" "x$b"
 #' 
@@ -47,11 +58,11 @@
 #' @export
 "rk.get.label" <- function (x) {
 	if (is.call (x) || is.name (x)) {
-		ret <- attr (eval (x), ".rk.meta")[names (attr (eval (x), ".rk.meta")) == "label"]
-	} else {
-		ret <- attr (x, ".rk.meta")[names (attr (x, ".rk.meta")) == "label"]
+		x <- eval (x)
 	}
-	as.character (as.vector (ret))
+	ret <- attr (x, ".rk.meta")[["label"]]
+	if (is.null (ret) || is.na (ret)) ""
+	else as.character (as.vector (ret))
 }
 
 # set rkward label
@@ -65,6 +76,19 @@
 	}
 	meta[["label"]] <- as.character (label)
 	eval(substitute(attr(x, ".rk.meta") <- meta), envir = envir)
+}
+
+# retrieve the rkward labels for items in the given list
+#' @rdname rk.label
+#' @export
+"rk.list.labels" <- function (x, fill=FALSE) {
+	ret <- sapply (x, rk.get.label)
+	if (isTRUE (fill)) {
+		ret[ret == ""] <- names(x)[ret == ""]
+	} else if (!is.logical (fill)) {
+		ret[ret == ""] <- as.character (fill)[ret == ""]
+	}
+	ret
 }
 
 # get a short name for the given object

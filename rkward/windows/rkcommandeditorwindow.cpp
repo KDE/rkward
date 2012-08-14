@@ -158,6 +158,8 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 RKCommandEditorWindow::~RKCommandEditorWindow () {
 	RK_TRACE (COMMANDEDITOR);
 
+	// NOTE: TODO: Ideally we'd only write out a changed config, but how to detect config changes?
+	// 	Alternatively, only for the last closed script window
 	m_doc->editor ()->writeConfig ();
 
 	delete hinter;
