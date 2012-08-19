@@ -9,6 +9,12 @@ NOTE: As of now, this bundle is made available for BETA TESTING purposes. It is 
  o https://sourceforge.net/apps/mediawiki/rkward/index.php?title=Contact
 
 
+REQUIREMENTS
+============
+
+You need at least Mac OSX 10.7 ("Lion") to install this bundle. It is reported to run on 10.8 ("Mountain Lion") as well.
+
+
 INSTALLATION
 ============
 To install, simply double click the .dmg, and double click the therein appearing archive as well. An installation dialog should appear and ask you for the device to install to (where you should probably select your system harddrive). The contents of this bundle will be installed to /opt/rkward, and the programs will be available at Applications/RKWard.

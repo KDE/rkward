@@ -4,7 +4,7 @@
 PortSystem          1.0
 fetch.type          svn
 svn.url             http://rkward.svn.sourceforge.net/svnroot/rkward/trunk
-svn.revision        4277
+svn.revision        4280
 worksrcdir          ${workpath}/trunk/rkward
 
 name                rkward-devel
