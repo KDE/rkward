@@ -23,6 +23,10 @@ Mandatory: RKWard is a KDE program, and KDE needs a service called dbus to run. 
   sudo launchctl load -w /opt/rkward/Library/LaunchDaemons/org.freedesktop.dbus-system.plist
   launchctl load -w /opt/rkward/Library/LaunchAgents/org.freedesktop.dbus-session.plist
 
+Mandatory: Currently, you need to update the MIME type database manually before you can run any KDE applications successfully. To do this, run the following command *once* in the terminal:
+
+  sudo update-mime-database -V /opt/rkward/share/mime
+
 Optional: As explained, the bundle installs mostly to /opt/rkward. If you want to launch all newly installed applications directly (e.g., R), you probably want to add this to the PATH environment variable, by adding it to ~/.profile:
 
   echo "export PATH=/opt/rkward/bin:/opt/rkward/sbin:\$PATH" >> ~/.profile
