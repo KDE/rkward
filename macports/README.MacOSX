@@ -25,7 +25,7 @@ Mandatory: RKWard is a KDE program, and KDE needs a service called dbus to run. 
 
 Mandatory: Currently, you need to update the MIME type database manually before you can run any KDE applications successfully. To do this, run the following command *once* in the terminal:
 
-  sudo update-mime-database -V /opt/rkward/share/mime
+  sudo /opt/rkward/bin/update-mime-database -V /opt/rkward/share/mime
 
 Optional: As explained, the bundle installs mostly to /opt/rkward. If you want to launch all newly installed applications directly (e.g., R), you probably want to add this to the PATH environment variable, by adding it to ~/.profile:
 
