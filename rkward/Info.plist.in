@@ -32,16 +32,5 @@
         <true/>
         <key>NSHumanReadableCopyright</key>
         <string></string>
-        <key>postinstall_script</key>
-        <string>#!/bin/sh
-sudo launchctl load -w /opt/rkward/Library/LaunchDaemons/org.freedesktop.dbus-system.plist
-launchctl load -w /opt/rkward/Library/LaunchAgents/org.freedesktop.dbus-session.plist
-sudo /opt/rkward/bin/update-mime-database -V /opt/rkward/share/mime
-exit 0
-        </string>
-        <key>uninstall_method</key>
-        <string>remove_copied_items</string>
-        <key>uninstallable</key>
-        <true/>
 </dict>
 </plist>
