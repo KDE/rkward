@@ -4,7 +4,7 @@
 PortSystem          1.0
 fetch.type          svn
 svn.url             http://rkward.svn.sourceforge.net/svnroot/rkward/trunk
-svn.revision        4283
+svn.revision        4284
 worksrcdir          ${workpath}/trunk/rkward
 
 name                rkward-devel
@@ -47,3 +47,8 @@ configure.args-append \
 configure.cmd       cmake ..
 
 build.dir           ${worksrcdir}/build
+
+pre-pkg {
+        file copy -force -- ${worksrcdir}/macports/postinstall ${package.scripts}/postinstall
+        file attributes ${package.scripts}/postinstall -permissions 0755
+}
