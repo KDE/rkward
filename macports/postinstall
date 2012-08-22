@@ -1,5 +1,4 @@
 #!/bin/sh
 launchctl load -w /opt/rkward/Library/LaunchDaemons/org.freedesktop.dbus-system.plist
-launchctl load -w /opt/rkward/Library/LaunchAgents/org.freedesktop.dbus-session.plist
 /opt/rkward/bin/update-mime-database -V /opt/rkward/share/mime
 exit 0
