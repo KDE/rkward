@@ -31,7 +31,7 @@ that matters in one script. As a side effect, a lot of useful automation was imp
 will definitely save you quite some amount of typing.
 
 \section{Before we start}
-It is important to undertsand that while  \texttt{rkwarddev} can help you to make designing new plugins
+It is important to understand that while  \texttt{rkwarddev} can help you to make designing new plugins
 much easier, you still need to know how the generated XML and JavaScript files work and interact. That is, if
 you didn't yet read the \textit{Introduction to Writing Plugins for
 RKWard},\footnote{\url{http://rkward.sourceforge.net/documents/devel/plugins/index.html}} please do so before
