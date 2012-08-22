@@ -11,7 +11,6 @@ NOTE: As of now, this bundle is made available for BETA TESTING purposes. It is 
 
 REQUIREMENTS
 ============
-
 You need at least Mac OSX 10.7 ("Lion") to install this bundle. It is reported to run on 10.8 ("Mountain Lion") as well.
 
 
@@ -21,21 +20,14 @@ To install, simply double click the .dmg, and double click the therein appearing
 
 NOTE: This bundle will NOT install MacPorts itself. It also doesn't touch the MacPorts default directory, so you should be able to use MacPorts in parallel without problems.
 
-
-AFTER THE INSTALLATION
-======================
-Mandatory: RKWard is a KDE program, and KDE needs a service called dbus to run. Therefore, after you installed the bundle image, run these commands *once* in a terminal session:
-
-  sudo launchctl load -w /opt/rkward/Library/LaunchDaemons/org.freedesktop.dbus-system.plist
-  launchctl load -w /opt/rkward/Library/LaunchAgents/org.freedesktop.dbus-session.plist
-
-Mandatory: Currently, you need to update the MIME type database manually before you can run any KDE applications successfully. To do this, run the following command *once* in the terminal:
-
-  sudo /opt/rkward/bin/update-mime-database -V /opt/rkward/share/mime
-
-Optional: As explained, the bundle installs mostly to /opt/rkward. If you want to launch all newly installed applications directly (e.g., R), you probably want to add this to the PATH environment variable, by adding it to ~/.profile:
+Optional: As explained, the bundle installs to /opt/rkward. If you want to launch all newly installed applications directly (e.g., R), you probably want to add this to the PATH environment variable, by adding it to ~/.profile:
 
   echo "export PATH=/opt/rkward/bin:/opt/rkward/sbin:\$PATH" >> ~/.profile
+
+
+RUNNING RKWARD
+==============
+Double click the "RKWard" icon in your Applications/RKWard folder.
 
 
 LOCALIZATION
@@ -65,11 +57,6 @@ To set the variable permanently, you can create or edit the file ~/.MacOSX/envir
     If the file does already exist, only add the above key and string nodes accordingly.
 
 
-RUNNING RKWARD
-==============
-Double click the "RKWard" icon in your Applications/RKWard folder.
-
-
 UPDATES/UNINSTALL
 =================
 There is no real update for binary bundles yet. That is, you need to uninstall and install the new version. Your personal settings should survive that, as they are sored in your personal directory (including manually installed R packages, if you didn't install them to /opt/rkward). To uninstall:
@@ -79,12 +66,21 @@ There is no real update for binary bundles yet. That is, you need to uninstall a
   2. Remove the directory /opt/rkward:
      sudo rm -rf /opt/rkward
 
-Afterwards, you can install the new bundle. You don't need to repeat the steps outlined in "After the installation" and "Localization".
+Afterwards, you can install the new bundle.
 
 
 TROUBLESHOOTING
 ===============
-For problems with RKWard on Mac OSX, refer to
+If the installation seemed to have finished without problems but RKWard wouldn't start, it might be that the dbus service isn't running yet. RKWard is a KDE program, and KDE needs this service to work properly. Therefore, try to run these commands in a terminal session:
+
+  sudo launchctl load -w /opt/rkward/Library/LaunchDaemons/org.freedesktop.dbus-system.plist
+  launchctl load -w /opt/rkward/Library/LaunchAgents/org.freedesktop.dbus-session.plist
+
+In case you get errors because of missing MIME types (application/octet-stream in particular), try to update the MIME type database manually. To do this, run the following command in the terminal:
+
+  sudo /opt/rkward/bin/update-mime-database -V /opt/rkward/share/mime
+
+If this doesn't help, for problems with RKWard on Mac OSX, refer to
  o https://sourceforge.net/apps/mediawiki/rkward/index.php?title=RKWard_on_Mac
 For problems specific to KDE or R, please refer to http://www.kde.org, and http://www.r-project.org, respectively.
 
