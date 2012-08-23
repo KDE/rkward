@@ -63,15 +63,6 @@ RObjectList::~RObjectList () {
 	RK_TRACE (OBJECTS);
 }
 
-void RObjectList::setWorkspaceURL (const KUrl &url) {
-	RK_TRACE (OBJECTS);
-
-	if (url != current_url) {
-		current_url = url;
-		emit (workspaceUrlChanged (url));
-	}
-}
-
 QStringList RObjectList::detachPackages (const QStringList &packages, RCommandChain *chain, RKProgressControl* control) {
 	RK_TRACE (OBJECTS);
 

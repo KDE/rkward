@@ -2,7 +2,7 @@
                           rkworkplace  -  description
                              -------------------
     begin                : Thu Sep 21 2006
-    copyright            : (C) 2006, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007, 2009, 2010, 2011, 2012 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -27,8 +27,10 @@
 #include <kactioncollection.h>
 #include <krun.h>
 #include <kmimetype.h>
+#include <kstandarddirs.h>
 
 #include <QFileInfo>
+#include <QCryptographicHash>
 
 #include "detachedwindowcontainer.h"
 #include "rkcommandeditorwindow.h"
@@ -61,6 +63,7 @@ RKWorkplace::RKWorkplace (QWidget *parent) : QWidget (parent) {
 	RK_ASSERT (main_workplace == 0);
 
 	main_workplace = this;
+	_workspace_config = 0;
 
 	/* Splitter setup contains heavy copying from Kate's katemdi! */
 	KVBox *vbox = new KVBox (this);
@@ -105,7 +108,44 @@ RKWorkplace::RKWorkplace (QWidget *parent) : QWidget (parent) {
 RKWorkplace::~RKWorkplace () {
 	RK_TRACE (APP);
 
+	delete _workspace_config;
 //	closeAll ();	// not needed, as the windows will autodelete themselves using QObject mechanism. Of course, closeAll () should be called *before* quitting.
+}
+
+QString workspaceConfigFileName (const KUrl &url) {
+	QString base_name = QString (QCryptographicHash::hash (url.prettyUrl ().toUtf8 (), QCryptographicHash::Md5).toHex());
+	return (KStandardDirs::locateLocal ("data", "rkward/workspace_config_" + base_name));
+}
+
+KConfigBase *RKWorkplace::workspaceConfig () {
+	if (!_workspace_config) {
+		RK_TRACE (APP);
+		_workspace_config = new KConfig (workspaceConfigFileName (workspaceURL ()));
+	}
+	return _workspace_config;
+}
+
+QString RKWorkplace::portableUrl (const KUrl &url) {
+	KUrl relative = KUrl::relativeUrl (workspaceURL (), url);
+	relative.cleanPath ();
+	return relative.prettyUrl ();
+}
+
+void RKWorkplace::setWorkspaceURL (const KUrl &url, bool keep_config) {
+	RK_TRACE (APP);
+
+	if (url != current_url) {
+		current_url = url;
+		if (keep_config && _workspace_config) {
+			KConfig * _new_config = _workspace_config->copyTo (workspaceConfigFileName (workspaceURL ()));
+			delete _workspace_config;
+			_workspace_config = _new_config;
+		} else {
+			delete _workspace_config;
+			_workspace_config = 0;
+		}
+		emit (workspaceUrlChanged (url));
+	}
 }
 
 void RKWorkplace::saveSettings () {
@@ -514,7 +554,7 @@ QStringList RKWorkplace::makeWorkplaceDescription () {
 	QStringList workplace_description;
 
 	// first, save the base directory of the workplace. This allows us to cope better with moved workspaces while restoring.
-	KUrl base_url = RObjectList::getObjectList ()->getWorkspaceURL ();
+	KUrl base_url = workspaceURL ();
 	base_url.setPath (base_url.directory ());
 	if (base_url.isLocalFile () && base_url.hasPath ()) workplace_description.append ("base::::" + base_url.url ());
 
@@ -564,6 +604,8 @@ QStringList RKWorkplace::makeWorkplaceDescription () {
 
 void RKWorkplace::saveWorkplace (RCommandChain *chain) {
 	RK_TRACE (APP);
+// TODO: This is still a mess. All workplace-related settings, including the workspaceConfig(), should be saved to a single place, and in 
+// standard KConfig format.
 	if (RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsModuleGeneral::SaveWorkplaceWithWorkspace) return;
 
 	RKGlobals::rInterface ()->issueCommand ("rk.save.workplace(description=" + RObject::rQuote (makeWorkplaceDescription().join ("\n")) + ")", RCommand::App, i18n ("Save Workplace layout"), 0, 0, chain);
@@ -580,7 +622,7 @@ KUrl checkAdjustRestoredUrl (const QString &_url, const QString old_base) {
 	KUrl url (_url);
 
 	if (old_base.isEmpty ()) return (url);
-	KUrl new_base_url = RObjectList::getObjectList ()->getWorkspaceURL ();
+	KUrl new_base_url = RKWorkplace::mainWorkplace ()->workspaceURL ();
 	new_base_url.setPath (new_base_url.directory ());
 	if (new_base_url.isEmpty ()) return (url);
 	KUrl old_base_url (old_base);
@@ -595,7 +637,7 @@ KUrl checkAdjustRestoredUrl (const QString &_url, const QString old_base) {
 	// check whether a file exists for the adjusted url
 	KUrl relative = KUrl::fromLocalFile (new_base_url.path () + '/' + KUrl::relativePath (old_base_url.path (), url.path ()));
 	relative.cleanPath ();
-	if (QFileInfo (relative.toLocalFile ()).exists ()) return (relative);
+// 	if (QFileInfo (relative.toLocalFile ()).exists ()) return (relative);
 	return (url);
 }
 

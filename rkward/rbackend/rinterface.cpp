@@ -546,7 +546,7 @@ QStringList RInterface::processPlainGenericRequest (const QStringList &calllist)
 			RKConsole::mainConsole ()->setCommandHistory (calllist.mid (2), calllist.value (1) == "append");
 		}
 	} else if (call == "getWorkspaceUrl") {
-		KUrl url = RObjectList::getObjectList ()->getWorkspaceURL ();
+		KUrl url = RKWorkplace::mainWorkplace ()->workspaceURL ();
 		if (!url.isEmpty ()) return (QStringList (url.url ()));
 	} else if (call == "workplace.layout") {
 		if (calllist.value (1) == "set") {

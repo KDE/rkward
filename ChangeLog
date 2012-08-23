@@ -1,3 +1,4 @@
+- Also save cursor position, folding, etc. for scripts. Note: Implementation details may be subject to change.
 - New function rk.list.labels() to retrieve column labels in a data.frame
 - rk.get.label() will now return an empty string ("") instead of NULL, in case no label is assigned
 - Fixed: Changed configuration settings would not be saved for script editor
@@ -5,7 +6,7 @@
 - Fixed: "Next"-button in wizards would remain enabled while settings are missing on a page
 - Fixed: Dynamic pages in a wizard would cause a layout bug on the first page
 - Do not offer to restore individual removed columns of a data.frame opened for editing
-- Fixed: Plot history and graphical menus broken in some cases with R 2.15.0		TODO: backport? (r4182)
+- Fixed: Plot history and graphical menus broken in some cases with R 2.15.0
 - Fixed: If the rkward package was loaded in a plain R session, q() and quit() still work
 - combined all Wilcoxon/Mann-Whitney-tests in one plugin (from previously two separate plugins)			TODO: adjust test(s)
 - Added polyserial/polychoric correlations to correlation matrix plugin			TODO: adjust test(s)

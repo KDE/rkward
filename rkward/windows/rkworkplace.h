@@ -2,7 +2,7 @@
                           rkworkplace  -  description
                              -------------------
     begin                : Thu Sep 21 2006
-    copyright            : (C) 2006, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007, 2009, 2010, 2011, 2012 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -155,14 +155,22 @@ Has no effect, if RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsMod
 	static RKWorkplace *mainWorkplace () { return main_workplace; };
 	static RKMDIWindowHistory *getHistory () { return main_workplace->history; };
 	void placeToolWindows ();
+
+	void setWorkspaceURL (const KUrl &url, bool keep_config=false);
+	KUrl workspaceURL () const { return current_url; };
+	KConfigBase *workspaceConfig ();
+	QString portableUrl (const KUrl &url);
 signals:
-/** TODO: For future expansion. This signal is neither emitted nor used so far. It could be used to deactivate some options in the "Window" menu. Or maybe it can be removed? */
-	void lastWindowClosed ();
+/** emitted when the workspace Url has changed */
+	void workspaceUrlChanged (const KUrl& url);
 public slots:
 /** When windows are attached to the workplace, their QObject::destroyed () signal is connected to this slot. Thereby deleted objects are removed from the workplace automatically */
 	void removeWindow (QObject *window);
 	void saveSettings ();
 private:
+	KUrl current_url;
+	KConfig *_workspace_config;
+
 /** current list of windows. @See getObjectList () */ 
 	RKWorkplaceObjectList windows;
 /** the view. @See view () */ 

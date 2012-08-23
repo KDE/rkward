@@ -168,7 +168,7 @@ public:
 @param encoding encoding to use. If QString (), the default encoding is used.
 @param read_only Open the file in read-only mode
 @param delete_on_close File should be deleted when closing the window. Only respected with read_only=true. */
-	bool openURL (const KUrl &url, const QString& encoding=QString (), bool use_r_highlighting=true, bool read_only=false, bool delete_on_close=false);
+	bool openURL (const KUrl url, const QString& encoding=QString (), bool use_r_highlighting=true, bool read_only=false, bool delete_on_close=false);
 /** returns, whether the document was modified since the last save */
 	bool isModified ();
 /** insert the given text into the document at the current cursor position. Additionally, focuses the view */

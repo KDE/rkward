@@ -21,6 +21,7 @@
 #include <ktexteditor/editorchooser.h>
 #include <ktexteditor/modificationinterface.h>
 #include <ktexteditor/markinterface.h>
+#include <ktexteditor/sessionconfiginterface.h>
 
 #include <qlayout.h>
 #include <qapplication.h>
@@ -62,6 +63,7 @@
 #include "../rkglobals.h"
 #include "../rkward.h"
 #include "rkhelpsearchwindow.h"
+#include "rkworkplace.h"
 
 #include "../debug.h"
 
@@ -161,6 +163,19 @@ RKCommandEditorWindow::~RKCommandEditorWindow () {
 	// NOTE: TODO: Ideally we'd only write out a changed config, but how to detect config changes?
 	// 	Alternatively, only for the last closed script window
 	m_doc->editor ()->writeConfig ();
+	if (!url ().isEmpty ()) {
+		KTextEditor::SessionConfigInterface *iface = qobject_cast<KTextEditor::SessionConfigInterface*> (m_doc);
+		QString p_url = RKWorkplace::mainWorkplace ()->portableUrl (m_doc->url ());
+		if (iface) {
+			KConfigGroup conf (RKWorkplace::mainWorkplace ()->workspaceConfig (), QString ("SkriptDocumentSettings %1").arg (p_url));
+			iface->writeSessionConfig (conf);
+		}
+		iface = qobject_cast<KTextEditor::SessionConfigInterface*> (m_view);
+		if (iface) {
+			KConfigGroup conf (RKWorkplace::mainWorkplace ()->workspaceConfig (), QString ("SkriptViewSettings %1").arg (p_url));
+			iface->writeSessionConfig (conf);
+		}
+	}
 
 	delete hinter;
 	delete m_doc;
@@ -347,12 +362,30 @@ void RKCommandEditorWindow::setReadOnly (bool ro) {
 	m_doc->setReadWrite (!ro);
 }
 
-bool RKCommandEditorWindow::openURL (const KUrl &url, const QString& encoding, bool use_r_highlighting, bool read_only, bool delete_on_close){
+bool RKCommandEditorWindow::openURL (const KUrl url, const QString& encoding, bool use_r_highlighting, bool read_only, bool delete_on_close){
 	RK_TRACE (COMMANDEDITOR);
 
 	// encoding must be set *before* loading the file
 	if (!encoding.isEmpty ()) m_doc->setEncoding (encoding);
-	if (m_doc->openUrl (url)){
+	if (m_doc->openUrl (url)) {
+		if (!delete_on_close) {	// don't litter config with temporary files
+			KTextEditor::SessionConfigInterface *iface = qobject_cast<KTextEditor::SessionConfigInterface*> (m_doc);
+			QString p_url = RKWorkplace::mainWorkplace ()->portableUrl (m_doc->url ());
+			if (iface) {
+				KConfigGroup conf (RKWorkplace::mainWorkplace ()->workspaceConfig (), QString ("SkriptDocumentSettings %1").arg (p_url));
+				// Hmm. KTextEditor::Document's readSessionConfig() simply restores too much. Yes, I want to load bookmarks and stuff.
+				// I do not want to mess with encoding, or risk loading a different url, after the doc is already loaded!
+				if (conf.readEntry ("Encoding", encoding) != encoding) conf.writeEntry ("Encoding", encoding);
+				if (conf.readEntry ("URL", url) != url) conf.writeEntry ("URL", url);
+				iface->readSessionConfig (conf);
+			}
+			iface = qobject_cast<KTextEditor::SessionConfigInterface*> (m_view);
+			if (iface) {
+				KConfigGroup conf (RKWorkplace::mainWorkplace ()->workspaceConfig (), QString ("SkriptViewSettings %1").arg (p_url));
+				iface->readSessionConfig (conf);
+			}
+		}
+
 		if (use_r_highlighting) RKCommandHighlighter::setHighlighting (m_doc, RKCommandHighlighter::RScript);
 		setReadOnly (read_only);
 
@@ -363,7 +396,7 @@ bool RKCommandEditorWindow::openURL (const KUrl &url, const QString& encoding, b
 				RK_ASSERT (false);
 				return true;
 			}
-			RKCommandEditorWindow::delete_on_close=url;
+			RKCommandEditorWindow::delete_on_close = url;
 		}
 
 		return true;

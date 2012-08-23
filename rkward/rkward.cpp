@@ -133,6 +133,7 @@ RKWardMainWindow::RKWardMainWindow (RKWardStartupOptions *options) : KParts::Mai
 	RKWorkplace::mainWorkplace ()->initActions (actionCollection (), "left_window", "right_window");
 	setCentralWidget (RKWorkplace::mainWorkplace ());
 	connect (RKWorkplace::mainWorkplace ()->view (), SIGNAL (captionChanged (const QString &)), this, SLOT (setCaption (const QString &)));
+	connect (RKWorkplace::mainWorkplace (), SIGNAL (workspaceUrlChanged(const KUrl&)), this, SLOT (addWorkspaceUrl(const KUrl&)));
 
 	part_manager = new KParts::PartManager (this);
 	// When the manager says the active part changes,
@@ -287,7 +288,6 @@ void RKWardMainWindow::startR () {
 
 	RKGlobals::rinter = new RInterface ();
 	new RObjectList ();
-	connect (RObjectList::getObjectList (), SIGNAL (workspaceUrlChanged(const KUrl&)), this, SLOT (addWorkspaceUrl(const KUrl&)));
 
 	RObjectBrowser::mainBrowser ()->unlock ();
 }
@@ -660,7 +660,7 @@ bool RKWardMainWindow::doQueryQuit () {
 	int res;
 	res = KMessageBox::questionYesNoCancel (this, i18n ("Quitting RKWard: Do you want to save the workspace?"), i18n ("Save Workspace?"), KStandardGuiItem::save (), KStandardGuiItem::discard (), KGuiItem (i18n ("Don't quit")));
 	if (res == KMessageBox::Yes) {
-		new RKSaveAgent (RObjectList::getObjectList ()->getWorkspaceURL (), false, RKSaveAgent::DoNothing);
+		new RKSaveAgent (RKWorkplace::mainWorkplace ()->workspaceURL (), false, RKSaveAgent::DoNothing);
 	} else if (res == KMessageBox::Cancel) {
 		slotSetStatusReady ();
 		return false;
@@ -727,7 +727,7 @@ void RKWardMainWindow::fileOpenAskSave (const KUrl &url) {
 	if (res == KMessageBox::No) {
 		fileOpenNoSave (url);
 	} else if (res == KMessageBox::Yes) {
-		new RKSaveAgent (RObjectList::getObjectList ()->getWorkspaceURL (), false, RKSaveAgent::Load, url);
+		new RKSaveAgent (RKWorkplace::mainWorkplace ()->workspaceURL (), false, RKSaveAgent::Load, url);
 	}
 	// else: cancel. Don't do anything
 }
@@ -751,12 +751,12 @@ void RKWardMainWindow::slotFileLoadLibs () {
 
 void RKWardMainWindow::slotFileSaveWorkspace () {
 	RK_TRACE (APP);
-	new RKSaveAgent (RObjectList::getObjectList ()->getWorkspaceURL ());
+	new RKSaveAgent (RKWorkplace::mainWorkplace ()->workspaceURL ());
 }
 
 void RKWardMainWindow::slotFileSaveWorkspaceAs () {
 	RK_TRACE (APP);
-	new RKSaveAgent (RObjectList::getObjectList ()->getWorkspaceURL (), true);
+	new RKSaveAgent (RKWorkplace::mainWorkplace ()->workspaceURL (), true);
 }
 
 void RKWardMainWindow::addWorkspaceUrl (const KUrl &url) {
@@ -881,8 +881,8 @@ void RKWardMainWindow::openHTML (const KUrl &url) {
 void RKWardMainWindow::setCaption (const QString &) {
 	RK_TRACE (APP);
 
-	QString wcaption = RObjectList::getObjectList ()->getWorkspaceURL ().fileName ();
-	if (wcaption.isEmpty ()) wcaption = RObjectList::getObjectList ()->getWorkspaceURL ().prettyUrl ();
+	QString wcaption = RKWorkplace::mainWorkplace ()->workspaceURL ().fileName ();
+	if (wcaption.isEmpty ()) wcaption = RKWorkplace::mainWorkplace ()->workspaceURL ().prettyUrl ();
 	if (wcaption.isEmpty ()) wcaption = i18n ("[Unnamed Workspace]");
 	RKMDIWindow *window = RKWorkplace::mainWorkplace ()->view ()->activePage ();
 	if (window) wcaption.append (" - " + window->fullCaption ());

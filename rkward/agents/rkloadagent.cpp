@@ -2,7 +2,7 @@
                           rkloadagent  -  description
                              -------------------
     begin                : Sun Sep 5 2004
-    copyright            : (C) 2004, 2007, 2009, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007, 2009, 2011, 2012 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -58,7 +58,7 @@ RKLoadAgent::RKLoadAgent (const KUrl &url, bool merge) {
 	command = new RCommand ("load (\"" + filename + "\")", RCommand::App | RCommand::ObjectListUpdate, QString::null, this, WORKSPACE_LOAD_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command);
 
-	RObjectList::getObjectList ()->setWorkspaceURL (url);
+	RKWorkplace::mainWorkplace ()->setWorkspaceURL (url);
 }
 
 RKLoadAgent::~RKLoadAgent () {
@@ -71,13 +71,13 @@ void RKLoadAgent::rCommandDone (RCommand *command) {
 	if (command->getFlags () == WORKSPACE_LOAD_COMMAND) {
 		if (!tmpfile.isEmpty ()) KIO::NetAccess::removeTempFile (tmpfile);
 		if (command->failed ()) {
-			KMessageBox::error (0, i18n ("There has been an error opening file '%1':\n%2", RObjectList::getObjectList ()->getWorkspaceURL ().path (), command->error ()), i18n ("Error loading workspace"));
-			RObjectList::getObjectList ()->setWorkspaceURL (KUrl());
+			KMessageBox::error (0, i18n ("There has been an error opening file '%1':\n%2", RKWorkplace::mainWorkplace ()->workspaceURL ().path (), command->error ()), i18n ("Error loading workspace"));
+			RKWorkplace::mainWorkplace ()->setWorkspaceURL (KUrl());
 		} else {
 			RKWorkplace::mainWorkplace ()->restoreWorkplace ();
 			if (RKSettingsModuleGeneral::cdToWorkspaceOnLoad ()) {
-				if (RObjectList::getObjectList ()->getWorkspaceURL ().isLocalFile ()) {
-					RKGlobals::rInterface ()->issueCommand ("setwd (" + RObject::rQuote (RObjectList::getObjectList ()->getWorkspaceURL ().directory ()) + ")", RCommand::App);
+				if (RKWorkplace::mainWorkplace ()->workspaceURL ().isLocalFile ()) {
+					RKGlobals::rInterface ()->issueCommand ("setwd (" + RObject::rQuote (RKWorkplace::mainWorkplace ()->workspaceURL ().directory ()) + ")", RCommand::App);
 				}
 			}
 		}

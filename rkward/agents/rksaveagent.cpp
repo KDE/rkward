@@ -2,7 +2,7 @@
                           rksaveagent  -  description
                              -------------------
     begin                : Sun Aug 29 2004
-    copyright            : (C) 2004, 2009, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2009, 2010, 2011, 2012 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -36,7 +36,7 @@ RKSaveAgent::RKSaveAgent (KUrl url, bool save_file_as, DoneAction when_done, KUr
 	save_url = url;
 	RKSaveAgent::when_done = when_done;
 	RKSaveAgent::load_url = load_url;
-	previous_url = RObjectList::getObjectList ()->getWorkspaceURL ();
+	previous_url = RKWorkplace::mainWorkplace ()->workspaceURL ();
 	save_chain = 0;
 	if (save_url.isEmpty () || save_file_as) {
 		if (!askURL ()) {
@@ -48,7 +48,7 @@ RKSaveAgent::RKSaveAgent (KUrl url, bool save_file_as, DoneAction when_done, KUr
 	RKWorkplace::mainWorkplace ()->flushAllData ();
 	save_chain = RKGlobals::rInterface ()->startChain (0);
 	
-	RObjectList::getObjectList ()->setWorkspaceURL (save_url);
+	RKWorkplace::mainWorkplace ()->setWorkspaceURL (save_url, true);
 	RKWorkplace::mainWorkplace ()->saveWorkplace (save_chain);
 	RKGlobals::rInterface ()->issueCommand (new RCommand ("save.image (\"" + save_url.toLocalFile () + "\")", RCommand::App, QString::null, this), save_chain);
 }
@@ -72,7 +72,7 @@ bool RKSaveAgent::askURL () {
 void RKSaveAgent::rCommandDone (RCommand *command) {
 	RK_TRACE (APP);
 	if (command->hasError ()) {
-		RObjectList::getObjectList ()->setWorkspaceURL (previous_url);
+		RKWorkplace::mainWorkplace ()->setWorkspaceURL (previous_url);
 
 		int res;
 		if (when_done != DoNothing) {

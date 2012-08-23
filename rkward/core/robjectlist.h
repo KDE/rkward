@@ -56,8 +56,6 @@ public:
 	/** reimplemented from RContainerObject: do nothing. The object-list has no meta data. */
 	void writeMetaData (RCommandChain *) {};
 
-	KUrl getWorkspaceURL () const { return current_url; };
-
 	REnvironmentObject* findChildByNamespace (const QString &namespacename) const;
 
 	static RObjectList *getObjectList () { return object_list; };
@@ -73,8 +71,6 @@ signals:
 	void updateStarted ();
 /// emitted when the list of objects has been updated	// TODO: remove me
 	void updateComplete ();
-/** emitted when the workspace Url has changed */
-	void workspaceUrlChanged (const KUrl& url);
 protected:
 /** reimplemented from RContainerObject to search the environments in search order */
 	RObject *findObjects (const QStringList &path, RObjectSearchMap *matches, const QString &op);
@@ -91,14 +87,11 @@ protected:
 private:
 	friend class RKLoadAgent;
 	friend class RKSaveAgent;
-	void setWorkspaceURL (const KUrl &url);
 	QTimer *update_timer;
 	
 	RCommandChain *update_chain;
 
 	REnvironmentObject *createTopLevelEnvironment (const QString &name);
-
-	KUrl current_url;
 
 	static RObjectList *object_list;
 };
