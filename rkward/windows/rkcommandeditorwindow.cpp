@@ -373,9 +373,9 @@ bool RKCommandEditorWindow::openURL (const KUrl url, const QString& encoding, bo
 			QString p_url = RKWorkplace::mainWorkplace ()->portableUrl (m_doc->url ());
 			if (iface) {
 				KConfigGroup conf (RKWorkplace::mainWorkplace ()->workspaceConfig (), QString ("SkriptDocumentSettings %1").arg (p_url));
-				// Hmm. KTextEditor::Document's readSessionConfig() simply restores too much. Yes, I want to load bookmarks and stuff.
+				// HACK: Hmm. KTextEditor::Document's readSessionConfig() simply restores too much. Yes, I want to load bookmarks and stuff.
 				// I do not want to mess with encoding, or risk loading a different url, after the doc is already loaded!
-				if (conf.readEntry ("Encoding", encoding) != encoding) conf.writeEntry ("Encoding", encoding);
+				if (!encoding.isEmpty () && (conf.readEntry ("Encoding", encoding) != encoding)) conf.writeEntry ("Encoding", encoding);
 				if (conf.readEntry ("URL", url) != url) conf.writeEntry ("URL", url);
 				iface->readSessionConfig (conf);
 			}
