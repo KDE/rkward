@@ -2,7 +2,7 @@
                           rkstandardcomponentgui  -  description
                              -------------------
     begin                : Sun Mar 19 2006
-    copyright            : (C) 2006, 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007, 2009, 2012 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -309,7 +309,7 @@ void RKStandardComponentWizard::createWizard (bool switchable) {
 	cancel_button = new QPushButton (i18n ("Cancel"), this);
 	main_grid->addWidget (cancel_button, 2, 0, Qt::AlignLeft);
 	if (enslaved) cancel_button->hide ();
-	help_button = new QPushButton ("Help", this);
+	help_button = new QPushButton (i18n ("Help"), this);
 	main_grid->addWidget (help_button, 2, 1, Qt::AlignLeft);
 	prev_button = new QPushButton (QString::null, this);
 	prev_button->setEnabled (false);
