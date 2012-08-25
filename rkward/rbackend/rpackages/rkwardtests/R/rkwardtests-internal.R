@@ -167,22 +167,18 @@ rktest.replace <- function (name, replacement, envir=as.environment ("package:rk
 	if (exists (backup.name, envir=targetEnv, inherits=FALSE)) {
 		message ("It looks like ", name, " has already been replaced. Not replacing it again.")
 	} else {
-# 		# Apparently R 2.14.x starts forcing namespaces for all packages, which makes things a bit more difficult
 		if (identical (envir, as.environment ("package:rkward"))) {
-			replacementWorked <- tryCatch(
-				rktest.replace (name, replacement, asNamespace ("rkward"), backup.name),
-				error=function(e) return(FALSE)
-			)
-			if(is.null(replacementWorked)){
-				return(invisible(NULL))
-			}
+# 		# Apparently R 2.14.x starts forcing namespaces for all packages, which makes things a bit more difficult
+			try (unlockBinding (name, asNamespace ("rkward")), silent=TRUE)
+			try (assign (name, replacement, asNamespace ("rkward")), silent=TRUE)
+			assign (backup.name, get (name, asNamespace ("rkward")), envir=targetEnv)
+		} else {
+			assign (backup.name, get (name, envir), envir=targetEnv)
 		}
 
-		assign (backup.name, get (name, envir), envir=targetEnv)
-
 		environment (replacement) <- envir
-		try (unlockBinding (name, envir))
-		assign (name, replacement, envir)
+		try (unlockBinding (name, envir), silent=TRUE)
+		try (assign (name, replacement, envir), silent=TRUE)
 	}
 	return(invisible(NULL))
 }
@@ -190,15 +186,9 @@ rktest.replace <- function (name, replacement, envir=as.environment ("package:rk
 rktest.restore <- function (name, envir=as.environment ("package:rkward"), backup.name=name, targetEnv=.rktest.tmp.storage) {
 	if (exists (backup.name, envir=targetEnv, inherits=FALSE)) {
 		if (identical (envir, as.environment ("package:rkward"))) {
-			replacementWorked <- tryCatch(
-				rktest.restore (name, envir=asNamespace ("rkward"), backup.name),
-				error=function(e) return(FALSE)
-			)
-			if(is.null(replacementWorked)){
-				return(invisible(NULL))
-			}
+			assign (name, get (backup.name, envir=targetEnv), envir=asNamespace ("rkward"))
 		}
-		assign (name, get (backup.name, envir=targetEnv), envir=envir)
+		try (assign (name, get (backup.name, envir=targetEnv), envir=envir), silent=TRUE)
 		rm (list=backup.name, envir=targetEnv)
 	} else {
 		message ("No backup available for ", name, ". Already restored?")
@@ -221,6 +211,9 @@ rktest.initializeEnvironment <- function () {
 
 	# HACK: Override date, so we don't get a difference for each call of rk.header ()
 	rktest.replace (".rk.date", function () return ("DATE"))
+
+	# disable toc printing
+	options (.rk.suppress.toc=TRUE)
 
 	# numerical precision is often a problem. To work around this in many places, reduce default printed precision to 5 digits
 	options (digits=5)
@@ -250,6 +243,7 @@ rktest.resetEnvironment <- function () {
 	rktest.restore ("rk.get.tempfile.name")
 	rktest.restore ("rk.set.output.html.file")
 	rktest.restore (".rk.date")
+	options (.rk.supress.toc=FALSE)
 	assign("initialized", FALSE, envir=.rktest.tmp.storage)
 }
 
