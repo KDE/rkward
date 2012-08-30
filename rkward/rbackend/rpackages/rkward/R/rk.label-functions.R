@@ -61,8 +61,8 @@
 		x <- eval (x)
 	}
 	ret <- attr (x, ".rk.meta")[["label"]]
-	if (is.null (ret) || is.na (ret)) ""
-	else as.character (as.vector (ret))
+	if (is.null (ret) || is.na (ret) || (length (ret) < 1)) ""
+	else as.character (as.vector (ret))[1L]
 }
 
 # set rkward label
@@ -74,7 +74,7 @@
 	} else {
 		meta <- attr (x, ".rk.meta")
 	}
-	meta[["label"]] <- as.character (label)
+	meta[["label"]] <- as.character (label)[1L]
 	eval(substitute(attr(x, ".rk.meta") <- meta), envir = envir)
 }
 
@@ -140,7 +140,7 @@
 			shortname <- .rk.make.short.name (argnames[i])
 		}
 
-		if (is.null (lbl) || (length (lbl) < 1)) descript[i] <- shortname
+		if (is.null (lbl) || (length (lbl) != 1) || (lbl == "")) descript[i] <- shortname
 		else descript[i] <- paste (shortname, " (", lbl, ")", sep="")
 	}
 

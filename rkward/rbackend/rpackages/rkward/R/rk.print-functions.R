@@ -120,7 +120,7 @@
 			cat("<script type=\"text/javascript\">\n\t<!--\n\t\taddToTOC('",header.id,"','",level,"');\n\t// -->\n</script>\n", sep="")
 		}
 	} else {
-		cat ("<h", level, ">", title, "</a></h", level, ">\n", sep="")
+		cat ("<h", level, ">", title, "</h", level, ">\n", sep="")
 	}
 
 	if (length (parameters)) {
