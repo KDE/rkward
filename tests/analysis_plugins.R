@@ -40,10 +40,12 @@ suite <- new ("RKTestSuite", id="analysis_plugins",
 		new ("RKTest", id="descriptive_stats", call=function () {
 			rk.call.plugin ("rkward::descriptive", constMad.real="1.4628", length.state="1", mad.state="1", mad_type.string="average", mean.state="1", median.state="1", prod.state="1", range.state="1", sd.state="1", sum.state="1", trim.real="0.00", x.available="women[[\"height\"]]\ntest10z", submit.mode="submit")
 		}),
-		new ("RKTest", id="t_test_two_vars", call=function () {
-			rk.call.plugin ("rkward::t_test_two_vars", confint.state="1", conflevel.real="0.95", hypothesis.string="two.sided", paired.state="0", varequal.state="0", x.available="test50x", y.available="test50y", submit.mode="submit")
+		new ("RKTest", id="t_test", call=function () {
+			rk.call.plugin ("rkward::t_test", confint.checked="1", conflevel.real="0.95", hypothesis.string="two.sided", test_form.string="indep", varequal.state="0", x.available="test50x", y.available="test50y", submit.mode="submit")
 
-			rk.call.plugin ("rkward::t_test_two_vars", confint.state="1", conflevel.real="0.99", hypothesis.string="less", paired.state="1", x.available="test10y", y.available="test10z", submit.mode="submit")
+			rk.call.plugin ("rkward::t_test", confint.checked="1", conflevel.real="0.99", hypothesis.string="less", test_form.string="paired", x.available="test10y", y.available="test10z", submit.mode="submit")
+
+			rk.call.plugin ("rkward::t_test", confint.checked="1", conflevel.real="0.95", hypothesis.string="two.sided", mu.real="20.00", test_form.string="const", x.available="test10z", submit.mode="submit")
 		}),
 		new ("RKTest", id="wilcoxon_test", call=function () {
 			rk.call.plugin ("rkward::wilcoxon_test", alternative.string="two.sided", confint.state="TRUE", conflevel.real="0.95", correct.state="FALSE", exact.string="yes", mu.real="0.00", x.available="test50x", y.available="", submit.mode="submit")

@@ -24,3 +24,14 @@ DATE<br />
 <br/>test10z</td><td>183.5</td><td>9</td><td>63.886</td><td>1</td><td>99</td><td>-Inf
 <br/>191.6</td></tr>
 </table>
+<h1>One Sample t-test</h1>
+<h2>Parameters</h2>
+<ul><li>Comparing: test10z against constant</li>
+<li>H1: true mean is not equal to 20</li>
+</ul>
+DATE<br />
+<table border="1">
+<tr><td>Variable Name</td><td>estimated mean</td><td>degrees of freedom</td><td>t</td><td>p</td><td>confidence interval percent</td><td>confidence interval of difference</td></tr>
+<tr><td>test10z</td><td>22</td><td>9</td><td>0.52223</td><td>0.61412</td><td>95</td><td>13.337
+<br/>30.663</td></tr>
+</table>
