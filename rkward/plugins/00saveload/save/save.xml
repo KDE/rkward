@@ -1,9 +1,10 @@
 <!DOCTYPE rkplugin>
 <document>
-	<code file="code.js"/>
+	<code file="save.js"/>
+	<help file="save.rkh"/>
 
 	<logic>
-		<convert id="lgc_compress" sources="compress.string" mode="notequals" />
+		<convert id="lgc_compress" sources="compress.string" mode="notequals" standard="" />
 		<convert id="lgc_cmprssxz" sources="compress.string" mode="equals" standard="xz" />
 		<connect governor="lgc_compress" client="complevel.enabled" />
 		<connect governor="lgc_cmprssxz" client="xzextreme.enabled" />
@@ -38,7 +39,7 @@
 					<frame label="Options" id="frm_Options">
 						<checkbox id="ascii" label="Ascii" value="true" />
 						<dropdown id="compress" label="Compression">
-							<option label="None" checked="true" />
+							<option label="None" value="" checked="true" />
 							<option label="gzip" value="gzip" />
 							<option label="bzip2" value="bzip2" />
 							<option label="xz" value="xz" />

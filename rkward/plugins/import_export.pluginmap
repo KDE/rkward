@@ -12,7 +12,7 @@
 		<component type="standard" id="load_r_object" file="import/load_data.xml" label="Load R data file" />
 		<component type="standard" id="load_source" file="import/source.xml" label="Source an R file" />
 
-		<component type="standard" id="save_r" file="save/save/description.xml" label="Save objects as R data" />
+		<component type="standard" id="save_r" file="save/save.xml" label="Save objects as R data" />
 		<component type="standard" id="save_skeleton" file="save/skeleton/description.xml" label="Create package skeleton" />
 		<component type="standard" id="save_variables" file="save/write.xml" label="Export vector or matrix data" />
 		<component type="standard" id="save_table" file="save/write_table.xml" label="Export tabular data" />

@@ -1,0 +1,24 @@
+<!DOCTYPE rkhelp>
+<document>
+	<summary>
+		Save one or more selected R objects to a file. <b>Note:</b> Use <i>Workspace->Save Workspace</i> for saving the
+		complete workspace.
+	</summary>
+	<usage>
+		Select the objects to save, and a filename to save to. Created data files can be loaded using <link href="rkward://component/load_r_object"/>.
+	</usage>
+	<settings>
+		<setting id="data">One or more objects to save.</setting>
+		<setting id="file">Location to save to.</setting>
+		<setting id="ascii">Write an ascii, rather than binary representation of the object(s).</setting>
+		<setting id="compress">The file can be compressed to achieve a smaller file size. This control allows to select the method of compression.</setting>
+		<setting id="complevel">Compression level. Higher values indicate better compression.</setting>
+		<setting id="xzextreme">For <i>xz</i> compression, only: Enable xz "extreme" compresison.</setting>
+	</settings>
+	<related>
+		<ul>
+			<li><link href="rkward://rhelp/save"/></li>
+			<li><link href="rkward://component/load_r_object"/></li>
+		</ul>
+	</related>
+</document>

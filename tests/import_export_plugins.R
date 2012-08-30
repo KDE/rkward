@@ -79,8 +79,8 @@ suite <- new ("RKTestSuite", id="import_export_plugins",
 			assign ("testy", datasets::volcano, envir=globalenv())
 			rk.sync.global()
 
-			rk.call.plugin ("rkward::save_r", ascii.state="TRUE", compress.state="TRUE", data.available="testx", file.selection="x.RData", submit.mode="submit")
-			rk.call.plugin ("rkward::save_r", ascii.state="TRUE", compress.state="TRUE", data.available="testy", file.selection="y.RData", submit.mode="submit")
+			rk.call.plugin ("rkward::save_r", ascii.state="true", complevel.real="6.00", compress.string="gzip", data.available="testx", file.selection="x.RData", submit.mode="submit")
+			rk.call.plugin ("rkward::save_r", ascii.state="", compress.string="xz", complevel.real="9.00", xzextreme.state="true", data.available="testy", file.selection="y.RData", submit.mode="submit")
 
 			rm (testx, testy, envir=globalenv())
 			load ("x.RData")
