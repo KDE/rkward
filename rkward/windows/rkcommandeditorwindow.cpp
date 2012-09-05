@@ -2,7 +2,7 @@
                           rkcommandeditorwindow  -  description
                              -------------------
     begin                : Mon Aug 30 2004
-    copyright            : (C) 2004, 2006, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2009, 2010, 2011, 2012 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -377,6 +377,10 @@ bool RKCommandEditorWindow::openURL (const KUrl url, const QString& encoding, bo
 				// I do not want to mess with encoding, or risk loading a different url, after the doc is already loaded!
 				if (!encoding.isEmpty () && (conf.readEntry ("Encoding", encoding) != encoding)) conf.writeEntry ("Encoding", encoding);
 				if (conf.readEntry ("URL", url) != url) conf.writeEntry ("URL", url);
+				/* HACK: What the...?! Somehow, at least on longer R scripts, stored Mode="Normal" in combination with R Highlighting
+				 * causes code folding to fail (KDE 4.8.4, https://sourceforge.net/tracker/?func=detail&atid=459007&aid=3564769&group_id=50231).
+				 * Forcing Mode == Highlighting appears to help. */
+				conf.writeEntry ("Mode", conf.readEntry ("Highlighting", "Normal"));
 				iface->readSessionConfig (conf);
 			}
 			iface = qobject_cast<KTextEditor::SessionConfigInterface*> (m_view);
@@ -1246,7 +1250,7 @@ void RKCommandHighlighter::setHighlighting (KTextEditor::Document *doc, Highligh
 
 	QString mode_string = "R Script";
 	if (mode == RInteractiveSession) mode_string = "R interactive session";
-	if (!doc->setHighlightingMode (mode_string)) RK_DO (qDebug ("R syntax highlighting defintion ('%s')not found!", qPrintable (mode_string)), COMMANDEDITOR, DL_ERROR);
+	if (!(doc->setHighlightingMode (mode_string) && doc->setMode (mode_string))) RK_DO (qDebug ("R syntax highlighting defintion ('%s')not found!", qPrintable (mode_string)), COMMANDEDITOR, DL_ERROR);
 }
 
 void RKCommandHighlighter::copyLinesToOutput (KTextEditor::View *view, HighlightingMode mode) {
