@@ -1,3 +1,6 @@
+- Fixed: Spinboxes had wrong initial values
+- Omit comments on missing function calls in dialog code windows (e.g., if prepare() is unused, there's no "## Prepare" in the output either)
+- Output markup is now more XHTML compliant and easier to parse
 - Also save cursor position, folding, etc. for scripts. Note: Implementation details may be subject to change.
 - New function rk.list.labels() to retrieve column labels in a data.frame
 - rk.get.label() will now return an empty string ("") instead of NULL, in case no label is assigned
