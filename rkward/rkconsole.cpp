@@ -664,7 +664,26 @@ void RKConsole::newOutput (RCommand *, ROutput *output) {
 	RK_TRACE (APP);
 
 	int start_line = doc->lines () -1;
-	doc->insertText (doc->documentEnd (), output->output);
+
+	// split by and handle carriage returns
+	const QString outstr = output->output;
+	int start_pos = 0;
+	int end_pos = outstr.size () - 1;
+	QChar c;
+	for (int pos = 0; pos <= end_pos; ++pos) {
+		c = output->output.at (pos);
+		if (c == '\r') {
+			/* NOTE: My first approach was to split the whole string by newlines, and insert each line separately. This allowed for a minor
+			 * optimization when hitting a carriage return (the string before the '\r' could simply be ignored, then), however it caused
+			 * around 10% slowdown when printing large amounts of output.
+			 * Thus, instead, when hitting a CR, we first insert everything before that into the document, then reset the line. */
+			doc->insertText (doc->documentEnd (), outstr.mid (start_pos, pos - start_pos));
+			doc->removeLine (doc->lines () - 1);
+			doc->insertLine (doc->lines (), QString ());
+			start_pos = pos + 1;
+		}
+	}
+	if (start_pos <= end_pos) doc->insertText (doc->documentEnd (), outstr.mid (start_pos, end_pos - start_pos + 1));
 
 	int end_line = doc->lines () -1;
 	if (output->type != ROutput::Output) {

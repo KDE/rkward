@@ -1,3 +1,4 @@
+- Fixed: Wrong handling of carriage returns ('\r') in the console window				TODO: also fix for the command log and other places
 - Fixed: Spinboxes had wrong initial values
 - Omit comments on missing function calls in dialog code windows (e.g., if prepare() is unused, there's no "## Prepare" in the output either)
 - Output markup is now more XHTML compliant and easier to parse
