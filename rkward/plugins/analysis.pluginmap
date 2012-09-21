@@ -8,8 +8,6 @@
 		<component type="standard" id="descriptive" file="descriptive/descriptive_statistics.xml" label="Descriptive Statistics" />
 		<component type="standard" id="t_test" file="analysis/t_test.xml" label="t-Test" />
 		<component type="standard" id="wilcoxon_tests" file="analysis/wilcoxon/wilcoxon_tests.xml" label="Wilcoxon/Mann-Whitney Tests" />
-		<component type="standard" id="wilcoxon_test" file="analysis/wilcoxon/wilcoxon_test.xml" label="Wilcoxon Test" />
-		<component type="standard" id="wilcoxon_exact_test" file="analysis/wilcoxon/wilcoxon_exact_test.xml" label="Wilcoxon Exact Test" />
 
 		<!-- moments -->
 		<component type="standard" id="moment" file="analysis/moments/moment.xml" label="Moment" />
@@ -101,8 +99,6 @@
 			</menu>
 			<menu id="wilcoxon_test" label="Wilcoxon Tests" index="11">
 				<entry component="wilcoxon_tests" />
-				<entry component="wilcoxon_test" />
-				<entry component="wilcoxon_exact_test" />
 			</menu>
 		</menu>
 	</hierarchy>
