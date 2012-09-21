@@ -47,15 +47,12 @@ suite <- new ("RKTestSuite", id="analysis_plugins",
 
 			rk.call.plugin ("rkward::t_test", confint.checked="1", conflevel.real="0.95", hypothesis.string="two.sided", mu.real="20.00", test_form.string="const", x.available="test10z", submit.mode="submit")
 		}),
-		new ("RKTest", id="wilcoxon_test", call=function () {
-			rk.call.plugin ("rkward::wilcoxon_test", alternative.string="two.sided", confint.state="TRUE", conflevel.real="0.95", correct.state="FALSE", exact.string="yes", mu.real="0.00", x.available="test50x", y.available="", submit.mode="submit")
-
-			rk.call.plugin ("rkward::wilcoxon_test", alternative.string="less", confint.state="FALSE", correct.state="TRUE", exact.string="automatic", mu.real="0.00", paired.state="TRUE", x.available="test50x", y.available="test50y", submit.mode="submit")
-		}),
-		new ("RKTest", id="wilcoxon_exact_test", call=function () {
-			rk.call.plugin ("rkward::wilcoxon_exact_test", alternative.string="two.sided", confint.state="TRUE", conflevel.real="0.95", correct.state="FALSE", exact.string="yes", mu.real="0.00", x.available="test50x", y.available="", submit.mode="submit")
-
-			rk.call.plugin ("rkward::wilcoxon_exact_test", alternative.string="less", confint.state="FALSE", correct.state="TRUE", exact.string="automatic", mu.real="0.00", paired.state="TRUE", x.available="test50x", y.available="test50y", submit.mode="submit")
+		new ("RKTest", id="wilcoxon_tests", call=function () {
+			rk.call.plugin ("rkward::wilcoxon_tests", alternative.string="two.sided", confint.checked="1", conflevel.real="0.95", correct.state="", exact.string="TRUE", mu.real="0.00", svb_Svrsltst.active="0", svb_Svrsltst.objectname="wcox.result", svb_Svrsltst.parent=".GlobalEnv", ties.state="", x.available="test50x", y.available="", submit.mode="submit")
+			rk.call.plugin ("rkward::wilcoxon_tests", alternative.string="less", confint.checked="0", correct.state="correct", exact.string="automatic", mu.real="0.00", paired.state="true", svb_Svrsltst.active="0", svb_Svrsltst.objectname="wcox.result", svb_Svrsltst.parent=".GlobalEnv", ties.state="", x.available="test50x", y.available="test50y", submit.mode="submit")
+			# exact tests, allowing ties
+			rk.call.plugin ("rkward::wilcoxon_tests", alternative.string="two.sided", confint.checked="1", conflevel.real="0.95", correct.state="", exact.string="TRUE", mu.real="0.00", svb_Svrsltst.active="0", svb_Svrsltst.objectname="wcox.result", svb_Svrsltst.parent=".GlobalEnv", ties.state="true", x.available="test50x", y.available="", submit.mode="submit")
+			rk.call.plugin ("rkward::wilcoxon_tests", alternative.string="less", confint.checked="0", correct.state="correct", exact.string="automatic", mu.real="0.00", paired.state="true", svb_Svrsltst.active="0", svb_Svrsltst.objectname="wcox.result", svb_Svrsltst.parent=".GlobalEnv", ties.state="true", x.available="test50x", y.available="test50y", submit.mode="submit")
 		}, libraries=c ("exactRankTests")),
 		new ("RKTest", id="moments_moment", call=function () {
 			rk.call.plugin ("rkward::moment", absolute.state="FALSE", central.state="FALSE", length.state="0", narm.state="TRUE", order.real="1.00", x.available="test50z\ntest50y\ntest50x\ntest10z\ntest10y\ntest10x", submit.mode="submit")
