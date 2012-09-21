@@ -6,5 +6,4 @@ local({
 					system ("echo B")
 				}
 			
-## Print result
 })
