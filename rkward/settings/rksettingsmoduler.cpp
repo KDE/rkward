@@ -486,8 +486,10 @@ QStringList RKSettingsModuleRPackages::makeRRunTimeOptionCommands () {
 	}
 	list.append (command + "))\n");
 
-	
-	
+#if defined Q_WS_WIN || defined Q_WS_MAC
+	list.append (pkgTypeOption ());
+#endif
+
 // library locations
 	list.append (libLocsCommand ());
 
