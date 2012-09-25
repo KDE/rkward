@@ -79,6 +79,7 @@ QString REnvironmentObject::makeChildName (const QString &short_child_name, bool
 	if (type & ToplevelEnv) {
 /* Some items are placed outside of their native namespace. E.g. in package:boot item "motor". It can be retrieved using as.environment ("package:boot")$motor. This is extremly ugly. We need to give them (and only them) this special treatment. */
 // TODO: hopefully one day operator "::" will work even in those cases. So check back later, and remove after a sufficient amount of backwards compatibility time
+// NOTE: This appears to have been fixed in R 2.14.0, when all packages were forced to have namespaces.
 		if ((type & PackageEnv) && (!misplaced)) return (packageName () + "::" + safe_name);
 		return (getFullName () + '$' + safe_name);
 	}

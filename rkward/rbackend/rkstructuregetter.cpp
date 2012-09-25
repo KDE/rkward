@@ -19,6 +19,7 @@
 
 #include "rdata.h"
 #include "rkrsupport.h"
+#include "rkrbackend.h"
 #include "rkrbackendprotocol_shared.h"
 #include "../core/robject.h"
 
@@ -367,7 +368,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, int a
 				PROTECT (child);
 
 				bool child_misplaced = false;
-				if (at_toplevel && with_namespace) {
+				if (at_toplevel && with_namespace && (!RKRBackend::this_pointer->RRuntimeIsVersion (2, 14, 0))) {
 					if (!Rf_isNull (namespace_envir)) {
 						SEXP dummy = Rf_findVarInFrame (namespace_envir, current_childname);
 						if (Rf_isNull (dummy) || (dummy == R_UnboundValue)) child_misplaced = true;
