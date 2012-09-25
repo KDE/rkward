@@ -2,7 +2,7 @@
                           rksettingsmoduler  -  description
                              -------------------
     begin                : Wed Jul 28 2004
-    copyright            : (C) 2004, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007, 2009, 2010, 2011, 2012 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -316,6 +316,7 @@ void RKSettingsModuleR::loadSettings (KConfig *config) {
 QStringList RKSettingsModuleRPackages::liblocs;
 QStringList RKSettingsModuleRPackages::defaultliblocs;
 bool RKSettingsModuleRPackages::archive_packages;
+bool RKSettingsModuleRPackages::source_packages;
 QStringList RKSettingsModuleRPackages::package_repositories;
 QString RKSettingsModuleRPackages::essential_packages = QString ("base\nmethods\nutils\ngrDevices\ngraphics\nrkward");
 QString RKSettingsModuleRPackages::cran_mirror_url;
@@ -347,7 +348,18 @@ RKSettingsModuleRPackages::RKSettingsModuleRPackages (RKSettings *gui, QWidget *
 	archive_packages_box = new QCheckBox (i18n ("Archive downloaded packages"), this);
 	archive_packages_box->setChecked (archive_packages);
 	connect (archive_packages_box, SIGNAL (stateChanged (int)), this, SLOT (settingChanged()));
-	main_vbox->addWidget (archive_packages_box);	
+	main_vbox->addWidget (archive_packages_box);
+
+#if defined Q_WS_WIN || defined Q_WS_MAC
+	source_packages_box = new QCheckBox (i18n ("Build packages from source"), this);
+	source_packages_box->setChecked (source_packages);
+#else
+	source_packages_box = new QCheckBox (i18n ("Build packages from source (not configurable on this platform)"), this);
+	source_packages_box->setChecked (true);
+	source_packages_box->setEnabled (false);
+#endif
+	connect (source_packages_box, SIGNAL (stateChanged (int)), this, SLOT (settingChanged()));
+	main_vbox->addWidget (source_packages_box);
 
 	main_vbox->addStretch ();
 
@@ -447,6 +459,22 @@ QString RKSettingsModuleRPackages::libLocsCommand () {
 }
 
 //static
+QString RKSettingsModuleRPackages::pkgTypeOption () {
+	QString ret;
+#if defined Q_WS_WIN || defined Q_WS_MAC
+	ret.append ("options (pkgType=\"");
+	if (source_packages) ret.append ("source");
+#	if defined Q_WS_WIN
+	else ret.append ("win.binary");
+#	else
+	else ret.append ("mac.binary.leopard");
+#	endif
+	ret.append ("\")\n");
+#endif
+	return ret;
+}
+
+//static
 QStringList RKSettingsModuleRPackages::makeRRunTimeOptionCommands () {
 	RK_TRACE (SETTINGS);
 	QStringList list;
@@ -458,6 +486,8 @@ QStringList RKSettingsModuleRPackages::makeRRunTimeOptionCommands () {
 	}
 	list.append (command + "))\n");
 
+	
+	
 // library locations
 	list.append (libLocsCommand ());
 
@@ -471,6 +501,7 @@ void RKSettingsModuleRPackages::applyChanges () {
 	if (cran_mirror_url.isEmpty ()) cran_mirror_url = "@CRAN@";
 
 	archive_packages = archive_packages_box->isChecked ();
+	source_packages = source_packages_box->isChecked ();
 	package_repositories = repository_selector->getValues ();
 	liblocs = libloc_selector->getValues ();
 
@@ -493,6 +524,7 @@ void RKSettingsModuleRPackages::saveSettings (KConfig *config) {
 	KConfigGroup cg = config->group ("R Settings");
 	cg.writeEntry ("CRAN mirror url", cran_mirror_url);
 	cg.writeEntry ("archive packages", archive_packages);
+	cg.writeEntry ("source_packages", source_packages);
 	cg.writeEntry ("Repositories", package_repositories);
 	cg.writeEntry ("LibraryLocations", liblocs);
 }
@@ -512,6 +544,11 @@ void RKSettingsModuleRPackages::loadSettings (KConfig *config) {
 
 	liblocs = cg.readEntry ("LibraryLocations", QStringList ());
 	archive_packages = cg.readEntry ("archive packages", false);
+#if defined Q_WS_WIN || defined Q_WS_MAC
+	source_packages = cg.readEntry ("source packages", false);
+#else
+	source_packages = true;
+#endif
 }
 
 #include "rksettingsmoduler.moc"

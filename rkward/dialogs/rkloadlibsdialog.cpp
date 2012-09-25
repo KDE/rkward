@@ -285,6 +285,8 @@ bool RKLoadLibsDialog::installPackages (const QStringList &packages, QString to_
 	}
 	repos_string.append ("))\n");
 
+	repos_string.append (RKSettingsModuleRPackages::pkgTypeOption ());
+
 	if (as_root) {
 		KUser user;
 		command_string.append ("system (\"chown " + user.loginName() + ' ' + downloaddir + "/*\")\n");

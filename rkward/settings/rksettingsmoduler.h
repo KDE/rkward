@@ -2,7 +2,7 @@
                           rksettingsmoduler  -  description
                              -------------------
     begin                : Wed Jul 28 2004
-    copyright            : (C) 2004, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007, 2009, 2010, 2011, 2012 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -121,6 +121,7 @@ public:
 	static QStringList makeRRunTimeOptionCommands ();
 
 	static bool archivePackages () { return archive_packages; }
+	static QString pkgTypeOption ();
 	static void addLibraryLocation (const QString& new_loc, RCommandChain *chain);
 	static QStringList libraryLocations () { return (liblocs + defaultliblocs); };
 
@@ -140,12 +141,14 @@ private:
 
 	MultiStringSelector *libloc_selector;
 	QCheckBox *archive_packages_box;
+	QCheckBox *source_packages_box;
 	MultiStringSelector *repository_selector;
 	QLineEdit* cran_mirror_input;
 
 	static QString cran_mirror_url;
 	static QStringList liblocs;
 	static bool archive_packages;
+	static bool source_packages;
 	static QStringList package_repositories;
 
 	friend class RInterface;
