@@ -4,3 +4,9 @@
 </ul>
 DATE<br />
 <img src="graph.png" width="480" height="480"><br>
+<h1>Boxplot</h1>
+<h2>Parameters</h2>
+<ul><li>Variable(s): weight, height</li>
+</ul>
+DATE<br />
+<img src="graph.png" width="480" height="480"><br>
