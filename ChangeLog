@@ -20,6 +20,7 @@
 - Fixed: Would not show output of system() commands to stderr on the console (on Unix-like systems)
 - Allow some markup inside <text> elements in plugins, and auto-add breaks only for duplicate newlines.
 - Reorganized t-test plugin, and add support for single sample t-tests
+- Box plot plugin gains more options for adding means
 - Fixed: Function argument hints for the second half of the parameter list would not be quoted, correctly
 - Improve keypress handling issues in the R Console, when the cursor or a selection is outside the editable range
 - Fixed: Failure to open workspaces with non-latin1 filenames from the command line

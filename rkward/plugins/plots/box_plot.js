@@ -54,7 +54,8 @@ function doPrintout (full) {
 		}
 		echo ('rk.graph.on()\n');
 	}
-	echo ('try (boxplot (data_list' + boxwex + positions + ', notch = ' + getValue ("notch") + ', outline = ' + getValue("outline") + ', horizontal = ' + getValue("orientation") + getValue ("plotoptions.code.printout") + ')) #actual boxplot function\n');
+	echo ('try ({\n');
+	echo ('	boxplot (data_list' + boxwex + positions + ', notch = ' + getValue ("notch") + ', outline = ' + getValue("outline") + ', horizontal = ' + getValue("orientation") + getValue ("plotoptions.code.printout") + ') #actual boxplot function\n');
 	if (do_mean) {
 	    var mean_fun = "mean, na.rm=TRUE";
 		if (getValue ("type_of_mean") =="geometric_mean") {
@@ -72,9 +73,9 @@ function doPrintout (full) {
 		}
 
 		if (horizontal) {
-		  echo ('	try (points(1:length(data_list) ~ sapply(data_list, ' + mean_fun + '), pch=' + pch_mean + ', cex = ' + getValue ("cex_sd_mean") + getValue ("sd_mean_color.code.printout") + ')) #calculates the mean for all data and adds a point at the corresponding position\n');
+		  echo ('	points(1:length(data_list) ~ sapply(data_list, ' + mean_fun + '), pch=' + pch_mean + ', cex = ' + getValue ("cex_sd_mean") + getValue ("sd_mean_color.code.printout") + ') #calculates the mean for all data and adds a point at the corresponding position\n');
 		} else {
-		  echo ('	try (points(sapply(data_list, ' + mean_fun + '), pch=' + pch_mean + ', cex = ' + getValue ("cex_sd_mean") + getValue ("sd_mean_color.code.printout") + ')) #calculates the mean for all data and adds a point at the corresponding position\n');
+		  echo ('	points(sapply(data_list, ' + mean_fun + '), pch=' + pch_mean + ', cex = ' + getValue ("cex_sd_mean") + getValue ("sd_mean_color.code.printout") + ') #calculates the mean for all data and adds a point at the corresponding position\n');
 		}
 	}
 
@@ -89,6 +90,7 @@ function doPrintout (full) {
 			echo ('	points(sd_high, pch=' + pch_sd_high + ', cex = ' + getValue ("cex_sd_mean") + getValue ("sd_mean_color.code.printout") + ')\n');
 		}
 	}
+	echo ('})\n');	// end of try ()
 
 	if (plot_adds.length > 0) {
 		echo ('\n');
