@@ -68,7 +68,7 @@ suite <- new ("RKTestSuite", id="analysis_plugins",
 		}, libraries=c ("moments")),
 		new ("RKTest", id="anscombe_test", call=function () {
 			rk.call.plugin ("rkward::anscombe_test", alternative.string="two.sided", length.state="1", show_alternative.state="1", x.available="warpbreaks[[\"breaks\"]]\ntest50z\ntest10y", submit.mode="submit")
-		}, libraries=c ("moments")),
+		}, fuzzy_output=TRUE, libraries=c ("moments")),
 		new ("RKTest", id="skewness_kurtosis", call=function () {
 			rk.call.plugin ("rkward::skewness_kurtosis", geary.state="1", kurtosis.state="1", length.state="1", narm.state="1", skewness.state="1", x.available="women[[\"weight\"]]\nwomen[[\"height\"]]\nwarpbreaks[[\"breaks\"]]", submit.mode="submit")
 		}, libraries=c ("moments")),
