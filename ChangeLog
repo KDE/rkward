@@ -15,7 +15,7 @@
 - Fixed: Plot history and graphical menus broken in some cases with R 2.15.0
 - Fixed: If the rkward package was loaded in a plain R session, q() and quit() still work
 - combined all Wilcoxon/Mann-Whitney-tests in one plugin (from previously two separate plugins)			TODO: adjust test(s)
-- Added polyserial/polychoric correlations to correlation matrix plugin			TODO: adjust test(s)
+- Added polyserial/polychoric correlations to correlation matrix plugin
 - Added more compression options to the "Save objects as R code" plugin
 - Added MacPorts support, see README.MacPorts and bundle build script in the macports folder
 - Added dynamically generated table-of-contents menu to output document

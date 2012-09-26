@@ -20,7 +20,7 @@
 				</row>
 			</tab>
 			<tab label="Options" id="tab_Options">
-				<checkbox id="do_p" label="Calculate p values" value="true" checked="true" />
+				<checkbox id="do_p" label="Calculate p values" value="1" checked="true" />
 				<radio id="method" label="Method">
 					<option label="Pearson's product-moment correlation" value="pearson" checked="true" />
 					<option label="Kendall's tau" value="kendall" />

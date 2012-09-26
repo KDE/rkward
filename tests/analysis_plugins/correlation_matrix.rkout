@@ -10,11 +10,24 @@ DATE<br />
 <tr><td>test50y</td><td>1</td><td>1</td><td>1</td></tr>
 <tr><td>test50z</td><td>1</td><td>1</td><td>1</td></tr>
 </table>
+<h4>p-values and sample size</h4>
+<br />
 <table border="1">
 <tr><td>n \ p</td><td>test50x</td><td>test50y</td><td>test50z</td></tr>
 <tr><td>test50x</td><td>NA</td><td>0</td><td>0</td></tr>
 <tr><td>test50y</td><td>50</td><td>NA</td><td>0</td></tr>
 <tr><td>test50z</td><td>50</td><td>50</td><td>NA</td></tr>
+</table>
+<h1>Correlation Matrix</h1>
+<h2>Parameters</h2>
+<ul><li>Method: polychoric</li>
+<li>Exclusion: pairwise</li>
+</ul>
+DATE<br />
+<table border="1">
+<tr><td>Coefficient</td><td>test10y</td><td>test10a</td></tr>
+<tr><td>test10y</td><td>NA</td><td>0.60718</td></tr>
+<tr><td>test10a</td><td>0.60718</td><td>NA</td></tr>
 </table>
 <h1>Correlation Matrix</h1>
 <h2>Parameters</h2>

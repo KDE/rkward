@@ -17,6 +17,7 @@ suite <- new ("RKTestSuite", id="analysis_plugins",
 			assign ("test10x", 100+c (1:10, NA), envir=globalenv())
 			assign ("test10y", 200+c (1:10, NA), envir=globalenv())
 			assign ("test10z", c (1:10, NA)*4, envir=globalenv())
+			assign ("test10a", c (1:5, 1:5, NA), envir=globalenv())
 			x <- data.frame ("A" = rep (c (1, 2), 8), "B" = rep (c (1, 1, 2, 2), 4), "C" = rep (c (1, 1, 1, 1, 2, 2, 2, 2), 2), "D"= c (rep (1, 8), rep (2, 8)))
 			x[2,2] <- NA
 			assign ("test_table", x, envir=globalenv())
@@ -31,6 +32,8 @@ suite <- new ("RKTestSuite", id="analysis_plugins",
 		}),
 		new ("RKTest", id="correlation_matrix", call=function () {		
 			rk.call.plugin ("rkward::corr_matrix", do_p.state="1", method.string="pearson", use.string="pairwise", x.available="test50x\ntest50y\ntest50z", submit.mode="submit")
+
+			rk.call.plugin ("rkward::corr_matrix", do_p.state="", method.string="polychoric", use.string="pairwise", x.available="test10y\ntest10a", submit.mode="submit")
 
 			rk.call.plugin ("rkward::corr_matrix", do_p.state="", method.string="pearson", use.string="pairwise", x.available="women[[\"weight\"]]\nwomen[[\"height\"]]", submit.mode="submit")
 		}),
