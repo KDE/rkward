@@ -5,6 +5,8 @@ require(ltm)
 rk.header("Graded response model plot")
 
 rk.graph.on()
-try(plot(estimates.grm, type="ICC", items=c(6)))
+try({
+	plot(estimates.grm, type="ICC", items=c(6))
+})
 rk.graph.off()
 })

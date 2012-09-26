@@ -5,7 +5,9 @@ require(eRm)
 rk.header("Andersen's LR test")
 
 rk.graph.on()
-lr.res <- LRtest(estimates.pcm, se=TRUE)
-try(plotGOF(lr.res, conf=list(), ctrline=list()))
+try({
+	lr.res <- LRtest(estimates.pcm, se=TRUE)
+	plotGOF(lr.res, conf=list(), ctrline=list())
+})
 rk.graph.off()
 })

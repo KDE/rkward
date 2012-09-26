@@ -84,33 +84,38 @@ function doPrintout (full) {
 		echo ('rk.graph.on()\n');
 	}
 	// only the following section will be generated for $full==false
+	echo ('try({\n');
+	printIndentedUnlessEmpty ('\t', getValue ("plotoptions.code.preprocess"), '', '\n');
 
 	// first we'll check wheter standard error curves should be plotted,
 	// because it takes two steps to draw them:
 	if (plot_type == "SEC") {
-		echo ('# two steps are needed to plot standard error curves\n');
-		echo ('# first some values are generated...\n');
-		echo ('res <- try(plot(' + getValue("x"));
+		echo ('	# two steps are needed to plot standard error curves\n');
+		echo ('	# first some values are generated...\n');
+		echo ('	res <- plot(' + getValue("x"));
 		if (options.length > 0) echo(", "+options.join(", "));
-		echo ('))\n');
+		echo (')\n');
 		echo ('\n');
-		echo ('# ... and then they\'re used to plot the curves:\n');
-		echo ('try(plot(res[,"z"], 1/sqrt(res[,"test.info"]), lwd=2');
+		echo ('	# ... and then they\'re used to plot the curves:\n');
+		echo ('	plot(res[,"z"], 1/sqrt(res[,"test.info"]), lwd=2');
 		// we give come defaults, but they can be changed via the embedded plot options:
 		if (!plot_ops_type) echo(", type=\"l\"");
 		if (!plot_ops_xlab) echo(", xlab=\"Ability\"");
 		if (!plot_ops_ylab) echo(", ylab=\"Standard Error\"");
 		if (!plot_ops_main) echo(", main=\"Stadard Error of Measurement\"");
 		if (plot_options) echo(plot_options);
-		echo ('))\n');
+		echo (')\n');
 	}
 	// and this will be plotted if anything else than stadard error curves are chosen:
 	else {
-		echo ('try(plot(' + getValue("x"));
+		echo ('	plot(' + getValue("x"));
 		if (options.length > 0) echo(", "+options.join(", "));
 		if (plot_options) echo(plot_options);
-		echo ('))\n');
+		echo (')\n');
 	}
+
+	printIndentedUnlessEmpty ('\t', getValue ("plotoptions.code.calculate"), '\n', '');
+	echo ('})\n');
 
 	if (full) echo ('rk.graph.off()\n');
 }

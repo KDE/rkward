@@ -1,4 +1,4 @@
-- Most plot plugins gain options to control margins and tick label orientation				TODO: add test(s), adjust existing test standards where needed, adjust IRT plugins
+- Most plot plugins gain options to control margins and tick label orientation				TODO: add test(s)
 - Added option for installing packages from source (implicitly enabled on Unixoid platforms)
 - Fixed: Wrong handling of carriage returns ('\r') in the console window				TODO: also fix for the command log and other places
 - Fixed: Spinboxes had wrong initial values

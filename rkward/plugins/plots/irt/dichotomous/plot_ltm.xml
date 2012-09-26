@@ -5,6 +5,7 @@
 
   <logic>
     <convert id="logic_items" mode="equals" sources="plot_type.string" standard="items" />
+    <set id="plotoptions.allow_ann" to="false"/>
 
     <connect client="plot_type_item.enabled" governor="logic_items" />
     <connect client="frame_items.enabled" governor="logic_items" />

@@ -87,14 +87,19 @@ function doPrintout (full) {
 		echo ('rk.graph.on()\n');
 	}
 	// only the following section will be generated for full==false
+	echo ('try({\n');
+	printIndentedUnlessEmpty ('\t', getValue ("plotoptions.code.preprocess"), '', '\n');
 
-	echo ('lr.res <- LRtest(' + getValue("x"));
+	echo ('	lr.res <- LRtest(' + getValue("x"));
 	if (options_lrtest.length > 0) echo(", "+options_lrtest.join(", "));
 	echo (')\n');
-	echo ('try(plotGOF(lr.res');
+	echo ('	plotGOF(lr.res');
 	if (options_plotgof.length > 0) echo(", "+options_plotgof.join(", "));
 	if (plot_options.length > 0) echo(plot_options);
-	echo ('))\n');
+	echo (')\n');
+
+	printIndentedUnlessEmpty ('\t', getValue ("plotoptions.code.calculate"), '\n', '');
+	echo ('})\n');
 
 	if (full) echo ('rk.graph.off()\n');
 }

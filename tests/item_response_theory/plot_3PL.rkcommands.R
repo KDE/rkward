@@ -5,6 +5,8 @@ require(ltm)
 rk.header("Birnbaum three parameter model plot")
 
 rk.graph.on()
-try(plot(estimates.3pl, type="IIC", items=0))
+try({
+	plot(estimates.3pl, type="IIC", items=0)
+})
 rk.graph.off()
 })

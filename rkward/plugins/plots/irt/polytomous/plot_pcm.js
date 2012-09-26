@@ -70,11 +70,16 @@ function doPrintout (full) {
 		echo ('rk.graph.on()\n');
 	}
 	// only the following section will be generated for full==false
+	echo ('try({\n');
+	printIndentedUnlessEmpty ('\t', getValue ("plotoptions.code.preprocess"), '', '\n');
 
-	echo ('try(plotICC(' + getValue("x"));
+	echo ('	plotICC(' + getValue("x"));
 	if (options.length > 0) echo(", "+options.join(", "));
 	if (plot_options) echo(plot_options);
-	echo ('))\n');
+	echo (')\n');
+
+	printIndentedUnlessEmpty ('\t', getValue ("plotoptions.code.calculate"), '\n', '');
+	echo ('})\n');
 
 	if (full) echo ('rk.graph.off()\n');
 }
