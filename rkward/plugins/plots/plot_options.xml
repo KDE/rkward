@@ -68,7 +68,7 @@
 		<connect client="grid_options.enabled" governor="grid_enable" />
 
 		<external id="allow_ann" default="true" />
-		<connect client="tab_ann.visible" governor="allow_ann"/>
+		<connect client="frame_ann.visible" governor="allow_ann"/>
 	</logic>
 	<dialog label="Default plot options" >
 		<tabbook>
@@ -83,10 +83,10 @@
 						<checkbox id="subisquote" label="Interpret this label as literal (quoted) string" checked="true" value="1" />
 					</frame>
 					<frame id="custom_margins" label="Custom margins" checkable="true" checked="false">
-						<spinbox id="margin_top" type="real" initial="4" default_precision="0" label="Top"/>
-						<spinbox id="margin_bottom" type="real" initial="5" default_precision="0" label="Bottom"/>
-						<spinbox id="margin_left" type="real" initial="4" default_precision="0" label="Left"/>
-						<spinbox id="margin_right" type="real" initial="2" default_precision="0" label="Right"/>
+						<spinbox id="margin_top" type="real" initial="4" default_precision="1" min="0" label="Top"/>
+						<spinbox id="margin_bottom" type="real" initial="5" default_precision="1" min="0" label="Bottom"/>
+						<spinbox id="margin_left" type="real" initial="4" default_precision="1" min="0" label="Left"/>
+						<spinbox id="margin_right" type="real" initial="2" default_precision="1" min="0" label="Right"/>
 					</frame>
 					<stretch/>
 				</column>
@@ -124,23 +124,21 @@
 							<input id="ymaxvalue" label="Max Y value" />
 						</row>
 					</frame>
+					<frame id="frame_ann" label="Axis Annotations">
+						<dropdown id="ticklblrot" label="Tick label orientation" >
+							<option value="" label="default" checked="true" />
+							<option value="0" label="Always parallel to the axis " />
+							<option value="1" label="Always horizontal " />
+							<option value="2" label="Always perpendicular to the axis " />
+							<option value="3" label="Always vertical " />
+						</dropdown>
+						<row>
+							<input id="cexaxis" label="Tick label scale (relative to cex))" />
+						</row>
+						<stretch/>
+					</frame>
 					<stretch/>
 				</column>
-			</tab>
-			<tab id="tab_ann" label="Annotations" >
-				<frame><!--- TODO: This frame is a dummy to work around a layout bug! -->
-					<dropdown id="ticklblrot" label="Tick label orientation" >
-						<option value="" label="default" checked="true" />
-						<option value="0" label="Always parallel to the axis " />
-						<option value="1" label="Always horizontal " />
-						<option value="2" label="Always perpendicular to the axis " />
-						<option value="3" label="Always vertical " />
-					</dropdown>
-					<row>
-						<input id="cexaxis" label="Tick label scale (relative to cex))" />
-					</row>
-					<stretch/>
-				</frame>
 			</tab>
 			<tab id="pointtypepage" label="Points / Lines">
 				<frame><!--- TODO: This frame is a dummy to work around a layout bug! -->
