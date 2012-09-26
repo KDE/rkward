@@ -14,7 +14,6 @@ function doPrintout (full) {
 	var narm = getValue ("narm");
 	var n = getValue ("n"); //called "resolution"
 	var x = getValue ("x");
-	var plot_adds = getValue ("plotoptions.code.calculate");
 
 	if (full) {
 		echo ('rk.header ("Histogram", list ("Variable", rk.get.description (' + x + ') ');
@@ -35,16 +34,14 @@ function doPrintout (full) {
 	}
 
 	echo ('try ({\n');
+	printIndentedUnlessEmpty ("\t", getValue ("plotoptions.code.preprocess"), '', '\n');
+
 	echo ('	hist (' + x + getValue ("histogram_opt.code.calculate") + getValue ("histogram_opt.code.printout") + getValue ("plotoptions.code.printout") + ')\n');
 	if ((densityscaled) && getValue ("density")) {
 		echo ('	lines(density(' + x + ', bw="' + bw + '", adjust = ' + adjust + ', ' + narm + ', n = ' + getValue ("n") + ')' + getValue ("col_density.code.printout") + ')\n');
 	}
-	if (plot_adds.length > 0) {
-		echo ('\n');
-		// print the grid() related code
-		printIndented ("\t", plot_adds);
-	}
-
+	
+	printIndentedUnlessEmpty ("\t", getValue ("plotoptions.code.calculate"), '\n', '');
 	echo ('})\n');
 	if (full) {
 		echo ('rk.graph.off ()\n');

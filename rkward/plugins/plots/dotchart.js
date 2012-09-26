@@ -20,9 +20,6 @@ function doPrintout (full) {
 
 	var options = getValue ("plotoptions.code.printout");
 
-	var plotpre = getValue ("plotoptions.code.preprocess");
-	var plotpost = getValue ("plotoptions.code.calculate");
-
 	if (tabulate) {
 		echo (getValue ('tabulate_options.code.calculate'));
 		echo ('n <- names (x); x <- as.numeric (x); names (x) <- n		# dotchart() is somewhat picky about data type\n');
@@ -50,9 +47,9 @@ function doPrintout (full) {
 	} else if (names_mode == "custom") {
 		echo ("names(x) <- c (\"" + str_replace (";", "\", \"", trim (getValue ("names_custom"))) + "\")\n");
 	}
-	if (plotpre != "") printIndented ("\t", plotpre);
+	printIndentedUnlessEmpty ("\t", getValue ("plotoptions.code.preprocess"), '', '\n');
 	echo ('	dotchart(x' + options + ')\n');
-	if (plotpost != "") printIndented ("\t", plotpost);
+	printIndentedUnlessEmpty ("\t", getValue ("plotoptions.code.calculate"), '\n', '');
 	echo ('})\n');
 	if (full) {
 		echo ('rk.graph.off ()\n');

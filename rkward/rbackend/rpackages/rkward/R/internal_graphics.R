@@ -55,13 +55,14 @@ assign(".rk.preview.devices", list (), envir=.rk.variables)
 ".rk.startPreviewDevice" <- function (x) {
 	a <- .rk.variables$.rk.preview.devices[[x]]
 	if (is.null (a)) {
-		a <- dev.cur ()
+		devnum <- dev.cur ()
 		x11 (is.preview.device = TRUE)
-		if (a != dev.cur ()) {
-			.rk.variables$.rk.preview.devices[[x]] <- dev.cur ()
+		if (devnum != dev.cur ()) {
+			.rk.variables$.rk.preview.devices[[x]] <- list (devnum=dev.cur(), par=par (no.readonly=TRUE))
 		}
 	} else {
-		dev.set (a)
+		dev.set (a$devnum)
+		par (a$par)
 	}
 }
 
@@ -69,8 +70,8 @@ assign(".rk.preview.devices", list (), envir=.rk.variables)
 ".rk.killPreviewDevice" <- function (x) {
 	a <- .rk.variables$.rk.preview.devices[[x]]
 	if (!is.null (a)) {
-		if (a %in% dev.list ()) {
-			dev.off (a)
+		if (a$devnum %in% dev.list ()) {
+			dev.off (a$devnum)
 		}
 		.rk.variables$.rk.preview.devices[[x]] <- NULL
 	}

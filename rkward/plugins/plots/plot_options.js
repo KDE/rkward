@@ -11,6 +11,11 @@ function prepareLabel (labelname) {
 	return label;
 }
 
+function preprocess () {
+	if (getValue ("custom_margins.checked")) {
+		echo ("par (mar=c (" + getValue ("margin_bottom") + ", " + getValue ("margin_left") + ", " + getValue ("margin_top") + ", " + getValue ("margin_right") + "))\n");
+	}
+}
 
 function calculate () {
 	if (getValue ("grid_enable") == "true") {

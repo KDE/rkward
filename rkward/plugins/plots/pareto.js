@@ -43,10 +43,14 @@ function doPrintout (full) {
 	}
 
 	echo ('try ({\n');
+	printIndentedUnlessEmpty ("\t", getValue ("plotoptions.code.preprocess"), '', '\n');
+
 	echo ('\t');
 	if (full && descriptives) echo ('descriptives <- ');
 	echo ('pareto.chart(x' + getValue ("plotoptions.code.printout") + ')\n');
 	if (full && descriptives) echo ('	rk.results(data.frame(descriptives))\n');
+
+	printIndentedUnlessEmpty ("\t", getValue ("plotoptions.code.calculate"), '\n', '');
 	echo ('})\n');
 	if (full) {
 		echo ('rk.graph.off ()\n');

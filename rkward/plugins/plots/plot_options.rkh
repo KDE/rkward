@@ -14,6 +14,11 @@
 		<setting id="mainisquote">If this box is checked, the <i>main</i> title will be used literally (quoted). Otherwise is will be interpreted as an R statement</setting>
 		<setting id="sub">This is the <i>sub</i> argument to plot.default. See R reference on <b>plot.default</b>. To achieve a line-break (in a quoted string), enter '\n'.</setting>
 		<setting id="subisquote">If this box is checked, the <i>sub</i> title will be used literally (quoted). Otherwise is will be interpreted as an R statement</setting>
+		<setting id="custom_margins">Enable this option, if you want to customize the margins.</setting>
+		<setting id="margin_top">Size of top margin. Size is specified in (approximate) line heights.</setting>
+		<setting id="margin_bottom">Size of bottom margin. Size is specified in (approximate) line heights.</setting>
+		<setting id="margin_left">Size of left margin. Size is specified in (approximate) line heights.</setting>
+		<setting id="margin_right">Size of right margin. Size is specified in (approximate) line heights.</setting>
 
 		<caption id="axespage"/>
 		<setting id="xaxt">Uncheck this box to avoid drawing the X axis. This is the <i>xaxt</i> argument to par. See R reference on <b>par</b>.</setting>

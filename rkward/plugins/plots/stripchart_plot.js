@@ -21,19 +21,19 @@ function doPrintout (full) {
 	}
 	var orientation = getValue ("orientation");
 	if (orientation == "Vertical") opts += ", vertical = TRUE";
-	var plot_adds = getValue ("plotoptions.code.calculate"); //add grid and alike
 
 	if (full) {
 		echo ('rk.header ("Stripchart", list ("Variable"=rk.get.description (' + x + '), "Group"=rk.get.description (' + g + '), "Method"=' + method + params + ', "Orientation"="' + orientation + '"))\n');
 		echo ('\n');
 		echo ('rk.graph.on ()\n');
 	}
-	echo ('try (stripchart (' + x + ' ~ (' + g + '), method = ' + method + opts + getValue ("plotoptions.code.printout") + '))\n');
-	if (plot_adds.length > 0) {
-		echo ('\n');
-		// print the grid() related code
-		printIndented ("\t", plot_adds);
-	}
+	echo ('try ({\n');
+	printIndentedUnlessEmpty ("\t", getValue ("plotoptions.code.preprocess"), '', '\n');
+
+	echo ('\tstripchart (' + x + ' ~ (' + g + '), method = ' + method + opts + getValue ("plotoptions.code.printout") + ')\n');
+
+	printIndentedUnlessEmpty ("\t", getValue ("plotoptions.code.calculate"), '\n', '');
+	echo ('})\n');
 
 	if (full) {
 		echo ('rk.graph.off ()\n');

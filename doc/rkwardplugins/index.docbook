@@ -53,8 +53,8 @@ as Authors, publish date, the abstract, and Keywords -->
      and in the FDL itself on how to use it. -->
 <legalnotice>&FDLNotice;</legalnotice>
 
-<date>2011-10-17</date>
-<releaseinfo>0.5.7.00</releaseinfo>
+<date>2012-09-26</date>
+<releaseinfo>0.5.8.00</releaseinfo>
 
 <abstract>
 <para>
@@ -76,7 +76,7 @@ This is a guide to writing plugins for &rkward;.
 
 	<note>
 		<para>
-			Documentation as of &rkward; release 0.5.7.
+			Documentation as of &rkward; release 0.5.8.
 		</para>
 	</note>
 	<para>
@@ -618,7 +618,6 @@ function calculate () {
 }
 		</programlisting>
 	</sect2>
-
 </sect1>
 
 <sect1 id="jstips">
@@ -1248,71 +1247,137 @@ function getSpecifics () {
 This chapter contains information on some topics that are useful only to certain classes of plugins.
 </para>
 
-<sect1 id="preview_plots">
-	<title>Preview functionality for graphing plugins</title>
+<sect1 id="specialized_plugins_plots">
+	<title>Plugins than produce a plot</title>
 	<para>
-		A very useful feature for all plugins generating a plot/graph is to provide an automatically updating preview. To do so, you will need two things: Adding a <command>&lt;preview&gt;</command> checkbox to your <link linkend="mainxml">GUI definition</link>, and adjusting the <link linkend="jstemplate">generated code</link> for the preview. We will deal with both in turn.
+		Creating a plot from a plugin is easy to do. However, there are a few sublte gotchas to avoid, and also some great generic functionality that you should be aware of. This section shows you the basic concepts, and concludes with a canonical example that you should follow whenever creating plot plugins.
 	</para>
-	<para>
-		Adding a <command>&lt;preview&gt;</command> checkbox is simple. Just place the following somewhere in your GUI. It will take care of all the behind-the-scenes magic of creating a preview device, updaing the preview whenever the setting have changed, etc. Example:
-	</para>
-	<programlisting>
-&lt;document&gt;
-	[...]
-	&lt;dialog [...]&gt;
+	<sect2 id="rk_graph_on">
+		<title>Drawing a plot to the output window</title>
+		<para>
+			In order to draw a plot to the output window, use <function>rk.graph.on()</function> directly before creating the plot, and
+			<function>rk.graph.off()</function>, directly afterwards. This is similar to e.g. callling <function>postscript()</function> and 
+			<function>dev.off()</function> in a regular R session.
+		</para>
+		<para>
+			Importantly, however, you must <emphasis>always</emphasis> call <function>rk.graph.off()</function> after calling <function>rk.graph.on()</function>. Otherwise the output file will be left in a broken state. To ensure <function>rk.graph.off()</function> really gets called, you should wrap <emphasis>all</emphasis> R commands between the two calls in
+			<function>try()</function> statement. Never heard of that? Don't worry, it's easy. All you need to do is follow the pattern shown in
+			<link linkend="plot_plugin_example">example</link>, below.
+		</para>
+	</sect2>
+	<sect2 id="preview_plots">
+		<title>Adding preview functionality</title>
+		<para>
+			A very useful feature for all plugins generating a plot/graph is to provide an automatically updating preview. To do so, you will need two things: Adding a <command>&lt;preview&gt;</command> checkbox to your <link linkend="mainxml">GUI definition</link>, and adjusting the <link linkend="jstemplate">generated code</link> for the preview.
+		</para>
+		<para>
+			Adding a <command>&lt;preview&gt;</command> checkbox is simple. Just place the following somewhere in your GUI. It will take care of all the behind-the-scenes magic of creating a preview device, updaing the preview whenever the setting have changed, etc. Example:
+		</para>
+		<programlisting>
+	&lt;document&gt;
 		[...]
-		&lt;preview id="preview"/&gt;
+		&lt;dialog [...]&gt;
+			[...]
+			&lt;preview id="preview"/&gt;
+			[...]
+		&lt;/dialog&gt;
 		[...]
-	&lt;/dialog&gt;
-	[...]
-&lt;/document&gt;
-	</programlisting>
-	<para>
-		And that's it for the GUI definition.
-	</para>
-	<para>
-		Adjusting the JS template is a little more work. You will have to create a new function called <function>preview()</function> in addition to the <function>preprocess()</function>, <function>calculate()</function>, etc. functions. This function should generate the code needed to produce the plot, and only that. Esp. no printing of headers, <function>rk.graphics.on()</function>, or similar calls. Below is an example of the typical pattern that you will use:
-	</para>
-	<programlisting>
-function preprocess () {
-	// the "somepackage" is needed to create the plot
-	ecoh ("require (somepackage)\n");
-}
-
-function printout () {
-	// all the real work is moved to a custom defined function doPrintout (), below
-
-	doPrintout (true);	// true in this case means: We want all the headers that should be printed in the output
-}
-
-function preview () {
-	// we call all stages of the general code. Only the printout () function need to be slightly different
-	preprocess ();
-	// calculate (); in this example the plugin has no calculate () function.
-	doPrintout (false);
-}
-
-function doPrintout (full) {
-	// this function takes care of generating the code for the printout() section. If "full" is set to true,
-	// it generates the full code, including headers. If full is set to false, only the essentials will
-	// be generated.
-
-	if (full) {
-		echo ('rk.header ("An example plot")\n\n');
-		echo ('rk.graph.on ()\n');
-	} 
-
-	// only the following section will be generated for full==false
-	echo ('try ({plot (5, 5)})\n');
-
-	if (full) {
-		echo ('rk.graph.off ()\n');
+	&lt;/document&gt;
+		</programlisting>
+		<para>
+			And that's it for the GUI definition.
+		</para>
+		<para>
+			Adjusting the JS template is a little more work. You will have to create a new function called <function>preview()</function> in addition to the <function>preprocess()</function>, <function>calculate()</function>, etc. functions. This function should generate the code needed to produce the plot, and only that. Esp. no printing of headers, <function>rk.graphics.on()</function>, or similar calls. See the <link linkend="plot_plugin_example">example</link>, below for the typical pattern that you will use.
+		</para>
+	</sect2>
+	<sect2 id="plot_options">
+		<title>Generic plot options</title>
+		<para>
+			You will have noticed that most plotting plugins in RKWard provide a wide range of generic options e.g. for customizing axis titles or figure margins. Adding these options to your plugin is easy. They are provided by an <link linkend="embedding">embeddable</link> plugin called <command>rkward::plot_options</command>. Embed this in your plugin UI like this:
+		</para>
+		<programlisting>
+	&lt;document&gt;
+		[...]
+		&lt;logic [...]&gt;
+			&lt;connect client="plotoptions.xvar" governor="x.available"/&gt;
+			&lt;set id="plotoptions.allow_type" to="true"/&gt;
+			&lt;set id="plotoptions.allow_ylim" to="true"/&gt;
+			&lt;set id="plotoptions.allow_xlim" to="false"/&gt;
+			&lt;set id="plotoptions.allow_log" to="false"/&gt;
+			&lt;set id="plotoptions.allow_grid" to="true"/&gt;
+		&lt;/logic&gt;
+		&lt;dialog [...]&gt;
+			[...]
+			&lt;embed id="plotoptions" component="rkward::plot_options" as_button="true" label="Plot Options"/&gt;
+			[...]
+		&lt;/dialog&gt;
+		[...]
+	&lt;/document&gt;
+		</programlisting>
+		<para>
+			This will add a button to your UI to bring up a window with plot options. The logic section is just an example. It allows you some control over the plot options plugin. Read more in the plot_options plugin's help page (linked from the help page of any plugin providing the generic options).
+		</para>
+		<para>
+			Next you need to make sure that the code corresponding to your plot options is added to the generated code for your plot. To do so,
+			fetch the properties <command>code.preprocess</command>, <command>code.printout</command>, and <command>code.calculate</command> from the embedded plot options plugin, and insert them into your code as shown in the <link linkend="plot_plugin_example">example</link>, below.
+		</para>
+	</sect2>
+	<sect2 id="plot_plugin_example">
+		<title>A canonical example</title>
+		<para>
+			Here's an example .JS file that you should use as a template, whenever you create a plotting plugin:
+		</para>
+		<programlisting>
+	function preprocess () {
+		// the "somepackage" is needed to create the plot
+		ecoh ("require (somepackage)\n");
 	}
-}
-	</programlisting>
-	<para>
-		That's it, your plugin should now be preview-enabled.
-	</para>
+
+	function printout () {
+		// all the real work is moved to a custom defined function doPrintout (), below
+
+		doPrintout (true);	// in this case, 'true' means: We want all the headers that should be printed in the output, not just the preview
+	}
+
+	function preview () {
+		// we call all stages of the general code. Only the printout () function needs to be slightly different for the plot preview
+		preprocess ();
+		// calculate (); // in this example, the plugin has no calculate () function.
+		doPrintout (false);	// in this case, 'false' means: Create the plot, but not any headers or other output.
+	}
+
+	function doPrintout (full) {
+		// this function takes care of generating the code for the printout() section. If "full" is set to true,
+		// it generates the full code, including headers. If full is set to false, only the essentials will
+		// be generated.
+
+		if (full) {
+			echo ('rk.header ("An example plot")\n\n');
+			echo ('rk.graph.on ()\n');
+		}
+		// only the following section will be generated for full==false
+
+		// remember: everything between rk.graph.on() and rk.graph.off() should be wrapped inside a try() statement:
+		echo ('try ({\n');
+		// insert any option-setting code that should be run before the actual plotting commands.
+		// The code itself is provided by the embedded plot options plugin. printIndentedUnlessEmpty() takes care of pretty formatting.
+		printIndentedUnlessEmpty ('\t', getValue ("plotoptions.code.preprocess"), '', '\n');
+
+		// create the actual plot. plotoptions.code.printout provides the part of the generic plot options
+		// that have to be added to the plotting call, itself.
+		echo ('plot (5, 5' + getValue ("plotoptions.code.printout") + ')\n');
+
+		// insert any option-setting code that should be run after the actual plot.
+		printIndentedUnlessEmpty ('\t', getValue ("plotoptions.code.calculate"), '\n');
+		echo ('})'\n);	// the closure of the try() statement
+
+		if (full) {
+			echo ('rk.graph.off ()\n');
+		}
+	}
+		</programlisting>
+	</sect2>
 </sect1>
 
 <sect1 id="contextualized_plugins">

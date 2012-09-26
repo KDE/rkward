@@ -12,8 +12,6 @@ function doPrintout (full) {
 	if (!(y == "")) {
 		y = ", " + y;
 	}
-	// get additional code (as of now grid) from the calculate section
-	var plot_adds = getValue ("plotoptions.code.calculate");
 
 	if (full) {
 
@@ -22,13 +20,11 @@ function doPrintout (full) {
 	}
 
 	echo ('try({\n');
-	echo ('	plot(' + x + y + getValue ("plotoptions.code.printout") + ');\n');
-	if (plot_adds.length > 0) {
-		echo ('\n');
-		// print the grid() related code
-		printIndented ("\t", plot_adds);
-	}
+	printIndentedUnlessEmpty ("\t", getValue ("plotoptions.code.preprocess"), '', '\n');
 
+	echo ('	plot(' + x + y + getValue ("plotoptions.code.printout") + ');\n');
+
+	printIndentedUnlessEmpty ("\t", getValue ("plotoptions.code.calculate"), '\n', '');
 	echo ('})\n');
 	if (full) {
 

@@ -44,9 +44,6 @@ function doPrintout (full) {
 	else if (col == "grayscale") options += ", col=gray.colors (if(is.matrix(x)) dim(x) else length(x))";
 	options += getValue ("plotoptions.code.printout");
 
-	var plotpre = getValue ("plotoptions.code.preprocess");
-	var plotpost = getValue ("plotoptions.code.calculate");
-
 	if (tabulate) {
 		echo (getValue ('tabulate_options.code.calculate'));
 	} else {
@@ -68,7 +65,7 @@ function doPrintout (full) {
 	}
 
 	echo ('try ({\n');
-	if (plotpre.length > 0) printIndented ("\t", plotpre);
+	printIndentedUnlessEmpty ("\t", getValue ("plotoptions.code.preprocess"), '', '\n');
 	if (names_mode == "rexp") {
 		echo ("\tnames(x) <- " + getValue ("names_exp") + "\n");
 	} else if (names_mode == "custom") {
@@ -76,7 +73,7 @@ function doPrintout (full) {
 	}
 
 	echo ('	pie(x' + options + ')\n');
-	if (plotpost.length > 0) printIndented ("\t", plotpost);
+	printIndentedUnlessEmpty ("\t", getValue ("plotoptions.code.calculate"), '\n', '');
 	echo ('})\n');
 	if (full) {
 		echo ('rk.graph.off ()\n');

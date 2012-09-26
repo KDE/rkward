@@ -16,7 +16,6 @@ function doPrintout (full) {
 	var pch_sd_high = getValue ("pch_sd_high");
 	var pch_sd_low = getValue ("pch_sd_low");
 	var horizontal = getValue ("orientation") == "TRUE";
-	var plot_adds = getValue ("plotoptions.code.calculate"); //add grid and alike
 	var boxwex = getValue ("boxwex");
 	if (!dodged && (Number (boxwex) != .8)) boxwex = ", boxwex=" + boxwex;
 	else boxwex = "";
@@ -54,7 +53,10 @@ function doPrintout (full) {
 		}
 		echo ('rk.graph.on()\n');
 	}
+
 	echo ('try ({\n');
+	printIndentedUnlessEmpty ("\t", getValue ("plotoptions.code.preprocess"), '', '\n');
+
 	echo ('	boxplot (data_list' + boxwex + positions + ', notch = ' + getValue ("notch") + ', outline = ' + getValue("outline") + ', horizontal = ' + getValue("orientation") + getValue ("plotoptions.code.printout") + ') #actual boxplot function\n');
 	if (do_mean) {
 	    var mean_fun = "mean, na.rm=TRUE";
@@ -90,13 +92,9 @@ function doPrintout (full) {
 			echo ('	points(sd_high, pch=' + pch_sd_high + ', cex = ' + getValue ("cex_sd_mean") + getValue ("sd_mean_color.code.printout") + ')\n');
 		}
 	}
-	echo ('})\n');	// end of try ()
 
-	if (plot_adds.length > 0) {
-		echo ('\n');
-		// print the grid() related code
-		printIndented ("\t", plot_adds);
-	}
+	printIndentedUnlessEmpty ("\t", getValue ("plotoptions.code.calculate"), '\n');
+	echo ('})\n');	// end of try ()
 
 	if (full) {
 		echo ('rk.graph.off ()\n');

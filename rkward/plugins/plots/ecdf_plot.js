@@ -26,6 +26,8 @@ function doPrintout (full) {
 		echo ('rk.graph.on ()\n');
 	}
 	echo ('try ({\n');
+	printIndentedUnlessEmpty ("\t", getValue ("plotoptions.code.preprocess"), '', '\n');
+
 	echo ('	plot.ecdf (' + x + ', ' + getValue ("stepfun_options.code.printout") + getValue ("plotoptions.code.printout") + ')\n');
 	if (getValue ("th_pnorm")) {
 		echo ('	curve (pnorm');
@@ -35,6 +37,8 @@ function doPrintout (full) {
 	if (getValue ("rug")) {
 		echo ('	rug (' + x + ', ' + getValue ("ticksize") + ', ' + getValue ("lwd") + ', ' + getValue ("side") + getValue ("col_rug.code.printout") + ')\n');
 	}
+
+	printIndentedUnlessEmpty ("\t", getValue ("plotoptions.code.calculate"), '\n', '');
 	echo ('})\n');
 	if (full) {
 		echo ('rk.graph.off ()\n');

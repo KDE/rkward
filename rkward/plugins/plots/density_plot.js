@@ -52,6 +52,8 @@ function doPrintout (full) {
 	}
 
 	echo ('try ({\n');
+	printIndentedUnlessEmpty ("\t", getValue ("plotoptions.code.preprocess"), '', '\n');
+
 	if (dodensity_plot) {
 		echo ('	plot(' + density_call + getValue ("plotoptions.code.printout") + ')\n');
 	} else {
@@ -60,6 +62,8 @@ function doPrintout (full) {
 	if (dorug) {
 		echo ('	rug(' + x + ', ' + getValue ("rug_ticksize") + ', ' + getValue ("rug_lwd") + ', ' + getValue ("rug_side") + getValue ("rug_col.code.printout") + ')\n');
 	}
+
+	printIndentedUnlessEmpty ("\t", getValue ("plotoptions.code.calculate"), '\n', '');
 	echo ('})\n');
 	if (full) {
 		echo ('rk.graph.off ()\n');

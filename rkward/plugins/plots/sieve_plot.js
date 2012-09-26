@@ -37,15 +37,12 @@ function doPrintout (full) {
 		echo ('rk.graph.on ()\n');
 	}
 
-	var plotpre = getValue ("plotoptions.code.preprocess");
-	var plotpost = getValue ("plotoptions.code.calculate");
-
 	echo ('try ({\n');
-	if (plotpre.length > 0) printIndented ("\t", plotpre);
-
+	printIndentedUnlessEmpty ("\t", getValue ("plotoptions.code.preprocess"), '', '\n');
 
 	echo ('	sieve(x, shade = ' + shade + ', sievetype = "' + sievetype + '" ' + getValue ("plotoptions.code.printout") + ')\n');
-	if (plotpost.length > 0) printIndented ("\t", plotpost);
+
+	printIndentedUnlessEmpty ("\t", getValue ("plotoptions.code.calculate"), '\n', '');
 	echo ('})\n');
 	if (full) {
 		echo ('rk.graph.off ()\n');

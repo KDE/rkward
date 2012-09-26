@@ -54,6 +54,8 @@ function doPrintout (full) {
 		echo ('\n');
 	}
 	echo ('try ({\n');
+	printIndentedUnlessEmpty ("\t", getValue ("plotoptions.code.preprocess"), '', '\n');
+
 	echo ('	# make frame and axes\n');
 	echo ('	plot(Xrange, Yrange, type="n"' + getValue ("plotoptions.code.printout") + ')\n');
 	echo ('	\n');
@@ -68,6 +70,8 @@ function doPrintout (full) {
 	echo ('			pch = pch[[i]]\n');
 	echo ('		)\n');
 	echo ('	}\n');
+
+	printIndentedUnlessEmpty ("\t", getValue ("plotoptions.code.calculate"), '\n', '');
 	echo ('})\n');
 	if (full) {
 		echo ('\n');

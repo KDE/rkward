@@ -72,7 +72,7 @@
 	</logic>
 	<dialog label="Default plot options" >
 		<tabbook>
-			<tab id="titlepage" label="Title">
+			<tab id="titlepage" label="Title and margins">
 				<column>
 					<frame label="Main title">
 						<input id="main" label="Main title (on top). Leave empty for default title" />
@@ -81,6 +81,12 @@
 					<frame label="Subtitle">
 						<input id="sub" label="Sub-title (at bottom). Leave empty for default title" />
 						<checkbox id="subisquote" label="Interpret this label as literal (quoted) string" checked="true" value="1" />
+					</frame>
+					<frame id="custom_margins" label="Custom margins" checkable="true" checked="false">
+						<spinbox id="margin_top" type="real" initial="4" default_precision="0" label="Top"/>
+						<spinbox id="margin_bottom" type="real" initial="5" default_precision="0" label="Bottom"/>
+						<spinbox id="margin_left" type="real" initial="4" default_precision="0" label="Left"/>
+						<spinbox id="margin_right" type="real" initial="2" default_precision="0" label="Right"/>
 					</frame>
 					<stretch/>
 				</column>

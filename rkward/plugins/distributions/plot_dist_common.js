@@ -26,7 +26,6 @@ function getDiscontRangeParameters () {
 }
 
 function doPrintout (full) {
-	var plot_adds = "";
 	var fun = getValue ("function");
 	var _log = (getValue ("log") == 1);
 
@@ -74,15 +73,13 @@ function doPrintout (full) {
 	}
 
 	echo ('try ({\n');
+	printIndentedUnlessEmpty ("\t", getValue ("plotoptions.code.preprocess"), '', '\n');
+
 	echo ('	curve (');
 	doFunCall ();
 	echo (', from=' + options['min'] + ', to=' + options['max'] + ', n=' + options['n'] + getValue ("plotoptions.code.printout") + ')\n');
 
-	plot_adds = getValue ("plotoptions.code.calculate");
-	if (plot_adds.length > 0) {
-		echo ('\n');
-		printIndented ("\t", plot_adds);
-	}
+	printIndentedUnlessEmpty ("\t", getValue ("plotoptions.code.calculate"), '\n', '');
 	echo ('})\n');
 	if (full) {
 		echo ('rk.graph.off ()\n');

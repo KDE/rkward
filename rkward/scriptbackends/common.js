@@ -10,6 +10,13 @@ printIndented = function (indentation, lines) {
 	echo (indentation + lines.replace (/\n(.)/g, "\n" + indentation + "$1"));
 }
 
+printIndentedUnlessEmpty = function (indentation, lines, pre, post) {
+	if (lines.length <= 0) return;
+	if (typeof (pre) != 'undefined') echo (pre);
+	printIndented (indentation, lines);
+	if (typeof (post) != 'undefined') echo (post);
+}
+
 noquote = function (text) {
 	var ret = new String (text);
 	ret.noquote = 1;
