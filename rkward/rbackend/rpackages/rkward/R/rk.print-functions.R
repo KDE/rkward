@@ -158,8 +158,11 @@
 		if (is.null(titles)) {
 			titles <- names(dimnames(x))
 		}
-		rn <- paste (titles[1], "=", dimnames(x)[[1]])
-		titles <- c ("", paste (titles[2], "=", dimnames(x)[[2]]))
+		rn <- dimnames(x)[[1]]
+		if (!is.na (titles[1])) rn <- paste(titles[1], "=", rn)
+		cn <- dimnames(x)[[2]]
+		if (!is.na (titles[2])) cn <- paste(titles[2], "=", cn)
+		titles <- c ("", cn)
 		x <- data.frame (cbind (x), stringsAsFactors=FALSE)
 		rownames (x) <- as.character (rn)
 		if (missing (print.rownames)) print.rownames <- TRUE

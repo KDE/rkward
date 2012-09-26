@@ -48,7 +48,7 @@ function doPrintout (full) {
 	echo ('\t');
 	if (full && descriptives) echo ('descriptives <- ');
 	echo ('pareto.chart(x' + getValue ("plotoptions.code.printout") + ')\n');
-	if (full && descriptives) echo ('	rk.results(data.frame(descriptives))\n');
+	if (full && descriptives) echo ('	rk.results(descriptives, titles=c(NA,NA))\n');
 
 	printIndentedUnlessEmpty ("\t", getValue ("plotoptions.code.calculate"), '\n', '');
 	echo ('})\n');

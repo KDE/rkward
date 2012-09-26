@@ -18,7 +18,7 @@ rk.header ("Pareto chart", parameters=list ("Variable"=title, "Limit"="10 larges
 rk.graph.on ()
 try ({
 	descriptives <- pareto.chart(x, ylab="Frequency", main=title)
-	rk.results(data.frame(descriptives))
+	rk.results(descriptives, titles=c(NA,NA))
 })
 rk.graph.off ()
 })
@@ -35,7 +35,7 @@ rk.header ("Pareto chart", parameters=list ("Tabulation groups"=paste (names (gr
 rk.graph.on ()
 try ({
 	descriptives <- pareto.chart(x, ylab="Sum of warpbreaks[[\"breaks\"]]", main=title)
-	rk.results(data.frame(descriptives))
+	rk.results(descriptives, titles=c(NA,NA))
 })
 rk.graph.off ()
 })

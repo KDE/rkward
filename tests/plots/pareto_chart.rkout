@@ -8,14 +8,14 @@ DATE<br />
 <tr><td></td><td>Frequency</td><td>Cum.Freq.</td><td>Percentage</td><td>Cum.Percent.</td></tr>
 <tr><td>A</td><td>53</td><td>53</td><td>21.116</td><td>21.116</td></tr>
 <tr><td>B</td><td>32</td><td>85</td><td>12.749</td><td>33.865</td></tr>
-<tr><td>D</td><td>29</td><td>114</td><td>11.554</td><td>45.418</td></tr>
-<tr><td>C</td><td>29</td><td>143</td><td>11.554</td><td>56.972</td></tr>
+<tr><td>C</td><td>29</td><td>114</td><td>11.554</td><td>45.418</td></tr>
+<tr><td>D</td><td>29</td><td>143</td><td>11.554</td><td>56.972</td></tr>
 <tr><td>E</td><td>28</td><td>171</td><td>11.155</td><td>68.127</td></tr>
 <tr><td>F</td><td>20</td><td>191</td><td>7.9681</td><td>76.096</td></tr>
 <tr><td>G</td><td>19</td><td>210</td><td>7.5697</td><td>83.665</td></tr>
 <tr><td>H</td><td>15</td><td>225</td><td>5.9761</td><td>89.641</td></tr>
-<tr><td>J</td><td>13</td><td>238</td><td>5.1793</td><td>94.821</td></tr>
-<tr><td>I</td><td>13</td><td>251</td><td>5.1793</td><td>100</td></tr>
+<tr><td>I</td><td>13</td><td>238</td><td>5.1793</td><td>94.821</td></tr>
+<tr><td>J</td><td>13</td><td>251</td><td>5.1793</td><td>100</td></tr>
 </table>
 
 <h1>Pareto chart</h1>
