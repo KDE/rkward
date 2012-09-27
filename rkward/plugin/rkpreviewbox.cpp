@@ -20,13 +20,18 @@
 #include <qlabel.h>
 #include <qcheckbox.h>
 #include <qtimer.h>
+#include <QTextDocument>
 
 #include <klocale.h>
 
 #include "../rkglobals.h"
 #include "../rbackend/rinterface.h"
 #include "../misc/xmlhelper.h"
+#include "../windows/rkwindowcatcher.h"
 #include "../debug.h"
+
+#define START_DEVICE 101
+#define DO_PLOT 102
 
 RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget) : RKComponent (parent_component, parent_widget) {
 	RK_TRACE (PLUGIN);
@@ -34,6 +39,7 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 	preview_active = false;
 	last_plot_done = true;
 	new_plot_pending = false;
+	dev_num = 0;
 
 	// get xml-helper
 	XMLHelper *xml = XMLHelper::getStaticHelper ();
@@ -113,6 +119,12 @@ void RKPreviewBox::tryPreview () {
 	updateStatusLabel ();
 }
 
+void RKPreviewBox::previewWindowClosed () {
+	RK_TRACE (PLUGIN);
+
+	dev_num = 0;
+}
+
 void RKPreviewBox::tryPreviewNow () {
 	RK_TRACE (PLUGIN);
 
@@ -120,6 +132,9 @@ void RKPreviewBox::tryPreviewNow () {
 	ComponentStatus s = parentComponent ()->recursiveStatus ();
 	if (s != Satisfied) {
 		if (s == Processing) tryPreview ();
+		else {
+			RKCaughtX11Window::setStatusMessage (dev_num, i18n ("Preview not (currently) possible"));
+		}
 		return;
 	}
 
@@ -131,8 +146,9 @@ void RKPreviewBox::tryPreviewNow () {
 
 	preview_active = true;
 	QString dummy;
-	RKGlobals::rInterface ()->issueCommand (dummy.sprintf (".rk.startPreviewDevice (\"%p\")", this), RCommand::Plugin | RCommand::Sync);
-	RKGlobals::rInterface ()->issueCommand ("local({\n" + code_property->preview () + "})\n", RCommand::Plugin | RCommand::Sync, QString::null, this);
+	RKGlobals::rInterface ()->issueCommand (dummy.sprintf (".rk.startPreviewDevice (\"%p\")", this), RCommand::Plugin | RCommand::Sync | RCommand::GetIntVector, QString (), this, START_DEVICE);
+	RKCaughtX11Window::setStatusMessage (dev_num, i18n ("Preview updating"));
+	RKGlobals::rInterface ()->issueCommand ("local({\n" + code_property->preview () + "})\n", RCommand::Plugin | RCommand::Sync, QString (), this, DO_PLOT);
 
 	last_plot_done = false;
 	new_plot_pending = false;
@@ -152,12 +168,25 @@ void RKPreviewBox::killPreview () {
 	new_plot_pending = false;
 }
 
-void RKPreviewBox::rCommandDone (RCommand *) {
+void RKPreviewBox::rCommandDone (RCommand *command) {
 	RK_TRACE (PLUGIN);
 
 	last_plot_done = true;
 	if (new_plot_pending) tryPreview ();
 
+	if (command->getFlags () == START_DEVICE) {
+		int old_devnum = dev_num;
+		dev_num = command->intVector ().value (0, 0);
+		if (dev_num != old_devnum) {
+			disconnect (this, SLOT (previewWindowClosed()));
+			RKCaughtX11Window *window = RKCaughtX11Window::getWindow (dev_num);
+			if (window) connect (window, SIGNAL (destroyed(QObject*)), this, SLOT(previewWindowClosed()));
+		}
+	} else if (command->getFlags () == DO_PLOT) {
+		QString warnings = command->warnings () + command->error ();
+		if (!warnings.isEmpty ()) warnings = QString ("<b>%1</b>\n<pre>%2</pre>").arg (i18n ("Warnings or Errors:")).arg (Qt::escape (warnings));
+		RKCaughtX11Window::setStatusMessage (dev_num, warnings);
+	}
 	updateStatusLabel ();
 }
 

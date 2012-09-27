@@ -59,11 +59,14 @@ assign(".rk.preview.devices", list (), envir=.rk.variables)
 		x11 (is.preview.device = TRUE)
 		if (devnum != dev.cur ()) {
 			.rk.variables$.rk.preview.devices[[x]] <- list (devnum=dev.cur(), par=par (no.readonly=TRUE))
+		} else {
+			return (0L)	# no device could be opened
 		}
 	} else {
 		dev.set (a$devnum)
 		par (a$par)
 	}
+	as.integer (dev.cur ())
 }
 
 #' @export
@@ -75,6 +78,20 @@ assign(".rk.preview.devices", list (), envir=.rk.variables)
 		}
 		.rk.variables$.rk.preview.devices[[x]] <- NULL
 	}
+}
+
+".rk.discard.preview.device.num" <- function (devnum) {
+	for (dev in names (.rk.variables$.rk.preview.devices)) {
+		if (.rk.variables$.rk.preview.devices[[dev]]$devnum == devnum) {
+			.rk.variables$.rk.preview.devices[[dev]] <- NULL
+			return (invisible (TRUE))
+		}
+	}
+	invisible (FALSE)
+}
+
+".rk.list.preview.device.numbers" <- function () {
+	unlist (sapply (.rk.variables$.rk.preview.devices, function (x) x$devnum))
 }
 
 .rk.variables$.rk.printer.devices <- list ()
@@ -104,6 +121,8 @@ assign(".rk.preview.devices", list (), envir=.rk.variables)
 				.rk.do.plain.call ("printPreview", printfile, FALSE)
 				.rk.variables$.rk.printer.devices[[as.character (which)]] <- NULL
 			}
+
+			rkward:::.rk.discard.preview.device.num(which)
 
 			return (ret)
 		})

@@ -2,7 +2,7 @@
                           rwindowcatcher.h  -  description
                              -------------------
     begin                : Wed May 4 2005
-    copyright            : (C) 2005, 2006, 2009, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2009, 2010, 2011, 2012 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -120,6 +120,9 @@ public:
 This should be used, when the plot is currently out-of-date (e.g. when loading a plot from history), _not_ when the window
 is simply busy (e.g. when saving the current plot to history). */
 	void setStatusMessage (const QString& message, RCommand* command=0);
+/** static convencience wrapper around setStatusMessage (). Sets the message on the window corresponding to the given device number.
+ * NOTE: If no device exists (or isn't known to the system), this function does nothing */
+	static void setStatusMessage (int dev_num, const QString &message, RCommand *command=0);
 public slots:
 /** Fixed size action was (potentially) toggled. Update to the new state */
 	void fixedSizeToggled ();

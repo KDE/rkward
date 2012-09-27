@@ -1,3 +1,4 @@
+- Preview device windows will display some status information (most importantly, warnings or errors)
 - Most plot plugins gain options to control margins and tick label orientation
 - Added option for installing packages from source (implicitly enabled on Unixoid platforms)
 - Fixed: Wrong handling of carriage returns ('\r') in the console window				TODO: also fix for the command log and other places

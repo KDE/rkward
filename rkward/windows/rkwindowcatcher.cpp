@@ -2,7 +2,7 @@
                           rwindowcatcher.cpp  -  description
                              -------------------
     begin                : Wed May 4 2005
-    copyright            : (C) 2005, 2006, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2009, 2010, 2011, 2012 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -519,6 +519,15 @@ void RKCaughtX11Window::setStatusMessage (const QString& message, RCommand *comm
 	} else {
 		status_popup->hide ();
 	}
+}
+
+// static
+void RKCaughtX11Window::setStatusMessage(int dev_num, const QString& message, RCommand* command) {
+	RK_TRACE (MISC);
+
+	RKCaughtX11Window *window = getWindow (dev_num);
+	if (!window) return;
+	window->setStatusMessage (message, command);
 }
 
 void RKCaughtX11Window::rCommandDone (RCommand *command) {

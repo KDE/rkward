@@ -199,7 +199,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		
 		# all open screen devices
 		.osd <- which (names (dev.list ()) %in% deviceIsInteractive ()) + 1
-		.opd <- unlist (.rk.variables$.rk.preview.devices)
+		.opd <- .rk.list.preview.device.numbers()
 		# to be managed devices:
 		if (length (.opd) > 0) .osd <-.osd [!(.osd %in% .opd)]
 		if (length (.osd) == 0) return (invisible ())
