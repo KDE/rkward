@@ -1,4 +1,4 @@
-- Most plot plugins gain options to control margins and tick label orientation				TODO: add test(s)
+- Most plot plugins gain options to control margins and tick label orientation
 - Added option for installing packages from source (implicitly enabled on Unixoid platforms)
 - Fixed: Wrong handling of carriage returns ('\r') in the console window				TODO: also fix for the command log and other places
 - Fixed: Spinboxes had wrong initial values
@@ -14,7 +14,7 @@
 - Do not offer to restore individual removed columns of a data.frame opened for editing
 - Fixed: Plot history and graphical menus broken in some cases with R 2.15.0
 - Fixed: If the rkward package was loaded in a plain R session, q() and quit() still work
-- combined all Wilcoxon/Mann-Whitney-tests in one plugin (from previously two separate plugins)			TODO: adjust test(s)
+- combined all Wilcoxon/Mann-Whitney-tests in one plugin (from previously two separate plugins)
 - Added polyserial/polychoric correlations to correlation matrix plugin
 - Added more compression options to the "Save objects as R code" plugin
 - Added MacPorts support, see README.MacPorts and bundle build script in the macports folder
