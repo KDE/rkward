@@ -26,6 +26,7 @@
 #include "rbackend/rcommandreceiver.h"
 #include "windows/rkcommandeditorwindow.h"
 #include "windows/rkmdiwindow.h"
+#include "misc/rkcommandhistory.h"
 
 class QEvent;
 class QKeyEvent;
@@ -72,7 +73,7 @@ public:
 /** reimplemnented from RKMDIWindow to clear selection when gaining focus */
 	void activate (bool with_focus=true);
 	void setCommandHistory (const QStringList &new_history, bool append);
-	QStringList commandHistory () const { return commands_history; };
+	QStringList commandHistory () const { return commands_history.getHistory (); };
 protected:
 /** Handle keystrokes before they reach the kate-part. Return TRUE if we want the kate-part to ignore it
 \param e the QKeyEvent */
@@ -90,15 +91,7 @@ friend class RKConsolePart;
 	void insertCompletion (int line_num, int word_start, int word_end, const QString &completion);
 	QString incomplete_command;
 /** A list to store previous commands */
-	QStringList commands_history;
-/** current position in the commands history */
-	QStringList::const_iterator commands_history_position;
-/** A flag to indicate whether the command was edited while scrolling in the history */ 
-	bool command_edited;
-/** The last line in the history is special, in that it is stored before it is submitted, but not permanently so */
-	QString history_editing_line;
-/** The context to look out for, if doing a context search in the command history */
-	QString command_history_context;
+	RKCommandHistory commands_history;
 /** Sets the cursor position to the end of the last line. */
 	void cursorAtTheEnd ();
 /** Submits the current command */
@@ -117,8 +110,6 @@ friend class RKConsolePart;
 /** Try to submit the next chunk of the input buffer. */
 	void tryNextInBuffer ();
 	void showPrompt ();
-/** Add given command to command history. Also checks, wether the history is longer than max length, and chops it if so. */
-	void addCommandToHistory (const QString &command);
 
 	QString prefix;
 /** This string stores the regular prefix printed at the beginning of each line. */
