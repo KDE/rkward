@@ -19,17 +19,18 @@
 
 #include <QPushButton>
 #include <QTextEdit>
-#include <QLineEdit>
 #include <QLabel>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <khistorycombobox.h>
 
 #include "../agents/rkdebughandler.h"
 #include "../misc/rkdummypart.h"
 #include "../misc/rkcommonfunctions.h"
+#include "../rkconsole.h"
 
 #include "../debug.h"
 
@@ -72,7 +73,8 @@ RKDebugConsole::RKDebugConsole (QWidget *parent, bool tool_window, const char *n
 
 	prompt_label = new QLabel (this);
 	lower_layout->addWidget (prompt_label);
-	reply_edit = new QLineEdit (this);
+	reply_edit = new KHistoryComboBox (this);
+	reply_edit->setSizePolicy (QSizePolicy::MinimumExpanding, QSizePolicy::Minimum);
 	connect (reply_edit, SIGNAL (returnPressed()), this, SLOT (sendReply()));
 	lower_layout->addWidget (reply_edit);
 	setFocusProxy (reply_edit);
@@ -105,6 +107,13 @@ void RKDebugConsole::newDebugState () {
 		context_view->setPlainText (RKDebugHandler::instance ()->outputContext ());
 		prompt_label->setText (RKDebugHandler::instance ()->debugPrompt ());
 		reply_edit->setEnabled (true);	// must come before focus
+		QStringList ch = RKConsole::mainConsole ()->commandHistory ();
+		QStringList ch_rev;	// limit to 100 items (dropdown list!), and reverse to have most recent item first.
+		for (int i = ch.size () - 1; i >= qMax (0, ch.size () - 101); --i) {
+			ch_rev.append (ch[i]);
+		}
+		reply_edit->setMaxCount (ch_rev.size ());
+		reply_edit->setHistoryItems (ch_rev);
 		activate (true);
 	}
 
@@ -118,7 +127,9 @@ void RKDebugConsole::newDebugState () {
 void RKDebugConsole::sendReply () {
 	RK_TRACE (APP);
 
-	sendReply (reply_edit->text ());
+	QString reply = reply_edit->currentText ();
+	sendReply (reply);
+	RKConsole::mainConsole ()->addCommandToHistory (reply);
 	reply_edit->clear ();
 }
 

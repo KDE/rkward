@@ -74,6 +74,7 @@ public:
 	void activate (bool with_focus=true);
 	void setCommandHistory (const QStringList &new_history, bool append);
 	QStringList commandHistory () const { return commands_history.getHistory (); };
+	void addCommandToHistory (const QString& text) { commands_history.append (text); };
 protected:
 /** Handle keystrokes before they reach the kate-part. Return TRUE if we want the kate-part to ignore it
 \param e the QKeyEvent */

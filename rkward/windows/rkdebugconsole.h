@@ -21,7 +21,7 @@
 #include "rkmdiwindow.h"
 
 class QPushButton;
-class QLineEdit;
+class KHistoryComboBox;
 class QTextEdit;
 class QLabel;
 
@@ -48,7 +48,7 @@ private:
 	void sendReply (const QString &reply);
 
 	QTextEdit* context_view;
-	QLineEdit* reply_edit;
+	KHistoryComboBox* reply_edit;
 	QLabel* prompt_label;
 
 	QPushButton* step_button;
