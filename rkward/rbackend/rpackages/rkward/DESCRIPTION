@@ -19,7 +19,7 @@ Authors@R: c(person(given="Thomas", family="Friedrichsmeier",
     person(given="RKWard-devel", family="mailing list",
     email="rkward-devel@lists.sourceforge.net", role=c("cre")))
 Version: 0.5.8
-Date: 2012-03-20
+Date: 2012-09-28
 Collate:
     'base_overrides.R'
     'internal_debugger.R'
