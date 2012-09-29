@@ -97,11 +97,13 @@
 }
 
 #' @export
+#' @rdname rk.results
 "rk.print.code" <- function(code) {
 	.rk.cat.output (.rk.do.plain.call ("highlightRCode", as.character (code)))
 }
 
 #' @export
+#' @rdname rk.results
 "rk.header" <- function (title, parameters=list (), level=1, toc=NULL) {
 	sink (rk.get.output.html.file(), append=TRUE)
 	on.exit (sink ())
@@ -147,6 +149,7 @@
 ".rk.date" <- function () date ()
 
 #' @export
+#' @rdname rk.results
 "rk.results" <- function (x, titles=NULL, print.rownames) {
 	sink (rk.get.output.html.file(), append=TRUE)
 	on.exit (sink ())
@@ -221,6 +224,7 @@
 }
 
 #' @export
+#' @rdname rk.results
 "rk.print.literal" <- function (x) {
 	cat ("<pre>", paste (x, collapse="\n"), "</pre>\n", sep="", file=rk.get.output.html.file(), append=TRUE);
 }
@@ -228,6 +232,7 @@
 # Describe the alternative (H1) of an htest.
 # This code adapted from stats:::print.htest
 #' @export
+#' @rdname rk.results
 "rk.describe.alternative" <- function (x) {
 	res <- ""
 	if (!is.null(x$alternative)) {

@@ -55,6 +55,7 @@
 }
 
 #' @export
+#' @rdname rk.get.tempfile.name
 "rk.get.workspace.url" <- function () {
 	res <- .rk.do.plain.call ("getWorkspaceUrl")
 	if (length (res)) res
@@ -62,11 +63,13 @@
 }
 
 #' @export
+#' @rdname rk.get.tempfile.name
 "rk.get.output.html.file" <- function () {
 	return (.rk.variables$.rk.output.html.file)
 }
 
 #' @export
+#' @rdname rk.get.tempfile.name
 "rk.set.output.html.file" <- function (x) {
 	stopifnot (is.character (x))
 	assign (".rk.output.html.file", x, .rk.variables)

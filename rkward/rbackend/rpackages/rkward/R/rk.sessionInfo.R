@@ -13,7 +13,7 @@
 #' @seealso \code{\link{sessionInfo}}
 #' @keywords utilities misc
 #' @export
-#' @rdname rk.sessionInf
+#' @rdname rk.sessionInfo
 #' @examples
 #' 
 #' rk.sessionInfo()

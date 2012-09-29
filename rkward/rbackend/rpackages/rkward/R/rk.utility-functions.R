@@ -53,6 +53,7 @@
 }
 
 #' @export
+#' @rdname rk.misc
 "rk.make.repos.string" <- function () {
 	x <- getOption ("repos")
 	len <- length (x)
@@ -76,6 +77,7 @@
 
 # a wrapper around chooseCRANmirror() without changing options ("repos"), permanently
 #' @export
+#' @rdname rk.misc
 "rk.select.CRAN.mirror" <- function () {
 	old_repos <- getOption("repos")
 	on.exit (options (repos=old_repos))
@@ -107,7 +109,7 @@
 #'
 #' @author Thomas Friedrichsmeier \email{rkward-devel@@lists.sourceforge.net}
 #' @keywords attribute misc utilities
-#' @rdname rk.misc
+#' @rdname rk.old.packages
 #' @examples
 #' 
 #' ## NOT RUN
@@ -135,13 +137,16 @@
 }
 
 
-# Start recording commands that are submitted from rkward to R.
-# filename: filename to write to (file will be truncated!).
-# include.all: By default, some types of command are filtered (internal synchronisation commands, and run again links). Should these be included?
-# To stop recording, supply NULL or "" as filename
-# Currently used for the purpose of automated testing, only. Perhaps in the future
-# this or a similar mechanism could also be added as a user feature.
+#' Start recording commands that are submitted from RKWard to R
+#' 
+#' To stop recording, supply NULL or "" as filename.
+#' Currently used for the purpose of automated testing, only. Perhaps in the future
+#' this or a similar mechanism could also be added as a user feature.
+#' 
+#' @param filename filename to write to (file will be truncated!).
+#' @param include.all By default, some types of command are filtered (internal synchronisation commands, and run again links). Should these be included?
 #' @export
+#' @rdname rk.record.commands
 "rk.record.commands" <- function (filename, include.all = FALSE) {
 	if (is.null (filename)) filename = ""
 

@@ -44,6 +44,7 @@
 }
 
 #' @export
+#' @rdname rk.edit
 "rk.edit.files" <- function (file = file, title = file, name = NULL, prompt = TRUE)
 {
 	if (!is.character (file)) {
@@ -59,12 +60,14 @@
 }
 
 #' @export
+#' @rdname rk.edit
 "rk.show.files" <- function (file = file, title = file, wtitle = NULL, delete=FALSE, prompt = TRUE)
 {
 	invisible (.Call ("rk.show.files", as.character (file), as.character (title), as.character (wtitle), delete, isTRUE (prompt)))
 }
 
 #' @export
+#' @rdname rk.edit
 "rk.show.html" <- function (url) {
 	invisible (.rk.do.plain.call ("showHTML", as.character (url), synchronous=FALSE));
 }

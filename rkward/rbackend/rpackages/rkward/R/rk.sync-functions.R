@@ -34,6 +34,7 @@
 
 # should this really be public?
 #' @export
+#' @rdname rk.sync
 "rk.sync.global" <- function () {
 	.rk.do.call("syncglobal", ls (envir=globalenv (), all.names=TRUE))
 }

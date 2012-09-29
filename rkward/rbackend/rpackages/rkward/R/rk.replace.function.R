@@ -11,10 +11,10 @@
 #' several subsequent replacments of the same function, nor does it support
 #' replacement of generics.
 #' 
-#' WARNING: This function can be used to alter - and disrupt - internal
+#' \bold{WARNING}: This function can be used to alter - and disrupt - internal
 #' functions in arbitrary ways. You better know what you are doing.
 #' 
-#' WARNING: Does not work well on generics!
+#' \bold{WARNING}: Does not work well on generics!
 #' 
 #' @param functionname name of the function to be replaced (character).
 #' @param environment package environment or namespace, where replacment should

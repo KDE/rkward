@@ -105,6 +105,7 @@
 # make a short name from the given arg (a character string)
 # e.g. return "b" for a[["b"]] (but 'a::"b"' for a::"b"
 #' @export
+#' @rdname rk.label
 ".rk.make.short.name" <- function (x) {
 	splt <- strsplit (x, "[[\"", fixed=TRUE)[[1]]
 	spltlen <- length (splt)
