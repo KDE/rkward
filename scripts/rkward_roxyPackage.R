@@ -15,7 +15,7 @@ local({
 	#######################
 	## these are the values you probably need to update
 	#######################
-	package.version <- "0.5.8"
+	package.version <- "0.6.0"
 
 	# this should point to the "rkward" root directory of the R package
 	package.sources <- file.path("/PathTo","trunk","rkward","rkward","rbackend","rpackages","rkward")
@@ -33,17 +33,17 @@ local({
 		# it will overwrite the docs, so be careful with svn commits
 		# until the docs are fully tagged!
 				"roxy",			# roxygenize the docs
-	 			"cite",			# update CITATION file
+				"cite",			# update CITATION file
 	# 			"doc",			# update pdf documentation
 	# 			"cl2news",		# convert ChangeLog into NEWS.Rd
 	## local repository:
 	# 			"news2rss",		# convert NEWS.Rd into RSS feed
 	# 			"html",			# update index.html
 	# 			"win",			# update the windows binary package
-	#			"macosx",		# update the mac OS X binary package
+	# 			"macosx",		# update the mac OS X binary package
 	## build:
 				"package" 		# build & install the package
-	#			"check"			# check package
+	# 			"check"			# check package
 	)
 
 	#######################
@@ -58,7 +58,7 @@ local({
 		AuthorsR="c(person(given=\"Thomas\", family=\"Friedrichsmeier\", email=\"thomas.friedrichsmeier@ruhr-uni-bochum.de\",
 				role=c(\"aut\")),
 			person(given=\"RKWard-devel\", family=\"mailing list\", email=\"rkward-devel@lists.sourceforge.net\",
-				role=c(\"cre\")))",
+				role=c(\"cre\",\"ctb\")))",
 		Maintainer="RKWard-devel mailing list <rkward-devel@lists.sourceforge.net>",
 		## TODO: check dependencies
 		Depends="R (>= 2.9.0),methods",
@@ -77,5 +77,6 @@ local({
 		pck.description=package.description,
 		R.libs=install.path,
 		repo.root=local.repository,
-		cleanup=TRUE)
+		cleanup=TRUE,
+		URL="http://rkward.sourceforge.net")
 })
