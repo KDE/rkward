@@ -1,6 +1,10 @@
 \name{rk.load.pluginmaps}
 \alias{rk.load.pluginmaps}
 \title{(Re-)load the given pluginmap files into the RKWard GUI}
+\usage{
+  rk.load.pluginmaps(pluginmap.files = NULL,
+    force.add = TRUE, force.reload = TRUE)
+}
 \arguments{
   \item{pluginmap.files}{a character vector of file names
   to add. This may be left empty, if the only desired
@@ -22,7 +26,7 @@
   \bold{Note}: It is not necessary to reload the pluginmap,
   in order to refresh an individual plugin (e.g. after
   modifying the dialog), as plugins are not kept in memory
-  after closing. Any currently opened plugins are not
+  after closing.  Any currently opened plugins are not
   affected by this function.}
 }
 \description{

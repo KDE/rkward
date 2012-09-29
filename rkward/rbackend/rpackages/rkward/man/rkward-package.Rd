@@ -8,8 +8,8 @@
 }
 \details{
   \tabular{ll}{ Package: \tab rkward\cr Type: \tab
-  Package\cr Version: \tab 0.5.8\cr Date: \tab
-  2012-03-20\cr Depends: \tab R (>= 2.9.0),methods\cr
+  Package\cr Version: \tab 0.6.0\cr Date: \tab
+  2012-09-29\cr Depends: \tab R (>= 2.9.0),methods\cr
   Encoding: \tab UTF-8\cr License: \tab GPL (>= 2)\cr
   LazyLoad: \tab yes\cr URL: \tab
   http://rkward.sourceforge.net\cr }
@@ -22,7 +22,8 @@
 \author{
   Thomas Friedrichsmeier
   \email{thomas.friedrichsmeier@ruhr-uni-bochum.de}, with
-  contributions from the RKWard Team
+  contributions from RKWard-devel mailing list
+  \email{rkward-devel@lists.sourceforge.net}
 }
 \keyword{package}
 
