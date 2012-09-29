@@ -1,6 +1,13 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
+\section{Changes in rkwarddev version 0.05-7 (2012-09-29)}{
+  \subsection{added}{
+    \itemize{
+      \item new function \code{rk.paste.JS.graph()} to simplify JS code generation for plots
+    }
+  }
+}
 \section{Changes in rkwarddev version 0.05-6 (2012-05-10)}{
   \subsection{added}{
     \itemize{
