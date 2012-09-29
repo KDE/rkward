@@ -17,9 +17,9 @@ URL: http://rkward.sourceforge.net
 Authors@R: c(person(given="Thomas", family="Friedrichsmeier",
     email="thomas.friedrichsmeier@ruhr-uni-bochum.de", role=c("aut")),
     person(given="RKWard-devel", family="mailing list",
-    email="rkward-devel@lists.sourceforge.net", role=c("cre")))
+    email="rkward-devel@lists.sourceforge.net", role=c("cre","ctb")))
 Version: 0.6.0
-Date: 2012-09-28
+Date: 2012-09-29
 Collate:
     'base_overrides.R'
     'internal_debugger.R'
