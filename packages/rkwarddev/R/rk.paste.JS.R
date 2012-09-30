@@ -40,6 +40,10 @@ rk.paste.JS <- function(..., level=2, indent.by="\t", funct=NULL, array=NULL,
 	all.objects <- list(...)
 
 	paste.results <- paste(sapply(all.objects, function(this.object){
+		# if this is a plot options object, by default only paste the printout slot
+		# and discard the rest
+		this.object <- stripCont(this.object, get="printout")
+
 		if(inherits(this.object, "rk.JS.ite")){
 			# done by an internal function, to ease handling of recursions
 			result <- paste.JS.ite(this.object, level=level, indent.by=indent.by, empty.e=empty.e)

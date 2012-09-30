@@ -19,7 +19,7 @@ rk.XML.embed <- function(component, button=FALSE, label="Options", id.name="auto
 		attr.list[["as_button"]] <- "true"
 	} else {}
 	
-	if(!identical(label, "Options")){
+	if(!identical(label, "Options") && isTRUE(button)){
 		attr.list[["label"]] <- label
 	} else {}
 

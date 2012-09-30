@@ -29,6 +29,10 @@
 id <- function(..., quote=FALSE, collapse="", js=TRUE){
 	full.content <- list(...)
 	ID.content <- sapply(full.content, function(this.part){
+			# if this is a plot options object, by default only paste the printout slot
+			# and discard the rest
+			this.part <- stripCont(this.part, get="printout")
+
 			if(inherits(this.part, "XiMpLe.node")){
 				node.id <- this.part@attributes$id
 					if(isTRUE(js)){

@@ -1,5 +1,13 @@
 ChangeLog for package rkwarddev
 
+changes in version 0.05-8 (2012-09-30)
+added:
+  - new function rk.plotOptions() and class "rk.plot.opts" to simplify code generation for plots;
+    this also caused changes in the internal workflow, especially for child.node() and rk.paste.JS()
+changed:
+  - rk.paste.JS.graph() also takes objects of class "rk.plot.opts"
+  - rk.XML.embed() now supresses the label if "button=FALSE"
+
 changes in version 0.05-7 (2012-09-29)
 added:
   - new function rk.paste.JS.graph() to simplify JS code generation for plots

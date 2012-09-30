@@ -1,6 +1,20 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
+\section{Changes in rkwarddev version 0.05-8 (2012-09-30)}{
+  \subsection{added}{
+    \itemize{
+      \item new function \code{rk.plotOptions()} and class \code{"rk.plot.opts"} to simplify code generation for plots;
+        this also caused changes in the internal workflow, especially for \code{child.node()} and \code{rk.paste.JS()}
+    }
+  }
+  \subsection{changed}{
+    \itemize{
+      \item \code{rk.paste.JS.graph()} also takes objects of class \code{"rk.plot.opts"}
+      \item \code{rk.XML.embed()} now supresses the label if "button=FALSE"
+    }
+  }
+}
 \section{Changes in rkwarddev version 0.05-7 (2012-09-29)}{
   \subsection{added}{
     \itemize{

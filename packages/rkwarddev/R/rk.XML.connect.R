@@ -31,6 +31,10 @@
 
 rk.XML.connect <- function(governor, client, get="state", set="enabled", not=FALSE, reconcile=FALSE){
 
+	# check for container objects
+	governor <- stripXML(governor)
+	client <- stripXML(client)
+
 	if(length(governor) > 1 | length(client) > 1){
 		stop(simpleError("'governor' and 'client' must be of length 1!"))
 	} else {}

@@ -17,9 +17,31 @@ auto.ids <- function(identifiers, prefix=NULL, suffix=NULL, chars=8){
 } ## end function auto.ids()
 
 
+## function stripCont()
+# get slots out of certain container objects
+stripCont <- function(obj, get="printout"){
+	if(inherits(obj, "rk.plot.opts")){
+		# if this is a plot options object, extract the XML slot
+		# and discard the rest
+		obj <- slot(obj, get)
+	} else {}
+	return(obj)
+}
+## end function stripCont()
+
+
+## function stripXML()
+# get XML node out of container objects
+stripXML <- function(obj){
+	return(stripCont(obj, get="XML"))
+}
+## end function stripXML()
+
+
 ## function child.list()
 # convenience function to let single children be provided without list()
-# 'empty' van be used to make sure a tag is non-empty without actual value
+# 'empty' can be used to make sure a tag is non-empty without actual value
+# this function also reduces rk.plot.opts objects to their XiMpLe.node slot
 child.list <- function(children, empty=TRUE){
 	if(inherits(children, "XiMpLe.node")){
 		children <- list(children)
@@ -32,6 +54,9 @@ child.list <- function(children, empty=TRUE){
 		} else if(identical(children, list()) & !isTRUE(empty)){
 			children <- list("")
 		} else {}
+		children <- lapply(children, function(this.child){
+				stripXML(this.child)
+			})
 	}
 	return(children)
 } ## end function child.list()
@@ -543,6 +568,10 @@ valid.child <- function(parent, children, warn=FALSE, section=parent, node.names
 	if(is.null(node.names)){
 		# check the node names and allow only valid ones
 		node.names <- sapply(child.list(children), function(this.child){
+				# if this is a plot options object, by default extract the XML slot
+				# and discard the rest
+				this.child <- stripXML(this.child)
+
 				if(inherits(this.child, "XiMpLe.node")){
 					return(slot(this.child, "name"))
 				} else {

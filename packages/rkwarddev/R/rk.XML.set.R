@@ -24,6 +24,9 @@ rk.XML.set <- function(id, set=NULL, to, check.modifiers=TRUE){
 		stop(simpleError("'id' and 'to' must be of length 1!"))
 	} else {}
 
+	# check for container objects
+	id <- stripXML(id)
+
 	# let's see if we need to extract IDs first
 	prop.id <- check.ID(id)
 
