@@ -4,7 +4,7 @@
 PortSystem          1.0
 fetch.type          svn
 svn.url             http://rkward.svn.sourceforge.net/svnroot/rkward/trunk
-svn.revision        4286
+svn.revision        4333
 worksrcdir          ${workpath}/trunk/rkward
 
 name                rkward-devel
@@ -44,6 +44,10 @@ configure.args-append \
         -DNO_R_XML=1 \
         -DRKVERSION_NUMBER=${version} \
         -DBUNDLE_INSTALL_DIR=${applications_dir}
+# work around moved Qt include dir
+if { ![file exists ${prefix}/include/Qt/qglobal.h] && [file exists ${prefix}/include/QtCore/qglobal.h] } {
+        configure.args-append -DQT_QT_INCLUDE_DIR=${prefix}/include/QtCore
+}
 configure.cmd       cmake ..
 
 build.dir           ${worksrcdir}/build
