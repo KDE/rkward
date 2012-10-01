@@ -1,8 +1,48 @@
 ## Public functions manipulating "graphics" should be stored here.
 ## These functions are accessible to the user.
 
-# Requests a graph to be written.
+#' Plot graphics to HTML output file
+#'
+#' \code{rk.graph.on()} creates an R device that will plot to the output html page in RKWard (\url{rkward://page/rkward_output}).
+#' The default settings for \code{device.type}, \code{width}, \code{height}, and \code{quality} can be modified from Settings -> Configure RKWard -> Output.
+#'
+#' @param device.type Type of device to create / graphics format to use. Currently, supported devices are "PNG", "SVG", or "JPG".
+#'                    The default is to use the format configured in Settings -> Configure RKWard -> Output.
+#' @param width Width of graphics in pixels. The default is to use the width configured in Settings -> Configure RKWard -> Output.
+#' @param height Height of graphics in pixels. The default is to use the heigth configured in Settings -> Configure RKWard -> Output.
+#' @param quality For device.type "JPG", quality of the JPG file from 0 to 100.
+#'                The default is to use the quality configured in Settings -> Configure RKWard -> Output.
+#' @param ... Further options will be passed to the graphics device used internally.
+#'
+#' \bold{Warning}: It is advised to use \code{rk.graph.off} and \bold{not} \code{dev.off} to close the device opened by
+#' \code{rk.graph.on}. \code{dev.print(device = rk.graph.on)} is a \bold{wrong} usage for this "device," and will result in errors.
+#' 
+#' @author Thomas Friedrichsmeier \email{rkward-devel@@lists.sourceforge.net}
+#' 
+#' @seealso \link{rk.results} \link{rk.print} \link{rk.get.output.html.file} \link{dev.off} \link{svg} \link{png} \link{jpg}
+#'
+#' @examples
+#' require (rkward)
+#' 
+#' ## Plot directly to the output (html) file, by-passing screen device:
+#' rk.graph.on ("JPG", 480, 480, 75)
+#' plot (rnorm (100))
+#' rk.graph.off ()
+#' 
+#' ## Copy the displayed plot to the output:
+#' plot (rnorm (100))
+#' dev.copy (device = rk.graph.on)
+#' rk.graph.off ()
+#' 
+#' ## WRONG USAGE: not run:
+#' #plot (rnorm (100))
+#' #dev.print (device = rk.graph.on)
+#'
+#' @keywords devices
+#'
 #' @export
+#' @aliases rk.graph.on rk.graph.off
+#' @rdname rk.graph.on
 rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOption ("rk.graphics.width"), height=getOption ("rk.graphics.height"), quality, ...) 
 {
 	if (!is.numeric (width)) width <- 480
@@ -45,6 +85,9 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	invisible (ret)
 }
 
+#' \code{rk.graph.off()} closes the device that was opened by \code{rk.graph.on}. 
+#'
+#' @rdname rk.graph.on
 #' @export
 "rk.graph.off" <- function(){
 	.rk.cat.output ("\n")	# so the output will be auto-refreshed
