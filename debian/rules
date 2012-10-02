@@ -5,20 +5,6 @@
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
-# Determine the installed distribution and release number
-# Will be used to determine if certain tweaks are needed, see below
-# NOTE: /etc/lsb-release is part of package base-files, *only on Ubuntu*, not on Debian.
-# For now this is ok, as we only need special handling for Ubuntu Hardy at this time.
-DISTRO = $(shell grep "DISTRIB_ID" /etc/lsb-release | awk -F= '{print $$2}' ; grep "DISTRIB_RELEASE" /etc/lsb-release | awk -F= '{print $$2}')
-
-# Ubuntu 8.04 uses a different PATH for KDE 4 apps and needs some patching
-ifeq ("$(DISTRO)","Ubuntu 8.04")
-	export PATH := $(PATH):/usr/lib/kde4/bin
-	# If the following variables are set, patches are applied
-	PATCHTARGET = patch-ubuntu804
-	UNPATCHTARGET = unpatch
-endif
-
 # For CXXFLAGS and CFLAGS.
 # See http://lists.debian.org/debian-devel-announce/2011/09/msg00001.html 
 DPKG_EXPORT_BUILDFLAGS = 1
@@ -42,7 +28,7 @@ else
 	CFLAGS += -O2
 endif
 
-config.status: $(PATCHTARGET) # Will only be called if set, see above
+config.status:
 	dh_testdir
 
 	mkdir -p $(CURDIR)/build
@@ -82,13 +68,12 @@ build-stamp: config.status
 
 	touch build-stamp
 
-clean: $(UNPATCHTARGET) # Will only be called if set, see above
+clean:
 	dh_testdir
 	dh_testroot
 	rm -f build-stamp
 	# remove any .svn subdir included by accident
 	rm -rf $(CURDIR)/debian/.svn
-	rm -rf $(CURDIR)/debian/patches/.svn
 
 	# Add here commands to clean up after the build process.
 	rm -rf $(CURDIR)/build/
@@ -146,13 +131,5 @@ binary-arch: build install
 	dh_md5sums
 	dh_builddeb
 
-patch-ubuntu804:
-	dpatch apply 10_hardy_menu
-	dpatch cat-all >patch-stamp
- 
-unpatch:
-	dpatch deapply-all
-	rm -rf patch-stamp debian/patched
-
 binary: binary-indep binary-arch
-.PHONY: build clean binary-indep binary-arch binary install patch-ubuntu804 unpatch
+.PHONY: build clean binary-indep binary-arch binary install
