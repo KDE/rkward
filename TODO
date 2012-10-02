@@ -30,9 +30,8 @@ Bugs:
 		- The editor is prone to race conditions of the type:
 			- 1. user edits something in the editor
 			- 2. before the edit has been synced to the backend, a different command touches the data
-			- The backend could check whether anything other than a sync touches data. 
-			- If so, wait for the editor to acknowledge the data change.
-			- If the editor does not acknowledge such a change, before trying to touch the data again, complain and let the user handle the situation
+			- The editor should keep track of which / how many synchronisation commands are still outstanding.
+			- If an edited object was touched while sync commands are still outstanding, complain and let the user handle the situation
 	- Quitting via q() in the R console will often lead to a segfault during shutdown
 	- options ("pager") is currently broken in RKWard. May not be a problem, but we offer a GUI to configure it in Settings->Configure RKWard...
 
