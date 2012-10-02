@@ -724,7 +724,9 @@ void RKVariable::writeValueLabels (RCommandChain *chain) const {
 		// using attr (..., "levels) instead of levels (...) in order to bypass checking
 		RKGlobals::rInterface ()->issueCommand ("attr (" + getFullName () + ", \"levels\") <- " + level_string, RCommand::App | RCommand::Sync, QString::null, 0, 0, chain);
 	} else {
-		RKGlobals::rInterface ()->issueCommand ("attr (" + getFullName () + ", \"levels\") <- NULL", RCommand::App | RCommand::Sync, QString::null, 0, 0, chain);
+		QString empty = "NULL";
+		if (getDataType () == DataFactor) empty = "NA";	// never set levels to NULL on a factor!
+		RKGlobals::rInterface ()->issueCommand ("attr (" + getFullName () + ", \"levels\") <- " + empty, RCommand::App | RCommand::Sync, QString::null, 0, 0, chain);
 	}
 }
 

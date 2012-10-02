@@ -272,22 +272,18 @@
 }
 
 # Change storage type of x to mode newmode.
-# Most attributes will be kept, but the data is erased!
+# Keeps the .rk.meta attribute, and levels attributes, but the data is erased!
 #' @export
 ".rk.set.vector.mode" <- function (x, fun, envir=parent.frame ()) {
-	old_attr <- attributes (x)
-	old_attr$class <- NULL
-	old_attr[[".rk.invalid.fields"]] <- list ()	# will be reset, anyway!
+	y <- fun(rep(NA, length.out = length(x)))
 
-	y <- fun (rep (NA, length.out=length (x)))
+	newattrs <- attributes(y)
+	if (is.null (newattrs)) newattrs <- list ()
+	newattrs[[".rk.meta"]] <- attributes(x)[[".rk.meta"]]
+	lvls <- attributes(x)[["levels"]]
+	if (!is.null (lvls)) newattrs[["levels"]] <- lvls
+	attributes(y) <- newattrs
 
-	# merge old attributes with new ones
-	newattrs <- attributes (y)
-	for (nattr in names (newattrs)) {
-		old_attr[[nattr]] <- newattrs[[nattr]]
-	}
-
-	attributes (y) <- old_attr
 	eval (substitute (x <- y), envir=envir)
 }
 
