@@ -2,7 +2,7 @@
                           rkvareditmodel  -  description
                              -------------------
     begin                : Mon Nov 05 2007
-    copyright            : (C) 2007, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2010, 2011, 2012 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -962,13 +962,15 @@ void RKVarEditDataFrameModel::pushTable (RCommandChain *sync_chain) {
 	command.append (")");
 
 	// push all children
-	RKGlobals::rInterface ()->issueCommand (new RCommand (command, RCommand::Sync | RCommand::ObjectListUpdate), sync_chain);
+	RKGlobals::rInterface ()->issueCommand (new RCommand (command, RCommand::Sync), sync_chain);
 	for (int col=0; col < objects.size (); ++col) {
 		objects[col]->restore (sync_chain);
 	}
 
 	// now store the meta-data
 	dataframe->writeMetaData (sync_chain);
+
+	RKGlobals::rInterface ()->issueCommand (new RCommand (QString (), RCommand::Sync | RCommand::EmptyCommand | RCommand::ObjectListUpdate), sync_chain);
 }
 
 void RKVarEditDataFrameModel::restoreObject (RObject* object, RCommandChain* chain) {

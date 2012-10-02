@@ -138,7 +138,10 @@ void REnvironmentObject::updateFromR (RCommandChain *chain, const QStringList &c
 	// which ones are new in the list?
 	for (int i = current_symbols.count () - 1; i >= 0; --i) {
 		RObject *child = findChildByName (current_symbols[i]);
-		if (!child) child = createPendingChild (current_symbols[i], i, false, false);
+		if (!child) {
+			child = createPendingChild (current_symbols[i], i, false, false);
+			child->type -= RObject::Pending;	// HACK: Child is not actually pending: We've seen it!
+		}
 		if (child->isPending ()) child->updateFromR (chain);
 	}
 

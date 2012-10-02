@@ -2,7 +2,7 @@
                           rcontainerobject  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004, 2006, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2009, 2010, 2011, 2012 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -255,7 +255,7 @@ void RContainerObject::updateRowNamesObject () {
 	rownames_object->extendToLength (childlen);	// in case it is being edited
 	rownames_object->dimensions[0] = childlen;
 
-	if (rownames_object->isType (NeedDataUpdate)) {
+	if (rownames_object->isType (NeedDataUpdate) && (!isPending ())) {
 		rownames_object->updateDataFromR (0);
 	}
 }

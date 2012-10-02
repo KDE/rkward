@@ -279,6 +279,11 @@ bool RObject::updateStructure (RData *new_data) {
 
 	if (!canAccommodateStructure (new_data)) return false;
 
+	if (isPending ()) {
+		type -= Pending;
+		return true;	// Do not update any info for pending objects
+	}
+
 	bool properties_change = false;
 
 	RData::RDataStorage new_data_data = new_data->structureVector ();
@@ -291,7 +296,6 @@ bool RObject::updateStructure (RData *new_data) {
 
 	if (properties_change) RKGlobals::tracker ()->objectMetaChanged (this);
 	if (type & NeedDataUpdate) updateDataFromR (0);
-	if (isPending ()) type -= Pending;
 
 	if (type & Incomplete) {
 		// If the (new!) type is "Incomplete", it means, the structure getter simply stopped at this point.

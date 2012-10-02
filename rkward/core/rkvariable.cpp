@@ -75,7 +75,9 @@ void RKVariable::setVarType (RObject::RDataType new_type, bool sync) {
 
 		// destroy and re-allocate edit data
 		data->num_listeners = 0;	// to avoid the otherwise useful assert in discardEditData
+		bool pending = isPending ();
 		discardEditData ();
+		if (pending) type |= Pending;	// flag is cleared in discardEditData()
 		setDataType (new_type);
 		allocateEditData ();
 
@@ -236,7 +238,7 @@ void RKVariable::beginEdit () {
 
 	if (!data) {
 		allocateEditData ();
-		if (!isPending ()) updateDataFromR (0);
+		if (!(isPending () || (parentObject () && parentObject ()->isPending ()))) updateDataFromR (0);
 	}
 	++(data->num_listeners);
 }
