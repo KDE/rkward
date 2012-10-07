@@ -3,7 +3,7 @@
 #' @param plugin A character string, path to the plugin package root directory (hint: it's the directory with
 #'		the DESCRIPTION file in it).
 #' @param check Logical, whether the package should be checked for errors. Always do this before you
-#'		publick a package!
+#'		publish a package!
 #' @param install Logical, whether the built package should also be installed locally.
 #' @param R.libs A character string, path to local R packages, used by \code{install} to figure
 #'		out where to install to.
