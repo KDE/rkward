@@ -11,17 +11,16 @@ msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
 "group_id=50231&atid=459007\n"
-"POT-Creation-Date: 2012-09-28 16:52+0200\n"
-"PO-Revision-Date: 2012-08-14 14:24+0000\n"
+"POT-Creation-Date: 2012-10-08 19:59+0200\n"
+"PO-Revision-Date: 2012-08-04 10:47+0200\n"
 "Last-Translator: Milan Bouchet-Valat <nalimilan@club.fr>\n"
 "Language-Team: français <>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2012-08-15 04:51+0000\n"
-"X-Generator: Launchpad (build 15801)\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+"X-Generator: Gtranslator 2.91.5\n"
 
 #: agents/rkeditobjectagent.cpp:56
 msgid ""
@@ -87,6 +86,8 @@ msgid ""
 "%1|R Workspace Files (%1)\n"
 "*|All files"
 msgstr ""
+"%1|Fichiers d'espace de travail R (%1)\n"
+"*|Tous les fichiers"
 
 #: agents/rksaveagent.cpp:65
 msgid ""
@@ -136,18 +137,16 @@ msgid "Showing file(s)"
 msgstr "Affichage de fichiers"
 
 #: agents/showedittextfileagent.cpp:110
-#, fuzzy
 msgid ""
 "A command running in the R-engine wants you to edit one or more file(s). "
 "Please look at these files, edit them as appropriate, and save them. When "
 "done, press the \"Done\"-button, or close this dialog to resume.\n"
 "\n"
 msgstr ""
-"Une commande s'exécutant dans le R-Engine veut que vous éditez un ou "
-"plusieurs fichier (s). S'il vous plaît regarder ces fichiers, les modifier "
-"comme approprié, et de les enregistrer. Lorsque vous avez terminé, appuyez "
-"sur le bouton \"Done\" , ou fermer cette boîte de dialogue pour reprendre\n"
-"\n"
+"Une commande lancée dans le moteur R désire que vous éditiez un ou plusieurs "
+"fichiers. Veuillez lire ces fichiers, les éditer comme nécessaire, puis les "
+"enregistrer. Lorsque vous aurez fini, cliquez sur le bouton « Terminé » ou "
+"fermez cette fenêtre pour continuer.\n"
 
 #: agents/showedittextfileagent.cpp:110
 msgid "Edit file(s)"
@@ -260,7 +259,7 @@ msgstr "Fonction"
 
 #: core/robject.cpp:119
 msgid "Usage: "
-msgstr "Utilisation : "
+msgstr "Utilisation :"
 
 #: core/robject.cpp:121
 msgid "Data frame"
@@ -501,7 +500,7 @@ msgstr "Insertion du contenu du presse-papiers..."
 
 #: dialogs/rkimportdialog.cpp:35
 msgid "File format: "
-msgstr "Format de fichier : "
+msgstr "Format de fichier :"
 
 #: dialogs/rkimportdialog.cpp:46
 msgid "No plugins defined for context '%1'"
@@ -853,20 +852,15 @@ msgstr "Contexte :"
 msgid "Crash recovery file detected"
 msgstr "Fichier de récupération après un arrêt brutal détecté"
 
-#: dialogs/rkrecoverdialog.cpp:37
+#: dialogs/rkrecoverdialog.cpp:38
 msgid "Show in file browser"
 msgstr "Afficher dans le gestionnaire de fichiers"
 
-#: dialogs/rkrecoverdialog.cpp:38
+#: dialogs/rkrecoverdialog.cpp:39
 msgid "Recover"
 msgstr "Récupérer"
 
-#: dialogs/rkrecoverdialog.cpp:42
-#, fuzzy
-msgid "<p><b>Crash recovery file detected</b></p>"
-msgstr "<p><b> revocery crash fichier détecté </b></p>"
-
-#: dialogs/rkrecoverdialog.cpp:43
+#: dialogs/rkrecoverdialog.cpp:44
 msgid ""
 "<p>It looks like RKWard has crashed, recently. We are sorry about that! "
 "However, not everything is lost, and with a bit of luck, your data has been "
@@ -876,7 +870,7 @@ msgstr ""
 "désolés ! Cependant, tout n'est pas perdu, et avec un peu de chance, vos "
 "données ont été enregistrées à temps.</p>"
 
-#: dialogs/rkrecoverdialog.cpp:44
+#: dialogs/rkrecoverdialog.cpp:45
 msgid "<p>A workspace recovery file exists in <i>%2</i> as <i>%3</i>.</p>"
 msgid_plural ""
 "<p>%1 workspace recovery files exist in <i>%2</i>, the most recent one of "
@@ -888,7 +882,7 @@ msgstr[1] ""
 "<p>%1 fichiers de récupération d'espaces de travail se trouve dans <i>%2</"
 "i> ; le plus récent est <i>%3</i>.</p>"
 
-#: dialogs/rkrecoverdialog.cpp:45
+#: dialogs/rkrecoverdialog.cpp:46
 msgid ""
 "<p>Do you want to open this file, now? <b>Note</b>: You will be prompted "
 "again, next time you start RKWard, until you remove/rename the file, "
@@ -979,8 +973,9 @@ msgid "Frontend to the R statistics language"
 msgstr "Interface utilisateur pour le langage de statistiques R"
 
 #: main.cpp:111
-msgid "(c) 2002, 2004 - 2011"
-msgstr ""
+#, fuzzy
+msgid "(c) 2002, 2004 - 2012"
+msgstr "(c) 2002, 2004 - 2011"
 
 #: main.cpp:112 main.cpp:113 main.cpp:114 main.cpp:115 main.cpp:116
 #: main.cpp:118 main.cpp:119 main.cpp:120 main.cpp:121 main.cpp:122
@@ -995,17 +990,16 @@ msgstr "Chef de projet et principal développeur"
 
 #: main.cpp:113
 msgid "C++ developer between 2004 and 2007"
-msgstr ""
+msgstr "Développeur C++ entre 2004 et 2007"
 
 #: main.cpp:114
-#, fuzzy
 msgid "Many plugins, suggestions, plot history feature"
-msgstr "De nombreux plugins, des suggestions"
+msgstr ""
+"De nombreux greffons, des suggestions, fonction d'historique des graphiques"
 
 #: main.cpp:115
-#, fuzzy
 msgid "Many plugins, suggestions, rkwarddev package"
-msgstr "De nombreux plugins, des suggestions"
+msgstr "De nombreux greffons, des suggestions, le paquet rkwarddev"
 
 #: main.cpp:116
 msgid "Many plugins, suggestions, marketing, translations"
@@ -1319,9 +1313,8 @@ msgstr ""
 "« %1 »."
 
 #: misc/xmlhelper.cpp:325
-#, fuzzy
 msgid "Trying to retrieve contents of invalid element"
-msgstr "Tentative de récupérer les descendants d'un élément invalide"
+msgstr "Tentative de récupérer le contenu d'un élément invalide"
 
 #: misc/xmlhelper.cpp:338
 msgid "XML-parsing '%1' "
@@ -1385,24 +1378,30 @@ msgstr "Envoi impossible"
 
 #: plugin/rkcomponentproperties.cpp:797
 msgid "This object has %1 dimension(s), but %2 dimension(s) is/are expected."
-msgstr ""
+msgstr "Cet objet a %1 dimension(s), alors que %2 dimension(s) sont attendues."
 
 #: plugin/rkcomponentproperties.cpp:800
 msgid "This object has a length of %1, but a minimum length of %2 is expected."
 msgstr ""
+"Cet objet est de longueur %1, alors qu'une longueur minimale de %2 est "
+"attendue."
 
 #: plugin/rkcomponentproperties.cpp:801
 msgid "This object has a length of %1, but a maximum length of %2 is expected."
 msgstr ""
+"Cet objet est de longueur %1, alors qu'une longueur maximale de %2 est "
+"attendue."
 
 #: plugin/rkcomponentproperties.cpp:813
 msgid "This object does not appear to belong to any of the classes <i>%1</i>."
-msgstr ""
+msgstr "Cet objet ne semble pas appartenir à l'une des classes <i>%1</i>."
 
 #: plugin/rkcomponentproperties.cpp:820
 msgid ""
 "This object's data type is <i>%1</i>, while allowed type(s) is/are <i>%2</i>."
 msgstr ""
+"Les données de cet objet sont de type <i>%1</i>, alors que le(s) type(s) "
+"autorisé(s) est (sont) <i>%2</i>."
 
 #: plugin/rkdropdown.cpp:42 plugin/rkradio.cpp:45
 msgid "Select one:"
@@ -1442,11 +1441,11 @@ msgstr "Saisissez du texte"
 
 #: plugin/rkoptionset.cpp:185
 msgid "Add a row / element"
-msgstr ""
+msgstr "Ajouter une ligne ou un élement"
 
 #: plugin/rkoptionset.cpp:187
 msgid "Remove a row / element"
-msgstr ""
+msgstr "Supprimer une ligne ou un élément"
 
 #: plugin/rkpluginbrowser.cpp:53
 msgid "Enter filename"
@@ -1569,6 +1568,8 @@ msgstr "Variable :"
 #: plugin/rkvarslot.cpp:142
 msgid "<p>This object is not allowed, here, for the following reason(s):</p>"
 msgstr ""
+"<p>Cet objet n'est pas autorisé à cet endroit pour les raisons suivantes :</"
+"p>"
 
 #: rbackend/rcommandstack.cpp:352
 msgid "Running"
@@ -1628,7 +1629,6 @@ msgid "Error starting R"
 msgstr "Erreur lors du démarrage de R"
 
 #: rbackend/rinterface.cpp:518
-#, fuzzy
 msgid ""
 "A command in the R backend is trying to change the character encoding. While "
 "RKWard offers support for this, and will try to adjust to the new locale, "
@@ -1640,17 +1640,18 @@ msgid ""
 "RKWard). In this case, please choose 'Cancel' now, then close the data "
 "windows, save, and retry."
 msgstr ""
-"Une commande dans le backend R essaie de changer l'encodage des caractères. "
-"Bien RKWard offre un soutien pour cela, et va essayer de s'adapter à la "
-"nouvelle locale, cette opération peut entraîner des bogues subtils, si les "
-"fenêtres de données sont actuellement ouverts. Aussi la fonction n'est pas "
-"encore bien testée donc il peut être conseillé d'enregistrer votre espace de "
-"travail avant de procéder.\n"
-"Si vous avez n'importe quel éditeur de données ouvert, ou en cas de doute, "
-"il est recommandé de les fermer en premier (ce sera probablement auto-"
-"détectés dans les versions ultérieures d'RKWard). Dans ce cas, s'il vous "
-"plaît choisissez 'Cancel' maintenant, fermez les fenêtres de données, "
-"d'enregistrer et de réessayer."
+"Une commande lancée dans le moteur R tente de modifier l'encodage des "
+"caractères. Même si RKWard prend en charge cette modification, et tentera de "
+"s'ajuster aux nouveaux paramètres linguistiques, cette opération peut "
+"provoquer des bogues complexes si des fenêtres de données sont actuellement "
+"ouvertes. Cette fonction n'a par ailleurs pas encore été très bien testée, "
+"et il peut être sage d'enregistrer votre espace de travail avant d'apliquer "
+"cette modification.\n"
+"Si un éditeur de données est ouvert, ou si vous avez des doutes, il est "
+"recommandé de les fermer d'abord (ceci sera probablement détecté "
+"automatiquement dans des versions futures de RKWard). Dans ce cas, veuillez "
+"choisir « Annuler » maintenant, fermer les fenêtres de données, enregistrer, "
+"et ré-essayer."
 
 #: rbackend/rinterface.cpp:518
 msgid "Locale change"
@@ -1944,14 +1945,12 @@ msgid "Pending Jobs"
 msgstr "Travaux en attente"
 
 #: rkward.cpp:349
-#, fuzzy
 msgid "Debugger Frames"
-msgstr "Drapeaux de débogage"
+msgstr "Trames du débogueur"
 
 #: rkward.cpp:354
-#, fuzzy
 msgid "Debugger Console"
-msgstr "Console R"
+msgstr "Console de débogage"
 
 #: rkward.cpp:366
 msgid "Dataset"
@@ -2026,9 +2025,8 @@ msgid "CC commands to output..."
 msgstr "Copier les commandes vers la sortie..."
 
 #: rkward.cpp:421 rkward.cpp:425
-#, fuzzy
 msgid "Manage R packages..."
-msgstr "Paquets installés"
+msgstr "Gérer les paquets R..."
 
 #: rkward.cpp:432
 msgid "Close All Data"
@@ -2108,9 +2106,8 @@ msgid "Opening workspace..."
 msgstr "Ouverture de l'espace de travail..."
 
 #: rkward.cpp:707 rkward.cpp:709
-#, fuzzy
 msgid "Select workspace to open..."
-msgstr "Fichier d'espace de travail R à ouvrir"
+msgstr "Sélectionnez un espace de travail à ouvrir..."
 
 #: rkward.cpp:726
 msgid "Do you want to save the current workspace?"
@@ -2263,9 +2260,8 @@ msgid "Minimum number of characters before completion is attempted"
 msgstr "Nombre minimal de caractères pour l'activation de l'auto-complètement"
 
 #: settings/rksettingsmodulecommandeditor.cpp:76
-#, fuzzy
 msgid "Timeout (milliseconds) before completion is attempted"
-msgstr "Délai (millisecondes) avant l'achèvement est tenté"
+msgstr "Délai d'activation de l'auto-complètement (en millisecondes)"
 
 #: settings/rksettingsmodulecommandeditor.cpp:87
 msgid "Enable function argument hinting"
@@ -2590,9 +2586,8 @@ msgid "Commands originating from dialogs and plugins"
 msgstr "Commandes lancées par des boîtes de dialogue et des greffons"
 
 #: settings/rksettingsmoduleoutput.cpp:65
-#, fuzzy
 msgid "Also carbon copy the command output"
-msgstr "De plus copie conforme de la commande ouptut"
+msgstr "Copier la sortie des commandes"
 
 #: settings/rksettingsmoduleoutput.cpp:155
 msgid "Output Window options"
@@ -2945,17 +2940,18 @@ msgstr "Reprendre l'exécution"
 
 #: windows/rkcallstackviewer.cpp:96
 msgid "<b>Active calls</b>"
-msgstr ""
+msgstr "<b>Appels actifs</b>"
 
 #: windows/rkcallstackviewer.cpp:125 windows/rkdebugconsole.cpp:100
-#, fuzzy
 msgid "Not in a debugger context"
-msgstr "Aucun greffon défini pour le contexte « %1 »"
+msgstr "Hors contexte de débogage"
 
 #: windows/rkcallstackviewer.cpp:144
 msgid ""
 "<b>Current call:</b> %1<br><b>Environment:</b> %2<br><b>Local objects:</b> %3"
 msgstr ""
+"<b>Appel courant :</b> %1<br><b>Environnement :</b> %2<br><b>Objets locaux :"
+"</b> %3"
 
 #: windows/rkcommandeditorwindow.cpp:109
 msgid "Script Editor"
@@ -3042,13 +3038,12 @@ msgid "Configure"
 msgstr "Configurer"
 
 #: windows/rkdebugconsole.cpp:54
-#, fuzzy
 msgid "Next"
-msgstr "Suivant >"
+msgstr "Suivant"
 
 #: windows/rkdebugconsole.cpp:57
 msgid "Step out"
-msgstr ""
+msgstr "Sortir d'un niveau"
 
 #: windows/rkdebugconsole.cpp:59
 msgid ""
@@ -3057,11 +3052,15 @@ msgid ""
 "calling function will never be reached, because the call was the last step "
 "in the caller.In these cases, the behavior is identical to 'Continue'.</p>"
 msgstr ""
+"<p>Continue jusqu'à ce que la fonction appelante de cette fonction soit "
+"atteinte (à moins qu'une autre instruction de débogage ne soit atteinte "
+"avant).</p><p><b>Note :</b> Dans certains cas, la fonction appelante ne sera "
+"jamais atteinte, parce que l'appel en était la dernière étape. Dans ce cas, "
+"cette action est identique à « Continuer ».</p>"
 
 #: windows/rkdebugconsole.cpp:63
-#, fuzzy
 msgid "Continue"
-msgstr "Contexte :"
+msgstr "Continuer"
 
 #: windows/rkdebugconsole.cpp:170
 msgid ""
@@ -3069,6 +3068,9 @@ msgid ""
 "idea what this means, and you want to get out, press the 'Cancel' button on "
 "the right hand side of this window."
 msgstr ""
+"Cette fenêtre ne peut être fermée tant qu'un débogueur est actif. Si vous "
+"n'avez aucune idée de ce que cela signifie, et que vous voulez sortir, "
+"cliquez sur le bouton « Annuler » sur la droite de cette fenêtre."
 
 #: windows/rkhelpsearchwindow.cpp:73
 msgid "Find:"
@@ -3479,6 +3481,11 @@ msgid ""
 "However, this is not currently supported in this build of RKWard on Mac OS "
 "X. See http://p.sf.net/rkward/mac for more information."
 msgstr ""
+"Vous avez créé une nouvelle fenêtre de graphiques depuis R. Normalement, R "
+"essaie de détecter de telles fenêtres pour en prendre le contrôle, et leur "
+"ajouter une barre de menus. Cependant, cela ne fonctionne actuellement pas "
+"dans cette version de RKWard sous Mac OS X. Rendez-vous sur http://p.sf.net/"
+"rkward/mac pour plus d'informations."
 
 #: windows/rkwindowcatcher.cpp:70 windows/rkwindowcatcher.cpp:72
 msgid "Could not embed R X11 window"
@@ -3519,16 +3526,14 @@ msgid "Graphics Device Window"
 msgstr "Fenêtre du dispositif graphique"
 
 #: windows/rkwindowcatcher.cpp:230
-#, fuzzy
 msgid ""
 "The current window appears too large to fit on the screen. If this happens "
 "regularly, you may want to adjust the default graphics window size in "
 "Settings->Configure RKWard->Onscreen Graphics."
 msgstr ""
-"La fenêtre actuelle semble trop grand pour tenir sur l'écran. Si cela se "
-"produit régulièrement, vous voudrez peut-être ajuster la taille de la "
-"fenêtre graphique par défaut dans Paramètres-> Configurer RKWard-> Graphics "
-"à l'écran."
+"La fenêtre actuelle semble trop grande pour tenir à l'écran. Si cela se "
+"produit souvent, vous pouvez ajuster la taille de la fenêtre des graphiques "
+"dans Configuration->Configurer RKWard->Graphiques."
 
 #: windows/rkwindowcatcher.cpp:230
 msgid "Large window"
@@ -4023,50 +4028,15 @@ msgstr "&Outils"
 #: rc.cpp:139
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
-msgstr ""
-"Milan Bouchet-Valat, ,Launchpad Contributions:,Jacolin Yves,Milan Bouchet-"
-"Valat,RKWard Team,SarahSlean"
+msgstr "Milan Bouchet-Valat"
 
 #: rc.cpp:140
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
-msgstr ""
-"nalimilan@club.fr,,,,nalimilan@club.fr,rkward-tracker@lists.sourceforge.net,"
-"yoda4@hotmail.fr"
+msgstr "nalimilan@club.fr"
 
-#~ msgid "(c) 2002, 2004, 2005, 2006, 2007, 2008, 2009, 2010"
-#~ msgstr "(c) 2002, 2004, 2005, 2006, 2007, 2008, 2009, 2010"
-
-#~ msgid "C++ coder since 0.2.9"
-#~ msgstr "Développeur C++ depuis la version 0.2.9"
-
-#~ msgid ""
-#~ "<p>A command running in the R backend has caused the R backend process to "
-#~ "\"fork\". Typically this is done to spread computations onto several CPU "
-#~ "cores. We try our best to support this in RKWard, despite some technical "
-#~ "problems inherent in forking a multi-library, multi-threaded application. "
-#~ "However, it is entirely possible that this causes trouble / broken "
-#~ "features in some cases, particularly in combination with further R "
-#~ "libraries. If you observe any such adverse effects after forking, please "
-#~ "send us a bug report.</p><p>If you have a choice, consider using a "
-#~ "different technique of parallelization, e.g. the 'PSOCK' method of R "
-#~ "packages <i>snow</i> or <i>parallel</i>.</p>"
-#~ msgstr ""
-#~ "<p> Une commande s'exécutant dans le backend R a provoqué le processus "
-#~ "backend R pour\"fork\". Typiquement, cela se fait de répandre des calculs "
-#~ "sur des noyaux CPU plusieurs années. Nous faisons de notre mieux pour "
-#~ "soutenir ce dans RKWard, malgré quelques problèmes techniques inhérents à "
-#~ "bifurquer d'une  multi-bibliothèque, multi-thread d'application. "
-#~ "Cependant, il est tout à fait possible que cette source de problèmes / "
-#~ "caractéristiques rompu dans certains cas, en particulier en combinaison "
-#~ "avec les bibliothèques R supplémentaires. Si vous observez de tels effets "
-#~ "indésirables après fork, s'il vous plaît envoyez-nous un rapport de bogue."
-#~ "</p><p> Si vous avez le choix, pensez à utiliser une technique différente "
-#~ "de la parallélisation, par exemple, la méthode du 'PSOCK' de R paquets  "
-#~ "<i>snow</i> ou <i>parallel</i>.</p>"
-
-#~ msgid "Backend has forked"
-#~ msgstr "Backend est Forké"
+#~ msgid "<p><b>Crash recovery file detected</b></p>"
+#~ msgstr "<p><b>Fichier de récupération après un arrêt brutal détecté</b></p>"
 
 #~ msgid "Configure RKWard"
 #~ msgstr "Configurer RKWard"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: el\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
 "group_id=50231&atid=459007\n"
-"POT-Creation-Date: 2012-09-28 16:52+0200\n"
+"POT-Creation-Date: 2012-10-08 19:59+0200\n"
 "PO-Revision-Date: 2011-10-18 13:21+0000\n"
 "Last-Translator: Giannis Katsampirhs <juankatsampirhs@gmail.com>\n"
 "Language-Team: en_US <kde-i18n-doc@lists.kde.org>\n"
@@ -777,26 +777,22 @@ msgstr "Σχετικό:"
 msgid "Crash recovery file detected"
 msgstr ""
 
-#: dialogs/rkrecoverdialog.cpp:37
+#: dialogs/rkrecoverdialog.cpp:38
 msgid "Show in file browser"
 msgstr ""
 
-#: dialogs/rkrecoverdialog.cpp:38
+#: dialogs/rkrecoverdialog.cpp:39
 msgid "Recover"
 msgstr ""
 
-#: dialogs/rkrecoverdialog.cpp:42
-msgid "<p><b>Crash recovery file detected</b></p>"
-msgstr ""
-
-#: dialogs/rkrecoverdialog.cpp:43
+#: dialogs/rkrecoverdialog.cpp:44
 msgid ""
 "<p>It looks like RKWard has crashed, recently. We are sorry about that! "
 "However, not everything is lost, and with a bit of luck, your data has been "
 "saved in time.</p>"
 msgstr ""
 
-#: dialogs/rkrecoverdialog.cpp:44
+#: dialogs/rkrecoverdialog.cpp:45
 msgid "<p>A workspace recovery file exists in <i>%2</i> as <i>%3</i>.</p>"
 msgid_plural ""
 "<p>%1 workspace recovery files exist in <i>%2</i>, the most recent one of "
@@ -804,7 +800,7 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: dialogs/rkrecoverdialog.cpp:45
+#: dialogs/rkrecoverdialog.cpp:46
 msgid ""
 "<p>Do you want to open this file, now? <b>Note</b>: You will be prompted "
 "again, next time you start RKWard, until you remove/rename the file, "
@@ -888,7 +884,7 @@ msgid "Frontend to the R statistics language"
 msgstr "Γραφικό περιβάλλον για τη γλώσσα στατιστικής R"
 
 #: main.cpp:111
-msgid "(c) 2002, 2004 - 2011"
+msgid "(c) 2002, 2004 - 2012"
 msgstr ""
 
 #: main.cpp:112 main.cpp:113 main.cpp:114 main.cpp:115 main.cpp:116

@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
 "group_id=50231&atid=459007\n"
-"POT-Creation-Date: 2012-09-28 16:52+0200\n"
+"POT-Creation-Date: 2012-10-08 19:59+0200\n"
 "PO-Revision-Date: 2011-10-24 12:30+0000\n"
 "Last-Translator: yurchor <Unknown>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
@@ -841,20 +841,15 @@ msgstr "Контекст:"
 msgid "Crash recovery file detected"
 msgstr "Виявлено файл даних для відновлення після аварії"
 
-#: dialogs/rkrecoverdialog.cpp:37
+#: dialogs/rkrecoverdialog.cpp:38
 msgid "Show in file browser"
 msgstr "Показати у навігаторі файловою системою"
 
-#: dialogs/rkrecoverdialog.cpp:38
+#: dialogs/rkrecoverdialog.cpp:39
 msgid "Recover"
 msgstr "Відновити"
 
-#: dialogs/rkrecoverdialog.cpp:42
-#, fuzzy
-msgid "<p><b>Crash recovery file detected</b></p>"
-msgstr "<p><b>Виявлено файл даних для відновлення після аварії</b></p>"
-
-#: dialogs/rkrecoverdialog.cpp:43
+#: dialogs/rkrecoverdialog.cpp:44
 msgid ""
 "<p>It looks like RKWard has crashed, recently. We are sorry about that! "
 "However, not everything is lost, and with a bit of luck, your data has been "
@@ -864,7 +859,7 @@ msgstr ""
 "будь ласка! Але не все втрачено: якщо все склалося вдало, ваші дані було "
 "вчасно збережено.</p>"
 
-#: dialogs/rkrecoverdialog.cpp:44
+#: dialogs/rkrecoverdialog.cpp:45
 msgid "<p>A workspace recovery file exists in <i>%2</i> as <i>%3</i>.</p>"
 msgid_plural ""
 "<p>%1 workspace recovery files exist in <i>%2</i>, the most recent one of "
@@ -879,7 +874,7 @@ msgstr[2] ""
 "<p>У <i>%2</i> зберігається %1 файлів резервний копій робочого простору, "
 "найсвіжіший має назву <i>%3</i>.</p>"
 
-#: dialogs/rkrecoverdialog.cpp:45
+#: dialogs/rkrecoverdialog.cpp:46
 msgid ""
 "<p>Do you want to open this file, now? <b>Note</b>: You will be prompted "
 "again, next time you start RKWard, until you remove/rename the file, "
@@ -970,7 +965,7 @@ msgid "Frontend to the R statistics language"
 msgstr "Графічна оболонка до мови статистичних обчислень R"
 
 #: main.cpp:111
-msgid "(c) 2002, 2004 - 2011"
+msgid "(c) 2002, 2004 - 2012"
 msgstr ""
 
 #: main.cpp:112 main.cpp:113 main.cpp:114 main.cpp:115 main.cpp:116
@@ -4006,6 +4001,10 @@ msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr ""
 "yurchor@ukr.net,,,rkward-tracker@lists.sourceforge.net,yurchor@gmail.com,"
+
+#, fuzzy
+#~ msgid "<p><b>Crash recovery file detected</b></p>"
+#~ msgstr "<p><b>Виявлено файл даних для відновлення після аварії</b></p>"
 
 #~ msgid "(c) 2002, 2004, 2005, 2006, 2007, 2008, 2009, 2010"
 #~ msgstr "© 2002, 2004, 2005, 2006, 2007, 2008, 2009, 2010"

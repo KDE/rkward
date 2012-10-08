@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: rkward\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
 "group_id=50231&atid=459007\n"
-"POT-Creation-Date: 2012-09-28 16:52+0200\n"
+"POT-Creation-Date: 2012-10-08 19:59+0200\n"
 "PO-Revision-Date: 2012-03-28 16:27+0000\n"
 "Last-Translator: Alfredo Sánchez Alberca <Unknown>\n"
 "Language-Team: Spanish <rkward-devel@lists.sourceforge.net>\n"
@@ -801,20 +801,15 @@ msgstr "Contexto:"
 msgid "Crash recovery file detected"
 msgstr "Se detectó un archivo de recuperación"
 
-#: dialogs/rkrecoverdialog.cpp:37
+#: dialogs/rkrecoverdialog.cpp:38
 msgid "Show in file browser"
 msgstr "Mostrar en el navegador de archivos"
 
-#: dialogs/rkrecoverdialog.cpp:38
+#: dialogs/rkrecoverdialog.cpp:39
 msgid "Recover"
 msgstr "Recuperar"
 
-#: dialogs/rkrecoverdialog.cpp:42
-#, fuzzy
-msgid "<p><b>Crash recovery file detected</b></p>"
-msgstr "<p><b>Se detectó un archivo de recuperación</b></p>"
-
-#: dialogs/rkrecoverdialog.cpp:43
+#: dialogs/rkrecoverdialog.cpp:44
 msgid ""
 "<p>It looks like RKWard has crashed, recently. We are sorry about that! "
 "However, not everything is lost, and with a bit of luck, your data has been "
@@ -824,7 +819,7 @@ msgstr ""
 "embargo, no todo está perdido y, con un poco de suerte, sus datos se han "
 "guardado a tiempo.</p>"
 
-#: dialogs/rkrecoverdialog.cpp:44
+#: dialogs/rkrecoverdialog.cpp:45
 msgid "<p>A workspace recovery file exists in <i>%2</i> as <i>%3</i>.</p>"
 msgid_plural ""
 "<p>%1 workspace recovery files exist in <i>%2</i>, the most recent one of "
@@ -836,7 +831,7 @@ msgstr[1] ""
 "<p>Hay %1 archivos de recuperación del espacio de trabajo en <i>%2</i>, de "
 "los cuales, el más reciente es <i>%3</i>.</p>"
 
-#: dialogs/rkrecoverdialog.cpp:45
+#: dialogs/rkrecoverdialog.cpp:46
 msgid ""
 "<p>Do you want to open this file, now? <b>Note</b>: You will be prompted "
 "again, next time you start RKWard, until you remove/rename the file, "
@@ -927,7 +922,7 @@ msgid "Frontend to the R statistics language"
 msgstr "Interfaz gráfica para el lenguaje estadístico R"
 
 #: main.cpp:111
-msgid "(c) 2002, 2004 - 2011"
+msgid "(c) 2002, 2004 - 2012"
 msgstr ""
 
 #: main.cpp:112 main.cpp:113 main.cpp:114 main.cpp:115 main.cpp:116
@@ -3934,6 +3929,10 @@ msgstr ""
 "tracker@lists.sourceforge.net,,,fitoschido@gmail.com,,rkward-tracker@lists."
 "sourceforge.net,,,fitoschido@gmail.com,,rkward-tracker@lists.sourceforge."
 "net,,,,fitoschido@gmail.com,,rkward-tracker@lists.sourceforge.net,"
+
+#, fuzzy
+#~ msgid "<p><b>Crash recovery file detected</b></p>"
+#~ msgstr "<p><b>Se detectó un archivo de recuperación</b></p>"
 
 #~ msgid "(c) 2002, 2004, 2005, 2006, 2007, 2008, 2009, 2010"
 #~ msgstr "(c) 2002, 2004, 2005, 2006, 2007, 2008, 2009, 2010"
