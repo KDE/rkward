@@ -64,6 +64,7 @@ public slots:
 private:
 	RKVarEditModel* datamodel;
 	RKVarEditMetaModel* metamodel;
+	bool locked_for_modal_editor;
 };
 
 

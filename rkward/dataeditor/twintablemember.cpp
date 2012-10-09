@@ -242,6 +242,7 @@ RKItemDelegate::RKItemDelegate (QObject *parent, RKVarEditModel* datamodel) : QI
 
 	RKItemDelegate::datamodel = datamodel;
 	metamodel = 0;
+	locked_for_modal_editor = false;
 }
 
 RKItemDelegate::RKItemDelegate (QObject *parent, RKVarEditMetaModel* metamodel) : QItemDelegate (parent) {
@@ -249,6 +250,7 @@ RKItemDelegate::RKItemDelegate (QObject *parent, RKVarEditMetaModel* metamodel) 
 
 	RKItemDelegate::metamodel = metamodel;
 	datamodel = 0;
+	locked_for_modal_editor = false;
 }
 
 RKItemDelegate::~RKItemDelegate () {
@@ -265,8 +267,10 @@ QWidget* RKItemDelegate::createEditor (QWidget* parent, const QStyleOptionViewIt
 		int row = index.row ();
 		if (row == RKVarEditMetaModel::FormatRow) {
 			ed = new EditFormatDialogProxy (parent);
+			const_cast<RKItemDelegate*> (this)->locked_for_modal_editor = true;
 		} else if (row == RKVarEditMetaModel::LevelsRow) {
 			ed = new EditLabelsDialogProxy (parent);
+			const_cast<RKItemDelegate*> (this)->locked_for_modal_editor = true;
 		} else {
 			ed = new CellEditor (parent);
 		}
@@ -353,6 +357,11 @@ void RKItemDelegate::setModelData (QWidget* editor, QAbstractItemModel* model, c
 bool RKItemDelegate::eventFilter (QObject* object, QEvent* event) {
 	RK_TRACE (EDITOR);
 
+	if (locked_for_modal_editor) return false;	// Needed on MacOSX: Pressing Ok in one of the modal editors seems to
+							// generate a Return-like event.
+							// This would be handled *before* the editor had a chance to update its data,
+							// thus committing the old, not new state.
+
 	QWidget *editor = qobject_cast<QWidget*> (object);
 	if (!editor) return false;
 
@@ -371,8 +380,9 @@ bool RKItemDelegate::eventFilter (QObject* object, QEvent* event) {
 void RKItemDelegate::editorDone (QWidget* editor, RKItemDelegate::EditorDoneReason reason) {
 	RK_TRACE (EDITOR);
 
-	if (reason != EditorReject) emit (commitData (editor));
+	if (reason != EditorReject) commitData (editor);
 	emit (doCloseEditor (editor, reason));
+	locked_for_modal_editor = false;
 }
 
 #include "twintablemember.moc"
