@@ -73,6 +73,9 @@ void RKFrontendTransmitter::run () {
 	connect (backend, SIGNAL (finished (int, QProcess::ExitStatus)), this, SLOT (backendExit (int)));
 	QString backend_executable = KStandardDirs::findExe (QDir::toNativeSeparators (QCoreApplication::applicationDirPath () + "/rkward.rbackend"));
 	if (backend_executable.isEmpty ()) backend_executable = KStandardDirs::findExe (QDir::toNativeSeparators (QCoreApplication::applicationDirPath () + "/rbackend/rkward.rbackend"));	// for running directly from the build-dir
+#ifdef Q_WS_MAC
+        if (backend_executable.isEmpty ()) backend_executable = KStandardDirs::findExe (QDir::toNativeSeparators (QCoreApplication::applicationDirPath () + "/../../../rbackend/rkward.rbackend"));
+#endif
 	RK_ASSERT (!backend_executable.isEmpty ());
 	backend->start (backend_executable, args, QIODevice::ReadOnly);
 
