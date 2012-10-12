@@ -8,6 +8,7 @@ Standards-Version: 3.9.4
 Homepage: http://rkward.sourceforge.net
 Vcs-Browser: http://rkward.svn.sourceforge.net/viewvc/rkward/trunk/rkward/debian/
 Vcs-Svn: http://rkward.svn.sourceforge.net/svnroot/rkward/trunk/rkward/debian/
+
 Package: rkward
 Architecture: any
 Depends: ${rvers}, ${shlibs:Depends}, ${misc:Depends}
