@@ -39,15 +39,17 @@ check_error "Failed to extract messages from source files. Do you have xgettext 
 echo "Done extracting messages"
 
 
-echo "Merging translations"
-catalogs=`find . -name '*.po'`
-for cat in $catalogs; do
-  echo $cat
-  msgmerge -o $cat.new $cat ${PROJECT}.pot
-  check_error "Failed to merge messages. Do you have msgmerge installed?"
-  mv $cat.new $cat
-done
-echo "Done merging translations"
+# Note: .po-file are now maintained (and merged) on launchpad
+#
+# echo "Merging translations"
+# catalogs=`find . -name '*.po'`
+# for cat in $catalogs; do
+#   echo $cat
+#   msgmerge -o $cat.new $cat ${PROJECT}.pot
+#   check_error "Failed to merge messages. Do you have msgmerge installed?"
+#   mv $cat.new $cat
+# done
+# echo "Done merging translations"
 
 
 echo "Cleaning up"

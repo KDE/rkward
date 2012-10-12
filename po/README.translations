@@ -1,0 +1,20 @@
+=== Maintainance of translations ===
+
+So you want to work on one of the translations? Great!
+
+In general, however, you should NOT use the .po files in this directory as a basis for your translations,
+and neither should you commit your updates, here. Please use https://translations.launchpad.net/rkward/trunk
+for your translations.
+
+THIS IS NOT THE PRIMARY PLACE where translations are maintained. In order to minimize the risk of your work
+conflicting with that of other translators, please get the most recent .po from launchpad, and upload, there. 
+If you do not want to work on launchpad for some reason or another, contact us on the mailing list, and we
+can upload translations for you. 
+
+If all you want is a quick way to pull translations from launchpad, use ../scripts/import_lp_translations.sh (only
+in our SVN repository, not in source releases).
+
+=== Developers ===
+
+- Synchronize translations from Launchpad to SVN using ../scripts/import_lp_translations.sh .
+- Update message template file using Messages.sh
