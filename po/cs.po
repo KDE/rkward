@@ -15,19 +15,19 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
-"Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
-"group_id=50231&atid=459007\n"
+"Report-Msgid-Bugs-To: "
+"http://sourceforge.net/tracker/?group_id=50231&atid=459007\n"
 "POT-Creation-Date: 2012-10-08 19:59+0200\n"
-"PO-Revision-Date: 2011-10-18 13:23+0000\n"
+"PO-Revision-Date: 2012-10-09 04:03+0000\n"
 "Last-Translator: fri <pavelfric@seznam.cz>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
-"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2011-10-19 06:05+0000\n"
-"X-Generator: Launchpad (build 14157)\n"
+"X-Launchpad-Export-Date: 2012-10-13 04:50+0000\n"
+"X-Generator: Launchpad (build 16137)\n"
+"Language: cs\n"
 
 #: agents/rkeditobjectagent.cpp:56
 msgid ""
@@ -60,9 +60,9 @@ msgstr "Chyba při nahrávání pracovního prostředí"
 #: agents/rkprintagent.cpp:70
 msgid ""
 "No service was found to provide a KDE print dialog for postscript files. We "
-"will try to open a generic postscript viewer (if any), instead."
-"<br><br>Consider installing 'okular', or configure RKWard not to attempt to "
-"print using a KDE print dialog."
+"will try to open a generic postscript viewer (if any), "
+"instead.<br><br>Consider installing 'okular', or configure RKWard not to "
+"attempt to print using a KDE print dialog."
 msgstr ""
 "Nebyla nalezena žádná služba, která by poskytla tiskový dialog KDE pro "
 "postscriptové soubory. Pokusíme se namísto toho otevřít obecný prohlížeč "
@@ -90,6 +90,8 @@ msgid ""
 "%1|R Workspace Files (%1)\n"
 "*|All files"
 msgstr ""
+"%1|Soubory pracovního prostředí R (%1)\n"
+"*|Všechny soubory"
 
 #: agents/rksaveagent.cpp:65
 msgid ""
@@ -137,17 +139,16 @@ msgid "Showing file(s)"
 msgstr "Ukazuje se soubor(y)"
 
 #: agents/showedittextfileagent.cpp:110
-#, fuzzy
 msgid ""
 "A command running in the R-engine wants you to edit one or more file(s). "
 "Please look at these files, edit them as appropriate, and save them. When "
 "done, press the \"Done\"-button, or close this dialog to resume.\n"
 "\n"
 msgstr ""
-"Příkaz běžící v jádru R chce, abyste upravil jeden soubor nebo více souborů."
-"Podívejte se, prosím, na tyto soubory, upravte je, jak náleží, a uložte je. "
-"Až budete hotov, stiskněte tlačítko \"Hotovo\", nebo zavřete tento dialog, "
-"aby se mohlo pokračovat.\n"
+"Příkaz běžící v jádru R chce, abyste upravil jeden nebo víc souborů. "
+"Podívejte se, prosím, na tyto soubory, upravte je, jak se patří, a uložte "
+"je. Až budete hotov, stiskněte tlačítko Hotovo, nebo tento dialog zavřete a "
+"pokračujte dál.\n"
 "\n"
 
 #: agents/showedittextfileagent.cpp:110
@@ -411,7 +412,8 @@ msgstr "Typ dat."
 
 #: dataeditor/rkvareditmodel.cpp:680
 msgid "Double click on these fields to customize data display."
-msgstr "Dvakrát klepněte na tato pole pro upravení zobrazení dat.přizpůsobení"
+msgstr ""
+"Dvakrát klepněte na tato pole pro upravení zobrazení dat.přizpůsobení"
 
 #: dataeditor/rkvareditmodel.cpp:681
 msgid "Double click on these fields to edit factor levels."
@@ -454,8 +456,8 @@ msgstr ""
 msgid ""
 "The editor '%1' contains the following duplicate columns. Editing this table "
 "may not be safe, and has been disabled. You may re-enable editing if you "
-"know what you are doing, but you are strongly advised to fix the table, and/"
-"or backup your data, first."
+"know what you are doing, but you are strongly advised to fix the table, "
+"and/or backup your data, first."
 msgstr ""
 "Editor '%1' obsahuje následující zdvojené sloupce. Úpravy této tabulky "
 "nemusí být bezpečné a byly zakázány. Úpravy můžete znovu povolit, pokud "
@@ -592,8 +594,8 @@ msgstr "Vybrané umístění knihovny není zapisovatelné"
 msgid ""
 "<p>The directory you have selected for installation (%1) is not writable "
 "with your current user permissions.</p><p>Would you like to install to %2, "
-"instead (you can also press \"Cancel\" and use the \"Configure Repositories"
-"\"-button to set up a different directory)?</p>"
+"instead (you can also press \"Cancel\" and use the \"Configure "
+"Repositories\"-button to set up a different directory)?</p>"
 msgstr ""
 "<p>Adresář, který jste zvolil pro instalaci (%1) není s vašimi současnými "
 "uživatelskými oprávněními zapisovatelný.</p><p>Chtěl byste namísto něj "
@@ -619,8 +621,8 @@ msgstr "Nainstalovat do %1"
 #: dialogs/rkloadlibsdialog.cpp:262
 msgid ""
 "<p>Alternatively, if you are the administrator of this machine, you can try "
-"to install the packages as root (you'll be prompted for the root password).</"
-"p>"
+"to install the packages as root (you'll be prompted for the root "
+"password).</p>"
 msgstr ""
 "<p>V náhradu za to, pokud jste na tomto stroji správcem systému, můžete "
 "zkusit instalaci balíčků pod účtem superuživatele (budete vyzván k zadání "
@@ -734,15 +736,15 @@ msgstr "Zahrnout závislosti"
 
 #: dialogs/rkloadlibsdialog.cpp:878
 msgid ""
-"<p>Please stand by while searching for installed and available packages.</"
-"p><p><strong>Note:</strong> This requires a working internet connection, and "
-"may take some time, esp. if one or more repositories are temporarily "
-"unavailable.</p>"
+"<p>Please stand by while searching for installed and available "
+"packages.</p><p><strong>Note:</strong> This requires a working internet "
+"connection, and may take some time, esp. if one or more repositories are "
+"temporarily unavailable.</p>"
 msgstr ""
-"<p>Čekejte, prosím, zatímco se hledají nainstalované a dostupné balíčky.</"
-"p><p><strong>Poznámka:</strong> Toto hledání vyžaduje pracující internetové "
-"spojení a může nějakou dobu trvat, zejména pokud je jedno nebo i více "
-"skladišť balíčků dočasně nedostupných.</p>"
+"<p>Čekejte, prosím, zatímco se hledají nainstalované a dostupné "
+"balíčky.</p><p><strong>Poznámka:</strong> Toto hledání vyžaduje pracující "
+"internetové spojení a může nějakou dobu trvat, zejména pokud je jedno nebo i "
+"více skladišť balíčků dočasně nedostupných.</p>"
 
 #: dialogs/rkloadlibsdialog.cpp:878
 msgid "Searching for packages"
@@ -862,8 +864,8 @@ msgid_plural ""
 "<p>%1 workspace recovery files exist in <i>%2</i>, the most recent one of "
 "which is <i>%3</i>.</p>"
 msgstr[0] ""
-"<p>Soubor pro obnovení pracovního prostředí existuje v <i>%2</i> jako <i>%3</"
-"i>.</p>"
+"<p>Soubor pro obnovení pracovního prostředí existuje v <i>%2</i> jako "
+"<i>%3</i>.</p>"
 msgstr[1] ""
 "<p>%1 soubory pro obnovení pracovního prostředí existují v <i>%2</i>, "
 "nejposlednějším je <i>%3</i>.</p>"
@@ -878,8 +880,8 @@ msgid ""
 "manually.</p>"
 msgstr ""
 "<p>Chcete tento soubor otevřít nyní? <b>Poznámka</b>: Budete vyzván znovu, "
-"až příště spustíte RKWard, dokud soubor neodstraníte/nepřejmenujete ručně.</"
-"p>"
+"až příště spustíte RKWard, dokud soubor neodstraníte/nepřejmenujete "
+"ručně.</p>"
 
 #: dialogs/rkselectlistdialog.cpp:38
 msgid "<b>Select one or more:</b>"
@@ -978,17 +980,15 @@ msgstr "Vedoucí projektu/hlavní vývojář"
 
 #: main.cpp:113
 msgid "C++ developer between 2004 and 2007"
-msgstr ""
+msgstr "Vývojář v C++ mezi roky 2004 a 2007"
 
 #: main.cpp:114
-#, fuzzy
 msgid "Many plugins, suggestions, plot history feature"
-msgstr "Mnohé přídavné moduly, návrhy"
+msgstr "Mnoho přídavných modulů, návrhy funkce historie nákresu"
 
 #: main.cpp:115
-#, fuzzy
 msgid "Many plugins, suggestions, rkwarddev package"
-msgstr "Mnohé přídavné moduly, návrhy"
+msgstr "Mnoho přídavných modulů, návrhy, balíček rkwarddev"
 
 #: main.cpp:116
 msgid "Many plugins, suggestions, marketing, translations"
@@ -1074,8 +1074,8 @@ msgstr "Dolů"
 
 #: misc/rkcommonfunctions.cpp:215
 msgid ""
-"<p><em>Note:</em> This setting does not take effect until you restart RKWard."
-"</p>"
+"<p><em>Note:</em> This setting does not take effect until you restart "
+"RKWard.</p>"
 msgstr ""
 "<p><em>Poznámka:</em> Toto nastavení se neprojeví, dokud RKWard nespustíte "
 "znovu.</p>"
@@ -1297,9 +1297,8 @@ msgstr ""
 "Nedovolená hodnota vlastnosti. Povoleny jsou pouze hodnoty '%1' nebo '%2'."
 
 #: misc/xmlhelper.cpp:325
-#, fuzzy
 msgid "Trying to retrieve contents of invalid element"
-msgstr "Pokouší se najít potomky neplatného prvku"
+msgstr "Zkouší se vyvolat obsah neplatného prvku"
 
 #: misc/xmlhelper.cpp:338
 msgid "XML-parsing '%1' "
@@ -1362,24 +1361,29 @@ msgstr "Nepodařilo se předat"
 
 #: plugin/rkcomponentproperties.cpp:797
 msgid "This object has %1 dimension(s), but %2 dimension(s) is/are expected."
-msgstr ""
+msgstr "Tento předmět má %1 rozměr(y), ale je/jsou očekáván(y) %2 rozměr(y)."
 
 #: plugin/rkcomponentproperties.cpp:800
-msgid "This object has a length of %1, but a minimum length of %2 is expected."
-msgstr ""
+msgid ""
+"This object has a length of %1, but a minimum length of %2 is expected."
+msgstr "Tento předmět má délku %1, ale je očekávána nejmenší délka %2."
 
 #: plugin/rkcomponentproperties.cpp:801
-msgid "This object has a length of %1, but a maximum length of %2 is expected."
-msgstr ""
+msgid ""
+"This object has a length of %1, but a maximum length of %2 is expected."
+msgstr "Tento předmět má délku %1, ale je očekávána největší délka %2."
 
 #: plugin/rkcomponentproperties.cpp:813
-msgid "This object does not appear to belong to any of the classes <i>%1</i>."
-msgstr ""
+msgid ""
+"This object does not appear to belong to any of the classes <i>%1</i>."
+msgstr "Nezdá se, že by tento předmět patřil do některé ze tříd <i>%1</i>."
 
 #: plugin/rkcomponentproperties.cpp:820
 msgid ""
 "This object's data type is <i>%1</i>, while allowed type(s) is/are <i>%2</i>."
 msgstr ""
+"Datový typ tohoto předmětu je <i>%1</i>, ale dovolený typ(y) je/jsou "
+"<i>%2</i>."
 
 #: plugin/rkdropdown.cpp:42 plugin/rkradio.cpp:45
 msgid "Select one:"
@@ -1419,11 +1423,11 @@ msgstr "Zadat text"
 
 #: plugin/rkoptionset.cpp:185
 msgid "Add a row / element"
-msgstr ""
+msgstr "Pidat řádek/prvek"
 
 #: plugin/rkoptionset.cpp:187
 msgid "Remove a row / element"
-msgstr ""
+msgstr "Odstranit řádek/prvek"
 
 #: plugin/rkpluginbrowser.cpp:53
 msgid "Enter filename"
@@ -1450,18 +1454,16 @@ msgid "Preview"
 msgstr "Náhled"
 
 #: plugin/rkpreviewbox.cpp:136
-#, fuzzy
 msgid "Preview not (currently) possible"
-msgstr "Náhled není (ještě) možný"
+msgstr "Náhed nyní není možný"
 
 #: plugin/rkpreviewbox.cpp:150 plugin/rkpreviewbox.cpp:203
 msgid "Preview updating"
 msgstr "Obnovení náhledu"
 
 #: plugin/rkpreviewbox.cpp:187
-#, fuzzy
 msgid "Warnings or Errors:"
-msgstr "Převést varování na chyby"
+msgstr "Varování a chyby:"
 
 #: plugin/rkpreviewbox.cpp:197
 msgid "Preview disabled"
@@ -1524,8 +1526,8 @@ msgid ""
 "Below you can see the command(s) corresponding to the settings you made. "
 "Click 'Submit' to run the command(s)."
 msgstr ""
-"Níže můžete vidět příkaz(y), které odpovídají nastavení, jež jste udělal."
-"Klepněte na \"Předat\" pro provedení příkazu(ů)."
+"Níže můžete vidět příkaz(y), které odpovídají nastavení, jež jste "
+"udělal.Klepněte na \"Předat\" pro provedení příkazu(ů)."
 
 #: plugin/rkstandardcomponentgui.cpp:390 plugin/rkstandardcomponentgui.cpp:408
 msgid "Next >"
@@ -1545,7 +1547,7 @@ msgstr "Proměnná:"
 
 #: plugin/rkvarslot.cpp:142
 msgid "<p>This object is not allowed, here, for the following reason(s):</p>"
-msgstr ""
+msgstr "<p>Tento předmět zde není povolen z následujícího(ch) důvodu(ů):</p>"
 
 #: rbackend/rcommandstack.cpp:352
 msgid "Running"
@@ -1596,15 +1598,14 @@ msgid ""
 "<p>There was a problem starting the R backend. The following error(s) "
 "occurred:</p>\n"
 msgstr ""
-"<p>Při spouštění jádra R vznikly určitá potíže. Vyskytla se následující chyba"
-"(y):</p>\n"
+"<p>Při spouštění jádra R vznikly určitá potíže. Vyskytla se následující "
+"chyba(y):</p>\n"
 
 #: rbackend/rinterface.cpp:300
 msgid "Error starting R"
 msgstr "Chyba při spuštění R"
 
 #: rbackend/rinterface.cpp:518
-#, fuzzy
 msgid ""
 "A command in the R backend is trying to change the character encoding. While "
 "RKWard offers support for this, and will try to adjust to the new locale, "
@@ -1616,16 +1617,6 @@ msgid ""
 "RKWard). In this case, please choose 'Cancel' now, then close the data "
 "windows, save, and retry."
 msgstr ""
-"V jádru k R se pokouší nějaký příkaz změnit kódování znaků. RKWard pro toto "
-"nabízí podporu a pokusí se přizpůsobit novému umístění. Tato operace se může "
-"stát příčinou pro nepatrné chyby, pokud by byla současně otevřena okna s "
-"daty. Tato funkce není zrovna moc dobře vyzkoušena, s proto bude rozumné, "
-"když před dalšími kroky uložíte své pracovní prostředí.\n"
-"Jestliže ještě máte otevřen nějaký editor s daty, nebo v případě jakýchkoli "
-"pochybností, doporučuje se vám je nejprve uzavřít (toto se bude v dalších "
-"verzích RKWard patrně provádět automaticky). V tomto případě nyní, prosím, "
-"zvolte \"Zrušit\", potom zavřete okna s daty, vše uložte a zkuste to ještě "
-"jednou."
 
 #: rbackend/rinterface.cpp:518
 msgid "Locale change"
@@ -1658,9 +1649,9 @@ msgid ""
 "even save the workspace (but if you're lucky, R already did that). What you "
 "can do, however, is save any open command-files, the output, or copy data "
 "out of open data editors. Quit RKWard after that.\n"
-"Since this should never happen, please write a mail to rkward-devel@lists."
-"sourceforge.net, and tell us, what you were trying to do, when this "
-"happened. Sorry!"
+"Since this should never happen, please write a mail to rkward-"
+"devel@lists.sourceforge.net, and tell us, what you were trying to do, when "
+"this happened. Sorry!"
 msgstr ""
 "\n"
 "Jádro R bude zastaveno okamžitě. Znamená to, že dále nemůžete používat "
@@ -1723,8 +1714,9 @@ msgid ""
 "that the last installation did not place all files in the correct place. "
 "However, in some cases, left-overs from a previous installation that was not "
 "cleanly removed may be the cause.</p>\t\t<p><b>You should quit RKWard, now, "
-"and fix your installation</b>. For help with that, see <a href=\"http://p.sf."
-"net/rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</p>\n"
+"and fix your installation</b>. For help with that, see <a "
+"href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a"
+">.</p>\n"
 msgstr ""
 "</p>\t- Buď se vůbec nepodařilo nahrát knihovnu R pro 'rkward', nebo nikoli "
 "ve správné verzi. Mohlo by to vést ke všem druhům chyb, od chybějících "
@@ -1732,21 +1724,23 @@ msgstr ""
 "poslední instalaci nebyly všechny soubory umístěny na správné místo. "
 "Nicméně, někdy toho mohou být příčina zbytky z předchozí instalace, které "
 "nebyly čistě odstraněny.</p>\t\t<p><b>Měl byste nyní ukončit RKWard, a "
-"opravit svou instalaci</b>. S tímto vám pomůže <a href=\"http://p.sf.net/"
-"rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</p>\n"
+"opravit svou instalaci</b>. S tímto vám pomůže <a "
+"href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a"
+">.</p>\n"
 
 #: rbackend/rkrbackend.cpp:1507
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
 "this indicates a broken installation.</p>\t\t<p><b>You should quit RKWard, "
-"now, and fix your installation</b>. For help with that, see <a href=\"http://"
-"p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</p></p>\n"
+"now, and fix your installation</b>. For help with that, see <a "
+"href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a"
+">.</p></p>\n"
 msgstr ""
 "<p>\t-Při zřizování spojení s R se vyskytly potíže. Nejpravděpodobněji je to "
 "kvůli poškozené instalaci.</p>\t\t<p><b>Měl byste nyní RKWard ukončit, a "
-"svou instalaci opravit</b>. Pro nápovědu k tomu se podívejte na <a href="
-"\"http://p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</"
-"p></p>\n"
+"svou instalaci opravit</b>. Pro nápovědu k tomu se podívejte na <a "
+"href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a"
+">.</p></p>\n"
 
 #: rkconsole.cpp:75
 msgid ""
@@ -1837,18 +1831,20 @@ msgid ""
 "<p>RKWard either could not find its resource files at all, or only an old "
 "version of those files. The most likely cause is that the last installation "
 "failed to place the files in the correct place. This can lead to all sorts "
-"of problems, from single missing features to complete failure to function.</"
-"p><p><b>You should quit RKWard, now, and fix your installation</b>. For help "
-"with that, see <a href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/"
-"rkward/compiling</a>.</p>"
+"of problems, from single missing features to complete failure to "
+"function.</p><p><b>You should quit RKWard, now, and fix your "
+"installation</b>. For help with that, see <a "
+"href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a"
+">.</p>"
 msgstr ""
 "<p>RKWard buď nemohl vůbec najít své zdrojové soubory, nebo pouze staré "
 "verze těchto souborů. Většinou bývá příčinou této věci, že při poslední "
 "instalaci se nepodařilo umístit tyto soubory na správné místo. Může to vést "
 "ke všem druhům potíží, od chybění jednoduchých funkcí po úplné selhání "
 "funkčnosti.</p><p><b>Měl byste nyní ukončit RKWard, a opravit svou "
-"instalaci</b>. Pomoc s tím hledejte na adrese <a href=\"http://p.sf.net/"
-"rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</p>"
+"instalaci</b>. Pomoc s tím hledejte na adrese <a "
+"href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a"
+">.</p>"
 
 #: rkward.cpp:202
 msgid "Broken installation"
@@ -1857,8 +1853,8 @@ msgstr "Pokažená instalace"
 #: rkward.cpp:219
 msgid ""
 "Your installation of KDE is configured to use \"native\" file dialogs. This "
-"is known to cause issues in some cases, and we recommend to disable \"native"
-"\" file dialogs.\n"
+"is known to cause issues in some cases, and we recommend to disable "
+"\"native\" file dialogs.\n"
 "Should \"native\" file dialogs be disabled in RKWard?"
 msgstr ""
 "Vaše instalace KDE je nastavena tak, aby používala své vlastní souborové "
@@ -1885,8 +1881,8 @@ msgstr "Nastavují se přídavné moduly..."
 
 #: rkward.cpp:273
 msgid ""
-"Plugins are needed: you may manage these through \"Settings->Configure RKWard"
-"\".\n"
+"Plugins are needed: you may manage these through \"Settings->Configure "
+"RKWard\".\n"
 msgstr ""
 "Jsou potřeba přídavné moduly: Spravovat je můžete prostřednictvím "
 "\"Nastavení->Nastavit RKWard\".\n"
@@ -1912,14 +1908,12 @@ msgid "Pending Jobs"
 msgstr "Úkoly čekající na vyřízení"
 
 #: rkward.cpp:349
-#, fuzzy
 msgid "Debugger Frames"
-msgstr "Příznaky ladění"
+msgstr "Snímky ladiče"
 
 #: rkward.cpp:354
-#, fuzzy
 msgid "Debugger Console"
-msgstr "Konzole R"
+msgstr "Konzole ladiče"
 
 #: rkward.cpp:366
 msgid "Dataset"
@@ -1994,9 +1988,8 @@ msgid "CC commands to output..."
 msgstr "Příkazy CC do výstupu"
 
 #: rkward.cpp:421 rkward.cpp:425
-#, fuzzy
 msgid "Manage R packages..."
-msgstr "Nainstalované balíčky"
+msgstr "Spravovat balíčky R..."
 
 #: rkward.cpp:432
 msgid "Close All Data"
@@ -2076,9 +2069,8 @@ msgid "Opening workspace..."
 msgstr "Otevírá se pracovní prostředí..."
 
 #: rkward.cpp:707 rkward.cpp:709
-#, fuzzy
 msgid "Select workspace to open..."
-msgstr "Soubor s prostředím R pro otevření"
+msgstr "Vybrat pracovní prostředí k otevření..."
 
 #: rkward.cpp:726
 msgid "Do you want to save the current workspace?"
@@ -2228,9 +2220,8 @@ msgid "Minimum number of characters before completion is attempted"
 msgstr "Nejmenší počet napsaných znaků, než se provede pokus o doplnění kódu"
 
 #: settings/rksettingsmodulecommandeditor.cpp:76
-#, fuzzy
 msgid "Timeout (milliseconds) before completion is attempted"
-msgstr "Překročení času (v ms), než se provede pokus o doplnění kódu"
+msgstr "Doba v milisekundách, předtím, než dojde k pokusu o doplnění"
 
 #: settings/rksettingsmodulecommandeditor.cpp:87
 msgid "Enable function argument hinting"
@@ -2549,9 +2540,8 @@ msgid "Commands originating from dialogs and plugins"
 msgstr "Příkazy pocházející z dialogů a přídavných modulů"
 
 #: settings/rksettingsmoduleoutput.cpp:65
-#, fuzzy
 msgid "Also carbon copy the command output"
-msgstr "Také Carbon Copy výstup příkazu"
+msgstr ""
 
 #: settings/rksettingsmoduleoutput.cpp:155
 msgid "Output Window options"
@@ -2778,11 +2768,11 @@ msgstr "Archivovat stažené balíčky"
 
 #: settings/rksettingsmoduler.cpp:354
 msgid "Build packages from source"
-msgstr ""
+msgstr "Sestavit balíčky ze zdroje"
 
 #: settings/rksettingsmoduler.cpp:357
 msgid "Build packages from source (not configurable on this platform)"
-msgstr ""
+msgstr "Sestavit balíčky ze zdroje (nelze nastavit na tomto systému)"
 
 #: settings/rksettingsmoduler.cpp:366
 msgid "R Library locations (where libraries get installed to, locally)"
@@ -2858,7 +2848,8 @@ msgstr "Příkazy pro seřízení"
 
 #: settings/rksettingsmodulewatch.cpp:151
 msgid "Maximum number of paragraphs/lines to display in the Command Log"
-msgstr "Největší počet odstavců/řádků, které se mají ukazovat v zápisu příkazů"
+msgstr ""
+"Největší počet odstavců/řádků, které se mají ukazovat v zápisu příkazů"
 
 #: settings/rksettingsmodulewatch.cpp:281 windows/rkcommandlog.cpp:55
 msgid "Command log"
@@ -2882,12 +2873,12 @@ msgstr "Zrušit zvolené příkazy"
 
 #: windows/rcontrolwindow.cpp:133
 msgid ""
-"Some of the commands you were trying to cancel are marked as \"sync"
-"\" (letter 'S' in the type column). Cancelling such commands could lead to "
-"loss of data. These commands have _not_ been cancelled."
+"Some of the commands you were trying to cancel are marked as \"sync\" "
+"(letter 'S' in the type column). Cancelling such commands could lead to loss "
+"of data. These commands have _not_ been cancelled."
 msgstr ""
-"Některé z příkazů, které jste se pokusil zrušit, jsou označeny jako \"sync"
-"\" (písmeno 'S' ve sloupci s typem). Zrušení těchto příkazů by mohlo véstke "
+"Některé z příkazů, které jste se pokusil zrušit, jsou označeny jako \"sync\" "
+"(písmeno 'S' ve sloupci s typem). Zrušení těchto příkazů by mohlo véstke "
 "ztrátě dat. Tyto příkazy nebyly zrušeny."
 
 #: windows/rcontrolwindow.cpp:133
@@ -2900,17 +2891,18 @@ msgstr "Znovu začít s prováděním"
 
 #: windows/rkcallstackviewer.cpp:96
 msgid "<b>Active calls</b>"
-msgstr ""
+msgstr "<b>Činná volání</b>"
 
 #: windows/rkcallstackviewer.cpp:125 windows/rkdebugconsole.cpp:100
-#, fuzzy
 msgid "Not in a debugger context"
-msgstr "Pro souvislost '%1' nebyly stanoveny žádné přídavné moduly"
+msgstr "Ne v souvislosti ladiče"
 
 #: windows/rkcallstackviewer.cpp:144
 msgid ""
 "<b>Current call:</b> %1<br><b>Environment:</b> %2<br><b>Local objects:</b> %3"
 msgstr ""
+"<b>Nynější volání:</b> %1<br><b>Prostředí:</b> %2<br><b>Místní předměty:</b> "
+"%3"
 
 #: windows/rkcommandeditorwindow.cpp:109
 msgid "Script Editor"
@@ -2996,9 +2988,8 @@ msgid "Configure"
 msgstr "Nastavit"
 
 #: windows/rkdebugconsole.cpp:54
-#, fuzzy
 msgid "Next"
-msgstr "Další >"
+msgstr "Další"
 
 #: windows/rkdebugconsole.cpp:57
 msgid "Step out"
@@ -3013,9 +3004,8 @@ msgid ""
 msgstr ""
 
 #: windows/rkdebugconsole.cpp:63
-#, fuzzy
 msgid "Continue"
-msgstr "Souvislosti:"
+msgstr "Pokračovat"
 
 #: windows/rkdebugconsole.cpp:170
 msgid ""
@@ -3078,9 +3068,9 @@ msgstr "Všechny nahrané balíčky"
 
 #: windows/rkhelpsearchwindow.cpp:258
 msgid ""
-"No help found on '%1'. Maybe the corresponding package is not installed/"
-"loaded, or maybe you mistyped the command. Try using Help->Search R Help for "
-"more options."
+"No help found on '%1'. Maybe the corresponding package is not "
+"installed/loaded, or maybe you mistyped the command. Try using Help->Search "
+"R Help for more options."
 msgstr ""
 "Pro '%1' nenalezena žádná nápověda. Možná není odpovídající balíček "
 "nainstalován/nahrán, nebo jste udělal překlep při psaní příkazu. Vyzkoušejte "
@@ -3409,10 +3399,10 @@ msgstr "Hlášení chyb v RKWardu"
 #: windows/rktoplevelwindowgui.cpp:170
 msgid ""
 "<p><b>Where should I report bugs or wishes?</b></p><p>Please submit your bug "
-"reports or wishes at <a href=\"%1\">%1</a> or send email to <a href=\"mailto:"
-"%2\">%2</a>.</p><p><b>What information should I provide?</b></p><p>Please "
-"copy the information shown below, and fill in the details to the questions.</"
-"p>"
+"reports or wishes at <a href=\"%1\">%1</a> or send email to <a "
+"href=\"mailto:%2\">%2</a>.</p><p><b>What information should I "
+"provide?</b></p><p>Please copy the information shown below, and fill in the "
+"details to the questions.</p>"
 msgstr ""
 "<p><b>Kam můžu nahlásit chyby nebo svá přání?</b></p><p>Pošlete, prsím "
 "hlášení o chybách nebo svá přání na <a href=\"%1\">%1</a> nebo pošlete "
@@ -3468,15 +3458,11 @@ msgid "Graphics Device Window"
 msgstr "Okno zařízení znázornění"
 
 #: windows/rkwindowcatcher.cpp:230
-#, fuzzy
 msgid ""
 "The current window appears too large to fit on the screen. If this happens "
 "regularly, you may want to adjust the default graphics window size in "
 "Settings->Configure RKWard->Onscreen Graphics."
 msgstr ""
-"Nynější okno se jeví být příliš veliké na to, aby se vešlo do obrazovky. "
-"Stává-li se to pravidelně, budete možná chtít upravit výchozí velikost okna "
-"znázornění v Nastavení->Nastavit RKWard->Znázornění na obrazovce."
 
 #: windows/rkwindowcatcher.cpp:230
 msgid "Large window"
@@ -3968,59 +3954,17 @@ msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr ""
 "Pavel Fric, ,Launchpad Contributions:,RKWard Team,fri, ,Launchpad "
-"Contributions:,RKWard Team,fri, ,Launchpad Contributions:,RKWard Team,fri, ,"
-"Launchpad Contributions:,RKWard Team,fri"
+"Contributions:,RKWard Team,fri, ,Launchpad Contributions:,RKWard Team,fri, "
+",Launchpad Contributions:,RKWard Team,fri, ,Launchpad Contributions:,RKWard "
+"Team,fri"
 
 #: rc.cpp:140
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr ""
-"fripohled.blogspot.com,,,rkward-tracker@lists.sourceforge.net,"
-"pavelfric@seznam.cz,,,rkward-tracker@lists.sourceforge.net,pavelfric@seznam."
-"cz,,,rkward-tracker@lists.sourceforge.net,pavelfric@seznam.cz,,,rkward-"
+"fripohled.blogspot.com,,,rkward-"
+"tracker@lists.sourceforge.net,pavelfric@seznam.cz,,,rkward-"
+"tracker@lists.sourceforge.net,pavelfric@seznam.cz,,,rkward-"
+"tracker@lists.sourceforge.net,pavelfric@seznam.cz,,,rkward-"
+"tracker@lists.sourceforge.net,pavelfric@seznam.cz,,,rkward-"
 "tracker@lists.sourceforge.net,pavelfric@seznam.cz"
-
-#, fuzzy
-#~ msgid "<p><b>Crash recovery file detected</b></p>"
-#~ msgstr "<p><b>Zjištěn soubor pro obnovení po pádu</b></p>"
-
-#~ msgid "(c) 2002, 2004, 2005, 2006, 2007, 2008, 2009, 2010"
-#~ msgstr "(c) 2002, 2004, 2005, 2006, 2007, 2008, 2009, 2010"
-
-#~ msgid "C++ coder since 0.2.9"
-#~ msgstr "C++ vývojář od verze 0.2.9"
-
-#~ msgid ""
-#~ "<p>A command running in the R backend has caused the R backend process to "
-#~ "\"fork\". Typically this is done to spread computations onto several CPU "
-#~ "cores. We try our best to support this in RKWard, despite some technical "
-#~ "problems inherent in forking a multi-library, multi-threaded application. "
-#~ "However, it is entirely possible that this causes trouble / broken "
-#~ "features in some cases, particularly in combination with further R "
-#~ "libraries. If you observe any such adverse effects after forking, please "
-#~ "send us a bug report.</p><p>If you have a choice, consider using a "
-#~ "different technique of parallelization, e.g. the 'PSOCK' method of R "
-#~ "packages <i>snow</i> or <i>parallel</i>.</p>"
-#~ msgstr ""
-#~ "<p>Příkaz běžící v jádru R způsobil, že se proces jádra R \"rozvětvil\". "
-#~ "Typicky se to dělá pro rozšíření výpočtů na několik jader CPU. cores. "
-#~ "Snažíme se, jak můžeme, abysme tuto věc podpořili v RKWardu, navzdory "
-#~ "některým technickým potížím spojeným s odnožováním víceknihovního, "
-#~ "vícevláknového programu. Nicméně je dost dobře možné, že to v některých "
-#~ "případech způsobí potíže/rozbité vlastnosti, zvláště ve spojení s dalšími "
-#~ "knihovnami R. Pokud po rozvětvení nějaký takový neblahý účinek "
-#~ "zpozorujete, pošlete nám, prosím, hlášení o chybě.</p><p>Pokud máte na "
-#~ "výběr, zvažte použití jiné techniky paralelizace, např. metodu 'PSOCK' "
-#~ "balíčků R <i>sníh</i> nebo <i>paralelní zpracování</i>.</p>"
-
-#~ msgid "Backend has forked"
-#~ msgstr "Jádro se rozvětvilo"
-
-#~ msgid "Configure RKWard"
-#~ msgstr "Nastavit RKWard"
-
-#~ msgid "*|All files"
-#~ msgstr "*|Všechny soubory"
-
-#~ msgid "Open File..."
-#~ msgstr "Otevřít soubor..."
