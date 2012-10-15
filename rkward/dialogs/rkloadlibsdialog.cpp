@@ -241,7 +241,7 @@ bool RKLoadLibsDialog::removePackages (QStringList packages, QStringList from_li
 	return true;
 }
 
-bool RKLoadLibsDialog::installPackages (const QStringList &packages, QString to_libloc, bool install_dependencies, const QStringList& repos) {
+bool RKLoadLibsDialog::installPackages (const QStringList &packages, QString to_libloc, bool install_suggested_packages, const QStringList& repos) {
 	RK_TRACE (DIALOGS);
 
 	if (packages.isEmpty ()) return false;
@@ -275,7 +275,7 @@ bool RKLoadLibsDialog::installPackages (const QStringList &packages, QString to_
 		QDir (RKSettingsModuleGeneral::filesPath ()).mkdir ("package_archive");
 		command_string += ", destdir=\"" + downloaddir + "\"";
 	}
-	if (install_dependencies) command_string += ", dependencies=TRUE";
+	if (install_suggested_packages) command_string += ", suggested_packages=TRUE";
 	command_string += ")\n";
 
 	QString repos_string = "options (repos= c(";
@@ -747,7 +747,7 @@ void InstallPackagesWidget::doInstall (bool refresh) {
 	if (!install.isEmpty ()) {
 		QString dest = install_params->installLocation ();
 		if (!dest.isEmpty ()) {
-			changed |= parent->installPackages (install, dest, install_params->installDependencies (), packages_status->currentRepositories ());
+			changed |= parent->installPackages (install, dest, install_params->installSuggestedPackages (), packages_status->currentRepositories ());
 		}
 	}
 
@@ -789,20 +789,21 @@ PackageInstallParamsWidget::PackageInstallParamsWidget (QWidget *parent) : QWidg
 	libloc_selector = new QComboBox (this);
 	vbox->addWidget (libloc_selector);
 
-	dependencies = new QCheckBox (i18n ("Include dependencies"), this);
-	dependencies->setChecked (true);
+	suggested_packages = new QCheckBox (i18n ("Install suggested packages"), this);
+	suggested_packages->setChecked (false);
+	RKCommonFunctions::setTips (QString ("<p>%1</p>").arg (i18n ("Some packages \"suggest\" additional packages, which are not strictly necessary for using that package, but which may provide additional related functionality. Check this option to include such additional suggested packages.")), suggested_packages);
 	vbox->addStretch ();
-	vbox->addWidget (dependencies);
+	vbox->addWidget (suggested_packages);
 }
 
 PackageInstallParamsWidget::~PackageInstallParamsWidget () {
 	RK_TRACE (DIALOGS);
 }
 
-bool PackageInstallParamsWidget::installDependencies () {
+bool PackageInstallParamsWidget::installSuggestedPackages () {
 	RK_TRACE (DIALOGS);
 
-	return dependencies->isChecked ();
+	return suggested_packages->isChecked ();
 }
 
 QString PackageInstallParamsWidget::installLocation () {

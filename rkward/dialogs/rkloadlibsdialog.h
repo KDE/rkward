@@ -2,7 +2,7 @@
                           rkloadlibsdialog  -  description
                              -------------------
     begin                : Mon Sep 6 2004
-    copyright            : (C) 2004, 2006, 2007, 2009, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2009, 2011, 2012 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -55,7 +55,7 @@ public:
 
 	~RKLoadLibsDialog ();
 
-	bool installPackages (const QStringList &packages, QString to_libloc, bool install_dependencies, const QStringList& repos);
+	bool installPackages (const QStringList &packages, QString to_libloc, bool install_suggested_packages, const QStringList& repos);
 	bool removePackages (QStringList packages, QStringList from_liblocs);
 
 /** opens a modal RKLoadLibsDialog with the "Install new Packages" tab on front (To be used when a require () fails in the R backend
@@ -271,13 +271,13 @@ public:
 	
 	~PackageInstallParamsWidget ();
 
-	bool installDependencies ();
+	bool installSuggestedPackages ();
 	QString installLocation ();
 public slots:
 	void liblocsChanged (const QStringList &newlist);
 private:
 	QComboBox *libloc_selector;
-	QCheckBox *dependencies;
+	QCheckBox *suggested_packages;
 };
 
 #endif
