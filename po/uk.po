@@ -1,24 +1,24 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 #
-# Yuri Chornoivan <yurchor@ukr.net>, 2011.
+# Yuri Chornoivan <yurchor@ukr.net>, 2011, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
-"group_id=50231&atid=459007\n"
+"Report-Msgid-Bugs-To: "
+"http://sourceforge.net/tracker/?group_id=50231&atid=459007\n"
 "POT-Creation-Date: 2012-10-08 19:59+0200\n"
-"PO-Revision-Date: 2011-10-24 12:30+0000\n"
-"Last-Translator: yurchor <Unknown>\n"
+"PO-Revision-Date: 2012-10-09 04:01+0000\n"
+"Last-Translator: RKWard Team <rkward-tracker@lists.sourceforge.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
-"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2011-10-25 04:58+0000\n"
-"X-Generator: Launchpad (build 14185)\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : "
+"n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Launchpad-Export-Date: 2012-10-13 04:50+0000\n"
+"X-Generator: Launchpad (build 16137)\n"
+"Language: uk\n"
 
 #: agents/rkeditobjectagent.cpp:56
 msgid ""
@@ -51,9 +51,9 @@ msgstr "Помилка під час завантаження робочого �
 #: agents/rkprintagent.cpp:70
 msgid ""
 "No service was found to provide a KDE print dialog for postscript files. We "
-"will try to open a generic postscript viewer (if any), instead."
-"<br><br>Consider installing 'okular', or configure RKWard not to attempt to "
-"print using a KDE print dialog."
+"will try to open a generic postscript viewer (if any), "
+"instead.<br><br>Consider installing 'okular', or configure RKWard not to "
+"attempt to print using a KDE print dialog."
 msgstr ""
 "Не знайдено служби, яка б могла надати діалогове вікно друку KDE для файлів "
 "PostScript. Буде виконано спробу відкрити дані у типовій програмі для "
@@ -83,6 +83,8 @@ msgid ""
 "%1|R Workspace Files (%1)\n"
 "*|All files"
 msgstr ""
+"%1|файли робочих просторів R (%1)\n"
+"*|всі файли"
 
 #: agents/rksaveagent.cpp:65
 msgid ""
@@ -130,7 +132,6 @@ msgid "Showing file(s)"
 msgstr "Показ файлів"
 
 #: agents/showedittextfileagent.cpp:110
-#, fuzzy
 msgid ""
 "A command running in the R-engine wants you to edit one or more file(s). "
 "Please look at these files, edit them as appropriate, and save them. When "
@@ -453,8 +454,8 @@ msgstr ""
 msgid ""
 "The editor '%1' contains the following duplicate columns. Editing this table "
 "may not be safe, and has been disabled. You may re-enable editing if you "
-"know what you are doing, but you are strongly advised to fix the table, and/"
-"or backup your data, first."
+"know what you are doing, but you are strongly advised to fix the table, "
+"and/or backup your data, first."
 msgstr ""
 "У редакторі «%1» містяться дублікати стовпчиків. Редагування цієї таблиці "
 "може бути небезпечним, отже його вимкнено. Ви можете увімкнути редагування, "
@@ -592,8 +593,8 @@ msgstr "Запис до вказаної адреси бібліотеки не�
 msgid ""
 "<p>The directory you have selected for installation (%1) is not writable "
 "with your current user permissions.</p><p>Would you like to install to %2, "
-"instead (you can also press \"Cancel\" and use the \"Configure Repositories"
-"\"-button to set up a different directory)?</p>"
+"instead (you can also press \"Cancel\" and use the \"Configure "
+"Repositories\"-button to set up a different directory)?</p>"
 msgstr ""
 "<p>Запис до вказано вами для встановлення каталогу (%1) неможливий з "
 "поточними правами доступу користувача.</p><p>Виконати встановлення до %2 (ви "
@@ -619,8 +620,8 @@ msgstr "Встановити до %1"
 #: dialogs/rkloadlibsdialog.cpp:262
 msgid ""
 "<p>Alternatively, if you are the administrator of this machine, you can try "
-"to install the packages as root (you'll be prompted for the root password).</"
-"p>"
+"to install the packages as root (you'll be prompted for the root "
+"password).</p>"
 msgstr ""
 "<p>Крім того, якщо ви маєте права адміністративні права доступу до вашої "
 "системи, ви можете встановити пакунки від імені користувача root (програма "
@@ -736,10 +737,10 @@ msgstr "Встановлювати з залежностями"
 
 #: dialogs/rkloadlibsdialog.cpp:878
 msgid ""
-"<p>Please stand by while searching for installed and available packages.</"
-"p><p><strong>Note:</strong> This requires a working internet connection, and "
-"may take some time, esp. if one or more repositories are temporarily "
-"unavailable.</p>"
+"<p>Please stand by while searching for installed and available "
+"packages.</p><p><strong>Note:</strong> This requires a working internet "
+"connection, and may take some time, esp. if one or more repositories are "
+"temporarily unavailable.</p>"
 msgstr ""
 "<p>Будь ласка, зачекайте на завершення пошуку встановлених та доступних "
 "пакунків.</p><p><strong>Зауваження:</strong> для виконання пошуку потрібне "
@@ -865,7 +866,7 @@ msgid_plural ""
 "<p>%1 workspace recovery files exist in <i>%2</i>, the most recent one of "
 "which is <i>%3</i>.</p>"
 msgstr[0] ""
-"<p>У <i>%2</i> зберігається %1 файл резервної копії робочого простору, "
+"<p><p>У <i>%2</i> зберігається %1 файл резервної копії робочого простору, "
 "найсвіжіший має назву <i>%3</i>.</p>"
 msgstr[1] ""
 "<p>У <i>%2</i> зберігається %1 файли резервних копій робочого простору, "
@@ -981,17 +982,15 @@ msgstr "Лідер проекту, основний розробник"
 
 #: main.cpp:113
 msgid "C++ developer between 2004 and 2007"
-msgstr ""
+msgstr "Розробник мовою C++ від 2004 до 2007 року"
 
 #: main.cpp:114
-#, fuzzy
 msgid "Many plugins, suggestions, plot history feature"
-msgstr "Багато додатків, пропозиції"
+msgstr "Багато додатків, пропозиції, журнал креслень"
 
 #: main.cpp:115
-#, fuzzy
 msgid "Many plugins, suggestions, rkwarddev package"
-msgstr "Багато додатків, пропозиції"
+msgstr "Багато додатків, пропозиції, пакунок rkwarddev"
 
 #: main.cpp:116
 msgid "Many plugins, suggestions, marketing, translations"
@@ -1078,8 +1077,8 @@ msgstr "Вниз"
 
 #: misc/rkcommonfunctions.cpp:215
 msgid ""
-"<p><em>Note:</em> This setting does not take effect until you restart RKWard."
-"</p>"
+"<p><em>Note:</em> This setting does not take effect until you restart "
+"RKWard.</p>"
 msgstr ""
 "<p><em>Зауваження:</em> зміни набудуть чинності лише після перезапуску "
 "RKWard.</p>"
@@ -1296,16 +1295,17 @@ msgstr "Некоректне значення атрибута. Можна ви�
 
 #: misc/xmlhelper.cpp:291
 msgid "Illegal attribute value. Only real numbers are allowed."
-msgstr "Некоректне значення атрибута. Можна використовувати лише дійсні числа."
+msgstr ""
+"Некоректне значення атрибута. Можна використовувати лише дійсні числа."
 
 #: misc/xmlhelper.cpp:309
 msgid "Illegal attribute value. Allowed values are '%1' or '%2', only."
-msgstr "Некоректне значення атрибута. Можливими значеннями є лише «%1» і «%2»."
+msgstr ""
+"Некоректне значення атрибута. Можливими значеннями є лише «%1» і «%2»."
 
 #: misc/xmlhelper.cpp:325
-#, fuzzy
 msgid "Trying to retrieve contents of invalid element"
-msgstr "Спроба отримання дочірнього об’єкта некоректного елемента"
+msgstr "Спроба отримання вмісту некоректного елемента"
 
 #: misc/xmlhelper.cpp:338
 msgid "XML-parsing '%1' "
@@ -1369,24 +1369,29 @@ msgstr "Не вдалося надіслати"
 
 #: plugin/rkcomponentproperties.cpp:797
 msgid "This object has %1 dimension(s), but %2 dimension(s) is/are expected."
-msgstr ""
+msgstr "Цей об’єкт має розмірність %1, мало бути використано розмірність %2."
 
 #: plugin/rkcomponentproperties.cpp:800
-msgid "This object has a length of %1, but a minimum length of %2 is expected."
-msgstr ""
+msgid ""
+"This object has a length of %1, but a minimum length of %2 is expected."
+msgstr "Цей об’єкт має довжину %1, мінімальною довжиною мала бути %2."
 
 #: plugin/rkcomponentproperties.cpp:801
-msgid "This object has a length of %1, but a maximum length of %2 is expected."
-msgstr ""
+msgid ""
+"This object has a length of %1, but a maximum length of %2 is expected."
+msgstr "Цей об’єкт має довжину %1, максимальною довжиною мала бути %2."
 
 #: plugin/rkcomponentproperties.cpp:813
-msgid "This object does not appear to belong to any of the classes <i>%1</i>."
-msgstr ""
+msgid ""
+"This object does not appear to belong to any of the classes <i>%1</i>."
+msgstr "Здається, цей об’єкт не належить до жодного з класів <i>%1</i>."
 
 #: plugin/rkcomponentproperties.cpp:820
 msgid ""
 "This object's data type is <i>%1</i>, while allowed type(s) is/are <i>%2</i>."
 msgstr ""
+"Типом даних цього об’єкта є <i>%1</i>, дозволеними типами об’єктів є "
+"<i>%2</i>."
 
 #: plugin/rkdropdown.cpp:42 plugin/rkradio.cpp:45
 msgid "Select one:"
@@ -1426,11 +1431,11 @@ msgstr "Введіть текст"
 
 #: plugin/rkoptionset.cpp:185
 msgid "Add a row / element"
-msgstr ""
+msgstr "Додати рядок або елемент"
 
 #: plugin/rkoptionset.cpp:187
 msgid "Remove a row / element"
-msgstr ""
+msgstr "Вилучити рядок або елемент"
 
 #: plugin/rkpluginbrowser.cpp:53
 msgid "Enter filename"
@@ -1457,18 +1462,16 @@ msgid "Preview"
 msgstr "Перегляд"
 
 #: plugin/rkpreviewbox.cpp:136
-#, fuzzy
 msgid "Preview not (currently) possible"
-msgstr "Попередній перегляд ще неможливий"
+msgstr "У поточній версії можливість попереднього перегляду не передбачено"
 
 #: plugin/rkpreviewbox.cpp:150 plugin/rkpreviewbox.cpp:203
 msgid "Preview updating"
 msgstr "Оновлення перегляду"
 
 #: plugin/rkpreviewbox.cpp:187
-#, fuzzy
 msgid "Warnings or Errors:"
-msgstr "Перетворювати попередження на помилки"
+msgstr "Попередження або помилки:"
 
 #: plugin/rkpreviewbox.cpp:197
 msgid "Preview disabled"
@@ -1552,7 +1555,7 @@ msgstr "Змінна:"
 
 #: plugin/rkvarslot.cpp:142
 msgid "<p>This object is not allowed, here, for the following reason(s):</p>"
-msgstr ""
+msgstr "<p>Цей об’єкт не можна використовувати тут з таких причин:</p>"
 
 #: rbackend/rcommandstack.cpp:352
 msgid "Running"
@@ -1612,7 +1615,6 @@ msgid "Error starting R"
 msgstr "Помилка під час запуску R"
 
 #: rbackend/rinterface.cpp:518
-#, fuzzy
 msgid ""
 "A command in the R backend is trying to change the character encoding. While "
 "RKWard offers support for this, and will try to adjust to the new locale, "
@@ -1666,9 +1668,9 @@ msgid ""
 "even save the workspace (but if you're lucky, R already did that). What you "
 "can do, however, is save any open command-files, the output, or copy data "
 "out of open data editors. Quit RKWard after that.\n"
-"Since this should never happen, please write a mail to rkward-devel@lists."
-"sourceforge.net, and tell us, what you were trying to do, when this "
-"happened. Sorry!"
+"Since this should never happen, please write a mail to rkward-"
+"devel@lists.sourceforge.net, and tell us, what you were trying to do, when "
+"this happened. Sorry!"
 msgstr ""
 "\n"
 "Роботу основного модуля R буде негайно завершено. Це означає, що ви не "
@@ -1733,8 +1735,9 @@ msgid ""
 "that the last installation did not place all files in the correct place. "
 "However, in some cases, left-overs from a previous installation that was not "
 "cleanly removed may be the cause.</p>\t\t<p><b>You should quit RKWard, now, "
-"and fix your installation</b>. For help with that, see <a href=\"http://p.sf."
-"net/rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</p>\n"
+"and fix your installation</b>. For help with that, see <a "
+"href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a"
+">.</p>\n"
 msgstr ""
 "</p>\t- Бібліотеку R «rkward» або взагалі не можна завантажити, або ця "
 "бібліотека має помилкову версію. Це може призвести до будь-яких помилок, від "
@@ -1750,15 +1753,16 @@ msgstr ""
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
 "this indicates a broken installation.</p>\t\t<p><b>You should quit RKWard, "
-"now, and fix your installation</b>. For help with that, see <a href=\"http://"
-"p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</p></p>\n"
+"now, and fix your installation</b>. For help with that, see <a "
+"href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a"
+">.</p></p>\n"
 msgstr ""
 "<p>\t- Під час спроби встановлення зв’язку з R виникли проблеми. "
-"Найімовірніше, це вказує на помилки у встановленій версії.</p>\t"
-"\t<p><b>Зараз вам слід завершити роботу RKWard і виправити помилки у "
+"Найімовірніше, це вказує на помилки у встановленій версії.</p>\t\t"
+"<p><b>Зараз вам слід завершити роботу RKWard і виправити помилки у "
 "встановленій версії</b>. Довідкові матеріали, які допоможуть в усуванні "
-"негараздів, можна знайти <a href=\"http://p.sf.net/rkward/compiling\">тут</"
-"a>.</p>\n"
+"негараздів, можна знайти <a "
+"href=\"http://p.sf.net/rkward/compiling\">тут</a>.</p>\n"
 
 #: rkconsole.cpp:75
 msgid ""
@@ -1851,10 +1855,11 @@ msgid ""
 "<p>RKWard either could not find its resource files at all, or only an old "
 "version of those files. The most likely cause is that the last installation "
 "failed to place the files in the correct place. This can lead to all sorts "
-"of problems, from single missing features to complete failure to function.</"
-"p><p><b>You should quit RKWard, now, and fix your installation</b>. For help "
-"with that, see <a href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/"
-"rkward/compiling</a>.</p>"
+"of problems, from single missing features to complete failure to "
+"function.</p><p><b>You should quit RKWard, now, and fix your "
+"installation</b>. For help with that, see <a "
+"href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a"
+">.</p>"
 msgstr ""
 "<p>RKWard не вдалося взагалі знайти файли ресурсів або було знайдено лише "
 "застарілу версію цих файлів. Найімовірнішою причиною є те, що не вдалося "
@@ -1862,8 +1867,8 @@ msgstr ""
 "призвести до будь-яких помилок, від неможливості скористатися певними "
 "можливостями до повної непрацездатності.</p><p><b>Зараз вам слід завершити "
 "роботу RKWard і виправити помилки у встановленій версії</b>. Довідкові "
-"матеріали, які допоможуть в усуванні негараздів, можна знайти <a href="
-"\"http://p.sf.net/rkward/compiling\">тут</a>.</p>"
+"матеріали, які допоможуть в усуванні негараздів, можна знайти <a "
+"href=\"http://p.sf.net/rkward/compiling\">тут</a>.</p>"
 
 #: rkward.cpp:202
 msgid "Broken installation"
@@ -1872,8 +1877,8 @@ msgstr "Помилки у встановленій версії"
 #: rkward.cpp:219
 msgid ""
 "Your installation of KDE is configured to use \"native\" file dialogs. This "
-"is known to cause issues in some cases, and we recommend to disable \"native"
-"\" file dialogs.\n"
+"is known to cause issues in some cases, and we recommend to disable "
+"\"native\" file dialogs.\n"
 "Should \"native\" file dialogs be disabled in RKWard?"
 msgstr ""
 "Встановлену вами версію KDE налаштовано на використання «рідних» діалогових "
@@ -1900,8 +1905,8 @@ msgstr "Налаштування додатків…"
 
 #: rkward.cpp:273
 msgid ""
-"Plugins are needed: you may manage these through \"Settings->Configure RKWard"
-"\".\n"
+"Plugins are needed: you may manage these through \"Settings->Configure "
+"RKWard\".\n"
 msgstr ""
 "Потрібні додатки: ви можете керувати додатками за допомогою пункту меню "
 "«Параметри -> Налаштувати RKWard».\n"
@@ -1927,14 +1932,12 @@ msgid "Pending Jobs"
 msgstr "Завдання з черги"
 
 #: rkward.cpp:349
-#, fuzzy
 msgid "Debugger Frames"
-msgstr "Прапорці діагностики"
+msgstr "Області діагностики"
 
 #: rkward.cpp:354
-#, fuzzy
 msgid "Debugger Console"
-msgstr "Консоль R"
+msgstr "Консоль діагностики"
 
 #: rkward.cpp:366
 msgid "Dataset"
@@ -2009,9 +2012,8 @@ msgid "CC commands to output..."
 msgstr "Скопіювати команди до виведення…"
 
 #: rkward.cpp:421 rkward.cpp:425
-#, fuzzy
 msgid "Manage R packages..."
-msgstr "Встановлені пакунки"
+msgstr "Керування пакунками R…"
 
 #: rkward.cpp:432
 msgid "Close All Data"
@@ -2091,9 +2093,8 @@ msgid "Opening workspace..."
 msgstr "Відкриття робочого простору…"
 
 #: rkward.cpp:707 rkward.cpp:709
-#, fuzzy
 msgid "Select workspace to open..."
-msgstr "Файл робочого простору R, який слід відкрити"
+msgstr "Виберіть робочий простір для відкриття…"
 
 #: rkward.cpp:726
 msgid "Do you want to save the current workspace?"
@@ -2245,7 +2246,6 @@ msgid "Minimum number of characters before completion is attempted"
 msgstr "Мінімальна кількість символів, яка вмикає автодоповнення"
 
 #: settings/rksettingsmodulecommandeditor.cpp:76
-#, fuzzy
 msgid "Timeout (milliseconds) before completion is attempted"
 msgstr "Час очікування (у мілісекундах) перед вмиканням автодоповнення"
 
@@ -2571,7 +2571,6 @@ msgid "Commands originating from dialogs and plugins"
 msgstr "Команди, що надходять з діалогових вікон і додатків"
 
 #: settings/rksettingsmoduleoutput.cpp:65
-#, fuzzy
 msgid "Also carbon copy the command output"
 msgstr "Також копіювати дані, виведені у відповідь на команди"
 
@@ -2773,7 +2772,8 @@ msgstr "Команда поділу на сторінки"
 
 #: settings/rksettingsmoduler.cpp:178
 msgid "Further (option) commands to run in each session"
-msgstr "Подальші додаткові команди, які слід виконувати під час кожного сеансу"
+msgstr ""
+"Подальші додаткові команди, які слід виконувати під час кожного сеансу"
 
 #: settings/rksettingsmoduler.cpp:200
 msgid "R-Backend"
@@ -2799,11 +2799,13 @@ msgstr "Архів отриманих пакунків"
 
 #: settings/rksettingsmoduler.cpp:354
 msgid "Build packages from source"
-msgstr ""
+msgstr "Зібрати пакунки з початкових кодів"
 
 #: settings/rksettingsmoduler.cpp:357
 msgid "Build packages from source (not configurable on this platform)"
 msgstr ""
+"Зібрати пакунки з початкових кодів (на цій платформі налаштовування не "
+"передбачено)"
 
 #: settings/rksettingsmoduler.cpp:366
 msgid "R Library locations (where libraries get installed to, locally)"
@@ -2905,9 +2907,9 @@ msgstr "Скасувати позначені команди"
 
 #: windows/rcontrolwindow.cpp:133
 msgid ""
-"Some of the commands you were trying to cancel are marked as \"sync"
-"\" (letter 'S' in the type column). Cancelling such commands could lead to "
-"loss of data. These commands have _not_ been cancelled."
+"Some of the commands you were trying to cancel are marked as \"sync\" "
+"(letter 'S' in the type column). Cancelling such commands could lead to loss "
+"of data. These commands have _not_ been cancelled."
 msgstr ""
 "Деякі з команд, які ви бажаєте скасувати, позначено як команди синхронізації "
 "(літера «S» у стовпчику типів). Скасування таких команд може призвести до "
@@ -2923,17 +2925,18 @@ msgstr "Поновити виконання"
 
 #: windows/rkcallstackviewer.cpp:96
 msgid "<b>Active calls</b>"
-msgstr ""
+msgstr "<b>Активні виклики</b>"
 
 #: windows/rkcallstackviewer.cpp:125 windows/rkdebugconsole.cpp:100
-#, fuzzy
 msgid "Not in a debugger context"
-msgstr "Для контексту «%1» додатків не визначено"
+msgstr "Не перебуває у контексті зневадника"
 
 #: windows/rkcallstackviewer.cpp:144
 msgid ""
 "<b>Current call:</b> %1<br><b>Environment:</b> %2<br><b>Local objects:</b> %3"
 msgstr ""
+"<b>Поточний виклик:</b> %1<br><b>Середовище:</b> %2<br><b>Локальні "
+"об’єкти:</b> %3"
 
 #: windows/rkcommandeditorwindow.cpp:109
 msgid "Script Editor"
@@ -2977,7 +2980,8 @@ msgstr " [змінено]"
 
 #: windows/rkcommandeditorwindow.cpp:342
 msgid "The document \"%1\" has been modified. Close it anyway?"
-msgstr "До документа «%1» внесено зміни. Закрити його без збереження цих змін?"
+msgstr ""
+"До документа «%1» внесено зміни. Закрити його без збереження цих змін?"
 
 #: windows/rkcommandeditorwindow.cpp:342
 msgid "File not saved"
@@ -3019,13 +3023,12 @@ msgid "Configure"
 msgstr "Налаштувати"
 
 #: windows/rkdebugconsole.cpp:54
-#, fuzzy
 msgid "Next"
-msgstr "Далі >"
+msgstr "Далі"
 
 #: windows/rkdebugconsole.cpp:57
 msgid "Step out"
-msgstr ""
+msgstr "Вийти"
 
 #: windows/rkdebugconsole.cpp:59
 msgid ""
@@ -3034,11 +3037,16 @@ msgid ""
 "calling function will never be reached, because the call was the last step "
 "in the caller.In these cases, the behavior is identical to 'Continue'.</p>"
 msgstr ""
+"<p>Продовжувати, аж доки не буде виявлено виклику цієї функції (або іншої "
+"діагностичної інструкції, яка йому передуватиме)</p><p><b>Зауваження:</b> "
+"іноді пункту у коді для функції, що викликається, ніколи не досягається, "
+"оскільки виклик є останнім кроком у функції, яка здійснює виклик. У таких "
+"випадках поведінка програми є тотожною до поведінки у відповідь на команду "
+"«Продовжити».</p>"
 
 #: windows/rkdebugconsole.cpp:63
-#, fuzzy
 msgid "Continue"
-msgstr "Контекст:"
+msgstr "Продовжити"
 
 #: windows/rkdebugconsole.cpp:170
 msgid ""
@@ -3046,6 +3054,9 @@ msgid ""
 "idea what this means, and you want to get out, press the 'Cancel' button on "
 "the right hand side of this window."
 msgstr ""
+"Доки працює зневадник, це вікно не можна закривати. Якщо вам просто треба "
+"позбутися від цього вікна, натисніть кнопку «Скасувати» у правій частині "
+"цього вікна."
 
 #: windows/rkhelpsearchwindow.cpp:73
 msgid "Find:"
@@ -3101,9 +3112,9 @@ msgstr "Всі завантажені пакунки"
 
 #: windows/rkhelpsearchwindow.cpp:258
 msgid ""
-"No help found on '%1'. Maybe the corresponding package is not installed/"
-"loaded, or maybe you mistyped the command. Try using Help->Search R Help for "
-"more options."
+"No help found on '%1'. Maybe the corresponding package is not "
+"installed/loaded, or maybe you mistyped the command. Try using Help->Search "
+"R Help for more options."
 msgstr ""
 "Довідки щодо «%1» не знайдено. Можливо, відповідний пакунок не встановлено "
 "або не завантажено, крім того, ви могли помилитися під час введення команди. "
@@ -3435,16 +3446,17 @@ msgstr "Сповіщення про вади у RKWard"
 #: windows/rktoplevelwindowgui.cpp:170
 msgid ""
 "<p><b>Where should I report bugs or wishes?</b></p><p>Please submit your bug "
-"reports or wishes at <a href=\"%1\">%1</a> or send email to <a href=\"mailto:"
-"%2\">%2</a>.</p><p><b>What information should I provide?</b></p><p>Please "
-"copy the information shown below, and fill in the details to the questions.</"
-"p>"
+"reports or wishes at <a href=\"%1\">%1</a> or send email to <a "
+"href=\"mailto:%2\">%2</a>.</p><p><b>What information should I "
+"provide?</b></p><p>Please copy the information shown below, and fill in the "
+"details to the questions.</p>"
 msgstr ""
 "<p><b>Де можна повідомити про вади і побажання?</b></p><p>Будь ласка, "
 "надсилайте ваші звіти щодо вад та побажання на адресу <a href=\"%1\">%1</a> "
-"або надішліть повідомлення на адресу <a href=\"mailto:%2\">%2</a>.</"
-"p><p><b>Які дані я маю надати?</b></p><p>Будь ласка, скопіюйте наведені "
-"нижче повідомлення і вкажіть короткі відповіді на вказані питання.</p>"
+"або надішліть повідомлення на адресу <a "
+"href=\"mailto:%2\">%2</a>.</p><p><b>Які дані я маю надати?</b></p><p>Будь "
+"ласка, скопіюйте наведені нижче повідомлення і вкажіть короткі відповіді на "
+"вказані питання.</p>"
 
 #: windows/rkwindowcatcher.cpp:70
 msgid ""
@@ -3453,6 +3465,11 @@ msgid ""
 "However, this is not currently supported in this build of RKWard on Mac OS "
 "X. See http://p.sf.net/rkward/mac for more information."
 msgstr ""
+"Вами створено нове вікно графічного пристрою у R. Зазвичай, RKWard "
+"намагається виявити такі вікна з метою встановлення над ними контролю та "
+"додавання смужки меню. Втім, у цій збірці RKWard для Mac OS X такого "
+"перебирання контролю не передбачено. Докладніше про це на сторінці "
+"http://p.sf.net/rkward/mac"
 
 #: windows/rkwindowcatcher.cpp:70 windows/rkwindowcatcher.cpp:72
 msgid "Could not embed R X11 window"
@@ -3493,7 +3510,6 @@ msgid "Graphics Device Window"
 msgstr "Вікно графічного пристрою"
 
 #: windows/rkwindowcatcher.cpp:230
-#, fuzzy
 msgid ""
 "The current window appears too large to fit on the screen. If this happens "
 "regularly, you may want to adjust the default graphics window size in "
@@ -3533,7 +3549,8 @@ msgstr "Задіяти графічний пристрій з номером %1"
 
 #: windows/rkwindowcatcher.cpp:376
 msgid "Copy contents of graphics device number %1 to output"
-msgstr "Скопіювати дані з графічного пристрою з номером %1 на панель виведення"
+msgstr ""
+"Скопіювати дані з графічного пристрою з номером %1 на панель виведення"
 
 #: windows/rkwindowcatcher.cpp:384
 msgid "Print contents of graphics device number %1"
@@ -3994,56 +4011,14 @@ msgstr "&Інструменти"
 msgctxt "NAME OF TRANSLATORS"
 msgid "Your names"
 msgstr ""
-"Юрій Чорноіван, ,Launchpad Contributions:,RKWard Team,Yuri Chornoivan,yurchor"
+"Юрій Чорноіван, ,Launchpad Contributions:,RKWard Team,Yuri "
+"Chornoivan,yurchor, ,Launchpad Contributions:,RKWard Team,Yuri "
+"Chornoivan,yurchor"
 
 #: rc.cpp:140
 msgctxt "EMAIL OF TRANSLATORS"
 msgid "Your emails"
 msgstr ""
-"yurchor@ukr.net,,,rkward-tracker@lists.sourceforge.net,yurchor@gmail.com,"
-
-#, fuzzy
-#~ msgid "<p><b>Crash recovery file detected</b></p>"
-#~ msgstr "<p><b>Виявлено файл даних для відновлення після аварії</b></p>"
-
-#~ msgid "(c) 2002, 2004, 2005, 2006, 2007, 2008, 2009, 2010"
-#~ msgstr "© 2002, 2004, 2005, 2006, 2007, 2008, 2009, 2010"
-
-#~ msgid "C++ coder since 0.2.9"
-#~ msgstr "Код мовою C++ з часу версії 0.2.9"
-
-#~ msgid ""
-#~ "<p>A command running in the R backend has caused the R backend process to "
-#~ "\"fork\". Typically this is done to spread computations onto several CPU "
-#~ "cores. We try our best to support this in RKWard, despite some technical "
-#~ "problems inherent in forking a multi-library, multi-threaded application. "
-#~ "However, it is entirely possible that this causes trouble / broken "
-#~ "features in some cases, particularly in combination with further R "
-#~ "libraries. If you observe any such adverse effects after forking, please "
-#~ "send us a bug report.</p><p>If you have a choice, consider using a "
-#~ "different technique of parallelization, e.g. the 'PSOCK' method of R "
-#~ "packages <i>snow</i> or <i>parallel</i>.</p>"
-#~ msgstr ""
-#~ "<p>Команда з основного модуля R спричинила розгалуження процесу основного "
-#~ "модуля R. Типово таке розгалуження призначено для розподілу обчислень між "
-#~ "декількома ядрами процесора. Нами виконано значну роботу з реалізації "
-#~ "підтримки розгалуження у RKWard, незважаючи на деякі технічні проблеми, "
-#~ "характерні для розгалуження програми, що працює з багатьма бібліотеками "
-#~ "та багатьма потоками виконання. Але у певних випадках, можливо, "
-#~ "реалізація може спричинити проблеми та помилки у роботі програми, зокрема "
-#~ "у поєднанні з іншими бібліотеками R. Якщо у вас виникають проблеми з "
-#~ "розгалуженням, будь ласка, повідомте нам про цю ваду.</p><p>Якщо у вас є "
-#~ "змога вибирати, скористайтеся іншою методикою паралелізації, наприклад "
-#~ "методом «PSOCK» з пакунків R <i>snow</i> або <i>parallel</i>.</p>"
-
-#~ msgid "Backend has forked"
-#~ msgstr "Основний модуль розгалужено"
-
-#~ msgid "Configure RKWard"
-#~ msgstr "Налаштувати RKWard"
-
-#~ msgid "*|All files"
-#~ msgstr "*|Всі файли"
-
-#~ msgid "Open File..."
-#~ msgstr "Відкрити файл…"
+"yurchor@ukr.net,,,rkward-"
+"tracker@lists.sourceforge.net,yurchor@gmail.com,,,,rkward-"
+"tracker@lists.sourceforge.net,yurchor@gmail.com,"
