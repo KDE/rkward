@@ -1,7 +1,11 @@
+- rk.set.output.html.file() gains argument to allow addition of custom content to the html header
+
+--- Version 0.6.0 - Oct-XX-2012
+- Fixed: Entering "0" as propabilities (quantiles) vector in distribution plugins would cause error message
 - Preview device windows will display some status information (most importantly, warnings or errors)
 - Most plot plugins gain options to control margins and tick label orientation
 - Added option for installing packages from source (implicitly enabled on Unixoid platforms)
-- Fixed: Wrong handling of carriage returns ('\r') in the console window				TODO: also fix for the command log and other places
+- Fixed: Wrong handling of carriage returns ('\r') in the console window
 - Fixed: Spinboxes had wrong initial values
 - Omit comments on missing function calls in dialog code windows (e.g., if prepare() is unused, there's no "## Prepare" in the output either)
 - Output markup is now more XHTML compliant and easier to parse
@@ -37,7 +41,7 @@
 - Fixed: On Windows, detached windows would sometimes be positioned with the menubar outside the upper screen edge
 - Added GUI support for inspecting the call stack during debugging
 - The backend executable is no longer linked against KDE libraries
-- Objects, which are not acceptable in a varslot, will still be shown, there, with a warning		TODO: add a UI to override
+- Objects, which are not acceptable in a varslot, will still be shown, there, with a warning
 
 --- Version 0.5.7 - Oct-23-2011
 - Fixed: Would not system-defined text color for argument hints

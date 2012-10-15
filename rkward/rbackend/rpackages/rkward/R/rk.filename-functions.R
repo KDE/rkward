@@ -25,6 +25,9 @@
 #' @param extension a string, used as a filename extension when saving images
 #'   to the output file
 #' @param x a string, giving the filename of the of the output file
+#' @param additional.header.contents NULL or an additional string to add to the HTML header section.
+#'        This could be scripts or additional CSS definitions, for example. Note that
+#'        @em nothing will be added to the header, if the file already exists.
 #' @return \code{rk.get.tempfile.name}, \code{rk.get.output.html.file}, and
 #'   \code{rk.get.workspace.url} return a string while
 #'   \code{rk.set.output.html.file} returns \code{NULL}.
@@ -70,7 +73,7 @@
 
 #' @export
 #' @rdname rk.get.tempfile.name
-"rk.set.output.html.file" <- function (x) {
+"rk.set.output.html.file" <- function (x, additional.header.contents = getOption ("rk.html.header.additions")) {
 	stopifnot (is.character (x))
 	assign (".rk.output.html.file", x, .rk.variables)
 
@@ -129,7 +132,9 @@
 		// -->\n\t</script>\n", sep=""))
 		# positioning of the TOC is done by CSS, default state is hidden
 		# see $SRC/rkward/pages/rkward_output.css
-		.rk.cat.output (paste ("</head>\n<body>\n", sep=""))
+
+		if (!is.null (additional.header.contents)) .rk.cat.output (as.character (additional.header.contents))
+		.rk.cat.output ("</head>\n<body>\n")
 		# This initial output mostly to indicate the output is really there, just empty for now
 		.rk.cat.output (paste ("<a name=\"top\"></a>\n<pre>RKWard output initialized on", .rk.date (), "</pre>\n"))
 		# an empty <div> where the TOC menu gets added to dynamically, and a second one to toggle show/hide
