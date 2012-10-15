@@ -975,10 +975,10 @@ QVariant RKRPackageInstallationStatus::data (const QModelIndex &index, int role)
 			if (role == Qt::ToolTipRole) return QVariant (i18n ("Packages for which an update is available. This may include packages which were merely built against a newer version of R."));
 		} else if (row == NewPackages) {
 			if ((role == Qt::DisplayRole) && (index.column () == PackageName)) return QVariant (i18n ("New Packages"));
-			if (role == Qt::ToolTipRole) return QVariant (i18n ("Packages for which available for installation, but which are not currently installed."));
+			if (role == Qt::ToolTipRole) return QVariant (i18n ("Packages which are available for installation, but which are not currently installed."));
 		} else if (row == InstalledPackages) {
 			if ((role == Qt::DisplayRole) && (index.column () == PackageName)) return QVariant (i18n ("Installed Packages"));
-			if (role == Qt::ToolTipRole) return QVariant (i18n ("Packages for which installed locally. Note that updates may be available for these packages."));
+			if (role == Qt::ToolTipRole) return QVariant (i18n ("Packages which are installed locally. Note that updates may be available for these packages."));
 		}
 		if (role == Qt::BackgroundColorRole) return QVariant (QColor (200, 200, 200));
 	} else if (!index.parent ().parent ().isValid ()) {		// model has exactly two levels
