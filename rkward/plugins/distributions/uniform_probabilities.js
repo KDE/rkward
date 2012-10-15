@@ -2,7 +2,7 @@
 var q;
 
 function calculate () {
-	q = "c (" + getValue ("q").replace (/[, ]+/g, ", ") + ")";
+	q = "c (" + getString ("q").replace (/[, ]+/g, ", ") + ")";
 
 	echo ('result <- (punif (q = ' + q + ', min = ' + getValue ("min") + ', max = ' + getValue ("max") + ', ' + getValue ("tail") + ', ' + getValue("logp") + '))\n');
 }

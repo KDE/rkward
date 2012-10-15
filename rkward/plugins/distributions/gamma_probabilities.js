@@ -2,7 +2,7 @@
 var q;
 
 function calculate () {
-	q = "c (" + getValue ("q").replace (/[, ]+/g, ", ") + ")";
+	q = "c (" + getString ("q").replace (/[, ]+/g, ", ") + ")";
 
 	echo ('result <- (pgamma (q = ' + q + ', shape = ' + getValue ("shape") + ', rate = ' + getValue ("rate") + ', ' + getValue ("tail") + ', ' + getValue("logp") + '))\n');
 }

@@ -48,6 +48,11 @@ getValue = function (id) {
 	return (_RK_backend.getValue (id));
 }
 
+getString = function (id) {
+	// getValue() sometimes returns numeric results (whenever the value is "0"). This variant always returns strings.
+	return (getValue (id).toString ());
+}
+
 printValue = function (id) {
 	echo (getValue (id));
 }

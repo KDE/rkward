@@ -2,7 +2,7 @@
 var p;
 
 function calculate () {
-	p = "c (" + getValue ("p").replace (/[, ]+/g, ", ") + ")";
+	p = "c (" + getString ("p").replace (/[, ]+/g, ", ") + ")";
 
 	echo ('result <- (qexp (p = ' + p + ', rate = ' + getValue ("rate") + ', ' + getValue ("tail") + ', ' + getValue("logp") + '))\n');
 }

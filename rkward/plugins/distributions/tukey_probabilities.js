@@ -2,7 +2,7 @@
 var q;
 
 function calculate () {
-	q = "c (" + getValue ("q").replace (/[, ]+/g, ", ") + ")";
+	q = "c (" + getString ("q").replace (/[, ]+/g, ", ") + ")";
 
 	echo ('result <- (ptukey (q = ' + q + ', nmeans = ' + getValue ("nmeans") + ', df = ' + getValue ("df") + ', nranges = ' + getValue ("nranges") + ', ' + getValue ("tail") + ', ' + getValue ("logp") + '))\n');
 }

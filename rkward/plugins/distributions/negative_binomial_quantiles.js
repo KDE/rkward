@@ -2,7 +2,7 @@
 var p;
 
 function calculate () {
-	p = "c (" + getValue ("p").replace (/[, ]+/g, ", ") + ")";
+	p = "c (" + getString ("p").replace (/[, ]+/g, ", ") + ")";
 
 	echo ('result <- (qnbinom (p = ' + p + ', size = ' + getValue ("size") + ', prob = ' + getValue ("prob") + ', ' + getValue ("tail") + ', ' + getValue("logp") + '))\n');
 }

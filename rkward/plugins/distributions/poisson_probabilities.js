@@ -2,7 +2,7 @@
 var q;
 
 function calculate () {
-	q = "c (" + getValue ("q").replace (/[, ]+/g, ", ") + ")";
+	q = "c (" + getString ("q").replace (/[, ]+/g, ", ") + ")";
 
 	echo ('result <- (ppois (q = ' + q + ', lambda = ' + getValue ("lambda") + ', ' + getValue ("tail") + ', ' + getValue("logp") + '))\n');
 }
