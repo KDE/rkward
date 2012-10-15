@@ -2,7 +2,7 @@
 var p;
 
 function calculate () {
-	p = "c (" + getValue ("p").replace (/[, ]+/g, ", ") + ")";
+	p = "c (" + getString ("p").replace (/[, ]+/g, ", ") + ")";
 
 	echo ('result <- (qchisq (p = ' + p + ', df = ' + getValue ("df") + ', ncp = ' + getValue ("ncp") + ', ' + getValue ("tail") + ', ' + getValue ("logp") + '))\n');
 }

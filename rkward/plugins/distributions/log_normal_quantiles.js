@@ -2,7 +2,7 @@
 var p;
 
 function calculate () {
-	p = "c (" + getValue ("p").replace (/[, ]+/g, ", ") + ")";
+	p = "c (" + getString ("p").replace (/[, ]+/g, ", ") + ")";
 
 	echo ('result <- (qlnorm (p = ' + p + ', meanlog = ' + getValue ("meanlog") + ', sdlog = ' + getValue ("sdlog") + ', ' + getValue ("tail") + ', ' + getValue ("logp") + '))\n');
 }

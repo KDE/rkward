@@ -2,7 +2,7 @@
 var p;
 
 function calculate () {
-	p = "c (" + getValue ("p").replace (/[, ]+/g, ", ") + ")";
+	p = "c (" + getString ("p").replace (/[, ]+/g, ", ") + ")";
 
 	echo ('result <- (qhyper (p = ' + p + ', m = ' + getValue ("m") + ', n = ' + getValue ("n") + ', k = ' + getValue ("k") + ', ' + getValue ("tail") + ', ' + getValue("logp") + '))\n');
 }
