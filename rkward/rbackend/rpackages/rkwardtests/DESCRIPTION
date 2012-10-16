@@ -16,7 +16,7 @@ Authors@R: c(person(given="Thomas", family="Friedrichsmeier",
     email="thomas.friedrichsmeier@ruhr-uni-bochum.de", role=c("aut", "cre")),
     person(given="Meik", family="Michalke", email="meik.michalke@hhu.de",
     role=c("aut", "cre")))
-Version: 0.6.0
+Version: 0.6.1
 Date: 2012-09-28
 Collate:
     'RKTest-class.R'

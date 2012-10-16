@@ -1,7 +1,7 @@
 - Fixed: Option to include suggested packages in install was mis-labelled "install dependencies"
 - rk.set.output.html.file() gains argument to allow addition of custom content to the html header
 
---- Version 0.6.0 - Oct-XX-2012
+--- Version 0.6.0 - Oct-24-2012
 - Fixed: Entering "0" as propabilities (quantiles) vector in distribution plugins would cause error message
 - Preview device windows will display some status information (most importantly, warnings or errors)
 - Most plot plugins gain options to control margins and tick label orientation
