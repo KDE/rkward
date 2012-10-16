@@ -1,4 +1,4 @@
-rkward (0.5.7z+0.6.0-0devel1) unstable; urgency=low
+rkward (0.6.0z+0.6.1-0devel1) unstable; urgency=low
 
   * new upstream release
   * remove support for building on Ubuntu hardy
@@ -7,7 +7,7 @@ rkward (0.5.7z+0.6.0-0devel1) unstable; urgency=low
   * bump standards version to 3.9.4 (no changes needed)
   * Add Vcs-Browser and Vcs-Svn fields
 
- -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Tue, 02 Oct 2012 15:30:00 +0200
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Tue, 16 Oct 2012 15:30:00 +0200
 
 rkward (0.5.7-2) unstable; urgency=low
 
