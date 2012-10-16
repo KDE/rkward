@@ -2,7 +2,7 @@
                           rktextmatrix  -  description
                              -------------------
     begin                : Thu Nov 08 2007
-    copyright            : (C) 2007, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2010, 2012 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -162,16 +162,19 @@ QString RKTextMatrix::getText (int row, int col) const {
 	return (rows[row][col]);
 }
 
-QString* RKTextMatrix::getColumn (int col) const {
+QStringList RKTextMatrix::getColumn (int col) const {
 	RK_TRACE (EDITOR);
 
 	if (col > colcount) {
-		return 0;
+		return QStringList ();
 	}
 
-	QString* ret = new QString[rows.size ()];
+	QStringList ret;
+#if QT_VERSION >= 0x040700
+	ret.reserve (rows.size ());
+#endif
 	for (int i = 0; i < rows.size (); ++i) {
-		ret[i] = rows[i][col];
+		ret.append (rows[i][col]);
 	}
 	return ret;
 }

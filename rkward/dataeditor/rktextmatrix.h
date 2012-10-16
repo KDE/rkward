@@ -2,7 +2,7 @@
                           rktextmatrix  -  description
                              -------------------
     begin                : Thu Nov 08 2007
-    copyright            : (C) 2007, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2010, 2012 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -45,8 +45,8 @@ public:
 	void appendRow (const QStringList& row);
 
 	QString getText (int row, int col) const;
-	/** get the contents of an entire column at once. It's your responsibility to delete the data when done. The returned array has length numRows() */
-	QString* getColumn (int col) const;
+	/** get the contents of an entire column at once. It's your responsibility to delete the data when done. The returned list has length numRows() */
+	QStringList getColumn (int col) const;
 	/** get the contents of an entire row at once */
 	QStringList getRow (int row) const;
 
