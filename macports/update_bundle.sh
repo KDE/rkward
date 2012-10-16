@@ -13,6 +13,7 @@ LPUBDIR=~/Public/rkward
 if [[ $1 == "" ]] ; then
  echo "Usage: update_bundle.sh OPTION
           OPTIONS:
+           -D (build target rkward instead of rkward-devel)
            -f (full -- all of the below)
            -p (update macports, remove inactive)
            -r (update port ${PTARGET})
@@ -23,8 +24,9 @@ if [[ $1 == "" ]] ; then
 fi
 
 # get the options
-while getopts ":fprmscx" OPT; do
+while getopts ":Dfprmscx" OPT; do
   case $OPT in
+    D) PTARGET=rkward >&2 ;;
     f)
        UPMPORTS=TRUE >&2
        UPRKWARD=TRUE >&2
