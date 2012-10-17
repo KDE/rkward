@@ -7,8 +7,8 @@ echo "
 	library (roxygen2)
 	packages <- c ( '${BASEDIR}/rkward/rbackend/rpackages/rkward/',
 					# '${BASEDIR}/rkward/rbackend/rpackages/rkwardtests/', # currently excluded due to missing support for slots in roxygen2
-					'${BASEDIR}/rkward/rbackend/rpackages/rkwarddev/',
-					'${BASEDIR}/rkward/rbackend/rpackages/XiMpLe/')
+					'${BASEDIR}/packages/rkwarddev/',
+					'${BASEDIR}/packages/XiMpLe/')
 	for (package in packages) {
 		roxygenize (package)
 		possibly_empty_dirs <- paste (package, c ('inst/doc', 'inst'), sep='/')
