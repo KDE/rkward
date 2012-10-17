@@ -1,5 +1,5 @@
 IF(NOT ${PROJECT_NAME} STREQUAL "rkward")
-	MESSAGE (FATAL_ERROR "${PROJECT_NAME}Build triggered from wrong subdirectory. Please point cmake to the parent of this directory, instead.")
+	MESSAGE (FATAL_ERROR "Build triggered from wrong subdirectory. Please point cmake to the parent of this directory, instead.")
 ENDIF(NOT ${PROJECT_NAME} STREQUAL "rkward")
 
 INCLUDE(SetVersionNumber.cmake)
