@@ -4,8 +4,8 @@
 PortSystem          1.0
 fetch.type          svn
 svn.url             http://rkward.svn.sourceforge.net/svnroot/rkward/branches/release_branch_0.6.0
-svn.revision        4377
-worksrcdir          ${workpath}/release_branch_0.6.0/rkward
+svn.revision        4380
+worksrcdir          ${workpath}/release_branch_0.6.0
 
 name                rkward
 version             0.6.0
