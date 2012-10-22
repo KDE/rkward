@@ -293,6 +293,15 @@
 
 ---- KDE 3 versions
 
+--- Version 0.4.9c - Mar-18-2010
+- Backport all plugin changes and additions up to RKWard 0.5.2
+- Add support for the dynamic help server introduced in R 2.10.0
+- Backport some improvements in event handling
+- Fix deadlock while handling some Tcl events
+- Fix: Warn before saving file that was modified on disk, externally
+- Fix: Do not try to open mimetypes other than text/html directly in the help browser.
+- Fixed: Screen device in rkward was not seen as interactive by R
+
 --- Version 0.4.9b - May-10-2009
 - Workaround: Deactivate all filemanagement shortcuts in the File Browser. These would sometimes trigger when they should not.
 - Fix crash while inserting rows in a data.frame with string variables
