@@ -155,15 +155,25 @@ assign(".rk.preview.devices", list (), envir=.rk.variables)
 			})
 	)
 
-	setHook (packageEvent ("grid", "attach"),
-		function (...)
-			rk.replace.function ("grid.newpage", as.environment ("package:grid"),
-				function () {
-					## TODO: add specific support for ggplots?
-					rk.record.plot$.plot.new.hook ()
-					ret <- eval (body (.rk.backups$grid.newpage))
-				})
-	)
+	if (compareVersion (as.character (getRversion ()), "2.14.0") < 0) {
+		setHook (packageEvent ("grid", "attach"),
+			function (...)
+				rk.replace.function ("grid.newpage", as.environment ("package:grid"),
+					function () {
+						## TODO: add specific support for ggplots?
+						rk.record.plot$.plot.new.hook ()
+						ret <- eval (body (.rk.backups$grid.newpage))
+					})
+		)
+	} else {
+		setHook ("before.grid.newpage",
+			function (...)
+			{
+				rk.record.plot$.plot.new.hook ()
+			},
+			action = "append"
+		)
+	}
 
 	## persp does not call plot.new (), so set a hook. Fortunately, the hook is placed after drawing the plot.
 	setHook ("persp",
