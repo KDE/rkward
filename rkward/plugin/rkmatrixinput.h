@@ -37,8 +37,8 @@ public:
 	bool isValid () { return is_valid; };
 	QString value (const QString &modifier);
 private slots:
-	void dimensionPropertyChanged (RKComponentPropertyBase *property);
-	void tsvPropertyChanged (RKComponentPropertyBase *property);
+	void dimensionPropertyChanged ();
+	void tsvPropertyChanged ();
 private:
 	RKComponentPropertyInt *row_count;
 	RKComponentPropertyInt *column_count;
@@ -50,17 +50,19 @@ private:
 	bool setData (const QModelIndex &index, const QVariant &value, int role = Qt::EditRole); // re-implemented for QAbstractTableModel
 
 	enum Mode {
-		Integer,
+		Integer=0,
 		Real,
 		String
-	};
+	} mode;
 
 	double min;
 	double max;
 
-	bool allow_missings;
-	bool allow_user_resize_rows;
-	bool allow_user_resize_columns;
+	const bool allow_missings;
+	const bool allow_user_resize_rows;
+	const bool allow_user_resize_columns;
+	const int trailing_rows;
+	const int trailing_columns;
 
 	bool isValueValid (const QString &value) const;
 	void updateValidityFlag ();
@@ -76,11 +78,15 @@ private:
 	struct Column {
 		int valid_up_to_row;	// to save validizing the entire table on each change, we keep track of validity per column
 		QStringList storage;
-		QString cached_joined_string;
+		QString cached_tab_joined_string;
 	};
 	QList<Column> columns;
 
 	QTableView *display;
+
+	// these two to avoid recursion:
+	bool updating_dimensions;
+	bool updating_tsv_data;
 };
 
 #endif
