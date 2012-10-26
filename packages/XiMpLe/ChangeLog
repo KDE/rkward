@@ -1,8 +1,17 @@
 ChangeLog for package XiMpLe
 
+changes in version 0.03-15 (2012-10-26)
+fixed:
+  - eliminated a memory problem for large XML trees. calling unlist() with
+    use.names=FALSE really makes a difference...
+changed:
+  - reviewed the garbage collecting and internally moved it out of
+    XML.nodes() into XML.single.tags()
+
 changes in version 0.03-14 (2012-05-11)
 added:
-  - forcing garbage collection gc() in internal function XML.nodes(), which iterates through parsed XML trees
+  - forcing garbage collection gc() in internal function XML.nodes(), which
+    iterates through parsed XML trees
 changed:
   - better handling of text value indentation via "shine" and "tidy"
 
@@ -12,57 +21,70 @@ added:
   - debianized the sources
 changed:
   - parseXMLTree() now takes connections as "file" parameter
-  - commented CDATA tags (like they're used in XHTML) can now be detected and pasted
+  - commented CDATA tags (like they're used in XHTML) can now be detected and
+    pasted
   - pasteXMLTag() adjusts indentation level of value tags and comments
 fixed:
-  - feeding internet addresses to parseXMLTree() no longer throws an error, skipping normalize.path() then now
+  - feeding internet addresses to parseXMLTree() no longer throws an error,
+    skipping normalize.path() then now
   - parseXMLTree() now preserves newlines in value tags and comments
-  
+
 changes in version 0.03-12 (2012-03-18)
-  - node() now also works with single XiMpLe.node objects (not only full trees)
-  - added pasteXML methods to paste objects of classes XiMpLe.node and XiMpLe.doc in a more
-    general manner. the former functions pasteXMLNode() and pasteXMLTree() are replaced by mere
-    wrapper frunctions to pasteXML() and should not be used any longer.
+  - node() now also works with single XiMpLe.node objects (not only full
+    trees)
+  - added pasteXML methods to paste objects of classes XiMpLe.node and
+    XiMpLe.doc in a more general manner. the former functions pasteXMLNode() and
+    pasteXMLTree() are replaced by mere wrapper frunctions to pasteXML() and
+    should not be used any longer.
   - fixed dropped text value if node also had child nodes in pasteXML()
   - fixed missing quotes in DOCTYPE id (pasteXML())
 
 changes in version 0.03-11 (2012-03-14)
-  - added functions XMLNode() and XMLTree() as constructor functions for XML nodes and trees.
-  - added opton "object" to parseXMLTree(), to be able to parse XML trees not only from files, but also character vectors
+  - added functions XMLNode() and XMLTree() as constructor functions for XML
+    nodes and trees.
+  - added opton "object" to parseXMLTree(), to be able to parse XML trees not
+    only from files, but also character vectors
   - output of internal function XML.single.tags() has no colname any more
-  - text values of nodes are no longer followed by an empty newline in pasteXMLNode()
+  - text values of nodes are no longer followed by an empty newline in
+    pasteXMLNode()
 
 changes in version 0.03-10 (2012-03-11)
-  - fixed bug in parsing of attributes, their names are now all quoted by default o not run into issues
-    if they contain R-sensitive characters (like "http-equiv")
+  - fixed bug in parsing of attributes, their names are now all quoted by
+    default o not run into issues if they contain R-sensitive characters (like
+    "http-equiv")
 
 changes in version 0.03-9 (2012-03-10)
-  - re-formatted the ChangeLog so roxyPackage can translate it into a NEWS.Rd file
+  - re-formatted the ChangeLog so roxyPackage can translate it into a NEWS.Rd
+    file
 
 changes in version 0.03-8 (2011-11-17)
-  - rewrote large parts of internal function XML.single.tags() for more efficiency, allthough it's still quite
-    lethargic when handling huge XML trees
+  - rewrote large parts of internal function XML.single.tags() for more
+    efficiency, allthough it's still quite lethargic when handling huge XML trees
 
 changes in version 0.03-7 (2011-10-23)
-  - added "&" to the special characters for "tidy" (only applies if theres space before and after)
-  - "tidy" now also indents text in comments and CDATA if it includes the newline character
+  - added "&" to the special characters for "tidy" (only applies if theres
+    space before and after)
+  - "tidy" now also indents text in comments and CDATA if it includes the
+    newline character
 
 changes in version 0.03-6 (2011-10-09)
-  - added "tidy" option to the paste functions, which is TRUE by default since "<" and ">" are
-    invalid in attributes and text anyway
+  - added "tidy" option to the paste functions, which is TRUE by default
+    since "<" and ">" are invalid in attributes and text anyway
 
 changes in version 0.03-5 (2011-10-07)
-  - fixed tree parsing bug (in rare cases, comment and CDATA entries caused parsing to choke on
-    empty lines)
+  - fixed tree parsing bug (in rare cases, comment and CDATA entries caused
+    parsing to choke on empty lines)
 
 changes in version 0.03-4 (2011-10-01)
   - added show methods for objects of class XiMpLe.doc and XiMpLe.node
 
 changes in version 0.03-3 (2011-09-27)
-  - changed default 'shine' value of pasteXMLNode() and pasteXMLTree() from 2 to 1
-  - pasteXMLNode() and pasteXMLTree() now try to call each other if fed with the wrong class object,
-    but a warning is given
-  - changed handling of 'value' in pasteXMLNode(), now reflects 'shine' setting/indentation
+  - changed default 'shine' value of pasteXMLNode() and pasteXMLTree() from 2
+    to 1
+  - pasteXMLNode() and pasteXMLTree() now try to call each other if fed with
+    the wrong class object, but a warning is given
+  - changed handling of 'value' in pasteXMLNode(), now reflects 'shine'
+    setting/indentation
 
 changes in version 0.03-2 (2011-09-17)
   - added docs for classed XiMpLe.doc and XiMpLe.node
@@ -76,8 +98,10 @@ changes in version 0.02-2 (2011-09-01)
   - adjusted docs a little
 
 changes in version 0.02-1 (2011-08-30)
-  - added option "indent.by" to the paste functions, in case one prefers space over tab.
-  - moved all rk.* functions out of this package and into its own (rkwardplugdev)
+  - added option "indent.by" to the paste functions, in case one prefers
+    space over tab.
+  - moved all rk.* functions out of this package and into its own
+    (rkwardplugdev)
 
 changes in version 0.01-9 (2011-08-28)
   - tiny improvements to XML formatting
@@ -95,7 +119,8 @@ changes in version 0.01-7 (2011-08-24)
 changes in version 0.01-6 (2011-08-23)
   - added functions pasteXMLTree() and pasteXMLNode()
   - added validity checks for classes XiMpLe.doc and XiMpLe.node
-  - added function rk.XML.about() [which will probably be moved out of the package]
+  - added function rk.XML.about() [which will probably be moved out of the
+    package]
 
 changes in version 0.01-5 (2011-08-22)
   - writing new node values with node<-() partly works
@@ -112,4 +137,4 @@ changes in version 0.01-2 (2011-08-15)
 
 changes in version 0.01-1 (2011-08-14)
   - initial release via reaktanz.de
- 
+

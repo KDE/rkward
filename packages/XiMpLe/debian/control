@@ -1,4 +1,4 @@
-Source: r-other-rkward-ximple
+Source: r-other-reaktanz-ximple
 Section: math
 Priority: optional
 Maintainer: m.eik michalke <meik.michalke@hhu.de>
@@ -6,7 +6,7 @@ Build-Depends-Indep: debhelper (>> 4.1.0), r-base-dev (>= 2.9.0), cdbs
 Standards-Version: 3.9.3.1
 Homepage: http://reaktanz.de/?c=hacking&s=XiMpLe
 
-Package: r-other-rkward-ximple
+Package: r-other-reaktanz-ximple
 Architecture: all
 Section: math
 Depends: r-base (>= 2.15.0)

@@ -3,8 +3,8 @@
 #' \tabular{ll}{
 #' Package: \tab XiMpLe\cr
 #' Type: \tab Package\cr
-#' Version: \tab 0.03-14\cr
-#' Date: \tab 2012-05-11\cr
+#' Version: \tab 0.03-15\cr
+#' Date: \tab 2012-10-26\cr
 #' Depends: \tab R (>= 2.9.0),methods\cr
 #' Enhances: \tab rkward\cr
 #' Encoding: \tab UTF-8\cr
@@ -22,6 +22,6 @@
 #' @name XiMpLe-package
 #' @docType package
 #' @title A simple XML tree parser and generator.
-#' @author m.eik michalke \email{meik.michalke@@hhu.de}
+#' @author Meik Michalke \email{meik.michalke@@hhu.de}
 #' @keywords package
 NULL

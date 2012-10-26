@@ -53,7 +53,7 @@ split.chars <- function(txt, pattern, perl=FALSE){
 					} else {}
 					return(result.match)
 				}
-			}))
+			}), use.names=FALSE)
 		return(result)
 	}
 } ## end function split.chars()
@@ -78,17 +78,20 @@ XML.single.tags <- function(tree, drop=NULL){
 	# CDATA or comments can contain stuff which might ruin the outcome. we'll deal with those parts first.
 	tree <- split.chars(txt=tree, pattern="<!\\[CDATA\\[((?s).*?)\\]\\]>|/\\*[[:space:]]*<!\\[CDATA\\[[[:space:]]*\\*/((?s).*?)/\\*[[:space:]]*\\]\\]>[[:space:]]*\\*/|<!--((?s).*?)-->", perl=TRUE)
 	# now do the splitting
-	single.tags <- as.character(unlist(sapply(tree, function(this.tree){
+	single.tags <- sapply(tree, function(this.tree){
 				# exclude the already cut our comments an CDATA entries
 				if(XML.comment(this.tree) | XML.cdata(this.tree) | XML.commcdata(this.tree)){
 					return(this.tree)
 				} else {
-					these.tags <- split.chars(txt=this.tree, "<((?s).*?)>", perl=TRUE)
+					these.tags <- unlist(split.chars(txt=this.tree, "<((?s).*?)>", perl=TRUE), use.names=FALSE)
 					# remove probably troublesome content like newlines
 					these.tags[!XML.value(these.tags)] <- gsub("[[:space:]]+", " ", these.tags[!XML.value(these.tags)])
 					return(these.tags)
 				}
-			})))
+			})
+	single.tags <- unlist(single.tags, use.names=FALSE)
+	single.tags <- as.character(single.tags)
+
 	colnames(single.tags) <- NULL
 	if("comments" %in% drop){
 		single.tags <- single.tags[!XML.comment(single.tags)]
@@ -102,6 +105,8 @@ XML.single.tags <- function(tree, drop=NULL){
 	if("cdata" %in% drop){
 		single.tags <- single.tags[!XML.cdata(single.tags)]
 	} else {}
+	# force garbage collection
+	gc()
 	return(single.tags)
 } ## end function XML.single.tags()
 
@@ -113,7 +118,7 @@ setMinIndent <- function(tag, level=1, indent.by="\t", shine=0){
 	if(shine > 0){
 		tag <- gsub("\n([^\t])", "\n\t\\1", tag, perl=TRUE)
 	} else {}
-	currentMinIndent <- min(nchar(unlist(strsplit(tag, "[^\t]+"))))
+	currentMinIndent <- min(nchar(unlist(strsplit(tag, "[^\t]+"), use.names=FALSE)))
 	indentDiff <- currentMinIndent - level
 	# if currentMinIndent is greater than level, reduce indentation
 	if(indentDiff > 0){
@@ -419,15 +424,25 @@ parseXMLTag <- function(tag){
 
 ## function XML.nodes()
 XML.nodes <- function(single.tags, end.here=NA, start=1){
+	# to save memory, we'll put the single.tags object into an environment
+	# and pass that on to all iterations
+	if(is.environment(single.tags)){
+		single.tags.env <- single.tags
+		num.all.tags <- length(get("single.tags", envir=single.tags.env))
+	} else {
+		single.tags.env <- new.env()
+		assign("single.tags", single.tags, envir=single.tags.env)
+		num.all.tags <- length(single.tags)
+	}
 	# try to iterate through the single tags
 	children <- list()
 	tag.no <- start
 	## uncomment to debug:
 	# cat(start,"\n")
-	while (tag.no < length(single.tags)){
+	while (tag.no < num.all.tags){
 		## uncomment to debug:
 		# time.spent <- system.time({
-		this.tag <- single.tags[tag.no]
+		this.tag <- get("single.tags", envir=single.tags.env)[tag.no]
 		nxt.child <- length(children) + 1
 		child.name <- XML.tagName(this.tag)
 		child.end.tag <- paste("</[[:space:]]*", end.here,"[[:space:]>]+.*", sep="")
@@ -485,7 +500,7 @@ XML.nodes <- function(single.tags, end.here=NA, start=1){
 		if(!XML.emptyTag(this.tag)){
 		## uncomment to debug:
 		# cat(child.name, ":", tag.no, "-", child.end.tag,"\n")
-			rec.nodes <- XML.nodes(single.tags, end.here=child.name, start=tag.no + 1)
+			rec.nodes <- XML.nodes(single.tags.env, end.here=child.name, start=tag.no + 1)
 			children[nxt.child] <- new("XiMpLe.node",
 				name=child.name,
 				attributes=child.attr,
@@ -504,8 +519,6 @@ XML.nodes <- function(single.tags, end.here=NA, start=1){
 			tag.no <- tag.no + 1
 			next
 		}
-		# force garbage collection
-		gc()
 		## uncomment to debug:
 		# })
 		# cat("system.time:", time.spent, "\n")
