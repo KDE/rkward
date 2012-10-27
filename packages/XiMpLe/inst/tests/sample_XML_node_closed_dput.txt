@@ -1,0 +1,6 @@
+new("XiMpLe.node"
+    , name = "empty"
+    , attributes = list()
+    , children = list()
+    , value = ""
+)
