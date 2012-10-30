@@ -10,6 +10,7 @@ pckg.dscrptn <- data.frame(
 			role=c(\"aut\", \"cre\")))",
 		Maintainer="m.eik michalke <meik.michalke@hhu.de>",
 		Depends="R (>= 2.9.0),methods",
+		Suggests="testthat",
 		Enhances="rkward",
 		Description="This package provides a simple XML tree parser/generator. It includes functions to read XML files into R objects,
 						get information out of and into nodes, and write R objects back to XML code.
