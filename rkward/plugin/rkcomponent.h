@@ -61,6 +61,7 @@ public:
 		ComponentSaveObject = 2015,
 		ComponentFrame = 2016,
 		ComponentOptionSet = 2017,
+		ComponentMatrixInput = 2018,
 		ComponentStandard = 2100,
 		ComponentContextHandler = 2900,
 		ComponentUser = 3000	/**< for user expansion */

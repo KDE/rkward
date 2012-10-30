@@ -20,16 +20,16 @@
 
 #include <rkcomponent.h>
 
-#include <QAbstractTableModel>
 #include <QDomElement>
 #include <QStringList>
 
 class QTableView;
+class RKMatrixInputModel;
 
 /** Provides a table for editing one- or two-dimensional data
   *@author Thomas Friedrichsmeier
   */
-class RKMatrixInput : public RKComponent, public QAbstractTableModel {
+class RKMatrixInput : public RKComponent {
 	Q_OBJECT
 public:
 	RKMatrixInput (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
@@ -41,14 +41,10 @@ private slots:
 	void dimensionPropertyChanged (RKComponentPropertyBase *property);
 	void tsvPropertyChanged ();
 private:
+	friend class RKMatrixInputModel;
 	RKComponentPropertyInt *row_count;
 	RKComponentPropertyInt *column_count;
 	RKComponentPropertyBase *tsv_data;
-
-	int rowCount (const QModelIndex &parent = QModelIndex()) const; // implemented for QAbstractTableModel
-	int columnCount (const QModelIndex &parent = QModelIndex()) const; // implemented for QAbstractTableModel
-	QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const; // re-implemented for QAbstractTableModel
-	bool setData (const QModelIndex &index, const QVariant &value, int role = Qt::EditRole); // re-implemented for QAbstractTableModel
 
 	enum Mode {
 		Integer=0,
@@ -59,11 +55,11 @@ private:
 	double min;
 	double max;
 
-	const bool allow_missings;
-	const bool allow_user_resize_rows;
-	const bool allow_user_resize_columns;
-	const int trailing_rows;
-	const int trailing_columns;
+	bool allow_missings;
+	bool allow_user_resize_rows;
+	bool allow_user_resize_columns;
+	int trailing_rows;
+	int trailing_columns;
 
 	bool isValueValid (const QString &value) const;
 	void updateValidityFlag ();
@@ -87,10 +83,26 @@ private:
 	QList<Column> columns;
 
 	QTableView *display;
+	RKMatrixInputModel *model;
 
 	// these two to avoid recursion:
 	bool updating_dimensions;
 	bool updating_tsv_data;
+};
+
+#include <QAbstractTableModel>
+
+class RKMatrixInputModel : public QAbstractTableModel {
+private:
+friend class RKMatrixInput;
+	RKMatrixInputModel (RKMatrixInput *matrix);
+	virtual ~RKMatrixInputModel ();
+	int rowCount (const QModelIndex &parent = QModelIndex()) const; // implemented for QAbstractTableModel
+	int columnCount (const QModelIndex &parent = QModelIndex()) const; // implemented for QAbstractTableModel
+	QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const; // re-implemented for QAbstractTableModel
+	bool setData (const QModelIndex &index, const QVariant &value, int role = Qt::EditRole); // re-implemented for QAbstractTableModel
+
+	RKMatrixInput *matrix;
 };
 
 #endif

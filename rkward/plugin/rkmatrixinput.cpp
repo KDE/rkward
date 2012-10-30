@@ -18,6 +18,8 @@
 #include "rkmatrixinput.h"
 
 #include <QVBoxLayout>
+#include <QLabel>
+#include <QTableView>
 
 #include "klocale.h"
 
@@ -25,7 +27,7 @@
 
 #include "../debug.h"
 
-RKMatrixInput::RKMatrixInput (const QDomElement& element, RKComponent* parent_component, QWidget* parent_widget) : RKComponent (parent_component, parent_widget), QAbstractTableModel () {
+RKMatrixInput::RKMatrixInput (const QDomElement& element, RKComponent* parent_component, QWidget* parent_widget) : RKComponent (parent_component, parent_widget) {
 	RK_TRACE (PLUGIN);
 
 	// get xml-helper
@@ -61,87 +63,25 @@ RKMatrixInput::RKMatrixInput (const QDomElement& element, RKComponent* parent_co
 
 	row_count = new RKComponentPropertyInt (this, false, xml->getIntAttribute (element, "rows", 2, DL_INFO));
 	column_count = new RKComponentPropertyInt (this, false, xml->getIntAttribute (element, "columns", 2, DL_INFO));
-	tsv_data = new RKComponentPropertyBase (this);
+	tsv_data = new RKComponentPropertyBase (this, false);
 	row_count->setInternal (true);
-	addChild (row_count);
+	addChild ("rows", row_count);
 	column_count->setInternal (true);
-	addChild (column_count);
-	addChild (tsv_data);
+	addChild ("columns", column_count);
+	addChild ("tsv", tsv_data);
 	connect (row_count, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (dimensionPropertyChanged(RKComponentPropertyBase*)));
 	connect (column_count, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (dimensionPropertyChanged(RKComponentPropertyBase*)));
 	connect (tsv_data, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (tsvPropertyChanged()));
 	updating_tsv_data = false;
 	updating_dimensions = false;
 
-	display->setModel (this);
+	model = new RKMatrixInputModel (this);
+	display->setModel (model);
 }
 
 
 RKMatrixInput::~RKMatrixInput () {
 	RK_TRACE (PLUGIN);
-}
-
-int RKMatrixInput::columnCount (const QModelIndex& parent) const {
-	if (parent.isValid ()) return 0;
-	return column_count->intValue () + trailing_columns;
-}
-
-int RKMatrixInput::rowCount (const QModelIndex& parent) const {
-	if (parent.isValid ()) return 0;
-	return row_count->intValue () + trailing_rows;
-}
-
-QVariant RKMatrixInput::data (const QModelIndex& index, int role) const {
-	if (!index.isValid ()) return QVariant ();
-
-	int row = index.row ();
-	int column = index.column ();
-
-	// handle trailing rows / cols in user expandable tables
-	bool trailing = false;
-	if (row > row_count->intValue ()) {
-		if ((!allow_user_resize_rows) || (row > row_count->intValue () + trailing_rows)) {
-			RK_ASSERT (false);
-			return QVariant ();
-		}
-		trailing = true;
-	}
-	if (column > column_count->intValue ()) {
-		if ((!allow_user_resize_columns) || (column > column_count->intValue () + trailing_columns)) {
-			RK_ASSERT (false);
-			return QVariant ();
-		}
-		trailing = true;
-	};
-	if (trailing) {
-		if (role == Qt::BackgroundRole) return QVariant (QBrush (Qt::lightGray));
-		if (role == Qt::ToolTipRole || role == Qt::StatusTipRole) return QVariant (i18n ("Type on these cells to expand the table"));
-		return QVariant ();
-	}
-
-	// regular cells
-	QString value;
-	if (columns.size () > column) {	// column >= columns.size() can happen, legally. In this case the value is simply missing.
-		value = columns[column].storage.value (row);
-	}
-	if ((role == Qt::DisplayRole) || (role == Qt::EditRole)) {
-		return QVariant (value);
-	} else if (role == Qt::BackgroundRole) {
-		if (!is_valid && (value.isEmpty () && !allow_missings) || !isValueValid (value)) return QVariant (QBrush (Qt::red));
-	} else if ((role == Qt::ToolTipRole) || (role == Qt::StatusTipRole)) {
-		if (!is_valid && (value.isEmpty () && !allow_missings)) return QVariant (i18n ("Empty values are not allowed"));
-		if (!is_valid && !isValueValid (value)) return QVariant (i18n ("This value is not allowed, here"));
-	}
-	return QVariant ();
-}
-
-bool RKMatrixInput::setData (const QModelIndex& index, const QVariant& value, int role) {
-	RK_TRACE (PLUGIN);
-
-	if (!index.isValid ()) return false;
-	if (role != Qt::EditRole) return false;
-	setCellValue (index.row (), index.column (), value.toString ());
-	return true;
 }
 
 bool RKMatrixInput::expandStorageForColumn (int column) {
@@ -169,12 +109,13 @@ void RKMatrixInput::setCellValue (int row, int column, const QString& value) {
 		return;
 	}
 
-	Column &col = columns[col];
+	Column &col = columns[column];
 	while (row >= col.storage.size ()) {
 		col.storage.append (QString ());
 	}
 	col.storage[row] = value;
 	updateColumn (row, column);
+	model->dataChanged (model->index (row, column), model->index (row, column));
 }
 
 void RKMatrixInput::setColumnValue (int column, const QString& value) {
@@ -183,6 +124,7 @@ void RKMatrixInput::setColumnValue (int column, const QString& value) {
 	if (!expandStorageForColumn (column)) return;
 	columns[column].storage = value.split ('\t', QString::KeepEmptyParts);
 	updateColumn (0, column);
+	model->dataChanged (model->index (0, column), model->index (row_count->intValue () + trailing_rows, column));
 }
 
 void RKMatrixInput::updateColumn (int offset, int column) {
@@ -244,7 +186,9 @@ void RKMatrixInput::updateDataAndDimensions () {
 		}
 		if (max_row != row_count->intValue () - 1) {
 			updating_dimensions = true;
+			model->layoutAboutToBeChanged ();
 			row_count->setIntValue (max_row);
+			model->layoutChanged ();
 			updating_dimensions = false;
 		}
 	}
@@ -260,7 +204,9 @@ void RKMatrixInput::updateDataAndDimensions () {
 		}
 		if (max_col != column_count->intValue () - 1) {
 			updating_dimensions = true;
+			model->layoutAboutToBeChanged ();
 			column_count->setIntValue (max_col);
+			model->layoutChanged ();
 			updating_dimensions = false;
 		}
 	}
@@ -273,7 +219,7 @@ void RKMatrixInput::updateDataAndDimensions () {
 		} else {
 			Column& col = columns[i];
 			if (col.cached_tab_joined_string.isNull ()) {
-				QString cache = col.storage.mid (0, max_row + 1).join ('\t');
+				QString cache = QStringList (col.storage.mid (0, max_row + 1)).join ("\t");
 				if (col.storage.size () < max_row) {
 					QString empty_trail (max_row - col.storage.size (), '\t');
 					cache.append (empty_trail);
@@ -283,7 +229,7 @@ void RKMatrixInput::updateDataAndDimensions () {
 			tsv.append (col.cached_tab_joined_string);
 		}
 	}
-	tsv_data->setValue (tsv);
+	tsv_data->setValue (tsv.join ("\n"));
 
 	updating_tsv_data = false;
 }
@@ -343,7 +289,81 @@ bool RKMatrixInput::isValueValid (const QString& value) const {
 	return (val < max);
 }
 
-#error TODO
-#error TODO signal model layout and data changes
+
+
+///////////////////////////////////////////////////////////////////////////////////////
+
+RKMatrixInputModel::RKMatrixInputModel (RKMatrixInput* _matrix) : QAbstractTableModel (_matrix) {
+	RK_TRACE (PLUGIN);
+
+	matrix = _matrix;
+}
+
+RKMatrixInputModel::~RKMatrixInputModel () {
+	RK_TRACE (PLUGIN);
+}
+
+int RKMatrixInputModel::columnCount (const QModelIndex& parent) const {
+	if (parent.isValid ()) return 0;
+	return matrix->column_count->intValue () + matrix->trailing_columns;
+}
+
+int RKMatrixInputModel::rowCount (const QModelIndex& parent) const {
+	if (parent.isValid ()) return 0;
+	return matrix->row_count->intValue () + matrix->trailing_rows;
+}
+
+QVariant RKMatrixInputModel::data (const QModelIndex& index, int role) const {
+	if (!index.isValid ()) return QVariant ();
+
+	int row = index.row ();
+	int column = index.column ();
+
+	// handle trailing rows / cols in user expandable tables
+	bool trailing = false;
+	if (row > matrix->row_count->intValue ()) {
+		if ((!matrix->allow_user_resize_rows) || (row > matrix->row_count->intValue () + matrix->trailing_rows)) {
+			RK_ASSERT (false);
+			return QVariant ();
+		}
+		trailing = true;
+	}
+	if (column > matrix->column_count->intValue ()) {
+		if ((!matrix->allow_user_resize_columns) || (column > matrix->column_count->intValue () + matrix->trailing_columns)) {
+			RK_ASSERT (false);
+			return QVariant ();
+		}
+		trailing = true;
+	};
+	if (trailing) {
+		if (role == Qt::BackgroundRole) return QVariant (QBrush (Qt::lightGray));
+		if (role == Qt::ToolTipRole || role == Qt::StatusTipRole) return QVariant (i18n ("Type on these cells to expand the table"));
+		return QVariant ();
+	}
+
+	// regular cells
+	QString value;
+	if (matrix->columns.size () > column) {	// column >= columns.size() can happen, legally. In this case the value is simply missing.
+		value = matrix->columns[column].storage.value (row);
+	}
+	if ((role == Qt::DisplayRole) || (role == Qt::EditRole)) {
+		return QVariant (value);
+	} else if (role == Qt::BackgroundRole) {
+		if (!matrix->is_valid && !matrix->isValueValid (value)) return QVariant (QBrush (Qt::red));
+	} else if ((role == Qt::ToolTipRole) || (role == Qt::StatusTipRole)) {
+		if (!matrix->is_valid && (value.isEmpty () && !matrix->allow_missings)) return QVariant (i18n ("Empty values are not allowed"));
+		if (!matrix->is_valid && !matrix->isValueValid (value)) return QVariant (i18n ("This value is not allowed, here"));
+	}
+	return QVariant ();
+}
+
+bool RKMatrixInputModel::setData (const QModelIndex& index, const QVariant& value, int role) {
+	RK_TRACE (PLUGIN);
+
+	if (!index.isValid ()) return false;
+	if (role != Qt::EditRole) return false;
+	matrix->setCellValue (index.row (), index.column (), value.toString ());
+	return true;
+}
 
 #include "rkmatrixinput.moc"
