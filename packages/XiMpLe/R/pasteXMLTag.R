@@ -24,6 +24,12 @@
 #'		"&lt;", "&gt;" and "&amp;" in attribute values. For comment or CDATA tags, if the text includes newline characters
 #'		they will also be indented.
 #' @export
+#' @examples
+#' sample.XML.tag <- pasteXMLTag("a",
+#'   attr=list(href="http://example.com", target="_blank"),
+#'   child="klick here!",
+#'   empty=FALSE)
+
 pasteXMLTag <- function(tag, attr=NULL, child=NULL, empty=TRUE, level=1, allow.empty=FALSE, rename=NULL, shine=2, indent.by="\t", tidy=TRUE){
 	# what attributes do we have?
 	all.attributes <- pasteXMLAttr(attr, tag=tag, level=level, rename=rename, shine=shine, indent.by=indent.by, tidy=tidy)

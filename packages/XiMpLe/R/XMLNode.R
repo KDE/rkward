@@ -14,6 +14,10 @@
 #' @param .children Alternative way of specifying children, if you have them already as a list.
 #' @return An object of class XiMpLe.node
 #' @export
+#' @examples
+#' sample.XML.node <- XMLNode("a",
+#'   attrs=list(href="http://example.com", target="_blank"),
+#'   .children="klick here!")
 
 XMLNode <- function(name, ..., attrs=NULL, namespace="", namespaceDefinitions=NULL, .children=list(...)){
 

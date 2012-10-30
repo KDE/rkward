@@ -17,6 +17,10 @@
 #'				(text value between a pair of start/end tags, if found).}
 #'		}
 #' @export
+#' @examples
+#' \dontrun{
+#' sample.XML.object <- parseXMLTree("~/data/sample_file.xml")
+#' }
 
 parseXMLTree <- function(file, drop=NULL, object=FALSE){
 	if(isTRUE(object)){
