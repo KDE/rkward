@@ -69,6 +69,7 @@ private:
 	void setColumnValue (int column, const QString& value);
 	void updateColumn (int offset, int column);
 	bool expandStorageForColumn (int column);
+	QString makeColumnString (int column, const QString& sep);
 
 	bool is_valid;
 
@@ -101,8 +102,12 @@ friend class RKMatrixInput;
 	int columnCount (const QModelIndex &parent = QModelIndex()) const; // implemented for QAbstractTableModel
 	QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const; // re-implemented for QAbstractTableModel
 	bool setData (const QModelIndex &index, const QVariant &value, int role = Qt::EditRole); // re-implemented for QAbstractTableModel
+	Qt::ItemFlags flags (const QModelIndex &index) const; // re-implemented for QAbstractTableModel
+	QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;  // re-implemented for QAbstractTableModel
 
 	RKMatrixInput *matrix;
+	QStringList horiz_header;
+	QStringList vert_header;
 };
 
 #endif

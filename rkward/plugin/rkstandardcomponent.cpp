@@ -47,6 +47,7 @@
 #include "rkdropdown.h"
 #include "rkcheckbox.h"
 #include "rkpluginspinbox.h"
+#include "rkmatrixinput.h"
 #include "rkinput.h"
 #include "rkpluginbrowser.h"
 #include "rkpluginsaveobject.h"
@@ -622,6 +623,8 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 			widget = new RKCheckBox (e, component (), parent_widget);
 		} else if (e.tagName () == "spinbox") {
 			widget = new RKPluginSpinBox (e, component (), parent_widget);
+		} else if (e.tagName () == "matrix") {
+			widget = new RKMatrixInput (e, component (), parent_widget);
 		} else if (e.tagName () == "input") {
 			widget = new RKInput (e, component (), parent_widget);
 		} else if (e.tagName () == "browser") {

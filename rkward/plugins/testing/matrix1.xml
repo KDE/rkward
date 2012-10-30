@@ -1,0 +1,33 @@
+<!DOCTYPE rkplugin>
+
+<document>
+	<code file="matrix1.js"/>
+
+	<logic>
+		<connect governor="c_rows.int" client="matrixc.rows"/>
+		<connect governor="c_columns.int" client="matrixc.columns"/>
+	</logic>
+
+	<dialog label="Testing Matrix input element">
+		<text id="text">
+			This plugin is bogus! Do not use!
+		</text>
+		<tabbook>
+			<tab label="User resizable matrix">
+				<matrix id="matrixa" allow_missings="false" mode="string" label="Enter data"/>
+			</tab>
+			<tab label="User resizable vector">
+				<row>
+					<matrix id="matrixb" mode="real" columns="1" allow_user_resize_columns="false" label="Enter data (0.0 .. 1.0)" min="0" max="1"/>
+					<stretch/>
+				</row>
+			</tab>
+			<tab label="Dimension controlled matrix">
+				<spinbox id="c_rows" type="integer" min="0" label="Number of rows" initial="3"/>
+				<spinbox id="c_columns" type="integer" min="0" label="Number of columns" initial="4"/>
+				<matrix id="matrixc"  allow_user_resize_columns="false"  allow_user_resize_rows="false" mode="integer" min="1" max="10" allow_missings="true" label="Enter data (integer 1 to 10 or missing)"/>
+			</tab>
+		</tabbook>
+	</dialog>
+
+</document> 
