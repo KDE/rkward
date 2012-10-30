@@ -24,7 +24,8 @@
   if you have them already as a list.}
 }
 \value{
-  An object of class XiMpLe.node
+  An object of class
+  \code{\link[XiMpLe:XiMpLe.node-class]{XiMpLe.node}}.
 }
 \description{
   Can be used to create XML nodes.
@@ -32,5 +33,14 @@
 \details{
   To generate a CDATA node, set \code{name="![CDATA["}, to
   create a comment, set \code{name="!--"}.
+}
+\examples{
+sample.XML.node <- XMLNode("a",
+  attrs=list(href="http://example.com", target="_blank"),
+  .children="klick here!")
+}
+\seealso{
+  \code{\link[XiMpLe:XMLTree]{XMLTree}},
+  \code{\link[XiMpLe:pasteXML]{pasteXML}}
 }
 

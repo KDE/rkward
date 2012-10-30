@@ -3,6 +3,10 @@
 #' Creates a whole XML tag with attributes and, if it is a pair of start and end tags,
 #' also one object as child. This can be used recursively to create whole XML tree structures
 #' with this one function.
+#' 
+#' @note However, you will probably not want to use this function at all, as it is much more
+#' 	comfortable to create XML nodes or even nested trees with \code{\link[XiMpLe:XMLNode]{XMLNode}} and
+#' 	\code{\link[XiMpLe:XMLTree]{XMLTree}}, and then feed the result to \code{\link[XiMpLe:pasteXML]{pasteXML}}.
 #'
 #' @param tag Character string, name of the XML tag.
 #' @param attr A list of attributes for the tag.
@@ -23,6 +27,10 @@
 #' @param tidy Logical, if \code{TRUE} the special characters "<", ">" and "&" will be replaced with the entities
 #'		"&lt;", "&gt;" and "&amp;" in attribute values. For comment or CDATA tags, if the text includes newline characters
 #'		they will also be indented.
+#' @return A character string.
+#' @seealso \code{\link[XiMpLe:XMLNode]{XMLNode}},
+#'		\code{\link[XiMpLe:XMLTree]{XMLTree}},
+#'		\code{\link[XiMpLe:pasteXML]{pasteXML}}
 #' @export
 #' @examples
 #' sample.XML.tag <- pasteXMLTag("a",

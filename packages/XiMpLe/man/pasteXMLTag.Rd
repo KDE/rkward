@@ -44,10 +44,32 @@
   For comment or CDATA tags, if the text includes newline
   characters they will also be indented.}
 }
+\value{
+  A character string.
+}
 \description{
   Creates a whole XML tag with attributes and, if it is a
   pair of start and end tags, also one object as child.
   This can be used recursively to create whole XML tree
   structures with this one function.
+}
+\note{
+  However, you will probably not want to use this function
+  at all, as it is much more comfortable to create XML
+  nodes or even nested trees with
+  \code{\link[XiMpLe:XMLNode]{XMLNode}} and
+  \code{\link[XiMpLe:XMLTree]{XMLTree}}, and then feed the
+  result to \code{\link[XiMpLe:pasteXML]{pasteXML}}.
+}
+\examples{
+sample.XML.tag <- pasteXMLTag("a",
+  attr=list(href="http://example.com", target="_blank"),
+  child="klick here!",
+  empty=FALSE)
+}
+\seealso{
+  \code{\link[XiMpLe:XMLNode]{XMLNode}},
+  \code{\link[XiMpLe:XMLTree]{XMLTree}},
+  \code{\link[XiMpLe:pasteXML]{pasteXML}}
 }
 

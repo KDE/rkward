@@ -9,22 +9,24 @@
 \alias{node,XiMpLe.XML-method}
 \title{Extract/manipulate a node or parts of it from an XML tree}
 \arguments{
-  \item{obj}{An object of class \code{XiMpLe.doc} or
-  \code{XiMpLe.node}.}
+  \item{obj}{An object of class
+  \code{\link[XiMpLe:XiMpLe.doc-class]{XiMpLe.doc}} or
+  \code{\link[XiMpLe:XiMpLe.node-class]{XiMpLe.node}}.}
 
   \item{node}{A list of node names (or their numeric
   values), where each element is the child of its previous
   element. duplicate matches will be returned as a list.}
 
   \item{what}{A character string, must be a valid slot name
-  of class \code{XiMpLe.node}, like \code{"attributes"} or
-  \code{"value"}. If not \code{NULL}, only that part of a
-  node will be returned.  There's also two special
-  properties for this option: \code{what="@path"} will not
-  return the node or it's contents, but a character string
-  with the "path" to it in the object;
-  \code{what="obj@path"} is the same but won't have
-  \code{obj} substituted with the object's name.}
+  of class
+  \code{\link[XiMpLe:XiMpLe.node-class]{XiMpLe.node}}, like
+  \code{"attributes"} or \code{"value"}. If not
+  \code{NULL}, only that part of a node will be returned.
+  There's also two special properties for this option:
+  \code{what="@path"} will not return the node or it's
+  contents, but a character string with the "path" to it in
+  the object; \code{what="obj@path"} is the same but won't
+  have \code{obj} substituted with the object's name.}
 
   \item{cond.attr}{A named character string, to further
   filter the returned results.  If not \code{NULL}, only

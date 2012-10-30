@@ -12,7 +12,10 @@
 #' @param namespace Currently ignored.
 #' @param namespaceDefinitions Currently ignored.
 #' @param .children Alternative way of specifying children, if you have them already as a list.
-#' @return An object of class XiMpLe.node
+#' @return An object of class \code{\link[XiMpLe:XiMpLe.node-class]{XiMpLe.node}}.
+#' @seealso
+#'		\code{\link[XiMpLe:XMLTree]{XMLTree}},
+#'		\code{\link[XiMpLe:pasteXML]{pasteXML}}
 #' @export
 #' @examples
 #' sample.XML.node <- XMLNode("a",

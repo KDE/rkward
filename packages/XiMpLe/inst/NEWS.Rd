@@ -1,6 +1,13 @@
 \name{NEWS}
 \title{News for Package 'XiMpLe'}
 \encoding{UTF-8}
+\section{Changes in XiMpLe version 0.03-16 (2012-10-30)}{
+  \subsection{added}{
+    \itemize{
+      \item added examples to all functions
+    }
+  }
+}
 \section{Changes in XiMpLe version 0.03-15 (2012-10-26)}{
   \subsection{fixed}{
     \itemize{

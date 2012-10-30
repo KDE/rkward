@@ -5,6 +5,8 @@ Author: m.eik michalke <meik.michalke@hhu.de>
 Maintainer: m.eik michalke <meik.michalke@hhu.de>
 Depends:
     R (>= 2.9.0),methods
+Suggests:
+    testthat
 Enhances: rkward
 Description: This package provides a simple XML tree parser/generator. It
     includes functions to read XML files into R objects, get information out of
@@ -17,8 +19,8 @@ LazyLoad: yes
 URL: http://reaktanz.de/?c=hacking&s=XiMpLe
 Authors@R: c(person(given="Meik", family="Michalke",
     email="meik.michalke@hhu.de", role=c("aut", "cre")))
-Version: 0.03-15
-Date: 2012-10-26
+Version: 0.03-16
+Date: 2012-10-30
 Collate:
     'XiMpLe-internal.R'
     'XiMpLe.node-class.R'

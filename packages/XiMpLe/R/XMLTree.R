@@ -2,13 +2,17 @@
 #'
 #' Can be used to create full XML trees.
 #'
-#' @param ... Optional children for the XML tree. Must be either objects of class XiMpLe.node or character strings,
+#' @param ... Optional children for the XML tree. Must be either objects of class
+#'		\code{\link[XiMpLe:XiMpLe.node-class]{XiMpLe.node}} or character strings,
 #'		which are treated as simple text values.
 #' @param xml A named list, XML declaration of the XML tree. Currently just pasted, no checking is done.
 #' @param dtd A named list, doctype definition of the XML tree. Valid elements are \code{doctype}, \code{id} and \code{refer}.
 #'		Currently just pasted, no checking is done.
 #' @param .children Alternative way of specifying children, if you have them already as a list.
-#' @return An object of class XiMpLe.doc
+#' @return An object of class \code{\link[XiMpLe:XiMpLe.doc-class]{XiMpLe.doc}}
+#' @seealso
+#'		\code{\link[XiMpLe:XMLNode]{XMLNode}},
+#'		\code{\link[XiMpLe:pasteXML]{pasteXML}}
 #' @export
 #' @examples
 #' sample.XML.a <- XMLNode("a",

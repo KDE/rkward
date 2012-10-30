@@ -36,7 +36,7 @@
   be used.
 }
 \seealso{
-  \code{\link[XiMpLe:XiMpLe.node-class]{XiMpLe.node}}
+  \code{\link[XiMpLe:XiMpLe.node-class]{XiMpLe.node}},
   \code{\link[XiMpLe:XiMpLe.doc-class]{XiMpLe.doc}}
 }
 \keyword{methods}

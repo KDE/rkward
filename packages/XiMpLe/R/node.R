@@ -2,10 +2,11 @@
 #'
 #' This method can be used to get parts of a parsed XML tree object, or to fill it with new values.
 #'
-#' @param obj An object of class \code{XiMpLe.doc} or \code{XiMpLe.node}.
+#' @param obj An object of class \code{\link[XiMpLe:XiMpLe.doc-class]{XiMpLe.doc}} or
+#'		\code{\link[XiMpLe:XiMpLe.node-class]{XiMpLe.node}}.
 #' @param node A list of node names (or their numeric values), where each element is
 #'		the child of its previous element. duplicate matches will be returned as a list.
-#' @param what A character string, must be a valid slot name of class \code{XiMpLe.node}, like
+#' @param what A character string, must be a valid slot name of class \code{\link[XiMpLe:XiMpLe.node-class]{XiMpLe.node}}, like
 #'		\code{"attributes"} or \code{"value"}. If not \code{NULL}, only that part of a node will be returned.
 #'		There's also two special properties for this option: \code{what="@@path"} will not return the
 #'		node or it's contents, but a character string with the "path" to it in the object; \code{what="obj@@path"}

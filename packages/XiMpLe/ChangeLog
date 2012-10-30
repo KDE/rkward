@@ -1,5 +1,9 @@
 ChangeLog for package XiMpLe
 
+changes in version 0.03-16 (2012-10-30)
+added:
+  - added examples to all functions
+
 changes in version 0.03-15 (2012-10-26)
 fixed:
   - eliminated a memory problem for large XML trees. calling unlist() with

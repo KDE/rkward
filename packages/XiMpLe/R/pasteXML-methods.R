@@ -22,7 +22,7 @@
 #'		pasteXML,XiMpLe.doc-method
 #'		pasteXMLNode
 #'		pasteXMLTree
-#' @seealso \code{\link[XiMpLe:XiMpLe.node-class]{XiMpLe.node}}
+#' @seealso \code{\link[XiMpLe:XiMpLe.node-class]{XiMpLe.node}}, 
 #'		\code{\link[XiMpLe:XiMpLe.doc-class]{XiMpLe.doc}}
 #' @keywords methods
 #' @rdname pasteXML-methods
