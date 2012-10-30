@@ -22,6 +22,7 @@
 
 #include <QAbstractTableModel>
 #include <QDomElement>
+#include <QStringList>
 
 class QTableView;
 
@@ -37,7 +38,7 @@ public:
 	bool isValid () { return is_valid; };
 	QString value (const QString &modifier);
 private slots:
-	void dimensionPropertyChanged ();
+	void dimensionPropertyChanged (RKComponentPropertyBase *property);
 	void tsvPropertyChanged ();
 private:
 	RKComponentPropertyInt *row_count;
@@ -66,10 +67,12 @@ private:
 
 	bool isValueValid (const QString &value) const;
 	void updateValidityFlag ();
+	void updateDataAndDimensions ();
 
-	bool setCellValue (int row, int column, const QString& value);
-	bool setColumnValue (int column, const QString& value);
-	bool setTableValue (const QString& value);
+	void setCellValue (int row, int column, const QString& value);
+	void setColumnValue (int column, const QString& value);
+	void updateColumn (int offset, int column);
+	bool expandStorageForColumn (int column);
 
 	bool is_valid;
 
@@ -77,6 +80,7 @@ private:
 	// lost, if a user shrinks a table, accidentally, then re-grows it.
 	struct Column {
 		int valid_up_to_row;	// to save validizing the entire table on each change, we keep track of validity per column
+		int filled_up_to_row;
 		QStringList storage;
 		QString cached_tab_joined_string;
 	};
