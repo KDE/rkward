@@ -3,7 +3,8 @@
 #' In RKWard the output is saved as a html file which is located at "~/.rkward"
 #' by default. (\bold{TODO}: make this platform free). The name of this html
 #' file can be retrieved and set using \code{rk.get.output.html.file} and
-#' \code{rk.set.output.html.file}.
+#' \code{rk.set.output.html.file}. \code{rk.flush.output.html.file} will delete 
+#' the current (or specified) html file, and re-initialize it.
 #' 
 #' \code{rk.get.tempfile.name} returns a non-existing filename inside the
 #' directory of the output file. It is mainly used by \link{rk.graph.on} to
@@ -156,4 +157,11 @@
 	# needs to come after initialization, so initialization alone does not trigger an update during startup
 	.rk.do.plain.call ("set.output.file", x, synchronous=FALSE)
 	invisible (NULL)
+}
+
+#' @export
+#' @rdname rk.get.tempfile.name
+"rk.flush.output" <- function (x=rk.get.output.html.file ()) {
+   unlink (file)
+   rk.set.output.html.file (file)
 }

@@ -1,4 +1,5 @@
 \name{rk.get.tempfile.name}
+\alias{rk.flush.output}
 \alias{rk.get.output.html.file}
 \alias{rk.get.tempfile.name}
 \alias{rk.get.workspace.url}
@@ -12,7 +13,10 @@
 
   rk.get.output.html.file()
 
-  rk.set.output.html.file(x)
+  rk.set.output.html.file(x,
+    additional.header.contents = getOption("rk.html.header.additions"))
+
+  rk.flush.output(x = rk.get.output.html.file())
 }
 \arguments{
   \item{prefix}{a string, used as a filename prefix when
@@ -23,6 +27,11 @@
 
   \item{x}{a string, giving the filename of the of the
   output file}
+
+  \item{additional.header.contents}{NULL or an additional
+  string to add to the HTML header section.  This could be
+  scripts or additional CSS definitions, for example. Note
+  that}
 }
 \value{
   \code{rk.get.tempfile.name},
@@ -36,6 +45,8 @@
   this platform free). The name of this html file can be
   retrieved and set using \code{rk.get.output.html.file}
   and \code{rk.set.output.html.file}.
+  \code{rk.flush.output.html.file} will delete the current
+  (or specified) html file, and re-initialize it.
 }
 \details{
   \code{rk.get.tempfile.name} returns a non-existing
