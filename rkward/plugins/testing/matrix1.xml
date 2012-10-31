@@ -18,7 +18,7 @@
 			</tab>
 			<tab label="User resizable vector">
 				<row>
-					<matrix id="matrixb" mode="real" columns="1" allow_user_resize_columns="false" label="Enter data (0.0 .. 1.0)" min="0" max="1"/>
+					<matrix id="matrixb" mode="real" columns="1" allow_user_resize_columns="false" label="Enter data (0.0 .. 1.0)" fixed_width="true" min="0" max="1"/>
 					<stretch/>
 				</row>
 			</tab>

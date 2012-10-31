@@ -62,22 +62,21 @@ private:
 	int trailing_columns;
 
 	bool isValueValid (const QString &value) const;
-	void updateValidityFlag ();
-	void updateDataAndDimensions ();
+	void updateAll ();
 
 	void setCellValue (int row, int column, const QString& value);
 	void setColumnValue (int column, const QString& value);
-	void updateColumn (int offset, int column);
+	void updateColumn (int column);
 	bool expandStorageForColumn (int column);
-	QString makeColumnString (int column, const QString& sep);
+	QString makeColumnString (int column, const QString& sep, bool r_pasteable = true);
+	bool isColumnValid (int column);
 
 	bool is_valid;
 
 	// NOTE: The storage may contain more rows / columns than the current dimensions of the table. This is so that no data gets
 	// lost, if a user shrinks a table, accidentally, then re-grows it.
 	struct Column {
-		int valid_up_to_row;	// to save validizing the entire table on each change, we keep track of validity per column
-		int filled_up_to_row;
+		int last_valid_row;	// to save validizing the entire table on each change, we keep track of validity per column
 		QStringList storage;
 		QString cached_tab_joined_string;
 	};
@@ -86,8 +85,7 @@ private:
 	QTableView *display;
 	RKMatrixInputModel *model;
 
-	// these two to avoid recursion:
-	bool updating_dimensions;
+	// to avoid recursion:
 	bool updating_tsv_data;
 };
 

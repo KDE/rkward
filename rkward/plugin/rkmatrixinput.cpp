@@ -20,6 +20,7 @@
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QTableView>
+#include <QHeaderView>
 
 #include "klocale.h"
 
@@ -55,6 +56,7 @@ RKMatrixInput::RKMatrixInput (const QDomElement& element, RKComponent* parent_co
 		max = FLT_MAX;
 	}
 
+	// Note: string type matrix allows missings, implicitly (treating them as empty strings)
 	allow_missings = xml->getBoolAttribute (element, "allow_missings", false, DL_INFO);
 	allow_user_resize_columns = xml->getBoolAttribute (element, "allow_user_resize_columns", true, DL_INFO);
 	allow_user_resize_rows = xml->getBoolAttribute (element, "allow_user_resize_rows", true, DL_INFO);
@@ -73,15 +75,23 @@ RKMatrixInput::RKMatrixInput (const QDomElement& element, RKComponent* parent_co
 	connect (column_count, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (dimensionPropertyChanged(RKComponentPropertyBase*)));
 	connect (tsv_data, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (tsvPropertyChanged()));
 	updating_tsv_data = false;
-	updating_dimensions = false;
 
 	model = new RKMatrixInputModel (this);
 	QString headers = xml->getStringAttribute (element, "horiz_headers", QString (), DL_INFO);
 	if (!headers.isEmpty ()) model->horiz_header = headers.split (';');
 	headers = xml->getStringAttribute (element, "vert_headers", QString (), DL_INFO);
 	if (!headers.isEmpty ()) model->vert_header = headers.split (';');
-	updateDataAndDimensions ();
+	updateAll ();
 	display->setModel (model);
+	display->setAlternatingRowColors (true);
+	if (xml->getBoolAttribute (element, "fixed_width", false, DL_INFO)) {
+		int max_col = column_count->intValue () - 1;
+		display->setFixedWidth (display->verticalHeader ()->width () + display->columnViewportPosition (max_col) + display->columnWidth (max_col) + display->verticalHeader ()->fontMetrics ().width ("0"));
+	}
+	if (xml->getBoolAttribute (element, "fixed_height", false, DL_INFO)) {
+		int max_row = row_count->intValue () - 1;
+		display->setFixedHeight (display->horizontalHeader ()->height () + display->rowViewportPosition (max_row) + display->rowHeight (max_row));
+	}
 }
 
 RKMatrixInput::~RKMatrixInput () {
@@ -99,7 +109,7 @@ QString RKMatrixInput::value (const QString& modifier) {
 
 	bool ok;
 	int col = modifier.toInt (&ok);
-	if ((col >= 0) && ok) return makeColumnString (col, "\t");
+	if ((col >= 0) && ok) return makeColumnString (col, "\t", false);
 	return tsv_data->value (modifier);
 }
 
@@ -113,8 +123,7 @@ bool RKMatrixInput::expandStorageForColumn (int column) {
 
 	while (column >= columns.size ()) {
 		Column col;
-		col.valid_up_to_row = -1;
-		col.filled_up_to_row = -1;
+		col.last_valid_row = -1;
 		columns.append (col);
 	}
 	return true;
@@ -129,11 +138,13 @@ void RKMatrixInput::setCellValue (int row, int column, const QString& value) {
 	}
 
 	Column &col = columns[column];
+	if (col.storage.value (row) == value) return;
+
 	while (row >= col.storage.size ()) {
 		col.storage.append (QString ());
 	}
 	col.storage[row] = value;
-	updateColumn (row, column);
+	updateColumn (column);
 	model->dataChanged (model->index (row, column), model->index (row, column));
 }
 
@@ -142,56 +153,29 @@ void RKMatrixInput::setColumnValue (int column, const QString& value) {
 
 	if (!expandStorageForColumn (column)) return;
 	columns[column].storage = value.split ('\t', QString::KeepEmptyParts);
-	updateColumn (0, column);
+	updateColumn (column);
 	model->dataChanged (model->index (0, column), model->index (row_count->intValue () + trailing_rows, column));
 }
 
-void RKMatrixInput::updateColumn (int offset, int column) {
+void RKMatrixInput::updateColumn (int column) {
 	RK_TRACE (PLUGIN);
 	RK_ASSERT ((column >= 0) && (column < columns.size ()));
 
 	Column &col = columns[column];
 
 	// check for trailing empty rows:
-	int last_row = col.storage.size () - 1;
-	while ((last_row >= 0) && col.storage[last_row].isEmpty ()) {
-		--last_row;
+	int last_row = col.storage.size ();
+	while ((--last_row >= 0) && col.storage[last_row].isEmpty ()) {	// strip empty trailing strings
+		col.storage.pop_back ();
 	}
-	col.filled_up_to_row = last_row;
 
-	offset = qMax (0, qMin (offset, col.valid_up_to_row));
-	while (offset < col.storage.size ()) {
-		if (!isValueValid (col.storage[offset])) break;
-		offset++;
-	}
-	col.valid_up_to_row = offset - 1;
+	col.last_valid_row = -1;
 	col.cached_tab_joined_string.clear (); // == no valid cache
 
-	updateDataAndDimensions ();
+	updateAll ();
 }
 
-void RKMatrixInput::updateValidityFlag () {
-	RK_TRACE (PLUGIN);
-
-	is_valid = true;
-	for (int i = 0; i < column_count->intValue (); ++i) {
-		if (i >= columns.size ()) {	// hit end of data, before hitting any invalid strings
-			is_valid = allow_missings;
-			break;
-		}
-
-		Column &col = columns[i];
-		if (col.valid_up_to_row >= (row_count->intValue () - 1)) continue;
-		else if (allow_missings && (col.valid_up_to_row >= (col.storage.size () - 1))) continue;
-		else {
-			is_valid = false;
-			break;
-		}
-	}
-	changed ();
-}
-
-QString RKMatrixInput::makeColumnString (int column, const QString& sep) {
+QString RKMatrixInput::makeColumnString (int column, const QString& sep, bool r_pasteable) {
 	RK_TRACE (PLUGIN);
 
 	QStringList storage;
@@ -199,14 +183,22 @@ QString RKMatrixInput::makeColumnString (int column, const QString& sep) {
 		storage = columns[column].storage;
 	}
 	QString ret;
-	if (!storage.isEmpty ()) ret = QStringList (storage.mid (0, row_count->intValue ())).join (sep);
-	for (int i = storage.size (); i < row_count->intValue (); ++i) {
-		ret.append (sep);
+	ret.reserve (3 * row_count->intValue ());	// a rather conservative estimate for most purposes
+	for (int i = 0; i < row_count->intValue (); ++i) {
+		if (i > 0) ret.append (sep);
+		const QString val = storage.value (i);
+		if (r_pasteable) {
+			if (mode == String) ret.append (RObject::rQuote (val));
+			else if (val.isEmpty ()) ret.append ("NA");
+			else ret.append (val);
+		} else {
+			ret.append (val);
+		}
 	}
 	return ret;
 }
 
-void RKMatrixInput::updateDataAndDimensions () {
+void RKMatrixInput::updateAll () {
 	RK_TRACE (PLUGIN);
 
 	if (updating_tsv_data) return;
@@ -216,30 +208,22 @@ void RKMatrixInput::updateDataAndDimensions () {
 	if (allow_user_resize_rows) {
 		max_row = -1;
 		for (int i = columns.size () - 1; i >= 0; --i) {
-			max_row = qMax (max_row, columns[i].filled_up_to_row);
+			max_row = qMax (max_row, columns[i].storage.size () - 1);
 		}
 		if (max_row != row_count->intValue () - 1) {
-			updating_dimensions = true;
-			model->layoutAboutToBeChanged ();
 			row_count->setIntValue (max_row + 1);
-			model->layoutChanged ();
-			updating_dimensions = false;
 		}
 	}
 
 	int max_col = column_count->intValue () - 1;
 	if (allow_user_resize_columns) {
 		for (max_col = columns.size () - 1; max_col >= 0; --max_col) {
-			if (columns[max_col].filled_up_to_row >= 0) {
+			if (!columns[max_col].storage.isEmpty ()) {
 				break;
 			}
 		}
 		if (max_col != column_count->intValue () - 1) {
-			updating_dimensions = true;
-			model->layoutAboutToBeChanged ();
 			column_count->setIntValue (max_col + 1);
-			model->layoutChanged ();
-			updating_dimensions = false;
 		}
 	}
 
@@ -248,7 +232,7 @@ void RKMatrixInput::updateDataAndDimensions () {
 	for (; i < columns.size (); ++i) {
 		Column& col = columns[i];
 		if (col.cached_tab_joined_string.isEmpty ()) {
-			col.cached_tab_joined_string = makeColumnString (i, "\t");
+			col.cached_tab_joined_string = makeColumnString (i, "\t", false);
 		}
 		tsv.append (col.cached_tab_joined_string);
 	}
@@ -258,30 +242,41 @@ void RKMatrixInput::updateDataAndDimensions () {
 	tsv_data->setValue (tsv.join ("\n"));
 
 	updating_tsv_data = false;
-	updateValidityFlag ();
+
+	// finally, check whether table is valid, and signal change
+	bool new_valid = true;
+	for (int i = 0; i < column_count->intValue (); ++i) {
+		if (!isColumnValid (i)) {
+			new_valid = false;
+			break;
+		}
+	}
+	if (new_valid != is_valid) {
+		is_valid = new_valid;
+		model->headerDataChanged (Qt::Horizontal, 0, column_count->intValue () - 1);
+	}
+	changed ();
 }
 
 void RKMatrixInput::dimensionPropertyChanged (RKComponentPropertyBase *property) {
 	RK_TRACE (PLUGIN);
 
-	if (updating_dimensions) return;
 	if (allow_user_resize_rows && (property == row_count)) {
-		RK_ASSERT (false);
-		return;
+		RK_ASSERT (updating_tsv_data);
 	}
 	if (allow_user_resize_columns && (property == column_count)) {
-		RK_ASSERT (false);
-		return;
+		RK_ASSERT (updating_tsv_data);
 	}
 
 	if (property == row_count) {		// invalidates column caches
 		for (int i = columns.size () - 1; i >= 0; --i) {
+			columns[i].last_valid_row = qMin (columns[i].last_valid_row, row_count->intValue () - 1);
 			columns[i].cached_tab_joined_string.clear ();
 		}
 	}
 
 	model->layoutAboutToBeChanged ();
-	updateDataAndDimensions ();
+	updateAll ();
 	model->layoutChanged ();
 }
 
@@ -298,7 +293,7 @@ void RKMatrixInput::tsvPropertyChanged () {
 	}
 
 	updating_tsv_data = false;
-	updateDataAndDimensions ();
+	updateAll ();
 }
 
 bool RKMatrixInput::isValueValid (const QString& value) const {
@@ -314,8 +309,40 @@ bool RKMatrixInput::isValueValid (const QString& value) const {
 	}
 	if (!number_ok) return false;
 	if (val < min) return false;
-	return (val < max);
+	return (val <= max);
 }
+
+bool RKMatrixInput::isColumnValid (int column) {
+	if (column < 0) {
+		RK_ASSERT (false);
+		return false;
+	}
+
+	if (column >= columns.size ()) return (allow_missings || (row_count->intValue () == 0));
+
+	Column &col = columns[column];
+	if (col.last_valid_row >= (row_count->intValue () - 1)) {
+		return true;
+	} else if (allow_missings && (col.last_valid_row >= (col.storage.size () - 1))) {
+		return true;
+	} else {
+	}
+
+	int row = col.last_valid_row + 1;
+	for (; row < col.storage.size (); ++row) {
+		if (!isValueValid (col.storage[row])) {
+			col.last_valid_row = row - 1;
+			return false;
+		}
+	}
+	col.last_valid_row = row - 1;
+
+	if (col.last_valid_row < (row_count->intValue () - 1)) {
+		return allow_missings;
+	}
+	return true;
+}
+
 
 
 
@@ -377,7 +404,7 @@ QVariant RKMatrixInputModel::data (const QModelIndex& index, int role) const {
 	if ((role == Qt::DisplayRole) || (role == Qt::EditRole)) {
 		return QVariant (value);
 	} else if (role == Qt::BackgroundRole) {
-		if (!matrix->is_valid && !matrix->isValueValid (value)) return QVariant (QBrush (Qt::red));
+		if (!matrix->is_valid && !matrix->isValueValid (value)) return QVariant (Qt::red);
 	} else if ((role == Qt::ToolTipRole) || (role == Qt::StatusTipRole)) {
 		if (!matrix->is_valid && (value.isEmpty () && !matrix->allow_missings)) return QVariant (i18n ("Empty values are not allowed"));
 		if (!matrix->is_valid && !matrix->isValueValid (value)) return QVariant (i18n ("This value is not allowed, here"));
@@ -400,6 +427,11 @@ QVariant RKMatrixInputModel::headerData (int section, Qt::Orientation orientatio
 		else list = &vert_header;
 		if (section < list->size ()) return QVariant ((*list)[section]);
 		return QVariant (QString::number (section + 1));
+	} else if (orientation == Qt::Horizontal) {
+		if (section < matrix->column_count->intValue ()) {
+			if ((role == Qt::BackgroundRole) && !matrix->isColumnValid (section)) return QVariant (Qt::red);
+			if (((role == Qt::ToolTipRole) || (role == Qt::StatusTipRole)) && !matrix->isColumnValid (section)) return QVariant (i18n ("This column contains illegal values in some of its cells"));
+		}
 	}
 	return QVariant ();
 }
