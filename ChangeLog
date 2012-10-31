@@ -1,3 +1,4 @@
+- RKWard is now categorized as Science/Math/Numerical Analysis in its .desktop file
 - Fixed: Device history was not working with more recent versions of ggplot2 		(TODO: find out, which version broke it, exactly)
 - Fixed: Option to include suggested packages in install was mis-labelled "install dependencies"
 - rk.set.output.html.file() gains argument to allow addition of custom content to the html header

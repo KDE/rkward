@@ -10,5 +10,5 @@ Exec=rkward -caption "%c" %i
 Terminal=false
 Type=Application
 DocPath=rkward/index.html
-Categories=Education;Science;Math;
+Categories=Science;Math;NumericalAnalysis
 # vi: encoding=utf-8
