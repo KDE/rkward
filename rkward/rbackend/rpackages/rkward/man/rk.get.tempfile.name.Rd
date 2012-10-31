@@ -16,7 +16,8 @@
   rk.set.output.html.file(x,
     additional.header.contents = getOption("rk.html.header.additions"))
 
-  rk.flush.output(x = rk.get.output.html.file())
+  rk.flush.output(x = rk.get.output.html.file(),
+    ask = TRUE)
 }
 \arguments{
   \item{prefix}{a string, used as a filename prefix when
@@ -32,6 +33,9 @@
   string to add to the HTML header section.  This could be
   scripts or additional CSS definitions, for example. Note
   that}
+
+  \item{ask}{Logical: Whether to ask before flushing the
+  output file.}
 }
 \value{
   \code{rk.get.tempfile.name},

@@ -29,6 +29,7 @@
 #' @param additional.header.contents NULL or an additional string to add to the HTML header section.
 #'        This could be scripts or additional CSS definitions, for example. Note that
 #'        @em nothing will be added to the header, if the file already exists.
+#' @param ask Logical: Whether to ask before flushing the output file.
 #' @return \code{rk.get.tempfile.name}, \code{rk.get.output.html.file}, and
 #'   \code{rk.get.workspace.url} return a string while
 #'   \code{rk.set.output.html.file} returns \code{NULL}.
@@ -161,7 +162,10 @@
 
 #' @export
 #' @rdname rk.get.tempfile.name
-"rk.flush.output" <- function (x=rk.get.output.html.file ()) {
-   unlink (file)
-   rk.set.output.html.file (file)
+"rk.flush.output" <- function (x=rk.get.output.html.file (), ask=TRUE) {
+	if (isTRUE (ask)) {
+		if (!rk.show.question (paste ("Do you really want to flush the output file (", x, ")?\nIt will not be possible to restore it."))) stop ("Aborted by user")
+	}
+	unlink (x)
+	rk.set.output.html.file (x)
 }
