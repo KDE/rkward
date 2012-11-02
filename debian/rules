@@ -10,6 +10,12 @@
 DPKG_EXPORT_BUILDFLAGS = 1
 -include /usr/share/dpkg/buildflags.mk
 
+CFLAGS += -Wall
+
+# Workaround for cmake not handling CPPFLAGS (https://wiki.debian.org/HardeningWalkthrough):
+CFLAGS += $(CPPFLAGS)
+CXXFLAGS += $(CPPFLAGS)
+
 # These are used for cross-compiling and for saving the configure script
 # from having to guess our platform (since we know it already)
 DEB_HOST_GNU_TYPE   ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
@@ -19,8 +25,6 @@ DEB_BUILD_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
 RVERS = $(shell dpkg-query -W --showformat='$${Version}' r-base-core)
 RMAJOR = $(shell echo $(RVERS) | awk -F. '{print $$1}')
 RMINOR = $(shell echo $(RVERS) | awk -F. '{print $$2}')
-
-CFLAGS = -Wall -g
 
 ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
 	CFLAGS += -O0
@@ -51,6 +55,9 @@ config.status:
 		-DKDE4_USE_ALWAYS_FULL_RPATH=false \
 		-DCMAKE_CXX_FLAGS="$(CXXFLAGS)" \
 		-DCMAKE_C_FLAGS="$(CFLAGS)" \
+		-DCMAKE_EXE_LINKER_FLAGS="$(LDFLAGS)" \
+		-DCMAKE_MODULE_LINKER_FLAGS="$(LDFLAGS)" \
+		-DCMAKE_SHARED_LINKER_FLAGS="$(LDFLAGS)" \
 		-DCMAKE_VERBOSE_MAKEFILE=ON \
 		-DKDE4_DISABLE_MULTIMEDIA=ON \
 		-DR_EXECUTABLE=/usr/bin/R/ \
