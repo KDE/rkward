@@ -1,3 +1,4 @@
+- Added GUI element for entering matrix or vector data in plugins		TODO: cut / copy / paste, cursor placement
 - Added utiltity function rk.flush.output()			TODO: Output Window->Flush Output should use this
 - RKWard is now categorized as Science/Math/Numerical Analysis in its .desktop file
 - Fixed: Device history was not working with more recent versions of ggplot2 		(TODO: find out, which version broke it, exactly)

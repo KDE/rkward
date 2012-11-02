@@ -99,7 +99,7 @@ RKMatrixInput::~RKMatrixInput () {
 }
 
 QString RKMatrixInput::value (const QString& modifier) {
-	if (modifier == "cbind") {
+	if (modifier.isEmpty () || (modifier == "cbind")) {
 		QStringList ret;
 		for (int i = 0; i < column_count->intValue (); ++i) {
 			ret.append ("\tc (" + makeColumnString (i, ", ") + ")");
@@ -110,7 +110,7 @@ QString RKMatrixInput::value (const QString& modifier) {
 	bool ok;
 	int col = modifier.toInt (&ok);
 	if ((col >= 0) && ok) return makeColumnString (col, "\t", false);
-	return tsv_data->value (modifier);
+	return ("Modifier '" + modifier + "' not recognized\n"); 
 }
 
 bool RKMatrixInput::expandStorageForColumn (int column) {

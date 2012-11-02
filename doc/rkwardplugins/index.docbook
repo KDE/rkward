@@ -76,7 +76,7 @@ This is a guide to writing plugins for &rkward;.
 
 	<note>
 		<para>
-			Documentation as of &rkward; release 0.5.8.
+			Documentation as of &rkward; release 0.6.1.
 		</para>
 	</note>
 	<para>
@@ -2255,6 +2255,7 @@ local({
 <sect2 id="activeelements"><title>Active elements</title>
 <para>All elements in this section accept an attribute id="identifierstring". This attribute is required for all elements. Only the additional attributes are listed. The id-string may not contain "." (dots).</para>
 <variablelist>
+
 <varlistentry>
 <term>&lt;varselector&gt;</term>
 <listitem><para>Provides a list of available objects from which the user can select one or more. Requires one or more &lt;varslot&gt;s as a counterpart to be useful. Attributes:
@@ -2265,6 +2266,7 @@ local({
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
+
 <varlistentry>
 <term>&lt;varslot&gt;</term>
 <listitem><para>Used in conjunction with a "varselector" to allow the user to select one or more variables. Attributes:
@@ -2319,6 +2321,7 @@ local({
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
+
 <varlistentry>
 <term>&lt;radio&gt;</term>
 <listitem><para>Defines a group of radio-exclusive buttons (only one can be selected at a time). Requires at least two &lt;option&gt;-tags as direct children. No other tags are allowed as children. Attributes:
@@ -2329,6 +2332,7 @@ local({
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
+
 <varlistentry>
 <term>&lt;dropdown&gt;</term>
 <listitem><para>Defines a group of options of which one and only one can be selected at the same time, using a dropdown list. This is functionally equivalent to a &lt;radio&gt;, but looks different. Requires at least two &lt;option&gt;-tags as direct children. No other tags are allowed as children. Attributes:
@@ -2339,6 +2343,7 @@ local({
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
+
 <varlistentry>
 <term>&lt;option&gt;</term>
 <listitem><para>Can only be used as a direct child of a &lt;radio&gt; or &lt;dropdown&gt; element. Represents one selectable option in a radio control or dropdown list. Specifying the "id" parameter for the &lt;option&gt; elements is optional (and in fact it's recommended, not to set an "id", unless you plan to really use it to disable single options). Only the parent element (&lt;radio&gt; or &lt;dropdown&gt;) needs one. Attributes:
@@ -2357,6 +2362,7 @@ local({
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
+
 <varlistentry>
 <term>&lt;checkbox&gt;</term>
 <listitem><para>Defines a checkbox, i.e. a single option that can either be set to on or off. Attributes:
@@ -2379,12 +2385,14 @@ local({
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
+
 <varlistentry>
 <term>&lt;frame&gt;</term>
 <listitem><para>The frame element is generally used as a pure layout element, and is listed in the section on <link linkend="layoutelements">layout elements</link>. However, it can also be
 made checkable, thus acting like a simple checkbox at the same time.
 </para></listitem>
 </varlistentry>
+
 <varlistentry>
 <term>&lt;input&gt;</term>
 <listitem><para>Defines a free text input field. Attributes:
@@ -2407,6 +2415,66 @@ made checkable, thus acting like a simple checkbox at the same time.
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
+
+<varlistentry>
+<term>&lt;matrix&gt;</term>
+<listitem><para>A table for entering matrix data (or vectors) in the GUI. <note><para>This input element is <emphasis>not</emphasis> optimized for entering editing large amounts of data. While there is no strict limit on the size of a &lt;matrix&gt;, in general it should not exceed around ten rows / columns. If you expect larger data, allow users to select it as an R object (which may be a good idea as an alternative option, in almost <emphasis>every</emphasis> instance where you use a matrix element).</para></note> Attributes:
+	<variablelist>
+	<varlistentry>
+	<term>&lt;label&gt;</term>
+	<listitem><para>Label for the table (required)</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>&lt;mode&gt;</term>
+	<listitem><para>One of "integer", "real", or "string". The type of data that will be accepted in the table (required)</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>&lt;min&gt;</term>
+	<listitem><para>Minimum acceptable value (for matrices of type "integer" or "real") (optional, defaults to the smallest representable value)</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>&lt;max&gt;</term>
+	<listitem><para>Maximum acceptable value (for matrices of type "integer" or "real") (optional, defaults to the largest representable value)</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>&lt;allow_missings&gt;</term>
+	<listitem><para>Whether missing (empty) values are allowed in the matrix. This is implied for matrices or mode "string"  (optional, defaults to false).</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>&lt;allow_user_resize_columns&gt;</term>
+	<listitem><para>When set to true, the user can add columns by typing on the rightmost (inactive) cells  (optional, defaults to true).</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>&lt;allow_user_resize_rows&gt;</term>
+	<listitem><para>When set to true, the user can add rows by typing on the bottommost (inactive) cells  (optional, defaults to true).</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>&lt;rows&gt;</term>
+	<listitem><para>Number of rows in the matrix. Has no effect for allow_user_resize_rows="true". <note><para>This can also be controlled by setting the "rows" property".</para></note> (optional, defaults to 2).</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>&lt;columns&gt;</term>
+	<listitem><para>Number of columns in the matrix. Has no effect for allow_user_resize_columns="true". <note><para>This can also be controlled by setting the "columns" property".</para></note> (optional, defaults to 2).</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>&lt;fixed_width&gt;</term>
+	<listitem><para>Force the GUI element to stay at its initial width. Do not use in combindation with matrices, where the number of columns may change in any way. Useful, esp. when creating a vector input element (rows="1"). (optional, defaults to false).</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>&lt;fixed_height&gt;</term>
+	<listitem><para>Force the GUI element to stay at its initial height. Do not use in combindation with matrices, where the number of rows may change in any way. Useful, esp. when creating a vector input element (columns="1"). (optional, defaults to false).</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>&lt;horiz_headers&gt;</term>
+	<listitem><para>Strings to ues for the horiztonal header, separated by ";". (optional, defaults to column number).</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>&lt;vert_headers&gt;</term>
+	<listitem><para>Strings to ues for the vertical header, separated by ";". (optional, defaults to row number).</para></listitem>
+	</varlistentry>
+	</variablelist></para></listitem>
+</varlistentry>
+
 <varlistentry>
 <term>&lt;browser&gt;</term>
 <listitem><para>An element designed to select a single filename (or directory name). Note that this field will take any string, even though it is meant to be used for files, only:
@@ -2437,6 +2505,7 @@ made checkable, thus acting like a simple checkbox at the same time.
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
+
 <varlistentry>
 <term>&lt;saveobject&gt;</term>
 <listitem><para>An element designed to select the name of an &r; object to save to (i.e. generally not already existing, in contrast to a varslot):
@@ -2463,6 +2532,7 @@ made checkable, thus acting like a simple checkbox at the same time.
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
+
 <varlistentry>
 <term>&lt;spinbox&gt;</term>
 <listitem><para>A spinbox in which the user can select a numeric value, using either direct keyboard input or small up/down arrows. Attributes:
@@ -2497,6 +2567,7 @@ made checkable, thus acting like a simple checkbox at the same time.
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
+
 <varlistentry>
 <term>&lt;formula&gt;</term>
 <listitem><para>This advanced element allows the user to select a formula/set of interactions from selected variables. For instance for a GLM, this element can be used to allow the user to specify the interaction-terms in the model. Attributes:
@@ -2511,6 +2582,7 @@ made checkable, thus acting like a simple checkbox at the same time.
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
+
 <varlistentry>
 <term>&lt;embed&gt;</term>
 <listitem><para>Embed a different plugin into this one (see <link linkend="embedding">chapter on embedding</link>). Attributes:
@@ -2529,6 +2601,7 @@ made checkable, thus acting like a simple checkbox at the same time.
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
+
 <varlistentry>
 <term>&lt;preview&gt;</term>
 <listitem><para>Checkbox to toggle preview functionality (see <link linkend="preview_plots">chapter on graph previews</link>). Attributes:
@@ -2658,6 +2731,7 @@ made checkable, thus acting like a simple checkbox at the same time.
 <para>
 In addition to this, some elements have additional properties you can connect to. Most active elements also have a "default" property whose value will be returned on calls to getValue ("..."), if no specific property was named, as described below.
 </para>
+
 <variablelist>
 <varlistentry>
 <term>&lt;text&gt;</term>
@@ -2669,6 +2743,7 @@ In addition to this, some elements have additional properties you can connect to
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
+
 <varlistentry>
 <term>&lt;varselector&gt;</term>
 <listitem><para>No default property
@@ -2683,6 +2758,7 @@ In addition to this, some elements have additional properties you can connect to
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
+
 <varlistentry>
 <term>&lt;varslot&gt;</term>
 <listitem><para>Default property is "available"
@@ -2701,6 +2777,7 @@ In addition to this, some elements have additional properties you can connect to
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
+
 <varlistentry>
 <term>&lt;radio&gt;</term>
 <listitem><para>Default property is "string"
@@ -2715,6 +2792,7 @@ In addition to this, some elements have additional properties you can connect to
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
+
 <varlistentry>
 <term>&lt;dropdown&gt;</term>
 <listitem><para>Default property is "string"
@@ -2729,6 +2807,7 @@ In addition to this, some elements have additional properties you can connect to
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
+
 <varlistentry>
 <term>&lt;option&gt;</term>
 <listitem><para>No default property. "enabled" is the *only* property. It does not have the "visible" or "required" properties.
@@ -2739,6 +2818,7 @@ In addition to this, some elements have additional properties you can connect to
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
+
 <varlistentry>
 <term>&lt;checkbox&gt;</term>
 <listitem><para>Default property is "state"
@@ -2749,6 +2829,7 @@ In addition to this, some elements have additional properties you can connect to
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
+
 <varlistentry>
 <term>&lt;frame&gt;</term>
 <listitem><para>Default property is "checked", if - and only if - the frame is checkable. For non-checkable frames, there is no default property.
@@ -2759,6 +2840,7 @@ In addition to this, some elements have additional properties you can connect to
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
+
 <varlistentry>
 <term>&lt;input&gt;</term>
 <listitem><para>Default property is "text"
@@ -2769,6 +2851,34 @@ In addition to this, some elements have additional properties you can connect to
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
+
+<varlistentry>
+	<term>&lt;matrix&gt;</term>
+	<listitem><para>Default property is "cbind".
+	<variablelist>
+		<varlistentry>
+			<term>rows</term>
+			<listitem><para>Number of rows in the matrix (integer). If the matrix allows the user to add / remove rows, this property should be treated as read-only. Otherwise, changing it, will change the size of the matrix.</para></listitem>
+		</varlistentry>
+		<varlistentry>
+			<term>columns</term>
+			<listitem><para>Number of columns in the matrix (integer). If the matrix allows the user to add / remove columns, this property should be treated as read-only. Otherwise, changing it, will change the size of the matrix.</para></listitem>
+		</varlistentry>
+		<varlistentry>
+			<term>tsv</term>
+			<listitem><para>Data in the matrix in tsv format (string). Note that compared to the usual tsv layout, <emphasis>columns</emphasis>, not rows, are separated by newline characters, and cells within a column are separated by tabulator characters.</para></listitem>
+		</varlistentry>
+		<varlistentry>
+			<term>0,1,2...</term>
+			<listitem><para>The data from a single column (0 for leftmost column), separated by tabulator characters (string).</para></listitem>
+		</varlistentry>
+		<varlistentry>
+			<term>cbind</term>
+			<listitem><para>Data in a format suitable for pasting to R, wrapped in a cbind statement (string).</para></listitem>
+		</varlistentry>
+	</variablelist></para></listitem>
+</varlistentry>
+
 <varlistentry>
 <term>&lt;browser&gt;</term>
 <listitem><para>Default property is "selection"
@@ -2779,6 +2889,7 @@ In addition to this, some elements have additional properties you can connect to
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
+
 <varlistentry>
 <term>&lt;saveobject&gt;</term>
 <listitem><para>Default property is "selection"
@@ -2801,6 +2912,7 @@ In addition to this, some elements have additional properties you can connect to
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
+
 <varlistentry>
 <term>&lt;spinbox&gt;</term>
 <listitem><para>Default property is either "int" or "real" depending on the spinbox's mode
@@ -2815,6 +2927,7 @@ In addition to this, some elements have additional properties you can connect to
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
+
 <varlistentry>
 <term>&lt;formula&gt;</term>
 <listitem><para>Default property is "model"
@@ -2841,6 +2954,7 @@ In addition to this, some elements have additional properties you can connect to
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
+
 <varlistentry>
 <term>&lt;embed&gt;</term>
 <listitem><para>No default property
@@ -2851,6 +2965,7 @@ In addition to this, some elements have additional properties you can connect to
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
+
 <varlistentry>
 <term>&lt;preview&gt;</term>
 <listitem><para>Default property is "state"
@@ -2861,6 +2976,7 @@ In addition to this, some elements have additional properties you can connect to
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
+
 <varlistentry>
 <term>&lt;convert&gt;</term>
 <listitem><para>This element (used in the &lt;logic&gt; section) is special, in that is technically *is* a property, instead of just holding one or more properties. It is of boolean kind. Note that useful modifiers of this property (as of all boolean properties) are "not" and "numeric" (see <link linkend="propertytypes">types of properties</link>)</para></listitem>
