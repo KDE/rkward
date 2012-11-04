@@ -65,19 +65,9 @@ Now let's see how these nodes can be generated using the \X{} package. Single no
 	\end{Soutput}
 \end{Schunk}
 
-As you see, you will see XML code in the console. But what this function returns is actually an R object of class \texttt{XiMpLe.node}, so what you see is an interpretation of that object, done by the \texttt{show()} method for objects of this type. If you would like to write the XML code to a file, you need to call \texttt{pasteXML()}, which will return a character string:
+As you see, you will see XML code in the console. But what this function returns is actually an R object of class \texttt{XiMpLe.node}, so what you see is an interpretation of that object, done by the \texttt{show()} method for objects of this type (see section \ref{Writing XML files} on page \pageref{Writing XML files}).
 
-\begin{Schunk}
-	\begin{Sinput}
-> useless.node <- XMLNode("useless")
-> pasteXML(useless.node)
-	\end{Sinput}
-	\begin{Soutput}
-[1] "<useless />\n"
-	\end{Soutput}
-\end{Schunk}
-
-The second in the example above node has an attribute. Attributes can be specified with the \texttt{attrs} argument, which expects a named list:
+The second node in the example above has an attribute. Attributes can be specified with the \texttt{attrs} argument, which expects a named list:
 
 \begin{Schunk}
 	\begin{Sinput}
@@ -115,7 +105,9 @@ Of course this is also the place to provide our node with the text value:
 + attrs=list(foo="bar"))
 	\end{Sinput}
 	\begin{Soutput}
-<other foo="bar" />
+<other foo="bar">
+  this text is the child of the "other" node.
+</other>
 	\end{Soutput}
 \end{Schunk}
 
@@ -163,5 +155,105 @@ OK, that's single nodes. In most cases, you want to have nested nodes which comb
 \end{Schunk}
 
 It should be noted, however, that \X{} doesn't perform even the slightest checks on what you provide as \texttt{DOCTYPE} or \texttt{xml} attributes.
+
+\section{Writing XML files}
+\label{Writing XML files}
+
+We've learned earlier that \texttt{XiMpLe} objects do not contain the actual XML code. If you would like to write the XML code to a file, you need to call \texttt{pasteXML()}, which will translate the R objects into a character string:
+
+\begin{Schunk}
+	\begin{Sinput}
+> useless.node <- XMLNode("useless")
+> pasteXML(useless.node)
+	\end{Sinput}
+	\begin{Soutput}
+[1] "<useless />\n"
+	\end{Soutput}
+\end{Schunk}
+
+Now let's write the XHTML code we created in the previous section to a file called \texttt{example.html}:
+
+\begin{Schunk}
+	\begin{Sinput}
+> cat(pasteXML(sample.XML.tree), file="example.html")
+	\end{Sinput}
+\end{Schunk}
+
+And that's it. The method \texttt{pasteXML()} has some arguments to configure the output, like \texttt{shine}, which sets the level of code formatting. If you set \texttt{shine=0}, no formatting is done, not even newlines.
+
+\section{Reading XML files}
+
+We've also just created an example file we can read back in, to see how XML parsing looks like with \X{}:
+
+\begin{Schunk}
+	\begin{Sinput}
+> sample.XML.parsed <- parseXMLTree("example.html")
+	\end{Sinput}
+\end{Schunk}
+
+\texttt{parseXMLTree()} can also digest XML directly if it comes in single character strings or vectors. You only need to tell it that you're not providing a file name this time:
+
+\begin{Schunk}
+	\begin{Sinput}
+> my.XML.stuff <- c("<start>here it begins","</start>")
+> parseXMLTree(my.XML.stuff, object=TRUE)
+\end{Sinput}
+	\begin{Soutput}
+<start>
+  here it begins
+</start>
+	\end{Soutput}
+\end{Schunk}
+
+\section{Mining nodes}
+
+Reading and writing XML files is neat, but what if you need to aquire only certain parts of, say, a parsed XML file? For example, what if we only needed the URL of the \texttt{href} attribute in our XHTML example?
+
+That's a job for \texttt{node()}. This method can be used to extract parts from XML trees. The branch you'd like to get can be defined by a list of node names, and \texttt{node()} will follow down this hierarchy and then return what nodes are to be found below that. You can also specify that you don't want the whole node(s), but only the attributes:
+
+\begin{Schunk}
+	\begin{Sinput}
+> node(sample.XML.tree, node=list("html","body","a"), what="attributes")
+	\end{Sinput}
+	\begin{Soutput}
+$href
+[1] "http://example.com"
+
+$target
+[1] "_blank"
+	\end{Soutput}
+	\begin{Sinput}
+> node(sample.XML.tree, node=list("html","body","a"), what="value")
+	\end{Sinput}
+	\begin{Soutput}
+[1] "klick here!"
+	\end{Soutput}
+\end{Schunk}
+
+This way it's easy to get the value of all attributes or the link text. You can also change values with \texttt{node()}. Let's change the URL and remove the \texttt{target} attribute completely:
+
+\begin{Schunk}
+	\begin{Sinput}
+> node(sample.XML.tree, node=list("html","body","a"),
++ what="attributes")$href <- "http://example.com/foobar"
+> node(sample.XML.tree, node=list("html","body","a"),
++ what="attributes")$target <- NULL
+> sample.XML.tree
+	\end{Sinput}
+	\begin{Soutput}
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+  </head>
+  <body>
+    <a href="http://example.com/foobar">
+      klick here!
+    </a>
+  </body>
+</html>
+	\end{Soutput}
+\end{Schunk}
 
 \end{document}
