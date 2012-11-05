@@ -401,7 +401,7 @@ XML.def <- function(tag, get=FALSE){
 ## function XML.tagName()
 XML.tagName <- function(tag){
 	tag.names <- sapply(tag, function(this.tag){
-			tagName <- gsub("<([[:space:]!?/]*)([^[:space:]>]+).*", "\\2", this.tag, perl=TRUE)
+			tagName <- gsub("<([[:space:]!?/]*)([^[:space:]>/]+).*", "\\2", this.tag, perl=TRUE)
 			return(tagName)
 		})
 	names(tag.names) <- NULL
@@ -439,7 +439,7 @@ XML.nodes <- function(single.tags, end.here=NA, start=1){
 	tag.no <- start
 	## uncomment to debug:
 	# cat(start,"\n")
-	while (tag.no < num.all.tags){
+	while (tag.no <= num.all.tags){
 		## uncomment to debug:
 		# time.spent <- system.time({
 		this.tag <- get("single.tags", envir=single.tags.env)[tag.no]

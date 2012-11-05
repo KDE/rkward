@@ -3,6 +3,12 @@ ChangeLog for package XiMpLe
 changes in version 0.03-16 (2012-10-30)
 added:
   - added examples to all functions
+  - added a vignette
+fixed:
+  - fixed dropping of last tag/text value if XML was incomplete, e.g., just
+    an excerpt of a full tree
+  - fixed handling of empty tags without space, e.g. "<br/>" instead of "<br
+    />"
 
 changes in version 0.03-15 (2012-10-26)
 fixed:
