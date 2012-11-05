@@ -211,12 +211,12 @@ pasteXMLAttr <- function(attr=NULL, tag=NULL, level=1, rename=NULL, shine=2, ind
 parseXMLAttr <- function(tag){
 	if(XML.doctype(tag)){
 		stripped.tag <- gsub("<!((?i)DOCTYPE)[[:space:]]+([^[:space:]]+)[[:space:]]*([^\"[:space:]]*)[[:space:]]*.*>",
-			"doctype=\"\\2\", id=\"\\3\"", tag)
+			"doctype=\"\\2\", decl=\"\\3\"", tag)
 		stripped.tag2 <- eval(parse(text=paste("c(",gsub("[^\"]*[\"]?([^\"]*)[\"]?[^\"]*", "\"\\1\",", tag),"NULL)")))
 		is.dtd <- grepl("\\.dtd", stripped.tag2)
 		doct.decl <- ifelse(sum(!is.dtd) > 0, paste(stripped.tag2[!is.dtd][1], sep=""), paste("", sep=""))
 		doct.ref <- ifelse(sum(is.dtd) > 0, paste(stripped.tag2[is.dtd][1], sep=""), paste("", sep=""))
-		parsed.list <- eval(parse(text=paste("list(", stripped.tag, ", decl=\"", doct.decl,"\"", ", refer=\"", doct.ref,"\")", sep="")))
+		parsed.list <- eval(parse(text=paste("list(", stripped.tag, ", id=\"", doct.decl,"\"", ", refer=\"", doct.ref,"\")", sep="")))
 	} else if(XML.endTag(tag) | XML.comment(tag) |XML.cdata(tag)){
 		# end tags, comments and CDATA don't have attributes
 		parsed.list <- ""

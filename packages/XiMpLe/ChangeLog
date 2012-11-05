@@ -1,14 +1,16 @@
 ChangeLog for package XiMpLe
 
-changes in version 0.03-16 (2012-10-30)
+changes in version 0.03-16 (2012-11-05)
 added:
   - added examples to all functions
   - added a vignette
 fixed:
   - fixed dropping of last tag/text value if XML was incomplete, e.g., just
     an excerpt of a full tree
-  - fixed handling of empty tags without space, e.g. "<br/>" instead of "<br
-    />"
+  - fixed handling of empty tags completely without space, e.g. "<br/>"
+    instead of "<br />"
+  - parsing error for DOCTYPE nodes mixed up elements and previously ignored
+    the "decl" value
 
 changes in version 0.03-15 (2012-10-26)
 fixed:

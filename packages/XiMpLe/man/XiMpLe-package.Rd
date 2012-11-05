@@ -9,7 +9,7 @@
 \details{
   \tabular{ll}{ Package: \tab XiMpLe\cr Type: \tab
   Package\cr Version: \tab 0.03-16\cr Date: \tab
-  2012-10-30\cr Depends: \tab R (>= 2.9.0),methods\cr
+  2012-11-05\cr Depends: \tab R (>= 2.9.0),methods\cr
   Enhances: \tab rkward\cr Encoding: \tab UTF-8\cr License:
   \tab GPL (>= 3)\cr LazyLoad: \tab yes\cr URL: \tab
   http://reaktanz.de/?c=hacking&s=XiMpLe\cr }

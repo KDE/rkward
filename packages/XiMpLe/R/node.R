@@ -2,6 +2,29 @@
 #'
 #' This method can be used to get parts of a parsed XML tree object, or to fill it with new values.
 #'
+#' @include XiMpLe.doc-class.R
+#' @include XiMpLe.node-class.R
+#' @include XiMpLe-internal.R
+#' @import methods
+#' @examples
+#' \dontrun{
+#' node(my.xml.tree, node=list("html","body"), what="attributes")
+#' node(my.xml.tree, node=list("html","head","title"), what="value") <- "foobar"
+#' }
+#' @docType methods
+#' @rdname node
+#' @export
+setGeneric("node", function(obj, node=list(), what=NULL, cond.attr=NULL, cond.value=NULL, element=NULL){standardGeneric("node")})
+
+# define class union to make life easier
+setClassUnion("XiMpLe.XML", members=c("XiMpLe.node", "XiMpLe.doc"))
+
+#' @rdname node
+#' @aliases
+#'		node,-methods
+#'		node,XiMpLe.doc-method
+#'		node,XiMpLe.node-method
+#'		node,XiMpLe.XML-method
 #' @param obj An object of class \code{\link[XiMpLe:XiMpLe.doc-class]{XiMpLe.doc}} or
 #'		\code{\link[XiMpLe:XiMpLe.node-class]{XiMpLe.node}}.
 #' @param node A list of node names (or their numeric values), where each element is
@@ -17,29 +40,6 @@
 #'		against the value between a pair of tags.
 #' @param element A character string naming one list element of the node slot. If \code{NULL}, all
 #'		elements will be returned.
-#' @include XiMpLe.doc-class.R
-#' @include XiMpLe.node-class.R
-#' @include XiMpLe-internal.R
-#' @import methods
-#' @aliases
-#'		node,XiMpLe.doc-method
-#'		node,XiMpLe.node-method
-#'		node,XiMpLe.XML-method
-#'		node<-
-#'		node<-,XiMpLe.doc-method
-#'		node<-,XiMpLe.node-method
-#'		node<-,XiMpLe.XML-method
-#' @examples
-#' \dontrun{
-#' node(my.xml.tree, node=list("html","body"), what="attributes")
-#' node(my.xml.tree, node=list("html","head","title"), what="value") <- "foobar"
-#' }
-#' @export
-setGeneric("node", function(obj, node=list(), what=NULL, cond.attr=NULL, cond.value=NULL, element=NULL){standardGeneric("node")})
-
-# define class union to make life easier
-setClassUnion("XiMpLe.XML", members=c("XiMpLe.node", "XiMpLe.doc"))
-
 setMethod("node",
 	signature(obj="XiMpLe.XML"),
 	function(obj, node=list(), what=NULL, cond.attr=NULL, cond.value=NULL, element=NULL){
@@ -161,6 +161,12 @@ setMethod("node",
 #' @export
 setGeneric("node<-", function(obj, node=list(), what=NULL, cond.attr=NULL, cond.value=NULL, element=NULL, value){standardGeneric("node<-")})
 
+#' @rdname node
+#' @aliases
+#'		node<-,-methods
+#'		node<-,XiMpLe.doc-method
+#'		node<-,XiMpLe.node-method
+#'		node<-,XiMpLe.XML-method
 setMethod("node<-",
 	signature(obj="XiMpLe.XML"),
 	function(obj, node=list(), what=NULL, cond.attr=NULL, cond.value=NULL, element=NULL, value){

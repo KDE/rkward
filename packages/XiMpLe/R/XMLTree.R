@@ -6,7 +6,8 @@
 #'		\code{\link[XiMpLe:XiMpLe.node-class]{XiMpLe.node}} or character strings,
 #'		which are treated as simple text values.
 #' @param xml A named list, XML declaration of the XML tree. Currently just pasted, no checking is done.
-#' @param dtd A named list, doctype definition of the XML tree. Valid elements are \code{doctype}, \code{id} and \code{refer}.
+#' @param dtd A named list, doctype definition of the XML tree. Valid elements are \code{doctype} (root element), \code{decl}
+#' ("PUBLIC" or "SYSTEM"), \code{id} (the identifier) and \code{refer} (URI to .dtd).
 #'		Currently just pasted, no checking is done.
 #' @param .children Alternative way of specifying children, if you have them already as a list.
 #' @return An object of class \code{\link[XiMpLe:XiMpLe.doc-class]{XiMpLe.doc}}
@@ -23,7 +24,7 @@
 #'   sample.XML.body))
 #' sample.XML.tree <- XMLTree(sample.XML.html,
 #'   xml=list(version="1.0", encoding="UTF-8"),
-#'   dtd=list(doctype="html PUBLIC",
+#'   dtd=list(doctype="html", decl="PUBLIC",
 #'     id="-//W3C//DTD XHTML 1.0 Transitional//EN",
 #'     refer="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"))
 

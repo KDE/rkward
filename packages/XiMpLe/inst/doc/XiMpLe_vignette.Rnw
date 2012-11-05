@@ -20,7 +20,9 @@ This package provides basic tools for parsing and generating XML into and from R
 
 Before I even begin, I would like to stress that \X{} can \textit{not} replace the \texttt{XML} package, and it is not supposed to. It has only a hand full of functions, therefore it can only do so much. Probably the most noteworthy missing feature in this package is any real DTD support. If you need that, you can stop reading here. Another problem is speed -- \X{} is written in pure R, and it's painfully slow with large XML trees. You won't notice this if you're only dealing with portions of some kilobytes, but if you need to parse really huge documents, it can take ages to finish.
 
-Historically, this package was written for exactly one purpose: I wanted to be able to read and write the XML documents of \texttt{RKWard}\footnote{\url{http://rkward.sourceforge.net}}, because I was about to write an R package for scripting plugins for this R GUI. I actually had started another project soon before, using the \texttt{XML} package as a dependency, but soon got complaints from Windows users. As it turned out, that package was not available for Windows, because somehow it couldn't be build automatically. I realised that I only needed a small subset of its features anyway, so I figured it might be the easiest way to quickly implement those features myself. Instead of hiding them in the internals of what eventually became the \texttt{rkwarddev} package, I then started working on this package first. And well, ''quicly'' was rather optimistic... but since I'm happily using \X{} in other packages as well (like \texttt{roxyPackage}), I'm satisfied it was worth it.
+Historically, this package was written for exactly one purpose: I wanted to be able to read and write the XML documents of \texttt{RKWard}\footnote{\url{http://rkward.sourceforge.net}}, because I was about to write an R package for scripting plugins for this R GUI. I actually had started another project shortly before, using the \texttt{XML} package as a dependency, but soon got complaints from Windows users. As it turned out, that package was not available for Windows, because somehow it couldn't be built automatically. When I realised that I only needed a small subset of its features anyway, I figured it might be easiest to quickly implement those features myself.
+
+Instead of hiding them in the internals of what eventually became the \texttt{rkwarddev}\footnote{\url{http://rkward.sourceforge.net/R/pckg/rkwarddev}} package, I then started working on this package first. And well, ``quickly'' was rather optimistic... but since I'm happily using \X{} in other packages as well (like \texttt{roxyPackage}\footnote{\url{http://reaktanz.de/?c=hacking\&s=roxyPackage}}), I'm satisfied it was worth it.
 
 So now you know. If you need a full-featured package to parse or generate XML in R, try the \texttt{XML} package. Otherwise, keep on reading.
 
@@ -38,7 +40,7 @@ Basically, \X{} can do these things for you:
 That about covers it. XML nodes can of course be nested to construct complex trees, but that's all. Let's look at some examples.
 
 \section{Naming conventions}
-Let's quickly explain what we'll be talking about here. If you're parsing an XML document, it will contain an \textbf{XML tree}. This tree is made up of \textbf{XML nodes}. A node is indicated by pointed brackets, \textit{must} have a \textbf{name}, \textit{can} have \textbf{attributes}, and is either \textbf{empty} or not. Nodes can be nested, where nodes inside a node are its \textbf{child nodes}.
+Let's quickly explain what we'll be talking about here. If you're parsing an XML document, it will contain an \textbf{XML tree}. This tree is made up of \textbf{XML nodes}. A node is indicated by arrow brackets, \textit{must} have a \textbf{name}, \textit{can} have \textbf{attributes}, and is either \textbf{empty} or not. Nodes can be nested, where nodes inside a node are its \textbf{child nodes}.
 
 \begin{Schunk}
 	\begin{Sinput}
@@ -65,7 +67,7 @@ Now let's see how these nodes can be generated using the \X{} package. Single no
 	\end{Soutput}
 \end{Schunk}
 
-As you see, you will see XML code in the console. But what this function returns is actually an R object of class \texttt{XiMpLe.node}, so what you see is an interpretation of that object, done by the \texttt{show()} method for objects of this type (see section \ref{Writing XML files} on page \pageref{Writing XML files}).
+As you see, you will be shown XML code on the console. But what this function returns is actually an R object of class \texttt{XiMpLe.node}, so what you see is an \textit{interpretation} of that object, made by the \texttt{show()} method for objects of this type (see section \ref{Writing XML files} on page \pageref{Writing XML files} on how to export XML to files).
 
 The second node in the example above has an attribute. Attributes can be specified with the \texttt{attrs} argument, which expects a named list:
 
@@ -78,7 +80,7 @@ The second node in the example above has an attribute. Attributes can be specifi
 	\end{Soutput}
 \end{Schunk}
 
-So, by default, as long as our node doesn't have any children, it's assumed to be an empty node. To force it into a non-empty node (i.\,e., opening and closing tag) even without content, we'd have to provide an empty character string as its child. Child nodes can be provided in two ways -- either one by one via the ''$\dots$'' argument, or as one list via the \texttt{.children} argument:
+So, by default, as long as our node doesn't have any children, it's assumed to be an empty node. To force it into a non-empty node (i.\,e., opening and closing tag) even without content, we'd have to provide an empty character string as its child. Child nodes can be provided in two ways -- either one by one via the ``$\dots$'' argument, or as one list via the \texttt{.children} argument:
 
 \begin{Schunk}
 	\begin{Sinput}
@@ -111,7 +113,7 @@ Of course this is also the place to provide our node with the text value:
 	\end{Soutput}
 \end{Schunk}
 
-But how about the comments? Well, \X{} does detect some special node names, one being ''!--'' to indicate a comment:
+But how about the comments? Well, \X{} does detect some special node names, one being ``!-\,-'' to indicate a comment:
 
 \begin{Schunk}
 	\begin{Sinput}
@@ -133,7 +135,7 @@ OK, that's single nodes. In most cases, you want to have nested nodes which comb
 + sample.XML.body)
 > sample.XML.tree <- XMLTree(sample.XML.html,
 + xml=list(version="1.0", encoding="UTF-8"),
-+ dtd=list(doctype="html PUBLIC",
++ dtd=list(doctype="html", decl="PUBLIC",
 + id="-//W3C//DTD XHTML 1.0 Transitional//EN",
 + refer="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"))
 > sample.XML.tree
@@ -159,7 +161,7 @@ It should be noted, however, that \X{} doesn't perform even the slightest checks
 \section{Writing XML files}
 \label{Writing XML files}
 
-We've learned earlier that \texttt{XiMpLe} objects do not contain the actual XML code. If you would like to write the XML code to a file, you need to call \texttt{pasteXML()}, which will translate the R objects into a character string:
+We've learned earlier that \texttt{XiMpLe} objects do not contain the actual XML code. If you would like to write the XML code to a file, you should use \texttt{pasteXML()}, which will translate the R objects into a character string:
 
 \begin{Schunk}
 	\begin{Sinput}
@@ -191,7 +193,7 @@ We've also just created an example file we can read back in, to see how XML pars
 	\end{Sinput}
 \end{Schunk}
 
-\texttt{parseXMLTree()} can also digest XML directly if it comes in single character strings or vectors. You only need to tell it that you're not providing a file name this time:
+\texttt{parseXMLTree()} can also digest XML directly if it comes in single character strings or vectors. You only need to tell it that you're not providing a file name this time, using the \texttt{object} argument:
 
 \begin{Schunk}
 	\begin{Sinput}
@@ -209,7 +211,7 @@ We've also just created an example file we can read back in, to see how XML pars
 
 Reading and writing XML files is neat, but what if you need to aquire only certain parts of, say, a parsed XML file? For example, what if we only needed the URL of the \texttt{href} attribute in our XHTML example?
 
-That's a job for \texttt{node()}. This method can be used to extract parts from XML trees. The branch you'd like to get can be defined by a list of node names, and \texttt{node()} will follow down this hierarchy and then return what nodes are to be found below that. You can also specify that you don't want the whole node(s), but only the attributes:
+That's a job for \texttt{node()}. This method can be used to extract parts from XML trees, once they are \X{} objects. The branch you'd like to get can be defined by a list of node names, and \texttt{node()} will follow down this hierarchy and then return what nodes are to be found below that. You can also specify that you don't want the whole node(s), but only the attributes:
 
 \begin{Schunk}
 	\begin{Sinput}

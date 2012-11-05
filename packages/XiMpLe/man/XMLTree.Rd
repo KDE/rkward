@@ -16,9 +16,10 @@
   Currently just pasted, no checking is done.}
 
   \item{dtd}{A named list, doctype definition of the XML
-  tree. Valid elements are \code{doctype}, \code{id} and
-  \code{refer}.  Currently just pasted, no checking is
-  done.}
+  tree. Valid elements are \code{doctype} (root element),
+  \code{decl} ("PUBLIC" or "SYSTEM"), \code{id} (the
+  identifier) and \code{refer} (URI to .dtd).  Currently
+  just pasted, no checking is done.}
 
   \item{.children}{Alternative way of specifying children,
   if you have them already as a list.}
@@ -39,7 +40,7 @@ sample.XML.html <- XMLNode("html", .children=list(XMLNode("head", ""),
   sample.XML.body))
 sample.XML.tree <- XMLTree(sample.XML.html,
   xml=list(version="1.0", encoding="UTF-8"),
-  dtd=list(doctype="html PUBLIC",
+  dtd=list(doctype="html", decl="PUBLIC",
     id="-//W3C//DTD XHTML 1.0 Transitional//EN",
     refer="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"))
 }

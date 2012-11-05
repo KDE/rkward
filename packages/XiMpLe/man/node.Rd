@@ -1,6 +1,9 @@
+\docType{methods}
 \name{node}
 \alias{node}
 \alias{node<-}
+\alias{node<-,-methods}
+\alias{node,-methods}
 \alias{node<-,XiMpLe.doc-method}
 \alias{node,XiMpLe.doc-method}
 \alias{node<-,XiMpLe.node-method}

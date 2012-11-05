@@ -1,10 +1,21 @@
 \name{NEWS}
 \title{News for Package 'XiMpLe'}
 \encoding{UTF-8}
-\section{Changes in XiMpLe version 0.03-16 (2012-10-30)}{
+\section{Changes in XiMpLe version 0.03-16 (2012-11-05)}{
   \subsection{added}{
     \itemize{
       \item added examples to all functions
+      \item added a vignette
+    }
+  }
+  \subsection{fixed}{
+    \itemize{
+      \item fixed dropping of last tag/text value if XML was incomplete, e.g., just
+        an excerpt of a full tree
+      \item fixed handling of empty tags completely without space, e.g. "<br/>"
+        instead of "<br />"
+      \item parsing error for DOCTYPE nodes mixed up elements and previously ignored
+        the \code{"decl"} value
     }
   }
 }

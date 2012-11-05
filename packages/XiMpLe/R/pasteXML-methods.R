@@ -106,7 +106,7 @@ setMethod("pasteXML",
 
 		if(any(nchar(unlist(tree.doctype)) > 0)) {
 			new.node   <- ifelse(shine > 0, "\n", "")
-			doc.doctype <- paste("<!DOCTYPE ", tree.doctype[["doctype"]], sep="")
+			doc.doctype <- paste("<!DOCTYPE", tree.doctype[["doctype"]], tree.doctype[["decl"]], sep=" ")
 			for (elmt in c("id", "refer")){
 				if(length(tree.doctype[[elmt]]) > 0) {
 					if(nchar(tree.doctype[[elmt]]) > 0){
