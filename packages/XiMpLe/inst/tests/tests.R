@@ -63,6 +63,9 @@ test_that("parse XML file", {
  		equals(sampleXMLparsed))
 })
 
+
+context("extracting nodes")
+
 test_that("extract node from parsed XML tree", {
 	# re-create object sampleXMLparsed
 	load("sample_RSS_parsed.RData")
@@ -74,4 +77,45 @@ test_that("extract node from parsed XML tree", {
  	expect_that(
 		sampleXMLnode.test,
  		equals(sampleXMLnode.extracted))
+})
+
+
+context("changing node values")
+
+test_that("change attribute values in XML node", {
+	# re-create object sampleXMLparsed
+	load("sample_RSS_parsed.RData")
+	# re-create object sampleXMLnode.extracted
+	load("sample_XML_tree_changed.RData")
+
+	# replace URL
+	node(sampleXMLparsed,
+		node=list("rss","channel","atom:link"),
+		what="attributes", element="href") <- "http://example.com"
+
+	# remove "rel" attribute
+	node(sampleXMLparsed,
+		node=list("rss","channel","atom:link"),
+		what="attributes", element="rel") <- NULL
+
+ 	expect_that(
+		sampleXMLparsed,
+ 		equals(sampleXMLparsed.changed))
+})
+
+test_that("change nested text value in XML node", {
+	# re-create object sampleXMLparsed
+	load("sample_RSS_parsed.RData")
+	# re-create object sampleXMLnode.extracted
+	load("sample_XML_tree_changed_value.RData")
+
+	# change text
+	node(sampleXMLparsed,
+		node=list("rss","channel","item","title"),
+		what="value",
+		cond.value="Changes in koRpus version 0.04-30") <- "this value was changed!"
+
+ 	expect_that(
+		sampleXMLparsed,
+ 		equals(sampleXMLparsed.changed.value))
 })

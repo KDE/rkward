@@ -4,6 +4,7 @@ changes in version 0.03-16 (2012-11-05)
 added:
   - added examples to all functions
   - added a vignette
+  - additional tests for node()<-
 fixed:
   - fixed dropping of last tag/text value if XML was incomplete, e.g., just
     an excerpt of a full tree
@@ -11,6 +12,12 @@ fixed:
     instead of "<br />"
   - parsing error for DOCTYPE nodes mixed up elements and previously ignored
     the "decl" value
+  - node()<- now replaces both text values and pseudo tags with a new value.
+    this can still be problematic for child nodes which contain a mix of
+    pseudo and actual tags, so a warning will be given until this is resolved
+changed:
+  - node() now reports text values of nodes which have "value" and a pseudo
+    tag at the same time as one character string, like pasteXML does
 
 changes in version 0.03-15 (2012-10-26)
 fixed:

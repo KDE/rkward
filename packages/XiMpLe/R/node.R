@@ -129,7 +129,7 @@ setMethod("node",
 					if(identical(what, "value")){
 						for (this.child in slot(this.node, "children")){
 								if(identical(slot(this.child, "name"), "") & isTRUE(nchar(slot(this.child, "value")) > 0))
-									results <- c(results, slot(this.child, "value"))
+									results <- paste(slot(this.child, "value"), results, sep=" ")
 							}
 					} else {}
 					if(!is.null(element)){
@@ -179,7 +179,37 @@ setMethod("node<-",
 	} else {}
 	for (this.node in obj.paths){
 		if(!is.null(what)){
-			this.node <- paste(this.node, "@", what, sep="")
+			# special case: text values can either be directly in the value slot of a node,
+			# or in a pseudo tag as a child node, so we check both and remove all
+			if(identical(what, "value")){
+				eval(parse(text=paste(this.node, "@value <- character()", sep="")))
+				all.node.children <- slot(eval(parse(text=this.node)), "children")
+				child.is.value <- sapply(all.node.children, function(this.child){
+						if(identical(slot(this.child, "name"), "") & isTRUE(nchar(slot(this.child, "value")) > 0)){
+							return(TRUE)
+						} else {
+							return(FALSE)
+						}
+					})
+				# if we have a mix of pseudo and actual tags, we probably messed up the markup
+				if(length(all.node.children) != length(child.is.value)){
+					warning("a child node contained text values and other nodes, we probably messed up the markup!")
+				} else {}
+				remove.nodes <- paste(this.node, "@children[child.is.value] <- NULL", sep="")
+				eval(parse(text=remove.nodes))
+
+				# paste new value into a single pseudo node
+				pseudo.node <- paste(this.node, "@children <- append(", this.node, "@children, ",
+					"new(\"XiMpLe.node\", name=\"\", value=\"", value, "\"), after=0)",
+					sep="")
+				eval(parse(text=pseudo.node))
+
+				# now return the object
+				return(obj)
+			} else {
+				this.node <- paste(this.node, "@", what, sep="")
+			}
+
 			if(!is.null(element)){
 				this.node <- paste(this.node, "[[\"",element,"\"]]", sep="")
 			} else {}

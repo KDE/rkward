@@ -237,9 +237,9 @@ This way it's easy to get the value of all attributes or the link text. You can 
 \begin{Schunk}
 	\begin{Sinput}
 > node(sample.XML.tree, node=list("html","body","a"),
-+ what="attributes")$href <- "http://example.com/foobar"
++ what="attributes", element="href") <- "http://example.com/foobar"
 > node(sample.XML.tree, node=list("html","body","a"),
-+ what="attributes")$target <- NULL
++ what="attributes", element="target") <- NULL
 > sample.XML.tree
 	\end{Sinput}
 	\begin{Soutput}
