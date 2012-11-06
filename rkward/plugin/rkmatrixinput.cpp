@@ -19,9 +19,12 @@
 
 #include <QVBoxLayout>
 #include <QLabel>
-#include <QTableView>
 #include <QHeaderView>
 
+#include "../misc/rktableview.h"
+#include "../dataeditor/rktextmatrix.h"
+#include "kstandardaction.h"
+#include "kaction.h"
 #include "klocale.h"
 
 #include "../misc/xmlhelper.h"
@@ -41,7 +44,7 @@ RKMatrixInput::RKMatrixInput (const QDomElement& element, RKComponent* parent_co
 	QLabel *label = new QLabel (xml->getStringAttribute (element, "label", i18n ("Enter data:"), DL_INFO), this);
 	vbox->addWidget (label);
 
-	display = new QTableView (this);
+	display = new RKTableView (this);
 	vbox->addWidget (display);
 
 	mode = static_cast<Mode> (xml->getMultiChoiceAttribute (element, "mode", "integer;real;string", 1, DL_WARNING));
@@ -92,6 +95,15 @@ RKMatrixInput::RKMatrixInput (const QDomElement& element, RKComponent* parent_co
 		int max_row = row_count->intValue () - 1;
 		display->setFixedHeight (display->horizontalHeader ()->height () + display->rowViewportPosition (max_row) + display->rowHeight (max_row));
 	}
+
+	// define standard actions
+	KAction *cut = KStandardAction::cut (this, SLOT (cut()), this);
+	display->addAction (cut);
+	KAction *copy = KStandardAction::copy (this, SLOT (copy()), this);
+	display->addAction (copy);
+	KAction *paste = KStandardAction::paste (this, SLOT (paste()), this);
+	display->addAction (paste);
+	display->setContextMenuPolicy (Qt::ActionsContextMenu);
 }
 
 RKMatrixInput::~RKMatrixInput () {
@@ -116,7 +128,7 @@ QString RKMatrixInput::value (const QString& modifier) {
 bool RKMatrixInput::expandStorageForColumn (int column) {
 	RK_TRACE (PLUGIN);
 
-	if ((column < 0) || (column >= (column_count->intValue () + trailing_columns))) {
+	if ((column < 0) || (!allow_user_resize_columns && (column >= column_count->intValue ()))) {
 		RK_ASSERT (false);
 		return false;
 	}
@@ -129,10 +141,16 @@ bool RKMatrixInput::expandStorageForColumn (int column) {
 	return true;
 }
 
+QString RKMatrixInput::cellValue (int row, int column) const {
+	if ((column < 0) || (column >= columns.size ())) return (QString ());
+	return columns[column].storage.value (row);
+}
+
+
 void RKMatrixInput::setCellValue (int row, int column, const QString& value) {
 	RK_TRACE (PLUGIN);
 
-	if ((!expandStorageForColumn (column)) || (row < 0) || (row >= (row_count->intValue () + trailing_rows))) {
+	if ((!expandStorageForColumn (column)) || (row < 0) || (!allow_user_resize_rows && (row >= row_count->intValue ()))) {
 		RK_ASSERT (false);
 		return;
 	}
@@ -281,10 +299,9 @@ void RKMatrixInput::dimensionPropertyChanged (RKComponentPropertyBase *property)
 }
 
 void RKMatrixInput::tsvPropertyChanged () {
-	RK_TRACE (PLUGIN);
-
 	if (updating_tsv_data) return;
 	updating_tsv_data = true;
+	RK_TRACE (PLUGIN);
 
 	columns.clear ();
 	QStringList coldata = tsv_data->value ().split ('\n', QString::KeepEmptyParts);
@@ -343,6 +360,69 @@ bool RKMatrixInput::isColumnValid (int column) {
 	return true;
 }
 
+void RKMatrixInput::clearSelectedCells () {
+	RK_TRACE (PLUGIN);
+
+	QItemSelectionRange range = display->getSelectionBoundaries ();
+	if (!range.isValid ()) return;
+
+	updating_tsv_data = true;
+	for (int col = range.left (); col <= range.right (); ++col) {
+		for (int row = range.top (); row <= range.bottom (); ++row) {
+			setCellValue (row, col, QString ());
+		}
+	}
+	updating_tsv_data = false;
+	updateAll ();
+}
+
+void RKMatrixInput::copy () {
+	RK_TRACE (PLUGIN);
+
+	QItemSelectionRange range = display->getSelectionBoundaries ();
+	if (!range.isValid ()) return;
+
+	RKTextMatrix ret;
+	for (int col = range.left (); col <= range.right (); ++col) {
+		for (int row = range.top (); row <= range.bottom (); ++row) {
+			ret.setText (row - range.top (), col - range.left (), cellValue (row, col));
+		}
+	}
+	ret.copyToClipboard ();
+}
+
+void RKMatrixInput::cut () {
+	RK_TRACE (PLUGIN);
+
+	copy ();
+	clearSelectedCells ();
+}
+
+void RKMatrixInput::paste () {
+	RK_TRACE (PLUGIN);
+
+	int left = 0;
+	int top = 0;
+	QItemSelectionRange range = display->getSelectionBoundaries ();
+	if (range.isValid ()) {
+		left = range.left ();
+		top = range.top ();
+	}
+
+	RKTextMatrix pasted = RKTextMatrix::matrixFromClipboard ();
+	int height = allow_user_resize_rows ? pasted.numRows () : qMin (pasted.numRows (), row_count->intValue () - top);
+	int width = allow_user_resize_columns ? pasted.numColumns () : qMin (pasted.numColumns (), column_count->intValue () - left);
+	
+	updating_tsv_data = true;
+	for (int c = 0; c < width; ++c) {
+		for (int r = 0; r < height; ++r) {
+			setCellValue (r + top, c + left, pasted.getText (r, c));
+		}
+	}
+	updating_tsv_data = false;
+	updateAll ();
+}
+
 
 
 
@@ -397,10 +477,7 @@ QVariant RKMatrixInputModel::data (const QModelIndex& index, int role) const {
 	}
 
 	// regular cells
-	QString value;
-	if (matrix->columns.size () > column) {	// column >= columns.size() can happen, legally. In this case the value is simply missing.
-		value = matrix->columns[column].storage.value (row);
-	}
+	QString value = matrix->cellValue (row, column);
 	if ((role == Qt::DisplayRole) || (role == Qt::EditRole)) {
 		return QVariant (value);
 	} else if (role == Qt::BackgroundRole) {

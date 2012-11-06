@@ -23,8 +23,13 @@
 #include <QDomElement>
 #include <QStringList>
 
-class QTableView;
+class RKTableView;
 class RKMatrixInputModel;
+
+/* TODO:
+ * - key-handling: del, backspace, left / right while editing
+ * - cursor-placement after editing trailing rows / columns
+ */
 
 /** Provides a table for editing one- or two-dimensional data
   *@author Thomas Friedrichsmeier
@@ -37,6 +42,10 @@ public:
 	int type () { return ComponentMatrixInput; };
 	bool isValid () { return is_valid; };
 	QString value (const QString &modifier);
+public slots:
+	void cut ();
+	void copy ();
+	void paste ();
 private slots:
 	void dimensionPropertyChanged (RKComponentPropertyBase *property);
 	void tsvPropertyChanged ();
@@ -65,6 +74,7 @@ private:
 	void updateAll ();
 
 	void setCellValue (int row, int column, const QString& value);
+	QString cellValue (int row, int column) const;
 	void setColumnValue (int column, const QString& value);
 	void updateColumn (int column);
 	bool expandStorageForColumn (int column);
@@ -82,11 +92,13 @@ private:
 	};
 	QList<Column> columns;
 
-	QTableView *display;
+	RKTableView *display;
 	RKMatrixInputModel *model;
 
 	// to avoid recursion:
 	bool updating_tsv_data;
+
+	void clearSelectedCells ();
 };
 
 #include <QAbstractTableModel>

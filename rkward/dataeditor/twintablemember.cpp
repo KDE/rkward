@@ -2,7 +2,7 @@
                           twintablemember.cpp  -  description
                              -------------------
     begin                : Tue Oct 29 2002
-    copyright            : (C) 2002, 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2006, 2007, 2009, 2010, 2012 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -30,7 +30,7 @@
 
 #include "../debug.h"
 
-TwinTableMember::TwinTableMember (QWidget *parent) : QTableView (parent){
+TwinTableMember::TwinTableMember (QWidget *parent) : RKTableView (parent){
 	RK_TRACE (EDITOR);
 
 	rw = true;
@@ -157,28 +157,6 @@ void TwinTableMember::paste (RKEditor::PasteMode mode) {
 		limrange = QItemSelectionRange (mymodel->index (0, 0), mymodel->index (mymodel->trueRows () - 1, mymodel->trueCols () - 1));
 	} // else: range not set means not confined = PasteAnywhere
 	mymodel->setTextMatrix (selrange.topLeft (), pasted, limrange);
-}
-
-QItemSelectionRange TwinTableMember::getSelectionBoundaries () {
-	RK_TRACE (EDITOR);
-
-	RK_ASSERT (selectionModel ());
-	QItemSelection sel = selectionModel ()->selection ();
-	if (sel.isEmpty ()){
-		QModelIndex current = currentIndex ();
-		if ((!current.isValid ()) || isIndexHidden (current)) return (QItemSelectionRange ());
-
-		return (QItemSelectionRange (currentIndex (), currentIndex ()));
-	} else {
-		RK_ASSERT (sel.size () == 1);
-
-		QItemSelectionRange range = sel[0];
-		while (isColumnHidden (range.left ())) {
-			// purge hidden leading columns from the range
-			range = QItemSelectionRange (mymodel->index (range.top (), range.left () + 1, rootIndex ()), range.bottomRight ());
-		}
-		return (range);
-	}
 }
 
 void TwinTableMember::keyPressEvent (QKeyEvent *e) {

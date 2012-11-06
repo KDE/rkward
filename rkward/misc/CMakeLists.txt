@@ -19,6 +19,7 @@ SET(misc_STAT_SRCS
    rkstandardactions.cpp
    rkxmlguisyncer.cpp
    rkcommandhistory.cpp
+   rktableview.cpp
    )
 
 QT4_AUTOMOC(${misc_STAT_SRCS})

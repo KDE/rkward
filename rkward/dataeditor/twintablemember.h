@@ -2,7 +2,7 @@
                           twintablemember.h  -  description
                              -------------------
     begin                : Tue Oct 29 2002
-    copyright            : (C) 2002, 2006, 2007, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2006, 2007, 2010, 2012 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -18,7 +18,6 @@
 #ifndef TWINTABLEMEMBER_H
 #define TWINTABLEMEMBER_H
 
-#include <QTableView>
 #include <QItemSelectionRange>
 #include <QItemDelegate>
 #include <qpoint.h>
@@ -29,6 +28,7 @@ class TwinTable;
 class CellEditor;
 class RKVarEditModelBase;
 
+#include "../misc/rktableview.h"
 #include "rkeditor.h"
 
 class RKVarEditMetaModel;
@@ -71,7 +71,7 @@ private:
 /** One of the tables used in a TwinTable.
 @author Thomas Friedrichsmeier
 */
-class TwinTableMember : public QTableView {
+class TwinTableMember : public RKTableView {
 	Q_OBJECT
 public: 
 	TwinTableMember (QWidget *parent);
@@ -87,8 +87,6 @@ public:
 
 /** blanks out the currently selected cells (or the currently active cell, if there is no selection) */
 	void blankSelected ();
-/** shortcut to get the boundaries of the current selection */
-	QItemSelectionRange getSelectionBoundaries ();
 
 	void setRKModel (RKVarEditModelBase* model);
 	void seRKItemDelegate (RKItemDelegate* delegate);
