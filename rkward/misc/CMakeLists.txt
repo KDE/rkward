@@ -20,6 +20,9 @@ SET(misc_STAT_SRCS
    rkxmlguisyncer.cpp
    rkcommandhistory.cpp
    rktableview.cpp
+   celleditor.cpp
+   editlabelsdialog.cpp
+   editformatdialog.cpp
    )
 
 QT4_AUTOMOC(${misc_STAT_SRCS})

@@ -19,11 +19,10 @@
 
 #include <kdialog.h>
 
-#include <QTableView>
 #include <QAbstractTableModel>
 
 #include "../core/robject.h"
-#include "twintablemember.h"
+#include "rktableview.h"
 
 class RKVariable;
 class RKVarLevelsTableModel;

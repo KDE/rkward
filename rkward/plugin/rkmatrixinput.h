@@ -20,6 +20,8 @@
 
 #include <rkcomponent.h>
 
+#include "../dataeditor/twintablemember.h"
+
 #include <QDomElement>
 #include <QStringList>
 
@@ -27,8 +29,7 @@ class RKTableView;
 class RKMatrixInputModel;
 
 /* TODO:
- * - key-handling: del, backspace, left / right while editing
- * - cursor-placement after editing trailing rows / columns
+ * - key-handling: del, backspace
  */
 
 /** Provides a table for editing one- or two-dimensional data

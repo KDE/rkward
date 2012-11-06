@@ -21,7 +21,7 @@
 #include <QList>
 
 #include "../core/robject.h"
-#include "twintablemember.h"
+#include "rktableview.h"
 
 class QStringList;
 class QMenu;
@@ -56,7 +56,6 @@ protected:
 	bool eventFilter (QObject* object, QEvent* event);
 private:
 	QMenu *value_list;
-	TwinTableMember *table;
 };
 
 #endif

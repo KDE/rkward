@@ -18,8 +18,6 @@
 #ifndef TWINTABLEMEMBER_H
 #define TWINTABLEMEMBER_H
 
-#include <QItemSelectionRange>
-#include <QItemDelegate>
 #include <qpoint.h>
 #include <QEvent>
 #include <QKeyEvent>
@@ -30,43 +28,6 @@ class RKVarEditModelBase;
 
 #include "../misc/rktableview.h"
 #include "rkeditor.h"
-
-class RKVarEditMetaModel;
-class RKVarEditModel;
-
-/** Item delegate for TwinTableMembers.
-@author Thomas Friedrichsmeier */
-class RKItemDelegate : public QItemDelegate {
-	Q_OBJECT
-public:
-	RKItemDelegate (QObject *parent, RKVarEditModel* datamodel);
-	RKItemDelegate (QObject *parent, RKVarEditMetaModel* metamodel);
-	~RKItemDelegate ();
-
-	QWidget* createEditor (QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const;
-	void setEditorData (QWidget* editor, const QModelIndex& index) const;
-	void setModelData (QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const;
-	bool eventFilter (QObject* editor, QEvent* event);
-
-	enum EditorDoneReason {
-		EditorExitLeft,
-		EditorExitRight,
-		EditorExitUp,
-		EditorExitDown,
-		EditorReject,
-		EditorExit
-	};
-signals:
-	// much like QAbstractItemDelegate::closeEditor(), but with our own flexible EndEditHint
-	void doCloseEditor (QWidget* editor, RKItemDelegate::EditorDoneReason);
-public slots:
-	void editorDone (QWidget* editor, RKItemDelegate::EditorDoneReason reason);
-private:
-	RKVarEditModel* datamodel;
-	RKVarEditMetaModel* metamodel;
-	bool locked_for_modal_editor;
-};
-
 
 /** One of the tables used in a TwinTable.
 @author Thomas Friedrichsmeier
@@ -89,7 +50,8 @@ public:
 	void blankSelected ();
 
 	void setRKModel (RKVarEditModelBase* model);
-	void seRKItemDelegate (RKItemDelegate* delegate);
+	int trueRows () const;	// re-implemented from RKTableView
+	int trueColumns () const;	// re-implemented from RKTableView
 signals:
 	void contextMenuRequest (int row, int col, const QPoint& pos);
 protected:
@@ -104,8 +66,6 @@ protected:
 	bool rw;
 friend class TwinTable;
 	void setTwin (TwinTableMember *new_twin);
-public slots:
-	void editorDone (QWidget* editor, RKItemDelegate::EditorDoneReason);
 protected slots:
 	void handleContextMenuRequest (const QPoint& pos);
 	void updateColWidth (int section, int old_w, int new_w);

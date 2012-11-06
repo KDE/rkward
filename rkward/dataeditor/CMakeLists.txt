@@ -8,9 +8,6 @@ SET(dataeditor_STAT_SRCS
    twintablemember.cpp
    rkeditor.cpp
    rkeditordataframe.cpp
-   celleditor.cpp
-   editlabelsdialog.cpp
-   editformatdialog.cpp
    rkvareditmodel.cpp
    rktextmatrix.cpp
    )

@@ -20,7 +20,7 @@
 #include <kdialog.h>
 
 #include "../core/rkvariable.h"
-#include "twintablemember.h"
+#include "rktableview.h"
 
 class QButtonGroup;
 class QSpinBox;

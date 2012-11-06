@@ -30,7 +30,7 @@
 #include <QVBoxLayout>
 
 #include "../core/rkvariable.h"
-#include "rktextmatrix.h"
+#include "../dataeditor/rktextmatrix.h"
 #include "celleditor.h"
 
 #include "../debug.h"

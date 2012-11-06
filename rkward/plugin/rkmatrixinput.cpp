@@ -23,6 +23,7 @@
 
 #include "../misc/rktableview.h"
 #include "../dataeditor/rktextmatrix.h"
+#include "../dataeditor/twintablemember.h"
 #include "kstandardaction.h"
 #include "kaction.h"
 #include "klocale.h"
@@ -104,6 +105,8 @@ RKMatrixInput::RKMatrixInput (const QDomElement& element, RKComponent* parent_co
 	KAction *paste = KStandardAction::paste (this, SLOT (paste()), this);
 	display->addAction (paste);
 	display->setContextMenuPolicy (Qt::ActionsContextMenu);
+
+	display->setRKItemDelegate (new RKItemDelegate (display, model, true));
 }
 
 RKMatrixInput::~RKMatrixInput () {
