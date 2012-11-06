@@ -1,3 +1,4 @@
+- Fixed: If none of the previous plugin maps could be found on startup, re-add the default
 - Added GUI element for entering matrix or vector data in plugins		TODO: cut / copy / paste, cursor placement
 - Added utiltity function rk.flush.output()			TODO: Output Window->Flush Output should use this
 - RKWard is now categorized as Science/Math/Numerical Analysis in its .desktop file

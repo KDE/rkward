@@ -2,7 +2,7 @@
                           rksettingsmoduleplugins  -  description
                              -------------------
     begin                : Wed Jul 28 2004
-    copyright            : (C) 2004, 2006, 2007, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2010, 2012 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -175,10 +175,11 @@ void RKSettingsModulePlugins::loadSettings (KConfig *config) {
 	KConfigGroup cg = config->group ("Plugin Settings");
 	plugin_maps = cg.readEntry ("Plugin Maps", QStringList ());
 	known_plugin_maps = cg.readEntry ("All known plugin maps", QStringList ());
+	fixPluginMapLists ();	// removes any maps which don't exist any more
 	if (plugin_maps.isEmpty ()) {
 		plugin_maps.append (RKCommonFunctions::getRKWardDataDir () + "/all.pluginmap");
+		fixPluginMapLists ();	// in case the default one is missing, somehow, too
 	}
-	fixPluginMapLists ();
 
 	interface_pref = static_cast<PluginPrefs> (cg.readEntry ("Interface Preferences", static_cast<int> (PreferRecommended)));
 	show_code = cg.readEntry ("Code display default", false);

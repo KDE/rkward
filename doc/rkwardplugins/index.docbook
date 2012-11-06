@@ -1592,7 +1592,8 @@ This chapter contains information on some topics that are useful only to certain
 		<sect3 id="automated_plugin_testing">
 		<title>Automated plugin testing (optional)</title>
 			<para>
-				Another optional directory is "tests", which is meant to provide files needed for <ulink url="http://sourceforge.net/apps/mediawiki/rkward/index.php?title=Automated_Plugin_Testing">automated plugin testing</ulink>. These tests are helpful to quickly check if your plugins still work with new versions of &r; or &rkward;. If you want to include tests, you should really restrain yourself to the naming scheme and hierarchy shown here. That is, tests should reside in a directory called <filename>tests</filename>, which includes a file <filename>testsuite.R</filename> and a folder with tests standards named after the appropriate test suite. You can, however, provide more than one test suite; in that case, if you don’t want to append them all in the one <filename>testsuite.R</filename> file, you can split them in e.g. one file for each test suite and create one <filename>testsuite.R</filename> with <function>source()</function> calls for each suite file. In either case, create separate subdirectories with test standards for each defined suite.
+				Another optional directory is "tests", which is meant to provide files needed for <ulink url="http://sourceforge.net/apps/mediawiki/rkward/index.php?title=Automated_Plugin_Testing">automated plugin testing</ulink>. These tests are helpful to quickly check if your plugins still work with new versions of &r; or &rkward;. If you want to include tests, you should really restrain yourself to the naming scheme and hierarchy shown here. That is, tests should reside in a directory called <filename>tests</filename>, which includes a file <filename>testsuite.R</filename> and a folder with tests standards named after the appropriate test suite. You can, however, provide more than one test suite; in that case, if you don’t want to append them all in the one <filename>testsuite.R</filename> file, you can split them in e.g. one file for each test suite and create one <filename>testsuite.R</filename> with <function>source()</function> calls for each suite file. In either case, create separate subdirectories with test 
+standards for each defined suite.
 			</para>
 			<para>
 				The benefits of upholding to this structure is that plugin tests can be run simply by calling <function>rktests.makplugintests()</function> from the <ulink url="rkward://rhelp/rkwardtests">rkwardtests</ulink> package without additional arguments. Have a look at the online documentation on <ulink url="http://sourceforge.net/apps/mediawiki/rkward/index.php?title=Automated_Plugin_Testing">Automated Plugin Testing</ulink> for further details.
@@ -2866,15 +2867,15 @@ In addition to this, some elements have additional properties you can connect to
 		</varlistentry>
 		<varlistentry>
 			<term>tsv</term>
-			<listitem><para>Data in the matrix in tsv format (string). Note that compared to the usual tsv layout, <emphasis>columns</emphasis>, not rows, are separated by newline characters, and cells within a column are separated by tabulator characters.</para></listitem>
+			<listitem><para>Data in the matrix in tsv format (string; read-write). Note that compared to the usual tsv layout, <emphasis>columns</emphasis>, not rows, are separated by newline characters, and cells within a column are separated by tabulator characters.</para></listitem>
 		</varlistentry>
 		<varlistentry>
 			<term>0,1,2...</term>
-			<listitem><para>The data from a single column (0 for leftmost column), separated by tabulator characters (string).</para></listitem>
+			<listitem><para>The data from a single column (0 for leftmost column), separated by tabulator characters (string; read-only).</para></listitem>
 		</varlistentry>
 		<varlistentry>
 			<term>cbind</term>
-			<listitem><para>Data in a format suitable for pasting to R, wrapped in a cbind statement (string).</para></listitem>
+			<listitem><para>Data in a format suitable for pasting to R, wrapped in a cbind statement (string; read-only).</para></listitem>
 		</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
