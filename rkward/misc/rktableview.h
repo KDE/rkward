@@ -60,7 +60,11 @@ private:
 	bool locked_for_modal_editor;
 };
 
-/** simple wrapper around QTableView to fix a couple shortcomings */
+/** simple wrapper around QTableView to fix a couple shortcomings. 
+ * 
+ *  TODO: merge cut() and copy() slots from TwinTableMember, RKMatrixInput, and EditLabelsDialog, here.
+ *        (for paste() this is probably not possible, though)
+ */
 class RKTableView : public QTableView {
 	Q_OBJECT
 public:
@@ -77,6 +81,11 @@ public:
 	QItemSelectionRange getSelectionBoundaries () const;
 	int trailing_rows;
 	int trailing_columns;
+signals:
+	void blankSelectionRequest ();
+protected:
+/** will emit blankSelectionRequest() on DEL and BACKSPACE. Also scrolls to current index on key presses. */
+	void keyPressEvent (QKeyEvent *e);
 private slots:
 	void editorDone (QWidget* editor, RKItemDelegate::EditorDoneReason reason);
 };

@@ -35,7 +35,7 @@
 
 #include "../debug.h"
 
-RKVarLevelsTable::RKVarLevelsTable (QWidget *parent, const RObject::ValueLabels& labels) : QTableView (parent) {
+RKVarLevelsTable::RKVarLevelsTable (QWidget *parent, const RObject::ValueLabels& labels) : RKTableView (parent) {
 	RK_TRACE (EDITOR);
 
 	setHorizontalScrollBarPolicy (Qt::ScrollBarAlwaysOff);
@@ -44,59 +44,50 @@ RKVarLevelsTable::RKVarLevelsTable (QWidget *parent, const RObject::ValueLabels&
 	verticalHeader ()->setFixedWidth (40);
 	setMinimumWidth (80);
 
-	KActionCollection *ac = new KActionCollection (this);
-	ac->addAction (KStandardAction::Cut, this, SLOT (cut ()));
-	ac->addAction (KStandardAction::Copy, this, SLOT (copy ()));
-	ac->addAction (KStandardAction::Paste, this, SLOT (paste ()));
+	addAction (KStandardAction::cut (this, SLOT (cut ()), this));
+	addAction (KStandardAction::copy (this, SLOT (copy ()), this));
+	addAction (KStandardAction::paste (this, SLOT (paste ()), this));
+	setContextMenuPolicy (Qt::ActionsContextMenu);
 
 	setModel (lmodel = new RKVarLevelsTableModel (labels, this));
+	connect (this, SIGNAL (blankSelectionRequest()), this, SLOT (blankSelected()));
+	setRKItemDelegate (new RKItemDelegate (this, lmodel, true));
 }
 
 RKVarLevelsTable::~RKVarLevelsTable () {
 	RK_TRACE (EDITOR);
 }
 
-bool RKVarLevelsTable::getSelectionBoundaries (int* top, int* bottom) const {
+void RKVarLevelsTable::blankSelected () {
 	RK_TRACE (EDITOR);
 
-	RK_ASSERT (selectionModel ());
-	QItemSelection sel = selectionModel ()->selection ();
-	if (sel.isEmpty ()){
-		QModelIndex current = currentIndex ();
-		if (!current.isValid ()) return false;
+	QItemSelectionRange range = getSelectionBoundaries ();
+	if (!range.isValid ()) return;
 
-		*top = current.row ();
-		*bottom = current.row ();
-	} else {
-		RK_ASSERT (sel.size () == 1);
-		*top = sel[0].top ();
-		*bottom = sel[0].bottom ();
+	for (int row = range.top (); row <= range.bottom (); ++row) {
+		lmodel->setData (lmodel->index (row, 0), QString ());
 	}
-	return true;
 }
 
 void RKVarLevelsTable::cut () {
 	RK_TRACE (EDITOR);
 
-	int top;
-	int bottom;
-	if (!getSelectionBoundaries (&top, &bottom)) return;
+	QItemSelectionRange range = getSelectionBoundaries ();
+	if (!range.isValid ()) return;
 
 	copy ();
-
-	for (int i = top; i <= bottom; ++i) lmodel->setData (lmodel->index (i, 0), QString ());
+	blankSelected ();
 }
 
 void RKVarLevelsTable::copy () {
 	RK_TRACE (EDITOR);
 
-	int top;
-	int bottom;
-	if (!getSelectionBoundaries (&top, &bottom)) return;
+	QItemSelectionRange range = getSelectionBoundaries ();
+	if (!range.isValid ()) return;
 
 	RKTextMatrix mat;
 	int trow = 0;
-	for (int i = top; i <= bottom; ++i) {
+	for (int i = range.top (); i <= range.bottom (); ++i) {
 		mat.setText (trow++, 0, lmodel->data (lmodel->index (i, 0)).toString ());
 	}
 	mat.copyToClipboard ();

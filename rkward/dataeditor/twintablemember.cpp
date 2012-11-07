@@ -43,6 +43,7 @@ TwinTableMember::TwinTableMember (QWidget *parent) : RKTableView (parent){
 	connect (this, SIGNAL (customContextMenuRequested(const QPoint&)), this, SLOT (handleContextMenuRequest(const QPoint&)));
 
 	updating_twin = false;
+	connect (this, SIGNAL (blankSelectionRequest()), this, SLOT (blankSelected()));
 }
 
 TwinTableMember::~TwinTableMember(){
@@ -126,18 +127,6 @@ void TwinTableMember::paste (RKEditor::PasteMode mode) {
 		limrange = QItemSelectionRange (mymodel->index (0, 0), mymodel->index (mymodel->trueRows () - 1, mymodel->trueCols () - 1));
 	} // else: range not set means not confined = PasteAnywhere
 	mymodel->setTextMatrix (selrange.topLeft (), pasted, limrange);
-}
-
-void TwinTableMember::keyPressEvent (QKeyEvent *e) {
-	RK_TRACE (EDITOR);
-
-	if ((e->key () == Qt::Key_Delete) || (e->key () == Qt::Key_Backspace)) {
-		blankSelected ();
-		e->accept ();
-	} else {
-		QTableView::keyPressEvent (e);
-		scrollTo (currentIndex ());	// why oh why isn't this the default behavior?
-	}
 }
 
 void TwinTableMember::scrollContentsBy (int dx, int dy) {

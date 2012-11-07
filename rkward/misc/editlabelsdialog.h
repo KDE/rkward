@@ -31,7 +31,7 @@ class RKVarLevelsTableModel;
 
 @author Thomas Friedrichsmeier
 */
-class RKVarLevelsTable : public QTableView {
+class RKVarLevelsTable : public RKTableView {
 	Q_OBJECT
 public:
 	RKVarLevelsTable (QWidget *parent, const RObject::ValueLabels& labels);
@@ -43,8 +43,8 @@ public slots:
 	void copy ();
 /** paste */
 	void paste ();
+	void blankSelected ();
 private:
-	bool getSelectionBoundaries (int* top, int* bottom) const;
 friend class EditLabelsDialogProxy;
 	RKVarLevelsTableModel* lmodel;
 	bool updating_size;

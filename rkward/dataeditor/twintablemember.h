@@ -40,18 +40,16 @@ public:
 	TwinTableMember *getTwin () { return twin; };
 /** ends editing. Actually it's just a simple wrapper around QTable::endEdit () */
 	void stopEditing ();
-/** reimplemented to delete cell contents on DEL and BACKSPACE. Placed in public, here, so CellEditor can have access */
-	void keyPressEvent (QKeyEvent *e);
 
 	void copy ();
 	void paste (RKEditor::PasteMode mode);
 
-/** blanks out the currently selected cells (or the currently active cell, if there is no selection) */
-	void blankSelected ();
-
 	void setRKModel (RKVarEditModelBase* model);
 	int trueRows () const;	// re-implemented from RKTableView
 	int trueColumns () const;	// re-implemented from RKTableView
+public slots:
+/** blanks out the currently selected cells (or the currently active cell, if there is no selection) */
+	void blankSelected ();
 signals:
 	void contextMenuRequest (int row, int col, const QPoint& pos);
 protected:

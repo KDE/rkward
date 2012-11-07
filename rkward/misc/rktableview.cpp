@@ -17,6 +17,8 @@
 
 #include "rktableview.h"
 
+#include <QKeyEvent>
+
 #include "../debug.h"
 
 RKTableView::RKTableView (QWidget *parent) : QTableView (parent) {
@@ -96,6 +98,18 @@ void RKTableView::setRKItemDelegate (RKItemDelegate* delegate) {
 	connect (delegate, SIGNAL (doCloseEditor(QWidget*,RKItemDelegate::EditorDoneReason)), this, SLOT (editorDone(QWidget*,RKItemDelegate::EditorDoneReason)));
 }
 
+void RKTableView::keyPressEvent (QKeyEvent *e) {
+	RK_TRACE (EDITOR);
+
+	if ((e->key () == Qt::Key_Delete) || (e->key () == Qt::Key_Backspace)) {
+		emit (blankSelectionRequest ());
+		e->accept ();
+	} else {
+		QTableView::keyPressEvent (e);
+		scrollTo (currentIndex ());	// why oh why isn't this the default behavior?
+	}
+}
+
 
 /////////////////// RKItemDelegate /////////////////////
 
@@ -103,8 +117,6 @@ void RKTableView::setRKItemDelegate (RKItemDelegate* delegate) {
 #include "celleditor.h"
 #include "editformatdialog.h"
 #include "editlabelsdialog.h"
-
-#include <QKeyEvent>
 
 RKItemDelegate::RKItemDelegate (QObject *parent, RKVarEditModel* datamodel) : QItemDelegate (parent) {
 	RK_TRACE (EDITOR);

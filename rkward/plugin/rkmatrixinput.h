@@ -28,10 +28,6 @@
 class RKTableView;
 class RKMatrixInputModel;
 
-/* TODO:
- * - key-handling: del, backspace
- */
-
 /** Provides a table for editing one- or two-dimensional data
   *@author Thomas Friedrichsmeier
   */
@@ -47,6 +43,7 @@ public slots:
 	void cut ();
 	void copy ();
 	void paste ();
+	void clearSelectedCells ();
 private slots:
 	void dimensionPropertyChanged (RKComponentPropertyBase *property);
 	void tsvPropertyChanged ();
@@ -98,8 +95,6 @@ private:
 
 	// to avoid recursion:
 	bool updating_tsv_data;
-
-	void clearSelectedCells ();
 };
 
 #include <QAbstractTableModel>
