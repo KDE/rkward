@@ -29,6 +29,7 @@
 #' @param additional.header.contents NULL or an additional string to add to the HTML header section.
 #'        This could be scripts or additional CSS definitions, for example. Note that
 #'        @em nothing will be added to the header, if the file already exists.
+#' @param flush.images. If true, any images used in the output file will be deleted as well.
 #' @param ask Logical: Whether to ask before flushing the output file.
 #' @return \code{rk.get.tempfile.name}, \code{rk.get.output.html.file}, and
 #'   \code{rk.get.workspace.url} return a string while
@@ -52,6 +53,7 @@
 #' rk.set.output.html.file("~/.rkward/another_file.html")
 #' rk.header("Output on a different output file")
 #' rk.show.html(rk.get.output.html.file())
+#' rk.flush.output()
 #' rk.set.output.html.file(outfile)
 #' 
 #' @export
@@ -160,12 +162,56 @@
 	invisible (NULL)
 }
 
+# Internal helper function to extract file names of images used in html files.
+# Almost definitely, this could be simplified, but I'll leave that as an exercise to the reader ;-)
+# Note that this uses heuristics, rather than real parsing
+".rk.get.images.in.html.file" <- function (file) {
+	lines <- readLines (file)
+	lines <- grep ("<(img|object)", lines, ignore.case=TRUE, value=TRUE)
+	files <- character (0)
+	for (line in lines) {
+		slines <- strsplit (line, "<")[[1]]
+		for (sline in slines) {
+			sline <- toupper (sline)
+			if (substring (sline, 0, 3) == "IMG") {
+				parts <- strsplit (sline, "SRC")[[1]]
+				if (length (parts) < 2) next
+				parts <- strsplit (parts[2], "\"")[[1]]
+				if (length (parts) < 2) next
+				files <- c (files, parts[2])
+			} else if (substring (sline, 0, 6) == "OBJECT") {
+				parts <- strsplit (sline, "DATA")[[1]]
+				if (length (parts) < 2) next
+				parts <- strsplit (parts[2], "\"")[[1]]
+				if (length (parts) < 2) next
+				files <- c (files, parts[2])
+			}
+		}
+	}
+	files
+}
+
 #' @export
 #' @rdname rk.get.tempfile.name
-"rk.flush.output" <- function (x=rk.get.output.html.file (), ask=TRUE) {
-	if (isTRUE (ask)) {
-		if (!rk.show.question (paste ("Do you really want to flush the output file (", x, ")?\nIt will not be possible to restore it."))) stop ("Aborted by user")
+"rk.flush.output" <- function (x=rk.get.output.html.file (), flush.images=TRUE, ask=TRUE) {
+	images <- character (0)
+	if (flush.images) images <- .rk.get.images.in.html.file (x)
+
+	desc <- x
+	if (length (images)) {
+		desc <- paste (x, ", along with ", length (images), " image files", sep="")
 	}
+
+	if (isTRUE (ask)) {
+		if (!rk.show.question (paste ("Do you really want to flush the output file (", desc, ")?\nIt will not be possible to restore it.", sep=""))) stop ("Aborted by user")
+	}
+
 	unlink (x)
+	try (
+		for (image in images) {
+			unlink (image)
+		}
+	)
+
 	rk.set.output.html.file (x)
 }
