@@ -52,6 +52,7 @@ RKVarLevelsTable::RKVarLevelsTable (QWidget *parent, const RObject::ValueLabels&
 	setModel (lmodel = new RKVarLevelsTableModel (labels, this));
 	connect (this, SIGNAL (blankSelectionRequest()), this, SLOT (blankSelected()));
 	setRKItemDelegate (new RKItemDelegate (this, lmodel, true));
+	trailing_rows = 1;
 }
 
 RKVarLevelsTable::~RKVarLevelsTable () {

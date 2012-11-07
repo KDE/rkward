@@ -61,6 +61,7 @@ RKMatrixInput::RKMatrixInput (const QDomElement& element, RKComponent* parent_co
 
 	// Note: string type matrix allows missings, implicitly (treating them as empty strings)
 	allow_missings = xml->getBoolAttribute (element, "allow_missings", false, DL_INFO);
+	if (mode == String) allow_missings = true;
 	allow_user_resize_columns = xml->getBoolAttribute (element, "allow_user_resize_columns", true, DL_INFO);
 	allow_user_resize_rows = xml->getBoolAttribute (element, "allow_user_resize_rows", true, DL_INFO);
 	trailing_rows = allow_user_resize_rows ? 1 : 0;
@@ -338,6 +339,8 @@ bool RKMatrixInput::isColumnValid (int column) {
 		return false;
 	}
 
+	if (mode == String) return true;
+
 	if (column >= columns.size ()) return (allow_missings || (row_count->intValue () == 0));
 
 	Column &col = columns[column];
@@ -345,7 +348,6 @@ bool RKMatrixInput::isColumnValid (int column) {
 		return true;
 	} else if (allow_missings && (col.last_valid_row >= (col.storage.size () - 1))) {
 		return true;
-	} else {
 	}
 
 	int row = col.last_valid_row + 1;
