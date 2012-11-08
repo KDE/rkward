@@ -136,6 +136,10 @@ void RKVarEditModel::objectMetaChanged (RObject* changed) {
 	if (cindex < 0) return;	// none of our buisiness
 
 	if (meta_model) meta_model->objectMetaChanged (cindex);
+}
+
+void RKVarEditModel::scheduleReset () {
+	RK_TRACE (EDITOR);
 
 	if (!reset_scheduled) {
 		reset_scheduled = true;
@@ -166,6 +170,10 @@ void RKVarEditModel::objectDataChanged (RObject* object, const RObject::ChangeSe
 
 	RK_ASSERT (changes);
 
+	if (changes->full_reset) {
+		scheduleReset ();
+		return;
+	}
 	emit (dataChanged (index (changes->from_index, cindex), index (changes->to_index, cindex)));
 }
 
@@ -296,6 +304,8 @@ QVariant RKVarEditModel::data (const QModelIndex& index, int role) const {
 	RKVariable::Status status = var->cellStatus (row);
 	if ((role == Qt::BackgroundRole)) {
 		if (status == RKVariable::ValueInvalid) return (Qt::red);
+	} else if (role == Qt::ToolTipRole) {
+		if (status == RKVariable::ValueInvalid) return (i18n ("This value is not allowed, here"));
 	}
 	if ((role == Qt::ForegroundRole) && (status == RKVariable::ValueUnknown)) return (Qt::lightGray);
 	if (role == Qt::TextAlignmentRole) {
@@ -361,16 +371,20 @@ bool RKVarEditModel::setData (const QModelIndex& index, const QVariant& value, i
 QVariant RKVarEditModel::headerData (int section, Qt::Orientation orientation, int role) const {
 	RK_TRACE (EDITOR);
 
-	if (role != Qt::DisplayRole) return QVariant ();
-
 	if (orientation == Qt::Horizontal) {
-		if (section >= objects.size ()) return i18n ("#New Variable#");
-		if (section < var_col_offset) return i18n ("Row names");
-		return (QString::number (section - var_col_offset + 1));
-	}
-
-	if (section < rownames->getLength ()) {
-		return rownames->getText (section);
+		if (role == Qt::DisplayRole) {
+			if (section >= objects.size ()) return i18n ("#New Variable#");
+			if (section < var_col_offset) return i18n ("Row names");
+			return (QString::number (section - var_col_offset + 1));
+		} else if (role == Qt::BackgroundRole) {
+			if ((section < objects.size  ()) && objects[section]->hasInvalidFields ()) return QVariant (Qt::red);
+		} else if ((role == Qt::ToolTipRole) || (role == Qt::StatusTipRole)) {
+			if ((section < objects.size  ()) && objects[section]->hasInvalidFields ()) return i18n ("This column contains one or more invalid fields");
+		}
+	} else {
+		if ((role == Qt::DisplayRole) && (section < rownames->getLength ())) {
+			return rownames->getText (section);
+		}
 	}
 
 	return QVariant ();
@@ -504,6 +518,7 @@ void RKVarEditMetaModel::objectMetaChanged (int atcolumn) {
 	RK_TRACE (EDITOR);
 
 	emit (dataChanged (index (0, atcolumn), index (RowCount - 1, atcolumn)));
+	emit (headerDataChanged (Qt::Horizontal, atcolumn, atcolumn));
 }
 
 int RKVarEditMetaModel::rowCount (const QModelIndex& parent) const {

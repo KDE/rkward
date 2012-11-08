@@ -203,10 +203,13 @@ public:
 @param levels levels to recurse (0 = only direct children). */
 	void fetchMoreIfNeeded (int levels=1);
 
-/// For now, the ChangeSet only handles RKVariables!
+/** Representation of changes to an edited object (currently for vector data, only) */
 	struct ChangeSet {
-		int from_index;
-		int to_index;
+		ChangeSet (int from = -1, int to = -1, bool reset = false) : 
+					from_index(from), to_index(to), full_reset(reset) {};
+		int from_index;		/**< first changed index */
+		int to_index;		/**< last changed index */
+		bool full_reset;	/**< Model should do a full reset (e.g. dimensions may have changed) */
 	};
 
 /** generates a (full) name for a child of this object with the given name. */

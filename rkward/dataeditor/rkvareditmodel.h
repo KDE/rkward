@@ -100,6 +100,7 @@ private slots:
 	void doResetNow ();
 private:
 	bool reset_scheduled;
+	void scheduleReset ();
 protected:
 friend class RKVarEditMetaModel;
 	QList<RKVariable*> objects;

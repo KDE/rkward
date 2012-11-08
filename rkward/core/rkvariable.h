@@ -2,7 +2,7 @@
                           rkvariable  -  description
                              -------------------
     begin                : Thu Aug 12 2004
-    copyright            : (C) 2004, 2007, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007, 2010, 2011, 2012 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -59,7 +59,9 @@ is set to Unused, if _no_ cell in the row is used, Valid if _all_ cells in the r
 	void syncDataToR ();
 /** reimplemented from RObject */
 	void updateDataFromR (RCommandChain *chain);
-	
+
+	bool hasInvalidFields () const;
+
 /** get the value at the given row in text-form - regardless of the storage mode.
 @param pretty: get the text in pretty form, e.g. rounding numbers to a certain number of digits, replacing numeric values with value labels if available, etc. Formatting is done according to the meta-information stored in the RObject and global user preferences */
 	QString getText (int row, bool pretty=false) const;

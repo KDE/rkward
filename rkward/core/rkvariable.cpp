@@ -2,7 +2,7 @@
                           rkvariable  -  description
                              -------------------
     begin                : Thu Aug 12 2004
-    copyright            : (C) 2004, 2007, 2008, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007, 2008, 2010, 2011, 2012 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -185,11 +185,10 @@ void RKVariable::rCommandDone (RCommand *command) {
 				}
 			}
 		}
+		data->previously_valid = data->invalid_fields.isEmpty ();
 		data->formatting_options = parseFormattingOptionsString (getMetaProperty ("format"));
 
-		ChangeSet *set = new ChangeSet;
-		set->from_index = 0;
-		set->to_index = getLength ();
+		ChangeSet *set = new ChangeSet (0, getLength (), true);
 		RKGlobals::tracker ()->objectDataChanged (this, set);
 		RKGlobals::tracker ()->objectMetaChanged (this);
 		type -= (type & NeedDataUpdate);
@@ -349,6 +348,10 @@ void RKVariable::writeInvalidField (int row, RCommandChain *chain) {
 		RKGlobals::rInterface ()->issueCommand (".rk.set.invalid.field (" + getFullName () + ", " + QString::number (row+1) + ", NULL)", RCommand::App | RCommand::Sync, QString (), 0,0, chain);
 	}
 	data->cell_states[row] -= (data->cell_states[row] & RKVarEditData::UnsyncedInvalidState);
+	if (data->previously_valid != data->invalid_fields.isEmpty ()) {
+		data->previously_valid = data->invalid_fields.isEmpty ();
+		RKGlobals::tracker ()->objectMetaChanged (this);
+	}
 }
 
 void RKVariable::writeData (int from_row, int to_row, RCommandChain *chain) {
@@ -373,9 +376,7 @@ void RKVariable::writeData (int from_row, int to_row, RCommandChain *chain) {
 		RKGlobals::rInterface ()->issueCommand (getFullName () + '[' + QString::number (from_row + 1) + ':' + QString::number (to_row + 1) + "] <- " + data_string, RCommand::App | RCommand::Sync, QString::null, 0,0, chain);
 	}
 
-	ChangeSet *set = new ChangeSet;
-	set->from_index = from_row;
-	set->to_index = to_row;
+	ChangeSet *set = new ChangeSet (from_row, to_row);
 	RKGlobals::tracker ()->objectDataChanged (this, set);
 }
 
@@ -405,6 +406,11 @@ void RKVariable::extendToLength (int length) {
 	}
 
 	dimensions[0] = length;
+}
+
+bool RKVariable::hasInvalidFields () const {
+	if (!data) return false;	// should not ever happen, though
+	return (!data->invalid_fields.isEmpty ());
 }
 
 QString RKVariable::getText (int row, bool pretty) const {
@@ -699,9 +705,7 @@ void RKVariable::setValueLabels (const ValueLabels& labels) {
 	}
 
 	// also update display of all values:
-	ChangeSet *set = new ChangeSet;
-	set->from_index = 0;
-	set->to_index = getLength () - 1;	
+	ChangeSet *set = new ChangeSet (0, getLength () - 1);
 	RKGlobals::tracker ()->objectDataChanged (this, set);
 
 	// TODO: find out whether the object is valid after the operation and update accordingly!
@@ -782,9 +786,7 @@ void RKVariable::setFormattingOptions (const FormattingOptions new_options) {
 	setMetaProperty ("format", formattingOptionsToString (new_options));
 
 	// also update display of all values:
-	ChangeSet *set = new ChangeSet;
-	set->from_index = 0;
-	set->to_index = getLength () - 1;	
+	ChangeSet *set = new ChangeSet (0, getLength () -1);
 	RKGlobals::tracker ()->objectDataChanged (this, set);
 }
 

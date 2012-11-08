@@ -86,9 +86,9 @@ void RKTableView::editorDone (QWidget* editor, RKItemDelegate::EditorDoneReason 
 		if ((reason != RKItemDelegate::EditorExitRight) && (reason != RKItemDelegate::EditorReject)) --col;
 	}
 
-	if ((row < apparentRows ()) && (col < apparentColumns ())) {
-		setCurrentIndex (model ()->index (row, col));
-	}
+	row = qMin (row, apparentRows () - 1);
+	col = qMin (col, apparentColumns () - 1);
+	setCurrentIndex (model ()->index (row, col));
 }
 
 void RKTableView::setRKItemDelegate (RKItemDelegate* delegate) {
