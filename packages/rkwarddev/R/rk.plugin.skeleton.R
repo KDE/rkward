@@ -40,7 +40,8 @@
 #'		If not set, their default values are used. See \code{\link[rkwarddev:rk.rkh.doc]{rk.rkh.doc}} for details.
 #' @param overwrite Logical, whether existing files should be replaced. Defaults to \code{FALSE}.
 #' @param tests Logical, whether directories and files for plugin tests should be created.
-#'		Defaults to \code{TRUE}.
+#'		Defaults to \code{TRUE}. A new testsuite file will only be generated if none is present
+#'		(\code{overwrite} is ignored).
 #' @param lazyLoad Logical, whether the package should be prepared for lazy loading or not. Should be left \code{TRUE},
 #'		unless you have very good reasons not to.
 #' @param create A character vector with one or more of these possible entries:
@@ -322,9 +323,11 @@ rk.plugin.skeleton <- function(about, path=tempdir(),
 	} else {}
 
 	## create testsuite.R
-	if(isTRUE(tests) & isTRUE(checkCreateFiles(testsuite.file, ow=overwrite, action="tests"))){
-		testsuite.doc <- rk.testsuite.doc(name=name)
-		cat(testsuite.doc, file=testsuite.file)
+	if(isTRUE(tests)){
+		if(isTRUE(checkCreateFiles(testsuite.file, ow=FALSE, action="tests"))){
+			testsuite.doc <- rk.testsuite.doc(name=name)
+			cat(testsuite.doc, file=testsuite.file)
+		} else {}
 	} else {}
 
 	## create DESCRIPTION file

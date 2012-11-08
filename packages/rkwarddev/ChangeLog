@@ -1,5 +1,9 @@
 ChangeLog for package rkwarddev
 
+changes in version 0.06-1 (2012-11-08)
+changed:
+  - rk.plugin.skeleton(): "tests" will now ignore "overwrite" and not replace existing testsuite files
+
 changes in version 0.05-8 (2012-09-30)
 added:
   - new function rk.plotOptions() and class "rk.plot.opts" to simplify code generation for plots;

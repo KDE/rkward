@@ -99,8 +99,9 @@
   be replaced. Defaults to \code{FALSE}.}
 
   \item{tests}{Logical, whether directories and files for
-  plugin tests should be created.  Defaults to
-  \code{TRUE}.}
+  plugin tests should be created.  Defaults to \code{TRUE}.
+  A new testsuite file will only be generated if none is
+  present (\code{overwrite} is ignored).}
 
   \item{lazyLoad}{Logical, whether the package should be
   prepared for lazy loading or not. Should be left

@@ -11,7 +11,7 @@
   DESCRIPTION file in it).}
 
   \item{check}{Logical, whether the package should be
-  checked for errors. Always do this before you publick a
+  checked for errors. Always do this before you publish a
   package!}
 
   \item{install}{Logical, whether the built package should
