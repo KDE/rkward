@@ -20,6 +20,7 @@
 #include "rinterface.h"
 #include "../windows/rkcommandlog.h"
 #include "rkrbackendprotocol_shared.h"
+#include "../core/robject.h"
 
 #include "../debug.h"
 #include "../rkglobals.h"
@@ -231,6 +232,10 @@ RCommandProxy* RCommand::makeProxy () const {
 	ret->status = status;
 	ret->has_been_run_up_to = has_been_run_up_to;
 	return ret;
+}
+
+QString RCommand::rQuote (const QString &quoted) {
+	return RObject::rQuote (quoted);
 }
 
 #include "rcommand.moc"

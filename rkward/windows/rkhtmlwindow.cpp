@@ -49,6 +49,7 @@
 #include "../misc/rkstandardicons.h"
 #include "../misc/xmlhelper.h"
 #include "../misc/rkxmlguisyncer.h"
+#include "../misc/rkprogresscontrol.h"
 #include "../plugin/rkcomponentmap.h"
 #include "../windows/rkworkplace.h"
 #include "../windows/rkworkplaceview.h"
@@ -461,23 +462,15 @@ void RKHTMLWindow::fileDoesNotExistMessage () {
 void RKHTMLWindow::flushOutput () {
 	RK_TRACE (APP);
 
-	int res = KMessageBox::questionYesNo (this, i18n ("Do you really want to flush the output? It will not be possible to restore it."), i18n ("Flush output?"));
+	int res = KMessageBox::questionYesNo (this, i18n ("Do you really want to clear the output? This will also remove all image files used in the output. It will not be possible to restore it."), i18n ("Flush output?"));
 	if (res==KMessageBox::Yes) {
 		QFile out_file (current_url.toLocalFile ());
-		QDir out_dir = QFileInfo (out_file).absoluteDir ();
-		out_file.remove ();
-
-		// remove all the graphs
-		out_dir.setNameFilters (QStringList ("graph*.png"));
-		QStringList graph_files = out_dir.entryList ();
-		for (QStringList::const_iterator it = graph_files.constBegin (); it != graph_files.constEnd (); ++it) {
-			QFile file (out_dir.absoluteFilePath (*it));
-			file.remove ();
-		}
-
-		// initialize the now empty file
-		RKGlobals::rInterface ()->issueCommand ("rk.set.output.html.file (\"" + out_file.fileName () + "\")\n", RCommand::App);
-		refresh ();
+		RCommand *c = new RCommand ("rk.flush.output (" + RCommand::rQuote (out_file.fileName ()) + ", ask=FALSE)\n", RCommand::App);
+		connect (c->notifier (), SIGNAL (commandFinished(RCommand*)), this, SLOT (refresh()));
+		RKProgressControl *status = new RKProgressControl (this, i18n ("Flushing output"), i18n ("Flushing output"), RKProgressControl::CancellableNoProgress);
+		status->addRCommand (c, true);
+		status->doNonModal (true);
+		RKGlobals::rInterface ()->issueCommand (c);
 	}
 }
 

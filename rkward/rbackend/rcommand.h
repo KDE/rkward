@@ -215,6 +215,8 @@ public:
 
 /** returns a notifier for this command (creating it, if needed). You can connect to the notifiers signals. */
 	RCommandNotifier* notifier ();
+/** same as RObject::rQuote */
+	static QString rQuote (const QString &quoted);
 private:
 friend class RInterface;
 friend class RCommandStack;

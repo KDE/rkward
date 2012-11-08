@@ -2,7 +2,7 @@
                           rkprogresscontol  -  description
                              -------------------
     begin                : Sun Sep 10 2006
-    copyright            : (C) 2006, 2007, 2009, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007, 2009, 2011, 2012 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -65,7 +65,8 @@ public:
 		DetailedError=StandardError | IncludeRegularOutput,
 		StandardProgress=DetailedError | OutputSwitchable | RaiseOnRegularOutput,
 		CancellableProgress=(StandardProgress | AllowCancel | AutoCancelCommands | PreventClose | ShowAtOnce) - (RaiseOnRegularOutput | OutputShownByDefault),
-		CancellableNoProgress=CancellableProgress - OutputSwitchable
+		CancellableNoProgress=CancellableProgress - OutputSwitchable,
+		SimpleSplash=(StandardProgress | PreventClose | ShowAtOnce) - (RaiseOnRegularOutput | OutputShownByDefault | OutputSwitchable)
 	};
 
 /** show the dialog modal. This will always show the dialog right away
