@@ -30,6 +30,10 @@ class QTreeWidgetItem;
 class QPushButton;
 
 /** An RKOptionSet provides a group of options for an arbitrary number of "rows". E.g. different line colors for each of a group of variables.
+ * 
+ * TODO
+ * - serialization / de-serialization. We will need to make RKComponentBase::fetchPropertyValuesRecursive() and RKComponent::setPropertyValues() virtual, and reimplement them.
+ * 
   *@author Thomas Friedrichsmeier
   */
 class RKOptionSet : public RKComponent {
@@ -42,6 +46,8 @@ public:
 	bool isValid ();
 	/** reimplemented from RKComponent */
 	ComponentStatus recursiveStatus ();
+	/** reimplemented from RKComponent */
+	void changed ();
 private slots:
 	void governingPropertyChanged (RKComponentPropertyBase *property);
 	void columnPropertyChanged (RKComponentPropertyBase *property);
@@ -53,6 +59,9 @@ private slots:
 private:
 	void initDisplay ();
 	void updateVisuals ();
+	int rowCount () const { return row_count->intValue (); };
+	void setRowState (int row, bool finished, bool valid);
+	void storeRowSerialization (int row);
 
 	RKComponentPropertyInt *current_row;
 	RKComponentPropertyInt *row_count;
@@ -75,10 +84,16 @@ private:
 	};
 	/** Map of all columns to their meta info */
 	QMap<RKComponentPropertyStringList *, ColumnInfo> column_map;
-	/** Rows which have been not yet been processed, fully */
-	QSet<int> unfinished_rows;
-	/** Rows which have been fully processed but were invalid (contents component was not satisfied) */
-	QSet<int> invalid_rows;
+	struct RowInfo {
+		RowInfo () : valid (false), finished (false) {};
+		bool valid;		/**< has finished processing and is known to be valid */
+		bool finished;	/**< has finished processing */
+		QMap<QString, QString> full_row_serialization;	/**< complete serialization of this row, (see RKComponent::fetchPropertyValuesRecursive()) */
+	};
+	QList<RowInfo> rows;
+	QMap<QString, QString> default_row_state;
+	int n_unfinished_rows, n_invalid_rows;
+	int active_row;
 
 	RKComponent *contents_container;
 	QTreeWidget *display;

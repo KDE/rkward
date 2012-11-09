@@ -46,6 +46,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	max_rows = xml->getIntAttribute (element, "max", INT_MAX, DL_INFO);
 
 	// create some meta properties
+	active_row = -1;
 	current_row = new RKComponentPropertyInt (this, false, -1);
 	current_row->setInternal (true);
 	addChild ("current_row", current_row);		// NOTE: read-write
@@ -77,7 +78,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 		QString governor = xml->getStringAttribute (e, "connect", QString (), DL_INFO);
 		bool restorable = xml->getBoolAttribute (e, "restorable", true, DL_INFO);
 
-		while (child_map.contains (id)) {
+		while (child_map.contains (id) || (id.startsWith ("_row"))) {
 			RK_DO (qDebug ("optionset already contains a property named %s. Renaming to _%s", qPrintable (id), qPrintable (id)), PLUGIN, DL_ERROR);
 			id = "_" + id;
 		}
@@ -155,12 +156,12 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 		}
 	}
 
+	n_invalid_rows = n_unfinished_rows = 0;
 	update_timer.start ();
 }
 
 RKOptionSet::~RKOptionSet () {
 	RK_TRACE (PLUGIN);
-qDebug ("Optionset deleted");
 }
 
 RKComponent *RKOptionSet::createDisplay (bool show_index, QWidget *parent) {
@@ -192,8 +193,8 @@ RKComponent *RKOptionSet::createDisplay (bool show_index, QWidget *parent) {
 void RKOptionSet::addRow () {
 	RK_TRACE (PLUGIN);
 
-	int row = current_row->intValue () + 1;	// append feels more natural than insert, here
-	int nrows = row_count->intValue ();
+	int row = active_row + 1;	// append feels more natural than insert, here
+	int nrows = rowCount ();
 	if (row <= 0) row = nrows;
 
 	// adjust values
@@ -207,20 +208,22 @@ void RKOptionSet::addRow () {
 		column.old_values = values;
 	}
 	// adjust status info
-	for (int i = nrows - 1; i > row; --i) {
-		if (unfinished_rows.remove (i)) unfinished_rows.insert (i+1);
-		if (invalid_rows.remove (i)) invalid_rows.insert (i+1);
-	}
-	unfinished_rows.insert (row);
+	RowInfo ri;
+	ri.valid = false;
+	ri.finished = false;
+	rows.insert (row, ri);
+	++n_unfinished_rows;
+	++n_invalid_rows;
 
-	current_row->setIntValue (row);
+	row_count->setIntValue (nrows + 1);
+	current_row->setIntValue (active_row = row);
 }
 
 void RKOptionSet::removeRow () {
 	RK_TRACE (PLUGIN);
 
-	int row = current_row->intValue ();
-	int nrows = row_count->intValue ();
+	int row = active_row;
+	int nrows = rowCount ();
 	if (row < 0) {
 		RK_ASSERT (false);
 		return;
@@ -236,17 +239,16 @@ void RKOptionSet::removeRow () {
 		col->setValues (values);
 		column.old_values = values;
 	}
+
 	// adjust status info
-	invalid_rows.remove (row);
-	unfinished_rows.remove (row);
-	for (int i = row + 1; i < nrows; ++i) {
-		if (unfinished_rows.remove (i)) unfinished_rows.insert (i-1);
-		if (invalid_rows.remove (i)) invalid_rows.insert (i-1);
-	}
+	if (!rows[row].valid) --n_invalid_rows;
+	if (!rows[row].finished) --n_unfinished_rows;
+	rows.removeAt (row);
 
 	--row;
 	if ((row < 0) && (nrows > 1)) row = 0;
-	current_row->setIntValue (row);
+	row_count->setIntValue (nrows - 1);
+	current_row->setIntValue (active_row = row);
 }
 
 QString getDefaultValue (const RKOptionSet::ColumnInfo& ci, int row) {
@@ -256,6 +258,28 @@ QString getDefaultValue (const RKOptionSet::ColumnInfo& ci, int row) {
 	return ci.default_value;
 }
 
+void RKOptionSet::setRowState (int row, bool finished, bool valid) {
+	RK_ASSERT (row < rows.size ());
+	if (rows[row].finished != finished) {
+		rows[row].finished = finished;
+		finished ? --n_unfinished_rows : ++n_unfinished_rows;
+	}
+	if (rows[row].valid != valid) {
+		rows[row].valid = valid;
+		valid ? --n_invalid_rows : ++n_invalid_rows;
+	}
+}
+
+void RKOptionSet::changed () {
+	int row = active_row;
+
+	rows[row].full_row_serialization.clear ();
+	ComponentStatus s = RKComponent::recursiveStatus ();
+	setRowState (row, s != Processing, s == Satisfied);
+
+	RKComponent::changed ();
+}
+
 // This function is called when a property of the current row of the optionset changes
 void RKOptionSet::governingPropertyChanged (RKComponentPropertyBase *property) {
 	RK_TRACE (PLUGIN);
@@ -263,12 +287,11 @@ void RKOptionSet::governingPropertyChanged (RKComponentPropertyBase *property) {
 	if (updating_from_storage) return;
 	updating_from_contents = true;
 
-	int row = current_row->intValue ();
+	int row = active_row;
 	if (row < 0) {
 		RK_ASSERT (false);
 		return;
 	}
-	unfinished_rows.insert (row);
 
 	QList<RKComponentPropertyStringList *> cols = columns_to_update.values (property);
 	QTreeWidgetItem *display_item = 0;
@@ -309,7 +332,7 @@ void RKOptionSet::columnPropertyChanged (RKComponentPropertyBase *property) {
 void RKOptionSet::handleKeycolumnUpdate () {
 	RK_TRACE (PLUGIN);
 
-	int activate_row = current_row->intValue ();
+	int activate_row = activate_row;
 	QStringList new_keys = keycolumn->values ();
 	QStringList old_keys = column_map[keycolumn].old_values;
 	QMap<int, int> position_changes;
@@ -321,10 +344,6 @@ void RKOptionSet::handleKeycolumnUpdate () {
 			int old_pos = old_keys.indexOf (key);	// NOTE: -1 for key no longer present
 			position_changes.insert (pos, old_pos);
 		}
-	}
-	for (; pos < old_keys.size (); ++pos) {
-		invalid_rows.remove (pos);
-		unfinished_rows.remove (pos);
 	}
 
 	if (position_changes.isEmpty () && (old_keys.size () == new_keys.size ())) {
@@ -366,22 +385,25 @@ void RKOptionSet::handleKeycolumnUpdate () {
 	}
 
 	// update status info
-	QSet<int> new_unfinished_rows;
-	QSet<int> new_invalid_rows;
+	QList<RowInfo> new_row_info = rows;
+	for (int i = (new_keys.size () - new_row_info.size ()); i > 0; --i) new_row_info.append (RowInfo ());
 	for (int pos = 0; pos < new_keys.size (); ++pos) {
 		QMap<int, int>::const_iterator pit = position_changes.find (pos);
 		if (pit != position_changes.constEnd ()) {	// some change
 			int old_pos = pit.value ();
 			if (old_pos < 0) {	// a new key
-				new_unfinished_rows.insert (pos);
+				new_row_info.insert (pos, RowInfo ());
 			} else {	// old key changed position
-				if (unfinished_rows.contains (old_pos)) new_unfinished_rows.insert (pos);
-				if (invalid_rows.contains (old_pos)) new_invalid_rows.insert (pos);
+				new_row_info[pos] = rows[old_pos];
 			} // NOTE: not visible: old key is gone without replacement
 		}
 	}
-	unfinished_rows = new_unfinished_rows;
-	invalid_rows = new_invalid_rows;
+	rows = new_row_info.mid (0, new_keys.size ());
+	n_invalid_rows = n_unfinished_rows = 0;
+	for (int i = 0; i < rows.size (); ++i) {
+		if (!rows[i].finished) ++n_unfinished_rows;
+		if (!rows[i].valid) ++n_invalid_rows;
+	}
 
 	columns_which_have_been_updated_externally.clear ();
 	column_map[keycolumn].old_values = new_keys;
@@ -389,12 +411,15 @@ void RKOptionSet::handleKeycolumnUpdate () {
 	int nrows = new_keys.size ();
 	row_count->setIntValue (nrows);
 	activate_row = qMax (new_keys.size () - 1, activate_row);
-	current_row->setIntValue (activate_row);
+	current_row->setIntValue (active_row = activate_row);
 }
 
 void RKOptionSet::setContentsForRow (int row) {
 	RK_TRACE (PLUGIN);
 
+#warning ------------ TODO: If needed, initialize serialization to default values, first! ----------------
+#warning ------------ TODO: Then initialize from serialization ----------------
+#warning ------------ then apply column values as below ----------------
 	QMap<RKComponentPropertyStringList *, ColumnInfo>::const_iterator it = column_map.constBegin ();
 	for (; it != column_map.constEnd (); ++it) {
 		RKComponentPropertyStringList* col = it.key ();
@@ -429,7 +454,7 @@ qDebug ("Optionset update");
 	updating_from_storage = true;
 
 	int count = -1;
-	int activate_row = current_row->intValue ();
+	int activate_row = active_row;
 	QMap<RKComponentPropertyStringList *, ColumnInfo>::iterator it = column_map.begin ();
 
 	// first make sure the display has correct number of rows
@@ -459,14 +484,14 @@ qDebug ("Optionset update");
 
 			// NOTE: However, internal status info should have been adjusted to the new indices, already
 			if (values[row] != ci.old_values.value (row)) {
-				unfinished_rows.insert (row);
+				setRowState (row, false, false);
 			}
 		}
 		ci.old_values = values;
 	}
 
 #warning TODO: duplicate update
-	current_row->setIntValue (activate_row);
+	current_row->setIntValue (active_row = activate_row);
 	setContentsForRow (activate_row);
 
 	row_count->setIntValue (count);
@@ -503,14 +528,26 @@ void RKOptionSet::currentRowPropertyChanged (RKComponentPropertyBase *property) 
 	RK_TRACE (PLUGIN);
 
 	RK_ASSERT (property == current_row);
+	int row = current_row->intValue ();
+	if (row != active_row) {	// May or may not be the case. True, e.g. if a row was removed
+		storeRowSerialization (active_row);
+		active_row = row;
+	}
+
 	if (display) {
 		QTreeWidgetItem *item = 0;
-		int row = current_row->intValue ();
 		if (row >= 0) item = display->topLevelItem (row);
 		if (item != display->currentItem ()) display->setCurrentItem (item);
 	}
-#warning: What if the current row is invalid. Should we refuse to switch? Or simply keep track of the fact? What if it is still processing?
+
 	update_timer.start ();
+}
+
+void RKOptionSet::storeRowSerialization (int row) {
+	RK_TRACE (PLUGIN);
+
+	if (row < 0) return;	// No row was active
+#warning ---------------- TODO ----------------------
 }
 
 void RKOptionSet::currentRowChanged (QTreeWidgetItem *new_row) {
@@ -527,13 +564,13 @@ RKComponent::ComponentStatus RKOptionSet::recursiveStatus () {
 
 	ComponentStatus s = RKComponent::recursiveStatus ();
 	if (s == Dead) return s;
-	if (!unfinished_rows.isEmpty ()) return Processing;
+	if (n_unfinished_rows > 0) return Processing;
 	if (update_timer.isActive ()) return Processing;
 	return s;
 }
 
 bool RKOptionSet::isValid () {
-	if (!invalid_rows.isEmpty ()) return false;
+	if (n_invalid_rows > n_unfinished_rows) return false;
 	int count = row_count->intValue ();
 	if (count < min_rows) return false;
 	if ((count > 0) && (count < min_rows_if_any)) return false;
