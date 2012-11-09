@@ -37,9 +37,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 
 	XMLHelper *xml = XMLHelper::getStaticHelper ();
 	updating_from_contents = updating_from_storage = false;
-	connect (&update_timer, SIGNAL (timeout()), this, SLOT (updateStatusAndDisplay()));
-	update_timer.setSingleShot (true);
-	update_timer.setInterval (0);
+	last_known_status = Processing;
 
 	min_rows = xml->getIntAttribute (element, "min_rows", 0, DL_INFO);
 	min_rows_if_any = xml->getIntAttribute (element, "min_rows_if_any", 1, DL_INFO);
@@ -66,6 +64,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	builder->buildElement (xml->getChildElement (element, "content", DL_ERROR), contents_box, false);	// NOTE that parent widget != parent component, here, by intention. The point is that the display should not be disabled along with the contents
 	builder->makeConnections ();
 	addChild ("contents", contents_container);
+	contents_container->fetchPropertyValuesRecursive (&default_row_state);
 
 	// create columns
 	XMLChildList options = xml->getChildElements (element, "option", DL_WARNING);
@@ -88,6 +87,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 		col_inf.restorable = restorable;
 		col_inf.governor = governor;
 #warning TODO: Do we have to wait for the parent component to settle before (re-)fetching defaults?
+#warning -------------- TODO ------------- Don't store defaults per column. Use only implicit defaults, instead.
 		if (e.hasAttribute ("default")) col_inf.default_value = xml->getStringAttribute (e, "default", QString (), DL_ERROR);
 		else if (!governor.isEmpty ()) col_inf.default_value = contents_container->fetchStringValue (governor);
 		if (!label.isEmpty ()) {
@@ -110,6 +110,9 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 		keycolumn = static_cast<RKComponentPropertyStringList*> (child_map.value (keycol));
 		if (!column_map.contains (keycolumn)) {
 			RK_DO (qDebug ("optionset does not contain a column named %s. Falling back to manual insertion mode", qPrintable (keycol)), PLUGIN, DL_ERROR);
+			keycolumn = 0;
+		} else if (!column_map[keycolumn].restorable) {
+			RK_DO (qDebug ("keycolumn (%s) is not marked as restorable. Falling back to manual insertion mode", qPrintable (keycol)), PLUGIN, DL_ERROR);
 			keycolumn = 0;
 		}
 	}
@@ -141,13 +144,14 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	}
 
 	if (display) {		// may or may not have been created
-		display->setColumnCount (visible_column_labels.size ());
-		display->setHeaderLabels (visible_column_labels);
+		model->column_labels = visible_column_labels;
 		display->setItemsExpandable (false);
 		display->setRootIsDecorated (false);
 		if (display_show_index) display->resizeColumnToContents (0);
 		else display->setColumnHidden (0, true);
-		connect (display, SIGNAL (currentItemChanged (QTreeWidgetItem*, QTreeWidgetItem*)), this, SLOT (currentRowChanged (QTreeWidgetItem*)));
+		model = new RKOptionSetDisplayModel (this);
+		display->setModel (model);
+		connect (display, SIGNAL (rowChanged(int)), this, SLOT (currentRowChanged (int)));
 
 		if (keycolumn) display_buttons->setVisible (false);
 		else {
@@ -157,7 +161,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	}
 
 	n_invalid_rows = n_unfinished_rows = 0;
-	update_timer.start ();
+	updateVisuals ();
 }
 
 RKOptionSet::~RKOptionSet () {
@@ -176,7 +180,7 @@ RKComponent *RKOptionSet::createDisplay (bool show_index, QWidget *parent) {
 	if (display) {
 		RK_DO (qDebug ("cannot create more than one optiondisplay per optionset"), PLUGIN, DL_ERROR);
 	} else {
-		display = new QTreeWidget (box);
+		display = new QTreeView (box);
 		display_show_index = show_index;
 	}
 
@@ -196,7 +200,9 @@ void RKOptionSet::addRow () {
 	int row = active_row + 1;	// append feels more natural than insert, here
 	int nrows = rowCount ();
 	if (row <= 0) row = nrows;
+	RK_ASSERT (!keycolumn);
 
+	if (display) model->beginInsertRows (QModelIndex (), row, row);
 	// adjust values
 	QMap<RKComponentPropertyStringList *, ColumnInfo>::iterator it = column_map.begin ();
 	for (; it != column_map.end (); ++it) {
@@ -205,10 +211,10 @@ void RKOptionSet::addRow () {
 		QStringList values = col->values ();
 		values.insert (row, getDefaultValue (column, row));
 		col->setValues (values);
-		column.old_values = values;
 	}
+
 	// adjust status info
-	RowInfo ri;
+	RowInfo ri (default_row_state);
 	ri.valid = false;
 	ri.finished = false;
 	rows.insert (row, ri);
@@ -217,6 +223,7 @@ void RKOptionSet::addRow () {
 
 	row_count->setIntValue (nrows + 1);
 	current_row->setIntValue (active_row = row);
+	if (display) model->endInsertRows ();
 }
 
 void RKOptionSet::removeRow () {
@@ -228,7 +235,9 @@ void RKOptionSet::removeRow () {
 		RK_ASSERT (false);
 		return;
 	}
+	RK_ASSERT (!keycolumn);
 
+	if (display) model->beginRemoveRows (QModelIndex (), row, row);
 	// adjust values
 	QMap<RKComponentPropertyStringList *, ColumnInfo>::iterator it = column_map.begin ();
 	for (; it != column_map.end (); ++it) {
@@ -237,7 +246,6 @@ void RKOptionSet::removeRow () {
 		QStringList values = col->values ();
 		values.removeAt (row);
 		col->setValues (values);
-		column.old_values = values;
 	}
 
 	// adjust status info
@@ -249,6 +257,7 @@ void RKOptionSet::removeRow () {
 	if ((row < 0) && (nrows > 1)) row = 0;
 	row_count->setIntValue (nrows - 1);
 	current_row->setIntValue (active_row = row);
+	if (display) model->endRemoveRows ();
 }
 
 QString getDefaultValue (const RKOptionSet::ColumnInfo& ci, int row) {
@@ -274,8 +283,14 @@ void RKOptionSet::changed () {
 	int row = active_row;
 
 	rows[row].full_row_serialization.clear ();
-	ComponentStatus s = RKComponent::recursiveStatus ();
-	setRowState (row, s != Processing, s == Satisfied);
+	ComponentStatus cs = contents_container->recursiveStatus ();
+	setRowState (row, cs != Processing, cs == Satisfied);
+
+	ComponentStatus s = recursiveStatus ();
+	if (s != last_known_status) {
+		last_known_status = s;
+		updateVisuals ();
+	}
 
 	RKComponent::changed ();
 }
@@ -294,19 +309,15 @@ void RKOptionSet::governingPropertyChanged (RKComponentPropertyBase *property) {
 	}
 
 	QList<RKComponentPropertyStringList *> cols = columns_to_update.values (property);
-	QTreeWidgetItem *display_item = 0;
-	if (display) display_item = display->topLevelItem (row);
 	for (int i = 0; i < cols.size (); ++i) {
 		RKComponentPropertyStringList *target = cols.at (i);
 		ColumnInfo &inf = column_map[target];
 		QString value = property->value (inf.governor_modifier);
 		target->setValueAt (row, value);
 
-		if (display_item && (inf.display_index >= 0)) {
-			display_item->setText (inf.display_index, value);
+		if (model && (inf.display_index >= 0)) {
+			model->dataChanged (model->index (inf.display_index, row), model->index (inf.display_index, row));
 		}
-
-		inf.old_values = target->values ();
 	}
 
 	updating_from_contents = false;
@@ -320,13 +331,14 @@ void RKOptionSet::columnPropertyChanged (RKComponentPropertyBase *property) {
 
 	RKComponentPropertyStringList *target = static_cast<RKComponentPropertyStringList *> (property);
 	RK_ASSERT (column_map.contains (target));
-	update_timer.start ();
-
-	if (target == keycolumn) {
-		handleKeycolumnUpdate ();
-	} else {
-		columns_which_have_been_updated_externally.insert (target);
+	ColumnInfo& ci = column_map[target];
+	if (!ci.restorable) {
+		RK_ASSERT (false);
+		return;
 	}
+
+	if (target == keycolumn) handleKeycolumnUpdate ();
+	else if (model) model->dataChanged (model->index (ci.display_index, 0), model->index (ci.display_index, model->rowCount ()));
 }
 
 void RKOptionSet::handleKeycolumnUpdate () {
@@ -334,7 +346,6 @@ void RKOptionSet::handleKeycolumnUpdate () {
 
 	int activate_row = activate_row;
 	QStringList new_keys = keycolumn->values ();
-	QStringList old_keys = column_map[keycolumn].old_values;
 	QMap<int, int> position_changes;
 
 	int pos;
@@ -347,7 +358,6 @@ void RKOptionSet::handleKeycolumnUpdate () {
 	}
 
 	if (position_changes.isEmpty () && (old_keys.size () == new_keys.size ())) {
-		columns_which_have_been_updated_externally.clear ();
 		return;	// no change
 	}
 
@@ -356,11 +366,11 @@ void RKOptionSet::handleKeycolumnUpdate () {
 	for (; it != column_map.end (); ++it) {
 		RKComponentPropertyStringList* col = it.key ();
 		ColumnInfo &column = it.value ();
-		if (col == keycolumn) continue;
+		if (column.restorable) continue;
 
 		// Ok, we'll have to adjust this column. We start by copying the old values, and padding to the
 		// new length (if that is greater than the old).
-		QStringList old_values = column.old_values;
+		QStringList old_values = col->values ();
 		QStringList new_values = old_values;
 		for (int i = (new_keys.size () - new_values.size ()); i > 0; --i) new_values.append (QString ());
 
@@ -380,19 +390,18 @@ void RKOptionSet::handleKeycolumnUpdate () {
 
 		// strip excess length (if any), and apply
 		new_values = new_values.mid (0, new_keys.size ());
-		column.old_values = new_values;		// Because these were not actually changed, but merely re-sorted!
-		if (!columns_which_have_been_updated_externally.contains (col)) col->setValues (new_values);
+		col->setValues (new_values);
 	}
 
 	// update status info
 	QList<RowInfo> new_row_info = rows;
-	for (int i = (new_keys.size () - new_row_info.size ()); i > 0; --i) new_row_info.append (RowInfo ());
+	for (int i = (new_keys.size () - new_row_info.size ()); i > 0; --i) new_row_info.append (RowInfo (default_row_state));
 	for (int pos = 0; pos < new_keys.size (); ++pos) {
 		QMap<int, int>::const_iterator pit = position_changes.find (pos);
 		if (pit != position_changes.constEnd ()) {	// some change
 			int old_pos = pit.value ();
 			if (old_pos < 0) {	// a new key
-				new_row_info.insert (pos, RowInfo ());
+				new_row_info.insert (pos, RowInfo (default_row_state));
 			} else {	// old key changed position
 				new_row_info[pos] = rows[old_pos];
 			} // NOTE: not visible: old key is gone without replacement
@@ -405,13 +414,14 @@ void RKOptionSet::handleKeycolumnUpdate () {
 		if (!rows[i].valid) ++n_invalid_rows;
 	}
 
-	columns_which_have_been_updated_externally.clear ();
-	column_map[keycolumn].old_values = new_keys;
+	old_keys = new_keys;
 
 	int nrows = new_keys.size ();
 	row_count->setIntValue (nrows);
-	activate_row = qMax (new_keys.size () - 1, activate_row);
+	activate_row = qMin (nrows - 1, activate_row);
 	current_row->setIntValue (active_row = activate_row);
+	if (model) model->triggerReset ();
+	changed ();
 }
 
 void RKOptionSet::setContentsForRow (int row) {
@@ -443,75 +453,10 @@ void RKOptionSet::setContentsForRow (int row) {
 	}
 }
 
-void RKOptionSet::updateStatusAndDisplay () {
-	RK_TRACE (PLUGIN);
-#warning TODO: way too many updates are going on
-qDebug ("Optionset update");
-	columns_which_have_been_updated_externally.clear ();
-
-	RK_ASSERT (!updating_from_contents);
-	RK_ASSERT (!updating_from_storage);
-	updating_from_storage = true;
-
-	int count = -1;
-	int activate_row = active_row;
-	QMap<RKComponentPropertyStringList *, ColumnInfo>::iterator it = column_map.begin ();
-
-	// first make sure the display has correct number of rows
-	if (it != column_map.end ()) count = it.key ()->values ().size ();
-	if (display) {
-		while (display->topLevelItemCount () != count) {
-			if (count > display->topLevelItemCount ()) {
-				display->addTopLevelItem (new QTreeWidgetItem (QStringList ()));
-				activate_row = count - 1;
-			} else {
-				delete (display->takeTopLevelItem (0));
-				activate_row = qMax (count - 1, activate_row);
-			}
-		}
-	}
-
-	// now check for any changed values, updating display and row status
-	for (; it != column_map.end (); ++it) {
-		RKComponentPropertyStringList* col = it.key ();
-		ColumnInfo &ci = it.value ();
-
-		QStringList values = col->values ();
-		for (int row = values.size () - 1; row >= 0; --row) {
-			if (display && (ci.display_index >= 0)) {	// NOTE: Updating the display is done for all rows, even seemingly unchanged ones. Rows may still have been shuffled to a new position, and we did not keep track of that.
-				display->topLevelItem (row)->setText (ci.display_index, values[row]);
-			}
-
-			// NOTE: However, internal status info should have been adjusted to the new indices, already
-			if (values[row] != ci.old_values.value (row)) {
-				setRowState (row, false, false);
-			}
-		}
-		ci.old_values = values;
-	}
-
-#warning TODO: duplicate update
-	current_row->setIntValue (active_row = activate_row);
-	setContentsForRow (activate_row);
-
-	row_count->setIntValue (count);
-	contents_container->enablednessProperty ()->setBoolValue (activate_row >= 0);
-	updateVisuals ();
-	changed ();	// needed, for the unlikely case that no change notification was triggered above, since recursiveStatus() returns Processing while updating
-
-	updating_from_storage = false;
-}
-
 void RKOptionSet::updateVisuals () {
 	RK_TRACE (PLUGIN);
 
 	if (!display) return;
-
-	if (display_show_index) {
-		for (int row = display->topLevelItemCount () - 1; row >= 0; --row) {
-			display->topLevelItem (row)->setText (0, QString::number (row + 1));
-		}
-	}
 
 	QPalette palette = display->header ()->palette ();
 	if (isInactive ()) {
@@ -532,15 +477,12 @@ void RKOptionSet::currentRowPropertyChanged (RKComponentPropertyBase *property) 
 	if (row != active_row) {	// May or may not be the case. True, e.g. if a row was removed
 		storeRowSerialization (active_row);
 		active_row = row;
+		contents_container->enablednessProperty ()->setBoolValue (active_row >= 0);
 	}
 
 	if (display) {
-		QTreeWidgetItem *item = 0;
-		if (row >= 0) item = display->topLevelItem (row);
-		if (item != display->currentItem ()) display->setCurrentItem (item);
+		if (row >= 0) display->setCurrentIndex (model->index (1, row));
 	}
-
-	update_timer.start ();
 }
 
 void RKOptionSet::storeRowSerialization (int row) {
@@ -550,11 +492,11 @@ void RKOptionSet::storeRowSerialization (int row) {
 #warning ---------------- TODO ----------------------
 }
 
-void RKOptionSet::currentRowChanged (QTreeWidgetItem *new_row) {
+void RKOptionSet::currentRowChanged (int new_row) {
 	RK_TRACE (PLUGIN);
 
 	RK_ASSERT (display);
-	current_row->setIntValue (display->indexOfTopLevelItem (new_row));
+	current_row->setIntValue (new_row);
 	// --> currentRowPropertyChanged ()
 }
 
@@ -565,7 +507,6 @@ RKComponent::ComponentStatus RKOptionSet::recursiveStatus () {
 	ComponentStatus s = RKComponent::recursiveStatus ();
 	if (s == Dead) return s;
 	if (n_unfinished_rows > 0) return Processing;
-	if (update_timer.isActive ()) return Processing;
 	return s;
 }
 
@@ -577,5 +518,41 @@ bool RKOptionSet::isValid () {
 	if (count > max_rows) return false;
 	return true;
 }
+
+RKOptionSetDisplayModel::RKOptionSetDisplayModel ( QObject* parent ) : QAbstractTableModel ( parent ) {
+#warning ------------ TODO ------------------
+}
+
+RKOptionSetDisplayModel::~RKOptionSetDisplayModel() {
+#warning ------------ TODO ------------------
+}
+
+int RKOptionSetDisplayModel::columnCount (const QModelIndex& parent) const {
+	return column_labels.size ();
+}
+
+int RKOptionSetDisplayModel::rowCount ( const QModelIndex& parent ) const {
+#warning ------------ TODO ------------------
+	return 0;
+}
+
+QVariant RKOptionSetDisplayModel::data ( const QModelIndex& index, int role ) const {
+#warning ------------ TODO ------------------
+	return QVariant ();
+}
+
+void RKOptionSetDisplayModel::doResetNow() {
+#warning ------------ TODO ------------------
+}
+
+QVariant RKOptionSetDisplayModel::headerData ( int section, Qt::Orientation orientation, int role ) const {
+#warning ------------ TODO ------------------
+    return QAbstractItemModel::headerData ( section, orientation, role );
+}
+
+void RKOptionSetDisplayModel::triggerReset() {
+#warning ------------ TODO ------------------
+}
+
 
 #include "rkoptionset.moc"

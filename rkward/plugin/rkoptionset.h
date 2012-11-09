@@ -25,14 +25,15 @@
 #include <QTimer>
 #include <QSet>
 
-class QTreeWidget;
-class QTreeWidgetItem;
+class QTreeView;
 class QPushButton;
+class RKOptionSetDisplayModel;
 
 /** An RKOptionSet provides a group of options for an arbitrary number of "rows". E.g. different line colors for each of a group of variables.
  * 
  * TODO
  * - serialization / de-serialization. We will need to make RKComponentBase::fetchPropertyValuesRecursive() and RKComponent::setPropertyValues() virtual, and reimplement them.
+ * - clear all compiler TODO warnings
  * 
   *@author Thomas Friedrichsmeier
   */
@@ -54,10 +55,8 @@ private slots:
 	void currentRowPropertyChanged (RKComponentPropertyBase *property);
 	void addRow ();
 	void removeRow ();
-	void updateStatusAndDisplay ();
-	void currentRowChanged (QTreeWidgetItem *item);
+	void currentRowChanged (int new_row);
 private:
-	void initDisplay ();
 	void updateVisuals ();
 	int rowCount () const { return row_count->intValue (); };
 	void setRowState (int row, bool finished, bool valid);
@@ -69,6 +68,7 @@ private:
 /** for option sets which are "driven" (i.e. the user cannot simply add / remove rows, directly), this holds the key column, controlling addition / removal of rows in the set.
   * if this length (or order) is changed in this row, it will also be changed in the other rows. */
 	RKComponentPropertyStringList *keycolumn;
+	QStringList old_keys;
 
 	/** Map of properties (in the contents region) to columns which need to be updated, when the property changes. */
 	QMultiMap<RKComponentPropertyBase *, RKComponentPropertyStringList *> columns_to_update;
@@ -80,12 +80,11 @@ private:
 		QString default_value;
 		int display_index;
 		bool restorable;
-		QStringList old_values;
 	};
 	/** Map of all columns to their meta info */
 	QMap<RKComponentPropertyStringList *, ColumnInfo> column_map;
 	struct RowInfo {
-		RowInfo () : valid (false), finished (false) {};
+		RowInfo (QMap<QString, QString> initial_values) : valid (false), finished (false), full_row_serialization (initial_values) {};
 		bool valid;		/**< has finished processing and is known to be valid */
 		bool finished;	/**< has finished processing */
 		QMap<QString, QString> full_row_serialization;	/**< complete serialization of this row, (see RKComponent::fetchPropertyValuesRecursive()) */
@@ -96,12 +95,14 @@ private:
 	int active_row;
 
 	RKComponent *contents_container;
-	QTreeWidget *display;
 	QWidget *display_buttons;
 	QPushButton *remove_button;
 	QPushButton *add_button;
 	bool display_show_index;
-	QTimer update_timer;
+	ComponentStatus last_known_status;
+
+	RKOptionSetDisplayModel* model;
+	QTreeView *display;
 
 	int min_rows;
 	int min_rows_if_any;
@@ -113,11 +114,29 @@ private:
 	void handleKeycolumnUpdate ();
 /** Sets the contents from the values in given row */
 	void setContentsForRow (int row);
-/** Columns which have already been updated before an update of the keycolumn, and thus do not need re-sorting, if the keycolumn is updated */
-	QSet<RKComponentPropertyStringList *> columns_which_have_been_updated_externally;
 
 /** get the default value for the given column, row. */
 	friend QString getDefaultValue (const ColumnInfo& ci, int row);
+};
+
+class RKOptionSetDisplayModel : QAbstractTableModel {
+	Q_OBJECT
+private:
+friend class RKOptionSet;
+	RKOptionSetDisplayModel (QObject* parent);
+	virtual ~RKOptionSetDisplayModel ();
+	int rowCount (const QModelIndex & parent = QModelIndex()) const;
+	int columnCount (const QModelIndex & parent = QModelIndex()) const;
+	QVariant data (const QModelIndex& index, int role = Qt::DisplayRole) const;
+	QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
+	void currentChanged (const QModelIndex& current, const QModelIndex& previous);
+	void triggerReset ();
+	QTimer reset_timer;
+	QStringList column_labels;
+private slots:
+	void doResetNow ();
+signals:
+	void rowChanged (int new_row);
 };
 
 #endif
