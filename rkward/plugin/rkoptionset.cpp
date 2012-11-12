@@ -87,20 +87,23 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 		col_inf.restorable = restorable;
 		col_inf.governor = governor;
 #warning TODO: Do we have to wait for the parent component to settle before (re-)fetching defaults?
-#warning -------------- TODO ------------- Don't store defaults per column. Use only implicit defaults, instead.
+#warning -------------- TODO ------------- Do not store defaults per column. Use only implicit defaults, instead.
 		if (e.hasAttribute ("default")) col_inf.default_value = xml->getStringAttribute (e, "default", QString (), DL_ERROR);
 		else if (!governor.isEmpty ()) col_inf.default_value = contents_container->fetchStringValue (governor);
-		if (!label.isEmpty ()) {
-			col_inf.display_index = visible_column_labels.size ();
-			col_inf.column_label = label;
-			visible_column_labels.append (label);
-		} else {
-			col_inf.display_index = -1;
-		}
 
 		RKComponentPropertyStringList *column_property = new RKComponentPropertyStringList (this, false);
 		addChild (id, column_property);
 		connect (column_property, SIGNAL (valueChanged(RKComponentPropertyBase *)), this, SLOT (columnPropertyChanged(RKComponentPropertyBase *)));
+
+		if (!label.isEmpty ()) {
+			col_inf.display_index = visible_column_labels.size ();
+			col_inf.column_label = label;
+			visible_column_labels.append (label);
+			visible_columns.append (column_property);
+		} else {
+			col_inf.display_index = -1;
+		}
+
 		column_map.insert (column_property, col_inf);
 	}
 
@@ -242,7 +245,6 @@ void RKOptionSet::removeRow () {
 	QMap<RKComponentPropertyStringList *, ColumnInfo>::iterator it = column_map.begin ();
 	for (; it != column_map.end (); ++it) {
 		RKComponentPropertyStringList* col = it.key ();
-		ColumnInfo &column = it.value ();
 		QStringList values = col->values ();
 		values.removeAt (row);
 		col->setValues (values);
@@ -519,39 +521,66 @@ bool RKOptionSet::isValid () {
 	return true;
 }
 
-RKOptionSetDisplayModel::RKOptionSetDisplayModel ( QObject* parent ) : QAbstractTableModel ( parent ) {
-#warning ------------ TODO ------------------
+RKOptionSetDisplayModel::RKOptionSetDisplayModel (RKOptionSet* parent) : QAbstractTableModel (parent) {
+	RK_TRACE (PLUGIN);
+	set = parent;
+	connect (&reset_timer, SIGNAL (timeout()), this, SLOT (doResetNow()));
+	reset_timer.setInterval (0);
+	reset_timer.setSingleShot (true);
 }
 
-RKOptionSetDisplayModel::~RKOptionSetDisplayModel() {
-#warning ------------ TODO ------------------
+RKOptionSetDisplayModel::~RKOptionSetDisplayModel () {
+	RK_TRACE (PLUGIN);
 }
 
 int RKOptionSetDisplayModel::columnCount (const QModelIndex& parent) const {
+	if (parent.isValid ()) return 0;
 	return column_labels.size ();
 }
 
-int RKOptionSetDisplayModel::rowCount ( const QModelIndex& parent ) const {
-#warning ------------ TODO ------------------
-	return 0;
+int RKOptionSetDisplayModel::rowCount (const QModelIndex& parent) const {
+	if (parent.isValid ()) return 0;
+	return set->rowCount ();
 }
 
-QVariant RKOptionSetDisplayModel::data ( const QModelIndex& index, int role ) const {
-#warning ------------ TODO ------------------
+QVariant RKOptionSetDisplayModel::data (const QModelIndex& index, int role) const {
+	if (!index.isValid ()) return QVariant ();
+	int row = index.row ();
+	int column = index.column ();
+
+	if (role == Qt::DisplayRole) {
+		if (column == 0) return QVariant (QString::number (row + 1));
+		RKComponentPropertyStringList *p = set->visible_columns.value (column - 1);
+		if (p) {
+			return QVariant (p->valueAt (row));
+		} else {
+			RK_ASSERT (false);
+		}
+	}
+
 	return QVariant ();
 }
 
-void RKOptionSetDisplayModel::doResetNow() {
-#warning ------------ TODO ------------------
+void RKOptionSetDisplayModel::doResetNow () {
+	RK_TRACE (PLUGIN);
+	emit (layoutChanged ());
 }
 
-QVariant RKOptionSetDisplayModel::headerData ( int section, Qt::Orientation orientation, int role ) const {
-#warning ------------ TODO ------------------
-    return QAbstractItemModel::headerData ( section, orientation, role );
+QVariant RKOptionSetDisplayModel::headerData (int section, Qt::Orientation orientation, int role) const {
+	if (role == Qt::DisplayRole) {
+		if (orientation == Qt::Horizontal) {
+			return (column_labels.value (section));
+		}
+	}
+	return QVariant ();
 }
 
 void RKOptionSetDisplayModel::triggerReset() {
-#warning ------------ TODO ------------------
+	RK_TRACE (PLUGIN);
+	if (!reset_timer.isActive ()) {
+		emit (layoutAboutToBeChanged ());
+		reset_timer.start ();
+	}
 }
 
 

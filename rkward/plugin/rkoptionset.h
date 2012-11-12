@@ -57,6 +57,7 @@ private slots:
 	void removeRow ();
 	void currentRowChanged (int new_row);
 private:
+friend class RKOptionSetDisplayModel;
 	void updateVisuals ();
 	int rowCount () const { return row_count->intValue (); };
 	void setRowState (int row, bool finished, bool valid);
@@ -83,6 +84,7 @@ private:
 	};
 	/** Map of all columns to their meta info */
 	QMap<RKComponentPropertyStringList *, ColumnInfo> column_map;
+	QList<RKComponentPropertyStringList*> visible_columns;
 	struct RowInfo {
 		RowInfo (QMap<QString, QString> initial_values) : valid (false), finished (false), full_row_serialization (initial_values) {};
 		bool valid;		/**< has finished processing and is known to be valid */
@@ -123,7 +125,7 @@ class RKOptionSetDisplayModel : QAbstractTableModel {
 	Q_OBJECT
 private:
 friend class RKOptionSet;
-	RKOptionSetDisplayModel (QObject* parent);
+	RKOptionSetDisplayModel (RKOptionSet* parent);
 	virtual ~RKOptionSetDisplayModel ();
 	int rowCount (const QModelIndex & parent = QModelIndex()) const;
 	int columnCount (const QModelIndex & parent = QModelIndex()) const;
@@ -133,6 +135,7 @@ friend class RKOptionSet;
 	void triggerReset ();
 	QTimer reset_timer;
 	QStringList column_labels;
+	RKOptionSet *set;
 private slots:
 	void doResetNow ();
 signals:
