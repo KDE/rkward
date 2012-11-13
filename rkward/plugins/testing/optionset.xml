@@ -48,7 +48,7 @@
 					</content>
 					<option id="object" external="true"/>
 					<option id="objshort" label="Object" external="true"/>
-					<option id="summary" connect="summary.text"/>
+					<option id="summary2" connect="summary.text"/>
 				</optionset>
 			</tab>
 			<tab label="Driven set">
@@ -65,13 +65,13 @@
 								<optiondisplay index="false"/>
 								<checkbox id="dummybox" label="This dummy option is always disabled"/>
 								<input id="commenta" label="Comment A"/>
-								<input id="commentb" label="Comment B"/>
+								<input id="commentb" label="Comment B" initial="This is a default entry. Change it, if you like."/>
 							</frame>
 						</content>
 						<option id="var" label="test" external="true"/>
 						<option id="varname" label="Varname" external="true"/>
 						<option id="ca" label="Comment A" connect="commenta.text"/>
-						<option id="cb" connect="commentb.text" default="This is a default entry. Change it, if you like."/>
+						<option id="cb" connect="commentb.text"/>
 					</optionset>
 				</row>
 			</tab>

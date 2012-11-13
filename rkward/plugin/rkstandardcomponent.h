@@ -2,7 +2,7 @@
                           rkstandardcomponent  -  description
                              -------------------
     begin                : Sun Feb 19 2006
-    copyright            : (C) 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007, 2009, 2010, 2012 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -81,6 +81,8 @@ public:
 
 /** Return the GUI-scripting handler (creating it, if needed) */
 	RKComponentScriptingProxy* scriptingProxy ();
+signals:
+	void standardInitializationComplete ();
 public slots:
 /** this gets called by the script-backend, when it's done. Might enable the
 	submit button or destruct the plugin. */

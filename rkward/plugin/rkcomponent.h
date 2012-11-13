@@ -185,6 +185,8 @@ public:
 	RKComponent *parentComponent () const { return _parent; };
 /** The standard component containing this component (if any). If @param id_adjust is given, it will be set to a relative path to the standard component. */
 	RKStandardComponent *standardComponent (QString *id_adjust=0);
+/** Like standardcomponent, but will return the topmost component in case of embedding. */
+	RKStandardComponent *topmostStandardComponent ();
 
 /** Find the id of this component. NOTE: this is slow. Better to store the id in the first place, if needed */
 	QString getIdInParent () const;

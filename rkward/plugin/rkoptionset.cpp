@@ -36,7 +36,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	RK_TRACE (PLUGIN);
 
 	XMLHelper *xml = XMLHelper::getStaticHelper ();
-	updating_from_contents = updating_from_storage = false;
+	updating = false;
 	last_known_status = Processing;
 
 	min_rows = xml->getIntAttribute (element, "min_rows", 0, DL_INFO);
@@ -64,8 +64,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	builder->buildElement (xml->getChildElement (element, "content", DL_ERROR), contents_box, false);	// NOTE that parent widget != parent component, here, by intention. The point is that the display should not be disabled along with the contents
 	builder->makeConnections ();
 	addChild ("contents", contents_container);
-	contents_container->fetchPropertyValuesRecursive (&default_row_state);
-	contents_container->enablednessProperty ()->setBoolValue (false);	// no current row; Do this *after* fetching default values, however
+	connect (standardComponent (), SIGNAL (standardInitializationComplete()), this, SLOT (fetchDefaults()));
 
 	// create columns
 	XMLChildList options = xml->getChildElements (element, "option", DL_WARNING);
@@ -87,10 +86,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 		col_inf.column_name = id;
 		col_inf.external = external;
 		col_inf.governor = governor;
-#warning TODO: Do we have to wait for the parent component to settle before (re-)fetching defaults?
-#warning -------------- TODO ------------- Do not store defaults per column. Use only implicit defaults, instead.
-		if (e.hasAttribute ("default")) col_inf.default_value = xml->getStringAttribute (e, "default", QString (), DL_ERROR);
-		else if (!governor.isEmpty ()) col_inf.default_value = contents_container->fetchStringValue (governor);
+		if (external && e.hasAttribute ("default")) col_inf.default_value = xml->getStringAttribute (e, "default", QString (), DL_ERROR);
 
 		RKComponentPropertyStringList *column_property = new RKComponentPropertyStringList (this, false);
 		addChild (id, column_property);
@@ -172,6 +168,13 @@ RKOptionSet::~RKOptionSet () {
 	RK_TRACE (PLUGIN);
 }
 
+void RKOptionSet::fetchDefaults () {
+	RK_TRACE (PLUGIN);
+	RK_ASSERT (default_row_state.isEmpty ());
+	contents_container->fetchPropertyValuesRecursive (&default_row_state);
+	contents_container->enablednessProperty ()->setBoolValue (rowCount () > 0);	// no current row; Do this *after* fetching default values, however. Otherwise most values will *not* be read, as the element is disabled
+}
+
 RKComponent *RKOptionSet::createDisplay (bool show_index, QWidget *parent) {
 	RK_TRACE (PLUGIN);
 
@@ -202,6 +205,8 @@ RKComponent *RKOptionSet::createDisplay (bool show_index, QWidget *parent) {
 void RKOptionSet::addRow () {
 	RK_TRACE (PLUGIN);
 
+	storeRowSerialization (active_row);
+
 	int row = active_row + 1;	// append feels more natural than insert, here
 	int nrows = rowCount ();
 	if (row <= 0) row = nrows;
@@ -209,6 +214,7 @@ void RKOptionSet::addRow () {
 
 	if (display) model->beginInsertRows (QModelIndex (), row, row);
 	// adjust values
+	updating = true;
 	QMap<RKComponentPropertyStringList *, ColumnInfo>::iterator it = column_map.begin ();
 	for (; it != column_map.end (); ++it) {
 		RKComponentPropertyStringList* col = it.key ();
@@ -217,6 +223,7 @@ void RKOptionSet::addRow () {
 		values.insert (row, getDefaultValue (column, row));
 		col->setValues (values);
 	}
+	updating = false;
 
 	// adjust status info
 	RowInfo ri (default_row_state);
@@ -227,9 +234,8 @@ void RKOptionSet::addRow () {
 	++n_invalid_rows;
 
 	row_count->setIntValue (nrows + 1);
-	storeRowSerialization (active_row);
 	current_row->setIntValue (active_row = row);
-	setContentsForRow (row);
+	setContentsForRow (active_row);
 	if (display) model->endInsertRows ();
 
 	changed ();
@@ -247,6 +253,7 @@ void RKOptionSet::removeRow () {
 	RK_ASSERT (!keycolumn);
 
 	if (display) model->beginRemoveRows (QModelIndex (), row, row);
+	updating = true;
 	// adjust values
 	QMap<RKComponentPropertyStringList *, ColumnInfo>::iterator it = column_map.begin ();
 	for (; it != column_map.end (); ++it) {
@@ -255,6 +262,7 @@ void RKOptionSet::removeRow () {
 		values.removeAt (row);
 		col->setValues (values);
 	}
+	updating = false;
 
 	// adjust status info
 	if (!rows[row].valid) --n_invalid_rows;
@@ -317,8 +325,8 @@ void RKOptionSet::governingPropertyChanged (RKComponentPropertyBase *property) {
 
 	int row = active_row;
 	if (row < 0) return;
-	if (updating_from_storage) return;
-	updating_from_contents = true;
+	if (updating) return;
+	updating = true;
 
 	QList<RKComponentPropertyStringList *> cols = columns_to_update.values (property);
 	for (int i = 0; i < cols.size (); ++i) {
@@ -332,20 +340,20 @@ void RKOptionSet::governingPropertyChanged (RKComponentPropertyBase *property) {
 		}
 	}
 
-	updating_from_contents = false;
+	updating = false;
 }
 
 // This function is called, when a column of the set is changed, typically from external logic
 void RKOptionSet::columnPropertyChanged (RKComponentPropertyBase *property) {
 	RK_TRACE (PLUGIN);
 
-	if (updating_from_contents) return;
+	if (updating) return;
 
 	RKComponentPropertyStringList *target = static_cast<RKComponentPropertyStringList *> (property);
 	RK_ASSERT (column_map.contains (target));
 	ColumnInfo& ci = column_map[target];
 	if (!ci.external) {
-		RK_ASSERT (false);
+		RK_DO (qDebug ("Column %s was touched externally, although it is not marked as external", qPrintable (ci.column_name)), PLUGIN, DL_ERROR);
 		return;
 	}
 
@@ -378,6 +386,7 @@ void RKOptionSet::handleKeycolumnUpdate () {
 
 	// get state of current row (which may subsequently be moved or even deleted
 	storeRowSerialization (active_row);
+	updating = true;
 
 	// update all columns
 	QMap<RKComponentPropertyStringList *, ColumnInfo>::iterator it = column_map.begin ();
@@ -440,6 +449,7 @@ void RKOptionSet::handleKeycolumnUpdate () {
 	current_row->setIntValue (active_row = activate_row);
 	if (model) model->triggerReset ();
 	setContentsForRow (active_row);
+	updating = false;
 	changed ();
 }
 
@@ -448,7 +458,9 @@ void RKOptionSet::applyContentsFromExternalColumn (RKComponentPropertyStringList
 
 	const ColumnInfo &ci = column_map[column];
 	if (!ci.external) return;
+	if (ci.governor.isEmpty ()) return;
 
+	updating = true;
 	QString dummy;
 	RKComponentBase *governor = contents_container->lookupComponent (ci.governor, &dummy);
 	if (governor && governor->isProperty ()) {
@@ -463,6 +475,7 @@ void RKOptionSet::applyContentsFromExternalColumn (RKComponentPropertyStringList
 		RK_DO (qDebug ("Lookup error while trying to restore row %d of optionset: %s. Remainder: %s", row, qPrintable (ci.governor), qPrintable (dummy)), PLUGIN, DL_WARNING);
 		RK_ASSERT (false);
 	}
+	updating = false;
 }
 
 void RKOptionSet::setContentsForRow (int row) {

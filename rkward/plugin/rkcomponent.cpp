@@ -304,6 +304,17 @@ RKStandardComponent *RKComponent::standardComponent (QString *id_adjust) {
 	return 0;
 }
 
+RKStandardComponent* RKComponent::topmostStandardComponent () {
+	RK_TRACE (PLUGIN);
+
+	RKComponent *p = this;
+	while (p->parentComponent ()) p = p->parentComponent ();
+	if (p->type () == RKComponent::ComponentStandard) return static_cast<RKStandardComponent*> (p);
+	// NOTE: currently, *only* standard components can be topmost
+	RK_ASSERT (false);
+	return 0;
+}
+
 void RKComponent::removeFromParent () {
 	RK_TRACE (PLUGIN);
 

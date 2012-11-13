@@ -2,7 +2,7 @@
                           rkcommandeditorwindow  -  description
                              -------------------
     begin                : Mon Aug 30 2004
-    copyright            : (C) 2004, 2006, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2009, 2010, 2011, 2012 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -160,7 +160,7 @@ class RKCommandEditorWindow : public RKMDIWindow, public RKScriptContextProvider
 public:
 /** constructor
 @param use_r_highlighting Initialize the view to use R syntax highlighting. Use, if you're going to edit an R syntax file */
-	RKCommandEditorWindow (QWidget *parent = 0, bool use_r_highlighting=true);
+	RKCommandEditorWindow (QWidget *parent = 0, bool use_r_highlighting=true, bool use_codehinting=true);
 /** destructor */
 	~RKCommandEditorWindow ();
 /** open given URL. 

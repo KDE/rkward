@@ -56,6 +56,7 @@ private slots:
 	void addRow ();
 	void removeRow ();
 	void currentRowChanged ();
+	void fetchDefaults ();
 private:
 friend class RKOptionSetDisplayModel;
 	int rowCount () const { return row_count->intValue (); };
@@ -110,8 +111,7 @@ friend class RKOptionSetDisplayModel;
 	int min_rows_if_any;
 	int max_rows;
 
-	bool updating_from_contents;
-	bool updating_from_storage;
+	bool updating;
 /** When keys in the key column change, all other columns have to be updated, accordingly. */
 	void handleKeycolumnUpdate ();
 /** Sets the contents from the values in given row */
@@ -137,8 +137,6 @@ friend class RKOptionSet;
 	RKOptionSet *set;
 private slots:
 	void doResetNow ();
-signals:
-	void rowChanged (int new_row);
 };
 
 #endif

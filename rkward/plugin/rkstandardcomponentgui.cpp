@@ -127,7 +127,8 @@ void RKStandardComponentGUI::createDialog (bool switchable) {
 	if (enslaved) toggle_code_button->hide ();
 	
 	// code display
-	code_display = new RKCommandEditorWindow (this, true);
+	code_display = new RKCommandEditorWindow (this, true, false);
+	code_display->setReadOnly (true);
 	code_display->setMinimumHeight (RKSettingsModulePlugins::defaultCodeHeight ());
 	code_display->hide ();
 
@@ -337,7 +338,8 @@ void RKStandardComponentWizard::addLastPage () {
 		vbox->setContentsMargins (0, 0, 0, 0);
 		QLabel *label = new QLabel (i18n ("Below you can see the command(s) corresponding to the settings you made. Click 'Submit' to run the command(s)."), last_page);
 		label->setWordWrap (true);
-		code_display = new RKCommandEditorWindow (last_page, true);
+		code_display = new RKCommandEditorWindow (last_page, true, false);
+		code_display->setReadOnly (true);
 		vbox->addWidget (label);
 		vbox->addWidget (code_display);
 	}

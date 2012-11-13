@@ -345,6 +345,7 @@ void RKStandardComponent::buildAndInitialize (const QDomElement &doc_element, co
 		QTimer::singleShot (0, gui, SLOT (show ()));
 	}
 	changed ();
+	standardInitializationComplete ();
 }
 
 RKComponentBase::ComponentStatus RKStandardComponent::recursiveStatus () {
