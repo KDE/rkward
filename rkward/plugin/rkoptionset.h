@@ -58,7 +58,6 @@ private slots:
 	void currentRowChanged ();
 private:
 friend class RKOptionSetDisplayModel;
-	void updateVisuals ();
 	int rowCount () const { return row_count->intValue (); };
 	void setRowState (int row, bool finished, bool valid);
 	void storeRowSerialization (int row);

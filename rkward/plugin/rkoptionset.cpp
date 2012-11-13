@@ -166,7 +166,6 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	}
 
 	n_invalid_rows = n_unfinished_rows = 0;
-	updateVisuals ();
 }
 
 RKOptionSet::~RKOptionSet () {
@@ -280,21 +279,25 @@ QString getDefaultValue (const RKOptionSet::ColumnInfo& ci, int row) {
 }
 
 void RKOptionSet::setRowState (int row, bool finished, bool valid) {
+	bool changed = false;
 	RK_ASSERT (row < rows.size ());
 	if (rows[row].finished != finished) {
 		rows[row].finished = finished;
 		finished ? --n_unfinished_rows : ++n_unfinished_rows;
+		changed = true;
 	}
 	if (rows[row].valid != valid) {
 		rows[row].valid = valid;
 		valid ? --n_invalid_rows : ++n_invalid_rows;
+		changed = true;
 	}
+	if (changed && model) model->dataChanged (model->index (row, 0), model->index (row, model->columnCount () - 1));
 }
 
 void RKOptionSet::changed () {
 	int row = active_row;
 
-	if (row > 0) {
+	if (row >= 0) {
 		ComponentStatus cs = contents_container->recursiveStatus ();
 		setRowState (row, cs != Processing, cs == Satisfied);
 	}
@@ -302,7 +305,7 @@ void RKOptionSet::changed () {
 	ComponentStatus s = recursiveStatus ();
 	if (s != last_known_status) {
 		last_known_status = s;
-		updateVisuals ();
+		if (model) model->headerDataChanged (Qt::Horizontal, 0, model->columnCount () - 1);
 	}
 
 	RKComponent::changed ();
@@ -347,7 +350,10 @@ void RKOptionSet::columnPropertyChanged (RKComponentPropertyBase *property) {
 	}
 
 	if (target == keycolumn) handleKeycolumnUpdate ();
-	else if (model) model->dataChanged (model->index (ci.display_index, 0), model->index (ci.display_index, model->rowCount ()));
+	else {
+		if (model) model->dataChanged (model->index (ci.display_index, 0), model->index (ci.display_index, model->rowCount ()));
+		applyContentsFromExternalColumn (target, active_row);
+	}
 }
 
 void RKOptionSet::handleKeycolumnUpdate () {
@@ -369,6 +375,9 @@ void RKOptionSet::handleKeycolumnUpdate () {
 	if (position_changes.isEmpty () && (old_keys.size () == new_keys.size ())) {
 		return;	// no change
 	}
+
+	// get state of current row (which may subsequently be moved or even deleted
+	storeRowSerialization (active_row);
 
 	// update all columns
 	QMap<RKComponentPropertyStringList *, ColumnInfo>::iterator it = column_map.begin ();
@@ -430,6 +439,7 @@ void RKOptionSet::handleKeycolumnUpdate () {
 	activate_row = qMin (nrows - 1, activate_row);
 	current_row->setIntValue (active_row = activate_row);
 	if (model) model->triggerReset ();
+	setContentsForRow (active_row);
 	changed ();
 }
 
@@ -470,22 +480,6 @@ void RKOptionSet::setContentsForRow (int row) {
 		applyContentsFromExternalColumn (col, row);
 	}
 	contents_container->enablednessProperty ()->setBoolValue (row >= 0);
-}
-
-void RKOptionSet::updateVisuals () {
-	RK_TRACE (PLUGIN);
-
-	if (!display) return;
-
-	QPalette palette = display->header ()->palette ();
-	if (isInactive ()) {
-		palette.setColor (QPalette::Window, QColor (200, 200, 200));
-	} else if (!isSatisfied ()) {
-		palette.setColor (QPalette::Window, QColor (255, 0, 0));
-	} else {
-		palette.setColor (QPalette::Window, QColor (255, 255, 255));
-	}
-	display->header ()->setPalette (palette);
 }
 
 void RKOptionSet::storeRowSerialization (int row) {
@@ -591,6 +585,14 @@ QVariant RKOptionSetDisplayModel::data (const QModelIndex& index, int role) cons
 		} else {
 			RK_ASSERT (false);
 		}
+	} else if (role == Qt::BackgroundRole) {
+		const RKOptionSet::RowInfo &ri = set->rows[row];
+		if (!ri.finished) return Qt::yellow;
+		if (!ri.valid) return Qt::red;
+	} else if (role == Qt::ToolTipRole) {
+		const RKOptionSet::RowInfo &ri = set->rows[row];
+		if (!ri.finished) return i18n ("This row has not yet been processed.");
+		if (!ri.valid) return i18n ("This row contains invalid settings.");
 	}
 
 	return QVariant ();
@@ -602,9 +604,22 @@ void RKOptionSetDisplayModel::doResetNow () {
 }
 
 QVariant RKOptionSetDisplayModel::headerData (int section, Qt::Orientation orientation, int role) const {
-	if (role == Qt::DisplayRole) {
-		if (orientation == Qt::Horizontal) {
-			return (column_labels.value (section));
+	if (orientation == Qt::Horizontal) {
+		if (role == Qt::DisplayRole) return (column_labels.value (section));
+		if (role == Qt::BackgroundRole) {
+			if (set->n_unfinished_rows > 0) return Qt::yellow;
+			if (!set->isValid ()) return Qt::red;
+		}
+		if (role == Qt::ToolTipRole) {
+			if (set->n_unfinished_rows > 0) return i18n ("Please wait while settings are being processed");
+			if (!set->isValid ()) {
+				QStringList probs;
+				if (set->n_invalid_rows > set->n_unfinished_rows) probs.append (i18n ("One or more rows contain invalid settings."));
+				if ((set->rowCount () > 0) && (set->rowCount () < set->min_rows_if_any)) probs.append (i18n ("At least %1 rows have to be defined (if any)").arg (set->min_rows_if_any));
+				if (set->rowCount () < set->min_rows) probs.append (i18n ("At least %1 rows have to be defined").arg (set->min_rows));
+				if (set->rowCount () > set->max_rows) probs.append (i18n ("At most %1 rows may be defined").arg (set->max_rows));
+				return (QString ("<p>%1</p><ul><li>%2</li></ul>").arg (i18n ("This element is not valid for the following reason(s):")).arg (probs.join ("</li>\n<li>")));
+			}
 		}
 	}
 	return QVariant ();

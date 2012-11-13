@@ -68,10 +68,10 @@
 								<input id="commentb" label="Comment B"/>
 							</frame>
 						</content>
-						<option id="var" label="test" restorable="false"/>
-						<option id="varname" label="Varname" restorable="false"/>
-						<option id="ca" label="Comment A" connect="commenta.text" restorable="true"/>
-						<option id="cb" connect="commentb.text" restorable="true" default="This is a default entry. Change it, if you like."/>
+						<option id="var" label="test" external="true"/>
+						<option id="varname" label="Varname" external="true"/>
+						<option id="ca" label="Comment A" connect="commenta.text"/>
+						<option id="cb" connect="commentb.text" default="This is a default entry. Change it, if you like."/>
 					</optionset>
 				</row>
 			</tab>
