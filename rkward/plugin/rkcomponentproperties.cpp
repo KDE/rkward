@@ -762,9 +762,10 @@ void RKComponentPropertyRObjects::setObjectList (const RObject::ObjectList &newl
 
 	// remove items from the old list that are not in the new list
 	for (int i = 0; i < object_list.size (); ++i) {
-		if (!newlist.contains (object_list[i])) {
+		RObject *object = object_list[i];
+		if (!newlist.contains (object)) {
 			stopListenForObject (object_list.takeAt (i));
-			problems.remove (object_list[i]);
+			problems.remove (object);
 			--i;
 			changes = true;
 		}

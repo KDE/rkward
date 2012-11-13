@@ -65,6 +65,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	builder->makeConnections ();
 	addChild ("contents", contents_container);
 	contents_container->fetchPropertyValuesRecursive (&default_row_state);
+	contents_container->enablednessProperty ()->setBoolValue (false);	// no current row; Do this *after* fetching default values, however
 
 	// create columns
 	XMLChildList options = xml->getChildElements (element, "option", DL_WARNING);
@@ -75,7 +76,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 		QString id = xml->getStringAttribute (e, "id", QString (), DL_ERROR);
 		QString label = xml->getStringAttribute (e, "label", QString (), DL_DEBUG);
 		QString governor = xml->getStringAttribute (e, "connect", QString (), DL_INFO);
-		bool restorable = xml->getBoolAttribute (e, "restorable", true, DL_INFO);
+		bool external = xml->getBoolAttribute (e, "external", false, DL_INFO);
 
 		while (child_map.contains (id) || (id.startsWith ("_row"))) {
 			RK_DO (qDebug ("optionset already contains a property named %s. Renaming to _%s", qPrintable (id), qPrintable (id)), PLUGIN, DL_ERROR);
@@ -84,7 +85,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 
 		ColumnInfo col_inf;
 		col_inf.column_name = id;
-		col_inf.restorable = restorable;
+		col_inf.external = external;
 		col_inf.governor = governor;
 #warning TODO: Do we have to wait for the parent component to settle before (re-)fetching defaults?
 #warning -------------- TODO ------------- Do not store defaults per column. Use only implicit defaults, instead.
@@ -114,8 +115,8 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 		if (!column_map.contains (keycolumn)) {
 			RK_DO (qDebug ("optionset does not contain a column named %s. Falling back to manual insertion mode", qPrintable (keycol)), PLUGIN, DL_ERROR);
 			keycolumn = 0;
-		} else if (!column_map[keycolumn].restorable) {
-			RK_DO (qDebug ("keycolumn (%s) is not marked as restorable. Falling back to manual insertion mode", qPrintable (keycol)), PLUGIN, DL_ERROR);
+		} else if (!column_map[keycolumn].external) {
+			RK_DO (qDebug ("keycolumn (%s) is not marked as external. Falling back to manual insertion mode", qPrintable (keycol)), PLUGIN, DL_ERROR);
 			keycolumn = 0;
 		}
 	}
@@ -129,12 +130,12 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 			RKComponentBase *governor = contents_container->lookupComponent (ci.governor, &ci.governor_modifier);
 			if (governor && governor->isProperty ()) {
 				RKComponentPropertyBase *gov_prop = static_cast<RKComponentPropertyBase*> (governor);
-				if (ci.restorable) {
+				if (ci.external) {
 					if (!ci.governor_modifier.isEmpty ()) {
-						RK_DO (qDebug ("Cannot connect restorable column '%s' in optionset to property with modifier (%s). Add an auxiliary non-restorable column, instead.", qPrintable (ci.column_name), qPrintable (ci.governor)), PLUGIN, DL_ERROR);
+						RK_DO (qDebug ("Cannot connect external column '%s' in optionset to property with modifier (%s).", qPrintable (ci.column_name), qPrintable (ci.governor)), PLUGIN, DL_ERROR);
 						continue;
 					} else if (gov_prop->isInternal ()) {
-						RK_DO (qDebug ("Cannot connect restorable column '%s' in optionset to property (%s), which is marked 'internal'. Add an auxiliary non-restorable column, instead.", qPrintable (ci.column_name), qPrintable (ci.governor)), PLUGIN, DL_ERROR);
+						RK_DO (qDebug ("Cannot connect external column '%s' in optionset to property (%s), which is marked 'internal'.", qPrintable (ci.column_name), qPrintable (ci.governor)), PLUGIN, DL_ERROR);
 						continue;
 					}
 				}
@@ -152,9 +153,10 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 		display->setRootIsDecorated (false);
 		if (display_show_index) display->resizeColumnToContents (0);
 		else display->setColumnHidden (0, true);
-		model = new RKOptionSetDisplayModel (this);
 		display->setModel (model);
-		connect (display, SIGNAL (rowChanged(int)), this, SLOT (currentRowChanged (int)));
+		display->setSelectionBehavior (QAbstractItemView::SelectRows);
+		display->setSelectionMode (QAbstractItemView::SingleSelection);
+		connect (display->selectionModel (), SIGNAL (selectionChanged(QItemSelection,QItemSelection)), this, SLOT (currentRowChanged()));
 
 		if (keycolumn) display_buttons->setVisible (false);
 		else {
@@ -185,6 +187,7 @@ RKComponent *RKOptionSet::createDisplay (bool show_index, QWidget *parent) {
 	} else {
 		display = new QTreeView (box);
 		display_show_index = show_index;
+		model = new RKOptionSetDisplayModel (this);
 	}
 
 	display_buttons = new KHBox (dummy);
@@ -225,8 +228,12 @@ void RKOptionSet::addRow () {
 	++n_invalid_rows;
 
 	row_count->setIntValue (nrows + 1);
+	storeRowSerialization (active_row);
 	current_row->setIntValue (active_row = row);
+	setContentsForRow (row);
 	if (display) model->endInsertRows ();
+
+	changed ();
 }
 
 void RKOptionSet::removeRow () {
@@ -259,7 +266,10 @@ void RKOptionSet::removeRow () {
 	if ((row < 0) && (nrows > 1)) row = 0;
 	row_count->setIntValue (nrows - 1);
 	current_row->setIntValue (active_row = row);
+	setContentsForRow (row);
 	if (display) model->endRemoveRows ();
+
+	changed ();
 }
 
 QString getDefaultValue (const RKOptionSet::ColumnInfo& ci, int row) {
@@ -284,9 +294,10 @@ void RKOptionSet::setRowState (int row, bool finished, bool valid) {
 void RKOptionSet::changed () {
 	int row = active_row;
 
-	rows[row].full_row_serialization.clear ();
-	ComponentStatus cs = contents_container->recursiveStatus ();
-	setRowState (row, cs != Processing, cs == Satisfied);
+	if (row > 0) {
+		ComponentStatus cs = contents_container->recursiveStatus ();
+		setRowState (row, cs != Processing, cs == Satisfied);
+	}
 
 	ComponentStatus s = recursiveStatus ();
 	if (s != last_known_status) {
@@ -301,14 +312,10 @@ void RKOptionSet::changed () {
 void RKOptionSet::governingPropertyChanged (RKComponentPropertyBase *property) {
 	RK_TRACE (PLUGIN);
 
+	int row = active_row;
+	if (row < 0) return;
 	if (updating_from_storage) return;
 	updating_from_contents = true;
-
-	int row = active_row;
-	if (row < 0) {
-		RK_ASSERT (false);
-		return;
-	}
 
 	QList<RKComponentPropertyStringList *> cols = columns_to_update.values (property);
 	for (int i = 0; i < cols.size (); ++i) {
@@ -334,7 +341,7 @@ void RKOptionSet::columnPropertyChanged (RKComponentPropertyBase *property) {
 	RKComponentPropertyStringList *target = static_cast<RKComponentPropertyStringList *> (property);
 	RK_ASSERT (column_map.contains (target));
 	ColumnInfo& ci = column_map[target];
-	if (!ci.restorable) {
+	if (!ci.external) {
 		RK_ASSERT (false);
 		return;
 	}
@@ -368,7 +375,7 @@ void RKOptionSet::handleKeycolumnUpdate () {
 	for (; it != column_map.end (); ++it) {
 		RKComponentPropertyStringList* col = it.key ();
 		ColumnInfo &column = it.value ();
-		if (column.restorable) continue;
+		if (column.external) continue;
 
 		// Ok, we'll have to adjust this column. We start by copying the old values, and padding to the
 		// new length (if that is greater than the old).
@@ -426,33 +433,43 @@ void RKOptionSet::handleKeycolumnUpdate () {
 	changed ();
 }
 
+void RKOptionSet::applyContentsFromExternalColumn (RKComponentPropertyStringList* column, int row) {
+	RK_TRACE (PLUGIN);
+
+	const ColumnInfo &ci = column_map[column];
+	if (!ci.external) return;
+
+	QString dummy;
+	RKComponentBase *governor = contents_container->lookupComponent (ci.governor, &dummy);
+	if (governor && governor->isProperty ()) {
+		RK_ASSERT (dummy.isEmpty ());
+
+		QString value;
+		if (row >= 0) value = column->valueAt (row);
+		else value = getDefaultValue (ci, row);
+
+		static_cast<RKComponentPropertyBase*> (governor)->setValue (value);
+	} else {
+		RK_DO (qDebug ("Lookup error while trying to restore row %d of optionset: %s. Remainder: %s", row, qPrintable (ci.governor), qPrintable (dummy)), PLUGIN, DL_WARNING);
+		RK_ASSERT (false);
+	}
+}
+
 void RKOptionSet::setContentsForRow (int row) {
 	RK_TRACE (PLUGIN);
 
-#warning ------------ TODO: If needed, initialize serialization to default values, first! ----------------
-#warning ------------ TODO: Then initialize from serialization ----------------
-#warning ------------ then apply column values as below ----------------
+	RK_ASSERT (rows.size () > row);
+	if (row >= 0) {
+		contents_container->setPropertyValues (&(rows[row].full_row_serialization), false);
+	} else {
+		contents_container->setPropertyValues (&default_row_state, false);
+	}
 	QMap<RKComponentPropertyStringList *, ColumnInfo>::const_iterator it = column_map.constBegin ();
 	for (; it != column_map.constEnd (); ++it) {
 		RKComponentPropertyStringList* col = it.key ();
-		const ColumnInfo &ci = it.value ();
-		if (!ci.restorable) continue;
-
-		QString dummy;
-		RKComponentBase *governor = contents_container->lookupComponent (ci.governor, &dummy);
-		if (governor && governor->isProperty ()) {
-			RK_ASSERT (dummy.isEmpty ());
-
-			QString value;
-			if (row >= 0) value = col->valueAt (row);
-			else value = getDefaultValue (ci, row);
-
-			static_cast<RKComponentPropertyBase*> (governor)->setValue (value);
-		} else {
-			RK_DO (qDebug ("Lookup error while trying to restore row %d of optionset: %s. Remainder: %s", row, qPrintable (ci.governor), qPrintable (dummy)), PLUGIN, DL_WARNING);
-			RK_ASSERT (false);
-		}
+		applyContentsFromExternalColumn (col, row);
 	}
+	contents_container->enablednessProperty ()->setBoolValue (row >= 0);
 }
 
 void RKOptionSet::updateVisuals () {
@@ -471,6 +488,37 @@ void RKOptionSet::updateVisuals () {
 	display->header ()->setPalette (palette);
 }
 
+void RKOptionSet::storeRowSerialization (int row) {
+	RK_TRACE (PLUGIN);
+
+	if (row < 0) return;	// No row was active
+	RK_ASSERT (rows.size () > row);
+	rows[row].full_row_serialization.clear ();
+	contents_container->fetchPropertyValuesRecursive (&(rows[row].full_row_serialization));
+}
+
+int getCurrentRowFromDisplay (QTreeView* display) {
+	QModelIndexList l = display->selectionModel ()->selectedRows ();
+	if (l.isEmpty ()) return -1;
+	return (l[0].row ());
+}
+
+void setCurrentRowInDisplay (QTreeView* display, int row) {
+	if (row < 0) display->selectionModel ()->clearSelection ();
+	else {
+		display->selectionModel ()->select (display->model ()->index (row, 0), QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
+	}
+}
+
+void RKOptionSet::currentRowChanged () {
+	RK_TRACE (PLUGIN);
+
+	RK_ASSERT (display);
+	int r = getCurrentRowFromDisplay (display);
+	if (active_row != r) current_row->setIntValue (r);
+	// --> currentRowPropertyChanged ()
+}
+
 void RKOptionSet::currentRowPropertyChanged (RKComponentPropertyBase *property) {
 	RK_TRACE (PLUGIN);
 
@@ -479,28 +527,12 @@ void RKOptionSet::currentRowPropertyChanged (RKComponentPropertyBase *property) 
 	if (row != active_row) {	// May or may not be the case. True, e.g. if a row was removed
 		storeRowSerialization (active_row);
 		active_row = row;
-		contents_container->enablednessProperty ()->setBoolValue (active_row >= 0);
+		setContentsForRow (active_row);
 	}
 
-	if (display) {
-		if (row >= 0) display->setCurrentIndex (model->index (1, row));
-	}
+	if (display) setCurrentRowInDisplay (display, row);	// Doing this unconditionally helps fixing up selection problems
 }
 
-void RKOptionSet::storeRowSerialization (int row) {
-	RK_TRACE (PLUGIN);
-
-	if (row < 0) return;	// No row was active
-#warning ---------------- TODO ----------------------
-}
-
-void RKOptionSet::currentRowChanged (int new_row) {
-	RK_TRACE (PLUGIN);
-
-	RK_ASSERT (display);
-	current_row->setIntValue (new_row);
-	// --> currentRowPropertyChanged ()
-}
 
 /** reimplemented from RKComponent */
 RKComponent::ComponentStatus RKOptionSet::recursiveStatus () {
@@ -520,6 +552,9 @@ bool RKOptionSet::isValid () {
 	if (count > max_rows) return false;
 	return true;
 }
+
+
+
 
 RKOptionSetDisplayModel::RKOptionSetDisplayModel (RKOptionSet* parent) : QAbstractTableModel (parent) {
 	RK_TRACE (PLUGIN);

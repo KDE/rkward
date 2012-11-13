@@ -55,13 +55,14 @@ private slots:
 	void currentRowPropertyChanged (RKComponentPropertyBase *property);
 	void addRow ();
 	void removeRow ();
-	void currentRowChanged (int new_row);
+	void currentRowChanged ();
 private:
 friend class RKOptionSetDisplayModel;
 	void updateVisuals ();
 	int rowCount () const { return row_count->intValue (); };
 	void setRowState (int row, bool finished, bool valid);
 	void storeRowSerialization (int row);
+	void applyContentsFromExternalColumn (RKComponentPropertyStringList* column, int row);
 
 	RKComponentPropertyInt *current_row;
 	RKComponentPropertyInt *row_count;
@@ -80,7 +81,7 @@ friend class RKOptionSetDisplayModel;
 		QString governor_modifier;
 		QString default_value;
 		int display_index;
-		bool restorable;
+		bool external;
 	};
 	/** Map of all columns to their meta info */
 	QMap<RKComponentPropertyStringList *, ColumnInfo> column_map;
@@ -131,7 +132,6 @@ friend class RKOptionSet;
 	int columnCount (const QModelIndex & parent = QModelIndex()) const;
 	QVariant data (const QModelIndex& index, int role = Qt::DisplayRole) const;
 	QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
-	void currentChanged (const QModelIndex& current, const QModelIndex& previous);
 	void triggerReset ();
 	QTimer reset_timer;
 	QStringList column_labels;
