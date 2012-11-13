@@ -643,7 +643,7 @@ void RKCommandEditorWindow::tryCompletion () {
 
 	KTextEditor::Range range = KTextEditor::Range (para, start, para, end);
 	QString word;
-	if (range.isValid ()) m_doc->text (range);
+	if (range.isValid ()) word = m_doc->text (range);
 	if (current_line.lastIndexOf ("#", cursor_pos) >= 0) word.clear ();	// do not hint while in comments
 	if (word.length () >= RKSettingsModuleCommandEditor::completionMinChars ()) {
 		completion_model->updateCompletionList (word);
