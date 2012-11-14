@@ -892,9 +892,20 @@ RKFunctionArgHinter::RKFunctionArgHinter (RKScriptContextProvider *provider, KTe
 
 	arghints_popup = new QLabel (0, Qt::ToolTip);
 	arghints_popup->setMargin (2);
-	QPalette p = QToolTip::palette ();		// HACK to trick the style into using the correct color
-	p.setColor (QPalette::Inactive, QPalette::Window, p.color (QPalette::Inactive, QPalette::ToolTipBase));
-	p.setColor (QPalette::Inactive, QPalette::WindowText, p.color (QPalette::Inactive, QPalette::ToolTipText));
+	// HACK trying hard to trick the style into using the correct color
+	// ... and sometimes we still get white on yellow in some styles. Sigh...
+	// A simple heuristic tries to detect the worst cases of unreasonably low contrast, and forces black on light blue, then.
+	QPalette p = QToolTip::palette ();
+	QColor b = p.color (QPalette::Inactive, QPalette::ToolTipBase);
+	QColor f = p.color (QPalette::Inactive, QPalette::ToolTipText);
+	if ((qAbs (f.greenF () - b.greenF ()) + qAbs (f.redF () -  b.redF ()) + qAbs (f.yellowF () - b.yellowF ())) < .6) {
+		f = Qt::black;
+		b = QColor (192, 219, 255);
+	}
+	p.setColor (QPalette::Inactive, QPalette::WindowText, f);
+	p.setColor (QPalette::Inactive, QPalette::Window, b);
+	p.setColor (QPalette::Inactive, QPalette::ToolTipText, f);
+	p.setColor (QPalette::Inactive, QPalette::ToolTipBase, b);
 	arghints_popup->setForegroundRole (QPalette::ToolTipText);
 	arghints_popup->setBackgroundRole (QPalette::ToolTipBase);
 	arghints_popup->setPalette (p);
