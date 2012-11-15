@@ -461,6 +461,7 @@ all.valid.modifiers <- list(
 	formula=c("model", "table", "labels", "fixed_factors", "dependent"),
 # removed embed, can be all sorts of stuff, see e.g. generic plot options
 #	embed=c("code"),
+# for the same reason external is not listed here
 	preview=c("state")
 ) ## end list with valid modifiers
 
@@ -480,7 +481,7 @@ modif.validity <- function(source, modifier, ignore.empty=TRUE, warn.only=TRUE, 
 	if(inherits(source, "XiMpLe.node")){
 		tag.name <- slot(source, "name")
 		# embedded plugins can have all sorts of modifiers
-		if(identical(tag.name, "embed")){
+		if(tag.name %in% c("embed", "external")){
 			if(isTRUE(bool)){
 				return(TRUE)
 			} else {
@@ -646,7 +647,7 @@ clean.name <- function(name, message=TRUE){
 	name <- gsub("[[:space:]]*[^[:alnum:]_.]*", "", name)
 	if(!identical(name.orig, name)){
 		if(isTRUE(message)){
-			message(paste("For filenames ", sQuote(name.orig), " was renamed to ", sQuote(name), ".", sep=""))
+			message(paste("For file names ", sQuote(name.orig), " was renamed to ", sQuote(name), ".", sep=""))
 		} else {}
 	} else {}
 	return(name)

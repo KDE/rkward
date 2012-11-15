@@ -250,8 +250,10 @@ rk.XML.pluginmap <- function(name, about=NULL, components, hierarchy="test",
 		} else {}
 	}
 
+	# clean the ID of dots and append "_rkward"
+	doc.ID.name <- paste(gsub("[.]*", "", name), "_rkward", sep="")
 	top.doc <- XMLNode("document",
-		attrs=list(base_prefix="", namespace="rkward", id=paste(name, "_rkward", sep="")),
+		attrs=list(base_prefix="", namespace="rkward", id=doc.ID.name),
 		.children=all.children
 	)
 

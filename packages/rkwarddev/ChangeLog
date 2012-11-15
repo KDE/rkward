@@ -2,12 +2,18 @@ ChangeLog for package rkwarddev
 
 changes in version 0.06-1 (2012-11-08)
 changed:
-  - rk.plugin.skeleton(): "tests" will now ignore "overwrite" and not replace existing testsuite files
+  - rk.plugin.skeleton(): "tests" will now ignore "overwrite" and not replace
+    existing testsuite files
+fixed:
+  - dots will now be removed from pluginmap IDs
+  - modifiers of "external" XML nodes will not be checked, since it can be
+    all kinds of stuff
 
 changes in version 0.05-8 (2012-09-30)
 added:
-  - new function rk.plotOptions() and class "rk.plot.opts" to simplify code generation for plots;
-    this also caused changes in the internal workflow, especially for child.node() and rk.paste.JS()
+  - new function rk.plotOptions() and class "rk.plot.opts" to simplify code
+    generation for plots; this also caused changes in the internal workflow,
+    especially for child.node() and rk.paste.JS()
 changed:
   - rk.paste.JS.graph() also takes objects of class "rk.plot.opts"
   - rk.XML.embed() now supresses the label if "button=FALSE"
@@ -18,16 +24,18 @@ added:
 
 changes in version 0.05-6 (2012-05-10)
 added:
-  - rk.XML.wizard() and rk.XML.dialog() can now set the "recommended" attribute
+  - rk.XML.wizard() and rk.XML.dialog() can now set the "recommended"
+    attribute
 
 changes in version 0.05-5 (2012-04-19)
 added:
-  - rk.plugin.skeleton() can now also generate initial ChangeLog files (but won't overwrite existing ones)
+  - rk.plugin.skeleton() can now also generate initial ChangeLog files (but
+    won't overwrite existing ones)
   - added a LICENSE file to the sources
   - sources were initially debianized by roxyPackage
 changed:
-  - if files are being skipped by rk.plugin.skeleton(), the corresponding warning will now include the 'create'
-    actions that these files belong to
+  - if files are being skipped by rk.plugin.skeleton(), the corresponding
+    warning will now include the 'create' actions that these files belong to
 fixed:
   - rk.paste.JS() pastes rk.comment() objects correctly again
 
@@ -37,30 +45,39 @@ fixed:
 
 changes in version 0.05-3 (2012-03-18)
   - fixed: rk.XML.text() now preserves XML tags in the text value
-  - internally, functions now call XiMpLe::XMLNode() and XiMpLe::XMLTree() constructors instead of new(),
-    and pasteXMLNode() and pasteXMLTree() were globally renamed into pasteXML()
+  - internally, functions now call XiMpLe::XMLNode() and XiMpLe::XMLTree()
+    constructors instead of new(), and pasteXMLNode() and pasteXMLTree() were
+    globally renamed into pasteXML()
   - internally, replaced object@node with slot(object, "node")
-  - internally, moved checks for valid child and parent nodes to an internal functions,
-    valid.child() and valid.parent()
+  - internally, moved checks for valid child and parent nodes to an internal
+    functions, valid.child() and valid.parent()
 
 changes in version 0.05-2 (2012-03-10)
   - added missing dependency to package methods
   - fixed docs in rk.XML.plugin(), rk.XML.saveobj() and rk.plugin.skeleton()
   - fixed bug in rk.XML.snippets()
-  - re-formatted the ChangeLog so roxyPackage can translate it into a NEWS.Rd file
+  - re-formatted the ChangeLog so roxyPackage can translate it into a NEWS.Rd
+    file
 
 changes in version 0.05-1 (2012-01-04)
-  - removed superfluous "level=1" arguments from automatic "rk.header()"s in rk.JS.doc()
+  - removed superfluous "level=1" arguments from automatic "rk.header()"s in
+    rk.JS.doc()
   - added wrapper function rk.XML.checkbox() for rk.XML.cbox()
-  - changed rk.JS.saveobj() to use ".GlobalEnv$" instead of "assign()" in the resulting code
-  - added option to toggle the addition of empty "else {}" statements in rk.JS.ite objects to rk.paste.JS()
+  - changed rk.JS.saveobj() to use ".GlobalEnv$" instead of "assign()" in the
+    resulting code
+  - added option to toggle the addition of empty "else {}" statements in
+    rk.JS.ite objects to rk.paste.JS()
 
 changes in version 0.05-0 (2011-12-14)
-  - "result.header" now doesn't add quotes by itself in rk.JS.doc(), so you can have R objects pasted.
-    previous scripts need to be adapted accordingly! the headers can also be deactivated by setting to FALSE or ""
-  - fixed show method for objects of class rk.JS.var with more than one variable object
-  - added support for global variables to rk.JS.doc() and rk.plugin.component(), and therefore also rk.plugin.skeleton()
-  - "variables" and "globals" in rk.JS.doc() can now also be given as objects of class rk.JS.var
+  - "result.header" now doesn't add quotes by itself in rk.JS.doc(), so you
+    can have R objects pasted. previous scripts need to be adapted accordingly!
+    the headers can also be deactivated by setting to FALSE or ""
+  - fixed show method for objects of class rk.JS.var with more than one
+    variable object
+  - added support for global variables to rk.JS.doc() and
+    rk.plugin.component(), and therefore also rk.plugin.skeleton()
+  - "variables" and "globals" in rk.JS.doc() can now also be given as objects
+    of class rk.JS.var
   - worked on the vignette
 
 changes in version 0.04-13 (2011-12-12)
@@ -68,7 +85,8 @@ changes in version 0.04-13 (2011-12-12)
   - rk.XML.connect() now correctly supports 'governor="<ID>.<modifier>.not"'
 
 changes in version 0.04-12 (2011-12-11)
-  - added function tf() for even quicker JavaScript code generation from checkboxes
+  - added function tf() for even quicker JavaScript code generation from
+    checkboxes
   - fixed issue with "about" not being an XML node in rk.plugin.skeleton()
 
 changes in version 0.04-11 (2011-12-10)
@@ -76,70 +94,86 @@ changes in version 0.04-11 (2011-12-10)
   - fixed superfluous first newline in rk.JS.vars()
 
 changes in version 0.04-10 (2011-12-05)
-  - when using rk.comment() for logic scripting, its contents will automatically be placed inside a <script> node now
+  - when using rk.comment() for logic scripting, its contents will
+    automatically be placed inside a <script> node now
 
 changes in version 0.04-9 (2011-12-03)
   - left over stuff from JS printout() function is now added to doPrintout()
 
 changes in version 0.04-8 (2011-11-10)
-  - R 2.14 creates source archives which are incompatible with earlier versions. attempt to deal with this
-    by adding empty R directory and NAMESPACE file
+  - R 2.14 creates source archives which are incompatible with earlier
+    versions. attempt to deal with this by adding empty R directory and NAMESPACE
+    file
 
 changes in version 0.04-7 (2011-11-08)
-  - added long description support to rk.XML.about(), used for the DESCRIPTION file
+  - added long description support to rk.XML.about(), used for the
+    DESCRIPTION file
 
 changes in version 0.04-6 (2011-10-31)
-  - added <frame> to the tags which are scanned by rk.JS.scan(), they're considered only if checkable
-  - added <frame> to the tags which are scanned by rk.JS.scan(), they're considered only if checkable
+  - added <frame> to the tags which are scanned by rk.JS.scan(), they're
+    considered only if checkable
+  - added <frame> to the tags which are scanned by rk.JS.scan(), they're
+    considered only if checkable
   - improved output of rk.JS.var class objects by rk.paste.JS()
 
 changes in version 0.04-5 (2011-10-28)
-  - set dependency of rkward to >= 0.5.6 to work around a glitch in rkward's package versioning.
-    this can cause errors on real 0.5.6 installations because they lack functions introduced
-    in 0.5.7 (to add & load a plugin automatically), but shouldn't really break anything
+  - set dependency of rkward to >= 0.5.6 to work around a glitch in rkward's
+    package versioning. this can cause errors on real 0.5.6 installations
+    because they lack functions introduced in 0.5.7 (to add & load a plugin
+    automatically), but shouldn't really break anything
   - added support to turn off modifier checks to rk.XML.set()
-  - added option "load.silencer" to rk.JS.doc(), to easily add a switch to turn off package load messages in output.
+  - added option "load.silencer" to rk.JS.doc(), to easily add a switch to
+    turn off package load messages in output.
 
 changes in version 0.04-4 (2011-10-26)
-  - fixed bug in check for valid modifiers (used to warn when mixed lists with/without modifiers were given)
-  - fixed bug in rk.XML.convert() (false output if provided with list without modifiers)
+  - fixed bug in check for valid modifiers (used to warn when mixed lists
+    with/without modifiers were given)
+  - fixed bug in rk.XML.convert() (false output if provided with list without
+    modifiers)
   - added option "check.modifiers" to rk.JS.vars()
 
 changes in version 0.04-3 (2011-10-22)
-  - added support for definint doPrintout() JS functions to rk.JS.doc(), rk.plugin.skeleton() and
-    rk.plugin.component()
-  - added function rk.comment() to add comments to the generated code. it's a <!-- comment --> node
-    by default, but will be turned into // comment by rk.paste.JS() and <![CDATA[ comment ]]> for
-    logic sections automatically
-  - added option "gen.info" to all file producing functions, to add a comment note that the file
-    was generated and changes should be made to the script rather than the code directly
+  - added support for definint doPrintout() JS functions to rk.JS.doc(),
+    rk.plugin.skeleton() and rk.plugin.component()
+  - added function rk.comment() to add comments to the generated code. it's a
+    <!-- comment --> node by default, but will be turned into // comment by
+    rk.paste.JS() and <![CDATA[ comment ]]> for logic sections automatically
+  - added option "gen.info" to all file producing functions, to add a comment
+    note that the file was generated and changes should be made to the script
+    rather than the code directly
   - fixed missing "id.name" option in rk.XML.embed()
-  - fixed automatic menu hierarchy generation for lists of legth 1 in rk.XML.pluginmap()
+  - fixed automatic menu hierarchy generation for lists of legth 1 in
+    rk.XML.pluginmap()
 
 changes in version 0.04-2 (2011-10-21)
-  - removed the superfluous "name" option from rk.plugin.skeleton() and rk.plugin.component(); names are now
-    always provided by "about", either as an <about> node or just the name.
+  - removed the superfluous "name" option from rk.plugin.skeleton() and
+    rk.plugin.component(); names are now always provided by "about", either as an
+    <about> node or just the name.
   - result headers now start at level 1 by default in rk.JS.doc()
-  - added option "suggest.required" to rk.plugin.skeleton() to add package requirements as suggestions,
-    not dependencies
+  - added option "suggest.required" to rk.plugin.skeleton() to add package
+    requirements as suggestions, not dependencies
   - updated skeleton GUI dialog
 
 changes in version 0.04-1 (2011-10-20)
   - added "about" option to rk.XML.plugin() to overrule pluginmap defaults
-  - added rk.plugin.component(), i.e. modularized the component generation, to allow for more than one
-    component in rk.plugin.skeleton(), which subsequently gained the new option "components"
-  - improved dependency support, rk.plugin.skeleton() writes dependencies from <about> to DESCRIPTION now
+  - added rk.plugin.component(), i.e. modularized the component generation,
+    to allow for more than one component in rk.plugin.skeleton(), which
+    subsequently gained the new option "components"
+  - improved dependency support, rk.plugin.skeleton() writes dependencies
+    from <about> to DESCRIPTION now
   - fixed dependency definition in rk.XML.about()
   - fixed "verion" typo in rk.XML.about()
   - the dot "." is now also allowed in file names
 
 changes in version 0.04-0 (2011-10-19)
-  - for accurcy and consistency with the docs, the "properties" option changed to "modifiers" in rk.JS.vars()
+  - for accurcy and consistency with the docs, the "properties" option
+    changed to "modifiers" in rk.JS.vars()
   - added further property modifiers to the internal validation
   - added class rk.JS.var, including show method
   - added support for class rk.JS.var in rk.paste.JS() an id()
   - rk.JS.vars() now returns a list of class rk.JS.var
-  - added support for all valid modifiers to rk.XML.convert() and rk.XML.connect()
+  - added support for all valid modifiers to rk.XML.convert() and
+    rk.XML.connect()
 
 changes in version 0.03-7 (2011-10-18)
   - added "checkable" and "checked" options to rk.XML.frame()
@@ -147,8 +181,10 @@ changes in version 0.03-7 (2011-10-18)
   - fixed bug in rk.JS.array() (superfluous "=" in generated code)
 
 changes in version 0.03-6 (2011-10-13)
-  - lifted rkward package dependecies to 0.5.7 (needed for rk.load.pluginmaps())
-  - rk.XML.menu() and rk.plugin.skeleton() can now recursively generate deeper menu structures if you provide it with a list
+  - lifted rkward package dependecies to 0.5.7 (needed for
+    rk.load.pluginmaps())
+  - rk.XML.menu() and rk.plugin.skeleton() can now recursively generate
+    deeper menu structures if you provide it with a list
   - fixed bug in autogeneration of IDs in rk.XML.input() and rk.XML.saveobj()
 
 changes in version 0.03-5 (2011-10-11)
@@ -158,20 +194,24 @@ changes in version 0.03-5 (2011-10-11)
 
 changes in version 0.03-4 (2011-10-10)
   - added functions rk.XML.code() and rk.XML.help()
-  - fixed bug in internal function check.ID() (produced false entry nodes under certain circumstances)
+  - fixed bug in internal function check.ID() (produced false entry nodes
+    under certain circumstances)
   - fixed bug in rk.XML.pluginmap() for automatic component IDs
-  - fixed bug in rk.plugin.skeleton() for cases where XML file exists and is not overwritten, but JS/help
-    files need to be generated
+  - fixed bug in rk.plugin.skeleton() for cases where XML file exists and is
+    not overwritten, but JS/help files need to be generated
   - cleaned up rk.XML.pluginmap() and rk.XML.plugin() hint code
   - changed "nodes" option to "..." also in rk.XML.menu()
   - added beginnings of a vignette (to be continued...)
 
 changes in version 0.03-3 (2011-10-09)
-  - replaced most of the "nodes" and "children" options with "..." in functions rk.rkh.related(), rk.rkh.settings(),
-    rk.XML.col(), rk.XML.components(), rk.XML.context(), rk.XML.dialog(), rk.XML.frame(), rk.XML.hierarchy(), rk.XML.logic(),
-    rk.XML.page(), rk.XML.row(), rk.XML.snippet(), rk.XML.snippets() and rk.XML.wizard(). therefore, you don't
-    need to list() objects any more.
-  - any function which generates an ID now has an automation mechanism for it, which is also the default.
+  - replaced most of the "nodes" and "children" options with "..." in
+    functions rk.rkh.related(), rk.rkh.settings(), rk.XML.col(), rk.XML.components(),
+    rk.XML.context(), rk.XML.dialog(), rk.XML.frame(), rk.XML.hierarchy(),
+    rk.XML.logic(), rk.XML.page(), rk.XML.row(), rk.XML.snippet(),
+    rk.XML.snippets() and rk.XML.wizard(). therefore, you don't need to list() objects any
+    more.
+  - any function which generates an ID now has an automation mechanism for
+    it, which is also the default.
 
 changes in version 0.03-2 (2011-10-09)
   - fixed skeleton GUI pluginmap not being found
@@ -186,68 +226,83 @@ changes in version 0.03-1 (2011-10-08)
   - added skeleton GUI, was generated by the demo script
 
 changes in version 0.03-0 (2011-10-07)
-  - redesigned options for rk.plugin.skeleton() again, to make them more intuitive and flexible
-    at the same time. unfortunately, this breaks backwards compatibility again.
-  - rk.plugin.skeleton() and rk.XML.pluginmap() now only accept rk.XML.about() made objects
-    for "about"
-  - rk.plugin.skeleton() uses internal function XML2person() to create nicer Authors@R entries in DESCRIPTION
+  - redesigned options for rk.plugin.skeleton() again, to make them more
+    intuitive and flexible at the same time. unfortunately, this breaks backwards
+    compatibility again.
+  - rk.plugin.skeleton() and rk.XML.pluginmap() now only accept
+    rk.XML.about() made objects for "about"
+  - rk.plugin.skeleton() uses internal function XML2person() to create nicer
+    Authors@R entries in DESCRIPTION
   - fixed bug in id() (now generates JS variable names, not XML IDs)
 
 changes in version 0.02-5 (2011-10-06)
-  - added functions rk.rkh.caption(), rk.rkh.link(), rk.rkh.related(), rk.rkh.section(), rk.rkh.setting(),
-    rk.rkh.settings(), rk.rkh.summary(), rk.rkh.technical(), rk.rkh.title() and rk.rkh.usage()
-  - rk.rkh.doc() now only accepts nodes of the above functions as input (and gained support for title and sections)
+  - added functions rk.rkh.caption(), rk.rkh.link(), rk.rkh.related(),
+    rk.rkh.section(), rk.rkh.setting(), rk.rkh.settings(), rk.rkh.summary(),
+    rk.rkh.technical(), rk.rkh.title() and rk.rkh.usage()
+  - rk.rkh.doc() now only accepts nodes of the above functions as input (and
+    gained support for title and sections)
   - rk.rkh.scan() now also looks for captions
   - added full help page support to rk.plugin.skeleton()
   - added support for properties to rk.JS.vars()
   - added function rk.JS.saveobj() to generate JS code for saveobject nodes.
-  - added function rk.JS.options() to generate code for JS variables holding multiple options
+  - added function rk.JS.options() to generate code for JS variables holding
+    multiple options
   - added class rk.JS.opt and a show method for it (use rk.paste.JS() on that)
-  - id() and echo() now also replace objects of classes rk.JS.opt and rk.JS.arr with their relevant ID
-  - linked "Introduction to Writing Plugins for RKWard" locally to the manual pages
+  - id() and echo() now also replace objects of classes rk.JS.opt and
+    rk.JS.arr with their relevant ID
+  - linked "Introduction to Writing Plugins for RKWard" locally to the manual
+    pages
 
 changes in version 0.02-4 (2011-10-03)
-  - some experimental JavaScript generator tools added, might very well be changed soon again:
-    - added functions rk.JS.vars(), echo(), id(), ite() and rk.paste.JS() to help generate JavaScript code
-    - added classes rk.JS.ite, rk.JS.arr and show methods for them
-    - function rk.JS.array() now returns an object of class rk.JS.arr (use rk.paste.JS() on that)
+  - some experimental JavaScript generator tools added, might very well be
+    changed soon again: - added functions rk.JS.vars(), echo(), id(), ite() and
+    rk.paste.JS() to help generate JavaScript code - added classes rk.JS.ite,
+    rk.JS.arr and show methods for them - function rk.JS.array() now returns
+    an object of class rk.JS.arr (use rk.paste.JS() on that)
 
 changes in version 0.02-3 (2011-09-30)
-  - added functions rk.XML.attribute(), rk.XML.component(), rk.XML.components(), rk.XML.context(),
-    rk.XML.entry(), rk.XML.hierarchy(), rk.XML.menu() and rk.XML.require()
-  - rk.plugin.skeleton() and rk.XML.pluginmap() now use the new functions, which makes them much more flexible
+  - added functions rk.XML.attribute(), rk.XML.component(),
+    rk.XML.components(), rk.XML.context(), rk.XML.entry(), rk.XML.hierarchy(), rk.XML.menu()
+    and rk.XML.require()
+  - rk.plugin.skeleton() and rk.XML.pluginmap() now use the new functions,
+    which makes them much more flexible
   - added option "menu" to rk.plugin.skeleton()
-  - added options "require", "x11.context", "import.context" and "hints" to rk.XML.pluginmap()
+  - added options "require", "x11.context", "import.context" and "hints" to
+    rk.XML.pluginmap()
   - removed now superfluous option "plugin.dir" from rk.XML.pluginmap()
-  - tuned rk.plugin.skeleton() to only skip file writing if they exist
-  
+  - tuned rk.plugin.skeleton() to only skip file writing if they exist 
+
 changes in version 0.02-2 (2011-09-29)
-  - added "load" and "show" options to rk.plugin.skeleton() to call rk.load.pluginmaps() and the plugin itself
+  - added "load" and "show" options to rk.plugin.skeleton() to call
+    rk.load.pluginmaps() and the plugin itself
   - added function rk.build.plugin()
 
 changes in version 0.02-1 (2011-09-28)
-  - added functions rk.XML.insert(), rk.XML.include(), rk.XML.embed(), rk.XML.preview(),
-    rk.XML.snippet(), and rk.XML.snippets()
-  - added support for snippets section to rk.XML.plugin() and rk.plugin.skeleton()
+  - added functions rk.XML.insert(), rk.XML.include(), rk.XML.embed(),
+    rk.XML.preview(), rk.XML.snippet(), and rk.XML.snippets()
+  - added support for snippets section to rk.XML.plugin() and
+    rk.plugin.skeleton()
   - included formula node into rk.XML.vars() wrapper
-  - rk.XML.varslot() now automatically sets "multi=TRUE" if "min", "max" or "any" are set
+  - rk.XML.varslot() now automatically sets "multi=TRUE" if "min", "max" or
+    "any" are set
 
 changes in version 0.02-0 (2011-09-27)
-  - redesigned options for rk.XML.plugin() and rk.plugin.skeleton() for more consistency.
-    unfortunately, this breaks backwards compatibility!
-  - added functions rk.XML.varselector(), rk.XML.copy(), rk.XML.dialog(), rk.XML.page() and
-    rk.XML.wizard()
+  - redesigned options for rk.XML.plugin() and rk.plugin.skeleton() for more
+    consistency. unfortunately, this breaks backwards compatibility!
+  - added functions rk.XML.varselector(), rk.XML.copy(), rk.XML.dialog(),
+    rk.XML.page() and rk.XML.wizard()
   - added type checks to rk.XML.spinbox()
   - added "id.name" and "label" to various functions
   - updated rk.XML.formula()
 
 changes in version 0.01-5 (2011-09-25)
-  - added functions rk.XML.formula(), rk.XML.convert(), rk.XML.connect(), rk.XML.logic(),
-    rk.XML.set() and rk.XML.external()
-  - added possibility to add custom XML code to the logic section with rk.XML.plugin()
-    and rk.plugin.skeleton()
+  - added functions rk.XML.formula(), rk.XML.convert(), rk.XML.connect(),
+    rk.XML.logic(), rk.XML.set() and rk.XML.external()
+  - added possibility to add custom XML code to the logic section with
+    rk.XML.plugin() and rk.plugin.skeleton()
   - fixed id setting in rk.XML.browser()
-  - simplified rk.plugin.skeleton() and rk.XML.pluginmap() by making "about" entirely optional
+  - simplified rk.plugin.skeleton() and rk.XML.pluginmap() by making "about"
+    entirely optional
 
 changes in version 0.01-4 (2011-09-22)
   - fixed wrong doc link and one wrong object name in rk.plugin.skeleton()
@@ -257,29 +312,33 @@ changes in version 0.01-4 (2011-09-22)
   - added "edit" and "create" options to rk.plugin.skeleton()
   - added function rk.XML.varslot()
   - added possibility to add custom XML nodes to the varslot in rk.XML.vars()
-  - added possibility to paste ready-to-use JavaScript code directly to the preprocess(),
-    calculate() and printout() functions, respectively
+  - added possibility to paste ready-to-use JavaScript code directly to the
+    preprocess(), calculate() and printout() functions, respectively
 
 changes in version 0.01-3 (2011-09-16)
-  - added rk.XML.spinbox() and missing options to rk.XML.browser() and rk.XML.saveobj()
+  - added rk.XML.spinbox() and missing options to rk.XML.browser() and
+    rk.XML.saveobj()
   - corrected browser default type in rk.XML.browser()
   - added wizard option to rk.plugin.skeleton()
 
 changes in version 0.01-2 (2011-09-15)
-  - reworked rk.XML.about() to use person class objects for authors, and need less info to
-    produce usable output
+  - reworked rk.XML.about() to use person class objects for authors, and need
+    less info to produce usable output
 
 changes in version 0.01-1 (2011-09-05)
-  - added rk.JS.scan(), rk.JS.doc(), rk.JS.array(), rk.rkh.scan() and rk.rkh.doc()
-  - added rk.XML.browser(),  rk.XML.input(),  rk.XML.saveobj(),  rk.XML.stretch() and  rk.XML.text()
+  - added rk.JS.scan(), rk.JS.doc(), rk.JS.array(), rk.rkh.scan() and
+    rk.rkh.doc()
+  - added rk.XML.browser(),  rk.XML.input(),  rk.XML.saveobj(), 
+    rk.XML.stretch() and  rk.XML.text()
   - added rk.testsuite.doc()
   - shortened package name from "rkwardplugdev" to "rkwarddev"
   - merged code into RKWard's svn tree
 
 changes in version 0.01-0 (2011-08-30)
   - forked rk.* functions from XiMpLe package into this one
-  - added functions rk.XML.cbox(), rk.XML.row(), rk.XML.col(), rk.XML.frame(),
-    rk.XML.radio() and rk.XML.vars()
+  - added functions rk.XML.cbox(), rk.XML.row(), rk.XML.col(),
+    rk.XML.frame(), rk.XML.radio() and rk.XML.vars()
   - rewrote the ID handling
   - added docs
   - initial release via reaktanz.de
+
