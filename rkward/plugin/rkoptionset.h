@@ -34,6 +34,7 @@ class RKOptionSetDisplayModel;
  * TODO
  * - serialization / de-serialization. We will need to make RKComponentBase::fetchPropertyValuesRecursive() and RKComponent::setPropertyValues() virtual, and reimplement them.
  * - clear all compiler TODO warnings
+ * - create automatism to take care of unfinished rows, which are not current
  * 
   *@author Thomas Friedrichsmeier
   */
@@ -57,7 +58,11 @@ private slots:
 	void removeRow ();
 	void currentRowChanged ();
 	void fetchDefaults ();
-private:
+protected:
+	// reimplemented from RKComponent
+	void fetchPropertyValuesRecursive (QMap<QString, QString> *list, bool include_top_level=false, const QString &prefix=QString::null) const;
+	// reimplemented from RKComponent
+	void setPropertyValues (QMap<QString, QString> *list, bool warn_internal=false);
 friend class RKOptionSetDisplayModel;
 	int rowCount () const { return row_count->intValue (); };
 	void setRowState (int row, bool finished, bool valid);

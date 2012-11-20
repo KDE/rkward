@@ -32,6 +32,8 @@
 
 #include "../debug.h"
 
+#define KEYCOLUMN_UNINITIALIZED_VALUE QString ("___#!RK!___Keycol_unintialized")
+
 RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget) : RKComponent (parent_component, parent_widget) {
 	RK_TRACE (PLUGIN);
 
@@ -77,7 +79,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 		QString governor = xml->getStringAttribute (e, "connect", QString (), DL_INFO);
 		bool external = xml->getBoolAttribute (e, "external", false, DL_INFO);
 
-		while (child_map.contains (id) || (id.startsWith ("_row"))) {
+		while (child_map.contains (id)) {
 			RK_DO (qDebug ("optionset already contains a property named %s. Renaming to _%s", qPrintable (id), qPrintable (id)), PLUGIN, DL_ERROR);
 			id = "_" + id;
 		}
@@ -89,6 +91,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 		if (external && e.hasAttribute ("default")) col_inf.default_value = xml->getStringAttribute (e, "default", QString (), DL_ERROR);
 
 		RKComponentPropertyStringList *column_property = new RKComponentPropertyStringList (this, false);
+		column_property->setInternal (external);	// Yes, looks strange, indeed. External properties should simply not be serialized / restored...
 		addChild (id, column_property);
 		connect (column_property, SIGNAL (valueChanged(RKComponentPropertyBase *)), this, SLOT (columnPropertyChanged(RKComponentPropertyBase *)));
 
@@ -107,13 +110,15 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	keycolumn = 0;
 	QString keycol = xml->getStringAttribute (element, "keycolumn", QString (), DL_DEBUG);
 	if (!keycol.isEmpty ()) {
-		keycolumn = static_cast<RKComponentPropertyStringList*> (child_map.value (keycol));
 		if (!column_map.contains (keycolumn)) {
 			RK_DO (qDebug ("optionset does not contain a column named %s. Falling back to manual insertion mode", qPrintable (keycol)), PLUGIN, DL_ERROR);
-			keycolumn = 0;
 		} else if (!column_map[keycolumn].external) {
 			RK_DO (qDebug ("keycolumn (%s) is not marked as external. Falling back to manual insertion mode", qPrintable (keycol)), PLUGIN, DL_ERROR);
-			keycolumn = 0;
+		} else {
+			keycolumn = static_cast<RKComponentPropertyStringList*> (child_map.value (keycol));
+			updating = true;
+			keycolumn->setValue (KEYCOLUMN_UNINITIALIZED_VALUE);
+			updating = false;
 		}
 	}
 
@@ -200,6 +205,59 @@ RKComponent *RKOptionSet::createDisplay (bool show_index, QWidget *parent) {
 	RKCommonFunctions::setTips (i18n ("Remove a row / element"), remove_button);
 
 	return (dummy);
+}
+
+QString serializeList (const QStringList &list) {
+	QString ret;
+	for (int i = 0; i < list.size (); ++i) {
+		if (i > 0) ret.append ('\n');
+		ret.append (RKCommonFunctions::escape (list[i]));
+	}
+	return ret;
+}
+
+QStringList unserializeList  (const QString &serial) {
+	QStringList ret = serial.split ('\n', QString::KeepEmptyParts);
+	for (int i = 0; i < ret.size (); ++i) {
+		ret[i] = RKCommonFunctions::unescape (ret[i]);
+	}
+	return ret;
+}
+
+void RKOptionSet::fetchPropertyValuesRecursive (QMap <QString, QString>* list, bool include_top_level, const QString& prefix) const {
+	RK_TRACE (PLUGIN);
+	RK_ASSERT (include_top_level);
+
+	if (keycolumn) {
+		list->insert (prefix + "keys", serializeList (old_keys));
+	}
+
+	QMap<RKComponentPropertyStringList *, ColumnInfo>::const_iterator it;
+	for (it = column_map.constBegin (); it != column_map.constEnd (); ++it) {
+		if (it.value ().external) continue;
+		list->insert (prefix + it.value ().column_name, serializeList (it.key ()->values ()));
+	}
+
+// NOTE: *Not* fetching any other properties. Esp. not from the contents_container!
+}
+
+void RKOptionSet::setPropertyValues (QMap< QString, QString >* list, bool warn_internal) {
+/* What happens when deserializing a plugin, with a driven optionset, and
+ * the property connected to the keycolumn is restored *before* the optionset itself has been de-serialized?
+ * 
+ * We have to special-case this: If we go into setPropertyValues, and
+ * the key column has already been touched, we have to
+ * - backup keycolumn *and* all other external columns
+ * - apply property values from the serialization
+ * - re-apply the backups
+ * 
+ * NOTE: This assumes that de-serialization can only happen once during the lifetime of an optionset. At the time of this writing,
+ *       this assumption is valid, but it could change, of course.
+ */
+	RK_TRACE (PLUGIN);
+
+#warning ------------------- TODO ----------------------
+	RKComponentBase::setPropertyValues (list, warn_internal);
 }
 
 void RKOptionSet::addRow () {
@@ -602,7 +660,7 @@ QVariant RKOptionSetDisplayModel::data (const QModelIndex& index, int role) cons
 		const RKOptionSet::RowInfo &ri = set->rows[row];
 		if (!ri.finished) return Qt::yellow;
 		if (!ri.valid) return Qt::red;
-	} else if (role == Qt::ToolTipRole) {
+	} else if ((role == Qt::ToolTipRole) || role == (Qt::StatusTipRole)) {
 		const RKOptionSet::RowInfo &ri = set->rows[row];
 		if (!ri.finished) return i18n ("This row has not yet been processed.");
 		if (!ri.valid) return i18n ("This row contains invalid settings.");
@@ -623,7 +681,7 @@ QVariant RKOptionSetDisplayModel::headerData (int section, Qt::Orientation orien
 			if (set->n_unfinished_rows > 0) return Qt::yellow;
 			if (!set->isValid ()) return Qt::red;
 		}
-		if (role == Qt::ToolTipRole) {
+		if ((role == Qt::ToolTipRole) || role == (Qt::StatusTipRole)) {
 			if (set->n_unfinished_rows > 0) return i18n ("Please wait while settings are being processed");
 			if (!set->isValid ()) {
 				QStringList probs;

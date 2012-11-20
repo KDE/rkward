@@ -66,6 +66,7 @@
 								<checkbox id="dummybox" label="This dummy option is always disabled"/>
 								<input id="commenta" label="Comment A"/>
 								<input id="commentb" label="Comment B" initial="This is a default entry. Change it, if you like."/>
+								<embed id="test_embed" component="rkward::plot_options" as_button="true"/>
 							</frame>
 						</content>
 						<option id="var" label="test" external="true"/>
