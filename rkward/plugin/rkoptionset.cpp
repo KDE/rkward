@@ -114,12 +114,14 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	keycolumn = 0;
 	QString keycol = xml->getStringAttribute (element, "keycolumn", QString (), DL_DEBUG);
 	if (!keycol.isEmpty ()) {
+		keycolumn = static_cast<RKComponentPropertyStringList*> (child_map.value (keycol));
 		if (!column_map.contains (keycolumn)) {
 			RK_DO (qDebug ("optionset does not contain a column named %s. Falling back to manual insertion mode", qPrintable (keycol)), PLUGIN, DL_ERROR);
+			keycolumn = 0;
 		} else if (!column_map[keycolumn].external) {
 			RK_DO (qDebug ("keycolumn (%s) is not marked as external. Falling back to manual insertion mode", qPrintable (keycol)), PLUGIN, DL_ERROR);
+			keycolumn = 0;
 		} else {
-			keycolumn = static_cast<RKComponentPropertyStringList*> (child_map.value (keycol));
 			updating = true;
 			keycolumn->setValue (KEYCOLUMN_UNINITIALIZED_VALUE);
 			updating = false;
