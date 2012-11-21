@@ -98,7 +98,7 @@ void RKVariable::setVarType (RObject::RDataType new_type, bool sync) {
 			else if (new_type == RObject::DataFactor) command += "as.factor";
 			command += ")";
 			RKGlobals::rInterface ()->issueCommand (command, RCommand::App | RCommand::Sync, QString::null);
-			if (new_type == RObject::DataFactor) writeValueLabels (0);		// as.factor resets the "levels"-attribute!
+			if (new_type == RObject::DataFactor) updateValueLabels ();	// as.factor resets the "levels"-attribute!
 
 			syncDataToR ();
 		} else discardUnsyncedChanges ();
@@ -180,8 +180,9 @@ void RKVariable::rCommandDone (RCommand *command) {
 			int invalids_count = invalids_length / 2;
 			for (int i=0; i < invalids_count; ++i) {
 				int row = invalids_list.at (i).toInt () - 1;
-				if (data->cell_states[row] & RKVarEditData::NA) {
-					setText (row, invalids_list.at (invalids_count + i));
+				if (data->cell_states[row] & RKVarEditData::NA) {	// NOTE: Do *not* use setText(), here. It tries too hard to set a valid value.
+					data->invalid_fields.insert (row, invalids_list.at (invalids_count + i));
+					data->cell_states[row] = RKVarEditData::Invalid;
 				}
 			}
 		}
@@ -339,15 +340,44 @@ void RKVariable::restore (RCommandChain *chain) {
 	writeMetaData (chain);
 }
 
-void RKVariable::writeInvalidField (int row, RCommandChain *chain) {
+void RKVariable::writeInvalidFields (QList<int> rows, RCommandChain *chain) {
 	RK_TRACE (OBJECTS);
 
-	if (data->invalid_fields.contains (row)) {
-		RKGlobals::rInterface ()->issueCommand (".rk.set.invalid.field (" + getFullName () + ", " + QString::number (row+1) + ", " + rQuote (data->invalid_fields.value (row)) + ')', RCommand::App | RCommand::Sync, QString::null, 0,0, chain);
-	} else {
-		RKGlobals::rInterface ()->issueCommand (".rk.set.invalid.field (" + getFullName () + ", " + QString::number (row+1) + ", NULL)", RCommand::App | RCommand::Sync, QString (), 0,0, chain);
+	if (rows.isEmpty ()) return;
+
+	QString set;
+	QString values;
+	QString clear;
+
+	for (int i = 0; i < rows.size (); ++i) {
+		int row = rows[i];
+
+		if (data->invalid_fields.contains (row)) {
+			if (!set.isEmpty ()) {
+				set.append (", ");
+				values.append (", ");
+			}
+			set.append (QString::number (row+1));
+			values.append (rQuote (data->invalid_fields[row]));
+		} else {
+			if (!clear.isEmpty ()) clear.append (", ");
+			clear.append (QString::number (row+1));
+		}
+
+		data->cell_states[row] -= (data->cell_states[row] & RKVarEditData::UnsyncedInvalidState);
 	}
-	data->cell_states[row] -= (data->cell_states[row] & RKVarEditData::UnsyncedInvalidState);
+
+	if (!set.isEmpty ()) {
+		set = "set=c(" + set + "), ";
+		values = "values=c(" + values + ")";
+	}
+	if (!clear.isEmpty ()) {
+		clear = "clear=c(" + clear + ")";
+		if (!values.isEmpty ()) values.append (",");
+	}
+
+	RKGlobals::rInterface ()->issueCommand (".rk.set.invalid.fields (" + getFullName () + ", " + set + values + clear + ")", RCommand::App | RCommand::Sync, QString (), 0,0, chain);
+
 	if (data->previously_valid != data->invalid_fields.isEmpty ()) {
 		data->previously_valid = data->invalid_fields.isEmpty ();
 		RKGlobals::tracker ()->objectMetaChanged (this);
@@ -358,10 +388,12 @@ void RKVariable::writeData (int from_row, int to_row, RCommandChain *chain) {
 	RK_TRACE (OBJECTS);
 	if (from_row == -1) return;
 
+	QList<int> changed_invalids;
+
 	// TODO: try to sync in correct storage mode
 	if (from_row == to_row) {
 		RKGlobals::rInterface ()->issueCommand (getFullName () + '[' + QString::number (from_row+1) + "] <- " + getRText (from_row), RCommand::App | RCommand::Sync, QString::null, 0,0, chain);
-		if (data->cell_states[from_row] & RKVarEditData::UnsyncedInvalidState) writeInvalidField (from_row, chain);
+		if (data->cell_states[from_row] & RKVarEditData::UnsyncedInvalidState) changed_invalids.append (from_row);
 	} else {
 		QString data_string = "c (";
 		for (int row = from_row; row <= to_row; ++row) {
@@ -370,11 +402,13 @@ void RKVariable::writeData (int from_row, int to_row, RCommandChain *chain) {
 			if (row != to_row) {
 				data_string.append (", ");
 			}
-			if (data->cell_states[row] & RKVarEditData::UnsyncedInvalidState) writeInvalidField (row, chain);
+			if (data->cell_states[row] & RKVarEditData::UnsyncedInvalidState) changed_invalids.append (row);
 		}
 		data_string.append (")");
 		RKGlobals::rInterface ()->issueCommand (getFullName () + '[' + QString::number (from_row + 1) + ':' + QString::number (to_row + 1) + "] <- " + data_string, RCommand::App | RCommand::Sync, QString::null, 0,0, chain);
 	}
+
+	if (!changed_invalids.isEmpty ()) writeInvalidFields (changed_invalids, chain);
 
 	ChangeSet *set = new ChangeSet (from_row, to_row);
 	RKGlobals::tracker ()->objectDataChanged (this, set);
@@ -486,13 +520,13 @@ void RKVariable::setText (int row, const QString &text) {
 			data->cell_strings[row] = text;
 		} else if (getDataType () == DataFactor) {
 			if (data->value_labels) {
-				QString realtext = data->value_labels->key (text);
-				if (realtext.isEmpty ()) valid = false;
-				else data->cell_doubles[row] = realtext.toInt ();
+				QString realtext = data->value_labels->key (text);	// first, attempt to set by level
+				if (!realtext.isEmpty ()) data->cell_doubles[row] = realtext.toInt ();
+				else {	// if this failed, try to set by index, instead.
+					if (data->value_labels->contains (text)) data->cell_doubles[row] = text.toInt ();
+					else valid = false;
+				}
 			} else valid = false;
-			if (!valid) {	// setting by lavel failed. Try to set a numeric value, instead
-				data->cell_doubles[row] = text.toDouble (&valid);
-			}
 		} else if (getDataType () == DataLogical) {
 			if (text == "0" || text == "F" || text == "FALSE") data->cell_doubles[row] = 0;
 			else if (text == "1" || text == "T" || text == "TRUE") data->cell_doubles[row] = 1;
@@ -631,9 +665,7 @@ void RKVariable::removeRows (int from_row, int to_row) {
 		else data->cell_doubles.removeAt (row);
 	}
 
-	for (int i = 0; i < changed_invalids.size (); ++i) {
-		writeInvalidField (changed_invalids[i], 0);
-	}
+	if (!changed_invalids.isEmpty ()) writeInvalidFields (changed_invalids);
 
 	dimensions[0] -= offset;
 }
@@ -657,9 +689,7 @@ void RKVariable::insertRows (int row, int count) {
 		}
 	}
 
-	for (int i = 0; i < changed_invalids.size (); ++i) {
-		writeInvalidField (changed_invalids[i], 0);
-	}
+	if (!changed_invalids.isEmpty ()) writeInvalidFields (changed_invalids);
 
 	dimensions[0] += count;
 }
@@ -688,21 +718,31 @@ void RKVariable::setValueLabels (const ValueLabels& labels) {
 		*(data->value_labels) = labels;
 	}
 
+	updateValueLabels ();
+}
+
+void RKVariable::updateValueLabels () {
+	RK_TRACE (OBJECTS);
+
 	writeValueLabels (0);
 	RKGlobals::tracker ()->objectMetaChanged (this);
 
+	ValueLabels *labels = data->value_labels;
+
+	lockSyncing (true);
 	// find out which values got valid / invalid and change those
 	for (int i=0; i < getLength (); ++i) {
 		if (cellStatus (i) == ValueInvalid) {
-			if (labels.contains (getText (i))) {
+			if (labels && labels->contains (getText (i))) {
 				setText (i, getText (i));
 			}
 		} else {
-			if (!(labels.contains (getText (i)))) {
+			if (!(labels && labels->contains (getText (i)))) {
 				setText (i, getText (i));
 			}
 		}
 	}
+	lockSyncing (false);
 
 	// also update display of all values:
 	ChangeSet *set = new ChangeSet (0, getLength () - 1);
@@ -714,10 +754,11 @@ void RKVariable::setValueLabels (const ValueLabels& labels) {
 void RKVariable::writeValueLabels (RCommandChain *chain) const {
 	RK_TRACE (OBJECTS);
 	RK_ASSERT (data);
-	
-	if (data->value_labels) {
+
+	QString level_string;
+	if (data->value_labels && (!data->value_labels->isEmpty())) {
 		int i = 1;
-		QString level_string = "c (";
+		level_string = "c (";
 		while (data->value_labels->contains (QString::number (i))) {
 			level_string.append (rQuote ((*(data->value_labels))[QString::number (i)]));
 			if (data->value_labels->contains (QString::number (++i))) {
@@ -725,13 +766,11 @@ void RKVariable::writeValueLabels (RCommandChain *chain) const {
 			}
 		}
 		level_string.append (")");
-		// using attr (..., "levels) instead of levels (...) in order to bypass checking
-		RKGlobals::rInterface ()->issueCommand ("attr (" + getFullName () + ", \"levels\") <- " + level_string, RCommand::App | RCommand::Sync, QString::null, 0, 0, chain);
 	} else {
-		QString empty = "NULL";
-		if (getDataType () == DataFactor) empty = "NA";	// never set levels to NULL on a factor!
-		RKGlobals::rInterface ()->issueCommand ("attr (" + getFullName () + ", \"levels\") <- " + empty, RCommand::App | RCommand::Sync, QString::null, 0, 0, chain);
+		level_string = "NULL";
 	}
+
+	RKGlobals::rInterface ()->issueCommand (".rk.set.levels (" + getFullName () + ", " + level_string + ")", RCommand::App | RCommand::Sync, QString::null, 0, 0, chain);
 }
 
 QString RKVariable::getValueLabelString () const {

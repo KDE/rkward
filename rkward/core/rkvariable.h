@@ -87,6 +87,8 @@ is set to Unused, if _no_ cell in the row is used, Valid if _all_ cells in the r
 	ValueLabels getValueLabels () const;
 /** assigns a new map of labels. Also takes care of syncing with the backend. */
 	void setValueLabels (const ValueLabels& labels);
+/** re-check a factor variable after editing its value labels, and sync labels to R */
+	void updateValueLabels ();
 /** get value labels as string (for display) */
 	QString getValueLabelString () const;
 /** set value labels from string (for paste operations) */
@@ -173,7 +175,7 @@ protected:
 	void cellsChanged (int from_row, int to_row);
 /** writes the given range of cells to the backend (regardless of whether syncing should be immediate) */
 	virtual void writeData (int from_row, int to_row, RCommandChain *chain=0);
-	void writeInvalidField (int row, RCommandChain *chain=0);
+	void writeInvalidFields (QList<int> rows, RCommandChain *chain=0);
 /** writes the values labels to the backend */
 	void writeValueLabels (RCommandChain *chain) const;
 /** tries to match a value-label to the value in the given cell. Returns the label, or - if there is no label - the original value in textual representation */

@@ -26,11 +26,45 @@
 	eval (substitute (attr (x, ".rk.meta") <<- m))
 }
 
-#' @export
 ".rk.set.invalid.field" <- function (x, row, value) {
 	l <- attr (x, ".rk.invalid.fields");
 	if (is.null (l)) l <- list ();
 	l[[as.character(row)]] <- value;
+	if (length (l) == 0) l <- NULL
+	eval (substitute (attr (x, ".rk.invalid.fields") <<- l))
+}
+
+#' Work around some peculiarities in R's handling of levels
+#' @export
+".rk.set.levels" <- function (var, levels) {
+	if (is.factor (var)) {
+		if (is.null (levels)) levels <- NA	# must never set NULL levels on a factor
+		old_l <- levels (var)
+		# using attr (..., "levels) instead of levels (...) in order to bypass checking
+		eval (substitute (attr (var, "levels") <<- levels))
+		if ((length (var) > 0) && (is.null (old_l) || ((length (old_l) == 1L) && is.na (old_l[1L]))))	{
+			# if levels were empty, this means var is all NAs. R will set all to first level, instead, in some cases
+			len <- length (var)
+			eval(substitute(var[1:len] <<- NA))
+		}
+	} else {
+		eval (substitute (attr (var, "levels") <<- levels))
+	}
+}
+
+#' @export
+".rk.set.invalid.fields" <- function (x, set, values, clear) {
+	l <- attr (x, ".rk.invalid.fields");
+	if (is.null (l)) l <- list ();
+
+	if (!missing (set)) {
+		set <- as.character (set)
+		l[set] <- as.character (values)
+	}
+	if (!missing (clear)) {
+		l[as.character (clear)] <- NULL
+	}
+
 	if (length (l) == 0) l <- NULL
 	eval (substitute (attr (x, ".rk.invalid.fields") <<- l))
 }

@@ -1,3 +1,4 @@
+- Fix conversion from Numeric to Factor in the data editor
 - In the data.frame editor, columns containing invalid values are now highlighted in red
 - Fixed: If none of the previous plugin maps could be found on startup, re-add the default
 - Added GUI element for entering matrix or vector data in plugins
