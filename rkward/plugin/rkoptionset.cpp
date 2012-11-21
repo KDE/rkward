@@ -241,7 +241,7 @@ void RKOptionSet::fetchPropertyValuesRecursive (QMap <QString, QString>* list, b
 // NOTE: *Not* fetching any other properties. Esp. not from the contents_container!
 }
 
-void RKOptionSet::setPropertyValues (QMap< QString, QString >* list, bool warn_internal) {
+void RKOptionSet::setPropertyValues (QMap <QString, QString>* list, bool warn_internal) {
 /* What happens when deserializing a plugin, with a driven optionset, and
  * the property connected to the keycolumn is restored *before* the optionset itself has been de-serialized?
  * 
@@ -255,6 +255,10 @@ void RKOptionSet::setPropertyValues (QMap< QString, QString >* list, bool warn_i
  *       this assumption is valid, but it could change, of course.
  */
 	RK_TRACE (PLUGIN);
+#warning Grrr. It doesn't work like this!
+#warning Also it's wrong. Serialization needs to be done by rows (using the row's contents serialization!).
+// The good news is that this means that regular properties can be used, with not virtual fetch/setPropertyValues.
+// The above note still applies. Keys should be de-serialized last. This can simply be done by giving them a name that will be sorted last in the map (zzkeys, or something)
 
 #warning ------------------- TODO ----------------------
 	RKComponentBase::setPropertyValues (list, warn_internal);
