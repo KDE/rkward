@@ -46,6 +46,10 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	max_rows = xml->getIntAttribute (element, "max", INT_MAX, DL_INFO);
 
 	// create some meta properties
+	serialization_of_set = new RKComponentPropertyBase (this, false);
+	addChild ("serialized", serialization_of_set);
+	connect (serialization_of_set, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (serializationPropertyChanged(RKComponentPropertyBase*)));
+
 	active_row = -1;
 	current_row = new RKComponentPropertyInt (this, false, -1);
 	current_row->setInternal (true);
@@ -210,58 +214,135 @@ RKComponent *RKOptionSet::createDisplay (bool show_index, QWidget *parent) {
 QString serializeList (const QStringList &list) {
 	QString ret;
 	for (int i = 0; i < list.size (); ++i) {
-		if (i > 0) ret.append ('\n');
+		if (i > 0) ret.append ('\t');
 		ret.append (RKCommonFunctions::escape (list[i]));
 	}
 	return ret;
 }
 
 QStringList unserializeList  (const QString &serial) {
-	QStringList ret = serial.split ('\n', QString::KeepEmptyParts);
+	QStringList ret = serial.split ('\t', QString::KeepEmptyParts);
 	for (int i = 0; i < ret.size (); ++i) {
 		ret[i] = RKCommonFunctions::unescape (ret[i]);
 	}
 	return ret;
 }
 
-void RKOptionSet::fetchPropertyValuesRecursive (QMap <QString, QString>* list, bool include_top_level, const QString& prefix) const {
+QString serializeMap (const QMap<QString, QString> &map) {
+	QString ret;
+
+	QMap<QString, QString>::const_iterator it;
+	for (it = map.constBegin (); it != map.constEnd (); ++it) {
+		if (!ret.isEmpty ()) ret.append ('\t');
+		ret.append (RKCommonFunctions::escape (it.key ()) + '=' + RKCommonFunctions::escape (it.value ()));
+	}
+	return ret;
+}
+
+QMap<QString, QString> unserializeMap (const QString &serial) {
+	QMap<QString, QString> ret;
+	QStringList l = serial.split ('\t', QString::KeepEmptyParts);
+	for (int i = 0; i < l.size (); ++i) {
+		QString &line = l[i];
+		int sep = line.indexOf ('=');
+		ret.insert (RKCommonFunctions::unescape (line.left (sep)), RKCommonFunctions::unescape (line.mid (sep+1)));
+	}
+	return ret;
+}
+
+void RKOptionSet::fetchPropertyValuesRecursive (QMap<QString, QString> *list, bool include_top_level, const QString &prefix) const {
 	RK_TRACE (PLUGIN);
 	RK_ASSERT (include_top_level);
 
+	QString serialization;
+
 	if (keycolumn) {
-		list->insert (prefix + "keys", serializeList (old_keys));
+		serialization.append ("keys=" + RKCommonFunctions::escape (serializeList (old_keys)));
 	}
 
-	QMap<RKComponentPropertyStringList *, ColumnInfo>::const_iterator it;
-	for (it = column_map.constBegin (); it != column_map.constEnd (); ++it) {
-		if (it.value ().external) continue;
-		list->insert (prefix + it.value ().column_name, serializeList (it.key ()->values ()));
+	for (int r = 0; r < rows.size (); ++r) {
+		if (!serialization.isEmpty ()) serialization.append ("\n");
+		serialization.append ("_row=" + serializeMap (rows[r].full_row_map));
 	}
 
-// NOTE: *Not* fetching any other properties. Esp. not from the contents_container!
+	list->insert (prefix + "serialized", serialization);
 }
 
-void RKOptionSet::setPropertyValues (QMap <QString, QString>* list, bool warn_internal) {
+void RKOptionSet::serializationPropertyChanged (RKComponentPropertyBase* property) {
+	if (updating) return;
+	updating = true;
+	if (model) model->layoutAboutToBeChanged ();
+
+	RK_TRACE (PLUGIN);
+	RK_ASSERT (property == serialization_of_set);
 /* What happens when deserializing a plugin, with a driven optionset, and
  * the property connected to the keycolumn is restored *before* the optionset itself has been de-serialized?
  * 
  * We have to special-case this: If we go into setPropertyValues, and
  * the key column has already been touched, we have to
- * - backup keycolumn *and* all other external columns
  * - apply property values from the serialization
- * - re-apply the backups
+ * - trigger handleKeycolumnUpdate(), delayed
  * 
- * NOTE: This assumes that de-serialization can only happen once during the lifetime of an optionset. At the time of this writing,
- *       this assumption is valid, but it could change, of course.
  */
-	RK_TRACE (PLUGIN);
-#warning Grrr. It doesn't work like this!
-#warning Also it's wrong. Serialization needs to be done by rows (using the row's contents serialization!).
-// The good news is that this means that regular properties can be used, with not virtual fetch/setPropertyValues.
-// The above note still applies. Keys should be de-serialized last. This can simply be done by giving them a name that will be sorted last in the map (zzkeys, or something)
+	if (keycolumn && (keycolumn->value () != KEYCOLUMN_UNINITIALIZED_VALUE)) {
+		QTimer::singleShot (0, this, SLOT (handleKeycolumnUpdate ()));
+	} else {
+		RK_ASSERT (rows.isEmpty ());
+	}
 
-#warning ------------------- TODO ----------------------
-	RKComponentBase::setPropertyValues (list, warn_internal);
+	QList<RowInfo> new_rows;
+	int row = 0;
+	QStringList items = property->value ().split ("\n");
+	bool keys_missing = (keycolumn != 0);
+	for (int i = 0; i < items.size (); ++i) {
+		const QString &item = items[i];
+		int sep = item.indexOf ('=');
+		if (sep < 0) {
+			RK_DO (qDebug ("Bad format while trying to de-serialize optionset, line %d", i), PLUGIN, DL_WARNING);
+			continue;
+		}
+		QString tag = item.left (sep);
+		QString value = item.mid (sep + 1);
+
+		if (tag == QLatin1String ("keys")) {
+			if (!keys_missing) {
+				RK_DO (qDebug ("Unexpected specification of keys while trying to de-serialize optionset, line %d", i), PLUGIN, DL_WARNING);
+				continue;
+			}
+			old_keys = unserializeList (value);
+		} else if (tag == QLatin1String ("_row")) {
+			new_rows.append (RowInfo (unserializeMap (value)));
+			++row;
+		} else {
+			RK_DO (qDebug ("Unexpected tag %s while trying to de-serialize optionset, line %d", qPrintable (tag), i), PLUGIN, DL_WARNING);
+			continue;
+		}
+	}
+
+	if (keycolumn) {
+		RK_ASSERT (rows.size () == old_keys.size ());
+		RK_ASSERT (!keys_missing);
+	}
+
+	// reset all non-external columns to default values
+	QMap<RKComponentPropertyStringList*, ColumnInfo>::const_iterator it;
+	for (it = column_map.constBegin (); it != column_map.constEnd (); ++it) {
+		const ColumnInfo &col = it.value ();
+		if (col.external) continue;
+		QStringList def;
+		for (int i = 0; i < row; ++i) {
+			def.append (getDefaultValue (col, i));
+		}
+		it.key ()->setValues (def);
+	}
+
+	rows = new_rows;
+	row_count->setIntValue (row);
+	current_row->setIntValue (qMin (0, row - 1));
+
+	serialization_of_set->setValue (QString ());	// free some mem, and don't make users think, this can actually be queried in real-time
+	updating = false;
+	if (model) model->layoutChanged ();
 }
 
 void RKOptionSet::addRow () {
@@ -545,7 +626,7 @@ void RKOptionSet::setContentsForRow (int row) {
 
 	RK_ASSERT (rows.size () > row);
 	if (row >= 0) {
-		contents_container->setPropertyValues (&(rows[row].full_row_serialization), false);
+		contents_container->setPropertyValues (&(rows[row].full_row_map), false);
 	} else {
 		contents_container->setPropertyValues (&default_row_state, false);
 	}
@@ -562,8 +643,8 @@ void RKOptionSet::storeRowSerialization (int row) {
 
 	if (row < 0) return;	// No row was active
 	RK_ASSERT (rows.size () > row);
-	rows[row].full_row_serialization.clear ();
-	contents_container->fetchPropertyValuesRecursive (&(rows[row].full_row_serialization));
+	rows[row].full_row_map.clear ();
+	contents_container->fetchPropertyValuesRecursive (&(rows[row].full_row_map));
 }
 
 int getCurrentRowFromDisplay (QTreeView* display) {

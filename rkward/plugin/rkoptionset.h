@@ -54,15 +54,13 @@ private slots:
 	void governingPropertyChanged (RKComponentPropertyBase *property);
 	void columnPropertyChanged (RKComponentPropertyBase *property);
 	void currentRowPropertyChanged (RKComponentPropertyBase *property);
+	void serializationPropertyChanged (RKComponentPropertyBase *property);
 	void addRow ();
 	void removeRow ();
 	void currentRowChanged ();
 	void fetchDefaults ();
 protected:
-	// reimplemented from RKComponent
-	void fetchPropertyValuesRecursive (QMap<QString, QString> *list, bool include_top_level=false, const QString &prefix=QString::null) const;
-	// reimplemented from RKComponent
-	void setPropertyValues (QMap<QString, QString> *list, bool warn_internal=false);
+	void fetchPropertyValuesRecursive (QMap<QString, QString> *list, bool include_top_level=false, const QString &prefix=QString ()) const;
 friend class RKOptionSetDisplayModel;
 	int rowCount () const { return row_count->intValue (); };
 	void setRowState (int row, bool finished, bool valid);
@@ -71,6 +69,10 @@ friend class RKOptionSetDisplayModel;
 
 	RKComponentPropertyInt *current_row;
 	RKComponentPropertyInt *row_count;
+/** Un-serializing an optionset's state is terribly complicated, if it isn't guaranteed to happen in a single batch. Therefore, we
+ * keep a dedicated property (serialization_of_set), which holds a _full_ serialization of the set's state. 
+ * However, this representation is not kept up to date, for performance reasons. Rather it is generated only in fetchPropertyValuesRecursive(). */
+ 	RKComponentPropertyBase *serialization_of_set;
 
 /** for option sets which are "driven" (i.e. the user cannot simply add / remove rows, directly), this holds the key column, controlling addition / removal of rows in the set.
   * if this length (or order) is changed in this row, it will also be changed in the other rows. */
@@ -92,10 +94,10 @@ friend class RKOptionSetDisplayModel;
 	QMap<RKComponentPropertyStringList *, ColumnInfo> column_map;
 	QList<RKComponentPropertyStringList*> visible_columns;
 	struct RowInfo {
-		RowInfo (QMap<QString, QString> initial_values) : valid (false), finished (false), full_row_serialization (initial_values) {};
+		RowInfo (QMap<QString, QString> initial_values) : valid (false), finished (false), full_row_map (initial_values) {};
 		bool valid;		/**< has finished processing and is known to be valid */
 		bool finished;	/**< has finished processing */
-		QMap<QString, QString> full_row_serialization;	/**< complete serialization of this row, (see RKComponent::fetchPropertyValuesRecursive()) */
+		QMap<QString, QString> full_row_map;	/**< complete status representation of this row, (see RKComponent::fetchPropertyValuesRecursive()) */
 	};
 	QList<RowInfo> rows;
 	QMap<QString, QString> default_row_state;
