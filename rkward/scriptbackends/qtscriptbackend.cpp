@@ -2,7 +2,7 @@
                           qtscriptbackend  -  description
                              -------------------
     begin                : Mon Sep 28 2009
-    copyright            : (C) 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2009, 2010, 2012 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -86,15 +86,21 @@ void QtScriptBackend::tryNextFunction () {
 		if (command_stack.first ()->complete) {
 			delete command_stack.takeFirst ();
 			
-			if (!command_stack.count ()) return;
+			if (command_stack.isEmpty ()) {
+				script_thread->goToSleep (true);
+				return;
+			}
 		}
 		
 		RK_DO (qDebug ("submitting QtScript code: %s", command_stack.first ()->command.toLatin1 ().data ()), PHP, DL_DEBUG);
+		if (script_thread) script_thread->goToSleep (false);
 		script_thread->setCommand (command_stack.first ()->command);
 		busy = true;
 		command_stack.first ()->complete = true;
 		current_flags = command_stack.first ()->flags;
 		current_type = command_stack.first ()->type;
+	} else {
+		if (script_thread && command_stack.isEmpty ()) script_thread->goToSleep (true);
 	}
 }
 
@@ -140,10 +146,24 @@ QtScriptBackendThread::QtScriptBackendThread (const QString &commonfile, const Q
 	_commonfile = commonfile;
 	_scriptfile = scriptfile;
 	killed = false;
+	sleeping = false;
 }
 
 QtScriptBackendThread::~QtScriptBackendThread () {
 	RK_TRACE (PHP);
+}
+
+void QtScriptBackendThread::goToSleep (bool sleep) {
+	RK_TRACE (PHP);
+	if (sleeping != sleep) {
+		if (sleep) {
+			sleep_mutex.lock ();	// hold a mutex until it's time to wake up, again. Thread will then wait on this mutex.
+			sleeping = true;
+		} else {
+			sleeping = false;
+			sleep_mutex.unlock ();
+		}
+	}
 }
 
 void QtScriptBackendThread::setCommand (const QString &command) {
@@ -243,6 +263,10 @@ void QtScriptBackendThread::run () {
 	QString command;
 	while (1) {
 		if (killed) return;
+		if (sleeping) {
+			sleep_mutex.lock ();
+			sleep_mutex.unlock ();
+		}
 
 		mutex.lock ();
 		if (!_command.isNull ()) {

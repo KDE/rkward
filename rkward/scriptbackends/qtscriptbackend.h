@@ -2,7 +2,7 @@
                           qtscriptbackend  -  description
                              -------------------
     begin                : Mon Sep 28 2009
-    copyright            : (C) 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2009, 2012 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -68,6 +68,7 @@ public:
 	void setCommand (const QString &command);
 	void setData (const QString &data);
 	void kill () { killed = true; };
+	void goToSleep (bool sleep);
 signals:
 	void commandDone (const QString &result);
 	void needData (const QString &identifier);
@@ -91,6 +92,9 @@ private:
 	bool killed;
 
 	QMutex mutex;
+
+	QMutex sleep_mutex;
+	bool sleeping;
 };
 
 #endif
