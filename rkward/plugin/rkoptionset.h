@@ -28,11 +28,13 @@
 class QTreeView;
 class QPushButton;
 class RKOptionSetDisplayModel;
+class QStackedWidget;
 
 /** An RKOptionSet provides a group of options for an arbitrary number of "rows". E.g. different line colors for each of a group of variables.
  * 
  * TODO
- * - serialization / de-serialization. We will need to make RKComponentBase::fetchPropertyValuesRecursive() and RKComponent::setPropertyValues() virtual, and reimplement them.
+ * - Fix de-serialization for driven sets. The problem is that the key-column might update in several steps, and this makes us lose info in handleKeycolumnUpdate().
+ * - Fix verification logic for deserialization (whether settings have been applied, successfully)
  * - clear all compiler TODO warnings
  * - create automatism to take care of unfinished rows, which are not current
  * 
@@ -59,6 +61,9 @@ private slots:
 	void removeRow ();
 	void currentRowChanged ();
 	void fetchDefaults ();
+	void slotUpdateUnfinishedRows ();
+/** When keys in the key column change, all other columns have to be updated, accordingly. */
+	void handleKeycolumnUpdate ();
 protected:
 	void fetchPropertyValuesRecursive (QMap<QString, QString> *list, bool include_top_level=false, const QString &prefix=QString ()) const;
 friend class RKOptionSetDisplayModel;
@@ -114,13 +119,18 @@ friend class RKOptionSetDisplayModel;
 	RKOptionSetDisplayModel* model;
 	QTreeView *display;
 
+	QStackedWidget *switcher;
+	QWidget *updating_notice;
+	QWidget *user_area;
+	void updateUnfinishedRows ();
+	int return_to_row;
+	QTimer update_timer;
+
 	int min_rows;
 	int min_rows_if_any;
 	int max_rows;
 
 	bool updating;
-/** When keys in the key column change, all other columns have to be updated, accordingly. */
-	void handleKeycolumnUpdate ();
 /** Sets the contents from the values in given row */
 	void setContentsForRow (int row);
 

@@ -21,6 +21,8 @@
 #include <QTreeWidget>
 #include <QHeaderView>
 #include <QPushButton>
+#include <QStackedWidget>
+#include <QLabel>
 
 #include <klocale.h>
 #include <kvbox.h>
@@ -40,34 +42,44 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	XMLHelper *xml = XMLHelper::getStaticHelper ();
 	updating = false;
 	last_known_status = Processing;
+	n_invalid_rows = n_unfinished_rows = 0;
 
 	min_rows = xml->getIntAttribute (element, "min_rows", 0, DL_INFO);
 	min_rows_if_any = xml->getIntAttribute (element, "min_rows_if_any", 1, DL_INFO);
 	max_rows = xml->getIntAttribute (element, "max", INT_MAX, DL_INFO);
+
+	// build UI framework
+	QVBoxLayout *layout = new QVBoxLayout (this);
+	switcher = new QStackedWidget (this);
+	layout->addWidget (switcher);
+	user_area = new KVBox (this);
+	switcher->addWidget (user_area);
+	updating_notice = new QLabel (i18n ("Updating status, please wait"), this);
+	switcher->addWidget (updating_notice);
+	update_timer.setInterval (0);
+	update_timer.setSingleShot (true);
+	connect (&update_timer, SIGNAL (timeout()), this, SLOT (slotUpdateUnfinishedRows()));
 
 	// create some meta properties
 	serialization_of_set = new RKComponentPropertyBase (this, false);
 	addChild ("serialized", serialization_of_set);
 	connect (serialization_of_set, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (serializationPropertyChanged(RKComponentPropertyBase*)));
 
-	active_row = -1;
-	current_row = new RKComponentPropertyInt (this, false, -1);
-	current_row->setInternal (true);
-	addChild ("current_row", current_row);		// NOTE: read-write
-	connect (current_row, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (currentRowPropertyChanged(RKComponentPropertyBase*)));
 	row_count = new RKComponentPropertyInt (this, false, 0);
 	row_count->setInternal (true);
 	addChild ("row_count", row_count);		// NOTE: read-only
+	return_to_row = active_row = -1;
+	current_row = new RKComponentPropertyInt (this, false, active_row);
+	current_row->setInternal (true);
+	addChild ("current_row", current_row);		// NOTE: read-write
+	connect (current_row, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (currentRowPropertyChanged(RKComponentPropertyBase*)));
 
 	// first build the contents, as we will need to refer to the elements inside, later
-	QVBoxLayout *layout = new QVBoxLayout (this);
-	KVBox *contents_box = new KVBox (this);
-	layout->addWidget (contents_box);
-
+	model = 0;
 	display = 0;	// will be created from the builder, on demand -> createDisplay ()
-	contents_container = new RKComponent (this, contents_box);
+	contents_container = new RKComponent (this, user_area);
 	RKComponentBuilder *builder = new RKComponentBuilder (contents_container, QDomElement ());
-	builder->buildElement (xml->getChildElement (element, "content", DL_ERROR), contents_box, false);	// NOTE that parent widget != parent component, here, by intention. The point is that the display should not be disabled along with the contents
+	builder->buildElement (xml->getChildElement (element, "content", DL_ERROR), user_area, false);	// NOTE that parent widget != parent component, here, by intention. The point is that the display should not be disabled along with the contents
 	builder->makeConnections ();
 	addChild ("contents", contents_container);
 	connect (standardComponent (), SIGNAL (standardInitializationComplete()), this, SLOT (fetchDefaults()));
@@ -171,8 +183,6 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 			connect (remove_button, SIGNAL (clicked()), this, SLOT (removeRow()));
 		}
 	}
-
-	n_invalid_rows = n_unfinished_rows = 0;
 }
 
 RKOptionSet::~RKOptionSet () {
@@ -259,7 +269,7 @@ void RKOptionSet::fetchPropertyValuesRecursive (QMap<QString, QString> *list, bo
 	QString serialization;
 
 	if (keycolumn) {
-		serialization.append ("keys=" + RKCommonFunctions::escape (serializeList (old_keys)));
+		serialization.append ("keys=" + serializeList (old_keys));
 	}
 
 	for (int r = 0; r < rows.size (); ++r) {
@@ -312,6 +322,7 @@ void RKOptionSet::serializationPropertyChanged (RKComponentPropertyBase* propert
 				continue;
 			}
 			old_keys = unserializeList (value);
+			keys_missing = false;
 		} else if (tag == QLatin1String ("_row")) {
 			new_rows.append (RowInfo (unserializeMap (value)));
 			++row;
@@ -322,7 +333,7 @@ void RKOptionSet::serializationPropertyChanged (RKComponentPropertyBase* propert
 	}
 
 	if (keycolumn) {
-		RK_ASSERT (rows.size () == old_keys.size ());
+		RK_ASSERT (new_rows.size () == old_keys.size ());
 		RK_ASSERT (!keys_missing);
 	}
 
@@ -339,12 +350,52 @@ void RKOptionSet::serializationPropertyChanged (RKComponentPropertyBase* propert
 	}
 
 	rows = new_rows;
+	n_unfinished_rows = n_invalid_rows = row;
 	row_count->setIntValue (row);
+	updating = false;
+
+	active_row = -1;
 	current_row->setIntValue (qMin (0, row - 1));
 
-	serialization_of_set->setValue (QString ());	// free some mem, and don't make users think, this can actually be queried in real-time
-	updating = false;
+#warning ------------ TODO: rework method of verification of serialization -------------
+//	serialization_of_set->setValue (QString ());	// free some mem, and don't make users think, this can actually be queried in real-time
 	if (model) model->layoutChanged ();
+	changed ();
+}
+
+void RKOptionSet::slotUpdateUnfinishedRows () {
+	updateUnfinishedRows ();
+}
+
+void RKOptionSet::updateUnfinishedRows () {
+	if (updating) return;
+	if ((active_row >= 0) && (active_row < rows.size ())) {
+		if (!rows[active_row].finished) {
+			return;	// if the current row is unfinished: let's wait for this one, first.
+		}
+	}
+
+	RK_TRACE (PLUGIN);
+
+	if (!n_unfinished_rows) {	// done
+		if (switcher->currentWidget () != updating_notice) return;
+		current_row->setIntValue (active_row = return_to_row);
+		switcher->setCurrentWidget (user_area);
+		return;
+	}
+
+	if (switcher->currentWidget () != updating_notice) {
+		switcher->setCurrentWidget (updating_notice);
+		return_to_row = active_row;
+	}
+	for (int i = 0; i < rows.size (); ++i) {
+		if (!rows[i].finished) {
+			current_row->setIntValue (i);
+			return;
+		}
+	}
+
+	RK_ASSERT (false);	// This would mean, we did not find any unfinished row, even though we tested for n_unfinished_rows, above.
 }
 
 void RKOptionSet::addRow () {
@@ -454,6 +505,8 @@ void RKOptionSet::changed () {
 		ComponentStatus cs = contents_container->recursiveStatus ();
 		setRowState (row, cs != Processing, cs == Satisfied);
 	}
+
+	update_timer.start ();
 
 	ComponentStatus s = recursiveStatus ();
 	if (s != last_known_status) {
@@ -578,6 +631,7 @@ void RKOptionSet::handleKeycolumnUpdate () {
 				new_row_info[pos] = rows[old_pos];
 			} // NOTE: not visible: old key is gone without replacement
 		}
+#warning --------------- TODO: keep and match against row info for keys that were formerly present -----------------------
 	}
 	rows = new_row_info.mid (0, new_keys.size ());
 	n_invalid_rows = n_unfinished_rows = 0;
@@ -650,12 +704,14 @@ void RKOptionSet::storeRowSerialization (int row) {
 }
 
 int getCurrentRowFromDisplay (QTreeView* display) {
+	if (!(display && display->selectionModel () && display->model ())) return - 1;	// can happen during initialization
 	QModelIndexList l = display->selectionModel ()->selectedRows ();
 	if (l.isEmpty ()) return -1;
 	return (l[0].row ());
 }
 
 void setCurrentRowInDisplay (QTreeView* display, int row) {
+	if (!(display && display->selectionModel () && display->model ())) return;	// can happen during initialization
 	if (row < 0) display->selectionModel ()->clearSelection ();
 	else {
 		display->selectionModel ()->select (display->model ()->index (row, 0), QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
@@ -675,14 +731,14 @@ void RKOptionSet::currentRowPropertyChanged (RKComponentPropertyBase *property) 
 	RK_TRACE (PLUGIN);
 
 	RK_ASSERT (property == current_row);
-	int row = current_row->intValue ();
+	int row = qMin (row_count->intValue () - 1, current_row->intValue ());
 	if (row != active_row) {	// May or may not be the case. True, e.g. if a row was removed
 		storeRowSerialization (active_row);
 		active_row = row;
 		setContentsForRow (active_row);
 	}
 
-	if (display) setCurrentRowInDisplay (display, row);	// Doing this unconditionally helps fixing up selection problems
+	setCurrentRowInDisplay (display, row);	// Doing this, even if the current row _seeems_ unchanged, helps fixing up selection problems
 }
 
 

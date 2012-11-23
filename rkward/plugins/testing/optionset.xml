@@ -9,7 +9,7 @@
 		<connect governor="x.available.shortname" client="set.varname" />
 		<connect governor="mset.object" client="cset.object" />
 		<connect governor="mset.objshort" client="cset.objshort" />
-		<!--		<connect governor="mset.current_row" client="cset.current_row" /> TODO: This causes crashes -->
+		<connect governor="mset.current_row" client="cset.current_row" />
 	</logic>
 
 	<dialog label="Testing Optionset">
