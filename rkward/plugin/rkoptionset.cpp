@@ -240,19 +240,19 @@ QStringList unserializeList  (const QString &serial) {
 	return ret;
 }
 
-QString serializeMap (const QMap<QString, QString> &map) {
+QString serializeMap (const RKComponent::PropertyValueMap &map) {
 	QString ret;
 
-	QMap<QString, QString>::const_iterator it;
+	RKComponent::PropertyValueMap::const_iterator it;
 	for (it = map.constBegin (); it != map.constEnd (); ++it) {
 		if (!ret.isEmpty ()) ret.append ('\t');
-		ret.append (RKCommonFunctions::escape (it.key ()) + '=' + RKCommonFunctions::escape (it.value ()));
+		ret.append (RKCommonFunctions::escape (it.key () + '=' + it.value ()));
 	}
 	return ret;
 }
 
-QMap<QString, QString> unserializeMap (const QString &serial) {
-	QMap<QString, QString> ret;
+RKComponent::PropertyValueMap unserializeMap (const QString &serial) {
+	RKComponent::PropertyValueMap ret;
 	QStringList l = serial.split ('\t', QString::KeepEmptyParts);
 	for (int i = 0; i < l.size (); ++i) {
 		QString &line = l[i];
@@ -262,7 +262,7 @@ QMap<QString, QString> unserializeMap (const QString &serial) {
 	return ret;
 }
 
-void RKOptionSet::fetchPropertyValuesRecursive (QMap<QString, QString> *list, bool include_top_level, const QString &prefix) const {
+void RKOptionSet::fetchPropertyValuesRecursive (PropertyValueMap *list, bool include_top_level, const QString &prefix) const {
 	RK_TRACE (PLUGIN);
 	RK_ASSERT (include_top_level);
 
@@ -274,7 +274,13 @@ void RKOptionSet::fetchPropertyValuesRecursive (QMap<QString, QString> *list, bo
 
 	for (int r = 0; r < rows.size (); ++r) {
 		if (!serialization.isEmpty ()) serialization.append ("\n");
-		serialization.append ("_row=" + serializeMap (rows[r].full_row_map));
+		if (r == active_row) {
+			PropertyValueMap map;	// current row may have changes which have not yet been stored to the state map
+			contents_container->fetchPropertyValuesRecursive (&map);
+			serialization.append ("_row=" + serializeMap (map));
+		} else {
+			serialization.append ("_row=" + serializeMap (rows[r].full_row_map));
+		}
 	}
 
 	list->insert (prefix + "serialized", serialization);
@@ -296,8 +302,9 @@ void RKOptionSet::serializationPropertyChanged (RKComponentPropertyBase* propert
  * - trigger handleKeycolumnUpdate(), delayed
  * 
  */
+	bool update_key_col = false;
 	if (keycolumn && (keycolumn->value () != KEYCOLUMN_UNINITIALIZED_VALUE)) {
-		QTimer::singleShot (0, this, SLOT (handleKeycolumnUpdate ()));
+		update_key_col = true;
 	} else {
 		RK_ASSERT (rows.isEmpty ());
 	}
@@ -353,6 +360,7 @@ void RKOptionSet::serializationPropertyChanged (RKComponentPropertyBase* propert
 	n_unfinished_rows = n_invalid_rows = row;
 	row_count->setIntValue (row);
 	updating = false;
+	if (update_key_col) handleKeycolumnUpdate ();
 
 	active_row = -1;
 	current_row->setIntValue (qMin (0, row - 1));
@@ -379,7 +387,7 @@ void RKOptionSet::updateUnfinishedRows () {
 
 	if (!n_unfinished_rows) {	// done
 		if (switcher->currentWidget () != updating_notice) return;
-		current_row->setIntValue (active_row = return_to_row);
+		current_row->setIntValue (return_to_row);
 		switcher->setCurrentWidget (user_area);
 		return;
 	}
@@ -568,14 +576,16 @@ void RKOptionSet::handleKeycolumnUpdate () {
 	int activate_row = activate_row;
 	QStringList new_keys = keycolumn->values ();
 	QMap<int, int> position_changes;
+	QSet<int> found_rows;
 
-	int pos;
-	for (pos = 0; pos < new_keys.size (); ++pos) {
+	for (int pos = 0; pos < new_keys.size (); ++pos) {
 		QString key = new_keys[pos];
 		if (old_keys.value (pos) != key) {	// NOTE: old_keys could be shorter than new_keys!
-			int old_pos = old_keys.indexOf (key);	// NOTE: -1 for key no longer present
+			int old_pos = old_keys.indexOf (key);	// NOTE: -1 for new keys
+			if (old_pos == active_row) activate_row = pos;
 			position_changes.insert (pos, old_pos);
-		}
+			if (old_pos >= 0) found_rows.insert (old_pos);
+		} else found_rows.insert (pos);
 	}
 
 	if (position_changes.isEmpty () && (old_keys.size () == new_keys.size ())) {
@@ -585,6 +595,13 @@ void RKOptionSet::handleKeycolumnUpdate () {
 	// get state of current row (which may subsequently be moved or even deleted
 	storeRowSerialization (active_row);
 	updating = true;
+
+	// as a first step, take a backup of any rows that have been removed.
+	for (int i = old_keys.size () - 1; i >= 0; --i) {
+		if (!found_rows.contains (i)) {
+			former_row_states.insert (old_keys[i], rows[i].full_row_map);
+		}
+	}
 
 	// update all columns
 	QMap<RKComponentPropertyStringList *, ColumnInfo>::iterator it = column_map.begin ();
@@ -625,13 +642,12 @@ void RKOptionSet::handleKeycolumnUpdate () {
 		QMap<int, int>::const_iterator pit = position_changes.find (pos);
 		if (pit != position_changes.constEnd ()) {	// some change
 			int old_pos = pit.value ();
-			if (old_pos < 0) {	// a new key
-				new_row_info.insert (pos, RowInfo (default_row_state));
+			if (old_pos < 0) {	// a new key (but it might have been known, formerly)
+				new_row_info.insert (pos, RowInfo (former_row_states.value (new_keys[pos], default_row_state)));
 			} else {	// old key changed position
 				new_row_info[pos] = rows[old_pos];
 			} // NOTE: not visible: old key is gone without replacement
 		}
-#warning --------------- TODO: keep and match against row info for keys that were formerly present -----------------------
 	}
 	rows = new_row_info.mid (0, new_keys.size ());
 	n_invalid_rows = n_unfinished_rows = 0;
@@ -645,9 +661,9 @@ void RKOptionSet::handleKeycolumnUpdate () {
 	int nrows = new_keys.size ();
 	row_count->setIntValue (nrows);
 	activate_row = qMin (nrows - 1, activate_row);
-	current_row->setIntValue (active_row = activate_row);
+	setContentsForRow (active_row = activate_row);
+	current_row->setIntValue (active_row);
 	if (model) model->triggerReset ();
-	setContentsForRow (active_row);
 	updating = false;
 	changed ();
 }

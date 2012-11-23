@@ -46,7 +46,7 @@ void RKComponentBase::addChild (const QString &id, RKComponentBase *child) {
 	child_map.insertMulti (id, child);		// no overwriting even on duplicate ("#noid#") ids
 }
 
-void RKComponentBase::fetchPropertyValuesRecursive (QMap<QString, QString> *list, bool include_top_level, const QString &prefix) const {
+void RKComponentBase::fetchPropertyValuesRecursive (PropertyValueMap *list, bool include_top_level, const QString &prefix) const {
 	RK_TRACE (PLUGIN);
 
 	for (QHash<QString, RKComponentBase*>::const_iterator it = child_map.constBegin (); it != child_map.constEnd (); ++it) {
@@ -65,11 +65,11 @@ void RKComponentBase::fetchPropertyValuesRecursive (QMap<QString, QString> *list
 	}
 }
 
-void RKComponentBase::setPropertyValues (QMap<QString, QString> *list, bool warn_internal) {
+void RKComponentBase::setPropertyValues (PropertyValueMap *list, bool warn_internal) {
 	RK_TRACE (PLUGIN);
 	// TODO: visibility enabledness and requiredness should be excluded, as those are not directly user settable. Perhaps even mark up all properties as user settable or not.
 
-	for (QMap<QString, QString>::const_iterator it = list->constBegin (); it != list->constEnd (); ++it) {
+	for (PropertyValueMap::const_iterator it = list->constBegin (); it != list->constEnd (); ++it) {
 		QString mod;
 		RKComponentBase *prop = lookupComponent (it.key (), &mod);
 		if (mod.isEmpty () && prop->isProperty ()) {		// found a property
@@ -83,11 +83,11 @@ void RKComponentBase::setPropertyValues (QMap<QString, QString> *list, bool warn
 QString RKComponentBase::serializeState () const {
 	RK_TRACE (PLUGIN);
 
-	QMap<QString, QString> props;
+	PropertyValueMap props;
 	fetchPropertyValuesRecursive (&props, true);
 
 	QString out;
-	for (QMap<QString, QString>::const_iterator it = props.constBegin (); it != props.constEnd (); ++it) {
+	for (PropertyValueMap::const_iterator it = props.constBegin (); it != props.constEnd (); ++it) {
 		if (!out.isEmpty ()) out.append ("\n");
 		out.append (RKCommonFunctions::escape (it.key () + "=" + it.value ()));
 	}
@@ -98,7 +98,7 @@ QString RKComponentBase::serializeState () const {
 RKComponent::UnserializeError RKComponentBase::unserializeState (const QStringList &state) {
 	RK_TRACE (PLUGIN);
 
-	QMap<QString, QString> props;
+	PropertyValueMap props;
 
 	for (int i = 0; i < state.count (); ++i) {
 		QString line = state[i];
@@ -111,7 +111,7 @@ RKComponent::UnserializeError RKComponentBase::unserializeState (const QStringLi
 
 	// verify
 	UnserializeError error = NoError;
-	for (QMap<QString, QString>::const_iterator it = props.constBegin (); it != props.constEnd (); ++it) {
+	for (PropertyValueMap::const_iterator it = props.constBegin (); it != props.constEnd (); ++it) {
 		if (fetchStringValue (it.key ()) != it.value ()) {
 			// COMPAT: In RKWard 0.5.1, the formatting of real numbers was different. Hence we compare the numeric values, instead
 			QString dummy;

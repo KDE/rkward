@@ -99,15 +99,17 @@ friend class RKOptionSetDisplayModel;
 	QMap<RKComponentPropertyStringList *, ColumnInfo> column_map;
 	QList<RKComponentPropertyStringList*> visible_columns;
 	struct RowInfo {
-		RowInfo (QMap<QString, QString> initial_values) : valid (false), finished (false), full_row_map (initial_values) {};
+		RowInfo (PropertyValueMap initial_values) : valid (false), finished (false), full_row_map (initial_values) {};
 		bool valid;		/**< has finished processing and is known to be valid */
 		bool finished;	/**< has finished processing */
-		QMap<QString, QString> full_row_map;	/**< complete status representation of this row, (see RKComponent::fetchPropertyValuesRecursive()) */
+		PropertyValueMap full_row_map;	/**< complete status representation of this row, (see RKComponent::fetchPropertyValuesRecursive()) */
 	};
 	QList<RowInfo> rows;
-	QMap<QString, QString> default_row_state;
+	PropertyValueMap default_row_state;
 	int n_unfinished_rows, n_invalid_rows;
 	int active_row;
+	/** backup of row state info for rows corresponding to keys which have been removed (in a driven set). These might get re-inserted, later. */
+	QHash<QString, PropertyValueMap> former_row_states;
 
 	RKComponent *contents_container;
 	QWidget *display_buttons;
