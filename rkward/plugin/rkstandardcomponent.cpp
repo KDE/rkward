@@ -526,7 +526,7 @@ QDomElement RKComponentBuilder::doElementCopy (const QString id, const QDomEleme
 	XMLChildList candidates = xml->findElementsWithAttribute (doc_elem, "id", id, true, DL_ERROR);
 	XMLChildList::const_iterator it;
 	for (it = candidates.constBegin (); it != candidates.constEnd (); ++it) {
-		if ((*it).tagName () == "copy") continue;
+		if ((*it).tagName () == QLatin1String ("copy")) continue;
 		res = (*it).cloneNode ().toElement ();
 		break;
 	}
@@ -540,7 +540,7 @@ QDomElement RKComponentBuilder::doElementCopy (const QString id, const QDomEleme
 	int len = attribs.count ();
 	for (int i=0; i < len; ++i) {
 		QDomAttr attr = attribs.item (i).toAttr ();
-		if (attr.name () == "copy_element_tag_name") res.setTagName (attr.value ());
+		if (attr.name () == QLatin1String ("copy_element_tag_name")) res.setTagName (attr.value ());
 		else res.setAttribute (attr.name (), attr.value ());
 	}
 
@@ -559,46 +559,46 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 		QDomElement e = *it;		// shorthand
 		QString id = xml->getStringAttribute (e, "id", QString::null, DL_INFO);
 
-		if (e.tagName () == "copy") {
+		if (e.tagName () == QLatin1String ("copy")) {
 			e = doElementCopy (id, e);
 		}	// no else, here. e may be changed to some entirely different element, now.
 
-		if (allow_pages && (e.tagName () == "page")) {
+		if (allow_pages && (e.tagName () == QLatin1String ("page"))) {
 			widget = component ()->addPage ();
 			QVBoxLayout *layout = new QVBoxLayout (widget);
 			KVBox *box = new KVBox (widget);
 			layout->addWidget (box);
 			buildElement (e, box, false);
-		} else if (e.tagName () == "row") {
+		} else if (e.tagName () == QLatin1String ("row")) {
 			widget = new RKComponent (component (), parent_widget);		// wrapping this (and column, below) inside an RKComponent has the benefit, that it can have an id, and hence can be set to visibile/hidden, enabled/disabled
 			QVBoxLayout *layout = new QVBoxLayout (widget);
 			layout->setContentsMargins (0, 0, 0, 0);
 			KHBox *box = new KHBox (widget);
 			layout->addWidget (box);
 			buildElement (e, box, false);
-		} else if (e.tagName () == "stretch") {
+		} else if (e.tagName () == QLatin1String ("stretch")) {
 			QWidget *stretch = new QWidget (parent_widget);
 			stretch->setSizePolicy (QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
 			KHBox *box = dynamic_cast<KHBox *> (parent_widget);
 			// RK_ASSERT (box);  <- NO, also meaningful in a <frame>
 			if (box) box->setStretchFactor (stretch, 100);
-		} else if (e.tagName () == "column") {
+		} else if (e.tagName () == QLatin1String ("column")) {
 			widget = new RKComponent (component (), parent_widget);
 			QVBoxLayout *layout = new QVBoxLayout (widget);
 			layout->setContentsMargins (0, 0, 0, 0);
 			KVBox *box = new KVBox (widget);
 			layout->addWidget (box);
 			buildElement (e, box, false);
-		} else if (e.tagName () == "frame") {
+		} else if (e.tagName () == QLatin1String ("frame")) {
 			RKPluginFrame *frame = new RKPluginFrame (e, component (), parent_widget);
 			widget = frame;
 			buildElement (e, frame->getPage (), false);
-		} else if (e.tagName () == "tabbook") {
+		} else if (e.tagName () == QLatin1String ("tabbook")) {
 			QTabWidget *tabbook = new QTabWidget (parent_widget);
 			QDomNodeList tabs = e.childNodes ();
 			for (int t=0; t < tabs.count (); ++t) {
 				QDomElement tab_e = tabs.item (t).toElement ();
-				if (tab_e.tagName () == "tab") {
+				if (tab_e.tagName () == QLatin1String ("tab")) {
 					RKTabPage *tabpage = new RKTabPage (tab_e, component (), tabbook);
 					buildElement (tab_e, tabpage->getPage (), false);
 					QString tab_id = xml->getStringAttribute (tab_e, "id", QString::null, DL_INFO);
@@ -607,36 +607,36 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 					}
 				}
 			}
-		} else if (e.tagName () == "varselector") {
+		} else if (e.tagName () == QLatin1String ("varselector")) {
 			widget = new RKVarSelector (e, component (), parent_widget);
-		} else if (e.tagName () == "varslot") {
+		} else if (e.tagName () == QLatin1String ("varslot")) {
 			widget = new RKVarSlot (e, component (), parent_widget);
 			addConnection (id, "source", xml->getStringAttribute (e, "source", "#noid#", DL_INFO), "selected", false, e);
-		} else if (e.tagName () == "formula") {
+		} else if (e.tagName () == QLatin1String ("formula")) {
 			widget = new RKFormula (e, component (), parent_widget);
 			addConnection (id, "dependent", xml->getStringAttribute (e, "dependent", "#noid#", DL_INFO), "available", false, e);
 			addConnection (id, "fixed_factors", xml->getStringAttribute (e, "fixed_factors", "#noid#", DL_INFO), "available", false, e);
-		} else if (e.tagName () == "radio") {
+		} else if (e.tagName () == QLatin1String ("radio")) {
 			widget = new RKRadio (e, component (), parent_widget);
-		} else if (e.tagName () == "dropdown") {
+		} else if (e.tagName () == QLatin1String ("dropdown")) {
 			widget = new RKDropDown (e, component (), parent_widget);
-		} else if (e.tagName () == "checkbox") {
+		} else if (e.tagName () == QLatin1String ("checkbox")) {
 			widget = new RKCheckBox (e, component (), parent_widget);
-		} else if (e.tagName () == "spinbox") {
+		} else if (e.tagName () == QLatin1String ("spinbox")) {
 			widget = new RKPluginSpinBox (e, component (), parent_widget);
-		} else if (e.tagName () == "matrix") {
+		} else if (e.tagName () == QLatin1String ("matrix")) {
 			widget = new RKMatrixInput (e, component (), parent_widget);
-		} else if (e.tagName () == "input") {
+		} else if (e.tagName () == QLatin1String ("input")) {
 			widget = new RKInput (e, component (), parent_widget);
-		} else if (e.tagName () == "browser") {
+		} else if (e.tagName () == QLatin1String ("browser")) {
 			widget = new RKPluginBrowser (e, component (), parent_widget);
-		} else if (e.tagName () == "text") {
+		} else if (e.tagName () == QLatin1String ("text")) {
 			widget = new RKText (e, component (), parent_widget);
-		} else if (e.tagName () == "preview") {
+		} else if (e.tagName () == QLatin1String ("preview")) {
 			widget = new RKPreviewBox (e, component (), parent_widget);
-		} else if (e.tagName () == "saveobject") {
+		} else if (e.tagName () == QLatin1String ("saveobject")) {
 			widget = new RKPluginSaveObject (e, component (), parent_widget);
-		} else if (e.tagName () == "embed") {
+		} else if (e.tagName () == QLatin1String ("embed")) {
 			QString component_id = xml->getStringAttribute (e, "component", QString::null, DL_ERROR);
 			RKComponentHandle *handle = RKComponentMap::getComponentHandle (component_id);
 			if (handle) {
@@ -654,16 +654,16 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 			} else {
 				xml->displayError (&e, QString ("Could not embed component '%1'. Not found").arg (component_id), DL_ERROR);
 			}
-		} else if (e.tagName () == "optionset") {
+		} else if (e.tagName () == QLatin1String ("optionset")) {
 			widget = new RKOptionSet (e, component (), parent_widget);
-		} else if (e.tagName () == "optiondisplay") {
+		} else if (e.tagName () == QLatin1String ("optiondisplay")) {
 			RKComponent *set = component ()->parentComponent ();
 			if (set->type () == RKComponentBase::ComponentOptionSet) {
 				widget = static_cast<RKOptionSet *> (set)->createDisplay (xml->getBoolAttribute (e, "index", true, DL_INFO), parent_widget);
 			} else {
 				xml->displayError (&e, QString ("optiondisplay element is not allowed outside of an optionset"), DL_ERROR);
 			}
-		} else if (e.tagName () == "scriptable") {
+		} else if (e.tagName () == QLatin1String ("scriptable")) {
 			widget = new RKComponent (component (), parent_widget);
 			QVBoxLayout *layout = new QVBoxLayout (widget);
 			layout->setContentsMargins (0, 0, 0, 0);
