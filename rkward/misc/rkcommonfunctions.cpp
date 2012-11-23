@@ -182,6 +182,7 @@ namespace RKCommonFunctions {
 
 	QString unescape (const QString &in) {
 		QString out;
+		out.reserve (in.size ());
 
 		for (int i = 0; i < in.size (); ++i) {
 			QChar c = in[i];
@@ -190,8 +191,8 @@ namespace RKCommonFunctions {
 				if (i >= in.size ()) break;
 				c = in[i];
 				if (c == 'n') c = '\n';
-				if (c == 't') c = '\t';
-				else if (c == '"') c = '"';
+				else if (c == 't') c = '\t';
+				// NOTE: Quote (") and backslash (\) are escaped by the same symbol, i.e. c = in[i] is good enough
 			}
 			out.append (c);
 		}
