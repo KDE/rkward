@@ -33,10 +33,8 @@ class QStackedWidget;
 /** An RKOptionSet provides a group of options for an arbitrary number of "rows". E.g. different line colors for each of a group of variables.
  * 
  * TODO
- * - Fix de-serialization for driven sets. The problem is that the key-column might update in several steps, and this makes us lose info in handleKeycolumnUpdate().
  * - Fix verification logic for deserialization (whether settings have been applied, successfully)
  * - clear all compiler TODO warnings
- * - create automatism to take care of unfinished rows, which are not current
  * 
   *@author Thomas Friedrichsmeier
   */
@@ -135,6 +133,7 @@ friend class RKOptionSetDisplayModel;
 	bool updating;
 /** Sets the contents from the values in given row */
 	void setContentsForRow (int row);
+	void updateCurrentRowInDisplay ();
 
 /** get the default value for the given column, row. */
 	friend QString getDefaultValue (const ColumnInfo& ci, int row);

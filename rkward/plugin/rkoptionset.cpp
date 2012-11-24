@@ -643,7 +643,7 @@ void RKOptionSet::handleKeycolumnUpdate () {
 		if (pit != position_changes.constEnd ()) {	// some change
 			int old_pos = pit.value ();
 			if (old_pos < 0) {	// a new key (but it might have been known, formerly)
-				new_row_info.insert (pos, RowInfo (former_row_states.value (new_keys[pos], default_row_state)));
+				new_row_info[pos] = RowInfo (former_row_states.value (new_keys[pos], default_row_state));
 			} else {	// old key changed position
 				new_row_info[pos] = rows[old_pos];
 			} // NOTE: not visible: old key is gone without replacement
@@ -660,11 +660,11 @@ void RKOptionSet::handleKeycolumnUpdate () {
 
 	int nrows = new_keys.size ();
 	row_count->setIntValue (nrows);
+	if (model) model->triggerReset ();
+	updating = false;
 	activate_row = qMin (nrows - 1, activate_row);
 	setContentsForRow (active_row = activate_row);
 	current_row->setIntValue (active_row);
-	if (model) model->triggerReset ();
-	updating = false;
 	changed ();
 }
 
@@ -726,11 +726,11 @@ int getCurrentRowFromDisplay (QTreeView* display) {
 	return (l[0].row ());
 }
 
-void setCurrentRowInDisplay (QTreeView* display, int row) {
+void RKOptionSet::updateCurrentRowInDisplay () {
 	if (!(display && display->selectionModel () && display->model ())) return;	// can happen during initialization
-	if (row < 0) display->selectionModel ()->clearSelection ();
+	if (active_row < 0) display->selectionModel ()->clearSelection ();
 	else {
-		display->selectionModel ()->select (display->model ()->index (row, 0), QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
+		display->selectionModel ()->select (display->model ()->index (active_row, 0), QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
 	}
 }
 
@@ -754,7 +754,7 @@ void RKOptionSet::currentRowPropertyChanged (RKComponentPropertyBase *property) 
 		setContentsForRow (active_row);
 	}
 
-	setCurrentRowInDisplay (display, row);	// Doing this, even if the current row _seeems_ unchanged, helps fixing up selection problems
+	updateCurrentRowInDisplay ();	// Doing this, even if the current row _seeems_ unchanged, helps fixing up selection problems
 }
 
 
@@ -831,6 +831,7 @@ QVariant RKOptionSetDisplayModel::data (const QModelIndex& index, int role) cons
 void RKOptionSetDisplayModel::doResetNow () {
 	RK_TRACE (PLUGIN);
 	emit (layoutChanged ());
+	set->updateCurrentRowInDisplay ();
 }
 
 QVariant RKOptionSetDisplayModel::headerData (int section, Qt::Orientation orientation, int role) const {
