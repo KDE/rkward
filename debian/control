@@ -2,7 +2,6 @@ Source: rkward
 Section: math
 Priority: optional
 Maintainer: Thomas Friedrichsmeier <tfry@users.sourceforge.net>
-DM-Upload-Allowed: yes
 Build-Depends: debhelper (>= 6.0.0), kdelibs5-dev, cmake, r-base-dev (>= 2.7.0), libx11-dev
 Standards-Version: 3.9.4
 Homepage: http://rkward.sourceforge.net
