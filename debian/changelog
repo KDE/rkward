@@ -1,11 +1,16 @@
 rkward (0.6.0z+0.6.1-0devel1) unstable; urgency=low
 
-  * new upstream release
+  * new upstream releaes
+
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Sat, 24 Nov 2012 14:30:00 +0100
+
+rkward (0.6.0-2) unstable; urgency=low
+
   * make sure to include CPPFLAGS and LDFLAGS in call to cmake
   * correct path to qwinhost files in debian/copyright
   * correct syntax in debian/copyright (thanks to Laszlo Kajan)
   
- -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Wed, 24 Oct 2012 15:35:00 +0200
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Sat, 24 Nov 2012 14:15:00 +0200
 
 rkward (0.6.0-1) unstable; urgency=low
 
