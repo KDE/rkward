@@ -75,8 +75,8 @@ function printout () {
 	log += getValue ("xlog");
 
 	xlab = prepareLabel ("xlab");
-	xminvalue = getValue ("xminvalue");
-	xmaxvalue = getValue ("xmaxvalue");
+	xminvalue = getString ("xminvalue");
+	xmaxvalue = getString ("xmaxvalue");
 	if ((xminvalue != "") || (xmaxvalue != "")) {
 		xlim = ", xlim=c (";
 		if ((xminvalue == "") && (xvar != "")) xlim += "min (" + xvar + ")";
@@ -96,8 +96,8 @@ function printout () {
 	log += getValue ("ylog");
 
 	ylab = prepareLabel ("ylab");
-	yminvalue = getValue ("yminvalue");
-	ymaxvalue = getValue ("ymaxvalue");
+	yminvalue = getString ("yminvalue");
+	ymaxvalue = getString ("ymaxvalue");
 	if ((yminvalue != "") || (ymaxvalue != "")) {
 		ylim = ", ylim=c (";
 		if ((yminvalue == "") && (yvar != "")) ylim += "min (" + yvar + ")";
