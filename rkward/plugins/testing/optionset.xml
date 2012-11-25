@@ -5,6 +5,7 @@
 
 	<logic>
 		<set id="set.contents.dummybox.enabled" to="false"/>
+		<!--		<connect governor="set.contents.x" client="set.contents.test_embed.xvar"/> -->
 		<connect governor="x.available" client="set.var" />
 		<connect governor="x.available.shortname" client="set.varname" />
 		<connect governor="mset.object" client="cset.object" />
@@ -61,6 +62,7 @@
 				<row>
 					<optionset id="set" min_rows="1" keycolumn="var">
 						<content>
+							<!--							<property id="x"/> -->
 							<frame>
 								<optiondisplay index="false"/>
 								<checkbox id="dummybox" label="This dummy option is always disabled"/>
@@ -69,10 +71,12 @@
 								<embed id="test_embed" component="rkward::plot_options" as_button="true"/>
 							</frame>
 						</content>
-						<option id="var" label="test" external="true"/>
+						<option id="var" label="test" external="true" connect="test_embed.xvar"/>
 						<option id="varname" label="Varname" external="true"/>
 						<option id="ca" label="Comment A" connect="commenta.text"/>
 						<option id="cb" connect="commentb.text"/>
+						<option id="plotoption_printout" connect="test_embed.code.printout"/>
+						<option id="plotoption_pre" connect="test_embed.code.preprocess"/>
 					</optionset>
 				</row>
 			</tab>

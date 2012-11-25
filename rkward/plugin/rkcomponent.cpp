@@ -65,7 +65,7 @@ void RKComponentBase::fetchPropertyValuesRecursive (PropertyValueMap *list, bool
 	}
 }
 
-void RKComponentBase::setPropertyValues (PropertyValueMap *list, bool warn_internal) {
+void RKComponentBase::setPropertyValues (const PropertyValueMap *list, bool warn) {
 	RK_TRACE (PLUGIN);
 	// TODO: visibility enabledness and requiredness should be excluded, as those are not directly user settable. Perhaps even mark up all properties as user settable or not.
 
@@ -74,60 +74,71 @@ void RKComponentBase::setPropertyValues (PropertyValueMap *list, bool warn_inter
 		RKComponentBase *prop = lookupComponent (it.key (), &mod);
 		if (mod.isEmpty () && prop->isProperty ()) {		// found a property
 			RKComponentPropertyBase* p = static_cast<RKComponentPropertyBase*>(prop);
-			RK_ASSERT (!(p->isInternal () && warn_internal));
+			if (p->isInternal () && warn) {
+				RK_DO (qDebug ("Setting value for property %s, which is marked internal.", qPrintable (it.key ())), PLUGIN, DL_WARNING);
+			}
 			p->setValue (it.value ());
+		} else {
+			if (warn) RK_DO (qDebug ("Property %s not found while setting values. Remainder was %s.", qPrintable (it.key ()), qPrintable (mod)), PLUGIN, DL_WARNING);
 		}
 	}
 }
 
-QString RKComponentBase::serializeState () const {
+//static
+QString RKComponentBase::valueMapToString (const PropertyValueMap &map) {
 	RK_TRACE (PLUGIN);
 
-	PropertyValueMap props;
-	fetchPropertyValuesRecursive (&props, true);
-
 	QString out;
-	for (PropertyValueMap::const_iterator it = props.constBegin (); it != props.constEnd (); ++it) {
+	for (PropertyValueMap::const_iterator it = map.constBegin (); it != map.constEnd (); ++it) {
 		if (!out.isEmpty ()) out.append ("\n");
 		out.append (RKCommonFunctions::escape (it.key () + "=" + it.value ()));
 	}
-
 	return out;
 }
 
-RKComponent::UnserializeError RKComponentBase::unserializeState (const QStringList &state) {
+//static
+bool RKComponentBase::stringListToValueMap (const QStringList &strings, PropertyValueMap *map) {
 	RK_TRACE (PLUGIN);
 
-	PropertyValueMap props;
-
-	for (int i = 0; i < state.count (); ++i) {
-		QString line = state[i];
+	for (int i = 0; i < strings.size (); ++i) {
+		QString line = RKCommonFunctions::unescape (strings[i]);
 		int sep = line.indexOf ('=');
-		if (sep < 0) return BadFormat;
-		props.insert (RKCommonFunctions::unescape (line.left (sep)), RKCommonFunctions::unescape (line.mid (sep+1)));
+		if (sep < 0) return false;
+		map->insert (line.left (sep), line.mid (sep+1));
 	}
+	return true;
+}
 
-	setPropertyValues (&props);
+QStringList RKComponentBase::matchAgainstState (const PropertyValueMap &state) {
+	RK_TRACE (PLUGIN);
+	QStringList probs;
 
-	// verify
-	UnserializeError error = NoError;
-	for (PropertyValueMap::const_iterator it = props.constBegin (); it != props.constEnd (); ++it) {
-		if (fetchStringValue (it.key ()) != it.value ()) {
-			// COMPAT: In RKWard 0.5.1, the formatting of real numbers was different. Hence we compare the numeric values, instead
+	PropertyValueMap current;
+	fetchPropertyValuesRecursive (&current, true);
+
+	for (PropertyValueMap::const_iterator it = state.constBegin (); it != state.constEnd (); ++it) {
+		QString current_value = current.value (it.key ());
+		if (current_value != it.value ()) {
+			// this is not necessarily a problem. The value may simply not be in the serialization, or in slightly different format
 			QString dummy;
 			RKComponentBase *prop = lookupComponent (it.key (), &dummy);
-			if (dummy.isEmpty () && prop && prop->type () == PropertyDouble) {
-				if (static_cast<RKComponentPropertyDouble*> (prop)->doubleValue () == it.value ().toDouble ()) {
+			if (dummy.isEmpty () && prop) {
+				// COMPAT: In RKWard 0.5.1, the formatting of real numbers was different. Hence we compare the numeric values, instead
+				if ((prop->type () == PropertyDouble) && static_cast<RKComponentPropertyDouble*> (prop)->doubleValue () == it.value ().toDouble ()) {
 					continue;
+				} else if (prop->value () == it.value ()) {
+					continue;
+				} else {
+					if (current_value.isEmpty () && !prop->value ().isEmpty ()) current_value = prop->value ();
+					probs.append (QString ("Tried to apply 'value %1' to property %2, but got '%3', instead").arg (it.value (), it.key (), current_value));
 				}
+			} else {
+				probs.append (QString ("No such property %1 (remainder was %2)").arg (it.key (), dummy));
 			}
-
-			RK_DO(qDebug ("Tried to apply value %s to property %s, but got %s", qPrintable (it.value ()), qPrintable (it.key ()), qPrintable (fetchStringValue (it.key ()))), PLUGIN, DL_WARNING);
-			error = NotAllSettingsApplied;
 		}
 	}
 
-	return error;
+	return probs;
 }
 
 QString RKComponentBase::fetchStringValue (const QString &identifier) {

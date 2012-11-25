@@ -79,7 +79,8 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	display = 0;	// will be created from the builder, on demand -> createDisplay ()
 	contents_container = new RKComponent (this, user_area);
 	RKComponentBuilder *builder = new RKComponentBuilder (contents_container, QDomElement ());
-	builder->buildElement (xml->getChildElement (element, "content", DL_ERROR), user_area, false);	// NOTE that parent widget != parent component, here, by intention. The point is that the display should not be disabled along with the contents
+	QDomElement content_element = xml->getChildElement (element, "content", DL_ERROR);
+	builder->buildElement (content_element, user_area, false);	// NOTE that parent widget != parent component, here, by intention. The point is that the display should not be disabled along with the contents
 	builder->makeConnections ();
 	addChild ("contents", contents_container);
 	connect (standardComponent (), SIGNAL (standardInitializationComplete()), this, SLOT (fetchDefaults()));
@@ -164,6 +165,20 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 				RK_DO (qDebug ("did not find governing property %s for column %s of optionset", qPrintable (ci.governor), qPrintable (ci.column_name)), PLUGIN, DL_ERROR);
 			}
 		}
+	}
+
+	// helper properties
+	XMLChildList properties = xml->getChildElements (content_element, "property", DL_WARNING);
+	for (int i = 0; i < properties.size (); ++i) {
+		const QDomElement &e = properties.at (i);
+		QString id = xml->getStringAttribute (e, "id", QString (), DL_ERROR);
+		if (contents_container->child_map.contains (id)) {
+			RK_DO (qDebug ("Id %s already in use. Skipping property declaration", qPrintable (id)), PLUGIN, DL_WARNING);
+			continue;
+		}
+		RKComponentPropertyBase *prop = new RKComponentPropertyBase (contents_container, false);
+		prop->setInternal (true);
+		contents_container->addChild (id, prop);
 	}
 
 	if (display) {		// may or may not have been created
@@ -359,14 +374,13 @@ void RKOptionSet::serializationPropertyChanged (RKComponentPropertyBase* propert
 	rows = new_rows;
 	n_unfinished_rows = n_invalid_rows = row;
 	row_count->setIntValue (row);
+	serialization_of_set->setValue (QString ());	// free some mem, and don't make users think, this can actually be queried in real-time
 	updating = false;
 	if (update_key_col) handleKeycolumnUpdate ();
 
 	active_row = -1;
 	current_row->setIntValue (qMin (0, row - 1));
 
-#warning ------------ TODO: rework method of verification of serialization -------------
-//	serialization_of_set->setValue (QString ());	// free some mem, and don't make users think, this can actually be queried in real-time
 	if (model) model->layoutChanged ();
 	changed ();
 }
@@ -486,7 +500,7 @@ void RKOptionSet::removeRow () {
 QString getDefaultValue (const RKOptionSet::ColumnInfo& ci, int row) {
 	// let's not trace this simple helper fun
 	Q_UNUSED (row);
-#warning TODO: should also allow scripted defaults
+// TODO: should also allow scripted defaults?
 	return ci.default_value;
 }
 

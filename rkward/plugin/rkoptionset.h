@@ -32,12 +32,8 @@ class QStackedWidget;
 
 /** An RKOptionSet provides a group of options for an arbitrary number of "rows". E.g. different line colors for each of a group of variables.
  * 
- * TODO
- * - Fix verification logic for deserialization (whether settings have been applied, successfully)
- * - clear all compiler TODO warnings
- * 
-  *@author Thomas Friedrichsmeier
-  */
+ * @author Thomas Friedrichsmeier
+ */
 class RKOptionSet : public RKComponent {
 	Q_OBJECT
 public:

@@ -173,7 +173,9 @@ void RKStandardComponentGUI::ok () {
 	command.clear ();
 	RKComponentHandle *handle = component->getHandle ();
 	if (handle->isAccessible ()) {
-		command.append (".rk.rerun.plugin.link(plugin=\"" + RKComponentMap::getComponentId (handle) + "\", settings=\"" + RKCommonFunctions::escape (component->serializeState ()) + "\", label=\"" + i18n ("Run again") + "\")\n");
+		RKComponent::PropertyValueMap map;
+		component->serializeState (&map);
+		command.append (".rk.rerun.plugin.link(plugin=\"" + RKComponentMap::getComponentId (handle) + "\", settings=\"" + RKCommonFunctions::escape (RKComponent::valueMapToString (map)) + "\", label=\"" + i18n ("Run again") + "\")\n");
 		// NOTE: the serialized state is quote-escape *again* for passing to R.
 	}
 	// separator line

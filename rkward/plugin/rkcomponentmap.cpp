@@ -252,54 +252,57 @@ bool RKComponentMap::invokeComponent (const QString &component_id, const QString
 	RKStandardComponent *component = handle->invoke (0, 0);
 	RK_ASSERT (component);
 
-	RKComponent::UnserializeError error = component->unserializeState (serialized_settings);
-	if (error == RKComponent::BadFormat) {
+	RKComponent::PropertyValueMap state;
+	bool format_ok = RKComponent::stringListToValueMap (serialized_settings, &state);
+	if (!format_ok) {
 		_message = i18n ("Bad serialization format while trying to invoke plugin '%1'. Please contact the RKWard team (Help->About RKWard->Authors).").arg (component_id);
 		if (message) *message = _message;
 		else KMessageBox::error (component, _message, i18n ("Bad serialization format"));
 		return false;
 	}
-	if (error == RKComponent::NotAllSettingsApplied) {
+	component->applyState (state);
+
+	// now wait for the component to settle
+	// the call to processEvents(), below, is quite dangerous, as the component self-destructs on errors. This helps us prevent crashes.
+	QObjectCleanupHandler chandler;
+	chandler.add (component);
+	// if the plugin takes longer than 5 seconds to settle, than that really is sort of buggy...
+	const int max_wait = 5000;
+
+	QTime t;
+	t.start ();
+	RKComponentBase::ComponentStatus status;
+	while ((!chandler.isEmpty ()) && ((status = component->recursiveStatus ()) == RKComponentBase::Processing) && (t.elapsed () < max_wait)) {
+		QCoreApplication::processEvents (QEventLoop::ExcludeUserInputEvents, (max_wait / 2));
+	}
+	if (chandler.isEmpty ()) status = RKComponentBase::Dead;
+	chandler.remove (component);	// otherwise it would auto-delete the component, later!
+
+	if (status == RKComponentBase::Dead) {
+		if (message) {
+			_message.append (i18n ("\nThe plugin has crashed."));
+			*message = _message;
+		}
+		return false;
+	}
+
+	QStringList problems = component->matchAgainstState (state);
+	if (!problems.isEmpty ()) {
 		_message = i18n ("Not all specified settings could be applied. Most likely this is because some R objects are no longer present in your current workspace.");
+		RK_DO (qDebug ("%s", qPrintable (problems.join ("\n"))), PLUGIN, DL_WARNING);	// TODO: make failures available to backend
 		if (message) *message = _message;
-		else KMessageBox::information (component, _message, i18n ("Not all settings applied"));
+		else KMessageBox::informationList (component, _message, problems, i18n ("Not all settings applied"));
 		// TODO: Don't show again-box?
 		// not considered an error
 	}
 
 	if (submit_mode == ManualSubmit) return true;
 
-
-	// Auto-Submit
-	// the call to processEvents(), below, is quite dangerous, as the component self-destructs on errors. This helps us prevent crashes.
-	QObjectCleanupHandler chandler;
-	chandler.add (component);
-	
-#ifndef Q_OS_WIN
-	// if the plugin takes longer than 5 seconds to settle, than that really is sort of buggy...
-	const int max_wait = 5000;
-#else
-#warning Temporary workaround. Remove this.
-	// (yet on windows, the PHP backend is *real* slow. We give it a bit longer as long as we still use it...
-	const int max_wait = 50000;
-#endif
-
-	QTime t;
-	t.start ();
-	while ((!chandler.isEmpty ()) && (component->recursiveStatus () == RKComponentBase::Processing) && (t.elapsed () < max_wait)) {
-		QCoreApplication::processEvents (QEventLoop::ExcludeUserInputEvents, (max_wait / 2));
-	}
-	RKComponentBase::ComponentStatus status = RKComponentBase::Dead;
-	if (!chandler.isEmpty ()) status = component->recursiveStatus ();
-	chandler.remove (component);	// otherwise it would auto-delete the component, later!
-
 	if (status == RKComponentBase::Satisfied) {
 		bool ok = component->submit (in_chain);
 		RK_ASSERT (ok);
 	} else {
-		if (submit_mode == AutoSubmitOrFail) {
-			if (status != RKComponentBase::Dead) component->kill ();
-		}
+		if (submit_mode == AutoSubmitOrFail) component->kill ();
 
 		_message.append (i18n ("\nThe plugin could not be auto-submitted with these settings."));
 		if (message) *message = _message;
