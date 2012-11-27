@@ -148,7 +148,7 @@ suite <- new ("RKTestSuite", id="analysis_plugins",
 		})
 	), postCalls = list (	# like initCalls: run after all tests to clean up.
 		function () {
-			suppressWarnings (rm (list=c ("women", "warpbreaks", "rock", "co2", "test50x", "test50y", "test50z", "test10x", "test10y", "test10z", "test_table"), envir=globalenv()))
+			suppressWarnings (rm (list=c ("women", "warpbreaks", "rock", "co2", "test50x", "test50y", "test50z", "test10x", "test10y", "test10z", "test_table", "hptrend", "hpcycle"), envir=globalenv()))
 		}
 	)
 )
