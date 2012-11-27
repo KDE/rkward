@@ -2,7 +2,7 @@
                           rkpreviewbox  -  description
                              -------------------
     begin                : Wed Jan 24 2007
-    copyright            : (C) 2007,2 012 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2012 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 

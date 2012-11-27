@@ -2,7 +2,7 @@
                           rkvarslot.cpp  -  description
                              -------------------
     begin                : Thu Nov 7 2002
-    copyright            : (C) 2002, 2007, 2008, 2009, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2007, 2008, 2009, 2011, 2012 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 

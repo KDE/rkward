@@ -2,7 +2,7 @@
                           rkpluginspinbox  -  description
                              -------------------
     begin                : Wed Aug 11 2004
-    copyright            : (C) 2004, 2006, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2009, 2012 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 

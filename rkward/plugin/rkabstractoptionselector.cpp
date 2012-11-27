@@ -2,7 +2,7 @@
                           rkabstractoptionselector  -  description
                              -------------------
     begin                : Tue Mar 20 2007
-    copyright            : (C) 2007, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2009, 2012 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 

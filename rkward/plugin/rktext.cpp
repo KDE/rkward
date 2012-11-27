@@ -2,7 +2,7 @@
                           rktext.cpp  -  description
                              -------------------
     begin                : Sun Nov 10 2002
-    copyright            : (C) 2002, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2006, 2007, 2012 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 

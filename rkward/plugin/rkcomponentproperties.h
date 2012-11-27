@@ -130,6 +130,7 @@ public:
 	int type () { return PropertyBool; };
 /** reimplemented to return a new negated boolean property if the identifier is "not" */
 	RKComponentBase* lookupComponent (const QString &identifier, QString *remainder);
+	static bool stringToBool (const QString &value, bool *ok);
 private:
 /** helper function. Sets the value without emitting change signal */
 	void internalSetValue (bool new_value);

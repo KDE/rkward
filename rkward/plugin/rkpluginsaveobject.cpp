@@ -2,7 +2,7 @@
                           rkpluginsaveobject  -  description
                              -------------------
     begin                : Tue Jan 30 2007
-    copyright            : (C) 2007, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2010, 2012 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 

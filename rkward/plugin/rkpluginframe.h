@@ -2,7 +2,7 @@
                           rkpluginframe.cpp  -  description
                              -------------------
     begin                : Sat Jun 4 2011
-    copyright            : (C) 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2011, 2012 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 

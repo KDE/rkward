@@ -2,7 +2,7 @@
                           rkpluginbrowser  -  description
                              -------------------
     begin                : Sat Mar 10 2005
-    copyright            : (C) 2005, 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2009, 2010, 2012 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
