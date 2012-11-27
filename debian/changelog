@@ -1,7 +1,7 @@
 rkward (0.6.0z+0.6.1-0devel1) unstable; urgency=low
 
   * new upstream release
-  * correctly treat -pre and -devel releases in debian/watch (thanks to Bart Martens)
+  * correctly treat -pre releases in debian/watch (thanks to Bart Martens)
   * remove obsolete DM-Upload-Allowed field
 
  -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Sat, 24 Nov 2012 14:30:00 +0100
