@@ -261,6 +261,20 @@ void RKComponentPropertyBool::internalSetValue (bool new_value) {
 	is_valid = true;
 }
 
+bool RKComponentPropertyBool::stringToBool (const QString &value, bool *ok) {
+	if (ok) *ok = true;
+
+	bool _ok;
+	bool ret = value.toInt (&_ok);
+	if (_ok) return ret;
+
+	if (value == "true") return true;
+	if (value == "false") return false;
+	
+	if (ok) *ok = false;
+	return false;
+}
+
 void RKComponentPropertyBool::internalSetValue (const QString &new_value) {
 	RK_TRACE (PLUGIN);
 
@@ -270,7 +284,7 @@ void RKComponentPropertyBool::internalSetValue (const QString &new_value) {
 	} else if (new_value == value_false) {
 		internalSetValue (false);
 	} else {
-		is_valid = false;
+		internalSetValue (stringToBool (new_value, &is_valid));
 	}
 }
 
@@ -324,7 +338,7 @@ void RKComponentPropertyBool::governorValueChanged (RKComponentPropertyBase *pro
 	RK_TRACE (PLUGIN);
 
 	QVariant value = property->value (governor_modifier);
-	if (value.type () == QVariant::String) {	// Qt's conversion from string to bool does not meet our needs.
+	if (value.type () == QVariant::String) {	// Qt's conversion from string to bool does not meet our needs
 		internalSetValue (value.toString ());
 	} else if (value.canConvert (QVariant::Bool)) {
 		internalSetValue (value.toBool ());
@@ -1195,7 +1209,9 @@ void RKComponentPropertyConvert::sourcePropertyChanged (RKComponentPropertyBase 
 				break;
 			} case And: {
 				bool ok;
-				int val = source.property->value (source.modifier).toInt (&ok);
+				QVariant v = source.property->value (source.modifier);
+				bool val = (bool) v.toInt (&ok);
+				if (!ok) val = stringToBool (fetchStringValue(source.property, source.modifier), &ok);
 				if (ok) {
 					if (!val) {
 						setBoolValue (false);
@@ -1207,7 +1223,9 @@ void RKComponentPropertyConvert::sourcePropertyChanged (RKComponentPropertyBase 
 				break;
 			} case Or: {
 				bool ok;
-				int val = source.property->value (source.modifier).toInt (&ok);
+				QVariant v = source.property->value (source.modifier);
+				bool val = (bool) v.toInt (&ok);
+				if (!ok) val = stringToBool (fetchStringValue(source.property, source.modifier), &ok);
 				if (ok) {
 					if (val) {
 						setBoolValue (true);
