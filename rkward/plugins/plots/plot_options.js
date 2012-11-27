@@ -18,7 +18,7 @@ function preprocess () {
 }
 
 function calculate () {
-	if (getValue ("grid_enable") == "true") {
+	if (getValue ("grid_enable.numeric")) {
 		echo (getValue ("grid_options.code.printout"));
 	}
 }

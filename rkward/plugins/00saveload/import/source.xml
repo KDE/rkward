@@ -4,8 +4,7 @@
 	<help file="source.rkh"/>
 
 	<logic>
-		<convert id="global_env" mode="equals" sources="local.state" standard="FALSE"/>
-		<connect client="run_global_warning.visible" governor="global_env"/>
+		<connect client="run_global_warning.visible" governor="local.state.not"/>
 
 		<connect client="maxdeparselength.enabled" governor="echo.state" />
 		<connect client="promptecho.enabled" governor="echo.state" />

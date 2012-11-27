@@ -1,6 +1,6 @@
 function calculate () {
 	var object = getValue ("object");
-	var is_data_frame = (getValue ("sortby.enabled") == "true");
+	var is_data_frame = getValue ("sortby.enabled.numeric");
 
 	var saveto = object;
 	if (getValue ("saveto_select") == "other") saveto = getValue ("saveto");

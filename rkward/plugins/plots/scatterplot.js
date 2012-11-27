@@ -6,7 +6,7 @@ function calculate () {
 	y = str_replace ("\n", ",", trim (getValue ("y"))) ;
 
 	var type = "";
-	if (getValue ("manual_type") == "true") {
+	if (getValue ("manual_type.numeric")) {
 		type = getValue ("custom_type");
 	} else {
 		type = "c ('" + getValue ("pointtype") + "')";
