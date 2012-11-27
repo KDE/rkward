@@ -14,17 +14,14 @@
 
 		<connect client="addtoplot.visible" governor="allow_addtoplot"/>
 
-		<convert id="default_verticalsb" sources="default_verticals" mode="equals" standard="true"/>
-		<connect client="verticals.state" governor="default_verticalsb"/>
+		<connect client="verticals.state" governor="default_verticals"/>
 		<connect client="col_vert.color.enabled" governor="verticals.state"/>
 
-		<convert id="default_dopointsb" sources="default_dopoints" mode="equals" standard="true"/>
-		<connect client="do_points.state" governor="default_dopointsb"/>
+		<connect client="do_points.state" governor="default_dopoints"/>
 		<connect client="col_points.color.enabled" governor="do_points.state"/>
 
-		<convert id="allow_col01line_TRUE" sources="allow_col01line" mode="equals" standard="true"/>
-		<connect client="frame_col_y0.visible" governor="allow_col01line_TRUE"/>
-		<connect client="frame_col_y1.visible" governor="allow_col01line_TRUE"/>
+		<connect client="frame_col_y0.visible" governor="allow_col01line"/>
+		<connect client="frame_col_y1.visible" governor="allow_col01line"/>
 		<set id="col_y0.argument" to=""/>
 		<set id="col_y1.argument" to=""/>
 	</logic>
