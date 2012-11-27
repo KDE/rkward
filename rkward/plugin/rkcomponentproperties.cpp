@@ -275,6 +275,21 @@ bool RKComponentPropertyBool::stringToBool (const QString &value, bool *ok) {
 	return false;
 }
 
+bool RKComponentPropertyBool::variantToBool (const QVariant &value, bool *ok) {
+	if (value.type () == QVariant::Bool) {
+		if (ok) *ok = true;
+		return value.toBool ();
+	} else if (value.canConvert (QVariant::Int)) {
+		bool valid;
+		bool ret = (bool) value.toInt (&valid);
+		if (valid) {
+			if (ok) *ok = true;
+			return ret;
+		}
+	}
+	return stringToBool (value.toString (), ok);
+}
+
 void RKComponentPropertyBool::internalSetValue (const QString &new_value) {
 	RK_TRACE (PLUGIN);
 
@@ -1209,9 +1224,7 @@ void RKComponentPropertyConvert::sourcePropertyChanged (RKComponentPropertyBase 
 				break;
 			} case And: {
 				bool ok;
-				QVariant v = source.property->value (source.modifier);
-				bool val = (bool) v.toInt (&ok);
-				if (!ok) val = stringToBool (fetchStringValue(source.property, source.modifier), &ok);
+				bool val = variantToBool (source.property->value (source.modifier), &ok);
 				if (ok) {
 					if (!val) {
 						setBoolValue (false);
@@ -1223,9 +1236,7 @@ void RKComponentPropertyConvert::sourcePropertyChanged (RKComponentPropertyBase 
 				break;
 			} case Or: {
 				bool ok;
-				QVariant v = source.property->value (source.modifier);
-				bool val = (bool) v.toInt (&ok);
-				if (!ok) val = stringToBool (fetchStringValue(source.property, source.modifier), &ok);
+				bool val = variantToBool (source.property->value (source.modifier), &ok);
 				if (ok) {
 					if (val) {
 						setBoolValue (true);

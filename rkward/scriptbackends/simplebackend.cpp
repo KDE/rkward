@@ -2,7 +2,7 @@
                           simplebackend  -  description
                              -------------------
     begin                : Thu May 10 2007
-    copyright            : (C) 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2012 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -67,7 +67,7 @@ void SimpleBackend::preview (int flags) {
 	callFunction (QString::null, flags, Preview);
 }
 
-void SimpleBackend::writeData (const QString &data) {
+void SimpleBackend::writeData (const QVariant &data) {
 	RK_TRACE (PHP);
 
 	current_values.append (data);
@@ -120,7 +120,7 @@ void SimpleBackend::processCall () {
 		RK_ASSERT (token_end >= 0);
 		QString token = current_template.mid (next_token + 3, token_end - (next_token + 3));
 		template_pos = token_end + 3;
-		emit (requestValue (token));
+		emit (requestValue (token, RKStandardComponent::StringValue));
 		return;
 	}
 
@@ -135,7 +135,7 @@ void SimpleBackend::finishCall (const QString &conditions) {
 	int repl = current_values.count();
 	for (int i = repl; i > 0; --i) {
 		QString placeholder = "%" + QString::number (i);
-		QString replacement = current_values[i-1];
+		QString replacement = current_values[i-1].toString ();
 		conds.replace (placeholder, replacement);
 	}
 

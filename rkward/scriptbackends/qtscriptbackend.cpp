@@ -56,7 +56,7 @@ bool QtScriptBackend::initialize (RKComponentPropertyCode *code_property, bool a
 	script_thread = new QtScriptBackendThread (common_js, filename, this);
 	connect (script_thread, SIGNAL (error(const QString&)), this, SLOT (threadError(const QString&)));
 	connect (script_thread, SIGNAL (commandDone(const QString&)), this, SLOT (commandDone(const QString&)));
-	connect (script_thread, SIGNAL (needData(const QString&)), this, SLOT (needData(const QString&)));
+	connect (script_thread, SIGNAL (needData(const QString&, const int)), this, SLOT (needData(const QString&, const int)));
 	current_type = ScriptBackend::Ignore;
 	script_thread->start ();
 
@@ -105,10 +105,10 @@ void QtScriptBackend::tryNextFunction () {
 	}
 }
 
-void QtScriptBackend::writeData (const QString &data) {
+void QtScriptBackend::writeData (const QVariant &data) {
 	RK_TRACE (PHP);
 
-	RK_DO (qDebug ("submitting data: %s", data.toLatin1 ().data ()), PHP, DL_DEBUG);
+	RK_DO (qDebug ("submitting data: %s", qPrintable (data.toString ())), PHP, DL_DEBUG);
 	script_thread->setData (data);
 	tryNextFunction ();
 }
@@ -130,10 +130,10 @@ void QtScriptBackend::commandDone (const QString &result) {
 	commandFinished (result);
 }
 
-void QtScriptBackend::needData (const QString &identifier) {
+void QtScriptBackend::needData (const QString &identifier, const int hint) {
 	RK_TRACE (PHP);
 
-	emit (requestValue (identifier));
+	emit (requestValue (identifier, hint));
 }
 
 
@@ -177,7 +177,7 @@ void QtScriptBackendThread::setCommand (const QString &command) {
 	mutex.unlock ();
 }
 
-void QtScriptBackendThread::setData (const QString &data) {
+void QtScriptBackendThread::setData (const QVariant &data) {
 	RK_TRACE (PHP);
 
 	mutex.lock ();
@@ -187,12 +187,12 @@ void QtScriptBackendThread::setData (const QString &data) {
 	mutex.unlock ();
 }
 
-QVariant QtScriptBackendThread::getValue (const QString &identifier) {
+QVariant QtScriptBackendThread::getValue (const QString &identifier, const int hint) {
 	RK_TRACE (PHP);
 
-	emit (needData (identifier));
+	emit (needData (identifier, hint));
 
-	QString ret;
+	QVariant ret;
 	while (1) {
 		if (killed) return QVariant ();
 
@@ -207,10 +207,23 @@ QVariant QtScriptBackendThread::getValue (const QString &identifier) {
 
 		usleep (20);	// getValue () may be called very often, and we expect an answer very soon, so we don't sleep too long.
 	}
+	return (ret);
+}
 
-	// return "0" as numeric constant. Many plugins rely on this form PHP times.
-	if (ret == "0") return (QVariant (0.0));
-	else return (QVariant (ret));
+QVariant QtScriptBackendThread::getValue (const QString &identifier) {
+	return getValue (identifier, RKStandardComponent::TraditionalValue);
+}
+
+QVariant QtScriptBackendThread::getList (const QString &identifier) {
+	return getValue (identifier, RKStandardComponent::StringlistValue);
+}
+
+QVariant QtScriptBackendThread::getString (const QString &identifier) {
+	return getValue (identifier, RKStandardComponent::StringValue);
+}
+
+QVariant QtScriptBackendThread::getBoolean (const QString &identifier) {
+	return getValue (identifier, RKStandardComponent::BooleanValue);
 }
 
 bool QtScriptBackendThread::scriptError () {

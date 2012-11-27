@@ -41,11 +41,11 @@ public:
 	void calculate (int flags) { callFunction ("do_calculate ();\n", flags, Calculate); };
 	void printout (int flags) { callFunction ("do_printout ();\n", flags, Printout); };
 	void preview (int flags) { callFunction ("do_preview ();\n", flags, Preview); };
-	void writeData (const QString &data);
+	void writeData (const QVariant &data);
 public slots:
 	void threadError (const QString &message);
 	void commandDone (const QString &result);
-	void needData (const QString &identifier);
+	void needData (const QString &identifier, const int hint);
 private:
 	void tryNextFunction ();
 	QtScriptBackendThread *script_thread;
@@ -66,24 +66,28 @@ public:
 	~QtScriptBackendThread ();
 
 	void setCommand (const QString &command);
-	void setData (const QString &data);
+	void setData (const QVariant &data);
 	void kill () { killed = true; };
 	void goToSleep (bool sleep);
 signals:
 	void commandDone (const QString &result);
-	void needData (const QString &identifier);
+	void needData (const QString &identifier, const int hint);
 	void error (const QString &error);
 protected slots:
 	QVariant getValue (const QString &identifier);
+	QVariant getList (const QString &identifier);
+	QVariant getString (const QString &identifier);
+	QVariant getBoolean (const QString &identifier);
 	bool includeFile (const QString &filename);
 protected:
 	void run ();
 private:
 	/** for any script error in the last evaluation. If there was an error, a message is generated, and this function return true (and the thread should be made to exit!) */
 	bool scriptError ();
+	QVariant getValue (const QString &identifier, const int hint);
 
 	QString _command;
-	QString _data;
+	QVariant _data;
 	QString _commonfile;
 	QString _scriptfile;
 

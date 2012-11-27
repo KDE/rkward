@@ -2,7 +2,7 @@
                           scriptbackend  -  description
                              -------------------
     begin                : Sun Aug 15 2004
-    copyright            : (C) 2004, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007, 2012 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -21,6 +21,8 @@
 
 #include <qstring.h>
 #include <QLinkedList>
+
+#include "../plugin/rkstandardcomponent.h"
 
 class RKComponentPropertyCode;
 
@@ -59,11 +61,11 @@ public:
 	
 	virtual bool isBusy () { return busy; };
 	
-	virtual void writeData (const QString &data) = 0;
+	virtual void writeData (const QVariant &data) = 0;
 signals:
 	void commandDone (int);
 	void idle ();
-	void requestValue (const QString &);
+	void requestValue (const QString &, const int);
 	void haveError ();
 protected:
 	RKComponentPropertyCode *code_property;

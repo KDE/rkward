@@ -50,7 +50,17 @@ getValue = function (id) {
 
 getString = function (id) {
 	// getValue() sometimes returns numeric results (whenever the value is "0"). This variant always returns strings.
-	return (getValue (id).toString ());
+	return (_RK_backend.getString (id));
+}
+
+getList = function (id) {
+	// will try to return value as list, and produces a warning, if that fails.
+	return (_RK_backend.getList (id));
+}
+
+getBoolean = function (id) {
+	// will try to return value as logical, and produces a warning, if that fails.
+	return (_RK_backend.getBoolean (id));
 }
 
 printValue = function (id) {

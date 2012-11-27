@@ -2,7 +2,7 @@
                           simplebackend  -  description
                              -------------------
     begin                : Thu May 10 2007
-    copyright            : (C) 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2012 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -48,7 +48,7 @@ public:
 	void printout (int flags);
 	void preview (int flags);
 	
-	void writeData (const QString &data);
+	void writeData (const QVariant &data);
 	void tryNextFunction ();
 private:
 	QString preprocess_template;
@@ -59,7 +59,7 @@ private:
 
 	int template_sep;
 	int template_pos;
-	QStringList current_values;
+	QList<QVariant> current_values;
 
 	void processCall ();
 	void finishCall (const QString &conditions);

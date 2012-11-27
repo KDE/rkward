@@ -154,9 +154,6 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 					if (!ci.governor_modifier.isEmpty ()) {
 						RK_DO (qDebug ("Cannot connect external column '%s' in optionset to property with modifier (%s).", qPrintable (ci.column_name), qPrintable (ci.governor)), PLUGIN, DL_ERROR);
 						continue;
-					} else if (gov_prop->isInternal ()) {
-						RK_DO (qDebug ("Cannot connect external column '%s' in optionset to property (%s), which is marked 'internal'.", qPrintable (ci.column_name), qPrintable (ci.governor)), PLUGIN, DL_ERROR);
-						continue;
 					}
 				}
 				columns_to_update.insertMulti (gov_prop, it.key ());

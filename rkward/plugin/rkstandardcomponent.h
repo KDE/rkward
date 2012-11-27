@@ -81,6 +81,14 @@ public:
 
 /** Return the GUI-scripting handler (creating it, if needed) */
 	RKComponentScriptingProxy* scriptingProxy ();
+
+	enum ValueTypeHint {
+		TraditionalValue,
+		BooleanValue,
+		StringValue,
+		StringlistValue,
+		NumericValue
+	};
 signals:
 	void standardInitializationComplete ();
 public slots:
@@ -91,8 +99,8 @@ public slots:
 //	void getRVector (const QString &call);
 /** return result of given call to the R-backend */
 //	void doRCall (const QString &call);
-/** get a value for the backend */
-	void getValue (const QString &id);
+/** get a value for the backend. Note: hint should be one of ValueTypeHint */
+	void getValue (const QString &id, const int hint);
 /** reimplemented from QWidget to hide the gui if applicable */
 	void hide ();
 /** for enslaved components */
