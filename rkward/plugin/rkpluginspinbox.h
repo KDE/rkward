@@ -34,7 +34,7 @@ public:
 	RKPluginSpinBox (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
 
 	~RKPluginSpinBox ();
-	QString value (const QString &modifier);
+	QVariant value (const QString &modifier=QString ());
 	int type () { return ComponentSpinBox; };
 
 	RKComponentPropertyInt *intvalue;

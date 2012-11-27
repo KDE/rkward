@@ -75,7 +75,7 @@ void RKPluginBrowser::textChanged (RKComponentPropertyBase *) {
 	if (updating) return;
 	updating = true;
 
-	selector->setLocation (selection->value ());
+	selector->setLocation (fetchStringValue (selection));
 	updateColor ();
 
 	updating = false;
@@ -89,7 +89,7 @@ void RKPluginBrowser::textChanged () {
 }
 
 bool RKPluginBrowser::isValid () {
-	return (!(selection->value ().isEmpty ()));
+	return (!(fetchStringValue (selection).isEmpty ()));
 }
 
 void RKPluginBrowser::requirednessChanged (RKComponentPropertyBase *) {

@@ -119,8 +119,8 @@ void RKInput::textChanged (RKComponentPropertyBase *) {
 	updating = true;
 
 	RK_ASSERT (textedit || lineedit);
-	if (textedit) textedit->setText (text->value ());
-	else lineedit->setText (text->value ());
+	if (textedit) textedit->setText (fetchStringValue (text));
+	else lineedit->setText (fetchStringValue (text));
 
 	updateColor ();
 
@@ -150,7 +150,7 @@ void RKInput::textChanged () {
 bool RKInput::isValid () {
 	RK_TRACE (PLUGIN);
 
-	return (!(text->value ().isEmpty ()));
+	return (!(fetchStringValue (text).isEmpty ()));
 }
 
 #include "rkinput.moc"

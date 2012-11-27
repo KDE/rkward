@@ -37,7 +37,7 @@ public:
 	RKPluginSaveObject (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
 	~RKPluginSaveObject ();
 
-	QString value (const QString &modifier);
+	QVariant value (const QString &modifier=QString ());
 	int type () { return ComponentSaveObject; };
 	bool isValid ();
 public slots:

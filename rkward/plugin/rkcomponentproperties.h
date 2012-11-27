@@ -2,7 +2,7 @@
                           rkcomponentproperties  -  description
                              -------------------
     begin                : Fri Nov 25 2005
-    copyright            : (C) 2005, 2006, 2007, 2009, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2009, 2011, 2012 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -28,6 +28,8 @@ class RKComponentPropertyBool;
 #include "rkcomponent.h"
 
 /** Base class for all RKComponentProperties. The base class can handle only a string-property. See derived classes for special types of properties.
+ * 
+ * TODO: Internal storage of value (_value) should be a QVariant
 
 see \ref RKComponentProperties
 */
@@ -39,7 +41,7 @@ public:
 /** destructor */
 	virtual ~RKComponentPropertyBase ();
 /** supplies the current value. Since more than one value may be supplied, modifier can be used to select a value. Default implementation only has  a single string, however. Reimplemented from RKComponentBase */
-	QString value (const QString &modifier=QString::null);
+	QVariant value (const QString &modifier=QString ());
 /** set the value in string form.
 @returns false if the value is illegal (in the base class, all strings are legal) */
 	virtual bool setValue (const QString &string);
@@ -78,10 +80,8 @@ public:
 	~RKComponentPropertyStringList ();
 /** for RTTI. see RKComponentBase::RKComponentTypes */
 	int type () { return PropertyStringList; };
-/** change separator string when concatenating strings for value (). Default separator string is "\n" */
-	void setSeparator (const QString &separator) { sep = separator; doChange (); };
-/** reimplemented to return all current strings joined by current separator (setSeparator) */
-	QString value (const QString &modifier=QString::null);
+/** reimplemented to return all current strings */
+	QVariant value (const QString &modifier=QString ());
 /** return the string at the given index */
 	const QString valueAt (int index) const { return storage.value (index); };
 /** set the values in string form (values will be split by the current separator)
@@ -93,9 +93,11 @@ public:
 	const QStringList& values () const { return storage; };
 /** set current strings as a QStringList */
 	void setValues (const QStringList &new_values) { storage = new_values; doChange (); };
+/** reimplemented from RKComponentPropertyBase to use special handling for list properties */
+	void governorValueChanged (RKComponentPropertyBase *property);
 private:
 	void doChange () { _value.clear (); emit (valueChanged (this)); };
-	QString sep;
+	QString sep;	// always "\n". TODO: remove
 	QStringList storage;
 };
 
@@ -116,8 +118,8 @@ public:
 	void setBoolValue (bool new_value);
 /** current value as bool */
 	bool boolValue ();
-/** reimplemented from RKComponentPropertyBase. Modifier "true" returns value if true. Modifier "false" returns value if false. Modifier QString::null returns current value. */
-	QString value (const QString &modifier=QString::null);
+/** reimplemented from RKComponentPropertyBase. Modifier "true" returns value if true. Modifier "false" returns value if false. Modifier QString () returns current value as bool, modifier "labelled" returns the labelled value. */
+	QVariant value (const QString &modifier=QString ());
 /** reimplemented from RKComponentPropertyBase to convert to bool value according to current settings */
 	bool setValue (const QString &string);
 /** reimplemented from RKComponentPropertyBase to test whether conversion to bool value is possible according to current settings */
@@ -162,8 +164,8 @@ public:
 	int maxValue ();
 /** current value as int */
 	int intValue ();
-/** reimplemented from RKComponentPropertyBase. Return current value as a string. In the future, modifier might be used for format. */
-	QString value (const QString &modifier=QString::null);
+/** reimplemented from RKComponentPropertyBase. Return current value. */
+	QVariant value (const QString &modifier=QString ());
 /** reimplemented from RKComponentPropertyBase to convert to int value according to current settings */
 	bool setValue (const QString &string);
 /** reimplemented from RKComponentPropertyBase to test whether conversion to int value is possible according to current settings (is a number, and within limits min and max) */
@@ -213,8 +215,8 @@ public:
 	double maxValue ();
 /** current value as double */
 	double doubleValue ();
-/** reimplemented from RKComponentPropertyBase. Return current value as a string. In the future, modifier might be used for format. */
-	QString value (const QString &modifier=QString::null);
+/** reimplemented from RKComponentPropertyBase. Return current value as a string. */
+	QVariant value (const QString &modifier=QString ());
 /** reimplemented from RKComponentPropertyBase to test whether conversion to int value is possible according to current settings (is a number, and within limits min and max) */
 	bool isStringValid (const QString &string);
 /** reimplemented from RKComponentPropertyBase to actually reconcile requirements with other numeric slots */
@@ -283,13 +285,14 @@ public:
 /** Get current list of objects. Do not modify this list! It is the very same list, the property uses internally!
 @returns an empty list if no valid object is selected */
 	RObject::ObjectList objectList ();
-/** set separator (used to concatenate object names/labels, etc. if more than one object is selected) */
-	void setSeparator (const QString &sep) { separator = sep; emit (valueChanged (this)); };
-/** reimplemented from RKComponentPropertyBase. Modifier "label" returns label. Modifier "shortname" returns short name. Modifier QString::null returns full name. If no object is set, returns an empty string */
-	QString value (const QString &modifier=QString::null);
+/** reimplemented from RKComponentPropertyBase. Modifier "label" returns label(s). Modifier "shortname" returns short name(s). Modifier QString::null returns full name. If no object is set, returns an empty string / variant */
+	QVariant value (const QString &modifier=QString ());
 /** reimplemented from RKComponentPropertyBase to convert to RObject with current constraints
 @returns false if no such object(s) could be found or the object(s) are invalid */
 	bool setValue (const QString &value);
+/** overload of setValue() which accepts a list of names of RObjects
+@returns false if no such object(s) could be found or the object(s) are invalid */
+	bool setValue (const QStringList &values);
 /** reimplemented from RKComponentPropertyBase to test whether conversion to RObject is possible with current constraints */
 	bool isStringValid (const QString &value);
 /** RTTI */
@@ -327,7 +330,7 @@ private:
 	QStringList classes;
 /** TODO: use a list of enums instead for internal purposes! */
 	QStringList types;
-	QString separator;
+	QString separator;	// always "\n". TODO: remove
 };
 
 ///////////////////////////////////////////////// Code ////////////////////////////////////////////////////////
@@ -349,7 +352,7 @@ public:
 /** the preview code */
 	QString preview () { return preview_code; };
 
-	QString value (const QString &modifier=QString::null);
+	QVariant value (const QString &modifier=QString ());
 
 /** set the preprocess code.
 @param code The code to set. If this is QString::null, the property is seen to lack preprocess code and hence is not valid (see isValid ()). In contrast, empty strings are seen as valid */

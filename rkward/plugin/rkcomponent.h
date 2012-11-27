@@ -87,8 +87,9 @@ public:
 	virtual RKComponentBase* lookupComponent (const QString &identifier, QString *remainder);
 /** Locate the component.subcomponent.property.value described by identifier and return its value as a string. Especially useful as a callback in code templates! Recursively walks subcomponents/properties until the requested value is found. @See RKComponentBase::lookupComponent */
 	QString fetchStringValue (const QString &identifier);
-/** returns the "value" of this component or property as a string. Properties generally return their value, components typically return the value of their "most important" property. Default implementation returns QString::null, and writes a debug message */
-	virtual QString value (const QString &modifier=QString::null);
+	static QString fetchStringValue (RKComponentBase* prop, const QString &modifier=QString ());
+/** returns the "value" of this component or property. Properties generally return their value, components typically return the value of their "most important" property. Default implementation returns QString::null, and writes a debug message */
+	virtual QVariant value (const QString &modifier=QString ());
 /** returns true, if this is a property */
 	bool isProperty () { return (type () <= PropertyEnd); };
 	bool isComponent () { return (type () >= ComponentBase); };
@@ -212,3 +213,4 @@ protected:
 };
 
 #endif
+

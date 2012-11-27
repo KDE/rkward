@@ -40,7 +40,7 @@ public:
 	~RKPluginBrowser ();
 
 	RKComponentPropertyBase *selection;
-	QString value (const QString &modifier) { return (selection->value (modifier)); };
+	QVariant value (const QString &modifier=QString ()) { return (selection->value (modifier)); };
 	int type () { return ComponentBrowser; };
 	bool isValid ();
 public slots:

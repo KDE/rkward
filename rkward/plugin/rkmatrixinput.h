@@ -38,7 +38,7 @@ public:
 	~RKMatrixInput ();
 	int type () { return ComponentMatrixInput; };
 	bool isValid () { return is_valid; };
-	QString value (const QString &modifier);
+	QVariant value (const QString &modifier=QString ());
 public slots:
 	void cut ();
 	void copy ();

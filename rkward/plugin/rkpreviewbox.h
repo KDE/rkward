@@ -41,7 +41,7 @@ public:
 	~RKPreviewBox ();
 	int type () { return ComponentPreviewBox; };
 	RKComponentPropertyBool *state;
-	QString value (const QString &modifier) { return (state->value (modifier)); };
+	QVariant value (const QString &modifier=QString ()) { return (state->value (modifier)); };
 public slots:
 	void changedState (int);
 	void changedState (RKComponentPropertyBase *);

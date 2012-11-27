@@ -326,7 +326,7 @@ void RKOptionSet::serializationPropertyChanged (RKComponentPropertyBase* propert
 
 	QList<RowInfo> new_rows;
 	int row = 0;
-	QStringList items = property->value ().split ("\n");
+	QStringList items = fetchStringValue (property).split ("\n");
 	bool keys_missing = (keycolumn != 0);
 	for (int i = 0; i < items.size (); ++i) {
 		const QString &item = items[i];
@@ -552,7 +552,7 @@ void RKOptionSet::governingPropertyChanged (RKComponentPropertyBase *property) {
 	for (int i = 0; i < cols.size (); ++i) {
 		RKComponentPropertyStringList *target = cols.at (i);
 		ColumnInfo &inf = column_map[target];
-		QString value = property->value (inf.governor_modifier);
+		QString value = fetchStringValue (property, inf.governor_modifier);
 		target->setValueAt (row, value);
 
 		if (model && (inf.display_index >= 0)) {

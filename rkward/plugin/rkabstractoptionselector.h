@@ -38,7 +38,7 @@ public:
 @param option_string the option string to search for
 @returns the id (0, 1, 2...) of the corresponding option, or -1 if not found */
 	int findOption (const QString &option_string);
-	QString value (const QString &modifier) { return (string->value (modifier)); };
+	QVariant value (const QString &modifier=QString ()) { return (string->value (modifier)); };
 /** reimplemented from RKComponent to add enabledness properties for the options, dynamically, if requested */
 	RKComponentBase* lookupComponent (const QString &identifier, QString *remainder);
 public slots:

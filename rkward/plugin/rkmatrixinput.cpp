@@ -114,7 +114,7 @@ RKMatrixInput::~RKMatrixInput () {
 	RK_TRACE (PLUGIN);
 }
 
-QString RKMatrixInput::value (const QString& modifier) {
+QVariant RKMatrixInput::value (const QString& modifier) {
 	if (modifier.isEmpty () || (modifier == "cbind")) {
 		QStringList ret;
 		for (int i = 0; i < column_count->intValue (); ++i) {
@@ -125,7 +125,15 @@ QString RKMatrixInput::value (const QString& modifier) {
 
 	bool ok;
 	int col = modifier.toInt (&ok);
-	if ((col >= 0) && ok) return makeColumnString (col, "\t", false);
+	if ((col >= 0) && ok) {
+		QStringList l;
+		if (col < columns.size ()) l = columns[col].storage;
+		while (l.size () < row_count->intValue ()) {
+			l.append (QString ());
+		}
+		if (l.size () > row_count->intValue ()) l = l.mid (0, row_count->intValue ());
+		return l;
+	}
 	return ("Modifier '" + modifier + "' not recognized\n"); 
 }
 
@@ -308,7 +316,7 @@ void RKMatrixInput::tsvPropertyChanged () {
 	RK_TRACE (PLUGIN);
 
 	columns.clear ();
-	QStringList coldata = tsv_data->value ().split ('\n', QString::KeepEmptyParts);
+	QStringList coldata = fetchStringValue (tsv_data).split ('\n', QString::KeepEmptyParts);
 	for (int i = 0; i < coldata.size (); ++i) {
 		setColumnValue (i, coldata[i]);
 	}

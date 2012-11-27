@@ -127,12 +127,13 @@ void RKPluginSpinBox::valueChanged (int) {
 	changed ();
 }
 
-QString RKPluginSpinBox::value (const QString &modifier) {
+QVariant RKPluginSpinBox::value (const QString &modifier) {
 	RK_TRACE (PLUGIN);
 
 	if (intmode) {
 		return intvalue->value (modifier);
 	} else {
+		if (modifier.isEmpty ()) return realvalue->value ("formatted");
 		return realvalue->value (modifier);
 	}
 }

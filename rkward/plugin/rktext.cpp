@@ -79,7 +79,7 @@ RKText::~RKText(){
 void RKText::textChanged (RKComponentPropertyBase *) {
 	RK_TRACE (PLUGIN);
 
-	label->setText (text->value ());
+	label->setText (fetchStringValue (text));
 	changed ();
 }
 

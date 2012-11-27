@@ -93,7 +93,7 @@ void RKPluginSaveObject::externalChange () {
 	if (updating) return;
 
 	// NOTE: the selection-property is read-only!
-	selector->setBaseName (objectname->value ());
+	selector->setBaseName (fetchStringValue (objectname));
 	selector->setRootObject (parent->objectValue ());
 	if (groupbox->isCheckable ()) {
 		groupbox->setChecked (active->boolValue ());
@@ -125,7 +125,7 @@ bool RKPluginSaveObject::isValid () {
 	return (RKComponent::isValid () && selector->isOk ());
 }
 
-QString RKPluginSaveObject::value (const QString& modifier) {
+QVariant RKPluginSaveObject::value (const QString& modifier) {
 //	RK_TRACE (PLUGIN);
 
 	return (selection->value (modifier));

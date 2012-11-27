@@ -40,7 +40,7 @@ public:
 	RKFormula (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
 	~RKFormula ();
 
-	QString value (const QString &modifier) { return model->value (modifier); };
+	QVariant value (const QString &modifier=QString ()) { return model->value (modifier); };
 	bool isValid ();
 
 /** RTTI */

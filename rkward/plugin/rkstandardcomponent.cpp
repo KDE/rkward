@@ -724,14 +724,14 @@ void RKComponentBuilder::parseLogic (const QDomElement &element) {
 		convert->setInternal (true);
 		QString id = xml->getStringAttribute (*it, "id", "#noid#", DL_WARNING);
 		int mode = xml->getMultiChoiceAttribute (*it, "mode", convert->convertModeOptionString (), 0, DL_WARNING);
-		QString sources = xml->getStringAttribute (*it, "sources", QString::null, DL_WARNING);
 		convert->setMode ((RKComponentPropertyConvert::ConvertMode) mode);
-		convert->setSources (sources);
 		if ((mode == RKComponentPropertyConvert::Equals) || (mode == RKComponentPropertyConvert::NotEquals)) {
 			convert->setStandard (xml->getStringAttribute (*it, "standard", QString::null, DL_WARNING));
 		} else if (mode == RKComponentPropertyConvert::Range) {
 			convert->setRange (xml->getDoubleAttribute (*it, "min", -FLT_MAX, DL_INFO), xml->getDoubleAttribute (*it, "max", FLT_MAX, DL_INFO));
 		}
+		QString sources = xml->getStringAttribute (*it, "sources", QString::null, DL_WARNING);
+		convert->setSources (sources);
 		convert->setRequireTrue (xml->getBoolAttribute (*it, "require_true", false, DL_INFO));
 		component ()->addChild (id, convert);
 	}

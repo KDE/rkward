@@ -55,7 +55,7 @@ void RKComponentBase::fetchPropertyValuesRecursive (PropertyValueMap *list, bool
 
 		if (it.value ()->isProperty ()) {
 			if (include_top_level) {
-				list->insert (prefix + it.key (), static_cast<RKComponentPropertyBase*> (it.value ())->value ());
+				list->insert (prefix + it.key (), fetchStringValue (it.value ()));
 			}
 		} else {
 			RK_ASSERT (it.value ()->isComponent ());
@@ -123,13 +123,16 @@ QStringList RKComponentBase::matchAgainstState (const PropertyValueMap &state) {
 			QString dummy;
 			RKComponentBase *prop = lookupComponent (it.key (), &dummy);
 			if (dummy.isEmpty () && prop) {
-				// COMPAT: In RKWard 0.5.1, the formatting of real numbers was different. Hence we compare the numeric values, instead
 				if ((prop->type () == PropertyDouble) && static_cast<RKComponentPropertyDouble*> (prop)->doubleValue () == it.value ().toDouble ()) {
+					// COMPAT: In RKWard 0.5.1, the formatting of real numbers was different. Hence we compare the numeric values, instead
 					continue;
-				} else if (prop->value () == it.value ()) {
+				} else if ((prop->type () == PropertyBool) && (it.value () == prop->value ("labeled").toString ())) {
+					// COMPAT: In RKWard 0.6.0, bool properties returned the labelled string, by default. Hence we also compare on the labelled value
+					continue;
+				} else if (fetchStringValue (prop) == it.value ()) {
 					continue;
 				} else {
-					if (current_value.isEmpty () && !prop->value ().isEmpty ()) current_value = prop->value ();
+					if (current_value.isEmpty ()) current_value = fetchStringValue (prop);	// TODO: Hm, what did I have in mind, here?
 					probs.append (QString ("Tried to apply 'value %1' to property %2, but got '%3', instead").arg (it.value (), it.key (), current_value));
 				}
 			} else {
@@ -141,20 +144,37 @@ QStringList RKComponentBase::matchAgainstState (const PropertyValueMap &state) {
 	return probs;
 }
 
+QString RKComponentBase::fetchStringValue (RKComponentBase* prop, const QString &modifier) {
+	// not tracing this simple helper
+// TODO: we need a bit of special casing, here. Probably, instead, we should add new virutal functions serialize() and unserialize(QString()), which properties can re-implement, if needed.
+
+	if (prop->type () == PropertyDouble) {
+		if (modifier.isEmpty ()) return (prop->value ("formatted").toString ());
+	} else if (prop->type () == PropertyStringList) {
+		if (modifier.isEmpty ()) return (prop->value ("joined").toString ());
+	} else if (prop->type () == PropertyRObjects) {
+		return (prop->value (modifier).toStringList ().join ("\n"));
+	}
+	QVariant value = prop->value (modifier);
+	if (value.type () == QVariant::StringList) {
+		return value.toStringList ().join ("\n");
+	}
+	return (value.toString ());
+}
+
 QString RKComponentBase::fetchStringValue (const QString &identifier) {
 	RK_TRACE (PLUGIN);
 
 	QString mod;
 	RKComponentBase *prop = lookupComponent (identifier, &mod);
-
-	return prop->value (mod);
+	return fetchStringValue (prop, mod);
 }
 
-QString RKComponentBase::value (const QString &modifier) {
+QVariant RKComponentBase::value (const QString &modifier) {
 	RK_TRACE (PLUGIN);
 
 	RK_DO (qDebug ("Component type %d does not have a value. Remaining modifier is: '%s'", type (), modifier.toLatin1 ().data ()), PLUGIN, DL_WARNING);
-	return QString ();
+	return QVariant ();
 }
 
 RKComponentBase::ComponentStatus RKComponentBase::recursiveStatus () {

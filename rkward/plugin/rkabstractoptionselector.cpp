@@ -111,7 +111,7 @@ void RKAbstractOptionSelector::propertyChanged (RKComponentPropertyBase *propert
 
 	int new_id = -1;
 	if (property == string) {
-		new_id = findOption (string->value ());
+		new_id = findOption (fetchStringValue (string));
 	} else if (property == number) {
 		new_id = number->intValue ();
 	} else {
@@ -120,7 +120,7 @@ void RKAbstractOptionSelector::propertyChanged (RKComponentPropertyBase *propert
 	if (new_id < 0) {
 		RK_DO (qDebug ("option selector '%s' has no such option:", qPrintable (getIdInParent ())), PLUGIN, DL_ERROR);
 		if (property == string) {
-			RK_DO (qDebug ("'%s'", qPrintable (string->value ())), PLUGIN, DL_ERROR);
+			RK_DO (qDebug ("'%s'", qPrintable (fetchStringValue (string))), PLUGIN, DL_ERROR);
 		} else {
 			RK_DO (qDebug ("index %d", number->intValue ()), PLUGIN, DL_ERROR);
 		}

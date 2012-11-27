@@ -41,7 +41,7 @@ public:
 	RKVarSlot (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget);
 	~RKVarSlot ();
 	int type () {return ComponentVarSlot; };
-	QString value (const QString &modifier) { return (available->value (modifier)); };
+	QVariant value (const QString &modifier=QString ()) { return (available->value (modifier)); };
 /** reimplemented to call updateLook (), in case enabledness changed */
 	void changed () { updateLook (); RKComponent::changed (); };
 	void updateLook ();

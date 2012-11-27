@@ -2,7 +2,7 @@
                           rkcomponentproperties  -  description
                              -------------------
     begin                : Fri Nov 25 2005
-    copyright            : (C) 2005, 2006, 2007, 2008, 2009, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2008, 2009, 2011, 2012 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -93,6 +93,8 @@ the specialized properties (e.g. RKComponentPropertyInt::intValue () always retu
 
 #include "rkcomponentproperties.h"
 
+#include "../misc/rkcommonfunctions.h"
+
 #include <klocale.h>
 
 #include "../debug.h"
@@ -109,7 +111,7 @@ RKComponentPropertyBase::~RKComponentPropertyBase () {
 	RK_TRACE (PLUGIN);
 }
 
-QString RKComponentPropertyBase::value (const QString &modifier) {
+QVariant RKComponentPropertyBase::value (const QString &modifier) {
 	RK_TRACE (PLUGIN);
 	if (!modifier.isEmpty ()) {
 		warnModifierNotRecognized (modifier);
@@ -140,8 +142,8 @@ void RKComponentPropertyBase::connectToGovernor (RKComponentPropertyBase *govern
 
 void RKComponentPropertyBase::governorValueChanged (RKComponentPropertyBase *property) {
 	RK_TRACE (PLUGIN);
-
-	setValue (property->value (governor_modifier));
+#warning TOOD: connected value should be stored as qvariant
+	setValue (property->value (governor_modifier).toString ());
 }
 
 void RKComponentPropertyBase::warnModifierNotRecognized (const QString &modifier) {
@@ -161,20 +163,35 @@ RKComponentPropertyStringList::~RKComponentPropertyStringList () {
 	RK_TRACE (PLUGIN);
 }
 
-QString RKComponentPropertyStringList::value (const QString &modifier) {
+QVariant RKComponentPropertyStringList::value (const QString &modifier) {
 	RK_TRACE (PLUGIN);
 
-	if (!modifier.isEmpty ()) {
-		warnModifierNotRecognized (modifier);
-		return QString ();
+	if (modifier.isEmpty ()) {
+		return storage;
+	} else if (modifier == "joined") {
+		if (_value.isNull ()) {
+			for (int i = 0; i < storage.size (); ++i) {
+				if (!_value.isEmpty ()) _value.append (sep);
+				_value.append (RKCommonFunctions::escape (storage[i]));	// _value acts as a cache for joined string
+			}
+		}
+		return _value;
 	}
-	if (_value.isNull ()) _value = storage.join (sep);	// _value acts as a cache
-	return _value;
+
+	warnModifierNotRecognized (modifier);
+	return QString ();
 }
 
 bool RKComponentPropertyStringList::setValue (const QString &string) {
-	if (string.isNull ()) setValues (QStringList ());
-	else setValues (string.split (sep));
+	if (string.isNull ()) {
+		setValues (QStringList ());
+	} else {
+		QStringList list = string.split (sep);
+		for (int i = 0; i < list.size (); ++i) {
+			list[i] = RKCommonFunctions::unescape (list[i]);
+		}
+		setValues (list);
+	}
 	return true;
 }
 
@@ -184,6 +201,15 @@ void RKComponentPropertyStringList::setValueAt (int index, const QString& value)
 	while (index >= storage.size ()) storage.append (QString ());	// expand as needed
 	storage[index] = value;
 	doChange ();
+}
+
+void RKComponentPropertyStringList::governorValueChanged (RKComponentPropertyBase *property) {
+	QVariant value = property->value (governor_modifier);
+	if (value.type () == QVariant::StringList) {
+		setValues (value.toStringList ());
+	} else {
+		setValue (value.toString ());
+	}
 }
 
 ///////////////////////////////////////////// Bool //////////////////////////////////////////
@@ -261,19 +287,20 @@ bool RKComponentPropertyBool::boolValue () {
 	return current_value;
 }
 
-QString RKComponentPropertyBool::value (const QString &modifier) {
+QVariant RKComponentPropertyBool::value (const QString &modifier) {
 	RK_TRACE (PLUGIN);
 
-	if (modifier.isEmpty ()) return _value;
+	if (modifier.isEmpty () || (modifier == "numeric")) {
+		return (int) (current_value ? 1 : 0);
+	}
+	if (modifier == "labeled") {
+		return current_value ? value_true : value_false;
+	}
 	if (modifier == "true") return value_true;
 	if (modifier == "false") return value_false;
-	if (modifier == "numeric") {
-		if (current_value) return "1";
-		else return "0";
-	}
 
 	warnModifierNotRecognized (modifier);
-	return QString ();
+	return QVariant ();
 }
 
 bool RKComponentPropertyBool::setValue (const QString &string) {
@@ -296,16 +323,13 @@ bool RKComponentPropertyBool::isStringValid (const QString &string) {
 void RKComponentPropertyBool::governorValueChanged (RKComponentPropertyBase *property) {
 	RK_TRACE (PLUGIN);
 
-	if (governor_modifier.isEmpty ()) {
-		if (property->type () == PropertyBool) {
-			internalSetValue (static_cast<RKComponentPropertyBool *>(property)->boolValue ());
-		} else if (property->type () == PropertyInt) {
-			internalSetValue (static_cast<RKComponentPropertyInt *>(property)->intValue () != 0);
-		} else {
-			internalSetValue (property->value (QString::null));
-		}
-	} else {
-		internalSetValue (property->value (governor_modifier));
+	QVariant value = property->value (governor_modifier);
+	if (value.type () == QVariant::String) {	// Qt's conversion from string to bool does not meet our needs.
+		internalSetValue (value.toString ());
+	} else if (value.canConvert (QVariant::Bool)) {
+		internalSetValue (value.toBool ());
+	} else {	// fallback for lists, and other stuff that really should not have been connected to a bool property, in the first place
+		internalSetValue (value.toString ());
 	}
 	emit (valueChanged (this));
 }
@@ -384,14 +408,14 @@ int RKComponentPropertyInt::intValue () {
 	return current_value;
 }
 
-QString RKComponentPropertyInt::value (const QString &modifier) {
+QVariant RKComponentPropertyInt::value (const QString &modifier) {
 	RK_TRACE (PLUGIN);
 
 	if (!modifier.isEmpty ()) {
 		warnModifierNotRecognized (modifier);
 		return QString ();
 	}
-	return _value;
+	return current_value;
 }
 
 bool RKComponentPropertyInt::isStringValid (const QString &string) {
@@ -437,17 +461,11 @@ void RKComponentPropertyInt::connectToGovernor (RKComponentPropertyBase *governo
 void RKComponentPropertyInt::governorValueChanged (RKComponentPropertyBase *property) {
 	RK_TRACE (PLUGIN);
 
-	if (governor_modifier.isEmpty ()) {
-		if (property->type () == PropertyInt) {
-			internalSetValue (static_cast<RKComponentPropertyInt *>(property)->intValue ());
-		} else if (property->type () == PropertyDouble) {
-			internalSetValue ((int) (static_cast<RKComponentPropertyDouble *>(property)->doubleValue ()));
-		} else {
-			internalSetValue (property->value (QString::null));
-		}
-	} else {
-		internalSetValue (property->value (governor_modifier));
-	}
+	QVariant value = property->value (governor_modifier);
+	double val = value.toDouble (&is_valid);	// QVariant's toInt() does not document rounding behavior. So we rather use a defined behavior, here.
+	if (isValid ()) internalSetValue ((int) val);
+	else internalSetValue (value.toString ());
+
 	emit (valueChanged (this));
 }
 
@@ -549,14 +567,14 @@ double RKComponentPropertyDouble::doubleValue () {
 	return current_value;
 }
 
-QString RKComponentPropertyDouble::value (const QString &modifier) {
+QVariant RKComponentPropertyDouble::value (const QString &modifier) {
 	RK_TRACE (PLUGIN);
 
-	if (!modifier.isEmpty ()) {
-		warnModifierNotRecognized (modifier);
-		return QString ();
-	}
-	return _value;
+	if (modifier.isEmpty ()) return current_value;
+	else if (modifier == "formatted") return _value;
+
+	warnModifierNotRecognized (modifier);
+	return QString ();
 }
 
 bool RKComponentPropertyDouble::isStringValid (const QString &string) {
@@ -602,17 +620,11 @@ void RKComponentPropertyDouble::connectToGovernor (RKComponentPropertyBase *gove
 void RKComponentPropertyDouble::governorValueChanged (RKComponentPropertyBase *property) {
 	RK_TRACE (PLUGIN);
 
-	if (governor_modifier.isEmpty ()) {
-		if (property->type () == PropertyInt) {
-			internalSetValue ((double) (static_cast<RKComponentPropertyInt *>(property)->intValue ()));
-		} else if (property->type () == PropertyDouble) {
-			internalSetValue (static_cast<RKComponentPropertyDouble *>(property)->doubleValue ());
-		} else {
-			internalSetValue (property->value (QString::null));
-		}
-	} else {
-		internalSetValue (property->value (governor_modifier));
-	}
+	QVariant value = property->value (governor_modifier);
+	double val = value.toDouble (&is_valid);
+	if (is_valid) internalSetValue (val);
+	else internalSetValue (value.toString ());
+
 	emit (valueChanged (this));
 }
 
@@ -839,7 +851,7 @@ RObject::ObjectList RKComponentPropertyRObjects::objectList () {
 	return (object_list);
 }
 
-QString RKComponentPropertyRObjects::value (const QString &modifier) {
+QVariant RKComponentPropertyRObjects::value (const QString &modifier) {
 	RK_TRACE (PLUGIN);
 
 	QStringList ret;
@@ -858,25 +870,29 @@ QString RKComponentPropertyRObjects::value (const QString &modifier) {
 	} else {
 		warnModifierNotRecognized (modifier);
 	}
-	return ret.join (separator);
+	return ret;
 }
 
-bool RKComponentPropertyRObjects::setValue (const QString &value) {
+bool RKComponentPropertyRObjects::setValue (const QStringList& values) {
 	RK_TRACE (PLUGIN);
 
 	setObjectValue (0);
 
 	bool ok = true;
-	QStringList slist = value.split (separator, QString::SkipEmptyParts);
-
-	for (QStringList::const_iterator it = slist.begin (); it != slist.end (); ++it) {
-		RObject *obj = RObjectList::getObjectList ()->findObject (*it);
+	for (int i = 0; i < values.size (); ++i) {
+		RObject *obj = RObjectList::getObjectList ()->findObject (values[i]);
 		ok = ok && appendObject (obj);
 	}
 
 	updateValidity ();
 	emit (valueChanged (this));
 	return (isValid () && ok);
+}
+
+bool RKComponentPropertyRObjects::setValue (const QString &value) {
+	RK_TRACE (PLUGIN);
+
+	return setValue (value.split (separator, QString::SkipEmptyParts));
 }
 
 bool RKComponentPropertyRObjects::isStringValid (const QString &value) {
@@ -989,7 +1005,12 @@ void RKComponentPropertyRObjects::governorValueChanged (RKComponentPropertyBase 
 	if ((property->type () == PropertyRObjects) && governor_modifier.isEmpty ()) {
 		setObjectList (static_cast <RKComponentPropertyRObjects *> (property)->objectList ());
 	} else {
-		setValue (property->value (governor_modifier));
+		QVariant value = property->value ();
+		if (value.type () == QVariant::StringList) {
+			setValue (value.toStringList ());
+		} else {
+			setValue (value.toString ());
+		}
 	}
 }
 
@@ -1066,7 +1087,7 @@ RKComponentPropertyCode::~RKComponentPropertyCode () {
 	RK_TRACE (PLUGIN);
 }
 
-QString RKComponentPropertyCode::value (const QString &modifier) {
+QVariant RKComponentPropertyCode::value (const QString &modifier) {
 	RK_TRACE (PLUGIN);
 
 	if (modifier == "preprocess") return preprocess ();
@@ -1148,24 +1169,21 @@ void RKComponentPropertyConvert::sourcePropertyChanged (RKComponentPropertyBase 
 		Source source = sources[i];		// easier typing
 		switch (_mode) {
 			case Equals: {
-				if (source.property->value (source.modifier) != standard) {
+				if (fetchStringValue (source.property, source.modifier) != standard) {
 					setBoolValue (false);
 					return;
 				}
 				break;
 			} case NotEquals: {
-				if (source.property->value (source.modifier) == standard) {
+				if (fetchStringValue (source.property, source.modifier) == standard) {
 					setBoolValue (false);
 					return;
 				}
 				break;
 			} case Range: {
-				double val;
-				if (source.property->type () == PropertyInt) {
-					val = (double) static_cast<RKComponentPropertyInt *>(source.property)->intValue ();
-				} else if (source.property->type () == PropertyDouble) {
-					val = (double) static_cast<RKComponentPropertyDouble *>(source.property)->doubleValue ();
-				} else {
+				bool ok;
+				double val = source.property->value (source.modifier).toDouble (&ok);
+				if (!ok) {
 					val = min;
 					RK_DO (qDebug ("Non-numeric property in convert sources, cannot check range"), PLUGIN, DL_WARNING);
 				}
