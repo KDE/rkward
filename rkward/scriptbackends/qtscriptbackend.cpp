@@ -69,6 +69,7 @@ bool QtScriptBackend::initialize (RKComponentPropertyCode *code_property, bool a
 void QtScriptBackend::destroy () {
 	RK_TRACE (PHP);
 	if (!dead) {
+		if (script_thread) script_thread->goToSleep (false);
 		dead = true;
 		code_property = 0;
 		if (script_thread) script_thread->kill ();
