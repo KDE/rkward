@@ -1194,8 +1194,10 @@ void RKComponentPropertyConvert::sourcePropertyChanged (RKComponentPropertyBase 
 				}
 				break;
 			} case And: {
-				if ((source.property->type () == PropertyBool) || (source.property->type () == PropertyLogic)) {
-					if (!(static_cast<RKComponentPropertyBool *>(source.property)->boolValue ())) {
+				bool ok;
+				int val = source.property->value (source.modifier).toInt (&ok);
+				if (ok) {
+					if (!val) {
 						setBoolValue (false);
 						return;
 					}
@@ -1204,8 +1206,10 @@ void RKComponentPropertyConvert::sourcePropertyChanged (RKComponentPropertyBase 
 				}
 				break;
 			} case Or: {
-				if ((source.property->type () == PropertyBool) || (source.property->type () == PropertyLogic)) {
-					if (static_cast<RKComponentPropertyBool *>(source.property)->boolValue ()) {
+				bool ok;
+				int val = source.property->value (source.modifier).toInt (&ok);
+				if (ok) {
+					if (val) {
 						setBoolValue (true);
 						return;
 					}

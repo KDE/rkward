@@ -1995,7 +1995,11 @@ local({
 	<variablelist>
 	<varlistentry>
 	<term>No modifier ("")</term>
-	<listitem><para>By default the property will return the string "TRUE", if it is true, and "FALSE" otherwise. Boolean properties attached to a checkbox behave slightly differently, and return the strings you specified in the "value" and "value_unchecked" attributes.</para></listitem>
+	<listitem><para>By default the property will return 1 if it is true, and 0 otherwise.</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>"labeled"</term>
+	<listitem><para>Returns the string "true" when true, "false", when false, or whichever custom strings have been specified (typically in a &lt;checkbox&gt;).</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>"true"</term>
@@ -2011,7 +2015,7 @@ local({
 	</varlistentry>
 	<varlistentry>
 	<term>"numeric"</term>
-	<listitem><para>Return the string "1" if the property is true, or "0" if it is false</para></listitem>
+	<listitem><para>Obsolete, provided for backwards compatibility. Same as no modifier "". Return "1" if the property is true, or "0" if it is false.</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
@@ -2021,11 +2025,21 @@ local({
 </varlistentry>
 <varlistentry>
 <term>Real number properties</term>
-<listitem><para>A property designed to hold a real number value (but of course it still returns a numeric character string to the JS-template). It does not accept any modifiers. Used in &lt;spinbox&gt;es (see below)</para></listitem>
+<listitem><para>A property designed to hold a real number value (but of course it still returns a numeric character string to the JS-template). Used in &lt;spinbox&gt;es (see below)
+	<variablelist>
+	<varlistentry>
+	<term>No modifier ("")</term>
+	<listitem><para>For getValue() / getString(), this returns the same as "formatted". In future versions, it will be possible to obtain a numeric represenation, instead.</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>"formatted"</term>
+	<listitem><para>Returns the formatted number (as a string).</para></listitem>
+	</varlistentry>
+	</variablelist></para></listitem>
 </varlistentry>
 <varlistentry>
 <term>RObject properties</term>
-<listitem><para>A property designed a selection of one or more &r; objects. Used most prominently in varselectors and varslots.  The following values will be returned according to the given modifier:
+<listitem><para>A property designed a selection of one or more &r; objects. Used most prominently in varselectors and varslots. The following values will be returned according to the given modifier:
 	<variablelist>
 	<varlistentry>
 	<term>No modifier ("")</term>
@@ -2038,6 +2052,20 @@ local({
 	<varlistentry>
 	<term>"label"</term>
 	<listitem><para>Like above, but returns the &rkward; label(s) of the object(s) (if no label availabe, this is the same as shortname)</para></listitem>
+	</varlistentry>
+	</variablelist></para></listitem>
+</varlistentry>
+<varlistentry>
+<term>String list properties</term>
+<listitem><para>This property holds a list of strings.
+	<variablelist>
+	<varlistentry>
+	<term>No modifier ("")</term>
+	<listitem><para>For <function>getValue()</function>, this returns all strings separated by "\n". Any "\n" characters in each item are escaped as literal "\n". However, the recommended usage is to fetch the value with <function>getList()</function>, instead, which will return an array of strings.</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>"joined"</term>
+	<listitem><para>Returns the list as a single string, with items joined by "\n". In contrast to no modifier (""), the individual strings are _not_ esacped.</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
@@ -2822,11 +2850,11 @@ In addition to this, some elements have additional properties you can connect to
 
 <varlistentry>
 <term>&lt;checkbox&gt;</term>
-<listitem><para>Default property is "state"
+<listitem><para>Default property is "state.labeled"
 	<variablelist>
 	<varlistentry>
 	<term>state</term>
-	<listitem><para>State of the checkbox (on or off). Note that useful modifiers of this property (as of all boolean properties) are "not" and "numeric" (see <link linkend="propertytypes">types of properties</link>). (boolean)</para></listitem>
+	<listitem><para>State of the checkbox (on or off). Note that useful modifiers of this property (as of all boolean properties) are "not" and "labeled" (see <link linkend="propertytypes">types of properties</link>). However, often it is most useful to connect to the property with no modifier, i.e. "<emphasis>checkbox_id</emphasis>.state", which will return the state of the checkbox in a format suitable for use in an if statement (0 or 1). (boolean)</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
@@ -2871,7 +2899,7 @@ In addition to this, some elements have additional properties you can connect to
 		</varlistentry>
 		<varlistentry>
 			<term>0,1,2...</term>
-			<listitem><para>The data from a single column (0 for leftmost column), separated by tabulator characters (string; read-only).</para></listitem>
+			<listitem><para>The data from a single column (0 for leftmost column). <function>getValue()</function>/<function>getString()</function> returns this as a single string, separated by "\n". However, the recommended way to get this is using <function>getList()</function>, which returns this column as an array of strings.</para></listitem>
 		</varlistentry>
 		<varlistentry>
 			<term>cbind</term>
@@ -2916,7 +2944,7 @@ In addition to this, some elements have additional properties you can connect to
 
 <varlistentry>
 <term>&lt;spinbox&gt;</term>
-<listitem><para>Default property is either "int" or "real" depending on the spinbox's mode
+<listitem><para>Default property is either "int" or "real.formatted" depending on the spinbox's mode
 	<variablelist>
 	<varlistentry>
 	<term>int</term>
