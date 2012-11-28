@@ -1483,6 +1483,129 @@ This chapter contains information on some topics that are useful only to certain
 	</para>
 </sect1>
 
+<sect1 id="optionset">
+	<title>Repeating (a set of) options</title>
+	<para>
+		Sometimes you want to repeat a set of options for an arbitrary number of items. E.g. suppose you want to implement a plugin for sorting a data.frame. You may want to allow for sorting by an arbitrary number of columns (in case of ties among the first column(s)). This could simply be realized by allowing the user to select multiple variables in a <command>&lt;varslot&gt;</command> with <parameter>multi="true"</parameter>. But if you want to extend this, e.g. allowing the user to specify for each variable whether it should be converted to character / numeric, or whether sorting should be ascending or descending, you need more flexibility. Other examples would be plotting multiple lines in one plot (allowing to select object, line style, line color, etc. for each line), or specifying a mapping for recoding from a set of old values to new values.
+	</para>
+	<para>
+		Enter the <command>&lt;optionset&gt;<command>. Let's look at a simple example, first:
+	</para>
+		<programlisting>
+&lt;dialog [...]&gt;
+	[...]
+	&lt;optionset id="set" min_rows="1"&gt;
+		&lt;content&gt;
+			&lt;frame&gt;
+				&lt;optiondisplay index="true"/&gt;
+				&lt;row&gt;
+					&lt;input id="firstname" label="Given name(s)" size="small"&gt;
+					&lt;input id="lastname" label="Family name" size="small"&gt;
+					&lt;radio id="gender" label="Gender"&gt;
+						&lt;option label="Male" value="m"/&gt;
+						&lt;option label="Female" value="f"/&gt;
+					&lt;/radio&gt;
+				&lt;/row&gt;
+			&lt;/frame&gt;
+		&lt;/content&gt;
+
+		&lt;option id="firstnames" label="Given name(s)" connect="firstname.text"&gt;
+		&lt;option id="lastnames" label="Family name" connect="lastname.text"&gt;
+		&lt;option id="gender" connect="gender.string"&gt;
+	&lt;/optionset&gt;
+	[...]
+&lt;/dialog&gt;
+		</programlisting>
+	<para>
+		Here, we created a UI for specifying a number of persons (e.g. authors). The UI requires at least one entry (<parameter>min_rows="1"</parameter>). Inside the <command>&lt;optionset&gt;</command>-element, we begin by specifying the
+		<command>&lt;content&gt;</command>, i.e. those elements that belong to the option set. You will be familiar with most elements
+		inside the <command>&lt;content&gt;</command>. The <command>&lt;optiondisplay&gt;</command> is a special element for use in option sets. It lists the current items, allows the user to switch between items, to add or to remove entries. <parameter>index="true"</parameter> means that we want an extra column in the list, showing an index (number) of each item.
+	</para><para>
+		Next we specify the variables of interest that we will want to read from the option set in our JS file. As we will be dealing with
+		an arbitrary number of items, we cannot just read <function>getString ("firstname")</function> in JS. Rather, for each value of
+		interest, we specify an <command>&lt;option&gt;</command>. For the first option in the example, <command>&lt;connect="firstname.text"&gt;</command> means that the content of the <command>&lt;input&gt;</command>
+		element "firstname" is read for each item. <command>&lt;option&gt;</command>s for which a <parameter>label</parameter> is given,
+		will be shown in the <command>&lt;optiondisplay&gt;</command>, in a column by that label. In JS, we can now fetch the first names for all authors using <function>getList("set.firstname")</function>, <function>getList("set.lastnames")</function> for the family
+		names, and <function>getList("set.gender")</function> for an array of "m"/"f" strings.
+	</para>
+	<para>
+		Note that there are no restrictions on what you can place inside an <command>&lt;optionset&gt;<command>. You can even use <link linkend="embedding">embedded</link> components. Just as with any other element, all you have to do is to collect the output
+		variables of interest in an <command>&lt;option&gt;</command>-specification. In the case of embedded plugins, this is often a section of the "code" property. E.g.:
+	</para>
+		<programlisting>
+&lt;dialog [...]&gt;
+	[...]
+	&lt;optionset id="set" min_rows="1"&gt;
+		&lt;content&gt;
+			[...]
+			&lt;embed id="color" component="rkward::color_chooser" label="Color"/&gt;
+		&lt;/content&gt;
+
+		[...]
+		&lt;option id="color_params" connect="color.code.printout"&gt;
+	&lt;/optionset&gt;
+	[...]
+&lt;/dialog&gt;
+		</programlisting>
+	<para>
+		Of course you can also use <link linkend="logic">UI logic</link> inside an optionset. You do so by making connection (or scripting)
+		in the <command>&lt;logic&gt;</command> section of your plugin, as usual. However, you will access the UI elements in the contents
+		region as (e.g.) "set.contents.firstname.XYZ". Note the prefix "set" (the <parameter>id</parameter> you have assigned to the set
+		and "contents".
+	</para>
+	<note>
+		<para>
+			When scripting logic in an optionset, all you can do is access the <emphasis>current</emphasis> content region. Thus, typically,
+			it is only meaningful to connect elements inside the contents region to each other. Connecting a property outside the <command>&lt;optionset&gt;</command> to a property inside the content region, may be useful for initialization. However,
+			modifying the contents region after initialzation will <emphasis>not</emphasis> apply to items that the user has already
+			defined. Only to the currently selected item in the set.
+		</para>
+	</note>
+	<sect2 id="optionset_driven"/>
+		<title>"Driven" optionsets</title>
+		<para>
+			So far we have considered an <command>&lt;optionset&gt;</command> that provides buttons for adding / removing items. However,
+			in some cases, it is much more natural to select items outside the <command>&lt;optionset&gt;</command>, and only provide
+			options for customizing some aspects of each item in an <command>&lt;optionset&gt;</command>. E.g. suppose you want to allow
+			the user to plot several objects inside one plot. For each object, the user should be able to specify line color.
+			You <emphasis>could</emphasis> solve this by placing a <command>&lt;varselector&gt;</command> and
+			<command>&lt;varslot&gt;</command> inside the <command>&lt;content&gt;</content> area, allowing the user to select one item
+			at a time. However, it will mean much less clicks for the user, if you use a <command>&lt;varslot multi="true"&gt;</command>
+			<emphasis>outside</emphasis> the <command>&lt;optionset&gt;</command>, instead. Then you will connect this selection of objects
+			to a so-called "driven" optionset. Here's how:
+		</para>
+		<programlisting>
+&lt;dialog [...]&gt;
+	&lt;logic&gt;
+		&lt;connect client="set.vars" governor="vars.available"/&gt;
+		&lt;connect client="set.varnames" governor="vars.available.shortname"/&gt;
+	&lt;/logic&gt;
+	[...]
+	&lt;varselector id="varsel"/&gt;
+	&lt;varslot id="vars" label="Objects to plot"/&gt;
+	&lt;optionset id="set" keycolumn="var"&gt;
+		&lt;content&gt;
+			&lt;optiondisplay/&gt;
+			[...]
+			&lt;embed id="color" component="rkward::color_chooser" label="Line color"/&gt;
+		&lt;/content&gt;
+
+		[...]
+		&lt;option id="vars" external="true"&gt;
+		&lt;option id="varnames" external="true" label="Variable"&gt;
+		&lt;option id="color_params" connect="color.code.printout"&gt;
+	&lt;/optionset&gt;
+	[...]
+&lt;/dialog&gt;
+		</programlisting>
+		<para>
+		TODO</para>
+	</sect2>
+	<sect2 id="optionset_alternatives"/>
+		<title>Alternatives: When not to use optionsets</title>
+	</sect2>
+</sect1>
+
 </chapter>
 
 <chapter id="external_plugins">
