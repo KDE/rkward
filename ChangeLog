@@ -1,4 +1,4 @@
-- New functions getString(), getList() and getBoolean() for fetching data in plugin scripts		TODO: document, more testing
+- New functions getString(), getList() and getBoolean() for fetching data in plugin scripts		TODO: more testing, convert at least some plugins
 - Boolean properties now return a numeric, not labelled representation of their value, by default. <checkbox>es should be unaffected.	TODO: when announcing release, link to explanation mail.
 - Added GUI element for entering a set of options for an arbitrary number of items		TODO: document
 - Reduce CPU usage of pluings while idle

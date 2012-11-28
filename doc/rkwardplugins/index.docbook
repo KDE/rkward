@@ -46,6 +46,7 @@ as Authors, publish date, the abstract, and Keywords -->
 <year>2008</year>
 <year>2010</year>
 <year>2011</year>
+<year>2012</year>
 <holder>Thomas Friedrichsmeier</holder>
 </copyright>
 <!-- Translators: put here the copyright notice of the translation -->
@@ -53,8 +54,8 @@ as Authors, publish date, the abstract, and Keywords -->
      and in the FDL itself on how to use it. -->
 <legalnotice>&FDLNotice;</legalnotice>
 
-<date>2012-09-26</date>
-<releaseinfo>0.5.8.00</releaseinfo>
+<date>2012-11-28</date>
+<releaseinfo>0.6.1.00</releaseinfo>
 
 <abstract>
 <para>
@@ -498,8 +499,8 @@ function preprocess () {
 	<sect2 id="sect_JS_calculate"><title>calculate()</title>
 		<programlisting>
 function calculate () {
-	echo ('res &lt;- t.test (x=' + getValue ("x") + ', y=' + getValue ("y") + ', hypothesis="' + getValue ("hypothesis") + '"' + getValue ("varequal"));
-	var conflevel = getValue ("conflevel");
+	echo ('res &lt;- t.test (x=' + getString ("x") + ', y=' + getString ("y") + ', hypothesis="' + getString ("hypothesis") + '"' + getString ("varequal"));
+	var conflevel = getString ("conflevel");
 	if (conflevel != "0.95") echo (', conf.level=' + conflevel);
 	echo (')\n');
 }
@@ -511,11 +512,16 @@ function calculate () {
 res &lt;- t.test (
 		</screen>
 		<para>
-			as plain text. Next we need to fill in the value, the user selected as the first variable. We fetch this using <function>getValue ("x")</function>, and append it to the string to be <quote>echoed</quote>. This prints out the value of the GUI-element with <parameter>id=</parameter><replaceable>"x"</replaceable>: our first <command>&lt;checkbox&gt;</command>. Next, we append a ', ', and do the same to fetch the value of the element <replaceable>"y"</replaceable> - the second <command>&lt;checkbox&gt;</command>. For the hypothesis (the <command>&lt;radio&gt;</command> group), and the equal variances <command>&lt;checkbox&gt;</command>, the procedure is very similar.
+			as plain text. Next we need to fill in the value, the user selected as the first variable. We fetch this using <function>getString ("x")</function>, and append it to the string to be <quote>echoed</quote>. This prints out the value of the GUI-element with <parameter>id=</parameter><replaceable>"x"</replaceable>: our first <command>&lt;checkbox&gt;</command>. Next, we append a ', ', and do the same to fetch the value of the element <replaceable>"y"</replaceable> - the second <command>&lt;checkbox&gt;</command>. For the hypothesis (the <command>&lt;radio&gt;</command> group), and the equal variances <command>&lt;checkbox&gt;</command>, the procedure is very similar.
 		</para>
 		<para>
 			Note that instead of concatenating the output snippets with <quote>+</quote>, you can also use several <function>echo()</function> statments. Everything is printed on a single line. To produce a line break in the generated code, insert a <replaceable>"\n"</replaceable> in the echoed string. In theory, you can even produce many lines with a single echo-statement, but please keep it to one line (or less) of generated code per <function>echo()</function>.
 		</para>
+		<note>
+			<para>Besides <function>getString()</function>, there are also functions <function>getBoolean()</function>, which will try to return the value as a logical (suitable for using in an <function>if()</function>-statement), and <function>getList()</function>, which will try to return list-like data in a JS <function>Array()</function>. We will show examples of those, later.</para>
+			<para>When looking at existing plugins, you will also find plenty of plugins using <function>getValue()</function>, instead of <function>getString()</function>, and in fact the two are <emphasis>almost</emphasis> identical. However using <function>getString()</function>, <function>getBoolean()</function> and <function>getList()</function> is the recommended practice since version 0.6.1.
+			</para>
+		</note>
 		<para>
 			It gets a little more tricky for the confidence level. For reasons of aesthetics, we don't want to explicitly specify the confidence level to use, if it corresponds to the default value. Hence, instead of printing the value unconditionally, we first fetch into a variable. Then we check, whether that variable differs from <replaceable>"0.95"</replaceable> and if so print out an additional argument. Finally, we echo a closing bracket and a line break: <replaceable>")\n"</replaceable>. That's all for the calculate function.
 		</para>
@@ -533,7 +539,7 @@ function printout () {
 		<programlisting>
 function printout () {
 	makeHeaderCode ("Two Variable t-Test", new Array ("Assume equal variances",
-		getValue ("varequal"), "Confidence level", getValue ("conflevel")))
+		getString ("varequal"), "Confidence level", getString ("conflevel")))
 	echo ('rk.print (res)\n');
 }
 		</programlisting>
@@ -604,16 +610,16 @@ if (my.rotation &gt; wobble.rotation.limit (x)) {
 	<sect2 id="policysimplicity">
 	<title>Dealing with complex options</title>
 		<para>
-			Many plugins can do more than one thing. For instance, the <quote>Descriptive Statistics</quote> plugin can compute mean, range, sum, product, median, length, etc. However, typically the user will only chose to have some of those calculations performed. In this case, please try to keep the generated code as simple as possible. It should only contain portions relevant to the options that are actually selected. To achieve this, here is an example of a common design patterns as you would use it (in JS):
+			Many plugins can do more than one thing. For instance, the <quote>Descriptive Statistics</quote> plugin can compute mean, range, sum, product, median, length, etc. However, typically the user will only chose to have some of those calculations performed. In this case, please try to keep the generated code as simple as possible. It should only contain portions relevant to the options that are actually selected. To achieve this, here is an example of a common design patterns as you would use it (in JS; here, "domean", "domedian", and "dosd" would be &lt;checkbox&gt; elements):
 		</para>
 		<programlisting>
 function calculate () {
-	echo ('x &lt;- &lt;' + getValue ("x") + ')\n');
+	echo ('x &lt;- &lt;' + getString ("x") + ')\n');
 	echo ('results &lt;- list ()\n');
 
-	if (getValue ("domean")) echo ("results$'Mean value' &lt;- mean (x)\n");
-	if (getValue ("domedian")) echo ("results$'Median' &lt;- median (x)\n");
-	if (getValue ("dosd")) echo ("results$'Standard deviation' &lt;- sd (x)\n");
+	if (getBoolean ("domean.state")) echo ("results$'Mean value' &lt;- mean (x)\n");
+	if (getBoolean ("domedian.state")) echo ("results$'Median' &lt;- median (x)\n");
+	if (getBoolean ("dosd.state")) echo ("results$'Standard deviation' &lt;- sd (x)\n");
 	//...
 }
 		</programlisting>
@@ -626,12 +632,12 @@ function calculate () {
 		Here are a few assorted tricks which may make writing plugins less tedious:
 	</para>
 	<para>
-		If you need the value of a GUI setting at several places in you plugin's code, consider assigning it to a variable in JS, and using that instead of fetching it again and again with getValue. This is faster, more readable, and less typing all at the same time:
+		If you need the value of a GUI setting at several places in you plugin's code, consider assigning it to a variable in JS, and using that instead of fetching it again and again with <function>getString()/getBoolean()/getList()</function>. This is faster, more readable, and less typing all at the same time:
 	</para>
 	<programlisting>
 function calculate () {
 	var narm = "";	// na.rm=FALSE is the default in all functions below
-	if (getValue ("remove_nas") == "1") {
+	if (getBoolean ("remove_nas")) {
 		$narm = ", na.rm=TRUE";
 	}
 	// ...
@@ -813,7 +819,7 @@ R code.
 		The first two lines inside the logic section are <command>&lt;convert&gt;</command> tags. Those basically provide two new boolean (on or off, true or false) properties, which can be used later on. The first property (<replaceable>"varmode"</replaceable>) is true, whenever the upper radio button is selected and the second whenever the lower radio button is selected. How is this done?
 	</para>
 	<para>
-		First, under <parameter>sources</parameter>, the source properties to work on are listed (in this case only one each; you could list several as <parameter>sources=</parameter><replaceable>"mode.string;somethingelse"</replaceable>, then <replaceable>"varmode"</replaceable> would only be true, if both <replaceable>"mode.string"</replaceable> and <replaceable>"somethingelse"</replaceable> are equal to the string <replaceable>"variable"</replaceable>). Note that in this case we don't just write <replaceable>"mode"</replaceable> (as we would in <function>getValue("mode")</function>, but <replaceable>"mode.string"</replaceable>. This is actually the internal way a radio control works: It has a property <quote>string</quote>, which holds its string value. <function>getValue("mode")</function> is just a shorthand, and equivalent to <function>getValue("mode.string")</function>. See the reference for all properties of the different GUI elements.
+		First, under <parameter>sources</parameter>, the source properties to work on are listed (in this case only one each; you could list several as <parameter>sources=</parameter><replaceable>"mode.string;somethingelse"</replaceable>, then <replaceable>"varmode"</replaceable> would only be true, if both <replaceable>"mode.string"</replaceable> and <replaceable>"somethingelse"</replaceable> are equal to the string <replaceable>"variable"</replaceable>). Note that in this case we don't just write <replaceable>"mode"</replaceable> (as we would in <function>getString("mode")</function>, but <replaceable>"mode.string"</replaceable>. This is actually the internal way a radio control works: It has a property <quote>string</quote>, which holds its string value. <function>getString("mode")</function> is just a shorthand, and equivalent to <function>getString("mode.string")</function>. See the reference for all properties of the different GUI elements.
 	</para>
 	<para>
 		Second, we set the mode of conversion to <parameter>mode=</parameter><replaceable>"equals"</replaceable>. This means, we want to check, whether the sources are equal to a certain value. Finally standard is the value to compare against, so with <parameter>standard=</parameter><replaceable>"variable"</replaceable>, we check whether the property <replaceable>"mode.string"</replaceable> is equal to the string <replaceable>"variable"</replaceable> (the value of the upper radio option). If it is equal, then the property varmode is true, else it is false.
@@ -856,7 +862,7 @@ R code.
 
 			// this function is called whenever the "mode" was changed
 			modeChanged = function () {
-				var varmode = (gui.getValue ("mode.string") == "variable");
+				var varmode = (gui.getString ("mode.string") == "variable");
 				gui.setValue ("y.enabled", varmode);
 				gui.setValue ("constant.enabled", !varmode);
 			}
@@ -923,7 +929,7 @@ R code.
 	<programlisting>
 function printout () {
 	// ...
-	echo ("myplotfunction ([...]" + getValue ("plotoptions.code.printout"); + ")\n");
+	echo ("myplotfunction ([...]" + getString ("plotoptions.code.printout"); + ")\n");
 	// ...
 }
 	</programlisting>
@@ -1004,7 +1010,7 @@ function printout () {
 	&lt;/logic&gt;
 	</programlisting>
 	<para>
-		This defines two additional properties in the plot_options plugin, whose sole purpose is to be connected to some (yet unknown) properties of the embedding plugin. In the plot_options plugin those two properties are simply used like any other, and for instance there are calls to <function>getValue("xvar")</function> in the plot_options JS template.
+		This defines two additional properties in the plot_options plugin, whose sole purpose is to be connected to some (yet unknown) properties of the embedding plugin. In the plot_options plugin those two properties are simply used like any other, and for instance there are calls to <function>getString("xvar")</function> in the plot_options JS template.
 	</para>
 	<para>
 		Now, for the incomplete plugin there is no way of knowing, where it will be embedded, and what the relevant settings in the embedding plugin will be called. So we need to add two additional lines in the embedding plugin's logic section as well:
@@ -1362,14 +1368,14 @@ This chapter contains information on some topics that are useful only to certain
 		echo ('try ({\n');
 		// insert any option-setting code that should be run before the actual plotting commands.
 		// The code itself is provided by the embedded plot options plugin. printIndentedUnlessEmpty() takes care of pretty formatting.
-		printIndentedUnlessEmpty ('\t', getValue ("plotoptions.code.preprocess"), '', '\n');
+		printIndentedUnlessEmpty ('\t', getString ("plotoptions.code.preprocess"), '', '\n');
 
 		// create the actual plot. plotoptions.code.printout provides the part of the generic plot options
 		// that have to be added to the plotting call, itself.
-		echo ('plot (5, 5' + getValue ("plotoptions.code.printout") + ')\n');
+		echo ('plot (5, 5' + getString ("plotoptions.code.printout") + ')\n');
 
 		// insert any option-setting code that should be run after the actual plot.
-		printIndentedUnlessEmpty ('\t', getValue ("plotoptions.code.calculate"), '\n');
+		printIndentedUnlessEmpty ('\t', getString ("plotoptions.code.calculate"), '\n');
 		echo ('})'\n);	// the closure of the try() statement
 
 		if (full) {
@@ -1982,7 +1988,7 @@ local({
 
 <sect1 id="propertytypes"><title>Types of properties/Modifiers</title>
 <para>
-	At some places in this introduction we've talked about <quote>properties</quote> of GUI elements or otherwise. In fact there are several different types of properties. Usually you do not need to worry about this, as you can use common sense to connect any property to any other property. However, internally, there are different types of properties. What this matters for, is when fetching some special values in the JS-template. In getValue ("id") statements you can also specify some so called <quote>modifiers</quote> like this: <function>getValue ("id.modifier")</function>. This modifier will affect, in which way the value is printed. Read on for the list of properties, and the modifiers they each make available:
+	At some places in this introduction we've talked about <quote>properties</quote> of GUI elements or otherwise. In fact there are several different types of properties. Usually you do not need to worry about this, as you can use common sense to connect any property to any other property. However, internally, there are different types of properties. What this matters for, is when fetching some special values in the JS-template. In getString ("id")/getBoolean ("id")/getList ("id") statements you can also specify some so called <quote>modifiers</quote> like this: <function>getString ("id.modifier")</function>. This modifier will affect, in which way the value is printed. Read on for the list of properties, and the modifiers they each make available:
 </para>
 <variablelist>
 <varlistentry>
@@ -1995,7 +2001,7 @@ local({
 	<variablelist>
 	<varlistentry>
 	<term>No modifier ("")</term>
-	<listitem><para>By default the property will return 1 if it is true, and 0 otherwise.</para></listitem>
+	<listitem><para>By default the property will return 1 if it is true, and 0 otherwise. The recommended way to fetch boolean values is using <function>getBoolean()</function>. Note that for <function>getString()</function>, the string "0" will be returned when teh property is false. This string would evaluate to true, not to false in JS.</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>"labeled"</term>
@@ -2029,7 +2035,7 @@ local({
 	<variablelist>
 	<varlistentry>
 	<term>No modifier ("")</term>
-	<listitem><para>For getValue() / getString(), this returns the same as "formatted". In future versions, it will be possible to obtain a numeric represenation, instead.</para></listitem>
+	<listitem><para>For <function>getValue() / getString()</function>, this returns the same as "formatted". In future versions, it will be possible to obtain a numeric represenation, instead.</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>"formatted"</term>
@@ -2061,7 +2067,7 @@ local({
 	<variablelist>
 	<varlistentry>
 	<term>No modifier ("")</term>
-	<listitem><para>For <function>getValue()</function>, this returns all strings separated by "\n". Any "\n" characters in each item are escaped as literal "\n". However, the recommended usage is to fetch the value with <function>getList()</function>, instead, which will return an array of strings.</para></listitem>
+	<listitem><para>For <function>getValue()/getString()</function>, this returns all strings separated by "\n". Any "\n" characters in each item are escaped as literal "\n". However, the recommended usage is to fetch the value with <function>getList()</function>, instead, which will return an array of strings.</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>"joined"</term>
@@ -2758,7 +2764,7 @@ made checkable, thus acting like a simple checkbox at the same time.
 </varlistentry>
 </variablelist>
 <para>
-In addition to this, some elements have additional properties you can connect to. Most active elements also have a "default" property whose value will be returned on calls to getValue ("..."), if no specific property was named, as described below.
+	In addition to this, some elements have additional properties you can connect to. Most active elements also have a "default" property whose value will be returned on calls to <function>getBoolean/getString/getList ("...")</function>, if no specific property was named, as described below.
 </para>
 
 <variablelist>
@@ -3231,7 +3237,10 @@ In addition to this, some elements have additional properties you can connect to
 <listitem><para>Class which represents a single component or component-property. The most important instance of this class is the variable "gui" which is predefined as the root property of the current component. The following methods are available for instances of class "Component":
 	<variablelist>
 	<varlistentry><term>absoluteId(base_id)</term><listitem><para>Returns the absolute ID of <emphasis>base_id</emphasis>, or - if base_id is omitted - the identifier of the component.</para></listitem></varlistentry>
-	<varlistentry><term>getValue(id)</term><listitem><para>Returns the value of the given child property. Returns the value of this property, if ID is omitted.</para></listitem></varlistentry>
+	<varlistentry><term>getValue(id)</term><listitem><para>Discouraged. Use <function>getString(), getBoolean(), or getList()</function>, intead. Returns the value of the given child property. Returns the value of this property, if ID is omitted.</para></listitem></varlistentry>
+	<varlistentry><term>getString(id)</term><listitem><para>Returns the value of the given child property as a string. Returns the value of this property, if ID is omitted.</para></listitem></varlistentry>
+	<varlistentry><term>getBoolean(id)</term><listitem><para>Returns the value of the given child property as a boolean (if possible). Returns the value of this property, if ID is omitted.</para></listitem></varlistentry>
+	<varlistentry><term>getList(id)</term><listitem><para>Returns the value of the given child property as an array of strings (if possible). Returns the value of this property, if ID is omitted.</para></listitem></varlistentry>
 	<varlistentry><term>setValue(id, value)</term><listitem><para>Set the value of the given child property to <emphasis>value</emphasis>.</para></listitem></varlistentry>
 	<varlistentry><term>getChild(id)</term><listitem><para>Return an instance of the child-property with the given <emphasis>id</emphasis>.</para></listitem></varlistentry>
 	<varlistentry><term>addChangeCommand(id, command)</term><listitem><para>Execute <emphasis>command</emphasis> whenever the child property given by <emphasis>id</emphasis> changes.</para></listitem></varlistentry>
