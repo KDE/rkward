@@ -1489,7 +1489,7 @@ This chapter contains information on some topics that are useful only to certain
 		Sometimes you want to repeat a set of options for an arbitrary number of items. E.g. suppose you want to implement a plugin for sorting a data.frame. You may want to allow for sorting by an arbitrary number of columns (in case of ties among the first column(s)). This could simply be realized by allowing the user to select multiple variables in a <command>&lt;varslot&gt;</command> with <parameter>multi="true"</parameter>. But if you want to extend this, e.g. allowing the user to specify for each variable whether it should be converted to character / numeric, or whether sorting should be ascending or descending, you need more flexibility. Other examples would be plotting multiple lines in one plot (allowing to select object, line style, line color, etc. for each line), or specifying a mapping for recoding from a set of old values to new values.
 	</para>
 	<para>
-		Enter the <command>&lt;optionset&gt;<command>. Let's look at a simple example, first:
+		Enter the <command>&lt;optionset&gt;</command>. Let's look at a simple example, first:
 	</para>
 		<programlisting>
 &lt;dialog [...]&gt;
@@ -1529,7 +1529,7 @@ This chapter contains information on some topics that are useful only to certain
 		names, and <function>getList("set.gender")</function> for an array of "m"/"f" strings.
 	</para>
 	<para>
-		Note that there are no restrictions on what you can place inside an <command>&lt;optionset&gt;<command>. You can even use <link linkend="embedding">embedded</link> components. Just as with any other element, all you have to do is to collect the output
+		Note that there are no restrictions on what you can place inside an <command>&lt;optionset&gt;</command>. You can even use <link linkend="embedding">embedded</link> components. Just as with any other element, all you have to do is to collect the output
 		variables of interest in an <command>&lt;option&gt;</command>-specification. In the case of embedded plugins, this is often a section of the "code" property. E.g.:
 	</para>
 		<programlisting>
@@ -1561,7 +1561,7 @@ This chapter contains information on some topics that are useful only to certain
 			defined. Only to the currently selected item in the set.
 		</para>
 	</note>
-	<sect2 id="optionset_driven"/>
+	<sect2 id="optionset_driven">
 		<title>"Driven" optionsets</title>
 		<para>
 			So far we have considered an <command>&lt;optionset&gt;</command> that provides buttons for adding / removing items. However,
@@ -1569,7 +1569,7 @@ This chapter contains information on some topics that are useful only to certain
 			options for customizing some aspects of each item in an <command>&lt;optionset&gt;</command>. E.g. suppose you want to allow
 			the user to plot several objects inside one plot. For each object, the user should be able to specify line color.
 			You <emphasis>could</emphasis> solve this by placing a <command>&lt;varselector&gt;</command> and
-			<command>&lt;varslot&gt;</command> inside the <command>&lt;content&gt;</content> area, allowing the user to select one item
+			<command>&lt;varslot&gt;</command> inside the <command>&lt;content&gt;</command> area, allowing the user to select one item
 			at a time. However, it will mean much less clicks for the user, if you use a <command>&lt;varslot multi="true"&gt;</command>
 			<emphasis>outside</emphasis> the <command>&lt;optionset&gt;</command>, instead. Then you will connect this selection of objects
 			to a so-called "driven" optionset. Here's how:
@@ -1599,10 +1599,40 @@ This chapter contains information on some topics that are useful only to certain
 &lt;/dialog&gt;
 		</programlisting>
 		<para>
-		TODO</para>
+			We'll start looking at the example at the bottom. You'll note that two <command>&lt;option&gt;</command> specifications have
+			<parameter>external="true"</parameter>. This tells &rkward; that these are controlled from outside the <command>&lt;optionset&gt;</command>. Here, the sole purpose of the "varnames"-option is to provide easy-to-read labels in the
+			<command>&lt;optiondisplay&gt;</command> (it is connected to the "shortname" modifier of the property holding the selected
+			objects). The purpose of the "vars"-option is to serve as the "key" column, as specified by
+			<command>&lt;optionset keycolumn="vars"...&gt;</command>. This means that for each entry in this list, the set will offer
+			one set of options, and options are logically tied to these entries. This column is connected to the property holding the
+			selected objects in the <command>&lt;varslot&gt;</command>. I.e. for each object that is selected there, the <command>&lt;optionset&gt;</command> will allow to specify line color.
+		</para>
+		<note>
+			<para>
+				External column can also be <parameter>connect</parameter>ed to properties inside the
+				<command>&lt;content&gt;</command> region. However, it is important to note that options declared
+				<parameter>external="true"</parameter> should never be modified from inside the <command>&lt;optionset&gt;</command>, and
+				options declared <parameter>external="false"</parameter> (the default) should never be modified from outside the
+				<command>&lt;optionset&gt;</command>.
+			</para>
+		</note>
 	</sect2>
-	<sect2 id="optionset_alternatives"/>
+	<sect2 id="optionset_alternatives">
 		<title>Alternatives: When not to use optionsets</title>
+		<para>
+			Optionsets are a powerful tool, but they can sometimes do more harm than good, as they add considerable complexity, both
+			from the perspective of a plugin developer, and from the perspective of a user. Thus, think twice, when using them. Here's
+			some adivce:
+		</para>
+		<itemizedlist>
+			<listitem><para>For some simple cases, the <command>&lt;matrix&gt;</command> element may provide a useful lightweight alternative.</para></listitem>
+			<listitem><para>Don't make your plugin do too much. We gave the example of using an optionset for a plugin to
+			draw several lines within one plot. But in general it is not a good idea to create a plugin that will produce individual
+			plots for each item in an optionset. Rather make the plugin produce one plot, and the user can call it multiple times.
+			</para></listitem>
+			<listitem><para>If you don't expect more than two or three items in a set, consider repeating the options, manually,
+			instead.</para></listitem>
+		</itemizedlist>
 	</sect2>
 </sect1>
 
@@ -2634,6 +2664,60 @@ made checkable, thus acting like a simple checkbox at the same time.
 </varlistentry>
 
 <varlistentry>
+<term>&lt;optionset&gt;</term>
+<listitem><para>A UI for repeating a set of options for an arbitrary number of items (<link linkend="optionset">introduction to optionsets</link>). Attributes:
+	<variablelist>
+	<varlistentry>
+	<term>&lt;min_rows&gt;</term>
+	<listitem><para>If specified, the set will be marked invalid, unless it has at least this number of rows (optional, integer).</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>&lt;min_rows_if_any&gt;</term>
+	<listitem><para>Like min_rows, but will only be tested, if there is at least one row (optional, integer).</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>&lt;max_rows&gt;</term>
+	<listitem><para>If specified, the set will be marked invalid, unless it has at most this number of rows (optional, integer).</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>&lt;keycolumn&gt;</term>
+	<listitem><para>Id of the column to act as keycolumn. An optionset with a (valid) keycolumn will act as a "driven" optionset. An optionset with no keycolumn will allow manual insertion / removal of items. The keycolumn must be marked as external. (optional, defaults to no keycolumn).</para></listitem>
+	</varlistentry>
+	</variablelist>
+Child-elements:
+	<variablelist>
+	<varlistentry>
+	<term>&lt;option&gt;</term>
+	<listitem><para>Declares one option of the set. For each value that you want to fetch from the optionset, you must declare a separate &lt;option&gt;. Attributes:
+		<variablelist>
+			<varlistentry><term>id</term>
+			<listitem><para>The id of the option (required, string).</para></listitem></varlistentry>
+			<varlistentry><term>external</term>
+			<listitem><para>Set to true, if the option is controlled from outside the optionset (optional, boolean, defaults to false).</para></listitem></varlistentry>
+			<varlistentry><term>label</term>
+			<listitem><para>If given, the option will be displayed in the &lt;optiondisply&gt; in a column by that label (optional, string, defaults to not displayed).</para></listitem></varlistentry>
+			<varlistentry><term>connect</term>
+			<listitem><para>The property to connect this option to, given as id inside the &lt;content&gt;-area. For external &lt;option&gt;s, the corresponding value will be set to the externally set value. For regular (non-external) &lt;option&gt;s,
+			the corresponding row of the &lt;option&gt;-property, will be set when the property changes inside the content-area. (optional, string, defaults to not connected).</para></listitem></varlistentry>
+			<varlistentry><term>default</term>
+			<listitem><para>Only for external columns: The value to assume for this column, if no value is known for an entry. Rarely useful. (Optional, defaults to empty string)</para></listitem></varlistentry>
+		</variablelist>
+	</para></listitem></varlistentry>
+	<varlistentry>
+	<term>&lt;content&gt;</term>
+	<listitem><para>Declare the content / UI of the set. No attributes. All usual active, passive, and layout elements are allowed as childname elements. In addition, the following special child-elements are allowed:
+		<variablelist>
+			<varlistentry><term>optiondisplay</term>
+			<listitem><para>TODO</para></listitem></varlistentry>
+			<varlistentry><term>property</term>
+			<listitem><para>TODO</para></listitem></varlistentry>
+		</variablelist>
+	</para></listitem></varlistentry>
+	</variablelist>
+</para></listitem>
+</varlistentry>
+
+<varlistentry>
 <term>&lt;browser&gt;</term>
 <listitem><para>An element designed to select a single filename (or directory name). Note that this field will take any string, even though it is meant to be used for files, only:
 	<variablelist>
@@ -3033,6 +3117,25 @@ made checkable, thus acting like a simple checkbox at the same time.
 		<varlistentry>
 			<term>cbind</term>
 			<listitem><para>Data in a format suitable for pasting to R, wrapped in a cbind statement (string; read-only).</para></listitem>
+		</varlistentry>
+	</variablelist></para></listitem>
+</varlistentry>
+
+<varlistentry>
+	<term>&lt;optionset&gt;</term>
+	<listitem><para>No default property.
+	<variablelist>
+		<varlistentry>
+			<term>row_count</term>
+			<listitem><para>Number of items in the optionset (integer). Read-only.</para></listitem>
+		</varlistentry>
+		<varlistentry>
+			<term>current_row</term>
+			<listitem><para>Currently active item in the optionset (integer). -1 for no active item. Read-write.</para></listitem>
+		</varlistentry>
+		<varlistentry>
+			<term><emphasis>option_ids</emphasis></term>
+			<listitem><para>For each &lt;option&gt; you define, a string list property will be created with the specified id.</para></listitem>
 		</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>

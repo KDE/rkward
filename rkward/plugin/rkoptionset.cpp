@@ -46,7 +46,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 
 	min_rows = xml->getIntAttribute (element, "min_rows", 0, DL_INFO);
 	min_rows_if_any = xml->getIntAttribute (element, "min_rows_if_any", 1, DL_INFO);
-	max_rows = xml->getIntAttribute (element, "max", INT_MAX, DL_INFO);
+	max_rows = xml->getIntAttribute (element, "max_rows", INT_MAX, DL_INFO);
 
 	// build UI framework
 	QVBoxLayout *layout = new QVBoxLayout (this);
