@@ -81,14 +81,6 @@ public:
 
 /** Return the GUI-scripting handler (creating it, if needed) */
 	RKComponentScriptingProxy* scriptingProxy ();
-
-	enum ValueTypeHint {
-		TraditionalValue,
-		BooleanValue,
-		StringValue,
-		StringlistValue,
-		NumericValue
-	};
 signals:
 	void standardInitializationComplete ();
 public slots:

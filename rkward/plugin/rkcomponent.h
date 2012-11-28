@@ -90,6 +90,14 @@ public:
 	static QString fetchStringValue (RKComponentBase* prop, const QString &modifier=QString ());
 /** returns the "value" of this component or property. Properties generally return their value, components typically return the value of their "most important" property. Default implementation returns QString::null, and writes a debug message */
 	virtual QVariant value (const QString &modifier=QString ());
+	enum ValueTypeHint {
+		TraditionalValue,
+		BooleanValue,
+		StringValue,
+		StringlistValue,
+		NumericValue
+	};
+	QVariant fetchValue (const QString &identifier, const int type_hint);
 /** returns true, if this is a property */
 	bool isProperty () { return (type () <= PropertyEnd); };
 	bool isComponent () { return (type () >= ComponentBase); };

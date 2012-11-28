@@ -49,7 +49,10 @@ public slots:
 	void include (const QString& filename);
 	void addChangeCommand (const QString& changed_id, const QString& command);
 
-	QString getValue (const QString &id) const;
+	QVariant getValue (const QString &id) const;
+	QVariant getString (const QString &id) const;
+	QVariant getBoolean (const QString &id) const;
+	QVariant getList (const QString &id) const;
 	void setValue (const QString &value, const QString &id);
 
 	QVariantList getObjectInfo (const QString &name);

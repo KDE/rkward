@@ -146,10 +146,24 @@ void RKComponentScriptingProxy::handleChange (RKComponentBase* changed) {
 	evaluate (command.toUtf8());
 }
 
-QString RKComponentScriptingProxy::getValue (const QString &id) const {
+QVariant RKComponentScriptingProxy::getValue (const QString &id) const {
 	RK_TRACE (PHP);
+	return (component->fetchValue (id, RKComponent::TraditionalValue));
+}
 
-	return component->fetchStringValue (id);
+QVariant RKComponentScriptingProxy::getString (const QString &id) const {
+	RK_TRACE (PHP);
+	return (component->fetchValue (id, RKComponent::StringValue));
+}
+
+QVariant RKComponentScriptingProxy::getBoolean (const QString &id) const {
+	RK_TRACE (PHP);
+	return (component->fetchValue (id, RKComponent::BooleanValue));
+}
+
+QVariant RKComponentScriptingProxy::getList (const QString &id) const {
+	RK_TRACE (PHP);
+	return (component->fetchValue (id, RKComponent::StringlistValue));
 }
 
 void RKComponentScriptingProxy::setValue (const QString &value, const QString &id) {

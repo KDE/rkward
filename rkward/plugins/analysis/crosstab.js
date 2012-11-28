@@ -21,7 +21,7 @@ function preprocess () {
 
 function calculate () {
 	var x = getValue ("x") ;
-	var y = trim (getValue ("y")).split (/\n/).join (', ');
+	var y = getList ("y").join (', ');
 	var margins = (getValue ("margins") == "TRUE");
 
 	echo ('x <- rk.list (' + x + ')\n');

@@ -423,32 +423,7 @@ void RKStandardComponent::getValue (const QString &id, const int hint) {
 	RK_TRACE (PLUGIN);
 	RK_ASSERT (backend);
 
-	if (hint == StringValue) {
-		backend->writeData (fetchStringValue (id));
-	} else if (hint == TraditionalValue) {
-		QString val = fetchStringValue (id);
-		// return "0" as numeric constant. Many plugins rely on this form PHP times.
-		if (val == "0") backend->writeData (QVariant (0.0));
-		else backend->writeData (QVariant (val));
-	} else {
-		QString mod;
-		RKComponentBase *prop = lookupComponent (id, &mod);
-		QVariant val = prop->value (mod);
-		if (hint == BooleanValue) {
-			bool ok;
-			backend->writeData (RKComponentPropertyBool::variantToBool (val, &ok));
-			if (!ok) RK_DO (qDebug ("Could not convert value of %s to boolean", qPrintable (id)), PLUGIN, DL_WARNING);
-		} else {
-			if (hint == StringlistValue) {
-				if (val.type () != QVariant::StringList) RK_DO (qDebug ("Value of %s is not a string list", qPrintable (id)), PLUGIN, DL_WARNING);
-			} else if (hint == NumericValue) {
-				if (!val.canConvert (QVariant::Double)) RK_DO (qDebug ("Value of %s is not numeric", qPrintable (id)), PLUGIN, DL_WARNING);
-			} else {
-				RK_ASSERT (false);
-			}
-			backend->writeData (val);
-		}
-	}
+	backend->writeData (fetchValue (id, hint));
 }
 
 bool RKStandardComponent::isWizardish () {

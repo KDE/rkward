@@ -170,6 +170,35 @@ QString RKComponentBase::fetchStringValue (const QString &identifier) {
 	return fetchStringValue (prop, mod);
 }
 
+QVariant RKComponentBase::fetchValue (const QString &id, const int hint) {
+	if (hint == StringValue) {
+		return (fetchStringValue (id));
+	} else if (hint == TraditionalValue) {
+		QString val = fetchStringValue (id);
+		// return "0" as numeric constant. Many plugins rely on this form PHP times.
+		if (val == "0") return (QVariant (0.0));
+		else return (QVariant (val));
+	} else {
+		QString mod;
+		RKComponentBase *prop = lookupComponent (id, &mod);
+		QVariant val = prop->value (mod);
+		if (hint == BooleanValue) {
+			bool ok;
+			return (RKComponentPropertyBool::variantToBool (val, &ok));
+			if (!ok) RK_DO (qDebug ("Could not convert value of %s to boolean", qPrintable (id)), PLUGIN, DL_WARNING);
+		} else {
+			if (hint == StringlistValue) {
+				if (val.type () != QVariant::StringList) RK_DO (qDebug ("Value of %s is not a string list", qPrintable (id)), PLUGIN, DL_WARNING);
+			} else if (hint == NumericValue) {
+				if (!val.canConvert (QVariant::Double)) RK_DO (qDebug ("Value of %s is not numeric", qPrintable (id)), PLUGIN, DL_WARNING);
+			} else {
+				RK_ASSERT (false);
+			}
+			return (val);
+		}
+	}
+}
+
 QVariant RKComponentBase::value (const QString &modifier) {
 	RK_TRACE (PLUGIN);
 
