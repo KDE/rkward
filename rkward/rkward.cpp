@@ -227,6 +227,15 @@ void RKWardMainWindow::doPostInit () {
 
 	KUrl recover_url = RKRecoverDialog::checkRecoverCrashedWorkspace ();
 	if (!recover_url.isEmpty ()) open_url = recover_url;
+	if (!open_url.isEmpty () && (open_url.isRelative ())) {
+		// make sure local urls are absolute, as we may be changing wd before loading
+		open_url = KUrl::fromLocalFile (QDir::current ().absoluteFilePath (open_url.toLocalFile ()));
+	}
+
+	QString cd_to = RKSettingsModuleGeneral::initialWorkingDirectory ();
+	if (!cd_to.isEmpty ()) {
+		RKGlobals::rInterface ()->issueCommand ("setwd (" + RObject::rQuote (cd_to) + ")\n", RCommand::App);
+	}
 
 	if (!open_url.isEmpty()) {
 		openWorkspace (open_url);

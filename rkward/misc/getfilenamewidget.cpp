@@ -2,7 +2,7 @@
                           getfilenamewidget  -  description
                              -------------------
     begin                : Tue Aug 24 2004
-    copyright            : (C) 2004, 2007, 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007, 2009, 2010, 2012 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -31,7 +31,7 @@ GetFileNameWidget::GetFileNameWidget (QWidget *parent, FileType mode, bool only_
 	vbox->setContentsMargins (0, 0, 0, 0);
 	vbox->setSizeConstraint (QLayout::SetMinimumSize);
 
-	vbox->addWidget (new QLabel (label, this));
+	if (!label.isEmpty ()) vbox->addWidget (new QLabel (label, this));
 
 	edit = new KUrlRequester (this);
 	connect (edit, SIGNAL (textChanged (const QString &)), this, SLOT (locationEditChanged (const QString &)));

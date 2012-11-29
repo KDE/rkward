@@ -2,7 +2,7 @@
                           rksettingsmodulegeneral  -  description
                              -------------------
     begin                : Fri Jul 30 2004
-    copyright            : (C) 2004, 2007, 2008, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2007, 2008, 2011, 2012 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -42,6 +42,14 @@ public:
 		DontSaveWorkplace=2
 	};
 
+	enum InitialDirectory {	// don't change the int values of this enum, or you'll ruin users saved settings. Append new values at the end
+		CurrentDirectory=0,
+		RKWardDirectory=1,
+		UserHomeDirectory=2,
+		LastUsedDirectory=3,
+		CustomDirectory=4
+	};
+
 	enum RKMDIFocusPolicy {		// don't change the int values of this enum, or you'll ruin users saved settings. Append new values at the end
 		RKMDIClickFocus=0,
 		RKMDIFocusFollowsMouse=1
@@ -70,6 +78,7 @@ public:
 	static unsigned long warnLargeObjectThreshold () { return warn_size_object_edit; };
 	static RKMDIFocusPolicy mdiFocusPolicy () { return mdi_focus_policy; }
 	static QString workspaceFilenameFilter () { return ("*.RData *.RDA"); };
+	static QString initialWorkingDirectory ();
 
 	enum RKWardConfigVersion {
 		RKWardConfig_Pre0_5_7,
@@ -84,8 +93,7 @@ public:
 	/** Did a config file already exist? */
 	static bool anyExistingConfig () { return config_exists; };
 public slots:
-	void pathChanged ();
-	void boxChanged (int);
+	void settingChanged ();
 private:
 	GetFileNameWidget *files_choser;
 	QComboBox *startup_action_choser;
@@ -94,6 +102,8 @@ private:
 	QCheckBox *show_help_on_startup_box;
 	RKSpinBox *warn_size_object_edit_box;
 	QComboBox *mdi_focus_policy_chooser;
+	QComboBox *initial_dir_chooser;
+	GetFileNameWidget *initial_dir_custom_chooser;
 
 	static StartupDialog::Result startup_action;
 	static QString files_path;
@@ -106,6 +116,8 @@ private:
 	static RKMDIFocusPolicy mdi_focus_policy;
 	static RKWardConfigVersion stored_config_version;
 	static bool config_exists;
+	static InitialDirectory initial_dir;
+	static QString initial_dir_specification;
 };
 
 #endif
