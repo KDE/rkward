@@ -2707,10 +2707,21 @@ Child-elements:
 	<term>&lt;content&gt;</term>
 	<listitem><para>Declare the content / UI of the set. No attributes. All usual active, passive, and layout elements are allowed as childname elements. In addition, the following special child-elements are allowed:
 		<variablelist>
-			<varlistentry><term>optiondisplay</term>
-			<listitem><para>TODO</para></listitem></varlistentry>
-			<varlistentry><term>property</term>
-			<listitem><para>TODO</para></listitem></varlistentry>
+			<varlistentry><term>&lt;optiondisplay&gt;</term>
+			<listitem><para>Creates a display for showing / selecting / adding / removing items in an optionset. Allowed only inside the contents are of an optionset, and only once. Attributes:
+			<variablelist>
+				<varlistentry><term>index</term>
+				<listitem><para>Whether to show a column with a numberic index (1...n) in the optiondisplay. (optional, boolean, defaults to "true")</para></listitem></varlistentry>
+			</variablelist>
+			</para></listitem></varlistentry>
+			<varlistentry><term>&lt;property&gt;</term>
+			<listitem><para>In the rare case that you want to connect two or more properties inside the contents region to an (external)
+			&lt;option&gt;, you can create an auxiliary property using this element. Attributes:
+			<variablelist>
+				<varlistentry><term>id</term>
+				<listitem><para>Id of the property (relative to "setid.contents") (required, string).</para></listitem></varlistentry>
+			</variablelist>
+			</para></listitem></varlistentry>
 		</variablelist>
 	</para></listitem></varlistentry>
 	</variablelist>
