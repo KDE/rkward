@@ -2311,7 +2311,7 @@ local({
 <listitem><para>Defines where to look for the JS template to the plugin. Use only once per file, as a direct child of the document-tag. Attributes:
 	<variablelist>
 	<varlistentry>
-	<term>&lt;file&gt;</term>
+	<term><parameter>file</parameter></term>
 	<listitem><para>Filename of the JS template, relative to the directory the plugin-xml is in</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
@@ -2321,7 +2321,7 @@ local({
 <listitem><para>Defines where to look for the help file for the plugin. Use only once per file, as a direct child of the document-tag. Attributes:
 	<variablelist>
 	<varlistentry>
-	<term>&lt;file&gt;</term>
+	<term><parameter>file</parameter></term>
 	<listitem><para>Filename of the help file, relative to the directory the plugin-xml is in</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
@@ -2331,11 +2331,11 @@ local({
 <listitem><para>Can be used as a child (direct or indirect) of the main layout elements, i.e. &lt;dialog&gt; and &lt;wizard&gt;. This is used to copy an entire block a xml elements 1:1. Attributes:
 	<variablelist>
 	<varlistentry>
-	<term>&lt;id&gt;</term>
+	<term><parameter>id</parameter></term>
 	<listitem><para>The ID to look for. The &lt;copy&gt; tag will look for a previous XML element that has been given the same ID, and copy it including all descendant elements.</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;copy_element_tag_name&gt;</term>
+	<term><parameter>copy_element_tag_name</parameter></term>
 	<listitem><para>In some few cases, you will want an almost literal copy, but change the tag-name of the element to copy. The most important example of this is, when you want to copy an entire &lt;tab&gt; from a dialog interface to the &lt;page&gt; of a wizard interface. In this case, you'd set coyp_elemnent_tag_name="page" to do this conversion automatically.</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
@@ -2350,11 +2350,11 @@ local({
 <listitem><para>Defines a dialog-type interface. Place the GUI-definition inside this tag. Use only once per file, as a direct child of the document-tag. At least one of "dialog" or "wizard" tags is required for a plugin. Attributes:
 	<variablelist>
 	<varlistentry>
-	<term>&lt;label&gt;</term>
+	<term><parameter>label</parameter></term>
 	<listitem><para>Caption for the dialog</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;recommended&gt;</term>
+	<term><parameter>recommended</parameter></term>
 	<listitem><para>Should the dialog be used as the "recommended" interface (i.e. the interface that will be shown by default, unless the user has configured RKWard to default to a specific interface)? This attribute does not currently have an effect, as it is implicitly "true", unless the wizard is recommended.</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
@@ -2364,11 +2364,11 @@ local({
 <listitem><para>Defines a wizard-type interface. Place the GUI-definition inside this tag. Use only once per file, as a direct child of the document-tag. At least one of "dialog" or "wizard" tags is required for a plugin. Accepts only &lt;page&gt; or &lt;embed&gt;-tags as direct children. Attributes:
 	<variablelist>
 	<varlistentry>
-	<term>&lt;label&gt;</term>
+	<term><parameter>label</parameter></term>
 	<listitem><para>Caption for the wizard</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;recommended&gt;</term>
+	<term><parameter>recommended</parameter></term>
 	<listitem><para>Should the wizard be used as the "recommended" interface (i.e. the interface that will be shown by default, unless the user has configured RKWard to default to a specific interface)? Optional, defaults to "false".</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
@@ -2400,15 +2400,15 @@ local({
 <listitem><para>Draws a frame/box around its direct children. Can be used to visually group related options. Layout inside a frame is top-to-bottom, unless you place a &lt;row&gt; inside. Attributes:
 	<variablelist>
 	<varlistentry>
-	<term>&lt;label&gt;</term>
+	<term><parameter>label</parameter></term>
 	<listitem><para>Caption for the frame (optional)</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;checkable&gt;</term>
+	<term><parameter>checkable</parameter></term>
 	<listitem><para>Frames can be made checkable. In this case, all contained elements will be disabled when the frame is unchecked, and enabled, when it is checked. (optional, defaults to "false")</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;checked&gt;</term>
+	<term><parameter>checked</parameter></term>
 	<listitem><para>For checkable frames only: Should the frame be checked by default? Defaults to "true". Not interpreted for non-checkable frames.</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
@@ -2422,7 +2422,7 @@ local({
 <listitem><para>Defines a page in a tabbook. Place the GUI-definition for the tab inside this tag. May be used only as a direct child of a &lt;tabbook&gt; tag. A &lt;tabbook&gt; should have at least two defined tabs. Attributes:
 	<variablelist>
 	<varlistentry>
-	<term>&lt;label&gt;</term>
+	<term><parameter>label</parameter></term>
 	<listitem><para>Caption for the tab page (required)</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
@@ -2432,7 +2432,7 @@ local({
 <listitem><para>Shows the text enclosed in this tag in the GUI. Some simple HTML-style markup is supported (notably <markup>&lt;b&gt;</markup>, <markup>&lt;i&gt;</markup>, <markup>&lt;p&gt;</markup>, and <markup>&lt;br/&gt;</markup>). Please keep formatting to a minimum, however. Inserting a completely empty line adds a hard line break. Attributes:
 	<variablelist>
 	<varlistentry>
-	<term>&lt;type&gt;</term>
+	<term><parameter>type</parameter></term>
 	<listitem><para>Type of the text. One of "normal", "warning" or "error". This influences the look of the text (optional, defaults to normal)</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
@@ -2449,7 +2449,7 @@ local({
 <listitem><para>Provides a list of available objects from which the user can select one or more. Requires one or more &lt;varslot&gt;s as a counterpart to be useful. Attributes:
 	<variablelist>
 	<varlistentry>
-	<term>&lt;label&gt;</term>
+	<term><parameter>label</parameter></term>
 	<listitem><para>Label for the varselector (optional, defaults to "Select variable(s)")</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
@@ -2460,51 +2460,51 @@ local({
 <listitem><para>Used in conjunction with a "varselector" to allow the user to select one or more variables. Attributes:
 	<variablelist>
 	<varlistentry>
-	<term>&lt;label&gt;</term>
+	<term><parameter>label</parameter></term>
 	<listitem><para>Label for the varslot (recommended, defaults to "Variable:")</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;source&gt;</term>
+	<term><parameter>source</parameter></term>
 	<listitem><para>The varselector to fetch the selection from (required, unless you connect manually)</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;required&gt;</term>
+	<term><parameter>required</parameter></term>
 	<listitem><para>Whether - for submitting the code - it is required that this varslot holds a valid value. See <link linkend="elementproperties">required-property</link> (optional, defaults to false)</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;multi&gt;</term>
+	<term><parameter>multi</parameter></term>
 	<listitem><para>Whether the varslot holds only one (default, "false"), or several objects</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;min_vars&gt;</term>
+	<term><parameter>min_vars</parameter></term>
 	<listitem><para>Only meaningful if multi="true": Minimum number of vars to be selected for the selection to be considered valid (optional, defaults to "1")</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;min_vars_if_any&gt;</term>
+	<term><parameter>min_vars_if_any</parameter></term>
 	<listitem><para>Only meaningful if multi="true": Some varslots may be considered valid, if, for instance, the varslot is either empty, or holds at least two values. This specifies how many variables have to be selected if any at all (2 in the example). (optional, defaults to "1")</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;max_vars&gt;</term>
+	<term><parameter>max_vars</parameter></term>
 	<listitem><para>Only meaningful if multi="true": Maximum number of variables to select (optional, defaults to "0", which means no maximum)</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;classes&gt;</term>
+	<term><parameter>classes</parameter></term>
 	<listitem><para>If you specify one or more &r; classnames (separated by spaces (" ")), here, the varslot will only accept objects belonging to those classes (otional, <emphasis>use with great care</emphasis>, the user should not be prevented from making valid choices, and &r; has <emphasis>a lot</emphasis> of different classes!)</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;types&gt;</term>
+	<term><parameter>types</parameter></term>
 	<listitem><para>If you specify one or more variables types (separated by spaced (" ")), here, the varslot will only accept objects of those types. Valid types are "unknown", "number", "string", "factor", "invalid". (Optional, <emphasis>use with great care</emphasis>, the user should not be prevented from making valid choices, and rkward does not always know the type of a variable)</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;num_dimensions&gt;</term>
+	<term><parameter>num_dimensions</parameter></term>
 	<listitem><para>The number of dimensions, an object needs to have. "0" (the default) means, any number of dimensions is acceptable. (optional, defaults to "0")</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;min_length&gt;</term>
+	<term><parameter>min_length</parameter></term>
 	<listitem><para>The minimum length, an object needs to have in order to be acceptable. (optional, defaults to "0")</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;max_length&gt;</term>
+	<term><parameter>max_length</parameter></term>
 	<listitem><para>The maximum length, an object needs to have in order to be acceptable. (optional, defaults to the largest integer number representable on the system)</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
@@ -2515,7 +2515,7 @@ local({
 <listitem><para>Defines a group of radio-exclusive buttons (only one can be selected at a time). Requires at least two &lt;option&gt;-tags as direct children. No other tags are allowed as children. Attributes:
 	<variablelist>
 	<varlistentry>
-	<term>&lt;label&gt;</term>
+	<term><parameter>label</parameter></term>
 	<listitem><para>Label for the radio control (recommended, defaults to "Select one:")</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
@@ -2526,7 +2526,7 @@ local({
 <listitem><para>Defines a group of options of which one and only one can be selected at the same time, using a dropdown list. This is functionally equivalent to a &lt;radio&gt;, but looks different. Requires at least two &lt;option&gt;-tags as direct children. No other tags are allowed as children. Attributes:
 	<variablelist>
 	<varlistentry>
-	<term>&lt;label&gt;</term>
+	<term><parameter>label</parameter></term>
 	<listitem><para>Label for the dropdown list (recommended, defaults to "Select one:")</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
@@ -2537,15 +2537,15 @@ local({
 <listitem><para>Can only be used as a direct child of a &lt;radio&gt; or &lt;dropdown&gt; element. Represents one selectable option in a radio control or dropdown list. Specifying the "id" parameter for the &lt;option&gt; elements is optional (and in fact it's recommended, not to set an "id", unless you plan to really use it to disable single options). Only the parent element (&lt;radio&gt; or &lt;dropdown&gt;) needs one. Attributes:
 	<variablelist>
 	<varlistentry>
-	<term>&lt;label&gt;</term>
+	<term><parameter>label</parameter></term>
 	<listitem><para>Label for the option (required)</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;value&gt;</term>
+	<term><parameter>value</parameter></term>
 	<listitem><para>The string value the parent element will return if this option is checked/selected (required)</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;checked&gt;</term>
+	<term><parameter>checked</parameter></term>
 	<listitem><para>Whether the option should be checked/selected by default "true" or "false". Only one button in a &lt;radio&gt; may be set to <parameter>checked=</parameter><replaceable>"true"</replaceable>. If no option is set to checked, the first option in the parent element will be checked/selected automatically. (optional, default to "false")</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
@@ -2556,19 +2556,19 @@ local({
 <listitem><para>Defines a checkbox, i.e. a single option that can either be set to on or off. Attributes:
 	<variablelist>
 	<varlistentry>
-	<term>&lt;label&gt;</term>
+	<term><parameter>label</parameter></term>
 	<listitem><para>Label for the checkbox (required)</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;value&gt;</term>
+	<term><parameter>value</parameter></term>
 	<listitem><para>The value the checkbox will return if checked (required)</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;value_unchecked&gt;</term>
+	<term><parameter>value_unchecked</parameter></term>
 	<listitem><para>The value that will be returned if the checkbox is not checked (optional, defauls to "", i.e. an empty string)</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;checked&gt;</term>
+	<term><parameter>checked</parameter></term>
 	<listitem><para>Whether the option should be checked by default "true" or "false" (optional, default to "false")</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
@@ -2586,19 +2586,19 @@ made checkable, thus acting like a simple checkbox at the same time.
 <listitem><para>Defines a free text input field. Attributes:
 	<variablelist>
 	<varlistentry>
-	<term>&lt;label&gt;</term>
+	<term><parameter>label</parameter></term>
 	<listitem><para>Label for the input field (required)</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;initial&gt;</term>
+	<term><parameter>initial</parameter></term>
 	<listitem><para>Initial text of the text field (optional, defaults to "", i.e. an empty string)</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;size&gt;</term>
+	<term><parameter>size</parameter></term>
 	<listitem><para>One of "small", "medium", or "large". "large" defines a multi-line input field, "small", and "medium" are single line fields (optional, defaults to "medium")</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;required&gt;</term>
+	<term><parameter>required</parameter></term>
 	<listitem><para>Whether - for submitting the code - it is required that this input is not empty. See <link linkend="elementproperties">required-property</link> (optional, defaults to false)</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
@@ -2609,55 +2609,55 @@ made checkable, thus acting like a simple checkbox at the same time.
 <listitem><para>A table for entering matrix data (or vectors) in the GUI. <note><para>This input element is <emphasis>not</emphasis> optimized for entering editing large amounts of data. While there is no strict limit on the size of a &lt;matrix&gt;, in general it should not exceed around ten rows / columns. If you expect larger data, allow users to select it as an R object (which may be a good idea as an alternative option, in almost <emphasis>every</emphasis> instance where you use a matrix element).</para></note> Attributes:
 	<variablelist>
 	<varlistentry>
-	<term>&lt;label&gt;</term>
+	<term><parameter>label</parameter></term>
 	<listitem><para>Label for the table (required)</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;mode&gt;</term>
+	<term><parameter>mode</parameter></term>
 	<listitem><para>One of "integer", "real", or "string". The type of data that will be accepted in the table (required)</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;min&gt;</term>
+	<term><parameter>min</parameter></term>
 	<listitem><para>Minimum acceptable value (for matrices of type "integer" or "real") (optional, defaults to the smallest representable value)</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;max&gt;</term>
+	<term><parameter>max</parameter></term>
 	<listitem><para>Maximum acceptable value (for matrices of type "integer" or "real") (optional, defaults to the largest representable value)</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;allow_missings&gt;</term>
+	<term><parameter>allow_missings</parameter></term>
 	<listitem><para>Whether missing (empty) values are allowed in the matrix. This is implied for matrices or mode "string"  (optional, defaults to false).</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;allow_user_resize_columns&gt;</term>
+	<term><parameter>allow_user_resize_columns</parameter></term>
 	<listitem><para>When set to true, the user can add columns by typing on the rightmost (inactive) cells  (optional, defaults to true).</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;allow_user_resize_rows&gt;</term>
+	<term><parameter>allow_user_resize_rows</parameter></term>
 	<listitem><para>When set to true, the user can add rows by typing on the bottommost (inactive) cells  (optional, defaults to true).</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;rows&gt;</term>
+	<term><parameter>rows</parameter></term>
 	<listitem><para>Number of rows in the matrix. Has no effect for allow_user_resize_rows="true". <note><para>This can also be controlled by setting the "rows" property".</para></note> (optional, defaults to 2).</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;columns&gt;</term>
+	<term><parameter>columns</parameter></term>
 	<listitem><para>Number of columns in the matrix. Has no effect for allow_user_resize_columns="true". <note><para>This can also be controlled by setting the "columns" property".</para></note> (optional, defaults to 2).</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;fixed_width&gt;</term>
+	<term><parameter>fixed_width</parameter></term>
 	<listitem><para>Force the GUI element to stay at its initial width. Do not use in combindation with matrices, where the number of columns may change in any way. Useful, esp. when creating a vector input element (rows="1"). (optional, defaults to false).</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;fixed_height&gt;</term>
+	<term><parameter>fixed_height</parameter></term>
 	<listitem><para>Force the GUI element to stay at its initial height. Do not use in combindation with matrices, where the number of rows may change in any way. Useful, esp. when creating a vector input element (columns="1"). (optional, defaults to false).</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;horiz_headers&gt;</term>
+	<term><parameter>horiz_headers</parameter></term>
 	<listitem><para>Strings to ues for the horiztonal header, separated by ";". (optional, defaults to column number).</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;vert_headers&gt;</term>
+	<term><parameter>vert_headers</parameter></term>
 	<listitem><para>Strings to ues for the vertical header, separated by ";". (optional, defaults to row number).</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
@@ -2668,19 +2668,19 @@ made checkable, thus acting like a simple checkbox at the same time.
 <listitem><para>A UI for repeating a set of options for an arbitrary number of items (<link linkend="optionset">introduction to optionsets</link>). Attributes:
 	<variablelist>
 	<varlistentry>
-	<term>&lt;min_rows&gt;</term>
+	<term><parameter>min_rows</parameter></term>
 	<listitem><para>If specified, the set will be marked invalid, unless it has at least this number of rows (optional, integer).</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;min_rows_if_any&gt;</term>
+	<term><parameter>min_rows_if_any</parameter></term>
 	<listitem><para>Like min_rows, but will only be tested, if there is at least one row (optional, integer).</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;max_rows&gt;</term>
+	<term><parameter>max_rows</parameter></term>
 	<listitem><para>If specified, the set will be marked invalid, unless it has at most this number of rows (optional, integer).</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;keycolumn&gt;</term>
+	<term><parameter>keycolumn</parameter></term>
 	<listitem><para>Id of the column to act as keycolumn. An optionset with a (valid) keycolumn will act as a "driven" optionset. An optionset with no keycolumn will allow manual insertion / removal of items. The keycolumn must be marked as external. (optional, defaults to no keycolumn).</para></listitem>
 	</varlistentry>
 	</variablelist>
@@ -2695,7 +2695,7 @@ Child-elements:
 			<varlistentry><term>external</term>
 			<listitem><para>Set to true, if the option is controlled from outside the optionset (optional, boolean, defaults to false).</para></listitem></varlistentry>
 			<varlistentry><term>label</term>
-			<listitem><para>If given, the option will be displayed in the &lt;optiondisply&gt; in a column by that label (optional, string, defaults to not displayed).</para></listitem></varlistentry>
+			<listitem><para>If given, the option will be displayed in the &lt;optiondisplay&gt; in a column by that label (optional, string, defaults to not displayed).</para></listitem></varlistentry>
 			<varlistentry><term>connect</term>
 			<listitem><para>The property to connect this option to, given as id inside the &lt;content&gt;-area. For external &lt;option&gt;s, the corresponding value will be set to the externally set value. For regular (non-external) &lt;option&gt;s,
 			the corresponding row of the &lt;option&gt;-property, will be set when the property changes inside the content-area. (optional, string, defaults to not connected).</para></listitem></varlistentry>
@@ -2710,7 +2710,7 @@ Child-elements:
 			<varlistentry><term>&lt;optiondisplay&gt;</term>
 			<listitem><para>Creates a display for showing / selecting / adding / removing items in an optionset. Allowed only inside the contents are of an optionset, and only once. Attributes:
 			<variablelist>
-				<varlistentry><term>index</term>
+				<varlistentry><term><parameter>index</parameter></term>
 				<listitem><para>Whether to show a column with a numberic index (1...n) in the optiondisplay. (optional, boolean, defaults to "true")</para></listitem></varlistentry>
 			</variablelist>
 			</para></listitem></varlistentry>
@@ -2718,7 +2718,7 @@ Child-elements:
 			<listitem><para>In the rare case that you want to connect two or more properties inside the contents region to an (external)
 			&lt;option&gt;, you can create an auxiliary property using this element. Attributes:
 			<variablelist>
-				<varlistentry><term>id</term>
+				<varlistentry><term><parameter>id</parameter></term>
 				<listitem><para>Id of the property (relative to "setid.contents") (required, string).</para></listitem></varlistentry>
 			</variablelist>
 			</para></listitem></varlistentry>
@@ -2733,27 +2733,27 @@ Child-elements:
 <listitem><para>An element designed to select a single filename (or directory name). Note that this field will take any string, even though it is meant to be used for files, only:
 	<variablelist>
 	<varlistentry>
-	<term>&lt;label&gt;</term>
+	<term><parameter>label</parameter></term>
 	<listitem><para>Label for the browser (optional, defaults to "Enter filename")</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;initial&gt;</term>
+	<term><parameter>initial</parameter></term>
 	<listitem><para>Initial text of the browser (optional, defaults to "", i.e. an empty string)</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;type&gt;</term>
+	<term><parameter>type</parameter></term>
 	<listitem><para>One of "file", "dir", or "savefile". To select an existing file, existing directory, or non-existing file, respectively (optional, defaults to "file")</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;allow_urls&gt;</term>
+	<term><parameter>allow_urls</parameter></term>
 	<listitem><para>Whether (non-local) urls can be selected (optional, defaults to "false")</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;filter&gt;</term>
+	<term><parameter>filter</parameter></term>
 	<listitem><para>File type filter, e.g. ("*.txt *.csv" for .txt and .csv files. Try not to induce limits unless absolutely needed, though) (optional, defaults to "", i.e. all files)</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;required&gt;</term>
+	<term><parameter>required</parameter></term>
 	<listitem><para>Whether - for submitting the code - it is required that the field is not empty. Note that this does not necessarily mean, the selected filename is valid! See <link linkend="elementproperties">required-property</link> (optional, defaults to true)</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
@@ -2764,23 +2764,23 @@ Child-elements:
 <listitem><para>An element designed to select the name of an &r; object to save to (i.e. generally not already existing, in contrast to a varslot):
 	<variablelist>
 	<varlistentry>
-	<term>&lt;label&gt;</term>
+	<term><parameter>label</parameter></term>
 	<listitem><para>Label for the input (optional, defaults to "Save to:")</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;initial&gt;</term>
+	<term><parameter>initial</parameter></term>
 	<listitem><para>Initial text of the input (optional, defaults to "my.data")</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;required&gt;</term>
+	<term><parameter>required</parameter></term>
 	<listitem><para>Whether - for submitting the code - it is required that the field holds a permissible object name. See <link linkend="elementproperties">required-property</link> (optional, defaults to true)</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;checkable&gt;</term>
+	<term><parameter>checkable</parameter></term>
 	<listitem><para>In many use cases, saving to an &r; object is optional. In these cases, a checkbox can be integrated into the saveobject-element using this attribute. When set to true, the saveobject will be activated / deactivated by the checkbox. See the <link linkend="elementproperties">active-property</link> of saveobject (optional, defaults to false)</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;checked&gt;</term>
+	<term><parameter>checked</parameter></term>
 	<listitem><para>For checkable saveobject-elements, only: Whether the control is checked/enabled by default (optional, defaults to false)</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
@@ -2791,31 +2791,31 @@ Child-elements:
 <listitem><para>A spinbox in which the user can select a numeric value, using either direct keyboard input or small up/down arrows. Attributes:
 	<variablelist>
 	<varlistentry>
-	<term>&lt;label&gt;</term>
+	<term><parameter>label</parameter></term>
 	<listitem><para>Label for the spinbox (recommend, default to "Enter value:")</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;min&gt;</term>
+	<term><parameter>min</parameter></term>
 	<listitem><para>The lowest value the user is allowed to enter in the spinbox (optional, defaults to the lowest value technically representable in the spinbox)</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;max&gt;</term>
+	<term><parameter>max</parameter></term>
 	<listitem><para>The largest value the user is allowed to enter in the spinbox (optional, defaults to the highest value technically representable in the spinbox)</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;initial&gt;</term>
+	<term><parameter>initial</parameter></term>
 	<listitem><para>The initial value shown in the spinbox (optional, defaults to "0")</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;type&gt;</term>
+	<term><parameter>type</parameter></term>
 	<listitem><para>One of "real" or "integer". Whether the spinbox will accept real numbers or only integers (optional, defaults to "real")</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;default_precision&gt;</term>
+	<term><parameter>default_precision</parameter></term>
 	<listitem><para>Only meaningful if the spinbox is of type="real". Specifies the default number of decimal places shown in the spinbox (only this many trailing zeros will be shown). When the user presses the up/down arrows, this decimal place will be changed. The user may still be able to enter values with a higher precision, however (see below) (optional, defaults to "2")</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;max_precision&gt;</term>
+	<term><parameter>max_precision</parameter></term>
 	<listitem><para>The maximum number of digits that can be meaningfully represented (optional, defaults to "8")</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
@@ -2826,11 +2826,11 @@ Child-elements:
 <listitem><para>This advanced element allows the user to select a formula/set of interactions from selected variables. For instance for a GLM, this element can be used to allow the user to specify the interaction-terms in the model. Attributes:
 	<variablelist>
 	<varlistentry>
-	<term>&lt;fixed_factors&gt;</term>
+	<term><parameter>fixed_factors</parameter></term>
 	<listitem><para>The ID of the varslot holding the selected fixed factors (required)</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;dependent&gt;</term>
+	<term><parameter>dependent</parameter></term>
 	<listitem><para>The ID of the varslot holding the selected dependent variable (required)</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
@@ -2841,15 +2841,15 @@ Child-elements:
 <listitem><para>Embed a different plugin into this one (see <link linkend="embedding">chapter on embedding</link>). Attributes:
 	<variablelist>
 	<varlistentry>
-	<term>&lt;component&gt;</term>
+	<term><parameter>component</parameter></term>
 	<listitem><para>The registered name of the component to embed (see <link linkend="pluginmap">chapter on registering components</link> (required)</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;as_button&gt;</term>
+	<term><parameter>as_button</parameter></term>
 	<listitem><para>If set to "true", only a pushbutton will be placed in the embedding GUI, the embedded GUI will only be shown (in a separate window) when the pushbutton is pressed (optional, default is "false")</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;label&gt;</term>
+	<term><parameter>label</parameter></term>
 	<listitem><para>Only meaningful if as_button="true": The label of the button (recommend, default is "Options")</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
@@ -2860,7 +2860,7 @@ Child-elements:
 <listitem><para>Checkbox to toggle preview functionality (see <link linkend="preview_plots">chapter on graph previews</link>). Attributes:
 	<variablelist>
 	<varlistentry>
-	<term>&lt;label&gt;</term>
+	<term><parameter>label</parameter></term>
 	<listitem><para>Label of the box (optional, default is "Preview")</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
@@ -2880,11 +2880,11 @@ Child-elements:
 <listitem><para>Creates a new (string) property that is supposed to be connected to an outside property if the plugin gets embedded. See <link linkend="embedding_incomplete">section on "incomplete" plugins</link>. Attributes:
 	<variablelist>
 	<varlistentry>
-	<term>&lt;id&gt;</term>
+	<term><parameter>id</parameter></term>
 	<listitem><para>The ID of the new property (required)</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;default&gt;</term>
+	<term><parameter>default</parameter></term>
 	<listitem><para>The default string value of the new property, i.e. the value used, if the property is not connected to an outside property (optional, defaults to an empty string)</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
@@ -2895,11 +2895,11 @@ Child-elements:
 <listitem><para>Set a property to a fixed value (of course, if you additionally connect the property to some other property, the value does not remain fixed). For instance, if you embed a plugin, but want to hide some of its elements, you might set the visibility property of those elements to false. Useful esp. for embedded/embedding plugins. Attributes:
 	<variablelist>
 	<varlistentry>
-	<term>&lt;id&gt;</term>
+	<term><parameter>id</parameter></term>
 	<listitem><para>The ID of the property to set (required)</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;to&gt;</term>
+	<term><parameter>to</parameter></term>
 	<listitem><para>The string value to set the property to (required). Note: For boolean properties such as visibility, enabledness, you'll typically set the to attribute to either to="true" or to="false".</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
@@ -2910,31 +2910,31 @@ Child-elements:
 <listitem><para>Create a new boolean properties that depends on the state of one or more different properties. Attributes:
 	<variablelist>
 	<varlistentry>
-	<term>&lt;id&gt;</term>
+	<term><parameter>id</parameter></term>
 	<listitem><para>The ID of the new property (required)</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;sources&gt;</term>
+	<term><parameter>sources</parameter></term>
 	<listitem><para>The ids of the properties this property will depend on. One or more properties may be specified, separated by ";" (required)</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;mode&gt;</term>
+	<term><parameter>mode</parameter></term>
 	<listitem><para>The mode of conversion/operation. One of "equals", "notequals", "range", "and", "or". If in mode equals, the property will only be true, if the value of all of its sources equals the attribute standard (see below). If in at mode notequals, the property will only be true, if the value of all of its sources are different from the attribute standard (see below). If in mode range, the sources have to be numeric (integer or real). The property will only be true, if all sources are in the range specified by the attributes min and max (see below). If in mode and, the sources have to be boolean properties. The property will only be true, if all the sources are true simultaniously. If in mode or, the sources have to be boolean properties. The property will only be true, if at least one of the sources is true. (required)</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;standard&gt;</term>
+	<term><parameter>standard</parameter></term>
 	<listitem><para>Only meaningful in modes equals or notequals: the string value to compare against (required if in one of these modes)</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;min&gt;</term>
+	<term><parameter>min</parameter></term>
 	<listitem><para>Only meaningful in mode range: the minimum value to compare against (optional, defaults to the lowest floating point number representable on the machine)</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;max&gt;</term>
+	<term><parameter>max</parameter></term>
 	<listitem><para>Only meaningful in mode range: the maximum value to compare against (optional, defaults to the largest floating point number representable on the machine)</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;require_true&gt;</term>
+	<term><parameter>require_true</parameter></term>
 	<listitem><para>If set to "true", the property will become required, and will only be considered valid, if its state is true/on. Hence, if the property is false, it will block the <guibutton>Submit</guibutton> button (optional, defaults to "false".
 		<caution><remark>If you use this, make sure the user can easily detect what's wrong, such as by showing an explanatory &lt;text&gt;)</remark></caution></para></listitem>
 	</varlistentry>
@@ -2946,15 +2946,15 @@ Child-elements:
 <listitem><para>Connects two properties. The client property will be changed whenever the governor property changes (but not the other way around!). Attributes:
 	<variablelist>
 	<varlistentry>
-	<term>&lt;client&gt;</term>
+	<term><parameter>client</parameter></term>
 	<listitem><para>The ID of the client property, i.e. the property that will be adjusted (required)</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;governor&gt;</term>
+	<term><parameter>governor</parameter></term>
 	<listitem><para>The ID of the governor property, i.e. the property that will adjusts the client property. This may include a modifier (required)</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>&lt;reconcile&gt;</term>
+	<term><parameter>reconcile</parameter></term>
 	<listitem><para>If "true", the client property will make adjust the governor property on connection in such a way that the governor property will only accept values that are also acceptable by the client (e.g. suppose the governor is a numeric property with min value "0", and the client is a numeric property with min value "100". The min of both properties will be adjusted to 100, if reconcile="true"). Generally works only for properties of the same basic type (optional, default to "false")</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
