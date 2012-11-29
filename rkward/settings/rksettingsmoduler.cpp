@@ -36,6 +36,7 @@
 #include "../core/robject.h"
 #include "../misc/multistringselector.h"
 #include "../misc/rkprogresscontrol.h"
+#include "../misc/rkcommonfunctions.h"
 #include "../rbackend/rinterface.h"
 #include "../rkglobals.h"
 #include "../debug.h"
@@ -54,6 +55,7 @@ bool RKSettingsModuleR::options_checkbounds;
 QString RKSettingsModuleR::options_editor;
 QString RKSettingsModuleR::options_pager;
 QString RKSettingsModuleR::options_further;
+bool RKSettingsModuleR::options_internet2;
 // static constants
 QString RKSettingsModuleR::builtin_editor = "<rkward>";
 // session constants
@@ -175,6 +177,17 @@ RKSettingsModuleR::RKSettingsModuleR (RKSettings *gui, QWidget *parent) : RKSett
 	connect (pager_input, SIGNAL (editTextChanged (const QString &)), this, SLOT (settingChanged()));
 	grid->addWidget (pager_input, row, 1);
 
+#ifdef Q_WS_WIN
+	grid->addWidget (label = new QLabel (i18n ("Use Internet Explorer functions for internet access"), this), ++row, 0);
+	internet2_input = new QCheckBox (this);
+	internet2_input->setChecked (options_internet2);
+	connect (internet2_input, SIGNAL (stateChanged(int)), this, SLOT (settingChanged()));
+	grid->addWidget (internet2_input, row, 1);
+	RKCommonFunctions::setTips (i18n ("<p>Use Internet Explorer functions for accessing the internet from R. "
+									"Enabling this option may help in case of problems with accessing the internet from R (e.g. for "
+									"installing packages).</p>"), internet2_input, label);
+#endif
+
 	grid->addWidget (new QLabel (i18n ("Further (option) commands to run in each session"), this), ++row, 0, 1, 2);
 	further_input = new QTextEdit (this);
 	further_input->setWordWrapMode (QTextOption::NoWrap);
@@ -221,6 +234,9 @@ void RKSettingsModuleR::applyChanges () {
 	options_editor = editor_input->currentText ();
 	options_pager = pager_input->currentText ();
 	options_further = further_input->toPlainText ();
+#ifdef Q_WS_WIN
+	options_internet2 = internet2_input->isChecked ();
+#endif
 
 // apply run time options in R
 	QStringList commands = makeRRunTimeOptionCommands ();
@@ -252,6 +268,9 @@ QStringList RKSettingsModuleR::makeRRunTimeOptionCommands () {
 	if (options_pager == builtin_editor) list.append ("options (pager=rk.show.files)\n");
 	else list.append ("options (pager=\"" + options_pager + "\")\n");
 	if (!options_further.isEmpty ()) list.append (options_further + "\n");
+#ifdef Q_WS_WIN
+	list.append (QString ("setInternet2 (") + (options_internet2 ? "TRUE)\n" : "FALSE)\n"));
+#endif
 
 #warning TODO make the following options configurable
 	list.append ("options (device=\"rk.screen.device\")\n");
@@ -287,6 +306,9 @@ void RKSettingsModuleR::saveSettings (KConfig *config) {
 	cg.writeEntry ("editor", options_editor);
 	cg.writeEntry ("pager", options_pager);
 	cg.writeEntry ("further init commands", options_further);
+#ifdef Q_WS_WIN
+	cg.writeEntry ("internet2", options_internet2);
+#endif
 }
 
 void RKSettingsModuleR::loadSettings (KConfig *config) {
@@ -306,6 +328,9 @@ void RKSettingsModuleR::loadSettings (KConfig *config) {
 	options_editor = cg.readEntry ("editor", builtin_editor);
 	options_pager = cg.readEntry ("pager", builtin_editor);
 	options_further = cg.readEntry ("further init commands", QString ());
+#ifdef Q_WS_WIN
+	options_internet2 = cg.readEntry ("internet2", false);
+#endif
 }
 
 //#################################################
