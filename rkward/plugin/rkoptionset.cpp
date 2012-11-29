@@ -86,7 +86,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	connect (standardComponent (), SIGNAL (standardInitializationComplete()), this, SLOT (fetchDefaults()));
 
 	// create columns
-	XMLChildList options = xml->getChildElements (element, "option", DL_WARNING);
+	XMLChildList options = xml->getChildElements (element, "optioncolumn", DL_WARNING);
 
 	QStringList visible_column_labels ("#");	// Optionally hidden first row for index
 	for (int i = 0; i < options.size (); ++i) {
@@ -129,7 +129,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	if (!keycol.isEmpty ()) {
 		keycolumn = static_cast<RKComponentPropertyStringList*> (child_map.value (keycol));
 		if (!column_map.contains (keycolumn)) {
-			RK_DO (qDebug ("optionset does not contain a column named %s. Falling back to manual insertion mode", qPrintable (keycol)), PLUGIN, DL_ERROR);
+			RK_DO (qDebug ("optionset does not contain an optioncolumn named %s. Falling back to manual insertion mode", qPrintable (keycol)), PLUGIN, DL_ERROR);
 			keycolumn = 0;
 		} else if (!column_map[keycolumn].external) {
 			RK_DO (qDebug ("keycolumn (%s) is not marked as external. Falling back to manual insertion mode", qPrintable (keycol)), PLUGIN, DL_ERROR);

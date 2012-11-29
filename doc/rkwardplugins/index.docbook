@@ -1502,16 +1502,16 @@ This chapter contains information on some topics that are useful only to certain
 					&lt;input id="firstname" label="Given name(s)" size="small"&gt;
 					&lt;input id="lastname" label="Family name" size="small"&gt;
 					&lt;radio id="gender" label="Gender"&gt;
-						&lt;option label="Male" value="m"/&gt;
-						&lt;option label="Female" value="f"/&gt;
+						&lt;optioncolumn label="Male" value="m"/&gt;
+						&lt;optioncolumn label="Female" value="f"/&gt;
 					&lt;/radio&gt;
 				&lt;/row&gt;
 			&lt;/frame&gt;
 		&lt;/content&gt;
 
-		&lt;option id="firstnames" label="Given name(s)" connect="firstname.text"&gt;
-		&lt;option id="lastnames" label="Family name" connect="lastname.text"&gt;
-		&lt;option id="gender" connect="gender.string"&gt;
+		&lt;optioncolumn id="firstnames" label="Given name(s)" connect="firstname.text"&gt;
+		&lt;optioncolumn id="lastnames" label="Family name" connect="lastname.text"&gt;
+		&lt;optioncolumn id="gender" connect="gender.string"&gt;
 	&lt;/optionset&gt;
 	[...]
 &lt;/dialog&gt;
@@ -1523,14 +1523,14 @@ This chapter contains information on some topics that are useful only to certain
 	</para><para>
 		Next we specify the variables of interest that we will want to read from the option set in our JS file. As we will be dealing with
 		an arbitrary number of items, we cannot just read <function>getString ("firstname")</function> in JS. Rather, for each value of
-		interest, we specify an <command>&lt;option&gt;</command>. For the first option in the example, <command>&lt;connect="firstname.text"&gt;</command> means that the content of the <command>&lt;input&gt;</command>
-		element "firstname" is read for each item. <command>&lt;option&gt;</command>s for which a <parameter>label</parameter> is given,
+		interest, we specify an <command>&lt;optioncolumn&gt;</command>. For the first optioncolumn in the example, <command>&lt;connect="firstname.text"&gt;</command> means that the content of the <command>&lt;input&gt;</command>
+		element "firstname" is read for each item. <command>&lt;optioncolumn&gt;</command>s for which a <parameter>label</parameter> is given,
 		will be shown in the <command>&lt;optiondisplay&gt;</command>, in a column by that label. In JS, we can now fetch the first names for all authors using <function>getList("set.firstname")</function>, <function>getList("set.lastnames")</function> for the family
 		names, and <function>getList("set.gender")</function> for an array of "m"/"f" strings.
 	</para>
 	<para>
 		Note that there are no restrictions on what you can place inside an <command>&lt;optionset&gt;</command>. You can even use <link linkend="embedding">embedded</link> components. Just as with any other element, all you have to do is to collect the output
-		variables of interest in an <command>&lt;option&gt;</command>-specification. In the case of embedded plugins, this is often a section of the "code" property. E.g.:
+		variables of interest in an <command>&lt;optioncolumn&gt;</command>-specification. In the case of embedded plugins, this is often a section of the "code" property. E.g.:
 	</para>
 		<programlisting>
 &lt;dialog [...]&gt;
@@ -1542,7 +1542,7 @@ This chapter contains information on some topics that are useful only to certain
 		&lt;/content&gt;
 
 		[...]
-		&lt;option id="color_params" connect="color.code.printout"&gt;
+		&lt;optioncolumn id="color_params" connect="color.code.printout"&gt;
 	&lt;/optionset&gt;
 	[...]
 &lt;/dialog&gt;
@@ -1591,18 +1591,18 @@ This chapter contains information on some topics that are useful only to certain
 		&lt;/content&gt;
 
 		[...]
-		&lt;option id="vars" external="true"&gt;
-		&lt;option id="varnames" external="true" label="Variable"&gt;
-		&lt;option id="color_params" connect="color.code.printout"&gt;
+		&lt;optioncolumn id="vars" external="true"&gt;
+		&lt;optioncolumn id="varnames" external="true" label="Variable"&gt;
+		&lt;optioncolumn id="color_params" connect="color.code.printout"&gt;
 	&lt;/optionset&gt;
 	[...]
 &lt;/dialog&gt;
 		</programlisting>
 		<para>
-			We'll start looking at the example at the bottom. You'll note that two <command>&lt;option&gt;</command> specifications have
-			<parameter>external="true"</parameter>. This tells &rkward; that these are controlled from outside the <command>&lt;optionset&gt;</command>. Here, the sole purpose of the "varnames"-option is to provide easy-to-read labels in the
+			We'll start looking at the example at the bottom. You'll note that two <command>&lt;optioncolumn&gt;</command> specifications have
+			<parameter>external="true"</parameter>. This tells &rkward; that these are controlled from outside the <command>&lt;optionset&gt;</command>. Here, the sole purpose of the "varnames"-optioncolumn is to provide easy-to-read labels in the
 			<command>&lt;optiondisplay&gt;</command> (it is connected to the "shortname" modifier of the property holding the selected
-			objects). The purpose of the "vars"-option is to serve as the "key" column, as specified by
+			objects). The purpose of the "vars"-optioncolumn is to serve as the "key" column, as specified by
 			<command>&lt;optionset keycolumn="vars"...&gt;</command>. This means that for each entry in this list, the set will offer
 			one set of options, and options are logically tied to these entries. This column is connected to the property holding the
 			selected objects in the <command>&lt;varslot&gt;</command>. I.e. for each object that is selected there, the <command>&lt;optionset&gt;</command> will allow to specify line color.
@@ -1610,9 +1610,9 @@ This chapter contains information on some topics that are useful only to certain
 		<note>
 			<para>
 				External column can also be <parameter>connect</parameter>ed to properties inside the
-				<command>&lt;content&gt;</command> region. However, it is important to note that options declared
+				<command>&lt;content&gt;</command> region. However, it is important to note that optioncolumns declared
 				<parameter>external="true"</parameter> should never be modified from inside the <command>&lt;optionset&gt;</command>, and
-				options declared <parameter>external="false"</parameter> (the default) should never be modified from outside the
+				optioncolumns declared <parameter>external="false"</parameter> (the default) should never be modified from outside the
 				<command>&lt;optionset&gt;</command>.
 			</para>
 		</note>
@@ -2687,18 +2687,18 @@ made checkable, thus acting like a simple checkbox at the same time.
 Child-elements:
 	<variablelist>
 	<varlistentry>
-	<term>&lt;option&gt;</term>
-	<listitem><para>Declares one option of the set. For each value that you want to fetch from the optionset, you must declare a separate &lt;option&gt;. Attributes:
+	<term>&lt;optioncolumn&gt;</term>
+	<listitem><para>Declares one optioncolumn of the set. For each value that you want to fetch from the optionset, you must declare a separate &lt;optioncolumn&gt;. Attributes:
 		<variablelist>
 			<varlistentry><term>id</term>
-			<listitem><para>The id of the option (required, string).</para></listitem></varlistentry>
+			<listitem><para>The id of the optioncolumn (required, string).</para></listitem></varlistentry>
 			<varlistentry><term>external</term>
-			<listitem><para>Set to true, if the option is controlled from outside the optionset (optional, boolean, defaults to false).</para></listitem></varlistentry>
+			<listitem><para>Set to true, if the optioncolumn is controlled from outside the optionset (optional, boolean, defaults to false).</para></listitem></varlistentry>
 			<varlistentry><term>label</term>
-			<listitem><para>If given, the option will be displayed in the &lt;optiondisplay&gt; in a column by that label (optional, string, defaults to not displayed).</para></listitem></varlistentry>
+			<listitem><para>If given, the optioncolumn will be displayed in the &lt;optiondisplay&gt; in a column by that label (optional, string, defaults to not displayed).</para></listitem></varlistentry>
 			<varlistentry><term>connect</term>
-			<listitem><para>The property to connect this option to, given as id inside the &lt;content&gt;-area. For external &lt;option&gt;s, the corresponding value will be set to the externally set value. For regular (non-external) &lt;option&gt;s,
-			the corresponding row of the &lt;option&gt;-property, will be set when the property changes inside the content-area. (optional, string, defaults to not connected).</para></listitem></varlistentry>
+			<listitem><para>The property to connect this optioncolumn to, given as id inside the &lt;content&gt;-area. For external &lt;optioncolumn&gt;s, the corresponding value will be set to the externally set value. For regular (non-external) &lt;optioncolumn&gt;s,
+			the corresponding row of the &lt;optioncolumn&gt;-property, will be set when the property changes inside the content-area. (optional, string, defaults to not connected).</para></listitem></varlistentry>
 			<varlistentry><term>default</term>
 			<listitem><para>Only for external columns: The value to assume for this column, if no value is known for an entry. Rarely useful. (Optional, defaults to empty string)</para></listitem></varlistentry>
 		</variablelist>
@@ -2716,7 +2716,7 @@ Child-elements:
 			</para></listitem></varlistentry>
 			<varlistentry><term>&lt;property&gt;</term>
 			<listitem><para>In the rare case that you want to connect two or more properties inside the contents region to an (external)
-			&lt;option&gt;, you can create an auxiliary property using this element. Attributes:
+			&lt;optioncolumn&gt;, you can create an auxiliary property using this element. Attributes:
 			<variablelist>
 				<varlistentry><term><parameter>id</parameter></term>
 				<listitem><para>Id of the property (relative to "setid.contents") (required, string).</para></listitem></varlistentry>
@@ -3145,8 +3145,8 @@ Child-elements:
 			<listitem><para>Currently active item in the optionset (integer). -1 for no active item. Read-write.</para></listitem>
 		</varlistentry>
 		<varlistentry>
-			<term><emphasis>option_ids</emphasis></term>
-			<listitem><para>For each &lt;option&gt; you define, a string list property will be created with the specified id.</para></listitem>
+			<term><emphasis>optioncolumn_ids</emphasis></term>
+			<listitem><para>For each &lt;optioncolumn&gt; you define, a string list property will be created with the specified id.</para></listitem>
 		</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>

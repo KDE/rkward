@@ -33,9 +33,9 @@
 							</row>
 						</frame>
 					</content>
-					<option id="object" connect="mx.available"/>
-					<option id="objshort" label="Object" connect="mx.available.shortname"/>
-					<option id="summary" label="Summary" connect="summary.text"/>
+					<optioncolumn id="object" connect="mx.available"/>
+					<optioncolumn id="objshort" label="Object" connect="mx.available.shortname"/>
+					<optioncolumn id="summary" label="Summary" connect="summary.text"/>
 				</optionset>
 			</tab>
 			<tab label="Connected driven set">
@@ -47,9 +47,9 @@
 							<input id="summary" label="Enter another summary" size="large"/>
 						</frame>
 					</content>
-					<option id="object" external="true"/>
-					<option id="objshort" label="Object" external="true"/>
-					<option id="summary2" connect="summary.text"/>
+					<optioncolumn id="object" external="true"/>
+					<optioncolumn id="objshort" label="Object" external="true"/>
+					<optioncolumn id="summary2" connect="summary.text"/>
 				</optionset>
 			</tab>
 			<tab label="Driven set">
@@ -71,12 +71,12 @@
 								<embed id="test_embed" component="rkward::plot_options" as_button="true"/>
 							</frame>
 						</content>
-						<option id="var" label="test" external="true" connect="test_embed.xvar"/>
-						<option id="varname" label="Varname" external="true"/>
-						<option id="ca" label="Comment A" connect="commenta.text"/>
-						<option id="cb" connect="commentb.text"/>
-						<option id="plotoption_printout" connect="test_embed.code.printout"/>
-						<option id="plotoption_pre" connect="test_embed.code.preprocess"/>
+						<optioncolumn id="var" label="test" external="true" connect="test_embed.xvar"/>
+						<optioncolumn id="varname" label="Varname" external="true"/>
+						<optioncolumn id="ca" label="Comment A" connect="commenta.text"/>
+						<optioncolumn id="cb" connect="commentb.text"/>
+						<optioncolumn id="plotoption_printout" connect="test_embed.code.printout"/>
+						<optioncolumn id="plotoption_pre" connect="test_embed.code.preprocess"/>
 					</optionset>
 				</row>
 			</tab>
