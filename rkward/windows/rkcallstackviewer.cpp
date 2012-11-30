@@ -66,7 +66,7 @@ void RKCallstackViewer::createRealWidget () {
 	RK_TRACE (APP);
 
 	if (!real_widget) {
-		RK_DO (qDebug ("creating callstack viewer"), APP, DL_INFO);
+		RK_DEBUG (APP, DL_INFO, "creating callstack viewer");
 
 		real_widget = new RKCallstackViewerWidget (layout_widget);
 		setFocusProxy (real_widget);

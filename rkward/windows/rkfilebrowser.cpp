@@ -72,7 +72,7 @@ void RKFileBrowser::showEvent (QShowEvent *e) {
 	RK_TRACE (APP);
 
 	if (!real_widget) {
-		RK_DO (qDebug ("creating file browser"), APP, DL_INFO);
+		RK_DEBUG (APP, DL_INFO, "creating file browser");
 
 		real_widget = new RKFileBrowserWidget (layout_widget);
 		setFocusProxy (real_widget);

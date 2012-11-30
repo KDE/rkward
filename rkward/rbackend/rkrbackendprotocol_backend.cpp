@@ -49,12 +49,12 @@
 		void exitThread () {
 			RK_TRACE (RBACKEND);
 			if (isRunning ()) {
-				RK_DO (qDebug ("Waiting for R thread to finish up..."), RBACKEND, DL_INFO);
+				RK_DEBUG (RBACKEND, DL_INFO, "Waiting for R thread to finish up...");
 				RKRBackendProtocolBackend::interruptProcessing ();
 				RKRBackend::this_pointer->kill ();
 				wait (1000);
 				if (isRunning ()) {
-					RK_DO (qDebug ("Backend thread is still running. It will be killed, now."), RBACKEND, DL_WARNING);
+					RK_DEBUG (RBACKEND, DL_WARNING, "Backend thread is still running. It will be killed, now.");
 					terminate ();
 					yieldCurrentThread ();
 					RK_ASSERT (false);
@@ -98,6 +98,21 @@
 		RK_Debug_File->write ("\n");
 		RK_Debug_File->flush ();
 		RK_Debug_Mutex.unlock ();
+	}
+
+	// NOTE: This function serves no benefit over qDebug() in the backend. But provided for consistency with the frontend.
+	// See the frontend version in main.cpp
+	void RKDebug (int flags, int level, const char *fmt, ...) {
+		Q_UNUSED (flags);
+		Q_UNUSED (level);
+		const int bufsize = 1024*8;
+		char buffer[bufsize];
+
+		va_list ap;
+		va_start (ap, fmt);
+		vsnprintf (buffer, bufsize-1, fmt, ap);
+		va_end (ap);
+		RKDebugMessageOutput (QtDebugMsg, buffer);
 	}
 
 	int main(int argc, char *argv[]) {

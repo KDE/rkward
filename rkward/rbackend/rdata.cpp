@@ -35,9 +35,9 @@ RData::~RData () {
 
 void RData::doAssert(RData::RDataType requested_type) const {
 	if (this == 0) {
-		RK_DO (qDebug ("Requested data from a NULL RData"), RBACKEND, DL_ERROR);
+		RK_DEBUG (RBACKEND, DL_ERROR, "Requested data from a NULL RData");
 	} else { 
-		RK_DO (qDebug ("Reqeusted data of type %d, while %p has type %d", requested_type, this, datatype), RBACKEND, DL_ERROR);
+		RK_DEBUG (RBACKEND, DL_ERROR, "Reqeusted data of type %d, while %p has type %d", requested_type, this, datatype);
 	}
 }
 

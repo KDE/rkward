@@ -57,7 +57,7 @@ void RKPluginFrame::initCheckedProperty () {
 	RK_TRACE (PLUGIN);
 	RK_ASSERT (!checked);
 	if (!frame->isCheckable ()) {
-		RK_DO (qDebug ("This frame does not have a property 'checked', as it is not checkable"), PLUGIN, DL_DEBUG);
+		RK_DEBUG (PLUGIN, DL_DEBUG, "This frame does not have a property 'checked', as it is not checkable");
 		return;
 	}
 

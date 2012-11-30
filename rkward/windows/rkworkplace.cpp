@@ -807,7 +807,7 @@ RKMDIWindowHistory::RKMDIWindowHistory (QObject *parent) : QObject (parent) {
 RKMDIWindowHistory::~RKMDIWindowHistory () {
 	RK_TRACE (APP);
 
-	RK_DO (qDebug ("Remaining windows in history: %d", recent_windows.count ()), APP, DL_DEBUG);
+	RK_DEBUG (APP, DL_DEBUG, "Remaining windows in history: %d", recent_windows.count ());
 }
 
 void RKMDIWindowHistory::windowActivated (RKMDIWindow *window) {

@@ -97,7 +97,7 @@ bool RKROutputBuffer::handleOutput (const QString &output, int buf_length, ROutp
 	if (!buf_length) return false;
 	RK_TRACE (RBACKEND);
 
-	RK_DO (qDebug ("Output type %d: %s", output_type, qPrintable (output)), RBACKEND, DL_DEBUG);
+	RK_DEBUG (RBACKEND, DL_DEBUG, "Output type %d: %s", output_type, qPrintable (output));
 
 	// wait while the output buffer is exceeded to give downstream threads a chance to catch up
 	while ((out_buf_len > MAX_BUF_LENGTH) && allow_blocking) {

@@ -109,7 +109,7 @@ RKConsole::RKConsole (QWidget *parent, bool tool_window, const char *name) : RKM
 			keas[i]->setShortcuts (noshort);
 		}
 	} else {
-		RK_DO (qDebug ("Could not retrieve the katepart's edit action collection"), APP, DL_ERROR);
+		RK_DEBUG (APP, DL_ERROR, "Could not retrieve the katepart's edit action collection");
 	}
 
 	if (view->focusProxy ()) view->focusProxy()->installEventFilter(this);
@@ -847,7 +847,7 @@ int RKConsole::currentCursorPositionInCommand(){
 
 void RKConsole::resetConsole () {
 	RK_TRACE (APP);
-	RK_DO (qDebug("received interrupt signal in console"), APP, DL_DEBUG);
+	RK_DEBUG (APP, DL_DEBUG, "received interrupt signal in console");
 
 	input_buffer.clear ();
 	if (current_command) {

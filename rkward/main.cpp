@@ -94,6 +94,22 @@ void RKDebugMessageOutput (QtMsgType type, const char *msg) {
 	RK_Debug_Mutex.unlock ();
 }
 
+/** The point of this redirect (to be called via the RK_DEBUG() macro) is to separate RKWard specific debug messages from
+ * any other noise, coming from Qt / kdelibs. Also it allows us to retain info on flags and level. Eventually, this could
+ * be made available in a tool window, esp. for debugging plugins. */
+void RKDebug (int flags, int level, const char *fmt, ...) {
+	Q_UNUSED (flags);
+	Q_UNUSED (level);
+	const int bufsize = 1024*8;
+	char buffer[bufsize];
+
+	va_list ap;
+	va_start (ap, fmt);
+	vsnprintf (buffer, bufsize-1, fmt, ap);
+	va_end (ap);
+	RKDebugMessageOutput (QtDebugMsg, buffer);
+}
+
 int main(int argc, char *argv[]) {
 /* #ifdef Q_WS_X11
 	This (along with the proper includes, of course) makes library (gWidgetsRGtk2) work on X11 on some systems.
@@ -144,7 +160,7 @@ int main(int argc, char *argv[]) {
 	RK_Debug_Level = DL_FATAL - QString (args->getOption ("debug-level")).toInt ();
 	RK_Debug_Flags = QString (args->getOption ("debug-flags")).toInt ();
 	if (!args->getOption ("debugger").isEmpty ()) {
-		RK_DO (qDebug ("--debugger option should have been handled by wrapper script. Ignoring."), ALL, DL_ERROR);
+		RK_DEBUG (ALL, DL_ERROR, "--debugger option should have been handled by wrapper script. Ignoring.");
 	}
 
 	RKWardStartupOptions *stoptions = new RKWardStartupOptions;
@@ -158,7 +174,7 @@ int main(int argc, char *argv[]) {
 	RKSettingsModuleDebug::debug_file = new QTemporaryFile (QDir::tempPath () + "/rkward.frontend");
 	RKSettingsModuleDebug::debug_file->setAutoRemove (false);
 	if (RKSettingsModuleDebug::debug_file->open ()) {
-		RK_DO (qDebug ("Full debug output is at %s", qPrintable (RKSettingsModuleDebug::debug_file->fileName ())), APP, DL_INFO);
+		RK_DEBUG (APP, DL_INFO, "Full debug output is at %s", qPrintable (RKSettingsModuleDebug::debug_file->fileName ()));
 		qInstallMsgHandler (RKDebugMessageOutput);
 	}
 

@@ -144,7 +144,7 @@ SEXP RKStructureGetter::resolvePromise (SEXP from) {
 	if (TYPEOF (from) == PROMSXP) {
 		ret = PRVALUE(from);
 		if (ret == R_UnboundValue) {
-			RK_DO (qDebug ("temporarily resolving unbound promise"), RBACKEND, DL_DEBUG);
+			RK_DEBUG (RBACKEND, DL_DEBUG, "temporarily resolving unbound promise");
 
 			PROTECT (from);
 			SET_PRSEEN(from, 1);
@@ -156,7 +156,7 @@ SEXP RKStructureGetter::resolvePromise (SEXP from) {
 			}
 			UNPROTECT (1);
 
-			RK_DO (qDebug ("resolved type is %d", TYPEOF (ret)), RBACKEND, DL_DEBUG);
+			RK_DEBUG (RBACKEND, DL_DEBUG, "resolved type is %d", TYPEOF (ret));
 		}
 	}
 
@@ -175,7 +175,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, int a
 	bool no_recurse = (nesting_depth >= 2);	// TODO: should be configurable
 	unsigned int type = 0;
 
-	RK_DO (qDebug ("fetching '%s': %p, s-type %d", name.toLatin1().data(), val, TYPEOF (val)), RBACKEND, DL_DEBUG);
+	RK_DEBUG (RBACKEND, DL_DEBUG, "fetching '%s': %p, s-type %d", name.toLatin1().data(), val, TYPEOF (val));
 
 	SEXP value = val;
 	PROTECT_INDEX value_index;
@@ -248,7 +248,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, int a
 	if (is_container) {
 		if (no_recurse) {
 			type |= RObject::Incomplete;
-			RK_DO (qDebug ("Depth limit reached. Will not recurse into %s", name.toLatin1().data ()), RBACKEND, DL_DEBUG);
+			RK_DEBUG (RBACKEND, DL_DEBUG, "Depth limit reached. Will not recurse into %s", name.toLatin1().data ());
 		}
 	}
 
@@ -294,7 +294,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, int a
 		type |= RObject::S4Object;
 		if (no_recurse) {
 			type |= RObject::Incomplete;
-			RK_DO (qDebug ("Depth limit reached. Will not recurse into slots of %s", name.toLatin1().data ()), RBACKEND, DL_DEBUG);
+			RK_DEBUG (RBACKEND, DL_DEBUG, "Depth limit reached. Will not recurse into slots of %s", name.toLatin1().data ());
 		} else {
 			RData::RDataStorage dummy (1, 0);
 			dummy[0] = new RData ();
@@ -345,7 +345,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, int a
 		QStringList childnames = RKRSupport::SEXPToStringList (childnames_s);
 		int childcount = childnames.size ();
 		if (childcount > NAMED_CHILDREN_LIMIT) {
-			RK_DO (qDebug ("object %s has %d named children. Will only retrieve the first %d", name.toLatin1().data (), childcount, NAMED_CHILDREN_LIMIT), RBACKEND, DL_WARNING);
+			RK_DEBUG (RBACKEND, DL_WARNING, "object %s has %d named children. Will only retrieve the first %d", name.toLatin1().data (), childcount, NAMED_CHILDREN_LIMIT);
 			childcount = NAMED_CHILDREN_LIMIT;
 		}
 
@@ -355,7 +355,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, int a
 		}
 
 		if (do_env) {
-			RK_DO (qDebug ("recurse into environment %s", name.toLatin1().data ()), RBACKEND, DL_DEBUG);
+			RK_DEBUG (RBACKEND, DL_DEBUG, "recurse into environment %s", name.toLatin1().data ());
 			if (!Rf_isEnvironment (value)) {
 				// some classes (ReferenceClasses) are identified as envionments by is.environment(), but are not internally ENVSXPs.
 				// For these, Rf_findVar would fail.
@@ -379,7 +379,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, int a
 				UNPROTECT (2); /* current_childname, child */
 			}
 		} else if (do_cont) {
-			RK_DO (qDebug ("recurse into list %s", name.toLatin1().data ()), RBACKEND, DL_DEBUG);
+			RK_DEBUG (RBACKEND, DL_DEBUG, "recurse into list %s", name.toLatin1().data ());
 			// fewer elements than names() can happen, although I doubt it is supposed to happen.
 			// see http://sourceforge.net/tracker/?func=detail&aid=3002439&group_id=50231&atid=459007
 			bool may_be_special = Rf_length (value) < childcount;
@@ -416,7 +416,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, int a
 
 			if (no_recurse) {
 				type |= RObject::Incomplete;
-				RK_DO (qDebug ("Depth limit reached. Will not recurse into namespace of %s", name.toLatin1().data ()), RBACKEND, DL_DEBUG);
+				RK_DEBUG (RBACKEND, DL_DEBUG, "Depth limit reached. Will not recurse into namespace of %s", name.toLatin1().data ());
 			} else {
 				RData::RDataStorage dummy (1, 0);
 				dummy[0] = new RData ();

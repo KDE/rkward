@@ -94,7 +94,7 @@ void RKXMLGUISyncerPrivate::uiRcFileChanged (const QString &path)  {
 		}
 		RK_ASSERT (client->localXMLFile () == path);
 		client->reloadXML ();
-		RK_DO (qDebug ("reloaded client %p for file %s", client, qPrintable (path)), MISC, DL_DEBUG);
+		RK_DEBUG (MISC, DL_DEBUG, "reloaded client %p for file %s", client, qPrintable (path));
 		if (client->factory ()) {
 			affected_factories.insert (client->factory ());
 			connect (client->factory (), SIGNAL (destroyed(QObject*)), this, SLOT (guiFactoryDestroyed(QObject*)));
@@ -120,7 +120,7 @@ void RKXMLGUISyncerPrivate::rebuildGUIs () {
 		KXMLGUIFactory *factory = *(affected_factories.begin ());
 		affected_factories.remove (factory);
 
-		RK_DO (qDebug ("rebuilding factory %p", factory), MISC, DL_DEBUG);
+		RK_DEBUG (MISC, DL_DEBUG, "rebuilding factory %p", factory);
 		QList<KXMLGUIClient*> clients = factory->clients ();
 		for (int i = clients.size () - 1; i >= 0; --i) {
 			factory->removeClient (clients[i]);
@@ -132,7 +132,7 @@ void RKXMLGUISyncerPrivate::rebuildGUIs () {
 				clients[i]->actionCollection ()->readSettings();
 			}
 		}
-		RK_DO (qDebug ("done rebuilding factory"), MISC, DL_DEBUG);
+		RK_DEBUG (MISC, DL_DEBUG, "done rebuilding factory");
 	}
 }
 
@@ -157,7 +157,7 @@ void RKXMLGUISyncerPrivate::actionCollectionDestroyed (QObject *object) {
 		notifier->deleteLater ();
 	}
 
-	RK_DO (qDebug ("action collection destroyed. Still watch %d clients with %d notifiers", client_map.size (), notifier_map.size ()), MISC, DL_DEBUG);
+	RK_DEBUG (MISC, DL_DEBUG, "action collection destroyed. Still watch %d clients with %d notifiers", client_map.size (), notifier_map.size ());
 }
 
 void RKXMLGUISyncerPrivate::guiFactoryDestroyed (QObject *object) {

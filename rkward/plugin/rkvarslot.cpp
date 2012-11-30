@@ -128,7 +128,7 @@ void RKVarSlot::availablePropertyChanged (RKComponentPropertyBase *) {
 	list->clear ();
 	item_map.clear ();
 
-	RK_DO (qDebug ("contained in varslot: %s", qPrintable (fetchStringValue (available))), PLUGIN, DL_DEBUG);
+	RK_DEBUG (PLUGIN, DL_DEBUG, "contained in varslot: %s", qPrintable (fetchStringValue (available)));
 
 	RObject::ObjectList objlist = available->objectList ();
 	for (int i = 0; i < objlist.count (); ++i) {
@@ -171,7 +171,7 @@ void RKVarSlot::updateLook () {
 void RKVarSlot::selectPressed () {
 	RK_TRACE (PLUGIN);
 
-	RK_DO (qDebug ("select press in varslot: mode %d, source %s, selected %s", add_mode, qPrintable (fetchStringValue (source)), qPrintable (fetchStringValue (selected))), PLUGIN, DL_DEBUG);
+	RK_DEBUG (PLUGIN, DL_DEBUG, "select press in varslot: mode %d, source %s, selected %s", add_mode, qPrintable (fetchStringValue (source)), qPrintable (fetchStringValue (selected)));
 
 	// first update the properties
 	if (add_mode) {

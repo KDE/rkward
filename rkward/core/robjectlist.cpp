@@ -96,7 +96,7 @@ void RObjectList::updateFromR (RCommandChain *chain) {
 	if (update_chain) {
 		// gee, looks like another update is still on the way. lets schedule one for later:
 		update_timer->start (UPDATE_DELAY_INTERVAL);
-		RK_DO (qDebug ("another object-list update is already running. Rescheduling a further update for later"), OBJECTS, DL_DEBUG);
+		RK_DEBUG (OBJECTS, DL_DEBUG, "another object-list update is already running. Rescheduling a further update for later");
 		return;
 	}
 
@@ -114,7 +114,7 @@ void RObjectList::updateFromR (RCommandChain *chain, const QStringList &current_
 	if (update_chain) {
 		// gee, looks like another update is still on the way. lets schedule one for later:
 		update_timer->start (UPDATE_DELAY_INTERVAL);
-		RK_DO (qDebug ("another object-list update is already running. Rescheduling a further update for later"), OBJECTS, DL_DEBUG);
+		RK_DEBUG (OBJECTS, DL_DEBUG, "another object-list update is already running. Rescheduling a further update for later");
 		return;
 	}
 
@@ -142,7 +142,7 @@ void RObjectList::rCommandDone (RCommand *command) {
 		RKGlobals::rInterface ()->closeChain (update_chain);
 		update_chain = 0;
 	
-		RK_DO (qDebug ("object list update complete"), OBJECTS, DL_DEBUG);
+		RK_DEBUG (OBJECTS, DL_DEBUG, "object list update complete");
 		emit (updateComplete ());
 	} else {
 		RK_ASSERT (false);
@@ -182,7 +182,7 @@ void RObjectList::updateEnvironments (const QStringList &env_names, bool force_g
 		int new_pos = newchildmap.indexOf (obj);
 		
 		if (new_pos < 0) {	// environment is gone
-			RK_DO (qDebug ("removing toplevel environment %s from list", obj->getShortName ().toLatin1 ().data ()), OBJECTS, DL_INFO);
+			RK_DEBUG (OBJECTS, DL_INFO, "removing toplevel environment %s from list", obj->getShortName ().toLatin1 ().data ());
 			if (RKGlobals::tracker ()->removeObject (obj, 0, true)) --i;
 			else (newchildmap.insert (i, obj));
 		} else if (new_pos != i) {

@@ -89,7 +89,7 @@ RKComponentBase* RKAbstractOptionSelector::lookupComponent (const QString &ident
 
 		QString mod = identifier.section (".", 1);
 		if (mod != "enabled") {
-			RK_DO (qDebug ("options do not have property '%s'", mod.toLatin1().data ()), PLUGIN, DL_DEBUG);
+			RK_DEBUG (PLUGIN, DL_DEBUG, "options do not have property '%s'", mod.toLatin1().data ());
 			return this;
 		}
 
@@ -118,11 +118,11 @@ void RKAbstractOptionSelector::propertyChanged (RKComponentPropertyBase *propert
 		RK_ASSERT (false);
 	}
 	if (new_id < 0) {
-		RK_DO (qDebug ("option selector '%s' has no such option:", qPrintable (getIdInParent ())), PLUGIN, DL_ERROR);
+		RK_DEBUG (PLUGIN, DL_ERROR, "option selector '%s' has no such option:", qPrintable (getIdInParent ()));
 		if (property == string) {
-			RK_DO (qDebug ("'%s'", qPrintable (fetchStringValue (string))), PLUGIN, DL_ERROR);
+			RK_DEBUG (PLUGIN, DL_ERROR, "'%s'", qPrintable (fetchStringValue (string)));
 		} else {
-			RK_DO (qDebug ("index %d", number->intValue ()), PLUGIN, DL_ERROR);
+			RK_DEBUG (PLUGIN, DL_ERROR, "index %d", number->intValue ());
 		}
 		return;
 	}
@@ -169,7 +169,7 @@ void RKAbstractOptionSelector::ItemPropertyChanged (RKComponentPropertyBase *pro
 				}
 			}
 			if (settable_opt >= 0) itemSelected (settable_opt);
-			else RK_DO (qDebug ("No option left enabled. Disable the entire component '%s', instead!", qPrintable (getIdInParent ())), PLUGIN, DL_ERROR);
+			else RK_DEBUG (PLUGIN, DL_ERROR, "No option left enabled. Disable the entire component '%s', instead!", qPrintable (getIdInParent ()));
 		}
 	}
 

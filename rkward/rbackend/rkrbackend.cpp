@@ -117,7 +117,7 @@ extern "C" {
 
 ///// interrupting R
 void RK_scheduleIntr () {
-	RK_DO (qDebug ("interrupt scheduled"), RBACKEND, DL_DEBUG);
+	RK_DEBUG (RBACKEND, DL_DEBUG, "interrupt scheduled");
 	RKRBackend::repl_status.interrupted = true;
 #ifdef Q_WS_WIN
 	UserBreak = 1;
@@ -150,7 +150,7 @@ void RKRBackend::interruptCommand (int command_id) {
 	if (all_current_commands.isEmpty ()) return;
 	if ((command_id == -1) || (all_current_commands.last ()->id == command_id)) {
 		if (!too_late_to_interrupt) {
-			RK_DO (qDebug ("scheduling interrupt for command id %d", command_id), RBACKEND, DL_DEBUG);
+			RK_DEBUG (RBACKEND, DL_DEBUG, "scheduling interrupt for command id %d", command_id);
 			scheduleInterrupt ();
 		}
 	} else {
@@ -158,7 +158,7 @@ void RKRBackend::interruptCommand (int command_id) {
 		foreach (RCommandProxy *candidate, all_current_commands) {
 			if (candidate->id == command_id) {
 				if (!current_commands_to_cancel.contains (candidate)) {
-					RK_DO (qDebug ("scheduling delayed interrupt for command id %d", command_id), RBACKEND, DL_DEBUG);
+					RK_DEBUG (RBACKEND, DL_DEBUG, "scheduling delayed interrupt for command id %d", command_id);
 					current_commands_to_cancel.append (candidate);
 				}
 			}
@@ -173,7 +173,7 @@ void clearPendingInterrupt_Worker (void *) {
 void RKRBackend::clearPendingInterrupt () {
 	RK_TRACE (RBACKEND);
 	bool passed = R_ToplevelExec (clearPendingInterrupt_Worker, 0);
-	if (!passed) RK_DO (qDebug ("pending interrupt cleared"), RBACKEND, DL_DEBUG);
+	if (!passed) RK_DEBUG (RBACKEND, DL_DEBUG, "pending interrupt cleared");
 }
 
 // some functions we need that are not declared
@@ -883,13 +883,13 @@ SEXP doError (SEXP call) {
 			if (RKRBackend::repl_status.user_command_status != RKRBackend::RKReplStatus::ReplIterationKilled) {	// was interrupted only to step out of the repl iteration
 				QMutexLocker lock (&(RKRBackend::this_pointer->all_current_commands_mutex));
 				foreach (RCommandProxy *command, RKRBackend::this_pointer->all_current_commands) command->status |= RCommand::Canceled;
-				RK_DO (qDebug ("interrupted"), RBACKEND, DL_DEBUG);
+				RK_DEBUG (RBACKEND, DL_DEBUG, "interrupted");
 			}
 		}
 	} else if (RKRBackend::repl_status.user_command_status != RKRBackend::RKReplStatus::ReplIterationKilled) {
 		QString string = RKRSupport::SEXPToString (call);
 		RKRBackend::this_pointer->handleOutput (string, string.length (), ROutput::Error);
-		RK_DO (qDebug ("error '%s'", qPrintable (string)), RBACKEND, DL_DEBUG);
+		RK_DEBUG (RBACKEND, DL_DEBUG, "error '%s'", qPrintable (string));
 	}
 	return R_NilValue;
 }
@@ -933,9 +933,9 @@ void R_CheckStackWrapper (void *) {
 SEXP doUpdateLocale () {
 	RK_TRACE (RBACKEND);
 
-	RK_DO (qDebug ("Changing locale"), RBACKEND, DL_WARNING);
+	RK_DEBUG (RBACKEND, DL_WARNING, "Changing locale");
 	RKRBackend::this_pointer->current_locale_codec = RKGetCurrentLocaleCodec ();
-	RK_DO (qDebug ("New locale codec is %s", RKRBackend::this_pointer->current_locale_codec->name ().data ()), RBACKEND, DL_WARNING);
+	RK_DEBUG (RBACKEND, DL_WARNING, "New locale codec is %s", RKRBackend::this_pointer->current_locale_codec->name ().data ());
 
 	return R_NilValue;
 }
@@ -1024,8 +1024,8 @@ bool RKRBackend::startR () {
 	// this has to come *after* the first setup_Rmainloop ()!
 	Rboolean stack_ok = R_ToplevelExec (R_CheckStackWrapper, (void *) 0);
 	if (!stack_ok) {
-		RK_DO (qDebug ("R_CheckStack() failed during initialization. Will disable stack checking and try to re-initialize."), RBACKEND, DL_WARNING);
-		RK_DO (qDebug ("Whether or not things work after this, *please* submit a bug report."), RBACKEND, DL_WARNING);
+		RK_DEBUG (RBACKEND, DL_WARNING, "R_CheckStack() failed during initialization. Will disable stack checking and try to re-initialize.");
+		RK_DEBUG (RBACKEND, DL_WARNING, "Whether or not things work after this, *please* submit a bug report.");
 		R_CStackStart = (uintptr_t) -1;
 		R_CStackLimit = (uintptr_t) -1;
 		setup_Rmainloop ();
@@ -1110,7 +1110,7 @@ void completeForkMaster () {
 
 //	This was used to show a warning message. Unfortunately, however, forks also occur on every popen (i.e. in system(..., intern=TRUE).
 //	RKRBackend::this_pointer->handlePlainGenericRequest (QStringList ("forkNotification"), false);
-	RK_DO (qDebug ("Backend process forked (for the first time, this session)"), RBACKEND, DL_WARNING);
+	RK_DEBUG (RBACKEND, DL_WARNING, "Backend process forked (for the first time, this session)");
 //	NOTE: perhaps we can heuristically differentiate from popen by checking sys.calls() for something with "fork" in it. 
 //	esp., in case we discover adverse side-effects of blocking SIGCHLD, we should attempt this
 }
@@ -1350,7 +1350,7 @@ void RKRBackend::run (const QString &locale_dir) {
 
 void RKRBackend::commandFinished (bool check_object_updates_needed) {
 	RK_TRACE (RBACKEND);
-	RK_DO (qDebug ("done running command"), RBACKEND, DL_DEBUG);
+	RK_DEBUG (RBACKEND, DL_DEBUG, "done running command");
 
 	{
 		QMutexLocker lock (&all_current_commands_mutex);
@@ -1429,7 +1429,7 @@ RCommandProxy* RKRBackend::handleRequest (RBackendRequest *request, bool mayHand
 	{
 		QMutexLocker lock (&all_current_commands_mutex);
 		if (current_commands_to_cancel.contains (current_command)) {
-			RK_DO (qDebug ("will now interrupt parent command"), RBACKEND, DL_DEBUG);
+			RK_DEBUG (RBACKEND, DL_DEBUG, "will now interrupt parent command");
 			current_commands_to_cancel.removeAll (current_command);
 			scheduleInterrupt ();
 		}
@@ -1530,14 +1530,14 @@ void RKRBackend::checkObjectUpdatesNeeded (bool check_list) {
 
 	if (check_list) {	
 	// TODO: avoid parsing this over and over again
-		RK_DO (qDebug ("checkObjectUpdatesNeeded: getting search list"), RBACKEND, DL_TRACE);
+		RK_DEBUG (RBACKEND, DL_TRACE, "checkObjectUpdatesNeeded: getting search list");
 		RCommandProxy *dummy = runDirectCommand ("search ()\n", RCommand::GetStringVector);
 		if (dummy->stringVector () != toplevel_env_names) search_update_needed = true;
 		if (search_update_needed) toplevel_env_names = dummy->stringVector ();
 		delete dummy;
 	
 	// TODO: avoid parsing this over and over again
-		RK_DO (qDebug ("checkObjectUpdatesNeeded: getting globalenv symbols"), RBACKEND, DL_TRACE);
+		RK_DEBUG (RBACKEND, DL_TRACE, "checkObjectUpdatesNeeded: getting globalenv symbols");
 		dummy = runDirectCommand ("ls (globalenv (), all.names=TRUE)\n", RCommand::GetStringVector);
 		QStringList new_globalenv_toplevel_names = dummy->stringVector ();
 		if (new_globalenv_toplevel_names.count () != global_env_toplevel_names.count ()) {
@@ -1567,7 +1567,7 @@ void RKRBackend::checkObjectUpdatesNeeded (bool check_list) {
 	}
 
 	if (search_update_needed || globalenv_update_needed) {
-		RK_DO (qDebug ("checkObjectUpdatesNeeded: updating watches"), RBACKEND, DL_TRACE);
+		RK_DEBUG (RBACKEND, DL_TRACE, "checkObjectUpdatesNeeded: updating watches");
 		runDirectCommand (".rk.watch.globalenv ()\n");
 	}
 

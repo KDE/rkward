@@ -94,7 +94,7 @@ void RObjectBrowser::initialize () {
 	if (internal) return;
 	if (locked) return;
 
-	RK_DO (qDebug ("creating workspace browser"), APP, DL_INFO);
+	RK_DEBUG (APP, DL_INFO, "creating workspace browser");
 
 	internal = new RObjectBrowserInternal (layout_widget);
 	setFocusProxy (internal);

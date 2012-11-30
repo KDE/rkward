@@ -515,7 +515,7 @@ bool RKHTMLWindow::renderRKHelp (const KUrl &url) {
 		} else {
 			help_file_name = help_base_dir + url.path () + ".rkh";
 		}
-		RK_DO (qDebug ("rendering help page for local file %s", help_file_name.toLatin1().data()), APP, DL_DEBUG);
+		RK_DEBUG (APP, DL_DEBUG, "rendering help page for local file %s", help_file_name.toLatin1().data());
 
 		// open help file
 		QDomElement help_doc_element = help_xml->openXMLFile (help_file_name, DL_ERROR);
@@ -673,7 +673,7 @@ QString RKHTMLWindow::renderHelpFragment (QDomElement &fragment) {
 	ret.append ("</p>");
 	ret.replace ("\n\n", "</p>\n<p>");
 
-	RK_DO (qDebug ("%s", ret.toLatin1 ().data ()), APP, DL_DEBUG);
+	RK_DEBUG (APP, DL_DEBUG, "%s", ret.toLatin1 ().data ());
 	return ret;
 }
 
@@ -705,7 +705,7 @@ void RKHTMLWindow::prepareHelpLink (QDomElement *link_element) {
 
 			if (text.isEmpty ()) {
 				text = i18n ("BROKEN REFERENCE");
-				RK_DO (qDebug ("Broken reference to %s", url.path ().toLatin1 ().data ()), APP, DL_WARNING);
+				RK_DEBUG (APP, DL_WARNING, "Broken reference to %s", url.path ().toLatin1 ().data ());
 			}
 
 			link_element->appendChild (link_element->ownerDocument ().createTextNode (text));

@@ -148,7 +148,7 @@ void RKComponentPropertyBase::governorValueChanged (RKComponentPropertyBase *pro
 
 void RKComponentPropertyBase::warnModifierNotRecognized (const QString &modifier) {
 	RK_TRACE (PLUGIN);
-	RK_DO (qDebug ("Modifier '%s' not recognized.", modifier.toLatin1 (). data ()), PLUGIN, DL_ERROR);
+	RK_DEBUG (PLUGIN, DL_ERROR, "Modifier '%s' not recognized.", modifier.toLatin1 (). data ());
 }
 
 
@@ -398,7 +398,7 @@ void RKComponentPropertyInt::setMin (int lower) {
 
 	validator->setBottom (lower);
 	if (default_value < lower) {
-		RK_DO (qDebug ("default value in integer property is lower than lower boundary"), PLUGIN, DL_DEBUG);	// actually this is ok. In this case the default is simply "invalid"
+		RK_DEBUG (PLUGIN, DL_DEBUG, "default value in integer property is lower than lower boundary");	// actually this is ok. In this case the default is simply "invalid"
 	}
 	if (current_value < lower) {
 		setIntValue (lower);
@@ -410,7 +410,7 @@ void RKComponentPropertyInt::setMax (int upper) {
 
 	validator->setTop (upper);
 	if (default_value > upper) {
-		RK_DO (qDebug ("default value in integer property is larger than upper boundary"), PLUGIN, DL_DEBUG);	// see above
+		RK_DEBUG (PLUGIN, DL_DEBUG, "default value in integer property is larger than upper boundary");	// see above
 	}
 	if (current_value > upper) {
 		setIntValue (upper);
@@ -557,7 +557,7 @@ void RKComponentPropertyDouble::setMin (double lower) {
 
 	validator->setBottom (lower);
 	if (default_value < lower) {
-		RK_DO (qDebug ("default value in double property is lower than lower boundary"), PLUGIN, DL_DEBUG);	// actually this is ok. In this case the default is simply "invalid"
+		RK_DEBUG (PLUGIN, DL_DEBUG, "default value in double property is lower than lower boundary");	// actually this is ok. In this case the default is simply "invalid"
 	}
 	if (current_value < lower) {
 		setDoubleValue (lower);
@@ -569,7 +569,7 @@ void RKComponentPropertyDouble::setMax (double upper) {
 
 	validator->setTop (upper);
 	if (default_value > upper) {
-		RK_DO (qDebug ("default value in double property is larger than upper boundary"), PLUGIN, DL_DEBUG);	// see above
+		RK_DEBUG (PLUGIN, DL_DEBUG, "default value in double property is larger than upper boundary");	// see above
 	}
 	if (current_value > upper) {
 		setDoubleValue (upper);
@@ -956,7 +956,7 @@ void RKComponentPropertyRObjects::connectToGovernor (RKComponentPropertyBase *go
 				if (ogov->dims <= 0) {
 					ogov->dims = dims;
 				} else if (ogov->dims != dims) {
-					RK_DO (qDebug ("Could not reconcile dimensionality in RObject properties"), PLUGIN, DL_WARNING);
+					RK_DEBUG (PLUGIN, DL_WARNING, "Could not reconcile dimensionality in RObject properties");
 				}
 			}
 			if (ogov->min_length < min_length) {
@@ -993,7 +993,7 @@ void RKComponentPropertyRObjects::connectToGovernor (RKComponentPropertyBase *go
 						}
 					}
 					if (ogov->classes.isEmpty ()) {
-						RK_DO (qDebug ("Incompatible class filters for RObject properties"), PLUGIN, DL_WARNING);
+						RK_DEBUG (PLUGIN, DL_WARNING, "Incompatible class filters for RObject properties");
 						ogov->classes = classes;
 					}
 				}
@@ -1013,7 +1013,7 @@ void RKComponentPropertyRObjects::connectToGovernor (RKComponentPropertyBase *go
 						}
 					}
 					if (ogov->types.isEmpty ()) {
-						RK_DO (qDebug ("Incompatible type filters for RObject properties"), PLUGIN, DL_WARNING);
+						RK_DEBUG (PLUGIN, DL_WARNING, "Incompatible type filters for RObject properties");
 						ogov->types = types;
 					}
 				}
@@ -1163,7 +1163,7 @@ void RKComponentPropertyConvert::setSources (const QString &source_string) {
 			sources.append (s);
 			connect (s.property, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (sourcePropertyChanged (RKComponentPropertyBase *)));
 		} else {
-			RK_DO (qDebug ("Not found or not a property: %s", (*it).toLatin1 ().data ()), PLUGIN, DL_WARNING);
+			RK_DEBUG (PLUGIN, DL_WARNING, "Not found or not a property: %s", (*it).toLatin1 ().data ());
 		}
 	}
 
@@ -1214,7 +1214,7 @@ void RKComponentPropertyConvert::sourcePropertyChanged (RKComponentPropertyBase 
 				double val = source.property->value (source.modifier).toDouble (&ok);
 				if (!ok) {
 					val = min;
-					RK_DO (qDebug ("Non-numeric property in convert sources, cannot check range"), PLUGIN, DL_WARNING);
+					RK_DEBUG (PLUGIN, DL_WARNING, "Non-numeric property in convert sources, cannot check range");
 				}
 
 				if ((min > val) || (max < val)) {
@@ -1231,7 +1231,7 @@ void RKComponentPropertyConvert::sourcePropertyChanged (RKComponentPropertyBase 
 						return;
 					}
 				} else {
-					RK_DO (qDebug ("Non-boolean property in convert sources, cannot check AND"), PLUGIN, DL_WARNING);
+					RK_DEBUG (PLUGIN, DL_WARNING, "Non-boolean property in convert sources, cannot check AND");
 				}
 				break;
 			} case Or: {
@@ -1243,7 +1243,7 @@ void RKComponentPropertyConvert::sourcePropertyChanged (RKComponentPropertyBase 
 						return;
 					}
 				} else {
-					RK_DO (qDebug ("Non-boolean property in convert sources, cannot check OR"), PLUGIN, DL_WARNING);
+					RK_DEBUG (PLUGIN, DL_WARNING, "Non-boolean property in convert sources, cannot check OR");
 				}
 				break;
 			}

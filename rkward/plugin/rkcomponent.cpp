@@ -29,7 +29,7 @@ RKComponentBase* RKComponentBase::lookupComponent (const QString &identifier, QS
 	RK_ASSERT (remainder);
 
 	if (identifier.isEmpty ()) return this;
-	RK_DO (qDebug ("looking up '%s'", identifier.toLatin1 ().data ()), PLUGIN, DL_DEBUG);
+	RK_DEBUG (PLUGIN, DL_DEBUG, "looking up '%s'", identifier.toLatin1 ().data ());
 
 	RKComponentBase *child = child_map.value (identifier.section (".", 0, 0));
 	if (!child) {	// if we do not have such a child, return this (and set remainder)
@@ -75,11 +75,11 @@ void RKComponentBase::setPropertyValues (const PropertyValueMap *list, bool warn
 		if (mod.isEmpty () && prop->isProperty ()) {		// found a property
 			RKComponentPropertyBase* p = static_cast<RKComponentPropertyBase*>(prop);
 			if (p->isInternal () && warn) {
-				RK_DO (qDebug ("Setting value for property %s, which is marked internal.", qPrintable (it.key ())), PLUGIN, DL_WARNING);
+				RK_DEBUG (PLUGIN, DL_WARNING, "Setting value for property %s, which is marked internal.", qPrintable (it.key ()));
 			}
 			p->setValue (it.value ());
 		} else {
-			if (warn) RK_DO (qDebug ("Property %s not found while setting values. Remainder was %s.", qPrintable (it.key ()), qPrintable (mod)), PLUGIN, DL_WARNING);
+			if (warn) RK_DEBUG (PLUGIN, DL_WARNING, "Property %s not found while setting values. Remainder was %s.", qPrintable (it.key ()), qPrintable (mod));
 		}
 	}
 }
@@ -185,12 +185,12 @@ QVariant RKComponentBase::fetchValue (const QString &id, const int hint) {
 		if (hint == BooleanValue) {
 			bool ok;
 			return (RKComponentPropertyBool::variantToBool (val, &ok));
-			if (!ok) RK_DO (qDebug ("Could not convert value of %s to boolean", qPrintable (id)), PLUGIN, DL_WARNING);
+			if (!ok) RK_DEBUG (PLUGIN, DL_WARNING, "Could not convert value of %s to boolean", qPrintable (id));
 		} else {
 			if (hint == StringlistValue) {
-				if (val.type () != QVariant::StringList) RK_DO (qDebug ("Value of %s is not a string list", qPrintable (id)), PLUGIN, DL_WARNING);
+				if (val.type () != QVariant::StringList) RK_DEBUG (PLUGIN, DL_WARNING, "Value of %s is not a string list", qPrintable (id));
 			} else if (hint == NumericValue) {
-				if (!val.canConvert (QVariant::Double)) RK_DO (qDebug ("Value of %s is not numeric", qPrintable (id)), PLUGIN, DL_WARNING);
+				if (!val.canConvert (QVariant::Double)) RK_DEBUG (PLUGIN, DL_WARNING, "Value of %s is not numeric", qPrintable (id));
 			} else {
 				RK_ASSERT (false);
 			}
@@ -202,7 +202,7 @@ QVariant RKComponentBase::fetchValue (const QString &id, const int hint) {
 QVariant RKComponentBase::value (const QString &modifier) {
 	RK_TRACE (PLUGIN);
 
-	RK_DO (qDebug ("Component type %d does not have a value. Remaining modifier is: '%s'", type (), modifier.toLatin1 ().data ()), PLUGIN, DL_WARNING);
+	RK_DEBUG (PLUGIN, DL_WARNING, "Component type %d does not have a value. Remaining modifier is: '%s'", type (), modifier.toLatin1 ().data ());
 	return QVariant ();
 }
 
@@ -223,7 +223,7 @@ RKComponentBase::ComponentStatus RKComponentBase::recursiveStatus () {
 	if (isComponent () && static_cast<RKComponent*>(this)->isInactive ()) req = false;
 	if (!req) return Satisfied;
 	if (children_satisfied && isValid ()) return Satisfied;
- 	if (isComponent ()) RK_DO (qDebug ("component not satisfied: %s", qPrintable (static_cast<RKComponent*> (this)->getIdInParent ())), PLUGIN, DL_DEBUG);
+ 	if (isComponent ()) RK_DEBUG (PLUGIN, DL_DEBUG, "component not satisfied: %s", qPrintable (static_cast<RKComponent*> (this)->getIdInParent ()));
 	return Unsatisfied;
 }
 

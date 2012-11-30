@@ -49,10 +49,10 @@ RKTextMatrix RKTextMatrix::matrixFromClipboard () {
 	// treated the same. We should however encourage external senders to
 	// provided the two in order.
 	if (data->hasFormat ("text/tab-separated-values")) {
-		RK_DO (qDebug ("paste tsv"), EDITOR, DL_DEBUG);
+		RK_DEBUG (EDITOR, DL_DEBUG, "paste tsv");
 		return (matrixFromSeparatedValues (QString::fromLocal8Bit (data->data ("text/tab-separated-values"))));
 	} else if (data->hasText ()) {
-		RK_DO (qDebug ("paste plain text"), EDITOR, DL_DEBUG);
+		RK_DEBUG (EDITOR, DL_DEBUG, "paste plain text");
 		return (matrixFromSeparatedValues (data->text ()));
 	}
 

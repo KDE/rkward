@@ -765,7 +765,7 @@ void RKComponentBuilder::makeConnections () {
 	XMLHelper *xml = XMLHelper::getStaticHelper ();
 
 	for (ConnectionList::const_iterator it = connection_list.constBegin (); it != connection_list.constEnd (); ++it) {
-		RK_DO (qDebug ("Connecting '%s' to '%s'", (*it).client_property.toLatin1 ().data (), (*it).governor_property.toLatin1 ().data ()), PLUGIN, DL_DEBUG);
+		RK_DEBUG (PLUGIN, DL_DEBUG, "Connecting '%s' to '%s'", (*it).client_property.toLatin1 ().data (), (*it).governor_property.toLatin1 ().data ());
 
 		QString dummy;
 		RKComponentBase *client = parent->lookupComponent ((*it).client_property, &dummy);

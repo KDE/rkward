@@ -222,7 +222,7 @@ void RKAbstractTransmitter::transmitRequest (RBackendRequest *request) {
 	}
 
 	QByteArray buffer = RKRBackendSerializer::serialize (*request);
-	RK_DO (qDebug ("Transmitting request of length %s", QString::number (buffer.length ()).toLocal8Bit ().data ()), RBACKEND, DL_DEBUG);
+	RK_DEBUG (RBACKEND, DL_DEBUG, "Transmitting request of length %s", QString::number (buffer.length ()).toLocal8Bit ().data ());
 	connection->write (QString::number (buffer.length ()).toLocal8Bit () + "\n");
 	connection->write (buffer);
 }

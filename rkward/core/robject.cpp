@@ -255,7 +255,7 @@ void RObject::rCommandDone (RCommand *command) {
 
 	if (command->getFlags () == ROBJECT_UDPATE_STRUCTURE_COMMAND) {
 		if (command->failed ()) {
-			RK_DO (qDebug ("command failed while trying to update object '%s'. No longer present?", getShortName ().toLatin1 ().data ()), OBJECTS, DL_INFO);
+			RK_DEBUG (OBJECTS, DL_INFO, "command failed while trying to update object '%s'. No longer present?", getShortName ().toLatin1 ().data ());
 			// this may happen, if the object has been removed in the workspace in between
 			RKGlobals::tracker ()->removeObject (this, 0, true);
 			return;
@@ -678,7 +678,7 @@ QStringList RObject::parseObjectPath (const QString &path) {
 		}
 	}
 	if (!fragment.isEmpty ()) ret.append (fragment);
-	RK_DO (qDebug ("parsed object path %s into %s", qPrintable (path), qPrintable (ret.join ("-"))), OBJECTS, DL_DEBUG);
+	RK_DEBUG (OBJECTS, DL_DEBUG, "parsed object path %s into %s", qPrintable (path), qPrintable (ret.join ("-")));
 	return ret;
 }
 

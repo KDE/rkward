@@ -120,7 +120,7 @@ void RKContextHandler::invokeComponent (RKComponentHandle *handle) {
 
 			RK_ASSERT (it.value ()->isProperty ());
 			if (!(client && remainder.isEmpty () && client->isProperty () && it.value ()->isProperty ())) {
-				RK_DO (qDebug ("Could not set context property %s", id.toLatin1 ().data ()), PLUGIN, DL_INFO);
+				RK_DEBUG (PLUGIN, DL_INFO, "Could not set context property %s", id.toLatin1 ().data ());
 				continue;
 			}
 

@@ -34,7 +34,7 @@ RKRBackendTransmitter::RKRBackendTransmitter (const QString &servername, const Q
 RKRBackendTransmitter::~RKRBackendTransmitter () {
 	RK_TRACE (RBACKEND);
 	if (!current_sync_requests.isEmpty ()) {
-		RK_DO (qDebug ("%d pending requests while exiting RKRBackendTransmitter", current_sync_requests.size ()), RBACKEND, DL_WARNING);
+		RK_DEBUG (RBACKEND, DL_WARNING, "%d pending requests while exiting RKRBackendTransmitter", current_sync_requests.size ());
 	}
 
 	if (!connection) return;
@@ -78,7 +78,7 @@ void RKRBackendTransmitter::writeRequest (RBackendRequest *request) {
 
 	if (request->synchronous) {
 		current_sync_requests.append (request);
-		RK_DO (qDebug ("Expecting replies for %d requests (added %p)", current_sync_requests.size (), request), RBACKEND, DL_DEBUG);
+		RK_DEBUG (RBACKEND, DL_DEBUG, "Expecting replies for %d requests (added %p)", current_sync_requests.size (), request);
 	} else {
 		delete request;
 	}
@@ -104,7 +104,7 @@ void RKRBackendTransmitter::requestReceived (RBackendRequest* request) {
 			current_sync_request->mergeReply (request);
 			current_sync_request->done = true;
 		}
-		RK_DO (qDebug ("Expecting replies for %d requests (popped %p)", current_sync_requests.size (), current_sync_request), RBACKEND, DL_DEBUG);
+		RK_DEBUG (RBACKEND, DL_DEBUG, "Expecting replies for %d requests (popped %p)", current_sync_requests.size (), current_sync_request);
 	}
 	delete request;
 }
@@ -126,7 +126,7 @@ void RKRBackendTransmitter::flushOutput (bool force) {
 void RKRBackendTransmitter::handleTransmissionError (const QString &message) {
 	RK_TRACE (RBACKEND);
 
-	RK_DO (qDebug ("%s", qPrintable ("Transmission error " + message)), RBACKEND, DL_ERROR);
+	RK_DEBUG (RBACKEND, DL_ERROR, "%s", qPrintable ("Transmission error " + message));
 	RKRBackend::tryToDoEmergencySave ();
 }
 

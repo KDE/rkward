@@ -107,7 +107,7 @@ void RCommand::addReceiver (RCommandReceiver *receiver) {
 		}
 	}
 
-	RK_DO (qDebug ("Too many receivers for command"), RBACKEND, DL_ERROR);
+	RK_DEBUG (RBACKEND, DL_ERROR, "Too many receivers for command");
 }
 
 void RCommand::removeReceiver (RCommandReceiver *receiver) {
@@ -122,7 +122,7 @@ void RCommand::removeReceiver (RCommandReceiver *receiver) {
 		}
 	}
 
-	RK_DO (qDebug ("Was not a receiver in RCommand::removeReceiver: %p", receiver), RBACKEND, DL_WARNING);
+	RK_DEBUG (RBACKEND, DL_WARNING, "Was not a receiver in RCommand::removeReceiver: %p", receiver);
 }
 
 void RCommand::finished () {

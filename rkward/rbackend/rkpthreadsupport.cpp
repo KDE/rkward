@@ -89,7 +89,7 @@ void RKGetCurrentThreadStackLimits (size_t *size, void **base, char *reference) 
 	// sanity check, as on some systems the stack direction is mis-detected somehow.
 	long usage = direction * ((unsigned long) (*base) - (unsigned long) (reference));
 	if ((usage < 0) || (unsigned long) usage > (unsigned long) (*size)) {
-		RK_DO (qDebug ("Stack boundaries detection produced bad results. Disabling stack checking."), RBACKEND, DL_WARNING);
+		RK_DEBUG (RBACKEND, DL_WARNING, "Stack boundaries detection produced bad results. Disabling stack checking.");
 		*size = (unsigned long) -1;
 	}
 }

@@ -46,7 +46,7 @@ void RKPrintAgent::printPostscript (const QString &file, bool delete_file) {
 
 	KService::Ptr service = KService::serviceByDesktopPath ("okular_part.desktop");
 	if (!service) service = KService::serviceByDesktopPath ("kpdf_part.desktop");
-	if (!service) RK_DO (qDebug ("No KDE service found for postscript printing"), APP, DL_WARNING);
+	if (!service) RK_DEBUG (APP, DL_WARNING, "No KDE service found for postscript printing");
 
 	KParts::ReadOnlyPart *provider = service->createInstance<KParts::ReadOnlyPart> (0);
 	QAction *printaction = 0;
@@ -59,14 +59,14 @@ void RKPrintAgent::printPostscript (const QString &file, bool delete_file) {
 			if (ok) printaction = a;
 		}
 		if (!(printaction && provider->openUrl (KUrl::fromLocalFile (file)))) {
-			RK_DO (qDebug ("No print action in postscript provider"), APP, DL_WARNING);
+			RK_DEBUG (APP, DL_WARNING, "No print action in postscript provider");
 			delete provider;
 			provider = 0;
 		}
 	}
 
 	if (!provider) {
-		RK_DO (qDebug ("No valid postscript postscript provider was found"), APP, DL_WARNING);
+		RK_DEBUG (APP, DL_WARNING, "No valid postscript postscript provider was found");
 		KMessageBox::sorry (RKWardMainWindow::getMain (), i18n ("No service was found to provide a KDE print dialog for postscript files. We will try to open a generic postscript viewer (if any), instead.<br><br>Consider installing 'okular', or configure RKWard not to attempt to print using a KDE print dialog."), i18n ("Unable to open KDE print dialog"));
 		// fallback: If we can't find a proper part, try to invoke a standalone PS reader, instead
 		KRun::runUrl (KUrl::fromLocalFile (file), "appication/postscript", RKWardMainWindow::getMain ());

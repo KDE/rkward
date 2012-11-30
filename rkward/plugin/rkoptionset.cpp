@@ -97,7 +97,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 		bool external = xml->getBoolAttribute (e, "external", false, DL_INFO);
 
 		while (child_map.contains (id)) {
-			RK_DO (qDebug ("optionset already contains a property named %s. Renaming to _%s", qPrintable (id), qPrintable (id)), PLUGIN, DL_ERROR);
+			RK_DEBUG (PLUGIN, DL_ERROR, "optionset already contains a property named %s. Renaming to _%s", qPrintable (id), qPrintable (id));
 			id = "_" + id;
 		}
 
@@ -129,10 +129,10 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	if (!keycol.isEmpty ()) {
 		keycolumn = static_cast<RKComponentPropertyStringList*> (child_map.value (keycol));
 		if (!column_map.contains (keycolumn)) {
-			RK_DO (qDebug ("optionset does not contain an optioncolumn named %s. Falling back to manual insertion mode", qPrintable (keycol)), PLUGIN, DL_ERROR);
+			RK_DEBUG (PLUGIN, DL_ERROR, "optionset does not contain an optioncolumn named %s. Falling back to manual insertion mode", qPrintable (keycol));
 			keycolumn = 0;
 		} else if (!column_map[keycolumn].external) {
-			RK_DO (qDebug ("keycolumn (%s) is not marked as external. Falling back to manual insertion mode", qPrintable (keycol)), PLUGIN, DL_ERROR);
+			RK_DEBUG (PLUGIN, DL_ERROR, "keycolumn (%s) is not marked as external. Falling back to manual insertion mode", qPrintable (keycol));
 			keycolumn = 0;
 		} else {
 			updating = true;
@@ -152,14 +152,14 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 				RKComponentPropertyBase *gov_prop = static_cast<RKComponentPropertyBase*> (governor);
 				if (ci.external) {
 					if (!ci.governor_modifier.isEmpty ()) {
-						RK_DO (qDebug ("Cannot connect external column '%s' in optionset to property with modifier (%s).", qPrintable (ci.column_name), qPrintable (ci.governor)), PLUGIN, DL_ERROR);
+						RK_DEBUG (PLUGIN, DL_ERROR, "Cannot connect external column '%s' in optionset to property with modifier (%s).", qPrintable (ci.column_name), qPrintable (ci.governor));
 						continue;
 					}
 				}
 				columns_to_update.insertMulti (gov_prop, it.key ());
 				connect (gov_prop, SIGNAL (valueChanged(RKComponentPropertyBase *)), this, SLOT (governingPropertyChanged(RKComponentPropertyBase *)));
 			} else {
-				RK_DO (qDebug ("did not find governing property %s for column %s of optionset", qPrintable (ci.governor), qPrintable (ci.column_name)), PLUGIN, DL_ERROR);
+				RK_DEBUG (PLUGIN, DL_ERROR, "did not find governing property %s for column %s of optionset", qPrintable (ci.governor), qPrintable (ci.column_name));
 			}
 		}
 	}
@@ -170,7 +170,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 		const QDomElement &e = properties.at (i);
 		QString id = xml->getStringAttribute (e, "id", QString (), DL_ERROR);
 		if (contents_container->child_map.contains (id)) {
-			RK_DO (qDebug ("Id %s already in use. Skipping property declaration", qPrintable (id)), PLUGIN, DL_WARNING);
+			RK_DEBUG (PLUGIN, DL_WARNING, "Id %s already in use. Skipping property declaration", qPrintable (id));
 			continue;
 		}
 		RKComponentPropertyBase *prop = new RKComponentPropertyBase (contents_container, false);
@@ -218,7 +218,7 @@ RKComponent *RKOptionSet::createDisplay (bool show_index, QWidget *parent) {
 	layout->addWidget (box);
 
 	if (display) {
-		RK_DO (qDebug ("cannot create more than one optiondisplay per optionset"), PLUGIN, DL_ERROR);
+		RK_DEBUG (PLUGIN, DL_ERROR, "cannot create more than one optiondisplay per optionset");
 	} else {
 		display = new QTreeView (box);
 		display_show_index = show_index;
@@ -329,7 +329,7 @@ void RKOptionSet::serializationPropertyChanged (RKComponentPropertyBase* propert
 		const QString &item = items[i];
 		int sep = item.indexOf ('=');
 		if (sep < 0) {
-			RK_DO (qDebug ("Bad format while trying to de-serialize optionset, line %d", i), PLUGIN, DL_WARNING);
+			RK_DEBUG (PLUGIN, DL_WARNING, "Bad format while trying to de-serialize optionset, line %d", i);
 			continue;
 		}
 		QString tag = item.left (sep);
@@ -337,7 +337,7 @@ void RKOptionSet::serializationPropertyChanged (RKComponentPropertyBase* propert
 
 		if (tag == QLatin1String ("keys")) {
 			if (!keys_missing) {
-				RK_DO (qDebug ("Unexpected specification of keys while trying to de-serialize optionset, line %d", i), PLUGIN, DL_WARNING);
+				RK_DEBUG (PLUGIN, DL_WARNING, "Unexpected specification of keys while trying to de-serialize optionset, line %d", i);
 				continue;
 			}
 			old_keys = unserializeList (value);
@@ -346,7 +346,7 @@ void RKOptionSet::serializationPropertyChanged (RKComponentPropertyBase* propert
 			new_rows.append (RowInfo (unserializeMap (value)));
 			++row;
 		} else {
-			RK_DO (qDebug ("Unexpected tag %s while trying to de-serialize optionset, line %d", qPrintable (tag), i), PLUGIN, DL_WARNING);
+			RK_DEBUG (PLUGIN, DL_WARNING, "Unexpected tag %s while trying to de-serialize optionset, line %d", qPrintable (tag), i);
 			continue;
 		}
 	}
@@ -570,7 +570,7 @@ void RKOptionSet::columnPropertyChanged (RKComponentPropertyBase *property) {
 	RK_ASSERT (column_map.contains (target));
 	ColumnInfo& ci = column_map[target];
 	if (!ci.external) {
-		RK_DO (qDebug ("Column %s was touched externally, although it is not marked as external", qPrintable (ci.column_name)), PLUGIN, DL_ERROR);
+		RK_DEBUG (PLUGIN, DL_ERROR, "Column %s was touched externally, although it is not marked as external", qPrintable (ci.column_name));
 		return;
 	}
 
@@ -698,7 +698,7 @@ void RKOptionSet::applyContentsFromExternalColumn (RKComponentPropertyStringList
 
 		static_cast<RKComponentPropertyBase*> (governor)->setValue (value);
 	} else {
-		RK_DO (qDebug ("Lookup error while trying to restore row %d of optionset: %s. Remainder: %s", row, qPrintable (ci.governor), qPrintable (dummy)), PLUGIN, DL_WARNING);
+		RK_DEBUG (PLUGIN, DL_WARNING, "Lookup error while trying to restore row %d of optionset: %s. Remainder: %s", row, qPrintable (ci.governor), qPrintable (dummy));
 		RK_ASSERT (false);
 	}
 	updating = false;

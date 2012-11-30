@@ -295,7 +295,7 @@ void RKFormula::addButtonClicked () {
 	for (int i = 0; i < interactions.count (); ++i) {
 		QString dummy;
 		for (int j=0; j <= interactions[i].level; ++j) {
-			RK_DO (qDebug ("inserting interaction %d, level %d", i, j), PLUGIN, DL_DEBUG);
+			RK_DEBUG (PLUGIN, DL_DEBUG, "inserting interaction %d, level %d", i, j);
 			if (j) {
 				dummy.append (" X ");
 			}
@@ -314,7 +314,7 @@ void RKFormula::addButtonClicked () {
 
 QList<RKFormula::Interaction> RKFormula::makeInteractions (int level, RObject::ObjectList source_vars) {
 	RK_TRACE (PLUGIN);
-	RK_DO (qDebug ("makeInteractions: level %d, source_count %d", level, source_vars.count ()), PLUGIN, DL_DEBUG);
+	RK_DEBUG (PLUGIN, DL_DEBUG, "makeInteractions: level %d, source_count %d", level, source_vars.count ());
 	RK_ASSERT (level >= 0);
 
 	QList<Interaction> ret;
@@ -387,7 +387,7 @@ void RKFormula::checkCustomModel () {
 		int found_vars = 0;
 		for (int i=0; i <= inter.level; ++i) {
 			for (ItemMap::const_iterator item = predictors_map.constBegin (); item != predictors_map.constEnd (); ++item) {
-				RK_DO (qDebug ("level %d", i), PLUGIN, DL_DEBUG);
+				RK_DEBUG (PLUGIN, DL_DEBUG, "level %d", i);
 				if (item.value () == inter.vars[i]) {
 					++found_vars;
 					break;

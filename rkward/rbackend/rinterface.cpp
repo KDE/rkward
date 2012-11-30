@@ -88,7 +88,7 @@ RInterface::RInterface () {
 
 // If R_HOME is not set, most certainly the user called the binary without the wrapper script
 	if (!getenv ("R_HOME")) {
-		RK_DO (qDebug ("No R_HOME environment variable set. RKWard will quit in a moment. Always start rkward in the default way unless you know what you're doing."), RBACKEND, DL_ERROR);
+		RK_DEBUG (RBACKEND, DL_ERROR, "No R_HOME environment variable set. RKWard will quit in a moment. Always start rkward in the default way unless you know what you're doing.");
 	}
 
 	new RCommandStackModel (this);
@@ -124,7 +124,7 @@ void RInterface::issueCommand (const QString &command, int type, const QString &
 RInterface::~RInterface(){
 	RK_TRACE (RBACKEND);
 
-	if (num_active_output_record_requests) RK_DO (qDebug ("%d requests for recording output still active on interface shutdown", num_active_output_record_requests), RBACKEND, DL_WARNING);
+	if (num_active_output_record_requests) RK_DEBUG (RBACKEND, DL_WARNING, "%d requests for recording output still active on interface shutdown", num_active_output_record_requests);
 	delete window_catcher;
 }
 
@@ -195,16 +195,16 @@ void RInterface::handleCommandOut (RCommand *command) {
 		if (command->failed ()) {
 			command->status |= RCommand::WasTried | RCommand::Failed;
 			if (command->status & RCommand::ErrorIncomplete) {
-				RK_DO (qDebug ("Command failed (incomplete)"), RBACKEND, dl);
+				RK_DEBUG (RBACKEND, dl, "Command failed (incomplete)");
 			} else if (command->status & RCommand::ErrorSyntax) {
-				RK_DO (qDebug ("Command failed (syntax)"), RBACKEND, dl);
+				RK_DEBUG (RBACKEND, dl, "Command failed (syntax)");
 			} else if (command->status & RCommand::Canceled) {
-				RK_DO (qDebug ("Command failed (interrupted)"), RBACKEND, dl);
+				RK_DEBUG (RBACKEND, dl, "Command failed (interrupted)");
 			} else {
-				RK_DO (qDebug ("Command failed (other)"), RBACKEND, dl);
+				RK_DEBUG (RBACKEND, dl, "Command failed (other)");
 			}
-			RK_DO (qDebug ("failed command was: '%s'", qPrintable (command->command ())), RBACKEND, dl);
-			RK_DO (qDebug ("- error message was: '%s'", qPrintable (command->error ())), RBACKEND, dl);
+			RK_DEBUG (RBACKEND, dl, "failed command was: '%s'", qPrintable (command->command ()));
+			RK_DEBUG (RBACKEND, dl, "- error message was: '%s'", qPrintable (command->error ()));
 		}
 	#endif
 
@@ -230,7 +230,7 @@ void RInterface::doNextCommand (RCommand *command) {
 	if (command) {
 		proxy = command->makeProxy ();
 
-		RK_DO (qDebug ("running command: %s", command->command ().toLatin1().data ()), RBACKEND, DL_DEBUG);
+		RK_DEBUG (RBACKEND, DL_DEBUG, "running command: %s", command->command ().toLatin1().data ());
 		command->status |= RCommand::Running;
 		RCommandStackModel::getModel ()->itemChange (command);
 
@@ -376,11 +376,11 @@ void RInterface::flushOutput (bool forced) {
 
 	foreach (ROutput *output, list) {
 		if (all_current_commands.isEmpty ()) {
-			RK_DO (qDebug ("output without receiver'%s'", qPrintable (output->output)), RBACKEND, DL_WARNING);
+			RK_DEBUG (RBACKEND, DL_WARNING, "output without receiver'%s'", qPrintable (output->output));
 			delete output;
 			continue;	// to delete the other output pointers, too
 		} else {
-			RK_DO (qDebug ("output '%s'", qPrintable (output->output)), RBACKEND, DL_DEBUG);
+			RK_DEBUG (RBACKEND, DL_DEBUG, "output '%s'", qPrintable (output->output));
 		}
 
 		if (num_active_output_record_requests) {
@@ -640,18 +640,18 @@ void RInterface::processHistoricalSubstackRequest (const QStringList &calllist) 
 			QString object_name = calllist[i];
 			RObject *obj = RObjectList::getObjectList ()->findObject (object_name);
 			if (obj) {
-				RK_DO (qDebug ("triggering update for symbol %s", object_name.toLatin1 ().data()), RBACKEND, DL_DEBUG);
+				RK_DEBUG (RBACKEND, DL_DEBUG, "triggering update for symbol %s", object_name.toLatin1 ().data());
 				obj->markDataDirty ();
 				obj->updateFromR (in_chain);
 			} else {
-				RK_DO (qDebug ("lookup failed for changed symbol %s", object_name.toLatin1 ().data()), RBACKEND, DL_WARNING);
+				RK_DEBUG (RBACKEND, DL_WARNING, "lookup failed for changed symbol %s", object_name.toLatin1 ().data());
 			}
 		}
 	} else if (call == "syncenvs") {
-		RK_DO (qDebug ("triggering update of object list"), RBACKEND, DL_DEBUG);
+		RK_DEBUG (RBACKEND, DL_DEBUG, "triggering update of object list");
 		RObjectList::getObjectList ()->updateFromR (in_chain, calllist.mid (1));
 	} else if (call == "syncglobal") {
-		RK_DO (qDebug ("triggering update of globalenv"), RBACKEND, DL_DEBUG);
+		RK_DEBUG (RBACKEND, DL_DEBUG, "triggering update of globalenv");
 		RObjectList::getGlobalEnv ()->updateFromR (in_chain, calllist.mid (1));
 #ifndef DISABLE_RKWINDOWCATCHER
 	// NOTE: WARNING: When converting these to PlainGenericRequests, the occasional "error, figure margins too large" starts coming up, again. Not sure, why.

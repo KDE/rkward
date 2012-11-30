@@ -264,7 +264,7 @@ void RKStandardComponentGUI::updateCodeNow () {
 
 	if (!code_property->isValid ()) {
 		code_display->setText (i18n ("Processing. Please wait"));
-		RK_DO (qDebug ("code not ready to be displayed: pre %d, cal %d, pri %d", !code_property->preprocess ().isNull (), !code_property->calculate ().isNull (), !code_property->printout ().isNull ()), PLUGIN, DL_DEBUG);
+		RK_DEBUG (PLUGIN, DL_DEBUG, "code not ready to be displayed: pre %d, cal %d, pri %d", !code_property->preprocess ().isNull (), !code_property->calculate ().isNull (), !code_property->printout ().isNull ());
 		was_valid = false;
 	} else {
 		code_display->setText ("local({\n" + code_property->preprocess () + code_property->calculate () + code_property->printout () + "})\n");

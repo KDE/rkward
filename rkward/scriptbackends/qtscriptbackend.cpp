@@ -46,7 +46,7 @@ bool QtScriptBackend::initialize (RKComponentPropertyCode *code_property, bool a
 	RK_TRACE (PHP);
 
 	if (script_thread) {
-		RK_DO (qDebug ("another template is already openend in this backend"), PHP, DL_ERROR);
+		RK_DEBUG (PHP, DL_ERROR, "another template is already openend in this backend");
 		return false;
 	}
 
@@ -93,7 +93,7 @@ void QtScriptBackend::tryNextFunction () {
 			}
 		}
 		
-		RK_DO (qDebug ("submitting QtScript code: %s", command_stack.first ()->command.toLatin1 ().data ()), PHP, DL_DEBUG);
+		RK_DEBUG (PHP, DL_DEBUG, "submitting QtScript code: %s", command_stack.first ()->command.toLatin1 ().data ());
 		if (script_thread) script_thread->goToSleep (false);
 		script_thread->setCommand (command_stack.first ()->command);
 		busy = true;
@@ -108,7 +108,7 @@ void QtScriptBackend::tryNextFunction () {
 void QtScriptBackend::writeData (const QVariant &data) {
 	RK_TRACE (PHP);
 
-	RK_DO (qDebug ("submitting data: %s", qPrintable (data.toString ())), PHP, DL_DEBUG);
+	RK_DEBUG (PHP, DL_DEBUG, "submitting data: %s", qPrintable (data.toString ()));
 	script_thread->setData (data);
 	tryNextFunction ();
 }

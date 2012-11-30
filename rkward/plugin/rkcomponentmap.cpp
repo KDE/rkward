@@ -119,7 +119,7 @@ int RKComponentGUIXML::addSubMenu (QDomElement& parent, const QDomElement& descr
 
 		RKComponentHandle* handle = RKComponentMap::getComponentHandle (id);
 		if ((!handle) || (!handle->isPlugin ())) {
-			RK_DO (qDebug ("No such component found while creating menu-entries or component is not a standalone plugin: \"%s\". No entry created.", id.toLatin1 ().data ()), PLUGIN, DL_ERROR);
+			RK_DEBUG (PLUGIN, DL_ERROR, "No such component found while creating menu-entries or component is not a standalone plugin: \"%s\". No entry created.", id.toLatin1 ().data ());
 		} else {
 			findOrCreateElement (menu_element, "Action", id, QString::null, xml->getIntAttribute ((*it), "index", -1, DL_INFO));
 			addedEntry (id, handle);
@@ -188,7 +188,7 @@ RKContextMap *RKComponentMap::getContext (const QString &id) {
 	RKContextMap *context = getMap ()->getContextLocal (id);
 	if (context) return context;
 
-	RK_DO (qDebug ("no such context %s", id.toLatin1 ().data ()), PLUGIN, DL_WARNING);
+	RK_DEBUG (PLUGIN, DL_WARNING, "no such context %s", id.toLatin1 ().data ());
 	return (0);
 }
 
@@ -205,7 +205,7 @@ RKComponentHandle* RKComponentMap::getComponentHandle (const QString &id) {
 	RKComponentHandle *handle = getMap ()->getComponentHandleLocal (id);
 	if (handle) return handle;
 
-	RK_DO (qDebug ("no such component %s", id.toLatin1 ().data ()), PLUGIN, DL_WARNING);
+	RK_DEBUG (PLUGIN, DL_WARNING, "no such component %s", id.toLatin1 ().data ());
 	return (0);
 }
 
@@ -289,7 +289,7 @@ bool RKComponentMap::invokeComponent (const QString &component_id, const QString
 	QStringList problems = component->matchAgainstState (state);
 	if (!problems.isEmpty ()) {
 		_message = i18n ("Not all specified settings could be applied. Most likely this is because some R objects are no longer present in your current workspace.");
-		RK_DO (qDebug ("%s", qPrintable (problems.join ("\n"))), PLUGIN, DL_WARNING);	// TODO: make failures available to backend
+		RK_DEBUG (PLUGIN, DL_WARNING, "%s", qPrintable (problems.join ("\n")));	// TODO: make failures available to backend
 		if (message) *message = _message;
 		else KMessageBox::informationList (component, _message, problems, i18n ("Not all settings applied"));
 		// TODO: Don't show again-box?
@@ -325,7 +325,7 @@ int RKComponentMap::addPluginMapLocal (const QString& plugin_map_file) {
 
 	QString plugin_map_file_abs = QFileInfo (plugin_map_file).absoluteFilePath ();
 	if (pluginmapfiles.contains (plugin_map_file_abs)) {
-		RK_DO (qDebug ("Plugin map file '%s' already loaded", plugin_map_file.toLatin1().data ()), PLUGIN, DL_INFO);
+		RK_DEBUG (PLUGIN, DL_INFO, "Plugin map file '%s' already loaded", plugin_map_file.toLatin1().data ());
 		return 0;
 	}
 
@@ -351,7 +351,7 @@ int RKComponentMap::addPluginMapLocal (const QString& plugin_map_file) {
 		if (QFileInfo (file).isReadable ()) {
 			includelist.append (file);
 		} else {
-			RK_DO (qDebug ("Specified required file '%s' does not exist or is not readable. Ignoring.", file.toLatin1 ().data ()), PLUGIN, DL_ERROR);
+			RK_DEBUG (PLUGIN, DL_ERROR, "Specified required file '%s' does not exist or is not readable. Ignoring.", file.toLatin1 ().data ());
 		}
 	}
 	for (QStringList::const_iterator it = includelist.constBegin (); it != includelist.constEnd (); ++it) {
@@ -369,9 +369,9 @@ int RKComponentMap::addPluginMapLocal (const QString& plugin_map_file) {
 		QString label = xml->getStringAttribute ((*it), "label", i18n ("(no label)"), DL_WARNING);
 
 		if (components.contains (id)) {
-			RK_DO (qDebug ("RKComponentMap already contains a component with id \"%s\". Ignoring second entry.", id.toLatin1 ().data ()), PLUGIN, DL_WARNING);
+			RK_DEBUG (PLUGIN, DL_WARNING, "RKComponentMap already contains a component with id \"%s\". Ignoring second entry.", id.toLatin1 ().data ());
 		} else if (!QFileInfo (pluginmap_file_desc->makeFileName (filename)).isReadable ()) {
-			RK_DO (qDebug ("Specified file '%s' for component id \"%s\" does not exist or is not readable. Ignoring.", filename.toLatin1 ().data (), id.toLatin1 ().data ()), PLUGIN, DL_ERROR);
+			RK_DEBUG (PLUGIN, DL_ERROR, "Specified file '%s' for component id \"%s\" does not exist or is not readable. Ignoring.", filename.toLatin1 ().data (), id.toLatin1 ().data ());
 		} else {
 			// create and initialize component handle
 			RKComponentHandle *handle = new RKComponentHandle (pluginmap_file_desc, filename, label, (RKComponentType) type);

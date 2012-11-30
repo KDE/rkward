@@ -57,7 +57,7 @@ RObject *RContainerObject::updateChildStructure (RObject *child, RData *new_data
 	} else {
 		if (just_created) {
 			RK_ASSERT (false);
-			RK_DO (qDebug ("%s cannot be represented", child->getFullName ().toLatin1 ().data ()), OBJECTS, DL_ERROR);
+			RK_DEBUG (OBJECTS, DL_ERROR, "%s cannot be represented", child->getFullName ().toLatin1 ().data ());
 			delete child;
 			return 0;
 		} else {
@@ -120,7 +120,7 @@ RObject *RContainerObject::createChildFromStructure (RData *child_data, const QS
 	} else if (child_type & RObject::Variable) {
 		child_object = new RKVariable (this, child_name);
 	} else {
-		RK_DO (qDebug ("Can't represent object '%s', type %d", child_name.toLatin1 ().data (), child_type), OBJECTS, DL_WARNING);
+		RK_DEBUG (OBJECTS, DL_WARNING, "Can't represent object '%s', type %d", child_name.toLatin1 ().data (), child_type);
 		return 0;
 	}
 	RK_ASSERT (child_object);
@@ -183,7 +183,7 @@ void RContainerObject::updateChildren (RData *new_children) {
 			if (old_child->isPending ()) {
 				new_childmap.insert (i, old_child);
 			} else {
-				RK_DO (qDebug ("child no longer present: %s.", old_child->getFullName ().toLatin1 ().data ()), OBJECTS, DL_DEBUG);
+				RK_DEBUG (OBJECTS, DL_DEBUG, "child no longer present: %s.", old_child->getFullName ().toLatin1 ().data ());
 				if (RKGlobals::tracker ()->removeObject (old_child, 0, true)) --i;
 				else (new_childmap.insert (i, old_child));
 			}
@@ -203,7 +203,7 @@ void RContainerObject::moveChild (RObject* child, int from_index, int to_index) 
 
 	RK_ASSERT (from_index != to_index);
 
-	RK_DO (qDebug ("Child position changed from %d to %d, %s", from_index, to_index, child->getFullName ().toLatin1 ().data ()), OBJECTS, DL_DEBUG);
+	RK_DEBUG (OBJECTS, DL_DEBUG, "Child position changed from %d to %d, %s", from_index, to_index, child->getFullName ().toLatin1 ().data ());
 
 	RK_ASSERT (childmap[from_index] == child);
 	RK_ASSERT (from_index < childmap.size ());

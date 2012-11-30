@@ -142,7 +142,7 @@ void RKWorkplaceView::removeWindow (RKMDIWindow *widget, bool destroyed) {
 	RK_TRACE (APP);
 
 	int id = indexOf (widget);		// which page is it?
-	RK_DO (if (id == -1) qDebug ("did not find page in RKWorkplaceView::removeWindow"), APP, DL_WARNING);
+	if (id == -1) RK_DEBUG (APP, DL_WARNING, "did not find page in RKWorkplaceView::removeWindow");
 	if (!destroyed) disconnect (widget, SIGNAL (captionChanged (RKMDIWindow *)), this, SLOT (childCaptionChanged (RKMDIWindow *)));
 
 	removeTab (id);
@@ -154,7 +154,7 @@ void RKWorkplaceView::setActivePage (RKMDIWindow *widget) {
 	RK_TRACE (APP);
 
 	int id = indexOf (widget);
-	RK_DO (if (id == -1) qDebug ("did not find page in RKWorkplaceView::setActivePage"), APP, DL_WARNING);
+	if (id == -1) RK_DEBUG (APP, DL_WARNING, "did not find page in RKWorkplaceView::setActivePage");
 
 	setCurrentIndex (id);
 }

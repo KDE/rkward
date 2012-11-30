@@ -1266,7 +1266,7 @@ void RKCommandHighlighter::setHighlighting (KTextEditor::Document *doc, Highligh
 
 	QString mode_string = "R Script";
 	if (mode == RInteractiveSession) mode_string = "R interactive session";
-	if (!(doc->setHighlightingMode (mode_string) && doc->setMode (mode_string))) RK_DO (qDebug ("R syntax highlighting defintion ('%s')not found!", qPrintable (mode_string)), COMMANDEDITOR, DL_ERROR);
+	if (!(doc->setHighlightingMode (mode_string) && doc->setMode (mode_string))) RK_DEBUG (COMMANDEDITOR, DL_ERROR, "R syntax highlighting defintion ('%s')not found!", qPrintable (mode_string));
 }
 
 void RKCommandHighlighter::copyLinesToOutput (KTextEditor::View *view, HighlightingMode mode) {

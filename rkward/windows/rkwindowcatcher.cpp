@@ -43,7 +43,7 @@ RKWindowCatcher::~RKWindowCatcher () {
 
 void RKWindowCatcher::start (int prev_cur_device) {
 	RK_TRACE (MISC);
-	RK_DO (qDebug ("Window Catcher activated"), RBACKEND, DL_DEBUG);
+	RK_DEBUG (RBACKEND, DL_DEBUG, "Window Catcher activated");
 
 	RKWardApplication::getApp ()->startWindowCreationDetection ();
 	last_cur_device = prev_cur_device;
@@ -51,7 +51,7 @@ void RKWindowCatcher::start (int prev_cur_device) {
 
 void RKWindowCatcher::stop (int new_cur_device) {
 	RK_TRACE (MISC);
-	RK_DO (qDebug ("Window Catcher deactivated"), RBACKEND, DL_DEBUG);
+	RK_DEBUG (RBACKEND, DL_DEBUG, "Window Catcher deactivated");
 
 	WId w = RKWardApplication::getApp ()->endWindowCreationDetection ();
 	if (new_cur_device != last_cur_device) {
@@ -89,7 +89,7 @@ void RKWindowCatcher::updateHistory (QStringList params) {
 			int position = params[i+1].toInt ();
 			window->updateHistoryActions (history_length, position, labels);
 		} else {
-			RK_DO (qDebug ("Device %d is not managed, while trying to update history", params[i].toInt ()), RBACKEND, DL_DEBUG);
+			RK_DEBUG (RBACKEND, DL_DEBUG, "Device %d is not managed, while trying to update history", params[i].toInt ());
 		}
 	}
 }

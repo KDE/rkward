@@ -20,6 +20,7 @@
 extern int RK_Debug_Level;
 extern int RK_Debug_Flags;
 extern int RK_Debug_CommandStep;
+extern void RKDebug (int flags, int level, const char *fmt, ...);
 
 // Debug-levels
 #define DL_TRACE 0
@@ -47,6 +48,7 @@ extern int RK_Debug_CommandStep;
 #ifdef RKWARD_DEBUG
 // Debug functions 
 #	define RK_DO(expr,flags,level) if ((flags & RK_Debug_Flags) && (level >= RK_Debug_Level)) { expr; }
+#	define RK_DEBUG(flags,level,...) { if ((flags & RK_Debug_Flags) && (level >= RK_Debug_Level)) RKDebug (flags,level,__VA_ARGS__); }
 #	define RK_ASSERT(x) if (!(x)) qDebug ("Assert failed at %s - function %s line %d", __FILE__, __FUNCTION__, __LINE__);
 #	ifndef RKWARD_NO_TRACE
 #		define RK_TRACE(flags) RK_DO (qDebug ("Trace: %s - function %s line %d", __FILE__, __FUNCTION__, __LINE__), flags, DL_TRACE);
@@ -55,6 +57,7 @@ extern int RK_Debug_CommandStep;
 #	endif
 #else
 #	define RK_DO(expr,flags,level)
+#	define RK_DEBUG(flags,level,fmt,...)
 #	define RK_ASSERT(x)
 #	define RK_TRACE(flags)
 #endif
