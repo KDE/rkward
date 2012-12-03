@@ -84,6 +84,7 @@
 #include "windows/rktoolwindowlist.h"
 #include "windows/rkdebugconsole.h"
 #include "windows/rkcallstackviewer.h"
+#include "windows/rkdebugmessagewindow.h"
 #include "rkconsole.h"
 #include "debug.h"
 #include "version.h"
@@ -362,6 +363,10 @@ void RKWardMainWindow::initToolViewsAndR () {
 	RKDebugConsole::_instance = new RKDebugConsole (0, true);
 	RKDebugConsole::instance ()->setCaption (i18n ("Debugger Console"));
 	RKToolWindowList::registerToolWindow (RKDebugConsole::instance (), "debugconsole", RKToolWindowList::Nowhere, Qt::AltModifier + Qt::Key_7);
+
+	RKDebugMessageWindow::_instance = new RKDebugMessageWindow (0, true);
+	RKDebugMessageWindow::instance ()->setCaption (i18n ("RKWard Debug Messages"));
+	RKToolWindowList::registerToolWindow (RKDebugMessageWindow::instance (), "rkdebugmessages", RKToolWindowList::Nowhere, 0);
 
 	RKWorkplace::mainWorkplace ()->placeToolWindows ();
 }

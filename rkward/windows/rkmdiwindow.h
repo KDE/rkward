@@ -55,6 +55,7 @@ public:
 		FileBrowserWindow=1 << 15,
 		DebugConsoleWindow=1 << 16,
 		CallstackViewerWindow=1 << 17,
+		DebugMessageWindow=1 << 18,
 
 		DocumentWindow=1 << 29,
 		ToolWindow=1 << 30,

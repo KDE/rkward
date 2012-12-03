@@ -66,6 +66,7 @@
 #include "rkward.h"
 #include "rkwardapplication.h"
 #include "settings/rksettingsmoduledebug.h"
+#include "windows/rkdebugmessagewindow.h"
 
 #ifdef Q_WS_WIN
 	// these are needed for the exit hack.
@@ -98,8 +99,6 @@ void RKDebugMessageOutput (QtMsgType type, const char *msg) {
  * any other noise, coming from Qt / kdelibs. Also it allows us to retain info on flags and level. Eventually, this could
  * be made available in a tool window, esp. for debugging plugins. */
 void RKDebug (int flags, int level, const char *fmt, ...) {
-	Q_UNUSED (flags);
-	Q_UNUSED (level);
 	const int bufsize = 1024*8;
 	char buffer[bufsize];
 
@@ -108,6 +107,7 @@ void RKDebug (int flags, int level, const char *fmt, ...) {
 	vsnprintf (buffer, bufsize-1, fmt, ap);
 	va_end (ap);
 	RKDebugMessageOutput (QtDebugMsg, buffer);
+	RKDebugMessageWindow::newMessage (flags, level, QString (buffer));
 }
 
 int main(int argc, char *argv[]) {

@@ -20,6 +20,7 @@ SET(windows_STAT_SRCS
 	rktoolwindowbar.cpp
 	rktoolwindowlist.cpp
 	robjectbrowser.cpp
+	rkdebugmessagewindow.cpp
 )
 
 QT4_AUTOMOC(${windows_STAT_SRCS})
