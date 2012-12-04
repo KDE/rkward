@@ -1,4 +1,4 @@
-- Add in-application debug message viewer (targetted at (plugin) developers)	TODO: mention in docs
+- Add in-application debug message viewer (targetted at (plugin) developers)
 - Add setting to customize initial working directory
 - Windows only: Add UI-checkbox for R's "internet2"-option
 - New functions getString(), getList() and getBoolean() for fetching data in plugin scripts		TODO: more testing, convert at least some plugins

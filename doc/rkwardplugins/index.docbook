@@ -82,6 +82,9 @@ This is a guide to writing plugins for &rkward;.
 	</note>
 	<para>
 		This document describes how to write your own plugins. Note, that at the time of this writing, some of the concepts are not yet set it stone. Therefore, this document should be regarded as an introduction to the current approach, and as a basis for discussion. All sorts of comments are welcome.
+		The documentation has grown quite large over time. Don't let that scare you. We recommend reading through the four basic steps (as
+		outlined, below), to get a basic idea of how things work. After that you may want to skim the table of contents to see which advanced
+		topics could be of relevance to you.
 	</para>
 	<para>
 		For questions and comments, please write to the &rkward; development mailing list.
@@ -3518,10 +3521,10 @@ Child-elements:
 <appendix id="troubleshooting">
 <title>Troubleshooting during plugin development</title>
 <para>
-So you've read all the documentation, did everything right, and still can't get it to work? Don't worry, we'll work it out. First thing to do is: Run rkward in a terminal/console, and watch out for messages on the console. As a general rule of thumb, you should not see any output when your plugin gets invoked, or at any other time (other than the startup message). If there is one, it's likely related to your plugin. See if it gets you anywhere.
+So you've read all the documentation, did everything right, and still can't get it to work? Don't worry, we'll work it out. First thing to do is: Activate "RKWard Debug Messages" - window (available from the "Windows" - menu, or right click on one of the tool bars), and then start your plugin, again. As a general rule of thumb, you should not see any output in the messages window when your plugin gets invoked, or at any other time. If there is one, it's likely related to your plugin. See if it helps you.
 </para>
 <para>
-If everything seems fine on the console, try to increase the debug-level with <command>rkward --debug-level 3</command> (you may also use debug-level 4, or even 5, but as this always generates <emphasis>a lot</emphasis> of output, try a lower level at first). Not all messages shown at higher debug levels neccessarily indicate a problem, but chance are, your problem shows up somewhere between the messages.
+If everything seems fine on the console, try to increase the debug-level (from the command line, using <command>rkward --debug-level 3</command>, or by setting debug level to 3 in Settings-&gt;Configure RKWard-&gt;Debug. Not all messages shown at higher debug levels neccessarily indicate a problem, but chance are, your problem shows up somewhere between the messages.
 </para>
 <para>
 If you still can't find out what's wrong, don't despair. We know this is complicated stuff, and - after all - possibly you've also come across a bug in &rkward;, and &rkward; needs to be fixed. Just write to the development mailing list, and tell us about the problem. We'll be happy to help you.
