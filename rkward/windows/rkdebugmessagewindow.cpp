@@ -20,8 +20,7 @@
 #include <QShowEvent>
 #include <QHideEvent>
 #include <QVBoxLayout>
-#include <QTreeWidget>
-#include <QTreeWidgetItem>
+#include <QTextEdit>
 
 #include <kvbox.h>
 #include <kmessagebox.h>
@@ -105,8 +104,10 @@ RKDebugMessageWindowWidget::RKDebugMessageWindowWidget (QWidget *parent) : QWidg
 
 	QVBoxLayout *v_layout = new QVBoxLayout (this);
 	v_layout->setContentsMargins (0, 0, 0, 0);
-	message_viewer = new QTreeWidget (this);
-	message_viewer->setHeaderLabels (QStringList () << i18nc ("Severity level of debug message: Info, Warning, Error, etc. Keep this short.", "Level") << i18n ("Message"));
+	message_viewer = new QTextEdit (this);
+	message_viewer->setUndoRedoEnabled (false);
+	message_viewer->setReadOnly (true);
+	message_viewer->setTextBackgroundColor (Qt::white);
 	v_layout->addWidget (message_viewer);
 }
 
@@ -116,46 +117,26 @@ RKDebugMessageWindowWidget::~RKDebugMessageWindowWidget () {
 
 void RKDebugMessageWindowWidget::newMessage (const int flags, const int level, const QString &message) {
 	Q_UNUSED (flags);
+
 	// Not tracing this! That might lead to infinite recursion!
-	QTreeWidgetItem *item = new QTreeWidgetItem (message_viewer);
 	if (level == DL_TRACE) {
-		item->setForeground (0, Qt::lightGray);
-		item->setText (0, "TRACE");
+		message_viewer->setTextColor (Qt::gray);
+		message_viewer->insertPlainText ("TRACE\t");
 	} else if (level == DL_DEBUG) {
-		item->setForeground (0, Qt::gray);
-		item->setText (0, "DEBUG");
+		message_viewer->setTextColor (Qt::blue);
+		message_viewer->insertPlainText ("DEBUG\t");
 	} else if (level == DL_INFO) {
-		item->setText (0, "INFO");
+		message_viewer->setTextColor (Qt::green);
+		message_viewer->insertPlainText ("INFO\t");
 	} else if (level == DL_WARNING) {
-		item->setForeground (0, Qt::yellow);
-		item->setText (0, "WARNING");
+		message_viewer->setTextColor (Qt::darkYellow);
+		message_viewer->insertPlainText ("WARNING\t");
 	} else {
-		item->setForeground (0, Qt::red);
-		item->setText (0, "ERROR");
+		message_viewer->setTextColor (Qt::red);
+		message_viewer->insertPlainText ("ERROR\t");
 	}
+	message_viewer->setTextColor (Qt::black);
 
-	// totally arbitrary and crude fuzzy wrapping
-	QString wrapped;
-	wrapped.reserve (message.size ());
-	int linelength = 0;
-	for (int i = 0; i < message.size (); ++i) {
-		if ((linelength > 100 && (message[i].isSpace()))
-			|| (linelength > 160 && (!message[i].isLetterOrNumber()))
-			|| (linelength > 200)) {
-			wrapped.append ('\n');
-			linelength = -1;
-		}
-		
-		wrapped.append (message[i]);
-		linelength++;
-	}
-	QString wrapped_short = wrapped;
-	if (wrapped.size () > 1500) {
-		wrapped_short = wrapped.mid (0, 1500) + "...";
-	}
-
-	item->setText (1, wrapped);
-	item->setToolTip (1, wrapped_short);
-	item->setTextAlignment (1, Qt::AlignTop | Qt::AlignLeft);
+	message_viewer->insertPlainText (message + "\n");
 }
 

@@ -21,7 +21,7 @@
 #include "rkmdiwindow.h"
 
 class RKDebugMessageWindowWidget;
-class QTreeWidget;
+class QTextEdit;
 
 /** Tool window for displaying RKWard debug messages. Mainly targetted at plugin
  * developers. */
@@ -55,7 +55,7 @@ public:
 
 	void newMessage (const int flags, const int level, const QString &message);
 private:
-	QTreeWidget *message_viewer;
+	QTextEdit *message_viewer;
 };
 
 #endif
