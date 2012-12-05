@@ -41,7 +41,7 @@
 
 	<dialog label="Sort data">
 		<tabbook>
-			<tab label="Basic settings">
+			<tab id="basic_settings" label="Basic settings">
 				<row>
 					<varselector id="selector"/>
 					<column>
@@ -60,7 +60,7 @@
 				</row>
 				<stretch/>
 			</tab>
-			<tab label="Sort order">
+			<tab id="sort_order" label="Sort order">
 				<radio id="order" label="Sort order">
 					<option label="Ascending" value="" checked="true"/>
 					<option label="Descending" value=", decreasing=TRUE"/>
