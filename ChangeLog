@@ -1,3 +1,4 @@
+- Sort plugin gains option to sort data.frames by more than one column at a time, and options for type conversion	TODO: adjust test(s)
 - Add in-application debug message viewer (targetted at (plugin) developers)
 - Add setting to customize initial working directory
 - Windows only: Add UI-checkbox for R's "internet2"-option

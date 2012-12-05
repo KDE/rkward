@@ -3,12 +3,21 @@
 	<code file="sort.js"/>
 	<help file="sort.rkh"/>
 	<logic>
-		<set id="vectormode" to="0"/>
 		<connect governor="current_dataframe" client="object.available"/>
 		<convert id="isok" mode="equals" sources="notice.text" standard="" require_true="true"/>
 
 		<convert id="saveto_other_object" mode="equals" sources="saveto_select.string" standard="other"/>
 		<connect governor="saveto_other_object" client="saveto.enabled"/>
+
+		<connect governor="sortby.enabled" client="multi_sortby.visible"/>
+		<connect governor="sortby.enabled.not" client="conversion_specs.visible"/>
+		<connect governor="sortby.available" client="multi_sortby.object"/>
+		<connect governor="sortby.available.shortname" client="multi_sortby.objectshort"/>
+
+		<convert id="custom_conversion" mode="equals" sources="conversion.string" standard="custom"/>
+		<connect governor="custom_conversion" client="conversion_custom.enabled"/>
+		<convert id="custom_conversion_multi" mode="equals" sources="multi_sortby.contents.conversion.string" standard="custom"/>
+		<connect governor="custom_conversion_multi" client="multi_sortby.contents.conversion_custom.enabled"/>
 		<script><![CDATA[
 			// the top-level block is called only once
 			gui.addChangeCommand ("object.available", "objectChanged ()");
@@ -29,26 +38,57 @@
 			}
 			]]></script>
 	</logic>
+
 	<dialog label="Sort data">
-		<row>
-			<varselector id="selector"/>
-			<column>
-				<varslot id="object" source="selector" label="Object to be sorted" required="true"/>
-				<text id="notice" type="warning"></text>
+		<tabbook>
+			<tab label="Basic settings">
+				<row>
+					<varselector id="selector"/>
+					<column>
+						<varslot id="object" source="selector" label="Object to be sorted" required="true"/>
+						<text id="notice" type="warning"></text>
+						<stretch/>
+						<varslot source="selector" id="sortby" label="Sort by" required="true" multi="true" min_vars="1"/>
+					</column>
+				</row>
+				<row>
+					<radio id="saveto_select" label="Save to">
+						<option label="Same object" value="same" checked="true"/>
+						<option label="Another object" value="other"/>
+					</radio>
+					<saveobject id="saveto" label="Object to save to" initial="sorted"/>
+				</row>
 				<stretch/>
-				<varslot source="selector" id="sortby" label="Sort by" required="true"/>
-				<radio id="order" label="Order">
+			</tab>
+			<tab label="Sort order">
+				<radio id="order" label="Sort order">
 					<option label="Ascending" value="" checked="true"/>
 					<option label="Descending" value=", decreasing=TRUE"/>
 				</radio>
-			</column>
-		</row>
-		<row>
-			<radio id="saveto_select" label="Save to">
-				<option label="Same object" value="same" checked="true"/>
-				<option label="Another object" value="other"/>
-			</radio>
-			<saveobject id="saveto" label="Object to save to" initial="sorted"/>
-		</row>
+				<row id="conversion_specs">
+					<dropdown id="conversion" label="Sort mode">
+						<option label="Sort as is" checked="true" value="as is"/>
+						<option label="Sort as character" value="character"/>
+						<option label="Sort as number" value="number"/>
+						<option label="Sort by custom function:" value="custom"/>
+					</dropdown>
+					<input id="conversion_custom" label="Function(_X_) to use for sorting" initial="nchar (as.character (_X_))"/>
+				</row>
+
+				<optionset id="multi_sortby" keycolumn="object">
+					<content>
+						<optiondisplay index="true"/>
+						<checkbox id="reverse" label="Reverse sort order" checked="false" value="Reversed" value_unchecked=""/>
+						<copy id="conversion_specs"/>
+					</content>
+					<optioncolumn id="object" external="true"/>
+					<optioncolumn id="objectshort" external="true" label="Object"/>
+					<optioncolumn id="reverse" label="Order" connect="reverse.state.labeled"/>
+					<optioncolumn id="conversion" label="Sort mode" connect="conversion.string"/>
+					<optioncolumn id="conversion_custom" connect="conversion_custom.text"/>
+				</optionset>
+				<stretch/>
+			</tab>
+		</tabbook>
 	</dialog>
 </document>
