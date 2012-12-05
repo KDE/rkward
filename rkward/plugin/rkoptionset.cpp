@@ -78,8 +78,8 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	model = 0;
 	display = 0;	// will be created from the builder, on demand -> createDisplay ()
 	contents_container = new RKComponent (this, user_area);
-	RKComponentBuilder *builder = new RKComponentBuilder (contents_container, QDomElement ());
 	QDomElement content_element = xml->getChildElement (element, "content", DL_ERROR);
+	RKComponentBuilder *builder = new RKComponentBuilder (contents_container, content_element);
 	builder->buildElement (content_element, user_area, false);	// NOTE that parent widget != parent component, here, by intention. The point is that the display should not be disabled along with the contents
 	builder->makeConnections ();
 	addChild ("contents", contents_container);

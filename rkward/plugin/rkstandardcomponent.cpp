@@ -505,6 +505,9 @@ RKComponentBuilder::RKComponentBuilder (RKComponent *parent_component, const QDo
 	RK_TRACE (PLUGIN);
 	parent = parent_component;
 	doc_elem = document_element;
+	while (!doc_elem.parentNode ().isNull ()) {
+		doc_elem = doc_elem.parentNode ().toElement ();
+	}
 }
 
 RKComponentBuilder::~RKComponentBuilder () {
