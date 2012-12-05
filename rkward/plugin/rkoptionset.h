@@ -59,7 +59,7 @@ private slots:
 /** When keys in the key column change, all other columns have to be updated, accordingly. */
 	void handleKeycolumnUpdate ();
 protected:
-	void fetchPropertyValuesRecursive (QMap<QString, QString> *list, bool include_top_level=false, const QString &prefix=QString ()) const;
+	void fetchPropertyValuesRecursive (PropertyValueMap *list, bool include_top_level=false, const QString &prefix=QString (), bool include_inactive_elements=false) const;
 friend class RKOptionSetDisplayModel;
 	int rowCount () const { return row_count->intValue (); };
 	void setRowState (int row, bool finished, bool valid);

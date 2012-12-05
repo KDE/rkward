@@ -40,13 +40,30 @@ RKComponentBase* RKComponentBase::lookupComponent (const QString &identifier, QS
 	}
 }
 
+RKComponentPropertyBase* RKComponentBase::lookupProperty (const QString &identifier, QString *remainder, bool warn) {
+	QString _remainder;
+	QString* p_remainder = remainder;
+	if (!remainder) p_remainder = &_remainder;
+
+	RKComponentBase* p = lookupComponent (identifier, p_remainder);
+	if (p && p->isProperty ()) {
+		if (!remainder && !p_remainder->isEmpty ()) {
+			if (warn) RK_DEBUG (PLUGIN, DL_ERROR, "Modifier is not allowed, here, while looking up property: %s. (Remainder was %s)", qPrintable (identifier), qPrintable (*p_remainder));
+			return 0;
+		}
+		return static_cast<RKComponentPropertyBase*> (p);
+	}
+	if (warn) RK_DEBUG (PLUGIN, DL_ERROR, "No such property: %s. Remainder was %s", qPrintable (identifier), qPrintable (*p_remainder));
+	return 0;
+}
+
 void RKComponentBase::addChild (const QString &id, RKComponentBase *child) {
 	RK_TRACE (PLUGIN);
 
 	child_map.insertMulti (id, child);		// no overwriting even on duplicate ("#noid#") ids
 }
 
-void RKComponentBase::fetchPropertyValuesRecursive (PropertyValueMap *list, bool include_top_level, const QString &prefix) const {
+void RKComponentBase::fetchPropertyValuesRecursive (PropertyValueMap *list, bool include_top_level, const QString &prefix, bool include_inactive_elements) const {
 	RK_TRACE (PLUGIN);
 
 	for (QHash<QString, RKComponentBase*>::const_iterator it = child_map.constBegin (); it != child_map.constEnd (); ++it) {
@@ -59,7 +76,7 @@ void RKComponentBase::fetchPropertyValuesRecursive (PropertyValueMap *list, bool
 			}
 		} else {
 			RK_ASSERT (it.value ()->isComponent ());
-			if (static_cast<RKComponent *> (it.value ())->isInactive ()) continue;
+			if (static_cast<RKComponent *> (it.value ())->isInactive () && (!include_inactive_elements)) continue;
 			it.value ()->fetchPropertyValuesRecursive (list, true, prefix + it.key () + '.');
 		}
 	}

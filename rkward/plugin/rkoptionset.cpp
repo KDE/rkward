@@ -204,7 +204,7 @@ RKOptionSet::~RKOptionSet () {
 void RKOptionSet::fetchDefaults () {
 	RK_TRACE (PLUGIN);
 	RK_ASSERT (default_row_state.isEmpty ());
-	contents_container->fetchPropertyValuesRecursive (&default_row_state);
+	contents_container->fetchPropertyValuesRecursive (&default_row_state, false, QString (), true);
 	contents_container->enablednessProperty ()->setBoolValue (rowCount () > 0);	// no current row; Do this *after* fetching default values, however. Otherwise most values will *not* be read, as the element is disabled
 }
 
@@ -274,9 +274,10 @@ RKComponent::PropertyValueMap unserializeMap (const QString &serial) {
 	return ret;
 }
 
-void RKOptionSet::fetchPropertyValuesRecursive (PropertyValueMap *list, bool include_top_level, const QString &prefix) const {
+void RKOptionSet::fetchPropertyValuesRecursive (PropertyValueMap *list, bool include_top_level, const QString &prefix, bool include_inactive_elements) const {
 	RK_TRACE (PLUGIN);
 	RK_ASSERT (include_top_level);
+	RK_ASSERT (!include_inactive_elements);
 
 	QString serialization;
 
@@ -709,7 +710,20 @@ void RKOptionSet::setContentsForRow (int row) {
 
 	RK_ASSERT (rows.size () > row);
 	if (row >= 0) {
-		contents_container->setPropertyValues (&(rows[row].full_row_map), false);
+		const PropertyValueMap *map = &(rows[row].full_row_map);
+		// If some elements are disabled, these will *not* be contained in the serialization of a row (unless that is still at the default).
+		// They *are* contained in the default_row_state, however, and thus we will apply any properties for which we do not have a value
+		// from the default_row_state, instead.
+		for (PropertyValueMap::const_iterator it = default_row_state.constBegin (); it != default_row_state.constEnd (); ++it) {
+			if (!map->contains (it.key ())) {
+				RKComponentPropertyBase *prop = contents_container->lookupProperty (it.key (), 0, true);
+				if (prop) {		// found a property
+					RK_ASSERT (!prop->isInternal ());
+					prop->setValue (it.value ());
+				}
+			}
+		}
+		contents_container->setPropertyValues (map, false);
 	} else {
 		contents_container->setPropertyValues (&default_row_state, false);
 	}
