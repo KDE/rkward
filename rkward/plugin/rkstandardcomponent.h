@@ -143,7 +143,7 @@ public:
 	RKComponentBuilder (RKComponent *parent_component, const QDomElement &document_element);
 	~RKComponentBuilder ();
 	void buildElement (const QDomElement &element, QWidget *parent_widget, bool allow_pages);
-	void parseLogic (const QDomElement &element);
+	void parseLogic (const QDomElement &element, bool allow_script_tag=true);
 	void makeConnections ();
 	RKComponent *component () const { return parent; };
 private:

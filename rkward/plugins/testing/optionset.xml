@@ -62,7 +62,6 @@
 				<row>
 					<optionset id="set" min_rows="1" keycolumn="var">
 						<content>
-							<!--							<property id="x"/> -->
 							<frame>
 								<optiondisplay index="false"/>
 								<checkbox id="dummybox" label="This dummy option is always disabled"/>

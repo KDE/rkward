@@ -684,7 +684,7 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 	}
 }
 
-void RKComponentBuilder::parseLogic (const QDomElement &element) {
+void RKComponentBuilder::parseLogic (const QDomElement &element, bool allow_script_tag) {
 	RK_TRACE (PLUGIN);
 
 	if (element.isNull ()) return;
@@ -740,10 +740,12 @@ void RKComponentBuilder::parseLogic (const QDomElement &element) {
 	}
 
 	QDomElement e = xml->getChildElement (element, "script", DL_INFO);
-	if (!e.isNull ()) {
+	if (!e.isNull () && allow_script_tag) {
 		QString file = xml->getStringAttribute (e, "file", QString (), DL_INFO);
 		QString inline_command = e.text ();
 		parent->standardComponent ()->scriptingProxy ()->initialize (file, inline_command);
+	} else if (!e.isNull ()) {
+		xml->displayError (&e, "<script> element is not allowed inside this <logic> section.", DL_ERROR);
 	}
 }
 

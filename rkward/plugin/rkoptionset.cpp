@@ -81,6 +81,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	QDomElement content_element = xml->getChildElement (element, "content", DL_ERROR);
 	RKComponentBuilder *builder = new RKComponentBuilder (contents_container, content_element);
 	builder->buildElement (content_element, user_area, false);	// NOTE that parent widget != parent component, here, by intention. The point is that the display should not be disabled along with the contents
+	builder->parseLogic (xml->getChildElement (element, "logic", DL_INFO), false);
 	builder->makeConnections ();
 	addChild ("contents", contents_container);
 	connect (standardComponent (), SIGNAL (standardInitializationComplete()), this, SLOT (fetchDefaults()));
@@ -162,20 +163,6 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 				RK_DEBUG (PLUGIN, DL_ERROR, "did not find governing property %s for column %s of optionset", qPrintable (ci.governor), qPrintable (ci.column_name));
 			}
 		}
-	}
-
-	// helper properties
-	XMLChildList properties = xml->getChildElements (content_element, "property", DL_WARNING);
-	for (int i = 0; i < properties.size (); ++i) {
-		const QDomElement &e = properties.at (i);
-		QString id = xml->getStringAttribute (e, "id", QString (), DL_ERROR);
-		if (contents_container->child_map.contains (id)) {
-			RK_DEBUG (PLUGIN, DL_WARNING, "Id %s already in use. Skipping property declaration", qPrintable (id));
-			continue;
-		}
-		RKComponentPropertyBase *prop = new RKComponentPropertyBase (contents_container, false);
-		prop->setInternal (true);
-		contents_container->addChild (id, prop);
 	}
 
 	if (display) {		// may or may not have been created

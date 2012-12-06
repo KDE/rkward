@@ -1551,10 +1551,8 @@ This chapter contains information on some topics that are useful only to certain
 &lt;/dialog&gt;
 		</programlisting>
 	<para>
-		Of course you can also use <link linkend="logic">UI logic</link> inside an optionset. You do so by making connection (or scripting)
-		in the <command>&lt;logic&gt;</command> section of your plugin, as usual. However, you will access the UI elements in the contents
-		region as (e.g.) "set.contents.firstname.XYZ". Note the prefix "set" (the <parameter>id</parameter> you have assigned to the set
-		and "contents".
+		Of course you can also use <link linkend="logic">UI logic</link> inside an optionset. There are two options for doing this: You can do so	by making connection (or scripting) in the main <command>&lt;logic&gt;</command> section of your plugin, as usual. However, you will access the UI elements in the contents region as (e.g.) "set.contents.firstname.XYZ". Note the prefix "set" (the <parameter>id</parameter> you have assigned to the set and "contents". Alternatively, you can add a separate <command>&lt;logic&gt;</command> section as a child element of your <command>&lt;optionset&gt;</command>. In this case, <parameter>id</parameter>s will be addressed relative to the contents region, e.g. "firstname.XYZ". Only the <command>&lt;script&gt;</command>-element is not allowed in the logic section of an optionset. If you want to use scripting,
+		you will have to utilize the plugin's main <command>&lt;logic&gt;</command> section.
 	</para>
 	<note>
 		<para>
@@ -2708,7 +2706,7 @@ Child-elements:
 	</para></listitem></varlistentry>
 	<varlistentry>
 	<term>&lt;content&gt;</term>
-	<listitem><para>Declare the content / UI of the set. No attributes. All usual active, passive, and layout elements are allowed as childname elements. In addition, the following special child-elements are allowed:
+	<listitem><para>Declare the content / UI of the set. No attributes. All usual active, passive, and layout elements are allowed as childname elements. In addition, the following special child-element is allowed:
 		<variablelist>
 			<varlistentry><term>&lt;optiondisplay&gt;</term>
 			<listitem><para>Creates a display for showing / selecting / adding / removing items in an optionset. Allowed only inside the contents are of an optionset, and only once. Attributes:
@@ -2717,15 +2715,11 @@ Child-elements:
 				<listitem><para>Whether to show a column with a numberic index (1...n) in the optiondisplay. (optional, boolean, defaults to "true")</para></listitem></varlistentry>
 			</variablelist>
 			</para></listitem></varlistentry>
-			<varlistentry><term>&lt;property&gt;</term>
-			<listitem><para>In the rare case that you want to connect two or more properties inside the contents region to an (external)
-			&lt;optioncolumn&gt;, you can create an auxiliary property using this element. Attributes:
-			<variablelist>
-				<varlistentry><term><parameter>id</parameter></term>
-				<listitem><para>Id of the property (relative to "setid.contents") (required, string).</para></listitem></varlistentry>
-			</variablelist>
-			</para></listitem></varlistentry>
 		</variablelist>
+	</para></listitem></varlistentry>
+	<varlistentry>
+	<term>&lt;logic&gt;</term>
+	<listitem><para>Optional specification of UI logic to apply <emphasis>inside</emphasis> the contents region the optionset. See <link linkend="logicelements">the reference on &lt;logic&gt;</link>
 	</para></listitem></varlistentry>
 	</variablelist>
 </para></listitem>
@@ -2875,7 +2869,7 @@ Child-elements:
 <variablelist>
 <varlistentry>
 <term>&lt;logic&gt;</term>
-<listitem><para>The containing element for the logic section. All elements below are allowed only inside the &lt;logic&gt; element. Only one &lt;logic&gt; element is allowed per document, as a direct child of the &lt;document&gt; element. The logic section applies to both &lt;dialog&gt; and &lt;wizard&gt; GUIs in the same way.</para></listitem>
+<listitem><para>The containing element for the logic section. All elements below are allowed only inside the &lt;logic&gt; element. The &lt;logic&gt; element is allowed only as a direct child of the &lt;document&gt; element (at most once per document), or of &lt;optionset&gt; elements (at most once per optionset). The document's logic section applies to both &lt;dialog&gt; and &lt;wizard&gt; GUIs in the same way.</para></listitem>
 </varlistentry>
 
 <varlistentry>
@@ -2962,6 +2956,18 @@ Child-elements:
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
+
+<varlistentry>
+<term>&lt;script&gt;</term>
+<listitem><para>Define script code to control UI logic. See <link linkend="logic_scripted">the section on scripted GUJI logic</link> for details. The script code to run can be given either using the <parameter>"file"</parameter> attribute, or as a (commented) text of the element. The <command>&lt;script&gt;</command> element is not allowed in the <command>&lt;logic&gt;</command> section of an optionset. Attributes:
+	<variablelist>
+	<varlistentry>
+	<term><parameter>file</parameter></term>
+	<listitem><para>File name of the script file. (required)</para></listitem>
+	</varlistentry>
+	</variablelist></para></listitem>
+</varlistentry>
+
 </variablelist>
 </sect2>
 

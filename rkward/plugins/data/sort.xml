@@ -16,8 +16,6 @@
 
 		<convert id="custom_conversion" mode="equals" sources="conversion.string" standard="custom"/>
 		<connect governor="custom_conversion" client="conversion_custom.enabled"/>
-		<convert id="custom_conversion_multi" mode="equals" sources="multi_sortby.contents.conversion.string" standard="custom"/>
-		<connect governor="custom_conversion_multi" client="multi_sortby.contents.conversion_custom.enabled"/>
 		<script><![CDATA[
 			// the top-level block is called only once
 			gui.addChangeCommand ("object.available", "objectChanged ()");
@@ -76,6 +74,10 @@
 				</row>
 
 				<optionset id="multi_sortby" keycolumn="object">
+					<logic>
+						<convert id="custom_conversion" mode="equals" sources="conversion.string" standard="custom"/>
+						<connect governor="custom_conversion" client="conversion_custom.enabled"/>
+					</logic>
 					<content>
 						<optiondisplay index="true"/>
 						<checkbox id="reverse" label="Reverse sort order" checked="false" value="Reversed" value_unchecked=""/>
