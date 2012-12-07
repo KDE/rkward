@@ -1150,11 +1150,10 @@ void RKComponentPropertyConvert::setMode (ConvertMode mode) {
 	sourcePropertyChanged (0);
 }
 
-void RKComponentPropertyConvert::setSources (const QString &source_string) {
+void RKComponentPropertyConvert::setSources (const QStringList &source_ids) {
 	RK_TRACE (PLUGIN);
 
 	sources.clear ();
-	QStringList source_ids = source_string.split (";");
 	for (QStringList::const_iterator it = source_ids.constBegin (); it != source_ids.constEnd (); ++it) {
 		Source s;
 		RKComponentBase *prop = c_parent->lookupComponent (*it, &(s.modifier));
@@ -1275,6 +1274,101 @@ bool RKComponentPropertyConvert::isValid () {
 	}
 
 	return is_valid;
+}
+
+void RKComponentPropertyConvert::connectToGovernor (RKComponentPropertyBase*, const QString&, bool) {
+	RK_DEBUG (PLUGIN, DL_ERROR, "Cannot connect a <convert> property to a governor");
+}
+
+bool RKComponentPropertyConvert::setValue (const QString&) {
+	RK_DEBUG (PLUGIN, DL_ERROR, "Cannot set value for a <convert> property");
+	return false;
+}
+
+/////////////////////////////////////////// Switch ////////////////////////////////////////////////
+
+RKComponentPropertySwitch::RKComponentPropertySwitch (RKComponent* parent, const QStringList& def_values, const QStringList& standards) : RKComponentPropertyBase (parent, false) {
+	RK_TRACE (PLUGIN);
+
+	RKComponentPropertySwitch::def_values = def_values;
+	RKComponentPropertySwitch::standards = standards;
+	condition_prop = 0;
+	c_parent = parent;
+
+	connect (this, SIGNAL(valueChanged(RKComponentPropertyBase*)), this, SLOT(selfChanged(RKComponentPropertyBase*)));
+}
+
+RKComponentPropertySwitch::~RKComponentPropertySwitch () {
+	RK_TRACE (PLUGIN);
+}
+
+void RKComponentPropertySwitch::connectToGovernor (RKComponentPropertyBase*, const QString&, bool) {
+	RK_DEBUG (PLUGIN, DL_ERROR, "Cannot connect a <switch> property to a governor");
+}
+
+bool RKComponentPropertySwitch::setValue (const QString& value) {
+	RK_DEBUG (PLUGIN, DL_ERROR, "Cannot set value for a <switch> property");
+	return false;
+}
+
+void RKComponentPropertySwitch::selfChanged (RKComponentPropertyBase *) {
+	RK_TRACE (PLUGIN);
+	c_parent->changed ();
+}
+
+void RKComponentPropertySwitch::sourcePropertyChanged (RKComponentPropertyBase*) {
+	RK_TRACE (PLUGIN);
+	valueChanged (this);	// new value will be pulled by anyone interested
+}
+
+QVariant RKComponentPropertySwitch::value (const QString& modifier) {
+	RK_TRACE (PLUGIN);
+
+	if (!condition_prop) {
+		RK_ASSERT (false);
+		return QVariant ();
+	}
+	QVariant cond = condition_prop->value (condition_prop_modifier);
+	int index = 0;
+	if (standards.isEmpty ()) {
+		if (RKComponentPropertyBool::variantToBool (cond, 0)) index = 1;
+	} else {
+		index = standards.indexOf (cond.toString ());		// NOTE: list search. Could use a hash, instead, but in general there won't be more than a hand full of standards
+		if (index < 0) index = standards.size ();	// remainder-category
+	}
+
+	// First try to return matching property
+	RKComponentPropertyBase *p = value_props.value (index);
+	if (p) {
+		QString mod = value_prop_mods.value (index);
+		if (!(mod.isEmpty () || modifier.isEmpty ())) mod.append (".");
+		mod.append (modifier);
+		return p->value (mod);
+	}
+
+	// If that fails, try to find a static default string
+	if (index < def_values.size ()) {
+		return def_values[index];	// NOTE: silently dropping modifier. This is useful for static "other" strings.
+	}
+
+	RK_DEBUG (PLUGIN, DL_ERROR, "Neither a fixed value, nor a property is defined for value %s (element %d/%d of standards)", qPrintable (cond.toString ()), index + 1, standards.size ());
+	return QVariant ();
+}
+
+void RKComponentPropertySwitch::setSources (const QString& _condition_prop, const QStringList& _value_props) {
+	RK_TRACE (PLUGIN);
+	RK_ASSERT (!condition_prop);	// must only be called once
+
+	condition_prop = c_parent->lookupProperty (_condition_prop, &condition_prop_modifier, true);
+	if (!condition_prop) RK_DEBUG (PLUGIN, DL_ERROR, "Not a valid condition to connect <switch> property to: %s", qPrintable (_condition_prop));
+
+	for (int i = 0; i < _value_props.size (); ++i) {
+		QString mod;
+		RKComponentPropertyBase *p = c_parent->lookupProperty (_value_props[i], &mod, true);
+		value_props.append (p);	// NOTE: Even if it is 0. value() takes care of that.
+		value_prop_mods.append (mod);
+		if (p) connect (p, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (sourcePropertyChanged(RKComponentPropertyBase*)));
+	}
 }
 
 #include "rkcomponentproperties.moc"

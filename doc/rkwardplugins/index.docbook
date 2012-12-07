@@ -809,44 +809,37 @@ R code.
 
 	&lt;logic&gt;
 		&lt;convert id="varmode" mode="equals" sources="mode.string" standard="variable" /&gt;
-		&lt;convert id="constmode" mode="equals" sources="mode.string" standard="constant" /&gt;
 
 		&lt;connect client="y.visible" governor="varmode" /&gt;
-		&lt;connect client="constant.visible" governor="constmode" /&gt;
+		&lt;connect client="constant.visible" governor="varmode.not" /&gt;
 	&lt;/logic&gt;
 
 	&lt;dialog label="T-Test"&gt;
 	[...]
 	</programlisting>
 	<para>
-		The first two lines inside the logic section are <command>&lt;convert&gt;</command> tags. Those basically provide two new boolean (on or off, true or false) properties, which can be used later on. The first property (<replaceable>"varmode"</replaceable>) is true, whenever the upper radio button is selected and the second whenever the lower radio button is selected. How is this done?
+		The first line inside the logic section is a <command>&lt;convert&gt;</command> tag. Basically, this provides a new boolean (on or off, true or false) property, which can be used later on. This property (<replaceable>"varmode"</replaceable>) is true, whenever the upper radio button is selected and false whenever the lower radio button is selected. How is this done?
 	</para>
 	<para>
 		First, under <parameter>sources</parameter>, the source properties to work on are listed (in this case only one each; you could list several as <parameter>sources=</parameter><replaceable>"mode.string;somethingelse"</replaceable>, then <replaceable>"varmode"</replaceable> would only be true, if both <replaceable>"mode.string"</replaceable> and <replaceable>"somethingelse"</replaceable> are equal to the string <replaceable>"variable"</replaceable>). Note that in this case we don't just write <replaceable>"mode"</replaceable> (as we would in <function>getString("mode")</function>, but <replaceable>"mode.string"</replaceable>. This is actually the internal way a radio control works: It has a property <quote>string</quote>, which holds its string value. <function>getString("mode")</function> is just a shorthand, and equivalent to <function>getString("mode.string")</function>. See the reference for all properties of the different GUI elements.
 	</para>
 	<para>
-		Second, we set the mode of conversion to <parameter>mode=</parameter><replaceable>"equals"</replaceable>. This means, we want to check, whether the sources are equal to a certain value. Finally standard is the value to compare against, so with <parameter>standard=</parameter><replaceable>"variable"</replaceable>, we check whether the property <replaceable>"mode.string"</replaceable> is equal to the string <replaceable>"variable"</replaceable> (the value of the upper radio option). If it is equal, then the property varmode is true, else it is false.
-	</para>
-	<para>
-		The next line is basically the same, but reversed. Here we define a property (<replaceable>"constmode"</replaceable>) which becomes true, if the second radio option is selected.
+		Second, we set the mode of conversion to <parameter>mode=</parameter><replaceable>"equals"</replaceable>. This means, we want to check, whether the source(s) is (are) equal to a certain value. Finally standard is the value to compare against, so with <parameter>standard=</parameter><replaceable>"variable"</replaceable>, we check whether the property <replaceable>"mode.string"</replaceable> is equal to the string <replaceable>"variable"</replaceable> (the value of the upper radio option). If it is equal, then the property varmode is true, else it is false.
 	</para>
 	<para>
 		Now to the real stuff: We <command>&lt;connect&gt;</command> the <replaceable>"varmode"</replaceable> property to y.visible, which controls whether the varslot <replaceable>"y"</replaceable> is shown or not. Note that any element which is made invisible is implicitly non-required. Thus, if the upper radio-option is selected, the varslot <replaceable>"y"</replaceable> is required, and visible. Else it is not required and hidden.
 	</para>
 	<para>
-		We do just the reverse for the spinbox. So in effect, either the varslot is shown and required, <emphasis>or</emphasis> the spinbox is shown and required - depending on which option is selected in the radio control. The GUI is changing itself according to the radio option. Try the example, if you like.
+		For the spinbox, we want the exact reverse. Fortunately, we do not need another <command>&lt;convert&gt;</command> for this: Boolean
+		properties can be negated very easily by appending the modifier <replaceable>"not"</replaceable>, so we <command>&lt;connect&gt;</command> <replaceable>"varmode.not"</replaceable> to the spinbox's visibility property. In effect, either
+		the varslot is shown and required, <emphasis>or</emphasis> the spinbox is shown and required - depending on which option is selected in the radio control. The GUI is changing itself according to the radio option. Try the example, if you like.
+	</para>
+	<para>
+		For a complete list of properties, refer to the <link linkend="reference">reference</link>. One more property, however, is special in that all GUI elements have it: <quote>enabled</quote>. This is slightly less drastic that <quote>visible</quote>. It does not show/hide the GUI element, but only enables/disables it. Disabled elements are typically shown grayed out, and do not react to user input.
 	</para>
 	<note>
-		<para>
-			In the above example, instead of defining two properties <replaceable>"varmode"</replaceable> and <replaceable>"constmode"</replaceable>, we could also have used the negation of <replaceable>"varmode"</replaceable>, like this:
-		</para>
+		<para>Besides <command>&lt;convert&gt;</command> and <command>&lt;connect&gt;</command>, there are several further elements for use in the <command>&lt;logic&gt;</command> section. E.g. conditional constructs can also be implemented using the <command>&lt;switch&gt;</command>-element. Refer to the <link linkend="logicelements">reference on logic elements</link> for details.</para>
 	</note>
-	<programlisting>
-	&lt;connect client="constant.visible" governor="varmode.not" /&gt;
-	</programlisting>
-	<para>
-		Once again, for a complete list of properties, refer to the <link linkend="reference">reference</link>. One more property, however, is special in that all GUI elements have it: <quote>enabled</quote>. This is slightly less drastic that <quote>visible</quote>. It does not show/hide the GUI element, but only enables/disables it. Disabled elements are typically shown grayed out, and do not react to user input.
-	</para>
 </sect1>
 <sect1 id="logic_scripted">
 <title>Scripted GUI logic</title>
@@ -856,7 +849,7 @@ R code.
 	<programlisting>
 	[...]
 	&lt;code file="code.js"/&gt;
-
+'
 	&lt;logic&gt;
 		&lt;script&gt;&lt;![CDATA[
 			// ECMAScript code in this block
@@ -2691,16 +2684,16 @@ Child-elements:
 	<term>&lt;optioncolumn&gt;</term>
 	<listitem><para>Declares one optioncolumn of the set. For each value that you want to fetch from the optionset, you must declare a separate &lt;optioncolumn&gt;. Attributes:
 		<variablelist>
-			<varlistentry><term>id</term>
+			<varlistentry><term><parameter>id</parameter></term>
 			<listitem><para>The id of the optioncolumn (required, string).</para></listitem></varlistentry>
-			<varlistentry><term>external</term>
+			<varlistentry><term><parameter>external</parameter></term>
 			<listitem><para>Set to true, if the optioncolumn is controlled from outside the optionset (optional, boolean, defaults to false).</para></listitem></varlistentry>
-			<varlistentry><term>label</term>
+			<varlistentry><term><parameter>label</parameter></term>
 			<listitem><para>If given, the optioncolumn will be displayed in the &lt;optiondisplay&gt; in a column by that label (optional, string, defaults to not displayed).</para></listitem></varlistentry>
-			<varlistentry><term>connect</term>
+			<varlistentry><term><parameter>connect</parameter></term>
 			<listitem><para>The property to connect this optioncolumn to, given as id inside the &lt;content&gt;-area. For external &lt;optioncolumn&gt;s, the corresponding value will be set to the externally set value. For regular (non-external) &lt;optioncolumn&gt;s,
 			the corresponding row of the &lt;optioncolumn&gt;-property, will be set when the property changes inside the content-area. (optional, string, defaults to not connected).</para></listitem></varlistentry>
-			<varlistentry><term>default</term>
+			<varlistentry><term><parameter>default</parameter></term>
 			<listitem><para>Only for external columns: The value to assume for this column, if no value is known for an entry. Rarely useful. (Optional, defaults to empty string)</para></listitem></varlistentry>
 		</variablelist>
 	</para></listitem></varlistentry>
@@ -2934,6 +2927,57 @@ Child-elements:
 	<term><parameter>require_true</parameter></term>
 	<listitem><para>If set to "true", the property will become required, and will only be considered valid, if its state is true/on. Hence, if the property is false, it will block the <guibutton>Submit</guibutton> button (optional, defaults to "false".
 		<caution><remark>If you use this, make sure the user can easily detect what's wrong, such as by showing an explanatory &lt;text&gt;)</remark></caution></para></listitem>
+	</varlistentry>
+	</variablelist></para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>&lt;switch&gt;</term>
+<listitem><para>Create a new property that will relay to different target properties (or fixed strings) based on the value of a condition property. This allows to create logic similar to <function>if()</function> or <function>switch()</function> constructs. Attributes:
+	<variablelist>
+	<varlistentry>
+	<term><parameter>id</parameter></term>
+	<listitem><para>The ID of the new property (required)</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term><parameter>condition</parameter></term>
+	<listitem><para>The id of the condition property (required)</para></listitem>
+	</varlistentry>
+	</variablelist>
+Child elements:
+	<variablelist>
+	<varlistentry>
+	<term>&lt;true&gt;</term>
+	<listitem><para>If the condition property is boolean, you can specify the two child elements &lt;true&gt; and &lt;false&gt; (and only these). (Required, if &lt;false&gt; is also given)</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>&lt;false&gt;</term>
+	<listitem><para>If the condition property is boolean, you can specify the two child elements &lt;true&gt; and &lt;false&gt; (and only these). (Required, if &lt;true&gt; is also given)</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>&lt;case&gt;</term>
+	<listitem><para>If the condition property is not boolean, you can supply and arbitrary number of &lt;case&gt;-elements, one for each
+	value of the condition property that you want to match (at least one such element is required, if the condition property is not boolean)</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>&lt;default&gt;</term>
+	<listitem><para>If the condition property is not boolean, the optional &lt;default&gt;-element, allows to specify the behavior, if no
+	&lt;case&gt; element is matches the value of the condition property (optional, allowed only once, in combination with one or more &lt;case&gt; elements).</para></listitem>
+	</varlistentry>
+	</variablelist>
+Child elements &lt;true&gt;, &lt;false&gt;, &lt;case&gt;, and &lt;default&gt; take the following attributes:
+	<variablelist>
+	<varlistentry>
+	<term><parameter>standard</parameter></term>
+	<listitem><para>Only for &lt;case&gt;-elements: The value to match the condition property against (required, string).</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term><parameter>fixed_value</parameter></term>
+	<listitem><para>A fixed string that should be supplied as the value of the &lt;switch&gt; property, if the current condition matches (required, if dynamic_value is not supplied).</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term><parameter>dynamic_value</parameter></term>
+	<listitem><para>The <parameter>id</parameter> of the target property that should be supplied as the value of the &lt;switch&gt; property, if the current condition matches (required, if fixed_value is not supplied).</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
@@ -3262,6 +3306,14 @@ Child-elements:
 <term>&lt;convert&gt;</term>
 <listitem><para>This element (used in the &lt;logic&gt; section) is special, in that is technically *is* a property, instead of just holding one or more properties. It is of boolean kind. Note that useful modifiers of this property (as of all boolean properties) are "not" and "numeric" (see <link linkend="propertytypes">types of properties</link>)</para></listitem>
 </varlistentry>
+
+<varlistentry>
+<term>&lt;switch&gt;</term>
+<listitem><para>This element (used in the &lt;logic&gt; section) is special, in that is technically *is* a (string) property, instead of just holding one or more properties. It allows to switch between several target properties depending on the value of a condition property, or to re-map values of the condition property. Any modifiers that you supply are passed on to the target properties, thus, e.g. if all target
+properties are RObject properties, you can use the "shortname" modifier on the switch, too. However, if the target properties are of
+different types, using modifiers may lead to errors. For <replaceable>fixed_value</replaceable>s, any modifier is dropped, silently. Note that target properties, when accessed through a switch, are always read-only!</para></listitem>
+</varlistentry>
+
 </variablelist>
 </sect1>
 

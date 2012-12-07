@@ -40,8 +40,9 @@ public:
 		PropertyDouble = 4,
 		PropertyRObjects = 5,
 		PropertyCode = 6,
-		PropertyLogic = 7,
+		PropertyConvert = 7,
 		PropertyStringList = 8,
+		PropertySwitch = 9,
 		PropertyUser = 1000,		/**< for user expansion */
 		PropertyEnd = 1999,
 		ComponentBase = 2001,

@@ -1,15 +1,16 @@
+- Added <switch> logic element to switch between several target properties (or fixed values) based on the value of a condition property
 - Sort plugin gains option to sort data.frames by more than one column at a time, and options for type conversion	TODO: adjust test(s)
 - Add in-application debug message viewer (targetted at (plugin) developers)
 - Add setting to customize initial working directory
 - Windows only: Add UI-checkbox for R's "internet2"-option
 - New functions getString(), getList() and getBoolean() for fetching data in plugin scripts		TODO: more testing, convert at least some plugins
 - Boolean properties now return a numeric, not labelled representation of their value, by default. <checkbox>es should be unaffected.	TODO: when announcing release, link to explanation mail.
-- Added GUI element for entering a set of options for an arbitrary number of items		TODO: document
+- Added <optionset> GUI element for entering a set of options for an arbitrary number of items
 - Reduce CPU usage of pluings while idle
 - Fix conversion from Numeric to Factor in the data editor
 - In the data.frame editor, columns containing invalid values are now highlighted in red
 - Fixed: If none of the previous plugin maps could be found on startup, re-add the default
-- Added GUI element for entering matrix or vector data in plugins
+- Added <matrix> GUI element for entering matrix or vector data in plugins
 - Improve key handling while editing factor levels in a data.frame
 - Added utiltity function rk.flush.output()
 - RKWard is now categorized as Science/Math/Numerical Analysis in its .desktop file

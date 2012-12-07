@@ -721,6 +721,7 @@ void RKComponentBuilder::parseLogic (const QDomElement &element, bool allow_scri
 	}
 
 	// find convert elements
+	QMap<RKComponentPropertyBase*, QStringList> switch_convert_sources;
 	children = xml->getChildElements (element, "convert", DL_INFO);
 	for (it = children.constBegin (); it != children.constEnd (); ++it) {
 		RKComponentPropertyConvert *convert = new RKComponentPropertyConvert (component ());
@@ -733,10 +734,70 @@ void RKComponentBuilder::parseLogic (const QDomElement &element, bool allow_scri
 		} else if (mode == RKComponentPropertyConvert::Range) {
 			convert->setRange (xml->getDoubleAttribute (*it, "min", -FLT_MAX, DL_INFO), xml->getDoubleAttribute (*it, "max", FLT_MAX, DL_INFO));
 		}
-		QString sources = xml->getStringAttribute (*it, "sources", QString::null, DL_WARNING);
-		convert->setSources (sources);
+		switch_convert_sources.insert (convert, xml->getStringAttribute (*it, "sources", QString::null, DL_WARNING).split (';'));
 		convert->setRequireTrue (xml->getBoolAttribute (*it, "require_true", false, DL_INFO));
 		component ()->addChild (id, convert);
+	}
+
+	// find switch elements
+	children = xml->getChildElements (element, "switch", DL_INFO);
+	for (it = children.constBegin (); it != children.constEnd (); ++it) {
+		QDomElement t = xml->getChildElement (*it, "true", DL_INFO);
+		QDomElement f = xml->getChildElement (*it, "false", DL_INFO);
+		if (t.isNull () != f.isNull ()) {
+			xml->displayError (&(*it), "One of <true> / <false> was provided for boolean <switch>, but not the other. Skipping switch.", DL_ERROR);
+			continue;
+		}
+
+		XMLChildList case_elems = xml->getChildElements (*it, "case", DL_INFO);
+		QDomElement default_elem = xml->getChildElement (*it, "default", DL_INFO);
+		if (!default_elem.isNull ()) case_elems.append (default_elem);
+
+		if (t.isNull ()) {
+			if (case_elems.isEmpty ()) {
+				xml->displayError (&(*it), "Neither <true> / <false> nor <case> / <default> were provided. Skipping switch.", DL_ERROR);
+				continue;
+			}
+		} else {
+			if (!case_elems.isEmpty ()) {
+				xml->displayError (&(*it), "One <true> / <false> *or* <case> / <default> may be provided a <switch>. Proceeding with boolean switch.", DL_ERROR);
+				case_elems.clear ();
+			}
+			case_elems.append (f);
+			case_elems.append (t);
+		}
+
+		QStringList def_strings;
+		QStringList standards;
+		QStringList sources;
+		sources.append (xml->getStringAttribute (*it, "condition", QString (), DL_ERROR));	// store condition prop as first "source"
+
+		for (XMLChildList::const_iterator cit = case_elems.constBegin (); cit != case_elems.constEnd (); ++cit) {
+			def_strings.append (xml->getStringAttribute (*cit, "fixed_value", QString (), DL_INFO));
+			sources.append (xml->getStringAttribute (*cit, "dynamic_value", QString (), DL_INFO));
+			if ((*cit).tagName () == "case") standards.append (xml->getStringAttribute (*cit, "standard", QString (), DL_WARNING));
+		}
+
+		QString id = xml->getStringAttribute (*it, "id", "#noid#", DL_WARNING);
+		RKComponentPropertySwitch *switchel = new RKComponentPropertySwitch (component (), def_strings, standards);
+		switchel->setInternal (true);
+		switch_convert_sources.insert (switchel, sources);
+		component ()->addChild (id, switchel);
+	}
+
+	// resolve source properties for switch and convert elements, *after* all properties have been created
+	for (QMap<RKComponentPropertyBase*, QStringList>::const_iterator it = switch_convert_sources.constBegin (); it != switch_convert_sources.constEnd (); ++it) {
+		if (it.key ()->type () == RKComponentBase::PropertyConvert) {
+			static_cast<RKComponentPropertyConvert*> (it.key ())->setSources (it.value ());
+		} else {
+			RK_ASSERT (it.key ()->type () == RKComponentBase::PropertySwitch);
+			QStringList sources = it.value ();
+			if (sources.isEmpty ()) {
+				RK_ASSERT (!sources.isEmpty ());
+				continue;
+			}
+			static_cast<RKComponentPropertySwitch*> (it.key ())->setSources (sources.takeFirst (), sources);
+		}
 	}
 
 	QDomElement e = xml->getChildElement (element, "script", DL_INFO);

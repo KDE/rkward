@@ -387,6 +387,7 @@ public:
 /** constructor. Note that this property *requires* an RKComponent as parent (the one at the top of all the source properties) */
 	RKComponentPropertyConvert (RKComponent *parent);
 	~RKComponentPropertyConvert ();
+	int type () { return PropertyConvert; };
 
 /** Mode of operation. see setMode () */
 	enum ConvertMode {
@@ -400,7 +401,7 @@ public:
 /** set the mode. Usually you will only call this once, after construction, and usually followed by setSources () - if applicable - setStandard () or setRange (). */
 	void setMode (ConvertMode mode);
 /** set the sources, i.e. the properties to check against. To specify multiple sources, separate their IDs with ";" */
-	void setSources (const QString &source_string);
+	void setSources (const QStringList &sources);
 /** set the standard for comparison. Only meaningful in Equals mode */
 	void setStandard (const QString &standard);
 /** set the range for comparison. Only meaningful in Range mode */
@@ -413,6 +414,10 @@ public:
 
 /** string represenation of the options in ConvertMode. For use in XMLHelper::getMultiChoiceAttribute */
 	static QString convertModeOptionString () { return ("equals;notequals;range;and;or"); };
+/** reimplemented to do raise a warning, and do nothing else. */
+	void connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier=QString::null, bool reconcile_requirements=true);
+/** reimplemented to do raise a warning, and do nothing else. */
+	bool setValue (const QString &value);
 public slots:
 /** unfortuntely, as the parent component likely does not know about us, we have to notify it manually of any changes. That's done from this slot */
 	void selfChanged (RKComponentPropertyBase *);
@@ -431,5 +436,38 @@ private:
 	QList<Source> sources;
 };
 
-#endif
+/** This special property corresponds to a switch-statement, switching between two or more separate governing props based on the value of a condition prop. */
+class RKComponentPropertySwitch : public RKComponentPropertyBase {
+	Q_OBJECT
+public:
+/** constructor. Note that this property *requires* an RKComponent as parent (the one at the top of all the source properties)
+ @param standards the values to match against. Note: Providing an empty list make the switch operate in boolean mode,
+ switching between the first two sources / values, based on the boolean value of the condition_prop. */
+	RKComponentPropertySwitch (RKComponent *parent, const QStringList& def_values, const QStringList& standards);
+	~RKComponentPropertySwitch ();
 
+/** set the sources, i.e. the properties to operate on */
+	void setSources (const QString &condition_prop, const QStringList &value_props);
+/** reimplemented to do raise a warning, and do nothing else. */
+	void connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier=QString::null, bool reconcile_requirements=true);
+/** reimplemented to do raise a warning, and do nothing else. */
+	bool setValue (const QString &value);
+
+	QVariant value (const QString &modifier=QString ());
+	int type () { return PropertySwitch; };
+public slots:
+/** unfortuntely, as the parent component likely does not know about us, we have to notify it manually of any changes. That's done from this slot */
+	void selfChanged (RKComponentPropertyBase *);
+/** a source property changed. Check the state */
+	void sourcePropertyChanged (RKComponentPropertyBase *);
+private:
+	RKComponent *c_parent;		// actually the same as parent (), but without the hassle of conversion
+	QStringList def_values;
+	QStringList standards;
+	RKComponentPropertyBase *condition_prop;
+	QString condition_prop_modifier;
+	QList<RKComponentPropertyBase*> value_props;
+	QStringList value_prop_mods;
+};
+
+#endif

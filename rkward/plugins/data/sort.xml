@@ -77,6 +77,10 @@
 					<logic>
 						<convert id="custom_conversion" mode="equals" sources="conversion.string" standard="custom"/>
 						<connect governor="custom_conversion" client="conversion_custom.enabled"/>
+						<switch id="conversion_label" condition="custom_conversion">
+							<false dynamic_value="conversion.string"/>
+							<true dynamic_value="conversion_custom.text"/>
+						</switch>
 					</logic>
 					<content>
 						<optiondisplay index="true"/>
@@ -86,7 +90,8 @@
 					<optioncolumn id="object" external="true"/>
 					<optioncolumn id="objectshort" external="true" label="Object"/>
 					<optioncolumn id="reverse" label="Order" connect="reverse.state.labeled"/>
-					<optioncolumn id="conversion" label="Sort mode" connect="conversion.string"/>
+					<optioncolumn id="conversion" connect="conversion.string"/>
+					<optioncolumn id="conversion_label" label="Sort mode" connect="conversion_label"/>
 					<optioncolumn id="conversion_custom" connect="conversion_custom.text"/>
 				</optionset>
 				<stretch/>

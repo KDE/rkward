@@ -41,6 +41,7 @@ RKComponentBase* RKComponentBase::lookupComponent (const QString &identifier, QS
 }
 
 RKComponentPropertyBase* RKComponentBase::lookupProperty (const QString &identifier, QString *remainder, bool warn) {
+	RK_TRACE (PLUGIN);
 	QString _remainder;
 	QString* p_remainder = remainder;
 	if (!remainder) p_remainder = &_remainder;
