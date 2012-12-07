@@ -589,6 +589,7 @@ bool RKHTMLWindow::renderRKHelp (const KUrl &url) {
 						QString title = help_xml->getStringAttribute (*it, "title", QString (), DL_INFO);
 						if (title.isEmpty ()) {
 							QDomElement source_element = component_xml->findElementWithAttribute (component_doc_element, "id", id, true, DL_WARNING);
+							if (source_element.isNull ()) RK_DEBUG (PLUGIN, DL_ERROR, "No such UI element: %s", qPrintable (id));
 							title = component_xml->getStringAttribute (source_element, "label", i18n ("Unnamed GUI element"), DL_WARNING);
 						}
 						khtmlpart->write ("<h4>" + title + "</h4>");
@@ -597,6 +598,7 @@ bool RKHTMLWindow::renderRKHelp (const KUrl &url) {
 						QString id = help_xml->getStringAttribute (*it, "id", QString (), DL_WARNING);
 						QString title = help_xml->getStringAttribute (*it, "title", QString (), DL_INFO);
 						QDomElement source_element = component_xml->findElementWithAttribute (component_doc_element, "id", id, true, DL_WARNING);
+						if (source_element.isNull ()) RK_DEBUG (PLUGIN, DL_ERROR, "No such UI element: %s", qPrintable (id));
 						title = component_xml->getStringAttribute (source_element, "label", title, DL_WARNING);
 						khtmlpart->write ("<h3>" + title + "</h3>");
 					} else {
