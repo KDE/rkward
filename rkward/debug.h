@@ -49,9 +49,9 @@ extern void RKDebug (int flags, int level, const char *fmt, ...);
 // Debug functions 
 #	define RK_DO(expr,flags,level) if ((flags & RK_Debug_Flags) && (level >= RK_Debug_Level)) { expr; }
 #	define RK_DEBUG(flags,level,...) { if ((flags & RK_Debug_Flags) && (level >= RK_Debug_Level)) RKDebug (flags,level,__VA_ARGS__); }
-#	define RK_ASSERT(x) if (!(x)) RKDebug (ALL, DL_FATAL, "Assert failed at %s - function %s line %d", __FILE__, __FUNCTION__, __LINE__);
+#	define RK_ASSERT(x) if (!(x)) RK_DEBUG (ALL, DL_FATAL, "Assert '%s' failed at %s - function %s line %d", #x, __FILE__, __FUNCTION__, __LINE__);
 #	ifndef RKWARD_NO_TRACE
-#		define RK_TRACE(flags) RKDebug (flags, DL_TRACE, "Trace: %s - function %s line %d", __FILE__, __FUNCTION__, __LINE__);
+#		define RK_TRACE(flags) RK_DEBUG (flags, DL_TRACE, "Trace: %s - function %s line %d", __FILE__, __FUNCTION__, __LINE__);
 #	else
 #		define RK_TRACE(flags)
 #	endif
