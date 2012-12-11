@@ -572,7 +572,7 @@ void RKOptionSet::columnPropertyChanged (RKComponentPropertyBase *property) {
 void RKOptionSet::handleKeycolumnUpdate () {
 	RK_TRACE (PLUGIN);
 
-	int activate_row = activate_row;
+	int activate_row = active_row;
 	QStringList new_keys = keycolumn->values ();
 	QMap<int, int> position_changes;
 	QSet<int> found_rows;
