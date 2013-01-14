@@ -82,7 +82,7 @@
 	assign (".rk.output.html.file", x, .rk.variables)
 
 	if (!file.exists (x)) {
-		.rk.cat.output (paste ("<?xml version=\"1.0\" encoding=\"", .Call ("rk.locale.name"), "\"?>\n", sep=""))
+		.rk.cat.output (paste ("<?xml version=\"1.0\" encoding=\"", .Call ("rk.locale.name", PACKAGE="(embedding)"), "\"?>\n", sep=""))
 		.rk.cat.output (paste ("<html><head>\n<title>RKWard Output</title>\n", .rk.do.plain.call ("getCSSlink"), sep=""))
 		# the next part defines a JavaScript function to add individual results to a global table of contents menu in the document
 		.rk.cat.output (paste ("\t<script type=\"text/javascript\">

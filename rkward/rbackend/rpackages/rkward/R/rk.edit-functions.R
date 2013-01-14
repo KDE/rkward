@@ -51,19 +51,19 @@
 		nfile = tempfile()
 		env = environment (file)
 		dput (file, file=nfile, control=c ("useSource", "keepNA", "keepInteger", "showAttributes"))
-		.Call("rk.edit.files", nfile, title, name, prompt)
+		.Call("rk.edit.files", nfile, title, name, prompt, PACKAGE="(embedding)")
 		x <- dget (nfile)
 		environment (x) <- env
 		return (x)
 	}
-	invisible (.Call ("rk.edit.files",  as.character (file),  as.character (title),  as.character (name), isTRUE (prompt)))
+	invisible (.Call ("rk.edit.files",  as.character (file),  as.character (title),  as.character (name), isTRUE (prompt), PACKAGE="(embedding)"))
 }
 
 #' @export
 #' @rdname rk.edit
 "rk.show.files" <- function (file = file, title = file, wtitle = NULL, delete=FALSE, prompt = TRUE)
 {
-	invisible (.Call ("rk.show.files", as.character (file), as.character (title), as.character (wtitle), delete, isTRUE (prompt)))
+	invisible (.Call ("rk.show.files", as.character (file), as.character (title), as.character (wtitle), delete, isTRUE (prompt), PACKAGE="(embedding)"))
 }
 
 #' @export

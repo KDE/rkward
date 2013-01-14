@@ -61,7 +61,7 @@
 
 #' @export
 "rk.show.message" <- function (message, caption = "Information", wait=TRUE) {
-	.Call ("rk.dialog", caption, message, "ok", "", "", isTRUE (wait))
+	.Call ("rk.dialog", caption, message, "ok", "", "", isTRUE (wait), PACKAGE="(embedding)")
 	invisible (TRUE)
 }
 
@@ -69,7 +69,7 @@
 #' @export
 #' @rdname rk.show.messages
 "rk.show.question" <- function (message, caption = "Question", button.yes = "yes", button.no = "no", button.cancel = "cancel") {
-	res <- .Call ("rk.dialog", caption, message, button.yes, button.no, button.cancel, TRUE)
+	res <- .Call ("rk.dialog", caption, message, button.yes, button.no, button.cancel, TRUE, PACKAGE="(embedding)")
 	if (res > 0) return (TRUE)
 	else if (res < 0) return (FALSE)
 	else return (NULL)	# cancelled

@@ -55,7 +55,7 @@
 
 		ret <- base::Sys.setlocale (category, locale, ...)
 
-		.Call ("rk.update.locale")
+		.Call ("rk.update.locale", PACKAGE="(embedding)")
 		ret
 	} else {
 		base::Sys.setlocale (category, locale, ...)

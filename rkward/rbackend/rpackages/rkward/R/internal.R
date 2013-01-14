@@ -117,7 +117,7 @@
 ".rk.do.error" <- function () {
 # comment in R sources says, it may not be good to query options during error handling. But what can we do, if R_ShowErrorMessages is not longer exported?
 	if (getOption ("show.error.messages")) {
-		.Call ("rk.do.error", c (geterrmessage ()));
+		.Call ("rk.do.error", c (geterrmessage ()), PACKAGE="(embedding)");
 	}
 }
 
@@ -127,13 +127,13 @@
 #' @export
 ".rk.do.call" <- function (x, args=NULL) {
 	.rk.set.reply (NULL)
-	.Call ("rk.do.command", c (x, args));
+	.Call ("rk.do.command", c (x, args), PACKAGE="(embedding)");
 	return (.rk.variables$.rk.rkreply)
 }
 
 #' @export
 ".rk.do.plain.call" <- function (x, args=NULL, synchronous=TRUE) {
-	.Call ("rk.do.generic.request", c (x, args), isTRUE (synchronous))
+	.Call ("rk.do.generic.request", c (x, args), isTRUE (synchronous), PACKAGE="(embedding)")
 }
 
 #' @export
@@ -241,7 +241,7 @@
 	function (value) {
 		if (!missing (value)) {
 			assign (k, value, envir=.rk.watched.symbols)
-			.Call ("rk.do.command", c ("ws", k));
+			.Call ("rk.do.command", c ("ws", k), PACKAGE="(embedding)");
 #			NOTE: the above is essentially the same a
 #				.rk.do.call ("ws", k);
 #			only minimally faster.
@@ -255,7 +255,7 @@
 #' @export
 ".rk.watch.symbol" <- function (k) {
 	f <- .rk.make.watch.f (k)
-	.Call ("rk.copy.no.eval", k, globalenv(), .rk.watched.symbols);
+	.Call ("rk.copy.no.eval", k, globalenv(), .rk.watched.symbols, PACKAGE="(embedding)");
 	#assign (k, get (k, envir=globalenv ()), envir=.rk.watched.symbols)
 	rm (list=k, envir=globalenv ())
 
@@ -323,7 +323,7 @@
 
 #' @export
 ".rk.get.structure" <- function (x, name, envlevel=0, namespacename=NULL) {
-	.Call ("rk.get.structure", x, as.character (name), as.integer (envlevel), namespacename)
+	.Call ("rk.get.structure", x, as.character (name), as.integer (envlevel), namespacename, PACKAGE="(embedding)")
 }
 
 #' @export
@@ -333,7 +333,7 @@
 
 #' @export
 ".rk.get.structure.global" <- function (name, envlevel=0, namespacename=NULL) {
-	.Call ("rk.get.structure.global", as.character (name), as.integer (envlevel), namespacename)
+	.Call ("rk.get.structure.global", as.character (name), as.integer (envlevel), namespacename, PACKAGE="(embedding)")
 }
 
 #' @export
