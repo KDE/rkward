@@ -1,4 +1,4 @@
-- Added support for the upcoming R 3.0.0		TODO: Check for any more regressions, before release
+- Added support for the upcoming R 3.0.0			TODO: Check for any more regressions, before release
 - Added <switch> logic element to switch between several target properties (or fixed values) based on the value of a condition property
 - Sort plugin gains option to sort data.frames by more than one column at a time, and options for type conversion	TODO: adjust test(s)
 - Add in-application debug message viewer (targetted at (plugin) developers)
