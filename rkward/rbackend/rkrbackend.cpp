@@ -1463,7 +1463,8 @@ QStringList RKRBackend::handlePlainGenericRequest (const QStringList &parameters
 	if (parameters.value (0) == "getSessionInfo") {
 		QStringList dummy = parameters;
 		dummy.append (RKRBackendProtocolBackend::backendDebugFile ());
-		dummy.append (R_MAJOR "." R_MINOR " " R_STATUS " (" R_YEAR "-" R_MONTH "-" R_DAY " r" R_SVN_REVISION ")");
+// NOTE: R_SVN_REVISON used to be a string, but has changed to numeric constant in R 3.0.0. QString::arg() handles both.
+		dummy.append (QString (R_MAJOR "." R_MINOR " " R_STATUS " (" R_YEAR "-" R_MONTH "-" R_DAY " r%1)").arg (R_SVN_REVISION));
 		request.params["call"] = dummy;
 	} else if (parameters.value (0) == "set.output.file") {
 		output_file = parameters.value (1);
