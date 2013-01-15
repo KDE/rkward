@@ -9,6 +9,7 @@ rkward (0.6.0-3) unstable; urgency=low
   * correctly treat -pre releases in debian/watch (thanks to Bart Martens)
   * remove obsolete DM-Upload-Allowed field
   * update Vcs-Svn field to changed repository URL
+  * remove Vcs-Browser field, as there is no useful repository browser, ATM
 
  -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Tue, 15 Jan 2012 12:30:00 +0100
 
