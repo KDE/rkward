@@ -13,6 +13,7 @@ LPUBDIR=~/Public/rkward
 if [[ $1 == "" ]] ; then
  echo "Usage: update_bundle.sh OPTION
           OPTIONS:
+           -D (build target rkward instead of rkward-devel)
            -f (full -- all of the below)
            -p (update macports, remove inactive)
            -r (update port ${PTARGET})
@@ -23,8 +24,9 @@ if [[ $1 == "" ]] ; then
 fi
 
 # get the options
-while getopts ":fprmscx" OPT; do
+while getopts ":Dfprmscx" OPT; do
   case $OPT in
+    D) PTARGET=rkward >&2 ;;
     f)
        UPMPORTS=TRUE >&2
        UPRKWARD=TRUE >&2
@@ -66,8 +68,11 @@ fi
 
 # remove previous installation and its build left-overs
 if [[ $UPRKWARD ]] ; then
-  sudo port uninstall $PTARGET
-  sudo port clean $PTARGET
+  # make sure each instance of previous RKWard installations is removed first
+  sudo port uninstall rkward
+  sudo port uninstall rkward-devel
+  sudo port clean rkward
+  sudo port clean rkward-devel
   # build and install recent version
   sudo port -v install $PTARGET
 fi
