@@ -5,6 +5,7 @@ Maintainer: Thomas Friedrichsmeier <tfry@users.sourceforge.net>
 Build-Depends: debhelper (>= 6.0.0), kdelibs5-dev, cmake, r-base-dev (>= 2.7.0), libx11-dev
 Standards-Version: 3.9.4
 Homepage: http://rkward.sourceforge.net
+Vcs-Browser: http://sourceforge.net/p/rkward/code/HEAD/tree/trunk/rkward/debian/
 Vcs-Svn: http://svn.code.sf.net/p/rkward/code/trunk/rkward/debian/
 
 Package: rkward
