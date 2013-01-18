@@ -788,6 +788,11 @@ void RKRBackend::connectCallbacks () {
 void RKRBackend::setupCallbacks () {
 	RK_TRACE (RBACKEND);
 }
+/*
+SEXP dummyselectlist (SEXP, SEXP, SEXP, SEXP) {
+	qDebug ("got it");
+	return R_NilValue;
+}*/
 
 void RKRBackend::connectCallbacks () {
 	RK_TRACE (RBACKEND);
@@ -811,6 +816,8 @@ void RKRBackend::connectCallbacks () {
 // TODO: R devels disabled this for some reason. We set it anyway...
 	ptr_R_EditFile = REditFile;
 //	ptr_R_EditFiles = REditFiles;		// undefined reference
+/*	ptr_do_selectlist = dummyselectlist;
+	ptr_do_dataviewer = dummyselectlist;*/
 
 // these two, we won't override
 //	ptr_R_loadhistory = ... 	// we keep our own history

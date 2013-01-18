@@ -18,23 +18,27 @@
 #ifndef RKCOMPONENTMETA_H
 #define RKCOMPONENTMETA_H
 
+#include <QDomElement>
+#include <kaboutdata.h>
+
 struct RKComponentDependency {
-	RKComponentDependency (_type, _package, _min_version, _max_version) : type (_type), package (_package), min_version (_min_version), max_version (_max_version);
+	RKComponentDependency () : type (RBaseInstallation), min_version (0), max_version (0xFFFFFFFF);
 	enum DependencyType {
 		RBaseInstallation,
 		RPackage,
-		RKWardPackage
+		RKWardPluginmap,
 	};
 	DependencyType type;
 	QString package;
-	int min_version;
-	int max_version;
+	QString source_info;
+	quint32 min_version;
+	quint32 max_version;
 };
 
 class RKComponentMeta {
-	static bool isRKWardVersionCompatible (const QDomElement &e, bool optional);
+	static bool isRKWardVersionCompatible (const QDomElement &e);
 	static QList<RKComponentDependency> parseDependencies (const QDomElement &e);
-	KAboutData parseAboutData (const QDomElement &e);
+	static KAboutData parseAboutData (const QDomElement &e);
 };
 
 #endif
