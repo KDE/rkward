@@ -2,6 +2,7 @@ rkward (0.6.0z+0.6.1-0devel1) unstable; urgency=low
 
   * new upstream release
   * re-add Vcs-Browser field
+  * fix year in changelog (previous upload had 2012 instead of 2013)
 
  -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Tue, 15 Jan 2013 12:30:00 +0100
 
