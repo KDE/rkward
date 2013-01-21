@@ -20,16 +20,21 @@
 
 #include <qstring.h>
 
+#include "rkcomponentmeta.h"
+
 /** very simple helper class to keep track of .pluginmap files */
 class RKPluginMapFile {
 public:
-	RKPluginMapFile (const QString &basedir) { RKPluginMapFile::basedir = basedir; };
+	RKPluginMapFile (const QString &basedir) : about (0) { RKPluginMapFile::basedir = basedir; };
 	~RKPluginMapFile () {};
 
 	QString getBaseDir () { return basedir; };
 	QString makeFileName (const QString &filename);
 private:
+friend class RKComponentMap;
 	QString basedir;
+	RKComponentAboutData *about;
+	QList<RKComponentDependency> dependencies;
 };
 
 /** enum of different types of RKComponent */

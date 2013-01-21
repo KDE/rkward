@@ -22,23 +22,29 @@
 #include <kaboutdata.h>
 
 struct RKComponentDependency {
-	RKComponentDependency () : type (RBaseInstallation), min_version (0), max_version (0xFFFFFFFF);
+	RKComponentDependency () : type (RBaseInstallation), min_version (0), max_version (0xFFFFFFFF) {};
 	enum DependencyType {
 		RBaseInstallation,
 		RPackage,
 		RKWardPluginmap,
+		RKWardVersion
 	};
 	DependencyType type;
 	QString package;
 	QString source_info;
 	quint32 min_version;
 	quint32 max_version;
+
+	static QList<RKComponentDependency> parseDependencies (const QDomElement &e);
+	static bool isRKWardVersionCompatible (const QDomElement &e);
 };
 
-class RKComponentMeta {
-	static bool isRKWardVersionCompatible (const QDomElement &e);
-	static QList<RKComponentDependency> parseDependencies (const QDomElement &e);
-	static KAboutData parseAboutData (const QDomElement &e);
+class RKComponentAboutData {
+public:
+	RKComponentAboutData (const QDomElement &e);
+	~RKComponentAboutData ();
+	KAboutData *about;
+	QString category;
 };
 
 #endif

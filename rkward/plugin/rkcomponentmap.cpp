@@ -342,6 +342,18 @@ int RKComponentMap::addPluginMapLocal (const QString& plugin_map_file) {
 	RKPluginMapFile *pluginmap_file_desc = new RKPluginMapFile (prefix);
 	pluginmapfiles.insert (QFileInfo (plugin_map_file).absoluteFilePath (), pluginmap_file_desc);
 
+	// step 0: check dependencies, parse about, and initialize
+	QDomElement dependencies = xml->getChildElement (document_element, "dependencies", DL_INFO);
+	if (!dependencies.isNull ()) {
+		if (!RKComponentDependency::isRKWardVersionCompatible (dependencies)) {
+			RK_DEBUG (PLUGIN, DL_INFO, "Skipping plugin map file '%s': Not compatible with this version of RKWard", qPrintable (plugin_map_file_abs));
+			return 0;
+		}
+		pluginmap_file_desc->dependencies = RKComponentDependency::parseDependencies (dependencies);
+	}
+	QDomElement about = xml->getChildElement (document_element, "about", DL_INFO);
+	if (!about.isNull ()) pluginmap_file_desc->about = new RKComponentAboutData (about);
+
 	// step 1: include required files
 	int counter = 0;
 	QStringList includelist;

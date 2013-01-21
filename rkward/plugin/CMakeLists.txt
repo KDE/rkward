@@ -5,6 +5,7 @@ INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${K
 
 SET(plugin_STAT_SRCS
    rkcomponentmap.cpp
+   rkcomponentmeta.cpp
    rkcomponentproperties.cpp
    rkcomponent.cpp
    rkstandardcomponent.cpp
