@@ -30,6 +30,7 @@ public:
 
 	QString getBaseDir () { return basedir; };
 	QString makeFileName (const QString &filename);
+	QList<RKComponentDependency> getDependencies () { return dependencies; };
 private:
 friend class RKComponentMap;
 	QString basedir;
@@ -70,9 +71,13 @@ public:
 
 	RKStandardComponent *invoke (RKComponent *parent_component, QWidget *parent_widget);
 
+/** Gets the dependencies of this plugin. This *includes* the dependencies of the parent pluginmap */
+	QList<RKComponentDependency> getDependencies ();
+/** Adds dependencies for this plugin. */
+	void addDependencies (const QList<RKComponentDependency> & deps);
+
 	QString getAttributeValue (const QString &attribute_id);
 	QString getAttributeLabel (const QString &attribute_id);
-	bool hasAttribute (const QString &attribute_id);
 	void addAttribute (const QString &id, const QString &value, const QString &label);
 	void setAccessible (bool accessible) { is_accessible = accessible; };
 /** Returns whether this component is accessible from the menu, somewhere (else it might be in a context) */
@@ -87,10 +92,6 @@ protected:
 	QString filename;
 	QString label;
 	RKComponentType type;
-
-	typedef QPair<QString, QString> AttributeValue;
-	typedef QMap<QString, AttributeValue> AttributeMap;
-	AttributeMap *attributes;
 private:
 	bool is_accessible;
 };
@@ -206,6 +207,16 @@ private:
 	PluginMapFileMap pluginmapfiles;
 
 	static RKComponentMap *component_map;
+friend class RKComponentHandle;
+	// most components have neither attributes specific dependencies (other than dependencies shared by all plugins in a pluginmap).
+	// therefore, it saves a few bytes to store attributes and specific dependencies in a central map, rather than keeping structures
+	// per plugin
+	struct AttributeValueMap {
+		QHash<RKComponentHandle*, QString> valuemap;
+		QHash<RKComponentHandle*, QString> labelmap;
+	};
+	QMap<QString, AttributeValueMap> component_attributes;
+	QHash<RKComponentHandle*, QList<RKComponentDependency> > component_dependencies;
 protected:
 	void addedEntry (const QString &id, RKComponentHandle *handle);
 };

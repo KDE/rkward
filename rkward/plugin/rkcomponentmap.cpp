@@ -170,6 +170,8 @@ void RKComponentMap::clearLocal () {
 		delete (it.value ());
 	}
 	pluginmapfiles.clear ();
+	component_attributes.clear ();
+	component_dependencies.clear ();
 
 	clearGUIDescription ();
 
@@ -375,8 +377,18 @@ int RKComponentMap::addPluginMapLocal (const QString& plugin_map_file) {
 	list = xml->getChildElements (element, "component", DL_INFO);
 
 	for (XMLChildList::const_iterator it=list.begin (); it != list.end (); ++it) {
-		QString filename = xml->getStringAttribute((*it), "file", QString::null, DL_WARNING);
 		QString id = cnamespace + xml->getStringAttribute((*it), "id", QString::null, DL_WARNING);
+
+		// check dependencies, first
+		QDomElement cdependencies = xml->getChildElement (*it, "dependencies", DL_INFO);
+		if (!cdependencies.isNull ()) {
+			if (!RKComponentDependency::isRKWardVersionCompatible (cdependencies)) {
+				RK_DEBUG (PLUGIN, DL_INFO, "Skipping component '%s': Not compatible with this version of RKWard", qPrintable (id));
+				continue;
+			}
+		}
+
+		QString filename = xml->getStringAttribute((*it), "file", QString::null, DL_WARNING);
 		int type = xml->getMultiChoiceAttribute ((*it), "type", "standard", 0, DL_WARNING);
 		QString label = xml->getStringAttribute ((*it), "label", i18n ("(no label)"), DL_WARNING);
 
@@ -391,6 +403,7 @@ int RKComponentMap::addPluginMapLocal (const QString& plugin_map_file) {
 			for (XMLChildList::const_iterator ait=attributes_list.begin (); ait != attributes_list.end (); ++ait) {
 				handle->addAttribute (xml->getStringAttribute (*ait, "id", "noid", DL_WARNING), xml->getStringAttribute (*ait, "value", QString::null, DL_ERROR), xml->getStringAttribute (*ait, "label", QString::null, DL_ERROR));
 			}
+			if (!cdependencies.isNull ()) handle->addDependencies (RKComponentDependency::parseDependencies (cdependencies));
 			components.insert (id, handle);
 		}
 	}
@@ -441,14 +454,11 @@ RKComponentHandle::RKComponentHandle (RKPluginMapFile *pluginmap, const QString 
 	RKComponentHandle::label = label;
 	RKComponentHandle::plugin_map = pluginmap;
 
-	attributes = 0;
 	is_accessible = false;
 }
 
 RKComponentHandle::~RKComponentHandle () {
 	RK_TRACE (PLUGIN);
-
-	delete attributes;
 }
 
 bool RKComponentHandle::isPlugin () {
@@ -474,36 +484,41 @@ void RKComponentHandle::activated () {
 QString RKComponentHandle::getAttributeValue (const QString &attribute_id) {
 	RK_TRACE (PLUGIN);
 
-	if (!attributes) return QString ();
-	AttributeMap::const_iterator it = attributes->find (attribute_id);
-	if (it == attributes->constEnd ()) return QString ();
-	return ((*it).first);
+	QMap<QString, RKComponentMap::AttributeValueMap>::const_iterator it = RKComponentMap::getMap ()->component_attributes.find (attribute_id);
+	if (it == RKComponentMap::getMap ()->component_attributes.constEnd ()) return QString ();
+	return (*it).valuemap.value (this);
 }
 
 QString RKComponentHandle::getAttributeLabel (const QString &attribute_id) {
 	RK_TRACE (PLUGIN);
 
-	if (!attributes) return QString ();
-	AttributeMap::const_iterator it = attributes->find (attribute_id);
-	if (it == attributes->constEnd ()) return QString ();
-	return ((*it).second);
-}
-
-bool RKComponentHandle::hasAttribute (const QString &attribute_id) {
-	RK_TRACE (PLUGIN);
-
-	if (!attributes) return false;
-	return (attributes->contains (attribute_id));
+	QMap<QString, RKComponentMap::AttributeValueMap>::const_iterator it = RKComponentMap::getMap ()->component_attributes.find (attribute_id);
+	if (it == RKComponentMap::getMap ()->component_attributes.constEnd ()) return QString ();
+	return (*it).labelmap.value (this);
 }
 
 void RKComponentHandle::addAttribute (const QString &id, const QString &value, const QString &label) {
 	RK_TRACE (PLUGIN);
 
-	if (!attributes) {
-		attributes = new AttributeMap;
-	}
-	AttributeValue value_p (value, label);
-	attributes->insert (id, value_p);
+	RKComponentMap::AttributeValueMap & map = RKComponentMap::getMap ()->component_attributes[id];	// NOTE: auto-created, if needed
+	map.valuemap.insert (this, value);
+	map.labelmap.insert (this, label);
+}
+
+void RKComponentHandle::addDependencies (const QList<RKComponentDependency>& deps) {
+	if (deps.isEmpty ()) return;
+	RK_TRACE (PLUGIN);
+
+	RKComponentMap::getMap ()->component_dependencies[this].append (deps);
+}
+
+QList <RKComponentDependency> RKComponentHandle::getDependencies () {
+	RK_TRACE (PLUGIN);
+
+	QList <RKComponentDependency> ret = plugin_map->getDependencies ();
+	QHash<RKComponentHandle*, QList<RKComponentDependency> >::const_iterator it = RKComponentMap::getMap ()->component_dependencies.find (this);
+	if (it == RKComponentMap::getMap ()->component_dependencies.constEnd ()) return ret;
+	return (ret + (*it));
 }
 
 ///########################### END RKComponentHandle ###############################
