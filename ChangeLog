@@ -1,9 +1,10 @@
+- Easier activation / de-activation of RKWard plugin maps using checkboxes (Settings->Configure RKWard->Plugins)
+- Broken or quirky .pluginmap files are reported to the user, and disables completely broken maps, automatically
 - Implement basic dependency handling for plugins / pluginmaps
 	- NOTES: Contrary to existing documentation, <dependencies> is a top level element, not a child element of <about>
 	- TODO:
-		- Proper error reporting for failed dependencies (also handling alternative versions)
-		- Dependencies and about for individual plugins
-		- Pluginmap selection UI
+		- Provide more info (particularly about data) in selection UI
+		- Add version barrier to standard pluginmap files to avoid accidental version mixup
 		- Explicitly document the fact that <include>s can be used for <about> and <dependencies>
 		- Add possibilities for soft dependencies (i.e. dynamic version check within a plugin)
 - Added support for the upcoming R 3.0.0			TODO: Check for any more regressions, before release
