@@ -1,19 +1,19 @@
 /***************************************************************************
-			rkward.h  -  description
-			-------------------
-begin                : Tue Oct 29 20:06:08 CET 2002 
-copyright            : (C) 2002, 2005, 2006, 2007, 2008, 2009, 2010, 2011 by Thomas Friedrichsmeier 
-email                : tfry@users.sourceforge.net
-***************************************************************************/
+                          rkward.h  -  description
+                             -------------------
+    begin                : Tue Oct 29 20:06:08 CET 2002
+    copyright            : (C) 2002-2013 by Thomas Friedrichsmeier 
+    email                : tfry@users.sourceforge.net
+ ***************************************************************************/
 
 /***************************************************************************
-*                                                                         *
-*   This program is free software; you can redistribute it and/or modify  *
-*   it under the terms of the GNU General Public License as published by  *
-*   the Free Software Foundation; either version 2 of the License, or     *
-*   (at your option) any later version.                                   *
-*                                                                         *
-***************************************************************************/
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
 
 #ifndef RKWARD_H
 #define RKWARD_H
@@ -179,7 +179,7 @@ private:
 	friend class RKSettings;
 
 	/** Finds plugins and inserts them into the menu-structure */
-	void initPlugins ();
+	void initPlugins (const QStringList &automatically_added = QStringList ());
 
 	RKWardStartupOptions *startup_options;
 

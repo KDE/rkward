@@ -2,7 +2,7 @@
                           rksettingsmodulegeneral  -  description
                              -------------------
     begin                : Fri Jul 30 2004
-    copyright            : (C) 2004, 2007, 2008, 2011, 2012 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2013 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -83,6 +83,7 @@ public:
 	enum RKWardConfigVersion {
 		RKWardConfig_Pre0_5_7,
 		RKWardConfig_0_5_7,
+		RKWardConfig_0_6_1,
 		RKWardConfig_Next,		/**< add new configuration versions above / before this entry */
 		RKWardConfig_Latest = RKWardConfig_Next - 1
 	};
@@ -92,6 +93,8 @@ public:
 	static RKWardConfigVersion storedConfigVersion () { return stored_config_version; };
 	/** Did a config file already exist? */
 	static bool anyExistingConfig () { return config_exists; };
+	/** Returns true, if the runtime version of RKWard has changed since the previous session. */
+	static bool rkwardVersionChanged () { return rkward_version_changed; };
 public slots:
 	void settingChanged ();
 private:
@@ -118,6 +121,7 @@ private:
 	static bool config_exists;
 	static InitialDirectory initial_dir;
 	static QString initial_dir_specification;
+	static bool rkward_version_changed;
 };
 
 #endif

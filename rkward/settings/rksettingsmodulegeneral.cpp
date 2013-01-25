@@ -2,7 +2,7 @@
                           rksettingsmodulegeneral  -  description
                              -------------------
     begin                : Fri Jul 30 2004
-    copyright            : (C) 2004, 2007, 2008, 2011, 2012 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2013 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -35,6 +35,7 @@
 #include "../misc/rkspinbox.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../rkglobals.h"
+#include "../version.h"
 #include "../debug.h"
 
 // static members
@@ -50,6 +51,7 @@ RKSettingsModuleGeneral::RKWardConfigVersion RKSettingsModuleGeneral::stored_con
 bool RKSettingsModuleGeneral::config_exists;
 RKSettingsModuleGeneral::InitialDirectory RKSettingsModuleGeneral::initial_dir;
 QString RKSettingsModuleGeneral::initial_dir_specification;
+bool RKSettingsModuleGeneral::rkward_version_changed;
 
 RKSettingsModuleGeneral::RKSettingsModuleGeneral (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
 	RK_TRACE (SETTINGS);
@@ -230,6 +232,7 @@ void RKSettingsModuleGeneral::saveSettings (KConfig *config) {
 
 	cg = config->group ("Internal");
 	cg.writeEntry ("config file version", (int) RKWardConfig_Latest);
+	cg.writeEntry ("previous runtime version", QString (RKWARD_VERSION));
 }
 
 void RKSettingsModuleGeneral::loadSettings (KConfig *config) {
@@ -259,6 +262,7 @@ void RKSettingsModuleGeneral::loadSettings (KConfig *config) {
 
 	cg = config->group ("Internal");
 	stored_config_version = (RKWardConfigVersion) cg.readEntry ("config file version", (int) RKWardConfig_Pre0_5_7);
+	rkward_version_changed = (cg.readEntry ("previous runtime version", QString ()) != RKWARD_VERSION);
 }
 
 QString RKSettingsModuleGeneral::getSavedWorkplace (KConfig *config) {

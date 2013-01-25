@@ -2,7 +2,7 @@
                           rkcomponentmap.h  -  description
                              -------------------
     begin                : Thu May 12 2005
-    copyright            : (C) 2005, 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2005-2013 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -25,7 +25,7 @@
 /** very simple helper class to keep track of .pluginmap files */
 class RKPluginMapFile {
 public:
-	RKPluginMapFile (const QString &basedir) : about (0) { RKPluginMapFile::basedir = basedir; };
+	RKPluginMapFile (const QString &basedir) { RKPluginMapFile::basedir = basedir; };
 	~RKPluginMapFile () {};
 
 	QString getBaseDir () { return basedir; };
@@ -34,7 +34,6 @@ public:
 private:
 friend class RKComponentMap;
 	QString basedir;
-	RKComponentAboutData *about;
 	QList<RKComponentDependency> dependencies;
 };
 
@@ -147,6 +146,18 @@ protected:
 
 class RKContextMap;
 
+class RKPluginMapParseResult {
+public:
+	RKPluginMapParseResult () : valid_plugins (0) {};
+	void add (const RKPluginMapParseResult &other) {
+		detailed_problems.append (other.detailed_problems);
+		valid_plugins += other.valid_plugins;
+	};
+	void addAndPrintError (int level, const QString message);
+	QStringList detailed_problems;
+	int valid_plugins;
+};
+
 /** This class (only a single instance should ever be needed) keeps a list of named components, which can be made accessible via the menu-structure
 or included in other plugins. What this class does is rather simple: It basically maps a two piece name (namespace, component name) to a short description of the component (RKComponentHandle). The most important part of that description is the filename where a more elaborate definition of
 the component can be retrieved.
@@ -162,8 +173,8 @@ public:
 	~RKComponentMap ();
 
 /** adds all Plugins / components in a .pluginmap-file. Also takes care of creating the menu-items, etc.
-@returns number of plugins (i.e. stand-alone components/menu-entries) added successfully */
-	static int addPluginMap (const QString& plugin_map_file);
+@returns status info of number of plugins (i.e. stand-alone components/menu-entries) added successfully / failed */
+	static RKPluginMapParseResult addPluginMap (const QString& plugin_map_file);
 
 /** clears out (and deletes) all components / plugins */
 	static void clearAll ();
@@ -187,6 +198,7 @@ public:
 	static bool invokeComponent (const QString &component_id, const QStringList &serialized_settings, ComponentInvocationMode submit_mode = ManualSubmit, QString *message=0, RCommandChain *in_chain = 0);
 /** @returns a list of all currently registered component ids */
 	QStringList allComponentIds () { return components.keys(); };
+	bool isPluginMapLoaded (const QString& abs_filename) { return pluginmapfiles.contains (abs_filename); };
 private:
 /** typedef for easy reference to iterator */
 	typedef QMap<QString, RKComponentHandle*> ComponentMap;
@@ -196,7 +208,7 @@ private:
 	RKComponentHandle* getComponentHandleLocal (const QString &id);
 	QString getComponentIdLocal (RKComponentHandle* component);
 	RKContextMap *getContextLocal (const QString &id);
-	int addPluginMapLocal (const QString& plugin_map_file);
+	RKPluginMapParseResult addPluginMapLocal (const QString& plugin_map_file);
 
 	void clearLocal ();
 

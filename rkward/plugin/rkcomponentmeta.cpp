@@ -113,8 +113,10 @@ QList <RKComponentDependency> RKComponentDependency::parseDependencies (const QD
 	dep.type = RKComponentDependency::RKWardVersion;
 	dep.min_version = 0;
 	dep.max_version = 0xFFFFFFFF;
-	if (e.hasAttribute (rkward_min_version_tag)) dep.min_version = RKSessionVars::parseVersionString (e.attribute (rkward_min_version_tag), 0);
-	if (e.hasAttribute (rkward_max_version_tag)) dep.max_version = RKSessionVars::parseVersionString (e.attribute (rkward_max_version_tag), 0);
+	// Although we ignore it, here, RKWard dependencies may come with a non-numeric suffix
+	QString suffix_dummy;
+	if (e.hasAttribute (rkward_min_version_tag)) dep.min_version = RKSessionVars::parseVersionString (e.attribute (rkward_min_version_tag), &suffix_dummy);
+	if (e.hasAttribute (rkward_max_version_tag)) dep.max_version = RKSessionVars::parseVersionString (e.attribute (rkward_max_version_tag), &suffix_dummy);
 	if ((dep.min_version > 0) || (dep.max_version < 0xFFFFFFFF)) ret.append (dep);
 
 	return ret;

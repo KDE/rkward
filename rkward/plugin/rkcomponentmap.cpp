@@ -2,7 +2,7 @@
                           rkcomponentmap.cpp  -  description
                              -------------------
     begin                : Thu May 12 2005
-    copyright            : (C) 2005, 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2005-2013 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -21,6 +21,7 @@
 #include <qdir.h>
 #include <QTime>
 #include <QObjectCleanupHandler>
+#include <QSet>
 
 #include <klocale.h>
 #include <kactioncollection.h>
@@ -316,19 +317,26 @@ bool RKComponentMap::invokeComponent (const QString &component_id, const QString
 	return true;
 }
 
-int RKComponentMap::addPluginMap (const QString& plugin_map_file) {
+void RKPluginMapParseResult::addAndPrintError (int level, const QString message) {
+	detailed_problems.append (message);
+	RK_DEBUG (PLUGIN, level, qPrintable (message));
+}
+
+RKPluginMapParseResult RKComponentMap::addPluginMap (const QString& plugin_map_file) {
 	RK_TRACE (PLUGIN);
 
 	return getMap()->addPluginMapLocal (plugin_map_file);
 }
 
-int RKComponentMap::addPluginMapLocal (const QString& plugin_map_file) {
+RKPluginMapParseResult RKComponentMap::addPluginMapLocal (const QString& plugin_map_file) {
 	RK_TRACE (PLUGIN);
+
+	RKPluginMapParseResult ret;
 
 	QString plugin_map_file_abs = QFileInfo (plugin_map_file).absoluteFilePath ();
 	if (pluginmapfiles.contains (plugin_map_file_abs)) {
 		RK_DEBUG (PLUGIN, DL_INFO, "Plugin map file '%s' already loaded", plugin_map_file.toLatin1().data ());
-		return 0;
+		return ret;
 	}
 
 	XMLHelper* xml = XMLHelper::getStaticHelper ();
@@ -336,7 +344,10 @@ int RKComponentMap::addPluginMapLocal (const QString& plugin_map_file) {
 	XMLChildList list;
 
 	QDomElement document_element = xml->openXMLFile (plugin_map_file_abs, DL_ERROR);
-	if (xml->highestError () >= DL_ERROR) return (0);
+	if (xml->highestError () >= DL_ERROR) {
+		ret.addAndPrintError (DL_ERROR, i18n ("Could not open plugin map file %1. (Is not readble, or failed to parse)", plugin_map_file_abs));
+		return ret;
+	}
 
 	QString prefix = QFileInfo (plugin_map_file_abs).absolutePath() + '/' + xml->getStringAttribute (document_element, "base_prefix", QString::null, DL_INFO);
 	QString cnamespace = xml->getStringAttribute (document_element, "namespace", "rkward", DL_INFO) + "::";
@@ -348,16 +359,13 @@ int RKComponentMap::addPluginMapLocal (const QString& plugin_map_file) {
 	QDomElement dependencies = xml->getChildElement (document_element, "dependencies", DL_INFO);
 	if (!dependencies.isNull ()) {
 		if (!RKComponentDependency::isRKWardVersionCompatible (dependencies)) {
-			RK_DEBUG (PLUGIN, DL_INFO, "Skipping plugin map file '%s': Not compatible with this version of RKWard", qPrintable (plugin_map_file_abs));
-			return 0;
+			ret.addAndPrintError (DL_WARNING, i18n ("Skipping plugin map file '%1': Not compatible with this version of RKWard", plugin_map_file_abs));
+			return ret;
 		}
 		pluginmap_file_desc->dependencies = RKComponentDependency::parseDependencies (dependencies);
 	}
-	QDomElement about = xml->getChildElement (document_element, "about", DL_INFO);
-	if (!about.isNull ()) pluginmap_file_desc->about = new RKComponentAboutData (about);
 
 	// step 1: include required files
-	int counter = 0;
 	QStringList includelist;
 	list = xml->getChildElements (document_element, "require", DL_INFO);
 	for (XMLChildList::const_iterator it=list.constBegin (); it != list.constEnd (); ++it) {
@@ -365,16 +373,20 @@ int RKComponentMap::addPluginMapLocal (const QString& plugin_map_file) {
 		if (QFileInfo (file).isReadable ()) {
 			includelist.append (file);
 		} else {
-			RK_DEBUG (PLUGIN, DL_ERROR, "Specified required file '%s' does not exist or is not readable. Ignoring.", file.toLatin1 ().data ());
+			ret.addAndPrintError (DL_ERROR, i18n ("Specified required file '%1' does not exist or is not readable. Ignoring.", file));
 		}
 	}
 	for (QStringList::const_iterator it = includelist.constBegin (); it != includelist.constEnd (); ++it) {
-		counter += addPluginMapLocal (*it);
+		ret.add (addPluginMapLocal (*it));
 	}
 
 	// step 2: create (list of) components
 	element = xml->getChildElement (document_element, "components", DL_INFO);
 	list = xml->getChildElements (element, "component", DL_INFO);
+	// Plugins that depend on a specific version of RKWard can be specified in several alternative version.
+	// It is not an error, unless *none* of the specified alternatives can be loaded.
+	QSet<QString> local_components;
+	QSet<QString> depfailed_local_components;
 
 	for (XMLChildList::const_iterator it=list.begin (); it != list.end (); ++it) {
 		QString id = cnamespace + xml->getStringAttribute((*it), "id", QString::null, DL_WARNING);
@@ -383,7 +395,8 @@ int RKComponentMap::addPluginMapLocal (const QString& plugin_map_file) {
 		QDomElement cdependencies = xml->getChildElement (*it, "dependencies", DL_INFO);
 		if (!cdependencies.isNull ()) {
 			if (!RKComponentDependency::isRKWardVersionCompatible (cdependencies)) {
-				RK_DEBUG (PLUGIN, DL_INFO, "Skipping component '%s': Not compatible with this version of RKWard", qPrintable (id));
+				RK_DEBUG (PLUGIN, DL_INFO, "Skipping component '%1': Not compatible with this version of RKWard", qPrintable (id));
+				depfailed_local_components.insert (id);
 				continue;
 			}
 		}
@@ -393,9 +406,9 @@ int RKComponentMap::addPluginMapLocal (const QString& plugin_map_file) {
 		QString label = xml->getStringAttribute ((*it), "label", i18n ("(no label)"), DL_WARNING);
 
 		if (components.contains (id)) {
-			RK_DEBUG (PLUGIN, DL_WARNING, "RKComponentMap already contains a component with id \"%s\". Ignoring second entry.", id.toLatin1 ().data ());
+			ret.addAndPrintError (DL_WARNING, i18n ("RKComponentMap already contains a component with id \"%1\". Ignoring second entry.", id));
 		} else if (!QFileInfo (pluginmap_file_desc->makeFileName (filename)).isReadable ()) {
-			RK_DEBUG (PLUGIN, DL_ERROR, "Specified file '%s' for component id \"%s\" does not exist or is not readable. Ignoring.", filename.toLatin1 ().data (), id.toLatin1 ().data ());
+			ret.addAndPrintError (DL_ERROR, i18n ("Specified file '%1' for component id \"%2\" does not exist or is not readable. Ignoring.", filename, id));
 		} else {
 			// create and initialize component handle
 			RKComponentHandle *handle = new RKComponentHandle (pluginmap_file_desc, filename, label, (RKComponentType) type);
@@ -405,12 +418,18 @@ int RKComponentMap::addPluginMapLocal (const QString& plugin_map_file) {
 			}
 			if (!cdependencies.isNull ()) handle->addDependencies (RKComponentDependency::parseDependencies (cdependencies));
 			components.insert (id, handle);
+			local_components.insert (id);
 		}
+	}
+
+	foreach (const QString &id, depfailed_local_components) {
+		if (local_components.contains (id)) continue;
+		ret.addAndPrintError (DL_ERROR, i18n ("Component '%1' is not available in a version compatible with this version of RKWard", id));
 	}
 
 	// step 3: create / insert into menus
 	QDomElement xmlgui_menubar_element = xml->getChildElement (gui_xml.documentElement (), "MenuBar", DL_ERROR);
-	counter += createMenus (xmlgui_menubar_element, xml->getChildElement (document_element, "hierarchy", DL_INFO), cnamespace);
+	ret.valid_plugins += createMenus (xmlgui_menubar_element, xml->getChildElement (document_element, "hierarchy", DL_INFO), cnamespace);
 
 	// step 4: create and register contexts
 	list = xml->getChildElements (document_element, "context", DL_INFO);
@@ -422,12 +441,12 @@ int RKComponentMap::addPluginMapLocal (const QString& plugin_map_file) {
 			context = new RKContextMap (id);
 			contexts.insert (id, context);
 		}
-		counter += context->create (*it, cnamespace);
+		ret.valid_plugins += context->create (*it, cnamespace);
 	}
 
-	setXMLGUIBuildDocument (gui_xml);
+	setXMLGUIBuildDocument (gui_xml);		// TODO: Should be called only once, not for each pluginmap!
 	actionCollection ()->readSettings ();
-	return counter;
+	return ret;
 }
 
 void RKComponentMap::addedEntry (const QString &id, RKComponentHandle *handle) {

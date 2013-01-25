@@ -2,7 +2,7 @@
                           rkward.cpp  -  description
                              -------------------
     begin                : Tue Oct 29 20:06:08 CET 2002
-    copyright            : (C) 2002, 2005, 2006, 2007, 2008, 2009, 2011 by Thomas Friedrichsmeier 
+    copyright            : (C) 2002-2013 by Thomas Friedrichsmeier 
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -266,24 +266,53 @@ void RKWardMainWindow::doPostInit () {
 	setCaption (QString ());	// our version of setCaption takes care of creating a correct caption, so we do not need to provide it here
 }
 
-void RKWardMainWindow::initPlugins () {
+void RKWardMainWindow::initPlugins (const QStringList &automatically_added) {
 	RK_TRACE (APP);
 	slotSetStatusBarText(i18n("Setting up plugins..."));
-	
+
+	QStringList all_maps = RKSettingsModulePlugins::pluginMaps ();
+	if (all_maps.isEmpty()) {
+		KMessageBox::information (0, i18n ("Plugins are needed: you may manage these through \"Settings->Configure RKWard\".\n"), i18n ("No active plugin maps"));
+		return;
+	}
+
 	factory ()->removeClient (RKComponentMap::getMap ());
 	RKComponentMap::clearAll ();
 
-	QStringList list = RKSettingsModulePlugins::pluginMaps ();
-	int counter = 0;
-	for (QStringList::const_iterator it = RKSettingsModulePlugins::pluginMaps ().begin (); it != RKSettingsModulePlugins::pluginMaps ().end (); ++it) {
-		counter += RKComponentMap::addPluginMap ((*it));
-	}
-
-	if (counter < 1) {
-		KMessageBox::information (0, i18n ("Plugins are needed: you may manage these through \"Settings->Configure RKWard\".\n"), i18n ("No (valid) plugins found"));
+	QStringList completely_broken_maps;
+	QStringList completely_broken_maps_details;
+	QStringList somewhat_broken_maps;
+	QStringList somewhat_broken_maps_details;
+	for (int i = 0; i < all_maps.size (); ++i) {
+		const QString &map = all_maps[i];
+		RKPluginMapParseResult result = RKComponentMap::addPluginMap (map);
+		if (!result.valid_plugins) {
+			RKSettingsModulePlugins::markPluginMapAsBroken (map);
+			completely_broken_maps.append (map);
+			completely_broken_maps_details.append (result.detailed_problems);
+		} else if (!result.detailed_problems.isEmpty ()) {
+			if (RKSettingsModulePlugins::markPluginMapAsQuirky (map)) {
+				somewhat_broken_maps.append (map);
+				somewhat_broken_maps_details.append (result.detailed_problems);
+			}
+		}
 	}
 
 	factory ()->addClient (RKComponentMap::getMap ());
+
+	if (!automatically_added.isEmpty ()) {
+		// NOTE: When plugins are added from R, these must be fully initialized *before* showing any dialog, which is modal, i.e. has an event loop. Otherwise, subsequent calls e.g. to rk.call.plugin() could sneak in front of this.
+		// This is the reason for handling notification about automatically_added plugins, here.
+		KMessageBox::informationList (RKWardMainWindow::getMain (), i18n ("New RKWard plugin packs (listed below) have been found, and have been activated, automatically. To de-activate selected plugin packs, use Settings->Configure RKWard->Plugins."), automatically_added, i18n ("New plugins found"), "new_plugins_found");
+	}
+	if (!completely_broken_maps.isEmpty ()) {
+		QString maplist = "<ul><li>" + completely_broken_maps.join ("</li>\n<li>") + "</li></ul>";
+		KMessageBox::detailedError (0, QString ("<p>%1</p><p>%2</p>").arg (i18n ("The following RKWard pluginmap files could not be loaded, and have been disabled. This could be because they are broken, not compatible with this version of RKWard, or not meant for direct loading (see the 'Details' for more information). They have been disabled.")).arg (maplist), completely_broken_maps_details.join ("\n"), i18n ("Failed to load some plugin maps"));
+	}
+	if (!somewhat_broken_maps.isEmpty ()) {
+		QString maplist = "<ul><li>" + somewhat_broken_maps.join ("</li>\n<li>") + "</li></ul>";
+		KMessageBox::detailedError (0, QString ("<p>%1</p><p>%2</p><p>%3</p>").arg (i18n ("Some errors were encountered while loading the following RKWard pluginmap files. This could be because individual plugins are broken or not compatible with this version of RKWard (see the 'Details' for more information). Other plugins were loaded, successfully, however.")).arg (maplist).arg (i18n ("Note: You will not be warned about these pluginmap files again, until you upgrade RKWard, or remove and re-add them in Settings->Configure RKWard->Plugins.")), somewhat_broken_maps_details.join ("\n"), i18n ("Failed to load some plugin maps"));
+	}
 
 	slotSetStatusReady ();
 }

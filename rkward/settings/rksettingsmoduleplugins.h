@@ -2,7 +2,7 @@
                           rksettingsmoduleplugins  -  description
                              -------------------
     begin                : Wed Jul 28 2004
-    copyright            : (C) 2004, 2006, 2007, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2013 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -18,10 +18,14 @@
 #define RKSETTINGSMODULEPLUGINS_H
 
 #include "rksettingsmodule.h"
+#include "../plugin/rkcomponentmeta.h"
 
 #include <qstringlist.h>
+#include <QDateTime>
+#include <QAbstractTableModel>
 
-class MultiStringSelector;
+class RKMultiStringSelectorV2;
+class RKSettingsModulePluginsModel;
 class QButtonGroup;
 class QCheckBox;
 class RKSpinBox;
@@ -32,9 +36,8 @@ class RKSpinBox;
 class RKSettingsModulePlugins : public RKSettingsModule {
 	Q_OBJECT
 public:
-    RKSettingsModulePlugins (RKSettings *gui, QWidget *parent);
-
-    ~RKSettingsModulePlugins ();
+	RKSettingsModulePlugins (RKSettings *gui, QWidget *parent);
+	~RKSettingsModulePlugins ();
 
 	bool hasChanges ();
 	void applyChanges ();
@@ -46,8 +49,9 @@ public:
 	static void loadSettings (KConfig *config);
 	
 	QString caption ();
-	
-	static QStringList &pluginMaps () { return plugin_maps; };
+
+	/** @returns a list of active plugin maps */
+	static QStringList pluginMaps ();
 	static PluginPrefs getInterfacePreference () { return interface_pref; };
 	static bool showCodeByDefault () { return show_code; };
 	static int defaultCodeHeight () { return code_size; };
@@ -57,19 +61,32 @@ public:
 	 * @param force_reload If true, plugin maps are always reloaded, even if no maps were added
 	 */
 	static void registerPluginMaps (const QStringList &maps, bool force_add, bool force_reload);
+	/** marks given map as broken (in this version), and deactivates it. @Returns false is the map was already known to be broken, true otherwise. */
+	static bool markPluginMapAsBroken (const QString &map);
+	/** marks given map as quirky (in this version). @Returns false is the map was already known to be quirky, true otherwise. */
+	static bool markPluginMapAsQuirky (const QString &map);
+	/** Helper struct used by RKSettingsModulePlugins to keep track of plugin map files. */
+	struct PluginMapStoredInfo {
+		PluginMapStoredInfo (const QString &_filename) : filename (_filename), active (false), broken_in_this_version (false), quirky_in_this_version (false) {};
+		QString filename;
+		bool active;
+		bool broken_in_this_version;
+		bool quirky_in_this_version;
+		QDateTime last_modified;
+	};
+	typedef QList<PluginMapStoredInfo> PluginMapList;
 public slots:
 	void settingChanged ();
-	void browseRequest (QStringList* strings);
 private:
-	MultiStringSelector *map_choser;
+ 	RKMultiStringSelectorV2 *map_choser;
+	RKSettingsModulePluginsModel *map_model;
 	QButtonGroup *button_group;
 	QCheckBox *show_code_box;
 	RKSpinBox *code_size_box;
 
-	/** active plugin maps */
-	static QStringList plugin_maps;
 	/** plugin maps which are not necessarily active, but have been encountered, before. @see plugin_maps */
-	static QStringList known_plugin_maps;
+	static PluginMapList known_plugin_maps;
+
 	static PluginPrefs interface_pref;
 	static bool show_code;
 	static int code_size;
@@ -80,6 +97,37 @@ private:
 	static QString baseNameOfPluginPack (const QString &archive_file);
 	static QStringList findPluginMapsRecursive (const QString &basedir);
 	static void fixPluginMapLists ();
+};
+
+class RKSettingsModulePluginsModel : public QAbstractTableModel {
+	Q_OBJECT
+public:
+	RKSettingsModulePluginsModel (RKSettingsModulePlugins* parent);
+	virtual ~RKSettingsModulePluginsModel ();
+/** (re-)initialize the model */
+	void init (const RKSettingsModulePlugins::PluginMapList &known_plugin_maps);
+	RKSettingsModulePlugins::PluginMapList pluginMaps () { return plugin_maps; };
+public slots:
+	void swapRows (int rowa, int rowb);
+	void insertNewStrings (int above_row);
+private:
+	RKSettingsModulePlugins::PluginMapList plugin_maps;
+	struct PluginMapMetaInfo {
+		RKComponentAboutData *about;
+		QList<RKComponentDependency> dependencies;
+		bool loaded;
+	};
+	QHash<QString, PluginMapMetaInfo> plugin_map_dynamic_info;
+	const PluginMapMetaInfo &getPluginMapMetaInfo (const QString &pluginmapfile);
+
+	// reimplemented model functions
+	int rowCount (const QModelIndex &parent = QModelIndex()) const;
+	int columnCount (const QModelIndex &parent = QModelIndex()) const;
+	QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const;
+	QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
+	bool setData (const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
+    bool removeRows (int row, int count, const QModelIndex& parent = QModelIndex ());
+	Qt::ItemFlags flags (const QModelIndex &index) const;
 };
 
 #endif
