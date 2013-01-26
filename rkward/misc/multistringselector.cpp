@@ -106,6 +106,7 @@ RKMultiStringSelectorV2::RKMultiStringSelectorV2 (const QString& label, QWidget*
 	tree_view->setSelectionMode (QAbstractItemView::SingleSelection);
 	tree_view->setSelectionBehavior (QAbstractItemView::SelectRows);
 	tree_view->setSortingEnabled (false);
+	tree_view->setRootIsDecorated (false);
 	main_box->addWidget (tree_view);
 
 	add_button = new QPushButton (i18n ("Add"), this);
