@@ -115,7 +115,6 @@ private:
 	struct PluginMapMetaInfo {
 		RKComponentAboutData *about;
 		QList<RKComponentDependency> dependencies;
-		bool loaded;
 	};
 	QHash<QString, PluginMapMetaInfo> plugin_map_dynamic_info;
 	const PluginMapMetaInfo &getPluginMapMetaInfo (const QString &pluginmapfile);

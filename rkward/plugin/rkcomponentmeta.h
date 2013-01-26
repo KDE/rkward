@@ -19,10 +19,12 @@
 #define RKCOMPONENTMETA_H
 
 #include <QDomElement>
-#include <kaboutdata.h>
+#include <QList>
 
 struct RKComponentDependency {
 	RKComponentDependency () : type (RBaseInstallation), min_version (0), max_version (0xFFFFFFFF) {};
+	QString toHtml () const;
+	static QString depsToHtml (const QList<RKComponentDependency> &deps);
 	enum DependencyType {
 		RBaseInstallation,
 		RPackage,
@@ -39,12 +41,28 @@ struct RKComponentDependency {
 	static bool isRKWardVersionCompatible (const QDomElement &e);
 };
 
+struct RKComponentAuthor {
+	QString name;
+	QString email;
+	QString url;
+	QString roles;
+};
+
 class RKComponentAboutData {
 public:
 	RKComponentAboutData (const QDomElement &e);
 	~RKComponentAboutData ();
-	KAboutData *about;
+	QString toHtml () const;
+
+	QString name;
+	QString version;
+	QString releasedate;
+	QString shortinfo;
+	QString copyright;
+	QString license;
+	QString url;
 	QString category;
+	QList<RKComponentAuthor> authors;
 };
 
 #endif

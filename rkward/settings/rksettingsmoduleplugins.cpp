@@ -40,6 +40,7 @@
 #include "../misc/multistringselector.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../misc/rkspinbox.h"
+#include "../misc/xmlhelper.h"
 #include "../plugin/rkcomponentmap.h"
 #include "rksettingsmodulegeneral.h"
 
@@ -421,6 +422,9 @@ RKSettingsModulePluginsModel::RKSettingsModulePluginsModel (RKSettingsModulePlug
 
 RKSettingsModulePluginsModel::~RKSettingsModulePluginsModel() {
 	RK_TRACE (SETTINGS);
+	foreach (const PluginMapMetaInfo &inf, plugin_map_dynamic_info) {
+		delete (inf.about);
+	}
 }
 
 void RKSettingsModulePluginsModel::init (const RKSettingsModulePlugins::PluginMapList& known_plugin_maps) {
@@ -456,6 +460,15 @@ QVariant RKSettingsModulePluginsModel::data (const QModelIndex& index, int role)
 	if (role == Qt::BackgroundRole) {
 		if (inf.broken_in_this_version) return Qt::red;
 		if (inf.quirky_in_this_version) return Qt::yellow;
+		return (QVariant ());
+	} else if (role == Qt::ToolTipRole) {
+		const PluginMapMetaInfo &meta = const_cast<RKSettingsModulePluginsModel*> (this)->getPluginMapMetaInfo (inf.filename);
+		QString desc = meta.about->toHtml ();
+		if (!meta.dependencies.isEmpty ()) {
+			desc.append ("<b>" + i18n ("Dependencies") + "</b>");
+			desc.append (RKComponentDependency::depsToHtml (meta.dependencies));
+		}
+		return desc;
 	}
 
 	if (col == COLUMN_CHECKED) {
@@ -563,6 +576,10 @@ const RKSettingsModulePluginsModel::PluginMapMetaInfo& RKSettingsModulePluginsMo
 	if (!plugin_map_dynamic_info.contains (pluginmapfile)) {
 		// TODO
 		PluginMapMetaInfo inf;
+		XMLHelper *xml = XMLHelper::getStaticHelper ();
+		QDomElement doc_elem = xml->openXMLFile (pluginmapfile, DL_WARNING);
+		inf.about = new RKComponentAboutData (xml->getChildElement (doc_elem, "about", DL_INFO));
+		inf.dependencies = RKComponentDependency::parseDependencies (xml->getChildElement (doc_elem, "dependencies", DL_INFO));
 		plugin_map_dynamic_info.insert (pluginmapfile, inf);
 	}
 
