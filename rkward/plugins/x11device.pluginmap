@@ -1,6 +1,8 @@
 <!DOCTYPE rkpluginmap>
 
 <document base_prefix="x11device/" namespace="rkward">
+	<include file="pluginmap_meta.inc"/>
+
 	<components>
 		<component type="standard" id="export_x11_device" file="export.xml" label="Export..." />
 	</components>

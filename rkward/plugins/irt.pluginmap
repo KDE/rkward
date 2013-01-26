@@ -1,6 +1,8 @@
 <!DOCTYPE rkpluginmap>
 
 <document base_prefix="" namespace="rkward">
+	<include file="pluginmap_meta.inc"/>
+
 	<components>
 		<component type="standard" id="par_est_rasch" file="analysis/irt/dichotomous/par_est_rasch.xml" label="Rasch model fit" />
 		<component type="standard" id="par_est_2pl" file="analysis/irt/dichotomous/par_est_2pl.xml" label="Two parameter logistic model fit" />

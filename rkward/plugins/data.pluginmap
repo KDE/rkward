@@ -1,6 +1,8 @@
 <!DOCTYPE rkpluginmap>
 
 <document base_prefix="" namespace="rkward">
+	<include file="pluginmap_meta.inc"/>
+
 	<components>
 		<component type="standard" id="generate_random" file="data/generate_random.xml" label="Generate random data" />
 		<component type="standard" id="sort_data" file="data/sort.xml" label="Sort data" />

@@ -1,6 +1,8 @@
 <!DOCTYPE rkpluginmap>
 
 <document base_prefix="" namespace="rkward">
+	<include file="pluginmap_meta.inc"/>
+
 	<components>
 		<!-- These are meant to be embedded, and are not shown in the menu -->
 		<component type="standard" id="plot_options" file="plots/plot_options.xml" label="Plot Options" />

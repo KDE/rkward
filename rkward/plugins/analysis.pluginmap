@@ -1,6 +1,8 @@
 <!DOCTYPE rkpluginmap>
 
 <document base_prefix="" namespace="rkward">
+	<include file="pluginmap_meta.inc"/>
+
 	<components>
 		<component type="standard" id="basic_statistics" file="uni1.2/description.xml" label="Basic Statistics" />
 		<component type="standard" id="corr_matrix" file="analysis/corr_matrix.xml" label="Correlation Matrix" />

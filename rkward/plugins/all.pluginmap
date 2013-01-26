@@ -1,6 +1,8 @@
 <!DOCTYPE rkpluginmap>
 
 <document base_prefix="" namespace="rkward">
+	<include file="pluginmap_meta.inc"/>
+
 	<require file="import_export.pluginmap"/>
 	<require file="analysis.pluginmap"/>
 	<require file="distributions.pluginmap"/>

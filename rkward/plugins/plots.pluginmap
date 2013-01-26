@@ -1,6 +1,8 @@
 <!DOCTYPE rkpluginmap>
 
 <document base_prefix="plots/" namespace="rkward">
+	<include file="pluginmap_meta.inc"/>
+
 	<components>
 		<component type="standard" id="barplot" file="barplot.xml" label="Barplot" />
 		<component type="standard" id="box_plot" file="box_plot.xml" label="Box Plot" />
