@@ -110,11 +110,6 @@ QString RKSettingsModuleDebug::caption () {
 	return (i18n ("Debug"));
 }
 
-bool RKSettingsModuleDebug::hasChanges () {
-	RK_TRACE (SETTINGS);
-	return changed;
-}
-
 void RKSettingsModuleDebug::applyChanges () {
 	RK_TRACE (SETTINGS);
 

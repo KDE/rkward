@@ -213,11 +213,6 @@ QString RKSettingsModuleR::caption () {
 	return (i18n ("R-Backend"));
 }
 
-bool RKSettingsModuleR::hasChanges () {
-	RK_TRACE (SETTINGS);
-	return changed;
-}
-
 void RKSettingsModuleR::applyChanges () {
 	RK_TRACE (SETTINGS);
 
@@ -434,11 +429,6 @@ void RKSettingsModuleRPackages::addRepository (QStringList *string_list) {
 QString RKSettingsModuleRPackages::caption () {
 	RK_TRACE (SETTINGS);
 	return (i18n ("R-Packages"));
-}
-
-bool RKSettingsModuleRPackages::hasChanges () {
-	RK_TRACE (SETTINGS);
-	return changed;
 }
 
 #define SELECT_CRAN_MIRROR_COMMAND 123

@@ -36,8 +36,6 @@ public:
 
 	~RKSettingsModuleObjectBrowser ();
 
-/** @returns whether changes have been made in this RKSettingsModule */
-	bool hasChanges ();
 /** applies current settings in this RKSettingsModule. This will only be called, if hasChanges () is true */
 	void applyChanges ();
 /** saves current changes to the given KConfig

@@ -39,7 +39,6 @@ public:
 	RKSettingsModulePlugins (RKSettings *gui, QWidget *parent);
 	~RKSettingsModulePlugins ();
 
-	bool hasChanges ();
 	void applyChanges ();
 	void save (KConfig *config);
 	

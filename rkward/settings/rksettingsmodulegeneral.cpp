@@ -184,11 +184,6 @@ QString RKSettingsModuleGeneral::caption () {
 	return (i18n ("General"));
 }
 
-bool RKSettingsModuleGeneral::hasChanges () {
-	RK_TRACE (SETTINGS);
-	return changed;
-}
-
 void RKSettingsModuleGeneral::applyChanges () {
 	RK_TRACE (SETTINGS);
 	new_files_path = files_choser->getLocation ();

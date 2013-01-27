@@ -37,11 +37,9 @@ Configure the R-backend
 class RKSettingsModuleR : public RKSettingsModule {
 	Q_OBJECT
 public:
-    RKSettingsModuleR (RKSettings *gui, QWidget *parent);
-
-    ~RKSettingsModuleR ();
+	RKSettingsModuleR (RKSettings *gui, QWidget *parent);
+	~RKSettingsModuleR ();
 	
-	bool hasChanges ();
 	void applyChanges ();
 	void save (KConfig *config);
 	
@@ -108,11 +106,9 @@ Configure packages and library paths
 class RKSettingsModuleRPackages : public RKSettingsModule, public RCommandReceiver {
 	Q_OBJECT
 public:
-    RKSettingsModuleRPackages (RKSettings *gui, QWidget *parent);
-
-    ~RKSettingsModuleRPackages ();
+	RKSettingsModuleRPackages (RKSettings *gui, QWidget *parent);
+	~RKSettingsModuleRPackages ();
 	
-	bool hasChanges ();
 	void applyChanges ();
 	void save (KConfig *config);
 	

@@ -252,12 +252,6 @@ void RKSettingsModuleWatch::loadSettings (KConfig *config) {
 	max_log_lines = cg.readEntry ("max log lines", 1000);
 }
 
-bool RKSettingsModuleWatch::hasChanges () {
-// TODO: move to RKSettingsModule -baseclass?
-	RK_TRACE (SETTINGS);
-	return changed;
-}
-
 void RKSettingsModuleWatch::applyChanges () {
 	RK_TRACE (SETTINGS);
 

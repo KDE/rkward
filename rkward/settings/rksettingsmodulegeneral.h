@@ -55,7 +55,6 @@ public:
 		RKMDIFocusFollowsMouse=1
 	};
 
-	bool hasChanges ();
 	void applyChanges ();
 	void save (KConfig *config);
 	

@@ -98,11 +98,6 @@ QString RKSettingsModuleGraphics::caption () {
 	return (i18n ("Onscreen Graphics"));
 }
 
-bool RKSettingsModuleGraphics::hasChanges () {
-	RK_TRACE (SETTINGS);
-	return changed;
-}
-
 void RKSettingsModuleGraphics::applyChanges () {
 	RK_TRACE (SETTINGS);
 

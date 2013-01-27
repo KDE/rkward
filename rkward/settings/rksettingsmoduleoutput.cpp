@@ -220,11 +220,6 @@ QString RKSettingsModuleOutput::caption () {
 	return (i18n ("Output"));
 }
 
-bool RKSettingsModuleOutput::hasChanges () {
-	RK_TRACE (SETTINGS);
-	return changed;
-}
-
 void RKSettingsModuleOutput::applyChanges () {
 	RK_TRACE (SETTINGS);
 

@@ -156,11 +156,6 @@ QString RKSettingsModuleCommandEditor::caption () {
 	return (i18n ("Script editor"));
 }
 
-bool RKSettingsModuleCommandEditor::hasChanges () {
-	RK_TRACE (SETTINGS);
-	return changed;
-}
-
 void RKSettingsModuleCommandEditor::applyChanges () {
 	RK_TRACE (SETTINGS);
 

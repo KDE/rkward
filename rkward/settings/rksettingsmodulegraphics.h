@@ -35,7 +35,6 @@ public:
 	RKSettingsModuleGraphics (RKSettings *gui, QWidget *parent);
 	~RKSettingsModuleGraphics ();
 	
-	bool hasChanges ();
 	void applyChanges ();
 	void save (KConfig *config);
 

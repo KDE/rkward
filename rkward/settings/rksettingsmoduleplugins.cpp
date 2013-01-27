@@ -132,11 +132,6 @@ QString RKSettingsModulePlugins::caption () {
 	return (i18n ("Plugins"));
 }
 
-bool RKSettingsModulePlugins::hasChanges () {
-	RK_TRACE (SETTINGS);
-	return changed;
-}
-
 void RKSettingsModulePlugins::applyChanges () {
 	RK_TRACE (SETTINGS);
 

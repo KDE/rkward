@@ -155,13 +155,6 @@ void RKSettingsModuleConsole::saveCommandHistory (const QStringList &list) {
 	cg.sync ();
 }
 
-
-bool RKSettingsModuleConsole::hasChanges () {
-// TODO: move to RKSettingsModule -baseclass?
-	RK_TRACE (SETTINGS);
-	return changed;
-}
-
 void RKSettingsModuleConsole::applyChanges () {
 	RK_TRACE (SETTINGS);
 

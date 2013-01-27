@@ -76,7 +76,6 @@ public:
 	RKSettingsModuleOutput (RKSettings *gui, QWidget *parent);
 	~RKSettingsModuleOutput ();
 	
-	bool hasChanges ();
 	void applyChanges ();
 	void save (KConfig *config);
 

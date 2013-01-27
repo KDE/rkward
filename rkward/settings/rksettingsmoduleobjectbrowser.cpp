@@ -104,11 +104,6 @@ void RKSettingsModuleObjectBrowser::addBlackList (QStringList *string_list) {
 	(*string_list).append (new_string);
 }
 
-bool RKSettingsModuleObjectBrowser::hasChanges () {
-	RK_TRACE (SETTINGS);
-	return changed;
-}
-
 void RKSettingsModuleObjectBrowser::applyChanges () {
 	RK_TRACE (SETTINGS);
 

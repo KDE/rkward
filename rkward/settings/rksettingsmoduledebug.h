@@ -35,7 +35,6 @@ public:
 
 	~RKSettingsModuleDebug ();
 	
-	bool hasChanges ();
 	void applyChanges ();
 	void save (KConfig *config);
 	

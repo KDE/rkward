@@ -35,7 +35,7 @@ public:
 
     virtual ~RKSettingsModule ();
 
-	virtual bool hasChanges () = 0;
+	bool hasChanges () { return changed; };
 	virtual void applyChanges () = 0;
 	virtual void save (KConfig *config) = 0;
 	
