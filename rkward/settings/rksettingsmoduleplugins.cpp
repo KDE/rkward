@@ -163,6 +163,7 @@ void RKSettingsModulePlugins::saveSettings (KConfig *config) {
 	KConfigGroup cg = config->group ("Plugin Settings");
 	cg.deleteGroup ("Known Plugin maps");	// always start from scratch to remove cruft from pluginmaps
 	KConfigGroup pmg = cg.group ("Known Plugin maps");
+	QStringList all_known_maps;
 	for (int i = 0; i < known_plugin_maps.size (); ++i) {
 		const PluginMapStoredInfo &inf = known_plugin_maps[i];
 		KConfigGroup ppmg = pmg.group (inf.filename);
@@ -170,7 +171,10 @@ void RKSettingsModulePlugins::saveSettings (KConfig *config) {
 		ppmg.writeEntry ("Broken", inf.broken_in_this_version);
 		ppmg.writeEntry ("Quirky", inf.quirky_in_this_version);
 		ppmg.writeEntry ("timestamp", inf.last_modified);
+		all_known_maps.append (inf.filename);
 	}
+	// NOTE: The group list is always sorted alphabetically, which is why we need a separate list setting for saving info on order.
+	cg.writeEntry ("All known plugin maps", all_known_maps);
 
 	cg.writeEntry ("Interface Preferences", static_cast<int> (interface_pref));
 	cg.writeEntry ("Code display default", show_code);
@@ -192,7 +196,7 @@ void RKSettingsModulePlugins::loadSettings (KConfig *config) {
 		}
 	} else {
 		KConfigGroup pmg = cg.group ("Known Plugin maps");
-		QStringList kplugin_maps = pmg.groupList ();
+		QStringList kplugin_maps = cg.readEntry ("All known plugin maps", QStringList ());
 		for (int i = 0; i < kplugin_maps.size (); ++i) {
 			KConfigGroup ppmg = pmg.group (kplugin_maps[i]);
 			PluginMapStoredInfo inf (kplugin_maps[i]);
