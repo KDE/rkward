@@ -255,7 +255,7 @@ QStringList RKSettingsModulePlugins::pluginMaps () {
 	RK_TRACE (SETTINGS);
 
 	QStringList ret;
-	for (int i = known_plugin_maps.size () - 1; i >= 0; --i) {
+	for (int i = 0; i < known_plugin_maps.size (); ++i) {
 		if (known_plugin_maps[i].active) ret.append (known_plugin_maps[i].filename);
 	}
 	return ret;
