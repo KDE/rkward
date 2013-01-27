@@ -316,8 +316,8 @@ void RKSettingsModulePlugins::fixPluginMapLists () {
 	// make sure the default plugin map is in the list (unless it is non-readable)
 	if ((default_pluginmap_index < 0) && (default_pluginmap.isReadable ())) {
 		PluginMapStoredInfo inf (default_pluginmap.absoluteFilePath ());
-		known_plugin_maps.append (inf);
-		default_pluginmap_index = known_plugin_maps.size () - 1;
+		known_plugin_maps.prepend (inf);
+		default_pluginmap_index = 0;
 	}
 
 	// if no other pluginmap is active, activate the default map

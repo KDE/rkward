@@ -6,6 +6,7 @@
 	- TODO:
 		- Provide more info (particularly about data) in selection UI
 		- Explicitly document the fact that <include>s can be used for <about> and <dependencies>
+		- Fix duplicate trigger of pluginmap loading when clicking "ok" on settings dialog
 		- Add possibilities for soft dependencies (i.e. dynamic version check within a plugin)
 		- Think about means for cross-package pluginmap includes
 - Added support for the upcoming R 3.0.0			TODO: Check for any more regressions, before release
