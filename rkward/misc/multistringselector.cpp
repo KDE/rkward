@@ -149,7 +149,7 @@ void RKMultiStringSelectorV2::setModel (QAbstractItemModel* model, int main_colu
 	connect (model, SIGNAL (layoutChanged()), this, SLOT (anyModelDataChange()));
 	connect (model, SIGNAL (rowsInserted(const QModelIndex&,int,int)), this, SLOT (anyModelDataChange()));
 	connect (model, SIGNAL (rowsRemoved(const QModelIndex&,int,int)), this, SLOT (anyModelDataChange()));
-	connect (model, SIGNAL (reset()), this, SLOT (anyModelDataChange()));
+	connect (model, SIGNAL (modelReset()), this, SLOT (anyModelDataChange()));
 
 	if (main_column >= 0) tree_view->resizeColumnToContents (main_column);
 	
