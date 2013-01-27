@@ -141,8 +141,7 @@ void RKMultiStringSelectorV2::setModel (QAbstractItemModel* model, int main_colu
 		disconnect (tree_view->selectionModel (), SIGNAL (currentChanged(QModelIndex,QModelIndex)), this, SLOT (updateButtons()));
 	}
 	if (tree_view->model ()) {
-		disconnect (tree_view->model (), 0, this, 0);
-		anyModelDataChange ();
+		disconnect (tree_view->model (), 0, this, SLOT (anyModelDataChange()));
 	}
 	tree_view->setModel (model);
 	connect (tree_view->selectionModel (), SIGNAL (currentChanged(QModelIndex,QModelIndex)), this, SLOT (updateButtons()));
