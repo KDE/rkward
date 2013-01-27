@@ -2,7 +2,7 @@
                           rksettings  -  description
                              -------------------
     begin                : Wed Jul 28 2004
-    copyright            : (C) 2004, 2007, 2008, 2009 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2013 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -166,6 +166,7 @@ void RKSettings::applyAll () {
 	for (it = modules.constBegin (); it != modules.constEnd (); ++it) {
 		if (it.value ()->hasChanges ()) {
 			it.value ()->applyChanges ();
+			it.value ()->changed = false;
 			it.value ()->save (KGlobal::config ().data ());
 			tracker ()->signalSettingsChange (it.key ());
 		}
