@@ -107,6 +107,19 @@ bool RKComponentDependency::isRKWardVersionCompatible (const QDomElement& e) {
 	return true;
 }
 
+bool RKComponentDependency::isRVersionCompatible (const QDomElement& e) {
+	RK_TRACE (PLUGIN);
+
+	if (e.hasAttribute (R_min_version_tag)) {
+		if (RKSessionVars::compareRVersion (e.attribute (R_min_version_tag)) > 0) return false;
+	}
+	if (e.hasAttribute (R_max_version_tag)) {
+		if (RKSessionVars::compareRVersion (e.attribute (R_max_version_tag)) < 0) return false;
+	}
+
+	return true;
+}
+
 QList <RKComponentDependency> RKComponentDependency::parseDependencies (const QDomElement& e) {
 	RK_TRACE (PLUGIN);
 

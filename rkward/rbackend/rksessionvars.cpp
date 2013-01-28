@@ -25,6 +25,8 @@
 RKSessionVars* RKSessionVars::_instance = 0;
 quint32 RKSessionVars::rkward_version = 0;
 QString RKSessionVars::rkward_version_suffix;
+quint32 RKSessionVars::r_version = 0;
+QString RKSessionVars::r_version_string;
 
 RKSessionVars::RKSessionVars (RInterface *parent) : QObject (parent) {
 	RK_TRACE (RBACKEND);
@@ -42,6 +44,16 @@ void RKSessionVars::setInstalledPackages (const QStringList &new_list) {
 
 	installed_packages = new_list;
 	emit (installedPackagesChanged ());
+}
+
+void RKSessionVars::setRVersion (const QString& version_string) {
+	RK_TRACE (RBACKEND);
+
+	if (!r_version_string.isEmpty ()) {
+		RK_DEBUG (RBACKEND, DL_WARNING, "R version has changed during runtime, from %s to %s", qPrintable (r_version_string), qPrintable (r_version));
+	}
+	r_version_string = version_string;
+	r_version = parseVersionString (version_string, 0);
 }
 
 quint32 RKSessionVars::parseVersionString (const QString &version, QString *suffix) {
@@ -87,6 +99,15 @@ int RKSessionVars::compareRKWardVersion (const QString& version) {
 	if (ver < rkward_version) return -1;
 	if (ver > rkward_version) return 1;
 	return (suffix.compare (rkward_version_suffix));
+}
+
+int RKSessionVars::compareRVersion (const QString& version) {
+	if (r_version_string.isEmpty()) return 0;
+
+	quint32 ver = parseVersionString (version, 0);
+	if (ver < r_version) return -1;
+	if (ver > r_version) return 1;
+	return 0;
 }
 
 #include "rksessionvars.moc"

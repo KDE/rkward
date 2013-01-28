@@ -4,6 +4,9 @@
 	<help file="save.rkh"/>
 
 	<logic>
+		<dependency_check R_min_version="2.10.0" id="R210"/>
+		<connect governor="R210" client="compress.xz.enabled" />
+		<connect governor="R210" client="compress.bzip2.enabled" />
 		<convert id="lgc_compress" sources="compress.string" mode="notequals" standard="" />
 		<convert id="lgc_cmprssxz" sources="compress.string" mode="equals" standard="xz" />
 		<connect governor="lgc_compress" client="complevel.enabled" />
@@ -41,8 +44,8 @@
 						<dropdown id="compress" label="Compression">
 							<option label="None" value="" checked="true" />
 							<option label="gzip" value="gzip" />
-							<option label="bzip2" value="bzip2" />
-							<option label="xz" value="xz" />
+							<option id="bzip2" label="bzip2" value="bzip2" />
+							<option id="xz" label="xz" value="xz" />
 						</dropdown>
 						<spinbox label="Compression level" id="complevel" initial="6" min="1" max="9" type="integer" />
 						<checkbox id="xzextreme" label="Enable xz extreme compression" value="true" />

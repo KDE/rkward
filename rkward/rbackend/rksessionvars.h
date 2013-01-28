@@ -22,7 +22,6 @@
 #include <QStringList>
 
 class RInterface;
-class RCommand;
 
 /** Singleton for storing information about the running R session, and - for some of the info - notifying about changes. */
 class RKSessionVars : public QObject {
@@ -31,8 +30,11 @@ public:
 	static RKSessionVars* instance () { return _instance; };
 	QStringList installedPackages () const { return installed_packages; };
 	void setInstalledPackages (const QStringList &new_list);
+	static void setRVersion (const QString &version_string);
 /** compare given version string against the running version of RKWard. Returns -1 for earlier than current, 0 for equal, 1 for later than current version */
 	static int compareRKWardVersion (const QString &version);
+/** compare given version string against the running version of R. Returns -1 for earlier than current, 0 for equal, 1 for later than current version. NOTE: The version of R is not known until the R backend has been started. In this case, 0 is always returned */
+	static int compareRVersion (const QString &version);
 /** Split "a.b.c.d.e-fghi" into up to four numeric portions (returned as four bytes in a single 32bit unsigned int).
 Anything else (everything after the fourth dot, or after the first character that is neither dot, nor digit)
 is returned as suffix (via the suffix pointer; if that is 0, an error is reported, instead). */
@@ -49,6 +51,8 @@ private:
 	QStringList installed_packages;
 	static quint32 rkward_version;
 	static QString rkward_version_suffix;
+	static quint32 r_version;
+	static QString r_version_string;
 };
 
 #endif

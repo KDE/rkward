@@ -8,7 +8,7 @@
 		<component type="standard" id="load_source" file="import/source.xml" label="Source an R file" />
 
 		<component type="standard" id="save_r" file="save/save.xml" label="Save objects as R data">
-			<dependencies R_min_version="2.10.0"/> <!-- "save_r" needs at least R 2.10 for bzip2/xz compression -->
+			<!-- <dependencies R_min_version="2.10.0"/>  "save_r" needs at least R 2.10 for bzip2/xz compression, but this is now handled inside the plugin itself. -->
 		</component>
 		<component type="standard" id="save_skeleton" file="save/skeleton/description.xml" label="Create package skeleton" />
 		<component type="standard" id="save_variables" file="save/write.xml" label="Export vector or matrix data" />

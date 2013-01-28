@@ -703,6 +703,13 @@ void RKComponentBuilder::parseLogic (const QDomElement &element, bool allow_scri
 	for (it = children.constBegin (); it != children.constEnd (); ++it) {
 		initial_values.insert (xml->getStringAttribute (*it, "id", "#noid#", DL_WARNING), xml->getStringAttribute (*it, "to", "false", DL_WARNING));
 	}
+	children = xml->getChildElements (element, "dependency_check", DL_INFO);
+	for (it = children.constBegin (); it != children.constEnd (); ++it) {
+		RKComponentPropertyBool *dep = new RKComponentPropertyBool (component (), false);
+		dep->setInternal (true);
+		dep->setBoolValue (RKComponentDependency::isRKWardVersionCompatible (*it) && RKComponentDependency::isRVersionCompatible (*it));
+		component ()->addChild (xml->getStringAttribute (*it, "id", "#noid#", DL_WARNING), dep);
+	}
 
 	// find outside elements
 	children = xml->getChildElements (element, "external", DL_INFO);

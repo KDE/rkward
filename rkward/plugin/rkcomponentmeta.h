@@ -39,6 +39,7 @@ struct RKComponentDependency {
 
 	static QList<RKComponentDependency> parseDependencies (const QDomElement &e);
 	static bool isRKWardVersionCompatible (const QDomElement &e);
+	static bool isRVersionCompatible (const QDomElement &e);
 };
 
 struct RKComponentAuthor {

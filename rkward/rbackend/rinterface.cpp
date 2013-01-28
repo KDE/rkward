@@ -2,7 +2,7 @@
                           rinterface.cpp  -  description
                              -------------------
     begin                : Fri Nov 1 2002
-    copyright            : (C) 2002, 2004, 2005, 2006, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2002-2013 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -74,6 +74,7 @@ RKWindowCatcher *window_catcher;
 #define GET_HELP_BASE 2
 #define SET_RUNTIME_OPTS 3
 #define STARTUP_PHASE2_COMPLETE 4
+#define GET_R_VERSION 5
 
 // statics
 double RInterface::na_real;
@@ -279,6 +280,10 @@ void RInterface::rCommandDone (RCommand *command) {
 		issueCommand ("rk.set.output.html.file (\"" + RKSettingsModuleGeneral::filesPath () + "/rk_out.html\")\n", RCommand::App | RCommand::Sync, QString (), this, SET_RUNTIME_OPTS, chain);
 
 		closeChain (chain);
+	} else if (command->getFlags () == GET_R_VERSION) {
+		RK_ASSERT (command->getDataType () == RData::StringVector);
+		RK_ASSERT (command->getDataLength () == 1);
+		RKSessionVars::setRVersion (command->stringVector ().value (0));
 	} else if (command->getFlags () == GET_HELP_BASE) {
 		RK_ASSERT (command->getDataType () == RData::StringVector);
 		RK_ASSERT (command->getDataLength () == 1);
@@ -345,6 +350,7 @@ void RInterface::handleRequest (RBackendRequest* request) {
 		RCommandStack *stack = new RCommandStack (runningCommand ());
 		RCommandChain *chain = stack->startChain (stack);
 
+		issueCommand ("paste (R.version[c (\"major\", \"minor\")], collapse=\".\")\n", RCommand::GetStringVector | RCommand::App | RCommand::Sync, QString (), this, GET_R_VERSION, chain);
 		// find out about standard library locations
 		issueCommand (".libPaths ()\n", RCommand::GetStringVector | RCommand::App | RCommand::Sync, QString (), this, GET_LIB_PATHS, chain);
 		// start help server / determined help base url
