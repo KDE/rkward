@@ -250,6 +250,18 @@ bool RKSettingsModulePlugins::markPluginMapAsQuirky (const QString& map) {
 	return ret;
 }
 
+void RKSettingsModulePlugins::markPluginMapAsWorking (const QString& map) {
+	RK_TRACE (SETTINGS);
+
+	int index = findKnownPluginMap (map, known_plugin_maps);
+	if (index < 0) {
+		RK_ASSERT (index >= 0);
+		return;
+	}
+	known_plugin_maps[index].quirky_in_this_version = false;
+	known_plugin_maps[index].broken_in_this_version = false;
+}
+
 QStringList RKSettingsModulePlugins::pluginMaps () {
 	RK_TRACE (SETTINGS);
 

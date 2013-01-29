@@ -64,6 +64,8 @@ public:
 	static bool markPluginMapAsBroken (const QString &map);
 	/** marks given map as quirky (in this version). @Returns false is the map was already known to be quirky, true otherwise. */
 	static bool markPluginMapAsQuirky (const QString &map);
+	/** Clears the broken or quirky flags. E.g. after the map was loaded, successfully */
+	static void markPluginMapAsWorking (const QString &map);
 	/** Helper struct used by RKSettingsModulePlugins to keep track of plugin map files. */
 	struct PluginMapStoredInfo {
 		PluginMapStoredInfo (const QString &_filename) : filename (_filename), active (false), broken_in_this_version (false), quirky_in_this_version (false) {};

@@ -295,6 +295,8 @@ void RKWardMainWindow::initPlugins (const QStringList &automatically_added) {
 				somewhat_broken_maps.append (map);
 				somewhat_broken_maps_details.append (result.detailed_problems);
 			}
+		} else {
+			RKSettingsModulePlugins::markPluginMapAsWorking (map);
 		}
 	}
 
