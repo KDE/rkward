@@ -50,7 +50,7 @@ void RKSessionVars::setRVersion (const QString& version_string) {
 	RK_TRACE (RBACKEND);
 
 	if (!r_version_string.isEmpty ()) {
-		RK_DEBUG (RBACKEND, DL_WARNING, "R version has changed during runtime, from %s to %s", qPrintable (r_version_string), qPrintable (r_version));
+		RK_DEBUG (RBACKEND, DL_WARNING, "R version has changed during runtime, from %s to %s", qPrintable (r_version_string), qPrintable (version_string));
 	}
 	r_version_string = version_string;
 	r_version = parseVersionString (version_string, 0);
