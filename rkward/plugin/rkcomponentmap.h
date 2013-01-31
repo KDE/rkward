@@ -31,9 +31,11 @@ public:
 	QString getBaseDir () { return basedir; };
 	QString makeFileName (const QString &filename);
 	QList<RKComponentDependency> getDependencies () { return dependencies; };
+	static QString parseId (const QDomElement &e);
 private:
 friend class RKComponentMap;
 	QString basedir;
+	QString id;
 	QList<RKComponentDependency> dependencies;
 };
 

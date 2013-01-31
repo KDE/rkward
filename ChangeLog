@@ -1,5 +1,7 @@
-- Added new element <dependency_check> for dynamic version checks within a plugin (R and RKWard versions, only, so far)
+- Pluginmaps can <require> other pluginmaps based on their id (for cross-package inclusion)
 	- TODO: document, test
+- Added new element <dependency_check> for dynamic version checks within a plugin (R and RKWard versions, only, so far)
+	- TODO: document
 - Add guard against accidental usage of the standard distributed pluginmaps in a later version of RKWard (installed in parallel)
 - Easier (de-)activation of RKWard plugin maps using checkboxes (Settings->Configure RKWard->Plugins)
 - Broken or quirky .pluginmap files are reported to the user, and disables completely broken maps, automatically
@@ -8,7 +10,7 @@
 	- TODO:
 		- Also provide "about" info and dependencies on plugin help pages
 		- Explicitly document the fact that <include>s can be used for <about> and <dependencies>
-		- Think about means for cross-package pluginmap includes
+		- Provide "priority" argument for pluginmaps (hidden,low,mid,high; where only mid and high will be activated by default)
 - Added support for the upcoming R 3.0.0			TODO: Check for any more regressions, before release
 - Added <switch> logic element to switch between several target properties (or fixed values) based on the value of a condition property
 - Sort plugin gains option to sort data.frames by more than one column at a time, and options for type conversion	TODO: adjust test(s)

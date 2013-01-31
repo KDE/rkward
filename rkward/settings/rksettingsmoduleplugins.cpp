@@ -166,6 +166,7 @@ void RKSettingsModulePlugins::saveSettings (KConfig *config) {
 		ppmg.writeEntry ("Broken", inf.broken_in_this_version);
 		ppmg.writeEntry ("Quirky", inf.quirky_in_this_version);
 		ppmg.writeEntry ("timestamp", inf.last_modified);
+		ppmg.writeEntry ("id", inf.id);
 		all_known_maps.append (inf.filename);
 	}
 	// NOTE: The group list is always sorted alphabetically, which is why we need a separate list setting for saving info on order.
@@ -200,6 +201,7 @@ void RKSettingsModulePlugins::loadSettings (KConfig *config) {
 			inf.broken_in_this_version = ppmg.readEntry ("Broken", false) && !RKSettingsModuleGeneral::rkwardVersionChanged ();
 			inf.quirky_in_this_version = ppmg.readEntry ("Quirky", false) && !RKSettingsModuleGeneral::rkwardVersionChanged ();
 			inf.last_modified = ppmg.readEntry ("timestamp", QDateTime ());
+			inf.id = ppmg.readEntry ("id");
 			known_plugin_maps.append (inf);
 		}
 	}
@@ -221,6 +223,21 @@ int findKnownPluginMap (const QString& filename, const RKSettingsModulePlugins::
 		if (haystack[i].filename == filename) return i;
 	}
 	return i;
+}
+
+QString RKSettingsModulePlugins::findPluginMapById (const QString &id) {
+	RK_TRACE (SETTINGS);
+
+	for (int i = 0; i < known_plugin_maps.size (); ++i) {
+		if (known_plugin_maps[i].id == id) return known_plugin_maps[i].filename;
+	}
+	// for "rkward::" namespace, try a little harded:
+	if (id.startsWith ("rkward::")) {
+		QFileInfo info (RKCommonFunctions::getRKWardDataDir () + "/" + id.mid (8));
+		if (info.isReadable ()) return info.absoluteFilePath ();
+	}
+
+	return QString ();
 }
 
 bool RKSettingsModulePlugins::markPluginMapAsBroken (const QString& map) {
@@ -320,7 +337,12 @@ void RKSettingsModulePlugins::fixPluginMapLists () {
 				inf.broken_in_this_version = false;
 				inf.quirky_in_this_version = false;
 				inf.last_modified = info.lastModified ();
+				inf.id.clear ();
 			}
+		}
+
+		if (inf.id.isEmpty ()) {
+			inf.id = RKPluginMapFile::parseId (XMLHelper::getStaticHelper ()->openXMLFile (inf.filename, DL_WARNING));
 		}
 	}
 

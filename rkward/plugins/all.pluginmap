@@ -1,6 +1,6 @@
 <!DOCTYPE rkpluginmap>
 
-<document base_prefix="" namespace="rkward">
+<document base_prefix="" namespace="rkward"  id="all_rkward_plugins">
 	<include file="pluginmap_meta.inc"/>
 
 	<require file="import_export.pluginmap"/>

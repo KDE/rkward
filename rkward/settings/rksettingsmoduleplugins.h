@@ -60,6 +60,8 @@ public:
 	 * @param force_reload If true, plugin maps are always reloaded, even if no maps were added
 	 */
 	static void registerPluginMaps (const QStringList &maps, bool force_add, bool force_reload);
+	/** Looks for the given id among known plugin maps */
+	static QString findPluginMapById (const QString &id);
 	/** marks given map as broken (in this version), and deactivates it. @Returns false is the map was already known to be broken, true otherwise. */
 	static bool markPluginMapAsBroken (const QString &map);
 	/** marks given map as quirky (in this version). @Returns false is the map was already known to be quirky, true otherwise. */
@@ -73,6 +75,7 @@ public:
 		bool active;
 		bool broken_in_this_version;
 		bool quirky_in_this_version;
+		QString id;
 		QDateTime last_modified;
 	};
 	typedef QList<PluginMapStoredInfo> PluginMapList;

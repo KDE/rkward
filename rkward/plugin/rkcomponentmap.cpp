@@ -30,13 +30,23 @@
 #include "rkcomponentcontext.h"
 #include "rkstandardcomponent.h"
 #include "../misc/xmlhelper.h"
+#include "../misc/rkcommonfunctions.h"
 #include "../debug.h"
 #include "../rkglobals.h"
 #include "../rkward.h"
+#include "../settings/rksettingsmoduleplugins.h"
 
 QString RKPluginMapFile::makeFileName (const QString &filename) {
 	return QDir::cleanPath (QDir (basedir).filePath (filename));
 }
+
+QString RKPluginMapFile::parseId (const QDomElement& e) {
+	RK_TRACE (PLUGIN);
+
+	XMLHelper *xml = XMLHelper::getStaticHelper ();
+	return (xml->getStringAttribute (e, "namespace", "rkward", DL_WARNING) + "::" + xml->getStringAttribute (e, "id", QString (), DL_INFO));
+}
+
 
 RKComponentGUIXML::RKComponentGUIXML () {
 	RK_TRACE (PLUGIN);
@@ -353,6 +363,7 @@ RKPluginMapParseResult RKComponentMap::addPluginMapLocal (const QString& plugin_
 	QString cnamespace = xml->getStringAttribute (document_element, "namespace", "rkward", DL_INFO) + "::";
 
 	RKPluginMapFile *pluginmap_file_desc = new RKPluginMapFile (prefix);
+	pluginmap_file_desc->id = RKPluginMapFile::parseId (document_element);
 	pluginmapfiles.insert (QFileInfo (plugin_map_file).absoluteFilePath (), pluginmap_file_desc);
 
 	// step 0: check dependencies, parse about, and initialize
@@ -369,11 +380,31 @@ RKPluginMapParseResult RKComponentMap::addPluginMapLocal (const QString& plugin_
 	QStringList includelist;
 	list = xml->getChildElements (document_element, "require", DL_INFO);
 	for (XMLChildList::const_iterator it=list.constBegin (); it != list.constEnd (); ++it) {
-		QString file = pluginmap_file_desc->makeFileName (xml->getStringAttribute (*it, "file", QString::null, DL_ERROR));
-		if (QFileInfo (file).isReadable ()) {
-			includelist.append (file);
+		if ((*it).hasAttribute ("file")) {
+			QString file = pluginmap_file_desc->makeFileName (xml->getStringAttribute (*it, "file", QString (), DL_ERROR));
+			if (QFileInfo (file).isReadable ()) {
+				includelist.append (file);
+			} else {
+				ret.addAndPrintError (DL_ERROR, i18n ("Specified required file '%1' does not exist or is not readable. Ignoring.", file));
+			}
 		} else {
-			ret.addAndPrintError (DL_ERROR, i18n ("Specified required file '%1' does not exist or is not readable. Ignoring.", file));
+			QString map_id = xml->getStringAttribute (*it, "map", QString (), DL_ERROR);
+			// Try to locate the map among the already loaded files, first
+			QString file;
+			for (PluginMapFileMap::const_iterator pmit = pluginmapfiles.constBegin (); pmit != pluginmapfiles.constEnd (); ++pmit) {
+				if (pmit.value ()->id == map_id) {
+					file = pmit.key ();
+					break;
+				}
+			}
+			// If the map is not among the loaded files, try to look it up among all known pluginmaps
+			if (file.isEmpty ()) file = RKSettingsModulePlugins::findPluginMapById (map_id);
+			if (!file.isEmpty ()) {
+				RK_DEBUG (PLUGIN, DL_INFO, "Resolving plugin map specification %s to filename %s", qPrintable (map_id), qPrintable (file));
+				includelist.append (file);
+			} else {
+				ret.addAndPrintError (DL_ERROR, i18n ("Could not resolve specified required pluginmap '%1'. You may have to install additional packages.", map_id));
+			}
 		}
 	}
 	for (QStringList::const_iterator it = includelist.constBegin (); it != includelist.constEnd (); ++it) {

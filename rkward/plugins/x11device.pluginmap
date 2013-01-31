@@ -1,6 +1,6 @@
 <!DOCTYPE rkpluginmap>
 
-<document base_prefix="x11device/" namespace="rkward">
+<document base_prefix="x11device/" namespace="rkward" id="x11device">
 	<include file="pluginmap_meta.inc"/>
 
 	<components>
