@@ -2,6 +2,7 @@
 <!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
   <!ENTITY rkward '<application>RKWard</application>'>
   <!ENTITY r '<application>R</application>'>
+  <!ENTITY pluginmap '<literal role="extension">.pluginmap</literal>'>
   <!ENTITY kapp "&rkward;"><!-- replace rkward here -->
   <!ENTITY % addindex "IGNORE">
   <!ENTITY % English "INCLUDE"><!-- change language only here -->
@@ -47,6 +48,7 @@ as Authors, publish date, the abstract, and Keywords -->
 <year>2010</year>
 <year>2011</year>
 <year>2012</year>
+<year>2013</year>
 <holder>Thomas Friedrichsmeier</holder>
 </copyright>
 <!-- Translators: put here the copyright notice of the translation -->
@@ -121,7 +123,7 @@ This is a guide to writing plugins for &rkward;.
 		Of course the first question you might have is: What portions of &rkward; functionality is realized using plugins? Or: What can plugins do?
 	</para>
 	<para>
-		One way to answer this is: Deselect all <literal role="extension">.pluginmap</literal> files under <menuchoice><guimenu>Settings</guimenu><guimenuitem>Configure &rkward;</guimenuitem><guimenuitem>Plugins</guimenuitem></menuchoice>, and see what's missing. A slightly more helpful answer: Most actual statistics functions accessible via the GUI are realized using plugins. Also, you can create fairly flexible GUIs for all kinds of operations using plugins.
+		One way to answer this is: Deselect all &pluginmap; files under <menuchoice><guimenu>Settings</guimenu><guimenuitem>Configure &rkward;</guimenuitem><guimenuitem>Plugins</guimenuitem></menuchoice>, and see what's missing. A slightly more helpful answer: Most actual statistics functions accessible via the GUI are realized using plugins. Also, you can create fairly flexible GUIs for all kinds of operations using plugins.
 	</para>
 	<para>
 		The basic paradigm behind &rkward; plugins is the one we'll walk you through in this document: An XML file describes what the GUI looks like. An additional JavaScript file is used to generate &r; syntax from the GUI settings. That is, plugins do not really have to perform any statistical calculations. Rather plugins generate the &r; syntax needed to run those calculations. The &r; syntax is then sent to the &r; backend for evaluation, and typically a result is shown in the output window.
@@ -134,7 +136,7 @@ This is a guide to writing plugins for &rkward;.
 <chapter id="pluginmap">
 <title>Creating menu entries</title>
 	<para>
-		When you create a new plugin, you need to tell &rkward; about it. So the first thing to do, is to write a <literal role="extension">.pluginmap</literal> file (or modify an existing one). The format of <literal role="extension">.pluginmap</literal> is XML. I'll walk you through an example (also of course, be sure you have &rkward; configured to load your pluginmap -- <menuchoice><guimenu>Settings</guimenu><guimenuitem>Configure &rkward;</guimenuitem><guimenuitem>Plugins</guimenuitem></menuchoice>):
+		When you create a new plugin, you need to tell &rkward; about it. So the first thing to do, is to write a &pluginmap; file (or modify an existing one). The format of &pluginmap; is XML. I'll walk you through an example (also of course, be sure you have &rkward; configured to load your &pluginmap; -- <menuchoice><guimenu>Settings</guimenu><guimenuitem>Configure &rkward;</guimenuitem><guimenuitem>Plugins</guimenuitem></menuchoice>):
 	</para>
 	<tip>
 		<para>
@@ -148,10 +150,15 @@ This is a guide to writing plugins for &rkward;.
 	The doctype is not really interpreted, but set it to <replaceable>"rkpluginmap"</replaceable> anyway.
 	</para>
 	<programlisting>
-&lt;document base_prefix="" namespace="rkward"&gt;
+&lt;document base_prefix="" namespace="myplugins" id="mypluginmap"&gt;
 	</programlisting>
 	<para>
-		The <parameter>base_prefix</parameter> attribute can be used, if all your plugins reside in a common directory. Basically, then you can omit that directory from the filenames specified below. As you will see below, all plugins get a unique identifier, <parameter>id</parameter>. The <parameter>namespace</parameter> is a way to organize those IDs, and make it less likely to create a duplicate identifier accidentally. Internally, basically the namespace and then a <quote>::</quote> gets prepended to all the identifiers you specify below. If unsure, leave these at <replaceable>""</replaceable> and <replaceable>"rkward"</replaceable>.
+		The <parameter>base_prefix</parameter> attribute can be used, if all your plugins reside in a common directory. Basically, then you can omit that directory from the filenames specified below. It safe to leave this at <replaceable>""</replaceable>.
+	</para><para>
+		As you will see below, all plugins get a unique identifier, <parameter>id</parameter>. The <parameter>namespace</parameter> is a way to organize those IDs, and make it less likely to create a duplicate identifier accidentally. Internally, basically the namespace and then a <quote>::</quote> gets prepended to all the identifiers you specify in this &pluginmap;. In general, if you intend to <link linkend="sect_external_plugins">distribute your plugins in an R package</link>, it is a good idea to use the package name as <parameter>namespace</parameter> parameter. Plugins shipped with the official &rkward; distribution have <replaceable>namespace="rkward"</replaceable>.
+	</para>
+	<para>
+		The <parameter>id</parameter> attribute is optional, but specifying an id for your &pluginmap; makes it possible for other people to make their &pluginmap;s load your &pluginmap;, automatically (see <link linkend="chapter_dependencies">the section on dependencies</link>).
 	</para>
 	<programlisting>
 	&lt;components&gt;
@@ -163,10 +170,10 @@ This is a guide to writing plugins for &rkward;.
 		&lt;component type="standard" id="t_test_two_vars" file="t_test_two_vars.xml" label="Two Variable t-Test" /&gt;
 	</programlisting>
 	<para>
-		First the <parameter>type</parameter> attribute: Leave this to <replaceable>"standard"</replaceable> for now. Further types are not yet implemented. The <parameter>id</parameter> we've already hinted at. Each component has to be given a unique (in its namespace) identifier. Pick one that is easily recognizable. Avoid spaces and any special characters. Those are not banned, so far, but might have special meanings. With the <parameter>file</parameter> attribute, you specify where the <link linkend="mainxml">description of the actual plugin itself</link> is located. This is relative to the directory the <literal role="extension">.pluginmap</literal> file is in, and the <parameter>base_prefix</parameter> above. Finally, give the component a label. This label will be shown whereever the plugin is placed in the menu (or in the future perhaps in other places as well).
+		First the <parameter>type</parameter> attribute: Leave this to <replaceable>"standard"</replaceable> for now. Further types are not yet implemented. The <parameter>id</parameter> we've already hinted at. Each component has to be given a unique (in its namespace) identifier. Pick one that is easily recognizable. Avoid spaces and any special characters. Those are not banned, so far, but might have special meanings. With the <parameter>file</parameter> attribute, you specify where the <link linkend="mainxml">description of the actual plugin itself</link> is located. This is relative to the directory the &pluginmap; file is in, and the <parameter>base_prefix</parameter> above. Finally, give the component a label. This label will be shown whereever the plugin is placed in the menu (or in the future perhaps in other places as well).
 	</para>
 	<para>
-		Typically a <literal role="extension">.pluginmap</literal> file will contain several components, so here are a few more:
+		Typically a &pluginmap; file will contain several components, so here are a few more:
 	</para>
 	<programlisting>
 		&lt;component type="standard" id="unimplemented_test" file="means/unimplemented.xml" /&gt;
@@ -185,7 +192,7 @@ This is a guide to writing plugins for &rkward;.
 	</programlisting>
 	<para>
 		Right below the <command>&lt;hierarchy&gt;</command> tag, you start describing, in which <command>&lt;menu&gt;</command> your plugins should go. With the above line, you basically say, that your plugin should be in the <menuchoice><guimenu>Analysis</guimenu></menuchoice> menu (not necessarily directly there, but in a submenu). The <menuchoice><guimenu>Analysis</guimenu></menuchoice> menu is standard in &rkward;, so it does not actually have to be created from scratch. However, if it did not exist yet, using the <parameter>label</parameter> attribute you'd give it its name. The <parameter>index</parameter> attribute says, that the menu (if newly created) should be placed at the fourth position in the menubar.
-		Finally, the <parameter>id</parameter> once again identifies this <command>&lt;menu&gt;</command>. This is needed, so several <literal role="extension">.pluginmap</literal> files can place their plugins in the same menus. They do this by looking for a <command>&lt;menu&gt;</command> with the given <parameter>id</parameter>. If the ID does not yet exist, a new menu will be created. Otherwise the entries will be added to the existing menu.
+		Finally, the <parameter>id</parameter> once again identifies this <command>&lt;menu&gt;</command>. This is needed, so several &pluginmap; files can place their plugins in the same menus. They do this by looking for a <command>&lt;menu&gt;</command> with the given <parameter>id</parameter>. If the ID does not yet exist, a new menu will be created. Otherwise the entries will be added to the existing menu.
 	</para>
 	<programlisting>
 			&lt;menu id="means" label="Means" index="1"&gt;
@@ -261,7 +268,7 @@ This is a guide to writing plugins for &rkward;.
 		</mediaobject>
 	</screenshot>
 	<para>
-		Confused? The easiest way to get started is probably taking some of the existing <literal role="extension">.pluginmap</literal> files shipped with the distribution, and modifying them to your needs. Also, if you need help, don't hesitate to write to the development mailing list.
+		Confused? The easiest way to get started is probably taking some of the existing &pluginmap; files shipped with the distribution, and modifying them to your needs. Also, if you need help, don't hesitate to write to the development mailing list.
 	</para>
 </chapter>
 
@@ -722,7 +729,7 @@ This links to the help page of another plugin. The [namespace/] part may be omit
 (in this case, rkward is assumed as the standard namespace, e.g.:
 &lt;link href="rkward://component/import_spss"/&gt; or
 &lt;link href="rkward://component/rkward/import_spss"/&gt; are equivalent).
-The component_id is the same that you specified in the <link linkend="pluginmap">.pluginmap</link>.
+The component_id is the same that you specified in the <link linkend="pluginmap">&pluginmap;</link>.
 
 &lt;link href="rkward://rhelp/rfunction"/&gt;
 
@@ -914,7 +921,7 @@ R code.
 		What happens here, is that the entire GUI or the plot options plugin (except of course for the standard elements like <guibutton>Submit</guibutton> button, etc.) is embedded right into your plugin (try it!).
 	</para>
 	<para>
-		As you can see the syntax of the <command>&lt;embed&gt;</command>-tag is fairly simple. It takes an <parameter>id</parameter> as most elements. The parameter component specifies which plugin to embed, as defined in the <link linkend="pluginmap">.pluginmap</link> file (<replaceable>"rkward::plot_options"</replaceable> is the result of concatenating the namespace <quote>rkward</quote>, a separator <quote>::</quote>, and the name of the component <quote>plot_options</quote>).
+		As you can see the syntax of the <command>&lt;embed&gt;</command>-tag is fairly simple. It takes an <parameter>id</parameter> as most elements. The parameter component specifies which plugin to embed, as defined in the &pluginmap; file (<replaceable>"rkward::plot_options"</replaceable> is the result of concatenating the namespace <quote>rkward</quote>, a separator <quote>::</quote>, and the name of the component <quote>plot_options</quote>).
 	</para>
 </sect1>
 <sect1 id="embedding_code">
@@ -1388,13 +1395,13 @@ This chapter contains information on some topics that are useful only to certain
 		So far we have assumed, all plugins are always meaningful, and all placed in the main menu. However, some plugins are meaningful only (or additionally) in a certain context. For instance a plugin to export the contents of an &r; X11 graphics device is obviously most useful, when placed in the menu of an X11 device, not in the main menubar. Also, such a plugin should know about the device number that it should operate on, without having to ask the user about this.
 	</para>
 	<para>
-		We call such plugins context-dependent. Correspondingly, in the <link linkend="pluginmap">.pluginmap file</link>, they are not (or not only) placed in the main <command>&lt;hierarchy&gt;</command> but rather into a <command>&lt;context&gt;</command> element. So far only two different contexts are supported (more will come later): x11 and file import. We'll deal with those in turn. Even if you are only interested in the import context, please also read the section on the x11 context, as this is slightly more elaborate.
+		We call such plugins context-dependent. Correspondingly, in the <link linkend="pluginmap">&pluginmap; file</link>, they are not (or not only) placed in the main <command>&lt;hierarchy&gt;</command> but rather into a <command>&lt;context&gt;</command> element. So far only two different contexts are supported (more will come later): x11 and file import. We'll deal with those in turn. Even if you are only interested in the import context, please also read the section on the x11 context, as this is slightly more elaborate.
 	</para>
 
 	<sect2 id="context_x11">
 		<title>X11 device context</title>
 		<para>
-			To use a plugin in the context of an x11 device - that is place it in the menu bar of the window you get when you call <function>x11()</function> in the console, first declare it as usual in the <link linkend="pluginmap">.pluginmap file</link>:
+			To use a plugin in the context of an x11 device - that is place it in the menu bar of the window you get when you call <function>x11()</function> in the console, first declare it as usual in the <link linkend="pluginmap">&pluginmap; file</link>:
 		</para>
 		<programlisting>
 &lt;document [...]&gt;
@@ -1436,7 +1443,7 @@ This chapter contains information on some topics that are useful only to certain
 			Before reading this section, please make sure to read the section on the <link linkend="context_x11">X11 device context</link>, as that explains the basic concepts.
 		</para>
 		<para>
-			The <replaceable>"import"</replaceable> context is used to declare import file filter plugins. You simply place those in a context with <parameter>id=</parameter><replaceable>"import"</replaceable> in the <literal role="extension">.pluginmap</literal> file. However, there is one additional twist when declaring these plugins: In order to offer a unified file selection dialog for all supported file types, you need to declare one additional bit of information on your component:
+			The <replaceable>"import"</replaceable> context is used to declare import file filter plugins. You simply place those in a context with <parameter>id=</parameter><replaceable>"import"</replaceable> in the &pluginmap; file. However, there is one additional twist when declaring these plugins: In order to offer a unified file selection dialog for all supported file types, you need to declare one additional bit of information on your component:
 		</para>
 		<programlisting>
 &lt;document [...]&gt;
@@ -1632,6 +1639,119 @@ This chapter contains information on some topics that are useful only to certain
 
 </chapter>
 
+<chapter id="chapter_dependencies">
+<title>Handling dependencies and compatibility issues</title>
+<sect1 id="sect_dependencies_rkward_version"><title>&rkward; version compatibility</title>
+	<para>We do our best to make sure that plugins developed for an old version of &rkward; will remain functional in later versions of &rkward;.  However, the reverse is not always true as new features are been added. Since not all users are running the latest version of &rkward;, this means your plugin may not work for everybody.</para>
+	<para>When you are aware of such compatibility issues, you should make sure to document this fact in your &pluginmap; file, using the <command>&lt;dependencies&gt;</command> element. The <command>&lt;dependencies&gt;</command> can either be specified as a direct child of the &pluginmap;'s &lt;document&gt; element, or as a child element of individual <command>&lt;component&gt;</command> definitions. In the first case, the dependencies apply to <emphasis>all</emphasis> plugins in the map. In the latter case only to the individual <command>&lt;component&gt;</command>(s). You can also mix top "global" and "specific" dependencies. In this case the "global" dependencies are added to those of the individual component.</para>
+	<para>Let's look at a small example:</para>
+	<programlisting>
+&lt;document ...&gt;
+	&lt;dependencies rkward_min_version="0.5.0c" /&gt;
+	&lt;components ...&gt;
+		&lt;component id="myplugin" file="reduced_version_of_myplugin.xml" ...&gt;
+			&lt;dependencies rkward_max_version="0.6.0z" /&gt;
+		&lt;/component&gt;
+		&lt;component id="myplugin" file="fancy_version_of_myplugin.xml" ...&gt;
+			&lt;dependencies rkward_min_version="0.6.1" /&gt;
+		&lt;/component&gt;
+		...
+x	&lt;/components ...&gt;
+&lt;/document&gt;
+	</programlisting>
+	<para>In this example, all plugins are known to require at least version 0.5.0c of &rkward;. One plugin, with <replaceable>id="myplugin"</replaceable> is provided in two alternative variants. The first, stripped down, version will be used for &rkward; versions before 0.6.1. The latter utilizes features that are new in &rkward; 0.6.1, and will only be used from &rkward; 0.6.1 onwards.</para>
+	<para>Providing alternative variants like this is a very user friendly way to make use of new features, while still keeping support for earlier versions of &rkward;. Alternative versions should share the same <parameter>id</parameter> (warnings will be produced, otherwise), and may only be defined <emphasis>within the same</emphasis> &pluginmap; file.</para>
+	<para>Plugin which are not compatible with the running version of &rkward;, and which do not come with an alternative version will be ignored with a warning.</para>
+	<note><para>Actually &rkward; 0.6.1 is the first version to interpret dependencies - and to report dependency errors - at all. Thus, contrary to what the example may suggest, specifying any earlier versions in the dependencies will not have any direct effect (but may still be a good idea for documentation purposes).</para></note>
+	<para><emphasis>Sometimes</emphasis> it will even be possible to handle version incompatibility issues <emphasis>inside</emphasis> a single &pluginmap; file, using the <command>&lt;dependency_check&gt;</command> element, described in the following section.</para>
+</sect1>
+<sect1 id="sect_dependencies_r_version"><title>&r; version compatibility</title>
+	<para>Similar to <parameter>rkward_min_version</parameter> and <parameter>rkward_max_version</parameter>, the <command>&lt;dependencies&gt;</command> element allows specification of the attributes <parameter>R_min_version</parameter> and <parameter>R_max_version</parameter>. However, there are the following differences:</para>
+	<itemizedlist>
+		<listitem><para>Plugins which fail to meet the &r; version requirement are <emphasis>not</emphasis> currently skipped when reading a &pluginmap; file. The user can still call the plugin, and will not see any immediate warning (in future versions, a warning message will probably be shown)</para></listitem>
+		<listitem><para>In consequence it is also <emphasis>not</emphasis> possible to define alternative versions of a plugin depending on the running version of &r;.</para></listitem>
+		<listitem><para>However, it is often easy to achieve backwards compatibility as shown below. If you are aware of &r; compatibility issues, please consider using this method, instead of defining a dependency on a particular version of &r;.</para></listitem>
+	</itemizedlist>
+	<para>In many cases, it is easily possible to provide reduced functionality, if a certain feature is not available in the running version of &r;. Consider the following short example of a plugin .xml file:</para>
+	<programlisting>
+&lt;dialog [...]&gt;
+	&lt;logic&gt;
+		&lt;dependency_check id="ris210" R_min_version="2.10.0"/&gt;
+		&lt;connect client="compression.xz.enabled" governor="ris210"/&gt;
+	&lt;/logic&gt;
+	[...]
+	&lt;radio id="compression" label="Compression method"&gt;
+		&lt;option label="None" value=""&gt;
+		&lt;option label="gzip" value="gzip"&gt;
+		&lt;option id="xz" label="xz" value="xz"&gt;
+	&lt;/radio&gt;
+	[...]
+&lt;/dialog&gt;
+	</programlisting>
+	<para>In this example the compression option "xz" will simply be disabled when the &r; runtime version is older than 2.10.0 (which did not support xz compression). The <command>&lt;dependency_check&gt;</command> element supports the same attributes as the <command>&lt;dependencies&gt;</command> element in &pluginmap; files. It creates a boolean property, which is true, if the specified dependencies are met, false otherwise.</para>
+</sect1>
+<sect1 id="sect_dependencies_r_packages"><title>Dependencies on &r; packages</title>
+<para>Dependencies on specific &r; packages can be defined, but as of &rkward; 0.6.1, these dependencies are neither checked, nor installed / loaded, automatically. They are shown in the plugin help files, however. Here is an example definition:</para>
+<programlisting>
+	&lt;dependencies&gt;
+		&lt;package 
+			name="heisenberg"
+			min_version="0.11-2"
+			repository="http://rforge.r-project.org"
+		/&gt;
+	&lt;/dependencies&gt;
+</programlisting>
+<note><para>Always make sure to add appropriate <function>require()</function> calls, if you plugin needs certain packages to be loaded.</para></note>
+</sect1>
+<sect1 id="sect_dependencies_other_pluginmaps"><title>Dependencies on other &rkward; &pluginmap;s</title>
+	<para>If your plugins depend on plugins defined in another &pluginmap; (that is <emphasis>not</emphasis> part of your package) you can define this dependency like this:</para>
+<programlisting>
+	&lt;dependencies&gt;
+		&lt;pluginmap 
+			name="heisenberg_plugins"
+			url="http://eternalwondermaths.example.org/hsb"
+		/&gt;
+	&lt;/dependencies&gt;
+</programlisting>
+<para>Currently will neither load, nor install, nor even warn about missing &pluginmap;s, but at least information on dependencies (and where to obtain them) will be shown on the plugin's help page. You do not have to (and you should not) declare dependencies on &pluginmap;s that are shipped with the offical &rkward; distribution, or on &pluginmap;s that are inside your own package. Further, if a required &pluginmap; is <link linkend="external_plugins">distributed as an &r; package</link>, declare a dependency of the package (as shown in the previous section), rather than on the map.</para>
+	<para>To make sure that required &pluginmap;s are actually loaded, use the <command>&lt;require&gt;</command>-tag (refer to the <link linkend="pluginmapelements">reference</link> for details).</para>
+</sect1>
+<sect1 id="sect_dependencies_example"><title>An example</title>
+	<para>To clarify how dependency definitions can be mixed, here's a combined example:</para>
+<programlisting>
+&lt;document ...&gt;
+	&lt;dependencies rkward_min_version="0.5.0c"&gt;
+		&lt;package 
+			name="heisenberg"
+			min_version="0.11-2"
+			repository="http://rforge.r-project.org"
+		/&gt;
+		&lt;package 
+			name="DreamsOfPi"
+			min_version="0.2"
+		/&gt;
+		&lt;pluginmap 
+			name="heisenberg_plugins"
+			url="http://eternalwondermaths.example.org/hsb"
+		/&gt;
+	&lt;dependencies&gt;
+
+	&lt;require map="heisenberg::heisenberg_plugins"/&gt;
+
+	&lt;components ...&gt;
+		&lt;component id="myplugin" file="reduced_version_of_myplugin.xml" ...&gt;
+			&lt;dependencies rkward_max_version="0.6.0z" /&gt;
+		&lt;/component&gt;
+		&lt;component id="myplugin" file="fancy_version_of_myplugin.xml" ...&gt;
+			&lt;dependencies rkward_min_version="0.6.1" /&gt;
+		&lt;/component&gt;
+		...
+x	&lt;/components ...&gt;
+&lt;/document&gt;
+</programlisting>
+</sect1>
+</chapter>
+
 <chapter id="external_plugins">
 <title>Share your work with others</title>
 <sect1 id="sect_external_plugins"><title>External plugins</title>
@@ -1704,7 +1824,7 @@ This chapter contains information on some topics that are useful only to certain
 		<sect3 id="basic_plugin_components">
 		<title>Basic plugin components</title>
 			<para>
-				It is mandatory to include at least three files: a <link linkend="pluginmap">.pluginmap</link>, a plugin <link linkend="mainxml">.xml</link> description and a plugin <link linkend="jstemplate">.js</link> file. That is, even the "plugins" directory is optional. It might just help to give your files some order, especially if you include more that one plugin/dialog in the archive, which is of course no problem. You can have as many directories for the actual plugin files as you see fit, they just have to resemble the <link linkend="pluginmap">.pluginmap</link>, respectively. It is also possible to even include several <literal role="extension">.pluginmap</literal> files, if it fits your needs, but you should include them all in <quote>plugin_name.pluginmap</quote> then.
+				It is mandatory to include at least three files: a <link linkend="pluginmap">&pluginmap;</link>, a plugin <link linkend="mainxml">.xml</link> description and a plugin <link linkend="jstemplate">.js</link> file. That is, even the "plugins" directory is optional. It might just help to give your files some order, especially if you include more that one plugin/dialog in the archive, which is of course no problem. You can have as many directories for the actual plugin files as you see fit, they just have to resemble the <link linkend="pluginmap">&pluginmap;</link>, respectively. It is also possible to even include several &pluginmap; files, if it fits your needs, but you should include them all in <quote>plugin_name.pluginmap</quote> then.
 			</para>
 			<para>
 				Each &r; package must have a valid <filename>DESCRIPTION</filename> file, which is also crucial for &rkward; recognizing it as a plugin provider. Most of the information it carries is also needed in the plugin <link linkend="meta-information">Meta-information</link>, but in a different format (the &r; documentation explains <ulink url="http://cran.r-project.org/doc/manuals/R-exts.html#The-DESCRIPTION-file">the <filename>DESCRIPTION</filename> file in detail</ulink>).
@@ -1758,7 +1878,7 @@ standards for each defined suite.
 	<sect1 id="meta-information">
 		<title>Meta-information</title>
 		<para>Each plugin archive should provide some basic meta-information on what it deals with, where to find more information, who maintains it, if it relies on specific &r; packages or other plugins, etc. </para>
-		<para>This information is given at least once in your <literal role="extension">.pluginmap</literal>, and can then be included or overwritten in each plugin <literal role="extension">.xml</literal> file (which might be useful if that particular plugin file was contributed by someone else, for instance). </para>
+		<para>This information is given at least once in your &pluginmap;, and can then be included or overwritten in each plugin <literal role="extension">.xml</literal> file (which might be useful if that particular plugin file was contributed by someone else, for instance). </para>
 		<para>To achieve this, the <command>&lt;about&gt;</command> tag is used. The overall structure of this tag looks something like this: </para>
 		<programlisting>
 	&lt;about&gt;
@@ -1776,7 +1896,7 @@ standards for each defined suite.
 	&lt;/about&gt;
 		</programlisting>
 		<para>That is, the <command>&lt;about&gt;</command> tag contains <command>&lt;author&gt;</command> and <command>&lt;dependencies&gt;</command>, and <command>&lt;dependencies&gt;</command> contains <command>&lt;package&gt;</command> and <command>&lt;pluginmap&gt;</command>. Each of these five tags knows in turn several further attributes (see below). </para>
-		<para>As you can see, you can have more than one entry on authors, needed &r; packages and &rkward; pluginmaps. </para>
+		<para>As you can see, you can have more than one entry on authors, needed &r; packages and &rkward; &pluginmap;s. </para>
 		<para>A full-blown example would look like this: </para>
 		<programlisting>
 &lt;document 
@@ -1846,13 +1966,13 @@ standards for each defined suite.
 	&lt;/hierarchy&gt;
 &lt;/document&gt;
 		</programlisting>
-		<tip><para>You don't have to write this XML code by hand. If you use the function <function>rk.plugin.skeleton()</function> from the <link linkend="rkwarddev"><application>rkwarddev</application> package</link> and provide all necessary information via the <parameter>about</parameter> option, it will automatically create a <literal role="extension">.pluginmap</literal> file with a working &lt;about&gt; section for you.</para></tip>
+		<tip><para>You don't have to write this XML code by hand. If you use the function <function>rk.plugin.skeleton()</function> from the <link linkend="rkwarddev"><application>rkwarddev</application> package</link> and provide all necessary information via the <parameter>about</parameter> option, it will automatically create a &pluginmap; file with a working &lt;about&gt; section for you.</para></tip>
 		<para>Most of this should explain itself, so we’ll not discuss each and every tag element. But let’s look at some details that probably need some commentary for easier understanding. </para>
 		<para>The <parameter>category</parameter> element in <command>&lt;about&gt;</command> can be defined rather freely, but should be meaningful, as it’s thought to be used to order plugins into groups. All other attributes in this opening tag are mandatory and must be filled with reasonable content. </para>
 		<para>At least one <command>&lt;author&gt;</command> with a valid e-mail address and the role <quote>aut</quote> (<quote>author</quote>) must also be given. In case your plugin causes problems or someone would like to share its gratitude with you, it should be easy to contact someone who’s involved. For further information on other valid roles, like <quote>ctb</quote> for code contributors or <quote>cre</quote> for package maintenance, please refer to the <ulink url="http://stat.ethz.ch/R-manual/R-patched/library/utils/html/person.html">R documentation on <function>person()</function></ulink>. </para>
 		<para>Actually the whole <command>&lt;dependencies&gt;</command> might be left empty if your plugin is supposed to run with any &rkward; version and standard &r; installation. But please be reasonable here as well. The inclusion of any <command>&lt;package&gt;</command> or <command>&lt;pluginmap&gt;</command> tags is of course optional as well, depending on the needs of your plugins. All the <parameter>min_version</parameter> and <parameter>max_version</parameter> information can be omitted, as well. They are obviously useful if your plugin is known to rely on certain versions of an &r; package, for instance. </para>
 		<para>If you need an &r; package that is probably not hosted on an official CRAN mirror, you can specify a repository where it can be found in the <command>&lt;package&gt;</command> tag. &rkward; will check whether this repository is already defined in its configuration, and if not, add it, but only after the user has given its explicit permission to that. </para>
-		<para>The <parameter>id</parameter>" element in the <command>&lt;pluginmap&gt;</command> tag refers to the ID given in the top level <command>&lt;document&gt;</command> tag of the pluginmap that you need. </para>
+		<para>The <parameter>id</parameter>" element in the <command>&lt;pluginmap&gt;</command> tag refers to the ID given in the top level <command>&lt;document&gt;</command> tag of the &pluginmap; that you need. </para>
 	</sect1>
 	<sect1 id="building_the_plugin_package">
 		<title>Building the plugin package</title>
@@ -2016,7 +2136,7 @@ JS.print &lt;- rk.paste.JS(echo("rk.print (res)\n"), level=2)
 		</sect2>
 
 		<sect2 id="rkdev_pluginmap"><title>Plugin map</title>
-		<para>This section is very short: We don't need to write a pluginmap at all, as it can be generated automatically by <function>rk.plugin.skeleton()</function>. The menu hierarchy can be specified via the <parameter>pluginmap</parameter> option:</para>
+		<para>This section is very short: We don't need to write a &pluginmap; at all, as it can be generated automatically by <function>rk.plugin.skeleton()</function>. The menu hierarchy can be specified via the <parameter>pluginmap</parameter> option:</para>
 			<programlisting>
 	[...]
 	pluginmap=list(
@@ -2252,7 +2372,7 @@ local({
 </sect1>
 
 <sect1 id="globalxmlelements">
-	<title>General purpose elements to be used in any XML file (<literal role="extension">.xml</literal>, <literal role="extension">.rkh</literal>, <literal role="extension">.pluginmap</literal>)</title>
+	<title>General purpose elements to be used in any XML file (<literal role="extension">.xml</literal>, <literal role="extension">.rkh</literal>, &pluginmap;)</title>
 	<variablelist>
 	<varlistentry>
 	<term>&lt;snippets&gt;</term>
@@ -3317,19 +3437,27 @@ different types, using modifiers may lead to errors. For <replaceable>fixed_valu
 </variablelist>
 </sect1>
 
-<sect1 id="pluginmapelements"><title>Elements for use in <literal role="extension">.pluginmap</literal> files</title>
+<sect1 id="pluginmapelements"><title>Elements for use in &pluginmap; files</title>
 <variablelist>
 <varlistentry>
 <term>&lt;document&gt;</term>
-<listitem><para>Needs to be present in each <literal role="extension">.pluginmap</literal> file as the root-node (exactly once). Attributes:
+<listitem><para>Needs to be present in each &pluginmap; file as the root-node (exactly once). Attributes:
 	<variablelist>
 	<varlistentry>
 	<term>base_prefix</term>
-	<listitem><para>Filenames specified in the pluginmap file are assumed to be relative to the directory of the <literal role="extension">.pluginmap</literal> file + the prefix you specify here. Useful, esp., if all your components are located below a single subdirectory.	</para></listitem>
+	<listitem><para>Filenames specified in the &pluginmap; file are assumed to be relative to the directory of the &pluginmap; file + the prefix you specify here. Useful, esp., if all your components are located below a single subdirectory.	</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>namespace</term>
 	<listitem><para>A namespace for the component ids. When looking up components for embedding, the components will beretrievable via a string "namespace::component_id". Set to "rkward" for now.</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>id</term>
+	<listitem><para>An optional identifier string for this &pluginmap;. Specifying this allows third authors to refer to and load your &pluginmap; from theirs (see <link linkend="chapter_dependencies">chapter on handling dependencies</link>.</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>priority</term>
+	<listitem><para>One of <replaceable>"hidden"</replaceable>, <replaceable>"low"</replaceable>, <replaceable>"medium"</replaceable>, or <replaceable>"high"</replaceable>. &pluginmap;s with priority "medium" or "high" are activated, automatically, when &rkward; first finds them. Use <replaceable>priority="hidden"</replaceable> for &pluginmap;s that are not meant to be activated, directory (only meant for inclusion). In the current implementation this does not actually hide the &pluginmap;, however. (Optional, defaults to "medium").</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
@@ -3387,7 +3515,7 @@ different types, using modifiers may lead to errors. For <replaceable>fixed_valu
 	<variablelist>
 	<varlistentry>
 	<term>id</term>
-	<listitem><para>An identifier string of the menu. Useful, when menu definitions are read from several <literal role="extension">.pluginmap</literal> files, to make sure plugins can be placed in the same menu(s). Some menu-ids such as "file" refer to predefined menus (in this case the "File" menu). Be sure to check with existing <literal role="extension">.pluginmap</literal> files to use consistent ids.</para></listitem>
+	<listitem><para>An identifier string of the menu. Useful, when menu definitions are read from several &pluginmap; files, to make sure plugins can be placed in the same menu(s). Some menu-ids such as "file" refer to predefined menus (in this case the "File" menu). Be sure to check with existing &pluginmap; files to use consistent ids.</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term>label</term>
@@ -3395,7 +3523,7 @@ different types, using modifiers may lead to errors. For <replaceable>fixed_valu
 	</varlistentry>
 	<varlistentry>
 	<term>index</term>
-	<listitem><para>Useful, when menu definitions are read from several <literal role="extension">.pluginmap</literal> files, to have control over the order in which (sub-)menus are placed inside a hierarchy level. Note that the index is not absolute (since more than one <literal role="extension">.pluginmap</literal> file may be read, more than one element at this hierarchy level may have the same id), but you can safely assume that an element with index="4" will be placed somewhere below an element which index="3" and above one with index="5" (optional, default is "-1", for add at end).</para></listitem>
+	<listitem><para>Useful, when menu definitions are read from several &pluginmap; files, to have control over the order in which (sub-)menus are placed inside a hierarchy level. Note that the index is not absolute (since more than one &pluginmap; file may be read, more than one element at this hierarchy level may have the same id), but you can safely assume that an element with index="4" will be placed somewhere below an element which index="3" and above one with index="5" (optional, default is "-1", for add at end).</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
@@ -3425,11 +3553,16 @@ different types, using modifiers may lead to errors. For <replaceable>fixed_valu
 </varlistentry>
 <varlistentry>
 <term>&lt;require&gt;</term>
-<listitem><para>Include another <literal role="extension">.pluginmap</literal> file. This <literal role="extension">.pluginmap</literal> file is only loaded once, even if it is &lt;require&gt;d from several other files. The most important use case is to include a pluginmap file, which declares some comopnents, which are embedded by components declared in this <literal role="extension">.pluginmap</literal>. &lt;require&gt;-elements are only allowed as direct children of the &lt;document&gt;-node. Attributes:
+<listitem><para>Include another &pluginmap; file. This &pluginmap; file is only loaded once, even if it is &lt;require&gt;d from several other files. The most important use case is to include a pluginmap file, which declares some comopnents, which are embedded by components declared in this &pluginmap;. &lt;require&gt;-elements are only allowed as direct children of the &lt;document&gt;-node. Attributes:
 	<variablelist>
 	<varlistentry>
 	<term>file</term>
-	<listitem><para>The filename of the <literal role="extension">.pluginmap</literal> to include. This is seen relative to the directory of the current <literal role="extension">.pluginmap</literal> file + the base_prefix (see above, &lt;document&gt;-element).</para></listitem>
+	<listitem><para>The filename of the &pluginmap; to include. This is seen relative to the directory of the current &pluginmap; file + the base_prefix (see above, &lt;document&gt;-element). If you do not know the relative path to the &pluginmap; to be included, use the <parameter>map</parameter> attribute to refer to it by id, instead.</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>map</term>
+	<listitem><para>To include a &pluginmap; file from a different package (or an &rkward; &pluginmap; from your external &pluginmap;, you can refer to it by its <replaceable>namespacename::id</replaceable>, as specified in the required &pluginmap;s &lt;document&gt; element. Inclusion will fail, if no &pluginmap; by that id is known (e.g. not installed on the user's system). You should use this method for including &pluginmap;s outside your package, only. For maps inside your package, specifying a relative path (<parameter>file</parameter> attribute) is faster, and more reliable.
+	</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
