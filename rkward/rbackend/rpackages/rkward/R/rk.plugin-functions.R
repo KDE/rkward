@@ -108,8 +108,8 @@ rk.list.plugins <- function () {
 #' @param pluginmap.files a character vector of file names to add. This may be left empty,
 #'                        if the only desired effect is to reload all active pluginmaps.
 #' @param force.add logical. Whether the pluginmap files should also be added, if they had
-#'                  been previously de-selected in the settings menu. In scripted usage, this
-#'                  should generally be set to FALSE.
+#'                  been previously de-selected in the settings menu, and regardless of their
+#'                  priority setting. In scripted usage, this should generally be set to FALSE.
 #' @param force.reload logical. By default the active pluginmaps are reloaded, only if any new ones
 #'                     were added. If set to TRUE, pluginmaps are reloaded in any case. In
 #'                     scripted usage, this should generally be set to FALSE. NOTE: Since

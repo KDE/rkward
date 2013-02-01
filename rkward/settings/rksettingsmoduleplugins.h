@@ -75,6 +75,7 @@ public:
 		bool active;
 		bool broken_in_this_version;
 		bool quirky_in_this_version;
+		int priority;
 		QString id;
 		QDateTime last_modified;
 	};
@@ -82,7 +83,9 @@ public:
 public slots:
 	void settingChanged ();
 private:
- 	RKMultiStringSelectorV2 *map_choser;
+	enum PluginMapPriority { PriorityHidden = 0, PriorityLow, PriorityMedium, PriorityHigh };
+
+	RKMultiStringSelectorV2 *map_choser;
 	RKSettingsModulePluginsModel *map_model;
 	QButtonGroup *button_group;
 	QCheckBox *show_code_box;

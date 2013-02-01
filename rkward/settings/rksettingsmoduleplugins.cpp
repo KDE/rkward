@@ -167,6 +167,7 @@ void RKSettingsModulePlugins::saveSettings (KConfig *config) {
 		ppmg.writeEntry ("Quirky", inf.quirky_in_this_version);
 		ppmg.writeEntry ("timestamp", inf.last_modified);
 		ppmg.writeEntry ("id", inf.id);
+		ppmg.writeEntry ("priority", inf.priority);
 		all_known_maps.append (inf.filename);
 	}
 	// NOTE: The group list is always sorted alphabetically, which is why we need a separate list setting for saving info on order.
@@ -202,6 +203,7 @@ void RKSettingsModulePlugins::loadSettings (KConfig *config) {
 			inf.quirky_in_this_version = ppmg.readEntry ("Quirky", false) && !RKSettingsModuleGeneral::rkwardVersionChanged ();
 			inf.last_modified = ppmg.readEntry ("timestamp", QDateTime ());
 			inf.id = ppmg.readEntry ("id");
+			inf.priority = ppmg.readEntry ("priority", (int) PriorityMedium);
 			known_plugin_maps.append (inf);
 		}
 	}
@@ -298,16 +300,24 @@ void RKSettingsModulePlugins::registerPluginMaps (const QStringList &maps, bool 
 		if (map.isEmpty ()) continue;
 		int index = findKnownPluginMap (map, known_plugin_maps);
 		if (index >= 0) {
+			if (known_plugin_maps[index].active) continue;
 			if (!force_add) continue;
 		} else {	// not found
 			PluginMapStoredInfo inf (map);
 			known_plugin_maps.append (inf);
 			index = known_plugin_maps.size () - 1;
 		}
+		added.append (map);
+	}
+	fixPluginMapLists ();
 
-		if (!known_plugin_maps[index].active) {
-			known_plugin_maps[index].active = true;
-			added.append (map);
+	// activate added (or forced) pluginmaps, *after* the list has been fixed (and info on priority has been read)
+	for (int i = 0; i < known_plugin_maps.size (); ++i) {
+		PluginMapStoredInfo &inf = known_plugin_maps[i];
+		int index = added.indexOf (inf.filename);
+		if (index >= 0) {
+			if (force_add || (inf.priority >= PriorityMedium)) inf.active = true;
+			else (added.removeAt (index));
 		}
 	}
 
@@ -342,7 +352,9 @@ void RKSettingsModulePlugins::fixPluginMapLists () {
 		}
 
 		if (inf.id.isEmpty ()) {
-			inf.id = RKPluginMapFile::parseId (XMLHelper::getStaticHelper ()->openXMLFile (inf.filename, DL_WARNING));
+			QDomElement de = XMLHelper::getStaticHelper ()->openXMLFile (inf.filename, DL_WARNING);
+			inf.id = RKPluginMapFile::parseId (de);
+			inf.priority = XMLHelper::getStaticHelper ()->getMultiChoiceAttribute (de, "priority", "hidden;low;medium;high", (int) PriorityMedium, DL_WARNING);
 		}
 	}
 

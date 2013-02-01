@@ -2,7 +2,7 @@
                           rkhtmlwindow  -  description
                              -------------------
     begin                : Wed Oct 12 2005
-    copyright            : (C) 2005, 2006, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2005-2013 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -487,169 +487,181 @@ bool RKHTMLWindow::renderRKHelp (const KUrl &url) {
 	bool for_component = false;		// is this a help page for a component, or a top-level help page?
 	if (url.host () == "component") for_component = true;
 
-	bool success = false;
-	XMLHelper *component_xml = new XMLHelper ();
-	XMLHelper *help_xml = new XMLHelper ();
+	XMLHelper component_xml;
+	XMLHelper help_xml;
 	QStringList anchors, anchornames;
 
-	while (true) {		// dirty hack to streamline exit code: breaking from this while, before success is set to true will cause the XMLHelpers to be deleted, and false returned.
-		RKComponentHandle *chandle = 0;
-		QString help_file_name;
-		QDomElement element;
-		QDomElement component_doc_element;
-		QString help_base_dir = RKCommonFunctions::getRKWardDataDir () + "pages/";
-		QString css_filename = QUrl::fromLocalFile (help_base_dir + "rkward_help.css").toString ();
+	RKComponentHandle *chandle = 0;
+	QString help_file_name;
+	QDomElement element;
+	QDomElement component_doc_element;
+	QString help_base_dir = RKCommonFunctions::getRKWardDataDir () + "pages/";
+	QString css_filename = QUrl::fromLocalFile (help_base_dir + "rkward_help.css").toString ();
 
-		// determine help file, and prepare
-		if (for_component) {
-			chandle = componentPathToHandle (url.path ());
-			if (!chandle) break;
+	// determine help file, and prepare
+	if (for_component) {
+		chandle = componentPathToHandle (url.path ());
+		if (!chandle) return false;
 
-			component_doc_element = component_xml->openXMLFile (chandle->getFilename (), DL_ERROR);
-			if (component_doc_element.isNull ()) break;
-			element = component_xml->getChildElement (component_doc_element, "help", DL_ERROR);
-			if (!element.isNull ()) {
-				help_file_name = component_xml->getStringAttribute (element, "file", QString::null, DL_ERROR);
-				if (!help_file_name.isEmpty ()) help_file_name = QFileInfo (chandle->getFilename ()).absoluteDir ().filePath (help_file_name);
-			}
-		} else {
-			help_file_name = help_base_dir + url.path () + ".rkh";
-		}
-		RK_DEBUG (APP, DL_DEBUG, "rendering help page for local file %s", help_file_name.toLatin1().data());
-
-		// open help file
-		QDomElement help_doc_element = help_xml->openXMLFile (help_file_name, DL_ERROR);
-		if (help_doc_element.isNull () && (!for_component)) break;
-
-		// initialize output, and set title
-		khtmlpart->begin (url);
-		QString page_title (i18n ("No Title"));
-		if (for_component) {
-			page_title = chandle->getLabel ();
-		} else {
-			element = help_xml->getChildElement (help_doc_element, "title", DL_WARNING);
-			if (!element.isNull ()) {
-				page_title = element.text ();
-			}
-		}
-		khtmlpart->write ("<html><head><title>" + page_title + "</title><link rel=\"stylesheet\" type=\"text/css\" href=\"" + css_filename + "\"></head>\n<body><div id=\"main\">\n<h1>" + page_title + "</h1>\n");
-
-		if (help_doc_element.isNull ()) {
-			RK_ASSERT (for_component);
-			khtmlpart->write (i18n ("<h1>Help page missing</h1>\n<p>The help page for this component has not yet been written (or is broken). Please consider contributing it.</p>\n"));
-		}
-		if (for_component) {
-			QString component_id = componentPathToId (url.path());
-			RKComponentHandle *handle = componentPathToHandle (url.path());
-			if (handle && handle->isAccessible ()) khtmlpart->write ("<a href=\"rkward://runplugin/" + component_id + "/\">" + i18n ("Use %1 now", page_title) + "</a>");
-		}
-
-		// fix all elements containing an "src" attribute
-		QDir base_path (QFileInfo (help_file_name).absolutePath());
-		XMLChildList src_elements = help_xml->findElementsWithAttribute (help_doc_element, "src", QString (), true, DL_DEBUG);
-		for (XMLChildList::iterator it = src_elements.begin (); it != src_elements.end (); ++it) {
-			QString src = (*it).attribute ("src");
-			if (KUrl::isRelativeUrl (src)) {
-				src = "file://" + QDir::cleanPath (base_path.filePath (src));
-				(*it).setAttribute ("src", src);
-			}
-		}
-
-		// render the sections
-		element = help_xml->getChildElement (help_doc_element, "summary", DL_INFO);
+		component_doc_element = component_xml.openXMLFile (chandle->getFilename (), DL_ERROR);
+		if (component_doc_element.isNull ()) return false;
+		element = component_xml.getChildElement (component_doc_element, "help", DL_ERROR);
 		if (!element.isNull ()) {
-			khtmlpart->write (startSection ("summary", i18n ("Summary"), QString (), &anchors, &anchornames));
-			khtmlpart->write (renderHelpFragment (element));
+			help_file_name = component_xml.getStringAttribute (element, "file", QString::null, DL_ERROR);
+			if (!help_file_name.isEmpty ()) help_file_name = QFileInfo (chandle->getFilename ()).absoluteDir ().filePath (help_file_name);
 		}
+	} else {
+		help_file_name = help_base_dir + url.path () + ".rkh";
+	}
+	RK_DEBUG (APP, DL_DEBUG, "rendering help page for local file %s", help_file_name.toLatin1().data());
 
-		element = help_xml->getChildElement (help_doc_element, "usage", DL_INFO);
+	// open help file
+	QDomElement help_doc_element = help_xml.openXMLFile (help_file_name, DL_ERROR);
+	if (help_doc_element.isNull () && (!for_component)) return false;
+
+	// initialize output, and set title
+	khtmlpart->begin (url);
+	QString page_title (i18n ("No Title"));
+	if (for_component) {
+		page_title = chandle->getLabel ();
+	} else {
+		element = help_xml.getChildElement (help_doc_element, "title", DL_WARNING);
 		if (!element.isNull ()) {
-			khtmlpart->write (startSection ("usage", i18n ("Usage"), QString (), &anchors, &anchornames));
-			khtmlpart->write (renderHelpFragment (element));
+			page_title = element.text ();
 		}
+	}
+	khtmlpart->write ("<html><head><title>" + page_title + "</title><link rel=\"stylesheet\" type=\"text/css\" href=\"" + css_filename + "\"></head>\n<body><div id=\"main\">\n<h1>" + page_title + "</h1>\n");
 
-		XMLChildList section_elements = help_xml->getChildElements (help_doc_element, "section", DL_INFO);
-		for (XMLChildList::iterator it = section_elements.begin (); it != section_elements.end (); ++it) {
-			QString title = help_xml->getStringAttribute (*it, "title", QString (), DL_WARNING);
-			QString shorttitle = help_xml->getStringAttribute (*it, "shorttitle", QString (), DL_DEBUG);
-			QString id = help_xml->getStringAttribute (*it, "id", QString (), DL_WARNING);
-			khtmlpart->write (startSection (id, title, shorttitle, &anchors, &anchornames));
-			khtmlpart->write (renderHelpFragment (*it));
+	if (help_doc_element.isNull ()) {
+		RK_ASSERT (for_component);
+		khtmlpart->write (i18n ("<h1>Help page missing</h1>\n<p>The help page for this component has not yet been written (or is broken). Please consider contributing it.</p>\n"));
+	}
+	if (for_component) {
+		QString component_id = componentPathToId (url.path());
+		RKComponentHandle *handle = componentPathToHandle (url.path());
+		if (handle && handle->isAccessible ()) khtmlpart->write ("<a href=\"rkward://runplugin/" + component_id + "/\">" + i18n ("Use %1 now", page_title) + "</a>");
+	}
+
+	// fix all elements containing an "src" attribute
+	QDir base_path (QFileInfo (help_file_name).absolutePath());
+	XMLChildList src_elements = help_xml.findElementsWithAttribute (help_doc_element, "src", QString (), true, DL_DEBUG);
+	for (XMLChildList::iterator it = src_elements.begin (); it != src_elements.end (); ++it) {
+		QString src = (*it).attribute ("src");
+		if (KUrl::isRelativeUrl (src)) {
+			src = "file://" + QDir::cleanPath (base_path.filePath (src));
+			(*it).setAttribute ("src", src);
 		}
+	}
 
-		// the section "settings" is the most complicated, as the labels of the individual GUI items has to be fetched from the component description. Of course it is only meaningful for component help, and not rendered for top level help pages.
-		if (for_component) {
-			element = help_xml->getChildElement (help_doc_element, "settings", DL_INFO);
-			if (!element.isNull ()) {
-				khtmlpart->write (startSection ("settings", i18n ("GUI settings"), QString (), &anchors, &anchornames));
-				XMLChildList setting_elements = help_xml->getChildElements (element, QString (), DL_WARNING);
-				for (XMLChildList::iterator it = setting_elements.begin (); it != setting_elements.end (); ++it) {
-					if ((*it).tagName () == "setting") {
-						QString id = help_xml->getStringAttribute (*it, "id", QString (), DL_WARNING);
-						QString title = help_xml->getStringAttribute (*it, "title", QString (), DL_INFO);
-						if (title.isEmpty ()) {
-							QDomElement source_element = component_xml->findElementWithAttribute (component_doc_element, "id", id, true, DL_WARNING);
-							if (source_element.isNull ()) RK_DEBUG (PLUGIN, DL_ERROR, "No such UI element: %s", qPrintable (id));
-							title = component_xml->getStringAttribute (source_element, "label", i18n ("Unnamed GUI element"), DL_WARNING);
-						}
-						khtmlpart->write ("<h4>" + title + "</h4>");
-						khtmlpart->write (renderHelpFragment (*it));
-					} else if ((*it).tagName () == "caption") {
-						QString id = help_xml->getStringAttribute (*it, "id", QString (), DL_WARNING);
-						QString title = help_xml->getStringAttribute (*it, "title", QString (), DL_INFO);
-						QDomElement source_element = component_xml->findElementWithAttribute (component_doc_element, "id", id, true, DL_WARNING);
+	// render the sections
+	element = help_xml.getChildElement (help_doc_element, "summary", DL_INFO);
+	if (!element.isNull ()) {
+		khtmlpart->write (startSection ("summary", i18n ("Summary"), QString (), &anchors, &anchornames));
+		khtmlpart->write (renderHelpFragment (element));
+	}
+
+	element = help_xml.getChildElement (help_doc_element, "usage", DL_INFO);
+	if (!element.isNull ()) {
+		khtmlpart->write (startSection ("usage", i18n ("Usage"), QString (), &anchors, &anchornames));
+		khtmlpart->write (renderHelpFragment (element));
+	}
+
+	XMLChildList section_elements = help_xml.getChildElements (help_doc_element, "section", DL_INFO);
+	for (XMLChildList::iterator it = section_elements.begin (); it != section_elements.end (); ++it) {
+		QString title = help_xml.getStringAttribute (*it, "title", QString (), DL_WARNING);
+		QString shorttitle = help_xml.getStringAttribute (*it, "shorttitle", QString (), DL_DEBUG);
+		QString id = help_xml.getStringAttribute (*it, "id", QString (), DL_WARNING);
+		khtmlpart->write (startSection (id, title, shorttitle, &anchors, &anchornames));
+		khtmlpart->write (renderHelpFragment (*it));
+	}
+
+	// the section "settings" is the most complicated, as the labels of the individual GUI items has to be fetched from the component description. Of course it is only meaningful for component help, and not rendered for top level help pages.
+	if (for_component) {
+		element = help_xml.getChildElement (help_doc_element, "settings", DL_INFO);
+		if (!element.isNull ()) {
+			khtmlpart->write (startSection ("settings", i18n ("GUI settings"), QString (), &anchors, &anchornames));
+			XMLChildList setting_elements = help_xml.getChildElements (element, QString (), DL_WARNING);
+			for (XMLChildList::iterator it = setting_elements.begin (); it != setting_elements.end (); ++it) {
+				if ((*it).tagName () == "setting") {
+					QString id = help_xml.getStringAttribute (*it, "id", QString (), DL_WARNING);
+					QString title = help_xml.getStringAttribute (*it, "title", QString (), DL_INFO);
+					if (title.isEmpty ()) {
+						QDomElement source_element = component_xml.findElementWithAttribute (component_doc_element, "id", id, true, DL_WARNING);
 						if (source_element.isNull ()) RK_DEBUG (PLUGIN, DL_ERROR, "No such UI element: %s", qPrintable (id));
-						title = component_xml->getStringAttribute (source_element, "label", title, DL_WARNING);
-						khtmlpart->write ("<h3>" + title + "</h3>");
-					} else {
-						help_xml->displayError (&(*it), "Tag not allowed, here", DL_WARNING);
+						title = component_xml.getStringAttribute (source_element, "label", i18n ("Unnamed GUI element"), DL_WARNING);
 					}
+					khtmlpart->write ("<h4>" + title + "</h4>");
+					khtmlpart->write (renderHelpFragment (*it));
+				} else if ((*it).tagName () == "caption") {
+					QString id = help_xml.getStringAttribute (*it, "id", QString (), DL_WARNING);
+					QString title = help_xml.getStringAttribute (*it, "title", QString (), DL_INFO);
+					QDomElement source_element = component_xml.findElementWithAttribute (component_doc_element, "id", id, true, DL_WARNING);
+					if (source_element.isNull ()) RK_DEBUG (PLUGIN, DL_ERROR, "No such UI element: %s", qPrintable (id));
+					title = component_xml.getStringAttribute (source_element, "label", title, DL_WARNING);
+					khtmlpart->write ("<h3>" + title + "</h3>");
+				} else {
+					help_xml.displayError (&(*it), "Tag not allowed, here", DL_WARNING);
 				}
 			}
 		}
-
-		// "related" section
-		element = help_xml->getChildElement (help_doc_element, "related", DL_INFO);
-		if (!element.isNull ()) {
-			khtmlpart->write (startSection ("related", i18n ("Related functions and pages"), QString (), &anchors, &anchornames));
-			khtmlpart->write (renderHelpFragment (element));
-		}
-
-		// "technical" section
-		element = help_xml->getChildElement (help_doc_element, "technical", DL_INFO);
-		if (!element.isNull ()) {
-			khtmlpart->write (startSection ("technical", i18n ("Technical details"), QString (), &anchors, &anchornames));
-			khtmlpart->write (renderHelpFragment (element));
-		}
-
-		// create a navigation bar
-		KUrl url_copy = url;
-		QString navigation = i18n ("<h1>On this page:</h1>");
-		RK_ASSERT (anchornames.size () == anchors.size ());
-		for (int i = 0; i < anchors.size (); ++i) {
-			QString anchor = anchors[i];
-			QString anchorname = anchornames[i];
-			if (!(anchor.isEmpty () || anchorname.isEmpty ())) {
-				url_copy.setRef (anchor);
-				navigation.append ("<p><a href=\"" + url_copy.url () + "\">" + anchorname + "</a></p>\n");
-			}
-		}
-		khtmlpart->write ("</div><div id=\"navigation\">" + navigation + "</div>");
-		khtmlpart->write ("</body></html>\n");
-		khtmlpart->end ();
-
-		QString ref = url.ref ();
-		if (!ref.isEmpty ()) {
-			doGotoAnchor (ref);
-		}
-
-		success = true;
-		break;
 	}
 
-	delete (component_xml);
-	delete (help_xml);
-	return (success);
+	// "related" section
+	element = help_xml.getChildElement (help_doc_element, "related", DL_INFO);
+	if (!element.isNull ()) {
+		khtmlpart->write (startSection ("related", i18n ("Related functions and pages"), QString (), &anchors, &anchornames));
+		khtmlpart->write (renderHelpFragment (element));
+	}
+
+	// "technical" section
+	element = help_xml.getChildElement (help_doc_element, "technical", DL_INFO);
+	if (!element.isNull ()) {
+		khtmlpart->write (startSection ("technical", i18n ("Technical details"), QString (), &anchors, &anchornames));
+		khtmlpart->write (renderHelpFragment (element));
+	}
+
+	// "dependencies" section
+	QList<RKComponentDependency> deps = chandle->getDependencies ();
+	if (!deps.isEmpty ()) {
+		khtmlpart->write (startSection ("dependencies", i18n ("Dependencies"), QString (), &anchors, &anchornames));
+		khtmlpart->write (RKComponentDependency::depsToHtml (deps));
+	}
+
+	// "about" section
+	element = help_xml.getChildElement (help_doc_element, "about", DL_INFO);
+	if (element.isNull ()) {
+		XMLHelper pluginmap_helper;
+		element = pluginmap_helper.openXMLFile (chandle->getPluginmapFilename (), DL_ERROR);
+		element = pluginmap_helper.getChildElement (element, "about", DL_INFO);
+	}
+	if (!element.isNull ()) {
+		RKComponentAboutData about (element);
+		khtmlpart->write (startSection ("about", i18n ("About"), QString (), &anchors, &anchornames));
+		khtmlpart->write (about.toHtml ());
+	}
+
+	// create a navigation bar
+	KUrl url_copy = url;
+	QString navigation = i18n ("<h1>On this page:</h1>");
+	RK_ASSERT (anchornames.size () == anchors.size ());
+	for (int i = 0; i < anchors.size (); ++i) {
+		QString anchor = anchors[i];
+		QString anchorname = anchornames[i];
+		if (!(anchor.isEmpty () || anchorname.isEmpty ())) {
+			url_copy.setRef (anchor);
+			navigation.append ("<p><a href=\"" + url_copy.url () + "\">" + anchorname + "</a></p>\n");
+		}
+	}
+	khtmlpart->write ("</div><div id=\"navigation\">" + navigation + "</div>");
+	khtmlpart->write ("</body></html>\n");
+	khtmlpart->end ();
+
+	QString ref = url.ref ();
+	if (!ref.isEmpty ()) {
+		doGotoAnchor (ref);
+	}
+
+	return (true);
 }
 
 QString RKHTMLWindow::renderHelpFragment (QDomElement &fragment) {

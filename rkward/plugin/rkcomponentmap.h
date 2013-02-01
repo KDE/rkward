@@ -63,13 +63,13 @@ class RKComponentHandle : public QObject {
 	Q_OBJECT
 public:
 	RKComponentHandle (RKPluginMapFile *pluginmap, const QString &rel_filename, const QString &label, RKComponentType type);
-
 	virtual ~RKComponentHandle ();
 
 	QString getFilename () { return plugin_map->makeFileName (filename); };
 	QString getLabel () { return label; };
 	RKComponentType getType () { return type; };
 	bool isPlugin ();
+	QString getPluginmapFilename ();
 
 	RKStandardComponent *invoke (RKComponent *parent_component, QWidget *parent_widget);
 

@@ -571,6 +571,12 @@ QList <RKComponentDependency> RKComponentHandle::getDependencies () {
 	return (ret + (*it));
 }
 
+QString RKComponentHandle::getPluginmapFilename () {
+	RK_TRACE (PLUGIN);
+
+	return RKComponentMap::getMap ()->pluginmapfiles.key (plugin_map);
+}
+
 ///########################### END RKComponentHandle ###############################
 
 #include "rkcomponentmap.moc"
