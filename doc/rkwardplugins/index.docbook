@@ -1702,6 +1702,7 @@ x	&lt;/components ...&gt;
 	&lt;/dependencies&gt;
 </programlisting>
 <note><para>Always make sure to add appropriate <function>require()</function> calls, if you plugin needs certain packages to be loaded.</para></note>
+<note><para>If you <link linkend="external_plugins">distribute your &pluginmap; as an &r; package</link>, and all plugins depend on a particular package, then you should define that dependency on the &r; package level. Defining dependencies to &r; packages on the level of the &rkward; &pluginmap; is most useful, if only some of your plugins need the dependency, the dependency is not available from CRAN, or your &pluginmap; is not distributed as an &r; package.</para></note>
 </sect1>
 <sect1 id="sect_dependencies_other_pluginmaps"><title>Dependencies on other &rkward; &pluginmap;s</title>
 	<para>If your plugins depend on plugins defined in another &pluginmap; (that is <emphasis>not</emphasis> part of your package) you can define this dependency like this:</para>
