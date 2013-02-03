@@ -1753,6 +1753,55 @@ x	&lt;/components ...&gt;
 </sect1>
 </chapter>
 
+<chapter id="chapter_about_information">
+<title>Author, license and version information</title>
+<para>So you have written a set of plugins, and you are getting ready to <link linkend="external_plugins">share your work</link>. To make sure users will know what your work is all about, under what terms they can use and distribute it, and whom they should contact about issues or ideas, you should add some information <emphasis>about</emphasis> your plugins. This can be done using the <command>&lt;about&gt;</command> element. It can be used in either the &pluginmap; or in individual plugin .xml files (in both cases as a direct child of the document tag). When specified in the &pluginmap; it will apply to all plugins. If <command>&lt;about&gt;</command> is specified in both places, the <command>&lt;about&gt;</command> information in the plugin .xml file will override that in the &pluginmap; file.</para>
+<para>Here's an example &pluginmap; file with only a few explanations, below. In cases of doubt, more information may be available from the reference.</para>
+<programlisting>
+&lt;document 
+	namespace="rkward"
+	id="SquaretheCircle_rkward"
+&gt;
+	&lt;about 
+		name="Square the Circle"
+		shortinfo="Squares the circle using Heisenberg compensation."
+		version="0.1-3"
+		releasedate="2011-09-19"
+		url="http://eternalwondermaths.example.org/23/stc.html"
+		license="GPL"
+		category="Geometry"
+	&gt;
+		&lt;author 
+			given="E.A."
+			family="Dölle"
+			email="doelle@eternalwondermaths.example.org"
+			role="aut"
+		 /&gt;
+		&lt;author 
+			given="A."
+			family="Assistant"
+			email="alterego@eternalwondermaths.example.org"
+			role="cre, ctb"
+		 /&gt;
+	&lt;/about&gt;
+	&lt;dependencies&gt;
+		...
+	&lt;/dependencies&gt;
+	&lt;components&gt;
+		...
+	&lt;/components&gt;
+	&lt;hierarchy&gt;
+		...
+	&lt;/hierarchy&gt;
+&lt;/document&gt;
+</programlisting>
+<para>Most of this should explain itself, so we’ll not discuss each and every tag element. But let’s look at some details that probably need some commentary for easier understanding. </para>
+<para>The <parameter>category</parameter> element in <command>&lt;about&gt;</command> can be defined rather freely, but should be meaningful, as it’s thought to be used to order plugins into groups. All other attributes in this opening tag are mandatory and must be filled with reasonable content. </para>
+<para>At least one <command>&lt;author&gt;</command> with a valid e-mail address and the role <quote>aut</quote> (<quote>author</quote>) must also be given. In case your plugin causes problems or someone would like to share its gratitude with you, it should be easy to contact someone who’s involved. For further information on other valid roles, like <quote>ctb</quote> for code contributors or <quote>cre</quote> for package maintenance, please refer to the <ulink url="http://stat.ethz.ch/R-manual/R-patched/library/utils/html/person.html">R documentation on <function>person()</function></ulink>. </para>
+<note><para>Remember that you can use <command>&lt;include&gt;</command> and / or <command>&lt;insert&gt;</command> to repeat information across several .xml files (e.g. information on an author who was involved with several plugins). <link linkend="sect_similar_plugins">More information</link>.</para></note>
+<tip><para>You don't have to write this XML code by hand. If you use the function <function>rk.plugin.skeleton()</function> from the <link linkend="rkwarddev"><application>rkwarddev</application> package</link> and provide all necessary information via the <parameter>about</parameter> option, it will automatically create a &pluginmap; file with a working &lt;about&gt; section for you.</para></tip>
+</chapter>
+
 <chapter id="external_plugins">
 <title>Share your work with others</title>
 <sect1 id="sect_external_plugins"><title>External plugins</title>
@@ -1828,7 +1877,7 @@ x	&lt;/components ...&gt;
 				It is mandatory to include at least three files: a <link linkend="pluginmap">&pluginmap;</link>, a plugin <link linkend="mainxml">.xml</link> description and a plugin <link linkend="jstemplate">.js</link> file. That is, even the "plugins" directory is optional. It might just help to give your files some order, especially if you include more that one plugin/dialog in the archive, which is of course no problem. You can have as many directories for the actual plugin files as you see fit, they just have to resemble the <link linkend="pluginmap">&pluginmap;</link>, respectively. It is also possible to even include several &pluginmap; files, if it fits your needs, but you should include them all in <quote>plugin_name.pluginmap</quote> then.
 			</para>
 			<para>
-				Each &r; package must have a valid <filename>DESCRIPTION</filename> file, which is also crucial for &rkward; recognizing it as a plugin provider. Most of the information it carries is also needed in the plugin <link linkend="meta-information">Meta-information</link>, but in a different format (the &r; documentation explains <ulink url="http://cran.r-project.org/doc/manuals/R-exts.html#The-DESCRIPTION-file">the <filename>DESCRIPTION</filename> file in detail</ulink>).
+				Each &r; package must have a valid <filename>DESCRIPTION</filename> file, which is also crucial for &rkward; recognizing it as a plugin provider. Most of the information it carries is also needed in the plugin <link linkend="chapter_about_information">Meta-information</link> and possibly <link linkend="chapter_dependencies">dependencies</link>, but in a different format (the &r; documentation explains <ulink url="http://cran.r-project.org/doc/manuals/R-exts.html#The-DESCRIPTION-file">the <filename>DESCRIPTION</filename> file in detail</ulink>).
 			</para>
 			<para>
 				In addition to the general contents of a <filename>DESCRIPTION</filename> file, make sure to also include the line <quote>Enhances: rkward</quote>. This will cause &rkward; to automatically scan the package for plugins if it is installed. An example <filename>DESCRIPTION</filename> file looks like this:
@@ -1860,7 +1909,7 @@ x	&lt;/components ...&gt;
 		<sect3 id="additional_information">
 		<title>Additional information (optional)</title>
 			<para>
-				<filename>ChangeLog</filename>, <filename>README</filename>, <filename>AUTHORS</filename>, <filename>LICENSE</filename> should be self-explaining and are entirely optional. Actually, they won’t be interpreted by &rkward;, so they are rather meant to carry additional information that might be relevant e.g. for distributors. Most of their relevant content (author credits, licence terms etc.) will be included in the actual plugin files anyway, though (see the <link linkend="meta-information">section on meta-information</link>). Note that all of these files could also be placed somewhere in the "inst" directory, if you want them not only to be present in the source archive but the installed package as well.
+				<filename>ChangeLog</filename>, <filename>README</filename>, <filename>AUTHORS</filename>, <filename>LICENSE</filename> should be self-explaining and are entirely optional. Actually, they won’t be interpreted by &rkward;, so they are rather meant to carry additional information that might be relevant e.g. for distributors. Most of their relevant content (author credits, licence terms etc.) will be included in the actual plugin files anyway, though (see the <link linkend="chapter_about_information">section on meta-information</link>). Note that all of these files could also be placed somewhere in the "inst" directory, if you want them not only to be present in the source archive but the installed package as well.
 			</para>
 		</sect3>
 		<sect3 id="automated_plugin_testing">
@@ -1876,105 +1925,6 @@ standards for each defined suite.
 	</sect2>
 </sect1>
   
-	<sect1 id="meta-information">
-		<title>Meta-information</title>
-		<para>Each plugin archive should provide some basic meta-information on what it deals with, where to find more information, who maintains it, if it relies on specific &r; packages or other plugins, etc. </para>
-		<para>This information is given at least once in your &pluginmap;, and can then be included or overwritten in each plugin <literal role="extension">.xml</literal> file (which might be useful if that particular plugin file was contributed by someone else, for instance). </para>
-		<para>To achieve this, the <command>&lt;about&gt;</command> tag is used. The overall structure of this tag looks something like this: </para>
-		<programlisting>
-	&lt;about&gt;
-		&lt;author /&gt;
-		&lt;author /&gt;
-		...
-		&lt;dependencies&gt;
-			&lt;package /&gt;
-			&lt;package /&gt;
-			...
-			&lt;pluginmap /&gt;
-			&lt;pluginmap /&gt;
-			...
-		&lt;/dependencies&gt;
-	&lt;/about&gt;
-		</programlisting>
-		<para>That is, the <command>&lt;about&gt;</command> tag contains <command>&lt;author&gt;</command> and <command>&lt;dependencies&gt;</command>, and <command>&lt;dependencies&gt;</command> contains <command>&lt;package&gt;</command> and <command>&lt;pluginmap&gt;</command>. Each of these five tags knows in turn several further attributes (see below). </para>
-		<para>As you can see, you can have more than one entry on authors, needed &r; packages and &rkward; &pluginmap;s. </para>
-		<para>A full-blown example would look like this: </para>
-		<programlisting>
-&lt;document 
-	namespace="rkward"
-	id="SquaretheCircle_rkward"
-&gt;
-	&lt;about 
-		name="Square the Circle"
-		shortinfo="Squares the circle using Heisenberg compensation."
-		version="0.1-3"
-		releasedate="2011-09-19"
-		url="http://eternalwondermaths.example.org/23/stc.html"
-		license="GPL"
-		category="Geometry"
-	&gt;
-		&lt;author 
-			given="E.A."
-			family="Dölle"
-			email="doelle@eternalwondermaths.example.org"
-			role="aut"
-		 /&gt;
-		&lt;author 
-			given="A."
-			family="Assistant"
-			email="alterego@eternalwondermaths.example.org"
-			role="cre, ctb"
-		 /&gt;
-		&lt;dependencies 
-			rkward_min_version="0.5.3"
-			R_min_verion="2.10"
-		&gt;
-			&lt;package 
-				name="heisenberg"
-				min_version="0.11-2"
-				repository="http://rforge.r-project.org"
-			 /&gt;
-			&lt;package 
-				name="DreamsOfPi"
-				min_version="0.2"
-			 /&gt;
-			&lt;pluginmap 
-				name="heisenberg.pluginmap"
-				url="http://eternalwondermaths.example.org/hsb"
-			 /&gt;
-		&lt;/dependencies&gt;
-	&lt;/about&gt;
-	&lt;components&gt;
-		&lt;component 
-			type="standard"
-			id="SquaretheCircle.SquaretheCircle"
-			file="plugins/SquaretheCircle.xml"
-			label="SquaretheCircle"
-		 /&gt;
-	&lt;/components&gt;
-	&lt;hierarchy&gt;
-		&lt;menu 
-			id="analysis"
-			label="Analysis"
-		&gt;
-			&lt;menu 
-				id="menu_SquaretheCircle.SquaretheCircle"
-				label="Square the Circle"
-			&gt;
-				&lt;entry component="SquaretheCircle.SquaretheCircle" /&gt;
-			&lt;/menu&gt;
-		&lt;/menu&gt;
-	&lt;/hierarchy&gt;
-&lt;/document&gt;
-		</programlisting>
-		<tip><para>You don't have to write this XML code by hand. If you use the function <function>rk.plugin.skeleton()</function> from the <link linkend="rkwarddev"><application>rkwarddev</application> package</link> and provide all necessary information via the <parameter>about</parameter> option, it will automatically create a &pluginmap; file with a working &lt;about&gt; section for you.</para></tip>
-		<para>Most of this should explain itself, so we’ll not discuss each and every tag element. But let’s look at some details that probably need some commentary for easier understanding. </para>
-		<para>The <parameter>category</parameter> element in <command>&lt;about&gt;</command> can be defined rather freely, but should be meaningful, as it’s thought to be used to order plugins into groups. All other attributes in this opening tag are mandatory and must be filled with reasonable content. </para>
-		<para>At least one <command>&lt;author&gt;</command> with a valid e-mail address and the role <quote>aut</quote> (<quote>author</quote>) must also be given. In case your plugin causes problems or someone would like to share its gratitude with you, it should be easy to contact someone who’s involved. For further information on other valid roles, like <quote>ctb</quote> for code contributors or <quote>cre</quote> for package maintenance, please refer to the <ulink url="http://stat.ethz.ch/R-manual/R-patched/library/utils/html/person.html">R documentation on <function>person()</function></ulink>. </para>
-		<para>Actually the whole <command>&lt;dependencies&gt;</command> might be left empty if your plugin is supposed to run with any &rkward; version and standard &r; installation. But please be reasonable here as well. The inclusion of any <command>&lt;package&gt;</command> or <command>&lt;pluginmap&gt;</command> tags is of course optional as well, depending on the needs of your plugins. All the <parameter>min_version</parameter> and <parameter>max_version</parameter> information can be omitted, as well. They are obviously useful if your plugin is known to rely on certain versions of an &r; package, for instance. </para>
-		<para>If you need an &r; package that is probably not hosted on an official CRAN mirror, you can specify a repository where it can be found in the <command>&lt;package&gt;</command> tag. &rkward; will check whether this repository is already defined in its configuration, and if not, add it, but only after the user has given its explicit permission to that. </para>
-		<para>The <parameter>id</parameter>" element in the <command>&lt;pluginmap&gt;</command> tag refers to the ID given in the top level <command>&lt;document&gt;</command> tag of the &pluginmap; that you need. </para>
-	</sect1>
 	<sect1 id="building_the_plugin_package">
 		<title>Building the plugin package</title>
 		<para>As explained earlier, external &rkward; plugins are in effect &r; packages, and therefore the packaging process is identical. In contrast to "real" &r; packages, a pure plugin package doesn't carry any further &r; code (although you can of course add &rkward; plugins to usual &r; packages as well, using the same methods explained here). This should make it even easier to create a functioning package, as long as you have a valid <filename>DESCRIPTION</filename> file and adhere to the file hierarchy explained in <link linkend="structure_of_a_plugin_package">previous sections</link>.</para>

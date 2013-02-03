@@ -10,8 +10,7 @@
 - Implement basic dependency handling for plugins / pluginmaps
 	- NOTES: Contrary to existing documentation, <dependencies> is a top level element, not a child element of <about>
 	- TODO:
-		- Explicitly document the fact that <include>s can be used for <about> and <dependencies>
-		- Write Reference section on <about>, clean documentation on <dependencies>
+		- Write Reference section on <about> and <dependencies>
 		- Write mail on implementation details
 - Added support for the upcoming R 3.0.0			TODO: Check for any more regressions, before release
 - Added <switch> logic element to switch between several target properties (or fixed values) based on the value of a condition property
