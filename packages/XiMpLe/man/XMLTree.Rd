@@ -1,9 +1,12 @@
 \name{XMLTree}
+\alias{is.XiMpLe.doc}
 \alias{XMLTree}
 \title{Constructor function for XiMpLe.doc objects}
 \usage{
   XMLTree(..., xml = NULL, dtd = NULL,
     .children = list(...))
+
+  is.XiMpLe.doc(x)
 }
 \arguments{
   \item{...}{Optional children for the XML tree. Must be
@@ -23,6 +26,8 @@
 
   \item{.children}{Alternative way of specifying children,
   if you have them already as a list.}
+
+  \item{x}{An arbitrary \code{R} object.}
 }
 \value{
   An object of class

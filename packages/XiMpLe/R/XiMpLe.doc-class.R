@@ -56,7 +56,7 @@ setValidity("XiMpLe.doc", function(object){
 
 		# check content of children
 		if(length(obj.children) > 0){
-			child.nodes <- sapply(obj.children, function(this.child){inherits(this.child, "XiMpLe.node")})
+			child.nodes <- sapply(obj.children, function(this.child){is.XiMpLe.node(this.child)})
 			if(!all(child.nodes)){
 				stop(simpleError("Invalid object: All list elements of children must be of class XiMpLe.node!"))
 			} else {}

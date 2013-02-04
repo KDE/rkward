@@ -45,7 +45,7 @@ setMethod("node",
 	function(obj, node=list(), what=NULL, cond.attr=NULL, cond.value=NULL, element=NULL){
 
 		# check top level if this is a node, not a tree
-		if(inherits(obj, "XiMpLe.node")){
+		if(is.XiMpLe.node(obj)){
 			got.this <- identical(slot(obj, "name"), node[[1]])
 			if(!isTRUE(got.this)){
 				# apparently, this node doesn't exist
@@ -149,7 +149,7 @@ setMethod("node",
 
 		# no need for a list if it's inly one node
 		if(length(result) == 1){
-			if(inherits(result[[1]], "XiMpLe.node") | !is.null(element)){
+			if(is.XiMpLe.node(result[[1]]) | !is.null(element)){
 				result <- result[[1]]
 			} else {}
 		} else {}

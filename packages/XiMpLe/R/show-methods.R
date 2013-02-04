@@ -1,4 +1,4 @@
-#' Shows method for S4 objects of XiMpLe XML classes
+#' Show method for S4 objects of XiMpLe XML classes
 #' 
 #' Used to display objects of class \code{\link[XiMpLe:XiMpLe.doc-class]{XiMpLe.doc}}
 #' and \code{\link[XiMpLe:XiMpLe.node-class]{XiMpLe.node}}

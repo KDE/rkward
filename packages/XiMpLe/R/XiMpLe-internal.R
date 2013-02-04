@@ -3,7 +3,7 @@
 ## function child.list()
 # convenience function to let single children be provided without list()
 child.list <- function(children){
-	if(inherits(children, "XiMpLe.node")){
+	if(is.XiMpLe.node(children)){
 		children <- list(children)
 	} else {
 		# if already a list, check if it's a list in a list and get it out

@@ -17,6 +17,7 @@
 #'		\code{\link[XiMpLe:XMLTree]{XMLTree}},
 #'		\code{\link[XiMpLe:pasteXML]{pasteXML}}
 #' @export
+#' @rdname XMLNode
 #' @examples
 #' sample.XML.node <- XMLNode("a",
 #'   attrs=list(href="http://example.com", target="_blank"),

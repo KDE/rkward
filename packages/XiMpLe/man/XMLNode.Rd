@@ -1,9 +1,12 @@
 \name{XMLNode}
+\alias{is.XiMpLe.node}
 \alias{XMLNode}
 \title{Constructor function for XiMpLe.node objects}
 \usage{
   XMLNode(name, ..., attrs = NULL, namespace = "",
     namespaceDefinitions = NULL, .children = list(...))
+
+  is.XiMpLe.node(x)
 }
 \arguments{
   \item{name}{Character string, the tag name.}
@@ -22,6 +25,8 @@
 
   \item{.children}{Alternative way of specifying children,
   if you have them already as a list.}
+
+  \item{x}{An arbitrary \code{R} object.}
 }
 \value{
   An object of class

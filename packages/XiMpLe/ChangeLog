@@ -1,5 +1,11 @@
 ChangeLog for package XiMpLe
 
+changes in version 0.03-17 (2013-02-04)
+added:
+  - added proper is.XiMpLe.node() and is.XiMpLe.doc() functions
+  - added getter functions for all slots in XiMpLe.node and XiMpLe.doc objects
+    (e.g., getXMLName() to get the name slot of a XiMpLe.node object)
+
 changes in version 0.03-16 (2012-11-05)
 added:
   - added examples to all functions

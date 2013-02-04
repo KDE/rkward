@@ -1,13 +1,13 @@
 bibentry("Manual",
 		title="XiMpLe: A simple XML tree parser and generator",
 		author="Meik Michalke",
-		year="2012",
-		note="(Version 0.03-16)",
+		year="2013",
+		note="(Version 0.03-17)",
 		url="http://reaktanz.de/?c=hacking&s=XiMpLe",
 
 		textVersion =
-		paste("Michalke, M. (2012). ",
-				"XiMpLe: A simple XML tree parser and generator (Version 0.03-16). ",
+		paste("Michalke, M. (2013). ",
+				"XiMpLe: A simple XML tree parser and generator (Version 0.03-17). ",
 				"Available from http://reaktanz.de/?c=hacking&s=XiMpLe",
 				sep=""),
 
