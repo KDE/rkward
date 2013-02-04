@@ -147,7 +147,7 @@ QList <RKComponentDependency> RKComponentDependency::parseDependencies (const QD
 			RK_DEBUG (PLUGIN, DL_ERROR, "Tag <%s> is not allowed, here.", qPrintable (dep_e.tagName ()));
 			continue;
 		}
-		dep.package = xml->getStringAttribute (e, "name", QString (), DL_INFO);
+		dep.package = xml->getStringAttribute (e, "name", QString (), DL_ERROR);
 
 		dep.min_version = 0;
 		dep.max_version = 0xFFFFFFFF;

@@ -1117,7 +1117,7 @@ function getSpecifics () {
 <sect1 id="include_xml">
 <title>Including <literal role="extension">.xml</literal> files</title>
 	<para>
-		Basically the same feature of including files is also available for use in the <literal role="extension">.xml</literal> and <literal role="extension">.rkh</literal> files. At any place in these files you can place an <command>&lt;include&gt;</command> tag as shown below. The effect is that the entire contents of that XML file (to be precise: everything within the <command>&lt;document&gt;</command> tag of that file) is included verbatim at this point in the file. Note that you can only include another XML file.
+		Basically the same feature of including files is also available for use in the <literal role="extension">.xml</literal>, &pluginmap; and <literal role="extension">.rkh</literal> files. At any place in these files you can place an <command>&lt;include&gt;</command> tag as shown below. The effect is that the entire contents of that XML file (to be precise: everything within the <command>&lt;document&gt;</command> tag of that file) is included verbatim at this point in the file. Note that you can only include another XML file.
 	</para>
 	<programlisting>
 &lt;document&gt;
@@ -2372,6 +2372,10 @@ local({
 <listitem><para>Needs to be present in each description.xml-file as the root-node. No special function. No attributes</para></listitem>
 </varlistentry>
 <varlistentry>
+<term>&lt;about&gt;</term>
+<listitem><para>Information about this plugin (author, licence, etc.). This element is allowed in both an individual plugin's .xml file, and in &pluginmap; files. Refer to the <link linkend="pluginmapelements">&pluginmap; file reference</link> for reference details, <link linkend="chapter_about_information">the chapter on 'about' information</link> for an introduction.</para></listitem>
+</varlistentry>
+<varlistentry>
 <term>&lt;code&gt;</term>
 <listitem><para>Defines where to look for the JS template to the plugin. Use only once per file, as a direct child of the document-tag. Attributes:
 	<variablelist>
@@ -3073,6 +3077,11 @@ Child elements &lt;true&gt;, &lt;false&gt;, &lt;case&gt;, and &lt;default&gt; ta
 </varlistentry>
 
 <varlistentry>
+<term>&lt;dependency_check&gt;</term>
+<listitem><para>Creates a boolean propterty that is true, if the specified dependencies are met, false otherwise. The xml syntax of the element is the same as that of the <command>&lt;dependencies&gt;</command> element, described in the <link linkend="pluginmapelements">&pluginmap; reference</link>. As of &rkward; 0.6.1, only the &rkward; and &r; version specifications are taken into account, not dependencies on packages or pluginmaps.</para></listitem>
+</varlistentry>
+
+<varlistentry>
 <term>&lt;script&gt;</term>
 <listitem><para>Define script code to control UI logic. See <link linkend="logic_scripted">the section on scripted GUJI logic</link> for details. The script code to run can be given either using the <parameter>"file"</parameter> attribute, or as a (commented) text of the element. The <command>&lt;script&gt;</command> element is not allowed in the <command>&lt;logic&gt;</command> section of an optionset. Attributes:
 	<variablelist>
@@ -3411,6 +3420,127 @@ different types, using modifiers may lead to errors. For <replaceable>fixed_valu
 	<listitem><para>One of <replaceable>"hidden"</replaceable>, <replaceable>"low"</replaceable>, <replaceable>"medium"</replaceable>, or <replaceable>"high"</replaceable>. &pluginmap;s with priority "medium" or "high" are activated, automatically, when &rkward; first finds them. Use <replaceable>priority="hidden"</replaceable> for &pluginmap;s that are not meant to be activated, directory (only meant for inclusion). In the current implementation this does not actually hide the &pluginmap;, however. (Optional, defaults to "medium").</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
+</varlistentry>
+<varlistentry>
+<term>&lt;dependencies&gt;</term>
+<listitem><para>This element, specifying dependencies, is allowed as a direct child of the &lt;document&gt; element (once), and as a child of &lt;component&gt; elements (once for each &lt;component&gt; element). Specifies the dependencies that must be met in order to use the plugin(s). See the <link linkend="chapter_dependencies">chapter on dependencies</link> for an overview. Attributes:
+	<variablelist>
+	<varlistentry>
+	<term>rkward_min_version, rkward_max_version</term>
+	<listitem><para>Minimum and maximum allowed version of &rkward;. Version specifications may include non-numeric suffixes, like "0.5.7z-devel1". If a specified dependency is not met, the plugin(s) it applies to <emphasis>will be ignored</emphasis>. <link linkend="sect_dependencies_rkward_version">More information</link>. Optional; if not specified, no minimum / maximum version of &rkward; will be required.</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>R_min_version, R_max_version</term>
+	<listitem><para>Minimum and maximum allowed version of &rkward;. Version specifications may <emphasis>not</emphasis> include non-numeric suffixes, like "0.5.7z-devel1". The R version dependency will be shown on the plugins' help pages, but does not have any direct effect, as of &rkward; 0.6.1. <link linkend="sect_dependencies_r_version">More information</link>. Optional; if not specified, no minimum / maximum version of &r; will be required.</para></listitem>
+	</varlistentry>
+	</variablelist>
+Child elements:
+	<variablelist>
+	<varlistentry>
+	<term>&lt;package&gt;</term>
+	<listitem><para>Adds a dependency on a specific &r; package. Attributes: 
+		<variablelist>
+		<varlistentry>
+		<term>name</term>
+		<listitem><para>Package name (required).</para></listitem>
+		</varlistentry>
+		<varlistentry>
+		<term>min_version, max_version</term>
+		<listitem><para>Minimum / maximum allowed version (optional).</para></listitem>
+		</varlistentry>
+		<varlistentry>
+		<term>repository</term>
+		<listitem><para>Repository where the package can be found. Optional, but highly recommended, if the package is not available on CRAN.</para></listitem>
+		</varlistentry>
+		</variablelist>
+	</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>&lt;pluginmap&gt;</term>
+	<listitem><para>Adds a dependency on a specific &rkward; &pluginmap;. Attributes: 
+		<variablelist>
+		<varlistentry>
+		<term>name</term>
+		<listitem><para>Id string of the required &pluginmap; (required).</para></listitem>
+		</varlistentry>
+		<varlistentry>
+		<term>min_version, max_version</term>
+		<listitem><para>Minimum / maximum allowed version (optional).</para></listitem>
+		</varlistentry>
+		<varlistentry>
+		<term>url</term>
+		<listitem><para>URL where the &pluginmap; can be found. Required.</para></listitem>
+		</varlistentry>
+		</variablelist>
+	</para></listitem>
+	</varlistentry>
+	</variablelist>
+</para></listitem>
+</varlistentry>
+<varlistentry>
+<term>&lt;about&gt;</term>
+<listitem><para>May be present exactly once as a direct child of the &lt;document&gt; element. Contains meta information on the &pluginmap; (or plugin). See the <link linkend="chapter_about_information">chapter on 'about' information</link> for an overview. Attributes:
+	<variablelist>
+	<varlistentry>
+	<term>name</term>
+	<listitem><para>User visible name. Optional. Does not have to be the same as the "id".</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>version</term>
+	<listitem><para>Version number. Optional. The format is not restricted, but to be on the safe side, please follow common versioning schemes such as "x.y.z".</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>releasedate</term>
+	<listitem><para>Release date specification. Optional in format "YYYY-MM-DD".</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>shortinfo</term>
+	<listitem><para>A <emphasis>short</emphasis> description of the plugin / &pluginmap;. Optional.</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>url</term>
+	<listitem><para>URL where more information can be found. Optional, but recommended.</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>copyright</term>
+	<listitem><para>Copyright specification, e.g. "2012-2013 by John Doe". Optional, but recommended.</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>licence</term>
+	<listitem><para>License specification, e.g. "GPL" or "BSD". Please make sure to accompany your files with a complete copy of the relevant licence! Optional, but recommended.</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>category</term>
+	<listitem><para>Category of plugin(s), e.g. "Item response theory". As of &rkward; 0.6.1, no categories are predefined. Optional.</para></listitem>
+	</varlistentry>
+	</variablelist>
+Child elements:
+	<variablelist>
+	<varlistentry>
+	<term>&lt;author&gt;</term>
+	<listitem><para>Adds information on an author. Attributes: 
+		<variablelist>
+		<varlistentry>
+		<term>name, given, family</term>
+		<listitem><para>Either specify the full name for <parameter>name</parameter>, or specify both <parameter>given</parameter> and <parameter>family</parameter>, separately.</para></listitem>
+		</varlistentry>
+		<varlistentry>
+		<term>role</term>
+		<listitem><para>Author role description (optional).</para></listitem>
+		</varlistentry>
+		<varlistentry>
+		<term>email</term>
+		<listitem><para>E-mail address, where author can be contacted. Required. May be set to the rkward-devel mailing list, if you are subscribed, and your plugin is meant to be included in the official &rkward; release.</para></listitem>
+		</varlistentry>
+		<varlistentry>
+		<term>url</term>
+		<listitem><para>URL with more information on the author, e.g. homepage (optional).</para></listitem>
+		</varlistentry>
+		</variablelist>
+	</para></listitem>
+	</varlistentry>
+	</variablelist>
+</para></listitem>
 </varlistentry>
 <varlistentry>
 <term>&lt;components&gt;</term>
