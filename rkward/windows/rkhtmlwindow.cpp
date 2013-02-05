@@ -620,19 +620,25 @@ bool RKHTMLWindow::renderRKHelp (const KUrl &url) {
 		khtmlpart->write (renderHelpFragment (element));
 	}
 
-	// "dependencies" section
-	QList<RKComponentDependency> deps = chandle->getDependencies ();
-	if (!deps.isEmpty ()) {
-		khtmlpart->write (startSection ("dependencies", i18n ("Dependencies"), QString (), &anchors, &anchornames));
-		khtmlpart->write (RKComponentDependency::depsToHtml (deps));
+	if (for_component) {
+		// "dependencies" section
+		QList<RKComponentDependency> deps = chandle->getDependencies ();
+		if (!deps.isEmpty ()) {
+			khtmlpart->write (startSection ("dependencies", i18n ("Dependencies"), QString (), &anchors, &anchornames));
+			khtmlpart->write (RKComponentDependency::depsToHtml (deps));
+		}
 	}
 
 	// "about" section
-	element = help_xml.getChildElement (help_doc_element, "about", DL_INFO);
-	if (element.isNull ()) {
-		XMLHelper pluginmap_helper;
-		element = pluginmap_helper.openXMLFile (chandle->getPluginmapFilename (), DL_ERROR);
-		element = pluginmap_helper.getChildElement (element, "about", DL_INFO);
+	if (for_component) {
+		element = component_xml.getChildElement (component_doc_element, "about", DL_INFO);
+		if (element.isNull ()) {
+			XMLHelper pluginmap_helper;
+			element = pluginmap_helper.openXMLFile (chandle->getPluginmapFilename (), DL_ERROR);
+			element = pluginmap_helper.getChildElement (element, "about", DL_INFO);
+		}
+	} else {
+		element = help_xml.getChildElement (help_doc_element, "about", DL_INFO);
 	}
 	if (!element.isNull ()) {
 		RKComponentAboutData about (element);

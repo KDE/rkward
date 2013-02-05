@@ -7,9 +7,6 @@
 - Easier (de-)activation of RKWard plugin maps using checkboxes (Settings->Configure RKWard->Plugins)
 - Broken or quirky .pluginmap files are reported to the user, completely broken maps are disabled, automatically
 - Implement basic dependency handling for plugins / pluginmaps
-	- NOTES: Contrary to existing documentation, <dependencies> is a top level element, not a child element of <about>
-	- TODO:
-		- Write mail on implementation details
 - Added support for the upcoming R 3.0.0			TODO: Check for any more regressions, before release
 - Added <switch> logic element to switch between several target properties (or fixed values) based on the value of a condition property
 - Sort plugin gains option to sort data.frames by more than one column at a time, and options for type conversion	TODO: adjust test(s)
