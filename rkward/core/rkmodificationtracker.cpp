@@ -151,6 +151,7 @@ void RKModificationTracker::renameObject (RObject *object, const QString &new_na
 
 void RKModificationTracker::beginAddObject (RObject *object, RObject* parent, int position) {
 	RK_TRACE (OBJECTS);
+	Q_UNUSED (object); // Kept for consistency of function signature
 
 	if (!updates_locked) {
 		QModelIndex parent_index = indexFor (parent);
