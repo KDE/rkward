@@ -1,5 +1,15 @@
 ChangeLog for package rkwarddev
 
+changes in version 0.06-2 (2013-02-07)
+changed:
+  - the structure of <about> nodes will change in RKWard 0.6.1, <dependencies> will become
+    a direct child of <document> or <component>, which explains several changes in this release
+  - for consistency, from now on <component> is never an empty node
+added:
+  - new function rk.XML.dependencies()
+  - added options "dependencies", "namespace" and "priority" to rk.XML.pluginmap()
+  - added option "dependencies" to rk.XML.component()
+
 changes in version 0.06-1 (2012-11-08)
 changed:
   - rk.plugin.skeleton(): "tests" will now ignore "overwrite" and not replace

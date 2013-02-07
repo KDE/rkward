@@ -5,7 +5,8 @@
   rk.XML.pluginmap(name, about = NULL, components,
     hierarchy = "test", require = NULL, x11.context = NULL,
     import.context = NULL, clean.name = TRUE,
-    hints = FALSE, gen.info = TRUE)
+    hints = FALSE, gen.info = TRUE, dependencies = NULL,
+    namespace = name, priority = "medium")
 }
 \arguments{
   \item{name}{Character string, name of the plugin.}
@@ -68,6 +69,19 @@
   will be written into the document, that it was generated
   by \code{rkwarddev} and changes should be done to the
   script.}
+
+  \item{dependencies}{An object of class \code{XiMpLe.node}
+  to be pasted as the \code{<dependencies>} section, See
+  \code{\link[XiMpLe:rk.XML.dependencies]{rk.XML.dependencies}}
+  for details. Skipped if \code{NULL}.}
+
+  \item{namespace}{Character string, the namespace
+  attribute of the \code{<document>} node, defaults to the
+  plugin name (which you probably shouldn't touch...)}
+
+  \item{priority}{Character string, the priority attribute
+  of the \code{<document>} node. Must be either "hidden",
+  "low", "medium", or "high", defaults to "medium".}
 }
 \value{
   An object of class \code{XiMpLe.node}.

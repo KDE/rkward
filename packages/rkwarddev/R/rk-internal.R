@@ -43,7 +43,7 @@ stripXML <- function(obj){
 # 'empty' can be used to make sure a tag is non-empty without actual value
 # this function also reduces rk.plot.opts objects to their XiMpLe.node slot
 child.list <- function(children, empty=TRUE){
-	if(inherits(children, "XiMpLe.node")){
+	if(is.XiMpLe.node(children)){
 		children <- list(children)
 	} else {
 		# if already a list, check if it's a list in a list and get it out
@@ -96,9 +96,9 @@ checkCreateFiles <- function(file.name, ow, action=NULL){
 ## function get.single.tags()
 get.single.tags <- function(XML.obj, drop=NULL){
 	# determine if we need to read a file or process an XiMpLe object
-	if(inherits(XML.obj, "XiMpLe.doc")){
+	if(is.XiMpLe.doc(XML.obj)){
 		single.tags <- trim(unlist(strsplit(pasteXMLTree(XML.obj, shine=1, indent.by=""), split="\n")))
-	} else if(inherits(XML.obj, "XiMpLe.node")){
+	} else if(is.XiMpLe.node(XML.obj)){
 		single.tags <- trim(unlist(strsplit(pasteXML(XML.obj, shine=1, indent.by=""), split="\n")))
 	} else {
 		xml.raw <- paste(readLines(XML.obj), collapse=" ")
@@ -119,7 +119,7 @@ get.IDs <- function(single.tags, relevant.tags, add.abbrev=FALSE, tag.names=FALS
 	# filter for relevant tags
 	cleaned.tags <- list()
 	for(this.tag in child.list(single.tags)){
-		if(inherits(this.tag, "XiMpLe.node")){
+		if(is.XiMpLe.node(this.tag)){
 			this.tag.name <- slot(this.tag, "name")
 			if(this.tag.name %in% relevant.tags & "id" %in% names(slot(this.tag, "attributes"))){
 				if(isTRUE(only.checkable) & this.tag.name %in% "frame"){
@@ -152,7 +152,7 @@ get.IDs <- function(single.tags, relevant.tags, add.abbrev=FALSE, tag.names=FALS
 	}
 
 	ids <- t(sapply(cleaned.tags, function(this.tag){
-				if(inherits(this.tag, "XiMpLe.node")){
+				if(is.XiMpLe.node(this.tag)){
 					this.tag.name <- slot(this.tag, "name")
 					this.tag.id <- slot(this.tag, "attributes")["id"]
 				} else {
@@ -219,7 +219,7 @@ get.JS.vars <- function(JS.var, XML.var=NULL, JS.prefix="", names.only=FALSE, mo
 		# check validity of modifiers value
 		if(!is.null(modifiers)){
 			if(identical(modifiers, "all")){
-				if(inherits(XML.var, "XiMpLe.node")){
+				if(is.XiMpLe.node(XML.var)){
 					tag.name <- slot(XML.var, "name")
 				} else {
 					tag.name <- XML.var
@@ -230,7 +230,7 @@ get.JS.vars <- function(JS.var, XML.var=NULL, JS.prefix="", names.only=FALSE, mo
 					modifiers <- NULL
 				}
 			} else {
-				if(inherits(XML.var, "XiMpLe.node")){
+				if(is.XiMpLe.node(XML.var)){
 					modif.tag.name <- slot(XML.var, "name")
 				} else {
 					modif.tag.name <- "all"
@@ -297,7 +297,7 @@ ID.prefix <- function(initial, abbr=TRUE, length=3, dot=FALSE){
 # pastes the nodes as XML, only alphanumeric characters, e.g. to generate auto-IDs
 node.soup <- function(nodes){
 	the.soup <- paste(unlist(sapply(child.list(nodes), function(this.node){
-			if(inherits(this.node, "XiMpLe.node")){
+			if(is.XiMpLe.node(this.node)){
 				return(gsub("[^[:alnum:]]", "", pasteXML(this.node, shine=0)))
 			} else {
 				stop(simpleError("Nodes must be of class XiMpLe.node!"))
@@ -310,7 +310,7 @@ node.soup <- function(nodes){
 ## function XML2person()
 # extracts the person/author info from XML "about" nodes
 XML2person <- function(node, eval=FALSE){
-		if(inherits(node, "XiMpLe.node")){
+		if(is.XiMpLe.node(node)){
 			# check if this is *really* a about section, otherwise die of boredom
 			if(!identical(slot(node, "name"), "about")){
 				stop(simpleError("I don't know what this is, but 'about' is not an about section!"))
@@ -357,7 +357,7 @@ XML2dependencies <- function(node, suggest=TRUE, mode="suggest"){
 	if(!isTRUE(suggest) & identical(mode, "suggest")){
 		return("")
 	} else {}
-	if(inherits(node, "XiMpLe.node")){
+	if(is.XiMpLe.node(node)){
 		# check if this is *really* a about section, otherwise die of boredom
 		if(!identical(slot(node, "name"), "about")){
 			stop(simpleError("I don't know what this is, but 'about' is not an about section!"))
@@ -424,7 +424,7 @@ check.ID <- function(node){
 		return(sapply(node, check.ID))
 	} else {}
 
-	if(inherits(node, "XiMpLe.node")){
+	if(is.XiMpLe.node(node)){
 		node.ID <- slot(node, "attributes")[["id"]]
 	} else if(is.character(node)){
 		node.ID <- node
@@ -478,7 +478,7 @@ modif.validity <- function(source, modifier, ignore.empty=TRUE, warn.only=TRUE, 
 		}
 	} else {}
 
-	if(inherits(source, "XiMpLe.node")){
+	if(is.XiMpLe.node(source)){
 		tag.name <- slot(source, "name")
 		# embedded plugins can have all sorts of modifiers
 		if(tag.name %in% c("embed", "external")){
@@ -538,6 +538,7 @@ all.valid.children <- list(
 	as=c("browser", "checkbox", "column", "copy",
 		"dropdown", "formula", "frame", "input", "page", "radio", "row", "saveobject",
 		"spinbox", "stretch", "tabbook", "text", "varselector", "varslot"),
+	component=c("dependencies"),
 	components=c("component"),
 	context=c("menu", "!--"),
 	dialog=c("browser", "checkbox", "column", "copy",
@@ -573,7 +574,7 @@ valid.child <- function(parent, children, warn=FALSE, section=parent, node.names
 				# and discard the rest
 				this.child <- stripXML(this.child)
 
-				if(inherits(this.child, "XiMpLe.node")){
+				if(is.XiMpLe.node(this.child)){
 					return(slot(this.child, "name"))
 				} else {
 					stop(simpleError(paste("Invalid object for ", section, " section, must be of class XiMpLe.node, but got class ", class(this.child), "!", sep="")))
@@ -603,7 +604,7 @@ valid.child <- function(parent, children, warn=FALSE, section=parent, node.names
 # - warn: warning or stop?
 # - see: name of the function to check docs for
 valid.parent <- function(parent, node, warn=FALSE, see=NULL){
-	if(inherits(node, "XiMpLe.node")){
+	if(is.XiMpLe.node(node)){
 		node.name <- slot(node, "name")
 		if(identical(node.name, parent)){
 			return(TRUE)

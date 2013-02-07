@@ -8,16 +8,18 @@
 #'		If \code{"auto"}, an ID will be generated automatically from the label.
 #' @param type Character string, type of component. As of now, only "standard" is supported. The option is
 #'		just implemented for completeness.
+#' @param dependencies An object of class \code{XiMpLe.node} to define \code{<dependencies>} for this component.
+#'		See \code{\link[XiMpLe:rk.XML.dependencies]{rk.XML.dependencies}} for details. Skipped if \code{NULL}.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
 #'		\code{\link[rkwarddev:rk.XML.components]{rk.XML.components}},
+#'		\code{\link[XiMpLe:rk.XML.dependencies]{rk.XML.dependencies}},
 #'		and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' test.component <- rk.XML.component("My GUI dialog", "plugins/MyGUIdialog.xml")
-#' cat(pasteXML(test.component))
 
-rk.XML.component <- function(label, file, id.name="auto", type="standard"){
+rk.XML.component <- function(label, file, id.name="auto", type="standard", dependencies=NULL){
 	if(identical(id.name, "auto")){
 		# try autogenerating some id
 		id.name <- auto.ids(label, prefix=ID.prefix("component"), chars=10)
@@ -36,7 +38,16 @@ rk.XML.component <- function(label, file, id.name="auto", type="standard"){
 		attr.list[["file"]] <- file
 	} else {}
 
-	node <- XMLNode("component", attrs=attr.list)
+	# does this component hava additional dependencies?
+	if(!is.null(dependencies)){
+		# check if this is *really* a dependencies section
+		valid.parent("dependencies", node=dependencies, see="rk.XML.dependencies")
+		dependencies <- child.list(dependencies)
+	} else {
+		dependencies <- list("")
+	}
+
+	node <- XMLNode("component", attrs=attr.list, .children=dependencies)
 
 	return(node)
 }

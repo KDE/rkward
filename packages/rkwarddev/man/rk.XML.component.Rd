@@ -3,7 +3,7 @@
 \title{Create XML "component" node for RKWard plugins}
 \usage{
   rk.XML.component(label, file, id.name = "auto",
-    type = "standard")
+    type = "standard", dependencies = NULL)
 }
 \arguments{
   \item{label}{Character string, a label for the
@@ -19,6 +19,11 @@
   \item{type}{Character string, type of component. As of
   now, only "standard" is supported. The option is just
   implemented for completeness.}
+
+  \item{dependencies}{An object of class \code{XiMpLe.node}
+  to define \code{<dependencies>} for this component.  See
+  \code{\link[XiMpLe:rk.XML.dependencies]{rk.XML.dependencies}}
+  for details. Skipped if \code{NULL}.}
 }
 \value{
   An object of class \code{XiMpLe.node}.
@@ -29,10 +34,10 @@
 }
 \examples{
 test.component <- rk.XML.component("My GUI dialog", "plugins/MyGUIdialog.xml")
-cat(pasteXML(test.component))
 }
 \seealso{
   \code{\link[rkwarddev:rk.XML.components]{rk.XML.components}},
+  \code{\link[XiMpLe:rk.XML.dependencies]{rk.XML.dependencies}},
   and the \href{help:rkwardplugins}{Introduction to Writing
   Plugins for RKWard}
 }
