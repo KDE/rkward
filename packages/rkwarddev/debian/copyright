@@ -6,7 +6,7 @@ The package was renamed from its upstream name 'rkwarddev' to
 'r-other-rkward-rkwarddev' in harmony with the R packaging policy to indicate
 that the package is external to the CRAN or BioC repositories.
 
-rkwarddev Copyright (C) 2012 Meik Michalke, released under the
+rkwarddev Copyright (C) 2013 Meik Michalke, released under the
 GNU General Public License (GPL) version 3 or (at your option) any later version.
 
 This software is distributed in the hope that it will be useful, but

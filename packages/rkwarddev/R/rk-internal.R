@@ -120,11 +120,11 @@ get.IDs <- function(single.tags, relevant.tags, add.abbrev=FALSE, tag.names=FALS
 	cleaned.tags <- list()
 	for(this.tag in child.list(single.tags)){
 		if(is.XiMpLe.node(this.tag)){
-			this.tag.name <- slot(this.tag, "name")
-			if(this.tag.name %in% relevant.tags & "id" %in% names(slot(this.tag, "attributes"))){
+			this.tag.name <- getXMLName(this.tag)
+			if(this.tag.name %in% relevant.tags & "id" %in% names(getXMLAttrs(this.tag))){
 				if(isTRUE(only.checkable) & this.tag.name %in% "frame"){
-					if("checkable" %in% names(slot(this.tag, "attributes"))){
-						if(identical(slot(this.tag, "attributes")[["checkable"]], "true")){
+					if("checkable" %in% names(getXMLAttrs(this.tag))){
+						if(identical(getXMLAttrs(this.tag)[["checkable"]], "true")){
 							cleaned.tags[length(cleaned.tags)+1] <- this.tag
 						} else {}
 					} else {}
@@ -153,8 +153,8 @@ get.IDs <- function(single.tags, relevant.tags, add.abbrev=FALSE, tag.names=FALS
 
 	ids <- t(sapply(cleaned.tags, function(this.tag){
 				if(is.XiMpLe.node(this.tag)){
-					this.tag.name <- slot(this.tag, "name")
-					this.tag.id <- slot(this.tag, "attributes")["id"]
+					this.tag.name <- getXMLName(this.tag)
+					this.tag.id <- getXMLAttrs(this.tag)["id"]
 				} else {
 					this.tag.name <- XiMpLe:::XML.tagName(this.tag)
 					this.tag.id <- XiMpLe:::parseXMLAttr(this.tag)[["id"]]
@@ -220,7 +220,7 @@ get.JS.vars <- function(JS.var, XML.var=NULL, JS.prefix="", names.only=FALSE, mo
 		if(!is.null(modifiers)){
 			if(identical(modifiers, "all")){
 				if(is.XiMpLe.node(XML.var)){
-					tag.name <- slot(XML.var, "name")
+					tag.name <- getXMLName(XML.var)
 				} else {
 					tag.name <- XML.var
 				}
@@ -231,7 +231,7 @@ get.JS.vars <- function(JS.var, XML.var=NULL, JS.prefix="", names.only=FALSE, mo
 				}
 			} else {
 				if(is.XiMpLe.node(XML.var)){
-					modif.tag.name <- slot(XML.var, "name")
+					modif.tag.name <- getXMLName(XML.var)
 				} else {
 					modif.tag.name <- "all"
 				}
@@ -312,7 +312,7 @@ node.soup <- function(nodes){
 XML2person <- function(node, eval=FALSE){
 		if(is.XiMpLe.node(node)){
 			# check if this is *really* a about section, otherwise die of boredom
-			if(!identical(slot(node, "name"), "about")){
+			if(!identical(getXMLName(node), "about")){
 				stop(simpleError("I don't know what this is, but 'about' is not an about section!"))
 			} else {}
 		} else {
@@ -327,9 +327,9 @@ XML2person <- function(node, eval=FALSE){
 		return(value)
 	}
 	all.authors <- c()
-	for (this.child in slot(node, "children")){
-		if(identical(slot(this.child, "name"), "author")){
-			attrs <- slot(this.child, "attributes")
+	for (this.child in getXMLChildren(node)){
+		if(identical(getXMLName(this.child), "author")){
+			attrs <- getXMLAttrs(this.child)
 			given <- make.vector(attrs[["given"]])
 			family <- make.vector(attrs[["family"]])
 			email <- make.vector(attrs[["email"]])
@@ -359,18 +359,18 @@ XML2dependencies <- function(node, suggest=TRUE, mode="suggest"){
 	} else {}
 	if(is.XiMpLe.node(node)){
 		# check if this is *really* a about section, otherwise die of boredom
-		if(!identical(slot(node, "name"), "about")){
+		if(!identical(getXMLName(node), "about")){
 			stop(simpleError("I don't know what this is, but 'about' is not an about section!"))
 		} else {}
 	} else {
 		stop(simpleError("'about' must be a XiMpLe.node, see ?rk.XML.about()!"))
 	}
-	check.deps <- sapply(slot(node, "children"), function(this.child){identical(slot(this.child, "name"), "dependencies")})
+	check.deps <- sapply(getXMLChildren(node), function(this.child){identical(getXMLName(this.child), "dependencies")})
 	if(any(check.deps)){
-		got.deps <- slot(node, "children")[[which(check.deps)]]
+		got.deps <- getXMLChildren(node)[[which(check.deps)]]
 		deps.packages <- list()
 		# first see if RKWard and R versions are given
-		deps.RkR <- slot(got.deps, "attributes")
+		deps.RkR <- getXMLAttrs(got.deps)
 		deps.RkR.options  <- names(deps.RkR)
 		R.min <- ifelse("R_min_version" %in% deps.RkR.options, paste(">= ", deps.RkR[["R_min_version"]], sep=""), "")
 		R.max <- ifelse("R_max_version" %in% deps.RkR.options, paste("< ", deps.RkR[["R_max_version"]], sep=""), "")
@@ -384,10 +384,10 @@ XML2dependencies <- function(node, suggest=TRUE, mode="suggest"){
 		if(Rk.version.indices > 0 & identical(mode, "depends")){
 			deps.packages[[length(deps.packages) + 1]] <- paste("rkward (", Rk.min, ifelse(Rk.version.indices > 1, ", ", ""), Rk.max, ")", sep="")
 		} else {}
-		check.deps.pckg <- sapply(slot(got.deps, "children"), function(this.child){identical(slot(this.child, "name"), "package")})
+		check.deps.pckg <- sapply(getXMLChildren(got.deps), function(this.child){identical(getXMLName(this.child), "package")})
 		if(any(check.deps.pckg & ((isTRUE(suggest) & identical(mode, "suggest")) | !isTRUE(suggest)))){
 			deps.packages[[length(deps.packages) + 1]] <- paste(sapply(which(check.deps.pckg), function(this.pckg){
-					this.pckg.dep <- slot(slot(got.deps, "children")[[this.pckg]], "attributes")
+					this.pckg.dep <- getXMLAttrs(getXMLChildren(got.deps)[[this.pckg]])
 					pckg.options <- names(this.pckg.dep)
 					pckg.name <- this.pckg.dep[["name"]]
 					pckg.min <- ifelse("min" %in% pckg.options, paste(">= ", this.pckg.dep[["min"]], sep=""), "")
@@ -425,7 +425,7 @@ check.ID <- function(node){
 	} else {}
 
 	if(is.XiMpLe.node(node)){
-		node.ID <- slot(node, "attributes")[["id"]]
+		node.ID <- getXMLAttrs(node)[["id"]]
 	} else if(is.character(node)){
 		node.ID <- node
 	} else {
@@ -479,7 +479,7 @@ modif.validity <- function(source, modifier, ignore.empty=TRUE, warn.only=TRUE, 
 	} else {}
 
 	if(is.XiMpLe.node(source)){
-		tag.name <- slot(source, "name")
+		tag.name <- getXMLName(source)
 		# embedded plugins can have all sorts of modifiers
 		if(tag.name %in% c("embed", "external")){
 			if(isTRUE(bool)){
@@ -575,7 +575,7 @@ valid.child <- function(parent, children, warn=FALSE, section=parent, node.names
 				this.child <- stripXML(this.child)
 
 				if(is.XiMpLe.node(this.child)){
-					return(slot(this.child, "name"))
+					return(getXMLName(this.child))
 				} else {
 					stop(simpleError(paste("Invalid object for ", section, " section, must be of class XiMpLe.node, but got class ", class(this.child), "!", sep="")))
 				}
@@ -605,7 +605,7 @@ valid.child <- function(parent, children, warn=FALSE, section=parent, node.names
 # - see: name of the function to check docs for
 valid.parent <- function(parent, node, warn=FALSE, see=NULL){
 	if(is.XiMpLe.node(node)){
-		node.name <- slot(node, "name")
+		node.name <- getXMLName(node)
 		if(identical(node.name, parent)){
 			return(TRUE)
 		} else {

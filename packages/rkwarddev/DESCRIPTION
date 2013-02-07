@@ -69,6 +69,7 @@ Collate:
     'rk.XML.convert.R'
     'rk.XML.copy.R'
     'rk.XML.dependencies.R'
+    'rk.XML.dependency_check.R'
     'rk.XML.dialog.R'
     'rk.XML.dropdown.R'
     'rk.XML.embed.R'

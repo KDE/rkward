@@ -7,8 +7,10 @@ changed:
   - for consistency, from now on <component> is never an empty node
 added:
   - new function rk.XML.dependencies()
+  - new function rk.XML.dependency_check()
   - added options "dependencies", "namespace" and "priority" to rk.XML.pluginmap()
   - added option "dependencies" to rk.XML.component()
+  - added "map" to rk.XML.require()
 
 changes in version 0.06-1 (2012-11-08)
 changed:
