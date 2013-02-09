@@ -1,40 +1,62 @@
 \docType{methods}
-\name{getXMLName}
-\alias{getXMLAttrs}
-\alias{getXMLAttrs,-methods}
-\alias{getXMLAttrs,XiMpLe.node-method}
-\alias{getXMLChildren}
-\alias{getXMLChildren,-methods}
-\alias{getXMLChildren,XiMpLe.doc-method}
-\alias{getXMLChildren,XiMpLe.node-method}
-\alias{getXMLDecl}
-\alias{getXMLDecl,-methods}
-\alias{getXMLDecl,XiMpLe.doc-method}
-\alias{getXMLDTD}
-\alias{getXMLDTD,-methods}
-\alias{getXMLDTD,XiMpLe.doc-method}
-\alias{getXMLFile}
-\alias{getXMLFile,-methods}
-\alias{getXMLFile,XiMpLe.doc-method}
-\alias{getXMLName}
-\alias{getXMLName,-methods}
-\alias{getXMLName,XiMpLe.node-method}
-\alias{getXMLValue}
-\alias{getXMLValue,-methods}
-\alias{getXMLValue,XiMpLe.node-method}
-\title{Getter methods for S4 objects of XiMpLe XML classes}
+\name{XMLName}
+\alias{XMLAttrs}
+\alias{XMLAttrs<-}
+\alias{XMLAttrs<-,-methods}
+\alias{XMLAttrs,-methods}
+\alias{XMLAttrs<-,XiMpLe.node-method}
+\alias{XMLAttrs,XiMpLe.node-method}
+\alias{XMLChildren}
+\alias{XMLChildren<-}
+\alias{XMLChildren<-,-methods}
+\alias{XMLChildren,-methods}
+\alias{XMLChildren<-,XiMpLe.doc-method}
+\alias{XMLChildren,XiMpLe.doc-method}
+\alias{XMLChildren<-,XiMpLe.node-method}
+\alias{XMLChildren,XiMpLe.node-method}
+\alias{XMLDecl}
+\alias{XMLDecl<-}
+\alias{XMLDecl<-,-methods}
+\alias{XMLDecl,-methods}
+\alias{XMLDecl<-,XiMpLe.doc-method}
+\alias{XMLDecl,XiMpLe.doc-method}
+\alias{XMLDTD}
+\alias{XMLDTD<-}
+\alias{XMLDTD<-,-methods}
+\alias{XMLDTD,-methods}
+\alias{XMLDTD<-,XiMpLe.doc-method}
+\alias{XMLDTD,XiMpLe.doc-method}
+\alias{XMLFile}
+\alias{XMLFile<-}
+\alias{XMLFile<-,-methods}
+\alias{XMLFile,-methods}
+\alias{XMLFile<-,XiMpLe.doc-method}
+\alias{XMLFile,XiMpLe.doc-method}
+\alias{XMLName}
+\alias{XMLName<-}
+\alias{XMLName<-,-methods}
+\alias{XMLName,-methods}
+\alias{XMLName<-,XiMpLe.node-method}
+\alias{XMLName,XiMpLe.node-method}
+\alias{XMLValue}
+\alias{XMLValue<-}
+\alias{XMLValue<-,-methods}
+\alias{XMLValue,-methods}
+\alias{XMLValue<-,XiMpLe.node-method}
+\alias{XMLValue,XiMpLe.node-method}
+\title{Getter/setter methods for S4 objects of XiMpLe XML classes}
 \arguments{
   \item{obj}{An object of class \code{XiMpLe.node} or
   \code{XiMpLe.doc}}
 }
 \description{
-  Used to get certain slots from objects of class
+  Used to get/set certain slots from objects of class
   \code{\link[XiMpLe:XiMpLe.doc-class]{XiMpLe.doc}} and
   \code{\link[XiMpLe:XiMpLe.node-class]{XiMpLe.node}}.
 }
 \details{
-  These are convenience methods to get slots from XML
-  objects without using the \code{@} operator.
+  These are convenience methods to get or set slots from
+  XML objects without using the \code{@} operator.
 }
 \seealso{
   \code{\link[XiMpLe:XiMpLe.doc-class]{XiMpLe.doc}}

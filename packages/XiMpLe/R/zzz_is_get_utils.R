@@ -15,12 +15,12 @@ is.XiMpLe.doc <- function(x){
 }
 
 
-#' Getter methods for S4 objects of XiMpLe XML classes
+#' Getter/setter methods for S4 objects of XiMpLe XML classes
 #'
-#' Used to get certain slots from objects of class \code{\link[XiMpLe:XiMpLe.doc-class]{XiMpLe.doc}}
+#' Used to get/set certain slots from objects of class \code{\link[XiMpLe:XiMpLe.doc-class]{XiMpLe.doc}}
 #' and \code{\link[XiMpLe:XiMpLe.node-class]{XiMpLe.node}}.
 #' 
-#' These are convenience methods to get slots from XML objects without using the \code{@@} operator.
+#' These are convenience methods to get or set slots from XML objects without using the \code{@@} operator.
 #'
 #' @param obj An object of class \code{XiMpLe.node} or \code{XiMpLe.doc}
 #' @seealso
@@ -29,16 +29,15 @@ is.XiMpLe.doc <- function(x){
 #' @keywords methods
 #' @docType methods
 #' @rdname XMLGetters-methods
-#' @exportMethod getXMLName
-setGeneric("getXMLName", function(obj) standardGeneric("getXMLName"))
-
+#' @exportMethod XMLName
+setGeneric("XMLName", function(obj) standardGeneric("XMLName"))
 #' @rdname XMLGetters-methods
 #' @aliases
-#'		getXMLName,-methods
-#'		getXMLName,XiMpLe.node-method
+#'		XMLName,-methods
+#'		XMLName,XiMpLe.node-method
 #' @docType methods
 #' @include XiMpLe.node-class.R
-setMethod("getXMLName",
+setMethod("XMLName",
 	signature=signature(obj="XiMpLe.node"),
 	function(obj){
 		return(obj@name)
@@ -46,16 +45,32 @@ setMethod("getXMLName",
 )
 
 #' @rdname XMLGetters-methods
-#' @exportMethod getXMLAttrs
-setGeneric("getXMLAttrs", function(obj) standardGeneric("getXMLAttrs"))
-
+#' @exportMethod XMLName<-
+setGeneric("XMLName<-", function(obj, value) standardGeneric("XMLName<-"))
 #' @rdname XMLGetters-methods
 #' @aliases
-#'		getXMLAttrs,-methods
-#'		getXMLAttrs,XiMpLe.node-method
+#'		XMLName<-,-methods
+#'		XMLName<-,XiMpLe.node-method
 #' @docType methods
 #' @include XiMpLe.node-class.R
-setMethod("getXMLAttrs",
+setMethod("XMLName<-",
+	signature=signature(obj="XiMpLe.node"),
+	function(obj, value){
+		obj@name <- value
+		return(obj)
+	}
+)
+
+#' @rdname XMLGetters-methods
+#' @exportMethod XMLAttrs
+setGeneric("XMLAttrs", function(obj) standardGeneric("XMLAttrs"))
+#' @rdname XMLGetters-methods
+#' @aliases
+#'		XMLAttrs,-methods
+#'		XMLAttrs,XiMpLe.node-method
+#' @docType methods
+#' @include XiMpLe.node-class.R
+setMethod("XMLAttrs",
 	signature=signature(obj="XiMpLe.node"),
 	function(obj){
 		return(obj@attributes)
@@ -63,47 +78,91 @@ setMethod("getXMLAttrs",
 )
 
 #' @rdname XMLGetters-methods
-#' @exportMethod getXMLChildren
-setGeneric("getXMLChildren", function(obj) standardGeneric("getXMLChildren"))
-
+#' @exportMethod XMLAttrs<-
+setGeneric("XMLAttrs<-", function(obj, value) standardGeneric("XMLAttrs<-"))
 #' @rdname XMLGetters-methods
 #' @aliases
-#'		getXMLChildren,-methods
-#'		getXMLChildren,XiMpLe.node-method
+#'		XMLAttrs<-,-methods
+#'		XMLAttrs<-,XiMpLe.node-method
 #' @docType methods
 #' @include XiMpLe.node-class.R
-setMethod("getXMLChildren",
+setMethod("XMLAttrs<-",
+	signature=signature(obj="XiMpLe.node"),
+	function(obj, value){
+		obj@attributes <- value
+		return(obj)
+	}
+)
+
+#' @rdname XMLGetters-methods
+#' @exportMethod XMLChildren
+setGeneric("XMLChildren", function(obj) standardGeneric("XMLChildren"))
+#' @rdname XMLGetters-methods
+#' @aliases
+#'		XMLChildren,-methods
+#'		XMLChildren,XiMpLe.node-method
+#' @docType methods
+#' @include XiMpLe.node-class.R
+setMethod("XMLChildren",
 	signature=signature(obj="XiMpLe.node"),
 	function(obj){
 		return(obj@children)
 	}
 )
-
 #' @rdname XMLGetters-methods
 #' @aliases
-#'		getXMLChildren,-methods
-#'		getXMLChildren,XiMpLe.doc-method
+#'		XMLChildren,-methods
+#'		XMLChildren,XiMpLe.doc-method
 #' @docType methods
 #' @include XiMpLe.doc-class.R
-setMethod("getXMLChildren",
+setMethod("XMLChildren",
 	signature=signature(obj="XiMpLe.doc"),
 	function(obj){
 		return(obj@children)
 	}
 )
 
-
 #' @rdname XMLGetters-methods
-#' @exportMethod getXMLValue
-setGeneric("getXMLValue", function(obj) standardGeneric("getXMLValue"))
-
+#' @exportMethod XMLChildren<-
+setGeneric("XMLChildren<-", function(obj, value) standardGeneric("XMLChildren<-"))
 #' @rdname XMLGetters-methods
 #' @aliases
-#'		getXMLValue,-methods
-#'		getXMLValue,XiMpLe.node-method
+#'		XMLChildren<-,-methods
+#'		XMLChildren<-,XiMpLe.node-method
 #' @docType methods
 #' @include XiMpLe.node-class.R
-setMethod("getXMLValue",
+setMethod("XMLChildren<-",
+	signature=signature(obj="XiMpLe.node"),
+	function(obj, value){
+		obj@children <- child.list(value)
+		return(obj)
+	}
+)
+#' @rdname XMLGetters-methods
+#' @aliases
+#'		XMLChildren<-,-methods
+#'		XMLChildren<-,XiMpLe.doc-method
+#' @docType methods
+#' @include XiMpLe.doc-class.R
+setMethod("XMLChildren<-",
+	signature=signature(obj="XiMpLe.doc"),
+	function(obj, value){
+		obj@children <- child.list(value)
+		return(obj)
+	}
+)
+
+
+#' @rdname XMLGetters-methods
+#' @exportMethod XMLValue
+setGeneric("XMLValue", function(obj) standardGeneric("XMLValue"))
+#' @rdname XMLGetters-methods
+#' @aliases
+#'		XMLValue,-methods
+#'		XMLValue,XiMpLe.node-method
+#' @docType methods
+#' @include XiMpLe.node-class.R
+setMethod("XMLValue",
 	signature=signature(obj="XiMpLe.node"),
 	function(obj){
 		return(obj@value)
@@ -111,16 +170,32 @@ setMethod("getXMLValue",
 )
 
 #' @rdname XMLGetters-methods
-#' @exportMethod getXMLFile
-setGeneric("getXMLFile", function(obj) standardGeneric("getXMLFile"))
-
+#' @exportMethod XMLValue<-
+setGeneric("XMLValue<-", function(obj, value) standardGeneric("XMLValue<-"))
 #' @rdname XMLGetters-methods
 #' @aliases
-#'		getXMLFile,-methods
-#'		getXMLFile,XiMpLe.doc-method
+#'		XMLValue<-,-methods
+#'		XMLValue<-,XiMpLe.node-method
+#' @docType methods
+#' @include XiMpLe.node-class.R
+setMethod("XMLValue<-",
+	signature=signature(obj="XiMpLe.node"),
+	function(obj, value){
+		obj@value <- value
+		return(obj)
+	}
+)
+
+#' @rdname XMLGetters-methods
+#' @exportMethod XMLFile
+setGeneric("XMLFile", function(obj) standardGeneric("XMLFile"))
+#' @rdname XMLGetters-methods
+#' @aliases
+#'		XMLFile,-methods
+#'		XMLFile,XiMpLe.doc-method
 #' @docType methods
 #' @include XiMpLe.doc-class.R
-setMethod("getXMLFile",
+setMethod("XMLFile",
 	signature=signature(obj="XiMpLe.doc"),
 	function(obj){
 		return(obj@file)
@@ -128,16 +203,32 @@ setMethod("getXMLFile",
 )
 
 #' @rdname XMLGetters-methods
-#' @exportMethod getXMLDecl
-setGeneric("getXMLDecl", function(obj) standardGeneric("getXMLDecl"))
-
+#' @exportMethod XMLFile<-
+setGeneric("XMLFile<-", function(obj, value) standardGeneric("XMLFile<-"))
 #' @rdname XMLGetters-methods
 #' @aliases
-#'		getXMLDecl,-methods
-#'		getXMLDecl,XiMpLe.doc-method
+#'		XMLFile<-,-methods
+#'		XMLFile<-,XiMpLe.doc-method
 #' @docType methods
 #' @include XiMpLe.doc-class.R
-setMethod("getXMLDecl",
+setMethod("XMLFile<-",
+	signature=signature(obj="XiMpLe.doc"),
+	function(obj, value){
+		obj@file <- value
+		return(obj)
+	}
+)
+
+#' @rdname XMLGetters-methods
+#' @exportMethod XMLDecl
+setGeneric("XMLDecl", function(obj) standardGeneric("XMLDecl"))
+#' @rdname XMLGetters-methods
+#' @aliases
+#'		XMLDecl,-methods
+#'		XMLDecl,XiMpLe.doc-method
+#' @docType methods
+#' @include XiMpLe.doc-class.R
+setMethod("XMLDecl",
 	signature=signature(obj="XiMpLe.doc"),
 	function(obj){
 		return(obj@xml)
@@ -145,19 +236,51 @@ setMethod("getXMLDecl",
 )
 
 #' @rdname XMLGetters-methods
-#' @exportMethod getXMLDTD
-setGeneric("getXMLDTD", function(obj) standardGeneric("getXMLDTD"))
-
+#' @exportMethod XMLDecl<-
+setGeneric("XMLDecl<-", function(obj, value) standardGeneric("XMLDecl<-"))
 #' @rdname XMLGetters-methods
 #' @aliases
-#'		getXMLDTD,-methods
-#'		getXMLDTD,XiMpLe.doc-method
+#'		XMLDecl<-,-methods
+#'		XMLDecl<-,XiMpLe.doc-method
 #' @docType methods
 #' @include XiMpLe.doc-class.R
-setMethod("getXMLDTD",
+setMethod("XMLDecl<-",
+	signature=signature(obj="XiMpLe.doc"),
+	function(obj, value){
+		obj@xml <- value
+		return(obj)
+	}
+)
+
+#' @rdname XMLGetters-methods
+#' @exportMethod XMLDTD
+setGeneric("XMLDTD", function(obj) standardGeneric("XMLDTD"))
+#' @rdname XMLGetters-methods
+#' @aliases
+#'		XMLDTD,-methods
+#'		XMLDTD,XiMpLe.doc-method
+#' @docType methods
+#' @include XiMpLe.doc-class.R
+setMethod("XMLDTD",
 	signature=signature(obj="XiMpLe.doc"),
 	function(obj){
 		return(obj@dtd)
 	}
 )
 
+#' @rdname XMLGetters-methods
+#' @exportMethod XMLDTD<-
+setGeneric("XMLDTD<-", function(obj, value) standardGeneric("XMLDTD<-"))
+#' @rdname XMLGetters-methods
+#' @aliases
+#'		XMLDTD<-,-methods
+#'		XMLDTD<-,XiMpLe.doc-method
+#' @docType methods
+#' @include XiMpLe.doc-class.R
+setMethod("XMLDTD<-",
+	signature=signature(obj="XiMpLe.doc"),
+	function(obj, value){
+		obj@dtd <- value
+		return(obj)
+	}
+)
