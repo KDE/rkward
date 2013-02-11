@@ -1,6 +1,19 @@
 \name{NEWS}
 \title{News for Package 'XiMpLe'}
 \encoding{UTF-8}
+\section{Changes in XiMpLe version 0.03-18 (2013-02-11)}{
+  \subsection{changed}{
+    \itemize{
+      \item renamed getter methods from getXML*() into the more generic XML*()
+    }
+  }
+  \subsection{added}{
+    \itemize{
+      \item added setter methods XML*()<- to all getter methods
+      \item added tests for getter/setter methods
+    }
+  }
+}
 \section{Changes in XiMpLe version 0.03-17 (2013-02-04)}{
   \subsection{added}{
     \itemize{

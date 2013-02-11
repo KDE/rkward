@@ -1,6 +1,6 @@
 ChangeLog for package XiMpLe
 
-changes in version 0.03-18 (2013-02-08)
+changes in version 0.03-18 (2013-02-11)
 changed:
   - renamed getter methods from getXML*() into the more generic XML*()
 added:
