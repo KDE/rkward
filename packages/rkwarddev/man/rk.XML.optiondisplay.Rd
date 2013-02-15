@@ -1,0 +1,21 @@
+\name{rk.XML.optiondisplay}
+\alias{rk.XML.optiondisplay}
+\title{Create XML node "optiondisplay" for RKWard plugins}
+\usage{
+  rk.XML.optiondisplay(index = TRUE, id.name = NULL)
+}
+\arguments{
+  \item{index}{Logical, whether to show a column with a
+  numeric index in the optiondisplay.}
+
+  \item{id.name}{Character string, a unique ID for this
+  plugin element (optional).}
+}
+\value{
+  An object of class \code{XiMpLe.node}.
+}
+\description{
+  This node is only allowed once insinde the
+  \code{<content>} node of an \code{<optionset>}.
+}
+

@@ -10,6 +10,8 @@ changed:
   - rk.XML.pluginmap() will now move <dependencies> from <about> to a top level child node
     of plugin maps, with a warning
 added:
+  - new function rk.XML.optiondisplay()
+  - new function rk.XML.optionset()
   - new function rk.XML.matrix()
   - new function rk.XML.dependencies()
   - new function rk.XML.dependency_check()

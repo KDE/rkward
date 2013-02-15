@@ -35,8 +35,8 @@ rk.XML.logic <- function(...){
 
 	# transform "!--" comment nodes into "![CDATA[" for scripting logic
 	nodes <- sapply(child.list(nodes), function(this.node){
-			if(identical(slot(this.node, "name"), "!--")){
-				slot(this.node, "name") <- "![CDATA["
+			if(identical(XMLName(this.node), "!--")){
+				XMLName(this.node) <- "![CDATA["
 				this.node <- XMLNode("script", .children=child.list(this.node, empty=FALSE))
 			} else {}
 			return(this.node)

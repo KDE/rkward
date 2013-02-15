@@ -1,0 +1,52 @@
+\name{rk.XML.optioncolumn}
+\alias{rk.XML.optioncolumn}
+\title{Create XML node "optioncolumn" for RKWard plugins}
+\usage{
+  rk.XML.optioncolumn(id.name, label = TRUE,
+    external = FALSE, connect = NULL, property = NULL,
+    default = NULL)
+}
+\arguments{
+  \item{id.name}{Character string, a unique ID for this
+  plugin element.}
+
+  \item{label}{Either logical or a character string. If
+  given, the optioncolumn will be displayed in the
+  \code{<optiondisplay>} in a column by that label.  If set
+  to \code{TRUE} and you provide a XiMpLe node object to
+  \code{connect}, the label will be extracted from that
+  node.}
+
+  \item{external}{Logical, set to \code{TRUE} if the
+  optioncolumn is controlled from outside the optionset.}
+
+  \item{connect}{Either a character string (the \code{id}
+  of the property to connect this optioncolumn to), or an
+  object of class XiMpLe.node (whose \code{id} will be
+  extracted and used). For external \code{<optioncolumn>}s,
+  the corresponding value will be set to the externally set
+  value. For regular (non-external) \code{<optioncolumn>}s,
+  the corresponding row of the \code{<optioncolumn>}
+  property, will be set when the property changes inside
+  the content-area.}
+
+  \item{property}{Character string, the actual property to
+  connect to, will be appended to the \code{id} of
+  \code{connect}.}
+
+  \item{default}{Character string, only for external
+  columns: The value to assume for this column, if no value
+  is known for an entry. Rarely useful.}
+}
+\value{
+  An object of class \code{XiMpLe.node}.
+}
+\description{
+  These nodes are valid only inside \code{<optionset>}
+  nodes.
+}
+\examples{
+myInput <- rk.XML.input(label="Given name(s)", size="small")
+myOptCol <- rk.XML.optioncolumn("os_name", connect=myInput, property="text")
+}
+
