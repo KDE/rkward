@@ -1,10 +1,14 @@
 ChangeLog for package rkwarddev
 
-changes in version 0.06-2 (2013-02-08)
+changes in version 0.06-2 (2013-02-15)
 changed:
   - the structure of <about> nodes will change in RKWard 0.6.1, <dependencies> will become
-    a direct child of <document> or <component>, which explains several changes in this release
+    a direct child of <document> or <component>, which explains several changes in this release.
+    this is not really critical, because this information wasn't evaluated by RKWard until now
+    anyway
   - for consistency, from now on <component> is never an empty node
+  - rk.XML.pluginmap() will now move <dependencies> from <about> to a top level child node
+    of plugin maps, with a warning
 added:
   - new function rk.XML.matrix()
   - new function rk.XML.dependencies()

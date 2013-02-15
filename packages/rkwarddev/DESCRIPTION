@@ -6,8 +6,8 @@ Maintainer: m.eik michalke <meik.michalke@hhu.de>
 Depends:
     R (>= 2.9.0),methods,XiMpLe (>= 0.03-18),rkward (>= 0.5.6)
 Enhances: rkward
-Description: Provides functions to create plugin skeletons and XML
-    structures for RKWard.
+Description: Provides functions to create plugin skeletons and XML structures
+    for RKWard.
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyLoad: yes
@@ -15,7 +15,7 @@ URL: http://rkward.sourceforge.net
 Authors@R: c(person(given="Meik", family="Michalke",
     email="meik.michalke@hhu.de", role=c("aut", "cre")))
 Version: 0.06-2
-Date: 2013-02-08
+Date: 2013-02-15
 Collate:
     'echo.R'
     'id.R'

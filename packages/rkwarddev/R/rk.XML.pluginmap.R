@@ -71,7 +71,18 @@ rk.XML.pluginmap <- function(name, about=NULL, components, hierarchy="test",
 		# initialize all.children list
 		all.children[[length(all.children)+1]] <- dependencies
 	} else {
-		if(isTRUE(hints)){
+		## wrapper for compatibility with earlier releases
+		# check for <dependencies> in <about>, and if found,
+		# take it out and use it here
+		deps.in.about <- try(
+			node(about, node=list("about","dependencies")),
+			silent=TRUE)
+		if(is.XiMpLe.node(deps.in.about)){
+			warning("<dependencies> inside <about> is deprecated, use the 'dependencies' argument instead!")
+			all.children[[length(all.children)+1]] <- deps.in.about
+			# remove <dependencies> from <about>
+			node(about, node=list("about","dependencies")) <- NULL
+		} else if(isTRUE(hints)){
 			dependencies.XML <- XMLNode("!--", XMLNode("dependencies", ""))
 			# initialize all.children list
 			all.children[[length(all.children)+1]] <- dependencies.XML
