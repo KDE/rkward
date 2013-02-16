@@ -10,6 +10,7 @@ changed:
   - rk.XML.pluginmap() will now move <dependencies> from <about> to a top level child node
     of plugin maps, with a warning
 added:
+  - new function rk.XML.switch()
   - new function rk.XML.optiondisplay()
   - new function rk.XML.optionset()
   - new function rk.XML.matrix()
@@ -18,6 +19,8 @@ added:
   - added options "dependencies", "namespace" and "priority" to rk.XML.pluginmap()
   - added option "dependencies" to rk.XML.component()
   - added "map" to rk.XML.require()
+fixed:
+  - added some missing parameter in the docs for rk.paste.JS.graph()
 
 changes in version 0.06-1 (2012-11-08)
 changed:

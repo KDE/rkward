@@ -3,7 +3,7 @@
 \title{Create XML node "optioncolumn" for RKWard plugins}
 \usage{
   rk.XML.optioncolumn(id.name, label = TRUE,
-    external = FALSE, connect = NULL, property = NULL,
+    external = FALSE, connect = NULL, modifier = NULL,
     default = NULL)
 }
 \arguments{
@@ -30,9 +30,9 @@
   property, will be set when the property changes inside
   the content-area.}
 
-  \item{property}{Character string, the actual property to
-  connect to, will be appended to the \code{id} of
-  \code{connect}.}
+  \item{modifier}{Character string, the modifier of the
+  property to connect to, will be appended to the \code{id}
+  of \code{connect}.}
 
   \item{default}{Character string, only for external
   columns: The value to assume for this column, if no value
@@ -47,6 +47,6 @@
 }
 \examples{
 myInput <- rk.XML.input(label="Given name(s)", size="small")
-myOptCol <- rk.XML.optioncolumn("os_name", connect=myInput, property="text")
+myOptCol <- rk.XML.optioncolumn("os_name", connect=myInput, modifier="text")
 }
 

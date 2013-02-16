@@ -37,7 +37,7 @@ test.component <- rk.XML.component("My GUI dialog", "plugins/MyGUIdialog.xml")
 }
 \seealso{
   \code{\link[rkwarddev:rk.XML.components]{rk.XML.components}},
-  \code{\link[XiMpLe:rk.XML.dependencies]{rk.XML.dependencies}},
+  \code{\link[rkwarddev:rk.XML.dependencies]{rk.XML.dependencies}},
   and the \href{help:rkwardplugins}{Introduction to Writing
   Plugins for RKWard}
 }

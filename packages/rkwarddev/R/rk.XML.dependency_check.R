@@ -25,6 +25,7 @@
 #' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' dependency_check.node <- rk.XML.dependency_check(
+#' 	id.name="dep_check",
 #' 	dependencies=list(
 #' 		rkward.min="0.5.3",
 #' 		rkward.max="",

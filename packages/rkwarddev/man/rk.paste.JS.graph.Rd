@@ -20,6 +20,18 @@
   is of class \code{rk.plot.opts} (as returned by
   \code{rk.plotOptions}), will be fetched from
   \code{plotOpts} automatically.}
+
+  \item{level}{Integer, which indentation level to use,
+  minimum is 1.}
+
+  \item{indent.by}{A character string defining the
+  indentation string to use.}
+
+  \item{empty.e}{For \code{rk.JS.ite} objects only:
+  Logical, if \code{TRUE} will force to add empty
+  \code{else \{\}} brackets when there is no \code{else}
+  statement defined, which is considered to enhance code
+  readability by some.}
 }
 \value{
   A character string.

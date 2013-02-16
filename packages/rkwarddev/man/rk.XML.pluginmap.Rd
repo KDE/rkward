@@ -72,7 +72,7 @@
 
   \item{dependencies}{An object of class \code{XiMpLe.node}
   to be pasted as the \code{<dependencies>} section, See
-  \code{\link[XiMpLe:rk.XML.dependencies]{rk.XML.dependencies}}
+  \code{\link[rkwarddev:rk.XML.dependencies]{rk.XML.dependencies}}
   for details. Skipped if \code{NULL}.}
 
   \item{namespace}{Character string, the namespace

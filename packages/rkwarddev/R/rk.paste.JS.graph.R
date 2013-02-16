@@ -14,6 +14,10 @@
 #' @param printoutObj An \code{rk.JS.var} object fetching the \code{"code.printout"} modifier of \code{plotOpts}
 #'		(see examples below!). If \code{NULL} and \code{plotOpts} is of class \code{rk.plot.opts} (as returned by \code{rk.plotOptions}),
 #'		will be fetched from \code{plotOpts} automatically.
+#' @param level Integer, which indentation level to use, minimum is 1.
+#' @param indent.by A character string defining the indentation string to use.
+#' @param empty.e For \code{rk.JS.ite} objects only: Logical, if \code{TRUE} will force to add empty \code{else \{\}} brackets when
+#'		there is no \code{else} statement defined, which is considered to enhance code readability by some.
 #' @return A character string.
 #' @export
 #' @seealso

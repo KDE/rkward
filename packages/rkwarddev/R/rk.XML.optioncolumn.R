@@ -10,14 +10,14 @@
 #'		class XiMpLe.node (whose \code{id} will be extracted and used). For external \code{<optioncolumn>}s, the corresponding value will
 #'		be set to the externally set value. For regular (non-external) \code{<optioncolumn>}s, the corresponding row of the \code{<optioncolumn>} property, will be set
 #'		when the property changes inside the content-area.
-#' @param property Character string, the actual property to connect to, will be appended to the \code{id} of \code{connect}.
+#' @param modifier Character string, the modifier of the property to connect to, will be appended to the \code{id} of \code{connect}.
 #' @param default Character string, only for external columns: The value to assume for this column, if no value is known for an entry. Rarely useful.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @examples
 #' myInput <- rk.XML.input(label="Given name(s)", size="small")
-#' myOptCol <- rk.XML.optioncolumn("os_name", connect=myInput, property="text")
-rk.XML.optioncolumn <- function(id.name, label=TRUE, external=FALSE, connect=NULL, property=NULL, default=NULL){
+#' myOptCol <- rk.XML.optioncolumn("os_name", connect=myInput, modifier="text")
+rk.XML.optioncolumn <- function(id.name, label=TRUE, external=FALSE, connect=NULL, modifier=NULL, default=NULL){
 
 	attr.list <- list(id=id.name)
 
@@ -40,10 +40,10 @@ rk.XML.optioncolumn <- function(id.name, label=TRUE, external=FALSE, connect=NUL
 		# let's see if we need to extract IDs first
 		connect.id <- check.ID(connect)
 		# if connect is an XML node, append 
-		if(is.XiMpLe.node(connect) && !is.null(property)){
+		if(is.XiMpLe.node(connect) && !is.null(modifier)){
 			# validate get modifier
-			if(modif.validity(connect, modifier=property)){
-				connect.id <- paste(connect.id, property, sep=".")
+			if(modif.validity(connect, modifier=modifier)){
+				connect.id <- paste(connect.id, modifier, sep=".")
 			} else {}
 		} else {}
 		attr.list[["connect"]] <- as.character(connect.id)
