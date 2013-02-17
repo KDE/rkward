@@ -30,10 +30,11 @@ test.set <- rk.XML.set(id="input_foo", set="required", to=TRUE)
 cat(pasteXML(test.set))
 }
 \seealso{
-  \code{\link[rkwarddev:rk.XML.convert]{rk.XML.convert}},
   \code{\link[rkwarddev:rk.XML.connect]{rk.XML.connect}},
   \code{\link[rkwarddev:rk.XML.external]{rk.XML.external}},
-  \code{\link[rkwarddev:rk.XML.logic]{rk.XML.logic}}, and
+  \code{\link[rkwarddev:rk.XML.logic]{rk.XML.logic}},
+  \code{\link[rkwarddev:rk.XML.set]{rk.XML.set}},
+  \code{\link[rkwarddev:rk.XML.switch]{rk.XML.switch}}, and
   the \href{help:rkwardplugins}{Introduction to Writing
   Plugins for RKWard}
 }

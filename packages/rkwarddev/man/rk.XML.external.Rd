@@ -21,11 +21,12 @@ test.external <- rk.XML.external(id="ext_property", default="none")
 cat(pasteXML(test.external))
 }
 \seealso{
-  \code{\link[rkwarddev:rk.XML.convert]{rk.XML.convert}},
   \code{\link[rkwarddev:rk.XML.connect]{rk.XML.connect}},
+  \code{\link[rkwarddev:rk.XML.covert]{rk.XML.convert}},
   \code{\link[rkwarddev:rk.XML.logic]{rk.XML.logic}},
-  \code{\link[rkwarddev:rk.XML.set]{rk.XML.set}}, and the
-  \href{help:rkwardplugins}{Introduction to Writing Plugins
-  for RKWard}
+  \code{\link[rkwarddev:rk.XML.set]{rk.XML.set}},
+  \code{\link[rkwarddev:rk.XML.switch]{rk.XML.switch}}, and
+  the \href{help:rkwardplugins}{Introduction to Writing
+  Plugins for RKWard}
 }
 

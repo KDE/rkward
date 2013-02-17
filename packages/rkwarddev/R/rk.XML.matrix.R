@@ -1,5 +1,8 @@
 #' Create XML "matrix" node for RKWard plugins
 #' 
+#' @note The \code{<matrix>} node was introduced with RKWard 0.6.1, please set the dependencies
+#'		of your component/plugin accordingly.
+#'
 #' @param label Character string, a label for the matrix.
 #' @param mode Character string, one of "integer", "real" or "string". The type of data that will
 #'		be accepted in the table (required)

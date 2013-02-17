@@ -2,6 +2,9 @@
 #' 
 #' These nodes are valid only inside \code{<optionset>} nodes.
 #'
+#' @note The \code{<optionset>} node was introduced with RKWard 0.6.1, please set the dependencies
+#'		of your component/plugin accordingly.
+#'
 #' @param id.name Character string, a unique ID for this plugin element.
 #' @param label Either logical or a character string. If given, the optioncolumn will be displayed in the \code{<optiondisplay>} in a column by that label.
 #'		If set to \code{TRUE} and you provide a XiMpLe node object to \code{connect}, the label will be extracted from that node.
@@ -14,6 +17,10 @@
 #' @param default Character string, only for external columns: The value to assume for this column, if no value is known for an entry. Rarely useful.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
+#' @seealso
+#'		\code{\link[rkwarddev:rk.XML.optionset]{rk.XML.optionset}},
+#'		\code{\link[rkwarddev:rk.XML.optiondisplay]{rk.XML.optiondisplay}},
+#'		and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' myInput <- rk.XML.input(label="Given name(s)", size="small")
 #' myOptCol <- rk.XML.optioncolumn("os_name", connect=myInput, modifier="text")

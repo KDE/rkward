@@ -2,15 +2,15 @@ Source: r-other-rkward-rkwarddev
 Section: math
 Priority: optional
 Maintainer: m.eik michalke <meik.michalke@hhu.de>
-Build-Depends-Indep: debhelper (>> 4.1.0), r-base-dev (>= 2.9.0), cdbs, r-cran-ximple (>= 0.03-12) | r-other-reaktanz-ximple (>=
- 0.03-12) | r-other-rkward-ximple (>= 0.03-12), rkward (>= 0.5.6)
+Build-Depends-Indep: debhelper (>> 4.1.0), r-base-dev (>= 2.9.0), cdbs, r-cran-ximple (>= 0.03-18) | r-other-reaktanz-ximple (>=
+ 0.03-18) | r-other-rkward-ximple (>= 0.03-18), rkward (>= 0.5.6)
 Standards-Version: 3.9.3.1
 Homepage: http://rkward.sourceforge.net
 
 Package: r-other-rkward-rkwarddev
 Architecture: all
 Section: math
-Depends: r-base (>= 2.15.0), r-cran-ximple (>= 0.03-12) | r-other-reaktanz-ximple (>= 0.03-12) | r-other-rkward-ximple (>= 0.03-12),
+Depends: r-base (>= 2.15.0), r-cran-ximple (>= 0.03-18) | r-other-reaktanz-ximple (>= 0.03-18) | r-other-rkward-ximple (>= 0.03-18),
  rkward (>= 0.5.6)
 Description: GNU R package: Provides functions to create plugin skeletons and XML structures for RKWard.
 Homepage: http://rkward.sourceforge.net

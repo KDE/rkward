@@ -5,10 +5,11 @@
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
-#'		\code{\link[rkwarddev:rk.XML.convert]{rk.XML.convert}},
 #'		\code{\link[rkwarddev:rk.XML.connect]{rk.XML.connect}},
+#'		\code{\link[rkwarddev:rk.XML.covert]{rk.XML.convert}},
 #'		\code{\link[rkwarddev:rk.XML.logic]{rk.XML.logic}},
 #'		\code{\link[rkwarddev:rk.XML.set]{rk.XML.set}},
+#'		\code{\link[rkwarddev:rk.XML.switch]{rk.XML.switch}},
 #'		and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' test.external <- rk.XML.external(id="ext_property", default="none")

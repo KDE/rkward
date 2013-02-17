@@ -1,5 +1,8 @@
 #' Create XML node "dependencies" for RKWard pluginmaps
 #'
+#' @note The \code{<dependencies>} node was introduced with RKWard 0.6.1, please set the dependencies
+#'		of your component/plugin accordingly.
+#'
 #' @param dependencies A named list with these elements:
 #'		\describe{
 #'			\item{rkward.min}{Minimum RKWard version needed for this plugin (optional)}
@@ -21,7 +24,9 @@
 #'		}
 #' @param hints Logical, if \code{TRUE}, \code{NULL} values will be replaced with example text.
 #' @export
-#' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
+#' @seealso
+#'		\code{\link[rkwarddev:rk.XML.dependency_check]{rk.XML.dependency_check}},
+#'		and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' dependencies.node <- rk.XML.dependencies(
 #' 	dependencies=list(

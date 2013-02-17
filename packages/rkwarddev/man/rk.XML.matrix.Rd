@@ -71,6 +71,11 @@
 \description{
   Create XML "matrix" node for RKWard plugins
 }
+\note{
+  The \code{<matrix>} node was introduced with RKWard
+  0.6.1, please set the dependencies of your
+  component/plugin accordingly.
+}
 \examples{
 test.matrix <- rk.XML.matrix("A matrix")
 }

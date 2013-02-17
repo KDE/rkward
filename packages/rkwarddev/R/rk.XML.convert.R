@@ -35,6 +35,7 @@
 #'		\code{\link[rkwarddev:rk.XML.external]{rk.XML.external}},
 #'		\code{\link[rkwarddev:rk.XML.logic]{rk.XML.logic}},
 #'		\code{\link[rkwarddev:rk.XML.set]{rk.XML.set}},
+#'		\code{\link[rkwarddev:rk.XML.switch]{rk.XML.switch}},
 #'		and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' test.convert <- rk.XML.convert(list(string="foo"), mode=c(notequals="bar"))

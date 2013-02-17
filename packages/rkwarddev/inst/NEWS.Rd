@@ -1,21 +1,34 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
-\section{Changes in rkwarddev version 0.06-2 (2013-02-07)}{
+\section{Changes in rkwarddev version 0.06-2 (2013-02-15)}{
   \subsection{changed}{
     \itemize{
       \item the structure of <about> nodes will change in RKWard 0.6.1, <dependencies> will become
-        a direct child of <document> or <component>, which explains several changes in this release
+        a direct child of <document> or <component>, which explains several changes in this release.
+        this is not really critical, because this information wasn't evaluated by RKWard until now
+        anyway
       \item for consistency, from now on <component> is never an empty node
+      \item \code{rk.XML.pluginmap()} will now move <dependencies> from <about> to a top level child node
+        of plugin maps, with a warning
     }
   }
   \subsection{added}{
     \itemize{
+      \item new function \code{rk.XML.switch()}
+      \item new function \code{rk.XML.optiondisplay()}
+      \item new function \code{rk.XML.optionset()}
+      \item new function \code{rk.XML.matrix()}
       \item new function \code{rk.XML.dependencies()}
       \item new function \code{rk.XML.dependency_check()}
       \item added options \code{"dependencies"}, \code{"namespace"} and \code{"priority"} to \code{rk.XML.pluginmap()}
       \item added option \code{"dependencies"} to \code{rk.XML.component()}
       \item added \code{"map"} to \code{rk.XML.require()}
+    }
+  }
+  \subsection{fixed}{
+    \itemize{
+      \item added some missing parameter in the docs for \code{rk.paste.JS.graph()}
     }
   }
 }

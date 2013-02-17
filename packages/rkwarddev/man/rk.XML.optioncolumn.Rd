@@ -45,8 +45,19 @@
   These nodes are valid only inside \code{<optionset>}
   nodes.
 }
+\note{
+  The \code{<optionset>} node was introduced with RKWard
+  0.6.1, please set the dependencies of your
+  component/plugin accordingly.
+}
 \examples{
 myInput <- rk.XML.input(label="Given name(s)", size="small")
 myOptCol <- rk.XML.optioncolumn("os_name", connect=myInput, modifier="text")
+}
+\seealso{
+  \code{\link[rkwarddev:rk.XML.optionset]{rk.XML.optionset}},
+  \code{\link[rkwarddev:rk.XML.optiondisplay]{rk.XML.optiondisplay}},
+  and the \href{help:rkwardplugins}{Introduction to Writing
+  Plugins for RKWard}
 }
 

@@ -36,6 +36,11 @@
 \description{
   Create XML node "dependency_check" for RKWard pluginmaps
 }
+\note{
+  The \code{<dependency_check>} node was introduced with
+  RKWard 0.6.1, please set the dependencies of your
+  component/plugin accordingly.
+}
 \examples{
 dependency_check.node <- rk.XML.dependency_check(
 	id.name="dep_check",
@@ -53,7 +58,8 @@ dependency_check.node <- rk.XML.dependency_check(
 )
 }
 \seealso{
-  \href{help:rkwardplugins}{Introduction to Writing Plugins
-  for RKWard}
+  \code{\link[rkwarddev:rk.XML.dependencies]{rk.XML.dependencies}},
+  and the \href{help:rkwardplugins}{Introduction to Writing
+  Plugins for RKWard}
 }
 

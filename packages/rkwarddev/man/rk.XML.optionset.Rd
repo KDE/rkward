@@ -47,4 +47,15 @@
 \description{
   Create XML node "optionset" for RKWard plugins
 }
+\note{
+  The \code{<optionset>} node was introduced with RKWard
+  0.6.1, please set the dependencies of your
+  component/plugin accordingly.
+}
+\seealso{
+  \code{\link[rkwarddev:rk.XML.optioncolumn]{rk.XML.optioncolumn}},
+  \code{\link[rkwarddev:rk.XML.optiondisplay]{rk.XML.optiondisplay}},
+  and the \href{help:rkwardplugins}{Introduction to Writing
+  Plugins for RKWard}
+}
 

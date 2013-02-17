@@ -51,9 +51,10 @@ cat(pasteXML(test.connect))
 \seealso{
   \code{\link[rkwarddev:rk.XML.convert]{rk.XML.convert}},
   \code{\link[rkwarddev:rk.XML.external]{rk.XML.external}},
-  \code{\link[rkwarddev:rk.XML.logic]{rk.XML.logic}}
-  \code{\link[rkwarddev:rk.XML.set]{rk.XML.set}}, and the
-  \href{help:rkwardplugins}{Introduction to Writing Plugins
-  for RKWard}
+  \code{\link[rkwarddev:rk.XML.logic]{rk.XML.logic}},
+  \code{\link[rkwarddev:rk.XML.set]{rk.XML.set}},
+  \code{\link[rkwarddev:rk.XML.switch]{rk.XML.switch}}, and
+  the \href{help:rkwardplugins}{Introduction to Writing
+  Plugins for RKWard}
 }
 

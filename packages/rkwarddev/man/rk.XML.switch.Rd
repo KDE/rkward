@@ -2,8 +2,7 @@
 \alias{rk.XML.switch}
 \title{Create XML node "switch" for RKWard plugins}
 \usage{
-  rk.XML.switch(condition, modifier = NULL, true = NULL,
-    false = NULL, case = NULL, default = NULL,
+  rk.XML.switch(condition, cases, modifier = NULL,
     id.name = "auto")
 }
 \arguments{
@@ -12,27 +11,20 @@
   object of class \code{XiMpLe.node} (whose \code{id} will
   be extracted and used).}
 
+  \item{cases}{A named list of named lists. The lists
+  contained must either be called \code{true} and
+  \code{false}, setting the return values if
+  \code{condition} is logical, or \code{case} and
+  optionally \code{default}. You can provide as many
+  \code{case} lists as you need, setting a return value for
+  each \code{condition == case} respectively.  Each list
+  must contain either a \code{fixed_value} or a
+  \code{dynamic_value} element.  In addition, each
+  \code{case} list must also have one \code{standard}
+  element.}
+
   \item{modifier}{Character string, an optional modifier to
-  be appended tp \code{condition}.}
-
-  \item{true}{A named list, setting the return value if
-  \code{condition} is TRUE.  Must have either
-  \code{fixed_value} or \code{dynamic_value}.}
-
-  \item{false}{A named list, setting the return value if
-  \code{condition} is FALSE.  Must have either
-  \code{fixed_value} or \code{dynamic_value}.}
-
-  \item{case}{A list of named lists, setting the return
-  values if \code{condition == case}.  Each vector
-  represents one case; it must include a character string
-  called \code{standard}, which is the value to match
-  against, as well as either \code{fixed_value} or
-  \code{dynamic_value}.}
-
-  \item{default}{A named list, setting the default return
-  value if \code{condition} doesn't match any case. Must
-  have either \code{fixed_value} or \code{dynamic_value}.}
+  be appended to \code{condition}.}
 
   \item{id.name}{Character string, a unique ID for this
   property.  If \code{"auto"}, IDs will be generated
@@ -43,9 +35,10 @@
 }
 \description{
   This node can only be used in \code{<logic>} sections. If
-  the provided property is logical, you must also set
-  values for \code{true} and \code{false}. If not, you must
-  provide at least one \code{case}.
+  the provided property is logical, in the \code{cases}
+  list you must also provide lists called \code{true} and
+  \code{false}. If not, you must provide at least one list
+  called \code{case}.
 }
 \details{
   The values to be returned can be either
@@ -56,14 +49,36 @@
   property, an can be provided as either a character string
   or an object of class \code{XiMpLe.node}.
 }
+\note{
+  The \code{<switch>} node was introduced with RKWard
+  0.6.1, please set the dependencies of your
+  component/plugin accordingly.
+}
 \examples{
+# example for a boolean switch
 myCheckbox <- rk.XML.cbox("foo")
-rk.XML.switch(myCheckbox,
-  true=c(fixed_value="foo"),
-  false=list(fixed_value="bar")
+rk.XML.switch(myCheckbox, cases=list(
+  true=list(fixed_value="foo"),
+  false=list(fixed_value="bar"))
+)
+
+# example for a case switch
+MyRadio <- rk.XML.radio("Chose one",
+  options=list(
+    "First Option"=c(val="val1"),
+    "Second Option"=c(val="val2", chk=TRUE))
+)
+rk.XML.switch(MyRadio, modifier="string", cases=list(
+  case=list(standard="val1", fixed_value="foo"),
+  case=list(standard="val2", fixed_value="bar"))
 )
 }
 \seealso{
+  \code{\link[rkwarddev:rk.XML.connect]{rk.XML.connect}},
+  \code{\link[rkwarddev:rk.XML.convert]{rk.XML.convert}},
+  \code{\link[rkwarddev:rk.XML.external]{rk.XML.external}},
+  \code{\link[rkwarddev:rk.XML.logic]{rk.XML.logic}},
+  \code{\link[rkwarddev:rk.XML.set]{rk.XML.set}}, and the
   \href{help:rkwardplugins}{Introduction to Writing Plugins
   for RKWard}
 }

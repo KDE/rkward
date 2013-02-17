@@ -1,5 +1,8 @@
 #' Create XML node "optionset" for RKWard plugins
 #'
+#' @note The \code{<optionset>} node was introduced with RKWard 0.6.1, please set the dependencies
+#'		of your component/plugin accordingly.
+#'
 #' @param content A list of XiMpLe.nodes to be placed inside the <content> node of this <optionset>.
 #' @param optioncolumn A list of \code{<optioncolumn>} XiMpLe.nodes.
 #' @param min_rows Numeric (integer), if specified, the set will be marked invalid, unless it has
@@ -18,6 +21,10 @@
 #'		If \code{"auto"}, an ID will be generated automatically from the <content> nodes.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
+#' @seealso
+#'		\code{\link[rkwarddev:rk.XML.optioncolumn]{rk.XML.optioncolumn}},
+#'		\code{\link[rkwarddev:rk.XML.optiondisplay]{rk.XML.optiondisplay}},
+#'		and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 rk.XML.optionset <- function(content, optioncolumn, min_rows=0, min_rows_if_any=0, max_rows=0, keycolumn=NULL, logic=NULL, optiondisplay=NULL, id.name="auto"){
 
 	if(identical(id.name, "auto")){

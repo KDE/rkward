@@ -13,6 +13,7 @@
 #'		\code{\link[rkwarddev:rk.XML.connect]{rk.XML.connect}},
 #'		\code{\link[rkwarddev:rk.XML.external]{rk.XML.external}},
 #'		\code{\link[rkwarddev:rk.XML.set]{rk.XML.set}},
+#'		\code{\link[rkwarddev:rk.XML.switch]{rk.XML.switch}},
 #'		and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' # define an input field and two checkboxes
