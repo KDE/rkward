@@ -20,7 +20,7 @@
 
 #include "../rbackend/rinterface.h"
 #include "robjectlist.h"
-#include "rslotspseudoobject.h"
+#include "rkpseudoobjects.h"
 #include "rkvariable.h"
 #include "rfunctionobject.h"
 #include "renvironmentobject.h"

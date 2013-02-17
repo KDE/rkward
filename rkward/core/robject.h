@@ -21,6 +21,7 @@
 
 #include <qstring.h>
 #include <qmap.h>
+#include <QHash>
 
 #include "../rbackend/rcommandreceiver.h"
 
@@ -98,6 +99,13 @@ public:
 		StorageSizeBasicInfo = 6,
 	};
 
+	enum PseudoObjectType {
+		SlotsObject,
+		NamespaceObject,
+		OrphanNamespacesObject,
+		InvalidPseudoObject
+	};
+
 #define ROBJECT_TYPE_INTERNAL_MASK (RObject::Container | RObject::Variable | RObject::Workspace | RObject::Environment | RObject::Function)
 /** @returns false if an object of the given old type cannot represent an object of the given new type (e.g. (new_type & RObjectType::Variable), but (old_type & RObjectType::Container)). */
 	static bool isMatchingType (int old_type, int new_type) { return ((old_type & ROBJECT_TYPE_INTERNAL_MASK) == (new_type & ROBJECT_TYPE_INTERNAL_MASK)); };
@@ -118,8 +126,9 @@ public:
 	/** see RObjectType */
 	bool isType (int type) const { return (RObject::type & type); };
 	bool isPseudoObject () const { return isType (PseudoObject); };
-	bool isSlotsPseudoObject () const { return (this && parent && ((void*) parent->slots_pseudo_object == (void*) this)); };
-	bool isPackageNamespace () const { return (this && isPseudoObject () && (name == "NAMESPACE")); };
+	static PseudoObjectType getPseudoObjectType (const RObject *object) { return pseudo_object_types.value (object, InvalidPseudoObject); };
+	bool isSlotsPseudoObject () const { return (this && isPseudoObject () && (getPseudoObjectType (this) == SlotsObject)); };
+	bool isPackageNamespace () const { return (this && isPseudoObject () && (getPseudoObjectType (this) == NamespaceObject)); };
 	bool hasMetaObject () const { return (meta_map); };
 	/** see RObjectType::Pending */
 	bool isPending () const { return type & Pending; };
@@ -277,6 +286,10 @@ friend class RKModificationTracker;
 	virtual void endEdit ();
 
 	void rCommandDone (RCommand *command);
+friend class RSlotsPseudoObject;
+friend class RKPackageNamespaceObject;
+friend class RKOrphanNamespacesObject;
+	static QHash<const RObject*, PseudoObjectType> pseudo_object_types;
 };
 
 #endif

@@ -21,6 +21,7 @@
 #include <klocale.h>
 
 #include "robjectlist.h"
+#include "rkpseudoobjects.h"
 #include "../rbackend/rinterface.h"
 #include "../settings/rksettingsmoduleobjectbrowser.h"
 #include "rkmodificationtracker.h"
@@ -58,7 +59,6 @@ QString REnvironmentObject::getFullName () const {
 
 	if (type & GlobalEnv) return name;	// .GlobalEnv
 	if (type & ToplevelEnv) return ("as.environment (" + rQuote (name) + ")");
-	if (isPackageNamespace ()) return ("asNamespace (" + rQuote (static_cast<REnvironmentObject*>(parent)->packageName ()) + ")");
 	return parent->makeChildName (name, type & Misplaced);
 }
 
@@ -83,7 +83,6 @@ QString REnvironmentObject::makeChildName (const QString &short_child_name, bool
 		if ((type & PackageEnv) && (!misplaced)) return (packageName () + "::" + safe_name);
 		return (getFullName () + '$' + safe_name);
 	}
-	if (isPackageNamespace ()) return (static_cast<REnvironmentObject*>(parent)->packageName () + ":::" + safe_name);
 	return (getFullName () + '$' + safe_name);
 }
 
@@ -91,7 +90,6 @@ QString REnvironmentObject::makeChildBaseName (const QString &short_child_name) 
 	RK_TRACE (OBJECTS);
 
 	if (type & ToplevelEnv) return (short_child_name);
-	if (isPackageNamespace ()) return (static_cast<REnvironmentObject*>(parent)->packageName () + ":::" + short_child_name);
 	return (name + '$' + short_child_name);
 }
 
@@ -187,7 +185,7 @@ void REnvironmentObject::updateNamespace (RData* new_data) {
 	RK_ASSERT (new_data->getDataType () == RData::StructureVector);
 	bool added = false;
 	if (!namespace_envir) {
-		namespace_envir = new REnvironmentObject (this, "NAMESPACE");
+		namespace_envir = new RKNamespaceObject (this);
 		added = true;
 		RKGlobals::tracker ()->lockUpdates (true);
 	}

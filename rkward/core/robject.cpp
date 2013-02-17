@@ -26,7 +26,7 @@
 #include "../rkglobals.h"
 #include "robjectlist.h"
 #include "rcontainerobject.h"
-#include "rslotspseudoobject.h"
+#include "rkpseudoobjects.h"
 #include "rkvariable.h"
 #include "renvironmentobject.h"
 #include "rfunctionobject.h"
@@ -38,6 +38,9 @@
 namespace RObjectPrivate {
 	QVector<qint32> dim_null (1, 0);
 }
+
+// static
+QHash<const RObject*, RObject::PseudoObjectType> RObject::pseudo_object_types;
 
 RObject::RObject (RObject *parent, const QString &name) {
 	RK_TRACE (OBJECTS);
@@ -473,7 +476,7 @@ bool RObject::updateSlots (RData *new_data) {
 		RK_ASSERT (new_data->getDataType () == RData::StructureVector);
 		bool added = false;
 		if (!slots_pseudo_object) {
-			slots_pseudo_object = new RSlotsPseudoObject (this, QString ());
+			slots_pseudo_object = new RSlotsPseudoObject (this);
 			added = true;
 			RKGlobals::tracker ()->lockUpdates (true);
 		}

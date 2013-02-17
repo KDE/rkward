@@ -12,7 +12,7 @@ SET(core_STAT_SRCS
    rfunctionobject.cpp
    renvironmentobject.cpp
    rkrownames.cpp
-   rslotspseudoobject.cpp
+   rkpseudoobjects.cpp
    )
 
 QT4_AUTOMOC(${core_STAT_SRCS})
