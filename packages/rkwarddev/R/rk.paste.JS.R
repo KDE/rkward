@@ -19,6 +19,9 @@
 #' @param join For \code{rk.JS.var} objects only: A character string, useful for GUI elements which accept multiple objects
 #'		(i.e., multi-varslots). If \code{join} is something other than \code{""}, these objects will be collapsed into one string
 #'		when pasted, joined by this string.
+#' @param getter For \code{rk.JS.var} objects only: A character string, naming the JavaScript function which should be used to get the
+#'		values in the actual plugin. Depending on the XML element, \code{"getString"}, \code{"getBool"} or \code{"getList"} can be
+#'		useful alternatives. For backwards compatibility, the default is set to \code{"getValue"}.
 #' @param empty.e For \code{rk.JS.ite} objects only: Logical, if \code{TRUE} will force to add empty \code{else \{\}} brackets when
 #'		there is no \code{else} statement defined, which is considered to enhance code readability by some.
 #' @return A character string.
@@ -35,7 +38,7 @@
 #' @export
 
 rk.paste.JS <- function(..., level=2, indent.by="\t", funct=NULL, array=NULL,
-	var.prefix=NULL, modifiers=NULL, default=NULL, join=NULL, empty.e=FALSE){
+	var.prefix=NULL, modifiers=NULL, default=NULL, join=NULL, getter=NULL, empty.e=FALSE){
 	stopifnot(level > 0)
 	all.objects <- list(...)
 
@@ -54,12 +57,12 @@ rk.paste.JS <- function(..., level=2, indent.by="\t", funct=NULL, array=NULL,
 			result <- paste.JS.options(this.object, level=level, indent.by=indent.by, array=array, funct=funct)
 		} else if(inherits(this.object, "rk.JS.var")){
 			result <- paste.JS.var(this.object, level=level, indent.by=indent.by, JS.prefix=var.prefix,
-				modifiers=modifiers, default=default, join=join)
-		} else if(inherits(this.object, "XiMpLe.node")){
-			if(identical(slot(this.object, "name"), "!--")){
+				modifiers=modifiers, default=default, join=join, getter=getter)
+		} else if(is.XiMpLe.node(this.object)){
+			if(identical(XMLName(this.object), "!--")){
 				result <- paste(indent(level, by=indent.by),
 					"// ",
-					gsub("\n", paste("\n", indent(level, by=indent.by), "//", sep=""), slot(slot(this.object, "children")[[1]], "value")), sep="")
+					gsub("\n", paste("\n", indent(level, by=indent.by), "//", sep=""), XMLValue(XMLChildren(this.object)[[1]])), sep="")
 			} else {
 				stop(simpleError("XiMpLe.node objects are only valid if they are comments!"))
 			}

@@ -11,7 +11,8 @@ setClass("rk.JS.var",
 		modifiers="list",
 		default="logical",
 		join="character",
-		vars="list"
+		vars="list",
+		getter="character"
 	),
 	prototype(
 		JS.var=character(),
@@ -20,7 +21,8 @@ setClass("rk.JS.var",
 		modifiers=list(),
 		default=FALSE,
 		join="",
-		vars=list()
+		vars=list(),
+		getter="getValue" # for compatibility with earlier releases
 	)
 )
 

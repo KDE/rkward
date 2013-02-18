@@ -6,12 +6,14 @@
 #' @param add.abbrev Logical, if \code{TRUE} the JavaScript variables will all have a prefix with an
 #'		three letter abbreviation of the XML tag type to improve the readability of the code. But it's
 #'		probably better to add this in the XML code in the first place.
+#' @param guess.getter Logical, if \code{TRUE} try to get a good default getter function for JavaScript
+#'		variable values.
 #' @param indent.by Character string used to indent each entry if \code{js=TRUE}.
 #' @return A character vector.
 #' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @export
 
-rk.JS.scan <- function(pXML, js=TRUE, add.abbrev=FALSE, indent.by="\t"){
+rk.JS.scan <- function(pXML, js=TRUE, add.abbrev=FALSE, guess.getter=FALSE, indent.by="\t"){
 
 	JS.relevant.tags <- c("radio", "varslot", "browser", "dropdown",
 		"checkbox", "saveobject", "input", "spinbox")
@@ -29,7 +31,8 @@ rk.JS.scan <- function(pXML, js=TRUE, add.abbrev=FALSE, indent.by="\t"){
 			JS.lines <- paste(unlist(sapply(1:nrow(JS.id), function(this.id){
 					return(rk.paste.JS(get.JS.vars(
 						JS.var=JS.id[this.id,"abbrev"],
-						XML.var=JS.id[this.id,"id"]),
+						XML.var=JS.id[this.id,"id"],
+						guess.getter=guess.getter),
 						level=2, indent.by=indent.by))
 				})), collapse="\n")
 		} else {
@@ -40,7 +43,7 @@ rk.JS.scan <- function(pXML, js=TRUE, add.abbrev=FALSE, indent.by="\t"){
 		JS.lines <- NULL
 	}
 
-	# special tags: must be chackable and get "checked" property
+	# special tags: must be checkable and get "checked" property
 	JS.special.tags <- c("frame")
 	JS.special.id <- get.IDs(single.tags=single.tags, relevant.tags=JS.special.tags, add.abbrev=add.abbrev, only.checkable=TRUE)
 	if("id" %in% colnames(JS.special.id)){
@@ -49,7 +52,8 @@ rk.JS.scan <- function(pXML, js=TRUE, add.abbrev=FALSE, indent.by="\t"){
 					return(rk.paste.JS(get.JS.vars(
 						JS.var=JS.special.id[this.id,"abbrev"],
 						XML.var=JS.special.id[this.id,"id"],
-						modifiers="checked"),
+						modifiers="checked",
+						guess.getter=guess.getter),
 						level=2, indent.by=indent.by))
 				})), collapse="\n"), sep="")
 		} else {

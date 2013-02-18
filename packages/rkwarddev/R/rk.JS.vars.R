@@ -13,6 +13,11 @@
 #'		joined by this string.
 #' @param check.modifiers Logical, if \code{TRUE} the given modifiers will be checked for validity. Should only be
 #'		turned off if you know what you're doing.
+#' @param getter A character string, naming the JavaScript function which should be used to get the values in the
+#'		actual plugin. Depending on the XML element, \code{"getString"}, \code{"getBool"} or \code{"getList"} can be
+#'		useful alternatives. For backwards compatibility, the default is set to \code{"getValue"}.
+#' @param guess.getter Logical, if \code{TRUE} try to get a good default getter function for JavaScript
+#'		variable values.
 #' @return An object of class \code{rk.JS.var}.
 #' @export
 #' @seealso \code{\link[rkwarddev:rk.JS.array]{rk.JS.array}},
@@ -27,7 +32,8 @@
 #' # define them by their ID in JavaScript
 #' cat(rk.paste.JS(rk.JS.vars(list(checkA, checkB, checkC))))
 
-rk.JS.vars <- function(..., var.prefix=NULL, modifiers=NULL, default=FALSE, join="", check.modifiers=TRUE){
+rk.JS.vars <- function(..., var.prefix=NULL, modifiers=NULL, default=FALSE, join="", check.modifiers=TRUE,
+	getter="getValue", guess.getter=FALSE){
 	variables <- list(...)
 
 	JS.vars <- new("rk.JS.var",
@@ -38,8 +44,11 @@ rk.JS.vars <- function(..., var.prefix=NULL, modifiers=NULL, default=FALSE, join
 						modifiers=modifiers,
 						default=default,
 						join=join,
-						check.modifiers=check.modifiers)
-				}))
+						check.modifiers=check.modifiers,
+						getter=getter,
+						guess.getter=guess.getter)
+				})
+			)
 
 	return(JS.vars)
 }

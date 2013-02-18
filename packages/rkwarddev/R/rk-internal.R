@@ -208,11 +208,29 @@ camelCode <- function(words){
 } ## end function camelCode()
 
 
+## default getters for JavaScript variables
+# try to set useful default getter functions to query the values from XML nodes
+# will only be used if "guess.getter" is true -- and after it's properly implemented
+# into rk.JS.scan()
+JS.getters.default <- list(
+	"radio"="getString",
+	"varslot"="getString",
+	"browser"="getString",
+	"dropdown"="getString",
+	"checkbox"="getBool",
+	"saveobject"="getString",
+	"input"="getString",
+	"spinbox"="getString",
+	"optioncolumn"="getList",
+	"matrix"="getList"
+)
+
 ## function get.JS.vars()
 #   <tag id="my.id" ...>
 # in XML will become
 #   var my.id = getValue("my.id");
-get.JS.vars <- function(JS.var, XML.var=NULL, JS.prefix="", names.only=FALSE, modifiers=NULL, default=FALSE, join="", check.modifiers=TRUE){
+get.JS.vars <- function(JS.var, XML.var=NULL, JS.prefix="", names.only=FALSE, modifiers=NULL, default=FALSE, join="",
+	getter="getValue", guess.getter=FALSE, check.modifiers=TRUE){
 	# check for XiMpLe nodes
 	JS.var <- check.ID(JS.var)
 	if(!is.null(XML.var)){
@@ -239,6 +257,13 @@ get.JS.vars <- function(JS.var, XML.var=NULL, JS.prefix="", names.only=FALSE, mo
 					modifiers <- modifiers[modif.validity(modif.tag.name, modifier=child.list(modifiers), warn.only=TRUE, bool=TRUE)]
 				} else {}
 			}
+		} else {}
+		# check for getter guessing
+		if(isTRUE(guess.getter) && is.XiMpLe.node(XML.var)){
+			tag.name <- XMLName(XML.var)
+			if(tag.name %in% names(JS.getters.default)){
+				getter <- JS.getters.default[[tag.name]]
+			} else {}
 		} else {}
 		XML.var <- check.ID(XML.var)
 	} else {
@@ -269,7 +294,8 @@ get.JS.vars <- function(JS.var, XML.var=NULL, JS.prefix="", names.only=FALSE, mo
 			prefix=JS.prefix,
 			modifiers=as.list(modifiers),
 			default=default,
-			join=join)
+			join=join,
+			getter=getter)
 	}
 
 	return(results)
@@ -835,7 +861,8 @@ paste.JS.options <- function(object, level=2, indent.by="\t", array=NULL, funct=
 
 
 ## function paste.JS.var()
-paste.JS.var <- function(object, level=2, indent.by="\t", JS.prefix=NULL, modifiers=NULL, default=NULL, join=NULL, names.only=FALSE, check.modifiers=FALSE){
+paste.JS.var <- function(object, level=2, indent.by="\t", JS.prefix=NULL, modifiers=NULL, default=NULL, join=NULL,
+	getter=NULL, names.only=FALSE, check.modifiers=FALSE){
 	# paste several objects
 	results <- unlist(sapply(slot(object, "vars"), function(this.obj){
 			paste.JS.var(this.obj,
@@ -845,6 +872,7 @@ paste.JS.var <- function(object, level=2, indent.by="\t", JS.prefix=NULL, modifi
 					modifiers=modifiers,
 					default=default,
 					join=join,
+					getter=getter,
 					names.only=names.only)}))
 	if(!isTRUE(names.only) & !is.null(results)){
 		results <- paste(results, collapse="\n")
@@ -871,6 +899,9 @@ paste.JS.var <- function(object, level=2, indent.by="\t", JS.prefix=NULL, modifi
 	if(is.null(join)){
 		join        <- slot(object, "join")
 	} else {}
+	if(is.null(getter)){
+		getter      <- slot(object, "getter")
+	} else {}
 
 	if(!identical(join, "")){
 		join.code <- paste(".split(\"\\n\").join(\"", join, "\")", sep="")
@@ -884,7 +915,7 @@ paste.JS.var <- function(object, level=2, indent.by="\t", JS.prefix=NULL, modifi
 			if(isTRUE(names.only)){
 				results <- c(results, camelCode(c(JS.prefix, JS.var)))
 			} else {
-				results <- paste(main.indent, "var ", camelCode(c(JS.prefix, JS.var)), " = getValue(\"", XML.var, "\")", join.code, ";", sep="")
+				results <- paste(main.indent, "var ", camelCode(c(JS.prefix, JS.var)), " = ", getter, "(\"", XML.var, "\")", join.code, ";", sep="")
 			}
 		} else {}
 		if(length(modifiers) > 0){
@@ -897,7 +928,7 @@ paste.JS.var <- function(object, level=2, indent.by="\t", JS.prefix=NULL, modifi
 						return(camelCode(c(JS.prefix, JS.var, this.modif)))
 					} else {
 						return(paste(main.indent, "var ", camelCode(c(JS.prefix, JS.var, this.modif)),
-							" = getValue(\"", XML.var, ".", this.modif, "\")", join.code, ";", sep=""))
+							" = ", getter, "(\"", XML.var, ".", this.modif, "\")", join.code, ";", sep=""))
 					}
 				})
 			if(identical(results, "")){

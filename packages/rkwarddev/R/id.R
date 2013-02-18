@@ -33,8 +33,8 @@ id <- function(..., quote=FALSE, collapse="", js=TRUE){
 			# and discard the rest
 			this.part <- stripCont(this.part, get="printout")
 
-			if(inherits(this.part, "XiMpLe.node")){
-				node.id <- this.part@attributes$id
+			if(is.XiMpLe.node(this.part)){
+				node.id <- XMLAttrs(this.part)$id
 					if(isTRUE(js)){
 						node.id <- camelCode(node.id)
 					} else {}

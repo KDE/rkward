@@ -3,7 +3,8 @@
 \title{Define variables in JavaScript code}
 \usage{
   rk.JS.vars(..., var.prefix = NULL, modifiers = NULL,
-    default = FALSE, join = "", check.modifiers = TRUE)
+    default = FALSE, join = "", check.modifiers = TRUE,
+    getter = "getValue", guess.getter = FALSE)
 }
 \arguments{
   \item{...}{Either one or more character strings (the
@@ -30,6 +31,17 @@
   \item{check.modifiers}{Logical, if \code{TRUE} the given
   modifiers will be checked for validity. Should only be
   turned off if you know what you're doing.}
+
+  \item{getter}{A character string, naming the JavaScript
+  function which should be used to get the values in the
+  actual plugin. Depending on the XML element,
+  \code{"getString"}, \code{"getBool"} or \code{"getList"}
+  can be useful alternatives. For backwards compatibility,
+  the default is set to \code{"getValue"}.}
+
+  \item{guess.getter}{Logical, if \code{TRUE} try to get a
+  good default getter function for JavaScript variable
+  values.}
 }
 \value{
   An object of class \code{rk.JS.var}.

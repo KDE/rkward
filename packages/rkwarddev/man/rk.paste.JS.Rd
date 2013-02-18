@@ -5,7 +5,7 @@
   rk.paste.JS(..., level = 2, indent.by = "\t",
     funct = NULL, array = NULL, var.prefix = NULL,
     modifiers = NULL, default = NULL, join = NULL,
-    empty.e = FALSE)
+    getter = NULL, empty.e = FALSE)
 }
 \arguments{
   \item{...}{Objects of class \code{rk.JS.ite},
@@ -48,6 +48,14 @@
   is something other than \code{""}, these objects will be
   collapsed into one string when pasted, joined by this
   string.}
+
+  \item{getter}{For \code{rk.JS.var} objects only: A
+  character string, naming the JavaScript function which
+  should be used to get the values in the actual plugin.
+  Depending on the XML element, \code{"getString"},
+  \code{"getBool"} or \code{"getList"} can be useful
+  alternatives. For backwards compatibility, the default is
+  set to \code{"getValue"}.}
 
   \item{empty.e}{For \code{rk.JS.ite} objects only:
   Logical, if \code{TRUE} will force to add empty

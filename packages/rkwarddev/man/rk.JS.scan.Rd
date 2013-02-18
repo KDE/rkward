@@ -3,7 +3,7 @@
 \title{Create JavaScript variables from plugin XML}
 \usage{
   rk.JS.scan(pXML, js = TRUE, add.abbrev = FALSE,
-    indent.by = "\t")
+    guess.getter = FALSE, indent.by = "\t")
 }
 \arguments{
   \item{pXML}{Either an object of class \code{XiMpLe.doc}
@@ -18,6 +18,10 @@
   abbreviation of the XML tag type to improve the
   readability of the code. But it's probably better to add
   this in the XML code in the first place.}
+
+  \item{guess.getter}{Logical, if \code{TRUE} try to get a
+  good default getter function for JavaScript variable
+  values.}
 
   \item{indent.by}{Character string used to indent each
   entry if \code{js=TRUE}.}
