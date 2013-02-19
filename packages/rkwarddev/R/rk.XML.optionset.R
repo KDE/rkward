@@ -14,9 +14,8 @@
 #' @param keycolumn Character
 #' @param logic A valid \code{<logic>} node.
 #' @param optiondisplay Logical value, can be used to automatically add an \code{<optiondisplay>} node on top
-#'		of the \code{<content>} section, if set to something other than \code{NULL}. Depending on whether it's
-#'		\code{TRUE} or \code{FALSE}, its \code{index} argument will be set to \code{"true"} or
-#'		\code{"false"}, respectively.
+#'		of the \code{<content>} section. Depending on whether it's \code{TRUE} or \code{FALSE}, its \code{index}
+#'		argument will be set to \code{"true"} or \code{"false"}, respectively. Set to \code{NULL} to deactivate.
 #' @param id.name Character string, a unique ID for this plugin element.
 #'		If \code{"auto"}, an ID will be generated automatically from the <content> nodes.
 #' @return An object of class \code{XiMpLe.node}.
@@ -25,11 +24,30 @@
 #'		\code{\link[rkwarddev:rk.XML.optioncolumn]{rk.XML.optioncolumn}},
 #'		\code{\link[rkwarddev:rk.XML.optiondisplay]{rk.XML.optiondisplay}},
 #'		and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
-rk.XML.optionset <- function(content, optioncolumn, min_rows=0, min_rows_if_any=0, max_rows=0, keycolumn=NULL, logic=NULL, optiondisplay=NULL, id.name="auto"){
+#' @examples
+#' firstname <- rk.XML.input("Given name(s)")
+#' lastname <- rk.XML.input("Family name")
+#' genderselect <- rk.XML.radio("Gender", options=list(
+#'   Male = c(val="m"),
+#'   Female = c(val="f")))
+#' rk.XML.optionset(
+#'   content = list(
+#'     rk.XML.row(
+#'       firstname,
+#'       lastname,
+#'       genderselect)),
+#'   optioncolumn = list(
+#'     rk.XML.optioncolumn(firstname, modifier="text"),
+#'     rk.XML.optioncolumn(lastname, modifier="text"),
+#'     rk.XML.optioncolumn(genderselect)
+#'   )
+#' )
+rk.XML.optionset <- function(content, optioncolumn, min_rows=0, min_rows_if_any=0, max_rows=0,
+	keycolumn=NULL, logic=NULL, optiondisplay=TRUE, id.name="auto"){
 
 	if(identical(id.name, "auto")){
 		# try autogenerating some id
-		attr.list <- list(id=auto.ids(node.soup(content), prefix=ID.prefix("optionset"), chars=10))
+		attr.list <- list(id=auto.ids(node.soup(content), prefix=ID.prefix("oset"), chars=10))
 	} else if(is.null(id.name)){
 		attr.list <- list()
 	} else {
