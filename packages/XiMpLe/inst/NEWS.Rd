@@ -1,6 +1,14 @@
 \name{NEWS}
 \title{News for Package 'XiMpLe'}
 \encoding{UTF-8}
+\section{Changes in XiMpLe version 0.03-19 (2013-02-19)}{
+  \subsection{added}{
+    \itemize{
+      \item new methods \code{XMLScan()} and \code{XMLScan()}<- to search an XML tree recursively
+        for appearances of certain node names
+    }
+  }
+}
 \section{Changes in XiMpLe version 0.03-18 (2013-02-11)}{
   \subsection{changed}{
     \itemize{
@@ -18,8 +26,8 @@
   \subsection{added}{
     \itemize{
       \item added proper \code{is.XiMpLe.node()} and \code{is.XiMpLe.doc()} functions
-      \item added getter functions for all slots in XiMpLe.node and XiMpLe.doc objects
-        (e.g., \code{getXMLName()} to get the name slot of a XiMpLe.node object)
+      \item added getter functions for all slots in XiMpLe.node and XiMpLe.doc
+        objects (e.g., \code{getXMLName()} to get the name slot of a XiMpLe.node object)
     }
   }
 }

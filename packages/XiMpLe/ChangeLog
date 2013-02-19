@@ -1,5 +1,10 @@
 ChangeLog for package XiMpLe
 
+changes in version 0.03-19 (2013-02-19)
+added:
+  - new methods XMLScan() and XMLScan()<- to search an XML tree recursively
+    for appearances of certain node names
+
 changes in version 0.03-18 (2013-02-11)
 changed:
   - renamed getter methods from getXML*() into the more generic XML*()
@@ -10,8 +15,8 @@ added:
 changes in version 0.03-17 (2013-02-04)
 added:
   - added proper is.XiMpLe.node() and is.XiMpLe.doc() functions
-  - added getter functions for all slots in XiMpLe.node and XiMpLe.doc objects
-    (e.g., getXMLName() to get the name slot of a XiMpLe.node object)
+  - added getter functions for all slots in XiMpLe.node and XiMpLe.doc
+    objects (e.g., getXMLName() to get the name slot of a XiMpLe.node object)
 
 changes in version 0.03-16 (2012-11-05)
 added:

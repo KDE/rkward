@@ -284,3 +284,104 @@ setMethod("XMLDTD<-",
 		return(obj)
 	}
 )
+
+## scan a tree for appearances of nodes
+#' @rdname XMLGetters-methods
+#' @exportMethod XMLScan
+setGeneric("XMLScan", function(obj, name) standardGeneric("XMLScan"))
+
+# internal helper function
+find.nodes <- function(nodes, nName, res){
+	for (thisNode in nodes){
+			if(identical(XMLName(thisNode), nName)){
+				res <- append(res, thisNode)
+			} else if(length(XMLChildren(thisNode)) > 0){
+				res <- append(res, find.nodes(XMLChildren(thisNode), nName=nName, res=res))
+			} else {}
+		}
+	return(res)
+}
+
+#' @rdname XMLGetters-methods
+#' @aliases
+#'		XMLScan,-methods
+#'		XMLScan,XiMpLe.node-method
+#' @docType methods
+#' @include XiMpLe.node-class.R
+setMethod("XMLScan",
+	signature=signature(obj="XiMpLe.node"),
+	function(obj, name){
+		node.list <- find.nodes(
+			nodes=child.list(obj),
+			nName=name,
+			res=list())
+		return(node.list)
+	}
+)
+
+#' @rdname XMLGetters-methods
+#' @aliases
+#'		XMLScan,XiMpLe.doc-method
+#' @docType methods
+#' @include XiMpLe.doc-class.R
+setMethod("XMLScan",
+	signature=signature(obj="XiMpLe.doc"),
+	function(obj, name){
+		node.list <- find.nodes(
+			nodes=XMLChildren(obj),
+			nName=name,
+			res=list())
+		return(node.list)
+	}
+)
+
+#' @rdname XMLGetters-methods
+#' @exportMethod XMLScan<-
+setGeneric("XMLScan<-", function(obj, name, value) standardGeneric("XMLScan<-"))
+
+# internal helper function
+replace.nodes <- function(nodes, nName, replacement){
+	nodes <- sapply(nodes, function(thisNode){
+			if(identical(XMLName(thisNode), nName)){
+				return(replacement)
+			} else if(length(XMLChildren(thisNode)) > 0){
+				return(replace.nodes(child.list(XMLChildren(thisNode)), nName=nName, replacement=replacement))
+			} else {
+				return(thisNode)
+			}
+		})
+	return(nodes)
+}
+
+#' @rdname XMLGetters-methods
+#' @aliases
+#'		XMLScan<-,-methods
+#'		XMLScan<-,XiMpLe.node-method
+#' @docType methods
+#' @include XiMpLe.node-class.R
+setMethod("XMLScan<-",
+	signature=signature(obj="XiMpLe.node"),
+	function(obj, name, value){
+		obj <- replace.nodes(
+			nodes=child.list(obj),
+			nName=name,
+			replacement=value)
+		return(obj)
+	}
+)
+
+#' @rdname XMLGetters-methods
+#' @aliases
+#'		XMLScan<-,XiMpLe.doc-method
+#' @docType methods
+#' @include XiMpLe.doc-class.R
+setMethod("XMLScan<-",
+	signature=signature(obj="XiMpLe.doc"),
+	function(obj, name, value){
+		obj <- replace.nodes(
+			nodes=XMLChildren(obj),
+			nName=name,
+			replacement=value)
+		return(obj)
+	}
+)

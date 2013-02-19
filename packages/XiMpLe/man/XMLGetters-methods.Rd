@@ -38,6 +38,14 @@
 \alias{XMLName,-methods}
 \alias{XMLName<-,XiMpLe.node-method}
 \alias{XMLName,XiMpLe.node-method}
+\alias{XMLScan}
+\alias{XMLScan<-}
+\alias{XMLScan<-,-methods}
+\alias{XMLScan,-methods}
+\alias{XMLScan<-,XiMpLe.doc-method}
+\alias{XMLScan,XiMpLe.doc-method}
+\alias{XMLScan<-,XiMpLe.node-method}
+\alias{XMLScan,XiMpLe.node-method}
 \alias{XMLValue}
 \alias{XMLValue<-}
 \alias{XMLValue<-,-methods}
