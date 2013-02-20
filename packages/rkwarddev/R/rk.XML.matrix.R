@@ -91,7 +91,7 @@ rk.XML.matrix <- function(label, mode="real", rows=2, columns=2, min=NULL, max=N
 	
 	if(!is.null(horiz_headers)){
 		if(is.character(horiz_headers)){
-			attr.list[["horiz_headers"]] <- paste(horiz_headers, sep=";")
+			attr.list[["horiz_headers"]] <- paste(horiz_headers, collapse=";")
 		} else {
 			stop(simpleError("'horiz_headers' must be a character vector!"))
 		}
@@ -99,7 +99,7 @@ rk.XML.matrix <- function(label, mode="real", rows=2, columns=2, min=NULL, max=N
 
 	if(!is.null(vert_headers)){
 		if(is.character(vert_headers)){
-			attr.list[["vert_headers"]] <- paste(vert_headers, sep=";")
+			attr.list[["vert_headers"]] <- paste(vert_headers, collapse=";")
 		} else {
 			stop(simpleError("'vert_headers' must be a character vector!"))
 		}

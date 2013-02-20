@@ -1,7 +1,7 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
-\section{Changes in rkwarddev version 0.06-2 (2013-02-18)}{
+\section{Changes in rkwarddev version 0.06-2 (2013-02-20)}{
   \subsection{changed}{
     \itemize{
       \item the structure of <about> nodes will change in RKWard 0.6.1, <dependencies> will become
@@ -16,6 +16,7 @@
         releases. consequently, \code{rk.JS.vars()} and \code{rk.paste.JS()} have a new \code{"getter"} argument to set
         or overwrite this value. another new argument, \code{"guess.getter"}, can be used to turn on
         automatic guessing which getter function might be most appropriate.
+      \item \code{rk.JS.scan()} learned how to treat <optionset> and <matrix>
     }
   }
   \subsection{added}{
