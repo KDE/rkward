@@ -22,14 +22,43 @@ is.XiMpLe.doc <- function(x){
 #' 
 #' These are convenience methods to get or set slots from XML objects without using the \code{@@} operator.
 #'
+#' \itemize{
+#'		\item{\code{XMLName()}: }{get/set the XML node name (slot \code{name} of class \code{XiMpLe.node})}
+#'		\item{\code{XMLAttrs()}: }{get/set the XML node attributes (slot \code{attrs} of class \code{XiMpLe.node})}
+#'		\item{\code{XMLValue()}: }{get/set the XML node value (slot \code{value} of class \code{XiMpLe.node})}
+#'		\item{\code{XMLChildren()}: }{get/set the XML child nodes (slot \code{children} of both classes \code{XiMpLe.node}
+#'			and  \code{XiMpLe.doc})}
+#'		\item{\code{XMLFile()}: }{get/set the XML document file name  (slot \code{file} of class \code{XiMpLe.doc})}
+#'		\item{\code{XMLDecl()}: }{get/set the XML document declaration (slot \code{xml} of class \code{XiMpLe.doc})}
+#'		\item{\code{XMLDTD()}: }{get/set the XML document doctype definition (slot \code{dtd} of class \code{XiMpLe.doc})}
+#' }
+#'
+#' Another special method can scan a node/document tree object for appearances of nodes with a particular name:
+#'
+#' \itemize{
+#'		\item{\code{XMLScan()}: }{get/set the XML nodes by name (recursively searches slot \code{name} of both classes
+#'			\code{XiMpLe.node} and  \code{XiMpLe.doc})}
+#' }
+#'
 #' @param obj An object of class \code{XiMpLe.node} or \code{XiMpLe.doc}
 #' @seealso
-#'		\code{\link[XiMpLe:XiMpLe.doc-class]{XiMpLe.doc}}
+#'		\code{\link[XiMpLe:node]{node}},
+#'		\code{\link[XiMpLe:XiMpLe.doc-class]{XiMpLe.doc}},
 #'		\code{\link[XiMpLe:XiMpLe.node-class]{XiMpLe.node}}
 #' @keywords methods
 #' @docType methods
 #' @rdname XMLGetters-methods
 #' @exportMethod XMLName
+#' @examples
+#' xmlTestNode <- XMLNode("foo", XMLNode("testchild"))
+#' XMLName(xmlTestNode) # returns "foo"
+#' XMLName(xmlTestNode) <- "bar"
+#' XMLName(xmlTestNode) # now returns "bar"
+#'
+#' # search for a child node
+#' XMLScan(xmlTestNode, "testchild")
+#' # remove nodes of that name
+#' XMLScan(xmlTestNode, "testchild") <- NULL
 setGeneric("XMLName", function(obj) standardGeneric("XMLName"))
 #' @rdname XMLGetters-methods
 #' @aliases
@@ -291,12 +320,13 @@ setMethod("XMLDTD<-",
 setGeneric("XMLScan", function(obj, name) standardGeneric("XMLScan"))
 
 # internal helper function
-find.nodes <- function(nodes, nName, res){
+find.nodes <- function(nodes, nName){
+	res <- list()
 	for (thisNode in nodes){
 			if(identical(XMLName(thisNode), nName)){
 				res <- append(res, thisNode)
 			} else if(length(XMLChildren(thisNode)) > 0){
-				res <- append(res, find.nodes(XMLChildren(thisNode), nName=nName, res=res))
+				res <- append(res, find.nodes(XMLChildren(thisNode), nName=nName))
 			} else {}
 		}
 	return(res)
@@ -313,9 +343,14 @@ setMethod("XMLScan",
 	function(obj, name){
 		node.list <- find.nodes(
 			nodes=child.list(obj),
-			nName=name,
-			res=list())
-		return(node.list)
+			nName=name)
+		if(identical(node.list, list())){
+			return(NULL)
+		} else if(length(node.list) == 1){
+			return(node.list[[1]])
+		} else {
+			return(node.list)
+		}
 	}
 )
 
@@ -329,9 +364,14 @@ setMethod("XMLScan",
 	function(obj, name){
 		node.list <- find.nodes(
 			nodes=XMLChildren(obj),
-			nName=name,
-			res=list())
-		return(node.list)
+			nName=name)
+		if(identical(node.list, list())){
+			return(NULL)
+		} else if(length(node.list) == 1){
+			return(node.list[[1]])
+		} else {
+			return(node.list)
+		}
 	}
 )
 
@@ -345,11 +385,17 @@ replace.nodes <- function(nodes, nName, replacement){
 			if(identical(XMLName(thisNode), nName)){
 				return(replacement)
 			} else if(length(XMLChildren(thisNode)) > 0){
-				return(replace.nodes(child.list(XMLChildren(thisNode)), nName=nName, replacement=replacement))
+				XMLChildren(thisNode) <- replace.nodes(
+						XMLChildren(thisNode),
+						nName=nName,
+						replacement=replacement)
+				return(thisNode)
 			} else {
 				return(thisNode)
 			}
 		})
+	# get rid of NULL in list
+	nodes <- Filter(Negate(is.null), nodes)
 	return(nodes)
 }
 
@@ -362,10 +408,13 @@ replace.nodes <- function(nodes, nName, replacement){
 setMethod("XMLScan<-",
 	signature=signature(obj="XiMpLe.node"),
 	function(obj, name, value){
+		# prevent the creation of invalid results
+		stopifnot(is.XiMpLe.node(value) || is.null(value))
 		obj <- replace.nodes(
 			nodes=child.list(obj),
 			nName=name,
-			replacement=value)
+			replacement=value)[[1]]
+		stopifnot(validObject(object=obj, test=TRUE, complete=TRUE))
 		return(obj)
 	}
 )
@@ -378,10 +427,13 @@ setMethod("XMLScan<-",
 setMethod("XMLScan<-",
 	signature=signature(obj="XiMpLe.doc"),
 	function(obj, name, value){
-		obj <- replace.nodes(
-			nodes=XMLChildren(obj),
-			nName=name,
-			replacement=value)
+		# prevent the creation of invalid results
+		stopifnot(is.XiMpLe.node(value) || is.null(value))
+		XMLChildren(obj) <- replace.nodes(
+				nodes=XMLChildren(obj),
+				nName=name,
+				replacement=value)[[1]]
+		stopifnot(validObject(object=obj, test=TRUE, complete=TRUE))
 		return(obj)
 	}
 )

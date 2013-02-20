@@ -221,3 +221,31 @@ test_that("set and get XML tree file info", {
 		equals("somefile.xml"))
 })
 
+
+context("getter/setter methods: XMLScan")
+
+test_that("scan XML tree for node names", {
+	load("sample_XML_tree.RData")
+
+	# this should return a list of 3
+	sampleXMLTree.nodes <- XMLScan(sampleXMLTree, "empty")
+
+	expect_is(
+		sampleXMLTree.nodes,
+		"list")
+	expect_that(
+		length(sampleXMLTree.nodes),
+		equals(3))
+})
+
+test_that("remove XML nodes from tree by name", {
+	load("sample_XML_tree.RData")
+
+	# this should remove all nodes,
+	# exept the parent "tree" node
+	XMLScan(sampleXMLTree, "empty") <- NULL
+
+	expect_identical(
+		sampleXMLTree,
+		XMLTree(XMLNode("tree")))
+})

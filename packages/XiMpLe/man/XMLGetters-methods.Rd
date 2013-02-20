@@ -65,9 +65,45 @@
 \details{
   These are convenience methods to get or set slots from
   XML objects without using the \code{@} operator.
+
+  \itemize{ \item{\code{XMLName()}: }{get/set the XML node
+  name (slot \code{name} of class \code{XiMpLe.node})}
+  \item{\code{XMLAttrs()}: }{get/set the XML node
+  attributes (slot \code{attrs} of class
+  \code{XiMpLe.node})} \item{\code{XMLValue()}: }{get/set
+  the XML node value (slot \code{value} of class
+  \code{XiMpLe.node})} \item{\code{XMLChildren()}:
+  }{get/set the XML child nodes (slot \code{children} of
+  both classes \code{XiMpLe.node} and \code{XiMpLe.doc})}
+  \item{\code{XMLFile()}: }{get/set the XML document file
+  name (slot \code{file} of class \code{XiMpLe.doc})}
+  \item{\code{XMLDecl()}: }{get/set the XML document
+  declaration (slot \code{xml} of class \code{XiMpLe.doc})}
+  \item{\code{XMLDTD()}: }{get/set the XML document doctype
+  definition (slot \code{dtd} of class \code{XiMpLe.doc})}
+  }
+
+  Another special method can scan a node/document tree
+  object for appearances of nodes with a particular name:
+
+  \itemize{ \item{\code{XMLScan()}: }{get/set the XML nodes
+  by name (recursively searches slot \code{name} of both
+  classes \code{XiMpLe.node} and \code{XiMpLe.doc})} }
+}
+\examples{
+xmlTestNode <- XMLNode("foo", XMLNode("testchild"))
+XMLName(xmlTestNode) # returns "foo"
+XMLName(xmlTestNode) <- "bar"
+XMLName(xmlTestNode) # now returns "bar"
+
+# search for a child node
+XMLScan(xmlTestNode, "testchild")
+# remove nodes of that name
+XMLScan(xmlTestNode, "testchild") <- NULL
 }
 \seealso{
-  \code{\link[XiMpLe:XiMpLe.doc-class]{XiMpLe.doc}}
+  \code{\link[XiMpLe:node]{node}},
+  \code{\link[XiMpLe:XiMpLe.doc-class]{XiMpLe.doc}},
   \code{\link[XiMpLe:XiMpLe.node-class]{XiMpLe.node}}
 }
 \keyword{methods}
