@@ -16,11 +16,13 @@
 rk.JS.scan <- function(pXML, js=TRUE, add.abbrev=FALSE, guess.getter=FALSE, indent.by="\t"){
 
 	JS.relevant.tags <- c("radio", "varslot", "browser", "dropdown",
-		"checkbox", "saveobject", "input", "spinbox")
+		"checkbox", "saveobject", "input", "spinbox", "optioncolumn", "matrix")
 	
-	single.tags <- get.single.tags(XML.obj=pXML, drop=c("comments","cdata", "declarations", "doctype"))
+	# getting the relevant IDs out of optionsets is a little tricky
+	# this function will probe for sets and return single tags
+	single.tags <- check.optionset.tags(XML.obj=pXML, drop=c("comments","cdata", "declarations", "doctype"))
 
-	JS.id <- get.IDs(single.tags=single.tags, relevant.tags=JS.relevant.tags, add.abbrev=add.abbrev)
+	JS.id <- get.IDs(single.tags=single.tags, relevant.tags=JS.relevant.tags, add.abbrev=add.abbrev, tag.names=TRUE)
 
 	if("id" %in% colnames(JS.id)){
 		if(isTRUE(js)){
@@ -32,9 +34,10 @@ rk.JS.scan <- function(pXML, js=TRUE, add.abbrev=FALSE, guess.getter=FALSE, inde
 					return(rk.paste.JS(get.JS.vars(
 						JS.var=JS.id[this.id,"abbrev"],
 						XML.var=JS.id[this.id,"id"],
+						tag.name=JS.id[this.id,"tag"],
 						guess.getter=guess.getter),
 						level=2, indent.by=indent.by))
-				})), collapse="\n")
+				}, USE.NAMES=FALSE)), collapse="\n")
 		} else {
 			JS.lines <- JS.id[,"id"]
 			names(JS.lines) <- NULL
@@ -45,17 +48,19 @@ rk.JS.scan <- function(pXML, js=TRUE, add.abbrev=FALSE, guess.getter=FALSE, inde
 
 	# special tags: must be checkable and get "checked" property
 	JS.special.tags <- c("frame")
-	JS.special.id <- get.IDs(single.tags=single.tags, relevant.tags=JS.special.tags, add.abbrev=add.abbrev, only.checkable=TRUE)
+	JS.special.id <- get.IDs(single.tags=single.tags, relevant.tags=JS.special.tags, add.abbrev=add.abbrev,
+		tag.names=TRUE, only.checkable=TRUE)
 	if("id" %in% colnames(JS.special.id)){
 		if(isTRUE(js)){
 			JS.lines <- paste(JS.lines, "\n", paste(unlist(sapply(1:nrow(JS.special.id), function(this.id){
 					return(rk.paste.JS(get.JS.vars(
 						JS.var=JS.special.id[this.id,"abbrev"],
 						XML.var=JS.special.id[this.id,"id"],
+						tag.name=JS.id[this.id,"tag"],
 						modifiers="checked",
 						guess.getter=guess.getter),
 						level=2, indent.by=indent.by))
-				})), collapse="\n"), sep="")
+				}, USE.NAMES=FALSE)), collapse="\n"), sep="")
 		} else {
 			JS.lines <- c(JS.lines, JS.special.id[,"id"])
 			names(JS.lines) <- NULL

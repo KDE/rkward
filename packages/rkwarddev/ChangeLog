@@ -1,6 +1,6 @@
 ChangeLog for package rkwarddev
 
-changes in version 0.06-2 (2013-02-18)
+changes in version 0.06-2 (2013-02-20)
 changed:
   - the structure of <about> nodes will change in RKWard 0.6.1, <dependencies> will become
     a direct child of <document> or <component>, which explains several changes in this release.
@@ -14,6 +14,7 @@ changed:
     releases. consequently, rk.JS.vars() and rk.paste.JS() have a new "getter" argument to set
     or overwrite this value. another new argument, "guess.getter", can be used to turn on
     automatic guessing which getter function might be most appropriate.
+  - rk.JS.scan() learned how to treat <optionset> and <matrix>
 added:
   - new function rk.XML.switch()
   - new function rk.XML.optiondisplay()

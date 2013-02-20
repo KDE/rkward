@@ -185,6 +185,39 @@ get.IDs <- function(single.tags, relevant.tags, add.abbrev=FALSE, tag.names=FALS
 	return(ids)
 } ## end function get.IDs()
 
+## function check.optionset.tags
+# XML.obj may be a character string (file name) or XiMpLe object
+# this functions will check if <optionset> nodes are present
+# and return a possibly corrected result of get.single.tags()
+check.optionset.tags <- function(XML.obj, drop=NULL){
+	# if this is not a XiMpLe object, transform the file into one
+	if(!is.XiMpLe.node(XML.obj) && !is.XiMpLe.doc(XML.obj)){
+		XML.obj <- parseXMLTree(XML.obj, drop=drop)
+	} else {}
+	# first get a list of all optionsets
+	optionset.nodes <- child.list(XMLScan(XML.obj, "optionset"))
+	# are there any?
+	if(is.null(optionset.nodes)){
+		result <- get.single.tags(XML.obj=XML.obj, drop=drop)
+	} else {
+		# now go through all sets and combine setID with the IDs of optioncolumns
+		optioncolumnNewIDs <- unlist(sapply(optionset.nodes, function(thisNode){
+				thisCols <- child.list(XMLScan(thisNode, "optioncolumn"))
+				thisSetID <- XMLAttrs(thisNode)[["id"]]
+				thisNewCols <- unlist(sapply(thisCols, function(thisCol){
+						thisColsID <- XMLAttrs(thisCol)[["id"]]
+						XMLAttrs(thisCol)[["id"]] <- paste(thisSetID, thisColsID, sep=".")
+						pastedTag <- get.single.tags(XML.obj=thisCol, drop=drop)
+						return(pastedTag)
+					}, USE.NAMES=FALSE))
+				return(thisNewCols)
+			}, USE.NAMES=FALSE))
+		# we don't need the set nodes any longer
+		XMLScan(XML.obj, "optionset") <- NULL
+		result <- c(optioncolumnNewIDs, get.single.tags(XML.obj=XML.obj, drop=drop))
+	}
+	return(result)
+} ## end function check.optionset.tags
 
 ## function camelCode()
 # changes the first letter of each string
@@ -229,7 +262,7 @@ JS.getters.default <- list(
 #   <tag id="my.id" ...>
 # in XML will become
 #   var my.id = getValue("my.id");
-get.JS.vars <- function(JS.var, XML.var=NULL, JS.prefix="", names.only=FALSE, modifiers=NULL, default=FALSE, join="",
+get.JS.vars <- function(JS.var, XML.var=NULL, tag.name=NULL, JS.prefix="", names.only=FALSE, modifiers=NULL, default=FALSE, join="",
 	getter="getValue", guess.getter=FALSE, check.modifiers=TRUE){
 	# check for XiMpLe nodes
 	JS.var <- check.ID(JS.var)
@@ -259,8 +292,13 @@ get.JS.vars <- function(JS.var, XML.var=NULL, JS.prefix="", names.only=FALSE, mo
 			}
 		} else {}
 		# check for getter guessing
-		if(isTRUE(guess.getter) && is.XiMpLe.node(XML.var)){
-			tag.name <- XMLName(XML.var)
+		if(isTRUE(guess.getter)){
+			if(is.XiMpLe.node(XML.var)){
+				tag.name <- XMLName(XML.var)
+			} else if(is.null(tag.name)){
+				# hm, not a XiMpLe object and no known tag name :-/
+				tag.name <- XMLName(XMLChildren(parseXMLTree(XML.var, object=TRUE))[[1]])
+			} else {}
 			if(tag.name %in% names(JS.getters.default)){
 				getter <- JS.getters.default[[tag.name]]
 			} else {}
