@@ -609,7 +609,7 @@ bool RKSettingsModulePluginsModel::removeRows (int row, int count, const QModelI
 	RK_TRACE (SETTINGS);
 	RK_ASSERT (!parent.isValid ());
 
-	if ((row < 0) || (count < 1) || (row + count > rowCount () - 1)) return false;
+	if ((row < 0) || (count < 1) || (row + count > rowCount ())) return false;
 	for (int i = row + count - 1; i >= row; --i) {
 		plugin_maps.removeAt (i);
 	}
