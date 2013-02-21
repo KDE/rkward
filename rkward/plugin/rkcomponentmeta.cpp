@@ -147,7 +147,7 @@ QList <RKComponentDependency> RKComponentDependency::parseDependencies (const QD
 			RK_DEBUG (PLUGIN, DL_ERROR, "Tag <%s> is not allowed, here.", qPrintable (dep_e.tagName ()));
 			continue;
 		}
-		dep.package = xml->getStringAttribute (e, "name", QString (), DL_ERROR);
+		dep.package = xml->getStringAttribute (dep_e, "name", QString (), DL_ERROR);
 
 		dep.min_version = 0;
 		dep.max_version = 0xFFFFFFFF;
@@ -178,6 +178,7 @@ QString numericVersionToString (quint32 numeric) {
 		ret.append (QString::number (ver_part));
 		if (i > 0) ret.append ('.');
 	}
+	if (ret.endsWith (".0")) ret.chop (2);	// HACK: Don't print more than three verison parts, unless the fourth is non-zero
 	return ret;
 }
 
@@ -198,7 +199,7 @@ QString RKComponentDependency::depsToHtml (const QList <RKComponentDependency>& 
 		} else {
 			if (dep.type == RKWardPluginmap) ret.append (i18n ("RKWard plugin map"));
 			else ret.append (i18n ("R package"));
-			ret.append ("\"" + dep.package + "\"");
+			ret.append (" \"" + dep.package + "\"");
 			if (!dep.source_info.isEmpty ()) ret.append (" (" + dep.source_info + ")");
 		}
 		if (dep.min_version > 0) ret.append (" &gt;= " + numericVersionToString (dep.min_version));
