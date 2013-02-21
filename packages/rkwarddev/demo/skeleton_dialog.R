@@ -2,15 +2,20 @@
 require(rkwarddev)
 
 local({
+# define where the plugin should write its files
+output.dir <- tempdir()
+
 about.info <- rk.XML.about(
 	name="RKWard Plugin Skeleton",
 	author=c(
 		person(given="Meik", family="Michalke",
 			email="meik.michalke@hhu.de", role=c("aut","cre"))),
 	about=list(desc="GUI interface to create RKWard plugin skeletons",
-		version="0.04-2", url="http://rkward.sf.net"),
-	dependencies=list(rkward.min="0.5.7")
+		# the version number should be in line with rkwarddev
+		# to reflect when the script code was changed
+		version="0.06-2", url="http://rkward.sf.net")
 	)
+dependencies.info <- rk.XML.dependencies(dependencies=list(rkward.min="0.6.0"))
 
 # tab1: information on the thing
 about.plugin <- rk.XML.frame(
@@ -32,8 +37,8 @@ about.contact <- rk.XML.frame(
 			aut.email <- rk.XML.input("E-mail", required=TRUE),
 			rk.XML.stretch()),
 		rk.XML.col(rk.XML.frame(
-			aut.auth <- rk.XML.cbox("Author", "aut", chk=TRUE),
-			aut.maint <- rk.XML.cbox("Maintainer", "cre", chk=TRUE),
+			aut.auth <- rk.XML.cbox("Author", chk=TRUE),
+			aut.maint <- rk.XML.cbox("Maintainer", chk=TRUE),
 			rk.XML.stretch(), label="Author roles"))),
 	label="Plugin author")
 
@@ -44,14 +49,14 @@ crt.opts <- rk.XML.frame(
 		rk.XML.row(pl.dir <- rk.XML.browser("Directory to save to (empty for $TEMPDIR)", type="dir", required=FALSE)),
 		rk.XML.row(
 			rk.XML.col(
-				pl.overw <- rk.XML.cbox("Overwrite existing files", "true", chk=FALSE),
-				pl.wiz <- rk.XML.cbox("Add wizard section", "true", chk=FALSE),
-				pl.tests <- rk.XML.cbox("Include plugin tests", "true", chk=TRUE),
+				pl.overw <- rk.XML.cbox("Overwrite existing files", chk=FALSE),
+				pl.wiz <- rk.XML.cbox("Add wizard section", chk=FALSE),
+				pl.tests <- rk.XML.cbox("Include plugin tests", chk=TRUE),
 				rk.XML.stretch()),
 			rk.XML.col(
-				pl.edit <- rk.XML.cbox("Open files for editing", "true", chk=TRUE),
-				pl.add <- rk.XML.cbox("Add plugin to RKWard configuration", "true", chk=TRUE),
-				pl.show <- rk.XML.cbox("Show the plugin", "true", chk=FALSE),
+				pl.edit <- rk.XML.cbox("Open files for editing", chk=TRUE),
+				pl.add <- rk.XML.cbox("Add plugin to RKWard configuration", chk=TRUE),
+				pl.show <- rk.XML.cbox("Show the plugin", chk=FALSE),
 				rk.XML.stretch())
 		),
 		rk.XML.row(pl.hier <- rk.XML.dropdown("Place in top menu",
@@ -73,7 +78,6 @@ crt.opts <- rk.XML.frame(
 		))
 	)
 dep.opts <- rk.XML.frame(
-	rk.XML.row(dep.checkbox <- rk.XML.cbox("Define dependencies", "true", chk=FALSE)),
 	rk.XML.row(
 		dep.frame.RKWard <- rk.XML.frame(
 				dep.rkmin <- rk.XML.input("RKWard min", size="small"),
@@ -86,7 +90,7 @@ dep.opts <- rk.XML.frame(
 # 	rk.XML.row(dep.frame.packages <- rk.XML.frame(rk.XML.stretch(before=list(
 # 			rk.XML.text("Separate package names by space:"),
 # 			dep.pckg <- rk.XML.input("Packages"))), label="Depends on R packages"))
-	), label="Dependencies")
+	), label="Define dependencies", checkable=TRUE, chk=FALSE)
 
 tab2.create <- rk.XML.col(crt.opts, dep.opts)
 
@@ -114,16 +118,16 @@ sklt.tabbook <- rk.XML.dialog(rk.XML.tabbook("Plugin Skeleton",
 
 ## some logic
 logic.section <- rk.XML.logic(
-		rk.XML.connect(governor=dep.checkbox, client=dep.frame.RKWard, set="enabled"),
-		rk.XML.connect(governor=dep.checkbox, client=dep.frame.R, set="enabled")#,
-# 		rk.XML.connect(governor=dep.checkbox, client=dep.frame.packages, set="enabled")
+		rk.XML.connect(governor=dep.opts, get="checked", client=dep.frame.RKWard, set="enabled"),
+		rk.XML.connect(governor=dep.opts, get="checked", client=dep.frame.R, set="enabled")#,
+# 		rk.XML.connect(governor=dep.opts, client=dep.frame.packages, set="enabled")
 	)
 
 ## JS code generation
 # author section
 js.opt.about.author.role <- rk.JS.options("optAuthorRole",
-	ite(aut.auth, qp("\"",aut.auth,"\"")),
-	ite(aut.maint, qp("\"",aut.maint,"\"")),
+	ite(aut.auth, qp("\"aut\"")),
+	ite(aut.maint, qp("\"cre\"")),
 	funct="c", option="role", collapse="")
 js.opt.about.author <- rk.JS.options("optAuthor",
 	ite(aut.given, qp("given=\"",aut.given,"\"")),
@@ -141,11 +145,12 @@ js.opt.about.about <- rk.JS.options("optAbout",
 	ite(pl.category, qp("category=\"",pl.category,"\"")),
 	funct="list", option="about", collapse=",\\n\\t")
 # dependencies section
+js.frm.dep.opts <- rk.JS.vars(dep.opts, modifiers="checked") # see to it frame is checked
 js.opt.about.dep <- rk.JS.options("optDependencies",
-	ite(id(dep.checkbox, " && ", dep.rkmin), qp("rkward.min=\"",dep.rkmin,"\"")),
-	ite(id(dep.checkbox, " && ", dep.rkmax), qp("rkward.max=\"",dep.rkmax,"\"")),
-	ite(id(dep.checkbox, " && ", dep.rmin), qp("R.min=\"",dep.rmin,"\"")),
-	ite(id(dep.checkbox, " && ", dep.rmax), qp("R.max=\"",dep.rmax,"\"")),
+	ite(id(js.frm.dep.opts, " && ", dep.rkmin), qp("rkward.min=\"",dep.rkmin,"\"")),
+	ite(id(js.frm.dep.opts, " && ", dep.rkmax), qp("rkward.max=\"",dep.rkmax,"\"")),
+	ite(id(js.frm.dep.opts, " && ", dep.rmin), qp("R.min=\"",dep.rmin,"\"")),
+	ite(id(js.frm.dep.opts, " && ", dep.rmax), qp("R.max=\"",dep.rmax,"\"")),
 	funct="list", option="dependencies", collapse=",\\n\\t")
 
 js.opt.skel.pluginmap <- rk.JS.options("optPluginmap",
@@ -173,9 +178,11 @@ JS.calculate <- rk.paste.JS(
 		ite(pl.name, echo("\n\tname=\"", pl.name, "\"")),
 		echo(js.opt.about.author),
 		echo(js.opt.about.about),
-		echo(js.opt.about.dep),
 	echo("\n)\n\n"),
+	ite(id(js.frm.dep.opts, " && ", js.opt.about.dep),
+		echo("plugin.dependencies <- rk.XML.dependencies(", js.opt.about.dep, "\n)\n\n")),
 	echo("plugin.dir <- rk.plugin.skeleton(\n\tabout=about.plugin,"),
+		ite(id(js.frm.dep.opts, " && ", js.opt.about.dep), echo("\n\tdependencies=plugin.dependencies,")),
 		echo(js.opt.skeleton),
 	echo("\n)\n\n"),
 	level=2)
@@ -184,6 +191,8 @@ JS.calculate <- rk.paste.JS(
 #plugin.dir <<- rk.plugin.skeleton(
 rk.plugin.skeleton(
 	about=about.info,
+	path=output.dir,
+	guess.getter=FALSE,
 	xml=list(
 		dialog=sklt.tabbook,
 		logic=logic.section),
@@ -193,6 +202,7 @@ rk.plugin.skeleton(
 	pluginmap=list(name="Create RKWard plugin skeleton", hierarchy=list("file", "export")),
 	overwrite=TRUE,
 	create=c("pmap","xml","js","desc"),
+	dependencies=dependencies.info,
 	tests=FALSE,
 	show=TRUE,
 	edit=TRUE)

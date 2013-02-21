@@ -1,3 +1,8 @@
+// this code was generated using the rkwarddev package.
+//perhaps don't make changes here, but in the rkwarddev script instead!
+
+
+
 function preprocess(){
 	// add requirements etc. here
 	echo("require(rkwarddev)\n");
@@ -25,20 +30,21 @@ function calculate(){
 	var chcAddplRKW = getValue("chc_AddplRKW");
 	var chcShwthplg = getValue("chc_Shwthplg");
 	var drpPlcntpmn = getValue("drp_Plcntpmn");
-	var chcDfndpndn = getValue("chc_Dfndpndn");
 	var inpRKWardmn = getValue("inp_RKWardmn");
 	var inpRKWardmx = getValue("inp_RKWardmx");
 	var inpRmin = getValue("inp_Rmin");
 	var inpRmax = getValue("inp_Rmax");
-	// put the R code to be evaluated here
+	var frmDfndpndnChecked = getValue("frm_Dfndpndn.checked");
+
+	// the R code to be evaluated
 	// define the array arrOptAuthorRole for values of R option "role"
 	var arrOptAuthorRole = new Array();
 		if(chcAuthor) {
-			arrOptAuthorRole.push("\"" + chcAuthor + "\"");
-		} else {}
+			arrOptAuthorRole.push("\"aut\"");
+		}
 		if(chcMaintanr) {
-			arrOptAuthorRole.push("\"" + chcMaintanr + "\"");
-		} else {}
+			arrOptAuthorRole.push("\"cre\"");
+		}
 	// clean array arrOptAuthorRole from empty strings
 	arrOptAuthorRole = arrOptAuthorRole.filter(String);
 	// set the actual variable optAuthorRole with all values for R option "role"
@@ -52,16 +58,16 @@ function calculate(){
 	var arrOptAuthor = new Array();
 		if(inpGivennam) {
 			arrOptAuthor.push("given=\"" + inpGivennam + "\"");
-		} else {}
+		}
 		if(inpFamilynm) {
 			arrOptAuthor.push("family=\"" + inpFamilynm + "\"");
-		} else {}
+		}
 		if(inpEmail) {
 			arrOptAuthor.push("email=\"" + inpEmail + "\"");
-		} else {}
+		}
 		if(optAuthorRole) {
 			arrOptAuthor.push(optAuthorRole);
-		} else {}
+		}
 	// clean array arrOptAuthor from empty strings
 	arrOptAuthor = arrOptAuthor.filter(String);
 	// set the actual variable optAuthor with all values for R option "author"
@@ -75,22 +81,22 @@ function calculate(){
 	var arrOptAbout = new Array();
 		if(inpShrtdscr) {
 			arrOptAbout.push("desc=\"" + inpShrtdscr + "\"");
-		} else {}
+		}
 		if(inpVrsnnmbr) {
 			arrOptAbout.push("version=\"" + inpVrsnnmbr + "\"");
-		} else {}
+		}
 		if(inpRlsdtmpt) {
 			arrOptAbout.push("date=\"" + inpRlsdtmpt + "\"");
-		} else {}
+		}
 		if(inpHomepage) {
 			arrOptAbout.push("url=\"" + inpHomepage + "\"");
-		} else {}
+		}
 		if(inpLicense) {
 			arrOptAbout.push("license=\"" + inpLicense + "\"");
-		} else {}
+		}
 		if(inpCategory) {
 			arrOptAbout.push("category=\"" + inpCategory + "\"");
-		} else {}
+		}
 	// clean array arrOptAbout from empty strings
 	arrOptAbout = arrOptAbout.filter(String);
 	// set the actual variable optAbout with all values for R option "about"
@@ -102,18 +108,18 @@ function calculate(){
 
 	// define the array arrOptDependencies for values of R option "dependencies"
 	var arrOptDependencies = new Array();
-		if(chcDfndpndn && inpRKWardmn) {
+		if(frmDfndpndnChecked && inpRKWardmn) {
 			arrOptDependencies.push("rkward.min=\"" + inpRKWardmn + "\"");
-		} else {}
-		if(chcDfndpndn && inpRKWardmx) {
+		}
+		if(frmDfndpndnChecked && inpRKWardmx) {
 			arrOptDependencies.push("rkward.max=\"" + inpRKWardmx + "\"");
-		} else {}
-		if(chcDfndpndn && inpRmin) {
+		}
+		if(frmDfndpndnChecked && inpRmin) {
 			arrOptDependencies.push("R.min=\"" + inpRmin + "\"");
-		} else {}
-		if(chcDfndpndn && inpRmax) {
+		}
+		if(frmDfndpndnChecked && inpRmax) {
 			arrOptDependencies.push("R.max=\"" + inpRmax + "\"");
-		} else {}
+		}
 	// clean array arrOptDependencies from empty strings
 	arrOptDependencies = arrOptDependencies.filter(String);
 	// set the actual variable optDependencies with all values for R option "dependencies"
@@ -127,7 +133,7 @@ function calculate(){
 	var arrOptPluginmap = new Array();
 		if(drpPlcntpmn!= "test") {
 			arrOptPluginmap.push("hierarchy=\"" + drpPlcntpmn + "\"");
-		} else {}
+		}
 	// clean array arrOptPluginmap from empty strings
 	arrOptPluginmap = arrOptPluginmap.filter(String);
 	// set the actual variable optPluginmap with all values for R option "pluginmap"
@@ -141,28 +147,28 @@ function calculate(){
 	var arrOptSkeleton = new Array();
 		if(brwDTEMPDIR) {
 			arrOptSkeleton.push("\n\tpath=\"" + brwDTEMPDIR + "\"");
-		} else {}
+		}
 		if(chcAddwzrds) {
 			arrOptSkeleton.push("\n\tprovides=c(\"logic\", \"dialog\", \"wizard\")");
-		} else {}
+		}
 		if(optPluginmap) {
 			arrOptSkeleton.push("\n\t" + optPluginmap);
-		} else {}
+		}
 		if(chcOvrwrtxs) {
 			arrOptSkeleton.push("\n\toverwrite=TRUE");
-		} else {}
+		}
 		if(chcIncldplg) {
 			arrOptSkeleton.push("\n\ttests=TRUE");
-		} else {}
+		}
 		if(chcOpnflsfr) {
 			arrOptSkeleton.push("\n\tedit=TRUE");
-		} else {}
+		}
 		if(chcAddplRKW) {
 			arrOptSkeleton.push("\n\tload=TRUE");
-		} else {}
+		}
 		if(chcShwthplg) {
 			arrOptSkeleton.push("\n\tshow=TRUE");
-		} else {}
+		}
 	// clean array arrOptSkeleton from empty strings
 	arrOptSkeleton = arrOptSkeleton.filter(String);
 	// set the actual variable optSkeleton with all values for R option ""
@@ -175,18 +181,25 @@ function calculate(){
 	echo("about.plugin <- rk.XML.about(");
 	if(inpPluginnm) {
 		echo("\n\tname=\"" + inpPluginnm + "\"");
-	} else {}
+	}
 	echo(optAuthor);
 	echo(optAbout);
-	echo(optDependencies);
 	echo("\n)\n\n");
+	if(frmDfndpndnChecked && optDependencies) {
+		echo("plugin.dependencies <- rk.XML.dependencies(" + optDependencies + "\n)\n\n");
+	}
 	echo("plugin.dir <- rk.plugin.skeleton(\n\tabout=about.plugin,");
+	if(frmDfndpndnChecked && optDependencies) {
+		echo("\n\tdependencies=plugin.dependencies,");
+	}
 	echo(optSkeleton);
 	echo("\n)\n\n");
 }
 
 function printout(){
 	// printout the results
-	echo("rk.header(\"Create RKWard plugin skeleton results\", level=1)\n");
-	echo("rk.print(\"\")\n");
+	echo("rk.header(\"Create RKWard plugin skeleton results\")\n");
+echo("rk.print(\"\")\n");
+
 }
+

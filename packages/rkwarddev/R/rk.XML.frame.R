@@ -1,4 +1,4 @@
-#' Create XML node "column" for RKWard plugins
+#' Create XML node "frame" for RKWard plugins
 #'
 #' @param ... Objects of class \code{XiMpLe.node}.
 #' @param label Character string, a text label for this plugin element.

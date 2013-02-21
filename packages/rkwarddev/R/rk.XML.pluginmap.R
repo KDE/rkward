@@ -64,43 +64,21 @@ rk.XML.pluginmap <- function(name, about=NULL, components, hierarchy="test",
 		all.children[[length(all.children)+1]] <- generator.info
 	} else {}
 
+	# check about and dependencies
+	# result is a named list with "about" and "dependencies"
+	about.dep.list <- dependenciesCompatWrapper(dependencies=dependencies, about=about, hints=hints)
+	dependencies <- about.dep.list[["dependencies"]]
+	about <- about.dep.list[["about"]]
+
 	## dependencies section
 	if(!is.null(dependencies)){
-		# check if this is *really* a dependencies section
-		valid.parent("dependencies", node=dependencies, see="rk.XML.dependencies")
-		# initialize all.children list
 		all.children[[length(all.children)+1]] <- dependencies
-	} else {
-		## wrapper for compatibility with earlier releases
-		# check for <dependencies> in <about>, and if found,
-		# take it out and use it here
-		deps.in.about <- try(
-			node(about, node=list("about","dependencies")),
-			silent=TRUE)
-		if(is.XiMpLe.node(deps.in.about)){
-			warning("<dependencies> inside <about> is deprecated, use the 'dependencies' argument instead!")
-			all.children[[length(all.children)+1]] <- deps.in.about
-			# remove <dependencies> from <about>
-			node(about, node=list("about","dependencies")) <- NULL
-		} else if(isTRUE(hints)){
-			dependencies.XML <- XMLNode("!--", XMLNode("dependencies", ""))
-			# initialize all.children list
-			all.children[[length(all.children)+1]] <- dependencies.XML
-		} else {}
-	}
+	} else {}
 
 	## about section
 	if(!is.null(about)){
-		# check if this is *really* a about section
-		valid.parent("about", node=about, see="rk.XML.about")
-		# initialize all.children list
 		all.children[[length(all.children)+1]] <- about
-	} else {
-		if(isTRUE(hints)){
-			about.XML <- XMLNode("!--", XMLNode("about", ""))
-			all.children[[length(all.children)+1]] <- about.XML
-		} else {}
-	}
+	} else {}
 
 	## require section
 	if(!is.null(require)){

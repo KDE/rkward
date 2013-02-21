@@ -9,14 +9,16 @@
         this is not really critical, because this information wasn't evaluated by RKWard until now
         anyway
       \item for consistency, from now on <component> is never an empty node
-      \item \code{rk.XML.pluginmap()} will now move <dependencies> from <about> to a top level child node
-        of plugin maps, with a warning
+      \item \code{rk.XML.pluginmap()}, \code{rk.XML.plugin()} and \code{rk.plugin.skeleton()} will now move <dependencies>
+        from <about> to a top level child node of plugin maps, with a warning
       \item the object class rk.JS.var gained a new slot \code{"getter"} to set a default JS function
         to query variable values. it defaults to \code{"getValue"} to ensure compatibility with earlier
-        releases. consequently, \code{rk.JS.vars()} and \code{rk.paste.JS()} have a new \code{"getter"} argument to set
+        releases. consequently, \code{rk.JS.vars()} and \code{rk.paste.JS()} have a new  \code{"getter"} argument to set
         or overwrite this value. another new argument, \code{"guess.getter"}, can be used to turn on
-        automatic guessing which getter function might be most appropriate.
+        automatic guessing which getter function might be most appropriate. this was also added to
+        \code{rk.plugin.component()} and \code{rk.plugin.skeleton()}.
       \item \code{rk.JS.scan()} learned how to treat <optionset> and <matrix>
+      \item updated the skeleton_dialog.R demo file and recreated the plugin code
     }
   }
   \subsection{added}{

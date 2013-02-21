@@ -29,6 +29,9 @@
 #'				the \code{<settings>} section of the help file. This option will be overruled if you provide that section manually
 #'				by the \code{rkh} option (see below).}
 #'		}
+#' @param guess.getter Logical, if \code{TRUE} try to get a good default getter function for JavaScript
+#'		variable values (if \code{scan} is active). This will use some functions which were added with RKWard 0.6.1, and therefore
+#'		raise the dependencies for your plugin/component accordingly. Nonetheless, it's recommended.
 #' @param hierarchy A character vector with instructions where to place this component in the menu hierarchy, one list or string.
 #'		Valid single values are \code{"file"}, \code{"edit"}, \code{"view"}, \code{"workspace"}, \code{"run"}, \code{"data"},
 #'		\code{"analysis"}, \code{"plots"}, \code{"distributions"}, \code{"windows"}, \code{"settings"} and \code{"help"},
@@ -65,8 +68,8 @@
 #' }
 
 rk.plugin.component <- function(about, xml=list(), js=list(), rkh=list(),
-	provides=c("logic", "dialog"), scan=c("var", "saveobj", "settings"), hierarchy="test",
-	pluginmap=NULL, create=c("xml", "js", "rkh"), gen.info=TRUE, indent.by="\t"){
+	provides=c("logic", "dialog"), scan=c("var", "saveobj", "settings"), guess.getter=FALSE,
+	hierarchy="test", pluginmap=NULL, create=c("xml", "js", "rkh"), gen.info=TRUE, indent.by="\t"){
 
 	if(inherits(about, "XiMpLe.node")){
 		about.node.name <- slot(about, "name")
@@ -141,7 +144,7 @@ rk.plugin.component <- function(about, xml=list(), js=list(), rkh=list(),
 			js[["results.header"]] <- paste("\"", name.orig, " results\"", sep="")
 		} else {}
 		if("var" %in% scan){
-			var.scanned <- rk.JS.scan(XML.plugin)
+			var.scanned <- rk.JS.scan(XML.plugin, guess.getter=guess.getter)
 			if(!is.null(var.scanned)){
 				js[["variables"]] <- paste(
 					ifelse(is.null(js[["variables"]]), "", paste(js[["variables"]], "\n", sep="")),

@@ -1,6 +1,6 @@
 \name{rk.XML.frame}
 \alias{rk.XML.frame}
-\title{Create XML node "column" for RKWard plugins}
+\title{Create XML node "frame" for RKWard plugins}
 \usage{
   rk.XML.frame(..., label = NULL, checkable = FALSE,
     chk = TRUE, id.name = "auto")
@@ -28,7 +28,7 @@
   An object of class \code{XiMpLe.node}.
 }
 \description{
-  Create XML node "column" for RKWard plugins
+  Create XML node "frame" for RKWard plugins
 }
 \examples{
 test.dropdown <- rk.XML.dropdown("mydrop",

@@ -5,9 +5,9 @@
   rk.plugin.component(about, xml = list(), js = list(),
     rkh = list(), provides = c("logic", "dialog"),
     scan = c("var", "saveobj", "settings"),
-    hierarchy = "test", pluginmap = NULL,
-    create = c("xml", "js", "rkh"), gen.info = TRUE,
-    indent.by = "\t")
+    guess.getter = FALSE, hierarchy = "test",
+    pluginmap = NULL, create = c("xml", "js", "rkh"),
+    gen.info = TRUE, indent.by = "\t")
 }
 \arguments{
   \item{about}{Either a character string with the name of
@@ -78,6 +78,14 @@
   file. This option will be overruled if you provide that
   section manually by the \code{rkh} option (see below).}
   }}
+
+  \item{guess.getter}{Logical, if \code{TRUE} try to get a
+  good default getter function for JavaScript variable
+  values (if \code{scan} is active). This will use some
+  functions which were added with RKWard 0.6.1, and
+  therefore raise the dependencies for your
+  plugin/component accordingly. Nonetheless, it's
+  recommended.}
 
   \item{hierarchy}{A character vector with instructions
   where to place this component in the menu hierarchy, one

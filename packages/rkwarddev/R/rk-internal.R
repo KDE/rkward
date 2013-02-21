@@ -185,7 +185,7 @@ get.IDs <- function(single.tags, relevant.tags, add.abbrev=FALSE, tag.names=FALS
 	return(ids)
 } ## end function get.IDs()
 
-## function check.optionset.tags
+## function check.optionset.tags()
 # XML.obj may be a character string (file name) or XiMpLe object
 # this functions will check if <optionset> nodes are present
 # and return a possibly corrected result of get.single.tags()
@@ -217,7 +217,7 @@ check.optionset.tags <- function(XML.obj, drop=NULL){
 		result <- c(optioncolumnNewIDs, get.single.tags(XML.obj=XML.obj, drop=drop))
 	}
 	return(result)
-} ## end function check.optionset.tags
+} ## end function check.optionset.tags()
 
 ## function camelCode()
 # changes the first letter of each string
@@ -246,16 +246,17 @@ camelCode <- function(words){
 # will only be used if "guess.getter" is true -- and after it's properly implemented
 # into rk.JS.scan()
 JS.getters.default <- list(
-	"radio"="getString",
-	"varslot"="getString",
 	"browser"="getString",
+	"checkbox"="getBoolean",
 	"dropdown"="getString",
-	"checkbox"="getBool",
-	"saveobject"="getString",
+	"frame"="getBoolean",
 	"input"="getString",
-	"spinbox"="getString",
+	"matrix"="getList",
 	"optioncolumn"="getList",
-	"matrix"="getList"
+	"radio"="getString",
+	"saveobject"="getString",
+	"spinbox"="getString",
+	"varslot"="getString"
 )
 
 ## function get.JS.vars()
@@ -314,7 +315,7 @@ get.JS.vars <- function(JS.var, XML.var=NULL, tag.name=NULL, JS.prefix="", names
 
 	if(isTRUE(names.only)){
 		results <- c()
-		if(is.null(modifiers) | isTRUE(default)){
+		if(is.null(modifiers) || isTRUE(default)){
 			results <- camelCode(c(JS.prefix, JS.var))
 		} else {}
 		if(!is.null(modifiers)){
@@ -413,25 +414,24 @@ XML2person <- function(node, eval=FALSE){
 
 
 ## function XML2dependencies()
-# extracts the package dependencies info from XML "about" nodes
+# extracts the package dependencies info from XML "about"/"dependencies" nodes
 # in "suggest" mode only suggestions will be returned, in "depends" mode only dependencies.
 # suggest=TRUE: Depends: R & RKWard; Suggests: packages
 # suggest=FALSE: Depends: R & RKWard & packages; suggests: none
 XML2dependencies <- function(node, suggest=TRUE, mode="suggest"){
-	if(!isTRUE(suggest) & identical(mode, "suggest")){
+	if(!isTRUE(suggest) && identical(mode, "suggest")){
 		return("")
 	} else {}
 	if(is.XiMpLe.node(node)){
 		# check if this is *really* a about section, otherwise die of boredom
-		if(!identical(XMLName(node), "about")){
-			stop(simpleError("I don't know what this is, but 'about' is not an about section!"))
+		if(!XMLName(node) %in% c("about", "dependencies")){
+			stop(simpleError("Please provide a valid about or dependencies section!"))
 		} else {}
 	} else {
-		stop(simpleError("'about' must be a XiMpLe.node, see ?rk.XML.about()!"))
+		stop(simpleError("'about' and/or 'dependencies' must be XiMpLe.nodes, see ?rk.XML.about() and ?rk.XML.dependencies()!"))
 	}
-	check.deps <- sapply(XMLChildren(node), function(this.child){identical(XMLName(this.child), "dependencies")})
-	if(any(check.deps)){
-		got.deps <- XMLChildren(node)[[which(check.deps)]]
+	got.deps <- XMLScan(node, "dependencies")
+	if(!is.null(got.deps)){
 		deps.packages <- list()
 		# first see if RKWard and R versions are given
 		deps.RkR <- XMLAttrs(got.deps)
@@ -445,11 +445,11 @@ XML2dependencies <- function(node, suggest=TRUE, mode="suggest"){
 		Rk.min <- ifelse("rkward_min_version" %in% deps.RkR.options, paste(">= ", deps.RkR[["rkward_min_version"]], sep=""), "")
 		Rk.max <- ifelse("rkward_max_version" %in% deps.RkR.options, paste("< ", deps.RkR[["rkward_max_version"]], sep=""), "")
 		Rk.version.indices <- sum(!identical(Rk.min, ""), !identical(Rk.max, ""))
-		if(Rk.version.indices > 0 & identical(mode, "depends")){
+		if(Rk.version.indices > 0 && identical(mode, "depends")){
 			deps.packages[[length(deps.packages) + 1]] <- paste("rkward (", Rk.min, ifelse(Rk.version.indices > 1, ", ", ""), Rk.max, ")", sep="")
 		} else {}
 		check.deps.pckg <- sapply(XMLChildren(got.deps), function(this.child){identical(XMLName(this.child), "package")})
-		if(any(check.deps.pckg & ((isTRUE(suggest) & identical(mode, "suggest")) | !isTRUE(suggest)))){
+		if(any(check.deps.pckg) && ((isTRUE(suggest) && identical(mode, "suggest")) | !isTRUE(suggest))){
 			deps.packages[[length(deps.packages) + 1]] <- paste(sapply(which(check.deps.pckg), function(this.pckg){
 					this.pckg.dep <- XMLAttrs(XMLChildren(got.deps)[[this.pckg]])
 					pckg.options <- names(this.pckg.dep)
@@ -985,3 +985,45 @@ paste.JS.var <- function(object, level=2, indent.by="\t", JS.prefix=NULL, modifi
 	
 	return(results)
 } ## end function paste.JS.var()
+
+
+## function dependenciesCompatWrapper()
+# with RKWard 0.6.1, the dependencies will no longer be a part of <about>
+# this wrapper takes both, "about" and "dependencies" arguments,
+# splits dependencies off and returns both in a list
+dependenciesCompatWrapper <- function(dependencies, about, hints=FALSE){
+	if(!is.null(about)){
+		# check if this is *really* a about section
+		valid.parent("about", node=about, see="rk.XML.about")
+		# check for <dependencies> in <about>; is NULL if not found
+		# this will only be used if dependencies is NULL
+		deps.in.about <- XMLScan(about, "dependencies")
+		if(!is.null(deps.in.about)){
+			warning("<dependencies> inside <about> is deprecated, use the 'dependencies' argument instead!")
+			# remove the misplaced node
+			XMLScan(about, "dependencies") <- NULL
+		}
+	} else {
+		if(isTRUE(hints)){
+			about <- XMLNode("!--", XMLNode("about", ""))
+		} else {}
+		deps.in.about <- NULL
+	}
+
+	# initialize results list
+	results <- list(about=about)
+
+	if(!is.null(dependencies)){
+		# check if this is *really* a dependencies section
+		valid.parent("dependencies", node=dependencies, see="rk.XML.dependencies")
+		results[["dependencies"]] <- dependencies
+	} else if(is.XiMpLe.node(deps.in.about)){
+		results[["dependencies"]] <- deps.in.about
+	} else if(isTRUE(hints)){
+		dependencies.XML <- XMLNode("!--", XMLNode("dependencies", ""))
+		results[["dependencies"]] <- dependencies.XML
+	} else {
+		results[["dependencies"]] <- NULL
+	}
+	return(results)
+} ## end function dependenciesCompatWrapper()

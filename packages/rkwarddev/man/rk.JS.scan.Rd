@@ -21,7 +21,10 @@
 
   \item{guess.getter}{Logical, if \code{TRUE} try to get a
   good default getter function for JavaScript variable
-  values.}
+  values. This will use some functions which were added
+  with RKWard 0.6.1, and therefore raise the dependencies
+  for your plugin/component accordingly. Nonetheless, it's
+  recommended.}
 
   \item{indent.by}{Character string used to indent each
   entry if \code{js=TRUE}.}

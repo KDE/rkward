@@ -7,14 +7,16 @@ changed:
     this is not really critical, because this information wasn't evaluated by RKWard until now
     anyway
   - for consistency, from now on <component> is never an empty node
-  - rk.XML.pluginmap() will now move <dependencies> from <about> to a top level child node
-    of plugin maps, with a warning
+  - rk.XML.pluginmap(), rk.XML.plugin() and rk.plugin.skeleton() will now move <dependencies>
+    from <about> to a top level child node of plugin maps, with a warning
   - the object class rk.JS.var gained a new slot "getter" to set a default JS function
     to query variable values. it defaults to "getValue" to ensure compatibility with earlier
-    releases. consequently, rk.JS.vars() and rk.paste.JS() have a new "getter" argument to set
+    releases. consequently, rk.JS.vars() and rk.paste.JS() have a new  "getter" argument to set
     or overwrite this value. another new argument, "guess.getter", can be used to turn on
-    automatic guessing which getter function might be most appropriate.
+    automatic guessing which getter function might be most appropriate. this was also added to
+    rk.plugin.component() and rk.plugin.skeleton().
   - rk.JS.scan() learned how to treat <optionset> and <matrix>
+  - updated the skeleton_dialog.R demo file and recreated the plugin code
 added:
   - new function rk.XML.switch()
   - new function rk.XML.optiondisplay()

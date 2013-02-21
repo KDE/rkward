@@ -1,17 +1,19 @@
 <!DOCTYPE rkplugin >
 <document>
+	<!-- this code was generated using the rkwarddev package.
+			perhaps don't make changes here, but in the rkwarddev script instead! -->
 	<code file="CreateRKWardpluginskeleton.js" />
 	<help file="CreateRKWardpluginskeleton.rkh" />
 	<include file="../RKWardPluginSkeleton.pluginmap" />
 	<logic>
-		<connect governor="chc_Dfndpndn.state" client="frm_DpndsRKW.enabled" />
-		<connect governor="chc_Dfndpndn.state" client="frm_DpndsnRv.enabled" />
+		<connect governor="frm_Dfndpndn.checked" client="frm_DpndsRKW.enabled" />
+		<connect governor="frm_Dfndpndn.checked" client="frm_DpndsnRv.enabled" />
 	</logic>
 	<dialog label="RKWard Plugin Skeleton">
 		<tabbook id="tbbk_PlgnSklt" label="Plugin Skeleton">
 			<tab label="About the plugin" id="tab_Abtthplg">
 				<column id="clm_fAAPPLLGPL">
-					<frame label="About the plugin" checkable="false" id="frm_Abtthplg">
+					<frame label="About the plugin" id="frm_Abtthplg">
 						<row id="row_inPPLLGPL3">
 							<input label="Plugin name" id="inp_Pluginnm" size="small" required="true" />
 							<input label="License" id="inp_License" initial="GPL (&gt;= 3)" required="true" />
@@ -28,7 +30,7 @@
 							<input label="Category" id="inp_Category" />
 						</row>
 					</frame>
-					<frame label="Plugin author" checkable="false" id="frm_Plugnthr">
+					<frame label="Plugin author" id="frm_Plugnthr">
 						<row id="row_cGGFFEEGGF">
 							<column id="clm_inptGGFFEE">
 								<input label="Given name" id="inp_Givennam" required="true" />
@@ -37,9 +39,9 @@
 								<stretch />
 							</column>
 							<column id="clm_frmlAAAAMM">
-								<frame label="Author roles" checkable="false" id="frm_Authrrls">
-									<checkbox id="chc_Author" label="Author" value="aut" checked="true" />
-									<checkbox id="chc_Maintanr" label="Maintainer" value="cre" checked="true" />
+								<frame label="Author roles" id="frm_Authrrls">
+									<checkbox id="chc_Author" label="Author" value="true" checked="true" />
+									<checkbox id="chc_Maintanr" label="Maintainer" value="true" checked="true" />
 									<stretch />
 								</frame>
 							</column>
@@ -49,7 +51,7 @@
 			</tab>
 			<tab label="Create options" id="tab_Cretptns">
 				<column id="clm_fDTEMPDIRD">
-					<frame checkable="false" id="frm_rDTEMPDIRD">
+					<frame id="frm_rDTEMPDIRD">
 						<row id="row_bDTEMPDIRD">
 							<browser label="Directory to save to (empty for $TEMPDIR)" type="dir" id="brw_DTEMPDIR" required="false" />
 						</row>
@@ -85,17 +87,14 @@
 							</dropdown>
 						</row>
 					</frame>
-					<frame label="Dependencies" checkable="false" id="frm_Depndncs">
-						<row id="row_chckbxdcDD">
-							<checkbox id="chc_Dfndpndn" label="Define dependencies" value="true" />
-						</row>
+					<frame label="Define dependencies" checkable="true" checked="false" id="frm_Dfndpndn">
 						<row id="row_fDRKWDRKWR">
-							<frame label="Depends on RKWard version" checkable="false" id="frm_DpndsRKW">
+							<frame label="Depends on RKWard version" id="frm_DpndsRKW">
 								<input label="RKWard min" id="inp_RKWardmn" size="small" />
 								<input label="RKWard max" id="inp_RKWardmx" size="small" />
 								<stretch />
 							</frame>
-							<frame label="Depends on R version" checkable="false" id="frm_DpndsnRv">
+							<frame label="Depends on R version" id="frm_DpndsnRv">
 								<input label="R min" id="inp_Rmin" size="small" />
 								<input label="R max" id="inp_Rmax" size="small" />
 								<stretch />

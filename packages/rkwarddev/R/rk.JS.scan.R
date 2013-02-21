@@ -7,7 +7,8 @@
 #'		three letter abbreviation of the XML tag type to improve the readability of the code. But it's
 #'		probably better to add this in the XML code in the first place.
 #' @param guess.getter Logical, if \code{TRUE} try to get a good default getter function for JavaScript
-#'		variable values.
+#'		variable values. This will use some functions which were added with RKWard 0.6.1, and therefore
+#'		raise the dependencies for your plugin/component accordingly. Nonetheless, it's recommended.
 #' @param indent.by Character string used to indent each entry if \code{js=TRUE}.
 #' @return A character vector.
 #' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}

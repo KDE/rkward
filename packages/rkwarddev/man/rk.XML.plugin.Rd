@@ -5,7 +5,8 @@
   rk.XML.plugin(name, dialog = NULL, wizard = NULL,
     logic = NULL, snippets = NULL, provides = NULL,
     help = TRUE, pluginmap = NULL, label = NULL,
-    clean.name = TRUE, about = NULL, gen.info = TRUE)
+    clean.name = TRUE, about = NULL, dependencies = NULL,
+    gen.info = TRUE)
 }
 \arguments{
   \item{name}{Character string, the name of the plugin.
@@ -58,12 +59,16 @@
   (\code{"_"}) will be removed from \code{name}.}
 
   \item{about}{An object of class \code{XiMpLe.node} with
-  descriptive information on the plugin, its authors and
-  dependencies, see
-  \code{link[XiMpLe:rk.XML.about]{rk.XML.about}} for
+  descriptive information on the plugin and its authors,
+  see \code{link[XiMpLe:rk.XML.about]{rk.XML.about}} for
   details. Only useful for information that differs from
   the \code{<about>} section of the \code{.pluginmap} file.
   Skipped if \code{NULL}.}
+
+  \item{dependencies}{An object of class \code{XiMpLe.node}
+  to be pasted as the \code{<dependencies>} section, See
+  \code{\link[rkwarddev:rk.XML.dependencies]{rk.XML.dependencies}}
+  for details. Skipped if \code{NULL}.}
 
   \item{gen.info}{Logical, if \code{TRUE} a comment note
   will be written into the document, that it was generated
