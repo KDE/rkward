@@ -298,10 +298,19 @@ get.JS.vars <- function(JS.var, XML.var=NULL, tag.name=NULL, JS.prefix="", names
 				tag.name <- XMLName(XML.var)
 			} else if(is.null(tag.name)){
 				# hm, not a XiMpLe object and no known tag name :-/
-				tag.name <- XMLName(XMLChildren(parseXMLTree(XML.var, object=TRUE))[[1]])
+				XML.var <- XMLChildren(parseXMLTree(XML.var, object=TRUE))[[1]]
+				tag.name <- XMLName(XML.var)
 			} else {}
 			if(tag.name %in% names(JS.getters.default)){
-				getter <- JS.getters.default[[tag.name]]
+				# special case: is a <checkbox> has a value other than
+				# "true" or "false", it's probably supposed to be fetched
+				# as string, not boolean
+				if(is.XiMpLe.node(XML.var) && identical(tag.name, "checkbox") &&
+					any(!c(XMLAttrs(XML.var)[["value"]], XMLAttrs(XML.var)[["value_unchecked"]]) %in% c("true","false"))){
+					getter <- "getString"
+				} else {
+					getter <- JS.getters.default[[tag.name]]
+				}
 			} else {}
 		} else {}
 		XML.var <- check.ID(XML.var)
