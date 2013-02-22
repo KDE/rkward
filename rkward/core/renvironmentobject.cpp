@@ -32,7 +32,6 @@
 REnvironmentObject::REnvironmentObject (RContainerObject *parent, const QString &name) : RContainerObject (parent, name) {
 	RK_TRACE (OBJECTS);
 
-	namespace_envir = 0;
 	type = Environment;
 	if (parent == RObjectList::getObjectList ()) {
 		type |= ToplevelEnv;
@@ -46,7 +45,6 @@ REnvironmentObject::REnvironmentObject (RContainerObject *parent, const QString 
 
 REnvironmentObject::~REnvironmentObject () {
 	RK_TRACE (OBJECTS);
-	delete namespace_envir;
 }
 
 QString REnvironmentObject::packageName () const {
@@ -176,14 +174,13 @@ void REnvironmentObject::updateNamespace (RData* new_data) {
 	RK_TRACE (OBJECTS);
 
 	if (!new_data) {
-		if (namespace_envir) {
-			RKGlobals::tracker ()->removeObject (namespace_envir, 0, true);
-		}
+		setSpecialChildObject (0, NamespaceObject);
 		return;
 	}
 
 	RK_ASSERT (new_data->getDataType () == RData::StructureVector);
 	bool added = false;
+	REnvironmentObject *namespace_envir = namespaceEnvironment ();
 	if (!namespace_envir) {
 		namespace_envir = new RKNamespaceObject (this);
 		added = true;
@@ -192,13 +189,7 @@ void REnvironmentObject::updateNamespace (RData* new_data) {
 	namespace_envir->updateStructure (new_data->structureVector ().at (0));
 	if (added) {
 		RKGlobals::tracker ()->lockUpdates (false);
-
-		int index = getObjectModelIndexOf (namespace_envir);
-		REnvironmentObject *neo = namespace_envir;
-		namespace_envir = 0;	// HACK: Must not be included in the count during the call to beginAddObject
-		RKGlobals::tracker ()->beginAddObject (neo, this, index);
-		namespace_envir = neo;
-		RKGlobals::tracker ()->endAddObject (neo, this, index);
+		setSpecialChildObject (namespace_envir, NamespaceObject);
 	}
 }
 

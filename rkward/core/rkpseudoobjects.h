@@ -21,7 +21,6 @@
 #include "renvironmentobject.h"
 
 /** TODO:
- * - use QHashes, instead of class memebers to store slots objects and package namespace objects (and rownames objects)
  * - implement OrphanNamepacesObject
  * - override getObjectDescription()
  * - namespace objects should keep track of their namespace name, themselves

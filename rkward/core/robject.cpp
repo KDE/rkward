@@ -2,7 +2,7 @@
                           robject  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004, 2006, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2013 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -41,6 +41,9 @@ namespace RObjectPrivate {
 
 // static
 QHash<const RObject*, RObject::PseudoObjectType> RObject::pseudo_object_types;
+QHash<const RObject*, RSlotsPseudoObject*> RObject::slots_objects;
+QHash<const RObject*, REnvironmentObject*> RObject::namespace_objects;
+QHash<const RObject*, RKRowNames*> RObject::rownames_objects;
 
 RObject::RObject (RObject *parent, const QString &name) {
 	RK_TRACE (OBJECTS);
@@ -49,7 +52,7 @@ RObject::RObject (RObject *parent, const QString &name) {
 	RObject::name = name;
 	type = 0;
 	meta_map = 0;
-	slots_pseudo_object = 0;
+	contained_objects = 0;
 	dimensions = RObjectPrivate::dim_null;	// safe initialization
 }
 
@@ -57,7 +60,9 @@ RObject::~RObject () {
 	RK_TRACE (OBJECTS);
 
 	cancelOutstandingCommands ();
-	delete slots_pseudo_object;
+	if (hasPseudoObject (SlotsObject)) delete slots_objects.take (this);
+	if (hasPseudoObject (NamespaceObject)) delete namespace_objects.take (this);
+	if (hasPseudoObject (RowNamesObject)) delete rownames_objects.take (this);
 }
 
 bool RObject::irregularShortName (const QString &name) {
@@ -85,7 +90,7 @@ RObject* RObject::findObjects (const QStringList &path, RObjectSearchMap *matche
 	RK_TRACE (OBJECTS);
 	// not a container
 	if (op == "@") {
-		if (slots_pseudo_object) return (slots_pseudo_object->findObjects (path, matches, "$"));
+		if (slotsPseudoObject ()) return (slotsPseudoObject ()->findObjects (path, matches, "$"));
 	}
 	return 0;
 }
@@ -243,7 +248,8 @@ void RObject::fetchMoreIfNeeded (int levels) {
 		updateFromR (0);
 		return;
 	}
-	if (slots_pseudo_object) slots_pseudo_object->fetchMoreIfNeeded (levels);
+	RSlotsPseudoObject *spo = slotsPseudoObject ();
+	if (spo) spo->fetchMoreIfNeeded (levels);
 	// Note: We do NOT do the same for any namespaceEnvironment, deliberately
 	if (levels <= 0) return;
 	if (!isContainer ()) return;
@@ -327,7 +333,7 @@ void RObject::markDataDirty () {
 		for (int i = children.size () - 1; i >= 0; --i) {
 			children[i]->markDataDirty ();
 		}
-		if (this_container->rownames_object) this_container->rownames_object->markDataDirty ();
+		if (this_container->hasPseudoObject (RowNamesObject)) this_container->rowNames ()->markDataDirty ();
 	}
 }
 
@@ -475,25 +481,20 @@ bool RObject::updateSlots (RData *new_data) {
 	if (new_data->getDataLength ()) {
 		RK_ASSERT (new_data->getDataType () == RData::StructureVector);
 		bool added = false;
-		if (!slots_pseudo_object) {
-			slots_pseudo_object = new RSlotsPseudoObject (this);
+		RSlotsPseudoObject *spo = slotsPseudoObject ();
+		if (!spo) {
+			spo = new RSlotsPseudoObject (this);
 			added = true;
 			RKGlobals::tracker ()->lockUpdates (true);
 		}
-		bool ret = slots_pseudo_object->updateStructure (new_data->structureVector ().at (0));
+		bool ret = spo->updateStructure (new_data->structureVector ().at (0));
 		if (added) {
 			RKGlobals::tracker ()->lockUpdates (false);
-
-			int index = getObjectModelIndexOf (slots_pseudo_object);
-			RSlotsPseudoObject *spo = slots_pseudo_object;
-			slots_pseudo_object = 0;	// HACK: Must not be included in the count during the call to beginAddObject
-			RKGlobals::tracker ()->beginAddObject (spo, this, index);
-			slots_pseudo_object = spo;
-			RKGlobals::tracker ()->endAddObject (spo, this, index);
+			setSpecialChildObject (spo, SlotsObject);
 		}
 		return ret;
-	} else if (slots_pseudo_object) {
-		RKGlobals::tracker ()->removeObject (slots_pseudo_object, 0, true);
+	} else if (slotsPseudoObject ()) {
+		setSpecialChildObject (0, SlotsObject);
 	}
 	return false;
 }
@@ -507,12 +508,12 @@ int RObject::getObjectModelIndexOf (RObject *child) const {
 		if (pos >= 0) return pos + offset;
 		offset += static_cast<const RContainerObject*> (this)->childmap.size ();
 	}
-	if (slots_pseudo_object) {
-		if (child == slots_pseudo_object) return offset;
+	if (hasPseudoObject (SlotsObject)) {
+		if (child == slotsPseudoObject ()) return offset;
 		offset += 1;
 	}
-	if (isType (Environment) && static_cast<const REnvironmentObject*> (this)->namespaceEnvironment ()) {
-		if (child == static_cast<const REnvironmentObject*> (this)->namespaceEnvironment ()) return offset;
+	if (hasPseudoObject (NamespaceObject)) {
+		if (child == namespaceEnvironment ()) return offset;
 		offset += 1;
 	}
 	return -1;
@@ -522,23 +523,25 @@ int RObject::numChildrenForObjectModel () const {
 	RK_TRACE (OBJECTS);
 
 	int ret = isContainer () ? static_cast<const RContainerObject*>(this)->numChildren () : 0;
-	if (slots_pseudo_object) ret += 1;
-	if (isType (PackageEnv) && static_cast<const REnvironmentObject*>(this)->namespaceEnvironment ()) ret += 1;
+	if (hasPseudoObject (SlotsObject)) ret += 1;
+	if (hasPseudoObject (NamespaceObject)) ret += 1;
 	return ret;
 }
 
 RObject *RObject::findChildByObjectModelIndex (int index) const {
-	int offset = index;
 	if (isContainer ()) {
 		const RContainerObject *container = static_cast<const RContainerObject*>(this);
 		if (index < container->numChildren ()) return container->findChildByIndex (index);
-		offset -= container->numChildren ();
-		if (isType (PackageEnv)) {
-			if (offset == 0 && slots_pseudo_object) return slots_pseudo_object;
-			return static_cast<const REnvironmentObject*>(this)->namespaceEnvironment ();
-		}
+		index -= container->numChildren ();
 	}
-	if (offset == 0) return slots_pseudo_object;
+	if (hasPseudoObject (SlotsObject)) {
+		if (index == 0) return slotsPseudoObject ();
+		--index;
+	}
+	if (hasPseudoObject (NamespaceObject)) {
+		if (index == 0) return namespaceEnvironment ();
+		--index;
+	}
 	return 0;
 }
 
@@ -552,18 +555,52 @@ void RObject::rename (const QString &new_short_name) {
 	static_cast<RContainerObject*> (parent)->renameChild (this, new_short_name);
 }
 
+void RObject::setSpecialChildObject (RObject* special, PseudoObjectType special_type) {
+	RK_TRACE (OBJECTS);
+
+	RObject *old_special = 0;
+	if (special_type == SlotsObject) old_special = slotsPseudoObject ();
+	else if (special_type == NamespaceObject) old_special = namespaceEnvironment ();
+	else if (special_type == RowNamesObject) old_special = rownames_objects.value (this);
+	else RK_ASSERT (false);
+
+	if (special == old_special) return;
+
+	if (old_special) {
+		RKGlobals::tracker ()->removeObject (old_special, 0, true);
+		RK_ASSERT (!hasPseudoObject (special_type));	// should have been removed in the above statement via RObject::remove()
+	}
+
+	if (special) {
+		if (special_type == SlotsObject) slots_objects.insert (this, static_cast<RSlotsPseudoObject*> (special));
+		else if (special_type == NamespaceObject) namespace_objects.insert (this, static_cast<REnvironmentObject*> (special));
+		else if (special_type == RowNamesObject) rownames_objects.insert (this, static_cast<RKRowNames*> (special));
+		contained_objects |= special_type;
+
+		if (special->isType (NonVisibleObject)) return;
+
+		int index = getObjectModelIndexOf (special);
+		// HACK: Newly added object must not be included in the index before beginAddObject (but must be included above for getObjectModelIncexOf() to work)
+		contained_objects -= special_type;
+		RKGlobals::tracker ()->beginAddObject (special, this, index);
+		contained_objects |= special_type;
+		RKGlobals::tracker ()->endAddObject (special, this, index);
+	}
+}
+
 void RObject::remove (bool removed_in_workspace) {
 	RK_TRACE (OBJECTS);
-	RK_ASSERT (canRemove ());
+	RK_ASSERT (canRemove () || removed_in_workspace);
 
-	if (isSlotsPseudoObject ()) {
+	if (isPseudoObject ()) {
 		RK_ASSERT (removed_in_workspace);
-		parent->slots_pseudo_object = 0;
+		PseudoObjectType type = getPseudoObjectType ();
+		if (type == SlotsObject) slots_objects.remove (parent);
+		else if (type == NamespaceObject) namespace_objects.remove (parent);
+		else if (type == RowNamesObject) rownames_objects.remove (parent);
+		RK_ASSERT (parent->contained_objects & type);
+		parent->contained_objects -= type;
 		delete this;
-	} else if (isPackageNamespace ()) {
-		RK_ASSERT (removed_in_workspace);
-		RK_ASSERT (parent->isType (Environment));
-		static_cast<REnvironmentObject*> (parent)->namespace_envir = 0;
 	} else {
 		static_cast<RContainerObject*> (parent)->removeChild (this, removed_in_workspace);
 	}

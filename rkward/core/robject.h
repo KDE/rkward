@@ -2,7 +2,7 @@
                           robject  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004, 2006, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2013 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -26,7 +26,9 @@
 #include "../rbackend/rcommandreceiver.h"
 
 class RSlotsPseudoObject;
+class REnvironmentObject;
 class RContainerObject;
+class RKRowNames;
 class RCommandChain;
 class RKEditor;
 class RData;
@@ -100,10 +102,11 @@ public:
 	};
 
 	enum PseudoObjectType {
-		SlotsObject,
-		NamespaceObject,
-		OrphanNamespacesObject,
-		InvalidPseudoObject
+		InvalidPseudoObject = 0,
+		SlotsObject = 1,
+		NamespaceObject = 1 << 1,
+		OrphanNamespacesObject = 1 << 2,
+		RowNamesObject = 1 << 3
 	};
 
 #define ROBJECT_TYPE_INTERNAL_MASK (RObject::Container | RObject::Variable | RObject::Workspace | RObject::Environment | RObject::Function)
@@ -126,9 +129,10 @@ public:
 	/** see RObjectType */
 	bool isType (int type) const { return (RObject::type & type); };
 	bool isPseudoObject () const { return isType (PseudoObject); };
-	static PseudoObjectType getPseudoObjectType (const RObject *object) { return pseudo_object_types.value (object, InvalidPseudoObject); };
-	bool isSlotsPseudoObject () const { return (this && isPseudoObject () && (getPseudoObjectType (this) == SlotsObject)); };
-	bool isPackageNamespace () const { return (this && isPseudoObject () && (getPseudoObjectType (this) == NamespaceObject)); };
+	PseudoObjectType getPseudoObjectType () const { return pseudo_object_types.value (this, InvalidPseudoObject); };
+	bool isSlotsPseudoObject () const { return (this && isPseudoObject () && (getPseudoObjectType () == SlotsObject)); };
+	bool isPackageNamespace () const { return (this && isPseudoObject () && (getPseudoObjectType () == NamespaceObject)); };
+	bool hasPseudoObject (const PseudoObjectType type) const { return (contained_objects & type); };
 	bool hasMetaObject () const { return (meta_map); };
 	/** see RObjectType::Pending */
 	bool isPending () const { return type & Pending; };
@@ -232,11 +236,17 @@ protected:
 	typedef QList<RObject*> RObjectMap;
 
 	RObject *parent;
-	RSlotsPseudoObject *slots_pseudo_object;
 	QString name;
+/** or-ed combination of RObjectType flags for this object */
 	int type;
 	QVector<qint32> dimensions;
 	QStringList classnames;
+/** or-ed combination of PseudoObjectType flags of pseudo objects available in this object */
+	qint8 contained_objects;
+	RSlotsPseudoObject *slotsPseudoObject () const { return (hasPseudoObject (SlotsObject) ? slots_objects.value (this) : 0); };
+/** returns the namespace environment for this object. Always returns 0 for objects which are not a package environment! */
+	REnvironmentObject* namespaceEnvironment () const { return (hasPseudoObject (NamespaceObject) ? namespace_objects.value (this) : 0); };
+	void setSpecialChildObject (RObject *special, PseudoObjectType special_type);
 
 /** Worker function for findObject() and findObjectsMatching(). If matches != 0, look for partial matches, and store them in the map (findObjectsMatching()). Else look for exact matches and return the first match (findObject()). */
 	virtual RObject *findObjects (const QStringList &path, RObjectSearchMap *matches, const QString &op);
@@ -286,9 +296,18 @@ friend class RKModificationTracker;
 	virtual void endEdit ();
 
 	void rCommandDone (RCommand *command);
+
+/* Storage hashes for special objects which are held by some but not all objects, and thus should not have a pointer
+ * in the class declaration. Some apply only to specific RObject types, but moving storage to the relevant classes, would make it more
+ * difficult to maintain the generic bits. */
+	static QHash<const RObject*, RSlotsPseudoObject*> slots_objects;
+	static QHash<const RObject*, REnvironmentObject*> namespace_objects;
+	static QHash<const RObject*, RKRowNames*> rownames_objects;
+
 friend class RSlotsPseudoObject;
 friend class RKPackageNamespaceObject;
 friend class RKOrphanNamespacesObject;
+friend class RKRowNames;
 	static QHash<const RObject*, PseudoObjectType> pseudo_object_types;
 };
 

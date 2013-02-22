@@ -2,7 +2,7 @@
                           rkmodificationtracker  -  description
                              -------------------
     begin                : Tue Aug 31 2004
-    copyright            : (C) 2004, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2013 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -94,8 +94,9 @@ bool RKModificationTracker::removeObject (RObject *object, RKEditor *editor, boo
 
 	RK_ASSERT (object);
 	RK_ASSERT (object->parentObject ());
+	bool view_update = !updates_locked && !object->isType (RObject::NonVisibleObject);
 
-	if (!updates_locked) {
+	if (view_update) {
 		QModelIndex object_index = indexFor (object->parentObject ());
 		int object_row = object->parentObject ()->getObjectModelIndexOf (object);
 		RK_ASSERT (object_row >= 0);
@@ -106,7 +107,7 @@ bool RKModificationTracker::removeObject (RObject *object, RKEditor *editor, boo
 
 	object->remove (removed_in_workspace);
 
-	if (!updates_locked) endRemoveRows ();
+	if (view_update) endRemoveRows ();
 
 	return true;
 }

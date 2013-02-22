@@ -2,7 +2,7 @@
                           rkrownames  -  description
                              -------------------
     begin                : Tue Mar 21 2010
-    copyright            : (C) 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2010, 2013 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -31,7 +31,8 @@
 RKRowNames::RKRowNames (RContainerObject *parent) : RKVariable (parent, QString ()) {
 	RK_TRACE (OBJECTS);
 
-	type = Variable | NonVisibleObject;
+	type = Variable | NonVisibleObject | PseudoObject;
+	pseudo_object_types.insert (this, RowNamesObject);
 
 	setDataType (RObject::DataCharacter);
 	check_duplicates = true;
@@ -42,6 +43,7 @@ RKRowNames::RKRowNames (RContainerObject *parent) : RKVariable (parent, QString 
 
 RKRowNames::~RKRowNames () {
 	RK_TRACE (OBJECTS);
+	pseudo_object_types.remove (this);
 }
 
 void RKRowNames::beginEdit () {

@@ -42,8 +42,6 @@ public:
 /** reimplemented from RContainerObject: If this is an environment var, call RContainerObject::writeMetaData (). Else, do nothing. An environment has no meta data. */
 	void writeMetaData (RCommandChain *chain);
 	QString packageName () const;
-/** For the environment of packages with a namespace, return the namespace. May be NULL! */
-	REnvironmentObject* namespaceEnvironment () const { return namespace_envir; };
 protected:
 	bool updateStructure (RData *new_data);
 /// reimplemented from RContainerObject to call "remove (objectname)" instead of "objectname <- NULL"
@@ -51,8 +49,6 @@ protected:
 /// reimplemented from RContainerObject to call "remove (objectname)" instead of "objectname <- NULL"
 	QString renameChildCommand (RObject *object, const QString &new_name) const;
 friend class RObject;
-	REnvironmentObject *namespace_envir;
-
 	void updateNamespace (RData *new_data);
 };
  

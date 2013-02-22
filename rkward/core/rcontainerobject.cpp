@@ -2,7 +2,7 @@
                           rcontainerobject  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004, 2006, 2007, 2009, 2010, 2011, 2012 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2013 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -34,7 +34,6 @@
 RContainerObject::RContainerObject (RObject *parent, const QString &name) : RObject (parent, name) {
 	RK_TRACE (OBJECTS);
 	type = Container;
-	rownames_object = 0;
 }
 
 RContainerObject::~RContainerObject () {
@@ -44,7 +43,6 @@ RContainerObject::~RContainerObject () {
 	for (int i = childmap.size () - 1; i >= 0; --i) {
 		delete childmap[i];
 	}
-	delete rownames_object;
 }
 
 RObject *RContainerObject::updateChildStructure (RObject *child, RData *new_data, bool just_created) {
@@ -238,16 +236,18 @@ RObject *RContainerObject::findChildByIndex (int position) const {
 RKRowNames* RContainerObject::rowNames () {
 	RK_TRACE (OBJECTS);
 
-	if (!rownames_object) {
-		rownames_object = new RKRowNames (this);
+	if (!hasPseudoObject (RowNamesObject)) {
+ 		setSpecialChildObject (new RKRowNames (this), RowNamesObject);
 		updateRowNamesObject ();
 	}
-	return rownames_object;
+	return rownames_objects.value (this);
 }
 
 void RContainerObject::updateRowNamesObject () {
 	RK_TRACE (OBJECTS);
 
+	RKRowNames *rownames_object = 0;
+	if (hasPseudoObject (RowNamesObject)) rownames_object = rownames_objects.value (this);
 	if (!rownames_object) return;
 
 	int childlen = 0;

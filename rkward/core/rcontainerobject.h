@@ -2,7 +2,7 @@
                           rcontainerobject  -  description
                              -------------------
     begin                : Thu Aug 19 2004
-    copyright            : (C) 2004, 2006, 2007, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2013 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -76,7 +76,6 @@ protected:
 
 	void updateChildren (RData *new_children);
 	RObjectMap childmap;
-	RKRowNames *rownames_object;
 	// why do I need this to make it compile?!
 	friend class RObjectList;
 	friend class RObject;
