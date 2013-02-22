@@ -2,7 +2,7 @@
                           rkworkplace  -  description
                              -------------------
     begin                : Thu Sep 21 2006
-    copyright            : (C) 2006, 2007, 2009, 2010, 2011, 2012 by Thomas Friedrichsmeier
+    copyright            : (C) 2006-2013 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -243,7 +243,9 @@ void RKWorkplace::placeInToolWindowBar (RKMDIWindow *window, int position) {
 
 	if (!windows.contains (window)) {	// first time, we see this window?
 		addWindow (window, true);
-		if (window->isAttached () && window->tool_window_bar) RKWardMainWindow::getMain ()->partManager ()->addPart (window->getPart ());
+		// In other cases, the part is added from addWindow()->attachWindow(). Probably, this could be simplified, but I don't dare
+		// touch it as long as it works. If parts are not added, part (de-)activation will not work, properly
+		if (window->isAttached () && !window->tool_window_bar) RKWardMainWindow::getMain ()->partManager ()->addPart (window->getPart ()); 
 	}
 }
 
@@ -899,3 +901,4 @@ void RKMDIWindowHistory::popLastWindow (RKMDIWindow* match) {
 }
 
 #include "rkworkplace.moc"
+
