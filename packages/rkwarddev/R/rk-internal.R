@@ -100,9 +100,11 @@ get.single.tags <- function(XML.obj, drop=NULL){
 		single.tags <- trim(unlist(strsplit(pasteXMLTree(XML.obj, shine=1, indent.by=""), split="\n")))
 	} else if(is.XiMpLe.node(XML.obj)){
 		single.tags <- trim(unlist(strsplit(pasteXML(XML.obj, shine=1, indent.by=""), split="\n")))
-	} else {
+	} else if(!is.null(XML.obj)){
 		xml.raw <- paste(readLines(XML.obj), collapse=" ")
 		single.tags <- XiMpLe:::XML.single.tags(xml.raw, drop=drop)
+	} else {
+		return(NULL)
 	}
 	names(single.tags) <- NULL
 
@@ -186,9 +188,11 @@ get.IDs <- function(single.tags, relevant.tags, add.abbrev=FALSE, tag.names=FALS
 } ## end function get.IDs()
 
 ## function check.optionset.tags()
-# XML.obj may be a character string (file name) or XiMpLe object
-# this functions will check if <optionset> nodes are present
-# and return a possibly corrected result of get.single.tags()
+# XML.obj may be a character string (file name) or XiMpLe object.
+# this function will check if <optionset> nodes are present
+# and return a possibly corrected result of get.single.tags(),
+# where "corrected" means: optioncolumns will get their IDs prefixed
+# with the set ID, and the rest of the set is discarded.
 check.optionset.tags <- function(XML.obj, drop=NULL){
 	# if this is not a XiMpLe object, transform the file into one
 	if(!is.XiMpLe.node(XML.obj) && !is.XiMpLe.doc(XML.obj)){
