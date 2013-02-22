@@ -413,9 +413,14 @@ setMethod("XMLScan<-",
 		obj <- replace.nodes(
 			nodes=child.list(obj),
 			nName=name,
-			replacement=value)[[1]]
+			replacement=value)
 		stopifnot(validObject(object=obj, test=TRUE, complete=TRUE))
-		return(obj)
+		if(identical(obj, as.list(value))){
+			# it seems the full object was replaced by value
+			return(value)
+		} else {
+			return(obj[[1]])
+		}
 	}
 )
 

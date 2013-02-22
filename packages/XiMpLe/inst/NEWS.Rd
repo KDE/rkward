@@ -1,7 +1,7 @@
 \name{NEWS}
 \title{News for Package 'XiMpLe'}
 \encoding{UTF-8}
-\section{Changes in XiMpLe version 0.03-19 (2013-02-19)}{
+\section{Changes in XiMpLe version 0.03-19 (2013-02-22)}{
   \subsection{added}{
     \itemize{
       \item new methods \code{XMLScan()} and \code{XMLScan()}<- to search an XML tree recursively
