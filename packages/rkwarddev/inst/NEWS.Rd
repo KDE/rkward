@@ -1,24 +1,27 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
-\section{Changes in rkwarddev version 0.06-2 (2013-02-20)}{
+\section{Changes in rkwarddev version 0.06-2 (2013-02-22)}{
   \subsection{changed}{
     \itemize{
-      \item the structure of <about> nodes will change in RKWard 0.6.1, <dependencies> will become
-        a direct child of <document> or <component>, which explains several changes in this release.
-        this is not really critical, because this information wasn't evaluated by RKWard until now
-        anyway
+      \item the structure of <about> nodes will change in RKWard 0.6.1,
+        <dependencies> will become a direct child of <document> or <component>, which explains
+        several changes in this release. this is not really critical, because this
+        information wasn't evaluated by RKWard until now anyway
       \item for consistency, from now on <component> is never an empty node
-      \item \code{rk.XML.pluginmap()}, \code{rk.XML.plugin()} and \code{rk.plugin.skeleton()} will now move <dependencies>
-        from <about> to a top level child node of plugin maps, with a warning
-      \item the object class rk.JS.var gained a new slot \code{"getter"} to set a default JS function
-        to query variable values. it defaults to \code{"getValue"} to ensure compatibility with earlier
-        releases. consequently, \code{rk.JS.vars()} and \code{rk.paste.JS()} have a new  \code{"getter"} argument to set
-        or overwrite this value. another new argument, \code{"guess.getter"}, can be used to turn on
-        automatic guessing which getter function might be most appropriate. this was also added to
+      \item \code{rk.XML.pluginmap()}, \code{rk.XML.plugin()} and \code{rk.plugin.skeleton()} will now
+        move <dependencies> from <about> to a top level child node of plugin maps,
+        with a warning
+      \item the object class rk.JS.var gained a new slot \code{"getter"} to set a default JS
+        function to query variable values. it defaults to \code{"getValue"} to ensure
+        compatibility with earlier releases. consequently, \code{rk.JS.vars()} and
+        \code{rk.paste.JS()} have a new  \code{"getter"} argument to set or overwrite this value.
+        another new argument, \code{"guess.getter"}, can be used to turn on automatic guessing
+        which getter function might be most appropriate. this was also added to
         \code{rk.plugin.component()} and \code{rk.plugin.skeleton()}.
-      \item \code{rk.JS.scan()} learned how to treat <optionset> and <matrix>
       \item updated the skeleton_dialog.R demo file and recreated the plugin code
+      \item JavaScript functions like \code{rk.JS.scan()} and \code{id()} learned how to treat
+        <optionset>, <optioncolumn> and <matrix>
     }
   }
   \subsection{added}{
@@ -29,7 +32,8 @@
       \item new function \code{rk.XML.matrix()}
       \item new function \code{rk.XML.dependencies()}
       \item new function \code{rk.XML.dependency_check()}
-      \item added options \code{"dependencies"}, \code{"namespace"} and \code{"priority"} to \code{rk.XML.pluginmap()}
+      \item added options \code{"dependencies"}, \code{"namespace"} and \code{"priority"} to
+        \code{rk.XML.pluginmap()}
       \item added option \code{"dependencies"} to \code{rk.XML.component()}
       \item added \code{"map"} to \code{rk.XML.require()}
     }
@@ -397,7 +401,7 @@
     \item added options \code{"require"}, \code{"x11.context"}, \code{"import.context"} and \code{"hints"} to
       \code{rk.XML.pluginmap()}
     \item removed now superfluous option \code{"plugin.dir"} from \code{rk.XML.pluginmap()}
-    \item tuned \code{rk.plugin.skeleton()} to only skip file writing if they exist 
+    \item tuned \code{rk.plugin.skeleton()} to only skip file writing if they exist
   }
 }
 \section{Changes in rkwarddev version 0.02-2 (2011-09-29)}{
@@ -471,7 +475,7 @@
   \itemize{
     \item added \code{rk.JS.scan()}, \code{rk.JS.doc()}, \code{rk.JS.array()}, \code{rk.rkh.scan()} and
       \code{rk.rkh.doc()}
-    \item added \code{rk.XML.browser()},  \code{rk.XML.input()},  \code{rk.XML.saveobj()}, 
+    \item added \code{rk.XML.browser()},  \code{rk.XML.input()},  \code{rk.XML.saveobj()},
       \code{rk.XML.stretch()} and  \code{rk.XML.text()}
     \item added \code{rk.testsuite.doc()}
     \item shortened package name from \code{"rkwardplugdev"} to \code{"rkwarddev"}

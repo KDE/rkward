@@ -34,10 +34,19 @@ id <- function(..., quote=FALSE, collapse="", js=TRUE){
 			this.part <- stripCont(this.part, get="printout")
 
 			if(is.XiMpLe.node(this.part)){
-				node.id <- XMLAttrs(this.part)$id
+				if(identical(XMLName(this.part), "optioncolumn")){
+					# optionsets are more difficult to identify automatically
+					if(isTRUE(js)){
+						node.id <- camelCode(get.IDs(check.optionset.tags(this.part), relevant.tags="optioncolumn")[,"abbrev"])
+					} else {
+						node.id <- get.IDs(check.optionset.tags(this.part), relevant.tags="optioncolumn")[,"id"]
+					}
+				} else {
+					node.id <- XMLAttrs(this.part)[["id"]]
 					if(isTRUE(js)){
 						node.id <- camelCode(node.id)
 					} else {}
+				}
 				return(node.id)
 			} else if(inherits(this.part, "rk.JS.arr")){
 				node.id <- this.part@opt.name

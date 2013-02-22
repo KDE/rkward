@@ -18,7 +18,6 @@ Version: 0.06-2
 Date: 2013-02-22
 Collate:
     'echo.R'
-    'id.os.R'
     'id.R'
     'rk.JS.ite-class.R'
     'ite.R'

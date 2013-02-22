@@ -114,7 +114,7 @@ get.single.tags <- function(XML.obj, drop=NULL){
 
 ## function get.IDs()
 # scans XML tags for defined IDs, returns a matrix with columns "id" and "abbrev",
-# and optional "tag"
+# and optional "tag". "abbrev" is mostly used for the JavaScript variable name.
 # 'single.tags' can also contain XiMpLe.node objects
 get.IDs <- function(single.tags, relevant.tags, add.abbrev=FALSE, tag.names=FALSE, only.checkable=FALSE){
 
@@ -156,17 +156,37 @@ get.IDs <- function(single.tags, relevant.tags, add.abbrev=FALSE, tag.names=FALS
 	ids <- t(sapply(cleaned.tags, function(this.tag){
 				if(is.XiMpLe.node(this.tag)){
 					this.tag.name <- XMLName(this.tag)
-					this.tag.id <- XMLAttrs(this.tag)["id"]
+					this.tag.id.abbrev <- this.tag.id <- XMLAttrs(this.tag)["id"]
+					# take care of one special case: optionsets
+					# the need the set ID to access the value from the dialog,
+					# but to be able to use only the optioncolumn in rkwaddev scripts
+					# as reference, the JavaScript variable must be generated from the
+					# column ID alone.
+					if(identical(this.tag.name, "optioncolumn")){
+						this.tag.setid <- XMLAttrs(this.tag)[["setid"]]
+						if(!is.null(this.tag.setid)){
+							this.tag.id <- paste(this.tag.setid, this.tag.id, sep=".")
+						} else {}
+						# for safety, prefix the column ID with a constant
+						this.tag.id.abbrev <- paste("ocol_", this.tag.id.abbrev, sep="")
+					} else {}
 				} else {
 					this.tag.name <- XiMpLe:::XML.tagName(this.tag)
-					this.tag.id <- XiMpLe:::parseXMLAttr(this.tag)[["id"]]
+					this.tag.id.abbrev <- this.tag.id <- XiMpLe:::parseXMLAttr(this.tag)[["id"]]
+					# see comment above for the next part
+					if(identical(this.tag.name, "optioncolumn")){
+						this.tag.setid <- XiMpLe:::parseXMLAttr(this.tag)[["setid"]]
+						if(!is.null(this.tag.setid)){
+							this.tag.id <- paste(this.tag.setid, this.tag.id, sep=".")
+						} else {}
+						# for safety, prefix the column ID with a constant
+						this.tag.id.abbrev <- paste("ocol_", this.tag.id.abbrev, sep="")
+					} else {}
 				}
 
 				if(isTRUE(add.abbrev)){
-					this.tag.id.abbrev <- paste(ID.prefix(this.tag.name), this.tag.id, sep="")
-				} else {
-					this.tag.id.abbrev <- this.tag.id
-				}
+					this.tag.id.abbrev <- paste(ID.prefix(this.tag.name), this.tag.id.abbrev, sep="")
+				} else {}
 			if(isTRUE(tag.names)){
 				return(c(id=this.tag.id, abbrev=this.tag.id.abbrev, tag=this.tag.name))
 			} else {
@@ -191,8 +211,10 @@ get.IDs <- function(single.tags, relevant.tags, add.abbrev=FALSE, tag.names=FALS
 # XML.obj may be a character string (file name) or XiMpLe object.
 # this function will check if <optionset> nodes are present
 # and return a possibly corrected result of get.single.tags(),
-# where "corrected" means: optioncolumns will get their IDs prefixed
-# with the set ID, and the rest of the set is discarded.
+# where "corrected" means: optioncolumns internally will gain an
+# attribute "setid" with the respective set ID, and the rest of the
+# set is discarded.
+# this extra attribute is evaluated by get.IDs().
 check.optionset.tags <- function(XML.obj, drop=NULL){
 	# if this is not a XiMpLe object, transform the file into one
 	if(!is.XiMpLe.node(XML.obj) && !is.XiMpLe.doc(XML.obj)){
@@ -209,8 +231,7 @@ check.optionset.tags <- function(XML.obj, drop=NULL){
 				thisCols <- child.list(XMLScan(thisNode, "optioncolumn"))
 				thisSetID <- XMLAttrs(thisNode)[["id"]]
 				thisNewCols <- unlist(sapply(thisCols, function(thisCol){
-						thisColsID <- XMLAttrs(thisCol)[["id"]]
-						XMLAttrs(thisCol)[["id"]] <- paste(thisSetID, thisColsID, sep=".")
+						XMLAttrs(thisCol)[["setid"]] <- thisSetID
 						pastedTag <- get.single.tags(XML.obj=thisCol, drop=drop)
 						return(pastedTag)
 					}, USE.NAMES=FALSE))
@@ -271,52 +292,60 @@ get.JS.vars <- function(JS.var, XML.var=NULL, tag.name=NULL, JS.prefix="", names
 	getter="getValue", guess.getter=FALSE, check.modifiers=TRUE){
 	# check for XiMpLe nodes
 	JS.var <- check.ID(JS.var)
+	have.XiMpLe.var <- FALSE
 	if(!is.null(XML.var)){
+		if(is.XiMpLe.node(XML.var)){
+			have.XiMpLe.var <- TRUE
+			tag.name <- XMLName(XML.var)
+		} else if(is.null(tag.name)){
+			# hm, not a XiMpLe object and no known tag name :-/
+			# if this is simply a character string, the tag name will become ""
+			tag.name <- XMLName(XMLChildren(parseXMLTree(XML.var, object=TRUE))[[1]])
+		} else {}
+
 		# check validity of modifiers value
 		if(!is.null(modifiers)){
 			if(identical(modifiers, "all")){
-				if(is.XiMpLe.node(XML.var)){
-					tag.name <- XMLName(XML.var)
-				} else {
-					tag.name <- XML.var
-				}
 				if(tag.name %in% names(all.valid.modifiers)){
 					modifiers <- all.valid.modifiers[[tag.name]]
 				} else {
 					modifiers <- NULL
 				}
 			} else {
-				if(is.XiMpLe.node(XML.var)){
-					modif.tag.name <- XMLName(XML.var)
-				} else {
+				if(identical(tag.name, "")){
 					modif.tag.name <- "all"
+				} else {
+					modif.tag.name <- tag.name
 				}
 				if(isTRUE(check.modifiers)){
-					modifiers <- modifiers[modif.validity(modif.tag.name, modifier=child.list(modifiers), warn.only=TRUE, bool=TRUE)]
+					modifiers <- modifiers[modif.validity(modif.tag.name,
+						modifier=child.list(modifiers), warn.only=TRUE, bool=TRUE)]
 				} else {}
 			}
 		} else {}
+
+
 		# check for getter guessing
 		if(isTRUE(guess.getter)){
-			if(is.XiMpLe.node(XML.var)){
-				tag.name <- XMLName(XML.var)
-			} else if(is.null(tag.name)){
-				# hm, not a XiMpLe object and no known tag name :-/
-				XML.var <- XMLChildren(parseXMLTree(XML.var, object=TRUE))[[1]]
-				tag.name <- XMLName(XML.var)
-			} else {}
 			if(tag.name %in% names(JS.getters.default)){
 				# special case: is a <checkbox> has a value other than
 				# "true" or "false", it's probably supposed to be fetched
 				# as string, not boolean
-				if(is.XiMpLe.node(XML.var) && identical(tag.name, "checkbox") &&
+				if(isTRUE(have.XiMpLe.var) && identical(tag.name, "checkbox") &&
 					any(!c(XMLAttrs(XML.var)[["value"]], XMLAttrs(XML.var)[["value_unchecked"]]) %in% c("true","false"))){
 					getter <- "getString"
 				} else {
 					getter <- JS.getters.default[[tag.name]]
 				}
 			} else {}
-		} else {}
+		} else {
+			# if guess.getters is off but we're dealing with <matrix> or <optionset>,
+			# throw in a warning:
+			if(tag.name %in% c("matrix", "optioncolumn") && identical(getter, "getValue")){
+				warning(paste("Your plugin contains the <", tag.name, "> element, but 'guess.getter' is off. ",
+					"Using the default getValue() on this node might cause problems!", sep=""), call.=FALSE)
+			} else {}
+		}
 		XML.var <- check.ID(XML.var)
 	} else {
 		XML.var <- check.ID(JS.var)

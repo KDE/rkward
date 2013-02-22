@@ -44,7 +44,15 @@
   An object of class \code{XiMpLe.node}.
 }
 \description{
-  Create XML node "optionset" for RKWard plugins
+  Note that if you want to refer to the optioncolumns in
+  your JavaScript code, the \code{id} you need is a
+  combination of \code{<optionset id>.<optioncolumn
+  id>.<modifier>}. that is, you must always prefix it with
+  the sets' \code{id}. For JavaScript code generating with
+  \code{rkwarddev}, you can use the ID that functions like
+  \code{\link[rkwarddev:id]{id}} return, because the
+  JavaScript variable name will only contain a constant
+  prefix ("ocol") an the column ID.
 }
 \note{
   The \code{<optionset>} node was introduced with RKWard
@@ -57,7 +65,7 @@ lastname <- rk.XML.input("Family name")
 genderselect <- rk.XML.radio("Gender", options=list(
   Male = c(val="m"),
   Female = c(val="f")))
-rk.XML.optionset(
+(myOptionset <- rk.XML.optionset(
   content = list(
     rk.XML.row(
       firstname,
@@ -68,7 +76,7 @@ rk.XML.optionset(
     rk.XML.optioncolumn(lastname, modifier="text"),
     rk.XML.optioncolumn(genderselect)
   )
-)
+))
 }
 \seealso{
   \code{\link[rkwarddev:rk.XML.optioncolumn]{rk.XML.optioncolumn}},

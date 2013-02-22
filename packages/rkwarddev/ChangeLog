@@ -1,22 +1,25 @@
 ChangeLog for package rkwarddev
 
-changes in version 0.06-2 (2013-02-20)
+changes in version 0.06-2 (2013-02-22)
 changed:
-  - the structure of <about> nodes will change in RKWard 0.6.1, <dependencies> will become
-    a direct child of <document> or <component>, which explains several changes in this release.
-    this is not really critical, because this information wasn't evaluated by RKWard until now
-    anyway
+  - the structure of <about> nodes will change in RKWard 0.6.1,
+    <dependencies> will become a direct child of <document> or <component>, which explains
+    several changes in this release. this is not really critical, because this
+    information wasn't evaluated by RKWard until now anyway
   - for consistency, from now on <component> is never an empty node
-  - rk.XML.pluginmap(), rk.XML.plugin() and rk.plugin.skeleton() will now move <dependencies>
-    from <about> to a top level child node of plugin maps, with a warning
-  - the object class rk.JS.var gained a new slot "getter" to set a default JS function
-    to query variable values. it defaults to "getValue" to ensure compatibility with earlier
-    releases. consequently, rk.JS.vars() and rk.paste.JS() have a new  "getter" argument to set
-    or overwrite this value. another new argument, "guess.getter", can be used to turn on
-    automatic guessing which getter function might be most appropriate. this was also added to
+  - rk.XML.pluginmap(), rk.XML.plugin() and rk.plugin.skeleton() will now
+    move <dependencies> from <about> to a top level child node of plugin maps,
+    with a warning
+  - the object class rk.JS.var gained a new slot "getter" to set a default JS
+    function to query variable values. it defaults to "getValue" to ensure
+    compatibility with earlier releases. consequently, rk.JS.vars() and
+    rk.paste.JS() have a new  "getter" argument to set or overwrite this value.
+    another new argument, "guess.getter", can be used to turn on automatic guessing
+    which getter function might be most appropriate. this was also added to
     rk.plugin.component() and rk.plugin.skeleton().
-  - rk.JS.scan() learned how to treat <optionset> and <matrix>
   - updated the skeleton_dialog.R demo file and recreated the plugin code
+  - JavaScript functions like rk.JS.scan() and id() learned how to treat
+    <optionset>, <optioncolumn> and <matrix>
 added:
   - new function rk.XML.switch()
   - new function rk.XML.optiondisplay()
@@ -24,7 +27,8 @@ added:
   - new function rk.XML.matrix()
   - new function rk.XML.dependencies()
   - new function rk.XML.dependency_check()
-  - added options "dependencies", "namespace" and "priority" to rk.XML.pluginmap()
+  - added options "dependencies", "namespace" and "priority" to
+    rk.XML.pluginmap()
   - added option "dependencies" to rk.XML.component()
   - added "map" to rk.XML.require()
 fixed:
@@ -300,7 +304,7 @@ changes in version 0.02-3 (2011-09-30)
   - added options "require", "x11.context", "import.context" and "hints" to
     rk.XML.pluginmap()
   - removed now superfluous option "plugin.dir" from rk.XML.pluginmap()
-  - tuned rk.plugin.skeleton() to only skip file writing if they exist 
+  - tuned rk.plugin.skeleton() to only skip file writing if they exist
 
 changes in version 0.02-2 (2011-09-29)
   - added "load" and "show" options to rk.plugin.skeleton() to call
@@ -358,7 +362,7 @@ changes in version 0.01-2 (2011-09-15)
 changes in version 0.01-1 (2011-09-05)
   - added rk.JS.scan(), rk.JS.doc(), rk.JS.array(), rk.rkh.scan() and
     rk.rkh.doc()
-  - added rk.XML.browser(),  rk.XML.input(),  rk.XML.saveobj(), 
+  - added rk.XML.browser(),  rk.XML.input(),  rk.XML.saveobj(),
     rk.XML.stretch() and  rk.XML.text()
   - added rk.testsuite.doc()
   - shortened package name from "rkwardplugdev" to "rkwarddev"

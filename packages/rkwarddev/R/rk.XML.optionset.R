@@ -1,5 +1,11 @@
 #' Create XML node "optionset" for RKWard plugins
 #'
+#' Note that if you want to refer to the optioncolumns in your JavaScript code, the \code{id}
+#' you need is a combination of \code{<optionset id>.<optioncolumn id>.<modifier>}. that is,
+#' you must always prefix it with the sets' \code{id}. For JavaScript code generating with
+#' \code{rkwarddev}, you can use the ID that functions like \code{\link[rkwarddev:id]{id}} return,
+#' because the JavaScript variable name will only contain a constant prefix ("ocol") an the column ID.
+#'
 #' @note The \code{<optionset>} node was introduced with RKWard 0.6.1, please set the dependencies
 #'		of your component/plugin accordingly.
 #'
@@ -30,7 +36,7 @@
 #' genderselect <- rk.XML.radio("Gender", options=list(
 #'   Male = c(val="m"),
 #'   Female = c(val="f")))
-#' rk.XML.optionset(
+#' (myOptionset <- rk.XML.optionset(
 #'   content = list(
 #'     rk.XML.row(
 #'       firstname,
@@ -41,7 +47,7 @@
 #'     rk.XML.optioncolumn(lastname, modifier="text"),
 #'     rk.XML.optioncolumn(genderselect)
 #'   )
-#' )
+#' ))
 rk.XML.optionset <- function(content, optioncolumn, min_rows=0, min_rows_if_any=0, max_rows=0,
 	keycolumn=NULL, logic=NULL, optiondisplay=TRUE, id.name="auto"){
 
