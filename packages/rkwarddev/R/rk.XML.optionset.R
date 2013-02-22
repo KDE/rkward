@@ -9,7 +9,7 @@
 #' @note The \code{<optionset>} node was introduced with RKWard 0.6.1, please set the dependencies
 #'		of your component/plugin accordingly.
 #'
-#' @param content A list of XiMpLe.nodes to be placed inside the <content> node of this <optionset>.
+#' @param content A list of XiMpLe.nodes to be placed inside the \code{<content>} node of this \code{<optionset>}.
 #' @param optioncolumn A list of \code{<optioncolumn>} XiMpLe.nodes.
 #' @param min_rows Numeric (integer), if specified, the set will be marked invalid, unless it has
 #'		at least this number of rows. Ignored if set to 0.

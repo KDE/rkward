@@ -8,7 +8,7 @@
 }
 \arguments{
   \item{content}{A list of XiMpLe.nodes to be placed inside
-  the <content> node of this <optionset>.}
+  the \code{<content>} node of this \code{<optionset>}.}
 
   \item{optioncolumn}{A list of \code{<optioncolumn>}
   XiMpLe.nodes.}

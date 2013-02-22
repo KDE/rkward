@@ -158,7 +158,7 @@ get.IDs <- function(single.tags, relevant.tags, add.abbrev=FALSE, tag.names=FALS
 					this.tag.name <- XMLName(this.tag)
 					this.tag.id.abbrev <- this.tag.id <- XMLAttrs(this.tag)["id"]
 					# take care of one special case: optionsets
-					# the need the set ID to access the value from the dialog,
+					# they need the set ID to access the value from the dialog,
 					# but to be able to use only the optioncolumn in rkwaddev scripts
 					# as reference, the JavaScript variable must be generated from the
 					# column ID alone.
