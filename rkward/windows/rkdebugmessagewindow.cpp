@@ -72,7 +72,7 @@ void RKDebugMessageWindow::createWidget () {
 	if (!real_widget) {
 		RK_DEBUG (APP, DL_INFO, "creating debug message viewer");
 		real_widget = new RKDebugMessageWindowWidget (layout_widget);
-		setFocusProxy (real_widget);
+		setFocusProxy (layout_widget);
 
 		if (first) {
 			KMessageBox::information (this, i18n ("<p>This window is used for displaying RKWard related debug messages. It is targetted primarily at (plugin) developers. It does <b>not</b> offer any features for debugging R code.</p>"
