@@ -1,6 +1,6 @@
 ChangeLog for package XiMpLe
 
-changes in version 0.03-19 (2013-02-22)
+changes in version 0.03-19 (2013-02-24)
 added:
   - new methods XMLScan() and XMLScan()<- to search an XML tree recursively
     for appearances of certain node names

@@ -1,9 +1,9 @@
 #!/usr/bin/make -f
 #								-*- makefile -*-
-# debian/rules file for the Debian/GNU Linux r-other-reaktanz-ximple package
+# debian/rules file for the Debian/GNU Linux r-other-rkward-ximple package
 # Copyright 2013 by m.eik michalke <meik.michalke@hhu.de>
 
-debRreposname := other-reaktanz
+debRreposname := other-rkward
 
 include /usr/share/R/debian/r-cran.mk
 
