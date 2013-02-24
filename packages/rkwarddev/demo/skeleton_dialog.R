@@ -205,5 +205,6 @@ rk.plugin.skeleton(
 	dependencies=dependencies.info,
 	tests=FALSE,
 	show=TRUE,
-	edit=TRUE)
+	edit=TRUE,
+	hints=FALSE)
 })

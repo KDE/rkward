@@ -15,7 +15,7 @@
 		shortinfo="GUI interface to create RKWard plugin skeletons"
 		longinfo="GUI interface to create RKWard plugin skeletons"
 		version="0.06-2"
-		releasedate="2013-02-21"
+		releasedate="2013-02-24"
 		url="http://rkward.sf.net"
 		license="GPL (&gt;= 3)"
 	>
@@ -26,11 +26,6 @@
 			role="aut, cre"
 		 />
 	</about>
-	<!-- 
-		<require 
-				file="path/file.pluginmap"
-			 /> 
-	-->
 	<components>
 		<component 
 			id="cmp_CrtRKWrdplgnskltnCrtRKWrd"
@@ -53,12 +48,4 @@
 			</menu>
 		</menu>
 	</hierarchy>
-	<!-- 
-		<context id="x11">
-			</context> 
-	-->
-	<!-- 
-		<context id="import">
-			</context> 
-	-->
 </document>
