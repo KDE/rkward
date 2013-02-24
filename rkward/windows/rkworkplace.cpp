@@ -231,6 +231,7 @@ void RKWorkplace::placeInToolWindowBar (RKMDIWindow *window, int position) {
 	RK_TRACE (APP);
 
 	RK_ASSERT (window->isToolWindow ());
+	bool needs_registration = (!window->tool_window_bar && (position != RKToolWindowList::Nowhere));
 	if ((position < 0) || (position >= TOOL_WINDOW_BAR_COUNT)) {
 		RK_ASSERT (position == RKToolWindowList::Nowhere);	// should never happen...
 		position = RKToolWindowList::Nowhere;		// ... but let's set this explicitly, in case of a broken workplace representation
@@ -241,12 +242,8 @@ void RKWorkplace::placeInToolWindowBar (RKMDIWindow *window, int position) {
 		tool_window_bars[position]->addWidget (window);
 	}
 
-	if (!windows.contains (window)) {	// first time, we see this window?
-		addWindow (window, true);
-		// In other cases, the part is added from addWindow()->attachWindow(). Probably, this could be simplified, but I don't dare
-		// touch it as long as it works. If parts are not added, part (de-)activation will not work, properly
-		if (window->isAttached () && !window->tool_window_bar) RKWardMainWindow::getMain ()->partManager ()->addPart (window->getPart ()); 
-	}
+	if (!windows.contains (window)) addWindow (window, true);	// first time we see this window
+	else if (needs_registration) attachWindow (window);
 }
 
 bool RKWorkplace::openAnyUrl (const KUrl &url, const QString &known_mimetype, bool force_external) {

@@ -344,7 +344,7 @@ void RKToolWindowBar::addRemoveToolWindow (QAction *action) {
 
 	RKMDIWindow *win = RKToolWindowList::findToolWindowById (action->data ().toString ());
 	if (action->isChecked ()) {
-		addWidget (win);
+		RKWorkplace::mainWorkplace ()->placeInToolWindowBar (win, position ());
 	} else {
 		RK_ASSERT (win->tool_window_bar == this);
 		removeWidget (win);
