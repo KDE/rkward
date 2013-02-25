@@ -764,6 +764,7 @@ clean.name <- function(name, message=TRUE){
 } ## end function clean.name()
 
 
+
 ## function paste.JS.ite()
 paste.JS.ite <- function(object, level=1, indent.by="\t", recurse=FALSE, empty.e=FALSE){
 	stopifnot(inherits(object, "rk.JS.ite"))

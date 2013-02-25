@@ -58,6 +58,8 @@ rk.paste.JS <- function(..., level=2, indent.by="\t", funct=NULL, array=NULL,
 		} else if(inherits(this.object, "rk.JS.var")){
 			result <- paste.JS.var(this.object, level=level, indent.by=indent.by, JS.prefix=var.prefix,
 				modifiers=modifiers, default=default, join=join, getter=getter)
+		} else if(inherits(this.object, "rk.JS.echo")){
+			result <- slot(this.object, "value")
 		} else if(is.XiMpLe.node(this.object)){
 			if(identical(XMLName(this.object), "!--")){
 				result <- paste(indent(level, by=indent.by),

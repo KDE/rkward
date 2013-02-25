@@ -25,3 +25,14 @@ echo <- function(..., newline=""){
 	result <- paste("echo(", ID.content, ");", newline, sep="")
 	return(result)
 }
+
+## internal class rk.JS.echo
+# this is a quick fix to be able to add values into echo() without quotes
+setClass("rk.JS.echo",
+	representation=representation(
+		value="character"
+	),
+	prototype(
+		value=character()
+	)
+)

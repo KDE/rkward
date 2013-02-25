@@ -1,6 +1,7 @@
 export(echo)
 export(id)
 export(ite)
+export(join)
 export(qp)
 export(rk.JS.array)
 export(rk.JS.doc)

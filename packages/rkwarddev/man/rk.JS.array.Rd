@@ -12,7 +12,7 @@
 
   \item{variables}{A list with either character strings
   (the names of the variables to combine to a vector or
-  list), of objects of class \code{XiMpLe.node} with plugin
+  list), or objects of class \code{XiMpLe.node} with plugin
   XML nodes (whose ID will be extracted and used).}
 
   \item{funct}{Character string, name of the R function to

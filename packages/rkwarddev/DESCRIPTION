@@ -15,12 +15,13 @@ URL: http://rkward.sourceforge.net
 Authors@R: c(person(given="Meik", family="Michalke",
     email="meik.michalke@hhu.de", role=c("aut", "cre")))
 Version: 0.06-2
-Date: 2013-02-22
+Date: 2013-02-25
 Collate:
     'echo.R'
     'id.R'
     'rk.JS.ite-class.R'
     'ite.R'
+    'join.R'
     'qp.R'
     'rk.build.plugin.R'
     'rk.comment.R'

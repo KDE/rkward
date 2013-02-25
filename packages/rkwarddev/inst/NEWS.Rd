@@ -1,7 +1,7 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
-\section{Changes in rkwarddev version 0.06-2 (2013-02-22)}{
+\section{Changes in rkwarddev version 0.06-2 (2013-02-25)}{
   \subsection{changed}{
     \itemize{
       \item the structure of <about> nodes will change in RKWard 0.6.1,
@@ -32,6 +32,7 @@
       \item new function \code{rk.XML.matrix()}
       \item new function \code{rk.XML.dependencies()}
       \item new function \code{rk.XML.dependency_check()}
+      \item new function \code{join()} to simplify "\code{.join()}" for JavaScript arrays
       \item added options \code{"dependencies"}, \code{"namespace"} and \code{"priority"} to
         \code{rk.XML.pluginmap()}
       \item added option \code{"dependencies"} to \code{rk.XML.component()}

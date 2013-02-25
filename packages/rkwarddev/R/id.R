@@ -62,6 +62,9 @@ id <- function(..., quote=FALSE, collapse="", js=TRUE){
 					warning(paste("Object contained more than one ID, only the first one was used: ", node.id, sep=""), call.=FALSE)
 				} else {}
 				return(node.id)
+			} else if(inherits(this.part, "rk.JS.echo")){
+				node.id <- slot(this.part, "value")
+				return(node.id)
 			} else {
 				if(isTRUE(quote)){
 					text.part <- deparse(this.part)

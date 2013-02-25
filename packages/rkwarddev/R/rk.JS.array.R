@@ -7,7 +7,7 @@
 #' @param option A character string, naming, e.g., an option of an R function which should be
 #'		constructed from several variables.
 #' @param variables A list with either character strings (the names of the variables to combine to a vector or list),
-#'		of objects of class \code{XiMpLe.node} with plugin XML nodes (whose ID will be extracted and used).
+#'		or objects of class \code{XiMpLe.node} with plugin XML nodes (whose ID will be extracted and used).
 #' @param funct Character string, name of the R function to be called to combine the options, e.g. "list" for \code{list()},
 #'		or "c" for \code{c()}.
 #' @param var.prefix A character string. sets a global string to be used as a prefix for the JS variable names.

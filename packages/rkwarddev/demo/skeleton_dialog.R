@@ -86,10 +86,22 @@ dep.opts <- rk.XML.frame(
 		dep.frame.R <- rk.XML.frame(
 				dep.rmin <- rk.XML.input("R min", size="small"),
 				dep.rmax <- rk.XML.input("R max", size="small"),
-				rk.XML.stretch(), label="Depends on R version")#,
-# 	rk.XML.row(dep.frame.packages <- rk.XML.frame(rk.XML.stretch(before=list(
-# 			rk.XML.text("Separate package names by space:"),
-# 			dep.pckg <- rk.XML.input("Packages"))), label="Depends on R packages"))
+				rk.XML.stretch(), label="Depends on R version")),
+	rk.XML.row(
+		dep.optionset.packages <- rk.XML.optionset(
+				content=rk.XML.frame(rk.XML.stretch(before=list(
+					dep.pckg.name <- rk.XML.input("Package")#,
+# 					dep.pckg.min <- rk.XML.input("min"),
+# 					dep.pckg.max <- rk.XML.input("max"),
+# 					dep.pckg.repo <- rk.XML.input("Repository")
+				)), label="Depends on R packages"),
+				optioncolumn=list(
+					dep.optioncol.pckg.name <- rk.XML.optioncolumn(connect=dep.pckg.name, modifier="text")#,
+# 					dep.optioncol.pckg.min <- rk.XML.optioncolumn(connect=dep.pckg.min, modifier="text"),
+# 					dep.optioncol.pckg.max <- rk.XML.optioncolumn(connect=dep.pckg.max, modifier="text"),
+# 					dep.optioncol.pckg.repo <- rk.XML.optioncolumn(connect=dep.pckg.repo, modifier="text")
+				)
+			)
 	), label="Define dependencies", checkable=TRUE, chk=FALSE)
 
 tab2.create <- rk.XML.col(crt.opts, dep.opts)
@@ -179,8 +191,15 @@ JS.calculate <- rk.paste.JS(
 		echo(js.opt.about.author),
 		echo(js.opt.about.about),
 	echo("\n)\n\n"),
-	ite(id(js.frm.dep.opts, " && ", js.opt.about.dep),
-		echo("plugin.dependencies <- rk.XML.dependencies(", js.opt.about.dep, "\n)\n\n")),
+	ite(id(js.frm.dep.opts, " && (", js.opt.about.dep, " || ", dep.optioncol.pckg.name, ")"),
+		rk.paste.JS(
+			echo("plugin.dependencies <- rk.XML.dependencies("),
+			ite(id(js.opt.about.dep), echo(js.opt.about.dep)),
+			ite(id(js.opt.about.dep, " && ", dep.optioncol.pckg.name), echo(",")),
+			ite(id(dep.optioncol.pckg.name),
+				echo("\n\tpackage=list(\n\t\tc(name=\"", join(dep.optioncol.pckg.name, by="\"),\n\t\tc(name=\""), "\")\n\t)")),
+			echo("\n)\n\n"),
+		level=3)),
 	echo("plugin.dir <- rk.plugin.skeleton(\n\tabout=about.plugin,"),
 		ite(id(js.frm.dep.opts, " && ", js.opt.about.dep), echo("\n\tdependencies=plugin.dependencies,")),
 		echo(js.opt.skeleton),
@@ -192,7 +211,7 @@ JS.calculate <- rk.paste.JS(
 rk.plugin.skeleton(
 	about=about.info,
 	path=output.dir,
-	guess.getter=FALSE,
+	guess.getter=TRUE,
 	xml=list(
 		dialog=sklt.tabbook,
 		logic=logic.section),

@@ -9,6 +9,7 @@
 #' @include rk.JS.ite-class.R
 #' @include rk.JS.opt-class.R
 #' @include rk.JS.var-class.R
+#' @include echo.R
 #' @exportMethod show
 #' @rdname show-methods
 setGeneric("show")
@@ -17,6 +18,7 @@ setGeneric("show")
 setMethod("show", signature(object="rk.JS.arr"), function(object){
 	cat(rk.paste.JS(object))
 })
+
 #' @rdname show-methods
 setMethod("show", signature(object="rk.JS.ite"), function(object){
 	cat(rk.paste.JS(object))
@@ -29,5 +31,10 @@ setMethod("show", signature(object="rk.JS.opt"), function(object){
 
 #' @rdname show-methods
 setMethod("show", signature(object="rk.JS.var"), function(object){
+	cat(rk.paste.JS(object))
+})
+
+#' @rdname show-methods
+setMethod("show", signature(object="rk.JS.echo"), function(object){
 	cat(rk.paste.JS(object))
 })
