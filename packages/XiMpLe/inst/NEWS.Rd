@@ -1,6 +1,17 @@
 \name{NEWS}
 \title{News for Package 'XiMpLe'}
 \encoding{UTF-8}
+\section{Changes in XiMpLe version 0.03-20 (2013-02-26)}{
+  \subsection{changed}{
+    \itemize{
+      \item CURRENTLY TURNED OFF: while parsing attributes, XiMpLe will try to force empty attributes into
+        attribute=\code{"attribute"}. firstly, empty attributes are not valid XML.
+        secondly, they break parsing, because they can't be represented in a list. only
+        works if the attribute in question is the last in line. needs improvement
+        and should be made optional.
+    }
+  }
+}
 \section{Changes in XiMpLe version 0.03-19 (2013-02-24)}{
   \subsection{added}{
     \itemize{

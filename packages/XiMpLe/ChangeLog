@@ -1,5 +1,13 @@
 ChangeLog for package XiMpLe
 
+changes in version 0.03-20 (2013-02-26)
+changed:
+  - CURRENTLY TURNED OFF: while parsing attributes, XiMpLe will try to force empty attributes into
+    attribute="attribute". firstly, empty attributes are not valid XML.
+    secondly, they break parsing, because they can't be represented in a list. only
+    works if the attribute in question is the last in line. needs improvement
+    and should be made optional.
+
 changes in version 0.03-19 (2013-02-24)
 added:
   - new methods XMLScan() and XMLScan()<- to search an XML tree recursively
