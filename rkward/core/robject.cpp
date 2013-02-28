@@ -516,6 +516,10 @@ int RObject::getObjectModelIndexOf (RObject *child) const {
 		if (child == namespaceEnvironment ()) return offset;
 		offset += 1;
 	}
+	if (isType (Workspace)) {
+		if (child == static_cast<const RObjectList*> (this)->orphanNamespacesObject ()) return offset;
+		offset += 1;
+	}
 	return -1;
 }
 
@@ -525,6 +529,7 @@ int RObject::numChildrenForObjectModel () const {
 	int ret = isContainer () ? static_cast<const RContainerObject*>(this)->numChildren () : 0;
 	if (hasPseudoObject (SlotsObject)) ret += 1;
 	if (hasPseudoObject (NamespaceObject)) ret += 1;
+	if (isType (Workspace)) ret += 1;	// for the RKOrphanNamespacesObject
 	return ret;
 }
 
@@ -540,6 +545,10 @@ RObject *RObject::findChildByObjectModelIndex (int index) const {
 	}
 	if (hasPseudoObject (NamespaceObject)) {
 		if (index == 0) return namespaceEnvironment ();
+		--index;
+	}
+	if (isType (Workspace)) {
+		if (index == 0) return static_cast<const RObjectList *> (this)->orphanNamespacesObject ();
 		--index;
 	}
 	return 0;
@@ -595,15 +604,17 @@ void RObject::remove (bool removed_in_workspace) {
 	if (isPseudoObject ()) {
 		RK_ASSERT (removed_in_workspace);
 		PseudoObjectType type = getPseudoObjectType ();
-		if (type == SlotsObject) slots_objects.remove (parent);
-		else if (type == NamespaceObject) namespace_objects.remove (parent);
-		else if (type == RowNamesObject) rownames_objects.remove (parent);
-		RK_ASSERT (parent->contained_objects & type);
-		parent->contained_objects -= type;
-		delete this;
-	} else {
-		static_cast<RContainerObject*> (parent)->removeChild (this, removed_in_workspace);
+		if (parent->hasPseudoObject (type)) {	// not always true for NamespaceObjects, which the RKOrphanNamespacesObject keeps as regular children!
+			if (type == SlotsObject) slots_objects.remove (parent);
+			else if (type == NamespaceObject) namespace_objects.remove (parent);
+			else if (type == RowNamesObject) rownames_objects.remove (parent);
+			parent->contained_objects -= type;
+			delete this;
+			return;
+		}
 	}
+
+	static_cast<RContainerObject*> (parent)->removeChild (this, removed_in_workspace);
 }
 
 //static

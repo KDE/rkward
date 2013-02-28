@@ -145,6 +145,7 @@ friend class RObjectListener;
 
 friend class RContainerObject;
 friend class REnvironmentObject;
+friend class RKOrphanNamespacesObject;
 friend class RObject;
 friend class RObjectList;
 /** essentially like the above function(s). All objects listening for child additions on the parent will be notified */

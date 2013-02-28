@@ -2,7 +2,7 @@
                           robjectlist  -  description
                              -------------------
     begin                : Wed Aug 18 2004
-    copyright            : (C) 2004, 2006, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2013 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -32,6 +32,7 @@ class RCommandChain;
 class RKEditor;
 class REnvironmentObject;
 class RKProgressControl;
+class RKOrphanNamespacesObject;
 
 /**
 This class is responsible for keeping and updating a list of objects in the R-workspace.
@@ -56,7 +57,7 @@ public:
 	/** reimplemented from RContainerObject: do nothing. The object-list has no meta data. */
 	void writeMetaData (RCommandChain *) {};
 
-	REnvironmentObject* findChildByNamespace (const QString &namespacename) const;
+	REnvironmentObject* findPackage (const QString &namespacename) const;
 
 	static RObjectList *getObjectList () { return object_list; };
 	static REnvironmentObject *getGlobalEnv ();
@@ -64,6 +65,8 @@ public:
 	/** detach the given list of packages (if the packages are loaded, and safe to remove)
 	@returns a list of error messages (usually empty) */
 	QStringList detachPackages (const QStringList &packages, RCommandChain *chain = 0, RKProgressControl *control = 0);
+	/** A pseudo object containing as children all loaded namespaces which do not belong to a package on the search path */
+	RKOrphanNamespacesObject* orphanNamespacesObject () const { return orphan_namespaces; };
 public slots:
 	void timeout ();
 signals:
@@ -84,12 +87,14 @@ protected:
 	bool updateStructure (RData *new_data);
 	void rCommandDone (RCommand *command);
 	void updateEnvironments (const QStringList &env_names, bool force_globalenv_update);
+	void updateNamespaces (const QStringList namespace_names);
 private:
 	friend class RKLoadAgent;
 	friend class RKSaveAgent;
 	QTimer *update_timer;
 	
 	RCommandChain *update_chain;
+	RKOrphanNamespacesObject *orphan_namespaces;
 
 	REnvironmentObject *createTopLevelEnvironment (const QString &name);
 

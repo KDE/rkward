@@ -1,5 +1,6 @@
+- Added support for loaded namespaces that are not attached to a loaded package
+	- TODO: Currently works only after clicking "Update" in the workspace view. Make it work automatically!
 - Pluginmaps can specify their "priority". Pluginmaps with low priority will not be added automatically, when found.
-	- TODO: test
 - Pluginmaps can <require> other pluginmaps based on their id (for cross-package inclusion)
 	- TODO: test
 - Added new element <dependency_check> for dynamic version checks within a plugin (R and RKWard versions, only, so far)

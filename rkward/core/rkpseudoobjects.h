@@ -21,10 +21,8 @@
 #include "renvironmentobject.h"
 
 /** TODO:
- * - implement OrphanNamepacesObject
+ * - fix automatic updating of loadedNamespaces()
  * - override getObjectDescription()
- * - namespace objects should keep track of their namespace name, themselves
- * - internally store namespace objects by name, not attached to a package
  * */
 
 /**
@@ -50,13 +48,43 @@ rather call it a "special" object, instead).
 */
 class RKNamespaceObject : public REnvironmentObject {
 public:
-	RKNamespaceObject (REnvironmentObject* package);
+	RKNamespaceObject (REnvironmentObject* package, const QString name = QString ());
 	~RKNamespaceObject ();
 
 	QString getFullName () const;
 	QString makeChildName (const QString &short_child_name, bool misplaced=false) const;
 	QString makeChildBaseName (const QString &short_child_name) const;
+	QString namespaceName () const { return namespace_name; };
+private:
+	QString namespace_name;
+};
+
+class RObjectList;
+/**
+This class represents the list of namespace environments which are loaded, but do not belong to a package on the search path.
+
+(TODO: Actually, we should relax the assumption that objects can only be at one place in the hierarchy, and turn this into a list of
+all namespace environemnts!)
+
+It exists only once, as a direct child of the RObjectList.
+
+@author Thomas Friedrichsmeier
+*/
+class RKOrphanNamespacesObject : public REnvironmentObject {
+public:
+	RKOrphanNamespacesObject (RObjectList *parent);
+	~RKOrphanNamespacesObject ();
+
+	QString getFullName () const;
+	QString makeChildName (const QString &short_child_name, bool misplaced=false) const;
+	QString makeChildBaseName (const QString &short_child_name) const;
+
+	RKNamespaceObject *findOrphanNamespace (const QString &name) const;
+
+	/** should not be called on this object. Reimplemented to raise an assert, and do nothing else. */
+	void updateFromR (RCommandChain *chain);
+	/** reimplemented from REnvironmentObject */
+	void updateFromR (RCommandChain *chain, const QStringList &current_symbols);
 };
 
 #endif
-

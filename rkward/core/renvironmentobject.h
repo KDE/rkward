@@ -34,7 +34,7 @@ public:
 
 	void updateFromR (RCommandChain *chain);
 /** like updateFromR, but only update new / removed symbols from R. Theoretically this could be defined in RContainerObject, but the only use case is for environments. */
-	void updateFromR (RCommandChain *chain, const QStringList &current_symbols);
+	virtual void updateFromR (RCommandChain *chain, const QStringList &current_symbols);
 
 	QString getFullName () const;
 	QString makeChildName (const QString &short_child_name, bool misplaced=false) const;

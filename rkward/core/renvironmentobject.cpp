@@ -49,6 +49,7 @@ REnvironmentObject::~REnvironmentObject () {
 
 QString REnvironmentObject::packageName () const {
 	RK_ASSERT (isType (PackageEnv));
+	if (!isType (PackageEnv)) RK_DEBUG (OBJECTS, DL_WARNING, "%s", qPrintable (name));
 	return name.section (':', 1);
 }
 
