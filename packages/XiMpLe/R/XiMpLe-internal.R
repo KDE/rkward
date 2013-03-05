@@ -1,5 +1,15 @@
 ## internal functions, not exported
 
+## wrapper for paste0() needed?
+if(isTRUE(R_system_version(getRversion()) < 2.15)){
+	# if this is an older R version, we need a wrapper function for paste0()
+	# which was introduced with R 2.15 as a more efficient shortcut to paste(..., sep="")
+	paste0 <- function(..., collapse=NULL){
+		return(paste(..., sep="", collapse=collapse))
+	}
+} else {}
+
+
 ## function child.list()
 # convenience function to let single children be provided without list()
 child.list <- function(children){
@@ -122,9 +132,9 @@ setMinIndent <- function(tag, level=1, indent.by="\t", shine=0){
 	indentDiff <- currentMinIndent - level
 	# if currentMinIndent is greater than level, reduce indentation
 	if(indentDiff > 0){
-		tag <- gsub(paste("(^|\n)(\t){", indentDiff, "}", sep=""), "\\1", tag, perl=TRUE)
+		tag <- gsub(paste0("(^|\n)(\t){", indentDiff, "}"), "\\1", tag, perl=TRUE)
 	} else if(indentDiff < 0){
-		tag <- gsub("(^|\n)(\t)", paste("\\1", indent(level + 1, by=indent.by), sep=""), tag, perl=TRUE)
+		tag <- gsub("(^|\n)(\t)", paste0("\\1", indent(level + 1, by=indent.by)), tag, perl=TRUE)
 	} else {}
 
 	return(tag)
@@ -190,7 +200,7 @@ pasteXMLAttr <- function(attr=NULL, tag=NULL, level=1, rename=NULL, shine=2, ind
 				} else {
 					attr.name <- this.attr
 				}
-				full.attr <- trim(paste(full.attr, new.attr, new.indent, attr.name, "=\"", attr[[this.attr]], "\"", sep=""))
+				full.attr <- trim(paste0(full.attr, new.attr, new.indent, attr.name, "=\"", attr[[this.attr]], "\""))
 			} else {}
 		}
 	} else {
@@ -201,7 +211,7 @@ pasteXMLAttr <- function(attr=NULL, tag=NULL, level=1, rename=NULL, shine=2, ind
 			attr.name <- names(attr)
 		}
 		# look up attribute name to paste
-		full.attr <- paste(attr.name, "=\"", attr[[1]], "\"", sep="")
+		full.attr <- paste0(attr.name, "=\"", attr[[1]], "\"")
 	}
 	return(full.attr)
 } ## end function pasteXMLAttr()
@@ -214,9 +224,9 @@ parseXMLAttr <- function(tag){
 			"doctype=\"\\2\", decl=\"\\3\"", tag)
 		stripped.tag2 <- eval(parse(text=paste("c(",gsub("[^\"]*[\"]?([^\"]*)[\"]?[^\"]*", "\"\\1\",", tag),"NULL)")))
 		is.dtd <- grepl("\\.dtd", stripped.tag2)
-		doct.decl <- ifelse(sum(!is.dtd) > 0, paste(stripped.tag2[!is.dtd][1], sep=""), paste("", sep=""))
-		doct.ref <- ifelse(sum(is.dtd) > 0, paste(stripped.tag2[is.dtd][1], sep=""), paste("", sep=""))
-		parsed.list <- eval(parse(text=paste("list(", stripped.tag, ", id=\"", doct.decl,"\"", ", refer=\"", doct.ref,"\")", sep="")))
+		doct.decl <- ifelse(sum(!is.dtd) > 0, paste0(stripped.tag2[!is.dtd][1]), paste0(""))
+		doct.ref <- ifelse(sum(is.dtd) > 0, paste0(stripped.tag2[is.dtd][1]), paste0(""))
+		parsed.list <- eval(parse(text=paste0("list(", stripped.tag, ", id=\"", doct.decl,"\"", ", refer=\"", doct.ref,"\")")))
 	} else if(XML.endTag(tag) | XML.comment(tag) |XML.cdata(tag)){
 		# end tags, comments and CDATA don't have attributes
 		parsed.list <- ""
@@ -449,7 +459,7 @@ XML.nodes <- function(single.tags, end.here=NA, start=1){
 		this.tag <- get("single.tags", envir=single.tags.env)[tag.no]
 		nxt.child <- length(children) + 1
 		child.name <- XML.tagName(this.tag)
-		child.end.tag <- paste("</[[:space:]]*", end.here,"[[:space:]>]+.*", sep="")
+		child.end.tag <- paste0("</[[:space:]]*", end.here,"[[:space:]>]+.*")
 		if(isTRUE(grepl(child.end.tag, this.tag))){
 		## uncomment to debug:
 		# cat(this.tag, ": break (",tag.no,")\n")

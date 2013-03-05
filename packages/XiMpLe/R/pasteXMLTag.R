@@ -61,7 +61,7 @@ pasteXMLTag <- function(tag, attr=NULL, child=NULL, empty=TRUE, level=1, allow.e
 			child <- trim(child)
 			child <- gsub("\n", new.cmmt, setMinIndent(child, level=level, indent.by=indent.by, shine=shine))
 		}
-		full.tag <- paste(child, " ", sep="")
+		full.tag <- paste0(child, " ")
 	} else {
 	switch(tag,
 		"!--"={
@@ -72,9 +72,9 @@ pasteXMLTag <- function(tag, attr=NULL, child=NULL, empty=TRUE, level=1, allow.e
 					child <- gsub("\n", new.cmmt, setMinIndent(child, level=level, indent.by=indent.by, shine=shine))
 				}
 			} else {}
-			full.tag <- paste(new.indent, "<!-- ", new.attr, new.cmmt.indent,
+			full.tag <- paste0(new.indent, "<!-- ", new.attr, new.cmmt.indent,
 				child, " ", new.attr, new.attr.indent,
-				"-->", new.node, sep="")},
+				"-->", new.node)},
 		"![CDATA["={
 			# clean up value if needed
 			if(!is.null(child)){
@@ -83,9 +83,9 @@ pasteXMLTag <- function(tag, attr=NULL, child=NULL, empty=TRUE, level=1, allow.e
 					child <- gsub("\n", new.cmmt, setMinIndent(child, level=level, indent.by=indent.by))
 				}
 			} else {}
-			full.tag <- paste(new.indent, "<![CDATA[ ", new.cmmt, comment.indent,
+			full.tag <- paste0(new.indent, "<![CDATA[ ", new.cmmt, comment.indent,
 				child, " ", new.cmmt, new.indent,
-				"]]>", new.node, sep="")},
+				"]]>", new.node)},
 		"*![CDATA["={
 			# clean up value if needed
 			if(!is.null(child)){
@@ -95,9 +95,9 @@ pasteXMLTag <- function(tag, attr=NULL, child=NULL, empty=TRUE, level=1, allow.e
 				}
 			} else {}
 			# 
-			full.tag <- paste(new.indent, "/* <![CDATA[ */ ", new.cmmt, comment.indent,
+			full.tag <- paste0(new.indent, "/* <![CDATA[ */ ", new.cmmt, comment.indent,
 				child, " ", new.cmmt, new.indent,
-				"/* ]]> */", new.node, sep="")},
+				"/* ]]> */", new.node)},
 		# last but not least, the default value
 		{
 			# only put attributes in new lines if there's more than one
@@ -107,12 +107,12 @@ pasteXMLTag <- function(tag, attr=NULL, child=NULL, empty=TRUE, level=1, allow.e
 			val.indent <- ifelse(shine > 0, indent(level + 1, by=indent.by), "")
 			# empty decides whether this is a empty tag or a pair of start and end tags
 			if(isTRUE(empty)){
-				full.tag <- paste(new.indent, "<", tag, attr.space, new.attr, new.cmmt.indent, all.attributes, new.attr, new.attr.indent, " />", new.node, sep="")
+				full.tag <- paste0(new.indent, "<", tag, attr.space, new.attr, new.cmmt.indent, all.attributes, new.attr, new.attr.indent, " />", new.node)
 			} else {
-				full.tag <- paste(
+				full.tag <- paste0(
 					new.indent, "<", tag, attr.space, new.attr, new.cmmt.indent, all.attributes, new.attr, new.attr.indent, ">", new.node,
-					if(!is.null(child)){paste(val.indent, trim(child), new.node, sep="")},
-					new.indent, "</", tag, ">", new.node, sep="")
+					if(!is.null(child)){paste0(val.indent, trim(child), new.node)},
+					new.indent, "</", tag, ">", new.node)
 			}
 		})
 	}

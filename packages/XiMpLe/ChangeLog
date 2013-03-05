@@ -1,12 +1,15 @@
 ChangeLog for package XiMpLe
 
-changes in version 0.03-20 (2013-02-26)
+changes in version 0.03-20 (2013-03-05)
 changed:
   - CURRENTLY TURNED OFF: while parsing attributes, XiMpLe will try to force empty attributes into
     attribute="attribute". firstly, empty attributes are not valid XML.
     secondly, they break parsing, because they can't be represented in a list. only
     works if the attribute in question is the last in line. needs improvement
     and should be made optional.
+  - internally replaced paste(..., sep="") calls with paste0(...). for R versions older than
+    2.15 (when paste0() was introduced), a wrapper function should kick in, so we don't need
+    to change the dependencies.
 
 changes in version 0.03-19 (2013-02-24)
 added:

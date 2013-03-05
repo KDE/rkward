@@ -54,13 +54,13 @@ setMethod("pasteXML",
 		} else {}
 
 		if(length(node.chld) > 0){
-			node.chld <- paste(unlist(sapply(node.chld, function(this.node){
+			node.chld <- paste0(unlist(sapply(node.chld, function(this.node){
 				if(slot(this.node, "name") == ""){
-					this.node.pasted <- paste(new.indent, pasteXML(this.node, level=level, shine=shine, indent.by=indent.by, tidy=tidy), sep="")
+					this.node.pasted <- paste0(new.indent, pasteXML(this.node, level=level, shine=shine, indent.by=indent.by, tidy=tidy))
 				} else {
 					this.node.pasted <- pasteXML(this.node, level=(level + 1), shine=shine, indent.by=indent.by, tidy=tidy)
 				}
-				return(this.node.pasted)})), collapse="", sep="")
+				return(this.node.pasted)})), collapse="")
 			node.empty <- FALSE
 		} else {
 			node.chld <- NULL
@@ -74,7 +74,7 @@ setMethod("pasteXML",
 				if(isTRUE(tidy)){
 					node.val <- sapply(node.val, xml.tidy)
 				} else {}
-				node.chld <- paste(node.chld, paste(node.val, new.node, collapse=" "), sep="")
+				node.chld <- paste0(node.chld, paste(node.val, new.node, collapse=" "))
 			} else {}
 		} else {}
 
@@ -110,23 +110,23 @@ setMethod("pasteXML",
 			for (elmt in c("id", "refer")){
 				if(length(tree.doctype[[elmt]]) > 0) {
 					if(nchar(tree.doctype[[elmt]]) > 0){
-						doc.doctype <- paste(doc.doctype, " \"",tree.doctype[[elmt]], "\"", sep="")
+						doc.doctype <- paste0(doc.doctype, " \"",tree.doctype[[elmt]], "\"")
 					} else {}
 				} else {}
 			}
-			doc.doctype <- paste(doc.doctype, ">", new.node, sep="")
+			doc.doctype <- paste0(doc.doctype, ">", new.node)
 		} else {
 			doc.doctype <- ""
 		}
 
 		if(length(tree.nodes) > 0) {
-			doc.nodes <- paste(unlist(sapply(tree.nodes, function(this.node){
-				return(pasteXML(this.node, level=1, shine=shine, indent.by=indent.by, tidy=tidy))})), collapse="", sep="")
+			doc.nodes <- paste0(unlist(sapply(tree.nodes, function(this.node){
+				return(pasteXML(this.node, level=1, shine=shine, indent.by=indent.by, tidy=tidy))})), collapse="")
 		} else {
 			doc.nodes <- ""
 		}
 
-		doc.all <- paste(doc.xml, doc.doctype, doc.nodes, collapse="", sep="")
+		doc.all <- paste0(doc.xml, doc.doctype, doc.nodes, collapse="")
 
 		return(doc.all)
 	}

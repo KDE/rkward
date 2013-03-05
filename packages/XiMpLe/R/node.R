@@ -49,7 +49,7 @@ setMethod("node",
 			got.this <- identical(slot(obj, "name"), node[[1]])
 			if(!isTRUE(got.this)){
 				# apparently, this node doesn't exist
-				stop(simpleError(paste("Can't find node ", node[[1]], " in ", sQuote(deparse(substitute(obj))), "!", sep="")))
+				stop(simpleError(paste0("Can't find node ", node[[1]], " in ", sQuote(deparse(substitute(obj))), "!")))
 			} else {
 				# remove first element in list node
 				node[[1]] <- NULL
@@ -62,9 +62,9 @@ setMethod("node",
 				got.this <- lapply(slot(this.node.part, "children"), function(this.child){slot(this.child, "name")}) %in% this.node
 				if(!any(got.this)){
 					# apparently, this node doesn't exist
-					stop(simpleError(paste("Can't find node ", sQuote(this.node), " in ", sQuote(deparse(substitute(obj))), "!", sep="")))
+					stop(simpleError(paste0("Can't find node ", sQuote(this.node), " in ", sQuote(deparse(substitute(obj))), "!")))
 				} else {
-					result.node.path <- unique(paste(result.node.path, paste("@children[[",which(got.this),"]]", sep=""), sep=""))
+					result.node.path <- unique(paste0(result.node.path, paste0("@children[[",which(got.this),"]]")))
 				}
 			}
 		}
@@ -111,7 +111,7 @@ setMethod("node",
 		if(!is.null(what)){
 			stopifnot(length(what) == 1)
 			if(!what %in% c(slotNames(new("XiMpLe.node")), "@path", "obj@path")){
-				stop(simpleError(paste("Invalid slot for class XiMpLe.node:", paste(sQuote(what), collapse=", "), "!", sep="")))
+				stop(simpleError(paste0("Invalid slot for class XiMpLe.node:", paste(sQuote(what), collapse=", "), "!")))
 			} else {}
 			if(identical(what, "@path")){
 				## return subtituted path info
@@ -182,7 +182,7 @@ setMethod("node<-",
 			# special case: text values can either be directly in the value slot of a node,
 			# or in a pseudo tag as a child node, so we check both and remove all
 			if(identical(what, "value")){
-				eval(parse(text=paste(this.node, "@value <- character()", sep="")))
+				eval(parse(text=paste0(this.node, "@value <- character()")))
 				all.node.children <- slot(eval(parse(text=this.node)), "children")
 				child.is.value <- sapply(all.node.children, function(this.child){
 						if(identical(slot(this.child, "name"), "") & isTRUE(nchar(slot(this.child, "value")) > 0)){
@@ -195,27 +195,26 @@ setMethod("node<-",
 				if(length(all.node.children) != length(child.is.value)){
 					warning("a child node contained text values and other nodes, we probably messed up the markup!")
 				} else {}
-				remove.nodes <- paste(this.node, "@children[child.is.value] <- NULL", sep="")
+				remove.nodes <- paste0(this.node, "@children[child.is.value] <- NULL")
 				eval(parse(text=remove.nodes))
 
 				# paste new value into a single pseudo node
-				pseudo.node <- paste(this.node, "@children <- append(", this.node, "@children, ",
-					"new(\"XiMpLe.node\", name=\"\", value=\"", value, "\"), after=0)",
-					sep="")
+				pseudo.node <- paste0(this.node, "@children <- append(", this.node, "@children, ",
+					"new(\"XiMpLe.node\", name=\"\", value=\"", value, "\"), after=0)")
 				eval(parse(text=pseudo.node))
 
 				# now return the object
 				return(obj)
 			} else {
-				this.node <- paste(this.node, "@", what, sep="")
+				this.node <- paste0(this.node, "@", what)
 			}
 
 			if(!is.null(element)){
-				this.node <- paste(this.node, "[[\"",element,"\"]]", sep="")
+				this.node <- paste0(this.node, "[[\"",element,"\"]]")
 			} else {}
 		} else {}
 
-		eval(parse(text=paste(this.node, " <- ", deparse(value), sep="")))
+		eval(parse(text=paste0(this.node, " <- ", deparse(value))))
 	}
 	
 		return(obj)
