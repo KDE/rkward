@@ -177,7 +177,9 @@ void RKRBackend::clearPendingInterrupt () {
 }
 
 // some functions we need that are not declared
+#if R_VERSION < R_Version(2,13,0)
 LibExtern void Rf_PrintWarnings (void);
+#endif
 LibExtern void run_Rmainloop (void);
 #include <R_ext/eventloop.h>
 }
@@ -185,8 +187,6 @@ LibExtern void run_Rmainloop (void);
 #include "rdata.h"
 
 extern SEXP RKWard_RData_Tag;
-SEXP parseCommand (const QString &command_qstring, RKRBackend::RKWardRError *error);
-SEXP runCommandInternalBase (SEXP pr, RKRBackend::RKWardRError *error);
 
 // ############## R Standard callback overrides BEGIN ####################
 Rboolean RKToplevelStatementFinishedCallback (SEXP expr, SEXP value, Rboolean succeeded, Rboolean visible, void *) {
@@ -918,6 +918,14 @@ SEXP doSubstackCall (SEXP call) {
 			return R_NilValue;
 		}
 	}
+/*	// this is a useful place to sneak in test code for profiling
+	if (list.value (0) == "testit") {
+		for (int i = 10000; i >= 1; --i) {
+			setWarnOption (i);
+		}
+		return R_NilValue;
+	} */
+
 
 	RKRBackend::this_pointer->handleHistoricalSubstackRequest (list);
 
@@ -1185,7 +1193,6 @@ SEXP runCommandInternalBase (SEXP pr, RKRBackend::RKWardRError *error) {
 	SEXP exp;
 	int r_error = 0;
 
-	PROTECT (pr);
 	exp=R_NilValue;
 
 	if (TYPEOF(pr)==EXPRSXP && LENGTH(pr)>0) {
@@ -1208,8 +1215,9 @@ SEXP runCommandInternalBase (SEXP pr, RKRBackend::RKWardRError *error) {
 		*error = RKRBackend::NoError;
 	}
 
-	UNPROTECT(1); /* pr */
-
+// actually, the code inside this #if worked up to R 2.15.x.
+// see the corresponding #if in runCommand
+#if R_VERSION < R_Version(2,13,0)
 	// for safety, let's protect exp for the two print calls below.
 	// TODO: this is not good. It causes an additional PROTECT and UPROTECT. Need to (re-)move printing
 	PROTECT (exp);
@@ -1220,6 +1228,7 @@ SEXP runCommandInternalBase (SEXP pr, RKRBackend::RKWardRError *error) {
 	Rf_PrintWarnings ();
 
 	UNPROTECT (1);		// exp; We unprotect this, as most of the time the caller is not really interested in the result
+#endif
 	return exp;
 }
 
@@ -1238,6 +1247,19 @@ RCommandProxy *RKRBackend::runDirectCommand (const QString &command, RCommand::C
 	RCommandProxy *c = new RCommandProxy (command, RCommand::App | RCommand::Sync | RCommand::Internal | datatype);
 	runCommand (c);
 	return c;
+}
+
+void setWarnOption (int level) {
+	SEXP s, t;
+	PROTECT (t = s = Rf_allocList (2));
+	SET_TYPEOF (s, LANGSXP);
+	SETCAR (t, Rf_install ("options")); t = CDR (t);
+	SETCAR (t, Rf_ScalarInteger (level));
+	SET_TAG (t, Rf_install ("warn"));
+// The above is rougly equivalent to parseCommand ("options(warn=" + QString::number (level) + ")", &error), but ~100 times faster
+	RKRBackend::RKWardRError error;
+	runCommandInternalBase (s, &error);
+	UNPROTECT (1);
 }
 
 void RKRBackend::runCommand (RCommandProxy *command) {
@@ -1264,8 +1286,16 @@ void RKRBackend::runCommand (RCommandProxy *command) {
 		repl_status.eval_depth++;
 		SEXP parsed = parseCommand (command->command, &error);
 		if (error == NoError) {
+			PROTECT (parsed);
 			SEXP exp;
+#if R_VERSION >= R_Version(2,13,0)
+			int warn_level = RKRSupport::SEXPToInt (Rf_GetOption1 (Rf_install ("warn")), 0);
+			if (warn_level != 1) setWarnOption (1);
+#endif
 			PROTECT (exp = runCommandInternalBase (parsed, &error));
+#if R_VERSION >= R_Version(2,13,0)
+			if (warn_level != 1) setWarnOption (warn_level);
+#endif
 			if (error == NoError) {
 				if (ctype & RCommand::GetStringVector) {
 					command->setData (RKRSupport::SEXPToStringList (exp));
@@ -1279,7 +1309,7 @@ void RKRBackend::runCommand (RCommandProxy *command) {
 					delete dummy;
 				}
 			}
-			UNPROTECT (1); // exp
+			UNPROTECT (2); // exp, parsed
 		}
 		repl_status.eval_depth--;
 	}
