@@ -4,7 +4,7 @@
 PortSystem          1.0
 fetch.type          svn
 svn.url             http://svn.code.sf.net/p/rkward/code/trunk
-svn.revision        4494
+#svn.revision        4494
 worksrcdir          ${workpath}/trunk/rkward
 
 name                rkward-devel
@@ -25,9 +25,17 @@ homepage            http://rkward.sourceforge.net
 master_sites        https://sourceforge.net/projects/rkward/files/Current_Stable_Releases
 
 PortGroup           cmake 1.0
-depends_lib         port:kde4-baseapps \
+# depends_lib         port:kde4-baseapps \
+#                    port:kate \
+#                    port:R
+depends_lib         port:kdelibs4 \
                     port:kate \
                     port:R
+
+# add port:okular once the graphics device is fully functional
+variant okular description {Add okular for nice PDF handling} {
+        depends_lib-append port:okular
+}
 
 if {${configure.compiler} == "clang"} {
         configure.compiler llvm-gcc-4.2

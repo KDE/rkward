@@ -9,25 +9,29 @@ WORKDIR=/opt/ports/kde/rkward/work
 PTARGET=rkward-devel
 # specify local public directory
 LPUBDIR=~/Public/rkward
+OLDWD=$(pwd)
 
 if [[ $1 == "" ]] ; then
  echo "Usage: update_bundle.sh OPTION
           OPTIONS:
            -D (build target rkward instead of rkward-devel)
+           -X <MacPorts version> (completely!!! wipe ${MPTINST} and do an all fresh installation)
            -f (full -- all of the below)
+           -l (remove static port libraries)
            -p (update macports, remove inactive)
            -r (update port ${PTARGET})
            -m (create .mdmg of ${PTARGET})
            -s (create sources .tar)
            -c (copy .mdmg and src.tar to ${LPUBDIR}, if created)
-           -x (completely!!! wipe \$MACPORTS/var/macports/distfiles)"
+           -x (completely!!! wipe ${MPTINST}/var/macports/distfiles)"
 fi
 
 # get the options
-while getopts ":Dfprmscx" OPT; do
+while getopts ":DflprmscxX:" OPT; do
   case $OPT in
     D) PTARGET=rkward >&2 ;;
     f)
+       RMSTLIBS=TRUE >&2
        UPMPORTS=TRUE >&2
        UPRKWARD=TRUE >&2
        MAKEMDMD=TRUE >&2
@@ -35,12 +39,17 @@ while getopts ":Dfprmscx" OPT; do
        COPYMDMD=TRUE >&2
        WIPEDSTF=TRUE >&2
        ;;
+    l) RMSTLIBS=TRUE >&2 ;;
     p) UPMPORTS=TRUE >&2 ;;
     r) UPRKWARD=TRUE >&2 ;;
     m) MAKEMDMD=TRUE >&2 ;;
     s) MKSRCTAR=TRUE >&2 ;;
     c) COPYMDMD=TRUE >&2 ;;
     x) WIPEDSTF=TRUE >&2 ;;
+    X)
+       WIPEDSTF=FALSE >&2
+       MCPVERS=$OPTARG >&2
+       WIPEINST=TRUE >&2 ;;
     \?)
       echo "Invalid option: -$OPTARG" >&2
       exit 1
@@ -52,10 +61,41 @@ while getopts ":Dfprmscx" OPT; do
   esac
 done
 
+
+# do a full clean installation, remove MacPorts completely
+if [[ $WIPEINST ]] ; then
+  echo "removing ${MPTINST}..."
+  sudo rm -rf ${MPTINST} || exit 1
+  echo "creating ${MPTINST}..."
+  sudo mkdir -p ${MPTINST} || exit 1
+  mkdir /tmp/MP && cd /tmp/MP
+  curl "https://distfiles.macports.org/MacPorts/MacPorts-${MCPVERS}.tar.bz2" -o "MacPorts-${MCPVERS}.tar.bz2" || exit 1
+  tar xjvf "MacPorts-${MCPVERS}.tar.bz2" || exit 1
+  cd "MacPorts-${MCPVERS}" || exit 1
+  ./configure --prefix=${MPTINST}  || exit 1
+  make || exit 1
+  sudo make install || exit 1
+  cd $OLDWD || exit 1
+  rm -rf /tmp/MP || exit 1
+  sudo port -v selfupdate || exit 1
+  sudo port install subversion || exit 1
+  ## NOTE: there is some serious trouble with port:p5.12-locale-gettext which hasn't been fixed in months
+  ## a workaround, if you run into it:
+  ##   sudo port edit p5.12-locale-gettext
+  ## and append 
+  ##   configure.cc cc -L/opt/local/lib -I/opt/local/include -arch x86_64
+  ## to the portfile
+  echo "adding local portfiles to ${MPTINST}/etc/macports/sources.conf..."
+  sudo sed -i -e "s+rsync://rsync.macports.org.*\[default\]+file://${SRCPATH}/\\`echo -e '\n\r'`&+" ${MPTINST}/etc/macports/sources.conf || exit 1
+  sudo port -v selfupdate || exit 1
+  echo "successfully completed reincarnation of ${MPTINST}!"
+fi
+
 # prepare for a clean installation, remove all cached sources
 if [[ $WIPEDSTF ]] ; then
   sudo rm -rf ${MPTINST}/var/macports/distfiles/*
 fi
+
 
 # update installed ports
 if [[ $UPMPORTS ]] ; then
@@ -75,6 +115,11 @@ if [[ $UPRKWARD ]] ; then
   sudo port clean rkward-devel
   # build and install recent version
   sudo port -v install $PTARGET
+fi
+
+# remove static libraries, they're a waste of disk space
+if [[ $RMSTLIBS ]] ; then
+  sudo rm ${MPTINST}/lib/*.a
 fi
 
 # set some variables
