@@ -46,9 +46,11 @@ void RKPrintAgent::printPostscript (const QString &file, bool delete_file) {
 
 	KService::Ptr service = KService::serviceByDesktopPath ("okular_part.desktop");
 	if (!service) service = KService::serviceByDesktopPath ("kpdf_part.desktop");
-	if (!service) RK_DEBUG (APP, DL_WARNING, "No KDE service found for postscript printing");
 
-	KParts::ReadOnlyPart *provider = service->createInstance<KParts::ReadOnlyPart> (0);
+	KParts::ReadOnlyPart *provider = 0;
+	if (service) provider = service->createInstance<KParts::ReadOnlyPart> (0);
+	else RK_DEBUG (APP, DL_WARNING, "No KDE service found for postscript printing");
+
 	QAction *printaction = 0;
 	if (provider) {
 		printaction = provider->action ("print");

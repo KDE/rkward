@@ -1,3 +1,4 @@
+- Fix crash when trying to print, and neither okular, nor kpdf are available
 - Added support for loaded namespaces that are not attached to a loaded package
 - Pluginmaps can specify their "priority". Pluginmaps with low priority will not be added automatically, when found.
 - Pluginmaps can <require> other pluginmaps based on their id (for cross-package inclusion)
