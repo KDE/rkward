@@ -18,8 +18,8 @@
 
 #define UPDATE_DELAY_INTERVAL 500
 
-#define ROBJECTLIST_UDPATE_ENVIRONMENTS_COMMAND 1
-#define ROBJECTLIST_UDPATE_COMPLETE_COMMAND 2
+#define ROBJECTLIST_UPDATE_ENVIRONMENTS_COMMAND 1
+#define ROBJECTLIST_UPDATE_COMPLETE_COMMAND 2
 
 #include <qtimer.h>
 #include <qstringlist.h>
@@ -110,11 +110,11 @@ void RObjectList::updateFromR (RCommandChain *chain) {
 	emit (updateStarted ());
 	update_chain = RKGlobals::rInterface ()->startChain (chain);
 
-	RCommand *command = new RCommand ("list (search (), loadedNamespaces ())", RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString::null, this, ROBJECTLIST_UDPATE_ENVIRONMENTS_COMMAND);
+	RCommand *command = new RCommand ("list (search (), loadedNamespaces ())", RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString (), this, ROBJECTLIST_UPDATE_ENVIRONMENTS_COMMAND);
 	RKGlobals::rInterface ()->issueCommand (command, update_chain);
 }
 
-void RObjectList::updateFromR (RCommandChain *chain, const QStringList &current_searchpath) {
+void RObjectList::updateFromR (RCommandChain *chain, const QStringList &current_searchpath, const QStringList &current_namespaces) {
 	RK_TRACE (OBJECTS);
 
 // TODO: can this happen? when?
@@ -129,20 +129,15 @@ void RObjectList::updateFromR (RCommandChain *chain, const QStringList &current_
 	update_chain = RKGlobals::rInterface ()->startChain (chain);
 
 	updateEnvironments (current_searchpath, false);
-#warning TODO
-#warning TODO
-#warning TODO
-#warning TODO
-#warning TODO
-#warning TODO
-#warning TODO
-	RKGlobals::rInterface ()->issueCommand (QString (), RCommand::App | RCommand::Sync | RCommand::EmptyCommand, QString (), this, ROBJECTLIST_UDPATE_COMPLETE_COMMAND, update_chain);
+	updateNamespaces (current_namespaces);
+
+	RKGlobals::rInterface ()->issueCommand (QString (), RCommand::App | RCommand::Sync | RCommand::EmptyCommand, QString (), this, ROBJECTLIST_UPDATE_COMPLETE_COMMAND, update_chain);
 }
 
 void RObjectList::rCommandDone (RCommand *command) {
 	RK_TRACE (OBJECTS);
 
-	if (command->getFlags () == ROBJECTLIST_UDPATE_ENVIRONMENTS_COMMAND) {
+	if (command->getFlags () == ROBJECTLIST_UPDATE_ENVIRONMENTS_COMMAND) {
 		RK_ASSERT (command->getDataType () == RData::StructureVector);
 		const RData::RDataStorage & data = command->structureVector ();
 		RK_ASSERT (data.size () == 2);
@@ -153,8 +148,8 @@ void RObjectList::rCommandDone (RCommand *command) {
 		updateEnvironments (new_environments, true);
 		updateNamespaces (data[1]->stringVector ());
 
-		RKGlobals::rInterface ()->issueCommand (QString (), RCommand::App | RCommand::Sync | RCommand::EmptyCommand, QString (), this, ROBJECTLIST_UDPATE_COMPLETE_COMMAND, update_chain);
-	} else if (command->getFlags () == ROBJECTLIST_UDPATE_COMPLETE_COMMAND) {
+		RKGlobals::rInterface ()->issueCommand (QString (), RCommand::App | RCommand::Sync | RCommand::EmptyCommand, QString (), this, ROBJECTLIST_UPDATE_COMPLETE_COMMAND, update_chain);
+	} else if (command->getFlags () == ROBJECTLIST_UPDATE_COMPLETE_COMMAND) {
 		RK_ASSERT (update_chain);
 		RKGlobals::rInterface ()->closeChain (update_chain);
 		update_chain = 0;

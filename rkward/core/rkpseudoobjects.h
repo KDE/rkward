@@ -78,6 +78,7 @@ public:
 	QString getFullName () const;
 	QString makeChildName (const QString &short_child_name, bool misplaced=false) const;
 	QString makeChildBaseName (const QString &short_child_name) const;
+	QString getObjectDescription () const;
 
 	RKNamespaceObject *findOrphanNamespace (const QString &name) const;
 

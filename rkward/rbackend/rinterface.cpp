@@ -655,7 +655,8 @@ void RInterface::processHistoricalSubstackRequest (const QStringList &calllist) 
 		}
 	} else if (call == "syncenvs") {
 		RK_DEBUG (RBACKEND, DL_DEBUG, "triggering update of object list");
-		RObjectList::getObjectList ()->updateFromR (in_chain, calllist.mid (1));
+		int search_len = calllist.value (1).toInt ();
+		RObjectList::getObjectList ()->updateFromR (in_chain, calllist.mid (2, search_len), calllist.mid (2 + search_len));
 	} else if (call == "syncglobal") {
 		RK_DEBUG (RBACKEND, DL_DEBUG, "triggering update of globalenv");
 		RObjectList::getGlobalEnv ()->updateFromR (in_chain, calllist.mid (1));

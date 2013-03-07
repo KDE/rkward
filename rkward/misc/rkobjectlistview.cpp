@@ -2,7 +2,7 @@
                           rkobjectlistview  -  description
                              -------------------
     begin                : Wed Sep 1 2004
-    copyright            : (C) 2004, 2006, 2007, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2013 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -240,6 +240,7 @@ bool RKObjectListViewSettings::filterAcceptsRow (int source_row, const QModelInd
 
 	if (!settings[ShowObjectsHidden]) {
 		if (object->getShortName ().startsWith ('.')) return false;
+		if (object == reinterpret_cast<RObject*> (RObjectList::getObjectList ()->orphanNamespacesObject ())) return false;
 	}
 
 	bool base_filter = QSortFilterProxyModel::filterAcceptsRow (source_row, source_parent);

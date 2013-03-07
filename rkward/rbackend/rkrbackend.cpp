@@ -1593,8 +1593,12 @@ void RKRBackend::checkObjectUpdatesNeeded (bool check_list) {
 		delete dummy;
 	
 		if (search_update_needed) {	// this includes an update of the globalenv, even if not needed
-			QStringList call = toplevel_env_names;
-			call.prepend ("syncenvs");	// should be faster than the reverse
+			QStringList call ("syncenvs");
+			call.append (QString::number (toplevel_env_names.size ()));
+			call.append (toplevel_env_names);
+			dummy = runDirectCommand ("loadedNamespaces ()\n", RCommand::GetStringVector);
+			call.append (dummy->stringVector ());
+			delete dummy;
 			handleHistoricalSubstackRequest (call);
 		} 
 		if (globalenv_update_needed) {

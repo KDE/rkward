@@ -81,7 +81,7 @@ QString RKNamespaceObject::makeChildBaseName (const QString& short_child_name) c
 #include "rkmodificationtracker.h"
 #include "../rkglobals.h"
 
-RKOrphanNamespacesObject::RKOrphanNamespacesObject (RObjectList* parent) : REnvironmentObject (parent, "." + i18nc ("Note: namespaces is a technical term, should not be translated", "Orphan Namespaces")) {	// HACK: Name prefixed with "." to treat object as hidden.
+RKOrphanNamespacesObject::RKOrphanNamespacesObject (RObjectList* parent) : REnvironmentObject (parent, i18nc ("Note: 'namespace' is a technical term, should not be translated", "Orphan Namespaces")) {
 	RK_TRACE (OBJECTS);
 	type |= PseudoObject;
 	pseudo_object_types.insert (this, OrphanNamespacesObject);
@@ -150,3 +150,10 @@ RKNamespaceObject* RKOrphanNamespacesObject::findOrphanNamespace (const QString&
 	return 0;
 }
 
+QString RKOrphanNamespacesObject::getObjectDescription () const {
+	RK_TRACE (OBJECTS);
+
+	QString desc = RObject::getObjectDescription ();
+	desc.append ("<p>This special object does not actually exist anywhere in R. It is used, here, to list namespaces which are loaded, but not attached to a package on the search path. These are typically 'imported' namespaces.</p>");
+	return desc;
+}
