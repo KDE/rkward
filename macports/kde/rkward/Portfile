@@ -25,14 +25,14 @@ homepage            http://rkward.sourceforge.net
 master_sites        https://sourceforge.net/projects/rkward/files/Current_Stable_Releases
 
 PortGroup           cmake 1.0
-# depends_lib         port:kde4-baseapps \
-#                    port:kate \
-#                    port:R
+
 depends_lib         port:kdelibs4 \
                     port:kate \
-                    port:R
+                    port:R-framework
 
 # add port:okular once the graphics device is fully functional
+# this needs port:poppler with +qt4 +quartz varaints which cannot be
+# specified with depends_lib-append
 variant okular description {Add okular for nice PDF handling} {
         depends_lib-append port:okular
 }

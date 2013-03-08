@@ -9,13 +9,18 @@ WORKDIR=/opt/ports/kde/rkward/work
 PTARGET=rkward-devel
 # specify local public directory
 LPUBDIR=~/Public/rkward
+# specify application dir used
+APPLDIR=/Applications/RKWard
+
+SVNREPO=http://svn.code.sf.net/p/rkward/code/trunk
 OLDWD=$(pwd)
 
 if [[ $1 == "" ]] ; then
  echo "Usage: update_bundle.sh OPTION
           OPTIONS:
            -D (build target rkward instead of rkward-devel)
-           -X <MacPorts version> (completely!!! wipe ${MPTINST} and do an all fresh installation)
+           -X (completely!!! wipe ${MPTINST})
+           -F <MacPorts version> (do an all fresh installation of <MacPorts version>)
            -f (full -- all of the below)
            -l (remove static port libraries)
            -p (update macports, remove inactive)
@@ -27,9 +32,12 @@ if [[ $1 == "" ]] ; then
 fi
 
 # get the options
-while getopts ":DflprmscxX:" OPT; do
+while getopts ":DflprmscxXF:" OPT; do
   case $OPT in
     D) PTARGET=rkward >&2 ;;
+    F)
+       FRESHMCP=TRUE >&2
+       MCPVERS=$OPTARG >&2 ;;
     f)
        RMSTLIBS=TRUE >&2
        UPMPORTS=TRUE >&2
@@ -48,7 +56,6 @@ while getopts ":DflprmscxX:" OPT; do
     x) WIPEDSTF=TRUE >&2 ;;
     X)
        WIPEDSTF=FALSE >&2
-       MCPVERS=$OPTARG >&2
        WIPEINST=TRUE >&2 ;;
     \?)
       echo "Invalid option: -$OPTARG" >&2
@@ -62,10 +69,41 @@ while getopts ":DflprmscxX:" OPT; do
 done
 
 
-# do a full clean installation, remove MacPorts completely
+# remove MacPorts completely
 if [[ $WIPEINST ]] ; then
-  echo "removing ${MPTINST}..."
-  sudo rm -rf ${MPTINST} || exit 1
+  if [ -d ${MPTINST} ] ; then
+    echo "removing ${MPTINST}..."
+    sudo rm -rf ${MPTINST} || exit 1
+  fi
+  if [ -d ${APPLDIR} ] ; then
+    echo "removing ${APPLDIR}..."
+    sudo rm -rf ${APPLDIR} || exit 1
+  fi
+  # these leftovers would conflict with port installation
+  if [ -f /Library/LaunchDaemons/org.freedesktop.dbus-system.plist ] ; then
+    sudo rm /Library/LaunchDaemons/org.freedesktop.dbus-system.plist
+  fi
+  if [ -f /Library/LaunchAgents/org.freedesktop.dbus-session.plist ] ; then
+    sudo rm /Library/LaunchAgents/org.freedesktop.dbus-session.plist
+  fi
+  if [ -f /Library/LaunchDaemons/org.freedesktop.avahi-daemon.plist ] ; then
+    sudo rm /Library/LaunchDaemons/org.freedesktop.avahi-daemon.plist
+  fi
+  if [ -f /Library/LaunchDaemons/org.freedesktop.avahi-dnsconfd.plist ] ; then
+    sudo rm /Library/LaunchDaemons/org.freedesktop.avahi-dnsconfd.plist
+  fi
+  if [ -f /Library/LaunchAgents/org.macports.kdecache.plist ] ; then
+    sudo rm /Library/LaunchAgents/org.macports.kdecache.plist
+  fi
+fi
+
+# prepare for a clean installation, remove all cached sources
+if [[ $WIPEDSTF ]] ; then
+  sudo rm -rf ${MPTINST}/var/macports/distfiles/*
+fi
+
+# do a full clean installation
+if [[ $FRESHMCP ]] ; then
   echo "creating ${MPTINST}..."
   sudo mkdir -p ${MPTINST} || exit 1
   mkdir /tmp/MP && cd /tmp/MP
@@ -77,23 +115,25 @@ if [[ $WIPEINST ]] ; then
   sudo make install || exit 1
   cd $OLDWD || exit 1
   rm -rf /tmp/MP || exit 1
+  echo "update MacPorts configuration"
+  sudo sed -i -e "s+#\(portautoclean[[:space:]]*\)yes+\1no+" ${MPTINST}/etc/macports/macports.conf
+  sudo sed -i -e "s+\(applications_dir[[:space:]]*\)/Applications/MacPorts+\1${APPLDIR}+" ${MPTINST}/etc/macports/macports.conf
   sudo port -v selfupdate || exit 1
-  sudo port install subversion || exit 1
+  echo "adding local portfiles to ${MPTINST}/etc/macports/sources.conf..."
+  sudo sed -i -e "s+rsync://rsync.macports.org.*\[default\]+file://${SRCPATH}/\\`echo -e '\n\r'`&+" ${MPTINST}/etc/macports/sources.conf || exit 1
+  sudo port install subversion || \
+    echo "configure.cc cc -L${MPTINST}/lib -I${MPTINST}/include -arch x86_64" >> \
+    "${MPTINST}/var/macports/sources/rsync.macports.org/release/tarballs/ports/perl/p5-locale-gettext/Portfile" && \
+    sudo port install subversion
   ## NOTE: there is some serious trouble with port:p5.12-locale-gettext which hasn't been fixed in months
   ## a workaround, if you run into it:
   ##   sudo port edit p5.12-locale-gettext
-  ## and append 
-  ##   configure.cc cc -L/opt/local/lib -I/opt/local/include -arch x86_64
-  ## to the portfile
-  echo "adding local portfiles to ${MPTINST}/etc/macports/sources.conf..."
-  sudo sed -i -e "s+rsync://rsync.macports.org.*\[default\]+file://${SRCPATH}/\\`echo -e '\n\r'`&+" ${MPTINST}/etc/macports/sources.conf || exit 1
+  ## and append
+  ##   configure.cc cc -L${MPTINST}/lib -I${MPTINST}/include -arch x86_64
+  ## to the portfile, or:
+  ## echo "configure.cc cc -L${MPTINST}/lib -I${MPTINST}/include -arch x86_64" >> ${MPTINST}/var/macports/sources/rsync.macports.org/release/tarballs/ports/perl/p5-locale-gettext/Portfile
   sudo port -v selfupdate || exit 1
   echo "successfully completed reincarnation of ${MPTINST}!"
-fi
-
-# prepare for a clean installation, remove all cached sources
-if [[ $WIPEDSTF ]] ; then
-  sudo rm -rf ${MPTINST}/var/macports/distfiles/*
 fi
 
 
@@ -126,6 +166,11 @@ fi
 if [[ $COPYMDMD ]] ; then
   # get version information of installed ports
   PORTVERS=$(port list $PTARGET | sed -e "s/.*@//;s/[[:space:]].*//")
+  if [ $PTARGET == "rkward-devel" ] ; then
+    TARGETVERS=${PORTVERS}$(svn info "$SVNREPO" | grep "^Revision:" | sed "s/[^[:digit:]]*//")
+  else
+    TARGETVERS=$PORTVERS
+  fi
   KDEVERS=$(port list kde4-baseapps | sed -e "s/.*@//;s/[[:space:]].*//")
   RVERS=$(port list R | sed -e "s/.*@//;s/[[:space:]].*//")
 fi
@@ -136,7 +181,7 @@ if [[ $MAKEMDMD ]] ; then
   # copy the image file to a public directory
   if [[ $COPYMDMD ]] ; then
     MDMGFILE=${WORKDIR}/${PTARGET}-${PORTVERS}.dmg
-    TRGTFILE=${LPUBDIR}/RKWard-${PORTVERS}_R-${RVERS}_KDE-${KDEVERS}_MacOSX_bundle.dmg
+    TRGTFILE=${LPUBDIR}/RKWard-${TARGETVERS}_R-${RVERS}_KDE-${KDEVERS}_MacOSX_bundle.dmg
     echo "copying: $MDMGFILE to $TRGTFILE ..."
     cp -av $MDMGFILE $TRGTFILE
     echo "done."
@@ -156,7 +201,7 @@ if [[ $MKSRCTAR ]] ; then
   tar cvf $SRCFILE ${MPTINST}/var/macports/distfiles || exit 1
   # copy the source archive to a public directory
   if [[ $COPYMDMD ]] ; then
-    TRGSFILE=${LPUBDIR}/RKWard-${PORTVERS}_R-${RVERS}_KDE-${KDEVERS}_src.tar
+    TRGSFILE=${LPUBDIR}/RKWard-${TARGETVERS}_R-${RVERS}_KDE-${KDEVERS}_src.tar
     echo "copying: $SRCFILE to $TRGSFILE ..."
     cp -av $SRCFILE $TRGSFILE
     echo "done."
