@@ -50,7 +50,9 @@ while getopts ":DflprmscxXF:" OPT; do
     l) RMSTLIBS=TRUE >&2 ;;
     p) UPMPORTS=TRUE >&2 ;;
     r) UPRKWARD=TRUE >&2 ;;
-    m) MAKEMDMD=TRUE >&2 ;;
+    m)
+       RMSTLIBS=TRUE >&2
+       MAKEMDMD=TRUE >&2 ;;
     s) MKSRCTAR=TRUE >&2 ;;
     c) COPYMDMD=TRUE >&2 ;;
     x) WIPEDSTF=TRUE >&2 ;;
