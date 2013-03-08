@@ -159,7 +159,10 @@ fi
 
 # remove static libraries, they're a waste of disk space
 if [[ $RMSTLIBS ]] ; then
+  echo "deleting all static libs in ${MPTINST}/lib/..."
   sudo rm ${MPTINST}/lib/*.a
+  echo "deleting all static libs in ${MPTINST}/var/macports/build..."
+  find "${MPTINST}/var/macports/build" -name "*.a" -exec sudo rm \{\} \;
 fi
 
 # set some variables
@@ -171,13 +174,13 @@ if [[ $COPYMDMD ]] ; then
   else
     TARGETVERS=$PORTVERS
   fi
-  KDEVERS=$(port list kde4-baseapps | sed -e "s/.*@//;s/[[:space:]].*//")
-  RVERS=$(port list R | sed -e "s/.*@//;s/[[:space:]].*//")
+  KDEVERS=$(port list kdelibs4 | sed -e "s/.*@//;s/[[:space:]].*//")
+  RVERS=$(port list R-framework | sed -e "s/.*@//;s/[[:space:]].*//")
 fi
 
 # make meta-package including dependencies
 if [[ $MAKEMDMD ]] ; then
-  sudo port -v mdmg $PTARGET
+  sudo port -v mdmg $PTARGET || exit 1
   # copy the image file to a public directory
   if [[ $COPYMDMD ]] ; then
     MDMGFILE=${WORKDIR}/${PTARGET}-${PORTVERS}.dmg
