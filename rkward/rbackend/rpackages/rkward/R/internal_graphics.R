@@ -144,11 +144,15 @@ assign(".rk.preview.devices", list (), envir=.rk.variables)
 			{
 				if (dev.cur() == 1) rk.screen.device ()
 				## TODO: use "trellis" instead of "lattice" to accomodate ggplot2 plots?
-				if (getOption ("rk.enable.graphics.history")) {
+				plot_hist_enabled <- getOption ("rk.enable.graphics.history")
+				if (plot_hist_enabled) {
 					rk.record.plot$record (nextplot.pkg = "lattice")
+					on.exit (options (rk.enable.graphics.history=TRUE))
+					options (rk.enable.graphics.history=FALSE)	# avoid duplicate trigger inside plot(), below
 				}
 				plot (x, ...)
-				if (getOption ("rk.enable.graphics.history")) {
+				if (plot_hist_enabled) {
+					options (rk.enable.graphics.history=TRUE)
 					rk.record.plot$.save.tlo.in.hP ()
 				}
 				invisible ()
