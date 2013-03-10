@@ -587,6 +587,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		pkg <- savedPlots [[st]]$pkg
 		
 		if (pkg %in% c("graphics", "unknown")) {
+			# NOTE: replayPlot() does *not* call plot.new()
 			replayPlot (savedPlots [[st]]$plot)
 		} else if (pkg == "lattice") {
 			# (re-)plot the lattice object but, if the current window is NOT active, then do not save
@@ -595,7 +596,9 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 			# access it
 			if (cur.devId != as.numeric (devId))
 				tlo.ls <- get ("lattice.status", envir = lattice:::.LatticeEnv)
+			options (rk.enable.graphics.history=FALSE); on.exit (options (rk.enable.graphics.history=TRUE))
 			plot (savedPlots [[st]]$plot, save.object = (cur.devId == as.numeric (devId)))
+			options (rk.enable.graphics.history=TRUE)
 			if (cur.devId != as.numeric (devId))
 				assign ("lattice.status", tlo.ls, envir = lattice:::.LatticeEnv)
 		}
