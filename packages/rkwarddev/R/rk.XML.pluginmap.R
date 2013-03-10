@@ -133,7 +133,7 @@ rk.XML.pluginmap <- function(name, about=NULL, components, hierarchy="test",
 					label=xml.basename,
 					file=this.comp,
 					# if this ID get's a change, also change it in rk.plugin.skeleton(show=TRUE)!
-					id.name=auto.ids(paste(name, xml.basename, sep=""), prefix=ID.prefix("component"), chars=25))
+					id.name=auto.ids(paste0(name, xml.basename), prefix=ID.prefix("component"), chars=25))
 				}
 		components.XML <- rk.XML.components(components.XML.list)
 
@@ -199,7 +199,7 @@ rk.XML.pluginmap <- function(name, about=NULL, components, hierarchy="test",
 				entry.XML <- rk.XML.menu(
 					label=name.orig,
 					rk.XML.entry(component=this.comp),
-					id.name=auto.ids(paste(name, this.comp, sep=""), prefix=ID.prefix("menu"), chars=12))
+					id.name=auto.ids(paste0(name, this.comp), prefix=ID.prefix("menu"), chars=12))
 
 				if(this.hier %in% names(main.menu)){
 					hier.XML <- rk.XML.menu(
@@ -260,7 +260,7 @@ rk.XML.pluginmap <- function(name, about=NULL, components, hierarchy="test",
 	}
 
 	# clean the ID of dots and append "_rkward"
-	doc.ID.name <- paste(gsub("[.]*", "", name), "_rkward", sep="")
+	doc.ID.name <- paste0(gsub("[.]*", "", name), "_rkward")
 	# check for empty "namespace" value
 	if(is.null(namespace)){
 		namespace <- "rkward"

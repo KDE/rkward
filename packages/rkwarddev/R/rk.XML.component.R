@@ -30,7 +30,7 @@ rk.XML.component <- function(label, file, id.name="auto", type="standard", depen
 
 	# once there are more types supported, this will make much more sense...
 	if(!type %in% c("standard")){
-		stop(simpleError(paste("Invalid type: ", type, sep="")))
+		stop(simpleError(paste0("Invalid type: ", type)))
 	} else {
 		attr.list[["type"]] <- type
 	}

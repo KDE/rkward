@@ -59,7 +59,7 @@ id <- function(..., quote=FALSE, collapse="", js=TRUE){
 				node.id <- paste.JS.var(this.part, names.only=TRUE)
 				if(length(node.id) > 1){
 					node.id <- node.id[1]
-					warning(paste("Object contained more than one ID, only the first one was used: ", node.id, sep=""), call.=FALSE)
+					warning(paste0("Object contained more than one ID, only the first one was used: ", node.id), call.=FALSE)
 				} else {}
 				return(node.id)
 			} else if(inherits(this.part, "rk.JS.echo")){

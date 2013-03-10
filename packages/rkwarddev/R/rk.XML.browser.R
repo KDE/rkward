@@ -23,7 +23,7 @@ rk.XML.browser <- function(label, type="file", initial=NULL, urls=FALSE, filter=
 	if(length(type) == 1 & type %in% c("dir", "file", "savefile")){
 		attr.list[["type"]] <- type
 	} else {
-		stop(simpleError(paste("Unknown browser type: ", type, sep="")))
+		stop(simpleError(paste0("Unknown browser type: ", type)))
 	}
 
 	if(identical(id.name, "auto")){

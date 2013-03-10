@@ -27,7 +27,7 @@ rk.XML.insert <- function(snippet){
 	if(inherits(snippet, "XiMpLe.node")){
 		node.name <- slot(snippet, "name")
 		if(!identical(node.name, "snippet")){
-			stop(simpleError(paste("Invalid XML node, must be a snippet: ", node.name, sep="")))
+			stop(simpleError(paste0("Invalid XML node, must be a snippet: ", node.name)))
 		} else {}
 	} else {}
 

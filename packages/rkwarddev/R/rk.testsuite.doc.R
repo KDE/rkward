@@ -6,7 +6,7 @@
 #' @export
 
 rk.testsuite.doc <- function(name=NULL){
-	suite.text <- paste("## definition of the test suite
+	suite.text <- paste0("## definition of the test suite
 	suite <- new(\"RKTestSuite\",
 		id=\"", name ,"\",
 		## needed packages
@@ -52,7 +52,7 @@ rk.testsuite.doc <- function(name=NULL){
 				# rm(list=c(\"earlier.results\"), envir=globalenv())
 			}
 		)
-	)", sep="")
+	)")
 
 	return(suite.text)
 }

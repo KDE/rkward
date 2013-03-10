@@ -1,8 +1,17 @@
 # internal functions for the rk.* functions
 
+## wrapper for paste0() needed?
+if(isTRUE(R_system_version(getRversion()) < 2.15)){
+	# if this is an older R version, we need a wrapper function for paste0()
+	# which was introduced with R 2.15 as a more efficient shortcut to paste(..., sep="")
+	paste0 <- function(..., collapse=NULL){
+		return(paste(..., sep="", collapse=collapse))
+	}
+} else {}
+
 # info message
-generator.info <- rk.comment(paste("this code was generated using the rkwarddev package.\n",
-			"perhaps don't make changes here, but in the rkwarddev script instead!", sep=""))
+generator.info <- rk.comment(paste0("this code was generated using the rkwarddev package.\n",
+			"perhaps don't make changes here, but in the rkwarddev script instead!"))
 
 ## function auto.ids()
 auto.ids <- function(identifiers, prefix=NULL, suffix=NULL, chars=8){
@@ -12,7 +21,7 @@ auto.ids <- function(identifiers, prefix=NULL, suffix=NULL, chars=8){
 	if(any(duplicated(id.names))){
 		warning("IDs are not unique, please check!")
 	} else {}
-	ids <- paste(prefix, id.names, suffix, sep="")
+	ids <- paste0(prefix, id.names, suffix)
 	return(ids)
 } ## end function auto.ids()
 
@@ -85,9 +94,9 @@ checkCreateFiles <- function(file.name, ow, action=NULL){
 		return(TRUE)
 	} else {
 		if(!is.null(action)){
-			action <- paste(action, ": ", sep="")
+			action <- paste0(action, ": ")
 		} else {}
-		warning(paste(action, "Skipping existing file ", file.name, ".", sep=""), call.=FALSE)
+		warning(paste0(action, "Skipping existing file ", file.name, "."), call.=FALSE)
 		return(FALSE)
 	}
 } ## end function checkCreateFiles()
@@ -168,7 +177,7 @@ get.IDs <- function(single.tags, relevant.tags, add.abbrev=FALSE, tag.names=FALS
 							this.tag.id <- paste(this.tag.setid, this.tag.id, sep=".")
 						} else {}
 						# for safety, prefix the column ID with a constant
-						this.tag.id.abbrev <- paste("ocol_", this.tag.id.abbrev, sep="")
+						this.tag.id.abbrev <- paste0("ocol_", this.tag.id.abbrev)
 					} else {}
 				} else {
 					this.tag.name <- XiMpLe:::XML.tagName(this.tag)
@@ -180,12 +189,12 @@ get.IDs <- function(single.tags, relevant.tags, add.abbrev=FALSE, tag.names=FALS
 							this.tag.id <- paste(this.tag.setid, this.tag.id, sep=".")
 						} else {}
 						# for safety, prefix the column ID with a constant
-						this.tag.id.abbrev <- paste("ocol_", this.tag.id.abbrev, sep="")
+						this.tag.id.abbrev <- paste0("ocol_", this.tag.id.abbrev)
 					} else {}
 				}
 
 				if(isTRUE(add.abbrev)){
-					this.tag.id.abbrev <- paste(ID.prefix(this.tag.name), this.tag.id.abbrev, sep="")
+					this.tag.id.abbrev <- paste0(ID.prefix(this.tag.name), this.tag.id.abbrev)
 				} else {}
 			if(isTRUE(tag.names)){
 				return(c(id=this.tag.id, abbrev=this.tag.id.abbrev, tag=this.tag.name))
@@ -200,7 +209,7 @@ get.IDs <- function(single.tags, relevant.tags, add.abbrev=FALSE, tag.names=FALS
 	if("id" %in% names(ids)){
 		multiple.id <- duplicated(ids[,"id"])
 		if(any(multiple.id)){
-			warning(paste("IDs are not unique:\n  ", paste(ids[multiple.id,"id"], collapse=", "), "\n  Expect errors!", sep=""))
+			warning(paste0("IDs are not unique:\n  ", paste(ids[multiple.id,"id"], collapse=", "), "\n  Expect errors!"))
 		} else {}
 	}
 
@@ -260,7 +269,7 @@ camelCode <- function(words){
 		return(word.new)
 	})
 
-	results <- paste(words[1], paste(new.words, collapse=""), sep="")
+	results <- paste0(words[1], paste(new.words, collapse=""))
 
 	return(results)
 } ## end function camelCode()
@@ -268,8 +277,7 @@ camelCode <- function(words){
 
 ## default getters for JavaScript variables
 # try to set useful default getter functions to query the values from XML nodes
-# will only be used if "guess.getter" is true -- and after it's properly implemented
-# into rk.JS.scan()
+# will only be used if "guess.getter" is true
 JS.getters.default <- list(
 	"browser"="getString",
 	"checkbox"="getBoolean",
@@ -282,6 +290,50 @@ JS.getters.default <- list(
 	"saveobject"="getString",
 	"spinbox"="getString",
 	"varslot"="getString"
+)
+# we can also guess some fitting getter functions by the modifier set
+JS.getters.modif.default <- list(
+#	"active",
+#	"available",
+#	"calculate",
+	"checked"="getBoolean",
+	"checked.not"="getBoolean",
+	"checked.numeric"="getBoolean",
+	"dependent"="getString",
+	"enabled"="getBoolean",
+	"enabled.not"="getBoolean",
+	"enabled.numeric"="getBoolean",
+#	"false",
+	"fixed_factors"="getString",
+#	"int",
+	"label"="getString",
+	"labels"="getString",
+	"model"="getString",
+#	"not",
+#	"number",
+#	"numeric",
+	"objectname"="getString",
+	"parent"="getString",
+	"preprocess"="getString",
+	"preview"="getBoolean",
+	"printout"="getString",
+#	"real",
+	"required"="getBoolean",
+#	"root",
+#	"selected",
+#	"selection",
+	"shortname"="getString",
+	"source"="getString",
+	"state"="getBoolean",
+	"state.not"="getBoolean",
+	"state.numeric"="getBoolean",
+	"string"="getString",
+#	"table",
+	"text"="getString",
+#	"true",
+	"visible"="getBoolean",
+	"visible.not"="getBoolean",
+	"visible.numeric"="getBoolean"
 )
 
 ## function get.JS.vars()
@@ -335,15 +387,32 @@ get.JS.vars <- function(JS.var, XML.var=NULL, tag.name=NULL, JS.prefix="", names
 					any(!c(XMLAttrs(XML.var)[["value"]], XMLAttrs(XML.var)[["value_unchecked"]]) %in% c("true","false"))){
 					getter <- "getString"
 				} else {
-					getter <- JS.getters.default[[tag.name]]
+					# check if a modifier is given and we have a default for it
+					# modifiers were probably checked already
+					## TODO: currently this only works for one modifier of if all
+					## modifiers are fine with the same getter; maybe "getter"
+					## should become a vector like "modifiers"
+					if(!is.null(modifiers) && any(modifiers %in% names(JS.getters.modif.default))){
+						# find all matching modifiers
+						getter.modifs <- modifiers[modifiers %in% names(JS.getters.modif.default)]
+						all.getters <- unique(unlist(JS.getters.modif.default[getter.modifs]))
+						if(length(all.getters) > 1){
+							warning("For the modifiers you specified, different getter functions were found. Only using the first one!", call.=FALSE)
+							getter <- all.getters[1]
+						} else {
+							getter <- all.getters
+						}
+					} else {
+						getter <- JS.getters.default[[tag.name]]
+					}
 				}
 			} else {}
 		} else {
 			# if guess.getters is off but we're dealing with <matrix> or <optionset>,
 			# throw in a warning:
 			if(tag.name %in% c("matrix", "optioncolumn") && identical(getter, "getValue")){
-				warning(paste("Your plugin contains the <", tag.name, "> element, but 'guess.getter' is off. ",
-					"Using the default getValue() on this node might cause problems!", sep=""), call.=FALSE)
+				warning(paste0("Your plugin contains the <", tag.name, "> element, but 'guess.getter' is off. ",
+					"Using the default getValue() on this node might cause problems!"), call.=FALSE)
 			} else {}
 		}
 		XML.var <- check.ID(XML.var)
@@ -392,9 +461,9 @@ ID.prefix <- function(initial, abbr=TRUE, length=3, dot=FALSE){
 		prfx <- NULL
 	}
 	if(isTRUE(dot)){
-		prfx <- paste(prfx, ".", sep="")
+		prfx <- paste0(prfx, ".")
 	} else {
-		prfx <- paste(prfx, "_", sep="")
+		prfx <- paste0(prfx, "_")
 	}
 	return(prfx)
 } ## end function ID.prefix()
@@ -403,13 +472,13 @@ ID.prefix <- function(initial, abbr=TRUE, length=3, dot=FALSE){
 ## function node.soup()
 # pastes the nodes as XML, only alphanumeric characters, e.g. to generate auto-IDs
 node.soup <- function(nodes){
-	the.soup <- paste(unlist(sapply(child.list(nodes), function(this.node){
+	the.soup <- paste0(unlist(sapply(child.list(nodes), function(this.node){
 			if(is.XiMpLe.node(this.node)){
 				return(gsub("[^[:alnum:]]", "", pasteXML(this.node, shine=0)))
 			} else {
 				stop(simpleError("Nodes must be of class XiMpLe.node!"))
 			}
-		})), sep="", collapse="")
+		})), collapse="")
 	return(the.soup)
 } ## end function node.soup()
 
@@ -427,9 +496,9 @@ XML2person <- function(node, eval=FALSE){
 		}
 	make.vector <- function(value){
 		if(grepl(",", value)){
-			value <- paste("c(\"", paste(trim(unlist(strsplit(value, ","))), collapse="\", \""), "\")", sep="")
+			value <- paste0("c(\"", paste(trim(unlist(strsplit(value, ","))), collapse="\", \""), "\")")
 		} else {
-			value <- paste("\"", value, "\"", sep="")
+			value <- paste0("\"", value, "\"")
 		}
 		return(value)
 	}
@@ -441,12 +510,12 @@ XML2person <- function(node, eval=FALSE){
 			family <- make.vector(attrs[["family"]])
 			email <- make.vector(attrs[["email"]])
 			role <- make.vector(attrs[["role"]])
-			this.author <- paste("person(given=", given, ", family=", family, ", email=", email, ", role=", role, ")", sep="")
+			this.author <- paste0("person(given=", given, ", family=", family, ", email=", email, ", role=", role, ")")
 			all.authors[length(all.authors) + 1] <- this.author
 		} else {}
 	}
 	if(length(all.authors) > 1){
-		all.authors <- paste("c(", paste(all.authors, collapse=", "), ")", sep="")
+		all.authors <- paste0("c(", paste(all.authors, collapse=", "), ")")
 	} else {}
 	if(isTRUE(eval)){
 		all.authors <- eval(parse(text=all.authors))
@@ -478,17 +547,17 @@ XML2dependencies <- function(node, suggest=TRUE, mode="suggest"){
 		# first see if RKWard and R versions are given
 		deps.RkR <- XMLAttrs(got.deps)
 		deps.RkR.options  <- names(deps.RkR)
-		R.min <- ifelse("R_min_version" %in% deps.RkR.options, paste(">= ", deps.RkR[["R_min_version"]], sep=""), "")
-		R.max <- ifelse("R_max_version" %in% deps.RkR.options, paste("< ", deps.RkR[["R_max_version"]], sep=""), "")
+		R.min <- ifelse("R_min_version" %in% deps.RkR.options, paste0(">= ", deps.RkR[["R_min_version"]]), "")
+		R.max <- ifelse("R_max_version" %in% deps.RkR.options, paste0("< ", deps.RkR[["R_max_version"]]), "")
 		R.version.indices <- sum(!identical(R.min, ""), !identical(R.max, ""))
 		if(R.version.indices > 0 & identical(mode, "depends")){
-			deps.packages[[length(deps.packages) + 1]] <- paste("R (", R.min, ifelse(R.version.indices > 1, ", ", ""), R.max, ")", sep="")
+			deps.packages[[length(deps.packages) + 1]] <- paste0("R (", R.min, ifelse(R.version.indices > 1, ", ", ""), R.max, ")")
 		} else {}
-		Rk.min <- ifelse("rkward_min_version" %in% deps.RkR.options, paste(">= ", deps.RkR[["rkward_min_version"]], sep=""), "")
-		Rk.max <- ifelse("rkward_max_version" %in% deps.RkR.options, paste("< ", deps.RkR[["rkward_max_version"]], sep=""), "")
+		Rk.min <- ifelse("rkward_min_version" %in% deps.RkR.options, paste0(">= ", deps.RkR[["rkward_min_version"]]), "")
+		Rk.max <- ifelse("rkward_max_version" %in% deps.RkR.options, paste0("< ", deps.RkR[["rkward_max_version"]]), "")
 		Rk.version.indices <- sum(!identical(Rk.min, ""), !identical(Rk.max, ""))
 		if(Rk.version.indices > 0 && identical(mode, "depends")){
-			deps.packages[[length(deps.packages) + 1]] <- paste("rkward (", Rk.min, ifelse(Rk.version.indices > 1, ", ", ""), Rk.max, ")", sep="")
+			deps.packages[[length(deps.packages) + 1]] <- paste0("rkward (", Rk.min, ifelse(Rk.version.indices > 1, ", ", ""), Rk.max, ")")
 		} else {}
 		check.deps.pckg <- sapply(XMLChildren(got.deps), function(this.child){identical(XMLName(this.child), "package")})
 		if(any(check.deps.pckg) && ((isTRUE(suggest) && identical(mode, "suggest")) | !isTRUE(suggest))){
@@ -496,15 +565,15 @@ XML2dependencies <- function(node, suggest=TRUE, mode="suggest"){
 					this.pckg.dep <- XMLAttrs(XMLChildren(got.deps)[[this.pckg]])
 					pckg.options <- names(this.pckg.dep)
 					pckg.name <- this.pckg.dep[["name"]]
-					pckg.min <- ifelse("min" %in% pckg.options, paste(">= ", this.pckg.dep[["min"]], sep=""), "")
-					pckg.max <- ifelse("max" %in% pckg.options, paste("< ", this.pckg.dep[["max"]], sep=""), "")
+					pckg.min <- ifelse("min" %in% pckg.options, paste0(">= ", this.pckg.dep[["min"]]), "")
+					pckg.max <- ifelse("max" %in% pckg.options, paste0("< ", this.pckg.dep[["max"]]), "")
 					version.indices <- sum(!identical(pckg.min, ""), !identical(pckg.max, ""))
 					if(version.indices > 0){
-						pckg.version <- paste(" (", pckg.min, ifelse(version.indices > 1, ", ", ""), pckg.max, ")", sep="")
+						pckg.version <- paste0(" (", pckg.min, ifelse(version.indices > 1, ", ", ""), pckg.max, ")")
 					} else {
 						pckg.version <- ""
 					}
-					return(paste(pckg.name, pckg.version, sep=""))
+					return(paste0(pckg.name, pckg.version))
 				}), collapse=", ")
 		} else {}
 		results <- paste(unlist(deps.packages), collapse=", ")
@@ -550,16 +619,16 @@ check.ID <- function(node){
 
 ## list with valid modifiers
 all.valid.modifiers <- list(
-	all=c("", "visible", "enabled", "required", "true", "false", "not", "numeric",
-	"preprocess", "calculate", "printout", "preview"),
+	all=c("", "visible", "visible.not", "visible.numeric", "enabled", "enabled.not", "enabled.numeric",
+	"required", "true", "false", "not", "numeric", "preprocess", "calculate", "printout", "preview"),
 	text=c("text"),
 	varselector=c("selected", "root"),
 	varslot=c("available", "selected", "source", "shortname", "label"),
 	radio=c("string", "number"),
 	dropdown=c("string", "number"),
 	# option=c(),
-	checkbox=c("state"),
-	frame=c("checked"),
+	checkbox=c("state", "state.not", "state.numeric"),
+	frame=c("checked", "checked.not", "checked.numeric"),
 	input=c("text"),
 	browser=c("selection"),
 	saveobject=c("selection", "parent", "objectname", "active"),
@@ -568,7 +637,7 @@ all.valid.modifiers <- list(
 # removed embed, can be all sorts of stuff, see e.g. generic plot options
 #	embed=c("code"),
 # for the same reason external is not listed here
-	preview=c("state")
+	preview=c("state", "state.not", "state.numeric")
 ) ## end list with valid modifiers
 
 
@@ -597,11 +666,7 @@ modif.validity <- function(source, modifier, ignore.empty=TRUE, warn.only=TRUE, 
 	} else if(identical(source, "all")){
 		tag.name <- "<any tag>"
 	} else {
-		if(isTRUE(bool)){
-			return(TRUE)
-		} else {
-			return(modifier)
-		}
+		tag.name <- source
 	}
 
 	if(tag.name %in% names(all.valid.modifiers)){
@@ -615,16 +680,16 @@ modif.validity <- function(source, modifier, ignore.empty=TRUE, warn.only=TRUE, 
 	invalid.modif <- !unlist(modifier) %in% valid.modifs
 	if(any(invalid.modif)){
 		if(isTRUE(warn.only)){
-			warning(paste("Some modifier you provided is invalid for '",tag.name,"' and was ignored: ",
-				paste(modifier[invalid.modif], collapse=", "), sep=""), call.=FALSE)
+			warning(paste0("Some modifier you provided is invalid for '",tag.name,"' and was ignored: ",
+				paste(modifier[invalid.modif], collapse=", ")), call.=FALSE)
 			if(isTRUE(bool)){
 				return(!invalid.modif)
 			} else {
 				return("")
 			}
 		} else {
-			stop(simpleError(paste("Some modifier you provided is invalid for '",tag.name,"' and was ignored: ",
-				paste(modifier[invalid.modif], collapse=", "), sep="")))
+			stop(simpleError(paste0("Some modifier you provided is invalid for '",tag.name,"' and was ignored: ",
+				paste(modifier[invalid.modif], collapse=", "))))
 		}
 	} else {
 		if(isTRUE(bool)){
@@ -686,14 +751,14 @@ valid.child <- function(parent, children, warn=FALSE, section=parent, node.names
 				if(is.XiMpLe.node(this.child)){
 					return(XMLName(this.child))
 				} else {
-					stop(simpleError(paste("Invalid object for ", section, " section, must be of class XiMpLe.node, but got class ", class(this.child), "!", sep="")))
+					stop(simpleError(paste0("Invalid object for ", section, " section, must be of class XiMpLe.node, but got class ", class(this.child), "!")))
 				}
 			})
 	} else {}
 
 	invalid.sets <- !node.names %in% all.valid.children[[parent]]
 	if(any(invalid.sets)){
-		return.message <- paste("Invalid XML nodes for ", section, " section: ", paste(node.names[invalid.sets], collapse=", "), sep="")
+		return.message <- paste0("Invalid XML nodes for ", section, " section: ", paste(node.names[invalid.sets], collapse=", "))
 		if(isTRUE(warn)){
 			warning(return.message)
 			return(FALSE)
@@ -718,7 +783,7 @@ valid.parent <- function(parent, node, warn=FALSE, see=NULL){
 		if(identical(node.name, parent)){
 			return(TRUE)
 		} else {
-			return.message <- paste("I don't know what this is, but '", parent, "' is not a <", parent, "> section!", sep="")
+			return.message <- paste0("I don't know what this is, but '", parent, "' is not a <", parent, "> section!")
 			if(isTRUE(warn)){
 				warning(return.message)
 				return(FALSE)
@@ -728,9 +793,9 @@ valid.parent <- function(parent, node, warn=FALSE, see=NULL){
 		}
 	} else {
 		stop(simpleError(
-				paste("'", parent, "' must be a XiMpLe.node",
-					if(!is.null(see)){paste(", see ?", see, sep="")},
-					"!", sep=""))
+				paste0("'", parent, "' must be a XiMpLe.node",
+					if(!is.null(see)){paste0(", see ?", see)},
+					"!"))
 			)
 	}
 } ## end function valid.parent()
@@ -741,7 +806,7 @@ check.type <- function(value, type, var.name, warn.only=TRUE){
 	if(inherits(value, type)){
 		return(invisible(NULL))
 	} else {
-		msg.text <- paste(sQuote(var.name), " should be of type ", type, "!", sep="")
+		msg.text <- paste0(sQuote(var.name), " should be of type ", type, "!")
 		if(isTRUE(warn.only)){
 			warning(msg.text)
 		} else {
@@ -757,7 +822,7 @@ clean.name <- function(name, message=TRUE){
 	name <- gsub("[[:space:]]*[^[:alnum:]_.]*", "", name)
 	if(!identical(name.orig, name)){
 		if(isTRUE(message)){
-			message(paste("For file names ", sQuote(name.orig), " was renamed to ", sQuote(name), ".", sep=""))
+			message(paste0("For file names ", sQuote(name.orig), " was renamed to ", sQuote(name), "."))
 		} else {}
 	} else {}
 	return(name)
@@ -774,30 +839,30 @@ paste.JS.ite <- function(object, level=1, indent.by="\t", recurse=FALSE, empty.e
 
 	# if this is not a single "if" but an "else if", do not indent
 	if(isTRUE(recurse)){
-		ifJS <- paste("if(", slot(object, "ifJS"), ") {\n", sep="")
+		ifJS <- paste0("if(", slot(object, "ifJS"), ") {\n")
 	} else {
-		ifJS <- paste(main.indent, "if(", slot(object, "ifJS"), ") {\n", sep="")
+		ifJS <- paste0(main.indent, "if(", slot(object, "ifJS"), ") {\n")
 	}
 
 	if(nchar(slot(object, "thenJS")) > 0) {
 		# chop off beginning indent strings, otherwiese they ruin the code layout
-		thenJS.clean <- gsub(paste("^", indent.by, "*", sep=""), "", slot(object, "thenJS"))
-		thenJS <- paste(scnd.indent, thenJS.clean, "\n", main.indent, "}", sep="")
+		thenJS.clean <- gsub(paste0("^", indent.by, "*"), "", slot(object, "thenJS"))
+		thenJS <- paste0(scnd.indent, thenJS.clean, "\n", main.indent, "}")
 	} else {
 		# if there is another rk.JS.ite object, call with recursion
 		if(length(slot(object, "thenifJS")) == 1){
-			thenJS <- paste(paste.JS.ite(slot(object, "thenifJS")[[1]], level=level+1, indent.by=indent.by), "\n", main.indent, "}", sep="")
+			thenJS <- paste0(paste.JS.ite(slot(object, "thenifJS")[[1]], level=level+1, indent.by=indent.by), "\n", main.indent, "}")
 		} else {}
 	}
 
 	if(nchar(slot(object, "elseJS")) > 0) {
 		# chop off beginning indent strings, otherwiese they ruin the code layout
-		elseJS.clean <- gsub(paste("^", indent.by, "*", sep=""), "", slot(object, "elseJS"))
-		elseJS <- paste(" else {\n", scnd.indent, elseJS.clean, "\n", main.indent, "}", sep="")
+		elseJS.clean <- gsub(paste0("^", indent.by, "*"), "", slot(object, "elseJS"))
+		elseJS <- paste0(" else {\n", scnd.indent, elseJS.clean, "\n", main.indent, "}")
 	} else {
 		# if there is another rk.JS.ite object, call with recursion
 		if(length(slot(object, "elifJS")) == 1){
-			elseJS <- paste(" else ", paste.JS.ite(slot(object, "elifJS")[[1]], level=level, indent.by=indent.by, recurse=TRUE), sep="")
+			elseJS <- paste0(" else ", paste.JS.ite(slot(object, "elifJS")[[1]], level=level, indent.by=indent.by, recurse=TRUE))
 		} else {
 			if(isTRUE(empty.e)){
 				# close for sure with an empty "else"
@@ -808,7 +873,7 @@ paste.JS.ite <- function(object, level=1, indent.by="\t", recurse=FALSE, empty.e
 		}
 	}
 
-	result <- paste(ifJS, thenJS, elseJS, collapse="", sep="")
+	result <- paste0(ifJS, thenJS, elseJS, collapse="")
 
 	return(result)
 } ## end function paste.JS.ite()
@@ -832,11 +897,11 @@ paste.JS.array <- function(object, level=2, indent.by="\t", funct=NULL){
 		funct.start <- ""
 		funct.end <- ""
 	} else {
-		funct.start <- paste(funct, "(", sep="")
+		funct.start <- paste0(funct, "(")
 		funct.end <- ")"
 	}
 
-	JS.array <- paste(
+	JS.array <- paste0(
 		main.indent, "// define the array ", arr.name, " for values of R option \"", option, "\"\n",
 		main.indent, "var ", arr.name, " = new Array();\n",
 		main.indent, arr.name, ".push(",
@@ -844,16 +909,15 @@ paste.JS.array <- function(object, level=2, indent.by="\t", funct=NULL){
 		main.indent, "// clean array ", arr.name, " from empty strings\n",
 		main.indent, arr.name, " = ", arr.name, ".filter(String);\n",
 		main.indent, "// set the actual variable ", opt.name,
-		ifelse(identical(option, ""), "", paste(" for R option \"", option, sep="")),
-		ifelse(identical(funct, ""), "\"", paste("=", funct, "()\"", sep="")), "\n",
+		ifelse(identical(option, ""), "", paste0(" for R option \"", option)),
+		ifelse(identical(funct, ""), "\"", paste0("=", funct, "()\"")), "\n",
 		main.indent, "if(", arr.name, ".length > 0) {\n",
 		scnd.indent, "var ", opt.name, " = \", ",
-		ifelse(identical(option, ""), "", paste(option, "=", sep="")),
+		ifelse(identical(option, ""), "", paste0(option, "=")),
 		funct.start, "\" + ", arr.name, ".join(\", \") + \"",funct.end,"\";\n",
 		main.indent, "} else {\n",
 		scnd.indent, "var ", opt.name, " = \"\";\n",
-		main.indent, "}\n",
-		sep="")
+		main.indent, "}\n")
 
 	return(JS.array)
 } ## end function paste.JS.array()
@@ -881,16 +945,16 @@ paste.JS.options <- function(object, level=2, indent.by="\t", array=NULL, funct=
 		funct.start <- ""
 		funct.end <- ""
 	} else {
-		funct.start <- paste(funct, "(", sep="")
+		funct.start <- paste0(funct, "(")
 		funct.end <- ")"
 	}
 
 	# a function to add the object stuff to ite objects
 	add.opts <- function(this.ite, collapse, array){
 		if(isTRUE(array)){
-			slot(this.ite, "thenJS") <- paste(arr.name, ".push(", slot(this.ite, "thenJS"),");", sep="")
+			slot(this.ite, "thenJS") <- paste0(arr.name, ".push(", slot(this.ite, "thenJS"),");")
 		} else {
-			slot(this.ite, "thenJS") <- paste(variable, " += ", collapse, slot(this.ite, "thenJS"),";", sep="")
+			slot(this.ite, "thenJS") <- paste0(variable, " += ", collapse, slot(this.ite, "thenJS"),";")
 		}
 		if(length(slot(this.ite, "elifJS")) == 1){
 			slot(this.ite, "elifJS") <- list(add.opts(slot(this.ite, "elifJS")[[1]]))
@@ -912,30 +976,28 @@ paste.JS.options <- function(object, level=2, indent.by="\t", array=NULL, funct=
 
 #return(ifs.pasted)
 
-	JS.options <- paste(
+	JS.options <- paste0(
 		if(isTRUE(array)){
-			paste(
+			paste0(
 				main.indent, "// define the array ", arr.name, " for values of R option \"", option, "\"\n",
-				main.indent, "var ", arr.name, " = new Array();\n", sep="")
+				main.indent, "var ", arr.name, " = new Array();\n")
 		} else {
-			paste(main.indent, "var ", variable, " = \"\";\n", sep="")
+			paste0(main.indent, "var ", variable, " = \"\";\n")
 		},
-		paste(ifs.pasted, sep="", collapse="\n"), "\n",
+		paste0(ifs.pasted, collapse="\n"), "\n",
 		if(isTRUE(array)){
-			paste(
+			paste0(
 				main.indent, "// clean array ", arr.name, " from empty strings\n",
 				main.indent, arr.name, " = ", arr.name, ".filter(String);\n",
 				main.indent, "// set the actual variable ", variable, " with all values for R option \"", option, "\"\n",
 				main.indent, "if(", arr.name, ".length > 0) {\n",
 				scnd.indent, "var ", variable, " = \"", collapse,
-				ifelse(identical(option, ""), "", paste(option, "=", sep="")),
+				ifelse(identical(option, ""), "", paste0(option, "=")),
 				funct.start, "\" + ", arr.name, ".join(\", \") + \"",funct.end,"\";\n",
 				main.indent, "} else {\n",
 				scnd.indent, "var ", variable, " = \"\";\n",
-				main.indent, "}\n",
-				sep="")
-		} else {},
-		sep="")
+				main.indent, "}\n")
+		} else {})
 
 	return(JS.options)
 } ## end function paste.JS.options()
@@ -985,7 +1047,7 @@ paste.JS.var <- function(object, level=2, indent.by="\t", JS.prefix=NULL, modifi
 	} else {}
 
 	if(!identical(join, "")){
-		join.code <- paste(".split(\"\\n\").join(\"", join, "\")", sep="")
+		join.code <- paste0(".split(\"\\n\").join(\"", join, "\")")
 	} else {
 		join.code <- ""
 	}
@@ -996,7 +1058,7 @@ paste.JS.var <- function(object, level=2, indent.by="\t", JS.prefix=NULL, modifi
 			if(isTRUE(names.only)){
 				results <- c(results, camelCode(c(JS.prefix, JS.var)))
 			} else {
-				results <- paste(main.indent, "var ", camelCode(c(JS.prefix, JS.var)), " = ", getter, "(\"", XML.var, "\")", join.code, ";", sep="")
+				results <- paste0(main.indent, "var ", camelCode(c(JS.prefix, JS.var)), " = ", getter, "(\"", XML.var, "\")", join.code, ";")
 			}
 		} else {}
 		if(length(modifiers) > 0){
@@ -1008,8 +1070,8 @@ paste.JS.var <- function(object, level=2, indent.by="\t", JS.prefix=NULL, modifi
 					if(isTRUE(names.only)){
 						return(camelCode(c(JS.prefix, JS.var, this.modif)))
 					} else {
-						return(paste(main.indent, "var ", camelCode(c(JS.prefix, JS.var, this.modif)),
-							" = ", getter, "(\"", XML.var, ".", this.modif, "\")", join.code, ";", sep=""))
+						return(paste0(main.indent, "var ", camelCode(c(JS.prefix, JS.var, this.modif)),
+							" = ", getter, "(\"", XML.var, ".", this.modif, "\")", join.code, ";"))
 					}
 				})
 			if(identical(results, "")){

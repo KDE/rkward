@@ -41,7 +41,7 @@ rk.XML.varslot <- function(label, source, required=FALSE, multi=FALSE, min=1, an
 	if(inherits(source, "XiMpLe.node")){
 		source.name <- slot(source, "name")
 		if(!identical(source.name, "varselector")){
-			stop(simpleError(paste("'source' must be a <varselector> node! You provided: <", source.name, ">", sep="")))
+			stop(simpleError(paste0("'source' must be a <varselector> node! You provided: <", source.name, ">")))
 		} else {}
 	} else {}
 
@@ -62,7 +62,7 @@ rk.XML.varslot <- function(label, source, required=FALSE, multi=FALSE, min=1, an
 		valid.types <- c("unknown", "number", "string", "factor", "invalid")
 		invalid.type <- !types %in% valid.types
 		if(invalid.type){
-			warning(paste("You provided invalid types for varslot, they were ignored: ", paste(types, collapse=", "), sep=""))
+			warning(paste0("You provided invalid types for varslot, they were ignored: ", paste(types, collapse=", ")))
 			types <- ""
 		} else {}
 		var.slot.attr[["types"]] <- paste(types, collapse=" ")

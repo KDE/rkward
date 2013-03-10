@@ -41,7 +41,7 @@ tf <- function(cbox, true=TRUE, not=FALSE, ifelse=FALSE, false=FALSE, opt=NULL, 
 	if(inherits(cbox, "XiMpLe.node")){
 		node.name <- cbox@name
 		if(!identical(node.name, "checkbox")){
-			stop(simpleError(paste("Invalid XML node, expected 'checkbox' and got: ", node.name, sep="")))
+			stop(simpleError(paste0("Invalid XML node, expected 'checkbox' and got: ", node.name)))
 		} else {}
 	} else {
 		stop(simpleError("'cbox' must be of class XiMpLe.node!"))
@@ -53,13 +53,13 @@ tf <- function(cbox, true=TRUE, not=FALSE, ifelse=FALSE, false=FALSE, opt=NULL, 
 		opt.name <- opt
 	}
 
-	full.prefix <- paste(prefix, indent(level=level, by=indent.by), sep="")
+	full.prefix <- paste0(prefix, indent(level=level, by=indent.by))
 
 	# check for negation
 	inverse <- ifelse(not, "!", "")
 	result <- ite(id(inverse, cbox),
-		echo(paste(full.prefix, opt.name, "=", true, sep="")),
-		ifelse(ifelse, echo(paste(full.prefix, opt.name, "=", false, sep="")), "")
+		echo(paste0(full.prefix, opt.name, "=", true)),
+		ifelse(ifelse, echo(paste0(full.prefix, opt.name, "=", false)), "")
 		)
 	return(result)
 }

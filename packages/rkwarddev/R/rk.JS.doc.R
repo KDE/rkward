@@ -51,7 +51,7 @@ rk.JS.doc <- function(require=c(), variables=NULL, globals=NULL, results.header=
 	if(!is.null(globals)){
 		js.globals <- paste(
 			"// define variables globally\n",
-			paste(globals, collapse=""), sep="")
+			paste0(globals, collapse=""))
 		if(!is.null(variables)){
 			# remove globals from variables, if duplicate
 			# we'll split them by semicolon
@@ -63,7 +63,7 @@ rk.JS.doc <- function(require=c(), variables=NULL, globals=NULL, results.header=
 			# leave only variables *not* found in globals
 			ok.vars <- split.vars[!stripped.vars %in% stripped.globs]
 			# finally, glue back the semicolon and make one string again
-			variables <- gsub("^\n*", "", paste(paste(ok.vars, ";", sep=""), collapse=""))
+			variables <- gsub("^\n*", "", paste(paste0(ok.vars, ";"), collapse=""))
 		} else {}
 	} else {
 		js.globals <- NULL
@@ -82,49 +82,47 @@ rk.JS.doc <- function(require=c(), variables=NULL, globals=NULL, results.header=
 			}
 			return(req.result)
 		}))
-	js.preprocess <- paste("function preprocess(){\n",
+	js.preprocess <- paste0("function preprocess(){\n",
 		indent(2, by=indent.by), "// add requirements etc. here\n",
 		paste(js.require, collapse=""),
 		"\n",
-		ifelse(is.null(preprocess), "", paste("\n", preprocess, "\n", sep="")),
-		"}", sep="")
+		ifelse(is.null(preprocess), "", paste0("\n", preprocess, "\n")),
+		"}")
 
-	js.calculate <- paste("function calculate(){\n",
+	js.calculate <- paste0("function calculate(){\n",
 			# for plots we only need something here if calculate is not empty
-			if(is.null(doPrintout) | !is.null(calculate)){paste(
-				ifelse(is.null(variables), "", paste(
+			if(is.null(doPrintout) | !is.null(calculate)){paste0(
+				ifelse(is.null(variables), "", paste0(
 					indent(2, by=indent.by), "// read in variables from dialog\n",
-					paste(variables, collapse=""), "\n\n", sep="")),
+					paste(variables, collapse=""), "\n\n")),
 				ifelse(is.null(calculate),
-					paste(indent(2, by=indent.by), "// generate the R code to be evaluated here\n", sep=""),
-					paste(indent(2, by=indent.by), "// the R code to be evaluated\n",calculate, "\n", sep="")),
-				sep="")
-			} else {}, "}", sep="")
+					paste0(indent(2, by=indent.by), "// generate the R code to be evaluated here\n"),
+					paste0(indent(2, by=indent.by), "// the R code to be evaluated\n",calculate, "\n")))
+			} else {}, "}")
 		
-	js.printout <- paste("function printout(){\n",
+	js.printout <- paste0("function printout(){\n",
 			if(is.null(doPrintout)){
-				paste(
+				paste0(
 					indent(2, by=indent.by), "// printout the results\n",
 					if(is.character(results.header) && !identical(results.header, "")){
-						paste(indent(2, by=indent.by), echo(id("rk.header(", results.header, ")\n")), sep="")
+						paste0(indent(2, by=indent.by), echo(id("rk.header(", results.header, ")\n")))
 					} else {},
 					"\n",
-					ifelse(is.null(printout), echo("rk.print(\"\")\n"), paste("\n", printout, sep="")),
-					"\n",
-				sep="")
+					ifelse(is.null(printout), echo("rk.print(\"\")\n"), paste0("\n", printout)),
+					"\n")
 				} else {
 					rk.paste.JS(
 						"// all the real work is moved to a custom defined function doPrintout() below",
 						"// true in this case means: We want all the headers that should be printed in the output:",
 						"doPrintout(true);",
 					level=2, indent.by=indent.by)
-				}, "\n}", sep="")
+				}, "\n}")
 
 	# this part will create preview() and doPrintout(full), if needed
 	if(is.null(doPrintout)){
 		js.doPrintout <- ""
 	} else {
-		js.doPrintout <- paste("function preview(){\n",
+		js.doPrintout <- paste0("function preview(){\n",
 					rk.paste.JS(
 						"preprocess();",
 						"calculate();",
@@ -132,9 +130,9 @@ rk.JS.doc <- function(require=c(), variables=NULL, globals=NULL, results.header=
 					level=2, indent.by=indent.by),
 					"\n\n",
 					"function doPrintout(full){\n",
-					ifelse(is.null(variables), "", paste(
+					ifelse(is.null(variables), "", paste0(
 						indent(2, by=indent.by), "// read in variables from dialog\n", 
-						paste(variables, collapse=""), "\n\n", sep="")),
+						paste(variables, collapse=""), "\n\n")),
 					indent(2, by=indent.by), "// create the plot\n",
 					if(is.character(results.header) && !identical(results.header, "")){
 						rk.paste.JS(ite("full", echo(id("rk.header(", results.header,")\n"))))
@@ -142,10 +140,9 @@ rk.JS.doc <- function(require=c(), variables=NULL, globals=NULL, results.header=
 					"\n\n",
 					doPrintout,
 					if(!is.null(printout)){
-						paste("\n\n", indent(2, by=indent.by), "// left over from the printout function\n", printout, "\n\n", sep="")
+						paste0("\n\n", indent(2, by=indent.by), "// left over from the printout function\n", printout, "\n\n")
 					} else {},
-					"\n}",
-				sep="")
+					"\n}")
 	}
 
 	JS.doc <- paste(js.gen.info, js.globals, js.preprocess, js.calculate, js.printout, js.doPrintout, sep="\n\n")

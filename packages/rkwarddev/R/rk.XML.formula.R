@@ -27,7 +27,7 @@ rk.XML.formula <- function(fixed, dependent, id.name="auto"){
 			if(inherits(this.attr, "XiMpLe.node")){
 				this.attr.name <- slot(this.attr ,"name")
 				if(!identical(this.attr.name, "varslot")){
-					stop(simpleError(paste("'fixed' and 'dependent' must be <varslot> nodes! You provided: <", this.attr.name, ">", sep="")))
+					stop(simpleError(paste0("'fixed' and 'dependent' must be <varslot> nodes! You provided: <", this.attr.name, ">")))
 				} else {}
 			} else {}
 		})
@@ -36,7 +36,7 @@ rk.XML.formula <- function(fixed, dependent, id.name="auto"){
 	depnd.id <- check.ID(dependent)
 
 	if(identical(id.name, "auto")){
-		attr.list <- list(id=auto.ids(paste(fixed.id, depnd.id, sep=""), prefix=ID.prefix("formula")))
+		attr.list <- list(id=auto.ids(paste0(fixed.id, depnd.id), prefix=ID.prefix("formula")))
 	} else if(!is.null(id.name)){
 		attr.list <- list(id=id.name)
 	} else {

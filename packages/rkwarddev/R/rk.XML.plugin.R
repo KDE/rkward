@@ -57,10 +57,10 @@ rk.XML.plugin <- function(name, dialog=NULL, wizard=NULL, logic=NULL, snippets=N
 		all.children[[length(all.children)+1]] <- generator.info
 	} else {}
 
-	all.children[[length(all.children)+1]] <- rk.XML.code(file=paste(name, ".js", sep=""))
+	all.children[[length(all.children)+1]] <- rk.XML.code(file=paste0(name, ".js"))
 
 	if(isTRUE(help)){
-		all.children[[length(all.children)+1]] <- rk.XML.help(file=paste(name, ".rkh", sep=""))
+		all.children[[length(all.children)+1]] <- rk.XML.help(file=paste0(name, ".rkh"))
 	} else {}
 
 	if(!is.null(pluginmap)){

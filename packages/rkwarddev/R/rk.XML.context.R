@@ -26,7 +26,7 @@ rk.XML.context <- function(..., id="x11"){
 	valid.child("context", children=nodes)
 
 	if(!id %in% c("x11", "import")){
-		stop(simpleError(paste("Invalid ID: ", id, sep="")))
+		stop(simpleError(paste0("Invalid ID: ", id)))
 	} else {}
 		
 	node <- XMLNode("context",

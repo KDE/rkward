@@ -40,7 +40,7 @@
 rk.plotOptions <- function(label="Generic plot options", embed="rkward::plot_options", button=TRUE, id.name="auto"){
 
 	if(identical(id.name, "auto")){
-		id.name <- auto.ids(paste(embed, label, sep=""), prefix=ID.prefix("embed"), chars=12)
+		id.name <- auto.ids(paste0(embed, label), prefix=ID.prefix("embed"), chars=12)
 	} else {}
 
 	genPlotOpts.XML <- rk.XML.embed(component=embed, button=button, label=label, id.name=id.name)

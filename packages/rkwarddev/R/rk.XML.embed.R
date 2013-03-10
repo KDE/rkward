@@ -24,7 +24,7 @@ rk.XML.embed <- function(component, button=FALSE, label="Options", id.name="auto
 	} else {}
 
 	if(identical(id.name, "auto")){
-		attr.list[["id"]] <- auto.ids(paste(label, component, sep=""), prefix=ID.prefix("embed"))
+		attr.list[["id"]] <- auto.ids(paste0(label, component), prefix=ID.prefix("embed"))
 	} else {
 		attr.list[["id"]] <- id.name
 	}

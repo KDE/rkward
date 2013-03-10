@@ -62,16 +62,16 @@ rk.paste.JS <- function(..., level=2, indent.by="\t", funct=NULL, array=NULL,
 			result <- slot(this.object, "value")
 		} else if(is.XiMpLe.node(this.object)){
 			if(identical(XMLName(this.object), "!--")){
-				result <- paste(indent(level, by=indent.by),
+				result <- paste0(indent(level, by=indent.by),
 					"// ",
-					gsub("\n", paste("\n", indent(level, by=indent.by), "//", sep=""), XMLValue(XMLChildren(this.object)[[1]])), sep="")
+					gsub("\n", paste0("\n", indent(level, by=indent.by), "//"), XMLValue(XMLChildren(this.object)[[1]])))
 			} else {
 				stop(simpleError("XiMpLe.node objects are only valid if they are comments!"))
 			}
 		} else {
 			# chop off beginning indent strings, otherwiese they ruin the code layout
-			this.object <- gsub(paste("^", indent.by, "*", sep=""), "", this.object)
-			result <- paste(indent(level, by=indent.by), this.object, sep="")
+			this.object <- gsub(paste0("^", indent.by, "*"), "", this.object)
+			result <- paste0(indent(level, by=indent.by), this.object)
 		}
 		return(result)
 	}), collapse="\n")

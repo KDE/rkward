@@ -25,7 +25,7 @@ rk.XML.snippets <- function(...){
 			stopifnot(inherits(this.node, "XiMpLe.node"))
 			node.name <- slot(this.node, "name")
 			if(!node.name %in% c("snippet", "!--")){
-				stop(simpleError(paste("Invalid XML nodes for snippets section: ", node.name, sep="")))
+				stop(simpleError(paste0("Invalid XML nodes for snippets section: ", node.name)))
 			} else {}
 		})
 

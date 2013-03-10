@@ -141,15 +141,14 @@ rk.plugin.component <- function(about, xml=list(), js=list(), rkh=list(),
 			} else {}
 		}
 		if(!"results.header" %in% got.JS.options) {
-			js[["results.header"]] <- paste("\"", name.orig, " results\"", sep="")
+			js[["results.header"]] <- paste0("\"", name.orig, " results\"")
 		} else {}
 		if("var" %in% scan){
 			var.scanned <- rk.JS.scan(XML.plugin, guess.getter=guess.getter)
 			if(!is.null(var.scanned)){
-				js[["variables"]] <- paste(
-					ifelse(is.null(js[["variables"]]), "", paste(js[["variables"]], "\n", sep="")),
-					var.scanned,
-					sep="")
+				js[["variables"]] <- paste0(
+					ifelse(is.null(js[["variables"]]), "", paste0(js[["variables"]], "\n")),
+					var.scanned)
 			} else {}
 		} else {}
 		if("saveobj" %in% scan){

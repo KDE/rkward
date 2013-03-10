@@ -28,7 +28,7 @@ join <- function(var, by="\", \""){
 	}
 
 	JS.join <- new("rk.JS.echo",
-			value=paste(camelCode(arr.name), ".join(", qp(by) ,")", sep="")
+			value=paste0(camelCode(arr.name), ".join(", qp(by) ,")")
 		)
 
 	return(JS.join)

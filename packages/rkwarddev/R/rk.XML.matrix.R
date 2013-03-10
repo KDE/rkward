@@ -48,7 +48,7 @@ rk.XML.matrix <- function(label, mode="real", rows=2, columns=2, min=NULL, max=N
 	attr.list <- list(id=check.ID(id.name), label=label)
 
 	if(!mode %in% c("integer", "real", "string")){
-		stop(simpleError(paste("Invalid mode: ", mode, sep="")))
+		stop(simpleError(paste0("Invalid mode: ", mode)))
 	} else {
 		attr.list[["mode"]] <- mode
 	}

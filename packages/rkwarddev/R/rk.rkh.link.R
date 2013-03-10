@@ -25,11 +25,11 @@ rk.rkh.link <- function(href, text=NULL, type="R"){
 		text <- ifelse(is.null(text), href, text)
 		link <- href
 	} else if(identical(type, "R")){
-		link <- paste("rkward://rhelp/", href, sep="")
+		link <- paste0("rkward://rhelp/", href)
 	} else if(identical(type, "RK")){
-		link <- paste("rkward://component/", href, sep="")
+		link <- paste0("rkward://component/", href)
 	} else {
-		stop(simpleError(paste("Invalid type for link node:", type, sep="")))
+		stop(simpleError(paste0("Invalid type for link node:", type)))
 	}
 
 	if(is.null(text)){

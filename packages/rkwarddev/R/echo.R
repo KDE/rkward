@@ -22,7 +22,7 @@
 
 echo <- function(..., newline=""){
 	ID.content <- qp(...)
-	result <- paste("echo(", ID.content, ");", newline, sep="")
+	result <- paste0("echo(", ID.content, ");", newline)
 	return(result)
 }
 

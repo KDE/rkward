@@ -36,8 +36,8 @@ rk.JS.saveobj <- function(pXML, R.objects="initial", vars=TRUE, add.abbrev=FALSE
 	if(!is.null(R.objects)){
 		num.obj <- length(R.objects)
 		if(num.obj != num.tags & !identical(R.objects, "initial")){
-			stop(simpleError(paste("Length of 'R.objects' (",num.obj,") is unequal to saveobject nodes found:\n  ",
-				paste(unlist(cleaned.tags), collapse="\n  "), sep="")))
+			stop(simpleError(paste0("Length of 'R.objects' (",num.obj,") is unequal to saveobject nodes found:\n  ",
+				paste(unlist(cleaned.tags), collapse="\n  "))))
 		} else {}
 	} else {}
 	
@@ -90,10 +90,10 @@ rk.JS.saveobj <- function(pXML, R.objects="initial", vars=TRUE, add.abbrev=FALSE
 				return(rk.paste.JS(JS.code, level=2, indent.by=indent.by))
 			})), collapse="\n")
 
-		results <- paste(main.indent, "//// save result object\n",
+		results <- paste0(main.indent, "//// save result object\n",
 			if(!is.null(JS.vars)) {
-				paste(main.indent, "// read in saveobject variables\n", JS.vars, "\n", sep="")
-			} else {}, main.indent, "// assign object to chosen environment\n", JS.assign, sep="")
+				paste0(main.indent, "// read in saveobject variables\n", JS.vars, "\n")
+			} else {}, main.indent, "// assign object to chosen environment\n", JS.assign)
 		return(results)
 	} else {
 		return(invisible(NULL))

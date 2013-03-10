@@ -175,7 +175,7 @@ rk.plugin.skeleton <- function(about, path=tempdir(),
 	rkward.dir <- file.path(main.dir, "inst", "rkward")
 	plugin.dir <- file.path(rkward.dir, "plugins")
 	# the basic file names
-	plugin.fname.pluginmap <- paste(name, ".pluginmap", sep="")
+	plugin.fname.pluginmap <- paste0(name, ".pluginmap")
 	# file names with paths
 	plugin.pluginmap <- file.path(rkward.dir, plugin.fname.pluginmap)
 	tests.main.dir <- file.path(rkward.dir, "tests")
@@ -186,23 +186,23 @@ rk.plugin.skeleton <- function(about, path=tempdir(),
 	# create it, if necessary
 	if(!file_test("-d", main.dir)){
 		stopifnot(dir.create(main.dir, recursive=TRUE))
-		message(paste("Created directory ", main.dir, ".", sep=""))
+		message(paste0("Created directory ", main.dir, "."))
 	} else {}
 
 	# create empty R directory, e.g. for smooth roxyPackage runs
 	if(!file_test("-d", R.dir)){
 		stopifnot(dir.create(R.dir, recursive=TRUE))
-		message(paste("Created directory ", R.dir, ".", sep=""))
+		message(paste0("Created directory ", R.dir, "."))
 	} else {}
 
 	# create directory structure
 	if(!file_test("-d", plugin.dir)){
 		stopifnot(dir.create(plugin.dir, recursive=TRUE))
-		message(paste("Created directory ", plugin.dir, ".", sep=""))
+		message(paste0("Created directory ", plugin.dir, "."))
 	} else {}
 	if(isTRUE(tests) & !file_test("-d", tests.dir)){
 		stopifnot(dir.create(tests.dir, recursive=TRUE))
-		message(paste("Created directory ", tests.dir, ".", sep=""))
+		message(paste0("Created directory ", tests.dir, "."))
 	} else {}
 
 	## create the main component
@@ -223,7 +223,7 @@ rk.plugin.skeleton <- function(about, path=tempdir(),
 		scan=scan,
 		guess.getter=guess.getter,
 		hierarchy=pluginmap[["hierarchy"]],
-		pluginmap=paste("../", name, ".pluginmap", sep=""),
+		pluginmap=paste0("../", name, ".pluginmap"),
 		create=create[create %in% c("xml", "js", "rkh")],
 		gen.info=gen.info,
 		indent.by=indent.by)
@@ -241,9 +241,9 @@ rk.plugin.skeleton <- function(about, path=tempdir(),
 			rkh.doc <- slot(this.comp, "rkh")
 
 			# the basic file names
-			plugin.fname.xml <- paste(comp.name, ".xml", sep="")
-			plugin.fname.js <- paste(comp.name, ".js", sep="")
-			plugin.fname.rkh <- paste(comp.name, ".rkh", sep="")
+			plugin.fname.xml <- paste0(comp.name, ".xml")
+			plugin.fname.js <- paste0(comp.name, ".js")
+			plugin.fname.rkh <- paste0(comp.name, ".rkh")
 			# file names with paths
 			plugin.xml <- file.path(plugin.dir, plugin.fname.xml)
 			plugin.js <- file.path(plugin.dir, plugin.fname.js)
@@ -293,7 +293,7 @@ rk.plugin.skeleton <- function(about, path=tempdir(),
 			# get components and hierarchy info from the components list
 			all.components <- sapply(components, function(this.comp){
 					comp.name <- slot(this.comp, "name")
-					named.compo <- paste("plugins/", clean.name(comp.name), ".xml", sep="")
+					named.compo <- paste0("plugins/", clean.name(comp.name), ".xml")
 					# we'll name the component, to nicen the menu entry
 					names(named.compo) <- comp.name
 					return(named.compo)
@@ -325,8 +325,8 @@ rk.plugin.skeleton <- function(about, path=tempdir(),
 			rk.load.pluginmaps(plugin.pluginmap)
 			if(isTRUE(show)){
 				# call the plugin; reconstructed the ID generation from rk.XML.pluginmap()
-				plugin.ID <- auto.ids(paste(pm.id.name, pm.id.name, sep=""), prefix=ID.prefix("component"), chars=25)
-				rk.call.plugin(paste("rkward::", plugin.ID, sep=""))
+				plugin.ID <- auto.ids(paste0(pm.id.name, pm.id.name), prefix=ID.prefix("component"), chars=25)
+				rk.call.plugin(paste0("rkward::", plugin.ID))
 			} else {}
 		} else {}
 	} else {}
@@ -390,17 +390,17 @@ rk.plugin.skeleton <- function(about, path=tempdir(),
 		# create empty NAMESPACE file for R 2.14 compatibility
 		if(!file_test("-f", namespace.file)){
 			cat("", file=namespace.file)
-			message(paste("Created empty file ", namespace.file, " for R 2.14 compatibility.", sep=""))
+			message(paste0("Created empty file ", namespace.file, " for R 2.14 compatibility."))
 		} else {}
 	} else {}
 
 	## create ChangeLog file (if none exists)
 	if("clog" %in% create){
 		if(isTRUE(checkCreateFiles(changelog.file, ow=FALSE, action="clog"))){
-			changelog.text <- paste("ChangeLog for package ", name,
+			changelog.text <- paste0("ChangeLog for package ", name,
 				"\n\nChanges in version ", slot(about.node, "attributes")[["version"]],
 				" (", slot(about.node, "attributes")[["releasedate"]],")",
-				"\nChanges:\n  - initial package build\nAdded:\n  - added a ChangeLog file\nFixed:\n  - ...\n", sep="")
+				"\nChanges:\n  - initial package build\nAdded:\n  - added a ChangeLog file\nFixed:\n  - ...\n")
 			cat(changelog.text, file=changelog.file)
 		} else {}
 		if(isTRUE(edit)){

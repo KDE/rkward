@@ -26,7 +26,7 @@ rk.XML.entry <- function(component, index=-1){
 	if(inherits(component, "XiMpLe.node")){
 		node.name <- slot(component ,"name")
 		if(!identical(node.name, "component")){
-			stop(simpleError(paste("Invalid XML node for 'entry': ", node.name, sep="")))
+			stop(simpleError(paste0("Invalid XML node for 'entry': ", node.name)))
 		} else {}
 	} else {}
 

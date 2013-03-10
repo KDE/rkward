@@ -49,7 +49,7 @@ rk.XML.convert <- function(sources, mode=c(), required=FALSE, id.name="auto"){
 		stop(simpleError("'mode' must have one (or two, if its a range) named element!"))
 	} else {}
 	if(!all(mode.name %in% c("equals","notequals","and","or","min","max"))){
-		stop(simpleError(paste("The mode you provided is invalid: ", mode.name, sep="")))
+		stop(simpleError(paste0("The mode you provided is invalid: ", mode.name)))
 	} else {}
 	if(length(mode) == 2 & !all(mode.name %in% c("min","max"))){
 		stop(simpleError("If 'mode' has two elements, they can only be \"min\" and \"max\"!"))
@@ -59,7 +59,7 @@ rk.XML.convert <- function(sources, mode=c(), required=FALSE, id.name="auto"){
 		sourceValsForID <- sapply(sources, function(this.source){
 					return(check.ID(this.source))
 			})
-		attr.list <- list(id=auto.ids(paste(paste(sourceValsForID, collapse=""), mode, sep=""), prefix=ID.prefix("logic")))
+		attr.list <- list(id=auto.ids(paste0(paste(sourceValsForID, collapse=""), mode), prefix=ID.prefix("logic")))
 	} else if(!is.null(id.name)){
 		attr.list <- list(id=id.name)
 	} else {
@@ -73,8 +73,8 @@ rk.XML.convert <- function(sources, mode=c(), required=FALSE, id.name="auto"){
 		# check these names if they're valid modifiers here
 		invalid.names <- !src.names %in% unique(unlist(all.valid.modifiers))
 		if(any(invalid.names)){
-			warning(paste("Some of the modifier names you provided are invalid and were ignored: ",
-				paste(src.names[invalid.names], collapse=", "), sep=""))
+			warning(paste0("Some of the modifier names you provided are invalid and were ignored: ",
+				paste(src.names[invalid.names], collapse=", ")))
 				src.names[invalid.names] <- ""
 		} else {}
 		sources <- as.character(sapply(1:length(src.names), function(src.no){
