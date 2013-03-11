@@ -1,6 +1,6 @@
 ChangeLog for package rkwarddev
 
-changes in version 0.06-2 (2013-03-10)
+changes in version 0.06-2 (2013-03-11)
 changed:
   - the structure of <about> nodes will change in RKWard 0.6.1,
     <dependencies> will become a direct child of <document> or <component>, which explains
@@ -20,8 +20,8 @@ changed:
   - updated the skeleton_dialog.R demo file and recreated the plugin code
   - JavaScript functions like rk.JS.scan() and id() learned how to treat
     <optionset>, <optioncolumn> and <matrix>
-  - internally paste(..., sep="") was replaced with paste0(...), in a way that ensures
-    compatibility with R < 2.15
+  - internally paste(..., sep="") was replaced with paste0(...), in a way
+    that ensures compatibility with R < 2.15
 added:
   - new function rk.XML.switch()
   - new function rk.XML.optiondisplay()
@@ -36,12 +36,12 @@ added:
   - added "map" to rk.XML.require()
   - the new class rk.JS.echo allows having objects in an echo() statement
     without quoting it
-  - new combined modifiers "visible.not", "visible.numeric", "enabled.not", "enabled.numeric",
-    "state.not" and "state.numeric" are now supported
+  - new combined modifiers "visible.not", "visible.numeric", "enabled.not",
+    "enabled.numeric", "state.not" and "state.numeric" are now supported
 fixed:
   - added some missing parameter in the docs for rk.paste.JS.graph()
-  - fixed a bug in the modifier checks; this unveiled a bug in how rk.JS.scan() dealt with <frame>
-    nodes, which was also fixed
+  - fixed a bug in the modifier checks; this unveiled a bug in how
+    rk.JS.scan() dealt with <frame> nodes, which was also fixed
   - fixed a duplicate entry in this ChangeLog for version 0.04-6
 
 changes in version 0.06-1 (2012-11-08)

@@ -1,7 +1,7 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
-\section{Changes in rkwarddev version 0.06-2 (2013-02-25)}{
+\section{Changes in rkwarddev version 0.06-2 (2013-03-11)}{
   \subsection{changed}{
     \itemize{
       \item the structure of <about> nodes will change in RKWard 0.6.1,
@@ -22,6 +22,8 @@
       \item updated the skeleton_dialog.R demo file and recreated the plugin code
       \item JavaScript functions like \code{rk.JS.scan()} and \code{id()} learned how to treat
         <optionset>, <optioncolumn> and <matrix>
+      \item internally paste(..., sep=\code{""}) was replaced with paste0(...), in a way
+        that ensures compatibility with R < 2.15
     }
   }
   \subsection{added}{
@@ -37,11 +39,18 @@
         \code{rk.XML.pluginmap()}
       \item added option \code{"dependencies"} to \code{rk.XML.component()}
       \item added \code{"map"} to \code{rk.XML.require()}
+      \item the new class rk.JS.echo allows having objects in an \code{echo()} statement
+        without quoting it
+      \item new combined modifiers \code{"visible.not"}, \code{"visible.numeric"}, \code{"enabled.not"},
+        \code{"enabled.numeric"}, \code{"state.not"} and \code{"state.numeric"} are now supported
     }
   }
   \subsection{fixed}{
     \itemize{
       \item added some missing parameter in the docs for \code{rk.paste.JS.graph()}
+      \item fixed a bug in the modifier checks; this unveiled a bug in how
+        \code{rk.JS.scan()} dealt with <frame> nodes, which was also fixed
+      \item fixed a duplicate entry in this ChangeLog for version 0.04-6
     }
   }
 }
@@ -208,8 +217,6 @@
 }
 \section{Changes in rkwarddev version 0.04-6 (2011-10-31)}{
   \itemize{
-    \item added <frame> to the tags which are scanned by \code{rk.JS.scan()}, they're
-      considered only if checkable
     \item added <frame> to the tags which are scanned by \code{rk.JS.scan()}, they're
       considered only if checkable
     \item improved output of rk.JS.var class objects by \code{rk.paste.JS()}
