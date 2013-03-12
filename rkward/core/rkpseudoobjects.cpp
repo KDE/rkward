@@ -109,11 +109,13 @@ QString RKOrphanNamespacesObject::makeChildBaseName (const QString& short_child_
 
 void RKOrphanNamespacesObject::updateFromR (RCommandChain* chain) {
 	RK_TRACE (OBJECTS);
+	Q_UNUSED (chain);
 	RK_ASSERT (false);
 }
 
 void RKOrphanNamespacesObject::updateFromR (RCommandChain* chain, const QStringList& current_symbols) {
 	RK_TRACE (OBJECTS);
+	Q_UNUSED (chain);	// becuase the namespace objects themselves are not updated, only added as incomplete objects
 
 	// which former children are missing?
 	for (int i = childmap.size () - 1; i >= 0; --i) {
