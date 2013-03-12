@@ -154,6 +154,6 @@ QString RKOrphanNamespacesObject::getObjectDescription () const {
 	RK_TRACE (OBJECTS);
 
 	QString desc = RObject::getObjectDescription ();
-	desc.append ("<p>This special object does not actually exist anywhere in R. It is used, here, to list namespaces which are loaded, but not attached to a package on the search path. These are typically 'imported' namespaces.</p>");
+	desc.append (QString ("<p>%1</p>").arg (i18n ("This special object does not actually exist anywhere in R. It is used, here, to list namespaces which are loaded, but not attached to a package on the search path. These are typically 'imported' namespaces.")));
 	return desc;
 }
