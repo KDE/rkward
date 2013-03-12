@@ -3,7 +3,6 @@
 - Added support for loaded namespaces that are not attached to a loaded package
 - Pluginmaps can specify their "priority". Pluginmaps with low priority will not be added automatically, when found.
 - Pluginmaps can <require> other pluginmaps based on their id (for cross-package inclusion)
-	- TODO: test
 - Added new element <dependency_check> for dynamic version checks within a plugin (R and RKWard versions, only, so far)
 - Add guard against accidental usage of the standard distributed pluginmaps in a later version of RKWard (installed in parallel)
 - Easier (de-)activation of RKWard plugin maps using checkboxes (Settings->Configure RKWard->Plugins)
@@ -11,11 +10,11 @@
 - Implement basic dependency handling for plugins / pluginmaps
 - Added support for the upcoming R 3.0.0			TODO: Check for any more regressions, before release
 - Added <switch> logic element to switch between several target properties (or fixed values) based on the value of a condition property
-- Sort plugin gains option to sort data.frames by more than one column at a time, and options for type conversion	TODO: adjust test(s)
+- Sort plugin gains option to sort data.frames by more than one column at a time, and options for type conversion
 - Add in-application debug message viewer (targetted at (plugin) developers)
 - Add setting to customize initial working directory
 - Windows only: Add UI-checkbox for R's "internet2"-option
-- New functions getString(), getList() and getBoolean() for fetching data in plugin scripts		TODO: more testing, convert at least some plugins
+- New functions getString(), getList() and getBoolean() for fetching data in plugin scripts
 - Boolean properties now return a numeric, not labelled representation of their value, by default. <checkbox>es should be unaffected.	TODO: when announcing release, link to explanation mail.
 - Added <optionset> GUI element for entering a set of options for an arbitrary number of items
 - Reduce CPU usage of pluings while idle
@@ -26,7 +25,7 @@
 - Improve key handling while editing factor levels in a data.frame
 - Added utiltity function rk.flush.output()
 - RKWard is now categorized as Science/Math/Numerical Analysis in its .desktop file
-- Fixed: Device history was not working with more recent versions of ggplot2 		(TODO: find out, which version broke it, exactly)
+- Fixed: Device history was not working with more recent versions of ggplot2
 - Fixed: Option to include suggested packages in install was mis-labelled "install dependencies"
 - rk.set.output.html.file() gains argument to allow addition of custom content to the html header
 
