@@ -621,23 +621,25 @@ check.ID <- function(node){
 all.valid.modifiers <- list(
 	all=c("", "visible", "visible.not", "visible.numeric", "enabled", "enabled.not", "enabled.numeric",
 	"required", "true", "false", "not", "numeric", "preprocess", "calculate", "printout", "preview"),
-	text=c("text"),
-	varselector=c("selected", "root"),
-	varslot=c("available", "selected", "source", "shortname", "label"),
-	radio=c("string", "number"),
-	dropdown=c("string", "number"),
-	# option=c(),
-	checkbox=c("state", "state.not", "state.numeric"),
-	frame=c("checked", "checked.not", "checked.numeric"),
-	input=c("text"),
 	browser=c("selection"),
-	saveobject=c("selection", "parent", "objectname", "active"),
-	spinbox=c("int", "real"),
-	formula=c("model", "table", "labels", "fixed_factors", "dependent"),
+	checkbox=c("state", "state.not", "state.numeric"),
+	dropdown=c("string", "number"),
 # removed embed, can be all sorts of stuff, see e.g. generic plot options
 #	embed=c("code"),
 # for the same reason external is not listed here
-	preview=c("state", "state.not", "state.numeric")
+	frame=c("checked", "checked.not", "checked.numeric"),
+	input=c("text"),
+	formula=c("model", "table", "labels", "fixed_factors", "dependent"),
+	matrix=c("rows", "columns", "tsv", "cbind"), # TODO: missing a solution for 1,2,3,... here
+	# option=c(),
+	optionset=c("row_count", "current_row", "optioncolumn_ids"),
+	preview=c("state", "state.not", "state.numeric"),
+	radio=c("string", "number"),
+	saveobject=c("selection", "parent", "objectname", "active"),
+	spinbox=c("int", "real"),
+	text=c("text"),
+	varselector=c("selected", "root"),
+	varslot=c("available", "selected", "source", "shortname", "label")
 ) ## end list with valid modifiers
 
 
@@ -655,8 +657,8 @@ modif.validity <- function(source, modifier, ignore.empty=TRUE, warn.only=TRUE, 
 
 	if(is.XiMpLe.node(source)){
 		tag.name <- XMLName(source)
-		# embedded plugins can have all sorts of modifiers
-		if(tag.name %in% c("embed", "external")){
+		# certain elemens/embedded plugins can have all sorts of modifiers
+		if(tag.name %in% c("embed", "external", "switch")){
 			if(isTRUE(bool)){
 				return(TRUE)
 			} else {

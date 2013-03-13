@@ -1,6 +1,6 @@
 ChangeLog for package rkwarddev
 
-changes in version 0.06-2 (2013-03-11)
+changes in version 0.06-2 (2013-03-13)
 changed:
   - the structure of <about> nodes will change in RKWard 0.6.1,
     <dependencies> will become a direct child of <document> or <component>, which explains
@@ -38,11 +38,14 @@ added:
     without quoting it
   - new combined modifiers "visible.not", "visible.numeric", "enabled.not",
     "enabled.numeric", "state.not" and "state.numeric" are now supported
+  - modifiers have been added for <optionset> and <matrix>, and <switch> can
+    have any modifier
 fixed:
   - added some missing parameter in the docs for rk.paste.JS.graph()
   - fixed a bug in the modifier checks; this unveiled a bug in how
     rk.JS.scan() dealt with <frame> nodes, which was also fixed
   - fixed a duplicate entry in this ChangeLog for version 0.04-6
+  - rk.plugin.skeleton() now correctly works with more than one author
 
 changes in version 0.06-1 (2012-11-08)
 changed:

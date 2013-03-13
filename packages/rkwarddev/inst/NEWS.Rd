@@ -1,7 +1,7 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
-\section{Changes in rkwarddev version 0.06-2 (2013-03-11)}{
+\section{Changes in rkwarddev version 0.06-2 (2013-03-13)}{
   \subsection{changed}{
     \itemize{
       \item the structure of <about> nodes will change in RKWard 0.6.1,
@@ -43,6 +43,8 @@
         without quoting it
       \item new combined modifiers \code{"visible.not"}, \code{"visible.numeric"}, \code{"enabled.not"},
         \code{"enabled.numeric"}, \code{"state.not"} and \code{"state.numeric"} are now supported
+      \item modifiers have been added for <optionset> and <matrix>, and <switch> can
+        have any modifier
     }
   }
   \subsection{fixed}{
@@ -51,6 +53,7 @@
       \item fixed a bug in the modifier checks; this unveiled a bug in how
         \code{rk.JS.scan()} dealt with <frame> nodes, which was also fixed
       \item fixed a duplicate entry in this ChangeLog for version 0.04-6
+      \item \code{rk.plugin.skeleton()} now correctly works with more than one author
     }
   }
 }
