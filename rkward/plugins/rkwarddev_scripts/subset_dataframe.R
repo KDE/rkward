@@ -146,8 +146,8 @@ lgc.sect.sset <- rk.XML.logic(
 		rk.XML.external(id="case_filter_data_mode", "any"),
 		lgc.drop.switch,
 		lgc.is.range,
-# TODO: Why doesn't this work?
-#		rk.XML.connect(governor=lgc.is.range, client=sset.range.options, set="visible"),
+		rk.XML.connect(governor=lgc.is.range, client=sset.range.options, set="visible"),
+# TODO: rkwarddev does not accept "visible.not" as modifier
 		rk.XML.connect(governor=sset.range.options, get="visible.not", client=sset.input.filter, set="visible"),
 		rk.XML.connect(governor=sset.have.filter.var, client=sset.input.filter, set="required")
 	)

@@ -1360,7 +1360,11 @@ void RKComponentPropertySwitch::setSources (const QString& _condition_prop, cons
 	RK_ASSERT (!condition_prop);	// must only be called once
 
 	condition_prop = c_parent->lookupProperty (_condition_prop, &condition_prop_modifier, true);
-	if (!condition_prop) RK_DEBUG (PLUGIN, DL_ERROR, "Not a valid condition to connect <switch> property to: %s", qPrintable (_condition_prop));
+	if (!condition_prop) {
+		RK_DEBUG (PLUGIN, DL_ERROR, "Not a valid condition to connect <switch> property to: %s", qPrintable (_condition_prop));
+	} else {
+		connect (condition_prop, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (sourcePropertyChanged(RKComponentPropertyBase*)));
+	}
 
 	for (int i = 0; i < _value_props.size (); ++i) {
 		QString mod;
