@@ -5,13 +5,23 @@
 .rktest.tmp.storage <- new.env()
 
 .rk.rerun.plugin.link.replacement <- function (plugin, settings, label) {
-	.rk.cat.output ("<h3>Rerun code:</h3>")
-	.rk.cat.output ("<pre>")
-	.rk.cat.output ("rk.call.plugin (\"")
-	.rk.cat.output (plugin)
-	.rk.cat.output ("\", ")
-	.rk.cat.output (gsub ("^\"", "", gsub ("=", "=\"", gsub ("\n", "\", ", settings))))
-	.rk.cat.output ("\", submit.mode=\"submit\")</pre>")
+	.rk.cat.output("<h3>Rerun code:</h3>")
+	.rk.cat.output("<pre>")
+	.rk.cat.output("rk.call.plugin (")
+	.rk.cat.output(dQuote (plugin))
+	.rk.cat.output(", ")
+
+	lines = strsplit (settings, '\n', fixed=TRUE)[[1]]
+	first = TRUE
+	for (line in lines) {
+		if (first) first <- FALSE
+		else .rk.cat.output (", ")
+		split <- strsplit (line, '=', fixed=TRUE)[[1]]
+		key <- split[1]
+		value <- paste (split[-1], collapse="=")
+		.rk.cat.output(paste (key, dQuote (value), sep="="))
+	}
+	.rk.cat.output(", submit.mode=\"submit\")</pre>")
 }
 
 rktest.appendTestResults <- function (objecta, objectb) {
