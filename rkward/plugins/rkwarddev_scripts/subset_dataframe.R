@@ -15,10 +15,12 @@ guess.getter <- TRUE
 about.info <- rk.XML.about(
 	name="rk.subset",
 	author=c(
+		person(given="RKWard", family="Team",
+			email="rkward-devel@lists.sf.net", role=c("cre")),
 		person(given="Meik", family="Michalke",
-			email="meik.michalke@hhu.de", role=c("aut","cre")),
+			email="meik.michalke@hhu.de", role=c("aut")),
 		person(given="Thomas", family="Friedrichsmeier",
-			email="tfry@users.sf.net", role=c("aut","cre"))),
+			email="tfry@users.sf.net", role=c("aut"))),
 	about=list(desc="RKWard GUI to define subsets of data objects",
 		version="0.02-1", url="http://rkward.sf.net")
 )
@@ -147,7 +149,6 @@ lgc.sect.sset <- rk.XML.logic(
 		lgc.drop.switch,
 		lgc.is.range,
 		rk.XML.connect(governor=lgc.is.range, client=sset.range.options, set="visible"),
-# TODO: rkwarddev does not accept "visible.not" as modifier
 		rk.XML.connect(governor=sset.range.options, get="visible.not", client=sset.input.filter, set="visible"),
 		rk.XML.connect(governor=sset.have.filter.var, client=sset.input.filter, set="required")
 	)
@@ -212,7 +213,7 @@ sset.plugin.dir <<- rk.plugin.skeleton(
 	create=c("pmap", "xml", "js", "desc"),
 	overwrite=overwrite,
 	tests=FALSE,
-#	edit=TRUE,
+	edit=TRUE,
 	load=TRUE,
 #	show=TRUE,
 	hints=FALSE)
