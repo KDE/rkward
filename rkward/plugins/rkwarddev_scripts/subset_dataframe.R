@@ -121,19 +121,25 @@ lgc.filter.script <- rk.comment(id("
 
 save.results.sset <- rk.XML.saveobj("Save results to workspace", initial="sset.result", chk=TRUE)
 
-tab.sset.data <- rk.XML.row(
-		var.select,
-		rk.XML.col(
-			var.data,
-			frame.selected.vars,
-			frame.filter.var,
-			rk.XML.stretch(),
-			save.results.sset
-		)
+sset.dialog.contents <- rk.XML.row (
+	var.select,
+	rk.XML.col(
+		var.data,
+		rk.XML.tabbook (tabs = list (
+			"Filter cases"=rk.XML.col(
+				frame.filter.var,
+				rk.XML.stretch()
+			), "Filter columns"=rk.XML.col(
+				frame.selected.vars,
+				rk.XML.stretch()
+			))
+		),
+		save.results.sset
 	)
+)
 
 sset.full.dialog <- rk.XML.dialog(
-	tab.sset.data,
+	sset.dialog.contents,
 	label="Subset of data")
 
 ## logic section
@@ -150,7 +156,13 @@ lgc.sect.sset <- rk.XML.logic(
 		lgc.is.range,
 		rk.XML.connect(governor=lgc.is.range, client=sset.range.options, set="visible"),
 		rk.XML.connect(governor=sset.range.options, get="visible.not", client=sset.input.filter, set="visible"),
-		rk.XML.connect(governor=sset.have.filter.var, client=sset.input.filter, set="required")
+		rk.XML.connect(governor=sset.have.filter.var, client=sset.input.filter, set="required"),
+		lgc.have.min <- rk.XML.convert(sources=list(text=sset.filter.min), mode=c(notequals="")),
+		lgc.have.max <- rk.XML.convert(sources=list(text=sset.filter.max), mode=c(notequals="")),
+		lgc.need.min <- rk.XML.convert(sources=list(not=lgc.have.max,lgc.is.range), mode=c(and="")),
+		lgc.need.max <- rk.XML.convert(sources=list(not=lgc.have.min,lgc.is.range), mode=c(and="")),
+		rk.XML.connect(governor=lgc.need.max, get="", client=sset.filter.max, set="required"),
+		rk.XML.connect(governor=lgc.need.min, get="", client=sset.filter.min, set="required")
 	)
 
 ## JavaScript
@@ -169,22 +181,24 @@ sset.js.calc <- rk.paste.JS(
 	js.filter.maxinc <- rk.JS.vars (sset.filter.max.inc, getter="getBoolean"),
 	echo("\tsset.result <- subset("),
 	ite(var.data, echo("\n\t\t", var.data)),
-	ite(id(js.filter.is.range), rk.paste.JS (
-		"var range_limit = '';",
-		ite (id (js.filter.min, " != ''"), rk.paste.JS ("range_limit += ", id (js.filter.var), " + ' >' + (", id (js.filter.mininc), " ? '= ' : ' ') + ", id (js.filter.min))),
-		ite (id (js.filter.max, " != ''"), rk.paste.JS ("range_limit += (range_limit == '' ? '' : ' && ') + ", id (js.filter.var), " + ' <' + (", id (js.filter.maxinc), " ? '= ' : ' ') + ", id (js.filter.max))),
-		ite (id (js.filter.operand, " == 'range'"),
-			rk.paste.JS (echo(",\n\t\t"), "echo (range_limit)"),
-			rk.paste.JS (echo(",\n\t\t!("), "echo (range_limit + ')')")
-		)),
-		ite (id (js.filter.data.mode, " == 'logical'"),
-			ite(id(js.filter.operand, " == \"TRUE\""),
-				echo(",\n\t\t", js.filter.var),
-				echo(",\n\t\t!", js.filter.var)
-			),
-			ite (id (js.filter.operand, " == '!%in%'"),
-				echo(",\n\t\t!(", js.filter.var, " %in% ", sset.input.filter, ")"),
-				echo(",\n\t\t", js.filter.var, " ", js.filter.operand, " ", sset.input.filter)
+	ite(id(js.filter.var, " != ''"), 
+		ite(id(js.filter.is.range), rk.paste.JS (
+			"var range_limit = '';",
+			ite (id (js.filter.min, " != ''"), rk.paste.JS ("range_limit += ", id (js.filter.var), " + ' >' + (", id (js.filter.mininc), " ? '= ' : ' ') + ", id (js.filter.min))),
+			ite (id (js.filter.max, " != ''"), rk.paste.JS ("range_limit += (range_limit == '' ? '' : ' && ') + ", id (js.filter.var), " + ' <' + (", id (js.filter.maxinc), " ? '= ' : ' ') + ", id (js.filter.max))),
+			ite (id (js.filter.operand, " == 'range'"),
+				rk.paste.JS (echo(",\n\t\t"), "echo (range_limit)"),
+				rk.paste.JS (echo(",\n\t\t!("), "echo (range_limit + ')')")
+			)),
+			ite (id (js.filter.data.mode, " == 'logical'"),
+				ite(id(js.filter.operand, " == \"TRUE\""),
+					echo(",\n\t\t", js.filter.var),
+					echo(",\n\t\t!", js.filter.var)
+				),
+				ite (id (js.filter.operand, " == '!%in%'"),
+					echo(",\n\t\t!(", js.filter.var, " %in% ", sset.input.filter, ")"),
+					echo(",\n\t\t", js.filter.var, " ", js.filter.operand, " ", sset.input.filter)
+				)
 			)
 		)
 	),
