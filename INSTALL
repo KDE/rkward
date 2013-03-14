@@ -43,6 +43,9 @@ In some cases you may want to set the following options:
 -DNO_R_XML
 	When packaging RKWard for binary distribution, it may be necessary to exclude the R syntax highlighting defintion "r.xml"
 	from installation, as it may already be provided other packages. In this case, you can use: -DNO_R_XML=1
+-DUSE_BINARY_PACKAGES
+	Currently only interpreted on Mac OS: If RKWard should default to installing binary R packages (if available) use
+	-DUSE_BINARY_PACKAGE=1. Otherwise, RKWard will default to building R packages from source.
 
 Further generic options are listed on http://www.cmake.org/Wiki/CMake_Useful_Variables .
 

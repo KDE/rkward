@@ -2,7 +2,7 @@
                           rksettingsmoduler  -  description
                              -------------------
     begin                : Wed Jul 28 2004
-    copyright            : (C) 2004, 2007, 2009, 2010, 2011, 2012 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2013 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -378,6 +378,7 @@ RKSettingsModuleRPackages::RKSettingsModuleRPackages (RKSettings *gui, QWidget *
 	source_packages_box->setChecked (true);
 	source_packages_box->setEnabled (false);
 #endif
+	RKCommonFunctions::setTips (QString ("<p>%1</p>").arg (i18n ("Installing packages from pre-compiled binaries (if available) is generally faster, and does not require an installation of development tools and libraries. On the other hand, building packages from source provides best compatibility. On Mac OS X and Linux, building packages from source is currently recommended.")), source_packages_box);
 	connect (source_packages_box, SIGNAL (stateChanged (int)), this, SLOT (settingChanged()));
 	main_vbox->addWidget (source_packages_box);
 
@@ -562,7 +563,16 @@ void RKSettingsModuleRPackages::loadSettings (KConfig *config) {
 	liblocs = cg.readEntry ("LibraryLocations", QStringList ());
 	archive_packages = cg.readEntry ("archive packages", false);
 #if defined Q_WS_WIN || defined Q_WS_MAC
-	source_packages = cg.readEntry ("source packages", false);
+#	if defined USE_BINARY_PACKAGES
+#		define USE_SOURCE_PACKAGES false
+#	else
+#		define USE_SOURCE_PACKAGES true
+#endif
+	source_packages = cg.readEntry ("source packages", USE_SOURCE_PACKAGES);
+	if (USE_SOURCE_PACKAGES && (RKSettingsModuleGeneral::storedConfigVersion () < RKSettingsModuleGeneral::RKWardConfig_0_6_1)) {
+		// revert default on MacOSX, even if a previous stored setting exists
+		source_packages = true;
+	}
 #else
 	source_packages = true;
 #endif

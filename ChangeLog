@@ -1,3 +1,4 @@
+- Revert to building R packages form source on Mac OS X by default (controllable via compile-time option)
 - Fixed: lattice plots would not be added to the plot history, correctly, for some versions of lattice
 - Fix crash when trying to print, and neither okular, nor kpdf are available
 - Added support for loaded namespaces that are not attached to a loaded package
