@@ -882,7 +882,7 @@ void RKConsole::initializeActions (KActionCollection *ac) {
 	RK_TRACE (APP);
 #ifdef Q_WS_MAC
 #	define REAL_CTRL_KEY Qt::MetaModifier
-#	define REAL_CMD_KEY Qt::ConrolModifier
+#	define REAL_CMD_KEY Qt::ControlModifier
 #else
 #	define REAL_CTRL_KEY Qt::ControlModifier
 #	define REAL_CMD_KEY Qt::MetaModifier
