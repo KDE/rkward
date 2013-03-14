@@ -880,18 +880,25 @@ void RKConsole::showContextHelp () {
 
 void RKConsole::initializeActions (KActionCollection *ac) {
 	RK_TRACE (APP);
-
+#ifdef Q_WS_MAC
+#	define REAL_CTRL_KEY Qt::MetaModifier
+#	define REAL_CMD_KEY Qt::ConrolModifier
+#else
+#	define REAL_CTRL_KEY Qt::ControlModifier
+#	define REAL_CMD_KEY Qt::MetaModifier
+#endif
 	RKStandardActions::copyLinesToOutput (this, this, SLOT (copyLinesToOutput()));
 	context_help_action = RKStandardActions::functionHelp (this, this, SLOT(showContextHelp()));
 	run_selection_action = RKStandardActions::runSelection (this, this, SLOT (runSelection()));
 
 	interrupt_command_action = ac->addAction ("interrupt", this, SLOT (resetConsole()));
 	interrupt_command_action->setText (i18n ("Interrupt running command"));
-	interrupt_command_action->setShortcut (Qt::ControlModifier + Qt::Key_C);
+	interrupt_command_action->setShortcut (REAL_CTRL_KEY + Qt::Key_C);
 	interrupt_command_action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionInterrupt));
 	interrupt_command_action->setEnabled (false);
 
 	copy_literal_action = ac->addAction ("rkconsole_copy_literal", this, SLOT (literalCopy()));
+	copy_literal_action->setShortcut (REAL_CMD_KEY + Qt::Key_C);
 	copy_literal_action->setText (i18n ("Copy selection literally"));
 
 	copy_commands_action = ac->addAction ("rkconsole_copy_commands", this, SLOT (copyCommands()));
