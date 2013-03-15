@@ -3,6 +3,22 @@
 # note: this script only creates objects in your workspace,
 # *EXCEPT* for the last call, see below.
 
+## Plugin mandatory TODO
+#
+# - write .rkh
+# - testing!
+# - write automated tests
+# - ChangeLog entry
+
+## Plugin wishlist
+#
+# - use an <optionset> to provide an arbitrary number of filters by variable
+# - allow removing of specified columns in addition to selection of specified columns
+# - re-think quotation issues? Use a <matrix> for specifying %in% and !%in% values?
+# - allow saving of resulting row-filter expression for later reuse
+# - print status summary ("filtered a of b rows, x of y columns, saved as z")
+# - split into two plugins (one for rows, one for columns)?
+
 require(rkwarddev)
 
 local({
