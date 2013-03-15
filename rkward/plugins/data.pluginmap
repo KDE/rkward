@@ -6,12 +6,14 @@
 	<components>
 		<component type="standard" id="generate_random" file="data/generate_random.xml" label="Generate random data" />
 		<component type="standard" id="sort_data" file="data/sort.xml" label="Sort data" />
+		<component type="standard" id="subset_dataframe" file="data/subset_dataframe.xml" label="Subset data.frame" />
 	</components>
 
 	<hierarchy>
 		<menu id="data" label="Data" index="3">
 			<entry component="generate_random" />
 			<entry component="sort_data" />
+			<entry component="subset_dataframe" />
 		</menu>
 	</hierarchy>
 </document>

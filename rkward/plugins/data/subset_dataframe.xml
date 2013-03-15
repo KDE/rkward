@@ -1,0 +1,130 @@
+<!DOCTYPE rkplugin >
+<document>
+	<!-- this code was generated using the rkwarddev package.
+			perhaps don't make changes here, but in the rkwarddev script instead! -->
+	<code file="subset_dataframe.js" />
+	<help file="subset_dataframe.rkh" />
+	<logic>
+		<script>
+			<![CDATA[ 
+				gui.addChangeCommand("vrsl_Fltrbyvr.available", "dataChanged()");
+							// this function is called whenever the data was changed
+							dataChanged = function(){
+									var enableVarInput = "true";
+									var dataMode = "any";
+									var thisObject = makeRObject(gui.getValue("vrsl_Fltrbyvr.available"));
+									 if(thisObject.classes()){
+										if(thisObject.isDataFactor() || thisObject.isDataCharacter()){
+											dataMode = "char_factor";
+										} else if(thisObject.isDataLogical()){
+											dataMode = "logical";
+											// NOTE: not hiding VarInput to avoid nasty flicker
+											enableVarInput = "false";
+										} else if(thisObject.isDataNumeric()){
+											dataMode="numeric";
+										}
+									} else {}
+									gui.setValue("drp_fltr_fct.visible", dataMode == 'char_factor' ? 'true' : 'false');
+									gui.setValue("drp_fltr_lgc.visible", dataMode == 'logical' ? 'true' : 'false');
+									gui.setValue("drp_fltr_num.visible", dataMode == 'numeric' ? 'true' : 'false');
+									gui.setValue("drp_fltr_all.visible", dataMode == 'any' ? 'true' : 'false');
+									gui.setValue("inp_Vlpstdss.enabled", enableVarInput);
+									gui.setValue("case_filter_data_mode", dataMode);
+								}
+								dataChanged (); // initialize 
+			]]>
+		</script>
+		<connect governor="current_object" client="var_data.available" />
+		<connect governor="var_data.available" client="vrs_Selectdt.root" />
+		<convert id="lgc_vardata" sources="var_data.available" mode="notequals" />
+		<convert id="lgc_vrslFltr" sources="vrsl_Fltrbyvr.available" mode="notequals" />
+		<connect governor="lgc_vardata" client="frm_Onlyssbs.enabled" />
+		<connect governor="lgc_vardata" client="frm_Fltrrwsb.enabled" />
+		<connect governor="lgc_vardata" client="frame_filter_exp.enabled" />
+		<external id="case_filter_data_mode" default="any" />
+		<switch condition="case_filter_data_mode" id="swt_csfltrdt">
+			<case standard="any" dynamic_value="drp_fltr_all.string" />
+			<case standard="char_factor" dynamic_value="drp_fltr_fct.string" />
+			<case standard="logical" dynamic_value="drp_fltr_lgc.string" />
+			<case standard="numeric" dynamic_value="drp_fltr_num.string" />
+		</switch>
+		<switch condition="swt_csfltrdt" id="swt_swtcsflt">
+			<case standard="!range" fixed_value="1" />
+			<case standard="range" fixed_value="1" />
+			<default fixed_value="0" />
+		</switch>
+		<connect governor="swt_swtcsflt.state" client="row_cMMIMMIMMI.visible" />
+		<connect governor="row_cMMIMMIMMI.visible.not" client="inp_Vlpstdss.visible" />
+		<connect governor="lgc_vrslFltr" client="inp_Vlpstdss.required" />
+		<convert id="lgc_inpMnmmr" sources="inp_Mnmmrmpt.text" mode="notequals" />
+		<convert id="lgc_inpMxmmr" sources="inp_Mxmmrmpt.text" mode="notequals" />
+		<convert id="lgc_lgcnpMxm" sources="lgc_inpMxmmr.not;swt_swtcsflt" mode="and" />
+		<convert id="lgc_lgcnpMnm" sources="lgc_inpMnmmr.not;swt_swtcsflt" mode="and" />
+		<connect governor="lgc_lgcnpMnm" client="inp_Mxmmrmpt.required" />
+		<connect governor="lgc_lgcnpMxm" client="inp_Mnmmrmpt.required" />
+	</logic>
+	<dialog label="Subset of data">
+		<row id="row_vSSDSFFFFF">
+			<varselector id="vrs_Selectdt" label="Select data" />
+			<column id="clm_vDSFFFFFFS">
+				<varslot id="var_data" label="Data (data.frame)" source="vrs_Selectdt" classes="data.frame" required="true" />
+				<tabbook>
+					<tab label="Filter cases" id="tab_Filtrcss">
+						<column id="clm_fFFFFSKKKT">
+							<frame label="Filter rows by variable" id="frm_Fltrrwsb">
+								<varslot id="vrsl_Fltrbyvr" label="Filter by variable" source="vrs_Selectdt" />
+								<dropdown id="drp_fltr_all" label="Keep cases matching rule">
+									<option label="is one of (%in%)" value="%in%" />
+									<option label="is not one of (!%in%)" value="!%in%" />
+									<option label="is equal (==)" value="==" checked="true" />
+									<option label="is not equal (!=)" value="!=" />
+									<option label="is in between" value="range" />
+									<option label="is not between" value="!range" />
+								</dropdown>
+								<dropdown id="drp_fltr_fct" label="Keep cases matching rule">
+									<option label="is one of (%in%)" value="%in%" />
+									<option label="is not one of (!%in%)" value="!%in%" />
+									<option label="is equal (==)" value="==" checked="true" />
+								</dropdown>
+								<dropdown id="drp_fltr_lgc" label="Keep cases matching rule">
+									<option label="is TRUE" value="TRUE" checked="true" />
+									<option label="is FALSE" value="FALSE" />
+								</dropdown>
+								<dropdown id="drp_fltr_num" label="Keep cases matching rule">
+									<option label="is equal (==)" value="==" checked="true" />
+									<option label="is not equal (!=)" value="!=" />
+									<option label="is in between" value="range" />
+									<option label="is not between" value="!range" />
+								</dropdown>
+								<input label="Value (pasted as-is, use proper quoting!)" id="inp_Vlpstdss" required="true" />
+								<row id="row_cMMIMMIMMI">
+									<column id="clm_inptlblMMI">
+										<input label="Minimum (or empty)" id="inp_Mnmmrmpt" />
+										<checkbox id="mininc" label="Included (&gt;=)" value="true" />
+									</column>
+									<column id="clm_inptlblMMI">
+										<input label="Maximum (or empty)" id="inp_Mxmmrmpt" />
+										<checkbox id="maxinc" label="Included (&lt;=)" value="true" />
+									</column>
+								</row>
+							</frame>
+							<frame label="Filter rows by expression" id="frame_filter_exp">
+								<input label="Expression (or empty)" id="inp_Exprssnr" />
+							</frame>
+							<stretch />
+						</column>
+					</tab>
+					<tab label="Filter columns" id="tab_Fltrclmn">
+						<column id="clm_frmlbOOSSS">
+							<frame label="Only use a subset of variables" checkable="true" checked="false" id="frm_Onlyssbs">
+								<varslot id="vrsl_Slctdvrb" label="Selected variables" source="vrs_Selectdt" multi="true" />
+							</frame>
+							<stretch />
+						</column>
+					</tab>
+				</tabbook>
+				<saveobject label="Save results to workspace" checkable="true" checked="true" initial="sset.result" id="svb_Svrsltst" />
+			</column>
+		</row>
+	</dialog>
+</document>
