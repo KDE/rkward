@@ -36,7 +36,7 @@ var.data <- rk.XML.varslot(label="Data (data.frame)", source=var.select, classes
 selected.vars <- rk.XML.varslot(label="Selected variables", source=var.select, multi=TRUE)
 frame.selected.vars <- rk.XML.frame(selected.vars, label="Only use a subset of variables", checkable=TRUE, chk=FALSE)
 
-filter.var <- rk.XML.varslot(label="Filter by", source=var.select)
+filter.var <- rk.XML.varslot(label="Filter by variable", source=var.select)
 sset.filter.drop <- rk.XML.dropdown(label="Keep cases matching rule", options=list(
 		"is one of (%in%)"=c(val="%in%"),
 		"is not one of (!%in%)"=c(val="!%in%"),
@@ -91,6 +91,10 @@ frame.filter.var <- rk.XML.frame(
 	sset.range.options,
 	label="Filter rows by variable")
 
+frame.filter.expression <- rk.XML.frame(
+	sset.filter.expression <- rk.XML.input ("Expression (or empty)"),
+	label="Filter rows by expression", id.name="frame_filter_exp")	# NOTE: Auto-assigned id is duplicate!
+
 # for logic section
 lgc.filter.script <- rk.comment(id("
 	gui.addChangeCommand(\"", filter.var, ".available\", \"dataChanged()\");
@@ -128,6 +132,7 @@ sset.dialog.contents <- rk.XML.row (
 		rk.XML.tabbook (tabs = list (
 			"Filter cases"=rk.XML.col(
 				frame.filter.var,
+				frame.filter.expression,
 				rk.XML.stretch()
 			), "Filter columns"=rk.XML.col(
 				frame.selected.vars,
@@ -151,6 +156,7 @@ lgc.sect.sset <- rk.XML.logic(
 		sset.have.filter.var <- rk.XML.convert(sources=list(available=filter.var), mode=c(notequals="")),
 		rk.XML.connect(governor=sset.gov.data, client=frame.selected.vars, set="enabled"),
 		rk.XML.connect(governor=sset.gov.data, client=frame.filter.var, set="enabled"),
+		rk.XML.connect(governor=sset.gov.data, client=frame.filter.expression, set="enabled"),
 		rk.XML.external(id="case_filter_data_mode", "any"),
 		lgc.drop.switch,
 		lgc.is.range,
@@ -166,45 +172,56 @@ lgc.sect.sset <- rk.XML.logic(
 	)
 
 ## JavaScript
-js.frm.filter <- rk.paste.JS (rk.JS.vars(filter.var), "!= \"\"") # see if any variable is selected
-js.frm.subset <- rk.JS.vars(frame.selected.vars, modifiers="checked")
+sset.js.calc <- id("
+	var data = getString ('", var.data, "');
+	var filter_var = getString ('", filter.var, ".shortname');
+	var filter_expr = getString ('", sset.filter.expression, "');
 
-sset.js.calc <- rk.paste.JS(
-	js.selected.vars <- rk.JS.vars(selected.vars, modifiers="shortname", join="\\\", \\\""), # get selected vars
-	js.filter.var <- rk.JS.vars(filter.var, modifiers="shortname", join="\\\", \\\""),
-	js.filter.data.mode <- rk.JS.vars ("case_filter_data_mode"),
-	js.filter.operand <- rk.JS.vars (lgc.drop.switch),
-	js.filter.is.range <- rk.JS.vars (lgc.is.range, getter="getBoolean"),
-	js.filter.min <- rk.JS.vars (sset.filter.min),
-	js.filter.mininc <- rk.JS.vars (sset.filter.min.inc, getter="getBoolean"),
-	js.filter.max <- rk.JS.vars (sset.filter.max),
-	js.filter.maxinc <- rk.JS.vars (sset.filter.max.inc, getter="getBoolean"),
-	echo("\tsset.result <- subset("),
-	ite(var.data, echo("\n\t\t", var.data)),
-	ite(id(js.filter.var, " != ''"), 
-		ite(id(js.filter.is.range), rk.paste.JS (
-			"var range_limit = '';",
-			ite (id (js.filter.min, " != ''"), rk.paste.JS ("range_limit += ", id (js.filter.var), " + ' >' + (", id (js.filter.mininc), " ? '= ' : ' ') + ", id (js.filter.min))),
-			ite (id (js.filter.max, " != ''"), rk.paste.JS ("range_limit += (range_limit == '' ? '' : ' && ') + ", id (js.filter.var), " + ' <' + (", id (js.filter.maxinc), " ? '= ' : ' ') + ", id (js.filter.max))),
-			ite (id (js.filter.operand, " == 'range'"),
-				rk.paste.JS (echo(",\n\t\t"), "echo (range_limit)"),
-				rk.paste.JS (echo(",\n\t\t!("), "echo (range_limit + ')')")
-			)),
-			ite (id (js.filter.data.mode, " == 'logical'"),
-				ite(id(js.filter.operand, " == \"TRUE\""),
-					echo(",\n\t\t", js.filter.var),
-					echo(",\n\t\t!", js.filter.var)
-				),
-				ite (id (js.filter.operand, " == '!%in%'"),
-					echo(",\n\t\t!(", js.filter.var, " %in% ", sset.input.filter, ")"),
-					echo(",\n\t\t", js.filter.var, " ", js.filter.operand, " ", sset.input.filter)
-				)
-			)
-		)
-	),
-	ite(id(js.frm.subset, " && ", js.selected.vars, " != \"\""), echo(",\n\t\tselect=c(\"", js.selected.vars, "\")")),
-	echo("\n\t)\n\n")
-)
+	echo ('\\tsset.result <- subset(');
+	if (data != '') {
+		echo ('\\n\\t\\t' + data);
+
+		// row filter
+		var row_filter_exp = '';
+		if (filter_var != '') {
+			var filter_operand = getString ('", lgc.drop.switch, "');
+			if (getBoolean ('", lgc.is.range, "')) {
+				var range_limit = '';
+				var max_range = '';
+				var fmin = getString ('", sset.filter.min, "');
+				var fmax = getString ('", sset.filter.max, "');
+				var fmininc = getBoolean ('", sset.filter.min.inc, "');
+				var fmaxinc = getBoolean ('", sset.filter.max.inc, "');
+				if (fmin != '') range_limit = filter_var + ' >' + (fmininc ? '= ' : ' ') + fmin;
+				if (fmax != '') max_range = filter_var + ' <' + (fmaxinc ? '= ' : ' ') + fmax;
+				if (!(max_range == '' || range_limit == '')) range_limit = '(' + range_limit + ') & (' + max_range + ')';
+				else range_limit += max_range;
+
+				if (filter_operand == 'range') row_filter_exp += range_limit;
+				else row_filter_exp += '!(' + range_limit + ')';
+			} else if (getString ('case_filter_data_mode') == 'logical') {
+				if (filter_operand == 'TRUE') row_filter_exp += filter_var;
+				else row_filter_exp += '!' + filter_var;
+			} else {
+				var input_filter = getString ('", sset.input.filter, "');
+				if (filter_operand == '!%in%') row_filter_exp += '!(' + filter_var + ' %in% ' + input_filter + ')';
+				else row_filter_exp += filter_var + ' ' + filter_operand + ' ' + input_filter;
+			}
+		}
+		if (filter_expr != '') {
+			if (row_filter_exp != '') row_filter_exp = '(' + row_filter_exp + ') & (' + filter_expr + ')';
+			else row_filter_exp = filter_expr;
+		}
+		if (row_filter_exp != '') echo (',\\n\\t\\t' + row_filter_exp);
+
+		// column filter
+		if (getBoolean ('", frame.selected.vars, ".checked')) {
+			var selected_vars = getList ('", selected.vars, ".shortname').join (', ');
+			if (selected_vars != '') echo (',\\n\\t\\tselect=c (' + selected_vars + ')');
+		}
+	}
+	echo ('\\n\\t)\\n\\n');
+", js=FALSE)
 
 
 #############
@@ -225,6 +242,7 @@ sset.plugin.dir <<- rk.plugin.skeleton(
 	pluginmap=list(name="Subset of data.frame", hierarchy=list("data")),
 	dependencies=rk.XML.dependencies (),
 	create=c("pmap", "xml", "js", "desc"),
+	scan=c("saveobj", "settings"),
 	overwrite=overwrite,
 	tests=FALSE,
 	edit=TRUE,
