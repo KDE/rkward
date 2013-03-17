@@ -17,7 +17,7 @@
     additional.header.contents = getOption("rk.html.header.additions"))
 
   rk.flush.output(x = rk.get.output.html.file(),
-    ask = TRUE)
+    flush.images = TRUE, ask = TRUE)
 }
 \arguments{
   \item{prefix}{a string, used as a filename prefix when
@@ -33,6 +33,9 @@
   string to add to the HTML header section.  This could be
   scripts or additional CSS definitions, for example. Note
   that}
+
+  \item{flush.images.}{If true, any images used in the
+  output file will be deleted as well.}
 
   \item{ask}{Logical: Whether to ask before flushing the
   output file.}
@@ -82,6 +85,7 @@ outfile <- rk.get.output.html.file()
 rk.set.output.html.file("~/.rkward/another_file.html")
 rk.header("Output on a different output file")
 rk.show.html(rk.get.output.html.file())
+rk.flush.output()
 rk.set.output.html.file(outfile)
 }
 \author{

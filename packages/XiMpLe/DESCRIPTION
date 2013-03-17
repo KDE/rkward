@@ -23,8 +23,8 @@ Version: 0.03-20
 Date: 2013-02-26
 Collate:
     'XiMpLe-internal.R'
-    'XiMpLe.node-class.R'
     'XiMpLe.doc-class.R'
+    'XiMpLe.node-class.R'
     'node.R'
     'parseXMLTree.R'
     'pasteXML-methods.R'
