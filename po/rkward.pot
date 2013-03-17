@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
 "group_id=50231&atid=459007\n"
-"POT-Creation-Date: 2013-03-12 11:41+0100\n"
+"POT-Creation-Date: 2013-03-17 08:39+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -193,7 +193,7 @@ msgctxt "Note: 'namespace' is a technical term, should not be translated"
 msgid "Orphan Namespaces"
 msgstr ""
 
-#: core/rkpseudoobjects.cpp:157
+#: core/rkpseudoobjects.cpp:159
 msgid ""
 "This special object does not actually exist anywhere in R. It is used, here, "
 "to list namespaces which are loaded, but not attached to a package on the "
@@ -1739,31 +1739,31 @@ msgstr ""
 msgid "Select filename to save command history"
 msgstr ""
 
-#: rkconsole.cpp:889
+#: rkconsole.cpp:895
 msgid "Interrupt running command"
 msgstr ""
 
-#: rkconsole.cpp:895
+#: rkconsole.cpp:902
 msgid "Copy selection literally"
 msgstr ""
 
-#: rkconsole.cpp:898
+#: rkconsole.cpp:905
 msgid "Copy commands, only"
 msgstr ""
 
-#: rkconsole.cpp:905
+#: rkconsole.cpp:912
 msgid "Print Console"
 msgstr ""
 
-#: rkconsole.cpp:912
+#: rkconsole.cpp:919
 msgid "Import command history..."
 msgstr ""
 
-#: rkconsole.cpp:914
+#: rkconsole.cpp:921
 msgid "Export command history..."
 msgstr ""
 
-#: rkconsole.cpp:933
+#: rkconsole.cpp:940
 msgid ""
 "You have configured RKWard to pipe script editor commands through the R "
 "Console. However, another command is currently active in the console. Do you "
@@ -1771,15 +1771,15 @@ msgid ""
 "console, first? Press cancel if you do not wish to run the new command, now."
 msgstr ""
 
-#: rkconsole.cpp:933
+#: rkconsole.cpp:940
 msgid "R Console is busy"
 msgstr ""
 
-#: rkconsole.cpp:933
+#: rkconsole.cpp:940
 msgid "Append"
 msgstr ""
 
-#: rkconsole.cpp:933
+#: rkconsole.cpp:940
 msgid "Reset, then submit"
 msgstr ""
 
@@ -2767,33 +2767,42 @@ msgstr ""
 msgid "Build packages from source (not configurable on this platform)"
 msgstr ""
 
-#: settings/rksettingsmoduler.cpp:386
+#: settings/rksettingsmoduler.cpp:381
+msgid ""
+"Installing packages from pre-compiled binaries (if available) is generally "
+"faster, and does not require an installation of development tools and "
+"libraries. On the other hand, building packages from source provides best "
+"compatibility. On Mac OS X and Linux, building packages from source is "
+"currently recommended."
+msgstr ""
+
+#: settings/rksettingsmoduler.cpp:387
 msgid "R Library locations (where libraries get installed to, locally)"
 msgstr ""
 
-#: settings/rksettingsmoduler.cpp:391
+#: settings/rksettingsmoduler.cpp:392
 msgid ""
 "Note: The startup defaults will always be used in addition to the locations "
 "you specify in this list"
 msgstr ""
 
-#: settings/rksettingsmoduler.cpp:417
+#: settings/rksettingsmoduler.cpp:418
 msgid "Add R Library Directory"
 msgstr ""
 
-#: settings/rksettingsmoduler.cpp:425
+#: settings/rksettingsmoduler.cpp:426
 msgid "Add repository"
 msgstr ""
 
-#: settings/rksettingsmoduler.cpp:425
+#: settings/rksettingsmoduler.cpp:426
 msgid "Add URL of new repository"
 msgstr ""
 
-#: settings/rksettingsmoduler.cpp:431
+#: settings/rksettingsmoduler.cpp:432
 msgid "R-Packages"
 msgstr ""
 
-#: settings/rksettingsmoduler.cpp:437
+#: settings/rksettingsmoduler.cpp:438
 msgid "Select CRAN mirror"
 msgstr ""
 
