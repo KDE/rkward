@@ -196,20 +196,5 @@ int main(int argc, char *argv[]) {
 	qInstallMsgHandler (0);
 	RKSettingsModuleDebug::debug_file->close ();
 
-#ifdef Q_WS_WIN
-	// HACK: Somehow, if we created a windows graph-device during runtime (possibly also on other conditions), we just can't exit cleanly anymore.
-	// We get out of the event loop, but once we return from main (including using _endthread(), _exit(), exit(), abort(), raise(SIGSEGV),
-	// ExitProcess(), and I don't know, what else I tried), the process just continues to sit there, hogging up one CPU.
-	// R 2.9.0, KDElibs 4.2.3, Qt 4.4.3, WinXP SP2
-	// So what we do is
-	// 1) Make extra sure, everything important is flushed
-	// 2) Use TerminateProcess () to kill all threads
-	// Alternatives: Use system ("taskkill ..."), but this command was not introduced before WinXP
-	app.flush();
-	app.processEvents();
-	_flushall ();
-
-	TerminateProcess (GetCurrentProcess (), 0);
-#endif
 	return status;
 }
