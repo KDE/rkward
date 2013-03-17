@@ -11,22 +11,22 @@
 # Stefan Rödiger <stefan_roediger@gmx.de>, 2007, 2009.
 # Pavel Fric <pavelfric@seznam.cz>, 2009, 2010.
 # Pavel Fric <fripohled@blogspot.com>, 2010, 2011.
-# Pavel Fric <fripohled.blogspot.com>, 2011.
+# Pavel Fric <fripohled.blogspot.com>, 2011, 2012.
 msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: "
 "http://sourceforge.net/tracker/?group_id=50231&atid=459007\n"
-"POT-Creation-Date: 2012-10-08 19:59+0200\n"
-"PO-Revision-Date: 2012-10-09 04:03+0000\n"
+"POT-Creation-Date: 2013-03-12 11:41+0100\n"
+"PO-Revision-Date: 2013-02-26 10:55+0000\n"
 "Last-Translator: fri <pavelfric@seznam.cz>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2012-10-13 04:50+0000\n"
-"X-Generator: Launchpad (build 16137)\n"
+"X-Launchpad-Export-Date: 2013-03-13 04:45+0000\n"
+"X-Generator: Launchpad (build 16532)\n"
 "Language: cs\n"
 
 #: agents/rkeditobjectagent.cpp:56
@@ -57,7 +57,7 @@ msgstr ""
 msgid "Error loading workspace"
 msgstr "Chyba při nahrávání pracovního prostředí"
 
-#: agents/rkprintagent.cpp:70
+#: agents/rkprintagent.cpp:72
 msgid ""
 "No service was found to provide a KDE print dialog for postscript files. We "
 "will try to open a generic postscript viewer (if any), "
@@ -69,7 +69,7 @@ msgstr ""
 "postscriptových souborů, je-li jaký.<br><br>Zvažte instalaci Okularu, nebo "
 "RKWard nastavte tak, aby se nepokoušel používat tiskový dialog KDE."
 
-#: agents/rkprintagent.cpp:70
+#: agents/rkprintagent.cpp:72
 msgid "Unable to open KDE print dialog"
 msgstr "Nelze otevřít tiskový dialog KDE"
 
@@ -85,7 +85,7 @@ msgstr ""
 msgid "Waiting for R to finish"
 msgstr "Čeká se na ukončení R"
 
-#: agents/rksaveagent.cpp:62 rkward.cpp:707 rkward.cpp:709
+#: agents/rksaveagent.cpp:62 rkward.cpp:752 rkward.cpp:754
 msgid ""
 "%1|R Workspace Files (%1)\n"
 "*|All files"
@@ -125,7 +125,7 @@ msgstr ""
 "názvem?"
 
 #: agents/showedittextfileagent.cpp:58 misc/rkprogresscontrol.cpp:305
-#: plugin/rkstandardcomponentgui.cpp:394
+#: plugin/rkstandardcomponentgui.cpp:398
 msgid "Done"
 msgstr "Hotovo"
 
@@ -155,7 +155,7 @@ msgstr ""
 msgid "Edit file(s)"
 msgstr "Upravit soubor(y)"
 
-#: core/renvironmentobject.cpp:109
+#: core/renvironmentobject.cpp:106
 msgid ""
 "The package '%1' (probably you just loaded it) is currently blacklisted for "
 "retrieving structure information. Practically this means, the objects in "
@@ -175,7 +175,7 @@ msgstr ""
 "množství dat, což by vedlo k dlouhému nahrávání. Aby nebyl tento balíček "
 "dále na seznamu, jděte do Nastavení -> Nastavit RKWard -> Pracovní prostředí."
 
-#: core/renvironmentobject.cpp:109
+#: core/renvironmentobject.cpp:106
 msgid "Package blacklisted"
 msgstr "Balíček byl umístěn na černou listinu"
 
@@ -211,97 +211,109 @@ msgstr ""
 "Opravdu chcete odstranit předmět '%1'? Není žádná možnost vrátit tento krok "
 "zpět."
 
-#: core/rkmodificationtracker.cpp:347 dataeditor/rkvareditmodel.cpp:670
+#: core/rkmodificationtracker.cpp:349 dataeditor/rkvareditmodel.cpp:685
 #: dialogs/rkloadlibsdialog.cpp:411 dialogs/rkloadlibsdialog.cpp:427
-#: dialogs/rkloadlibsdialog.cpp:940 plugin/rkformula.cpp:83
+#: dialogs/rkloadlibsdialog.cpp:941 plugin/rkformula.cpp:83
 #: plugin/rkvarslot.cpp:55
 msgid "Name"
 msgstr "Název"
 
-#: core/rkmodificationtracker.cpp:348 dataeditor/editlabelsdialog.cpp:213
-#: dataeditor/rkvareditmodel.cpp:671 misc/rkobjectlistview.cpp:186
+#: core/rkmodificationtracker.cpp:350 dataeditor/rkvareditmodel.cpp:686
+#: misc/editlabelsdialog.cpp:205 misc/rkobjectlistview.cpp:186
 msgid "Label"
 msgstr "Značka"
 
-#: core/rkmodificationtracker.cpp:349 dataeditor/rkvareditmodel.cpp:672
+#: core/rkmodificationtracker.cpp:351 dataeditor/rkvareditmodel.cpp:687
 #: misc/rkobjectlistview.cpp:185 rbackend/rcommandstack.cpp:399
 #: windows/rkhelpsearchwindow.cpp:345
 msgid "Type"
 msgstr "Typ"
 
-#: core/rkmodificationtracker.cpp:350 misc/rkobjectlistview.cpp:187
+#: core/rkmodificationtracker.cpp:352 misc/rkobjectlistview.cpp:187
 msgid "Class"
 msgstr "Třída"
 
-#: core/rkrownames.cpp:40
+#: core/rkpseudoobjects.cpp:84
+msgctxt "Note: 'namespace' is a technical term, should not be translated"
+msgid "Orphan Namespaces"
+msgstr ""
+
+#: core/rkpseudoobjects.cpp:157
+msgid ""
+"This special object does not actually exist anywhere in R. It is used, here, "
+"to list namespaces which are loaded, but not attached to a package on the "
+"search path. These are typically 'imported' namespaces."
+msgstr ""
+
+#: core/rkrownames.cpp:41
 msgid "row names"
 msgstr "názvy řádků"
 
-#: core/rkrownames.cpp:105
+#: core/rkrownames.cpp:107
 msgid "new.row"
 msgstr "nový řádek"
 
-#: core/robject.cpp:112
+#: core/robject.cpp:120
 msgid "Full location:"
 msgstr "Úplný údaj o umístění:"
 
-#: core/robject.cpp:114
+#: core/robject.cpp:122
 msgid "Label:"
 msgstr "Značka:"
 
-#: core/robject.cpp:115
+#: core/robject.cpp:123
 msgid "Type:"
 msgstr "Typ:"
 
-#: core/robject.cpp:118
+#: core/robject.cpp:126
 msgid "Function"
 msgstr "Funkce"
 
-#: core/robject.cpp:119
+#: core/robject.cpp:127
 msgid "Usage: "
 msgstr "Používání: "
 
-#: core/robject.cpp:121
+#: core/robject.cpp:129
 msgid "Data frame"
 msgstr "Časový snímek"
 
-#: core/robject.cpp:123
+#: core/robject.cpp:131
 msgid "Array"
 msgstr "Řada"
 
-#: core/robject.cpp:125 misc/rkspecialactions.cpp:88
+#: core/robject.cpp:133 misc/rkspecialactions.cpp:88
 msgid "Matrix"
 msgstr "Matice"
 
-#: core/robject.cpp:127
+#: core/robject.cpp:135
 msgid "List"
 msgstr "Seznam"
 
-#: core/robject.cpp:129
+#: core/robject.cpp:137
 msgid "Variable"
 msgstr "Proměnná"
 
-#: core/robject.cpp:130
+#: core/robject.cpp:138
 msgid "Data Type:"
 msgstr "Datový typ:"
 
-#: core/robject.cpp:132
+#: core/robject.cpp:140
 msgid "Environment"
 msgstr "Prostředí"
 
-#: core/robject.cpp:137
+#: core/robject.cpp:145
 msgid "Length: "
 msgstr "Délka: "
 
-#: core/robject.cpp:139
+#: core/robject.cpp:147
 msgid "Dimensions: "
 msgstr "Rozměry: "
 
-#: core/robject.cpp:147
+#: core/robject.cpp:155
 msgid "Class(es):"
 msgstr "Třída(y):"
 
-#: core/robjectlist.cpp:75
+#: core/robjectlist.cpp:82
 msgid ""
 "Did not unload package %1. It is required in RKWard. If you really want to "
 "do this, do so on the R Console."
@@ -309,59 +321,9 @@ msgstr ""
 "Nebyl odstraněn balíček %1. Je vyžadován v RKWardu. Pokud to skutečně chcete "
 "udělat, udělejte to v konzoli R."
 
-#: core/robjectlist.cpp:78
+#: core/robjectlist.cpp:85
 msgid "Package %1 appears not to have been loaded"
 msgstr "Zdá se, že balíček %1 nebyl nahrán"
-
-#: dataeditor/editformatdialog.cpp:41
-msgid "Alignment"
-msgstr "Zarovnání"
-
-#: dataeditor/editformatdialog.cpp:45
-msgid "Default"
-msgstr "Výchozí"
-
-#: dataeditor/editformatdialog.cpp:47
-msgid "Left"
-msgstr "Vlevo"
-
-#: dataeditor/editformatdialog.cpp:49
-msgid "Right"
-msgstr "Vpravo"
-
-#: dataeditor/editformatdialog.cpp:54
-msgid "Decimal Places"
-msgstr "Desetinná místa"
-
-#: dataeditor/editformatdialog.cpp:56
-msgid "Default setting"
-msgstr "Výchozí nastavení"
-
-#: dataeditor/editformatdialog.cpp:58
-msgid "As required"
-msgstr "Jak požadováno"
-
-#: dataeditor/editformatdialog.cpp:60
-msgid "Fixed precision:"
-msgstr "Pevně daná přesnost:"
-
-#: dataeditor/editformatdialog.cpp:78
-msgid "Formatting options for '%1'"
-msgstr "Volby formátování pro '%1'"
-
-#: dataeditor/editlabelsdialog.cpp:223
-msgid ""
-"Levels can be assigned only to consecutive integers starting with 1 (the "
-"index column is read only). To remove levels at the end of the list, just "
-"set them to empty."
-msgstr ""
-"Úrovně mohou být přiřazeny pouze k po sobě následujícím celým číslům, "
-"počínaje 1, (sloupec rejstříku je pouze pro čtení). Pro odstranění úrovní na "
-"konci seznamu je pouze musíte nastavit jako prázdné."
-
-#: dataeditor/editlabelsdialog.cpp:229
-msgid "Levels / Value labels for '%1'"
-msgstr "Úrovně / Značky hodnot pro '%1'"
 
 #: dataeditor/rkeditordataframe.cpp:63 windows/robjectbrowser.cpp:191
 #: windows/robjectbrowser.cpp:237
@@ -374,48 +336,56 @@ msgstr ""
 msgid "Invalid Name"
 msgstr "Neplatný název"
 
-#: dataeditor/rkvareditmodel.cpp:283 dataeditor/rkvareditmodel.cpp:541
+#: dataeditor/rkvareditmodel.cpp:291 dataeditor/rkvareditmodel.cpp:556
 msgid "Type on these fields to add new columns"
 msgstr "Pište v těchto polích pro přidání nových sloupců"
 
-#: dataeditor/rkvareditmodel.cpp:284
+#: dataeditor/rkvareditmodel.cpp:292
 msgid "Type on these fields to add new rows"
 msgstr "Pište v těchto polích pro přidání nových řádků"
 
-#: dataeditor/rkvareditmodel.cpp:367
+#: dataeditor/rkvareditmodel.cpp:308 plugin/rkmatrixinput.cpp:500
+msgid "This value is not allowed, here"
+msgstr "Tato hodnota zde není dovolena"
+
+#: dataeditor/rkvareditmodel.cpp:376
 msgid "#New Variable#"
 msgstr "#Nová proměnná#"
 
-#: dataeditor/rkvareditmodel.cpp:368
+#: dataeditor/rkvareditmodel.cpp:377
 msgid "Row names"
 msgstr "Názvy řádků"
 
-#: dataeditor/rkvareditmodel.cpp:673
+#: dataeditor/rkvareditmodel.cpp:382
+msgid "This column contains one or more invalid fields"
+msgstr "Tento sloupec obsahuje jedno nebo více neplatných polí"
+
+#: dataeditor/rkvareditmodel.cpp:688
 msgid "Format"
 msgstr "Formát"
 
-#: dataeditor/rkvareditmodel.cpp:674
+#: dataeditor/rkvareditmodel.cpp:689
 msgid "Levels"
 msgstr "Úrovně"
 
-#: dataeditor/rkvareditmodel.cpp:677
+#: dataeditor/rkvareditmodel.cpp:692
 msgid "Edit these fields to rename variables."
 msgstr "Upravit tato pole pro přejmenování proměnných."
 
-#: dataeditor/rkvareditmodel.cpp:678
+#: dataeditor/rkvareditmodel.cpp:693
 msgid "A descriptive label for each column (optional)."
 msgstr "Popisný štítek pro každý sloupec (volitelné)."
 
-#: dataeditor/rkvareditmodel.cpp:679
+#: dataeditor/rkvareditmodel.cpp:694
 msgid "Type of data."
 msgstr "Typ dat."
 
-#: dataeditor/rkvareditmodel.cpp:680
+#: dataeditor/rkvareditmodel.cpp:695
 msgid "Double click on these fields to customize data display."
 msgstr ""
 "Dvakrát klepněte na tato pole pro upravení zobrazení dat.přizpůsobení"
 
-#: dataeditor/rkvareditmodel.cpp:681
+#: dataeditor/rkvareditmodel.cpp:696
 msgid "Double click on these fields to edit factor levels."
 msgstr "Dvakrát klepněte na tato pole pro upravení úrovní faktorů."
 
@@ -648,16 +618,16 @@ msgstr "Instalační proces byl ukončen s kódem pro ukončení %1"
 msgid "Installed packages"
 msgstr "Nainstalované balíčky"
 
-#: dialogs/rkloadlibsdialog.cpp:411 dialogs/rkloadlibsdialog.cpp:941
+#: dialogs/rkloadlibsdialog.cpp:411 dialogs/rkloadlibsdialog.cpp:942
 #: windows/rkhelpsearchwindow.cpp:97 windows/rkhelpsearchwindow.cpp:343
 msgid "Title"
 msgstr "Název"
 
-#: dialogs/rkloadlibsdialog.cpp:411 dialogs/rkloadlibsdialog.cpp:942
+#: dialogs/rkloadlibsdialog.cpp:411 dialogs/rkloadlibsdialog.cpp:943
 msgid "Version"
 msgstr "Verze"
 
-#: dialogs/rkloadlibsdialog.cpp:411 dialogs/rkloadlibsdialog.cpp:943
+#: dialogs/rkloadlibsdialog.cpp:411 dialogs/rkloadlibsdialog.cpp:944
 msgid "Location"
 msgstr "Umístění"
 
@@ -731,10 +701,22 @@ msgid "Install packages to:"
 msgstr "Nainstalovat balíčky do:"
 
 #: dialogs/rkloadlibsdialog.cpp:792
-msgid "Include dependencies"
-msgstr "Zahrnout závislosti"
+msgid "Install suggested packages"
+msgstr "Nainstalovat navržené balíčky"
 
-#: dialogs/rkloadlibsdialog.cpp:878
+#: dialogs/rkloadlibsdialog.cpp:794
+msgid ""
+"Some packages \"suggest\" additional packages, which are not strictly "
+"necessary for using that package, but which may provide additional related "
+"functionality. Check this option to include such additional suggested "
+"packages."
+msgstr ""
+"Některé balíčky \"navrhují dodatečné balíčky, které nejsou přísně vzato "
+"nezbytné pro používání toho balíčku, ale mohou poskytovat dodatečnou "
+"související funkcionalitu. Zaškrtněte tuto volbu, aby byly takové dodatečné "
+"balíčky zahrnuty."
+
+#: dialogs/rkloadlibsdialog.cpp:879
 msgid ""
 "<p>Please stand by while searching for installed and available "
 "packages.</p><p><strong>Note:</strong> This requires a working internet "
@@ -746,15 +728,16 @@ msgstr ""
 "internetové spojení a může nějakou dobu trvat, zejména pokud je jedno nebo i "
 "více skladišť balíčků dočasně nedostupných.</p>"
 
-#: dialogs/rkloadlibsdialog.cpp:878
+#: dialogs/rkloadlibsdialog.cpp:879
 msgid "Searching for packages"
 msgstr "Vyhledávají se balíčky"
 
-#: dialogs/rkloadlibsdialog.cpp:939 rbackend/rcommandstack.cpp:400
+#: dialogs/rkloadlibsdialog.cpp:940 rbackend/rcommandstack.cpp:400
+#: settings/rksettingsmoduleplugins.cpp:553
 msgid "Status"
 msgstr "Stav"
 
-#: dialogs/rkloadlibsdialog.cpp:946
+#: dialogs/rkloadlibsdialog.cpp:947
 msgid ""
 "<p>Packages marked with an RKWard icon in this column provide enhancements "
 "to RKWard, typically in the form of additional graphical dialogs.</p>"
@@ -762,7 +745,7 @@ msgstr ""
 "<p>Balíčky označené ikonou RKWardu v tomto sloupci poskytují vylepšení pro "
 "RKWard, typicky v podobě dodatečných grafických dialogů.</p>"
 
-#: dialogs/rkloadlibsdialog.cpp:947
+#: dialogs/rkloadlibsdialog.cpp:948
 msgid ""
 "<p>You can select packages for installation / removal by checking / "
 "unchecking the corresponding boxes in this column.</p>"
@@ -770,11 +753,11 @@ msgstr ""
 "<p>Balíčky pro instalaci/odstranění vyberete zaškrtnutím/zrušením zaškrtnutí "
 "odpovídajících políček v tomto sloupci.</p>"
 
-#: dialogs/rkloadlibsdialog.cpp:948
+#: dialogs/rkloadlibsdialog.cpp:949
 msgid "<p>The name of the package.</p>"
 msgstr "<p>Název balíčku.</p>"
 
-#: dialogs/rkloadlibsdialog.cpp:949
+#: dialogs/rkloadlibsdialog.cpp:950
 msgid ""
 "<p>A descriptive title for the package. Currently this is not available for "
 "packages in non-local repositories.</p>"
@@ -782,19 +765,19 @@ msgstr ""
 "<p>Popisné záhlaví pro balíček. V současnosti toto u balíčků uložených ve "
 "skladištích, co nejsou místní, není dostupné.</p>"
 
-#: dialogs/rkloadlibsdialog.cpp:950
+#: dialogs/rkloadlibsdialog.cpp:951
 msgid "<p>Installed and / or available version of the package</p>"
 msgstr "<p>Nainstalovaná a/nebo dostupná verze balíčku</p>"
 
-#: dialogs/rkloadlibsdialog.cpp:951
+#: dialogs/rkloadlibsdialog.cpp:952
 msgid "<p>Location where the package is installed / available</p>"
 msgstr "<p>Místo, kde je balíček nainstalován/dostupný</p>"
 
-#: dialogs/rkloadlibsdialog.cpp:974
+#: dialogs/rkloadlibsdialog.cpp:975
 msgid "Updateable Packages"
 msgstr "Aktualizovatelné balíčky"
 
-#: dialogs/rkloadlibsdialog.cpp:975
+#: dialogs/rkloadlibsdialog.cpp:976
 msgid ""
 "Packages for which an update is available. This may include packages which "
 "were merely built against a newer version of R."
@@ -802,34 +785,35 @@ msgstr ""
 "Balíčky, pro které je dostupná aktualizace. Může to zahrnovat balíčky, které "
 "prostě byly sestaveny proti novější verzi R."
 
-#: dialogs/rkloadlibsdialog.cpp:977
+#: dialogs/rkloadlibsdialog.cpp:978
 msgid "New Packages"
 msgstr "Nové balíčky"
 
-#: dialogs/rkloadlibsdialog.cpp:978
+#: dialogs/rkloadlibsdialog.cpp:979
 msgid ""
-"Packages for which available for installation, but which are not currently "
+"Packages which are available for installation, but which are not currently "
 "installed."
 msgstr ""
-"Balíčky dostupné pro instalaci, ale které v současnosti nainstalovány nejsou."
+"Balíčky, které jsou pro instalaci dostupné, ale které nyní nejsou "
+"nainstalované."
 
-#: dialogs/rkloadlibsdialog.cpp:980
+#: dialogs/rkloadlibsdialog.cpp:981
 msgid "Installed Packages"
 msgstr "Nainstalované balíčky"
 
-#: dialogs/rkloadlibsdialog.cpp:981
+#: dialogs/rkloadlibsdialog.cpp:982
 msgid ""
-"Packages for which installed locally. Note that updates may be available for "
+"Packages which are installed locally. Note that updates may be available for "
 "these packages."
 msgstr ""
-"Balíčky nainstalovány místně. Všimněte si, že pro tyto balíčky mohou být "
-"dostupné aktualizace"
+"Balíčky, které jsou nainstalovány místně. Všimněte si, že pro tyto balíčky "
+"mohou být dostupné aktualizace."
 
-#: dialogs/rkloadlibsdialog.cpp:1005
+#: dialogs/rkloadlibsdialog.cpp:1006
 msgid "Install"
 msgstr "Instalovat"
 
-#: dialogs/rkloadlibsdialog.cpp:1008 misc/multistringselector.cpp:58
+#: dialogs/rkloadlibsdialog.cpp:1009 misc/multistringselector.cpp:116
 msgid "Remove"
 msgstr "Odstranit"
 
@@ -895,11 +879,11 @@ msgstr "<b>Vybrat jeden:</b>"
 msgid "What would you like to do?"
 msgstr "Co chcete dělat?"
 
-#: dialogs/startupdialog.cpp:59 settings/rksettingsmodulegeneral.cpp:70
+#: dialogs/startupdialog.cpp:59 settings/rksettingsmodulegeneral.cpp:75
 msgid "Start with an empty workspace"
 msgstr "Začít s prázdným pracovním prostředím"
 
-#: dialogs/startupdialog.cpp:61 settings/rksettingsmodulegeneral.cpp:72
+#: dialogs/startupdialog.cpp:61 settings/rksettingsmodulegeneral.cpp:77
 msgid "Start with an empty table"
 msgstr "Začít s prázdnou tabulkou"
 
@@ -927,7 +911,7 @@ msgstr "<<Otevřít další soubor>>"
 msgid "Always do this on startup"
 msgstr "Při spuštění provést vždy toto"
 
-#: main.cpp:105
+#: main.cpp:121
 msgid ""
 "After starting (and after loading the specified workspace, if applicable), "
 "evaluate the given R code."
@@ -935,15 +919,15 @@ msgstr ""
 "Po spuštění (a po nahrání určeného pracovního prostředí, je-li to vhodné), "
 "vyhodnotit stanovený kód R."
 
-#: main.cpp:106
+#: main.cpp:122
 msgid "Verbosity of debug messages (0-5)"
 msgstr "Mnohomluvnost ladících hlášení (0-5)"
 
-#: main.cpp:107
+#: main.cpp:123
 msgid "Mask for components to debug (see debug.h)"
 msgstr "Přestrojit pro součásti, které mají být laděny (viz debug.h)"
 
-#: main.cpp:108
+#: main.cpp:124
 msgid ""
 "Debugger (enclose any debugger arguments in single quotes ('') together with "
 "the command)"
@@ -951,128 +935,178 @@ msgstr ""
 "Ladicí program (Uzavřete všechny parametry pro ladicí program se zvláštními "
 "příkazy dohromady do jednoduchých uvozovek (''))"
 
-#: main.cpp:109
+#: main.cpp:125
 msgid "R workspace file to open"
 msgstr "Soubor s prostředím R pro otevření"
 
-#: main.cpp:111
+#: main.cpp:127
 msgid "RKWard"
 msgstr "RKWard"
 
-#: main.cpp:111
+#: main.cpp:127
 msgid "Frontend to the R statistics language"
 msgstr "Rozhraní pro statistický jazyk R"
 
-#: main.cpp:111
-msgid "(c) 2002, 2004 - 2012"
-msgstr ""
+#: main.cpp:127
+msgid "(c) 2002, 2004 - 2013"
+msgstr "(c) 2002, 2004 - 2013"
 
-#: main.cpp:112 main.cpp:113 main.cpp:114 main.cpp:115 main.cpp:116
-#: main.cpp:118 main.cpp:119 main.cpp:120 main.cpp:121 main.cpp:122
-#: main.cpp:123 main.cpp:124 main.cpp:125 main.cpp:126 main.cpp:127
-#: main.cpp:128 main.cpp:129
+#: main.cpp:128 main.cpp:129 main.cpp:130 main.cpp:131 main.cpp:132
+#: main.cpp:134 main.cpp:135 main.cpp:136 main.cpp:137 main.cpp:138
+#: main.cpp:139 main.cpp:140 main.cpp:141 main.cpp:142 main.cpp:143
+#: main.cpp:144 main.cpp:145
 msgid "%1"
 msgstr "%1"
 
-#: main.cpp:112
+#: main.cpp:128
 msgid "Project leader / main developer"
 msgstr "Vedoucí projektu/hlavní vývojář"
 
-#: main.cpp:113
+#: main.cpp:129
 msgid "C++ developer between 2004 and 2007"
 msgstr "Vývojář v C++ mezi roky 2004 a 2007"
 
-#: main.cpp:114
+#: main.cpp:130
 msgid "Many plugins, suggestions, plot history feature"
 msgstr "Mnoho přídavných modulů, návrhy funkce historie nákresu"
 
-#: main.cpp:115
+#: main.cpp:131
 msgid "Many plugins, suggestions, rkwarddev package"
 msgstr "Mnoho přídavných modulů, návrhy, balíček rkwarddev"
 
-#: main.cpp:116
+#: main.cpp:132
 msgid "Many plugins, suggestions, marketing, translations"
 msgstr "Mnohé přídavné moduly, návrhy, marketing a překlady"
 
-#: main.cpp:117
+#: main.cpp:133
 msgid "Contributors in alphabetical order"
 msgstr "Přispěvatelé podle abecedního pořádku"
 
-#: main.cpp:118
+#: main.cpp:134
 msgid "Several helpful comments and discussions"
 msgstr "Rozličné nápomocné poznámky a jednání"
 
-#: main.cpp:119
+#: main.cpp:135
 msgid "Plugins and patches"
 msgstr "Přídavné moduly a záplaty"
 
-#: main.cpp:120
+#: main.cpp:136
 msgid "New website"
 msgstr "Nové stránky"
 
-#: main.cpp:121
+#: main.cpp:137
 msgid "HP filter plugin, spanish translation"
 msgstr "HP filtrovací přídavný modul, překlad do španělštiny"
 
-#: main.cpp:122
+#: main.cpp:138
 msgid "A cool icon"
 msgstr "Skvělá ikona"
 
-#: main.cpp:123
+#: main.cpp:139
 msgid "RKWard logo, many suggestions, help on wording"
 msgstr "Logo pro RKWard, četné návrhy, pomoc se zněním"
 
-#: main.cpp:124
+#: main.cpp:140
 msgid "Several valuable comments, hints and patches"
 msgstr "Rozličné oceňované poznámky, rady a záplaty"
 
-#: main.cpp:125
+#: main.cpp:141
 msgid "Translation, Suggestions, plugins"
 msgstr "Překlady, návrhy a přídavné moduly"
 
-#: main.cpp:126
+#: main.cpp:142
 msgid "Many comments, useful suggestions, and bug reports"
 msgstr "Mnoho poznámek, užitečných návrhů a hlášení chyb"
 
-#: main.cpp:127
+#: main.cpp:143
 msgid "German Translation, bug reports"
 msgstr "Překlad do němčiny, hlášení chyb"
 
-#: main.cpp:128
+#: main.cpp:144
 msgid "Some patches"
 msgstr "Některé záplaty"
 
-#: main.cpp:129
+#: main.cpp:145
 msgid "patches and helpful comments"
 msgstr "Záplaty a užitečné poznámky"
 
-#: main.cpp:130
+#: main.cpp:146
 msgid "Many more people on rkward-devel@lists.sourceforge.net"
 msgstr "Všichni ti lidé na rkward-devel@lists.sourceforge.net"
 
-#: main.cpp:130
+#: main.cpp:146
 msgid "Sorry, if we forgot to list you. Please contact us to get added"
 msgstr ""
 "Prominutí, pokud jste zde nebyli zmíněni. Spojte se, prosím, s námi, abychom "
 "vás sem mohli přidat"
 
-#: misc/multistringselector.cpp:48
+#: misc/editformatdialog.cpp:41
+msgid "Alignment"
+msgstr "Zarovnání"
+
+#: misc/editformatdialog.cpp:45
+msgid "Default"
+msgstr "Výchozí"
+
+#: misc/editformatdialog.cpp:47
+msgid "Left"
+msgstr "Vlevo"
+
+#: misc/editformatdialog.cpp:49
+msgid "Right"
+msgstr "Vpravo"
+
+#: misc/editformatdialog.cpp:54
+msgid "Decimal Places"
+msgstr "Desetinná místa"
+
+#: misc/editformatdialog.cpp:56
+msgid "Default setting"
+msgstr "Výchozí nastavení"
+
+#: misc/editformatdialog.cpp:58
+msgid "As required"
+msgstr "Jak požadováno"
+
+#: misc/editformatdialog.cpp:60
+msgid "Fixed precision:"
+msgstr "Pevně daná přesnost:"
+
+#: misc/editformatdialog.cpp:78
+msgid "Formatting options for '%1'"
+msgstr "Volby formátování pro '%1'"
+
+#: misc/editlabelsdialog.cpp:215
+msgid ""
+"Levels can be assigned only to consecutive integers starting with 1 (the "
+"index column is read only). To remove levels at the end of the list, just "
+"set them to empty."
+msgstr ""
+"Úrovně mohou být přiřazeny pouze k po sobě následujícím celým číslům, "
+"počínaje 1, (sloupec rejstříku je pouze pro čtení). Pro odstranění úrovní na "
+"konci seznamu je pouze musíte nastavit jako prázdné."
+
+#: misc/editlabelsdialog.cpp:221
+msgid "Levels / Value labels for '%1'"
+msgstr "Úrovně / Značky hodnot pro '%1'"
+
+#: misc/multistringselector.cpp:46 settings/rksettingsmoduleplugins.cpp:552
 msgid "Filename"
 msgstr "Název souboru"
 
-#: misc/multistringselector.cpp:54
+#: misc/multistringselector.cpp:112
 msgid "Add"
 msgstr "Přidat"
 
-#: misc/multistringselector.cpp:64
+#: misc/multistringselector.cpp:122
 msgid "Up"
 msgstr "Nahoru"
 
-#: misc/multistringselector.cpp:68
+#: misc/multistringselector.cpp:126
 msgid "Down"
 msgstr "Dolů"
 
-#: misc/rkcommonfunctions.cpp:215
+#: misc/rkcommonfunctions.cpp:216
 msgid ""
 "<p><em>Note:</em> This setting does not take effect until you restart "
 "RKWard.</p>"
@@ -1104,11 +1138,11 @@ msgstr "Funkce"
 msgid "Hidden Objects"
 msgstr "Skryté předměty"
 
-#: misc/rkobjectlistview.cpp:284
+#: misc/rkobjectlistview.cpp:285
 msgid "Show Objects"
 msgstr "Ukázat předměty"
 
-#: misc/rkobjectlistview.cpp:292
+#: misc/rkobjectlistview.cpp:293
 msgid "Show Fields"
 msgstr "Ukázat pole"
 
@@ -1133,7 +1167,7 @@ msgstr "Chyby/varování"
 msgid "Errors / Warnings:"
 msgstr "Chyby/varování:"
 
-#: misc/rkprogresscontrol.cpp:252 plugin/rkstandardcomponentgui.cpp:309
+#: misc/rkprogresscontrol.cpp:252 plugin/rkstandardcomponentgui.cpp:312
 #: robjectviewer.cpp:176 windows/rkdebugconsole.cpp:66
 msgid "Cancel"
 msgstr "Zrušit"
@@ -1304,11 +1338,11 @@ msgstr "Zkouší se vyvolat obsah neplatného prvku"
 msgid "XML-parsing '%1' "
 msgstr "Načtení XML '%1' "
 
-#: plugin/rkcomponentmap.cpp:107 plugin/rkcomponentmap.cpp:366
+#: plugin/rkcomponentmap.cpp:118 plugin/rkcomponentmap.cpp:437
 msgid "(no label)"
 msgstr "(žádná značka)"
 
-#: plugin/rkcomponentmap.cpp:246
+#: plugin/rkcomponentmap.cpp:259
 msgid ""
 "You tried to invoke a plugin called '%1', but that plugin is currently "
 "unknown. Probably you need to load the corresponding PluginMap (Settings-"
@@ -1319,11 +1353,11 @@ msgstr ""
 "mapu přídavných modulů (Nastavit->Nastavit RKWard->Přídavné moduly), nebo "
 "byl možná tento přídavný modul přejmenován."
 
-#: plugin/rkcomponentmap.cpp:248
+#: plugin/rkcomponentmap.cpp:261
 msgid "No such plugin"
 msgstr "Žádný takový přídavný modul"
 
-#: plugin/rkcomponentmap.cpp:257
+#: plugin/rkcomponentmap.cpp:271
 msgid ""
 "Bad serialization format while trying to invoke plugin '%1'. Please contact "
 "the RKWard team (Help->About RKWard->Authors)."
@@ -1331,11 +1365,19 @@ msgstr ""
 "Nesprávný formát pro řazení při pokusu o vyvolání přídavného modulu '%1'. "
 "Spojte se, prosím, s týmem RKWardu (Nápověda->O RKWardu->Autoři)."
 
-#: plugin/rkcomponentmap.cpp:259
+#: plugin/rkcomponentmap.cpp:273
 msgid "Bad serialization format"
 msgstr "Nesprávný formát pro řazení"
 
-#: plugin/rkcomponentmap.cpp:263
+#: plugin/rkcomponentmap.cpp:296
+msgid ""
+"\n"
+"The plugin has crashed."
+msgstr ""
+"\n"
+"Přídavný modul spadl."
+
+#: plugin/rkcomponentmap.cpp:304
 msgid ""
 "Not all specified settings could be applied. Most likely this is because "
 "some R objects are no longer present in your current workspace."
@@ -1343,11 +1385,11 @@ msgstr ""
 "Ne všechna stanovená nastavení se mohla použít. Většinou jde o to, že "
 "některé předměty R nejsou více dostupné ve vašem pracovním prostředí."
 
-#: plugin/rkcomponentmap.cpp:265
+#: plugin/rkcomponentmap.cpp:307
 msgid "Not all settings applied"
 msgstr "Nepoužita všechna nastavení"
 
-#: plugin/rkcomponentmap.cpp:304
+#: plugin/rkcomponentmap.cpp:320
 msgid ""
 "\n"
 "The plugin could not be auto-submitted with these settings."
@@ -1355,30 +1397,104 @@ msgstr ""
 "\n"
 "Přídavný modul nemohl být s těmito nastaveními automaticky předán."
 
-#: plugin/rkcomponentmap.cpp:306
+#: plugin/rkcomponentmap.cpp:322
 msgid "Could not submit"
 msgstr "Nepodařilo se předat"
 
-#: plugin/rkcomponentproperties.cpp:797
+#: plugin/rkcomponentmap.cpp:358
+msgid ""
+"Could not open plugin map file %1. (Is not readble, or failed to parse)"
+msgstr ""
+
+#: plugin/rkcomponentmap.cpp:373
+msgid ""
+"Skipping plugin map file '%1': Not compatible with this version of RKWard"
+msgstr ""
+
+#: plugin/rkcomponentmap.cpp:388
+msgid ""
+"Specified required file '%1' does not exist or is not readable. Ignoring."
+msgstr ""
+"Určený požadovaný soubor '%1' neexistuje nebo není čitelný. Přehlíží se."
+
+#: plugin/rkcomponentmap.cpp:406
+msgid ""
+"Could not resolve specified required pluginmap '%1'. You may have to install "
+"additional packages."
+msgstr ""
+"Nepodařilo se analyzovat určenou požadovanou mapu přídavného modulu '%1'. "
+"Možná budete muset nainstalovat dodatečné balíčky."
+
+#: plugin/rkcomponentmap.cpp:440
+msgid ""
+"RKComponentMap already contains a component with id \"%1\". Ignoring second "
+"entry."
+msgstr ""
+"RKComponentMap již obsahuje součást s ID \"%1\". Přehlíží se druhý záznam."
+
+#: plugin/rkcomponentmap.cpp:442
+msgid ""
+"Specified file '%1' for component id \"%2\" does not exist or is not "
+"readable. Ignoring."
+msgstr ""
+"Určený soubor '%1' pro ID součásti \"%2\" neexistuje nebo není čitelný. "
+"Přehlíží se."
+
+#: plugin/rkcomponentmap.cpp:458
+msgid ""
+"Component '%1' is not available in a version compatible with this version of "
+"RKWard"
+msgstr "Součást '%1' není dostupná ve verzi vhodné pro tuto verzi RKWardu"
+
+#: plugin/rkcomponentmeta.cpp:46
+msgid "Unspecified"
+msgstr "Neurčeno"
+
+#: plugin/rkcomponentmeta.cpp:78
+msgid "Copyright (c)"
+msgstr "Autorské právo (c)"
+
+#: plugin/rkcomponentmeta.cpp:79
+msgid "License"
+msgstr "Licence"
+
+#: plugin/rkcomponentmeta.cpp:82
+msgid "Authors:"
+msgstr "Autoři:"
+
+#: plugin/rkcomponentmeta.cpp:88
+msgctxt "Author roles (contributor, etc.)"
+msgid "Roles"
+msgstr "Role"
+
+#: plugin/rkcomponentmeta.cpp:200
+msgid "RKWard plugin map"
+msgstr "Mapa přídavného modulu pro RKWard"
+
+#: plugin/rkcomponentmeta.cpp:201
+msgid "R package"
+msgstr "Balíček R"
+
+#: plugin/rkcomponentproperties.cpp:839
 msgid "This object has %1 dimension(s), but %2 dimension(s) is/are expected."
 msgstr "Tento předmět má %1 rozměr(y), ale je/jsou očekáván(y) %2 rozměr(y)."
 
-#: plugin/rkcomponentproperties.cpp:800
+#: plugin/rkcomponentproperties.cpp:842
 msgid ""
 "This object has a length of %1, but a minimum length of %2 is expected."
 msgstr "Tento předmět má délku %1, ale je očekávána nejmenší délka %2."
 
-#: plugin/rkcomponentproperties.cpp:801
+#: plugin/rkcomponentproperties.cpp:843
 msgid ""
 "This object has a length of %1, but a maximum length of %2 is expected."
 msgstr "Tento předmět má délku %1, ale je očekávána největší délka %2."
 
-#: plugin/rkcomponentproperties.cpp:813
+#: plugin/rkcomponentproperties.cpp:855
 msgid ""
 "This object does not appear to belong to any of the classes <i>%1</i>."
 msgstr "Nezdá se, že by tento předmět patřil do některé ze tříd <i>%1</i>."
 
-#: plugin/rkcomponentproperties.cpp:820
+#: plugin/rkcomponentproperties.cpp:862
 msgid ""
 "This object's data type is <i>%1</i>, while allowed type(s) is/are <i>%2</i>."
 msgstr ""
@@ -1421,13 +1537,65 @@ msgstr "Výraz"
 msgid "Enter text"
 msgstr "Zadat text"
 
-#: plugin/rkoptionset.cpp:185
+#: plugin/rkmatrixinput.cpp:44
+msgid "Enter data:"
+msgstr "Zadat data:"
+
+#: plugin/rkmatrixinput.cpp:488
+msgid "Type on these cells to expand the table"
+msgstr "Pište do těchto buněk pro rozšíření tabulky"
+
+#: plugin/rkmatrixinput.cpp:499
+msgid "Empty values are not allowed"
+msgstr "Prázdné hodnoty nejsou dovoleny"
+
+#: plugin/rkmatrixinput.cpp:523
+msgid "This column contains illegal values in some of its cells"
+msgstr "Tento sloupec obsahuje v některých svých buňkách neplatné hodnoty"
+
+#: plugin/rkoptionset.cpp:57
+msgid "Updating status, please wait"
+msgstr "Aktualizuje se stav. Počkejte, prosím"
+
+#: plugin/rkoptionset.cpp:218
 msgid "Add a row / element"
 msgstr "Pidat řádek/prvek"
 
-#: plugin/rkoptionset.cpp:187
+#: plugin/rkoptionset.cpp:220
 msgid "Remove a row / element"
 msgstr "Odstranit řádek/prvek"
+
+#: plugin/rkoptionset.cpp:836
+msgid "This row has not yet been processed."
+msgstr "Tento řádek ještě nebyl zpracován."
+
+#: plugin/rkoptionset.cpp:837
+msgid "This row contains invalid settings."
+msgstr "Tento řádek obsahuje neplatná nastavení."
+
+#: plugin/rkoptionset.cpp:857
+msgid "Please wait while settings are being processed"
+msgstr "Počkejte, prosím, zatímco jsou nastavení zpracovávána"
+
+#: plugin/rkoptionset.cpp:860
+msgid "One or more rows contain invalid settings."
+msgstr "Jeden nebo více řádků obsahuje neplatná nastavení."
+
+#: plugin/rkoptionset.cpp:861
+msgid "At least %1 rows have to be defined (if any)"
+msgstr "Musí se stanovit alespoň %1 řádků (jestli nějaký)"
+
+#: plugin/rkoptionset.cpp:862
+msgid "At least %1 rows have to be defined"
+msgstr "Musí se stanovit alespoň %1 řádků"
+
+#: plugin/rkoptionset.cpp:863
+msgid "At most %1 rows may be defined"
+msgstr "Může být stanoveno nanejvýš %1 řádků"
+
+#: plugin/rkoptionset.cpp:864
+msgid "This element is not valid for the following reason(s):"
+msgstr "Tento prvek není platný z následujícího důvodu(ů):"
 
 #: plugin/rkpluginbrowser.cpp:53
 msgid "Enter filename"
@@ -1441,7 +1609,7 @@ msgstr "Vybrat"
 msgid "Save to:"
 msgstr "Uložit do:"
 
-#: plugin/rkpluginsaveobject.cpp:40 rkward.cpp:241
+#: plugin/rkpluginsaveobject.cpp:40 rkward.cpp:251
 msgid "my.data"
 msgstr "moje.data"
 
@@ -1477,7 +1645,7 @@ msgstr "Současný náhled"
 msgid "Preview not (yet) possible"
 msgstr "Náhled není (ještě) možný"
 
-#: plugin/rkstandardcomponent.cpp:93
+#: plugin/rkstandardcomponent.cpp:94
 msgid ""
 "There has been an error while trying to parse the description of this plugin "
 "('%1'). Please refer to stdout for details."
@@ -1485,15 +1653,15 @@ msgstr ""
 "Při pokusu o přečtení popisu k tomuto přídavnému modulu se vyskytla chyba "
 "('%1'). Podívejte se, prosím na stdout kvůli podrobnostem."
 
-#: plugin/rkstandardcomponent.cpp:93
+#: plugin/rkstandardcomponent.cpp:94
 msgid "Could not create plugin"
 msgstr "Nepodařilo se vytvořit přídavný modul"
 
-#: plugin/rkstandardcomponentgui.cpp:97 plugin/rkstandardcomponentgui.cpp:413
+#: plugin/rkstandardcomponentgui.cpp:97 plugin/rkstandardcomponentgui.cpp:417
 msgid "Submit"
 msgstr "Předat"
 
-#: plugin/rkstandardcomponentgui.cpp:102 plugin/rkstandardcomponentgui.cpp:402
+#: plugin/rkstandardcomponentgui.cpp:102 plugin/rkstandardcomponentgui.cpp:406
 msgid "Close"
 msgstr "Zavřít"
 
@@ -1501,7 +1669,7 @@ msgstr "Zavřít"
 msgid "Auto close"
 msgstr "Automaticky zavřít"
 
-#: plugin/rkstandardcomponentgui.cpp:111 plugin/rkstandardcomponentgui.cpp:312
+#: plugin/rkstandardcomponentgui.cpp:111 plugin/rkstandardcomponentgui.cpp:315
 msgid "Help"
 msgstr "Nápověda"
 
@@ -1513,15 +1681,15 @@ msgstr "Použít průvodce"
 msgid "Code"
 msgstr "Kód"
 
-#: plugin/rkstandardcomponentgui.cpp:175
+#: plugin/rkstandardcomponentgui.cpp:178
 msgid "Run again"
 msgstr "Provést znovu"
 
-#: plugin/rkstandardcomponentgui.cpp:263
+#: plugin/rkstandardcomponentgui.cpp:266
 msgid "Processing. Please wait"
 msgstr "Zpracovává se. Počkejte, prosím"
 
-#: plugin/rkstandardcomponentgui.cpp:338
+#: plugin/rkstandardcomponentgui.cpp:341
 msgid ""
 "Below you can see the command(s) corresponding to the settings you made. "
 "Click 'Submit' to run the command(s)."
@@ -1529,15 +1697,15 @@ msgstr ""
 "Níže můžete vidět příkaz(y), které odpovídají nastavení, jež jste "
 "udělal.Klepněte na \"Předat\" pro provedení příkazu(ů)."
 
-#: plugin/rkstandardcomponentgui.cpp:390 plugin/rkstandardcomponentgui.cpp:408
+#: plugin/rkstandardcomponentgui.cpp:394 plugin/rkstandardcomponentgui.cpp:412
 msgid "Next >"
 msgstr "Další >"
 
-#: plugin/rkstandardcomponentgui.cpp:400 plugin/rkstandardcomponentgui.cpp:418
+#: plugin/rkstandardcomponentgui.cpp:404 plugin/rkstandardcomponentgui.cpp:422
 msgid "< Back"
 msgstr "< Zpět"
 
-#: plugin/rkstandardcomponentgui.cpp:421
+#: plugin/rkstandardcomponentgui.cpp:425
 msgid "Use Dialog"
 msgstr "Použít dialog"
 
@@ -1581,11 +1749,11 @@ msgstr "Příkaz"
 msgid "Description"
 msgstr "Popis"
 
-#: rbackend/rinterface.cpp:106
+#: rbackend/rinterface.cpp:107
 msgid "R Startup"
 msgstr "Spuštění R"
 
-#: rbackend/rinterface.cpp:290
+#: rbackend/rinterface.cpp:295
 msgid ""
 "<p>\t-An unspecified error occurred that is not yet handled by RKWard. "
 "Likely RKWard will not function properly. Please check your setup.</p>\n"
@@ -1593,7 +1761,7 @@ msgstr ""
 "<p>\t-Vyskytla se neurčitá chyba, kterou RKWard zatím nezvládá. RKWard "
 "pravděpodobně nebude pracovat správně. Ověřte, prosím, svou instalaci.</p>\n"
 
-#: rbackend/rinterface.cpp:292
+#: rbackend/rinterface.cpp:297
 msgid ""
 "<p>There was a problem starting the R backend. The following error(s) "
 "occurred:</p>\n"
@@ -1601,11 +1769,11 @@ msgstr ""
 "<p>Při spouštění jádra R vznikly určitá potíže. Vyskytla se následující "
 "chyba(y):</p>\n"
 
-#: rbackend/rinterface.cpp:300
+#: rbackend/rinterface.cpp:305
 msgid "Error starting R"
 msgstr "Chyba při spuštění R"
 
-#: rbackend/rinterface.cpp:518
+#: rbackend/rinterface.cpp:524
 msgid ""
 "A command in the R backend is trying to change the character encoding. While "
 "RKWard offers support for this, and will try to adjust to the new locale, "
@@ -1617,12 +1785,21 @@ msgid ""
 "RKWard). In this case, please choose 'Cancel' now, then close the data "
 "windows, save, and retry."
 msgstr ""
+"Příkaz v jádru R se pokouší změnit kódování znaků. I když pro to RKWard "
+"nabízí podporu, a pokusí se přizpůsobit novému jazykovému nastavení, může "
+"tato operace vést k sotva patrným chybám, jestliže jsou současně otevřena "
+"okna s daty. Vlastnost také ještě není dobře vyzkoušena, a bude rozumné, "
+"když svou práci, předtím než budete pokračovat, uložíte.\n"
+"pokud máte otevřen nějaký editor dat, nebo v případě jakýchkoli pochybností, "
+"doporučuje se jej nejprve zavřít (v pozdějších verzích RKWardu toto bude "
+"zřejmě zjištěno automaticky). V tomto případě, prosím, nyní zvolte Zrušit, "
+"potom uložte okna s daty, uložte a pokračujte."
 
-#: rbackend/rinterface.cpp:518
+#: rbackend/rinterface.cpp:524
 msgid "Locale change"
 msgstr "Místní změna"
 
-#: rbackend/rinterface.cpp:680
+#: rbackend/rinterface.cpp:687
 msgid ""
 "The R-backend has indicated that in order to carry out the current task it "
 "needs the package '%1', which is not currently installed. We will open the "
@@ -1633,15 +1810,15 @@ msgstr ""
 "současnosti není nainstalován. Bude otevřen nástroj pro správu balíčků. Z "
 "něj se můžete pokusit o nalezení a nainstalování nezbytného balíčku."
 
-#: rbackend/rinterface.cpp:680
+#: rbackend/rinterface.cpp:687
 msgid "Require package '%1'"
 msgstr "Vyžadován balíček '%1'"
 
-#: rbackend/rinterface.cpp:776
+#: rbackend/rinterface.cpp:783
 msgid "R backend requests information"
 msgstr "Jádro R požaduje údaje"
 
-#: rbackend/rinterface.cpp:803
+#: rbackend/rinterface.cpp:810
 msgid ""
 "\n"
 "The R backend will be shut down immediately. This means, you can not use any "
@@ -1664,11 +1841,11 @@ msgstr ""
 "popisem toho, co se přihodilo a co jste prováděl, na adresu rkward-"
 "devel@lists.sourceforge.net. Prominutí!"
 
-#: rbackend/rinterface.cpp:804
+#: rbackend/rinterface.cpp:811
 msgid "R engine has died"
 msgstr "Jádro R 'vytuhlo'"
 
-#: rbackend/rkfrontendtransmitter.cpp:107
+#: rbackend/rkfrontendtransmitter.cpp:110
 msgid ""
 "Error during handshake with backend process. Expected token '%1', received "
 "token '%2'"
@@ -1676,7 +1853,7 @@ msgstr ""
 "Chyba při podání ruky s procesem jádra. Očekáván symbol '%1', obdržen symbol "
 "'%2'"
 
-#: rbackend/rkfrontendtransmitter.cpp:111
+#: rbackend/rkfrontendtransmitter.cpp:114
 msgid ""
 "Version mismatch during handshake with backend process. Frontend is version "
 "'%1' while backend is '%2'.\n"
@@ -1706,7 +1883,7 @@ msgstr "Oznámení od jádra k R"
 msgid "Question from the R backend"
 msgstr "Otázka od jádra k R"
 
-#: rbackend/rkrbackend.cpp:1503
+#: rbackend/rkrbackend.cpp:1541
 msgid ""
 "</p>\t- The 'rkward' R-library either could not be loaded at all, or not in "
 "the correct version. This may lead to all sorts of errors, from single "
@@ -1728,7 +1905,7 @@ msgstr ""
 "href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a"
 ">.</p>\n"
 
-#: rbackend/rkrbackend.cpp:1507
+#: rbackend/rkrbackend.cpp:1545
 msgid ""
 "<p>\t-There was a problem setting up the communication with R. Most likely "
 "this indicates a broken installation.</p>\t\t<p><b>You should quit RKWard, "
@@ -1826,7 +2003,7 @@ msgstr "Přidat"
 msgid "Reset, then submit"
 msgstr "Vymazat, pak předložit"
 
-#: rkward.cpp:202
+#: rkward.cpp:203
 msgid ""
 "<p>RKWard either could not find its resource files at all, or only an old "
 "version of those files. The most likely cause is that the last installation "
@@ -1846,11 +2023,11 @@ msgstr ""
 "href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a"
 ">.</p>"
 
-#: rkward.cpp:202
+#: rkward.cpp:203
 msgid "Broken installation"
 msgstr "Pokažená instalace"
 
-#: rkward.cpp:219
+#: rkward.cpp:220
 msgid ""
 "Your installation of KDE is configured to use \"native\" file dialogs. This "
 "is known to cause issues in some cases, and we recommend to disable "
@@ -1863,23 +2040,23 @@ msgstr ""
 "zakázat.\n"
 "Mají se v RKWardu tyto \"původní\" souborové dialogy zakázat?"
 
-#: rkward.cpp:220
+#: rkward.cpp:221
 msgid "Potential problem with your configuration"
 msgstr "Možné potíže s vaším nastavením"
 
-#: rkward.cpp:220
+#: rkward.cpp:221
 msgid "Yes, disable"
 msgstr "Ano, zakázat"
 
-#: rkward.cpp:220
+#: rkward.cpp:221
 msgid "No, use \"native\" file dialogs"
 msgstr "Ne, používat \"původní\" souborové dialogy"
 
-#: rkward.cpp:261
+#: rkward.cpp:271
 msgid "Setting up plugins..."
 msgstr "Nastavují se přídavné moduly..."
 
-#: rkward.cpp:273
+#: rkward.cpp:275
 msgid ""
 "Plugins are needed: you may manage these through \"Settings->Configure "
 "RKWard\".\n"
@@ -1887,212 +2064,260 @@ msgstr ""
 "Jsou potřeba přídavné moduly: Spravovat je můžete prostřednictvím "
 "\"Nastavení->Nastavit RKWard\".\n"
 
-#: rkward.cpp:273
-msgid "No (valid) plugins found"
-msgstr "Nenalezeny žádné (platné) přídavné moduly"
+#: rkward.cpp:275
+msgid "No active plugin maps"
+msgstr "Žádné činné mapy přídavných modulů"
 
-#: rkward.cpp:310
+#: rkward.cpp:308
+msgid ""
+"New RKWard plugin packs (listed below) have been found, and have been "
+"activated, automatically. To de-activate selected plugin packs, use Settings-"
+">Configure RKWard->Plugins."
+msgstr ""
+"Byly nalezeny nové balíčky s přídavnými moduly pro RKWard (uvedeny v seznamu "
+"níže). Tyto byly automaticky zapnuty. Pro vypnutí vybraných balíčků s "
+"přídavnými moduly, použijte Nastavení->Nastavit RKWard->Přídavné moduly."
+
+#: rkward.cpp:308
+msgid "New plugins found"
+msgstr "Nalezeny nové přídavné moduly"
+
+#: rkward.cpp:312
+msgid ""
+"The following RKWard pluginmap files could not be loaded, and have been "
+"disabled. This could be because they are broken, not compatible with this "
+"version of RKWard, or not meant for direct loading (see the 'Details' for "
+"more information). They have been disabled."
+msgstr ""
+
+#: rkward.cpp:312 rkward.cpp:316
+msgid "Failed to load some plugin maps"
+msgstr "Nepodařilo se nahrát některé mapy přídavných modulů"
+
+#: rkward.cpp:316
+msgid ""
+"Some errors were encountered while loading the following RKWard pluginmap "
+"files. This could be because individual plugins are broken or not compatible "
+"with this version of RKWard (see the 'Details' for more information). Other "
+"plugins were loaded, successfully, however."
+msgstr ""
+
+#: rkward.cpp:316
+msgid ""
+"Note: You will not be warned about these pluginmap files again, until you "
+"upgrade RKWard, or remove and re-add them in Settings->Configure RKWard-"
+">Plugins."
+msgstr ""
+"Poznámka: Znovu kvůli těmto souborům s mapami přídavných modulů varováni "
+"nebudete, dokud RKWard nezaktualizujete, nebo dokud je neodstraníte a znovu "
+"nepřidáte v Nastavení->Nastavit RKWard->Přídavné moduly."
+
+#: rkward.cpp:351
 msgid "Carbon Copy Settings"
 msgstr "Nastavení Carbon Copy"
 
-#: rkward.cpp:324 settings/rksettingsmoduleobjectbrowser.cpp:128
+#: rkward.cpp:365 settings/rksettingsmoduleobjectbrowser.cpp:123
 msgid "Workspace"
 msgstr "Pracovní prostředí"
 
-#: rkward.cpp:333
+#: rkward.cpp:374
 msgid "Files"
 msgstr "Soubory"
 
-#: rkward.cpp:337
+#: rkward.cpp:378
 msgid "Pending Jobs"
 msgstr "Úkoly čekající na vyřízení"
 
-#: rkward.cpp:349
+#: rkward.cpp:390
 msgid "Debugger Frames"
 msgstr "Snímky ladiče"
 
-#: rkward.cpp:354
+#: rkward.cpp:395
 msgid "Debugger Console"
 msgstr "Konzole ladiče"
 
-#: rkward.cpp:366
+#: rkward.cpp:399
+msgid "RKWard Debug Messages"
+msgstr "Ladicí zprávy RKWardu"
+
+#: rkward.cpp:411
 msgid "Dataset"
 msgstr "Soubor dat"
 
-#: rkward.cpp:368
+#: rkward.cpp:413
 msgid "Creates new empty dataset and opens it for editing"
 msgstr "Vytvoří nový prázdný soubor dat a otevře jej pro úpravy"
 
-#: rkward.cpp:371
+#: rkward.cpp:416
 msgid "Script File"
 msgstr "Soubor se skriptem"
 
-#: rkward.cpp:375
+#: rkward.cpp:420
 msgid "Open R Script File..."
 msgstr "Otevřít soubor skriptu R..."
 
-#: rkward.cpp:378
+#: rkward.cpp:423
 msgid "Open Recent R Script File"
 msgstr "Otevřít nedávný soubor skriptu R"
 
-#: rkward.cpp:385
+#: rkward.cpp:430
 msgid "Import Data"
 msgstr "Zavést data"
 
-#: rkward.cpp:386
+#: rkward.cpp:431
 msgid "Import data from a variety of file formats"
 msgstr "Zavést data z různých datových formátů"
 
-#: rkward.cpp:390
+#: rkward.cpp:435
 msgid "Open Workspace..."
 msgstr "Otevřít pracovní prostředí..."
 
-#: rkward.cpp:392
+#: rkward.cpp:437
 msgid "Opens an existing document"
 msgstr "Otevře stávající dokument"
 
-#: rkward.cpp:395
+#: rkward.cpp:440
 msgid "Open Recent Workspace"
 msgstr "Otevřít nedávné pracovní prostředí"
 
-#: rkward.cpp:396
+#: rkward.cpp:441
 msgid "Opens a recently used file"
 msgstr "Otevře nedávno použitý soubor"
 
-#: rkward.cpp:399
+#: rkward.cpp:444
 msgid "Save Workspace"
 msgstr "Uložit pracovní prostředí"
 
-#: rkward.cpp:401
+#: rkward.cpp:446
 msgid "Saves the actual document"
 msgstr "Uloží současný dokument"
 
-#: rkward.cpp:404
+#: rkward.cpp:449
 msgid "Save Workspace As"
 msgstr "Uložit pracovní prostředí jako"
 
-#: rkward.cpp:405
+#: rkward.cpp:450
 msgid "Saves the actual document as..."
 msgstr "Uložit současný dokument jako..."
 
-#: rkward.cpp:408
+#: rkward.cpp:453
 msgid "Quits the application"
 msgstr "Ukončí program"
 
-#: rkward.cpp:411
+#: rkward.cpp:456
 msgid "Interrupt all commands"
 msgstr "Přerušit všechny příkazy"
 
-#: rkward.cpp:417
+#: rkward.cpp:462
 msgid "CC commands to output..."
 msgstr "Příkazy CC do výstupu"
 
-#: rkward.cpp:421 rkward.cpp:425
+#: rkward.cpp:466 rkward.cpp:470
 msgid "Manage R packages..."
 msgstr "Spravovat balíčky R..."
 
-#: rkward.cpp:432
+#: rkward.cpp:477
 msgid "Close All Data"
 msgstr "Uzavřít všechna data"
 
-#: rkward.cpp:433
+#: rkward.cpp:478
 msgid "Closes all open data editors"
 msgstr "Uzavře všechny otevřené editory dat"
 
-#: rkward.cpp:438
+#: rkward.cpp:483
 msgid "Close All"
 msgstr "Uzavřít vše"
 
-#: rkward.cpp:442 windows/rktoolwindowbar.cpp:279
+#: rkward.cpp:487 windows/rktoolwindowbar.cpp:279
 #: windows/rkworkplaceview.cpp:208
 msgid "Detach"
 msgstr "Oddělit"
 
-#: rkward.cpp:447
+#: rkward.cpp:492
 msgid "[No actions available for current view]"
 msgstr "[Pro nynější pohled nejsou dostupné žádné kroky]"
 
-#: rkward.cpp:454
+#: rkward.cpp:499
 msgid "Open..."
 msgstr "Otevřít..."
 
-#: rkward.cpp:464
+#: rkward.cpp:509
 msgid "Import"
 msgstr "Zavést"
 
-#: rkward.cpp:467
+#: rkward.cpp:512
 msgid "Create..."
 msgstr "Vytvořit..."
 
-#: rkward.cpp:474
+#: rkward.cpp:519
 msgid "Save..."
 msgstr "Uložit..."
 
-#: rkward.cpp:478
+#: rkward.cpp:523
 msgid "Export"
 msgstr "Vyvést"
 
-#: rkward.cpp:571
+#: rkward.cpp:616
 msgid "Ready."
 msgstr "Připravený."
 
-#: rkward.cpp:575
+#: rkward.cpp:620
 msgid "Current working directory"
 msgstr "Nynější pracovní adresář"
 
-#: rkward.cpp:653
+#: rkward.cpp:698
 msgid "Exiting..."
 msgstr "Ukončuje se..."
 
-#: rkward.cpp:661
+#: rkward.cpp:706
 msgid "Quitting RKWard: Do you want to save the workspace?"
 msgstr "Ukončuje se RKWard: Chcete uložit pracovní prostředí?"
 
-#: rkward.cpp:661 rkward.cpp:726
+#: rkward.cpp:706 rkward.cpp:771
 msgid "Save Workspace?"
 msgstr "Uložit pracovní prostředí?"
 
-#: rkward.cpp:661
+#: rkward.cpp:706
 msgid "Don't quit"
 msgstr "Neukončit"
 
-#: rkward.cpp:691
+#: rkward.cpp:736
 msgid "New dataset"
 msgstr "Nový soubor dat"
 
-#: rkward.cpp:691
+#: rkward.cpp:736
 msgid "Enter name for the new dataset"
 msgstr "Zadejte název pro nový soubor dat"
 
-#: rkward.cpp:701
+#: rkward.cpp:746
 msgid "Opening workspace..."
 msgstr "Otevírá se pracovní prostředí..."
 
-#: rkward.cpp:707 rkward.cpp:709
+#: rkward.cpp:752 rkward.cpp:754
 msgid "Select workspace to open..."
 msgstr "Vybrat pracovní prostředí k otevření..."
 
-#: rkward.cpp:726
+#: rkward.cpp:771
 msgid "Do you want to save the current workspace?"
 msgstr "Chcete uložit nynější pracovní prostředí?"
 
-#: rkward.cpp:818
+#: rkward.cpp:863
 msgid "The <b>R</b> engine is busy."
 msgstr "Jádro <b>R</b> je zaneprázdněno."
 
-#: rkward.cpp:822
+#: rkward.cpp:867
 msgid "The <b>R</b> engine is idle."
 msgstr "Jádro <b>R</b> je nečinné."
 
-#: rkward.cpp:826
+#: rkward.cpp:871
 msgid "The <b>R</b> engine is being initialized."
 msgstr "Jádro <b>R</b> je inicializováno."
 
-#: rkward.cpp:866 rkward.cpp:868
+#: rkward.cpp:911 rkward.cpp:913
 msgid "Open script file(s)"
 msgstr "Otevřít soubor(y) skriptu"
 
-#: rkward.cpp:886
+#: rkward.cpp:931
 msgid "[Unnamed Workspace]"
 msgstr "[Nepojmenované pracovní prostředí]"
 
@@ -2136,7 +2361,7 @@ msgstr "Klepněte na \"Obnovit\" pro získání informací"
 msgid "Ready"
 msgstr "Připraven"
 
-#: scriptbackends/qtscriptbackend.cpp:114
+#: scriptbackends/qtscriptbackend.cpp:121
 msgid ""
 "The QtScript-backend has reported an error:\n"
 "%1"
@@ -2144,11 +2369,11 @@ msgstr ""
 "Jádro pro QtScript nahlásilo chybu:\n"
 "%1"
 
-#: scriptbackends/qtscriptbackend.cpp:114
+#: scriptbackends/qtscriptbackend.cpp:121
 msgid "Scripting error"
 msgstr "Chyba ve skriptování"
 
-#: scriptbackends/qtscriptbackend.cpp:200
+#: scriptbackends/qtscriptbackend.cpp:234
 msgid ""
 "Script Error: %1\n"
 "Backtrace:\n"
@@ -2158,7 +2383,7 @@ msgstr ""
 "Zpětná stopa:\n"
 "%2"
 
-#: scriptbackends/qtscriptbackend.cpp:219
+#: scriptbackends/qtscriptbackend.cpp:253
 msgid ""
 "The file \"%1\" (needed by \"%2\") could not be found. Please check your "
 "installation."
@@ -2203,7 +2428,7 @@ msgid "Settings"
 msgstr "Nastavení"
 
 #: settings/rksettingsmodulecommandeditor.cpp:50
-#: settings/rksettingsmodulegeneral.cpp:55
+#: settings/rksettingsmodulegeneral.cpp:60
 msgid "Settings marked with (*) do not take effect until you restart RKWard"
 msgstr "Nastavení označená (*) začnou působit až po novém spuštění RKWardu"
 
@@ -2317,7 +2542,7 @@ msgstr "Přidat všechny příkazy"
 msgid "Command history is context sensitive by default"
 msgstr "Historie příkazů je ve výchozím nastavení citlivá na souvislosti"
 
-#: settings/rksettingsmoduleconsole.cpp:185
+#: settings/rksettingsmoduleconsole.cpp:178
 msgid "Console"
 msgstr "Ovládací panel neboli konzole"
 
@@ -2351,34 +2576,73 @@ msgstr "<i>Poznámka:</i> Výstup ladění je zapsán do %1"
 msgid "Debug"
 msgstr "Ladění"
 
-#: settings/rksettingsmodulegeneral.cpp:61
+#: settings/rksettingsmodulegeneral.cpp:66
 msgid "Directory where rkward may store files (*)"
 msgstr "Adresář, v němž by rkward měl uchovávat soubory (*)"
 
-#: settings/rksettingsmodulegeneral.cpp:67
+#: settings/rksettingsmodulegeneral.cpp:72
 msgid "Startup Action (*)"
 msgstr "Krok spuštění (*)"
 
-#: settings/rksettingsmodulegeneral.cpp:71
+#: settings/rksettingsmodulegeneral.cpp:76
 msgid ""
 "Load .RData-file from current directory, if available (R option '--restore')"
 msgstr ""
 "Nahrát soubor .RData z nynějšího adresáře, je-li dostupný (volba R '--"
 "restore')"
 
-#: settings/rksettingsmodulegeneral.cpp:73
+#: settings/rksettingsmodulegeneral.cpp:78
 msgid "Ask for a file to open"
 msgstr "Žádat o soubor, který se má otevřít"
 
-#: settings/rksettingsmodulegeneral.cpp:74
+#: settings/rksettingsmodulegeneral.cpp:79
 msgid "Show selection dialog (default)"
 msgstr "Ukázat dialog pro výběr (výchozí)"
 
-#: settings/rksettingsmodulegeneral.cpp:79
+#: settings/rksettingsmodulegeneral.cpp:84
 msgid "Show RKWard Help on Startup"
 msgstr "Ukázat nápovědu k RKWardu při spuštění"
 
-#: settings/rksettingsmodulegeneral.cpp:86
+#: settings/rksettingsmodulegeneral.cpp:89
+msgid "Intial working directory (*)"
+msgstr "Počáteční pracovní adresář (*)"
+
+#: settings/rksettingsmodulegeneral.cpp:93
+msgid "Do not change current directory on startup"
+msgstr "Při spuštění neměnit nynější adresář"
+
+#: settings/rksettingsmodulegeneral.cpp:94
+msgid "RKWard files directory (as specified, above)"
+msgstr "Adresář se soubory RKWard (jak je určen výše)"
+
+#: settings/rksettingsmodulegeneral.cpp:95
+msgid "User home directory"
+msgstr "Uživatelův domovský adresář"
+
+#: settings/rksettingsmodulegeneral.cpp:96
+msgid "Last used directory"
+msgstr "Naposledy použitý adresář"
+
+#: settings/rksettingsmodulegeneral.cpp:97
+msgid "The following directory (please specify):"
+msgstr "Následující adresář (určete, prosím):"
+
+#: settings/rksettingsmodulegeneral.cpp:101
+msgid "Initial working directory"
+msgstr "Počáteční pracovní adresář"
+
+#: settings/rksettingsmodulegeneral.cpp:105
+msgid ""
+"<p>The initial working directory to use. Note that if you are loading a "
+"workspace on startup, and you have configured RKWard to change to the "
+"directory of loaded workspaces, that directory will take precedence.</p>"
+msgstr ""
+"<p>Počáteční pracovní adresář, který se má použít. Všimněte si, že pokud "
+"nahráváte pracovní plochu při spuštění, a RKWard máte nastaven tak, aby "
+"udělal změnu na adresář nahraných pracovních ploch, bude mít tento adresář "
+"přednost.</p>"
+
+#: settings/rksettingsmodulegeneral.cpp:110
 msgid ""
 "The workplace layout (i.e. which script-, data-, help-windows are open) may "
 "be saved (and loaded) per R workspace, or independent of the R workspace. "
@@ -2388,13 +2652,13 @@ msgstr ""
 "otevřená), může být uloženo buď do pracovního souboru R (do pracovního "
 "prostředí), nebo na něm nezávisle (a opět nahráno) Čemu dáváte přednost?"
 
-#: settings/rksettingsmodulegeneral.cpp:95
+#: settings/rksettingsmodulegeneral.cpp:119
 msgid "Save/restore with R workspace, when saving/loading R workspace"
 msgstr ""
 "Uložit/Obnovit společně s pracovním souborem, když je ukládán/nahráván "
 "pracovní soubor (pracovní prostředí)"
 
-#: settings/rksettingsmodulegeneral.cpp:98
+#: settings/rksettingsmodulegeneral.cpp:122
 msgid ""
 "Save/restore independent of R workspace (save at end of RKWard session, "
 "restore at next start)"
@@ -2402,16 +2666,16 @@ msgstr ""
 "Uložit/Obnovit nezávisle na pracovním souboru (pracovním prostředí) (bude "
 "uloženo na konci sezení RKWardu, obnoveno při novém spuštění)"
 
-#: settings/rksettingsmodulegeneral.cpp:101
+#: settings/rksettingsmodulegeneral.cpp:125
 msgid "Do not save/restore workplace layout"
 msgstr "Neukládat rozvržení pracoviště"
 
-#: settings/rksettingsmodulegeneral.cpp:110
+#: settings/rksettingsmodulegeneral.cpp:134
 msgid "When loading a workspace, change to the corresponding directory."
 msgstr ""
 "Při nahrávání pracovního prostředí se přepnout do odpovídajícího adresáře."
 
-#: settings/rksettingsmodulegeneral.cpp:117
+#: settings/rksettingsmodulegeneral.cpp:141
 msgid ""
 "Warn when editing objects with more than this number of fields (0 for no "
 "limit):"
@@ -2419,23 +2683,23 @@ msgstr ""
 "Upozornit, když by byly upravovány předměty s více než tímto počtem polí (0 "
 "pro bez omezení):"
 
-#: settings/rksettingsmodulegeneral.cpp:120
+#: settings/rksettingsmodulegeneral.cpp:144
 msgid "No limit"
 msgstr "Bez omezení"
 
-#: settings/rksettingsmodulegeneral.cpp:127
+#: settings/rksettingsmodulegeneral.cpp:151
 msgid "MDI window focus behavior"
 msgstr "Chování při zaměření na okno MDI"
 
-#: settings/rksettingsmodulegeneral.cpp:130
+#: settings/rksettingsmodulegeneral.cpp:154
 msgid "Click to focus"
 msgstr "Klepněte pro zaměření"
 
-#: settings/rksettingsmodulegeneral.cpp:131
+#: settings/rksettingsmodulegeneral.cpp:155
 msgid "Focus follows mouse"
 msgstr "Zaměření následuje myš"
 
-#: settings/rksettingsmodulegeneral.cpp:156
+#: settings/rksettingsmodulegeneral.cpp:184
 msgid "General"
 msgstr "Obecné"
 
@@ -2541,7 +2805,7 @@ msgstr "Příkazy pocházející z dialogů a přídavných modulů"
 
 #: settings/rksettingsmoduleoutput.cpp:65
 msgid "Also carbon copy the command output"
-msgstr ""
+msgstr "Rovněž Carbon Copy výstup příkazů"
 
 #: settings/rksettingsmoduleoutput.cpp:155
 msgid "Output Window options"
@@ -2591,7 +2855,7 @@ msgstr "Šířka:"
 msgid "Height:"
 msgstr "Výška:"
 
-#: settings/rksettingsmoduleplugins.cpp:61
+#: settings/rksettingsmoduleplugins.cpp:62
 msgid ""
 "Some plugins are available with both, a wizard-like interface and a "
 "traditional dialog interface. If both are available, which mode of "
@@ -2601,57 +2865,63 @@ msgstr ""
 "rozhraní ve stylu průvodce, a druhým tradiční dialog. V případě, že je "
 "dostupné obojí, dáváte přednost kterému z nich?"
 
-#: settings/rksettingsmoduleplugins.cpp:71
+#: settings/rksettingsmoduleplugins.cpp:72
 msgid "Always prefer dialogs"
 msgstr "Vždy dávat přednost dialogům"
 
-#: settings/rksettingsmoduleplugins.cpp:74
+#: settings/rksettingsmoduleplugins.cpp:75
 msgid "Prefer recommended interface"
 msgstr "Dávat přednost doporučenému rozhraní"
 
-#: settings/rksettingsmoduleplugins.cpp:77
+#: settings/rksettingsmoduleplugins.cpp:78
 msgid "Always prefer wizards"
 msgstr "Vždy dávat přednost průvodcům"
 
-#: settings/rksettingsmoduleplugins.cpp:89
+#: settings/rksettingsmoduleplugins.cpp:90
 msgid "R syntax display (in dialogs)"
 msgstr "Zobrazení skladby R (v dialozích)"
 
-#: settings/rksettingsmoduleplugins.cpp:92
+#: settings/rksettingsmoduleplugins.cpp:93
 msgid "Code shown by default"
 msgstr "Ve výchozím nastavení ukazovat kód"
 
-#: settings/rksettingsmoduleplugins.cpp:98
+#: settings/rksettingsmoduleplugins.cpp:99
 msgid "Default height of code display (pixels)"
 msgstr "Výchozí velikost zobrazovaného kódu (pixely)"
 
-#: settings/rksettingsmoduleplugins.cpp:110
+#: settings/rksettingsmoduleplugins.cpp:111
 msgid "Select .pluginmap file(s)"
 msgstr "Vybrat soubor(y) .pluginmap"
 
-#: settings/rksettingsmoduleplugins.cpp:131
-msgid "Select .pluginmap-file"
-msgstr "Vybrat soubor .pluginmap"
-
-#: settings/rksettingsmoduleplugins.cpp:136
+#: settings/rksettingsmoduleplugins.cpp:132
 msgid "Plugins"
 msgstr "Přídavné moduly"
 
-#: settings/rksettingsmoduleplugins.cpp:215
-msgid ""
-"New RKWard plugin packs (listed below) have been found, and have been "
-"activated, automatically. To de-activate selected plugin packs, use Settings-"
-">Configure RKWard->Plugins."
-msgstr ""
-"Byly nalezeny nové balíčky s přídavnými moduly pro RKWard (uvedeny v seznamu "
-"níže). Tyto byly automaticky zapnuty. Pro vypnutí vybraných balíčků s "
-"přídavnými moduly, použijte Nastavení->Nastavit RKWard->Přídavné moduly."
+#: settings/rksettingsmoduleplugins.cpp:513 windows/rkhtmlwindow.cpp:627
+msgid "Dependencies"
+msgstr "Závislosti"
 
-#: settings/rksettingsmoduleplugins.cpp:215
-msgid "New plugins found"
-msgstr "Nalezeny nové přídavné moduly"
+#: settings/rksettingsmoduleplugins.cpp:527
+msgid "Broken"
+msgstr "Poškozeno"
 
-#: settings/rksettingsmoduler.cpp:69
+#: settings/rksettingsmoduleplugins.cpp:529
+msgid "Loaded"
+msgstr "Nahráno"
+
+#: settings/rksettingsmoduleplugins.cpp:532
+msgid "Quirky"
+msgstr "Podivné"
+
+#: settings/rksettingsmoduleplugins.cpp:551
+msgid "Active"
+msgstr "Činné"
+
+#: settings/rksettingsmoduleplugins.cpp:576
+msgid "Select .pluginmap-file"
+msgstr "Vybrat soubor .pluginmap"
+
+#: settings/rksettingsmoduler.cpp:71
 msgid ""
 "The following settings mostly affect R behavior in the console. It is "
 "generally safe to keep these unchanged."
@@ -2659,126 +2929,140 @@ msgstr ""
 "Následující nastavení ovlivňují většinou chování R v konzoli. Obecně se dá "
 "říct, že je bezpečné ponechat je beze změny."
 
-#: settings/rksettingsmoduler.cpp:78
+#: settings/rksettingsmoduler.cpp:80
 msgid "Display warnings"
 msgstr "Zobrazit varování"
 
-#: settings/rksettingsmoduler.cpp:81
+#: settings/rksettingsmoduler.cpp:83
 msgid "Suppress warnings"
 msgstr "Potlačit varování"
 
-#: settings/rksettingsmoduler.cpp:82
+#: settings/rksettingsmoduler.cpp:84
 msgid "Print warnings later (default)"
 msgstr "Vytisknout varování později (výchozí)"
 
-#: settings/rksettingsmoduler.cpp:83
+#: settings/rksettingsmoduler.cpp:85
 msgid "Print warnings immediately"
 msgstr "Vytisknout varování okamžitě"
 
-#: settings/rksettingsmoduler.cpp:84
+#: settings/rksettingsmoduler.cpp:86
 msgid "Convert warnings to errors"
 msgstr "Převést varování na chyby"
 
-#: settings/rksettingsmoduler.cpp:90
+#: settings/rksettingsmoduler.cpp:92
 msgid "Decimal character (only for printing)"
 msgstr "Desetinná místa (pouze pro tisk)"
 
-#: settings/rksettingsmoduler.cpp:97
+#: settings/rksettingsmoduler.cpp:99
 msgid "Output width (characters)"
 msgstr "Šířka výstupu (znaky)"
 
-#: settings/rksettingsmoduler.cpp:103
+#: settings/rksettingsmoduler.cpp:105
 msgid "Maximum number of elements shown in print"
 msgstr "Největší počet prvků ukázaných v tisku"
 
-#: settings/rksettingsmoduler.cpp:109
+#: settings/rksettingsmoduler.cpp:111
 msgid "Maximum length of warnings/errors to print"
 msgstr "Největší délka varování/chyb, která se má vytisknout"
 
-#: settings/rksettingsmoduler.cpp:115
+#: settings/rksettingsmoduler.cpp:117
 msgid "Keep comments in functions"
 msgstr "Ponechat příkazy ve funkcích"
 
-#: settings/rksettingsmoduler.cpp:118
+#: settings/rksettingsmoduler.cpp:120
 msgid "TRUE (default)"
 msgstr "SPRÁVNÝ (výchozí)"
 
-#: settings/rksettingsmoduler.cpp:119
+#: settings/rksettingsmoduler.cpp:121
 msgid "FALSE"
 msgstr "NESPRÁVNÝ"
 
-#: settings/rksettingsmoduler.cpp:125
+#: settings/rksettingsmoduler.cpp:127
 msgid "Keep comments in packages"
 msgstr "Ponechat poznámky v balíčcích"
 
-#: settings/rksettingsmoduler.cpp:128 settings/rksettingsmoduler.cpp:150
+#: settings/rksettingsmoduler.cpp:130 settings/rksettingsmoduler.cpp:152
 msgid "TRUE"
 msgstr "SPRÁVNÝ"
 
-#: settings/rksettingsmoduler.cpp:129 settings/rksettingsmoduler.cpp:151
+#: settings/rksettingsmoduler.cpp:131 settings/rksettingsmoduler.cpp:153
 msgid "FALSE (default)"
 msgstr "NESPRÁVNÝ (výchozí)"
 
-#: settings/rksettingsmoduler.cpp:135
+#: settings/rksettingsmoduler.cpp:137
 msgid "Maximum level of nested expressions"
 msgstr "Nejvyšší úroveň u složitých výrazů"
 
-#: settings/rksettingsmoduler.cpp:141
+#: settings/rksettingsmoduler.cpp:143
 msgid "Default decimal precision in print ()"
 msgstr "Výchozí přesnost pro desetinné místo při tisku ()"
 
-#: settings/rksettingsmoduler.cpp:147
+#: settings/rksettingsmoduler.cpp:149
 msgid "Check vector bounds (warn)"
 msgstr "Ověřit hranice vektorů (upozornit)"
 
-#: settings/rksettingsmoduler.cpp:156
+#: settings/rksettingsmoduler.cpp:158
 msgid "Editor command"
 msgstr "Příkaz pro editor"
 
-#: settings/rksettingsmoduler.cpp:167
+#: settings/rksettingsmoduler.cpp:169
 msgid "Pager command"
 msgstr "Příkaz pro \"pager\""
 
-#: settings/rksettingsmoduler.cpp:178
+#: settings/rksettingsmoduler.cpp:181
+msgid "Use Internet Explorer functions for internet access"
+msgstr "Použít funkce prohlížeče Internet Explorer pro přístup k internetu"
+
+#: settings/rksettingsmoduler.cpp:186
+msgid ""
+"<p>Use Internet Explorer functions for accessing the internet from R. "
+"Enabling this option may help in case of problems with accessing the "
+"internet from R (e.g. for installing packages).</p>"
+msgstr ""
+"<p>Použijte funkce prohlížeče Internet Explorer pro přístup k internetu z R. "
+"Povolení této funkce může pomoci v případě potíží s přístupem k internetu z "
+"R (např. pro instalaci balíčků).</p>"
+
+#: settings/rksettingsmoduler.cpp:191
 msgid "Further (option) commands to run in each session"
 msgstr "Další (možnost) příkazy ke spuštění v každém sezení"
 
-#: settings/rksettingsmoduler.cpp:200
+#: settings/rksettingsmoduler.cpp:213
 msgid "R-Backend"
 msgstr "Jádro R"
 
-#: settings/rksettingsmoduler.cpp:331
+#: settings/rksettingsmoduler.cpp:351
 msgid "CRAN download mirror (leave empty to be prompted once each session):"
 msgstr ""
 "Stahovací zrcadlo CRAN (ponechat prázdné, aby bylo napovězeno při každém "
 "sezení):"
 
-#: settings/rksettingsmoduler.cpp:338
+#: settings/rksettingsmoduler.cpp:358
 msgid "Select mirror"
 msgstr "Vybrat zrcadlo"
 
-#: settings/rksettingsmoduler.cpp:342
+#: settings/rksettingsmoduler.cpp:362
 msgid "Additional package repositories (where libraries are downloaded from)"
 msgstr ""
 "Dodatečné sklady balíčků (zdroje, ze kterých se mají knihovny stahovat)"
 
-#: settings/rksettingsmoduler.cpp:348
+#: settings/rksettingsmoduler.cpp:368
 msgid "Archive downloaded packages"
 msgstr "Archivovat stažené balíčky"
 
-#: settings/rksettingsmoduler.cpp:354
+#: settings/rksettingsmoduler.cpp:374
 msgid "Build packages from source"
 msgstr "Sestavit balíčky ze zdroje"
 
-#: settings/rksettingsmoduler.cpp:357
+#: settings/rksettingsmoduler.cpp:377
 msgid "Build packages from source (not configurable on this platform)"
 msgstr "Sestavit balíčky ze zdroje (nelze nastavit na tomto systému)"
 
-#: settings/rksettingsmoduler.cpp:366
+#: settings/rksettingsmoduler.cpp:386
 msgid "R Library locations (where libraries get installed to, locally)"
 msgstr "Umístění knihovny R (kam se mají knihovny instalovat, místně)"
 
-#: settings/rksettingsmoduler.cpp:371
+#: settings/rksettingsmoduler.cpp:391
 msgid ""
 "Note: The startup defaults will always be used in addition to the locations "
 "you specify in this list"
@@ -2786,23 +3070,23 @@ msgstr ""
 "Poznámka: Výchozí nastavení při spuštění se budou vždy používat jako "
 "doplnění k umístění, která stanovíte v tomto seznamu"
 
-#: settings/rksettingsmoduler.cpp:397
+#: settings/rksettingsmoduler.cpp:417
 msgid "Add R Library Directory"
 msgstr "Přidat adresář s knihovnou R"
 
-#: settings/rksettingsmoduler.cpp:405
+#: settings/rksettingsmoduler.cpp:425
 msgid "Add repository"
 msgstr "Přidat zdroj (sklad)"
 
-#: settings/rksettingsmoduler.cpp:405
+#: settings/rksettingsmoduler.cpp:425
 msgid "Add URL of new repository"
 msgstr "Přidat adresu (URL) nového skladu (zdroje)"
 
-#: settings/rksettingsmoduler.cpp:411
+#: settings/rksettingsmoduler.cpp:431
 msgid "R-Packages"
 msgstr "Balíčky R"
 
-#: settings/rksettingsmoduler.cpp:422
+#: settings/rksettingsmoduler.cpp:437
 msgid "Select CRAN mirror"
 msgstr "Vybrat zrcadlo CRAN"
 
@@ -2851,7 +3135,7 @@ msgid "Maximum number of paragraphs/lines to display in the Command Log"
 msgstr ""
 "Největší počet odstavců/řádků, které se mají ukazovat v zápisu příkazů"
 
-#: settings/rksettingsmodulewatch.cpp:281 windows/rkcommandlog.cpp:55
+#: settings/rksettingsmodulewatch.cpp:275 windows/rkcommandlog.cpp:55
 msgid "Command log"
 msgstr "Výpis příkazů"
 
@@ -2908,66 +3192,66 @@ msgstr ""
 msgid "Script Editor"
 msgstr "Editor skriptů"
 
-#: windows/rkcommandeditorwindow.cpp:218
+#: windows/rkcommandeditorwindow.cpp:220
 msgid "Insert line break and run"
 msgstr "Vložit zalomení řádku a provést"
 
-#: windows/rkcommandeditorwindow.cpp:223
+#: windows/rkcommandeditorwindow.cpp:225
 msgid "Run block"
 msgstr "Provést celý blok"
 
-#: windows/rkcommandeditorwindow.cpp:227
+#: windows/rkcommandeditorwindow.cpp:229
 msgid "Mark selection as block"
 msgstr "Označit výběr jako blok"
 
-#: windows/rkcommandeditorwindow.cpp:230
+#: windows/rkcommandeditorwindow.cpp:232
 msgid "Unmark block"
 msgstr "Zrušit označení bloku"
 
-#: windows/rkcommandeditorwindow.cpp:235
+#: windows/rkcommandeditorwindow.cpp:237
 msgid "CD to script directory"
 msgstr "Přejít do adresáře se skriptem"
 
-#: windows/rkcommandeditorwindow.cpp:237
+#: windows/rkcommandeditorwindow.cpp:239
 msgid "Change the working directory to the directory of this script"
 msgstr "Změnit pracovní adresář na adresář s tímto skriptem"
 
-#: windows/rkcommandeditorwindow.cpp:242
+#: windows/rkcommandeditorwindow.cpp:244
 msgid "Save Script..."
 msgstr "Uložit skript..."
 
-#: windows/rkcommandeditorwindow.cpp:244
+#: windows/rkcommandeditorwindow.cpp:246
 msgid "Save Script As..."
 msgstr "Uložit skript jako..."
 
-#: windows/rkcommandeditorwindow.cpp:335 windows/rkcommandeditorwindow.cpp:573
+#: windows/rkcommandeditorwindow.cpp:337 windows/rkcommandeditorwindow.cpp:575
 msgid " [modified]"
 msgstr " [změněný]"
 
-#: windows/rkcommandeditorwindow.cpp:342
+#: windows/rkcommandeditorwindow.cpp:344
 msgid "The document \"%1\" has been modified. Close it anyway?"
 msgstr "Dokument \"%1\" byl změněn. Přesto se má zavřít?"
 
-#: windows/rkcommandeditorwindow.cpp:342
+#: windows/rkcommandeditorwindow.cpp:344
 msgid "File not saved"
 msgstr "Soubor neuložen"
 
-#: windows/rkcommandeditorwindow.cpp:505
+#: windows/rkcommandeditorwindow.cpp:507
 msgid ""
 "An error occurred while trying to create an autosave of the script file '%1':"
 msgstr ""
 "Při pokusu o vytvoření automaticky ukládaného souboru skriptového souboru se "
 "vyskytla chyba '%1':"
 
-#: windows/rkcommandeditorwindow.cpp:572
+#: windows/rkcommandeditorwindow.cpp:574
 msgid "Unnamed"
 msgstr "Nepojmenované"
 
-#: windows/rkcommandeditorwindow.cpp:819
+#: windows/rkcommandeditorwindow.cpp:824
 msgid "%1 (Active)"
 msgstr "%1 (Činný)"
 
-#: windows/rkcommandeditorwindow.cpp:846
+#: windows/rkcommandeditorwindow.cpp:851
 msgid "%1 (Unused)"
 msgstr "%1 (Nepoužívaný)"
 
@@ -2993,7 +3277,7 @@ msgstr "Další"
 
 #: windows/rkdebugconsole.cpp:57
 msgid "Step out"
-msgstr ""
+msgstr "Odejít"
 
 #: windows/rkdebugconsole.cpp:59
 msgid ""
@@ -3002,6 +3286,10 @@ msgid ""
 "calling function will never be reached, because the call was the last step "
 "in the caller.In these cases, the behavior is identical to 'Continue'.</p>"
 msgstr ""
+"<p>Pokračovat, dokud není dosaženo volajícího této funkce (dokud se nedojde "
+"k dalšímu ladicímu příkazu)</p><p><b>Poznámka:</b> V některých případech "
+"nebude volající funkce dosaženo nikdy, protože volání bylo posledním krokem "
+"ve volajícím. V takových případech je chování totožné s 'Pokračovat'.</p>"
 
 #: windows/rkdebugconsole.cpp:63
 msgid "Continue"
@@ -3013,6 +3301,22 @@ msgid ""
 "idea what this means, and you want to get out, press the 'Cancel' button on "
 "the right hand side of this window."
 msgstr ""
+"Toto okno nelze zavřít, protože ladič je v činnosti. Pokud nemáte ponětí o "
+"tom, co to znamená, a chcete se dostat pryč, stiskněte tlačítko Zrušit na "
+"pravé straně tohoto okna."
+
+#: windows/rkdebugmessagewindow.cpp:78
+msgid ""
+"<p>This window is used for displaying RKWard related debug messages. It is "
+"targetted primarily at (plugin) developers. It does <b>not</b> offer any "
+"features for debugging R code.</p><p>Note that the list of message is "
+"cleared everytime you close the window.</p><p>Type and severity level of "
+"messages can be controlled from Settings->Configure RKWard->Debug</p>"
+msgstr ""
+
+#: windows/rkdebugmessagewindow.cpp:79
+msgid "About this window"
+msgstr "O tomto okně"
 
 #: windows/rkhelpsearchwindow.cpp:73
 msgid "Find:"
@@ -3088,39 +3392,39 @@ msgstr "Obsah"
 msgid "Package"
 msgstr "Balíček"
 
-#: windows/rkhtmlwindow.cpp:152
+#: windows/rkhtmlwindow.cpp:153
 msgid "&Flush Output"
 msgstr "&Vyprázdnit výstup"
 
-#: windows/rkhtmlwindow.cpp:156
+#: windows/rkhtmlwindow.cpp:157
 msgid "&Refresh Output"
 msgstr "&Obnovit výstup"
 
-#: windows/rkhtmlwindow.cpp:377
+#: windows/rkhtmlwindow.cpp:378
 msgid "Output %1"
 msgstr "Výstup %1"
 
-#: windows/rkhtmlwindow.cpp:419
+#: windows/rkhtmlwindow.cpp:420
 msgid "Print output"
 msgstr "Tisknout výstup"
 
-#: windows/rkhtmlwindow.cpp:421
+#: windows/rkhtmlwindow.cpp:422
 msgid "Export page as HTML"
 msgstr "Vyvést stránku jako HTML"
 
-#: windows/rkhtmlwindow.cpp:425
+#: windows/rkhtmlwindow.cpp:426
 msgid "Output Window"
 msgstr "Okno s výstupem"
 
-#: windows/rkhtmlwindow.cpp:433
+#: windows/rkhtmlwindow.cpp:434
 msgid "Print page"
 msgstr "Tisknout stránku"
 
-#: windows/rkhtmlwindow.cpp:435
+#: windows/rkhtmlwindow.cpp:436
 msgid "Save Output as HTML"
 msgstr "Uložit výstup jako HTML"
 
-#: windows/rkhtmlwindow.cpp:454
+#: windows/rkhtmlwindow.cpp:455
 msgid ""
 "<HTML><BODY><H1>RKWard output file could not be found</H1>\n"
 "</BODY></HTML>"
@@ -3128,25 +3432,31 @@ msgstr ""
 "<HTML><BODY><H1>Soubor s výstupem z RKWardu se nepodařilo najít</H1>\n"
 "</BODY></HTML>"
 
-#: windows/rkhtmlwindow.cpp:456
+#: windows/rkhtmlwindow.cpp:457
 msgid "Page does not exist or is broken"
 msgstr "Stránky nejsou, nebo jsou poškozeny"
 
-#: windows/rkhtmlwindow.cpp:464
+#: windows/rkhtmlwindow.cpp:465
 msgid ""
-"Do you really want to flush the output? It will not be possible to restore "
-"it."
-msgstr "Opravdu chcete vyprázdnit výstup? Jeho obnovení nebude možné."
+"Do you really want to clear the output? This will also remove all image "
+"files used in the output. It will not be possible to restore it."
+msgstr ""
+"Opravdu chcete uklidit výstup? Tím budou zároveň odstraněny všechny "
+"obrázkové soubory použité ve výstupu. Nebude možné je obnovit."
 
-#: windows/rkhtmlwindow.cpp:464
+#: windows/rkhtmlwindow.cpp:465
 msgid "Flush output?"
 msgstr "Vyprázdnit výstup?"
 
-#: windows/rkhtmlwindow.cpp:533
+#: windows/rkhtmlwindow.cpp:470
+msgid "Flushing output"
+msgstr "Spláchnutí výstupu"
+
+#: windows/rkhtmlwindow.cpp:524
 msgid "No Title"
 msgstr "Žádný název"
 
-#: windows/rkhtmlwindow.cpp:546
+#: windows/rkhtmlwindow.cpp:537
 msgid ""
 "<h1>Help page missing</h1>\n"
 "<p>The help page for this component has not yet been written (or is broken). "
@@ -3156,43 +3466,47 @@ msgstr ""
 "<p>Stránky s nápovědou pro tuto součást ještě nebyly napsány (nebo jsou "
 "poškozeny). Zvažte, prosím, svoje přispění.</p>\n"
 
-#: windows/rkhtmlwindow.cpp:551
+#: windows/rkhtmlwindow.cpp:542
 msgid "Use %1 now"
 msgstr "Použít %1 nyní"
 
-#: windows/rkhtmlwindow.cpp:568
+#: windows/rkhtmlwindow.cpp:559
 msgid "Summary"
 msgstr "Shrnutí"
 
-#: windows/rkhtmlwindow.cpp:574
+#: windows/rkhtmlwindow.cpp:565
 msgid "Usage"
 msgstr "Používání"
 
-#: windows/rkhtmlwindow.cpp:591
+#: windows/rkhtmlwindow.cpp:582
 msgid "GUI settings"
 msgstr "Nastavení uživatelského rozhraní"
 
-#: windows/rkhtmlwindow.cpp:599
+#: windows/rkhtmlwindow.cpp:591
 msgid "Unnamed GUI element"
 msgstr "Nepojmenovaný prvek uživatelského rozhraní"
 
-#: windows/rkhtmlwindow.cpp:619
+#: windows/rkhtmlwindow.cpp:612
 msgid "Related functions and pages"
 msgstr "Související funkce a stránky"
 
-#: windows/rkhtmlwindow.cpp:626
+#: windows/rkhtmlwindow.cpp:619
 msgid "Technical details"
 msgstr "Odborné podrobnosti"
 
-#: windows/rkhtmlwindow.cpp:632
+#: windows/rkhtmlwindow.cpp:645
+msgid "About"
+msgstr "O"
+
+#: windows/rkhtmlwindow.cpp:651
 msgid "<h1>On this page:</h1>"
 msgstr "<h1>Na této stránce:</h1>"
 
-#: windows/rkhtmlwindow.cpp:699
+#: windows/rkhtmlwindow.cpp:712
 msgid "R Reference on '%1'"
 msgstr "Odkaz R u '%1'"
 
-#: windows/rkhtmlwindow.cpp:714
+#: windows/rkhtmlwindow.cpp:727
 msgid "BROKEN REFERENCE"
 msgstr "POŠKOZENÝ ODKAZ"
 
@@ -3417,6 +3731,10 @@ msgid ""
 "However, this is not currently supported in this build of RKWard on Mac OS "
 "X. See http://p.sf.net/rkward/mac for more information."
 msgstr ""
+"vytvořil jste  okno grafického zařízení v R. Obvykle se RKWard taková okna "
+"pokouší zjistit, aby převzal jejich ovládání a přidal jim pruh s nabídkou. "
+"Toto však v nynějším sestavení RKWardu na Mac OS X podporováno není. Další "
+"informace hledejte na http://p.sf.net/rkward/mac."
 
 #: windows/rkwindowcatcher.cpp:70 windows/rkwindowcatcher.cpp:72
 msgid "Could not embed R X11 window"
@@ -3463,6 +3781,10 @@ msgid ""
 "regularly, you may want to adjust the default graphics window size in "
 "Settings->Configure RKWard->Onscreen Graphics."
 msgstr ""
+"Nynější okno se jeví být příliš velké na to, aby se vešlo na obrazovku. "
+"Pokud se to začne stávat pravidelně, možná budete chtít upravit výchozí "
+"velikost okna s grafikou v Nastavení->Nastavit RKWard->Znázornění na "
+"obrazovce."
 
 #: windows/rkwindowcatcher.cpp:230
 msgid "Large window"
@@ -3642,7 +3964,7 @@ msgstr "Uložit jako předmět R..."
 msgid "Duplicate"
 msgstr "Zdvojit"
 
-#: windows/rkworkplace.cpp:274
+#: windows/rkworkplace.cpp:273
 msgid ""
 "The url you are trying to open ('%1') is not a local file or the filetype is "
 "not supported by RKWard. Do you want to open the url in the default "
@@ -3652,19 +3974,19 @@ msgstr ""
 "není souborový typ podporován RKWardem. Chcete tuto adresu otevřít ve "
 "výchozí aplikaci?"
 
-#: windows/rkworkplace.cpp:274
+#: windows/rkworkplace.cpp:273
 msgid "Open in default application?"
 msgstr "Otevřít ve výchozí aplikaci?"
 
-#: windows/rkworkplace.cpp:302
+#: windows/rkworkplace.cpp:301
 msgid "Unable to open \"%1\""
 msgstr "Nelze otevřít soubor \"%1\""
 
-#: windows/rkworkplace.cpp:302
+#: windows/rkworkplace.cpp:301
 msgid "Could not open command file"
 msgstr "Nepodařilo se otevřít soubor s příkazem"
 
-#: windows/rkworkplace.cpp:414
+#: windows/rkworkplace.cpp:413
 msgid ""
 "You are about to edit object \"%1\", which is very large (%2 fields). RKWard "
 "is not optimized to handle very large objects in the built in data editor. "
@@ -3688,15 +4010,15 @@ msgstr ""
 "nastavit (nebo úplně vypnout) pod Nastavení -> Nastavit RKWard -> Obecné.\n"
 "Skutečně upravovat předmět?"
 
-#: windows/rkworkplace.cpp:414
+#: windows/rkworkplace.cpp:413
 msgid "About to edit very large object"
 msgstr "Chystáte se upravit velmi velký předmět"
 
-#: windows/rkworkplace.cpp:611
+#: windows/rkworkplace.cpp:610
 msgid "Save Workplace layout"
 msgstr "Uložit rozvržení pracoviště"
 
-#: windows/rkworkplace.cpp:618
+#: windows/rkworkplace.cpp:617
 msgid "Restore Workplace layout"
 msgstr "Obnovit rozvržení pracoviště"
 
@@ -3903,7 +4225,7 @@ msgstr "&Zapnout"
 #. i18n: ectx: Menu (settings)
 #. i18n: file: windows/rkcommandlogpart.rc:9
 #. i18n: ectx: Menu (settings)
-#. i18n: file: windows/rktoplevelwindowgui.rc:26
+#. i18n: file: windows/rktoplevelwindowgui.rc:27
 #. i18n: ectx: Menu (settings)
 #: rc.cpp:48 rc.cpp:78 rc.cpp:102 rc.cpp:111 rc.cpp:135
 msgid "&Settings"
@@ -3913,7 +4235,7 @@ msgstr "&Nastavení"
 #. i18n: ectx: Menu (help)
 #. i18n: file: windows/detachedwindowcontainer.rc:49
 #. i18n: ectx: Menu (help)
-#. i18n: file: windows/rktoplevelwindowgui.rc:30
+#. i18n: file: windows/rktoplevelwindowgui.rc:31
 #. i18n: ectx: Menu (help)
 #: rc.cpp:51 rc.cpp:81 rc.cpp:138
 msgid "&Help"
