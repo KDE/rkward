@@ -152,7 +152,7 @@ int main (int argc, char *argv[]) {
 		if (r_exe.isNull ()) {
 			r_exe = R_EXECUTABLE;
 			if (!QFileInfo (r_exe).isExecutable ()) {
-				QMessageBox::critical (0, "Specified R executable does not exist", QString ("The R executable specified at compile time (%1) does not exist or is not executable. Probably the installation of R has moved. You can use the command line parameter '--R', or supply and rkward.ini file to specify the new location.").arg (r_exe));
+				QMessageBox::critical (0, "Specified R executable does not exist", QString ("The R executable specified at compile time (%1) does not exist or is not executable. Probably the installation of R has moved. You can use the command line parameter '--R', or supply an rkward.ini file to specify the new location.").arg (r_exe));
 				exit (1);
 			}
 		}

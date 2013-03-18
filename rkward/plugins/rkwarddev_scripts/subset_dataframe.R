@@ -5,10 +5,7 @@
 
 ## Plugin mandatory TODO
 #
-# - write .rkh
 # - testing!
-# - write automated tests
-# - ChangeLog entry
 
 ## Plugin wishlist
 #
