@@ -242,7 +242,13 @@ void RKSettingsModuleGeneral::loadSettings (KConfig *config) {
 	cg = config->group ("General");
 	startup_action = (StartupDialog::Result) cg.readEntry ("startup action", (int) StartupDialog::NoSavedSetting);
 	show_help_on_startup = cg.readEntry ("show help on startup", true);
-	initial_dir = (InitialDirectory) cg.readEntry ("initial dir mode", (int) CurrentDirectory);
+	initial_dir = (InitialDirectory) cg.readEntry ("initial dir mode",
+#ifndef Q_WS_WIN
+		(int) CurrentDirectory
+#else
+		(int) RKWardDirectory
+#endif
+	);
 	initial_dir_specification = cg.readEntry ("initial dir spec", QString ());
 
 	cg = config->group ("Workplace");
