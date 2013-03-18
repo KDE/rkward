@@ -239,7 +239,6 @@ sset.js.calc <- id("
 	echo ('\\n\\t)\\n\\n');
 ", js=FALSE)
 
-
 #############
 ## if you run the following function call, files will be written to tempdir!
 #############
@@ -255,9 +254,30 @@ sset.plugin.dir <<- rk.plugin.skeleton(
 		),
 	js=list(results.header=FALSE,
 		calculate=sset.js.calc),
+	rkh=list(
+		summary = rk.rkh.summary ("Select a subset of rows and / or columns of a data.frame"),
+		usage = rk.rkh.usage ("Select the data.frame to subset. Then specify rules to filter by rows / cases, and / or columns. A data.frame containing only the specified subset is saved to your workspace."),
+		settings = rk.rkh.settings (list (
+			rk.rkh.setting (var.data, "Select the data.frame to subset."),
+			rk.rkh.caption (frame.filter.var),
+			rk.rkh.setting (filter.var, "Select a column of the data.frame specifying the condition to filter cases on. Leave empty, if you do not want to filter on a column."),
+			rk.rkh.setting (sset.filter.drop, "Select the type of condition. Note that depending on the type of the filter variable, different options are available"),
+			rk.rkh.setting (sset.input.filter, "The value to compare against (for condition types equal / not equal, and one of / not one of). Note that this will be pasted as R code, verbatim. This means, you can specify any valid R expression, including the name of another column of the data.frame. However, if you want to compare to fixed strings, you will have to make sure to quote these. E.g. 'c (\"City A\", \"City B\")'."),
+			rk.rkh.setting (sset.filter.min, "For comparing against ranges (condition types in between / not in between), minimum and / or maximum values can be specified. If either is omitted, only the other is checked (i.e. greater / smaller than). Note that this will be pasted as R code, verbatim. This means, you can specify any valid R expression, including the name of another column of the data.frame."),
+			rk.rkh.setting (sset.filter.min.inc, "Whether the minimum value is contained in the range to check against (i.e. compare 'larger or equal (>=)')."),
+			rk.rkh.setting (sset.filter.max, "See above. Maximum value."),
+			rk.rkh.setting (sset.filter.max.inc, "Whether the maximum value is contained in the range to check against (i.e. compare 'smaller or equal (<=)')."),
+			rk.rkh.caption (frame.filter.expression),
+			rk.rkh.setting (sset.filter.expression, "You can also filter rows / cases by a custom R expression. If using this in combination with filtering by a column (see above), both conditions are combined by logical 'and' (&). Leave empty, if you do not want to filter on a custom expression."),
+			rk.rkh.caption (frame.selected.vars),
+			rk.rkh.setting (frame.selected.vars, "Check this, if you want to remove some columns from the resulting data.frame. Otherwise, all columns will be included."),
+			rk.rkh.setting (selected.vars, "Variables to include in the resulting data.frame")
+		)),
+		related = rk.rkh.related (rk.rkh.link ("subset"))
+	),
 	pluginmap=list(name="subset_dataframe", hierarchy=list("data")),
 	dependencies=rk.XML.dependencies (),
-	create=c("pmap", "xml", "js"),
+	create=c("pmap", "xml", "js", "rkh"),
 	scan=c("saveobj", "settings"),
 	overwrite=overwrite,
 	tests=FALSE,
