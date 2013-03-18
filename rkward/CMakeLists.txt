@@ -61,6 +61,9 @@ GET_DIRECTORY_PROPERTY(R_EXECUTABLE DIRECTORY rbackend DEFINITION R_EXECUTABLE)
 IF(WIN32)
 	SET(RKWARD_WRAPPER_TEMPLATE rkward.bat.in)
 	SET(RKWARD_WRAPPER_SCRIPT ${CMAKE_CURRENT_BINARY_DIR}/rkward.bat)
+# For now use wrapper binary on Windows, only, and only as an alternative to rkward.bat.
+# Will become standard startup mechanism on all platforms, in a later release
+	ADD_SUBDIRECTORY( wrapper )
 ELSE(WIN32)
 	SET(RKWARD_WRAPPER_TEMPLATE rkward.sh.in)
 	SET(RKWARD_WRAPPER_SCRIPT ${CMAKE_CURRENT_BINARY_DIR}/rkward)
