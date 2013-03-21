@@ -1,5 +1,5 @@
 /***************************************************************************
-                          rkgraphicsdevice  -  description
+                          rkgraphicsdevice_setup  -  description
                              -------------------
     begin                : Mon Mar 18 20:06:08 CET 2013
     copyright            : (C) 2013 by Thomas Friedrichsmeier 
@@ -64,21 +64,20 @@ void RKStartGraphicsDevice (double width, double height, double pointsize, const
 	BEGIN_SUSPEND_INTERRUPTS {
 		/* Allocate and initialize the device driver data */
 		dev = (pDevDesc) calloc (1, sizeof(DevDesc));
-		if (!(dev && desc->initRDevDesc (dev, pointsize))) {
+		if (!(dev && desc->initRDevDesc (dev, pointsize) && RKGraphicsDeviceBackendTransmitter::instance ())) {
 			free (dev);
 			delete (desc);
 			desc = 0;
 		} else {
+			desc->devnum = curDevice ();
+			RKD_Create (desc->width, desc->height, dev);
 			pGEDevDesc gdd = GEcreateDevDesc (dev);
 			gdd->displayList = R_NilValue;
 			GEaddDevice2 (gdd, "RKGraphicsDevice");
 		}
 	} END_SUSPEND_INTERRUPTS;
 
-	if (desc) {
-		desc->devnum = curDevice ();
-		RKD_Create (desc->width, desc->height, dev);
-	} else {
+	if (!desc) {
 		Rf_error("unable to start device");
 	}
 }

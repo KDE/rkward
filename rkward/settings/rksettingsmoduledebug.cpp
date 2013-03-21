@@ -70,6 +70,7 @@ RKSettingsModuleDebug::RKSettingsModuleDebug (RKSettings *gui, QWidget *parent) 
 	debug_flags_group->addButton (new QCheckBox ("DIALOGS", group), DIALOGS);
 	debug_flags_group->addButton (new QCheckBox ("OUTPUT", group), OUTPUT);
 	debug_flags_group->addButton (new QCheckBox ("XML", group), XML);
+	debug_flags_group->addButton (new QCheckBox ("GRAPHICS_DEVICE", group), GRAPHICS_DEVICE);
 
 	QList<QAbstractButton*> buttons = debug_flags_group->buttons ();
 	for (QList<QAbstractButton*>::const_iterator it = buttons.constBegin (); it != buttons.constEnd (); ++it) {

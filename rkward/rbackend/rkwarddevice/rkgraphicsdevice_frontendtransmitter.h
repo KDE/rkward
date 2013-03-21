@@ -1,8 +1,8 @@
 /***************************************************************************
-                          rkfrontendtransmitter  -  description
+                          rkgraphicsdevice_frontendtransmitter  -  description
                              -------------------
-    begin                : Thu Nov 04 2010
-    copyright            : (C) 2010 by Thomas Friedrichsmeier
+    begin                : Mon Mar 18 20:06:08 CET 2013
+    copyright            : (C) 2013 by Thomas Friedrichsmeier 
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -15,40 +15,31 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef RKFRONTENDTRANSMITTER_H
-#define RKFRONTENDTRANSMITTER_H
+#ifndef RKGRAPHICSDEVICE_FRONTENDTRANSMITTER_H
+#define RKGRAPHICSDEVICE_FRONTENDTRANSMITTER_H
 
-#include "rktransmitter.h"
+#include "rkgraphicsdevice_protocol_shared.h"
 
-class QProcess;
+class QIODevice;
 class QLocalServer;
-class RKGraphicsDeviceFrontendTransmitter;
 
-class RKFrontendTransmitter : public RKAbstractTransmitter, public RKROutputBuffer {
-Q_OBJECT
+/** Handles the frontend side of RKWard Graphics Device transmissions. Since the
+ * frontend has a running Qt event loop, We can use simple signals and slots, here. */
+class RKGraphicsDeviceFrontendTransmitter : public QObject {
+	Q_OBJECT
 public:
-	RKFrontendTransmitter ();
-	~RKFrontendTransmitter ();
-
-	void run ();
-
-	bool doMSleep (int delay) {
-		msleep (delay);
-		return true;
-	};
-	void writeRequest (RBackendRequest *request);
-	void requestReceived (RBackendRequest *request);
-private slots:
-	void connectAndEnterLoop ();
-	void backendExit (int exitcode);
+	RKGraphicsDeviceFrontendTransmitter ();
+	~RKGraphicsDeviceFrontendTransmitter ();
+	QString serverName () const { return server_name; };
+public slots:
+	void newData ();
+	void newConnection ();
 private:
-	void handleTransmissionError (const QString &message);
-
-	int current_request_length;
-	QProcess* backend;
-	QLocalServer* server;
-	RKGraphicsDeviceFrontendTransmitter* rkd_transmitter;
+	void setupServer ();
+	QString server_name;
+	QIODevice *connection;
+	QLocalServer *local_server;
+	RKAsyncDataStreamHelper streamer;
 };
 
 #endif
-

@@ -2,7 +2,7 @@
                           rkrbackendprotocol  -  description
                              -------------------
     begin                : Thu Nov 04 2010
-    copyright            : (C) 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2010, 2013 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -125,7 +125,7 @@
 		RK_Debug_File->setAutoRemove (false);
 		if (RK_Debug_File->open ()) qInstallMsgHandler (RKDebugMessageOutput);
 
-		QString servername;
+		QString servername, rkd_server_name;
 		QString data_dir, locale_dir;
 		QStringList args = app.arguments ();
 		for (int i = 1; i < args.count (); ++i) {
@@ -138,6 +138,8 @@
 				data_dir = args[i].section ('=', 1);
 			} else if (args[i].startsWith ("--locale-dir")) {
 				locale_dir = args[i].section ('=', 1);
+			} else if (args[i].startsWith ("--rkd-server-name")) {
+				rkd_server_name = args[i].section ('=', 1);
 			} else {
 				printf ("unkown argument %s", qPrintable (args[i]));
 			}
@@ -154,7 +156,7 @@
 		fflush (stdout);
 
 		RKRBackendTransmitter transmitter (servername, token);
-		RKRBackendProtocolBackend backend (data_dir);
+		RKRBackendProtocolBackend backend (data_dir, rkd_server_name);
 		transmitter.start ();
 		RKRBackend::this_pointer->run (locale_dir);
 		transmitter.quit ();
@@ -165,7 +167,7 @@
 #endif
 
 RKRBackendProtocolBackend* RKRBackendProtocolBackend::_instance = 0;
-RKRBackendProtocolBackend::RKRBackendProtocolBackend (const QString &storage_dir) {
+RKRBackendProtocolBackend::RKRBackendProtocolBackend (const QString &storage_dir, const QString &_rkd_server_name) {
 	RK_TRACE (RBACKEND);
 
 	_instance = this;
@@ -181,6 +183,7 @@ RKRBackendProtocolBackend::RKRBackendProtocolBackend (const QString &storage_dir
 #	endif
 #endif
 	data_dir = storage_dir;
+	rkd_server_name = _rkd_server_name;
 }
 
 RKRBackendProtocolBackend::~RKRBackendProtocolBackend () {

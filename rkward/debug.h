@@ -32,17 +32,18 @@ extern void RKDebug (int flags, int level, const char *fmt, ...);
 
 // Debug components
 #define APP 1
-#define PLUGIN 2
-#define OBJECTS 4
-#define EDITOR 8
-#define SETTINGS 16
-#define PHP 64
-#define RBACKEND 128
-#define COMMANDEDITOR 256
-#define MISC 512
-#define DIALOGS 1024
-#define OUTPUT 2048
-#define XML 4096
+#define PLUGIN 1 << 1
+#define OBJECTS 1 << 2
+#define EDITOR 1 << 3
+#define SETTINGS 1 << 4
+#define PHP 1 << 5
+#define RBACKEND 1 << 6
+#define COMMANDEDITOR 1 << 7
+#define MISC 1 << 8
+#define DIALOGS 1 << 9
+#define OUTPUT 1 << 10
+#define XML 1 << 11
+#define GRAPHICS_DEVICE 1 << 12
 #define ALL (APP | PLUGIN | PHP | OBJECTS | EDITOR | RBACKEND | COMMANDEDITOR | MISC | DIALOGS | OUTPUT | XML)
 
 #ifdef RKWARD_DEBUG

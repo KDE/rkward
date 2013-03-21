@@ -2,7 +2,7 @@
                           rkfrontendtransmitter  -  description
                              -------------------
     begin                : Thu Nov 04 2010
-    copyright            : (C) 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2010, 2011, 2013 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -18,6 +18,7 @@
 #include "rkfrontendtransmitter.h"
 
 #include "rkrbackendprotocol_frontend.h"
+#include "rkwarddevice/rkgraphicsdevice_frontendtransmitter.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../settings/rksettingsmodulegeneral.h"
 
@@ -36,12 +37,14 @@
 RKFrontendTransmitter::RKFrontendTransmitter () : RKAbstractTransmitter () {
 	RK_TRACE (RBACKEND);
 
+	rkd_transmitter = new RKGraphicsDeviceFrontendTransmitter ();
 	start ();
 }
 
 RKFrontendTransmitter::~RKFrontendTransmitter () {
 	RK_TRACE (RBACKEND);
 
+	delete rkd_transmitter;
 	RK_ASSERT (!server->isListening ());
 }
 
@@ -68,6 +71,7 @@ void RKFrontendTransmitter::run () {
 	QStringList args;
 	args.append ("--debug-level=" + QString::number (RK_Debug_Level));
 	args.append ("--server-name=" + server->fullServerName ());
+	args.append ("--rkd-server-name=" + rkd_transmitter->serverName ());
 	args.append ("--data-dir=" + RKSettingsModuleGeneral::filesPath ());
 	args.append ("--locale-dir=" + KGlobal::dirs()->findResourceDir ("locale", KGlobal::locale ()->language () + "/LC_MESSAGES/rkward.mo"));
 	connect (backend, SIGNAL (finished (int, QProcess::ExitStatus)), this, SLOT (backendExit (int)));

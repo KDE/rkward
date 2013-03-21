@@ -992,6 +992,8 @@ SEXP doCopyNoEval (SEXP name, SEXP fromenv, SEXP toenv) {
 	return (R_NilValue);
 }
 
+SEXP RKStartGraphicsDevice (SEXP width, SEXP height, SEXP pointsize, SEXP family);
+
 bool RKRBackend::startR () {
 	RK_TRACE (RBACKEND);
 
@@ -1077,6 +1079,7 @@ bool RKRBackend::startR () {
 		{ "rk.dialog", (DL_FUNC) &doDialog, 6 },
 		{ "rk.update.locale", (DL_FUNC) &doUpdateLocale, 0 },
 		{ "rk.locale.name", (DL_FUNC) &doLocaleName, 0 },
+		{ "rk.graphics.device", (DL_FUNC) &RKStartGraphicsDevice, 4},
 		{ 0, 0, 0 }
 	};
 	R_registerRoutines (R_getEmbeddingDllInfo(), NULL, callMethods, NULL, NULL);

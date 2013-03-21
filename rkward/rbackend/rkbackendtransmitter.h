@@ -40,7 +40,6 @@ private:
 	void flushOutput (bool force);
 	QList<RBackendRequest*> current_sync_requests;	// pointers to the request that we expect a reply for. Yes, internally, this can be several requests.
 	QString servername;
-	QString token;
 };
 
 #endif

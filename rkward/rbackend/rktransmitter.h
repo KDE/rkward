@@ -2,7 +2,7 @@
                           rktransmitter  -  description
                              -------------------
     begin                : Thu Nov 18 2010
-    copyright            : (C) 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2010, 2013 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -50,6 +50,9 @@ Q_OBJECT
 public:
 	static RKAbstractTransmitter* instance () { return _instance; };
 	virtual ~RKAbstractTransmitter ();
+
+/** returns the magic token negotiated between frontend and backend (for validating incoming connections) */
+	QString connectionToken () { return token; };
 protected:
 	RKAbstractTransmitter ();
 
@@ -61,6 +64,7 @@ protected:
 	void customEvent (QEvent *e);
 	void setConnection (QLocalSocket *connection);
 	QLocalSocket *connection;
+	QString token;
 private slots:
 	/** Note: this blocks until a compelete request has been received. Connected to the "readyRead"-signal of the connection. Calls requestReceived() once the request has been read. */
 	void fetchTransmission ();

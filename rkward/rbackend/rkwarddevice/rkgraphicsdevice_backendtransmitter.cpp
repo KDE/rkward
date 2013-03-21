@@ -1,5 +1,5 @@
 /***************************************************************************
-                          rkgraphicsdevice  -  description
+                          rkgraphicsdevice_backendtransmitter  -  description
                              -------------------
     begin                : Mon Mar 18 20:06:08 CET 2013
     copyright            : (C) 2013 by Thomas Friedrichsmeier 
@@ -17,29 +17,53 @@
 
 #include "rkgraphicsdevice_backendtransmitter.h"
 
+#include <QLocalSocket>
+#include "../rkrbackendprotocol_backend.h"
+#define RKWARD_SPLIT_PROCESS 1
+#include "../rkbackendtransmitter.h"
+
 #include "../../debug.h"
 
-QByteArray RKGraphicsDeviceBackendTransmitter::buffer;
-QDataStream RKGraphicsDeviceBackendTransmitter::protocol (&buffer, QIODevice::ReadWrite);
-QAbstractSocket* RKGraphicsDeviceBackendTransmitter::connection = 0;
+RKAsyncDataStreamHelper RKGraphicsDeviceBackendTransmitter::streamer;
+QIODevice* RKGraphicsDeviceBackendTransmitter::connection = 0;
 QMutex RKGraphicsDeviceBackendTransmitter::mutex;
+RKGraphicsDeviceBackendTransmitter* RKGraphicsDeviceBackendTransmitter::_instance = 0;
 
-RKGraphicsDeviceBackendTransmitter::RKGraphicsDeviceBackendTransmitter (QAbstractSocket* _connection) : QThread () {
-	RK_TRACE (RBACKEND);
+RKGraphicsDeviceBackendTransmitter::RKGraphicsDeviceBackendTransmitter (QIODevice* _connection) : QThread () {
+	RK_TRACE (GRAPHICS_DEVICE);
 
 	RK_ASSERT (!connection);
 	RK_ASSERT (_connection);
 	connection = _connection;
+	streamer.setIODevice (connection);
 	alive = true;
 	start ();
 }
 
 RKGraphicsDeviceBackendTransmitter::~RKGraphicsDeviceBackendTransmitter () {
-	RK_TRACE (RBACKEND);
+	RK_TRACE (GRAPHICS_DEVICE);
+	delete connection;
+}
+
+RKGraphicsDeviceBackendTransmitter* RKGraphicsDeviceBackendTransmitter::instance () {
+	if (_instance) return _instance;
+	RK_TRACE (GRAPHICS_DEVICE);
+
+	QLocalSocket *con = new QLocalSocket ();
+	con->connectToServer (RKRBackendProtocolBackend::rkdServerName ());
+	con->waitForConnected (2000);
+	if (con->state () == QLocalSocket::ConnectedState) {
+		con->write (RKRBackendTransmitter::instance ()->connectionToken ().toLocal8Bit ().data ());
+		con->write ("\n");
+		con->waitForBytesWritten (1000);
+		_instance = new RKGraphicsDeviceBackendTransmitter (con);
+		return _instance;
+	}
+	return 0;
 }
 
 void RKGraphicsDeviceBackendTransmitter::run () {
-	RK_TRACE (RBACKEND);
+	RK_TRACE (GRAPHICS_DEVICE);
 
 	while (alive) {
 		msleep (10);	// it's ok to be lazy. If a request expects a reply, RKGraphicsDataStreamReadGuard will take care of pushing everything, itself. Essentially, this thread's job is simply to make sure we don't lag *too* far behind.
@@ -48,13 +72,17 @@ void RKGraphicsDeviceBackendTransmitter::run () {
 		mutex.unlock ();
 	}
 
-	RK_TRACE (RBACKEND);
+	RK_TRACE (GRAPHICS_DEVICE);
 }
 
 void RKGraphicsDeviceBackendTransmitter::kill () {
-	RK_TRACE (RBACKEND);
-	mutex.lock ();
-	alive = false;
-	mutex.unlock ();
-	wait (1000);
+	if (_instance) {
+		RK_TRACE (GRAPHICS_DEVICE);
+		mutex.lock ();
+		_instance->alive = false;
+		mutex.unlock ();
+		_instance->wait (1000);
+		delete _instance;
+		_instance = 0;
+	}
 }
