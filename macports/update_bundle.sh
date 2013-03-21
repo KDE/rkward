@@ -14,11 +14,18 @@ APPLDIR=/Applications/RKWard
 # specify the prefix for build directories below ${MPTINST}/var/macports/build
 BLDPRFX=_opt_rkward_var_macports_sources_rsync.macports.org_release_tarballs_ports_
 # this array holds all packages who should not be included in the bundle
-declare -a EXCLPKG=(audio_flac audio_jack audio_lame audio_libmodplug audio_libopus audio_libsamplerate \
- audio_libsndfile audio_libvorbis audio_phonon audio_speex databases_db46 databases_gdbm databases_sqlite3 devel_boost \
- devel_soprano devel_strigi devel_virtuoso gnome_gobject-introspection gnome_gtk2 gnome_hicolor-icon-theme gnome_libglade2 \
- multimedia_XviD multimedia_dirac multimedia_ffmpeg multimedia_libogg multimedia_libtheora multimedia_libvpx \ 
- multimedia_schroedinger multimedia_x264 net_avahi net_kerberos5 security_cyrus-sasl2 sysutils_e2fsprogs )
+#declare -a EXCLPKG=(audio_flac audio_jack audio_lame audio_libmodplug audio_libopus audio_libsamplerate \
+# audio_libsndfile audio_libvorbis audio_phonon audio_speex \
+# databases_db46 databases_gdbm databases_sqlite3 devel_boost devel_soprano devel_strigi devel_virtuoso
+# gnome_gobject-introspection gnome_gtk2 gnome_hicolor-icon-theme gnome_libglade2 \
+# multimedia_XviD multimedia_dirac multimedia_ffmpeg multimedia_libogg multimedia_libtheora multimedia_libvpx \ 
+# multimedia_schroedinger multimedia_x264 net_avahi net_kerberos5 security_cyrus-sasl2 sysutils_e2fsprogs )
+
+#declare -a EXCLPKG=(audio_flac audio_jack audio_lame audio_libmodplug audio_libopus audio_libsamplerate \
+# audio_libsndfile audio_libvorbis audio_phonon audio_speex \
+# gnome_gobject-introspection gnome_gtk2 gnome_hicolor-icon-theme gnome_libglade2 \
+# multimedia_XviD multimedia_dirac multimedia_ffmpeg multimedia_libogg multimedia_libtheora multimedia_libvpx \
+# multimedia_schroedinger multimedia_x264 net_avahi net_kerberos5 security_cyrus-sasl2 sysutils_e2fsprogs )
 
 SVNREPO=http://svn.code.sf.net/p/rkward/code/trunk
 OLDWD=$(pwd)
@@ -52,6 +59,7 @@ while getopts ":DflprmscxXF:" OPT; do
     r) UPRKWARD=TRUE >&2 ;;
     m)
        RMSTLIBS=TRUE >&2
+#       DOEXCPCK=TRUE >&2
        MAKEMDMD=TRUE >&2 ;;
     s) MKSRCTAR=TRUE >&2 ;;
     c) COPYMDMD=TRUE >&2 ;;
@@ -81,20 +89,29 @@ if [[ $WIPEINST ]] ; then
     echo "removing ${APPLDIR}..."
     sudo rm -rf ${APPLDIR} || exit 1
   fi
+  if [ -d /Applications/MacPorts ] ; then
+    echo "removing /Applications/MacPorts..."
+    sudo rm -rf /Applications/MacPorts || exit 1
+  fi
   # these leftovers would conflict with port installation
-  if [ -f /Library/LaunchDaemons/org.freedesktop.dbus-system.plist ] ; then
+  if [ -L /Library/LaunchDaemons/org.freedesktop.dbus-system.plist ] ; then
+    echo "removing symbolic link /Library/LaunchDaemons/org.freedesktop.dbus-system.plist..."
     sudo rm /Library/LaunchDaemons/org.freedesktop.dbus-system.plist
   fi
-  if [ -f /Library/LaunchAgents/org.freedesktop.dbus-session.plist ] ; then
+  if [ -L /Library/LaunchAgents/org.freedesktop.dbus-session.plist ] ; then
+    echo "removing symbolic link /Library/LaunchAgents/org.freedesktop.dbus-session.plist..."
     sudo rm /Library/LaunchAgents/org.freedesktop.dbus-session.plist
   fi
-  if [ -f /Library/LaunchDaemons/org.freedesktop.avahi-daemon.plist ] ; then
+  if [ -L /Library/LaunchDaemons/org.freedesktop.avahi-daemon.plist ] ; then
+    echo "removing symbolic link /Library/LaunchDaemons/org.freedesktop.avahi-daemon.plist..."
     sudo rm /Library/LaunchDaemons/org.freedesktop.avahi-daemon.plist
   fi
-  if [ -f /Library/LaunchDaemons/org.freedesktop.avahi-dnsconfd.plist ] ; then
+  if [ -L /Library/LaunchDaemons/org.freedesktop.avahi-dnsconfd.plist ] ; then
+    echo "removing symbolic link /Library/LaunchDaemons/org.freedesktop.avahi-dnsconfd.plist..."
     sudo rm /Library/LaunchDaemons/org.freedesktop.avahi-dnsconfd.plist
   fi
-  if [ -f /Library/LaunchAgents/org.macports.kdecache.plist ] ; then
+  if [ -L /Library/LaunchAgents/org.macports.kdecache.plist ] ; then
+    echo "removing symbolic link /Library/LaunchAgents/org.macports.kdecache.plist..."
     sudo rm /Library/LaunchAgents/org.macports.kdecache.plist
   fi
 fi
@@ -124,8 +141,8 @@ if [[ $FRESHMCP ]] ; then
   echo "adding local portfiles to ${MPTINST}/etc/macports/sources.conf..."
   sudo sed -i -e "s+rsync://rsync.macports.org.*\[default\]+file://${SRCPATH}/\\`echo -e '\n\r'`&+" ${MPTINST}/etc/macports/sources.conf || exit 1
   sudo port install subversion || \
-    echo "configure.cc cc -L${MPTINST}/lib -I${MPTINST}/include -arch x86_64" >> \
-    "${MPTINST}/var/macports/sources/rsync.macports.org/release/tarballs/ports/perl/p5-locale-gettext/Portfile" && \
+    echo "configure.cc cc -L${MPTINST}/lib -I${MPTINST}/include -arch x86_64" | \
+    sudo tee -a "${MPTINST}/var/macports/sources/rsync.macports.org/release/tarballs/ports/perl/p5-locale-gettext/Portfile" && \
     sudo port install subversion
   ## NOTE: there is some serious trouble with port:p5.12-locale-gettext which hasn't been fixed in months
   ## a workaround, if you run into it:
@@ -150,11 +167,16 @@ fi
 
 # remove previous installation and its build left-overs
 if [[ $UPRKWARD ]] ; then
+  INSTALLEDPORTS=$(port installed)
   # make sure each instance of previous RKWard installations is removed first
-  sudo port uninstall rkward
-  sudo port uninstall rkward-devel
-  sudo port clean rkward
-  sudo port clean rkward-devel
+  if [[ $(echo $INSTALLEDPORTS | grep "[[:space:]]rkward[[:space:]]" 2> /dev/null ) ]] ; then
+    sudo port uninstall rkward
+    sudo port clean rkward
+  fi
+  if [[ $(echo $INSTALLEDPORTS | grep "[[:space:]]rkward-devel[[:space:]]" 2> /dev/null ) ]] ; then 
+    sudo port uninstall rkward-devel
+    sudo port clean rkward-devel
+  fi
   # build and install recent version
   sudo port -v install $PTARGET
 fi
@@ -191,38 +213,42 @@ fi
 
 # make meta-package including dependencies
 if [[ $MAKEMDMD ]] ; then
-  # before we build the bundle package, replace the destroot folder of the packages
-  # defined in the array EXCLPKG with empty ones, so their stuff is not included
-  for i in ${EXCLPKG[@]} ; do 
-    THISPKG=${MPTINST}/var/macports/build/${BLDPRFX}${i}
-    if [ -d ${THISPKG} ] ; then
-      SUBFLDR=$(ls $THISPKG)
-      if [ -d ${THISPKG}/${SUBFLDR}/work/destroot ] && [ ! -d ${THISPKG}/${SUBFLDR}/work/destroot_off ]; then
-	sudo mv ${THISPKG}/${SUBFLDR}/work/destroot ${THISPKG}/${SUBFLDR}/work/destroot_off
-	sudo mkdir ${THISPKG}/${SUBFLDR}/work/destroot
+  if [[ $DOEXCPCK ]] ; then
+    # before we build the bundle package, replace the destroot folder of the packages
+    # defined in the array EXCLPKG with empty ones, so their stuff is not included
+    for i in ${EXCLPKG[@]} ; do
+      THISPKG=${MPTINST}/var/macports/build/${BLDPRFX}${i}
+      if [ -d ${THISPKG} ] ; then
+        SUBFLDR=$(ls $THISPKG)
+        if [ -d ${THISPKG}/${SUBFLDR}/work/destroot ] && [ ! -d ${THISPKG}/${SUBFLDR}/work/destroot_off ]; then
+          sudo mv ${THISPKG}/${SUBFLDR}/work/destroot ${THISPKG}/${SUBFLDR}/work/destroot_off
+          sudo mkdir ${THISPKG}/${SUBFLDR}/work/destroot
+        fi
+        unset SUBFLDR
+      else
+        echo "warning: can't find ${THISPKG}!"
       fi
-      unset SUBFLDR
-    else
-      echo "warning: can't find ${THISPKG}!"
-    fi
-    unset THISPKG
-  done
+      unset THISPKG
+    done
+  fi
 
   sudo port -v mdmg $PTARGET || exit 1
 
-  # restore original destroot directories
-  for i in ${EXCLPKG[@]} ; do 
-    THISPKG=${MPTINST}/var/macports/build/${BLDPRFX}${i}
-    if [ -d ${THISPKG} ] ; then
-      SUBFLDR=$(ls $THISPKG)
-      if [ -d ${THISPKG}/${SUBFLDR}/work/destroot_off ] ; then
-	sudo rmdir ${THISPKG}/${SUBFLDR}/work/destroot
-	sudo mv ${THISPKG}/${SUBFLDR}/work/destroot_off ${THISPKG}/${SUBFLDR}/work/destroot
+  if [[ $DOEXCPCK ]] ; then
+    # restore original destroot directories
+    for i in ${EXCLPKG[@]} ; do
+      THISPKG=${MPTINST}/var/macports/build/${BLDPRFX}${i}
+      if [ -d ${THISPKG} ] ; then
+        SUBFLDR=$(ls $THISPKG)
+        if [ -d ${THISPKG}/${SUBFLDR}/work/destroot_off ] ; then
+          sudo rmdir ${THISPKG}/${SUBFLDR}/work/destroot
+          sudo mv ${THISPKG}/${SUBFLDR}/work/destroot_off ${THISPKG}/${SUBFLDR}/work/destroot
+        fi
+        unset SUBFLDR
       fi
-      unset SUBFLDR
-    fi
-    unset THISPKG
-  done
+      unset THISPKG
+    done
+  fi
 
   # copy the image file to a public directory
   if [[ $COPYMDMD ]] ; then
