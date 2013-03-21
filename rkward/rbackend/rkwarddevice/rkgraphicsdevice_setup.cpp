@@ -23,9 +23,9 @@
  * 
  ***************************************************************************/
 
-#include <QRect>
 #include "../rkrsupport.h"
-#include "rkgraphicsdevice_stubs.h"
+
+#include "rkgraphicsdevice_stubs.cpp"
 
 struct RKGraphicsDeviceDesc {
 	bool initRDevDesc (pDevDesc dev, double pointsize);
@@ -66,6 +66,7 @@ void RKStartGraphicsDevice (double width, double height, double pointsize, const
 	} END_SUSPEND_INTERRUPTS;
 
 	desc->devnum = curDevice ();
+	RKD_Create (width, height, desc);
 }
 
 SEXP RKStartGraphicsDevice (SEXP width, SEXP height, SEXP pointsize, SEXP family
