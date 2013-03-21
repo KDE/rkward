@@ -17,14 +17,26 @@
 
 #include "rkgraphicsdevice_protocol_shared.h"
 #include "rkgraphicsdevice_backendtransmitter.h"
+#include "../rkrbackend.h"
+
+extern "C" {
+#include <R_ext/GraphicsEngine.h>
+}
 
 #include <QRectF>
 
+#define RKD_PROTOCOL RKGraphicsDeviceBackendTransmitter::protocol
+
 /** This class is essentially like QMutexLocker. In addition, the constructor waits until the next chunk of the transmission is ready (and does event processing) */
-class RKSocketDataStreamReadGuard {
-	RKSocketDataStreamReadGuard () {
+class RKGraphicsDataStreamReadGuard {
+public:
+	RKGraphicsDataStreamReadGuard () {
 #warning TODO: handle cancellation
-		rkwarddeviceprotocolmutex.lock ();
+/* How shall we handle cancellation? If an interrupt is pending, _while waiting for the reply_, we push an RKD_Cancel
+ * request down the line. This tells the frontend to send a reply to the last request ASAP (if the frontend has already sent the reply, it will ignore the RKD_Cancel). From there, we simply process the reply as usual, and leave it to R to actually
+ * do the interrupt. */
+		RKGraphicsDeviceBackendTransmitter::mutex.lock ();
+		QAbstractSocket* connection = RKGraphicsDeviceBackendTransmitter::connection;
 		BEGIN_SUSPEND_INTERRUPTS {
 			while (connection->bytesToWrite ()) {
 				connection->waitForBytesWritten (10);
@@ -35,157 +47,161 @@ class RKSocketDataStreamReadGuard {
 				connection->waitForReadyRead (10);
 			}
 			quint32 transmisison_size;
-			transmisison_size << protocol;
+			RKD_PROTOCOL >> transmisison_size;
 			while (connection->bytesAvailable () < transmisison_size) {
 				RKRBackend::processX11Events ();
 				connection->waitForReadyRead (10);
 			}
+			RKGraphicsDeviceBackendTransmitter::buffer = connection->read (transmisison_size);
 		} END_SUSPEND_INTERRUPTS;
 	}
-	~RKSocketDataStreamReadGuard () {
-		buffer.resize (0);
-		rkwarddeviceprotocolmutex.unlock ();
+
+	~RKGraphicsDataStreamReadGuard () {
+		RKGraphicsDeviceBackendTransmitter::buffer.resize (0);
+		RKGraphicsDeviceBackendTransmitter::mutex.unlock ();
 	}
 };
 
 /** This class is essentially like QMutexLocker. In addition, the destructor takes care of pushing anything that was written to the protocol buffer during it lifetime to the transmitter. (Does NOT wait for the transmission itself). */
-class RKSocketDataStreamWriteGuard {
-	RKSocketDataStreamWriteGuard () {
-		rkwarddeviceprotocolmutex.lock ();
+class RKGraphicsDataStreamWriteGuard {
+public:
+	RKGraphicsDataStreamWriteGuard () {
+		RKGraphicsDeviceBackendTransmitter::mutex.lock ();
 	}
-	~RKSocketDataStreamWriteGuard () {
-		aux_stream << (quint32) buffer.size ();		// TODO: is uint32 always enough?
-		connection->write (aux_buffer);
+	~RKGraphicsDataStreamWriteGuard () {
+		aux_stream << (quint32) RKGraphicsDeviceBackendTransmitter::buffer.size ();		// TODO: is uint32 always enough?
+		RKGraphicsDeviceBackendTransmitter::connection->write (aux_buffer);
 		aux_buffer.resize (0);
-		connection->write (buffer);
-		buffer.resize (0);
-		rkwarddeviceprotocolmutex.unlock ();
+		RKGraphicsDeviceBackendTransmitter::connection->write (RKGraphicsDeviceBackendTransmitter::buffer);
+		RKGraphicsDeviceBackendTransmitter::buffer.resize (0);
+		RKGraphicsDeviceBackendTransmitter::mutex.unlock ();
 	}
-
+private:
 	static QByteArray aux_buffer;
 	static QDataStream aux_stream;
 };
 
-#include <R_ext/GraphicsEngine.h>
+QByteArray RKGraphicsDataStreamWriteGuard::aux_buffer;
+QDataStream RKGraphicsDataStreamWriteGuard::aux_stream (&RKGraphicsDataStreamWriteGuard::aux_buffer, QIODevice::WriteOnly);
 
 #define WRITE_HEADER(x,dev) (qint8) x << (quint8) static_cast<RKGraphicsDeviceDesc*> (dev->deviceSpecific)->devnum
 #define WRITE_COL() (qint32) gc->col
-#define WRITE_PEN() WRITE_COL() << (double) gc->lwd << (qint32) << gc->lty
+#define WRITE_PEN() WRITE_COL() << gc->col << (double) gc->lwd << (qint32) gc->lty
 #define WRITE_LINE_ENDS() (quint8) gc->lend << (quint8) gc->ljoin << gc->lmitre
 #define WRITE_FILL() (qint32) gc->fill
-#define WRITE_FONT(dev) gc->cex << gc->ps << gc->lineheight << (quint8) gc->fontface << gc->fontfamily[0] ? QString (gc->fontfamily) : (static_cast<RKGraphicsDeviceDesc*> (dev->deviceSpecific)->default_family)
+#define WRITE_FONT(dev) gc->cex << gc->ps << gc->lineheight << (quint8) gc->fontface << (gc->fontfamily[0] ? QString (gc->fontfamily) : (static_cast<RKGraphicsDeviceDesc*> (dev->deviceSpecific)->default_family))
 
 static void RKD_Create (double width, double height, pDevDesc dev) {
-	RKSocketDataStreamWriteGuard guard;
-	protocol << WRITE_HEADER (RKDCreate, dev);
-	protocol << width << height;
+	RKGraphicsDataStreamWriteGuard guard;
+	RKD_PROTOCOL << WRITE_HEADER (RKDCreate, dev);
+	RKD_PROTOCOL << width << height;
 }
 
 static void RKD_Circle (double x, double y, double r, R_GE_gcontext *gc, pDevDesc dev) {
-	RKSocketDataStreamWriteGuard guard;
-	protocol << WRITE_HEADER (RKDCircle, dev);
-	protocol << x << y << r;
-	protocol << WRITE_PEN ();
+	RKGraphicsDataStreamWriteGuard guard;
+	RKD_PROTOCOL << WRITE_HEADER (RKDCircle, dev);
+	RKD_PROTOCOL << x << y << r;
+	RKD_PROTOCOL << WRITE_PEN ();
 }
 
 static void RKD_Line (double x1, double y1, double x2, double y2, R_GE_gcontext *gc, pDevDesc dev) {
-	RKSocketDataStreamWriteGuard guard;
-	protocol << WRITE_HEADER (RKDLine, dev);
-	protocol << x1 << y1 << x2 << y2;
-	protocol << WRITE_PEN ();
+	RKGraphicsDataStreamWriteGuard guard;
+	RKD_PROTOCOL << WRITE_HEADER (RKDLine, dev);
+	RKD_PROTOCOL << x1 << y1 << x2 << y2;
+	RKD_PROTOCOL << WRITE_PEN ();
 }
 
 static void RKD_Polygon (int n, double *x, double *y, R_GE_gcontext *gc, pDevDesc dev) {
-	RKSocketDataStreamWriteGuard guard;
-	protocol << WRITE_HEADER (RKDPolygon, dev);
+	RKGraphicsDataStreamWriteGuard guard;
+	RKD_PROTOCOL << WRITE_HEADER (RKDPolygon, dev);
 	quint32 _n = qMax (n, 1 << 25);	// skip stuff exceeding reasonable limits to keep protocol simple
-	protocol << _n;
-	for (quint32 i; i < _n; ++i) {
-		protocol << x[i] << y[i];
+	RKD_PROTOCOL << _n;
+	for (quint32 i = 0; i < _n; ++i) {
+		RKD_PROTOCOL << x[i] << y[i];
 	}
-	protocol << WRITE_PEN ();
-	protocol << WRITE_LINE_ENDS ();
-	protocol << WRITE_FILL ();
+	RKD_PROTOCOL << WRITE_PEN ();
+	RKD_PROTOCOL << WRITE_LINE_ENDS ();
+	RKD_PROTOCOL << WRITE_FILL ();
 }
 
 static void RKD_Polyline (int n, double *x, double *y, R_GE_gcontext *gc, pDevDesc dev) {
-	RKSocketDataStreamWriteGuard guard;
-	protocol << WRITE_HEADER (RKDPolyline, dev);
+	RKGraphicsDataStreamWriteGuard guard;
+	RKD_PROTOCOL << WRITE_HEADER (RKDPolyline, dev);
 	quint32 _n = qMax (n, 1 << 25);	// skip stuff exceeding reasonable limits to keep protocol simple
-	protocol << _n;
-	for (quint32 i; i < _n; ++i) {
-		protocol << x[i] << y[i];
+	RKD_PROTOCOL << _n;
+	for (quint32 i = 0; i < _n; ++i) {
+		RKD_PROTOCOL << x[i] << y[i];
 	}
-	protocol << WRITE_PEN ();
-	protocol << WRITE_LINE_ENDS ();
+	RKD_PROTOCOL << WRITE_PEN ();
+	RKD_PROTOCOL << WRITE_LINE_ENDS ();
 }
 
 static void RKD_Rect (double x0, double y0, double x1, double y1, R_GE_gcontext *gc, pDevDesc dev) {
-	RKSocketDataStreamWriteGuard guard;
-	protocol << WRITE_HEADER (RKDPolyline, dev);
-	protocol << QRectF (x0, y0, x1-x0, y1-y0);
-	protocol << WRITE_PEN ();
-	protocol << WRITE_LINE_ENDS ();
-	protocol << WRITE_FILL ();
+	RKGraphicsDataStreamWriteGuard guard;
+	RKD_PROTOCOL << WRITE_HEADER (RKDPolyline, dev);
+	RKD_PROTOCOL << QRectF (x0, y0, x1-x0, y1-y0);
+	RKD_PROTOCOL << WRITE_PEN ();
+	RKD_PROTOCOL << WRITE_LINE_ENDS ();
+	RKD_PROTOCOL << WRITE_FILL ();
 }
 
-static void RKD_TextUTF8 (double x, double y, char *str, double rot, double hadj, R_GE_gcontext *gc, pDevDesc dev) {
-	RKSocketDataStreamWriteGuard guard;
-	protocol << WRITE_HEADER (RKDTextUTF8, dev);
-	protocol << x << y << QString::fromUtf8 (str) << rot << hadj;
-	protocol << WRITE_COL ();
-	protocol << WRITE_FONT (dev);
+static void RKD_TextUTF8 (double x, double y, const char *str, double rot, double hadj, R_GE_gcontext *gc, pDevDesc dev) {
+	RKGraphicsDataStreamWriteGuard guard;
+	RKD_PROTOCOL << WRITE_HEADER (RKDTextUTF8, dev);
+	RKD_PROTOCOL << x << y << QString::fromUtf8 (str) << rot << hadj;
+	RKD_PROTOCOL << WRITE_COL ();
+	RKD_PROTOCOL << WRITE_FONT (dev);
 }
 
-static double RKD_StrWidthUTF8 (char *str, R_GE_gcontext *gc, pDevDesc dev) {
+static double RKD_StrWidthUTF8 (const char *str, R_GE_gcontext *gc, pDevDesc dev) {
 	{
-		RKSocketDataStreamWriteGuard guard;
-		protocol << WRITE_HEADER (RKDStrWidthUTF8, dev);
-		protocol << QString::fromUtf8 (str);
-		protocol << WRITE_FONT (dev);
+		RKGraphicsDataStreamWriteGuard guard;
+		RKD_PROTOCOL << WRITE_HEADER (RKDStrWidthUTF8, dev);
+		RKD_PROTOCOL << QString::fromUtf8 (str);
+		RKD_PROTOCOL << WRITE_FONT (dev);
 	}
 	double ret;
 	{
-		RKSocketDataStreamReadGuard guard;
-		ret << protocol;
+		RKGraphicsDataStreamReadGuard guard;
+		RKD_PROTOCOL >> ret;
 	}
 	return ret;
 }
 
 static void RKD_NewPage (R_GE_gcontext *gc, pDevDesc dev) {
-	RKSocketDataStreamWriteGuard guard;
-	protocol << WRITE_HEADER (RKDNewPage, dev);
-	protocol << WRITE_FILL ();
+	RKGraphicsDataStreamWriteGuard guard;
+	RKD_PROTOCOL << WRITE_HEADER (RKDNewPage, dev);
+	RKD_PROTOCOL << WRITE_FILL ();
 }
 
 static void RKD_MetricInfo (int c, R_GE_gcontext *gc, double* ascent, double* descent, double* width, pDevDesc dev) {
 	{
-		RKSocketDataStreamWriteGuard wguard;
-		protocol << WRITE_HEADER (RKDMetricInfo, dev);
-		protocol << QChar (c);
-		protocol << WRITE_FONT (dev);
+		RKGraphicsDataStreamWriteGuard wguard;
+		RKD_PROTOCOL << WRITE_HEADER (RKDMetricInfo, dev);
+		RKD_PROTOCOL << QChar (c);
+		RKD_PROTOCOL << WRITE_FONT (dev);
 	}
 	{
-		RKSocketDataStreamReadGuard rguard;
-		*ascent << protocol;
-		*descent << protocol;
-		*width << protocol;
+		RKGraphicsDataStreamReadGuard rguard;
+		RKD_PROTOCOL >> *ascent;
+		RKD_PROTOCOL >> *descent;
+		RKD_PROTOCOL >> *width;
 	}
 }
 
 static void RKD_Close (pDevDesc dev) {
-	RKSocketDataStreamWriteGuard guard;
-	protocol << WRITE_HEADER (RKDClose, dev);
+	RKGraphicsDataStreamWriteGuard guard;
+	RKD_PROTOCOL << WRITE_HEADER (RKDClose, dev);
 }
 
 static void RKD_Activate (pDevDesc dev) {
-	RKSocketDataStreamWriteGuard guard;
-	protocol << WRITE_HEADER (RKDActivate, dev);
+	RKGraphicsDataStreamWriteGuard guard;
+	RKD_PROTOCOL << WRITE_HEADER (RKDActivate, dev);
 }
 
 static void RKD_Deactivate (pDevDesc dev) {
-	RKSocketDataStreamWriteGuard guard;
-	protocol << WRITE_HEADER (RKDDeActivate, dev);
+	RKGraphicsDataStreamWriteGuard guard;
+	RKD_PROTOCOL << WRITE_HEADER (RKDDeActivate, dev);
 }
 
 static void RKD_Clip (double left, double right, double top, double bottom, pDevDesc dev) {
@@ -193,44 +209,47 @@ static void RKD_Clip (double left, double right, double top, double bottom, pDev
 	dev->clipRight = right;
 	dev->clipTop = top;
 	dev->clipBottom = bottom;
-	RKSocketDataStreamWriteGuard guard;
-	protocol << WRITE_HEADER (RKDClip, dev);
-	protocol << QRectF (left, top, right - left, bottom - top);
+	RKGraphicsDataStreamWriteGuard guard;
+	RKD_PROTOCOL << WRITE_HEADER (RKDClip, dev);
+	RKD_PROTOCOL << QRectF (left, top, right - left, bottom - top);
 }
 
 static void RKD_Mode (int mode, pDevDesc dev) {
+	Q_UNUSED (mode);
+	Q_UNUSED (dev);
 /* Left empty for now. 1 is start signal, 0 is stop signal. Might be useful for flushing, though.
 
-	RKSocketDataStreamWriteGuard guard;
-	protocol << WRITE_HEADER (RKDMode, dev);
+	RKGraphicsDataStreamWriteGuard guard;
+	RKD_PROTOCOL << WRITE_HEADER (RKDMode, dev);
 	connectoin << (qint8) mode; */
 }
 
 static Rboolean RKD_Locator (double *x, double *y, pDevDesc dev) {
 	{
-		RKSocketDataStreamWriteGuard wguard;
-		protocol << WRITE_HEADER (RKDLocator, dev);
+		RKGraphicsDataStreamWriteGuard wguard;
+		RKD_PROTOCOL << WRITE_HEADER (RKDLocator, dev);
 	}
 	{
-		RKSocketDataStreamReadGuard rguard;
+		RKGraphicsDataStreamReadGuard rguard;
 		bool ok;
-		ok << protocol;
-		*x << protocol;
-		*y << protocol;
-		if (ok) return TRUE;
-		return FALSE;
+		RKD_PROTOCOL >> ok;
+		RKD_PROTOCOL >> *x;
+		RKD_PROTOCOL >> *y;
+		if (ok) return (Rboolean) TRUE;
+		return (Rboolean) FALSE;
 	}
 }
 
 static Rboolean RKD_NewFrameConfirm (pDevDesc dev) {
 	{
-		RKSocketDataStreamWriteGuard wguard;
-		protocol << WRITE_HEADER (RKDNewPageConfirm, dev);
+		RKGraphicsDataStreamWriteGuard wguard;
+		RKD_PROTOCOL << WRITE_HEADER (RKDNewPageConfirm, dev);
 	}
 	{
-		RKSocketDataStreamReadGuard rguard;
-		bool ok << protocol;
-		if (ok) return TRUE;
-		return FALSE;
+		RKGraphicsDataStreamReadGuard rguard;
+		bool ok;
+		RKD_PROTOCOL >> ok;
+		if (ok) return (Rboolean) TRUE;
+		return (Rboolean) FALSE;
 	}
 }

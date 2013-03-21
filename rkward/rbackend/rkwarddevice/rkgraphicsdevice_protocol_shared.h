@@ -15,7 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 
-enum {
+enum RKDOpcodes {
 	// Asynchronous operations
 	RKDCreate,
 	RKDCircle,
@@ -37,4 +37,4 @@ enum {
 	RKDMetricInfo,
 	RKDLocator,
 	RKDNewPageConfirm
-} OpCodes;
+};

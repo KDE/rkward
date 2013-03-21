@@ -25,7 +25,17 @@
 
 #include "../rkrsupport.h"
 
-#include "rkgraphicsdevice_stubs.cpp"
+#ifdef TRUE
+#	undef TRUE
+#endif
+#ifdef FALSE
+#	undef FALSE
+#endif
+#define R_USE_PROTOTPYES 1
+
+extern "C" {
+#include <R_ext/GraphicsEngine.h>
+}
 
 struct RKGraphicsDeviceDesc {
 	bool initRDevDesc (pDevDesc dev, double pointsize);
@@ -34,6 +44,8 @@ struct RKGraphicsDeviceDesc {
 	QString default_family;
 	pDevDesc rdevdesc;
 };
+
+#include "rkgraphicsdevice_stubs.cpp"
 
 #define RKGD_DPI 72
 
@@ -45,32 +57,34 @@ void RKStartGraphicsDevice (double width, double height, double pointsize, const
 	desc->width = width * RKGD_DPI;
 	desc->height = height * RKGD_DPI;
 	desc->default_family = family;
-//	_scene->setSceneRect(0.0, 0.0, width, height);
 
 	R_GE_checkVersionOrDie (R_GE_version);
 	R_CheckDeviceAvailable ();
+	pDevDesc dev;
 	BEGIN_SUSPEND_INTERRUPTS {
-		pDevDesc dev;
 		/* Allocate and initialize the device driver data */
-		if (!(dev = (pDevDesc) calloc (1, sizeof(DevDesc))))
-			return 0; /* or error() */
-		/* set up device driver or free 'dev' and error() */
-		if (!desc->initRDevDesc (dev, pointsize, desc)) {
+		dev = (pDevDesc) calloc (1, sizeof(DevDesc));
+		if (!(dev && desc->initRDevDesc (dev, pointsize))) {
 			free (dev);
 			delete (desc);
-			Rf_error("unable to start device");
+			desc = 0;
+		} else {
+			pGEDevDesc gdd = GEcreateDevDesc (dev);
+			gdd->displayList = R_NilValue;
+			GEaddDevice2 (gdd, "RKGraphicsDevice");
 		}
-		pGEDevDesc gdd = GEcreateDevDesc (dev);
-		gdd->displayList = R_NilValue;
-		GEaddDevice2 (gdd, "QTScene");
 	} END_SUSPEND_INTERRUPTS;
 
-	desc->devnum = curDevice ();
-	RKD_Create (width, height, desc);
+	if (desc) {
+		desc->devnum = curDevice ();
+		RKD_Create (desc->width, desc->height, dev);
+	} else {
+		Rf_error("unable to start device");
+	}
 }
 
 SEXP RKStartGraphicsDevice (SEXP width, SEXP height, SEXP pointsize, SEXP family
-#warning TODO: add more params for compatibility with X11
+#warning TODO: add more params for compatibility with X11()
 ) {
 	RKStartGraphicsDevice (Rf_asReal (width), Rf_asReal (height), Rf_asReal (pointsize), RKRSupport::SEXPToString (family));
 	return R_NilValue;
@@ -113,8 +127,8 @@ bool RKGraphicsDeviceDesc::initRDevDesc (pDevDesc dev, double pointsize) {
 	dev->displayListOn = TRUE;
 
 	dev->hasTextUTF8 = TRUE;
-	dev->textUTF8 = (void (*)()) RKD_TextUTF8;
-	dev->strWidthUTF8 = (double (*)()) RKD_StrWidthUTF8;
+	dev->textUTF8 = RKD_TextUTF8;
+	dev->strWidthUTF8 = RKD_StrWidthUTF8;
 	dev->wantSymbolUTF8 = TRUE;
 	dev->useRotatedTextInContour = TRUE;
 
@@ -138,23 +152,23 @@ bool RKGraphicsDeviceDesc::initRDevDesc (pDevDesc dev, double pointsize) {
 	/*
 	* Device functions
 	*/
-	dev->activate =    (void (*)()) RKD_Activate;
-	dev->circle =      (void (*)()) RKD_Circle;
-	dev->clip =        (void (*)()) RKD_Clip;
-	dev->close =       (void (*)()) RKD_Close;
-	dev->deactivate =  (void (*)()) RKD_Deactivate;
-	dev->locator = (Rboolean (*)()) RKD_Locator;
-	dev->line =        (void (*)()) RKD_Line;
-	dev->metricInfo =  (void (*)()) RKD_MetricInfo;
-	dev->mode =        (void (*)()) RKD_Mode;
-	dev->newPage =     (void (*)()) RKD_NewPage;
-	dev->polygon =     (void (*)()) RKD_Polygon;
-	dev->polyline =    (void (*)()) RKD_Polyline;
-	dev->rect =        (void (*)()) RKD_Rect;
-	dev->size =        NULL; // (void (*)()) RKD_Size;
-	// dev->onexit =      (void (*)()) RKD_OnExit; NULL is OK
+	dev->activate = RKD_Activate;
+	dev->circle = RKD_Circle;
+	dev->clip = RKD_Clip;
+	dev->close = RKD_Close;
+	dev->deactivate = RKD_Deactivate;
+	dev->locator = RKD_Locator;
+	dev->line = RKD_Line;
+	dev->metricInfo = RKD_MetricInfo;
+	dev->mode = RKD_Mode;
+	dev->newPage = RKD_NewPage;
+	dev->polygon = RKD_Polygon;
+	dev->polyline = RKD_Polyline;
+	dev->rect = RKD_Rect;
+	dev->size = NULL; // RKD_Size;
+	// dev->onexit = RKD_OnExit; NULL is OK
 	// dev->getEvent = SEXP (*getEvent)(SEXP, const char *);
-	dev->newFrameConfirm = (Rboolean (*)()) RKD_NewFrameConfirm;
+	dev->newFrameConfirm = RKD_NewFrameConfirm;
 
 	return true;
 }
