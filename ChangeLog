@@ -1,5 +1,5 @@
 --- Version 0.6.1 - Apr-02-2013
-- Add option to force-close a graphics window		TODO: test on windows
+- Add option to force-close a graphics window
 - Add plugin for subsetting data.frames by rows or columns
 - On the Windows platform, add an new (experimental) binary startup wrapper (rkward.exe)
 - Revert to building R packages form source on Mac OS X by default (controllable via compile-time option)
