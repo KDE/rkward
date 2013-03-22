@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
 "group_id=50231&atid=459007\n"
-"POT-Creation-Date: 2013-03-17 08:39+0100\n"
+"POT-Creation-Date: 2013-03-22 12:10+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3419,175 +3419,189 @@ msgstr ""
 msgid "Large window"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:254
+#: windows/rkwindowcatcher.cpp:266
 msgid "Shutting down device number %1"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:255
+#: windows/rkwindowcatcher.cpp:267
 msgid "Closing device (saving history)"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:342
+#: windows/rkwindowcatcher.cpp:269
+msgid ""
+"<p>The graphics device is being closed, saving the last plot to the plot "
+"history. This may take a while, if the R backend is still busy. To close the "
+"graphics device immediately, click 'Cancel'. However, the last plot may be "
+"missing from the plot history, if you do this.</p>"
+msgstr ""
+
+#: windows/rkwindowcatcher.cpp:271
+msgid ""
+"<p>Note: On X11, the embedded window may be expurged, when you press "
+"'Cancel' and you will have to close it manually in this case.</p>"
+msgstr ""
+
+#: windows/rkwindowcatcher.cpp:363
 msgid "Specify fixed size"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:348
+#: windows/rkwindowcatcher.cpp:369
 msgid "Width"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:352
+#: windows/rkwindowcatcher.cpp:373
 msgid "Height"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:370
+#: windows/rkwindowcatcher.cpp:391
 msgid "Activate graphics device number %1"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:376
+#: windows/rkwindowcatcher.cpp:397
 msgid "Copy contents of graphics device number %1 to output"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:384
+#: windows/rkwindowcatcher.cpp:405
 msgid "Print contents of graphics device number %1"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:393
+#: windows/rkwindowcatcher.cpp:414
 msgid "Specify R object"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:398
+#: windows/rkwindowcatcher.cpp:419
 msgid "Specify the R object name, you want to save the graph to"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:410
+#: windows/rkwindowcatcher.cpp:431
 msgid "Save contents of graphics device number %1 to object '%2'"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:419
+#: windows/rkwindowcatcher.cpp:440
 msgid "Duplicate graphics device number %1"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:425
+#: windows/rkwindowcatcher.cpp:446
 msgid "Load next plot in device number %1"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:426 windows/rkwindowcatcher.cpp:434
-#: windows/rkwindowcatcher.cpp:442 windows/rkwindowcatcher.cpp:450
-#: windows/rkwindowcatcher.cpp:458
+#: windows/rkwindowcatcher.cpp:447 windows/rkwindowcatcher.cpp:455
+#: windows/rkwindowcatcher.cpp:463 windows/rkwindowcatcher.cpp:471
+#: windows/rkwindowcatcher.cpp:479
 msgid "Loading plot from history"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:433
+#: windows/rkwindowcatcher.cpp:454
 msgid "Load previous plot in device number %1"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:441
+#: windows/rkwindowcatcher.cpp:462
 msgid "Load first plot in device number %1"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:449
+#: windows/rkwindowcatcher.cpp:470
 msgid "Load last plot in device number %1"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:457
+#: windows/rkwindowcatcher.cpp:478
 msgid "Load plot %1 in device number %2"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:465
+#: windows/rkwindowcatcher.cpp:486
 msgid "Append this plot to history (device number %1)"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:471
+#: windows/rkwindowcatcher.cpp:492
 msgid "Remove current plot from history (device number %1)"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:477
+#: windows/rkwindowcatcher.cpp:498
 msgid ""
 "This will clear the plot history for all device windows, not just this one. "
 "If this is not your intent, press cancel, below."
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:479
+#: windows/rkwindowcatcher.cpp:500
 msgid "Clear plot history"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:485
+#: windows/rkwindowcatcher.cpp:506
 msgid "Plot properties (device number %1)"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:499
+#: windows/rkwindowcatcher.cpp:520
 msgid "<Unsaved plot>"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:559
+#: windows/rkwindowcatcher.cpp:580
 msgid "Draw area follows size of window"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:565
+#: windows/rkwindowcatcher.cpp:586
 msgid "Set fixed size 500x500"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:567
+#: windows/rkwindowcatcher.cpp:588
 msgid "Set fixed size 1000x1000"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:569
+#: windows/rkwindowcatcher.cpp:590
 msgid "Set fixed size 2000x2000"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:571
+#: windows/rkwindowcatcher.cpp:592
 msgid "Set specified fixed size..."
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:574
+#: windows/rkwindowcatcher.cpp:595
 msgid "Previous plot"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:578
+#: windows/rkwindowcatcher.cpp:599
 msgid "First plot"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:582
+#: windows/rkwindowcatcher.cpp:603
 msgid "Next plot"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:586
+#: windows/rkwindowcatcher.cpp:607
 msgid "Last plot"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:589
+#: windows/rkwindowcatcher.cpp:610
 msgid "Go to plot"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:596
+#: windows/rkwindowcatcher.cpp:617
 msgid "Append this plot"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:600
+#: windows/rkwindowcatcher.cpp:621
 msgid "Remove this plot"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:606
+#: windows/rkwindowcatcher.cpp:627
 msgid "Clear history"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:611
+#: windows/rkwindowcatcher.cpp:632
 msgid "Plot properties"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:615
+#: windows/rkwindowcatcher.cpp:636
 msgid "Make active"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:618
+#: windows/rkwindowcatcher.cpp:639
 msgid "Copy to output"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:622
+#: windows/rkwindowcatcher.cpp:643
 msgid "Store as R object..."
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:624
+#: windows/rkwindowcatcher.cpp:645
 msgid "Duplicate"
 msgstr ""
 
