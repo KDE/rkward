@@ -157,13 +157,14 @@ public slots:
 	void setKilledInR () { killed_in_r = true; };
 private slots:
 	void doEmbed ();
-	void forceClose ();
 private:
+	void forceClose ();
 	void reEmbed ();
 	void rCommandDone (RCommand *command);
 	friend class RKCaughtX11WindowPart;	// needs access to the actions
 	int device_number;
 	bool killed_in_r;
+	bool close_attempted;
 	WId embedded;
 	KVBox *xembed_container;
 	QScrollArea *scroll_widget;

@@ -143,7 +143,7 @@ RKCaughtX11Window::RKCaughtX11Window (WId window_to_embed, int device_number) : 
 	RK_TRACE (MISC);
 
 	capture = 0;
-	killed_in_r = false;
+	killed_in_r = close_attempted = false;
 	embedded = window_to_embed;
 	RKCaughtX11Window::device_number = device_number;
 	RK_ASSERT (!device_windows.contains (device_number));
@@ -245,6 +245,7 @@ RKCaughtX11Window::~RKCaughtX11Window () {
 }
 
 void RKCaughtX11Window::forceClose () {
+	killed_in_r = true;
 	if (capture) {
 #ifdef Q_WS_X11
 		// HACK: Somehow (R 3.0.0alpha), the X11() window is surpisingly die-hard, if it is not close "the regular way".
@@ -263,18 +264,19 @@ bool RKCaughtX11Window::close (bool also_delete) {
 		return RKMDIWindow::close (also_delete);
 	}
 
-	RCommand* c = new RCommand ("dev.off (" + QString::number (device_number) + ')', RCommand::App, i18n ("Shutting down device number %1", device_number));
 	QString status = i18n ("Closing device (saving history)");
-	setStatusMessage (status, c);
-	RKProgressControl *pc = new RKProgressControl (this, i18n ("<p>The graphics device is being closed, saving the last plot to the plot history. This may take a while, if the R backend is still busy. To close the graphics device immediately, click 'Cancel'. However, the last plot may be missing from the plot history, if you do this.</p>")
+	if (!close_attempted) {
+		RCommand* c = new RCommand ("dev.off (" + QString::number (device_number) + ')', RCommand::App, i18n ("Shutting down device number %1", device_number));
+		setStatusMessage (status, c);
+		RKGlobals::rInterface ()->issueCommand (c);
+		close_attempted = true;
+	} else {
+		if (KMessageBox::questionYesNo (this, i18n ("<p>The graphics device is being closed, saving the last plot to the plot history. This may take a while, if the R backend is still busy. You can close the graphics device immediately, in case it is stuck. However, the last plot may be missing from the plot history, if you do this.</p>")
 #ifdef Q_WS_X11
-	+ i18n ("<p>Note: On X11, the embedded window may be expurged, when you press 'Cancel' and you will have to close it manually in this case.</p>")
+		+ i18n ("<p>Note: On X11, the embedded window may be expurged, and you will have to close it manually in this case.</p>")
 #endif
-	, status, RKProgressControl::CancellableNoProgress);
-	pc->addRCommand (c);
-	connect (pc, SIGNAL (cancelled()), this, SLOT (forceClose()));
-	pc->doNonModal (true);
-	RKGlobals::rInterface ()->issueCommand (c);
+		, status, KGuiItem (i18n ("Close immediately")), KGuiItem (i18n ("Keep waiting"))) == KMessageBox::Yes) forceClose ();
+	}
 
 	return false;
 }
