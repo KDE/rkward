@@ -27,8 +27,6 @@
 #include <QProcess>
 #include <QSettings>
 
-#include <stdlib.h>
-
 #ifndef RKWARD_REL_INSTALL_PATH
 #	define RKWARD_REL_INSTALL_PATH ""
 #endif
@@ -77,8 +75,8 @@ int main (int argc, char *argv[]) {
 		kdeinit4_exe = findExeAtPath ("kdeinit4", kde_dir.path ());
 #endif
 		// important if RKWard is not in KDEPREFIX/bin but e.g. KDEPREFIX/lib/libexec
-		setenv ("RKWARD_ENSURE_PREFIX", kde_dir.path().toLocal8Bit (), 1);
-
+		qputenv ("RKWARD_ENSURE_PREFIX", kde_dir.path().toLocal8Bit ());
+	
 		rkward_frontend_exe = findRKWardAtPath (kde_dir.absoluteFilePath ("bin"));
 		if (rkward_frontend_exe.isNull ()) rkward_frontend_exe = findRKWardAtPath (kde_dir.absoluteFilePath ("../lib/libexec"));
 		if (rkward_frontend_exe.isNull ()) rkward_frontend_exe = findRKWardAtPath (kde_dir.absoluteFilePath (RKWARD_REL_INSTALL_PATH));
