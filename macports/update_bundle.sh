@@ -14,13 +14,12 @@ APPLDIR=/Applications/RKWard
 # specify the prefix for build directories below ${MPTINST}/var/macports/build
 BLDPRFX=_opt_rkward_var_macports_sources_rsync.macports.org_release_tarballs_ports_
 # this array holds all packages who should not be included in the bundle
-#declare -a EXCLPKG=(audio_flac audio_jack audio_lame audio_libmodplug audio_libopus audio_libsamplerate \
-# audio_libsndfile audio_libvorbis audio_phonon audio_speex \
-# databases_db46 databases_gdbm databases_sqlite3 devel_boost devel_soprano devel_strigi devel_virtuoso
-# gnome_gobject-introspection gnome_gtk2 gnome_hicolor-icon-theme gnome_libglade2 \
-# multimedia_XviD multimedia_dirac multimedia_ffmpeg multimedia_libogg multimedia_libtheora multimedia_libvpx \ 
-# multimedia_schroedinger multimedia_x264 net_avahi net_kerberos5 security_cyrus-sasl2 sysutils_e2fsprogs )
-
+declare -a EXCLPKG=(audio_flac audio_jack audio_lame audio_libmodplug audio_libopus audio_libsamplerate \
+  audio_libsndfile audio_libvorbis audio_phonon audio_speex \
+  databases_db46 databases_gdbm databases_sqlite3 devel_boost devel_soprano devel_strigi devel_virtuoso \
+  gnome_gobject-introspection gnome_gtk2 gnome_hicolor-icon-theme gnome_libglade2 \
+  multimedia_XviD multimedia_dirac multimedia_ffmpeg multimedia_libogg multimedia_libtheora multimedia_libvpx \
+  multimedia_schroedinger multimedia_x264 net_avahi net_kerberos5 security_cyrus-sasl2 sysutils_e2fsprogs )
 #declare -a EXCLPKG=(audio_flac audio_jack audio_lame audio_libmodplug audio_libopus audio_libsamplerate \
 # audio_libsndfile audio_libvorbis audio_phonon audio_speex \
 # gnome_gobject-introspection gnome_gtk2 gnome_hicolor-icon-theme gnome_libglade2 \
@@ -38,6 +37,7 @@ if [[ $1 == "" ]] ; then
            -F <MacPorts version> (do an all fresh installation of <MacPorts version>)
            -f (list disk usage for all includable ports)
            -l (remove static port libraries)
+           -L (don't bundle probably superfluous ports)
            -p (update macports, remove inactive)
            -r (update port ${PTARGET})
            -m (create .mdmg of ${PTARGET})
@@ -47,7 +47,7 @@ if [[ $1 == "" ]] ; then
 fi
 
 # get the options
-while getopts ":DflprmscxXF:" OPT; do
+while getopts ":DflLprmscxXF:" OPT; do
   case $OPT in
     D) PTARGET=rkward >&2 ;;
     F)
@@ -55,11 +55,12 @@ while getopts ":DflprmscxXF:" OPT; do
        MCPVERS=$OPTARG >&2 ;;
     f) LSDSKUSG=TRUE >&2 ;;
     l) RMSTLIBS=TRUE >&2 ;;
+    L) DOEXCPCK=TRUE >&2 ;;
     p) UPMPORTS=TRUE >&2 ;;
     r) UPRKWARD=TRUE >&2 ;;
     m)
        RMSTLIBS=TRUE >&2
-#       DOEXCPCK=TRUE >&2
+       RPATHFIX=TRUE >&2
        MAKEMDMD=TRUE >&2 ;;
     s) MKSRCTAR=TRUE >&2 ;;
     c) COPYMDMD=TRUE >&2 ;;
@@ -213,6 +214,26 @@ fi
 
 # make meta-package including dependencies
 if [[ $MAKEMDMD ]] ; then
+  if [[ $RPATHFIX ]] ; then
+    # this is to fix some kind of a race condition: if RKWard gets installed before R-framework,
+    # it wil create a directory which must actually be a symlink in order for R to run! so we'll
+    # move RKWard's own packages before bundling it
+    RKWDSTROOT=${MPTINST}/var/macports/build/_opt_ports_kde_rkward/${PTARGET}/work/destroot
+    RKWRFWPATH=${RKWDSTROOT}/${MPTINST}/Library/Frameworks/R.framework
+    # only do this if the Resources directory exists
+    if [ -d ${RKWRFWPATH}/Resources ] ; then
+      RFWPATH=${MPTINST}/var/macports/build/${BLDPRFX}math_R-framework/R-framework/work/destroot
+      RVERSPATH=${RFWPATH}/${MPTINST}/Library/Frameworks/R.framework/Versions
+      # this variable will hold the R version of the installed framework
+      RFWVERS=$(cd ${RVERSPATH} && find . -type d -maxdepth 1 -mindepth 1 | sed -e "s#./##" || exit 1)
+      # now cd into RKWard's destroot and re-arrange the directory structure
+      cd $RKWRFWPATH || exit 1
+      sudo mkdir -p "Versions/${RFWVERS}/Resources" || exit 1
+      sudo mv "Resources/library" "Versions/${RFWVERS}/Resources/" || exit 1
+      sudo rm -rf "Resources" || exit 1
+      cd $OLDWD || exit 1
+    fi
+  fi
   if [[ $DOEXCPCK ]] ; then
     # before we build the bundle package, replace the destroot folder of the packages
     # defined in the array EXCLPKG with empty ones, so their stuff is not included
@@ -249,6 +270,16 @@ if [[ $MAKEMDMD ]] ; then
       unset THISPKG
     done
   fi
+  if [[ $RPATHFIX ]] ; then
+    if [ -d ${RKWRFWPATH}/Versions ] ; then
+      cd $RKWRFWPATH || exit 1
+      sudo mkdir -p "Resources" || exit 1
+      sudo mv "Versions/${RFWVERS}/Resources/library" "Resources/" || exit 1
+      sudo rm -rf "Versions" || exit 1
+      cd $OLDWD || exit 1
+    fi
+  fi
+
 
   # copy the image file to a public directory
   if [[ $COPYMDMD ]] ; then
