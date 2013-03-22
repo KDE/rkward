@@ -2,7 +2,7 @@
                           rwindowcatcher.cpp  -  description
                              -------------------
     begin                : Wed May 4 2005
-    copyright            : (C) 2005, 2006, 2007, 2009, 2010, 2011, 2012 by Thomas Friedrichsmeier
+    copyright            : (C) 2005 - 2013 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -244,6 +244,18 @@ RKCaughtX11Window::~RKCaughtX11Window () {
 	delete status_popup;
 }
 
+void RKCaughtX11Window::forceClose () {
+	if (capture) {
+#ifdef Q_WS_X11
+		// HACK: Somehow (R 3.0.0alpha), the X11() window is surpisingly die-hard, if it is not close "the regular way".
+		// So we expurge it, and leave the rest to the user.
+		capture->discardClient ();
+		qApp->processEvents ();
+#endif
+	}
+	RKMDIWindow::close (true);
+}
+
 bool RKCaughtX11Window::close (bool also_delete) {
 	RK_TRACE (MISC);
 
@@ -251,8 +263,17 @@ bool RKCaughtX11Window::close (bool also_delete) {
 		return RKMDIWindow::close (also_delete);
 	}
 
-	RCommand* c = new RCommand ("dev.off (" + QString::number (device_number) + ')', RCommand::App, i18n ("Shutting down device number %1", device_number), error_dialog);
-	setStatusMessage (i18n ("Closing device (saving history)"), c);
+	RCommand* c = new RCommand ("dev.off (" + QString::number (device_number) + ')', RCommand::App, i18n ("Shutting down device number %1", device_number));
+	QString status = i18n ("Closing device (saving history)");
+	setStatusMessage (status, c);
+	RKProgressControl *pc = new RKProgressControl (this, i18n ("<p>The graphics device is being closed, saving the last plot to the plot history. This may take a while, if the R backend is still busy. To close the graphics device immediately, click 'Cancel'. However, the last plot may be missing from the plot history, if you do this.</p>")
+#ifdef Q_WS_X11
+	+ i18n ("<p>Note: On X11, the embedded window may be expurged, when you press 'Cancel' and you will have to close it manually in this case.</p>")
+#endif
+	, status, RKProgressControl::CancellableNoProgress);
+	pc->addRCommand (c);
+	connect (pc, SIGNAL (cancelled()), this, SLOT (forceClose()));
+	pc->doNonModal (true);
 	RKGlobals::rInterface ()->issueCommand (c);
 
 	return false;
