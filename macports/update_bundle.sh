@@ -15,13 +15,13 @@ APPLDIR=/Applications/RKWard
 BLDPRFX=_opt_rkward_var_macports_sources_rsync.macports.org_release_tarballs_ports_
 # this array holds all packages who should not be included in the bundle
 declare -a EXCLPKG=(audio_flac audio_jack audio_lame audio_libmodplug audio_libopus audio_libsamplerate \
-  audio_libsndfile audio_libvorbis audio_phonon audio_speex \
+  audio_libsndfile audio_libvorbis audio_speex \
   databases_db46 databases_gdbm databases_sqlite3 devel_boost devel_soprano devel_strigi devel_virtuoso \
   gnome_gobject-introspection gnome_gtk2 gnome_hicolor-icon-theme gnome_libglade2 \
   multimedia_XviD multimedia_dirac multimedia_ffmpeg multimedia_libogg multimedia_libtheora multimedia_libvpx \
   multimedia_schroedinger multimedia_x264 net_avahi net_kerberos5 security_cyrus-sasl2 sysutils_e2fsprogs )
 #declare -a EXCLPKG=(audio_flac audio_jack audio_lame audio_libmodplug audio_libopus audio_libsamplerate \
-# audio_libsndfile audio_libvorbis audio_phonon audio_speex \
+# audio_libsndfile audio_libvorbis audio_speex \
 # gnome_gobject-introspection gnome_gtk2 gnome_hicolor-icon-theme gnome_libglade2 \
 # multimedia_XviD multimedia_dirac multimedia_ffmpeg multimedia_libogg multimedia_libtheora multimedia_libvpx \
 # multimedia_schroedinger multimedia_x264 net_avahi net_kerberos5 security_cyrus-sasl2 sysutils_e2fsprogs )
@@ -220,12 +220,16 @@ if [[ $MAKEMDMD ]] ; then
     # move RKWard's own packages before bundling it
     RKWDSTROOT=${MPTINST}/var/macports/build/_opt_ports_kde_rkward/${PTARGET}/work/destroot
     RKWRFWPATH=${RKWDSTROOT}/${MPTINST}/Library/Frameworks/R.framework
+    RFWPATH=${MPTINST}/var/macports/build/${BLDPRFX}math_R-framework/R-framework/work/destroot
+    RVERSPATH=${RFWPATH}/${MPTINST}/Library/Frameworks/R.framework/Versions
+    # this variable will hold the R version of the installed framework
+    RFWVERS=$(cd ${RVERSPATH} && find . -type d -maxdepth 1 -mindepth 1 | sed -e "s#./##" || exit 1)
+    if [[ $RFWVERS == "" ]] ; then
+      echo "could not get R version! aborting..."
+      exit 1
+    fi
     # only do this if the Resources directory exists
     if [ -d ${RKWRFWPATH}/Resources ] ; then
-      RFWPATH=${MPTINST}/var/macports/build/${BLDPRFX}math_R-framework/R-framework/work/destroot
-      RVERSPATH=${RFWPATH}/${MPTINST}/Library/Frameworks/R.framework/Versions
-      # this variable will hold the R version of the installed framework
-      RFWVERS=$(cd ${RVERSPATH} && find . -type d -maxdepth 1 -mindepth 1 | sed -e "s#./##" || exit 1)
       # now cd into RKWard's destroot and re-arrange the directory structure
       cd $RKWRFWPATH || exit 1
       sudo mkdir -p "Versions/${RFWVERS}/Resources" || exit 1
@@ -253,6 +257,8 @@ if [[ $MAKEMDMD ]] ; then
     done
   fi
 
+  # cleaning boost, the avahi port somehow gets installed in two varaints...
+  sudo port clean boost
   sudo port -v mdmg $PTARGET || exit 1
 
   if [[ $DOEXCPCK ]] ; then
