@@ -40,24 +40,24 @@
 
 enum RKDOpcodes {
 	// Asynchronous operations
-	RKDCreate,
+	RKDCreate,     // 0
 	RKDCircle,
 	RKDLine,
 	RKDPolygon,
 	RKDPolyline,
-	RKDRect,
+	RKDRect,       // 5
 	RKDTextUTF8,
 	RKDNewPage,
 	RKDClose,
 	RKDActivate,
-	RKDDeActivate,
+	RKDDeActivate, // 10
 	RKDClip,
 	RKDMode,
 
 	// Synchronous operations
 	RKD_First_Synchronous_Request,
 	RKDStrWidthUTF8,
-	RKDMetricInfo,
+	RKDMetricInfo, // 15
 	RKDLocator,
 	RKDNewPageConfirm
 };

@@ -69,15 +69,19 @@ void RKStartGraphicsDevice (double width, double height, double pointsize, const
 			delete (desc);
 			desc = 0;
 		} else {
-			desc->devnum = curDevice ();
-			RKD_Create (desc->width, desc->height, dev);
+			desc->devnum = 0;	// graphics engine will send an Activate-event, before we were even
+								// able to see our own devnum and call RKD_Create. Therefore, intialize
+								// devnum to 0, so as not to confuse the frontend
 			pGEDevDesc gdd = GEcreateDevDesc (dev);
 			gdd->displayList = R_NilValue;
 			GEaddDevice2 (gdd, "RKGraphicsDevice");
 		}
 	} END_SUSPEND_INTERRUPTS;
 
-	if (!desc) {
+	if (desc) {
+		desc->devnum = curDevice ();
+		RKD_Create (desc->width, desc->height, dev);
+	} else {
 		Rf_error("unable to start device");
 	}
 }

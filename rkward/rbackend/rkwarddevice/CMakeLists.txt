@@ -10,6 +10,7 @@ SET (
 SET (
 	rkgraphicsdevice_frontend_SRCS
 	rkgraphicsdevice_frontendtransmitter.cpp
+	rkgraphicsdevice.cpp
 )
 
 QT4_AUTOMOC(${rkgraphicsdevice_frontend_SRCS})

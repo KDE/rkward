@@ -36,6 +36,7 @@ public slots:
 	void newConnection ();
 private:
 	void setupServer ();
+	void sendDummyReply (quint8 opcode);
 	QString server_name;
 	QIODevice *connection;
 	QLocalServer *local_server;

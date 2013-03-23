@@ -27,8 +27,6 @@ extern "C" {
 #include <R_ext/GraphicsEngine.h>
 }
 
-#include <QRectF>
-
 #define RKD_IN_STREAM RKGraphicsDeviceBackendTransmitter::streamer.instream
 #define RKD_OUT_STREAM RKGraphicsDeviceBackendTransmitter::streamer.outstream
 
@@ -72,11 +70,20 @@ public:
 	}
 };
 
+#include <QRectF>
+
+#define RK_TEST_COL 0xABCDEF01
+#if not ((R_RED(RK_TEST_COL) == 0x01) && (R_GREEN(RK_TEST_COL) == 0xEF) && (R_BLUE(RK_TEST_COL) == 0xCD) && (R_ALPHA(RK_TEST_COL) == 0xAB))
+#error R color format has changed!
+#endif
+
+// I'd love to convert to QColor, directly, but that's in QtGui, not QtCore. QRgb used different byte ordering
+#define WRITE_COLOR_BYTES(col) (quint8) R_RED (col) << (quint8) R_GREEN (col) << (quint8) R_BLUE (col) << (quint8) R_ALPHA (col)
 #define WRITE_HEADER(x,dev) (qint8) x << (quint8) static_cast<RKGraphicsDeviceDesc*> (dev->deviceSpecific)->devnum
-#define WRITE_COL() (qint32) gc->col
-#define WRITE_PEN() WRITE_COL() << gc->col << (double) gc->lwd << (qint32) gc->lty
+#define WRITE_COL() WRITE_COLOR_BYTES (gc->col)
+#define WRITE_PEN() WRITE_COL() << (double) gc->lwd << (qint32) gc->lty
 #define WRITE_LINE_ENDS() (quint8) gc->lend << (quint8) gc->ljoin << gc->lmitre
-#define WRITE_FILL() (qint32) gc->fill
+#define WRITE_FILL() WRITE_COLOR_BYTES (gc->fill)
 #define WRITE_FONT(dev) gc->cex << gc->ps << gc->lineheight << (quint8) gc->fontface << (gc->fontfamily[0] ? QString (gc->fontfamily) : (static_cast<RKGraphicsDeviceDesc*> (dev->deviceSpecific)->default_family))
 
 static void RKD_Create (double width, double height, pDevDesc dev) {
@@ -90,6 +97,7 @@ static void RKD_Circle (double x, double y, double r, R_GE_gcontext *gc, pDevDes
 	RKD_OUT_STREAM << WRITE_HEADER (RKDCircle, dev);
 	RKD_OUT_STREAM << x << y << r;
 	RKD_OUT_STREAM << WRITE_PEN ();
+	RKD_OUT_STREAM << WRITE_FILL ();
 }
 
 static void RKD_Line (double x1, double y1, double x2, double y2, R_GE_gcontext *gc, pDevDesc dev) {
@@ -97,6 +105,7 @@ static void RKD_Line (double x1, double y1, double x2, double y2, R_GE_gcontext 
 	RKD_OUT_STREAM << WRITE_HEADER (RKDLine, dev);
 	RKD_OUT_STREAM << x1 << y1 << x2 << y2;
 	RKD_OUT_STREAM << WRITE_PEN ();
+	RKD_OUT_STREAM << WRITE_LINE_ENDS ();
 }
 
 static void RKD_Polygon (int n, double *x, double *y, R_GE_gcontext *gc, pDevDesc dev) {
