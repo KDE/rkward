@@ -95,7 +95,10 @@ static QPen readSimplePen (QDataStream &instream) {
 
 static QPen readPen (QDataStream &instream) {
 	QPen ret = readSimplePen (instream);
-#warning: Read further attribs!
+	quint8 lends, ljoin;
+	double lmitre;
+	instream >> lends >> ljoin >> lmitre;
+#warning: Apply attribs!
 	return ret;
 }
 
@@ -113,6 +116,20 @@ static QFont readFont (QDataStream &instream) {
 	QFont ret (fontfamily);
 	ret.setPointSizeF (cex*ps);
 	return ret;
+}
+
+static QVector<QPointF> readPoints (QDataStream &instream, bool close) {
+	quint32 n;
+	instream >> n;
+	QVector<QPointF> points;
+	points.reserve (n + (close ? 1 : 0));
+	for (int i = 0; i < n; ++i) {
+		double x, y;
+		instream >> x >> y;
+		points.append (QPointF (x, y));
+	}
+	if (n && close) points.append (points[0]);
+	return points;
 }
 
 void RKGraphicsDeviceFrontendTransmitter::newData () {
@@ -150,7 +167,13 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 			device->line (x1, y1, x2, y2, readPen (streamer.instream));
 			continue;
 		} else if (opcode == RKDPolygon) {
+			QPolygonF pol (readPoints (streamer.instream, true));
+			device->polygon (pol, readPen (streamer.instream), readBrush (streamer.instream));
+			continue;
 		} else if (opcode == RKDPolyline) {
+			QPolygonF pol (readPoints (streamer.instream, false));
+			device->polyline (pol, readPen (streamer.instream));
+			continue;
 		} else if (opcode == RKDRect) {
 		} else if (opcode == RKDStrWidthUTF8) {
 			QString out;
@@ -160,6 +183,13 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 			streamer.writeOutBuffer ();
 			continue;
 		} else if (opcode == RKDMetricInfo) {
+			QChar c;
+			double ascent, descent, width;
+			streamer.instream >> c;
+			device->metricInfo (c, readFont (streamer.instream), &ascent, &descent, &width);
+			streamer.outstream << ascent << descent << width;
+			streamer.writeOutBuffer ();
+			continue;
 		} else if (opcode == RKDTextUTF8) {
 			double x, y, rot, hadj;
 			QString out;
@@ -173,7 +203,6 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 		} else if (opcode == RKDDeActivate) {
 		} else if (opcode == RKDClip) {
 		} else if (opcode == RKDMode) {
-		} else if (opcode == RKDClip) {
 		} else if (opcode == RKDLocator) {
 		} else if (opcode == RKDNewPageConfirm) {
 		}

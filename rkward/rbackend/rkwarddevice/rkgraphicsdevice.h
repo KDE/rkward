@@ -39,7 +39,10 @@ public:
 	void line (double x1, double y1, double x2, double y2, const QPen& pen);
 	double strWidth (const QString &text, const QFont& font);
 	void text (double x, double y, const QString &text, double rot, double hadj, const QColor& col, const QFont& font);
+	void metricInfo (const QChar& c, const QFont& font, double *ascent, double *descent, double *width);
 	void setClip (const QRectF& new_clip);
+	void polygon (const QPolygonF& pol, const QPen& pen, const QBrush &brush);
+	void polyline (const QPolygonF& pol, const QPen& pen);
 private:
 	QGraphicsScene* scene;
 	QGraphicsView* view;

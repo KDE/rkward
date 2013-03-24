@@ -75,7 +75,7 @@ void RKGraphicsDevice::setClip (const QRectF& new_clip) {
 }
 
 void RKGraphicsDevice::circle (double x, double y, double r, const QPen& pen, const QBrush& brush) {
-	QGraphicsEllipseItem* circle = new QGraphicsEllipseItem (x - r, y - r, r, r, clip);
+	QGraphicsEllipseItem* circle = new QGraphicsEllipseItem (x - r, y - r, r+r, r+r, clip);
 	circle->setPen (pen);
 	circle->setBrush (brush);
 	circle->setZValue (item_z += .1);
@@ -103,4 +103,24 @@ void RKGraphicsDevice::text (double x, double y, const QString& _text, double ro
 	text->setPos (x, y);
 	text->setZValue (item_z += .1);
 	text->setTextInteractionFlags (Qt::TextSelectableByMouse);
+}
+
+void RKGraphicsDevice::metricInfo (const QChar& c, const QFont& font, double* ascent, double* descent, double* width) {
+	QFontMetricsF fm (font);
+	*ascent = fm.ascent ();	// TODO: or should we return the metrics of this particular char (similar to strWidth)
+	*descent = fm.descent ();
+	*width = fm.width (c);
+}
+
+void RKGraphicsDevice::polygon (const QPolygonF& pol, const QPen& pen, const QBrush& brush) {
+	QGraphicsPolygonItem *poli = new QGraphicsPolygonItem (pol, clip);
+	poli->setPen (pen);
+	poli->setBrush (brush);
+	poli->setZValue (item_z += .1);
+}
+
+void RKGraphicsDevice::polyline (const QPolygonF& pol, const QPen& pen) {
+	QGraphicsPolygonItem *poli = new QGraphicsPolygonItem (pol, clip);
+	poli->setPen (pen);
+	poli->setZValue (item_z += .1);
 }

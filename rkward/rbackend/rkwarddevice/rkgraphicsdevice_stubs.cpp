@@ -142,10 +142,20 @@ static void RKD_Rect (double x0, double y0, double x1, double y1, R_GE_gcontext 
 	RKD_OUT_STREAM << WRITE_FILL ();
 }
 
+static QString RToQString (const char *str, bool is_symbol) {
+	if (is_symbol) {
+		int n = strlen (str);
+		char outbuf[n*4 + 4];
+		Rf_AdobeSymbol2utf8 (outbuf, str, n*4);
+		return QString::fromUtf8 (outbuf);
+	}
+	return QString::fromUtf8 (str);
+}
+
 static void RKD_TextUTF8 (double x, double y, const char *str, double rot, double hadj, R_GE_gcontext *gc, pDevDesc dev) {
 	RKGraphicsDataStreamWriteGuard guard;
 	RKD_OUT_STREAM << WRITE_HEADER (RKDTextUTF8, dev);
-	RKD_OUT_STREAM << x << y << QString::fromUtf8 (str) << rot << hadj;
+	RKD_OUT_STREAM << x << y << RToQString (str, gc->fontface == 5) << rot << hadj;
 	RKD_OUT_STREAM << WRITE_COL ();
 	RKD_OUT_STREAM << WRITE_FONT (dev);
 }
@@ -154,7 +164,7 @@ static double RKD_StrWidthUTF8 (const char *str, R_GE_gcontext *gc, pDevDesc dev
 	{
 		RKGraphicsDataStreamWriteGuard guard;
 		RKD_OUT_STREAM << WRITE_HEADER (RKDStrWidthUTF8, dev);
-		RKD_OUT_STREAM << QString::fromUtf8 (str);
+		RKD_OUT_STREAM << RToQString (str, gc->fontface == 5);
 		RKD_OUT_STREAM << WRITE_FONT (dev);
 	}
 	double ret;
@@ -175,14 +185,25 @@ static void RKD_MetricInfo (int c, R_GE_gcontext *gc, double* ascent, double* de
 	{
 		RKGraphicsDataStreamWriteGuard wguard;
 		RKD_OUT_STREAM << WRITE_HEADER (RKDMetricInfo, dev);
-		RKD_OUT_STREAM << QChar (c);
+		QChar unichar;
+		if (c < 0) { unichar = QChar (-c); }
+		else if ((gc->fontface == 5) || (!mbcslocale)) {
+			char inbuf[2];
+			inbuf[0] = c;
+			inbuf[1] = 0;
+			QString dummy = RToQString (inbuf, gc->fontface == 5);
+			if (!dummy.isEmpty ()) unichar = dummy.at (0);
+		} else {
+#warning TODO: handle non-unicode locale?
+			unichar = QChar (c);
+		}
+		RKD_OUT_STREAM << unichar;
 		RKD_OUT_STREAM << WRITE_FONT (dev);
 	}
 	{
 		RKGraphicsDataStreamReadGuard rguard;
-		RKD_IN_STREAM >> *ascent;
-		RKD_IN_STREAM >> *descent;
-		RKD_IN_STREAM >> *width;
+		RKD_IN_STREAM >> *ascent >> *descent >> *width;
+//qDebug ("for char %d: a %f, d %f, w %f", c, *ascent, *descent, *width);
 	}
 }
 
