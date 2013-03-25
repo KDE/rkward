@@ -31,20 +31,42 @@
 
 #include "../../debug.h"
 
+#define UPDATE_INTERVAL 100
+
 QHash<int, RKGraphicsDevice*> RKGraphicsDevice::devices;
 
 RKGraphicsDevice::RKGraphicsDevice (double width, double height) : QObject () {
 	RK_TRACE (GRAPHICS_DEVICE);
 	scene = new QGraphicsScene (0, 0, width, height, this);
 	view = new QGraphicsView (scene);
+//	view->setOptimizationFlags (QGraphicsView::DontSavePainterState);
+//	view->setRenderHints (QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
+//	scene->setItemIndexMethod (QGraphicsScene::NoIndex);
+//	scene->setBspTreeDepth (16);
+//	view->setViewportUpdateMode (QGraphicsView::NoViewportUpdate);
+	connect (&updatetimer, SIGNAL (timeout ()), this, SLOT (updateNow ()));
 	view->show ();
 	item_z = clip_z = 0;
+	clip = 0;
 	setClip (scene->sceneRect ());
 }
 
 RKGraphicsDevice::~RKGraphicsDevice () {
 	RK_TRACE (GRAPHICS_DEVICE);
 	delete view;
+}
+
+void RKGraphicsDevice::triggerUpdate () {
+	view->setUpdatesEnabled (false);
+	updatetimer.start (UPDATE_INTERVAL);
+}
+
+void RKGraphicsDevice::updateNow () {
+//	QList<QRectF> dummy;
+//	dummy.append (scene->sceneRect ());
+//	view->updateScene (dummy);
+	view->setUpdatesEnabled (true);
+	view->update ();
 }
 
 RKGraphicsDevice* RKGraphicsDevice::newDevice (int devnum, double width, double height) {
@@ -66,61 +88,142 @@ void RKGraphicsDevice::closeDevice (int devnum) {
 	devices.take (devnum)->deleteLater ();
 }
 
+void RKGraphicsDevice::clear (const QBrush& bg) {
+	RK_TRACE (GRAPHICS_DEVICE);
+
+	scene->clear ();
+	clip = 0;
+	setClip (scene->sceneRect ());
+	rect (scene->sceneRect (), QPen (Qt::NoPen), bg);
+	view->show ();
+	updatetimer.start (UPDATE_INTERVAL);
+}
+
 void RKGraphicsDevice::setClip (const QRectF& new_clip) {
 	RK_TRACE (GRAPHICS_DEVICE);
+
+//	QGraphicsItem* old_clip = clip;
 	clip = scene->addRect (new_clip, QPen (Qt::NoPen));
 	clip->setZValue (clip_z += .1);
 	clip->setFlags (QGraphicsItem::ItemClipsChildrenToShape);
 	item_z = 0;
+//	if (old_clip) old_clip->setCacheMode (QGraphicsItem::DeviceCoordinateCache);
+}
+
+void RKGraphicsDevice::addItem (QGraphicsItem* item) {
+	if (item_z > 1000) {
+		updatetimer.stop ();
+		QGraphicsItem *old_clip = clip;
+		QRectF brect = clip->rect ().normalized ();
+		QPixmap cache (brect.width () + 1, brect.height () + 1);
+		cache.fill (QColor (0, 0, 0, 0));
+		QPainter painter;
+		painter.begin (&cache);
+		scene->render (&painter, cache.rect (), brect);
+		painter.end ();
+		setClip (brect);
+		QGraphicsPixmapItem *cached = new QGraphicsPixmapItem (cache);
+		cached->setPos (brect.x (), brect.y ());
+		addItem (cached);
+		delete old_clip;
+	}
+	item->setZValue (item_z += .1);
+	item->setParentItem (clip);
+	triggerUpdate ();
 }
 
 void RKGraphicsDevice::circle (double x, double y, double r, const QPen& pen, const QBrush& brush) {
-	QGraphicsEllipseItem* circle = new QGraphicsEllipseItem (x - r, y - r, r+r, r+r, clip);
+	RK_TRACE (GRAPHICS_DEVICE);
+
+	QGraphicsEllipseItem* circle = new QGraphicsEllipseItem (x - r, y - r, r+r, r+r);
 	circle->setPen (pen);
 	circle->setBrush (brush);
-	circle->setZValue (item_z += .1);
+	addItem (circle);
 }
 
 void RKGraphicsDevice::line (double x1, double y1, double x2, double y2, const QPen& pen) {
-	QGraphicsLineItem* line = new QGraphicsLineItem (x1, y1, x2, y2, clip);
+	RK_TRACE (GRAPHICS_DEVICE);
+
+	QGraphicsLineItem* line = new QGraphicsLineItem (x1, y1, x2, y2);
 	line->setPen (pen);
-	line->setZValue (item_z += .1);
+	addItem (line);
+}
+
+void RKGraphicsDevice::rect (const QRectF& rec, const QPen& pen, const QBrush& brush) {
+	RK_TRACE (GRAPHICS_DEVICE);
+
+	QGraphicsRectItem* rect = new QGraphicsRectItem (rec);
+	rect->setPen (pen);
+	rect->setBrush (brush);
+	addItem (rect);
 }
 
 double RKGraphicsDevice::strWidth (const QString& text, const QFont& font) {
-	QGraphicsSimpleTextItem t (text, 0);
+	RK_TRACE (GRAPHICS_DEVICE);
+
+	QGraphicsTextItem t (text);
 	t.setFont (font);
 	return t.boundingRect ().width ();
 }
 
 void RKGraphicsDevice::text (double x, double y, const QString& _text, double rot, double hadj, const QColor& col, const QFont& font) {
-	QGraphicsTextItem *text = new QGraphicsTextItem (clip);
+	RK_TRACE (GRAPHICS_DEVICE);
+
+	QGraphicsTextItem *text = new QGraphicsTextItem ();
 	text->setPlainText (_text);
 	text->setFont (font);
-	QRectF brect = text->boundingRect();
+	text->setDefaultTextColor (col);
+	QRectF brect = text->boundingRect ();
 	text->rotate (-rot);
 	text->translate (-hadj * brect.width (), - QFontMetricsF (font).height ());
 	text->setPos (x, y);
-	text->setZValue (item_z += .1);
 	text->setTextInteractionFlags (Qt::TextSelectableByMouse);
+	addItem (text);
 }
 
 void RKGraphicsDevice::metricInfo (const QChar& c, const QFont& font, double* ascent, double* descent, double* width) {
+	RK_TRACE (GRAPHICS_DEVICE);
+
 	QFontMetricsF fm (font);
 	*ascent = fm.ascent ();	// TODO: or should we return the metrics of this particular char (similar to strWidth)
 	*descent = fm.descent ();
 	*width = fm.width (c);
+/*	QGraphicsTextItem t;
+	t.setPlainText (QString (c));
+	t.setFont (font);
+	*ascent = t.boundingRect().height();
+	*descent = 0;
+	*width = t.boundingRect().width(); */
 }
 
 void RKGraphicsDevice::polygon (const QPolygonF& pol, const QPen& pen, const QBrush& brush) {
-	QGraphicsPolygonItem *poli = new QGraphicsPolygonItem (pol, clip);
+	RK_TRACE (GRAPHICS_DEVICE);
+
+	QGraphicsPolygonItem *poli = new QGraphicsPolygonItem (pol);
 	poli->setPen (pen);
 	poli->setBrush (brush);
-	poli->setZValue (item_z += .1);
+	addItem (poli);
 }
 
 void RKGraphicsDevice::polyline (const QPolygonF& pol, const QPen& pen) {
-	QGraphicsPolygonItem *poli = new QGraphicsPolygonItem (pol, clip);
+	RK_TRACE (GRAPHICS_DEVICE);
+// Qt insistes that all QGraphicsPolygonItems must be closed. So the this does not work:
+// QGraphicsPolygonItem *poli = new QGraphicsPolygonItem (pol, clip);
+	if (pol.isEmpty ()) return;
+
+	QPainterPath path;
+	path.moveTo (pol[0]);
+	for (int i = 1; i < pol.size (); ++i) {
+		path.lineTo (pol[i]);
+	}
+	QGraphicsPathItem *poli = new QGraphicsPathItem (path);
 	poli->setPen (pen);
-	poli->setZValue (item_z += .1);
+	addItem (poli);
 }
+
+void RKGraphicsDevice::setActive (bool active) {
+	RK_TRACE (GRAPHICS_DEVICE);
+	emit (activeChanged (active));
+}
+
+#include "rkgraphicsdevice.moc"

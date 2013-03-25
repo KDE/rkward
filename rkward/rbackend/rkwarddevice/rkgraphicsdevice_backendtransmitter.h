@@ -28,10 +28,11 @@
  Also it provides the namespace for some statics.
  As the protocol is really quite simple (only the backend send requests, only one request at a time), so is the transmitter. */
 class RKGraphicsDeviceBackendTransmitter : public QThread {
-	RKGraphicsDeviceBackendTransmitter (QIODevice *connection);
+	RKGraphicsDeviceBackendTransmitter (QIODevice *connection, bool is_q_local_socket);
 	~RKGraphicsDeviceBackendTransmitter ();
 public:
 	static void kill ();
+	static bool connectionAlive ();
 	static RKGraphicsDeviceBackendTransmitter* instance ();
 	static RKAsyncDataStreamHelper streamer;
 	static QIODevice* connection;
@@ -39,6 +40,7 @@ public:
 private:
 	static RKGraphicsDeviceBackendTransmitter* _instance;
 	bool alive;
+	bool is_local_socket;
 	void run ();
 };
 

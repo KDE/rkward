@@ -81,15 +81,35 @@ void RKGraphicsDeviceFrontendTransmitter::newConnection () {
 	connect (connection, SIGNAL (readyRead ()), this, SLOT (newData ()));
 }
 
-static QPen readSimplePen (QDataStream &instream) {
+static QColor readColor (QDataStream &instream) {
 	quint8 r, g, b, a;
+	instream >> r >> g >> b >> a;
+	if (a == 0x00) return QColor ();
+	return QColor (r, g, b, a);
+}
+
+static QPen readSimplePen (QDataStream &instream) {
+	QColor col = readColor (instream);
 	double lwd;
 	qint32 lty;
-	instream >> r >> g >> b >> a >> lwd >> lty;
-#warning: Line style!
+	instream >> lwd >> lty;
+	if (!col.isValid () || (lty == -1L)) return QPen (Qt::NoPen);
+
+	lwd = qMax (1.0001, lwd);	// minimum 1 px (+rounding margin!) as in X11 device
 	QPen ret;
+	if (lty != 0) {	// solid
+		QVector<qreal> dashes;
+		quint32 nlty = lty;
+		for (int i = 0; i < 8; ++i) {
+			if (!nlty) break;
+			quint8 j = nlty & 0xF;
+			dashes.append (j * lwd * 96/72 + .5);	// 96/72: value taken from X11 device
+			nlty >>= 4;
+		}
+		if (!dashes.isEmpty ()) ret.setDashPattern (dashes);
+	}
 	ret.setWidthF (lwd);
-	ret.setColor (QColor (r, g, b, a));
+	ret.setColor (col);
 	return ret;
 }
 
@@ -98,22 +118,27 @@ static QPen readPen (QDataStream &instream) {
 	quint8 lends, ljoin;
 	double lmitre;
 	instream >> lends >> ljoin >> lmitre;
-#warning: Apply attribs!
+	ret.setCapStyle (lends == RoundLineCap ? Qt::RoundCap : (lends == ButtLineCap ? Qt::FlatCap : Qt::SquareCap));
+	ret.setJoinStyle (ljoin == RoundJoin ? Qt::RoundJoin : (ljoin == BevelJoin ? Qt::BevelJoin : Qt::MiterJoin));
+	ret.setMiterLimit (lmitre);
 	return ret;
 }
 
 static QBrush readBrush (QDataStream &instream) {
-#warning: Read brush!
-	return QBrush ();
+	QColor col = readColor (instream);
+	if (!col.isValid ()) return QBrush ();
+	return QBrush (col);
 }
 
 static QFont readFont (QDataStream &instream) {
-#warning: Handle all attribs!
 	double cex, ps, lineheight;
 	quint8 fontface;
 	QString fontfamily;
 	instream >> cex >> ps >> lineheight >> fontface >> fontfamily;
+#warning TODO deal with line-height
 	QFont ret (fontfamily);
+	if (fontface == 2 || fontface == 4) ret.setWeight (QFont::Bold);
+	if (fontface == 3 || fontface == 4) ret.setItalic (true);
 	ret.setPointSizeF (cex*ps);
 	return ret;
 }
@@ -123,7 +148,7 @@ static QVector<QPointF> readPoints (QDataStream &instream, bool close) {
 	instream >> n;
 	QVector<QPointF> points;
 	points.reserve (n + (close ? 1 : 0));
-	for (int i = 0; i < n; ++i) {
+	for (quint32 i = 0; i < n; ++i) {
 		double x, y;
 		instream >> x >> y;
 		points.append (QPointF (x, y));
@@ -156,32 +181,34 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 			}
 		}
 
+/* WARNING: No fixed evaluation order of function arguments. Do not use several readXYZ() calls in the same function call! Use dummy variables, instead. */
 		if (opcode == RKDCircle) {
 			double x, y, r;
 			streamer.instream >> x >> y >> r;
-			device->circle (x, y, r, readSimplePen (streamer.instream), readBrush (streamer.instream));
-			continue;
+			QPen pen = readSimplePen (streamer.instream);
+			device->circle (x, y, r, pen, readBrush (streamer.instream));
 		} else if (opcode == RKDLine) {
 			double x1, y1, x2, y2;
 			streamer.instream >> x1 >> y1 >> x2 >> y2;
 			device->line (x1, y1, x2, y2, readPen (streamer.instream));
-			continue;
 		} else if (opcode == RKDPolygon) {
 			QPolygonF pol (readPoints (streamer.instream, true));
-			device->polygon (pol, readPen (streamer.instream), readBrush (streamer.instream));
-			continue;
+			QPen pen = readPen (streamer.instream);
+			device->polygon (pol, pen, readBrush (streamer.instream));
 		} else if (opcode == RKDPolyline) {
 			QPolygonF pol (readPoints (streamer.instream, false));
 			device->polyline (pol, readPen (streamer.instream));
-			continue;
 		} else if (opcode == RKDRect) {
+			QRectF rect;
+			streamer.instream >> rect;
+			QPen pen = readPen (streamer.instream);
+			device->rect (rect, pen, readBrush (streamer.instream));
 		} else if (opcode == RKDStrWidthUTF8) {
 			QString out;
 			streamer.instream >> out;
 			double w = device->strWidth (out, readFont (streamer.instream));
 			streamer.outstream << w;
 			streamer.writeOutBuffer ();
-			continue;
 		} else if (opcode == RKDMetricInfo) {
 			QChar c;
 			double ascent, descent, width;
@@ -189,29 +216,41 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 			device->metricInfo (c, readFont (streamer.instream), &ascent, &descent, &width);
 			streamer.outstream << ascent << descent << width;
 			streamer.writeOutBuffer ();
-			continue;
 		} else if (opcode == RKDTextUTF8) {
 			double x, y, rot, hadj;
 			QString out;
-			QRgb col;
-			streamer.instream >> x >> y >> out >> rot >> hadj >> col;
+			streamer.instream >> x >> y >> out >> rot >> hadj;
+			QColor col = readColor (streamer.instream);
 			device->text (x, y, out, rot, hadj, col, readFont (streamer.instream));
-			continue;
 		} else if (opcode == RKDNewPage) {
+			device->clear (readBrush (streamer.instream));
 		} else if (opcode == RKDClose) {
+			RKGraphicsDevice::closeDevice (devnum);
 		} else if (opcode == RKDActivate) {
+			RK_DEBUG (GRAPHICS_DEVICE, DL_ERROR, "Unhandled operation of type %d for device number %d. Skippping.", opcode, devnum);
 		} else if (opcode == RKDDeActivate) {
+			RK_DEBUG (GRAPHICS_DEVICE, DL_ERROR, "Unhandled operation of type %d for device number %d. Skippping.", opcode, devnum);
 		} else if (opcode == RKDClip) {
+			QRectF clip;
+			streamer.instream >> clip;
+			device->setClip (clip);
 		} else if (opcode == RKDMode) {
+			quint8 m;
+			streamer.instream >> m;
+			if (m == 0) device->triggerUpdate ();
 		} else if (opcode == RKDLocator) {
+			RK_DEBUG (GRAPHICS_DEVICE, DL_ERROR, "Unhandled operation of type %d for device number %d. Skippping.", opcode, devnum);
+			sendDummyReply (opcode);
 		} else if (opcode == RKDNewPageConfirm) {
+			RK_DEBUG (GRAPHICS_DEVICE, DL_ERROR, "Unhandled operation of type %d for device number %d. Skippping.", opcode, devnum);
+			sendDummyReply (opcode);
+		} else {
+			RK_DEBUG (GRAPHICS_DEVICE, DL_ERROR, "Unhandled operation of type %d for device number %d. Skippping.", opcode, devnum);
 		}
 
-		RK_ASSERT (streamer.instream.atEnd ());
-		RK_DEBUG (GRAPHICS_DEVICE, DL_ERROR, "Unhandled operation of type %d for device number %d. Skippping.", opcode, devnum);
-
-#warning TODO: Actually handle the data!
-		sendDummyReply (opcode);
+		if (!streamer.instream.atEnd ()) {
+			RK_DEBUG (GRAPHICS_DEVICE, DL_ERROR, "Failed to read all data for operation of type %d on device number %d.", opcode, devnum);
+		}
 	}
 }
 
@@ -219,7 +258,7 @@ void RKGraphicsDeviceFrontendTransmitter::sendDummyReply (quint8 opcode) {
 	RK_TRACE (GRAPHICS_DEVICE);
 
 	if (opcode == RKDLocator) {
-		bool ok = true;
+		bool ok = false;
 		double x, y;
 		x = y = 0;
 		streamer.outstream << ok << x << y;
@@ -228,7 +267,7 @@ void RKGraphicsDeviceFrontendTransmitter::sendDummyReply (quint8 opcode) {
 		ascent = descent = width = 0.1;
 		streamer.outstream << ascent << descent << width;
 	} else if (opcode == RKDNewPageConfirm) {
-		bool ok = true;
+		bool ok = false;
 		streamer.outstream << ok;
 	} else if (opcode == RKDStrWidthUTF8) {
 		double width = 1;

@@ -114,8 +114,8 @@ bool RKGraphicsDeviceDesc::initRDevDesc (pDevDesc dev, double pointsize) {
 	dev->right  = dev->clipRight  = width;
 	dev->bottom = dev->clipBottom = height;
 	dev->top    = dev->clipTop    = 0;
-	dev->cra[0] = 0.9 * pointsize;
-	dev->cra[1] = 1.2 * pointsize;
+	dev->cra[0] = 0.9 * pointsize * 96/72;
+	dev->cra[1] = 1.2 * pointsize * 96/72;
 	dev->xCharOffset = 0.4900;
 	dev->yCharOffset = 0.3333;
 	dev->yLineBias = 0.1;

@@ -38,6 +38,22 @@
  * 
  */
 
+/** This enum simply repeats R's line end definitions. It is used to ensure compatiblity, without the need to include
+ * any R headers in the frontend. */
+enum RKLineEndStyles {
+	RoundLineCap = 1,
+	ButtLineCap = 2,
+	SquareLineCap = 3
+};
+
+/** This enum simply repeats R's line join definitions. It is used to ensure compatiblity, without the need to include
+ * any R headers in the frontend. */
+enum RKLineJoinStyles {
+	RoundJoin = 1,
+	MitreJoin = 2,
+	BevelJoin = 3
+};
+
 enum RKDOpcodes {
 	// Asynchronous operations
 	RKDCreate,     // 0

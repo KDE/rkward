@@ -29,7 +29,7 @@ QIODevice* RKGraphicsDeviceBackendTransmitter::connection = 0;
 QMutex RKGraphicsDeviceBackendTransmitter::mutex;
 RKGraphicsDeviceBackendTransmitter* RKGraphicsDeviceBackendTransmitter::_instance = 0;
 
-RKGraphicsDeviceBackendTransmitter::RKGraphicsDeviceBackendTransmitter (QIODevice* _connection) : QThread () {
+RKGraphicsDeviceBackendTransmitter::RKGraphicsDeviceBackendTransmitter (QIODevice* _connection, bool is_q_local_socket) : QThread () {
 	RK_TRACE (GRAPHICS_DEVICE);
 
 	RK_ASSERT (!connection);
@@ -37,6 +37,7 @@ RKGraphicsDeviceBackendTransmitter::RKGraphicsDeviceBackendTransmitter (QIODevic
 	connection = _connection;
 	streamer.setIODevice (connection);
 	alive = true;
+	is_local_socket = is_q_local_socket;
 	start ();
 }
 
@@ -56,10 +57,16 @@ RKGraphicsDeviceBackendTransmitter* RKGraphicsDeviceBackendTransmitter::instance
 		con->write (RKRBackendTransmitter::instance ()->connectionToken ().toLocal8Bit ().data ());
 		con->write ("\n");
 		con->waitForBytesWritten (1000);
-		_instance = new RKGraphicsDeviceBackendTransmitter (con);
+		_instance = new RKGraphicsDeviceBackendTransmitter (con, true);
 		return _instance;
 	}
 	return 0;
+}
+
+bool RKGraphicsDeviceBackendTransmitter::connectionAlive () {
+	if (!_instance) return false;
+	if (!_instance->is_local_socket) return true;
+	return static_cast<QLocalSocket*> (_instance->connection)->state () == QLocalSocket::ConnectedState;
 }
 
 void RKGraphicsDeviceBackendTransmitter::run () {
