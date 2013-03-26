@@ -1,11 +1,11 @@
-rkward (0.6.0z+0.6.1-0pre1) unstable; urgency=low
+rkward (0.6.1-1) unstable; urgency=low
 
   * new upstream release
   * re-add Vcs-Browser field
   * fix year in changelog (previous upload had 2012 instead of 2013)
   * add runtime dependency on r-base-core < 3.0.0 unless compiled with >= 3.0.0
 
- -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Tue, 15 Jan 2013 12:30:00 +0100
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Tue, 02 Apr 2013 12:30:00 +0100
 
 rkward (0.6.0-3) unstable; urgency=low
 
