@@ -21,11 +21,9 @@
 #include <QHash>
 #include <QPen>
 #include <QTimer>
-
-class QGraphicsRectItem;
-class QGraphicsView;
-class QGraphicsScene;
-class QGraphicsItem;
+#include <QPixmap>
+#include <QPainter>
+#include <QLabel>
 
 /** This is the class that actually does all the drawing for the RKGraphicsDevice */
 class RKGraphicsDevice : public QObject {
@@ -41,13 +39,13 @@ public:
 	void circle (double x, double y, double r, const QPen& pen, const QBrush& brush);
 	void line (double x1, double y1, double x2, double y2, const QPen& pen);
 	void rect (const QRectF& rec, const QPen& pen, const QBrush& brush);
-	double strWidth (const QString &text, const QFont& font);
+	QSizeF strSize (const QString &text, const QFont& font);
 	void text (double x, double y, const QString &text, double rot, double hadj, const QColor& col, const QFont& font);
 	void metricInfo (const QChar& c, const QFont& font, double *ascent, double *descent, double *width);
 	void setClip (const QRectF& new_clip);
 	void polygon (const QPolygonF& pol, const QPen& pen, const QBrush &brush);
 	void polyline (const QPolygonF& pol, const QPen& pen);
-	void clear (const QBrush& bg);
+	void clear (const QColor& col=QColor());
 	void setActive (bool active);
 	void triggerUpdate ();
 signals:
@@ -55,13 +53,10 @@ signals:
 private slots:
 	void updateNow ();
 private:
-	void addItem (QGraphicsItem *item);
 	QTimer updatetimer;
-	QGraphicsScene* scene;
-	QGraphicsView* view;
-	QGraphicsRectItem* clip;
-	double clip_z;
-	double item_z;
+	QPixmap area;
+	QPainter painter;
+	QLabel *view;
 };
 
 #endif

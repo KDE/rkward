@@ -103,7 +103,7 @@ public:
 #define WRITE_FILL() \
 	WRITE_COLOR_BYTES (gc->fill)
 #define WRITE_FONT(dev) \
-	RKD_OUT_STREAM << gc->cex << gc->ps << gc->lineheight << (quint8) gc->fontface << (gc->fontfamily[0] ? QString (gc->fontfamily) : (static_cast<RKGraphicsDeviceDesc*> (dev->deviceSpecific)->default_family))
+	RKD_OUT_STREAM << gc->cex << gc->ps << gc->lineheight << (quint8) gc->fontface << (gc->fontfamily[0] ? QString (gc->fontfamily) : (static_cast<RKGraphicsDeviceDesc*> (dev->deviceSpecific)->getFontFamily (gc->fontface == 5)))
 
 static void RKD_Create (double width, double height, pDevDesc dev) {
 	RKGraphicsDataStreamWriteGuard guard;
@@ -161,20 +161,10 @@ static void RKD_Rect (double x0, double y0, double x1, double y1, R_GE_gcontext 
 	WRITE_FILL ();
 }
 
-static QString RToQString (const char *str, bool is_symbol) {
-	if (is_symbol) {
-		int n = strlen (str);
-		char outbuf[n*4 + 16];
-		Rf_AdobeSymbol2utf8 (outbuf, str, n*4);
-		return QString::fromUtf8 (outbuf);
-	}
-	return QString::fromUtf8 (str);
-}
-
 static void RKD_TextUTF8 (double x, double y, const char *str, double rot, double hadj, R_GE_gcontext *gc, pDevDesc dev) {
 	RKGraphicsDataStreamWriteGuard guard;
 	WRITE_HEADER (RKDTextUTF8, dev);
-	RKD_OUT_STREAM << x << y << RToQString (str, gc->fontface == 5) << rot << hadj;
+	RKD_OUT_STREAM << x << y << QString::fromUtf8 (str) << rot << hadj;	// NOTE: yes, even Symbols are sent as UTF-8, here.
 	WRITE_COL ();
 	WRITE_FONT (dev);
 }
@@ -183,7 +173,7 @@ static double RKD_StrWidthUTF8 (const char *str, R_GE_gcontext *gc, pDevDesc dev
 	{
 		RKGraphicsDataStreamWriteGuard guard;
 		WRITE_HEADER (RKDStrWidthUTF8, dev);
-		RKD_OUT_STREAM << RToQString (str, gc->fontface == 5);
+		RKD_OUT_STREAM << QString::fromUtf8 (str);	// NOTE: yes, even Symbols are sent as UTF-8, here.
 		WRITE_FONT (dev);
 	}
 	double ret;
@@ -205,16 +195,13 @@ static void RKD_MetricInfo (int c, R_GE_gcontext *gc, double* ascent, double* de
 		RKGraphicsDataStreamWriteGuard wguard;
 		WRITE_HEADER (RKDMetricInfo, dev);
 		QChar unichar;
-		if (c < 0) { unichar = QChar (-c); }
-		else if ((gc->fontface == 5) || (!mbcslocale)) {
-			char inbuf[2];
+		if (c < 0) unichar = QChar (-c);
+		else {		// correct?! Do we get utf8, here?
+			int inbuf[2];
 			inbuf[0] = c;
 			inbuf[1] = 0;
-			QString dummy = RToQString (inbuf, gc->fontface == 5);
+			QString dummy = QString::fromUtf8 ((char*) inbuf);
 			if (!dummy.isEmpty ()) unichar = dummy.at (0);
-		} else {
-#warning TODO: handle non-unicode locale?
-			unichar = QChar (c);
 		}
 		RKD_OUT_STREAM << unichar;
 		WRITE_FONT (dev);

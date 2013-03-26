@@ -15,19 +15,12 @@
  *                                                                         *
  ***************************************************************************/
 
-/******************************* ACKNOWLEDGEMENT ***************************
- * 
- * The drawing functions in this file are heavily inspired, in some parts even copied from package qtutils, version 0.1-3
- * by Deepayan Sarkar. Package qtutils is available from http://qtinterfaces.r-forge.r-project.org
- * under GNU LPGL 2 or later.
- * 
- ***************************************************************************/
-
 #include "rkgraphicsdevice.h"
 
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QGraphicsRectItem>
+#include <qmath.h>
 
 #include "../../debug.h"
 
@@ -35,38 +28,31 @@
 
 QHash<int, RKGraphicsDevice*> RKGraphicsDevice::devices;
 
-RKGraphicsDevice::RKGraphicsDevice (double width, double height) : QObject () {
+RKGraphicsDevice::RKGraphicsDevice (double width, double height) : QObject (), area (qAbs (width) + 1, qAbs (height) + 1) {
 	RK_TRACE (GRAPHICS_DEVICE);
-	scene = new QGraphicsScene (0, 0, width, height, this);
-	view = new QGraphicsView (scene);
-//	view->setOptimizationFlags (QGraphicsView::DontSavePainterState);
-//	view->setRenderHints (QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
-//	scene->setItemIndexMethod (QGraphicsScene::NoIndex);
-//	scene->setBspTreeDepth (16);
-//	view->setViewportUpdateMode (QGraphicsView::NoViewportUpdate);
+	painter.setRenderHints (QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
+	view = new QLabel ();
+	view->setFixedSize (area.size ());
 	connect (&updatetimer, SIGNAL (timeout ()), this, SLOT (updateNow ()));
-	view->show ();
-	item_z = clip_z = 0;
-	clip = 0;
-	setClip (scene->sceneRect ());
+	updatetimer.setSingleShot (true);
+	clear ();
 }
 
 RKGraphicsDevice::~RKGraphicsDevice () {
 	RK_TRACE (GRAPHICS_DEVICE);
+	painter.end ();
 	delete view;
 }
 
 void RKGraphicsDevice::triggerUpdate () {
-	view->setUpdatesEnabled (false);
 	updatetimer.start (UPDATE_INTERVAL);
 }
 
 void RKGraphicsDevice::updateNow () {
-//	QList<QRectF> dummy;
-//	dummy.append (scene->sceneRect ());
-//	view->updateScene (dummy);
-	view->setUpdatesEnabled (true);
-	view->update ();
+	if (painter.isActive ()) painter.end ();
+	view->setPixmap (area);
+	view->show ();
+	painter.begin (&area);
 }
 
 RKGraphicsDevice* RKGraphicsDevice::newDevice (int devnum, double width, double height) {
@@ -88,137 +74,96 @@ void RKGraphicsDevice::closeDevice (int devnum) {
 	devices.take (devnum)->deleteLater ();
 }
 
-void RKGraphicsDevice::clear (const QBrush& bg) {
+void RKGraphicsDevice::clear (const QColor& col) {
 	RK_TRACE (GRAPHICS_DEVICE);
 
-	scene->clear ();
-	clip = 0;
-	setClip (scene->sceneRect ());
-	rect (scene->sceneRect (), QPen (Qt::NoPen), bg);
-	view->show ();
-	updatetimer.start (UPDATE_INTERVAL);
+	if (painter.isActive ()) painter.end ();
+ 	if (col.isValid ()) area.fill (col);
+	else area.fill (QColor (255, 255, 255, 255));
+	updateNow ();
 }
 
 void RKGraphicsDevice::setClip (const QRectF& new_clip) {
 	RK_TRACE (GRAPHICS_DEVICE);
 
-//	QGraphicsItem* old_clip = clip;
-	clip = scene->addRect (new_clip, QPen (Qt::NoPen));
-	clip->setZValue (clip_z += .1);
-	clip->setFlags (QGraphicsItem::ItemClipsChildrenToShape);
-	item_z = 0;
-//	if (old_clip) old_clip->setCacheMode (QGraphicsItem::DeviceCoordinateCache);
-}
-
-void RKGraphicsDevice::addItem (QGraphicsItem* item) {
-	if (item_z > 1000) {
-		updatetimer.stop ();
-		QGraphicsItem *old_clip = clip;
-		QRectF brect = clip->rect ().normalized ();
-		QPixmap cache (brect.width () + 1, brect.height () + 1);
-		cache.fill (QColor (0, 0, 0, 0));
-		QPainter painter;
-		painter.begin (&cache);
-		scene->render (&painter, cache.rect (), brect);
-		painter.end ();
-		setClip (brect);
-		QGraphicsPixmapItem *cached = new QGraphicsPixmapItem (cache);
-		cached->setPos (brect.x (), brect.y ());
-		addItem (cached);
-		delete old_clip;
-	}
-	item->setZValue (item_z += .1);
-	item->setParentItem (clip);
-	triggerUpdate ();
+	if (!painter.isActive ()) painter.begin (&area);
+	painter.setClipRect (new_clip);
 }
 
 void RKGraphicsDevice::circle (double x, double y, double r, const QPen& pen, const QBrush& brush) {
 	RK_TRACE (GRAPHICS_DEVICE);
 
-	QGraphicsEllipseItem* circle = new QGraphicsEllipseItem (x - r, y - r, r+r, r+r);
-	circle->setPen (pen);
-	circle->setBrush (brush);
-	addItem (circle);
+	painter.setPen (pen);
+	painter.setBrush (brush);
+	painter.drawEllipse (x - r, y - r, r+r, r+r);
+	triggerUpdate ();
 }
 
 void RKGraphicsDevice::line (double x1, double y1, double x2, double y2, const QPen& pen) {
 	RK_TRACE (GRAPHICS_DEVICE);
 
-	QGraphicsLineItem* line = new QGraphicsLineItem (x1, y1, x2, y2);
-	line->setPen (pen);
-	addItem (line);
+	painter.setPen (pen);
+	painter.drawLine (x1, y1, x2, y2);
+	triggerUpdate ();
 }
 
 void RKGraphicsDevice::rect (const QRectF& rec, const QPen& pen, const QBrush& brush) {
 	RK_TRACE (GRAPHICS_DEVICE);
 
-	QGraphicsRectItem* rect = new QGraphicsRectItem (rec);
-	rect->setPen (pen);
-	rect->setBrush (brush);
-	addItem (rect);
+	painter.setPen (pen);
+	painter.setBrush (brush);
+	painter.drawRect (rec);
+	triggerUpdate ();
 }
 
-double RKGraphicsDevice::strWidth (const QString& text, const QFont& font) {
+QSizeF RKGraphicsDevice::strSize (const QString& text, const QFont& font) {
 	RK_TRACE (GRAPHICS_DEVICE);
 
-	QGraphicsTextItem t (text);
-	t.setFont (font);
-	return t.boundingRect ().width ();
+	painter.setFont (font);
+	QSizeF size = painter.boundingRect (QRectF (area.rect ()), text).size ();
+	return size;
 }
 
-void RKGraphicsDevice::text (double x, double y, const QString& _text, double rot, double hadj, const QColor& col, const QFont& font) {
+void RKGraphicsDevice::text (double x, double y, const QString& text, double rot, double hadj, const QColor& col, const QFont& font) {
 	RK_TRACE (GRAPHICS_DEVICE);
 
-	QGraphicsTextItem *text = new QGraphicsTextItem ();
-	text->setPlainText (_text);
-	text->setFont (font);
-	text->setDefaultTextColor (col);
-	QRectF brect = text->boundingRect ();
-	text->rotate (-rot);
-	text->translate (-hadj * brect.width (), - QFontMetricsF (font).height ());
-	text->setPos (x, y);
-	text->setTextInteractionFlags (Qt::TextSelectableByMouse);
-	addItem (text);
+	painter.save ();
+	QSizeF size = strSize (text, font);	// NOTE: side-effect of setting font!
+//	painter.setFont (font);
+	painter.setPen (QPen (col));
+	painter.translate (x, y);
+	painter.rotate (-rot);
+	painter.drawText (-(hadj * size.width ()), 0, text);
+	painter.restore ();	// undo rotation / translation
+	triggerUpdate ();
 }
 
 void RKGraphicsDevice::metricInfo (const QChar& c, const QFont& font, double* ascent, double* descent, double* width) {
 	RK_TRACE (GRAPHICS_DEVICE);
 
+	// Don't touch! This is the result of a lot of trial and error, and replicates the behavior of X11() on the ?plotmath examples
 	QFontMetricsF fm (font);
-	*ascent = fm.ascent ();	// TODO: or should we return the metrics of this particular char (similar to strWidth)
-	*descent = fm.descent ();
+	QRectF rect = fm.boundingRect (c);
+	*ascent = -rect.top ();
+	*descent = rect.bottom ();
 	*width = fm.width (c);
-/*	QGraphicsTextItem t;
-	t.setPlainText (QString (c));
-	t.setFont (font);
-	*ascent = t.boundingRect().height();
-	*descent = 0;
-	*width = t.boundingRect().width(); */
 }
 
 void RKGraphicsDevice::polygon (const QPolygonF& pol, const QPen& pen, const QBrush& brush) {
 	RK_TRACE (GRAPHICS_DEVICE);
 
-	QGraphicsPolygonItem *poli = new QGraphicsPolygonItem (pol);
-	poli->setPen (pen);
-	poli->setBrush (brush);
-	addItem (poli);
+	painter.setPen (pen);
+	painter.setBrush (brush);
+	painter.drawPolygon (pol);
+	triggerUpdate ();
 }
 
 void RKGraphicsDevice::polyline (const QPolygonF& pol, const QPen& pen) {
 	RK_TRACE (GRAPHICS_DEVICE);
-// Qt insistes that all QGraphicsPolygonItems must be closed. So the this does not work:
-// QGraphicsPolygonItem *poli = new QGraphicsPolygonItem (pol, clip);
-	if (pol.isEmpty ()) return;
 
-	QPainterPath path;
-	path.moveTo (pol[0]);
-	for (int i = 1; i < pol.size (); ++i) {
-		path.lineTo (pol[i]);
-	}
-	QGraphicsPathItem *poli = new QGraphicsPathItem (path);
-	poli->setPen (pen);
-	addItem (poli);
+	painter.setPen (pen);
+	painter.drawPolyline (pol);
+	triggerUpdate ();
 }
 
 void RKGraphicsDevice::setActive (bool active) {

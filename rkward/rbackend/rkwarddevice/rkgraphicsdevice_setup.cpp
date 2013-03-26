@@ -41,6 +41,10 @@ struct RKGraphicsDeviceDesc {
 	bool initRDevDesc (pDevDesc dev, double pointsize);
 	int devnum;
 	double width, height;
+	QString getFontFamily (bool symbolfont) const {
+		if (symbolfont) return QString ("symbol");
+		return default_family;
+	}
 	QString default_family;
 	pDevDesc rdevdesc;
 };

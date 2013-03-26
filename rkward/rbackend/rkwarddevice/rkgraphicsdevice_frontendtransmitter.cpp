@@ -143,17 +143,16 @@ static QFont readFont (QDataStream &instream) {
 	return ret;
 }
 
-static QVector<QPointF> readPoints (QDataStream &instream, bool close) {
+static QVector<QPointF> readPoints (QDataStream &instream) {
 	quint32 n;
 	instream >> n;
 	QVector<QPointF> points;
-	points.reserve (n + (close ? 1 : 0));
+	points.reserve (n);
 	for (quint32 i = 0; i < n; ++i) {
 		double x, y;
 		instream >> x >> y;
 		points.append (QPointF (x, y));
 	}
-	if (n && close) points.append (points[0]);
 	return points;
 }
 
@@ -192,11 +191,11 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 			streamer.instream >> x1 >> y1 >> x2 >> y2;
 			device->line (x1, y1, x2, y2, readPen (streamer.instream));
 		} else if (opcode == RKDPolygon) {
-			QPolygonF pol (readPoints (streamer.instream, true));
+			QPolygonF pol (readPoints (streamer.instream));
 			QPen pen = readPen (streamer.instream);
 			device->polygon (pol, pen, readBrush (streamer.instream));
 		} else if (opcode == RKDPolyline) {
-			QPolygonF pol (readPoints (streamer.instream, false));
+			QPolygonF pol (readPoints (streamer.instream));
 			device->polyline (pol, readPen (streamer.instream));
 		} else if (opcode == RKDRect) {
 			QRectF rect;
@@ -206,7 +205,7 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 		} else if (opcode == RKDStrWidthUTF8) {
 			QString out;
 			streamer.instream >> out;
-			double w = device->strWidth (out, readFont (streamer.instream));
+			double w = device->strSize (out, readFont (streamer.instream)).width ();
 			streamer.outstream << w;
 			streamer.writeOutBuffer ();
 		} else if (opcode == RKDMetricInfo) {
@@ -223,7 +222,7 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 			QColor col = readColor (streamer.instream);
 			device->text (x, y, out, rot, hadj, col, readFont (streamer.instream));
 		} else if (opcode == RKDNewPage) {
-			device->clear (readBrush (streamer.instream));
+			device->clear (readColor (streamer.instream));
 		} else if (opcode == RKDClose) {
 			RKGraphicsDevice::closeDevice (devnum);
 		} else if (opcode == RKDActivate) {
