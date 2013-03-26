@@ -21,6 +21,7 @@
 #include <QGraphicsView>
 #include <QGraphicsRectItem>
 #include <qmath.h>
+#include <klocale.h>
 
 #include "../../debug.h"
 
@@ -32,7 +33,6 @@ RKGraphicsDevice::RKGraphicsDevice (double width, double height) : QObject (), a
 	RK_TRACE (GRAPHICS_DEVICE);
 	painter.setRenderHints (QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
 	view = new QLabel ();
-	view->setFixedSize (area.size ());
 	connect (&updatetimer, SIGNAL (timeout ()), this, SLOT (updateNow ()));
 	updatetimer.setSingleShot (true);
 	clear ();
@@ -51,7 +51,10 @@ void RKGraphicsDevice::triggerUpdate () {
 void RKGraphicsDevice::updateNow () {
 	if (painter.isActive ()) painter.end ();
 	view->setPixmap (area);
-	view->show ();
+	if (!view->isVisible ()) {
+		view->resize (area.size ());
+		view->show ();
+	}
 	painter.begin (&area);
 }
 

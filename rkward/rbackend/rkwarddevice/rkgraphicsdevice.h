@@ -57,6 +57,7 @@ private:
 	QPixmap area;
 	QPainter painter;
 	QLabel *view;
+	QWidget *status_overlay;
 };
 
 #endif

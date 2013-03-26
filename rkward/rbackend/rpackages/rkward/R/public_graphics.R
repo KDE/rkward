@@ -85,6 +85,32 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	invisible (ret)
 }
 
+#' Plot graphics to RKWard native device
+#'
+#' \code{RK()} creates an R on-screen device that will be rendered in the RKWard frontend. 
+#' The default settings for \code{width}, and \code{height} can be modified from Settings -> Configure RKWard -> Onscreen Graphics.
+#'
+#' @param width Width of the device in inches. The default is to use the heigth configured in Settings -> Configure RKWard -> Onscreen Graphics.
+#' @param height Height of the device in inchesgraphics in pixels. The default is to use the heigth configured in Settings -> Configure RKWard -> Onscreen Graphics.
+#' @param pointsize Default pointsize
+#' @param family Default font family. This can be a character vector of length 1 or 2. The second value is used for
+#'               plotting symbols. Effectively the default is c("Helvetica", "Symbol"). A wide variety of sepcification is supported,
+#'               including the device independent fonts names "sans", "serif", and "mono"
+#' @param bg Background color.
+#' @param title Window title.
+#' @param antialias Antialiasing. Can be turned off for somewhat faster drawing.
+#'
+#' @keywords devices
+#'
+#' @export
+#' @aliases RK
+#' @rdname RKdevice
+"RK" <- function (width=getOption("rk.screendevice.width"), height=getOption("rk.screendevice.height"), pointsize=12, family=NULL, bg="white", title="", antialias=TRUE) {
+	if (is.null (width)) width <- 7
+	if (is.null (height)) height <- 7
+	.Call ("rk.graphics.device", as.integer (width), as.integer (height), as.integer (pointsize), family, bg, title, isTRUE (antialias), PACKAGE="(embedding)")
+}
+
 #' \code{rk.graph.off()} closes the device that was opened by \code{rk.graph.on}. 
 #'
 #' @rdname rk.graph.on

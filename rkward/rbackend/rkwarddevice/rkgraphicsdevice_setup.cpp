@@ -37,15 +37,20 @@ extern "C" {
 #include <R_ext/GraphicsEngine.h>
 }
 
+#ifndef rcolor
+#define rcolor unsigned int
+#endif
+
 struct RKGraphicsDeviceDesc {
-	bool initRDevDesc (pDevDesc dev, double pointsize);
+	bool initRDevDesc (pDevDesc dev, double pointsize, rcolor bg);
 	int devnum;
 	double width, height;
 	QString getFontFamily (bool symbolfont) const {
-		if (symbolfont) return QString ("symbol");
+		if (symbolfont) return default_symbol_family;
 		return default_family;
 	}
 	QString default_family;
+	QString default_symbol_family;
 	pDevDesc rdevdesc;
 };
 
@@ -53,14 +58,16 @@ struct RKGraphicsDeviceDesc {
 
 #define RKGD_DPI 72
 
-void RKStartGraphicsDevice (double width, double height, double pointsize, const QString &family) {
+void RKStartGraphicsDevice (double width, double height, double pointsize, const QStringList &family, rcolor bg, const char* title, bool antialias) {
 	if (width <= 0 || height <= 0) {
 		Rf_error ("Invalid width or height: (%g, %g)", width, height);
 	}
 	RKGraphicsDeviceDesc *desc = new RKGraphicsDeviceDesc;
 	desc->width = width * RKGD_DPI;
 	desc->height = height * RKGD_DPI;
-	desc->default_family = family;
+	desc->default_family = family.value (0, "Helvetica");
+	desc->default_symbol_family = family.value (0, "Symbol");
+#warning: Title, antialias
 
 	R_GE_checkVersionOrDie (R_GE_version);
 	R_CheckDeviceAvailable ();
@@ -68,7 +75,7 @@ void RKStartGraphicsDevice (double width, double height, double pointsize, const
 	BEGIN_SUSPEND_INTERRUPTS {
 		/* Allocate and initialize the device driver data */
 		dev = (pDevDesc) calloc (1, sizeof(DevDesc));
-		if (!(dev && desc->initRDevDesc (dev, pointsize) && RKGraphicsDeviceBackendTransmitter::instance ())) {
+		if (!(dev && desc->initRDevDesc (dev, pointsize, bg) && RKGraphicsDeviceBackendTransmitter::instance ())) {
 			free (dev);
 			delete (desc);
 			desc = 0;
@@ -90,14 +97,12 @@ void RKStartGraphicsDevice (double width, double height, double pointsize, const
 	}
 }
 
-SEXP RKStartGraphicsDevice (SEXP width, SEXP height, SEXP pointsize, SEXP family
-#warning TODO: add more params for compatibility with X11()
-) {
-	RKStartGraphicsDevice (Rf_asReal (width), Rf_asReal (height), Rf_asReal (pointsize), RKRSupport::SEXPToString (family));
+SEXP RKStartGraphicsDevice (SEXP width, SEXP height, SEXP pointsize, SEXP family, SEXP bg, SEXP title, SEXP antialias) {
+	RKStartGraphicsDevice (Rf_asReal (width), Rf_asReal (height), Rf_asReal (pointsize), RKRSupport::SEXPToStringList (family), R_GE_str2col (CHAR(Rf_asChar(bg))), CHAR(Rf_asChar(title)), Rf_asLogical (antialias));
 	return R_NilValue;
 }
 
-bool RKGraphicsDeviceDesc::initRDevDesc (pDevDesc dev, double pointsize) {
+bool RKGraphicsDeviceDesc::initRDevDesc (pDevDesc dev, double pointsize, rcolor bg) {
 	dev->deviceSpecific = (void *) this;
 
 	// pointsize?
@@ -108,7 +113,7 @@ bool RKGraphicsDeviceDesc::initRDevDesc (pDevDesc dev, double pointsize) {
 	dev->startfont = 1;
 	dev->startps = pointsize;
 	dev->startcol = R_RGB(0, 0, 0);
-	dev->startfill = R_TRANWHITE;
+	dev->startfill = bg;
 	dev->startlty = LTY_SOLID;
 	dev->startgamma = 1;
 	/*
