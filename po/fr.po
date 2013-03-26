@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: "
 "http://sourceforge.net/tracker/?group_id=50231&atid=459007\n"
-"POT-Creation-Date: 2013-03-12 11:41+0100\n"
+"POT-Creation-Date: 2013-03-22 15:54+0100\n"
 "PO-Revision-Date: 2012-10-09 04:03+0000\n"
 "Last-Translator: Milan Bouchet-Valat <nalimilan@club.fr>\n"
 "Language-Team: français <>\n"
@@ -19,8 +19,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Launchpad-Export-Date: 2013-03-13 04:45+0000\n"
-"X-Generator: Launchpad (build 16532)\n"
+"X-Launchpad-Export-Date: 2013-03-23 05:22+0000\n"
+"X-Generator: Launchpad (build 16540)\n"
 "Language: fr\n"
 
 #: agents/rkeditobjectagent.cpp:56
@@ -240,7 +240,7 @@ msgctxt "Note: 'namespace' is a technical term, should not be translated"
 msgid "Orphan Namespaces"
 msgstr ""
 
-#: core/rkpseudoobjects.cpp:157
+#: core/rkpseudoobjects.cpp:159
 msgid ""
 "This special object does not actually exist anywhere in R. It is used, here, "
 "to list namespaces which are loaded, but not attached to a package on the "
@@ -1976,31 +1976,31 @@ msgid "Select filename to save command history"
 msgstr ""
 "Choisissez un nom de fichier où enregistrer l'historique des commandes"
 
-#: rkconsole.cpp:889
+#: rkconsole.cpp:895
 msgid "Interrupt running command"
 msgstr "Interrompre l'exécution de la commande"
 
-#: rkconsole.cpp:895
+#: rkconsole.cpp:902
 msgid "Copy selection literally"
 msgstr "Copier la sélection littéralement"
 
-#: rkconsole.cpp:898
+#: rkconsole.cpp:905
 msgid "Copy commands, only"
 msgstr "Copier seulement les commandes"
 
-#: rkconsole.cpp:905
+#: rkconsole.cpp:912
 msgid "Print Console"
 msgstr "Imprimer la console"
 
-#: rkconsole.cpp:912
+#: rkconsole.cpp:919
 msgid "Import command history..."
 msgstr "Importer l'historique des commandes..."
 
-#: rkconsole.cpp:914
+#: rkconsole.cpp:921
 msgid "Export command history..."
 msgstr "Exporter l'historique des commandes..."
 
-#: rkconsole.cpp:933
+#: rkconsole.cpp:940
 msgid ""
 "You have configured RKWard to pipe script editor commands through the R "
 "Console. However, another command is currently active in the console. Do you "
@@ -2012,15 +2012,15 @@ msgstr ""
 "dans la console. Voulez-vous ajouter la nouvelle commande à celle-ci, ou "
 "réinitialiser d'abord la console ?"
 
-#: rkconsole.cpp:933
+#: rkconsole.cpp:940
 msgid "R Console is busy"
 msgstr "Console R occupée"
 
-#: rkconsole.cpp:933
+#: rkconsole.cpp:940
 msgid "Append"
 msgstr "Ajouter"
 
-#: rkconsole.cpp:933
+#: rkconsole.cpp:940
 msgid "Reset, then submit"
 msgstr "Réinitialiser d'abord"
 
@@ -3080,13 +3080,22 @@ msgstr ""
 msgid "Build packages from source (not configurable on this platform)"
 msgstr ""
 
-#: settings/rksettingsmoduler.cpp:386
+#: settings/rksettingsmoduler.cpp:381
+msgid ""
+"Installing packages from pre-compiled binaries (if available) is generally "
+"faster, and does not require an installation of development tools and "
+"libraries. On the other hand, building packages from source provides best "
+"compatibility. On Mac OS X and Linux, building packages from source is "
+"currently recommended."
+msgstr ""
+
+#: settings/rksettingsmoduler.cpp:387
 msgid "R Library locations (where libraries get installed to, locally)"
 msgstr ""
 "Emplacement des bibliothèques R (où les bibliothèques sont installées "
 "localement)"
 
-#: settings/rksettingsmoduler.cpp:391
+#: settings/rksettingsmoduler.cpp:392
 msgid ""
 "Note: The startup defaults will always be used in addition to the locations "
 "you specify in this list"
@@ -3094,23 +3103,23 @@ msgstr ""
 "Remarque : Les valeurs par défaut au démarrage seront toujours utilisées en "
 "plus des emplacements spécifiés dans cette liste"
 
-#: settings/rksettingsmoduler.cpp:417
+#: settings/rksettingsmoduler.cpp:418
 msgid "Add R Library Directory"
 msgstr "Ajouter un répertoire de bibliothèque R"
 
-#: settings/rksettingsmoduler.cpp:425
+#: settings/rksettingsmoduler.cpp:426
 msgid "Add repository"
 msgstr "Ajouter un dépôt"
 
-#: settings/rksettingsmoduler.cpp:425
+#: settings/rksettingsmoduler.cpp:426
 msgid "Add URL of new repository"
 msgstr "Ajouter l'URL d'un nouveau dépôt"
 
-#: settings/rksettingsmoduler.cpp:431
+#: settings/rksettingsmoduler.cpp:432
 msgid "R-Packages"
 msgstr "Paquets R"
 
-#: settings/rksettingsmoduler.cpp:437
+#: settings/rksettingsmoduler.cpp:438
 msgid "Select CRAN mirror"
 msgstr "Sélectionnez un miroir CRAN"
 
@@ -3819,91 +3828,113 @@ msgstr ""
 msgid "Large window"
 msgstr "Grande fenêtre"
 
-#: windows/rkwindowcatcher.cpp:254
-msgid "Shutting down device number %1"
-msgstr "Fermeture du dispositif n°%1"
-
-#: windows/rkwindowcatcher.cpp:255
+#: windows/rkwindowcatcher.cpp:267
 msgid "Closing device (saving history)"
 msgstr "Fermeture du dispositif (conservation de l'historique)"
 
-#: windows/rkwindowcatcher.cpp:342
+#: windows/rkwindowcatcher.cpp:269
+msgid "Shutting down device number %1"
+msgstr "Fermeture du dispositif n°%1"
+
+#: windows/rkwindowcatcher.cpp:274
+msgid ""
+"<p>The graphics device is being closed, saving the last plot to the plot "
+"history. This may take a while, if the R backend is still busy. You can "
+"close the graphics device immediately, in case it is stuck. However, the "
+"last plot may be missing from the plot history, if you do this.</p>"
+msgstr ""
+
+#: windows/rkwindowcatcher.cpp:276
+msgid ""
+"<p>Note: On X11, the embedded window may be expurged, and you will have to "
+"close it manually in this case.</p>"
+msgstr ""
+
+#: windows/rkwindowcatcher.cpp:278
+msgid "Close immediately"
+msgstr ""
+
+#: windows/rkwindowcatcher.cpp:278
+msgid "Keep waiting"
+msgstr ""
+
+#: windows/rkwindowcatcher.cpp:365
 msgid "Specify fixed size"
 msgstr "Spécifier une taille fixe"
 
-#: windows/rkwindowcatcher.cpp:348
+#: windows/rkwindowcatcher.cpp:371
 msgid "Width"
 msgstr "Largeur"
 
-#: windows/rkwindowcatcher.cpp:352
+#: windows/rkwindowcatcher.cpp:375
 msgid "Height"
 msgstr "Hauteur"
 
-#: windows/rkwindowcatcher.cpp:370
+#: windows/rkwindowcatcher.cpp:393
 msgid "Activate graphics device number %1"
 msgstr "Activer le dispositif graphique n°%1"
 
-#: windows/rkwindowcatcher.cpp:376
+#: windows/rkwindowcatcher.cpp:399
 msgid "Copy contents of graphics device number %1 to output"
 msgstr "Copier le contenu du dispositif graphique n°%1 dans la sortie"
 
-#: windows/rkwindowcatcher.cpp:384
+#: windows/rkwindowcatcher.cpp:407
 msgid "Print contents of graphics device number %1"
 msgstr "Imprimer le contenu du dispositif graphique n°%1"
 
-#: windows/rkwindowcatcher.cpp:393
+#: windows/rkwindowcatcher.cpp:416
 msgid "Specify R object"
 msgstr "Spécifiez un objet R"
 
-#: windows/rkwindowcatcher.cpp:398
+#: windows/rkwindowcatcher.cpp:421
 msgid "Specify the R object name, you want to save the graph to"
 msgstr ""
 "Entrez le nom de l'objet R dans lequel vous voulez enregistrer le graphique"
 
-#: windows/rkwindowcatcher.cpp:410
+#: windows/rkwindowcatcher.cpp:433
 msgid "Save contents of graphics device number %1 to object '%2'"
 msgstr ""
 "Enregistrer le contenu du dispositif graphique n°%1 dans l'objet « %2 »"
 
-#: windows/rkwindowcatcher.cpp:419
+#: windows/rkwindowcatcher.cpp:442
 msgid "Duplicate graphics device number %1"
 msgstr "Dupliquer le dispositif graphique n°%1"
 
-#: windows/rkwindowcatcher.cpp:425
+#: windows/rkwindowcatcher.cpp:448
 msgid "Load next plot in device number %1"
 msgstr "Charger le graphique suivant dans le dispositif n°%1"
 
-#: windows/rkwindowcatcher.cpp:426 windows/rkwindowcatcher.cpp:434
-#: windows/rkwindowcatcher.cpp:442 windows/rkwindowcatcher.cpp:450
-#: windows/rkwindowcatcher.cpp:458
+#: windows/rkwindowcatcher.cpp:449 windows/rkwindowcatcher.cpp:457
+#: windows/rkwindowcatcher.cpp:465 windows/rkwindowcatcher.cpp:473
+#: windows/rkwindowcatcher.cpp:481
 msgid "Loading plot from history"
 msgstr "Chargement du graphique à partir de l'historique"
 
-#: windows/rkwindowcatcher.cpp:433
+#: windows/rkwindowcatcher.cpp:456
 msgid "Load previous plot in device number %1"
 msgstr "Charger le graphique précédent dans le dispositif n°%1"
 
-#: windows/rkwindowcatcher.cpp:441
+#: windows/rkwindowcatcher.cpp:464
 msgid "Load first plot in device number %1"
 msgstr "Charger le premier graphique dans le dispositif n°%1"
 
-#: windows/rkwindowcatcher.cpp:449
+#: windows/rkwindowcatcher.cpp:472
 msgid "Load last plot in device number %1"
 msgstr "Charger le dernier graphique dans le dispositif n°%1"
 
-#: windows/rkwindowcatcher.cpp:457
+#: windows/rkwindowcatcher.cpp:480
 msgid "Load plot %1 in device number %2"
 msgstr "Charger le graphique %1 dans le dispositif n°%2"
 
-#: windows/rkwindowcatcher.cpp:465
+#: windows/rkwindowcatcher.cpp:488
 msgid "Append this plot to history (device number %1)"
 msgstr "Ajouter ce graphique à l'historique (dispositif n°%1"
 
-#: windows/rkwindowcatcher.cpp:471
+#: windows/rkwindowcatcher.cpp:494
 msgid "Remove current plot from history (device number %1)"
 msgstr "Supprimer ce graphique de l'historique (dispositif n°%1"
 
-#: windows/rkwindowcatcher.cpp:477
+#: windows/rkwindowcatcher.cpp:500
 msgid ""
 "This will clear the plot history for all device windows, not just this one. "
 "If this is not your intent, press cancel, below."
@@ -3912,87 +3943,87 @@ msgstr ""
 "seulement celui-ci. Si ce n'est pas votre intention, cliquez sur « Annuler » "
 "ci-dessous."
 
-#: windows/rkwindowcatcher.cpp:479
+#: windows/rkwindowcatcher.cpp:502
 msgid "Clear plot history"
 msgstr "Effacer l'historique des graphiques"
 
-#: windows/rkwindowcatcher.cpp:485
+#: windows/rkwindowcatcher.cpp:508
 msgid "Plot properties (device number %1)"
 msgstr "Propriétés des graphiques (dispositif n°%1)"
 
-#: windows/rkwindowcatcher.cpp:499
+#: windows/rkwindowcatcher.cpp:522
 msgid "<Unsaved plot>"
 msgstr "<Graphique non enregistré>"
 
-#: windows/rkwindowcatcher.cpp:559
+#: windows/rkwindowcatcher.cpp:582
 msgid "Draw area follows size of window"
 msgstr "La surface de dessin suit la taille de la fenêtre"
 
-#: windows/rkwindowcatcher.cpp:565
+#: windows/rkwindowcatcher.cpp:588
 msgid "Set fixed size 500x500"
 msgstr "Fixer la taille à 500x500"
 
-#: windows/rkwindowcatcher.cpp:567
+#: windows/rkwindowcatcher.cpp:590
 msgid "Set fixed size 1000x1000"
 msgstr "Fixer la taille à 1000x1000"
 
-#: windows/rkwindowcatcher.cpp:569
+#: windows/rkwindowcatcher.cpp:592
 msgid "Set fixed size 2000x2000"
 msgstr "Fixer la taille à 2000x2000"
 
-#: windows/rkwindowcatcher.cpp:571
+#: windows/rkwindowcatcher.cpp:594
 msgid "Set specified fixed size..."
 msgstr "Fixer une autre taille..."
 
-#: windows/rkwindowcatcher.cpp:574
+#: windows/rkwindowcatcher.cpp:597
 msgid "Previous plot"
 msgstr "Précédent"
 
-#: windows/rkwindowcatcher.cpp:578
+#: windows/rkwindowcatcher.cpp:601
 msgid "First plot"
 msgstr "Premier"
 
-#: windows/rkwindowcatcher.cpp:582
+#: windows/rkwindowcatcher.cpp:605
 msgid "Next plot"
 msgstr "Suivant"
 
-#: windows/rkwindowcatcher.cpp:586
+#: windows/rkwindowcatcher.cpp:609
 msgid "Last plot"
 msgstr "Dernier"
 
-#: windows/rkwindowcatcher.cpp:589
+#: windows/rkwindowcatcher.cpp:612
 msgid "Go to plot"
 msgstr "Aller à un graphique"
 
-#: windows/rkwindowcatcher.cpp:596
+#: windows/rkwindowcatcher.cpp:619
 msgid "Append this plot"
 msgstr "Ajouter ce graphique"
 
-#: windows/rkwindowcatcher.cpp:600
+#: windows/rkwindowcatcher.cpp:623
 msgid "Remove this plot"
 msgstr "Supprimer ce graphique"
 
-#: windows/rkwindowcatcher.cpp:606
+#: windows/rkwindowcatcher.cpp:629
 msgid "Clear history"
 msgstr "Effacer l'historique"
 
-#: windows/rkwindowcatcher.cpp:611
+#: windows/rkwindowcatcher.cpp:634
 msgid "Plot properties"
 msgstr "Propriétés du graphique"
 
-#: windows/rkwindowcatcher.cpp:615
+#: windows/rkwindowcatcher.cpp:638
 msgid "Make active"
 msgstr "Activer"
 
-#: windows/rkwindowcatcher.cpp:618
+#: windows/rkwindowcatcher.cpp:641
 msgid "Copy to output"
 msgstr "Copier dans la sortie"
 
-#: windows/rkwindowcatcher.cpp:622
+#: windows/rkwindowcatcher.cpp:645
 msgid "Store as R object..."
 msgstr "Enregistrer dans un objet R..."
 
-#: windows/rkwindowcatcher.cpp:624
+#: windows/rkwindowcatcher.cpp:647
 msgid "Duplicate"
 msgstr "Dupliquer"
 

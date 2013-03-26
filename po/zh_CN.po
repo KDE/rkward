@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: lala\n"
 "Report-Msgid-Bugs-To: "
 "http://sourceforge.net/tracker/?group_id=50231&atid=459007\n"
-"POT-Creation-Date: 2013-03-12 11:41+0100\n"
+"POT-Creation-Date: 2013-03-22 15:54+0100\n"
 "PO-Revision-Date: 2012-10-09 04:03+0000\n"
 "Last-Translator: RKWard Team <rkward-tracker@lists.sourceforge.net>\n"
 "Language-Team: Simplified Chinese\n"
@@ -17,8 +17,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Launchpad-Export-Date: 2013-03-13 04:45+0000\n"
-"X-Generator: Launchpad (build 16532)\n"
+"X-Launchpad-Export-Date: 2013-03-23 05:22+0000\n"
+"X-Generator: Launchpad (build 16540)\n"
 "Language: \n"
 
 #: agents/rkeditobjectagent.cpp:56
@@ -201,7 +201,7 @@ msgctxt "Note: 'namespace' is a technical term, should not be translated"
 msgid "Orphan Namespaces"
 msgstr ""
 
-#: core/rkpseudoobjects.cpp:157
+#: core/rkpseudoobjects.cpp:159
 msgid ""
 "This special object does not actually exist anywhere in R. It is used, here, "
 "to list namespaces which are loaded, but not attached to a package on the "
@@ -1755,31 +1755,31 @@ msgstr ""
 msgid "Select filename to save command history"
 msgstr ""
 
-#: rkconsole.cpp:889
+#: rkconsole.cpp:895
 msgid "Interrupt running command"
 msgstr "中断正在运行的命令"
 
-#: rkconsole.cpp:895
+#: rkconsole.cpp:902
 msgid "Copy selection literally"
 msgstr "复制选中的文本"
 
-#: rkconsole.cpp:898
+#: rkconsole.cpp:905
 msgid "Copy commands, only"
 msgstr ""
 
-#: rkconsole.cpp:905
+#: rkconsole.cpp:912
 msgid "Print Console"
 msgstr ""
 
-#: rkconsole.cpp:912
+#: rkconsole.cpp:919
 msgid "Import command history..."
 msgstr ""
 
-#: rkconsole.cpp:914
+#: rkconsole.cpp:921
 msgid "Export command history..."
 msgstr ""
 
-#: rkconsole.cpp:933
+#: rkconsole.cpp:940
 msgid ""
 "You have configured RKWard to pipe script editor commands through the R "
 "Console. However, another command is currently active in the console. Do you "
@@ -1787,15 +1787,15 @@ msgid ""
 "console, first? Press cancel if you do not wish to run the new command, now."
 msgstr ""
 
-#: rkconsole.cpp:933
+#: rkconsole.cpp:940
 msgid "R Console is busy"
 msgstr ""
 
-#: rkconsole.cpp:933
+#: rkconsole.cpp:940
 msgid "Append"
 msgstr ""
 
-#: rkconsole.cpp:933
+#: rkconsole.cpp:940
 msgid "Reset, then submit"
 msgstr ""
 
@@ -2784,33 +2784,42 @@ msgstr ""
 msgid "Build packages from source (not configurable on this platform)"
 msgstr ""
 
-#: settings/rksettingsmoduler.cpp:386
+#: settings/rksettingsmoduler.cpp:381
+msgid ""
+"Installing packages from pre-compiled binaries (if available) is generally "
+"faster, and does not require an installation of development tools and "
+"libraries. On the other hand, building packages from source provides best "
+"compatibility. On Mac OS X and Linux, building packages from source is "
+"currently recommended."
+msgstr ""
+
+#: settings/rksettingsmoduler.cpp:387
 msgid "R Library locations (where libraries get installed to, locally)"
 msgstr ""
 
-#: settings/rksettingsmoduler.cpp:391
+#: settings/rksettingsmoduler.cpp:392
 msgid ""
 "Note: The startup defaults will always be used in addition to the locations "
 "you specify in this list"
 msgstr "注意：除了在这个表中指定的地点外，启动缺省项也会一并被使用。"
 
-#: settings/rksettingsmoduler.cpp:417
+#: settings/rksettingsmoduler.cpp:418
 msgid "Add R Library Directory"
 msgstr "添加R函数库目录"
 
-#: settings/rksettingsmoduler.cpp:425
+#: settings/rksettingsmoduler.cpp:426
 msgid "Add repository"
 msgstr "添加仓库"
 
-#: settings/rksettingsmoduler.cpp:425
+#: settings/rksettingsmoduler.cpp:426
 msgid "Add URL of new repository"
 msgstr ""
 
-#: settings/rksettingsmoduler.cpp:431
+#: settings/rksettingsmoduler.cpp:432
 msgid "R-Packages"
 msgstr "R函数包"
 
-#: settings/rksettingsmoduler.cpp:437
+#: settings/rksettingsmoduler.cpp:438
 msgid "Select CRAN mirror"
 msgstr ""
 
@@ -3433,175 +3442,197 @@ msgstr ""
 msgid "Large window"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:254
-msgid "Shutting down device number %1"
-msgstr ""
-
-#: windows/rkwindowcatcher.cpp:255
+#: windows/rkwindowcatcher.cpp:267
 msgid "Closing device (saving history)"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:342
+#: windows/rkwindowcatcher.cpp:269
+msgid "Shutting down device number %1"
+msgstr ""
+
+#: windows/rkwindowcatcher.cpp:274
+msgid ""
+"<p>The graphics device is being closed, saving the last plot to the plot "
+"history. This may take a while, if the R backend is still busy. You can "
+"close the graphics device immediately, in case it is stuck. However, the "
+"last plot may be missing from the plot history, if you do this.</p>"
+msgstr ""
+
+#: windows/rkwindowcatcher.cpp:276
+msgid ""
+"<p>Note: On X11, the embedded window may be expurged, and you will have to "
+"close it manually in this case.</p>"
+msgstr ""
+
+#: windows/rkwindowcatcher.cpp:278
+msgid "Close immediately"
+msgstr ""
+
+#: windows/rkwindowcatcher.cpp:278
+msgid "Keep waiting"
+msgstr ""
+
+#: windows/rkwindowcatcher.cpp:365
 msgid "Specify fixed size"
 msgstr "指定固定尺寸"
 
-#: windows/rkwindowcatcher.cpp:348
+#: windows/rkwindowcatcher.cpp:371
 msgid "Width"
 msgstr "宽度"
 
-#: windows/rkwindowcatcher.cpp:352
+#: windows/rkwindowcatcher.cpp:375
 msgid "Height"
 msgstr "高度"
 
-#: windows/rkwindowcatcher.cpp:370
+#: windows/rkwindowcatcher.cpp:393
 msgid "Activate graphics device number %1"
 msgstr "激活图像设备号码%1"
 
-#: windows/rkwindowcatcher.cpp:376
+#: windows/rkwindowcatcher.cpp:399
 msgid "Copy contents of graphics device number %1 to output"
 msgstr "复制图像设备号码%1中的内容到输出"
 
-#: windows/rkwindowcatcher.cpp:384
+#: windows/rkwindowcatcher.cpp:407
 msgid "Print contents of graphics device number %1"
 msgstr "打印图像设备号码%1中的内容"
 
-#: windows/rkwindowcatcher.cpp:393
+#: windows/rkwindowcatcher.cpp:416
 msgid "Specify R object"
 msgstr "指定R对象"
 
-#: windows/rkwindowcatcher.cpp:398
+#: windows/rkwindowcatcher.cpp:421
 msgid "Specify the R object name, you want to save the graph to"
 msgstr "指定您想要保存图像内容到的R对象名"
 
-#: windows/rkwindowcatcher.cpp:410
+#: windows/rkwindowcatcher.cpp:433
 msgid "Save contents of graphics device number %1 to object '%2'"
 msgstr "保存图像设备号码%1中的内容到对象%2"
 
-#: windows/rkwindowcatcher.cpp:419
+#: windows/rkwindowcatcher.cpp:442
 msgid "Duplicate graphics device number %1"
 msgstr "复制图像设备号码%1"
 
-#: windows/rkwindowcatcher.cpp:425
+#: windows/rkwindowcatcher.cpp:448
 msgid "Load next plot in device number %1"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:426 windows/rkwindowcatcher.cpp:434
-#: windows/rkwindowcatcher.cpp:442 windows/rkwindowcatcher.cpp:450
-#: windows/rkwindowcatcher.cpp:458
+#: windows/rkwindowcatcher.cpp:449 windows/rkwindowcatcher.cpp:457
+#: windows/rkwindowcatcher.cpp:465 windows/rkwindowcatcher.cpp:473
+#: windows/rkwindowcatcher.cpp:481
 msgid "Loading plot from history"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:433
+#: windows/rkwindowcatcher.cpp:456
 msgid "Load previous plot in device number %1"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:441
+#: windows/rkwindowcatcher.cpp:464
 msgid "Load first plot in device number %1"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:449
+#: windows/rkwindowcatcher.cpp:472
 msgid "Load last plot in device number %1"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:457
+#: windows/rkwindowcatcher.cpp:480
 msgid "Load plot %1 in device number %2"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:465
+#: windows/rkwindowcatcher.cpp:488
 msgid "Append this plot to history (device number %1)"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:471
+#: windows/rkwindowcatcher.cpp:494
 msgid "Remove current plot from history (device number %1)"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:477
+#: windows/rkwindowcatcher.cpp:500
 msgid ""
 "This will clear the plot history for all device windows, not just this one. "
 "If this is not your intent, press cancel, below."
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:479
+#: windows/rkwindowcatcher.cpp:502
 msgid "Clear plot history"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:485
+#: windows/rkwindowcatcher.cpp:508
 msgid "Plot properties (device number %1)"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:499
+#: windows/rkwindowcatcher.cpp:522
 msgid "<Unsaved plot>"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:559
+#: windows/rkwindowcatcher.cpp:582
 msgid "Draw area follows size of window"
 msgstr "绘图区遵循窗口的尺寸"
 
-#: windows/rkwindowcatcher.cpp:565
+#: windows/rkwindowcatcher.cpp:588
 msgid "Set fixed size 500x500"
 msgstr "设定固定尺寸500x500"
 
-#: windows/rkwindowcatcher.cpp:567
+#: windows/rkwindowcatcher.cpp:590
 msgid "Set fixed size 1000x1000"
 msgstr "设定固定尺寸1000x1000"
 
-#: windows/rkwindowcatcher.cpp:569
+#: windows/rkwindowcatcher.cpp:592
 msgid "Set fixed size 2000x2000"
 msgstr "设定固定尺寸2000x2000"
 
-#: windows/rkwindowcatcher.cpp:571
+#: windows/rkwindowcatcher.cpp:594
 msgid "Set specified fixed size..."
 msgstr "设定指定的固定尺寸..."
 
-#: windows/rkwindowcatcher.cpp:574
+#: windows/rkwindowcatcher.cpp:597
 msgid "Previous plot"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:578
+#: windows/rkwindowcatcher.cpp:601
 msgid "First plot"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:582
+#: windows/rkwindowcatcher.cpp:605
 msgid "Next plot"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:586
+#: windows/rkwindowcatcher.cpp:609
 msgid "Last plot"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:589
+#: windows/rkwindowcatcher.cpp:612
 msgid "Go to plot"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:596
+#: windows/rkwindowcatcher.cpp:619
 msgid "Append this plot"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:600
+#: windows/rkwindowcatcher.cpp:623
 msgid "Remove this plot"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:606
+#: windows/rkwindowcatcher.cpp:629
 msgid "Clear history"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:611
+#: windows/rkwindowcatcher.cpp:634
 msgid "Plot properties"
 msgstr ""
 
-#: windows/rkwindowcatcher.cpp:615
+#: windows/rkwindowcatcher.cpp:638
 msgid "Make active"
 msgstr "激活"
 
-#: windows/rkwindowcatcher.cpp:618
+#: windows/rkwindowcatcher.cpp:641
 msgid "Copy to output"
 msgstr "拷贝到输出"
 
-#: windows/rkwindowcatcher.cpp:622
+#: windows/rkwindowcatcher.cpp:645
 msgid "Store as R object..."
 msgstr "保存为R对象..."
 
-#: windows/rkwindowcatcher.cpp:624
+#: windows/rkwindowcatcher.cpp:647
 msgid "Duplicate"
 msgstr "复制"
 

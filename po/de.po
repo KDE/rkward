@@ -14,16 +14,16 @@ msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: "
 "http://sourceforge.net/tracker/?group_id=50231&atid=459007\n"
-"POT-Creation-Date: 2013-03-12 11:41+0100\n"
-"PO-Revision-Date: 2013-03-14 17:06+0000\n"
+"POT-Creation-Date: 2013-03-22 15:54+0100\n"
+"PO-Revision-Date: 2013-03-18 18:20+0000\n"
 "Last-Translator: Thomas Friedrichsmeier <Unknown>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2013-03-15 06:08+0000\n"
-"X-Generator: Launchpad (build 16532)\n"
+"X-Launchpad-Export-Date: 2013-03-23 05:22+0000\n"
+"X-Generator: Launchpad (build 16540)\n"
 "Language: de\n"
 
 #: agents/rkeditobjectagent.cpp:56
@@ -32,7 +32,7 @@ msgid ""
 "or RKWard does not support editing this type of object, yet."
 msgstr ""
 "Das Objekt '%1' konnte nicht zum Bearbeiten geöffnet werden. Entweder "
-"existiert es nicht, oder RKWard unterstütze die Bearbeitung dieser Art von "
+"existiert es nicht, oder RKWard unterstützt die Bearbeitung dieser Art von "
 "Objekten noch nicht."
 
 #: agents/rkeditobjectagent.cpp:56
@@ -244,7 +244,7 @@ msgctxt "Note: 'namespace' is a technical term, should not be translated"
 msgid "Orphan Namespaces"
 msgstr "Verwaiste Namespaces"
 
-#: core/rkpseudoobjects.cpp:157
+#: core/rkpseudoobjects.cpp:159
 msgid ""
 "This special object does not actually exist anywhere in R. It is used, here, "
 "to list namespaces which are loaded, but not attached to a package on the "
@@ -1998,31 +1998,31 @@ msgstr "Wähle Befehlsverlauf um Datei zu laden"
 msgid "Select filename to save command history"
 msgstr "Wähle Dateiname um Befehlsverlauf zu speichern"
 
-#: rkconsole.cpp:889
+#: rkconsole.cpp:895
 msgid "Interrupt running command"
 msgstr "Unterbreche laufendes Kommando"
 
-#: rkconsole.cpp:895
+#: rkconsole.cpp:902
 msgid "Copy selection literally"
 msgstr "Kopiere Auswahl wörtlich"
 
-#: rkconsole.cpp:898
+#: rkconsole.cpp:905
 msgid "Copy commands, only"
 msgstr "Kopiere nur Kommandos"
 
-#: rkconsole.cpp:905
+#: rkconsole.cpp:912
 msgid "Print Console"
 msgstr "Drucke Konsole"
 
-#: rkconsole.cpp:912
+#: rkconsole.cpp:919
 msgid "Import command history..."
 msgstr "Importiere Befehlsverlauf..."
 
-#: rkconsole.cpp:914
+#: rkconsole.cpp:921
 msgid "Export command history..."
 msgstr "Exportiere Befehlsverlauf..."
 
-#: rkconsole.cpp:933
+#: rkconsole.cpp:940
 msgid ""
 "You have configured RKWard to pipe script editor commands through the R "
 "Console. However, another command is currently active in the console. Do you "
@@ -2035,15 +2035,15 @@ msgstr ""
 "werden? Abbrechen drücken falls das neue Kommando nun nicht ausgeführt "
 "werden soll."
 
-#: rkconsole.cpp:933
+#: rkconsole.cpp:940
 msgid "R Console is busy"
 msgstr "R-Konsole ist beschäftigt"
 
-#: rkconsole.cpp:933
+#: rkconsole.cpp:940
 msgid "Append"
 msgstr "Anhängen"
 
-#: rkconsole.cpp:933
+#: rkconsole.cpp:940
 msgid "Reset, then submit"
 msgstr "Zurücksetzen, dann übermitteln"
 
@@ -2149,6 +2149,10 @@ msgid ""
 "with this version of RKWard (see the 'Details' for more information). Other "
 "plugins were loaded, successfully, however."
 msgstr ""
+"Beim Laden der folgenden pluginmap Dateien sind Fehler aufgetreten. Das "
+"könnte daran liegen, dass einzelne Plugins fehlerhaft oder nicht mit dieser "
+"Version von RKWard kompatibel sind (klicken Sie auf 'Details' um mehr zu "
+"erfahren). Andere Plugins konnten jedoch erfolgreich geladen werden."
 
 #: rkward.cpp:316
 msgid ""
@@ -2156,6 +2160,9 @@ msgid ""
 "upgrade RKWard, or remove and re-add them in Settings->Configure RKWard-"
 ">Plugins."
 msgstr ""
+"Hinweis: Sie werden zu diesen pluginmap Dateien erst wieder gewarnt, wenn "
+"Sie eine neue Version von RKWard benutzen, oder diese Plugins entfernen und "
+"unter Einstellungen->Konfiguriere RKWard->Plugins erneut hinzufügen."
 
 #: rkward.cpp:351
 msgid "Carbon Copy Settings"
@@ -2175,7 +2182,7 @@ msgstr "Schwebende Aufgaben"
 
 #: rkward.cpp:390
 msgid "Debugger Frames"
-msgstr ""
+msgstr "Debugger Frames"
 
 #: rkward.cpp:395
 msgid "Debugger Console"
@@ -2183,7 +2190,7 @@ msgstr "Debugger Konsole"
 
 #: rkward.cpp:399
 msgid "RKWard Debug Messages"
-msgstr ""
+msgstr "RKWard Diagnose Meldungen"
 
 #: rkward.cpp:411
 msgid "Dataset"
@@ -2654,19 +2661,19 @@ msgstr "Zeige RKWard-Hilfe beim Start"
 
 #: settings/rksettingsmodulegeneral.cpp:89
 msgid "Intial working directory (*)"
-msgstr ""
+msgstr "Startverzeichnis (*)"
 
 #: settings/rksettingsmodulegeneral.cpp:93
 msgid "Do not change current directory on startup"
-msgstr ""
+msgstr "Arbeitsverzeichnis beim Starten nicht wechseln"
 
 #: settings/rksettingsmodulegeneral.cpp:94
 msgid "RKWard files directory (as specified, above)"
-msgstr ""
+msgstr "RKWard-Verzeichnis (wie oben angegeben)"
 
 #: settings/rksettingsmodulegeneral.cpp:95
 msgid "User home directory"
-msgstr ""
+msgstr "Benutzerverzeichnis"
 
 #: settings/rksettingsmodulegeneral.cpp:96
 msgid "Last used directory"
@@ -2674,11 +2681,11 @@ msgstr "Zuletzt benutztes Verzeichnis"
 
 #: settings/rksettingsmodulegeneral.cpp:97
 msgid "The following directory (please specify):"
-msgstr ""
+msgstr "Das folgende Verzeichnis (bitte angeben):"
 
 #: settings/rksettingsmodulegeneral.cpp:101
 msgid "Initial working directory"
-msgstr ""
+msgstr "Startverzeichnis"
 
 #: settings/rksettingsmodulegeneral.cpp:105
 msgid ""
@@ -2686,6 +2693,10 @@ msgid ""
 "workspace on startup, and you have configured RKWard to change to the "
 "directory of loaded workspaces, that directory will take precedence.</p>"
 msgstr ""
+"<p>Das Arbeitsverzeichnis, das bei Programmstart aktiv sein soll. Beachten "
+"Sie: Wenn Sie beim Programmstart einen Workspace laden und RKWard so "
+"eingestellt ist, dass beim Laden von Workspaces in deren Verzeichnis "
+"gewechselt wird, so hat jenes Verzeichnis Vorrang.</p>"
 
 #: settings/rksettingsmodulegeneral.cpp:110
 msgid ""
@@ -2946,15 +2957,15 @@ msgstr "Plugins"
 
 #: settings/rksettingsmoduleplugins.cpp:513 windows/rkhtmlwindow.cpp:627
 msgid "Dependencies"
-msgstr ""
+msgstr "Abhängigkeiten"
 
 #: settings/rksettingsmoduleplugins.cpp:527
 msgid "Broken"
-msgstr ""
+msgstr "Defekt"
 
 #: settings/rksettingsmoduleplugins.cpp:529
 msgid "Loaded"
-msgstr ""
+msgstr "Geladen"
 
 #: settings/rksettingsmoduleplugins.cpp:532
 msgid "Quirky"
@@ -2962,7 +2973,7 @@ msgstr "Mit Fehlern"
 
 #: settings/rksettingsmoduleplugins.cpp:551
 msgid "Active"
-msgstr ""
+msgstr "Aktiv"
 
 #: settings/rksettingsmoduleplugins.cpp:576
 msgid "Select .pluginmap-file"
@@ -3058,7 +3069,7 @@ msgstr "Pager-Kommando"
 
 #: settings/rksettingsmoduler.cpp:181
 msgid "Use Internet Explorer functions for internet access"
-msgstr ""
+msgstr "Internet Explorer Funktionen für den Internet-Zugriff benutzen"
 
 #: settings/rksettingsmoduler.cpp:186
 msgid ""
@@ -3066,6 +3077,10 @@ msgid ""
 "Enabling this option may help in case of problems with accessing the "
 "internet from R (e.g. for installing packages).</p>"
 msgstr ""
+"<p>Internet Explorer Funktionen für Zugriffe von R auf das Internet "
+"benutzen. Diese Einstellung zu aktivieren, kann helfen, wenn Probleme eim "
+"Zugriff auf das Internet von R auftreten (z.B. beim Installieren von "
+"Paketen).</p>"
 
 #: settings/rksettingsmoduler.cpp:191
 msgid "Further (option) commands to run in each session"
@@ -3104,11 +3119,25 @@ msgid "Build packages from source (not configurable on this platform)"
 msgstr ""
 "Pakete aus Quellcode übersetzen (auf dieser Plattform nicht einstellbar)"
 
-#: settings/rksettingsmoduler.cpp:386
+#: settings/rksettingsmoduler.cpp:381
+msgid ""
+"Installing packages from pre-compiled binaries (if available) is generally "
+"faster, and does not require an installation of development tools and "
+"libraries. On the other hand, building packages from source provides best "
+"compatibility. On Mac OS X and Linux, building packages from source is "
+"currently recommended."
+msgstr ""
+"Pakete von fertig kompilierten Binärdateien zu installieren (soweit "
+"verfügbar) ist in der Regel schneller und benötigt keine Entwicklertools "
+"oder Bibliotheken. Allerdings führt die Installation aus Quelldateien zur "
+"bestmöglichen Kompatibilität. Unter Mac OS X und Linux empfehlen wir die "
+"Installation von Paketen aus Quelldateien."
+
+#: settings/rksettingsmoduler.cpp:387
 msgid "R Library locations (where libraries get installed to, locally)"
 msgstr "R-Bibliothek Adresse (wohin Bibliotheken gespeichert werden, lokal)"
 
-#: settings/rksettingsmoduler.cpp:391
+#: settings/rksettingsmoduler.cpp:392
 msgid ""
 "Note: The startup defaults will always be used in addition to the locations "
 "you specify in this list"
@@ -3116,23 +3145,23 @@ msgstr ""
 "Vermerk: Die StartUp-Standardwerte werden immer genutzt zusätzlich den "
 "Adressen die Sie in dieser Liste spezifizieren"
 
-#: settings/rksettingsmoduler.cpp:417
+#: settings/rksettingsmoduler.cpp:418
 msgid "Add R Library Directory"
 msgstr "Füge R-Bibliotheksverzeichnis hinzu"
 
-#: settings/rksettingsmoduler.cpp:425
+#: settings/rksettingsmoduler.cpp:426
 msgid "Add repository"
 msgstr "Füge Repository hinzu"
 
-#: settings/rksettingsmoduler.cpp:425
+#: settings/rksettingsmoduler.cpp:426
 msgid "Add URL of new repository"
 msgstr "Füge URL von neuem Repository hinzu"
 
-#: settings/rksettingsmoduler.cpp:431
+#: settings/rksettingsmoduler.cpp:432
 msgid "R-Packages"
 msgstr "R-Pakete"
 
-#: settings/rksettingsmoduler.cpp:437
+#: settings/rksettingsmoduler.cpp:438
 msgid "Select CRAN mirror"
 msgstr "Wähle CRAN Spiegelserver"
 
@@ -3362,10 +3391,16 @@ msgid ""
 "cleared everytime you close the window.</p><p>Type and severity level of "
 "messages can be controlled from Settings->Configure RKWard->Debug</p>"
 msgstr ""
+"<p>Dieses Fenster zeigt Diagnose-Meldungen zu RKWard selbst. Es richtet sich "
+"primär an (Plugin-)Entwickler. Es bietet <b>keine</b> Hilfe beim Debuggen "
+"von R Skripten.</p><p>Beachten Sie, dass die Liste der Meldungen jedes Mal "
+"gelöscht wird, wenn Sie das Fenster schließen.</p><p>Art und Schweregrad der "
+"gezeigten Meldungen kann unter Einstellungen->Konfiguriere RKWard->Debug "
+"eingestellt werden.</p>"
 
 #: windows/rkdebugmessagewindow.cpp:79
 msgid "About this window"
-msgstr ""
+msgstr "Hinweis zu diesem Fenster"
 
 #: windows/rkhelpsearchwindow.cpp:73
 msgid "Find:"
@@ -3490,6 +3525,9 @@ msgid ""
 "Do you really want to clear the output? This will also remove all image "
 "files used in the output. It will not be possible to restore it."
 msgstr ""
+"Wollen Sie die Ausgabe wirklich löschen? Dadurch werden auch alle Grafik-"
+"Dateien in der Ausgabe gelöscht. Es ist nicht möglich, Sie wieder "
+"herzustellen."
 
 #: windows/rkhtmlwindow.cpp:465
 msgid "Flush output?"
@@ -3497,7 +3535,7 @@ msgstr "Ausgabe leeren?"
 
 #: windows/rkhtmlwindow.cpp:470
 msgid "Flushing output"
-msgstr ""
+msgstr "Lösche Ausgabe"
 
 #: windows/rkhtmlwindow.cpp:524
 msgid "No Title"
@@ -3543,7 +3581,7 @@ msgstr "Technische Details"
 
 #: windows/rkhtmlwindow.cpp:645
 msgid "About"
-msgstr ""
+msgstr "Info"
 
 #: windows/rkhtmlwindow.cpp:651
 msgid "<h1>On this page:</h1>"
@@ -3835,91 +3873,113 @@ msgstr ""
 msgid "Large window"
 msgstr "Großes Fenster"
 
-#: windows/rkwindowcatcher.cpp:254
-msgid "Shutting down device number %1"
-msgstr "Schließe Gerätenummer %1"
-
-#: windows/rkwindowcatcher.cpp:255
+#: windows/rkwindowcatcher.cpp:267
 msgid "Closing device (saving history)"
 msgstr "Schließe Gerät (speichere Verlauf)"
 
-#: windows/rkwindowcatcher.cpp:342
+#: windows/rkwindowcatcher.cpp:269
+msgid "Shutting down device number %1"
+msgstr "Schließe Gerätenummer %1"
+
+#: windows/rkwindowcatcher.cpp:274
+msgid ""
+"<p>The graphics device is being closed, saving the last plot to the plot "
+"history. This may take a while, if the R backend is still busy. You can "
+"close the graphics device immediately, in case it is stuck. However, the "
+"last plot may be missing from the plot history, if you do this.</p>"
+msgstr ""
+
+#: windows/rkwindowcatcher.cpp:276
+msgid ""
+"<p>Note: On X11, the embedded window may be expurged, and you will have to "
+"close it manually in this case.</p>"
+msgstr ""
+
+#: windows/rkwindowcatcher.cpp:278
+msgid "Close immediately"
+msgstr ""
+
+#: windows/rkwindowcatcher.cpp:278
+msgid "Keep waiting"
+msgstr ""
+
+#: windows/rkwindowcatcher.cpp:365
 msgid "Specify fixed size"
 msgstr "Feste Größe angeben"
 
-#: windows/rkwindowcatcher.cpp:348
+#: windows/rkwindowcatcher.cpp:371
 msgid "Width"
 msgstr "Breite"
 
-#: windows/rkwindowcatcher.cpp:352
+#: windows/rkwindowcatcher.cpp:375
 msgid "Height"
 msgstr "Höhe"
 
-#: windows/rkwindowcatcher.cpp:370
+#: windows/rkwindowcatcher.cpp:393
 msgid "Activate graphics device number %1"
 msgstr "Grafikfenster %1 aktivieren"
 
-#: windows/rkwindowcatcher.cpp:376
+#: windows/rkwindowcatcher.cpp:399
 msgid "Copy contents of graphics device number %1 to output"
 msgstr "Inhalte von Grafikfenster %1 zur Ausgabe kopieren"
 
-#: windows/rkwindowcatcher.cpp:384
+#: windows/rkwindowcatcher.cpp:407
 msgid "Print contents of graphics device number %1"
 msgstr "Inhalte von Grafikfenster %1 drucken"
 
-#: windows/rkwindowcatcher.cpp:393
+#: windows/rkwindowcatcher.cpp:416
 msgid "Specify R object"
 msgstr "R Objekt spezifizieren"
 
-#: windows/rkwindowcatcher.cpp:398
+#: windows/rkwindowcatcher.cpp:421
 msgid "Specify the R object name, you want to save the graph to"
 msgstr ""
 "Geben Sie den Namen des R Objekts an, in das sie die Grafik gespeichert "
 "werden soll"
 
-#: windows/rkwindowcatcher.cpp:410
+#: windows/rkwindowcatcher.cpp:433
 msgid "Save contents of graphics device number %1 to object '%2'"
 msgstr "Inhalte des Grafikfensters %1 in Objekt '%2' speichern"
 
-#: windows/rkwindowcatcher.cpp:419
+#: windows/rkwindowcatcher.cpp:442
 msgid "Duplicate graphics device number %1"
 msgstr "Grafikfenster %1 duplizieren"
 
-#: windows/rkwindowcatcher.cpp:425
+#: windows/rkwindowcatcher.cpp:448
 msgid "Load next plot in device number %1"
 msgstr "Lade nächsten Plot in Gerätenummer %1"
 
-#: windows/rkwindowcatcher.cpp:426 windows/rkwindowcatcher.cpp:434
-#: windows/rkwindowcatcher.cpp:442 windows/rkwindowcatcher.cpp:450
-#: windows/rkwindowcatcher.cpp:458
+#: windows/rkwindowcatcher.cpp:449 windows/rkwindowcatcher.cpp:457
+#: windows/rkwindowcatcher.cpp:465 windows/rkwindowcatcher.cpp:473
+#: windows/rkwindowcatcher.cpp:481
 msgid "Loading plot from history"
 msgstr "Lade Plot vom Verlauf"
 
-#: windows/rkwindowcatcher.cpp:433
+#: windows/rkwindowcatcher.cpp:456
 msgid "Load previous plot in device number %1"
 msgstr "Lade vorherigen Plot in Gerätenummer %1"
 
-#: windows/rkwindowcatcher.cpp:441
+#: windows/rkwindowcatcher.cpp:464
 msgid "Load first plot in device number %1"
 msgstr "Lade ersten Plot in Gerätenummer %1"
 
-#: windows/rkwindowcatcher.cpp:449
+#: windows/rkwindowcatcher.cpp:472
 msgid "Load last plot in device number %1"
 msgstr "Lade letzten Plot in Gerätenummer %1"
 
-#: windows/rkwindowcatcher.cpp:457
+#: windows/rkwindowcatcher.cpp:480
 msgid "Load plot %1 in device number %2"
 msgstr "Lade Plot %1 in Gerätenummer %2"
 
-#: windows/rkwindowcatcher.cpp:465
+#: windows/rkwindowcatcher.cpp:488
 msgid "Append this plot to history (device number %1)"
 msgstr "Hänge diesen Plot dem Verlauf an (Gerätenummer %1)"
 
-#: windows/rkwindowcatcher.cpp:471
+#: windows/rkwindowcatcher.cpp:494
 msgid "Remove current plot from history (device number %1)"
 msgstr "Entferne aktuellen Plot vom Verlauf (Gerätenummer %1)"
 
-#: windows/rkwindowcatcher.cpp:477
+#: windows/rkwindowcatcher.cpp:500
 msgid ""
 "This will clear the plot history for all device windows, not just this one. "
 "If this is not your intent, press cancel, below."
@@ -3928,87 +3988,87 @@ msgstr ""
 "Gerätefenster löschen. Wenn Sie dies nicht beabsichtigen wählen Sie nun "
 "bitte Abbrechen."
 
-#: windows/rkwindowcatcher.cpp:479
+#: windows/rkwindowcatcher.cpp:502
 msgid "Clear plot history"
 msgstr "Lösche Plot-Verlauf"
 
-#: windows/rkwindowcatcher.cpp:485
+#: windows/rkwindowcatcher.cpp:508
 msgid "Plot properties (device number %1)"
 msgstr "Ploteigenschaften (Grafikfenster %1)"
 
-#: windows/rkwindowcatcher.cpp:499
+#: windows/rkwindowcatcher.cpp:522
 msgid "<Unsaved plot>"
 msgstr "<Nicht gespeicherter Plot>"
 
-#: windows/rkwindowcatcher.cpp:559
+#: windows/rkwindowcatcher.cpp:582
 msgid "Draw area follows size of window"
 msgstr "Bildgröße folgt Fenstergröße"
 
-#: windows/rkwindowcatcher.cpp:565
+#: windows/rkwindowcatcher.cpp:588
 msgid "Set fixed size 500x500"
 msgstr "Feste Größe 500x500 einstellen"
 
-#: windows/rkwindowcatcher.cpp:567
+#: windows/rkwindowcatcher.cpp:590
 msgid "Set fixed size 1000x1000"
 msgstr "Feste Größe 1000x1000 einstellen"
 
-#: windows/rkwindowcatcher.cpp:569
+#: windows/rkwindowcatcher.cpp:592
 msgid "Set fixed size 2000x2000"
 msgstr "Feste Größe 2000x2000 einstellen"
 
-#: windows/rkwindowcatcher.cpp:571
+#: windows/rkwindowcatcher.cpp:594
 msgid "Set specified fixed size..."
 msgstr "Feste Größe einstellen..."
 
-#: windows/rkwindowcatcher.cpp:574
+#: windows/rkwindowcatcher.cpp:597
 msgid "Previous plot"
 msgstr "Vorheriger Plot"
 
-#: windows/rkwindowcatcher.cpp:578
+#: windows/rkwindowcatcher.cpp:601
 msgid "First plot"
 msgstr "Erster Plot"
 
-#: windows/rkwindowcatcher.cpp:582
+#: windows/rkwindowcatcher.cpp:605
 msgid "Next plot"
 msgstr "Nächster Plot"
 
-#: windows/rkwindowcatcher.cpp:586
+#: windows/rkwindowcatcher.cpp:609
 msgid "Last plot"
 msgstr "Letzter Plot"
 
-#: windows/rkwindowcatcher.cpp:589
+#: windows/rkwindowcatcher.cpp:612
 msgid "Go to plot"
 msgstr "Gehe zu Plot"
 
-#: windows/rkwindowcatcher.cpp:596
+#: windows/rkwindowcatcher.cpp:619
 msgid "Append this plot"
 msgstr "Diesen Plot anhängen"
 
-#: windows/rkwindowcatcher.cpp:600
+#: windows/rkwindowcatcher.cpp:623
 msgid "Remove this plot"
 msgstr "Entferne diesen Plot"
 
-#: windows/rkwindowcatcher.cpp:606
+#: windows/rkwindowcatcher.cpp:629
 msgid "Clear history"
 msgstr "Lösche Verlauf"
 
-#: windows/rkwindowcatcher.cpp:611
+#: windows/rkwindowcatcher.cpp:634
 msgid "Plot properties"
 msgstr "Plot-Eigenschaften"
 
-#: windows/rkwindowcatcher.cpp:615
+#: windows/rkwindowcatcher.cpp:638
 msgid "Make active"
 msgstr "Aktivieren"
 
-#: windows/rkwindowcatcher.cpp:618
+#: windows/rkwindowcatcher.cpp:641
 msgid "Copy to output"
 msgstr "Zur Ausgabe kopieren"
 
-#: windows/rkwindowcatcher.cpp:622
+#: windows/rkwindowcatcher.cpp:645
 msgid "Store as R object..."
 msgstr "Als R Objekt speichern..."
 
-#: windows/rkwindowcatcher.cpp:624
+#: windows/rkwindowcatcher.cpp:647
 msgid "Duplicate"
 msgstr "Duplizieren"
 
