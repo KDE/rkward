@@ -34,19 +34,12 @@ extern "C" {
 class RKGraphicsDataStreamReadGuard {
 public:
 	RKGraphicsDataStreamReadGuard () {
-#warning TODO: handle cancellation
-/* How shall we handle cancellation? If an interrupt is pending, _while waiting for the reply_, we push an RKD_Cancel
- * request down the line. This tells the frontend to send a reply to the last request ASAP (if the frontend has already sent the reply, it will ignore the RKD_Cancel). From there, we simply process the reply as usual, and leave it to R to actually
- * do the interrupt. */
 		RKGraphicsDeviceBackendTransmitter::mutex.lock ();
 		QIODevice* connection = RKGraphicsDeviceBackendTransmitter::connection;
 		BEGIN_SUSPEND_INTERRUPTS {
 			while (connection->bytesToWrite ()) {
 				if (!connection->waitForBytesWritten (10)) {
-					if (!RKGraphicsDeviceBackendTransmitter::connectionAlive ()) {	// Don't go into endless loop, if e.g. frontend has crashed
-						RKGraphicsDeviceBackendTransmitter::mutex.unlock ();
-						Rf_error ("RKWard Graphics connection has shut down");
-					}
+					checkHandleError ();
 				}
 #warning TODO: Use R_CheckUserInterrupt(), instead?
 				if (connection->bytesToWrite ()) RKRBackend::processX11Events ();
@@ -54,10 +47,8 @@ public:
 			while (!RKGraphicsDeviceBackendTransmitter::streamer.readInBuffer ()) {
 				RKRBackend::processX11Events ();
 				if (!connection->waitForReadyRead (10)) {
-					if (!RKGraphicsDeviceBackendTransmitter::connectionAlive ()) {
-						RKGraphicsDeviceBackendTransmitter::mutex.unlock ();
-						Rf_error ("RKWard Graphics connection has shut down");
-					}
+					if (checkHandleInterrupt (connection)) break;
+					checkHandleError ();
 				}
 			}
 		} END_SUSPEND_INTERRUPTS;
@@ -65,6 +56,37 @@ public:
 
 	~RKGraphicsDataStreamReadGuard () {
 		RKGraphicsDeviceBackendTransmitter::mutex.unlock ();
+	}
+
+private:
+	bool checkHandleInterrupt (QIODevice *connection) {
+		if (!R_interrupts_pending) return false;
+
+		// Tell the frontend to finish whatever it was doing ASAP. Don't process any other events until that has happened
+		RKGraphicsDeviceBackendTransmitter::streamer.outstream << (quint8) RKDCancel << (quint8) 0;
+		RKGraphicsDeviceBackendTransmitter::streamer.writeOutBuffer ();
+		while (connection->bytesToWrite ()) {
+			if (!connection->waitForBytesWritten (10)) {
+				checkHandleError ();
+			}
+		}
+		int loop = 0;
+		while (!RKGraphicsDeviceBackendTransmitter::streamer.readInBuffer ()) {
+			if (!connection->waitForReadyRead (10)) {
+				if (++loop > 500) {
+					connection->close ();	// If frontend is unresponsive, kill connection
+				}
+				checkHandleError ();
+			}
+		}
+		return true;
+	}
+
+	void checkHandleError () {
+		if (!RKGraphicsDeviceBackendTransmitter::connectionAlive ()) {	// Don't go into endless loop, if e.g. frontend has crashed
+			RKGraphicsDeviceBackendTransmitter::mutex.unlock ();
+			Rf_error ("RKWard Graphics connection has shut down");
+		}
 	}
 };
 
@@ -105,10 +127,10 @@ public:
 #define WRITE_FONT(dev) \
 	RKD_OUT_STREAM << gc->cex << gc->ps << gc->lineheight << (quint8) gc->fontface << (gc->fontfamily[0] ? QString (gc->fontfamily) : (static_cast<RKGraphicsDeviceDesc*> (dev->deviceSpecific)->getFontFamily (gc->fontface == 5)))
 
-static void RKD_Create (double width, double height, pDevDesc dev) {
+static void RKD_Create (double width, double height, pDevDesc dev, const char *title, bool antialias) {
 	RKGraphicsDataStreamWriteGuard guard;
 	WRITE_HEADER (RKDCreate, dev);
-	RKD_OUT_STREAM << width << height;
+	RKD_OUT_STREAM << width << height << QString::fromUtf8 (title) << antialias;
 }
 
 static void RKD_Circle (double x, double y, double r, R_GE_gcontext *gc, pDevDesc dev) {

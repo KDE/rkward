@@ -34,6 +34,9 @@ public:
 public slots:
 	void newData ();
 	void newConnection ();
+	void locatorDone (bool ok, double x, double y);
+signals:
+	void stopInteraction ();
 private:
 	void setupServer ();
 	void sendDummyReply (quint8 opcode);

@@ -85,7 +85,7 @@
 
 	extern "C" void RK_setupGettext (const char*);
 	int RK_Debug_Level = 2;
-	int RK_Debug_Flags = ALL;
+	int RK_Debug_Flags = DEBUG_ALL;
 	QMutex RK_Debug_Mutex;
 	QTemporaryFile* RK_Debug_File;
 

@@ -29,10 +29,10 @@
 class RKGraphicsDevice : public QObject {
 	Q_OBJECT
 protected:
-	RKGraphicsDevice (double width, double height);
+	RKGraphicsDevice (double width, double height, const QString &title, bool antialias);
 	~RKGraphicsDevice ();
 public:
-	static RKGraphicsDevice* newDevice (int devnum, double width, double height);
+	static RKGraphicsDevice* newDevice (int devnum, double width, double height, const QString &title, bool antialias);
 	static void closeDevice (int devnum);
 	static QHash<int, RKGraphicsDevice*> devices;
 
@@ -48,16 +48,24 @@ public:
 	void clear (const QColor& col=QColor());
 	void setActive (bool active);
 	void triggerUpdate ();
+	void locator ();
+public slots:
+	void stopInteraction ();
 signals:
 	void activeChanged (bool);
+	void locatorDone (bool ok, double x, double y);
 private slots:
 	void updateNow ();
 private:
+	bool eventFilter (QObject *watched, QEvent *event);
+
 	QTimer updatetimer;
 	QPixmap area;
 	QPainter painter;
 	QLabel *view;
-	QWidget *status_overlay;
+	QString base_title;
+
+	int interaction_opcode;	/**< Current interactive operation (from RKDOpcodes enum), or -1 is there is no current interactive operation */
 };
 
 #endif

@@ -37,6 +37,7 @@ extern "C" {
 #include <R_ext/GraphicsEngine.h>
 }
 
+// rcolor typedef added in R 3.0.0
 #ifndef rcolor
 #define rcolor unsigned int
 #endif
@@ -67,7 +68,6 @@ void RKStartGraphicsDevice (double width, double height, double pointsize, const
 	desc->height = height * RKGD_DPI;
 	desc->default_family = family.value (0, "Helvetica");
 	desc->default_symbol_family = family.value (0, "Symbol");
-#warning: Title, antialias
 
 	R_GE_checkVersionOrDie (R_GE_version);
 	R_CheckDeviceAvailable ();
@@ -91,7 +91,7 @@ void RKStartGraphicsDevice (double width, double height, double pointsize, const
 
 	if (desc) {
 		desc->devnum = curDevice ();
-		RKD_Create (desc->width, desc->height, dev);
+		RKD_Create (desc->width, desc->height, dev, title, antialias);
 	} else {
 		Rf_error("unable to start device");
 	}

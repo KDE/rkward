@@ -20,8 +20,13 @@
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QGraphicsRectItem>
-#include <qmath.h>
+#include <QPushButton>
+#include <QHBoxLayout>
+#include <QMouseEvent>
 #include <klocale.h>
+#include <sys/stat.h>
+
+#include "rkgraphicsdevice_protocol_shared.h"
 
 #include "../../debug.h"
 
@@ -29,13 +34,17 @@
 
 QHash<int, RKGraphicsDevice*> RKGraphicsDevice::devices;
 
-RKGraphicsDevice::RKGraphicsDevice (double width, double height) : QObject (), area (qAbs (width) + 1, qAbs (height) + 1) {
+RKGraphicsDevice::RKGraphicsDevice (double width, double height, const QString &title, bool antialias) : QObject (), area (qAbs (width) + 1, qAbs (height) + 1), base_title (title) {
 	RK_TRACE (GRAPHICS_DEVICE);
-	painter.setRenderHints (QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
+
+	interaction_opcode = -1;
+	if (antialias) painter.setRenderHints (QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
 	view = new QLabel ();
+	view->installEventFilter (this);
 	connect (&updatetimer, SIGNAL (timeout ()), this, SLOT (updateNow ()));
 	updatetimer.setSingleShot (true);
 	clear ();
+	setActive (true);	// sets window title
 }
 
 RKGraphicsDevice::~RKGraphicsDevice () {
@@ -58,14 +67,14 @@ void RKGraphicsDevice::updateNow () {
 	painter.begin (&area);
 }
 
-RKGraphicsDevice* RKGraphicsDevice::newDevice (int devnum, double width, double height) {
+RKGraphicsDevice* RKGraphicsDevice::newDevice (int devnum, double width, double height, const QString &title, bool antialias) {
 	RK_TRACE (GRAPHICS_DEVICE);
 
 	if (devices.contains (devnum)) {
 		RK_DEBUG (GRAPHICS_DEVICE, DL_ERROR, "Graphics device number %d already exists while trying to create it", devnum);
 		closeDevice (devnum);
 	}
-	RKGraphicsDevice* dev = new RKGraphicsDevice (width, height);
+	RKGraphicsDevice* dev = new RKGraphicsDevice (width, height, title.isEmpty () ? i18n ("Graphics Device Number %1").arg (QString (devnum+1)) : title, antialias);
 	devices.insert (devnum, dev);
 	return (dev);
 }
@@ -171,7 +180,48 @@ void RKGraphicsDevice::polyline (const QPolygonF& pol, const QPen& pen) {
 
 void RKGraphicsDevice::setActive (bool active) {
 	RK_TRACE (GRAPHICS_DEVICE);
+
+	if (active) view->setWindowTitle (i18n ("%1 (Active)").arg (base_title));
+	else view->setWindowTitle (i18n ("%1 (Inactive)").arg (base_title));
 	emit (activeChanged (active));
+}
+
+void RKGraphicsDevice::locator () {
+	RK_TRACE (GRAPHICS_DEVICE);
+
+	interaction_opcode = RKDLocator;
+
+	view->setCursor (Qt::CrossCursor);
+	view->setToolTip (i18n ("<h2>Locating point(s)</h2><p>Use left mouse button to select point(s). Any other mouse button to stop.</p>"));
+}
+
+bool RKGraphicsDevice::eventFilter (QObject *watched, QEvent *event) {
+	RK_ASSERT (watched == view);
+
+	if (interaction_opcode == RKDLocator) {
+		if (event->type () == QEvent::MouseButtonRelease) {
+			QMouseEvent *me = static_cast<QMouseEvent*> (event);
+			if (me->button () == Qt::LeftButton) {
+				emit (locatorDone (true, me->x (), me->y ()));
+				interaction_opcode = -1;
+			}
+			stopInteraction ();
+			return true;
+		}
+	}
+
+	return false;
+}
+
+void RKGraphicsDevice::stopInteraction () {
+	RK_TRACE (GRAPHICS_DEVICE);
+
+	if (interaction_opcode == RKDLocator) {
+		emit (locatorDone (false, 0.0, 0.0));
+	}
+	view->setCursor (Qt::ArrowCursor);
+	view->setToolTip (QString ());
+	interaction_opcode = -1;
 }
 
 #include "rkgraphicsdevice.moc"

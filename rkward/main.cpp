@@ -78,7 +78,7 @@
 #include "version.h"
 
 int RK_Debug_Level = 0;
-int RK_Debug_Flags = ALL;
+int RK_Debug_Flags = DEBUG_ALL;
 int RK_Debug_CommandStep = 0;
 QMutex RK_Debug_Mutex;
 
@@ -120,7 +120,7 @@ int main(int argc, char *argv[]) {
 #endif */
 	options.add ("evaluate <Rcode>", ki18n ("After starting (and after loading the specified workspace, if applicable), evaluate the given R code."), 0);
 	options.add ("debug-level <level>", ki18n ("Verbosity of debug messages (0-5)"), "2");
-	options.add ("debug-flags <flags>", ki18n ("Mask for components to debug (see debug.h)"), "8191");
+	options.add ("debug-flags <flags>", ki18n ("Mask for components to debug (see debug.h)"), QString::number (DEBUG_ALL).toLocal8Bit ());
 	options.add ("debugger <command>", ki18n ("Debugger (enclose any debugger arguments in single quotes ('') together with the command)"), "");
 	options.add ("+[File]", ki18n ("R workspace file to open"), 0);
 
@@ -160,7 +160,7 @@ int main(int argc, char *argv[]) {
 	RK_Debug_Level = DL_FATAL - QString (args->getOption ("debug-level")).toInt ();
 	RK_Debug_Flags = QString (args->getOption ("debug-flags")).toInt ();
 	if (!args->getOption ("debugger").isEmpty ()) {
-		RK_DEBUG (ALL, DL_ERROR, "--debugger option should have been handled by wrapper script. Ignoring.");
+		RK_DEBUG (DEBUG_ALL, DL_ERROR, "--debugger option should have been handled by wrapper script. Ignoring.");
 	}
 
 	RKWardStartupOptions *stoptions = new RKWardStartupOptions;

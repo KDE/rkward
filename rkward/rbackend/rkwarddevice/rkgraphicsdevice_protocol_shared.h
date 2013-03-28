@@ -28,13 +28,19 @@
  * even when sending many @em small requests.
  * 
  * All communication is initiated from the backend. The backend sends a request, starting with the size of the
- * request in bytes (quint32), then an opcode, then the device number, then all applicable parameters. Most requests
- * are asynchronous, but a few await a reply from the frontend.
+ * request in bytes (quint32), then an opcode (quint8), then the device number (quint8), then all applicable parameters.
+ * Most requests are asynchronous, but a few await a reply from the frontend.
  * 
  * At any time, there can only be one request waiting for a reply, and the request waiting for a reply is always the most
  * recent one. This makes the protocol very simple.
  * 
  * If the frontend has spontaneous need for communication, it will have to use some separate channel.
+ *
+ * How do we handle cancellation of interactive ops (e.g. locator()) from the backend? If an interrupt is pending
+ * in the backend, _while waiting for the reply_, we push an RKD_Cancel request down the line. This tells the frontend to
+ * send a reply to the last request ASAP (if the frontend has already sent the reply, it will ignore the RKD_Cancel). From
+ * there, we simply process the reply as usual, and leave it to R to actually do the interrupt. If the frontend takes more than
+ * fives seconds to respond at this point, the connection will be killed.
  * 
  */
 
@@ -75,7 +81,10 @@ enum RKDOpcodes {
 	RKDStrWidthUTF8,
 	RKDMetricInfo, // 15
 	RKDLocator,
-	RKDNewPageConfirm
+	RKDNewPageConfirm,
+
+	// Protocol operations
+	RKDCancel
 };
 
 #include <QIODevice>

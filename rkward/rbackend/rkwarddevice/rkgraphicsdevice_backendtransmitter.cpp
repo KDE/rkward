@@ -74,9 +74,9 @@ void RKGraphicsDeviceBackendTransmitter::run () {
 
 	while (alive) {
 		msleep (10);	// it's ok to be lazy. If a request expects a reply, RKGraphicsDataStreamReadGuard will take care of pushing everything, itself. Essentially, this thread's job is simply to make sure we don't lag *too* far behind.
-		mutex.lock ();
+/*		mutex.lock ();
 		connection->waitForBytesWritten (100);
-		mutex.unlock ();
+		mutex.unlock (); */
 	}
 
 	RK_TRACE (GRAPHICS_DEVICE);
