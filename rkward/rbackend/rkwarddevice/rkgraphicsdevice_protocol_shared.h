@@ -77,10 +77,9 @@ enum RKDOpcodes {
 	RKDMode,
 
 	// Synchronous operations
-	RKD_First_Synchronous_Request,
 	RKDStrWidthUTF8,
-	RKDMetricInfo, // 15
-	RKDLocator,
+	RKDMetricInfo,
+	RKDLocator,    // 15
 	RKDNewPageConfirm,
 
 	// Protocol operations

@@ -25,6 +25,7 @@
 #include <QMouseEvent>
 #include <klocale.h>
 #include <sys/stat.h>
+#include <kdialog.h>
 
 #include "rkgraphicsdevice_protocol_shared.h"
 
@@ -38,6 +39,7 @@ RKGraphicsDevice::RKGraphicsDevice (double width, double height, const QString &
 	RK_TRACE (GRAPHICS_DEVICE);
 
 	interaction_opcode = -1;
+	dialog = 0;
 	if (antialias) painter.setRenderHints (QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
 	view = new QLabel ();
 	view->installEventFilter (this);
@@ -50,6 +52,7 @@ RKGraphicsDevice::RKGraphicsDevice (double width, double height, const QString &
 RKGraphicsDevice::~RKGraphicsDevice () {
 	RK_TRACE (GRAPHICS_DEVICE);
 	painter.end ();
+	stopInteraction ();
 	delete view;
 }
 
@@ -189,10 +192,40 @@ void RKGraphicsDevice::setActive (bool active) {
 void RKGraphicsDevice::locator () {
 	RK_TRACE (GRAPHICS_DEVICE);
 
+	RK_ASSERT (interaction_opcode < 0);
 	interaction_opcode = RKDLocator;
 
 	view->setCursor (Qt::CrossCursor);
 	view->setToolTip (i18n ("<h2>Locating point(s)</h2><p>Use left mouse button to select point(s). Any other mouse button to stop.</p>"));
+	view->show ();
+	view->raise ();
+}
+
+void RKGraphicsDevice::confirmNewPage () {
+	RK_TRACE (GRAPHICS_DEVICE);
+
+	RK_ASSERT (interaction_opcode < 0);
+	RK_ASSERT (dialog == 0);
+	interaction_opcode = RKDNewPageConfirm;
+
+	view->show ();
+	view->raise ();
+	dialog = new KDialog (view);
+	dialog->setCaption (i18n ("Ok to show next plot?"));
+	dialog->setButtons (KDialog::Ok | KDialog::Cancel);
+	dialog->setMainWidget (new QLabel (i18n ("<p>Press Enter to see next plot, or click 'Cancel' to abort.</p>"), dialog));
+//	dialog->setWindowModality (Qt::WindowModal);        // not good: Grays out the plot window
+	connect (dialog, SIGNAL (finished (int)), this, SLOT (newPageDialogDone (int)));
+	dialog->show ();
+}
+
+void RKGraphicsDevice::newPageDialogDone (int result) {
+	RK_TRACE (GRAPHICS_DEVICE);
+
+	RK_ASSERT (dialog);
+	emit (newPageConfirmDone (result == KDialog::Accepted));
+	interaction_opcode = -1;
+	stopInteraction ();
 }
 
 bool RKGraphicsDevice::eventFilter (QObject *watched, QEvent *event) {
@@ -218,6 +251,14 @@ void RKGraphicsDevice::stopInteraction () {
 
 	if (interaction_opcode == RKDLocator) {
 		emit (locatorDone (false, 0.0, 0.0));
+	} else if (interaction_opcode == RKDNewPageConfirm) {
+		RK_ASSERT (dialog);
+		emit (newPageConfirmDone (true));
+	}
+
+	if (dialog) {
+		dialog->deleteLater ();
+		dialog = 0;
 	}
 	view->setCursor (Qt::ArrowCursor);
 	view->setToolTip (QString ());

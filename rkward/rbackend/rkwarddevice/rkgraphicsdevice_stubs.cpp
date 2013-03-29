@@ -35,6 +35,7 @@ class RKGraphicsDataStreamReadGuard {
 public:
 	RKGraphicsDataStreamReadGuard () {
 		RKGraphicsDeviceBackendTransmitter::mutex.lock ();
+		have_lock = true;
 		QIODevice* connection = RKGraphicsDeviceBackendTransmitter::connection;
 		BEGIN_SUSPEND_INTERRUPTS {
 			while (connection->bytesToWrite ()) {
@@ -47,7 +48,11 @@ public:
 			while (!RKGraphicsDeviceBackendTransmitter::streamer.readInBuffer ()) {
 				RKRBackend::processX11Events ();
 				if (!connection->waitForReadyRead (10)) {
-					if (checkHandleInterrupt (connection)) break;
+					if (checkHandleInterrupt (connection)) {
+						if (have_lock) RKGraphicsDeviceBackendTransmitter::mutex.unlock ();
+						have_lock = false;	// Will d'tor still be called? We don't rely on it.
+						break;
+					}
 					checkHandleError ();
 				}
 			}
@@ -55,7 +60,7 @@ public:
 	}
 
 	~RKGraphicsDataStreamReadGuard () {
-		RKGraphicsDeviceBackendTransmitter::mutex.unlock ();
+		if (have_lock) RKGraphicsDeviceBackendTransmitter::mutex.unlock ();
 	}
 
 private:
@@ -84,10 +89,12 @@ private:
 
 	void checkHandleError () {
 		if (!RKGraphicsDeviceBackendTransmitter::connectionAlive ()) {	// Don't go into endless loop, if e.g. frontend has crashed
-			RKGraphicsDeviceBackendTransmitter::mutex.unlock ();
+			if (have_lock) RKGraphicsDeviceBackendTransmitter::mutex.unlock ();
+			have_lock = false;	// Will d'tor still be called? We don't rely on it.
 			Rf_error ("RKWard Graphics connection has shut down");
 		}
 	}
+	bool have_lock;
 };
 
 /** This class is essentially like QMutexLocker. In addition, the destructor takes care of pushing anything that was written to the protocol buffer during it lifetime to the transmitter. (Does NOT wait for the transmission itself). */
@@ -288,11 +295,12 @@ static Rboolean RKD_NewFrameConfirm (pDevDesc dev) {
 		RKGraphicsDataStreamWriteGuard wguard;
 		WRITE_HEADER (RKDNewPageConfirm, dev);
 	}
+	bool ok;
 	{
 		RKGraphicsDataStreamReadGuard rguard;
-		bool ok;
 		RKD_IN_STREAM >> ok;
-		if (ok) return (Rboolean) TRUE;
-		return (Rboolean) FALSE;
 	}
+	if (!ok) Rf_error ("Aborted by user");
+	return (Rboolean) TRUE;
+	// Return value FALSE: Let R ask, instead
 }

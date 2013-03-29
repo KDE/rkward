@@ -25,6 +25,8 @@
 #include <QPainter>
 #include <QLabel>
 
+class KDialog;
+
 /** This is the class that actually does all the drawing for the RKGraphicsDevice */
 class RKGraphicsDevice : public QObject {
 	Q_OBJECT
@@ -49,13 +51,16 @@ public:
 	void setActive (bool active);
 	void triggerUpdate ();
 	void locator ();
+	void confirmNewPage ();
 public slots:
 	void stopInteraction ();
 signals:
 	void activeChanged (bool);
 	void locatorDone (bool ok, double x, double y);
+	void newPageConfirmDone (bool accepted);
 private slots:
 	void updateNow ();
+	void newPageDialogDone (int result);
 private:
 	bool eventFilter (QObject *watched, QEvent *event);
 
@@ -64,6 +69,7 @@ private:
 	QPainter painter;
 	QLabel *view;
 	QString base_title;
+	KDialog *dialog;
 
 	int interaction_opcode;	/**< Current interactive operation (from RKDOpcodes enum), or -1 is there is no current interactive operation */
 };

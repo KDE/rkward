@@ -35,6 +35,7 @@ public slots:
 	void newData ();
 	void newConnection ();
 	void locatorDone (bool ok, double x, double y);
+	void newPageConfirmDone (bool accepted);
 signals:
 	void stopInteraction ();
 private:

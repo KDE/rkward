@@ -174,12 +174,18 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 			streamer.instream >> width >> height >> title >> antialias;
 			device = RKGraphicsDevice::newDevice (devnum, width, height, title, antialias);
 			connect (device, SIGNAL (locatorDone(bool,double,double)), this, SLOT (locatorDone(bool,double,double)));
+			connect (device, SIGNAL (newPageConfirmDone(bool)), this, SLOT (newPageConfirmDone(bool)));
 			connect (this, SIGNAL (stopInteraction()), device, SLOT (stopInteraction()));
-		} else if (devnum) {
-			device = RKGraphicsDevice::devices.value (devnum);
+		} else {
+			if (devnum) device = RKGraphicsDevice::devices.value (devnum);
 			if (!device) {
-				RK_DEBUG (GRAPHICS_DEVICE, DL_ERROR, "Received transmission of type %d for unknown device number %d. Skippping.", opcode, devnum);
-				sendDummyReply (opcode);
+				if (opcode == RKDCancel) {
+					RK_DEBUG (GRAPHICS_DEVICE, DL_WARNING, "Graphics operation cancelled");
+					emit (stopInteraction());
+				} else {
+					RK_DEBUG (GRAPHICS_DEVICE, DL_ERROR, "Received transmission of type %d for unknown device number %d. Skippping.", opcode, devnum);
+					sendDummyReply (opcode);
+				}
 				continue;
 			}
 		}
@@ -230,9 +236,9 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 		} else if (opcode == RKDClose) {
 			RKGraphicsDevice::closeDevice (devnum);
 		} else if (opcode == RKDActivate) {
-			RK_DEBUG (GRAPHICS_DEVICE, DL_ERROR, "Unhandled operation of type %d for device number %d. Skippping.", opcode, devnum);
+			device->setActive (true);
 		} else if (opcode == RKDDeActivate) {
-			RK_DEBUG (GRAPHICS_DEVICE, DL_ERROR, "Unhandled operation of type %d for device number %d. Skippping.", opcode, devnum);
+			device->setActive (false);
 		} else if (opcode == RKDClip) {
 			QRectF clip;
 			streamer.instream >> clip;
@@ -245,11 +251,8 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 			device->locator ();
 #warning TODO keep track of status
 		} else if (opcode == RKDNewPageConfirm) {
-			RK_DEBUG (GRAPHICS_DEVICE, DL_ERROR, "Unhandled operation of type %d for device number %d. Skippping.", opcode, devnum);
-			sendDummyReply (opcode);
-		} else if (opcode == RKDCancel) {
-			RK_DEBUG (GRAPHICS_DEVICE, DL_WARNING, "Graphics operation cancelled");
-			emit (stopInteraction());
+			device->confirmNewPage ();
+#warning TODO keep track of status
 		} else {
 			RK_DEBUG (GRAPHICS_DEVICE, DL_ERROR, "Unhandled operation of type %d for device number %d. Skippping.", opcode, devnum);
 		}
@@ -273,7 +276,7 @@ void RKGraphicsDeviceFrontendTransmitter::sendDummyReply (quint8 opcode) {
 		ascent = descent = width = 0.1;
 		streamer.outstream << ascent << descent << width;
 	} else if (opcode == RKDNewPageConfirm) {
-		bool ok = false;
+		bool ok = true;
 		streamer.outstream << ok;
 	} else if (opcode == RKDStrWidthUTF8) {
 		double width = 1;
@@ -289,6 +292,13 @@ void RKGraphicsDeviceFrontendTransmitter::locatorDone (bool ok, double x, double
 	RK_TRACE (GRAPHICS_DEVICE);
 
 	streamer.outstream << ok << x << y;
+	streamer.writeOutBuffer ();
+}
+
+void RKGraphicsDeviceFrontendTransmitter::newPageConfirmDone (bool accepted) {
+	RK_TRACE (GRAPHICS_DEVICE);
+
+	streamer.outstream << accepted;
 	streamer.writeOutBuffer ();
 }
 
