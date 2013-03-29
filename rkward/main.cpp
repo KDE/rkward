@@ -123,7 +123,7 @@ int main(int argc, char *argv[]) {
 	aboutData.addAuthor (ki18n ("%1").subs ("Thomas Friedrichsmeier"), ki18n ("Project leader / main developer"));
 	aboutData.addAuthor (ki18n ("%1").subs ("Pierre Ecochard"), ki18n ("C++ developer between 2004 and 2007"));
 	aboutData.addAuthor (ki18n ("%1").subs ("Prasenjit Kapat"), ki18n ("Many plugins, suggestions, plot history feature"));
-	aboutData.addCredit (ki18n ("%1").subs ("Meik Michalke"), ki18n ("Many plugins, suggestions, rkwarddev package"));
+	aboutData.addAuthor (ki18n ("%1").subs ("Meik Michalke"), ki18n ("Many plugins, suggestions, rkwarddev package"));
 	aboutData.addAuthor (ki18n ("%1").subs ("Stefan Roediger"), ki18n ("Many plugins, suggestions, marketing, translations"));
 	aboutData.addCredit (ki18n ("Contributors in alphabetical order"));
 	aboutData.addCredit (ki18n ("%1").subs ("Philippe Grosjean"), ki18n ("Several helpful comments and discussions"));
