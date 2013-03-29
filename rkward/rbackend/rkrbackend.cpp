@@ -434,6 +434,10 @@ bool RKRBackend::fetchStdoutStderr (bool forcibly) {
 	} else {
 		stdout_stderr_mutex.lock ();
 	}
+	if (stdout_stderr_fd < 0) {
+		stdout_stderr_mutex.unlock ();
+		return false;
+	}
 
 	// it seems, setting this only once is not always enough.
 	fcntl (stdout_stderr_fd, F_SETFL, fcntl (stdout_stderr_fd, F_GETFL, 0) | O_NONBLOCK);
@@ -748,6 +752,7 @@ RKRBackend::RKRBackend () : stdout_stderr_mutex (QMutex::Recursive) {
 	r_running = false;
 
 	current_command = 0;
+	stdout_stderr_fd = -1;
 
 	RK_ASSERT (this_pointer == 0);
 	this_pointer = this;
