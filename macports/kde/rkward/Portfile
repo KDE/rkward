@@ -8,7 +8,7 @@ svn.url             http://svn.code.sf.net/p/rkward/code/trunk
 worksrcdir          ${workpath}/trunk/rkward
 
 name                rkward-devel
-version             0.6.0-svn${svn.revision}
+version             0.6.1-svn${svn.revision}
 categories          kde kde4 math science
 maintainers         hhu.de:meik.michalke
 license             GPL-2

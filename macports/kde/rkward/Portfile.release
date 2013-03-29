@@ -3,12 +3,12 @@
 
 PortSystem          1.0
 fetch.type          svn
-svn.url             http://svn.code.sf.net/p/rkward/code/branches/release_branch_0.6.0
-svn.revision        4388
-worksrcdir          ${workpath}/release_branch_0.6.0
+svn.url             http://svn.code.sf.net/p/rkward/code/branches/release_branches/rkward_0.6.1
+svn.revision        4635
+worksrcdir          ${workpath}/release_0.6.1
 
 name                rkward
-version             0.6.0
+version             0.6.1
 categories          kde kde4 math science
 maintainers         hhu.de:meik.michalke
 license             GPL-2
