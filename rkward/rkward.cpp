@@ -115,7 +115,7 @@ void bogusCalls () {
 //static
 RKWardMainWindow *RKWardMainWindow::rkward_mainwin = 0;
 
-RKWardMainWindow::RKWardMainWindow (RKWardStartupOptions *options) : KParts::MainWindow ((QWidget *)0, (Qt::WindowFlags) KDE_DEFAULT_WINDOWFLAGS) {
+RKWardMainWindow::RKWardMainWindow () : KParts::MainWindow ((QWidget *)0, (Qt::WindowFlags) KDE_DEFAULT_WINDOWFLAGS) {
 	RK_TRACE (APP);
 	RK_ASSERT (rkward_mainwin == 0);
 
@@ -159,8 +159,6 @@ RKWardMainWindow::RKWardMainWindow (RKWardStartupOptions *options) : KParts::Mai
 
 	RKComponentMap::initialize ();
 
-	startup_options = options;
-
 	// stuff which should wait until the event loop is running
 	QTimer::singleShot (0, this, SLOT (doPostInit ()));
 }
@@ -203,11 +201,8 @@ void RKWardMainWindow::doPostInit () {
 		KMessageBox::error (this, i18n ("<p>RKWard either could not find its resource files at all, or only an old version of those files. The most likely cause is that the last installation failed to place the files in the correct place. This can lead to all sorts of problems, from single missing features to complete failure to function.</p><p><b>You should quit RKWard, now, and fix your installation</b>. For help with that, see <a href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</p>"), i18n ("Broken installation"), KMessageBox::Notify | KMessageBox::AllowLink);
 	}
 
-	// startup options will be deleted from the R thread (TODO correct this!), so we need to copy the initial_url here, or run into race conditions
-	KUrl open_url = startup_options ? startup_options->initial_url : KUrl ();
-	QString evaluate_code = startup_options ? startup_options->evaluate : QString ();
-	delete startup_options;
-	startup_options = 0;
+	KUrl open_url = RKGlobals::startup_options.take ("initial_url").toUrl ();
+	QString evaluate_code = RKGlobals::startup_options.take ("evaluate").toString ();
 
 	initPlugins ();
 	gui_rebuild_locked = false;

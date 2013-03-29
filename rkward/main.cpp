@@ -2,7 +2,7 @@
                           main.cpp  -  description
                              -------------------
     begin                : Tue Oct 29 20:06:08 CET 2002
-    copyright            : (C) 2002, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012 by Thomas Friedrichsmeier 
+    copyright            : (C) 2002-2013 by Thomas Friedrichsmeier 
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -64,6 +64,7 @@
 #include <stdlib.h>
 
 #include "rkward.h"
+#include "rkglobals.h"
 #include "rkwardapplication.h"
 #include "settings/rksettingsmoduledebug.h"
 #include "windows/rkdebugmessagewindow.h"
@@ -111,17 +112,11 @@ void RKDebug (int flags, int level, const char *fmt, ...) {
 }
 
 int main(int argc, char *argv[]) {
-/* #ifdef Q_WS_X11
-	This (along with the proper includes, of course) makes library (gWidgetsRGtk2) work on X11 on some systems.
-	Unfortunately, on others, I causes lockups when plotting.
-
-	XInitThreads ();
-	XtToolkitThreadInitialize ();
-#endif */
 	options.add ("evaluate <Rcode>", ki18n ("After starting (and after loading the specified workspace, if applicable), evaluate the given R code."), 0);
 	options.add ("debug-level <level>", ki18n ("Verbosity of debug messages (0-5)"), "2");
 	options.add ("debug-flags <flags>", ki18n ("Mask for components to debug (see debug.h)"), "8191");
 	options.add ("debugger <command>", ki18n ("Debugger (enclose any debugger arguments in single quotes ('') together with the command)"), "");
+	options.add ("backend-debugger <command>", ki18n ("Debugger for the backend. (Enclose any debugger arguments in single quotes ('') together with the command. Make sure to re-direct stdout!)"), "");
 	options.add ("+[File]", ki18n ("R workspace file to open"), 0);
 
 	KAboutData aboutData("rkward", QByteArray (), ki18n ("RKWard"), RKWARD_VERSION, ki18n ("Frontend to the R statistics language"), KAboutData::License_GPL, ki18n ("(c) 2002, 2004 - 2013"), KLocalizedString (), "http://rkward.sf.net", "rkward-devel@lists.sourceforge.net");
@@ -163,11 +158,11 @@ int main(int argc, char *argv[]) {
 		RK_DEBUG (ALL, DL_ERROR, "--debugger option should have been handled by wrapper script. Ignoring.");
 	}
 
-	RKWardStartupOptions *stoptions = new RKWardStartupOptions;
 	if (args->count ()) {
-		stoptions->initial_url = args->url (0);
+		RKGlobals::startup_options["initial_url"] = QUrl (args->url (0));
 	}
-	stoptions->evaluate = args->getOption ("evaluate");
+	RKGlobals::startup_options["evaluate"] = args->getOption ("evaluate");
+	RKGlobals::startup_options["backend-debugger"] = args->getOption ("backend-debugger");
 
 	RKWardApplication app;
 	// install message handler *after* the componentData has been initialized
@@ -181,7 +176,7 @@ int main(int argc, char *argv[]) {
 	if (app.isSessionRestored ()) {
 		RESTORE(RKWardMainWindow);	// well, whatever this is supposed to do -> TODO
 	} else {
-		new RKWardMainWindow(stoptions);
+		new RKWardMainWindow ();
 	}
 	args->clear();
 

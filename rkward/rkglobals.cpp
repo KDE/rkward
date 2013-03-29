@@ -20,13 +20,7 @@
 
 RInterface *RKGlobals::rinter;
 RKModificationTracker *RKGlobals::mtracker;
-
-RKGlobals::RKGlobals () {
-}
-
-
-RKGlobals::~RKGlobals () {
-}
+QVariantMap RKGlobals::startup_options;
 
 #include <kdialog.h>
 

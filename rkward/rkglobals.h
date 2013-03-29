@@ -2,7 +2,7 @@
                           rkglobals  -  description
                              -------------------
     begin                : Wed Aug 18 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2013 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -16,6 +16,8 @@
  ***************************************************************************/
 #ifndef RKGLOBALS_H
 #define RKGLOBALS_H
+
+#include <QVariantMap>
 
 class RKWardMainWindow;
 class RInterface;
@@ -34,11 +36,6 @@ TODO: move the static members to the respective classes instead. There's no poin
 */
 class RKGlobals{
 public:
-/** constructor. Do not use. No instance needed of this class. Only static stuff inside */
-	RKGlobals ();
-/** destructor. Do not use. No instance needed of this class. Only static stuff inside */
-	~RKGlobals ();
-
 /// static pointer to the RInterface
 	static RInterface *rInterface () { return rinter; };
 /// static pointer to the RKModificationTracker
@@ -49,8 +46,7 @@ public:
 /// returns KDialog::spacingHint (), without the need to include kdialog.h in all the sources
 	static int spacingHint ();
 
-	static void deleteStrings (QString **strings, int count);
-
+	static QVariantMap startup_options;
 private:
 	friend class RKWardMainWindow;
 	static RInterface *rinter;

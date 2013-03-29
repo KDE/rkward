@@ -31,11 +31,6 @@ class KRecentFilesAction;
 class KSqueezedTextLabel;
 class QAction;
 
-struct RKWardStartupOptions {
-	KUrl initial_url;	/**< The workspace file to load on startup. If empty, show a dialog asking what to do. **/
-	QString evaluate;	/**< R code to run after startup */
-};
-
 /**
 The main class of rkward. This is where all strings are tied togther, controlls the initialization, and there are some of the most important slots for user actions. All real work is done elsewhere.
 */
@@ -44,7 +39,7 @@ class RKWardMainWindow : public KParts::MainWindow {
 public:
 /** construtor
 @param options Options from command line. RKWardMainWindow will take ownership of this pointer, and delete it, once not longer needed. */
-	RKWardMainWindow (RKWardStartupOptions *options = 0);
+	RKWardMainWindow ();
 /** destructor */
 	~RKWardMainWindow ();
 
@@ -180,8 +175,6 @@ private:
 
 	/** Finds plugins and inserts them into the menu-structure */
 	void initPlugins (const QStringList &automatically_added = QStringList ());
-
-	RKWardStartupOptions *startup_options;
 
 	static RKWardMainWindow *rkward_mainwin;
 

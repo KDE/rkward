@@ -2,7 +2,7 @@
                           rkfrontendtransmitter  -  description
                              -------------------
     begin                : Thu Nov 04 2010
-    copyright            : (C) 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2010-2013 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -20,10 +20,11 @@
 #include "rkrbackendprotocol_frontend.h"
 #include "../misc/rkcommonfunctions.h"
 #include "../settings/rksettingsmodulegeneral.h"
+#include "../rkglobals.h"
 
-#include "klocale.h"
-#include "krandom.h"
-#include "kstandarddirs.h"
+#include <klocale.h>
+#include <krandom.h>
+#include <kstandarddirs.h>
 #include <QCoreApplication>
 #include <QProcess>
 #include <QLocalServer>
@@ -77,7 +78,15 @@ void RKFrontendTransmitter::run () {
         if (backend_executable.isEmpty ()) backend_executable = KStandardDirs::findExe (QDir::toNativeSeparators (QCoreApplication::applicationDirPath () + "/../../../rbackend/rkward.rbackend"));
 #endif
 	RK_ASSERT (!backend_executable.isEmpty ());
-	backend->start (backend_executable, args, QIODevice::ReadOnly);
+	QString debugger = RKGlobals::startup_options["backend-debugger"].toString ();
+	if (!debugger.isEmpty ()) {
+		args.prepend (backend_executable);
+		QStringList l = debugger.split (' ');
+		args = l.mid (1) + args;
+		backend->start (l.first (), args, QIODevice::ReadOnly);
+	} else {
+		backend->start (backend_executable, args, QIODevice::ReadOnly);
+	}
 
 	// fetch security token
 	if (!backend->canReadLine ()) backend->waitForReadyRead ();

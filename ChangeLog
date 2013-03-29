@@ -1,3 +1,5 @@
+- Add command line option --backend-debugger
+
 --- Version 0.6.1 - Apr-02-2013
 - Add option to force-close a graphics window
 - Add plugin for subsetting data.frames by rows or columns
