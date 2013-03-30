@@ -238,10 +238,13 @@ parseXMLAttr <- function(tag){
 		separated.tag <- gsub("=[[:space:]]*\"([^\"]*)\"[[:space:]]+([^[:space:]=]+)", "=\"\\1\", \\2", stripped.tag, perl=TRUE)
 		# to be on the safe side, escape all list names, in case there's unexpected special characters in them
 		separated.tag <- gsub("( ,)?([^[:space:],\"]*)=\"", "\\1\"\\2\"=\"", separated.tag, perl=TRUE)
-		# empty attributes are not valid, force them into atrribute="attribute"
-		# does only work partially it the empty attribute is the last in line
-		# and still causes *problems* in matching string in the value of other attributes!
+		###################################################################################
+		## TODO:
+		## empty attributes are not valid, force them into atrribute="attribute"
+		## does only work partially it the empty attribute is the last in line
+		## and still causes *problems* in matching string in the value of other attributes!
 		# separated.tag <- gsub("(, |\\A)([^[:space:],\"=][[:alnum:]]*)", "\\1\"\\2\"=\"\\2\"", separated.tag, perl=TRUE)
+		###################################################################################
 		parsed.list <- eval(parse(text=paste("list(", separated.tag, ")")))
 	}
 	if(XML.declaration(tag)){

@@ -20,6 +20,7 @@ setGeneric("show")
 #' @rdname show-methods
 #' @include XiMpLe.node-class.R
 #' @include XiMpLe.doc-class.R
+#' @export
 setMethod("show", signature(object="XiMpLe.XML"), function(object){
 	cat(pasteXML(object))
 })
