@@ -81,6 +81,12 @@ void RKGraphicsDeviceFrontendTransmitter::newConnection () {
 	connect (connection, SIGNAL (readyRead ()), this, SLOT (newData ()));
 }
 
+static QRgb readRgb (QDataStream &instream) {
+	quint8 r, g, b, a;
+	instream >> r >> g >> b >> a;
+	return qRgba (r, g, b, a);
+}
+
 static QColor readColor (QDataStream &instream) {
 	quint8 r, g, b, a;
 	instream >> r >> g >> b >> a;
@@ -247,6 +253,20 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 			quint8 m;
 			streamer.instream >> m;
 			if (m == 0) device->triggerUpdate ();
+		} else if (opcode == RKDRaster) {
+			quint32 w, h;
+			streamer.instream >> w >> h;
+			QImage image (w, h, QImage::Format_ARGB32);
+			for (quint32 col = 0; col < h; ++col) {
+				for (quint32 row = 0; row < w; ++row) {
+					image.setPixel (row, col, readRgb (streamer.instream));
+				}
+			}
+			QRectF target;
+			double rotation;
+			bool interpolate;
+			streamer.instream >> target >> rotation >> interpolate;
+			device->image (image, target.normalized (), rotation, interpolate);
 		} else if (opcode == RKDLocator) {
 			device->locator ();
 #warning TODO keep track of status

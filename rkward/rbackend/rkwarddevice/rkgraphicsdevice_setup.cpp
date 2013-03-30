@@ -146,7 +146,7 @@ bool RKGraphicsDeviceDesc::initRDevDesc (pDevDesc dev, double pointsize, rcolor 
 
 	dev->haveTransparency = 2;
 	dev->haveTransparentBg = 2; // FIXME. Do we really? Check.
-	dev->haveRaster = 1;
+	dev->haveRaster = 2;
 	dev->haveCapture = 1;
 	dev->haveLocator = 2;
 
@@ -180,6 +180,7 @@ bool RKGraphicsDeviceDesc::initRDevDesc (pDevDesc dev, double pointsize, rcolor 
 	dev->size = NULL; // RKD_Size;
 	// dev->onexit = RKD_OnExit; NULL is OK
 	// dev->getEvent = SEXP (*getEvent)(SEXP, const char *);
+	dev->raster = RKD_Raster;
 	dev->newFrameConfirm = RKD_NewFrameConfirm;
 
 	return true;

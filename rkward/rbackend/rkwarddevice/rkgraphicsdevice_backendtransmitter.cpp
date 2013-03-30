@@ -72,10 +72,13 @@ bool RKGraphicsDeviceBackendTransmitter::connectionAlive () {
 void RKGraphicsDeviceBackendTransmitter::run () {
 	RK_TRACE (GRAPHICS_DEVICE);
 
+	bool more_left = false;
 	while (alive) {
-		msleep (10);	// it's ok to be lazy. If a request expects a reply, RKGraphicsDataStreamReadGuard will take care of pushing everything, itself. Essentially, this thread's job is simply to make sure we don't lag *too* far behind.
+		msleep (more_left ? 10 : 50);	// it's ok to be lazy. If a request expects a reply, RKGraphicsDataStreamReadGuard will take care of pushing everything, itself. Essentially, this thread's job is simply to make sure we don't lag *too* far behind.
+		// See note in RKRBackend::handleRequest(): sleeping short is CPU-intensive
 		mutex.lock ();
 		connection->waitForBytesWritten (100);
+		more_left = connection->bytesToWrite ();
 		mutex.unlock ();
 	}
 

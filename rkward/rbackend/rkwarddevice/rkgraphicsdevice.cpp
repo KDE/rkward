@@ -77,7 +77,7 @@ RKGraphicsDevice* RKGraphicsDevice::newDevice (int devnum, double width, double 
 		RK_DEBUG (GRAPHICS_DEVICE, DL_ERROR, "Graphics device number %d already exists while trying to create it", devnum);
 		closeDevice (devnum);
 	}
-	RKGraphicsDevice* dev = new RKGraphicsDevice (width, height, title.isEmpty () ? i18n ("Graphics Device Number %1").arg (QString (devnum+1)) : title, antialias);
+	RKGraphicsDevice* dev = new RKGraphicsDevice (width, height, title.isEmpty () ? i18n ("Graphics Device Number %1").arg (QString::number (devnum+1)) : title, antialias);
 	devices.insert (devnum, dev);
 	return (dev);
 }
@@ -178,6 +178,20 @@ void RKGraphicsDevice::polyline (const QPolygonF& pol, const QPen& pen) {
 
 	painter.setPen (pen);
 	painter.drawPolyline (pol);
+	triggerUpdate ();
+}
+
+void RKGraphicsDevice::image (const QImage& image, const QRectF& target_rect, double rot, bool interpolate) {
+	RK_TRACE (GRAPHICS_DEVICE);
+
+	painter.save ();
+	QRectF tr = target_rect;
+	painter.translate (tr.x (), tr.y ());
+	tr.moveTo (0, 0);
+	painter.rotate (-rot);
+	painter.setRenderHint (QPainter::SmoothPixmapTransform, interpolate);
+	painter.drawImage (tr, image, image.rect ());
+	painter.restore ();
 	triggerUpdate ();
 }
 

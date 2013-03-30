@@ -276,6 +276,24 @@ static void RKD_Mode (int mode, pDevDesc dev) {
 	connectoin << (qint8) mode; */
 }
 
+static void RKD_Raster (unsigned int *raster, int w, int h, double x, double y, double width, double height, double rot, Rboolean interpolate, const pGEcontext gc, pDevDesc dev) {
+	Q_UNUSED (gc);
+
+	RKGraphicsDataStreamWriteGuard wguard;
+	WRITE_HEADER (RKDRaster, dev);
+
+	quint32 _w = qMin (w, 1 << 15);	// skip stuff exceeding reasonable limits to keep protocol simple
+	RKD_OUT_STREAM << _w;
+	quint32 _h = qMin (h, 1 << 15);
+	RKD_OUT_STREAM << _h;
+	for (quint32 col = 0; col < _h; ++col) {
+		for (quint32 row = 0; row < _w; ++row) {
+			WRITE_COLOR_BYTES (raster[(col*_w) + row]);
+		}
+	}
+	RKD_OUT_STREAM << QRectF (x, y, width, height) << rot << (bool) interpolate;
+}
+
 static Rboolean RKD_Locator (double *x, double *y, pDevDesc dev) {
 	{
 		RKGraphicsDataStreamWriteGuard wguard;
@@ -304,3 +322,4 @@ static Rboolean RKD_NewFrameConfirm (pDevDesc dev) {
 	return (Rboolean) TRUE;
 	// Return value FALSE: Let R ask, instead
 }
+

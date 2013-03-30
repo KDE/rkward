@@ -75,11 +75,12 @@ enum RKDOpcodes {
 	RKDDeActivate, // 10
 	RKDClip,
 	RKDMode,
+	RKDRaster,
 
 	// Synchronous operations
 	RKDStrWidthUTF8,
-	RKDMetricInfo,
-	RKDLocator,    // 15
+	RKDMetricInfo, // 15
+	RKDLocator,
 	RKDNewPageConfirm,
 
 	// Protocol operations
