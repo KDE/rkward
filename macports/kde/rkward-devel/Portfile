@@ -38,9 +38,10 @@ variant okular description {Add okular for nice PDF handling} {
         depends_lib-append port:okular
 }
 
-if {${configure.compiler} == "clang"} {
-        configure.compiler llvm-gcc-4.2
-}
+#if {${configure.compiler} == "clang"} {
+#        configure.compiler llvm-gcc-4.2
+##        configure.compiler macports-gcc-4.7
+#}
 
 post-extract {
         # creates the build dir if it doesn't exist

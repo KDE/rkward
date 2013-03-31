@@ -5,7 +5,7 @@ PortSystem          1.0
 fetch.type          svn
 svn.url             http://svn.code.sf.net/p/rkward/code/branches/release_branches/rkward_0.6.1
 svn.revision        4635
-worksrcdir          ${workpath}/release_0.6.1
+worksrcdir          ${workpath}/rkward_0.6.1
 
 name                rkward
 conflicts           rkward-devel
