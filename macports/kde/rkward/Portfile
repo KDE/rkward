@@ -3,12 +3,12 @@
 
 PortSystem          1.0
 fetch.type          svn
-svn.url             http://svn.code.sf.net/p/rkward/code/trunk
-#svn.revision        4494
-worksrcdir          ${workpath}/trunk/rkward
+svn.url             http://svn.code.sf.net/p/rkward/code/branches/release_branches/rkward_0.6.1
+svn.revision        4635
+worksrcdir          ${workpath}/release_0.6.1
 
-name                rkward-devel
-version             0.6.1-svn${svn.revision}
+name                rkward
+version             0.6.1
 categories          kde kde4 math science
 maintainers         hhu.de:meik.michalke
 license             GPL-2
@@ -25,7 +25,6 @@ homepage            http://rkward.sourceforge.net
 master_sites        https://sourceforge.net/projects/rkward/files/Current_Stable_Releases
 
 PortGroup           cmake 1.0
-
 depends_lib         port:kdelibs4 \
                     port:kate \
                     port:R-framework
@@ -57,6 +56,10 @@ if { ![file exists ${prefix}/include/Qt/qglobal.h] && [file exists ${prefix}/inc
         configure.args-append -DQT_QT_INCLUDE_DIR=${prefix}/include/QtCore
 }
 configure.cmd       cmake ..
+
+variant binary description {Configure R to install Mac binaries by default} {
+        configure.args-append -DUSE_BINARY_PACKAGES=1
+}
 
 build.dir           ${worksrcdir}/build
 
