@@ -73,7 +73,7 @@ int main (int argc, char *argv[]) {
 		kde_dir.makeAbsolute ();
 #ifdef Q_WS_WIN
 		kdeinit4_exe = findExeAtPath ("kdeinit4", kde_dir.path ());
-		qputenv ("PATH", QString (kde_dir.path () + ":" + qgetenv ("PATH")).toLocal8Bit ());
+		qputenv ("PATH", QString (kde_dir.path () + ";" + qgetenv ("PATH")).toLocal8Bit ());
 #endif
 		// important if RKWard is not in KDEPREFIX/bin but e.g. KDEPREFIX/lib/libexec
 		qputenv ("RKWARD_ENSURE_PREFIX", kde_dir.path().toLocal8Bit ());
