@@ -8,6 +8,7 @@ svn.revision        4635
 worksrcdir          ${workpath}/release_0.6.1
 
 name                rkward
+conflicts           rkward-devel
 version             0.6.1
 categories          kde kde4 math science
 maintainers         hhu.de:meik.michalke
