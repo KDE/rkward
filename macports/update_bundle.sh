@@ -3,10 +3,10 @@ SRCDATE=$(date +%Y-%m-%d)
 SRCPATH=/opt/ports
 # specify macports installation path
 MPTINST=/opt/rkward
-# specify work directory
-WORKDIR=/opt/ports/kde/rkward/work
 # specify the target port
 PTARGET=rkward-devel
+# specify work directory
+WORKDIR=/opt/ports/kde/${PTARGET}/work
 # specify local public directory
 LPUBDIR=~/Public/rkward
 # specify application dir used
@@ -25,6 +25,11 @@ declare -a EXCLPKG=(audio_flac audio_jack audio_lame audio_libmodplug audio_libo
 # gnome_gobject-introspection gnome_gtk2 gnome_hicolor-icon-theme gnome_libglade2 \
 # multimedia_XviD multimedia_dirac multimedia_ffmpeg multimedia_libogg multimedia_libtheora multimedia_libvpx \
 # multimedia_schroedinger multimedia_x264 net_avahi net_kerberos5 security_cyrus-sasl2 sysutils_e2fsprogs )
+
+#LLVMFIX="configure.compiler=llvm-gcc-4.2"
+
+# to see the dependency tree of ports, run
+# sudo port rdeps rkward-devel
 
 SVNREPO=http://svn.code.sf.net/p/rkward/code/trunk
 OLDWD=$(pwd)
@@ -49,9 +54,9 @@ fi
 # get the options
 while getopts ":DflLprmscxXF:" OPT; do
   case $OPT in
-    D) PTARGET=rkward >&2 ;;
-    F)
-       FRESHMCP=TRUE >&2
+    D) PTARGET=rkward >&2
+       WORKDIR=/opt/ports/kde/${PTARGET}/work>&2 ;;
+    F) FRESHMCP=TRUE >&2
        MCPVERS=$OPTARG >&2 ;;
     f) LSDSKUSG=TRUE >&2 ;;
     l) RMSTLIBS=TRUE >&2 ;;
@@ -59,7 +64,7 @@ while getopts ":DflLprmscxXF:" OPT; do
     p) UPMPORTS=TRUE >&2 ;;
     r) UPRKWARD=TRUE >&2 ;;
     m)
-       RMSTLIBS=TRUE >&2
+#       RMSTLIBS=TRUE >&2
        RPATHFIX=TRUE >&2
        MAKEMDMD=TRUE >&2 ;;
     s) MKSRCTAR=TRUE >&2 ;;
@@ -141,17 +146,16 @@ if [[ $FRESHMCP ]] ; then
   sudo port -v selfupdate || exit 1
   echo "adding local portfiles to ${MPTINST}/etc/macports/sources.conf..."
   sudo sed -i -e "s+rsync://rsync.macports.org.*\[default\]+file://${SRCPATH}/\\`echo -e '\n\r'`&+" ${MPTINST}/etc/macports/sources.conf || exit 1
-  sudo port install subversion || \
-    echo "configure.cc cc -L${MPTINST}/lib -I${MPTINST}/include -arch x86_64" | \
-    sudo tee -a "${MPTINST}/var/macports/sources/rsync.macports.org/release/tarballs/ports/perl/p5-locale-gettext/Portfile" && \
-    sudo port install subversion
-  ## NOTE: there is some serious trouble with port:p5.12-locale-gettext which hasn't been fixed in months
-  ## a workaround, if you run into it:
-  ##   sudo port edit p5.12-locale-gettext
-  ## and append
-  ##   configure.cc cc -L${MPTINST}/lib -I${MPTINST}/include -arch x86_64
-  ## to the portfile, or:
-  ## echo "configure.cc cc -L${MPTINST}/lib -I${MPTINST}/include -arch x86_64" >> ${MPTINST}/var/macports/sources/rsync.macports.org/release/tarballs/ports/perl/p5-locale-gettext/Portfile
+  # install a needed gcc/clang first?
+  if [[ $CMPLR ]] ; then
+    sudo port -v install ${CMPLR} ${LLVMFIX} || exit 1
+  fi
+  if [[ $CLANG ]] ; then
+    sudo port -v install ${CLANG} ${LLVMFIX} || exit 1
+  fi
+#  # if you don't have the latest Xcode, some dependencies of subversion might need certain compilers
+#  sudo port -v install subversion ${LLVMFIX} || exit 1
+  sudo port -v install subversion || exit 1
   sudo port -v selfupdate || exit 1
   echo "successfully completed reincarnation of ${MPTINST}!"
 fi
@@ -179,7 +183,7 @@ if [[ $UPRKWARD ]] ; then
     sudo port clean rkward-devel
   fi
   # build and install recent version
-  sudo port -v install $PTARGET
+  sudo port -v install ${PTARGET} || exit 1
 fi
 
 # remove static libraries, they're a waste of disk space
@@ -257,8 +261,8 @@ if [[ $MAKEMDMD ]] ; then
     done
   fi
 
-  # cleaning boost, the avahi port somehow gets installed in two varaints...
-  sudo port clean boost
+#  # cleaning boost, the avahi port somehow gets installed in two varaints...
+#  sudo port clean boost
   sudo port -v mdmg $PTARGET || exit 1
 
   if [[ $DOEXCPCK ]] ; then
@@ -318,368 +322,3 @@ if [[ $MKSRCTAR ]] ; then
 fi
 
 exit 0
-
-## appendix ;-)
-# this is the result of sudo port rdeps rkward-devel:
-# The following ports are dependencies of rkward-devel @0.6.0-svn_0:
-#   subversion
-#     expat
-#     neon
-#       gettext
-#         libiconv
-#           gperf
-#         ncurses
-#       libcomerr
-#         pkgconfig
-#       openssl
-#         zlib
-#     apr
-#     apr-util
-#       db46
-#       sqlite3
-#         libedit
-#     serf1
-#     cyrus-sasl2
-#       kerberos5
-#         autoconf
-#           xz
-#           perl5
-#             perl5.12
-#               gdbm
-#           m4
-#           help2man
-#             p5.12-locale-gettext
-#         automake
-#         libtool
-#     file
-#     curl-ca-bundle
-#   cmake
-#     libidn
-
-##############
-#   kdelibs4
-##############
-#   xz
-#     libiconv
-#       gperf
-#     gettext
-#       expat
-#       ncurses
-#   cmake
-#     libidn
-#     openssl
-#       zlib
-#   pkgconfig
-#   automoc
-#     qt4-mac
-#       dbus
-#       tiff
-#         jpeg
-#       libpng
-#       libmng
-#         autoconf
-#           perl5
-#             perl5.12
-#               gdbm
-#           m4
-#           help2man
-#             p5.12-locale-gettext
-#         automake
-#         libtool
-#         lcms
-#   flex
-#   gmake
-#   docbook-xsl-ns
-#     unzip
-#     xmlcatmgr
-#   phonon
-#   bzip2
-#   soprano
-#     strigi
-#       clucene
-#       exiv2
-#       libxml2
-#       ffmpeg
-#         texi2html
-#         yasm
-#         lame
-#         libvorbis
-#           libogg
-#         libopus
-#         libtheora
-#         libmodplug
-#         jack
-#           libxslt
-#           libsndfile
-#             flac
-#           libsamplerate
-#             fftw-3
-#         dirac
-#           cppunit
-#         schroedinger
-#           orc
-#         openjpeg
-#           lcms2
-#           jbigkit
-#         freetype
-#         speex
-#         libvpx
-#         libsdl
-#           xorg-libXext
-#             xorg-util-macros
-#             xorg-libX11
-#               xorg-xtrans
-#               xorg-bigreqsproto
-#               xorg-xcmiscproto
-#               xorg-xextproto
-#               xorg-xf86bigfontproto
-#               xorg-inputproto
-#               xorg-libXdmcp
-#                 xorg-xproto
-#               xorg-libXau
-#               xorg-libxcb
-#                 xorg-xcb-proto
-#                   python27
-#                     sqlite3
-#                       libedit
-#                     db46
-#                     python_select
-#                 xorg-libpthread-stubs
-#               xorg-kbproto
-#           xorg-libXrandr
-#             xrender
-#               xorg-renderproto
-#             xorg-randrproto
-#         XviD
-#         x264
-#       boost
-#         icu
-#     raptor2
-#       curl
-#         curl-ca-bundle
-#     redland
-#       rasqal
-#         mhash
-#         mpfr
-#           gmp
-#     libiodbc
-#       gtk2
-#         atk
-#           glib2
-#             libffi
-#           gobject-introspection
-#             cairo
-#               libpixman
-#               fontconfig
-#               lzo2
-#               xorg-xcb-util
-#         pango
-#           harfbuzz
-#             graphite2
-#           Xft2
-#         gdk-pixbuf2
-#           jasper
-#         xorg-libXi
-#         xorg-libXcursor
-#           xorg-fixesproto
-#           xorg-libXfixes
-#         xorg-libXinerama
-#           xorg-xineramaproto
-#         xorg-libXdamage
-#           xorg-damageproto
-#         xorg-libXcomposite
-#           xorg-compositeproto
-#         shared-mime-info
-#           intltool
-#             gnome-common
-#             p5.12-xml-parser
-#             p5.12-getopt-long
-#             p5.12-pathtools
-#             p5.12-scalar-list-utils
-#         hicolor-icon-theme
-#     virtuoso
-#       gawk
-#         readline
-#   cyrus-sasl2
-#     kerberos5
-#       libcomerr
-#   pcre
-#   giflib
-#     xorg-libsm
-#       xorg-libice
-#   openexr
-#     ilmbase
-#       gsed
-#   libart_lgpl
-#   enchant
-#     aspell
-#       texinfo
-#     hunspell
-#   aspell-dict-en
-#   attica
-#   avahi
-#     libdaemon
-#     libglade2
-#     dbus-python27
-#       dbus-glib
-#         gtk-doc
-#           gnome-doc-utils
-#             py27-libxml2
-#             docbook-xml
-#               docbook-xml-4.1.2
-#                 docbook-xml-4.2
-#               docbook-xml-4.3
-#               docbook-xml-4.4
-#               docbook-xml-4.5
-#               docbook-xml-5.0
-#             docbook-xsl
-#             rarian
-#               getopt
-#             iso-codes
-#       py27-gobject
-#     py27-gdbm
-#     py27-pygtk
-#       py27-cairo
-#         py27-numpy
-#           py27-nose
-#             py27-distribute
-#             nosetests_select
-#   qca
-#   dbusmenu-qt
-#     qjson
-#   grantlee
-#   shared-desktop-ontologies
-
-#########
-# kate
-#########
-#       ilmbase
-#         gsed
-#     libart_lgpl
-#     enchant
-#       aspell
-#         texinfo
-#       hunspell
-#     aspell-dict-en
-#     attica
-#     avahi
-#       libdaemon
-#       libglade2
-#       dbus-python27
-#         dbus-glib
-#           gtk-doc
-#             gnome-doc-utils
-#               py27-libxml2
-#               docbook-xml
-#                 docbook-xml-4.1.2
-#                   docbook-xml-4.2
-#                 docbook-xml-4.3
-#                 docbook-xml-4.4
-#                 docbook-xml-4.5
-#                 docbook-xml-5.0
-#               docbook-xsl
-#               rarian
-#                 getopt
-#               iso-codes
-#         py27-gobject
-#       py27-gdbm
-#       py27-pygtk
-#         py27-cairo
-#           py27-numpy
-#             py27-nose
-#               py27-distribute
-#               nosetests_select
-#     qca
-#     dbusmenu-qt
-#       qjson
-#     grantlee
-#     shared-desktop-ontologies
-#   kactivities
-#   oxygen-icons
-
-################
-#   R-framework
-################
-#   pkgconfig
-#     libiconv
-#       gperf
-#   readline
-#     ncurses
-#   icu
-#   xorg-libsm
-#     xorg-xtrans
-#     xorg-libice
-#       xorg-xproto
-#   xorg-libX11
-#     xorg-bigreqsproto
-#     xorg-xcmiscproto
-#     xorg-xextproto
-#     xorg-xf86bigfontproto
-#     xorg-inputproto
-#     xorg-libXdmcp
-#     xorg-libXau
-#     xorg-libxcb
-#       xorg-xcb-proto
-#         libxml2
-#           zlib
-#           xz
-#             gettext
-#               expat
-#         python27
-#           openssl
-#           sqlite3
-#             libedit
-#           db46
-#           bzip2
-#           python_select
-#       xorg-libpthread-stubs
-#     xorg-kbproto
-#   xorg-libXt
-#   tiff
-#     jpeg
-#   libpng
-#   cairo
-#     libpixman
-#     glib2
-#       libffi
-#       perl5
-#         perl5.12
-#           gdbm
-#     fontconfig
-#       freetype
-#     lzo2
-#     xrender
-#       xorg-renderproto
-#     xorg-libXext
-#       xorg-util-macros
-#       autoconf
-#         m4
-#         help2man
-#           p5.12-locale-gettext
-#       automake
-#       libtool
-#     xorg-xcb-util
-#   pango
-#     gobject-introspection
-#     harfbuzz
-#       graphite2
-#         cmake
-#           libidn
-#     Xft2
-#   gcc45
-#     gmp
-#     mpfr
-#     libmpc
-#     ppl
-#       glpk
-#     gcc_select
-#     ld64
-#       libunwind-headers
-#       dyld-headers
-#       cctools-headers
-#       llvm-3.2
-#         llvm_select
-#     cctools
-#     libstdcxx
-#       cloog
-#         isl
