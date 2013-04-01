@@ -38,10 +38,14 @@ variant okular description {Add okular for nice PDF handling} {
         depends_lib-append port:okular
 }
 
-#if {${configure.compiler} == "clang"} {
-#        configure.compiler llvm-gcc-4.2
-##        configure.compiler macports-gcc-4.7
-#}
+if {${configure.compiler} == "clang"} {
+#        configure.compiler   llvm-gcc-4.2
+        # force the use of gcc 4.7 to be able to link with R-framework
+        depends_lib-append   port:gcc47
+        configure.compiler   macports-gcc-4.7
+        configure.objc       /usr/bin/gcc
+        configure.env-append "OBJCXX=${configure.objc}"
+}
 
 post-extract {
         # creates the build dir if it doesn't exist

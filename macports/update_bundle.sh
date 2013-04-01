@@ -191,7 +191,9 @@ if [[ $RMSTLIBS ]] ; then
   echo "deleting all static libs in ${MPTINST}/lib/..."
   sudo rm ${MPTINST}/lib/*.a
   echo "deleting all static libs in ${MPTINST}/var/macports/build..."
-  find "${MPTINST}/var/macports/build" -name "*.a" -exec sudo rm \{\} \;
+  #find "${MPTINST}/var/macports/build" -name "*.a" -exec sudo rm \{\} \;
+  # only remove libs in destroot/libs/
+  find -E "${MPTINST}/var/macports/build" -type f -regex '.*/destroot'${MPTINST}'/lib/[^/]*\.a' -exec sudo rm \{\} \;
 fi
 
 # list disk usage of ports
