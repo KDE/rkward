@@ -197,10 +197,15 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, int a
 
 	if ((TYPEOF (value) == LANGSXP) || (TYPEOF (value) == SYMSXP)) {	// if it's a call, we should NEVER send it through eval
 		// stripped down and adjusted from R_data_class
-		classes = RKRSupport::SEXPToStringList(Rf_getAttrib (value, R_ClassSymbol));
+		PROTECT (classes_s = Rf_getAttrib (value, R_ClassSymbol));
+		classes = RKRSupport::SEXPToStringList(classes_s);
+		UNPROTECT (1);
 		if (classes.isEmpty ()) {
 			if (TYPEOF (value) == LANGSXP) {
-				QString cl = RKRSupport::SEXPToString (PRINTNAME (value));
+				SEXP cl_s = PRINTNAME (value);
+				PROTECT (cl_s);
+				QString cl = RKRSupport::SEXPToString (cl_s);
+				UNPROTECT (1);
 				if ((cl != "if") && (cl != "while") && (cl != "for") && (cl != "=") && (cl != "<-") && (cl != "(") && (cl != "{")) cl = "call";
 				classes = QStringList (cl);
 			} else {
@@ -210,8 +215,9 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, int a
 
 		REPROTECT (value = Rf_coerceVector (value, EXPRSXP), value_index);	// make sure the object is safe for everything to come
 	} else {
-		classes_s = RKRSupport::callSimpleFun (class_fun, value, baseenv);
+		PROTECT (classes_s = RKRSupport::callSimpleFun (class_fun, value, baseenv));
 		classes = RKRSupport::SEXPToStringList (classes_s);
+		UNPROTECT (1);
 	}
 
 	// store classes
