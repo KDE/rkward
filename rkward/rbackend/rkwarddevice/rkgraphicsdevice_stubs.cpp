@@ -140,6 +140,14 @@ static void RKD_Create (double width, double height, pDevDesc dev, const char *t
 	RKD_OUT_STREAM << width << height << QString::fromUtf8 (title) << antialias;
 }
 
+// TODO: Handle resizes
+static void RKD_Size (double *left, double *right, double *top, double *bottom, pDevDesc dev) {
+	*left = dev->left;
+	*top = dev->top;
+	*right = dev->right;
+	*bottom = dev->bottom;
+}
+
 static void RKD_Circle (double x, double y, double r, R_GE_gcontext *gc, pDevDesc dev) {
 	RKGraphicsDataStreamWriteGuard guard;
 	WRITE_HEADER (RKDCircle, dev);
@@ -292,6 +300,47 @@ static void RKD_Raster (unsigned int *raster, int w, int h, double x, double y, 
 		}
 	}
 	RKD_OUT_STREAM << QRectF (x, y, width, height) << rot << (bool) interpolate;
+}
+
+static SEXP RKD_Capture (pDevDesc dev) {
+	{
+		RKGraphicsDataStreamWriteGuard wguard;
+		WRITE_HEADER (RKDCapture, dev);
+	}
+
+	quint32 w, h;
+	quint32 size;
+	int *buffer;
+	{
+		RKGraphicsDataStreamReadGuard rguard;
+		quint8 r, g, b, a;
+		RKD_IN_STREAM >> w >> h;
+		size = w*h;
+ 		buffer = new int[size];// Although unlikely, allocVector below could fail. We don't want to be left with a locked mutex (from the rguard) in this case. (Being left with a dead pointer looks bening in comparison)
+		quint32 i = 0;
+		for (quint32 col = 0; col < h; ++col) {
+			for (quint32 row = 0; row < w; ++row) {
+				RKD_IN_STREAM >> r >> g >> b >> a;
+				buffer[i++] = R_RGBA (r, g, b, a);
+			}
+		}
+	}
+	SEXP ret, dim;
+	PROTECT (ret = Rf_allocVector (INTSXP, size));
+	int* ret_vals = INTEGER (ret);
+	for (quint32 i = 0; i < size; ++i) {
+		ret_vals[i] = buffer[i];
+	}
+	delete (buffer);
+
+	// Documentation does not mention it, but cap expects dim information to be returned
+	PROTECT(dim = Rf_allocVector (INTSXP, 2));
+	INTEGER (dim)[0] = w;
+	INTEGER (dim)[1] = h;
+	Rf_setAttrib (ret, R_DimSymbol, dim);
+
+	UNPROTECT (2);
+	return ret;
 }
 
 static Rboolean RKD_Locator (double *x, double *y, pDevDesc dev) {

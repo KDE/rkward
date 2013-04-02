@@ -195,6 +195,12 @@ void RKGraphicsDevice::image (const QImage& image, const QRectF& target_rect, do
 	triggerUpdate ();
 }
 
+QImage RKGraphicsDevice::capture () const {
+	RK_TRACE (GRAPHICS_DEVICE);
+
+	return area.toImage ();
+}
+
 void RKGraphicsDevice::setActive (bool active) {
 	RK_TRACE (GRAPHICS_DEVICE);
 

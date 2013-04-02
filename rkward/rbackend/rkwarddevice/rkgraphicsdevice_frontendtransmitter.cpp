@@ -267,6 +267,18 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 			bool interpolate;
 			streamer.instream >> target >> rotation >> interpolate;
 			device->image (image, target.normalized (), rotation, interpolate);
+		} else if (opcode == RKDCapture) {
+			QImage image = device->capture ();
+			quint32 w = image.width ();
+			quint32 h = image.height ();
+			streamer.outstream << w << h;
+			for (quint32 col = 0; col < h; ++col) {
+				for (quint32 row = 0; row < w; ++row) {
+					QRgb pixel = image.pixel (row, col);
+					streamer.outstream << (quint8) qRed (pixel) << (quint8) qGreen (pixel) << (quint8) qBlue (pixel) << (quint8) qAlpha (pixel);
+				}
+			}
+			streamer.writeOutBuffer ();
 		} else if (opcode == RKDLocator) {
 			device->locator ();
 #warning TODO keep track of status

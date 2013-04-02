@@ -49,6 +49,7 @@ public:
 	void polyline (const QPolygonF& pol, const QPen& pen);
 	void clear (const QColor& col=QColor());
 	void image (const QImage &image, const QRectF &target_rect, double rot, bool interpolate);
+	QImage capture () const;
 	void setActive (bool active);
 	void triggerUpdate ();
 	void locator ();

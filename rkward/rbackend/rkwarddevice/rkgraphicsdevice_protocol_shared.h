@@ -82,6 +82,7 @@ enum RKDOpcodes {
 	RKDMetricInfo, // 15
 	RKDLocator,
 	RKDNewPageConfirm,
+	RKDCapture,
 
 	// Protocol operations
 	RKDCancel
