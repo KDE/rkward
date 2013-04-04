@@ -198,13 +198,13 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, int a
 	if ((TYPEOF (value) == LANGSXP) || (TYPEOF (value) == SYMSXP)) {	// if it's a call, we should NEVER send it through eval
 		// stripped down and adjusted from R_data_class
 		PROTECT (classes_s = Rf_getAttrib (value, R_ClassSymbol));
-		classes = RKRSupport::SEXPToStringList(classes_s);
+		if (Rf_length (classes_s)) classes = RKRSupport::SEXPToStringList(classes_s);
 		UNPROTECT (1);
 		if (classes.isEmpty ()) {
 			if (TYPEOF (value) == LANGSXP) {
-				SEXP cl_s = PRINTNAME (value);
-				PROTECT (cl_s);
-				QString cl = RKRSupport::SEXPToString (cl_s);
+				SEXP symb = PROTECT (CAR (value));
+				QString cl;
+				if (TYPEOF (symb) == SYMSXP) cl = CHAR (PRINTNAME (symb));
 				UNPROTECT (1);
 				if ((cl != "if") && (cl != "while") && (cl != "for") && (cl != "=") && (cl != "<-") && (cl != "(") && (cl != "{")) cl = "call";
 				classes = QStringList (cl);
