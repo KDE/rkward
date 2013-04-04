@@ -9,7 +9,12 @@ IF(Q_WS_MAC)
 	SET(CPACK_BUNDLE_ICON rkward.icns)
 	SET(CPACK_BUNDLE_NAME RKWard)
 	SET(CPACK_BUNDLE_STARTUP_COMMAND rkward)
-	SET(LOOKUP_LOCAL_MAKE "if ! [ -f /usr/bin/make ] && [ -f \"${BIN_INSTALL_DIR}/gmake\" ] ; then export MAKE=\"${BIN_INSTALL_DIR}/gmake\" ; fi")
+	SET(LOOKUP_LOCAL_MAKE "# 'make' is needed to build source packages.
+# usually it's only available on OS X if XCode or similar was installed,
+# so we'll check for that and try to provide an alternative if it's not found
+if ! [ -f /usr/bin/make ] && [ -f \"${BIN_INSTALL_DIR}/gmake\" ] ; then
+  export MAKE=\"${BIN_INSTALL_DIR}/gmake\"
+fi")
 	SET(KDE_START_DBUS "launchctl load -w \"${CMAKE_INSTALL_PREFIX}/Library/LaunchAgents/org.freedesktop.dbus-session.plist\"")
 #	SET(CPACK_BUNDLE_PLIST ${CMAKE_SOURCE_DIR}/rkward/Info.plist)
 ELSE(Q_WS_MAC)
