@@ -36,7 +36,7 @@
 #'		Valid single values are \code{"file"}, \code{"edit"}, \code{"view"}, \code{"workspace"}, \code{"run"}, \code{"data"},
 #'		\code{"analysis"}, \code{"plots"}, \code{"distributions"}, \code{"windows"}, \code{"settings"} and \code{"help"},
 #'		anything else will place it in a "test" menu. If \code{hierarchy} is a list, each entry represents the label of a menu level.
-#' @param pluginmap Character string, relative path to the pluginmap file, which will then be included in the head of the GUI XML document.
+#' @param include Character string or vector, relative path(s) to other file(s), which will then be included in the head of the GUI XML document.
 #' @param create A character vector with one or more of these possible entries:
 #'		\describe{
 #'			\item{\code{"xml"}}{Create the plugin \code{.xml} XML file skeleton.}
@@ -69,7 +69,7 @@
 
 rk.plugin.component <- function(about, xml=list(), js=list(), rkh=list(),
 	provides=c("logic", "dialog"), scan=c("var", "saveobj", "settings"), guess.getter=FALSE,
-	hierarchy="test", pluginmap=NULL, create=c("xml", "js", "rkh"), gen.info=TRUE, indent.by="\t"){
+	hierarchy="test", include=NULL, create=c("xml", "js", "rkh"), gen.info=TRUE, indent.by="\t"){
 
 	if(inherits(about, "XiMpLe.node")){
 		about.node.name <- slot(about, "name")
@@ -124,7 +124,7 @@ rk.plugin.component <- function(about, xml=list(), js=list(), rkh=list(),
 			logic=xml[["logic"]],
 			snippets=xml[["snippets"]],
 			provides=provides,
-			pluginmap=pluginmap,
+			include=include,
 			about=about.node,
 			gen.info=gen.info)
 		slot(this.component, "xml") <- XML.plugin

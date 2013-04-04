@@ -6,7 +6,7 @@
     rkh = list(), provides = c("logic", "dialog"),
     scan = c("var", "saveobj", "settings"),
     guess.getter = FALSE, hierarchy = "test",
-    pluginmap = NULL, create = c("xml", "js", "rkh"),
+    include = NULL, create = c("xml", "js", "rkh"),
     gen.info = TRUE, indent.by = "\t")
 }
 \arguments{
@@ -97,9 +97,9 @@
   place it in a "test" menu. If \code{hierarchy} is a list,
   each entry represents the label of a menu level.}
 
-  \item{pluginmap}{Character string, relative path to the
-  pluginmap file, which will then be included in the head
-  of the GUI XML document.}
+  \item{include}{Character string or vector, relative
+  path(s) to other file(s), which will then be included in
+  the head of the GUI XML document.}
 
   \item{create}{A character vector with one or more of
   these possible entries: \describe{

@@ -4,7 +4,7 @@
 \usage{
   rk.XML.plugin(name, dialog = NULL, wizard = NULL,
     logic = NULL, snippets = NULL, provides = NULL,
-    help = TRUE, pluginmap = NULL, label = NULL,
+    help = TRUE, include = NULL, label = NULL,
     clean.name = TRUE, about = NULL, dependencies = NULL,
     gen.info = TRUE)
 }
@@ -45,9 +45,9 @@
   help file named \emph{"<name>.rkh"} will be added to the
   header.}
 
-  \item{pluginmap}{Character string, relative path to the
-  pluginmap file, which will then be included in the head
-  of this document.}
+  \item{include}{Character string or vector, relative
+  path(s) to other file(s), which will then be included in
+  the head of the GUI XML document.}
 
   \item{label}{Character string, a text label for the
   plugin's top level, i.e. the window title of the dialog.

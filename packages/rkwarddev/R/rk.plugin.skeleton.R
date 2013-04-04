@@ -223,7 +223,6 @@ rk.plugin.skeleton <- function(about, path=tempdir(),
 		scan=scan,
 		guess.getter=guess.getter,
 		hierarchy=pluginmap[["hierarchy"]],
-		pluginmap=paste0("../", name, ".pluginmap"),
 		create=create[create %in% c("xml", "js", "rkh")],
 		gen.info=gen.info,
 		indent.by=indent.by)

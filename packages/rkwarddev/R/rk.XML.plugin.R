@@ -14,7 +14,7 @@
 #'		sections the document should provide even if \code{dialog}, \code{wizard} and \code{logic} are \code{NULL}.
 #'		These sections must be edited manually and some parts are therefore commented out.
 #' @param help Logical, if \code{TRUE} an include tag for a help file named \emph{"<name>.rkh"} will be added to the header.
-#' @param pluginmap Character string, relative path to the pluginmap file, which will then be included in the head of this document.
+#' @param include Character string or vector, relative path(s) to other file(s), which will then be included in the head of the GUI XML document.
 #' @param label Character string, a text label for the plugin's top level, i.e. the window title of the dialog.
 #'		Will only be used if \code{dialog} or \code{wizard} are \code{NULL}.
 #' @param clean.name Logical, if \code{TRUE}, all non-alphanumeric characters except the underscore (\code{"_"}) will be removed from \code{name}.
@@ -44,7 +44,7 @@
 #' test.plugin <- rk.XML.plugin("My test", dialog=rk.XML.dialog(test.tabbook))
 #' }
 
-rk.XML.plugin <- function(name, dialog=NULL, wizard=NULL, logic=NULL, snippets=NULL, provides=NULL, help=TRUE, pluginmap=NULL,
+rk.XML.plugin <- function(name, dialog=NULL, wizard=NULL, logic=NULL, snippets=NULL, provides=NULL, help=TRUE, include=NULL,
 	label=NULL, clean.name=TRUE, about=NULL, dependencies=NULL, gen.info=TRUE){
 	if(isTRUE(clean.name)){
 		name.orig <- name
@@ -63,8 +63,10 @@ rk.XML.plugin <- function(name, dialog=NULL, wizard=NULL, logic=NULL, snippets=N
 		all.children[[length(all.children)+1]] <- rk.XML.help(file=paste0(name, ".rkh"))
 	} else {}
 
-	if(!is.null(pluginmap)){
-		all.children[[length(all.children)+1]] <- rk.XML.include(file=pluginmap)
+	if(!is.null(include)){
+		for (thisInclude in include) {
+			all.children[[length(all.children)+1]] <- rk.XML.include(file=thisInclude)
+		}
 	} else {}
 
 	# check about and dependencies

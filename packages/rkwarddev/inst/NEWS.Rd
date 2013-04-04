@@ -1,7 +1,7 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
-\section{Changes in rkwarddev version 0.06-2 (2013-03-13)}{
+\section{Changes in rkwarddev version 0.06-2 (2013-04-04)}{
   \subsection{changed}{
     \itemize{
       \item the structure of <about> nodes will change in RKWard 0.6.1,
@@ -12,6 +12,9 @@
       \item \code{rk.XML.pluginmap()}, \code{rk.XML.plugin()} and \code{rk.plugin.skeleton()} will now
         move <dependencies> from <about> to a top level child node of plugin maps,
         with a warning
+      \item from \code{rk.plugin.component()} and \code{rk.XML.plugin()}, the \code{"pluginmap"} argument
+        was replaced by the more general \code{"include"}, which can now also process a
+        vector of file names
       \item the object class rk.JS.var gained a new slot \code{"getter"} to set a default JS
         function to query variable values. it defaults to \code{"getValue"} to ensure
         compatibility with earlier releases. consequently, \code{rk.JS.vars()} and
@@ -54,6 +57,7 @@
         \code{rk.JS.scan()} dealt with <frame> nodes, which was also fixed
       \item fixed a duplicate entry in this ChangeLog for version 0.04-6
       \item \code{rk.plugin.skeleton()} now correctly works with more than one author
+      \item pluginmap files are no longer included into plugin XML files automatically
     }
   }
 }

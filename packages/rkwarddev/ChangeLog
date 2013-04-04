@@ -1,6 +1,6 @@
 ChangeLog for package rkwarddev
 
-changes in version 0.06-2 (2013-03-13)
+changes in version 0.06-2 (2013-04-04)
 changed:
   - the structure of <about> nodes will change in RKWard 0.6.1,
     <dependencies> will become a direct child of <document> or <component>, which explains
@@ -10,6 +10,9 @@ changed:
   - rk.XML.pluginmap(), rk.XML.plugin() and rk.plugin.skeleton() will now
     move <dependencies> from <about> to a top level child node of plugin maps,
     with a warning
+  - from rk.plugin.component() and rk.XML.plugin(), the "pluginmap" argument
+    was replaced by the more general "include", which can now also process a
+    vector of file names
   - the object class rk.JS.var gained a new slot "getter" to set a default JS
     function to query variable values. it defaults to "getValue" to ensure
     compatibility with earlier releases. consequently, rk.JS.vars() and
@@ -46,6 +49,7 @@ fixed:
     rk.JS.scan() dealt with <frame> nodes, which was also fixed
   - fixed a duplicate entry in this ChangeLog for version 0.04-6
   - rk.plugin.skeleton() now correctly works with more than one author
+  - pluginmap files are no longer included into plugin XML files automatically
 
 changes in version 0.06-1 (2012-11-08)
 changed:
