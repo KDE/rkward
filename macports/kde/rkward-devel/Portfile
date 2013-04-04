@@ -39,7 +39,6 @@ variant okular description {Add okular for nice PDF handling} {
 }
 
 if {${configure.compiler} == "clang"} {
-#        configure.compiler   llvm-gcc-4.2
         # force the use of gcc 4.7 to be able to link with R-framework
         depends_lib-append   port:gcc47
         configure.compiler   macports-gcc-4.7
@@ -66,6 +65,11 @@ configure.cmd       cmake ..
 
 variant binary description {Configure R to install Mac binaries by default} {
         configure.args-append -DUSE_BINARY_PACKAGES=1
+}
+
+variant debug description {Compile with full debugging support} {
+        depends_lib-append port:valgrind
+        configure.args-append -DCMAKE_BUILD_TYPE=debugfull
 }
 
 build.dir           ${worksrcdir}/build
