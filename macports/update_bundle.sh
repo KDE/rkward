@@ -5,6 +5,7 @@ SRCPATH=/opt/ports
 MPTINST=/opt/rkward
 # specify the target port
 PTARGET=rkward-devel
+PNSUFFX="-devel"
 # specify work directory
 WORKDIR=/opt/ports/kde/${PTARGET}/work
 # specify local public directory
@@ -35,9 +36,15 @@ SVNREPO=http://svn.code.sf.net/p/rkward/code/trunk
 OLDWD=$(pwd)
 
 if [[ $1 == "" ]] ; then
- echo "Usage: update_bundle.sh OPTION
+ echo "Usage: update_bundle.sh OPTIONS
           OPTIONS:
+
+           the following must always be combined with r/m/s/c:
            -D (build target rkward instead of rkward-devel)
+           -d (build subport 'debug')
+           -b (build subport 'binary')
+
+           these work on their own:
            -X (completely!!! wipe ${MPTINST})
            -F <MacPorts version> (do an all fresh installation of <MacPorts version>)
            -f (list disk usage for all includable ports)
@@ -52,10 +59,15 @@ if [[ $1 == "" ]] ; then
 fi
 
 # get the options
-while getopts ":DflLprmscxXF:" OPT; do
+while getopts ":DdbflLprmscxXF:" OPT; do
   case $OPT in
     D) PTARGET=rkward >&2
-       WORKDIR=/opt/ports/kde/${PTARGET}/work>&2 ;;
+       WORKDIR="/opt/ports/kde/${PTARGET}/work" >&2
+       PNSUFFX="" >&2 ;;
+    d) PTARGET=${PTARGET}-debug >&2
+       PNSUFFX="${PNSUFFX}-debug" >&2 ;;
+    b) PTARGET=${PTARGET}-binary >&2
+       PNSUFFX="${PNSUFFX}-binary" >&2 ;;
     F) FRESHMCP=TRUE >&2
        MCPVERS=$OPTARG >&2 ;;
     f) LSDSKUSG=TRUE >&2 ;;
@@ -174,14 +186,16 @@ fi
 if [[ $UPRKWARD ]] ; then
   INSTALLEDPORTS=$(port installed)
   # make sure each instance of previous RKWard installations is removed first
-  if [[ $(echo $INSTALLEDPORTS | grep "[[:space:]]rkward[[:space:]]" 2> /dev/null ) ]] ; then
-    sudo port uninstall rkward
-    sudo port clean rkward
-  fi
-  if [[ $(echo $INSTALLEDPORTS | grep "[[:space:]]rkward-devel[[:space:]]" 2> /dev/null ) ]] ; then 
-    sudo port uninstall rkward-devel
-    sudo port clean rkward-devel
-  fi
+  for i in rkward rkward-devel rkward-binary rkward-devel-binary rkward-debug rkward-devel-debug ; do
+    if [[ $(echo $INSTALLEDPORTS | grep "[[:space:]]${i}[[:space:]]" 2> /dev/null ) ]] ; then
+      sudo port uninstall ${i}
+      sudo port clean ${i}
+    fi
+  done
+#   if [[ $(echo $INSTALLEDPORTS | grep "[[:space:]]rkward-devel[[:space:]]" 2> /dev/null ) ]] ; then 
+#     sudo port uninstall rkward-devel
+#     sudo port clean rkward-devel
+#   fi
   # build and install recent version
   sudo port -v install ${PTARGET} || exit 1
 fi
@@ -296,7 +310,7 @@ if [[ $MAKEMDMD ]] ; then
   # copy the image file to a public directory
   if [[ $COPYMDMD ]] ; then
     MDMGFILE=${WORKDIR}/${PTARGET}-${PORTVERS}.dmg
-    TRGTFILE=${LPUBDIR}/RKWard-${TARGETVERS}_R-${RVERS}_KDE-${KDEVERS}_MacOSX_bundle.dmg
+    TRGTFILE=${LPUBDIR}/RKWard${PNSUFFX}-${TARGETVERS}_R-${RVERS}_KDE-${KDEVERS}_MacOSX_bundle.dmg
     echo "copying: $MDMGFILE to $TRGTFILE ..."
     cp -av $MDMGFILE $TRGTFILE
     echo "done."
@@ -316,7 +330,7 @@ if [[ $MKSRCTAR ]] ; then
   tar cvf $SRCFILE ${MPTINST}/var/macports/distfiles || exit 1
   # copy the source archive to a public directory
   if [[ $COPYMDMD ]] ; then
-    TRGSFILE=${LPUBDIR}/RKWard-${TARGETVERS}_R-${RVERS}_KDE-${KDEVERS}_src.tar
+    TRGSFILE=${LPUBDIR}/RKWard${PNSUFFX}-${TARGETVERS}_R-${RVERS}_KDE-${KDEVERS}_src.tar
     echo "copying: $SRCFILE to $TRGSFILE ..."
     cp -av $SRCFILE $TRGSFILE
     echo "done."

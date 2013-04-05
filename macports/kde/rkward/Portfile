@@ -26,9 +26,12 @@ homepage            http://rkward.sourceforge.net
 master_sites        https://sourceforge.net/projects/rkward/files/Current_Stable_Releases
 
 PortGroup           cmake 1.0
+
+# gmake is needed to be able to build R source packages without XCode
 depends_lib         port:kdelibs4 \
                     port:kate \
-                    port:R-framework
+                    port:R-framework \
+                    port:gmake
 
 # add port:okular once the graphics device is fully functional
 # this needs port:poppler with +qt4 +quartz varaints which cannot be
@@ -62,11 +65,15 @@ if { ![file exists ${prefix}/include/Qt/qglobal.h] && [file exists ${prefix}/inc
 }
 configure.cmd       cmake ..
 
-variant binary description {Configure R to install Mac binaries by default} {
+# configure R to install Mac binaries by default
+subport rkward-binary {
+        conflicts-append rkward rkward-devel-binary rkward-devel-debug rkward-debug
         configure.args-append -DUSE_BINARY_PACKAGES=1
 }
 
-variant debug description {Compile with full debugging support} {
+# compile with full debugging support
+subport rkward-debug {
+        conflicts-append rkward rkward-devel-binary rkward-devel-debug rkward-binary
         depends_lib-append port:valgrind
         configure.args-append -DCMAKE_BUILD_TYPE=debugfull
 }
