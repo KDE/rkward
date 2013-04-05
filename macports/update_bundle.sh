@@ -238,8 +238,12 @@ if [[ $MAKEMDMD ]] ; then
     # this is to fix some kind of a race condition: if RKWard gets installed before R-framework,
     # it wil create a directory which must actually be a symlink in order for R to run! so we'll
     # move RKWard's own packages before bundling it
-    RKWDSTROOT=${MPTINST}/var/macports/build/_opt_ports_kde_rkward/${PTARGET}/work/destroot
+    RKWDSTROOT=${MPTINST}/var/macports/build/_opt_ports_kde_${PTARGET}/${PTARGET}/work/destroot
     RKWRFWPATH=${RKWDSTROOT}/${MPTINST}/Library/Frameworks/R.framework
+    if ! [ -d ${RKWRFWPATH} ] ; then
+      echo "cannot find R.framework, bogus path? ${RKWRFWPATH}"
+      exit 1
+    fi
     RFWPATH=${MPTINST}/var/macports/build/${BLDPRFX}math_R-framework/R-framework/work/destroot
     RVERSPATH=${RFWPATH}/${MPTINST}/Library/Frameworks/R.framework/Versions
     # this variable will hold the R version of the installed framework
