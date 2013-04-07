@@ -6,6 +6,7 @@ MPTINST=/opt/rkward
 # specify the target port
 PTARGET=rkward-devel
 PNSUFFX="-devel"
+DEVEL=TRUE
 # specify work directory
 WORKDIR=/opt/ports/kde/${PTARGET}/work
 # specify local public directory
@@ -15,17 +16,17 @@ APPLDIR=/Applications/RKWard
 # specify the prefix for build directories below ${MPTINST}/var/macports/build
 BLDPRFX=_opt_rkward_var_macports_sources_rsync.macports.org_release_tarballs_ports_
 # this array holds all packages who should not be included in the bundle
+# declare -a EXCLPKG=(audio_flac audio_jack audio_lame audio_libmodplug audio_libopus audio_libsamplerate \
+#   audio_libsndfile audio_libvorbis audio_speex \
+#   databases_db46 databases_gdbm databases_sqlite3 devel_boost devel_soprano devel_strigi devel_virtuoso \
+#   gnome_gobject-introspection gnome_gtk2 gnome_hicolor-icon-theme gnome_libglade2 \
+#   multimedia_XviD multimedia_dirac multimedia_ffmpeg multimedia_libogg multimedia_libtheora multimedia_libvpx \
+#   multimedia_schroedinger multimedia_x264 net_avahi net_kerberos5 security_cyrus-sasl2 sysutils_e2fsprogs )
 declare -a EXCLPKG=(audio_flac audio_jack audio_lame audio_libmodplug audio_libopus audio_libsamplerate \
-  audio_libsndfile audio_libvorbis audio_speex \
-  databases_db46 databases_gdbm databases_sqlite3 devel_boost devel_soprano devel_strigi devel_virtuoso \
+  audio_libsndfile audio_libvorbis audio_speex databases_db46 databases_gdbm databases_sqlite3 devel_boost \
   gnome_gobject-introspection gnome_gtk2 gnome_hicolor-icon-theme gnome_libglade2 \
   multimedia_XviD multimedia_dirac multimedia_ffmpeg multimedia_libogg multimedia_libtheora multimedia_libvpx \
   multimedia_schroedinger multimedia_x264 net_avahi net_kerberos5 security_cyrus-sasl2 sysutils_e2fsprogs )
-#declare -a EXCLPKG=(audio_flac audio_jack audio_lame audio_libmodplug audio_libopus audio_libsamplerate \
-# audio_libsndfile audio_libvorbis audio_speex \
-# gnome_gobject-introspection gnome_gtk2 gnome_hicolor-icon-theme gnome_libglade2 \
-# multimedia_XviD multimedia_dirac multimedia_ffmpeg multimedia_libogg multimedia_libtheora multimedia_libvpx \
-# multimedia_schroedinger multimedia_x264 net_avahi net_kerberos5 security_cyrus-sasl2 sysutils_e2fsprogs )
 
 #LLVMFIX="configure.compiler=llvm-gcc-4.2"
 
@@ -63,10 +64,13 @@ while getopts ":DdbflLprmscxXF:" OPT; do
   case $OPT in
     D) PTARGET=rkward >&2
        WORKDIR="/opt/ports/kde/${PTARGET}/work" >&2
-       PNSUFFX="" >&2 ;;
-    d) PTARGET=${PTARGET}-debug >&2
+       PNSUFFX="" >&2
+       DEVEL=FALSE >&2 ;;
+    d) DEBUG=TRUE >&2
+       PTARGET=${PTARGET}-debug >&2
        PNSUFFX="${PNSUFFX}-debug" >&2 ;;
-    b) PTARGET=${PTARGET}-binary >&2
+    b) BINARY=TRUE >&2
+       PTARGET=${PTARGET}-binary >&2
        PNSUFFX="${PNSUFFX}-binary" >&2 ;;
     F) FRESHMCP=TRUE >&2
        MCPVERS=$OPTARG >&2 ;;
@@ -75,15 +79,12 @@ while getopts ":DdbflLprmscxXF:" OPT; do
     L) DOEXCPCK=TRUE >&2 ;;
     p) UPMPORTS=TRUE >&2 ;;
     r) UPRKWARD=TRUE >&2 ;;
-    m)
-#       RMSTLIBS=TRUE >&2
-       RPATHFIX=TRUE >&2
+    m) RPATHFIX=TRUE >&2
        MAKEMDMD=TRUE >&2 ;;
     s) MKSRCTAR=TRUE >&2 ;;
     c) COPYMDMD=TRUE >&2 ;;
     x) WIPEDSTF=TRUE >&2 ;;
-    X)
-       WIPEDSTF=FALSE >&2
+    X) WIPEDSTF=FALSE >&2
        WIPEINST=TRUE >&2 ;;
     \?)
       echo "Invalid option: -$OPTARG" >&2
@@ -96,6 +97,11 @@ while getopts ":DdbflLprmscxXF:" OPT; do
   esac
 done
 
+# correct setting of RPATHFIX workaround, it's not needed
+# for binary subports since they don't include R.framework
+if [[ $BINARY ]] ; then
+  unset RPATHFIX
+fi
 
 # remove MacPorts completely
 if [[ $WIPEINST ]] ; then
@@ -219,20 +225,29 @@ fi
 if [[ $COPYMDMD ]] ; then
   # get version information of installed ports
   PORTVERS=$(port list $PTARGET | sed -e "s/.*@//;s/[[:space:]].*//")
-  if [ $PTARGET == "rkward-devel" ] ; then
+  if [[ $DEVEL ]] ; then
     TARGETVERS=${PORTVERS}$(svn info "$SVNREPO" | grep "^Revision:" | sed "s/[^[:digit:]]*//")
   else
     TARGETVERS=$PORTVERS
   fi
   KDEVERS=$(port list kdelibs4 | sed -e "s/.*@//;s/[[:space:]].*//")
+fi
+
+# get R version, long and short
+if [[ $BINARY ]] ; then
+  RVERS=$(R --version | grep "R version" | sed -e "s/R version \([[:digit:].]*\).*/\1/")
+else
   RVERS=$(port list R-framework | sed -e "s/.*@//;s/[[:space:]].*//")
 fi
+# if we have to re-create the symlinks for binary installation
+# this can be used to get the short version numer <major>.<minor>:
+#RVSHORT=$(echo $RVERS | sed -e "s/\([[:digit:]]*\.\)\([[:digit:]]*\).*/\1\2/")
 
 # make meta-package including dependencies
 if [[ $MAKEMDMD ]] ; then
   if [[ $RPATHFIX ]] ; then
     # this is to fix some kind of a race condition: if RKWard gets installed before R-framework,
-    # it wil create a directory which must actually be a symlink in order for R to run! so we'll
+    # it will create a directory which must actually be a symlink in order for R to run! so we'll
     # move RKWard's own packages before bundling it
     RKWDSTROOT=${WORKDIR}/destroot
     RKWRFWPATH=${RKWDSTROOT}/${MPTINST}/Library/Frameworks/R.framework
@@ -310,7 +325,11 @@ if [[ $MAKEMDMD ]] ; then
   # copy the image file to a public directory
   if [[ $COPYMDMD ]] ; then
     MDMGFILE=${WORKDIR}/${PTARGET}-${PORTVERS}.dmg
-    TRGTFILE=${LPUBDIR}/RKWard${PNSUFFX}-${TARGETVERS}_R-${RVERS}_KDE-${KDEVERS}_MacOSX_bundle.dmg
+    if [[ $BINARY ]] ; then
+      TRGTFILE=${LPUBDIR}/RKWard${PNSUFFX}-${TARGETVERS}_KDE-${KDEVERS}_needs_CRAN_R-${RVERS}.dmg
+    else
+      TRGTFILE=${LPUBDIR}/RKWard${PNSUFFX}-${TARGETVERS}_R-${RVERS}_KDE-${KDEVERS}_MacOSX_bundle.dmg
+    fi
     echo "copying: $MDMGFILE to $TRGTFILE ..."
     cp -av $MDMGFILE $TRGTFILE
     echo "done."
@@ -330,7 +349,11 @@ if [[ $MKSRCTAR ]] ; then
   tar cvf $SRCFILE ${MPTINST}/var/macports/distfiles || exit 1
   # copy the source archive to a public directory
   if [[ $COPYMDMD ]] ; then
-    TRGSFILE=${LPUBDIR}/RKWard${PNSUFFX}-${TARGETVERS}_R-${RVERS}_KDE-${KDEVERS}_src.tar
+    if [[ $BINARY ]] ; then
+      TRGSFILE=${LPUBDIR}/RKWard${PNSUFFX}-${TARGETVERS}_KDE-${KDEVERS}_src.tar
+    else
+      TRGSFILE=${LPUBDIR}/RKWard${PNSUFFX}-${TARGETVERS}_R-${RVERS}_KDE-${KDEVERS}_src.tar
+    fi
     echo "copying: $SRCFILE to $TRGSFILE ..."
     cp -av $SRCFILE $TRGSFILE
     echo "done."
