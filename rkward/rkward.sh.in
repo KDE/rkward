@@ -43,6 +43,7 @@ fi
 export LC_NUMERIC="C"
 
 @APPEND_LOCAL_PATH@
+@APPEND_LOCAL_RLIBS@
 @KDE_START_DBUS@
 
 ## Start rkward. Running through R CMD to set all the relevant R enviroment variables

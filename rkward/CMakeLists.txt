@@ -13,6 +13,10 @@ IF(Q_WS_MAC)
 if ! [ $(echo $PATH | grep ${CMAKE_INSTALL_PREFIX}) ] ; then
   export PATH=\"${CMAKE_INSTALL_PREFIX}/bin\":\"${CMAKE_INSTALL_PREFIX}/sbin\":$PATH
 fi")
+	IF(DEFINED R_LIBDIR)
+		SET(APPEND_LOCAL_RLIBS "# ensure that RKWard finds its own packages
+export R_LIBS=\"${R_LIBDIR}\"")
+	ENDIF(R_LIBDIR)
 	SET(KDE_START_DBUS "launchctl load -w \"${CMAKE_INSTALL_PREFIX}/Library/LaunchAgents/org.freedesktop.dbus-session.plist\"")
 #	SET(CPACK_BUNDLE_PLIST ${CMAKE_SOURCE_DIR}/rkward/Info.plist)
 ELSE(Q_WS_MAC)
