@@ -11,7 +11,7 @@ IF(Q_WS_MAC)
 	SET(CPACK_BUNDLE_STARTUP_COMMAND rkward)
 	SET(APPEND_LOCAL_PATH "# ensure that PATH is set to include what we deliver with the bundle
 if ! [ $(echo $PATH | grep ${CMAKE_INSTALL_PREFIX}) ] ; then
-  export PATH=\"${CMAKE_INSTALL_PREFIX}/bin\":\"${CMAKE_INSTALL_PREFIX}/sbin\":${PATH}
+  export PATH=\"${CMAKE_INSTALL_PREFIX}/bin\":\"${CMAKE_INSTALL_PREFIX}/sbin\":$PATH
 fi")
 	SET(KDE_START_DBUS "launchctl load -w \"${CMAKE_INSTALL_PREFIX}/Library/LaunchAgents/org.freedesktop.dbus-session.plist\"")
 #	SET(CPACK_BUNDLE_PLIST ${CMAKE_SOURCE_DIR}/rkward/Info.plist)
