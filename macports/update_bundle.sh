@@ -192,10 +192,6 @@ if [[ $UPRKWARD ]] ; then
       sudo port clean ${i}
     fi
   done
-#   if [[ $(echo $INSTALLEDPORTS | grep "[[:space:]]rkward-devel[[:space:]]" 2> /dev/null ) ]] ; then 
-#     sudo port uninstall rkward-devel
-#     sudo port clean rkward-devel
-#   fi
   # build and install recent version
   sudo port -v install ${PTARGET} || exit 1
 fi
@@ -238,7 +234,7 @@ if [[ $MAKEMDMD ]] ; then
     # this is to fix some kind of a race condition: if RKWard gets installed before R-framework,
     # it wil create a directory which must actually be a symlink in order for R to run! so we'll
     # move RKWard's own packages before bundling it
-    RKWDSTROOT=${MPTINST}/var/macports/build/_opt_ports_kde_${PTARGET}/${PTARGET}/work/destroot
+    RKWDSTROOT=${WORKDIR}/destroot
     RKWRFWPATH=${RKWDSTROOT}/${MPTINST}/Library/Frameworks/R.framework
     if ! [ -d ${RKWRFWPATH} ] ; then
       echo "cannot find R.framework, bogus path? ${RKWRFWPATH}"
