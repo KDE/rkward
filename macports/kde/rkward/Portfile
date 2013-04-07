@@ -29,8 +29,7 @@ PortGroup           cmake 1.0
 
 depends_lib         port:kdelibs4 \
                     port:kate \
-                    port:R-framework \
-                    port:gmake
+                    port:R-framework
 
 # add port:okular once the graphics device is fully functional
 # this needs port:poppler with +qt4 +quartz varaints which cannot be

@@ -42,7 +42,7 @@ fi
 ## set LC_NUMERIC to "C"
 export LC_NUMERIC="C"
 
-@LOOKUP_LOCAL_MAKE@
+@APPEND_LOCAL_PATH@
 @KDE_START_DBUS@
 
 ## Start rkward. Running through R CMD to set all the relevant R enviroment variables

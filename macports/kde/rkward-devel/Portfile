@@ -27,11 +27,9 @@ master_sites        https://sourceforge.net/projects/rkward/files/Current_Stable
 
 PortGroup           cmake 1.0
 
-# gmake is needed to be able to build R source packages without XCode
 depends_lib         port:kdelibs4 \
                     port:kate \
-                    port:R-framework \
-                    port:gmake
+                    port:R-framework
 
 # add port:okular once the graphics device is fully functional
 # this needs port:poppler with +qt4 +quartz varaints which cannot be
