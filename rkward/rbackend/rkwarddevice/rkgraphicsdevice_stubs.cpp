@@ -30,7 +30,15 @@ extern "C" {
 #define RKD_IN_STREAM RKGraphicsDeviceBackendTransmitter::streamer.instream
 #define RKD_OUT_STREAM RKGraphicsDeviceBackendTransmitter::streamer.outstream
 
-/** This class is essentially like QMutexLocker. In addition, the constructor waits until the next chunk of the transmission is ready (and does event processing) */
+/** This class is essentially like QMutexLocker. In addition, the constructor waits until the next chunk of the transmission is ready (and does event processing).
+ *
+ * @note: Never ever call Rf_error(), or any R function that might fail during the lifetime of an RKGraphicsDataStreamReadGuard or
+ * RKGraphicsDataStreamWriteGuard. If R decides to long-jump out, the d'tor will not be called, the mutex will be left locked, and
+ * the next graphics operation will hang, with no way to interrupt.
+ * 
+ * At the same time, note that the RKGraphicsDataStreamReadGuard c'tor @em may cause R to long-jump (safely) in case of a user interrupt,
+ * or if the connection was killed. Don't rely on the code following the creation of an RKGraphicsDataStreamReadGuard to be called.
+ */
 class RKGraphicsDataStreamReadGuard {
 public:
 	RKGraphicsDataStreamReadGuard () {
@@ -290,13 +298,14 @@ static void RKD_Raster (unsigned int *raster, int w, int h, double x, double y, 
 	RKGraphicsDataStreamWriteGuard wguard;
 	WRITE_HEADER (RKDRaster, dev);
 
+	int *_raster = reinterpret_cast<int*> (raster);	// shut up warning in WRITE_COLOR_BYTES. It's just four separete bytes, anyway
 	quint32 _w = qMin (w, 1 << 15);	// skip stuff exceeding reasonable limits to keep protocol simple
 	RKD_OUT_STREAM << _w;
 	quint32 _h = qMin (h, 1 << 15);
 	RKD_OUT_STREAM << _h;
 	for (quint32 col = 0; col < _h; ++col) {
 		for (quint32 row = 0; row < _w; ++row) {
-			WRITE_COLOR_BYTES (raster[(col*_w) + row]);
+			WRITE_COLOR_BYTES (_raster[(col*_w) + row]);
 		}
 	}
 	RKD_OUT_STREAM << QRectF (x, y, width, height) << rot << (bool) interpolate;
@@ -316,7 +325,7 @@ static SEXP RKD_Capture (pDevDesc dev) {
 		quint8 r, g, b, a;
 		RKD_IN_STREAM >> w >> h;
 		size = w*h;
- 		buffer = new int[size];// Although unlikely, allocVector below could fail. We don't want to be left with a locked mutex (from the rguard) in this case. (Being left with a dead pointer looks bening in comparison)
+ 		buffer = new int[size];// Although unlikely, allocVector below could fail. We don't want to be left with a locked mutex (from the rguard) in this case. (Being left with a dead pointer looks benign in comparison; Note that the vector may easily be too large for allocation on the stack)
 		quint32 i = 0;
 		for (quint32 col = 0; col < h; ++col) {
 			for (quint32 row = 0; row < w; ++row) {

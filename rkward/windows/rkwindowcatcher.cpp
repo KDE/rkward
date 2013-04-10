@@ -131,6 +131,7 @@ void RKWindowCatcher::killDevice (int device_number) {
 
 #include "../rkglobals.h"
 #include "../rbackend/rinterface.h"
+#include "../rbackend/rkwarddevice/rkgraphicsdevice.h"
 #include "../core/robject.h"
 #include "../misc/rkprogresscontrol.h"
 #include "../misc/rksaveobjectchooser.h"
@@ -142,33 +143,8 @@ QHash<int, RKCaughtX11Window*> RKCaughtX11Window::device_windows;
 RKCaughtX11Window::RKCaughtX11Window (WId window_to_embed, int device_number) : RKMDIWindow (0, X11Window), RCommandReceiver () {
 	RK_TRACE (MISC);
 
-	capture = 0;
-	killed_in_r = false;
 	embedded = window_to_embed;
-	RKCaughtX11Window::device_number = device_number;
-	RK_ASSERT (!device_windows.contains (device_number));
-	device_windows.insert (device_number, this);
-
-	error_dialog = new RKProgressControl (0, i18n ("An error occurred"), i18n ("An error occurred"), RKProgressControl::DetailedError);
-	setPart (new RKCaughtX11WindowPart (this));
-	setMetaInfo (i18n ("Graphics Device Window"), "rkward://page/rkward_plot_history", RKSettings::PageX11);
-	initializeActivationSignals ();
-	setFocusPolicy (Qt::ClickFocus);
-	updateHistoryActions (0, 0, QStringList ());
-
-	status_popup = new KPassivePopup (this);
-	status_popup->setTimeout (0);
-	disconnect (status_popup, SIGNAL (clicked()), status_popup, SLOT (hide()));	// no auto-hiding, please
-
-	QVBoxLayout *layout = new QVBoxLayout (this);
-	layout->setContentsMargins (0, 0, 0, 0);
-	box_widget = new KVBox (this);
-	layout->addWidget (box_widget);
-	scroll_widget = new QScrollArea (this);
-	scroll_widget->hide ();
-	layout->addWidget (scroll_widget);
-
-	xembed_container = new KVBox (box_widget);	// QX11EmbedContainer can not be reparented (between the box_widget, and the scroll_widget) directly. Therefore we place it into a container, and reparent that instead
+	commonInit (device_number);
 
 #ifdef Q_WS_WIN
 	// unfortunately, trying to get KWindowInfo as below hangs on windows (KDElibs 4.2.3)
@@ -192,12 +168,53 @@ RKCaughtX11Window::RKCaughtX11Window (WId window_to_embed, int device_number) : 
 	setGeometry (wininfo.geometry ());	// it's important to set a size, even while not visible. Else DetachedWindowContainer will assign a default size of 640*480, and then size upwards, if necessary.
 	setCaption (wininfo.name ());
 #endif
-	dynamic_size = false;
-	dynamic_size_action->setChecked (false);
 
 	// somehow in Qt 4.4.3, when the RKCaughtWindow is reparented the first time, the QX11EmbedContainer may kill its client. Hence we delay the actual embedding until after the window was shown.
 	// In some previous version of Qt, this was not an issue, but I did not track the versions.
 	QTimer::singleShot (0, this, SLOT (doEmbed()));
+}
+
+RKCaughtX11Window::RKCaughtX11Window (RKGraphicsDevice* rkward_device, int device_number) : RKMDIWindow (0, X11Window) {
+	RK_TRACE (MISC);
+
+	commonInit (device_number);
+	rk_native_device_view = rkward_device->viewPort ();
+	rk_native_device_view->setParent (xembed_container);
+}
+
+void RKCaughtX11Window::commonInit (int device_number) {
+	RK_TRACE (MISC);
+
+	capture = 0;
+	killed_in_r = false;
+	RKCaughtX11Window::device_number = device_number;
+	RK_ASSERT (!device_windows.contains (device_number));
+	device_windows.insert (device_number, this);
+
+	error_dialog = new RKProgressControl (0, i18n ("An error occurred"), i18n ("An error occurred"), RKProgressControl::DetailedError);
+	setPart (new RKCaughtX11WindowPart (this));
+	setMetaInfo (i18n ("Graphics Device Window"), "rkward://page/rkward_plot_history", RKSettings::PageX11);
+	initializeActivationSignals ();
+	setFocusPolicy (Qt::ClickFocus);
+	updateHistoryActions (0, 0, QStringList ());
+
+	status_popup = new KPassivePopup (this);
+	status_popup->setTimeout (0);
+	disconnect (status_popup, SIGNAL (clicked()), status_popup, SLOT (hide()));	// no auto-hiding, please
+
+	QVBoxLayout *layout = new QVBoxLayout (this);
+	layout->setContentsMargins (0, 0, 0, 0);
+	box_widget = new KVBox (this);
+	layout->addWidget (box_widget);
+	scroll_widget = new QScrollArea (this);
+	scroll_widget->hide ();
+	layout->addWidget (scroll_widget);
+
+	xembed_container = new KVBox (box_widget);	// QX11EmbedContainer can not be reparented (between the box_widget, and the scroll_widget) directly. Therefore we place it into a container, and reparent that instead.
+	// Also, this makes it easier to handle the various different devices
+
+	dynamic_size = false;
+	dynamic_size_action->setChecked (false);
 }
 
 void RKCaughtX11Window::doEmbed () {

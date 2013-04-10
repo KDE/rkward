@@ -128,7 +128,7 @@ public:
  * processing from instream. */
 	bool readInBuffer () {
 		if (!expected_read_size) {
-			if (device->bytesAvailable () < sizeof (quint32)) {
+			if (device->bytesAvailable () < (unsigned int) sizeof (quint32)) {
 				return false;
 			} else {
 				auxbuffer = device->read (sizeof (quint32));

@@ -144,11 +144,13 @@ bool RKGraphicsDeviceDesc::initRDevDesc (pDevDesc dev, double pointsize, rcolor 
 	dev->wantSymbolUTF8 = TRUE;
 	dev->useRotatedTextInContour = TRUE;
 
+#if R_VERSION >= R_Version (2, 14, 0)
 	dev->haveTransparency = 2;
 	dev->haveTransparentBg = 2; // FIXME. Do we really? Check.
 	dev->haveRaster = 2;
 	dev->haveCapture = 2;
 	dev->haveLocator = 2;
+#endif
 
 	/*
 	* Mouse events

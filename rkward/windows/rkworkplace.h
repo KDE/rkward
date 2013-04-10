@@ -2,7 +2,7 @@
                           rkworkplace  -  description
                              -------------------
     begin                : Thu Sep 21 2006
-    copyright            : (C) 2006, 2007, 2009, 2010, 2011, 2012 by Thomas Friedrichsmeier
+    copyright            : (C) 2006-2013 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -36,6 +36,7 @@ class KActionCollection;
 class KAction;
 class RKToolWindowBar;
 class RKMDIWindowHistoryWidget;
+class RKGraphicsDevice;
 
 #define TOOL_WINDOW_BAR_COUNT 4
 
@@ -111,6 +112,7 @@ public:
 	RKMDIWindow* openOutputWindow (const KUrl &url=KUrl ());
 
 	void newX11Window (WId window_to_embed, int device_number);
+	void newRKWardGraphisWindow (RKGraphicsDevice *dev, int device_number);
 	void newObjectViewer (RObject *object);
 
 /** @returns true if there is a known editor for this type of object, false otherwise */

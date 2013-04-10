@@ -54,6 +54,8 @@ public:
 	void triggerUpdate ();
 	void locator ();
 	void confirmNewPage ();
+
+ 	QWidget* viewPort () const { return view; };
 public slots:
 	void stopInteraction ();
 signals:
@@ -63,6 +65,7 @@ signals:
 private slots:
 	void updateNow ();
 	void newPageDialogDone (int result);
+	void viewKilled ();
 private:
 	bool eventFilter (QObject *watched, QEvent *event);
 

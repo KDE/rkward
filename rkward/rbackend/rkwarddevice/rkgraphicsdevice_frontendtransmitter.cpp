@@ -28,6 +28,7 @@
 // *IF* the RKWard Graphics Device works out as hoped, the single process variant can finally be ditched for good.
 #define RKWARD_SPLIT_PROCESS 1
 #include "../rkfrontendtransmitter.h"
+#include "../../windows/rkworkplace.h"
 #include "rkgraphicsdevice.h"
 #include "../../version.h"
 
@@ -179,6 +180,7 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 			bool antialias;
 			streamer.instream >> width >> height >> title >> antialias;
 			device = RKGraphicsDevice::newDevice (devnum, width, height, title, antialias);
+			RKWorkplace::mainWorkplace ()->newRKWardGraphisWindow (device, devnum+1);
 			connect (device, SIGNAL (locatorDone(bool,double,double)), this, SLOT (locatorDone(bool,double,double)));
 			connect (device, SIGNAL (newPageConfirmDone(bool)), this, SLOT (newPageConfirmDone(bool)));
 			connect (this, SIGNAL (stopInteraction()), device, SLOT (stopInteraction()));

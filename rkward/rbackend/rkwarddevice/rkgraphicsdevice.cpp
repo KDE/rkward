@@ -43,6 +43,7 @@ RKGraphicsDevice::RKGraphicsDevice (double width, double height, const QString &
 	if (antialias) painter.setRenderHints (QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
 	view = new QLabel ();
 	view->installEventFilter (this);
+	connect (view, SIGNAL (destroyed(QObject*)), this, SLOT (viewKilled()));
 	connect (&updatetimer, SIGNAL (timeout ()), this, SLOT (updateNow ()));
 	updatetimer.setSingleShot (true);
 	clear ();
@@ -54,6 +55,12 @@ RKGraphicsDevice::~RKGraphicsDevice () {
 	painter.end ();
 	stopInteraction ();
 	delete view;
+}
+
+void RKGraphicsDevice::viewKilled () {
+	RK_TRACE (GRAPHICS_DEVICE);
+	view = 0;
+	closeDevice (devices.key (this));
 }
 
 void RKGraphicsDevice::triggerUpdate () {
@@ -102,7 +109,7 @@ void RKGraphicsDevice::setClip (const QRectF& new_clip) {
 	RK_TRACE (GRAPHICS_DEVICE);
 
 	if (!painter.isActive ()) painter.begin (&area);
-	painter.setClipRect (new_clip);
+//	painter.setClipRect (new_clip);
 }
 
 void RKGraphicsDevice::circle (double x, double y, double r, const QPen& pen, const QBrush& brush) {
@@ -280,8 +287,10 @@ void RKGraphicsDevice::stopInteraction () {
 		dialog->deleteLater ();
 		dialog = 0;
 	}
-	view->setCursor (Qt::ArrowCursor);
-	view->setToolTip (QString ());
+	if (view) {	// might already be destroyed
+		view->setCursor (Qt::ArrowCursor);
+		view->setToolTip (QString ());
+	}
 	interaction_opcode = -1;
 }
 
