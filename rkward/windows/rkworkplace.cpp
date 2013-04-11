@@ -352,6 +352,14 @@ void RKWorkplace::newX11Window (WId window_to_embed, int device_number) {
 	addWindow (window, false);
 }
 
+void RKWorkplace::newRKWardGraphisWindow (RKGraphicsDevice* dev, int device_number) {
+	RK_TRACE (APP);
+
+	RKCaughtX11Window *window = new RKCaughtX11Window (dev, device_number);
+	window->state = RKMDIWindow::Detached;
+	addWindow (window, false);
+}
+
 void RKWorkplace::newObjectViewer (RObject *object) {
 	RK_TRACE (APP);
 	RK_ASSERT (object);

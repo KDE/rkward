@@ -2,7 +2,7 @@
                           rkrbackendprotocol  -  description
                              -------------------
     begin                : Thu Nov 04 2010
-    copyright            : (C) 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2010, 2011, 2013 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -26,9 +26,10 @@ class RKRBackendProtocolBackend {
 public:
 	static bool inRThread ();
 	static QString dataDir () { return _instance->data_dir; };
+	static QString rkdServerName () { return _instance->rkd_server_name; };
 	static QString backendDebugFile ();
 
-	RKRBackendProtocolBackend (const QString &data_dir);
+	RKRBackendProtocolBackend (const QString &data_dir, const QString &rkd_server_name);
 	~RKRBackendProtocolBackend ();
 protected:
 friend class RKRBackendProtocolFrontend;
@@ -40,6 +41,7 @@ friend class RKRBackendTransmitter;
 	static RKRBackendProtocolBackend* instance () { return _instance; };
 	QString data_dir;
 private:
+	QString rkd_server_name;
 	static RKRBackendProtocolBackend* _instance;
 	QThread *r_thread;
 #ifndef Q_WS_WIN

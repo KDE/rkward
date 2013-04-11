@@ -22,6 +22,7 @@
 
 class QProcess;
 class QLocalServer;
+class RKGraphicsDeviceFrontendTransmitter;
 
 class RKFrontendTransmitter : public RKAbstractTransmitter, public RKROutputBuffer {
 Q_OBJECT
@@ -46,7 +47,7 @@ private:
 	int current_request_length;
 	QProcess* backend;
 	QLocalServer* server;
-	QString token;
+	RKGraphicsDeviceFrontendTransmitter* rkd_transmitter;
 };
 
 #endif

@@ -2,7 +2,7 @@
                           rwindowcatcher.h  -  description
                              -------------------
     begin                : Wed May 4 2005
-    copyright            : (C) 2005 - 2013 by Thomas Friedrichsmeier
+    copyright            : (C) 2005-2013 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -95,8 +95,10 @@ class RKProgressControl;
 class QX11EmbedContainer;
 class QWinHost;
 class KPassivePopup;
+class RKGraphicsDevice;
 
-/** An R X11 device window managed by rkward. */
+/** An R onscreen graphics device window managed by rkward. Currently, this can be X11 devices (on X11), Windows devices (on Windows), and
+ RK devices (anywhere). */
 class RKCaughtX11Window : public RKMDIWindow, public RCommandReceiver {
 	Q_OBJECT
 public:
@@ -104,6 +106,7 @@ public:
 @param window_to_embed the Window id of the R X11 device window to embed
 @param device_number the device number corresponding to that window */
 	RKCaughtX11Window (WId window_to_embed, int device_number);
+	RKCaughtX11Window (RKGraphicsDevice *rkward_device, int device_number);
 /** dtor */
 	~RKCaughtX11Window ();
 /** TODO? */
@@ -158,7 +161,11 @@ public slots:
 private slots:
 	void doEmbed ();
 private:
+<<<<<<< .working
 	void forceClose ();
+=======
+	void commonInit (int device_number);
+>>>>>>> .merge-right.r4686
 	void reEmbed ();
 	void rCommandDone (RCommand *command);
 	friend class RKCaughtX11WindowPart;	// needs access to the actions
@@ -180,6 +187,7 @@ private:
 	// a dummy to make things compile for now
 	QWidget *capture;
 #endif
+	RKGraphicsDevice *rk_native_device;
 
 	bool dynamic_size;
 	KToggleAction *dynamic_size_action;

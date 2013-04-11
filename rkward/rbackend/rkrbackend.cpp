@@ -884,7 +884,7 @@ LibExtern int R_interrupts_pending;
 SEXP doError (SEXP call) {
 	RK_TRACE (RBACKEND);
 
-	if ((RKRBackend::repl_status.eval_depth == 0) && (!RKRBackend::repl_status.browser_context) && (!RKRBackend::this_pointer->isKilled ()) && (RKRBackend::repl_status.user_command_status != RKRBackend::RKReplStatus::ReplIterationKilled)) {
+	if ((RKRBackend::repl_status.eval_depth == 0) && (!RKRBackend::repl_status.browser_context) && (!RKRBackend::this_pointer->isKilled ()) && (RKRBackend::repl_status.user_command_status != RKRBackend::RKReplStatus::ReplIterationKilled) && (!RKRBackend::repl_status.user_command_status == RKRBackend::RKReplStatus::NoUserCommand)) {
 		RKRBackend::repl_status.user_command_status = RKRBackend::RKReplStatus::UserCommandFailed;
 	}
 	if (RKRBackend::repl_status.interrupted) {
@@ -997,6 +997,8 @@ SEXP doCopyNoEval (SEXP name, SEXP fromenv, SEXP toenv) {
 	return (R_NilValue);
 }
 
+SEXP RKStartGraphicsDevice (SEXP width, SEXP height, SEXP pointsize, SEXP family, SEXP bg, SEXP title, SEXP antialias);
+
 bool RKRBackend::startR () {
 	RK_TRACE (RBACKEND);
 
@@ -1082,6 +1084,7 @@ bool RKRBackend::startR () {
 		{ "rk.dialog", (DL_FUNC) &doDialog, 6 },
 		{ "rk.update.locale", (DL_FUNC) &doUpdateLocale, 0 },
 		{ "rk.locale.name", (DL_FUNC) &doLocaleName, 0 },
+		{ "rk.graphics.device", (DL_FUNC) &RKStartGraphicsDevice, 7},
 		{ 0, 0, 0 }
 	};
 	R_registerRoutines (R_getEmbeddingDllInfo(), NULL, callMethods, NULL, NULL);

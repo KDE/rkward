@@ -18,6 +18,20 @@ EXECUTE_PROCESS(
 	OUTPUT_VARIABLE R_ARCH)
 MESSAGE (STATUS "R architecture is ${R_ARCH}")
 
+# check R version. Currently min R 2.12.0.
+SET (R_MIN_VERSION "2.12.0")
+MESSAGE (STATUS "Checking R version")
+EXECUTE_PROCESS(
+	COMMAND ${R_EXECUTABLE} "--slave" "--no-save" "-e" "cat (paste(R.version$major, R.version$minor, sep='.'))"
+	OUTPUT_VARIABLE R_VERSION)
+MESSAGE (STATUS "R version is ${R_VERSION}")
+EXECUTE_PROCESS(
+	COMMAND ${R_EXECUTABLE} "--slave" "--no-save" "-e" "min_ver <- '${R_MIN_VERSION}'; if (compareVersion ('${R_VERSION}', min_ver) < 0) cat ('At least R version', min_ver, 'is required')"
+	OUTPUT_VARIABLE R_VERSION_STATUS)
+IF (R_VERSION_STATUS)
+	MESSAGE (FATAL_ERROR ${R_VERSION_STATUS})
+ENDIF (R_VERSION_STATUS)
+
 # find R_HOME
 
 MESSAGE(STATUS "Looking for R_HOME")

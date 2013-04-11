@@ -3,10 +3,8 @@
 
 # overriding x11 to get informed, when a new x11 window is opened
 #' @export
-"rk.screen.device" <- function (..., is.being.duplicated = FALSE, is.preview.device = FALSE) {
+"rk.screen.device" <- function (...) {
 	.rk.do.call ("startOpenX11", as.character (dev.cur ()));
-
-	old_dev <- dev.cur ()
 
 	args <- list (...)
 	if (!exists (".rk.default.device")) {
@@ -29,8 +27,7 @@
 
 	.rk.do.call ("endOpenX11", as.character (dev.cur ()));
 
-	if (getOption ("rk.enable.graphics.history"))
-		rk.record.plot$onAddDevice (old_dev, dev.cur (), is.being.duplicated, is.preview.device)
+	rk.record.plot$onAddDevice ()
 
 	invisible (x)
 }
@@ -56,7 +53,7 @@ assign(".rk.preview.devices", list (), envir=.rk.variables)
 	a <- .rk.variables$.rk.preview.devices[[x]]
 	if (is.null (a)) {
 		devnum <- dev.cur ()
-		x11 (is.preview.device = TRUE)
+		rk.without.plot.history (rk.screen.device ())
 		if (devnum != dev.cur ()) {
 			.rk.variables$.rk.preview.devices[[x]] <- list (devnum=dev.cur(), par=par (no.readonly=TRUE))
 		} else {
@@ -147,12 +144,9 @@ assign(".rk.preview.devices", list (), envir=.rk.variables)
 				plot_hist_enabled <- getOption ("rk.enable.graphics.history")
 				if (plot_hist_enabled) {
 					rk.record.plot$record (nextplot.pkg = "lattice")
-					on.exit (options (rk.enable.graphics.history=TRUE))
-					options (rk.enable.graphics.history=FALSE)	# avoid duplicate trigger inside plot(), below
 				}
-				plot (x, ...)
+				rk.without.plot.history (plot (x, ...))
 				if (plot_hist_enabled) {
-					options (rk.enable.graphics.history=TRUE)
 					rk.record.plot$.save.tlo.in.hP ()
 				}
 				invisible ()
