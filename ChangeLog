@@ -1,3 +1,6 @@
+- New (experimental) RKWard native on-screen device (RK())
+        TODO: Finish it, then provide UI option to select on-screen device
+- New R function rk.without.plot.history() for turning off plot history, temporarily
 - Add command line option --backend-debugger
 
 --- Version 0.6.1 - Apr-02-2013
