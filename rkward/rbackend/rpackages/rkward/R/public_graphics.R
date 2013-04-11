@@ -109,7 +109,8 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	if (is.null (width)) width <- 7
 	if (is.null (height)) height <- 7
 	ret <- .Call ("rk.graphics.device", as.integer (width), as.integer (height), as.integer (pointsize), family, bg, title, isTRUE (antialias), PACKAGE="(embedding)")
-	inivisble (ret)	# Current always NULL
+	rk.record.plot$onAddDevice (dev.cur ())
+	invisible (ret)	# Current always NULL
 }
 
 #' \code{rk.graph.off()} closes the device that was opened by \code{rk.graph.on}. 
@@ -162,8 +163,10 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 #' @export
 "rk.duplicate.device" <- function (devId = dev.cur ())
 {
+	rk.record.plot$duplicating.from.device <- devId
+	on.exit (rk.record.plot$duplicating.from.device <- 1)	# NULL device
 	dev.set (devId)
-	dev.copy (device = x11, is.being.duplicated = TRUE)
+	dev.copy (device = rk.screen.device)
 }
 
 # A global history of various graphics calls;
@@ -235,16 +238,15 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	}
 	
 	## Device specific functions:
-	onAddDevice <- function (devId.from = 1, devId = dev.cur (), 
-		is.being.duplicated = FALSE, is.preview.device = FALSE)
+	onAddDevice <- function (devId = dev.cur ())
 	{
-		if (is.preview.device) return (invisible ())
+		if (!isTRUE (getOption ("rk.enable.graphics.history"))) return (invisible ())
 		
-		devId.from <- as.character (devId.from)
+		devId.from <- as.character (env$duplicating.from.device)
 		devId <- as.character (devId)
 		
 		histPositions [[devId]] <<- .hP.template
-		if (is.being.duplicated && !histPositions [[devId.from]]$is.this.dev.new) {
+		if ((env$duplicating.from.device > 1) && !histPositions [[devId.from]]$is.this.dev.new) {
 			# devId.from > 1
 			## TODO: see if so many "[[" calls can be reduced?
 			histPositions [[devId]]$is.this.plot.new <<- TRUE
@@ -623,9 +625,9 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 			# access it
 			if (cur.devId != as.numeric (devId))
 				tlo.ls <- get ("lattice.status", envir = lattice:::.LatticeEnv)
-			options (rk.enable.graphics.history=FALSE); on.exit (options (rk.enable.graphics.history=TRUE))
-			plot (savedPlots [[st]]$plot, save.object = (cur.devId == as.numeric (devId)))
-			options (rk.enable.graphics.history=TRUE)
+			rk.without.plot.history ({
+				plot (savedPlots [[st]]$plot, save.object = (cur.devId == as.numeric (devId)))
+			})
 			if (cur.devId != as.numeric (devId))
 				assign ("lattice.status", tlo.ls, envir = lattice:::.LatticeEnv)
 		}
@@ -870,6 +872,7 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 		# Existing plots are not checked for their sizes, only the new ones are.
 	}
 
+	env$duplicating.from.device <- 1 # NULL device
 	env
 }
 rk.record.plot <- rk.record.plot ()
@@ -957,4 +960,16 @@ rk.record.plot <- rk.record.plot ()
 			history = rk.record.plot$getSavedPlotsSummary (),
 			NULL)
 	ret
+}
+#' Run a (plotting) action, without recording anything in the plot history.
+#' Internally, the plot history option is turned off for the duration of the action.
+#' 
+#' @export
+"rk.without.plot.history" <- function (expr)
+{
+	if (getOption ("rk.enable.graphics.history")) {
+		on.exit (options ("rk.enable.graphics.history" = TRUE))
+	}
+	options ("rk.enable.graphics.history" = FALSE)
+	eval.parent(expr)
 }
