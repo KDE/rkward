@@ -161,11 +161,8 @@ public slots:
 private slots:
 	void doEmbed ();
 private:
-<<<<<<< .working
 	void forceClose ();
-=======
 	void commonInit (int device_number);
->>>>>>> .merge-right.r4686
 	void reEmbed ();
 	void rCommandDone (RCommand *command);
 	friend class RKCaughtX11WindowPart;	// needs access to the actions
