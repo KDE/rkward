@@ -164,7 +164,6 @@ bool RKGraphicsDeviceDesc::init (pDevDesc dev, double pointsize, const QStringLi
 	dev->haveLocator = 2;
 #endif
 
-#if R_VERSION >= R_Version (2, 12, 0)
 	/*
 	* Mouse events
 	*/
@@ -175,8 +174,6 @@ bool RKGraphicsDeviceDesc::init (pDevDesc dev, double pointsize, const QStringLi
 
 	// gettingEvent; This is set while getGraphicsEvent is actively
 	// looking for events
-//	dev->eventHelper = ...
-#endif
 
 	/*
 	* Device functions
@@ -196,10 +193,9 @@ bool RKGraphicsDeviceDesc::init (pDevDesc dev, double pointsize, const QStringLi
 	dev->rect = RKD_Rect;
 	dev->size = RKD_Size;
 	// dev->onexit = RKD_OnExit; Called on user interrupts. NULL is OK.
-#if R_VERSION >= R_Version (2, 11, 0)
+	// dev->getEvent = SEXP (*getEvent)(SEXP, const char *);
 	dev->raster = RKD_Raster;
 	dev->cap = RKD_Capture;
-#endif
 	dev->newFrameConfirm = RKD_NewFrameConfirm;
 
 	return true;
