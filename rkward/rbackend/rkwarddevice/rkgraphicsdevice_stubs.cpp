@@ -73,6 +73,8 @@ public:
 
 private:
 	bool checkHandleInterrupt (QIODevice *connection) {
+		// NOTE: It would be possible, but not exactly easier to rely on GEonExit() rather than R_interrupts_pending
+		// Might be an option, if R_interrupts_pending gets hidden one day, though
 		if (!R_interrupts_pending) return false;
 
 		// Tell the frontend to finish whatever it was doing ASAP. Don't process any other events until that has happened
@@ -128,8 +130,10 @@ public:
 #define WRITE_COLOR_BYTES(col) \
 	if (col == NA_INTEGER) RKD_OUT_STREAM << (quint8) 0xFF << (quint8) 0xFF << (quint8) 0xFF << (quint8) 0x00; \
 	else RKD_OUT_STREAM << (quint8) R_RED (col) << (quint8) R_GREEN (col) << (quint8) R_BLUE (col) << (quint8) R_ALPHA (col)
+#define WRITE_HEADER_NUM(x,devnum) \
+	RKD_OUT_STREAM << (qint8) x << (quint8) devnum
 #define WRITE_HEADER(x,dev) \
-	RKD_OUT_STREAM << (qint8) x << (quint8) static_cast<RKGraphicsDeviceDesc*> (dev->deviceSpecific)->devnum
+	WRITE_HEADER_NUM (x,static_cast<RKGraphicsDeviceDesc*> (dev->deviceSpecific)->devnum)
 #define WRITE_COL() \
 	WRITE_COLOR_BYTES (gc->col)
 #define WRITE_PEN() \
@@ -141,6 +145,19 @@ public:
 	WRITE_COLOR_BYTES (gc->fill)
 #define WRITE_FONT(dev) \
 	RKD_OUT_STREAM << gc->cex << gc->ps << gc->lineheight << (quint8) gc->fontface << (gc->fontfamily[0] ? QString (gc->fontfamily) : (static_cast<RKGraphicsDeviceDesc*> (dev->deviceSpecific)->getFontFamily (gc->fontface == 5)))
+
+static void RKD_QueryResolution (int *dpix, int *dpiy) {
+	{
+		RKGraphicsDataStreamWriteGuard wguard;
+		WRITE_HEADER_NUM (RKDQueryResolution, 0);
+	}
+	{
+		RKGraphicsDataStreamReadGuard rguard;
+		qint32 _dpix, _dpiy;
+		RKD_IN_STREAM >> _dpix >> _dpiy;
+		*dpix = _dpix; *dpiy = _dpiy;
+	}
+}
 
 static void RKD_Create (double width, double height, pDevDesc dev, const char *title, bool antialias) {
 	RKGraphicsDataStreamWriteGuard guard;
@@ -260,6 +277,7 @@ static void RKD_MetricInfo (int c, R_GE_gcontext *gc, double* ascent, double* de
 static void RKD_Close (pDevDesc dev) {
 	RKGraphicsDataStreamWriteGuard guard;
 	WRITE_HEADER (RKDClose, dev);
+	delete static_cast<RKGraphicsDeviceDesc*> (dev->deviceSpecific);
 }
 
 static void RKD_Activate (pDevDesc dev) {

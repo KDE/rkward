@@ -24,6 +24,10 @@
 #include <kmessagebox.h>
 #include <klocale.h>
 
+// for screen resolution
+#include <QApplication>
+#include <QDesktopWidget>
+
 // NOTE: This is but the latest nail in the coffin of the single process variant of RKWard.
 // *IF* the RKWard Graphics Device works out as hoped, the single process variant can finally be ditched for good.
 #define RKWARD_SPLIT_PROCESS 1
@@ -80,6 +84,7 @@ void RKGraphicsDeviceFrontendTransmitter::newConnection () {
 	connection = con;
 	streamer.setIODevice (con);
 	connect (connection, SIGNAL (readyRead ()), this, SLOT (newData ()));
+	newData ();	// might already be available
 }
 
 static QRgb readRgb (QDataStream &instream) {
@@ -184,12 +189,17 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 			connect (device, SIGNAL (locatorDone(bool,double,double)), this, SLOT (locatorDone(bool,double,double)));
 			connect (device, SIGNAL (newPageConfirmDone(bool)), this, SLOT (newPageConfirmDone(bool)));
 			connect (this, SIGNAL (stopInteraction()), device, SLOT (stopInteraction()));
+			continue;
 		} else {
 			if (devnum) device = RKGraphicsDevice::devices.value (devnum);
 			if (!device) {
 				if (opcode == RKDCancel) {
 					RK_DEBUG (GRAPHICS_DEVICE, DL_WARNING, "Graphics operation cancelled");
 					emit (stopInteraction());
+				} else if (opcode == RKDQueryResolution) {
+					QDesktopWidget *desktop = QApplication::desktop ();
+					streamer.outstream << (qint32) desktop->physicalDpiX () << (qint32) desktop->physicalDpiY ();
+					streamer.writeOutBuffer ();
 				} else {
 					RK_DEBUG (GRAPHICS_DEVICE, DL_ERROR, "Received transmission of type %d for unknown device number %d. Skippping.", opcode, devnum);
 					sendDummyReply (opcode);

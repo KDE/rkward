@@ -100,16 +100,17 @@ void RKGraphicsDevice::clear (const QColor& col) {
 	RK_TRACE (GRAPHICS_DEVICE);
 
 	if (painter.isActive ()) painter.end ();
- 	if (col.isValid ()) area.fill (col);
+	if (col.isValid ()) area.fill (col);
 	else area.fill (QColor (255, 255, 255, 255));
 	updateNow ();
+	setClip (area.rect ());	// R's devX11.c resets clip on clear, so we do this, too.
 }
 
 void RKGraphicsDevice::setClip (const QRectF& new_clip) {
 	RK_TRACE (GRAPHICS_DEVICE);
 
 	if (!painter.isActive ()) painter.begin (&area);
-//	painter.setClipRect (new_clip);
+	painter.setClipRect (new_clip);
 }
 
 void RKGraphicsDevice::circle (double x, double y, double r, const QPen& pen, const QBrush& brush) {

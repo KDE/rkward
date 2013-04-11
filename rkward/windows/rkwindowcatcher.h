@@ -182,7 +182,7 @@ private:
 	// a dummy to make things compile for now
 	QWidget *capture;
 #endif
-	QWidget *rk_native_device_view;
+	RKGraphicsDevice *rk_native_device;
 
 	bool dynamic_size;
 	KToggleAction *dynamic_size_action;

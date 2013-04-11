@@ -108,7 +108,8 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 "RK" <- function (width=getOption("rk.screendevice.width"), height=getOption("rk.screendevice.height"), pointsize=12, family=NULL, bg="white", title="", antialias=TRUE) {
 	if (is.null (width)) width <- 7
 	if (is.null (height)) height <- 7
-	.Call ("rk.graphics.device", as.integer (width), as.integer (height), as.integer (pointsize), family, bg, title, isTRUE (antialias), PACKAGE="(embedding)")
+	ret <- .Call ("rk.graphics.device", as.integer (width), as.integer (height), as.integer (pointsize), family, bg, title, isTRUE (antialias), PACKAGE="(embedding)")
+	inivisble (ret)	# Current always NULL
 }
 
 #' \code{rk.graph.off()} closes the device that was opened by \code{rk.graph.on}. 

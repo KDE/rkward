@@ -44,9 +44,10 @@ extern "C" {
 #endif
 
 struct RKGraphicsDeviceDesc {
-	bool initRDevDesc (pDevDesc dev, double pointsize, rcolor bg);
+	bool init (pDevDesc dev, double pointsize, const QStringList &family, rcolor bg);
 	int devnum;
 	double width, height;
+	int dpix, dpiy;
 	QString getFontFamily (bool symbolfont) const {
 		if (symbolfont) return default_symbol_family;
 		return default_family;
@@ -58,17 +59,17 @@ struct RKGraphicsDeviceDesc {
 
 #include "rkgraphicsdevice_stubs.cpp"
 
-#define RKGD_DPI 72
+// No, I do not really understand what this is for.
+// Mostly trying to mimick the X11 device's behavior, here.
+#define RKGD_DPI 72.0
 
 void RKStartGraphicsDevice (double width, double height, double pointsize, const QStringList &family, rcolor bg, const char* title, bool antialias) {
 	if (width <= 0 || height <= 0) {
 		Rf_error ("Invalid width or height: (%g, %g)", width, height);
 	}
 	RKGraphicsDeviceDesc *desc = new RKGraphicsDeviceDesc;
-	desc->width = width * RKGD_DPI;
-	desc->height = height * RKGD_DPI;
-	desc->default_family = family.value (0, "Helvetica");
-	desc->default_symbol_family = family.value (0, "Symbol");
+	desc->width = width;
+	desc->height = height;
 
 	R_GE_checkVersionOrDie (R_GE_version);
 	R_CheckDeviceAvailable ();
@@ -76,7 +77,8 @@ void RKStartGraphicsDevice (double width, double height, double pointsize, const
 	BEGIN_SUSPEND_INTERRUPTS {
 		/* Allocate and initialize the device driver data */
 		dev = (pDevDesc) calloc (1, sizeof(DevDesc));
-		if (!(dev && desc->initRDevDesc (dev, pointsize, bg) && RKGraphicsDeviceBackendTransmitter::instance ())) {
+		// NOTE: The call to RKGraphicsDeviceBackendTransmitter::instance(), here is important beyond error checking. It might *create* the instance and connection, if this is the first use.
+		if (!(dev && RKGraphicsDeviceBackendTransmitter::instance () && desc->init (dev, pointsize, family, bg))) {
 			free (dev);
 			delete (desc);
 			desc = 0;
@@ -103,7 +105,16 @@ SEXP RKStartGraphicsDevice (SEXP width, SEXP height, SEXP pointsize, SEXP family
 	return R_NilValue;
 }
 
-bool RKGraphicsDeviceDesc::initRDevDesc (pDevDesc dev, double pointsize, rcolor bg) {
+bool RKGraphicsDeviceDesc::init (pDevDesc dev, double pointsize, const QStringList &family, rcolor bg) {
+	default_family = family.value (0, "Helvetica");
+	default_symbol_family = family.value (0, "Symbol");
+	RKD_QueryResolution (&dpix, &dpiy);
+	if (dpix <= 1) dpix = RKGD_DPI;
+	if (dpiy <= 1) dpiy = RKGD_DPI;
+	width *= dpix;
+	height *= dpiy;
+//	Rprintf ("dpi: %d * %d, dims: %f * %f\n", dpix, dpiy, width, height);
+
 	dev->deviceSpecific = (void *) this;
 
 	// pointsize?
@@ -124,17 +135,17 @@ bool RKGraphicsDeviceDesc::initRDevDesc (pDevDesc dev, double pointsize, rcolor 
 	dev->right  = dev->clipRight  = width;
 	dev->bottom = dev->clipBottom = height;
 	dev->top    = dev->clipTop    = 0;
-	dev->cra[0] = 0.9 * pointsize * 96/72;
-	dev->cra[1] = 1.2 * pointsize * 96/72;
+	dev->cra[0] = 0.9 * pointsize * (dpix / RKGD_DPI);
+	dev->cra[1] = 1.2 * pointsize * (dpiy / RKGD_DPI);
 	dev->xCharOffset = 0.4900;
 	dev->yCharOffset = 0.3333;
 	dev->yLineBias = 0.1;
-	dev->ipr[0] = 1.0 / RKGD_DPI;
-	dev->ipr[1] = 1.0 / RKGD_DPI;
+	dev->ipr[0] = 1.0 / dpix;
+	dev->ipr[1] = 1.0 / dpiy;
 	/*
 	* Device capabilities
 	*/
-	dev->canClip = FALSE; // FIXME. can clip, but then selection becomes weird
+	dev->canClip = TRUE;
 	dev->canHAdj = 2;
 	dev->canChangeGamma = FALSE;
 	dev->displayListOn = TRUE;
@@ -181,7 +192,7 @@ bool RKGraphicsDeviceDesc::initRDevDesc (pDevDesc dev, double pointsize, rcolor 
 	dev->polyline = RKD_Polyline;
 	dev->rect = RKD_Rect;
 	dev->size = RKD_Size;
-	// dev->onexit = RKD_OnExit; NULL is OK
+	// dev->onexit = RKD_OnExit; Called on user interrupts. NULL is OK.
 	// dev->getEvent = SEXP (*getEvent)(SEXP, const char *);
 	dev->raster = RKD_Raster;
 	dev->cap = RKD_Capture;

@@ -143,8 +143,8 @@ QHash<int, RKCaughtX11Window*> RKCaughtX11Window::device_windows;
 RKCaughtX11Window::RKCaughtX11Window (WId window_to_embed, int device_number) : RKMDIWindow (0, X11Window), RCommandReceiver () {
 	RK_TRACE (MISC);
 
-	embedded = window_to_embed;
 	commonInit (device_number);
+	embedded = window_to_embed;
 
 #ifdef Q_WS_WIN
 	// unfortunately, trying to get KWindowInfo as below hangs on windows (KDElibs 4.2.3)
@@ -178,14 +178,20 @@ RKCaughtX11Window::RKCaughtX11Window (RKGraphicsDevice* rkward_device, int devic
 	RK_TRACE (MISC);
 
 	commonInit (device_number);
-	rk_native_device_view = rkward_device->viewPort ();
-	rk_native_device_view->setParent (xembed_container);
+	rk_native_device = rkward_device;
+	xembed_container->setFixedSize (rk_native_device->viewPort ()->size ());
+	rk_native_device->viewPort ()->setParent (xembed_container);
+
+// adjust to size
+//	dynamic_size_action->setChecked (true);
+	fixedSizeToggled ();
 }
 
 void RKCaughtX11Window::commonInit (int device_number) {
 	RK_TRACE (MISC);
 
 	capture = 0;
+	rk_native_device = 0;
 	killed_in_r = false;
 	RKCaughtX11Window::device_number = device_number;
 	RK_ASSERT (!device_windows.contains (device_number));
@@ -268,6 +274,7 @@ bool RKCaughtX11Window::close (bool also_delete) {
 		return RKMDIWindow::close (also_delete);
 	}
 
+	if (rk_native_device) rk_native_device->stopInteraction ();
 	RCommand* c = new RCommand ("dev.off (" + QString::number (device_number) + ')', RCommand::App, i18n ("Shutting down device number %1", device_number), error_dialog);
 	setStatusMessage (i18n ("Closing device (saving history)"), c);
 	RKGlobals::rInterface ()->issueCommand (c);

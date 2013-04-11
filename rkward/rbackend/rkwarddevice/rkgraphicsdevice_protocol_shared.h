@@ -83,9 +83,10 @@ enum RKDOpcodes {
 	RKDLocator,
 	RKDNewPageConfirm,
 	RKDCapture,
+	RKDQueryResolution,
 
 	// Protocol operations
-	RKDCancel
+	RKDCancel      // 20
 };
 
 #include <QIODevice>
