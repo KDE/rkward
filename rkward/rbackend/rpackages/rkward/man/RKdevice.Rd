@@ -2,8 +2,8 @@
 \alias{RK}
 \title{Plot graphics to RKWard native device}
 \usage{
-  RK(width = options("rk.screendevice.width"),
-    height = options("rk.screendevice.height"),
+  RK(width = getOption("rk.screendevice.width"),
+    height = getOption("rk.screendevice.height"),
     pointsize = 12, family = NULL, bg = "white",
     title = "", antialias = TRUE)
 }
