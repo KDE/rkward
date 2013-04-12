@@ -287,7 +287,7 @@ void RKCommandLogPart::initActions () {
 	QAction *configure = actionCollection ()->addAction ("log_configure", log, SLOT(configureLog()));
 	configure->setText (i18n ("Configure"));
 
-	run_selection = RKStandardActions::runSelection (log, log, SLOT(runSelection()));
+	run_selection = RKStandardActions::runCurrent (log, log, SLOT(runSelection()));
 
 	connect (log->getView (), SIGNAL (popupMenuRequest (const QPoint &)), this, SLOT (doPopupMenu (const QPoint &)));
 }

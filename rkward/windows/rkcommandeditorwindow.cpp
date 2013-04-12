@@ -2,7 +2,7 @@
                           rkcommandeditorwindow  -  description
                              -------------------
     begin                : Mon Aug 30 2004
-    copyright            : (C) 2004, 2006, 2007, 2009, 2010, 2011, 2012 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2013 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -212,13 +212,11 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 	RKStandardActions::pasteSpecial (this, this, SLOT (paste(const QString&)));
 
 	action_run_all = RKStandardActions::runAll (this, this, SLOT (runAll()));
-	action_run_selection = RKStandardActions::runSelection (this, this, SLOT (runSelection()));
-	action_run_selection->setEnabled (false);
-	action_run_line = RKStandardActions::runLine (this, this, SLOT (runLine()));
+	action_run_current = RKStandardActions::runCurrent (this, this, SLOT (runCurrent()), true);
 	// NOTE: enter_and_submit is not currently added to the menu
 	KAction *action = ac->addAction ("enter_and_submit", this, SLOT (enterAndSubmit()));
 	action->setText (i18n ("Insert line break and run"));
-	action->setShortcuts (KShortcut (Qt::ControlModifier + Qt::Key_Return, Qt::ControlModifier + Qt::Key_Enter));
+	action->setShortcuts (KShortcut (Qt::AltModifier + Qt::Key_Return, Qt::AltModifier + Qt::Key_Enter));
 
 	action_help_function = RKStandardActions::functionHelp (this, this, SLOT (showHelp()));
 
@@ -690,25 +688,20 @@ void RKCommandEditorWindow::setWDToScript () {
 	RKConsole::pipeUserCommand ("setwd (\"" + dir + "\")");
 }
 
-void RKCommandEditorWindow::runSelection() {
+void RKCommandEditorWindow::runCurrent () {
 	RK_TRACE (COMMANDEDITOR);
 
-	QString command = m_view->selectionText ();
-	if (command.isEmpty ()) return;
+	if (m_view->selection ()) {
+		RKConsole::pipeUserCommand (m_view->selectionText ());
+	} else {
+		KTextEditor::Cursor c = m_view->cursorPosition();
+		QString command = m_doc->line (c.line());
+		if (!command.isEmpty ()) RKConsole::pipeUserCommand (command + '\n');
 
-	RKConsole::pipeUserCommand (command);
-}
-
-void RKCommandEditorWindow::runLine() {
-	RK_TRACE (COMMANDEDITOR);
-
-	KTextEditor::Cursor c = m_view->cursorPosition();
-	QString command = m_doc->line (c.line());
-	if (!command.isEmpty ()) RKConsole::pipeUserCommand (command + '\n');
-
-	// advance to next line (NOTE: m_view->down () won't work on auto-wrapped lines)
-	c.setLine(c.line() + 1);
-	m_view->setCursorPosition (c);
+		// advance to next line (NOTE: m_view->down () won't work on auto-wrapped lines)
+		c.setLine(c.line() + 1);
+		m_view->setCursorPosition (c);
+	}
 }
 
 void RKCommandEditorWindow::enterAndSubmit () {
@@ -863,10 +856,8 @@ void RKCommandEditorWindow::selectionChanged (KTextEditor::View* view) {
 	RK_ASSERT (view == m_view);
 
 	if (view->selection ()) {
-		action_run_selection->setEnabled (true);
 		actionmenu_mark_block->setEnabled (true);
 	} else {
-		action_run_selection->setEnabled (false);
 		actionmenu_mark_block->setEnabled (false);
 	}
 }

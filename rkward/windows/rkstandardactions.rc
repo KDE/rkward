@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward_standardactions" version="560">
+<kpartgui name="rkward_standardactions" version="620">
 <!-- What is this for, wouldn't it be easier to just inline these actions in the parts where they
      end up? Yes, but then they would be separate actions, internally, and each could be assigned
      a shortcut of its own. This is needed to tie them all together. -->
@@ -11,8 +11,7 @@
 			<Action name="paste_special" group="after_edit_paste_merge"/>
 		</Menu>
 		<Menu name="run">
-			<Action name="run_line" group="run_actions_merge"/>
-			<Action name="run_selection" group="run_actions_merge"/>
+			<Action name="run_current" group="run_actions_merge"/>
 			<Action name="run_all" group="run_actions_merge"/>
 			<WeakSeparator group="postrun_actions_merge"/>
 			<Action name="interrupt" group="postrun_actions_merge"/>
@@ -37,8 +36,7 @@
 	<Menu name="ktexteditor_popup">
 		<Action name="paste_special" group="edit_paste_merge"/>
 		<Menu name="run">
-			<Action name="run_line" group="run_actions_merge"/>
-			<Action name="run_selection" group="run_actions_merge"/>
+			<Action name="run_current" group="run_actions_merge"/>
 			<Action name="run_all" group="run_actions_merge"/>
 		</Menu>
 		<Action name="function_reference" group="ktexteditor_popup_merge2"/>
@@ -48,12 +46,12 @@
 	<Menu name="rkconsole_context_menu">
 		<Action name="copy_lines_to_output" group="rkconsole_context_merge_copy"/>
 		<Action name="paste_special" group="rkconsole_context_merge_paste"/>
-		<Action name="run_selection" group="rkconsole_context_merge1"/>
+		<Action name="run_current" group="rkconsole_context_merge1"/>
 		<Action name="function_reference" group="rkconsole_context_merge2"/>
 		<Separator/>
 		<Action name="window_configure"/>
 	</Menu>
 	<Menu name="rkcommandlog_context_menu">
-		<Action name="run_selection" group="rkcommandlog_context_merge1"/>
+		<Action name="run_current" group="rkcommandlog_context_merge1"/>
 	</Menu>
 </kpartgui>

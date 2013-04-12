@@ -2,7 +2,7 @@
                           rkstandardactions  -  description
                              -------------------
     begin                : Sun Nov 18 2007
-    copyright            : (C) 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2007-2013 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -32,8 +32,7 @@ namespace RKStandardActions {
 @param member needs to have the signature void fun (const QString&). */
 	KAction* pasteSpecial (RKMDIWindow *window, const QObject *receiver=0, const char *member=0);
 
-	KAction* runLine (RKMDIWindow *window, const QObject *receiver=0, const char *member=0);
-	KAction* runSelection (RKMDIWindow *window, const QObject *receiver=0, const char *member=0);
+	KAction* runCurrent (RKMDIWindow *window, const QObject *receiver=0, const char *member=0, bool current_or_line=false);
 	KAction* runAll (RKMDIWindow *window, const QObject *receiver=0, const char *member=0);
 
 	KAction* functionHelp (RKMDIWindow *window, const QObject *receiver=0, const char *member=0);

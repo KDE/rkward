@@ -2,7 +2,7 @@
                           rkstandardactions  -  description
                              -------------------
     begin                : Sun Nov 18 2007
-    copyright            : (C) 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2007-2013 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -45,23 +45,19 @@ KAction* RKStandardActions::pasteSpecial (RKMDIWindow *window, const QObject *re
 	return ret;
 }
 
-KAction* RKStandardActions::runLine (RKMDIWindow *window, const QObject *receiver, const char *member) {
+KAction* RKStandardActions::runCurrent (RKMDIWindow *window, const QObject *receiver, const char *member, bool current_or_line) {
 	RK_TRACE (MISC);
 
-	KAction* ret = window->standardActionCollection ()->addAction ("run_line", receiver, member);
-	ret->setText (i18n ("Run current line"));
+	KAction* ret = window->standardActionCollection ()->addAction ("run_current", receiver, member);
+	if (current_or_line) {
+		ret->setText (i18n ("Run line / selection"));
+		ret->setStatusTip (i18n ("Runs the current selection (if any) or the current line (if there is no selection)"));
+		ret->setToolTip (ret->statusTip ());
+	} else {
+		ret->setText (i18n ("Run selection"));
+	}
 	ret->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionRunLine));
-	ret->setShortcut (Qt::ShiftModifier + Qt::Key_F7);
-	return ret;
-}
-
-KAction* RKStandardActions::runSelection (RKMDIWindow *window, const QObject *receiver, const char *member) {
-	RK_TRACE (MISC);
-
-	KAction* ret = window->standardActionCollection ()->addAction ("run_selection", receiver, member);
-	ret->setText (i18n ("Run selection"));
-	ret->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionRunSelection));
-	ret->setShortcut (Qt::ShiftModifier + Qt::Key_F8);
+	ret->setShortcut (KShortcut (Qt::ControlModifier + Qt::Key_Return, Qt::ControlModifier + Qt::Key_Enter));
 	return ret;
 }
 
@@ -71,7 +67,7 @@ KAction* RKStandardActions::runAll (RKMDIWindow *window, const QObject *receiver
 	KAction* ret = window->standardActionCollection ()->addAction ("run_all", receiver, member);
 	ret->setText (i18n ("Run all"));
 	ret->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionRunAll));
-	ret->setShortcut (Qt::ShiftModifier + Qt::Key_F9);
+	ret->setShortcut (KShortcut (Qt::ControlModifier + Qt::ShiftModifier + Qt::Key_Return, Qt::ControlModifier + Qt::ShiftModifier + Qt::Key_Enter));
 	return ret;
 }
 

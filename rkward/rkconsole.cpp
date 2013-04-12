@@ -889,7 +889,7 @@ void RKConsole::initializeActions (KActionCollection *ac) {
 #endif
 	RKStandardActions::copyLinesToOutput (this, this, SLOT (copyLinesToOutput()));
 	context_help_action = RKStandardActions::functionHelp (this, this, SLOT(showContextHelp()));
-	run_selection_action = RKStandardActions::runSelection (this, this, SLOT (runSelection()));
+	run_selection_action = RKStandardActions::runCurrent (this, this, SLOT (runSelection()));
 
 	interrupt_command_action = ac->addAction ("interrupt", this, SLOT (resetConsole()));
 	interrupt_command_action->setText (i18n ("Interrupt running command"));

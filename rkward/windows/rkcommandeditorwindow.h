@@ -2,7 +2,7 @@
                           rkcommandeditorwindow  -  description
                              -------------------
     begin                : Mon Aug 30 2004
-    copyright            : (C) 2004, 2006, 2007, 2009, 2010, 2011, 2012 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2013 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -205,10 +205,8 @@ public slots:
 	void focusIn (KTextEditor::View *);
 /** Show help about the current word. */
 	void showHelp ();
-/** run the currently selected command(s) */
-	void runSelection ();
-/** run the current line */
-	void runLine ();
+/** run the currently selected command(s) or line */
+	void runCurrent ();
 /** run the entire script */
 	void runAll ();
 /** insert line break and run the (previous) line */
@@ -287,8 +285,7 @@ private:
 	KActionMenu* actionmenu_run_block;
 
 	KAction* action_run_all;
-	KAction* action_run_selection;
-	KAction* action_run_line;
+	KAction* action_run_current;
 
 	KAction* action_setwd_to_script;
 
