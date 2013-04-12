@@ -23,10 +23,6 @@
 #include <QThread>
 #include <QByteArray>
 
-#ifndef RKWARD_SPLIT_PROCESS
-#	error This should only be compiled for split process backends.
-#endif
-
 /** functions for serialization / unserialization of communication between backend and frontend.
 NOTE: This could really be a namespace, instead of a class, but "friending" a class is simply easier... */
 class RKRBackendSerializer {

@@ -39,9 +39,7 @@ public:
 protected:
 /** needed to handle the QEvents, the R thread is sending (notifications on what's happening in the backend thread) */
 	void customEvent (QEvent *e);
-#ifndef RKWARD_THREADED
 	QThread* main_thread;
-#endif
 private:
 	static RKRBackendProtocolFrontend* _instance;
 	RInterface *frontend;

@@ -21,18 +21,10 @@
 
 #include <QThread>
 
-#ifdef RKWARD_THREADED
-#	include "rkrbackend.h"
-#	include "rkrbackendprotocol_backend.h"
-#else
-#	include "rkfrontendtransmitter.h"
-#	include <QCoreApplication>
-#endif
+#include "rkfrontendtransmitter.h"
+#include <QCoreApplication>
 
 #include "../debug.h"
-
-#ifndef RKWARD_THREADED
-#endif
 
 RKRBackendProtocolFrontend* RKRBackendProtocolFrontend::_instance = 0;
 RKRBackendProtocolFrontend::RKRBackendProtocolFrontend (RInterface* parent) : QObject (parent) {
@@ -47,23 +39,15 @@ RKRBackendProtocolFrontend::~RKRBackendProtocolFrontend () {
 	RK_TRACE (RBACKEND);
 
 	terminateBackend ();
-#ifdef RKWARD_THREADED
-	delete RKRBackendProtocolBackend::instance ();
-#else
 	RKFrontendTransmitter::instance ()->quit ();
 	RKFrontendTransmitter::instance ()->wait (1000);
 	delete RKFrontendTransmitter::instance ();
-#endif
 }
 
 void RKRBackendProtocolFrontend::setupBackend () {
 	RK_TRACE (RBACKEND);
 
-#ifdef RKWARD_THREADED
-	new RKRBackendProtocolBackend ();
-#else
 	new RKFrontendTransmitter ();
-#endif
 }
 
 void RKRBackendProtocolFrontend::setRequestCompleted (RBackendRequest *request) {
@@ -73,42 +57,28 @@ void RKRBackendProtocolFrontend::setRequestCompleted (RBackendRequest *request) 
 	request->completed ();
 	if (!sync) return;
 
-#ifndef RKWARD_THREADED
 	RKRBackendEvent* ev = new RKRBackendEvent (request);
 	qApp->postEvent (RKFrontendTransmitter::instance (), ev);
-#endif
+
 	QThread::yieldCurrentThread ();
 }
 
 ROutputList RKRBackendProtocolFrontend::flushOutput (bool force) {
-#ifdef RKWARD_THREADED
-	return (RKRBackend::this_pointer->flushOutput (force));
-#else
 	return static_cast<RKFrontendTransmitter*> (RKFrontendTransmitter::instance ())->flushOutput (force);
-#endif
 }
 
 void RKRBackendProtocolFrontend::interruptCommand (int command_id) {
 	RK_TRACE (RBACKEND);
 
-#ifdef RKWARD_THREADED
-	RK_ASSERT (!RKRBackendProtocolBackend::inRThread ());
-	RKRBackendProtocolBackend::interruptCommand (command_id);
-#else
 	RBackendRequest *req = new RBackendRequest (false, RBackendRequest::Interrupt);
 	req->params.insert ("commandid", QVariant (command_id));
 	qApp->postEvent (RKFrontendTransmitter::instance (), new RKRBackendEvent (req));
-#endif
 }
 
 void RKRBackendProtocolFrontend::terminateBackend () {
 	RK_TRACE (RBACKEND);
 
-#ifdef RKWARD_THREADED
-	RKRBackend::this_pointer->kill ();
-#else
 	// Backend process will terminate automatically, when the transmitter dies
-#endif
 }
 
 void RKRBackendProtocolFrontend::customEvent (QEvent *e) {
@@ -120,4 +90,3 @@ void RKRBackendProtocolFrontend::customEvent (QEvent *e) {
 		return;
 	}
 }
-

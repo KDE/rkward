@@ -47,7 +47,6 @@ void* RKRBackend::default_global_context = 0;
 #include "rkrsupport.h"
 #include "rkstructuregetter.h"
 #include "rklocalesupport.h"
-#include "rkpthreadsupport.h"
 #include "rksignalsupport.h"
 #include "../misc/rkcommonfunctions.h"
 
@@ -100,7 +99,7 @@ extern "C" {
 #endif
 
 ///// i18n
-#if (defined ENABLE_NLS) && (!defined RKWARD_THREADED)		// ENABLE_NLS is from Rconfig.h
+#if (defined ENABLE_NLS)		// ENABLE_NLS is from Rconfig.h
 #	include <libintl.h>
 #	define RK_MSG_DOMAIN "rkward"
 	// define i18n to be compatible with the easiest usage in KDE
@@ -1011,18 +1010,6 @@ bool RKRBackend::startR () {
 	int argc = 3;
 	char* argv[3] = { qstrdup ("--slave"), qstrdup ("--no-save"), qstrdup ("--no-restore") };
 	Rf_initialize_R (argc, argv);
-
-	// in R on windows the stack limits detection seems to work out of the box for threads
-#ifndef Q_WS_WIN
-	{
-		char dummy;
-		size_t stacksize;
-		void *stackstart;
-		RKGetCurrentThreadStackLimits (&stacksize, &stackstart, &dummy);
-		R_CStackStart = (uintptr_t) stackstart;
-		R_CStackLimit = stacksize;
-	}
-#endif
 
 #ifdef Q_WS_WIN
 	R_set_command_line_arguments(argc, argv);

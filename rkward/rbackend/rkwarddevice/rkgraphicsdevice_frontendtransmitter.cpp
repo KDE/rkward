@@ -28,9 +28,6 @@
 #include <QApplication>
 #include <QDesktopWidget>
 
-// NOTE: This is but the latest nail in the coffin of the single process variant of RKWard.
-// *IF* the RKWard Graphics Device works out as hoped, the single process variant can finally be ditched for good.
-#define RKWARD_SPLIT_PROCESS 1
 #include "../rkfrontendtransmitter.h"
 #include "../../windows/rkworkplace.h"
 #include "rkgraphicsdevice.h"

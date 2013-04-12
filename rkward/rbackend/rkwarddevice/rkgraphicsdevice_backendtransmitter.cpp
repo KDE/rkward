@@ -19,7 +19,6 @@
 
 #include <QLocalSocket>
 #include "../rkrbackendprotocol_backend.h"
-#define RKWARD_SPLIT_PROCESS 1
 #include "../rkbackendtransmitter.h"
 
 #include "../../debug.h"

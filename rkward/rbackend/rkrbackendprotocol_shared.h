@@ -18,10 +18,6 @@
 #ifndef RKRBACKENDPROTOCOL_SHARED_H
 #define RKRBACKENDPROTOCOL_SHARED_H
 
-#ifndef RKWARD_SPLIT_PROCESS
-#	define RKWARD_THREADED
-#endif
-
 #include <QVariantMap>
 #include <QMutex>
 #include "rcommand.h"
@@ -46,10 +42,8 @@ public:
 		SetParamsFromBackend,
 		Debugger,
 		CommandLineIn,	/**< The next line of the current user command has been submitted in the backend. */
-#ifndef RKWARD_THREADED
 		Output,		/**< A piece of output. Note: If the backend runs in a single process, output is handled in a pull fashion, instead of using requests. */
 		Interrupt,	/**< Interrupt evaluation. This request type originates in the frontend, not the backend (the only one so far). */
-#endif
 		OutputStartedNotification, /**< Only used in the frontend: Notification that a new bit of output has arrived. Used to trigger flushing after a timeout. */
 		OtherRequest		/**< Any other type of request. Note: which requests are in the enum, and which are not has mostly historical reasons. @see params */
 	};
@@ -80,10 +74,8 @@ public:
 	QVariantMap params;
 /** NOTE: only used for separate process backend. See RCallbackType::Output */
 	ROutputList *output;
-#ifndef RKWARD_THREADED
 /** NOTE: this does @em not copy merge the "done" flag. Do that manually, @em after merging (and don't touch the request from the transmitter thread, after that). */
 	void mergeReply (RBackendRequest *reply);
-#endif
 protected:
 	friend class RKRBackendProtocolFrontend;
 	friend class RKRBackendProtocolBackend;

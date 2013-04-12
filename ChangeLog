@@ -1,3 +1,4 @@
+- Remove support for compiling RKWard in a single process (threaded) variant. This was not used / tested since RKWard 0.5.5
 - Shortcuts for the "Run ..." actions have been changed for better cross-platform compatibility
 - The script editor's "Run line" and "Run selection" actions have been merged
 - New (experimental) RKWard native on-screen device (RK())

@@ -24,64 +24,15 @@
 #include <QCoreApplication>
 #include <QThread>
 
-#ifdef RKWARD_THREADED
-#	include "rkrbackendprotocol_frontend.h"
-#else
-#	include <QLocalSocket>
-#	include <QMutex>
-#	include "rktransmitter.h"
-#	include <stdio.h>
-#endif
+#include <QLocalSocket>
+#include <QMutex>
+#include "rktransmitter.h"
+#include <stdio.h>
 
-#ifdef RKWARD_THREADED
-	class RKRBackendThread : public QThread {
-	public:
-		RKRBackendThread () {
-#	ifdef Q_WS_WIN
-			// we hope that on other platforms the default is reasonable
-			setStackSize (0xa00000);	// 10MB as recommended by r_exts-manual
-#	endif
-			instance = this;
-		};
-		~RKRBackendThread () {};
-
-		// called form the *other* thread, only
-		void exitThread () {
-			RK_TRACE (RBACKEND);
-			if (isRunning ()) {
-				RK_DEBUG (RBACKEND, DL_INFO, "Waiting for R thread to finish up...");
-				RKRBackendProtocolBackend::interruptProcessing ();
-				RKRBackend::this_pointer->kill ();
-				wait (1000);
-				if (isRunning ()) {
-					RK_DEBUG (RBACKEND, DL_WARNING, "Backend thread is still running. It will be killed, now.");
-					terminate ();
-					yieldCurrentThread ();
-					RK_ASSERT (false);
-				}
-			}
-		};
-
-		void publicmsleep (int delay) { msleep (delay); };
-
-		void run () {
-			RK_TRACE (RBACKEND);
-#	ifndef Q_WS_WIN
-			RKRBackendProtocolBackend::instance ()->r_thread_id = currentThreadId ();
-#	endif
-			RKRBackend::this_pointer->run ();
-		}
-
-		/** On pthread systems this is the pthread_id of the backend thread. It is needed to send SIGINT to the R backend */
-		Qt::HANDLE thread_id;
-		static RKRBackendThread* instance;
-	};
-	RKRBackendThread* RKRBackendThread::instance = 0;
-#else
-#	include "rkbackendtransmitter.h"
-#	include <QUuid>		// mis-used as a random-string generator
-#	include <QTemporaryFile>
-#	include <QDir>
+#include "rkbackendtransmitter.h"
+#include <QUuid>		// mis-used as a random-string generator
+#include <QTemporaryFile>
+#include <QDir>
 
 	extern "C" void RK_setupGettext (const char*);
 	int RK_Debug_Level = 2;
@@ -164,7 +115,6 @@
 
 		if (!RKRBackend::this_pointer->isKilled ()) RKRBackend::tryToDoEmergencySave ();
 	}
-#endif
 
 RKRBackendProtocolBackend* RKRBackendProtocolBackend::_instance = 0;
 RKRBackendProtocolBackend::RKRBackendProtocolBackend (const QString &storage_dir, const QString &_rkd_server_name) {
@@ -172,15 +122,9 @@ RKRBackendProtocolBackend::RKRBackendProtocolBackend (const QString &storage_dir
 
 	_instance = this;
 	new RKRBackend ();
-#ifdef RKWARD_THREADED
-	r_thread = new RKRBackendThread ();
-	// NOTE: r_thread_id is obtained from within the thread
-	RKRBackendThread::instance->start ();
-#else
 	r_thread = QThread::currentThread ();	// R thread == main thread
-#	ifndef Q_WS_WIN
+#ifndef Q_WS_WIN
 	r_thread_id = QThread::currentThreadId ();
-#	endif
 #endif
 	data_dir = storage_dir;
 	rkd_server_name = _rkd_server_name;
@@ -188,11 +132,6 @@ RKRBackendProtocolBackend::RKRBackendProtocolBackend (const QString &storage_dir
 
 RKRBackendProtocolBackend::~RKRBackendProtocolBackend () {
 	RK_TRACE (RBACKEND);
-
-#ifdef RKWARD_THREADED
-	RKRBackendThread::instance->exitThread ();
-	delete RKRBackendThread::instance;
-#endif
 }
 
 void RKRBackendProtocolBackend::sendRequest (RBackendRequest *_request) {
@@ -204,12 +143,8 @@ void RKRBackendProtocolBackend::sendRequest (RBackendRequest *_request) {
 		_request->done = true;				// for aesthetics
 	}
 	RKRBackendEvent* event = new RKRBackendEvent (request);
-#ifdef RKWARD_THREADED
-	qApp->postEvent (RKRBackendProtocolFrontend::instance (), event);
-#else
 	RK_ASSERT (request->type != RBackendRequest::Output);
 	qApp->postEvent (RKRBackendTransmitter::instance (), event);
-#endif
 }
 
 bool RKRBackendProtocolBackend::inRThread () {
@@ -217,17 +152,9 @@ bool RKRBackendProtocolBackend::inRThread () {
 }
 
 void RKRBackendProtocolBackend::msleep (int delay) {
-#ifdef RKWARD_THREADED
-	RKRBackendThread::instance->publicmsleep (delay);
-#else
 	static_cast<RKRBackendTransmitter*> (RKRBackendTransmitter::instance ())->publicmsleep (delay);
-#endif
 }
 
 QString RKRBackendProtocolBackend::backendDebugFile () {
-#ifdef RKWARD_THREADED
-	return (QString ());
-#else
 	return RK_Debug_File->fileName ();
-#endif
 }

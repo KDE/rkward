@@ -52,7 +52,6 @@ RBackendRequest::~RBackendRequest () {
 	delete output;
 };
 
-#ifndef RKWARD_THREADED
 void RBackendRequest::mergeReply (RBackendRequest *reply) {
 	RK_TRACE (RBACKEND);
 
@@ -62,7 +61,6 @@ void RBackendRequest::mergeReply (RBackendRequest *reply) {
 	reply->command = 0;
 	reply->output = 0;
 }
-#endif
 
 RBackendRequest* RBackendRequest::duplicate () {
 	RK_TRACE (RBACKEND);
