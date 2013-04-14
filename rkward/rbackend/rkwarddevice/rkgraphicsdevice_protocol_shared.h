@@ -105,7 +105,13 @@ enum RKDOpcodes {
  */
 class RKAsyncDataStreamHelper {
 public:
-	RKAsyncDataStreamHelper () : instream (&inbuffer, QIODevice::ReadOnly), outstream (&outbuffer, QIODevice::WriteOnly), auxstream (&auxbuffer, QIODevice::ReadWrite) {
+	RKAsyncDataStreamHelper () : 
+			auxbuffer(), 
+			inbuffer(),
+			outbuffer(),
+			auxstream (&auxbuffer, QIODevice::ReadWrite),
+			instream (&inbuffer, QIODevice::ReadOnly), 
+			outstream (&outbuffer, QIODevice::WriteOnly) {
 		device = 0;
 		expected_read_size = 0;
 	}
@@ -151,16 +157,17 @@ public:
 	int inSize () const {
 		return inbuffer.size ();
 	}
-	
-	QDataStream instream;
-	QDataStream outstream;
 private:
 	QIODevice *device;
 	quint32 expected_read_size;
+	// NOTE: Order of declaration of the buffers and streams is important, as these are initialized during construction, and depend on each other
+	QByteArray auxbuffer;
 	QByteArray inbuffer;
 	QByteArray outbuffer;
-	QByteArray auxbuffer;
 	QDataStream auxstream;
+public:
+	QDataStream instream;
+	QDataStream outstream;
 };
 
 #endif
