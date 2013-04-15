@@ -23,6 +23,7 @@
 #include <QMutex>
 
 #include "rkgraphicsdevice_protocol_shared.h"
+#include "../rkasyncdatastreamhelper.h"
 
 /** This simple class is responsible for handling the backend side of transmitting data / requests for the RKGraphicsDevice
  Also it provides the namespace for some statics.
@@ -34,7 +35,7 @@ public:
 	static void kill ();
 	static bool connectionAlive ();
 	static RKGraphicsDeviceBackendTransmitter* instance ();
-	static RKAsyncDataStreamHelper streamer;
+	static RKAsyncDataStreamHelper<RKGraphicsDeviceTransmittionLengthType> streamer;
 	static QIODevice* connection;
 	static QMutex mutex;
 private:

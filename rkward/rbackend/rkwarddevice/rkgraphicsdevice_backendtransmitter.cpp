@@ -23,7 +23,7 @@
 
 #include "../../debug.h"
 
-RKAsyncDataStreamHelper RKGraphicsDeviceBackendTransmitter::streamer;
+RKAsyncDataStreamHelper<RKGraphicsDeviceTransmittionLengthType> RKGraphicsDeviceBackendTransmitter::streamer;
 QIODevice* RKGraphicsDeviceBackendTransmitter::connection = 0;
 QMutex RKGraphicsDeviceBackendTransmitter::mutex;
 RKGraphicsDeviceBackendTransmitter* RKGraphicsDeviceBackendTransmitter::_instance = 0;

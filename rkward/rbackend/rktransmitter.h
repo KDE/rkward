@@ -19,6 +19,7 @@
 #define RKTRANSMITTER_H
 
 #include "rkrbackendprotocol_shared.h"
+#include "rkasyncdatastreamhelper.h"
 
 #include <QThread>
 #include <QByteArray>
@@ -27,8 +28,8 @@
 NOTE: This could really be a namespace, instead of a class, but "friending" a class is simply easier... */
 class RKRBackendSerializer {
 public:
-	static QByteArray serialize (const RBackendRequest &request);
-	static RBackendRequest *unserialize (const QByteArray &buffer);
+	static void serialize (const RBackendRequest &request, QDataStream &buffer);
+	static RBackendRequest *unserialize (QDataStream &buffer);
 
 private:
 	static void serializeOutput (const ROutputList &list, QDataStream &stream);
@@ -67,7 +68,7 @@ private slots:
 	void disconnected ();
 private:
 	static RKAbstractTransmitter* _instance;
-	bool fetching_transmission;
+	RKAsyncDataStreamHelper<quint64> streamer;
 };
 
 #endif

@@ -2,7 +2,7 @@
                           rktransmitter  -  description
                              -------------------
     begin                : Thu Nov 18 2010
-    copyright            : (C) 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2010, 2013 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -19,11 +19,8 @@
 
 #include "../debug.h"
 
-QByteArray RKRBackendSerializer::serialize (const RBackendRequest &request) {
+void RKRBackendSerializer::serialize (const RBackendRequest &request, QDataStream &stream) {
 	RK_TRACE (RBACKEND);
-
-	QByteArray ret;
-	QDataStream stream (&ret, QIODevice::WriteOnly);
 
 	stream << (qint8) request.type;
 	stream << request.synchronous;
@@ -42,14 +39,11 @@ QByteArray RKRBackendSerializer::serialize (const RBackendRequest &request) {
 		stream << false;
 	}
 	stream << request.params;
-
-	return ret;
 }
 
-RBackendRequest *RKRBackendSerializer::unserialize (const QByteArray &buffer) {
+RBackendRequest *RKRBackendSerializer::unserialize (QDataStream &stream) {
 	RK_TRACE (RBACKEND);
 
-	QDataStream stream (buffer);
 	RBackendRequest *request = new RBackendRequest (false, RBackendRequest::OtherRequest);		// will be overwritten
 
 	bool dummyb;
@@ -203,7 +197,6 @@ RKAbstractTransmitter::RKAbstractTransmitter () : QThread () {
 	RK_ASSERT (_instance == 0);	// NOTE: Although there are two instances of an abstract transmitter in an RKWard session, these live in different processes.
 	_instance = this;
 	connection = 0;
-	fetching_transmission = false;
 
 	moveToThread (this);
 }
@@ -221,10 +214,9 @@ void RKAbstractTransmitter::transmitRequest (RBackendRequest *request) {
 		return;
 	}
 
-	QByteArray buffer = RKRBackendSerializer::serialize (*request);
-	RK_DEBUG (RBACKEND, DL_DEBUG, "Transmitting request of length %s", QString::number (buffer.length ()).toLocal8Bit ().data ());
-	connection->write (QString::number (buffer.length ()).toLocal8Bit () + "\n");
-	connection->write (buffer);
+	RKRBackendSerializer::serialize (*request, streamer.outstream);
+	RK_DEBUG (RBACKEND, DL_DEBUG, "Transmitting request of length %d", streamer.outSize ());
+	streamer.writeOutBuffer ();
 }
 
 void RKAbstractTransmitter::customEvent (QEvent *e) {
@@ -242,38 +234,17 @@ void RKAbstractTransmitter::customEvent (QEvent *e) {
 void RKAbstractTransmitter::fetchTransmission () {
 	RK_TRACE (RBACKEND);
 
+	while (connection->bytesAvailable ()) {
+		if (!streamer.readInBuffer ()) break;
+
+		requestReceived (RKRBackendSerializer::unserialize (streamer.instream));
+		RK_ASSERT (streamer.instream.atEnd ());   // full transmission should have been read
+	}
+
 	if (!connection->isOpen ()) {
-		handleTransmissionError ("Connection not open while trying to read request. Last error was: " + connection->errorString ());
+		handleTransmissionError ("Connection closed unexepctedly. Last error was: " + connection->errorString ());
 		return;
 	}
-
-	if (fetching_transmission) return;	// apparently, on Windows, readyRead() *does* get emitted from waitForReadyRead. Avoid recursion.
-
-	if (!connection->canReadLine ()) return;
-	fetching_transmission = true;
-
-	QString line = QString::fromLocal8Bit (connection->readLine ());
-	bool ok;
-	int expected_length = line.toInt (&ok);
-	if (!ok) handleTransmissionError ("Protocol header error. Last connection error was: " + connection->errorString ()+ "; header was: " + line);
-
-	QByteArray receive_buffer;
-	while (receive_buffer.length () < expected_length) {
-		if (connection->bytesAvailable ()) {
-			receive_buffer.append (connection->read (expected_length - receive_buffer.length ()));
-		} else {
-			connection->waitForReadyRead (1000);
-			if (!connection->isOpen ()) {
-				handleTransmissionError ("Connection closed unexepctedly. Last error: " + connection->errorString ());
-				return;
-			}
-		}
-	}
-	fetching_transmission = false;
-
-	requestReceived (RKRBackendSerializer::unserialize (receive_buffer));
-
-	if (connection->bytesAvailable ()) QTimer::singleShot (0, this, SLOT (fetchTransmission ()));
 }
 
 void RKAbstractTransmitter::setConnection (QLocalSocket *_connection) {
@@ -281,6 +252,7 @@ void RKAbstractTransmitter::setConnection (QLocalSocket *_connection) {
 	RK_ASSERT (!connection);
 
 	connection = _connection;
+	streamer.setIODevice (connection);
 	RK_ASSERT (connection->isOpen ());
 
 	connect (connection, SIGNAL (readyRead()), this, SLOT (fetchTransmission()));

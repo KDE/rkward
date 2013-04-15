@@ -19,6 +19,7 @@
 #define RKGRAPHICSDEVICE_FRONTENDTRANSMITTER_H
 
 #include "rkgraphicsdevice_protocol_shared.h"
+#include "../rkasyncdatastreamhelper.h"
 
 class QIODevice;
 class QLocalServer;
@@ -44,7 +45,7 @@ private:
 	QString server_name;
 	QIODevice *connection;
 	QLocalServer *local_server;
-	RKAsyncDataStreamHelper streamer;
+	RKAsyncDataStreamHelper<RKGraphicsDeviceTransmittionLengthType> streamer;
 };
 
 #endif
