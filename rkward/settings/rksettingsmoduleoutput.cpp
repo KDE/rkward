@@ -275,6 +275,7 @@ void RKSettingsModuleOutput::loadSettings (KConfig *config) {
 
 //static
 QStringList RKSettingsModuleOutput::makeRRunTimeOptionCommands () {
+	RK_TRACE (SETTINGS);
 	QStringList list;
 
 // output format options

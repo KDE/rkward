@@ -148,6 +148,7 @@ void RKSettingsModuleGraphics::loadSettings (KConfig *config) {
 
 //static
 QStringList RKSettingsModuleGraphics::makeRRunTimeOptionCommands () {
+	RK_TRACE (SETTINGS);
 	QStringList list;
 
 #ifdef Q_WS_X11

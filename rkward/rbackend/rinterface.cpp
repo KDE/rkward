@@ -93,7 +93,7 @@ RInterface::RInterface () {
 	}
 
 	new RCommandStackModel (this);
-	RCommandStack::regular_stack = new RCommandStack (0);
+	RCommandStack::regular_stack = new RCommandStack ();
 	startup_phase2_error = false;
 	command_logfile_mode = NotRecordingCommands;
 	previously_idle = false;
@@ -139,19 +139,22 @@ RCommand *RInterface::popPreviousCommand () {
 	RK_TRACE (RBACKEND);
 
 	RK_ASSERT (!all_current_commands.isEmpty ());
-	RCommandStack::currentStack ()->pop ();
-	return all_current_commands.takeLast ();
+	RCommand *ret = all_current_commands.takeLast ();
+	RCommandStack::pop (ret);
+	return ret;
 }
 
 void RInterface::tryNextCommand () {
 	RK_TRACE (RBACKEND);
 	if (!currentCommandRequest ()) return;
 
-	RCommandStack *stack = RCommandStack::currentStack ();
-	bool main_stack = (stack == RCommandStack::regular_stack);
-
-	if ((!(main_stack && locked)) && stack->isActive ()) {		// do not respect locks in substacks
-		RCommand *command = stack->currentCommand ();
+	bool on_top_level = all_current_commands.isEmpty ();
+	if (!(on_top_level && locked)) {                                     // do not respect locks for sub-commands
+		RCommand *command = RCommandStack::currentCommand ();
+		if (!on_top_level && all_current_commands.contains (command)) {  // all sub-commands of the current command have finished
+			doNextCommand (0);
+			return;
+		}
 
 		if (command) {
 			all_current_commands.append (command);
@@ -175,11 +178,7 @@ void RInterface::tryNextCommand () {
 		}
 	}
 
-	if ((!stack->isActive ()) && stack->isEmpty () && !main_stack) {
-		// a substack was depleted
-		delete stack;
-		doNextCommand (0);
-	} else if (main_stack) {
+	if (on_top_level) {
 		if (!previously_idle) RKWardMainWindow::getMain ()->setRStatus (RKWardMainWindow::Idle);
 		previously_idle = true;
 	}
@@ -266,8 +265,7 @@ void RInterface::rCommandDone (RCommand *command) {
 		RK_ASSERT (command->getDataType () == RData::StringVector);
 		RKSettingsModuleRPackages::defaultliblocs += command->stringVector ();
 
-		RCommandStack *stack = RCommandStack::currentStack ();
-		RCommandChain *chain = stack->currentChain ();
+		RCommandChain *chain = command->parent;
 		RK_ASSERT (chain);
 		RK_ASSERT (!chain->isClosed ());
 
@@ -323,7 +321,7 @@ void RInterface::handleRequest (RBackendRequest* request) {
 	if (request->type == RBackendRequest::CommandOut) {
 		RCommandProxy *cproxy = request->takeCommand ();
 		RCommand *command = 0;
-
+#warning: when there are priority commands, the command to pop is NOT necessarily the one we last submitted!
 		// NOTE: the order of processing is: first try to submit the next command, then handle the old command.
 		// The reason for doing it this way, instead of the reverse, is that this allows the backend thread / process to continue working, concurrently
 		// NOTE: cproxy should only ever be 0 in the very first cycle
@@ -347,8 +345,7 @@ void RInterface::handleRequest (RBackendRequest* request) {
 		startup_errors = request->params["message"].toString ();
 
 		command_requests.append (request);
-		RCommandStack *stack = new RCommandStack (runningCommand ());
-		RCommandChain *chain = stack->startChain (stack);
+		RCommandChain *chain = RCommandStack::startChain (runningCommand ());
 
 		issueCommand ("paste (R.version[c (\"major\", \"minor\")], collapse=\".\")\n", RCommand::GetStringVector | RCommand::App | RCommand::Sync, QString (), this, GET_R_VERSION, chain);
 		// find out about standard library locations
@@ -454,9 +451,7 @@ void RInterface::issueCommand (RCommand *command, RCommandChain *chain) {
 RCommandChain *RInterface::startChain (RCommandChain *parent) {
 	RK_TRACE (RBACKEND);
 
-	RCommandChain *ret;
-	ret = RCommandStack::startChain (parent);
-	return ret;
+	return RCommandStack::startChain (parent);
 };
 
 void RInterface::closeChain (RCommandChain *chain) {
@@ -636,7 +631,7 @@ void RInterface::processHistoricalSubstackRequest (const QStringList &calllist) 
 		current_command = new RCommand (QString (), RCommand::App | RCommand::EmptyCommand | RCommand::Sync);
 		issueCommand (current_command);
 	}
-	in_chain = startChain (new RCommandStack (current_command));
+	in_chain = startChain (current_command);
 
 	QString call = calllist.value (0);
 	if (call == "sync") {

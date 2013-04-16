@@ -110,9 +110,9 @@ private:
 		User=1		/**< locked on user request */
 	};
 
-/** Used for locking the backend, meaning not further commands will be given to the backend. This is used, when the currently running command is to be cancelled. It is used to make sure that the backend thread does not proceed with further commands, before the main thread takes notice. Also it is called, if the RThread is paused on User request. Further, the thread is initially locked so the main thread can check for some conditions before the backend thread may produce
-more errors/crashes. @see RInterface::cancelCommand @see RInterface::pauseProcessing
-May be an OR'ed combination of several LockType s */
+/** Used for locking the backend, meaning not further commands will be given to the backend. It is called, if the RThread is paused on User request.
+ * @see RInterface::pauseProcessing
+ * May be an OR'ed combination of several LockType s, but currently, there is only one LockType */
 	int locked;
 
 	QString startup_errors;

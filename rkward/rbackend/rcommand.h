@@ -2,7 +2,7 @@
                           rcommand.h  -  description
                              -------------------
     begin                : Mon Nov 11 2002
-    copyright            : (C) 2002, 2006, 2007, 2009, 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2006, 2007, 2009, 2010, 2013 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -29,38 +29,28 @@
 class RCommandReceiver;
 class RCommand;
 class RCommandProxy;
-class RCommandChain;
 
-/** Base class for RCommand and RCommandChain, to make it possible to store both in the same list */
-class RCommandBase {
-public:
-/** Returns the casted pointer, if this is a command, else 0 */
-	RCommand* commandPointer ();
-/** Returns the casted pointer, if this is a chain, else 0 */
-	RCommandChain* chainPointer ();
-protected:
-friend class RCommandStack;
-friend class RCommandStackModel;
-	RCommandBase (bool is_chain);
-	RCommandChain *parent;
-private:
-	bool is_command_chain;
-};
-
-/** this simple struct is used to ensure a sequence of RCommand s does not get interrupted by unrelated RCommands.
+/** R Commands can be arranged in a simple chain to make sure they are not interrupted by other commands.
+ *  Also, command may need to run sub-commands.
 @see \ref UsingTheInterfaceToR
 @see RInterface::startChain
 @see RInterface::closeChain */
-class RCommandChain : public RCommandBase {
+class RCommandChain {
 public:
 	bool isClosed () const { return closed; };
+/** @returns true, if there are no sub-commands or sub-chains waiting in this chain */
+	bool isEmpty () const { return sub_commands.isEmpty (); };
+	bool isCommand () const { return is_command; };
+	RCommandChain* parentChain () const { return parent; };
+	RCommand *toCommand ();
 protected:
 friend class RCommandStack;
 friend class RCommandStackModel;
-	RCommandChain () : RCommandBase (true) {};
-	QList<RCommandBase*> commands;
+	RCommandChain (bool is_chain=true) : closed (!is_chain), is_command (!is_chain) {};
+	QList<RCommandChain*> sub_commands;
 	bool closed;
-	bool isStack () { return (parent == 0); }
+	bool is_command;
+	RCommandChain *parent;
 };
 
 /** this struct is used to store the R output to an RCommand. The RCommand basically keeps a list of ROutputString (s). The difference to a normal
@@ -114,7 +104,7 @@ friend class RCommand;
 	kept around very long, so they should not be a memory issue.
   *@author Thomas Friedrichsmeier
   */
-class RCommand : public RData, public RCommandBase {
+class RCommand : public RData, public RCommandChain {
 public:
 /** constructs an RCommand.
 @param command The command (string) to be run in the backend. This may include newlines and ";". The command should be a complete statement. If it is an incomplete statement, the backend will not wait for the rest of the command to come in, but rather the command will fail with RCommand::errorIncomplete.

@@ -25,19 +25,8 @@
 #include "../debug.h"
 #include "../rkglobals.h"
 
-RCommandBase::RCommandBase (bool is_chain) {
-	is_command_chain = is_chain;
-	RCommandBase::parent = 0;
-}
-
-RCommand* RCommandBase::commandPointer () {
-	if (is_command_chain) return 0;
-	return static_cast<RCommand*> (this);
-}
-
-RCommandChain* RCommandBase::chainPointer () {
-	if (!is_command_chain) return 0;
-	return static_cast<RCommandChain*> (this);
+RCommand* RCommandChain::toCommand() {
+	return (is_command ? static_cast<RCommand*> (this) : 0);
 }
 
 
@@ -51,7 +40,7 @@ RCommandNotifier::~RCommandNotifier () {
 
 int RCommand::next_id = 0;
 
-RCommand::RCommand(const QString &command, int type, const QString &rk_equiv, RCommandReceiver *receiver, int flags) : RData (), RCommandBase (false) {
+RCommand::RCommand(const QString &command, int type, const QString &rk_equiv, RCommandReceiver *receiver, int flags) : RData (), RCommandChain (false) {
 	RK_TRACE (RBACKEND);
 	_id = next_id++;
 // if we ever submit enough commands to get a buffer overflow, use only positive numbers.

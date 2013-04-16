@@ -2,7 +2,7 @@
                           rcommandstack  -  description
                              -------------------
     begin                : Mon Sep 6 2004
-    copyright            : (C) 2004, 2007, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2013 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -20,15 +20,17 @@
 #include "rcommand.h"
 
 /**
-This class represents a top-level RCommandChain. There are/will be two (types of) such chains: One for commands sent to the R-backend for "regular" evaluation, and one for commands sent in reply to a (modal) request from the R-backend via the RRequestHandler.
-The class provides convenience functions for determining the state of the Stack (empty/blocked/active) and inserting and fetching commands in the correct order.
-Remember to lock RInterface::mutex before accessing any of these functions!
-
-@author Thomas Friedrichsmeier
+* This class represents the top-level RCommandChain, which persists for the entire session.
+* Having a separate class for this (singleton!) is a bit of a historical left-over. However, it does make a bit of sense, as this essentially provides the API
+* for manipulation of RCommandChain s, which should be used by RInterface, only.
+* 
+* The main job of this class is to allow fetching commands in the correct order.
+* 
+* @author Thomas Friedrichsmeier
 */
 class RCommandStack : public RCommandChain {
 public:
-	RCommandStack (RCommand *parent_command);
+	RCommandStack ();
 	~RCommandStack ();
 
 /** add a command to the given chain (static, as it does no matter, which stack the chain belongs to) */
@@ -40,37 +42,22 @@ public:
  (static, as it does no matter, which stack the chain belongs to). */
 	static void closeChain (RCommandChain *chain);
 
-/** @returns true, if there are no commands or open chains waiting in this stack */
-	bool isEmpty ();
-/** @returns true, if there are commands to be processed in the current chain */
-	bool isActive ();
+/** removes the given RCommand from the stack. */
+	static void pop (RCommandChain *item);
+	static bool popIfCompleted (RCommandChain *item);
+	static RCommandChain* activeSubItemOf (RCommandChain *item);
 
-/** removes the RCommand to be processed next from the stack and sets it as the currentCommand(). If there is no command to process right now, currentCommand() will be 0. Note: we can't just return the popped command for internal reasons. */
-	void pop ();
-
-/** see pop() */
-	RCommand* currentCommand ();
-	QList<RCommand*> allCommands () const;
-	RCommandChain* currentChain () { return current_chain; };
+/** returns a pointer to the current command to be processed. NOTE: This is really non-const. Chains which have been closed might be removed. */
+	static RCommand* currentCommand ();
+	static QList<RCommand*> allCommands ();
 
 /** the regular command stack, i.e. not a callback */
 	static RCommandStack *regular_stack;
-
-	static RCommandStack* currentStack ();
-
-/** return the parent RCommandStack of the given RCommandChain */
-	static RCommandStack *chainStack (RCommandChain *child);
-/** return the parent RCommandStack of the given RCommand */
-	static RCommandStack *stackForCommand (RCommand *child);
 private:
+	static void issueCommandInternal (RCommandChain *child, RCommandChain *parent);
+	static bool removeFromParent (RCommandChain *child);
 friend class RCommandStackModel;
-	RCommandChain *current_chain;
-/** super-ordinated command. 0 for the regular_stack */
-	RCommand *parent_command;
-/** pointer to any substack. Will only be non-zero, if the substack is active */
-	RCommandStack *sub_stack;
-	void clearFinishedChains ();
-	void addChainCommandsToList (QList<RCommand*> *list, const RCommandChain *chain) const;
+	static void listCommandsRecursive (QList<RCommand*> *list, const RCommandChain *chain);
 };
 
 #include <QAbstractItemModel>
@@ -115,24 +102,24 @@ public:
 
 	/** call this, when you are about to remove an item from a command stack/chain, *before* you actually remove the item. When done, call popComplete().
 	@param parent The parent of the item to be removed */
-	void aboutToPop (RCommandBase* parent);
+	void aboutToPop (RCommandChain* parent, int index);
 	/** @see aboutToPop () */
 	void popComplete ();
 	/** call this, when you are about to add an item to a command stack/chain, *before* you actually add the item. When done, call addComplete().
 	@param parent The parent of the item to be removed */
-	void aboutToAdd (RCommandBase* parent);
+	void aboutToAdd (RCommandChain* parent, int index);
 	/** @see aboutToAdd () */
 	void addComplete ();
 	/** call this, when you have made changes to an item, that should be reflected in RControlWindow
 	@param item The item that was changed */
-	void itemChange (RCommandBase* item);
+	void itemChange (RCommandChain* item);
 private:
 	/** number of listeners. If there are no listeners, the model will do almost nothing at all */
 	int listeners;
 	static RCommandStackModel* static_model;
 
 	/** create a model index for the given item */
-	QModelIndex indexFor (RCommandBase *item);
+	QModelIndex indexFor (RCommandChain *item);
 };
 
 #endif

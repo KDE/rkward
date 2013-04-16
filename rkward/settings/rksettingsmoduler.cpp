@@ -242,6 +242,7 @@ void RKSettingsModuleR::applyChanges () {
 
 //static
 QStringList RKSettingsModuleR::makeRRunTimeOptionCommands () {
+	RK_TRACE (SETTINGS);
 	QStringList list;
 
 	QString tf;
