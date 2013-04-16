@@ -442,7 +442,7 @@ void RKSettingsModuleRPackages::selectCRANMirror () {
 
 	RKProgressControl* control = new RKProgressControl (this, title, title, RKProgressControl::CancellableProgress);
 	control->addRCommand (command, true);
-	RKGlobals::rInterface ()->issueCommand (command);
+	RKGlobals::rInterface ()->issueCommand (command, commandChain ());
 	control->doModal (true);
 }
 
