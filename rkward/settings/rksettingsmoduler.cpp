@@ -484,7 +484,12 @@ QString RKSettingsModuleRPackages::pkgTypeOption () {
 #	if defined Q_WS_WIN
 	else ret.append ("win.binary");
 #	else
+#		if R_VERSION < R_Version(3,0,0)
 	else ret.append ("mac.binary.leopard");
+#		else
+	// OS X binary packages have switched repo locations and package type in R >= 3.0.0
+	else ret.append ("mac.binary");
+#		endif
 #	endif
 	ret.append ("\")\n");
 #endif
