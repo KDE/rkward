@@ -34,7 +34,7 @@
 
 #include "../debug.h"
 
-#define KEYCOLUMN_UNINITIALIZED_VALUE QString ("___#!RK!___Keycol_unintialized")
+#define KEYCOLUMN_UNINITIALIZED_VALUE QString ("___#!RK!___Keycol_uninitialized")
 
 RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget) : RKComponent (parent_component, parent_widget) {
 	RK_TRACE (PLUGIN);

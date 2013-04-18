@@ -314,7 +314,7 @@ protected:
 private:
 /** check all objects currently in the list for validity. And set validity state accordingly. */
 	void validizeAll (bool silent=false);
-/** simple helper function: Check whether the the list is valid (*after* each object had been validized!), and set the valid state accordingly */
+/** simple helper function: Check whether the list is valid (*after* each object had been validized!), and set the valid state accordingly */
 	void updateValidity ();
 /** internal helper to add the object (and check it for problems).
  * @returns true, if the list was changed, false, if the object was already in the list or is 0. */

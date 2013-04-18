@@ -130,7 +130,7 @@ protected:
 
 Notes: How does building work?
 - Builder builds the components. Simple components are built by the same builder. For embedded components, a sub-builder is invoked.
-- Simple components register their (property) connection wishes to the the builder during construction
+- Simple components register their (property) connection wishes to the builder during construction
 - Builder takes care of connecting properties
 
 Calls parent_component->addChild () for built child-components. As an exception, this may be omitted for passive components (e.g. layouting components) that do not specify an id

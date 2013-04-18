@@ -86,7 +86,7 @@ RKSettingsModuleGeneral::RKSettingsModuleGeneral (RKSettings *gui, QWidget *pare
 	connect (show_help_on_startup_box, SIGNAL (stateChanged (int)), this, SLOT (settingChanged()));
 	main_vbox->addWidget (show_help_on_startup_box);
 
-	QGroupBox* group_box = new QGroupBox (i18n ("Intial working directory (*)"), this);
+	QGroupBox* group_box = new QGroupBox (i18n ("Initial working directory (*)"), this);
 	QHBoxLayout *hlayout = new QHBoxLayout (group_box);
 	initial_dir_chooser = new QComboBox (group_box);
 	initial_dir_chooser->setEditable (false);

@@ -76,7 +76,7 @@ void RKDebugMessageWindow::createWidget () {
 
 		if (first) {
 			KMessageBox::information (this, i18n ("<p>This window is used for displaying RKWard related debug messages. It is targetted primarily at (plugin) developers. It does <b>not</b> offer any features for debugging R code.</p>"
-				"<p>Note that the list of message is cleared everytime you close the window.</p><p>Type and severity level of messages can be controlled from Settings->Configure RKWard->Debug</p>"), i18n ("About this window"), "inforkdebugmessagewindow");
+				"<p>Note that the list of messages is cleared everytime you close the window.</p><p>Type and severity level of messages can be controlled from Settings->Configure RKWard->Debug</p>"), i18n ("About this window"), "inforkdebugmessagewindow");
 			first = false;
 		}
 	}

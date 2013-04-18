@@ -68,7 +68,7 @@ public:
 /** For synchronous requests, only: The frontend-thread will set this to true (using completed()), once the request has been "completed". Important: The backend thread MUST NOT touch a request after it has been sent, and before "done" has been set to true. */
 	bool volatile done;
 	RCallbackType type;
-/** For synchronous requests, only: If the the frontend wants any commands to be executed, it will place the next one in this slot. The backend thread should keep executing commands (in a sub-eventloop) while this is non-zero. Also, the backend-thread may place here any command that has just finished. */
+/** For synchronous requests, only: If the frontend wants any commands to be executed, it will place the next one in this slot. The backend thread should keep executing commands (in a sub-eventloop) while this is non-zero. Also, the backend-thread may place here any command that has just finished. */
 	RCommandProxy *command;
 /** Any other parameters, esp. for RCallbackType::OtherRequest. Can be used in both directions. */
 	QVariantMap params;
