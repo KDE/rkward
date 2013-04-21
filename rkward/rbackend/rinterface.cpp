@@ -135,22 +135,35 @@ bool RInterface::backendIsIdle () {
 	return (RCommandStack::regular_stack->isEmpty() && (!runningCommand()));
 }
 
-RCommand *RInterface::popPreviousCommand () {
+RCommand *RInterface::popPreviousCommand (int id) {
 	RK_TRACE (RBACKEND);
 
 	RK_ASSERT (!all_current_commands.isEmpty ());
-	RCommand *ret = all_current_commands.takeLast ();
-	RCommandStack::pop (ret);
-	return ret;
+	for (int i = all_current_commands.size () - 1; i >= 0; --i) {
+		RCommand *ret = all_current_commands[i];
+		if (ret->id () == id) {
+			RCommandStack::pop (ret);
+			all_current_commands.removeAt (i);
+			return ret;
+		}
+	}
+	RK_ASSERT (false);
+	return 0;
 }
 
 void RInterface::tryNextCommand () {
 	RK_TRACE (RBACKEND);
-	if (!currentCommandRequest ()) return;
+	RCommand *command = RCommandStack::currentCommand ();
+	if (command_requests.isEmpty ()) {
+		// if the backend is not requesting anything, only priority commands will be pushed
+		if (!command) return;
+		if (!(command->type () & RCommand::PriorityCommand)) return;
+		if (all_current_commands.contains (command)) return;
+	}
 
+	bool priority = command && (command->type () & RCommand::PriorityCommand);
 	bool on_top_level = all_current_commands.isEmpty ();
-	if (!(on_top_level && locked)) {                                     // do not respect locks for sub-commands
-		RCommand *command = RCommandStack::currentCommand ();
+	if (!(on_top_level && locked && !(priority))) {                                     // do not respect locks for sub-commands
 		if (!on_top_level && all_current_commands.contains (command)) {  // all sub-commands of the current command have finished
 			doNextCommand (0);
 			return;
@@ -164,7 +177,7 @@ void RInterface::tryNextCommand () {
 				command->status |= RCommand::Failed;
 
 				// notify ourselves...
-				RCommand* dummy = popPreviousCommand ();
+				RCommand* dummy = popPreviousCommand (command->id ());
 				RK_ASSERT (dummy == command);
 				handleCommandOut (command);
 				return;
@@ -223,7 +236,16 @@ void RInterface::handleCommandOut (RCommand *command) {
 void RInterface::doNextCommand (RCommand *command) {
 	RK_TRACE (RBACKEND);
 	RBackendRequest* command_request = currentCommandRequest ();
-	RK_ASSERT (command_request);
+	if (!command_request) {
+		if (!(command && (command->type () & RCommand::PriorityCommand))) return;
+	}
+	// importantly, this point is not reached for the fake startup command
+
+	if (RK_Debug_CommandStep) {
+		QTime t;
+		t.start ();
+		while (t.elapsed () < RK_Debug_CommandStep) {}
+	}
 
 	flushOutput (true);
 	RCommandProxy *proxy = 0;
@@ -248,9 +270,14 @@ void RInterface::doNextCommand (RCommand *command) {
 		}
 	}
 
-	command_request->command = proxy;
-	RKRBackendProtocolFrontend::setRequestCompleted (command_request);
-	command_requests.pop_back ();
+	if (command && (command->type () & RCommand::PriorityCommand)) {
+		RKRBackendProtocolFrontend::sendPriorityCommand (proxy);
+	} else {
+		RK_ASSERT (command_request);
+		command_request->command = proxy;
+		RKRBackendProtocolFrontend::setRequestCompleted (command_request);
+		command_requests.pop_back ();
+	}
 }
 
 void RInterface::rCommandDone (RCommand *command) {
@@ -321,11 +348,10 @@ void RInterface::handleRequest (RBackendRequest* request) {
 	if (request->type == RBackendRequest::CommandOut) {
 		RCommandProxy *cproxy = request->takeCommand ();
 		RCommand *command = 0;
-#warning: when there are priority commands, the command to pop is NOT necessarily the one we last submitted!
 		// NOTE: the order of processing is: first try to submit the next command, then handle the old command.
 		// The reason for doing it this way, instead of the reverse, is that this allows the backend thread / process to continue working, concurrently
 		// NOTE: cproxy should only ever be 0 in the very first cycle
-		if (cproxy) command = popPreviousCommand ();
+		if (cproxy) command = popPreviousCommand (cproxy->id);
 		command_requests.append (request);
 		tryNextCommand ();
 		if (cproxy) {

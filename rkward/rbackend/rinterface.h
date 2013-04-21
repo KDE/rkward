@@ -101,7 +101,7 @@ private:
 	RBackendRequest* currentCommandRequest () const { return (command_requests.isEmpty () ? 0 : command_requests.last ()); };
 	void tryNextCommand ();
 	void doNextCommand (RCommand *command);
-	RCommand *popPreviousCommand ();
+	RCommand *popPreviousCommand (int id);
 	void handleCommandOut (RCommand *command);
 	bool previously_idle;
 

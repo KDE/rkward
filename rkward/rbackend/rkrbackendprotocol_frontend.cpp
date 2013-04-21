@@ -75,6 +75,15 @@ void RKRBackendProtocolFrontend::interruptCommand (int command_id) {
 	qApp->postEvent (RKFrontendTransmitter::instance (), new RKRBackendEvent (req));
 }
 
+void RKRBackendProtocolFrontend::sendPriorityCommand (RCommandProxy* proxy) {
+	RK_TRACE (RBACKEND);
+
+	RBackendRequest *req = new RBackendRequest (false, RBackendRequest::PriorityCommand);
+	req->command = proxy;
+	qApp->postEvent (RKFrontendTransmitter::instance (), new RKRBackendEvent (req));
+
+}
+
 void RKRBackendProtocolFrontend::terminateBackend () {
 	RK_TRACE (RBACKEND);
 

@@ -47,8 +47,17 @@ void RCommandStack::issueCommandInternal (RCommandChain* child, RCommandChain* p
 	RK_TRACE (RBACKEND);
 	RK_ASSERT (parent);
 
-	RCommandStackModel::getModel ()->aboutToAdd (parent, parent->sub_commands.size ());
-	parent->sub_commands.append (child);
+	int pos = parent->sub_commands.size ();
+	if (child->is_command && (child->toCommand ()->type () & RCommand::PriorityCommand)) {
+		// Add priority commands before any regular command, after other priority commands. Always in main chain.
+		RK_ASSERT (parent == regular_stack);
+		for (pos = 0; pos < parent->sub_commands.size (); ++pos) {
+			RCommand *com = parent->sub_commands[pos]->toCommand ();
+			if (!(com && (com->type () & RCommand::PriorityCommand))) break;
+		}
+	}
+	RCommandStackModel::getModel ()->aboutToAdd (parent, pos);
+	parent->sub_commands.insert (pos, child);
 	child->parent = parent;
 	RCommandStackModel::getModel ()->addComplete ();
 }
@@ -90,12 +99,6 @@ void RCommandStack::closeChain (RCommandChain *chain) {
 
 RCommand* RCommandStack::currentCommand () {
 	RK_TRACE (RBACKEND);
-
-	if (RK_Debug_CommandStep) {
-		QTime t;
-		t.start ();
-		while (t.elapsed () < RK_Debug_CommandStep) {}
-	}
 
 	RCommandChain *dummy;
 	do {	// first pop any empty things in the way

@@ -43,7 +43,8 @@ public:
 		Debugger,
 		CommandLineIn,	/**< The next line of the current user command has been submitted in the backend. */
 		Output,		/**< A piece of output. Note: If the backend runs in a single process, output is handled in a pull fashion, instead of using requests. */
-		Interrupt,	/**< Interrupt evaluation. This request type originates in the frontend, not the backend (the only one so far). */
+		Interrupt,	/**< Interrupt evaluation. This request type originates in the frontend, not the backend. */
+		PriorityCommand, /**< Send a command to be run during R's event processing. This request type originates in the frontend, not the backend. */
 		OutputStartedNotification, /**< Only used in the frontend: Notification that a new bit of output has arrived. Used to trigger flushing after a timeout. */
 		OtherRequest		/**< Any other type of request. Note: which requests are in the enum, and which are not has mostly historical reasons. @see params */
 	};

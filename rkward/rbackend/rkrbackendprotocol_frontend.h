@@ -2,7 +2,7 @@
                           rkrbackendprotocol  -  description
                              -------------------
     begin                : Thu Nov 04 2010
-    copyright            : (C) 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2010, 2011, 2013 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -24,6 +24,7 @@
 
 class RInterface;
 class QThread;
+class RCommandProxy;
 
 class RKRBackendProtocolFrontend : public QObject {
 public:
@@ -32,7 +33,8 @@ public:
 
 	static void setRequestCompleted (RBackendRequest *request);
 	ROutputList flushOutput (bool force);
-	void interruptCommand (int command_id);
+	static void interruptCommand (int command_id);
+	static void sendPriorityCommand (RCommandProxy *proxy);
 	void terminateBackend ();
 	void setupBackend ();
 	static RKRBackendProtocolFrontend* instance () { return _instance; };
