@@ -26,6 +26,7 @@
 #include "../windows/rkmdiwindow.h"
 
 class KHTMLPart;
+class KTemporaryFile;
 class KActionCollection;
 class KRecentFilesAction;
 class QAction;
@@ -91,10 +92,12 @@ private slots:
 	void mimeTypeDetermined (KIO::Job*, const QString& type);
 	void internalNavigation ();
 protected:
-/** Here we store the position of the scroll bar before refresh. Used to scroll to the same position after a reload */
-	int scroll_position;
-/** the KHTMLPart doing all the real work */
-	KHTMLPart * khtmlpart;
+/** Here we store the state of the part before refresh. Used to scroll to the same position after a reload */
+	QByteArray saved_state;
+/** the part doing all the real work */
+	KParts::ReadOnlyPart * renderingpart;
+/** In case the part is a khtmlpart: A ready-cast pointer to that. 0 otherwise (if a webkit part is in use) */
+	KHTMLPart *khtmlpart;
 /** update caption according to given URL */
 	virtual void updateCaption (const KUrl &url);
 /** called from openURL. Takes care of updating caption, and updating back/forward actions, if available */
@@ -102,10 +105,10 @@ protected:
 private:
 	struct VisitedLocation {
 		KUrl url;
-		int y_offset;
+		QByteArray state;
 	};
 	QList<VisitedLocation> url_history;
-	void openLocationFromHistory (const VisitedLocation &loc);
+	void openLocationFromHistory (VisitedLocation &loc);
 	int current_history_position;
 	bool url_change_is_from_history;	// dirty!!!
 
@@ -135,6 +138,13 @@ private:
 	RKComponentHandle *componentPathToHandle (QString path);
 	QString startSection (const QString &name, const QString &title, const QString &shorttitle, QStringList *anchors, QStringList *anchor_names);
 
+	void beginWritingHTML (const KUrl &url);
+	void writeHTML (const QString &string);
+	KTemporaryFile* html_write_file;
+	void endWritingHTML ();
+
+	void saveBrowserState (QByteArray *state);
+	void restoreBrowserState (QByteArray *state);
 };
 
 /**
