@@ -32,6 +32,11 @@
 	invisible (x)
 }
 
+# Fetch the current size of the given RK() device from the frontend, and redraw
+"RK.resize" <- function (devnum) {
+	.Call ("rk.graphics.device.resize", as.integer (devnum)-1, PACKAGE="(embedding)")
+}
+
 #' @export
 "x11" <- rk.screen.device
 

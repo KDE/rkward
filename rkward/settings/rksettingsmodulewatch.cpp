@@ -45,7 +45,7 @@ bool RKSettingsModuleWatch::shouldShowInput (RCommand *command) {
 
 	if (command->type () & RCommand::EmptyCommand) return false;
 	
-	if (command->type () & RCommand::Sync) {
+	if (command->type () & (RCommand::Sync | RCommand::PriorityCommand)) {
 		return (sync_filter & ShowInput);
 	} else if (command->type () & RCommand::User) {
 		return (user_filter & ShowInput);
@@ -66,7 +66,7 @@ bool RKSettingsModuleWatch::shouldShowOutput (RCommand *command) {
 	if (command->type () & RCommand::EmptyCommand) return false;
 	if (!shouldShowInput (command)) return false;
 
-	if (command->type () & RCommand::Sync) {
+	if (command->type () & (RCommand::Sync | RCommand::PriorityCommand)) {
 		return (sync_filter & ShowOutput);
 	} else if (command->type () & RCommand::User) {
 		return (user_filter & ShowOutput);
@@ -84,7 +84,7 @@ bool RKSettingsModuleWatch::shouldShowOutput (RCommand *command) {
 bool RKSettingsModuleWatch::shouldShowError (RCommand *command) {
 	RK_TRACE (SETTINGS);
 
-	if (command->type () & RCommand::Sync) {
+	if (command->type () & (RCommand::Sync | RCommand::PriorityCommand)) {
 		return (sync_filter & ShowError);
 	} else if (command->type () & RCommand::User) {
 		return (user_filter & ShowError);
@@ -101,7 +101,7 @@ bool RKSettingsModuleWatch::shouldShowError (RCommand *command) {
 bool RKSettingsModuleWatch::shouldRaiseWindow (RCommand *command) {
 	RK_TRACE (SETTINGS);
 
-	if (command->type () & RCommand::Sync) {
+	if (command->type () & (RCommand::Sync | RCommand::PriorityCommand)) {
 		return (sync_filter & RaiseWindow);
 	} else if (command->type () & RCommand::User) {
 		return (user_filter & RaiseWindow);

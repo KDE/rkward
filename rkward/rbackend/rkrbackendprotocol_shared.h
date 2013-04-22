@@ -2,7 +2,7 @@
                           rkrbackendprotocol  -  description
                              -------------------
     begin                : Thu Nov 04 2010
-    copyright            : (C) 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2010, 2011, 2013 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -32,17 +32,17 @@ public:
 		ShowFiles,
 		ChooseFile,
 		EditFiles,
-		ReadLine,
+		ReadLine,      // 5
 		CommandOut,
 		Started,
 		EvalRequest,
 		CallbackRequest,
-		HistoricalSubstackRequest,
+		HistoricalSubstackRequest,   // 10
 		PlainGenericRequest,
 		SetParamsFromBackend,
 		Debugger,
 		CommandLineIn,	/**< The next line of the current user command has been submitted in the backend. */
-		Output,		/**< A piece of output. Note: If the backend runs in a single process, output is handled in a pull fashion, instead of using requests. */
+		Output,		/**< A piece of output. Note: If the backend runs in a single process, output is handled in a pull fashion, instead of using requests. */  //15
 		Interrupt,	/**< Interrupt evaluation. This request type originates in the frontend, not the backend. */
 		PriorityCommand, /**< Send a command to be run during R's event processing. This request type originates in the frontend, not the backend. */
 		OutputStartedNotification, /**< Only used in the frontend: Notification that a new bit of output has arrived. Used to trigger flushing after a timeout. */
@@ -68,6 +68,8 @@ public:
 	bool synchronous;
 /** For synchronous requests, only: The frontend-thread will set this to true (using completed()), once the request has been "completed". Important: The backend thread MUST NOT touch a request after it has been sent, and before "done" has been set to true. */
 	bool volatile done;
+	int id;
+	static int _id;
 	RCallbackType type;
 /** For synchronous requests, only: If the frontend wants any commands to be executed, it will place the next one in this slot. The backend thread should keep executing commands (in a sub-eventloop) while this is non-zero. Also, the backend-thread may place here any command that has just finished. */
 	RCommandProxy *command;

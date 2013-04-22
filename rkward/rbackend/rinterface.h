@@ -105,6 +105,10 @@ private:
 	void handleCommandOut (RCommand *command);
 	bool previously_idle;
 
+	RCommandChain* openSubcommandChain (RCommand *parent_command);
+	QList<RCommand *> current_commands_with_subcommands;
+	void closeSubcommandChain (RCommand *parent_command);
+
 /** @see locked */
 	enum LockType {
 		User=1		/**< locked on user request */

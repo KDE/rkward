@@ -2,7 +2,7 @@
                           rkrbackend  -  description
                              -------------------
     begin                : Sun Jul 25 2004
-    copyright            : (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2004 - 2013 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -456,6 +456,7 @@ bool RKRBackend::fetchStdoutStderr (bool forcibly) {
 
 void RWriteConsoleEx (const char *buf, int buflen, int type) {
 	RK_TRACE (RBACKEND);
+	RK_DEBUG (RBACKEND, DL_DEBUG, "raw output type %d, size %d: %s", type, buflen, buf);
 
 	// output while nothing else is running (including handlers?) -> This may be a syntax error.
 	if ((RKRBackend::repl_status.eval_depth == 0) && (!RKRBackend::repl_status.browser_context) && (!RKRBackend::this_pointer->isKilled ())) {
@@ -751,6 +752,7 @@ RKRBackend::RKRBackend () : stdout_stderr_mutex (QMutex::Recursive) {
 	r_running = false;
 
 	current_command = 0;
+	pending_priority_command = 0;
 	stdout_stderr_fd = -1;
 
 	RK_ASSERT (this_pointer == 0);
@@ -997,6 +999,9 @@ SEXP doCopyNoEval (SEXP name, SEXP fromenv, SEXP toenv) {
 }
 
 SEXP RKStartGraphicsDevice (SEXP width, SEXP height, SEXP pointsize, SEXP family, SEXP bg, SEXP title, SEXP antialias);
+SEXP RKD_AdjustSize (SEXP devnum);
+void doPendingPriorityCommands ();
+void (* old_R_PolledEvents)(void);
 
 bool RKRBackend::startR () {
 	RK_TRACE (RBACKEND);
@@ -1019,7 +1024,8 @@ bool RKRBackend::startR () {
 #ifndef Q_OS_WIN
 	// re-direct stdout / stderr to a pipe, so we can read output from system() calls
 	int pfd[2];
-	pipe (pfd);
+	int error = pipe (pfd);
+	RK_ASSERT (!error);	// mostly to silence compile time warning about unused return value
 	dup2 (pfd[1], STDOUT_FILENO);
 	dup2 (pfd[1], STDERR_FILENO);		// forward both to a single channel to avoid interleaving hell, for now.
 	close (pfd[1]);
@@ -1072,12 +1078,15 @@ bool RKRBackend::startR () {
 		{ "rk.update.locale", (DL_FUNC) &doUpdateLocale, 0 },
 		{ "rk.locale.name", (DL_FUNC) &doLocaleName, 0 },
 		{ "rk.graphics.device", (DL_FUNC) &RKStartGraphicsDevice, 7},
+		{ "rk.graphics.device.resize", (DL_FUNC) &RKD_AdjustSize, 1},
 		{ 0, 0, 0 }
 	};
 	R_registerRoutines (R_getEmbeddingDllInfo(), NULL, callMethods, NULL, NULL);
 
 	connectCallbacks();
 	RKInsertToplevelStatementFinishedCallback (0);
+	old_R_PolledEvents = R_PolledEvents;
+	R_PolledEvents = doPendingPriorityCommands;
 	default_global_context = R_GlobalContext;
 
 	// get info on R runtime version
@@ -1324,6 +1333,37 @@ void RKRBackend::runCommand (RCommandProxy *command) {
 	}
 }
 
+void RKRBackend::setPriorityCommand (RCommandProxy* command) {
+	RK_TRACE (RBACKEND);
+	QMutexLocker lock (&priority_command_mutex);
+	RK_ASSERT (!(command && pending_priority_command));      // for the time being, we support only one priority command at a time
+	pending_priority_command = command;
+}
+
+void doPendingPriorityCommands () {
+	RK_TRACE (RBACKEND);
+
+	RCommandProxy *command = RKRBackend::this_pointer->pending_priority_command;
+	if (command) {
+		RK_DEBUG (RBACKEND, DL_DEBUG, "running priority command %s", qPrintable (command->command));
+		RKRBackend::this_pointer->setPriorityCommand (0);
+		{
+			QMutexLocker lock (&RKRBackend::this_pointer->all_current_commands_mutex);
+			RKRBackend::this_pointer->all_current_commands.append (command);
+			RKRBackend::this_pointer->current_command = command;
+		}
+
+		RKRBackend::this_pointer->runCommand (command);
+		RKRBackend::this_pointer->commandFinished (false);
+		// TODO: Oh boy, what a mess. Sending notifications should be split from fetchNextCommand() (which is not appropriate, here)
+		RBackendRequest req (false, RBackendRequest::CommandOut);      // NOTE: We do *NOT* want a reply to this one, and in particular, we do *NOT* want to do 
+		                                                               // (recursive) event processing while handling this.
+		req.command = command;
+		RKRBackend::this_pointer->handleRequest (&req);
+	}
+	if (old_R_PolledEvents) old_R_PolledEvents ();
+}
+
 // On Windows, using runDirectCommand (".rk.cat.output ...") is not safe during some places where we call this, e.g. in RBusy.
 // Not a problem on Linux with R 2.13.0, though
 void RKRBackend::catToOutputFile (const QString &out) {
@@ -1439,6 +1479,8 @@ RCommandProxy* RKRBackend::handleRequest (RBackendRequest *request, bool mayHand
 		// latency (not too much, though, as we still need to process events).
 		if (!request->done) RKRBackendProtocolBackend::msleep (++i < 200 ? 10 : 50);
 	}
+
+	while (pending_priority_command) processX11Events ();  // Probably not needed, but make sure to process priority commands first at all times.
 
 	RCommandProxy* command = request->takeCommand ();
 	if (!command) return 0;

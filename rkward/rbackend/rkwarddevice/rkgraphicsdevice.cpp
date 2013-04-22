@@ -28,6 +28,8 @@
 #include <kdialog.h>
 
 #include "rkgraphicsdevice_protocol_shared.h"
+#include "../rinterface.h"
+#include "../../rkglobals.h"
 
 #include "../../debug.h"
 
@@ -40,13 +42,14 @@ RKGraphicsDevice::RKGraphicsDevice (double width, double height, const QString &
 
 	interaction_opcode = -1;
 	dialog = 0;
-	if (antialias) painter.setRenderHints (QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
 	view = new QLabel ();
 	view->installEventFilter (this);
+	view->setScaledContents (true);    // this is just for preview during scaling. The area will be re-sized and re-drawn from R.
 	connect (view, SIGNAL (destroyed(QObject*)), this, SLOT (viewKilled()));
 	connect (&updatetimer, SIGNAL (timeout ()), this, SLOT (updateNow ()));
 	updatetimer.setSingleShot (true);
 	clear ();
+	if (antialias) painter.setRenderHints (QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
 	setActive (true);	// sets window title
 }
 
@@ -73,6 +76,9 @@ void RKGraphicsDevice::updateNow () {
 	if (!view->isVisible ()) {
 		view->resize (area.size ());
 		view->show ();
+	}
+	if (view->size () != area.size ()) {
+		RKGlobals::rInterface ()->issueCommand (new RCommand ("rkward:::RK.resize (" + QString::number (devices.key (this) + 1) + ")", RCommand::PriorityCommand));
 	}
 	painter.begin (&area);
 }
@@ -104,6 +110,13 @@ void RKGraphicsDevice::clear (const QColor& col) {
 	else area.fill (QColor (255, 255, 255, 255));
 	updateNow ();
 	setClip (area.rect ());	// R's devX11.c resets clip on clear, so we do this, too.
+}
+
+void RKGraphicsDevice::setAreaSize (const QSize& size) {
+	if (painter.isActive ()) painter.end ();
+	RK_DEBUG (GRAPHICS_DEVICE, DL_WARNING, "New Size %d, %d (view size is %d, %d)", size.width (), size.height (), view->width (), view->height ());
+	area = QPixmap (size.width (), size.height ());
+	clear ();
 }
 
 void RKGraphicsDevice::setClip (const QRectF& new_clip) {
@@ -270,6 +283,7 @@ bool RKGraphicsDevice::eventFilter (QObject *watched, QEvent *event) {
 			return true;
 		}
 	}
+	if (event->type () == QEvent::Resize) triggerUpdate ();
 
 	return false;
 }

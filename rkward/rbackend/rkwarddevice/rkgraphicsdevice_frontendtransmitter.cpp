@@ -288,6 +288,13 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 				}
 			}
 			streamer.writeOutBuffer ();
+		} else if (opcode == RKDGetSize) {
+			streamer.outstream << device->currentSize ();
+			streamer.writeOutBuffer ();
+		} else if (opcode == RKDSetSize) {
+			QSize size;
+			streamer.instream >> size;
+			device->setAreaSize (size);
 		} else if (opcode == RKDLocator) {
 			device->locator ();
 #warning TODO keep track of status
@@ -322,6 +329,8 @@ void RKGraphicsDeviceFrontendTransmitter::sendDummyReply (quint8 opcode) {
 	} else if (opcode == RKDStrWidthUTF8) {
 		double width = 1;
 		streamer.outstream << width;
+	} else if (opcode == RKDGetSize) {
+		streamer.outstream << QSizeF ();
 	} else {
 		return;	// nothing to write
 	}

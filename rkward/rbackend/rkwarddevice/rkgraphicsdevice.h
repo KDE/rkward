@@ -56,6 +56,8 @@ public:
 	void confirmNewPage ();
 
  	QWidget* viewPort () const { return view; };
+	QSizeF currentSize () const { return view->size (); }
+	void setAreaSize (const QSize &size);
 public slots:
 	void stopInteraction ();
 signals:

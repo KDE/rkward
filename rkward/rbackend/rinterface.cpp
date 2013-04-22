@@ -151,6 +151,22 @@ RCommand *RInterface::popPreviousCommand (int id) {
 	return 0;
 }
 
+RCommandChain* RInterface::openSubcommandChain (RCommand* parent_command) {
+	RK_TRACE (RBACKEND);
+
+	current_commands_with_subcommands.append (parent_command);
+	return RCommandStack::startChain (parent_command);
+}
+
+void RInterface::closeSubcommandChain (RCommand* parent_command) {
+	RK_TRACE (RBACKEND);
+
+	if (current_commands_with_subcommands.contains (parent_command)) {
+		current_commands_with_subcommands.removeAll (parent_command);
+		doNextCommand (0);
+	}
+}
+
 void RInterface::tryNextCommand () {
 	RK_TRACE (RBACKEND);
 	RCommand *command = RCommandStack::currentCommand ();
@@ -164,8 +180,8 @@ void RInterface::tryNextCommand () {
 	bool priority = command && (command->type () & RCommand::PriorityCommand);
 	bool on_top_level = all_current_commands.isEmpty ();
 	if (!(on_top_level && locked && !(priority))) {                                     // do not respect locks for sub-commands
-		if (!on_top_level && all_current_commands.contains (command)) {  // all sub-commands of the current command have finished
-			doNextCommand (0);
+		if ((!on_top_level) && all_current_commands.contains (command)) {  // all sub-commands of the current command have finished, it became the top-most item of the RCommandStack, again
+			closeSubcommandChain (command);
 			return;
 		}
 
@@ -352,7 +368,7 @@ void RInterface::handleRequest (RBackendRequest* request) {
 		// The reason for doing it this way, instead of the reverse, is that this allows the backend thread / process to continue working, concurrently
 		// NOTE: cproxy should only ever be 0 in the very first cycle
 		if (cproxy) command = popPreviousCommand (cproxy->id);
-		command_requests.append (request);
+		if (request->synchronous) command_requests.append (request);
 		tryNextCommand ();
 		if (cproxy) {
 			RK_ASSERT (command);
@@ -371,7 +387,7 @@ void RInterface::handleRequest (RBackendRequest* request) {
 		startup_errors = request->params["message"].toString ();
 
 		command_requests.append (request);
-		RCommandChain *chain = RCommandStack::startChain (runningCommand ());
+		RCommandChain *chain = openSubcommandChain (runningCommand ());
 
 		issueCommand ("paste (R.version[c (\"major\", \"minor\")], collapse=\".\")\n", RCommand::GetStringVector | RCommand::App | RCommand::Sync, QString (), this, GET_R_VERSION, chain);
 		// find out about standard library locations
@@ -657,7 +673,7 @@ void RInterface::processHistoricalSubstackRequest (const QStringList &calllist) 
 		current_command = new RCommand (QString (), RCommand::App | RCommand::EmptyCommand | RCommand::Sync);
 		issueCommand (current_command);
 	}
-	in_chain = startChain (current_command);
+	in_chain = openSubcommandChain (current_command);
 
 	QString call = calllist.value (0);
 	if (call == "sync") {

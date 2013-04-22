@@ -2,7 +2,7 @@
                           rkrbackend  -  description
                              -------------------
     begin                : Sun Jul 25 2004
-    copyright            : (C) 2004, 2005, 2006, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2004 - 2013 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -194,6 +194,10 @@ handleHistoricalSubstackRequest(). Exactly which requests get handled by which f
 	bool fetchStdoutStderr (bool forcibly);
 /** public for technical reasons */
 	QMutex stdout_stderr_mutex;
+
+	void setPriorityCommand (RCommandProxy *command);
+	RCommandProxy *pending_priority_command;
+	QMutex priority_command_mutex;
 private:
 	void clearPendingInterrupt ();
 protected:

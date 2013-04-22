@@ -2,7 +2,7 @@
                           rkrbackendprotocol  -  description
                              -------------------
     begin                : Thu Nov 04 2010
-    copyright            : (C) 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2010, 2011, 2013 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -35,11 +35,13 @@ RCommandProxy::~RCommandProxy () {
 }
 
 
+int RBackendRequest::_id = 0;
 RBackendRequest::RBackendRequest (bool synchronous, RCallbackType type) {
 	RK_TRACE (RBACKEND);
 
 	RBackendRequest::synchronous = synchronous;
 	RBackendRequest::type = type;
+	id = ++_id;
 	done = false;
 	command = 0;
 	output = 0;
@@ -55,6 +57,7 @@ RBackendRequest::~RBackendRequest () {
 void RBackendRequest::mergeReply (RBackendRequest *reply) {
 	RK_TRACE (RBACKEND);
 
+	RK_ASSERT (reply->id == id);
 	command = reply->command;
 	params = reply->params;
 	output = reply->output;
@@ -66,6 +69,8 @@ RBackendRequest* RBackendRequest::duplicate () {
 	RK_TRACE (RBACKEND);
 
 	RBackendRequest* ret = new RBackendRequest (synchronous, type);
+	--_id;   // for pretty, consecutive numbering
+	ret->id = id;
 	ret->done = done;
 	ret->command = command;
 	ret->params = params;

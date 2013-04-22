@@ -22,6 +22,7 @@
 void RKRBackendSerializer::serialize (const RBackendRequest &request, QDataStream &stream) {
 	RK_TRACE (RBACKEND);
 
+	stream << (qint16) request.id;
 	stream << (qint8) request.type;
 	stream << request.synchronous;
 	stream << request.done;		// well, not really needed, but...
@@ -45,9 +46,13 @@ RBackendRequest *RKRBackendSerializer::unserialize (QDataStream &stream) {
 	RK_TRACE (RBACKEND);
 
 	RBackendRequest *request = new RBackendRequest (false, RBackendRequest::OtherRequest);		// will be overwritten
+	RBackendRequest::_id--;
 
 	bool dummyb;
 	qint8 dummy8;
+	qint16 dummy16;
+	stream >> dummy16;
+	request->id = dummy16;
 	stream >> dummy8;
 	request->type = (RBackendRequest::RCallbackType) dummy8;
 	stream >> request->synchronous;

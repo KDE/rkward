@@ -120,6 +120,7 @@ public:
 };
 
 #include <QRectF>
+#include <QSizeF>
 
 // This ought to be optimized away by the compiler:
 #define SAFE_LINE_END(lend) (quint8) (lend == GE_ROUND_CAP ? RoundLineCap : (lend == GE_BUTT_CAP ? ButtLineCap : SquareLineCap))
@@ -165,12 +166,42 @@ static void RKD_Create (double width, double height, pDevDesc dev, const char *t
 	RKD_OUT_STREAM << width << height << QString::fromUtf8 (title) << antialias;
 }
 
-// TODO: Handle resizes
 static void RKD_Size (double *left, double *right, double *top, double *bottom, pDevDesc dev) {
+// NOTE: This does *not* query the frontend for the current size. This is only done on request
 	*left = dev->left;
 	*top = dev->top;
 	*right = dev->right;
 	*bottom = dev->bottom;
+}
+
+static void RKD_SetSize (pDevDesc dev) {
+	RKGraphicsDataStreamWriteGuard wguard;
+	WRITE_HEADER (RKDSetSize, dev);
+	RKD_OUT_STREAM << QSize (qAbs (dev->right - dev->left) + .2, qAbs (dev->bottom - dev->top) + .2);
+}
+
+SEXP RKD_AdjustSize (SEXP _devnum) {
+	int devnum = Rf_asInteger (_devnum);
+	pGEDevDesc gdev = GEgetDevice (devnum);
+	if (!gdev) Rf_error ("No such device %d", devnum);
+	pDevDesc dev = gdev->dev;
+	{
+		RKGraphicsDataStreamWriteGuard wguard;
+		WRITE_HEADER (RKDGetSize, dev);
+	}
+	QSizeF size;
+	{
+		RKGraphicsDataStreamReadGuard rguard;
+		RKD_IN_STREAM >> size;
+	}
+	if (size.isNull ()) Rf_error ("Could not determine current size of device %d. Not an RK device?", devnum);
+	dev->left = dev->top = 0;
+	dev->right = size.width ();
+	dev->bottom = size.height ();
+
+	RKD_SetSize (dev);    // This adjusts the rendering area in the frontend
+	GEplayDisplayList (gdev);
+	return R_NilValue;
 }
 
 static void RKD_Circle (double x, double y, double r, R_GE_gcontext *gc, pDevDesc dev) {

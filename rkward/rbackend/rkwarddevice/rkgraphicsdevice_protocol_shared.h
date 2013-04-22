@@ -62,31 +62,33 @@ enum RKLineJoinStyles {
 
 enum RKDOpcodes {
 	// Asynchronous operations
-	RKDCreate,     // 0
+	RKDCreate,          // 0
 	RKDCircle,
 	RKDLine,
 	RKDPolygon,
 	RKDPolyline,
-	RKDRect,       // 5
+	RKDRect,            // 5
 	RKDTextUTF8,
 	RKDNewPage,
 	RKDClose,
 	RKDActivate,
-	RKDDeActivate, // 10
+	RKDDeActivate,      // 10
 	RKDClip,
 	RKDMode,
 	RKDRaster,
+	RKDSetSize,
 
 	// Synchronous operations
-	RKDStrWidthUTF8,
-	RKDMetricInfo, // 15
+	RKDStrWidthUTF8,    // 15
+	RKDMetricInfo, 
 	RKDLocator,
 	RKDNewPageConfirm,
 	RKDCapture,
-	RKDQueryResolution,
+	RKDQueryResolution, // 20
+	RKDGetSize,    
 
 	// Protocol operations
-	RKDCancel      // 20
+	RKDCancel
 };
 
 #include <QtGlobal>

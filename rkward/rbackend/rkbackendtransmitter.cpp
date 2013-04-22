@@ -2,7 +2,7 @@
                           rkbackendtransmitter  -  description
                              -------------------
     begin                : Thu Nov 18 2010
-    copyright            : (C) 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2010, 2013 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -90,14 +90,25 @@ void RKRBackendTransmitter::requestReceived (RBackendRequest* request) {
 	// first check for requests which originated in the frontend
 	if (request->type == RBackendRequest::Interrupt) {
 		RKRBackend::this_pointer->interruptCommand (request->params.value ("commandid", -1).toInt ());
-	// requests which originated in the backend below this line
-	} else {
+	} else if (request->type == RBackendRequest::PriorityCommand) {
+		RKRBackend::this_pointer->setPriorityCommand (request->takeCommand ());
+	} else {    // requests which originated in the backend below this line
 		if (current_sync_requests.isEmpty ()) {
 			RK_ASSERT (false);
 			return;
 		}
 
-		RBackendRequest* current_sync_request = current_sync_requests.takeFirst ();
+		// "Synchronous" requests are not necessarily answered in the order they have been queued
+		int id = request->id;
+		RBackendRequest* current_sync_request = 0;
+		for (int i = current_sync_requests.size () - 1; i >= 0; --i) {
+			RBackendRequest *candidate = current_sync_requests[i];
+			if (id == candidate->id) {
+				current_sync_request = current_sync_requests.takeAt (i);
+				break;
+			}
+		}
+		RK_ASSERT (current_sync_request);
 		if (current_sync_request->type == RBackendRequest::Output) {
 			delete current_sync_request;	// this was just our internal request
 		} else {
