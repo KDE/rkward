@@ -23,6 +23,7 @@ SET (
 	rkrsupport.cpp
 	rkstructuregetter.cpp
 	rkrbackendprotocol_backend.cpp
+	rkreventloop.cpp
 )
 
 SET (

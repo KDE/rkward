@@ -48,6 +48,7 @@ void* RKRBackend::default_global_context = 0;
 #include "rkstructuregetter.h"
 #include "rklocalesupport.h"
 #include "rksignalsupport.h"
+#include "rkreventloop.h"
 #include "../misc/rkcommonfunctions.h"
 
 #include <stdlib.h>
@@ -69,7 +70,6 @@ extern "C" {
 
 #include <Rdefines.h>
 #include <R_ext/Rdynload.h>
-#include <R_ext/eventloop.h>
 #include <R_ext/Callbacks.h>
 #include <R.h>
 #include <Rversion.h>
@@ -835,52 +835,6 @@ RKRBackend::~RKRBackend () {
 	RK_TRACE (RBACKEND);
 }
 
-#if 0
-static int timeout_counter = 0;
-#endif
-
-void processX11EventsWorker (void *) {
-// this basically copied from R's unix/sys-std.c (Rstd_ReadConsole)
-#ifndef Q_WS_WIN
-	for (;;) {
-		fd_set *what;
-		what = R_checkActivityEx(R_wait_usec > 0 ? R_wait_usec : 50, 1, RK_doIntr);
-		R_runHandlers(R_InputHandlers, what);
-		if (what == NULL) break;
-	}
-	/* This seems to be needed to make Rcmdr react to events. Has this always been the case? It was commented out for a long time, without anybody noticing. */
-	R_PolledEvents ();
-#else
-#warning TODO: correct?
-	R_ProcessEvents();
-#endif
-
-#if 0
-// TODO: The remainder of this function had been commented out since R 2.3.x and is not in Rstd_ReadConsole. Do we still need this?
-	/* I don't really understand what I'm doing here, but apparently this is necessary for Tcl-Tk windows to function properly. */
-	R_PolledEvents ();
-	
-/* Maybe we also need to also call R_timeout_handler once in a while? Obviously this is extremely crude code! 
-TODO: verify we really need this. */
-	if (++timeout_counter > 100) {
-//		extern void (* R_timeout_handler) ();	// already defined in Rinferface.h
-		if (R_timeout_handler) R_timeout_handler ();
-		timeout_counter = 0;
-	}
-#endif
-}
-
-void RKRBackend::processX11Events () {
-	// do not trace
-	if (!this_pointer->r_running) return;
-	if (this_pointer->isKilled ()) return;
-
-	RKRBackend::repl_status.eval_depth++;
-// In case an error (or user interrupt) is caught inside processX11EventsWorker, we don't want to long-jump out.
-	R_ToplevelExec (processX11EventsWorker, 0);
-	RKRBackend::repl_status.eval_depth--;
-}
-
 LibExtern int R_interrupts_pending;
 SEXP doError (SEXP call) {
 	RK_TRACE (RBACKEND);
@@ -1001,7 +955,6 @@ SEXP doCopyNoEval (SEXP name, SEXP fromenv, SEXP toenv) {
 SEXP RKStartGraphicsDevice (SEXP width, SEXP height, SEXP pointsize, SEXP family, SEXP bg, SEXP title, SEXP antialias);
 SEXP RKD_AdjustSize (SEXP devnum);
 void doPendingPriorityCommands ();
-void (* old_R_PolledEvents)(void);
 
 bool RKRBackend::startR () {
 	RK_TRACE (RBACKEND);
@@ -1085,8 +1038,7 @@ bool RKRBackend::startR () {
 
 	connectCallbacks();
 	RKInsertToplevelStatementFinishedCallback (0);
-	old_R_PolledEvents = R_PolledEvents;
-	R_PolledEvents = doPendingPriorityCommands;
+	RKREventLoop::setEventHandler (doPendingPriorityCommands);
 	default_global_context = R_GlobalContext;
 
 	// get info on R runtime version
@@ -1361,7 +1313,6 @@ void doPendingPriorityCommands () {
 		req.command = command;
 		RKRBackend::this_pointer->handleRequest (&req);
 	}
-	if (old_R_PolledEvents) old_R_PolledEvents ();
 }
 
 // On Windows, using runDirectCommand (".rk.cat.output ...") is not safe during some places where we call this, e.g. in RBusy.
@@ -1472,7 +1423,7 @@ RCommandProxy* RKRBackend::handleRequest (RBackendRequest *request, bool mayHand
 	while (!request->done) {
 		if (killed) return 0;
 		// NOTE: processX11Events() may, conceivably, lead to new requests, which may also wait for sub-commands!
-		processX11Events ();
+		RKREventLoop::processX11Events ();
 		// NOTE: sleeping and waking up again can be surprisingly CPU-intensive (yes: more than the event processing, above. I have profiled it).
 		// However, we really don't want to introduce too much delay, either.
 		// Thus, the logic is this: If there was no reply within 2 seconds, then probably we're waiting for a user event, and can afford some more
@@ -1480,7 +1431,7 @@ RCommandProxy* RKRBackend::handleRequest (RBackendRequest *request, bool mayHand
 		if (!request->done) RKRBackendProtocolBackend::msleep (++i < 200 ? 10 : 50);
 	}
 
-	while (pending_priority_command) processX11Events ();  // Probably not needed, but make sure to process priority commands first at all times.
+	while (pending_priority_command) RKREventLoop::processX11Events ();  // Probably not needed, but make sure to process priority commands first at all times.
 
 	RCommandProxy* command = request->takeCommand ();
 	if (!command) return 0;

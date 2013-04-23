@@ -22,6 +22,7 @@
 #include "rkgraphicsdevice_protocol_shared.h"
 #include "rkgraphicsdevice_backendtransmitter.h"
 #include "../rkrbackend.h"
+#include "../rkreventloop.h"
 
 extern "C" {
 #include <R_ext/GraphicsEngine.h>
@@ -51,10 +52,10 @@ public:
 					checkHandleError ();
 				}
 #warning TODO: Use R_CheckUserInterrupt(), instead?
-				if (connection->bytesToWrite ()) RKRBackend::processX11Events ();
+				if (connection->bytesToWrite ()) RKREventLoop::processX11Events ();
 			}
 			while (!RKGraphicsDeviceBackendTransmitter::streamer.readInBuffer ()) {
-				RKRBackend::processX11Events ();
+				RKREventLoop::processX11Events ();
 				if (!connection->waitForReadyRead (10)) {
 					if (checkHandleInterrupt (connection)) {
 						if (have_lock) RKGraphicsDeviceBackendTransmitter::mutex.unlock ();
