@@ -4,7 +4,8 @@
 - Shortcuts for the "Run ..." actions have been changed for better cross-platform compatibility
 - The script editor's "Run line" and "Run selection" actions have been merged
 - New (experimental) RKWard native on-screen device (RK())
-        TODO: Finish it, then provide UI option to select on-screen device
+	TODO: Finish it, then provide UI option to select on-screen device
+	- take care of the warnings in rkgraphicsdevice_stubs.cpp
 - New R function rk.without.plot.history() for turning off plot history, temporarily
 - Add command line option --backend-debugger
 

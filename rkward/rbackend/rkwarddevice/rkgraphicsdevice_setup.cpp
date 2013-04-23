@@ -168,14 +168,15 @@ bool RKGraphicsDeviceDesc::init (pDevDesc dev, double pointsize, const QStringLi
 	/*
 	* Mouse events
 	*/
-//     dev->canGenMouseDown = TRUE;
-//     dev->canGenMouseMove = TRUE;
-//     dev->canGenMouseUp = TRUE; 
-//     dev->canGenKeybd = TRUE;
+	dev->canGenMouseDown = TRUE;
+	dev->canGenMouseMove = TRUE;
+	dev->canGenMouseUp = TRUE; 
+	dev->canGenKeybd = TRUE;
 
 	// gettingEvent; This is set while getGraphicsEvent is actively
 	// looking for events
-//	dev->eventHelper = ...
+	dev->eventHelper = RKD_EventHelper;
+	dev->onExit = RKD_onExit;
 #endif
 
 	/*

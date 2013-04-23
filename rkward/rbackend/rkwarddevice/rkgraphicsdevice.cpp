@@ -45,6 +45,7 @@ RKGraphicsDevice::RKGraphicsDevice (double width, double height, const QString &
 	view = new QLabel ();
 	view->installEventFilter (this);
 	view->setScaledContents (true);    // this is just for preview during scaling. The area will be re-sized and re-drawn from R.
+	view->setFocusPolicy (Qt::StrongFocus);   // for receiving key events for R's getGraphicsEvent()
 	connect (view, SIGNAL (destroyed(QObject*)), this, SLOT (viewKilled()));
 	connect (&updatetimer, SIGNAL (timeout ()), this, SLOT (updateNow ()));
 	updatetimer.setSingleShot (true);
@@ -270,6 +271,37 @@ void RKGraphicsDevice::newPageDialogDone (int result) {
 	stopInteraction ();
 }
 
+void RKGraphicsDevice::startGettingEvents (const QString& prompt) {
+	RK_TRACE (GRAPHICS_DEVICE);
+
+	RK_ASSERT (interaction_opcode < 0);
+	stored_events.clear ();
+	interaction_opcode = RKDStartGettingEvents;
+
+	view->setCursor (Qt::CrossCursor);
+	view->setToolTip (prompt);
+	view->show ();
+	view->raise ();
+}
+
+RKGraphicsDevice::StoredEvent RKGraphicsDevice::fetchNextEvent () {
+	RK_TRACE (GRAPHICS_DEVICE);
+
+	if (stored_events.isEmpty ()) {
+		StoredEvent ret;
+		ret.event_code = RKDNothing;
+		return ret;
+	}
+	return stored_events.takeFirst ();
+}
+
+void RKGraphicsDevice::stopGettingEvents () {
+	RK_TRACE (GRAPHICS_DEVICE);
+
+	RK_ASSERT (interaction_opcode == RKDStartGettingEvents);
+	stopInteraction ();
+}
+
 bool RKGraphicsDevice::eventFilter (QObject *watched, QEvent *event) {
 	RK_ASSERT (watched == view);
 
@@ -283,7 +315,41 @@ bool RKGraphicsDevice::eventFilter (QObject *watched, QEvent *event) {
 			stopInteraction ();
 			return true;
 		}
+	} else if (interaction_opcode == RKDStartGettingEvents) {
+		if ((event->type () == QEvent::MouseButtonPress) || (event->type () == QEvent::MouseButtonRelease) || (event->type () == QEvent::MouseMove)) {
+			QMouseEvent *me = static_cast<QMouseEvent*> (event);
+			StoredEvent sev;
+
+			sev.event_code = event->type () == QEvent::MouseButtonPress ? RKDMouseDown : (event->type () == QEvent::MouseButtonRelease ? RKDMouseUp : RKDMouseMove);
+			sev.x = me->x ();
+			sev.y = me->y ();
+			sev.buttons = 0;
+			if (me->buttons () & Qt::LeftButton) sev.buttons |= RKDMouseLeftButton;
+			if (me->buttons () & Qt::MiddleButton) sev.buttons |= RKDMouseMiddleButton;
+			if (me->buttons () & Qt::RightButton) sev.buttons |= RKDMouseRightButton;
+
+			stored_events.append (sev);
+			return (true);
+		} else if (event->type () == QEvent::KeyPress) {
+			QKeyEvent *ke = static_cast<QKeyEvent*> (event);
+			StoredEvent sev;
+
+			sev.event_code = RKDKeyPress;
+			sev.keytext = ke->text ();
+			sev.keycode = ke->key ();
+			sev.modifiers = ke->modifiers ();
+			if (sev.modifiers - (sev.modifiers & Qt::ShiftModifier)) {
+				// well, the text returned in ke->text() is a bit strange, sometimes when modifiers are involved.
+				// This HACK does some sanitizing. Too much sanitizing? Umlauts don't get through this, for one thing.
+				sev.keytext = QKeySequence (sev.modifiers | sev.keycode).toString ();
+				sev.keytext = sev.keytext.right (1);
+			}
+
+			stored_events.append (sev);
+			return (true);
+		}
 	}
+
 	if (event->type () == QEvent::Resize) triggerUpdate ();
 
 	return false;
@@ -297,6 +363,12 @@ void RKGraphicsDevice::stopInteraction () {
 	} else if (interaction_opcode == RKDNewPageConfirm) {
 		RK_ASSERT (dialog);
 		emit (newPageConfirmDone (true));
+	} else if (interaction_opcode == RKDStartGettingEvents) {
+		// not much to do, fortunately, as getting graphics events is non-blocking
+		stored_events.clear ();
+		StoredEvent sev;
+		sev.event_code = RKDFrontendCancel;
+		stored_events.append (sev);   // In case the backend keeps asking (without calling RKDStartGettingEvents again, first), we'll tell it to stop.
 	}
 
 	if (dialog) {

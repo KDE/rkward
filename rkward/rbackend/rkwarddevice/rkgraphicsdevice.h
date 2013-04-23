@@ -55,6 +55,21 @@ public:
 	void locator ();
 	void confirmNewPage ();
 
+	// graphics event handling
+/** Simple struct to keep info about both mouse and keyboard events, so we can store them in a list, until R fetches them. */
+	struct StoredEvent {
+		StoredEvent () : event_code (0), buttons (0), modifiers (0), keycode (0), x (0), y (0) {};
+		qint8 event_code;
+		qint8 buttons;
+		qint32 modifiers;
+		qint32 keycode;
+		QString keytext;
+		double x, y;
+	};
+	void startGettingEvents (const QString &prompt);
+	StoredEvent fetchNextEvent ();
+	void stopGettingEvents ();
+
  	QWidget* viewPort () const { return view; };
 	QSizeF currentSize () const { return view->size (); }
 	void setAreaSize (const QSize &size);
@@ -80,6 +95,8 @@ private:
 	KDialog *dialog;
 
 	int interaction_opcode;	/**< Current interactive operation (from RKDOpcodes enum), or -1 is there is no current interactive operation */
+
+	QList<StoredEvent> stored_events;
 };
 
 #endif

@@ -297,7 +297,23 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 			device->setAreaSize (size);
 		} else if (opcode == RKDLocator) {
 			device->locator ();
-#warning TODO keep track of status
+		} else if (opcode == RKDStartGettingEvents) {
+			QString prompt;
+			streamer.instream >> prompt;
+			device->startGettingEvents (prompt);
+		} else if (opcode == RKDStopGettingEvents) {
+			device->stopGettingEvents ();
+		} else if (opcode == RKDFetchNextEvent) {
+			RKGraphicsDevice::StoredEvent ev = device->fetchNextEvent ();
+			streamer.outstream << (qint8) ev.event_code;
+			if (ev.event_code == RKDKeyPress) {
+				streamer.outstream << ev.keytext << (qint32) ev.keycode << (qint32) ev.modifiers;
+			} else if ((ev.event_code == RKDMouseDown) || (ev.event_code == RKDMouseUp) || (ev.event_code == RKDMouseMove)) {
+				streamer.outstream << (qint8) ev.buttons << (double) ev.x << (double) ev.y;
+			} else {
+				RK_ASSERT ((ev.event_code == RKDNothing) || (ev.event_code == RKDFrontendCancel));
+			}
+			streamer.writeOutBuffer ();
 		} else if (opcode == RKDNewPageConfirm) {
 			device->confirmNewPage ();
 #warning TODO keep track of status
@@ -331,6 +347,8 @@ void RKGraphicsDeviceFrontendTransmitter::sendDummyReply (quint8 opcode) {
 		streamer.outstream << width;
 	} else if (opcode == RKDGetSize) {
 		streamer.outstream << QSizeF ();
+	} else if (opcode == RKDFetchNextEvent) {
+		streamer.outstream << (qint8) RKDNothing;
 	} else {
 		return;	// nothing to write
 	}

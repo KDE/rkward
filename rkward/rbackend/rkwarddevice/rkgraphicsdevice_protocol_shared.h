@@ -62,33 +62,52 @@ enum RKLineJoinStyles {
 
 enum RKDOpcodes {
 	// Asynchronous operations
-	RKDCreate,          // 0
+	RKDCreate,             // 0
 	RKDCircle,
 	RKDLine,
 	RKDPolygon,
 	RKDPolyline,
-	RKDRect,            // 5
+	RKDRect,               // 5
 	RKDTextUTF8,
 	RKDNewPage,
 	RKDClose,
 	RKDActivate,
-	RKDDeActivate,      // 10
+	RKDDeActivate,         // 10
 	RKDClip,
 	RKDMode,
 	RKDRaster,
 	RKDSetSize,
+	RKDStartGettingEvents, // 15
+	RKDStopGettingEvents,
 
 	// Synchronous operations
-	RKDStrWidthUTF8,    // 15
+	RKDFetchNextEvent,
+	RKDStrWidthUTF8,
 	RKDMetricInfo, 
-	RKDLocator,
+	RKDLocator,            // 20
 	RKDNewPageConfirm,
 	RKDCapture,
-	RKDQueryResolution, // 20
-	RKDGetSize,    
+	RKDQueryResolution,
+	RKDGetSize,
 
 	// Protocol operations
-	RKDCancel
+	RKDCancel              // 25
+};
+
+enum RKDEventCodes {
+	RKDMouseUp = 0,
+	RKDMouseDown = 1,
+	RKDMouseMove = 2,
+	RKDKeyPress = 3,
+	RKDNothing = 4,
+	RKDFrontendCancel = 5,
+
+// Mouse buttons, or-able, identical to the corresponding R defines. Note: x1 and x2 buttons are not handled by R
+	RKDMouseLeftButton = 1,
+	RKDMouseMiddleButton = 2,
+	RKDMouseRightButton = 4
+//	RKDMouseX1Button = 8,
+//	RKDMouseX2Button = 16
 };
 
 #include <QtGlobal>
