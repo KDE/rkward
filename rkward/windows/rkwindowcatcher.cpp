@@ -180,11 +180,12 @@ RKCaughtX11Window::RKCaughtX11Window (RKGraphicsDevice* rkward_device, int devic
 	commonInit (device_number);
 	rk_native_device = rkward_device;
 	xembed_container->setFixedSize (rk_native_device->viewPort ()->size ());
+	resize (xembed_container->size ());
 	rk_native_device->viewPort ()->setParent (xembed_container);
+	connect (rkward_device, SIGNAL (captionChanged(const QString&)), this, SLOT (setCaption(const QString &)));
+	setCaption (rkward_device->viewPort ()->windowTitle ());
 
-// adjust to size
-//	dynamic_size_action->setChecked (true);
-	fixedSizeToggled ();
+	QTimer::singleShot (0, this, SLOT (doEmbed()));
 }
 
 void RKCaughtX11Window::commonInit (int device_number) {
@@ -192,6 +193,7 @@ void RKCaughtX11Window::commonInit (int device_number) {
 
 	capture = 0;
 	rk_native_device = 0;
+	embedded = 0;
 	killed_in_r = close_attempted = false;
 	RKCaughtX11Window::device_number = device_number;
 	RK_ASSERT (!device_windows.contains (device_number));
@@ -226,22 +228,24 @@ void RKCaughtX11Window::commonInit (int device_number) {
 void RKCaughtX11Window::doEmbed () {
 	RK_TRACE (MISC);
 
+	if (embedded) {
 #ifdef Q_WS_WIN
-	capture = new QWinHost (xembed_container);
-	capture->setWindow (embedded);
-	capture->setFocusPolicy (Qt::ClickFocus);
-	capture->setAutoDestruct (true);
-	connect (capture, SIGNAL (clientDestroyed()), this, SLOT (deleteLater()), Qt::QueuedConnection);
-	connect (capture, SIGNAL (clientTitleChanged(const QString&)), this, SLOT (setCaption(const QString&)), Qt::QueuedConnection);
+		capture = new QWinHost (xembed_container);
+		capture->setWindow (embedded);
+		capture->setFocusPolicy (Qt::ClickFocus);
+		capture->setAutoDestruct (true);
+		connect (capture, SIGNAL (clientDestroyed()), this, SLOT (deleteLater()), Qt::QueuedConnection);
+		connect (capture, SIGNAL (clientTitleChanged(const QString&)), this, SLOT (setCaption(const QString&)), Qt::QueuedConnection);
 
-	setCaption (capture->getClientTitle ());
+		setCaption (capture->getClientTitle ());
 #elif defined Q_WS_X11
-	capture = new QX11EmbedContainer (xembed_container);
-	capture->embedClient (embedded);
-	connect (capture, SIGNAL (clientClosed ()), this, SLOT (deleteLater ()));
+		capture = new QX11EmbedContainer (xembed_container);
+		capture->embedClient (embedded);
+		connect (capture, SIGNAL (clientClosed ()), this, SLOT (deleteLater ()));
 
-	RKWardApplication::getApp ()->registerNameWatcher (embedded, this);
+		RKWardApplication::getApp ()->registerNameWatcher (embedded, this);
 #endif
+	}
 	// make xembed_container resizable, again, now that it actually has a content
 	dynamic_size_action->setChecked (true);
 	fixedSizeToggled ();
@@ -261,7 +265,7 @@ RKCaughtX11Window::~RKCaughtX11Window () {
 
 	close (false);
 #ifdef Q_WS_X11
-	RKWardApplication::getApp ()->unregisterNameWatcher (embedded);
+	if (embedded) RKWardApplication::getApp ()->unregisterNameWatcher (embedded);
 #endif
 	error_dialog->autoDeleteWhenDone ();
 	delete status_popup;

@@ -64,6 +64,7 @@ signals:
 	void activeChanged (bool);
 	void locatorDone (bool ok, double x, double y);
 	void newPageConfirmDone (bool accepted);
+	void captionChanged (const QString &caption);
 private slots:
 	void updateNow ();
 	void newPageDialogDone (int result);

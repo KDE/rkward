@@ -173,7 +173,7 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 
 		quint8 opcode, devnum;
 		streamer.instream >> opcode >> devnum;
-		RK_DEBUG (GRAPHICS_DEVICE, DL_DEBUG, "Received transmission of type %d, devnum %d, size %d", opcode, devnum, streamer.inSize ());
+		RK_DEBUG (GRAPHICS_DEVICE, DL_DEBUG, "Received transmission of type %d, devnum %d, size %d", opcode, devnum+1, streamer.inSize ());
 
 		RKGraphicsDevice *device = 0;
 		if (devnum && opcode == RKDCreate) {
@@ -198,7 +198,7 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 					streamer.outstream << (qint32) desktop->physicalDpiX () << (qint32) desktop->physicalDpiY ();
 					streamer.writeOutBuffer ();
 				} else {
-					RK_DEBUG (GRAPHICS_DEVICE, DL_ERROR, "Received transmission of type %d for unknown device number %d. Skippping.", opcode, devnum);
+					if (devnum) RK_DEBUG (GRAPHICS_DEVICE, DL_ERROR, "Received transmission of type %d for unknown device number %d. Skippping.", opcode, devnum+1);
 					sendDummyReply (opcode);
 				}
 				continue;
@@ -302,11 +302,11 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 			device->confirmNewPage ();
 #warning TODO keep track of status
 		} else {
-			RK_DEBUG (GRAPHICS_DEVICE, DL_ERROR, "Unhandled operation of type %d for device number %d. Skippping.", opcode, devnum);
+			RK_DEBUG (GRAPHICS_DEVICE, DL_ERROR, "Unhandled operation of type %d for device number %d. Skippping.", opcode, devnum+1);
 		}
 
 		if (!streamer.instream.atEnd ()) {
-			RK_DEBUG (GRAPHICS_DEVICE, DL_ERROR, "Failed to read all data for operation of type %d on device number %d.", opcode, devnum);
+			RK_DEBUG (GRAPHICS_DEVICE, DL_ERROR, "Failed to read all data for operation of type %d on device number %d.", opcode, devnum+1);
 		}
 	}
 }

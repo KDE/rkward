@@ -228,6 +228,7 @@ void RKGraphicsDevice::setActive (bool active) {
 	if (active) view->setWindowTitle (i18n ("%1 (Active)").arg (base_title));
 	else view->setWindowTitle (i18n ("%1 (Inactive)").arg (base_title));
 	emit (activeChanged (active));
+	emit (captionChanged (view->windowTitle ()));
 }
 
 void RKGraphicsDevice::locator () {
