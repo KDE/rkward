@@ -275,7 +275,7 @@ bool RKLoadLibsDialog::installPackages (const QStringList &packages, QString to_
 		QDir (RKSettingsModuleGeneral::filesPath ()).mkdir ("package_archive");
 		command_string += ", destdir=\"" + downloaddir + "\"";
 	}
-	if (install_suggested_packages) command_string += ", suggested_packages=TRUE";
+	if (install_suggested_packages) command_string += ", dependencies=TRUE";
 	command_string += ")\n";
 
 	QString repos_string = "options (repos= c(";
