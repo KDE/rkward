@@ -51,7 +51,6 @@ public:
 				if (!connection->waitForBytesWritten (10)) {
 					checkHandleError ();
 				}
-#warning TODO: Use R_CheckUserInterrupt(), instead?
 				if (connection->bytesToWrite ()) RKREventLoop::processX11Events ();
 			}
 			while (!RKGraphicsDeviceBackendTransmitter::streamer.readInBuffer ()) {

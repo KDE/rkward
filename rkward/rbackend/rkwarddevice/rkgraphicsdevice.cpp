@@ -114,7 +114,7 @@ void RKGraphicsDevice::clear (const QColor& col) {
 
 void RKGraphicsDevice::setAreaSize (const QSize& size) {
 	if (painter.isActive ()) painter.end ();
-	RK_DEBUG (GRAPHICS_DEVICE, DL_WARNING, "New Size %d, %d (view size is %d, %d)", size.width (), size.height (), view->width (), view->height ());
+	RK_DEBUG (GRAPHICS_DEVICE, DL_INFO, "New Size %d, %d (view size is %d, %d)", size.width (), size.height (), view->width (), view->height ());
 	area = QPixmap (size.width (), size.height ());
 	clear ();
 }

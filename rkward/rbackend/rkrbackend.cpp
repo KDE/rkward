@@ -1038,7 +1038,7 @@ bool RKRBackend::startR () {
 
 	connectCallbacks();
 	RKInsertToplevelStatementFinishedCallback (0);
-	RKREventLoop::setEventHandler (doPendingPriorityCommands);
+	RKREventLoop::setRKEventHandler (doPendingPriorityCommands);
 	default_global_context = R_GlobalContext;
 
 	// get info on R runtime version
@@ -1290,11 +1290,13 @@ void RKRBackend::setPriorityCommand (RCommandProxy* command) {
 	QMutexLocker lock (&priority_command_mutex);
 	RK_ASSERT (!(command && pending_priority_command));      // for the time being, we support only one priority command at a time
 	pending_priority_command = command;
+	RKREventLoop::wakeRKEventHandler ();
 }
 
 void doPendingPriorityCommands () {
 	RK_TRACE (RBACKEND);
 
+	if (RKRBackend::this_pointer->killed) return;
 	RCommandProxy *command = RKRBackend::this_pointer->pending_priority_command;
 	if (command) {
 		RK_DEBUG (RBACKEND, DL_DEBUG, "running priority command %s", qPrintable (command->command));

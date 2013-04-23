@@ -105,8 +105,6 @@ public:
 @param datatype the data type that should be (attempted to be) returned
 @returns a pointer to the RCommandProxy-instance that was created and used, internally. You can query this pointer for status and data. Be sure to delete it, when done. */
 	RCommandProxy *runDirectCommand (const QString &command, RCommand::CommandTypes datatype); 
-/** call this periodically to make R's x11 windows process their events */
-	static void processX11Events ();
 
 	void handleRequest (RBackendRequest *request) { handleRequest (request, true); };
 /** A relic of history. In contrast to handlePlainGenericRequest(), these requests support running sub-commands. However, the remaining requests which are currently handled this way
