@@ -39,6 +39,7 @@ namespace RKREventLoop {
  * R's event loop. */
 	void wakeRKEventHandler ();
 #ifdef Q_WS_WIN
+/** On Windows, Rp->Callback has to be set to this function during startup. */
 	void winRKEventHandlerWrapper (void);
 #endif
 };

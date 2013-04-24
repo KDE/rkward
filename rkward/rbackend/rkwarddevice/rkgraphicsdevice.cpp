@@ -328,6 +328,12 @@ bool RKGraphicsDevice::eventFilter (QObject *watched, QEvent *event) {
 			if (me->buttons () & Qt::MiddleButton) sev.buttons |= RKDMouseMiddleButton;
 			if (me->buttons () & Qt::RightButton) sev.buttons |= RKDMouseRightButton;
 
+			// Mouse move event may be generated much faster than R can handle them. We simply lump them together
+			// (unless any other event type (click, release, keypress) has occurred meanwhile, of course.
+			if (!stored_events.isEmpty () && (sev.event_code == RKDMouseMove)) {
+				if (stored_events.last ().event_code == RKDMouseMove) stored_events.pop_back ();
+			}
+
 			stored_events.append (sev);
 			return (true);
 		} else if (event->type () == QEvent::KeyPress) {
