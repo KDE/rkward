@@ -18,8 +18,8 @@
 #include "rkrbackend.h"
 
 #ifdef Q_WS_WIN
-#	include <windows.h>
 #	include <winsock2.h>
+#	include <windows.h>
 #	include <locale.h>
 #	undef ERROR 	// clashes with R
 #	define Win32	// needed for R includes

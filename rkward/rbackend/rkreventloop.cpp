@@ -17,7 +17,11 @@
 
 #include "rkreventloop.h"
 
-#include <R_ext/eventloop.h>
+#ifdef Q_OS_WIN
+#	include <R.h>
+#else
+#	include <R_ext/eventloop.h>
+#endif
 #include <Rinternals.h>
 
 #include "rkrbackend.h"
