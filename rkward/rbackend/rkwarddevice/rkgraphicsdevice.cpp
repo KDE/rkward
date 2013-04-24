@@ -325,7 +325,7 @@ bool RKGraphicsDevice::eventFilter (QObject *watched, QEvent *event) {
 			sev.y = me->y ();
 			sev.buttons = 0;
 			if (me->buttons () & Qt::LeftButton) sev.buttons |= RKDMouseLeftButton;
-			if (me->buttons () & Qt::MiddleButton) sev.buttons |= RKDMouseMiddleButton;
+			if (me->buttons () & Qt::MidButton) sev.buttons |= RKDMouseMiddleButton;
 			if (me->buttons () & Qt::RightButton) sev.buttons |= RKDMouseRightButton;
 
 			// Mouse move event may be generated much faster than R can handle them. We simply lump them together
