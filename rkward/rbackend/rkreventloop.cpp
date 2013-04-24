@@ -16,15 +16,15 @@
  ***************************************************************************/
 
 #include "rkreventloop.h"
+#include "rkrbackend.h"
 
-#ifdef Q_OS_WIN
+#ifdef Q_WS_WIN
+#	define Win32
 #	include <R.h>
 #else
 #	include <R_ext/eventloop.h>
 #endif
 #include <Rinternals.h>
-
-#include "rkrbackend.h"
 
 #include "../debug.h"
 
@@ -72,10 +72,10 @@ void RKREventLoop::processX11Events() {
 	RKRBackend::RKRBackend::repl_status.eval_depth--;
 }
 
-static void (* RK_old_R_PolledEvents)();
 static void (* RK_eventHandlerFunction)() = 0;
 
 #ifndef Q_OS_WIN
+static void (* RK_old_R_PolledEvents)();
 // NOTE: input-handler-based event loop mechanism is heavily inspired by (but not quite the same as in) package qtbase version 1.0.4 by Michael Lawrence, Deepayan Sarkar.
 // URL: http://qtinterfaces.r-forge.r-project.org
 static int ifd = 0;
@@ -91,20 +91,24 @@ static void RK_eventHandlerWrapper (void *data) {
 	RK_ASSERT (read_ok);
 	RK_eventHandlerFunction ();
 }
-#endif
 
 static void RK_eventHandlerChain () {
 	if (RK_eventHandlerFunction) RK_eventHandlerFunction ();
 	if (RK_old_R_PolledEvents) RK_old_R_PolledEvents ();
 }
+#else
+void RKREventLoop::winRKEventHandlerWrapper (void) {
+        if (RK_eventHandlerFunction) RK_eventHandlerFunction ();
+}
+#endif
 
 void RKREventLoop::setRKEventHandler (void (* handler) ()) {
 	RK_TRACE (RBACKEND);
 	RK_ASSERT (!RK_eventHandlerFunction);
 	RK_eventHandlerFunction = handler;
 
-	bool ok = false;
 #ifndef Q_OS_WIN
+        bool ok = false;
 	int fds[2];
 
 	if (!pipe (fds)) {
@@ -113,12 +117,12 @@ void RKREventLoop::setRKEventHandler (void (* handler) ()) {
 		addInputHandler (R_InputHandlers, ifd, RK_eventHandlerWrapper, 32);
 		ok = true;
 	}
-#endif
 	if (ok) return;
 
 	// if pipe method did not work, fall back to R_PolledEvents
 	RK_old_R_PolledEvents = R_PolledEvents;
 	R_PolledEvents = RK_eventHandlerChain;
+#endif
 }
 
 void RKREventLoop::wakeRKEventHandler () {

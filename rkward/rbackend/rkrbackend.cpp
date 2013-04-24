@@ -774,7 +774,7 @@ void RKRBackend::setupCallbacks () {
 	RK_R_Params.ReadConsole = RReadConsoleWin;
 	RK_R_Params.WriteConsoleEx = RWriteConsoleEx;
 	RK_R_Params.WriteConsole = 0;
-	RK_R_Params.CallBack = RDoNothing;
+	RK_R_Params.CallBack = RKREventLoop::winRKEventHandlerWrapper;
 	RK_R_Params.YesNoCancel = RAskYesNoCancel;
 	RK_R_Params.Busy = RBusy;
 

@@ -18,6 +18,8 @@
 #ifndef RKREVENTLOOP_H
 #define RKREVENTLOOP_H
 
+#include <qglobal.h>  // For Q_WS_WIN
+
 namespace RKREventLoop {
 /** This - somewhat misnamed - function takes care of processing R's events (not only X11).
  *  It is like R_ProcessEvents (except for the scary warning in the header file, that R_ProcessEvents does not work on Unix),
@@ -36,6 +38,9 @@ namespace RKREventLoop {
 /** Call this (potentially from a separate thread) to wake the handler set by setRKEventHandler() in the next iteration of 
  * R's event loop. */
 	void wakeRKEventHandler ();
+#ifdef Q_WS_WIN
+	void winRKEventHandlerWrapper (void);
+#endif
 };
 
 #endif
