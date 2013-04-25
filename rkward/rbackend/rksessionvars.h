@@ -39,6 +39,7 @@ public:
 Anything else (everything after the fourth dot, or after the first character that is neither dot, nor digit)
 is returned as suffix (via the suffix pointer; if that is 0, an error is reported, instead). */
 	static quint32 parseVersionString (const QString &version, QString *suffix);
+	static QStringList frontendSessionInfo ();
 signals:
 	void installedPackagesChanged ();
 protected:

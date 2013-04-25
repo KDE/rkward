@@ -18,7 +18,16 @@
 #include "rksessionvars.h"
 
 #include "rinterface.h"
+#include "../settings/rksettingsmoduledebug.h"
+#include "../settings/rksettingsmodulegeneral.h"
 #include "../version.h"
+
+#include <kdeversion.h>
+#include <ktemporaryfile.h>
+#include <kstandarddirs.h>
+
+#include <QLibraryInfo>
+#include <QSysInfo>
 
 #include "../debug.h"
 
@@ -108,6 +117,26 @@ int RKSessionVars::compareRVersion (const QString& version) {
 	if (ver < r_version) return -1;
 	if (ver > r_version) return 1;
 	return 0;
+}
+
+QStringList RKSessionVars::frontendSessionInfo () {
+	QStringList lines;
+	lines.append ("RKWard version: " RKWARD_VERSION);
+	lines.append ("KDE version (runtime): " + QString (KDE::versionString ()));
+	lines.append ("KDE version (compile time): " KDE_VERSION_STRING);
+	lines.append ("Qt build key: " + QLibraryInfo::buildKey ());
+#if defined Q_WS_WIN
+	lines.append ("Windows runtime version (refer to QSysInfo documentation to translate code into human readable form): 0x" + QString::number (QSysInfo::windowsVersion (), 16));
+#elif defined Q_WS_MAC
+	lines.append ("MacOS runtime version (refer to QSysInfo documentation to translate code into human readable form): 0x" + QString::number (QSysInfo::MacintoshVersion, 16));
+#endif
+	lines.append ("Local KDE directory: " + KGlobal::dirs ()->localkdedir ());
+	lines.append ("RKWard storage directory: " + RKSettingsModuleGeneral::filesPath ());
+	lines.append ("Backend version (as known to the frontend): " + r_version_string);
+	lines.append (QString());
+	lines.append ("Debug message file (this may contain relevant diagnostic output in case of trouble):");
+	lines.append (RKSettingsModuleDebug::debug_file->fileName ());
+	return lines;
 }
 
 #include "rksessionvars.moc"

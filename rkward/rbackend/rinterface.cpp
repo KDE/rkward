@@ -26,13 +26,13 @@
 #include "../settings/rksettingsmoduleoutput.h"
 #include "../settings/rksettingsmodulegraphics.h"
 #include "../settings/rksettingsmoduleplugins.h"
-#include "../settings/rksettingsmoduledebug.h"
 #include "../core/robjectlist.h"
 #include "../core/renvironmentobject.h"
 #include "../core/rkmodificationtracker.h"
 #include "../dialogs/rkloadlibsdialog.h"
 #include "../dialogs/rkselectlistdialog.h"
 #include "../dialogs/rkreadlinedialog.h"
+#include "../dialogs/rkerrordialog.h"
 #include "../agents/showedittextfileagent.h"
 #include "../agents/rkeditobjectagent.h"
 #include "../agents/rkprintagent.h"
@@ -59,7 +59,6 @@ RKWindowCatcher *window_catcher;
 #include <kmessagebox.h>
 #include <kfiledialog.h>
 #include <klocale.h>
-#include <ktemporaryfile.h>
 #include <kstandarddirs.h>
 
 #include <qdir.h>
@@ -602,15 +601,11 @@ QStringList RInterface::processPlainGenericRequest (const QStringList &calllist)
 		}
 	} else if (call == "getSessionInfo") {
 		// Non-translatable on purpose. This is meant for posting to the bug tracker, mostly.
-		QStringList lines;
-		lines.append ("RKWard version: " RKWARD_VERSION);
-		lines.append ("KDE version (runtime): " + QString (KDE::versionString ()));
-		lines.append ("KDE version (compile time): " KDE_VERSION_STRING);
-		lines.append ("Local KDE directory: " + KGlobal::dirs ()->localkdedir ());
-		lines.append ("RKWard storage directory: " + RKSettingsModuleGeneral::filesPath ());
-		lines.append (QString());
-		lines.append ("Debug message file(s) in use (these may contain relevant diagnostic output in case of trouble):");
-		lines.append (RKSettingsModuleDebug::debug_file->fileName ());
+		QStringList lines ("-- Frontend --");
+		lines.append (RKSessionVars::frontendSessionInfo ());
+		lines.append (QString ());
+		lines.append ("-- Backend --");
+		lines.append ("Debug message file (this may contain relevant diagnostic output in case of trouble):");
 		lines.append (calllist.value (1));
 		lines.append (QString ());
 		lines.append ("R version (compile time): " + calllist.value (2));
@@ -844,8 +839,8 @@ void RInterface::processRBackendRequest (RBackendRequest *request) {
 		if (!backend_dead) {
 			backend_dead = true;
 			QString message = request->params["message"].toString ();
-			message += i18n ("\nThe R backend will be shut down immediately. This means, you can not use any more functions that rely on it. I.e. you can do hardly anything at all, not even save the workspace (but if you're lucky, R already did that). What you can do, however, is save any open command-files, the output, or copy data out of open data editors. Quit RKWard after that.\nSince this should never happen, please write a mail to rkward-devel@lists.sourceforge.net, and tell us, what you were trying to do, when this happened. Sorry!");
-			KMessageBox::error (0, message, i18n ("R engine has died"));
+			message += i18n ("\nThe R backend will be shut down immediately. This means, you can not use any more functions that rely on it. I.e. you can do hardly anything at all, not even save the workspace (but if you're lucky, R already did that). What you can do, however, is save any open command-files, the output, or copy data out of open data editors. Quit RKWard after that. Sorry!");
+			RKErrorDialog::reportableErrorMessage (0, message, QString (), i18n ("R engine has died"), "r_engine_has_died");
 		}
 	} else {
 		RK_ASSERT (false);
