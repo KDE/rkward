@@ -456,53 +456,59 @@ void RKD_EventHelper (pDevDesc dev, int code) {
 		}
 	}
 	RK_ASSERT (code == 2);
+
+	// NOTE: The event handler functions doKeybd() and doMouseEvent() could conceivably produce errors -> longjump
+	// Thus we need to make sure the read-guard has gone out of scope before that. Thus, we take the somewhat clunky
+	// route of first reading the full reply, then processing it.
+	qint8 event_code;
+	QString text;
+	qint32 keycode, modifiers;
+	double x, y;
+	qint8 buttons;
 	{
 		RKGraphicsDataStreamReadGuard rguard;
-#warning TODO: read while guard is active
-	}
-		qint8 event_code;
 		RKD_IN_STREAM >> event_code;
-		if (event_code == RKDFrontendCancel) {
-			Rf_error ("Interrupted by user");
-			return;  // not reached
-		}
-		if (event_code == RKDNothing) return;
-		else if (event_code == RKDKeyPress) {
-			QString text;
-			qint32 keycode, modifiers;
+		if ((event_code == RKDNothing) || (event_code == RKDFrontendCancel)) {
+			// nothing
+		} else if (event_code == RKDKeyPress) {
 			RKD_IN_STREAM >> text >> keycode >> modifiers;
-
-			if (modifiers - (modifiers & Qt::ShiftModifier)) {  // any other modifier than Shift. only. NOTE: devX11.c and devWindows.c handle Ctrl, only as of R 3.0.0
-				QString mod_text;
-				if (modifiers & Qt::ControlModifier) mod_text.append ("ctrl-");
-				if (modifiers & Qt::AltModifier) mod_text.append ("alt-");
-				if (modifiers & Qt::MetaModifier) mod_text.append ("meta-");
-				if (text.isEmpty () && (modifiers & Qt::ShiftModifier)) mod_text.append ("shift-");     // don't apply shift text (where it has already been handled)
-				text = mod_text + text.toUpper ();
-			}
-
-			R_KeyName r_key_name = knUNKNOWN;
-			if (keycode == Qt::Key_Left) r_key_name = knLEFT;
-			else if (keycode == Qt::Key_Right) r_key_name = knRIGHT;
-			else if (keycode == Qt::Key_Up) r_key_name = knUP;
-			else if (keycode == Qt::Key_Down) r_key_name = knDOWN;
-			else if ((keycode >= Qt::Key_F1) && (keycode <= Qt::Key_F12)) r_key_name = (R_KeyName) (knF1 + (keycode - Qt::Key_F1));
-			else if (keycode == Qt::Key_PageUp) r_key_name = knPGUP;
-			else if (keycode == Qt::Key_PageDown) r_key_name = knPGDN;
-			else if (keycode == Qt::Key_End) r_key_name = knEND;
-			else if (keycode == Qt::Key_Home) r_key_name = knHOME;
-			else if (keycode == Qt::Key_Insert) r_key_name = knINS;
-			else if (keycode == Qt::Key_Delete) r_key_name = knDEL;
-#warning: TODO: can this result in an error / interrupt?
-			Rf_doKeybd (dev, r_key_name, text.toUtf8 ());
-		} else {    // all others are mouse events
-			double x, y;
-			qint8 buttons;
+		} else {  // a mouse event
 			RKD_IN_STREAM >> buttons >> x >> y;
-#warning: TODO: can this result in an error / interrupt?
-			Rf_doMouseEvent (dev, event_code == RKDMouseDown ? meMouseDown : (event_code == RKDMouseUp ? meMouseUp : meMouseMove), buttons, x, y);
 		}
-qDebug ("got something");
+	}
+
+	if (event_code == RKDFrontendCancel) {
+		Rf_error ("Interrupted by user");
+		return;  // not reached
+	}
+	if (event_code == RKDNothing) return;
+	else if (event_code == RKDKeyPress) {
+		if (modifiers - (modifiers & Qt::ShiftModifier)) {  // any other modifier than Shift, alone. NOTE: devX11.c and devWindows.c handle Ctrl, only as of R 3.0.0
+			QString mod_text;
+			if (modifiers & Qt::ControlModifier) mod_text.append ("ctrl-");
+			if (modifiers & Qt::AltModifier) mod_text.append ("alt-");
+			if (modifiers & Qt::MetaModifier) mod_text.append ("meta-");
+			if (text.isEmpty () && (modifiers & Qt::ShiftModifier)) mod_text.append ("shift-");     // don't apply shift when there is text (where it has already been handled)
+			text = mod_text + text.toUpper ();
+		}
+
+		R_KeyName r_key_name = knUNKNOWN;
+		if (keycode == Qt::Key_Left) r_key_name = knLEFT;
+		else if (keycode == Qt::Key_Right) r_key_name = knRIGHT;
+		else if (keycode == Qt::Key_Up) r_key_name = knUP;
+		else if (keycode == Qt::Key_Down) r_key_name = knDOWN;
+		else if ((keycode >= Qt::Key_F1) && (keycode <= Qt::Key_F12)) r_key_name = (R_KeyName) (knF1 + (keycode - Qt::Key_F1));
+		else if (keycode == Qt::Key_PageUp) r_key_name = knPGUP;
+		else if (keycode == Qt::Key_PageDown) r_key_name = knPGDN;
+		else if (keycode == Qt::Key_End) r_key_name = knEND;
+		else if (keycode == Qt::Key_Home) r_key_name = knHOME;
+		else if (keycode == Qt::Key_Insert) r_key_name = knINS;
+		else if (keycode == Qt::Key_Delete) r_key_name = knDEL;
+
+		Rf_doKeybd (dev, r_key_name, text.toUtf8 ());
+	} else {    // all others are mouse events
+		Rf_doMouseEvent (dev, event_code == RKDMouseDown ? meMouseDown : (event_code == RKDMouseUp ? meMouseUp : meMouseMove), buttons, x, y);
+	}
 }
 
 void RKD_onExit (pDevDesc dev) {
