@@ -81,7 +81,7 @@ void RKFrontendTransmitter::run () {
 #ifdef Q_WS_MAC
         if (backend_executable.isEmpty ()) backend_executable = KStandardDirs::findExe (QDir::toNativeSeparators (QCoreApplication::applicationDirPath () + "/../../../rbackend/rkward.rbackend"));
 #endif
-	RK_ASSERT (!backend_executable.isEmpty ());
+	if (backend_executable.isEmpty ()) handleTransmissionError (i18n ("The backend executable could not be found. This is likely to be a problem with your installation."));
 	QString debugger = RKGlobals::startup_options["backend-debugger"].toString ();
 	if (!debugger.isEmpty ()) {
 		args.prepend (backend_executable);
