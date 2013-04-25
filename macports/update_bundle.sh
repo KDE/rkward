@@ -57,6 +57,7 @@ if [[ $1 == "" ]] ; then
            -s (create sources .tar)
            -c (copy .mdmg and src.tar to ${LPUBDIR}, if created)
            -x (completely!!! wipe ${MPTINST}/var/macports/distfiles)"
+exit 0
 fi
 
 # get the options
