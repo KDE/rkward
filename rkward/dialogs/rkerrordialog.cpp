@@ -70,6 +70,7 @@ void RKErrorDialog::reportBug (QWidget* parent_widget, const QString& message_in
 	report_template.append (i18n ("When you try to repeat the above, does the problem occur again (no, sometimes, always)?\n###Please fill in###\n\n"));
 	report_template.append (i18n ("If applicable: When doing the same thing in an R session outside of RKWard, do you see the same problem?\n###Please fill in###\n\n"));
 	report_template.append (i18n ("Do you have any further information that might help us to track this problem down? In particular, if applicable, can you provide sample data and sample R code to reproduce this problem?\n###Please fill in###\n\n"));
+	report_template.append (i18n ("RKWard is available in many different packagings, and sometimes problems are specific to one method of installation. How did you install RKWard (which file(s) did you download)?\n###Please fill in###\n\n"));
 
 	if (!message_info.isEmpty ()) {
 		report_template.append ("\n---Error Message---\n");
@@ -84,7 +85,8 @@ void RKErrorDialog::reportBug (QWidget* parent_widget, const QString& message_in
 		RKProgressControl *control = new RKProgressControl (parent_widget, i18n ("Please stand by while gathering some information on your setup.\nIn case the backend has died or hung up, you may want to press 'Cancel' to skip this step."), i18n ("Gathering setup information"), RKProgressControl::CancellableNoProgress);
 		control->addRCommand (command, true);
 		RKGlobals::rInterface ()->issueCommand (command);
-		ok = control->doModal (false);
+		control->doModal (false);
+		ok = command->succeeded ();
 		report_template.append (control->fullCommandOutput ());
 		delete control;
 	}
