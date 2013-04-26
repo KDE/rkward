@@ -1,3 +1,4 @@
+- Fixed: R backend would exit immediately, without meaningful error message, if there is an error in .Rprofile (or Rprofile.site)
 - Fixed: Installing suggested packages from the package installation dialog was broken
 - Fixed: Selecting a mirror via the "R packages" settings page would not work when prompted for package installation form the backend
 - Remove support for compiling RKWard in a single process (threaded) variant. This was not used / tested since RKWard 0.5.5

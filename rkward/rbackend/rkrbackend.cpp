@@ -985,6 +985,12 @@ bool RKRBackend::startR () {
 	stdout_stderr_fd = pfd[0];
 #endif
 
+#ifndef Q_WS_WIN
+	// It is important to set this *early*, so R does not bail out, if there is an error in .Rprofile.
+	// On windows, set in connectCallbacks() for technical reasons, and that seems sufficient.
+	R_Interactive = (Rboolean) TRUE;
+#endif
+
 	setup_Rmainloop ();
 
 #ifndef Q_WS_WIN
@@ -1001,9 +1007,14 @@ bool RKRBackend::startR () {
 #endif
 
 #ifndef Q_WS_WIN
-	// on windows, set in connectCallbacks() for technical reasons
+	// I am not sure, whether it is necessary to repeat this, here. It is not in R 3.0.0.
+	// But historically, it was placed here (after setup_Rmainloop(), and conceivably there
+	// was a reason to that (might have been reset in setup_Rmainloop() in earlier versions
+	// of R.
 	R_Interactive = (Rboolean) TRUE;
-#else
+#endif
+
+#ifdef Q_WS_WIN
 	setlocale (LC_NUMERIC, "C");	// something appears to mess with the locale on Windows. R will not work correctly without LC_NUMERIC=C
 #endif
 
