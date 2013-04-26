@@ -183,6 +183,9 @@ RKCaughtX11Window::RKCaughtX11Window (RKGraphicsDevice* rkward_device, int devic
 	resize (xembed_container->size ());
 	rk_native_device->viewPort ()->setParent (xembed_container);
 	connect (rkward_device, SIGNAL (captionChanged(const QString&)), this, SLOT (setCaption(const QString &)));
+	connect (rkward_device, SIGNAL (goingInteractive(bool,const QString&)), this, SLOT (deviceInteractive(bool,const QString&)));
+	stop_interaction->setVisible (true);
+	stop_interaction->setEnabled (false);
 	setCaption (rkward_device->viewPort ()->windowTitle ());
 
 	QTimer::singleShot (0, this, SLOT (doEmbed()));
@@ -337,6 +340,28 @@ void RKCaughtX11Window::prepareToBeDetached () {
 
 	dynamic_size_action->setEnabled (true);
 	reEmbed ();
+}
+
+void RKCaughtX11Window::deviceInteractive (bool interactive, const QString& prompt) {
+	RK_TRACE (MISC);
+
+	stop_interaction->setToolTip (prompt);
+	stop_interaction->setEnabled (interactive);
+
+	if (interactive) {
+		activate (true);
+		// it is necessary to do this also in the wrapper widget. Otherwise, for some reason, the view cannot be expanded, but can be shrunk.
+		setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Fixed);
+	} else {
+		setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Preferred);
+	}
+}
+
+void RKCaughtX11Window::stopInteraction () {
+	RK_TRACE (MISC);
+
+	RK_ASSERT (rk_native_device);
+	rk_native_device->stopInteraction ();
 }
 
 void RKCaughtX11Window::fixedSizeToggled () {
@@ -675,6 +700,11 @@ RKCaughtX11WindowPart::RKCaughtX11WindowPart (RKCaughtX11Window *window) : KPart
 	action = actionCollection ()->addAction ("device_duplicate", window, SLOT (duplicateDevice()));
 	action->setText (i18n ("Duplicate"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionWindowDuplicate));
+
+	action = window->stop_interaction = actionCollection ()->addAction ("stop_interaction", window, SLOT (stopInteraction ()));
+	action->setText (i18n ("Stop interaction"));
+	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionInterrupt));
+	action->setVisible (false);
 
 	// initialize context for plugins
 	RKContextMap *context = RKComponentMap::getContext ("x11");

@@ -127,6 +127,8 @@ is simply busy (e.g. when saving the current plot to history). */
  * NOTE: If no device exists (or isn't known to the system), this function does nothing */
 	static void setStatusMessage (int dev_num, const QString &message, RCommand *command=0);
 public slots:
+	void deviceInteractive (bool interactive, const QString &prompt);
+	
 /** Fixed size action was (potentially) toggled. Update to the new state */
 	void fixedSizeToggled ();
 /** Switch to fixed size mode, and set size1 (currently 500*500) */
@@ -143,6 +145,7 @@ public slots:
 	void printDevice ();
 	void copyDeviceToRObject ();
 	void duplicateDevice ();
+	void stopInteraction ();
 
 /** history navigation */
 	void firstPlot ();
@@ -197,6 +200,7 @@ private:
 	KAction *plot_clear_history_action;
 	KAction *plot_properties_action;
 	KSelectAction *plot_list_action;
+	KAction *stop_interaction;
 
 	KPassivePopup* status_popup;
 	RCommand* status_change_command;

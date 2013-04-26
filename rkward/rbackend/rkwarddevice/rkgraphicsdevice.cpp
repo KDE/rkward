@@ -78,10 +78,15 @@ void RKGraphicsDevice::updateNow () {
 		view->resize (area.size ());
 		view->show ();
 	}
+	checkSize ();
+	painter.begin (&area);
+}
+
+void RKGraphicsDevice::checkSize() {
+	RK_TRACE (GRAPHICS_DEVICE);
 	if (view->size () != area.size ()) {
 		RKGlobals::rInterface ()->issueCommand (new RCommand ("rkward:::RK.resize (" + QString::number (devices.key (this) + 1) + ")", RCommand::PriorityCommand));
 	}
-	painter.begin (&area);
 }
 
 RKGraphicsDevice* RKGraphicsDevice::newDevice (int devnum, double width, double height, const QString &title, bool antialias) {
@@ -232,16 +237,27 @@ void RKGraphicsDevice::setActive (bool active) {
 	emit (captionChanged (view->windowTitle ()));
 }
 
+void RKGraphicsDevice::goInteractive (const QString& prompt) {
+	RK_TRACE (GRAPHICS_DEVICE);
+
+	// The backend does not support trying to resize while it is waiting for a reply, and will produce error message in this case.
+	// To avoid confusion and loads of scary error messages, we disable resizing in the frontend while interactive.
+	// NOTE: It would certainly be possible, but rather cumbersome to support resizing during interaction in the backend.
+	// It does not seem to be important enough, however.
+	view->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Fixed);
+	view->setCursor (Qt::CrossCursor);
+	view->setToolTip (prompt);
+	view->show ();
+	view->raise ();
+	emit (goingInteractive (true, prompt));
+}
+
 void RKGraphicsDevice::locator () {
 	RK_TRACE (GRAPHICS_DEVICE);
 
 	RK_ASSERT (interaction_opcode < 0);
 	interaction_opcode = RKDLocator;
-
-	view->setCursor (Qt::CrossCursor);
-	view->setToolTip (i18n ("<h2>Locating point(s)</h2><p>Use left mouse button to select point(s). Any other mouse button to stop.</p>"));
-	view->show ();
-	view->raise ();
+	goInteractive (i18n ("<h2>Locating point(s)</h2><p>Use left mouse button to select point(s). Any other mouse button to stop.</p>"));
 }
 
 void RKGraphicsDevice::confirmNewPage () {
@@ -251,12 +267,12 @@ void RKGraphicsDevice::confirmNewPage () {
 	RK_ASSERT (dialog == 0);
 	interaction_opcode = RKDNewPageConfirm;
 
-	view->show ();
-	view->raise ();
+	QString msg = i18n ("<p>Press Enter to see next plot, or click 'Cancel' to abort.</p>");
+	goInteractive (msg);
 	dialog = new KDialog (view);
 	dialog->setCaption (i18n ("Ok to show next plot?"));
 	dialog->setButtons (KDialog::Ok | KDialog::Cancel);
-	dialog->setMainWidget (new QLabel (i18n ("<p>Press Enter to see next plot, or click 'Cancel' to abort.</p>"), dialog));
+	dialog->setMainWidget (new QLabel (msg, dialog));
 //	dialog->setWindowModality (Qt::WindowModal);        // not good: Grays out the plot window
 	connect (dialog, SIGNAL (finished (int)), this, SLOT (newPageDialogDone (int)));
 	dialog->show ();
@@ -278,10 +294,7 @@ void RKGraphicsDevice::startGettingEvents (const QString& prompt) {
 	stored_events.clear ();
 	interaction_opcode = RKDStartGettingEvents;
 
-	view->setCursor (Qt::CrossCursor);
-	view->setToolTip (prompt);
-	view->show ();
-	view->raise ();
+	goInteractive (prompt);
 }
 
 RKGraphicsDevice::StoredEvent RKGraphicsDevice::fetchNextEvent () {
@@ -354,6 +367,17 @@ bool RKGraphicsDevice::eventFilter (QObject *watched, QEvent *event) {
 			stored_events.append (sev);
 			return (true);
 		}
+	} else if (interaction_opcode == RKDNewPageConfirm) {
+		if (event->type () == QEvent::KeyPress) {
+			QKeyEvent *ke = static_cast<QKeyEvent*> (event);
+			if ((ke->key () == Qt::Key_Return) || (ke->key () == Qt::Key_Enter)) {
+				newPageDialogDone (KDialog::Accepted);
+				return true;
+			} else if (ke->key () == Qt::Key_Escape) {
+				newPageDialogDone (KDialog::Rejected);
+				return true;
+			}
+		}
 	}
 
 	if (event->type () == QEvent::Resize) triggerUpdate ();
@@ -384,7 +408,10 @@ void RKGraphicsDevice::stopInteraction () {
 	if (view) {	// might already be destroyed
 		view->setCursor (Qt::ArrowCursor);
 		view->setToolTip (QString ());
+		checkSize ();
+		view->setSizePolicy (QSizePolicy::Preferred, QSizePolicy::Preferred);
 	}
+	emit (goingInteractive (false, QString ()));
 	interaction_opcode = -1;
 }
 

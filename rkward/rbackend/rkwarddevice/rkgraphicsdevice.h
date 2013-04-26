@@ -76,6 +76,7 @@ public:
 public slots:
 	void stopInteraction ();
 signals:
+	void goingInteractive (bool interactive, const QString &prompt);
 	void activeChanged (bool);
 	void locatorDone (bool ok, double x, double y);
 	void newPageConfirmDone (bool accepted);
@@ -85,7 +86,9 @@ private slots:
 	void newPageDialogDone (int result);
 	void viewKilled ();
 private:
+	void goInteractive (const QString &prompt);
 	bool eventFilter (QObject *watched, QEvent *event);
+	void checkSize ();
 
 	QTimer updatetimer;
 	QPixmap area;

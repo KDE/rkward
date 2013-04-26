@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward_x11window" version="54">
+<kpartgui name="rkward_x11window" version="620">
 	<MenuBar>
 		<Menu name="device"><text>&amp;Device</text>
 			<Action name="device_activate"/>
@@ -46,5 +46,7 @@
 		<Action name="plot_next"/>
 		<Separator/>
 		<Action name="plot_remove"/>
+		<Separator/>
+		<Action name="stop_interaction"/>
 	</ToolBar>
 </kpartgui>
