@@ -1,3 +1,5 @@
+- New R function rk.capture.device() for manually embedding graphics devices in RKWard
+	TODO: Adjust frontend error message when embedding fails
 - Fixed: R backend would exit immediately, without meaningful error message, if there is an error in .Rprofile (or Rprofile.site)
 - Fixed: Installing suggested packages from the package installation dialog was broken
 - Fixed: Selecting a mirror via the "R packages" settings page would not work when prompted for package installation form the backend

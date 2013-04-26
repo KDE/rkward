@@ -113,6 +113,33 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	invisible (ret)	# Current always NULL
 }
 
+#' Capture / embed non-RKWard device windows
+#'
+#' \code{rk.capture.device} evaluates the given expression, and if this has created a window on the screen, tries to embed it as an RKWard window.
+#'
+#' @param expr  Expression to evaluate. 
+#'
+#' @note Theoretically, \code{expr} can be any valid R expression. However typically this should be calls to X11(), Windows(), or, perhaps dev.copy().
+#'       Importantly, the expression should create exactly one new window for \code{rk.capture.device()} to work. Keep in mind, that this is not
+#'       always the case for \code{plot(...)} and similar commands, which will re-use an existing plot window, if available. Further, note that
+#'       \code{rk.capture.device()} will not work on all platforms (most importantly, not in most MacOSX binaries). Finally, note that a captured
+#'       \code{X11()} or \code{Windows} device may look similar to an \code{RK()} device, but is actually a very different thing.
+#'
+#' @seealso \link{RK()} 
+#'
+#' @export
+"rk.capture.device" <- function (expr) {
+	oldd <- dev.cur ()
+	.rk.do.call ("startOpenX11", as.character (oldd));
+	on.exit (.rk.do.call ("endOpenX11", as.character (dev.cur())));
+
+	x <- eval.parent (expr)
+
+	if (oldd != dev.cur ()) on.exit (rk.record.plot$onAddDevice (), add=TRUE)
+	else warning ("No device appears to have been created (dev.cur() has not changed)");
+	invisible (x)
+}
+
 #' \code{rk.graph.off()} closes the device that was opened by \code{rk.graph.on}. 
 #'
 #' @rdname rk.graph.on
