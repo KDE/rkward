@@ -32,6 +32,9 @@ extern "C" {
 #define RKD_IN_STREAM RKGraphicsDeviceBackendTransmitter::streamer.instream
 #define RKD_OUT_STREAM RKGraphicsDeviceBackendTransmitter::streamer.outstream
 
+static bool rkd_waiting_for_reply = false;
+static int rkd_suppress_on_exit = 0;
+
 /** This class is essentially like QMutexLocker. In addition, the constructor waits until the next chunk of the transmission is ready (and does event processing).
  *
  * @note: Never ever call Rf_error(), or any R function that might fail during the lifetime of an RKGraphicsDataStreamReadGuard or
@@ -46,6 +49,7 @@ public:
 	RKGraphicsDataStreamReadGuard () {
 		RKGraphicsDeviceBackendTransmitter::mutex.lock ();
 		have_lock = true;
+		rkd_waiting_for_reply = true;
 		QIODevice* connection = RKGraphicsDeviceBackendTransmitter::connection;
 		BEGIN_SUSPEND_INTERRUPTS {
 			while (connection->bytesToWrite ()) {
@@ -57,23 +61,23 @@ public:
 			while (!RKGraphicsDeviceBackendTransmitter::streamer.readInBuffer ()) {
 				RKREventLoop::processX11Events ();
 				if (!connection->waitForReadyRead (10)) {
-					if (checkHandleInterrupt (connection)) {
-						if (have_lock) RKGraphicsDeviceBackendTransmitter::mutex.unlock ();
-						have_lock = false;	// Will d'tor still be called? We don't rely on it.
-						break;
-					}
+					if (checkHandleInterrupt (connection)) break;
 					checkHandleError ();
 				}
 			}
-			if (R_interrupts_pending && have_lock) {
-				RKGraphicsDeviceBackendTransmitter::mutex.unlock ();
-				have_lock = false;
+			if (R_interrupts_pending) {
+				if (have_lock) {
+					RKGraphicsDeviceBackendTransmitter::mutex.unlock ();
+					have_lock = false;  // Will d'tor still be called? We don't rely on it.
+				}
+				rkd_waiting_for_reply = false;
 			}
 		} END_SUSPEND_INTERRUPTS;
 	}
 
 	~RKGraphicsDataStreamReadGuard () {
 		if (have_lock) RKGraphicsDeviceBackendTransmitter::mutex.unlock ();
+		rkd_waiting_for_reply = false;
 	}
 
 private:
@@ -116,6 +120,12 @@ private:
 class RKGraphicsDataStreamWriteGuard {
 public:
 	RKGraphicsDataStreamWriteGuard () {
+		if (rkd_waiting_for_reply) {
+			// For now, the backend does not support any nesting of graphics operations. It would make the protocol more complex.
+			// I believe the only use-case is resizing during interaction, and IMO, that's not a terribly important one to support.
+			rkd_suppress_on_exit++;
+			Rf_error ("Nested graphics operations are not supported by this device (did you try to resize the device during locator()?)");
+		}
 		RKGraphicsDeviceBackendTransmitter::mutex.lock ();
 	}
 	~RKGraphicsDataStreamWriteGuard () {
@@ -512,6 +522,10 @@ void RKD_EventHelper (pDevDesc dev, int code) {
 }
 
 void RKD_onExit (pDevDesc dev) {
+	if (rkd_suppress_on_exit > 0) {
+		--rkd_suppress_on_exit;
+		return;
+	}
 	if (dev->gettingEvent) {
 		RKGraphicsDataStreamWriteGuard wguard;
 		WRITE_HEADER (RKDStopGettingEvents, dev);
