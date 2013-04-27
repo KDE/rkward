@@ -43,7 +43,7 @@
 #' @export
 #' @aliases rk.graph.on rk.graph.off
 #' @rdname rk.graph.on
-rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOption ("rk.graphics.width"), height=getOption ("rk.graphics.height"), quality, ...) 
+"rk.graph.on" <- function (device.type=getOption ("rk.graphics.type"), width=getOption ("rk.graphics.width"), height=getOption ("rk.graphics.height"), quality, ...) 
 {
 	if (!is.numeric (width)) width <- 480
 	if (!is.numeric (height)) height <- 480
@@ -85,6 +85,21 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	invisible (ret)
 }
 
+#' \code{rk.graph.off()} closes the device that was opened by \code{rk.graph.on}. 
+#'
+#' @rdname rk.graph.on
+#' @export
+"rk.graph.off" <- function(){
+	.rk.cat.output ("\n")	# so the output will be auto-refreshed
+	ret <- dev.off()
+	
+	# dev.off () sets dev.next () as active, which may not have been active before rk.graph.on was called;
+	# so reset the correct device as active:
+	i <- get (".rk.active.device", .rk.variables)
+	if ((!is.null (i)) && (i %in% dev.list ())) ret <- dev.set (i)
+	ret
+}
+
 #' Plot graphics to RKWard native device
 #'
 #' \code{RK()} creates an R on-screen device that will be rendered in the RKWard frontend. 
@@ -119,13 +134,14 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 #'
 #' @param expr  Expression to evaluate. 
 #'
-#' @note Theoretically, \code{expr} can be any valid R expression. However typically this should be calls to X11(), Windows(), or, perhaps dev.copy().
+#' @details Theoretically, \code{expr} can be any valid R expression. However typically this should be calls to X11(), Windows(), or, perhaps dev.copy().
 #'       Importantly, the expression should create exactly one new window for \code{rk.capture.device()} to work. Keep in mind, that this is not
-#'       always the case for \code{plot(...)} and similar commands, which will re-use an existing plot window, if available. Further, note that
-#'       \code{rk.capture.device()} will not work on all platforms (most importantly, not in most MacOSX binaries). Finally, note that a captured
+#'       always the case for \code{plot(...)} and similar commands, which will re-use an existing plot window, if available.
+#'
+#' @note \code{rk.capture.device()} will not work on all platforms (most importantly, not in most MacOSX binaries). Further, note that a captured
 #'       \code{X11()} or \code{Windows} device may look similar to an \code{RK()} device, but is actually a very different thing.
 #'
-#' @seealso \link{RK()} 
+#' @seealso \link{RK}
 #'
 #' @export
 "rk.capture.device" <- function (expr) {
@@ -140,20 +156,67 @@ rk.graph.on <- function (device.type=getOption ("rk.graphics.type"), width=getOp
 	invisible (x)
 }
 
-#' \code{rk.graph.off()} closes the device that was opened by \code{rk.graph.on}. 
-#'
-#' @rdname rk.graph.on
-#' @export
-"rk.graph.off" <- function(){
-	.rk.cat.output ("\n")	# so the output will be auto-refreshed
-	ret <- dev.off()
-	
-	# dev.off () sets dev.next () as active, which may not have been active before rk.graph.on was called;
-	# so reset the correct device as active:
-	i <- get (".rk.active.device", .rk.variables)
-	if ((!is.null (i)) && (i %in% dev.list ())) ret <- dev.set (i)
+# Internal function to create wrapper around an R device function (used for X11(), Windows(), and - soon: Quartz()).
+".rk.make.device.wrapper" <- function (devicename) {
+	ret <- eval (substitute (
+		function (width=getOption("rk.screendevice.width"), height=getOption("rk.screendevice.height"), pointsize=12) {
+			rk.mode <- getOption ("rk.override.platform.devices")
+			if (identical (rk.mode, "replace") || !exists (devicename, envir=asNamespace ("grDevices"), inherits=FALSE)) {
+				if (!identical (rk.mode, "replace")) {
+					warning (paste (devicename, "()-device is not available. Falling back to RK()"))
+				}
+				args <- list ()
+				if (exists ("width", inherits=FALSE) && !missing (width)) args$width <- width
+				if (exists ("height", inherits=FALSE) && !missing (height)) args$height <- height
+				if (exists ("pointsize", inherits=FALSE) && !missing (pointsize)) args$pointsize <- pointsize
+				if (exists ("bg", inherits=FALSE) && !missing (bg)) args$bg <- bg
+				if (exists ("title", inherits=FALSE) && !missing (title)) args$title <- title
+				if (exists ("antialias", inherits=FALSE) && !missing (antialias)) args$antialias <- !identical (antialias, "none")
+				do.call (rkward::RK, args)
+			} else if (identical (rk.mode, "capture")) {
+				if (missing (width)) width <- getOption ("rk.screendevice.width")
+				if (!is.numeric (width)) width <- 7
+				if (missing (height)) height <- getOption ("rk.screendevice.height")
+				if (!is.numeric (height)) height <- 7
+				rk.capture.device (eval (body (grDevices::devicename)))
+			} else {
+				eval (body (grDevices::devicename))
+			}
+		}
+	))
+	if (exists (devicename, envir=asNamespace ("grDevices"), inherits=FALSE)) {
+		devfun <- get (devicename, asNamespace ("grDevices"))
+		formals (ret) <- formals (devfun)
+		environment (ret) <- environment (devfun)
+	}
 	ret
 }
+
+## NOTE: Adding an Rd-page for these makes "?X11" fail (R 3.0.0).
+# Overrides for platform specific R plotting devices
+#
+# These functions override the platform specific on-screen plotting devices by the same names.
+# The exact behavior depends on configuration settings, and can be one of: The original R device,
+# the original R device embedded using \code{rk.capture.device()}, or the call can be re-directed
+# to the \code{RK()} device. In the last case not all function arguments may be honored.
+#
+# @note If you want to use the \link{RK} device, you should call that, explicitly. These
+#       overrides are provided to make it easy to use scripts that refer to the platform specific
+#       plotting devices provided by R.
+#
+# @seealso \link{RK} \link{rk.capture.device} \link[grDevices]{X11} \link[grDevices]{Windows}
+#
+# @rdname DeviceOverrides
+#' @export
+"X11" <- rk.screen.device
+# NOTE: Not yet activated. Need to work on settings UI, first
+#"X11" <- .rk.make.device.wrapper ("X11")
+#' @export
+"x11" <- X11
+#' @export
+"windows" <- .rk.make.device.wrapper ("windows")
+#' @export
+"win.graph" <- .rk.make.device.wrapper ("win.graph")  # NOTE: Has different formals() than windows()
 
 #' Device for printing using the KDE print dialog
 #' 

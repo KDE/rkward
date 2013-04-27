@@ -123,6 +123,15 @@ public:
 		if (rkd_waiting_for_reply) {
 			// For now, the backend does not support any nesting of graphics operations. It would make the protocol more complex.
 			// I believe the only use-case is resizing during interaction, and IMO, that's not a terribly important one to support.
+			//
+			// In case we do want to support nested operations, I think the plan would be basically:
+			// - For every request that awaits a reply (and only those), send a reply token
+			// - In RKGraphicsDataStreamReadGuard () wait for that specific token. If another token arrives, instead of the expected one,
+			//   put it on a stack, and continue waiting.
+			// - When waiting for a reply, also check the stack.
+			// What about the mutex?
+			// Well, essentially, during rkd_waiting_for_reply, nothing should attempt to obtain a lock. The transmitter thread can simply pause
+			// during that time.
 			rkd_suppress_on_exit++;
 			Rf_error ("Nested graphics operations are not supported by this device (did you try to resize the device during locator()?)");
 		}

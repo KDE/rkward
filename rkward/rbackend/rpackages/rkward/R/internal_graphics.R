@@ -31,17 +31,6 @@
 	.Call ("rk.graphics.device.resize", as.integer (devnum)-1, PACKAGE="(embedding)")
 }
 
-#' @export
-"x11" <- rk.screen.device
-
-#' @export
-"X11" <- x11
-
-if (base::.Platform$OS.type == "windows") {
-	  "windows" = rk.screen.device
-	  "win.graph" = rk.screen.device
-}
-
 # set from rkward the application:
 # options(device="rk.screen.device")
 #' @include internal.R
