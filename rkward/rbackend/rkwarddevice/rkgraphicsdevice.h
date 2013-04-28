@@ -21,9 +21,21 @@
 #include <QHash>
 #include <QPen>
 #include <QTimer>
-#include <QPixmap>
 #include <QPainter>
 #include <QLabel>
+
+#ifdef Q_WS_MAC
+// On Mac, drawing on a pixmap does not work correctly. Probably can only be done inside paint
+// events. (MacOSX 10.6.8, Qt 4.8.4).
+// Fortunately, a QImage based buffer does not seem to be _that_ much slower
+// (around 5-10% on X11, on plot (rnorm (100000)))
+#	define USE_QIMAGE_BUFFER
+#endif
+#ifdef USE_QIMAGE_BUFFER
+#	include <QImage>
+#else
+#	include <QPixmap>
+#endif
 
 class KDialog;
 
@@ -91,7 +103,11 @@ private:
 	void checkSize ();
 
 	QTimer updatetimer;
+#ifdef USE_QIMAGE_BUFFER
+	QImage area;
+#else
 	QPixmap area;
+#endif
 	QPainter painter;
 	QLabel *view;
 	QString base_title;

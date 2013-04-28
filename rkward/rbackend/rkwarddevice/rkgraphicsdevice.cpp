@@ -37,7 +37,14 @@
 
 QHash<int, RKGraphicsDevice*> RKGraphicsDevice::devices;
 
-RKGraphicsDevice::RKGraphicsDevice (double width, double height, const QString &title, bool antialias) : QObject (), area (qAbs (width) + 1, qAbs (height) + 1), base_title (title) {
+RKGraphicsDevice::RKGraphicsDevice (double width, double height, const QString &title, bool antialias) : 
+		QObject (),
+#ifdef USE_QIMAGE_BUFFER
+		area (qAbs (width) + 1, qAbs (height) + 1, QImage::Format_ARGB32),
+#else
+		area (qAbs (width) + 1, qAbs (height) + 1),
+#endif
+		base_title (title) {
 	RK_TRACE (GRAPHICS_DEVICE);
 
 	interaction_opcode = -1;
@@ -73,7 +80,11 @@ void RKGraphicsDevice::triggerUpdate () {
 
 void RKGraphicsDevice::updateNow () {
 	if (painter.isActive ()) painter.end ();
+#ifdef USE_QIMAGE_BUFFER
+	view->setPixmap (QPixmap::fromImage (area));
+#else
 	view->setPixmap (area);
+#endif
 	if (!view->isVisible ()) {
 		view->resize (area.size ());
 		view->show ();
@@ -121,7 +132,11 @@ void RKGraphicsDevice::clear (const QColor& col) {
 void RKGraphicsDevice::setAreaSize (const QSize& size) {
 	if (painter.isActive ()) painter.end ();
 	RK_DEBUG (GRAPHICS_DEVICE, DL_INFO, "New Size %d, %d (view size is %d, %d)", size.width (), size.height (), view->width (), view->height ());
+#ifdef USE_QIMAGE_BUFFER
+	area = QImage (size.width (), size.height (), QImage::Format_ARGB32);
+#else 
 	area = QPixmap (size.width (), size.height ());
+#endif
 	clear ();
 }
 
@@ -224,8 +239,11 @@ void RKGraphicsDevice::image (const QImage& image, const QRectF& target_rect, do
 
 QImage RKGraphicsDevice::capture () const {
 	RK_TRACE (GRAPHICS_DEVICE);
-
+#ifdef USE_QIMAGE_BUFFER
+	return area;
+#else
 	return area.toImage ();
+#endif
 }
 
 void RKGraphicsDevice::setActive (bool active) {
