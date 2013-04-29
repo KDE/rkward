@@ -1,13 +1,12 @@
-- New R function rk.capture.device() for manually embedding graphics devices in RKWard
-	TODO: Adjust frontend error message when embedding fails
+- New R function rk.embed.device() for manually embedding graphics devices in RKWard
 - Fixed: R backend would exit immediately, without meaningful error message, if there is an error in .Rprofile (or Rprofile.site)
 - Fixed: Installing suggested packages from the package installation dialog was broken
 - Fixed: Selecting a mirror via the "R packages" settings page would not work when prompted for package installation form the backend
 - Remove support for compiling RKWard in a single process (threaded) variant. This was not used / tested since RKWard 0.5.5
 - Shortcuts for the "Run ..." actions have been changed for better cross-platform compatibility
 - The script editor's "Run line" and "Run selection" actions have been merged
-- New (experimental) RKWard native on-screen device (RK())
-	TODO: Finish it, then provide UI option to select on-screen device
+- Add UI for configuring default graphics device, and embedding of standard graphics devices.
+- New RKWard native on-screen device (RK()). This is the default on-screen device in RKWard, now.
 - New R function rk.without.plot.history() for turning off plot history, temporarily
 - Add command line option --backend-debugger
 

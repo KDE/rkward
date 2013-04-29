@@ -1,10 +1,15 @@
 ## Internal functions manipulating graphics should be stored here.
 ## These functions are _not_ supposed to be called by the end user.
 
-# overriding x11 to get informed, when a new x11 window is opened
+#' DEPRECATED: \code{rk.screen.device} is obsolete. It simply calls \code{dev.new()} in this version of RKWard.
+#'
+#' Depending on your use case, you should use \code{dev.new()}, \code{RK()} or \code{rk.embed.device()}, instead.
+#'
+#' @seealso \link{dev.new}, \link{RK}, \link{rk.embed.device}
+#'
 #' @export
 "rk.screen.device" <- function (...) {
-	.Deprecated("RK")
+	warning ("rk.screen.device() is obsolete.\nUse one of dev.new(), RK(), or rk.embed.device(), instead.")
 	dev.new (...)
 }
 
@@ -13,8 +18,6 @@
 	.Call ("rk.graphics.device.resize", as.integer (devnum)-1, PACKAGE="(embedding)")
 }
 
-# set from rkward the application:
-# options(device="rk.screen.device")
 #' @include internal.R
 assign(".rk.preview.devices", list (), envir=.rk.variables)
 
@@ -23,7 +26,7 @@ assign(".rk.preview.devices", list (), envir=.rk.variables)
 	a <- .rk.variables$.rk.preview.devices[[x]]
 	if (is.null (a)) {
 		devnum <- dev.cur ()
-		rk.without.plot.history (rk.screen.device ())
+		rk.without.plot.history (dev.new ())
 		if (devnum != dev.cur ()) {
 			.rk.variables$.rk.preview.devices[[x]] <- list (devnum=dev.cur(), par=par (no.readonly=TRUE))
 		} else {
@@ -109,7 +112,7 @@ assign(".rk.preview.devices", list (), envir=.rk.variables)
 		function (...)
 			lattice::lattice.options (print.function = function (x, ...)
 			{
-				if (dev.cur() == 1) rk.screen.device ()
+				if (dev.cur() == 1) dev.new ()
 				## TODO: use "trellis" instead of "lattice" to accomodate ggplot2 plots?
 				plot_hist_enabled <- getOption ("rk.enable.graphics.history")
 				if (plot_hist_enabled) {

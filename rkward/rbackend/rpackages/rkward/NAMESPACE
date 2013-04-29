@@ -1,7 +1,7 @@
 export(makeActiveBinding)
 export(.onAttach)
 export(q)
-export(Quartz)
+export(quartz)
 export(quit)
 export(require)
 export(RK)

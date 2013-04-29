@@ -1,0 +1,15 @@
+\name{rk.screen.device}
+\alias{rk.screen.device}
+\title{DEPRECATED: \code{rk.screen.device} is obsolete. It simply calls \code{dev.new()} in this version of RKWard.}
+\usage{
+  rk.screen.device(...)
+}
+\description{
+  Depending on your use case, you should use
+  \code{dev.new()}, \code{RK()} or
+  \code{rk.embed.device()}, instead.
+}
+\seealso{
+  \link{dev.new}, \link{RK}, \link{rk.embed.device}
+}
+

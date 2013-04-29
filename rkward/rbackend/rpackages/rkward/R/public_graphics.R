@@ -156,7 +156,7 @@
 	invisible (x)
 }
 
-# Internal function to create wrapper around an R device function (used for X11(), Windows(), and - soon: Quartz()).
+# Internal function to create wrapper around an R device function (used for X11(), windows(), and quartz()).
 ".rk.make.device.wrapper" <- function (devicename) {
 	ret <- eval (substitute (
 		function (width=getOption("rk.screendevice.width"), height=getOption("rk.screendevice.height"), pointsize=12) {
@@ -216,7 +216,7 @@
 #' @export
 "win.graph" <- .rk.make.device.wrapper ("win.graph")  # NOTE: Has different formals() than windows()
 #' @export
-"Quartz" <- .rk.make.device.wrapper ("Quartz")
+"quartz" <- .rk.make.device.wrapper ("quartz")
 
 #' Device for printing using the KDE print dialog
 #' 
@@ -256,7 +256,7 @@
 	rk.record.plot$duplicating.from.device <- devId
 	on.exit (rk.record.plot$duplicating.from.device <- 1)	# NULL device
 	dev.set (devId)
-	dev.copy (device = rk.screen.device)
+	dev.copy (device = dev.new)
 }
 
 # A global history of various graphics calls;
@@ -915,7 +915,7 @@
 		paste (substr (.lab.str, 1, l), "...", sep = "")
 	}
 	.plot.new.hook <- function (.callstr) {
-		if (dev.cur() == 1) rk.screen.device ()
+		if (dev.cur() == 1) dev.new ()
 		if (getOption ("rk.enable.graphics.history")) {
 			.callstr <- sys.call (-sys.parents()[sys.nframe ()])
 			record (nextplot.pkg = "graphics", nextplot.call = .callstr)

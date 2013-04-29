@@ -29,6 +29,7 @@
 
 #include "../rkwardapplication.h"
 #include "../settings/rksettingsmodulegraphics.h"
+#include "../dialogs/rkerrordialog.h"
 #include "rkworkplace.h"
 #include "../misc/rkstandardicons.h"
 #include "../debug.h"
@@ -67,9 +68,9 @@ void RKWindowCatcher::stop (int new_cur_device) {
 #endif
 		} else {
 #if defined Q_WS_MAC
-			KMessageBox::information (0, i18n ("You have created a new graphics device window in R. Usually, RKWard tries to detect such windows, to take control of them, and add a menu-bar to them. However, this is not currently supported in this build of RKWard on Mac OS X. See http://p.sf.net/rkward/mac for more information."), i18n ("Could not embed R X11 window"), "embed_x11_device_not_supported");
+			KMessageBox::information (0, i18n ("You have tried to embed a new R graphics device window in RKWard. However, this is not currently supported in this build of RKWard on Mac OS X. See http://p.sf.net/rkward/mac for more information."), i18n ("Could not embed R X11 window"), "embed_x11_device_not_supported");
 #else
-			KMessageBox::information (0, i18n ("You have created a new X11 device window in R. Usually, RKWard tries to detect such windows, to take control of them, and add a menu-bar to them. This time, however, RKWard failed to detect, which window was created, and so can not embed it.\nIf you created the window on a different screen or X11 display, that is to be expected. You might want to consider changing options(\"display\"), then.\nIf you can see the X11 window on the same screen as this message, then RKWard should do better. In this case, please contact us at rkward-devel@lists.sourceforge.net with details on your setup, so we can try to fix this in future versions of RKWard."), i18n ("Could not embed R X11 window"), "failure_to_detect_x11_device");
+			RKErrorDialog::reportableErrorMessage (0, i18n ("You have tried to embed a new R graphics device window in RKWard. However, either no window was created, or RKWard failed to detect the new window. If you think RKWard should have done better, consider reporting this as a bug. Alternatively, you may want to adjust Settings->Configure RKWard->Onscreen Graphics."), QString (), i18n ("Could not embed R X11 window"), "failure_to_detect_x11_device");
 #endif
 		}
 	}
