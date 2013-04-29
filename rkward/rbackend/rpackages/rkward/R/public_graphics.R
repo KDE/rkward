@@ -173,7 +173,7 @@
 				if (exists ("title", inherits=FALSE) && !missing (title)) args$title <- title
 				if (exists ("antialias", inherits=FALSE) && !missing (antialias)) args$antialias <- !identical (antialias, "none")
 				do.call (rkward::RK, args)
-			} else if (identical (rk.mode, "capture")) {
+			} else if (identical (rk.mode, "embed")) {
 				if (missing (width)) width <- getOption ("rk.screendevice.width")
 				if (!is.numeric (width)) width <- 7
 				if (missing (height)) height <- getOption ("rk.screendevice.height")
