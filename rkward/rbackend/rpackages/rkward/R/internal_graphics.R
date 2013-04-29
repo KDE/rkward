@@ -4,26 +4,8 @@
 # overriding x11 to get informed, when a new x11 window is opened
 #' @export
 "rk.screen.device" <- function (...) {
-	args <- list (...)
-	rk.capture.device ({
-		if (!exists (".rk.default.device")) {
-			if (base::.Platform$OS.type == "unix") {
-				device <- grDevices::x11
-			} else {
-				device <- grDevices::windows
-				if (is.null (args[["width"]])) args[["width"]] <- options ("rk.screendevice.width")[[1]]
-				if (!is.numeric (args[["width"]])) args[["width"]] <- 7
-				if (is.null (args[["height"]])) args[["height"]] <- options ("rk.screendevice.height")[[1]]
-				if (!is.numeric (args[["height"]])) args[["height"]] <- 7
-			}
-		} else {
-			device <- .rk.default.device
-			if (is.character (.rk.default.device)) {
-				device <- get (.rk.default.device)
-			}
-		}
-		do.call (device, args)
-	})
+	.Deprecated("RK")
+	dev.new (...)
 }
 
 # Fetch the current size of the given RK() device from the frontend, and redraw

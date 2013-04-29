@@ -128,23 +128,23 @@
 	invisible (ret)	# Current always NULL
 }
 
-#' Capture / embed non-RKWard device windows
+#' Embed non-RKWard device windows
 #'
-#' \code{rk.capture.device} evaluates the given expression, and if this has created a window on the screen, tries to embed it as an RKWard window.
+#' \code{rk.embed.device} evaluates the given expression, and if this has created a window on the screen, tries to embed it as an RKWard window.
 #'
 #' @param expr  Expression to evaluate. 
 #'
 #' @details Theoretically, \code{expr} can be any valid R expression. However typically this should be calls to X11(), Windows(), or, perhaps dev.copy().
-#'       Importantly, the expression should create exactly one new window for \code{rk.capture.device()} to work. Keep in mind, that this is not
+#'       Importantly, the expression should create exactly one new window for \code{rk.embed.device()} to work. Keep in mind, that this is not
 #'       always the case for \code{plot(...)} and similar commands, which will re-use an existing plot window, if available.
 #'
-#' @note \code{rk.capture.device()} will not work on all platforms (most importantly, not in most MacOSX binaries). Further, note that a captured
+#' @note \code{rk.embed.device()} will not work on all platforms (most importantly, not in most MacOSX binaries). Further, note that a captured
 #'       \code{X11()} or \code{Windows} device may look similar to an \code{RK()} device, but is actually a very different thing.
 #'
 #' @seealso \link{RK}
 #'
 #' @export
-"rk.capture.device" <- function (expr) {
+"rk.embed.device" <- function (expr) {
 	oldd <- dev.cur ()
 	.rk.do.call ("startOpenX11", as.character (oldd));
 	on.exit (.rk.do.call ("endOpenX11", as.character (dev.cur())));
@@ -178,7 +178,7 @@
 				if (!is.numeric (width)) width <- 7
 				if (missing (height)) height <- getOption ("rk.screendevice.height")
 				if (!is.numeric (height)) height <- 7
-				rk.capture.device (eval (body (grDevices::devicename)))
+				rk.embed.device (eval (body (grDevices::devicename)))
 			} else {
 				eval (body (grDevices::devicename))
 			}
@@ -197,26 +197,26 @@
 #
 # These functions override the platform specific on-screen plotting devices by the same names.
 # The exact behavior depends on configuration settings, and can be one of: The original R device,
-# the original R device embedded using \code{rk.capture.device()}, or the call can be re-directed
+# the original R device embedded using \code{rk.embed.device()}, or the call can be re-directed
 # to the \code{RK()} device. In the last case not all function arguments may be honored.
 #
 # @note If you want to use the \link{RK} device, you should call that, explicitly. These
 #       overrides are provided to make it easy to use scripts that refer to the platform specific
 #       plotting devices provided by R.
 #
-# @seealso \link{RK} \link{rk.capture.device} \link[grDevices]{X11} \link[grDevices]{Windows}
+# @seealso \link{RK} \link{rk.embed.device} \link[grDevices]{X11} \link[grDevices]{Windows}
 #
 # @rdname DeviceOverrides
 #' @export
-"X11" <- rk.screen.device
-# NOTE: Not yet activated. Need to work on settings UI, first
-#"X11" <- .rk.make.device.wrapper ("X11")
+"X11" <- .rk.make.device.wrapper ("X11")
 #' @export
 "x11" <- X11
 #' @export
 "windows" <- .rk.make.device.wrapper ("windows")
 #' @export
 "win.graph" <- .rk.make.device.wrapper ("win.graph")  # NOTE: Has different formals() than windows()
+#' @export
+"Quartz" <- .rk.make.device.wrapper ("Quartz")
 
 #' Device for printing using the KDE print dialog
 #' 
