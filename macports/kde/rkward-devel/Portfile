@@ -9,7 +9,7 @@ worksrcdir          ${workpath}/trunk/rkward
 
 name                rkward-devel
 conflicts           rkward
-version             0.6.1-svn${svn.revision}
+version             0.6.1-svn
 categories          kde kde4 math science
 maintainers         hhu.de:meik.michalke
 license             GPL-2
@@ -29,7 +29,7 @@ PortGroup           cmake 1.0
 
 depends_lib         port:kdelibs4 \
                     port:kate \
-                    port:R-framework
+                    port:R
 
 # add port:okular once the graphics device is fully functional
 # this needs port:poppler with +qt4 +quartz varaints which cannot be
@@ -68,7 +68,7 @@ configure.cmd       cmake ..
 # you must first install the OS X packages of CRAN R, as we'll link against them
 subport rkward-devel-binary {
         conflicts-append rkward-devel rkward-binary rkward-devel-debug rkward-debug
-        depends_lib-delete   port:gcc47 port:R-framework
+        depends_lib-delete   port:gcc47 port:R
         configure.compiler   llvm-gcc-4.2
         configure.args-delete \
                -DR_EXECUTABLE=${prefix}/Library/Frameworks/R.framework/Resources/R
