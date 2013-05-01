@@ -69,7 +69,7 @@ suite <- new ("RKTestSuite", id="rkward_application_tests",
 			graphics.off()
 			stopifnot (is.null (dev.list ()))
 
-			plot (1, 1); x11(); plot (2, 2)
+			plot (1, 1); rk.embed.device (grDevices::x11()); plot (2, 2)
 
 			stopifnot (all.equal (as.numeric (dev.list ()), c (2, 3)))
 			dev.off (2)
