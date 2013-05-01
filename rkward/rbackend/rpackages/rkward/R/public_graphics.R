@@ -285,9 +285,7 @@
 		pkg = "", call = NA_character_, plot = NA, tlo.ls = NA)
 	# this list stores the details for currently displayed plots on the devices; tagged by device number
 	histPositions <- list ("1" = .hP.template)
-	.hP.names <- names (histPositions)
-	.set.hP.names <- function () .hP.names <<- names (histPositions)
-	
+
 	.ss.used <- FALSE # split.screen variable
 	.pop.notify <- TRUE # used when hist limit is reached
 	.cll <- 50 # no. of characters used in the "goto plot" drop down list
@@ -295,7 +293,7 @@
 	
 	## Generic functions:
 	.get.sys.time <- function () format (Sys.time (), "%Y%m%d%H%M%OS3")
-	.is.device.managed <- function (devId) as.character (devId) %in% .hP.names[-1]
+	.is.device.managed <- function (devId) as.character (devId) %in% names(histPositions)[-1]
 	.set.trellis.last.object <- function (devId = dev.cur ())
 	{
 		# called only from dev.set (); this appropriately sets the "lattice.status"
@@ -348,7 +346,6 @@
 			histPositions [[devId]]$plot <<- histPositions [[devId.from]]$plot
 			histPositions [[devId]]$tlo.ls <<- histPositions [[devId.from]]$tlo.ls
 		}
-		.set.hP.names ()
 		.rk.update.hist.actions ()
 		invisible ()
 	}
@@ -377,18 +374,15 @@
 					list (is.this.plot.new = TRUE, is.this.dev.new = FALSE, pkg = "unknown"))
 		}
 		.rk.backups$dev.set (d.cur)
-		.set.hP.names ()
 	}
 	onDelDevice <- function (devId = dev.cur())
 	{
 		devId <- as.character (devId)
-		if (!(devId %in% .hP.names[-1])) return (invisible ())
+		if (!(devId %in% names(histPositions)[-1])) return (invisible ())
 		
 		## TODO: ask for confirmation before appending a plot
 		record (devId, action = "dev.off")
 		histPositions [[devId]] <<- NULL
-		.set.hP.names ()
-		
 		invisible ()
 	}
 	flushout.histPositions <- function ()
@@ -398,7 +392,7 @@
 		# cleans out the device specific lists
 		
 		# save any unsaved plots and "close" the device w/o actually closing the window:
-		for (d in .hP.names)
+		for (d in names(histPositions))
 			record (devId = d, action = "dev.off")
 		.rk.update.hist.actions (enable.plot.hist = FALSE)
 		histPositions <<- list ("1" = .hP.template)
@@ -586,7 +580,7 @@
 	.check.other.dev.at.same.pos <- function (devId, .n.)
 	{
 		# length (.n.) >= 1 when .verify.hist.limits () calls remove ()
-		odnames <- .hP.names [!(.hP.names %in% c("1", devId))]
+		odnames <- names(histPositions) [!(names(histPositions) %in% c("1", devId))]
 		if (length (odnames) == 0) return (invisible ())
 		
 		odpos <- sapply (histPositions [odnames], "[[", "pos.cur") # names kept
@@ -677,7 +671,7 @@
 		savedPlots <<- list ()
 		.unsavedPlot <<- list (plot = NULL, tlo.ls = NULL, pkg = NA_character_, is.os = NA, tryerr = NA)
 		.ss.used <<- FALSE
-		for (d in .hP.names[-1]) {
+		for (d in names(histPositions)[-1]) {
 			if (!histPositions [[d]]$is.this.dev.new)
 				histPositions [[d]]$is.this.plot.new <<- TRUE
 			histPositions [[d]]$pos.cur <<- NA_integer_
@@ -837,7 +831,7 @@
 	.get.plot.info.str <- function (devId = dev.cur (), l=0)
 	{
 		devId <- as.character (devId)
-		if (!(devId %in% .hP.names)) return (paste ("Device", devId, "is not managed."))
+		if (!(devId %in% names(histPositions))) return (paste ("Device", devId, "is not managed."))
 		
 		n <- histPositions [[devId]]$pos.cur
 		if (is.na (n)) {
@@ -923,7 +917,7 @@
 	}
 	
 	## Utility / R - C++ connection functions:
-	.rk.update.hist.actions <- function (devIds = .hP.names, enable.plot.hist = TRUE)
+	.rk.update.hist.actions <- function (devIds = names(histPositions), enable.plot.hist = TRUE)
 	{
 		# this function is called whenever the history length changes
 		# or the position changes in any device.
