@@ -70,10 +70,35 @@ protected:
 	QString governor_modifier;
 };
 
+//////////////////////////////////////////////// AbstractList //////////////////////////////////////////////////
+/** Base class for list properties (RKComponentPropertyStringList and RKComponentPropertyRObjects) */
+class RKComponentPropertyAbstractList : public RKComponentPropertyBase {
+public:
+	RKComponentPropertyAbstractList (QObject* parent, bool required);
+	virtual ~RKComponentPropertyAbstractList ();
+/** how many items can this property hold? Use default values (0) to remove constraints
+@param min_num_items Minimum number of items for this property to be valid
+@param min_num_items_if_any Some properties may be valid, if they hold either no items at all, or at least a certain number of items
+@param max_num_items Maximum number of items for this property to be valid */
+	void setAllowedLength (int min_num_items=0, int min_num_items_if_any=0, int max_num_items=0);
+/** @returns true, if the property holds the maximum number of items (or more) */
+	bool atMaxLength () const { return (max_num_items && (max_num_items <= listLength ())); };
+/** reimplemented from RKComponentPropertyBase to actually reconcile requirements with other list properties */
+	void connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier=QString::null, bool reconcile_requirements=true);
+protected:
+	bool checkListLength ();
+	virtual int listLength () const = 0;
+	void reconcileLengthRequirements (RKComponentPropertyAbstractList *governor);
+	static QString sep;
+private:
+	int min_num_items;
+	int min_num_items_if_any;
+	int max_num_items;
+};
 
 /////////////////////////////////////////////// StringList /////////////////////////////////////////////////////
 /** RKComponentProperty, which can handle lists of strings, better */
-class RKComponentPropertyStringList : public RKComponentPropertyBase {
+class RKComponentPropertyStringList : public RKComponentPropertyAbstractList {
 public:
 	RKComponentPropertyStringList (QObject *parent, bool required);
 /** destructor */
@@ -95,9 +120,9 @@ public:
 	void setValues (const QStringList &new_values) { storage = new_values; doChange (); };
 /** reimplemented from RKComponentPropertyBase to use special handling for list properties */
 	void governorValueChanged (RKComponentPropertyBase *property);
+	int listLength () const { return (storage.size ()); };
 private:
 	void doChange () { _value.clear (); emit (valueChanged (this)); };
-	QString sep;	// always "\n". TODO: remove
 	QStringList storage;
 };
 
@@ -251,18 +276,13 @@ class RKObjectListView;
 #include "../core/rkmodificationtracker.h"
 
 /** special type of RKComponentProperty, that prepresents one or more RObject (s) */
-class RKComponentPropertyRObjects : public RKComponentPropertyBase, public RObjectListener {
+class RKComponentPropertyRObjects : public RKComponentPropertyAbstractList, public RObjectListener {
 	Q_OBJECT
 public:
 /** constructor */
 	RKComponentPropertyRObjects (QObject *parent, bool required);
 /** destructor */
 	~RKComponentPropertyRObjects ();
-/** how many objects can this property hold? Use default values (0) to remove constraints
-@param min_num_objects Minimum number of objects for this property to be valid
-@param min_num_objects_if_any Some properties may be valid, if they hold either no objects at all, or at least a certain number of objects
-@param max_num_objects Maximum number of objects for this property to be valid */
-	void setListLength (int min_num_objects=0, int min_num_objects_if_any=0, int max_num_objects=0);
 /** add an object value */
 	bool addObjectValue (RObject *object);
 /** Set property to only accept certain classes. If you provide an empty list, all classes will be accepted*/
@@ -303,9 +323,8 @@ public:
 	void connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier=QString::null, bool reconcile_requirements=true);
 /** reimplemented from RKComponentPropertyBase to use special handling for object properties */
 	void governorValueChanged (RKComponentPropertyBase *property);
-/** @returns true, if the property holds the maximum number of items (or more) */
-	bool atMaxLength ();
 	void removeObjectValue (RObject* object) { objectRemoved (object); };
+	int listLength () const { return (object_list.size ()); };
 protected:
 /** remove an object value. reimplemented from RObjectListener::objectRemoved (). This is so we get notified if the object currently selected is removed TODO: is this effectively a duplication of setFromList? */
 	void objectRemoved (RObject *removed);
@@ -326,13 +345,9 @@ private:
 	int dims;
 	int min_length;
 	int max_length;
-	int min_num_objects;
-	int min_num_objects_if_any;
-	int max_num_objects;
 	QStringList classes;
 /** TODO: use a list of enums instead for internal purposes! */
 	QStringList types;
-	QString separator;	// always "\n". TODO: remove
 };
 
 ///////////////////////////////////////////////// Code ////////////////////////////////////////////////////////

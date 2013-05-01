@@ -152,11 +152,65 @@ void RKComponentPropertyBase::warnModifierNotRecognized (const QString &modifier
 }
 
 
+///////////////////////////////////////// AbstractList /////////////////////////////////////
+
+QString RKComponentPropertyAbstractList::sep = "\n";
+RKComponentPropertyAbstractList::RKComponentPropertyAbstractList (QObject* parent, bool required) : RKComponentPropertyBase (parent, required) {
+	RK_TRACE (PLUGIN);
+	setAllowedLength ();
+}
+
+RKComponentPropertyAbstractList::~RKComponentPropertyAbstractList () {
+	RK_TRACE (PLUGIN);
+}
+
+void RKComponentPropertyAbstractList::setAllowedLength ( int min_num_items, int min_num_items_if_any, int max_num_items ) {
+	RK_TRACE (PLUGIN);
+
+	RKComponentPropertyAbstractList::min_num_items = min_num_items;
+	RKComponentPropertyAbstractList::min_num_items_if_any = min_num_items_if_any;
+	RKComponentPropertyAbstractList::max_num_items = max_num_items;
+
+	// TODO: re-validize?
+}
+
+bool RKComponentPropertyAbstractList::checkListLength () {
+	RK_TRACE (PLUGIN);
+
+	if ((min_num_items > 0) || (max_num_items > 0) || (min_num_items_if_any > 0)) {
+		int len = listLength ();
+		if (len < min_num_items) return false;
+		if (len && (len < min_num_items_if_any)) return false;
+		if ((max_num_items > 0) && (len > max_num_items)) return false;
+	}
+	return true;
+}
+
+void RKComponentPropertyAbstractList::reconcileLengthRequirements (RKComponentPropertyAbstractList* governor) {
+	RK_TRACE (PLUGIN);
+
+	if (governor->min_num_items < min_num_items) governor->min_num_items = min_num_items;
+	if (governor->min_num_items_if_any < min_num_items_if_any) governor->min_num_items_if_any = min_num_items_if_any;
+	if (max_num_items && (governor->max_num_items > max_num_items)) governor->max_num_items = max_num_items;
+}
+
+void RKComponentPropertyAbstractList::connectToGovernor (RKComponentPropertyBase* governor, const QString& modifier, bool reconcile_requirements) {
+	RK_TRACE (PLUGIN);
+
+	if (reconcile_requirements && modifier.isEmpty ()) {
+		if ((governor->type () == PropertyStringList) || (governor->type () == PropertyRObjects)) {
+			reconcileLengthRequirements (static_cast<RKComponentPropertyAbstractList*> (governor));
+		}
+	}
+
+	RKComponentPropertyBase::connectToGovernor (governor, modifier, reconcile_requirements);
+}
+
+
 ///////////////////////////////////////// StringList ///////////////////////////////////////
 
-RKComponentPropertyStringList::RKComponentPropertyStringList (QObject *parent, bool required) : RKComponentPropertyBase (parent, required) {
+RKComponentPropertyStringList::RKComponentPropertyStringList (QObject *parent, bool required) : RKComponentPropertyAbstractList (parent, required) {
 	RK_TRACE (PLUGIN);
-	sep = "\n";
 }
 
 RKComponentPropertyStringList::~RKComponentPropertyStringList () {
@@ -457,13 +511,10 @@ bool RKComponentPropertyInt::isStringValid (const QString &string) {
 
 void RKComponentPropertyInt::connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier, bool reconcile_requirements) {
 	RK_TRACE (PLUGIN);
-
 	RK_ASSERT (governor);
-	connect (governor, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (governorValueChanged (RKComponentPropertyBase *)));
-	governor_modifier = modifier;
 
 	// reconcile requirements if applicable
-	if (reconcile_requirements && governor_modifier.isEmpty ()) {
+	if (reconcile_requirements && modifier.isEmpty ()) {
 		if (governor->type () == PropertyInt) {
 			RKComponentPropertyInt *igov = static_cast<RKComponentPropertyInt *> (governor); 	// convenience pointer
 			if (validator->bottom () > igov->minValue ()) {
@@ -483,8 +534,7 @@ void RKComponentPropertyInt::connectToGovernor (RKComponentPropertyBase *governo
 		}
 	}
 
-	// fetch current value
-	governorValueChanged (governor);
+	RKComponentPropertyBase::connectToGovernor (governor, modifier, reconcile_requirements);
 }
 
 void RKComponentPropertyInt::governorValueChanged (RKComponentPropertyBase *property) {
@@ -616,13 +666,10 @@ bool RKComponentPropertyDouble::isStringValid (const QString &string) {
 
 void RKComponentPropertyDouble::connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier, bool reconcile_requirements) {
 	RK_TRACE (PLUGIN);
-
 	RK_ASSERT (governor);
-	connect (governor, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (governorValueChanged (RKComponentPropertyBase *)));
-	governor_modifier = modifier;
 
 	// reconcile requirements if applicable
-	if (reconcile_requirements && governor_modifier.isEmpty ()) {
+	if (reconcile_requirements && modifier.isEmpty ()) {
 		if (governor->type () == PropertyInt) {
 			RKComponentPropertyInt *igov = static_cast<RKComponentPropertyInt *> (governor); 	// convenience pointer
 			if (validator->bottom () > igov->minValue ()) {
@@ -642,8 +689,7 @@ void RKComponentPropertyDouble::connectToGovernor (RKComponentPropertyBase *gove
 		}
 	}
 
-	// fetch current value
-	governorValueChanged (governor);
+	RKComponentPropertyBase::connectToGovernor (governor, modifier, reconcile_requirements);
 }
 
 void RKComponentPropertyDouble::governorValueChanged (RKComponentPropertyBase *property) {
@@ -702,12 +748,11 @@ void RKComponentPropertyDouble::internalSetValue (const QString &new_value) {
 #include "../core/rkmodificationtracker.h"
 #include "../misc/rkobjectlistview.h"
 
-RKComponentPropertyRObjects::RKComponentPropertyRObjects (QObject *parent, bool required) : RKComponentPropertyBase (parent, required), RObjectListener (RObjectListener::Other) {
+RKComponentPropertyRObjects::RKComponentPropertyRObjects (QObject *parent, bool required) : RKComponentPropertyAbstractList (parent, required), RObjectListener (RObjectListener::Other) {
 	RK_TRACE (PLUGIN);
 
 // no initial requirements
-	dims = min_length = max_length = min_num_objects = min_num_objects_if_any = max_num_objects = -1;
-	separator = "\n";
+	dims = min_length = max_length;
 
 	addNotificationType (RObjectListener::ObjectRemoved);
 	addNotificationType (RObjectListener::MetaChanged);
@@ -717,16 +762,6 @@ RKComponentPropertyRObjects::~RKComponentPropertyRObjects () {
 	RK_TRACE (PLUGIN);
 
 	setObjectValue (0);
-}
-
-void RKComponentPropertyRObjects::setListLength (int min_num_objects, int min_num_objects_if_any, int max_num_objects) {
-	RK_TRACE (PLUGIN);
-
-	RKComponentPropertyRObjects::min_num_objects = min_num_objects;
-	RKComponentPropertyRObjects::min_num_objects_if_any = min_num_objects_if_any;
-	RKComponentPropertyRObjects::max_num_objects = max_num_objects;
-
-	validizeAll ();
 }
 
 bool RKComponentPropertyRObjects::addObjectValue (RObject *object) {
@@ -921,13 +956,13 @@ bool RKComponentPropertyRObjects::setValue (const QStringList& values) {
 bool RKComponentPropertyRObjects::setValue (const QString &value) {
 	RK_TRACE (PLUGIN);
 
-	return setValue (value.split (separator, QString::SkipEmptyParts));
+	return setValue (value.split (sep, QString::SkipEmptyParts));
 }
 
 bool RKComponentPropertyRObjects::isStringValid (const QString &value) {
 	RK_TRACE (PLUGIN);
 
-	QStringList slist = value.split (separator, QString::SkipEmptyParts);
+	QStringList slist = value.split (sep, QString::SkipEmptyParts);
 
 	for (QStringList::const_iterator it = slist.begin (); it != slist.end (); ++it) {
 		RObject *obj = RObjectList::getObjectList ()->findObject (*it);
@@ -941,13 +976,10 @@ bool RKComponentPropertyRObjects::isStringValid (const QString &value) {
 
 void RKComponentPropertyRObjects::connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier, bool reconcile_requirements) {
 	RK_TRACE (PLUGIN);
-
 	RK_ASSERT (governor);
-	connect (governor, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (governorValueChanged (RKComponentPropertyBase *)));
-	governor_modifier = modifier;
 
 	// reconcile requirements if applicable
-	if (reconcile_requirements && governor_modifier.isEmpty ()) {
+	if (reconcile_requirements && modifier.isEmpty ()) {
 		if (governor->type () == PropertyRObjects) {
 			RKComponentPropertyRObjects *ogov = static_cast<RKComponentPropertyRObjects *> (governor); 	// convenience pointer
 
@@ -966,17 +998,6 @@ void RKComponentPropertyRObjects::connectToGovernor (RKComponentPropertyBase *go
 				if (ogov->max_length > max_length) {
 					ogov->max_length = max_length;
 				}
-			}
-
-			// reconcile number of objects filter
-			if (ogov->min_num_objects < min_num_objects) {
-				ogov->min_num_objects = min_num_objects;
-			}
-			if (ogov->min_num_objects_if_any < min_num_objects_if_any) {
-				ogov->min_num_objects_if_any = min_num_objects_if_any;
-			}
-			if (max_num_objects && (ogov->max_num_objects > max_num_objects)) {
-				ogov->max_num_objects = max_num_objects;
 			}
 
 			// reconcile class filter
@@ -1024,8 +1045,7 @@ void RKComponentPropertyRObjects::connectToGovernor (RKComponentPropertyBase *go
 		}
 	}
 
-	// fetch current value
-	governorValueChanged (governor);
+	RKComponentPropertyAbstractList::connectToGovernor (governor, modifier, reconcile_requirements);
 }
 
 void RKComponentPropertyRObjects::governorValueChanged (RKComponentPropertyBase *property) {
@@ -1086,23 +1106,8 @@ void RKComponentPropertyRObjects::updateValidity () {
 	is_valid = true;	// innocent until proven guilty
 
 	if (!problems.isEmpty ()) is_valid = false;
-	else if ((min_num_objects > 0) || (max_num_objects > 0) || (min_num_objects_if_any > 0)) {
-		int len = object_list.count ();
-		if (len < min_num_objects) is_valid = false;
-		if (len && (len < min_num_objects_if_any)) is_valid = false;
-		if ((max_num_objects > 0) && (len > max_num_objects)) is_valid = false;
-	}
+	else is_valid = checkListLength ();
 }
-
-bool RKComponentPropertyRObjects::atMaxLength () {
-	RK_TRACE (PLUGIN);
-
-	int len = object_list.count ();
-	if (max_num_objects && (len >= max_num_objects)) return true;
-	return false;
-}
-
-
 
 /////////////////////////////////////////// Code ////////////////////////////////////////////////
 

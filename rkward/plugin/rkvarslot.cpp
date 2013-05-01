@@ -67,10 +67,10 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 
 	// find out about options
 	if ((multi = xml->getBoolAttribute (element, "multi", false, DL_INFO))) {
-		available->setListLength (xml->getIntAttribute (element, "min_vars", 1, DL_INFO), xml->getIntAttribute (element, "min_vars_if_any", 1, DL_INFO), xml->getIntAttribute (element, "max_vars", 0, DL_INFO));
+		available->setAllowedLength (xml->getIntAttribute (element, "min_vars", 1, DL_INFO), xml->getIntAttribute (element, "min_vars_if_any", 1, DL_INFO), xml->getIntAttribute (element, "max_vars", 0, DL_INFO));
 		connect (list, SIGNAL (itemSelectionChanged ()), this, SLOT (listSelectionChanged ()));
 	} else {
-		available->setListLength (1, 1, 1);
+		available->setAllowedLength (1, 1, 1);
 
 		// make it look like a line-edit
 		list->header ()->hide ();
