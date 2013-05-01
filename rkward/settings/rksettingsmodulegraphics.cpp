@@ -237,7 +237,7 @@ QStringList RKSettingsModuleGraphics::makeRRunTimeOptionCommands () {
 	QStringList list;
 
 	// register RK as interactive
-	list.append ("try (if (!(\"RK\" %in% deviceIsInteractive())) deviceIsInteractive(name=\"RK\"))\n");
+	list.append ("try (if (!(\"RKGraphicsDevice\" %in% deviceIsInteractive())) deviceIsInteractive(name=\"RKGraphicsDevice\"))\n");
 
 	QString command = "options (device=";
 	if (default_device == RKDevice) command.append ("\"RK\"");
