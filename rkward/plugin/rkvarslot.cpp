@@ -2,7 +2,7 @@
                           rkvarslot.cpp  -  description
                              -------------------
     begin                : Thu Nov 7 2002
-    copyright            : (C) 2002, 2007, 2008, 2009, 2011, 2012 by Thomas Friedrichsmeier
+    copyright            : (C) 2002-2013 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -59,11 +59,19 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 	list->setRootIsDecorated (false);
 	g_layout->addWidget (list, 1, 2);
 
+	mode = (element.tagName () == "valueslot") ? Valueslot : Varslot;
+
 	// initialize properties
-	addChild ("source", source = new RKComponentPropertyRObjects (this, false));
+	if (mode == Valueslot) {
+		addChild ("source", source = new RKComponentPropertyStringList (this, false));
+		addChild ("available", available = new RKComponentPropertyStringList (this, true));
+		addChild ("selected", selected = new RKComponentPropertyStringList (this, false));
+	} else {
+		addChild ("source", source = new RKComponentPropertyRObjects (this, false));
+		addChild ("available", available = new RKComponentPropertyRObjects (this, true));
+		addChild ("selected", selected = new RKComponentPropertyRObjects (this, false));
+	}
 	source->setInternal (true);
-	addChild ("available", available = new RKComponentPropertyRObjects (this, true));
-	addChild ("selected", selected = new RKComponentPropertyRObjects (this, false));
 	selected->setInternal (true);
 
 	// find out about options
@@ -87,12 +95,14 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 		g_layout->setRowStretch (3, 1);		// so the label does not get separated from the view
 	}
 
-	// initialize filters
-	available->setClassFilter (xml->getStringAttribute (element, "classes", QString (), DL_INFO).split (" ", QString::SkipEmptyParts));
-	setRequired (xml->getBoolAttribute (element, "required", false, DL_INFO));
-	available->setTypeFilter (xml->getStringAttribute (element, "types", QString::null, DL_INFO).split (" ", QString::SkipEmptyParts));
-	available->setDimensionFilter (xml->getIntAttribute (element, "num_dimensions", 0, DL_INFO), xml->getIntAttribute (element, "min_length", 0, DL_INFO), xml->getIntAttribute (element, "max_length", INT_MAX, DL_INFO));
-	available->setStripDuplicates (!xml->getBoolAttribute (element, "allow_duplicates", false, DL_INFO));
+	if (mode == Varslot) {
+		// initialize filters
+		static_cast<RKComponentPropertyRObjects*> (available)->setClassFilter (xml->getStringAttribute (element, "classes", QString (), DL_INFO).split (" ", QString::SkipEmptyParts));
+		setRequired (xml->getBoolAttribute (element, "required", false, DL_INFO));
+		static_cast<RKComponentPropertyRObjects*> (available)->setTypeFilter (xml->getStringAttribute (element, "types", QString::null, DL_INFO).split (" ", QString::SkipEmptyParts));
+		static_cast<RKComponentPropertyRObjects*> (available)->setDimensionFilter (xml->getIntAttribute (element, "num_dimensions", 0, DL_INFO), xml->getIntAttribute (element, "min_length", 0, DL_INFO), xml->getIntAttribute (element, "max_length", INT_MAX, DL_INFO));
+	}
+	available->setStripDuplicates (!xml->getBoolAttribute (element, "allow_duplicates", mode == Valueslot, DL_INFO));
 
 	connect (available, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (availablePropertyChanged (RKComponentPropertyBase *)));
 	availablePropertyChanged (available);		// initialize
@@ -115,13 +125,18 @@ void RKVarSlot::setSelectButton (bool add) {
 void RKVarSlot::listSelectionChanged () {
 	RK_TRACE (PLUGIN);
 
-	RObject::ObjectList sellist;
-	QList<QTreeWidgetItem*> selitems = list->selectedItems ();
-	for (int i = 0; i < selitems.count (); ++i) sellist.append (item_map.value (selitems[i]));
+	QModelIndexList selrows = list->selectionModel ()->selectedRows (0);
+	if (mode == Valueslot) {
+		QStringList sellist;
+		for (int i = 0; i < selrows.count (); ++i) sellist.append (static_cast<RKComponentPropertyStringList*> (available)->valueAt (selrows[i].row ()));
+		static_cast<RKComponentPropertyStringList*> (selected)->setValueList (sellist);
+	} else {
+		RObject::ObjectList sellist;
+		for (int i = 0; i < selrows.count (); ++i) sellist.append (static_cast<RKComponentPropertyRObjects*> (available)->objectAt (selrows[i].row ()));
+		static_cast<RKComponentPropertyRObjects*> (selected)->setObjectList (sellist);
+	}
 
-	selected->setObjectList (sellist);
-
-	setSelectButton (((!multi) || (selitems.isEmpty ())) && (!available->atMaxLength ()));
+	setSelectButton (((!multi) || (selrows.isEmpty ())) && (!available->atMaxLength ()));
 }
 
 void RKVarSlot::availablePropertyChanged (RKComponentPropertyBase *) {
@@ -130,23 +145,25 @@ void RKVarSlot::availablePropertyChanged (RKComponentPropertyBase *) {
 	if (updating) return;
 
 	list->clear ();
-	item_map.clear ();
 
 	RK_DEBUG (PLUGIN, DL_DEBUG, "contained in varslot: %s", qPrintable (fetchStringValue (available)));
 
-	RObject::ObjectList objlist = available->objectList ();
-	for (int i = 0; i < objlist.count (); ++i) {
-		RObject *object = objlist[i];
-
+	int len = available->listLength ();
+	for (int i = 0; i < len; ++i) {
 		QTreeWidgetItem *new_item = new QTreeWidgetItem (list);
 		new_item->setText (0, QString::number (i + 1));
-		new_item->setText (1, object->getShortName ());
-		QString probs = available->objectProblems (i);
-		if (!probs.isEmpty ()) {
-			new_item->setToolTip (1, i18n ("<p>This object is not allowed, here, for the following reason(s):</p>") + probs);
-			new_item->setIcon (1, RKStandardIcons::getIcon (RKStandardIcons::ActionDeleteVar));
+
+		if (mode == Valueslot) {
+			new_item->setText (1, static_cast<RKComponentPropertyStringList*> (available)->valueAt (i));
+		} else {
+			RObject *object = static_cast<RKComponentPropertyRObjects*> (available)->objectAt (i);
+			new_item->setText (1, object->getShortName ());
+			QString probs = static_cast<RKComponentPropertyRObjects*> (available)->objectProblems (i);
+			if (!probs.isEmpty ()) {
+				new_item->setToolTip (1, i18n ("<p>This object is not allowed, here, for the following reason(s):</p>") + probs);
+				new_item->setIcon (1, RKStandardIcons::getIcon (RKStandardIcons::ActionDeleteVar));
+			}
 		}
-		item_map.insert (new_item, object);
 	}
 	if (multi) list->resizeColumnToContents (0);
 
@@ -180,15 +197,14 @@ void RKVarSlot::selectPressed () {
 	updating = true;
 	// first update the properties
 	if (add_mode) {
-		if (multi) {
-			RObject::ObjectList objlist = source->objectList ();
-			RObject::ObjectList::const_iterator it = objlist.constBegin ();
-			while (it != objlist.constEnd ()) {
-				available->addObjectValue (*it);
-				++it;
+		if (!multi) available->setValueList (QStringList ());  // replace
+		int len = source->listLength ();
+		for (int i = 0; i < len; ++i) {
+			if (mode == Valueslot) {
+				static_cast<RKComponentPropertyStringList*> (available)->setValueAt (i, static_cast<RKComponentPropertyStringList*> (source)->valueAt (i));
+			} else {
+				static_cast<RKComponentPropertyRObjects*> (available)->addObjectValue (static_cast<RKComponentPropertyRObjects*> (source)->objectAt (i));
 			}
-		} else {
-			if (source->objectValue ()) available->setObjectValue (source->objectValue ());
 		}
 	} else {		// remove-mode
 		QModelIndexList removed = list->selectionModel ()->selectedRows (0);       // Note: list contains no dupes, but is unsorted.
@@ -197,10 +213,11 @@ void RKVarSlot::selectPressed () {
 			removed_rows.append (removed[i].row ());
 		}
 		qSort (removed_rows);
+		if (!multi && removed_rows.isEmpty ()) removed_rows.append (0);
 		for (int i = removed_rows.size () - 1; i >= 0; --i) {
 			available->removeAt (removed_rows[i]);
 		}
-		selected->setObjectValue (0);
+		selected->setValueList (QStringList ());
 	}
 	updating = false;
 	availablePropertyChanged (available);

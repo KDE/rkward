@@ -612,7 +612,7 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 			}
 		} else if (e.tagName () == QLatin1String ("varselector")) {
 			widget = new RKVarSelector (e, component (), parent_widget);
-		} else if (e.tagName () == QLatin1String ("varslot")) {
+		} else if ((e.tagName () == QLatin1String ("varslot")) || (e.tagName () == QLatin1String ("valueslot"))) {
 			widget = new RKVarSlot (e, component (), parent_widget);
 			addConnection (id, "source", xml->getStringAttribute (e, "source", "#noid#", DL_INFO), "selected", false, e);
 		} else if (e.tagName () == QLatin1String ("formula")) {

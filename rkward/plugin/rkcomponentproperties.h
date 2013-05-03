@@ -88,10 +88,11 @@ public:
 /** If set to true, duplicate values are dropped, silently */
 	void setStripDuplicates (bool strip) { strip_duplicates = strip; };
 	virtual void removeAt (int index) = 0;
+	virtual int listLength () const = 0;
+	virtual bool setValueList (const QStringList &new_values) = 0;
 protected:
 	bool getStripDuplicates () const { return strip_duplicates; };
 	bool checkListLength ();
-	virtual int listLength () const = 0;
 	void reconcileLengthRequirements (RKComponentPropertyAbstractList *governor);
 	static QString sep;
 private:
@@ -122,13 +123,13 @@ public:
 /** get all current strings as a QStringList */
 	const QStringList& values () const { return storage; };
 /** set current strings as a QStringList */
-	void setValues (const QStringList &new_values) { storage = new_values; checkStripDuplicates (); doChange (); };
+	bool setValueList (const QStringList &new_values) { storage = new_values; checkStripDuplicates (); doChange (); return true; };
 /** reimplemented from RKComponentPropertyBase to use special handling for list properties */
 	void governorValueChanged (RKComponentPropertyBase *property);
 	int listLength () const { return (storage.size ()); };
 	void removeAt (int index);
 private:
-	void doChange () { _value.clear (); emit (valueChanged (this)); };
+	void doChange ();
 	void checkStripDuplicates ();
 	QStringList storage;
 };
@@ -321,7 +322,7 @@ public:
 	bool setValue (const QString &value);
 /** overload of setValue() which accepts a list of names of RObjects
 @returns false if no such object(s) could be found or the object(s) are invalid */
-	bool setValue (const QStringList &values);
+	bool setValueList (const QStringList &values);
 /** reimplemented from RKComponentPropertyBase to test whether conversion to RObject is possible with current constraints */
 	bool isStringValid (const QString &value);
 /** RTTI */
@@ -331,6 +332,7 @@ public:
 /** reimplemented from RKComponentPropertyBase to use special handling for object properties */
 	void governorValueChanged (RKComponentPropertyBase *property);
 	void removeAt (int index);
+	RObject* objectAt (int index) const { return object_list.value (index); };
 	int listLength () const { return (object_list.size ()); };
 protected:
 /** remove an object value. reimplemented from RObjectListener::objectRemoved (). This is so we get notified if the object currently selected is removed TODO: is this effectively a duplication of setFromList? */

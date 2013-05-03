@@ -2,7 +2,7 @@
                           rkvarslot.h  -  description
                              -------------------
     begin                : Thu Nov 7 2002
-    copyright            : (C) 2002, 2006, 2007, 2012 by Thomas Friedrichsmeier
+    copyright            : (C) 2002 - 2013 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -54,6 +54,10 @@ protected:
 /** Calls updateLook (), when enabledness changes */
 	void enabledChange (bool old) { updateLook (); QWidget::enabledChange (old); };
 private:
+	enum {
+		Varslot,
+		Valueslot
+	} mode;
 /** change the select button to left/right / add/remove
 @param add if true, button shows arrow right, or signifies more values would be added. Else the other way around */
 	void setSelectButton (bool add);
@@ -62,16 +66,14 @@ private:
 	bool updating;
 
 /** the available objects (typically a copy of the property of the varselector) */
-	RKComponentPropertyRObjects *source;
+	RKComponentPropertyAbstractList *source;
 /** the objects in the varslot */
-	RKComponentPropertyRObjects *available;
+	RKComponentPropertyAbstractList *available;
 /** of the objects in the varslot, those that are marked */
-	RKComponentPropertyRObjects *selected;
+	RKComponentPropertyAbstractList *selected;
 
 	QTreeWidget *list;
 	QPushButton *select;
-	typedef QMap<QTreeWidgetItem*, RObject*> ItemMap;
-	ItemMap item_map;
 };
 
 #endif

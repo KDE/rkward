@@ -239,13 +239,13 @@ QVariant RKComponentPropertyStringList::value (const QString &modifier) {
 
 bool RKComponentPropertyStringList::setValue (const QString &string) {
 	if (string.isNull ()) {
-		setValues (QStringList ());
+		setValueList (QStringList ());
 	} else {
 		QStringList list = string.split (sep);
 		for (int i = 0; i < list.size (); ++i) {
 			list[i] = RKCommonFunctions::unescape (list[i]);
 		}
-		setValues (list);
+		setValueList (list);
 	}
 	return true;
 }
@@ -263,7 +263,7 @@ void RKComponentPropertyStringList::setValueAt (int index, const QString& value)
 void RKComponentPropertyStringList::governorValueChanged (RKComponentPropertyBase *property) {
 	QVariant value = property->value (governor_modifier);
 	if (value.type () == QVariant::StringList) {
-		setValues (value.toStringList ());
+		setValueList (value.toStringList ());
 	} else {
 		setValue (value.toString ());
 	}
@@ -288,6 +288,13 @@ void RKComponentPropertyStringList::removeAt (int index) {
 	}
 	storage.removeAt (index);
 	doChange ();
+}
+
+void RKComponentPropertyStringList::doChange () {
+	RK_TRACE (PLUGIN);
+	is_valid = checkListLength ();
+	_value.clear ();
+	emit (valueChanged (this));
 }
 
 ///////////////////////////////////////////// Bool //////////////////////////////////////////
@@ -970,7 +977,7 @@ QVariant RKComponentPropertyRObjects::value (const QString &modifier) {
 	return ret;
 }
 
-bool RKComponentPropertyRObjects::setValue (const QStringList& values) {
+bool RKComponentPropertyRObjects::setValueList (const QStringList& values) {
 	RK_TRACE (PLUGIN);
 
 	setObjectValue (0);
@@ -978,7 +985,7 @@ bool RKComponentPropertyRObjects::setValue (const QStringList& values) {
 	bool ok = true;
 	for (int i = 0; i < values.size (); ++i) {
 		RObject *obj = RObjectList::getObjectList ()->findObject (values[i]);
-		ok = ok && addObjectValueSilent (obj);
+		ok &= addObjectValueSilent (obj);
 	}
 
 	updateValidity ();
@@ -989,7 +996,7 @@ bool RKComponentPropertyRObjects::setValue (const QStringList& values) {
 bool RKComponentPropertyRObjects::setValue (const QString &value) {
 	RK_TRACE (PLUGIN);
 
-	return setValue (value.split (sep, QString::SkipEmptyParts));
+	return setValueList (value.split (sep, QString::SkipEmptyParts));
 }
 
 bool RKComponentPropertyRObjects::isStringValid (const QString &value) {
@@ -1089,7 +1096,7 @@ void RKComponentPropertyRObjects::governorValueChanged (RKComponentPropertyBase 
 	} else {
 		QVariant value = property->value ();
 		if (value.type () == QVariant::StringList) {
-			setValue (value.toStringList ());
+			setValueList (value.toStringList ());
 		} else {
 			setValue (value.toString ());
 		}
@@ -1344,7 +1351,7 @@ void RKComponentPropertySwitch::connectToGovernor (RKComponentPropertyBase*, con
 	RK_DEBUG (PLUGIN, DL_ERROR, "Cannot connect a <switch> property to a governor");
 }
 
-bool RKComponentPropertySwitch::setValue (const QString& value) {
+bool RKComponentPropertySwitch::setValue (const QString&) {
 	RK_DEBUG (PLUGIN, DL_ERROR, "Cannot set value for a <switch> property");
 	return false;
 }

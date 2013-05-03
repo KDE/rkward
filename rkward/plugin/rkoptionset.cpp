@@ -353,7 +353,7 @@ void RKOptionSet::serializationPropertyChanged (RKComponentPropertyBase* propert
 		for (int i = 0; i < row; ++i) {
 			def.append (getDefaultValue (col, i));
 		}
-		it.key ()->setValues (def);
+		it.key ()->setValueList (def);
 	}
 
 	rows = new_rows;
@@ -424,7 +424,7 @@ void RKOptionSet::addRow () {
 		ColumnInfo &column = it.value ();
 		QStringList values = col->values ();
 		values.insert (row, getDefaultValue (column, row));
-		col->setValues (values);
+		col->setValueList (values);
 	}
 	updating = false;
 
@@ -463,7 +463,7 @@ void RKOptionSet::removeRow () {
 		RKComponentPropertyStringList* col = it.key ();
 		QStringList values = col->values ();
 		values.removeAt (row);
-		col->setValues (values);
+		col->setValueList (values);
 	}
 	updating = false;
 
@@ -631,7 +631,7 @@ void RKOptionSet::handleKeycolumnUpdate () {
 
 		// strip excess length (if any), and apply
 		new_values = new_values.mid (0, new_keys.size ());
-		col->setValues (new_values);
+		col->setValueList (new_values);
 	}
 
 	// update status info
