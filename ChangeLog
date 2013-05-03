@@ -1,3 +1,4 @@
+- <varslots> can be set to accept the same object several times. Used in scatterplot plugin.
 - New R function rk.embed.device() for manually embedding graphics devices in RKWard
 - Fixed: R backend would exit immediately, without meaningful error message, if there is an error in .Rprofile (or Rprofile.site)
 - Fixed: Installing suggested packages from the package installation dialog was broken

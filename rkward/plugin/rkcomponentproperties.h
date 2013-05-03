@@ -85,7 +85,11 @@ public:
 	bool atMaxLength () const { return (max_num_items && (max_num_items <= listLength ())); };
 /** reimplemented from RKComponentPropertyBase to actually reconcile requirements with other list properties */
 	void connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier=QString::null, bool reconcile_requirements=true);
+/** If set to true, duplicate values are dropped, silently */
+	void setStripDuplicates (bool strip) { strip_duplicates = strip; };
+	virtual void removeAt (int index) = 0;
 protected:
+	bool getStripDuplicates () const { return strip_duplicates; };
 	bool checkListLength ();
 	virtual int listLength () const = 0;
 	void reconcileLengthRequirements (RKComponentPropertyAbstractList *governor);
@@ -94,6 +98,7 @@ private:
 	int min_num_items;
 	int min_num_items_if_any;
 	int max_num_items;
+	bool strip_duplicates;
 };
 
 /////////////////////////////////////////////// StringList /////////////////////////////////////////////////////
@@ -117,12 +122,14 @@ public:
 /** get all current strings as a QStringList */
 	const QStringList& values () const { return storage; };
 /** set current strings as a QStringList */
-	void setValues (const QStringList &new_values) { storage = new_values; doChange (); };
+	void setValues (const QStringList &new_values) { storage = new_values; checkStripDuplicates (); doChange (); };
 /** reimplemented from RKComponentPropertyBase to use special handling for list properties */
 	void governorValueChanged (RKComponentPropertyBase *property);
 	int listLength () const { return (storage.size ()); };
+	void removeAt (int index);
 private:
 	void doChange () { _value.clear (); emit (valueChanged (this)); };
+	void checkStripDuplicates ();
 	QStringList storage;
 };
 
@@ -323,7 +330,7 @@ public:
 	void connectToGovernor (RKComponentPropertyBase *governor, const QString &modifier=QString::null, bool reconcile_requirements=true);
 /** reimplemented from RKComponentPropertyBase to use special handling for object properties */
 	void governorValueChanged (RKComponentPropertyBase *property);
-	void removeObjectValue (RObject* object) { objectRemoved (object); };
+	void removeAt (int index);
 	int listLength () const { return (object_list.size ()); };
 protected:
 /** remove an object value. reimplemented from RObjectListener::objectRemoved (). This is so we get notified if the object currently selected is removed TODO: is this effectively a duplication of setFromList? */
@@ -337,7 +344,8 @@ private:
 	void updateValidity ();
 /** internal helper to add the object (and check it for problems).
  * @returns true, if the list was changed, false, if the object was already in the list or is 0. */
-	bool appendObject (RObject *object);
+	bool addObjectValueSilent (RObject *object);
+	bool setObjectValueSilent (RObject *object);
 /** Check any object for problems */
 	QString checkObjectProblems (RObject *object) const;
 	RObject::ObjectList object_list;

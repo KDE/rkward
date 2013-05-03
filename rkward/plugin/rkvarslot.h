@@ -59,6 +59,7 @@ private:
 	void setSelectButton (bool add);
 	bool add_mode;
 	bool multi;
+	bool updating;
 
 /** the available objects (typically a copy of the property of the varselector) */
 	RKComponentPropertyRObjects *source;

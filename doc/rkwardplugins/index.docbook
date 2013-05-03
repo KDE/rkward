@@ -56,8 +56,8 @@ as Authors, publish date, the abstract, and Keywords -->
      and in the FDL itself on how to use it. -->
 <legalnotice>&FDLNotice;</legalnotice>
 
-<date>2012-11-28</date>
-<releaseinfo>0.6.1.00</releaseinfo>
+<date>2013-05-03</date>
+<releaseinfo>0.6.2.00</releaseinfo>
 
 <abstract>
 <para>
@@ -2543,6 +2543,10 @@ local({
 	<varlistentry>
 	<term><parameter>multi</parameter></term>
 	<listitem><para>Whether the varslot holds only one (default, "false"), or several objects</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term><parameter>allow_duplicates</parameter></term>
+	<listitem><para>Whether the varslot may accept only unique objects (default, "false"), or if the same object may be added several times.</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term><parameter>min_vars</parameter></term>

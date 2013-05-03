@@ -37,6 +37,7 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 	RK_TRACE (PLUGIN);
 
 	XMLHelper *xml = XMLHelper::getStaticHelper ();
+	updating = false;
 
 	// basic layout
 	QGridLayout *g_layout = new QGridLayout (this);
@@ -91,6 +92,7 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 	setRequired (xml->getBoolAttribute (element, "required", false, DL_INFO));
 	available->setTypeFilter (xml->getStringAttribute (element, "types", QString::null, DL_INFO).split (" ", QString::SkipEmptyParts));
 	available->setDimensionFilter (xml->getIntAttribute (element, "num_dimensions", 0, DL_INFO), xml->getIntAttribute (element, "min_length", 0, DL_INFO), xml->getIntAttribute (element, "max_length", INT_MAX, DL_INFO));
+	available->setStripDuplicates (!xml->getBoolAttribute (element, "allow_duplicates", false, DL_INFO));
 
 	connect (available, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (availablePropertyChanged (RKComponentPropertyBase *)));
 	availablePropertyChanged (available);		// initialize
@@ -124,6 +126,8 @@ void RKVarSlot::listSelectionChanged () {
 
 void RKVarSlot::availablePropertyChanged (RKComponentPropertyBase *) {
 	RK_TRACE (PLUGIN);
+
+	if (updating) return;
 
 	list->clear ();
 	item_map.clear ();
@@ -173,6 +177,7 @@ void RKVarSlot::selectPressed () {
 
 	RK_DEBUG (PLUGIN, DL_DEBUG, "select press in varslot: mode %d, source %s, selected %s", add_mode, qPrintable (fetchStringValue (source)), qPrintable (fetchStringValue (selected)));
 
+	updating = true;
 	// first update the properties
 	if (add_mode) {
 		if (multi) {
@@ -186,20 +191,19 @@ void RKVarSlot::selectPressed () {
 			if (source->objectValue ()) available->setObjectValue (source->objectValue ());
 		}
 	} else {		// remove-mode
-		RObject::ObjectList objlist;
-		if (multi) {
-			objlist = selected->objectList ();
-		} else {
-			objlist = available->objectList ();
+		QModelIndexList removed = list->selectionModel ()->selectedRows (0);       // Note: list contains no dupes, but is unsorted.
+		QList<int> removed_rows;
+		for (int i = 0; i < removed.size (); ++i) {
+			removed_rows.append (removed[i].row ());
 		}
-
-		RObject::ObjectList::const_iterator it = objlist.begin ();
-		while (it != objlist.end ()) {
-			available->removeObjectValue (*it);
-			selected->removeObjectValue (*it);
-			++it;
+		qSort (removed_rows);
+		for (int i = removed_rows.size () - 1; i >= 0; --i) {
+			available->removeAt (removed_rows[i]);
 		}
+		selected->setObjectValue (0);
 	}
+	updating = false;
+	availablePropertyChanged (available);
 }
 
 #include "rkvarslot.moc"

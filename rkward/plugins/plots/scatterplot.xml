@@ -21,8 +21,8 @@ A duplicate option has to be tested-->
 					<varselector id="vars" />
 					<column>
 						<row>
-							<varslot multi="true" duplicate="true" types="number unknown" id="x" source="vars" label="'X' variables" required="true" />
-							<varslot multi="true" duplicate="true" types="number unknown" id="y" source="vars" label="'Y' variables" required="true" />
+							<varslot multi="true" allow_duplicates="true" types="number unknown" id="x" source="vars" label="'X' variables" required="true" />
+							<varslot multi="true" allow_duplicates="true" types="number unknown" id="y" source="vars" label="'Y' variables" required="true" />
 						</row>
 						<preview id="preview"/>
 					</column>

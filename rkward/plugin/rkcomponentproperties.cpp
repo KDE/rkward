@@ -158,6 +158,7 @@ QString RKComponentPropertyAbstractList::sep = "\n";
 RKComponentPropertyAbstractList::RKComponentPropertyAbstractList (QObject* parent, bool required) : RKComponentPropertyBase (parent, required) {
 	RK_TRACE (PLUGIN);
 	setAllowedLength ();
+	setStripDuplicates (false);
 }
 
 RKComponentPropertyAbstractList::~RKComponentPropertyAbstractList () {
@@ -252,6 +253,8 @@ bool RKComponentPropertyStringList::setValue (const QString &string) {
 void RKComponentPropertyStringList::setValueAt (int index, const QString& value) {
 	RK_TRACE (PLUGIN);
 	
+	if (getStripDuplicates () && storage.contains (value)) return;
+	
 	while (index >= storage.size ()) storage.append (QString ());	// expand as needed
 	storage[index] = value;
 	doChange ();
@@ -264,6 +267,27 @@ void RKComponentPropertyStringList::governorValueChanged (RKComponentPropertyBas
 	} else {
 		setValue (value.toString ());
 	}
+}
+
+void RKComponentPropertyStringList::checkStripDuplicates () {
+	if (!getStripDuplicates ()) return;
+	RK_TRACE (PLUGIN);
+
+	QStringList unique;
+	for (int i = 0; i < storage.size (); ++i) {
+		if (!unique.contains (storage[i])) unique.append (storage[i]);
+	}
+	storage = unique;
+}
+
+void RKComponentPropertyStringList::removeAt (int index) {
+	RK_TRACE (PLUGIN);
+	if ((index < 0) || (index >= storage.size ())) {
+		RK_ASSERT (false);
+		return;
+	}
+	storage.removeAt (index);
+	doChange ();
 }
 
 ///////////////////////////////////////////// Bool //////////////////////////////////////////
@@ -753,6 +777,7 @@ RKComponentPropertyRObjects::RKComponentPropertyRObjects (QObject *parent, bool 
 
 // no initial requirements
 	dims = min_length = max_length;
+	setStripDuplicates (true);      // legacy default
 
 	addNotificationType (RObjectListener::ObjectRemoved);
 	addNotificationType (RObjectListener::MetaChanged);
@@ -761,13 +786,13 @@ RKComponentPropertyRObjects::RKComponentPropertyRObjects (QObject *parent, bool 
 RKComponentPropertyRObjects::~RKComponentPropertyRObjects () {
 	RK_TRACE (PLUGIN);
 
-	setObjectValue (0);
+	setObjectValueSilent (0);
 }
 
 bool RKComponentPropertyRObjects::addObjectValue (RObject *object) {
 	RK_TRACE (PLUGIN);
 
-	if (appendObject (object)) {
+	if (addObjectValueSilent (object)) {
 		updateValidity ();
 		emit (valueChanged (this));
 		return isValid ();
@@ -775,27 +800,42 @@ bool RKComponentPropertyRObjects::addObjectValue (RObject *object) {
 	return false;
 }
 
-bool RKComponentPropertyRObjects::appendObject (RObject *object) {
-	if ((!object) || object_list.contains (object)) return false;
+bool RKComponentPropertyRObjects::addObjectValueSilent (RObject *object) {
+	if (!object) return false;
+	bool is_dupe = object_list.contains (object);
+	if (getStripDuplicates () && is_dupe) return false;
 
 	object_list.append (object);
-	QString probs = checkObjectProblems (object);
-	if (!probs.isEmpty ()) problems.insert (object, probs);
-	listenForObject (object);
+	if (!is_dupe) {
+		QString probs = checkObjectProblems (object);
+		if (!probs.isEmpty ()) problems.insert (object, probs);
+		listenForObject (object);
+	}
 	return true;
 }
 
 void RKComponentPropertyRObjects::objectRemoved (RObject *object) {
 	RK_TRACE (PLUGIN);
 
-	int index = object_list.indexOf (object);
-	if (index >= 0) {
-		object_list.removeAt (index);
+	int removals = object_list.removeAll (object);
+	if (removals) {
 		problems.remove (object);
 		stopListenForObject (object);
 		updateValidity ();
 		emit (valueChanged (this));
 	}
+}
+
+void RKComponentPropertyRObjects::removeAt (int index) {
+	RK_TRACE (PLUGIN);
+	if ((index < 0) || (index >= object_list.size ())) {
+		RK_ASSERT (false);
+		return;
+	}
+	RObject* obj = object_list.takeAt (index);
+	if (!object_list.contains (obj)) stopListenForObject (obj);
+	updateValidity ();
+	emit (valueChanged (this));
 }
 
 void RKComponentPropertyRObjects::setClassFilter (const QStringList &classes) {
@@ -821,40 +861,33 @@ void RKComponentPropertyRObjects::setDimensionFilter (int dimensionality, int mi
 	validizeAll ();
 }
 
-bool RKComponentPropertyRObjects::setObjectValue (RObject *object) {
+bool RKComponentPropertyRObjects::setObjectValueSilent (RObject* object) {
 	RK_TRACE (PLUGIN);
 
 	problems.clear ();
-	while (!object_list.isEmpty ()) {
-		stopListenForObject (object_list.takeAt (0));
+	QSet<RObject*> unique = object_list.toSet ();
+	foreach (RObject *obj, unique) {
+		stopListenForObject (obj);
 	}
-	return (addObjectValue (object));
+	object_list.clear ();
+	return (addObjectValueSilent (object));
+}
+
+bool RKComponentPropertyRObjects::setObjectValue (RObject *object) {
+	setObjectValueSilent (object);
+	updateValidity ();
+	emit (valueChanged (this));
+	return isValid ();
 }
 
 void RKComponentPropertyRObjects::setObjectList (const RObject::ObjectList &newlist) {
 	RK_TRACE (PLUGIN);
 
-	bool changes = false;
-
-	// remove items from the old list that are not in the new list
-	for (int i = 0; i < object_list.size (); ++i) {
-		RObject *object = object_list[i];
-		if (!newlist.contains (object)) {
-			stopListenForObject (object_list.takeAt (i));
-			problems.remove (object);
-			--i;
-			changes = true;
+	if (newlist != object_list) {
+		setObjectValueSilent (0);
+		for (int i = 0; i < newlist.size (); ++i) {
+			addObjectValueSilent (newlist[i]);
 		}
-	}
-
-	// now add items from the new list that are not in the old list
-	for (int i = 0; i < newlist.size (); ++i) {
-		RObject *obj = newlist[i];
-		if (appendObject (obj)) changes = true;
-	}
-
-	// emit a signal if there have been any changes
-	if (changes) {
 		updateValidity ();
 		emit (valueChanged (this));
 	}
@@ -945,7 +978,7 @@ bool RKComponentPropertyRObjects::setValue (const QStringList& values) {
 	bool ok = true;
 	for (int i = 0; i < values.size (); ++i) {
 		RObject *obj = RObjectList::getObjectList ()->findObject (values[i]);
-		ok = ok && appendObject (obj);
+		ok = ok && addObjectValueSilent (obj);
 	}
 
 	updateValidity ();
