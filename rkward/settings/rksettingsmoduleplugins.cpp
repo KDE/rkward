@@ -339,16 +339,16 @@ void RKSettingsModulePlugins::fixPluginMapLists () {
 		if (!info.isReadable ()) {
 			known_plugin_maps.removeAt (i);
 			--i;
-		} else {
-			if (inf.active) any_active_pluginmap = true;
-			if ((default_pluginmap_index < 0) && (info == default_pluginmap)) default_pluginmap_index = i;
+			continue;
+		}
+		if (inf.active) any_active_pluginmap = true;
+		if ((default_pluginmap_index < 0) && (info == default_pluginmap)) default_pluginmap_index = i;
 
-			if (info.lastModified () != inf.last_modified) {
-				inf.broken_in_this_version = false;
-				inf.quirky_in_this_version = false;
-				inf.last_modified = info.lastModified ();
-				inf.id.clear ();
-			}
+		if (info.lastModified () != inf.last_modified) {
+			inf.broken_in_this_version = false;
+			inf.quirky_in_this_version = false;
+			inf.last_modified = info.lastModified ();
+			inf.id.clear ();
 		}
 
 		if (inf.id.isEmpty ()) {
