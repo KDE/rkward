@@ -1,6 +1,7 @@
 rkward (0.6.1z+0.6.2-0pre1) unstable; urgency=low
 
   * new upstream release
+  * when built against r-base-core >= 3.0.0, depend on r-base-core <= 3.0.0
 
  -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Thu, 11 Apr 2013 12:30:00 +0100
 
