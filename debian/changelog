@@ -1,3 +1,11 @@
+rkward (0.6.1-1) unstable; urgency=low
+
+  * upstream release 0.6.1-rc1 was made available as 0.6.1 without changes
+  * new upload to build against R 3.0.0 on most architectures
+  * when built against r-base-core >= 3.0.0, depend on r-base-core <= 3.0.0
+
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Thu, 07 May 2013 12:30:00 +0100
+
 rkward (0.6.1~rc1-1) unstable; urgency=low
 
   * new upstream release
