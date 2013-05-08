@@ -614,7 +614,9 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 			widget = new RKVarSelector (e, component (), parent_widget);
 		} else if ((e.tagName () == QLatin1String ("varslot")) || (e.tagName () == QLatin1String ("valueslot"))) {
 			widget = new RKVarSlot (e, component (), parent_widget);
-			addConnection (id, "source", xml->getStringAttribute (e, "source", "#noid#", DL_INFO), "selected", false, e);
+			QString source = xml->getStringAttribute (e, "source_property", QString (), DL_INFO);
+			if (source.isEmpty ()) source = xml->getStringAttribute (e, "source", "#noid#", DL_WARNING) + ".selected";
+			addConnection (id, "source", source, QString (), false, e);
 		} else if (e.tagName () == QLatin1String ("formula")) {
 			widget = new RKFormula (e, component (), parent_widget);
 			addConnection (id, "dependent", xml->getStringAttribute (e, "dependent", "#noid#", DL_INFO), "available", false, e);
