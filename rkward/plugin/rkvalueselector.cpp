@@ -55,9 +55,10 @@ RKValueSelector::RKValueSelector (const QDomElement &element, RKComponent *paren
 
 	list_view = new QTreeView (this);
 	list_view->setSelectionMode (QAbstractItemView::ExtendedSelection);
-	connect (list_view, SIGNAL (listSelectionChanged ()), this, SLOT (listSelectionChanged ()));
+	list_view->setRootIsDecorated (false);
 	model = new QStringListModel (this);
 	list_view->setModel (model);
+	connect (list_view->selectionModel (), SIGNAL (selectionChanged(QItemSelection,QItemSelection)), this, SLOT (listSelectionChanged ()));
 
 	vbox->addWidget (list_view);
 
@@ -68,9 +69,10 @@ RKValueSelector::RKValueSelector (const QDomElement &element, RKComponent *paren
 		QStringList selected_list;
 
 		for (int i = 0; i < options.size (); ++i) {
-			QString v = xml->getStringAttribute (element, "value", QString (), DL_WARNING);
-			QString l = xml->getStringAttribute (element, "label", v, DL_INFO);
-			if (xml->getBoolAttribute (element, "selected", false, DL_INFO)) selected_list.append (v);
+			const QDomElement &child = options[i];
+			QString v = xml->getStringAttribute (child, "value", QString (), DL_WARNING);
+			QString l = xml->getStringAttribute (child, "label", v, DL_INFO);
+			if (xml->getBoolAttribute (child, "selected", false, DL_INFO)) selected_list.append (v);
 			labels_list.append (l);
 			values_list.append (v);
 		}
@@ -108,6 +110,7 @@ void RKValueSelector::availablePropertyChanged () {
 		purged_selected_indexes.clear ();
 	} else {
 		selectionPropertyChanged ();   // To update selected items
+		purged_selected_indexes.clear ();
 	}
 }
 
@@ -115,6 +118,7 @@ void RKValueSelector::listSelectionChanged () {
 	if (updating) return;
 	RK_TRACE (PLUGIN);
 
+	purged_selected_indexes.clear ();
 	QStringList sel_list;
 	QModelIndexList selected_rows = list_view->selectionModel ()->selectedRows ();
 	for (int i = 0; i < selected_rows.size (); ++i) {
@@ -149,8 +153,9 @@ void RKValueSelector::selectionPropertyChanged () {
 	foreach (const int row, selected_rows) {
 		list_view->selectionModel ()->select (model->index (row), QItemSelectionModel::Select | QItemSelectionModel::Rows);
 	}
-
 	updating = false;
+
+	changed ();
 }
 
 QVariant RKValueSelector::value (const QString& modifier) {
@@ -169,4 +174,4 @@ QVariant RKValueSelector::value (const QString& modifier) {
 	return selected->value (modifier);
 }
 
-#include "rkvarselector.moc"
+#include "rkvalueselector.moc"

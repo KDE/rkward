@@ -56,6 +56,7 @@
 #include "rktabpage.h"
 #include "rkpluginframe.h"
 #include "rkoptionset.h"
+#include "rkvalueselector.h"
 
 #include "../rkglobals.h"
 
@@ -617,6 +618,8 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 			QString source = xml->getStringAttribute (e, "source_property", QString (), DL_INFO);
 			if (source.isEmpty ()) source = xml->getStringAttribute (e, "source", "#noid#", DL_WARNING) + ".selected";
 			addConnection (id, "source", source, QString (), false, e);
+		} else if ((e.tagName () == QLatin1String ("valueselector")) || (e.tagName () == QLatin1String ("select"))) {
+			widget = new RKValueSelector (e, component (), parent_widget);
 		} else if (e.tagName () == QLatin1String ("formula")) {
 			widget = new RKFormula (e, component (), parent_widget);
 			addConnection (id, "dependent", xml->getStringAttribute (e, "dependent", "#noid#", DL_INFO), "available", false, e);

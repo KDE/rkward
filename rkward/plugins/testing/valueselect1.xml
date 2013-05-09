@@ -1,0 +1,33 @@
+<!DOCTYPE rkplugin>
+
+<document>
+	<code file="valueselect1.js"/>
+
+	<dialog label="Testing valueselector/slot and select elements">
+		<text id="text">
+			This plugin is bogus! Do not use!
+		</text>
+		<tabbook>
+			<tab label="&lt;select&gt;">
+				<select id="select">
+					<option value="test1" label="first" selected="true"/>
+					<option value="test2" label="second"/>
+					<option value="test3" label="third" selected="true"/>
+				</select>
+				<stretch/>
+			</tab>
+			<tab label="valueselector/valueslot">
+				<row>
+					<valueselector id="valueselect">
+						<option value="test1" label="first"/>
+						<option value="test2" label="second"/>
+						<option value="test3" label="third"/>
+					</valueselector>
+					<valueslot id="valueslot" label="Select one or more" min_vars="1" multi="true" source="valueselect"/>
+					<stretch/>
+				</row>
+			</tab>
+		</tabbook>
+	</dialog>
+
+</document> 
