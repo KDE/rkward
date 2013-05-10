@@ -32,7 +32,11 @@ else
 	CFLAGS += -O2
 endif
 
-config.status:
+build: build-arch build-indep
+build-arch: build-stamp
+build-indep: build-stamp
+
+build-stamp:
 	dh_testdir
 
 	mkdir -p $(CURDIR)/build
@@ -62,13 +66,6 @@ config.status:
 		-DKDE4_DISABLE_MULTIMEDIA=ON \
 		-DR_EXECUTABLE=/usr/bin/R/ \
 		-DR_LIBDIR=/usr/lib/R/site-library/
-
-build: build-arch build-indep
-build-arch: build-stamp
-build-indep: build-stamp
-
-build-stamp: config.status
-	dh_testdir
 
 	# Add here commands to compile the package.
 	cd $(CURDIR)/build && $(MAKE)
