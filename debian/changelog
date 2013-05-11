@@ -3,8 +3,6 @@ rkward (0.6.1z+0.6.2-0pre1) unstable; urgency=low
   * new upstream release
   * avoid duplicate cmake run during build
   * upstream increased lowest supported R version to 2.8.0
-  * drop dependency on cmake, already provided by kdelibs5-dev
-    closes: #531086
 
  -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Fri, 10 May 2013 12:30:00 +0100
 
