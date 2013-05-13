@@ -35,6 +35,7 @@
 
 #include "../../debug.h"
 
+double RKGraphicsDeviceFrontendTransmitter::lwdscale = 72/96;
 RKGraphicsDeviceFrontendTransmitter::RKGraphicsDeviceFrontendTransmitter () : QObject () {
 	RK_TRACE (GRAPHICS_DEVICE);
 
@@ -104,7 +105,7 @@ static QPen readSimplePen (QDataStream &instream) {
 	instream >> lwd >> lty;
 	if (!col.isValid () || (lty == -1L)) return QPen (Qt::NoPen);
 
-	lwd = qMax (1.0001, lwd);	// minimum 1 px (+rounding margin!) as in X11 device
+	lwd = qMax (1.0, lwd);	// minimum 1 px as in X11 device
 	QPen ret;
 	if (lty != 0) {	// solid
 		QVector<qreal> dashes;
@@ -112,12 +113,13 @@ static QPen readSimplePen (QDataStream &instream) {
 		for (int i = 0; i < 8; ++i) {
 			if (!nlty) break;
 			quint8 j = nlty & 0xF;
-			dashes.append (j * lwd * 96/72 + .5);	// 96/72: value taken from X11 device
+			if (j < 1) j = 1;
+			dashes.append ((int) (j * lwd * RKGraphicsDeviceFrontendTransmitter::lwdscale + .5));
 			nlty >>= 4;
 		}
 		if (!dashes.isEmpty ()) ret.setDashPattern (dashes);
 	}
-	ret.setWidthF (lwd);
+	ret.setWidth ((int) (lwd * RKGraphicsDeviceFrontendTransmitter::lwdscale + .5));
 	ret.setColor (col);
 	return ret;
 }
@@ -196,7 +198,10 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 				} else if (opcode == RKDQueryResolution) {
 					QDesktopWidget *desktop = QApplication::desktop ();
 					streamer.outstream << (qint32) desktop->physicalDpiX () << (qint32) desktop->physicalDpiY ();
+					RK_DEBUG (GRAPHICS_DEVICE, DL_INFO, "DPI for device %d: %d by %d", devnum+1, desktop->physicalDpiX (), desktop->physicalDpiY ());
 					streamer.writeOutBuffer ();
+					// Actually, this is only needed once, but where to put it...
+					RKGraphicsDeviceFrontendTransmitter::lwdscale = desktop->physicalDpiX () / 96;   // taken from devX11.c
 				} else {
 					if (devnum) RK_DEBUG (GRAPHICS_DEVICE, DL_ERROR, "Received transmission of type %d for unknown device number %d. Skippping.", opcode, devnum+1);
 					sendDummyReply (opcode);

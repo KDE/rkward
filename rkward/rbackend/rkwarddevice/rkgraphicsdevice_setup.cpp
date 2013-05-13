@@ -139,7 +139,7 @@ bool RKGraphicsDeviceDesc::init (pDevDesc dev, double pointsize, const QStringLi
 	dev->cra[1] = 1.2 * pointsize * (dpiy / RKGD_DPI);
 	dev->xCharOffset = 0.4900;
 	dev->yCharOffset = 0.3333;
-	dev->yLineBias = 0.1;
+	dev->yLineBias = 0.2;
 	dev->ipr[0] = 1.0 / dpix;
 	dev->ipr[1] = 1.0 / dpiy;
 	/*

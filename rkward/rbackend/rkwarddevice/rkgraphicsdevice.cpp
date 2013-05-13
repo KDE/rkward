@@ -160,7 +160,15 @@ void RKGraphicsDevice::line (double x1, double y1, double x2, double y2, const Q
 	RK_TRACE (GRAPHICS_DEVICE);
 
 	painter.setPen (pen);
-	painter.drawLine (x1, y1, x2, y2);
+	// HACK: There seems to be a bug in QPainter (Qt 4.8.4), which can shift connected lines (everything but the first polyline)
+	//       towards the direction where the previous line came from. The result is that line drawn via drawLine() and drawPolyline() do
+	//       not match, exactly. This is particularly evident for the plot frame.
+	//       We hack around this, by doing all line drawing via drawPolyline.
+	QPointF points [2];
+	points[0] = QPointF (x1, y1);
+	points[1] = QPointF (x2, y2);
+	painter.drawPolyline (points, 2);
+//	painter.drawLine (x1, y1, x2, y2);
 	triggerUpdate ();
 }
 

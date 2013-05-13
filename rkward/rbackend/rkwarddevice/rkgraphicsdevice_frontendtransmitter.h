@@ -32,6 +32,7 @@ public:
 	RKGraphicsDeviceFrontendTransmitter ();
 	~RKGraphicsDeviceFrontendTransmitter ();
 	QString serverName () const { return server_name; };
+	static double lwdscale;
 public slots:
 	void newData ();
 	void newConnection ();
