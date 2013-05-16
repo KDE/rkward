@@ -2,7 +2,7 @@
                           rinterface.h  -  description
                              -------------------
     begin                : Fri Nov 1 2002
-    copyright            : (C) 2002, 2004, 2005, 2006, 2007, 2009, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2002 - 2013 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -62,6 +62,8 @@ public:
 /** Ensures that the given command will not be executed, or, if it is already running, interrupts it. Note that commands marked RCommand::Sync can
 not be interrupted. */
 	void cancelCommand (RCommand *command);
+/** Cancels the given command, unless it has already been submitted to the backend. Returns true, if command was cancelled, false otherwise. */
+	bool softCancelCommand (RCommand *command);
 /** Cancels all running or outstanding commands. @See cancelCommand() */
 	void cancelAll ();
 

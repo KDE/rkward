@@ -509,6 +509,15 @@ void RInterface::cancelAll () {
 	foreach (RCommand* command, all_commands) cancelCommand (command);
 }
 
+bool RInterface::softCancelCommand (RCommand* command) {
+	RK_TRACE (RBACKEND);
+
+	if (!(command->type () && RCommand::Running)) {
+		cancelCommand (command);
+	}
+	return command->status && RCommand::Canceled;
+}
+
 void RInterface::cancelCommand (RCommand *command) {
 	RK_TRACE (RBACKEND);
 
