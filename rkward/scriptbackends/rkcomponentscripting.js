@@ -2,7 +2,7 @@
                           rkcomponentscripting  -  description
                              -------------------
     begin                : Thu Jun 17 2010
-    copyright            : (C) 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2010, 2013 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -59,6 +59,9 @@ makeComponent = function (id) {
 	return (new Component (id));
 }
 gui = new Component ("");
+doRCommand = function (command, callback) {
+	return (_rkward.doRCommand (command, callback));
+}
 
 function RObject(objectname) {
 	this.objectname = objectname;

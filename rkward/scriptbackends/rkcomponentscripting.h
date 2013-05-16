@@ -2,7 +2,7 @@
                           rkcomponentscripting  -  description
                              -------------------
     begin                : Thu Jun 17 2010
-    copyright            : (C) 2010 by Thomas Friedrichsmeier
+    copyright            : (C) 2010, 2013 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -22,6 +22,7 @@
 #include <QHash>
 
 #include <kross/core/action.h>
+#include "../rbackend/rcommand.h"
 
 class RKComponent;
 class RKComponentBase;
@@ -48,6 +49,8 @@ public slots:
 // these are meant to be called from the script
 	void include (const QString& filename);
 	void addChangeCommand (const QString& changed_id, const QString& command);
+/** @returns id of the command issued. */
+	QVariant doRCommand (const QString& command, const QString& callback);
 
 	QVariant getValue (const QString &id) const;
 	QVariant getString (const QString &id) const;
@@ -60,9 +63,16 @@ public slots:
 	QString getObjectChild (const QString &name);
 signals:
 	void haveError ();
+private slots:
+	void scriptRCommandFinished (RCommand* command);
 private:
 	RKComponent* component;
 	Kross::Action* script;
+	struct OutstandingCommand {
+		RCommand *command;
+		QString callback;
+	};
+	QList<OutstandingCommand> outstanding_commands;
 	QString _scriptfile;
 /** helper function for compatibility with KDE < 4.3 */
 	void evaluate (const QByteArray &code);

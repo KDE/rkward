@@ -24,6 +24,8 @@
 #include "../plugin/rkcomponent.h"
 #include "../core/robjectlist.h"
 #include "../misc/rkcommonfunctions.h"
+#include "../rkglobals.h"
+#include "../rbackend/rinterface.h"
 
 #include "../debug.h"
 
@@ -40,6 +42,10 @@ RKComponentScriptingProxy::RKComponentScriptingProxy (RKComponent *component) : 
 
 RKComponentScriptingProxy::~RKComponentScriptingProxy () {
 	RK_TRACE (PHP);
+
+	for (int i = 0; i < outstanding_commands.size (); ++i) {
+		RKGlobals::rInterface ()->cancelCommand (outstanding_commands[i].command);
+	}
 }
 
 void RKComponentScriptingProxy::initialize (const QString& file, const QString& command) {
@@ -127,6 +133,86 @@ void RKComponentScriptingProxy::addChangeCommand (const QString& changed_id, con
 	} else {
 		script->setError (QString ("error ('No such property %1 (failed portion was %2)');\n").arg (changed_id, remainder));
 	}
+}
+
+QVariant RKComponentScriptingProxy::doRCommand (const QString& command, const QString& callback) {
+	RK_TRACE (PHP);
+
+	// purge duplicate commands
+	for (int i = 0; i < outstanding_commands.size (); ++i) {
+		const OutstandingCommand &oc = outstanding_commands[i];
+		if (oc.callback == callback) {
+			if (RKGlobals::rInterface ()->softCancelCommand (oc.command)) {
+				outstanding_commands.removeAt (i);
+				--i;
+				continue;
+			}
+		}
+	}
+
+	OutstandingCommand com;
+	com.command = new RCommand (command, RCommand::PriorityCommand | RCommand::GetStructuredData | RCommand::Plugin);
+	connect (com.command->notifier (), SIGNAL (commandFinished(RCommand*)), this, SLOT (scriptRCommandFinished(RCommand*)));
+	com.callback = callback;
+	outstanding_commands.append (com);
+
+	RKGlobals::rInterface ()->issueCommand (com.command);
+	return (QVariant (com.command->id ()));
+}
+
+static QVariant marshall (RData *data) {
+	RK_TRACE (PHP);
+
+	if (data->getDataType () == RData::StringVector) {
+		return (QVariant (data->stringVector()));
+	} else if (data->getDataType () == RData::IntVector) {
+		const RData::IntStorage& is = data->intVector ();
+		QVariantList ret;
+		for (int i = 0; i < is.size (); ++i) {
+			ret.append (QVariant (is[i]));
+		}
+		return ret;
+	} else if (data->getDataType () == RData::RealVector) {
+		const RData::RealStorage& rs = data->realVector ();
+		QVariantList ret;
+		for (int i = 0; i < rs.size (); ++i) {
+			ret.append (QVariant (rs[i]));
+		}
+		return ret;
+	} else if (data->getDataType () == RData::StructureVector) {
+		const RData::RDataStorage& rs = data->structureVector ();
+		QVariantList ret;
+		for (int i = 0; i < rs.size (); ++i) {
+			ret.append (marshall (rs[i]));
+		}
+		return ret;
+	} else {
+		RK_ASSERT (false);
+	}
+	return QVariant ();
+}
+
+void RKComponentScriptingProxy::scriptRCommandFinished (RCommand* command) {
+	RK_TRACE (PHP);
+
+	QString callback;
+	for (int i = 0; i < outstanding_commands.size (); ++i) {
+		const OutstandingCommand& oc = outstanding_commands[i];
+		if (oc.command == command) {
+			callback = oc.callback;
+			outstanding_commands.removeAt (i);
+			break;
+		}
+	}
+	RK_ASSERT (!callback.isNull ());
+
+	if (command->wasCanceled ()) return;
+	if (command->failed ()) RK_DEBUG (PHP, DL_ERROR, "Plugin script R command %s failed. Full output wsa %s", qPrintable (command->command ()), qPrintable (command->fullOutput ()));
+
+	QVariantList args;
+	args.append (marshall (command));
+	args.append (QVariant (command->id ()));
+	script->callFunction (callback, args);
 }
 
 void RKComponentScriptingProxy::componentChanged (RKComponent* changed) {

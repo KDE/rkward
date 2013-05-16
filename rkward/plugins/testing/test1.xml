@@ -6,6 +6,7 @@
 	<logic>
 		<script><![CDATA[
 			call_num = 0;
+ 			last_command_id = -1;
 			gui.setValue ("text.text", "Select a dependent variable!");
 
 			f = Kross.module('forms');
@@ -20,6 +21,12 @@
 				text += "That has length " + obj.dimensions() + " and classes " + obj.classes() + "!\n";
 				text += "Updates of this text so far: " + call_num;
 				gui.setValue ("text.text", text);
+
+				if (obj.objectname != "") last_command_id = doRCommand ("levels (" + obj.objectname + ")", "levelsCommandFinished");
+			}
+			levelsCommandFinished = function (value, id) {
+				otext = gui.getValue ("text.text");
+				gui.setValue ("text.text", otext + "\n" + last_command_id + "-" + id + "\nadas" + value.join ("-"));
 			}
 			]]></script>
 	</logic>
