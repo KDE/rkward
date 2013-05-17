@@ -57,6 +57,7 @@ public slots:
 	QVariant getBoolean (const QString &id) const;
 	QVariant getList (const QString &id) const;
 	void setValue (const QString &value, const QString &id);
+	void setListValue (const QStringList &value, const QString &id);
 
 	QVariantList getObjectInfo (const QString &name);
 	QString getObjectParent (const QString &name);

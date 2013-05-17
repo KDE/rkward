@@ -54,6 +54,7 @@ RKValueSelector::RKValueSelector (const QDomElement &element, RKComponent *paren
 	}
 
 	list_view = new QTreeView (this);
+	list_view->setHeaderHidden (true);
 	list_view->setSelectionMode (QAbstractItemView::ExtendedSelection);
 	list_view->setRootIsDecorated (false);
 	model = new QStringListModel (this);
@@ -86,10 +87,19 @@ RKValueSelector::~RKValueSelector () {
 	RK_TRACE (PLUGIN);
 }
 
+static QStringList mergeLists (const QStringList &labels, const QStringList &ids) {
+	if (labels.size () < ids.size ()) {
+		return labels + (ids.mid (labels.size ()));
+	} else if (labels.size () > ids.size ()) {
+		return (labels.mid (0, ids.size ()));
+	}
+	return labels;
+}
+
 void RKValueSelector::labelsPropertyChanged () {
 	RK_TRACE (PLUGIN);
 
-	model->setStringList (labels->values ());
+	model->setStringList (mergeLists (labels->values (), available->values ()));
 	selectionPropertyChanged ();   // To update selected items
 }
 
@@ -102,6 +112,8 @@ void RKValueSelector::availablePropertyChanged () {
 			RK_DEBUG (PLUGIN, DL_WARNING, "Duplicate value index in value selector: %s", qPrintable (vals[i]));
 		}
 	}
+	model->setStringList (mergeLists (labels->values (), available->values ()));
+
 	if (!purged_selected_indexes.isEmpty ()) {
 		// This is to handle the case that the "selected" property was updated externally, *before* the "available" property got the corresponding change.
 		// In this case, try to re-apply any selected strings that could not be matched, before

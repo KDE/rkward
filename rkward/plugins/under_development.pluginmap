@@ -14,6 +14,8 @@
 		<component type="standard" id="optionset_test" file="testing/optionset.xml" label="Optionset Test" />
 		<component type="standard" id="matrix_test1" file="testing/matrix1.xml" label="Input Matrix Test" />
 		<component type="standard" id="valueselect_test1" file="testing/valueselect1.xml" label="Valueselector/valueslot/select Test" />
+
+		<component type="standard" id="level_select" file="data/level_select.xml" label="Select by value" />
 <!-- End -->
 
 		<component type="standard" id="import_xls" file="00saveload/import/import_xls.xml" label="Import MS EXCEL">
@@ -42,6 +44,7 @@
 			<entry component="optionset_test" index="1"/>
 			<entry component="matrix_test1" index="1"/>
 			<entry component="valueselect_test1" index="1"/>
+			<entry component="level_select" index="1"/>
 		</menu>
 		<menu id="plots" label="Plots" index="5">
 			<entry component="sieve_plot" />

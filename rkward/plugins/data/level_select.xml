@@ -1,0 +1,62 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="level_select.js" />
+	<help file="level_select.rkh" />
+	<logic>
+		<external id="variable" default=""/>
+		<external id="custom_expression" default=""/>
+		<external id="limit" default="100"/>
+
+		<connect client="variable" governor="x.available"/>
+
+		<script><![CDATA[
+				last_command_id = -1;
+
+				gui.addChangeCommand ("variable", "update ()");
+				gui.addChangeCommand ("limit", "update ()");
+				gui.addChangeCommand ("custom_expression", "update ()");
+				update = function () {
+					gui.setValue ("selector.available", "");
+					gui.setValue ("selector.enabled", 0);
+
+					variable = gui.getValue ("variable");
+					if (variable == "") return;
+
+					limit = gui.getValue ("limit");
+					custom_expression = gui.getValue ("custom_expression");
+					if (custom_expression != "") {
+						expression = custom_expression.replace ('_X_', variable);
+					} else {
+						expression = 'e <- ' + variable + '; if (is.factor (e)) {levels (e)} else {sort (unique (e, nmax=' + limit*limit + '))}';
+					}
+					code = "local ({\n";
+					code += "\tx <- {" + expression + "}\n";
+					code += "\tif (length (x) > " + limit + ") x <- c (x[1:" + limit + "], \"____LIMIT____\")\n";
+					code += "\tx\n";
+					code += "})";
+
+					last_command_id = doRCommand (code, "commandFinished");
+				}
+
+				commandFinished = function (result, id) {
+					if (id != last_command_id) return;  // another result is about to arrive
+					gui.setValue ("selector.enabled", 1);
+					limit = gui.getValue ("limit");
+					gui.setValue ("limitnote.visible", result.length > limit ? 1 : 0);
+					gui.setListValue ("selector.available", result.slice (0, limit));
+				}
+		]]></script>
+	</logic>
+	<dialog label="Level selector">
+		<row>
+			<varselector id="vars"/>
+			<varslot id="x" source="vars"/>
+		</row>
+		
+		<valueselector id="selector" />
+		<text id="limitnote" type="warning">
+			Note: Some values were cut off.
+		</text>
+	</dialog>
+</document>
+ 

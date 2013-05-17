@@ -47,6 +47,10 @@ function Component(id) {
 		return (_rkward.setValue (value, this.absoluteId (id)));
 	}
 
+	this.setListValue = function (id, value) {
+		return (_rkward.setListValue (value, this.absoluteId (id)));
+	}
+
 	this.getChild = function (id) {
 		return (new Component (this.absoluteId (id)));
 	}

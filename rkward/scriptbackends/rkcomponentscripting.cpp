@@ -264,6 +264,23 @@ void RKComponentScriptingProxy::setValue (const QString &value, const QString &i
 	}
 }
 
+void RKComponentScriptingProxy::setListValue (const QStringList& value, const QString& id) {
+	RK_TRACE (PHP);
+
+	QString modifier;
+	RKComponentBase* resolved = component->lookupComponent (id, &modifier);
+	if (resolved && modifier.isEmpty () && resolved->isProperty ()) {
+		RKComponentPropertyAbstractList *l = dynamic_cast<RKComponentPropertyAbstractList*> (resolved);
+		if (l) {
+			l->setValueList (value);
+			return;
+		}
+		static_cast<RKComponentPropertyBase*> (resolved)->setValue (value.join ("\n"));
+	} else {
+		script->setError (QString ("error ('No such property %1 (failed portion was %2)');\n").arg (id, modifier));
+	}
+}
+
 QVariantList RKComponentScriptingProxy::getObjectInfo (const QString &name) {
 	RK_TRACE (PHP);
 

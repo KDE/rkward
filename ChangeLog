@@ -1,3 +1,6 @@
+- Allow plugin UI script code to query R for information
+	TODO: - document
+	      - piece all the new features together and implement an embeddable level selector plugin on top of this
 - Fixed: potential crash when a previously installed pluginmap is not longer readable
 - Allow to connect <varslot>/<valueslot> source to any property, not just <varselectors>
 	TODO: document
