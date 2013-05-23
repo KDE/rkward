@@ -1,3 +1,4 @@
+- Fixed: Adjust to (re-?)named parameters for options("pager")
 - Allow plugin UI script code to query R for information
 	TODO: - document
 	      - piece all the new features together and implement an embeddable level selector plugin on top of this

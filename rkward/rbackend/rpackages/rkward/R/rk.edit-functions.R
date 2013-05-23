@@ -61,9 +61,11 @@
 
 #' @export
 #' @rdname rk.edit
-"rk.show.files" <- function (file = file, title = file, wtitle = NULL, delete=FALSE, prompt = TRUE)
+"rk.show.files" <- function (file = file, header = file, title = NULL, delete.file=FALSE, prompt = TRUE,
+	delete = delete.file  # For compatibility with earlier versions of R
+)
 {
-	invisible (.Call ("rk.show.files", as.character (file), as.character (title), as.character (wtitle), delete, isTRUE (prompt), PACKAGE="(embedding)"))
+	invisible (.Call ("rk.show.files", as.character (file), as.character (header), as.character (title), delete, isTRUE (prompt), PACKAGE="(embedding)"))
 }
 
 #' @export
