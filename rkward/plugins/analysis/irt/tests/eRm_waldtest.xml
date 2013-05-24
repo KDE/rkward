@@ -17,7 +17,7 @@
         <row id="row_vars">
           <varselector id="vars" />
           <column>
-            <varslot type="numeric" id="x" classes="Rm" source="vars" required="true" label="Chose fitted model to test:"/>
+            <varslot type="numeric" id="x" classes="Rm" source="vars" required="true" label="Choose fitted model to test:"/>
             <text>Only objects of class Rm are valid!</text>
             <stretch />
           </column>

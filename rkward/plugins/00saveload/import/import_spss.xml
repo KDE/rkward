@@ -53,7 +53,7 @@
 					<option value="ISO8859-11" label="ISO8859-11 Latin/Thai"/>
 					<option value="ISO8859-13" label="ISO8859-13 Latin-7 Baltic Rim"/>
 					<option value="ISO8859-14" label="ISO8859-14 Latin-8 Celtic"/>
-					<option value="ISO8859-15" label="ISO8859-15 Latin-9 Western Europen (EUR)"/>
+					<option value="ISO8859-15" label="ISO8859-15 Latin-9 Western European (EUR)"/>
 					<option value="ISO8859-16" label="ISO8859-16 Latin-10 South-Eastern European"/>
 					<option value="other" label="Other (specify below)"/>
 				</dropdown>

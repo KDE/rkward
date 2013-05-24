@@ -11,7 +11,7 @@ Choose if you want stacked bars, legend, and rainbow colors. Also you can choose
 	<settings>
 		<setting id="legend">Should a legend be added to the barplot? The row names of the data will be used to construct the legend, so this option has no effect, if the rows are not named.</setting>
 		<setting id="colors">Select between grey and rainbow colors.</setting>
-		<setting id="type">Select a type between juxtaposed bars and stacked bars. This setting is only meaningful for two-dimensional data. If you chose stacked bars you can not display bar values, below.</setting>
+		<setting id="type">Select a type between juxtaposed bars and stacked bars. This setting is only meaningful for two-dimensional data. If you choose stacked bars you can not display bar values, below.</setting>
 		<setting id="labels">Select if you want to display bar values (labels).</setting>
 		<setting id="place">If you have selected to display bar values (labels) you can select where should they be displayed:
 		<li> Above the bars </li>

@@ -4,7 +4,7 @@
 		Plot an empirical cumulative distribution function.
 	</summary>
 	<usage>
-		Select a variable to plot an ECDF for. The theoretcial normal distribution and a rug can be added to the plot.
+		Select a variable to plot an ECDF for. The theoretical normal distribution and a rug can be added to the plot.
 	</usage>
 	<settings>
 		<caption id="tab_variables"/>

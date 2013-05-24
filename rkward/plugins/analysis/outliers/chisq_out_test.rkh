@@ -5,7 +5,7 @@
 	</summary>
 
 	<usage>
-		Chose the data set to find one outlier, based on chisquared distribution of squared differences between data and sample mean. You can chose multiple data. Please consider that this test is no longer recommended. See <link href="rkward://rhelp/chisq.out.test"/>.
+		Choose the data set to find one outlier, based on chisquared distribution of squared differences between data and sample mean. You can choose multiple data. Please consider that this test is no longer recommended. See <link href="rkward://rhelp/chisq.out.test"/>.
 	</usage>
 
 	<settings>

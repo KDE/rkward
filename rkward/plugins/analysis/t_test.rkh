@@ -5,15 +5,15 @@ t-Test (two variable paired or independent samples, or one variable).
 	</summary>
 
 	<usage>
-Chose two numeric vectors or one vector an a constant to compare against each other. For two samples, specify whether the variables are paired or independent samples. For details, see below.
+Choose two numeric vectors or one vector an a constant to compare against each other. For two samples, specify whether the variables are paired or independent samples. For details, see below.
 	</usage>
 
 	<settings>
 		<caption id="tab_variables"/>
-		<setting id="test_form">Chose whether you want a two samples test (paired samples or independent samples), or to test a single variable against a constant</setting>
+		<setting id="test_form">Choose whether you want a two samples test (paired samples or independent samples), or to test a single variable against a constant</setting>
 		<setting id="x">A numeric vector for the first variable</setting>
 		<setting id="y">A numeric vector for the second variable. Available for two samples tests only.</setting>
-		<setting id="mu">A numeric constant. Available for tests agains constant only.</setting>
+		<setting id="mu">A numeric constant. Available for tests against constant only.</setting>
 		<setting id="varequal">Whether to assume equal variances for the two samples (for independent samples t-test, only). This option is implied for a paired test.</setting>
 		<setting id="hypothesis">Alternative hypothesis (H1) of the test.</setting>
 		<caption id="tab_options"/>

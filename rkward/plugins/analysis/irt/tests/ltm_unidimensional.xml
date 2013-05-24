@@ -14,7 +14,7 @@
         <row id="row_vars">
           <varselector id="vars" />
           <column>
-            <varslot type="numeric" id="x" classes="rasch ltm tpm" source="vars" required="true" label="Chose fitted model to check:"/>
+            <varslot type="numeric" id="x" classes="rasch ltm tpm" source="vars" required="true" label="Choose fitted model to check:"/>
             <text>Only objects of class rasch, ltm or tpm are valid!</text>
             <stretch />
             <frame id="frame_options" label="Monte Carlo options">

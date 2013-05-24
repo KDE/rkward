@@ -7,7 +7,7 @@
 	<usage>
 		Select one or more numeric variables to test against normality. An individual test is run for each one of them. The output consists of the JB chi-squared statistic with 2 degrees of freedom and its correspondent p-value.
 		
-		The statistic's distribution is asynthotic, so this test performs better when working with big samples.
+		The statistic's distribution is asymptotic, so this test performs better when working with big samples.
 
 		Make sure the data does not contain NAs or, if so, that the 'Exclude NAs' option is checked, as neglecting this will usually prevent the test from succeeding.
 	</usage>

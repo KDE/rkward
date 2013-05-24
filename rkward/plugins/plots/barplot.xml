@@ -1,4 +1,4 @@
-	<!DOCTYPE rkplugin>
+<!DOCTYPE rkplugin>
 	<document>
 		<code file="barplot.js" />
 		<help file="barplot.rkh" />

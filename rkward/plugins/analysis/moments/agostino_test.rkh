@@ -5,7 +5,7 @@
 	</summary>
 
 	<usage>
-		Chose the data to perform the D'Agostino test for skewness in normally distributed data. You can chose multiple data. See <link href="rkward://rhelp/agostino.test"/>.
+		Choose the data to perform the D'Agostino test for skewness in normally distributed data. You can choose multiple data. See <link href="rkward://rhelp/agostino.test"/>.
 	</usage>
 
 	<settings>

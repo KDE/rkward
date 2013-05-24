@@ -14,7 +14,7 @@
 			</frame>
 		</snippet>
 		<snippet id="dist_options">
-			<frame label="Paramters" >
+			<frame label="Parameters" >
 				<spinbox type="real" id="mean" min="0" initial="5" label="Mean" />
 			</frame>
 		</snippet>

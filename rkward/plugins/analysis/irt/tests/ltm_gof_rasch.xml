@@ -12,7 +12,7 @@
         <row id="row_vars">
           <varselector id="vars" />
           <column>
-            <varslot type="numeric" id="x" classes="rasch" source="vars" required="true" label="Chose fitted model to examine:"/>
+            <varslot type="numeric" id="x" classes="rasch" source="vars" required="true" label="Choose fitted model to examine:"/>
             <text>Only objects of class rasch are valid!</text>
             <stretch />
             <frame label="Bootstrap options">

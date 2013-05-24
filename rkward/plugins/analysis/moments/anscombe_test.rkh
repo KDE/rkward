@@ -5,7 +5,7 @@
 	</summary>
 
 	<usage>
-		Chose the data to perform the Anscombe-Glynn test of kurtosis for normal samples. You can chose multiple data. See <link href="rkward://rhelp/anscombe.test"/>.
+		Choose the data to perform the Anscombe-Glynn test of kurtosis for normal samples. You can choose multiple data. See <link href="rkward://rhelp/anscombe.test"/>.
 	</usage>
 
 	<settings>

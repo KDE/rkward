@@ -2,7 +2,7 @@
 <document>
 	<snippet id="clt_help_template">
 		<summary>
-			Normal approximation to <insert snippet="dist_name"/> Sample averages. Most of this help file is generic description of CLT plugins. Sample averages from a contending distribution (Binomial here) are compared to a target Normal distribution. The comparision is made based on either histograms or distribution functions. For brevity, D will denote the contending distribution (<insert snippet="dist_name"/> here).
+			Normal approximation to <insert snippet="dist_name"/> Sample averages. Most of this help file is generic description of CLT plugins. Sample averages from a contending distribution (Binomial here) are compared to a target Normal distribution. The comparison is made based on either histograms or distribution functions. For brevity, D will denote the contending distribution (<insert snippet="dist_name"/> here).
 		</summary>
 		<usage>
 			Choose the <insert snippet="dist_name"/> parameters, the sample sizes needed for CLT and a choice of function. The function specific options are provided in different tabs.

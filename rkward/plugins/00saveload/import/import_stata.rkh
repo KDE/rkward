@@ -11,7 +11,7 @@ Choose the STATA data file to import. Usually those files have the ending '*.dta
 	<settings>
 		<caption id="tab_general"/>
 		<setting id="file">The filename of the file to import. This may also be a URL (http://, http:// and ftp:// are supported).</setting>
-		<setting id="saveto">The name of an R object to store the imported data in. If you chose an existing symbol name, you will be prompted, whether to overwrite this object.</setting>
+		<setting id="saveto">The name of an R object to store the imported data in. If you choose an existing symbol name, you will be prompted, whether to overwrite this object.</setting>
 		<setting id="doedit">Whether the object should be opened for editing after it was imported. </setting>
 
 		<setting id="convert_dates">Convert Stata dates to R 'Date' class (see <link href="rkward://rhelp/read.dta"/>, <link href="rkward://rhelp/Dates"/>).</setting>

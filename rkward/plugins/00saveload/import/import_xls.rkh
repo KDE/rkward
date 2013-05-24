@@ -12,7 +12,7 @@ Note: The this plugin requires a properly working Perl setup.  See <link href="r
 	<settings>
 		<caption id="tab_general"/>
 		<setting id="file">The filename of the file to import</setting>
-		<setting id="name">The name of an R object to store the imported data in. If you chose an existing symbol name, you will be prompted, whether to overwrite this object.</setting>
+		<setting id="name">The name of an R object to store the imported data in. If you choose an existing symbol name, you will be prompted, whether to overwrite this object.</setting>
 		<setting id="sheetname">Specifies the sheet which is imported from a Microsoft EXCEL file</setting>
 		<setting id="verbose">Print details as the file is processed</setting>
 		<setting id="skip">Defines a number of rows to skip</setting>

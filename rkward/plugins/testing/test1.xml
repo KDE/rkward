@@ -49,7 +49,7 @@
 				<scriptable id="scripty"/>
 			</tab>
 			<tab label="Model">
-				<formula id="model" fixed_factors="y" dependent="x" label="Now chose the model"/>
+				<formula id="model" fixed_factors="y" dependent="x" label="Now choose the model"/>
 			</tab>
 		</tabbook>
 	</dialog>

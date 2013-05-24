@@ -5,7 +5,7 @@
 	</summary>
 
 	<usage>
-		Chose the data to perform the Dixon test for outlier. You can chose multiple vectors. See <link href="rkward://rhelp/dixon.test"/>.
+		Choose the data to perform the Dixon test for outlier. You can choose multiple vectors. See <link href="rkward://rhelp/dixon.test"/>.
 	</usage>
 
 	<settings>

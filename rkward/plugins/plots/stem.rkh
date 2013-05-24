@@ -5,7 +5,7 @@
 	</summary>
 
 	<usage>
-		Chose the data to produce the stem-and-leaf plot. See <link href="rkward://rhelp/stem"/>. For a more sophisticated stem-and-leaf plot refer to the <link href="http://cran.r-project.org/src/contrib/Descriptions/Rcmdr.html">Rcmdr package</link>.
+		Choose the data to produce the stem-and-leaf plot. See <link href="rkward://rhelp/stem"/>. For a more sophisticated stem-and-leaf plot refer to the <link href="http://cran.r-project.org/src/contrib/Descriptions/Rcmdr.html">Rcmdr package</link>.
 	</usage>
 
 	<settings>

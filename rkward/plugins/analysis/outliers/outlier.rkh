@@ -5,7 +5,7 @@
 	</summary>
 
 	<usage>
-		Chose the data to find the value with the largest difference from the sample mean. You can select multiple vectors. See <link href="rkward://rhelp/outlier"/>.
+		Choose the data to find the value with the largest difference from the sample mean. You can select multiple vectors. See <link href="rkward://rhelp/outlier"/>.
 	</usage>
 
 	<settings>

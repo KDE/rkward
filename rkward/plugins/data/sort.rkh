@@ -11,7 +11,7 @@ save to a separate object.
 		<caption id="basic_settings"/>
 		<setting id="object">The object to sort. If a data.frame editor window is currently active, the corresponding object name will be filled in as a default.</setting>
 		<setting id="sortby">Only for data.frame objects. Select the column(s) to sort by.</setting>
-		<setting id="saveto_select">Chose "Same object" (the default) to replace the object to be sorted with the sorted variant. If, instead, you want to keep the unsorted object, chose "Another object" to save the sorted object, separately.</setting>
+		<setting id="saveto_select">Choose "Same object" (the default) to replace the object to be sorted with the sorted variant. If, instead, you want to keep the unsorted object, choose "Another object" to save the sorted object, separately.</setting>
 		<setting id="saveto">Only, if you selected "Another object", above: Specify the object to save to.</setting>
 		<caption id="sort_order"/>
 		<setting id="order">Sort in ascending or descending order.</setting>

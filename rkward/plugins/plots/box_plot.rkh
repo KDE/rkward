@@ -5,7 +5,7 @@ Creates a box plot of one or more variables.
 	</summary>
 
 	<usage>
-Chose numerical data to be plotted. Data can be organized in separate vectors, or in a single outcome variable and one or more grouping variables.
+Choose numerical data to be plotted. Data can be organized in separate vectors, or in a single outcome variable and one or more grouping variables.
 	</usage>
 
 	<settings>
@@ -28,8 +28,8 @@ Chose numerical data to be plotted. Data can be organized in separate vectors, o
 		<setting id="sd">Whether to draw a mark indicating the standard deviation.</setting>
 		<setting id="pch_sd_high">If the standard deviation is to be indicated: Symbol to use as mark for the upper sd.</setting>
 		<setting id="pch_sd_low">If the standard deviation is to be indicated: Symbol to use as mark for the lower sd.</setting>
-		<setting id="cex_sd_mean">Size of mean / sd idicators. This option is only availble, if at least one of mean or sd are to be drawn.</setting>
-		<setting id="sd_mean_color">Color of mean / sd idicators. This option is only availble, if at least one of mean or sd are to be drawn.</setting>
+		<setting id="cex_sd_mean">Size of mean / sd indicators. This option is only available, if at least one of mean or sd are to be drawn.</setting>
+		<setting id="sd_mean_color">Color of mean / sd indicators. This option is only available, if at least one of mean or sd are to be drawn.</setting>
 		<setting id="plotoptions" title="General plot Options">Since these settings are reused in further plugins, they are documented on a page of their own: See <link href="rkward://component/plot_options"/>.</setting>
 	</settings>
 	<related>

@@ -5,7 +5,7 @@
 	</summary>
 
 	<usage>
-		Chose the data to perform the Grubbs tests for one or two outliers in data sample. You can chose multiple data. See <link href="rkward://rhelp/grubbs.test"/>.
+		Choose the data to perform the Grubbs tests for one or two outliers in data sample. You can choose multiple data. See <link href="rkward://rhelp/grubbs.test"/>.
 	</usage>
 
 	<settings>

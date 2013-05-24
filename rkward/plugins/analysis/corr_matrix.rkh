@@ -5,7 +5,7 @@ Calculate a correlation matrix given a number of numerical input vectors.
 	</summary>
 
 	<usage>
-Chose the vectors to calculate correlations for. A correlation is calculated for each pair of vectors. Optionally, (two-sided) p-values are calculated for each pair.
+Choose the vectors to calculate correlations for. A correlation is calculated for each pair of vectors. Optionally, (two-sided) p-values are calculated for each pair.
 	</usage>
 
 	<settings>

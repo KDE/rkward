@@ -131,8 +131,8 @@
 							<option value="AvantGarde" label="AvantGarde"/>
 							<option value="Bookman" label="Bookman"/>
 							<option value="Courier" label="Courier"/>
-							<option value="Helvectica" label="Helvectica"/>
-							<option value="Helvectica-Narrow" label="Helvectica Narrow"/>
+							<option value="Helvetica" label="Helvetica"/>
+							<option value="Helvetica-Narrow" label="Helvetica Narrow"/>
 							<option value="mono" label="Mono"/>
 							<option value="NewCenturySchoolbook" label="New Century Schoolbook"/>
 							<option value="Palatino" label="Palatino"/>
@@ -144,7 +144,7 @@
 							<option value="NimbusMon" label="NimbusMon (URW)"/>
 							<option value="NimbusSanCond" label="NimbusSanCond (URW)"/>
 							<option value="URWBookman" label="URWBookman"/>
-							<option value="URWHelvectica" label="URWHelvectica"/>
+							<option value="URWHelvetica" label="URWHelvetica"/>
 							<option value="URWGothic" label="URWGothic"/>
 							<option value="URWPalladio" label="URWPalladio"/>
 							<option value="URWTimes" label="URWTimes"/>

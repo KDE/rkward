@@ -15,7 +15,7 @@
 		<setting id="density">Should a density curve be plotted over the histogram? This option is only available, if the histogram is density scaled.</setting>
 		<setting id="col_density">Which color should the density line be drawn in?</setting>
 		<setting id="bw">The smoothing bandwidth used to calculate the density estimate. See <link href="rkward://rhelp/density"/> for details.</setting>
-		<setting id="adjust">Factor to adjust the bandwith by.</setting>
+		<setting id="adjust">Factor to adjust the bandwidth by.</setting>
 		<setting id="narm">Remove missing values? If not checked, missing values will cause an error.</setting>
 		<setting id="n">Number of equally spaced points to estimate the density at.</setting>
 	</settings>

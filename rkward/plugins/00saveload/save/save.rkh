@@ -13,7 +13,7 @@
 		<setting id="ascii">Write an ascii, rather than binary representation of the object(s).</setting>
 		<setting id="compress">The file can be compressed to achieve a smaller file size. This control allows to select the method of compression. Some methods are not available for versions of R before 2.10.0.</setting>
 		<setting id="complevel">Compression level. Higher values indicate better compression.</setting>
-		<setting id="xzextreme">For <i>xz</i> compression, only: Enable xz "extreme" compresison.</setting>
+		<setting id="xzextreme">For <i>xz</i> compression, only: Enable xz "extreme" compression.</setting>
 	</settings>
 	<related>
 		<ul>

@@ -4,7 +4,7 @@
 		Set or change the current working directory.
 	</summary>
 	<usage>
-    Choose a diretory to set/change the working directory for R. The R function <b>setwd</b> is used to do the job.
+    Choose a directory to set/change the working directory for R. The R function <b>setwd</b> is used to do the job.
 	</usage>
 	<related>
 		<ul>
