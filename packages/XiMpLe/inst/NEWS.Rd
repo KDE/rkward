@@ -1,6 +1,15 @@
 \name{NEWS}
 \title{News for Package 'XiMpLe'}
 \encoding{UTF-8}
+\section{Changes in XiMpLe version 0.03-21 (2013-05-24)}{
+  \subsection{added}{
+    \itemize{
+      \item new attribute \code{"as.list"} added to \code{XMLScan()}, if TRUE forces the return
+        value to be a list of length 1 (default is still to directly return the
+        single node).
+    }
+  }
+}
 \section{Changes in XiMpLe version 0.03-20 (2013-03-30)}{
   \subsection{changed}{
     \itemize{

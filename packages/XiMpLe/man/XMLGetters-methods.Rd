@@ -86,9 +86,13 @@
   Another special method can scan a node/document tree
   object for appearances of nodes with a particular name:
 
-  \itemize{ \item{\code{XMLScan()}: }{get/set the XML nodes
-  by name (recursively searches slot \code{name} of both
-  classes \code{XiMpLe.node} and \code{XiMpLe.doc})} }
+  \itemize{ \item{\code{XMLScan(obj, name, as.list=FALSE)}:
+  }{get/set the XML nodes by name (recursively searches
+  slot \code{name} of both classes \code{XiMpLe.node} and
+  \code{XiMpLe.doc}). If \code{as.list=TRUE} allways
+  returns a list (or NULL), otherwise if exactly one result
+  is found, it will be returned as as single
+  \code{XiMpLe.node}.} }
 }
 \examples{
 xmlTestNode <- XMLNode("foo", XMLNode("testchild"))
