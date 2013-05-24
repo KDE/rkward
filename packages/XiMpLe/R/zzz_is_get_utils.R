@@ -36,8 +36,9 @@ is.XiMpLe.doc <- function(x){
 #' Another special method can scan a node/document tree object for appearances of nodes with a particular name:
 #'
 #' \itemize{
-#'		\item{\code{XMLScan()}: }{get/set the XML nodes by name (recursively searches slot \code{name} of both classes
-#'			\code{XiMpLe.node} and  \code{XiMpLe.doc})}
+#'		\item{\code{XMLScan(obj, name, as.list=FALSE)}: }{get/set the XML nodes by name (recursively searches slot \code{name} of both classes
+#'			\code{XiMpLe.node} and  \code{XiMpLe.doc}). If \code{as.list=TRUE} allways returns a list (or NULL), otherwise if exactly one result is found,
+#'			it will be returned as as single \code{XiMpLe.node}.}
 #' }
 #'
 #' @param obj An object of class \code{XiMpLe.node} or \code{XiMpLe.doc}
@@ -317,7 +318,7 @@ setMethod("XMLDTD<-",
 ## scan a tree for appearances of nodes
 #' @rdname XMLGetters-methods
 #' @exportMethod XMLScan
-setGeneric("XMLScan", function(obj, name) standardGeneric("XMLScan"))
+setGeneric("XMLScan", function(obj, name, as.list=FALSE) standardGeneric("XMLScan"))
 
 # internal helper function
 find.nodes <- function(nodes, nName){
@@ -340,13 +341,13 @@ find.nodes <- function(nodes, nName){
 #' @include XiMpLe.node-class.R
 setMethod("XMLScan",
 	signature=signature(obj="XiMpLe.node"),
-	function(obj, name){
+	function(obj, name, as.list=FALSE){
 		node.list <- find.nodes(
 			nodes=child.list(obj),
 			nName=name)
 		if(identical(node.list, list())){
 			return(NULL)
-		} else if(length(node.list) == 1){
+		} else if(length(node.list) == 1 && !isTRUE(as.list)){
 			return(node.list[[1]])
 		} else {
 			return(node.list)
@@ -361,13 +362,13 @@ setMethod("XMLScan",
 #' @include XiMpLe.doc-class.R
 setMethod("XMLScan",
 	signature=signature(obj="XiMpLe.doc"),
-	function(obj, name){
+	function(obj, name, as.list=FALSE){
 		node.list <- find.nodes(
 			nodes=XMLChildren(obj),
 			nName=name)
 		if(identical(node.list, list())){
 			return(NULL)
-		} else if(length(node.list) == 1){
+		} else if(length(node.list) == 1 && !isTRUE(as.list)){
 			return(node.list[[1]])
 		} else {
 			return(node.list)
