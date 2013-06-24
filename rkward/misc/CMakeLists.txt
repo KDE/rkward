@@ -23,6 +23,7 @@ SET(misc_STAT_SRCS
    celleditor.cpp
    editlabelsdialog.cpp
    editformatdialog.cpp
+   rkmessagecatalog.cpp
    )
 
 QT4_AUTOMOC(${misc_STAT_SRCS})
