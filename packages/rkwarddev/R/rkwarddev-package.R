@@ -3,8 +3,8 @@
 #' \tabular{ll}{
 #' Package: \tab rkwarddev\cr
 #' Type: \tab Package\cr
-#' Version: \tab 0.06-2\cr
-#' Date: \tab 2013-04-04\cr
+#' Version: \tab 0.06-3\cr
+#' Date: \tab 2013-07-05\cr
 #' Depends: \tab R (>= 2.9.0),methods,XiMpLe (>= 0.03-18),rkward (>= 0.5.6)\cr
 #' Enhances: \tab rkward\cr
 #' Encoding: \tab UTF-8\cr
@@ -15,7 +15,7 @@
 #'
 #' Provides functions to create plugin skeletons and XML structures for RKWard.
 #'
-#' @aliases rkwarddev-package rkwarddev
+#' @aliases rkwarddev-package
 #' @name rkwarddev-package
 #' @docType package
 #' @title The rkwarddev Package

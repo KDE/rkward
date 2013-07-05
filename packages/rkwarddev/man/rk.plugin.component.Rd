@@ -7,7 +7,7 @@
     scan = c("var", "saveobj", "settings"),
     guess.getter = FALSE, hierarchy = "test",
     include = NULL, create = c("xml", "js", "rkh"),
-    gen.info = TRUE, indent.by = "\t")
+    hints = TRUE, gen.info = TRUE, indent.by = "\t")
 }
 \arguments{
   \item{about}{Either a character string with the name of
@@ -78,6 +78,10 @@
   file. This option will be overruled if you provide that
   section manually by the \code{rkh} option (see below).}
   }}
+
+  \item{hints}{Logical, if \code{TRUE} and you leave
+  optional entries empty (like \code{rkh=list()}), dummy
+  sections will be added.}
 
   \item{guess.getter}{Logical, if \code{TRUE} try to get a
   good default getter function for JavaScript variable

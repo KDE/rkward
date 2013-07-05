@@ -29,6 +29,7 @@
 #'				the \code{<settings>} section of the help file. This option will be overruled if you provide that section manually
 #'				by the \code{rkh} option (see below).}
 #'		}
+#' @param hints Logical, if \code{TRUE} and you leave optional entries empty (like \code{rkh=list()}), dummy sections will be added.
 #' @param guess.getter Logical, if \code{TRUE} try to get a good default getter function for JavaScript
 #'		variable values (if \code{scan} is active). This will use some functions which were added with RKWard 0.6.1, and therefore
 #'		raise the dependencies for your plugin/component accordingly. Nonetheless, it's recommended.
@@ -52,7 +53,7 @@
 #' @examples
 #' \dontrun{
 #' test.dropdown <- rk.XML.dropdown("mydrop",
-#'   opts=list("First Option"=c(val="val1"),
+#'   options=list("First Option"=c(val="val1"),
 #'   "Second Option"=c(val="val2", chk=TRUE)))
 #' test.checkboxes <- rk.XML.row(rk.XML.col(
 #'   list(test.dropdown,
@@ -60,8 +61,8 @@
 #'     rk.XML.cbox(label="bar", val="bar2"))
 #'   ))
 #' test.vars <- rk.XML.vars("select some vars", "vars go here")
-#' test.tabbook <- rk.XML.dialog(rk.XML.tabbook("My Tabbook", tab.labels=c("First Tab",
-#'   "Second Tab"), children=list(test.checkboxes, test.vars)))
+#' test.tabbook <- rk.XML.dialog(rk.XML.tabbook("My Tabbook",
+#'   tabs=c("First Tab"=test.checkboxes, "Second Tab"=test.vars)))
 #' 
 #' rk.plugin.component("Square the Circle",
 #'   xml=list(dialog=test.tabbook))
@@ -69,7 +70,7 @@
 
 rk.plugin.component <- function(about, xml=list(), js=list(), rkh=list(),
 	provides=c("logic", "dialog"), scan=c("var", "saveobj", "settings"), guess.getter=FALSE,
-	hierarchy="test", include=NULL, create=c("xml", "js", "rkh"), gen.info=TRUE, indent.by="\t"){
+	hierarchy="test", include=NULL, create=c("xml", "js", "rkh"), hints=TRUE, gen.info=TRUE, indent.by="\t"){
 
 	if(inherits(about, "XiMpLe.node")){
 		about.node.name <- slot(about, "name")
@@ -198,10 +199,11 @@ rk.plugin.component <- function(about, xml=list(), js=list(), rkh=list(),
 			related=rkh[["related"]],
 			technical=rkh[["technical"]],
 			title=rk.rkh.title(name.orig),
+			hints=hints,
 			gen.info=gen.info)
 		slot(this.component, "rkh") <- rkh.doc
 	} else {
-		slot(this.component, "rkh") <- rk.rkh.doc()
+		slot(this.component, "rkh") <- rk.rkh.doc(hints=hints)
 	}
 
 	return(this.component)

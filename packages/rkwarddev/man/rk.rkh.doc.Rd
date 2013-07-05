@@ -4,7 +4,7 @@
 \usage{
   rk.rkh.doc(summary = NULL, usage = NULL, sections = NULL,
     settings = NULL, related = NULL, technical = NULL,
-    title = NULL, gen.info = TRUE)
+    title = NULL, hints = TRUE, gen.info = TRUE)
 }
 \arguments{
   \item{summary}{An object of class \code{XiMpLe.node} to
@@ -44,6 +44,10 @@
   pasted as the \code{<title>} section. See
   \code{\link[rkwarddev:rk.rkh.title]{rk.rkh.title}} for
   details.}
+
+  \item{hints}{Logical, if \code{TRUE} and you leave out
+  optional entries (like \code{technical=NULL}), empty
+  dummy sections will be added.}
 
   \item{gen.info}{Logical, if \code{TRUE} a comment note
   will be written into the document, that it was generated

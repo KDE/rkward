@@ -20,12 +20,12 @@
   checkbox. In other words, set this to \code{TRUE} if you
   want the option to be set if the box is not checked.}
 
-  \item{ifelse}{Logical, whether the options should be
-  set anyway. By default, the option will only be set in
-  one condition. If \code{ifelse=TRUE}, it will get the
-  inverse value in case of the alternative condition, e.g.
-  it will be set to either \code{not=TRUE} or
-  \code{not=FALSE} if the box is checked or unchecked.}
+  \item{ifelse}{Logical, whether the options should be set
+  anyway. By default, the option will only be set in one
+  condition. If \code{ifelse=TRUE}, it will get the inverse
+  value in case of the alternative condition, e.g. it will
+  be set to either \code{not=TRUE} or \code{not=FALSE} if
+  the box is checked or unchecked.}
 
   \item{false}{Logical or character, the value the option
   should, only used get if \code{ifelse=TRUE} as well.

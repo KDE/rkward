@@ -1,5 +1,12 @@
 ChangeLog for package rkwarddev
 
+changes in version 0.06-3 (2013-07-05)
+fixed:
+  - fixed outdated example code for rk.plugin.component()
+changed:
+  - rk.plugin.component() and rk.rkh.doc() do now interpret the "hints" argument to prevent the
+    generation of optional XML nodes.
+
 changes in version 0.06-2 (2013-04-04)
 changed:
   - the structure of <about> nodes will change in RKWard 0.6.1,

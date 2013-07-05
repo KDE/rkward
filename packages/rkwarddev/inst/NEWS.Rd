@@ -1,6 +1,14 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
+\section{Changes in rkwarddev version 0.06-3 (2013-07-05)}{
+  \subsection{changed}{
+    \itemize{
+      \item \code{rk.plugin.component()} and \code{rk.rkh.doc()} do now interpret the \code{"hints"} argument to prevent the
+        generation of optional XML nodes.
+    }
+  }
+}
 \section{Changes in rkwarddev version 0.06-2 (2013-04-04)}{
   \subsection{changed}{
     \itemize{
