@@ -123,8 +123,13 @@ void RKGraphicsDevice::clear (const QColor& col) {
 	RK_TRACE (GRAPHICS_DEVICE);
 
 	if (painter.isActive ()) painter.end ();
+#if QT_VERSION >= 0x040800
 	if (col.isValid ()) area.fill (col);
 	else area.fill (QColor (255, 255, 255, 255));
+#else
+	if (col.isValid ()) area.fill (col.rgb ());
+	else area.fill (qRgb (255, 255, 255));
+#endif
 	updateNow ();
 	setClip (area.rect ());	// R's devX11.c resets clip on clear, so we do this, too.
 }

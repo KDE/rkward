@@ -24,9 +24,14 @@
 #include <QPainter>
 #include <QLabel>
 
-#ifdef Q_WS_MAC
+#ifndef Q_WS_WIN
 // On Mac, drawing on a pixmap does not work correctly. Probably can only be done inside paint
 // events. (MacOSX 10.6.8, Qt 4.8.4).
+// On X11, similar problems seem to occur on some, but not all systems. Only on old versions?
+// See http://sourceforge.net/p/rkward/bugs/129/ .
+// Version not working with QPixmap: qt 4.7.0~beta2, libx11 1.3.2, xserver-xorg 7.5
+// Version working with QPixmap: qt 4.8.4, libx11 1.5.0, xserver-xorg 7.7
+//
 // Fortunately, a QImage based buffer does not seem to be _that_ much slower
 // (around 5-10% on X11, on plot (rnorm (100000)))
 #	define USE_QIMAGE_BUFFER

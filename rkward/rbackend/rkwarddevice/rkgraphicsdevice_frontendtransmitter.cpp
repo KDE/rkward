@@ -321,7 +321,6 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 			streamer.writeOutBuffer ();
 		} else if (opcode == RKDNewPageConfirm) {
 			device->confirmNewPage ();
-#warning TODO keep track of status
 		} else {
 			RK_DEBUG (GRAPHICS_DEVICE, DL_ERROR, "Unhandled operation of type %d for device number %d. Skippping.", opcode, devnum+1);
 		}
