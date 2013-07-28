@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="rkward_main" version="570">
+<kpartgui name="rkward_main" version="620">
 <MenuBar>
 	<!-- The Main Window ui.rc is the only one, where merging happens, reliably. That is, why we need to define
 	     a lot of merge points, here, which can then be used be mdi windows and their children.
@@ -94,7 +94,7 @@
 		<Action name="new_any"/>
 		<Action name="save_any"/>
 </ToolBar>
-<ToolBar fullWidth="true" name="mdiToolBar">
+<ToolBar fullWidth="true" name="mdiToolBar"><text>Window specific actions bar</text>
 	<DefineGroup name="pretoolbar_actions_merge" append="pretoolbar_actions_merge"/>
 	<DefineGroup name="toolbar_actions_merge" append="toolbar_actions_merge"/>
 	<DefineGroup name="posttoolbar_actions_merge" append="posttoolbar_actions_merge"/>

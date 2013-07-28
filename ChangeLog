@@ -1,3 +1,5 @@
+- Fixed: Give a label to an unlabelled toolbar
+- IN PROGESS: Allow plugins to be translated
 - Fixed: Adjust to (re-?)named parameters for options("pager")
 - Allow plugin UI script code to query R for information
 	TODO: - document
