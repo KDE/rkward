@@ -120,7 +120,7 @@ QVariant RKMatrixInput::value (const QString& modifier) {
 		for (int i = 0; i < column_count->intValue (); ++i) {
 			ret.append ("\tc (" + makeColumnString (i, ", ") + ")");
 		}
-		return QString ("cbind (\n" + ret.join ("\n") + "\n)");
+		return QString ("cbind (\n" + ret.join (",\n") + "\n)");
 	}
 
 	bool ok;
