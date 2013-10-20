@@ -5,7 +5,7 @@ pckg.dscrptn <- data.frame(
 		Package="XiMpLe",
 		Type="Package",
 		Title="A simple XML tree parser and generator",
-		Author="m.eik michalke <meik.michalke@hhu.de>",
+		Author="m.eik michalke",
 		AuthorsR="c(person(given=\"Meik\", family=\"Michalke\", email=\"meik.michalke@hhu.de\",
 			role=c(\"aut\", \"cre\")))",
 		Maintainer="m.eik michalke <meik.michalke@hhu.de>",
