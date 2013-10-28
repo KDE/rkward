@@ -15,7 +15,7 @@
 	<section title="Getting Started" id="getting_started">
 	Due to the large differences in prior knowledge of R, we provide two different guides for getting started with RKWard. The first is aimed at users with some knowledge of the R language, and focuses on introducing the IDE features of RKWard: <link href="rkward://page/rkward_for_r_users" />.
 
-	The second gives a more hands on introduction to getting started with RKWard, but does not go quite as deep. If you have never users R or RKWard before, you should start with this guide, then later read the above page link: <link href="rkward://page/rkward_for_new_users" />.
+	The second gives a more hands on introduction to getting started with RKWard, but does not go quite as deep. If you have never used R or RKWard before, you should start with this guide, then later read the above page link: <link href="rkward://page/rkward_for_new_users" />.
 	</section>
 
 	<section title="General Information" id="further_info">
