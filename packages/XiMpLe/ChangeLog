@@ -1,10 +1,12 @@
 ChangeLog for package XiMpLe
 
-changes in version 0.03-21 (2013-05-24)
+changes in version 0.03-21 (2013-11-11)
 added:
   - new attribute "as.list" added to XMLScan(), if TRUE forces the return
     value to be a list of length 1 (default is still to directly return the
     single node).
+changed:
+  - added a proper GPL notice at the beginning of each R file
 
 changes in version 0.03-20 (2013-03-30)
 changed:

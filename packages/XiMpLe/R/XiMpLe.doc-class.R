@@ -1,3 +1,21 @@
+# Copyright 2011-2013 Meik Michalke <meik.michalke@hhu.de>
+#
+# This file is part of the R package XiMpLe.
+#
+# XiMpLe is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# XiMpLe is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with XiMpLe.  If not, see <http://www.gnu.org/licenses/>.
+
+
 ## temporarily turned off most of the roxygen comments
 ## class docs will remain static until roxygen2 supports "@slot"
 
