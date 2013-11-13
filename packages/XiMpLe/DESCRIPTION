@@ -1,7 +1,7 @@
 Package: XiMpLe
 Type: Package
 Title: A simple XML tree parser and generator
-Author: m.eik michalke <meik.michalke@hhu.de>
+Author: m.eik michalke
 Maintainer: m.eik michalke <meik.michalke@hhu.de>
 Depends:
     R (>= 2.9.0),methods
@@ -20,7 +20,7 @@ URL: http://reaktanz.de/?c=hacking&s=XiMpLe
 Authors@R: c(person(given="Meik", family="Michalke",
     email="meik.michalke@hhu.de", role=c("aut", "cre")))
 Version: 0.03-21
-Date: 2013-05-24
+Date: 2013-11-13
 Collate:
     'XiMpLe-internal.R'
     'XiMpLe.node-class.R'

@@ -1,28 +1,10 @@
-# Copyright 2011-2013 Meik Michalke <meik.michalke@hhu.de>
-#
-# This file is part of the R package XiMpLe.
-#
-# XiMpLe is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# XiMpLe is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with XiMpLe.  If not, see <http://www.gnu.org/licenses/>.
-
-
 #' A simple XML tree parser and generator.
 #'
 #' \tabular{ll}{
 #' Package: \tab XiMpLe\cr
 #' Type: \tab Package\cr
 #' Version: \tab 0.03-21\cr
-#' Date: \tab 2013-05-24\cr
+#' Date: \tab 2013-11-13\cr
 #' Depends: \tab R (>= 2.9.0),methods\cr
 #' Enhances: \tab rkward\cr
 #' Encoding: \tab UTF-8\cr
@@ -36,10 +18,10 @@
 #' It's not as powerful as the XML package and doesn't aim to be, but for simple XML handling
 #' it could be useful. It was originally programmed for RKWard.
 #'
-#' @aliases XiMpLe-package XiMpLe
+#' @aliases XiMpLe-package
 #' @name XiMpLe-package
 #' @docType package
 #' @title The XiMpLe Package
-#' @author Meik Michalke \email{meik.michalke@@hhu.de}
+#' @author Meik Michalke
 #' @keywords package
 NULL

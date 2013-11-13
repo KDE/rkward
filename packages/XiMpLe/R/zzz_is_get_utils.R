@@ -59,6 +59,12 @@ is.XiMpLe.doc <- function(x){
 #'			it will be returned as as single \code{XiMpLe.node}.}
 #' }
 #'
+#' Finally, there is a method to scan for certain values in XiMpLe objects and just list them. For instance, it can be used to
+#' list all instances of a certain attribute type in a document tree:
+#'
+#' \itemize{
+#'		\item{\code{XMLScanDeep(obj, find, search="attributes")}: }{returns all found instances of \code{find} in all slots defined by \code{search}.}
+#' }
 #' @param obj An object of class \code{XiMpLe.node} or \code{XiMpLe.doc}
 #' @seealso
 #'		\code{\link[XiMpLe:node]{node}},
@@ -459,5 +465,62 @@ setMethod("XMLScan<-",
 				replacement=value)[[1]]
 		stopifnot(validObject(object=obj, test=TRUE, complete=TRUE))
 		return(obj)
+	}
+)
+
+#' @rdname XMLGetters-methods
+#' @exportMethod XMLScanDeep
+setGeneric("XMLScanDeep", function(obj, find=NULL, search="attributes") standardGeneric("XMLScanDeep"))
+
+# internal helper function
+recursiveScan <- function(robj, rfind, rsearch, recResult=list(), result, envID="all"){
+	if(is.XiMpLe.doc(robj)){
+		recResult <- append(recResult, lapply(robj@children, function(this.child){
+			recursiveScan(robj=this.child, rfind=rfind, rsearch=rsearch, recResult=recResult, result=result, envID=envID)
+		}))
+	} else if(is.XiMpLe.node(robj)){
+		attrs <- XMLAttrs(robj)[[rfind]]
+		if(!is.null(attrs)){
+			attrResult <- as.list(result)
+			nodeName <- XMLName(robj)
+			attrResult[[envID]] <- append(attrResult[[envID]], attrs)
+			names(attrResult[[envID]])[length(attrResult[[envID]])] <- nodeName
+			list2env(attrResult, envir=result)
+		} else {}
+		recResult <- append(recResult, lapply(robj@children, function(this.child){
+			recursiveScan(robj=this.child, rfind=rfind, rsearch=rsearch, recResult=recResult, result=result, envID=envID)
+		}))
+	}
+	return(recResult)
+}
+
+#' @rdname XMLGetters-methods
+#' @aliases
+#'		XMLScanDeep,-methods
+#'		XMLScanDeep,XiMpLe.node-method
+#' @docType methods
+#' @include XiMpLe.node-class.R
+setMethod("XMLScanDeep",
+	signature=signature(obj="XiMpLe.node"),
+	function(obj, find, search){
+		result <- new.env()
+		assign(find, c(), envir=result)
+		recursiveScan(robj=obj, rfind=find, rsearch=search, recResult=list(), result=result, envID=find)
+		return(get(find, envir=result))
+	}
+)
+
+#' @rdname XMLGetters-methods
+#' @aliases
+#'		XMLScanDeep,XiMpLe.doc-method
+#' @docType methods
+#' @include XiMpLe.doc-class.R
+setMethod("XMLScanDeep",
+	signature=signature(obj="XiMpLe.doc"),
+	function(obj, find, search){
+		result <- new.env()
+		assign(find, c(), envir=result)
+		recursiveScan(robj=obj, rfind=find, rsearch=search, recResult=list(), result=result, envID=find)
+		return(get(find, envir=result))
 	}
 )

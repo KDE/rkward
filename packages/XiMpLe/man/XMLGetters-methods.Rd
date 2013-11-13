@@ -40,6 +40,10 @@
 \alias{XMLName,XiMpLe.node-method}
 \alias{XMLScan}
 \alias{XMLScan<-}
+\alias{XMLScanDeep}
+\alias{XMLScanDeep,-methods}
+\alias{XMLScanDeep,XiMpLe.doc-method}
+\alias{XMLScanDeep,XiMpLe.node-method}
 \alias{XMLScan<-,-methods}
 \alias{XMLScan,-methods}
 \alias{XMLScan<-,XiMpLe.doc-method}
@@ -93,6 +97,15 @@
   returns a list (or NULL), otherwise if exactly one result
   is found, it will be returned as as single
   \code{XiMpLe.node}.} }
+
+  Finally, there is a method to scan for certain values in
+  XiMpLe objects and just list them. For instance, it can
+  be used to list all instances of a certain attribute type
+  in a document tree:
+
+  \itemize{ \item{\code{XMLScanDeep(obj, find,
+  search="attributes")}: }{returns all found instances of
+  \code{find} in all slots defined by \code{search}.} }
 }
 \examples{
 xmlTestNode <- XMLNode("foo", XMLNode("testchild"))
