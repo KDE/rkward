@@ -4,7 +4,7 @@
 #' Package: \tab rkwarddev\cr
 #' Type: \tab Package\cr
 #' Version: \tab 0.06-3\cr
-#' Date: \tab 2013-07-05\cr
+#' Date: \tab 2013-11-24\cr
 #' Depends: \tab R (>= 2.9.0),methods,XiMpLe (>= 0.03-18),rkward (>= 0.5.6)\cr
 #' Enhances: \tab rkward\cr
 #' Encoding: \tab UTF-8\cr
@@ -19,6 +19,6 @@
 #' @name rkwarddev-package
 #' @docType package
 #' @title The rkwarddev Package
-#' @author Meik Michalke \email{meik.michalke@@hhu.de}
+#' @author Meik Michalke
 #' @keywords package
 NULL

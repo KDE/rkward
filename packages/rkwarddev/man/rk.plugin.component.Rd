@@ -130,7 +130,7 @@
 \examples{
 \dontrun{
 test.dropdown <- rk.XML.dropdown("mydrop",
-  opts=list("First Option"=c(val="val1"),
+  options=list("First Option"=c(val="val1"),
   "Second Option"=c(val="val2", chk=TRUE)))
 test.checkboxes <- rk.XML.row(rk.XML.col(
   list(test.dropdown,
@@ -138,8 +138,8 @@ test.checkboxes <- rk.XML.row(rk.XML.col(
     rk.XML.cbox(label="bar", val="bar2"))
   ))
 test.vars <- rk.XML.vars("select some vars", "vars go here")
-test.tabbook <- rk.XML.dialog(rk.XML.tabbook("My Tabbook", tab.labels=c("First Tab",
-  "Second Tab"), children=list(test.checkboxes, test.vars)))
+test.tabbook <- rk.XML.dialog(rk.XML.tabbook("My Tabbook",
+  tabs=c("First Tab"=test.checkboxes, "Second Tab"=test.vars)))
 
 rk.plugin.component("Square the Circle",
   xml=list(dialog=test.tabbook))

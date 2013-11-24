@@ -15,7 +15,7 @@ URL: http://rkward.sourceforge.net
 Authors@R: c(person(given="Meik", family="Michalke",
     email="meik.michalke@hhu.de", role=c("aut", "cre")))
 Version: 0.06-3
-Date: 2013-07-05
+Date: 2013-11-24
 Collate:
     'echo.R'
     'id.R'
@@ -55,6 +55,7 @@ Collate:
     'rk.rkh.title.R'
     'rk.rkh.usage.R'
     'rk.testsuite.doc.R'
+    'rk.uniqueIDs.R'
     'rkwarddev-desc-internal.R'
     'rkwarddev-package.R'
     'rk.XML.about.R'

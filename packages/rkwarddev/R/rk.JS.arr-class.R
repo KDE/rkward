@@ -10,6 +10,7 @@ setClass("rk.JS.arr",
 		IDs="vector",
 		variables="vector",
 		funct="character",
+		quote="logical",
 		option="character"
 	),
 	prototype(
@@ -18,6 +19,7 @@ setClass("rk.JS.arr",
 		IDs=c(),
 		variables=c(),
 		funct="c",
+		quote=FALSE,
 		option=character()
 	)
 )

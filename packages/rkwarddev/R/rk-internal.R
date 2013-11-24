@@ -891,6 +891,7 @@ paste.JS.array <- function(object, level=2, indent.by="\t", funct=NULL){
 	arr.name  <- slot(object, "arr.name")
 	opt.name  <- slot(object, "opt.name")
 	variables <- slot(object, "variables")
+	quote     <- slot(object, "quote")
 	option    <- slot(object, "option")
 	if(is.null(funct)){
 		funct <- slot(object, "funct")
@@ -902,7 +903,7 @@ paste.JS.array <- function(object, level=2, indent.by="\t", funct=NULL){
 		funct.start <- paste0(funct, "(")
 		funct.end <- ")"
 	}
-
+	
 	JS.array <- paste0(
 		main.indent, "// define the array ", arr.name, " for values of R option \"", option, "\"\n",
 		main.indent, "var ", arr.name, " = new Array();\n",
@@ -916,7 +917,10 @@ paste.JS.array <- function(object, level=2, indent.by="\t", funct=NULL){
 		main.indent, "if(", arr.name, ".length > 0) {\n",
 		scnd.indent, "var ", opt.name, " = \", ",
 		ifelse(identical(option, ""), "", paste0(option, "=")),
-		funct.start, "\" + ", arr.name, ".join(\", \") + \"",funct.end,"\";\n",
+		ifelse(isTRUE(quote),
+			paste0(funct.start, "\\\"\" + ", arr.name, ".join(\"\\\", \\\"\") + \"\\\"",funct.end,"\";\n"),
+			paste0(funct.start, "\" + ", arr.name, ".join(\", \") + \"",funct.end,"\";\n")
+		),
 		main.indent, "} else {\n",
 		scnd.indent, "var ", opt.name, " = \"\";\n",
 		main.indent, "}\n")

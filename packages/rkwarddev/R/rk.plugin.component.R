@@ -128,6 +128,8 @@ rk.plugin.component <- function(about, xml=list(), js=list(), rkh=list(),
 			include=include,
 			about=about.node,
 			gen.info=gen.info)
+		# make sure there's no duplicate IDs
+		stopifnot(rk.uniqueIDs(XML.plugin, bool=TRUE))
 		slot(this.component, "xml") <- XML.plugin
 	} else {
 		slot(this.component, "xml") <- rk.XML.plugin("")
