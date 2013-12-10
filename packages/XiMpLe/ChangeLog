@@ -1,6 +1,6 @@
 ChangeLog for package XiMpLe
 
-changes in version 0.03-21 (2013-11-13)
+changes in version 0.03-21 (2013-12-10)
 added:
   - new attribute "as.list" added to XMLScan(), if TRUE forces the return
     value to be a list of length 1 (default is still to directly return the
@@ -9,6 +9,7 @@ added:
     which were found
 changed:
   - added a proper GPL notice at the beginning of each R file
+  - the vignette was moved from inst/doc to inst/vignettes
 
 changes in version 0.03-20 (2013-03-30)
 changed:
