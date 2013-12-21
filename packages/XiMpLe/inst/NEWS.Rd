@@ -1,12 +1,21 @@
 \name{NEWS}
 \title{News for Package 'XiMpLe'}
 \encoding{UTF-8}
-\section{Changes in XiMpLe version 0.03-21 (2013-05-24)}{
+\section{Changes in XiMpLe version 0.03-21 (2013-12-21)}{
   \subsection{added}{
     \itemize{
       \item new attribute \code{"as.list"} added to \code{XMLScan()}, if TRUE forces the return
         value to be a list of length 1 (default is still to directly return the
         single node).
+      \item new method \code{XMLScanDeep()} recursively scans for attributes and returns all
+        which were found
+    }
+  }
+  \subsection{changed}{
+    \itemize{
+      \item added a proper GPL notice at the beginning of each R file
+      \item the vignette was moved from inst/doc to inst/vignettes
+      \item synced names of Author: and Maintainer: in DESCRIPTION with Autors@R:
     }
   }
 }
