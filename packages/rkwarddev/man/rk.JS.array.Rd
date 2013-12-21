@@ -3,7 +3,7 @@
 \title{Create a simple JavaScript array}
 \usage{
   rk.JS.array(option, variables = list(), funct = "c",
-    var.prefix = NULL)
+    var.prefix = NULL, quote = FALSE)
 }
 \arguments{
   \item{option}{A character string, naming, e.g., an option
@@ -21,6 +21,10 @@
 
   \item{var.prefix}{A character string. sets a global
   string to be used as a prefix for the JS variable names.}
+
+  \item{quote}{Logical, if \code{TRUE}, the values will be
+  quoted in the resulting R code (might be neccessary for
+  character values).}
 }
 \value{
   An object of class \code{rk.JS.arr}.

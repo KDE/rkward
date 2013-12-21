@@ -3,7 +3,8 @@
 \title{Create XML node "about" for RKWard pluginmaps}
 \usage{
   rk.XML.about(name, author,
-    about = list(desc = "SHORT_DESCRIPTION", version = "0.01-0", date = Sys.Date(), url = "http://EXAMPLE.com", license = "GPL (>= 3)", long.desc = NULL),
+    about = list(desc = "SHORT_DESCRIPTION", version = "0.01-0", date = Sys.Date(),
+      url = "http://EXAMPLE.com", license = "GPL (>= 3)", long.desc = NULL),
     dependencies = NULL, package = NULL, pluginmap = NULL)
 }
 \arguments{

@@ -6,7 +6,3 @@
 debRreposname := other-rkward
 
 include /usr/share/R/debian/r-cran.mk
-
-# Require a number equal or superior than the R version the package was built with.
-install/$(package)::
-	echo "R:Depends=r-base-core (>= $(shell R --version | head -n1 | perl -ne 'print / +([0-9]\.[0-9]+\.[0-9])/')~)" >> debian/$(package).substvars

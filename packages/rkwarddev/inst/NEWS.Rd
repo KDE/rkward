@@ -1,11 +1,23 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
-\section{Changes in rkwarddev version 0.06-3 (2013-07-05)}{
+\section{Changes in rkwarddev version 0.06-3 (2013-12-21)}{
+  \subsection{fixed}{
+    \itemize{
+      \item fixed outdated example code for \code{rk.plugin.component()}
+    }
+  }
+  \subsection{added}{
+    \itemize{
+      \item new function \code{rk.uniqueIDs()} checks for duplicate IDs
+      \item \code{rk.JS.array()} can now be told to quote values
+    }
+  }
   \subsection{changed}{
     \itemize{
       \item \code{rk.plugin.component()} and \code{rk.rkh.doc()} do now interpret the \code{"hints"} argument to prevent the
         generation of optional XML nodes.
+      \item \code{rk.plugin.component()} now automatically calls \code{rk.uniqueIDs()} and stops if IDs are not unique
     }
   }
 }

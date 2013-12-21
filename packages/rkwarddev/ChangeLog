@@ -1,6 +1,6 @@
 ChangeLog for package rkwarddev
 
-changes in version 0.06-3 (2013-11-25)
+changes in version 0.06-3 (2013-12-21)
 fixed:
   - fixed outdated example code for rk.plugin.component()
 added:
