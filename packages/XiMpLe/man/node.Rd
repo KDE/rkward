@@ -1,16 +1,29 @@
 \docType{methods}
 \name{node}
 \alias{node}
+\alias{node,-methods}
+\alias{node,XiMpLe.XML-method}
+\alias{node,XiMpLe.doc-method}
+\alias{node,XiMpLe.node-method}
 \alias{node<-}
 \alias{node<-,-methods}
-\alias{node,-methods}
-\alias{node<-,XiMpLe.doc-method}
-\alias{node,XiMpLe.doc-method}
-\alias{node<-,XiMpLe.node-method}
-\alias{node,XiMpLe.node-method}
 \alias{node<-,XiMpLe.XML-method}
-\alias{node,XiMpLe.XML-method}
+\alias{node<-,XiMpLe.doc-method}
+\alias{node<-,XiMpLe.node-method}
 \title{Extract/manipulate a node or parts of it from an XML tree}
+\usage{
+node(obj, node = list(), what = NULL, cond.attr = NULL,
+  cond.value = NULL, element = NULL)
+
+\S4method{node}{XiMpLe.XML}(obj, node = list(), what = NULL,
+  cond.attr = NULL, cond.value = NULL, element = NULL)
+
+node(obj, node = list(), what = NULL, cond.attr = NULL,
+  cond.value = NULL, element = NULL) <- value
+
+\S4method{node}{XiMpLe.XML}(obj, node = list(), what = NULL,
+  cond.attr = NULL, cond.value = NULL, element = NULL) <- value
+}
 \arguments{
   \item{obj}{An object of class
   \code{\link[XiMpLe:XiMpLe.doc-class]{XiMpLe.doc}} or
@@ -44,8 +57,8 @@
   returned.}
 }
 \description{
-  This method can be used to get parts of a parsed XML tree
-  object, or to fill it with new values.
+This method can be used to get parts of a parsed XML tree
+object, or to fill it with new values.
 }
 \examples{
 \dontrun{

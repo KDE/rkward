@@ -1,11 +1,21 @@
+\docType{methods}
 \name{pasteXML}
 \alias{pasteXML}
 \alias{pasteXML,-methods}
-\alias{pasteXMLNode}
-\alias{pasteXMLTree}
 \alias{pasteXML,XiMpLe.doc-method}
 \alias{pasteXML,XiMpLe.node-method}
+\alias{pasteXMLNode}
+\alias{pasteXMLTree}
 \title{Paste methods for XiMpLe XML objects}
+\usage{
+pasteXML(obj, ...)
+
+\S4method{pasteXML}{XiMpLe.node}(obj, level = 1, shine = 1,
+  indent.by = "\\t", tidy = TRUE)
+
+\S4method{pasteXML}{XiMpLe.doc}(obj, shine = 1, indent.by = "\\t",
+  tidy = TRUE)
+}
 \arguments{
   \item{obj}{An object of class \code{XiMpLe.node} or
   \code{XiMpLe.doc}.}
@@ -26,18 +36,18 @@
   "&lt;" and "gt;" in attributes and text values.}
 }
 \description{
-  These methods can be used to paste objects if class
-  \code{\link[XiMpLe:XiMpLe.node-class]{XiMpLe.node}} or
-  \code{\link[XiMpLe:XiMpLe.doc-class]{XiMpLe.doc}}.
+These methods can be used to paste objects if class
+\code{\link[XiMpLe:XiMpLe.node-class]{XiMpLe.node}} or
+\code{\link[XiMpLe:XiMpLe.doc-class]{XiMpLe.doc}}.
 }
 \note{
-  The functions pasteXMLNode() and pasteXMLTree() have been
-  replaced by the pasteXML methods.  They should no longer
-  be used.
+The functions pasteXMLNode() and pasteXMLTree() have been
+replaced by the pasteXML methods.  They should no longer be
+used.
 }
 \seealso{
-  \code{\link[XiMpLe:XiMpLe.node-class]{XiMpLe.node}},
-  \code{\link[XiMpLe:XiMpLe.doc-class]{XiMpLe.doc}}
+\code{\link[XiMpLe:XiMpLe.node-class]{XiMpLe.node}},
+\code{\link[XiMpLe:XiMpLe.doc-class]{XiMpLe.doc}}
 }
 \keyword{methods}
 

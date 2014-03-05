@@ -1,4 +1,4 @@
-# Copyright 2011-2013 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2011-2014 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package XiMpLe.
 #
@@ -21,17 +21,17 @@
 #' Can be used to create full XML trees.
 #'
 #' @param ... Optional children for the XML tree. Must be either objects of class
-#'		\code{\link[XiMpLe:XiMpLe.node-class]{XiMpLe.node}} or character strings,
-#'		which are treated as simple text values.
+#'    \code{\link[XiMpLe:XiMpLe.node-class]{XiMpLe.node}} or character strings,
+#'    which are treated as simple text values.
 #' @param xml A named list, XML declaration of the XML tree. Currently just pasted, no checking is done.
 #' @param dtd A named list, doctype definition of the XML tree. Valid elements are \code{doctype} (root element), \code{decl}
 #' ("PUBLIC" or "SYSTEM"), \code{id} (the identifier) and \code{refer} (URI to .dtd).
-#'		Currently just pasted, no checking is done.
+#'    Currently just pasted, no checking is done.
 #' @param .children Alternative way of specifying children, if you have them already as a list.
 #' @return An object of class \code{\link[XiMpLe:XiMpLe.doc-class]{XiMpLe.doc}}
 #' @seealso
-#'		\code{\link[XiMpLe:XMLNode]{XMLNode}},
-#'		\code{\link[XiMpLe:pasteXML]{pasteXML}}
+#'    \code{\link[XiMpLe:XMLNode]{XMLNode}},
+#'    \code{\link[XiMpLe:pasteXML]{pasteXML}}
 #' @export
 #' @rdname XMLTree
 #' @examples
@@ -49,32 +49,32 @@
 
 XMLTree <- function(..., xml=NULL, dtd=NULL, .children=list(...)){
 
-	# remove NULLs
-	.children <- .children[unlist(lapply(.children, length) != 0)]
+  # remove NULLs
+  .children <- .children[unlist(lapply(.children, length) != 0)]
 
-	# check for text values
-	all.children <- sapply(child.list(.children), function(this.child){
-		if(is.character(this.child)){
-			this.child <- new("XiMpLe.node",
-					name="",
-					value=this.child
-				)
-		} else {}
-		return(this.child)
-	})
+  # check for text values
+  all.children <- sapply(child.list(.children), function(this.child){
+    if(is.character(this.child)){
+      this.child <- new("XiMpLe.node",
+          name="",
+          value=this.child
+        )
+    } else {}
+    return(this.child)
+  })
 
-	if(is.null(xml)){
-		xml <- list()
-	} else {}
-	if(is.null(dtd)){
-		dtd <- list()
-	} else {}
-	
-	newTree <- new("XiMpLe.doc",
-		xml=xml,
-		dtd=dtd,
-		children=all.children
-	)
+  if(is.null(xml)){
+    xml <- list()
+  } else {}
+  if(is.null(dtd)){
+    dtd <- list()
+  } else {}
+  
+  newTree <- new("XiMpLe.doc",
+    xml=xml,
+    dtd=dtd,
+    children=all.children
+  )
 
-	return(newTree)
+  return(newTree)
 }

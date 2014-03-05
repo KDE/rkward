@@ -1,12 +1,12 @@
 \name{XMLNode}
-\alias{is.XiMpLe.node}
 \alias{XMLNode}
+\alias{is.XiMpLe.node}
 \title{Constructor function for XiMpLe.node objects}
 \usage{
-  XMLNode(name, ..., attrs = NULL, namespace = "",
-    namespaceDefinitions = NULL, .children = list(...))
+XMLNode(name, ..., attrs = NULL, namespace = "",
+  namespaceDefinitions = NULL, .children = list(...))
 
-  is.XiMpLe.node(x)
+is.XiMpLe.node(x)
 }
 \arguments{
   \item{name}{Character string, the tag name.}
@@ -29,15 +29,15 @@
   \item{x}{An arbitrary \code{R} object.}
 }
 \value{
-  An object of class
-  \code{\link[XiMpLe:XiMpLe.node-class]{XiMpLe.node}}.
+An object of class
+\code{\link[XiMpLe:XiMpLe.node-class]{XiMpLe.node}}.
 }
 \description{
-  Can be used to create XML nodes.
+Can be used to create XML nodes.
 }
 \details{
-  To generate a CDATA node, set \code{name="![CDATA["}, to
-  create a comment, set \code{name="!--"}.
+To generate a CDATA node, set \code{name="![CDATA["}, to
+create a comment, set \code{name="!--"}.
 }
 \examples{
 sample.XML.node <- XMLNode("a",
@@ -45,7 +45,7 @@ sample.XML.node <- XMLNode("a",
   .children="klick here!")
 }
 \seealso{
-  \code{\link[XiMpLe:XMLTree]{XMLTree}},
-  \code{\link[XiMpLe:pasteXML]{pasteXML}}
+\code{\link[XiMpLe:XMLTree]{XMLTree}},
+\code{\link[XiMpLe:pasteXML]{pasteXML}}
 }
 

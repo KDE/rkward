@@ -1,12 +1,11 @@
 \name{XMLTree}
-\alias{is.XiMpLe.doc}
 \alias{XMLTree}
+\alias{is.XiMpLe.doc}
 \title{Constructor function for XiMpLe.doc objects}
 \usage{
-  XMLTree(..., xml = NULL, dtd = NULL,
-    .children = list(...))
+XMLTree(..., xml = NULL, dtd = NULL, .children = list(...))
 
-  is.XiMpLe.doc(x)
+is.XiMpLe.doc(x)
 }
 \arguments{
   \item{...}{Optional children for the XML tree. Must be
@@ -30,11 +29,11 @@
   \item{x}{An arbitrary \code{R} object.}
 }
 \value{
-  An object of class
-  \code{\link[XiMpLe:XiMpLe.doc-class]{XiMpLe.doc}}
+An object of class
+\code{\link[XiMpLe:XiMpLe.doc-class]{XiMpLe.doc}}
 }
 \description{
-  Can be used to create full XML trees.
+Can be used to create full XML trees.
 }
 \examples{
 sample.XML.a <- XMLNode("a",
@@ -50,7 +49,7 @@ sample.XML.tree <- XMLTree(sample.XML.html,
     refer="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"))
 }
 \seealso{
-  \code{\link[XiMpLe:XMLNode]{XMLNode}},
-  \code{\link[XiMpLe:pasteXML]{pasteXML}}
+\code{\link[XiMpLe:XMLNode]{XMLNode}},
+\code{\link[XiMpLe:pasteXML]{pasteXML}}
 }
 

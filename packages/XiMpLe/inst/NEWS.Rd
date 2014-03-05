@@ -1,7 +1,7 @@
 \name{NEWS}
 \title{News for Package 'XiMpLe'}
 \encoding{UTF-8}
-\section{Changes in XiMpLe version 0.03-21 (2013-12-21)}{
+\section{Changes in XiMpLe version 0.03-22 (2014-03-05)}{
   \subsection{added}{
     \itemize{
       \item new attribute \code{"as.list"} added to \code{XMLScan()}, if TRUE forces the return

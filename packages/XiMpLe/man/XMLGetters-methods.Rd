@@ -1,111 +1,188 @@
 \docType{methods}
 \name{XMLName}
 \alias{XMLAttrs}
+\alias{XMLAttrs,-methods}
+\alias{XMLAttrs,XiMpLe.node-method}
 \alias{XMLAttrs<-}
 \alias{XMLAttrs<-,-methods}
-\alias{XMLAttrs,-methods}
 \alias{XMLAttrs<-,XiMpLe.node-method}
-\alias{XMLAttrs,XiMpLe.node-method}
 \alias{XMLChildren}
+\alias{XMLChildren,-methods}
+\alias{XMLChildren,XiMpLe.doc-method}
+\alias{XMLChildren,XiMpLe.node-method}
 \alias{XMLChildren<-}
 \alias{XMLChildren<-,-methods}
-\alias{XMLChildren,-methods}
 \alias{XMLChildren<-,XiMpLe.doc-method}
-\alias{XMLChildren,XiMpLe.doc-method}
 \alias{XMLChildren<-,XiMpLe.node-method}
-\alias{XMLChildren,XiMpLe.node-method}
-\alias{XMLDecl}
-\alias{XMLDecl<-}
-\alias{XMLDecl<-,-methods}
-\alias{XMLDecl,-methods}
-\alias{XMLDecl<-,XiMpLe.doc-method}
-\alias{XMLDecl,XiMpLe.doc-method}
 \alias{XMLDTD}
+\alias{XMLDTD,-methods}
+\alias{XMLDTD,XiMpLe.doc-method}
 \alias{XMLDTD<-}
 \alias{XMLDTD<-,-methods}
-\alias{XMLDTD,-methods}
 \alias{XMLDTD<-,XiMpLe.doc-method}
-\alias{XMLDTD,XiMpLe.doc-method}
+\alias{XMLDecl}
+\alias{XMLDecl,-methods}
+\alias{XMLDecl,XiMpLe.doc-method}
+\alias{XMLDecl<-}
+\alias{XMLDecl<-,-methods}
+\alias{XMLDecl<-,XiMpLe.doc-method}
 \alias{XMLFile}
+\alias{XMLFile,-methods}
+\alias{XMLFile,XiMpLe.doc-method}
 \alias{XMLFile<-}
 \alias{XMLFile<-,-methods}
-\alias{XMLFile,-methods}
 \alias{XMLFile<-,XiMpLe.doc-method}
-\alias{XMLFile,XiMpLe.doc-method}
 \alias{XMLName}
+\alias{XMLName,-methods}
+\alias{XMLName,XiMpLe.node-method}
 \alias{XMLName<-}
 \alias{XMLName<-,-methods}
-\alias{XMLName,-methods}
 \alias{XMLName<-,XiMpLe.node-method}
-\alias{XMLName,XiMpLe.node-method}
 \alias{XMLScan}
+\alias{XMLScan,-methods}
+\alias{XMLScan,XiMpLe.doc-method}
+\alias{XMLScan,XiMpLe.node-method}
 \alias{XMLScan<-}
+\alias{XMLScan<-,-methods}
+\alias{XMLScan<-,XiMpLe.doc-method}
+\alias{XMLScan<-,XiMpLe.node-method}
 \alias{XMLScanDeep}
 \alias{XMLScanDeep,-methods}
 \alias{XMLScanDeep,XiMpLe.doc-method}
 \alias{XMLScanDeep,XiMpLe.node-method}
-\alias{XMLScan<-,-methods}
-\alias{XMLScan,-methods}
-\alias{XMLScan<-,XiMpLe.doc-method}
-\alias{XMLScan,XiMpLe.doc-method}
-\alias{XMLScan<-,XiMpLe.node-method}
-\alias{XMLScan,XiMpLe.node-method}
 \alias{XMLValue}
+\alias{XMLValue,-methods}
+\alias{XMLValue,XiMpLe.node-method}
 \alias{XMLValue<-}
 \alias{XMLValue<-,-methods}
-\alias{XMLValue,-methods}
 \alias{XMLValue<-,XiMpLe.node-method}
-\alias{XMLValue,XiMpLe.node-method}
 \title{Getter/setter methods for S4 objects of XiMpLe XML classes}
+\usage{
+XMLName(obj)
+
+\S4method{XMLName}{XiMpLe.node}(obj)
+
+XMLName(obj) <- value
+
+\S4method{XMLName}{XiMpLe.node}(obj) <- value
+
+XMLAttrs(obj)
+
+\S4method{XMLAttrs}{XiMpLe.node}(obj)
+
+XMLAttrs(obj) <- value
+
+\S4method{XMLAttrs}{XiMpLe.node}(obj) <- value
+
+XMLChildren(obj)
+
+\S4method{XMLChildren}{XiMpLe.node}(obj)
+
+\S4method{XMLChildren}{XiMpLe.doc}(obj)
+
+XMLChildren(obj) <- value
+
+\S4method{XMLChildren}{XiMpLe.node}(obj) <- value
+
+\S4method{XMLChildren}{XiMpLe.doc}(obj) <- value
+
+XMLValue(obj)
+
+\S4method{XMLValue}{XiMpLe.node}(obj)
+
+XMLValue(obj) <- value
+
+\S4method{XMLValue}{XiMpLe.node}(obj) <- value
+
+XMLFile(obj)
+
+\S4method{XMLFile}{XiMpLe.doc}(obj)
+
+XMLFile(obj) <- value
+
+\S4method{XMLFile}{XiMpLe.doc}(obj) <- value
+
+XMLDecl(obj)
+
+\S4method{XMLDecl}{XiMpLe.doc}(obj)
+
+XMLDecl(obj) <- value
+
+\S4method{XMLDecl}{XiMpLe.doc}(obj) <- value
+
+XMLDTD(obj)
+
+\S4method{XMLDTD}{XiMpLe.doc}(obj)
+
+XMLDTD(obj) <- value
+
+\S4method{XMLDTD}{XiMpLe.doc}(obj) <- value
+
+XMLScan(obj, name, as.list = FALSE)
+
+\S4method{XMLScan}{XiMpLe.node}(obj, name, as.list = FALSE)
+
+\S4method{XMLScan}{XiMpLe.doc}(obj, name, as.list = FALSE)
+
+XMLScan(obj, name) <- value
+
+\S4method{XMLScan}{XiMpLe.node}(obj, name) <- value
+
+\S4method{XMLScan}{XiMpLe.doc}(obj, name) <- value
+
+XMLScanDeep(obj, find = NULL, search = "attributes")
+
+\S4method{XMLScanDeep}{XiMpLe.node}(obj, find, search)
+
+\S4method{XMLScanDeep}{XiMpLe.doc}(obj, find, search)
+}
 \arguments{
   \item{obj}{An object of class \code{XiMpLe.node} or
   \code{XiMpLe.doc}}
 }
 \description{
-  Used to get/set certain slots from objects of class
-  \code{\link[XiMpLe:XiMpLe.doc-class]{XiMpLe.doc}} and
-  \code{\link[XiMpLe:XiMpLe.node-class]{XiMpLe.node}}.
+Used to get/set certain slots from objects of class
+\code{\link[XiMpLe:XiMpLe.doc-class]{XiMpLe.doc}} and
+\code{\link[XiMpLe:XiMpLe.node-class]{XiMpLe.node}}.
 }
 \details{
-  These are convenience methods to get or set slots from
-  XML objects without using the \code{@} operator.
+These are convenience methods to get or set slots from XML
+objects without using the \code{@} operator.
 
-  \itemize{ \item{\code{XMLName()}: }{get/set the XML node
-  name (slot \code{name} of class \code{XiMpLe.node})}
-  \item{\code{XMLAttrs()}: }{get/set the XML node
-  attributes (slot \code{attrs} of class
-  \code{XiMpLe.node})} \item{\code{XMLValue()}: }{get/set
-  the XML node value (slot \code{value} of class
-  \code{XiMpLe.node})} \item{\code{XMLChildren()}:
-  }{get/set the XML child nodes (slot \code{children} of
-  both classes \code{XiMpLe.node} and \code{XiMpLe.doc})}
-  \item{\code{XMLFile()}: }{get/set the XML document file
-  name (slot \code{file} of class \code{XiMpLe.doc})}
-  \item{\code{XMLDecl()}: }{get/set the XML document
-  declaration (slot \code{xml} of class \code{XiMpLe.doc})}
-  \item{\code{XMLDTD()}: }{get/set the XML document doctype
-  definition (slot \code{dtd} of class \code{XiMpLe.doc})}
-  }
+\itemize{ \item{\code{XMLName()}: }{get/set the XML node
+name (slot \code{name} of class \code{XiMpLe.node})}
+\item{\code{XMLAttrs()}: }{get/set the XML node attributes
+(slot \code{attrs} of class \code{XiMpLe.node})}
+\item{\code{XMLValue()}: }{get/set the XML node value (slot
+\code{value} of class \code{XiMpLe.node})}
+\item{\code{XMLChildren()}: }{get/set the XML child nodes
+(slot \code{children} of both classes \code{XiMpLe.node}
+and \code{XiMpLe.doc})} \item{\code{XMLFile()}: }{get/set
+the XML document file name (slot \code{file} of class
+\code{XiMpLe.doc})} \item{\code{XMLDecl()}: }{get/set the
+XML document declaration (slot \code{xml} of class
+\code{XiMpLe.doc})} \item{\code{XMLDTD()}: }{get/set the
+XML document doctype definition (slot \code{dtd} of class
+\code{XiMpLe.doc})} }
 
-  Another special method can scan a node/document tree
-  object for appearances of nodes with a particular name:
+Another special method can scan a node/document tree object
+for appearances of nodes with a particular name:
 
-  \itemize{ \item{\code{XMLScan(obj, name, as.list=FALSE)}:
-  }{get/set the XML nodes by name (recursively searches
-  slot \code{name} of both classes \code{XiMpLe.node} and
-  \code{XiMpLe.doc}). If \code{as.list=TRUE} allways
-  returns a list (or NULL), otherwise if exactly one result
-  is found, it will be returned as as single
-  \code{XiMpLe.node}.} }
+\itemize{ \item{\code{XMLScan(obj, name, as.list=FALSE)}:
+}{get/set the XML nodes by name (recursively searches slot
+\code{name} of both classes \code{XiMpLe.node} and
+\code{XiMpLe.doc}). If \code{as.list=TRUE} allways returns
+a list (or NULL), otherwise if exactly one result is found,
+it will be returned as as single \code{XiMpLe.node}.} }
 
-  Finally, there is a method to scan for certain values in
-  XiMpLe objects and just list them. For instance, it can
-  be used to list all instances of a certain attribute type
-  in a document tree:
+Finally, there is a method to scan for certain values in
+XiMpLe objects and just list them. For instance, it can be
+used to list all instances of a certain attribute type in a
+document tree:
 
-  \itemize{ \item{\code{XMLScanDeep(obj, find,
-  search="attributes")}: }{returns all found instances of
-  \code{find} in all slots defined by \code{search}.} }
+\itemize{ \item{\code{XMLScanDeep(obj, find,
+search="attributes")}: }{returns all found instances of
+\code{find} in all slots defined by \code{search}.} }
 }
 \examples{
 xmlTestNode <- XMLNode("foo", XMLNode("testchild"))
@@ -119,9 +196,9 @@ XMLScan(xmlTestNode, "testchild")
 XMLScan(xmlTestNode, "testchild") <- NULL
 }
 \seealso{
-  \code{\link[XiMpLe:node]{node}},
-  \code{\link[XiMpLe:XiMpLe.doc-class]{XiMpLe.doc}},
-  \code{\link[XiMpLe:XiMpLe.node-class]{XiMpLe.node}}
+\code{\link[XiMpLe:node]{node}},
+\code{\link[XiMpLe:XiMpLe.doc-class]{XiMpLe.doc}},
+\code{\link[XiMpLe:XiMpLe.node-class]{XiMpLe.node}}
 }
 \keyword{methods}
 

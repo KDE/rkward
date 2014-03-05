@@ -1,4 +1,4 @@
-# Copyright 2011-2013 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2011-2014 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package XiMpLe.
 #
@@ -23,22 +23,19 @@
 #'
 #' @param object An object of class \code{XiMpLe.doc} or \code{XiMpLe.node}
 #' @aliases
-#'		show,-methods
-#'		show,XiMpLe.doc-method
-#'		show,XiMpLe.node-method
-#'		show,XiMpLe.XML-method
-#' @seealso	
-#'		\code{\link[XiMpLe:XiMpLe.doc-class]{XiMpLe.doc}}
-#'		\code{\link[XiMpLe:XiMpLe.node-class]{XiMpLe.node}}
+#'    show,-methods
+#'    show,XiMpLe.doc-method
+#'    show,XiMpLe.node-method
+#'    show,XiMpLe.XML-method
+#' @seealso  
+#'    \code{\link[XiMpLe:XiMpLe.doc-class]{XiMpLe.doc}}
+#'    \code{\link[XiMpLe:XiMpLe.node-class]{XiMpLe.node}}
 #' @keywords methods
+#' @docType methods
 #' @exportMethod show
 #' @rdname show-methods
-setGeneric("show")
-
-#' @rdname show-methods
-#' @include XiMpLe.node-class.R
-#' @include XiMpLe.doc-class.R
-#' @export
+#' @include 00_class_01_XiMpLe.node.R
+#' @include 00_class_02_XiMpLe.doc.R
 setMethod("show", signature(object="XiMpLe.XML"), function(object){
-	cat(pasteXML(object))
+  cat(pasteXML(object))
 })

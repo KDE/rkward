@@ -2,9 +2,9 @@
 \alias{pasteXMLTag}
 \title{Write an XML tag}
 \usage{
-  pasteXMLTag(tag, attr = NULL, child = NULL, empty = TRUE,
-    level = 1, allow.empty = FALSE, rename = NULL,
-    shine = 2, indent.by = "\t", tidy = TRUE)
+pasteXMLTag(tag, attr = NULL, child = NULL, empty = TRUE, level = 1,
+  allow.empty = FALSE, rename = NULL, shine = 2, indent.by = "\\t",
+  tidy = TRUE)
 }
 \arguments{
   \item{tag}{Character string, name of the XML tag.}
@@ -45,21 +45,21 @@
   characters they will also be indented.}
 }
 \value{
-  A character string.
+A character string.
 }
 \description{
-  Creates a whole XML tag with attributes and, if it is a
-  pair of start and end tags, also one object as child.
-  This can be used recursively to create whole XML tree
-  structures with this one function.
+Creates a whole XML tag with attributes and, if it is a
+pair of start and end tags, also one object as child. This
+can be used recursively to create whole XML tree structures
+with this one function.
 }
 \note{
-  However, you will probably not want to use this function
-  at all, as it is much more comfortable to create XML
-  nodes or even nested trees with
-  \code{\link[XiMpLe:XMLNode]{XMLNode}} and
-  \code{\link[XiMpLe:XMLTree]{XMLTree}}, and then feed the
-  result to \code{\link[XiMpLe:pasteXML]{pasteXML}}.
+However, you will probably not want to use this function at
+all, as it is much more comfortable to create XML nodes or
+even nested trees with
+\code{\link[XiMpLe:XMLNode]{XMLNode}} and
+\code{\link[XiMpLe:XMLTree]{XMLTree}}, and then feed the
+result to \code{\link[XiMpLe:pasteXML]{pasteXML}}.
 }
 \examples{
 sample.XML.tag <- pasteXMLTag("a",
@@ -68,8 +68,8 @@ sample.XML.tag <- pasteXMLTag("a",
   empty=FALSE)
 }
 \seealso{
-  \code{\link[XiMpLe:XMLNode]{XMLNode}},
-  \code{\link[XiMpLe:XMLTree]{XMLTree}},
-  \code{\link[XiMpLe:pasteXML]{pasteXML}}
+\code{\link[XiMpLe:XMLNode]{XMLNode}},
+\code{\link[XiMpLe:XMLTree]{XMLTree}},
+\code{\link[XiMpLe:pasteXML]{pasteXML}}
 }
 

@@ -1,15 +1,15 @@
-Source: r-other-rkward-ximple
+Source: r-other-reaktanz-ximple
 Section: math
 Priority: optional
 Maintainer: m.eik michalke <meik.michalke@hhu.de>
-Build-Depends-Indep: debhelper (>> 4.1.0), r-base-dev (>= 2.9.0), cdbs
+Build-Depends-Indep: debhelper (>> 7.0.0), r-base-dev (>= 3.0.0), cdbs
 Standards-Version: 3.9.3.1
 Homepage: http://reaktanz.de/?c=hacking&s=XiMpLe
 
-Package: r-other-rkward-ximple
+Package: r-other-reaktanz-ximple
 Architecture: all
 Section: math
-Depends: r-base (>= 3.0.0)
+Depends: r-base-core (>= 3.0.0)
 Description: GNU R package: This package provides a simple XML tree parser/generator. It includes functions to read XML files into R
  objects, get information out of and into nodes, and write R objects back to XML code.  It's not as powerful as the XML package and
  doesn't aim to be, but for simple XML handling it could be useful. It was originally programmed for RKWard.
