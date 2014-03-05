@@ -2,6 +2,11 @@ The following list of TODO-items is NOT complete!
 Also, plans change frequently. If something is listed for a specific release, that's no more than a rough plan.
 All in all, this TODO list is mostly for internal purposes, and many parts may not necessarily be intellegible to anybody but the authors.
 
+New features in R 3.1.0 to make use of / support:
+
+- A new browser command s has been added, to “step into” function calls.
+- A new browser command f has been added, to “finish” the current loop or function.
+
 Simple stuff to do soon:
 	- RKConsole: Show a notice (with "don't show again"-box, of course) when first using Ctrl+C shortcut
 
