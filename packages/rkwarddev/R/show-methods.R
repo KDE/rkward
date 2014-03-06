@@ -16,25 +16,25 @@ setGeneric("show")
 
 #' @rdname show-methods
 setMethod("show", signature(object="rk.JS.arr"), function(object){
-	cat(rk.paste.JS(object))
+  cat(rk.paste.JS(object))
 })
 
 #' @rdname show-methods
 setMethod("show", signature(object="rk.JS.ite"), function(object){
-	cat(rk.paste.JS(object))
+  cat(rk.paste.JS(object))
 })
 
 #' @rdname show-methods
 setMethod("show", signature(object="rk.JS.opt"), function(object){
-	cat(rk.paste.JS(object))
+  cat(rk.paste.JS(object))
 })
 
 #' @rdname show-methods
 setMethod("show", signature(object="rk.JS.var"), function(object){
-	cat(rk.paste.JS(object))
+  cat(rk.paste.JS(object))
 })
 
 #' @rdname show-methods
 setMethod("show", signature(object="rk.JS.echo"), function(object){
-	cat(rk.paste.JS(object))
+  cat(rk.paste.JS(object))
 })

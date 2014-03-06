@@ -9,31 +9,31 @@
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
-#'		\href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
+#'    \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' cat(pasteXML(rk.XML.stretch()))
 
 #<stretch />
 rk.XML.stretch <- function(before=NULL, after=NULL){
-	strch <- XMLNode("stretch")
+  strch <- XMLNode("stretch")
 
-	# if called without furter objects, just return the node
-	if(is.null(c(before, after))){
-		return(strch)
-	} else {}
+  # if called without furter objects, just return the node
+  if(is.null(c(before, after))){
+    return(strch)
+  } else {}
 
-	if(!is.null(before)){
-		strch.lst <- child.list(before)
-		strch.lst[[length(strch.lst)+1]] <- strch
-	} else {
-		strch.lst <- list(strch)
-	}
+  if(!is.null(before)){
+    strch.lst <- child.list(before)
+    strch.lst[[length(strch.lst)+1]] <- strch
+  } else {
+    strch.lst <- list(strch)
+  }
 
-	if(!is.null(after)){
-		for(this.element in child.list(after)){
-				strch.lst[[length(strch.lst)+1]] <- this.element
-			}
-	} else {}
+  if(!is.null(after)){
+    for(this.element in child.list(after)){
+        strch.lst[[length(strch.lst)+1]] <- this.element
+      }
+  } else {}
 
-	return(strch.lst)
+  return(strch.lst)
 }

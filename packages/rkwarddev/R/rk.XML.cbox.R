@@ -5,7 +5,7 @@
 #' @param un.value Character string, an optional value for the unchecked option.
 #' @param chk Logical, whether this element should be checked by default.
 #' @param id.name Character string, a unique ID for this plugin element.
-#'		If \code{"auto"}, an ID will be generated automatically from the label.
+#'    If \code{"auto"}, an ID will be generated automatically from the label.
 #' @return An object of class \code{XiMpLe.node}.
 #' @note There's also a simple wrapper function \code{rk.XML.checkbox}.
 #' @export
@@ -19,27 +19,27 @@
 #' cat(pasteXML(test.checkboxes))
 
 rk.XML.cbox <- function(label, value="true", un.value=NULL, chk=FALSE, id.name="auto"){
-	if(identical(id.name, "auto")){
-		id <- auto.ids(label, prefix=ID.prefix("checkbox"))
-	} else {
-		id <- id.name
-	}
+  if(identical(id.name, "auto")){
+    id <- auto.ids(label, prefix=ID.prefix("checkbox"))
+  } else {
+    id <- id.name
+  }
 
-	attr.list <- list(id=id, label=label, value=value)
-	if(!is.null(un.value)){
-		attr.list[["value_unchecked"]] <- un.value
-	} else {}
-	if(isTRUE(chk)){
-		attr.list[["checked"]] <- "true"
-	} else {}
+  attr.list <- list(id=id, label=label, value=value)
+  if(!is.null(un.value)){
+    attr.list[["value_unchecked"]] <- un.value
+  } else {}
+  if(isTRUE(chk)){
+    attr.list[["checked"]] <- "true"
+  } else {}
 
-	checkbox <- XMLNode("checkbox", attrs=attr.list)
+  checkbox <- XMLNode("checkbox", attrs=attr.list)
 
-	return(checkbox)
+  return(checkbox)
 }
 
 ## wrapper for name scheme consistency
 #' @export
 rk.XML.checkbox <- function(label, value="true", un.value=NULL, chk=FALSE, id.name="auto"){
-	rk.XML.cbox(label=label, value=value, un.value=un.value, chk=chk, id.name=id.name)
+  rk.XML.cbox(label=label, value=value, un.value=un.value, chk=chk, id.name=id.name)
 }

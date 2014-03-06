@@ -7,13 +7,13 @@
 #' @param ... Objects of class \code{XiMpLe.node}
 #' @param label Character string, a text label for this plugin element.
 #' @param recommended Logical, whether the wizard should be the recommended interface (unless the user has configured
-#'		RKWard to default to a specific interface).
+#'    RKWard to default to a specific interface).
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
-#'		\code{\link[rkwarddev:rk.XML.plugin]{rk.XML.plugin}},
-#'		\code{\link[rkwarddev:rk.plugin.skeleton]{rk.plugin.skeleton}},
-#'		and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
+#'    \code{\link[rkwarddev:rk.XML.plugin]{rk.XML.plugin}},
+#'    \code{\link[rkwarddev:rk.plugin.skeleton]{rk.plugin.skeleton}},
+#'    and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' # define a checkbox for the actual dialog
 #' test.cbox1 <- rk.XML.cbox(label="More than 30 subjects", val="true")
@@ -24,25 +24,25 @@
 #' cat(pasteXML(test.wizard))
 
 rk.XML.wizard <- function(..., label=NULL, recommended=FALSE){
-	nodes <- list(...)
+  nodes <- list(...)
 
-	# check the node names and allow only valid ones
-	valid.child("wizard", children=nodes)
+  # check the node names and allow only valid ones
+  valid.child("wizard", children=nodes)
 
-	if(!is.null(label)){
-		attr.list <- list(label=label)
-	} else {
-		attr.list <- list()
-	}
+  if(!is.null(label)){
+    attr.list <- list(label=label)
+  } else {
+    attr.list <- list()
+  }
 
-	if(isTRUE(recommended)){
-		attr.list[["recommended"]] <- "true"
-	} else {}
-	
-	node <- XMLNode("wizard",
-			attrs=attr.list,
-			.children=child.list(nodes, empty=FALSE)
-		)
+  if(isTRUE(recommended)){
+    attr.list[["recommended"]] <- "true"
+  } else {}
+  
+  node <- XMLNode("wizard",
+      attrs=attr.list,
+      .children=child.list(nodes, empty=FALSE)
+    )
 
-	return(node)
+  return(node)
 }

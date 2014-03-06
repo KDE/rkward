@@ -4,12 +4,12 @@
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
-#'		\href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
+#'    \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' test.help <- rk.XML.help("some_file.rkh")
 #' cat(pasteXML(test.help))
 
 rk.XML.help <- function(file){
-	node <- XMLNode("help", attrs=list(file=as.character(file)))
-	return(node)
+  node <- XMLNode("help", attrs=list(file=as.character(file)))
+  return(node)
 }

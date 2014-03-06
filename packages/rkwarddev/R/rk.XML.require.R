@@ -6,9 +6,9 @@
 #' possible.
 #' 
 #' @param file Character string, file name of another .pluginmap file to be included. Should be
-#'		preferred over \code{map} if that file is in the same package.
+#'    preferred over \code{map} if that file is in the same package.
 #' @param map Character string, should be \code{"namespace::id"} of another .pluginmap to be included.
-#'		Can be used to address plugin maps which are not part of the same plugin package.
+#'    Can be used to address plugin maps which are not part of the same plugin package.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
@@ -17,27 +17,27 @@
 #' cat(pasteXML(test.require))
 
 rk.XML.require <- function(file=NULL, map=NULL){
-	# one of file or map *must* be used
-	if(is.null(file) && is.null(map)){
-		stop(simpleError("'file' or 'map' must be specified!"))
-	} else {}
-	# but only *one* of file or map can be used
-	if(!is.null(file) && !is.null(map)){
-		stop(simpleError("'file' and 'map' cannot be used both at the same time!"))
-	} else {}
+  # one of file or map *must* be used
+  if(is.null(file) && is.null(map)){
+    stop(simpleError("'file' or 'map' must be specified!"))
+  } else {}
+  # but only *one* of file or map can be used
+  if(!is.null(file) && !is.null(map)){
+    stop(simpleError("'file' and 'map' cannot be used both at the same time!"))
+  } else {}
 
-	# now that we know one of both is set
-	if(!is.null(file)){
-		if(length(file) > 1 || !is.character(file)){
-			stop(simpleError("'file' must be a character string!"))
-		} else {}
-	} else {
-		if(length(map) > 1 || !is.character(map)){
-			stop(simpleError("'map' must be a character string!"))
-		} else {}
-	}
+  # now that we know one of both is set
+  if(!is.null(file)){
+    if(length(file) > 1 || !is.character(file)){
+      stop(simpleError("'file' must be a character string!"))
+    } else {}
+  } else {
+    if(length(map) > 1 || !is.character(map)){
+      stop(simpleError("'map' must be a character string!"))
+    } else {}
+  }
 
-	node <- XMLNode("require", attrs=list(file=file, map=map))
+  node <- XMLNode("require", attrs=list(file=file, map=map))
 
-	return(node)
+  return(node)
 }

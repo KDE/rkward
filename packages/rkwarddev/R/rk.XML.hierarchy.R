@@ -7,11 +7,11 @@
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
-#'		\code{\link[rkwarddev:rk.XML.menu]{rk.XML.menu}},
-#'		\code{\link[rkwarddev:rk.XML.entry]{rk.XML.entry}},
-#'		\code{\link[rkwarddev:rk.XML.component]{rk.XML.component}},
-#'		\code{\link[rkwarddev:rk.XML.components]{rk.XML.components}},
-#'		and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
+#'    \code{\link[rkwarddev:rk.XML.menu]{rk.XML.menu}},
+#'    \code{\link[rkwarddev:rk.XML.entry]{rk.XML.entry}},
+#'    \code{\link[rkwarddev:rk.XML.component]{rk.XML.component}},
+#'    \code{\link[rkwarddev:rk.XML.components]{rk.XML.components}},
+#'    and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' test.component <- rk.XML.component("My GUI dialog", "plugins/MyGUIdialog.xml")
 #' test.entry <- rk.XML.entry(test.component)
@@ -20,12 +20,12 @@
 #' cat(pasteXML(test.hierarchy))
 
 rk.XML.hierarchy <- function(...){
-	nodes <- list(...)
+  nodes <- list(...)
 
-	# check the node names and allow only valid ones
-	valid.child("hierarchy", children=nodes)
+  # check the node names and allow only valid ones
+  valid.child("hierarchy", children=nodes)
 
-	node <- XMLNode("hierarchy", .children=child.list(nodes, empty=FALSE))
+  node <- XMLNode("hierarchy", .children=child.list(nodes, empty=FALSE))
 
-	return(node)
+  return(node)
 }

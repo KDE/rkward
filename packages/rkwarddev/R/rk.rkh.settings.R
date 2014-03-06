@@ -6,10 +6,10 @@
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
-#'		\code{\link[rkwarddev:rk.rkh.doc]{rk.rkh.doc}},
-#'		\code{\link[rkwarddev:rk.rkh.setting]{rk.rkh.setting}},
-#'		\code{\link[rkwarddev:rk.rkh.caption]{rk.rkh.caption}},
-#'		and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
+#'    \code{\link[rkwarddev:rk.rkh.doc]{rk.rkh.doc}},
+#'    \code{\link[rkwarddev:rk.rkh.setting]{rk.rkh.setting}},
+#'    \code{\link[rkwarddev:rk.rkh.caption]{rk.rkh.caption}},
+#'    and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' # define a sample frame
 #' test.dropdown <- rk.XML.dropdown("mydrop",
@@ -23,12 +23,12 @@
 # cat(pasteXML(test.settings))
 
 rk.rkh.settings <- function(...){
-	nodes <- list(...)
+  nodes <- list(...)
 
-	# check the node names and allow only valid ones
-	valid.child("settings", children=nodes)
+  # check the node names and allow only valid ones
+  valid.child("settings", children=nodes)
 
-	node <- XMLNode("settings", .children=child.list(nodes, empty=FALSE))
+  node <- XMLNode("settings", .children=child.list(nodes, empty=FALSE))
 
-	return(node)
+  return(node)
 }

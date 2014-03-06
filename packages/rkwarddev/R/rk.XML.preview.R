@@ -9,13 +9,13 @@
 #' cat(pasteXML(test.preview))
 
 rk.XML.preview <- function(label="Preview"){
-	if(!identical(label, "Preview")){
-		attr.list <- list(label=label)
-	} else {
-		attr.list <- list()
-	}
+  if(!identical(label, "Preview")){
+    attr.list <- list(label=label)
+  } else {
+    attr.list <- list()
+  }
 
-	node <- XMLNode("preview", attrs=attr.list)
+  node <- XMLNode("preview", attrs=attr.list)
 
-	return(node)
+  return(node)
 }

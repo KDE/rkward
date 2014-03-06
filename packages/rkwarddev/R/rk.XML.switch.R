@@ -10,29 +10,29 @@
 #' be provided as either a character string or an object of class \code{XiMpLe.node}.
 #'
 #' @note The \code{<switch>} node was introduced with RKWard 0.6.1, please set the dependencies
-#'		of your component/plugin accordingly.
+#'    of your component/plugin accordingly.
 #'
 #' @param condition Either a character string (the \code{id} of the property whose
-#'		state should be queried), or an object of class \code{XiMpLe.node}
-#'		(whose \code{id} will be extracted and used).
+#'    state should be queried), or an object of class \code{XiMpLe.node}
+#'    (whose \code{id} will be extracted and used).
 #' @param cases A named list of named lists. The lists contained must either be called
-#'		\code{true} and \code{false}, setting the return values if \code{condition} is logical, or
-#'		\code{case} and optionally \code{default}. You can provide as many \code{case} lists
-#'		as you need, setting a return value for each \code{condition == case} respectively.
-#'		Each list must contain either a \code{fixed_value} or a \code{dynamic_value} element.
-#'		In addition, each \code{case} list must also have one \code{standard} element.
+#'    \code{true} and \code{false}, setting the return values if \code{condition} is logical, or
+#'    \code{case} and optionally \code{default}. You can provide as many \code{case} lists
+#'    as you need, setting a return value for each \code{condition == case} respectively.
+#'    Each list must contain either a \code{fixed_value} or a \code{dynamic_value} element.
+#'    In addition, each \code{case} list must also have one \code{standard} element.
 #' @param modifier Character string, an optional modifier to be appended to \code{condition}.
 #' @param id.name Character string, a unique ID for this property.
-#'		If \code{"auto"}, IDs will be generated automatically from the condition ID.
+#'    If \code{"auto"}, IDs will be generated automatically from the condition ID.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
-#'		\code{\link[rkwarddev:rk.XML.connect]{rk.XML.connect}},
-#'		\code{\link[rkwarddev:rk.XML.convert]{rk.XML.convert}},
-#'		\code{\link[rkwarddev:rk.XML.external]{rk.XML.external}},
-#'		\code{\link[rkwarddev:rk.XML.logic]{rk.XML.logic}},
-#'		\code{\link[rkwarddev:rk.XML.set]{rk.XML.set}},
-#'		and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
+#'    \code{\link[rkwarddev:rk.XML.connect]{rk.XML.connect}},
+#'    \code{\link[rkwarddev:rk.XML.convert]{rk.XML.convert}},
+#'    \code{\link[rkwarddev:rk.XML.external]{rk.XML.external}},
+#'    \code{\link[rkwarddev:rk.XML.logic]{rk.XML.logic}},
+#'    \code{\link[rkwarddev:rk.XML.set]{rk.XML.set}},
+#'    and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' # example for a boolean switch
 #' myCheckbox <- rk.XML.cbox("foo")
@@ -54,64 +54,64 @@
 
 rk.XML.switch <- function(condition, cases, modifier=NULL, id.name="auto"){
 
-	condition.id <- check.ID(condition)
-	if(is.XiMpLe.node(condition) && !is.null(modifier)){
-		# validate modifier
-		if(modif.validity(condition, modifier=modifier)){
-			condition.id <- paste(condition.id, modifier, sep=".")
-		} else {}
-	} else {}
+  condition.id <- check.ID(condition)
+  if(is.XiMpLe.node(condition) && !is.null(modifier)){
+    # validate modifier
+    if(modif.validity(condition, modifier=modifier)){
+      condition.id <- paste(condition.id, modifier, sep=".")
+    } else {}
+  } else {}
 
-	if(identical(id.name, "auto")){
-		attr.list <- list(condition=condition.id, id=auto.ids(condition.id, prefix=ID.prefix("switch")))
-	} else if(!is.null(id.name)){
-		attr.list <- list(condition=condition.id, id=id.name)
-	} else {
-		stop(simpleError("'id.name' must have a value!"))
-	}
+  if(identical(id.name, "auto")){
+    attr.list <- list(condition=condition.id, id=auto.ids(condition.id, prefix=ID.prefix("switch")))
+  } else if(!is.null(id.name)){
+    attr.list <- list(condition=condition.id, id=id.name)
+  } else {
+    stop(simpleError("'id.name' must have a value!"))
+  }
 
-	check.required.attrs <- function(obj, req=c("fixed_value", "dynamic_value")){
-			# some sanity check here
-			if(!any(req %in% names(obj))){
-				stop(simpleError("Check your attributes!"))
-			} else {}
-		}
+  check.required.attrs <- function(obj, req=c("fixed_value", "dynamic_value")){
+      # some sanity check here
+      if(!any(req %in% names(obj))){
+        stop(simpleError("Check your attributes!"))
+      } else {}
+    }
 
-	# does also check for the required default attributes
-	check.dyn.value <- function(condCase){
-			check.required.attrs(obj=condCase)
-			if("dynamic_value" %in% names(condCase)){
-				condCase[["dynamic_value"]] <- check.ID(condCase[["dynamic_value"]])
-			} else {}
-			return(condCase)
-		}
+  # does also check for the required default attributes
+  check.dyn.value <- function(condCase){
+      check.required.attrs(obj=condCase)
+      if("dynamic_value" %in% names(condCase)){
+        condCase[["dynamic_value"]] <- check.ID(condCase[["dynamic_value"]])
+      } else {}
+      return(condCase)
+    }
 
-	child.nodes <- list()
-	case.names <- names(cases)
-	# check for a sane set of cases
-	if(all(c("true","false") %in% case.names) && length(case.names) == 2){
-		true <- check.dyn.value(cases[["true"]])
-		false <- check.dyn.value(cases[["false"]])
-		child.nodes <- append(child.nodes, XMLNode("true", attrs=true))
-		child.nodes <- append(child.nodes, XMLNode("false", attrs=false))
-	} else if(all(!c("true","false") %in% case.names) && "case" %in% case.names){
-		for (thisNode in cases[case.names %in% "case"]){
-			check.required.attrs(thisNode, req="standard")
-			thisNode <- check.dyn.value(thisNode)
-			child.nodes <- append(child.nodes, XMLNode("case", attrs=thisNode))
-		}
-		if(!is.null(cases[["default"]])){
-			default <- check.dyn.value(cases[["default"]])
-			child.nodes <- append(child.nodes, XMLNode("default", attrs=default))
-		} else {}
-	} else {
-		stop(simpleError("Please either provide both 'true' and 'false', or 'case'!"))
-	}
+  child.nodes <- list()
+  case.names <- names(cases)
+  # check for a sane set of cases
+  if(all(c("true","false") %in% case.names) && length(case.names) == 2){
+    true <- check.dyn.value(cases[["true"]])
+    false <- check.dyn.value(cases[["false"]])
+    child.nodes <- append(child.nodes, XMLNode("true", attrs=true))
+    child.nodes <- append(child.nodes, XMLNode("false", attrs=false))
+  } else if(all(!c("true","false") %in% case.names) && "case" %in% case.names){
+    for (thisNode in cases[case.names %in% "case"]){
+      check.required.attrs(thisNode, req="standard")
+      thisNode <- check.dyn.value(thisNode)
+      child.nodes <- append(child.nodes, XMLNode("case", attrs=thisNode))
+    }
+    if(!is.null(cases[["default"]])){
+      default <- check.dyn.value(cases[["default"]])
+      child.nodes <- append(child.nodes, XMLNode("default", attrs=default))
+    } else {}
+  } else {
+    stop(simpleError("Please either provide both 'true' and 'false', or 'case'!"))
+  }
 
-	node <- XMLNode("switch",
-		attrs=attr.list,
-		.children=child.nodes)
+  node <- XMLNode("switch",
+    attrs=attr.list,
+    .children=child.nodes)
 
-	return(node)
+  return(node)
 
 }

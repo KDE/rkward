@@ -9,12 +9,12 @@
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
-#'		\code{\link[rkwarddev:rk.XML.convert]{rk.XML.convert}},
-#'		\code{\link[rkwarddev:rk.XML.connect]{rk.XML.connect}},
-#'		\code{\link[rkwarddev:rk.XML.external]{rk.XML.external}},
-#'		\code{\link[rkwarddev:rk.XML.set]{rk.XML.set}},
-#'		\code{\link[rkwarddev:rk.XML.switch]{rk.XML.switch}},
-#'		and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
+#'    \code{\link[rkwarddev:rk.XML.convert]{rk.XML.convert}},
+#'    \code{\link[rkwarddev:rk.XML.connect]{rk.XML.connect}},
+#'    \code{\link[rkwarddev:rk.XML.external]{rk.XML.external}},
+#'    \code{\link[rkwarddev:rk.XML.set]{rk.XML.set}},
+#'    \code{\link[rkwarddev:rk.XML.switch]{rk.XML.switch}},
+#'    and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' # define an input field and two checkboxes
 #' test.input <- rk.XML.input("Type some text")
@@ -32,21 +32,21 @@
 #' cat(pasteXML(test.logic2))
 
 rk.XML.logic <- function(...){
-	nodes <- list(...)
+  nodes <- list(...)
 
-	# transform "!--" comment nodes into "![CDATA[" for scripting logic
-	nodes <- sapply(child.list(nodes), function(this.node){
-			if(identical(XMLName(this.node), "!--")){
-				XMLName(this.node) <- "![CDATA["
-				this.node <- XMLNode("script", .children=child.list(this.node, empty=FALSE))
-			} else {}
-			return(this.node)
-		})
+  # transform "!--" comment nodes into "![CDATA[" for scripting logic
+  nodes <- sapply(child.list(nodes), function(this.node){
+      if(identical(XMLName(this.node), "!--")){
+        XMLName(this.node) <- "![CDATA["
+        this.node <- XMLNode("script", .children=child.list(this.node, empty=FALSE))
+      } else {}
+      return(this.node)
+    })
 
-	# check the node names and allow only valid ones
-	valid.child("logic", children=nodes)
+  # check the node names and allow only valid ones
+  valid.child("logic", children=nodes)
 
-	node <- XMLNode("logic", .children=child.list(nodes, empty=FALSE))
+  node <- XMLNode("logic", .children=child.list(nodes, empty=FALSE))
 
-	return(node)
+  return(node)
 }

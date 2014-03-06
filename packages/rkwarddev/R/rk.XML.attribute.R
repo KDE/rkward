@@ -4,14 +4,14 @@
 #' Only meaningful for import plugins.
 #'
 #' @param id Either a character string (the \code{id} of the property whose attribute should be set),
-#'		or an object of class \code{XiMpLe.node} (whose \code{id} will be extracted and used).
+#'    or an object of class \code{XiMpLe.node} (whose \code{id} will be extracted and used).
 #' @param value Character string, new value for the attribute.
 #' @param label Character string, label associated with the attribute.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
-#'		\code{\link[rkwarddev:rk.XML.components]{rk.XML.components}},
-#'		and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
+#'    \code{\link[rkwarddev:rk.XML.components]{rk.XML.components}},
+#'    and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' # define a formula section with varselector and varslots
 #' test.checkbox <- rk.XML.cbox(label="foo", value="foo1", chk=TRUE)
@@ -20,21 +20,21 @@
 #' cat(pasteXML(test.attribute))
 
 rk.XML.attribute <- function(id, value=NULL, label=NULL){
-	# let's see if we need to extract IDs first
-	attr.list <- list(id=check.ID(id))
+  # let's see if we need to extract IDs first
+  attr.list <- list(id=check.ID(id))
 
-	if(all(is.null(value), is.null(label))){
-		stop(simpleError("You must at least specity either one of 'value' or 'label'!"))
-	} else {}
-	
-	if(!is.null(value)){
-		attr.list[["value"]] <- value
-	} else {}
-	if(!is.null(label)){
-		attr.list[["label"]] <- label
-	} else {}
+  if(all(is.null(value), is.null(label))){
+    stop(simpleError("You must at least specity either one of 'value' or 'label'!"))
+  } else {}
+  
+  if(!is.null(value)){
+    attr.list[["value"]] <- value
+  } else {}
+  if(!is.null(label)){
+    attr.list[["label"]] <- label
+  } else {}
 
-	node <- XMLNode("attribute", attrs=attr.list)
+  node <- XMLNode("attribute", attrs=attr.list)
 
-	return(node)
+  return(node)
 }

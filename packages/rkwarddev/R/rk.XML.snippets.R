@@ -6,9 +6,9 @@
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
-#'		\code{\link[rkwarddev:rk.XML.plugin]{rk.XML.plugin}}
-#'		\code{\link[rkwarddev:rk.XML.snippet]{rk.XML.snippet}},
-#'		and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
+#'    \code{\link[rkwarddev:rk.XML.plugin]{rk.XML.plugin}}
+#'    \code{\link[rkwarddev:rk.XML.snippet]{rk.XML.snippet}},
+#'    and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' # define a formula section with varselector and varslots
 #' test.formula <- rk.XML.vars("Variables", "Fixed", formula.dependent="Dependent")
@@ -18,18 +18,18 @@
 #' cat(pasteXML(test.snippets))
 
 rk.XML.snippets <- function(...){
-	nodes <- list(...)
+  nodes <- list(...)
 
-	# check the node names and allow only valid ones
-	sapply(child.list(nodes), function(this.node){
-			stopifnot(inherits(this.node, "XiMpLe.node"))
-			node.name <- slot(this.node, "name")
-			if(!node.name %in% c("snippet", "!--")){
-				stop(simpleError(paste0("Invalid XML nodes for snippets section: ", node.name)))
-			} else {}
-		})
+  # check the node names and allow only valid ones
+  sapply(child.list(nodes), function(this.node){
+      stopifnot(inherits(this.node, "XiMpLe.node"))
+      node.name <- slot(this.node, "name")
+      if(!node.name %in% c("snippet", "!--")){
+        stop(simpleError(paste0("Invalid XML nodes for snippets section: ", node.name)))
+      } else {}
+    })
 
-	node <- XMLNode("snippets", .children=child.list(nodes, empty=FALSE))
+  node <- XMLNode("snippets", .children=child.list(nodes, empty=FALSE))
 
-	return(node)
+  return(node)
 }

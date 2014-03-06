@@ -2,8 +2,8 @@
 #'
 #' @param ... Objects of class \code{XiMpLe.node}.
 #' @param id.name Character string, a unique ID for this plugin element.
-#'		If \code{"auto"}, an ID will be generated automatically from the objects in \code{...}.
-#'		If \code{NULL}, no ID will be given.
+#'    If \code{"auto"}, an ID will be generated automatically from the objects in \code{...}.
+#'    If \code{NULL}, no ID will be given.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
@@ -14,20 +14,20 @@
 #' cat(pasteXML(test.checkboxes))
 
 rk.XML.col <- function(..., id.name="auto"){
-	nodes <- list(...)
+  nodes <- list(...)
 
-	if(identical(id.name, "auto")){
-		# try autogenerating some id
-		attr.list <- list(id=auto.ids(node.soup(nodes), prefix=ID.prefix("column"), chars=10))
-	} else if(is.null(id.name)){
-		attr.list <- list()
-	} else {
-		attr.list <- list(id=id.name)
-	}
+  if(identical(id.name, "auto")){
+    # try autogenerating some id
+    attr.list <- list(id=auto.ids(node.soup(nodes), prefix=ID.prefix("column"), chars=10))
+  } else if(is.null(id.name)){
+    attr.list <- list()
+  } else {
+    attr.list <- list(id=id.name)
+  }
 
-	col <- XMLNode("column",
-		attrs=attr.list,
-		.children=child.list(nodes, empty=FALSE))
+  col <- XMLNode("column",
+    attrs=attr.list,
+    .children=child.list(nodes, empty=FALSE))
 
-	return(col)
+  return(col)
 }

@@ -7,24 +7,24 @@
 # produced by rk.plugin.component()
 
 setClass("rk.plug.comp",
-	representation=representation(
-		name="character",
-		create="vector",
-		xml="XiMpLe.doc",
-		js="character",
-		rkh="XiMpLe.doc",
-		hierarchy="list"
-	),
-	prototype(
-		name=character(),
-		create=c(),
-		xml=new("XiMpLe.doc"),
-		js=character(),
-		rkh=new("XiMpLe.doc"),
-		hierarchy=list()
-	)
+  representation=representation(
+    name="character",
+    create="vector",
+    xml="XiMpLe.doc",
+    js="character",
+    rkh="XiMpLe.doc",
+    hierarchy="list"
+  ),
+  prototype(
+    name=character(),
+    create=c(),
+    xml=new("XiMpLe.doc"),
+    js=character(),
+    rkh=new("XiMpLe.doc"),
+    hierarchy=list()
+  )
 )
 
 # setValidity("rk.plug.comp", function(object){
-# 	return(TRUE)
+#   return(TRUE)
 # })
