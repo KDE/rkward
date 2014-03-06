@@ -119,26 +119,20 @@ if [[ $WIPEINST ]] ; then
     sudo rm -rf /Applications/MacPorts || exit 1
   fi
   # these leftovers would conflict with port installation
-  if [ -L /Library/LaunchDaemons/org.freedesktop.dbus-system.plist ] ; then
-    echo "removing symbolic link /Library/LaunchDaemons/org.freedesktop.dbus-system.plist..."
-    sudo rm /Library/LaunchDaemons/org.freedesktop.dbus-system.plist
-  fi
-  if [ -L /Library/LaunchAgents/org.freedesktop.dbus-session.plist ] ; then
-    echo "removing symbolic link /Library/LaunchAgents/org.freedesktop.dbus-session.plist..."
-    sudo rm /Library/LaunchAgents/org.freedesktop.dbus-session.plist
-  fi
-  if [ -L /Library/LaunchDaemons/org.freedesktop.avahi-daemon.plist ] ; then
-    echo "removing symbolic link /Library/LaunchDaemons/org.freedesktop.avahi-daemon.plist..."
-    sudo rm /Library/LaunchDaemons/org.freedesktop.avahi-daemon.plist
-  fi
-  if [ -L /Library/LaunchDaemons/org.freedesktop.avahi-dnsconfd.plist ] ; then
-    echo "removing symbolic link /Library/LaunchDaemons/org.freedesktop.avahi-dnsconfd.plist..."
-    sudo rm /Library/LaunchDaemons/org.freedesktop.avahi-dnsconfd.plist
-  fi
-  if [ -L /Library/LaunchAgents/org.macports.kdecache.plist ] ; then
-    echo "removing symbolic link /Library/LaunchAgents/org.macports.kdecache.plist..."
-    sudo rm /Library/LaunchAgents/org.macports.kdecache.plist
-  fi
+  for libsymlink in \
+    /Library/LaunchDaemons/org.freedesktop.dbus-system.plist \
+    /Library/LaunchAgents/org.freedesktop.dbus-session.plist \
+    /Library/LaunchDaemons/org.freedesktop.avahi-daemon.plist \
+    /Library/LaunchDaemons/org.freedesktop.avahi-dnsconfd.plist \
+    /Library/LaunchAgents/org.macports.kdecache.plist \
+    /Library/LaunchDaemons/org.macports.mysql5.plist \
+    /Library/LaunchDaemons/org.macports.slapd.plist
+  do
+    if [ -L "${libsymlink}" ] ; then
+      echo "removing symbolic link ${libsymlink}..."
+      sudo rm "${libsymlink}"
+    fi
+  done
 fi
 
 # prepare for a clean installation, remove all cached sources
