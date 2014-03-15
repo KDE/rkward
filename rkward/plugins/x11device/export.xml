@@ -55,12 +55,12 @@
 		<connect client="frame_gsoptions.enabled" governor="isGS" />
 	</logic>
 
-	<dialog label="Export contents of graphics device to png/jpeg format">
+	<dialog label="Export contents of graphics device to various formats">
 		<tabbook>
 			<tab id="tab_file_and_type" label="Filename and Generic options">
 				<row>
 					<column>
-						<browser type="savefile" id="file" label="File name" initial="Rplot" filter="*.ps *.eps *.pdf *.png *.jpg *.jpeg *.bmp" />
+						<browser type="savefile" id="file" label="File name" initial="Rplot" filter="*.ps *.eps *.pdf *.png *.jpg *.jpeg *.bmp *.tex" />
 						<checkbox id="autoextension" value="1" value_unchecked="0" checked="true" label="Automatic File extension"/>
 						<frame id="frame_dimensions" label="Dimensions">
 							<row>
@@ -82,8 +82,9 @@
 							<option value="svg" label="SVG" />
 							<option value="png" label="PNG" />
 							<option value="jpeg" label="JPEG" />
-							<option value="gs" label="via Ghostscript" />
-						</radio>
+              <option value="gs" label="via Ghostscript" />
+              <option value="tikz" label="LaTeX/TikZ" />
+            </radio>
 						<checkbox id="formateps" label="EPS compatible" checked="true" value="1" value_unchecked="0"/>
 					</column>
 				</row>

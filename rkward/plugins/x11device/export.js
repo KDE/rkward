@@ -5,6 +5,8 @@ function preprocess () {
 		echo ('	require (cairoDevice)\n');
 		echo ('	svg <- Cairo_svg\n');
 		echo ('}\n');
+	} else if (getValue ("format") == "tikz") {
+		echo ('require (tikzDevice)\n');
 	}
 }
 
@@ -23,7 +25,7 @@ function calculate () {
 		jpegpng = ((type == "jpeg") | (type == "png"));
 		eps = (type == "postscript") && (getValue ("formateps"));
 
-		// Does the filename end with .ps/.eps or .pdf or .png or .jpeg/.jpg?
+		// Does the filename end with .ps/.eps or .pdf or .png or .jpeg/.jpg or .tex?
 		// If not, add the appropriate extension.
 		if (getValue ("autoextension")) {
 			if (type == "jpeg") {
@@ -34,6 +36,8 @@ function calculate () {
 				} else {
 					if (file.search (/\.e?ps$/i) < 0) file += ".ps";
 				}
+			} else if (type == "tikz") {
+				if (file.search (/\.tex$/i) < 0) file += ".tex";
 			} else {
 				var regexp = new RegExp ("\." + type + "$", "i");
 				if (file.search (regexp) < 0) file += "." + type;
