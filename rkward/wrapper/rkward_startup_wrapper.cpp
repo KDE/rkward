@@ -92,8 +92,8 @@ int main (int argc, char *argv[]) {
 	// Explicit initialization of KDE, in case Windows 7 asks for admin priviledges
 	if (kdeinit4_exe.isNull ()) {
 		kdeinit4_exe = findExeAtPath ("kdeinit4", QFileInfo (rkward_frontend_exe).absolutePath ());
-		if (!kdeinit4_exe.isNull ()) QProcess::execute (kdeinit4_exe, QStringList ());
 	}
+	if (!kdeinit4_exe.isNull ()) QProcess::execute (kdeinit4_exe, QStringList ());
 #endif
 
 	bool usage = false;
