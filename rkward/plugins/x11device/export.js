@@ -104,9 +104,9 @@ function calculate () {
 
 	echo ('dev.set (' + getValue ("devnum") + ')\n');
 	if (type == "gs") {
-		echo ('dev2bitmap ("' + file + '", type="' + gstype + '"' + options + ');\n');
+		echo ('dev2bitmap ("' + file + '", type="' + gstype + '"' + options + ')\n');
 	} else {
-		echo ('dev.print (device=' + type + ', file="' + file + '"' + options + ');\n');
+		echo ('dev.print (device=' + type + ', file="' + file + '"' + options + ')\n');
 	}
 }
 
