@@ -39,9 +39,9 @@ variant okular description {Add okular for nice PDF handling} {
 }
 
 if {${configure.compiler} == "clang"} {
-        # force the use of gcc 4.7 to be able to link with R-framework
-        depends_lib-append   port:gcc47
-        configure.compiler   macports-gcc-4.7
+        # force the use of gcc 4.8 to be able to link with R-framework
+        depends_lib-append   port:gcc48
+        configure.compiler   macports-gcc-4.8
         configure.objc       /usr/bin/gcc
         configure.env-append "OBJCXX=${configure.objc}"
 }
@@ -68,7 +68,7 @@ configure.cmd       cmake ..
 # you must first install the OS X packages of CRAN R, as we'll link against them
 subport rkward-devel-binary {
         conflicts-append rkward-devel rkward-binary rkward-devel-debug rkward-debug
-        depends_lib-delete   port:gcc47 port:R
+        depends_lib-delete   port:gcc48 port:R
         configure.compiler   llvm-gcc-4.2
         configure.args-delete \
                -DR_EXECUTABLE=${prefix}/Library/Frameworks/R.framework/Resources/R
