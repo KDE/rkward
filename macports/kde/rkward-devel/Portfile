@@ -45,7 +45,7 @@ configure.args-append \
 # configure R to use Mac binaries by default
 # you must first install the OS X packages of CRAN R, as we'll link against them
 subport rkward-devel-binary {
-        conflicts-append rkward-devel rkward-binary rkward-devel-debug rkward-debug
+        conflicts-append rkward-devel rkward-binary
         depends_lib-delete   port:gcc48 port:R
         configure.compiler   llvm-gcc-4.2
         configure.args-delete \
@@ -60,9 +60,7 @@ subport rkward-devel-binary {
 
 # compile with full debugging support
 variant rkward-devel-debug {
-        conflicts-append rkward-devel rkward-devel-binary rkward-binary
         depends_lib-append port:valgrind
-        configure.args-append -DCMAKE_BUILD_TYPE=debugfull
 }
 
 configure.post_args ..

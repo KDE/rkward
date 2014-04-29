@@ -41,25 +41,21 @@ configure.args-append \
         -DRKVERSION_NUMBER=${version} \
         -DBUNDLE_INSTALL_DIR=${applications_dir} \
         -DR_EXECUTABLE=${frameworks_dir}/R.framework/Resources/R
-# work around moved Qt include dir
-if { ![file exists ${prefix}/include/Qt/qglobal.h] && [file exists ${prefix}/include/QtCore/qglobal.h] } {
-        configure.args-append -DQT_QT_INCLUDE_DIR=${prefix}/include/QtCore
-}
 
 # configure R to use Mac binaries by default
 # you must first install the OS X packages of CRAN R, as we'll link against them
 subport rkward-binary {
         conflicts-append rkward rkward-devel-binary
         depends_lib-delete   port:gcc48 port:R
-#        configure.compiler   llvm-gcc-4.2
+        configure.compiler   llvm-gcc-4.2
         configure.args-delete \
                -DR_EXECUTABLE=${frameworks_dir}/R.framework/Resources/R
         configure.args-append \
                -DUSE_BINARY_PACKAGES=1 \
                -DR_EXECUTABLE=/Library/Frameworks/R.framework/Resources/R \
                -DR_LIBDIR=${frameworks_dir}/R.framework/Resources/library
-#        # create libdir if it doesn't exist
-#        file mkdir ${frameworks_dir}/R.framework/Resources/library
+        # create libdir if it doesn't exist
+        file mkdir ${frameworks_dir}/R.framework/Resources/library
 }
 
 # compile with full debugging support
