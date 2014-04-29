@@ -28,22 +28,8 @@ master_sites        https://sourceforge.net/projects/rkward/files/Current_Stable
 
 depends_lib         port:kdelibs4 \
                     port:kate \
+                    port:okular \
                     port:R
-
-# add port:okular once the graphics device is fully functional
-# this needs port:poppler with +qt4 +quartz varaints which cannot be
-# specified with depends_lib-append
-variant okular description {Add okular for nice PDF handling} {
-        depends_lib-append port:okular
-}
-
-if {${configure.compiler} == "clang"} {
-        # force the use of gcc 4.8 to be able to link with R-framework
-        depends_lib-append   port:gcc48
-#        configure.compiler   macports-gcc-4.8
-        configure.objc       /usr/bin/gcc
-        configure.env-append "OBJCXX=${configure.objc}"
-}
 
 post-extract {
         file mkdir ${worksrcpath}/build

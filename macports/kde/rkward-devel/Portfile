@@ -2,14 +2,15 @@
 # $Id$
 
 PortSystem          1.0
+PortGroup           cmake 1.0
 fetch.type          svn
+name                rkward-devel
+version             0.6.1-svn
 svn.url             http://svn.code.sf.net/p/rkward/code/trunk
 #svn.revision        4494
-worksrcdir          ${workpath}/trunk/rkward
+worksrcdir          trunk/rkward
 
-name                rkward-devel
 conflicts           rkward
-version             0.6.1-svn
 categories          kde kde4 math science
 maintainers         hhu.de:meik.michalke
 license             GPL-2
@@ -25,44 +26,21 @@ homepage            http://rkward.sourceforge.net
 
 master_sites        https://sourceforge.net/projects/rkward/files/Current_Stable_Releases
 
-PortGroup           cmake 1.0
-
 depends_lib         port:kdelibs4 \
                     port:kate \
+                    port:okular \
                     port:R
 
-# add port:okular once the graphics device is fully functional
-# this needs port:poppler with +qt4 +quartz varaints which cannot be
-# specified with depends_lib-append
-variant okular description {Add okular for nice PDF handling} {
-        depends_lib-append port:okular
-}
-
-if {${configure.compiler} == "clang"} {
-        # force the use of gcc 4.8 to be able to link with R-framework
-        depends_lib-append   port:gcc48
-        configure.compiler   macports-gcc-4.8
-        configure.objc       /usr/bin/gcc
-        configure.env-append "OBJCXX=${configure.objc}"
-}
-
 post-extract {
-        # creates the build dir if it doesn't exist
-        # this won't return errors if directory is already there
-        file mkdir ${worksrcdir}/build
+        file mkdir ${worksrcpath}/build
 }
 
-configure.dir       ${worksrcdir}/build
+configure.dir       ${worksrcpath}/build
 configure.args-append \
         -DNO_R_XML=1 \
         -DRKVERSION_NUMBER=${version} \
         -DBUNDLE_INSTALL_DIR=${applications_dir} \
-        -DR_EXECUTABLE=${prefix}/Library/Frameworks/R.framework/Resources/R
-# work around moved Qt include dir
-if { ![file exists ${prefix}/include/Qt/qglobal.h] && [file exists ${prefix}/include/QtCore/qglobal.h] } {
-        configure.args-append -DQT_QT_INCLUDE_DIR=${prefix}/include/QtCore
-}
-configure.cmd       cmake ..
+        -DR_EXECUTABLE=${frameworks_dir}/R.framework/Resources/R
 
 # configure R to use Mac binaries by default
 # you must first install the OS X packages of CRAN R, as we'll link against them
@@ -71,23 +49,25 @@ subport rkward-devel-binary {
         depends_lib-delete   port:gcc48 port:R
         configure.compiler   llvm-gcc-4.2
         configure.args-delete \
-               -DR_EXECUTABLE=${prefix}/Library/Frameworks/R.framework/Resources/R
+               -DR_EXECUTABLE=${frameworks_dir}/R.framework/Resources/R
         configure.args-append \
                -DUSE_BINARY_PACKAGES=1 \
                -DR_EXECUTABLE=/Library/Frameworks/R.framework/Resources/R \
-               -DR_LIBDIR=${prefix}/Library/Frameworks/R.framework/Resources/library
+               -DR_LIBDIR=${frameworks_dir}/R.framework/Resources/library
         # create libdir if it doesn't exist
-        file mkdir ${prefix}/Library/Frameworks/R.framework/Resources/library
+        file mkdir ${frameworks_dir}/R.framework/Resources/library
 }
 
 # compile with full debugging support
-subport rkward-devel-debug {
-        conflicts-append rkward-devel rkward-devel-binary rkward-debug rkward-binary
+variant rkward-devel-debug {
+        conflicts-append rkward-devel rkward-devel-binary rkward-binary
         depends_lib-append port:valgrind
         configure.args-append -DCMAKE_BUILD_TYPE=debugfull
 }
 
-build.dir           ${worksrcdir}/build
+configure.post_args ..
+
+build.dir           ${worksrcpath}/build
 
 pre-pkg {
         file copy -force -- ${worksrcdir}/macports/postinstall ${package.scripts}/postinstall
