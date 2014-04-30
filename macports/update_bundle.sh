@@ -7,6 +7,7 @@ MPTINST=/opt/rkward
 PTARGET=rkward-devel
 PNSUFFX="-devel"
 DEVEL=TRUE
+PVARIANT=""
 # specify work directory
 WORKDIR=/opt/ports/kde/${PTARGET}/work
 # specify local public directory
@@ -42,8 +43,8 @@ if [[ $1 == "" ]] ; then
 
            the following must always be combined with r/m/s/c:
            -D (build target rkward instead of rkward-devel)
-           -d (build subport 'debug')
-           -b (build subport 'binary')
+           -d (build variant 'debug')
+           -b (build subport 'binary', needs CRAN R)
 
            these work on their own:
            -X (completely!!! wipe ${MPTINST})
@@ -68,7 +69,7 @@ while getopts ":DdbflLprmscxXF:" OPT; do
        PNSUFFX="" >&2
        DEVEL=FALSE >&2 ;;
     d) DEBUG=TRUE >&2
-       PTARGET=${PTARGET}-debug >&2
+       PVARIANT="+debug" >&2
        PNSUFFX="${PNSUFFX}-debug" >&2 ;;
     b) BINARY=TRUE >&2
        PTARGET=${PTARGET}-binary >&2
@@ -194,7 +195,7 @@ if [[ $UPRKWARD ]] ; then
     fi
   done
   # build and install recent version
-  sudo port -v install ${PTARGET} || exit 1
+  sudo port -v install ${PTARGET} ${PVARIANT} || exit 1
 fi
 
 # remove static libraries, they're a waste of disk space
