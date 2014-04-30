@@ -8,6 +8,7 @@ name                rkward
 version             0.6.1
 svn.url             http://svn.code.sf.net/p/rkward/code/branches/release_branches/rkward_${version}
 svn.revision        4635
+patchfiles          patch-rkward-rbackend-rkstructuregetter.cpp.diff
 worksrcdir          ${name}_${version}
 
 conflicts           rkward-devel
