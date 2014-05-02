@@ -27,7 +27,7 @@
 class RCommand;
 class RKWardMainWindow;
 class RKRBackend;
-struct RBackendRequest;
+class RBackendRequest;
 
 /** This class provides the main interface to the R-processor.
 

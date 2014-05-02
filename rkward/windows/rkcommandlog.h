@@ -26,7 +26,7 @@
 #include "../rbackend/rcommandreceiver.h"
 
 class RCommand;
-class ROutput;
+struct ROutput;
 class RKCommandLogView;
 class RKCommandLogPart;
 

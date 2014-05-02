@@ -135,7 +135,6 @@ friend class RKConsolePart;
 
 	bool tab_key_pressed_before;
 
-	KAction* copy_lines_to_output_action;
 	KAction* context_help_action;
 	KAction* run_selection_action;
 	KAction* interrupt_command_action;

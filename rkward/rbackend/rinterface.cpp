@@ -381,7 +381,7 @@ void RInterface::handleRequest (RBackendRequest* request) {
 	} else if (request->type == RBackendRequest::PlainGenericRequest) {
 		request->params["return"] = QVariant (processPlainGenericRequest (request->params["call"].toStringList ()));
 		RKRBackendProtocolFrontend::setRequestCompleted (request);
-	} else if ((request->type == RBackendRequest::Started)) {
+	} else if (request->type == RBackendRequest::Started) {
 		// The backend thread has finished basic initialization, but we still have more to do...
 		startup_errors = request->params["message"].toString ();
 
