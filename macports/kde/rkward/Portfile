@@ -2,14 +2,11 @@
 # $Id$
 
 PortSystem          1.0
-PortGroup           cmake 1.0
-fetch.type          svn
+PortGroup           kde4 1.1
 name                rkward
 version             0.6.1
-svn.url             http://svn.code.sf.net/p/rkward/code/branches/release_branches/rkward_${version}
-svn.revision        4635
 patchfiles          patch-rkward-rbackend-rkstructuregetter.cpp.diff
-worksrcdir          ${name}_${version}
+worksrcdir          ${name}-${version}
 
 conflicts           rkward-devel
 categories          kde kde4 math science
@@ -25,12 +22,15 @@ long_description    RKWard aims to become an easy to use, transparent frontend t
 
 homepage            http://rkward.sourceforge.net
 
-master_sites        sourceforge:projects/rkward/files/Current_Stable_Releases
+master_sites        sourceforge:rkward
 
 depends_lib         port:kdelibs4 \
                     port:kate \
                     port:okular \
                     port:R
+
+checksums           rmd160  b476b0adbb9cfbd1253c86bf763c351b7cd22e25 \
+                    sha256  7887bc22645a8e6de278da55e31a61acd91aca0ade777af11a110d0dfcfffde7
 
 post-extract {
         file mkdir ${worksrcpath}/build
@@ -50,6 +50,10 @@ variant debug description {Add full debugging support} {
 configure.post_args ..
 
 build.dir           ${worksrcpath}/build
+
+livecheck.type      regex
+livecheck.url       http://sourceforge.net/projects/${name}/files/Current_Stable_Releases/
+livecheck.regex     "${name}-(\\d+\\.\\d+\\.\\d+)\\.tar"
 
 pre-pkg {
         file copy -force -- ${worksrcdir}/macports/postinstall ${package.scripts}/postinstall

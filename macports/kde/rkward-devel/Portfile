@@ -2,7 +2,7 @@
 # $Id$
 
 PortSystem          1.0
-PortGroup           cmake 1.0
+PortGroup           kde4 1.1
 fetch.type          svn
 name                rkward-devel
 version             0.6.1-svn
@@ -23,8 +23,6 @@ long_description    RKWard aims to become an easy to use, transparent frontend t
                     statistical functions, future versions will also provide seamless integration with an office-suite.
 
 homepage            http://rkward.sourceforge.net
-
-master_sites        sourceforge:projects/rkward/files/Current_Stable_Releases
 
 depends_lib         port:kdelibs4 \
                     port:kate \
