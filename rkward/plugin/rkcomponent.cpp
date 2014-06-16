@@ -2,7 +2,7 @@
                           rkcomponent  -  description
                              -------------------
     begin                : Tue Dec 13 2005
-    copyright            : (C) 2005, 2006, 2009, 2010, 2011, 2012 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2009, 2010, 2011, 2012, 2013, 2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -202,7 +202,7 @@ QVariant RKComponentBase::fetchValue (const QString &id, const int hint) {
 		QVariant val = prop->value (mod);
 		if (hint == BooleanValue) {
 			bool ok;
-			return (RKComponentPropertyBool::variantToBool (val, &ok));
+			val = RKComponentPropertyBool::variantToBool (val, &ok);
 			if (!ok) RK_DEBUG (PLUGIN, DL_WARNING, "Could not convert value of %s to boolean", qPrintable (id));
 		} else {
 			if (hint == StringlistValue) {
@@ -212,8 +212,8 @@ QVariant RKComponentBase::fetchValue (const QString &id, const int hint) {
 			} else {
 				RK_ASSERT (false);
 			}
-			return (val);
 		}
+		return (val);
 	}
 }
 

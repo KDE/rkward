@@ -1,3 +1,4 @@
+- Fixed some compilation problems
 - Add basic support to export plots using tikzDevice
 - Fixed: cbind-value of <matrix> element was missing commas
 - Fixed: Give a label to an unlabelled toolbar
