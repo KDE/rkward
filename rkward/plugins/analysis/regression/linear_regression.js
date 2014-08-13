@@ -1,9 +1,22 @@
 function calculate () {
 	var vars = trim (getValue ("x")).replace (/\n/g, " + ");
 	var intercept = "";
-	if (!getValue ("intercept.state.numeric")) intercept = "0 + ";
+	if (!getBoolean ("intercept")) intercept = "0 + ";
 
-	echo ('results <- summary.lm (lm (' + getValue ("y") + ' ~ ' + intercept + vars + '))\n');
+	var savefitted = getBoolean ("savefitted.active");
+	var simple_mode = !savefitted;
+
+	model = 'lm (' + getValue ("y") + ' ~ ' + intercept + vars;
+	if (savefitted) model += ', na.action=na.exclude';	// default action of na.omit is a nuisance for fitted values
+	model += ')';
+
+	if (simple_mode) {
+		echo ('results <- summary.lm (' + model + ')\n');
+	} else {
+		echo ('model <- ' + model + '\n');
+		echo ('.GlobalEnv$' + getString ('savefitted') + ' <- fitted (model)\n');
+		echo ('results <- summary.lm (model)\n');
+	}
 }
 
 function printout () {

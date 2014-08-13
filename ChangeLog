@@ -1,3 +1,4 @@
+- Linear regression plugin gains option to save predicted values
 - Fixed some compilation problems
 - Add basic support to export plots using tikzDevice
 - Fixed: cbind-value of <matrix> element was missing commas

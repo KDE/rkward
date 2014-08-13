@@ -12,6 +12,7 @@
 		<setting id="y">The dependent variable. This must be numeric.</setting>
 		<setting id="x">One or more independent variables, each of the same length as the dependent. Note that factor variables are treated as categorial predictors, while numeric variables are treated as continuous predictors, automatically.</setting>
 		<setting id="intercept">Should an intercept term be included in the model?</setting>
+		<setting id="savefitted">Extract and save predicted values from the model.</setting>
 	</settings>
 	<related>
 		<ul>

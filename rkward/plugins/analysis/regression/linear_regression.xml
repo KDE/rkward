@@ -11,6 +11,7 @@
 				<varslot type="numeric" id="x" source="vars" required="true" multi="true" label="independent variables"/>
 				<checkbox id="intercept" label="include intercept" checked="true"/>
 				<stretch/>
+				<saveobject id="savefitted" label="Save fitted values" initial="lm_fitted" checkable="true"/>
 			</column>
 		</row>
 	</dialog>
