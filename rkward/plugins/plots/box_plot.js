@@ -70,8 +70,8 @@ function doPrintout (full) {
 		  echo('	interq_mean <- function (x) {sum(quantile(x, probs=c(0.25), na.rm=TRUE), quantile(x, probs=c(0.75), na.rm=TRUE)) / 2}	#Calculate the interquartile mean\n');
 			mean_fun = "interq_mean";
 		} else {	// arithmetic mean
-			var trim = getValue("trim");
-			if (trim != 0) mean_fun += ", trim=" + trim;
+			var trimp = getValue("trim");	// NOTE: avoid name clash with utility function trim()!
+			if (trimp != 0) mean_fun += ", trim=" + trimp;
 		}
 
 		if (horizontal) {
