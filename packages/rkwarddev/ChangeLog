@@ -1,5 +1,13 @@
 ChangeLog for package rkwarddev
 
+changes in version 0.06-4 (2014-09-01)
+added:
+  - new functions rk.set.language(), rk.get.language() and i18n() to facilitate
+    static internationalisation of plugins; makes use of a new internal environment
+    .rkdev.env
+fixed:
+  - abbreviation of labels now limits valid characters to [0-9A-Za-z]
+    
 changes in version 0.06-3 (2013-12-21)
 fixed:
   - fixed outdated example code for rk.plugin.component()

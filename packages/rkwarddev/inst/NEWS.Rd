@@ -1,6 +1,20 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
+\section{Changes in rkwarddev version 0.06-4 (2014-09-01)}{
+  \subsection{added}{
+    \itemize{
+      \item new functions \code{rk.set.language()}, \code{rk.get.language()} and \code{i18n()} to facilitate
+        static internationalisation of plugins; makes use of a new internal environment
+        .rkdev.env
+    }
+  }
+  \subsection{fixed}{
+    \itemize{
+      \item abbreviation of labels now limits valid characters to [0-9A-Za-z]
+    }
+  }
+}
 \section{Changes in rkwarddev version 0.06-3 (2013-12-21)}{
   \subsection{fixed}{
     \itemize{

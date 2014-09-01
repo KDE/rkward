@@ -2,7 +2,7 @@ Source: r-other-rkward-rkwarddev
 Section: math
 Priority: optional
 Maintainer: m.eik michalke <meik.michalke@hhu.de>
-Build-Depends-Indep: debhelper (>> 4.1.0), r-base-dev (>= 2.9.0), cdbs, r-cran-ximple (>= 0.03-21) | r-other-reaktanz-ximple (>=
+Build-Depends-Indep: debhelper (>> 7.0.0), r-base-dev (>= 3.0.0), cdbs, r-cran-ximple (>= 0.03-21) | r-other-reaktanz-ximple (>=
  0.03-21) | r-other-rkward-ximple (>= 0.03-21), rkward (>= 0.5.7)
 Standards-Version: 3.9.3.1
 Homepage: http://rkward.sourceforge.net

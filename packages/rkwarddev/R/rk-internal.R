@@ -15,6 +15,11 @@
 # You should have received a copy of the GNU General Public License
 # along with rkwarddev.  If not, see <http://www.gnu.org/licenses/>.
 
+# collate voodoo
+#' @include rk.comment.R
+
+# set up an internal environment, e.g. for language settings
+.rkdev.env <- new.env()
 
 # internal functions for the rk.* functions
 
@@ -33,7 +38,7 @@ generator.info <- rk.comment(paste0("this code was generated using the rkwarddev
 
 ## function auto.ids()
 auto.ids <- function(identifiers, prefix=NULL, suffix=NULL, chars=8){
-  identifiers <- gsub("[[:space:]]*[^[:alnum:]]*", "", identifiers)
+  identifiers <- gsub("[[:space:]]*[^[0-9A-Za-z]]*", "", identifiers)
   id.names <- ifelse(nchar(identifiers) > 8, abbreviate(identifiers, minlength=chars), identifiers)
   # check for uniqueness
   if(any(duplicated(id.names))){
