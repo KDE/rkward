@@ -6,7 +6,8 @@
 rk.XML.pluginmap(name, about = NULL, components, hierarchy = "test",
   require = NULL, x11.context = NULL, import.context = NULL,
   clean.name = TRUE, hints = FALSE, gen.info = TRUE,
-  dependencies = NULL, namespace = name, priority = "medium")
+  dependencies = NULL, namespace = name, priority = "medium",
+  lang = rk.get.language())
 }
 \arguments{
 \item{name}{Character string, name of the plugin.}
@@ -60,6 +61,9 @@ See \code{\link[rkwarddev:rk.XML.dependencies]{rk.XML.dependencies}} for details
 \item{priority}{Character string,
       the priority attribute of the \code{<document>} node. Must be either "hidden", "low", "medium", or "high",
 defaults to "medium".}
+
+\item{lang}{Character string,
+      the language of the document. See \code{\link[rkwarddev:i18n]{i18n}} for details.}
 }
 \value{
 An object of class \code{XiMpLe.node}.

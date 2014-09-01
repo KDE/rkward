@@ -7,6 +7,9 @@
       \item new functions \code{rk.set.language()}, \code{rk.get.language()} and \code{i18n()} to facilitate
         static internationalisation of plugins; makes use of a new internal environment
         .rkdev.env
+      \item new parameter \code{"lang"} in functions \code{rk.rkh.doc()}, \code{rk.XML.plugin()}, \code{rk.XML.pluginmap()}
+        and \code{rk.plugin.skeleton()} for internationalisation. if used, the attributes \code{"lang"}
+        and "xml:lang" will be set in the <document> root of the generated files, respectively
     }
   }
   \subsection{fixed}{

@@ -5,6 +5,9 @@ added:
   - new functions rk.set.language(), rk.get.language() and i18n() to facilitate
     static internationalisation of plugins; makes use of a new internal environment
     .rkdev.env
+  - new parameter "lang" in functions rk.rkh.doc(), rk.XML.plugin(), rk.XML.pluginmap()
+    and rk.plugin.skeleton() for internationalisation. if used, the attributes "lang"
+    and "xml:lang" will be set in the <document> root of the generated files, respectively
 fixed:
   - abbreviation of labels now limits valid characters to [0-9A-Za-z]
     
