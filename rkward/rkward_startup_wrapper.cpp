@@ -118,6 +118,18 @@ int main (int argc, char *argv[]) {
 		}
 	}
 
+	// MacOS may need some path adjustments, first
+#ifdef Q_WS_MAC
+	QString oldpath = qgetenv ("PATH");
+	if (!oldpath.contains (INSTALL_PATH)) {
+		//ensure that PATH is set to include what we deliver with the bundle
+		qputenv ("PATH", QString ("\"%1/bin\":\"%1/sbin\":%2").arg (INSTALL_PATH).arg (oldpath).toLocal8Bit ());
+	}
+	// ensure that RKWard finds its own packages
+	qputenv ("R_LIBS"=R_LIBS);
+	QProcess::execute ("lanuchctl", QStringList () << "load" << "-w" << "\"" INSTALL_PATH "/Library/LaunchAgents/org.freedesktop.dbus-session.plist\"");
+#endif
+
 	// Locate KDE and RKWard installations
 	QString kdeinit4_exe;
 	QString rkward_frontend_exe;
@@ -189,17 +201,6 @@ qDebug ("%s", RKWARD_FRONTEND_LOCATION);
 	}
 
 	qputenv ("LC_NUMERIC", "C");
-#endif
-
-#ifdef Q_WS_MAC
-	QString oldpath = qgetenv ("PATH");
-	if (!oldpath.contains (INSTALL_PATH)) {
-		//ensure that PATH is set to include what we deliver with the bundle
-		qputenv ("PATH", QString ("\"%1/bin\":\"%1/sbin\":%2").arg (INSTALL_PATH).arg (oldpath).toLocal8Bit ());
-	}
-	// ensure that RKWard finds its own packages
-	qputenv ("R_LIBS"=R_LIBS);
-	QProcess::execute ("lanuchctl", QStringList () << "load" << "-w" << "\"" INSTALL_PATH "/Library/LaunchAgents/org.freedesktop.dbus-session.plist\"");
 #endif
 
 	// Look for R:
