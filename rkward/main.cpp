@@ -111,12 +111,17 @@ void RKDebug (int flags, int level, const char *fmt, ...) {
 	RKDebugMessageWindow::newMessage (flags, level, QString (buffer));
 }
 
+QString decodeArgument (const QString &input) {
+	return (QUrl::fromPercentEncoding (input.toUtf8()));
+}
+
 int main(int argc, char *argv[]) {
 	options.add ("evaluate <Rcode>", ki18n ("After starting (and after loading the specified workspace, if applicable), evaluate the given R code."), 0);
 	options.add ("debug-level <level>", ki18n ("Verbosity of debug messages (0-5)"), "2");
 	options.add ("debug-flags <flags>", ki18n ("Mask for components to debug (see debug.h)"), QString::number (DEBUG_ALL).toLocal8Bit ());
 	options.add ("debugger <command>", ki18n ("Debugger (enclose any debugger arguments in single quotes ('') together with the command)"), "");
 	options.add ("backend-debugger <command>", ki18n ("Debugger for the backend. (Enclose any debugger arguments in single quotes ('') together with the command. Make sure to re-direct stdout!)"), "");
+	options.add ("r-executable <command>", ki18n ("Use specified R installation, instead of the one configured at compile time (note: rkward R library must be installed to that installation of R)"), "");
 	options.add ("+[File]", ki18n ("R workspace file to open"), 0);
 
 	KAboutData aboutData("rkward", QByteArray (), ki18n ("RKWard"), RKWARD_VERSION, ki18n ("Frontend to the R statistics language"), KAboutData::License_GPL, ki18n ("(c) 2002, 2004 - 2013"), KLocalizedString (), "http://rkward.sf.net", "rkward-devel@lists.sourceforge.net");
@@ -159,10 +164,10 @@ int main(int argc, char *argv[]) {
 	}
 
 	if (args->count ()) {
-		RKGlobals::startup_options["initial_url"] = QUrl (args->url (0));
+		RKGlobals::startup_options["initial_url"] = QUrl (KCmdLineArgs::makeURL (decodeArgument (args->arg (0)).toUtf8 ()));
 	}
-	RKGlobals::startup_options["evaluate"] = args->getOption ("evaluate");
-	RKGlobals::startup_options["backend-debugger"] = args->getOption ("backend-debugger");
+	RKGlobals::startup_options["evaluate"] = decodeArgument (args->getOption ("evaluate"));
+	RKGlobals::startup_options["backend-debugger"] = decodeArgument (args->getOption ("backend-debugger"));
 
 	RKWardApplication app;
 	// install message handler *after* the componentData has been initialized

@@ -34,6 +34,7 @@
 <group choice="opt"><option>--debug-flags</option> <replaceable> flags</replaceable></group>
 <group choice="opt"><option>--debugger</option> <replaceable> debugger_command</replaceable></group>
 <group choice="opt"><option>--backend-debugger</option> <replaceable> debugger_command</replaceable></group>
+<group choice="opt"><option>--r-executable</option> <replaceable> path_to_executable</replaceable></group>
 <arg choice="opt">KDE Generic Options</arg>
 <arg choice="opt">Qt Generic Options</arg>
 </cmdsynopsis>
@@ -63,11 +64,16 @@
 </varlistentry>
 <varlistentry>
 <term><option>--debugger</option> <replaceable>command</replaceable></term>
-<listitem><para>Run &rkward; through the specified debugger command. To add command line options to the debugger command, enclose them in single quotes ('') together with the command. <emphasis>NOTE:</emphasis> To use the \-\-debugger option, it must be specified as the first option on the command line. Only the frontend process will be debugged, using this option.</para></listitem>
+<listitem><para>Run &rkward; through the specified debugger command. To add command line options to the debugger command, enclose them in single quotes ('') together with the command. <emphasis>NOTE:</emphasis> To use the \-\-debugger option, it must be specified as the first option on the command line. Only the frontend process will be debugged, using this option.</para>
+<para>Note that there are a number of pitfalls that may complicate setting up the debugger session as desired. Consider starting &rkward; with option \-\-debug-lebel 3, which will print the effective command line used to start the frontend (but not set some environment variables). Under Windows, the debugger command will <emphasis>not</emphasis> be connected to stdin. For interactive debugging, consider using a graphical debugger.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term><option>--backend-debugger</option> <replaceable>command</replaceable></term>
 <listitem><para>Run the &rkward; backend through the specified debugger command. To add command line options to the debugger command, enclose them in single quotes ('') together with the command. <emphasis>NOTE:</emphasis> Debugger arguments will be split by spaces. If this is not appropriate, you will have to write your own wrapper script for invoking the debugger. Also, make sure to redirect all debugger output and/or input as appropriate. See the examples.</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><option>--r-executable</option> <replaceable>command</replaceable></term>
+<listitem><para>In the case of several R installations, specify the installation to use, e.g. /usr/bin/R. Note that the rkward R library must have been installed to this installation of R, or startup will fail.</para></listitem>
 </varlistentry>
 </variablelist>
 
@@ -84,6 +90,8 @@
 <para><programlisting>
 # Run the rkward backend through valgrind
 rkward --backend-debugger 'valgrind --log-file=valgrind.log'.
+# Debug the frontend through gdb
+rkward --debugger 'gdb --args'
 </programlisting></para>
 </refsect1>
 
