@@ -51,10 +51,13 @@ QString findRKWardAtPath (const QString &path) {
 	return findExeAtPath ("rkward.frontend", path);
 }
 
+#ifdef Q_WS_WIN
+#include <windows.h>
+#endif
 QString quoteCommand (const QString &orig) {
 #ifdef Q_WS_WIN
 	wchar_t input[orig.size()+1];
-	orig.toWCharArray(&input);
+	orig.toWCharArray(input);
 	input[orig.size()]=L'\0'; // terminate string
 	long length = GetShortPathName(input, NULL, 0);
 	wchar_t output[length];
