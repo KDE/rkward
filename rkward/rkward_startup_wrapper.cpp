@@ -53,13 +53,13 @@ QString findRKWardAtPath (const QString &path) {
 
 QString quoteCommand (const QString &orig) {
 #ifdef Q_WS_WIN
-	QString ret = "\"";
-	for (int i = 0; i < orig.size (); ++i) {
-		if (orig[i] == QLatin1Char ('"')) ret.append ("\"\"");
-		else if (orig[i] == QLatin1Char ('\\')) ret.append ("\\\\");
-		else ret.append (orig[i]);
-	}
-	ret.append (QLatin1Char ('"'));
+	wchar_t input[orig.size()+1];
+	orig.toWCharArray(&input);
+	input[orig.size()]=L'\0'; // terminate string
+	long length = GetShortPathName(input, NULL, 0);
+	wchar_t output[length];
+	GetShortPathName(input,output,length);
+	QString ret=QString::fromWCharArray(output,length-1); // discard
 	return ret;
 #else
 	return orig;
@@ -131,50 +131,45 @@ int main (int argc, char *argv[]) {
 #endif
 
 	// Locate KDE and RKWard installations
-	QString kdeinit4_exe;
-	QString rkward_frontend_exe;
-	rkward_frontend_exe = findRKWardAtPath (app.applicationDirPath ());	// this is for running directly from a build tree
-	if (rkward_frontend_exe.isNull ()) {	// this is for the regular case: startup wrapper is not in the same dir as rkward.frontend
-		QString kde4_config_exe;
-		kde4_config_exe = findExeAtPath ("kde4-config", QDir::currentPath ());
-		if (kde4_config_exe.isNull ()) kde4_config_exe = findExeAtPath ("kde4-config", app.applicationDirPath ());
-		if (kde4_config_exe.isNull ()) kde4_config_exe = findExeAtPath ("kde4-config", QDir (app.applicationDirPath ()).filePath ("KDE/bin"));
-		if (kde4_config_exe.isNull ()) {
+	QString kde4_config_exe = findExeAtPath ("kde4-config", QDir::currentPath ());
+	if (kde4_config_exe.isNull ()) kde4_config_exe = findExeAtPath ("kde4-config", app.applicationDirPath ());
+	if (kde4_config_exe.isNull ()) kde4_config_exe = findExeAtPath ("kde4-config", QDir (app.applicationDirPath ()).filePath ("KDE/bin"));
+	if (kde4_config_exe.isNull ()) {
 #ifdef Q_WS_WIN
-			QStringList syspath = QString (qgetenv ("PATH")).split (";");
+	QStringList syspath = QString (qgetenv ("PATH")).split (";");
 #else
-			QStringList syspath = QString (qgetenv ("PATH")).split (":");
+	QStringList syspath = QString (qgetenv ("PATH")).split (":");
 #endif
-			for (int i = 0; i < syspath.size (); ++i) {
-				kde4_config_exe = findExeAtPath ("kde4-config", syspath[i]);
-				if (!kde4_config_exe.isNull ()) break;
-			}
+		for (int i = 0; i < syspath.size (); ++i) {
+			kde4_config_exe = findExeAtPath ("kde4-config", syspath[i]);
+			if (!kde4_config_exe.isNull ()) break;
 		}
+	}
 
-		if (kde4_config_exe.isNull ()) {
-			QMessageBox::critical (0, "Could not find KDE installation", "The KDE installation could not be found (kde4-config). When moving / copying RKWard, make sure to copy the whole application folder, or create a shorcut / link, instead.");
-			exit (1);
-		}
+	if (kde4_config_exe.isNull ()) {
+		QMessageBox::critical (0, "Could not find KDE installation", "The KDE installation could not be found (kde4-config). When moving / copying RKWard, make sure to copy the whole application folder, or create a shorcut / link, instead.");
+		exit (1);
+	}
 
-		QDir kde_dir (QFileInfo (kde4_config_exe).absolutePath ());
-		kde_dir.makeAbsolute ();
+	QDir kde_dir (QFileInfo (kde4_config_exe).absolutePath ());
+	kde_dir.makeAbsolute ();
 #ifdef Q_WS_WIN
-		kdeinit4_exe = findExeAtPath ("kdeinit4", kde_dir.path ());
-		qputenv ("PATH", QString (kde_dir.path () + ";" + qgetenv ("PATH")).toLocal8Bit ());
-		if (debug_level > 3) qDebug ("Adding %s to the system path", qPrintable (kde_dir.path ()));
+	QString kdeinit4_exe = findExeAtPath ("kdeinit4", kde_dir.path ());
+	qputenv ("PATH", QString (kde_dir.path () + ";" + qgetenv ("PATH")).toLocal8Bit ());
+	if (debug_level > 3) qDebug ("Adding %s to the system path", qPrintable (kde_dir.path ()));
 #endif
-		// important if RKWard is not in KDEPREFIX/bin but e.g. KDEPREFIX/lib/libexec
-		qputenv ("RKWARD_ENSURE_PREFIX", kde_dir.path().toLocal8Bit ());
-		if (debug_level > 3) qDebug ("Setting environment variable RKWARD_ENSURE_PREFIX=%s", qPrintable (kde_dir.path ()));
-qDebug ("%s", RKWARD_FRONTEND_LOCATION);
-		rkward_frontend_exe = findRKWardAtPath (RKWARD_FRONTEND_LOCATION);
-		if (rkward_frontend_exe.isNull ()) rkward_frontend_exe = findRKWardAtPath (kde_dir.absoluteFilePath ("bin"));
-		if (rkward_frontend_exe.isNull ()) rkward_frontend_exe = findRKWardAtPath (kde_dir.absoluteFilePath ("../lib/libexec"));
+	// important if RKWard is not in KDEPREFIX/bin but e.g. KDEPREFIX/lib/libexec
+	qputenv ("RKWARD_ENSURE_PREFIX", kde_dir.path().toLocal8Bit ());
+	if (debug_level > 3) qDebug ("Setting environment variable RKWARD_ENSURE_PREFIX=%s", qPrintable (kde_dir.path ()));
 
-		if (rkward_frontend_exe.isNull ()) {
-			QMessageBox::critical (0, "RKWard frontend binary missing", "RKWard frontend binary could not be found. When moving / copying RKWard, make sure to copy the whole application folder, or create a shorcut / link, instead.");
-			exit (1);
-		}
+	QString rkward_frontend_exe = findRKWardAtPath (app.applicationDirPath ());	// this is for running directly from a build tree
+	if (rkward_frontend_exe.isNull ()) rkward_frontend_exe = findRKWardAtPath (RKWARD_FRONTEND_LOCATION);
+	if (rkward_frontend_exe.isNull ()) rkward_frontend_exe = findRKWardAtPath (kde_dir.absoluteFilePath ("bin"));
+	if (rkward_frontend_exe.isNull ()) rkward_frontend_exe = findRKWardAtPath (kde_dir.absoluteFilePath ("../lib/libexec"));
+
+	if (rkward_frontend_exe.isNull ()) {
+		QMessageBox::critical (0, "RKWard frontend binary missing", "RKWard frontend binary could not be found. When moving / copying RKWard, make sure to copy the whole application folder, or create a shorcut / link, instead.");
+		exit (1);
 	}
 
 	if (usage) {
