@@ -56,14 +56,15 @@ QString findRKWardAtPath (const QString &path) {
 #endif
 QString quoteCommand (const QString &orig) {
 #ifdef Q_WS_WIN
+// Get short path name as a safe way to pass all sort of commands on the Windows shell
+// credits to http://erasmusjam.wordpress.com/2012/10/01/get-8-3-windows-short-path-names-in-a-qt-application/
 	wchar_t input[orig.size()+1];
-	orig.toWCharArray(input);
-	input[orig.size()]=L'\0'; // terminate string
-	long length = GetShortPathName(input, NULL, 0);
+	orig.toWCharArray (input);
+	input[orig.size ()] = L'\0'; // terminate string
+	long length = GetShortPathName (input, NULL, 0);
 	wchar_t output[length];
-	GetShortPathName(input,output,length);
-	QString ret=QString::fromWCharArray(output,length-1); // discard
-	return ret;
+	GetShortPathName (input, output, length);
+	return QString::fromWCharArray (output, length-1);
 #else
 	return orig;
 #endif
