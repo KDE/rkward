@@ -9,16 +9,6 @@ IF(Q_WS_MAC)
 	SET(CPACK_BUNDLE_ICON rkward.icns)
 	SET(CPACK_BUNDLE_NAME RKWard)
 	SET(CPACK_BUNDLE_STARTUP_COMMAND rkward)
-	SET(APPEND_LOCAL_PATH "# ensure that PATH is set to include what we deliver with the bundle
-if ! [ $(echo $PATH | grep ${CMAKE_INSTALL_PREFIX}) ] ; then
-  export PATH=\"${CMAKE_INSTALL_PREFIX}/bin\":\"${CMAKE_INSTALL_PREFIX}/sbin\":$PATH
-fi")
-	IF(DEFINED R_LIBDIR)
-		SET(APPEND_LOCAL_RLIBS "# ensure that RKWard finds its own packages
-export R_LIBS=\"${R_LIBDIR}\"")
-	ENDIF(R_LIBDIR)
-	SET(KDE_START_DBUS "launchctl load -w \"${CMAKE_INSTALL_PREFIX}/Library/LaunchAgents/org.freedesktop.dbus-session.plist\"")
-#	SET(CPACK_BUNDLE_PLIST ${CMAKE_SOURCE_DIR}/rkward/Info.plist)
 ELSE(Q_WS_MAC)
 	SET(RKWARD_FRONTEND_LOCATION ${LIBEXEC_INSTALL_DIR})
 ENDIF(Q_WS_MAC)
@@ -83,8 +73,13 @@ ENDIF (WIN32)
 ADD_CUSTOM_COMMAND (OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/rkward.ico"
 			COMMAND cmake -E copy "${CMAKE_CURRENT_SOURCE_DIR}/icons/app-icon/rkward.ico"
 			"${CMAKE_CURRENT_BINARY_DIR}/rkward.ico")
-ADD_EXECUTABLE (rkward wrapper/rkward_startup_wrapper.cpp wrapper/rkward_windows_icon.rc rkward.ico)
+ADD_EXECUTABLE (rkward rkward_startup_wrapper.cpp rkward_windows_icon.rc rkward.ico)
+# NOTE: These definitions are needed for the wrapper, only.
+# We should switch with to target_compile_definitions once we require CMAKE 2.6+
 add_definitions ("-DR_EXECUTABLE=\\\"${R_EXECUTABLE}\\\"")
+add_definitions ("-DINSTALL_PATH=\\\"${CMAKE_INSTALL_PREFIX}\\\"")
+add_definitions ("-DR_LIBS=\\\"${R_LIBDIR}\\\"")
+add_definitions ("-DRKWARD_FRONTEND_LOCATION=\\\"${RKWARD_FRONTEND_LOCATION}\\\"")
 TARGET_LINK_LIBRARIES(rkward ${QT_QTGUI_LIBRARY} ${QT_QTCORE_LIBRARY})
 
 ADD_DEPENDENCIES(rkward.frontend rkward)

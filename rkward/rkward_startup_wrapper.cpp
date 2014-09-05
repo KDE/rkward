@@ -127,6 +127,17 @@ int main (int argc, char *argv[]) {
 		kde4_config_exe = findExeAtPath ("kde4-config", QDir::currentPath ());
 		if (kde4_config_exe.isNull ()) kde4_config_exe = findExeAtPath ("kde4-config", app.applicationDirPath ());
 		if (kde4_config_exe.isNull ()) kde4_config_exe = findExeAtPath ("kde4-config", QDir (app.applicationDirPath ()).filePath ("KDE/bin"));
+		if (kde4_config_exe.isNull ()) {
+#ifdef Q_WS_WIN
+			QStringList syspath = QString (qgetenv ("PATH")).split (";");
+#else
+			QStringList syspath = QString (qgetenv ("PATH")).split (":");
+#endif
+			for (int i = 0; i < syspath.size (); ++i) {
+				kde4_config_exe = findExeAtPath ("kde4-config", syspath[i]);
+				if (!kde4_config_exe.isNull ()) break;
+			}
+		}
 
 		if (kde4_config_exe.isNull ()) {
 			QMessageBox::critical (0, "Could not find KDE installation", "The KDE installation could not be found (kde4-config). When moving / copying RKWard, make sure to copy the whole application folder, or create a shorcut / link, instead.");
@@ -143,7 +154,7 @@ int main (int argc, char *argv[]) {
 		// important if RKWard is not in KDEPREFIX/bin but e.g. KDEPREFIX/lib/libexec
 		qputenv ("RKWARD_ENSURE_PREFIX", kde_dir.path().toLocal8Bit ());
 		if (debug_level > 3) qDebug ("Setting environment variable RKWARD_ENSURE_PREFIX=%s", qPrintable (kde_dir.path ()));
-	
+qDebug ("%s", RKWARD_FRONTEND_LOCATION);
 		rkward_frontend_exe = findRKWardAtPath (RKWARD_FRONTEND_LOCATION);
 		if (rkward_frontend_exe.isNull ()) rkward_frontend_exe = findRKWardAtPath (kde_dir.absoluteFilePath ("bin"));
 		if (rkward_frontend_exe.isNull ()) rkward_frontend_exe = findRKWardAtPath (kde_dir.absoluteFilePath ("../lib/libexec"));
@@ -165,6 +176,30 @@ int main (int argc, char *argv[]) {
 		kdeinit4_exe = findExeAtPath ("kdeinit4", QFileInfo (rkward_frontend_exe).absolutePath ());
 	}
 	if (!kdeinit4_exe.isNull ()) QProcess::execute (kdeinit4_exe, QStringList ());
+#else
+// Apparently on some systems an embedded R gets outsmarted somehow, and LC_NUMERIC is set to some dangerous value for the whole app (via SCIM)
+// To prevent this, set it here, explicitely. R does not work with wrong settings of LC_NUMERIC.
+
+// First, however, need to unset LC_ALL, if set. Instead we set LANG, so the default will be the same, where not overridden
+	QString lcall = qgetenv ("LC_ALL");
+	if (!lcall.isEmpty ()) {
+		qputenv ("LANG", lcall.toLocal8Bit ());
+		qputenv ("LC_ALL", "");
+		qDebug ("Warning: Unsetting LC_ALL");
+	}
+
+	qputenv ("LC_NUMERIC", "C");
+#endif
+
+#ifdef Q_WS_MAC
+	QString oldpath = qgetenv ("PATH");
+	if (!oldpath.contains (INSTALL_PATH)) {
+		//ensure that PATH is set to include what we deliver with the bundle
+		qputenv ("PATH", QString ("\"%1/bin\":\"%1/sbin\":%2").arg (INSTALL_PATH).arg (oldpath).toLocal8Bit ());
+	}
+	// ensure that RKWard finds its own packages
+	qputenv ("R_LIBS"=R_LIBS);
+	QProcess::execute ("lanuchctl", QStringList () << "load" << "-w" << "\"" INSTALL_PATH "/Library/LaunchAgents/org.freedesktop.dbus-session.plist\"");
 #endif
 
 	// Look for R:
