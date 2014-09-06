@@ -102,7 +102,7 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 		static_cast<RKComponentPropertyRObjects*> (available)->setTypeFilter (xml->getStringAttribute (element, "types", QString::null, DL_INFO).split (" ", QString::SkipEmptyParts));
 		static_cast<RKComponentPropertyRObjects*> (available)->setDimensionFilter (xml->getIntAttribute (element, "num_dimensions", 0, DL_INFO), xml->getIntAttribute (element, "min_length", 0, DL_INFO), xml->getIntAttribute (element, "max_length", INT_MAX, DL_INFO));
 	}
-	available->setStripDuplicates (!xml->getBoolAttribute (element, "allow_duplicates", mode == Valueslot, DL_INFO));
+	available->setStripDuplicates (!xml->getBoolAttribute (element, "allow_duplicates", false, DL_INFO));
 
 	connect (available, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (availablePropertyChanged (RKComponentPropertyBase *)));
 	availablePropertyChanged (available);		// initialize
@@ -201,7 +201,7 @@ void RKVarSlot::selectPressed () {
 		int len = source->listLength ();
 		for (int i = 0; i < len; ++i) {
 			if (mode == Valueslot) {
-				static_cast<RKComponentPropertyStringList*> (available)->setValueAt (i, static_cast<RKComponentPropertyStringList*> (source)->valueAt (i));
+				static_cast<RKComponentPropertyStringList*> (available)->setValueAt (static_cast<RKComponentPropertyStringList*> (available)->listLength (), static_cast<RKComponentPropertyStringList*> (source)->valueAt (i));
 			} else {
 				static_cast<RKComponentPropertyRObjects*> (available)->addObjectValue (static_cast<RKComponentPropertyRObjects*> (source)->objectAt (i));
 			}
