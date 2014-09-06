@@ -2584,6 +2584,22 @@ local({
 </varlistentry>
 
 <varlistentry>
+<term>&lt;valueselector&gt;</term>
+<listitem><para>Provides a list of available strings (not R objects) to be selected in one or more accompanying &lt;valueslot&gt;s. String options can be defined using &lt;option&gt;-tags as direct children (see below), or set using dynamic <link linkend="elementproperties">properties</link>. Attributes:
+	<variablelist>
+	<varlistentry>
+	<term><parameter>label</parameter></term>
+	<listitem><para>Label for the valueselector (optional, defaults to no label)</para></listitem>
+	</varlistentry>
+	</variablelist></para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>&lt;valueslot&gt;</term>
+<listitem><para>Used in conjunction with a &lt;valueselector&gt; to allow the user to select one or more string items. This element is mostly identical to &lt;varslot&gt;, and shares the same attributes, except for those which refer to properties of the acceptable items (i.e. classes, types, num_dimensions, min_length, max_length).</para></listitem>
+</varlistentry>
+
+<varlistentry>
 <term>&lt;radio&gt;</term>
 <listitem><para>Defines a group of radio-exclusive buttons (only one can be selected at a time). Requires at least two &lt;option&gt;-tags as direct children. No other tags are allowed as children. Attributes:
 	<variablelist>
@@ -2606,8 +2622,19 @@ local({
 </varlistentry>
 
 <varlistentry>
+<term>&lt;select&gt;</term>
+<listitem><para>Provides a list of available strings from which the user can select an arbitrary number. String options can be defined using &lt;option&gt;-tags as direct children (see below), or set using dynamic <link linkend="elementproperties">properties</link>. Attributes:
+	<variablelist>
+	<varlistentry>
+	<term><parameter>label</parameter></term>
+	<listitem><para>Label for the &lt;select&gt; (optional, defaults to no label)</para></listitem>
+	</varlistentry>
+	</variablelist></para></listitem>
+</varlistentry>
+
+<varlistentry>
 <term>&lt;option&gt;</term>
-<listitem><para>Can only be used as a direct child of a &lt;radio&gt; or &lt;dropdown&gt; element. Represents one selectable option in a radio control or dropdown list. Specifying the "id" parameter for the &lt;option&gt; elements is optional (and in fact it's recommended, not to set an "id", unless you plan to really use it to disable single options). Only the parent element (&lt;radio&gt; or &lt;dropdown&gt;) needs one. Attributes:
+<listitem><para>Can only be used as a direct child of a &lt;radio&gt;, &lt;dropdown&gt;, &lt;valueslot&gt; or &lt;select&gt; element. Represents one selectable option in a radio control or dropdown list. Specifying the "id" parameter for the &lt;option&gt; elements is optional (and in fact it's recommended, not to set an "id", unless you plan to really use it to disable single options; &lt;valueslot&gt; and &lt;select&gt; options do not currently support ids). Only the parent element (&lt;radio&gt; or &lt;dropdown&gt; or &lt;valueslot&gt; or &lt;select&gt;) needs one. Attributes:
 	<variablelist>
 	<varlistentry>
 	<term><parameter>label</parameter></term>
@@ -2619,7 +2646,7 @@ local({
 	</varlistentry>
 	<varlistentry>
 	<term><parameter>checked</parameter></term>
-	<listitem><para>Whether the option should be checked/selected by default "true" or "false". Only one button in a &lt;radio&gt; may be set to <parameter>checked=</parameter><replaceable>"true"</replaceable>. If no option is set to checked, the first option in the parent element will be checked/selected automatically. (optional, default to "false")</para></listitem>
+	<listitem><para>Whether the option should be checked/selected by default "true" or "false". In a &lt;radio&gt; or &lt;dropdown&gt;, only one option may be set to <parameter>checked=</parameter><replaceable>"true"</replaceable>, and if no option is set to checked, the first option in the parent element will be checked/selected automatically. In a &lt;select&gt;, any number of options may be set to checked. (optional, default to "false")</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
@@ -3169,6 +3196,30 @@ Child elements &lt;true&gt;, &lt;false&gt;, &lt;case&gt;, and &lt;default&gt; ta
 </varlistentry>
 
 <varlistentry>
+<term>&lt;valueselector&gt;</term>
+<listitem><para>Default property is "selected"
+	<variablelist>
+	<varlistentry>
+	<term>selected</term>
+	<listitem><para>The strings currently selected. Modifier "labeled" to retrieve the corresponding labels. In a &lt;valueselector&gt; you probably do not want to use this, directly (only in a &lt;select&gt;). (read/write StringList)</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>available</term>
+	<listitem><para>The list of string values to select from. (read/write StringList)</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>labels</term>
+	<listitem><para>Labels to display for the string values. (read/write StringList)</para></listitem>
+	</varlistentry>
+	</variablelist></para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>&lt;valueslot&gt;</term>
+<listitem><para>Same as &lt;varslot&gt;, but the properties are lists of strings, instead of RObjects.</para></listitem>
+</varlistentry>
+
+<varlistentry>
 <term>&lt;radio&gt;</term>
 <listitem><para>Default property is "string"
 	<variablelist>
@@ -3185,22 +3236,17 @@ Child elements &lt;true&gt;, &lt;false&gt;, &lt;case&gt;, and &lt;default&gt; ta
 
 <varlistentry>
 <term>&lt;dropdown&gt;</term>
-<listitem><para>Default property is "string"
-	<variablelist>
-	<varlistentry>
-	<term>string</term>
-	<listitem><para>The value of the currently selected option (string)</para></listitem>
-	</varlistentry>
-	<varlistentry>
-	<term>number</term>
-	<listitem><para>The number of the currently selected option (options are numbered top-to-bottom, starting at 0) (integer)</para></listitem>
-	</varlistentry>
-	</variablelist></para></listitem>
+<listitem><para>Same as &lt;radio&gt;</para></listitem>
+</varlistentry>
+
+<varlistentry>
+<term>&lt;select&gt;</term>
+<listitem><para>Same as &lt;valueselector&gt;</para></listitem>
 </varlistentry>
 
 <varlistentry>
 <term>&lt;option&gt;</term>
-<listitem><para>No default property. "enabled" is the *only* property. It does not have the "visible" or "required" properties.
+<listitem><para>No default property. "enabled" is the *only* property, and it is not currenlty available for options inside a &lt;select&gt; or &lt;valueselector&gt;. &lt;option&gt; does not have the "visible" or "required" properties.
 	<variablelist>
 	<varlistentry>
 	<term>enabled</term>

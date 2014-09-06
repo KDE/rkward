@@ -10,9 +10,9 @@
 		<tabbook>
 			<tab label="&lt;select&gt;">
 				<select id="select">
-					<option value="test1" label="first" selected="true"/>
+					<option value="test1" label="first" checked="true"/>
 					<option value="test2" label="second"/>
-					<option value="test3" label="third" selected="true"/>
+					<option value="test3" label="third" checked="true"/>
 				</select>
 				<stretch/>
 			</tab>

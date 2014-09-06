@@ -73,7 +73,7 @@ RKValueSelector::RKValueSelector (const QDomElement &element, RKComponent *paren
 			const QDomElement &child = options[i];
 			QString v = xml->getStringAttribute (child, "value", QString (), DL_WARNING);
 			QString l = xml->getStringAttribute (child, "label", v, DL_INFO);
-			if (xml->getBoolAttribute (child, "selected", false, DL_INFO)) selected_list.append (v);
+			if (xml->getBoolAttribute (child, "checked", false, DL_INFO)) selected_list.append (v);
 			labels_list.append (l);
 			values_list.append (v);
 		}
@@ -173,7 +173,7 @@ void RKValueSelector::selectionPropertyChanged () {
 QVariant RKValueSelector::value (const QString& modifier) {
 	RK_TRACE (PLUGIN);
 
-	if (modifier == "labelled") {
+	if (modifier == "labeled") {
 		QStringList selected_labels;
 		for (int i = 0; i < selected->listLength (); ++i) {
 			int index = available->values ().indexOf (selected->valueAt (i));
