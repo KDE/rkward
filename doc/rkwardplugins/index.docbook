@@ -2534,7 +2534,11 @@ local({
 	</varlistentry>
 	<varlistentry>
 	<term><parameter>source</parameter></term>
-	<listitem><para>The varselector to fetch the selection from (required, unless you connect manually)</para></listitem>
+	<listitem><para>The varselector to fetch the selection from (required, unless you connect manually or using source_property)</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term><parameter>source_property</parameter></term>
+	<listitem><para>An arbitrary property to copy values from, when the select button is clicked. If specified, this overrides the "source"-attribute.</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term><parameter>required</parameter></term>

@@ -10,12 +10,10 @@
 - Fixed: Adjust to (re-?)named parameters for options("pager")
 - Allow plugin UI script code to query R for information
 	TODO: - document
-	      - piece all the new features together and implement an embeddable level selector plugin on top of this
+	      - piece all the new features together and finish implementing an embeddable level selector plugin on top of this
 - Fixed: potential crash when a previously installed pluginmap is not longer readable
 - Allow to connect <varslot>/<valueslot> source to any property, not just <varselectors>
-	TODO: document
 - New plugin elements <valueselector> and <select>
-	TODO: allow to fill <valueselector> from R expression
 - New plugin element <valueslot> for selecting arbitrary string values (otherwise almost identical to <varslot>)
 - <varslots> can be set to accept the same object several times. Used in scatterplot plugin.
 - New R function rk.embed.device() for manually embedding graphics devices in RKWard

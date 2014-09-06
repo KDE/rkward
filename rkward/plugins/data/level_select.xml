@@ -11,6 +11,7 @@
 
 		<script><![CDATA[
 				last_command_id = -1;
+				gui.setValue ("limitnote.visible", false);
 
 				gui.addChangeCommand ("variable", "update ()");
 				gui.addChangeCommand ("limit", "update ()");
