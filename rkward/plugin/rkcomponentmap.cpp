@@ -382,6 +382,41 @@ RKPluginMapParseResult RKComponentMap::addPluginMapLocal (const QString& plugin_
 	for (XMLChildList::const_iterator it=list.constBegin (); it != list.constEnd (); ++it) {
 		if ((*it).hasAttribute ("file")) {
 			QString file = pluginmap_file_desc->makeFileName (xml->getStringAttribute (*it, "file", QString (), DL_ERROR));
+			/// EXPERIMENTAL: Look for localized version of required pluginmap
+			if (xml->getBoolAttribute (*it, "localized", false, DL_INFO)) {
+				QFileInfo fi(file);
+				QDir dir = fi.absoluteDir ();
+				QString fn = fi.fileName ();
+				QString lang = KGlobal::locale ()->language ();
+				RK_DEBUG (PLUGIN, DL_INFO, "Looking for localized version of %s, (locale is %s)", qPrintable (file), qPrintable (lang));
+				QString country = lang.section ('_', 1, 1);	// in case it's something like 'de_DE'
+				lang = lang.section ('_', 0, 0);
+				QStringList candidates = dir.entryList (QStringList () << lang + "*." + fn);
+				QString plain_match, exact_match;
+				// if full language code is 'de_DE', look for (in order of preference):
+				// de_DE, de, de_SOMETHING
+				for (int i = 0; i < candidates.length (); ++i) {
+					if (candidates[i] == lang + '_' + country + '.' + fn) {
+						exact_match = candidates[i];
+						break;
+					} else if (candidates[i] == lang + '.' + fn) {
+						plain_match = candidates[i];
+					}
+				}
+				if (!exact_match.isEmpty ()) {
+					file = exact_match;
+					RK_DEBUG (PLUGIN, DL_INFO, "Found exact match");
+				} else if (!plain_match.isEmpty ()) {
+					file = plain_match;
+					RK_DEBUG (PLUGIN, DL_INFO, "Found language match");
+				} else if (!candidates.isEmpty ()) {
+					file = candidates[0];
+					RK_DEBUG (PLUGIN, DL_INFO, "Using %s as best match");
+				} else {
+					RK_DEBUG (PLUGIN, DL_INFO, "No suitable localized version found");
+				}
+			}
+			/// END
 			if (QFileInfo (file).isReadable ()) {
 				includelist.append (file);
 			} else {
