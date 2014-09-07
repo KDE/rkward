@@ -315,7 +315,7 @@ void RKLoadLibsDialog::runInstallationCommand (const QString& command, bool as_r
 		RK_ASSERT (false);
 	}
 
-	QString R_binary (getenv ("R_binary"));
+	QString R_binary (getenv ("R_BINARY"));
 	QString call;
 	QStringList params;
 #ifdef Q_WS_WIN
