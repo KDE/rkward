@@ -1,0 +1,46 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="recode_categorical.js" />
+	<help file="recode_categorical.rkh" />
+	<logic>
+		<connect governor="x.available" client="levels.variable"/>
+	</logic>
+	<dialog label="Recode categorical data"><tabbook>
+		<tab label="Input and output variables">
+				<varselector id="vars"/>
+				<varslot id="x" source="vars" label="Select variable to recode"/>
+			<text>TODO where to store output</text>
+			<dropdown id="datamode" label="Data type after recoding">
+				<option value="character" label="Character"/>
+				<option value="factor" label="Factor" checked="true"/>
+				<option value="numeric" label="Numeric"/>
+				<option value="logical" label="Logical"/>
+			</dropdown>
+		</tab>
+		<tab label="Values">
+			<row>
+				<embed id="levels" component="rkward::level_select"/>
+				<column>
+					<optionset id="set" min_rows="1">
+						<content>
+							<frame>
+								<optiondisplay index="true"/>
+								<valueslot multi="true" min_vars="1" id="values" label="Values to recode"/>
+								<input id="other_custom" label="Value"/>
+							</frame>
+						</content>
+					</optionset>
+
+					<radio id="other" label="Any other values">	<!-- TODO Should this be including original NAs? -->
+						<option value="copy" label="Copy" id="copy_others"/>
+						<option value="na" label="NA"/>
+						<option value="custom" label="Custom value:"/>
+					</radio>
+					<input id="other_custom" label="Value"/>
+
+					<checkbox id="drop" label="Drop NAs in recoded variable"/>
+				</column>
+			</row>
+		</tab>
+	</tabbook></dialog>
+</document>

@@ -1,13 +1,17 @@
 <!DOCTYPE rkplugin>
 <document>
 	<code file="level_select.js" />
-	<help file="level_select.rkh" />
 	<logic>
+		<!-- This plugin is meant for embedding only. Provides a <valueselector> holding levels of a variable
+			(or other info queried from R).
+			External properties:
+				- variable: Connect this to the variable to fetch levels for (typically the available-property of a varslot)
+				- limit: Optionally adjust max number of levels to fetch. Default is 100.
+				- custom_expression: A custom expression to run instead of levels(_X_). The string '_X_' is replaced with the variable name.
+		-->
 		<external id="variable" default=""/>
 		<external id="custom_expression" default=""/>
 		<external id="limit" default="100"/>
-
-		<connect client="variable" governor="x.available"/>
 
 		<script><![CDATA[
 				last_command_id = -1;
@@ -49,11 +53,6 @@
 		]]></script>
 	</logic>
 	<dialog label="Level selector">
-		<row>
-			<varselector id="vars"/>
-			<varslot id="x" source="vars"/>
-		</row>
-		
 		<valueselector id="selector" />
 		<text id="limitnote" type="warning">
 			Note: Some values were cut off.
