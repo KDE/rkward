@@ -404,13 +404,13 @@ RKPluginMapParseResult RKComponentMap::addPluginMapLocal (const QString& plugin_
 					}
 				}
 				if (!exact_match.isEmpty ()) {
-					file = exact_match;
+					file = dir.absoluteFilePath (exact_match);
 					RK_DEBUG (PLUGIN, DL_INFO, "Found exact match");
 				} else if (!plain_match.isEmpty ()) {
-					file = plain_match;
+					file = dir.absoluteFilePath (plain_match);
 					RK_DEBUG (PLUGIN, DL_INFO, "Found language match");
 				} else if (!candidates.isEmpty ()) {
-					file = candidates[0];
+					file = dir.absoluteFilePath (candidates[0]);
 					RK_DEBUG (PLUGIN, DL_INFO, "Using %s as best match");
 				} else {
 					RK_DEBUG (PLUGIN, DL_INFO, "No suitable localized version found");
