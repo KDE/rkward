@@ -187,8 +187,12 @@ rk.plugin.skeleton <- function(about, path=tempdir(),
   
   # check for i18n
   if(!is.null(lang)){
-    lang <- paste0(".", lang)
-  } else {}
+    translate <- TRUE
+    lang.file <- paste0(lang, ".")
+  } else {
+    translate <- FALSE
+    lang.file <- NULL
+  }
 
   # define paths an file names
   main.dir <- file.path(path, name)
@@ -197,11 +201,26 @@ rk.plugin.skeleton <- function(about, path=tempdir(),
   namespace.file <- file.path(main.dir, "NAMESPACE")
   changelog.file <- file.path(main.dir, "ChangeLog")
   rkward.dir <- file.path(main.dir, "inst", "rkward")
+  i18n.dir <- file.path(rkward.dir, "po")
   plugin.dir <- file.path(rkward.dir, "plugins")
-  # the basic file names
-  plugin.fname.pluginmap <- paste0(name, lang, ".pluginmap")
   # file names with paths
-  plugin.pluginmap <- file.path(rkward.dir, plugin.fname.pluginmap)
+  toplevel.fname.pluginmap <- paste0(name, ".pluginmap")
+  # check for i18n
+  if(isTRUE(translate)){
+    # don't prefix pluginmap for the english default
+    if(identical(lang, "en")){
+      plugin.fname.pluginmap <- paste0(name, ".pluginmap")
+    } else {
+      plugin.fname.pluginmap <- paste0(lang.file, name, ".pluginmap")
+    }
+    plugin.pluginmap <- file.path(i18n.dir, plugin.fname.pluginmap)
+    toplevel.pluginmap <- file.path(rkward.dir, toplevel.fname.pluginmap)
+    default.pluginmap <- file.path(i18n.dir, toplevel.fname.pluginmap)
+    require.default.pluginmap <- file.path("po", toplevel.fname.pluginmap)
+  } else {
+    plugin.fname.pluginmap <- paste0(lang.file, name, ".pluginmap")
+    plugin.pluginmap <- file.path(rkward.dir, toplevel.fname.pluginmap)
+  }
   tests.main.dir <- file.path(rkward.dir, "tests")
   tests.dir <- file.path(rkward.dir, "tests", name)
   testsuite.file <- file.path(tests.main.dir, "testsuite.R")
@@ -227,6 +246,10 @@ rk.plugin.skeleton <- function(about, path=tempdir(),
   if(isTRUE(tests) & !file_test("-d", tests.dir)){
     stopifnot(dir.create(tests.dir, recursive=TRUE))
     message(paste0("Created directory ", tests.dir, "."))
+  } else {}
+  if(isTRUE(translate) & !file_test("-d", i18n.dir)){
+    stopifnot(dir.create(i18n.dir, recursive=TRUE))
+    message(paste0("Created directory ", i18n.dir, "."))
   } else {}
 
   ## create the main component
@@ -264,9 +287,9 @@ rk.plugin.skeleton <- function(about, path=tempdir(),
       rkh.doc <- slot(this.comp, "rkh")
 
       # the basic file names
-      plugin.fname.xml <- paste0(comp.name, lang, ".xml")
-      plugin.fname.js <- paste0(comp.name, lang, ".js")
-      plugin.fname.rkh <- paste0(comp.name, lang, ".rkh")
+      plugin.fname.xml <- paste0(lang.file, comp.name, ".xml")
+      plugin.fname.js <- paste0(lang.file, comp.name, ".js")
+      plugin.fname.rkh <- paste0(lang.file, comp.name, ".rkh")
       # file names with paths
       plugin.xml <- file.path(plugin.dir, plugin.fname.xml)
       plugin.js <- file.path(plugin.dir, plugin.fname.js)
@@ -316,7 +339,11 @@ rk.plugin.skeleton <- function(about, path=tempdir(),
       # get components and hierarchy info from the components list
       all.components <- sapply(components, function(this.comp){
           comp.name <- slot(this.comp, "name")
-          named.compo <- paste0("plugins/", clean.name(comp.name), lang, ".xml")
+          if(isTRUE(translate)){
+            named.compo <- paste0("../plugins/", lang.file, clean.name(comp.name), ".xml")
+          } else {
+            named.compo <- paste0("plugins/", clean.name(comp.name), ".xml")
+          }
           # we'll name the component, to nicen the menu entry
           names(named.compo) <- comp.name
           return(named.compo)
@@ -334,13 +361,30 @@ rk.plugin.skeleton <- function(about, path=tempdir(),
         require=pluginmap[["require"]],
         hints=hints,
         gen.info=gen.info,
-        dependencies=dependencies.node)
+        dependencies=dependencies.node,
+        id.name=paste(gsub("[.]*", "", pluginmap[["name"]]), lang, "rkward", sep="_"))
       cat(pasteXML(XML.pluginmap, shine=2, indent.by=indent.by), file=plugin.pluginmap)
       # needed for "show"
       pm.id.name <- pluginmap[["name"]]
     } else {
       pm.id.name <- name
     }
+
+    if(isTRUE(translate)){
+      # generate toplevel pluginmap for i18n
+      XML.i18n.require <- rk.XML.require(file=require.default.pluginmap, localized=TRUE)
+      XML.i18n.pluginmap <- rk.XML.pluginmap(
+        name=pluginmap[["name"]],
+        components=NULL,
+        hierarchy=NULL,
+        require=XML.i18n.require,
+        hints=FALSE,
+        gen.info=gen.info,
+        id.name=paste0(gsub("[.]*", "", pluginmap[["name"]]), "_main_rkward"),
+        lang="en")
+      cat(pasteXML(XML.i18n.pluginmap, shine=2, indent.by=indent.by), file=toplevel.pluginmap)
+    } else {}
+
     if(isTRUE(edit)){
       rk.edit.files(plugin.pluginmap, title=plugin.fname.pluginmap, prompt=FALSE)
     } else {}
@@ -353,6 +397,7 @@ rk.plugin.skeleton <- function(about, path=tempdir(),
       } else {}
     } else {}
   } else {}
+  
 
   ## create testsuite.R
   if(isTRUE(tests)){

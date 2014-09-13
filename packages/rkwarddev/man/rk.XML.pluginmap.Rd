@@ -7,7 +7,7 @@ rk.XML.pluginmap(name, about = NULL, components, hierarchy = "test",
   require = NULL, x11.context = NULL, import.context = NULL,
   clean.name = TRUE, hints = FALSE, gen.info = TRUE,
   dependencies = NULL, namespace = name, priority = "medium",
-  lang = rk.get.language())
+  id.name = "auto", lang = rk.get.language())
 }
 \arguments{
 \item{name}{Character string, name of the plugin.}
@@ -18,7 +18,8 @@ See \code{link[XiMpLe:rk.XML.about]{rk.XML.about}} for details. Skipped if \code
 \item{components}{Either an object of class \code{XiMpLe.node} to be pasted as the \code{<components>} section (see
 \code{\link[rkwarddev:rk.XML.components]{rk.XML.components}} for details). Or a character vector with at least
 one plugin component file name,
-      relative path from the pluginmap file and ending with ".xml".}
+      relative path from the pluginmap file and ending with ".xml". Can be set to \code{NULL} if
+\code{require} is used accordingly.}
 
 \item{hierarchy}{Either an object of class \code{XiMpLe.node} to be pasted as the \code{<hierarchy>} section (see
 \code{\link[rkwarddev:rk.XML.hierarchy]{rk.XML.hierarchy}} for details). Or a character vector with instructions
@@ -29,7 +30,8 @@ where to place the plugin in the menu hierarchy,
 \code{"analysis"}, \code{"plots"}, \code{"distributions"}, \code{"windows"},
       \code{"settings"} and \code{"help"},
 anything else will place it in a "test" menu. If \code{hierarchy} is a list,
-      each entry represents the label of a menu level.}
+      each entry represents the label of a menu level.
+Can be set to \code{NULL} if \code{require} is used accordingly.}
 
 \item{require}{Either a (list of) objects of class \code{XiMpLe.node} to be pasted as a \code{<require>} section (see
 \code{\link[rkwarddev:rk.XML.require]{rk.XML.require}} for details). Or a character vector with at least

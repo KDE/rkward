@@ -80,13 +80,13 @@ rk.XML.plugin <- function(name, dialog=NULL, wizard=NULL, logic=NULL, snippets=N
   if(is.null(lang)){
     lang.file <- NULL
   } else {
-    lang.file <- paste0(".", lang)
+    lang.file <- paste0(lang, ".")
   }
 
-  all.children[[length(all.children)+1]] <- rk.XML.code(file=paste0(name, lang.file, ".js"))
+  all.children[[length(all.children)+1]] <- rk.XML.code(file=paste0(lang.file, name, ".js"))
 
   if(isTRUE(help)){
-    all.children[[length(all.children)+1]] <- rk.XML.help(file=paste0(name, lang.file, ".rkh"))
+    all.children[[length(all.children)+1]] <- rk.XML.help(file=paste0(lang.file, name, ".rkh"))
   } else {}
 
   if(!is.null(include)){

@@ -27,6 +27,9 @@
 #'    preferred over \code{map} if that file is in the same package.
 #' @param map Character string, should be \code{"namespace::id"} of another .pluginmap to be included.
 #'    Can be used to address plugin maps which are not part of the same plugin package.
+#' @param localized Logical, only useful for plugins with static internationalisation. Adds the \code{localized}
+#'    attribute if set to \code{TRUE}; \code{file} must then point to the default pluginmap in a subdirectory
+#'    containing all localised pluginmaps.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
@@ -34,7 +37,7 @@
 #' test.require <- rk.XML.require("another.pluginmap")
 #' cat(pasteXML(test.require))
 
-rk.XML.require <- function(file=NULL, map=NULL){
+rk.XML.require <- function(file=NULL, map=NULL, localized=FALSE){
   # one of file or map *must* be used
   if(is.null(file) && is.null(map)){
     stop(simpleError("'file' or 'map' must be specified!"))
@@ -45,9 +48,14 @@ rk.XML.require <- function(file=NULL, map=NULL){
   } else {}
 
   # now that we know one of both is set
+  set.localized <- NULL
   if(!is.null(file)){
     if(length(file) > 1 || !is.character(file)){
       stop(simpleError("'file' must be a character string!"))
+    } else {}
+    # check for i18n
+    if(isTRUE(localized)){
+      set.localized <- "true"
     } else {}
   } else {
     if(length(map) > 1 || !is.character(map)){
@@ -55,7 +63,7 @@ rk.XML.require <- function(file=NULL, map=NULL){
     } else {}
   }
 
-  node <- XMLNode("require", attrs=list(file=file, map=map))
+  node <- XMLNode("require", attrs=list(localized=set.localized, file=file, map=map))
 
   return(node)
 }

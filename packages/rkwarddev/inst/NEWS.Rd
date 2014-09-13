@@ -1,20 +1,25 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
-\section{Changes in rkwarddev version 0.06-4 (2014-09-01)}{
+\section{Changes in rkwarddev version 0.06-4 (2014-09-14)}{
   \subsection{added}{
     \itemize{
-      \item new functions \code{rk.set.language()}, \code{rk.get.language()} and \code{i18n()} to facilitate
-        static internationalisation of plugins; makes use of a new internal environment
-        .rkdev.env
-      \item new parameter \code{"lang"} in functions \code{rk.rkh.doc()}, \code{rk.XML.plugin()}, \code{rk.XML.pluginmap()}
-        and \code{rk.plugin.skeleton()} for internationalisation. if used, the attributes \code{"lang"}
-        and "xml:lang" will be set in the <document> root of the generated files, respectively
+      \item new functions \code{rk.set.language()}, \code{rk.get.language()} and \code{i18n()} to
+        facilitate static internationalisation of plugins; makes use of a new internal
+        environment .rkdev.env
+      \item new parameter \code{"lang"} in functions \code{rk.rkh.doc()}, \code{rk.XML.plugin()},
+        \code{rk.XML.pluginmap()} and \code{rk.plugin.skeleton()} for internationalisation. if used, the
+        attributes \code{"lang"} and "xml:lang" will be set in the <document> root of
+        the generated files, respectively
+      \item new parameter \code{"localized"} in \code{rk.XML.require()} for internationalisation
+      \item the document id in \code{rk.XML.pluginmap()} can now be set manually
     }
   }
   \subsection{fixed}{
     \itemize{
       \item abbreviation of labels now limits valid characters to [0-9A-Za-z]
+      \item in \code{rk.XML.pluginmap()}, \code{"components"} and \code{"hierarchy"} may be set to NULL if
+        \code{"require"} is used accordingly
     }
   }
 }
@@ -32,9 +37,10 @@
   }
   \subsection{changed}{
     \itemize{
-      \item \code{rk.plugin.component()} and \code{rk.rkh.doc()} do now interpret the \code{"hints"} argument to prevent the
-        generation of optional XML nodes.
-      \item \code{rk.plugin.component()} now automatically calls \code{rk.uniqueIDs()} and stops if IDs are not unique
+      \item \code{rk.plugin.component()} and \code{rk.rkh.doc()} do now interpret the \code{"hints"}
+        argument to prevent the generation of optional XML nodes.
+      \item \code{rk.plugin.component()} now automatically calls \code{rk.uniqueIDs()} and stops if
+        IDs are not unique
     }
   }
 }

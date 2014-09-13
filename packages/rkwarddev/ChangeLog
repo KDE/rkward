@@ -1,16 +1,21 @@
 ChangeLog for package rkwarddev
 
-changes in version 0.06-4 (2014-09-01)
+changes in version 0.06-4 (2014-09-14)
 added:
-  - new functions rk.set.language(), rk.get.language() and i18n() to facilitate
-    static internationalisation of plugins; makes use of a new internal environment
-    .rkdev.env
-  - new parameter "lang" in functions rk.rkh.doc(), rk.XML.plugin(), rk.XML.pluginmap()
-    and rk.plugin.skeleton() for internationalisation. if used, the attributes "lang"
-    and "xml:lang" will be set in the <document> root of the generated files, respectively
+  - new functions rk.set.language(), rk.get.language() and i18n() to
+    facilitate static internationalisation of plugins; makes use of a new internal
+    environment .rkdev.env
+  - new parameter "lang" in functions rk.rkh.doc(), rk.XML.plugin(),
+    rk.XML.pluginmap() and rk.plugin.skeleton() for internationalisation. if used, the
+    attributes "lang" and "xml:lang" will be set in the <document> root of
+    the generated files, respectively
+  - new parameter "localized" in rk.XML.require() for internationalisation
+  - the document id in rk.XML.pluginmap() can now be set manually
 fixed:
   - abbreviation of labels now limits valid characters to [0-9A-Za-z]
-    
+  - in rk.XML.pluginmap(), "components" and "hierarchy" may be set to NULL if
+    "require" is used accordingly
+
 changes in version 0.06-3 (2013-12-21)
 fixed:
   - fixed outdated example code for rk.plugin.component()
@@ -18,9 +23,10 @@ added:
   - new function rk.uniqueIDs() checks for duplicate IDs
   - rk.JS.array() can now be told to quote values
 changed:
-  - rk.plugin.component() and rk.rkh.doc() do now interpret the "hints" argument to prevent the
-    generation of optional XML nodes.
-  - rk.plugin.component() now automatically calls rk.uniqueIDs() and stops if IDs are not unique
+  - rk.plugin.component() and rk.rkh.doc() do now interpret the "hints"
+    argument to prevent the generation of optional XML nodes.
+  - rk.plugin.component() now automatically calls rk.uniqueIDs() and stops if
+    IDs are not unique
 
 changes in version 0.06-2 (2013-04-04)
 changed:

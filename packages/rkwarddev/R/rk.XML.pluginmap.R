@@ -23,13 +23,15 @@
 #'    See \code{link[XiMpLe:rk.XML.about]{rk.XML.about}} for details. Skipped if \code{NULL}.
 #' @param components Either an object of class \code{XiMpLe.node} to be pasted as the \code{<components>} section (see
 #'    \code{\link[rkwarddev:rk.XML.components]{rk.XML.components}} for details). Or a character vector with at least
-#'    one plugin component file name, relative path from the pluginmap file and ending with ".xml".
+#'    one plugin component file name, relative path from the pluginmap file and ending with ".xml". Can be set to \code{NULL} if
+#'    \code{require} is used accordingly.
 #' @param hierarchy Either an object of class \code{XiMpLe.node} to be pasted as the \code{<hierarchy>} section (see
 #'    \code{\link[rkwarddev:rk.XML.hierarchy]{rk.XML.hierarchy}} for details). Or a character vector with instructions
 #'    where to place the plugin in the menu hierarchy, one list or string for each included component. Valid single values are
 #'    \code{"file"}, \code{"edit"}, \code{"view"}, \code{"workspace"}, \code{"run"}, \code{"data"},
 #'    \code{"analysis"}, \code{"plots"}, \code{"distributions"}, \code{"windows"}, \code{"settings"} and \code{"help"},
 #'    anything else will place it in a "test" menu. If \code{hierarchy} is a list, each entry represents the label of a menu level.
+#'    Can be set to \code{NULL} if \code{require} is used accordingly.
 #' @param require Either a (list of) objects of class \code{XiMpLe.node} to be pasted as a \code{<require>} section (see
 #'    \code{\link[rkwarddev:rk.XML.require]{rk.XML.require}} for details). Or a character vector with at least
 #'    one .pluginmap filename to be included in this one.
@@ -53,11 +55,16 @@
 
 rk.XML.pluginmap <- function(name, about=NULL, components, hierarchy="test",
   require=NULL, x11.context=NULL, import.context=NULL, clean.name=TRUE, hints=FALSE, gen.info=TRUE,
-  dependencies=NULL, namespace=name, priority="medium", lang=rk.get.language()){
+  dependencies=NULL, namespace=name, priority="medium", id.name="auto", lang=rk.get.language()){
   name.orig <- name
   if(isTRUE(clean.name)){
     # to besure, remove all non-character symbols from name
     name <- clean.name(name)
+  } else {}
+
+  # one of components or require *must* be used
+  if(is.null(components) && is.null(require)){
+    stop(simpleError("'components' or 'require' must be specified!"))
   } else {}
 
   # .pluginmap has these children in <document>:
@@ -122,46 +129,48 @@ rk.XML.pluginmap <- function(name, about=NULL, components, hierarchy="test",
   }
 
   ## components section
-  if(inherits(components, "XiMpLe.node")){
-    # check if this is *really* a components section, otherwise quit and go dancing
-    valid.parent("components", node=components, see="rk.XML.components")
-    all.children[[length(all.children)+1]] <- components
-    # get the IDs for hierarchy section
-    component.IDs <- sapply(slot(components, "children"), function(this.comp){
-        slot(this.comp, "attributes")$id
-      })
-  } else {
-      components.XML.list <- list()
-      num.compos <- length(components)
-      compo.names <- names(components)
-      for (this.comp.num in 1:num.compos){
-        this.comp <- components[this.comp.num]
-        if(num.compos > 1) {
-          # let's see if we have entry names
-          if(length(compo.names) == length(components)){
-            xml.basename <- compo.names[this.comp.num]
+  if(!is.null(components)){
+    if(inherits(components, "XiMpLe.node")){
+      # check if this is *really* a components section, otherwise quit and go dancing
+      valid.parent("components", node=components, see="rk.XML.components")
+      all.children[[length(all.children)+1]] <- components
+      # get the IDs for hierarchy section
+      component.IDs <- sapply(slot(components, "children"), function(this.comp){
+          slot(this.comp, "attributes")$id
+        })
+    } else {
+        components.XML.list <- list()
+        num.compos <- length(components)
+        compo.names <- names(components)
+        for (this.comp.num in 1:num.compos){
+          this.comp <- components[this.comp.num]
+          if(num.compos > 1) {
+            # let's see if we have entry names
+            if(length(compo.names) == length(components)){
+              xml.basename <- compo.names[this.comp.num]
+            } else {
+              # remove any directory names and .EXT endings
+              xml.basename <- gsub("(.*/)?([[:alnum:]_]*).+(.*)?", "\\2", this.comp, perl=TRUE)
+            }
           } else {
-            # remove any directory names and .EXT endings
-            xml.basename <- gsub("(.*/)?([[:alnum:]_]*).+(.*)?", "\\2", this.comp, perl=TRUE)
+            xml.basename <- name.orig
           }
-        } else {
-          xml.basename <- name.orig
-        }
-        names(this.comp) <- NULL
-        components.XML.list[[length(components.XML.list) + 1]] <- rk.XML.component(
-          label=xml.basename,
-          file=this.comp,
-          # if this ID get's a change, also change it in rk.plugin.skeleton(show=TRUE)!
-          id.name=auto.ids(paste0(name, xml.basename), prefix=ID.prefix("component"), chars=25))
-        }
-    components.XML <- rk.XML.components(components.XML.list)
+          names(this.comp) <- NULL
+          components.XML.list[[length(components.XML.list) + 1]] <- rk.XML.component(
+            label=xml.basename,
+            file=this.comp,
+            # if this ID get's a change, also change it in rk.plugin.skeleton(show=TRUE)!
+            id.name=auto.ids(paste0(name, xml.basename), prefix=ID.prefix("component"), chars=25))
+          }
+      components.XML <- rk.XML.components(components.XML.list)
 
-    all.children[[length(all.children)+1]] <- components.XML
-    # get the IDs for hierarchy section
-    component.IDs <- sapply(slot(components.XML, "children"), function(this.comp){
-        slot(this.comp, "attributes")$id
-      })
-  }
+      all.children[[length(all.children)+1]] <- components.XML
+      # get the IDs for hierarchy section
+      component.IDs <- sapply(slot(components.XML, "children"), function(this.comp){
+          slot(this.comp, "attributes")$id
+        })
+    }
+  } else {}
 
   ## hierachy section
   if(inherits(hierarchy, "XiMpLe.node")){
@@ -169,72 +178,79 @@ rk.XML.pluginmap <- function(name, about=NULL, components, hierarchy="test",
     valid.parent("hierarchy", node=hierarchy, see="rk.XML.hierarchy")
     all.children[[length(all.children)+1]] <- hierarchy
   } else {
-    # correct for cases with one component and a list
-    if(length(component.IDs) == 1 & is.list(hierarchy)){
-      if(!is.list(hierarchy[[1]]))
-      hierarchy <- list(hierarchy)
-    } else {}
-    # check if the numbers fit
-    if(length(hierarchy) != length(component.IDs)){
-      stop(simpleError("Length of 'hierarchy' and number of components must be the same!"))
-    } else {}
-    # predefined menu points
-    main.menu <- c(file="File", edit="Edit", view="View", workspace="Workspace", run="Run",
-      data="Data", analysis="Analysis", plots="Plots", distributions="Distributions",
-      windows="Windows", settings="Settings", help="Help")
+    # if require loads another pluginmap, we might not need a hierarchy at all
+    if(is.null(hierarchy)){
+      if(is.null(require)){
+        stop(simpleError("if 'hierarchy' is NULL, 'require' must be specified!"))
+      } else {}
+    } else {
+      # correct for cases with one component and a list
+      if(length(component.IDs) == 1 & is.list(hierarchy)){
+        if(!is.list(hierarchy[[1]]))
+        hierarchy <- list(hierarchy)
+      } else {}
+      # check if the numbers fit
+      if(length(hierarchy) != length(component.IDs)){
+        stop(simpleError("Length of 'hierarchy' and number of components must be the same!"))
+      } else {}
+      # predefined menu points
+      main.menu <- c(file="File", edit="Edit", view="View", workspace="Workspace", run="Run",
+        data="Data", analysis="Analysis", plots="Plots", distributions="Distributions",
+        windows="Windows", settings="Settings", help="Help")
 
-    hier.comp.XML <- sapply(1:length(hierarchy), function(this.dial){
-      this.comp <- component.IDs[this.dial]
-      if(is.list(hierarchy)){
-        this.hier <- hierarchy[[this.dial]]
-      } else {
-        this.hier <- hierarchy[this.dial]
-      }
-
-      # hierachy can either be a list with menu paths, or predefined
-      if(is.list(this.hier)){
-        # check if we need to generate a hierarchy tree
-        if(length(this.hier) > 1){
-          new.hierarchy <- this.hier[2:length(this.hier)]
-          new.hierarchy[[length(new.hierarchy) + 1]] <- this.comp
+      hier.comp.XML <- sapply(1:length(hierarchy), function(this.dial){
+        this.comp <- component.IDs[this.dial]
+        if(is.list(hierarchy)){
+          this.hier <- hierarchy[[this.dial]]
         } else {
-          new.hierarchy <- rk.XML.entry(this.comp)
+          this.hier <- hierarchy[this.dial]
         }
-        if(this.hier[[1]] %in% names(main.menu)){
-          id.names <- sapply(this.hier, function(hier.id){
-              return(clean.name(hier.id))
-            })
 
-          hier.XML <- rk.XML.menu(
-            label=unlist(main.menu[this.hier[[1]]]),
-            new.hierarchy,
-            id.name=id.names)
-        } else {
-          hier.XML <- rk.XML.menu(
-            label=this.hier[[1]],
-            new.hierarchy)
-        }
-      } else {
-        entry.XML <- rk.XML.menu(
-          label=name.orig,
-          rk.XML.entry(component=this.comp),
-          id.name=auto.ids(paste0(name, this.comp), prefix=ID.prefix("menu"), chars=12))
+        # hierachy can either be a list with menu paths, or predefined
+        if(is.list(this.hier)){
+          # check if we need to generate a hierarchy tree
+          if(length(this.hier) > 1){
+            new.hierarchy <- this.hier[2:length(this.hier)]
+            new.hierarchy[[length(new.hierarchy) + 1]] <- this.comp
+          } else {
+            new.hierarchy <- rk.XML.entry(this.comp)
+          }
+          if(this.hier[[1]] %in% names(main.menu)){
+            id.names <- sapply(this.hier, function(hier.id){
+                return(clean.name(hier.id))
+              })
 
-        if(this.hier %in% names(main.menu)){
-          hier.XML <- rk.XML.menu(
-            label=main.menu[this.hier],
-            entry.XML,
-            id.name=this.hier)
+            hier.XML <- rk.XML.menu(
+              label=unlist(main.menu[this.hier[[1]]]),
+              new.hierarchy,
+              id.name=id.names)
+          } else {
+            hier.XML <- rk.XML.menu(
+              label=this.hier[[1]],
+              new.hierarchy)
+          }
         } else {
-          hier.XML <- rk.XML.menu(
-            label="Test",
-            entry.XML,
-            id.name="test")
+          entry.XML <- rk.XML.menu(
+            label=name.orig,
+            rk.XML.entry(component=this.comp),
+            id.name=auto.ids(paste0(name, this.comp), prefix=ID.prefix("menu"), chars=12))
+
+          if(this.hier %in% names(main.menu)){
+            hier.XML <- rk.XML.menu(
+              label=main.menu[this.hier],
+              entry.XML,
+              id.name=this.hier)
+          } else {
+            hier.XML <- rk.XML.menu(
+              label="Test",
+              entry.XML,
+              id.name="test")
+          }
         }
-      }
-      return(hier.XML)
-    })
-    all.children[[length(all.children)+1]] <- rk.XML.hierarchy(hier.comp.XML)
+        return(hier.XML)
+      })
+      all.children[[length(all.children)+1]] <- rk.XML.hierarchy(hier.comp.XML)
+    }
   }
 
   ## context sections
@@ -278,8 +294,12 @@ rk.XML.pluginmap <- function(name, about=NULL, components, hierarchy="test",
     } else {}
   }
 
-  # clean the ID of dots and append "_rkward"
-  doc.ID.name <- paste0(gsub("[.]*", "", name), "_rkward")
+  if(identical(id.name, "auto") | is.null(id.name)){
+    # clean the ID of dots and append "_rkward"
+    doc.ID.name <- paste0(gsub("[.]*", "", name), "_rkward")
+  } else {
+    doc.ID.name <- id.name
+  }
   # check for empty "namespace" value
   if(is.null(namespace)){
     namespace <- "rkward"
