@@ -37,7 +37,7 @@ rk.uniqueIDs <- function(obj, bool=FALSE, warning=TRUE){
     invalidIDs <- unique(allIDs[duplicateIDs])
     result <- allIDs[allIDs %in% invalidIDs]
     if(isTRUE(warning)){
-      warning(paste0("Duplicate IDs wer found:\n  ", paste0(names(result), ": ", result, collapse="\n  ")), call.=FALSE)
+      warning(paste0("Duplicate IDs were found:\n  ", paste0(names(result), ": ", result, collapse="\n  ")), call.=FALSE)
     } else {}
     if(isTRUE(bool)){
       return(FALSE)
