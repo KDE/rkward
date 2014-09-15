@@ -28,6 +28,20 @@ quote = function (text) {
 	return ("\"" + text.replace (/\"/g, "\\\"") + "\"");
 }
 
+/** Yet unused: Dummies for i18n(), for later backwards-compatibility of plugins. */
+i18n = function (string) {
+	return string;
+}
+i18np = function (string) {
+	return string;
+}
+i18nc = function (comment, string) {
+	return string;
+}
+i18ncp = function (comment, string) {
+	return string;
+}
+
 makeHeaderCode = function (title, parameters) {
 	echo ("rk.header(" + quote (title));
 	if (parameters.length) {
