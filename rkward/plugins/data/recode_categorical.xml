@@ -3,44 +3,99 @@
 	<code file="recode_categorical.js" />
 	<help file="recode_categorical.rkh" />
 	<logic>
-		<connect governor="x.available" client="levels.variable"/>
+		<connect governor="x.available" client="set.contents.levels.variable"/>
+		
+		<convert id="saveto_other_object" mode="equals" sources="saveto_select.string" standard="other"/>
+		<connect governor="saveto_other_object" client="saveto.enabled"/>
+
+		<convert id="other_values_custom" mode="equals" sources="other.string" standard="custom"/>
+		<connect governor="other_values_custom" client="other_custom.enabled"/>
+
+		<script><![CDATA[
+			gui.addChangeCommand ("datamode", "update ()");
+
+			update = function () {
+				var mode = gui.getValue ("datamode.string");
+				gui.setValue ("set.contents.quotation_note.visible", mode == "factor" || mode == "character");
+			}
+		]]></script>
 	</logic>
 	<dialog label="Recode categorical data"><tabbook>
 		<tab label="Input and output variables">
-				<varselector id="vars"/>
-				<varslot id="x" source="vars" label="Select variable to recode"/>
-			<text>TODO where to store output</text>
+			<varselector id="vars"/>
+			<varslot id="x" source="vars" label="Select variable to recode" num_dimensions="1"/>
+			<row>
+				<radio id="saveto_select" label="Save to">
+					<option value="same" label="Same object"/>
+					<option value="other" label="Other:" checked="true"/>
+				</radio>
+				<saveobject id="saveto" label="Object to save to" initial="recoded"/>
+			</row>
 			<dropdown id="datamode" label="Data type after recoding">
 				<option value="character" label="Character"/>
 				<option value="factor" label="Factor" checked="true"/>
 				<option value="numeric" label="Numeric"/>
 				<option value="logical" label="Logical"/>
 			</dropdown>
+			<stretch/>
 		</tab>
 		<tab label="Values">
 			<row>
-				<embed id="levels" component="rkward::level_select"/>
 				<column>
 					<optionset id="set" min_rows="1">
+						<logic>
+							<convert id="new_value_na" mode="equals" sources="new_value.string" standard="na"/>
+							<connect client="new_value_custom.enabled" governor="new_value_na.not"/>
+							<switch condition="new_value.string" id="new_value_string">
+								<case standard="na" fixed_value="_NA_" />
+								<default dynamic_value="new_value_custom.text" />
+							</switch>
+						</logic>
+						<optioncolumn id="values" connect="values.available" label="Old value(s)"/>
+						<optioncolumn id="new_values_labelled" connect="new_value_string" label="New value(s)"/>
+						<optioncolumn id="new_value_types" connect="new_value.string"/>
+						<optioncolumn id="new_value_strings" connect="new_value_custom.text"/>
 						<content>
 							<frame>
 								<optiondisplay index="true"/>
-								<valueslot multi="true" min_vars="1" id="values" label="Values to recode"/>
-								<input id="other_custom" label="Value"/>
+								<row>
+									<column>
+										<text type="normal">Old values</text>
+										<!-- TODO Allow selecting NAs in input -->
+										<embed id="levels" component="rkward::level_select"/>
+									</column>
+									<column>
+										<row>
+											<valueslot multi="true" min_vars="1" id="values" label="Values to recode" source="levels.selector"/>
+											<column>
+												<radio id="new_value" label="New value">
+													<option value="na" label="NA"/>
+													<option value="custom" label="Value:" checked="true"/>
+												</radio>
+												<input id="new_value_custom" label=""/>
+												<text id="quotation_note" type="normal">(Value will be quoted, automatically)</text>
+												<stretch/>
+											</column>
+										</row>
+									</column>
+								</row>
 							</frame>
 						</content>
 					</optionset>
-
-					<radio id="other" label="Any other values">	<!-- TODO Should this be including original NAs? -->
-						<option value="copy" label="Copy" id="copy_others"/>
-						<option value="na" label="NA"/>
-						<option value="custom" label="Custom value:"/>
-					</radio>
-					<input id="other_custom" label="Value"/>
-
-					<checkbox id="drop" label="Drop NAs in recoded variable"/>
 				</column>
 			</row>
+			<row>
+				<radio id="other" label="Any other values">	<!-- TODO Should this be including original NAs? -->
+					<option value="copy" label="Copy" id="copy_others"/>
+					<option value="na" label="NA"/>
+					<option value="custom" label="Custom value:"/>
+				</radio>
+				<column>
+					<input id="other_custom" label="Value"/>
+					<stretch/>
+				</column>
+			</row>
+			<checkbox id="drop" label="Drop NAs in recoded variable"/>
 		</tab>
 	</tabbook></dialog>
 </document>

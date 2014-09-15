@@ -37,6 +37,7 @@
 					code = "local ({\n";
 					code += "\tx <- {" + expression + "}\n";
 					code += "\tif (length (x) > " + limit + ") x <- c (x[1:" + limit + "], \"____LIMIT____\")\n";
+					code += "\tif (is.character (x)) x <- dQuote (x)\n";
 					code += "\tx\n";
 					code += "})";
 
@@ -45,6 +46,10 @@
 
 				commandFinished = function (result, id) {
 					if (id != last_command_id) return;  // another result is about to arrive
+					if (typeof (result) == "undefined") {
+						gui.setListValue ("selector.available", Array ("ERROR"));
+						return;
+					}
 					gui.setValue ("selector.enabled", 1);
 					limit = gui.getValue ("limit");
 					gui.setValue ("limitnote.visible", result.length > limit ? 1 : 0);
