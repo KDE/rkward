@@ -302,7 +302,7 @@ QVariant RKVarEditModel::data (const QModelIndex& index, int role) const {
 	if (role == Qt::EditRole) return var->getText (row, false);
 
 	RKVariable::Status status = var->cellStatus (row);
-	if ((role == Qt::BackgroundRole)) {
+	if (role == Qt::BackgroundRole) {
 		if (status == RKVariable::ValueInvalid) return (Qt::red);
 	} else if (role == Qt::ToolTipRole) {
 		if (status == RKVariable::ValueInvalid) return (i18n ("This value is not allowed, here"));
