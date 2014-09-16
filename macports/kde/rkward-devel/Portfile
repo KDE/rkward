@@ -90,6 +90,6 @@ configure.post_args ..
 build.dir           ${worksrcpath}/build
 
 pre-pkg {
-        file copy -force -- ${worksrcdir}/macports/postinstall ${package.scripts}/postinstall
+        file copy -force -- ${workpath}/trunk/rkward/macports/postinstall ${package.scripts}/postinstall
         file attributes ${package.scripts}/postinstall -permissions 0755
 }
