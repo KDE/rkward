@@ -41,9 +41,11 @@ QString findExeAtPath (const QString appname, const QString &path) {
 	QDir dir (path);
 	dir.makeAbsolute ();
 	if (QFileInfo (dir.filePath (appname)).isExecutable ()) return dir.filePath (appname);
+#ifdef Q_WS_WIN
 	if (QFileInfo (dir.filePath (appname + ".exe")).isExecutable ()) return dir.filePath (appname + ".exe");
 	if (QFileInfo (dir.filePath (appname + ".com")).isExecutable ()) return dir.filePath (appname + ".com");
 	if (QFileInfo (dir.filePath (appname + ".bat")).isExecutable ()) return dir.filePath (appname + ".bat");
+#endif
 	return QString ();
 }
 
@@ -167,6 +169,9 @@ int main (int argc, char *argv[]) {
 	if (debug_level > 3) qDebug ("Setting environment variable RKWARD_ENSURE_PREFIX=%s", qPrintable (kde_dir.path ()));
 
 	QString rkward_frontend_exe = findRKWardAtPath (app.applicationDirPath ());	// this is for running directly from a build tree
+#ifdef Q_WS_MAC
+	if (rkward_frontend_exe.isNull ()) rkward_frontend_exe = findRKWardAtPath ("rkward.frontend.app/Contents/MacOS"); 	// this is for running directly from a build tree
+#endif
 	if (rkward_frontend_exe.isNull ()) rkward_frontend_exe = findRKWardAtPath (RKWARD_FRONTEND_LOCATION);
 	if (rkward_frontend_exe.isNull ()) rkward_frontend_exe = findRKWardAtPath (kde_dir.absoluteFilePath ("bin"));
 	if (rkward_frontend_exe.isNull ()) rkward_frontend_exe = findRKWardAtPath (kde_dir.absoluteFilePath ("../lib/libexec"));
