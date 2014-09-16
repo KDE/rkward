@@ -44,7 +44,6 @@ private slots:
 private:
 	void handleTransmissionError (const QString &message);
 
-	int current_request_length;
 	QProcess* backend;
 	QLocalServer* server;
 	RKGraphicsDeviceFrontendTransmitter* rkd_transmitter;
