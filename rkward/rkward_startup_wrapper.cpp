@@ -130,7 +130,7 @@ int main (int argc, char *argv[]) {
 		qputenv ("PATH", QString ("\"%1/bin\":\"%1/sbin\":%2").arg (INSTALL_PATH).arg (oldpath).toLocal8Bit ());
 	}
 	// ensure that RKWard finds its own packages
-	qputenv ("R_LIBS"=R_LIBS);
+	qputenv ("R_LIBS", R_LIBS);
 	QProcess::execute ("lanuchctl", QStringList () << "load" << "-w" << "\"" INSTALL_PATH "/Library/LaunchAgents/org.freedesktop.dbus-session.plist\"");
 #endif
 
