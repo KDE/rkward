@@ -42,6 +42,74 @@ Page custom RHomeCreate RHomeLeave
 Page custom KDEHomeCreate KDEHomeLeave
 Page instfiles
 
+# StrRep function. Taken from http://nsis.sf.net/StrRep
+!define StrRep "!insertmacro StrRep"
+!macro StrRep output string old new
+    Push `${string}`
+    Push `${old}`
+    Push `${new}`
+    !ifdef __UNINSTALL__
+        Call un.StrRep
+    !else
+        Call StrRep
+    !endif
+    Pop ${output}
+!macroend
+ 
+!macro Func_StrRep un
+    Function ${un}StrRep
+        Exch $R2 ;new
+        Exch 1
+        Exch $R1 ;old
+        Exch 2
+        Exch $R0 ;string
+        Push $R3
+        Push $R4
+        Push $R5
+        Push $R6
+        Push $R7
+        Push $R8
+        Push $R9
+ 
+        StrCpy $R3 0
+        StrLen $R4 $R1
+        StrLen $R6 $R0
+        StrLen $R9 $R2
+        loop:
+            StrCpy $R5 $R0 $R4 $R3
+            StrCmp $R5 $R1 found
+            StrCmp $R3 $R6 done
+            IntOp $R3 $R3 + 1 ;move offset by 1 to check the next character
+            Goto loop
+        found:
+            StrCpy $R5 $R0 $R3
+            IntOp $R8 $R3 + $R4
+            StrCpy $R7 $R0 "" $R8
+            StrCpy $R0 $R5$R2$R7
+            StrLen $R6 $R0
+            IntOp $R3 $R3 + $R9 ;move offset by length of the replacement string
+            Goto loop
+        done:
+ 
+        Pop $R9
+        Pop $R8
+        Pop $R7
+        Pop $R6
+        Pop $R5
+        Pop $R4
+        Pop $R3
+        Push $R0
+        Push $R1
+        Pop $R0
+        Pop $R1
+        Pop $R0
+        Pop $R2
+        Exch $R1
+    FunctionEnd
+!macroend
+!insertmacro Func_StrRep ""
+!insertmacro Func_StrRep "un."
+
 !macro MakeExternalLink Py Plabel Plink
 	Push $0 ; save $0
 
@@ -121,8 +189,8 @@ Function ValidateRHome
 		IntOp $R3 $R0 & 0x0000FFFF
 		StrCpy $1 "Version $R2.$R3"
 
-		# 0x00020005a == Version 2.9(.)0
-		${If} $R0 >= 0x0002005a
+		# 0x000300000 == Version 3.0(.)0 (if think)
+		${If} $R0 >= 0x00030000
 			StrCpy $2 "should be ok"
 			IntOp $RHomeOk_count $RHomeOk_count + 1
 		${Else}
@@ -238,7 +306,7 @@ Function ValidateKDEPrefix
 	libktexteditor_dll_found:
 		StrCpy $1 "$Libktexteditor_dll_location exists"
 
-		!insertmacro RunSimpleQuery "$FileSelectCurrent\bin\kde4-config.exe --kde-version" "UNKNOWN"
+		!insertmacro RunSimpleQuery "$\"$FileSelectCurrent\bin\kde4-config.exe$\" --kde-version" "UNKNOWN"
 		Pop $INST_KDE_VERSION
 
 		!insertmacro VersionCompareCall $INST_KDE_VERSION "4.7.0" $MyTemp
@@ -293,11 +361,6 @@ FunctionEnd
 
 ## installation
 
-Function setRBinaryPath
-	StrCpy $R9 "SET R_BINARY=$INST_RHOME\bin\R.exe$\r$\n"
-	Push $0
-FunctionEnd
-
 # set desktop as install directory
 installDir $DESKTOP
 
@@ -305,7 +368,10 @@ installDir $DESKTOP
 section
 	setOutPath $INST_KDEPREFIX
 	File /r install\_KDEPREFIX_\*.*
-	${LineFind} "$INST_KDEPREFIX\bin\rkward.bat" "" 10 setRBinaryPath
+	FileOpen $4 "$INST_KDEPREFIX\bin\rkward.ini" w
+	${StrRep} $5 "R executable=$INST_RHOME\bin\R.exe$\r$\n" "\" "\\"
+	FileWrite $4 $5
+	FileClose $4
 
 	setOutPath $INST_RHOME
 	File /r install\_RHOME_\*.*
