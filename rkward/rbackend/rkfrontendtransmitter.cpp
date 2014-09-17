@@ -2,7 +2,7 @@
                           rkfrontendtransmitter  -  description
                              -------------------
     begin                : Thu Nov 04 2010
-    copyright            : (C) 2010-2013 by Thomas Friedrichsmeier
+    copyright            : (C) 2010-2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -34,6 +34,19 @@
 
 #include "../version.h"
 #include "../debug.h"
+
+QString findBackendAtPath (const QString &path) {
+	QDir dir (path);
+	dir.makeAbsolute ();
+	QString ret;
+#ifdef Q_WS_WIN
+	if (QFileInfo (dir.filePath ("rkward.rbackend.exe")).isExecutable ()) ret = dir.filePath ("rkward.rbackend.exe");
+#else
+	if (QFileInfo (dir.filePath ("rkward.rbackend")).isExecutable ()) ret = dir.filePath ("rkward.rbackend");
+#endif
+	RK_DEBUG (RBACKEND, DL_DEBUG, "Looking for backend at %s: %s", qPrintable (dir.absolutePath ()), qPrintable (ret));
+	return ret;
+}
 
 RKFrontendTransmitter::RKFrontendTransmitter () : RKAbstractTransmitter () {
 	RK_TRACE (RBACKEND);
@@ -76,10 +89,10 @@ void RKFrontendTransmitter::run () {
 	args.append ("--data-dir=" + RKSettingsModuleGeneral::filesPath ());
 	args.append ("--locale-dir=" + KGlobal::dirs()->findResourceDir ("locale", KGlobal::locale ()->language () + "/LC_MESSAGES/rkward.mo"));
 	connect (backend, SIGNAL (finished (int, QProcess::ExitStatus)), this, SLOT (backendExit (int)));
-	QString backend_executable = KStandardDirs::findExe (QDir::toNativeSeparators (QCoreApplication::applicationDirPath () + "/rkward.rbackend"));
-	if (backend_executable.isEmpty ()) backend_executable = KStandardDirs::findExe (QDir::toNativeSeparators (QCoreApplication::applicationDirPath () + "/rbackend/rkward.rbackend"));	// for running directly from the build-dir
+	QString backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath ());
+	if (backend_executable.isEmpty ()) backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath () + "/rbackend");	// for running directly from the build-dir
 #ifdef Q_WS_MAC
-        if (backend_executable.isEmpty ()) backend_executable = KStandardDirs::findExe (QDir::toNativeSeparators (QCoreApplication::applicationDirPath () + "/../../../rbackend/rkward.rbackend"));
+        if (backend_executable.isEmpty ()) backend_executable = findBackendAtPath (QCoreApplication::applicationDirPath () + "/../../../rbackend");
 #endif
 	if (backend_executable.isEmpty ()) handleTransmissionError (i18n ("The backend executable could not be found. This is likely to be a problem with your installation."));
 	QString debugger = RKGlobals::startup_options["backend-debugger"].toString ();
