@@ -159,14 +159,15 @@ int main (int argc, char *argv[]) {
 
 	QDir kde_dir (QFileInfo (kde4_config_exe).absolutePath ());
 	kde_dir.makeAbsolute ();
+	QString kde_dir_safe_path = quoteCommand (kde_dir.path ());
 #ifdef Q_WS_WIN
 	QString kdeinit4_exe = findExeAtPath ("kdeinit4", kde_dir.path ());
-	qputenv ("PATH", QString (kde_dir.path () + ";" + qgetenv ("PATH")).toLocal8Bit ());
-	if (debug_level > 3) qDebug ("Adding %s to the system path", qPrintable (kde_dir.path ()));
+	qputenv ("PATH", QString (kde_dir_safe_path + ";" + qgetenv ("PATH")).toLocal8Bit ());
+	if (debug_level > 3) qDebug ("Adding %s to the system path", qPrintable (kde_dir_safe_path));
 #endif
 	// important if RKWard is not in KDEPREFIX/bin but e.g. KDEPREFIX/lib/libexec
-	qputenv ("RKWARD_ENSURE_PREFIX", kde_dir.path().toLocal8Bit ());
-	if (debug_level > 3) qDebug ("Setting environment variable RKWARD_ENSURE_PREFIX=%s", qPrintable (kde_dir.path ()));
+	qputenv ("RKWARD_ENSURE_PREFIX", kde_dir_safe_path.toLocal8Bit ());
+	if (debug_level > 3) qDebug ("Setting environment variable RKWARD_ENSURE_PREFIX=%s", qPrintable (kde_dir_safe_path));
 
 	QString rkward_frontend_exe = findRKWardAtPath (app.applicationDirPath ());	// this is for running directly from a build tree
 #ifdef Q_WS_MAC
