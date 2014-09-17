@@ -38,14 +38,15 @@
 QString findBackendAtPath (const QString &path) {
 	QDir dir (path);
 	dir.makeAbsolute ();
-	QString ret;
 #ifdef Q_WS_WIN
-	if (QFileInfo (dir.filePath ("rkward.rbackend.exe")).isExecutable ()) ret = dir.filePath ("rkward.rbackend.exe");
+	QString ret = dir.filePath ("rkward.rbackend.exe");
 #else
-	if (QFileInfo (dir.filePath ("rkward.rbackend")).isExecutable ()) ret = dir.filePath ("rkward.rbackend");
+	QString ret = dir.filePath ("rkward.rbackend");
 #endif
-	RK_DEBUG (RBACKEND, DL_DEBUG, "Looking for backend at %s: %s", qPrintable (dir.absolutePath ()), qPrintable (ret));
-	return ret;
+	RK_DEBUG (RBACKEND, DL_DEBUG, "Looking for backend at %s", qPrintable (ret));
+	QFileInfo fi (ret);
+	if (fi.exists () && fi.isExecutable ()) return ret;
+	return QString ();
 }
 
 RKFrontendTransmitter::RKFrontendTransmitter () : RKAbstractTransmitter () {
@@ -103,6 +104,10 @@ void RKFrontendTransmitter::run () {
 		backend->start (l.first (), args, QIODevice::ReadOnly);
 	} else {
 		backend->start (backend_executable, args, QIODevice::ReadOnly);
+	}
+
+	if (!backend->waitForStarted ()) {
+		handleTransmissionError (i18n ("The backend executable could not be started. Error message was: %1").arg (backend->errorString ()));
 	}
 
 	// fetch security token
