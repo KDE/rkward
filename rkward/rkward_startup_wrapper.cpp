@@ -134,7 +134,7 @@ int main (int argc, char *argv[]) {
 	}
 	// ensure that RKWard finds its own packages
 	qputenv ("R_LIBS", R_LIBS);
-	QProcess::execute ("lanuchctl", QStringList () << "load" << "-w" << "\"" INSTALL_PATH "/Library/LaunchAgents/org.freedesktop.dbus-session.plist\"");
+	QProcess::execute ("lanuchctl", QStringList () << "load" << "-w" << INSTALL_PATH "/Library/LaunchAgents/org.freedesktop.dbus-session.plist");
 #endif
 
 	// Locate KDE and RKWard installations
