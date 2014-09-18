@@ -129,7 +129,8 @@ int main (int argc, char *argv[]) {
 	QString oldpath = qgetenv ("PATH");
 	if (!oldpath.contains (INSTALL_PATH)) {
 		//ensure that PATH is set to include what we deliver with the bundle
-		qputenv ("PATH", QString ("\"%1/bin\":\"%1/sbin\":%2").arg (INSTALL_PATH).arg (oldpath).toLocal8Bit ());
+		qputenv ("PATH", QString ("%1/bin:%1/sbin:%2").arg (INSTALL_PATH).arg (oldpath).toLocal8Bit ());
+		if (debug_level > 3) qDebug ("Adjusting system path to %s", qPrintable (qgetenv ("PATH")));
 	}
 	// ensure that RKWard finds its own packages
 	qputenv ("R_LIBS", R_LIBS);
