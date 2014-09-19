@@ -2,7 +2,7 @@
                           rkoptionset  -  description
                              -------------------
     begin                : Mon Oct 31 2011
-    copyright            : (C) 2011, 2012 by Thomas Friedrichsmeier
+    copyright            : (C) 2011, 2012, 2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -192,6 +192,7 @@ void RKOptionSet::fetchDefaults () {
 	RK_TRACE (PLUGIN);
 	RK_ASSERT (default_row_state.isEmpty ());
 	contents_container->fetchPropertyValuesRecursive (&default_row_state, false, QString (), true);
+	if (min_rows && !keycolumn) addRow ();
 	contents_container->enablednessProperty ()->setBoolValue (rowCount () > 0);	// no current row; Do this *after* fetching default values, however. Otherwise most values will *not* be read, as the element is disabled
 }
 
