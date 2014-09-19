@@ -218,6 +218,20 @@ RKComponentPropertyStringList::~RKComponentPropertyStringList () {
 	RK_TRACE (PLUGIN);
 }
 
+// escapes only newlines, so we can join strings by newline. Does duplicate backslashes, so the string can safely be passed through RKCommonFunction::unescape().
+QString escapeNewlines (const QString &in) {
+	QString out;
+
+	for (int i = 0; i < in.size (); ++i) {
+		QChar c = in[i];
+		if (c == '\\') out.append ("\\\\");
+		else if (c == '\n') out.append ("\\n");
+		else out.append (c);
+	}
+
+	return out;
+}
+
 QVariant RKComponentPropertyStringList::value (const QString &modifier) {
 	RK_TRACE (PLUGIN);
 
@@ -227,7 +241,7 @@ QVariant RKComponentPropertyStringList::value (const QString &modifier) {
 		if (_value.isNull ()) {
 			for (int i = 0; i < storage.size (); ++i) {
 				if (!_value.isEmpty ()) _value.append (sep);
-				_value.append (RKCommonFunctions::escape (storage[i]));	// _value acts as a cache for joined string
+				_value.append (escapeNewlines (storage[i]));	// _value acts as a cache for joined string
 			}
 		}
 		return _value;
