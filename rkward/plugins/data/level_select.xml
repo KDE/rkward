@@ -37,7 +37,7 @@
 					code = "local ({\n";
 					code += "\tx <- {" + expression + "}\n";
 					code += "\tif (length (x) > " + limit + ") x <- c (x[1:" + limit + "], \"____LIMIT____\")\n";
-					code += "\tif (is.character (x)) x <- dQuote (x)\n";
+					code += "\tif (is.character (x)) { op <- options ('useFancyQuotes'=FALSE); x <- dQuote (x); options (op) }\n";
 					code += "\tx\n";
 					code += "})";
 

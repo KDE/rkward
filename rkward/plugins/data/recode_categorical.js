@@ -1,12 +1,28 @@
+var input;
+var output;
+
 function calculate () {
-	var input = getString ("x");
-	var output = input;
+	input = getString ("x");
+	output = input;
 	if (getBoolean ("saveto_other_object")) output = getString ("saveto");
 	var datamode = getString ("datamode");
 	var quote_new_values = (datamode == "character" || datamode == "factor");
+	var is_factor = datamode == "factor";
+	var default_values = getString ("other");
 
 	// initialize output vector to defaults
-	// TODO
+	echo ('input <- ' + input + '\n');
+	if (is_factor) {
+		echo ('# Use as.character() as intermediate data format, to support adding and dropping levels\n');
+		echo ('recoded <- as.character (');
+	} else {
+		echo ('recoded <- as.' + datamode + ' (');
+	}
+	if (default_values == "copy") {
+		echo (input + ")\n");
+	} else {
+		echo ('rep (' + default_values == "na" ? 'NA' : getString ("other_custom") + ', length.out = length (' + input + ')))\n');
+	}
 
 	// Make replacements
 	var old_values = getList ("set.values");
@@ -31,24 +47,30 @@ function calculate () {
 		if (old_values_it.length > 1) {
 			old_index = ' %in% c(' + old_values_it.join (',') + ')';
 		} else {
-			old_index = ' == ' + all_old_values;
+			old_index = ' == ' + old_values_it;
 		}
 
-		var replacement = "NA";
+		var replacement = 'NA';
 		if (new_values_types[i] != "na") {
 			replacement = new_values_strings[i];
 			if (quote_new_values) replacement = quote (replacement);
 		}
 
-		echo (output + '[' + input + old_index + '] <- ' + replacement + '\n');
+		echo ('recoded[input' + old_index + '] <- ' + replacement + '\n');
 	}
 
-	// Produce warnings (or errors?) TODO
+	// Produce warnings (or should it be errors?)
 	if (dupes.length > 0) {
-		echo ("Dupes: " + dupes.join (", "));
+		echo ('\nwarning ("Some input values were specified more than once: ", ' + quote (dupes.join (', ')) + ')\n');
 	}
 
-	// Drop NAs TODO
-	// Set data type TODO
-	// Assign to output variable in GlobalEnv TODO
+	// Set data type and assign to output variable in GlobalEnv
+	echo ('.GlobalEnv$' + output + ' <- ');
+	if (is_factor) echo ('as.factor (recoded)\n');
+	else echo ('recoded\n');
+}
+
+function printout () {
+// TODO: Number of differences count is off when a row is NA in one vector, but not the other.
+	makeHeaderCode ('Recode categorical data', new Array ('Input variable', input, 'Output variable', output, 'Number of differences after recoding', noquote ('sum (' + input + ' != ' + output + ', na.rm=TRUE)')));
 }

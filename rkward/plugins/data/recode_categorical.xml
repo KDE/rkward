@@ -95,7 +95,6 @@
 					<stretch/>
 				</column>
 			</row>
-			<checkbox id="drop" label="Drop NAs in recoded variable"/>
 		</tab>
 	</tabbook></dialog>
 </document>
