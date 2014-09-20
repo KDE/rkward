@@ -4,17 +4,19 @@ function calculate () {
 	if (!getBoolean ("intercept")) intercept = "0 + ";
 
 	var savefitted = getBoolean ("savefitted.active");
-	var simple_mode = !savefitted;
+	var saveresiduals = getBoolean ("saveresiduals.active");
+	var simple_mode = !(savefitted || saveresiduals);
 
 	model = 'lm (' + getValue ("y") + ' ~ ' + intercept + vars;
-	if (savefitted) model += ', na.action=na.exclude';	// default action of na.omit is a nuisance for fitted values
+	if (!simple_mode) model += ', na.action=na.exclude';	// default action of na.omit is a nuisance for fitted values
 	model += ')';
 
 	if (simple_mode) {
 		echo ('results <- summary.lm (' + model + ')\n');
 	} else {
 		echo ('model <- ' + model + '\n');
-		echo ('.GlobalEnv$' + getString ('savefitted') + ' <- fitted (model)\n');
+		if (savefitted) echo ('.GlobalEnv$' + getString ('savefitted') + ' <- fitted (model)\n');
+		if (saveresiduals) echo ('.GlobalEnv$' + getString ('saveresiduals') + ' <- residuals (model)\n');
 		echo ('results <- summary.lm (model)\n');
 	}
 }

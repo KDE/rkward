@@ -71,6 +71,6 @@ function calculate () {
 }
 
 function printout () {
-// TODO: Number of differences count is off when a row is NA in one vector, but not the other.
-	makeHeaderCode ('Recode categorical data', new Array ('Input variable', input, 'Output variable', output, 'Number of differences after recoding', noquote ('sum (' + input + ' != ' + output + ', na.rm=TRUE)')));
+// TODO: Number of differences always shows as 0, if storing to same object...
+	makeHeaderCode ('Recode categorical data', new Array ('Input variable', input, 'Output variable', output, 'Number of differences after recoding', noquote ('sum (' + input + ' != ' + output + ', na.rm=TRUE) + sum (is.na (' + input + ') != is.na (' + output + '))')));
 }

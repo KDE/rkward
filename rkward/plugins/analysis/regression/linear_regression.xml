@@ -12,6 +12,7 @@
 				<checkbox id="intercept" label="include intercept" checked="true"/>
 				<stretch/>
 				<saveobject id="savefitted" label="Save fitted values" initial="lm_fitted" checkable="true"/>
+				<saveobject id="saveresiduals" label="Save residuals" initial="lm_residuals" checkable="true"/>
 			</column>
 		</row>
 	</dialog>
