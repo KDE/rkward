@@ -2,7 +2,7 @@
                           rkvalueselector  -  description
                              -------------------
     begin                : Weg May 8 2013
-    copyright            : (C) 2013 by Thomas Friedrichsmeier
+    copyright            : (C) 2013, 2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 

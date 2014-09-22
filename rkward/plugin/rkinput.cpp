@@ -2,7 +2,7 @@
                           rkinput  -  description
                              -------------------
     begin                : Sat Mar 10 2005
-    copyright            : (C) 2005, 2006, 2007, 2012 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2012, 2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -47,8 +47,11 @@ RKInput::RKInput (const QDomElement &element, RKComponent *parent_component, QWi
 	// do all the layouting
 	QVBoxLayout *vbox = new QVBoxLayout (this);
 	vbox->setContentsMargins (0, 0, 0, 0);
-	QLabel *label = new QLabel (xml->getStringAttribute (element, "label", i18n ("Enter text"), DL_INFO), this);
-	vbox->addWidget (label);
+	QString label_string = xml->getStringAttribute (element, "label", i18n ("Enter text"), DL_INFO);
+	if (!label_string.isEmpty ()) {
+		QLabel *label = new QLabel (label_string, this);
+		vbox->addWidget (label);
+	}
 
 	int size = xml->getMultiChoiceAttribute (element, "size", "small;medium;large", 1, DL_INFO);
 	if (size == 2) {

@@ -2,7 +2,7 @@
                           rkvarslot.cpp  -  description
                              -------------------
     begin                : Thu Nov 7 2002
-    copyright            : (C) 2002-2013 by Thomas Friedrichsmeier
+    copyright            : (C) 2002-2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -42,8 +42,11 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 	// basic layout
 	QGridLayout *g_layout = new QGridLayout (this);
 
-	QLabel *label = new QLabel (xml->getStringAttribute (element, "label", i18n ("Variable:"), DL_INFO), this);
-	g_layout->addWidget (label, 0, 2);
+	QString label_string = xml->getStringAttribute (element, "label", i18n ("Variable:"), DL_INFO);
+	if (!label_string.isEmpty ()) {
+		QLabel *label = new QLabel (label_string, this);
+		g_layout->addWidget (label, 0, 2);
+	}
 
 	select = new QPushButton (QString::null, this);
 	setSelectButton (false);
