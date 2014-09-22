@@ -44,14 +44,27 @@
 				<column>
 					<optionset id="set" min_rows="1">
 						<logic>
+							<convert id="old_value_na" mode="equals" sources="old_value_type.string" standard="na"/>
+							<connect client="levels.enabled" governor="old_value_na.not"/>
+							<connect client="values.enabled" governor="old_value_na.not"/>
+
 							<convert id="new_value_na" mode="equals" sources="new_value.string" standard="na"/>
 							<connect client="new_value_custom.enabled" governor="new_value_na.not"/>
-							<switch condition="new_value.string" id="new_value_string">
-								<case standard="na" fixed_value="_NA_" />
-								<default dynamic_value="new_value_custom.text" />
+
+							<!-- The purpose of these switch-properties is to provide readable labels for NA / value -->
+							<switch condition="old_value_na" id="old_value_string">
+								<true fixed_value="NA" />
+								<false dynamic_value="values.available" />
+							</switch>
+							<switch condition="new_value_na" id="new_value_string">
+								<true standard="na" fixed_value="_NA_" />
+								<false dynamic_value="new_value_custom.text" />
 							</switch>
 						</logic>
-						<optioncolumn id="values" connect="values.available" label="Old value(s)"/>
+						<optioncolumn id="old_values_labelled" connect="old_value_string" label="Old value(s)"/>
+						<optioncolumn id="old_value_types" connect="old_value_type.string"/>
+						<optioncolumn id="old_value_strings" connect="values.available"/>
+
 						<optioncolumn id="new_values_labelled" connect="new_value_string" label="New value(s)"/>
 						<optioncolumn id="new_value_types" connect="new_value.string"/>
 						<optioncolumn id="new_value_strings" connect="new_value_custom.text"/>
@@ -60,23 +73,23 @@
 								<optiondisplay index="true"/>
 								<row>
 									<column>
-										<text type="normal">Old values</text>
-										<!-- TODO Allow selecting NAs in input -->
-										<embed id="levels" component="rkward::level_select"/>
+										<radio id="old_value_type" label="Old values">
+											<option value="na" label="NA"/>
+											<option value="value" label="Select value(s):" checked="true"/>
+										</radio>
+										<row>
+											<embed id="levels" component="rkward::level_select"/>
+											<valueslot multi="true" min_vars="1" id="values" label="" source="levels.selector"/>
+										</row>
 									</column>
 									<column>
-										<row>
-											<valueslot multi="true" min_vars="1" id="values" label="Values to recode" source="levels.selector"/>
-											<column>
-												<radio id="new_value" label="New value">
-													<option value="na" label="NA"/>
-													<option value="custom" label="Value:" checked="true"/>
-												</radio>
-												<input id="new_value_custom" label=""/>
-												<text id="quotation_note" type="normal">(Value will be quoted, automatically)</text>
-												<stretch/>
-											</column>
-										</row>
+										<radio id="new_value" label="New value">
+											<option value="na" label="NA"/>
+											<option value="custom" label="Value:" checked="true"/>
+										</radio>
+										<input id="new_value_custom" label=""/>
+										<text id="quotation_note" type="normal">(Value will be quoted, automatically)</text>
+										<stretch/>
 									</column>
 								</row>
 							</frame>
@@ -84,17 +97,13 @@
 					</optionset>
 				</column>
 			</row>
-			<row>
-				<radio id="other" label="Any other values">	<!-- TODO Should this be including original NAs? -->
-					<option value="copy" label="Copy" id="copy_others"/>
-					<option value="na" label="NA"/>
-					<option value="custom" label="Custom value:"/>
-				</radio>
-				<column>
-					<input id="other_custom" label="Value"/>
-					<stretch/>
-				</column>
-			</row>
+			<radio id="other" label="Any other values">	<!-- TODO Should this be including original NAs? -->
+				<option value="copy" label="Copy" id="copy_others"/>
+				<option value="na" label="NA"/>
+				<option value="custom" label="Custom value:"/>
+			</radio>
+			<input id="other_custom" label=""/>
+			<stretch/>
 		</tab>
 	</tabbook></dialog>
 </document>
