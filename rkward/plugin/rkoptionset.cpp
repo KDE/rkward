@@ -169,6 +169,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 		model->column_labels = visible_column_labels;
 		display->setItemsExpandable (false);
 		display->setRootIsDecorated (false);
+		display->setAlternatingRowColors (true);
 		if (display_show_index) display->resizeColumnToContents (0);
 		else display->setColumnHidden (0, true);
 		display->setModel (model);
@@ -192,7 +193,7 @@ void RKOptionSet::fetchDefaults () {
 	RK_TRACE (PLUGIN);
 	RK_ASSERT (default_row_state.isEmpty ());
 	contents_container->fetchPropertyValuesRecursive (&default_row_state, false, QString (), true);
-	if (min_rows && !keycolumn) addRow ();
+	if (min_rows && !keycolumn && (rowCount () <= 0)) addRow ();
 	contents_container->enablednessProperty ()->setBoolValue (rowCount () > 0);	// no current row; Do this *after* fetching default values, however. Otherwise most values will *not* be read, as the element is disabled
 }
 
