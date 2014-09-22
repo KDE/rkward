@@ -2,7 +2,7 @@
                           rkcomponentproperties  -  description
                              -------------------
     begin                : Fri Nov 25 2005
-    copyright            : (C) 2005, 2006, 2007, 2008, 2009, 2011, 2012 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2008, 2009, 2011, 2012, 2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -1427,7 +1427,8 @@ void RKComponentPropertySwitch::setSources (const QString& _condition_prop, cons
 
 	for (int i = 0; i < _value_props.size (); ++i) {
 		QString mod;
-		RKComponentPropertyBase *p = c_parent->lookupProperty (_value_props[i], &mod, true);
+		RKComponentPropertyBase *p = 0;
+		if (!_value_props[i].isEmpty ()) p = c_parent->lookupProperty (_value_props[i], &mod, true);	// Don't try to look it up, if it's empty (as it always is for fixed_value, as this would generate a warning.)
 		value_props.append (p);	// NOTE: Even if it is 0. value() takes care of that.
 		value_prop_mods.append (mod);
 		if (p) connect (p, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (sourcePropertyChanged(RKComponentPropertyBase*)));
