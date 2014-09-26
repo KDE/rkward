@@ -1,0 +1,103 @@
+<!DOCTYPE rkplugin>
+<document>
+	<code file="multi_input.js" />
+	<logic>
+		<!-- This plugin is meant for embedding only. Provides input elements for character/factor, numbers, and logicals, combined in one.
+			External properties:
+				- datatype: Connect this to the desired type of data. Default is character
+				- value: The resulting value. Logicals are coded as 0 or 1. You can also set this externally. Initially "", 0, depending on datatype.
+				- valuequoted: The resulting value. Automatically quoted, if datatype is character or factor. Logicals are coded as TRUE or FALSE
+				               (without additional quotes). NOTE: Contrary to "value", this is read-only.
+		-->
+		<external id="datatype" default="character"/>
+		<external id="value" default=""/>
+		<external id="valuequoted" default="&quot;&quot;"/>
+
+		<script><![CDATA[
+				gui.addChangeCommand ("datatype", "updateType ()");
+				gui.addChangeCommand ("value", "update ()");
+				gui.addChangeCommand ("input.text", "inputChange ()");
+				gui.addChangeCommand ("spinbox.real", "spinboxChange ()");
+				gui.addChangeCommand ("logical.number", "logicalChange ()");
+
+				toNumber = function (value_string) {
+					value = parseFloat (value_string);
+					if (isNaN (value)) {
+						if (value_string == "TRUE") value = 1;
+						else (value = 0);
+					}
+					return value;
+				}
+				
+				updateType = function () {
+					datatype = gui.getValue ("datatype");
+					value = "";
+					logical = 0;
+					character = 0;
+					numeric = 0;
+					if (datatype == "logical") {
+						logical = 1;
+						value = (gui.getBoolean ("value") ? 1 : 0);
+					} else if (datatype == "numeric") {
+						numeric = 1;
+						value = toNumber (gui.getString ("value"));
+					} else {
+						value = gui.getString ("value");
+						character = 1;
+					}
+					gui.setValue ("logical.visible", logical);
+					gui.setValue ("spinbox.visible", numeric);
+					gui.setValue ("input.visible", character);
+					gui.setValue ("value", value);
+				}
+
+				var updatingValue = false;
+				update = function () {
+					updatingValue = true;
+
+					datatype = gui.getValue ("datatype");
+					if (datatype == "logical") {
+						value = (gui.getBoolean ("value") ? 1 : 0);
+						valuequoted = value ? "TRUE" : "FALSE";
+					} else if (datatype == "numeric") {
+						value = toNumber (gui.getValue ("value"));
+						valuequoted = value;
+					} else {
+						value = gui.getString ("value");
+						valuequoted = quote (value);
+					}
+					gui.setValue ("logical.number", value);
+					gui.setValue ("spinbox.real", value);
+					gui.setValue ("input.text", value);
+					gui.setValue ("valuequoted", valuequoted);
+
+					updatingValue = false;
+				}
+
+				// The reason for splitting these into separate functions is to make the element behave better in optionsets,
+				// even if the data-type is changed from _outside_ the optionset. In this case, the optionset may have stored the value of a
+				// sub-element, which is now _inactive/hidden_.
+				spinboxChange = function () {
+					if (updatingValue) return;
+					gui.setValue ("value", gui.getValue ("spinbox.real"));
+				}
+				inputChange = function () {
+					if (updatingValue) return;
+					gui.setValue ("value", gui.getValue ("input.text"));
+				}
+				logicalChange = function () {
+					if (updatingValue) return;
+					gui.setValue ("value", gui.getBoolean ("logical.number") ? 1 : 0);
+				}
+		]]></script>
+	</logic>
+	<dialog label="Level selector">
+		<radio id="logical" label="">
+			<option label="FALSE" value="FALSE"/>
+			<option label="TRUE" value="TRUE"/>
+		</radio>
+		<input id="input" label="" initial="initial"/>
+		<spinbox id="spinbox" label="" default_precision="0"/>
+	</dialog>
+</document>
+ 

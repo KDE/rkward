@@ -4,6 +4,7 @@
 	<help file="recode_categorical.rkh" />
 	<logic>
 		<connect governor="x.available" client="set.contents.levels.variable"/>
+		<connect governor="datamode.string" client="set.contents.new_value_custom.datatype"/>
 		
 		<convert id="saveto_other_object" mode="equals" sources="saveto_select.string" standard="other"/>
 		<connect governor="saveto_other_object" client="saveto.enabled"/>
@@ -58,7 +59,7 @@
 							</switch>
 							<switch condition="new_value_na" id="new_value_string">
 								<true standard="na" fixed_value="_NA_" />
-								<false dynamic_value="new_value_custom.text" />
+								<false dynamic_value="new_value_custom.valuequoted" />
 							</switch>
 						</logic>
 						<optioncolumn id="old_values_labelled" connect="old_value_string" label="Old value(s)"/>
@@ -67,7 +68,7 @@
 
 						<optioncolumn id="new_values_labelled" connect="new_value_string" label="New value(s)"/>
 						<optioncolumn id="new_value_types" connect="new_value.string"/>
-						<optioncolumn id="new_value_strings" connect="new_value_custom.text"/>
+						<optioncolumn id="new_value_strings" connect="new_value_custom.value"/>
 						<content>
 							<frame>
 								<optiondisplay index="true"/>
@@ -87,7 +88,7 @@
 											<option value="na" label="NA"/>
 											<option value="custom" label="Value:" checked="true"/>
 										</radio>
-										<input id="new_value_custom" label=""/>
+										<embed id="new_value_custom" component="rkward::multi_input"/>
 										<text id="quotation_note" type="normal">(Value will be quoted, automatically)</text>
 										<stretch/>
 									</column>
@@ -102,7 +103,7 @@
 				<option value="na" label="NA"/>
 				<option value="custom" label="Custom value:"/>
 			</radio>
-			<input id="other_custom" label=""/>
+			<embed id="other_custom" component="rkward::multi_input"/>
 			<stretch/>
 		</tab>
 	</tabbook></dialog>

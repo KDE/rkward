@@ -1,3 +1,4 @@
+- New embeddable (minimal) plugin "multi_input" to combine different input elements
 - Fixed: Problems starting from paths with spaces in the file name on Windows
 - Added command line option --r-executable for switching between several installations of R
 - Use a binary wrapper, instead of wrapper shell script for startup on all platforms

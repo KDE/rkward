@@ -6,8 +6,8 @@ function calculate () {
 	output = input;
 	if (getBoolean ("saveto_other_object")) output = getString ("saveto");
 	var datamode = getString ("datamode");
-	var quote_new_values = (datamode == "character" || datamode == "factor");
 	var is_factor = datamode == "factor";
+	var is_character = datamode == "character";
 	var default_values = getString ("other");
 
 	// initialize output vector to defaults
@@ -21,7 +21,7 @@ function calculate () {
 	if (default_values == "copy") {
 		echo (input + ")\n");
 	} else {
-		echo ('rep (' + default_values == "na" ? 'NA' : getString ("other_custom") + ', length.out = length (' + input + ')))\n');
+		echo ('rep (' + default_values == "na" ? 'NA' : getString ("other_custom.valuequoted") + ', length.out = length (' + input + ')))\n');
 	}
 
 	// Make replacements
@@ -57,7 +57,8 @@ function calculate () {
 		var replacement = 'NA';
 		if (new_value_types[i] != "na") {
 			replacement = new_value_strings[i];
-			if (quote_new_values) replacement = quote (replacement);
+			if (is_factor || is_character) replacement = quote (replacement);
+			else if (datamode == "logical") replacement = Number (replacement) ? "TRUE" : "FALSE";
 		}
 
 		echo ('recoded[' + old_index + '] <- ' + replacement + '\n');
