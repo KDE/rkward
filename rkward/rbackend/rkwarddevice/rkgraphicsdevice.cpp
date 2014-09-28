@@ -2,7 +2,7 @@
                           rkgraphicsdevice_backendtransmitter  -  description
                              -------------------
     begin                : Mon Mar 18 20:06:08 CET 2013
-    copyright            : (C) 2013 by Thomas Friedrichsmeier 
+    copyright            : (C) 2013, 2014 by Thomas Friedrichsmeier 
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -79,6 +79,7 @@ void RKGraphicsDevice::triggerUpdate () {
 }
 
 void RKGraphicsDevice::updateNow () {
+	if (!view) return;	// device windows already killed, but this instance not yet removed.
 	if (painter.isActive ()) painter.end ();
 #ifdef USE_QIMAGE_BUFFER
 	view->setPixmap (QPixmap::fromImage (area));
