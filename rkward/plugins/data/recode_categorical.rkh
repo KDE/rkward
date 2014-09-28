@@ -1,0 +1,57 @@
+<!DOCTYPE rkhelp >
+<document>
+	<title>
+		Recode categorical data
+	</title>
+	<summary>
+		Allows you to recode a vector with categorical data. This plugin also allows to recode vectors that are coded numerically, but this only makes
+		sense for numeric vectors with only a limited number of unique values.
+	</summary>
+	<usage>
+		Select the vector to recode, and where to store the recoded data. Select the storage mode of the resulting data. Then, on the second tab, specify
+		the recodings to make.
+	</usage>
+	<settings>
+		<caption id="tab_in_out"/>
+		<setting id="x">
+			Select the vector to recode
+		</setting>
+		<setting id="saveto_select">
+			Select whether to overwrite/replace the input vector with the recoded data, or save to a different vector.
+		</setting>
+		<setting id="saveto">
+			Pick a name (and optionally a container) for the recoded data.
+		</setting>
+		<setting id="datamode">
+			Storage mode of the recoded data.
+		</setting>
+		<caption id="tab_values"/>
+		<setting id="set">
+			The upper half of this tab allows you to specify recodings for individual input values. To add more recodings, click the "add/+"-button. To
+			remove recodings, click the "remove/x"-button. For each recoding, select the following:
+		</setting>
+		<setting id="old_values">
+			For each recoding to perform, first select the old value(s) to recode. This can be either NA/missing, or select non-NA value(s) on the left hand side,
+			and add them to the values to be recoded by clicking the arrow-button. If several input values are to be replaced with one output value,
+			you can select them all at once.
+		</setting>
+		<setting id="new_value">
+			Enter the new value (or set it to be NA). For factors and character vectors, values will be quoted, automatically.
+		</setting>
+		<setting id="other">
+			Any input values (including NAs) for which no recoding was specified, above, can either be left unchanged ("Copy"), or can be replaced
+			with a specific value or NA.
+		</setting>
+	</settings>
+	<related>
+		<ul>
+			<li>
+				<link href="rkward://rhelp/recode" />
+			</li>
+		</ul>
+	</related>
+	<technical>
+		This plugin utilizes the <link href="rkward://component/rkward/level_select"/> and <link href="rkward://component/rkward/multi_input"/>
+		embeddable plugins.
+	</technical>
+</document>

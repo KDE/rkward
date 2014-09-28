@@ -22,9 +22,9 @@
 		]]></script>
 	</logic>
 	<dialog label="Recode categorical data"><tabbook>
-		<tab label="Input and output variables">
+		<tab label="Input and output variables" id="tab_in_out">
 			<varselector id="vars"/>
-			<varslot id="x" source="vars" label="Select variable to recode" num_dimensions="1"/>
+			<varslot id="x" source="vars" label="Select variable to recode" num_dimensions="1" required="true"/>
 			<row>
 				<radio id="saveto_select" label="Save to">
 					<option value="same" label="Same object"/>
@@ -40,10 +40,10 @@
 			</dropdown>
 			<stretch/>
 		</tab>
-		<tab label="Values">
+		<tab label="Values" id="tab_values">
 			<row>
 				<column>
-					<optionset id="set" min_rows="1">
+					<optionset id="set" min_rows="1" label="Recodings">
 						<logic>
 							<convert id="old_value_na" mode="equals" sources="old_value_type.string" standard="na"/>
 							<connect client="levels.enabled" governor="old_value_na.not"/>
