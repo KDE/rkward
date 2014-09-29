@@ -28,7 +28,7 @@
 #' @param x a string, giving the filename of the of the output file
 #' @param additional.header.contents NULL or an additional string to add to the HTML header section.
 #'        This could be scripts or additional CSS definitions, for example. Note that
-#'        @em nothing will be added to the header, if the file already exists.
+#'        \emph{nothing} will be added to the header, if the file already exists.
 #' @param flush.images. If true, any images used in the output file will be deleted as well.
 #' @param ask Logical: Whether to ask before flushing the output file.
 #' @return \code{rk.get.tempfile.name}, \code{rk.get.output.html.file}, and
