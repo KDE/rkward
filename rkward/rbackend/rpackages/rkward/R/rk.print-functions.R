@@ -195,7 +195,7 @@
 				for (row in 1:dim (x)[1]) {
 					cat ("<tr>")
 					for (col in 1:dim (x)[2]) {
-						cat ("<td>", x[row, col], "</td>", sep="")
+						cat ("<td>", format (x[row, col]), "</td>", sep="")
 					}
 					cat ("</tr>\n")
 				}
