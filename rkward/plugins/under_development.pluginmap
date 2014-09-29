@@ -16,9 +16,6 @@
 		<component type="standard" id="valueselect_test1" file="testing/valueselect1.xml" label="Valueselector/valueslot/select Test" />
 <!-- End -->
 
-		<component type="standard" id="recode_categorical" file="data/recode_categorical.xml" label="Recode categorical data" />
-		<component type="standard" id="level_select" file="data/level_select.xml" label="Select by value" />
-
 		<component type="standard" id="import_xls" file="00saveload/import/import_xls.xml" label="Import MS EXCEL">
 			<attribute id="format" value="*.xls *.xlsx" label="MS EXCEL sheet"/>
 		</component>
@@ -38,7 +35,6 @@
 			<entry component="generate_random"/>
 			<entry component="sort_data"/>
 			<entry component="sort_data2"/>
-			<entry component="recode_categorical"/>
 		</menu>
 		<menu id="analysis" label="Analysis" index="4">
 			<entry component="simple_anova" index="9"/>

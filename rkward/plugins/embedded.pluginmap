@@ -16,6 +16,7 @@
 
 		<component type="standard" id="x11grid" file="x11device/grid.xml" label="Draw Grid" />
 
+		<component type="standard" id="level_select" file="data/level_select.xml" label="Select by value" />
 		<component type="standard" id="multi_input" file="data/multi_input.xml" label="Multi Input" />
 
 		<!-- This plugin does not really belong, here, but nowhere else, either, since it's only for the purpose of testing some things in the
