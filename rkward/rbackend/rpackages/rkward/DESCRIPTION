@@ -18,8 +18,8 @@ Authors@R: c(person(given="Thomas", family="Friedrichsmeier",
     email="thomas.friedrichsmeier@ruhr-uni-bochum.de", role=c("aut")),
     person(given="RKWard-devel", family="mailing list",
     email="rkward-devel@lists.sourceforge.net", role=c("cre","ctb")))
-Version: 0.6.1
-Date: 2012-09-29
+Version: 0.6.2
+Date: 2014-09-29
 Collate:
     'base_overrides.R'
     'internal.R'
