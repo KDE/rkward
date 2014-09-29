@@ -309,7 +309,7 @@ Function ValidateKDEPrefix
 		!insertmacro RunSimpleQuery "$\"$FileSelectCurrent\bin\kde4-config.exe$\" --kde-version" "UNKNOWN"
 		Pop $INST_KDE_VERSION
 
-		!insertmacro VersionCompareCall $INST_KDE_VERSION "4.7.0" $MyTemp
+		!insertmacro VersionCompareCall $INST_KDE_VERSION "4.10.2" $MyTemp
 		${If} $MyTemp < 2
 			StrCpy $2 "Version $INST_KDE_VERSION should be ok"
 			IntOp $KDEPrefixOk_count $KDEPrefixOk_count + 1
