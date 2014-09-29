@@ -314,7 +314,7 @@ Function ValidateKDEPrefix
 			StrCpy $2 "Version $INST_KDE_VERSION should be ok"
 			IntOp $KDEPrefixOk_count $KDEPrefixOk_count + 1
 		${Else}
-			StrCpy $2 "Version $INST_KDE_VERSION is too old (4.7.0 or later is required)"
+			StrCpy $2 "Version $INST_KDE_VERSION is too old (4.10.2 or later is required)"
 			Goto done
 		${EndIf}
 
