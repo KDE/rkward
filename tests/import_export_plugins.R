@@ -54,7 +54,7 @@ suite <- new ("RKTestSuite", id="import_export_plugins",
 			# variable, yet.
 		}, libraries=c("foreign"), files=c("../import_export_plugins_testfile.sav")),
 		new ("RKTest", id="import_stata", call=function () {
-			rk.call.plugin ("rkward::import_stata", convert_dates.state="1", convert_factors.state="1", convert_underscore.state="0", doedit.state="0", file.selection="import_export_plugins_testfile.dta", missing_type.state="0", saveto.objectname="my.stata.data", submit.mode="submit")
+			rk.call.plugin ("rkward::import_stata", convert_dates.state="1", convert_factors.state="1", convert_underscore.state="0", do_locale_conversion.state="1", doedit.state="0", encoding.string="ISO8859-1", file.selection="import_export_plugins_testfile.dta", missing_type.state="0", saveto.objectname="my.stata.data", saveto.parent=".GlobalEnv", submit.mode="submit")
 
 			# In order to check, whether the import was correct
 			rk.print (my.stata.data)

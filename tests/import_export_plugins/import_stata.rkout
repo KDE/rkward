@@ -15,7 +15,7 @@ DATE<br />
 	<tr class= firstline > 
 		<th>&nbsp;  </th>
 		<th>testvar  </th>
-		<th>specialäöüßèchars  </th>
+		<th>specialÃ¤Ã¶Ã¼ÃŸÃ¨chars  </th>
 		<th>strings</th> 
 	</tr> 
 <tr> 
@@ -43,7 +43,7 @@ DATE<br />
 </td>
 <td class=cellinside> 3
 </td>
-<td class=cellinside>valueöäü3
+<td class=cellinside>valueÃ¶Ã¤Ã¼3
 </td>
 <td class=cellinside>text
 </td></tr>
@@ -65,7 +65,7 @@ DATE<br />
 </td>
 <td class=cellinside>value1
 </td>
-<td class=cellinside>äöüß
+<td class=cellinside>Ã¤Ã¶Ã¼ÃŸ
 </td></tr>
  
 <tr> 
@@ -75,7 +75,7 @@ DATE<br />
 </td>
 <td class=cellinside>value2
 </td>
-<td class=cellinside>$€
+<td class=cellinside>$Â€
 </td></tr>
  
 <tr> 
@@ -83,7 +83,7 @@ DATE<br />
 </td>
 <td class=cellinside> 7
 </td>
-<td class=cellinside>valueöäü3
+<td class=cellinside>valueÃ¶Ã¤Ã¼3
 </td>
 <td class=cellinside> 
 </td></tr>
@@ -105,6 +105,6 @@ DATE<br />
 
 <p class='character'>var (Variable label 1)</p>
 
-<p class='character'>var (Variable label 2 with some special chars: äöü#+ß€)</p>
+<p class='character'>var (Variable label 2 with some special chars: Ã¤Ã¶Ã¼#+ÃŸÂ€)</p>
 
 <p class='character'>var</p>

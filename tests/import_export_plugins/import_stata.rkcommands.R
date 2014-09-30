@@ -1,8 +1,24 @@
 local({
 ## Prepare
 require (foreign)
+
+# helper function to convert all strings to the current encoding
+iconv.recursive <- function (x, from) {
+	attribs <- attributes (x);
+	if (is.character (x)) {
+		x <- iconv (x, from=from, to="", sub="")
+	} else if (is.list (x)) {
+		x <- lapply (x, function (sub) iconv.recursive (sub, from))
+	}
+	# convert factor levels and all other attributes
+	attributes (x) <- lapply (attribs, function (sub) iconv.recursive (sub, from))
+	x
+}
 ## Compute
 data <- read.dta ("import_export_plugins_testfile.dta", convert.dates=TRUE, convert.factors=TRUE, missing.type=FALSE, convert.underscore=FALSE)
+
+# convert all strings to the current encoding
+data <- iconv.recursive (data, from="ISO8859-1")
 
 # set variable labels for use in RKWard
 labels <- attr (data, "var.labels")
