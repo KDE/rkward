@@ -1,5 +1,8 @@
+include ("convert_encoding.js");
+
 function preprocess () {
 	echo ('require (foreign)\n');
+	makeEncodingPreprocessCode ();
 }
 
 function calculate () {
@@ -32,6 +35,7 @@ function calculate () {
 	var object = getValue ("saveto");
 
 	echo ('data <- read.dta ("' + getValue ("file") + '"' + options + ')\n');
+	makeEncodingCall ('data');
 	echo ('\n');
 	echo ('# set variable labels for use in RKWard\n');
 	echo ('labels <- attr (data, "var.labels")\n');

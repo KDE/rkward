@@ -2,6 +2,9 @@
 <document>
 	<code file="import_spss.js" />
 	<help file="import_spss.rkh" />
+	<snippets>
+		<include file="convert_encoding.xml"/>
+	</snippets>
 	<logic>
 		<external id="filename"/>
 		<connect governor="filename" client="file.selection"/>
@@ -11,10 +14,7 @@
 		<connect governor="use_labels.state" client="labels_limit.enabled"/>
 		<connect governor="use_labels.state" client="trim_labels.enabled"/>
 		
-		<connect governor="do_locale_conversion.state" client="encoding.enabled" />
-		<convert id="other_encoding" mode="equals" standard="other" sources="encoding.string" />
-		<convert id="other_encoding2" mode="and" sources="other_encoding;do_locale_conversion.state" />
-		<connect governor="other_encoding2" client="user_encoding.enabled" />
+		<insert snippet="encoding_logic"/>
 	</logic>
 	<dialog label="Import SPSS file">
 		<tabbook>
@@ -34,31 +34,7 @@
 					<checkbox id="trim_labels" checked="false" label="Trim white space" value="1" value_unchecked="0"/>
 				</frame>
 			</tab>
-			<tab id="tab_encoding" label="Encoding">
-				<checkbox id="do_locale_conversion" checked="false" label="Convert string encoding" value="1" value_unchecked="0"/>
-				<dropdown id="encoding" label="Convert from:">
-					<option value="latin1" label="Latin 1" checked="true"/>
-					<option value="UTF-8" label="UTF-8"/>
-					<option value="ISO8859-1" label="ISO8859-1 Latin-1 Western European"/>
-					<option value="ISO8859-2" label="ISO8859-2 Latin-2 Central European"/>
-					<option value="ISO8859-3" label="ISO8859-3 Latin-3 South European"/>
-					<option value="ISO8859-4" label="ISO8859-4 Latin-4 North European"/>
-					<option value="ISO8859-5" label="ISO8859-5 Latin/Cyrillic"/>
-					<option value="ISO8859-6" label="ISO8859-6 Latin/Arabic"/>
-					<option value="ISO8859-7" label="ISO8859-7 Latin/Greek"/>
-					<option value="MS-GREEK" label="MS-GREEK"/>
-					<option value="ISO8859-8" label="ISO8859-8 Latin/Hebrew"/>
-					<option value="ISO8859-9" label="ISO8859-9 Latin-5 Turkish"/>
-					<option value="ISO8859-10" label="ISO8859-10 Latin-6 Nordic"/>
-					<option value="ISO8859-11" label="ISO8859-11 Latin/Thai"/>
-					<option value="ISO8859-13" label="ISO8859-13 Latin-7 Baltic Rim"/>
-					<option value="ISO8859-14" label="ISO8859-14 Latin-8 Celtic"/>
-					<option value="ISO8859-15" label="ISO8859-15 Latin-9 Western European (EUR)"/>
-					<option value="ISO8859-16" label="ISO8859-16 Latin-10 South-Eastern European"/>
-					<option value="other" label="Other (specify below)"/>
-				</dropdown>
-				<input id="user_encoding" label="Other encoding" required="true"/>
-			</tab>
+			<insert snippet="encoding_tab"/>
 		</tabbook>
 	</dialog>
 </document>

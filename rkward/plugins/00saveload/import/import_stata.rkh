@@ -1,5 +1,8 @@
 <!DOCTYPE rkhelp>
 <document>
+	<snippets>
+		<include file="convert_encoding.xml"/>
+	</snippets>
 	<summary>
 Import STATA data files.
 	</summary>
@@ -18,6 +21,7 @@ Choose the STATA data file to import. Usually those files have the ending '*.dta
 		<setting id="convert_factors">R uses value labels only for factors. Should Stata variable with value labels be converted to factors?</setting>
 		<setting id="missing_type">Stata version 8 and above differentiates various different type of missing values. If this option is set, this information is stored in an attribute of the imported data. See <link href="rkward://rhelp/read.dta"/> for details.</setting>
 		<setting id="convert_underscore">The underscore ('_') is usually not used in R variable names, and may cause problems in some (rare) situations. Should underscore characters be converted to dots ('.')?</setting>
+		<insert snippet="encoding_doc"/>
 	</settings>
 	<related>
 		<ul>

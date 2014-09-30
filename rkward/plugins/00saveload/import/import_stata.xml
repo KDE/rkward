@@ -2,9 +2,13 @@
 <document>
 	<code file="import_stata.js" />
 	<help file="import_stata.rkh" />
+	<snippets>
+		<include file="convert_encoding.xml"/>
+	</snippets>
 	<logic>
 		<external id="filename"/>
 		<connect governor="filename" client="file.selection"/>
+		<insert snippet="encoding_logic"/>
 	</logic>
 	<dialog label="Import STATA file">
 		<tabbook>
@@ -23,6 +27,7 @@
 					<checkbox id="convert_underscore" checked="false" label="Convert '_' in Stata variable names to '.' in R names" value="1" value_unchecked="0"/>
 				</frame>
 			</tab>
+			<insert snippet="encoding_tab"/>
 		</tabbook>
 	</dialog>
 </document>

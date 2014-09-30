@@ -1,5 +1,8 @@
 <!DOCTYPE rkhelp>
 <document>
+	<snippets>
+		<include file="convert_encoding.xml"/>
+	</snippets>
 	<summary>
 Import SPSS data files.
 	</summary>
@@ -19,11 +22,7 @@ Choose the SPSS data file to import. Usually those files have the ending '*.sav'
 		<setting id="use_labels">Should SPSS variables with value labels be converted to R factors with those levels?</setting>
 		<setting id="labels_limit">Maximum number of factor levels to use (see <link href="rkward://rhelp/read.spss" />)</setting>
 		<setting id="trim_labels">Trim trailing white space from labels?</setting>
-
-		<caption id="tab_encoding"/>
-		<setting id="do_locale_conversion">If special character (e.g. umlauts) do not show up correctly, the SPSS file probably uses a different locale than your R session. In this case, check this option, and specify the correct character encoding below.</setting>
-		<setting id="encoding">Select character encoding to convert from. The option above needs to be checked, for this to be enabled.</setting>
-		<setting id="user_encoding">If none of the encodings above matches, you can specify an encoding here. Note that the available encodings may differ from platform to platform. See <link href="rkward://rhelp/iconvlist" /> for a list of available encodings.</setting>
+		<insert snippet="encoding_doc"/>
 	</settings>
 	<related>
 		<ul>
