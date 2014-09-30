@@ -1,3 +1,4 @@
+- Import Stata plugin gains option to convert character encoding.
 - New embeddable (minimal) plugin "multi_input" to combine different input elements
 - Fixed: Problems starting from paths with spaces in the file name on Windows
 - Added command line option --r-executable for switching between several installations of R
@@ -10,8 +11,6 @@
 - IN PROGESS: Allow plugins to be translated
 - Fixed: Adjust to (re-?)named parameters for options("pager")
 - Allow plugin UI script code to query R for information
-	TODO: - document
-	      - piece all the new features together and finish implementing an embeddable level selector plugin on top of this
 - Fixed: potential crash when a previously installed pluginmap is not longer readable
 - Allow to connect <varslot>/<valueslot> source to any property, not just <varselectors>
 - New plugin elements <valueselector> and <select>

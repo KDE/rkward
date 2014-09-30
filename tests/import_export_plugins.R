@@ -44,6 +44,7 @@ suite <- new ("RKTestSuite", id="import_export_plugins",
 			stopifnot (oldwd == getwd ())
 		}),
 		new ("RKTest", id="import_spss", call=function () {
+# NOTE: read.spss currently failing when run in non iso8859-1 locale. See http://r.789695.n4.nabble.com/read-spss-locale-and-encodings-td881149.html
 			rk.call.plugin ("rkward::import_spss", convert_var_labels.state="1", data_frame.state="1", do_locale_conversion.state="0", doedit.state="0", file.selection="import_export_plugins_testfile.sav", labels_limit.real="1.00", saveto.objectname="my.spss.data", trim_labels.state="0", use_labels.state="1", submit.mode="submit")
 
 			# In order to check, whether the import was correct

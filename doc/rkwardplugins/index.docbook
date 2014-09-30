@@ -49,6 +49,7 @@ as Authors, publish date, the abstract, and Keywords -->
 <year>2011</year>
 <year>2012</year>
 <year>2013</year>
+<year>2014</year>
 <holder>Thomas Friedrichsmeier</holder>
 </copyright>
 <!-- Translators: put here the copyright notice of the translation -->
@@ -1474,6 +1475,54 @@ This chapter contains information on some topics that are useful only to certain
 			You can declare two <command>&lt;external&gt;</command> properties in your plugin. <parameter>filename</parameter> will be set to the selected file name, and <parameter>context</parameter> will be set to <replaceable>"import"</replaceable>.
 		</para>
 	</sect2>
+</sect1>
+
+<sect1 id="querying_r_for_info">
+<title>Querying R for information</title>
+	<para>In some cases, you may want to fetch further information from R, to be presented in your plugin's UI. For instance, you may want to offer a selection of the levels of a factor that the user
+	has selected for analysis. Since version 0.6.2 or &rkward; it is possible to do so. Before we start, it is important that you are aware of some caveats:</para>
+	<para>R Code run from inside the plugin's UI logic is evaluated in R's event loop, meaning they can be run <emphasis>while</emphasis> other computations are running. This is to make sure your plugin's UI will be usable, even while R is busy doing other things. However, this makes it really important, that your code does not have side effects. In particular:</para>
+	<itemizedlist>
+		<listitem><para>Do <emphasis>not</emphasis> make any assignments in .GlobalEnv or any other non-local environment.</para></listitem>
+		<listitem><para>Do <emphasis>not</emphasis> print anything to the output file.</para></listitem>
+		<listitem><para>Do <emphasis>not</emphasis> plot anything on-screen.</para></listitem>
+		<listitem><para>In general, do <emphasis>not</emphasis> do anything that has side-effects. Your code may <emphasis>read in information</emphasis>, not "<emphasis>do</emphasis>" anything.</para></listitem>
+	</itemizedlist>
+	<para>With this in mind, here's the general pattern. You will use this inside a <link linkend="logic_scripted">scripted UI logic</link> section:</para>
+	<programlisting>
+		&lt;script&gt;&lt;![CDATA[
+				last_command_id = -1;
+				gui.addChangeCommand ("variable", "update ()");
+				update = function () {
+					gui.setValue ("selector.enabled", 0);
+					variable = gui.getValue ("variable");
+					if (variable == "") return;
+
+					last_command_id = doRCommand ('levels (' + variable + ')', "commandFinished");
+				}
+
+				commandFinished = function (result, id) {
+					if (id != last_command_id) return;  // another result is about to arrive
+					if (typeof (result) == "undefined") {
+						gui.setListValue ("selector.available", Array ("ERROR"));
+						return;
+					}
+					gui.setValue ("selector.enabled", 1);
+					gui.setListValue ("selector.available", result);
+				}
+		]]&gt;&lt;/script&gt;
+	</programlisting>
+	<para>Here, <parameter>variable</parameter> is a property holding an object name (e.g. inside a <command>&lt;varslot&gt;</command>). Whenever that changes, you will want to update the display
+	      of levels inside the <command>&lt;valueselector&gt;</command>, named <parameter>selector</parameter>. The key function here is <command>doRCommand()</command>, taking as first parameter
+		  the command string to run, and as second parameter the name of a function to call, when the command has finished. Note that the command is running asynchronously, and this makes things
+		  a bit more complex. For one thing you want to make sure, that your <command>&lt;valueselector&gt;</command> remains disabled, while it does not contain up-to-date information. Another
+		  thing is that you could potentially have queued more than one command, before you get the first results. This is why every command is given an "id", and we store that in <parameter>last_command_id</parameter> for future reference.</para>
+	  <para>When the command is done, the specified callback is called (<parameter>commandFinished</parameter>, in this case) with two parameters: The result itself, and the id of the correspoding
+		  command. The result will be of a type resembling the representation in R, i.e. a numeric Array, if the result is numeric, etc. It can even be an R <command>list()</command>, but in this case
+		  it will be represented as a JS <command>Array()</command> whithout names.</para>
+	  <para>Note that even this example is somewhat simplified. In reality you should take additional precautions, e.g. to avoid putting an extreme amount of levels into the selector. The good news
+		  is that probably you do not have to do all this yourself. The above example is taken from the <command>level_select</command> plugin, for instance, which you can simply embed in your own
+		  plugin. This even allows you to specify a different expression to run in place of <command>levels()</command>.</para>
 </sect1>
 
 <sect1 id="current_object">
@@ -3449,6 +3498,86 @@ different types, using modifiers may lead to errors. For <replaceable>fixed_valu
 </varlistentry>
 
 </variablelist>
+</sect1>
+
+<sect1 id="standard_embeddable_plugins"><title>Embeddable plugins shipped with the official RKWard release</title>
+<para>A number of embeddable plugins is shipped with &rkward;, and can be used in your own plugins. Detailed documentation is currently available
+	only in these plugins source or help files. However, here is a list to give you a quick overview of what is available:</para>
+<table frame='all'><title>Standard embeddable plugins</title>
+<tgroup cols='4'>
+<thead>
+<row>
+  <entry>ID</entry>
+  <entry>Pluginmap</entry>
+  <entry>Description</entry>
+  <entry>Example usage</entry>
+</row>
+</thead>
+<tbody>
+<row>
+  <entry>rkward::plot_options</entry>
+  <entry>embedded.pluginmap</entry>
+  <entry>Provides a wide range of options for plots. Most plotting plugins utilize this.</entry>
+  <entry>Plots->Barplot, most other plotting plugins</entry>
+</row>
+<row>
+  <entry>rkward::plot_color_choser</entry>
+  <entry>embedded.pluginmap</entry>
+  <entry>Very simple plugin for specifying a color. Current implementation provides a list of color names. Future implementations may provide
+         more elaborate color picking.</entry>
+  <entry>Plots->Histogram</entry>
+</row>
+<row>
+  <entry>rkward::plot_stepfun_options</entry>
+  <entry>embedded.pluginmap</entry>
+  <entry>Step function plot options</entry>
+  <entry>Plots->ECDF plot</entry>
+</row>
+<row>
+  <entry>rkward::histogram_options</entry>
+  <entry>embedded.pluginmap</entry>
+  <entry>Histogram (plot) options</entry>
+  <entry>Plots->Histogram</entry>
+</row>
+<row>
+  <entry>rkward::barplot_embed</entry>
+  <entry>embedded.pluginmap</entry>
+  <entry>Barplot options</entry>
+  <entry>Plots->Barplot</entry>
+</row>
+<row>
+  <entry>rkward::one_var_tabulation</entry>
+  <entry>embedded.pluginmap</entry>
+  <entry>Provides tabulation on a single variable.</entry>
+  <entry>Plots->Barplot</entry>
+</row>
+<row>
+  <entry>rkward::limit_vector_length</entry>
+  <entry>embedded.pluginmap</entry>
+  <entry>Limit the length of a vector (to the n largest or smallest elements).</entry>
+  <entry>Plots->Barplot</entry>
+</row>
+<row>
+  <entry>rkward::x11_grid</entry>
+  <entry>embedded.pluginmap</entry>
+  <entry>Add grid to a plot</entry>
+  <entry>In an existing plot window: Edit->Draw grid.</entry>
+</row>
+<row>
+  <entry>rkward::level_select</entry>
+  <entry>embedded.pluginmap</entry>
+  <entry>Provides a &lt;valueselector&gt; filled with the levels (or unique values) of a vector.</entry>
+  <entry>Data->Recode Categorical data</entry>
+</row>
+<row>
+  <entry>rkward::multi_input</entry>
+  <entry>embedded.pluginmap</entry>
+  <entry>Combines spinbox, input and radio controls to provide input for character, numeric, logical data.</entry>
+  <entry>Data->Recode Categorical data</entry>
+</row>
+</tbody>
+</tgroup>
+</table>
 </sect1>
 
 <sect1 id="pluginmapelements"><title>Elements for use in &pluginmap; files</title>
