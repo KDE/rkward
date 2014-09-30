@@ -1516,12 +1516,12 @@ This chapter contains information on some topics that are useful only to certain
 	      of levels inside the <command>&lt;valueselector&gt;</command>, named <parameter>selector</parameter>. The key function here is <command>doRCommand()</command>, taking as first parameter
 		  the command string to run, and as second parameter the name of a function to call, when the command has finished. Note that the command is running asynchronously, and this makes things
 		  a bit more complex. For one thing you want to make sure, that your <command>&lt;valueselector&gt;</command> remains disabled, while it does not contain up-to-date information. Another
-		  thing is that you could potentially have queued more than one command, before you get the first results. This is why every command is given an "id", and we store that in <parameter>last_command_id</parameter> for future reference.</para>
+		  thing is that you could potentially have queued more than one command, before you get the first results. This is why every command is given an "id", and we store that in <parameter>last_command_id</parameter> for later reference.</para>
 	  <para>When the command is done, the specified callback is called (<parameter>commandFinished</parameter>, in this case) with two parameters: The result itself, and the id of the correspoding
 		  command. The result will be of a type resembling the representation in R, i.e. a numeric Array, if the result is numeric, etc. It can even be an R <command>list()</command>, but in this case
 		  it will be represented as a JS <command>Array()</command> whithout names.</para>
 	  <para>Note that even this example is somewhat simplified. In reality you should take additional precautions, e.g. to avoid putting an extreme amount of levels into the selector. The good news
-		  is that probably you do not have to do all this yourself. The above example is taken from the <command>level_select</command> plugin, for instance, which you can simply embed in your own
+		  is that probably you do not have to do all this yourself. The above example is taken from the <command>rkward::level_select</command> plugin, for instance, which you can simply <link linkend="embedding">embed</link> in your own
 		  plugin. This even allows you to specify a different expression to run in place of <command>levels()</command>.</para>
 </sect1>
 
@@ -3967,6 +3967,9 @@ Child elements:
 </varlistentry>
 <varlistentry><term>include()-function</term>
 <listitem><para><command>include(filename)</command>can be used to include a separate JS file.</para></listitem>
+</varlistentry>
+<varlistentry><term>doRCommand()-function</term>
+<listitem><para><command>doRCommand(command, callback)</command> can be used to query R for information. Please read the section on <link linkend="querying_r_for_info">querying R from inside a plugin</link> for details, and caveats.</para></listitem>
 </varlistentry>
 </variablelist>
 </sect1>
