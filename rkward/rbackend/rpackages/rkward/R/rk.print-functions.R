@@ -155,7 +155,7 @@
 	on.exit (sink ())
 
 	# convert 2d tables to data.frames with values labelled
-	if (is.table(x) && (length(dim(x)) == 2)) {
+	if ((is.table(x) || is.matrix(x)) && (length(dim(x)) == 2)) {
 		rows = dim(x)[1]
 		cols = dim(x)[2]
 		if (is.null(titles)) {
