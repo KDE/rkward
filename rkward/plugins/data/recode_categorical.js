@@ -21,7 +21,7 @@ function calculate () {
 	if (default_values == "copy") {
 		echo (input + ")\n");
 	} else {
-		echo ('rep (' + default_values == "na" ? 'NA' : getString ("other_custom.valuequoted") + ', length.out = length (' + input + ')))\n');
+		echo ('rep (' + default_values == "na" ? 'NA' : getString ("other_custom.valuequoted") + ', length.out = length (' + input + '))\n');
 	}
 
 	// Make replacements
