@@ -36,7 +36,7 @@ suite <- new ("RKTestSuite", id="analysis_plugins",
 			rk.call.plugin ("rkward::corr_matrix", do_p.state="", method.string="polychoric", use.string="pairwise", x.available="test10y\ntest10a", submit.mode="submit")
 
 			rk.call.plugin ("rkward::corr_matrix", do_p.state="", method.string="pearson", use.string="pairwise", x.available="women[[\"weight\"]]\nwomen[[\"height\"]]", submit.mode="submit")
-		}),
+		}, libraries=c("polycor")),
 		new ("RKTest", id="correlation_matrix_plot", call=function () {
 			rk.call.plugin ("rkward::cor_graph", digits.real="3.00", method.string="pearson", scale.state="TRUE", use.string="pairwise.complete.obs", x.available="rock", submit.mode="submit")
 		}),
