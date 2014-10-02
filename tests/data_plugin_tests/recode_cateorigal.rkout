@@ -1,0 +1,30 @@
+<h1>Recode categorical data</h1>
+<h2>Parameters</h2>
+<ul><li>Input variable: warpbreaks[["tension"]]</li>
+<li>Output variable: recoded</li>
+<li>Number of differences after recoding: 54</li>
+</ul>
+DATE<br />
+
+<p class='character'>
+
+<font class='factor'></p>
+
+<p class='character'>low&nbsp; low&nbsp; low&nbsp; low&nbsp; low&nbsp; low&nbsp; low&nbsp; low&nbsp; low&nbsp; midorhigh&nbsp; midorhigh&nbsp; midorhigh&nbsp; midorhigh&nbsp; midorhigh&nbsp; midorhigh&nbsp; midorhigh&nbsp; midorhigh&nbsp; midorhigh&nbsp; midorhigh&nbsp; midorhigh&nbsp; midorhigh&nbsp; midorhigh&nbsp; midorhigh&nbsp; midorhigh&nbsp; midorhigh&nbsp; midorhigh&nbsp; midorhigh&nbsp; low&nbsp; low&nbsp; low&nbsp; low&nbsp; low&nbsp; low&nbsp; low&nbsp; low&nbsp; low&nbsp; midorhigh&nbsp; midorhigh&nbsp; midorhigh&nbsp; midorhigh&nbsp; midorhigh&nbsp; midorhigh&nbsp; midorhigh&nbsp; midorhigh&nbsp; midorhigh&nbsp; midorhigh&nbsp; midorhigh&nbsp; midorhigh&nbsp; midorhigh&nbsp; midorhigh&nbsp; midorhigh&nbsp; midorhigh&nbsp; midorhigh&nbsp; midorhigh</p>
+
+<p class='character'></font>
+</p>
+
+<br>&nbsp;
+
+<p class='character'>Levels:<font class='factorlevels'> low midorhigh</font>
+<br></p>
+<h1>Recode categorical data</h1>
+<h2>Parameters</h2>
+<ul><li>Input variable: withnas</li>
+<li>Output variable: recoded2</li>
+<li>Number of differences after recoding: 20</li>
+</ul>
+DATE<br />
+
+<p class='logical'>NA&nbsp; FALSE&nbsp; TRUE&nbsp; FALSE&nbsp; FALSE&nbsp; FALSE&nbsp; FALSE&nbsp; FALSE&nbsp; NA&nbsp; NA&nbsp; NA&nbsp; FALSE&nbsp; FALSE&nbsp; FALSE&nbsp; TRUE&nbsp; FALSE&nbsp; FALSE&nbsp; FALSE&nbsp; NA&nbsp; NA</p>
