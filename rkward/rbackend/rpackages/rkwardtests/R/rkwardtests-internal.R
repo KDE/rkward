@@ -5,6 +5,9 @@
 .rktest.tmp.storage <- new.env()
 
 .rk.rerun.plugin.link.replacement <- function (plugin, settings, label) {
+	op <- options (useFancyQuotes = FALSE)
+	on.exit (options (op))
+
 	.rk.cat.output("<h3>Rerun code:</h3>")
 	.rk.cat.output("<pre>")
 	.rk.cat.output("rk.call.plugin (")
