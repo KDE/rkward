@@ -246,7 +246,16 @@ suite <- new ("RKTestSuite", id="rkward_application_tests",
 			# Since the error only appeared occasionally, we try 100 times to produce it. Unfortunately, that does make the test run annoyingly long...
 			graphics.off()
 			for (i in 1:100) {
-				rk.screen.device ()
+				rk.embed.device (grDevices::x11())
+				plot (rnorm (100), main=paste (i, "/ 100"))
+				dev.off ()
+			}
+		}),
+		new ("RKTest", id="rk_device_stress_test", call=function () {
+			# Somewhat less annyoingly long test for the RK()-device. Stress testing esp. the open/close operations has revealed at least one race-condition bug, previously.
+			graphics.off()
+			for (i in 1:25) {
+				RK ()
 				plot (rnorm (100), main=paste (i, "/ 100"))
 				dev.off ()
 			}
