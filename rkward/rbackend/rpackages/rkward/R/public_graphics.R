@@ -139,9 +139,15 @@
 #'       always the case for \code{plot(...)} and similar commands, which will re-use an existing plot window, if available.
 #'
 #' @note \code{rk.embed.device()} will not work on all platforms (most importantly, not in most MacOSX binaries). Further, note that a captured
-#'       \code{X11()} or \code{Windows} device may look similar to an \code{RK()} device, but is actually a very different thing.
+#'       \code{X11()} or \code{Windows} device may look similar to an \code{RK()} device, but is actually a very different thing. Capturing a
+#'       window already "owned" by RKWard (importantly, \code{RK()} device windows) may lead to unexpected results, including crashes.
 #'
 #' @seealso \link{RK}
+#' @examples
+#' 
+#' ## Not run:
+#' rk.embed.device (grDevices::X11(title="X11 device window"))
+#' plot (rnorm (10))
 #'
 #' @export
 "rk.embed.device" <- function (expr) {

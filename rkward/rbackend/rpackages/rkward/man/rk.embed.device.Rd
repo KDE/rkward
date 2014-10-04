@@ -18,7 +18,13 @@ Theoretically, \code{expr} can be any valid R expression. However typically this
 }
 \note{
 \code{rk.embed.device()} will not work on all platforms (most importantly, not in most MacOSX binaries). Further, note that a captured
-      \code{X11()} or \code{Windows} device may look similar to an \code{RK()} device, but is actually a very different thing.
+      \code{X11()} or \code{Windows} device may look similar to an \code{RK()} device, but is actually a very different thing. Capturing a
+      window already "owned" by RKWard (importantly, \code{RK()} device windows) may lead to unexpected results, including crashes.
+}
+\examples{
+## Not run:
+rk.embed.device (grDevices::X11(title="X11 device window"))
+plot (rnorm (10))
 }
 \seealso{
 \link{RK}
