@@ -1,5 +1,9 @@
 ChangeLog for package rkwarddev
 
+changes in version 0.06-5 (2014-10-04)
+fixed:
+  - the "show" feature in rk.plugin.skeleton() was broken due to changes in the namespace defaults
+
 changes in version 0.06-4 (2014-09-14)
 added:
   - new functions rk.set.language(), rk.get.language() and i18n() to

@@ -362,10 +362,10 @@ rk.plugin.skeleton <- function(about, path=tempdir(),
         hints=hints,
         gen.info=gen.info,
         dependencies=dependencies.node,
-        id.name=paste(gsub("[.]*", "", pluginmap[["name"]]), lang, "rkward", sep="_"))
+        id.name=paste(gsub("[.]*|[[:space:]]*", "", pluginmap[["name"]]), lang, "rkward", sep="_"))
       cat(pasteXML(XML.pluginmap, shine=2, indent.by=indent.by), file=plugin.pluginmap)
       # needed for "show"
-      pm.id.name <- pluginmap[["name"]]
+      pm.id.name <- gsub("[.]*|[[:space:]]*", "", pluginmap[["name"]])
     } else {
       pm.id.name <- name
     }
@@ -380,7 +380,7 @@ rk.plugin.skeleton <- function(about, path=tempdir(),
         require=XML.i18n.require,
         hints=FALSE,
         gen.info=gen.info,
-        id.name=paste0(gsub("[.]*", "", pluginmap[["name"]]), "_main_rkward"),
+        id.name=paste0(gsub("[.]*|[[:space:]]*", "", pluginmap[["name"]]), "_main_rkward"),
         lang="en")
       cat(pasteXML(XML.i18n.pluginmap, shine=2, indent.by=indent.by), file=toplevel.pluginmap)
     } else {}
@@ -393,7 +393,8 @@ rk.plugin.skeleton <- function(about, path=tempdir(),
       if(isTRUE(show)){
         # call the plugin; reconstructed the ID generation from rk.XML.pluginmap()
         plugin.ID <- auto.ids(paste0(pm.id.name, pm.id.name), prefix=ID.prefix("component"), chars=25)
-        rk.call.plugin(paste0("rkward::", plugin.ID))
+        # namespace should be the plugin name
+        rk.call.plugin(paste0(pm.id.name, "::", plugin.ID))
       } else {}
     } else {}
   } else {}

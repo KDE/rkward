@@ -1,6 +1,13 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
+\section{Changes in rkwarddev version 0.06-5 (2014-10-04)}{
+  \subsection{fixed}{
+    \itemize{
+      \item the \code{"show"} feature in \code{rk.plugin.skeleton()} was broken due to changes in the namespace defaults
+    }
+  }
+}
 \section{Changes in rkwarddev version 0.06-4 (2014-09-14)}{
   \subsection{added}{
     \itemize{
