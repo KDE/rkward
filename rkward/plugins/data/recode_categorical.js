@@ -8,7 +8,7 @@ function calculate () {
 	var datamode = getString ("datamode");
 	var is_factor = datamode == "factor";
 	var is_character = datamode == "character";
-	var default_values = getString ("other");
+	var default_values = getString ("other.string");
 
 	// initialize output vector to defaults
 	echo ('input <- ' + input + '\n');
@@ -21,7 +21,7 @@ function calculate () {
 	if (default_values == "copy") {
 		echo (input + ")\n");
 	} else {
-		echo ('rep (' + default_values == "na" ? 'NA' : getString ("other_custom.valuequoted") + ', length.out = length (' + input + '))\n');
+		echo ('rep (' + ((default_values == "na") ? 'NA' : getString ("other_custom.valuequoted")) + ', length.out = length (' + input + ')))\n');
 	}
 
 	// Make replacements

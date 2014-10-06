@@ -26,7 +26,7 @@ local ({
 local({
 ## Compute
 input <- withnas
-recoded <- as.logical ("", length.out = length (withnas))
+recoded <- as.logical (rep (NA, length.out = length (withnas)))
 recoded[input %in% c("2","3","4","5","6","7","8","9","10")] <- FALSE
 recoded[input %in% c("9","10")] <- NA
 recoded[is.na (input)] <- TRUE
