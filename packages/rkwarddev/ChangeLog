@@ -1,8 +1,10 @@
 ChangeLog for package rkwarddev
 
-changes in version 0.06-5 (2014-10-04)
+changes in version 0.06-5 (2014-10-06)
 fixed:
   - the "show" feature in rk.plugin.skeleton() was broken due to changes in the namespace defaults
+  - scanning plugin XML code for JS and help related content didn't work as expected in rk.plugin.component()
+  - rk.rkh.scan() now also recognises <optioncolumn> and <matrix> nodes
 
 changes in version 0.06-4 (2014-09-14)
 added:

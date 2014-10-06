@@ -154,17 +154,8 @@ rk.plugin.component <- function(about, xml=list(), js=list(), rkh=list(),
   }
 
   ## create plugin.js
-  if("js" %in% create & length(js) > 0){
-    got.JS.options <- names(js)
-    for (this.opt in c("require", "globals", "variables", "preprocess", "calculate", "printout", "doPrintout", "load.silencer")){
-      if(!this.opt %in% got.JS.options) {
-        js[[this.opt]] <- eval(formals(rk.JS.doc)[[this.opt]])
-      } else {}
-    }
-    if(!"results.header" %in% got.JS.options) {
-      js[["results.header"]] <- paste0("\"", name.orig, " results\"")
-    } else {}
-    if("var" %in% scan){
+  js.try.scan <- function(XML.plugin, scan, js, guess.getter){
+      if("var" %in% scan){
       var.scanned <- rk.JS.scan(XML.plugin, guess.getter=guess.getter)
       if(!is.null(var.scanned)){
         js[["variables"]] <- paste0(
@@ -178,6 +169,19 @@ rk.plugin.component <- function(about, xml=list(), js=list(), rkh=list(),
         js[["printout"]] <- paste(js[["printout"]], saveobj.scanned, sep="\n")
       } else {}
     } else {}
+    return(js)
+  }
+  if("js" %in% create & length(js) > 0){
+    got.JS.options <- names(js)
+    for (this.opt in c("require", "globals", "variables", "preprocess", "calculate", "printout", "doPrintout", "load.silencer")){
+      if(!this.opt %in% got.JS.options) {
+        js[[this.opt]] <- eval(formals(rk.JS.doc)[[this.opt]])
+      } else {}
+    }
+    if(!"results.header" %in% got.JS.options) {
+      js[["results.header"]] <- paste0("\"", name.orig, " results\"")
+    } else {}
+    js <- js.try.scan(XML.plugin=XML.plugin, scan=scan, js=js, guess.getter=guess.getter)
     JS.code <- rk.JS.doc(
       require=js[["require"]],
       variables=js[["variables"]],
@@ -192,7 +196,10 @@ rk.plugin.component <- function(about, xml=list(), js=list(), rkh=list(),
       indent.by=indent.by)
     slot(this.component, "js") <- JS.code
   } else {
-    slot(this.component, "js") <- rk.JS.doc()
+    if("js" %in% create){
+      js <- js.try.scan(XML.plugin=XML.plugin, scan=scan, js=js, guess.getter=guess.getter)
+    } else {}
+    slot(this.component, "js") <- rk.JS.doc(variables=js[["variables"]], printout=js[["printout"]])
   }
 
   ## create plugin.rkh
@@ -223,7 +230,10 @@ rk.plugin.component <- function(about, xml=list(), js=list(), rkh=list(),
       gen.info=gen.info)
     slot(this.component, "rkh") <- rkh.doc
   } else {
-    slot(this.component, "rkh") <- rk.rkh.doc(hints=hints)
+    if("rkh" %in% create & "settings" %in% scan){
+      rkh[["settings"]] <- rk.rkh.settings(rk.rkh.scan(XML.plugin))
+    } else {}
+    slot(this.component, "rkh") <- rk.rkh.doc(settings=rkh[["settings"]], hints=hints)
   }
 
   return(this.component)

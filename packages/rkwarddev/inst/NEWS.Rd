@@ -1,10 +1,11 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
-\section{Changes in rkwarddev version 0.06-5 (2014-10-04)}{
+\section{Changes in rkwarddev version 0.06-5 (2014-10-06)}{
   \subsection{fixed}{
     \itemize{
       \item the \code{"show"} feature in \code{rk.plugin.skeleton()} was broken due to changes in the namespace defaults
+      \item scanning plugin XML code for JS and help related content didn't work as expected in \code{rk.plugin.component()}
     }
   }
 }
