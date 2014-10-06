@@ -1161,3 +1161,16 @@ dependenciesCompatWrapper <- function(dependencies, about, hints=FALSE){
   }
   return(results)
 } ## end function dependenciesCompatWrapper()
+
+
+## function get.rkh.prompter()
+# returns either an empty list or the contents of rkh.prompter from the internal enviroment 
+get.rkh.prompter <- function(){
+  if(exists("rkh.prompter", envir=.rkdev.env, inherits=FALSE)){
+    rkh.prompter <- as.list(.rkdev.env)[["rkh.prompter"]]
+  } else {
+    assign("rkh.prompter", list(), envir=.rkdev.env)
+    rkh.prompter <- list()
+  }
+  return(rkh.prompter)
+}
