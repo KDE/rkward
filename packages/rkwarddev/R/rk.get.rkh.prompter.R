@@ -17,21 +17,21 @@
 
 #' Get .rkh related information stored internally
 #' 
-#' @param plugin Character string, the name under which you stored information. If \code{NULL},
+#' @param component Character string, the name under which you stored information. If \code{NULL},
 #'    returns all information stored in the internal \code{rkh.prompter} list.
-#' @param id Character string, the node ID if a given plugin to search for.  If \code{NULL}, returns
-#'    the full list of the given plugin, otherwise only the help information for the requested node.
+#' @param id Character string, the node ID if a given component to search for.  If \code{NULL}, returns
+#'    the full list of the given component, otherwise only the help information for the requested node.
 #' @export
 #' @examples
 #' rk.get.rkh.prompter("rk.myPlugin", "someID")
 
-rk.get.rkh.prompter <- function(plugin=NULL, id=NULL){
+rk.get.rkh.prompter <- function(component=NULL, id=NULL){
   rkh.prompter <- get.rkh.prompter()
 
-  if(is.null(plugin)){
+  if(is.null(component)){
     return(rkh.prompter)
   } else {
-    rkh.prompter <- rkh.prompter[[plugin]]
+    rkh.prompter <- rkh.prompter[[component]]
     if(is.null(id)){
       return(rkh.prompter)
     } else {

@@ -208,7 +208,7 @@ rk.plugin.component <- function(about, xml=list(), js=list(), rkh=list(),
     # if settings were defined manually, this overwrites the scan
     if(!"settings" %in% got.rkh.options){
       if("settings" %in% scan){
-        rkh[["settings"]] <- rk.rkh.settings(rk.rkh.scan(XML.plugin))
+        rkh[["settings"]] <- rk.rkh.settings(rk.rkh.scan(XML.plugin, component=name.orig))
       } else {
         rkh[["settings"]] <- eval(formals(rk.rkh.doc)[["settings"]])
       }

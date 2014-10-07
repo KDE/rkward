@@ -22,11 +22,13 @@
 #' @param help Logical, if \code{TRUE} a list of XiMpLe.node objects will be returned, otherwise a character
 #'    vector with only the relevant ID names.
 #' @param captions Logical, if \code{TRUE} captions will be generated for all "page", "tab" and "frame" nodes.
+#' @param component Character string, name of the scanned component. Only needed if you want to search for
+#'    help text provided by \code{\link[rkwarddev:rk.set.rkh.prompter]{rk.set.rkh.prompter}}.
 #' @return A character vector or a list of XiMpLe.node objects.
 #' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @export
 
-rk.rkh.scan <- function(pXML, help=TRUE, captions=TRUE){
+rk.rkh.scan <- function(pXML, help=TRUE, captions=TRUE, component=NULL){
 
   settings.tags <- c("radio", "varslot", "browser", "dropdown",
     "checkbox", "saveobject", "input", "spinbox", "optioncolumn", "matrix")
@@ -47,7 +49,16 @@ rk.rkh.scan <- function(pXML, help=TRUE, captions=TRUE){
           if(help.id[this.id,"tag"] %in% caption.tags){
             return(rk.rkh.caption(id=help.id[this.id,"id"]))
           } else {
-            return(rk.rkh.setting(id=help.id[this.id,"id"]))
+            if(!is.null(component)){
+              rkh.text <- rk.get.rkh.prompter(component=component, id=this.id)
+              # check if the component is to be omitted
+              if(is.logical(rkh.text[["help"]]) & !isTRUE(rkh.text[["help"]])){
+                return(NULL)
+              } else {}
+            } else {
+              rkh.text <- NULL
+            }
+            return(rk.rkh.setting(id=help.id[this.id,"id"], text=rkh.text))
           }
         }))
     } else {
