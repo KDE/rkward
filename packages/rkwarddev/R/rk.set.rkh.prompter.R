@@ -28,6 +28,7 @@
 #' environment will magically be written into the help file.
 #' 
 #' @param component Character string, should be a unique name to identify the current plugin/component.
+#'    If \code{NULL}, this function quits silently without any action.
 #' @param id Either a character string (the \code{id} of the node to store the help information for),
 #'    or an object of class \code{XiMpLe.node} (whose \code{id} will be extracted and used).
 #' @param help Character string, will be used as the \code{text} value for a setting node in the .rkh file.
@@ -37,8 +38,15 @@
 #' @examples
 #' rk.set.rkh.prompter("rk.myPlugin", "someID", "CLick this to feel funny.")
 
-rk.set.rkh.prompter <- function(component, id, help=NULL, rm=FALSE){
-  rkh.prompter <- get.rkh.prompter()
+rk.set.rkh.prompter <- function(component=NULL, id=NULL, help=NULL, rm=FALSE){
+  if(is.null(component)){
+    if(!is.null(help)){
+      warning("rk.set.rkh.prompter(): you did not specify a 'component', but text for 'help'!", call.=FALSE)
+    } else {}
+    return(invisible(NULL))
+  } else {
+    rkh.prompter <- get.rkh.prompter()
+  }
 
   if(!is.null(id)){
     # let's see if we need to extract IDs first

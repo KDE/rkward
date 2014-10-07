@@ -112,7 +112,7 @@ rk.plugin.component <- function(about, xml=list(), js=list(), rkh=list(),
   # to besure, remove all non-character symbols from name
   name.orig <- name
   name <- clean.name(name)
-
+  
   # check hierarchy
   if(is.null(hierarchy)){
     hierarchy <- list()
@@ -231,7 +231,7 @@ rk.plugin.component <- function(about, xml=list(), js=list(), rkh=list(),
     slot(this.component, "rkh") <- rkh.doc
   } else {
     if("rkh" %in% create & "settings" %in% scan){
-      rkh[["settings"]] <- rk.rkh.settings(rk.rkh.scan(XML.plugin))
+      rkh[["settings"]] <- rk.rkh.settings(rk.rkh.scan(XML.plugin, component=name.orig))
     } else {}
     slot(this.component, "rkh") <- rk.rkh.doc(settings=rkh[["settings"]], hints=hints)
   }

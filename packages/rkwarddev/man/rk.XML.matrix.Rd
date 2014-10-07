@@ -7,7 +7,7 @@ rk.XML.matrix(label, mode = "real", rows = 2, columns = 2, min = NULL,
   max = NULL, allow_missings = FALSE, allow_user_resize_columns = TRUE,
   allow_user_resize_rows = TRUE, fixed_width = FALSE,
   fixed_height = FALSE, horiz_headers = NULL, vert_headers = NULL,
-  id.name = "auto")
+  id.name = "auto", help = NULL, component = rk.get.comp())
 }
 \arguments{
 \item{label}{Character string, a label for the matrix.}
@@ -53,6 +53,17 @@ Useful, esp. when creating a vector input element (columns="1").}
 
 \item{id.name}{Character string, a unique ID for this plugin element.
 If \code{"auto"}, an ID will be generated automatically from the label.}
+
+\item{help}{Character string,
+      will be used as the \code{text} value for a setting node in the .rkh file.
+If set to \code{FALSE},
+      \code{\link[rkwarddev:rk.rkh.scan]{rk.rkh.scan}} will ignore this node.
+Also needs \code{component} to be set accordingly!}
+
+\item{component}{Character string,
+      name of the component this node belongs to. Only needed if you
+want to use the scan features for automatic help file generation; needs \code{help} to be set
+accordingly, too!}
 }
 \value{
 An object of class \code{XiMpLe.node}.

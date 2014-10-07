@@ -5,7 +5,8 @@
 \usage{
 rk.XML.varslot(label, source, required = FALSE, multi = FALSE, min = 1,
   any = 1, max = 0, dim = 0, min.len = 0, max.len = NULL,
-  classes = NULL, types = NULL, id.name = "auto")
+  classes = NULL, types = NULL, id.name = "auto", help = NULL,
+  component = rk.get.comp())
 }
 \arguments{
 \item{label}{Character string, a text label for the varslot.}
@@ -49,6 +50,17 @@ of a variable!}
 
 \item{id.name}{Character vector, unique ID for the varslot.
 If \code{"auto"}, the ID will be generated automatically from \code{label}.}
+
+\item{help}{Character string,
+      will be used as the \code{text} value for a setting node in the .rkh file.
+If set to \code{FALSE},
+      \code{\link[rkwarddev:rk.rkh.scan]{rk.rkh.scan}} will ignore this node.
+Also needs \code{component} to be set accordingly!}
+
+\item{component}{Character string,
+      name of the component this node belongs to. Only needed if you
+want to use the scan features for automatic help file generation; needs \code{help} to be set
+accordingly, too!}
 }
 \value{
 An object of class \code{XiMpLe.node}.

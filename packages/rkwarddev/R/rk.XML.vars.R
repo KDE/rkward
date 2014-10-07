@@ -58,6 +58,12 @@
 #'    and varslot (third entry). If \code{formula.dependent} is not \code{NULL}, a fourth and fifth entry is needed as well,
 #'    for the dependent varslot and the formula node, respectively.
 #'    If \code{"auto"}, IDs will be generated automatically from \code{label} and \code{slot.text}.
+#' @param help Character string, will be used as the \code{text} value for a setting node in the .rkh file.
+#'    If set to \code{FALSE}, \code{\link[rkwarddev:rk.rkh.scan]{rk.rkh.scan}} will ignore this node.
+#'    Also needs \code{component} to be set accordingly!
+#' @param component Character string, name of the component this node belongs to. Only needed if you
+#'    want to use the scan features for automatic help file generation; needs \code{help} to be set
+#'    accordingly, too!
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
@@ -70,7 +76,8 @@
 
 rk.XML.vars <- function(label, slot.text, required=FALSE, multi=FALSE, min=1, any=1, max=0,
   dim=0, min.len=0, max.len=NULL, classes=NULL, types=NULL, horiz=TRUE, add.nodes=NULL,
-  frame.label=NULL, formula.dependent=NULL, dep.options=list(), id.name="auto"){
+  frame.label=NULL, formula.dependent=NULL, dep.options=list(), id.name="auto",
+  help=NULL, component=rk.get.comp()){
 
   if(identical(id.name, "auto")){
     ## if this ID generation get's changed, change it in rk.XML.varslot(), too!
@@ -108,7 +115,9 @@ rk.XML.vars <- function(label, slot.text, required=FALSE, multi=FALSE, min=1, an
     max.len=max.len,
     classes=classes,
     types=types,
-    id.name=var.slot.id)
+    id.name=var.slot.id,
+    help=help,
+    component=component)
 
   slot.content <- list(v.slot)
 
@@ -127,7 +136,9 @@ rk.XML.vars <- function(label, slot.text, required=FALSE, multi=FALSE, min=1, an
       max.len=if ("max.len" %in% dep.opt.names) {dep.options[["max.len"]]} else {NULL},
       classes=if ("classes" %in% dep.opt.names) {dep.options[["classes"]]} else {NULL},
       types=if ("types" %in% dep.opt.names) {dep.options[["types"]]} else {NULL},
-      id.name=var.dep.id)
+      id.name=var.dep.id,
+      help=help,
+      component=component)
     slot.content[[length(slot.content) + 1]] <- dep.slot
     formula.node <- rk.XML.formula(fixed=v.slot, dependent=dep.slot, id.name=frml.id)
     slot.content[[length(slot.content) + 1]] <- formula.node

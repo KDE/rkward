@@ -27,6 +27,12 @@
 #' @param max.precision Numeric, maximum number of digits that can be meaningfully represented.
 #' @param id.name Character string, a unique ID for this plugin element.
 #'    If \code{"auto"} and a label was provided, an ID will be generated automatically from the label.
+#' @param help Character string, will be used as the \code{text} value for a setting node in the .rkh file.
+#'    If set to \code{FALSE}, \code{\link[rkwarddev:rk.rkh.scan]{rk.rkh.scan}} will ignore this node.
+#'    Also needs \code{component} to be set accordingly!
+#' @param component Character string, name of the component this node belongs to. Only needed if you
+#'    want to use the scan features for automatic help file generation; needs \code{help} to be set
+#'    accordingly, too!
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
@@ -35,7 +41,8 @@
 #' cat(pasteXML(test.spinbox))
 
 
-rk.XML.spinbox <- function(label, min=NULL, max=NULL, initial=0, real=TRUE, precision=2, max.precision=8, id.name="auto"){
+rk.XML.spinbox <- function(label, min=NULL, max=NULL, initial=0, real=TRUE, precision=2, max.precision=8, id.name="auto",
+  help=NULL, component=rk.get.comp()){
   attr.list <- list(label=label)
 
   if(identical(id.name, "auto")){
@@ -69,6 +76,9 @@ rk.XML.spinbox <- function(label, min=NULL, max=NULL, initial=0, real=TRUE, prec
   } else {}
 
   node <- XMLNode("spinbox", attrs=attr.list)
+
+  # check for .rkh content
+  rk.set.rkh.prompter(component=component, id=attr.list[["id"]], help=help)
 
   return(node)
 }

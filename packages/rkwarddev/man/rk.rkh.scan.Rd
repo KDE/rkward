@@ -3,7 +3,7 @@
 \alias{rk.rkh.scan}
 \title{Create RKWard help nodes from plugin XML}
 \usage{
-rk.rkh.scan(pXML, help = TRUE, captions = TRUE)
+rk.rkh.scan(pXML, help = TRUE, captions = TRUE, component = NULL)
 }
 \arguments{
 \item{pXML}{Either an object of class \code{XiMpLe.doc} or \code{XiMpLe.node},
@@ -15,6 +15,10 @@ vector with only the relevant ID names.}
 
 \item{captions}{Logical, if \code{TRUE} captions will be generated for all "page",
       "tab" and "frame" nodes.}
+
+\item{component}{Character string,
+      name of the scanned component. Only needed if you want to search for
+help text provided by \code{\link[rkwarddev:rk.set.rkh.prompter]{rk.set.rkh.prompter}}.}
 }
 \value{
 A character vector or a list of XiMpLe.node objects.

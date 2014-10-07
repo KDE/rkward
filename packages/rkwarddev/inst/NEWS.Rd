@@ -1,12 +1,22 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
-\section{Changes in rkwarddev version 0.06-5 (2014-10-06)}{
+\section{Changes in rkwarddev version 0.06-5 (2014-10-07)}{
   \subsection{fixed}{
     \itemize{
       \item the \code{"show"} feature in \code{rk.plugin.skeleton()} was broken due to changes in the namespace defaults
       \item scanning plugin XML code for JS and help related content didn't work as expected in \code{rk.plugin.component()}
       \item \code{rk.rkh.scan()} now also recognises <optioncolumn> and <matrix> nodes
+    }
+  }
+  \subsection{added}{
+    \itemize{
+      \item new functions \code{rk.set.rkh.prompter()} and \code{rk.get.rkh.prompter()} to make it easier to generate help files
+        (later...)
+      \item \code{rk.rkh.scan()} (and automatically \code{rk.plugin.skeleton()} and \code{rk.plugin.component()}) are now capable of fetching
+        text set with \code{rk.set.rkh.prompter()} and use it to generate help files
+      \item all functions scanned by \code{rk.rkh.scan()} for setting nodes in .rkh files have gained two additional arguments,
+        \code{"help"} and \code{"component"}, to register the text to be used via \code{rk.set.rkh.prompter()}
     }
   }
 }

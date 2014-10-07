@@ -4,7 +4,7 @@
 \title{Create XML node "radio" for RKWard plugins}
 \usage{
 rk.XML.radio(label, options = list(label = c(val = NULL, chk = FALSE)),
-  id.name = "auto")
+  id.name = "auto", help = NULL, component = rk.get.comp())
 }
 \arguments{
 \item{label}{Character string, a text label for this plugin element.}
@@ -17,6 +17,15 @@ labels of the options, \code{val} defines the value to submit if the option is c
 \item{id.name}{Character string, a unique ID for this plugin element.
 If \code{"auto"} and a label was provided,
       an ID will be generated automatically from the label.}
+
+\item{help}{Character string,
+      will be used as the \code{text} value for a setting node in the .rkh file.
+Also needs \code{component} to be set accordingly!}
+
+\item{component}{Character string,
+      name of the component this node belongs to. Only needed if you
+want to use the scan features for automatic help file generation; needs \code{help} to be set
+accordingly, too!}
 }
 \value{
 An object of class \code{XiMpLe.node}.

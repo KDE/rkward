@@ -3,16 +3,16 @@
 \alias{rk.get.rkh.prompter}
 \title{Get .rkh related information stored internally}
 \usage{
-rk.get.rkh.prompter(plugin = NULL, id = NULL)
+rk.get.rkh.prompter(component = NULL, id = NULL)
 }
 \arguments{
-\item{plugin}{Character string,
+\item{component}{Character string,
       the name under which you stored information. If \code{NULL},
 returns all information stored in the internal \code{rkh.prompter} list.}
 
-\item{id}{Character string, the node ID if a given plugin to search for.  If \code{NULL},
-      returns
-the full list of the given plugin,
+\item{id}{Character string,
+      the node ID if a given component to search for.  If \code{NULL}, returns
+the full list of the given component,
       otherwise only the help information for the requested node.}
 }
 \description{

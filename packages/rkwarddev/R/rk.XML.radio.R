@@ -24,6 +24,11 @@
 #'    \code{chk=TRUE} should be set in the one option which is checked by default.
 #' @param id.name Character string, a unique ID for this plugin element.
 #'    If \code{"auto"} and a label was provided, an ID will be generated automatically from the label.
+#' @param help Character string, will be used as the \code{text} value for a setting node in the .rkh file.
+#'    Also needs \code{component} to be set accordingly!
+#' @param component Character string, name of the component this node belongs to. Only needed if you
+#'    want to use the scan features for automatic help file generation; needs \code{help} to be set
+#'    accordingly, too!
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
@@ -33,7 +38,7 @@
 #'   "Second Option"=c(val="val2", chk=TRUE)))
 #' cat(pasteXML(test.radio))
 
-rk.XML.radio <- function(label, options=list(label=c(val=NULL, chk=FALSE)), id.name="auto"){
+rk.XML.radio <- function(label, options=list(label=c(val=NULL, chk=FALSE)), id.name="auto", help=NULL, component=rk.get.comp()){
   num.opt <- length(options)
   rd.options <- sapply(1:num.opt, function(this.num){
       this.element <- names(options)[[this.num]]
@@ -58,6 +63,9 @@ rk.XML.radio <- function(label, options=list(label=c(val=NULL, chk=FALSE)), id.n
       attrs=rd.attr.list,
       .children=child.list(rd.options, empty=FALSE)
     )
+
+  # check for .rkh content
+  rk.set.rkh.prompter(component=component, id=id, help=help)
 
   return(radio)
 }

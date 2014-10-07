@@ -41,6 +41,12 @@
 #'    of a variable!
 #' @param id.name Character vector, unique ID for the varslot.
 #'    If \code{"auto"}, the ID will be generated automatically from \code{label}.
+#' @param help Character string, will be used as the \code{text} value for a setting node in the .rkh file.
+#'    If set to \code{FALSE}, \code{\link[rkwarddev:rk.rkh.scan]{rk.rkh.scan}} will ignore this node.
+#'    Also needs \code{component} to be set accordingly!
+#' @param component Character string, name of the component this node belongs to. Only needed if you
+#'    want to use the scan features for automatic help file generation; needs \code{help} to be set
+#'    accordingly, too!
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
@@ -55,7 +61,7 @@
 #' }
 
 rk.XML.varslot <- function(label, source, required=FALSE, multi=FALSE, min=1, any=1, max=0,
-  dim=0, min.len=0, max.len=NULL, classes=NULL, types=NULL, id.name="auto"){
+  dim=0, min.len=0, max.len=NULL, classes=NULL, types=NULL, id.name="auto", help=NULL, component=rk.get.comp()){
   if(inherits(source, "XiMpLe.node")){
     source.name <- slot(source, "name")
     if(!identical(source.name, "varselector")){
@@ -114,6 +120,9 @@ rk.XML.varslot <- function(label, source, required=FALSE, multi=FALSE, min=1, an
   } else {}
 
   v.slot <- XMLNode("varslot", attrs=var.slot.attr)
+
+  # check for .rkh content
+  rk.set.rkh.prompter(component=component, id=var.slot.attr[["id"]], help=help)
 
   return(v.slot)
 }

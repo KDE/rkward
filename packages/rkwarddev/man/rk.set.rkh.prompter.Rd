@@ -3,16 +3,22 @@
 \alias{rk.set.rkh.prompter}
 \title{Set up an environment to store .rkh related information}
 \usage{
-rk.set.rkh.prompter(plugin, id, help = NULL, rm = FALSE)
+rk.set.rkh.prompter(component = NULL, id = NULL, help = NULL,
+  rm = FALSE)
 }
 \arguments{
-\item{plugin}{Character string, should be a unique name to identify the current plugin.}
+\item{component}{Character string,
+      should be a unique name to identify the current plugin/component.
+If \code{NULL}, this function quits silently without any action.}
 
 \item{id}{Either a character string (the \code{id} of the node to store the help information for),
 or an object of class \code{XiMpLe.node} (whose \code{id} will be extracted and used).}
 
+\item{help}{Character string,
+      will be used as the \code{text} value for a setting node in the .rkh file.}
+
 \item{rm}{Logical,
-      If \code{TRUE} will remove all information stored by the name of \code{plugin} (if
+      If \code{TRUE} will remove all information stored by the name of \code{component} (if
 \code{id=NULL}) or of the given \code{id=NULL}, respectively.}
 }
 \description{
@@ -21,7 +27,8 @@ directly into your script code of certrain functions,
       like for radio buttons or checkboxes.
 }
 \details{
-The information is temporarily stored in an internal environment, using the plugin name
+The information is temporarily stored in an internal environment,
+      using the plugin/component name
 you specify. Each entry is named after the ID of its respective node. If you later call
 \code{\link[rkwarddev:rk.plugin.component]{rk.plugin.component}} (or it is called by other
 functions) and you activate the \code{scan} option for rkh files, the scanning process

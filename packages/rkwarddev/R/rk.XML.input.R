@@ -24,6 +24,12 @@
 #' @param required Logical, whether an entry is mandatory or not.
 #' @param id.name Character string, a unique ID for this plugin element.
 #'    If \code{"auto"}, an ID will be generated automatically from the label.
+#' @param help Character string, will be used as the \code{text} value for a setting node in the .rkh file.
+#'    If set to \code{FALSE}, \code{\link[rkwarddev:rk.rkh.scan]{rk.rkh.scan}} will ignore this node.
+#'    Also needs \code{component} to be set accordingly!
+#' @param component Character string, name of the component this node belongs to. Only needed if you
+#'    want to use the scan features for automatic help file generation; needs \code{help} to be set
+#'    accordingly, too!
 #' @return An object of class \code{XiMpLe.node}.
 #' @seealso
 #'    \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
@@ -32,7 +38,7 @@
 #' test.input <- rk.XML.input("Type some text")
 #' cat(pasteXML(test.input))
 
-rk.XML.input <- function(label, initial=NULL, size="medium", required=FALSE, id.name="auto"){
+rk.XML.input <- function(label, initial=NULL, size="medium", required=FALSE, id.name="auto", help=NULL, component=rk.get.comp()){
   attr.list <- list(label=label)
 
   if(identical(id.name, "auto")){
@@ -52,6 +58,9 @@ rk.XML.input <- function(label, initial=NULL, size="medium", required=FALSE, id.
   } else {}
 
   node <- XMLNode("input", attrs=attr.list)
+
+  # check for .rkh content
+  rk.set.rkh.prompter(component=component, id=attr.list[["id"]], help=help)
 
   return(node)
 }

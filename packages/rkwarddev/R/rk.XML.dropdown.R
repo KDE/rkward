@@ -24,6 +24,12 @@
 #'    \code{chk=TRUE} should be set in the one option which is checked by default.
 #' @param id.name Character string, a unique ID for this plugin element.
 #'    If \code{"auto"} and a label was provided, an ID will be generated automatically from the label.
+#' @param help Character string, will be used as the \code{text} value for a setting node in the .rkh file.
+#'    If set to \code{FALSE}, \code{\link[rkwarddev:rk.rkh.scan]{rk.rkh.scan}} will ignore this node.
+#'    Also needs \code{component} to be set accordingly!
+#' @param component Character string, name of the component this node belongs to. Only needed if you
+#'    want to use the scan features for automatic help file generation; needs \code{help} to be set
+#'    accordingly, too!
 #' @return An object of class \code{XiMpLe.node}.
 #' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @export
@@ -33,7 +39,7 @@
 #'   "Second Option"=c(val="val2", chk=TRUE)))
 #' cat(pasteXML(test.dropdown))
 
-rk.XML.dropdown <- function(label, options=list(label=c(val="", chk=FALSE)), id.name="auto"){
+rk.XML.dropdown <- function(label, options=list(label=c(val="", chk=FALSE)), id.name="auto", help=NULL, component=rk.get.comp()){
   num.opt <- length(options)
   dd.options <- sapply(1:num.opt, function(this.num){
       this.element <- names(options)[[this.num]]
@@ -58,6 +64,9 @@ rk.XML.dropdown <- function(label, options=list(label=c(val="", chk=FALSE)), id.
       attrs=drp.attr.list,
       .children=child.list(dd.options, empty=FALSE)
     )
+
+  # check for .rkh content
+  rk.set.rkh.prompter(component=component, id=id, help=help)
 
   return(dropdown)
 }

@@ -50,7 +50,7 @@ rk.rkh.scan <- function(pXML, help=TRUE, captions=TRUE, component=NULL){
             return(rk.rkh.caption(id=help.id[this.id,"id"]))
           } else {
             if(!is.null(component)){
-              rkh.text <- rk.get.rkh.prompter(component=component, id=this.id)
+              rkh.text <- rk.get.rkh.prompter(component=component, id=help.id[this.id,"id"])
               # check if the component is to be omitted
               if(is.logical(rkh.text[["help"]]) & !isTRUE(rkh.text[["help"]])){
                 return(NULL)
