@@ -226,8 +226,8 @@ FunctionEnd
 Function RHomeLeave
 	${If} $RHomeOk != "yes"
 		Messagebox MB_YESNO|MB_ICONSTOP \
-			"$FileSelectCurrent does not qualify as the directory of the R installation to use.$\r$\nEither R is not installed, there at all, or the installed version is to old.$\r$\n \
-			If you think you now what you are doing, click $\"Yes$\" to continue with the installation, anyway. Otherwise click $\"No$\".$\r$\n$\r$\n \
+			"$FileSelectCurrent does not qualify as the directory of the R installation to use.$\r$\nEither R is not installed, there at all, or the installed version is too old.$\r$\n \
+			If you think you know what you are doing, click $\"Yes$\" to continue with the installation, anyway. Otherwise click $\"No$\".$\r$\n$\r$\n \
 			Continue with the current settings?" \
 			/SD IDNO IDYES next IDNO stop
 		stop:
@@ -275,7 +275,7 @@ Function KDEHomeLeave
 	${If} $KDEPrefixOk != "yes"
 		Messagebox MB_YESNO|MB_ICONSTOP \
 			"$FileSelectCurrent does not seem to contain a (valid) KDE installation.$\r$\n \
-			If you think you now what you are doing, click $\"Yes$\" to continue with the installation, anyway. Otherwise click $\"No$\".$\r$\n$\r$\n \
+			If you think you know what you are doing, click $\"Yes$\" to continue with the installation, anyway. Otherwise click $\"No$\".$\r$\n$\r$\n \
 			Continue with the current settings?" \
 			/SD IDNO IDYES next IDNO stop
 		stop:
