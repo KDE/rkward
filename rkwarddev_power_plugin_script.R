@@ -25,17 +25,19 @@ dependencies.info <- rk.XML.dependencies(
   package=list(c(name="pwr")))
 )
 
+rk.set.comp("Power analysis")
 
 pwr.parameter.rad <- rk.XML.radio(label="Parameter to determine", options=list(
     "Power of test"=c(val="Power", chk=TRUE),
     "Sample size"=c(val="Sample size"),
     "Effect size"=c(val="Effect size"),
     "Significance level"=c(val="Significance level")
-  ), id.name="rad_pwr_param")
+  ), id.name="rad_pwr_param",
+  help="foo")
 
 pwr.parameter.twosamples.rad <- rk.XML.radio(label="Estimate", options=list(
-    "First sample"=c(val="n1", chk=TRUE),
-    "Second sample"=c(val="n2")
+    "First sample"=c(val="n1"),
+    "Second sample"=c(val="n2", chk=TRUE)
   ), id.name="rad_pwr_param_2samples")
 
 pwr.parameter.twodf.rad <- rk.XML.radio(label="Estimate", options=list(
@@ -51,7 +53,8 @@ pwr.stat.drop <- rk.XML.dropdown(label="Select a method", options=list(
     "Chi-squared test"=c(val="pwr.chisq.test"),
     "Proportion tests"=c(val="pwr.p.test"),
     "Mean of a normal distribution (known variance)"=c(val="pwr.norm.test")
-  ), id.name="drp_pwr_stat")
+  ), id.name="drp_pwr_stat",
+  help="bar")
 
 pwr.hypothesis.drop <- rk.XML.dropdown("Using test hypothesis",
   options=list(
@@ -85,7 +88,8 @@ pwr.proptype.drop <- rk.XML.dropdown("Samples",
   ),
   id.name="drp_pwr_proptype")
 
-pwr.input.power <- rk.XML.spinbox(label="Power", min=0, max=1, initial=0.8)
+pwr.input.power <- rk.XML.spinbox(label="Power", min=0, max=1, initial=0.8,
+  help="baz")
 pwr.input.df <- rk.XML.spinbox(label="Degrees of freedom", id.name="pwr_spin_df", min=1, real=FALSE, initial=30)
 pwr.input.dfu <- rk.XML.spinbox(label="Degrees of freedom for numerator", id.name="pwr_spin_dfu", min=1, real=FALSE, initial=30)
 pwr.input.dfv <- rk.XML.spinbox(label="Degrees of freedom for denominator", id.name="pwr_spin_dfv", min=1, real=FALSE, initial=30)
@@ -114,7 +118,8 @@ pwr.txt.effect.h <- rk.XML.text("Measure for selected method is <b>Cohen's h</b>
 pwr.input.signif <- rk.XML.spinbox(label="Significance level", min=0, max=1, initial=0.05)
 
 
-save.results.pwr <- rk.XML.saveobj("Save results to workspace", initial="pwr.result")
+save.results.pwr <- rk.XML.saveobj("Save results to workspace", initial="pwr.result",
+  component="Power analysis", help=FALSE)
 
 tab.pwr.data <- rk.XML.row(
     rk.XML.col(
@@ -295,7 +300,7 @@ pwr.full.dialog <- rk.XML.dialog(
  
 ## JavaScript
 pwr.js.calc <- rk.paste.JS(
-  echo("\tpwr.result <- "),
+  echo("\tpwr.result <- try(\n\t\t"),
   #########
   ## t-test
   ite(id(pwr.stat.drop, " == \"pwr.t.test\""),
@@ -305,24 +310,24 @@ pwr.js.calc <- rk.paste.JS(
         rk.paste.JS(# yes
           echo("pwr.t2n.test("),
           ite(id(pwr.parameter.rad, " != \"Sample size\""),
-            echo("\n\t\tn1=", pwr.input.sample.n1, ",\n\t\tn2=", pwr.input.sample.n2),
+            echo("\n\t\t\tn1=", pwr.input.sample.n1, ",\n\t\t\tn2=", pwr.input.sample.n2),
             ite(id(pwr.parameter.twosamples.rad, " == \"n2\""),
-              echo("\n\t\tn1=", pwr.input.sample.n1, ","),
-              echo("\n\t\tn2=", pwr.input.sample.n2, ",")
+              echo("\n\t\t\tn1=", pwr.input.sample.n1, ","),
+              echo("\n\t\t\tn2=", pwr.input.sample.n2, ",")
             )
           )
         ),
         rk.paste.JS(#no
           echo("pwr.t.test("),
           ite(id(pwr.parameter.rad, " != \"Sample size\""),
-            echo("\n\t\tn=", pwr.input.sample)
+            echo("\n\t\t\tn=", pwr.input.sample)
           )
         )
       ),
       ite(id(pwr.parameter.rad, " != \"Effect size\""),
         rk.paste.JS(
           ite(id(pwr.parameter.rad, " != \"Sample size\""), echo(",")),
-          echo("\n\t\td=", pwr.input.effect)
+          echo("\n\t\t\td=", pwr.input.effect)
         )
       )
     )
@@ -333,12 +338,12 @@ pwr.js.calc <- rk.paste.JS(
     rk.paste.JS(
       echo("pwr.r.test("),
       ite(id(pwr.parameter.rad, " != \"Sample size\""),
-        echo("\n\t\tn=", pwr.input.sample)
+        echo("\n\t\t\tn=", pwr.input.sample)
       ),
       ite(id(pwr.parameter.rad, " != \"Effect size\""),
         rk.paste.JS(
           ite(id(pwr.parameter.rad, " != \"Sample size\""), echo(",")),
-          echo("\n\t\tr=", pwr.input.effect)
+          echo("\n\t\t\tr=", pwr.input.effect)
         )
       )
     )
@@ -348,14 +353,14 @@ pwr.js.calc <- rk.paste.JS(
   ite(id(pwr.stat.drop, " == \"pwr.anova.test\""),
     rk.paste.JS(
       echo("pwr.anova.test("),
-      echo("\n\t\tk=", pwr.input.groups),
+      echo("\n\t\t\tk=", pwr.input.groups),
       ite(id(pwr.parameter.rad, " != \"Sample size\""),
-        echo(",\n\t\tn=", pwr.input.sample)
+        echo(",\n\t\t\tn=", pwr.input.sample)
       ),
       ite(id(pwr.parameter.rad, " != \"Effect size\""),
         ite(id(pwr.effect.etasq.rad, " == \"f\""),
-          echo(",\n\t\tf=", pwr.input.effect),
-          echo(",\n\t\tf=sqrt(", pwr.input.effect,"/(1-", pwr.input.effect,")) # calculate f from eta squared")
+          echo(",\n\t\t\tf=", pwr.input.effect),
+          echo(",\n\t\t\tf=sqrt(", pwr.input.effect,"/(1-", pwr.input.effect,")) # calculate f from eta squared")
         )
       )
     )
@@ -366,15 +371,15 @@ pwr.js.calc <- rk.paste.JS(
     rk.paste.JS(
       echo("pwr.f2.test("),
       ite(id(pwr.parameter.rad, " != \"Sample size\""),
-        echo(",\n\t\tu=", pwr.input.dfu, ",\n\t\tv=", pwr.input.dfv),
+        echo(",\n\t\t\tu=", pwr.input.dfu, ",\n\t\t\tv=", pwr.input.dfv),
         ite(id(pwr.parameter.twodf.rad, " == \"v\""),
-          echo("\n\t\tu=", pwr.input.dfu),
-          echo("\n\t\tv=", pwr.input.dfv)
+          echo("\n\t\t\tu=", pwr.input.dfu),
+          echo("\n\t\t\tv=", pwr.input.dfv)
         )
       ),
       ite(id(pwr.parameter.rad, " != \"Effect size\""),
         rk.paste.JS(
-          echo(",\n\t\tf2=", pwr.input.effect)
+          echo(",\n\t\t\tf2=", pwr.input.effect)
         )
       )
     )
@@ -385,15 +390,15 @@ pwr.js.calc <- rk.paste.JS(
     rk.paste.JS(
       echo("pwr.chisq.test("),
       ite(id(pwr.parameter.rad, " != \"Effect size\""),
-        echo("\n\t\tw=", pwr.input.effect)
+        echo("\n\t\t\tw=", pwr.input.effect)
       ),
       ite(id(pwr.parameter.rad, " != \"Sample size\""),
         rk.paste.JS(
           ite(id(pwr.parameter.rad, " != \"Effect size\""), echo(",")),
-          echo("\n\t\tN=", pwr.input.sample)
+          echo("\n\t\t\tN=", pwr.input.sample)
         )
       ),
-      echo(",\n\t\tdf=", pwr.input.df)
+      echo(",\n\t\t\tdf=", pwr.input.df)
     )
   ),
   ##############
@@ -404,20 +409,20 @@ pwr.js.calc <- rk.paste.JS(
       ite(id(pwr.proptype.drop, " == \"two.sample.diff\""), echo("pwr.2p2n.test(")),
       ite(id(pwr.proptype.drop, " == \"one.sample\""), echo("pwr.p.test(")),
       ite(id(pwr.parameter.rad, " != \"Effect size\""),
-        echo("\n\t\th=", pwr.input.effect)
+        echo("\n\t\t\th=", pwr.input.effect)
       ),
       ite(id(pwr.parameter.rad, " != \"Sample size\""),
         rk.paste.JS(
           ite(id(pwr.parameter.rad, " != \"Effect size\""), echo(",")),
           ite(id(pwr.proptype.drop, " != \"two.sample.diff\""),
-            echo("\n\t\tn=", pwr.input.sample),
-            echo("\n\t\tn1=", pwr.input.sample.n1, ",\n\t\tn2=", pwr.input.sample.n2)
+            echo("\n\t\t\tn=", pwr.input.sample),
+            echo("\n\t\t\tn1=", pwr.input.sample.n1, ",\n\t\t\tn2=", pwr.input.sample.n2)
           )
         ),
         ite(id(pwr.proptype.drop, " == \"two.sample.diff\""),
           ite(id(pwr.parameter.twosamples.rad, " == \"n2\""),
-            echo("\n\t\tn1=", pwr.input.sample.n1, ","),
-            echo("\n\t\tn2=", pwr.input.sample.n2, ",")
+            echo(",\n\t\t\tn1=", pwr.input.sample.n1),
+            echo(",\n\t\t\tn2=", pwr.input.sample.n2)
           )
         )
       )
@@ -429,46 +434,49 @@ pwr.js.calc <- rk.paste.JS(
     rk.paste.JS(
       echo("pwr.norm.test("),
       ite(id(pwr.parameter.rad, " != \"Effect size\""),
-        echo("\n\t\td=", pwr.input.effect)
+        echo("\n\t\t\td=", pwr.input.effect)
       ),
       ite(id(pwr.parameter.rad, " != \"Sample size\""),
         rk.paste.JS(
           ite(id(pwr.parameter.rad, " != \"Effect size\""), echo(",")),
-          echo("\n\t\tn=", pwr.input.sample)
+          echo("\n\t\t\tn=", pwr.input.sample)
         )
       )
     )
   ),
   ite(id(pwr.parameter.rad, " != \"Significance level\""),
-    ite(id(pwr.input.signif, " != 0.05"), echo("\n\t\tsig.level=", pwr.input.signif, ",")),
-    echo(",\n\t\tsig.level=NULL")
+    ite(id(pwr.input.signif, " != 0.05"), echo("\n\t\t\tsig.level=", pwr.input.signif, ",")),
+    echo(",\n\t\t\tsig.level=NULL")
   ),
   ite(id(pwr.parameter.rad, " != \"Power\""),
-    echo(",\n\t\tpower=", pwr.input.power)
+    echo(",\n\t\t\tpower=", pwr.input.power)
   ),
   ite(id(pwr.stat.drop, " == \"pwr.t.test\" & ", pwr.type.drop, " != \"two.sample.diff\" & ", pwr.type.drop, " != \"two.sample\""),
-    echo(",\n\t\ttype=\"", pwr.type.drop, "\"")
+    echo(",\n\t\t\ttype=\"", pwr.type.drop, "\"")
   ),
   ite(id(pwr.stat.drop, " != \"pwr.anova.test\" & ", pwr.stat.drop, " != \"pwr.f2.test\" & ", pwr.stat.drop, " != \"pwr.chisq.test\""),
     ite(id(pwr.hypothesis.drop, " != \"two.sided\""),
-      echo(",\n\t\talternative=\"", pwr.hypothesis.drop, "\"")
+      echo(",\n\t\t\talternative=\"", pwr.hypothesis.drop, "\"")
     )
   ),
-  echo("\n\t)\n\n")
+  echo("\n\t\t)\n\t)\n\n")
 )
 
 pwr.js.print <- rk.paste.JS(
   rk.JS.vars(list(pwr.stat.drop, pwr.parameter.rad)),
   echo(
+    "\t# Catch errors due to unsuitable data\n",
+    "\tif(class(pwr.result) == \"try-error\"){\n",
+    "\t\trk.print(\"Power anaylsis not possible with the data you provided\")\n",
+    "\t\treturn()\n\t}\n\n",
     "\t# Prepare printout\n",
-    "\tmethod <- pwr.result[[\"method\"]]\n",
     "\tnote <- pwr.result[[\"note\"]]\n",
     "\tparameters <- list(\"Target measure\"=\"", pwr.parameter.rad, "\")\n",
     "\tif(!is.null(pwr.result[[\"alternative\"]])){\n\t\tparameters[[\"alternative\"]] <- pwr.result[[\"alternative\"]]\n\t}\n\n",
+    "\trk.header(pwr.result[[\"method\"]], parameters=parameters)\n",
     "\tpwr.result[c(\"method\", \"note\", \"alternative\")] <- NULL\n",
     "\tpwr.result <- as.data.frame(unlist(pwr.result))\n",
     "\tcolnames(pwr.result) <- \"Parameters\"\n\n",
-    "\trk.header(method, parameters=parameters)\n",
     "\trk.results(pwr.result)\n",
     "\tif(!is.null(note)){\n\t\trk.print(paste(\"<strong>Note:</strong> \", note))\n\t}\n\n"
   ),
@@ -515,9 +523,13 @@ pwr.plugin.dir <<- rk.plugin.skeleton(
     require="pwr",
     calculate=pwr.js.calc,
     printout=pwr.js.print),
+  rkh=list(
+    summary=rk.rkh.summary("Perform power analysis and sample size estimation, using the pwr package."),
+    usage=rk.rkh.usage("See blow.")
+  ),
   pluginmap=list(name="Power analysis", hierarchy=list("analysis")),
   dependencies=dependencies.info,
-  create=c("pmap", "xml", "js", "desc"),
+  create=c("pmap", "xml", "js", "desc", "rkh"),
   overwrite=overwrite,
   tests=FALSE,
 # edit=TRUE,
