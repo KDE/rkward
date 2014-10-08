@@ -94,6 +94,8 @@ pwr.input.power <- rk.XML.spinbox(label="Power", min=0, max=1, initial=0.8)
 pwr.input.df <- rk.XML.spinbox(label="Degrees of freedom", id.name="pwr_spin_df", min=1, real=FALSE, initial=30)
 pwr.input.dfu <- rk.XML.spinbox(label="Degrees of freedom for numerator", id.name="pwr_spin_dfu", min=1, real=FALSE, initial=30)
 pwr.input.dfv <- rk.XML.spinbox(label="Degrees of freedom for denominator", id.name="pwr_spin_dfv", min=1, real=FALSE, initial=30)
+pwr.txt.dfu <- rk.XML.text("df<sub>num</sub>: k &minus; 1", id.name="pwr_txt_dfu")
+pwr.txt.dfv <- rk.XML.text("df<sub>den</sub>: k &times; (n &minus; 1)", id.name="pwr_txt_dfv")
 
 pwr.input.sample <- rk.XML.spinbox(label="Sample size", id.name="pwr_spin_sample0", min=1, real=FALSE, initial=30)
 pwr.input.sample.n1 <- rk.XML.spinbox(label="First sample size", id.name="pwr_spin_sample1", min=1, real=FALSE, initial=30)
@@ -152,7 +154,9 @@ tab.pwr.data <- rk.XML.row(
         pwr.frame.df <- rk.XML.frame(
           pwr.input.df,
           pwr.input.dfu,
-          pwr.input.dfv
+          pwr.txt.dfu,
+          pwr.input.dfv,
+          pwr.txt.dfv
         ),
         pwr.frame.sample <- rk.XML.frame(
           pwr.input.sample,
@@ -282,6 +286,8 @@ pwr.full.dialog <- rk.XML.dialog(
     rk.XML.connect(governor=pwr.gov.smpl.show.n2, client=pwr.input.sample.n2, set="enabled"),
     rk.XML.connect(governor=pwr.gov.df.show.u, client=pwr.input.dfu, set="enabled"),
     rk.XML.connect(governor=pwr.gov.df.show.v, client=pwr.input.dfv, set="enabled"),
+    rk.XML.connect(governor=pwr.gov.df.show.u, client=pwr.txt.dfu, set="enabled"),
+    rk.XML.connect(governor=pwr.gov.df.show.v, client=pwr.txt.dfv, set="enabled"),
     
     # disable alterative setting
     pwr.gov.meth.noalternative <- rk.XML.convert(sources=list(not=pwr.gov.meth.anova, not=pwr.gov.meth.f2test, not=pwr.gov.meth.chisq), mode=c(and=""), id.name="pwr_lgc_noalternative"),
