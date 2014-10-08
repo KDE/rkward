@@ -18,7 +18,7 @@ about.info <- rk.XML.about(
     person(given="Meik", family="Michalke",
       email="meik.michalke@hhu.de", role=c("aut","cre"))),
   about=list(desc="RKWard GUI to perform power analysis and sample size estimation.",
-    version="0.01-2", url="http://rkward.sf.net")
+    version="0.01-3", url="http://rkward.sf.net")
   )
 dependencies.info <- rk.XML.dependencies(
   dependencies=list(rkward.min=ifelse(isTRUE(guess.getter), "0.6.0", "0.5.6"),
@@ -33,12 +33,15 @@ pwr.parameter.rad <- rk.XML.radio(label="Parameter to determine", options=list(
     "Effect size"=c(val="Effect size"),
     "Significance level"=c(val="Significance level")
   ), id.name="rad_pwr_param",
-  help="foo")
+  help="Parameter to estimate, given the others.")
 
 pwr.parameter.twosamples.rad <- rk.XML.radio(label="Estimate", options=list(
     "First sample"=c(val="n1"),
     "Second sample"=c(val="n2", chk=TRUE)
-  ), id.name="rad_pwr_param_2samples")
+  ), id.name="rad_pwr_param_2samples",
+  help="Only shown when applicable: For estimating the required sample sizes for a test with two 
+    differently sized samples, specify which should be estimated, and which is 
+    given.")
 
 pwr.parameter.twodf.rad <- rk.XML.radio(label="Estimate", options=list(
     "Numerator"=c(val="u", chk=TRUE),
@@ -53,8 +56,7 @@ pwr.stat.drop <- rk.XML.dropdown(label="Select a method", options=list(
     "Chi-squared test"=c(val="pwr.chisq.test"),
     "Proportion tests"=c(val="pwr.p.test"),
     "Mean of a normal distribution (known variance)"=c(val="pwr.norm.test")
-  ), id.name="drp_pwr_stat",
-  help="bar")
+  ), id.name="drp_pwr_stat")
 
 pwr.hypothesis.drop <- rk.XML.dropdown("Using test hypothesis",
   options=list(
@@ -88,8 +90,7 @@ pwr.proptype.drop <- rk.XML.dropdown("Samples",
   ),
   id.name="drp_pwr_proptype")
 
-pwr.input.power <- rk.XML.spinbox(label="Power", min=0, max=1, initial=0.8,
-  help="baz")
+pwr.input.power <- rk.XML.spinbox(label="Power", min=0, max=1, initial=0.8)
 pwr.input.df <- rk.XML.spinbox(label="Degrees of freedom", id.name="pwr_spin_df", min=1, real=FALSE, initial=30)
 pwr.input.dfu <- rk.XML.spinbox(label="Degrees of freedom for numerator", id.name="pwr_spin_dfu", min=1, real=FALSE, initial=30)
 pwr.input.dfv <- rk.XML.spinbox(label="Degrees of freedom for denominator", id.name="pwr_spin_dfv", min=1, real=FALSE, initial=30)
@@ -506,6 +507,20 @@ pwr.js.print <- rk.paste.JS(
   )
 )
 
+############
+## help file
+
+pwr.rkh.summary <- rk.rkh.summary("Perform power anaylsis for a variety of statistcal methods.")
+
+pwr.rkh.usage <- rk.rkh.usage("Given three of the parameters 'power of test', 
+  'sample size', 'effect size', and 'significance level', this plugin will 
+  estimate the fourth, i.e. for example the test power of a t.test at a given 
+  sample size, effect size, and level of significance. On the left hand control, 
+  select which of the parameters to estimate. In the middle, specify the 
+  statistical method, on the right hand side, enter the values of the given 
+  parameters.")
+
+
 #############
 ## if you run the following function call, files will be written to tempdir!
 #############
@@ -524,8 +539,8 @@ pwr.plugin.dir <<- rk.plugin.skeleton(
     calculate=pwr.js.calc,
     printout=pwr.js.print),
   rkh=list(
-    summary=rk.rkh.summary("Perform power analysis and sample size estimation, using the pwr package."),
-    usage=rk.rkh.usage("See blow.")
+    summary=pwr.rkh.summary,
+    usage=pwr.rkh.usage
   ),
   pluginmap=list(name="Power analysis", hierarchy=list("analysis")),
   dependencies=dependencies.info,
