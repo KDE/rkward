@@ -1,3 +1,4 @@
+- In data editor, indicate NAs, explicitly
 - Import Stata plugin gains option to convert character encoding.
 - New embeddable (minimal) plugin "multi_input" to combine different input elements
 - Fixed: Problems starting from paths with spaces in the file name on Windows

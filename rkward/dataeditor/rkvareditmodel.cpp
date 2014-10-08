@@ -2,7 +2,7 @@
                           rkvareditmodel  -  description
                              -------------------
     begin                : Mon Nov 05 2007
-    copyright            : (C) 2007, 2010, 2011, 2012 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2010, 2011, 2012, 2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -298,16 +298,19 @@ QVariant RKVarEditModel::data (const QModelIndex& index, int role) const {
 	RKVariable *var = objects[col];
 	RK_ASSERT (var);
 
-	if (role == Qt::DisplayRole) return var->getText (row, true);
 	if (role == Qt::EditRole) return var->getText (row, false);
 
 	RKVariable::Status status = var->cellStatus (row);
+	if (role == Qt::DisplayRole) {
+		if (status == RKVariable::ValueUnused) return QString ("<NA>");
+		return var->getText (row, true);
+	}
 	if (role == Qt::BackgroundRole) {
 		if (status == RKVariable::ValueInvalid) return (Qt::red);
 	} else if (role == Qt::ToolTipRole) {
 		if (status == RKVariable::ValueInvalid) return (i18n ("This value is not allowed, here"));
 	}
-	if ((role == Qt::ForegroundRole) && (status == RKVariable::ValueUnknown)) return (Qt::lightGray);
+	if ((role == Qt::ForegroundRole) && ((status == RKVariable::ValueUnknown) || (status == RKVariable::ValueUnused))) return (Qt::lightGray);
 	if (role == Qt::TextAlignmentRole) {
 		if (var->getAlignment () == RKVariable::AlignCellLeft) return ((int) Qt::AlignLeft | Qt::AlignVCenter);
 		else return ((int) Qt::AlignRight | Qt::AlignVCenter);
