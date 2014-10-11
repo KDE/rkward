@@ -56,14 +56,15 @@ pwr.stat.drop <- rk.XML.dropdown(label="Select a method", options=list(
     "Chi-squared test"=c(val="pwr.chisq.test"),
     "Proportion tests"=c(val="pwr.p.test"),
     "Mean of a normal distribution (known variance)"=c(val="pwr.norm.test")
-  ), id.name="drp_pwr_stat")
+  ), help="Specify the statistical method to perform power estimation for", id.name="drp_pwr_stat")
 
 pwr.hypothesis.drop <- rk.XML.dropdown("Using test hypothesis",
   options=list(
     "Two-sided"=c(val="two.sided", chk=TRUE),
     "First is greater"=c(val="greater"),
     "Second is greater"=c(val="less")
-  ),
+  ), help="Specify the hypothesis to use. Note that for the one-sided hypothesis \"first is greater\",
+           a positive effect size is expected. For \"second is greater\", a negative effect size is expected.",
   id.name="drp_pwr_hypothesis")
 pwr.txt.hypothesis.neg <- rk.XML.text("Hypothesis probably expects a negative effect size!", id.name="pwr_txt_hypothesis_neg", type="warning")
 pwr.txt.hypothesis.pos <- rk.XML.text("Hypothesis probably expects a positive effect size!", id.name="pwr_txt_hypothesis_pos", type="warning")
@@ -71,7 +72,8 @@ pwr.txt.hypothesis.pos <- rk.XML.text("Hypothesis probably expects a positive ef
 pwr.effect.etasq.rad <- rk.XML.radio(label="Provided effect size", options=list(
     "Cohen's f"=c(val="f", chk=TRUE),
     "Eta squared"=c(val="e2")
-  ), id.name="rad_effct_eta")
+  ), help="Only shown where applicable. Allows you to select, whether to specify the effect size as Cohen's f, or as Eta squared.",
+  id.name="rad_effct_eta")
 
 pwr.type.drop <- rk.XML.dropdown("Samples",
   options=list(
@@ -79,7 +81,7 @@ pwr.type.drop <- rk.XML.dropdown("Samples",
     "Two samples (different sizes)"=c(val="two.sample.diff"), # pwr.t2n.test
     "Single sample (test against constant)"=c(val="one.sample"),
     "Paired samples"=c(val="paired")
-  ),
+  ), help="Only enabled where applicable. Specify the nature of samples used in the test. For samples of different sizes, only one sample size can be estimated.",
   id.name="drp_pwr_type")
 
 pwr.proptype.drop <- rk.XML.dropdown("Samples",
@@ -87,15 +89,20 @@ pwr.proptype.drop <- rk.XML.dropdown("Samples",
     "Two samples (equal sizes)"=c(val="two.sample.same", chk=TRUE), # pwr.2p.test
     "Two samples (different sizes)"=c(val="two.sample.diff"), # pwr.2p2n.test
     "One sample"=c(val="one.sample") # pwr.p.test
-  ),
+  ), help=FALSE, # In the help file, same as t.test dropdown
   id.name="drp_pwr_proptype")
 
-pwr.input.power <- rk.XML.spinbox(label="Power", min=0, max=1, initial=0.8)
-pwr.input.df <- rk.XML.spinbox(label="Degrees of freedom", id.name="pwr_spin_df", min=1, real=FALSE, initial=30)
-pwr.input.dfu <- rk.XML.spinbox(label="Degrees of freedom for numerator", id.name="pwr_spin_dfu", min=1, real=FALSE, initial=30)
-pwr.input.dfv <- rk.XML.spinbox(label="Degrees of freedom for denominator", id.name="pwr_spin_dfv", min=1, real=FALSE, initial=30)
+pwr.input.power <- rk.XML.spinbox(label="Power", min=0, max=1, initial=0.8, help="Targetted power of test (1 minus Type II error probability)")
+pwr.input.df <- rk.XML.spinbox(label="Degrees of freedom", id.name="pwr_spin_df", min=1, real=FALSE, initial=30,
+                               help="Only shown for chi-square statistics: Targetted degrees of freedom. As a reminder, this is (rows &minus; 1)&times;(columns &minus; 1) for a test of independence,
+                               and (cells &minus; 1) for a test of goodness of fit.")
+pwr.input.dfu <- rk.XML.spinbox(label="Degrees of freedom for numerator", id.name="pwr_spin_dfu", min=1, real=FALSE, initial=30,
+                               help="Only shown for general linear model: Targetted numerator degrees of freedom. As a reminder, this is the number of parameters to estimate, or number of groups/samples minus 1.")
+pwr.input.dfv <- rk.XML.spinbox(label="Degrees of freedom for denominator", id.name="pwr_spin_dfv", min=1, real=FALSE, initial=30,
+                               help="Only shown for general linear model: Available denominator degrees of freedom / degrees of freedom of the error term.
+                               As a reminder, this is the total number of observations minus numerator degrees of freedom minus 1, or total number of observations minus number of groups/samples.")
 pwr.txt.dfu <- rk.XML.text("df<sub>num</sub>: k &minus; 1", id.name="pwr_txt_dfu")
-pwr.txt.dfv <- rk.XML.text("df<sub>den</sub>: k &times; (n &minus; 1)", id.name="pwr_txt_dfv")
+pwr.txt.dfv <- rk.XML.text("df<sub>den</sub>: N &minus; k", id.name="pwr_txt_dfv")
 
 pwr.input.sample <- rk.XML.spinbox(label="Sample size", id.name="pwr_spin_sample0", min=1, real=FALSE, initial=30)
 pwr.input.sample.n1 <- rk.XML.spinbox(label="First sample size", id.name="pwr_spin_sample1", min=1, real=FALSE, initial=30)
@@ -230,7 +237,9 @@ pwr.full.dialog <- rk.XML.dialog(
     rk.XML.connect(governor=pwr.gov.meth.df, client=pwr.frame.df, set="visible"),
     rk.XML.connect(governor=pwr.gov.meth.chisq, client=pwr.input.df, set="visible"),
     rk.XML.connect(governor=pwr.gov.meth.f2test, client=pwr.input.dfu, set="visible"),
+    rk.XML.connect(governor=pwr.gov.meth.f2test, client=pwr.txt.dfu, set="visible"),
     rk.XML.connect(governor=pwr.gov.meth.f2test, client=pwr.input.dfv, set="visible"),
+    rk.XML.connect(governor=pwr.gov.meth.f2test, client=pwr.txt.dfv, set="visible"),
 
     pwr.gov.efct.d <- rk.XML.convert(sources=list(pwr.gov.meth.ttest, pwr.gov.meth.norm), mode=c(or=""), id.name="pwr_lgc_efct_d"),
     rk.XML.connect(governor=pwr.gov.efct.d, client=pwr.txt.effect.d, set="visible"),
