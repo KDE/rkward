@@ -741,6 +741,7 @@ all.valid.children <- list(
     "dropdown", "embed", "formula", "frame", "include", "input", "insert", "matrix",
     "optionset", "preview", "radio", "row", "saveobject", "spinbox", "stretch", "tabbook",
     "text", "varselector", "varslot", "!--"),
+  dropdown=c("option"),
   hierarchy=c("menu", "!--"),
   logic=c("connect", "convert", "dependency_check", "external", "include", "insert",
     "script", "set", "switch"),
@@ -750,6 +751,7 @@ all.valid.children <- list(
     "dropdown", "formula", "frame", "input", "matrix", "optionset", "page", "radio",
     "row", "saveobject", "spinbox", "stretch", "tabbook", "text", "varselector",
     "varslot", "!--"),
+  radio=c("option"),
   settings=c("setting", "caption", "!--"),
   wizard=c("browser", "checkbox", "column", "copy",
     "dropdown", "embed", "formula", "frame", "include", "input", "insert", "matrix",
@@ -1173,4 +1175,43 @@ get.rkh.prompter <- function(){
     rkh.prompter <- list()
   }
   return(rkh.prompter)
+} ## end function get.rkh.prompter()
+
+
+## function rk.check.options()
+# options is a list, containig either named vectors in teh form of
+#   label=c(val=NULL, chk=FALSE)
+# or an "option" node of class XiMpLe.node
+rk.check.options <- function(options, parent){
+  num.opt <- length(options)
+  all.options <- sapply(1:num.opt, function(this.num){
+      if(is.XiMpLe.node(options[[this.num]])){
+        # check the node names and allow only valid ones
+        valid.child(parent, children=options[[this.num]])
+        return(options[[this.num]])
+      } else {
+        if("chk" %in% names(options[[this.num]])){
+          checked <- isTRUE(as.logical(options[[this.num]][["chk"]]))
+        } else {
+          checked <- FALSE
+        }
+        return(
+          rk.XML.option(
+            label=names(options)[[this.num]],
+            val=options[[this.num]][["val"]],
+            chk=checked,
+            id.name=NULL
+          )
+        )
+      }
+    })
+  # see to it that only one options is "checked"
+  is.checked <- sapply(all.options, function(this.opt){
+      return(!is.null(XMLScanDeep(this.opt, find="checked")))
+    })
+  if(sum(is.checked) > 1){
+    stop(simpleError("you defined options where more than one is 'checked' -- this is wrong!"))
+  } else {}
+  return(all.options)
 }
+## end function rk.check.options()

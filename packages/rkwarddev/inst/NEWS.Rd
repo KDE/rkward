@@ -1,7 +1,7 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
-\section{Changes in rkwarddev version 0.06-5 (2014-10-07)}{
+\section{Changes in rkwarddev version 0.06-5 (2014-10-11)}{
   \subsection{fixed}{
     \itemize{
       \item the \code{"show"} feature in \code{rk.plugin.skeleton()} was broken due to changes in the namespace defaults
@@ -17,6 +17,7 @@
         text set with \code{rk.set.rkh.prompter()} and use it to generate help files
       \item all functions scanned by \code{rk.rkh.scan()} for setting nodes in .rkh files have gained two additional arguments,
         \code{"help"} and \code{"component"}, to register the text to be used via \code{rk.set.rkh.prompter()}
+      \item new function \code{rk.XMLoption()} to allow setting and accessing IDs for single options as well
     }
   }
 }

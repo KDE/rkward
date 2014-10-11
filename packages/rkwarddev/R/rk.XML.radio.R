@@ -39,18 +39,8 @@
 #' cat(pasteXML(test.radio))
 
 rk.XML.radio <- function(label, options=list(label=c(val=NULL, chk=FALSE)), id.name="auto", help=NULL, component=rk.get.comp()){
-  num.opt <- length(options)
-  rd.options <- sapply(1:num.opt, function(this.num){
-      this.element <- names(options)[[this.num]]
-      this.value <- options[[this.num]][["val"]]
-      attr.list <- list(label=this.element, value=this.value)
-      if("chk" %in% names(options[[this.num]])){
-        if(isTRUE(as.logical(options[[this.num]][["chk"]]))){
-          attr.list[["checked"]] <- "true"
-        } else {}
-      } else {}
-      return(XMLNode("option", attrs=attr.list))
-    })
+  # convert list elements into a list of XiMpLe nodes (if they aren't already)
+  rd.options <- rk.check.options(options, parent="radio")
 
   if(identical(id.name, "auto")){
     id <- auto.ids(label, prefix=ID.prefix("radio"))
