@@ -3,7 +3,7 @@
 # note: this script only creates objects in your workspace,
 # *EXCEPT* for the last call, see below.
 
-require(rkwarddev)
+require(rkwarddev) ## this script needs rkwarddev >= 0.06-5
 
 local({
 # set the output directory to overwrite the actual plugin
