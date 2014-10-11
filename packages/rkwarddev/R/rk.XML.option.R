@@ -1,0 +1,51 @@
+# Copyright 2010-2014 Meik Michalke <meik.michalke@hhu.de>
+#
+# This file is part of the R package rkwarddev.
+#
+# rkwarddev is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# rkwarddev is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with rkwarddev.  If not, see <http://www.gnu.org/licenses/>.
+
+
+#' Create XML node "option" for RKWard plugins
+#'
+#' @param label Character string, a text label for this plugin element.
+#' @param val Character string, defines the value to submit if the option is checked.
+#' @param chk Logical, should be set \code{TRUE} in the one option which is checked by default.
+#' @param id.name Character string, a unique ID for this plugin element.
+#'    If \code{"auto"} and a label was provided, an ID will be generated automatically from the label.
+#' @return An object of class \code{XiMpLe.node}.
+#' @export
+#' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
+#' @examples
+#' test.radio <- rk.XML.radio("Chose one",
+#'   options=list(
+#'     rk.XML.option("First Option", val="val1"),
+#'     rk.XML.option("Second Option", val="val2", chk=TRUE))
+#' cat(pasteXML(test.radio))
+
+rk.XML.option <- function(label, val=NULL, chk=FALSE, id.name=NULL){
+  attr.list <- list(label=label, value=val)
+  if(isTRUE(chk)){
+    attr.list[["checked"]] <- "true"
+  } else {}
+
+  if(identical(id.name, "auto")){
+    attr.list[["id"]] <- auto.ids(label, prefix=ID.prefix("optn"))
+  } else {
+    attr.list[["id"]] <- id.name
+  }
+
+  option <- XMLNode("option", attrs=attr.list)
+
+  return(option)
+}
