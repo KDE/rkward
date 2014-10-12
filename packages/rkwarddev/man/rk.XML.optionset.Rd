@@ -47,7 +47,7 @@ you need is a combination of \code{<optionset id>.<optioncolumn id>.<modifier>}.
 you must always prefix it with the sets' \code{id}. For JavaScript code generating with
 \code{rkwarddev},
       you can use the ID that functions like \code{\link[rkwarddev:id]{id}} return,
-because the JavaScript variable name will only contain a constant prefix ("ocol") an the column ID.
+because the JavaScript variable name will only contain a constant prefix ("ocol") and the column ID.
 }
 \note{
 The \code{<optionset>} node was introduced with RKWard 0.6.1, please set the dependencies

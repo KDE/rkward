@@ -4,7 +4,6 @@
 			perhaps don't make changes here, but in the rkwarddev script instead! -->
 	<code file="CreateRKWardpluginskeleton.js" />
 	<help file="CreateRKWardpluginskeleton.rkh" />
-	<include file="../RKWardPluginSkeleton.pluginmap" />
 	<logic>
 		<connect governor="frm_Dfndpndn.checked" client="frm_DpndsRKW.enabled" />
 		<connect governor="frm_Dfndpndn.checked" client="frm_DpndsnRv.enabled" />
@@ -99,6 +98,18 @@
 								<input label="R max" id="inp_Rmax" size="small" />
 								<stretch />
 							</frame>
+						</row>
+						<row id="row_oDRDRPPDRD">
+							<optionset id="ost_frmlDRDRPP">
+								<content>
+									<optiondisplay />
+									<frame label="Depends on R packages" id="frm_DpndsnRp">
+										<input label="Package" id="inp_Package" />
+										<stretch />
+									</frame>
+								</content>
+								<optioncolumn id="ocl_inpPckgtxt" connect="inp_Package.text" label="Package" />
+							</optionset>
 						</row>
 					</frame>
 				</column>

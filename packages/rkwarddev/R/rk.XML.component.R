@@ -59,7 +59,7 @@ rk.XML.component <- function(label, file, id.name="auto", type="standard", depen
   # does this component hava additional dependencies?
   if(!is.null(dependencies)){
     # check if this is *really* a dependencies section
-    valid.parent("dependencies", node=dependencies, see="rk.XML.dependencies")
+    valid.parent("dependencies", node=dependencies, see="rk.XML.dependencies", comment.ok=TRUE)
     dependencies <- child.list(dependencies)
   } else {
     dependencies <- list("")

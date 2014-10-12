@@ -184,7 +184,7 @@ rk.plugin.skeleton <- function(about, path=tempdir(),
   # to besure, remove all non-character symbols from name
   name.orig <- name
   name <- clean.name(name)
-  
+
   # check for i18n
   if(!is.null(lang)){
     translate <- TRUE

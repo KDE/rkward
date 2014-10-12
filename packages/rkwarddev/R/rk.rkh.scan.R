@@ -24,7 +24,7 @@
 #' @param captions Logical, if \code{TRUE} captions will be generated for all "page", "tab" and "frame" nodes.
 #' @param component Character string, name of the scanned component. Only needed if you want to search for
 #'    help text provided by \code{\link[rkwarddev:rk.set.rkh.prompter]{rk.set.rkh.prompter}}.
-#' @return A character vector or a list of XiMpLe.node objects.
+#' @return A character vector or a list of XiMpLe.node objects. Returns \code{NULL} if no documentable nodes are found.
 #' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @export
 

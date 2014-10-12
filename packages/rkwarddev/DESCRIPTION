@@ -117,6 +117,7 @@ Collate:
     'rk.uniqueIDs.R'
     'rkwarddev-desc-internal.R'
     'rkwarddev-package.R'
+    'rkwarddev.required.R'
     'show-methods.R'
     'tf.R'
     'zzz.rk.plot.opts-class.R'

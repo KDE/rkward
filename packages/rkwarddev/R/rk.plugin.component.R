@@ -108,7 +108,7 @@ rk.plugin.component <- function(about, xml=list(), js=list(), rkh=list(),
   # to besure, remove all non-character symbols from name
   name.orig <- name
   name <- clean.name(name)
-  
+
   # check hierarchy
   if(is.null(hierarchy)){
     hierarchy <- list()
@@ -144,10 +144,10 @@ rk.plugin.component <- function(about, xml=list(), js=list(), rkh=list(),
       gen.info=gen.info)
     # make sure there's no duplicate IDs
     stopifnot(rk.uniqueIDs(XML.plugin, bool=TRUE))
-    slot(this.component, "xml") <- XML.plugin
   } else {
-    slot(this.component, "xml") <- rk.XML.plugin("")
+    XML.plugin <- rk.XML.plugin("")
   }
+  slot(this.component, "xml") <- XML.plugin
 
   ## create plugin.js
   js.try.scan <- function(XML.plugin, scan, js, guess.getter){
@@ -204,7 +204,12 @@ rk.plugin.component <- function(about, xml=list(), js=list(), rkh=list(),
     # if settings were defined manually, this overwrites the scan
     if(!"settings" %in% got.rkh.options){
       if("settings" %in% scan){
-        rkh[["settings"]] <- rk.rkh.settings(rk.rkh.scan(XML.plugin, component=name.orig))
+        this.settings <- rk.rkh.scan(XML.plugin, component=name.orig)
+      } else {
+        this.settings <- NULL
+      }
+      if(!is.null(this.settings)){
+        rkh[["settings"]] <- rk.rkh.settings(this.settings)
       } else {
         rkh[["settings"]] <- eval(formals(rk.rkh.doc)[["settings"]])
       }
@@ -227,7 +232,10 @@ rk.plugin.component <- function(about, xml=list(), js=list(), rkh=list(),
     slot(this.component, "rkh") <- rkh.doc
   } else {
     if("rkh" %in% create & "settings" %in% scan){
-      rkh[["settings"]] <- rk.rkh.settings(rk.rkh.scan(XML.plugin, component=name.orig))
+      this.settings <- rk.rkh.scan(XML.plugin, component=name.orig)
+      if(!is.null(this.settings)){
+        rkh[["settings"]] <- rk.rkh.settings(this.settings)
+      } else {}
     } else {}
     slot(this.component, "rkh") <- rk.rkh.doc(settings=rkh[["settings"]], hints=hints)
   }

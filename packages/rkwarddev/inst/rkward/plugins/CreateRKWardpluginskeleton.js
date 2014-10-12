@@ -10,31 +10,32 @@ function preprocess(){
 
 function calculate(){
 	// read in variables from dialog
-	var inpPluginnm = getValue("inp_Pluginnm");
-	var inpLicense = getValue("inp_License");
-	var inpShrtdscr = getValue("inp_Shrtdscr");
-	var inpVrsnnmbr = getValue("inp_Vrsnnmbr");
-	var inpRlsdtmpt = getValue("inp_Rlsdtmpt");
-	var inpHomepage = getValue("inp_Homepage");
-	var inpCategory = getValue("inp_Category");
-	var inpGivennam = getValue("inp_Givennam");
-	var inpFamilynm = getValue("inp_Familynm");
-	var inpEmail = getValue("inp_Email");
-	var chcAuthor = getValue("chc_Author");
-	var chcMaintanr = getValue("chc_Maintanr");
-	var brwDTEMPDIR = getValue("brw_DTEMPDIR");
-	var chcOvrwrtxs = getValue("chc_Ovrwrtxs");
-	var chcAddwzrds = getValue("chc_Addwzrds");
-	var chcIncldplg = getValue("chc_Incldplg");
-	var chcOpnflsfr = getValue("chc_Opnflsfr");
-	var chcAddplRKW = getValue("chc_AddplRKW");
-	var chcShwthplg = getValue("chc_Shwthplg");
-	var drpPlcntpmn = getValue("drp_Plcntpmn");
-	var inpRKWardmn = getValue("inp_RKWardmn");
-	var inpRKWardmx = getValue("inp_RKWardmx");
-	var inpRmin = getValue("inp_Rmin");
-	var inpRmax = getValue("inp_Rmax");
-	var frmDfndpndnChecked = getValue("frm_Dfndpndn.checked");
+	var ocolOclInpPckgtxt = getList("ost_frmlDRDRPP.ocl_inpPckgtxt");
+	var inpPluginnm = getString("inp_Pluginnm");
+	var inpLicense = getString("inp_License");
+	var inpShrtdscr = getString("inp_Shrtdscr");
+	var inpVrsnnmbr = getString("inp_Vrsnnmbr");
+	var inpRlsdtmpt = getString("inp_Rlsdtmpt");
+	var inpHomepage = getString("inp_Homepage");
+	var inpCategory = getString("inp_Category");
+	var inpGivennam = getString("inp_Givennam");
+	var inpFamilynm = getString("inp_Familynm");
+	var inpEmail = getString("inp_Email");
+	var chcAuthor = getBoolean("chc_Author");
+	var chcMaintanr = getBoolean("chc_Maintanr");
+	var brwDTEMPDIR = getString("brw_DTEMPDIR");
+	var chcOvrwrtxs = getBoolean("chc_Ovrwrtxs");
+	var chcAddwzrds = getBoolean("chc_Addwzrds");
+	var chcIncldplg = getBoolean("chc_Incldplg");
+	var chcOpnflsfr = getBoolean("chc_Opnflsfr");
+	var chcAddplRKW = getBoolean("chc_AddplRKW");
+	var chcShwthplg = getBoolean("chc_Shwthplg");
+	var drpPlcntpmn = getString("drp_Plcntpmn");
+	var inpRKWardmn = getString("inp_RKWardmn");
+	var inpRKWardmx = getString("inp_RKWardmx");
+	var inpRmin = getString("inp_Rmin");
+	var inpRmax = getString("inp_Rmax");
+	var frmDfndpndnChecked = getBoolean("frm_Dfndpndn.checked");
 
 	// the R code to be evaluated
 	// define the array arrOptAuthorRole for values of R option "role"
@@ -185,8 +186,18 @@ function calculate(){
 	echo(optAuthor);
 	echo(optAbout);
 	echo("\n)\n\n");
-	if(frmDfndpndnChecked && optDependencies) {
-		echo("plugin.dependencies <- rk.XML.dependencies(" + optDependencies + "\n)\n\n");
+	if(frmDfndpndnChecked && (optDependencies || ocolOclInpPckgtxt)) {
+		echo("plugin.dependencies <- rk.XML.dependencies(");
+		if(optDependencies) {
+			echo(optDependencies);
+		}
+		if(optDependencies && ocolOclInpPckgtxt) {
+			echo(",");
+		}
+		if(ocolOclInpPckgtxt) {
+			echo("\n\tpackage=list(\n\t\tc(name=\"" + ocolOclInpPckgtxt.join("\"),\n\t\tc(name=\"") + "\")\n\t)");
+		}
+		echo("\n)\n\n");
 	}
 	echo("plugin.dir <- rk.plugin.skeleton(\n\tabout=about.plugin,");
 	if(frmDfndpndnChecked && optDependencies) {

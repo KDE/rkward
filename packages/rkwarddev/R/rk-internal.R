@@ -559,7 +559,12 @@ XML2dependencies <- function(node, suggest=TRUE, mode="suggest"){
   if(is.XiMpLe.node(node)){
     # check if this is *really* a about section, otherwise die of boredom
     if(!XMLName(node) %in% c("about", "dependencies")){
-      stop(simpleError("Please provide a valid about or dependencies section!"))
+      # are these perhaps commented out? then just quit silently
+      if(XMLName(node) %in% "!--"){
+        return("")
+      } else {
+        stop(simpleError("Please provide a valid about or dependencies section!"))
+      }
     } else {}
   } else {
     stop(simpleError("'about' and/or 'dependencies' must be XiMpLe.nodes, see ?rk.XML.about() and ?rk.XML.dependencies()!"))
@@ -814,12 +819,15 @@ valid.child <- function(parent, children, warn=FALSE, section=parent, node.names
 # - see: name of the function to check docs for
 # - arg.name: optional argument name of a function where valid.parent() is called from,
 #     e.g. if an object is given via "cbox" but checked for "checkbox"
-valid.parent <- function(parent, node, warn=FALSE, see=NULL, arg.name=NULL){
+valid.parent <- function(parent, node, warn=FALSE, see=NULL, arg.name=NULL, comment.ok=FALSE){
   if(is.XiMpLe.node(node)){
     node.name <- XMLName(node)
     if(identical(node.name, parent)){
       return(TRUE)
     } else {
+      if(isTRUE(comment.ok) & identical(node.name, "!--")){
+        return(TRUE)
+      } else {}
       if(is.null(arg.name)){
         arg.name <- parent
       } else {}
@@ -1164,7 +1172,7 @@ dependenciesCompatWrapper <- function(dependencies, about, hints=FALSE){
 
   if(!is.null(dependencies)){
     # check if this is *really* a dependencies section
-    valid.parent("dependencies", node=dependencies, see="rk.XML.dependencies")
+    valid.parent("dependencies", node=dependencies, see="rk.XML.dependencies", comment.ok=TRUE)
     results[["dependencies"]] <- dependencies
   } else if(is.XiMpLe.node(deps.in.about)){
     results[["dependencies"]] <- deps.in.about

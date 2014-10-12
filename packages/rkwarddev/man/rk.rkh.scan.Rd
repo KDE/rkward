@@ -21,7 +21,7 @@ vector with only the relevant ID names.}
 help text provided by \code{\link[rkwarddev:rk.set.rkh.prompter]{rk.set.rkh.prompter}}.}
 }
 \value{
-A character vector or a list of XiMpLe.node objects.
+A character vector or a list of XiMpLe.node objects. Returns \code{NULL} if no documentable nodes are found.
 }
 \description{
 Create RKWard help nodes from plugin XML

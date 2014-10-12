@@ -1,7 +1,7 @@
 <!DOCTYPE rkpluginmap >
 <document 
 	namespace="CreateRKWardpluginskeleton"
-	id="CreateRKWardpluginskeleton_rkward"
+	id="CreateRKWardpluginskeleton__rkward"
 	priority="medium"
 >
 	<!-- 
@@ -14,8 +14,8 @@
 		name="RKWard Plugin Skeleton"
 		shortinfo="GUI interface to create RKWard plugin skeletons"
 		longinfo="GUI interface to create RKWard plugin skeletons"
-		version="0.06-2"
-		releasedate="2013-02-24"
+		version="0.06-5"
+		releasedate="2014-10-12"
 		url="http://rkward.sf.net"
 		license="GPL (&gt;= 3)"
 	>
