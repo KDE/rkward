@@ -42,7 +42,7 @@
 rk.XML.formula <- function(fixed, dependent, id.name="auto"){
   # check if these are actually varslots
   sapply(list(fixed, dependent), function(this.attr){
-      if(inherits(this.attr, "XiMpLe.node")){
+      if(is.XiMpLe.node(this.attr)){
         this.attr.name <- slot(this.attr ,"name")
         if(!identical(this.attr.name, "varslot")){
           stop(simpleError(paste0("'fixed' and 'dependent' must be <varslot> nodes! You provided: <", this.attr.name, ">")))

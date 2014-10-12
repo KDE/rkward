@@ -30,6 +30,6 @@
 rk.set.comp <- function(component=NULL){
   rkh.prompter <- get.rkh.prompter()
   rkh.prompter[[".active.component"]] <- component
-  assign("rkh.prompter", rkh.prompter, envir=.rkdev.env)
+  set.rk.env("rkh.prompter", value=rkh.prompter)
   return(invisible(NULL))
 }

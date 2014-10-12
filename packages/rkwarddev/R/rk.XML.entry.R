@@ -41,11 +41,8 @@ rk.XML.entry <- function(component, index=-1){
   } else {}
 
   # check the node names and allow only valid ones
-  if(inherits(component, "XiMpLe.node")){
-    node.name <- slot(component ,"name")
-    if(!identical(node.name, "component")){
-      stop(simpleError(paste0("Invalid XML node for 'entry': ", node.name)))
-    } else {}
+  if(is.XiMpLe.node(component)){
+    valid.parent(parent="component", node=component, warn=FALSE, see="rk.XML.component")
   } else {}
 
   attr.list <- list(component=check.ID(component))

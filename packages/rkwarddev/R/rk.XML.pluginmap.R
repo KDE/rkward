@@ -110,7 +110,7 @@ rk.XML.pluginmap <- function(name, about=NULL, components, hierarchy="test",
   if(!is.null(require)){
     # check if this is *really* require nodes
     for(this.child in child.list(require)){
-        if(inherits(this.child, "XiMpLe.node")){
+        if(is.XiMpLe.node(this.child)){
           valid.parent("require", node=this.child, see="rk.XML.require")
           all.children[[length(all.children)+1]] <- this.child
         } else {
@@ -130,7 +130,7 @@ rk.XML.pluginmap <- function(name, about=NULL, components, hierarchy="test",
 
   ## components section
   if(!is.null(components)){
-    if(inherits(components, "XiMpLe.node")){
+    if(is.XiMpLe.node(components)){
       # check if this is *really* a components section, otherwise quit and go dancing
       valid.parent("components", node=components, see="rk.XML.components")
       all.children[[length(all.children)+1]] <- components
@@ -173,7 +173,7 @@ rk.XML.pluginmap <- function(name, about=NULL, components, hierarchy="test",
   } else {}
 
   ## hierachy section
-  if(inherits(hierarchy, "XiMpLe.node")){
+  if(is.XiMpLe.node(hierarchy)){
     # check if this is *really* a hierarchy section, otherwise quit and go dancing
     valid.parent("hierarchy", node=hierarchy, see="rk.XML.hierarchy")
     all.children[[length(all.children)+1]] <- hierarchy
@@ -256,7 +256,7 @@ rk.XML.pluginmap <- function(name, about=NULL, components, hierarchy="test",
   ## context sections
   if(!is.null(x11.context)){
     # check if this is *really* a context node for x11
-    if(inherits(x11.context, "XiMpLe.node")){
+    if(is.XiMpLe.node(x11.context)){
       node.name <- slot(x11.context, "name")
       ctxt.name <- slot(x11.context, "attributes")$id
     } else {
@@ -276,7 +276,7 @@ rk.XML.pluginmap <- function(name, about=NULL, components, hierarchy="test",
   # import
   if(!is.null(import.context)){
     # check if this is *really* a context node for import
-    if(inherits(import.context, "XiMpLe.node")){
+    if(is.XiMpLe.node(import.context)){
       node.name <- slot(import.context, "name")
       ctxt.name <- slot(import.context, "attributes")$id
     } else {

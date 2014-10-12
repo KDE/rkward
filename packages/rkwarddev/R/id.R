@@ -67,10 +67,10 @@ id <- function(..., quote=FALSE, collapse="", js=TRUE){
         }
         return(node.id)
       } else if(inherits(this.part, "rk.JS.arr")){
-        node.id <- this.part@opt.name
+        node.id <- slot(this.part, "opt.name")
         return(node.id)
       } else if(inherits(this.part, "rk.JS.opt")){
-        node.id <- this.part@var.name
+        node.id <- slot(this.part, "var.name")
         return(node.id)
       } else if(inherits(this.part, "rk.JS.var")){
         # can hold multiple IDs, but we'll only return the first valid one

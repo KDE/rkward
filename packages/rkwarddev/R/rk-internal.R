@@ -617,13 +617,21 @@ get.by.role <- function(persons, role="aut"){
 
 
 ## function check.ID()
-check.ID <- function(node){
+# - node: a XiMpLe.node to search for an ID
+# - search.environment: if TRUE, the internal environment is searched for the ID
+#     as well; a use case for this is IDs of oprions, which need their parent IDs as well;
+#     see get.optionIDs() below
+check.ID <- function(node, search.environment=FALSE){
   if(is.list(node)){
     return(sapply(node, check.ID))
   } else {}
 
   if(is.XiMpLe.node(node)){
     node.ID <- XMLAttrs(node)[["id"]]
+    if(isTRUE(search.environment)){
+      optionIDs <- get.optionIDs()[[node.ID]]
+      node.ID <- ifelse(is.null(optionIDs), node.ID, optionIDs[["XML"]])
+    } else {}
   } else if(is.character(node)){
     node.ID <- node
   } else {
@@ -804,13 +812,18 @@ valid.child <- function(parent, children, warn=FALSE, section=parent, node.names
 # - node: a XiMpLe.node object to check
 # - warn: warning or stop?
 # - see: name of the function to check docs for
-valid.parent <- function(parent, node, warn=FALSE, see=NULL){
+# - arg.name: optional argument name of a function where valid.parent() is called from,
+#     e.g. if an object is given via "cbox" but checked for "checkbox"
+valid.parent <- function(parent, node, warn=FALSE, see=NULL, arg.name=NULL){
   if(is.XiMpLe.node(node)){
     node.name <- XMLName(node)
     if(identical(node.name, parent)){
       return(TRUE)
     } else {
-      return.message <- paste0("I don't know what this is, but '", parent, "' is not a <", parent, "> section!")
+      if(is.null(arg.name)){
+        arg.name <- parent
+      } else {}
+      return.message <- paste0("I don't know what this is, but '", arg.name, "' is not a <", parent, "> section!")
       if(isTRUE(warn)){
         warning(return.message)
         return(FALSE)
@@ -1164,24 +1177,48 @@ dependenciesCompatWrapper <- function(dependencies, about, hints=FALSE){
   return(results)
 } ## end function dependenciesCompatWrapper()
 
+## function get.rk.env()
+# generic function to query the internal environment and declare a desired object, if not present yet
+get.rk.env <- function(name, value=list()){
+  if(exists(name, envir=.rkdev.env, inherits=FALSE)){
+    this.env <- as.list(.rkdev.env)[[name]]
+  } else {
+    assign(name, value, envir=.rkdev.env)
+    this.env <- value
+  }
+  return(this.env)
+} ## end function get.rk.env()
+
+
+## function set.rk.env()
+# generic function to write to the internal environment
+set.rk.env <- function(name, value){
+  assign(name, value, envir=.rkdev.env)
+  return(invisible(NULL))
+} ## end function set.rk.env()
+
 
 ## function get.rkh.prompter()
 # returns either an empty list or the contents of rkh.prompter from the internal enviroment 
 get.rkh.prompter <- function(){
-  if(exists("rkh.prompter", envir=.rkdev.env, inherits=FALSE)){
-    rkh.prompter <- as.list(.rkdev.env)[["rkh.prompter"]]
-  } else {
-    assign("rkh.prompter", list(), envir=.rkdev.env)
-    rkh.prompter <- list()
-  }
+  rkh.prompter <- get.rk.env("rkh.prompter", value=list())
   return(rkh.prompter)
 } ## end function get.rkh.prompter()
 
 
+## function get.optionIDs()
+# returns either an empty list or the contents of rkh.prompter from the internal enviroment 
+get.optionIDs <- function(){
+  optionIDs <- get.rk.env("optionIDs", value=list())
+  return(optionIDs)
+} ## end function get.optionIDs()
+
+
 ## function rk.check.options()
-# options is a list, containig either named vectors in teh form of
-#   label=c(val=NULL, chk=FALSE)
-# or an "option" node of class XiMpLe.node
+# - options: a list, containig either named vectors in the form of
+#       label=c(val=NULL, chk=FALSE)
+#     or an "option" node of class XiMpLe.node
+# - parent: the parent node type, e.g. "radio"
 rk.check.options <- function(options, parent){
   num.opt <- length(options)
   all.options <- sapply(1:num.opt, function(this.num){
@@ -1215,3 +1252,34 @@ rk.check.options <- function(options, parent){
   return(all.options)
 }
 ## end function rk.check.options()
+
+
+## function rk.register.options()
+# - options: a list, containig either named vectors in the form of
+#       label=c(val=NULL, chk=FALSE)
+#     or an "option" node of class XiMpLe.node; only the latter will be
+#     searched for IDs
+# - parent.node: full parent XiMpLe.node option IDs will be registered in
+#     an internal environment, which makes it easier to fetch a directly
+#     usable ID (because it has to be prefixed with the parent ID)
+rk.register.options <- function(options, parent.node){
+  num.opt <- length(options)
+  all.options <- sapply(1:num.opt, function(this.num){
+    if(is.XiMpLe.node(options[[this.num]])){
+      opt.id <- XMLAttrs(options[[this.num]])[["id"]]
+      if(!is.null(opt.id)){
+        # save ID with parents
+        optionIDs <- get.optionIDs()
+        thisID <- c(XML=id(options[[this.num]], js=FALSE), JS=id(options[[this.num]]))
+        parentID <- c(XML=id(parent.node, js=FALSE), JS=id(parent.node))
+        optionIDs[[opt.id]] <- list(
+          XML=paste(parentID[["XML"]], thisID[["XML"]], sep="."),
+          JS=paste(parentID[["JS"]], thisID[["JS"]], sep="."),
+          parent=parentID
+        )
+        set.rk.env("optionIDs", value=optionIDs)
+        } else {}
+      } else {}
+    })
+}
+## end function rk.register.options()

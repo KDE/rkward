@@ -59,10 +59,10 @@ rk.XML.connect <- function(governor, client, get="state", set="enabled", not=FAL
   } else {}
 
   # let's see if we need to extract IDs first
-  client.id <- check.ID(client)
+  client.id <- check.ID(client, search.environment=TRUE)
   governor.id <- check.ID(governor)
   # if governor is an XML node but not <convert>, append ".state"
-  if(inherits(governor, "XiMpLe.node")){
+  if(is.XiMpLe.node(governor)){
     node.name <- slot(governor, "name")
     if(!identical(node.name, "convert")){
       # validate get modifier

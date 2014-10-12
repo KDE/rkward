@@ -70,6 +70,6 @@ rk.set.rkh.prompter <- function(component=NULL, id=NULL, help=NULL, rm=FALSE){
    rkh.prompter[[component]][[id]][["help"]] <- help
   }
 
-  assign("rkh.prompter", rkh.prompter, envir=.rkdev.env)
+  set.rk.env("rkh.prompter", rkh.prompter)
   return(invisible(NULL))
 }

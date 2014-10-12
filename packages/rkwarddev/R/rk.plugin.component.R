@@ -90,16 +90,12 @@ rk.plugin.component <- function(about, xml=list(), js=list(), rkh=list(),
   provides=c("logic", "dialog"), scan=c("var", "saveobj", "settings"), guess.getter=FALSE,
   hierarchy="test", include=NULL, create=c("xml", "js", "rkh"), hints=TRUE, gen.info=TRUE, indent.by="\t"){
 
-  if(inherits(about, "XiMpLe.node")){
-    about.node.name <- slot(about, "name")
+  if(is.XiMpLe.node(about)){
     # check if this is *really* a about section, otherwise quit and go dancing
-    if(!identical(about.node.name, "about")){
-      stop(simpleError("I don't know what this is, but 'about' is not an about section!"))
-    } else {
-      # fetch the plugin name
-      name <- slot(about, "attributes")[["name"]]
-      about.node <- about
-    }
+    valid.parent(parent="about", node=about, warn=FALSE, see="rk.XML.about")
+    # fetch the plugin name
+    name <- XMLAttrs(about, "attributes")[["name"]]
+    about.node <- about
   } else if(is.character(about) & length(about) == 1) {
     name <- about
     about.node <- NULL

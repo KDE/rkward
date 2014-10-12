@@ -46,7 +46,7 @@ setClass("rk.JS.var",
 
 setValidity("rk.JS.var", function(object){
     # vars in this object must be of the same class
-    sapply(object@vars, function(this.var){
+    sapply(slot(object, "vars"), function(this.var){
       if(!inherits(this.var, "rk.JS.var")){
         stop(simpleError("Slot 'vars' can only have a list of elements of class 'rk.JS.var'!"))
       } else {}

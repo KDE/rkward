@@ -62,7 +62,7 @@
 
 rk.XML.varslot <- function(label, source, required=FALSE, multi=FALSE, min=1, any=1, max=0,
   dim=0, min.len=0, max.len=NULL, classes=NULL, types=NULL, id.name="auto", help=NULL, component=rk.get.comp()){
-  if(inherits(source, "XiMpLe.node")){
+  if(is.XiMpLe.node(source)){
     source.name <- slot(source, "name")
     if(!identical(source.name, "varselector")){
       stop(simpleError(paste0("'source' must be a <varselector> node! You provided: <", source.name, ">")))

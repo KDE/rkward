@@ -36,12 +36,12 @@ rk.set.language <- function(lang=NULL, locales=NULL){
     } else {}
     message(paste("removed language setting"))
   } else {
-    assign("lang", lang, envir=.rkdev.env)
+    set.rk.env("lang", value=lang)
     message(paste("set language to:", dQuote(lang)))
     if(is.null(locales)){
       warning("please provide at least one locale!")
     } else {
-      assign("locales", locales, envir=.rkdev.env)
+      set.rk.env("locales", value=locales)
       message(paste("set locales to:", paste0(dQuote(locales), collapse=", ")))
     }
   }

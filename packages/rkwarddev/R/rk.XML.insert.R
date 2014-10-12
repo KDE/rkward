@@ -42,11 +42,8 @@ rk.XML.insert <- function(snippet){
     stop(simpleError("'snippet' must be of length 1!"))
   } else {}
 
-  if(inherits(snippet, "XiMpLe.node")){
-    node.name <- slot(snippet, "name")
-    if(!identical(node.name, "snippet")){
-      stop(simpleError(paste0("Invalid XML node, must be a snippet: ", node.name)))
-    } else {}
+  if(is.XiMpLe.node(snippet)){
+    valid.parent(parent="snippet", node=snippet, warn=FALSE, see="rk.XML.snippet")
   } else {}
 
   # let's see if we need to extract IDs first

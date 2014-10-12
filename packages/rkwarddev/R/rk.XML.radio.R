@@ -17,6 +17,9 @@
 
 
 #' Create XML node "radio" for RKWard plugins
+#' 
+#' @note It is also possible to address a particular option by giving it an ID, probably useful
+#' in logic sections. Have a look at \code{\link[rkwarddev:rk.XML.option]{rk.XML.option}} for details.
 #'
 #' @param label Character string, a text label for this plugin element.
 #' @param options A named list with options to choose from. The names of the list elements will become
@@ -31,7 +34,9 @@
 #'    accordingly, too!
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
-#' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
+#' @seealso
+#'    \code{\link[rkwarddev:rk.XML.option]{rk.XML.option}},
+#'    \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' test.radio <- rk.XML.radio("Chose one",
 #'   options=list("First Option"=c(val="val1"),
@@ -39,9 +44,6 @@
 #' cat(pasteXML(test.radio))
 
 rk.XML.radio <- function(label, options=list(label=c(val=NULL, chk=FALSE)), id.name="auto", help=NULL, component=rk.get.comp()){
-  # convert list elements into a list of XiMpLe nodes (if they aren't already)
-  rd.options <- rk.check.options(options, parent="radio")
-
   if(identical(id.name, "auto")){
     id <- auto.ids(label, prefix=ID.prefix("radio"))
   } else {
@@ -49,10 +51,16 @@ rk.XML.radio <- function(label, options=list(label=c(val=NULL, chk=FALSE)), id.n
   }
   rd.attr.list <- list(id=id, label=label)
 
+  # convert list elements into a list of XiMpLe nodes (if they aren't already)
+  rd.options <- rk.check.options(options, parent="radio")
+
   radio <- XMLNode("radio",
       attrs=rd.attr.list,
       .children=child.list(rd.options, empty=FALSE)
     )
+
+  # if present, store option IDs with parent ID 
+  rk.register.options(options, parent.node=radio)
 
   # check for .rkh content
   rk.set.rkh.prompter(component=component, id=id, help=help)

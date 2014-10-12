@@ -162,7 +162,7 @@ rk.plugin.skeleton <- function(about, path=tempdir(),
   components=list(), dependencies=NULL, edit=FALSE, load=FALSE, show=FALSE, gen.info=TRUE,
   hints=TRUE, indent.by="\t", lang=rk.get.language()){
 
-  if(inherits(about, "XiMpLe.node")){
+  if(is.XiMpLe.node(about)){
     # check about and dependencies
     # result is a named list with "about" and "dependencies"
     about.dep.list <- dependenciesCompatWrapper(dependencies=dependencies, about=about, hints=hints)

@@ -58,7 +58,7 @@ rk.rkh.doc <- function(summary=NULL, usage=NULL, sections=NULL, settings=NULL, r
 
   if(!is.null(title)){
     # check if this is *really* a title section
-    if(inherits(title, "XiMpLe.node")){
+    if(is.XiMpLe.node(title)){
       title.node.name <- slot(title, "name")
     } else {
       title.node.name <- "yougottabekiddingme"
@@ -71,7 +71,7 @@ rk.rkh.doc <- function(summary=NULL, usage=NULL, sections=NULL, settings=NULL, r
 
   if(!is.null(summary)){
     # check if this is *really* a summary section
-    if(inherits(summary, "XiMpLe.node")){
+    if(is.XiMpLe.node(summary)){
       summary.node.name <- slot(summary, "name")
     } else {
       summary.node.name <- "yougottabekiddingme"
@@ -86,7 +86,7 @@ rk.rkh.doc <- function(summary=NULL, usage=NULL, sections=NULL, settings=NULL, r
 
   if(!is.null(usage)){
     # check if this is *really* a usage section
-    if(inherits(usage, "XiMpLe.node")){
+    if(is.XiMpLe.node(usage)){
       usage.node.name <- slot(usage, "name")
     } else {
       usage.node.name <- "yougottabekiddingme"
@@ -102,7 +102,7 @@ rk.rkh.doc <- function(summary=NULL, usage=NULL, sections=NULL, settings=NULL, r
   if(!is.null(sections)){
     for(this.section in sections){
       # check if this is *really* a section
-      if(inherits(this.section, "XiMpLe.node")){
+      if(is.XiMpLe.node(this.section)){
         this.section.node.name <- slot(this.section, "name")
       } else {
         this.section.node.name <- "yougottabekiddingme"
@@ -120,7 +120,7 @@ rk.rkh.doc <- function(summary=NULL, usage=NULL, sections=NULL, settings=NULL, r
 
   if(!is.null(settings)){
     # check if this is *really* a settings section
-    if(inherits(settings, "XiMpLe.node")){
+    if(is.XiMpLe.node(settings)){
       settings.node.name <- slot(settings, "name")
     } else {
       settings.node.name <- "yougottabekiddingme"
@@ -135,7 +135,7 @@ rk.rkh.doc <- function(summary=NULL, usage=NULL, sections=NULL, settings=NULL, r
 
   if(!is.null(related)){
     # check if this is *really* a related section
-    if(inherits(related, "XiMpLe.node")){
+    if(is.XiMpLe.node(related)){
       related.node.name <- slot(related, "name")
     } else {
       related.node.name <- "yougottabekiddingme"
@@ -150,7 +150,7 @@ rk.rkh.doc <- function(summary=NULL, usage=NULL, sections=NULL, settings=NULL, r
 
   if(!is.null(technical)){
     # check if this is *really* a technical section
-    if(inherits(technical, "XiMpLe.node")){
+    if(is.XiMpLe.node(technical)){
       technical.node.name <- slot(technical, "name")
     } else {
       technical.node.name <- "yougottabekiddingme"

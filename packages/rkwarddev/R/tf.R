@@ -56,14 +56,7 @@
 tf <- function(cbox, true=TRUE, not=FALSE, ifelse=FALSE, false=FALSE, opt=NULL, prefix=",\n", level=3, indent.by="\t"){
 
   # check if we're given a checkbox, alright...
-  if(inherits(cbox, "XiMpLe.node")){
-    node.name <- cbox@name
-    if(!identical(node.name, "checkbox")){
-      stop(simpleError(paste0("Invalid XML node, expected 'checkbox' and got: ", node.name)))
-    } else {}
-  } else {
-    stop(simpleError("'cbox' must be of class XiMpLe.node!"))
-  }
+  valid.parent(parent="checkbox", node=cbox, warn=FALSE, see="rk.XML.cbox", arg.name="cbox")
 
   if(is.null(opt)){
     opt.name <- id(cbox, js=FALSE)

@@ -99,9 +99,9 @@ rk.XML.convert <- function(sources, mode=c(), required=FALSE, id.name="auto"){
         this.modif <- src.names[src.no]
         valid.modif <- modif.validity(source=sources[[src.no]], modifier=this.modif, bool=FALSE)
         if(nchar(valid.modif) > 0){
-          new.value <- paste(check.ID(sources[[src.no]]), this.modif, sep=".")
+          new.value <- paste(check.ID(sources[[src.no]], search.environment=TRUE), this.modif, sep=".")
         } else {
-          new.value <- check.ID(sources[[src.no]])
+          new.value <- check.ID(sources[[src.no]], search.environment=TRUE)
         }
         return(new.value)
       }))

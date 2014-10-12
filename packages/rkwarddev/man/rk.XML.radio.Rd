@@ -33,6 +33,10 @@ An object of class \code{XiMpLe.node}.
 \description{
 Create XML node "radio" for RKWard plugins
 }
+\note{
+It is also possible to address a particular option by giving it an ID, probably useful
+in logic sections. Have a look at \code{\link[rkwarddev:rk.XML.option]{rk.XML.option}} for details.
+}
 \examples{
 test.radio <- rk.XML.radio("Chose one",
   options=list("First Option"=c(val="val1"),
@@ -40,6 +44,7 @@ test.radio <- rk.XML.radio("Chose one",
 cat(pasteXML(test.radio))
 }
 \seealso{
-\href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
+\code{\link[rkwarddev:rk.XML.option]{rk.XML.option}},
+   \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 }
 
