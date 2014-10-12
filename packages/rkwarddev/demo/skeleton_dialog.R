@@ -138,30 +138,45 @@ dep.opts <- rk.XML.frame(
 
 tab2.create <- rk.XML.col(crt.opts, dep.opts)
 
-# tab3: varslot to select the actual content
-children.text <- rk.XML.text("If you already created XML content for the plugin, select the main dialog object here (probably a tabbook?)")
-children.var <- rk.XML.row(
-  children.varselector <- rk.XML.varselector(label="Plugin content"),
-  rk.XML.col(
-    cont.dial <- rk.XML.varslot("Select an object of class XiMpLe.node", source=children.varselector, classes="XiMpLe.node",
-      help="If you already created XML content for the plugin, select the main dialog object here."),
-    rk.XML.frame(
-      js.prep <- rk.XML.varslot("preprocess()", source=children.varselector,
-        help="A JavaScript object to be used as the the preprocess() function."),
-      js.calc <- rk.XML.varslot("calculate()", source=children.varselector,
-        help="A JavaScript object to be used as the the calculate() function."),
-      js.prnt <- rk.XML.varslot("printout()", source=children.varselector,
-        help="A JavaScript object to be used as the the printout() function."),
-      rk.XML.stretch())
-  ))
-tab3.children <- rk.XML.col(rk.XML.row(children.text), rk.XML.row(children.var))
+# # tab3: varslot to select the actual content
+# children.text <- rk.XML.text("If you already created XML content for the plugin, select the main dialog object here (probably a tabbook?)")
+# children.var <- rk.XML.row(
+#   children.varselector <- rk.XML.varselector(label="Plugin content"),
+#   rk.XML.col(
+#     cont.dial <- rk.XML.varslot("Select an object of class XiMpLe.node", source=children.varselector, classes="XiMpLe.node",
+#       help="If you already created XML content for the plugin, select the main dialog object here."),
+#     rk.XML.frame(
+#       js.prep <- rk.XML.varslot("preprocess()", source=children.varselector,
+#         help="A JavaScript object to be used as the the preprocess() function."),
+#       js.calc <- rk.XML.varslot("calculate()", source=children.varselector,
+#         help="A JavaScript object to be used as the the calculate() function."),
+#       js.prnt <- rk.XML.varslot("printout()", source=children.varselector,
+#         help="A JavaScript object to be used as the the printout() function."),
+#       rk.XML.stretch())
+#   ))
+# tab3.children <- rk.XML.col(rk.XML.row(children.text), rk.XML.row(children.var))
+help.text.summary <- rk.XML.input("Summary", size="large",
+  help="Give a short summary of the plugin for the help page. If empty, the short description is taken as the default.")
+help.text.usage <- rk.XML.input("Usage", size="large",
+  help="A general note on how to use the plugin.")
+help.text <- rk.XML.frame(
+  rk.XML.row(help.text.summary),
+  rk.XML.row(help.text.usage),
+  label="Write help files",
+  checkable=TRUE,
+  chk=FALSE)
+  
+tab3.help <- rk.XML.col(help.text)
 
 ## glue all of the above together in one tabbook
 # sklt.tabbook <- rk.XML.dialog(rk.XML.tabbook("Plugin Skeleton",
 #   tab.labels=c("About the plugin", "Create options", "XML content"),
 #   children=list(tab1.about, tab2.create, tab3.children)), label="RKWard Plugin Skeleton")
 sklt.tabbook <- rk.XML.dialog(rk.XML.tabbook("Plugin Skeleton",
-  tabs=list("About the plugin"=tab1.about, "Create options"=tab2.create)),
+  tabs=list(
+    "About the plugin"=tab1.about,
+    "Create options"=tab2.create,
+    "Help page"=tab3.help)),
   label="RKWard Plugin Skeleton")
 
 ## some logic
@@ -205,16 +220,25 @@ js.opt.skel.pluginmap <- rk.JS.options("optPluginmap",
   ite(id(pl.hier, "!= \"test\""), qp("hierarchy=\"", pl.hier, "\"")),
   funct="list", option="pluginmap", collapse="")
 js.opt.skeleton <- rk.JS.options("optSkeleton",
-  ite(pl.dir, qp("\n\tpath=\"", pl.dir, "\"")),
   ite(pl.wiz, qp("\n\tprovides=c(\"logic\", \"dialog\", \"wizard\")")),
   ite(js.opt.skel.pluginmap, qp("\n\t", js.opt.skel.pluginmap)),
-  ite(pl.overw, qp("\n\toverwrite=TRUE")),
   ite(pl.tests, qp("\n\ttests=TRUE")),
   ite(pl.edit, qp("\n\tedit=TRUE")),
   ite(pl.add, qp("\n\tload=TRUE")),
   ite(pl.show, qp("\n\tshow=TRUE")),
   collapse="")
 
+JS.prepare <- rk.paste.JS(
+  rk.JS.vars(pl.dir, pl.overw),
+  echo("rkwarddev.required(\"0.06-5\")"),
+  echo("\n\n# define where the plugin should write its files\noutput.dir <- "),
+  ite(pl.dir, echo("\"", pl.dir, "\""), echo("tempdir()")),
+  echo("\n# overwrite an existing plugin in output.dir?\noverwrite <- "),
+  ite(pl.overw, echo("TRUE"), echo("FALSE")),
+  echo("\n\n"),
+  level=2)
+  
+js.frm.help.text <- rk.JS.vars(help.text, modifiers="checked")
 JS.calculate <- rk.paste.JS(
   js.opt.about.author.role,
   js.opt.about.author,
@@ -236,9 +260,29 @@ JS.calculate <- rk.paste.JS(
         echo("\n\tpackage=list(\n\t\tc(name=\"", join(dep.optioncol.pckg.name, by="\"),\n\t\tc(name=\""), "\")\n\t)")),
       echo("\n)\n\n"),
     level=3)),
-  echo("plugin.dir <- rk.plugin.skeleton(\n\tabout=about.plugin,"),
-    ite(id(js.frm.dep.opts, " && ", js.opt.about.dep), echo("\n\tdependencies=plugin.dependencies,")),
-    echo(js.opt.skeleton),
+  ite(js.frm.help.text,
+    rk.paste.JS(
+      echo("############\n## help page\nplugin.summary <- rk.rkh.summary(\n\t"),
+      ite(help.text.summary, echo("\"", help.text.summary, "\"\n)"), echo("\"", pl.desc, "\"\n)")),
+      echo("\nplugin.usage <- rk.rkh.usage(\n\t\"", help.text.usage, "\"\n)\n\n"),
+    level=3)),
+  echo("#############\n",
+    "## the main call\n",
+    "## if you run the following function call, files will be written to output.dir!\n",
+    "#############\n",
+    "# this is where things get serious, that is, here all of the above is put together into one plugin\n",
+    "plugin.dir <- rk.plugin.skeleton(\n\tabout=about.plugin,"),
+  ite(id(js.frm.dep.opts, " && ", js.opt.about.dep), echo("\n\tdependencies=plugin.dependencies,")),
+  echo("\n\tpath=output.dir,"),
+  echo("\n\toverwrite=overwrite,"),
+  ite(js.frm.help.text,
+    echo(
+      "\n\trkh=list(\n\t\tsummary=plugin.summary,\n\t\tusage=plugin.usage\n\t),",
+      "\n\tcreate=c(\"pmap\", \"xml\", \"js\", \"desc\", \"rkh\"),"
+    ),
+    echo("\n\tcreate=c(\"pmap\", \"xml\", \"js\", \"desc\"),")
+  ),
+  echo(js.opt.skeleton),
   echo("\n)\n\n"),
   level=2)
 
@@ -265,6 +309,7 @@ rk.plugin.skeleton(
     logic=logic.section),
   js=list(
     require="rkwarddev",
+    preprocess=JS.prepare,
     calculate=JS.calculate),
   rkh=list(
     summary=rkh.summary,
@@ -277,6 +322,6 @@ rk.plugin.skeleton(
   tests=FALSE,
   show=TRUE,
 #  load=TRUE,
-  edit=TRUE,
+#  edit=TRUE,
   hints=FALSE)
 })

@@ -114,6 +114,18 @@
 					</frame>
 				</column>
 			</tab>
+			<tab label="Help page" id="tab_Helppage">
+				<column id="clm_fWWSSSSUUU">
+					<frame label="Write help files" checkable="true" checked="false" id="frm_Wrthlpfl">
+						<row id="row_inptlblSmS">
+							<input label="Summary" id="inp_Summary" size="large" />
+						</row>
+						<row id="row_inptlblUsU">
+							<input label="Usage" id="inp_Usage" size="large" />
+						</row>
+					</frame>
+				</column>
+			</tab>
 		</tabbook>
 	</dialog>
 </document>

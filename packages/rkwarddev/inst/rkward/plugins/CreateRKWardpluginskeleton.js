@@ -6,6 +6,23 @@
 function preprocess(){
 	// add requirements etc. here
 	echo("require(rkwarddev)\n");
+
+	var brwDTEMPDIR = getValue("brw_DTEMPDIR");
+	var chcOvrwrtxs = getValue("chc_Ovrwrtxs");
+	echo("rkwarddev.required(\"0.06-5\")");
+	echo("\n\n# define where the plugin should write its files\noutput.dir <- ");
+	if(brwDTEMPDIR) {
+		echo("\"" + brwDTEMPDIR + "\"");
+	} else {
+		echo("tempdir()");
+	}
+	echo("\n# overwrite an existing plugin in output.dir?\noverwrite <- ");
+	if(chcOvrwrtxs) {
+		echo("TRUE");
+	} else {
+		echo("FALSE");
+	}
+	echo("\n\n");
 }
 
 function calculate(){
@@ -35,7 +52,10 @@ function calculate(){
 	var inpRKWardmx = getString("inp_RKWardmx");
 	var inpRmin = getString("inp_Rmin");
 	var inpRmax = getString("inp_Rmax");
+	var inpSummary = getString("inp_Summary");
+	var inpUsage = getString("inp_Usage");
 	var frmDfndpndnChecked = getBoolean("frm_Dfndpndn.checked");
+	var frmWrthlpflChecked = getBoolean("frm_Wrthlpfl.checked");
 
 	// the R code to be evaluated
 	// define the array arrOptAuthorRole for values of R option "role"
@@ -146,17 +166,11 @@ function calculate(){
 
 	// define the array arrOptSkeleton for values of R option ""
 	var arrOptSkeleton = new Array();
-		if(brwDTEMPDIR) {
-			arrOptSkeleton.push("\n\tpath=\"" + brwDTEMPDIR + "\"");
-		}
 		if(chcAddwzrds) {
 			arrOptSkeleton.push("\n\tprovides=c(\"logic\", \"dialog\", \"wizard\")");
 		}
 		if(optPluginmap) {
 			arrOptSkeleton.push("\n\t" + optPluginmap);
-		}
-		if(chcOvrwrtxs) {
-			arrOptSkeleton.push("\n\toverwrite=TRUE");
 		}
 		if(chcIncldplg) {
 			arrOptSkeleton.push("\n\ttests=TRUE");
@@ -199,9 +213,25 @@ function calculate(){
 		}
 		echo("\n)\n\n");
 	}
-	echo("plugin.dir <- rk.plugin.skeleton(\n\tabout=about.plugin,");
+	if(frmWrthlpflChecked) {
+		echo("############\n## help page\nplugin.summary <- rk.rkh.summary(\n\t");
+		if(inpSummary) {
+			echo("\"" + inpSummary + "\"\n)");
+		} else {
+			echo("\"" + inpShrtdscr + "\"\n)");
+		}
+		echo("\nplugin.usage <- rk.rkh.usage(\n\t\"" + inpUsage + "\"\n)\n\n");
+	}
+	echo("#############\n" + "## the main call\n" + "## if you run the following function call, files will be written to output.dir!\n" + "#############\n" + "# this is where things get serious, that is, here all of the above is put together into one plugin\n" + "plugin.dir <- rk.plugin.skeleton(\n\tabout=about.plugin,");
 	if(frmDfndpndnChecked && optDependencies) {
 		echo("\n\tdependencies=plugin.dependencies,");
+	}
+	echo("\n\tpath=output.dir,");
+	echo("\n\toverwrite=overwrite,");
+	if(frmWrthlpflChecked) {
+		echo("\n\trkh=list(\n\t\tsummary=plugin.summary,\n\t\tusage=plugin.usage\n\t)," + "\n\tcreate=c(\"pmap\", \"xml\", \"js\", \"desc\", \"rkh\"),");
+	} else {
+		echo("\n\tcreate=c(\"pmap\", \"xml\", \"js\", \"desc\"),");
 	}
 	echo(optSkeleton);
 	echo("\n)\n\n");

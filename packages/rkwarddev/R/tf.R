@@ -23,7 +23,7 @@
 #' by default \code{TRUE} or \code{FALSE} (hence the name, abbreviated "true or false").
 #' The same result can be obtained with \code{ite}, but for most common cases \code{tf} is much quicker.
 #' 
-#' @param cbox An obkect of class \code{XiMpLe.node} containing a \code{<checkbox>} node, as generated
+#' @param cbox An object of class \code{XiMpLe.node} containing a \code{<checkbox>} node, as generated
 #'    by \code{\link[rkwarddev:rk.XML.cbox]{rk.XML.cbox}}.
 #' @param true Logical or character, the value the option should get. E.g., if \code{true=TRUE} then the option will be
 #'    set to \code{TRUE} if the box is checked, or in case \code{not=TRUE}, if the box is not checked.

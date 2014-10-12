@@ -103,6 +103,14 @@
 			The names of R packages required to run this plugin.
 		</setting>
 		<setting id="ocl_inpPckgtxt" />
+		<caption id="tab_Helppage" />
+		<caption id="frm_Wrthlpfl" />
+		<setting id="inp_Summary">
+			Give a short summary of the plugin for the help page. If empty, the short description is taken as the default.
+		</setting>
+		<setting id="inp_Usage">
+			A general note on how to use the plugin.
+		</setting>
 	</settings>
 	<!-- <related>
 				<ul>
