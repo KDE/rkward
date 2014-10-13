@@ -11,21 +11,21 @@
 # Stefan Rödiger <stefan_roediger@gmx.de>, 2007, 2009.
 # Pavel Fric <pavelfric@seznam.cz>, 2009, 2010.
 # Pavel Fric <fripohled@blogspot.com>, 2010, 2011.
-# Pavel Fric <fripohled.blogspot.com>, 2011, 2012.
+# Pavel Fric <fripohled.blogspot.com>, 2011, 2012, 2014.
 msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: "
 "http://sourceforge.net/tracker/?group_id=50231&atid=459007\n"
 "POT-Creation-Date: 2014-09-28 19:06+0200\n"
-"PO-Revision-Date: 2013-02-26 10:55+0000\n"
+"PO-Revision-Date: 2014-10-07 05:21+0000\n"
 "Last-Translator: fri <pavelfric@seznam.cz>\n"
 "Language-Team: Czech <kde-i18n-doc@kde.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2014-09-29 04:55+0000\n"
+"X-Launchpad-Export-Date: 2014-10-08 06:43+0000\n"
 "X-Generator: Launchpad (build 17196)\n"
 "Language: cs\n"
 
@@ -167,13 +167,13 @@ msgid ""
 ">Configure RKWard->Workspace."
 msgstr ""
 "Balíček '%1' (který jste pravděpodobně právě nahrál) je nyní umístěn na "
-"černé listiněkvůli získávání údajů o skladbě. Především to znamená, že "
+"černé listině kvůli získávání údajů o skladbě. Především to znamená, že "
 "předměty v tomto balíčku se nebudou objevovat v prohlížeči předmětů, a že "
 "nebude žádné dokončování názvu předmětu nebo radění argumentů k funkcím pro "
 "předměty v tomto balíčku.\n"
 "Balíčky jsou obvykle na černou listinu umisťovány, když obsahují obrovské "
 "množství dat, což by vedlo k dlouhému nahrávání. Aby nebyl tento balíček "
-"dále na seznamu, jděte do Nastavení -> Nastavit RKWard -> Pracovní prostředí."
+"dále na seznamu, jděte do Nastavení → Nastavit RKWard → Pracovní prostředí."
 
 #: core/renvironmentobject.cpp:106
 msgid "Package blacklisted"
@@ -236,7 +236,7 @@ msgstr "Třída"
 #: core/rkpseudoobjects.cpp:84
 msgctxt "Note: 'namespace' is a technical term, should not be translated"
 msgid "Orphan Namespaces"
-msgstr ""
+msgstr "Osiřelý jmenný prostor:"
 
 #: core/rkpseudoobjects.cpp:159
 msgid ""
@@ -244,6 +244,9 @@ msgid ""
 "to list namespaces which are loaded, but not attached to a package on the "
 "search path. These are typically 'imported' namespaces."
 msgstr ""
+"Tento zvláštní předmět ve skutečnosti v R neexistuje. Je zde používán pro "
+"vypsání jmenných prostorů, jež jsou nahrány, ale nejsou připojeny k balíčku "
+"v prohledávané cestě. Jedná se typicky o \"zavedené\" jmenné prostory."
 
 #: core/rkrownames.cpp:41
 msgid "row names"
@@ -468,11 +471,11 @@ msgstr "Vkládá se obsah schránky..."
 
 #: dialogs/rkerrordialog.cpp:44
 msgid "Report As Bug"
-msgstr ""
+msgstr "Nahlásit jako chybu"
 
 #: dialogs/rkerrordialog.cpp:54
 msgid "Message code: %1\n"
-msgstr ""
+msgstr "Kód zprávy:\n"
 
 #: dialogs/rkerrordialog.cpp:63
 msgid "---Problem description---\n"
@@ -495,6 +498,10 @@ msgid ""
 "###Please fill in (if applicable)###\n"
 "\n"
 msgstr ""
+"Objevilo se hlášení o chybě uvedené níže. Vedle toho byly pozorovány "
+"následující příznaky:\n"
+"###Vyplňte, prosím, (pokud platí)###\n"
+"\n"
 
 #: dialogs/rkerrordialog.cpp:69
 msgid ""
@@ -552,6 +559,11 @@ msgid ""
 "###Please fill in###\n"
 "\n"
 msgstr ""
+"RKWard je dostupný v mnoha lišících se baleních, a někdy jsou potíže spojeny "
+"s určitým způsobem instalace. Jak jste RKWard nainstaloval (které soubory "
+"jste stáhnul)?\n"
+"###Vyplňte, prosím###\n"
+"\n"
 
 #: dialogs/rkerrordialog.cpp:85
 msgid ""
@@ -1060,12 +1072,17 @@ msgid ""
 "Debugger for the backend. (Enclose any debugger arguments in single quotes "
 "('') together with the command. Make sure to re-direct stdout!)"
 msgstr ""
+"Ladicí program pro jádro (podpůrnou vrstvu). (Uzavřete všechny argumenty pro "
+"ladicí program společně s příkazem do jednoduchých uvozovek (''). Zajistěte "
+"přesměrování výstupu - stdout!)"
 
 #: main.cpp:124
 msgid ""
 "Use specified R installation, instead of the one configured at compile time "
 "(note: rkward R library must be installed to that installation of R)"
 msgstr ""
+"Použít danou instalaci R namísto té, která byla nastavena v době instalace "
+"(Poznámka: knihovna rkward R musí být nainstalována do té instalace R)"
 
 #: main.cpp:125
 msgid "R workspace file to open"
@@ -1100,7 +1117,7 @@ msgstr "Vývojář v C++ mezi roky 2004 a 2007"
 
 #: main.cpp:130
 msgid "Many plugins, suggestions, plot history feature"
-msgstr "Mnoho přídavných modulů, návrhy funkce historie nákresu"
+msgstr "Mnoho přídavných modulů, návrhy, funkce historie nákresu"
 
 #: main.cpp:131
 msgid "Many plugins, suggestions, rkwarddev package"
@@ -1406,13 +1423,15 @@ msgstr "Kopírovat řádky do výstupu"
 
 #: misc/rkstandardactions.cpp:53
 msgid "Run line / selection"
-msgstr ""
+msgstr "Provést řádek/výběr"
 
 #: misc/rkstandardactions.cpp:54
 msgid ""
 "Runs the current selection (if any) or the current line (if there is no "
 "selection)"
 msgstr ""
+"Provede nynější výběr (je-li jaký) nebo nynější řádek (pokud není vybráno "
+"nic)"
 
 #: misc/rkstandardactions.cpp:57
 msgid "Run selection"
@@ -1488,7 +1507,7 @@ msgid ""
 msgstr ""
 "Pokusil jste se vyvolat přídavný modul s názvem '%1', ale tento přídavný "
 "modul je v současnosti neznámý. Pravděpodobně musíte nahrát odpovídající "
-"mapu přídavných modulů (Nastavit->Nastavit RKWard->Přídavné moduly), nebo "
+"mapu přídavných modulů (Nastavit → Nastavit RKWard → Přídavné moduly), nebo "
 "byl možná tento přídavný modul přejmenován."
 
 #: plugin/rkcomponentmap.cpp:261
@@ -1501,7 +1520,7 @@ msgid ""
 "the RKWard team (Help->About RKWard->Authors)."
 msgstr ""
 "Nesprávný formát pro řazení při pokusu o vyvolání přídavného modulu '%1'. "
-"Spojte se, prosím, s týmem RKWardu (Nápověda->O RKWardu->Autoři)."
+"Spojte se, prosím, s týmem RKWardu (Nápověda → O RKWardu → Autoři)."
 
 #: plugin/rkcomponentmap.cpp:273
 msgid "Bad serialization format"
@@ -1543,11 +1562,15 @@ msgstr "Nepodařilo se předat"
 msgid ""
 "Could not open plugin map file %1. (Is not readble, or failed to parse)"
 msgstr ""
+"Nepodařilo se otevřít soubor s přiřazením přídavného modulu %1. (Není "
+"čitelný, anebo se jej nepodařilo zpracovat)"
 
 #: plugin/rkcomponentmap.cpp:373
 msgid ""
 "Skipping plugin map file '%1': Not compatible with this version of RKWard"
 msgstr ""
+"Přeskakuje se soubor s přiřazením přídavného modulu %1. Není slučitelný s "
+"touto verzí RKWardu"
 
 #: plugin/rkcomponentmap.cpp:423
 msgid ""
@@ -1861,7 +1884,7 @@ msgstr "Provádí se"
 
 #: rbackend/rcommandstack.cpp:278
 msgid "Canceled"
-msgstr ""
+msgstr "Zrušeno"
 
 #: rbackend/rcommandstack.cpp:287
 msgid "Command Chain"
@@ -1965,20 +1988,29 @@ msgid ""
 "can do, however, is save any open command-files, the output, or copy data "
 "out of open data editors. Quit RKWard after that. Sorry!"
 msgstr ""
+"\n"
+"Jádro R bude zastaveno okamžitě Znamená to, že dále nemůžete používat "
+"jakékoli funkce závisející na jádru k R Také jinak řečeno, nemůžete provádět "
+"vůbec nic, dokonce ani uložit pracovní prostředí Máte-li štěstí, udělal to "
+"už R. Ovšem to, co můžete udělat, je, že můžete uložit otevřené soubory s "
+"příkazy, výstupy, nebo data z otevřeného editoru dat. Poté ukončete RKWard. "
+"Promiňte!"
 
 #: rbackend/rinterface.cpp:852
 msgid "R engine has died"
-msgstr "Jádro R 'vytuhlo'"
+msgstr "Jádro R vytuhlo"
 
 #: rbackend/rkfrontendtransmitter.cpp:98
 msgid ""
 "The backend executable could not be found. This is likely to be a problem "
 "with your installation."
 msgstr ""
+"Nepodařilo se najít spustitelný soubor jádra. Jedná se pravděpodobně o "
+"problém s vaší instalací."
 
 #: rbackend/rkfrontendtransmitter.cpp:110
 msgid "The backend executable could not be started. Error message was: %1"
-msgstr ""
+msgstr "Nepodařilo se spustit spustitelný soubor jádra. Zpráva o chybě: %1"
 
 #: rbackend/rkfrontendtransmitter.cpp:141
 msgid ""
@@ -2002,14 +2034,15 @@ msgstr ""
 msgid ""
 "The backend process could not be started. Please check your installation."
 msgstr ""
+"Nepodařilo se spustit proces jádra. Prověřte, prosím, svou instalaci."
 
 #: rbackend/rkfrontendtransmitter.cpp:179
 msgid "The backend process failed to start with exit code %1."
-msgstr ""
+msgstr "Nepodařilo se spustit proces jádra. Kód ukončení %1."
 
 #: rbackend/rkfrontendtransmitter.cpp:180
 msgid "Backend process has exited with code %1."
-msgstr ""
+msgstr "Proces jádra byl ukončen s kódem %1."
 
 #: rbackend/rkrbackend.cpp:525
 msgid "The R engine has shut down with status: %1"
@@ -2069,7 +2102,7 @@ msgstr ""
 
 #: rbackend/rkwarddevice/rkgraphicsdevice.cpp:111
 msgid "Graphics Device Number %1"
-msgstr ""
+msgstr "Číslo znázorňovacího zařízení %1"
 
 #: rbackend/rkwarddevice/rkgraphicsdevice.cpp:266
 #: windows/rkcommandeditorwindow.cpp:817
@@ -2078,21 +2111,25 @@ msgstr "%1 (Činný)"
 
 #: rbackend/rkwarddevice/rkgraphicsdevice.cpp:267
 msgid "%1 (Inactive)"
-msgstr ""
+msgstr "%1 (Nečinný)"
 
 #: rbackend/rkwarddevice/rkgraphicsdevice.cpp:292
 msgid ""
 "<h2>Locating point(s)</h2><p>Use left mouse button to select point(s). Any "
 "other mouse button to stop.</p>"
 msgstr ""
+"<h2>Hledání bodu</h2><p>Použijte levé tlačítko myši pro výběr bodu/bodů. "
+"Jakékoli jiné tlačítko myši pro zastavení.</p>"
 
 #: rbackend/rkwarddevice/rkgraphicsdevice.cpp:302
 msgid "<p>Press Enter to see next plot, or click 'Cancel' to abort.</p>"
 msgstr ""
+"<p>Stiskněte klávesu Enter, abyste uviděli další nákres, nebo klepněte na "
+"Zrušit pro přerušení.</p>"
 
 #: rbackend/rkwarddevice/rkgraphicsdevice.cpp:305
 msgid "Ok to show next plot?"
-msgstr ""
+msgstr "OK pro ukázání dalšího nákresu?"
 
 #: rbackend/rkwarddevice/rkgraphicsdevice_frontendtransmitter.cpp:77
 msgid ""
@@ -2100,14 +2137,17 @@ msgid ""
 "backend. This means, on-screen graphics using the RKWard device will not "
 "work in this session."
 msgstr ""
+"Při pokusu o připojení znázorňovacího zobrazovacího jádra se vyskytla chyba. "
+"Znamená to, že grafika na obrazovce pomocí zařízení RKWard v tomto sezení "
+"nebude pracovat."
 
 #: rbackend/rkwarddevice/rkgraphicsdevice_frontendtransmitter.cpp:77
 msgid "Expected connection token %1, but read connection token %2"
-msgstr ""
+msgstr "Očekáván symbol pro spojení %1, ale přečten symbol pro spojení %2"
 
 #: rbackend/rkwarddevice/rkgraphicsdevice_frontendtransmitter.cpp:77
 msgid "Error while connection graphics backend"
-msgstr ""
+msgstr "Chyba při připojování znázorňovacího jádra"
 
 #: rkconsole.cpp:75
 msgid ""
@@ -2252,7 +2292,7 @@ msgid ""
 "RKWard\".\n"
 msgstr ""
 "Jsou potřeba přídavné moduly: Spravovat je můžete prostřednictvím "
-"\"Nastavení->Nastavit RKWard\".\n"
+"\"Nastavení → Nastavit RKWard\".\n"
 
 #: rkward.cpp:270
 msgid "No active plugin maps"
@@ -2266,7 +2306,7 @@ msgid ""
 msgstr ""
 "Byly nalezeny nové balíčky s přídavnými moduly pro RKWard (uvedeny v seznamu "
 "níže). Tyto byly automaticky zapnuty. Pro vypnutí vybraných balíčků s "
-"přídavnými moduly, použijte Nastavení->Nastavit RKWard->Přídavné moduly."
+"přídavnými moduly, použijte Nastavení → Nastavit RKWard → Přídavné moduly."
 
 #: rkward.cpp:303
 msgid "New plugins found"
@@ -2279,6 +2319,10 @@ msgid ""
 "version of RKWard, or not meant for direct loading (see the 'Details' for "
 "more information). They have been disabled."
 msgstr ""
+"Následující soubory s přiřazením přídavných modulů RKWard se nepodařilo "
+"nahrát, a byly zakázány. Mohlo by to být tím, že jsou poškozeny, "
+"neslučitelné s touto verzí RKWardu, nebo nejsou určeny k přímému nahrání "
+"(Další informace hledejte v Podrobnosti). Byly zakázány."
 
 #: rkward.cpp:307 rkward.cpp:311
 msgid "Failed to load some plugin maps"
@@ -2291,6 +2335,10 @@ msgid ""
 "with this version of RKWard (see the 'Details' for more information). Other "
 "plugins were loaded, successfully, however."
 msgstr ""
+"Při nahrávání následujících souborů s přiřazením přídavných modulů RKWardu "
+"se vyskytly nějaké chyby. Mohlo by to být tím, že jednotlivé přídavné moduly "
+"jsou poškozeny, neslučitelné s touto verzí RKWardu (Další informace hledejte "
+"v Podrobnosti). Jiné přídavné moduly byly ovšem úspěšně nahrány."
 
 #: rkward.cpp:311
 msgid ""
@@ -2300,7 +2348,7 @@ msgid ""
 msgstr ""
 "Poznámka: Znovu kvůli těmto souborům s mapami přídavných modulů varováni "
 "nebudete, dokud RKWard nezaktualizujete, nebo dokud je neodstraníte a znovu "
-"nepřidáte v Nastavení->Nastavit RKWard->Přídavné moduly."
+"nepřidáte v Nastavení → Nastavit RKWard → Přídavné moduly."
 
 #: rkward.cpp:346
 msgid "Carbon Copy Settings"
@@ -2308,7 +2356,7 @@ msgstr "Nastavení Carbon Copy"
 
 #: rkward.cpp:360 settings/rksettingsmoduleobjectbrowser.cpp:123
 msgid "Workspace"
-msgstr "Pracovní prostředí"
+msgstr "Prostředí"
 
 #: rkward.cpp:369
 msgid "Files"
@@ -2795,7 +2843,7 @@ msgstr "Ukázat nápovědu k RKWardu při spuštění"
 
 #: settings/rksettingsmodulegeneral.cpp:89
 msgid "Initial working directory (*)"
-msgstr ""
+msgstr "Počáteční pracovní adresář (*)"
 
 #: settings/rksettingsmodulegeneral.cpp:93
 msgid "Do not change current directory on startup"
@@ -2895,19 +2943,19 @@ msgstr "Obecné"
 
 #: settings/rksettingsmodulegraphics.cpp:58
 msgid "Default graphics device"
-msgstr ""
+msgstr "Výchozí znázorňovací zařízení"
 
 #: settings/rksettingsmodulegraphics.cpp:61
 msgid "RKWard native device"
-msgstr ""
+msgstr "Původní zařízení RKWardu"
 
 #: settings/rksettingsmodulegraphics.cpp:64
 msgid "Platform default device"
-msgstr ""
+msgstr "Výchozí zařízení systému"
 
 #: settings/rksettingsmodulegraphics.cpp:67
 msgid "Other device:"
-msgstr ""
+msgstr "Jiné zařízení:"
 
 #: settings/rksettingsmodulegraphics.cpp:76
 msgid ""
@@ -2920,22 +2968,29 @@ msgid ""
 "platform.</p><p>You can also specify the name of a function such as "
 "<i>cairoDevice</i>.</p>"
 msgstr ""
+"<p>Výchozí zařízení se používá ke kreslení, to znamená, když je vytvářen "
+"nový nákres, zatímco není činné žádné znázorňovací zařízení (Podívejte se na "
+"<i>options(\"device\")</i>).</p><p>Původní zařízení RKWard je doporučovanou "
+"volbou pro většinu uživatelů. Odpovídá příkazu R <i>RK()</i>.</p><p>Výchozí "
+"zařízení systému odpovídá jednomu z <i>X11()</i>, <i>windows()</i>, nebo "
+"<i>quartz()</i>, v závislosti na systému.</p><p>Také můžete zadat název "
+"funkce, například <i>cairoDevice</i>.</p>"
 
 #: settings/rksettingsmodulegraphics.cpp:84
 msgid "Integration of R standard devices"
-msgstr ""
+msgstr "Začlenění běžných zařízení R"
 
 #: settings/rksettingsmodulegraphics.cpp:87
 msgid "Replace with RKWard device"
-msgstr ""
+msgstr "Nahradit zařízením RKWardu"
 
 #: settings/rksettingsmodulegraphics.cpp:90
 msgid "Embed original device"
-msgstr ""
+msgstr "Vložit původní zařízení"
 
 #: settings/rksettingsmodulegraphics.cpp:96
 msgid "No device integration"
-msgstr ""
+msgstr "Žádné začleňování zařízení"
 
 #: settings/rksettingsmodulegraphics.cpp:101
 msgid ""
@@ -2954,10 +3009,24 @@ msgid ""
 "not defined (e.g. <i>Windows()</i> on Mac OS X) will always fall back to the "
 "<i>RK()</i> device.</p>"
 msgstr ""
+"<p>Mnoho skriptů používá volání běžných zařízení vlastních systému "
+"(<i>X11()</i>, <i>windows()</i>, <i>quartz()</i>), ačkoli se tu dají použít "
+"všechna zobrazovací zařízení. RKWard poskytuje pro tyto funkce běžných "
+"zařízení přetížení, která mohou při užití v uživatelově kódu změnit jejich "
+"chování:</p><ul><li>Volání mohou být přesměrována do původního zařízení "
+"RKWardu (<i>RK()</i>). Některé, ale ne všechny argumenty funkce budou "
+"porovnány, jiné se budou přehlížet.</li><li>Lze použít původních zařízení "
+"vlastních systému, budou ale vložena do oken RKWardu. Tato volba není "
+"dostupná na MacOS X.</li><li>Původní zařízení vlastní systému lze použít "
+"nezměněna, bez přidání funkcí vlastních RKWardu.</li></ul><p>Bez ohledu na "
+"toto nastavení jsou původní zařízení vždy přístupná jako "
+"<i>grDevices::X11()</i>, atd.</p><p>použití zařízení v systému, v němž není "
+"vymezeno (např. <i>Windows()</i> na Mac OS X) vždy povede k ustoupení k "
+"zařízení <i>RK()</i>.</p>"
 
 #: settings/rksettingsmodulegraphics.cpp:113
 msgid "Default window size (for RK(), or embedded device windows)"
-msgstr ""
+msgstr "Výchozí velikost okna (pro RK(), nebo okna vloženého zařízení)"
 
 #: settings/rksettingsmodulegraphics.cpp:115
 msgid "Default width (inches):"
@@ -3318,6 +3387,11 @@ msgid ""
 "compatibility. On Mac OS X and Linux, building packages from source is "
 "currently recommended."
 msgstr ""
+"Instalace balíčko z předsestavených spustitelných souborů (jsou-li dostupné) "
+"je obecně rychlejší, a nevyžaduje instalaci vývojářských nástrojů a "
+"knihoven. Na druhou stranu poskytuje vytvoření balíčků ze zdrojových souborů "
+"lepší slučitelnost. Na Mac OS X a Linuxu se doporučuje sestavování balíčků "
+"ze zdrojových souborů."
 
 #: settings/rksettingsmoduler.cpp:386
 msgid "R Library locations (where libraries get installed to, locally)"
@@ -3570,6 +3644,11 @@ msgid ""
 "cleared everytime you close the window.</p><p>Type and severity level of "
 "messages can be controlled from Settings->Configure RKWard->Debug</p>"
 msgstr ""
+"<p>Toto okno se používá na zobrazení zpráv o ladění vztahujících se k "
+"RKWardu. Je cíleno hlavně na vývojáře (přídavných modulů). <b>Nenabízí</b> "
+"žádné funkce pro ladění kódu R.</p><p>Všimněte si, že seznam zpráv je "
+"vymazán pokaždé, když okno zavřete.</p><p>Typ a stupeň vážnosti zpráv lze "
+"řídit v Nastavení → Nastavit RKWard → Ladění</p>"
 
 #: windows/rkdebugmessagewindow.cpp:79
 msgid "About this window"
@@ -3635,7 +3714,7 @@ msgid ""
 msgstr ""
 "Pro '%1' nenalezena žádná nápověda. Možná není odpovídající balíček "
 "nainstalován/nahrán, nebo jste udělal překlep při psaní příkazu. Vyzkoušejte "
-"Nápověda -> Hledat nápovědu k R kvůli více podrobnostem."
+"Nápověda → Hledat nápovědu k R kvůli více podrobnostem."
 
 #: windows/rkhelpsearchwindow.cpp:258
 msgid "No help found"
@@ -3892,6 +3971,9 @@ msgid ""
 "this is not currently supported in this build of RKWard on Mac OS X. See "
 "http://p.sf.net/rkward/mac for more information."
 msgstr ""
+"Vytvořil jste se o vložení nového okna znázorňovacího zařízení R do RKWardu. "
+"Toto však v nynějším sestavení RKWardu na Mac OS X podporováno není. Další "
+"informace hledejte na http://p.sf.net/rkward/mac."
 
 #: windows/rkwindowcatcher.cpp:71 windows/rkwindowcatcher.cpp:73
 msgid "Could not embed R X11 window"
@@ -3905,6 +3987,11 @@ msgid ""
 "Alternatively, you may want to adjust Settings->Configure RKWard->Onscreen "
 "Graphics."
 msgstr ""
+"Pokusil jste se o vložení nového okna s grafickým zařízením R do RKWard. "
+"Nicméně buď nebylo vytvořeno žádné okno, nebo se RKWardu nepodařilo nové "
+"okno zjistit. Pokud zastáváte názor, že by to měl RKWard udělat lépe, zvažte "
+"ohlášení teto věci jako chyby. Popřípadě upravte Nastavení → Nastavit RKWard "
+"→ Znázornění na obrazovce."
 
 #: windows/rkwindowcatcher.cpp:206
 msgid "An error occurred"
@@ -3944,20 +4031,26 @@ msgid ""
 "close the graphics device immediately, in case it is stuck. However, the "
 "last plot may be missing from the plot history, if you do this.</p>"
 msgstr ""
+"<p>Znázorňovací zařízení je zavřeno. Poslední nákres se ukládá do historie "
+"nákresů. Může to chvíli trvat, pokud je jádro R stále ještě zaměstnáno. "
+"Můžete znázorňovací zařízení zavřít okamžitě, v případě že se zaseklo. "
+"Poslední nákres ovšem může pokud to učiníte, v historii nákresů chybět.</p>"
 
 #: windows/rkwindowcatcher.cpp:309
 msgid ""
 "<p>Note: On X11, the embedded window may be expurged, and you will have to "
 "close it manually in this case.</p>"
 msgstr ""
+"<p>Poznámka: Na X11 může být vložené okno odstraněno, a v tom případě je "
+"musíte zavřít ručně.</p>"
 
 #: windows/rkwindowcatcher.cpp:311
 msgid "Close immediately"
-msgstr ""
+msgstr "Zavřít okamžitě"
 
 #: windows/rkwindowcatcher.cpp:311
 msgid "Keep waiting"
-msgstr ""
+msgstr "Pokračovat v čekání"
 
 #: windows/rkwindowcatcher.cpp:420
 msgid "Specify fixed size"
@@ -3973,15 +4066,15 @@ msgstr "Výška"
 
 #: windows/rkwindowcatcher.cpp:448
 msgid "Activate graphics device number %1"
-msgstr "Spustit grafické zařízení číslo %1"
+msgstr "Spustit znázorňovací zařízení číslo %1"
 
 #: windows/rkwindowcatcher.cpp:454
 msgid "Copy contents of graphics device number %1 to output"
-msgstr "Kopírovat obsah grafického zařízení číslo %1 do výstupu"
+msgstr "Kopírovat obsah znázorňovacího zařízení číslo %1 do výstupu"
 
 #: windows/rkwindowcatcher.cpp:462
 msgid "Print contents of graphics device number %1"
-msgstr "Tisknout obsah grafického zařízení číslo %1"
+msgstr "Tisknout obsah znázorňovacího zařízení číslo %1"
 
 #: windows/rkwindowcatcher.cpp:471
 msgid "Specify R object"
@@ -3993,11 +4086,11 @@ msgstr "Zadejte název pro předmět R, do kterého se mají ukládat znázorně
 
 #: windows/rkwindowcatcher.cpp:488
 msgid "Save contents of graphics device number %1 to object '%2'"
-msgstr "Uložit obsah grafického zařízení číslo %1 do předmětu '%2'"
+msgstr "Uložit obsah znázorňovacího zařízení číslo %1 do předmětu '%2'"
 
 #: windows/rkwindowcatcher.cpp:497
 msgid "Duplicate graphics device number %1"
-msgstr "Zdvojit grafické zařízení číslo %1"
+msgstr "Zdvojit znázorňovací zařízení číslo %1"
 
 #: windows/rkwindowcatcher.cpp:503
 msgid "Load next plot in device number %1"
@@ -4127,7 +4220,7 @@ msgstr "Zdvojit"
 
 #: windows/rkwindowcatcher.cpp:706
 msgid "Stop interaction"
-msgstr ""
+msgstr "Zastavit výměnu informací"
 
 #: windows/rkworkplace.cpp:273
 msgid ""
@@ -4298,7 +4391,7 @@ msgstr "Ukázat skryté předměty"
 #: rc.cpp:3 rc.cpp:9 rc.cpp:33 rc.cpp:63 rc.cpp:96 rc.cpp:111 rc.cpp:120
 #: rc.cpp:126
 msgid "&Edit"
-msgstr "&Úpravy"
+msgstr "Úp&ravy"
 
 #. i18n: file: rkconsolepart.rc:4
 #. i18n: ectx: Menu (file)
@@ -4364,7 +4457,7 @@ msgstr "&Vyvést"
 #. i18n: ectx: Menu (workspace)
 #: rc.cpp:30
 msgid "&Workspace"
-msgstr "&Pracovní prostředí"
+msgstr "Pros&tředí"
 
 #. i18n: file: rkwardui.rc:64
 #. i18n: ectx: Menu (window)
@@ -4404,13 +4497,13 @@ msgstr "&Nastavení"
 #. i18n: ectx: Menu (help)
 #: rc.cpp:51 rc.cpp:84 rc.cpp:141
 msgid "&Help"
-msgstr "&Nápověda"
+msgstr "Nápověd&a"
 
 #. i18n: file: rkwardui.rc:97
 #. i18n: ectx: ToolBar (mdiToolBar)
 #: rc.cpp:54
 msgid "Window specific actions bar"
-msgstr ""
+msgstr "Pruh činností pro okno"
 
 #. i18n: file: windows/detachedwindowcontainer.rc:8
 #. i18n: ectx: Menu (device)

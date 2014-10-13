@@ -8,15 +8,15 @@ msgstr ""
 "Report-Msgid-Bugs-To: "
 "http://sourceforge.net/tracker/?group_id=50231&atid=459007\n"
 "POT-Creation-Date: 2014-09-28 19:06+0200\n"
-"PO-Revision-Date: 2013-04-18 02:39+0000\n"
-"Last-Translator: yurchor <Unknown>\n"
+"PO-Revision-Date: 2014-09-29 19:19+0000\n"
+"Last-Translator: Yuri Chornoivan <yurchor@gmail.com>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Launchpad-Export-Date: 2014-09-29 04:56+0000\n"
+"X-Launchpad-Export-Date: 2014-09-30 06:39+0000\n"
 "X-Generator: Launchpad (build 17196)\n"
 "Language: uk\n"
 
@@ -470,11 +470,11 @@ msgstr "Вставлення вмісту буфера…"
 
 #: dialogs/rkerrordialog.cpp:44
 msgid "Report As Bug"
-msgstr ""
+msgstr "Повідомити як ваду"
 
 #: dialogs/rkerrordialog.cpp:54
 msgid "Message code: %1\n"
-msgstr ""
+msgstr "Код повідомлення: %1\n"
 
 #: dialogs/rkerrordialog.cpp:63
 msgid "---Problem description---\n"
@@ -497,6 +497,10 @@ msgid ""
 "###Please fill in (if applicable)###\n"
 "\n"
 msgstr ""
+"I encountered the error message quoted below. Additionally, I saw the "
+"following symptoms:\n"
+"###Будь ласка. додайте відповідні симптоми (якщо такі є)###\n"
+"\n"
 
 #: dialogs/rkerrordialog.cpp:69
 msgid ""
@@ -555,6 +559,14 @@ msgid ""
 "###Please fill in###\n"
 "\n"
 msgstr ""
+"RKWard is available in many different packagings, and sometimes problems are "
+"specific to one method of installation. How did you install RKWard (which "
+"file(s) did you download)?\n"
+"RKWard може працювати на багатьох платформах на основі різних способів "
+"встановлення. Іноді проблеми пов’язано із способом встановлення програми. У "
+"який спосіб ви встановили RKWard (за допомогою яких файлів ви це зробили)?\n"
+"###Будь ласка, вкажіть потрібні дані###\n"
+"\n"
 
 #: dialogs/rkerrordialog.cpp:85
 msgid ""
@@ -1068,12 +1080,16 @@ msgid ""
 "Debugger for the backend. (Enclose any debugger arguments in single quotes "
 "('') together with the command. Make sure to re-direct stdout!)"
 msgstr ""
+"Зневадник для модуля. (Усі аргументи зневадника слід брати у одинарні лапки "
+"('') разом із командою. Не забудьте переспрямувати stdout!)"
 
 #: main.cpp:124
 msgid ""
 "Use specified R installation, instead of the one configured at compile time "
 "(note: rkward R library must be installed to that installation of R)"
 msgstr ""
+"Скористайтеся вказаним варіантом R замість налаштованого під час збирання "
+"(зауважте, що для цієї версії R має бути встановлено бібліотеку R rkward)"
 
 #: main.cpp:125
 msgid "R workspace file to open"
@@ -1417,13 +1433,15 @@ msgstr "Копіювати рядки до виведення"
 
 #: misc/rkstandardactions.cpp:53
 msgid "Run line / selection"
-msgstr ""
+msgstr "Виконати рядок або позначений фрагмент"
 
 #: misc/rkstandardactions.cpp:54
 msgid ""
 "Runs the current selection (if any) or the current line (if there is no "
 "selection)"
 msgstr ""
+"Виконує поточний позначений фрагмент (якщо щось позначено) або поточний "
+"рядок (якщо нічого не позначено)"
 
 #: misc/rkstandardactions.cpp:57
 msgid "Run selection"
@@ -1883,7 +1901,7 @@ msgstr "Працює"
 
 #: rbackend/rcommandstack.cpp:278
 msgid "Canceled"
-msgstr ""
+msgstr "Скасовано"
 
 #: rbackend/rcommandstack.cpp:287
 msgid "Command Chain"
@@ -1989,6 +2007,13 @@ msgid ""
 "can do, however, is save any open command-files, the output, or copy data "
 "out of open data editors. Quit RKWard after that. Sorry!"
 msgstr ""
+"\n"
+"Роботу модуля R буде негайно припинено. Це означає, що ви більше не зможете "
+"скористатися функціями, робота яких залежить від модуля. Інакше кажучи, ви "
+"навряд чи зможете виконати будь-які дії, навіть зберегти робочий простір "
+"(втім, якщо вам поталанило, R уже виконав цю дію).Втім, ви можете зберегти "
+"всі відкриті командні файли, виведені дані або скопіювати дані з відкритих "
+"вікон редагування даних. Після збереження даних вийдіть з RKWard. Вибачте!"
 
 #: rbackend/rinterface.cpp:852
 msgid "R engine has died"
@@ -1999,10 +2024,13 @@ msgid ""
 "The backend executable could not be found. This is likely to be a problem "
 "with your installation."
 msgstr ""
+"Не вдалося знайти виконуваний файл модуля. Ймовірно, це пов’язано із "
+"проблемами зі встановленими компонентами."
 
 #: rbackend/rkfrontendtransmitter.cpp:110
 msgid "The backend executable could not be started. Error message was: %1"
 msgstr ""
+"Не вдалося запустити виконуваний файл модуля. Повідомлення щодо помилки: %1"
 
 #: rbackend/rkfrontendtransmitter.cpp:141
 msgid ""
@@ -2026,14 +2054,16 @@ msgstr ""
 msgid ""
 "The backend process could not be started. Please check your installation."
 msgstr ""
+"Не вдалося запустити процес модуля. Будь ласка, перевірте, чи встановлено "
+"усе належним чином."
 
 #: rbackend/rkfrontendtransmitter.cpp:179
 msgid "The backend process failed to start with exit code %1."
-msgstr ""
+msgstr "Не вдалося запустити процес модуля. Код виходу %1."
 
 #: rbackend/rkfrontendtransmitter.cpp:180
 msgid "Backend process has exited with code %1."
-msgstr ""
+msgstr "Процес модуля завершив роботу з кодом %1."
 
 #: rbackend/rkrbackend.cpp:525
 msgid "The R engine has shut down with status: %1"
@@ -2094,7 +2124,7 @@ msgstr ""
 
 #: rbackend/rkwarddevice/rkgraphicsdevice.cpp:111
 msgid "Graphics Device Number %1"
-msgstr ""
+msgstr "Графічний пристрій з номером %1"
 
 #: rbackend/rkwarddevice/rkgraphicsdevice.cpp:266
 #: windows/rkcommandeditorwindow.cpp:817
@@ -2103,21 +2133,25 @@ msgstr "%1 (активний)"
 
 #: rbackend/rkwarddevice/rkgraphicsdevice.cpp:267
 msgid "%1 (Inactive)"
-msgstr ""
+msgstr "%1 (неактивний)"
 
 #: rbackend/rkwarddevice/rkgraphicsdevice.cpp:292
 msgid ""
 "<h2>Locating point(s)</h2><p>Use left mouse button to select point(s). Any "
 "other mouse button to stop.</p>"
 msgstr ""
+"<h2>Визначення розташування точок</h2><p>Скористайтеся лівою кнопкою миші "
+"для вибору точок. Вибір можна зупинити клацанням будь-якою іншою кнопкою.</p>"
 
 #: rbackend/rkwarddevice/rkgraphicsdevice.cpp:302
 msgid "<p>Press Enter to see next plot, or click 'Cancel' to abort.</p>"
 msgstr ""
+"<p>Натисніть Enter, щоб переглянути наступне креслення, або натисніть "
+"«Скасувати», щоб перервати показ.</p>"
 
 #: rbackend/rkwarddevice/rkgraphicsdevice.cpp:305
 msgid "Ok to show next plot?"
-msgstr ""
+msgstr "Показати наступне креслення?"
 
 #: rbackend/rkwarddevice/rkgraphicsdevice_frontendtransmitter.cpp:77
 msgid ""
@@ -2125,14 +2159,17 @@ msgid ""
 "backend. This means, on-screen graphics using the RKWard device will not "
 "work in this session."
 msgstr ""
+"Під час спроби з’єднатися з модулем показу графіки на екрані сталася "
+"помилка. Це означає, що екранна графіка, пов’язана із використанням цього "
+"пристрою RKWard, буде недоступною під час цього сеансу."
 
 #: rbackend/rkwarddevice/rkgraphicsdevice_frontendtransmitter.cpp:77
 msgid "Expected connection token %1, but read connection token %2"
-msgstr ""
+msgstr "Очікувався ключ з’єднання %1, втім, прочитано ключ з’єднання %2"
 
 #: rbackend/rkwarddevice/rkgraphicsdevice_frontendtransmitter.cpp:77
 msgid "Error while connection graphics backend"
-msgstr ""
+msgstr "Помилка під час спроби з’єднатисяіз модулем обробки графіки"
 
 #: rkconsole.cpp:75
 msgid ""
@@ -2835,7 +2872,7 @@ msgstr "Показувати довідку з RKWard після запуску"
 
 #: settings/rksettingsmodulegeneral.cpp:89
 msgid "Initial working directory (*)"
-msgstr ""
+msgstr "Початковий робочий каталог (*)"
 
 #: settings/rksettingsmodulegeneral.cpp:93
 msgid "Do not change current directory on startup"
@@ -2937,19 +2974,19 @@ msgstr "Загальне"
 
 #: settings/rksettingsmodulegraphics.cpp:58
 msgid "Default graphics device"
-msgstr ""
+msgstr "Типовий графічний пристрій"
 
 #: settings/rksettingsmodulegraphics.cpp:61
 msgid "RKWard native device"
-msgstr ""
+msgstr "Власний пристрій RKWard"
 
 #: settings/rksettingsmodulegraphics.cpp:64
 msgid "Platform default device"
-msgstr ""
+msgstr "Типовий пристрій платформи"
 
 #: settings/rksettingsmodulegraphics.cpp:67
 msgid "Other device:"
-msgstr ""
+msgstr "Інший пристрій:"
 
 #: settings/rksettingsmodulegraphics.cpp:76
 msgid ""
@@ -2962,22 +2999,30 @@ msgid ""
 "platform.</p><p>You can also specify the name of a function such as "
 "<i>cairoDevice</i>.</p>"
 msgstr ""
+"<p>Типовий пристрій для креслення графіків, тобто пристрій, який буде "
+"використано для створення нового креслення, якщо немає активного графічного "
+"пристрою (див. <i>options(\"device\")</i>).</p><p>Рекомендованим є власний "
+"пристрій RKWard. Цей пристрій визначається за допомогою команди R "
+"<i>RK()</i>.</p><p>«Типовий для платформи пристрій» визначає один із "
+"пристроїв, <i>X11()</i>, <i>windows()</i> або <i>quartz()</i>, залежно від "
+"платформи.</p><p>Ви також можете вказати назву функції, наприклад "
+"<i>cairoDevice</i>.</p>"
 
 #: settings/rksettingsmodulegraphics.cpp:84
 msgid "Integration of R standard devices"
-msgstr ""
+msgstr "Інтеграція стандартних пристроїв R"
 
 #: settings/rksettingsmodulegraphics.cpp:87
 msgid "Replace with RKWard device"
-msgstr ""
+msgstr "Замінити пристроєм RKWard"
 
 #: settings/rksettingsmodulegraphics.cpp:90
 msgid "Embed original device"
-msgstr ""
+msgstr "Вбудувати оригінальний пристрій"
 
 #: settings/rksettingsmodulegraphics.cpp:96
 msgid "No device integration"
-msgstr ""
+msgstr "Немає інтеграці із пристроєм"
 
 #: settings/rksettingsmodulegraphics.cpp:101
 msgid ""
@@ -2996,10 +3041,28 @@ msgid ""
 "not defined (e.g. <i>Windows()</i> on Mac OS X) will always fall back to the "
 "<i>RK()</i> device.</p>"
 msgstr ""
+"<p>У багатьох скриптах використовуються виклики специфічних для платформи "
+"стандартних пристроїв (<i>X11()</i>, <i>windows()</i>, <i>quartz()</i>), "
+"хоча у цих місцях можна використовувати будь-які екранні пристрої. У RKWard "
+"передбачено перевизначення таких стандартних функцій для пристроїв, яке може "
+"призвести до зміни у поведінці функцій під час використання у коді "
+"користувача:</p><ul><li>Виклики може бути переспрямовано до власного "
+"пристрою RKWard (<i>RK()</i>). Для деяких, але не для усіх, аргументів "
+"функцій може бути встановлено відповідність, інші ж буде "
+"проігноровано.</li><li>Можна скористатися оригінальними специфічними "
+"пристроями, вбудованими до вікон RKWard. Цим варіантом не можна скористатися "
+"у MacOS X.</li><li>Оригінальні специфічні для платформи пристрої можна "
+"використовувати без змін і без додавання специфічних для RKWard "
+"можливостей.</li></ul><p>Незалежно від значення цього параметра, доступ до "
+"оригінальних пристроїв завжди можна здійснювати за допомогою функцій, "
+"подібних до <i>grDevices::X11()</i>.</p><p>Використання пристрою на "
+"платформі, де пристрій не визначено (наприклад <i>Windows()</i> у Mac OS X), "
+"завжди призводитиме до використання пристрою, що визначається "
+"<i>RK()</i>.</p>"
 
 #: settings/rksettingsmodulegraphics.cpp:113
 msgid "Default window size (for RK(), or embedded device windows)"
-msgstr ""
+msgstr "Типовий розмір вікна (для RK() або вікон вбудованого пристрою)"
 
 #: settings/rksettingsmodulegraphics.cpp:115
 msgid "Default width (inches):"
@@ -3625,6 +3688,13 @@ msgid ""
 "cleared everytime you close the window.</p><p>Type and severity level of "
 "messages can be controlled from Settings->Configure RKWard->Debug</p>"
 msgstr ""
+"<p>Це вікно призначено для показу пов’язаних із RKWard діагностичних "
+"повідомлень. В основному, його призначено для розробників (зокрема "
+"додатків). У ньому <b>не передбачено</b> жодних можливостей для діагностики "
+"коду R.</p><p>Зауважте, що список повідомлень спорожнятиметься кожного разу, "
+"коли ви закриватимете вікно.</p><p>Типом і рівнем критичності повідомлень "
+"можна керувати за допомогою вікна, яке відкривається пунктом меню «Параметри "
+"-> Налаштувати RKWard -> Діагностика»</p>"
 
 #: windows/rkdebugmessagewindow.cpp:79
 msgid "About this window"
@@ -3949,6 +4019,9 @@ msgid ""
 "this is not currently supported in this build of RKWard on Mac OS X. See "
 "http://p.sf.net/rkward/mac for more information."
 msgstr ""
+"Ви намагалися вбудувати до RKWard нове вікно графічного пристрою R. Втім, у "
+"цій збірці RKWard для Mac OS X підтримки цієї можливості не передбачено. Щоб "
+"дізнатися більше, ознайомтеся із вмістом сторінки http://p.sf.net/rkward/mac"
 
 #: windows/rkwindowcatcher.cpp:71 windows/rkwindowcatcher.cpp:73
 msgid "Could not embed R X11 window"
@@ -3962,6 +4035,11 @@ msgid ""
 "Alternatively, you may want to adjust Settings->Configure RKWard->Onscreen "
 "Graphics."
 msgstr ""
+"Ви намагалися вбудувати до RKWard нове вікно графічного пристрою R. Втім, "
+"або не було створено жодного вікна, або RKWard не вдалося виявити нове "
+"вікно. Якщо ви вважаєте, що RKWard міг би зробити це краще, повідомте про "
+"ваду розробникам. Крім того, ви можете скоригувати значення параметра у "
+"вікні «Параметри -> Налаштувати RKWard -> Екранна графіка»."
 
 #: windows/rkwindowcatcher.cpp:206
 msgid "An error occurred"
@@ -4192,7 +4270,7 @@ msgstr "Здублювати"
 
 #: windows/rkwindowcatcher.cpp:706
 msgid "Stop interaction"
-msgstr ""
+msgstr "Припинити взаємодію"
 
 #: windows/rkworkplace.cpp:273
 msgid ""
@@ -4476,7 +4554,7 @@ msgstr "&Довідка"
 #. i18n: ectx: ToolBar (mdiToolBar)
 #: rc.cpp:54
 msgid "Window specific actions bar"
-msgstr ""
+msgstr "Специфічна для вікна панель дій"
 
 #. i18n: file: windows/detachedwindowcontainer.rc:8
 #. i18n: ectx: Menu (device)

@@ -15,14 +15,14 @@ msgstr ""
 "Report-Msgid-Bugs-To: "
 "http://sourceforge.net/tracker/?group_id=50231&atid=459007\n"
 "POT-Creation-Date: 2014-09-28 19:06+0200\n"
-"PO-Revision-Date: 2013-03-18 18:20+0000\n"
+"PO-Revision-Date: 2014-10-12 17:48+0000\n"
 "Last-Translator: Thomas Friedrichsmeier <Unknown>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2014-09-29 04:56+0000\n"
+"X-Launchpad-Export-Date: 2014-10-13 05:53+0000\n"
 "X-Generator: Launchpad (build 17196)\n"
 "Language: de\n"
 
@@ -482,11 +482,11 @@ msgstr "Zwischenablageinhalt einfügen..."
 
 #: dialogs/rkerrordialog.cpp:44
 msgid "Report As Bug"
-msgstr ""
+msgstr "Fehlerbericht erstellen"
 
 #: dialogs/rkerrordialog.cpp:54
 msgid "Message code: %1\n"
-msgstr ""
+msgstr "Fehler-Code: %1\n"
 
 #: dialogs/rkerrordialog.cpp:63
 msgid "---Problem description---\n"
@@ -509,6 +509,10 @@ msgid ""
 "###Please fill in (if applicable)###\n"
 "\n"
 msgstr ""
+"Mir wurde die unten stehende Fehlermeldung angezeigt. Zusätzlich habe ich "
+"die folgenden Symptome beobachtet:\n"
+"### Bitte ausfüllen (sofern relevant) ###\n"
+"\n"
 
 #: dialogs/rkerrordialog.cpp:69
 msgid ""
@@ -566,6 +570,10 @@ msgid ""
 "###Please fill in###\n"
 "\n"
 msgstr ""
+"RKWard ist in vielen verschiedenen Paketen erhältlich und manchmal sind "
+"Probleme spezifisch für eine Art der Installation. Wie haben Sie RKWard "
+"installiert (welche Datei(en) haben Sie heruntergeladen)?\n"
+"\n"
 
 #: dialogs/rkerrordialog.cpp:85
 msgid ""
@@ -1079,12 +1087,18 @@ msgid ""
 "Debugger for the backend. (Enclose any debugger arguments in single quotes "
 "('') together with the command. Make sure to re-direct stdout!)"
 msgstr ""
+"Debugger für das Backend. (Argumente für den debugger können in einfachen "
+"Anführungszeichen ('') mit dem Kommando angegeben werden. Stellen Sie "
+"sicher, dass stdout umgeleitet wird!)"
 
 #: main.cpp:124
 msgid ""
 "Use specified R installation, instead of the one configured at compile time "
 "(note: rkward R library must be installed to that installation of R)"
 msgstr ""
+"Benute die angegebene Installation von R, statt der bei der Kompilierung "
+"festgelegten (Hinweis: Die RKWard R \"library\" muss in dieser Installation "
+"von R installiert sein)"
 
 #: main.cpp:125
 msgid "R workspace file to open"
@@ -1428,13 +1442,15 @@ msgstr "Kopiere Zeilen zur Ausgabe"
 
 #: misc/rkstandardactions.cpp:53
 msgid "Run line / selection"
-msgstr ""
+msgstr "Führe Zeile / Auswahl aus"
 
 #: misc/rkstandardactions.cpp:54
 msgid ""
 "Runs the current selection (if any) or the current line (if there is no "
 "selection)"
 msgstr ""
+"Führt die aktuelle Auswahl aus (falls vorhanden) oder die aktuelle Zeile "
+"(falls nichts ausgewählt ist)"
 
 #: misc/rkstandardactions.cpp:57
 msgid "Run selection"
@@ -1898,7 +1914,7 @@ msgstr "Läuft"
 
 #: rbackend/rcommandstack.cpp:278
 msgid "Canceled"
-msgstr ""
+msgstr "Storniert"
 
 #: rbackend/rcommandstack.cpp:287
 msgid "Command Chain"
@@ -2004,6 +2020,14 @@ msgid ""
 "can do, however, is save any open command-files, the output, or copy data "
 "out of open data editors. Quit RKWard after that. Sorry!"
 msgstr ""
+"\n"
+"Das R-Backend wird unmittelbar abgeschaltet. Das bedeutet, dass Sie keine "
+"Funktoinen mehr nutzen können, die es voraussetzen. D.h. Sie können fast "
+"nichts tun, auch nicht den Workspace speichern (mit etwas Glück hat R das "
+"allerdings bereits getan). Was Sie allerdings tun können, ist geöffnete "
+"Skript-Dateien oder Ausageben zu speichern, oder Daten aus bereits "
+"geöffneten Daten-Editoren herauskopieren. Schließen Sie RKWard anschließend. "
+"Sorry!"
 
 #: rbackend/rinterface.cpp:852
 msgid "R engine has died"
@@ -2014,10 +2038,13 @@ msgid ""
 "The backend executable could not be found. This is likely to be a problem "
 "with your installation."
 msgstr ""
+"Die Backend-Anwendungsdatei konnte nicht gefunden werden. Das liegt "
+"wahrscheinlich an einem Fehler in Ihrer Installation."
 
 #: rbackend/rkfrontendtransmitter.cpp:110
 msgid "The backend executable could not be started. Error message was: %1"
 msgstr ""
+"Das Backend-Programm konnte nicht gestartet werden. Die Fehlermeldung war: %1"
 
 #: rbackend/rkfrontendtransmitter.cpp:141
 msgid ""
@@ -2041,14 +2068,16 @@ msgstr ""
 msgid ""
 "The backend process could not be started. Please check your installation."
 msgstr ""
+"Der Backend-Prozess konnte nicht gestartet werden. Bitte überprüfen Sie Ihre "
+"Installation."
 
 #: rbackend/rkfrontendtransmitter.cpp:179
 msgid "The backend process failed to start with exit code %1."
-msgstr ""
+msgstr "Der Backend-Prozess konnte nicht gestartet werden (exit code: %1)."
 
 #: rbackend/rkfrontendtransmitter.cpp:180
 msgid "Backend process has exited with code %1."
-msgstr ""
+msgstr "Der Backend-Prozess hat sich mit exit-code %1 beendet."
 
 #: rbackend/rkrbackend.cpp:525
 msgid "The R engine has shut down with status: %1"
@@ -2110,7 +2139,7 @@ msgstr ""
 
 #: rbackend/rkwarddevice/rkgraphicsdevice.cpp:111
 msgid "Graphics Device Number %1"
-msgstr ""
+msgstr "Grafikgerät Nummer %1"
 
 #: rbackend/rkwarddevice/rkgraphicsdevice.cpp:266
 #: windows/rkcommandeditorwindow.cpp:817
@@ -2119,21 +2148,25 @@ msgstr "%1 (Aktiv)"
 
 #: rbackend/rkwarddevice/rkgraphicsdevice.cpp:267
 msgid "%1 (Inactive)"
-msgstr ""
+msgstr "%1 (inaktiv)"
 
 #: rbackend/rkwarddevice/rkgraphicsdevice.cpp:292
 msgid ""
 "<h2>Locating point(s)</h2><p>Use left mouse button to select point(s). Any "
 "other mouse button to stop.</p>"
 msgstr ""
+"<h2>Punkte festlegen</h2><p>Benutzen Sie die linke Maustaste, um Punkt(e) "
+"auszuwählen. Eine andere Maustaste zum Stoppen.</p>"
 
 #: rbackend/rkwarddevice/rkgraphicsdevice.cpp:302
 msgid "<p>Press Enter to see next plot, or click 'Cancel' to abort.</p>"
 msgstr ""
+"<p>Drücken Sie die Eingabetaste, um die nächste Grafik zu sehen, oder "
+"'Abbrechen' um abzubrechen.</p>"
 
 #: rbackend/rkwarddevice/rkgraphicsdevice.cpp:305
 msgid "Ok to show next plot?"
-msgstr ""
+msgstr "Nächste Grafik anzeigen?"
 
 #: rbackend/rkwarddevice/rkgraphicsdevice_frontendtransmitter.cpp:77
 msgid ""
@@ -2141,14 +2174,18 @@ msgid ""
 "backend. This means, on-screen graphics using the RKWard device will not "
 "work in this session."
 msgstr ""
+"Bei dem Versuch, das Backend für Bildschirm-Grafiken zu verbinden, ist ein "
+"Fehler aufgetreten. Das bedeutet, dass Bildschirm Grafiken mit dem RKWard-"
+"Gerät in dieser Sitzung nicht funktionieren werden."
 
 #: rbackend/rkwarddevice/rkgraphicsdevice_frontendtransmitter.cpp:77
 msgid "Expected connection token %1, but read connection token %2"
 msgstr ""
+"Verbindungs-Token %1 wurde erwartet, aber Verbindungs-Token %2 wurde gelesen"
 
 #: rbackend/rkwarddevice/rkgraphicsdevice_frontendtransmitter.cpp:77
 msgid "Error while connection graphics backend"
-msgstr ""
+msgstr "Fehler bei der Verbindung mit dem Bildschrim-Grafik-Backend"
 
 #: rkconsole.cpp:75
 msgid ""
@@ -2850,7 +2887,7 @@ msgstr "Zeige RKWard-Hilfe beim Start"
 
 #: settings/rksettingsmodulegeneral.cpp:89
 msgid "Initial working directory (*)"
-msgstr ""
+msgstr "Initiales Arbeitsverzeichnis (*)"
 
 #: settings/rksettingsmodulegeneral.cpp:93
 msgid "Do not change current directory on startup"
@@ -2951,19 +2988,19 @@ msgstr "Allgemein"
 
 #: settings/rksettingsmodulegraphics.cpp:58
 msgid "Default graphics device"
-msgstr ""
+msgstr "Standard Grafik-Gerät"
 
 #: settings/rksettingsmodulegraphics.cpp:61
 msgid "RKWard native device"
-msgstr ""
+msgstr "RKWard-eigenes Gerät"
 
 #: settings/rksettingsmodulegraphics.cpp:64
 msgid "Platform default device"
-msgstr ""
+msgstr "Standard-Gerät der Plattform"
 
 #: settings/rksettingsmodulegraphics.cpp:67
 msgid "Other device:"
-msgstr ""
+msgstr "Anderes Gerät:"
 
 #: settings/rksettingsmodulegraphics.cpp:76
 msgid ""
@@ -2976,22 +3013,30 @@ msgid ""
 "platform.</p><p>You can also specify the name of a function such as "
 "<i>cairoDevice</i>.</p>"
 msgstr ""
+"<p>Das Standard-Gerät, das für Grafiken benutzt werden soll, d.h. dann, wenn "
+"eine neue Graifk erstellt wird, während kein Grafik-Gerät aktiv ist (siehe "
+"<i>options(\"device\")</i>).</p><p>Für die meisten Nutzer wird empfohlen, "
+"das RKWard-native Gerät zu nutzen. Dies entspricht dem R-Befehl "
+"<i>RK()</i>.</p><p>Das 'Standard-Gerät der Plattform' entspricht, je nach "
+"Plattform, einem von <i>X11()</i>, <i>windows()</i>, oder "
+"<i>quartz()</i>.</p><p>Sie können auch den namen einer Funktion angeben, wie "
+"etwa <i>cairoDevice</i>.</p>"
 
 #: settings/rksettingsmodulegraphics.cpp:84
 msgid "Integration of R standard devices"
-msgstr ""
+msgstr "Integration von R Standard-Geräten"
 
 #: settings/rksettingsmodulegraphics.cpp:87
 msgid "Replace with RKWard device"
-msgstr ""
+msgstr "Durch RKWard-Gerät ersetzen"
 
 #: settings/rksettingsmodulegraphics.cpp:90
 msgid "Embed original device"
-msgstr ""
+msgstr "Ursprüngliches Gerät einbetten"
 
 #: settings/rksettingsmodulegraphics.cpp:96
 msgid "No device integration"
-msgstr ""
+msgstr "Keine Integration des Geräts"
 
 #: settings/rksettingsmodulegraphics.cpp:101
 msgid ""
