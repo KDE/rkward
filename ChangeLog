@@ -1,3 +1,6 @@
+- IN PROGESS: Allow plugins to be translated
+
+--- Version 0.6.2 - Oct-20-2014
 - In data editor, indicate NAs, explicitly
 - Import Stata plugin gains option to convert character encoding.
 - New embeddable (minimal) plugin "multi_input" to combine different input elements
@@ -9,7 +12,6 @@
 - Add basic support to export plots using tikzDevice
 - Fixed: cbind-value of <matrix> element was missing commas
 - Fixed: Give a label to an unlabelled toolbar
-- IN PROGESS: Allow plugins to be translated
 - Fixed: Adjust to (re-?)named parameters for options("pager")
 - Allow plugin UI script code to query R for information
 - Fixed: potential crash when a previously installed pluginmap is not longer readable
