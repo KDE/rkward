@@ -6,6 +6,8 @@ fixed:
   - scanning plugin XML code for JS and help related content didn't work as expected in rk.plugin.component()
   - rk.rkh.scan() now also recognises <optioncolumn> and <matrix> nodes
   - a logical bug prevented rk.plugin.component() to run with default values for XML
+  - internal function paste.JS.options(), used by rk.JS.options(), was only working correctly for the "then"
+    part if ite() statements in arrays; now also produces usable code for an "else" part, if available
 added:
   - new functions rk.set.rkh.prompter() and rk.get.rkh.prompter() to make it easier to generate help files
     (later...)

@@ -85,24 +85,29 @@ crt.opts <- rk.XML.frame(
           help="If this is checked, the generated plugin will be shown (opened) for you to see what it looks like."),
         rk.XML.stretch())
     ),
-    rk.XML.row(pl.hier <- rk.XML.dropdown("Place in top menu",
-      options=list(
-          "Test (created if needed)"=c(val="test", chk=TRUE),
-          "File"=c(val="file"),
-          "Edit"=c(val="edit"),
-          "View"=c(val="view"),
-          "Workspace"=c(val="workspace"),
-          "Run"=c(val="run"),
-          "Data"=c(val="data"),
-          "Analysis"=c(val="analysis"),
-          "Plots"=c(val="plots"),
-          "Distributions"=c(val="distributions"),
-          "Windows"=c(val="windows"),
-          "Settings"=c(val="settings"),
-          "Help"=c(val="help")
+    rk.XML.frame(
+      rk.XML.row(pl.hier <- rk.XML.dropdown("Place in top menu",
+        options=list(
+            "Test (created if needed)"=c(val="test", chk=TRUE),
+            "File"=c(val="file"),
+            "Edit"=c(val="edit"),
+            "View"=c(val="view"),
+            "Workspace"=c(val="workspace"),
+            "Run"=c(val="run"),
+            "Data"=c(val="data"),
+            "Analysis"=c(val="analysis"),
+            "Plots"=c(val="plots"),
+            "Distributions"=c(val="distributions"),
+            "Windows"=c(val="windows"),
+            "Settings"=c(val="settings"),
+            "Help"=c(val="help")
+        ),
+        help="Specify where the plugin should appear in RKWard's top menus."
       ),
-      help="Specify where the plugin should appear in RKWard's top menus."
-    ))
+      pl.hier.name <- rk.XML.input("Name in menu (plugin name if empty)",
+        help="You can set the exact entry name of your main component in the menu here. If left empty, the plugin name will be used as default.")
+      )
+    )
   )
 dep.opts <- rk.XML.frame(
   rk.XML.row(
@@ -217,15 +222,22 @@ js.opt.about.dep <- rk.JS.options("optDependencies",
   funct="list", option="dependencies", collapse=",\\n\\t")
 
 js.opt.skel.pluginmap <- rk.JS.options("optPluginmap",
-  ite(id(pl.hier, "!= \"test\""), qp("hierarchy=\"", pl.hier, "\"")),
+  ite(pl.hier.name,
+    qp("name=\"", pl.hier.name, "\""),
+    qp("name=\"", pl.name, "\"")
+  ),
+  ite(pl.hier,  qp("hierarchy=\"", pl.hier, "\"")),
   funct="list", option="pluginmap", collapse="")
 js.opt.skeleton <- rk.JS.options("optSkeleton",
-  ite(pl.wiz, qp("\n\tprovides=c(\"logic\", \"dialog\", \"wizard\")")),
-  ite(js.opt.skel.pluginmap, qp("\n\t", js.opt.skel.pluginmap)),
-  ite(pl.tests, qp("\n\ttests=TRUE")),
-  ite(pl.edit, qp("\n\tedit=TRUE")),
-  ite(pl.add, qp("\n\tload=TRUE")),
-  ite(pl.show, qp("\n\tshow=TRUE")),
+  ite(pl.wiz, qp("\n\tprovides=c(\"logic\", \"dialog\", \"wizard\")"), qp("\n\t#provides=c(\"logic\", \"dialog\")")),
+  ite(js.opt.skel.pluginmap,
+    qp("\n\t", js.opt.skel.pluginmap),
+    qp("\n\t#pluginmap=list(name=\"\", hierarchy=\"\", require=\"\")")
+  ),
+  ite(pl.tests, qp("\n\ttests=TRUE"), qp("\n\ttests=FALSE")),
+  ite(pl.edit, qp("\n\tedit=TRUE"), qp("\n\tedit=FALSE")),
+  ite(pl.add, qp("\n\tload=TRUE"), qp("\n\tload=FALSE")),
+  ite(pl.show, qp("\n\tshow=TRUE"), qp("\n\tshow=FALSE")),
   collapse="")
 
 JS.prepare <- rk.paste.JS(
@@ -273,15 +285,24 @@ JS.calculate <- rk.paste.JS(
     "# this is where things get serious, that is, here all of the above is put together into one plugin\n",
     "plugin.dir <- rk.plugin.skeleton(\n\tabout=about.plugin,"),
   ite(id(js.frm.dep.opts, " && ", js.opt.about.dep), echo("\n\tdependencies=plugin.dependencies,")),
-  echo("\n\tpath=output.dir,"),
-  echo("\n\toverwrite=overwrite,"),
+  echo("\n\tpath=output.dir,",
+    "\n\tscan=c(\"var\", \"saveobj\", \"settings\"),",
+    "\n\txml=list(\n\t\t#dialog=,\n\t\t#wizard=,\n\t\t#logic=,\n\t\t#snippets=\n\t),",
+    "\n\tjs=list(\n\t\t#results.header=FALSE,\n\t\t#load.silencer=,\n\t\t#require=,\n\t\t#variables=,",
+      "\n\t\t#globals=,\n\t\t#preprocess=,\n\t\t#calculate=,\n\t\t#printout=,\n\t\t#doPrintout=\n\t),"
+  ),
   ite(js.frm.help.text,
     echo(
-      "\n\trkh=list(\n\t\tsummary=plugin.summary,\n\t\tusage=plugin.usage\n\t),",
+      "\n\trkh=list(\n\t\tsummary=plugin.summary,\n\t\tusage=plugin.usage#,",
+      "\n\t\t#sections=,\n\t\t#settings=,\n\t\t#related=,\n\t\t#technical=\n\t),",
       "\n\tcreate=c(\"pmap\", \"xml\", \"js\", \"desc\", \"rkh\"),"
     ),
-    echo("\n\tcreate=c(\"pmap\", \"xml\", \"js\", \"desc\"),")
+    echo("\n\trkh=list(","\n\t\t#summary=,\n\t\t#usage=,",
+      "\n\t\t#sections=,\n\t\t#settings=,\n\t\t#related=,\n\t\t#technical=\n\t),",
+      "\n\tcreate=c(\"pmap\", \"xml\", \"js\", \"desc\"),"
+    )
   ),
+  echo("\n\toverwrite=overwrite,"),
   echo(js.opt.skeleton),
   echo("\n)\n\n"),
   level=2)
@@ -308,9 +329,11 @@ rk.plugin.skeleton(
     dialog=sklt.tabbook,
     logic=logic.section),
   js=list(
+    results.header=FALSE,
     require="rkwarddev",
     preprocess=JS.prepare,
-    calculate=JS.calculate),
+    calculate=JS.calculate,
+    printout=""),
   rkh=list(
     summary=rkh.summary,
     usage=rkh.usage

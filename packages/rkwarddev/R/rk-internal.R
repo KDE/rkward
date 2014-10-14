@@ -1005,11 +1005,20 @@ paste.JS.options <- function(object, level=2, indent.by="\t", array=NULL, funct=
   add.opts <- function(this.ite, collapse, array){
     if(isTRUE(array)){
       slot(this.ite, "thenJS") <- paste0(arr.name, ".push(", slot(this.ite, "thenJS"),");")
+      if(length(slot(this.ite, "elseJS")) == 1){
+        slot(this.ite, "elseJS") <- paste0(arr.name, ".push(", slot(this.ite, "elseJS"),");")
+      } else {}
     } else {
       slot(this.ite, "thenJS") <- paste0(variable, " += ", collapse, slot(this.ite, "thenJS"),";")
+      if(length(slot(this.ite, "elseJS")) == 1){
+        slot(this.ite, "elseJS") <- paste0(variable, " += ", collapse, slot(this.ite, "elseJS"),";")
+      } else {}
     }
     if(length(slot(this.ite, "elifJS")) == 1){
-      slot(this.ite, "elifJS") <- list(add.opts(slot(this.ite, "elifJS")[[1]]))
+      slot(this.ite, "elifJS") <- list(add.opts(slot(this.ite, "elifJS")[[1]], collapse=collapse, array=array))
+    } else {}
+    if(length(slot(this.ite, "thenifJS")) == 1){
+      slot(this.ite, "thenifJS") <- list(add.opts(slot(this.ite, "thenifJS")[[1]], collapse=collapse, array=array))
     } else {}
     return(this.ite)
   }
