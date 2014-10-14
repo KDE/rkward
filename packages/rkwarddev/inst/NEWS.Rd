@@ -8,6 +8,8 @@
       \item scanning plugin XML code for JS and help related content didn't work as expected in \code{rk.plugin.component()}
       \item \code{rk.rkh.scan()} now also recognises <optioncolumn> and <matrix> nodes
       \item a logical bug prevented \code{rk.plugin.component()} to run with default values for XML
+      \item internal function \code{paste.JS.options()}, used by \code{rk.JS.options()}, was only working correctly for the \code{"then"}
+        part if \code{ite()} statements in arrays; now also produces usable code for an \code{"else"} part, if available
     }
   }
   \subsection{added}{

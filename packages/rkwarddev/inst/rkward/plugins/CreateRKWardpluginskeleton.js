@@ -9,6 +9,7 @@ function preprocess(){
 
 	var brwDTEMPDIR = getValue("brw_DTEMPDIR");
 	var chcOvrwrtxs = getValue("chc_Ovrwrtxs");
+	var chcGsRKW060 = getValue("chc_GsRKW060");
 	echo("rkwarddev.required(\"0.06-5\")");
 	echo("\n\n# define where the plugin should write its files\noutput.dir <- ");
 	if(brwDTEMPDIR) {
@@ -22,12 +23,18 @@ function preprocess(){
 	} else {
 		echo("FALSE");
 	}
+	echo("\n# if you set guess.getters to TRUE, the resulting code will need RKWard >= 0.6.0\nguess.getter <- ");
+	if(chcGsRKW060) {
+		echo("TRUE");
+	} else {
+		echo("FALSE");
+	}
 	echo("\n\n");
 }
 
 function calculate(){
 	// read in variables from dialog
-	var ocolOclInpPckgtxt = getList("ost_frmlDRDRPP.ocl_inpPckgtxt");
+	var ocolOclInpPckgtxt = getList("ost_frDRDRPPPP.ocl_inpPckgtxt");
 	var inpPluginnm = getString("inp_Pluginnm");
 	var inpLicense = getString("inp_License");
 	var inpShrtdscr = getString("inp_Shrtdscr");
@@ -47,7 +54,9 @@ function calculate(){
 	var chcOpnflsfr = getBoolean("chc_Opnflsfr");
 	var chcAddplRKW = getBoolean("chc_AddplRKW");
 	var chcShwthplg = getBoolean("chc_Shwthplg");
+	var chcGsRKW060 = getBoolean("chc_GsRKW060");
 	var drpPlcntpmn = getString("drp_Plcntpmn");
+	var inpNmnmnplg = getString("inp_Nmnmnplg");
 	var inpRKWardmn = getString("inp_RKWardmn");
 	var inpRKWardmx = getString("inp_RKWardmx");
 	var inpRmin = getString("inp_Rmin");
@@ -62,9 +71,13 @@ function calculate(){
 	var arrOptAuthorRole = new Array();
 		if(chcAuthor) {
 			arrOptAuthorRole.push("\"aut\"");
+		} else {
+			arrOptAuthorRole.push();
 		}
 		if(chcMaintanr) {
 			arrOptAuthorRole.push("\"cre\"");
+		} else {
+			arrOptAuthorRole.push();
 		}
 	// clean array arrOptAuthorRole from empty strings
 	arrOptAuthorRole = arrOptAuthorRole.filter(String);
@@ -79,15 +92,23 @@ function calculate(){
 	var arrOptAuthor = new Array();
 		if(inpGivennam) {
 			arrOptAuthor.push("given=\"" + inpGivennam + "\"");
+		} else {
+			arrOptAuthor.push();
 		}
 		if(inpFamilynm) {
 			arrOptAuthor.push("family=\"" + inpFamilynm + "\"");
+		} else {
+			arrOptAuthor.push();
 		}
 		if(inpEmail) {
 			arrOptAuthor.push("email=\"" + inpEmail + "\"");
+		} else {
+			arrOptAuthor.push();
 		}
 		if(optAuthorRole) {
 			arrOptAuthor.push(optAuthorRole);
+		} else {
+			arrOptAuthor.push();
 		}
 	// clean array arrOptAuthor from empty strings
 	arrOptAuthor = arrOptAuthor.filter(String);
@@ -102,21 +123,33 @@ function calculate(){
 	var arrOptAbout = new Array();
 		if(inpShrtdscr) {
 			arrOptAbout.push("desc=\"" + inpShrtdscr + "\"");
+		} else {
+			arrOptAbout.push();
 		}
 		if(inpVrsnnmbr) {
 			arrOptAbout.push("version=\"" + inpVrsnnmbr + "\"");
+		} else {
+			arrOptAbout.push();
 		}
 		if(inpRlsdtmpt) {
 			arrOptAbout.push("date=\"" + inpRlsdtmpt + "\"");
+		} else {
+			arrOptAbout.push();
 		}
 		if(inpHomepage) {
 			arrOptAbout.push("url=\"" + inpHomepage + "\"");
+		} else {
+			arrOptAbout.push();
 		}
 		if(inpLicense) {
 			arrOptAbout.push("license=\"" + inpLicense + "\"");
+		} else {
+			arrOptAbout.push();
 		}
 		if(inpCategory) {
 			arrOptAbout.push("category=\"" + inpCategory + "\"");
+		} else {
+			arrOptAbout.push();
 		}
 	// clean array arrOptAbout from empty strings
 	arrOptAbout = arrOptAbout.filter(String);
@@ -131,15 +164,23 @@ function calculate(){
 	var arrOptDependencies = new Array();
 		if(frmDfndpndnChecked && inpRKWardmn) {
 			arrOptDependencies.push("rkward.min=\"" + inpRKWardmn + "\"");
+		} else {
+			arrOptDependencies.push();
 		}
 		if(frmDfndpndnChecked && inpRKWardmx) {
 			arrOptDependencies.push("rkward.max=\"" + inpRKWardmx + "\"");
+		} else {
+			arrOptDependencies.push();
 		}
 		if(frmDfndpndnChecked && inpRmin) {
 			arrOptDependencies.push("R.min=\"" + inpRmin + "\"");
+		} else {
+			arrOptDependencies.push();
 		}
 		if(frmDfndpndnChecked && inpRmax) {
 			arrOptDependencies.push("R.max=\"" + inpRmax + "\"");
+		} else {
+			arrOptDependencies.push();
 		}
 	// clean array arrOptDependencies from empty strings
 	arrOptDependencies = arrOptDependencies.filter(String);
@@ -152,8 +193,15 @@ function calculate(){
 
 	// define the array arrOptPluginmap for values of R option "pluginmap"
 	var arrOptPluginmap = new Array();
-		if(drpPlcntpmn!= "test") {
+		if(inpNmnmnplg) {
+			arrOptPluginmap.push("name=\"" + inpNmnmnplg + "\"");
+		} else {
+			arrOptPluginmap.push("name=\"" + inpPluginnm + "\"");
+		}
+		if(drpPlcntpmn) {
 			arrOptPluginmap.push("hierarchy=\"" + drpPlcntpmn + "\"");
+		} else {
+			arrOptPluginmap.push();
 		}
 	// clean array arrOptPluginmap from empty strings
 	arrOptPluginmap = arrOptPluginmap.filter(String);
@@ -168,21 +216,33 @@ function calculate(){
 	var arrOptSkeleton = new Array();
 		if(chcAddwzrds) {
 			arrOptSkeleton.push("\n\tprovides=c(\"logic\", \"dialog\", \"wizard\")");
+		} else {
+			arrOptSkeleton.push("\n\t#provides=c(\"logic\", \"dialog\")");
 		}
 		if(optPluginmap) {
 			arrOptSkeleton.push("\n\t" + optPluginmap);
+		} else {
+			arrOptSkeleton.push("\n\t#pluginmap=list(name=\"\", hierarchy=\"\", require=\"\")");
 		}
 		if(chcIncldplg) {
 			arrOptSkeleton.push("\n\ttests=TRUE");
+		} else {
+			arrOptSkeleton.push("\n\ttests=FALSE");
 		}
 		if(chcOpnflsfr) {
 			arrOptSkeleton.push("\n\tedit=TRUE");
+		} else {
+			arrOptSkeleton.push("\n\tedit=FALSE");
 		}
 		if(chcAddplRKW) {
 			arrOptSkeleton.push("\n\tload=TRUE");
+		} else {
+			arrOptSkeleton.push("\n\tload=FALSE");
 		}
 		if(chcShwthplg) {
 			arrOptSkeleton.push("\n\tshow=TRUE");
+		} else {
+			arrOptSkeleton.push("\n\tshow=FALSE");
 		}
 	// clean array arrOptSkeleton from empty strings
 	arrOptSkeleton = arrOptSkeleton.filter(String);
@@ -208,11 +268,12 @@ function calculate(){
 		if(optDependencies && ocolOclInpPckgtxt) {
 			echo(",");
 		}
-		if(ocolOclInpPckgtxt) {
+		if(ocolOclInpPckgtxt!= "") {
 			echo("\n\tpackage=list(\n\t\tc(name=\"" + ocolOclInpPckgtxt.join("\"),\n\t\tc(name=\"") + "\")\n\t)");
 		}
 		echo("\n)\n\n");
 	}
+	echo("############\n## your plugin dialog and JavaScript should be put here\n############\n\n");
 	if(frmWrthlpflChecked) {
 		echo("############\n## help page\nplugin.summary <- rk.rkh.summary(\n\t");
 		if(inpSummary) {
@@ -226,21 +287,23 @@ function calculate(){
 	if(frmDfndpndnChecked && optDependencies) {
 		echo("\n\tdependencies=plugin.dependencies,");
 	}
-	echo("\n\tpath=output.dir,");
-	echo("\n\toverwrite=overwrite,");
+	echo("\n\tpath=output.dir," + "\n\tguess.getter=guess.getter," + "\n\tscan=c(\"var\", \"saveobj\", \"settings\")," + "\n\txml=list(\n\t\t#dialog=,\n\t\t#wizard=,\n\t\t#logic=,\n\t\t#snippets=\n\t)," + "\n\tjs=list(\n\t\t#results.header=FALSE,\n\t\t#load.silencer=,\n\t\t#require=,\n\t\t#variables=," + "\n\t\t#globals=,\n\t\t#preprocess=,\n\t\t#calculate=,\n\t\t#printout=,\n\t\t#doPrintout=\n\t),");
 	if(frmWrthlpflChecked) {
-		echo("\n\trkh=list(\n\t\tsummary=plugin.summary,\n\t\tusage=plugin.usage\n\t)," + "\n\tcreate=c(\"pmap\", \"xml\", \"js\", \"desc\", \"rkh\"),");
+		echo("\n\trkh=list(\n\t\tsummary=plugin.summary,\n\t\tusage=plugin.usage#," + "\n\t\t#sections=,\n\t\t#settings=,\n\t\t#related=,\n\t\t#technical=\n\t)," + "\n\tcreate=c(\"pmap\", \"xml\", \"js\", \"desc\", \"rkh\"),");
 	} else {
-		echo("\n\tcreate=c(\"pmap\", \"xml\", \"js\", \"desc\"),");
+		echo("\n\trkh=list(" + "\n\t\t#summary=,\n\t\t#usage=," + "\n\t\t#sections=,\n\t\t#settings=,\n\t\t#related=,\n\t\t#technical=\n\t)," + "\n\tcreate=c(\"pmap\", \"xml\", \"js\", \"desc\"),");
 	}
+	echo("\n\toverwrite=overwrite,");
+	echo("\n\t#components=list(),");
 	echo(optSkeleton);
 	echo("\n)\n\n");
 }
 
 function printout(){
 	// printout the results
-	echo("rk.header(\"Create RKWard plugin skeleton results\")\n");
-echo("rk.print(\"\")\n");
+
+
+
 
 }
 

@@ -7,7 +7,7 @@ tf(cbox, true = TRUE, not = FALSE, ifelse = FALSE, false = FALSE,
   opt = NULL, prefix = ",\\n", level = 3, indent.by = "\\t")
 }
 \arguments{
-\item{cbox}{An obkect of class \code{XiMpLe.node} containing a \code{<checkbox>} node,
+\item{cbox}{An object of class \code{XiMpLe.node} containing a \code{<checkbox>} node,
       as generated
 by \code{\link[rkwarddev:rk.XML.cbox]{rk.XML.cbox}}.}
 

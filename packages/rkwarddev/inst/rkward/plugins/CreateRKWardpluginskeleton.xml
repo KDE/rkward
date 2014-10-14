@@ -65,26 +65,30 @@
 								<checkbox id="chc_Opnflsfr" label="Open files for editing" value="true" checked="true" />
 								<checkbox id="chc_AddplRKW" label="Add plugin to RKWard configuration" value="true" checked="true" />
 								<checkbox id="chc_Shwthplg" label="Show the plugin" value="true" />
+								<checkbox id="chc_GsRKW060" label="Guess getter functions (RKWard &gt;= 0.6.0)" value="true" />
 								<stretch />
 							</column>
 						</row>
-						<row id="row_dPPTFEVWRD">
-							<dropdown id="drp_Plcntpmn" label="Place in top menu">
-								<option label="Test (created if needed)" value="test" checked="true" />
-								<option label="File" value="file" />
-								<option label="Edit" value="edit" />
-								<option label="View" value="view" />
-								<option label="Workspace" value="workspace" />
-								<option label="Run" value="run" />
-								<option label="Data" value="data" />
-								<option label="Analysis" value="analysis" />
-								<option label="Plots" value="plots" />
-								<option label="Distributions" value="distributions" />
-								<option label="Windows" value="windows" />
-								<option label="Settings" value="settings" />
-								<option label="Help" value="help" />
-							</dropdown>
-						</row>
+						<frame id="frm_rPPTFEVWRD">
+							<row id="row_dPPTFEVWRD">
+								<dropdown id="drp_Plcntpmn" label="Place in top menu">
+									<option label="Test (created if needed)" value="test" checked="true" />
+									<option label="File" value="file" />
+									<option label="Edit" value="edit" />
+									<option label="View" value="view" />
+									<option label="Workspace" value="workspace" />
+									<option label="Run" value="run" />
+									<option label="Data" value="data" />
+									<option label="Analysis" value="analysis" />
+									<option label="Plots" value="plots" />
+									<option label="Distributions" value="distributions" />
+									<option label="Windows" value="windows" />
+									<option label="Settings" value="settings" />
+									<option label="Help" value="help" />
+								</dropdown>
+								<input label="Name in menu (plugin name if empty)" id="inp_Nmnmnplg" />
+							</row>
+						</frame>
 					</frame>
 					<frame label="Define dependencies" checkable="true" checked="false" id="frm_Dfndpndn">
 						<row id="row_fDRKWDRKWR">
@@ -99,12 +103,14 @@
 								<stretch />
 							</frame>
 						</row>
-						<row id="row_oDRDRPPDRD">
-							<optionset id="ost_frmlDRDRPP">
+						<row id="row_oDRDRPPPPD">
+							<optionset id="ost_frDRDRPPPP">
 								<content>
 									<optiondisplay />
 									<frame label="Depends on R packages" id="frm_DpndsnRp">
-										<input label="Package" id="inp_Package" />
+										<row id="row_inptlblPcP">
+											<input label="Package" id="inp_Package" />
+										</row>
 										<stretch />
 									</frame>
 								</content>

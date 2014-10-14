@@ -83,6 +83,8 @@ crt.opts <- rk.XML.frame(
             If you store it in a temporary directory and remove it before the next start of RKWard, the entry will removed again as well."),
         pl.show <- rk.XML.cbox("Show the plugin", chk=FALSE,
           help="If this is checked, the generated plugin will be shown (opened) for you to see what it looks like."),
+        pl.guessgetter <- rk.XML.cbox("Guess getter functions (RKWard >= 0.6.0)", chk=FALSE,
+          help="If this is checked, rkwarddev tries to select the optimal getter functions to get data from the dialog into the R code. The plugin then requires RKWard >= 0.6.0."),
         rk.XML.stretch())
     ),
     rk.XML.frame(
@@ -126,11 +128,16 @@ dep.opts <- rk.XML.frame(
   rk.XML.row(
     dep.optionset.packages <- rk.XML.optionset(
         content=rk.XML.frame(rk.XML.stretch(before=list(
-          dep.pckg.name <- rk.XML.input("Package",
-          help="The names of R packages required to run this plugin.")#,
-#           dep.pckg.min <- rk.XML.input("min"),
-#           dep.pckg.max <- rk.XML.input("max"),
-#           dep.pckg.repo <- rk.XML.input("Repository")
+          rk.XML.row(
+            dep.pckg.name <- rk.XML.input("Package",
+              help="The names of R packages required to run this plugin.")#,
+#             dep.pckg.min <- rk.XML.input("min",
+#               help="The minimum version number of R packages required to run this plugin."),
+#             dep.pckg.max <- rk.XML.input("max",
+#               help="The maximum version number of R packages required to run this plugin."),
+#             dep.pckg.repo <- rk.XML.input("Repository",
+#               help="The repository to download R packages from required to run this plugin.")
+         )
         )), label="Depends on R packages"),
         optioncolumn=list(
           dep.optioncol.pckg.name <- rk.XML.optioncolumn(connect=dep.pckg.name, modifier="text")#,
@@ -241,12 +248,14 @@ js.opt.skeleton <- rk.JS.options("optSkeleton",
   collapse="")
 
 JS.prepare <- rk.paste.JS(
-  rk.JS.vars(pl.dir, pl.overw),
+  rk.JS.vars(pl.dir, pl.overw, pl.guessgetter),
   echo("rkwarddev.required(\"0.06-5\")"),
   echo("\n\n# define where the plugin should write its files\noutput.dir <- "),
   ite(pl.dir, echo("\"", pl.dir, "\""), echo("tempdir()")),
   echo("\n# overwrite an existing plugin in output.dir?\noverwrite <- "),
   ite(pl.overw, echo("TRUE"), echo("FALSE")),
+  echo("\n# if you set guess.getters to TRUE, the resulting code will need RKWard >= 0.6.0\nguess.getter <- "),
+  ite(pl.guessgetter, echo("TRUE"), echo("FALSE")),
   echo("\n\n"),
   level=2)
   
@@ -268,10 +277,12 @@ JS.calculate <- rk.paste.JS(
       echo("plugin.dependencies <- rk.XML.dependencies("),
       ite(id(js.opt.about.dep), echo(js.opt.about.dep)),
       ite(id(js.opt.about.dep, " && ", dep.optioncol.pckg.name), echo(",")),
-      ite(id(dep.optioncol.pckg.name),
-        echo("\n\tpackage=list(\n\t\tc(name=\"", join(dep.optioncol.pckg.name, by="\"),\n\t\tc(name=\""), "\")\n\t)")),
+      ite(id(dep.optioncol.pckg.name , "!= \"\""),
+        echo("\n\tpackage=list(\n\t\tc(name=\"", join(dep.optioncol.pckg.name, by="\"),\n\t\tc(name=\""), "\")\n\t)"),
+      ),
       echo("\n)\n\n"),
     level=3)),
+  echo("############\n## your plugin dialog and JavaScript should be put here\n############\n\n"),
   ite(js.frm.help.text,
     rk.paste.JS(
       echo("############\n## help page\nplugin.summary <- rk.rkh.summary(\n\t"),
@@ -286,6 +297,7 @@ JS.calculate <- rk.paste.JS(
     "plugin.dir <- rk.plugin.skeleton(\n\tabout=about.plugin,"),
   ite(id(js.frm.dep.opts, " && ", js.opt.about.dep), echo("\n\tdependencies=plugin.dependencies,")),
   echo("\n\tpath=output.dir,",
+    "\n\tguess.getter=guess.getter,",
     "\n\tscan=c(\"var\", \"saveobj\", \"settings\"),",
     "\n\txml=list(\n\t\t#dialog=,\n\t\t#wizard=,\n\t\t#logic=,\n\t\t#snippets=\n\t),",
     "\n\tjs=list(\n\t\t#results.header=FALSE,\n\t\t#load.silencer=,\n\t\t#require=,\n\t\t#variables=,",
@@ -303,6 +315,7 @@ JS.calculate <- rk.paste.JS(
     )
   ),
   echo("\n\toverwrite=overwrite,"),
+  echo("\n\t#components=list(),"),
   echo(js.opt.skeleton),
   echo("\n)\n\n"),
   level=2)

@@ -80,8 +80,15 @@
 		<setting id="chc_Shwthplg">
 			If this is checked, the generated plugin will be shown (opened) for you to see what it looks like.
 		</setting>
+		<setting id="chc_GsRKW060">
+			If this is checked, rkwarddev tries to select the optimal getter functions to get data from the dialog into the R code. The plugin then requires RKWard &gt;= 0.6.0.
+		</setting>
+		<caption id="frm_rPPTFEVWRD" />
 		<setting id="drp_Plcntpmn">
 			Specify where the plugin should appear in RKWard's top menus.
+		</setting>
+		<setting id="inp_Nmnmnplg">
+			You can set the exact entry name of your main component in the menu here. If left empty, the plugin name will be used as default.
 		</setting>
 		<caption id="frm_Dfndpndn" />
 		<caption id="frm_DpndsRKW" />

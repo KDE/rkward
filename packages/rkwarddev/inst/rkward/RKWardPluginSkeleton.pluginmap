@@ -15,7 +15,7 @@
 		shortinfo="GUI interface to create RKWard plugin skeletons"
 		longinfo="GUI interface to create RKWard plugin skeletons"
 		version="0.06-5"
-		releasedate="2014-10-12"
+		releasedate="2014-10-14"
 		url="http://rkward.sf.net"
 		license="GPL (&gt;= 3)"
 	>
