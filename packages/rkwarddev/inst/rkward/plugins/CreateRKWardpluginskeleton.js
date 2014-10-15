@@ -224,6 +224,11 @@ function calculate(){
 		} else {
 			arrOptSkeleton.push("\n\t#pluginmap=list(name=\"\", hierarchy=\"\", require=\"\")");
 		}
+		if(frmDfndpndnChecked && (optDependencies || ocolOclInpPckgtxt)) {
+			arrOptSkeleton.push("\n\tdependencies=plugin.dependencies");
+		} else {
+			arrOptSkeleton.push("\n\t#dependencies=plugin.dependencies");
+		}
 		if(chcIncldplg) {
 			arrOptSkeleton.push("\n\ttests=TRUE");
 		} else {
@@ -272,6 +277,12 @@ function calculate(){
 			echo("\n\tpackage=list(\n\t\tc(name=\"" + ocolOclInpPckgtxt.join("\"),\n\t\tc(name=\"") + "\")\n\t)");
 		}
 		echo("\n)\n\n");
+	}
+	echo("# name of the main component, relevant for help page content\nrk.set.comp(\"");
+	if(inpNmnmnplg) {
+		echo(inpNmnmnplg + "\")\n\n");
+	} else {
+		echo(inpPluginnm + "\")\n\n");
 	}
 	echo("############\n## your plugin dialog and JavaScript should be put here\n############\n\n");
 	if(frmWrthlpflChecked) {

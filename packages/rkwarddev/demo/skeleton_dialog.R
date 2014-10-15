@@ -241,6 +241,10 @@ js.opt.skeleton <- rk.JS.options("optSkeleton",
     qp("\n\t", js.opt.skel.pluginmap),
     qp("\n\t#pluginmap=list(name=\"\", hierarchy=\"\", require=\"\")")
   ),
+  ite(id(js.frm.dep.opts, " && (", js.opt.about.dep, " || ", dep.optioncol.pckg.name, ")"),
+    qp("\n\tdependencies=plugin.dependencies"),
+    qp("\n\t#dependencies=plugin.dependencies")
+  ),
   ite(pl.tests, qp("\n\ttests=TRUE"), qp("\n\ttests=FALSE")),
   ite(pl.edit, qp("\n\tedit=TRUE"), qp("\n\tedit=FALSE")),
   ite(pl.add, qp("\n\tload=TRUE"), qp("\n\tload=FALSE")),
@@ -282,6 +286,11 @@ JS.calculate <- rk.paste.JS(
       ),
       echo("\n)\n\n"),
     level=3)),
+  echo("# name of the main component, relevant for help page content\nrk.set.comp(\""),
+  ite(pl.hier.name,
+    echo(pl.hier.name, "\")\n\n"),
+    echo(pl.name, "\")\n\n")
+  ),
   echo("############\n## your plugin dialog and JavaScript should be put here\n############\n\n"),
   ite(js.frm.help.text,
     rk.paste.JS(
