@@ -162,6 +162,7 @@ void RKFrontendTransmitter::requestReceived (RBackendRequest* request) {
 
 			delete (out);
 		}
+		delete list;
 		request->output = 0;
 		RK_ASSERT (request->synchronous);
 		writeRequest (request);	// to tell the backend, that we are keeping up. Also deletes the request.
