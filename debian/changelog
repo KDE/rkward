@@ -1,11 +1,11 @@
-rkward (0.6.1z+0.6.2+test2-1) unstable; urgency=low
+rkward (0.6.2-1) unstable; urgency=low
 
   * new upstream release
   * avoid duplicate cmake run during build
   * upstream increased lowest supported R version to 2.8.0
   * bump standards version to 3.9.4 (no changes needed)
 
- -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Tue, 30 Sep 2014 13:30:00 +0100
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Mon, 20 Oct 2014 13:30:00 +0100
 
 rkward (0.6.1-1) unstable; urgency=low
 
