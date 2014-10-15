@@ -92,18 +92,21 @@ pwr.input.dfv <- rk.XML.spinbox(label="Degrees of freedom for denominator", id.n
 pwr.txt.dfu <- rk.XML.text("df<sub>num</sub>: k &minus; 1", id.name="pwr_txt_dfu")
 pwr.txt.dfv <- rk.XML.text("df<sub>den</sub>: N &minus; k", id.name="pwr_txt_dfv")
 
-pwr.input.sample <- rk.XML.spinbox(label="Sample size", id.name="pwr_spin_sample0", min=1, real=FALSE, initial=30)
-pwr.input.sample.n1 <- rk.XML.spinbox(label="First sample size", id.name="pwr_spin_sample1", min=1, real=FALSE, initial=30)
-pwr.input.sample.n2 <- rk.XML.spinbox(label="Second sample size", id.name="pwr_spin_sample2", min=1, real=FALSE, initial=30)
+pwr.input.sample <- rk.XML.spinbox(label="Sample size", id.name="pwr_spin_sample0", min=1, real=FALSE, initial=30, ,
+                               help="Sample size. Note that depending on the selected method, this can mean observations per sample, per group, or in total. Make sure to read the note shown below the control.")
+pwr.input.sample.n1 <- rk.XML.spinbox(label="First sample size", id.name="pwr_spin_sample1", min=1, real=FALSE, initial=30, help=FALSE)
+pwr.input.sample.n2 <- rk.XML.spinbox(label="Second sample size", id.name="pwr_spin_sample2", min=1, real=FALSE, initial=30, help=FALSE)
 pwr.txt.sample.default <- rk.XML.text("Number of observations", id.name="pwr_txt_smpl")
 pwr.txt.sample.ps <- rk.XML.text("Number of observations <b>per sample</b>", id.name="pwr_txt_smpl_ps")
 pwr.txt.sample.pg <- rk.XML.text("Number of observations <b>per group</b>", id.name="pwr_txt_smpl_pg")
 pwr.txt.sample.tt <- rk.XML.text("Number of observations <b>in total</b>", id.name="pwr_txt_smpl_tt")
 pwr.txt.sample.pairs <- rk.XML.text("Number of <b>pairs</b>", id.name="pwr_txt_smpl_pairs")
 
-pwr.input.groups <- rk.XML.spinbox(label="Number of groups", min=1, real=FALSE, initial=2)
+pwr.input.groups <- rk.XML.spinbox(label="Number of groups", min=1, real=FALSE, initial=2, help="Number of groups. For ANOVA, only.")
 
-pwr.input.effect <- rk.XML.spinbox(label="Effect size", min=-1, max=1, initial=0.3)
+pwr.input.effect <- rk.XML.spinbox(label="Effect size", min=-1, max=1, initial=0.3,
+   help="Minimum detectable effect size. Note that effect size specifications differ between the available methods. Be sure to read the note shown below the control.\n\n
+   As a reminder, for mapping between cohen's f and Eta&sup2; use f&sup2; = Eta&sup2; / (1 &minus; Eta&sup2;)")
 # effect sizes: d, r, f, f2, w, h
 pwr.txt.effect.d <- rk.XML.text("Measure for selected method is <b>Cohen's d</b>", id.name="pwr_txt_efct_d")
 pwr.txt.effect.r <- rk.XML.text("Measure for selected method is <b>Pearson's r</b>", id.name="pwr_txt_efct_r")
@@ -113,7 +116,7 @@ pwr.txt.effect.e2 <- rk.XML.text("Measure for selected method is <b>Eta<sup>2</s
 pwr.txt.effect.f2 <- rk.XML.text("Measure for selected method is <b>Cohen's f<sup>2</sup></b>", id.name="pwr_txt_efct_f2")
 pwr.txt.effect.w <- rk.XML.text("Measure for selected method is <b>Cohen's w</b>", id.name="pwr_txt_efct_w")
 pwr.txt.effect.h <- rk.XML.text("Measure for selected method is <b>Cohen's h</b>", id.name="pwr_txt_efct_h")
-pwr.input.signif <- rk.XML.spinbox(label="Significance level", min=0, max=1, initial=0.05)
+pwr.input.signif <- rk.XML.spinbox(label="Significance level", min=0, max=1, initial=0.05, help="Targetted level of significance")
 
 
 save.results.pwr <- rk.XML.saveobj("Save results to workspace", initial="pwr.result",
@@ -508,11 +511,14 @@ pwr.rkh.summary <- rk.rkh.summary("Perform power anaylsis for a variety of stati
 pwr.rkh.usage <- rk.rkh.usage("Given three of the parameters 'power of test', 
   'sample size', 'effect size', and 'significance level', this plugin will 
   estimate the fourth, i.e. for example the test power of a t.test at a given 
-  sample size, effect size, and level of significance. On the left hand control, 
-  select which of the parameters to estimate. In the middle, specify the 
+  sample size, effect size, and level of significance. On the left hand, specify the 
   statistical method, on the right hand side, enter the values of the given 
-  parameters.")
+  parameters. In the control in the middle, select which of the parameters to estimate.\n\n
+  Note that in some cases it will not be possible to estimate a (finite) parameter at the given
+  specifications. In general, this means that you have to increase sample size(s) or effect size,
+  or decrease effect power or parameter count.")
 
+pwr.rkh.related <- rk.rkh.related(rk.rkh.link ("pwr", text="Description of the R package \"pwr\", used to perform the power calculations."))
 
 #############
 ## if you run the following function call, files will be written to tempdir!
@@ -533,7 +539,8 @@ pwr.plugin.dir <<- rk.plugin.skeleton(
     printout=pwr.js.print),
   rkh=list(
     summary=pwr.rkh.summary,
-    usage=pwr.rkh.usage
+    usage=pwr.rkh.usage,
+    related=pwr.rkh.related
   ),
   pluginmap=list(name="Power analysis", hierarchy=list("analysis")),
   dependencies=dependencies.info,
