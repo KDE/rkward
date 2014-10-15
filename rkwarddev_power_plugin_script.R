@@ -9,7 +9,7 @@ local({
 # set the output directory to overwrite the actual plugin
 output.dir <- tempdir()
 overwrite <- TRUE
-# if you set guess.getters to TRUE, the resulting code willdat need RKWard >= 0.6.0
+# if you set guess.getters to TRUE, the resulting code will need RKWard >= 0.6.0
 guess.getter <- FALSE
 
 about.info <- rk.XML.about(
@@ -31,22 +31,10 @@ pwr.parameter.rad <- rk.XML.radio(label="Parameter to determine", options=list(
     "Power of test"=c(val="Power", chk=TRUE),
     "Sample size"=c(val="Sample size"),
     "Effect size"=c(val="Effect size"),
-    "Significance level"=c(val="Significance level")
+    "Significance level"=c(val="Significance level"),
+    pwr.parameter.opt.dfu <- rk.XML.option ("Parameter count", val="Parameter count", id.name="auto")
   ), id.name="rad_pwr_param",
   help="Parameter to estimate, given the others.")
-
-pwr.parameter.twosamples.rad <- rk.XML.radio(label="Estimate", options=list(
-    "First sample"=c(val="n1"),
-    "Second sample"=c(val="n2", chk=TRUE)
-  ), id.name="rad_pwr_param_2samples",
-  help="Only shown when applicable: For estimating the required sample sizes for a test with two 
-    differently sized samples, specify which should be estimated, and which is 
-    given.")
-
-pwr.parameter.twodf.rad <- rk.XML.radio(label="Estimate", options=list(
-    "Numerator"=c(val="u", chk=TRUE),
-    "Denominator"=c(val="v")
-  ), id.name="rad_pwr_param_2df")
 
 pwr.stat.drop <- rk.XML.dropdown(label="Select a method", options=list(
     "t-Tests of means"=c(val="pwr.t.test", chk=TRUE),
@@ -134,15 +122,6 @@ save.results.pwr <- rk.XML.saveobj("Save results to workspace", initial="pwr.res
 tab.pwr.data <- rk.XML.row(
     rk.XML.col(
       rk.XML.frame(
-        pwr.parameter.rad,
-        rk.XML.stretch(),
-        pwr.parameter.twosamples.rad,
-        pwr.parameter.twodf.rad,
-        label="Target measure"
-      )
-    ),
-    rk.XML.col(
-      rk.XML.frame(
         pwr.stat.drop,
         pwr.input.groups,
         pwr.type.drop,
@@ -154,6 +133,13 @@ tab.pwr.data <- rk.XML.row(
         label="Statistical Method"
       ),
       rk.XML.stretch()
+    ),
+    rk.XML.col(
+      rk.XML.frame(
+        pwr.parameter.rad,
+        rk.XML.stretch(),
+        label="Target measure"
+      )
     ),
     rk.XML.col(
       rk.XML.frame(
@@ -203,6 +189,7 @@ pwr.full.dialog <- rk.XML.dialog(
     pwr.gov.want.sample <- rk.XML.convert(sources=list(string=pwr.parameter.rad), mode=c(equals="Sample size"), id.name="pwr_lgc_sample"),
     pwr.gov.want.effect <- rk.XML.convert(sources=list(string=pwr.parameter.rad), mode=c(equals="Effect size"), id.name="pwr_lgc_effect"),
     pwr.gov.want.signif <- rk.XML.convert(sources=list(string=pwr.parameter.rad), mode=c(equals="Significance level"), id.name="pwr_lgc_signif"),
+    pwr.gov.want.df.u <- rk.XML.convert(sources=list(string=pwr.parameter.rad), mode=c(equals="Parameter count"), id.name="pwr_lgc_df_u"),
     rk.XML.connect(governor=pwr.gov.want.power, client=pwr.frame.power, set="enabled", not=TRUE),
     rk.XML.connect(governor=pwr.gov.want.effect, client=pwr.frame.effect, set="enabled", not=TRUE),
     rk.XML.connect(governor=pwr.gov.want.signif, client=pwr.frame.signif, set="enabled", not=TRUE),
@@ -232,6 +219,7 @@ pwr.full.dialog <- rk.XML.dialog(
     rk.XML.connect(governor=pwr.gov.meth.ttest, client=pwr.type.drop, set="enabled"),
     rk.XML.connect(governor=pwr.gov.meth.proptest, client=pwr.proptype.drop, set="visible"),
     rk.XML.connect(governor=pwr.gov.meth.proptest, client=pwr.proptype.drop, set="enabled"),
+    rk.XML.connect(governor=pwr.gov.meth.f2test, client=pwr.parameter.opt.dfu, set="enabled"),
     rk.XML.connect(governor=pwr.gov.meth.f2test, client=pwr.frame.sample, set="visible", not=TRUE),
     pwr.gov.meth.df <- rk.XML.convert(sources=list(pwr.gov.meth.f2test, pwr.gov.meth.chisq), mode=c(or=""), id.name="pwr_lgc_show_df"),
     rk.XML.connect(governor=pwr.gov.meth.df, client=pwr.frame.df, set="visible"),
@@ -278,25 +266,15 @@ pwr.full.dialog <- rk.XML.dialog(
 
     # switch between sample estimations
     pwr.gov.smpl.switch <- rk.XML.convert(sources=list(pwr.gov.want.sample, pwr.gov.smpl.diff), mode=c(and=""), id.name="pwr_lgc_smpl_switch"),
-    pwr.gov.df.switch <- rk.XML.convert(sources=list(pwr.gov.want.sample, pwr.gov.meth.f2test), mode=c(and=""), id.name="pwr_lgc_df_switch"),
     pwr.gov.enable.sample.frame <- rk.XML.convert(sources=list(not=pwr.gov.want.sample, pwr.gov.smpl.switch), mode=c(or=""), id.name="pwr_lgc_enable_sample_frame"),
     rk.XML.connect(governor=pwr.gov.enable.sample.frame, client=pwr.frame.sample, set="enabled"),
-    rk.XML.connect(governor=pwr.gov.smpl.switch, client=pwr.parameter.twosamples.rad, set="visible"),
-    rk.XML.connect(governor=pwr.gov.df.switch, client=pwr.parameter.twodf.rad, set="visible"),
-    pwr.gov.smpl.n1 <- rk.XML.convert(sources=list(string=pwr.parameter.twosamples.rad), mode=c(equals="n1"), id.name="pwr_lgc_smpl_n1"),
-    pwr.gov.smpl.n2 <- rk.XML.convert(sources=list(string=pwr.parameter.twosamples.rad), mode=c(equals="n2"), id.name="pwr_lgc_smpl_n2"),
-    pwr.gov.df.u <- rk.XML.convert(sources=list(string=pwr.parameter.twodf.rad), mode=c(equals="u"), id.name="pwr_lgc_df_u"),
-    pwr.gov.df.v <- rk.XML.convert(sources=list(string=pwr.parameter.twodf.rad), mode=c(equals="v"), id.name="pwr_lgc_df_v"),
-    pwr.gov.smpl.show.n1 <- rk.XML.convert(sources=list(pwr.gov.smpl.n2, not=pwr.gov.want.sample), mode=c(or=""), id.name="pwr_lgc_smpl_show_n1"),
-    pwr.gov.smpl.show.n2 <- rk.XML.convert(sources=list(pwr.gov.smpl.n1, not=pwr.gov.want.sample), mode=c(or=""), id.name="pwr_lgc_smpl_show_n2"),
-    pwr.gov.df.show.u <- rk.XML.convert(sources=list(pwr.gov.df.v, not=pwr.gov.want.sample), mode=c(or=""), id.name="pwr_lgc_df_show_u"),
-    pwr.gov.df.show.v <- rk.XML.convert(sources=list(pwr.gov.df.u, not=pwr.gov.want.sample), mode=c(or=""), id.name="pwr_lgc_df_show_v"),
-    rk.XML.connect(governor=pwr.gov.smpl.show.n1, client=pwr.input.sample.n1, set="enabled"),
-    rk.XML.connect(governor=pwr.gov.smpl.show.n2, client=pwr.input.sample.n2, set="enabled"),
-    rk.XML.connect(governor=pwr.gov.df.show.u, client=pwr.input.dfu, set="enabled"),
-    rk.XML.connect(governor=pwr.gov.df.show.v, client=pwr.input.dfv, set="enabled"),
-    rk.XML.connect(governor=pwr.gov.df.show.u, client=pwr.txt.dfu, set="enabled"),
-    rk.XML.connect(governor=pwr.gov.df.show.v, client=pwr.txt.dfv, set="enabled"),
+    rk.XML.connect(governor=pwr.gov.want.sample, client=pwr.input.sample.n2, not=TRUE, set="enabled"),
+    
+    # df
+    rk.XML.connect(governor=pwr.gov.want.df.u, client=pwr.input.dfu, not=TRUE, set="enabled"),
+    rk.XML.connect(governor=pwr.gov.want.sample, client=pwr.input.dfv, not=TRUE, set="enabled"),
+    rk.XML.connect(governor=pwr.gov.want.df.u, client=pwr.txt.dfu, not=TRUE, set="enabled"),
+    rk.XML.connect(governor=pwr.gov.want.sample, client=pwr.txt.dfv, not=TRUE, set="enabled"),
     
     # disable alterative setting
     pwr.gov.meth.noalternative <- rk.XML.convert(sources=list(not=pwr.gov.meth.anova, not=pwr.gov.meth.f2test, not=pwr.gov.meth.chisq), mode=c(and=""), id.name="pwr_lgc_noalternative"),
@@ -327,10 +305,7 @@ pwr.js.calc <- rk.paste.JS(
           echo("pwr.t2n.test("),
           ite(id(pwr.parameter.rad, " != \"Sample size\""),
             echo("\n\t\t\tn1=", pwr.input.sample.n1, ",\n\t\t\tn2=", pwr.input.sample.n2),
-            ite(id(pwr.parameter.twosamples.rad, " == \"n2\""),
-              echo("\n\t\t\tn1=", pwr.input.sample.n1, ","),
-              echo("\n\t\t\tn2=", pwr.input.sample.n2, ",")
-            )
+            echo("\n\t\t\tn1=", pwr.input.sample.n1, ",")
           )
         ),
         rk.paste.JS(#no
@@ -386,10 +361,16 @@ pwr.js.calc <- rk.paste.JS(
   ite(id(pwr.stat.drop, " == \"pwr.f2.test\""),
     rk.paste.JS(
       echo("pwr.f2.test("),
+      ite(id(pwr.parameter.rad, " != \"Parameter count\""),
+        rk.paste.JS(
+          echo("\n\t\t\tu=", pwr.input.dfu)
+        )
+      ),
       ite(id(pwr.parameter.rad, " != \"Sample size\""),
-        echo(",\n\t\t\tu=", pwr.input.dfu, ",\n\t\t\tv=", pwr.input.dfv),
-        ite(id(pwr.parameter.twodf.rad, " == \"v\""),
-          echo("\n\t\t\tu=", pwr.input.dfu),
+        rk.paste.JS(
+          ite(id(pwr.parameter.rad, " != \"Parameter count\""),
+            echo (",")
+          ),
           echo("\n\t\t\tv=", pwr.input.dfv)
         )
       ),
@@ -436,10 +417,7 @@ pwr.js.calc <- rk.paste.JS(
           )
         ),
         ite(id(pwr.proptype.drop, " == \"two.sample.diff\""),
-          ite(id(pwr.parameter.twosamples.rad, " == \"n2\""),
-            echo(",\n\t\t\tn1=", pwr.input.sample.n1),
-            echo(",\n\t\t\tn2=", pwr.input.sample.n2)
-          )
+          echo(",\n\t\t\tn1=", pwr.input.sample.n1),
         )
       )
     )
