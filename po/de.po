@@ -15,14 +15,14 @@ msgstr ""
 "Report-Msgid-Bugs-To: "
 "http://sourceforge.net/tracker/?group_id=50231&atid=459007\n"
 "POT-Creation-Date: 2014-09-28 19:06+0200\n"
-"PO-Revision-Date: 2014-10-12 17:48+0000\n"
+"PO-Revision-Date: 2014-10-15 08:21+0000\n"
 "Last-Translator: Thomas Friedrichsmeier <Unknown>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Launchpad-Export-Date: 2014-10-13 05:53+0000\n"
+"X-Launchpad-Export-Date: 2014-10-16 04:52+0000\n"
 "X-Generator: Launchpad (build 17196)\n"
 "Language: de\n"
 
@@ -3055,10 +3055,27 @@ msgid ""
 "not defined (e.g. <i>Windows()</i> on Mac OS X) will always fall back to the "
 "<i>RK()</i> device.</p>"
 msgstr ""
+"<p>Viele Skripte benutzen Plattform-spezifische Geräte (<i>X11()</i>, "
+"<i>windows()</i>, <i>quartz()</i>), obwohl an deren Stelle ein beliebeiges "
+"Bildschirm-Grafik-Gerät stehen könnte. RKWard bietet eine Überlagerung für "
+"diese Geräte-Funktionen an, wodurch das Verhalten dieser Funktionen in "
+"Benutzer-Code verändert werden kann:</p><ul><li>Die Aufrufe könne auf "
+"RKWard's natives Grafik-Gerät (<i>RK</i>) umgelenkt werden. Einige, aber "
+"nicht alle Argumente werden dabei weitergegeben, andere "
+"ignoriert.</li><li>Die ursprünglichen Plattform-spezifischen Geräte können "
+"benutzt werden, aber in RKWard Fenster eingebettet werden. Diese Option ist "
+"unter MacOS X nicht verfügbar.</li><li>Die  ursprünglichen Plattform-"
+"spezifischen Geräte können unverändert benutzt werden, ohne RKWard "
+"spezifische Funktionalität.</li></ul><p>Unabhängig von dieser Einstellung "
+"können die ursprünglichen Geräte als <i>grDevices::X11()</i> etc. aufgerufen "
+"werden.</p><p>Der Versuch, ein Gerät auf einer Plattform zu benutzen, auf "
+"der es nicht definiert ist (z.B. <i>Windows()</i> unter MacOS X) wird immer "
+"auf das <i>RK()</i>-Gerät umgelenkt.</p>"
 
 #: settings/rksettingsmodulegraphics.cpp:113
 msgid "Default window size (for RK(), or embedded device windows)"
 msgstr ""
+"Standard Fenster-Größe (für RK(), oder für eingebettete Grafik-Fenster)"
 
 #: settings/rksettingsmodulegraphics.cpp:115
 msgid "Default width (inches):"
@@ -3683,6 +3700,13 @@ msgid ""
 "cleared everytime you close the window.</p><p>Type and severity level of "
 "messages can be controlled from Settings->Configure RKWard->Debug</p>"
 msgstr ""
+"<p>Dieses Fenster ist dafür da, RKWard-spezifische Debug-Meldungen "
+"anzuzeigen. Es richtet sich vor allem an (Plugin-)Entwickler. Es bietet "
+"<b>keine</b> Funktionalität für das Debuggen von R Code.</p><p>Beachten Sie, "
+"dass die Meldungen jedes mal gelöscht werden, wenn Sie das Fenster "
+"schließen.</p><p>Die Arten und der Wichtigkeitsgrad der angezeigten "
+"Meldungen kann unter Einstellungen->Konfiguriere RKWard->Debug eingestellt "
+"werden.</p>"
 
 #: windows/rkdebugmessagewindow.cpp:79
 msgid "About this window"
@@ -4004,6 +4028,9 @@ msgid ""
 "this is not currently supported in this build of RKWard on Mac OS X. See "
 "http://p.sf.net/rkward/mac for more information."
 msgstr ""
+"Sie haben versucht, ein neues R Grafikgeräte-Fenster in RKWard einzubetten. "
+"Dies ist mit dieser Installation von RKWard unter MacOS X nicht möglich. "
+"Mehr Informationen unter http://p.sf.net/rkward/mac ."
 
 #: windows/rkwindowcatcher.cpp:71 windows/rkwindowcatcher.cpp:73
 msgid "Could not embed R X11 window"
@@ -4017,6 +4044,12 @@ msgid ""
 "Alternatively, you may want to adjust Settings->Configure RKWard->Onscreen "
 "Graphics."
 msgstr ""
+"Sie haben versucht, ein neues R Grafikgeräte-Fenster in RKWard einzubetten. "
+"Es wurde jedoch entweder kein Fenster erzeugt, oder RKWard hat dieses "
+"Fenster nicht erkannt. Wenn Sie meinen, dass RKWard hier verbesserungswürdig "
+"ist, können Sie dies als Fehler melden. Alternativ können Sie Ihre "
+"Einstellungen unter Einstellungen->Konfiguriere RKWard->Bildschirm Grafiken "
+"verändern."
 
 #: windows/rkwindowcatcher.cpp:206
 msgid "An error occurred"
@@ -4055,20 +4088,27 @@ msgid ""
 "close the graphics device immediately, in case it is stuck. However, the "
 "last plot may be missing from the plot history, if you do this.</p>"
 msgstr ""
+"<p>Das Grafik-Gerät wird geschlossen, die letzte Grafik wird im Verlauf "
+"gespeichert. Dies kann eine Weile dauern, wenn das R Backend noch "
+"beschäftigt ist. Sie können das Grafik-Fenster direkt schließen, falls es "
+"steckengeblieben ist. Allerdings kann dann die letzte Grafik im Plot-Verlauf "
+"fehlen.</p>"
 
 #: windows/rkwindowcatcher.cpp:309
 msgid ""
 "<p>Note: On X11, the embedded window may be expurged, and you will have to "
 "close it manually in this case.</p>"
 msgstr ""
+"<p>Hinweis: Unter X11 kann es passieren, dass das eingebettete Fenster "
+"ausgeworfen wird. In diesem Fall müssen Sie es von Hand schließen.</p>"
 
 #: windows/rkwindowcatcher.cpp:311
 msgid "Close immediately"
-msgstr ""
+msgstr "Sofort schließen"
 
 #: windows/rkwindowcatcher.cpp:311
 msgid "Keep waiting"
-msgstr ""
+msgstr "Weiter warten"
 
 #: windows/rkwindowcatcher.cpp:420
 msgid "Specify fixed size"
@@ -4241,7 +4281,7 @@ msgstr "Duplizieren"
 
 #: windows/rkwindowcatcher.cpp:706
 msgid "Stop interaction"
-msgstr ""
+msgstr "Interaktion beenden"
 
 #: windows/rkworkplace.cpp:273
 msgid ""
@@ -4525,7 +4565,7 @@ msgstr "&Hilfe"
 #. i18n: ectx: ToolBar (mdiToolBar)
 #: rc.cpp:54
 msgid "Window specific actions bar"
-msgstr ""
+msgstr "Fenster-spezifische Aktionsleiste"
 
 #. i18n: file: windows/detachedwindowcontainer.rc:8
 #. i18n: ectx: Menu (device)
