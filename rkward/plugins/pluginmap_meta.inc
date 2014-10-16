@@ -11,6 +11,6 @@
 			url="http://rkward.sf.net" />
 	</about>
 	<!-- Guard against accidental inclusion of pluginmaps in a different installed version of RKWard -->
-	<dependencies rkward_min_version="0.6.1z" rkward_max_version="0.6.2y" />
+	<dependencies rkward_min_version="0.6.2z" rkward_max_version="0.6.3y" />
 </document>
  
