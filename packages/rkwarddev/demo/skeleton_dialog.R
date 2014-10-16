@@ -146,7 +146,9 @@ dep.opts <- rk.XML.frame(
 #           dep.optioncol.pckg.repo <- rk.XML.optioncolumn(connect=dep.pckg.repo, modifier="text")
         )
       )
-  ), label="Define dependencies", checkable=TRUE, chk=FALSE)
+  ),
+  label="Define dependencies", checkable=TRUE, chk=FALSE
+)
 
 tab2.create <- rk.XML.col(crt.opts, dep.opts)
 

@@ -32,7 +32,6 @@
 #'    \code{\link[rkwarddev:rk.rkh.settings]{rk.rkh.settings}}
 #'    and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
-#' # define a formula section with varselector and varslots
 #' test.checkbox <- rk.XML.cbox(label="foo", value="foo1", chk=TRUE)
 #' # explain the option
 #' test.setting <- rk.rkh.setting(test.checkbox, text="Check this to do Foo.")

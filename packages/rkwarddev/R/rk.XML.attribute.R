@@ -31,7 +31,6 @@
 #'    \code{\link[rkwarddev:rk.XML.components]{rk.XML.components}},
 #'    and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
-#' # define a formula section with varselector and varslots
 #' test.checkbox <- rk.XML.cbox(label="foo", value="foo1", chk=TRUE)
 #' # re-set the attribute
 #' test.attribute <- rk.XML.attribute(test.checkbox, value="bar2", label="bar")

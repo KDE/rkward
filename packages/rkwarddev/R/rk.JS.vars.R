@@ -26,7 +26,7 @@
 #' @param modifiers A character vector with modifiers you'd like to apply to the XML node property.
 #' @param default Logical, if \code{TRUE} the default value (no special modifier) of the node will
 #'    also be defined. Does nothing if \code{modifiers=NULL}.
-#' @param join A character string, useful for GUI elements which accept multiple objects (i.e., multi-varslots).
+#' @param join A character string, useful for GUI elements which accept multiple objects (e.g., multi-varslots).
 #'    If \code{join} is something other than \code{""}, these objects will be collapsed into one string when pasted,
 #'    joined by this string.
 #' @param check.modifiers Logical, if \code{TRUE} the given modifiers will be checked for validity. Should only be

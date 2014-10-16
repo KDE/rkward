@@ -35,7 +35,7 @@
 #' @param default For \code{rk.JS.var} objects only: Logical, if \code{TRUE} the default value (no special modifier) of the node will
 #'    also be defined. Does nothing if \code{modifiers=NULL}.
 #' @param join For \code{rk.JS.var} objects only: A character string, useful for GUI elements which accept multiple objects
-#'    (i.e., multi-varslots). If \code{join} is something other than \code{""}, these objects will be collapsed into one string
+#'    (e.g., multi-varslots). If \code{join} is something other than \code{""}, these objects will be collapsed into one string
 #'    when pasted, joined by this string.
 #' @param getter For \code{rk.JS.var} objects only: A character string, naming the JavaScript function which should be used to get the
 #'    values in the actual plugin. Depending on the XML element, \code{"getString"}, \code{"getBool"} or \code{"getList"} can be

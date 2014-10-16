@@ -34,7 +34,7 @@
 
 rk.JS.scan <- function(pXML, js=TRUE, add.abbrev=FALSE, guess.getter=FALSE, indent.by="\t"){
 
-  JS.relevant.tags <- c("radio", "varslot", "browser", "dropdown",
+  JS.relevant.tags <- c("radio", "varslot", "valueslot", "browser", "dropdown",
     "checkbox", "saveobject", "input", "spinbox", "optioncolumn", "matrix")
   
   # getting the relevant IDs out of optionsets is a little tricky

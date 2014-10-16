@@ -312,6 +312,7 @@ JS.getters.default <- list(
   "radio"="getString",
   "saveobject"="getString",
   "spinbox"="getString",
+  "valueslot"="getString", 
   "varslot"="getString"
 )
 # we can also guess some fitting getter functions by the modifier set
@@ -674,6 +675,8 @@ all.valid.modifiers <- list(
   saveobject=c("selection", "parent", "objectname", "active"),
   spinbox=c("int", "real"),
   text=c("text"),
+  valueselector=c("available", "selected", "root"),
+  valueslot=c("available", "selected", "source", "shortname", "label"),
   varselector=c("selected", "root"),
   varslot=c("available", "selected", "source", "shortname", "label")
 ) ## end list with valid modifiers
@@ -746,14 +749,14 @@ all.valid.children <- list(
   # 'as' is not a node, but an attribute of <copy>
   as=c("browser", "checkbox", "column", "copy",
     "dropdown", "formula", "frame", "input", "page", "radio", "row", "saveobject",
-    "spinbox", "stretch", "tabbook", "text", "varselector", "varslot"),
+    "spinbox", "stretch", "tabbook", "text", "valueselector", "valueslot", "varselector", "varslot"),
   component=c("dependencies"),
   components=c("component"),
   context=c("menu", "!--"),
   dialog=c("browser", "checkbox", "column", "copy",
     "dropdown", "embed", "formula", "frame", "include", "input", "insert", "matrix",
     "optionset", "preview", "radio", "row", "saveobject", "spinbox", "stretch", "tabbook",
-    "text", "varselector", "varslot", "!--"),
+    "text", "valueselector", "valueslot", "varselector", "varslot", "!--"),
   dropdown=c("option"),
   hierarchy=c("menu", "!--"),
   logic=c("connect", "convert", "dependency_check", "external", "include", "insert",
@@ -762,14 +765,14 @@ all.valid.children <- list(
   optionset=c("content", "logic", "optioncolumn"),
   page=c("browser", "checkbox", "column", "copy",
     "dropdown", "formula", "frame", "input", "matrix", "optionset", "page", "radio",
-    "row", "saveobject", "spinbox", "stretch", "tabbook", "text", "varselector",
-    "varslot", "!--"),
+    "row", "saveobject", "spinbox", "stretch", "tabbook", "text", "valueselector",
+    "valueslot", "varselector", "varslot", "!--"),
   radio=c("option"),
   settings=c("setting", "caption", "!--"),
   wizard=c("browser", "checkbox", "column", "copy",
     "dropdown", "embed", "formula", "frame", "include", "input", "insert", "matrix",
     "optionset", "page", "preview", "radio", "row", "saveobject", "spinbox", "stretch",
-    "tabbook", "text", "varselector", "varslot", "!--")
+    "tabbook", "text", "valueselector", "valueslot", "varselector", "varslot", "!--")
 ) ## end list with valid child nodes
 
 

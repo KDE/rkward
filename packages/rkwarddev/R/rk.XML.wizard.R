@@ -20,7 +20,8 @@
 #'
 #' This function will create a wizard section with optional child nodes "browser", "checkbox",
 #' "column", "copy", "dropdown", "embed", "formula", "frame", "include", "input", "insert",
-#' "page", "preview", "radio", "row", "saveobject", "spinbox", "stretch", "tabbook", "text", "varselector" and "varslot".
+#' "page", "preview", "radio", "row", "saveobject", "spinbox", "stretch", "tabbook", "text",
+#' "valueselector", "valueslot", "varselector" and "varslot".
 #'
 #' @param ... Objects of class \code{XiMpLe.node}
 #' @param label Character string, a text label for this plugin element.

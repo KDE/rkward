@@ -1,6 +1,6 @@
 ChangeLog for package rkwarddev
 
-changes in version 0.06-5 (2014-10-12)
+changes in version 0.06-5 (2014-10-16)
 fixed:
   - the "show" feature in rk.plugin.skeleton() was broken due to changes in the namespace defaults
   - scanning plugin XML code for JS and help related content didn't work as expected in rk.plugin.component()
@@ -9,6 +9,8 @@ fixed:
   - internal function paste.JS.options(), used by rk.JS.options(), was only working correctly for the "then"
     part if ite() statements in arrays; now also produces usable code for an "else" part, if available
 added:
+  - new functions rk.XML.valueselector(),  rk.XML.valueslot() and the combining rk.XML.values() to define
+    <valueselector> and <valueslot> nodes, similar to rk.XML.varselector(),  rk.XML.varslot() and rk.XML.vars()
   - new functions rk.set.rkh.prompter() and rk.get.rkh.prompter() to make it easier to generate help files
     (later...)
   - rk.rkh.scan() (and automatically rk.plugin.skeleton() and rk.plugin.component()) are now capable of fetching
