@@ -2,7 +2,7 @@
                           xmlhelper.h  -  description
                              -------------------
     begin                : Fri May 6 2005
-    copyright            : (C) 2005, 2007, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2007, 2011, 2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -134,9 +134,6 @@ When calling this function, highestError () will be reset to 0.
  * @returns the contents as a QString (may be empty) */
 	QString getRawContents (const QDomElement &element, int debug_level);
 
-/** @returns the level of the most severe error since the last call to openXMLFile () (based on the debug_level options passed to XMLHelper () */
-	int highestError () { return (highest_error); };
-
 /** displays a custom-error message (also used internally by XMLHelper to display errors
 @param in_node a pointer to the node/element to which the error relates (or 0). If given and non-zero, a "backtrace" of where the error is located will be generated
 @param message the error-message to display
@@ -150,7 +147,6 @@ private:
 /** copy the node list into a child list. The main effect is that a child list is not updated according to document changes */
 	XMLChildList nodeListToChildList (const QDomNodeList &from);
 	void replaceWithChildren (QDomNode *replaced, const QDomElement &replacement_parent);
-	int highest_error;
 	static XMLHelper *static_xml_helper;
 	QString filename;
 };

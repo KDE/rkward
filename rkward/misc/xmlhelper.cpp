@@ -2,7 +2,7 @@
                           xmlhelper.cpp  -  description
                              -------------------
     begin                : Fri May 6 2005
-    copyright            : (C) 2005, 2007, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2007, 2011, 2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -32,8 +32,6 @@ XMLHelper *XMLHelper::static_xml_helper=0;
 
 XMLHelper::XMLHelper () {
 	RK_TRACE (XML);
-
-	highest_error = 0;
 }
 
 XMLHelper::~XMLHelper () {
@@ -58,12 +56,12 @@ QDomElement XMLHelper::openXMLFile (const QString &filename, int debug_level, bo
 	QDomDocument doc;
 
 	XMLHelper::filename = filename;
-	highest_error = 0;
 	
 	QFile f (filename);
-	if (!f.open (QIODevice::ReadOnly)) displayError (0, i18n("Could not open file for reading"), debug_level, DL_ERROR);
+	if (!f.open (QIODevice::ReadOnly)) displayError (0, i18n("Could not open file %1 for reading").arg (filename), debug_level, DL_ERROR);
 	if (!doc.setContent(&f, false, &error_message, &error_line, &error_column)) {
 		displayError (0, i18n ("Error parsing XML-file. Error-message was: '%1' in line '%2', column '%3'. Expect further errors to be reported below", error_message, error_line, error_column), debug_level, DL_ERROR);
+		return QDomElement ();
 	}
 	f.close();
 
@@ -332,7 +330,6 @@ void XMLHelper::displayError (const QDomNode *in_node, const QString &message, i
 	RK_TRACE (XML);
 
 	if (message_level < debug_level) message_level = debug_level;
-	if (highest_error < debug_level) highest_error = debug_level;
 
 	if ((RK_Debug_Flags & XML) && (message_level >= RK_Debug_Level)) {
 		QString backtrace = i18n ("XML-parsing '%1' ", filename);

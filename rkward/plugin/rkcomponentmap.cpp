@@ -2,7 +2,7 @@
                           rkcomponentmap.cpp  -  description
                              -------------------
     begin                : Thu May 12 2005
-    copyright            : (C) 2005-2013 by Thomas Friedrichsmeier
+    copyright            : (C) 2005-2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -354,7 +354,7 @@ RKPluginMapParseResult RKComponentMap::addPluginMapLocal (const QString& plugin_
 	XMLChildList list;
 
 	QDomElement document_element = xml->openXMLFile (plugin_map_file_abs, DL_ERROR);
-	if (xml->highestError () >= DL_ERROR) {
+	if (document_element.isNull ()) {
 		ret.addAndPrintError (DL_ERROR, i18n ("Could not open plugin map file %1. (Is not readble, or failed to parse)", plugin_map_file_abs));
 		return ret;
 	}

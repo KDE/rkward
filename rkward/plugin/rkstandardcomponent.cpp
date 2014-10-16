@@ -2,7 +2,7 @@
                           rkstandardcomponent  -  description
                              -------------------
     begin                : Sun Feb 19 2006
-    copyright            : (C) 2006, 2007, 2009, 2010, 2011, 2012 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007, 2009, 2010, 2011, 2012, 2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -91,7 +91,7 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 	// open the main description file for parsing
 	XMLHelper* xml = XMLHelper::getStaticHelper ();
 	QDomElement doc_element = xml->openXMLFile (filename, DL_ERROR);
-	if (xml->highestError () >= DL_ERROR) {
+	if (doc_element.isNull ()) {
 		KMessageBox::error (this, i18n ("There has been an error while trying to parse the description of this plugin ('%1'). Please refer to stdout for details.", filename), i18n ("Could not create plugin"));
 		kill ();
 		return;
@@ -170,7 +170,7 @@ RKStandardComponent::~RKStandardComponent () {
 	RK_TRACE (PLUGIN);
 
 	if (gui) delete gui;	// NOTE: *NOT* using gui->deleteLater (). Destructing the GUI immediately is necessary to get rid of child components, immediately. Otherwise these could try to access their (destroyed) parent, e.g. if they have a timer running that gets triggered before the deletion event arrives.
-	backend->destroy ();	// it will self-destruct, when it has closed the process.
+	if (backend) backend->destroy ();	// it will self-destruct, when it has closed the process.
 }
 
 void RKStandardComponent::kill () {
