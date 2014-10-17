@@ -66,7 +66,7 @@
 						value = gui.getString ("value");
 						valuequoted = quote (value);
 					}
-					gui.setValue ("logical.number", value);
+					gui.setValue ("logical.number", value ? 1 : 0);
 					gui.setValue ("spinbox.real", value);
 					gui.setValue ("input.text", value);
 					gui.setValue ("valuequoted", valuequoted);
