@@ -1,3 +1,9 @@
+rkward (0.6.2~rc1-2) unstable; urgency=low
+
+  * bump standards version to 3.9.6 (no changes needed)
+
+ -- Thomas Friedrichsmeier <tfry@users.sourceforge.net>  Fri, 17 Oct 2014 10:30:00 +0100
+
 rkward (0.6.2~rc1-1) unstable; urgency=low
 
   * new upstream release
