@@ -2,7 +2,7 @@
 	<about
 		name="RKWard pluginmap"
 		shortinfo="Part of the official RKWard distribution"
-		version="0.6.1"
+		version="0.6.3"
 		license="GPL"
 		url="http://rkward.sf.net">
 		<author

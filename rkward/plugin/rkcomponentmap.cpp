@@ -349,7 +349,7 @@ RKPluginMapParseResult RKComponentMap::addPluginMapLocal (const QString& plugin_
 	QDomElement element;
 	XMLChildList list;
 
-	QDomElement document_element = xml.openXMLFile (plugin_map_file_abs, DL_ERROR);
+	QDomElement document_element = xml.openXMLFile (DL_ERROR);
 	if (document_element.isNull ()) {
 		ret.addAndPrintError (DL_ERROR, i18n ("Could not open plugin map file %1. (Is not readble, or failed to parse)", plugin_map_file_abs));
 		return ret;

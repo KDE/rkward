@@ -91,7 +91,7 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 
 	// open the main description file for parsing
 	XMLHelper* xml = getXmlHelper ();
-	QDomElement doc_element = xml->openXMLFile (filename, DL_ERROR);
+	QDomElement doc_element = xml->openXMLFile (DL_ERROR);
 	if (doc_element.isNull ()) {
 		KMessageBox::error (this, i18n ("There has been an error while trying to parse the description of this plugin ('%1'). Please refer to stdout for details.", filename), i18n ("Could not create plugin"));
 		kill ();
@@ -287,7 +287,7 @@ void RKStandardComponent::switchInterface () {
 
 	// open the main description file for parsing (again)
 	XMLHelper* xml = getXmlHelper ();
-	QDomElement doc_element = xml->openXMLFile (filename, DL_ERROR);
+	QDomElement doc_element = xml->openXMLFile (DL_ERROR);
 	int force_mode = 2;
 	if (isWizardish ()) force_mode = 1;
 

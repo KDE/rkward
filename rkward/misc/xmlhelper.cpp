@@ -36,15 +36,13 @@ XMLHelper::~XMLHelper () {
 	RK_TRACE (XML);
 }
 
-QDomElement XMLHelper::openXMLFile (const QString &filename, int debug_level, bool with_includes, bool with_snippets) {
+QDomElement XMLHelper::openXMLFile (int debug_level, bool with_includes, bool with_snippets) {
 	RK_TRACE (XML);
 
 	int error_line, error_column;
 	QString error_message;
 	QDomDocument doc;
 
-	XMLHelper::filename = filename;
-	
 	QFile f (filename);
 	if (!f.open (QIODevice::ReadOnly)) displayError (0, i18n("Could not open file %1 for reading").arg (filename), debug_level, DL_ERROR);
 	if (!doc.setContent(&f, false, &error_message, &error_line, &error_column)) {
@@ -65,7 +63,8 @@ QDomElement XMLHelper::openXMLFile (const QString &filename, int debug_level, bo
 			inc_filename = base.filePath (inc_filename);
 
 			// import
-			QDomElement included = openXMLFile (inc_filename, debug_level, true, false);
+			XMLHelper inc_xml = XMLHelper (inc_filename);
+			QDomElement included = inc_xml.openXMLFile (debug_level, true, false);
 
 			if (!included.isNull ()) {
 				QDomElement copied = doc.importNode (included, true).toElement ();

@@ -492,11 +492,14 @@ bool RKHTMLWindow::renderRKHelp (const KUrl &url) {
 	bool for_component = false;		// is this a help page for a component, or a top-level help page?
 	if (url.host () == "component") for_component = true;
 
-	XMLHelper component_xml;
-	XMLHelper help_xml;
 	QStringList anchors, anchornames;
 
 	RKComponentHandle *chandle = 0;
+	if (for_component) {
+		chandle = componentPathToHandle (url.path ());
+		if (!chandle) return false;
+	}
+	XMLHelper component_xml (for_component ? chandle->getFilename () : QString ());
 	QString help_file_name;
 	QDomElement element;
 	QDomElement component_doc_element;
@@ -505,10 +508,7 @@ bool RKHTMLWindow::renderRKHelp (const KUrl &url) {
 
 	// determine help file, and prepare
 	if (for_component) {
-		chandle = componentPathToHandle (url.path ());
-		if (!chandle) return false;
-
-		component_doc_element = component_xml.openXMLFile (chandle->getFilename (), DL_ERROR);
+		component_doc_element = component_xml.openXMLFile (DL_ERROR);
 		if (component_doc_element.isNull ()) return false;
 		element = component_xml.getChildElement (component_doc_element, "help", DL_ERROR);
 		if (!element.isNull ()) {
@@ -521,7 +521,8 @@ bool RKHTMLWindow::renderRKHelp (const KUrl &url) {
 	RK_DEBUG (APP, DL_DEBUG, "rendering help page for local file %s", help_file_name.toLatin1().data());
 
 	// open help file
-	QDomElement help_doc_element = help_xml.openXMLFile (help_file_name, DL_ERROR);
+	XMLHelper help_xml (help_file_name);
+	QDomElement help_doc_element = help_xml.openXMLFile (DL_ERROR);
 	if (help_doc_element.isNull () && (!for_component)) return false;
 
 	// initialize output, and set title
@@ -638,8 +639,8 @@ bool RKHTMLWindow::renderRKHelp (const KUrl &url) {
 	if (for_component) {
 		element = component_xml.getChildElement (component_doc_element, "about", DL_INFO);
 		if (element.isNull ()) {
-			XMLHelper pluginmap_helper;
-			element = pluginmap_helper.openXMLFile (chandle->getPluginmapFilename (), DL_ERROR);
+			XMLHelper pluginmap_helper (chandle->getPluginmapFilename ());
+			element = pluginmap_helper.openXMLFile (DL_ERROR);
 			element = pluginmap_helper.getChildElement (element, "about", DL_INFO);
 		}
 	} else {
@@ -718,9 +719,8 @@ void RKHTMLWindow::prepareHelpLink (QDomElement *link_element) {
 			} else if (url.host () == "page") {
 				QString help_base_dir = RKCommonFunctions::getRKWardDataDir () + "pages/";
 		
-				XMLHelper xml;
-				QString help_file_name = help_base_dir + url.path () + ".rkh";
-				QDomElement doc_element = xml.openXMLFile (help_file_name, DL_WARNING);
+				XMLHelper xml (help_base_dir + url.path () + ".rkh");
+				QDomElement doc_element = xml.openXMLFile (DL_WARNING);
 				QDomElement title_element = xml.getChildElement (doc_element, "title", DL_WARNING);
 				text = title_element.text ();
 			}

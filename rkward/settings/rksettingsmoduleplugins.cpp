@@ -352,8 +352,8 @@ void RKSettingsModulePlugins::fixPluginMapLists () {
 		}
 
 		if (inf.id.isEmpty ()) {
-			XMLHelper xml = XMLHelper ();
-			QDomElement de = xml.openXMLFile (inf.filename, DL_WARNING);
+			XMLHelper xml (inf.filename);
+			QDomElement de = xml.openXMLFile (DL_WARNING);
 			inf.id = RKPluginMapFile::parseId (de, xml);
 			inf.priority = xml.getMultiChoiceAttribute (de, "priority", "hidden;low;medium;high", (int) PriorityMedium, DL_WARNING);
 		}
@@ -622,8 +622,8 @@ const RKSettingsModulePluginsModel::PluginMapMetaInfo& RKSettingsModulePluginsMo
 	if (!plugin_map_dynamic_info.contains (pluginmapfile)) {
 		// TODO
 		PluginMapMetaInfo inf;
-		XMLHelper xml;
-		QDomElement doc_elem = xml.openXMLFile (pluginmapfile, DL_WARNING);
+		XMLHelper xml (pluginmapfile);
+		QDomElement doc_elem = xml.openXMLFile (DL_WARNING);
 		inf.about = new RKComponentAboutData (xml.getChildElement (doc_elem, "about", DL_INFO), xml);
 		inf.dependencies = RKComponentDependency::parseDependencies (xml.getChildElement (doc_elem, "dependencies", DL_INFO), xml);
 		plugin_map_dynamic_info.insert (pluginmapfile, inf);

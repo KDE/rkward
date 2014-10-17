@@ -23,33 +23,28 @@
 /** a helper type used to pass a list of direct child elements of a node */
 typedef QList<QDomElement> XMLChildList;
 
-/** This class contains some convenience functions for parsing XML files (DOM). Usually you will use a static instance of this class (getStaticHelper ()), which will be created early in rkward initialization. The error-logs will be reset every time you open a new XML-file using openXMLFile (). This is fine as long as you are parsing files one by one instead of mixing several files. In the latter case you will want to create additional instances of XMLHelper (it's quite possible, this mechanism will be changed, but I want to get going before considering all implications ;-)).
+/** This class contains some convenience functions for parsing XML files (DOM). RKComponents should retrieve the instance appropriate for parsing their
+XML elements from the parent component: @see RKComponent::xmlHelper() .
 
-The functions in this class provide error-messages for illegal/problematic input. Information on the error status of the last commands is provided. More documentation to come once the API is somewhat finalized.
-
-Warning/Error messages will always be printed using the standard debugging framework (shown according to user settings).
-
-TODO: Probably it's not really clever to use the debugging-framework for showing error-messages in XML-file parsing. Anyway, the only function to adjust in order to change this would be displayError ().
-
-TODO: Either something like push-context/pop-context or an added closeFile (). This way, when parsing several XML-files, we'd still get the correct messages. Internally a stack of filenames and highest_errors would be kept.
+The functions in this class provide error-messages for illegal/problematic input. Warning/Error messages will always be printed using the standard debugging framework (shown according to user settings).
 
 @author Thomas Friedrichsmeier
 */
 class XMLHelper {
 public:
-/** create an instance of XMLHelper. */
-	XMLHelper (const QString &filename=QString ());
+/** create an instance of XMLHelper.
+ @param filename the name of the file to parse. The file is not yet opened on construction. Use openXMLFile() for that. */
+	XMLHelper (const QString &filename);
 /** destrcutor */
 	~XMLHelper ();
 	
-/** open the given filename (read-only) and do basic parsing. Internally, the file will be closed right away, so there is no need to call an additional closeFile-equivalent. Once the returned element (and any copies you make of it) goes out of scope, the entire element-tree allocated will be freed.
-When calling this function, highestError () will be reset to 0.
-@param filename the name of the file to parse
+/** Open the filename set in the constructor (read-only) and do basic parsing. Internally, the file will be closed right away, so there is no need to call an additional closeFile-equivalent. Once the returned element (and any copies you make of it) goes out of scope, the entire element-tree allocated will be freed,
+but you can re-open the file, if needed.
 @param debug_level level of debug message to generate if opening/parsing fails
 @param with_includes should the helper take care of resolving "include" elements?
 @param with_snippets should the helper take care of resolving "insert" elements?
 @returns the document-element of the file. */
-	QDomElement openXMLFile (const QString &filename, int debug_level, bool with_includes=true, bool with_snippets=true);
+	QDomElement openXMLFile (int debug_level, bool with_includes=true, bool with_snippets=true);
 
 /** resolve "snippet" elements in the given element. It is assumed that the from element will contain a "snippets" section, i.e. it is generally a document. */
 	QDomElement resolveSnippets (QDomElement &from);
