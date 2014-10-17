@@ -30,7 +30,7 @@
 RKTabPage::RKTabPage (const QDomElement &element, RKComponent *parent_component, QTabWidget *parent_widget) : RKComponent (parent_component, parent_widget) {
 	RK_TRACE (PLUGIN);
 
-	XMLHelper* xml = XMLHelper::getStaticHelper ();
+	XMLHelper* xml = parent_component->xmlHelper ();
 	label = xml->getStringAttribute (element, "label", QString::null, DL_WARNING);
 
 	QVBoxLayout *layout = new QVBoxLayout (this);

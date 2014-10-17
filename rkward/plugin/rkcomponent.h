@@ -2,7 +2,7 @@
                           rkcomponent  -  description
                              -------------------
     begin                : Tue Dec 13 2005
-    copyright            : (C) 2005, 2006, 2007, 2009, 2010, 2011, 2012 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2009, 2010, 2011, 2012, 2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -154,6 +154,7 @@ private:
 
 #include "rkcomponentproperties.h"
 
+class XMLHelper;
 /** abstract base class of all RKComponents, including component widgets */
 class RKComponent : public QWidget, public RKComponentBase {
 	Q_OBJECT
@@ -203,9 +204,11 @@ public:
 /** The parent of this component. Should be notified, whenever isSatisfied () or recursiveStatus () changed. */
 	RKComponent *parentComponent () const { return _parent; };
 /** The standard component containing this component (if any). If @param id_adjust is given, it will be set to a relative path to the standard component. */
-	RKStandardComponent *standardComponent (QString *id_adjust=0);
+	RKStandardComponent *standardComponent (QString *id_adjust=0) const;
 /** Like standardcomponent, but will return the topmost component in case of embedding. */
 	RKStandardComponent *topmostStandardComponent ();
+/** Return a properly initialize helper for parsing XML in this component. */
+	XMLHelper *xmlHelper () const;
 
 /** Find the id of this component. NOTE: this is slow. Better to store the id in the first place, if needed */
 	QString getIdInParent () const;

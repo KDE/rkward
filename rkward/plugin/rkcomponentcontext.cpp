@@ -2,7 +2,7 @@
                           rkcomponentcontext  -  description
                              -------------------
     begin                : Mon Jan 22 2007
-    copyright            : (C) 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -35,12 +35,11 @@ RKContextMap::~RKContextMap () {
 	RK_TRACE (PLUGIN);
 }
 
-int RKContextMap::create (const QDomElement &context_element, const QString &component_namespace) {
+int RKContextMap::create (const QDomElement &context_element, XMLHelper &xml, const QString &component_namespace) {
 	RK_TRACE (PLUGIN);
 
-	XMLHelper *xml = XMLHelper::getStaticHelper ();
-	QDomElement element = xml->getChildElement (gui_xml.documentElement (), "MenuBar", DL_ERROR);
-	return (createMenus (element, context_element, component_namespace));
+	QDomElement element = xml.getChildElement (gui_xml.documentElement (), "MenuBar", DL_ERROR);
+	return (createMenus (element, xml, context_element, component_namespace));
 }
 
 RKContextHandler *RKContextMap::makeContextHandler (QObject *parent, bool create_actions) {

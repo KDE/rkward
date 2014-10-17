@@ -369,10 +369,10 @@ void RKComponent::changed () {
 	emit (componentChanged (this));
 }
 
-RKStandardComponent *RKComponent::standardComponent (QString *id_adjust) {
+RKStandardComponent *RKComponent::standardComponent (QString *id_adjust) const {
 	RK_TRACE (PLUGIN);
 
-	RKComponent *p = this;
+	RKComponent *p = const_cast<RKComponent*> (this);
 	while (p) {
 		if (p->type () == RKComponent::ComponentStandard) return static_cast<RKStandardComponent*> (p);
 		if (id_adjust) id_adjust->prepend (p->getIdInParent () + '.');
@@ -391,6 +391,13 @@ RKStandardComponent* RKComponent::topmostStandardComponent () {
 	// NOTE: currently, *only* standard components can be topmost
 	RK_ASSERT (false);
 	return 0;
+}
+
+XMLHelper* RKComponent::xmlHelper () const {
+	RK_TRACE (PLUGIN);
+
+	RKStandardComponent *sc = standardComponent ();
+	return sc->getXmlHelper ();
 }
 
 void RKComponent::removeFromParent () {

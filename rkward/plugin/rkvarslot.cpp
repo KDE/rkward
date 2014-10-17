@@ -36,7 +36,7 @@
 RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget) : RKComponent (parent_component, parent_widget) {
 	RK_TRACE (PLUGIN);
 
-	XMLHelper *xml = XMLHelper::getStaticHelper ();
+	XMLHelper *xml = parent_component->xmlHelper ();
 	updating = false;
 
 	// basic layout

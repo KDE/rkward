@@ -42,7 +42,7 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 	dev_num = 0;
 
 	// get xml-helper
-	XMLHelper *xml = XMLHelper::getStaticHelper ();
+	XMLHelper *xml = parent_component->xmlHelper ();
 
 	// create and add property
 	addChild ("state", state = new RKComponentPropertyBool (this, true, preview_active, "active", "inactive"));

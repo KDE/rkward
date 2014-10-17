@@ -30,7 +30,7 @@ RKPluginBrowser::RKPluginBrowser (const QDomElement &element, RKComponent *paren
 	RK_TRACE (PLUGIN);
 
 	// get xml-helper
-	XMLHelper *xml = XMLHelper::getStaticHelper ();
+	XMLHelper *xml = parent_component->xmlHelper ();
 
 	// create and add property
 	addChild ("selection", selection = new RKComponentPropertyBase (this, true));

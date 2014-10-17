@@ -73,6 +73,7 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 	scripting = 0;
 	gui = 0;
 	wizard = 0;
+	xml = 0;
 	created = false;
 	killed = false;
 	addChild ("code", code = new RKComponentPropertyCode (this, true));		// do not change this name!
@@ -89,7 +90,7 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 	addChild ("current_dataframe", current_dataframe_property);
 
 	// open the main description file for parsing
-	XMLHelper* xml = XMLHelper::getStaticHelper ();
+	XMLHelper* xml = getXmlHelper ();
 	QDomElement doc_element = xml->openXMLFile (filename, DL_ERROR);
 	if (doc_element.isNull ()) {
 		KMessageBox::error (this, i18n ("There has been an error while trying to parse the description of this plugin ('%1'). Please refer to stdout for details.", filename), i18n ("Could not create plugin"));
@@ -171,6 +172,7 @@ RKStandardComponent::~RKStandardComponent () {
 
 	if (gui) delete gui;	// NOTE: *NOT* using gui->deleteLater (). Destructing the GUI immediately is necessary to get rid of child components, immediately. Otherwise these could try to access their (destroyed) parent, e.g. if they have a timer running that gets triggered before the deletion event arrives.
 	if (backend) backend->destroy ();	// it will self-destruct, when it has closed the process.
+	delete xml;
 }
 
 void RKStandardComponent::kill () {
@@ -219,10 +221,17 @@ void RKStandardComponent::setCaption (const QString &caption) {
 	gui->setWindowTitle (caption);
 }
 
+XMLHelper* RKStandardComponent::getXmlHelper () {
+	RK_TRACE (PLUGIN);
+
+	if (!xml) xml = new XMLHelper (filename);
+	return xml;
+}
+
 bool RKStandardComponent::createTopLevel (const QDomElement &doc_element, int force_mode, bool enslaved) {
 	RK_TRACE (PLUGIN);
 
-	XMLHelper* xml = XMLHelper::getStaticHelper ();
+	XMLHelper* xml = getXmlHelper ();
 	bool build_wizard = false;
 	QDomElement dialog_element;
 	QDomElement wizard_element;
@@ -277,7 +286,7 @@ void RKStandardComponent::switchInterface () {
 	RK_ASSERT (gui);		// this should only ever happen on top level
 
 	// open the main description file for parsing (again)
-	XMLHelper* xml = XMLHelper::getStaticHelper ();
+	XMLHelper* xml = getXmlHelper ();
 	QDomElement doc_element = xml->openXMLFile (filename, DL_ERROR);
 	int force_mode = 2;
 	if (isWizardish ()) force_mode = 1;
@@ -324,14 +333,14 @@ void RKStandardComponent::discard () {
 void RKStandardComponent::buildAndInitialize (const QDomElement &doc_element, const QDomElement &gui_element, QWidget *parent_widget, bool build_wizard, bool enslaved) {
 	RK_TRACE (PLUGIN);
 
-	XMLHelper* xml = XMLHelper::getStaticHelper ();
+	XMLHelper* xml = getXmlHelper ();
 
 	// create a builder
 	RKComponentBuilder *builder = new RKComponentBuilder (this, doc_element);
 
 	// go
-	builder->buildElement (gui_element, parent_widget, build_wizard);
-	builder->parseLogic (xml->getChildElement (doc_element, "logic", DL_INFO));
+	builder->buildElement (gui_element, *xml, parent_widget, build_wizard);
+	builder->parseLogic (xml->getChildElement (doc_element, "logic", DL_INFO), *xml);
 	setCaption (xml->getStringAttribute (gui_element, "label", QString::null, DL_WARNING));
 
 	// initialize
@@ -515,19 +524,18 @@ RKComponentBuilder::~RKComponentBuilder () {
 	RK_TRACE (PLUGIN);
 }
 
-QDomElement RKComponentBuilder::doElementCopy (const QString id, const QDomElement &copy) {
+QDomElement RKComponentBuilder::doElementCopy (const QString id, XMLHelper &xml, const QDomElement &copy) {
 	RK_TRACE (PLUGIN);
 
-	XMLHelper* xml = XMLHelper::getStaticHelper ();
 	QDomElement res;
 
 	if (id.isEmpty ()) {
-		xml->displayError (&copy, "no id given for copy element", DL_ERROR, DL_ERROR);
+		xml.displayError (&copy, "no id given for copy element", DL_ERROR, DL_ERROR);
 		return res;	// null
 	}
 
 	// find matching element to copy from
-	XMLChildList candidates = xml->findElementsWithAttribute (doc_elem, "id", id, true, DL_ERROR);
+	XMLChildList candidates = xml.findElementsWithAttribute (doc_elem, "id", id, true, DL_ERROR);
 	XMLChildList::const_iterator it;
 	for (it = candidates.constBegin (); it != candidates.constEnd (); ++it) {
 		if ((*it).tagName () == QLatin1String ("copy")) continue;
@@ -535,7 +543,7 @@ QDomElement RKComponentBuilder::doElementCopy (const QString id, const QDomEleme
 		break;
 	}
 	if (res.isNull ()) {
-		xml->displayError (&copy, "no matching element found to copy from", DL_ERROR, DL_ERROR);
+		xml.displayError (&copy, "no matching element found to copy from", DL_ERROR, DL_ERROR);
 		return res;
 	}
 
@@ -551,20 +559,19 @@ QDomElement RKComponentBuilder::doElementCopy (const QString id, const QDomEleme
 	return res;
 }
 
-void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *parent_widget, bool allow_pages) {
+void RKComponentBuilder::buildElement (const QDomElement &element, XMLHelper &xml, QWidget *parent_widget, bool allow_pages) {
 	RK_TRACE (PLUGIN);
 
-	XMLHelper* xml = XMLHelper::getStaticHelper ();
-	XMLChildList children = xml->getChildElements (element, QString::null, DL_ERROR);
+	XMLChildList children = xml.getChildElements (element, QString::null, DL_ERROR);
 	
 	XMLChildList::const_iterator it;
 	for (it = children.constBegin (); it != children.constEnd (); ++it) {
 		RKComponent *widget = 0;
 		QDomElement e = *it;		// shorthand
-		QString id = xml->getStringAttribute (e, "id", QString::null, DL_INFO);
+		QString id = xml.getStringAttribute (e, "id", QString::null, DL_INFO);
 
 		if (e.tagName () == QLatin1String ("copy")) {
-			e = doElementCopy (id, e);
+			e = doElementCopy (id, xml, e);
 		}	// no else, here. e may be changed to some entirely different element, now.
 
 		if (allow_pages && (e.tagName () == QLatin1String ("page"))) {
@@ -572,14 +579,14 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 			QVBoxLayout *layout = new QVBoxLayout (widget);
 			KVBox *box = new KVBox (widget);
 			layout->addWidget (box);
-			buildElement (e, box, false);
+			buildElement (e, xml, box, false);
 		} else if (e.tagName () == QLatin1String ("row")) {
 			widget = new RKComponent (component (), parent_widget);		// wrapping this (and column, below) inside an RKComponent has the benefit, that it can have an id, and hence can be set to visibile/hidden, enabled/disabled
 			QVBoxLayout *layout = new QVBoxLayout (widget);
 			layout->setContentsMargins (0, 0, 0, 0);
 			KHBox *box = new KHBox (widget);
 			layout->addWidget (box);
-			buildElement (e, box, false);
+			buildElement (e, xml, box, false);
 		} else if (e.tagName () == QLatin1String ("stretch")) {
 			QWidget *stretch = new QWidget (parent_widget);
 			stretch->setSizePolicy (QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
@@ -592,11 +599,11 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 			layout->setContentsMargins (0, 0, 0, 0);
 			KVBox *box = new KVBox (widget);
 			layout->addWidget (box);
-			buildElement (e, box, false);
+			buildElement (e, xml, box, false);
 		} else if (e.tagName () == QLatin1String ("frame")) {
 			RKPluginFrame *frame = new RKPluginFrame (e, component (), parent_widget);
 			widget = frame;
-			buildElement (e, frame->getPage (), false);
+			buildElement (e, xml, frame->getPage (), false);
 		} else if (e.tagName () == QLatin1String ("tabbook")) {
 			QTabWidget *tabbook = new QTabWidget (parent_widget);
 			QDomNodeList tabs = e.childNodes ();
@@ -604,8 +611,8 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 				QDomElement tab_e = tabs.item (t).toElement ();
 				if (tab_e.tagName () == QLatin1String ("tab")) {
 					RKTabPage *tabpage = new RKTabPage (tab_e, component (), tabbook);
-					buildElement (tab_e, tabpage->getPage (), false);
-					QString tab_id = xml->getStringAttribute (tab_e, "id", QString::null, DL_INFO);
+					buildElement (tab_e, xml, tabpage->getPage (), false);
+					QString tab_id = xml.getStringAttribute (tab_e, "id", QString::null, DL_INFO);
 					if (!tab_id.isNull ()) {
 						parent->addChild (tab_id, tabpage);
 					}
@@ -615,15 +622,15 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 			widget = new RKVarSelector (e, component (), parent_widget);
 		} else if ((e.tagName () == QLatin1String ("varslot")) || (e.tagName () == QLatin1String ("valueslot"))) {
 			widget = new RKVarSlot (e, component (), parent_widget);
-			QString source = xml->getStringAttribute (e, "source_property", QString (), DL_INFO);
-			if (source.isEmpty ()) source = xml->getStringAttribute (e, "source", "#noid#", DL_WARNING) + ".selected";
+			QString source = xml.getStringAttribute (e, "source_property", QString (), DL_INFO);
+			if (source.isEmpty ()) source = xml.getStringAttribute (e, "source", "#noid#", DL_WARNING) + ".selected";
 			addConnection (id, "source", source, QString (), false, e);
 		} else if ((e.tagName () == QLatin1String ("valueselector")) || (e.tagName () == QLatin1String ("select"))) {
 			widget = new RKValueSelector (e, component (), parent_widget);
 		} else if (e.tagName () == QLatin1String ("formula")) {
 			widget = new RKFormula (e, component (), parent_widget);
-			addConnection (id, "dependent", xml->getStringAttribute (e, "dependent", "#noid#", DL_INFO), "available", false, e);
-			addConnection (id, "fixed_factors", xml->getStringAttribute (e, "fixed_factors", "#noid#", DL_INFO), "available", false, e);
+			addConnection (id, "dependent", xml.getStringAttribute (e, "dependent", "#noid#", DL_INFO), "available", false, e);
+			addConnection (id, "fixed_factors", xml.getStringAttribute (e, "fixed_factors", "#noid#", DL_INFO), "available", false, e);
 		} else if (e.tagName () == QLatin1String ("radio")) {
 			widget = new RKRadio (e, component (), parent_widget);
 		} else if (e.tagName () == QLatin1String ("dropdown")) {
@@ -645,13 +652,13 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 		} else if (e.tagName () == QLatin1String ("saveobject")) {
 			widget = new RKPluginSaveObject (e, component (), parent_widget);
 		} else if (e.tagName () == QLatin1String ("embed")) {
-			QString component_id = xml->getStringAttribute (e, "component", QString::null, DL_ERROR);
+			QString component_id = xml.getStringAttribute (e, "component", QString::null, DL_ERROR);
 			RKComponentHandle *handle = RKComponentMap::getComponentHandle (component_id);
 			if (handle) {
-				if (xml->getBoolAttribute (e, "as_button", false, DL_INFO)) {
+				if (xml.getBoolAttribute (e, "as_button", false, DL_INFO)) {
 					RKStandardComponent* swidget = handle->invoke (component (), 0);
 					widget = swidget;
-					QString dummy = xml->getStringAttribute (e, "label", "Options", DL_WARNING);
+					QString dummy = xml.getStringAttribute (e, "label", "Options", DL_WARNING);
 					swidget->setCaption (dummy);
 // TODO we should use a specialized pushbutton, that changes color if the corresponding component is dissatisfied!
 					QPushButton *button = new QPushButton (dummy, parent_widget);
@@ -660,16 +667,16 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 					widget = handle->invoke (component (), parent_widget);
 				}
 			} else {
-				xml->displayError (&e, QString ("Could not embed component '%1'. Not found").arg (component_id), DL_ERROR);
+				xml.displayError (&e, QString ("Could not embed component '%1'. Not found").arg (component_id), DL_ERROR);
 			}
 		} else if (e.tagName () == QLatin1String ("optionset")) {
 			widget = new RKOptionSet (e, component (), parent_widget);
 		} else if (e.tagName () == QLatin1String ("optiondisplay")) {
 			RKComponent *set = component ()->parentComponent ();
 			if (set->type () == RKComponentBase::ComponentOptionSet) {
-				widget = static_cast<RKOptionSet *> (set)->createDisplay (xml->getBoolAttribute (e, "index", true, DL_INFO), parent_widget);
+				widget = static_cast<RKOptionSet *> (set)->createDisplay (xml.getBoolAttribute (e, "index", true, DL_INFO), parent_widget);
 			} else {
-				xml->displayError (&e, QString ("optiondisplay element is not allowed outside of an optionset"), DL_ERROR);
+				xml.displayError (&e, QString ("optiondisplay element is not allowed outside of an optionset"), DL_ERROR);
 			}
 		} else if (e.tagName () == QLatin1String ("scriptable")) {
 			widget = new RKComponent (component (), parent_widget);
@@ -680,7 +687,7 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 			QString id_adjust;
 			parent->standardComponent (&id_adjust)->scriptingProxy ()->addScriptableWidget (id_adjust + id, widget);
 		} else {
-			xml->displayError (&e, QString ("Invalid tagname '%1'").arg (e.tagName ()), DL_ERROR);
+			xml.displayError (&e, QString ("Invalid tagname '%1'").arg (e.tagName ()), DL_ERROR);
 		}
 
 		if (widget && (!(id.isNull ()))) {
@@ -689,43 +696,42 @@ void RKComponentBuilder::buildElement (const QDomElement &element, QWidget *pare
 	}
 }
 
-void RKComponentBuilder::parseLogic (const QDomElement &element, bool allow_script_tag) {
+void RKComponentBuilder::parseLogic (const QDomElement &element, XMLHelper &xml, bool allow_script_tag) {
 	RK_TRACE (PLUGIN);
 
 	if (element.isNull ()) return;
 
 	// find connect elements
-	XMLHelper* xml = XMLHelper::getStaticHelper ();
-	XMLChildList children = xml->getChildElements (element, "connect", DL_INFO);
+	XMLChildList children = xml.getChildElements (element, "connect", DL_INFO);
 
 	XMLChildList::const_iterator it;
 	for (it = children.constBegin (); it != children.constEnd (); ++it) {
-		addConnection (xml->getStringAttribute (*it, "client", "#noid#", DL_WARNING), QString::null, xml->getStringAttribute (*it, "governor", "#noid#", DL_WARNING), QString::null, xml->getBoolAttribute (*it, "reconcile", false, DL_INFO), element);
+		addConnection (xml.getStringAttribute (*it, "client", "#noid#", DL_WARNING), QString::null, xml.getStringAttribute (*it, "governor", "#noid#", DL_WARNING), QString::null, xml.getBoolAttribute (*it, "reconcile", false, DL_INFO), element);
 	}
 
 	// find initialize elements
-	children = xml->getChildElements (element, "set", DL_INFO);
+	children = xml.getChildElements (element, "set", DL_INFO);
 	for (it = children.constBegin (); it != children.constEnd (); ++it) {
-		initial_values.insert (xml->getStringAttribute (*it, "id", "#noid#", DL_WARNING), xml->getStringAttribute (*it, "to", "false", DL_WARNING));
+		initial_values.insert (xml.getStringAttribute (*it, "id", "#noid#", DL_WARNING), xml.getStringAttribute (*it, "to", "false", DL_WARNING));
 	}
-	children = xml->getChildElements (element, "dependency_check", DL_INFO);
+	children = xml.getChildElements (element, "dependency_check", DL_INFO);
 	for (it = children.constBegin (); it != children.constEnd (); ++it) {
 		RKComponentPropertyBool *dep = new RKComponentPropertyBool (component (), false);
 		dep->setInternal (true);
 		dep->setBoolValue (RKComponentDependency::isRKWardVersionCompatible (*it) && RKComponentDependency::isRVersionCompatible (*it));
-		component ()->addChild (xml->getStringAttribute (*it, "id", "#noid#", DL_WARNING), dep);
+		component ()->addChild (xml.getStringAttribute (*it, "id", "#noid#", DL_WARNING), dep);
 	}
 
 	// find outside elements
-	children = xml->getChildElements (element, "external", DL_INFO);
+	children = xml.getChildElements (element, "external", DL_INFO);
 	for (it = children.constBegin (); it != children.constEnd (); ++it) {
-		QString id = xml->getStringAttribute (*it, "id", "#noid#", DL_WARNING);
-		RKComponentPropertyBase *prop = new RKComponentPropertyBase (component (), xml->getBoolAttribute (*it, "required", false, DL_INFO));
+		QString id = xml.getStringAttribute (*it, "id", "#noid#", DL_WARNING);
+		RKComponentPropertyBase *prop = new RKComponentPropertyBase (component (), xml.getBoolAttribute (*it, "required", false, DL_INFO));
 		component ()->addChild (id, prop);
 		prop->setInternal (true);
 		component ()->connect (prop, SIGNAL (valueChanged (RKComponentPropertyBase *)), component (), SLOT (outsideValueChanged (RKComponentPropertyBase *)));
 
-		QString dummy = xml->getStringAttribute (*it, "default", QString::null, DL_INFO);
+		QString dummy = xml.getStringAttribute (*it, "default", QString::null, DL_INFO);
 		if (!dummy.isNull ()) {
 			initial_values.insert (id, dummy);
 		}
@@ -734,45 +740,45 @@ void RKComponentBuilder::parseLogic (const QDomElement &element, bool allow_scri
 
 	// find convert elements
 	QMap<RKComponentPropertyBase*, QStringList> switch_convert_sources;
-	children = xml->getChildElements (element, "convert", DL_INFO);
+	children = xml.getChildElements (element, "convert", DL_INFO);
 	for (it = children.constBegin (); it != children.constEnd (); ++it) {
 		RKComponentPropertyConvert *convert = new RKComponentPropertyConvert (component ());
 		convert->setInternal (true);
-		QString id = xml->getStringAttribute (*it, "id", "#noid#", DL_WARNING);
-		int mode = xml->getMultiChoiceAttribute (*it, "mode", convert->convertModeOptionString (), 0, DL_WARNING);
+		QString id = xml.getStringAttribute (*it, "id", "#noid#", DL_WARNING);
+		int mode = xml.getMultiChoiceAttribute (*it, "mode", convert->convertModeOptionString (), 0, DL_WARNING);
 		convert->setMode ((RKComponentPropertyConvert::ConvertMode) mode);
 		if ((mode == RKComponentPropertyConvert::Equals) || (mode == RKComponentPropertyConvert::NotEquals)) {
-			convert->setStandard (xml->getStringAttribute (*it, "standard", QString::null, DL_WARNING));
+			convert->setStandard (xml.getStringAttribute (*it, "standard", QString::null, DL_WARNING));
 		} else if (mode == RKComponentPropertyConvert::Range) {
-			convert->setRange (xml->getDoubleAttribute (*it, "min", -FLT_MAX, DL_INFO), xml->getDoubleAttribute (*it, "max", FLT_MAX, DL_INFO));
+			convert->setRange (xml.getDoubleAttribute (*it, "min", -FLT_MAX, DL_INFO), xml.getDoubleAttribute (*it, "max", FLT_MAX, DL_INFO));
 		}
-		switch_convert_sources.insert (convert, xml->getStringAttribute (*it, "sources", QString::null, DL_WARNING).split (';'));
-		convert->setRequireTrue (xml->getBoolAttribute (*it, "require_true", false, DL_INFO));
+		switch_convert_sources.insert (convert, xml.getStringAttribute (*it, "sources", QString::null, DL_WARNING).split (';'));
+		convert->setRequireTrue (xml.getBoolAttribute (*it, "require_true", false, DL_INFO));
 		component ()->addChild (id, convert);
 	}
 
 	// find switch elements
-	children = xml->getChildElements (element, "switch", DL_INFO);
+	children = xml.getChildElements (element, "switch", DL_INFO);
 	for (it = children.constBegin (); it != children.constEnd (); ++it) {
-		QDomElement t = xml->getChildElement (*it, "true", DL_INFO);
-		QDomElement f = xml->getChildElement (*it, "false", DL_INFO);
+		QDomElement t = xml.getChildElement (*it, "true", DL_INFO);
+		QDomElement f = xml.getChildElement (*it, "false", DL_INFO);
 		if (t.isNull () != f.isNull ()) {
-			xml->displayError (&(*it), "One of <true> / <false> was provided for boolean <switch>, but not the other. Skipping switch.", DL_ERROR);
+			xml.displayError (&(*it), "One of <true> / <false> was provided for boolean <switch>, but not the other. Skipping switch.", DL_ERROR);
 			continue;
 		}
 
-		XMLChildList case_elems = xml->getChildElements (*it, "case", DL_INFO);
-		QDomElement default_elem = xml->getChildElement (*it, "default", DL_INFO);
+		XMLChildList case_elems = xml.getChildElements (*it, "case", DL_INFO);
+		QDomElement default_elem = xml.getChildElement (*it, "default", DL_INFO);
 		if (!default_elem.isNull ()) case_elems.append (default_elem);
 
 		if (t.isNull ()) {
 			if (case_elems.isEmpty ()) {
-				xml->displayError (&(*it), "Neither <true> / <false> nor <case> / <default> were provided. Skipping switch.", DL_ERROR);
+				xml.displayError (&(*it), "Neither <true> / <false> nor <case> / <default> were provided. Skipping switch.", DL_ERROR);
 				continue;
 			}
 		} else {
 			if (!case_elems.isEmpty ()) {
-				xml->displayError (&(*it), "One <true> / <false> *or* <case> / <default> may be provided a <switch>. Proceeding with boolean switch.", DL_ERROR);
+				xml.displayError (&(*it), "One <true> / <false> *or* <case> / <default> may be provided a <switch>. Proceeding with boolean switch.", DL_ERROR);
 				case_elems.clear ();
 			}
 			case_elems.append (f);
@@ -782,15 +788,15 @@ void RKComponentBuilder::parseLogic (const QDomElement &element, bool allow_scri
 		QStringList def_strings;
 		QStringList standards;
 		QStringList sources;
-		sources.append (xml->getStringAttribute (*it, "condition", QString (), DL_ERROR));	// store condition prop as first "source"
+		sources.append (xml.getStringAttribute (*it, "condition", QString (), DL_ERROR));	// store condition prop as first "source"
 
 		for (XMLChildList::const_iterator cit = case_elems.constBegin (); cit != case_elems.constEnd (); ++cit) {
-			def_strings.append (xml->getStringAttribute (*cit, "fixed_value", QString (), DL_INFO));
-			sources.append (xml->getStringAttribute (*cit, "dynamic_value", QString (), DL_INFO));
-			if ((*cit).tagName () == "case") standards.append (xml->getStringAttribute (*cit, "standard", QString (), DL_WARNING));
+			def_strings.append (xml.getStringAttribute (*cit, "fixed_value", QString (), DL_INFO));
+			sources.append (xml.getStringAttribute (*cit, "dynamic_value", QString (), DL_INFO));
+			if ((*cit).tagName () == "case") standards.append (xml.getStringAttribute (*cit, "standard", QString (), DL_WARNING));
 		}
 
-		QString id = xml->getStringAttribute (*it, "id", "#noid#", DL_WARNING);
+		QString id = xml.getStringAttribute (*it, "id", "#noid#", DL_WARNING);
 		RKComponentPropertySwitch *switchel = new RKComponentPropertySwitch (component (), def_strings, standards);
 		switchel->setInternal (true);
 		switch_convert_sources.insert (switchel, sources);
@@ -812,13 +818,13 @@ void RKComponentBuilder::parseLogic (const QDomElement &element, bool allow_scri
 		}
 	}
 
-	QDomElement e = xml->getChildElement (element, "script", DL_INFO);
+	QDomElement e = xml.getChildElement (element, "script", DL_INFO);
 	if (!e.isNull () && allow_script_tag) {
-		QString file = xml->getStringAttribute (e, "file", QString (), DL_INFO);
+		QString file = xml.getStringAttribute (e, "file", QString (), DL_INFO);
 		QString inline_command = e.text ();
 		parent->standardComponent ()->scriptingProxy ()->initialize (file, inline_command);
 	} else if (!e.isNull ()) {
-		xml->displayError (&e, "<script> element is not allowed inside this <logic> section.", DL_ERROR);
+		xml.displayError (&e, "<script> element is not allowed inside this <logic> section.", DL_ERROR);
 	}
 }
 
@@ -840,7 +846,7 @@ void RKComponentBuilder::makeConnections () {
 
 	component ()->setPropertyValues (&initial_values);
 
-	XMLHelper *xml = XMLHelper::getStaticHelper ();
+	XMLHelper *xml = component ()->xmlHelper ();
 
 	for (ConnectionList::const_iterator it = connection_list.constBegin (); it != connection_list.constEnd (); ++it) {
 		RK_DEBUG (PLUGIN, DL_DEBUG, "Connecting '%s' to '%s'", (*it).client_property.toLatin1 ().data (), (*it).governor_property.toLatin1 ().data ());

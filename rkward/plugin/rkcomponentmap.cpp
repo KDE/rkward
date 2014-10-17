@@ -40,11 +40,10 @@ QString RKPluginMapFile::makeFileName (const QString &filename) {
 	return QDir::cleanPath (QDir (basedir).filePath (filename));
 }
 
-QString RKPluginMapFile::parseId (const QDomElement& e) {
+QString RKPluginMapFile::parseId (const QDomElement& e, XMLHelper &xml) {
 	RK_TRACE (PLUGIN);
 
-	XMLHelper *xml = XMLHelper::getStaticHelper ();
-	return (xml->getStringAttribute (e, "namespace", "rkward", DL_WARNING) + "::" + xml->getStringAttribute (e, "id", QString (), DL_INFO));
+	return (xml.getStringAttribute (e, "namespace", "rkward", DL_WARNING) + "::" + xml.getStringAttribute (e, "id", QString (), DL_INFO));
 }
 
 
@@ -64,30 +63,28 @@ void RKComponentGUIXML::clearGUIDescription () {
 	gui_xml.setContent (QString ("<!DOCTYPE kpartgui>\n<kpartgui name=\"rkwardcomponents\" version=\"0.3.4\">\n<MenuBar>\n\n</MenuBar>\n</kpartgui>"));
 }
 
-int RKComponentGUIXML::createMenus (QDomElement& parent, const QDomElement& hierarchy_description, const QString& cnamespace) {
+int RKComponentGUIXML::createMenus (QDomElement& parent, XMLHelper &xml, const QDomElement& hierarchy_description, const QString& cnamespace) {
 	RK_TRACE (PLUGIN);
 
-	XMLHelper* xml = XMLHelper::getStaticHelper ();
-	XMLChildList list = xml->getChildElements (hierarchy_description, "menu", DL_INFO);
+	XMLChildList list = xml.getChildElements (hierarchy_description, "menu", DL_INFO);
 	int counter = 0;
 	for (XMLChildList::const_iterator it=list.begin (); it != list.end (); ++it) {
-		counter += addSubMenu (parent, (*it), cnamespace);
+		counter += addSubMenu (parent, xml, (*it), cnamespace);
 	}
 	return counter;
 }
 
-QDomElement RKComponentGUIXML::findOrCreateElement (QDomElement& parent, const QString& tagname, const QString& name, const QString& label, int index) {
+QDomElement RKComponentGUIXML::findOrCreateElement (QDomElement& parent, XMLHelper &xml, const QString& tagname, const QString& name, const QString& label, int index) {
 	RK_TRACE (PLUGIN);
 
-	XMLHelper* xml = XMLHelper::getStaticHelper ();
-	XMLChildList list = xml->getChildElements (parent, QString::null, DL_INFO);		// we need to look at all children, so we get the order right
+	XMLChildList list = xml.getChildElements (parent, QString::null, DL_INFO);		// we need to look at all children, so we get the order right
 	QDomElement insert_after_element;
 	for (XMLChildList::const_iterator it=list.begin (); it != list.end (); ++it) {
-		if ((tagname == (*it).tagName ()) && (name == xml->getStringAttribute ((*it), "name", "", DL_ERROR))) {
+		if ((tagname == (*it).tagName ()) && (name == xml.getStringAttribute ((*it), "name", "", DL_ERROR))) {
 			return (*it);
 		} else {
 			if (index >= 0) {
-				if (index > xml->getIntAttribute ((*it), "index", -1, DL_INFO)) {
+				if (index > xml.getIntAttribute ((*it), "index", -1, DL_INFO)) {
 					insert_after_element = *it;
 				}
 			}
@@ -108,31 +105,30 @@ QDomElement RKComponentGUIXML::findOrCreateElement (QDomElement& parent, const Q
 	return ret;
 }
 
-int RKComponentGUIXML::addSubMenu (QDomElement& parent, const QDomElement& description, const QString& cnamespace) {
+int RKComponentGUIXML::addSubMenu (QDomElement& parent, XMLHelper &xml, const QDomElement& description, const QString& cnamespace) {
 	RK_TRACE (PLUGIN);
 
 	int counter = 0;
-	XMLHelper* xml = XMLHelper::getStaticHelper ();
 
 	// 1: check whether menu already exists, and create new menu otherwise
-	QDomElement menu_element = findOrCreateElement (parent, "Menu", xml->getStringAttribute (description, "id", "none", DL_ERROR), xml->getStringAttribute (description, "label", i18n ("(no label)"), DL_WARNING), xml->getIntAttribute (description, "index", -1, DL_INFO));
+	QDomElement menu_element = findOrCreateElement (parent, xml, "Menu", xml.getStringAttribute (description, "id", "none", DL_ERROR), xml.getStringAttribute (description, "label", i18n ("(no label)"), DL_WARNING), xml.getIntAttribute (description, "index", -1, DL_INFO));
 
 	// 2: recurse into submenus (of element to add!)
-	XMLChildList list = xml->getChildElements (description, "menu", DL_INFO);
+	XMLChildList list = xml.getChildElements (description, "menu", DL_INFO);
 	for (XMLChildList::const_iterator it=list.begin (); it != list.end (); ++it) {
-		counter += addSubMenu (menu_element, (*it), cnamespace);
+		counter += addSubMenu (menu_element, xml, (*it), cnamespace);
 	}
 
 	// 3: add entries
-	list = xml->getChildElements (description, "entry", DL_INFO);
+	list = xml.getChildElements (description, "entry", DL_INFO);
 	for (XMLChildList::const_iterator it=list.begin (); it != list.end (); ++it) {
-		QString id = cnamespace + xml->getStringAttribute ((*it), "component", "#invalid#", DL_ERROR);
+		QString id = cnamespace + xml.getStringAttribute ((*it), "component", "#invalid#", DL_ERROR);
 
 		RKComponentHandle* handle = RKComponentMap::getComponentHandle (id);
 		if ((!handle) || (!handle->isPlugin ())) {
 			RK_DEBUG (PLUGIN, DL_ERROR, "No such component found while creating menu-entries or component is not a standalone plugin: \"%s\". No entry created.", id.toLatin1 ().data ());
 		} else {
-			findOrCreateElement (menu_element, "Action", id, QString::null, xml->getIntAttribute ((*it), "index", -1, DL_INFO));
+			findOrCreateElement (menu_element, xml, "Action", id, QString::null, xml.getIntAttribute ((*it), "index", -1, DL_INFO));
 			addedEntry (id, handle);
 			counter++;
 		}
@@ -349,41 +345,41 @@ RKPluginMapParseResult RKComponentMap::addPluginMapLocal (const QString& plugin_
 		return ret;
 	}
 
-	XMLHelper* xml = XMLHelper::getStaticHelper ();
+	XMLHelper xml (plugin_map_file_abs);
 	QDomElement element;
 	XMLChildList list;
 
-	QDomElement document_element = xml->openXMLFile (plugin_map_file_abs, DL_ERROR);
+	QDomElement document_element = xml.openXMLFile (plugin_map_file_abs, DL_ERROR);
 	if (document_element.isNull ()) {
 		ret.addAndPrintError (DL_ERROR, i18n ("Could not open plugin map file %1. (Is not readble, or failed to parse)", plugin_map_file_abs));
 		return ret;
 	}
 
-	QString prefix = QFileInfo (plugin_map_file_abs).absolutePath() + '/' + xml->getStringAttribute (document_element, "base_prefix", QString::null, DL_INFO);
-	QString cnamespace = xml->getStringAttribute (document_element, "namespace", "rkward", DL_INFO) + "::";
+	QString prefix = QFileInfo (plugin_map_file_abs).absolutePath() + '/' + xml.getStringAttribute (document_element, "base_prefix", QString::null, DL_INFO);
+	QString cnamespace = xml.getStringAttribute (document_element, "namespace", "rkward", DL_INFO) + "::";
 
 	RKPluginMapFile *pluginmap_file_desc = new RKPluginMapFile (prefix);
-	pluginmap_file_desc->id = RKPluginMapFile::parseId (document_element);
+	pluginmap_file_desc->id = RKPluginMapFile::parseId (document_element, xml);
 	pluginmapfiles.insert (QFileInfo (plugin_map_file).absoluteFilePath (), pluginmap_file_desc);
 
 	// step 0: check dependencies, parse about, and initialize
-	QDomElement dependencies = xml->getChildElement (document_element, "dependencies", DL_INFO);
+	QDomElement dependencies = xml.getChildElement (document_element, "dependencies", DL_INFO);
 	if (!dependencies.isNull ()) {
 		if (!RKComponentDependency::isRKWardVersionCompatible (dependencies)) {
 			ret.addAndPrintError (DL_WARNING, i18n ("Skipping plugin map file '%1': Not compatible with this version of RKWard", plugin_map_file_abs));
 			return ret;
 		}
-		pluginmap_file_desc->dependencies = RKComponentDependency::parseDependencies (dependencies);
+		pluginmap_file_desc->dependencies = RKComponentDependency::parseDependencies (dependencies, xml);
 	}
 
 	// step 1: include required files
 	QStringList includelist;
-	list = xml->getChildElements (document_element, "require", DL_INFO);
+	list = xml.getChildElements (document_element, "require", DL_INFO);
 	for (XMLChildList::const_iterator it=list.constBegin (); it != list.constEnd (); ++it) {
 		if ((*it).hasAttribute ("file")) {
-			QString file = pluginmap_file_desc->makeFileName (xml->getStringAttribute (*it, "file", QString (), DL_ERROR));
+			QString file = pluginmap_file_desc->makeFileName (xml.getStringAttribute (*it, "file", QString (), DL_ERROR));
 			/// EXPERIMENTAL: Look for localized version of required pluginmap
-			if (xml->getBoolAttribute (*it, "localized", false, DL_INFO)) {
+			if (xml.getBoolAttribute (*it, "localized", false, DL_INFO)) {
 				QFileInfo fi(file);
 				QDir dir = fi.absoluteDir ();
 				QString fn = fi.fileName ();
@@ -423,7 +419,7 @@ RKPluginMapParseResult RKComponentMap::addPluginMapLocal (const QString& plugin_
 				ret.addAndPrintError (DL_ERROR, i18n ("Specified required file '%1' does not exist or is not readable. Ignoring.", file));
 			}
 		} else {
-			QString map_id = xml->getStringAttribute (*it, "map", QString (), DL_ERROR);
+			QString map_id = xml.getStringAttribute (*it, "map", QString (), DL_ERROR);
 			// Try to locate the map among the already loaded files, first
 			QString file;
 			for (PluginMapFileMap::const_iterator pmit = pluginmapfiles.constBegin (); pmit != pluginmapfiles.constEnd (); ++pmit) {
@@ -447,18 +443,18 @@ RKPluginMapParseResult RKComponentMap::addPluginMapLocal (const QString& plugin_
 	}
 
 	// step 2: create (list of) components
-	element = xml->getChildElement (document_element, "components", DL_INFO);
-	list = xml->getChildElements (element, "component", DL_INFO);
+	element = xml.getChildElement (document_element, "components", DL_INFO);
+	list = xml.getChildElements (element, "component", DL_INFO);
 	// Plugins that depend on a specific version of RKWard can be specified in several alternative version.
 	// It is not an error, unless *none* of the specified alternatives can be loaded.
 	QSet<QString> local_components;
 	QSet<QString> depfailed_local_components;
 
 	for (XMLChildList::const_iterator it=list.begin (); it != list.end (); ++it) {
-		QString id = cnamespace + xml->getStringAttribute((*it), "id", QString::null, DL_WARNING);
+		QString id = cnamespace + xml.getStringAttribute((*it), "id", QString::null, DL_WARNING);
 
 		// check dependencies, first
-		QDomElement cdependencies = xml->getChildElement (*it, "dependencies", DL_INFO);
+		QDomElement cdependencies = xml.getChildElement (*it, "dependencies", DL_INFO);
 		if (!cdependencies.isNull ()) {
 			if (!RKComponentDependency::isRKWardVersionCompatible (cdependencies)) {
 				RK_DEBUG (PLUGIN, DL_INFO, "Skipping component '%1': Not compatible with this version of RKWard", qPrintable (id));
@@ -467,9 +463,9 @@ RKPluginMapParseResult RKComponentMap::addPluginMapLocal (const QString& plugin_
 			}
 		}
 
-		QString filename = xml->getStringAttribute((*it), "file", QString::null, DL_WARNING);
-		int type = xml->getMultiChoiceAttribute ((*it), "type", "standard", 0, DL_WARNING);
-		QString label = xml->getStringAttribute ((*it), "label", i18n ("(no label)"), DL_WARNING);
+		QString filename = xml.getStringAttribute((*it), "file", QString (), DL_WARNING);
+		int type = xml.getMultiChoiceAttribute ((*it), "type", "standard", 0, DL_WARNING);
+		QString label = xml.getStringAttribute ((*it), "label", i18n ("(no label)"), DL_WARNING);
 
 		if (components.contains (id)) {
 			ret.addAndPrintError (DL_WARNING, i18n ("RKComponentMap already contains a component with id \"%1\". Ignoring second entry.", id));
@@ -478,11 +474,11 @@ RKPluginMapParseResult RKComponentMap::addPluginMapLocal (const QString& plugin_
 		} else {
 			// create and initialize component handle
 			RKComponentHandle *handle = new RKComponentHandle (pluginmap_file_desc, filename, label, (RKComponentType) type);
-			XMLChildList attributes_list = xml->getChildElements (*it, "attribute", DL_DEBUG);
+			XMLChildList attributes_list = xml.getChildElements (*it, "attribute", DL_DEBUG);
 			for (XMLChildList::const_iterator ait=attributes_list.begin (); ait != attributes_list.end (); ++ait) {
-				handle->addAttribute (xml->getStringAttribute (*ait, "id", "noid", DL_WARNING), xml->getStringAttribute (*ait, "value", QString::null, DL_ERROR), xml->getStringAttribute (*ait, "label", QString::null, DL_ERROR));
+				handle->addAttribute (xml.getStringAttribute (*ait, "id", "noid", DL_WARNING), xml.getStringAttribute (*ait, "value", QString (), DL_ERROR), xml.getStringAttribute (*ait, "label", QString (), DL_ERROR));
 			}
-			if (!cdependencies.isNull ()) handle->addDependencies (RKComponentDependency::parseDependencies (cdependencies));
+			if (!cdependencies.isNull ()) handle->addDependencies (RKComponentDependency::parseDependencies (cdependencies, xml));
 			components.insert (id, handle);
 			local_components.insert (id);
 		}
@@ -494,20 +490,20 @@ RKPluginMapParseResult RKComponentMap::addPluginMapLocal (const QString& plugin_
 	}
 
 	// step 3: create / insert into menus
-	QDomElement xmlgui_menubar_element = xml->getChildElement (gui_xml.documentElement (), "MenuBar", DL_ERROR);
-	ret.valid_plugins += createMenus (xmlgui_menubar_element, xml->getChildElement (document_element, "hierarchy", DL_INFO), cnamespace);
+	QDomElement xmlgui_menubar_element = xml.getChildElement (gui_xml.documentElement (), "MenuBar", DL_ERROR);
+	ret.valid_plugins += createMenus (xmlgui_menubar_element, xml, xml.getChildElement (document_element, "hierarchy", DL_INFO), cnamespace);
 
 	// step 4: create and register contexts
-	list = xml->getChildElements (document_element, "context", DL_INFO);
+	list = xml.getChildElements (document_element, "context", DL_INFO);
 	for (XMLChildList::const_iterator it=list.constBegin (); it != list.constEnd (); ++it) {
-		QString id = xml->getStringAttribute (*it, "id", QString::null, DL_ERROR);
+		QString id = xml.getStringAttribute (*it, "id", QString::null, DL_ERROR);
 
 		RKContextMap *context = getContextLocal (id);
 		if (!context) {
 			context = new RKContextMap (id);
 			contexts.insert (id, context);
 		}
-		ret.valid_plugins += context->create (*it, cnamespace);
+		ret.valid_plugins += context->create (*it, xml, cnamespace);
 	}
 
 	setXMLGUIBuildDocument (gui_xml);		// TODO: Should be called only once, not for each pluginmap!

@@ -59,7 +59,7 @@ RKFormula::RKFormula (const QDomElement &element, RKComponent *parent_component,
 	labels->setInternal (true);
 
 	// get xmlHelper
-	XMLHelper *xml = XMLHelper::getStaticHelper ();
+	XMLHelper *xml = parent_component->xmlHelper ();
 
 	// create layout
 	QVBoxLayout *vbox = new QVBoxLayout (this);

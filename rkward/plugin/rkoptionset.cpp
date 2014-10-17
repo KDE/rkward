@@ -39,7 +39,7 @@
 RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget) : RKComponent (parent_component, parent_widget) {
 	RK_TRACE (PLUGIN);
 
-	XMLHelper *xml = XMLHelper::getStaticHelper ();
+	XMLHelper *xml = parent_component->xmlHelper ();
 	updating = false;
 	last_known_status = Processing;
 	n_invalid_rows = n_unfinished_rows = 0;
@@ -80,8 +80,8 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	contents_container = new RKComponent (this, user_area);
 	QDomElement content_element = xml->getChildElement (element, "content", DL_ERROR);
 	RKComponentBuilder *builder = new RKComponentBuilder (contents_container, content_element);
-	builder->buildElement (content_element, user_area, false);	// NOTE that parent widget != parent component, here, by intention. The point is that the display should not be disabled along with the contents
-	builder->parseLogic (xml->getChildElement (element, "logic", DL_INFO), false);
+	builder->buildElement (content_element, *xml, user_area, false);	// NOTE that parent widget != parent component, here, by intention. The point is that the display should not be disabled along with the contents
+	builder->parseLogic (xml->getChildElement (element, "logic", DL_INFO), *xml, false);
 	builder->makeConnections ();
 	addChild ("contents", contents_container);
 	connect (standardComponent (), SIGNAL (standardInitializationComplete()), this, SLOT (fetchDefaults()));

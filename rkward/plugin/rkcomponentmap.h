@@ -2,7 +2,7 @@
                           rkcomponentmap.h  -  description
                              -------------------
     begin                : Thu May 12 2005
-    copyright            : (C) 2005-2013 by Thomas Friedrichsmeier
+    copyright            : (C) 2005-2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -22,6 +22,7 @@
 
 #include "rkcomponentmeta.h"
 
+class XMLHelper;
 /** very simple helper class to keep track of .pluginmap files */
 class RKPluginMapFile {
 public:
@@ -31,7 +32,7 @@ public:
 	QString getBaseDir () { return basedir; };
 	QString makeFileName (const QString &filename);
 	QList<RKComponentDependency> getDependencies () { return dependencies; };
-	static QString parseId (const QDomElement &e);
+	static QString parseId (const QDomElement &e, XMLHelper &xml);
 private:
 friend class RKComponentMap;
 	QString basedir;
@@ -104,6 +105,7 @@ private:
 #include <kxmlguiclient.h>
 
 class QDomElement;
+class XMLHelper;
 
 /** This class keeps a QDomDocument that is a represenation of the GUI using KDEs XML-GUI format (a ui.rc). Use createMenus () to have it parse the menu descriptions from a .pluginmap file. It will adjust the XML description accordingly. When done, you can use to generated gui_xml to set it as the xmlGUIBuildDocument of a KXMLGUIClient. 
 
@@ -123,13 +125,13 @@ protected:
 @param parent the parent menu (or tag) (in the KXMLGUI)
 @param hierarchy_description the QDomElement containing the description for the new menu hierarchy
 @returns number of plugins/menu-entries added successfully */
-	int createMenus (QDomElement& parent, const QDomElement& hierarchy_description, const QString& cnamespace);
+	int createMenus (QDomElement& parent, XMLHelper &xml, const QDomElement& hierarchy_description, const QString& cnamespace);
 
 /** recurse into a lower menu-level 
 @param parent the parent menu (in the KXMLGUI)
 @param description the QDomElement containing the description for the new submenu
 @returns number of plugins/menu-entries added successfully */
-	int addSubMenu (QDomElement& parent, const QDomElement& description, const QString& cnamespace);
+	int addSubMenu (QDomElement& parent, XMLHelper &xml, const QDomElement& description, const QString& cnamespace);
 
 /** helper function: Find a specified element, and return it. If the element could not be found, it is created instead. The first three parameters are used as search parameters (all have to match). The additional two parameters only take effect, if a new element is created.
 @param parent the QDomElement whose children to search through
@@ -137,7 +139,7 @@ protected:
 @param name value of the "name"-attribute to look for
 @param label the label to assign to the new element (if no existing match could be found)
 @param index the index position where to insert the new element in the list of children (if no existing match could be found). -1 means insert at the end of the list. */
-	QDomElement findOrCreateElement (QDomElement& parent, const QString& tagname, const QString& name, const QString& label, int index);
+	QDomElement findOrCreateElement (QDomElement& parent, XMLHelper &xml, const QString& tagname, const QString& name, const QString& label, int index);
 
 /** an entry was added to the menu(s) somewhere. Reimplement, if you want to e.g. create a KAction for this */
 	virtual void addedEntry (const QString & /* id */, RKComponentHandle * /* handle */) {};

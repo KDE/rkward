@@ -2,7 +2,7 @@
                           rkcomponentmeta  -  description
                              -------------------
     begin                : Wed Jan 09 2013
-    copyright            : (C) 2013 by Thomas Friedrichsmeier
+    copyright            : (C) 2013, 2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -31,33 +31,32 @@ QLatin1String R_max_version_tag ("R_max_version");
 QLatin1String any_min_version_tag ("min_version");
 QLatin1String any_max_version_tag ("max_version");
 
-RKComponentAboutData::RKComponentAboutData (const QDomElement& e) {
+RKComponentAboutData::RKComponentAboutData (const QDomElement& e, XMLHelper &xml) {
 	RK_TRACE (PLUGIN);
 	if (e.isNull ()) return;
 
-	XMLHelper *xml = XMLHelper::getStaticHelper ();
-	name = xml->getStringAttribute (e, "name", QString (), DL_INFO);
-	version = xml->getStringAttribute (e, "version", QString (), DL_INFO);
-	releasedate = xml->getStringAttribute (e, "releasedate", QString (), DL_INFO);
-	shortinfo = xml->getStringAttribute (e, "shortinfo", QString (), DL_INFO);
-	copyright = xml->getStringAttribute (e, "copyright", QString (), DL_INFO);
-	license = xml->getStringAttribute (e, "license", QString (), DL_INFO);
-	url = xml->getStringAttribute (e, "url", QString (), DL_INFO);
-	category = xml->getStringAttribute (e, "category", i18n ("Unspecified"), DL_INFO);
+	name = xml.getStringAttribute (e, "name", QString (), DL_INFO);
+	version = xml.getStringAttribute (e, "version", QString (), DL_INFO);
+	releasedate = xml.getStringAttribute (e, "releasedate", QString (), DL_INFO);
+	shortinfo = xml.getStringAttribute (e, "shortinfo", QString (), DL_INFO);
+	copyright = xml.getStringAttribute (e, "copyright", QString (), DL_INFO);
+	license = xml.getStringAttribute (e, "license", QString (), DL_INFO);
+	url = xml.getStringAttribute (e, "url", QString (), DL_INFO);
+	category = xml.getStringAttribute (e, "category", i18n ("Unspecified"), DL_INFO);
 
-	XMLChildList aes = xml->getChildElements (e, "author", DL_INFO);
+	XMLChildList aes = xml.getChildElements (e, "author", DL_INFO);
 	for (int i = 0; i < aes.size (); ++i) {
 		QDomElement ae = aes[i];
 		RKComponentAuthor author;
-		author.name = xml->getStringAttribute (ae, "name", QString (), DL_INFO);
+		author.name = xml.getStringAttribute (ae, "name", QString (), DL_INFO);
 		if (author.name.isEmpty ()) {
-			author.name = xml->getStringAttribute (ae, "given", QString (), DL_WARNING) + " " + xml->getStringAttribute (ae, "family", QString (), DL_WARNING);
+			author.name = xml.getStringAttribute (ae, "given", QString (), DL_WARNING) + " " + xml.getStringAttribute (ae, "family", QString (), DL_WARNING);
 			
 		}
-		if (author.name.isEmpty ()) xml->displayError (&ae, "No author name specified", DL_WARNING);
-		author.roles = xml->getStringAttribute (ae, "role", QString (), DL_INFO);
-		author.email = xml->getStringAttribute (ae, "email", QString (), DL_WARNING);
-		author.url = xml->getStringAttribute (ae, "url", QString (), DL_INFO);
+		if (author.name.isEmpty ()) xml.displayError (&ae, "No author name specified", DL_WARNING);
+		author.roles = xml.getStringAttribute (ae, "role", QString (), DL_INFO);
+		author.email = xml.getStringAttribute (ae, "email", QString (), DL_WARNING);
+		author.url = xml.getStringAttribute (ae, "url", QString (), DL_INFO);
 		authors.append (author);
 	}
 }
@@ -120,12 +119,11 @@ bool RKComponentDependency::isRVersionCompatible (const QDomElement& e) {
 	return true;
 }
 
-QList <RKComponentDependency> RKComponentDependency::parseDependencies (const QDomElement& e) {
+QList <RKComponentDependency> RKComponentDependency::parseDependencies (const QDomElement& e, XMLHelper &xml) {
 	RK_TRACE (PLUGIN);
 
 	QList<RKComponentDependency> ret;
 	if (e.isNull ()) return ret;
-	XMLHelper *xml = XMLHelper::getStaticHelper ();
 	RKComponentDependency dep;
 
 	// Check for R dependency, first.
@@ -134,20 +132,20 @@ QList <RKComponentDependency> RKComponentDependency::parseDependencies (const QD
 	if (e.hasAttribute (R_max_version_tag)) dep.max_version = RKSessionVars::parseVersionString (e.attribute (R_max_version_tag), 0);
 	if ((dep.min_version > 0) || (dep.max_version < 0xFFFFFFFF)) ret.append (dep);
 
-	XMLChildList deps = xml->getChildElements (e, QString (), DL_INFO);
+	XMLChildList deps = xml.getChildElements (e, QString (), DL_INFO);
 	for (int i = 0; i < deps.size (); ++i) {
 		QDomElement dep_e = deps[i];
 		if (dep_e.tagName () == "package") {
 			dep.type = RKComponentDependency::RPackage;
-			dep.source_info = xml->getStringAttribute (e, "repository", QString (), DL_INFO);
+			dep.source_info = xml.getStringAttribute (e, "repository", QString (), DL_INFO);
 		} else if (dep_e.tagName () == "pluginmap") {
 			dep.type = RKComponentDependency::RKWardPluginmap;
-			dep.source_info = xml->getStringAttribute (e, "url", QString ("http://rkward.sf.net"), DL_WARNING);
+			dep.source_info = xml.getStringAttribute (e, "url", QString ("http://rkward.sf.net"), DL_WARNING);
 		} else {
 			RK_DEBUG (PLUGIN, DL_ERROR, "Tag <%s> is not allowed, here.", qPrintable (dep_e.tagName ()));
 			continue;
 		}
-		dep.package = xml->getStringAttribute (dep_e, "name", QString (), DL_ERROR);
+		dep.package = xml.getStringAttribute (dep_e, "name", QString (), DL_ERROR);
 
 		dep.min_version = 0;
 		dep.max_version = 0xFFFFFFFF;

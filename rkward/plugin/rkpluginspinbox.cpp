@@ -29,7 +29,7 @@
 RKPluginSpinBox::RKPluginSpinBox (const QDomElement &element, RKComponent *parent_component, QWidget *parent_widget) : RKComponent (parent_component, parent_widget) {
 	RK_TRACE (PLUGIN);
 	// get xml-helper
-	XMLHelper *xml = XMLHelper::getStaticHelper ();
+	XMLHelper *xml = parent_component->xmlHelper ();
 
 	// first question: int or real
 	intmode = (xml->getMultiChoiceAttribute (element, "type", "integer;real", 1, DL_INFO) == 0);

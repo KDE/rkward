@@ -35,7 +35,7 @@ RKMatrixInput::RKMatrixInput (const QDomElement& element, RKComponent* parent_co
 	RK_TRACE (PLUGIN);
 
 	// get xml-helper
-	XMLHelper *xml = XMLHelper::getStaticHelper ();
+	XMLHelper *xml = parent_component->xmlHelper ();
 
 	// create layout
 	QVBoxLayout *vbox = new QVBoxLayout (this);

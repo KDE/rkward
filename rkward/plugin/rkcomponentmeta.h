@@ -2,7 +2,7 @@
                           rkcomponentmeta  -  description
                              -------------------
     begin                : Wed Jan 09 2013
-    copyright            : (C) 2013 by Thomas Friedrichsmeier
+    copyright            : (C) 2013, 2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -21,6 +21,7 @@
 #include <QDomElement>
 #include <QList>
 
+class XMLHelper;
 struct RKComponentDependency {
 	RKComponentDependency () : type (RBaseInstallation), min_version (0), max_version (0xFFFFFFFF) {};
 	QString toHtml () const;
@@ -37,7 +38,7 @@ struct RKComponentDependency {
 	quint32 min_version;
 	quint32 max_version;
 
-	static QList<RKComponentDependency> parseDependencies (const QDomElement &e);
+	static QList<RKComponentDependency> parseDependencies (const QDomElement &e, XMLHelper &xml);
 	static bool isRKWardVersionCompatible (const QDomElement &e);
 	static bool isRVersionCompatible (const QDomElement &e);
 };
@@ -51,7 +52,7 @@ struct RKComponentAuthor {
 
 class RKComponentAboutData {
 public:
-	RKComponentAboutData (const QDomElement &e);
+	RKComponentAboutData (const QDomElement &e, XMLHelper &xml);
 	~RKComponentAboutData ();
 	QString toHtml () const;
 

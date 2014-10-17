@@ -31,7 +31,7 @@ RKText::RKText (const QDomElement &element, RKComponent *parent_component, QWidg
 	RK_TRACE (PLUGIN);
 
 	// get xml-helper
-	XMLHelper *xml = XMLHelper::getStaticHelper ();
+	XMLHelper *xml = parent_component->xmlHelper ();
 
 	// create layout and label
 	QVBoxLayout *vbox = new QVBoxLayout (this);

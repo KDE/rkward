@@ -31,7 +31,7 @@ RKPluginSaveObject::RKPluginSaveObject (const QDomElement &element, RKComponent 
 	RK_TRACE (PLUGIN);
 
 	// read settings
-	XMLHelper *xml = XMLHelper::getStaticHelper ();
+	XMLHelper *xml = parent_component->xmlHelper ();
 
 	bool checkable = xml->getBoolAttribute (element, "checkable", false, DL_INFO);
 	bool checked = xml->getBoolAttribute (element, "checked", false, DL_INFO);

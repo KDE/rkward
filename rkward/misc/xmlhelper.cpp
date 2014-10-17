@@ -27,25 +27,13 @@
 
 #include "../debug.h"
 
-//static
-XMLHelper *XMLHelper::static_xml_helper=0;
-
-XMLHelper::XMLHelper () {
+XMLHelper::XMLHelper (const QString &filename) {
 	RK_TRACE (XML);
+	XMLHelper::filename = filename;
 }
 
 XMLHelper::~XMLHelper () {
 	RK_TRACE (XML);
-}
-
-//static 
-XMLHelper *XMLHelper::getStaticHelper () {
-	RK_TRACE (XML);
-
-	if (!static_xml_helper) {
-		static_xml_helper = new XMLHelper ();
-	}
-	return static_xml_helper;
 }
 
 QDomElement XMLHelper::openXMLFile (const QString &filename, int debug_level, bool with_includes, bool with_snippets) {

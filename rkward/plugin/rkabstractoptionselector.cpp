@@ -45,7 +45,7 @@ void RKAbstractOptionSelector::addOptionsAndInit (const QDomElement &element) {
 	RK_TRACE (PLUGIN);
 
 	// get xml-helper
-	XMLHelper *xml = XMLHelper::getStaticHelper ();
+	XMLHelper *xml = parentComponent ()->xmlHelper ();
 
 	// create all the options
 	XMLChildList option_elements = xml->getChildElements (element, "option", DL_ERROR);	
@@ -119,6 +119,11 @@ void RKAbstractOptionSelector::propertyChanged (RKComponentPropertyBase *propert
 	}
 	if (new_id < 0) {
 		RK_DEBUG (PLUGIN, DL_ERROR, "option selector '%s' has no such option:", qPrintable (getIdInParent ()));
+/*		RKComponent *p = this; 
+		while (p) {
+			qDebug ("p: %s", qPrintable (p->getIdInParent ()));
+			p = p->parentComponent();
+		} */
 		if (property == string) {
 			RK_DEBUG (PLUGIN, DL_ERROR, "'%s'", qPrintable (fetchStringValue (string)));
 		} else {

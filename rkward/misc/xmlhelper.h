@@ -37,8 +37,8 @@ TODO: Either something like push-context/pop-context or an added closeFile (). T
 */
 class XMLHelper {
 public:
-/** create an instance of XMLHelper. Usually you will use the instance returned by getStaticHelper () instead of creating a new instance. */
-	XMLHelper ();
+/** create an instance of XMLHelper. */
+	XMLHelper (const QString &filename=QString ());
 /** destrcutor */
 	~XMLHelper ();
 	
@@ -46,8 +46,8 @@ public:
 When calling this function, highestError () will be reset to 0.
 @param filename the name of the file to parse
 @param debug_level level of debug message to generate if opening/parsing fails
-@param with_includes should be helper take care of resolving "include" elements?
-@param with_snippets should be helper take care of resolving "insert" elements?
+@param with_includes should the helper take care of resolving "include" elements?
+@param with_snippets should the helper take care of resolving "insert" elements?
 @returns the document-element of the file. */
 	QDomElement openXMLFile (const QString &filename, int debug_level, bool with_includes=true, bool with_snippets=true);
 
@@ -141,13 +141,10 @@ When calling this function, highestError () will be reset to 0.
 @param message_level sometime you may want to make sure your message is being shown even if it is not very important to your code. For instance, if there is a typo/illegal value in an optional setting, your code can continue using a reasonable default, but the user should still be notified of this error. If you omit this parameter or set it to something smaller that debug_level, debug_level will be used instead. */
 	void displayError (const QDomNode *in_node, const QString &message, int debug_level, int message_level=-1);
 	
-/** @returns a pointer to the default instance of XMLHelper (if none has been created so far, this will happen automatically. */
-	static XMLHelper *getStaticHelper ();
 private:
 /** copy the node list into a child list. The main effect is that a child list is not updated according to document changes */
 	XMLChildList nodeListToChildList (const QDomNodeList &from);
 	void replaceWithChildren (QDomNode *replaced, const QDomElement &replacement_parent);
-	static XMLHelper *static_xml_helper;
 	QString filename;
 };
 

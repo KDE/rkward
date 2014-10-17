@@ -646,7 +646,7 @@ bool RKHTMLWindow::renderRKHelp (const KUrl &url) {
 		element = help_xml.getChildElement (help_doc_element, "about", DL_INFO);
 	}
 	if (!element.isNull ()) {
-		RKComponentAboutData about (element);
+		RKComponentAboutData about (element, for_component ? component_xml : help_xml);
 		writeHTML (startSection ("about", i18n ("About"), QString (), &anchors, &anchornames));
 		writeHTML (about.toHtml ());
 	}
@@ -718,14 +718,11 @@ void RKHTMLWindow::prepareHelpLink (QDomElement *link_element) {
 			} else if (url.host () == "page") {
 				QString help_base_dir = RKCommonFunctions::getRKWardDataDir () + "pages/";
 		
+				XMLHelper xml;
 				QString help_file_name = help_base_dir + url.path () + ".rkh";
-				XMLHelper *xml = new XMLHelper ();
-
-				QDomElement doc_element = xml->openXMLFile (help_file_name, DL_WARNING);
-				QDomElement title_element = xml->getChildElement (doc_element, "title", DL_WARNING);
+				QDomElement doc_element = xml.openXMLFile (help_file_name, DL_WARNING);
+				QDomElement title_element = xml.getChildElement (doc_element, "title", DL_WARNING);
 				text = title_element.text ();
-
-				delete xml;
 			}
 
 			if (text.isEmpty ()) {

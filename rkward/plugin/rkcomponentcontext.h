@@ -2,7 +2,7 @@
                           rkcomponentcontext  -  description
                              -------------------
     begin                : Mon Jan 22 2007
-    copyright            : (C) 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -25,6 +25,7 @@
 
 class QDomElement;
 class RKContextHandler;
+class XMLHelper;
 
 /** This class keeps a list of components that are useable in a certain context (e.g. x11 device). It also keeps a description of the menu structure(s) that should be used for that context. Note that in order to use the XML-GUI, you should create an RKContextHandler using makeContextHandler().
 
@@ -38,7 +39,7 @@ public:
 /** destructor */
 	~RKContextMap ();
 /** A menu entries to the context map from a .pluginmap file */
-	int create (const QDomElement &context_element, const QString &component_namespace);
+	int create (const QDomElement &context_element, XMLHelper &xml, const QString &component_namespace);
 /** Create a context handler for this context. */
 	RKContextHandler *makeContextHandler (QObject *parent, bool create_actions=true);
 	QStringList components () { return component_ids; };

@@ -27,7 +27,7 @@ RKCheckBox::RKCheckBox (const QDomElement &element, RKComponent *parent_componen
 	RK_TRACE (PLUGIN);
 
 	// get xml-helper
-	XMLHelper *xml = XMLHelper::getStaticHelper ();
+	XMLHelper *xml = parent_component->xmlHelper ();
 
 	// create and add property
 	addChild ("state", state = new RKComponentPropertyBool (this, true, xml->getBoolAttribute (element, "checked", false, DL_INFO), xml->getStringAttribute (element, "value", "1", DL_INFO), xml->getStringAttribute (element, "value_unchecked", QString::null, DL_INFO)));

@@ -35,7 +35,7 @@ RKInput::RKInput (const QDomElement &element, RKComponent *parent_component, QWi
 	lineedit = 0;
 
 	// get xml-helper
-	XMLHelper *xml = XMLHelper::getStaticHelper ();
+	XMLHelper *xml = parent_component->xmlHelper ();
 
 	// create and add property
 	addChild ("text", text = new RKComponentPropertyBase (this, false));

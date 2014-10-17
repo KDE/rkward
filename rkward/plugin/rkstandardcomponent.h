@@ -2,7 +2,7 @@
                           rkstandardcomponent  -  description
                              -------------------
     begin                : Sun Feb 19 2006
-    copyright            : (C) 2006, 2007, 2009, 2010, 2012 by Thomas Friedrichsmeier
+    copyright            : (C) 2006, 2007, 2009, 2010, 2012, 2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -66,6 +66,7 @@ public:
 	void setCaption (const QString &caption);
 /** return the filename of the xml file */
 	QString getFilename () { return filename; };
+	XMLHelper *getXmlHelper ();
 	RKComponentHandle *getHandle () { return handle; };
 	bool haveHelp () { return have_help; };
 /** Submits the current code (by simulating a click on the ok button).
@@ -118,6 +119,7 @@ private:
 	void buildAndInitialize (const QDomElement &doc_element, const QDomElement &gui_element, QWidget *parent_widget, bool build_wizard, bool enslaved=false);
 /** used during switchInterfaces () to discard child components, and delete gui if applicable */
 	void discard ();
+	XMLHelper *xml;
 protected:
 	friend class RKComponentBuilder;
 /** reimplemented for technical reasons. Additionally registers component children with the component stack if in wizard mode */
@@ -142,14 +144,14 @@ class RKComponentBuilder {
 public:
 	RKComponentBuilder (RKComponent *parent_component, const QDomElement &document_element);
 	~RKComponentBuilder ();
-	void buildElement (const QDomElement &element, QWidget *parent_widget, bool allow_pages);
-	void parseLogic (const QDomElement &element, bool allow_script_tag=true);
+	void buildElement (const QDomElement &element, XMLHelper &xml, QWidget *parent_widget, bool allow_pages);
+	void parseLogic (const QDomElement &element, XMLHelper &xml, bool allow_script_tag=true);
 	void makeConnections ();
 	RKComponent *component () const { return parent; };
 private:
 /** internal convenience function to schedule a property connection */
 	void addConnection (const QString &client_id, const QString &client_property, const QString &governor_id, const QString &governor_property, bool reconcile, const QDomElement &origin);
-	QDomElement doElementCopy (const QString id, const QDomElement &copy);
+	QDomElement doElementCopy (const QString id, XMLHelper &xml, const QDomElement &copy);
 	QDomElement doc_elem;
 	RKComponent *parent;
 	struct RKComponentPropertyConnection {

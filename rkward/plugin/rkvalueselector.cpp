@@ -31,7 +31,7 @@ RKValueSelector::RKValueSelector (const QDomElement &element, RKComponent *paren
 	RK_TRACE (PLUGIN);
 
 	updating = false;
-	XMLHelper *xml = XMLHelper::getStaticHelper ();
+	XMLHelper *xml = parent_component->xmlHelper ();
 	standalone = element.tagName () == "select";
 
 	addChild ("selected", selected = new RKComponentPropertyStringList (this, false));
