@@ -369,6 +369,7 @@ bool RKComponentPropertyBool::stringToBool (const QString &value, bool *ok) {
 
 	if (value == "true") return true;
 	if (value == "false") return false;
+	if (value.isEmpty ()) return false;
 	
 	if (ok) *ok = false;
 	return false;
