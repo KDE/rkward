@@ -627,7 +627,8 @@ get.by.role <- function(persons, role="aut"){
 # - search.environment: if TRUE, the internal environment is searched for the ID
 #     as well; a use case for this is IDs of oprions, which need their parent IDs as well;
 #     see get.optionIDs() below
-check.ID <- function(node, search.environment=FALSE){
+# - env.get: the ID type to fetch from the environment, if search.environment=TRUE
+check.ID <- function(node, search.environment=FALSE, env.get="XML"){
   if(is.list(node)){
     return(sapply(node, check.ID))
   } else {}
@@ -636,7 +637,7 @@ check.ID <- function(node, search.environment=FALSE){
     node.ID <- XMLAttrs(node)[["id"]]
     if(isTRUE(search.environment)){
       optionIDs <- get.optionIDs()[[node.ID]]
-      node.ID <- ifelse(is.null(optionIDs), node.ID, optionIDs[["XML"]])
+      node.ID <- ifelse(is.null(optionIDs), node.ID, optionIDs[[env.get]])
     } else {}
   } else if(is.character(node)){
     node.ID <- node

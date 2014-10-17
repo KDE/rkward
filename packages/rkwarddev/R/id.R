@@ -56,8 +56,10 @@ id <- function(..., quote=FALSE, collapse="", js=TRUE){
           # optionsets are more difficult to identify automatically
           if(isTRUE(js)){
             node.id <- camelCode(get.IDs(check.optionset.tags(this.part), relevant.tags="optioncolumn")[,"abbrev"])
+#            node.id <- check.ID(this.part, search.environment=TRUE, env.get="JS")
           } else {
             node.id <- get.IDs(check.optionset.tags(this.part), relevant.tags="optioncolumn")[,"id"]
+#            node.id <- check.ID(this.part, search.environment=TRUE, env.get="XML")
           }
         } else {
           node.id <- XMLAttrs(this.part)[["id"]]

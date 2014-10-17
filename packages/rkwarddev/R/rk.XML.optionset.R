@@ -125,5 +125,8 @@ rk.XML.optionset <- function(content, optioncolumn, min_rows=0, min_rows_if_any=
     attrs=attr.list,
     .children=all.children)
 
+  # if present, store option IDs with parent ID 
+  rk.register.options(optioncolumn, parent.node=node)
+
   return(node)
 }

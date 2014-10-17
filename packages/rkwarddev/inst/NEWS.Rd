@@ -22,7 +22,7 @@
         text set with \code{rk.set.rkh.prompter()} and use it to generate help files
       \item all functions scanned by \code{rk.rkh.scan()} for setting nodes in .rkh files have gained two additional arguments,
         \code{"help"} and \code{"component"}, to register the text to be used via \code{rk.set.rkh.prompter()}
-      \item new function \code{rk.XMLoption()} to allow setting and accessing IDs for single options as well
+      \item new function \code{rk.XML.option()} to allow setting and accessing IDs for single options as well
     }
   }
   \subsection{changed}{
