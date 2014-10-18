@@ -2687,7 +2687,7 @@ local({
 
 <varlistentry>
 <term>&lt;option&gt;</term>
-<listitem><para>Can only be used as a direct child of a &lt;radio&gt;, &lt;dropdown&gt;, &lt;valueslot&gt; or &lt;select&gt; element. Represents one selectable option in a radio control or dropdown list. As &lt;option&gt; elements are always part of one of the selection elements, they do not normally
+<listitem><para>Can only be used as a direct child of a &lt;radio&gt;, &lt;dropdown&gt;, &lt;valueselector&gt; or &lt;select&gt; element. Represents one selectable option in a radio control or dropdown list. As &lt;option&gt; elements are always part of one of the selection elements, they do not normally
 have an "id" of their own, but see below. Attributes:
 	<variablelist>
 	<varlistentry>
@@ -2705,7 +2705,7 @@ have an "id" of their own, but see below. Attributes:
 	<varlistentry>
 	<term><parameter>id</parameter></term>
 	<listitem><para>Specifying the "id" parameter for the &lt;option&gt; elements is optional (and in fact it's recommended, not to set an "id", unless you really need one). However, specifying an "id" will allow you to enable/disable &lt;option&gt;s, dynamically, by connecting to the boolean property <replaceable>id_of_radio.id_of_optionX.enabled</replaceable>. Currently this works for options inside &lt;radio&gt; or &lt;dropdown&gt;
-	elements, only; &lt;valueslot&gt; and &lt;select&gt; options do not currently support ids.</para></listitem>
+	elements, only; &lt;valueselector&gt; and &lt;select&gt; options do not currently support ids.</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
