@@ -30,7 +30,7 @@
 			The upper half of this tab allows you to specify recodings for individual input values. To add more recodings, click the "add/+"-button. To
 			remove recodings, click the "remove/x"-button. For each recoding, select the following:
 		</setting>
-		<setting id="old_values">
+		<setting id="old_value_type">
 			For each recoding to perform, first select the old value(s) to recode. This can be either NA/missing, or select non-NA value(s) on the left hand side,
 			and add them to the values to be recoded by clicking the arrow-button. If several input values are to be replaced with one output value,
 			you can select them all at once.
