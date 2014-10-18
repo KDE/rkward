@@ -15,7 +15,7 @@ URL: http://rkward.sourceforge.net
 Authors@R: c(person(given="Meik", family="Michalke",
     email="meik.michalke@hhu.de", role=c("aut", "cre")))
 Version: 0.06-5
-Date: 2014-10-17
+Date: 2014-10-18
 Collate:
     'echo.R'
     'i18n.R'
@@ -76,6 +76,7 @@ Collate:
     'rk.XML.require.R'
     'rk.XML.row.R'
     'rk.XML.saveobj.R'
+    'rk.XML.select.R'
     'rk.XML.set.R'
     'rk.XML.snippet.R'
     'rk.XML.snippets.R'

@@ -11,6 +11,7 @@ fixed:
 added:
   - new functions rk.XML.valueselector(),  rk.XML.valueslot() and the combining rk.XML.values() to define
     <valueselector> and <valueslot> nodes, similar to rk.XML.varselector(),  rk.XML.varslot() and rk.XML.vars()
+  - new function rk.XML.select() to define <select> nodes
   - new functions rk.set.rkh.prompter() and rk.get.rkh.prompter() to make it easier to generate help files
     (later...)
   - rk.rkh.scan() (and automatically rk.plugin.skeleton() and rk.plugin.component()) are now capable of fetching
@@ -20,6 +21,8 @@ added:
   - new function rk.XML.option() to allow setting and accessing IDs for single options as well
 changed:
   - updated the plugin skeleton example script; e.g., it now uses the new .rkh file generating features
+  - rk.XML.radio() and rk.XML.dropdown() now also accept objects made with rk.XML.option() in their respective
+    list of options
 
 changes in version 0.06-4 (2014-09-14)
 added:

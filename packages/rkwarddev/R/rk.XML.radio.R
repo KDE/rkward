@@ -24,7 +24,8 @@
 #' @param label Character string, a text label for this plugin element.
 #' @param options A named list with options to choose from. The names of the list elements will become
 #'    labels of the options, \code{val} defines the value to submit if the option is checked, and
-#'    \code{chk=TRUE} should be set in the one option which is checked by default.
+#'    \code{chk=TRUE} should be set in the one option which is checked by default. Objects generated with
+#'    \code{\link[rkwarddev:rk.XML.option]{rk.XML.option}} are accepted as well.
 #' @param id.name Character string, a unique ID for this plugin element.
 #'    If \code{"auto"} and a label was provided, an ID will be generated automatically from the label.
 #' @param help Character string, will be used as the \code{text} value for a setting node in the .rkh file.

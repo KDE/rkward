@@ -30,8 +30,9 @@
 
 rk.rkh.scan <- function(pXML, help=TRUE, captions=TRUE, component=NULL){
 
-  settings.tags <- c("radio", "varslot", "valueslot", "browser", "dropdown",
-    "checkbox", "saveobject", "input", "spinbox", "optioncolumn", "matrix")
+  settings.tags <- c("browser", "checkbox", "dropdown", "input", "matrix", "optioncolumn",
+    "radio", "saveobject", "select", "spinbox", "valueslot", "varslot")
+    
   if(isTRUE(captions)){
     caption.tags <- c("page", "tab", "frame")
   } else {

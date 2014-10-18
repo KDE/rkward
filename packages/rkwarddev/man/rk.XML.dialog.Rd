@@ -23,9 +23,9 @@ An object of class \code{XiMpLe.node}.
 This function will create a dialog section with optional child nodes "browser",
       "checkbox",
 "column", "copy", "dropdown", "embed", "formula", "frame", "include", "input", "insert",
-"preview", "radio", "row", "saveobject", "spinbox", "stretch", "tabbook", "text",
-      "valueselector",
-"valueslot", "varselector" and "varslot".
+"preview", "radio", "row", "saveobject", "select", "spinbox", "stretch", "tabbook",
+      "text",
+"valueselector", "valueslot", "varselector" and "varslot".
 }
 \examples{
 # define an input field and two checkboxes

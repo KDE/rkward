@@ -311,6 +311,7 @@ JS.getters.default <- list(
   "optioncolumn"="getList",
   "radio"="getString",
   "saveobject"="getString",
+  "select"="getString",
   "spinbox"="getString",
   "valueslot"="getString", 
   "varslot"="getString"
@@ -674,6 +675,7 @@ all.valid.modifiers <- list(
   preview=c("state", "state.not", "state.numeric"),
   radio=c("string", "number"),
   saveobject=c("selection", "parent", "objectname", "active"),
+  select=c("string", "number"),
   spinbox=c("int", "real"),
   text=c("text"),
   valueselector=c("available", "selected", "root"),
@@ -769,6 +771,7 @@ all.valid.children <- list(
     "row", "saveobject", "spinbox", "stretch", "tabbook", "text", "valueselector",
     "valueslot", "varselector", "varslot", "!--"),
   radio=c("option"),
+  select=c("option"),
   settings=c("setting", "caption", "!--"),
   wizard=c("browser", "checkbox", "column", "copy",
     "dropdown", "embed", "formula", "frame", "include", "input", "insert", "matrix",

@@ -20,8 +20,7 @@
 #'
 #' This function will create a page node for wizard sections, with optional child nodes "browser", "checkbox",
 #' "column", "copy", "dropdown", "formula", "frame", "input", "page", "radio", "row", "saveobject",
-#' "spinbox", "stretch", "tabbook", "text", "valueselector", "valueslot", "varselector" and "varslot".
-#'
+#' "select", "spinbox", "stretch", "tabbook", "text", "valueselector", "valueslot", "varselector" and "varslot".
 #' @param ... Objects of class \code{XiMpLe.node}.
 #' @param id.name Character string, a unique ID for this plugin element.
 #'    If \code{"auto"}, an ID will be generated automatically from the objects in \code{...}.
