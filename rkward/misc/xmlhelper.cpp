@@ -25,11 +25,15 @@
 #include <qdir.h>
 #include <QTextStream>
 
+#include <rkmessagecatalog.h>
+
 #include "../debug.h"
 
-XMLHelper::XMLHelper (const QString &filename) {
+XMLHelper::XMLHelper (const QString &filename, const RKMessageCatalog *default_catalog) {
 	RK_TRACE (XML);
 	XMLHelper::filename = filename;
+	if (!default_catalog) catalog = RKMessageCatalog::nullCatalog ();
+	else catalog = default_catalog;
 }
 
 XMLHelper::~XMLHelper () {
@@ -52,6 +56,10 @@ QDomElement XMLHelper::openXMLFile (int debug_level, bool with_includes, bool wi
 	f.close();
 
 	QDomElement ret = doc.documentElement ();
+	if (ret.hasAttribute ("po_id")) {
+		QDir path = QFileInfo (filename).absoluteDir ();
+		catalog = RKMessageCatalog::getCatalog ("rkward__" + ret.attribute ("po_id"), path.absoluteFilePath (getStringAttribute (ret, "po_path", "po", DL_INFO)));
+	}
 	if (with_includes) {
 		XMLChildList includes = nodeListToChildList (doc.elementsByTagName ("include"));
 		for (XMLChildList::const_iterator it = includes.constBegin (); it != includes.constEnd (); ++it) {
@@ -230,6 +238,19 @@ QString XMLHelper::getStringAttribute (const QDomElement &element, const QString
 	}
 
 	return (element.attribute (name));
+}
+
+QString XMLHelper::i18nStringAttribute (const QDomElement& element, const QString& name, const QString& def, int debug_level) {
+	RK_TRACE (XML);
+	if (!element.hasAttribute (name)) {
+		const QString no18nname = "noi18n_" + name;
+		if (element.hasAttribute (no18nname)) return element.attribute (no18nname);
+		displayError (&element, i18n ("'%1'-attribute not given. Assuming '%2'", name, def), debug_level);
+		return def;
+	}
+	const QString context_element ("i18ncontext");
+	if (element.hasAttribute (context_element)) return (catalog->translate (context_element, element.attribute (name)));
+	return (catalog->translate (element.attribute (name)));
 }
 
 int XMLHelper::getMultiChoiceAttribute (const QDomElement &element, const QString &name, const QString &values, int def, int debug_level) {

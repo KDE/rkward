@@ -1,5 +1,9 @@
 - Fixed some erroneous plugin debug messages
 - IN PROGESS: Allow plugins to be translated
+  + Notes:
+    - Is it a problem to sync KDE_LANG and LANGUAGE? Should that also be set for the backend?
+    - Message extraction: Should we do this in R, using XiMpLe? That might allow us to give better context / comments
+    - Don't forget to write documentation
 
 --- Version 0.6.2 - Oct-20-2014
 - In data editor, indicate NAs, explicitly

@@ -2,7 +2,7 @@
                           rkmessagecatalog  -  description
                              -------------------
     begin                : Mon Jun 24 2013
-    copyright            : (C) 2013 by Thomas Friedrichsmeier
+    copyright            : (C) 2013, 2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -22,12 +22,18 @@
 
 #include "../debug.h"
 
+// statics
+QHash<QString, RKMessageCatalog*> RKMessageCatalog::catalogs;
+QMutex RKMessageCatalog::setup_mutex;
+RKMessageCatalog* RKMessageCatalog::null_catalog = 0;
+
 RKMessageCatalog::RKMessageCatalog (const QString &name, const QString& path) {
 	RK_TRACE (MISC);
 
-	bound = false;
-	catalog_path = path;
 	catalog_name = QFile::encodeName (name);
+	char *res = bindtextdomain (catalog_name, QFile::encodeName (path));
+	RK_DO (qDebug ("Opening catalog %s, expected at %s, found at %s", qPrintable (name), qPrintable (path), res), MISC, DL_WARNING);
+	bind_textdomain_codeset (catalog_name, "UTF-8");
 }
 
 RKMessageCatalog::~RKMessageCatalog () {
@@ -40,7 +46,6 @@ RKMessageCatalog::~RKMessageCatalog () {
 
 QString RKMessageCatalog::translate (const QString &msgctxt, const QString &msgid) const {
 	RK_TRACE (MISC);
-	if (!bound) const_cast<RKMessageCatalog *> (this)->setup ();
 
 	QByteArray key = (msgctxt + GETTEXT_CONTEXT_GLUE + msgid).toUtf8 ();
 	const char *trans = dgettext (catalog_name, key);
@@ -50,19 +55,29 @@ QString RKMessageCatalog::translate (const QString &msgctxt, const QString &msgi
 
 QString RKMessageCatalog::translate (const QString &msgid) const {
 	RK_TRACE (MISC);
-	if (!bound) const_cast<RKMessageCatalog *> (this)->setup ();
 
 	return QString::fromUtf8 (dgettext (catalog_name, msgid.toUtf8 ()));
 }
 
-void RKMessageCatalog::setup () {
+// static
+RKMessageCatalog* RKMessageCatalog::getCatalog (const QString& name, const QString& pathhint) {
 	RK_TRACE (MISC);
 
+	RKMessageCatalog *ret = catalogs.value (name, 0);
+	if (ret) return ret;
 	setup_mutex.lock ();
-	if (!bound) {
-		bindtextdomain (catalog_name, QFile::encodeName (catalog_path));
-		bind_textdomain_codeset (catalog_name, "UTF-8");
-		bound = true;
-	}
+		// try to look up again, in case initialized from another thread
+		ret = catalogs.value (name, 0);
+		if (!ret) {
+			ret = new RKMessageCatalog (name, pathhint);
+			catalogs.insert (name, ret);
+		}
 	setup_mutex.unlock ();
+	return ret;
+}
+
+RKMessageCatalog* RKMessageCatalog::nullCatalog () {
+	// ok, not thread-safe, here, but the worst that can happen is creating more than one dummy catalog.
+	if (!null_catalog) null_catalog = getCatalog  ("rkward_dummy", QString ());
+	return null_catalog;
 }

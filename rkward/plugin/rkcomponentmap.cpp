@@ -465,7 +465,7 @@ RKPluginMapParseResult RKComponentMap::addPluginMapLocal (const QString& plugin_
 
 		QString filename = xml.getStringAttribute((*it), "file", QString (), DL_WARNING);
 		int type = xml.getMultiChoiceAttribute ((*it), "type", "standard", 0, DL_WARNING);
-		QString label = xml.getStringAttribute ((*it), "label", i18n ("(no label)"), DL_WARNING);
+		QString label = xml.i18nStringAttribute ((*it), "label", i18n ("(no label)"), DL_WARNING);
 
 		if (components.contains (id)) {
 			ret.addAndPrintError (DL_WARNING, i18n ("RKComponentMap already contains a component with id \"%1\". Ignoring second entry.", id));

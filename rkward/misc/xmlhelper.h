@@ -20,6 +20,8 @@
 
 #include <qdom.h>
 
+class RKMessageCatalog;
+
 /** a helper type used to pass a list of direct child elements of a node */
 typedef QList<QDomElement> XMLChildList;
 
@@ -33,11 +35,15 @@ The functions in this class provide error-messages for illegal/problematic input
 class XMLHelper {
 public:
 /** create an instance of XMLHelper.
- @param filename the name of the file to parse. The file is not yet opened on construction. Use openXMLFile() for that. */
-	XMLHelper (const QString &filename);
-/** destrcutor */
+ @param filename the name of the file to parse. The file is not yet opened on construction. Use openXMLFile() for that. 
+ @param default_catalog message catalog to use in case none is specified in the xml file itself. */
+	XMLHelper (const QString &filename, const RKMessageCatalog *default_catalog=0);
+/** destructor */
 	~XMLHelper ();
-	
+/** Return the a pointer to the message catalog in use. This may - or may not - be the same as specified as default catalog in the constructor.
+    Guaranteed to be non-null (but not guaranteed to be non-empty). */
+	const RKMessageCatalog *messageCatalog () const { return catalog; };
+
 /** Open the filename set in the constructor (read-only) and do basic parsing. Internally, the file will be closed right away, so there is no need to call an additional closeFile-equivalent. Once the returned element (and any copies you make of it) goes out of scope, the entire element-tree allocated will be freed,
 but you can re-open the file, if needed.
 @param debug_level level of debug message to generate if opening/parsing fails
@@ -88,6 +94,8 @@ but you can re-open the file, if needed.
 @param debug_level level of debug message to generate in case of failure (i.e. no such attribute was found)
 @returns the value of the given attribute or the given default */
 	QString getStringAttribute (const QDomElement &element, const QString &name, const QString &def, int debug_level);
+/** same as getStringAttribute(), but tries to translate the string, before returning it. Does not translate def! */
+	QString i18nStringAttribute (const QDomElement &element, const QString &name, const QString &def, int debug_level);
 
 /** checks whether the given attribute is one of the allowed string values and returns the number of the value in the list (or the default)
 @param element the element whose attributes to search
@@ -114,7 +122,6 @@ but you can re-open the file, if needed.
 @returns the value of the given attribute or the given default */
 	double getDoubleAttribute (const QDomElement &element, const QString &name, double def, int debug_level);
 
-
 /** returns the value of a boolean attribute ("true" or "false")
 @param element the element whose attributes to search
 @param name the name of the attribute to read
@@ -135,12 +142,12 @@ but you can re-open the file, if needed.
 @param debug_level the debug level to show the message at (highestError () will be adujsted if applicable)
 @param message_level sometime you may want to make sure your message is being shown even if it is not very important to your code. For instance, if there is a typo/illegal value in an optional setting, your code can continue using a reasonable default, but the user should still be notified of this error. If you omit this parameter or set it to something smaller that debug_level, debug_level will be used instead. */
 	void displayError (const QDomNode *in_node, const QString &message, int debug_level, int message_level=-1);
-	
 private:
 /** copy the node list into a child list. The main effect is that a child list is not updated according to document changes */
 	XMLChildList nodeListToChildList (const QDomNodeList &from);
 	void replaceWithChildren (QDomNode *replaced, const QDomElement &replacement_parent);
 	QString filename;
+	const RKMessageCatalog *catalog;
 };
 
 #endif

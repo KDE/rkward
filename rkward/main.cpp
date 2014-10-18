@@ -170,6 +170,9 @@ int main(int argc, char *argv[]) {
 	RKGlobals::startup_options["backend-debugger"] = decodeArgument (args->getOption ("backend-debugger"));
 
 	RKWardApplication app;
+	// No, I do not really understand the point of separating KDE_LANG from LANGUAGE. We do honor it in so far as not
+	// forcing LANGUAGE on the backend, though. Having language as LANGUAGE makes code in RKMessageCatalog much easier compared to KCatalog.
+	qputenv ("LANGUAGE", QFile::encodeName (KGlobal::locale ()->language ()));
 	// install message handler *after* the componentData has been initialized
 	RKSettingsModuleDebug::debug_file = new QTemporaryFile (QDir::tempPath () + "/rkward.frontend");
 	RKSettingsModuleDebug::debug_file->setAutoRemove (false);
