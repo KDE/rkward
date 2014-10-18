@@ -9,6 +9,7 @@
 --- Version 0.6.2 - Oct-20-2014
 - In data editor, indicate NAs, explicitly
 - Import Stata plugin gains option to convert character encoding.
+- New plugin for recoding categorical data
 - New embeddable (minimal) plugin "multi_input" to combine different input elements
 - Fixed: Problems starting from paths with spaces in the file name on Windows
 - Added command line option --r-executable for switching between several installations of R
