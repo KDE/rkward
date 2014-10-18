@@ -1,3 +1,5 @@
+- Fixed display of file paths containing non-ascii characters in the title bar and startup dialog
+
 --- Version 0.6.2 - Oct-20-2014
 - In data editor, indicate NAs, explicitly
 - Import Stata plugin gains option to convert character encoding.
