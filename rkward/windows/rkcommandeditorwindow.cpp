@@ -2,7 +2,7 @@
                           rkcommandeditorwindow  -  description
                              -------------------
     begin                : Mon Aug 30 2004
-    copyright            : (C) 2004-2013 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -331,7 +331,7 @@ QString RKCommandEditorWindow::fullCaption () {
 	if (m_doc->url ().isEmpty ()) {
 		return (shortCaption ());
 	} else {
-		QString cap = m_doc->url ().url ();
+		QString cap = m_doc->url ().pathOrUrl ();
 		if (isModified ()) cap.append (i18n (" [modified]"));
 		return (cap);
 	}
