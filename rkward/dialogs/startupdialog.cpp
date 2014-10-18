@@ -2,7 +2,7 @@
                           startupdialog  -  description
                              -------------------
     begin                : Thu Aug 26 2004
-    copyright            : (C) 2004, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2011, 2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -77,7 +77,10 @@ StartupDialog::StartupDialog (QWidget *parent, StartupDialogResult *result, KRec
 	file_list->setSortingEnabled (false);
 	chose_file_item = new QListWidgetItem (i18n ("<<Open another file>>"), file_list);
 	if (recent_files) {
-		file_list->addItems (recent_files->urls ().toStringList ());
+		KUrl::List urls = recent_files->urls ();
+		for (int i = 0; i < urls.length (); ++i) {
+			file_list->addItem (urls[i].pathOrUrl ());
+		}
 	}
 	connect (file_list, SIGNAL (itemClicked (QListWidgetItem*)), this, SLOT (listClicked (QListWidgetItem*)));
 	connect (file_list, SIGNAL (itemDoubleClicked (QListWidgetItem*)), this, SLOT (listDoubleClicked (QListWidgetItem*)));

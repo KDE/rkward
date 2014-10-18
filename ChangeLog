@@ -1,3 +1,4 @@
+- Fixed display of file paths containing non-ascii characters in the title bar and startup dialog
 - Fixed some erroneous plugin debug messages
 - IN PROGESS: Allow plugins to be translated
   + Notes:
