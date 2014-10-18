@@ -3,11 +3,18 @@
 \alias{rk.XML.valueselector}
 \title{Create node "valueselector" for RKWard plugins}
 \usage{
-rk.XML.valueselector(label = NULL, id.name = "auto")
+rk.XML.valueselector(label = NULL, options = list(label = c(val = NULL, chk
+  = FALSE)), id.name = "auto")
 }
 \arguments{
 \item{label}{Character string, a text label for the value selection slot.
 Must be set if \code{id.name="auto"}.}
+
+\item{options}{A named list with string values to choose from. The names of the list elements will become
+labels of the options, \code{val} defines the value to submit if the value is selected,
+      and
+\code{chk=TRUE} should be set in the one option which is checked by default. Objects generated with
+\code{\link[rkwarddev:rk.XML.option]{rk.XML.option}} are accepted as well.}
 
 \item{id.name}{Character vector, unique ID for this element.}
 }
@@ -24,6 +31,7 @@ cat(pasteXML(test.valueselector))
 \seealso{
 \code{\link[rkwarddev:rk.XML.valueslot]{rk.XML.valueslot}},
    \code{\link[rkwarddev:rk.XML.values]{rk.XML.values}},
+   \code{\link[rkwarddev:rk.XML.option]{rk.XML.option}},
    and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 }
 

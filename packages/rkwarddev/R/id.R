@@ -56,10 +56,8 @@ id <- function(..., quote=FALSE, collapse="", js=TRUE){
           # optionsets are more difficult to identify automatically
           if(isTRUE(js)){
             node.id <- camelCode(get.IDs(check.optionset.tags(this.part), relevant.tags="optioncolumn")[,"abbrev"])
-#            node.id <- check.ID(this.part, search.environment=TRUE, env.get="JS")
           } else {
             node.id <- get.IDs(check.optionset.tags(this.part), relevant.tags="optioncolumn")[,"id"]
-#            node.id <- check.ID(this.part, search.environment=TRUE, env.get="XML")
           }
         } else {
           node.id <- XMLAttrs(this.part)[["id"]]
@@ -91,6 +89,13 @@ id <- function(..., quote=FALSE, collapse="", js=TRUE){
         } else {
           text.part <- this.part
         }
+        # check for temoprary object to add inices for a for loop, see internal function paste.JS.optionsset()
+        addLoopIndex <- get.rk.env(name="IDLoopIndex", value=NULL)
+        if(!is.null(addLoopIndex)){
+          if(text.part %in% addLoopIndex[["columnIDs"]]){
+            text.part <- paste0(text.part, "[", addLoopIndex[["loopvar"]], "]")
+          } else {}
+        } else {}
         return(text.part)
       }
     })

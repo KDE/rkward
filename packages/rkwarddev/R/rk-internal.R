@@ -188,33 +188,21 @@ get.IDs <- function(single.tags, relevant.tags, add.abbrev=FALSE, tag.names=FALS
   ids <- t(sapply(cleaned.tags, function(this.tag){
         if(is.XiMpLe.node(this.tag)){
           this.tag.name <- XMLName(this.tag)
-          this.tag.id.abbrev <- this.tag.id <- XMLAttrs(this.tag)["id"]
-          # take care of one special case: optionsets
-          # they need the set ID to access the value from the dialog,
-          # but to be able to use only the optioncolumn in rkwaddev scripts
-          # as reference, the JavaScript variable must be generated from the
-          # column ID alone.
-          if(identical(this.tag.name, "optioncolumn")){
-            this.tag.setid <- XMLAttrs(this.tag)[["setid"]]
-            if(!is.null(this.tag.setid)){
-              this.tag.id <- paste(this.tag.setid, this.tag.id, sep=".")
-            } else {}
-            # for safety, prefix the column ID with a constant
-            this.tag.id.abbrev <- paste0("ocol_", this.tag.id.abbrev)
-          } else {}
+          this.tag.id.abbrev <- this.tag.id <- check.ID(this.tag)
         } else {
           this.tag.name <- XiMpLe:::XML.tagName(this.tag)
           this.tag.id.abbrev <- this.tag.id <- XiMpLe:::parseXMLAttr(this.tag)[["id"]]
-          # see comment above for the next part
-          if(identical(this.tag.name, "optioncolumn")){
-            this.tag.setid <- XiMpLe:::parseXMLAttr(this.tag)[["setid"]]
-            if(!is.null(this.tag.setid)){
-              this.tag.id <- paste(this.tag.setid, this.tag.id, sep=".")
-            } else {}
-            # for safety, prefix the column ID with a constant
-            this.tag.id.abbrev <- paste0("ocol_", this.tag.id.abbrev)
-          } else {}
         }
+        # take care of one special case: optionsets
+        # they need the set ID to access the value from the dialog,
+        # but to be able to use only the optioncolumn in rkwaddev scripts
+        # as reference, the JavaScript variable must be generated from the
+        # column ID alone.
+        if(identical(this.tag.name, "optioncolumn")){
+          this.tag.id <- check.ID(this.tag.id, search.environment=TRUE)
+          # for safety, prefix the column ID with a constant
+          this.tag.id.abbrev <- paste0("ocol_", this.tag.id.abbrev)
+        } else {}
 
         if(isTRUE(add.abbrev)){
           this.tag.id.abbrev <- paste0(ID.prefix(this.tag.name), this.tag.id.abbrev)
@@ -255,26 +243,17 @@ check.optionset.tags <- function(XML.obj, drop=NULL){
   # first get a list of all optionsets
   optionset.nodes <- child.list(XMLScan(XML.obj, "optionset"))
   # are there any?
-  if(is.null(optionset.nodes)){
-    result <- get.single.tags(XML.obj=XML.obj, drop=drop)
-  } else {
-    # now go through all sets and combine setID with the IDs of optioncolumns
-    optioncolumnNewIDs <- unlist(sapply(optionset.nodes, function(thisNode){
-        thisCols <- child.list(XMLScan(thisNode, "optioncolumn"))
-        thisSetID <- XMLAttrs(thisNode)[["id"]]
-        thisNewCols <- unlist(sapply(thisCols, function(thisCol){
-            XMLAttrs(thisCol)[["setid"]] <- thisSetID
-            pastedTag <- get.single.tags(XML.obj=thisCol, drop=drop)
-            return(pastedTag)
-          }, USE.NAMES=FALSE))
-        return(thisNewCols)
-      }, USE.NAMES=FALSE))
-    # we don't need the set nodes any longer
-    XMLScan(XML.obj, "optionset") <- NULL
-    result <- c(optioncolumnNewIDs, get.single.tags(XML.obj=XML.obj, drop=drop))
-  }
+  if(!is.null(optionset.nodes)){
+    for (thisNode in optionset.nodes){
+      optioncolumn.nodes <- child.list(XMLScan(thisNode, "optioncolumn"))
+      # register column and set IDs internally
+      rk.register.options(optioncolumn.nodes, parent.node=thisNode)
+    }
+  } else {}
+  result <- get.single.tags(XML.obj=XML.obj, drop=drop)
   return(result)
 } ## end function check.optionset.tags()
+
 
 ## function camelCode()
 # changes the first letter of each string
@@ -366,7 +345,7 @@ JS.getters.modif.default <- list(
 # in XML will become
 #   var my.id = getValue("my.id");
 get.JS.vars <- function(JS.var, XML.var=NULL, tag.name=NULL, JS.prefix="", names.only=FALSE, modifiers=NULL, default=FALSE, join="",
-  getter="getValue", guess.getter=FALSE, check.modifiers=TRUE){
+  getter="getValue", guess.getter=FALSE, check.modifiers=TRUE, search.environment=FALSE){
   # check for XiMpLe nodes
   JS.var <- check.ID(JS.var)
   have.XiMpLe.var <- FALSE
@@ -400,7 +379,6 @@ get.JS.vars <- function(JS.var, XML.var=NULL, tag.name=NULL, JS.prefix="", names
         } else {}
       }
     } else {}
-
 
     # check for getter guessing
     if(isTRUE(guess.getter)){
@@ -440,9 +418,9 @@ get.JS.vars <- function(JS.var, XML.var=NULL, tag.name=NULL, JS.prefix="", names
           "Using the default getValue() on this node might cause problems!"), call.=FALSE)
       } else {}
     }
-    XML.var <- check.ID(XML.var)
+    XML.var <- check.ID(XML.var, search.environment=search.environment)
   } else {
-    XML.var <- check.ID(JS.var)
+    XML.var <- check.ID(JS.var, search.environment=search.environment)
   }
 
   if(is.null(JS.prefix)){
@@ -642,6 +620,10 @@ check.ID <- function(node, search.environment=FALSE, env.get="XML"){
     } else {}
   } else if(is.character(node)){
     node.ID <- node
+    if(isTRUE(search.environment)){
+      optionIDs <- get.optionIDs()[[node.ID]]
+      node.ID <- ifelse(is.null(optionIDs), node.ID, optionIDs[[env.get]])
+    } else {}
   } else {
     stop(simpleError("Can't find an ID!"))
   }
@@ -773,6 +755,7 @@ all.valid.children <- list(
   radio=c("option"),
   select=c("option"),
   settings=c("setting", "caption", "!--"),
+  valueselector=c("option"),
   wizard=c("browser", "checkbox", "column", "copy",
     "dropdown", "embed", "formula", "frame", "include", "input", "insert", "matrix",
     "optionset", "page", "preview", "radio", "row", "saveobject", "spinbox", "stretch",
@@ -1160,6 +1143,49 @@ paste.JS.var <- function(object, level=2, indent.by="\t", JS.prefix=NULL, modifi
 } ## end function paste.JS.var()
 
 
+## function paste.JS.optionsset()
+paste.JS.optionsset <- function(object, level=2, indent.by="\t"){
+  stopifnot(inherits(object, "rk.JS.oset"))
+  # check indentation
+  main.indent <- indent(level, by=indent.by)
+  scnd.indent <- indent(level+1, by=indent.by)
+
+  vars <- slot(object, "vars")
+  loopvar <- slot(object, "loopvar")
+  columns <- slot(object, "columns")
+  body <- slot(object, "body")
+
+  if(length(slot(vars, "vars")) > 0 | length(slot(vars, "JS.var")) > 0 ){
+    paste.vars <- paste.JS.var(vars, level=level, indent.by=indent.by)
+  } else {
+    paste.vars <- c()
+  }
+
+  ## the for loop body
+#   for (var i = 0; i < col_a.length; ++i) {
+#         echo ("coolfun (", col_a[i] + ", " + col_b[i] + "," + col_c[i] + ")\n");
+#   }
+  for.head <- paste0(main.indent, "for (var ", loopvar, " = 0; ", loopvar, " < ", id(columns[[1]]), ".length; ++", loopvar, "){")
+
+  # place a temporary object in the internal environment to cause id() to add an index to the column IDs
+  set.rk.env(
+    name="IDLoopIndex",
+    value=list(
+      columnIDs=sapply(columns, id),
+      loopvar=loopvar
+    )
+  )
+  paste.body <- rk.paste.JS(body, level=level, indent.by=scnd.indent)
+  # remove teporary object
+  set.rk.env(name="IDLoopIndex", value=NULL)
+
+  for.foot <- paste0(main.indent, "}")
+  
+  results <- paste(c(paste.vars, for.head, paste.body, for.foot), collapse="\n")
+  return(results)
+} ## end function paste.JS.optionsset()
+
+
 ## function dependenciesCompatWrapper()
 # with RKWard 0.6.1, the dependencies will no longer be a part of <about>
 # this wrapper takes both, "about" and "dependencies" arguments,
@@ -1294,7 +1320,7 @@ rk.register.options <- function(options, parent.node){
       if(!is.null(opt.id)){
         # save ID with parents
         optionIDs <- get.optionIDs()
-        thisID <- c(XML=id(options[[this.num]], js=FALSE), JS=id(options[[this.num]]))
+        thisID <- c(XML=opt.id, JS=id(options[[this.num]]))
         parentID <- c(XML=id(parent.node, js=FALSE), JS=id(parent.node))
         optionIDs[[opt.id]] <- list(
           XML=paste(parentID[["XML"]], thisID[["XML"]], sep="."),

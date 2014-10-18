@@ -8,8 +8,8 @@ rk.paste.JS(..., level = 2, indent.by = "\\t", funct = NULL,
   join = NULL, getter = NULL, empty.e = FALSE)
 }
 \arguments{
-\item{...}{Objects of class \code{rk.JS.ite}, \code{rk.JS.arr},
-      \code{rk.JS.opt} or character.
+\item{...}{Objects of class \code{rk.JS.ite}, \code{rk.JS.arr}, \code{rk.JS.opt},
+      \code{rk.JS.oset} or character.
 Another special case is XiMpLe nodes created by \code{rk.comment()}, which will be turned
 into JavaScript comments (i.e., lines starting with "//").}
 
@@ -66,6 +66,7 @@ To get a list of the implemented modifiers in this package,
 \seealso{
 \code{\link[rkwarddev:rk.JS.array]{rk.JS.array}},
    \code{\link[rkwarddev:rk.JS.options]{rk.JS.options}},
+   \code{\link[rkwarddev:rk.JS.optionset]{rk.JS.optionset}},
    \code{\link[rkwarddev:rk.JS.vars]{rk.JS.vars}},
    \code{\link[rkwarddev:ite]{ite}},
    and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}

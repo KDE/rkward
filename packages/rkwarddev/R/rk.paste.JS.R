@@ -20,7 +20,7 @@
 #'
 #' @note To get a list of the implemented modifiers in this package, call \code{rkwarddev:::all.valid.modifiers}.
 #'
-#' @param ... Objects of class \code{rk.JS.ite}, \code{rk.JS.arr}, \code{rk.JS.opt} or character.
+#' @param ... Objects of class \code{rk.JS.ite}, \code{rk.JS.arr}, \code{rk.JS.opt}, \code{rk.JS.oset} or character.
 #'    Another special case is XiMpLe nodes created by \code{rk.comment()}, which will be turned
 #'    into JavaScript comments (i.e., lines starting with "//").
 #' @param level Integer, which indentation level to use, minimum is 1.
@@ -46,10 +46,12 @@
 #' @include rk.JS.arr-class.R
 #' @include rk.JS.ite-class.R
 #' @include rk.JS.opt-class.R
+#' @include rk.JS.oset-class.R
 #' @include rk.JS.var-class.R
 #' @seealso
 #'    \code{\link[rkwarddev:rk.JS.array]{rk.JS.array}},
 #'    \code{\link[rkwarddev:rk.JS.options]{rk.JS.options}},
+#'    \code{\link[rkwarddev:rk.JS.optionset]{rk.JS.optionset}},
 #'    \code{\link[rkwarddev:rk.JS.vars]{rk.JS.vars}},
 #'    \code{\link[rkwarddev:ite]{ite}},
 #'    and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
@@ -73,6 +75,8 @@ rk.paste.JS <- function(..., level=2, indent.by="\t", funct=NULL, array=NULL,
       result <- paste.JS.array(this.object, level=level, indent.by=indent.by, funct=funct)
     } else if(inherits(this.object, "rk.JS.opt")){
       result <- paste.JS.options(this.object, level=level, indent.by=indent.by, array=array, funct=funct)
+    } else if(inherits(this.object, "rk.JS.oset")){
+      result <- paste.JS.optionsset(this.object, level=level, indent.by=indent.by)
     } else if(inherits(this.object, "rk.JS.var")){
       result <- paste.JS.var(this.object, level=level, indent.by=indent.by, JS.prefix=var.prefix,
         modifiers=modifiers, default=default, join=join, getter=getter)

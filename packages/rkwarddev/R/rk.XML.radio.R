@@ -55,6 +55,9 @@ rk.XML.radio <- function(label, options=list(label=c(val=NULL, chk=FALSE)), id.n
   # convert list elements into a list of XiMpLe nodes (if they aren't already)
   rd.options <- rk.check.options(options, parent="radio")
 
+  # check the node names and allow only valid ones
+  valid.child("radio", children=rd.options)
+
   radio <- XMLNode("radio",
       attrs=rd.attr.list,
       .children=child.list(rd.options, empty=FALSE)

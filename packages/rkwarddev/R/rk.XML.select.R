@@ -51,6 +51,9 @@ rk.XML.select <- function(label, options=list(label=c(val="", chk=FALSE)), id.na
   # convert list elements into a list of XiMpLe nodes (if they aren't already)
   sl.options <- rk.check.options(options, parent="select")
 
+  # check the node names and allow only valid ones
+  valid.child("select", children=sl.options)
+
   select <- XMLNode("select",
       attrs=slct.attr.list,
       .children=child.list(sl.options, empty=FALSE)

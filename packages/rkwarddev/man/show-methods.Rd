@@ -7,8 +7,9 @@
 \alias{show,rk.JS.echo-method}
 \alias{show,rk.JS.ite-method}
 \alias{show,rk.JS.opt-method}
+\alias{show,rk.JS.oset-method}
 \alias{show,rk.JS.var-method}
-\title{Show methods for objects of class rk.JS.S}
+\title{Show methods for S4 objects of class \code{rk.JS.*}}
 \usage{
 show(object)
 
@@ -17,6 +18,8 @@ show(object)
 \S4method{show}{rk.JS.ite}(object)
 
 \S4method{show}{rk.JS.opt}(object)
+
+\S4method{show}{rk.JS.oset}(object)
 
 \S4method{show}{rk.JS.var}(object)
 

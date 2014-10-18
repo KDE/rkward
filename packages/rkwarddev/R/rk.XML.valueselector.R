@@ -20,18 +20,23 @@
 #'
 #' @param label Character string, a text label for the value selection slot.
 #'    Must be set if \code{id.name="auto"}.
+#' @param options A named list with string values to choose from. The names of the list elements will become
+#'    labels of the options, \code{val} defines the value to submit if the value is selected, and
+#'    \code{chk=TRUE} should be set in the one option which is checked by default. Objects generated with
+#'    \code{\link[rkwarddev:rk.XML.option]{rk.XML.option}} are accepted as well.
 #' @param id.name Character vector, unique ID for this element.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
 #'    \code{\link[rkwarddev:rk.XML.valueslot]{rk.XML.valueslot}},
 #'    \code{\link[rkwarddev:rk.XML.values]{rk.XML.values}},
+#'    \code{\link[rkwarddev:rk.XML.option]{rk.XML.option}},
 #'    and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' test.valueselector <- rk.XML.valueselector("Select some values")
 #' cat(pasteXML(test.valueselector))
 
-rk.XML.valueselector <- function(label=NULL, id.name="auto"){
+rk.XML.valueselector <- function(label=NULL, options=list(label=c(val=NULL, chk=FALSE)), id.name="auto"){
   if(identical(id.name, "auto")){
     ## if this ID generation get's changed, change it in rk.XML.vars(), too!
     attr.list <- list(id=auto.ids(label, prefix=ID.prefix("valueselector", length=3)))
@@ -47,7 +52,16 @@ rk.XML.valueselector <- function(label=NULL, id.name="auto"){
     } else {}
   }
 
-  node <- XMLNode("valueselector", attrs=attr.list)
+  # convert list elements into a list of XiMpLe nodes (if they aren't already)
+  vs.options <- rk.check.options(options, parent="valueselector")
+
+  # check the node names and allow only valid ones
+  valid.child("valueselector", children=vs.options)
+
+  node <- XMLNode("valueselector",
+    attrs=attr.list,
+    .children=child.list(vs.options, empty=FALSE)
+  )
 
   return(node)
 }

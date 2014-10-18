@@ -18,14 +18,14 @@
 
 #' Show methods for S4 objects of class \code{rk.JS.*}
 #'
-#' @title Show methods for objects of class rk.JS.S
 #' @param object An object of class \code{rk.JS.*}
-#' @aliases show,-methods show,rk.JS.ite-method show,rk.JS.arr-method show,rk.JS.opt-method show,rk.JS.var-method
+#' @aliases show,-methods show,rk.JS.ite-method show,rk.JS.arr-method show,rk.JS.opt-method show,rk.JS.oset-method show,rk.JS.var-method
 #' @keywords methods
 #' @import methods
 #' @include rk.JS.arr-class.R
 #' @include rk.JS.ite-class.R
 #' @include rk.JS.opt-class.R
+#' @include rk.JS.oset-class.R
 #' @include rk.JS.var-class.R
 #' @include echo.R
 #' @exportMethod show
@@ -44,6 +44,11 @@ setMethod("show", signature(object="rk.JS.ite"), function(object){
 
 #' @rdname show-methods
 setMethod("show", signature(object="rk.JS.opt"), function(object){
+  cat(rk.paste.JS(object))
+})
+
+#' @rdname show-methods
+setMethod("show", signature(object="rk.JS.oset"), function(object){
   cat(rk.paste.JS(object))
 })
 

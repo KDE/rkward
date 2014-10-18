@@ -19,6 +19,7 @@ added:
   - all functions scanned by rk.rkh.scan() for setting nodes in .rkh files have gained two additional arguments,
     "help" and "component", to register the text to be used via rk.set.rkh.prompter()
   - new function rk.XML.option() to allow setting and accessing IDs for single options as well
+  - new function rk.JS.optionset() and object class "rk.JS.oset" to generate for loops over <optionset> columns
 changed:
   - updated the plugin skeleton example script; e.g., it now uses the new .rkh file generating features
   - rk.XML.radio() and rk.XML.dropdown() now also accept objects made with rk.XML.option() in their respective
