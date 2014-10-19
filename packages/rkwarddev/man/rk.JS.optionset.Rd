@@ -58,6 +58,14 @@ dep.optionset.packages <- rk.XML.optionset(
 )
 
 # now translate it to JavaScript for loop
+JS.optionset <- rk.JS.optionset(dep.optionset.packages,
+  echo("c("),
+  echo("name=\\"", dep.optioncol.pckg.name, "\\""),
+  ite(dep.optioncol.pckg.min, echo(", min=\\"", dep.optioncol.pckg.min, "\\"")),
+  ite(dep.optioncol.pckg.max, echo(", max=\\"", dep.optioncol.pckg.max, "\\"")),
+  ite(dep.optioncol.pckg.repo, echo(", repository=\\"", dep.optioncol.pckg.repo, "\\"")),
+  echo(")")
+)
 }
 \seealso{
 \code{\link[rkwarddev:rk.XML.optionset]{rk.XML.optionset}},

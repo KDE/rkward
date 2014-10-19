@@ -60,14 +60,14 @@
 #' )
 #' 
 #' # now translate it to JavaScript for loop
-# JS.optionset <- rk.JS.optionset(dep.optionset.packages,
-#   echo("c("),
-#   echo("name=\"", dep.optioncol.pckg.name, "\""),
-#   ite(dep.optioncol.pckg.min, echo(", min=\"", dep.optioncol.pckg.min, "\"")),
-#   ite(dep.optioncol.pckg.max, echo(", max=\"", dep.optioncol.pckg.max, "\"")),
-#   ite(dep.optioncol.pckg.repo, echo(", repository=\"", dep.optioncol.pckg.repo, "\"")),
-#   echo(")")
-# )
+#' JS.optionset <- rk.JS.optionset(dep.optionset.packages,
+#'   echo("c("),
+#'   echo("name=\"", dep.optioncol.pckg.name, "\""),
+#'   ite(dep.optioncol.pckg.min, echo(", min=\"", dep.optioncol.pckg.min, "\"")),
+#'   ite(dep.optioncol.pckg.max, echo(", max=\"", dep.optioncol.pckg.max, "\"")),
+#'   ite(dep.optioncol.pckg.repo, echo(", repository=\"", dep.optioncol.pckg.repo, "\"")),
+#'   echo(")")
+#' )
 
 rk.JS.optionset <- function(optionset, ..., loopvar="i", collapse=",\\n\\t", vars=FALSE, guess.getter=TRUE){
   optioncolumn.nodes <- child.list(XMLScan(optionset, "optioncolumn"))
