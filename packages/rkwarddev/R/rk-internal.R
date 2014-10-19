@@ -1149,11 +1149,13 @@ paste.JS.optionsset <- function(object, level=2, indent.by="\t"){
   # check indentation
   main.indent <- indent(level, by=indent.by)
   scnd.indent <- indent(level+1, by=indent.by)
+  thrd.indent <- indent(level+2, by=indent.by)
 
   vars <- slot(object, "vars")
   loopvar <- slot(object, "loopvar")
   columns <- slot(object, "columns")
   body <- slot(object, "body")
+  collapse <- slot(object, "collapse")
 
   if(length(slot(vars, "vars")) > 0 | length(slot(vars, "JS.var")) > 0 ){
     paste.vars <- paste.JS.var(vars, level=level, indent.by=indent.by)
@@ -1162,24 +1164,25 @@ paste.JS.optionsset <- function(object, level=2, indent.by="\t"){
   }
 
   ## the for loop body
-#   for (var i = 0; i < col_a.length; ++i) {
-#         echo ("coolfun (", col_a[i] + ", " + col_b[i] + "," + col_c[i] + ")\n");
-#   }
   for.head <- paste0(main.indent, "for (var ", loopvar, " = 0; ", loopvar, " < ", id(columns[[1]]), ".length; ++", loopvar, "){")
 
-  # place a temporary object in the internal environment to cause id() to add an index to the column IDs
-  set.rk.env(
-    name="IDLoopIndex",
-    value=list(
-      columnIDs=sapply(columns, id),
-      loopvar=loopvar
-    )
-  )
-  paste.body <- rk.paste.JS(body, level=level, indent.by=scnd.indent)
-  # remove teporary object
-  set.rk.env(name="IDLoopIndex", value=NULL)
+  paste.body <- sapply(body, function(bodyPart){
+      rk.paste.JS(bodyPart, level=level, indent.by=scnd.indent)
+    })
+  # replace the column IDs with indexed ones
+  for (thisCol in sapply(columns, id)){
+    paste.body <- gsub(
+      paste0("([^[:alnum:]]+|^)", thisCol, "([^[:alnum:]]+|$)"),
+      paste0("\\1", thisCol, "[", loopvar, "]\\2"),
+      paste.body, perl=TRUE)
+  }
 
-  for.foot <- paste0(main.indent, "}")
+  for.foot <- paste0(
+    scnd.indent, "if(", loopvar, " + 1 < ", id(columns[[1]]), ".length) {\n",
+    thrd.indent, "echo(\"", collapse, "\");\n",
+    scnd.indent, "}\n",
+    main.indent, "}"
+  )
   
   results <- paste(c(paste.vars, for.head, paste.body, for.foot), collapse="\n")
   return(results)

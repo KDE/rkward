@@ -103,18 +103,24 @@
 								<stretch />
 							</frame>
 						</row>
-						<row id="row_oDRDRPPPPD">
-							<optionset id="ost_frDRDRPPPP">
+						<row id="row_oDRDRPPRRP">
+							<optionset id="ost_fDRDRPPRRP">
 								<content>
 									<optiondisplay />
 									<frame label="Depends on R packages" id="frm_DpndsnRp">
-										<row id="row_inptlblPcP">
+										<row id="row_inptlbPPRR">
 											<input label="Package" id="inp_Package" />
+											<input label="min" id="inp_min" />
+											<input label="max" id="inp_max" />
+											<input label="Repository" id="inp_Repostry" />
 										</row>
 										<stretch />
 									</frame>
 								</content>
 								<optioncolumn id="ocl_inpPckgtxt" connect="inp_Package.text" label="Package" />
+								<optioncolumn id="ocl_inpmintext" connect="inp_min.text" label="min" />
+								<optioncolumn id="ocl_inpmaxtext" connect="inp_max.text" label="max" />
+								<optioncolumn id="ocl_inpRpstryt" connect="inp_Repostry.text" label="Repository" />
 							</optionset>
 						</row>
 					</frame>

@@ -22,11 +22,11 @@
 #' @aliases show,-methods show,rk.JS.ite-method show,rk.JS.arr-method show,rk.JS.opt-method show,rk.JS.oset-method show,rk.JS.var-method
 #' @keywords methods
 #' @import methods
-#' @include rk.JS.arr-class.R
-#' @include rk.JS.ite-class.R
-#' @include rk.JS.opt-class.R
-#' @include rk.JS.oset-class.R
-#' @include rk.JS.var-class.R
+#' @include 00_class_01_rk.JS.arr.R
+#' @include 00_class_02_rk.JS.var.R
+#' @include 00_class_03_rk.JS.ite.R
+#' @include 00_class_04_rk.JS.opt.R
+#' @include 00_class_05_rk.JS.oset.R
 #' @include echo.R
 #' @exportMethod show
 #' @rdname show-methods

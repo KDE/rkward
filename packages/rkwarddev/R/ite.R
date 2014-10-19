@@ -26,7 +26,7 @@
 #'    You can also give another object of class \code{rk.JS.ite}.
 #' @param elsejs Like \code{thenjs}, the code to be executed in case the \code{if()} statement is not true.
 #' @return An object of class \code{rk.JS.ite}
-#' @include rk.JS.ite-class.R
+#' @include 00_class_03_rk.JS.ite.R
 #' @seealso \code{\link[rkwarddev:rk.paste.JS]{rk.paste.JS}},
 #'    \code{\link[rkwarddev:rk.JS.vars]{rk.JS.vars}},
 #'    \code{\link[rkwarddev:rk.JS.array]{rk.JS.array}},

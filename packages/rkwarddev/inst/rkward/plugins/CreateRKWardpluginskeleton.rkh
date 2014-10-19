@@ -109,7 +109,23 @@
 		<setting id="inp_Package">
 			The names of R packages required to run this plugin.
 		</setting>
-		<setting id="ocl_inpPckgtxt" />
+		<setting id="inp_min">
+			The minimum version number of R packages required to run this plugin.
+		</setting>
+		<setting id="inp_max">
+			The maximum version number of R packages required to run this plugin.
+		</setting>
+		<setting id="inp_Repostry">
+			The repository to download R packages from required to run this plugin.
+		</setting>
+		<setting id="ost_fDRDRPPRRP.ocl_inpPckgtxt">
+		</setting>
+		<setting id="ost_fDRDRPPRRP.ocl_inpmintext">
+		</setting>
+		<setting id="ost_fDRDRPPRRP.ocl_inpmaxtext">
+		</setting>
+		<setting id="ost_fDRDRPPRRP.ocl_inpRpstryt">
+		</setting>
 		<caption id="tab_Helppage" />
 		<caption id="frm_Wrthlpfl" />
 		<setting id="inp_Summary">

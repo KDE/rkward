@@ -21,8 +21,12 @@
 #' Note that if you want to refer to the optioncolumns in your JavaScript code, the \code{id}
 #' you need is a combination of \code{<optionset id>.<optioncolumn id>.<modifier>}. that is,
 #' you must always prefix it with the sets' \code{id}. For JavaScript code generating with
-#' \code{rkwarddev}, you can use the ID that functions like \code{\link[rkwarddev:id]{id}} return,
-#' because the JavaScript variable name will only contain a constant prefix ("ocol") and the column ID.
+#' \code{rkwarddev}, the easiest way to get to results is to use \code{\link[rkwarddev:rk.JS.optionset]{rk.JS.optionset}}.
+#' It will automatically place your code fragments into a for loop and iterate through all available
+#' rows of the set.
+#' 
+#' If this isn't flexible enough for your needs, you can also use the ID that functions like \code{\link[rkwarddev:id]{id}}
+#' return, because the JavaScript variable name will only contain a constant prefix ("ocol") and the column ID.
 #'
 #' @note The \code{<optionset>} node was introduced with RKWard 0.6.1, please set the dependencies
 #'    of your component/plugin accordingly.
@@ -47,6 +51,7 @@
 #' @seealso
 #'    \code{\link[rkwarddev:rk.XML.optioncolumn]{rk.XML.optioncolumn}},
 #'    \code{\link[rkwarddev:rk.XML.optiondisplay]{rk.XML.optiondisplay}},
+#'    \code{\link[rkwarddev:rk.JS.optionset]{rk.JS.optionset}},
 #'    and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' firstname <- rk.XML.input("Given name(s)")

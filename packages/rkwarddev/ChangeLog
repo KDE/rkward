@@ -1,6 +1,6 @@
 ChangeLog for package rkwarddev
 
-changes in version 0.06-5 (2014-10-16)
+changes in version 0.06-5 (2014-10-19)
 fixed:
   - the "show" feature in rk.plugin.skeleton() was broken due to changes in the namespace defaults
   - scanning plugin XML code for JS and help related content didn't work as expected in rk.plugin.component()
@@ -24,6 +24,7 @@ changed:
   - updated the plugin skeleton example script; e.g., it now uses the new .rkh file generating features
   - rk.XML.radio() and rk.XML.dropdown() now also accept objects made with rk.XML.option() in their respective
     list of options
+  - renamed all class definition files due to include problems with roxygenize()
 
 changes in version 0.06-4 (2014-09-14)
 added:

@@ -130,20 +130,20 @@ dep.opts <- rk.XML.frame(
         content=rk.XML.frame(rk.XML.stretch(before=list(
           rk.XML.row(
             dep.pckg.name <- rk.XML.input("Package",
-              help="The names of R packages required to run this plugin.")#,
-#             dep.pckg.min <- rk.XML.input("min",
-#               help="The minimum version number of R packages required to run this plugin."),
-#             dep.pckg.max <- rk.XML.input("max",
-#               help="The maximum version number of R packages required to run this plugin."),
-#             dep.pckg.repo <- rk.XML.input("Repository",
-#               help="The repository to download R packages from required to run this plugin.")
+              help="The names of R packages required to run this plugin."),
+            dep.pckg.min <- rk.XML.input("min",
+              help="The minimum version number of R packages required to run this plugin."),
+            dep.pckg.max <- rk.XML.input("max",
+              help="The maximum version number of R packages required to run this plugin."),
+            dep.pckg.repo <- rk.XML.input("Repository",
+              help="The repository to download R packages from required to run this plugin.")
          )
         )), label="Depends on R packages"),
         optioncolumn=list(
-          dep.optioncol.pckg.name <- rk.XML.optioncolumn(connect=dep.pckg.name, modifier="text")#,
-#           dep.optioncol.pckg.min <- rk.XML.optioncolumn(connect=dep.pckg.min, modifier="text"),
-#           dep.optioncol.pckg.max <- rk.XML.optioncolumn(connect=dep.pckg.max, modifier="text"),
-#           dep.optioncol.pckg.repo <- rk.XML.optioncolumn(connect=dep.pckg.repo, modifier="text")
+          dep.optioncol.pckg.name <- rk.XML.optioncolumn(connect=dep.pckg.name, modifier="text"),
+          dep.optioncol.pckg.min <- rk.XML.optioncolumn(connect=dep.pckg.min, modifier="text"),
+          dep.optioncol.pckg.max <- rk.XML.optioncolumn(connect=dep.pckg.max, modifier="text"),
+          dep.optioncol.pckg.repo <- rk.XML.optioncolumn(connect=dep.pckg.repo, modifier="text")
         )
       )
   ),
@@ -284,7 +284,19 @@ JS.calculate <- rk.paste.JS(
       ite(id(js.opt.about.dep), echo(js.opt.about.dep)),
       ite(id(js.opt.about.dep, " && ", dep.optioncol.pckg.name), echo(",")),
       ite(id(dep.optioncol.pckg.name , "!= \"\""),
-        echo("\n\tpackage=list(\n\t\tc(name=\"", join(dep.optioncol.pckg.name, by="\"),\n\t\tc(name=\""), "\")\n\t)"),
+        rk.paste.JS(
+          echo("\n\tpackage=list(\n\t\t"),
+          rk.JS.optionset(dep.optionset.packages,
+            echo("c("),
+            echo("name=\"", dep.optioncol.pckg.name, "\""),
+            ite(dep.optioncol.pckg.min, echo(", min=\"", dep.optioncol.pckg.min, "\"")),
+            ite(dep.optioncol.pckg.max, echo(", max=\"", dep.optioncol.pckg.max, "\"")),
+            ite(dep.optioncol.pckg.repo, echo(", repository=\"", dep.optioncol.pckg.repo, "\"")),
+            echo(")"),
+            collapse=",\\n\\t\\t"
+          ),
+          echo("\n\t)")
+        )
       ),
       echo("\n)\n\n"),
     level=3)),

@@ -43,11 +43,11 @@
 #' @param empty.e For \code{rk.JS.ite} objects only: Logical, if \code{TRUE} will force to add empty \code{else \{\}} brackets when
 #'    there is no \code{else} statement defined, which is considered to enhance code readability by some.
 #' @return A character string.
-#' @include rk.JS.arr-class.R
-#' @include rk.JS.ite-class.R
-#' @include rk.JS.opt-class.R
-#' @include rk.JS.oset-class.R
-#' @include rk.JS.var-class.R
+#' @include 00_class_01_rk.JS.arr.R
+#' @include 00_class_03_rk.JS.ite.R
+#' @include 00_class_04_rk.JS.opt.R
+#' @include 00_class_05_rk.JS.oset.R
+#' @include 00_class_02_rk.JS.var.R
 #' @seealso
 #'    \code{\link[rkwarddev:rk.JS.array]{rk.JS.array}},
 #'    \code{\link[rkwarddev:rk.JS.options]{rk.JS.options}},

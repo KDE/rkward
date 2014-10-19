@@ -1,7 +1,7 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
-\section{Changes in rkwarddev version 0.06-5 (2014-10-16)}{
+\section{Changes in rkwarddev version 0.06-5 (2014-10-19)}{
   \subsection{fixed}{
     \itemize{
       \item the \code{"show"} feature in \code{rk.plugin.skeleton()} was broken due to changes in the namespace defaults
@@ -32,6 +32,7 @@
       \item updated the plugin skeleton example script; e.g., it now uses the new .rkh file generating features
       \item \code{rk.XML.radio()} and \code{rk.XML.dropdown()} now also accept objects made with \code{rk.XML.option()} in their respective
         list of options
+      \item renamed all class definition files due to include problems with \code{roxygenize()}
     }
   }
 }

@@ -34,7 +34,6 @@ function preprocess(){
 
 function calculate(){
 	// read in variables from dialog
-	var ocolOclInpPckgtxt = getList("ost_frDRDRPPPP.ocl_inpPckgtxt");
 	var inpPluginnm = getString("inp_Pluginnm");
 	var inpLicense = getString("inp_License");
 	var inpShrtdscr = getString("inp_Shrtdscr");
@@ -61,6 +60,14 @@ function calculate(){
 	var inpRKWardmx = getString("inp_RKWardmx");
 	var inpRmin = getString("inp_Rmin");
 	var inpRmax = getString("inp_Rmax");
+	var inpPackage = getString("inp_Package");
+	var inpMin = getString("inp_min");
+	var inpMax = getString("inp_max");
+	var inpRepostry = getString("inp_Repostry");
+	var ocolOclInpPckgtxt = getList("ost_fDRDRPPRRP.ocl_inpPckgtxt");
+	var ocolOclInpmintext = getList("ost_fDRDRPPRRP.ocl_inpmintext");
+	var ocolOclInpmaxtext = getList("ost_fDRDRPPRRP.ocl_inpmaxtext");
+	var ocolOclInpRpstryt = getList("ost_fDRDRPPRRP.ocl_inpRpstryt");
 	var inpSummary = getString("inp_Summary");
 	var inpUsage = getString("inp_Usage");
 	var frmDfndpndnChecked = getBoolean("frm_Dfndpndn.checked");
@@ -274,7 +281,25 @@ function calculate(){
 			echo(",");
 		}
 		if(ocolOclInpPckgtxt!= "") {
-			echo("\n\tpackage=list(\n\t\tc(name=\"" + ocolOclInpPckgtxt.join("\"),\n\t\tc(name=\"") + "\")\n\t)");
+			echo("\n\tpackage=list(\n\t\t");
+	for (var i = 0; i < ocolOclInpPckgtxt.length; ++i){
+		echo("c(");
+		echo("name=\"" + ocolOclInpPckgtxt[i] + "\"");
+		if(ocolOclInpmintext[i]) {
+				echo(", min=\"" + ocolOclInpmintext[i] + "\"");
+		}
+		if(ocolOclInpmaxtext[i]) {
+				echo(", max=\"" + ocolOclInpmaxtext[i] + "\"");
+		}
+		if(ocolOclInpRpstryt[i]) {
+				echo(", repository=\"" + ocolOclInpRpstryt[i] + "\"");
+		}
+		echo(")");
+		if(i + 1 < ocolOclInpPckgtxt.length) {
+			echo(",\n\t\t");
+		}
+	}
+	echo("\n\t)");
 		}
 		echo("\n)\n\n");
 	}

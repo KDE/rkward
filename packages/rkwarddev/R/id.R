@@ -89,13 +89,6 @@ id <- function(..., quote=FALSE, collapse="", js=TRUE){
         } else {
           text.part <- this.part
         }
-        # check for temoprary object to add inices for a for loop, see internal function paste.JS.optionsset()
-        addLoopIndex <- get.rk.env(name="IDLoopIndex", value=NULL)
-        if(!is.null(addLoopIndex)){
-          if(text.part %in% addLoopIndex[["columnIDs"]]){
-            text.part <- paste0(text.part, "[", addLoopIndex[["loopvar"]], "]")
-          } else {}
-        } else {}
         return(text.part)
       }
     })

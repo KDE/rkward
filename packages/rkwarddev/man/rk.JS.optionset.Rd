@@ -3,8 +3,8 @@
 \alias{rk.JS.optionset}
 \title{Evaluate optionset objects in plugin JavaScript}
 \usage{
-rk.JS.optionset(optionset, ..., loopvar = "i", vars = FALSE,
-  guess.getter = TRUE)
+rk.JS.optionset(optionset, ..., loopvar = "i", collapse = ",\\\\n\\\\t",
+  vars = FALSE, guess.getter = TRUE)
 }
 \arguments{
 \item{optionset}{A XiMpLe.node object, the full \code{<optionset>} node.}
@@ -14,6 +14,11 @@ rk.JS.optionset(optionset, ..., loopvar = "i", vars = FALSE,
 the body of the for loop.}
 
 \item{loopvar}{Character, name of the index variable used in the for loop.}
+
+\item{collapse}{Character string,
+      how all optioncolumns should be concatenated on the R code level
+Hint: To place each one on a new line with tab indentation, set \code{collapse=",
+     \\n\\t"}.}
 
 \item{vars}{Logical,
       if \code{TRUE} all optioncolumn varaibles will be defined first. This is not
@@ -30,6 +35,29 @@ a for loop that iterates through all columns. Inside \code{...},
       you can use the column objects of
 \code{\link[rkwarddev:rk.XML.optioncolumn]{rk.XML.optioncolumn}} to refer to the respective column,
 \code{rk.JS.optionset} will use appropriate variables.
+}
+\examples{
+# this example is taken from the plugin skeleton script
+# first set up an optionset object
+dep.optionset.packages <- rk.XML.optionset(
+  content=rk.XML.frame(rk.XML.stretch(before=list(
+    rk.XML.row(
+      dep.pckg.name <- rk.XML.input("Package"),
+      dep.pckg.min <- rk.XML.input("min"),
+      dep.pckg.max <- rk.XML.input("max"),
+      dep.pckg.repo <- rk.XML.input("Repository")
+    )
+  )), label="Depends on R packages"),
+  optioncolumn=list(
+    dep.optioncol.pckg.name <- rk.XML.optioncolumn(connect=dep.pckg.name,
+      modifier="text"),
+    dep.optioncol.pckg.min <- rk.XML.optioncolumn(connect=dep.pckg.min, modifier="text"),
+    dep.optioncol.pckg.max <- rk.XML.optioncolumn(connect=dep.pckg.max, modifier="text"),
+    dep.optioncol.pckg.repo <- rk.XML.optioncolumn(connect=dep.pckg.repo, modifier="text")
+  )
+)
+
+# now translate it to JavaScript for loop
 }
 \seealso{
 \code{\link[rkwarddev:rk.XML.optionset]{rk.XML.optionset}},

@@ -23,7 +23,7 @@
 # so for the time being, this file is renamed to be parsed at the end
 
 #' @include rk.XML.embed.R
-#' @include rk.JS.var-class.R
+#' @include 00_class_02_rk.JS.var.R
 #' @include rk.JS.vars.R
 #' @export
 

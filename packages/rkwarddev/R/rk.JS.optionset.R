@@ -27,17 +27,51 @@
 #' @param ... The JavaScript code, optionally including the optioncolumn objects. This will become
 #'    the body of the for loop.
 #' @param loopvar Character, name of the index variable used in the for loop.
+#' @param collapse Character string, how all optioncolumns should be concatenated on the R code level
+#'    Hint: To place each one on a new line with tab indentation, set \code{collapse=",\\n\\t"}.
 #' @param vars Logical, if \code{TRUE} all optioncolumn varaibles will be defined first. This is not
 #'    needed if \code{\link[rkwarddev:rk.JS.scan]{rk.JS.scan}} was already called.
 #' @param guess.getter Logical, if \code{TRUE} try to get a good default getter function for JavaScript
 #'    variable values. Only relevant if \code{vars=TRUE}.
+#' @include 00_class_02_rk.JS.var.R
+#' @include 00_class_05_rk.JS.oset.R
 #' @export
 #' @seealso
 #'    \code{\link[rkwarddev:rk.XML.optionset]{rk.XML.optionset}}, 
 #'    \code{\link[rkwarddev:rk.XML.optioncolumn]{rk.XML.optioncolumn}}
+#' @examples
+#' # this example is taken from the plugin skeleton script
+#' # first set up an optionset object
+#' dep.optionset.packages <- rk.XML.optionset(
+#'   content=rk.XML.frame(rk.XML.stretch(before=list(
+#'     rk.XML.row(
+#'       dep.pckg.name <- rk.XML.input("Package"),
+#'       dep.pckg.min <- rk.XML.input("min"),
+#'       dep.pckg.max <- rk.XML.input("max"),
+#'       dep.pckg.repo <- rk.XML.input("Repository")
+#'     )
+#'   )), label="Depends on R packages"),
+#'   optioncolumn=list(
+#'     dep.optioncol.pckg.name <- rk.XML.optioncolumn(connect=dep.pckg.name, modifier="text"),
+#'     dep.optioncol.pckg.min <- rk.XML.optioncolumn(connect=dep.pckg.min, modifier="text"),
+#'     dep.optioncol.pckg.max <- rk.XML.optioncolumn(connect=dep.pckg.max, modifier="text"),
+#'     dep.optioncol.pckg.repo <- rk.XML.optioncolumn(connect=dep.pckg.repo, modifier="text")
+#'   )
+#' )
+#' 
+#' # now translate it to JavaScript for loop
+# JS.optionset <- rk.JS.optionset(dep.optionset.packages,
+#   echo("c("),
+#   echo("name=\"", dep.optioncol.pckg.name, "\""),
+#   ite(dep.optioncol.pckg.min, echo(", min=\"", dep.optioncol.pckg.min, "\"")),
+#   ite(dep.optioncol.pckg.max, echo(", max=\"", dep.optioncol.pckg.max, "\"")),
+#   ite(dep.optioncol.pckg.repo, echo(", repository=\"", dep.optioncol.pckg.repo, "\"")),
+#   echo(")")
+# )
 
-rk.JS.optionset <- function(optionset, ..., loopvar="i", vars=FALSE, guess.getter=TRUE){
+rk.JS.optionset <- function(optionset, ..., loopvar="i", collapse=",\\n\\t", vars=FALSE, guess.getter=TRUE){
   optioncolumn.nodes <- child.list(XMLScan(optionset, "optioncolumn"))
+  # profit from lazy evaluation, let this be done by paste
   loopbody <- list(...)
 
   if(isTRUE(vars)){
@@ -65,7 +99,8 @@ rk.JS.optionset <- function(optionset, ..., loopvar="i", vars=FALSE, guess.gette
     vars=JS.vars,
     loopvar=loopvar,
     columns=optioncolumn.nodes,
-    body=loopbody
+    body=loopbody,
+    collapse=collapse
   )
 
   return(JS.osfor)

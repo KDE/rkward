@@ -16,27 +16,29 @@
 # along with rkwarddev.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#' @include rk.JS.var-class.R
-#' @export
-
 # this simple class is for JavaScript generation,
 # produced by rk.JS.optionset()
 
+#' @include 00_class_02_rk.JS.var.R
+#' @export
 setClass("rk.JS.oset",
   representation=representation(
     vars="rk.JS.var",
     loopvar="character",
     columns="list",
-    body="list"
+    body="list",
+    collapse="character"
   ),
   prototype(
     vars=new("rk.JS.var"),
     loopvar="i",
     columns=list(),
-    body=list()
+    body=list(),
+    collapse=",\\n\\t"
   )
 )
 
+#' @include 00_class_02_rk.JS.var.R
 setValidity("rk.JS.oset", function(object){
     sapply(slot(object, "columns"), function(this.col){
       if(!inherits(this.col, "XiMpLe.node")){
