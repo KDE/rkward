@@ -23,6 +23,9 @@
 #' \code{\link[rkwarddev:rk.XML.optioncolumn]{rk.XML.optioncolumn}} to refer to the respective column,
 #' \code{rk.JS.optionset} will use appropriate variables.
 #' 
+#' In case you simply want to define the variables, but not run the loop yet, set \code{vars=TRUE} and
+#' leave \code{...} empty.
+#' 
 #' @param optionset A XiMpLe.node object, the full \code{<optionset>} node.
 #' @param ... The JavaScript code, optionally including the optioncolumn objects. This will become
 #'    the body of the for loop.

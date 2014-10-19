@@ -55,18 +55,19 @@ rk.JS.vars <- function(..., var.prefix=NULL, modifiers=NULL, default=FALSE, join
   variables <- list(...)
 
   JS.vars <- new("rk.JS.var",
-        vars=sapply(child.list(variables), function(this.var){get.JS.vars(
-            JS.var=this.var,
-            XML.var=this.var,
-            JS.prefix=var.prefix,
-            modifiers=modifiers,
-            default=default,
-            join=join,
-            check.modifiers=check.modifiers,
-            getter=getter,
-            guess.getter=guess.getter)
-        })
-      )
+      vars=sapply(child.list(variables), function(this.var){
+        get.JS.vars(
+          JS.var=this.var,
+          XML.var=this.var,
+          JS.prefix=var.prefix,
+          modifiers=modifiers,
+          default=default,
+          join=join,
+          check.modifiers=check.modifiers,
+          getter=getter,
+          guess.getter=guess.getter)
+      })
+    )
 
   return(JS.vars)
 }

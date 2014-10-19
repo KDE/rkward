@@ -36,6 +36,11 @@ a for loop that iterates through all columns. Inside \code{...},
 \code{\link[rkwarddev:rk.XML.optioncolumn]{rk.XML.optioncolumn}} to refer to the respective column,
 \code{rk.JS.optionset} will use appropriate variables.
 }
+\details{
+In case you simply want to define the variables, but not run the loop yet,
+      set \code{vars=TRUE} and
+leave \code{...} empty.
+}
 \examples{
 # this example is taken from the plugin skeleton script
 # first set up an optionset object

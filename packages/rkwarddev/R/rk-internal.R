@@ -1163,28 +1163,33 @@ paste.JS.optionsset <- function(object, level=2, indent.by="\t"){
     paste.vars <- c()
   }
 
-  ## the for loop body
-  for.head <- paste0(main.indent, "for (var ", loopvar, " = 0; ", loopvar, " < ", id(columns[[1]]), ".length; ++", loopvar, "){")
+  # if there's no body, we don't need a loop
+  if(length(body) > 0){
+    ## the for loop body
+    for.head <- paste0(main.indent, "for (var ", loopvar, " = 0; ", loopvar, " < ", id(columns[[1]]), ".length; ++", loopvar, "){")
 
-  paste.body <- sapply(body, function(bodyPart){
-      rk.paste.JS(bodyPart, level=level, indent.by=scnd.indent)
-    })
-  # replace the column IDs with indexed ones
-  for (thisCol in sapply(columns, id)){
-    paste.body <- gsub(
-      paste0("([^[:alnum:]]+|^)", thisCol, "([^[:alnum:]]+|$)"),
-      paste0("\\1", thisCol, "[", loopvar, "]\\2"),
-      paste.body, perl=TRUE)
+    paste.body <- sapply(body, function(bodyPart){
+        rk.paste.JS(bodyPart, level=level, indent.by=scnd.indent)
+      })
+    # replace the column IDs with indexed ones
+    for (thisCol in sapply(columns, id)){
+      paste.body <- gsub(
+        paste0("([^[:alnum:]]+|^)", thisCol, "([^[:alnum:]]+|$)"),
+        paste0("\\1", thisCol, "[", loopvar, "]\\2"),
+        paste.body, perl=TRUE)
+    }
+
+    for.foot <- paste0(
+      scnd.indent, "if(", loopvar, " + 1 < ", id(columns[[1]]), ".length) {\n",
+      thrd.indent, "echo(\"", collapse, "\");\n",
+      scnd.indent, "}\n",
+      main.indent, "}"
+    )
+    
+    results <- paste(c(paste.vars, for.head, paste.body, for.foot), collapse="\n")
+  } else {
+    results <- paste.vars
   }
-
-  for.foot <- paste0(
-    scnd.indent, "if(", loopvar, " + 1 < ", id(columns[[1]]), ".length) {\n",
-    thrd.indent, "echo(\"", collapse, "\");\n",
-    scnd.indent, "}\n",
-    main.indent, "}"
-  )
-  
-  results <- paste(c(paste.vars, for.head, paste.body, for.foot), collapse="\n")
   return(results)
 } ## end function paste.JS.optionsset()
 
