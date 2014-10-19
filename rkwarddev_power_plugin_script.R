@@ -3,7 +3,8 @@
 # note: this script only creates objects in your workspace,
 # *EXCEPT* for the last call, see below.
 
-require(rkwarddev) ## this script needs rkwarddev >= 0.06-5
+require(rkwarddev)
+rkwarddev.required("0.06-5")
 
 local({
 # set the output directory to overwrite the actual plugin
@@ -16,7 +17,8 @@ about.info <- rk.XML.about(
   name="rk.power",
   author=c(
     person(given="Meik", family="Michalke",
-      email="meik.michalke@hhu.de", role=c("aut","cre"))),
+      email="meik.michalke@hhu.de", role=c("aut","cre")),
+    person(given="Thomas", family="Friedrichsmeier", role=c("ctb"))),
   about=list(desc="RKWard GUI to perform power analysis and sample size estimation.",
     version="0.01-3", url="http://rkward.sf.net")
   )
