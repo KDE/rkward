@@ -511,9 +511,13 @@ XML2person <- function(node, eval=FALSE){
       attrs <- XMLAttrs(this.child)
       given <- make.vector(attrs[["given"]])
       family <- make.vector(attrs[["family"]])
-      email <- make.vector(attrs[["email"]])
+      if(!is.null(attrs[["email"]])){
+        email <- paste0(", email=", make.vector(attrs[["email"]]))
+      } else {
+        email <- ""
+      }
       role <- make.vector(attrs[["role"]])
-      this.author <- paste0("person(given=", given, ", family=", family, ", email=", email, ", role=", role, ")")
+      this.author <- paste0("person(given=", given, ", family=", family, email, ", role=", role, ")")
       all.authors[length(all.authors) + 1] <- this.author
     } else {}
   }

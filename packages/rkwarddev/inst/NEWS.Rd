@@ -4,35 +4,47 @@
 \section{Changes in rkwarddev version 0.06-5 (2014-10-19)}{
   \subsection{fixed}{
     \itemize{
-      \item the \code{"show"} feature in \code{rk.plugin.skeleton()} was broken due to changes in the namespace defaults
-      \item scanning plugin XML code for JS and help related content didn't work as expected in \code{rk.plugin.component()}
+      \item the \code{"show"} feature in \code{rk.plugin.skeleton()} was broken due to changes in
+        the namespace defaults
+      \item scanning plugin XML code for JS and help related content didn't work as
+        expected in \code{rk.plugin.component()}
       \item \code{rk.rkh.scan()} now also recognises <optioncolumn> and <matrix> nodes
-      \item a logical bug prevented \code{rk.plugin.component()} to run with default values for XML
-      \item internal function \code{paste.JS.options()}, used by \code{rk.JS.options()}, was only working correctly for the \code{"then"}
-        part if \code{ite()} statements in arrays; now also produces usable code for an \code{"else"} part, if available
+      \item a logical bug prevented \code{rk.plugin.component()} to run with default values
+        for XML
+      \item internal function \code{paste.JS.options()}, used by \code{rk.JS.options()}, was only
+        working correctly for the \code{"then"} part if \code{ite()} statements in arrays; now
+        also produces usable code for an \code{"else"} part, if available
     }
   }
   \subsection{added}{
     \itemize{
-      \item new functions \code{rk.XML.valueselector()},  \code{rk.XML.valueslot()} and the combining \code{rk.XML.values()} to define
-        <valueselector> and <valueslot> nodes, similar to \code{rk.XML.varselector()},  \code{rk.XML.varslot()} and \code{rk.XML.vars()}
+      \item new functions \code{rk.XML.valueselector()},  \code{rk.XML.valueslot()} and the
+        combining \code{rk.XML.values()} to define <valueselector> and <valueslot> nodes,
+        similar to \code{rk.XML.varselector()},  \code{rk.XML.varslot()} and \code{rk.XML.vars()}
       \item new function \code{rk.XML.select()} to define <select> nodes
-      \item new functions \code{rk.set.rkh.prompter()} and \code{rk.get.rkh.prompter()} to make it easier to generate help files
-        (later...)
-      \item \code{rk.rkh.scan()} (and automatically \code{rk.plugin.skeleton()} and \code{rk.plugin.component()}) are now capable of fetching
-        text set with \code{rk.set.rkh.prompter()} and use it to generate help files
-      \item all functions scanned by \code{rk.rkh.scan()} for setting nodes in .rkh files have gained two additional arguments,
-        \code{"help"} and \code{"component"}, to register the text to be used via \code{rk.set.rkh.prompter()}
-      \item new function \code{rk.XML.option()} to allow setting and accessing IDs for single options as well
-      \item new function \code{rk.JS.optionset()} and object class \code{"rk.JS.oset"} to generate for loops over <optionset> columns
+      \item new functions \code{rk.set.rkh.prompter()} and \code{rk.get.rkh.prompter()} to make it
+        easier to generate help files (later...)
+      \item \code{rk.rkh.scan()} (and automatically \code{rk.plugin.skeleton()} and
+        \code{rk.plugin.component()}) are now capable of fetching text set with \code{rk.set.rkh.prompter()}
+        and use it to generate help files
+      \item all functions scanned by \code{rk.rkh.scan()} for setting nodes in .rkh files
+        have gained two additional arguments, \code{"help"} and \code{"component"}, to register
+        the text to be used via \code{rk.set.rkh.prompter()}
+      \item new function \code{rk.XML.option()} to allow setting and accessing IDs for
+        single options as well
+      \item new function \code{rk.JS.optionset()} and object class \code{"rk.JS.oset"} to generate
+        for loops over <optionset> columns
     }
   }
   \subsection{changed}{
     \itemize{
-      \item updated the plugin skeleton example script; e.g., it now uses the new .rkh file generating features
-      \item \code{rk.XML.radio()} and \code{rk.XML.dropdown()} now also accept objects made with \code{rk.XML.option()} in their respective
-        list of options
-      \item renamed all class definition files due to include problems with \code{roxygenize()}
+      \item updated the plugin skeleton example script; e.g., it now uses the new
+        .rkh file generating features
+      \item \code{rk.XML.radio()} and \code{rk.XML.dropdown()} now also accept objects made with
+        \code{rk.XML.option()} in their respective list of options
+      \item renamed all class definition files due to include problems with
+        \code{roxygenize()}
+      \item allow non-maintainers to omit email addresses in <about> nodes
     }
   }
 }

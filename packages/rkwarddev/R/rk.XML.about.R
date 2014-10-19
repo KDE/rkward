@@ -23,7 +23,7 @@
 #'    \describe{
 #'      \item{given}{Author given name}
 #'      \item{family}{Author family name}
-#'      \item{email}{Author mail address}
+#'      \item{email}{Author mail address (can be omitted if \code{role} does not include \code{"cre"})}
 #'      \item{role}{This person's specific role, e.g. \code{"aut"} for actual author, \code{"cre"} for maintainer or \code{"ctb"} for contributor.}
 #'    }
 #'    See \code{\link[utils:person]{person}} for more details on this, especially for valid roles.
@@ -121,11 +121,20 @@ rk.XML.about <- function(name, author, about=list(desc="SHORT_DESCRIPTION", vers
   # - email
   # - role
   xml.authors <- unlist(sapply(author, function(this.author){
-      stopifnot(all(c("given", "family", "email") %in% names(unlist(this.author))))
+      stopifnot(all(c("given", "family") %in% names(unlist(this.author))))
       author.given  <- format(this.author, include="given")
       author.family <- format(this.author, include="family")
-      author.email  <- format(this.author, include="email", braces=list(email=""))
+      if("email" %in% names(unlist(this.author))){
+        author.email  <- format(this.author, include="email", braces=list(email=""))
+      } else {
+        author.email  <- NULL
+      }
       author.role   <- format(this.author, include="role", braces=list(role=""), collapse=list(role=", "))
+      # at least maintainers need an email address
+      if("cre" %in% unlist(this.author) & is.null(author.email)){
+        stop(simpleError("the maintainer ", author.given, " ", author.family, " needs an email address!"))
+      } else {}
+     
       result <- XMLNode("author",
         attrs=list(
           given=author.given,

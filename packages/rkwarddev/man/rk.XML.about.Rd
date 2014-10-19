@@ -15,7 +15,7 @@ rk.XML.about(name, author, about = list(desc = "SHORT_DESCRIPTION", version =
 \describe{
   \item{given}{Author given name}
   \item{family}{Author family name}
-  \item{email}{Author mail address}
+  \item{email}{Author mail address (can be omitted if \code{role} does not include \code{"cre"})}
   \item{role}{This person's specific role, e.g. \code{"aut"} for actual author,
       \code{"cre"} for maintainer or \code{"ctb"} for contributor.}
 }
