@@ -5,7 +5,7 @@ PortSystem          1.0
 PortGroup           kde4 1.1
 fetch.type          svn
 name                rkward-devel
-version             0.6.1-svn
+version             0.6.2-svn
 svn.url             http://svn.code.sf.net/p/rkward/code/trunk
 #svn.revision        4494
 worksrcdir          trunk/rkward
@@ -59,10 +59,9 @@ subport rkward-binary {
         configure.args-delete \
                -DR_EXECUTABLE=${frameworks_dir}/R.framework/Resources/R \
                -DRKVERSION_NUMBER=${version}
-        version             0.6.1
+        version             0.6.2
         svn.url             http://svn.code.sf.net/p/rkward/code/branches/release_branches/rkward_${version}
-        svn.revision        4635
-        patchfiles          patch-rkward-rbackend-rkstructuregetter.cpp.diff
+        svn.revision        4940
         worksrcdir          rkward_${version}
         depends_lib-delete   port:R
         configure.compiler   llvm-gcc-4.2
@@ -90,6 +89,6 @@ configure.post_args ..
 build.dir           ${worksrcpath}/build
 
 pre-pkg {
-        file copy -force -- ${workpath}/trunk/rkward/macports/postinstall ${package.scripts}/postinstall
+        file copy -force -- ${worksrcpath}/macports/postinstall ${package.scripts}/postinstall
         file attributes ${package.scripts}/postinstall -permissions 0755
 }

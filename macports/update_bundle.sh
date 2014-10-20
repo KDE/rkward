@@ -23,11 +23,20 @@ BLDPRFX=_opt_rkward_var_macports_sources_rsync.macports.org_release_tarballs_por
 #   gnome_gobject-introspection gnome_gtk2 gnome_hicolor-icon-theme gnome_libglade2 \
 #   multimedia_XviD multimedia_dirac multimedia_ffmpeg multimedia_libogg multimedia_libtheora multimedia_libvpx \
 #   multimedia_schroedinger multimedia_x264 net_avahi net_kerberos5 security_cyrus-sasl2 sysutils_e2fsprogs )
-declare -a EXCLPKG=(audio_flac audio_jack audio_lame audio_libmodplug audio_libopus audio_libsamplerate \
-  audio_libsndfile audio_libvorbis audio_speex databases_db46 databases_gdbm databases_sqlite3 devel_boost \
-  gnome_gobject-introspection gnome_gtk2 gnome_hicolor-icon-theme gnome_libglade2 \
-  multimedia_XviD multimedia_dirac multimedia_ffmpeg multimedia_libogg multimedia_libtheora multimedia_libvpx \
-  multimedia_schroedinger multimedia_x264 net_avahi net_kerberos5 security_cyrus-sasl2 sysutils_e2fsprogs )
+declare -a EXCLPKG=(audio_lame audio_libmodplug audio_libopus \
+  audio_libvorbis audio_speex audio_taglib databases_db46 databases_db48 databases_gdbm databases_openldap databases_sqlite3 devel_boost \
+  gnome_at-spi2-atk gnome_at-spi2-core gnome_desktop-file-utils gnome_gnome-common gnome_gobject-introspection gnome_gtk-doc \
+  gnome_gtk2 gnome_gtk3 gnome_hicolor-icon-theme gnome_libcroco gnome_libglade2 gnome_gobject-introspection \
+  multimedia_ffmpeg multimedia_libass multimedia_libbluray multimedia_libogg multimedia_libtheora multimedia_libvpx \
+  multimedia_schroedinger multimedia_x264 multimedia_XviD \
+  net_avahi net_kerberos5 net_tcp_wrappers security_cyrus-sasl2 security_p11-kit sysutils_e2fsprogs \
+  x11_pango x11_urw-fonts x11_Xft2 x11_xorg-bigreqsproto x11_xorg-compositeproto x11_xorg-damageproto x11_xorg-evieproto \
+  x11_xorg-fixesproto x11_xorg-inputproto x11_xorg-kbproto x11_xorg-libice x11_xorg-libpthread-stubs x11_xorg-libsm \
+  x11_xorg-libX11 x11_xorg-libXau x11_xorg-libxcb x11_xorg-libXcomposite x11_xorg-libXcursor x11_xorg-libXdamage \
+  x11_xorg-libXdmcp x11_xorg-libXevie x11_xorg-libXext x11_xorg-libXfixes x11_xorg-libXi x11_xorg-libXinerama \
+  x11_xorg-libXrandr x11_xorg-libXt x11_xorg-libXtst x11_xorg-randrproto x11_xorg-recordproto x11_xorg-renderproto \
+  x11_xorg-util-macros x11_xorg-xcb-proto x11_xorg-xcb-util x11_xorg-xcmiscproto x11_xorg-xextproto \
+  x11_xorg-xf86bigfontproto x11_xorg-xineramaproto x11_xorg-xproto x11_xorg-xtrans x11_xrender )
 
 #LLVMFIX="configure.compiler=llvm-gcc-4.2"
 
