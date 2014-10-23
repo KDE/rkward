@@ -42,23 +42,67 @@ about.plugin <- rk.XML.frame(
     pl.category<- rk.XML.input("Category",
       help="A category for your plugin. This infromation is currently ignored by RKWard.")),
   label="About the plugin")
+# about.contact <- rk.XML.frame(
+#   rk.XML.row(
+#     rk.XML.col(
+#       aut.given <- rk.XML.input("Given name", required=TRUE,
+#         help="First name of the package author."),
+#       aut.family <- rk.XML.input("Family name", required=TRUE,
+#         help="Family name of the package author."),
+#       aut.email <- rk.XML.input("E-mail", required=TRUE,
+#         help="The authors e-mail address, important for bug reports and receiving a myriad of thank yous..."),
+#       rk.XML.stretch()),
+#     rk.XML.col(rk.XML.frame(
+#       aut.auth <- rk.XML.cbox("Author", chk=TRUE,
+#         help="Check this if you are the author of the plugin code."),
+#       aut.maint <- rk.XML.cbox("Maintainer", chk=TRUE,
+#         help="Check this if you maintain the plugin package."),
+#       rk.XML.stretch(), label="Author roles"))),
+#   label="Plugin author")
+
 about.contact <- rk.XML.frame(
   rk.XML.row(
-    rk.XML.col(
-      aut.given <- rk.XML.input("Given name", required=TRUE,
-        help="First name of the package author."),
-      aut.family <- rk.XML.input("Family name", required=TRUE,
-        help="Family name of the package author."),
-      aut.email <- rk.XML.input("E-mail", required=TRUE,
-        help="The authors e-mail address, important for bug reports and receiving a myriad of thank yous..."),
-      rk.XML.stretch()),
-    rk.XML.col(rk.XML.frame(
-      aut.auth <- rk.XML.cbox("Author", chk=TRUE,
-        help="Check this if you are the author of the plugin code."),
-      aut.maint <- rk.XML.cbox("Maintainer", chk=TRUE,
-        help="Check this if you maintain the plugin package."),
-      rk.XML.stretch(), label="Author roles"))),
-  label="Plugin author")
+    oset.authors <- rk.XML.optionset(
+      content=rk.XML.frame(rk.XML.stretch(before=list(
+        rk.XML.row(
+        frm.about.contact <- rk.XML.frame(
+          rk.XML.row(
+            rk.XML.col(
+              aut.given <- rk.XML.input("Given name", required=TRUE,
+                help="First name of the package author."),
+              aut.family <- rk.XML.input("Family name", required=TRUE,
+                help="Family name of the package author."),
+              aut.email <- rk.XML.input("E-mail", required=FALSE,
+                help="The authors e-mail address, important for bug reports and receiving a myriad of thank yous..."),
+              rk.XML.stretch()),
+            rk.XML.col(rk.XML.frame(
+              aut.auth <- rk.XML.cbox("Author", chk=TRUE,
+                help="Check this if this person is the author of the plugin code."),
+              aut.maint <- rk.XML.cbox("Maintainer", chk=TRUE,
+                help="Check this if this person maintains the plugin package."),
+              aut.cntr <- rk.XML.cbox("Contributor", chk=FALSE,
+                help="Check this if this person is a contributor to the plugin code (e.g., translations)."),
+              rk.XML.stretch(), label="Roles"))),
+            label="Package author"
+          )
+        )
+      )), label="Package authors"),
+      optioncolumn=list(
+        optioncol.aut.given <- rk.XML.optioncolumn(connect=aut.given, modifier="text"),
+        optioncol.aut.family <- rk.XML.optioncolumn(connect=aut.family, modifier="text"),
+        optioncol.aut.email <- rk.XML.optioncolumn(connect=aut.email, modifier="text"),
+        optioncol.aut.auth <- rk.XML.optioncolumn(connect=aut.auth, modifier="state"),
+        optioncol.aut.maint <- rk.XML.optioncolumn(connect=aut.maint, modifier="state"),
+        optioncol.aut.cntr <- rk.XML.optioncolumn(connect=aut.cntr, modifier="state")
+      ),
+      logic=rk.XML.logic(
+        rk.XML.connect(governor=aut.maint, client=aut.email, set="required")
+      )
+    )
+  ),
+  label="Plugin author"
+)
+
 
 tab1.about <- rk.XML.col(about.plugin, about.contact)
 
@@ -201,17 +245,6 @@ logic.section <- rk.XML.logic(
   )
 
 ## JS code generation
-# author section
-js.opt.about.author.role <- rk.JS.options("optAuthorRole",
-  ite(aut.auth, qp("\"aut\"")),
-  ite(aut.maint, qp("\"cre\"")),
-  funct="c", option="role", collapse="")
-js.opt.about.author <- rk.JS.options("optAuthor",
-  ite(aut.given, qp("given=\"",aut.given,"\"")),
-  ite(aut.family, qp("family=\"",aut.family,"\"")),
-  ite(aut.email, qp("email=\"",aut.email,"\"")),
-  ite(js.opt.about.author.role, js.opt.about.author.role),
-  funct="person", option="author", collapse=",\\n\\t")
 # about section
 js.opt.about.about <- rk.JS.options("optAbout",
   ite(pl.desc, qp("desc=\"",pl.desc,"\"")),
@@ -267,15 +300,34 @@ JS.prepare <- rk.paste.JS(
   
 js.frm.help.text <- rk.JS.vars(help.text, modifiers="checked")
 JS.calculate <- rk.paste.JS(
-  js.opt.about.author.role,
-  js.opt.about.author,
   js.opt.about.about,
   js.opt.about.dep,
   js.opt.skel.pluginmap,
   js.opt.skeleton,
   echo("about.plugin <- rk.XML.about("),
     ite(pl.name, echo("\n\tname=\"", pl.name, "\"")),
-    echo(js.opt.about.author),
+    # author section
+    rk.JS.optionset(oset.authors, vars=TRUE, guess.getter=TRUE),
+    ite(id(optioncol.aut.given, " != \"\""),
+      rk.paste.JS(
+        echo("\tauthor=\"c(\n\t\t\t"),
+        rk.JS.optionset(oset.authors,
+          js.oset.authors.role <- rk.JS.options("optAuthorRole",
+            ite(id(optioncol.aut.auth, " == 1"), qp("\\\"aut\\\"")),
+            ite(id(optioncol.aut.maint, " == 1"), qp("\\\"cre\\\"")),
+            ite(id(optioncol.aut.cntr, " == 1"), qp("\\\"ctb\\\"")),
+            funct="c", option="role", collapse=""),
+          echo("person("),
+          echo("given=\\\"", optioncol.aut.given, "\\\""),
+          ite(optioncol.aut.family, echo(", family=\\\"", optioncol.aut.family, "\\\"")),
+          ite(optioncol.aut.email, echo(", email=\\\"", optioncol.aut.email, "\\\"")),
+          ite(js.oset.authors.role, echo(", ", js.oset.authors.role)),
+          echo(")"),
+          collapse=",\\n\\t\\t\\t"
+        ),
+        echo("\n\t\t)\",\n")
+      )
+    ),
     echo(js.opt.about.about),
   echo("\n)\n\n"),
   ite(id(js.frm.dep.opts, " && (", js.opt.about.dep, " || ", dep.optioncol.pckg.name, ")"),

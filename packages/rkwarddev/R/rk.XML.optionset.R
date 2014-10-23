@@ -98,18 +98,6 @@ rk.XML.optionset <- function(content, optioncolumn, min_rows=0, min_rows_if_any=
     attr.list[["keycolumn"]] <- keycolumn
   } else {}
 
-  if(!is.null(logic)){
-    if(is.XiMpLe.node(logic) && identical(XMLName(logic), "logic")){
-      valid.child("logic", children=XMLChildren(logic))
-    } else {
-      stop(simpleError("'logic' must be a <logic> node!"))
-    }
-    # checks go here
-  } else {}
-
-  # this list will carry all child nodes of the full set
-  all.children <- list(logic)
-
   content <- child.list(content)
   optioncolumn <- child.list(optioncolumn)
 
@@ -121,10 +109,24 @@ rk.XML.optionset <- function(content, optioncolumn, min_rows=0, min_rows_if_any=
   content.node <- XMLNode("content",
     .children=content)
 
-  # append content node
-  all.children <- append(all.children, content.node)
+  # this list will carry all child nodes of the full set
+  all.children <- list(content.node)
+
   # append optioncolumns
   all.children <- append(all.children, optioncolumn)
+
+  if(!is.null(logic)){
+    if(is.XiMpLe.node(logic) && identical(XMLName(logic), "logic")){
+      valid.child("logic", children=XMLChildren(logic))
+    } else {
+      stop(simpleError("'logic' must be a <logic> node!"))
+    }
+    # checks go here
+  } else {}
+
+  # append logic node; must be evaluated last so all objects are already defined
+  # but for the sake of nice code, we'll put it first
+  all.children <- append(all.children, logic, after=0)
 
   node <- XMLNode("optionset",
     attrs=attr.list,
