@@ -224,6 +224,13 @@ bool RKConsole::handleKeyPress (QKeyEvent *e) {
 
 	if (para < doc->lines () - 1 || pos < prefix.length ()) {	// not inside the last line?
 		if (!is_modifier_key) cursorAtTheEnd ();	// adjust position before interpreting non-modifier keystroke
+
+		// KDE 4.13.3 (may have started, earlier): Apparently, cursor adjustment does not take effect, immediately.
+		if (para < doc->lines () - 1 || pos < prefix.length ()) { // still not inside the last line?
+			// HACK ish workaround:
+			// qApp->postEvent (this, e); // not quite as easy to re-post, as event will be deleted
+			return true;	// at least prevent kate part form interpreting it
+		}
 	}
 
 	if (current_command) {
@@ -473,7 +480,7 @@ bool RKConsole::eventFilter (QObject *o, QEvent *e) {
 		return RKMDIWindow::eventFilter (o, e);
 	}
 
-	if (e->type () == QEvent::KeyPress) {
+	if ((e->type () == QEvent::KeyPress) || (e->type () == QEvent::Shortcut)) {
 		QKeyEvent *k = (QKeyEvent *)e;
 		return (handleKeyPress (k));
 	} else if (e->type () == QEvent::MouseButtonPress) {
