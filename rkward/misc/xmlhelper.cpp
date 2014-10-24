@@ -248,7 +248,7 @@ QString XMLHelper::i18nStringAttribute (const QDomElement& element, const QStrin
 		displayError (&element, i18n ("'%1'-attribute not given. Assuming '%2'", name, def), debug_level);
 		return def;
 	}
-	const QString context_element ("i18ncontext");
+	const QString context_element ("i18n_context");
 	if (element.hasAttribute (context_element)) return (catalog->translate (context_element, element.attribute (name)));
 	return (catalog->translate (element.attribute (name)));
 }
