@@ -5,6 +5,7 @@
     - Is it a problem to sync KDE_LANG and LANGUAGE? Should that also be set for the backend?
     - Message extraction: Should we do this in R, using XiMpLe? That might allow us to give better context / comments
     - Don't forget to write documentation
+    - What should be the policy regarding installing translations (80% criterion)
 
 --- Version 0.6.2 - Oct-20-2014
 - In data editor, indicate NAs, explicitly

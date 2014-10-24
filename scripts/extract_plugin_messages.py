@@ -9,15 +9,32 @@ import os
 from xml.dom import minidom
 import copy
 
+def usage ():
+  print ("Usage: " + sys.argv[0] + " [--default_po=PO_ID] [--outdir=DIR] files")
+  exit (1)
+
 # list of tag-names the content of which to extract in full (including, possibly, HTML-tags, within)
 text_containers = ['section', 'text', 'related', 'title', 'summary', 'usage', 'technical', 'setting']
 
+# initialize globals, and parse args
+infile = {"infile": "", "file_prefix": "", "caption": ""}
+default_po = ""
 outfile = ""
+outdir = ""
 initialized_pot_files = []
 current_po_id = ""
-toplevel_sources = list (sys.argv[1:])
-
-infile = {"infile": "", "file_prefix": "", "caption": ""}
+toplevel_sources = []
+for arg in (list (sys.argv[1:])):
+  if (arg.startswith ("--default_po=")):
+    default_po = arg.split ("=", 1)[1]
+  elif (arg.startswith ("--outdir=")):
+    outdir = arg.split ("=", 1)[1]
+  elif (arg.startswith ("--")):
+    usage ()
+  else:
+    toplevel_sources.append (arg)
+if (len (toplevel_sources) < 1):
+  usage ()
 
 tag_stack = []
 def backtrace ():
@@ -142,25 +159,29 @@ def initialize_pot_file (po_id):
   else:
     initialized_pot_files.append (current_po_id)
     mode = 'w'
-  outfile = codecs.open (po_id + '.pot.cpp', mode, 'utf-8')
+  outfile = codecs.open (os.path.join (outdir, po_id + '.pot.cpp'), mode, 'utf-8')
 
 #######
 # Loop over toplevel_sources (specified on command line, or those that want to be split into separate po) and extract messages
 # NOTE: toplevel_sources may grow, dynamically, but only at the end.
 i = 0
-print toplevel_sources
 while i < len (toplevel_sources):
   xmldoc = minidom.parse (toplevel_sources[i])
-  if (not xmldoc.documentElement.hasAttribute ("po_id")):
-    sys.stderr.write ("No po_id attribute on file " + toplevel_sources[i])
+  po_id = xmldoc.documentElement.getAttribute ("po_id")
+  if (po_id == ""):
+    po_id = default_po
+  if (po_id == ""):
+    sys.stderr.write ("No po_id attribute on file " + toplevel_sources[i] + " and no default specified\n")
     continue
-  initialize_pot_file (xmldoc.documentElement.getAttribute ("po_id"))
+  initialize_pot_file (po_id)
   handleSubFile (toplevel_sources[i])  # Some duplication of parsing, instead of duplication of code
   i += 1
 
 #######
 # Run xgettext on all generated .pot.cpp files
 for potcpp in initialized_pot_files:
+  potcppfile = os.path.join (outdir, potcpp + ".pot.cpp")
   os.system ("xgettext --from-code=UTF-8 -C -kde -ci18n -ki18n:1 -ki18nc:1c,2 -ki18np:1,2 -ki18ncp:1c,2,3 -ktr2i18n:1 " + 
              "-kI18N_NOOP:1 -kI18N_NOOP2:1c,2 -kaliasLocale -kki18n:1 -kki18nc:1c,2 -kki18np:1,2 -kki18ncp:1c,2,3 " +
-             "--msgid-bugs-address=" + BUGADDR + " -o " + potcpp + ".pot " + potcpp + ".pot.cpp")
+             "--msgid-bugs-address=" + BUGADDR + " -o " + os.path.join (outdir, "rkward__" + potcpp + ".pot ") + potcppfile)
+  os.remove (potcppfile)

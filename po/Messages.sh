@@ -58,3 +58,9 @@ rm rcfiles.list
 rm infiles.list
 rm rc.cpp
 echo "Done"
+
+echo "Extracting messages from plugins"
+cd ${BASEDIR}
+# For testing purposes, extract analysis.pluginmap, only
+python ../scripts/extract_plugin_messages.py --outdir=../po/plugins/ plugins/analysis.pluginmap
+echo "Done"
