@@ -1,7 +1,7 @@
 #!/bin/sh
 BASEDIR="../rkward/"	# root of translatable sources
 PROJECT="rkward"	# project name
-BUGADDR="http://sourceforge.net/tracker/?group_id=50231&atid=459007"	# MSGID-Bugs
+BUGADDR="http://p.sf.net/rkward/bugs"	# MSGID-Bugs
 WDIR=`pwd`		# working dir
 
 check_error()

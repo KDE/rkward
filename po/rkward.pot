@@ -7,9 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: http://sourceforge.net/tracker/?"
-"group_id=50231&atid=459007\n"
-"POT-Creation-Date: 2014-09-28 19:06+0200\n"
+"Report-Msgid-Bugs-To: http://p.sf.net/rkward/bugs\n"
+"POT-Creation-Date: 2014-10-24 11:47+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -166,19 +165,19 @@ msgid ""
 "Do you really want to remove the object '%1'? There's no way to get it back."
 msgstr ""
 
-#: core/rkmodificationtracker.cpp:349 dataeditor/rkvareditmodel.cpp:685
+#: core/rkmodificationtracker.cpp:349 dataeditor/rkvareditmodel.cpp:688
 #: dialogs/rkloadlibsdialog.cpp:411 dialogs/rkloadlibsdialog.cpp:427
 #: dialogs/rkloadlibsdialog.cpp:941 plugin/rkformula.cpp:83
 #: plugin/rkvarslot.cpp:59
 msgid "Name"
 msgstr ""
 
-#: core/rkmodificationtracker.cpp:350 dataeditor/rkvareditmodel.cpp:686
+#: core/rkmodificationtracker.cpp:350 dataeditor/rkvareditmodel.cpp:689
 #: misc/editlabelsdialog.cpp:205 misc/rkobjectlistview.cpp:186
 msgid "Label"
 msgstr ""
 
-#: core/rkmodificationtracker.cpp:351 dataeditor/rkvareditmodel.cpp:687
+#: core/rkmodificationtracker.cpp:351 dataeditor/rkvareditmodel.cpp:690
 #: misc/rkobjectlistview.cpp:185 rbackend/rcommandstack.cpp:320
 #: windows/rkhelpsearchwindow.cpp:345
 msgid "Type"
@@ -288,7 +287,7 @@ msgstr ""
 msgid "Invalid Name"
 msgstr ""
 
-#: dataeditor/rkvareditmodel.cpp:291 dataeditor/rkvareditmodel.cpp:556
+#: dataeditor/rkvareditmodel.cpp:291 dataeditor/rkvareditmodel.cpp:559
 msgid "Type on these fields to add new columns"
 msgstr ""
 
@@ -296,47 +295,47 @@ msgstr ""
 msgid "Type on these fields to add new rows"
 msgstr ""
 
-#: dataeditor/rkvareditmodel.cpp:308 plugin/rkmatrixinput.cpp:500
+#: dataeditor/rkvareditmodel.cpp:311 plugin/rkmatrixinput.cpp:500
 msgid "This value is not allowed, here"
 msgstr ""
 
-#: dataeditor/rkvareditmodel.cpp:376
+#: dataeditor/rkvareditmodel.cpp:379
 msgid "#New Variable#"
 msgstr ""
 
-#: dataeditor/rkvareditmodel.cpp:377
+#: dataeditor/rkvareditmodel.cpp:380
 msgid "Row names"
 msgstr ""
 
-#: dataeditor/rkvareditmodel.cpp:382
+#: dataeditor/rkvareditmodel.cpp:385
 msgid "This column contains one or more invalid fields"
 msgstr ""
 
-#: dataeditor/rkvareditmodel.cpp:688
+#: dataeditor/rkvareditmodel.cpp:691
 msgid "Format"
 msgstr ""
 
-#: dataeditor/rkvareditmodel.cpp:689
+#: dataeditor/rkvareditmodel.cpp:692
 msgid "Levels"
 msgstr ""
 
-#: dataeditor/rkvareditmodel.cpp:692
+#: dataeditor/rkvareditmodel.cpp:695
 msgid "Edit these fields to rename variables."
 msgstr ""
 
-#: dataeditor/rkvareditmodel.cpp:693
+#: dataeditor/rkvareditmodel.cpp:696
 msgid "A descriptive label for each column (optional)."
 msgstr ""
 
-#: dataeditor/rkvareditmodel.cpp:694
+#: dataeditor/rkvareditmodel.cpp:697
 msgid "Type of data."
 msgstr ""
 
-#: dataeditor/rkvareditmodel.cpp:695
+#: dataeditor/rkvareditmodel.cpp:698
 msgid "Double click on these fields to customize data display."
 msgstr ""
 
-#: dataeditor/rkvareditmodel.cpp:696
+#: dataeditor/rkvareditmodel.cpp:699
 msgid "Double click on these fields to edit factor levels."
 msgstr ""
 
@@ -731,7 +730,7 @@ msgid "Searching for packages"
 msgstr ""
 
 #: dialogs/rkloadlibsdialog.cpp:940 rbackend/rcommandstack.cpp:321
-#: settings/rksettingsmoduleplugins.cpp:553
+#: settings/rksettingsmoduleplugins.cpp:554
 msgid "Status"
 msgstr ""
 
@@ -879,7 +878,7 @@ msgstr ""
 msgid "<<Open another file>>"
 msgstr ""
 
-#: dialogs/startupdialog.cpp:85
+#: dialogs/startupdialog.cpp:88
 msgid "Always do this on startup"
 msgstr ""
 
@@ -928,7 +927,7 @@ msgid "Frontend to the R statistics language"
 msgstr ""
 
 #: main.cpp:127
-msgid "(c) 2002, 2004 - 2013"
+msgid "(c) 2002, 2004 - 2014"
 msgstr ""
 
 #: main.cpp:128 main.cpp:129 main.cpp:130 main.cpp:131 main.cpp:132
@@ -1065,7 +1064,7 @@ msgstr ""
 msgid "Levels / Value labels for '%1'"
 msgstr ""
 
-#: misc/multistringselector.cpp:46 settings/rksettingsmoduleplugins.cpp:552
+#: misc/multistringselector.cpp:46 settings/rksettingsmoduleplugins.cpp:553
 msgid "Filename"
 msgstr ""
 
@@ -1267,187 +1266,187 @@ msgstr ""
 msgid "&Function reference"
 msgstr ""
 
-#: misc/xmlhelper.cpp:64
-msgid "Could not open file for reading"
+#: misc/xmlhelper.cpp:51
+msgid "Could not open file %1 for reading"
 msgstr ""
 
-#: misc/xmlhelper.cpp:66
+#: misc/xmlhelper.cpp:53
 msgid ""
 "Error parsing XML-file. Error-message was: '%1' in line '%2', column '%3'. "
 "Expect further errors to be reported below"
 msgstr ""
 
-#: misc/xmlhelper.cpp:177
+#: misc/xmlhelper.cpp:170
 msgid "Trying to retrieve children of invalid element"
 msgstr ""
 
-#: misc/xmlhelper.cpp:188
+#: misc/xmlhelper.cpp:181
 msgid "Expected exactly one element '%1' but found %2"
 msgstr ""
 
-#: misc/xmlhelper.cpp:243
+#: misc/xmlhelper.cpp:236 misc/xmlhelper.cpp:248
 msgid "'%1'-attribute not given. Assuming '%2'"
 msgstr ""
 
-#: misc/xmlhelper.cpp:261
+#: misc/xmlhelper.cpp:267
 msgid "Illegal attribute value. Allowed values are one of '%1', only."
 msgstr ""
 
-#: misc/xmlhelper.cpp:275
+#: misc/xmlhelper.cpp:281
 msgid "Illegal attribute value. Only integer numbers are allowed."
 msgstr ""
 
-#: misc/xmlhelper.cpp:291
+#: misc/xmlhelper.cpp:297
 msgid "Illegal attribute value. Only real numbers are allowed."
 msgstr ""
 
-#: misc/xmlhelper.cpp:309
+#: misc/xmlhelper.cpp:315
 msgid "Illegal attribute value. Allowed values are '%1' or '%2', only."
 msgstr ""
 
-#: misc/xmlhelper.cpp:325
+#: misc/xmlhelper.cpp:331
 msgid "Trying to retrieve contents of invalid element"
 msgstr ""
 
-#: misc/xmlhelper.cpp:338
+#: misc/xmlhelper.cpp:343
 msgid "XML-parsing '%1' "
 msgstr ""
 
-#: plugin/rkcomponentmap.cpp:118 plugin/rkcomponentmap.cpp:472
+#: plugin/rkcomponentmap.cpp:114 plugin/rkcomponentmap.cpp:468
 msgid "(no label)"
 msgstr ""
 
-#: plugin/rkcomponentmap.cpp:259
+#: plugin/rkcomponentmap.cpp:255
 msgid ""
 "You tried to invoke a plugin called '%1', but that plugin is currently "
 "unknown. Probably you need to load the corresponding PluginMap (Settings-"
 ">Configure RKWard->Plugins), or perhaps the plugin was renamed."
 msgstr ""
 
-#: plugin/rkcomponentmap.cpp:261
+#: plugin/rkcomponentmap.cpp:257
 msgid "No such plugin"
 msgstr ""
 
-#: plugin/rkcomponentmap.cpp:271
+#: plugin/rkcomponentmap.cpp:267
 msgid ""
 "Bad serialization format while trying to invoke plugin '%1'. Please contact "
 "the RKWard team (Help->About RKWard->Authors)."
 msgstr ""
 
-#: plugin/rkcomponentmap.cpp:273
+#: plugin/rkcomponentmap.cpp:269
 msgid "Bad serialization format"
 msgstr ""
 
-#: plugin/rkcomponentmap.cpp:296
+#: plugin/rkcomponentmap.cpp:292
 msgid ""
 "\n"
 "The plugin has crashed."
 msgstr ""
 
-#: plugin/rkcomponentmap.cpp:304
+#: plugin/rkcomponentmap.cpp:300
 msgid ""
 "Not all specified settings could be applied. Most likely this is because "
 "some R objects are no longer present in your current workspace."
 msgstr ""
 
-#: plugin/rkcomponentmap.cpp:307
+#: plugin/rkcomponentmap.cpp:303
 msgid "Not all settings applied"
 msgstr ""
 
-#: plugin/rkcomponentmap.cpp:320
+#: plugin/rkcomponentmap.cpp:316
 msgid ""
 "\n"
 "The plugin could not be auto-submitted with these settings."
 msgstr ""
 
-#: plugin/rkcomponentmap.cpp:322
+#: plugin/rkcomponentmap.cpp:318
 msgid "Could not submit"
 msgstr ""
 
-#: plugin/rkcomponentmap.cpp:358
+#: plugin/rkcomponentmap.cpp:354
 msgid "Could not open plugin map file %1. (Is not readble, or failed to parse)"
 msgstr ""
 
-#: plugin/rkcomponentmap.cpp:373
+#: plugin/rkcomponentmap.cpp:369
 msgid ""
 "Skipping plugin map file '%1': Not compatible with this version of RKWard"
 msgstr ""
 
-#: plugin/rkcomponentmap.cpp:423
+#: plugin/rkcomponentmap.cpp:419
 msgid ""
 "Specified required file '%1' does not exist or is not readable. Ignoring."
 msgstr ""
 
-#: plugin/rkcomponentmap.cpp:441
+#: plugin/rkcomponentmap.cpp:437
 msgid ""
 "Could not resolve specified required pluginmap '%1'. You may have to install "
 "additional packages."
 msgstr ""
 
-#: plugin/rkcomponentmap.cpp:475
+#: plugin/rkcomponentmap.cpp:471
 msgid ""
 "RKComponentMap already contains a component with id \"%1\". Ignoring second "
 "entry."
 msgstr ""
 
-#: plugin/rkcomponentmap.cpp:477
+#: plugin/rkcomponentmap.cpp:473
 msgid ""
 "Specified file '%1' for component id \"%2\" does not exist or is not "
 "readable. Ignoring."
 msgstr ""
 
-#: plugin/rkcomponentmap.cpp:493
+#: plugin/rkcomponentmap.cpp:489
 msgid ""
 "Component '%1' is not available in a version compatible with this version of "
 "RKWard"
 msgstr ""
 
-#: plugin/rkcomponentmeta.cpp:46
+#: plugin/rkcomponentmeta.cpp:45
 msgid "Unspecified"
 msgstr ""
 
-#: plugin/rkcomponentmeta.cpp:78
+#: plugin/rkcomponentmeta.cpp:77
 msgid "Copyright (c)"
 msgstr ""
 
-#: plugin/rkcomponentmeta.cpp:79
+#: plugin/rkcomponentmeta.cpp:78
 msgid "License"
 msgstr ""
 
-#: plugin/rkcomponentmeta.cpp:82
+#: plugin/rkcomponentmeta.cpp:81
 msgid "Authors:"
 msgstr ""
 
-#: plugin/rkcomponentmeta.cpp:88
+#: plugin/rkcomponentmeta.cpp:87
 msgctxt "Author roles (contributor, etc.)"
 msgid "Roles"
 msgstr ""
 
-#: plugin/rkcomponentmeta.cpp:200
+#: plugin/rkcomponentmeta.cpp:198
 msgid "RKWard plugin map"
 msgstr ""
 
-#: plugin/rkcomponentmeta.cpp:201
+#: plugin/rkcomponentmeta.cpp:199
 msgid "R package"
 msgstr ""
 
-#: plugin/rkcomponentproperties.cpp:928
+#: plugin/rkcomponentproperties.cpp:929
 msgid "This object has %1 dimension(s), but %2 dimension(s) is/are expected."
 msgstr ""
 
-#: plugin/rkcomponentproperties.cpp:931
+#: plugin/rkcomponentproperties.cpp:932
 msgid "This object has a length of %1, but a minimum length of %2 is expected."
 msgstr ""
 
-#: plugin/rkcomponentproperties.cpp:932
+#: plugin/rkcomponentproperties.cpp:933
 msgid "This object has a length of %1, but a maximum length of %2 is expected."
 msgstr ""
 
-#: plugin/rkcomponentproperties.cpp:944
+#: plugin/rkcomponentproperties.cpp:945
 msgid "This object does not appear to belong to any of the classes <i>%1</i>."
 msgstr ""
 
-#: plugin/rkcomponentproperties.cpp:951
+#: plugin/rkcomponentproperties.cpp:952
 msgid ""
 "This object's data type is <i>%1</i>, while allowed type(s) is/are <i>%2</i>."
 msgstr ""
@@ -1596,13 +1595,13 @@ msgstr ""
 msgid "Preview not (yet) possible"
 msgstr ""
 
-#: plugin/rkstandardcomponent.cpp:95
+#: plugin/rkstandardcomponent.cpp:96
 msgid ""
 "There has been an error while trying to parse the description of this plugin "
 "('%1'). Please refer to stdout for details."
 msgstr ""
 
-#: plugin/rkstandardcomponent.cpp:95
+#: plugin/rkstandardcomponent.cpp:96
 msgid "Could not create plugin"
 msgstr ""
 
@@ -1786,16 +1785,16 @@ msgid ""
 "Please fix your installation."
 msgstr ""
 
-#: rbackend/rkfrontendtransmitter.cpp:178
+#: rbackend/rkfrontendtransmitter.cpp:179
 msgid ""
 "The backend process could not be started. Please check your installation."
 msgstr ""
 
-#: rbackend/rkfrontendtransmitter.cpp:179
+#: rbackend/rkfrontendtransmitter.cpp:180
 msgid "The backend process failed to start with exit code %1."
 msgstr ""
 
-#: rbackend/rkfrontendtransmitter.cpp:180
+#: rbackend/rkfrontendtransmitter.cpp:181
 msgid "Backend process has exited with code %1."
 msgstr ""
 
@@ -1893,49 +1892,49 @@ msgstr ""
 msgid "R Console"
 msgstr ""
 
-#: rkconsole.cpp:597
+#: rkconsole.cpp:604
 msgid "Syntax error\n"
 msgstr ""
 
-#: rkconsole.cpp:758 rkconsole.cpp:778
+#: rkconsole.cpp:765 rkconsole.cpp:785
 msgid ""
 "*.Rhistory|R history files (*.Rhistory)\n"
 "*|All files (*)"
 msgstr ""
 
-#: rkconsole.cpp:758
+#: rkconsole.cpp:765
 msgid "Select command history file to load"
 msgstr ""
 
-#: rkconsole.cpp:778
+#: rkconsole.cpp:785
 msgid "Select filename to save command history"
 msgstr ""
 
-#: rkconsole.cpp:895
+#: rkconsole.cpp:902
 msgid "Interrupt running command"
 msgstr ""
 
-#: rkconsole.cpp:902
+#: rkconsole.cpp:909
 msgid "Copy selection literally"
 msgstr ""
 
-#: rkconsole.cpp:905
+#: rkconsole.cpp:912
 msgid "Copy commands, only"
 msgstr ""
 
-#: rkconsole.cpp:912
+#: rkconsole.cpp:919
 msgid "Print Console"
 msgstr ""
 
-#: rkconsole.cpp:919
+#: rkconsole.cpp:926
 msgid "Import command history..."
 msgstr ""
 
-#: rkconsole.cpp:921
+#: rkconsole.cpp:928
 msgid "Export command history..."
 msgstr ""
 
-#: rkconsole.cpp:940
+#: rkconsole.cpp:947
 msgid ""
 "You have configured RKWard to pipe script editor commands through the R "
 "Console. However, another command is currently active in the console. Do you "
@@ -1943,15 +1942,15 @@ msgid ""
 "console, first? Press cancel if you do not wish to run the new command, now."
 msgstr ""
 
-#: rkconsole.cpp:940
+#: rkconsole.cpp:947
 msgid "R Console is busy"
 msgstr ""
 
-#: rkconsole.cpp:940
+#: rkconsole.cpp:947
 msgid "Append"
 msgstr ""
 
-#: rkconsole.cpp:940
+#: rkconsole.cpp:947
 msgid "Reset, then submit"
 msgstr ""
 
@@ -2847,27 +2846,27 @@ msgstr ""
 msgid "Plugins"
 msgstr ""
 
-#: settings/rksettingsmoduleplugins.cpp:513 windows/rkhtmlwindow.cpp:632
+#: settings/rksettingsmoduleplugins.cpp:514 windows/rkhtmlwindow.cpp:633
 msgid "Dependencies"
 msgstr ""
 
-#: settings/rksettingsmoduleplugins.cpp:527
+#: settings/rksettingsmoduleplugins.cpp:528
 msgid "Broken"
 msgstr ""
 
-#: settings/rksettingsmoduleplugins.cpp:529
+#: settings/rksettingsmoduleplugins.cpp:530
 msgid "Loaded"
 msgstr ""
 
-#: settings/rksettingsmoduleplugins.cpp:532
+#: settings/rksettingsmoduleplugins.cpp:533
 msgid "Quirky"
 msgstr ""
 
-#: settings/rksettingsmoduleplugins.cpp:551
+#: settings/rksettingsmoduleplugins.cpp:552
 msgid "Active"
 msgstr ""
 
-#: settings/rksettingsmoduleplugins.cpp:576
+#: settings/rksettingsmoduleplugins.cpp:577
 msgid "Select .pluginmap-file"
 msgstr ""
 
@@ -3373,58 +3372,58 @@ msgstr ""
 msgid "Flushing output"
 msgstr ""
 
-#: windows/rkhtmlwindow.cpp:529
+#: windows/rkhtmlwindow.cpp:530
 msgid "No Title"
 msgstr ""
 
-#: windows/rkhtmlwindow.cpp:542
+#: windows/rkhtmlwindow.cpp:543
 msgid ""
 "<h1>Help page missing</h1>\n"
 "<p>The help page for this component has not yet been written (or is broken). "
 "Please consider contributing it.</p>\n"
 msgstr ""
 
-#: windows/rkhtmlwindow.cpp:547
+#: windows/rkhtmlwindow.cpp:548
 msgid "Use %1 now"
 msgstr ""
 
-#: windows/rkhtmlwindow.cpp:564
+#: windows/rkhtmlwindow.cpp:565
 msgid "Summary"
 msgstr ""
 
-#: windows/rkhtmlwindow.cpp:570
+#: windows/rkhtmlwindow.cpp:571
 msgid "Usage"
 msgstr ""
 
-#: windows/rkhtmlwindow.cpp:587
+#: windows/rkhtmlwindow.cpp:588
 msgid "GUI settings"
 msgstr ""
 
-#: windows/rkhtmlwindow.cpp:596
+#: windows/rkhtmlwindow.cpp:597
 msgid "Unnamed GUI element"
 msgstr ""
 
-#: windows/rkhtmlwindow.cpp:617
+#: windows/rkhtmlwindow.cpp:618
 msgid "Related functions and pages"
 msgstr ""
 
-#: windows/rkhtmlwindow.cpp:624
+#: windows/rkhtmlwindow.cpp:625
 msgid "Technical details"
 msgstr ""
 
-#: windows/rkhtmlwindow.cpp:650
+#: windows/rkhtmlwindow.cpp:651
 msgid "About"
 msgstr ""
 
-#: windows/rkhtmlwindow.cpp:656
+#: windows/rkhtmlwindow.cpp:657
 msgid "<h1>On this page:</h1>"
 msgstr ""
 
-#: windows/rkhtmlwindow.cpp:717
+#: windows/rkhtmlwindow.cpp:718
 msgid "R Reference on '%1'"
 msgstr ""
 
-#: windows/rkhtmlwindow.cpp:732
+#: windows/rkhtmlwindow.cpp:729
 msgid "BROKEN REFERENCE"
 msgstr ""
 
