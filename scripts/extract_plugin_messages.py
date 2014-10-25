@@ -36,15 +36,24 @@ for arg in (list (sys.argv[1:])):
 if (len (toplevel_sources) < 1):
   usage ()
 
-tag_stack = []
-def backtrace ():
+def backtrace (element, attribute=""):
   ret = "i18n: file: " + infile["infile"] + "\n"
   ret += "i18n: ectx: "
   if (infile["caption"] != ""):
-    ret += "(" + infile["caption"] + ")"
-  for tag in tag_stack:
-    ret += " -> " + tag
-  return (ret)
+    ret += "(" + infile["caption"] + ") "
+  tag_stack = ["<" + element.tagName + ">"]
+  while ((element.parentNode != None)):
+    element = element.parentNode
+    if (element.tagName == "document"):
+      break # Ignore <document>-tag, it is not informative
+    tag_stack.insert (0, "<" + element.tagName + ">")
+  ts = tag_stack[-4:]
+  if (len (tag_stack) > 3):
+    ts[0] = tag_stack[0]
+    ts[1] = "[...]"
+  if (attribute != ""):
+    ts[len (ts)-1]= ts[-1].replace (">", " " + attribute + "=\"...\">")
+  return (ret + ' '.join (ts))
 
 def quote (text):
   return "\"" + text.replace ("\\", "\\\\").replace ("\"", "\\\"") + "\""
@@ -74,22 +83,21 @@ def getText (node):
   return ''.join (rc).strip ()
 
 # Look for an i18n comment in the given node, and write it out to the outfile
-def getI18nComment (node):
+def getI18nComment (node, attribute=""):
   ret = "/* "
   for cn in node.childNodes:
     if cn.nodeType == cn.COMMENT_NODE:
       comment = normalize (cn.data.strip ())
       if (comment.lower ().startswith ("i18n:") or comment.lower ().startswith ("translators:")):
         ret += "i18n: " + comment + "\n"
-  ret += backtrace () + " */\n"
+  ret += backtrace (node, attribute) + " */\n"
   return (ret)
 
 # Main workhorse: Look at given node and recurse into children
 def handleNode (node):
   if (node.nodeType == node.ELEMENT_NODE):
-    tag_stack.append (node.tagName)
     if (node.hasAttribute ("label")):
-      outfile.write (getI18nComment (node))
+      outfile.write (getI18nComment (node, "label"))
       if (node.hasAttribute ("i18n_context")):
         outfile.write ("i18nc (" + quote (node.getAttribute ("i18n_context")) + ", " + quote (node.getAttribute ("label")) + ");\n")
       outfile.write ("i18n (" + quote (node.getAttribute ("label")) + ");\n")
@@ -103,13 +111,11 @@ def handleNode (node):
         outfile.write (getI18nComment (node))
         outfile.write ("i18n (" + quote (normalize (chunk)) + ");\n")
     elif (getText (node) != ""):
-      sys.stderr.write ("WARNING: Found text content where none expected: " + backtrace () + "\n")
+      sys.stderr.write ("WARNING: Found text content where none expected: " + backtrace (node) + "\n")
   if (not ((node.nodeType == node.ELEMENT_NODE) and (node.tagName in text_containers))):
     # Don't go looking into the contents of text containers any further (may contain HTML markup)
     for child in node.childNodes:
       handleNode (child)
-  if (node.nodeType == node.ELEMENT_NODE):
-    tag_stack.pop ()
 
 # Try to determine a caption for the file (will be used as context comment)
 def getFileCaption (docelem):
@@ -133,7 +139,7 @@ def handleSubFile (filename):
   cdir = os.path.dirname (infile["infile"])
   filename = os.path.join (cdir, infile["file_prefix"], filename)
   if (not os.path.isfile (filename)):
-    sys.stderr.write (backtrace ()  + " WARNING: File " + filename + " does not exist\n")
+    sys.stderr.write (backtrace (node)  + " WARNING: File " + filename + " does not exist\n")
     return
   xmldoc = minidom.parse (filename)
   if (xmldoc.documentElement.hasAttribute ("po_id") and (xmldoc.documentElement.getAttribute ("po_id") != current_po_id)):
