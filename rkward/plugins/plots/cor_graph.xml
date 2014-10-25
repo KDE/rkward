@@ -25,9 +25,9 @@
 					<option value="pairwise.complete.obs" label="pairwise" checked="true"/>
 				</radio>
 				<spinbox id="digits" label="Precision" type="integer" min="0" max="5" initial="3"/> 
-				<checkbox id="scale" label="Scale text" value="TRUE" value_unchecked="FALSE" checked="true"/>
+				<checkbox id="scale" label="Scale text" value="TRUE" value_unchecked="FALSE" checked="true"><!-- i18n: Should text be scaled? --></checkbox>
 			</tab>
-		</tabbook>			
+		</tabbook>
 	</dialog>
 
 </document>

@@ -12,7 +12,7 @@
 		<component type="standard" id="wilcoxon_tests" file="analysis/wilcoxon/wilcoxon_tests.xml" label="Wilcoxon/Mann-Whitney Tests" />
 
 		<!-- moments -->
-		<component type="standard" id="moment" file="analysis/moments/moment.xml" label="Moment" />
+		<component type="standard" id="moment" file="analysis/moments/moment.xml" label="Moment" i18n_context="Statistics" />
 		<component type="standard" id="bonett_test" file="analysis/moments/bonett_test.xml" label="Bonett-Seier Test of Geary's Kurtosis" />
 		<component type="standard" id="agostino_test" file="analysis/moments/agostino_test.xml" label="D'Agostino Test of Skewness" />
 		<component type="standard" id="anscombe_test" file="analysis/moments/anscombe_test.xml" label="Anscombe-Glynn Test of Kurtosis" />
@@ -64,7 +64,7 @@
 					<entry component="t_test" />
 				</menu>
 			</menu>
-			<menu id="moments" label="Moments" index="6">
+			<menu id="moments" label="Moments" i18n_context="Statistics" index="6">
 				<entry component="anscombe_test"/>
 				<entry component="bonett_test"/>
 				<entry component="agostino_test"/>
