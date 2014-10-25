@@ -46,7 +46,10 @@ def backtrace (element, attribute=""):
     element = element.parentNode
     if (element.tagName == "document"):
       break # Ignore <document>-tag, it is not informative
-    tag_stack.insert (0, "<" + element.tagName + ">")
+    t = "<" + element.tagName
+    if (element.hasAttribute ("label")):  # Where available, include the labels of parent elements. Particularly helpful for radio-options
+      t += " label=" + quote (element.getAttribute ("label"))
+    tag_stack.insert (0, t + ">")
   ts = tag_stack[-4:]
   if (len (tag_stack) > 3):
     ts[0] = tag_stack[0]
@@ -100,7 +103,8 @@ def handleNode (node):
       outfile.write (getI18nComment (node, "label"))
       if (node.hasAttribute ("i18n_context")):
         outfile.write ("i18nc (" + quote (node.getAttribute ("i18n_context")) + ", " + quote (node.getAttribute ("label")) + ");\n")
-      outfile.write ("i18n (" + quote (node.getAttribute ("label")) + ");\n")
+      else:
+        outfile.write ("i18n (" + quote (node.getAttribute ("label")) + ");\n")
     if (node.hasAttribute ("file")):
       if (node.tagName != "code"):
         # TODO: handle .js files
