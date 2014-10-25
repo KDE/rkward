@@ -6,6 +6,7 @@
     - Message extraction: Should we do this in R, using XiMpLe? That might allow us to give better context / comments
     - Don't forget to write documentation
     - What should be the policy regarding installing translations (80% criterion)
+    - Where should the extraction script look for i18n comments (before element, within element)?
 
 --- Version 0.6.2 - Oct-20-2014
 - In data editor, indicate NAs, explicitly

@@ -38,10 +38,10 @@ if (len (toplevel_sources) < 1):
 
 tag_stack = []
 def backtrace ():
-  ret = infile["infile"]
+  ret = "i18n: file: " + infile["infile"] + "\n"
+  ret += "i18n: ectx: "
   if (infile["caption"] != ""):
-    ret += " (" + infile["caption"] + ")"
-  ret += ":"
+    ret += "(" + infile["caption"] + ")"
   for tag in tag_stack:
     ret += " -> " + tag
   return (ret)
@@ -75,12 +75,14 @@ def getText (node):
 
 # Look for an i18n comment in the given node, and write it out to the outfile
 def getI18nComment (node):
+  ret = "/* "
   for cn in node.childNodes:
     if cn.nodeType == cn.COMMENT_NODE:
-      comment = cn.data.strip ()
-      if (comment.startswith ("I18N:") or comment.startswith ("TRANSLATORS:")):
-        return "/*i18n: " + comment + "\nOrigin was " + backtrace () + " */\n"
-  return "/*i18n: Origin was " + backtrace () + " */\n"
+      comment = normalize (cn.data.strip ())
+      if (comment.lower ().startswith ("i18n:") or comment.lower ().startswith ("translators:")):
+        ret += "i18n: " + comment + "\n"
+  ret += backtrace () + " */\n"
+  return (ret)
 
 # Main workhorse: Look at given node and recurse into children
 def handleNode (node):
@@ -101,7 +103,7 @@ def handleNode (node):
         outfile.write (getI18nComment (node))
         outfile.write ("i18n (" + quote (normalize (chunk)) + ");\n")
     elif (getText (node) != ""):
-      sys.stderr.write ("Found text content where none expected: " + backtrace () + "\n")
+      sys.stderr.write ("WARNING: Found text content where none expected: " + backtrace () + "\n")
   if (not ((node.nodeType == node.ELEMENT_NODE) and (node.tagName in text_containers))):
     # Don't go looking into the contents of text containers any further (may contain HTML markup)
     for child in node.childNodes:
@@ -136,9 +138,9 @@ def handleSubFile (filename):
   xmldoc = minidom.parse (filename)
   if (xmldoc.documentElement.hasAttribute ("po_id") and (xmldoc.documentElement.getAttribute ("po_id") != current_po_id)):
     toplevel_sources.append (filename)
-    sys.stderr.write ("Added " + filename + " to toplevel\n")
+    #sys.stderr.write ("Added " + filename + " to toplevel\n")
   else:
-    sys.stderr.write ("Recursing into " + filename + "\n")
+    #sys.stderr.write ("Recursing into " + filename + "\n")
     oldinfile = copy.deepcopy (infile)
     infile["infile"] = filename
     infile["file_prefix"] = xmldoc.documentElement.getAttribute ("base_prefix")
@@ -171,7 +173,7 @@ while i < len (toplevel_sources):
   if (po_id == ""):
     po_id = default_po
   if (po_id == ""):
-    sys.stderr.write ("No po_id attribute on file " + toplevel_sources[i] + " and no default specified\n")
+    sys.stderr.write ("WARNING: No po_id attribute on file " + toplevel_sources[i] + " and no default specified. Skipping.\n")
     continue
   initialize_pot_file (po_id)
   handleSubFile (toplevel_sources[i])  # Some duplication of parsing, instead of duplication of code
@@ -181,7 +183,8 @@ while i < len (toplevel_sources):
 # Run xgettext on all generated .pot.cpp files
 for potcpp in initialized_pot_files:
   potcppfile = os.path.join (outdir, potcpp + ".pot.cpp")
+  # NOTE: using --no-location, as that just adds meaningless references to the temporary .pot.cpp-file.
   os.system ("xgettext --from-code=UTF-8 -C -kde -ci18n -ki18n:1 -ki18nc:1c,2 -ki18np:1,2 -ki18ncp:1c,2,3 -ktr2i18n:1 " + 
-             "-kI18N_NOOP:1 -kI18N_NOOP2:1c,2 -kaliasLocale -kki18n:1 -kki18nc:1c,2 -kki18np:1,2 -kki18ncp:1c,2,3 " +
+             "-kI18N_NOOP:1 -kI18N_NOOP2:1c,2 -kaliasLocale -kki18n:1 -kki18nc:1c,2 -kki18np:1,2 -kki18ncp:1c,2,3 --no-location " +
              "--msgid-bugs-address=" + BUGADDR + " -o " + os.path.join (outdir, "rkward__" + potcpp + ".pot ") + potcppfile)
   os.remove (potcppfile)
