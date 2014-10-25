@@ -6,6 +6,7 @@ MACRO(RKHandlePO _PO_FILES)
 		IF(_namePartsCount GREATER 2)
 			LIST(GET _nameParts 0 _poid)
 			LIST(REMOVE_AT _nameParts 0)
+			SET(ACCEPT_INCOMPLETE_PO "-DACCEPT_INCOMPLETE_PO=1")
 		ELSE(_namePartsCount GREATER 2)
 			SET(_poid "rkward")
 		ENDIF(_namePartsCount GREATER 2)
@@ -17,7 +18,7 @@ MACRO(RKHandlePO _PO_FILES)
 		# (since the gmo file is only built for translations which are complete enough)
 		SET(_stampFile ${CMAKE_CURRENT_BINARY_DIR}/${_poid}.${_lang}.stamp)
 		ADD_CUSTOM_COMMAND(OUTPUT ${_stampFile}
-			COMMAND ${CMAKE_COMMAND} "-D_poFile=${_poFile}" "-D_gmoFile=${_gmoFile}" "-DGETTEXT_MSGFMT_EXECUTABLE=${GETTEXT_MSGFMT_EXECUTABLE}" -P ${CMAKE_CURRENT_SOURCE_DIR}/compile_po.cmake
+			COMMAND ${CMAKE_COMMAND} "-D_poFile=${_poFile}" "-D_gmoFile=${_gmoFile}" "-DGETTEXT_MSGFMT_EXECUTABLE=${GETTEXT_MSGFMT_EXECUTABLE}" ${ACCEPT_INCOMPLETE_PO} -P ${CMAKE_CURRENT_SOURCE_DIR}/compile_po.cmake
 			COMMAND ${CMAKE_COMMAND} -E touch ${_stampFile}
 			COMMENT "Generating translation for language '${_lang}', catalog '${_poid}'"
 			DEPENDS ${_poFile})

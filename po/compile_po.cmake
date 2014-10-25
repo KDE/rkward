@@ -22,8 +22,12 @@ MATH(EXPR TRANSLATION_RATIO "${TRANSLATED_COUNT}*100/(${TRANSLATED_COUNT}+${UNTR
 
 # Purge hopelessly incomplete translations
 IF(TRANSLATION_RATIO LESS 80)
-	MESSAGE (STATUS "${_poFile} is only ${TRANSLATION_RATIO}% translated. Will not be installed.")
-	FILE(REMOVE ${_gmoFile})
+	IF(${ACCEPT_INCOMPLETE_PO})
+		MESSAGE (STATUS "${_poFile} is only ${TRANSLATION_RATIO}% translated. Accepting anyway as a temporary exception")
+	ELSE(${ACCEPT_INCOMPLETE_PO})
+		MESSAGE (STATUS "${_poFile} is only ${TRANSLATION_RATIO}% translated. Will not be installed.")
+		FILE(REMOVE ${_gmoFile})
+	ENDIF(${ACCEPT_INCOMPLETE_PO})
 ELSE(TRANSLATION_RATIO LESS 80)
 	MESSAGE (STATUS "${_poFile} is ${TRANSLATION_RATIO}% translated.")
 ENDIF(TRANSLATION_RATIO LESS 80)
