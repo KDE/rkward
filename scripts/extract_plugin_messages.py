@@ -36,22 +36,25 @@ for arg in (list (sys.argv[1:])):
 if (len (toplevel_sources) < 1):
   usage ()
 
-def backtrace (element, attribute=""):
+# Try to extract helpful file context information
+def getFileContext (element, attribute=""):
   ret = "i18n: file: " + infile["infile"] + "\n"
   ret += "i18n: ectx: "
   if (infile["caption"] != ""):
     ret += "(" + infile["caption"] + ") "
   tag_stack = ["<" + element.tagName + ">"]
-  while ((element.parentNode != None)):
+  while ((element.parentNode.nodeType != element.DOCUMENT_NODE)):
     element = element.parentNode
-    if (element.tagName == "document"):
-      break # Ignore <document>-tag, it is not informative
+    if (element.tagName in ["document", "row", "column", "frame", "content", "tabbook"]):
+      if (not element.hasAttribute ("label")):
+        continue # Skip over tags that don't really add any meaningful context information. (Note: <frame>s _with_ a label are meaningful, of course)
     t = "<" + element.tagName
     if (element.hasAttribute ("label")):  # Where available, include the labels of parent elements. Particularly helpful for radio-options
       t += " label=" + quote (element.getAttribute ("label"))
     tag_stack.insert (0, t + ">")
-  ts = tag_stack[-4:]
-  if (len (tag_stack) > 3):
+  ts = tag_stack[-5:]
+  if (len (tag_stack) > 4):
+    ts.pop (0)
     ts[0] = tag_stack[0]
     ts[1] = "[...]"
   if (attribute != ""):
@@ -93,7 +96,7 @@ def getI18nComment (node, attribute=""):
       comment = normalize (cn.data.strip ())
       if (comment.lower ().startswith ("i18n:") or comment.lower ().startswith ("translators:")):
         ret += "i18n: " + comment + "\n"
-  ret += backtrace (node, attribute) + " */\n"
+  ret += getFileContext (node, attribute) + " */\n"
   return (ret)
 
 # Main workhorse: Look at given node and recurse into children
@@ -115,7 +118,7 @@ def handleNode (node):
         outfile.write (getI18nComment (node))
         outfile.write ("i18n (" + quote (normalize (chunk)) + ");\n")
     elif (getText (node) != ""):
-      sys.stderr.write ("WARNING: Found text content where none expected: " + backtrace (node) + "\n")
+      sys.stderr.write ("WARNING: Found text content where none expected: " + getFileContext (node) + "\n")
   if (not ((node.nodeType == node.ELEMENT_NODE) and (node.tagName in text_containers))):
     # Don't go looking into the contents of text containers any further (may contain HTML markup)
     for child in node.childNodes:
@@ -143,7 +146,7 @@ def handleSubFile (filename):
   cdir = os.path.dirname (infile["infile"])
   filename = os.path.join (cdir, infile["file_prefix"], filename)
   if (not os.path.isfile (filename)):
-    sys.stderr.write (backtrace (node)  + " WARNING: File " + filename + " does not exist\n")
+    sys.stderr.write (getFileContext (node)  + " WARNING: File " + filename + " does not exist\n")
     return
   xmldoc = minidom.parse (filename)
   if (xmldoc.documentElement.hasAttribute ("po_id") and (xmldoc.documentElement.getAttribute ("po_id") != current_po_id)):
