@@ -47,7 +47,7 @@ RKInput::RKInput (const QDomElement &element, RKComponent *parent_component, QWi
 	// do all the layouting
 	QVBoxLayout *vbox = new QVBoxLayout (this);
 	vbox->setContentsMargins (0, 0, 0, 0);
-	QString label_string = xml->getStringAttribute (element, "label", i18n ("Enter text"), DL_INFO);
+	QString label_string = xml->i18nStringAttribute (element, "label", i18n ("Enter text"), DL_INFO);
 	if (!label_string.isEmpty ()) {
 		QLabel *label = new QLabel (label_string, this);
 		vbox->addWidget (label);

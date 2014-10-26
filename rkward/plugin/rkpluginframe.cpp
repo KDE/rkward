@@ -33,7 +33,7 @@ RKPluginFrame::RKPluginFrame (const QDomElement &element, RKComponent *parent_co
 
 	QVBoxLayout *layout = new QVBoxLayout (this);
 	layout->setContentsMargins (0, 0, 0, 0);
-	frame = new QGroupBox (xml->getStringAttribute (element, "label", QString(), DL_INFO), this);
+	frame = new QGroupBox (xml->i18nStringAttribute (element, "label", QString(), DL_INFO), this);
 	layout->addWidget (frame);
 	layout = new QVBoxLayout (frame);
 	page = new KVBox (frame);

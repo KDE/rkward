@@ -41,7 +41,7 @@ RKMatrixInput::RKMatrixInput (const QDomElement& element, RKComponent* parent_co
 	QVBoxLayout *vbox = new QVBoxLayout (this);
 	vbox->setContentsMargins (0, 0, 0, 0);
 
-	QLabel *label = new QLabel (xml->getStringAttribute (element, "label", i18n ("Enter data:"), DL_INFO), this);
+	QLabel *label = new QLabel (xml->i18nStringAttribute (element, "label", i18n ("Enter data:"), DL_INFO), this);
 	vbox->addWidget (label);
 
 	display = new RKTableView (this);

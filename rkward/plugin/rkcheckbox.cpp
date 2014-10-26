@@ -36,7 +36,7 @@ RKCheckBox::RKCheckBox (const QDomElement &element, RKComponent *parent_componen
 	// create checkbox
 	QVBoxLayout *vbox = new QVBoxLayout (this);
 	vbox->setContentsMargins (0, 0, 0, 0);
-	checkbox = new QCheckBox (xml->getStringAttribute (element, "label", QString::null, DL_WARNING), this);
+	checkbox = new QCheckBox (xml->i18nStringAttribute (element, "label", QString (), DL_WARNING), this);
 	vbox->addWidget (checkbox);
 	checkbox->setChecked (xml->getBoolAttribute (element, "checked", false, DL_INFO));
 	connect (checkbox, SIGNAL (stateChanged (int)), this, SLOT (changedState (int)));

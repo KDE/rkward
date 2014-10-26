@@ -341,7 +341,7 @@ void RKStandardComponent::buildAndInitialize (const QDomElement &doc_element, co
 	// go
 	builder->buildElement (gui_element, *xml, parent_widget, build_wizard);
 	builder->parseLogic (xml->getChildElement (doc_element, "logic", DL_INFO), *xml);
-	setCaption (xml->getStringAttribute (gui_element, "label", QString::null, DL_WARNING));
+	setCaption (xml->i18nStringAttribute (gui_element, "label", QString (), DL_WARNING));
 
 	// initialize
 	builder->makeConnections ();
@@ -658,7 +658,7 @@ void RKComponentBuilder::buildElement (const QDomElement &element, XMLHelper &xm
 				if (xml.getBoolAttribute (e, "as_button", false, DL_INFO)) {
 					RKStandardComponent* swidget = handle->invoke (component (), 0);
 					widget = swidget;
-					QString dummy = xml.getStringAttribute (e, "label", "Options", DL_WARNING);
+					QString dummy = xml.i18nStringAttribute (e, "label", i18n ("Options"), DL_WARNING);
 					swidget->setCaption (dummy);
 // TODO we should use a specialized pushbutton, that changes color if the corresponding component is dissatisfied!
 					QPushButton *button = new QPushButton (dummy, parent_widget);

@@ -47,7 +47,7 @@ RKValueSelector::RKValueSelector (const QDomElement &element, RKComponent *paren
 	QVBoxLayout *vbox = new QVBoxLayout (this);
 	vbox->setContentsMargins (0, 0, 0, 0);
 
-	QString lab = xml->getStringAttribute (element, "label", QString (), DL_INFO);
+	QString lab = xml->i18nStringAttribute (element, "label", QString (), DL_INFO);
 	if (!lab.isNull ()) {
 		QLabel *label = new QLabel (lab, this);
 		vbox->addWidget (label);
@@ -72,7 +72,7 @@ RKValueSelector::RKValueSelector (const QDomElement &element, RKComponent *paren
 		for (int i = 0; i < options.size (); ++i) {
 			const QDomElement &child = options[i];
 			QString v = xml->getStringAttribute (child, "value", QString (), DL_WARNING);
-			QString l = xml->getStringAttribute (child, "label", v, DL_INFO);
+			QString l = xml->i18nStringAttribute (child, "label", v, DL_INFO);
 			if (xml->getBoolAttribute (child, "checked", false, DL_INFO)) selected_list.append (v);
 			labels_list.append (l);
 			values_list.append (v);

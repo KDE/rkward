@@ -85,7 +85,7 @@ def getText (node):
       rc.append(cn.data)
   return ''.join (rc).strip ()
 
-# Look for an i18n comment in the given node, and write it out to the outfile
+# Look for an i18n comment in the given node, and add automatically extracted file context information
 def getI18nComment (node, attribute=""):
   ret = "/* "
   for cn in node.childNodes:

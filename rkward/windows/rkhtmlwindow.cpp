@@ -594,7 +594,7 @@ bool RKHTMLWindow::renderRKHelp (const KUrl &url) {
 					if (title.isEmpty ()) {
 						QDomElement source_element = component_xml.findElementWithAttribute (component_doc_element, "id", id, true, DL_WARNING);
 						if (source_element.isNull ()) RK_DEBUG (PLUGIN, DL_ERROR, "No such UI element: %s", qPrintable (id));
-						title = component_xml.getStringAttribute (source_element, "label", i18n ("Unnamed GUI element"), DL_WARNING);
+						title = component_xml.i18nStringAttribute (source_element, "label", i18n ("Unnamed GUI element"), DL_WARNING);
 					}
 					writeHTML ("<h4>" + title + "</h4>");
 					writeHTML (renderHelpFragment (*it));
@@ -603,7 +603,7 @@ bool RKHTMLWindow::renderRKHelp (const KUrl &url) {
 					QString title = help_xml.getStringAttribute (*it, "title", QString (), DL_INFO);
 					QDomElement source_element = component_xml.findElementWithAttribute (component_doc_element, "id", id, true, DL_WARNING);
 					if (source_element.isNull ()) RK_DEBUG (PLUGIN, DL_ERROR, "No such UI element: %s", qPrintable (id));
-					title = component_xml.getStringAttribute (source_element, "label", title, DL_WARNING);
+					title = component_xml.i18nStringAttribute (source_element, "label", title, DL_WARNING);
 					writeHTML ("<h3>" + title + "</h3>");
 				} else {
 					help_xml.displayError (&(*it), "Tag not allowed, here", DL_WARNING);

@@ -50,8 +50,8 @@ RKPluginBrowser::RKPluginBrowser (const QDomElement &element, RKComponent *paren
 
 	bool only_local = !xml->getBoolAttribute (element, "allow_urls", false, DL_INFO);
 
-	selector = new GetFileNameWidget (this, mode, only_local, xml->getStringAttribute (element, "label", i18n ("Enter filename"), DL_INFO), i18n ("Select"), xml->getStringAttribute (element, "initial", QString::null, DL_INFO));
-	QString filter = xml->getStringAttribute (element, "filter", QString::null, DL_INFO);
+	selector = new GetFileNameWidget (this, mode, only_local, xml->i18nStringAttribute (element, "label", i18n ("Enter filename"), DL_INFO), i18n ("Select"), xml->getStringAttribute (element, "initial", QString (), DL_INFO));
+	QString filter = xml->getStringAttribute (element, "filter", QString (), DL_INFO);
 	if (!filter.isEmpty ()) {
 		filter.append ("\n*|All files");
 		selector->setFilter (filter);

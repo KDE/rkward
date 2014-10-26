@@ -42,7 +42,7 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 	// basic layout
 	QGridLayout *g_layout = new QGridLayout (this);
 
-	QString label_string = xml->getStringAttribute (element, "label", i18n ("Variable:"), DL_INFO);
+	QString label_string = xml->i18nStringAttribute (element, "label", i18n ("Variable:"), DL_INFO);
 	if (!label_string.isEmpty ()) {
 		QLabel *label = new QLabel (label_string, this);
 		g_layout->addWidget (label, 0, 2);

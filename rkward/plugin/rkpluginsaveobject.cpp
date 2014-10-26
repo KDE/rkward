@@ -36,7 +36,7 @@ RKPluginSaveObject::RKPluginSaveObject (const QDomElement &element, RKComponent 
 	bool checkable = xml->getBoolAttribute (element, "checkable", false, DL_INFO);
 	bool checked = xml->getBoolAttribute (element, "checked", false, DL_INFO);
 	bool required = xml->getBoolAttribute (element, "required", true, DL_INFO);
-	QString label = xml->getStringAttribute (element, "label", i18n ("Save to:"), DL_INFO);
+	QString label = xml->i18nStringAttribute (element, "label", i18n ("Save to:"), DL_INFO);
 	QString initial = xml->getStringAttribute (element, "initial", i18n ("my.data"), DL_INFO);
 
 	// create and add properties

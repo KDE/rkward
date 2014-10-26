@@ -52,9 +52,9 @@ void RKAbstractOptionSelector::addOptionsAndInit (const QDomElement &element) {
 	int selected = 0;
 	int i = 0;
 	for (XMLChildList::const_iterator it = option_elements.begin (); it != option_elements.end (); ++it) {
-		QString label = xml->getStringAttribute (*it, "label", QString::null, DL_ERROR);
-		QString value = xml->getStringAttribute (*it, "value", QString::null, DL_WARNING);
-		QString name = xml->getStringAttribute (*it, "id", QString::null, DL_INFO);
+		QString label = xml->i18nStringAttribute (*it, "label", QString (), DL_ERROR);
+		QString value = xml->getStringAttribute (*it, "value", QString (), DL_WARNING);
+		QString name = xml->getStringAttribute (*it, "id", QString (), DL_INFO);
 
 		Option *opt = new Option;
 		opt->value = value;

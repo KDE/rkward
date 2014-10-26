@@ -42,7 +42,7 @@ RKPluginSpinBox::RKPluginSpinBox (const QDomElement &element, RKComponent *paren
 	// layout and label
 	QVBoxLayout *vbox = new QVBoxLayout (this);
 	vbox->setContentsMargins (0, 0, 0, 0);
-	QLabel *label = new QLabel (xml->getStringAttribute (element, "label", i18n ("Enter value:"), DL_WARNING), this);
+	QLabel *label = new QLabel (xml->i18nStringAttribute (element, "label", i18n ("Enter value:"), DL_WARNING), this);
 	vbox->addWidget (label);
 
 	// create spinbox and read settings

@@ -93,7 +93,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 	for (int i = 0; i < options.size (); ++i) {
 		const QDomElement &e = options.at (i);
 		QString id = xml->getStringAttribute (e, "id", QString (), DL_ERROR);
-		QString label = xml->getStringAttribute (e, "label", QString (), DL_DEBUG);
+		QString label = xml->i18nStringAttribute (e, "label", QString (), DL_DEBUG);
 		QString governor = xml->getStringAttribute (e, "connect", QString (), DL_INFO);
 		bool external = xml->getBoolAttribute (e, "external", false, DL_INFO);
 

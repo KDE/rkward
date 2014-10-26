@@ -111,7 +111,7 @@ int RKComponentGUIXML::addSubMenu (QDomElement& parent, XMLHelper &xml, const QD
 	int counter = 0;
 
 	// 1: check whether menu already exists, and create new menu otherwise
-	QDomElement menu_element = findOrCreateElement (parent, xml, "Menu", xml.getStringAttribute (description, "id", "none", DL_ERROR), xml.getStringAttribute (description, "label", i18n ("(no label)"), DL_WARNING), xml.getIntAttribute (description, "index", -1, DL_INFO));
+	QDomElement menu_element = findOrCreateElement (parent, xml, "Menu", xml.getStringAttribute (description, "id", "none", DL_ERROR), xml.i18nStringAttribute (description, "label", i18n ("(no label)"), DL_WARNING), xml.getIntAttribute (description, "index", -1, DL_INFO));
 
 	// 2: recurse into submenus (of element to add!)
 	XMLChildList list = xml.getChildElements (description, "menu", DL_INFO);
@@ -476,7 +476,7 @@ RKPluginMapParseResult RKComponentMap::addPluginMapLocal (const QString& plugin_
 			RKComponentHandle *handle = new RKComponentHandle (pluginmap_file_desc, filename, label, (RKComponentType) type);
 			XMLChildList attributes_list = xml.getChildElements (*it, "attribute", DL_DEBUG);
 			for (XMLChildList::const_iterator ait=attributes_list.begin (); ait != attributes_list.end (); ++ait) {
-				handle->addAttribute (xml.getStringAttribute (*ait, "id", "noid", DL_WARNING), xml.getStringAttribute (*ait, "value", QString (), DL_ERROR), xml.getStringAttribute (*ait, "label", QString (), DL_ERROR));
+				handle->addAttribute (xml.getStringAttribute (*ait, "id", "noid", DL_WARNING), xml.getStringAttribute (*ait, "value", QString (), DL_ERROR), xml.i18nStringAttribute (*ait, "label", QString (), DL_ERROR));
 			}
 			if (!cdependencies.isNull ()) handle->addDependencies (RKComponentDependency::parseDependencies (cdependencies, xml));
 			components.insert (id, handle);
