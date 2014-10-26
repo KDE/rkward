@@ -4,23 +4,28 @@
 \title{Create a XML node "valueslot" for RKWard plugins}
 \usage{
 rk.XML.valueslot(label, source, property = NULL, required = FALSE,
-  multi = FALSE, min = 1, any = 1, max = 0, id.name = "auto",
-  help = NULL, component = rk.get.comp())
+  multi = FALSE, duplicates = FALSE, min = 1, any = 1, max = 0,
+  id.name = "auto", help = NULL, component = rk.get.comp())
 }
 \arguments{
 \item{label}{Character string, a text label for the valueslot.}
 
 \item{source}{Either a character string (the \code{id} name of the \code{valueselector} to select values
-from), or an object of class \code{XiMpLe.node} (whose \code{id} will be extracted and used). If it is not
+from),
+      or an object of class \code{XiMpLe.node} (whose \code{id} will be extracted and used). If it is not
 a \code{<valueselector>} node, you must also specify a valid property for the node.}
 
-\item{property}{Character string, valid property for a XiMpLe node defined by \code{source}. In the XML code, it
+\item{property}{Character string,
+      valid property for a XiMpLe node defined by \code{source}. In the XML code, it
 will cause the use of \code{source_property} instead of \code{source}. Only used if \code{source} ist not a
 \code{<valueselector>} node.}
 
 \item{required}{Logical, whether the selection of values is mandatory or not.}
 
 \item{multi}{Logical, whether the valueslot holds only one or several objects.}
+
+\item{duplicates}{Logical,
+      if \code{multi=TRUE} defines whether the same entry may be added multiple times. Sets \code{multi=TRUE}.}
 
 \item{min}{If \code{multi=TRUE} defines how many objects must be selected. Sets \code{multi=TRUE}.}
 
@@ -33,11 +38,14 @@ are selected at all. Sets \code{multi=TRUE}.}
 \item{id.name}{Character vector, unique ID for the valueslot.
 If \code{"auto"}, the ID will be generated automatically from \code{label}.}
 
-\item{help}{Character string or list of character values and XiMpLe nodes, will be used as the \code{text} value for a setting node in the .rkh file.
-If set to \code{FALSE}, \code{\link[rkwarddev:rk.rkh.scan]{rk.rkh.scan}} will ignore this node.
+\item{help}{Character string or list of character values and XiMpLe nodes,
+      will be used as the \code{text} value for a setting node in the .rkh file.
+If set to \code{FALSE},
+      \code{\link[rkwarddev:rk.rkh.scan]{rk.rkh.scan}} will ignore this node.
 Also needs \code{component} to be set accordingly!}
 
-\item{component}{Character string, name of the component this node belongs to. Only needed if you
+\item{component}{Character string,
+      name of the component this node belongs to. Only needed if you
 want to use the scan features for automatic help file generation; needs \code{help} to be set
 accordingly, too!}
 }

@@ -12,7 +12,8 @@ rk.XML.snippets(...)
 An object of class \code{XiMpLe.node}.
 }
 \description{
-This function will create a snippets node for the document section, with optional child nodes "snippet".
+This function will create a snippets node for the document section,
+      with optional child nodes "snippet".
 }
 \examples{
 # define a formula section with varselector and varslots

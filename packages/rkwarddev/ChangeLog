@@ -9,7 +9,7 @@ fixed:
 added:
   - all "help" values can now be a list of character strings or XiMpLe nodes,
     to have more control over the markup
-  - added "property" argument to rk.XML.valueslot() and rk.XML.varslot().
+  - added "property" and "duplicates" arguments to rk.XML.valueslot() and rk.XML.varslot().
 
 changes in version 0.06-5 (2014-10-19)
 fixed:

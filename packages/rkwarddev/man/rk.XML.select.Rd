@@ -10,18 +10,23 @@ rk.XML.select(label, options = list(label = c(val = "", chk = FALSE)),
 \item{label}{Character string, a text label for this plugin element.}
 
 \item{options}{A named list with options to choose from. The names of the list elements will become
-labels of the options, \code{val} defines the value to submit if the option is selected, and
+labels of the options, \code{val} defines the value to submit if the option is selected,
+      and
 \code{chk=TRUE} should be set in the one option which is selected by default. Objects generated with
 \code{\link[rkwarddev:rk.XML.option]{rk.XML.option}} are accepted as well.}
 
 \item{id.name}{Character string, a unique ID for this plugin element.
-If \code{"auto"} and a label was provided, an ID will be generated automatically from the label.}
+If \code{"auto"} and a label was provided,
+      an ID will be generated automatically from the label.}
 
-\item{help}{Character string or list of character values and XiMpLe nodes, will be used as the \code{text} value for a setting node in the .rkh file.
-If set to \code{FALSE}, \code{\link[rkwarddev:rk.rkh.scan]{rk.rkh.scan}} will ignore this node.
+\item{help}{Character string or list of character values and XiMpLe nodes,
+      will be used as the \code{text} value for a setting node in the .rkh file.
+If set to \code{FALSE},
+      \code{\link[rkwarddev:rk.rkh.scan]{rk.rkh.scan}} will ignore this node.
 Also needs \code{component} to be set accordingly!}
 
-\item{component}{Character string, name of the component this node belongs to. Only needed if you
+\item{component}{Character string,
+      name of the component this node belongs to. Only needed if you
 want to use the scan features for automatic help file generation; needs \code{help} to be set
 accordingly, too!}
 }

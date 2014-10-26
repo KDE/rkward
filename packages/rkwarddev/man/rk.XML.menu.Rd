@@ -13,11 +13,13 @@ rk.XML.menu(label, ..., index = -1, id.name = "auto")
 with the last element being the \code{component} value for \code{\link[rkwarddev:rk.XML.entry]{rk.XML.entry}}.}
 
 \item{index}{Integer number to influence the level of menu placement. If \code{...} is a list,
-\code{index} can also be a vector of the same length + 1, so indices will be set in the same order to the
+\code{index} can also be a vector of the same length + 1,
+      so indices will be set in the same order to the
 menu levels, the last value is for the entry.}
 
 \item{id.name}{Character, a unique ID for this plugin element.
-If \code{"auto"}, an ID will be generated automatically from the label. Otherwise, if \code{...} is a list,
+If \code{"auto"}, an ID will be generated automatically from the label. Otherwise,
+      if \code{...} is a list,
 \code{id.name} must have the same length and will be set in the same order to the menu levels.
 Used to place the menu in the global menu hierarchy.}
 }

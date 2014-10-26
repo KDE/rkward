@@ -14,7 +14,8 @@ rk.XML.component(label, file, id.name = "auto", type = "standard",
 \item{id.name}{Character string, a unique ID for this plugin element.
 If \code{"auto"}, an ID will be generated automatically from the label.}
 
-\item{type}{Character string, type of component. As of now, only "standard" is supported. The option is
+\item{type}{Character string, type of component. As of now,
+      only "standard" is supported. The option is
 just implemented for completeness.}
 
 \item{dependencies}{An object of class \code{XiMpLe.node} to define \code{<dependencies>} for this component.

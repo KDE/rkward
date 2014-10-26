@@ -27,6 +27,7 @@
 #'    \code{<valueselector>} node. 
 #' @param required Logical, whether the selection of variables is mandatory or not.
 #' @param multi Logical, whether the varslot holds only one or several objects.
+#' @param duplicates Logical, if \code{multi=TRUE} defines whether the same entry may be added multiple times. Sets \code{multi=TRUE}.
 #' @param min If \code{multi=TRUE} defines how many objects must be selected. Sets \code{multi=TRUE}.
 #' @param any If \code{multi=TRUE} defines how many objects must be selected at least if any
 #'    are selected at all. Sets \code{multi=TRUE}.
@@ -63,7 +64,7 @@
 #' cat(pasteXML(test.varslot))
 #' }
 
-rk.XML.varslot <- function(label, source, property=NULL, required=FALSE, multi=FALSE, min=1, any=1, max=0,
+rk.XML.varslot <- function(label, source, property=NULL, required=FALSE, multi=FALSE, duplicates=FALSE, min=1, any=1, max=0,
   dim=0, min.len=0, max.len=NULL, classes=NULL, types=NULL, id.name="auto", help=NULL, component=rk.get.comp()){
   if(identical(id.name, "auto")){
     var.slot.attr <- list(id=auto.ids(label, prefix=ID.prefix("varslot", length=4)))
@@ -103,8 +104,11 @@ rk.XML.varslot <- function(label, source, property=NULL, required=FALSE, multi=F
   } else {}
 
   # "multi" is mandatory if min, max or any are set
-  if(isTRUE(multi) | min > 1 | any > 1 | max > 0){
+  if(isTRUE(multi) | isTRUE(duplicates) | min > 1 | any > 1 | max > 0){
     var.slot.attr[["multi"]] <- "true"
+    if(isTRUE(duplicates)){
+      var.slot.attr[["allow_duplicates"]] <- "true"
+    } else {}
     if(min > 1){
       var.slot.attr[["min_vars"]] <- min
     } else {}

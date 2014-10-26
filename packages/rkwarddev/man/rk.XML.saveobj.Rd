@@ -10,23 +10,29 @@ rk.XML.saveobj(label, chk = FALSE, checkable = TRUE, initial = "auto",
 \arguments{
 \item{label}{Character string, a text label for this plugin element.}
 
-\item{chk}{Logical, if \code{TRUE} and \code{checkable=TRUE} the option is checkable and active by default.}
+\item{chk}{Logical,
+      if \code{TRUE} and \code{checkable=TRUE} the option is checkable and active by default.}
 
 \item{checkable}{Logical, if \code{TRUE} the option can be switched on and off.}
 
 \item{initial}{Character string, the default name for the object should be saved to.
-If \code{"auto"} and a label was provided, an name will be generated automatically from the label.}
+If \code{"auto"} and a label was provided,
+      an name will be generated automatically from the label.}
 
 \item{required}{Logical, whether an entry is mandatory or not.}
 
 \item{id.name}{Character string, a unique ID for this plugin element.
-If \code{"auto"} and a label was provided, an ID will be generated automatically from the label.}
+If \code{"auto"} and a label was provided,
+      an ID will be generated automatically from the label.}
 
-\item{help}{Character string or list of character values and XiMpLe nodes, will be used as the \code{text} value for a setting node in the .rkh file.
-If set to \code{FALSE}, \code{\link[rkwarddev:rk.rkh.scan]{rk.rkh.scan}} will ignore this node.
+\item{help}{Character string or list of character values and XiMpLe nodes,
+      will be used as the \code{text} value for a setting node in the .rkh file.
+If set to \code{FALSE},
+      \code{\link[rkwarddev:rk.rkh.scan]{rk.rkh.scan}} will ignore this node.
 Also needs \code{component} to be set accordingly!}
 
-\item{component}{Character string, name of the component this node belongs to. Only needed if you
+\item{component}{Character string,
+      name of the component this node belongs to. Only needed if you
 want to use the scan features for automatic help file generation; needs \code{help} to be set
 accordingly, too!}
 }

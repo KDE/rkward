@@ -12,7 +12,8 @@ rk.XML.components(...)
 A list of objects of class \code{XiMpLe.node}.
 }
 \description{
-This function will create a components node for a .pluginmap file, with mandatory child nodes "component".
+This function will create a components node for a .pluginmap file,
+      with mandatory child nodes "component".
 }
 \examples{
 test.component <- rk.XML.component("My GUI dialog", "plugins/MyGUIdialog.xml")

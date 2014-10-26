@@ -10,10 +10,12 @@ rk.XML.option(label, val = NULL, chk = FALSE, id.name = NULL)
 
 \item{val}{Character string, defines the value to submit if the option is checked.}
 
-\item{chk}{Logical, should be set \code{TRUE} in the one option which is checked by default.}
+\item{chk}{Logical,
+      should be set \code{TRUE} in the one option which is checked by default.}
 
 \item{id.name}{Character string, a unique ID for this plugin element.
-If \code{"auto"} and a label was provided, an ID will be generated automatically from the label.}
+If \code{"auto"} and a label was provided,
+      an ID will be generated automatically from the label.}
 }
 \value{
 An object of class \code{XiMpLe.node}.

@@ -27,6 +27,7 @@
 #'    \code{<valueselector>} node. 
 #' @param required Logical, whether the selection of values is mandatory or not.
 #' @param multi Logical, whether the valueslot holds only one or several objects.
+#' @param duplicates Logical, if \code{multi=TRUE} defines whether the same entry may be added multiple times. Sets \code{multi=TRUE}.
 #' @param min If \code{multi=TRUE} defines how many objects must be selected. Sets \code{multi=TRUE}.
 #' @param any If \code{multi=TRUE} defines how many objects must be selected at least if any
 #'    are selected at all. Sets \code{multi=TRUE}.
@@ -53,7 +54,7 @@
 #' cat(pasteXML(test.valueslot))
 #' }
 
-rk.XML.valueslot <- function(label, source, property=NULL, required=FALSE, multi=FALSE, min=1, any=1, max=0,
+rk.XML.valueslot <- function(label, source, property=NULL, required=FALSE, multi=FALSE, duplicates=FALSE, min=1, any=1, max=0,
   id.name="auto", help=NULL, component=rk.get.comp()){
   if(identical(id.name, "auto")){
     value.slot.attr <- list(id=auto.ids(label, prefix=ID.prefix("valueslot", length=4)))
@@ -66,12 +67,12 @@ rk.XML.valueslot <- function(label, source, property=NULL, required=FALSE, multi
   if(is.XiMpLe.node(source)){
     source.name <- slot(source, "name")
     if(identical(source.name, "varselector")){
-      var.slot.attr[["source"]] <- check.ID(source)
+      value.slot.attr[["source"]] <- check.ID(source)
     } else {
       if(is.null(property)){
         stop(simpleError(paste0("'source' must either be a <varselector> node or come with an appropripate 'property' value!")))
       } else if(modif.validity(source, modifier=property)){
-        var.slot.attr[["source_property"]] <- paste(check.ID(source), property, sep=".")
+        value.slot.attr[["source_property"]] <- paste(check.ID(source), property, sep=".")
       } else {}
     }
   } else {}
@@ -81,8 +82,11 @@ rk.XML.valueslot <- function(label, source, property=NULL, required=FALSE, multi
   } else {}
 
   # "multi" is mandatory if min, max or any are set
-  if(isTRUE(multi) | min > 1 | any > 1 | max > 0){
+  if(isTRUE(multi) | isTRUE(duplicates) | min > 1 | any > 1 | max > 0){
     value.slot.attr[["multi"]] <- "true"
+    if(isTRUE(duplicates)){
+      value.slot.attr[["allow_duplicates"]] <- "true"
+    } else {}
     if(min > 1){
       value.slot.attr[["min_vars"]] <- min
     } else {}

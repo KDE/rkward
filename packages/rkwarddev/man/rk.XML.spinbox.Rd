@@ -10,26 +10,34 @@ rk.XML.spinbox(label, min = NULL, max = NULL, initial = 0, real = TRUE,
 \arguments{
 \item{label}{Character string, a text label for this plugin element.}
 
-\item{min}{Numeric, the lowest value allowed. Defaults to the lowest value technically representable in the spinbox.}
+\item{min}{Numeric,
+      the lowest value allowed. Defaults to the lowest value technically representable in the spinbox.}
 
-\item{max}{Numeric, the largest value allowed. Defaults to the highest value technically representable in the spinbox.}
+\item{max}{Numeric,
+      the largest value allowed. Defaults to the highest value technically representable in the spinbox.}
 
 \item{initial}{Numeric, will be used as the initial value.}
 
 \item{real}{Logical, whether values should be real or integer numbers.}
 
-\item{precision}{Numeric, if \code{real=TRUE} defines the default number of decimal places shown in the spinbox.}
+\item{precision}{Numeric,
+      if \code{real=TRUE} defines the default number of decimal places shown in the spinbox.}
 
-\item{max.precision}{Numeric, maximum number of digits that can be meaningfully represented.}
+\item{max.precision}{Numeric,
+      maximum number of digits that can be meaningfully represented.}
 
 \item{id.name}{Character string, a unique ID for this plugin element.
-If \code{"auto"} and a label was provided, an ID will be generated automatically from the label.}
+If \code{"auto"} and a label was provided,
+      an ID will be generated automatically from the label.}
 
-\item{help}{Character string or list of character values and XiMpLe nodes, will be used as the \code{text} value for a setting node in the .rkh file.
-If set to \code{FALSE}, \code{\link[rkwarddev:rk.rkh.scan]{rk.rkh.scan}} will ignore this node.
+\item{help}{Character string or list of character values and XiMpLe nodes,
+      will be used as the \code{text} value for a setting node in the .rkh file.
+If set to \code{FALSE},
+      \code{\link[rkwarddev:rk.rkh.scan]{rk.rkh.scan}} will ignore this node.
 Also needs \code{component} to be set accordingly!}
 
-\item{component}{Character string, name of the component this node belongs to. Only needed if you
+\item{component}{Character string,
+      name of the component this node belongs to. Only needed if you
 want to use the scan features for automatic help file generation; needs \code{help} to be set
 accordingly, too!}
 }

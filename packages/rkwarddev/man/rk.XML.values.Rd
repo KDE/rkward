@@ -32,16 +32,22 @@ if \code{FALSE} below it.}
 
 \item{frame.label}{Character string, a text label for the whole frame.}
 
-\item{id.name}{Character vector, unique IDs for the frame (first entry), the valueselector (second entry)
-and valueslot (third entry). If \code{formula.dependent} is not \code{NULL}, a fourth and fifth entry is needed as well,
+\item{id.name}{Character vector, unique IDs for the frame (first entry),
+      the valueselector (second entry)
+and valueslot (third entry). If \code{formula.dependent} is not \code{NULL},
+      a fourth and fifth entry is needed as well,
 for the dependent valueslot and the formula node, respectively.
-If \code{"auto"}, IDs will be generated automatically from \code{label} and \code{slot.text}.}
+If \code{"auto"},
+      IDs will be generated automatically from \code{label} and \code{slot.text}.}
 
-\item{help}{Character string or list of character values and XiMpLe nodes, will be used as the \code{text} value for a setting node in the .rkh file.
-If set to \code{FALSE}, \code{\link[rkwarddev:rk.rkh.scan]{rk.rkh.scan}} will ignore this node.
+\item{help}{Character string or list of character values and XiMpLe nodes,
+      will be used as the \code{text} value for a setting node in the .rkh file.
+If set to \code{FALSE},
+      \code{\link[rkwarddev:rk.rkh.scan]{rk.rkh.scan}} will ignore this node.
 Also needs \code{component} to be set accordingly!}
 
-\item{component}{Character string, name of the component this node belongs to. Only needed if you
+\item{component}{Character string,
+      name of the component this node belongs to. Only needed if you
 want to use the scan features for automatic help file generation; needs \code{help} to be set
 accordingly, too!}
 }
@@ -51,7 +57,8 @@ An object of class \code{XiMpLe.node}.
 \description{
 This function will create a <frame> node including a <valueselector> and a <valueslot> node. It is
 actually a wrapper for \code{\link[rkwarddev:rk.XML.valueslot]{rk.XML.valueslot}} and
-\code{\link[rkwarddev:rk.XML.valueselector]{rk.XML.valueselector}}, since you usually won't define one
+\code{\link[rkwarddev:rk.XML.valueselector]{rk.XML.valueselector}},
+      since you usually won't define one
 without the other.
 }
 \examples{

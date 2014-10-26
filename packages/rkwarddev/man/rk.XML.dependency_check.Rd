@@ -31,13 +31,15 @@ rk.XML.dependency_check(id.name, dependencies = NULL, package = NULL,
   \item{url}{URL to get the pluginmap (optional)}
 }}
 
-\item{hints}{Logical, if \code{TRUE}, \code{NULL} values will be replaced with example text.}
+\item{hints}{Logical, if \code{TRUE},
+      \code{NULL} values will be replaced with example text.}
 }
 \description{
 Create XML node "dependency_check" for RKWard pluginmaps
 }
 \note{
-The \code{<dependency_check>} node was introduced with RKWard 0.6.1, please set the dependencies
+The \code{<dependency_check>} node was introduced with RKWard 0.6.1,
+      please set the dependencies
    of your component/plugin accordingly.
 }
 \examples{

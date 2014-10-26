@@ -1,6 +1,23 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
+\section{Changes in rkwarddev version 0.06-6 (2014-10-26)}{
+  \subsection{fixed}{
+    \itemize{
+      \item \code{rk.XML.optionset()} does now allow to re-use objects defined in the same
+        function call (i.e., refer to optioncolumns in the logic section)
+      \item removed arguments \code{"help"} and \code{"component"} from \code{rk.XML.optionscolumn()} again,
+        as these are already being documented via the objects they connect to.
+    }
+  }
+  \subsection{added}{
+    \itemize{
+      \item all \code{"help"} values can now be a list of character strings or XiMpLe nodes,
+        to have more control over the markup
+      \item added \code{"property"} and \code{"duplicates"} arguments to \code{rk.XML.valueslot()} and \code{rk.XML.varslot()}.
+    }
+  }
+}
 \section{Changes in rkwarddev version 0.06-5 (2014-10-19)}{
   \subsection{fixed}{
     \itemize{

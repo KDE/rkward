@@ -10,11 +10,14 @@ rk.JS.options(var, ..., collapse = ", ", option = NULL, funct = NULL,
 \item{var}{Character string, name of the JavaScript variable to use in the script code.}
 
 \item{...}{A list of objects of class \code{rk.JS.ite} (see \code{\link[rkwarddev:ite]{ite}}).
-Use the \code{thenjs} element to define only the value to add to the option, without commas
+Use the \code{thenjs} element to define only the value to add to the option,
+      without commas
 (e.g., \code{"paired=TRUE"} or \code{qp("conf.level=\"", conflevel, "\"")}.}
 
-\item{collapse}{Character string, how all options should be concatenated on the R code level
-(if \code{array=FALSE}), or how \code{option} should be added to the generated R code. Hint:
+\item{collapse}{Character string,
+      how all options should be concatenated on the R code level
+(if \code{array=FALSE}),
+      or how \code{option} should be added to the generated R code. Hint:
 To place each option in a new line with tab indentation, set \code{collapse=",\\n\\t"}.}
 
 \item{option}{A character string, naming, e.g., an option of an R function which should be
@@ -24,7 +27,8 @@ constructed from several variables. Only used if \code{array=TRUE}.}
 e.g. "list" for \code{list()}, or "c" for \code{c()}. Set to \code{NULL} to drop.
 Only used if \code{array=TRUE}.}
 
-\item{array}{Logical, if \code{TRUE} will generate the options as an array, otherwise in one
+\item{array}{Logical, if \code{TRUE} will generate the options as an array,
+      otherwise in one
 concatenated character string (probably only useful for mandatory options).}
 }
 \value{

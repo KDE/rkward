@@ -17,7 +17,8 @@ or the first entry if no language was set at all or the set language cannot be f
 \code{...}.
 }
 \details{
-If used in an \code{rkwarddev} script, this can be used to toggle the generation of plugins
+If used in an \code{rkwarddev} script,
+      this can be used to toggle the generation of plugins
 in a certain language.
 }
 \examples{

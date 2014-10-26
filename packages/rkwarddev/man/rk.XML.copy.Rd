@@ -9,7 +9,8 @@ rk.XML.copy(id, as = NULL)
 \item{id}{Either a character string (the \code{id} of the property to be copied),
 or an object of class \code{XiMpLe.node} (whose \code{id} will be extracted and used).}
 
-\item{as}{A character string resembling the \code{copy_element_tag_name} value. I.e., must be
+\item{as}{A character string resembling the \code{copy_element_tag_name} value. I.e.,
+      must be
 a valid tag name. Will cause a change of tag name of the \code{id} (e.g. "tab") to \code{as}
 (e.g. "page").}
 }

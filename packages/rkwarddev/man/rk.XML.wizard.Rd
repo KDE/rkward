@@ -10,16 +10,19 @@ rk.XML.wizard(..., label = NULL, recommended = FALSE)
 
 \item{label}{Character string, a text label for this plugin element.}
 
-\item{recommended}{Logical, whether the wizard should be the recommended interface (unless the user has configured
+\item{recommended}{Logical,
+      whether the wizard should be the recommended interface (unless the user has configured
 RKWard to default to a specific interface).}
 }
 \value{
 An object of class \code{XiMpLe.node}.
 }
 \description{
-This function will create a wizard section with optional child nodes "browser", "checkbox",
+This function will create a wizard section with optional child nodes "browser",
+      "checkbox",
 "column", "copy", "dropdown", "embed", "formula", "frame", "include", "input", "insert",
-"page", "preview", "radio", "row", "saveobject", "select", "spinbox", "stretch", "tabbook", "text",
+"page", "preview", "radio", "row", "saveobject", "select", "spinbox", "stretch",
+      "tabbook", "text",
 "valueselector", "valueslot", "varselector" and "varslot".
 }
 \examples{
