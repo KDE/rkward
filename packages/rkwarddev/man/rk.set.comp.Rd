@@ -13,8 +13,7 @@ subsequently.}
 \description{
 This small tool let's you set a component name as kind of "active", which simply
 means it will be returned by \code{\link[rkwarddev:rk.get.comp]{rk.get.comp}}. This can be
-used by functions like, e.g., \code{\link[rkwarddev:rk.XML.cbox]{rk.XML.cbox}},
-      to add text
+used by functions like, e.g., \code{\link[rkwarddev:rk.XML.cbox]{rk.XML.cbox}}, to add text
 for .rkh pages automatically to the current plugin component.
 }
 

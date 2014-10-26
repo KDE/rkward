@@ -27,7 +27,7 @@
 #' @param max.precision Numeric, maximum number of digits that can be meaningfully represented.
 #' @param id.name Character string, a unique ID for this plugin element.
 #'    If \code{"auto"} and a label was provided, an ID will be generated automatically from the label.
-#' @param help Character string, will be used as the \code{text} value for a setting node in the .rkh file.
+#' @param help Character string or list of character values and XiMpLe nodes, will be used as the \code{text} value for a setting node in the .rkh file.
 #'    If set to \code{FALSE}, \code{\link[rkwarddev:rk.rkh.scan]{rk.rkh.scan}} will ignore this node.
 #'    Also needs \code{component} to be set accordingly!
 #' @param component Character string, name of the component this node belongs to. Only needed if you

@@ -11,8 +11,7 @@ rkwarddev.required(min = "0.06-5", lib.loc = NULL)
 \item{lib.loc}{The \code{lib.loc} argument passed over to \code{\link[utils:packageVersion]{packageVersion}}.}
 }
 \value{
-The function has no return value,
-      but wil stop with an error if the specified version requirement is not met.
+The function has no return value, but wil stop with an error if the specified version requirement is not met.
 }
 \description{
 Check for rkwarddev package version requirements

@@ -31,7 +31,7 @@
 #'    If \code{NULL}, this function quits silently without any action.
 #' @param id Either a character string (the \code{id} of the node to store the help information for),
 #'    or an object of class \code{XiMpLe.node} (whose \code{id} will be extracted and used).
-#' @param help Character string, will be used as the \code{text} value for a setting node in the .rkh file.
+#' @param help Character string or list of character values and XiMpLe nodes, will be used as the \code{text} value for a setting node in the .rkh file.
 #' @param rm Logical, If \code{TRUE} will remove all information stored by the name of \code{component} (if
 #'    \code{id=NULL}) or of the given \code{id=NULL}, respectively.
 #' @export

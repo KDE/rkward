@@ -31,7 +31,7 @@
 #'    (0 means any number). Sets \code{multi=TRUE}.
 #' @param id.name Character vector, unique ID for the valueslot.
 #'    If \code{"auto"}, the ID will be generated automatically from \code{label}.
-#' @param help Character string, will be used as the \code{text} value for a setting node in the .rkh file.
+#' @param help Character string or list of character values and XiMpLe nodes, will be used as the \code{text} value for a setting node in the .rkh file.
 #'    If set to \code{FALSE}, \code{\link[rkwarddev:rk.rkh.scan]{rk.rkh.scan}} will ignore this node.
 #'    Also needs \code{component} to be set accordingly!
 #' @param component Character string, name of the component this node belongs to. Only needed if you

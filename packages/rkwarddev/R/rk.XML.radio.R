@@ -28,7 +28,7 @@
 #'    \code{\link[rkwarddev:rk.XML.option]{rk.XML.option}} are accepted as well.
 #' @param id.name Character string, a unique ID for this plugin element.
 #'    If \code{"auto"} and a label was provided, an ID will be generated automatically from the label.
-#' @param help Character string, will be used as the \code{text} value for a setting node in the .rkh file.
+#' @param help Character string or list of character values and XiMpLe nodes, will be used as the \code{text} value for a setting node in the .rkh file.
 #'    Also needs \code{component} to be set accordingly!
 #' @param component Character string, name of the component this node belongs to. Only needed if you
 #'    want to use the scan features for automatic help file generation; needs \code{help} to be set

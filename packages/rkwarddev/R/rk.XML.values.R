@@ -40,7 +40,7 @@
 #'    and valueslot (third entry). If \code{formula.dependent} is not \code{NULL}, a fourth and fifth entry is needed as well,
 #'    for the dependent valueslot and the formula node, respectively.
 #'    If \code{"auto"}, IDs will be generated automatically from \code{label} and \code{slot.text}.
-#' @param help Character string, will be used as the \code{text} value for a setting node in the .rkh file.
+#' @param help Character string or list of character values and XiMpLe nodes, will be used as the \code{text} value for a setting node in the .rkh file.
 #'    If set to \code{FALSE}, \code{\link[rkwarddev:rk.rkh.scan]{rk.rkh.scan}} will ignore this node.
 #'    Also needs \code{component} to be set accordingly!
 #' @param component Character string, name of the component this node belongs to. Only needed if you

@@ -13,12 +13,10 @@ rk.XML.frame(..., label = NULL, checkable = FALSE, chk = TRUE,
 
 \item{checkable}{Logical, if \code{TRUE} the frame can be switched on and off.}
 
-\item{chk}{Logical,
-      if \code{TRUE} and \code{checkable=TRUE} the frame is checkable and active by default.}
+\item{chk}{Logical, if \code{TRUE} and \code{checkable=TRUE} the frame is checkable and active by default.}
 
 \item{id.name}{Character string, a unique ID for this plugin element.
-If \code{"auto"} and a label was provided,
-      an ID will be generated automatically from the label
+If \code{"auto"} and a label was provided, an ID will be generated automatically from the label
 if presen, otherwise from the objects in the frame.
 If \code{NULL}, no ID will be given.}
 }

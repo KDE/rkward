@@ -6,11 +6,9 @@
 rk.set.language(lang = NULL, locales = NULL)
 }
 \arguments{
-\item{lang}{Character string,
-      abbreviated language to use with \code{\link[rkwarddev:i18n]{i18n}}, e.g. \code{"en"}.}
+\item{lang}{Character string, abbreviated language to use with \code{\link[rkwarddev:i18n]{i18n}}, e.g. \code{"en"}.}
 
-\item{locales}{Character vector, all the locales this translation covers,
-      e.g. \code{c("en_EN", "en_US")}.}
+\item{locales}{Character vector, all the locales this translation covers, e.g. \code{c("en_EN", "en_US")}.}
 }
 \description{
 Stores the given language in an internal environment, so functions like

@@ -49,7 +49,7 @@ rk.rkh.setting <- function(id, text=NULL, title=NULL){
     text <- ""
   } else {}
 
-  node <- XMLNode("setting", text, attrs=attr.list)
+  node <- XMLNode("setting", attrs=attr.list, .children=child.list(text, empty=FALSE))
 
   return(node)
 }

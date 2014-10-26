@@ -10,32 +10,25 @@ rk.XML.browser(label, type = "file", initial = NULL, urls = FALSE,
 \arguments{
 \item{label}{Character string, a text label for this plugin element.}
 
-\item{type}{Character string, valid values are "dir", "file" and "savefile" (i.e.,
-      an non-existing file).}
+\item{type}{Character string, valid values are "dir", "file" and "savefile" (i.e., an non-existing file).}
 
-\item{initial}{Character string,
-      if not \code{NULL} will be used as the initial value of the browser.}
+\item{initial}{Character string, if not \code{NULL} will be used as the initial value of the browser.}
 
 \item{urls}{Logical, whether non-local URLs are permitted or not.}
 
-\item{filter}{Character vector, file type filter, e.g. \code{filter=c("*.txt",
-      "*.csv")} for .txt and .csv files.
+\item{filter}{Character vector, file type filter, e.g. \code{filter=c("*.txt", "*.csv")} for .txt and .csv files.
 Try not to induce limits unless absolutely needed, though.}
 
 \item{required}{Logical, whether an entry is mandatory or not.}
 
 \item{id.name}{Character string, a unique ID for this plugin element.
-If \code{"auto"} and a label was provided,
-      an ID will be generated automatically from the label.}
+If \code{"auto"} and a label was provided, an ID will be generated automatically from the label.}
 
-\item{help}{Character string,
-      will be used as the \code{text} value for a setting node in the .rkh file.
-If set to \code{FALSE},
-      \code{\link[rkwarddev:rk.rkh.scan]{rk.rkh.scan}} will ignore this node.
+\item{help}{Character string or list of character values and XiMpLe nodes, will be used as the \code{text} value for a setting node in the .rkh file.
+If set to \code{FALSE}, \code{\link[rkwarddev:rk.rkh.scan]{rk.rkh.scan}} will ignore this node.
 Also needs \code{component} to be set accordingly!}
 
-\item{component}{Character string,
-      name of the component this node belongs to. Only needed if you
+\item{component}{Character string, name of the component this node belongs to. Only needed if you
 want to use the scan features for automatic help file generation; needs \code{help} to be set
 accordingly, too!}
 }

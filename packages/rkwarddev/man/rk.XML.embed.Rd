@@ -7,18 +7,14 @@ rk.XML.embed(component, button = FALSE, label = "Options",
   id.name = "auto")
 }
 \arguments{
-\item{component}{A character string,
-      registered name (\code{id} in pluginmap file) of the component to be embedded.}
+\item{component}{A character string, registered name (\code{id} in pluginmap file) of the component to be embedded.}
 
-\item{button}{Logical,
-      whether the plugin should be embedded as a button and appear if it's pressed.}
+\item{button}{Logical, whether the plugin should be embedded as a button and appear if it's pressed.}
 
-\item{label}{A character string,
-      text label for the button (only used if \code{button=TRUE}).}
+\item{label}{A character string, text label for the button (only used if \code{button=TRUE}).}
 
 \item{id.name}{Character string, a unique ID for this plugin element.
-If \code{"auto"},
-      an ID will be generated automatically from the label and component strings.}
+If \code{"auto"}, an ID will be generated automatically from the label and component strings.}
 }
 \value{
 An object of class \code{XiMpLe.node}.

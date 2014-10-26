@@ -9,14 +9,12 @@ ite(ifjs, thenjs, elsejs = NULL)
 \item{ifjs}{Either a character string to be placed in the brackets if an \code{if()} statement,
 or an object of class \code{XiMpLe.node}. \code{rk.JS.arr} or \code{rk.JS.opt} (whose identifier will be used).}
 
-\item{thenjs}{Either a character string,
-      the code to be executed in case the \code{if()} statement is true,
+\item{thenjs}{Either a character string, the code to be executed in case the \code{if()} statement is true,
 or an object of class \code{XiMpLe.node}. \code{rk.JS.arr} or \code{rk.JS.opt} (whose identifier will be used).
 The latter is especially useful in combination with \code{\link[rkwarddev:rk.JS.options]{rk.JS.options}}.
 You can also give another object of class \code{rk.JS.ite}.}
 
-\item{elsejs}{Like \code{thenjs},
-      the code to be executed in case the \code{if()} statement is not true.}
+\item{elsejs}{Like \code{thenjs}, the code to be executed in case the \code{if()} statement is not true.}
 }
 \value{
 An object of class \code{rk.JS.ite}

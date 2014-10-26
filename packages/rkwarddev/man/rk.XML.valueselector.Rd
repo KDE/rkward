@@ -11,8 +11,7 @@ rk.XML.valueselector(label = NULL, options = list(label = c(val = NULL, chk
 Must be set if \code{id.name="auto"}.}
 
 \item{options}{A named list with string values to choose from. The names of the list elements will become
-labels of the options, \code{val} defines the value to submit if the value is selected,
-      and
+labels of the options, \code{val} defines the value to submit if the value is selected, and
 \code{chk=TRUE} should be set in the one option which is checked by default. Objects generated with
 \code{\link[rkwarddev:rk.XML.option]{rk.XML.option}} are accepted as well.}
 

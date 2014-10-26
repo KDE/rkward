@@ -34,12 +34,6 @@
 #' @param default Character string, only for external columns: The value to assume for this column, if no value is known for an entry. Rarely useful.
 #' @param id.name Character string, a unique ID for this plugin element.
 #'    If \code{"auto"}, an ID will be generated automatically from the \code{connect} object.
-#' @param help Character string, will be used as the \code{text} value for a setting node in the .rkh file.
-#'    If set to \code{FALSE}, \code{\link[rkwarddev:rk.rkh.scan]{rk.rkh.scan}} will ignore this node.
-#'    Also needs \code{component} to be set accordingly!
-#' @param component Character string, name of the component this node belongs to. Only needed if you
-#'    want to use the scan features for automatic help file generation; needs \code{help} to be set
-#'    accordingly, too!
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
@@ -49,8 +43,7 @@
 #' @examples
 #' myInput <- rk.XML.input(label="Given name(s)", size="small")
 #' myOptCol <- rk.XML.optioncolumn(myInput, modifier="text")
-rk.XML.optioncolumn <- function(connect, modifier=NULL, label=TRUE, external=FALSE, default=NULL, id.name="auto",
-  help=NULL, component=rk.get.comp()){
+rk.XML.optioncolumn <- function(connect, modifier=NULL, label=TRUE, external=FALSE, default=NULL, id.name="auto"){
 
   connect.id <- check.ID(connect)
   if(is.XiMpLe.node(connect) && !is.null(modifier)){
@@ -91,9 +84,6 @@ rk.XML.optioncolumn <- function(connect, modifier=NULL, label=TRUE, external=FAL
 
   node <- XMLNode("optioncolumn",
     attrs=attr.list)
-
-  # check for .rkh content
-  rk.set.rkh.prompter(component=component, id=attr.list[["id"]], help=help)
 
   return(node)
 }

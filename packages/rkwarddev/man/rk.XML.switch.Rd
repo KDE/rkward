@@ -17,8 +17,7 @@ as you need, setting a return value for each \code{condition == case} respective
 Each list must contain either a \code{fixed_value} or a \code{dynamic_value} element.
 In addition, each \code{case} list must also have one \code{standard} element.}
 
-\item{modifier}{Character string,
-      an optional modifier to be appended to \code{condition}.}
+\item{modifier}{Character string, an optional modifier to be appended to \code{condition}.}
 
 \item{id.name}{Character string, a unique ID for this property.
 If \code{"auto"}, IDs will be generated automatically from the condition ID.}

@@ -11,8 +11,7 @@ rk.XML.valueslot(label, source, required = FALSE, multi = FALSE, min = 1,
 \item{label}{Character string, a text label for the valueslot.}
 
 \item{source}{Either a character string (the \code{id} name of the \code{valueselector} to select values
-from),
-      or an object of class \code{XiMpLe.node} (whose \code{id} will be extracted and used, must be
+from), or an object of class \code{XiMpLe.node} (whose \code{id} will be extracted and used, must be
 a \code{<valueselector>} node).}
 
 \item{required}{Logical, whether the selection of values is mandatory or not.}
@@ -30,14 +29,11 @@ are selected at all. Sets \code{multi=TRUE}.}
 \item{id.name}{Character vector, unique ID for the valueslot.
 If \code{"auto"}, the ID will be generated automatically from \code{label}.}
 
-\item{help}{Character string,
-      will be used as the \code{text} value for a setting node in the .rkh file.
-If set to \code{FALSE},
-      \code{\link[rkwarddev:rk.rkh.scan]{rk.rkh.scan}} will ignore this node.
+\item{help}{Character string or list of character values and XiMpLe nodes, will be used as the \code{text} value for a setting node in the .rkh file.
+If set to \code{FALSE}, \code{\link[rkwarddev:rk.rkh.scan]{rk.rkh.scan}} will ignore this node.
 Also needs \code{component} to be set accordingly!}
 
-\item{component}{Character string,
-      name of the component this node belongs to. Only needed if you
+\item{component}{Character string, name of the component this node belongs to. Only needed if you
 want to use the scan features for automatic help file generation; needs \code{help} to be set
 accordingly, too!}
 }
