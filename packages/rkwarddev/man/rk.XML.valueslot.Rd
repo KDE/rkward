@@ -3,16 +3,20 @@
 \alias{rk.XML.valueslot}
 \title{Create a XML node "valueslot" for RKWard plugins}
 \usage{
-rk.XML.valueslot(label, source, required = FALSE, multi = FALSE, min = 1,
-  any = 1, max = 0, id.name = "auto", help = NULL,
-  component = rk.get.comp())
+rk.XML.valueslot(label, source, property = NULL, required = FALSE,
+  multi = FALSE, min = 1, any = 1, max = 0, id.name = "auto",
+  help = NULL, component = rk.get.comp())
 }
 \arguments{
 \item{label}{Character string, a text label for the valueslot.}
 
 \item{source}{Either a character string (the \code{id} name of the \code{valueselector} to select values
-from), or an object of class \code{XiMpLe.node} (whose \code{id} will be extracted and used, must be
-a \code{<valueselector>} node).}
+from), or an object of class \code{XiMpLe.node} (whose \code{id} will be extracted and used). If it is not
+a \code{<valueselector>} node, you must also specify a valid property for the node.}
+
+\item{property}{Character string, valid property for a XiMpLe node defined by \code{source}. In the XML code, it
+will cause the use of \code{source_property} instead of \code{source}. Only used if \code{source} ist not a
+\code{<valueselector>} node.}
 
 \item{required}{Logical, whether the selection of values is mandatory or not.}
 

@@ -3,17 +3,21 @@
 \alias{rk.XML.varslot}
 \title{Create a XML node "varslot" for RKWard plugins}
 \usage{
-rk.XML.varslot(label, source, required = FALSE, multi = FALSE, min = 1,
-  any = 1, max = 0, dim = 0, min.len = 0, max.len = NULL,
-  classes = NULL, types = NULL, id.name = "auto", help = NULL,
-  component = rk.get.comp())
+rk.XML.varslot(label, source, property = NULL, required = FALSE,
+  multi = FALSE, min = 1, any = 1, max = 0, dim = 0, min.len = 0,
+  max.len = NULL, classes = NULL, types = NULL, id.name = "auto",
+  help = NULL, component = rk.get.comp())
 }
 \arguments{
 \item{label}{Character string, a text label for the varslot.}
 
 \item{source}{Either a character string (the \code{id} name of the \code{varselector} to select variables
-from), or an object of class \code{XiMpLe.node} (whose \code{id} will be extracted and used, must be
-a \code{<varselector>} node).}
+from), or an object of class \code{XiMpLe.node} (whose \code{id} will be extracted and used). If it is not
+a \code{<valueselector>} node, you must also specify a valid property for the node.}
+
+\item{property}{Character string, valid property for a XiMpLe node defined by \code{source}. In the XML code, it
+will cause the use of \code{source_property} instead of \code{source}. Only used if \code{source} ist not a
+\code{<valueselector>} node.}
 
 \item{required}{Logical, whether the selection of variables is mandatory or not.}
 

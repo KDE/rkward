@@ -20,8 +20,11 @@
 #'
 #' @param label Character string, a text label for the valueslot.
 #' @param source Either a character string (the \code{id} name of the \code{valueselector} to select values
-#'    from), or an object of class \code{XiMpLe.node} (whose \code{id} will be extracted and used, must be
-#'    a \code{<valueselector>} node).
+#'    from), or an object of class \code{XiMpLe.node} (whose \code{id} will be extracted and used). If it is not
+#'    a \code{<valueselector>} node, you must also specify a valid property for the node.
+#' @param property Character string, valid property for a XiMpLe node defined by \code{source}. In the XML code, it
+#'    will cause the use of \code{source_property} instead of \code{source}. Only used if \code{source} ist not a
+#'    \code{<valueselector>} node. 
 #' @param required Logical, whether the selection of values is mandatory or not.
 #' @param multi Logical, whether the valueslot holds only one or several objects.
 #' @param min If \code{multi=TRUE} defines how many objects must be selected. Sets \code{multi=TRUE}.
@@ -50,15 +53,8 @@
 #' cat(pasteXML(test.valueslot))
 #' }
 
-rk.XML.valueslot <- function(label, source, required=FALSE, multi=FALSE, min=1, any=1, max=0,
+rk.XML.valueslot <- function(label, source, property=NULL, required=FALSE, multi=FALSE, min=1, any=1, max=0,
   id.name="auto", help=NULL, component=rk.get.comp()){
-  if(is.XiMpLe.node(source)){
-    source.name <- slot(source, "name")
-    if(!identical(source.name, "valueselector")){
-      stop(simpleError(paste0("'source' must be a <valueselector> node! You provided: <", source.name, ">")))
-    } else {}
-  } else {}
-
   if(identical(id.name, "auto")){
     value.slot.attr <- list(id=auto.ids(label, prefix=ID.prefix("valueslot", length=4)))
   } else if(!is.null(id.name)){
@@ -67,7 +63,18 @@ rk.XML.valueslot <- function(label, source, required=FALSE, multi=FALSE, min=1, 
   
   value.slot.attr[["label"]] <- label
 
-  value.slot.attr[["source"]] <- check.ID(source)
+  if(is.XiMpLe.node(source)){
+    source.name <- slot(source, "name")
+    if(identical(source.name, "varselector")){
+      var.slot.attr[["source"]] <- check.ID(source)
+    } else {
+      if(is.null(property)){
+        stop(simpleError(paste0("'source' must either be a <varselector> node or come with an appropripate 'property' value!")))
+      } else if(modif.validity(source, modifier=property)){
+        var.slot.attr[["source_property"]] <- paste(check.ID(source), property, sep=".")
+      } else {}
+    }
+  } else {}
 
   if(isTRUE(required)){
     value.slot.attr[["required"]] <- "true"

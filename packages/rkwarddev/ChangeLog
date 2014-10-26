@@ -1,6 +1,6 @@
 ChangeLog for package rkwarddev
 
-changes in version 0.06-6 (2014-10-25)
+changes in version 0.06-6 (2014-10-26)
 fixed:
   - rk.XML.optionset() does now allow to re-use objects defined in the same
     function call (i.e., refer to optioncolumns in the logic section)
@@ -9,6 +9,7 @@ fixed:
 added:
   - all "help" values can now be a list of character strings or XiMpLe nodes,
     to have more control over the markup
+  - added "property" argument to rk.XML.valueslot() and rk.XML.varslot().
 
 changes in version 0.06-5 (2014-10-19)
 fixed:
