@@ -31,6 +31,7 @@
 #include <khbox.h>
 
 #include "rkstandardcomponentgui.h"
+#include "rkcomponentmap.h"
 #include "../scriptbackends/qtscriptbackend.h"
 #include "../scriptbackends/simplebackend.h"
 #include "../scriptbackends/rkcomponentscripting.h"
@@ -224,7 +225,7 @@ void RKStandardComponent::setCaption (const QString &caption) {
 XMLHelper* RKStandardComponent::getXmlHelper () {
 	RK_TRACE (PLUGIN);
 
-	if (!xml) xml = new XMLHelper (filename);
+	if (!xml) xml = new XMLHelper (filename, getHandle ()->messageCatalog ());
 	return xml;
 }
 

@@ -358,7 +358,7 @@ RKPluginMapParseResult RKComponentMap::addPluginMapLocal (const QString& plugin_
 	QString prefix = QFileInfo (plugin_map_file_abs).absolutePath() + '/' + xml.getStringAttribute (document_element, "base_prefix", QString::null, DL_INFO);
 	QString cnamespace = xml.getStringAttribute (document_element, "namespace", "rkward", DL_INFO) + "::";
 
-	RKPluginMapFile *pluginmap_file_desc = new RKPluginMapFile (prefix);
+	RKPluginMapFile *pluginmap_file_desc = new RKPluginMapFile (prefix, xml.messageCatalog ());
 	pluginmap_file_desc->id = RKPluginMapFile::parseId (document_element, xml);
 	pluginmapfiles.insert (QFileInfo (plugin_map_file).absoluteFilePath (), pluginmap_file_desc);
 

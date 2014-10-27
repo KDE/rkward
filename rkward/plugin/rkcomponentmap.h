@@ -22,22 +22,25 @@
 
 #include "rkcomponentmeta.h"
 
+class RKMessageCatalog;
 class XMLHelper;
 /** very simple helper class to keep track of .pluginmap files */
 class RKPluginMapFile {
 public:
-	RKPluginMapFile (const QString &basedir) { RKPluginMapFile::basedir = basedir; };
+	RKPluginMapFile (const QString &basedir, const RKMessageCatalog *_catalog) { RKPluginMapFile::basedir = basedir; catalog = _catalog; };
 	~RKPluginMapFile () {};
 
 	QString getBaseDir () { return basedir; };
 	QString makeFileName (const QString &filename);
 	QList<RKComponentDependency> getDependencies () { return dependencies; };
 	static QString parseId (const QDomElement &e, XMLHelper &xml);
+	const RKMessageCatalog *messageCatalog () const { return catalog; };
 private:
 friend class RKComponentMap;
 	QString basedir;
 	QString id;
 	QList<RKComponentDependency> dependencies;
+	const RKMessageCatalog *catalog;
 };
 
 /** enum of different types of RKComponent */
@@ -85,6 +88,7 @@ public:
 	void setAccessible (bool accessible) { is_accessible = accessible; };
 /** Returns whether this component is accessible from the menu, somewhere (else it might be in a context) */
 	bool isAccessible () const { return is_accessible; };
+	const RKMessageCatalog *messageCatalog () const { return plugin_map->messageCatalog (); };
 public slots:
 /** Slot called, when the menu-item for this component is selected. Responsible for creating the GUI. */
 	void activated ();
