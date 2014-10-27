@@ -15,9 +15,11 @@ def usage ():
 
 # list of tag-names the content of which to extract in full (including, possibly, HTML-tags, within)
 text_containers = ['section', 'text', 'related', 'title', 'summary', 'usage', 'technical', 'setting']
+# Elements that refer to a different (labelled) element by id
+referring_elements = ['setting', 'caption']
 
 # initialize globals, and parse args
-infile = {"infile": "", "file_prefix": "", "caption": ""}
+infile = {"infile": "", "file_prefix": "", "caption": "", "id_labels" : {}}
 default_po = ""
 outfile = ""
 outdir = ""
@@ -42,6 +44,13 @@ def getFileContext (element, attribute=""):
   ret += "i18n: ectx: "
   if (infile["caption"] != ""):
     ret += "(" + infile["caption"] + ") "
+  if ((element.tagName in referring_elements) and (element.hasAttribute ("id"))):
+    if (not (element.getAttribute ("id") in infile["id_labels"])):
+      sys.stderr.write ("WARNING in " + infile["infile"] + ": Reference to unknown element id '" + element.getAttribute ("id") + "'")
+    else:
+      refer_to = " (refers to element labelled " + quote (infile["id_labels"][element.getAttribute ("id")]) + ")"
+  else:
+    refer_to = ""
   tag_stack = ["<" + element.tagName + ">"]
   while ((element.parentNode.nodeType != element.DOCUMENT_NODE)):
     element = element.parentNode
@@ -52,14 +61,11 @@ def getFileContext (element, attribute=""):
     if (element.hasAttribute ("label")):  # Where available, include the labels of parent elements. Particularly helpful for radio-options
       t += " label=" + quote (element.getAttribute ("label"))
     tag_stack.insert (0, t + ">")
-  ts = tag_stack[-5:]
   if (len (tag_stack) > 4):
-    ts.pop (0)
-    ts[0] = tag_stack[0]
-    ts[1] = "[...]"
+    tag_stack = [tag_stack[0], "[...]"] + tag_stack[-2:]
   if (attribute != ""):
-    ts[len (ts)-1]= ts[-1].replace (">", " " + attribute + "=\"...\">")
-  return (ret + ' '.join (ts))
+    tag_stack[len (tag_stack)-1] = tag_stack[-1].replace (">", " " + attribute + "=\"...\">")
+  return (ret + ' '.join (tag_stack) + refer_to)
 
 def quote (text):
   return "\"" + text.replace ("\\", "\\\\").replace ("\"", "\\\"") + "\""
@@ -111,7 +117,7 @@ def handleNode (node):
     if (node.hasAttribute ("file")):
       if (node.tagName != "code"):
         # TODO: handle .js files
-        handleSubFile (node.getAttribute ("file"))
+        handleSubFile (node.getAttribute ("file"), node.tagName == "component")
     if (node.tagName in text_containers):
       textchunks = getFullText (node).split ("\n\n")
       for chunk in textchunks:
@@ -136,11 +142,21 @@ def getFileCaption (docelem):
   if (elems.length):
     return elems.item (0).getAttribute ("label")
   return ""
-    
+
+# Gather labels of elements with given id (so <setting id="xyz">text</setting> elements can be labelled)
+def getElementLabelsRecursive (elem):
+  ret = {}
+  for ce in elem.childNodes:
+    if (ce.nodeType == ce.ELEMENT_NODE):
+      if (ce.hasAttribute ("id") and ce.hasAttribute ("label")):
+        ret[ce.getAttribute ("id")] = ce.getAttribute ("label")
+      ret.update (getElementLabelsRecursive (ce))
+  return ret
+
 # When we encounter a "file"-attribute, we generally dive right into parsing that file, i.e. we do depth first
 # Advantage is that strings in all files belonging to one plugin will be in direct succession in the .pot file
 # The exception is if the referenced file declares an own (different) po_id. In this case it will be handled, later.
-def handleSubFile (filename):
+def handleSubFile (filename, fetch_ids = False):
   global toplevel_sources
   global infile
   cdir = os.path.dirname (infile["infile"])
@@ -160,6 +176,8 @@ def handleSubFile (filename):
     infile["caption"] = getFileCaption (xmldoc.documentElement)
     if ((infile["caption"] == "") and (oldinfile["caption"] != "")):
       infile["caption"] = "Loaded from " + oldinfile["caption"]
+    if (fetch_ids):
+      infile["id_labels"] = getElementLabelsRecursive (xmldoc.documentElement)
     handleNode (xmldoc.documentElement)
     infile = oldinfile
 
