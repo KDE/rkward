@@ -309,7 +309,7 @@ rk.XML.pluginmap <- function(name, about=NULL, components, hierarchy="test",
     stop(simpleError("'priority' must be one of 'hidden', 'low', 'medium' or 'high'!"))
   } else {}
 
-  all.attrs <- list(base_prefix="", namespace=namespace, id=doc.ID.name, priority=priority)
+  all.attrs <- list(base_prefix="", namespace=namespace, id=doc.ID.name, po_id=doc.ID.name, priority=priority)
   # check for possible i18n
   if(!is.null(lang)){
     all.attrs[["lang"]] <- all.attrs[["xml:lang"]] <- lang
