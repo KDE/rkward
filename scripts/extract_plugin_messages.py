@@ -38,6 +38,17 @@ for arg in (list (sys.argv[1:])):
 if (len (toplevel_sources) < 1):
   usage ()
 
+# Where available, include the labels of parent elements. Particularly helpful for radio-options
+def getElementShort (element, dot_attribute=""):
+  ret = "<" + element.tagName
+  for attr in ["label", "title"]:
+    if (attr == dot_attribute):
+      ret += " " + attr + "=\"...\""
+    else:
+      if (element.hasAttribute (attr)):
+        ret += " " + attr + "=" + quote (element.getAttribute (attr))
+  return ret + ">"
+
 # Try to extract helpful file context information
 def getFileContext (element, attribute=""):
   ret = "i18n: file: " + infile["infile"] + "\n"
@@ -51,20 +62,15 @@ def getFileContext (element, attribute=""):
       refer_to = " (refers to element labelled " + quote (infile["id_labels"][element.getAttribute ("id")]) + ")"
   else:
     refer_to = ""
-  tag_stack = ["<" + element.tagName + ">"]
+  tag_stack = [getElementShort (element, attribute)]
   while ((element.parentNode.nodeType != element.DOCUMENT_NODE)):
     element = element.parentNode
     if (element.tagName in ["document", "row", "column", "frame", "content", "tabbook"]):
-      if (not element.hasAttribute ("label")):
+      if (not (element.hasAttribute ("label") or element.hasAttribute ("title"))):
         continue # Skip over tags that don't really add any meaningful context information. (Note: <frame>s _with_ a label are meaningful, of course)
-    t = "<" + element.tagName
-    if (element.hasAttribute ("label")):  # Where available, include the labels of parent elements. Particularly helpful for radio-options
-      t += " label=" + quote (element.getAttribute ("label"))
-    tag_stack.insert (0, t + ">")
+    tag_stack.insert (0, getElementShort (element))
   if (len (tag_stack) > 4):
     tag_stack = [tag_stack[0], "[...]"] + tag_stack[-2:]
-  if (attribute != ""):
-    tag_stack[len (tag_stack)-1] = tag_stack[-1].replace (">", " " + attribute + "=\"...\">")
   return (ret + ' '.join (tag_stack) + refer_to)
 
 def quote (text):
@@ -188,7 +194,7 @@ def initialize_pot_file (po_id):
   if (outfile != ""):
     outfile.close ()
   if (current_po_id in initialized_pot_files):
-    mode = 'w+'
+    mode = 'a'
   else:
     initialized_pot_files.append (current_po_id)
     mode = 'w'
