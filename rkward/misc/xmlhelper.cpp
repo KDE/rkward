@@ -228,7 +228,6 @@ XMLChildList XMLHelper::findElementsWithAttribute (const QDomElement &parent, co
 	return ret;
 }
 
-
 QString XMLHelper::getStringAttribute (const QDomElement &element, const QString &name, const QString &def, int debug_level) {
 	RK_TRACE (XML);
 
@@ -316,7 +315,7 @@ bool XMLHelper::getBoolAttribute (const QDomElement &element, const QString &nam
 	return def;
 }
 
-QString XMLHelper::getRawContents (const QDomElement &element, int debug_level) {
+QString XMLHelper::i18nElementText (const QDomElement &element, int debug_level) {
 	RK_TRACE (XML);
 
 	QString ret;
@@ -329,6 +328,16 @@ QString XMLHelper::getRawContents (const QDomElement &element, int debug_level) 
 		}
 	} else {
 		displayError (&element, i18n ("Trying to retrieve contents of invalid element"), debug_level);
+	}
+
+	QStringList paras = ret.split ("\n\n");
+	ret.clear ();
+	for (int i = 0; i < paras.count (); ++i) {
+		QString para = paras[i].simplified ();
+		if (!para.isEmpty ()) {
+			if (!ret.isEmpty ()) ret.append ("\n");
+			ret += "<p>" + catalog->translate (para) + "</p>";
+		}
 	}
 
 	return ret;

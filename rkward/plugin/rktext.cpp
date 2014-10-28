@@ -2,7 +2,7 @@
                           rktext.cpp  -  description
                              -------------------
     begin                : Sun Nov 10 2002
-    copyright            : (C) 2002, 2006, 2007, 2012 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2006, 2007, 2012, 2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -41,10 +41,6 @@ RKText::RKText (const QDomElement &element, RKComponent *parent_component, QWidg
 	label->setWordWrap (true);
 	vbox->addWidget (label);
 
-	QString initial_text = xml->getRawContents (element, DL_ERROR);
-	if (!initial_text.isEmpty ()) initial_text = "<p>" + initial_text + "</p>";
-	initial_text.replace ("\n\n", "</p>\n<p>");
-
 	int type = xml->getMultiChoiceAttribute (element, "type", "normal;warning;error", 0, DL_INFO);
 	if (type != 0) {
 		QFont font = label->font ();
@@ -60,8 +56,7 @@ RKText::RKText (const QDomElement &element, RKComponent *parent_component, QWidg
 		label->setFont (font);
 	}
 
-	// strip final newline
-	initial_text.truncate (initial_text.length () -1);
+	QString initial_text = xml->i18nElementText (element, DL_ERROR);
 
 	// create and add property
 	addChild ("text", text = new RKComponentPropertyBase (this, true));

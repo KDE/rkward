@@ -131,10 +131,11 @@ but you can re-open the file, if needed.
 	bool getBoolAttribute (const QDomElement &element, const QString &name, bool def, int debug_level);
 
 /** Gets a string representation of whatever is *inside* the element. Contrary to QDomElement::text(), this includes child tags.
+ * Text is normalized, i18n'ed, put inside '<p></p>'-tags (unless empty), and double newlines are split into separate paragraphs.
  * @param element the element of interest
  * @param debug_level level of debug message to generate in case of failure (i.e. the element is null)
  * @returns the contents as a QString (may be empty) */
-	QString getRawContents (const QDomElement &element, int debug_level);
+	QString i18nElementText (const QDomElement &element, int debug_level);
 
 /** displays a custom-error message (also used internally by XMLHelper to display errors
 @param in_node a pointer to the node/element to which the error relates (or 0). If given and non-zero, a "backtrace" of where the error is located will be generated

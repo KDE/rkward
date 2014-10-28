@@ -6,12 +6,15 @@
     - Message extraction: Should we do this in R, using XiMpLe? That might allow us to give better context / comments
     - Don't forget to write documentation
     - What should be the policy regarding installing translations (80% criterion)
-    - Where should the extraction script look for i18n comments (before element, within element)?
     - discuss i18n_context vs. comments
-    - Important pitfalls: String comparison with checkbox / radio labels! (Definitely wrong in some plugins)
+    - Important pitfalls: String comparison with checkbox / radio labels! (Probably wrong in some plugins)
+    - i18n'ed plugins vs. automated tests
+      - Sure, we can run automated tests under C locale. But it would be nice to have an additional check that translations don't cause
+        any obvious problems.
+        - At least we could check for errors
+        - Perhaps a special diff of the generated R commands, where all quoted strings and comments are stripped?
    - i18n calls
     - wcgrep getStringAttribute.*i18n
-    - is <caption title="XYZ"> used, anywhere?
     - element text
 
 --- Version 0.6.2 - Oct-20-2014
