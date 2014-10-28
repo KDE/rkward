@@ -679,14 +679,11 @@ void RKComponentBuilder::buildElement (const QDomElement &element, XMLHelper &xm
 			} else {
 				xml.displayError (&e, QString ("optiondisplay element is not allowed outside of an optionset"), DL_ERROR);
 			}
-		} else if (e.tagName () == QLatin1String ("scriptable")) {
-			widget = new RKComponent (component (), parent_widget);
-			QVBoxLayout *layout = new QVBoxLayout (widget);
-			layout->setContentsMargins (0, 0, 0, 0);
-			KVBox *box = new KVBox (widget);
-			layout->addWidget (box);
-			QString id_adjust;
-			parent->standardComponent (&id_adjust)->scriptingProxy ()->addScriptableWidget (id_adjust + id, widget);
+/*		} else if (e.tagName () == QLatin1String ("scriptable")) {
+ * TODO: We used to have some purely experimental code, here, to support fully custom elements (scripted via Kross->Forms). We will want 
+ * to have something like that, eventually. After porting to KF5, Qt5, and thus dropping legacy support, the natural way to add this will
+ * be QML.
+ */
 		} else {
 			xml.displayError (&e, QString ("Invalid tagname '%1'").arg (e.tagName ()), DL_ERROR);
 		}

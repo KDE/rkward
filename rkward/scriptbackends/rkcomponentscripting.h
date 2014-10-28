@@ -20,8 +20,8 @@
 
 #include <QObject>
 #include <QHash>
+#include <QScriptEngine>
 
-#include <kross/core/action.h>
 #include "../rbackend/rcommand.h"
 
 class RKComponent;
@@ -41,7 +41,6 @@ public:
 	~RKComponentScriptingProxy ();
 
 	void initialize (const QString& file, const QString& command);
-	void addScriptableWidget (const QString& name, QWidget *widget);
 public slots:
 	void componentChanged (RKComponent* changed);
 	void propertyChanged (RKComponentPropertyBase* changed);
@@ -68,15 +67,14 @@ private slots:
 	void scriptRCommandFinished (RCommand* command);
 private:
 	RKComponent* component;
-	Kross::Action* script;
+	QScriptEngine engine;
 	struct OutstandingCommand {
 		RCommand *command;
 		QString callback;
 	};
 	QList<OutstandingCommand> outstanding_commands;
 	QString _scriptfile;
-/** helper function for compatibility with KDE < 4.3 */
-	void evaluate (const QByteArray &code);
+	void evaluate (const QString &code);
 
 	void handleChange (RKComponentBase* changed);
 	QHash<RKComponentBase*, QString> component_commands;

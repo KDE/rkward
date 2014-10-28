@@ -9,9 +9,9 @@
  			last_command_id = -1;
 			gui.setValue ("text.text", "Select a dependent variable!");
 
-			f = Kross.module('forms');
+			/*f = Kross.module('forms');
 			label = f.createWidget(scripty, 'QLabel', 'Label', {});
-			label.setText ('<b>This label was created by the script. Be sure to read the label above, too.</b>');
+			label.setText ('<b>This label was created by the script. Be sure to read the label above, too.</b>');*/
 
 			gui.addChangeCommand ("x.available", "updateText ()");
 			updateText = function () {
@@ -46,7 +46,7 @@
 						<varslot type="numeric" id="y" source="vars" required="true" multi="true" label="fixed factors"/>
 					</column>
 				</row>
-				<scriptable id="scripty"/>
+				<!--<scriptable id="scripty"/>-->
 			</tab>
 			<tab label="Model">
 				<formula id="model" fixed_factors="y" dependent="x" label="Now choose the model"/>
