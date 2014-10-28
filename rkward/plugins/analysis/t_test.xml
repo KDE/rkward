@@ -28,9 +28,9 @@
 					<varselector id="vars"/>
 					<column>
 						<varslot id="x" label="compare" source="vars" types="number" required="true" />
-						<varslot id="y" label="against" source="vars" types="number" required="true" />
+						<varslot id="y" label="against" source="vars" types="number" required="true" i18n_context="compare against" />
 						<checkbox id="varequal" label="assume equal variances" value="1" value_unchecked="0"/>
-						<spinbox label="against" id="mu" initial="0" />
+						<spinbox label="against" i18n_context="compare against" id="mu" initial="0" />
 						<radio id="hypothesis" label="using test hypothesis">
 							<option value="two.sided" label="Two-sided"/>
 							<option value="greater" label="First is greater"/>

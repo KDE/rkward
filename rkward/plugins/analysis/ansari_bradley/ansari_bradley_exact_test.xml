@@ -14,7 +14,7 @@
 					<varselector id="vars"/>
 					<column>
 						<varslot type="numeric" id="x" source="vars" required="true" label="compare"/>
-						<varslot type="numeric" id="y" source="vars" required="true" label="against"/>
+						<varslot type="numeric" id="y" source="vars" required="true" label="against" i18n_context="compare against"/>
 						<radio id="alternative" label="using test hypothesis">
 							<option value="two.sided" label="Two-sided"/>
 							<option value="greater" label="greater"/>

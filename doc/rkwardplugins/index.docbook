@@ -344,7 +344,7 @@ This is a guide to writing plugins for &rkward;.
 	</para>
 	<programlisting>
 						&lt;varslot types="number" id="x" source="vars" required="true" label="compare"/&gt;
-						&lt;varslot types="number" id="y" source="vars" required="true" label="against"/&gt;
+						&lt;varslot types="number" id="y" source="vars" required="true" label="against" i18n_context="compare against"/&gt;
 	</programlisting>
 	<para>
 		These elements are the counterpart to the <command>&lt;varselector&gt;</command>. They represent <quote>slots</quote> into which the user can put variables. You will note that the <parameter>source</parameter> is set to the same value as the <parameter>id</parameter> of the <command>&lt;varselector&gt;</command>. This means, the <command>&lt;varslot&gt;</command>s will each take their variables from the varselector. The <command>&lt;varslot&gt;</command>s also have to be given an <parameter>id</parameter>. They may have a <parameter>label</parameter>, and they may be set to <parameter>required</parameter>. This means that the <guibutton>Submit</guibutton> button will not be enabled until the <command>&lt;varslot&gt;</command> holds a valid value. Finally the <parameter>type</parameter> attribute is not interpreted yet, but it will be used to take care that only the correct types of variables will be allowed in the <command>&lt;varslot&gt;</command>.
@@ -2053,7 +2053,7 @@ basic.settings &lt;- rk.XML.row(variables, rk.XML.col(var.x, var.y, test.hypothe
 	&lt;varselector id="vars" /&gt;
 	&lt;column id="clm_vrsTFSPP10"&gt;
 		&lt;varslot id="vrsl_compare" label="compare" source="vars" types="number" required="true" /&gt;
-		&lt;varslot id="vrsl_against" label="against" source="vars" types="number" required="true" /&gt;
+		&lt;varslot id="vrsl_against" label="against" i18n_context="compare against" source="vars" types="number" required="true" /&gt;
 		&lt;radio id="rad_usngtsth" label="using test hypothesis"&gt;
 			&lt;option label="Two-sided" value="two.sided" /&gt;
 			&lt;option label="First is greater" value="greater" /&gt;
