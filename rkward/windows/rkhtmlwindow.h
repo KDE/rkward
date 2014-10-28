@@ -2,7 +2,7 @@
                           rkhtmlwindow  -  description
                              -------------------
     begin                : Wed Oct 12 2005
-    copyright            : (C) 2005, 2006, 2007, 2009, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2009, 2011, 2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -32,6 +32,7 @@ class KRecentFilesAction;
 class QAction;
 class QDomElement;
 class RKComponentHandle;
+class XMLHelper;
 
 /**
 	\brief Show html files.
@@ -132,7 +133,7 @@ private:
 
 	// for dealing with rkward://[page|component]-pages
 	bool renderRKHelp (const KUrl &url);
-	QString renderHelpFragment (QDomElement &fragment);
+	QString renderHelpFragment (QDomElement &fragment, const XMLHelper *xml);
 	void prepareHelpLink (QDomElement *link_element);
 	QString componentPathToId (QString path);
 	RKComponentHandle *componentPathToHandle (QString path);

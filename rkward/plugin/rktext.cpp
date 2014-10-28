@@ -56,7 +56,7 @@ RKText::RKText (const QDomElement &element, RKComponent *parent_component, QWidg
 		label->setFont (font);
 	}
 
-	QString initial_text = xml->i18nElementText (element, DL_ERROR);
+	QString initial_text = xml->i18nElementText (element, true, DL_ERROR);
 
 	// create and add property
 	addChild ("text", text = new RKComponentPropertyBase (this, true));

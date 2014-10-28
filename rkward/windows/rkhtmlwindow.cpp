@@ -2,7 +2,7 @@
                           rkhtmlwindow  -  description
                              -------------------
     begin                : Wed Oct 12 2005
-    copyright            : (C) 2005-2013 by Thomas Friedrichsmeier
+    copyright            : (C) 2005-2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -52,6 +52,7 @@
 #include "../misc/xmlhelper.h"
 #include "../misc/rkxmlguisyncer.h"
 #include "../misc/rkprogresscontrol.h"
+#include "../misc/rkmessagecatalog.h"
 #include "../plugin/rkcomponentmap.h"
 #include "../windows/rkworkplace.h"
 #include "../windows/rkworkplaceview.h"
@@ -499,7 +500,7 @@ bool RKHTMLWindow::renderRKHelp (const KUrl &url) {
 		chandle = componentPathToHandle (url.path ());
 		if (!chandle) return false;
 	}
-	XMLHelper component_xml (for_component ? chandle->getFilename () : QString ());
+	XMLHelper component_xml (for_component ? chandle->getFilename () : QString (), for_component ? chandle->messageCatalog () : 0);
 	QString help_file_name;
 	QDomElement element;
 	QDomElement component_doc_element;
@@ -521,7 +522,9 @@ bool RKHTMLWindow::renderRKHelp (const KUrl &url) {
 	RK_DEBUG (APP, DL_DEBUG, "rendering help page for local file %s", help_file_name.toLatin1().data());
 
 	// open help file
-	XMLHelper help_xml (help_file_name);
+	const RKMessageCatalog *catalog = component_xml.messageCatalog ();
+	if (!for_component) catalog = RKMessageCatalog::getCatalog ("rkward__pages", RKCommonFunctions::getRKWardDataDir () + "po/");
+	XMLHelper help_xml (help_file_name, catalog);
 	QDomElement help_doc_element = help_xml.openXMLFile (DL_ERROR);
 	if (help_doc_element.isNull () && (!for_component)) return false;
 
@@ -532,9 +535,7 @@ bool RKHTMLWindow::renderRKHelp (const KUrl &url) {
 		page_title = chandle->getLabel ();
 	} else {
 		element = help_xml.getChildElement (help_doc_element, "title", DL_WARNING);
-		if (!element.isNull ()) {
-			page_title = element.text ();
-		}
+		page_title = help_xml.i18nElementText (element, false, DL_WARNING);
 	}
 	writeHTML ("<html><head><title>" + page_title + "</title><link rel=\"stylesheet\" type=\"text/css\" href=\"" + css_filename + "\"></head>\n<body><div id=\"main\">\n<h1>" + page_title + "</h1>\n");
 
@@ -563,22 +564,22 @@ bool RKHTMLWindow::renderRKHelp (const KUrl &url) {
 	element = help_xml.getChildElement (help_doc_element, "summary", DL_INFO);
 	if (!element.isNull ()) {
 		writeHTML (startSection ("summary", i18n ("Summary"), QString (), &anchors, &anchornames));
-		writeHTML (renderHelpFragment (element));
+		writeHTML (renderHelpFragment (element, &help_xml));
 	}
 
 	element = help_xml.getChildElement (help_doc_element, "usage", DL_INFO);
 	if (!element.isNull ()) {
 		writeHTML (startSection ("usage", i18n ("Usage"), QString (), &anchors, &anchornames));
-		writeHTML (renderHelpFragment (element));
+		writeHTML (renderHelpFragment (element, &help_xml));
 	}
 
 	XMLChildList section_elements = help_xml.getChildElements (help_doc_element, "section", DL_INFO);
 	for (XMLChildList::iterator it = section_elements.begin (); it != section_elements.end (); ++it) {
-		QString title = help_xml.getStringAttribute (*it, "title", QString (), DL_WARNING);
-		QString shorttitle = help_xml.getStringAttribute (*it, "shorttitle", QString (), DL_DEBUG);
+		QString title = help_xml.i18nStringAttribute (*it, "title", QString (), DL_WARNING);
+		QString shorttitle = help_xml.i18nStringAttribute (*it, "shorttitle", QString (), DL_DEBUG);
 		QString id = help_xml.getStringAttribute (*it, "id", QString (), DL_WARNING);
 		writeHTML (startSection (id, title, shorttitle, &anchors, &anchornames));
-		writeHTML (renderHelpFragment (*it));
+		writeHTML (renderHelpFragment (*it, &help_xml));
 	}
 
 	// the section "settings" is the most complicated, as the labels of the individual GUI items has to be fetched from the component description. Of course it is only meaningful for component help, and not rendered for top level help pages.
@@ -590,17 +591,17 @@ bool RKHTMLWindow::renderRKHelp (const KUrl &url) {
 			for (XMLChildList::iterator it = setting_elements.begin (); it != setting_elements.end (); ++it) {
 				if ((*it).tagName () == "setting") {
 					QString id = help_xml.getStringAttribute (*it, "id", QString (), DL_WARNING);
-					QString title = help_xml.getStringAttribute (*it, "title", QString (), DL_INFO);
+					QString title = help_xml.i18nStringAttribute (*it, "title", QString (), DL_INFO);
 					if (title.isEmpty ()) {
 						QDomElement source_element = component_xml.findElementWithAttribute (component_doc_element, "id", id, true, DL_WARNING);
 						if (source_element.isNull ()) RK_DEBUG (PLUGIN, DL_ERROR, "No such UI element: %s", qPrintable (id));
 						title = component_xml.i18nStringAttribute (source_element, "label", i18n ("Unnamed GUI element"), DL_WARNING);
 					}
 					writeHTML ("<h4>" + title + "</h4>");
-					writeHTML (renderHelpFragment (*it));
+					writeHTML (renderHelpFragment (*it, &help_xml));
 				} else if ((*it).tagName () == "caption") {
 					QString id = help_xml.getStringAttribute (*it, "id", QString (), DL_WARNING);
-					QString title = help_xml.getStringAttribute (*it, "title", QString (), DL_INFO);
+					QString title = help_xml.i18nStringAttribute (*it, "title", QString (), DL_INFO);
 					QDomElement source_element = component_xml.findElementWithAttribute (component_doc_element, "id", id, true, DL_WARNING);
 					if (source_element.isNull ()) RK_DEBUG (PLUGIN, DL_ERROR, "No such UI element: %s", qPrintable (id));
 					title = component_xml.i18nStringAttribute (source_element, "label", title, DL_WARNING);
@@ -616,14 +617,14 @@ bool RKHTMLWindow::renderRKHelp (const KUrl &url) {
 	element = help_xml.getChildElement (help_doc_element, "related", DL_INFO);
 	if (!element.isNull ()) {
 		writeHTML (startSection ("related", i18n ("Related functions and pages"), QString (), &anchors, &anchornames));
-		writeHTML (renderHelpFragment (element));
+		writeHTML (renderHelpFragment (element, &help_xml));
 	}
 
 	// "technical" section
 	element = help_xml.getChildElement (help_doc_element, "technical", DL_INFO);
 	if (!element.isNull ()) {
 		writeHTML (startSection ("technical", i18n ("Technical details"), QString (), &anchors, &anchornames));
-		writeHTML (renderHelpFragment (element));
+		writeHTML (renderHelpFragment (element, &help_xml));
 	}
 
 	if (for_component) {
@@ -639,7 +640,7 @@ bool RKHTMLWindow::renderRKHelp (const KUrl &url) {
 	if (for_component) {
 		element = component_xml.getChildElement (component_doc_element, "about", DL_INFO);
 		if (element.isNull ()) {
-			XMLHelper pluginmap_helper (chandle->getPluginmapFilename ());
+			XMLHelper pluginmap_helper (chandle->getPluginmapFilename (), chandle->messageCatalog ());
 			element = pluginmap_helper.openXMLFile (DL_ERROR);
 			element = pluginmap_helper.getChildElement (element, "about", DL_INFO);
 		}
@@ -676,7 +677,7 @@ bool RKHTMLWindow::renderRKHelp (const KUrl &url) {
 	return (true);
 }
 
-QString RKHTMLWindow::renderHelpFragment (QDomElement &fragment) {
+QString RKHTMLWindow::renderHelpFragment (QDomElement &fragment, const XMLHelper *xml) {
 	RK_TRACE (APP);
 
 	// prepare all internal links
@@ -688,16 +689,7 @@ QString RKHTMLWindow::renderHelpFragment (QDomElement &fragment) {
 		prepareHelpLink (&element);
 	}
 
-	// render to string
-	QString ret;
-	QTextStream stream (&ret, QIODevice::WriteOnly);
-	for (QDomNode node = fragment.firstChild (); !node.isNull (); node = node.nextSibling ()) {
-		node.save (stream, 0);
-	}
-
-	ret.prepend ("<p>");
-	ret.append ("</p>");
-	ret.replace ("\n\n", "</p>\n<p>");
+	QString ret = xml->i18nElementText (fragment, true, DL_WARNING);
 
 	RK_DEBUG (APP, DL_DEBUG, "%s", ret.toLatin1 ().data ());
 	return ret;
@@ -719,10 +711,10 @@ void RKHTMLWindow::prepareHelpLink (QDomElement *link_element) {
 			} else if (url.host () == "page") {
 				QString help_base_dir = RKCommonFunctions::getRKWardDataDir () + "pages/";
 		
-				XMLHelper xml (help_base_dir + url.path () + ".rkh");
+				XMLHelper xml (help_base_dir + url.path () + ".rkh", RKMessageCatalog::getCatalog ("rkward__pages", RKCommonFunctions::getRKWardDataDir () + "po/"));
 				QDomElement doc_element = xml.openXMLFile (DL_WARNING);
 				QDomElement title_element = xml.getChildElement (doc_element, "title", DL_WARNING);
-				text = title_element.text ();
+				text = xml.i18nElementText (title_element, false, DL_WARNING);
 			}
 
 			if (text.isEmpty ()) {

@@ -315,7 +315,7 @@ bool XMLHelper::getBoolAttribute (const QDomElement &element, const QString &nam
 	return def;
 }
 
-QString XMLHelper::i18nElementText (const QDomElement &element, int debug_level) {
+QString XMLHelper::i18nElementText (const QDomElement &element, bool with_paragraphs, int debug_level) const {
 	RK_TRACE (XML);
 
 	QString ret;
@@ -328,6 +328,7 @@ QString XMLHelper::i18nElementText (const QDomElement &element, int debug_level)
 		}
 	} else {
 		displayError (&element, i18n ("Trying to retrieve contents of invalid element"), debug_level);
+		return QString ();
 	}
 
 	const QString context_attr ("i18n_context");
@@ -336,20 +337,23 @@ QString XMLHelper::i18nElementText (const QDomElement &element, int debug_level)
 		context = element.attribute (context_attr);
 	}
 
+	// if (!with_paragraphs), text should better not contain double newlines. We treat all the same, though, just as the message extraction script does.
 	QStringList paras = ret.split ("\n\n");
 	ret.clear ();
 	for (int i = 0; i < paras.count (); ++i) {
 		QString para = paras[i].simplified ();
 		if (!para.isEmpty ()) {
 			if (!ret.isEmpty ()) ret.append ("\n");
-			ret += "<p>" + context.isNull () ? catalog->translate (para) : catalog->translate (context, para) + "</p>";
+			QString text = context.isNull () ? catalog->translate (para) : catalog->translate (context, para);
+			if (with_paragraphs) ret += "<p>" + text + "</p>";
+			else ret += text;
 		}
 	}
 
 	return ret;
 }
 
-void XMLHelper::displayError (const QDomNode *in_node, const QString &message, int debug_level, int message_level) {
+void XMLHelper::displayError (const QDomNode *in_node, const QString &message, int debug_level, int message_level) const {
 	RK_TRACE (XML);
 
 	if (message_level < debug_level) message_level = debug_level;

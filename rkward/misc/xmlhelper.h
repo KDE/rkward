@@ -131,18 +131,19 @@ but you can re-open the file, if needed.
 	bool getBoolAttribute (const QDomElement &element, const QString &name, bool def, int debug_level);
 
 /** Gets a string representation of whatever is *inside* the element. Contrary to QDomElement::text(), this includes child tags.
- * Text is normalized, i18n'ed, put inside '<p></p>'-tags (unless empty), and double newlines are split into separate paragraphs.
+ * Text is normalized and i18n'ed.
  * @param element the element of interest
+ * @param with_paragraphs If true, put text inside '<p></p>'-tags (unless empty), and double newlines are split into separate paragraphs
  * @param debug_level level of debug message to generate in case of failure (i.e. the element is null)
  * @returns the contents as a QString (may be empty) */
-	QString i18nElementText (const QDomElement &element, int debug_level);
+	QString i18nElementText (const QDomElement &element, bool with_paragraphs, int debug_level) const;
 
 /** displays a custom-error message (also used internally by XMLHelper to display errors
 @param in_node a pointer to the node/element to which the error relates (or 0). If given and non-zero, a "backtrace" of where the error is located will be generated
 @param message the error-message to display
 @param debug_level the debug level to show the message at (highestError () will be adujsted if applicable)
 @param message_level sometime you may want to make sure your message is being shown even if it is not very important to your code. For instance, if there is a typo/illegal value in an optional setting, your code can continue using a reasonable default, but the user should still be notified of this error. If you omit this parameter or set it to something smaller that debug_level, debug_level will be used instead. */
-	void displayError (const QDomNode *in_node, const QString &message, int debug_level, int message_level=-1);
+	void displayError (const QDomNode *in_node, const QString &message, int debug_level, int message_level=-1) const;
 private:
 /** copy the node list into a child list. The main effect is that a child list is not updated according to document changes */
 	XMLChildList nodeListToChildList (const QDomNodeList &from);
