@@ -330,13 +330,19 @@ QString XMLHelper::i18nElementText (const QDomElement &element, int debug_level)
 		displayError (&element, i18n ("Trying to retrieve contents of invalid element"), debug_level);
 	}
 
+	const QString context_attr ("i18n_context");
+	QString context;
+	if (element.hasAttribute (context_attr)) {
+		context = element.attribute (context_attr);
+	}
+
 	QStringList paras = ret.split ("\n\n");
 	ret.clear ();
 	for (int i = 0; i < paras.count (); ++i) {
 		QString para = paras[i].simplified ();
 		if (!para.isEmpty ()) {
 			if (!ret.isEmpty ()) ret.append ("\n");
-			ret += "<p>" + catalog->translate (para) + "</p>";
+			ret += "<p>" + context.isNull () ? catalog->translate (para) : catalog->translate (context, para) + "</p>";
 		}
 	}
 
