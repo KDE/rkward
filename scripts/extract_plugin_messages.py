@@ -7,6 +7,7 @@ import sys
 import os.path
 import os
 from xml.dom import minidom
+import HTMLParser
 import copy
 
 def usage ():
@@ -74,6 +75,7 @@ def getFileContext (element, attribute=""):
   return (ret + ' '.join (tag_stack) + refer_to)
 
 def quote (text):
+  text = HTMLParser.HTMLParser ().unescape (text)	# unescape character entities, Qt does so while parsing the xml
   return "\"" + text.replace ("\\", "\\\\").replace ("\"", "\\\"") + "\""
 
 # Normalizes larger text fragments. TODO: Do we want to protect <pre>-blocks?
