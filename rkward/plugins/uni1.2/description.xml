@@ -27,7 +27,7 @@
 						<varslot multi="true" classes="numeric integer" id="z" source="vars" label="Variable" required="true" />
 					</row>
 				</column>
-					<checkbox value_unchecked="0" checked="flase" value="1" id="save_to_file" label="Save results to file" />
+					<checkbox value_unchecked="0" checked="false" value="1" id="save_to_file" label="Save results to file" />
 					<browser type="savefile" size="small" id="file" filter="*.csv" initial="data" label="Name of the file" />
 			</tab>
 			<tab label="Statistics" >
