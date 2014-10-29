@@ -59,6 +59,7 @@
 #include <QMutex>
 #include <QTemporaryFile>
 #include <QDir>
+#include <QThread>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -97,8 +98,8 @@ void RKDebugMessageOutput (QtMsgType type, const char *msg) {
 }
 
 /** The point of this redirect (to be called via the RK_DEBUG() macro) is to separate RKWard specific debug messages from
- * any other noise, coming from Qt / kdelibs. Also it allows us to retain info on flags and level. Eventually, this could
- * be made available in a tool window, esp. for debugging plugins. */
+ * any other noise, coming from Qt / kdelibs. Also it allows us to retain info on flags and level, and to show messages
+ * in a tool window, esp. for debugging plugins. */
 void RKDebug (int flags, int level, const char *fmt, ...) {
 	const int bufsize = 1024*8;
 	char buffer[bufsize];
@@ -108,7 +109,10 @@ void RKDebug (int flags, int level, const char *fmt, ...) {
 	vsnprintf (buffer, bufsize-1, fmt, ap);
 	va_end (ap);
 	RKDebugMessageOutput (QtDebugMsg, buffer);
-	RKDebugMessageWindow::newMessage (flags, level, QString (buffer));
+	if (QApplication::instance ()->thread () == QThread::currentThread ()) {
+		// not safe to call from any other than the GUI thread
+		RKDebugMessageWindow::newMessage (flags, level, QString (buffer));
+	}
 }
 
 QString decodeArgument (const QString &input) {
