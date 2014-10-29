@@ -7,6 +7,7 @@ SET(scriptbackends_STAT_SRCS
    scriptbackend.cpp
    simplebackend.cpp
    qtscriptbackend.cpp
+   qtscripti18n.cpp
    rkcomponentscripting.cpp
    )
 

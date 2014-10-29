@@ -23,14 +23,16 @@
 #include "kmessagebox.h"
 
 #include "../misc/rkcommonfunctions.h"
+#include "qtscripti18n.h"
 
 #include "../debug.h"
 
-QtScriptBackend::QtScriptBackend (const QString &filename) : ScriptBackend () {
+QtScriptBackend::QtScriptBackend (const QString &filename, const RKMessageCatalog *catalog) : ScriptBackend () {
 	RK_TRACE (PHP);
 
 	script_thread = 0;
 	QtScriptBackend::filename = filename;
+	QtScriptBackend::catalog = catalog;
 	dead = false;
 	busy = true;
 }
@@ -53,7 +55,7 @@ bool QtScriptBackend::initialize (RKComponentPropertyCode *code_property, bool a
 	QDir files_path (RKCommonFunctions::getRKWardDataDir () + "phpfiles/");
 	QString common_js (files_path.absoluteFilePath ("common.js"));
 
-	script_thread = new QtScriptBackendThread (common_js, filename, this);
+	script_thread = new QtScriptBackendThread (common_js, filename, this, catalog);
 	connect (script_thread, SIGNAL (error(const QString&)), this, SLOT (threadError(const QString&)));
 	connect (script_thread, SIGNAL (commandDone(const QString&)), this, SLOT (commandDone(const QString&)));
 	connect (script_thread, SIGNAL (needData(const QString&, const int)), this, SLOT (needData(const QString&, const int)));
@@ -141,13 +143,14 @@ void QtScriptBackend::needData (const QString &identifier, const int hint) {
 
 #include <kurl.h>
 
-QtScriptBackendThread::QtScriptBackendThread (const QString &commonfile, const QString &scriptfile, QtScriptBackend *parent) : QThread (parent) {
+QtScriptBackendThread::QtScriptBackendThread (const QString &commonfile, const QString &scriptfile, QtScriptBackend *parent, const RKMessageCatalog *catalog) : QThread (parent) {
 	RK_TRACE (PHP);
 
 	_commonfile = commonfile;
 	_scriptfile = scriptfile;
 	killed = false;
 	sleeping = false;
+	QtScriptBackendThread::catalog = catalog;
 }
 
 QtScriptBackendThread::~QtScriptBackendThread () {
@@ -268,6 +271,8 @@ void QtScriptBackendThread::run () {
 
 	QScriptValue backend_object = engine.newQObject (this);
 	engine.globalObject ().setProperty ("_RK_backend", backend_object);
+	RKMessageCatalogObject::addI18nToScriptEngine (&engine, catalog);
+	if (scriptError ()) return;
 
 	if (!includeFile (_commonfile)) return;
 	if (!includeFile (_scriptfile)) return;

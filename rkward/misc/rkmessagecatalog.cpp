@@ -53,10 +53,29 @@ QString RKMessageCatalog::translate (const QString &msgctxt, const QString &msgi
 	return QString::fromUtf8 (trans);
 }
 
+QString RKMessageCatalog::translate (const QString &msgctxt, const QString &msgid_singular, const QString &msgid_plural, unsigned long int count) const {
+	RK_TRACE (MISC);
+
+	QByteArray key = (msgctxt + GETTEXT_CONTEXT_GLUE + msgid_singular).toUtf8 ();
+	QByteArray pkey = msgid_plural.toUtf8 ();
+	const char *trans = dngettext (catalog_name, key, pkey, count);
+	if ((trans == key) || (trans == pkey)) {
+		if (count == 1) return msgid_singular.arg (count);
+		return msgid_plural.arg (count);
+	}
+	return QString::fromUtf8 (trans).arg (count);
+}
+
 QString RKMessageCatalog::translate (const QString &msgid) const {
 	RK_TRACE (MISC);
 
 	return QString::fromUtf8 (dgettext (catalog_name, msgid.toUtf8 ()));
+}
+
+QString RKMessageCatalog::translate (const QString &msgid_singular, const QString &msgid_plural, unsigned long int count) const {
+	RK_TRACE (MISC);
+
+	return QString::fromUtf8 (dngettext (catalog_name, msgid_singular.toUtf8 (), msgid_plural.toUtf8 (), count)).arg (count);
 }
 
 // static

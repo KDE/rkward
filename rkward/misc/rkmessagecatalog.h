@@ -30,8 +30,10 @@
  */
 class RKMessageCatalog {
 public:
-	QString translate (const QString &msgctxt, const QString &msgid) const;
 	QString translate (const QString &msgid) const;
+	QString translate (const QString &msgctxt, const QString &msgid) const;
+	QString translate (const QString &msgid_singular, const QString &msgid_plural, unsigned long int count) const;
+	QString translate (const QString &msgctxt, const QString &msgid_singular, const QString &msgid_plural, unsigned long int count) const;
 
 /** Get the catalog identified by name. This could be an already open catalog, or a new one. In the latter case, the catalog is expected at pathhint. In the former case, pathhint is ignored. This function is guaranteed to return a non-null RKMessageCatalog, although that does not imply the catalog could actually be loaded. */
 	static RKMessageCatalog *getCatalog (const QString &name, const QString &pathhint);

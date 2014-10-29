@@ -104,7 +104,7 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 	if (element.hasAttribute ("file")) {
 		QString dummy = QFileInfo (filename).path() + '/' + xml->getStringAttribute (element, "file", "code.js", DL_WARNING);
 
-		backend = new QtScriptBackend (dummy);
+		backend = new QtScriptBackend (dummy, xml->messageCatalog ());
 	} else {
 		SimpleBackend *back = new SimpleBackend ();
 		back->setPreprocessTemplate (xml->getStringAttribute (element, "preprocess", QString::null, DL_INFO));

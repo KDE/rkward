@@ -21,6 +21,7 @@
 #include "scriptbackend.h"
 
 class QtScriptBackendThread;
+class RKMessageCatalog;
 
 /** This class allows to use QtScript as a scripting backend in RKWard.
 
@@ -30,7 +31,7 @@ TODO: The code is currently based on the old PHPBackend. Once that is truely obs
 class QtScriptBackend : public ScriptBackend {
 	Q_OBJECT
 public:
-	QtScriptBackend (const QString &filename);
+	QtScriptBackend (const QString &filename, const RKMessageCatalog *catalog);
 
 	~QtScriptBackend ();
 
@@ -49,6 +50,7 @@ public slots:
 private:
 	void tryNextFunction ();
 	QtScriptBackendThread *script_thread;
+	const RKMessageCatalog *catalog;
 
 	bool dead;
 
@@ -62,7 +64,7 @@ private:
 class QtScriptBackendThread : public QThread {
 	Q_OBJECT
 public:
-	QtScriptBackendThread (const QString &commonfile, const QString &scriptfile, QtScriptBackend *parent);
+	QtScriptBackendThread (const QString &commonfile, const QString &scriptfile, QtScriptBackend *parent, const RKMessageCatalog *catalog);
 	~QtScriptBackendThread ();
 
 	void setCommand (const QString &command);
@@ -92,6 +94,7 @@ private:
 	QString _scriptfile;
 
 	QScriptEngine engine;
+	const RKMessageCatalog *catalog;
 
 	bool killed;
 
