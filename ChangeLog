@@ -1,3 +1,5 @@
+- Improve crash recovery dialog to not prompt again for the same files
+- Fixed potential crash while the "RKWard Debug Messages" window is visible
 - Fixed display of file paths containing non-ascii characters in the title bar and startup dialog
 - Fixed some erroneous plugin debug messages
 - IN PROGESS: Allow plugins to be translated
@@ -5,6 +7,7 @@
     - Is it a problem to sync KDE_LANG and LANGUAGE? Should that also be set for the backend?
     - Message extraction: Should we do this in R, using XiMpLe? That might allow us to give better context / comments
     - Don't forget to write documentation
+      - Also general documentation for JS-functions is missing!
     - What should be the policy regarding installing translations (80% criterion)
     - discuss i18n_context vs. comments
     - Important pitfalls: String comparison with checkbox / radio labels! (Probably wrong in some plugins)

@@ -2,7 +2,7 @@
                           rkrecoverdialog  -  description
                              -------------------
     begin                : Fri Feb 04 2011
-    copyright            : (C) 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2011, 2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -32,8 +32,10 @@ public:
 protected:
 	RKRecoverDialog (const QStringList &recovery_files);
 	~RKRecoverDialog ();
+	static QString saveFileFor (const QString &recovery_file);
+	QStringList files;
 private slots:
-	void showButtonClicked ();
+	void deleteButtonClicked ();
 };
 
 #endif
