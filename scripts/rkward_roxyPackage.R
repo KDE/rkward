@@ -15,7 +15,7 @@ local({
 	#######################
 	## these are the values you probably need to update
 	#######################
-	package.version <- "0.6.0"
+	package.version <- "0.6.3"
 
 	# this should point to the "rkward" root directory of the R package
 	package.sources <- file.path("/PathTo","trunk","rkward","rkward","rbackend","rpackages","rkward")
@@ -54,7 +54,7 @@ local({
 		Package="rkward",
 		Type="Package",
 		Title="Provides functions related to the RKWard GUI",
-		Author="Thomas Friedrichsmeier <thomas.friedrichsmeier@ruhr-uni-bochum.de>, with contributions from the RKWard Team",
+		Author="Thomas Friedrichsmeier <thomas.friedrichsmeier@ruhr-uni-bochum.de> and the RKWard Team <rkward-devel@lists.sourceforge.net>",
 		AuthorsR="c(person(given=\"Thomas\", family=\"Friedrichsmeier\", email=\"thomas.friedrichsmeier@ruhr-uni-bochum.de\",
 				role=c(\"aut\")),
 			person(given=\"RKWard-devel\", family=\"mailing list\", email=\"rkward-devel@lists.sourceforge.net\",
