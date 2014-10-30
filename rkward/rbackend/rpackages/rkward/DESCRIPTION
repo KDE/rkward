@@ -1,8 +1,8 @@
 Package: rkward
 Type: Package
 Title: Provides functions related to the RKWard GUI
-Author: Thomas Friedrichsmeier <thomas.friedrichsmeier@ruhr-uni-bochum.de>,
-    and the RKWard Team <rkward-devel@lists.sourceforge.net>
+Author: Thomas Friedrichsmeier <thomas.friedrichsmeier@ruhr-uni-bochum.de> and
+    the RKWard Team <rkward-devel@lists.sourceforge.net>
 Maintainer: RKWard-devel mailing list <rkward-devel@lists.sourceforge.net>
 Depends:
     R (>= 2.9.0),methods
@@ -19,7 +19,7 @@ Authors@R: c(person(given="Thomas", family="Friedrichsmeier",
     person(given="RKWard-devel", family="mailing list",
     email="rkward-devel@lists.sourceforge.net", role=c("cre","ctb")))
 Version: 0.6.3
-Date: 2014-09-29
+Date: 2014-10-30
 Collate:
     'base_overrides.R'
     'internal.R'
