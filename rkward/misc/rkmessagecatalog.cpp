@@ -63,7 +63,8 @@ QString RKMessageCatalog::translate (const QString &msgctxt, const QString &msgi
 		if (count == 1) return msgid_singular.arg (count);
 		return msgid_plural.arg (count);
 	}
-	return QString::fromUtf8 (trans).arg (count);
+	return QString::fromUtf8 (trans).replace (QLatin1String ("%1"), QString::number (count));	// NOTE: Not using .arg(count), as "%1" may not be given in both singular and plural form.
+																								// .arg() would go replacing "%2", then.
 }
 
 QString RKMessageCatalog::translate (const QString &msgid) const {
@@ -75,7 +76,7 @@ QString RKMessageCatalog::translate (const QString &msgid) const {
 QString RKMessageCatalog::translate (const QString &msgid_singular, const QString &msgid_plural, unsigned long int count) const {
 	RK_TRACE (MISC);
 
-	return QString::fromUtf8 (dngettext (catalog_name, msgid_singular.toUtf8 (), msgid_plural.toUtf8 (), count)).arg (count);
+	return QString::fromUtf8 (dngettext (catalog_name, msgid_singular.toUtf8 (), msgid_plural.toUtf8 (), count)).replace (QLatin1String ("%1"), QString::number (count));
 }
 
 // static
