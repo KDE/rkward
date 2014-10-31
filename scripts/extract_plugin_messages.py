@@ -123,9 +123,14 @@ def handleNode (node):
       else:
         outfile.write ("i18n (" + quote (node.getAttribute ("label")) + ");\n")
     if (node.hasAttribute ("file")):
-      if (node.tagName != "code"):
-        # TODO: handle .js files
-        handleSubFile (node.getAttribute ("file"), node.tagName == "component")
+      filename = node.getAttribute ("file")
+      if (filename.endswith (".js")):
+        filename = os.path.join (os.path.dirname (infile["infile"]), filename)
+        jsfile = codecs.open (filename, 'r', 'utf-8')
+        handleJSChunk (jsfile.read (), filename, 0, getFileCaption (None, infile["caption"]))
+        jsfile.close ()
+      else:
+        handleSubFile (filename, node.tagName == "component")
     if (node.tagName in text_containers):
       textchunks = getFullText (node).split ("\n\n")
       for chunk in textchunks:
@@ -138,17 +143,20 @@ def handleNode (node):
     for child in node.childNodes:
       handleNode (child)
 
-# Try to determine a caption for the file (will be used as context comment)
-def getFileCaption (docelem):
-  elems = docelem.getElementsByTagName ("title")
-  if (elems.length):
-    return normalize (getFullText (elems.item (0)))
-  elems = docelem.getElementsByTagName ("dialog")
-  if (elems.length):
-    return elems.item (0).getAttribute ("label")
-  elems = docelem.getElementsByTagName ("wizard")
-  if (elems.length):
-    return elems.item (0).getAttribute ("label")
+# Try to determine a caption for the file (will be used as context comment). If none is found in this file use "Loaded from loaded_from"
+def getFileCaption (docelem, loaded_from):
+  if (not docelem is None):
+    elems = docelem.getElementsByTagName ("title")
+    if (elems.length):
+      return normalize (getFullText (elems.item (0)))
+    elems = docelem.getElementsByTagName ("dialog")
+    if (elems.length):
+      return elems.item (0).getAttribute ("label")
+    elems = docelem.getElementsByTagName ("wizard")
+    if (elems.length):
+      return elems.item (0).getAttribute ("label")
+  if (loaded_from != ""):
+    return "Loaded from " + loaded_from
   return ""
 
 # Gather labels of elements with given id (so <setting id="xyz">text</setting> elements can be labelled)
@@ -160,6 +168,120 @@ def getElementLabelsRecursive (elem):
         ret[ce.getAttribute ("id")] = ce.getAttribute ("label")
       ret.update (getElementLabelsRecursive (ce))
   return ret
+
+# It really is sort of lame to have to parse JS and extract i18n-calls, when xgettext could do it. But that would not
+# - allow us to add info on which plugin this belongs to
+# - list the i18n strings from the JS file in sequence with the i18n strings from the XML parts of the same plugin
+# - give decent file context for inlines JS script code
+class JSParseBuffer:
+  def __init__ (self, content):
+    self.buf = content
+    self.comment = ""
+    self.nline = 0
+    self.nchar = 0
+  def atEof (self):
+    return (self.nchar >= len (self.buf))
+  def currentChar (self):
+    if (self.atEof ()):
+      return ""
+    return (self.buf[self.nchar])
+  def advance (self, n=1):
+    for step in range (n):
+      self.nchar += 1
+      if (self.nchar >= (len (self.buf) - 1)):
+        return False
+      if (self.buf[self.nchar] == "\n"):
+        self.nline += 1
+    return True
+  def skipWhitespace (self):
+    while (self.buf[self.nchar].isspace ()):
+      if (not self.advance ()):
+        break
+  def seekUntil (self, needle):
+    fromchar = self.nchar
+    while (not self.startswith (needle)):
+      if (not self.advance ()):
+        break
+    return self.buf[fromchar:self.nchar]
+  def seek_line_comment_end (self):
+    comment = ""
+    while True:
+      comment += self.seekUntil ("\n")
+      self.skipWhitespace ()    
+      if (self.startswith ("//")):
+        self.advance (2)
+      else:
+        break
+    return comment
+  # TODO: handle includes, somehow
+  def nibble_until (self, string, skip_over_parentheses=False):
+    fromchar = self.nchar
+    while (not self.startswith (string)):
+      if (self.atEof ()):
+        break
+      if (self.startswith ('\\')):
+        self.advance (2)
+        continue
+      if (self.buf[self.nchar] in ['"', '\'', '`']):
+        ochar = self.buf[self.nchar]
+        if (self.advance ()):
+          self.nibble_until (ochar)
+      elif (self.startswith ("/*")):
+        self.comment = self.seekUntil ("*/")
+      elif (self.startswith ("//")):
+        self.comment = self.seek_line_comment_end ()
+      elif (skip_over_parentheses and (self.startswith ("("))):	# skip over nested parentheses
+        self.advance ()
+        self.nibble_until (")", True)
+      elif (not self.buf[self.nchar].isspace ()):
+        self.comment = ""
+      if (not self.advance ()):
+        break
+    return (self.buf[fromchar:self.nchar])
+  def startswith (self, string):
+    return self.buf.startswith (string, self.nchar)
+
+def handleJSChunk (buf, filename, offset, caption):
+  global outfile
+
+  jsbuf = JSParseBuffer (buf)
+  while (True):
+    call = ""
+    junk = jsbuf.nibble_until ("i18n")
+    if (jsbuf.atEof ()):
+      break
+    # skip over somethingelsei18n identifiers
+    if (jsbuf.nchar > 0 and jsbuf.buf[jsbuf.nchar-1].isalnum ()):
+      jsbuf.advance ()
+      continue
+    # skip over i18nsomethingelse identifiers
+    jsbuf.advance (4) # i18n
+    if (jsbuf.startswith ("cp")):
+      call = "i18ncp"
+      jsbuf.advance (2)
+    elif (jsbuf.startswith ("c")):
+      call = "i18nc"
+      jsbuf.advance (1)
+    elif (jsbuf.startswith ("p")):
+      call = "i18np"
+      jsbuf.advance (1)
+    else:
+      call = "i18n"
+    nextchar = jsbuf.currentChar ()
+    if (not (nextchar.isspace () or nextchar == '(')):
+      continue
+    comment = normalize (jsbuf.comment)
+    line = jsbuf.nline
+    call += jsbuf.nibble_until ("(") + jsbuf.nibble_until (")", True) + ";"
+    text = "/* "
+    if (comment.lower ().startswith ("i18n:") or comment.lower ().startswith ("translators:")):
+      text += "i18n: " + comment + "\n"
+    text += "i18n: file: " + filename
+    if (offset >= 0):
+      text += ":" + str (offset + line + 1)
+    text += "\ni18n: ectx: " + caption + " */"
+    text += call
+    outfile.write (text)
 
 # When we encounter a "file"-attribute, we generally dive right into parsing that file, i.e. we do depth first
 # Advantage is that strings in all files belonging to one plugin will be in direct succession in the .pot file
@@ -181,9 +303,7 @@ def handleSubFile (filename, fetch_ids = False):
     oldinfile = copy.deepcopy (infile)
     infile["infile"] = filename
     infile["file_prefix"] = xmldoc.documentElement.getAttribute ("base_prefix")
-    infile["caption"] = getFileCaption (xmldoc.documentElement)
-    if ((infile["caption"] == "") and (oldinfile["caption"] != "")):
-      infile["caption"] = "Loaded from " + oldinfile["caption"]
+    infile["caption"] = getFileCaption (xmldoc.documentElement, oldinfile["caption"])
     if (fetch_ids):
       infile["id_labels"] = getElementLabelsRecursive (xmldoc.documentElement)
     handleNode (xmldoc.documentElement)
