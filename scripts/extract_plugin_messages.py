@@ -39,6 +39,15 @@ for arg in (list (sys.argv[1:])):
 if (len (toplevel_sources) < 1):
   usage ()
 
+# For crying out loud! So we are not strictly using XML, because we allow the use of (X)HTML entities, esp. inside <text>-elements,
+# without formally declaring these entities. Python seems to make a point of making it real hard to deal with this. So what we do is
+# escaping all entities before parsing, then passing all through HTMLParser.unescape () before writing the output.
+def parseFile (filename):
+  f = codecs.open (filename, 'r', 'utf-8')
+  content = f.read ()
+  f.close ()
+  return minidom.parseString (content.replace ("&", "&amp;"))
+
 # Where available, include the labels of parent elements. Particularly helpful for radio-options
 def getElementShort (element, dot_attribute=""):
   ret = "<" + element.tagName
@@ -56,13 +65,12 @@ def getFileContext (element, attribute=""):
   ret += "i18n: ectx: "
   if (infile["caption"] != ""):
     ret += "(" + infile["caption"] + ") "
+  refer_to = ""
   if ((element.tagName in referring_elements) and (element.hasAttribute ("id"))):
     if (not (element.getAttribute ("id") in infile["id_labels"])):
       sys.stderr.write ("WARNING in " + infile["infile"] + ": Reference to unknown element id '" + element.getAttribute ("id") + "'")
     else:
       refer_to = " (refers to element labelled " + quote (infile["id_labels"][element.getAttribute ("id")]) + ")"
-  else:
-    refer_to = ""
   tag_stack = [getElementShort (element, attribute)]
   while ((element.parentNode.nodeType != element.DOCUMENT_NODE)):
     element = element.parentNode
@@ -92,13 +100,13 @@ def getFullText (element):
   for cn in element.childNodes:
     if cn.nodeType != cn.COMMENT_NODE:
       rc.append(cn.toxml ("utf-8"))
-  return ''.join (rc).strip ()
+  return ''.join (rc).strip ().replace ("&amp;", "&")
 
 # get the content of all text nodes inside this node (does not include xml tags)
 def getText (node):
   rc = []
   for cn in node.childNodes:
-    if cn.nodeType == cn.TEXT_NODE:
+    if cn.nodeType in [cn.TEXT_NODE, cn.CDATA_SECTION_NODE]:
       rc.append(cn.data)
   return ''.join (rc).strip ()
 
@@ -131,7 +139,9 @@ def handleNode (node):
         jsfile.close ()
       else:
         handleSubFile (filename, node.tagName == "component")
-    if (node.tagName in text_containers):
+    if (node.tagName == "script"):
+      handleJSChunk (getText (node), infile["infile"], -1, infile["caption"])
+    elif (node.tagName in text_containers):
       textchunks = getFullText (node).split ("\n\n")
       for chunk in textchunks:
         outfile.write (getI18nComment (node))
@@ -279,7 +289,7 @@ def handleJSChunk (buf, filename, offset, caption):
     text += "i18n: file: " + filename
     if (offset >= 0):
       text += ":" + str (offset + line + 1)
-    text += "\ni18n: ectx: " + caption + " */"
+    text += "\ni18n: ectx: (" + caption + ") */"
     text += call
     outfile.write (text)
 
@@ -294,7 +304,8 @@ def handleSubFile (filename, fetch_ids = False):
   if (not os.path.isfile (filename)):
     sys.stderr.write (getFileContext (node)  + " WARNING: File " + filename + " does not exist\n")
     return
-  xmldoc = minidom.parse (filename)
+  print filename
+  xmldoc = parseFile (filename)
   if (xmldoc.documentElement.hasAttribute ("po_id") and (xmldoc.documentElement.getAttribute ("po_id") != current_po_id)):
     toplevel_sources.append (filename)
     #sys.stderr.write ("Added " + filename + " to toplevel\n")
@@ -327,7 +338,7 @@ def initialize_pot_file (po_id):
 # NOTE: toplevel_sources may grow, dynamically, but only at the end.
 i = 0
 while i < len (toplevel_sources):
-  xmldoc = minidom.parse (toplevel_sources[i])
+  xmldoc = parseFile (toplevel_sources[i])
   po_id = xmldoc.documentElement.getAttribute ("po_id")
   if (po_id == ""):
     po_id = default_po
