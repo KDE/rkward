@@ -143,9 +143,11 @@ void QtScriptBackend::needData (const QString &identifier, const int hint) {
 
 #include <kurl.h>
 
-QtScriptBackendThread::QtScriptBackendThread (const QString &commonfile, const QString &scriptfile, QtScriptBackend *parent, const RKMessageCatalog *catalog) : QThread (parent) {
+QtScriptBackendThread::QtScriptBackendThread (const QString &commonfile, const QString &scriptfile, QtScriptBackend *parent, const RKMessageCatalog *catalog) : QThread (parent), engine (0) {
 	RK_TRACE (PHP);
 
+	// you'd think the engine already was in this thread, but no, it is not. You'd also think, this was fixable by setting "this" as the engine's parent, instead of 0, but no, somehow not.
+	engine.moveToThread (this);
 	_commonfile = commonfile;
 	_scriptfile = scriptfile;
 	killed = false;
@@ -251,8 +253,8 @@ bool QtScriptBackendThread::includeFile (const QString &filename) {
 		_filename = script_path.toLocalFile ();
 	}
 
-        QFile file (_filename);
-        if (!file.open (QIODevice::ReadOnly | QIODevice::Text)) {
+		QFile file (_filename);
+		if (!file.open (QIODevice::ReadOnly | QIODevice::Text)) {
 		emit (error (i18n ("The file \"%1\" (needed by \"%2\") could not be found. Please check your installation.", _filename, _scriptfile)));
 		return false;
 	}
@@ -274,7 +276,18 @@ void QtScriptBackendThread::run () {
 	RKMessageCatalogObject::addI18nToScriptEngine (&engine, catalog);
 	if (scriptError ()) return;
 
+#ifdef USE_Q_SCRIPT_PROGRAM
+	if (!RKPrecompiledQtScripts::loadCommonScript (&engine, _commonfile)) {
+		if (!engine.hasUncaughtException ()) {
+			emit error (i18n ("Could not open common script file \"%1\"", _commonfile));
+		} else {
+			scriptError ();
+		}
+		return;
+	}
+#else
 	if (!includeFile (_commonfile)) return;
+#endif
 	if (!includeFile (_scriptfile)) return;
 
 	emit (commandDone ("startup complete"));
@@ -307,5 +320,35 @@ void QtScriptBackendThread::run () {
 		command.clear ();
 	}
 }
+
+#ifdef USE_Q_SCRIPT_PROGRAM
+namespace RKPrecompiledQtScripts {
+	QMap<QString, QScriptProgram> compiled_includes;
+	QMutex compiled_includes_mutex;
+
+	bool loadCommonScript (QScriptEngine* engine, QString scriptfile) {
+		RK_TRACE (PHP);
+
+		QMutexLocker ml (&compiled_includes_mutex);
+		if (!compiled_includes.contains (scriptfile)) {
+			RK_DEBUG (PHP, DL_DEBUG, "Compiling common script file %s", qPrintable (scriptfile));
+			QFile file (scriptfile);
+			if (!file.open (QIODevice::ReadOnly | QIODevice::Text)) {
+				return false;
+			}
+			compiled_includes.insert (scriptfile, QScriptProgram (file.readAll (), scriptfile));
+			file.close ();
+		} else {
+			RK_DEBUG (PHP, DL_DEBUG, "Script file %s is already compiled", qPrintable (scriptfile));
+		}
+		engine->evaluate (compiled_includes[scriptfile]);
+		if (engine->hasUncaughtException ()) {
+			compiled_includes.remove (scriptfile);
+			return false;
+		}
+		return true;
+	}
+}
+#endif
 
 #include "qtscriptbackend.moc"

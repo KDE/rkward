@@ -2,7 +2,7 @@
                           qtscriptbackend  -  description
                              -------------------
     begin                : Mon Sep 28 2009
-    copyright            : (C) 2009, 2012 by Thomas Friedrichsmeier
+    copyright            : (C) 2009, 2012, 2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -103,5 +103,13 @@ private:
 	QMutex sleep_mutex;
 	bool sleeping;
 };
+
+#if QT_VERSION >= 0x040700
+#	define USE_Q_SCRIPT_PROGRAM
+#	include <QScriptProgram>
+namespace RKPrecompiledQtScripts {
+	bool loadCommonScript (QScriptEngine *engine, QString scriptfile);
+};
+#endif
 
 #endif
