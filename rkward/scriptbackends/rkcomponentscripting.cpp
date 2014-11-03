@@ -25,8 +25,11 @@
 #include "../plugin/rkcomponent.h"
 #include "../core/robjectlist.h"
 #include "../misc/rkcommonfunctions.h"
+#include "../misc/xmlhelper.h"
 #include "../rkglobals.h"
 #include "../rbackend/rinterface.h"
+#include "qtscriptbackend.h"
+#include "qtscripti18n.h"
 
 #include "../debug.h"
 
@@ -38,6 +41,7 @@ RKComponentScriptingProxy::RKComponentScriptingProxy (RKComponent *component) : 
 
 	QScriptValue backend_object = engine.newQObject (this);
 	engine.globalObject ().setProperty ("_rkward", backend_object);
+	RKMessageCatalogObject::addI18nToScriptEngine (&engine, component->xmlHelper ()->messageCatalog ());
 }
 
 RKComponentScriptingProxy::~RKComponentScriptingProxy () {
@@ -57,9 +61,17 @@ void RKComponentScriptingProxy::initialize (const QString& file, const QString& 
 		_scriptfile = file;
 	}
 	QDir files_path (RKCommonFunctions::getRKWardDataDir () + "phpfiles/");
+#ifdef USE_Q_SCRIPT_PROGRAM
+	if (!RKPrecompiledQtScripts::loadCommonScript (&engine, files_path.absoluteFilePath ("rkcomponentscripting.js"))) {
+		engine.evaluate (i18n ("Error opening script file %1", files_path.absoluteFilePath ("rkcomponentscripting.js")));
+	} else if (!RKPrecompiledQtScripts::loadCommonScript (&engine, files_path.absoluteFilePath ("common.js"))) {
+		engine.evaluate (i18n ("Error opening script file %1", files_path.absoluteFilePath ("common.js")));
+	}
+#else
 	_command.prepend ("_rkward.include('" + files_path.absoluteFilePath ("rkcomponentscripting.js") + "');\n");
 	_command.prepend ("_rkward.include('" + files_path.absoluteFilePath ("common.js") + "');\n");
 	evaluate (_command);
+#endif
 }
 
 void RKComponentScriptingProxy::handleScriptError (const QString& current_file) {

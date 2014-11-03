@@ -63,4 +63,5 @@ echo "Extracting messages from plugins"
 cd ${BASEDIR}
 # For testing purposes, extract analysis.pluginmap, only
 python ../scripts/extract_plugin_messages.py --outdir=../po/plugins/ plugins/analysis.pluginmap
+python ../scripts/extract_plugin_messages.py --outdir=../po/plugins/ --default_po=testing plugins/under_development.pluginmap
 echo "Done"

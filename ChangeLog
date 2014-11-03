@@ -1,3 +1,4 @@
+- Pre-compile the common js code included in every plugin (only when compiled with Qt >= 4.7)
 - Improve crash recovery dialog to not prompt again for the same files
 - Fixed potential crash while the "RKWard Debug Messages" window is visible
 - Fixed display of file paths containing non-ascii characters in the title bar and startup dialog
@@ -19,6 +20,11 @@
    - i18n calls
     - wcgrep getStringAttribute.*i18n
     - element text
+   - i18n in JS:
+     - should return strings quoted, by default. Safer and less typing.
+       - enforces suggested policy of not i18n'ing functional parts of the code (variable / function names)
+     - Additional function comment(), equivalent to printIndented ("#", i18n (noquote ("something")))
+     - An elegant (object based?) way to fix the makeHeaderCode()-mess?
 
 --- Version 0.6.2 - Oct-20-2014
 - In data editor, indicate NAs, explicitly
