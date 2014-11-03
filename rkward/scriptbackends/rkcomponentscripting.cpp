@@ -70,8 +70,8 @@ void RKComponentScriptingProxy::initialize (const QString& file, const QString& 
 #else
 	_command.prepend ("_rkward.include('" + files_path.absoluteFilePath ("rkcomponentscripting.js") + "');\n");
 	_command.prepend ("_rkward.include('" + files_path.absoluteFilePath ("common.js") + "');\n");
-	evaluate (_command);
 #endif
+	evaluate (_command);
 }
 
 void RKComponentScriptingProxy::handleScriptError (const QString& current_file) {
