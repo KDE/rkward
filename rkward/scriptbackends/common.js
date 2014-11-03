@@ -37,7 +37,7 @@ quote = function (text) {
 
 i18n = function (msgid) {
 	var ret = _i18n.i18n (msgid);
-	for (int i = 1; i < arguments.length; i++) {
+	for (var i = 1; i < arguments.length; i++) {
 		ret = ret.replace(new RegExp("%" + i, 'g'), arguments[i]);
 	}
 	if (msgid.noquote) {
@@ -51,7 +51,7 @@ i18n = function (msgid) {
 
 i18nc = function (msgctxt, msgid) {
 	var ret = _i18n.i18nc (msgctxt, msgid);
-	for (int i = 2; i < arguments.length; i++) {
+	for (var i = 2; i < arguments.length; i++) {
 		ret = ret.replace(new RegExp("%" + (i - 1), 'g'), arguments[i]);
 	}
 	if (msgid.noquote) {
@@ -63,7 +63,7 @@ i18nc = function (msgctxt, msgid) {
 
 i18np = function (msgid, msgid_plural, n) {
 	var ret = _i18n.i18np (msgid, msgid_plural, n);
-	for (int i = 3; i < arguments.length; i++) {
+	for (var i = 3; i < arguments.length; i++) {
 		ret = ret.replace(new RegExp("%" + (i - 1), 'g'), arguments[i]);	// start replacing at %2. %1 already handled.
 	}
 	if (msgid.noquote) {
@@ -75,7 +75,7 @@ i18np = function (msgid, msgid_plural, n) {
 
 i18ncp = function (msgctxt, msgid, msgid_plural, n) {
 	var ret = _i18n.i18ncp (msgctxt, msgid, msgid_plural, n);
-	for (int i = 4; i < arguments.length; i++) {
+	for (var i = 4; i < arguments.length; i++) {
 		ret = ret.replace(new RegExp("%" + (i - 2), 'g'), arguments[i]);
 	}
 	if (msgid.noquote) {
