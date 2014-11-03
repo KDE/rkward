@@ -7,7 +7,7 @@
 		<script><![CDATA[
 			call_num = 0;
  			last_command_id = -1;
-			gui.setValue ("text.text", i18n ("Select a dependent variable!"));
+			gui.setValue ("text.text", i18n (noquote ("Select a dependent variable!")));
 
 			/*f = Kross.module('forms');
 			label = f.createWidget(scripty, 'QLabel', 'Label', {});

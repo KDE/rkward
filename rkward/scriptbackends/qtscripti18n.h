@@ -34,11 +34,11 @@ public:
 	Q_INVOKABLE QString i18nc (const QString &msgctxt, const QString &msgid) const {
 		return (catalog->translate (msgctxt, msgid));
 	};
-	Q_INVOKABLE QString i18np (const QString &msgid_singular, const QString &msgid_plural, unsigned long int count) const {
+	Q_INVOKABLE QString i18np (const QString &msgid_singular, const QString &msgid_plural, uint count) const {
 		return (catalog->translate (msgid_singular, msgid_plural, count));
 	};
-	Q_INVOKABLE QString i18ncp (const QString &msgctxt, const QString &msgid_singular, const QString &msgid_plural, unsigned long int count) const {
-		return (catalog->translate (msgctxt, msgid_singular, msgid_plural, count).arg (count));
+	Q_INVOKABLE QString i18ncp (const QString &msgctxt, const QString &msgid_singular, const QString &msgid_plural, uint count) const {
+		return (catalog->translate (msgctxt, msgid_singular, msgid_plural, count));
 	};
 /** Add an RKMessageCatalog, and the required glue code to the given QScriptEngine. */
 	static void addI18nToScriptEngine (QScriptEngine *engine, const RKMessageCatalog *catalog);
