@@ -15,6 +15,7 @@ function printout () {
 
 	echo ('### i18n tests below ###\n');
 	echo ('print (' + i18n ("This is an i18n text") + ')\n');
+	echo ('print (' + i18n ('This is a single quoted i18n text, with a variety of quoting chars (\' " \` \" `), and a %1 inside:', 1) + ')\n');
 	echo ('# A comment: ' + i18nc ("Dummy context", noquote ("This is a non-auto-quoted i18n'ed text with context")) + '\n');
 	for (var i = 10; i > 0; --i) {
 		echo ('print (' + i18np ("There was one green bottle standing on the %2", "There were %1 green bottles standing on the %2", i, i18n (noquote ("wall"))) + ')\n');

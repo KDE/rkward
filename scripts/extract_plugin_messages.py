@@ -253,13 +253,13 @@ class JSParseBuffer:
     while (not self.startswith (string)):
       if (self.atEof ()):
         break
-      if (self.startswith ('\\')):
-        self.advance (2)
-        continue
       if (self.buf[self.nchar] in ['"', '\'', '`']):
         ochar = self.buf[self.nchar]
-        if (self.advance ()):
-          self.seekUntil (ochar)
+        while (self.advance ()):
+          if (self.startswith ('\\')):
+            self.advance ()	# skip next char
+          elif (self.startswith (ochar)):
+            break
       elif (self.startswith ("/*")):
         self.comment = self.seekUntil ("*/")
       elif (self.startswith ("//")):
@@ -278,6 +278,36 @@ class JSParseBuffer:
 def handleJSChunk (buf, filename, offset, caption):
   global outfile
 
+  # Convert single quoted and backtick quoted strings in the input chunk to double quotes (so xgettext can work in C-style).
+  def normalizeQuotes (chunk):
+    pos = 0
+    current_quote_symbol = ""
+    output = ""
+    strip_closing_parentheses = 0
+    while (pos < len (chunk)):
+      c = chunk[pos]
+      if c == "\\":
+        nc = chunk[pos+1]
+        if ((nc != current_quote_symbol) or (nc == '"')):
+          output += c
+        output += nc
+        pos += 1
+      elif c in ['"', '\'', '`']:
+        if (current_quote_symbol == ""):
+          current_quote_symbol = c
+          output += '"'
+        elif current_quote_symbol == c:
+          current_quote_symbol = ""
+          output += '"'
+        elif c == '"':
+          output += '\\\"'
+        else:
+          output += c
+      else:
+        output += c
+      pos += 1
+    return output
+
   jsbuf = JSParseBuffer (buf)
   while (True):
     call = ""
@@ -286,7 +316,6 @@ def handleJSChunk (buf, filename, offset, caption):
       break
     for candidate in ["i18n", "i18nc", "i18np", "i18ncp"]:
       if (jsbuf.isAtFunctionCall (candidate)):
-        print ("found " + candidate)
         call = candidate
         break
     if (call == ""):
@@ -314,7 +343,7 @@ def handleJSChunk (buf, filename, offset, caption):
     if (offset >= 0):
       text += ":" + str (offset + line + 1)
     text += "\ni18n: ectx: (" + caption + ") */\n"
-    text += call + parameters + ";\n"
+    text += call + normalizeQuotes (parameters) + ";\n"
     outfile.write (text)
 
 # When we encounter a "file"-attribute, we generally dive right into parsing that file, i.e. we do depth first

@@ -329,6 +329,13 @@ namespace RKPrecompiledQtScripts {
 	bool loadCommonScript (QScriptEngine* engine, QString scriptfile) {
 		RK_TRACE (PHP);
 
+		// NOTE: QScriptProgram cannot be evaluated concurrently in several threads (see https://bugreports.qt-project.org/browse/QTBUG-29246).
+		// Neither would our QMap caching logic work in concurrent threads. Thus the mutex. This clearly has the drawback that QScript evaluation threads
+		// may be waiting for each other during initialization. However, we assume that
+		// - Typically only few such threads are running
+		// - Responsiveness (i.e. UI startup speed), not throughput is the main goal, here.
+		// - The important script engines are those running in the UI thread (and thus necessarily sequentially). As long as these are initialized before
+		//   the other threads, they will clearly profit from pre-compiling
 		QMutexLocker ml (&compiled_includes_mutex);
 		if (!compiled_includes.contains (scriptfile)) {
 			RK_DEBUG (PHP, DL_DEBUG, "Compiling common script file %s", qPrintable (scriptfile));
