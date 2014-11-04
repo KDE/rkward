@@ -124,12 +124,16 @@ def getI18nComment (node, attribute=""):
 # Main workhorse: Look at given node and recurse into children
 def handleNode (node):
   if (node.nodeType == node.ELEMENT_NODE):
-    if (node.hasAttribute ("label")):
-      outfile.write (getI18nComment (node, "label"))
-      if (node.hasAttribute ("i18n_context")):
-        outfile.write ("i18nc (" + quote (node.getAttribute ("i18n_context")) + ", " + quote (node.getAttribute ("label")) + ");\n")
-      else:
-        outfile.write ("i18n (" + quote (node.getAttribute ("label")) + ");\n")
+    for attr in ["label", "title", "shorttitle"]:
+      if (node.hasAttribute (attr)):
+        attrv = node.getAttribute (attr)
+        if (attrv == ""):
+          continue
+        outfile.write (getI18nComment (node, attr))
+        if (node.hasAttribute ("i18n_context")):
+          outfile.write ("i18nc (" + quote (node.getAttribute ("i18n_context")) + ", " + quote (attrv) + ");\n")
+        else:
+          outfile.write ("i18n (" + quote (attrv) + ");\n")
     if (node.hasAttribute ("file")):
       filename = node.getAttribute ("file")
       if (filename.endswith (".js")):
@@ -144,8 +148,9 @@ def handleNode (node):
     elif (node.tagName in text_containers):
       textchunks = getFullText (node).split ("\n\n")
       for chunk in textchunks:
-        outfile.write (getI18nComment (node))
-        outfile.write ("i18n (" + quote (normalize (chunk)) + ");\n")
+        if (chunk != ""):
+          outfile.write (getI18nComment (node))
+          outfile.write ("i18n (" + quote (normalize (chunk)) + ");\n")
     elif (getText (node) != ""):
       sys.stderr.write ("WARNING: Found text content where none expected: " + getFileContext (node) + "\n")
   if (not ((node.nodeType == node.ELEMENT_NODE) and (node.tagName in text_containers))):
@@ -213,6 +218,18 @@ class JSParseBuffer:
       if (not self.advance ()):
         break
     return self.buf[fromchar:self.nchar]
+  # returns True, if the given word is found at the current position, _and_ it this is a full keyword (i.e. preceded and followed by some delimiter), and could be a function call
+  def isAtFunctionCall (self, word):
+    if (not self.startswith (word)):
+      return False
+    # return False if previous char is no delimiter
+    if (self.nchar < 0 and self.buf[self.nchar-1].isalnum ()):
+      return False
+    # return False if next char is no delimiter
+    nextchar = self.buf[self.nchar + len (word)]
+    if (not (nextchar.isspace () or nextchar == '(')):
+      return False
+    return True
   def seek_line_comment_end (self):
     comment = ""
     while True:
@@ -223,6 +240,13 @@ class JSParseBuffer:
       else:
         break
     return comment
+  def nibbleCallParameters (self):
+    fromchar = self.nchar
+    self.nibble_until ('(')
+    self.advance ()
+    self.nibble_until (')', True)
+    self.advance ()
+    return self.buf[fromchar:self.nchar]
   # TODO: handle includes, somehow
   def nibble_until (self, string, skip_over_parentheses=False):
     fromchar = self.nchar
@@ -235,7 +259,7 @@ class JSParseBuffer:
       if (self.buf[self.nchar] in ['"', '\'', '`']):
         ochar = self.buf[self.nchar]
         if (self.advance ()):
-          self.nibble_until (ochar)
+          self.seekUntil (ochar)
       elif (self.startswith ("/*")):
         self.comment = self.seekUntil ("*/")
       elif (self.startswith ("//")):
@@ -260,37 +284,37 @@ def handleJSChunk (buf, filename, offset, caption):
     junk = jsbuf.nibble_until ("i18n")
     if (jsbuf.atEof ()):
       break
-    # skip over somethingelsei18n identifiers
-    if (jsbuf.nchar > 0 and jsbuf.buf[jsbuf.nchar-1].isalnum ()):
+    for candidate in ["i18n", "i18nc", "i18np", "i18ncp"]:
+      if (jsbuf.isAtFunctionCall (candidate)):
+        print ("found " + candidate)
+        call = candidate
+        break
+    if (call == ""):
+      # skip over somethingelsei18nsomethingelse identifiers, i.e. those not matched, above
       jsbuf.advance ()
       continue
-    # skip over i18nsomethingelse identifiers
-    jsbuf.advance (4) # i18n
-    if (jsbuf.startswith ("cp")):
-      call = "i18ncp"
-      jsbuf.advance (2)
-    elif (jsbuf.startswith ("c")):
-      call = "i18nc"
-      jsbuf.advance (1)
-    elif (jsbuf.startswith ("p")):
-      call = "i18np"
-      jsbuf.advance (1)
-    else:
-      call = "i18n"
-    nextchar = jsbuf.currentChar ()
-    if (not (nextchar.isspace () or nextchar == '(')):
-      continue
+
+    jsbuf.advance (len (call))
     comment = normalize (jsbuf.comment)
     line = jsbuf.nline
-    call += jsbuf.nibble_until ("(") + jsbuf.nibble_until (")", True) + ";"
+    parameters = jsbuf.nibbleCallParameters ()
+    # Ok, here's another crude hack... Strip "noquote()" from anything inside the i18n-call, as xgettext will ignore strings inside other calls
+    subbuf = JSParseBuffer (parameters)
+    parameters = ""
+    while (not subbuf.atEof ()):
+      parameters += subbuf.nibble_until ("noquote")
+      if (subbuf.isAtFunctionCall ("noquote")):
+        subbuf.advance (len ("noquote"))
+        parameters += subbuf.nibbleCallParameters ().strip ()[1:][:-1]	# strip parentheses, too
+    # Hack end.
     text = "/* "
     if (comment.lower ().startswith ("i18n:") or comment.lower ().startswith ("translators:")):
       text += "i18n: " + comment + "\n"
     text += "i18n: file: " + filename
     if (offset >= 0):
       text += ":" + str (offset + line + 1)
-    text += "\ni18n: ectx: (" + caption + ") */"
-    text += call
+    text += "\ni18n: ectx: (" + caption + ") */\n"
+    text += call + parameters + ";\n"
     outfile.write (text)
 
 # When we encounter a "file"-attribute, we generally dive right into parsing that file, i.e. we do depth first
@@ -304,7 +328,6 @@ def handleSubFile (filename, fetch_ids = False):
   if (not os.path.isfile (filename)):
     sys.stderr.write (getFileContext (node)  + " WARNING: File " + filename + " does not exist\n")
     return
-  print filename
   xmldoc = parseFile (filename)
   if (xmldoc.documentElement.hasAttribute ("po_id") and (xmldoc.documentElement.getAttribute ("po_id") != current_po_id)):
     toplevel_sources.append (filename)
