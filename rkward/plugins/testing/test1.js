@@ -1,5 +1,5 @@
 function preprocess () {
-	printIndented ("\t\t", "This is\n\t\a\ntest");
+	printIndented ("\t\t", "This is\n\t\a\ntest\n");
 }
 
 function calculate () {
@@ -13,7 +13,7 @@ function printout () {
 //	makeHeaderCode ("SimpleAnova", new Array ("Model", "Data"))
 	echo ('rk.echo (result)\n');
 
-	echo ('### i18n tests below ###\n');
+	comment ('i18n tests below');
 	echo ('print (' + i18n ("This is an i18n text") + ')\n');
 	echo ('print (' + i18n ('This is a single quoted i18n text, with a variety of quoting chars (\' " \` \" `), and a %1 inside:', 1) + ')\n');
 	echo ('# A comment: ' + i18nc ("Dummy context", noquote ("This is a non-auto-quoted i18n'ed text with context")) + '\n');

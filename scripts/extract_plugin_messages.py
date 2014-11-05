@@ -311,10 +311,10 @@ def handleJSChunk (buf, filename, offset, caption):
   jsbuf = JSParseBuffer (buf)
   while (True):
     call = ""
-    junk = jsbuf.nibble_until ("i18n")
+    junk = jsbuf.nibble_until (("i18n", "comment"))
     if (jsbuf.atEof ()):
       break
-    for candidate in ["i18n", "i18nc", "i18np", "i18ncp"]:
+    for candidate in ["i18n", "i18nc", "i18np", "i18ncp", "comment"]:
       if (jsbuf.isAtFunctionCall (candidate)):
         call = candidate
         break
@@ -343,6 +343,9 @@ def handleJSChunk (buf, filename, offset, caption):
     if (offset >= 0):
       text += ":" + str (offset + line + 1)
     text += "\ni18n: ectx: (" + caption + ") */\n"
+    if (call == "comment"):
+      call = "i18nc" # for xgettext
+      parameters = parameters.replace ('(', '("R code comment", ', 1)
     text += call + normalizeQuotes (parameters) + ";\n"
     outfile.write (text)
 

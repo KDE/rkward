@@ -85,6 +85,14 @@ i18ncp = function (msgctxt, msgid, msgid_plural, n) {
 	return (noquote (quote (ret)));
 }
 
+comment = function (message, indentation) {
+	var args = Array ().slice.call (arguments, 2);
+	args.unshift ("R code comment", noquote (message));
+	message = i18nc.apply (this, args);
+	if (typeof (indentation) == 'undefined') indentation = "";
+	printIndented (indentation + "# ", message + "\n");
+}
+
 makeHeaderCode = function (title, parameters) {
 	echo ("rk.header(" + quote (title));
 	if (parameters.length) {
