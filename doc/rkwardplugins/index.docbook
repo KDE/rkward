@@ -57,8 +57,8 @@ as Authors, publish date, the abstract, and Keywords -->
      and in the FDL itself on how to use it. -->
 <legalnotice>&FDLNotice;</legalnotice>
 
-<date>2014-10-13</date>
-<releaseinfo>0.6.2.00</releaseinfo>
+<date>2014-11-06</date>
+<releaseinfo>0.6.300</releaseinfo>
 
 <abstract>
 <para>
@@ -1800,6 +1800,92 @@ x	&lt;/components ...&gt;
 &lt;/document&gt;
 </programlisting>
 </sect1>
+</chapter>
+
+<chapter id="i18n">
+	<title>Plugin translations</title>
+	<para>
+		So far we have used a few concepts regarding translations or "i18n" (short for "internationaliation", which has 18 characters between i and n) in passing. In this chapter we
+		give a more in-depth account of what i18n functionaliy for &rkward; plugins. For the most part you will <emphasis>not</emphasis> need all of this in your plugins. However,
+		it may be a good idea to read over this chapter in full, as understanding these concept should help you creating plugins that are fully translatable, and that allow for a high
+		quality of translations.
+	</para>
+	<sect1 id="i18n_general"><title>General considerations</title>
+		<para>
+			One important point to understand about software translations, in contrast to translations of other text materials, is that translators will often have a rather hard
+			time getting a complete picture of <emphasis>what</emphasis> they are translating. Software translations are necessarily based on rather short fragments of text: Every
+			label you give to an <command>&lt;option&gt;</command> in a <command>&lt;radio&gt;</command>, every string that you mark for translation in an
+			<command>i18n()</command>-function call, will form a separate "translation unit". In essence, each such fragment will be presented to the translator in isolation. Well,
+			not complete isolation, as we do try to provide translator with as much meaningful context as can be extracted, automatically. But at some points translators will need
+			additional context to make sense of a string, especially where strings are short.
+		</para>
+	</sect1>
+	<sect1 id="i18n_xml"><title>i18n in &rkward;'s xml files</title>
+		<para>
+			For &rkward;'s xml files, i18n will mostly just work. If you are writing your own <command>.pluginmap</command> (e.g. for an <link linkend="external_plugins">external plugin</link>),
+			you will have to specify a <replaceable>po_id</replaceable> next to the pluginmap's <replaceable>id</replaceable>. This defines the "message catalog" to use. In general this should
+			be set identical to the <replaceable>id</replaceable> of your <command>.pluginmap</command>, but if you provide several <command>.pluginmap</command>s and want to control, how
+			message catalogs are divided up, this allows you to do so. The <replaceable>po_id</replaceable> is inherited by any <command>.pluginmap</command> you include, unless that declares
+			a different <replaceable>po_id</replaceable>, and by all plugins declared in it.
+		</para>
+		<para>
+			For plugins and help pages, you do not need to tell &rkward; which strings are to be translated, because that is generally evident from their usage. However, as explained above,
+			you should keep an eye out for strings that may be ambiguous or need some explaining in order to be translated, correctly. For strings that could have different meanings, provide
+			an <replaceable>i18n_context</replaceable> like this:
+		</para>
+		<programlisting>
+&lt;checkbox id="scale" label="Scale" i18n_context="Show the scale"/&gt;
+&lt;checkbox id="scale" label="Scale" i18n_context="Scale the plot"/&gt;
+		</programlisting>
+		<para>
+			Providing <replaceable>i18n_context</replaceable> will cause the two strings to be translated separately. Otherwise they would share a single translation. In addition, the context
+			is shown to the translator. The <replaceable>i18n_context</replaceable>-attribute is supported on all elements that can have translatable strings, somewhere, including elements that
+			contain text inside them (e.g. <command>&lt;text&gt;</command>-elements).
+		</para>
+		<para>
+			In other cases the string to translate has a single non-ambiguous meaning, but may still need some explaining. In this case you can add a comment that will be shown to translators.
+			Examples might include:
+		</para>
+		<programlisting>
+&lt;!-- i18n: No, this is not a typo for screen plot! --&gt;
+&lt;component id="scree_plot" label="Scree plot"/&gt;
+
+&lt;!-- i18n: If you can, please make this string short. Having more than some 15 chars
+looks really ugly at this point, and the meaning should be mostly self-evident to the
+user (selection from a list of values shown next to this element) --&gt;
+&lt;valueslot id="selected" label="Pick one"/&gt;
+		</programlisting>
+		<para>
+			Note that such comments must precede the element they apply to, and must start with either "i18n:" or "TRANSLATORS:".
+		</para>
+		<para>
+			Finally, in rare cases, you may want to exclude certain strings from translation. This may make sense, for example, if you offer a choice between
+			several R function names in a <command>&lt;radio&gt;</command>-control. You do not want these to be translated, then (but depending on the context, 
+			you should consider giving a descriptive label, instead):
+		</para>
+		<programlisting>
+&lt;radio id="transformation" label="R function to apply"&gt;
+  &lt;option id="as.list" noi18n_label="as.list()"/&gt;
+  &lt;option id="as.vector" noi18n_label="as.vector()"/&gt;
+  [...]
+&lt;/radio&gt;
+		</programlisting>
+		<para>
+			Note that you will omit the <replaceable>label</replaceable>-attribute, then, and specify <replaceable>noi18n_label</replaceable>, instead.
+		</para>
+	</sect1>
+	<sect1 id="i18n_js"><title>i18n in &rkward;'s js files and sections</title>
+	</sect1>
+	<sect1 id="i18n_workflow"><title>Translation maintainance</title>
+		<para>
+			Esp. for external plugins.
+		</para>
+	</sect1>
+	<sect1 id="i18n_translators"><title>Writing plugin translations</title>
+		<para>
+			Workflow and guidelines
+		</para>
+	</sect1>
 </chapter>
 
 <chapter id="chapter_about_information">
