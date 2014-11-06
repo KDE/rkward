@@ -1875,6 +1875,8 @@ user (selection from a list of values shown next to this element) --&gt;
 		</para>
 	</sect1>
 	<sect1 id="i18n_js"><title>i18n in &rkward;'s js files and sections</title>
+		<para>
+		</para>
 	</sect1>
 	<sect1 id="i18n_workflow"><title>Translation maintainance</title>
 		<para>
