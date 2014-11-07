@@ -1,0 +1,364 @@
+create repository rkward
+end repository
+
+match /trunk/rkward/
+  repository rkward
+  branch master
+end match
+
+match /branches/2010_10_18_backend_restructuring_branch/
+  repository rkward
+  branch development/2010_10_18_backend_restructuring_branch
+end match
+
+match /branches/development_branches/rkward_graphpics_device/
+  repository rkward
+  branch development/rkward_graphics_device
+end match
+
+match /branches/KDE4_port/
+  repository rkward
+  branch development/port_to_kde4
+end match
+
+match /branches/environment_objects/rkward/
+  repository rkward
+  branch development/environment_objects
+end match
+
+match /branches/release_branch_0.4.5/rkward/
+  repository rkward
+  branch releases/0.4.5
+end match
+
+match /branches/release_branch_0.4.6/
+  repository rkward
+  branch releases/0.4.6
+end match
+
+match /branches/release_branch_0.4.7/
+  repository rkward
+  branch releases/0.4.7
+end match
+
+match /branches/release_branch_0.4.8/
+  repository rkward
+  branch releases/0.4.8
+end match
+
+match /branches/release_branch_0.4.9/
+  repository rkward
+  branch releases/0.4.9
+end match
+
+match /branches/release_branch_0.5.1/
+  repository rkward
+  branch releases/0.5.1
+end match
+
+match /branches/release_branch_0.5.4/
+  repository rkward
+  branch releases/0.5.4
+end match
+
+match /branches/release_branch_0.5.5/
+  repository rkward
+  branch releases/0.5.5
+end match
+
+match /branches/release_branch_0.5.6/
+  repository rkward
+  branch releases/0.5.6
+end match
+
+match /branches/release_branch_0.5.7/
+  repository rkward
+  branch releases/0.5.7
+end match
+
+match /branches/release_branch_0.6.0/
+  repository rkward
+  branch releases/0.6.0
+end match
+
+match /branches/release_branches/rkward_0.6.1/
+  repository rkward
+  branch releases/0.6.1
+end match
+
+match /branches/release_branches/rkward_0.6.2/
+  repository rkward
+  branch releases/0.6.2
+end match
+
+#match /branches/vendor/rkward/
+#  action recurse
+#  repository rkward
+#  branch vendor
+#  min revision 2
+#  can't drop due to copy ???
+#end match
+
+match /branches/vendor/
+  action recurse
+#drop ??
+end match
+
+match /branches/external_plugins/
+#  drop
+end match
+
+match /branches/jss_dec_10/
+#  drop
+end match
+
+### tags
+match /tags/date_2005_11_2004_before_component_work/rkward/
+  repository rkward
+  branch refs/tags/development/date_2005_11_2004_before_component_work
+end match
+
+match /tags/release-0.4.0/rkward/
+  repository rkward
+  branch refs/tags/release/v0.4.0
+end match
+
+match /tags/release-0.4.0pre1/rkward/
+  repository rkward
+  branch refs/tags/release/v0.4.0-pre1
+end match
+
+match /tags/release-0.4.0pre2/rkward/
+  repository rkward
+  branch refs/tags/release/v0.4.0-pre2
+end match
+
+match /tags/release-0.4.0pre3/rkward/
+  repository rkward
+  branch refs/tags/release/v0.4.0-pre3
+end match
+
+match /tags/release-0.4.1pre1/rkward/
+  repository rkward
+  branch refs/tags/release/v0.4.1-pre1
+end match
+
+match /tags/release-0.4.1/rkward/
+  repository rkward
+  branch refs/tags/release/v0.4.1
+end match
+
+match /tags/release-0.4.2/rkward/
+  repository rkward
+  branch refs/tags/release/v0.4.2
+end match
+
+match /tags/release-0.4.5/
+  repository rkward
+  branch refs/tags/release/v0.4.5
+end match
+
+match /tags/release-0.4.5pre1/
+  repository rkward
+  branch refs/tags/release/v0.4.5-pre1
+end match
+
+match /tags/release-0.4.5pre2/rkward/
+  repository rkward
+  branch refs/tags/release/v0.4.5-pre2
+end match
+
+match /tags/release-0.4.6/
+  repository rkward
+  branch refs/tags/release/v0.4.6
+end match
+
+match /tags/release-0.4.6pre1/
+  repository rkward
+  branch refs/tags/release/v0.4.6-pre1
+end match
+
+match /tags/release-0.4.6pre2/
+  repository rkward
+  branch refs/tags/release/v0.4.6-pre2
+end match
+
+match /tags/release-0.4.7/
+  repository rkward
+  branch refs/tags/release/v0.4.7
+end match
+
+match /tags/release-0.4.7a/
+  repository rkward
+  branch refs/tags/release/v0.4.7a
+end match
+
+match /tags/release-0.4.8/
+  repository rkward
+  branch refs/tags/release/v0.4.8
+end match
+
+match /tags/release-0.4.8a/
+  repository rkward
+  branch refs/tags/release/v0.4.8a
+end match
+
+match /tags/release-0.4.9/
+  repository rkward
+  branch refs/tags/release/v0.4.9
+end match
+
+match /tags/release-0.4.9b/
+  repository rkward
+  branch refs/tags/release/v0.4.9b
+end match
+
+match /tags/release-0.5.0/
+  repository rkward
+  branch refs/tags/release/v0.5.0
+end match
+
+match /tags/release-0.5.0c/
+  repository rkward
+  branch refs/tags/release/v0.5.0c
+end match
+
+match /tags/release-0.5.0d/
+  repository rkward
+  branch refs/tags/release/v0.5.0d
+end match
+
+match /tags/release-0.5.1/
+  repository rkward
+  branch refs/tags/release/v0.5.1
+end match
+
+match /tags/release-0.5.2/
+  repository rkward
+  branch refs/tags/release/v0.5.2
+end match
+
+match /tags/release-0.5.3/
+  repository rkward
+  branch refs/tags/release/v0.5.3
+end match
+
+match /tags/release-0.5.4/
+  repository rkward
+  branch refs/tags/release/v0.5.4
+end match
+
+match /tags/release-0.5.5/
+  repository rkward
+  branch refs/tags/release/v0.5.5
+end match
+
+match /tags/release-0.5.7/
+  repository rkward
+  branch refs/tags/release/v0.5.7
+end match
+
+match /tags/release-0_3_3/rkward/
+  repository rkward
+  branch refs/tags/release/v0.3.3
+end match
+
+match /tags/release-0_3_4/rkward/
+  repository rkward
+  branch refs/tags/release/v0.3.4
+end match
+
+match /tags/release-0_3_5/rkward/
+  repository rkward
+  branch refs/tags/release/v0.3.5
+end match
+
+match /tags/release-0_3_6/rkward/
+  repository rkward
+  branch refs/tags/release/v0.3.6
+end match
+
+match /tags/release-0_3_7/rkward/
+  repository rkward
+  branch refs/tags/release/v0.3.7
+end match
+
+match /tags/release-rkward-0.6.2-rc1/
+  repository rkward
+  branch refs/tags/release/v0.6.2-rc1
+end match
+
+match /tags/release_0_1_0/rkward/
+  repository rkward
+  branch refs/tags/release/v0.1.0
+  action recurse
+end match
+
+#match /tags/release_0_1_0/$
+#   min revision 41
+#   max revision 41
+#  repository rkward
+#  branch refs/tags/release/v0.1.0
+#end match
+
+match /tags/release_0_2_0/rkward/
+  repository rkward
+  branch refs/tags/release/v0.2.0
+end match
+
+match /tags/release_0_2_1/rkward/
+  repository rkward
+  branch refs/tags/release/v0.2.1
+end match
+
+match /tags/release_0_2_2/rkward/
+  repository rkward
+  branch refs/tags/release/v0.2.2
+end match
+
+match /tags/release_0_2_5/rkward/
+  repository rkward
+  branch refs/tags/release/v0.2.5
+end match
+
+match /tags/release_0_2_6/rkward/
+  repository rkward
+  branch refs/tags/release/v0.2.6
+end match
+
+match /tags/release_0_2_6a/rkward/
+  repository rkward
+  branch refs/tags/release/v0.2.6a
+end match
+
+match /tags/release_0_2_7/rkward/
+  repository rkward
+  branch refs/tags/release/v0.2.7
+end match
+
+match /tags/release_0_2_8/rkward/
+  repository rkward
+  branch refs/tags/release/v0.2.8
+end match
+
+match /tags/release_0_2_9/rkward/
+  repository rkward
+  branch refs/tags/release/v0.2.9
+end match
+
+match /tags/release_0_3_0/rkward/
+  repository rkward
+  branch refs/tags/release/v0.3.0
+end match
+
+match /tags/release_0_3_2/rkward/
+  repository rkward
+  branch refs/tags/release/v0.3.2
+end match
+
+match /tags/start/rkward/
+  repository rkward
+  branch refs/tags/start
+end match
+
+
