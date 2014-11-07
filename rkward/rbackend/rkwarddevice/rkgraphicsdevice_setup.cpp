@@ -2,7 +2,7 @@
                           rkgraphicsdevice_setup  -  description
                              -------------------
     begin                : Mon Mar 18 20:06:08 CET 2013
-    copyright            : (C) 2013 by Thomas Friedrichsmeier 
+    copyright            : (C) 2013-2014 by Thomas Friedrichsmeier 
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -194,6 +194,9 @@ bool RKGraphicsDeviceDesc::init (pDevDesc dev, double pointsize, const QStringLi
 	dev->newPage = RKD_NewPage;
 	dev->polygon = RKD_Polygon;
 	dev->polyline = RKD_Polyline;
+#if R_VERSION >= R_Version (2, 12, 0)
+	dev->path = RKD_Path;
+#endif
 	dev->rect = RKD_Rect;
 	dev->size = RKD_Size;
 	// dev->onexit = RKD_OnExit; Called on user interrupts. NULL is OK.

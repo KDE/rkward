@@ -2,7 +2,7 @@
                           rkgraphicsdevice_frontendtransmitter  -  description
                              -------------------
     begin                : Mon Mar 18 20:06:08 CET 2013
-    copyright            : (C) 2013 by Thomas Friedrichsmeier 
+    copyright            : (C) 2013-2014 by Thomas Friedrichsmeier 
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -227,6 +227,18 @@ void RKGraphicsDeviceFrontendTransmitter::newData () {
 		} else if (opcode == RKDPolyline) {
 			QPolygonF pol (readPoints (streamer.instream));
 			device->polyline (pol, readPen (streamer.instream));
+		} else if (opcode == RKDPath) {
+			quint32 npol;
+			streamer.instream >> npol;
+			QVector<QPolygonF> polygons;
+			polygons.reserve (npol);
+			for (quint32 i = 0; i < npol; ++i) {
+				polygons.append (readPoints (streamer.instream));
+			}
+			bool winding;
+			streamer.instream >> winding;
+			QPen pen = readPen (streamer.instream);
+			device->polypath (polygons, winding, pen, readBrush (streamer.instream));
 		} else if (opcode == RKDRect) {
 			QRectF rect;
 			streamer.instream >> rect;

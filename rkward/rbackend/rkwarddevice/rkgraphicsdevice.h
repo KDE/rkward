@@ -2,7 +2,7 @@
                           rkgraphicsdevice_backendtransmitter  -  description
                              -------------------
     begin                : Mon Mar 18 20:06:08 CET 2013
-    copyright            : (C) 2013 by Thomas Friedrichsmeier 
+    copyright            : (C) 2013-2014 by Thomas Friedrichsmeier 
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -64,6 +64,7 @@ public:
 	void setClip (const QRectF& new_clip);
 	void polygon (const QPolygonF& pol, const QPen& pen, const QBrush &brush);
 	void polyline (const QPolygonF& pol, const QPen& pen);
+	void polypath (const QVector<QPolygonF>& polygons, bool winding, const QPen& pen, const QBrush& brush);
 	void clear (const QColor& col=QColor());
 	void image (const QImage &image, const QRectF &target_rect, double rot, bool interpolate);
 	QImage capture () const;

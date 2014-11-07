@@ -67,31 +67,32 @@ enum RKDOpcodes {
 	RKDLine,
 	RKDPolygon,
 	RKDPolyline,
-	RKDRect,               // 5
+	RKDPath,               // 5
+	RKDRect,
 	RKDTextUTF8,
 	RKDNewPage,
 	RKDClose,
-	RKDActivate,
-	RKDDeActivate,         // 10
+	RKDActivate,           // 10
+	RKDDeActivate,
 	RKDClip,
 	RKDMode,
 	RKDRaster,
-	RKDSetSize,
-	RKDStartGettingEvents, // 15
+	RKDSetSize,            // 15
+	RKDStartGettingEvents,
 	RKDStopGettingEvents,
 
 	// Synchronous operations
 	RKDFetchNextEvent,
 	RKDStrWidthUTF8,
-	RKDMetricInfo, 
-	RKDLocator,            // 20
+	RKDMetricInfo,         // 20
+	RKDLocator,
 	RKDNewPageConfirm,
 	RKDCapture,
 	RKDQueryResolution,
-	RKDGetSize,
+	RKDGetSize,            // 25
 
 	// Protocol operations
-	RKDCancel              // 25
+	RKDCancel
 };
 
 enum RKDEventCodes {

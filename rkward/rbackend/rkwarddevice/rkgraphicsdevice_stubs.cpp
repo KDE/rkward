@@ -2,7 +2,7 @@
                           rkgraphicsdevice_stubs  -  description
                              -------------------
     begin                : Mon Mar 18 20:06:08 CET 2013
-    copyright            : (C) 2013 by Thomas Friedrichsmeier 
+    copyright            : (C) 2013-2014 by Thomas Friedrichsmeier 
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -267,6 +267,26 @@ static void RKD_Polyline (int n, double *x, double *y, R_GE_gcontext *gc, pDevDe
 	}
 	WRITE_PEN ();
 	WRITE_LINE_ENDS ();
+}
+
+static void RKD_Path (double *x, double *y, int npoly, int *nper, Rboolean winding, R_GE_gcontext *gc, pDevDesc dev) {
+	RKGraphicsDataStreamWriteGuard guard;
+	WRITE_HEADER (RKDPath, dev);
+	quint32 total_points = 0;
+	quint32 _n = qMin (npoly, 1 << 24);	// skip stuff exceeding reasonable limits to keep protocol simple
+	RKD_OUT_STREAM << _n;
+	for (quint32 i = 0; i < _n; ++i) {
+		quint32 np = nper[i];	// Actually, a quint8 would probably do?
+		RKD_OUT_STREAM << np;
+		for (quint32 j = 0; j < np; ++j) {
+			RKD_OUT_STREAM << x[total_points] << y[total_points];
+			total_points++;
+		}
+	}
+	RKD_OUT_STREAM << (bool) winding;
+	WRITE_PEN ();
+	WRITE_LINE_ENDS ();
+	WRITE_FILL ();
 }
 
 static void RKD_Rect (double x0, double y0, double x1, double y1, R_GE_gcontext *gc, pDevDesc dev) {

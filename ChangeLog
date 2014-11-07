@@ -1,3 +1,4 @@
+- Implement polyPath()-drawing in RK() device
 - Pre-compile the common js code included in every plugin (only when compiled with Qt >= 4.7)
 - Improve crash recovery dialog to not prompt again for the same files
 - Fixed potential crash while the "RKWard Debug Messages" window is visible

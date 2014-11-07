@@ -237,6 +237,21 @@ void RKGraphicsDevice::polyline (const QPolygonF& pol, const QPen& pen) {
 	triggerUpdate ();
 }
 
+void RKGraphicsDevice::polypath (const QVector<QPolygonF>& polygons, bool winding, const QPen& pen, const QBrush& brush) {
+	RK_TRACE (GRAPHICS_DEVICE);
+
+	painter.setPen (pen);
+	painter.setBrush (brush);
+	QPainterPath path;
+	if (winding) path.setFillRule (Qt::WindingFill);
+	for (int i = 0; i < polygons.size (); ++i) {
+		path.addPolygon (polygons[i]);
+		path.closeSubpath ();
+	}
+	painter.drawPath (path);
+	triggerUpdate ();
+}
+
 void RKGraphicsDevice::image (const QImage& image, const QRectF& target_rect, double rot, bool interpolate) {
 	RK_TRACE (GRAPHICS_DEVICE);
 

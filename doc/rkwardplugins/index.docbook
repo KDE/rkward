@@ -1871,7 +1871,8 @@ user (selection from a list of values shown next to this element) --&gt;
 &lt;/radio&gt;
 		</programlisting>
 		<para>
-			Note that you will omit the <replaceable>label</replaceable>-attribute, then, and specify <replaceable>noi18n_label</replaceable>, instead.
+			Note that you will omit the <replaceable>label</replaceable>-attribute, then, and specify <replaceable>noi18n_label</replaceable>, instead. Also, note that in contrast to
+			<replaceable>i18n_context</replaceable> and comments, using <replaceable>noi18n_label</replaceable> will make your plugin incompatible with versions of &rkward; prior to 0.6.3.
 		</para>
 	</sect1>
 	<sect1 id="i18n_js"><title>i18n in &rkward;'s js files and sections</title>
