@@ -1877,7 +1877,61 @@ user (selection from a list of values shown next to this element) --&gt;
 	</sect1>
 	<sect1 id="i18n_js"><title>i18n in &rkward;'s js files and sections</title>
 		<para>
+			In contrast to the .xml files, making the js files of a plugin translatable requires more custom work. The key difference, here, is that there is no decent automatic way to tell,
+			whether a string is meant to be displayed as a human readable string, or a piece of code. So you need to mark this up, yourself. We have already shown examples of this, all along. Here
+			is a more complete description of the i18n-functions available in js code, and some hints for more complex cases:
 		</para>
+<variablelist>
+<varlistentry>
+	<term><command>i18n (msgid, [...])</command></term>
+	<listitem><para>The most important function. Marks the string for translation. The string (whether translated or not) is returned quoted using double quotes ('"'). An aribtrary
+			number of placeholders can be used in the string like shown below. Using such placeholders instead of concatenating small substrings is much easier for translators.:</para>
+		<programlisting>
+			i18n ("Compare objects %1 and %2", getString ('x'), getString ('y'));
+		</programlisting></listitem>
+</varlistentry>
+<varlistentry>
+	<term><command>i18nc (msgctxt, msgid, [...])</command></term>
+	<listitem><para>Same as <command>i18n()</command>, but additionally providing a message context:</para>
+		<programlisting>
+			i18nc ("proper name, not state of mind", "Mood test");
+		</programlisting></listitem>
+</varlistentry>
+<varlistentry>
+	<term><command>i18np (msgid_singular, msgid_plural, n, [...])</command></term>
+	<listitem><para>Same as <command>i18n()</command>, but for messages that may be different in singular or plural form (and some languages have differentiate yet more numerical forms). Note
+			that just like with <command>i18n()</command>, you can use an arbitrary number of replacements, but the first ('%1') is required, and has to be an integer.</para>
+		<programlisting>
+			i18np ("Comparing a single pair", "Comparing %1 distinct pairs", n_pairs);
+		</programlisting></listitem>
+</varlistentry>
+<varlistentry>
+	<term><command>i18ncp (msgctxt, msgid_singular, msgid_plural, n, [...])</command></term>
+	<listitem><para><command>i18np()</command> with added message context.</para></listitem>
+</varlistentry>
+<varlistentry>
+	<term><command>comment (comment, [indentation])</command></term>
+	<listitem><para>Echos a code comment, marked for translation. In contrast to the other i18n() functions, this is not quoted, but a '#' is added to each line of the comment.</para>
+		<programlisting>
+			comment ("Transpose the matrix");
+			echo ('x &lt;- t (x)\n');
+		</programlisting></listitem>
+</varlistentry>
+</variablelist>
+		<sect2 id="i18n_js_quoting"><title>i18n and quotes</title>
+			<para>
+				For the most part, you will not have to worry about i18n() behavior with respect to quotes. As, typically, translatable strings are string literals, quoting them is just the
+				right thing to do, and saves you some typing. Also, in functions like <command>makeHeaderCode()</command> that usually quote their arguments, i18n()'ed strings are protected
+				from duplicate quoting. Essentially, this works, by sending the translated string first through <command>quote()</command> (to make it quoted), then through
+				<command>noquote()</command> (to protect it from additional quoting). Should you require a translatable string that is not quoted, use <command>i18n(noquote ("My message"))</command>.
+				Should you require a translatable string to be quoted, a second time, send it through <command>quote()</command>, <emphasis>twice</emphasis>.
+			</para>
+			<para>
+				That said, it is generally not a good idea to make bits like function names or variable names translatable. For one thing, R, the programming language, is inherently in English,
+				and there is not internationalization. Code comments are a different beast, but you should use the <command>comment()</command>-function for those. Secondly, making syntactically relevant parts of the generated code translatable means that translations could actually break your plugin.
+				E.g. if an unsuspecting translator translates a string meant as a variable name in two distinct words with a space in between.
+			</para>
+		</sect2>
 	</sect1>
 	<sect1 id="i18n_workflow"><title>Translation maintainance</title>
 		<para>
