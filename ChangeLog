@@ -11,6 +11,7 @@
     - Don't forget to write documentation
       - Also general documentation for JS-functions is missing!
       - Also adjust all examples throughout the docs.
+      - Document message merging, or better yet: Make extract_plugin_messages.py take care of that
     - What should be the policy regarding installing translations (80% criterion)
     - discuss i18n_context vs. comments
     - Important pitfalls: String comparison with checkbox / radio labels! (Probably wrong in some plugins)

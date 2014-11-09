@@ -1918,6 +1918,15 @@ user (selection from a list of values shown next to this element) --&gt;
 		</programlisting></listitem>
 </varlistentry>
 </variablelist>
+	<para>
+		To add comments to the translators (see <link linkend="i18n_xml">above</link> for a discussion of the differences between comment and context), add a comment starting with "i18n:" or
+		"translators:" directly above the <command>i18n()</command>-call to comment. E.g.:
+	</para>
+	<programlisting>
+		// i18n: Spelling is correct: Scree plot.
+		echo ('rk.header (' + i18n ("Scree plot") + ')\n');
+	</programlisting>
+
 		<sect2 id="i18n_js_quoting"><title>i18n and quotes</title>
 			<para>
 				For the most part, you will not have to worry about i18n() behavior with respect to quotes. As, typically, translatable strings are string literals, quoting them is just the
@@ -1935,8 +1944,25 @@ user (selection from a list of values shown next to this element) --&gt;
 	</sect1>
 	<sect1 id="i18n_workflow"><title>Translation maintainance</title>
 		<para>
-			Esp. for external plugins.
+			Now that you have made your plugin translatable, how do you actually get it translated? In general you only need to worry about this, when develoing an <link linkend="external_plugins">
+			external plugin</link>. For plugins in &rkward;'s main repository, all the magic is done for you. Here's the basic workflow. Note that you need the "gettext" tools, installed:
 		</para>
+		<itemizedlist>
+			<listitem><para>Mark up all strings, providing context and comments as needed</para></listitem>
+			<listitem><para>Run <command>python scripts/extract_plugin_messages.py /path/to/my.pluginmap</command>. scripts/extract_plugin_messages.py is not currently part of the source
+					releases, but can be found in a source repository checkout.</para></listitem>
+			<listitem><para>Distribute the resulting <command>rkward__<replaceable>POID</replaceable>.pot</command> file to your translators. For external plugins, it is recommended to place it
+					in a subfolder "po" in inst/rkward.</para></listitem>
+			<listitem><para>Translator opens the file in a translation tool such as <command>lokalize</command>. Actually, even if you are not going to prepare any translation, yourself, 
+					you should try this step for yourself. Browse the extracted strings looking out for problems / ambiguities.</para></listitem>
+			<listitem><para>Translator saves the translation as <command>rkward__<replaceable>POID</replaceable>.<replaceable>xx</replaceable>.po</command> (where
+					<replaceable>xx</replaceable> is the language code), and sends it back to you.</para></listitem>
+			<listitem><para>You run <command>rkward__<replaceable>POID</replaceable>.<replaceable>xx</replaceable>.po</command> and copy the resulting <command>messages.mo</command> to
+					<command><replaceable>DIR_OF_PLUGINMAP</replaceable>/po/<replaceable>xx</replaceable>/LC_MESSAGES/rkward__<replaceable>POID</replaceable>.mo</command> (where
+					<replaceable>xx</replaceable> is the language code, again).</para></listitem>
+			<listitem><para>You should also include the non-compiled translation (i.e. <command>rkward__<replaceable>POID</replaceable>.<replaceable>xx</replaceable>.po</command>) in
+					your distribution, in the "po" subdirectory.</para></listitem>
+		</itemizedlist>
 	</sect1>
 	<sect1 id="i18n_translators"><title>Writing plugin translations</title>
 		<para>
