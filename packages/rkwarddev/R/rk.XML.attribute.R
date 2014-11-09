@@ -25,6 +25,9 @@
 #'    or an object of class \code{XiMpLe.node} (whose \code{id} will be extracted and used).
 #' @param value Character string, new value for the attribute.
 #' @param label Character string, label associated with the attribute.
+#' @param i18n A named list with the optional element \code{context}, to give some \code{i18n_context}
+#'    information for this node. If set to \code{FALSE}, the attribute \code{label} will be renamed into 
+#'    \code{noi18n_label}.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
@@ -36,7 +39,7 @@
 #' test.attribute <- rk.XML.attribute(test.checkbox, value="bar2", label="bar")
 #' cat(pasteXML(test.attribute))
 
-rk.XML.attribute <- function(id, value=NULL, label=NULL){
+rk.XML.attribute <- function(id, value=NULL, label=NULL, i18n=NULL){
   # let's see if we need to extract IDs first
   attr.list <- list(id=check.ID(id))
 
@@ -51,6 +54,9 @@ rk.XML.attribute <- function(id, value=NULL, label=NULL){
     attr.list[["label"]] <- label
   } else {}
 
+  # check for additional i18n info; if FALSE, "label" will be renamed to "noi18n_label"
+  attr.list <- check.i18n(i18n=i18n, attrs=attr.list)
+  
   node <- XMLNode("attribute", attrs=attr.list)
 
   return(node)

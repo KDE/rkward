@@ -1,7 +1,7 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
-\section{Changes in rkwarddev version 0.06-6 (2014-10-26)}{
+\section{Changes in rkwarddev version 0.06-6 (2014-11-09)}{
   \subsection{fixed}{
     \itemize{
       \item \code{rk.XML.optionset()} does now allow to re-use objects defined in the same
@@ -15,6 +15,9 @@
       \item all \code{"help"} values can now be a list of character strings or XiMpLe nodes,
         to have more control over the markup
       \item added \code{"property"} and \code{"duplicates"} arguments to \code{rk.XML.valueslot()} and \code{rk.XML.varslot()}.
+      \item \code{rk.XML.pluginmap()} now adds a \code{"po_id"} attribute to pluginmaps, necessary for i18n
+      \item new attribute \code{"i18n"} added to several XML functions; it takes a list with the named arguments
+        \code{"comment"} or \code{"context"} to either produce an i18n comment node or an \code{"i18n_context"} attribute
     }
   }
 }

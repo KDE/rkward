@@ -30,6 +30,9 @@
 #' @param component Character string, name of the component this node belongs to. Only needed if you
 #'    want to use the scan features for automatic help file generation; needs \code{help} to be set
 #'    accordingly, too!
+#' @param i18n A named list with the optional element \code{context}, to give some \code{i18n_context}
+#'    information for this node. If set to \code{FALSE}, the attribute \code{label} will be renamed into 
+#'    \code{noi18n_label}.
 #' @return An object of class \code{XiMpLe.node}.
 #' @note There's also a simple wrapper function \code{rk.XML.checkbox}.
 #' @export
@@ -42,7 +45,7 @@
 #'     rk.XML.cbox(label="bar", value="bar2"))))
 #' cat(pasteXML(test.checkboxes))
 
-rk.XML.cbox <- function(label, value="true", un.value=NULL, chk=FALSE, id.name="auto", help=NULL, component=rk.get.comp()){
+rk.XML.cbox <- function(label, value="true", un.value=NULL, chk=FALSE, id.name="auto", help=NULL, component=rk.get.comp(), i18n=NULL){
   if(identical(id.name, "auto")){
     id <- auto.ids(label, prefix=ID.prefix("checkbox"))
   } else {
@@ -56,6 +59,9 @@ rk.XML.cbox <- function(label, value="true", un.value=NULL, chk=FALSE, id.name="
   if(isTRUE(chk)){
     attr.list[["checked"]] <- "true"
   } else {}
+
+  # check for additional i18n info; if FALSE, "label" will be renamed to "noi18n_label"
+  attr.list <- check.i18n(i18n=i18n, attrs=attr.list)
 
   checkbox <- XMLNode("checkbox", attrs=attr.list)
 

@@ -1345,3 +1345,47 @@ rk.register.options <- function(options, parent.node){
     })
 }
 ## end function rk.register.options()
+
+
+## function check.i18n()
+# checks for additional i18n info in XiMpLe nodes. returns either an appended or altered list of
+# attributes, or a XiMpLe node with an i18n comment
+# i18n: either a list with possible named elements "context" or "comment", or FALSE;
+#   if the latter, "label" will be renamed to "noi18n_label", "title" to "noi18n_title"
+# attrs: a list of previously defined attributes
+# comment: if TRUE, returns a comment node, else a list of attributes
+check.i18n <- function(i18n=NULL, attrs=list(), comment=FALSE){
+  if(isTRUE(comment)){
+    result <- NULL
+  } else {
+    result <- attrs
+  }
+  if(is.null(i18n)){
+    return(result)
+  } else {
+    if(is.list(i18n)){
+      if(!names(i18n) %in% c("comment", "context")){
+        stop(simpleError("i18n: only elements named \"comment\" or \"context\" are supported!"))
+      } else {}
+      if(isTRUE(comment)){
+        if("comment" %in% names(i18n)){
+          result <- XMLNode("!--", paste0("i18n: ", i18n[["comment"]]))
+        } else {}
+      } else {
+        if("context" %in% names(i18n)){
+          result[["i18n_context"]] <- i18n[["context"]]
+        } else{}
+      }
+    } else if(is.logical(i18n) & !isTRUE(i18n)){
+      if("label" %in% names(result)){
+        result[["noi18n_label"]] <- result[["label"]]
+        result[["label"]] <- NULL
+      } else {}
+      if("title" %in% names(result)){
+        result[["noi18n_title"]] <- result[["title"]]
+        result[["title"]] <- NULL
+      } else {}
+    } else {}
+  }
+  return(result)
+} ## end function check.i18n()
