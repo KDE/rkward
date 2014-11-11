@@ -4,8 +4,8 @@ BUGADDR = "http://p.sf.net/rkward/bugs"
 
 import codecs
 import sys
-import os.path
 import os
+import subprocess
 from xml.dom import minidom
 import HTMLParser
 import copy
@@ -408,8 +408,24 @@ while i < len (toplevel_sources):
 # Run xgettext on all generated .pot.cpp files
 for potcpp in initialized_pot_files:
   potcppfile = os.path.join (outdir, potcpp + ".pot.cpp")
+  templatename = "rkward__" + potcpp
+  finalpotfile = os.path.join (outdir, templatename + ".pot")
   # NOTE: using --no-location, as that just adds meaningless references to the temporary .pot.cpp-file.
-  os.system ("xgettext --from-code=UTF-8 -C -kde -ci18n -ki18n:1 -ki18nc:1c,2 -ki18np:1,2 -ki18ncp:1c,2,3 -ktr2i18n:1 " + 
-             "-kI18N_NOOP:1 -kI18N_NOOP2:1c,2 -kaliasLocale -kki18n:1 -kki18nc:1c,2 -kki18np:1,2 -kki18ncp:1c,2,3 --no-location " +
-             "--msgid-bugs-address=" + BUGADDR + " -o " + os.path.join (outdir, "rkward__" + potcpp + ".pot ") + potcppfile)
+  res = subprocess.call (["xgettext", "--from-code=UTF-8", "-C", "-kde", "-ci18n", "-ki18n:1", "-ki18nc:1c,2", "-ki18np:1,2", "-ki18ncp:1c,2,3",
+                    "-ktr2i18n:1", "-kI18N_NOOP:1", "-kI18N_NOOP2:1c,2", "-kaliasLocale", "-kki18n:1", "-kki18nc:1c,2", "-kki18np:1,2",
+                    "-kki18ncp:1c,2,3", "--no-location", "--msgid-bugs-address=" + BUGADDR, "-o", "finalpotfile", potcppfile])
+  if (res):
+    sys.stderr.write ("calling xgettext failed with exit code " + res)
   os.remove (potcppfile)
+  # merge existing translations
+  transfiles = os.listdir (os.path.join (outdir))
+  for trans in transfiles:
+    abstrans = os.path.join (outdir, trans)
+    # is it really a translation file?
+    if (trans.startswith (templatename + ".") and trans.endswith (".po") and ((len (templatename) + 6) >= len (trans) <= (len (templatename) + 7))):
+      res = subprocess.call (["msgmerge", "-o", abstrans + ".new", abstrans, finalpotfile])
+      if (res):
+        sys.stderr.write ("Failed to merge messages for " + abstrans)
+      else:
+        os.remove (abstrans)
+        os.rename (abstrans + ".new", abstrans)
