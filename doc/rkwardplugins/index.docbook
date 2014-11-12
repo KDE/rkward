@@ -349,6 +349,10 @@ This is a guide to writing plugins for &rkward;.
 	<para>
 		These elements are the counterpart to the <command>&lt;varselector&gt;</command>. They represent <quote>slots</quote> into which the user can put variables. You will note that the <parameter>source</parameter> is set to the same value as the <parameter>id</parameter> of the <command>&lt;varselector&gt;</command>. This means, the <command>&lt;varslot&gt;</command>s will each take their variables from the varselector. The <command>&lt;varslot&gt;</command>s also have to be given an <parameter>id</parameter>. They may have a <parameter>label</parameter>, and they may be set to <parameter>required</parameter>. This means that the <guibutton>Submit</guibutton> button will not be enabled until the <command>&lt;varslot&gt;</command> holds a valid value. Finally the <parameter>type</parameter> attribute is not interpreted yet, but it will be used to take care that only the correct types of variables will be allowed in the <command>&lt;varslot&gt;</command>.
 	</para>
+	<para>
+		In case you are wondering about the <parameter>i18n_context</parameter>-attribute: This is to provide context to help the correct translation of the word "against", used as the
+		<command>&lt;varslot&gt;</command>'s label, but does not affect the functionality of the plugin, directly. More on this in <link linkend="i18n_general">a separate chapter</link>.
+	</para>
 	<programlisting>
 						&lt;radio id="hypothesis" label="using test hypothesis"&gt;
 							&lt;option value="two.sided" label="Two-sided"/&gt;
@@ -540,17 +544,19 @@ res &lt;- t.test (
 	<sect2 id="sect_JS_printout"><title>printout()</title>
 		<programlisting>
 function printout () {
-	echo ('rk.header ("Two Variable t-Test")\n');
+	echo ('rk.header (' + i18n ("Two Variable t-Test") + ')\n');
 	echo ('rk.print (res)\n');
 }
 		</programlisting>
 		<para>
-			And this was all there is to the printout function in most cases. <function>rk.header()</function> prints a standard headline for the results. You can also add some more information to this, if you like, e.g.:
+			And this was all there is to the printout function in most cases. <function>rk.header()</function> prints a standard headline for the results. Note that in the .js files, you have to
+			mark up all translatable strings by hand, using <command>i18n()</command>, or some alternative commands. More on this in the <link linkend="i18n_js">chapter on internationaliation</link>.
+			You can also add some more information to this, if you like, e.g.:
 		</para>
 		<programlisting>
 function printout () {
-	makeHeaderCode ("Two Variable t-Test", new Array ("Assume equal variances",
-		getString ("varequal"), "Confidence level", getString ("conflevel")))
+	makeHeaderCode (i18n ("Two Variable t-Test"), new Array (i18n ("Assume equal variances"),
+		getBoolean ("varequal.state") ? i18n ("yes") : i18n ("no"), i18n ("Confidence level"), getString ("conflevel")))
 	echo ('rk.print (res)\n');
 }
 		</programlisting>
@@ -597,7 +603,8 @@ function printout () {
 			Statements in a lower block should be indented with one tab (see example below).
 		</para>
 		<para>
-			If you do very complex calculations, add a comment here and there, esp. to mark up logical sections.
+			If you do very complex calculations, add a comment here and there, esp. to mark up logical sections. Note that there is a dedicated function <command>comment()</command> for inserting
+			translatable comments in the generated code.
 		</para>
 		<para>
 			For example, generated code might look like this. The same code without indentation or comments would be pretty hard to read, despite its modest complexity:
@@ -628,9 +635,9 @@ function calculate () {
 	echo ('x &lt;- &lt;' + getString ("x") + ')\n');
 	echo ('results &lt;- list ()\n');
 
-	if (getBoolean ("domean.state")) echo ("results$'Mean value' &lt;- mean (x)\n");
-	if (getBoolean ("domedian.state")) echo ("results$'Median' &lt;- median (x)\n");
-	if (getBoolean ("dosd.state")) echo ("results$'Standard deviation' &lt;- sd (x)\n");
+	if (getBoolean ("domean.state")) echo ("results$" + i18n ("Mean value") + " &lt;- mean (x)\n");
+	if (getBoolean ("domedian.state")) echo ("results$" + i18n ("Median") + " &lt;- median (x)\n");
+	if (getBoolean ("dosd.state")) echo ("results$" + i18n ("Standard deviation") + " &lt;- sd (x)\n");
 	//...
 }
 		</programlisting>
@@ -801,8 +808,8 @@ R code.
 					&lt;option value="variable" checked="true" label="another variable (select below)"/&gt;
 					&lt;option value="constant" label="a constant value (set below)"/&gt;
 				&lt;/radio&gt;
-				&lt;varslot id="y" types="number" source="vars" required="true" label="variable"/&gt;
-				&lt;spinbox id="constant" initial="0" label="constant" /&gt;
+				&lt;varslot id="y" types="number" source="vars" required="true" label="variable" i18n_context="Noun; a variable"/&gt;
+				&lt;spinbox id="constant" initial="0" label="constant" i18n_context="Noun; a constant"/&gt;
 			&lt;/column&gt;
 		&lt;/row&gt;
 	&lt;/dialog&gt;
@@ -909,7 +916,7 @@ R code.
 		&lt;tab [...]&gt;
 			[...]
 		&lt;/tab&gt;
-		&lt;tab label="Plot Options"&gt;
+		&lt;tab label="Plot Options" i18n_context="Options concerning the plot"&gt;
 			&lt;embed id="plotoptions" component="rkward::plot_options"/&gt;
 		&lt;/tab&gt;
 		&lt;tab [...]&gt;
@@ -1060,7 +1067,7 @@ function printout () {
 function doCommonStuff () {
 	// perhaps fetch some options, etc.
 	// ...
-	echo ("# This is R code you want in several different plugins\n");
+	comment ("This is R code you want in several different plugins\n");
 	// ...
 }
 	</programlisting>
@@ -1363,7 +1370,7 @@ This chapter contains information on some topics that are useful only to certain
 		// be generated.
 
 		if (full) {
-			echo ('rk.header ("An example plot")\n\n');
+			echo ('rk.header (' + i18n ("An example plot") + ')\n\n');
 			echo ('rk.graph.on ()\n');
 		}
 		// only the following section will be generated for full==false
@@ -1941,6 +1948,37 @@ user (selection from a list of values shown next to this element) --&gt;
 				E.g. if an unsuspecting translator translates a string meant as a variable name in two distinct words with a space in between.
 			</para>
 		</sect2>
+
+		<sect2 id="i18n_js_compatibility"><title>i18n and backwards compatibility</title>
+			<para>
+				One unfortunate aspect of the lack of <command>i18n()</command>-support in &rkward; versions up to 0.6.2 is that adding <command>i18n()</command> calls will make the plugin require
+				&rkward; version 0.6.3. If your plugin is developed outside &rkward;'s official release, this may be a problem. Here are some possible options on how to handle this:
+			</para>
+		<itemizedlist>
+			<listitem><para>Provide the plugin in two versions for &rkward; &gt;= 0.6.3 and &rkward; &lt; 0.6.3, as described in the chapter on 
+					<link linkend="sect_dependencies_rkward_version">handling dependencies</link></para></listitem>
+			<listitem><para>Simply don't translate the strings in the .js-file, yet. Obviously this is an easy, but rather inelegant solution.</para></listitem>
+			<listitem><para>Include some support code in your .js-file(s) like shown below:</para></listitem>
+		</itemizedlist>
+		<programlisting>
+			// js-function "comment" was not defined before 0.6.3
+			if (typeof (comment) == 'undefined) {
+				// define function i18n(), and any others you may need. Note that your implementation could actually be simpler than
+				// shown, here, e.g. if you do not make use of placeholders.
+				i18n = function (msgid) {
+					var ret = msgid;
+					for (var i = 1; i &lt; arguments.length; i++) {
+						ret = ret.replace(new RegExp("%" + i, 'g'), arguments[i]);
+					}
+					if (msgid.noquote) {
+						ret.noquote = msgid.noquote;
+						return (ret);
+					}
+					return (noquote (quote (ret)));
+				}
+			}
+		</programlisting>
+		</sect2>
 	</sect1>
 	<sect1 id="i18n_workflow"><title>Translation maintainance</title>
 		<para>
@@ -1962,12 +2000,27 @@ user (selection from a list of values shown next to this element) --&gt;
 					<replaceable>xx</replaceable> is the language code, again).</para></listitem>
 			<listitem><para>You should also include the non-compiled translation (i.e. <command>rkward__<replaceable>POID</replaceable>.<replaceable>xx</replaceable>.po</command>) in
 					your distribution, in the "po" subdirectory.</para></listitem>
+			<listitem><para>For any update of your plugin, run <command>python scripts/extract_plugin_messages.py /path/to/my.pluginmap</command> to update the .pot file, but also the
+					existing .po-files.</para></listitem>
 		</itemizedlist>
 	</sect1>
 	<sect1 id="i18n_translators"><title>Writing plugin translations</title>
 		<para>
-			Workflow and guidelines
+			We assume you know your trade as a translator, or are willing to read up on it, elsewhere. A few words specifically about translations of RKWard plugins, though:
 		</para>
+		<itemizedlist>
+			<listitem><para>RKWard plugins were not translatable until version 0.6.3, and were mostly not written with i18n in mind, before then. Thus you are going to encounter rather
+					more ambiguous strings, and other i18n problems than in other mature projects. Please don't just silently work around these, but let us (or the plugin maintainers) 
+					know, so we can fix these issues.</para></listitem>
+			<listitem><para>Many RKWard plugins refer to highly specialized terms, from data handling and statistics, but also from other fields of science. In many cases, a good translation
+					will require at least basic knowledge of these fields. In some cases, there <emphasis>is</emphasis> no good translation for a technical term, and the best option may 
+					be to leave the term untranslated, or to include the English term in parentheses. Don't focus too much on the 100% mark of translated strings, focus on providing 
+					a good translation, even if that means skipping some strings (or even skipping some message catalogs as a whole). Other users may be able to fill in any gaps in technical
+					terms.</para></listitem>
+			<listitem><para>At the time of this writing, &rkward;'s project hosting is about to change, and this also affect the translation workflow. Do read comments accompanying 
+					the .pot-files, on how translations should be handled. If in doubt, it is never wrong to send your work the the rkward-devel mailing list, or to ask for up-to-date instructions,
+					there.</para></listitem>
+		</itemizedlist>
 	</sect1>
 </chapter>
 
