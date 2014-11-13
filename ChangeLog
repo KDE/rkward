@@ -1,3 +1,4 @@
+- New Object based convience method for printing headers from plugins
 - Implement polyPath()-drawing in RK() device
 - Pre-compile the common js code included in every plugin (only when compiled with Qt >= 4.7)
 - Improve crash recovery dialog to not prompt again for the same files
@@ -7,13 +8,11 @@
 - IN PROGESS: Allow plugins to be translated
   + Notes:
     - Is it a problem to sync KDE_LANG and LANGUAGE? Should that also be set for the backend?
-    - Message extraction: Should we do this in R, using XiMpLe? That might allow us to give better context / comments
+    - Lifetime of RKMessageCatalogs? Should probably be destructable, at least when reloading pluginmaps. Should be possible to implement in a sane ways 
+      using QSharedPointer magic.
     - Don't forget to write documentation
       - Also general documentation for JS-functions is missing!
-      - Also adjust all examples throughout the docs.
-      - Document message merging, or better yet: Make extract_plugin_messages.py take care of that
     - What should be the policy regarding installing translations (80% criterion)
-    - discuss i18n_context vs. comments
     - Important pitfalls: String comparison with checkbox / radio labels! (Probably wrong in some plugins)
     - i18n'ed plugins vs. automated tests
       - Sure, we can run automated tests under C locale. But it would be nice to have an additional check that translations don't cause
@@ -21,13 +20,7 @@
         - At least we could check for errors
         - Perhaps a special diff of the generated R commands, where all quoted strings and comments are stripped?
    - i18n calls
-    - wcgrep getStringAttribute.*i18n
-    - element text
-   - i18n in JS:
-     - should return strings quoted, by default. Safer and less typing.
-       - enforces suggested policy of not i18n'ing functional parts of the code (variable / function names)
-     - Additional function comment(), equivalent to printIndented ("#", i18n (noquote ("something")))
-     - An elegant (object based?) way to fix the makeHeaderCode()-mess?
+     - <about> data!
 
 --- Version 0.6.2 - Oct-20-2014
 - In data editor, indicate NAs, explicitly

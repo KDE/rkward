@@ -97,16 +97,25 @@ makeHeaderCode = function (title, parameters) {
 	echo ("rk.header(" + quote (title));
 	if (parameters.length) {
 		echo (", parameters=list(");
-		for (var p = 0; p < parameters.length; ++p) {
-			if (p) {
-				if (!(p % 2)) echo (",\n\t");
-				else echo (", ");
-			}
-			echo (quote(parameters[p]));
+		for (var p = 0; p < parameters.length; p += 2) {
+			if (p) echo (",\n\t");
+			echo (quote (parameters[p]) + "=" + quote (parameters[p+1]));
 		}
 		echo (")");
 	}
 	echo (")\n");
+}
+
+Header = function (title) {
+	this.title = title;
+	this.parameters = [];
+	this.add = function (caption, value) {
+		this.parameters.push (caption, value);
+		return this;
+	}
+	this.print = function () {
+		makeHeaderCode (this.title, this.parameters);
+	}
 }
 
 getValue = function (id) {

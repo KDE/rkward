@@ -9,8 +9,10 @@ function calculate () {
 }
 
 function printout () {
-	makeHeaderCode ("SimpleAnova", new Array (i18nc ("GLM Model specification", "Model"), getValue ("model"), "Data", getValue ("model.table"), "Test", noquote ("print ('hi')")))
-//	makeHeaderCode ("SimpleAnova", new Array ("Model", "Data"))
+	new Header (i18n ("SimpleAnova"))
+			.add (i18nc ("GLM Model specification", "Model"), getValue ("model"))
+			.add (i18n ("Data"), getValue ("model.table"))
+			.add ("Test", noquote ("print ('hi')")).print ();
 	echo ('rk.echo (result)\n');
 
 	comment ('i18n tests below');

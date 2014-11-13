@@ -128,6 +128,7 @@
 	if (length (parameters)) {
 		# legacy handling: parameter=value used to be passed as parameter, value
 		if (is.null (names (parameters))) {
+			warning ("Unnamed parameter lists are deprecated in rk.header()")
 			s <- seq.int (1, length (parameters), by=2)
 			pnames <- as.character (parameters[s])
 			parameters <- parameters[s+1]
