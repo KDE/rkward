@@ -1,0 +1,6 @@
+# These often present in developer's system
+.kdev4/
+build/
+# Generated from cmake
+rkward/resource.ver
+rkward/version.h
