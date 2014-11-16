@@ -93,28 +93,31 @@ comment = function (message, indentation) {
 	printIndented (indentation + "# ", message + "\n");
 }
 
-makeHeaderCode = function (title, parameters) {
-	echo ("rk.header(" + quote (title));
+makeHeaderCode = function (title, parameters, level) {
+	if (typeof (indentation) == 'undefined') indentation = "";
+	echo (indentation + "rk.header (" + quote (title));
 	if (parameters.length) {
 		echo (", parameters=list(");
 		for (var p = 0; p < parameters.length; p += 2) {
-			if (p) echo (",\n\t");
+			if (p) echo (",\n" + indentation + "\t");
 			echo (quote (parameters[p]) + "=" + quote (parameters[p+1]));
 		}
 		echo (")");
 	}
+	if (typeof (level) != 'undefined') echo (", level=" + level);
 	echo (")\n");
 }
 
-Header = function (title) {
+Header = function (title, level) {
 	this.title = title;
+	this.level = level;
 	this.parameters = [];
 	this.add = function (caption, value) {
 		this.parameters.push (caption, value);
 		return this;
 	}
-	this.print = function () {
-		makeHeaderCode (this.title, this.parameters);
+	this.print = function (indentation) {
+		makeHeaderCode (this.title, this.parameters, this.level, this.indentation);
 	}
 }
 
