@@ -65,7 +65,7 @@ RKRecoverDialog::~RKRecoverDialog () {
 void RKRecoverDialog::deleteButtonClicked () {
 	RK_TRACE (DIALOGS);
 
-	if (KMessageBox::warningContinueCancel (this, i18np ("You are about to delete the recovery file %2. There will be no way to bring it back. Continue?", "You are about to delete %1 recovery files (the most recent one is %2). There will be no way to bring them back. Continue?", files.count (), files.first ())) != KMessageBox::Continue) return;
+	if (KMessageBox::warningContinueCancel (this, i18np ("You are about to delete the recovery file %2. There will be no way to bring it back. Really delete it?", "You are about to delete %1 recovery files (the most recent one is %2). There will be no way to bring them back. Really delete them?", files.count (), files.first ()), i18n ("Really delete recovery file(s)?"), KStandardGuiItem::del()) != KMessageBox::Continue) return;
 
 	for (int i = 0; i < files.count (); ++i) {
 		QFile (files[i]).remove ();	// TODO: error handling?
