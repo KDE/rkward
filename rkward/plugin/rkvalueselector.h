@@ -2,7 +2,7 @@
                           rkvalueselector  -  description
                              -------------------
     begin                : Weg May 8 2013
-    copyright            : (C) 2013 by Thomas Friedrichsmeier
+    copyright            : (C) 2013-2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -36,6 +36,7 @@ public:
 	~RKValueSelector ();
 	int type () { return ComponentValueSelector; };
 	QVariant value (const QString &modifier=QString ());
+	QStringList getUiLabelPair () const;
 private slots:
 	void selectionPropertyChanged ();
 	void listSelectionChanged ();
@@ -50,6 +51,7 @@ private:
 	RKComponentPropertyStringList *labels;
 	RKComponentPropertyStringList *available;
 	QStringList purged_selected_indexes;
+	QString label_string;
 };
 
 #endif

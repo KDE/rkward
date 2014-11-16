@@ -2,7 +2,7 @@
                           rkpluginbrowser  -  description
                              -------------------
     begin                : Sat Mar 10 2005
-    copyright            : (C) 2005, 2006, 2007, 2012 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2012, 2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -41,6 +41,7 @@ public:
 
 	RKComponentPropertyBase *selection;
 	QVariant value (const QString &modifier=QString ()) { return (selection->value (modifier)); };
+	QStringList getUiLabelPair () const;
 	int type () { return ComponentBrowser; };
 	bool isValid ();
 public slots:
@@ -51,6 +52,7 @@ private:
 	void updateColor ();
 	GetFileNameWidget *selector;
 	bool updating;
+	QString label_string;
 };
 
 #endif

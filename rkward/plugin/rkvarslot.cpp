@@ -42,7 +42,7 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 	// basic layout
 	QGridLayout *g_layout = new QGridLayout (this);
 
-	QString label_string = xml->i18nStringAttribute (element, "label", i18n ("Variable:"), DL_INFO);
+	label_string = xml->i18nStringAttribute (element, "label", i18n ("Variable:"), DL_INFO);
 	if (!label_string.isEmpty ()) {
 		QLabel *label = new QLabel (label_string, this);
 		g_layout->addWidget (label, 0, 2);
@@ -224,6 +224,14 @@ void RKVarSlot::selectPressed () {
 	}
 	updating = false;
 	availablePropertyChanged (available);
+}
+
+QStringList RKVarSlot::getUiLabelPair () const {
+	RK_TRACE (PLUGIN);
+
+	QStringList ret (label_string);
+	ret.append (available->value ().toString ());
+	return ret;
 }
 
 #include "rkvarslot.moc"

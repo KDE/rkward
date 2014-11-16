@@ -100,9 +100,11 @@ public:
 		BooleanValue,
 		StringValue,
 		StringlistValue,
-		NumericValue
+		NumericValue,
+		UiLabelPair
 	};
 	QVariant fetchValue (const QString &identifier, const int type_hint);
+	virtual QStringList getUiLabelPair () const { return QStringList (); };
 /** returns true, if this is a property */
 	bool isProperty () { return (type () <= PropertyEnd); };
 	bool isComponent () { return (type () >= ComponentBase); };
@@ -227,6 +229,8 @@ protected:
 	void createDefaultProperties ();
 /** This function is needed internally, to set the Qt enabledness of this widget, and all child component widgets. Note that the enabledness as stored in the enabledness_property is not necessarily the same as the enabledness in the GUI (and is not affected by this call). In general, a component is enabled in the GUI, if and only if a) it's enabledness_property is set to true, b) its parent widget is enabled in Qt, and c) it's parent component is also enabled. */
 	void updateEnablednessRecursive (bool parent_component_enabled);
+/** Helper for getUiLabelPair(): Strips accelator key markup ("&") from strings */
+	static QString stripAccelerators (const QString &in);
 };
 
 #endif

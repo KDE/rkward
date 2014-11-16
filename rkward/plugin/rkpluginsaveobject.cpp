@@ -2,7 +2,7 @@
                           rkpluginsaveobject  -  description
                              -------------------
     begin                : Tue Jan 30 2007
-    copyright            : (C) 2007, 2010, 2012 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2010, 2012, 2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -129,6 +129,14 @@ QVariant RKPluginSaveObject::value (const QString& modifier) {
 //	RK_TRACE (PLUGIN);
 
 	return (selection->value (modifier));
+}
+
+QStringList RKPluginSaveObject::getUiLabelPair () const {
+	RK_TRACE (PLUGIN);
+
+	QStringList ret (stripAccelerators (groupbox->title ()));
+	ret.append (selection->value ().toString ());
+	return ret;
 }
 
 #include "rkpluginsaveobject.moc"

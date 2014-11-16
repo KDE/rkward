@@ -80,6 +80,7 @@ protected slots:
 	QVariant getList (const QString &identifier);
 	QVariant getString (const QString &identifier);
 	QVariant getBoolean (const QString &identifier);
+	QVariant getUiLabelPair (const QString &identifier);
 	bool includeFile (const QString &filename);
 protected:
 	void run ();

@@ -2,7 +2,7 @@
                           rkinput  -  description
                              -------------------
     begin                : Sat Mar 10 2005
-    copyright            : (C) 2005, 2006, 2007, 2012 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2012, 2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -38,6 +38,7 @@ public:
 
 	RKComponentPropertyBase *text;
 	QVariant value (const QString &modifier=QString ()) { return (text->value (modifier)); };
+	QStringList getUiLabelPair () const;
 	int type () { return ComponentInput; };
 	bool isValid ();
 public slots:
@@ -53,6 +54,7 @@ private:
 	bool updating;
 	QTextEdit *textedit;
 	QLineEdit *lineedit;
+	QString label_string;
 };
 
 #endif

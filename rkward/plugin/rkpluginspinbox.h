@@ -2,7 +2,7 @@
                           rkpluginspinbox  -  description
                              -------------------
     begin                : Wed Aug 11 2004
-    copyright            : (C) 2004, 2006, 2012 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2012, 2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -23,6 +23,7 @@
 
 class RKSpinBox;
 class QDomElement;
+class QLabel;
 
 /** RKComponent for numeric input represented as a spinbox
 TODO: rename file and class to RKComponentSpinBox
@@ -35,6 +36,7 @@ public:
 
 	~RKPluginSpinBox ();
 	QVariant value (const QString &modifier=QString ());
+	QStringList getUiLabelPair () const;
 	int type () { return ComponentSpinBox; };
 
 	RKComponentPropertyInt *intvalue;
@@ -44,6 +46,7 @@ public slots:
 	void valueChanged (RKComponentPropertyBase *property);
 private:
 	RKSpinBox *spinbox;
+	QLabel *label;
 	bool intmode;
 	bool updating;
 };

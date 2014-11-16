@@ -2,7 +2,7 @@
                           rkformula  -  description
                              -------------------
     begin                : Thu Aug 12 2004
-    copyright            : (C) 2004, 2006, 2007, 2012 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2012, 2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -41,6 +41,7 @@ public:
 	~RKFormula ();
 
 	QVariant value (const QString &modifier=QString ()) { return model->value (modifier); };
+	QStringList getUiLabelPair () const;
 	bool isValid ();
 
 /** RTTI */
@@ -73,6 +74,7 @@ private:
 	QPushButton *add_button;
 	QPushButton *remove_button;
 	QSpinBox *level_box;
+	QString label_string;
 	
 	void checkCustomModel ();
 	void makeModelString ();

@@ -2,7 +2,7 @@
                           qtscriptbackend  -  description
                              -------------------
     begin                : Mon Sep 28 2009
-    copyright            : (C) 2009, 2010, 2012 by Thomas Friedrichsmeier
+    copyright            : (C) 2009, 2010, 2012, 2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -229,6 +229,10 @@ QVariant QtScriptBackendThread::getString (const QString &identifier) {
 
 QVariant QtScriptBackendThread::getBoolean (const QString &identifier) {
 	return getValue (identifier, RKStandardComponent::BooleanValue);
+}
+
+QVariant QtScriptBackendThread::getUiLabelPair (const QString &identifier) {
+	return getValue (identifier, RKStandardComponent::UiLabelPair);
 }
 
 bool QtScriptBackendThread::scriptError () {

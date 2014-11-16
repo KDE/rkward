@@ -1,3 +1,4 @@
+- Support automatically generating a printable header parameter from most plugin elements
 - New Object based convience method for printing headers from plugins
 - Implement polyPath()-drawing in RK() device
 - Pre-compile the common js code included in every plugin (only when compiled with Qt >= 4.7)

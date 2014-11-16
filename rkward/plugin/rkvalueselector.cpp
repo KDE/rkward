@@ -47,9 +47,9 @@ RKValueSelector::RKValueSelector (const QDomElement &element, RKComponent *paren
 	QVBoxLayout *vbox = new QVBoxLayout (this);
 	vbox->setContentsMargins (0, 0, 0, 0);
 
-	QString lab = xml->i18nStringAttribute (element, "label", QString (), DL_INFO);
-	if (!lab.isNull ()) {
-		QLabel *label = new QLabel (lab, this);
+	label_string = xml->i18nStringAttribute (element, "label", QString (), DL_INFO);
+	if (!label_string.isNull ()) {
+		QLabel *label = new QLabel (label_string, this);
 		vbox->addWidget (label);
 	}
 
@@ -184,6 +184,14 @@ QVariant RKValueSelector::value (const QString& modifier) {
 		return QVariant (selected_labels);
 	}
 	return selected->value (modifier);
+}
+
+QStringList RKValueSelector::getUiLabelPair () const {
+	RK_TRACE (PLUGIN);
+
+	QStringList ret (label_string);
+	ret.append (const_cast<RKValueSelector *> (this)->value ("labeled").toStringList ().join ("; "));
+	return ret;
 }
 
 #include "rkvalueselector.moc"

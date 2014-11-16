@@ -93,7 +93,7 @@ comment = function (message, indentation) {
 	printIndented (indentation + "# ", message + "\n");
 }
 
-makeHeaderCode = function (title, parameters, level) {
+makeHeaderCode = function (title, parameters, level, indentation) {
 	if (typeof (indentation) == 'undefined') indentation = "";
 	echo (indentation + "rk.header (" + quote (title));
 	if (parameters.length) {
@@ -116,8 +116,11 @@ Header = function (title, level) {
 		this.parameters.push (caption, value);
 		return this;
 	}
+	this.addFromUI = function (elementid) {
+		this.parameters = this.parameters.concat (_RK_backend.getUiLabelPair (elementid));
+	}
 	this.print = function (indentation) {
-		makeHeaderCode (this.title, this.parameters, this.level, this.indentation);
+		makeHeaderCode (this.title, this.parameters, this.level, indentation);
 	}
 }
 

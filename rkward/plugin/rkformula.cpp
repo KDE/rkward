@@ -2,7 +2,7 @@
                           rkformula  -  description
                              -------------------
     begin                : Thu Aug 12 2004
-    copyright            : (C) 2004, 2006, 2007, 2009, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2007, 2009, 2011, 2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -65,7 +65,8 @@ RKFormula::RKFormula (const QDomElement &element, RKComponent *parent_component,
 	QVBoxLayout *vbox = new QVBoxLayout (this);
 	vbox->setContentsMargins (0, 0, 0, 0);
 
-	vbox->addWidget (new QLabel (xml->i18nStringAttribute (element, "label", i18n ("Specify model"), DL_INFO), this));
+	label_string = xml->i18nStringAttribute (element, "label", i18n ("Specify model"), DL_INFO);
+	vbox->addWidget (new QLabel (label_string, this));
 
 	type_selector = new QButtonGroup (this);
 	QRadioButton* button;
@@ -404,6 +405,16 @@ void RKFormula::checkCustomModel () {
 bool RKFormula::isValid () {
 	RK_TRACE (PLUGIN);
 	return (model_ok);
+}
+
+QStringList RKFormula::getUiLabelPair () const {
+	RK_TRACE (PLUGIN);
+
+	QStringList ret (label_string);
+	QString m = stripAccelerators (type_selector->checkedButton ()->text ());
+	if (model_type == Custom) m.append (" " + model->value ().toString ());
+	ret.append (m);
+	return ret;
 }
 
 #include "rkformula.moc"

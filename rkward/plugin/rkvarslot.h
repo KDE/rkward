@@ -2,7 +2,7 @@
                           rkvarslot.h  -  description
                              -------------------
     begin                : Thu Nov 7 2002
-    copyright            : (C) 2002 - 2013 by Thomas Friedrichsmeier
+    copyright            : (C) 2002 - 2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -42,6 +42,7 @@ public:
 	~RKVarSlot ();
 	int type () {return ComponentVarSlot; };
 	QVariant value (const QString &modifier=QString ()) { return (available->value (modifier)); };
+	QStringList getUiLabelPair () const;
 /** reimplemented to call updateLook (), in case enabledness changed */
 	void changed () { updateLook (); RKComponent::changed (); };
 	void updateLook ();
@@ -64,6 +65,7 @@ private:
 	bool add_mode;
 	bool multi;
 	bool updating;
+	QString label_string;
 
 /** the available objects (typically a copy of the property of the varselector) */
 	RKComponentPropertyAbstractList *source;

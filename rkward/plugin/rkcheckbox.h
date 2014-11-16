@@ -2,7 +2,7 @@
                           rkcheckbox  -  description
                              -------------------
     begin                : Fri Jul 30 2004
-    copyright            : (C) 2004, 2006, 2012 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2012, 2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -41,6 +41,7 @@ public:
 		if (modifier.isEmpty ()) return state->value ("labeled");
 		return (state->value (modifier));
 	};
+	QStringList getUiLabelPair () const;
 public slots:
 	void changedState (int);
 	void changedState (RKComponentPropertyBase *);

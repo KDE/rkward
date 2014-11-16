@@ -556,10 +556,11 @@ function printout () {
 		<programlisting>
 function printout () {
 	new Header (i18n ("Two Variable t-Test"))
-	          .add (i18n ("Assume equal variances"), getBoolean ("varequal.state") ? i18n ("yes") : i18n ("no"))
-	          .add (i18n ("Confidence level"), getString ("conflevel"))
+	          .addFromUI ("varequal")
+	          .add (i18n ("Confidence level"), getString ("conflevel"))  // Note: written like this for illustration purposes. More automatic:
+	//        .addFromUI ("conflevel")
 	          .print ();
-	echo ('rk.print (res)\n');
+echo ('rk.print (res)\n');
 }
 		</programlisting>
 		<para>

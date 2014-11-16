@@ -67,40 +67,25 @@ function calculate(){
 function printout(){
 	// printout the results
 
-
+	var y = getValue("y");
 	var confintChecked = getValue("confint.checked");
 	var correct = getValue("correct");
-	var exact = getValue("exact");
-	var paired = getValue("paired");
 	var mu = getValue("mu");
-	echo("rk.header (wcox.result$method,\n" + "\tparameters=list (\"Comparing\", paste (names, collapse=\" against \"),\n" + "\t\"H1\", rk.describe.alternative (wcox.result),\n" + "\t\"Continuity correction in normal approximation for p-value\", ");
-	if(correct) {
-		echo("\"TRUE\",\n");
-	} else {
-		echo("\"FALSE\",\n");
-	}
-	echo("\t\"Compute exact p-value\", \"" + exact + "\",\n");
-	echo("\t\"Paired test\", ");
-	if(paired) {
-		echo("\"TRUE\",\n");
-	} else {
-		echo("\"FALSE\",\n");
-	}
-	echo("\t\"mu\", \"" + mu + "\"))\n\n");
-	echo("rk.results (list (\n" + "\t\"Variable Names\"=names,\n" + "\t\"Statistic\"=wcox.result$statistic,\n" + "\t\"Location Shift\"=wcox.result$null.value,\n" + "\t\"Hypothesis\"=wcox.result$alternative,\n" + "\tp=wcox.result$p.value");
+	var header = new Header (noquote ('wcox.result$method')).add (i18n ("Comparing"), noquote ('names[1]'));
+	if (y) header.add (i18nc ("compare against", "against"), noquote ('names[2]'));
+	header.add ("H1", noquote ('rk.describe.alternative (wcox.result)'));
+	header.add (i18n ("Continuity correction in normal approximation for p-value"), correct ? "TRUE" : "FALSE");
+	header.addFromUI ("exact");
+	if (y) header.addFromUI ("paired");
+	header.addFromUI ("mu");
+	header.print ();
+	echo("rk.results (list (\n\t" + i18n ("Variable Names") + "=names,\n\t" + i18nc ("a statistic indicator", "Statistic") + "=wcox.result$statistic,\n\t" + i18n ("Location Shift") + "=wcox.result$null.value,\n\t" + i18n ("Hypothesis") + "=wcox.result$alternative,\n" + "\tp=wcox.result$p.value");
 	if(confintChecked) {
-		echo(",\n\t\"Confidence interval percent\"=(100 * attr(wcox.result$conf.int, \"conf.level\")),\n" + "\t\"Confidence interval of difference\"=wcox.result$conf.int,\n" + "\t\"Difference in Location\"=wcox.result$estimate");
+		echo(",\n\t" + i18n ("Confidence interval percent") + "=(100 * attr(wcox.result$conf.int, \"conf.level\")),\n\t" + i18n ("Confidence interval of difference") + "=wcox.result$conf.int,\n\t" + i18n ("Difference in Location") + "=wcox.result$estimate");
 	} else {}
 	echo("))\n");
-	//// save result object
-	// read in saveobject variables
-	var svbSvrsltst = getValue("svb_Svrsltst");
-	var svbSvrsltstActive = getValue("svb_Svrsltst.active");
-	var svbSvrsltstParent = getValue("svb_Svrsltst.parent");
-	// assign object to chosen environment
-	if(svbSvrsltstActive) {
-		echo("assign(\"" + svbSvrsltst + "\", wcox.result, envir=" + svbSvrsltstParent + ")\n");
-	} else {}
-
+	// save result, if requested
+	if(getBoolean("svb_Svrsltst.active")) {
+		echo("\n\t.GlobalEnv$" + getString("svb_Svrsltst") + " <- wcox.result\n");
+	}
 }
-

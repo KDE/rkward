@@ -2,7 +2,7 @@
                           rkpluginspinbox  -  description
                              -------------------
     begin                : Wed Aug 11 2004
-    copyright            : (C) 2004, 2006, 2009, 2012 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2009, 2012, 2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -42,7 +42,7 @@ RKPluginSpinBox::RKPluginSpinBox (const QDomElement &element, RKComponent *paren
 	// layout and label
 	QVBoxLayout *vbox = new QVBoxLayout (this);
 	vbox->setContentsMargins (0, 0, 0, 0);
-	QLabel *label = new QLabel (xml->i18nStringAttribute (element, "label", i18n ("Enter value:"), DL_WARNING), this);
+	label = new QLabel (xml->i18nStringAttribute (element, "label", i18n ("Enter value:"), DL_WARNING), this);
 	vbox->addWidget (label);
 
 	// create spinbox and read settings
@@ -136,6 +136,14 @@ QVariant RKPluginSpinBox::value (const QString &modifier) {
 		if (modifier.isEmpty ()) return realvalue->value ("formatted");
 		return realvalue->value (modifier);
 	}
+}
+
+QStringList RKPluginSpinBox::getUiLabelPair () const {
+	RK_TRACE (PLUGIN);
+
+	QStringList ret (stripAccelerators (label->text ()));
+	ret.append (const_cast<RKPluginSpinBox *> (this)->value ().toString ());
+	return ret;
 }
 
 #include "rkpluginspinbox.moc"

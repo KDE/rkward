@@ -2,7 +2,7 @@
                           rkdropdown.h  -  description
                              -------------------
     begin                : Fri Jan 12 2007
-    copyright            : (C) 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -22,6 +22,7 @@
 
 class QComboBox;
 class QListWidget;
+class QLabel;
 
 /** This RKPluginWidget provides a drop down list of options for use in plugins
 @author Thomas Friedrichsmeier
@@ -39,9 +40,11 @@ protected:
 	void setItemInGUI (int id);
 	void addOptionToGUI (const QString &label, int id);
 	void setItemEnabledInGUI (int id, bool enabled);
+	QStringList getUiLabelPair () const;
 private:
 	QComboBox *box;
 	QListWidget *listwidget;
+	QLabel *label;
 };
 
 #endif

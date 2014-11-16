@@ -2,7 +2,7 @@
                           rkcheckbox  -  description
                              -------------------
     begin                : Fri Jul 30 2004
-    copyright            : (C) 2004, 2006 by Thomas Friedrichsmeier
+    copyright            : (C) 2004, 2006, 2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -18,6 +18,7 @@
 
 #include <qcheckbox.h>
 #include <QVBoxLayout>
+#include <klocale.h>
 
 #include "../rkglobals.h"
 #include "../misc/xmlhelper.h"
@@ -65,6 +66,14 @@ void RKCheckBox::changedState (int) {
 	RK_TRACE (PLUGIN);
 
 	state->setBoolValue (checkbox->isChecked ());
+}
+
+QStringList RKCheckBox::getUiLabelPair () const {
+	RK_TRACE (PLUGIN);
+
+	QStringList ret (stripAccelerators (checkbox->text ()));
+	ret.append (checkbox->isChecked () ? i18n ("yes") : i18n ("no"));
+	return ret;
 }
 
 #include "rkcheckbox.moc"

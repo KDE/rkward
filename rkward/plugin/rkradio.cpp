@@ -2,7 +2,7 @@
                           rkradio.cpp  -  description
                              -------------------
     begin                : Thu Nov 7 2002
-    copyright            : (C) 2002, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2006, 2007, 2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -76,6 +76,14 @@ void RKRadio::setItemEnabledInGUI (int id, bool enabled) {
 	QAbstractButton *button = group->button (id);
 	RK_ASSERT (button);
 	button->setEnabled (enabled);
+}
+
+QStringList RKRadio::getUiLabelPair () const {
+	RK_TRACE (PLUGIN);
+
+	QStringList ret (stripAccelerators (group_box->title ()));
+	ret.append (stripAccelerators (group->checkedButton ()->text ()));
+	return ret;
 }
 
 #include "rkradio.moc"

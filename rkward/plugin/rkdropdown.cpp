@@ -2,7 +2,7 @@
                           rkdropdown.h  -  description
                              -------------------
     begin                : Fri Jan 12 2007
-    copyright            : (C) 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -39,7 +39,7 @@ RKDropDown::RKDropDown (const QDomElement &element, RKComponent *parent_componen
 	QVBoxLayout *vbox = new QVBoxLayout (this);
 	vbox->setContentsMargins (0, 0, 0, 0);
 
-	QLabel *label = new QLabel (xml->i18nStringAttribute (element, "label", i18n ("Select one:"), DL_INFO), this);
+	label = new QLabel (xml->i18nStringAttribute (element, "label", i18n ("Select one:"), DL_INFO), this);
 	vbox->addWidget (label);
 
 	// create ComboBox
@@ -86,6 +86,14 @@ void RKDropDown::setItemEnabledInGUI (int id, bool enabled) {
 	if (enabled) flags |= Qt::ItemIsEnabled | Qt::ItemIsSelectable;
 	else flags -= flags & (Qt::ItemIsEnabled | Qt::ItemIsSelectable);
 	item->setFlags ((Qt::ItemFlags) flags);
+}
+
+QStringList RKDropDown::getUiLabelPair () const {
+	RK_TRACE (PLUGIN);
+
+	QStringList ret (stripAccelerators (label->text ()));
+	ret.append (stripAccelerators (box->currentText ()));
+	return ret;
 }
 
 #include "rkdropdown.moc"

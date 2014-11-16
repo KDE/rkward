@@ -2,7 +2,7 @@
                           rkpluginbrowser  -  description
                              -------------------
     begin                : Sat Mar 10 2005
-    copyright            : (C) 2005, 2006, 2007, 2009, 2010, 2012 by Thomas Friedrichsmeier
+    copyright            : (C) 2005, 2006, 2007, 2009, 2010, 2012, 2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -50,7 +50,8 @@ RKPluginBrowser::RKPluginBrowser (const QDomElement &element, RKComponent *paren
 
 	bool only_local = !xml->getBoolAttribute (element, "allow_urls", false, DL_INFO);
 
-	selector = new GetFileNameWidget (this, mode, only_local, xml->i18nStringAttribute (element, "label", i18n ("Enter filename"), DL_INFO), i18n ("Select"), xml->getStringAttribute (element, "initial", QString (), DL_INFO));
+	label_string = xml->i18nStringAttribute (element, "label", i18n ("Enter filename"), DL_INFO);
+	selector = new GetFileNameWidget (this, mode, only_local, label_string, i18n ("Select"), xml->getStringAttribute (element, "initial", QString (), DL_INFO));
 	QString filter = xml->getStringAttribute (element, "filter", QString (), DL_INFO);
 	if (!filter.isEmpty ()) {
 		filter.append ("\n*|All files");
@@ -110,6 +111,14 @@ void RKPluginBrowser::updateColor () {
 	} else {
 		selector->setBackgroundColor (QColor (200, 200, 200));
 	}
+}
+
+QStringList RKPluginBrowser::getUiLabelPair () const {
+	RK_TRACE (PLUGIN);
+
+	QStringList ret (label_string);
+	ret.append (selection->value ().toString ());
+	return ret;
 }
 
 #include "rkpluginbrowser.moc"

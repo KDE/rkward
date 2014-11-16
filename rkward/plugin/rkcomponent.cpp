@@ -199,6 +199,23 @@ QVariant RKComponentBase::fetchValue (const QString &id, const int hint) {
 	} else {
 		QString mod;
 		RKComponentBase *prop = lookupComponent (id, &mod);
+		if (hint == UiLabelPair) {
+			QStringList ret;
+			if (prop->isComponent ()) {
+				ret = static_cast<const RKComponent*> (prop)->getUiLabelPair ();
+				if (ret.isEmpty ()) {
+					RK_DEBUG (PLUGIN, DL_WARNING, "Component id %s does not support getting ui labels.", qPrintable (id));
+				}
+				RK_ASSERT (!(ret.size () % 2));
+			} else {
+				RK_DEBUG (PLUGIN, DL_WARNING, "Getting ui labels is not supported for properties, only for components. Failed id was: %s", qPrintable (id));
+			}
+			if (ret.isEmpty ()) {
+				ret << "-" << "-";
+			}
+			RK_DEBUG (PLUGIN, DL_WARNING, "Labels for %s: %s", qPrintable (id), qPrintable (ret.join (":")));
+			return QVariant (ret);
+		}
 		QVariant val = prop->value (mod);
 		if (hint == BooleanValue) {
 			bool ok;
@@ -418,6 +435,21 @@ QString RKComponent::getIdInParent () const {
 
 	if (!parentComponent ()) return QString ();
 	return (parentComponent ()->child_map.key (const_cast<RKComponent*> (this)));
+}
+
+// static
+QString RKComponent::stripAccelerators (const QString& in) {
+	QString ret;
+	ret.reserve (in.size ());
+	for (int i = 0; i < in.size (); ++i) {
+		QChar c = in[i];
+		if (c == QLatin1Char ('&')) {
+			if (++i < in.size ()) ret.append (in[i]);
+		} else {
+			ret.append (c);
+		}
+	}
+	return ret;
 }
 
 #include "rkcomponent.moc"

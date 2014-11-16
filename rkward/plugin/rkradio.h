@@ -2,7 +2,7 @@
                           rkradio.h  -  description
                              -------------------
     begin                : Thu Nov 7 2002
-    copyright            : (C) 2002, 2006, 2007 by Thomas Friedrichsmeier
+    copyright            : (C) 2002, 2006, 2007, 2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -36,6 +36,7 @@ protected:
 	void setItemInGUI (int id);
 	void addOptionToGUI (const QString &label, int id);
 	void setItemEnabledInGUI (int id, bool enabled);
+	QStringList getUiLabelPair () const;
 private:
 	QButtonGroup* group;
 	QGroupBox* group_box;
