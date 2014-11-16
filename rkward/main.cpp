@@ -123,7 +123,7 @@ int main(int argc, char *argv[]) {
 	options.add ("evaluate <Rcode>", ki18n ("After starting (and after loading the specified workspace, if applicable), evaluate the given R code."), 0);
 	options.add ("debug-level <level>", ki18n ("Verbosity of debug messages (0-5)"), "2");
 	options.add ("debug-flags <flags>", ki18n ("Mask for components to debug (see debug.h)"), QString::number (DEBUG_ALL).toLocal8Bit ());
-	options.add ("debugger <command>", ki18n ("Debugger (enclose any debugger arguments in single quotes ('') together with the command)"), "");
+	options.add ("debugger <command and arguments>", ki18n ("Debugger for the fronted. Specify last, or add '--' after all debugger arguments"), "");
 	options.add ("backend-debugger <command>", ki18n ("Debugger for the backend. (Enclose any debugger arguments in single quotes ('') together with the command. Make sure to re-direct stdout!)"), "");
 	options.add ("r-executable <command>", ki18n ("Use specified R installation, instead of the one configured at compile time (note: rkward R library must be installed to that installation of R)"), "");
 	options.add ("+[File]", ki18n ("R workspace file to open"), 0);

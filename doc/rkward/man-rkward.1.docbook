@@ -12,7 +12,7 @@
 <affiliation>
 <address><email>rkward-devel@lists.sourceforge.net</email></address>
 </affiliation>
-<date>2013-03-29</date>
+<date>2014-11-16</date>
 </refentryinfo>
 
 <refmeta>
@@ -32,7 +32,7 @@
 <group choice="opt"><option>--evaluate</option> <replaceable> Rcode</replaceable></group>
 <group choice="opt"><option>--debug-level</option> <replaceable> level</replaceable></group>
 <group choice="opt"><option>--debug-flags</option> <replaceable> flags</replaceable></group>
-<group choice="opt"><option>--debugger</option> <replaceable> debugger_command</replaceable></group>
+<arg><option>--debugger</option> <replaceable>debugger_command</replaceable><arg choice="opt">debugger_args<arg choice="opt"><option>--</option></arg></arg></arg>
 <group choice="opt"><option>--backend-debugger</option> <replaceable> debugger_command</replaceable></group>
 <group choice="opt"><option>--r-executable</option> <replaceable> path_to_executable</replaceable></group>
 <arg choice="opt">KDE Generic Options</arg>
@@ -63,9 +63,10 @@
 <listitem><para>Allows to configure, which sections of code to debug. Flags are given as a binary number. Refer to the source files for documentation, as this really is an internal option.</para></listitem>
 </varlistentry>
 <varlistentry>
-<term><option>--debugger</option> <replaceable>command</replaceable></term>
-<listitem><para>Run &rkward; through the specified debugger command. To add command line options to the debugger command, enclose them in single quotes ('') together with the command. <emphasis>NOTE:</emphasis> To use the \-\-debugger option, it must be specified as the first option on the command line. Only the frontend process will be debugged, using this option.</para>
-<para>Note that there are a number of pitfalls that may complicate setting up the debugger session as desired. Consider starting &rkward; with option \-\-debug-lebel 3, which will print the effective command line used to start the frontend (but not set some environment variables). Under Windows, the debugger command will <emphasis>not</emphasis> be connected to stdin. For interactive debugging, consider using a graphical debugger.</para></listitem>
+<term><option>--debugger</option> <replaceable>command</replaceable> [<replaceable>arguments</replaceable> [<replaceable>--</replaceable>]]</term>
+<listitem><para>Run &rkward; through the specified debugger command. All arguments following this will be passed to the debugger command. To end debugger arguments (and add arguments to pass to &rkward;), use "--". <emphasis>NOTE:</emphasis> Only the frontend process will be debugged, using this option.</para>
+<para>Note that there are a number of pitfalls that may complicate setting up the debugger session as desired. Consider starting &rkward; with option \-\-debug-lebel 3, which will print the effective command line used to start the frontend (but not all relevant environment variables). As one hint, you will generally need to pass a separator arugment with the debugger arguments, e.g. <command>rkward --debugger gdb --args</command>.
+Under Windows, the debugger command will <emphasis>not</emphasis> be connected to stdin. For interactive debugging, consider using a graphical debugger.</para></listitem>
 </varlistentry>
 <varlistentry>
 <term><option>--backend-debugger</option> <replaceable>command</replaceable></term>

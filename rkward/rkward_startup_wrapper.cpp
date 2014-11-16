@@ -100,17 +100,19 @@ int main (int argc, char *argv[]) {
 
 	// Parse arguments that need handling in the wrapper
 	bool usage = false;
-	QString debugger_arg;
+	QStringList debugger_args;
 	QString r_exe_arg;
 	int debug_level = 2;
 
 	for (int i=0; i < args.size (); ++i) {
 		if (args[i] == "--debugger") {
-			if ((i+1) < args.size ()) {
-				debugger_arg = args.takeAt (i + 1);
-			} else usage = true;
 			args.removeAt (i);
-			--i;
+			while (i < args.size ()) {
+				QString arg = args.takeAt (i);
+				if (arg == "--") break;
+				debugger_args.append (arg);
+			}
+			if (debugger_args.isEmpty ()) usage = true;
 		} else if (args[i] == "--r-executable") {
 			if ((i+1) < args.size ()) {
 				r_exe_arg = args.takeAt (i + 1);
@@ -250,7 +252,7 @@ int main (int argc, char *argv[]) {
 
 	qputenv ("R_BINARY", r_exe.toLocal8Bit ());
 	QStringList call_args ("CMD");
-	if (!debugger_arg.isNull ()) call_args.append (debugger_arg.split (" "));
+	call_args.append (debugger_args);
 	call_args.append (quoteCommand (rkward_frontend_exe));
 
 	if (!args.isEmpty ()) {
