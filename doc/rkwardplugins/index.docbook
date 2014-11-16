@@ -563,7 +563,7 @@ function printout () {
 }
 		</programlisting>
 		<para>
-			<function>rk.print()</function> utilizes the R2HTML package to provide HTML formatted output. Another helpful function is <function>rk.results()</function>, which can also output different kinds of result tables. If in doubt, however, just use <function>rk.print()</function>, and be done with. The JS class <function>Header</function> is a JS level helper to create a call to <function>rk.header()</function> (just take a look at the generated code). In some cases you may want to call <function>echo ('rk.header (...)')</function> directly to print a header for your output.
+			<function>rk.print()</function> utilizes the R2HTML package to provide HTML formatted output. Another helpful function is <function>rk.results()</function>, which can also output different kinds of result tables. If in doubt, however, just use <function>rk.print()</function>, and be done with. The JS class <function>Header</function> is a JS level helper to generate a call to <function>rk.header()</function> (just take a look at the generated &r; code). In some cases you may want to call <function>echo ('rk.header (...)')</function> directly to print a header for your output.
 		</para>
 		<para>
 			Note that internally, the output is just a plain HTML document at this point of time. Therefore you might be tempted to add custom HTML using <function>rk.cat.output()</function>. While this will work, please don't do this. The output format may change (e.g. to ODF) in the future, so it's best not to introduce HTML specific code. Rather keep things simple with <function>rk.header()</function>, <function>rk.print()</function>, <function>rk.results()</function>, and -- if needed -- <function>rk.print.literal()</function>. If those don't seem to satisfy your formatting needs, contact us on the mailing list for help.
@@ -596,7 +596,7 @@ function printout () {
 	<sect2 id="policyformatting">
 	<title>Code formatting</title>
 		<para>
-			The most important thing is for your generated &r; code to work. But please also keep an eye on formatting. Some considerations:
+			The most important thing is for your generated &r; code to work, but it should be also easy to read. Therefore, please also keep an eye on formatting. Some considerations:
 		</para>
 		<para>
 			Normal top-level &r; statements should be left aligned.
@@ -1939,14 +1939,15 @@ user (selection from a list of values shown next to this element) --&gt;
 		<sect2 id="i18n_js_quoting"><title>i18n and quotes</title>
 			<para>
 				For the most part, you will not have to worry about i18n() behavior with respect to quotes. As, typically, translatable strings are string literals, quoting them is just the
-				right thing to do, and saves you some typing. Also, in functions like <command>makeHeaderCode()</command> that usually quote their arguments, i18n()'ed strings are protected
+				right thing to do, and saves you some typing. Also, in functions like <command>makeHeaderCode()/Header()</command> that usually quote their arguments, i18n()'ed strings are protected
 				from duplicate quoting. Essentially, this works, by sending the translated string first through <command>quote()</command> (to make it quoted), then through
 				<command>noquote()</command> (to protect it from additional quoting). Should you require a translatable string that is not quoted, use <command>i18n(noquote ("My message"))</command>.
 				Should you require a translatable string to be quoted, a second time, send it through <command>quote()</command>, <emphasis>twice</emphasis>.
 			</para>
 			<para>
 				That said, it is generally not a good idea to make bits like function names or variable names translatable. For one thing, R, the programming language, is inherently in English,
-				and there is not internationalization. Code comments are a different beast, but you should use the <command>comment()</command>-function for those. Secondly, making syntactically relevant parts of the generated code translatable means that translations could actually break your plugin.
+				and there is no internationalization of the lanuage itself. Code comments are a different beast, but you should use the <command>comment()</command>-function for those. Secondly,
+				making syntactically relevant parts of the generated code translatable means that translations could actually break your plugin.
 				E.g. if an unsuspecting translator translates a string meant as a variable name in two distinct words with a space in between.
 			</para>
 		</sect2>
@@ -3540,7 +3541,7 @@ Child elements &lt;true&gt;, &lt;false&gt;, &lt;case&gt;, and &lt;default&gt; ta
 
 <varlistentry>
 <term>&lt;checkbox&gt;</term>
-<listitem><para>Default property is "state.labeled"
+<listitem><para>Default property is "state.labeled", which means that the values specified by the <parameter>value</parameter>, and <parameter>value_unchecked</parameter>-attributes are returned, <emphasis>not</emphasis> the displayed label of the checkbox.
 	<variablelist>
 	<varlistentry>
 	<term>state</term>
