@@ -40,11 +40,11 @@ function calculate () {
 		}
 	}
 
-	echo ('# cor requires all objects to be inside the same data.frame.\n');
-	echo ('# Here we construct such a temporary frame from the input variables\n');
+	comment ('cor requires all objects to be inside the same data.frame.');
+	comment ('Here we construct such a temporary frame from the input variables');
 	echo ('data.list <- rk.list (' + vars.split ("\n").join (", ") + ')\n');
 	if (!polyCorr && toNumeric) {
-		echo ('# Non-numeric variables will be treated as ordered data and transformed into numeric ranks\n');
+		comment ('Non-numeric variables will be treated as ordered data and transformed into numeric ranks');
 		echo ('transformed.vars <- list()\n');
 		echo ('for (i in names(data.list)) {\n');
 		echo ('	if(!is.numeric(data.list[[i]])){\n');
@@ -52,26 +52,25 @@ function calculate () {
 		echo ('		data.list[[i]] <- xtfrm(data.list[[i]])\n');
 		echo ('		after.vars <- unique(data.list[[i]])\n');
 		echo ('		names(after.vars) <- before.vars\n');
-		echo ('		# Keep track of all transformations\n');
+		comment ('Keep track of all transformations', '		');
 		echo ('		transformed.vars[[i]] <- data.frame(rank=sort(after.vars))\n');
 		echo ('	} else {}\n');
 		echo ('}\n');
-		echo ('# Finally combine the actual data\n');
+		comment ('Finally combine the actual data');
 	} else {}
 	echo ('data <- as.data.frame (data.list, check.names=FALSE)\n');
 	echo ('\n');
-	echo ('# calculate correlation matrix\n');
+	comment ('calculate correlation matrix');
 	if (polyCorr) {
 		echo ('result <- matrix (nrow = length (data), ncol = length (data), dimnames=list (names (data), names (data)))\n');
 	} else {
 		echo ('result <- cor (data, use=' + use + ', method=' + method + ')\n');
 	}
 	if (do_p || polyCorr) {
-		echo ('# calculate matrix of probabilities\n');
+		comment ('calculate matrix of probabilities');
 		echo ('result.p <- matrix (nrow = length (data), ncol = length (data), dimnames=list (names (data), names (data)))\n');
 		if (exclude_whole) {
-			echo ('# as we need to do pairwise comparisons for technical reasons,\n');
-			echo ('# we need to exclude incomplete cases first to match the use="complete.obs" parameter in cor()\n');
+			comment ('as we need to do pairwise comparisons for technical reasons,\nwe need to exclude incomplete cases first to match the use="complete.obs" parameter in cor()');
 			echo ('data <- data[complete.cases (data),]\n');
 		} else {}
 		echo ('for (i in 1:length (data)) {\n');
@@ -79,7 +78,7 @@ function calculate () {
 		echo ('		if (i != j) {\n');
 		if (polyCorr) {
 			if(method == "\"polyserial\""){
-				echo('			# polyserial expects x to be numeric\n');
+				comment('polyserial expects x to be numeric', '			');
 				echo('			if(is.numeric(data[[i]]) & !is.numeric(data[[j]])){\n');
 				echo('				t <- polyserial(data[[i]], data[[j]]');
 				if (do_p) {
@@ -120,23 +119,24 @@ function calculate () {
 }
 
 function printout () {
-	echo ('rk.header ("Correlation Matrix", parameters=list ("Method", ' + method + ', "Exclusion", ' + use + '))\n\n');
-	echo ('rk.results (data.frame (result, check.names=FALSE), titles=c ("Coefficient", names (data)))\n');
+	// TODO: Printing of method and use is a poor solution, esp. when translated. We should support getting the <radio>'s option labels, and print those, instead.
+	new Header (i18n ("Correlation Matrix")).add (i18n ("Method"), noquote (method)).add (i18n ("Exclusion"), noquote (use)).print ();
+	echo ('rk.results (data.frame (result, check.names=FALSE), titles=c (' + i18n ("Coefficient") + ', names (data)))\n');
 	if (do_p) {
 		if (polyCorr) {
-			echo ('rk.header ("Standard errors, test of bivariate normality and sample size", level=4)\n');
+			new Header (i18n ("Standard errors, test of bivariate normality and sample size"), 4).print ();
 			echo ('rk.results (data.frame (result.p, check.names=FALSE, stringsAsFactors=FALSE), titles=c ("Chisq, df, p \\\\ se, n", names (data)))\n');
 		} else {
-			echo ('rk.header ("p-values and sample size", level=4)\n');
+			new Header (i18n ("p-values and sample size"), 4).print ();
 			echo ('rk.results (data.frame (result.p, check.names=FALSE), titles=c ("n \\\\ p", names (data)))\n');
 		}
 	}
 	if (!polyCorr && toNumeric) {
 		echo ('if(length(transformed.vars) > 0){\n');
-		echo ('	rk.header("Variables treated as numeric ranks", level=4)\n');
+		new Header (i18n ("Variables treated as numeric ranks"), 4).print ('\t');
 		echo ('	for (i in names(transformed.vars)) {\n');
-		echo ('		rk.print(paste("Variable:<b>", i, "</b>"))\n');
-		echo ('		rk.results(transformed.vars[[i]], titles=c("original value", "assigned rank"))\n');
+		echo ('		rk.print(paste(' + i18nc ("noun", "Variable:") + ', "<b>", i, "</b>"))\n');
+		echo ('		rk.results(transformed.vars[[i]], titles=c(' + i18n ("original value") + ', ' + i18n ("assigned rank") + '))\n');
 		echo ('	}\n');
 		echo ('} else {}\n');
 	} else {}

@@ -1,6 +1,7 @@
 <h1>Welch Two Sample t-test</h1>
 <h2>Parameters</h2>
-<ul><li>Comparing: test50x against test50y</li>
+<ul><li>Comparing: test50x</li>
+<li>against: test50y</li>
 <li>H1: true difference in means is not equal to 0</li>
 <li>Equal variances: not assumed</li>
 </ul>
@@ -14,7 +15,8 @@ DATE<br />
 </table>
 <h1>Paired t-test</h1>
 <h2>Parameters</h2>
-<ul><li>Comparing: test10y against test10z</li>
+<ul><li>Comparing: test10y</li>
+<li>against: test10z</li>
 <li>H1: true difference in means is less than 0</li>
 </ul>
 DATE<br />
@@ -26,7 +28,8 @@ DATE<br />
 </table>
 <h1>One Sample t-test</h1>
 <h2>Parameters</h2>
-<ul><li>Comparing: test10z against constant</li>
+<ul><li>Comparing: test10z</li>
+<li>against: constant value: 20.00</li>
 <li>H1: true mean is not equal to 20</li>
 </ul>
 DATE<br />

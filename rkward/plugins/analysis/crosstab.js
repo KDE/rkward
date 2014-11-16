@@ -9,12 +9,12 @@ function preprocess () {
 	any_table_additions = (prop_row || prop_column || prop_total || chisq_expected);
 	if (!any_table_additions) return;
 
-	echo ('# convenience function to bind together several two dimensional tables into a single three dimensional table\n');
+	comment ('convenience function to bind together several two dimensional tables into a single three dimensional table\n');
 	echo ('bind.tables <- function (...) {\n');
 	echo ('	tables <- list (...)\n');
 	echo ('	output <- unlist (tables)\n');
 	echo ('	dim (output) <- c (dim (tables[[1]]), length (tables))\n');
-	echo ('	dimnames (output) <- c (dimnames (tables[[1]]), list (statistic=names(tables)))\n');
+	echo ('	dimnames (output) <- c (dimnames (tables[[1]]), list (' + i18nc ("a statistic indicator" ,"statistic") + '=names(tables)))\n');
 	echo ('	output\n');
 	echo ('}\n');
 }
@@ -29,7 +29,7 @@ function calculate () {
 	echo ('results <- list()\n');
 	if (chisq) echo ('chisquares <- list ()\n');
 	echo ('\n');
-	echo ('# calculate crosstabs\n');
+	comment ('calculate crosstabs\n');
 	echo ('for (i in 1:length (yvars)) {\n');
 	echo ('	count <- table(x[[1]], yvars[[i]])\n');
 	if (chisq) {
@@ -47,18 +47,18 @@ function calculate () {
 	} else {
 		// unfortunately, mixing margins and proportions is a pain, in that they don't make a whole lot of sense for "% of row", and "% of column"
 		if (margins) {
-			echo ('	results[[i]] <- bind.tables ("count"=addmargins (count)');
-			if (prop_row) echo (',\n		"% of row"=addmargins (prop.table(count, 1) * 100, quiet=TRUE, FUN=function(x) NA)');
-			if (prop_column) echo (',\n		"% of column"=addmargins (prop.table(count, 2) * 100, quiet=TRUE, FUN=function(x) NA)');
-			if (prop_total) echo (',\n		"% of total"=addmargins (prop.table(count) * 100)');
-			if (chisq_expected) echo (',\n		"expected"=addmargins (chisquares[[i]]$expected, quiet=TRUE, FUN=function(x) NA)');
+			echo ('	results[[i]] <- bind.tables (' + i18nc ("noun", "count") + '=addmargins (count)');
+			if (prop_row) echo (',\n		' + i18n ("% of row") + '=addmargins (prop.table(count, 1) * 100, quiet=TRUE, FUN=function(x) NA)');
+			if (prop_column) echo (',\n		' + i18n ("% of column") + '=addmargins (prop.table(count, 2) * 100, quiet=TRUE, FUN=function(x) NA)');
+			if (prop_total) echo (',\n		' + i18n ("% of total") + '=addmargins (prop.table(count) * 100)');
+			if (chisq_expected) echo (',\n		' + i18nc ("expected count", "expected") + '=addmargins (chisquares[[i]]$expected, quiet=TRUE, FUN=function(x) NA)');
 			echo (')\n');
 		} else {
-			echo ('	results[[i]] <- bind.tables ("count"=count');
-			if (prop_row) echo (',\n		"% of row"=prop.table(count, 1) * 100');
-			if (prop_column) echo (',\n		"% of column"=prop.table(count, 2) * 100');
-			if (prop_total) echo (',\n		"% of total"=prop.table(count) * 100');
-			if (chisq_expected) echo (',\n		"expected"=chisquares[[i]]$expected');
+			echo ('	results[[i]] <- bind.tables (' + i18nc ("noun", "count") + '=count');
+			if (prop_row) echo (',\n		' + i18n ("% of row") + '=prop.table(count, 1) * 100');
+			if (prop_column) echo (',\n		' + i18n ("% of column") + '=prop.table(count, 2) * 100');
+			if (prop_total) echo (',\n		' + i18n ("% of total") + '=prop.table(count) * 100');
+			if (chisq_expected) echo (',\n		' + i18nc ("expected count", "expected") + '=chisquares[[i]]$expected');
 			echo (')\n');
 		}
 	}
@@ -70,15 +70,21 @@ function printout () {
 }
 
 function preview () {
+	preprocess ();
 	calculate ();
 	doPrintout (false);
 }
 
+function sectionHeader (title, additions) {
+	echo ('\trk.header (' + quote (title) + ', parameters=list (' + i18nc ("dependent variable", "Dependent") + '=names (x)[1], '
+	                      + i18nc ("independent variable", "Independent") + '=names (yvars)[i]' + additions + '), level=2)\n');
+}
+
 function doPrintout (full) {
 	if (full) {
-		echo ('rk.header ("Crosstabs (n to 1)", level=1)\n');
+		new Header (i18n ("Crosstabs (n to 1)"), 1).print ();
 		echo ('for (i in 1:length (results)) {\n');
-		echo ('	rk.header ("Crosstabs (n to 1)", parameters=list ("Dependent", names (x)[1], "Independent", names (yvars)[i]), level=2)\n');
+		sectionHeader (i18n ("Crosstabs (n to 1)"), "");
 		if (any_table_additions) {
 			echo ('	rk.print (ftable (results[[i]], col.vars=2))\n');
 		} else {
@@ -86,13 +92,13 @@ function doPrintout (full) {
 		}
 		if (getValue ("chisq") == "TRUE") {
 			echo ('\n');
-			echo ('	rk.header ("Pearson\'s Chi Square Test for Crosstabs", list ("Dependent", names (x)[1], "Independent", names (yvars)[i], "Method", chisquares[[i]][["method"]]), level=2)\n');
-			echo ('	rk.results (list (\'Statistic\'=chisquares[[i]][[\'statistic\']], \'df\'=chisquares[[i]][[\'parameter\']], \'p\'=chisquares[[i]][[\'p.value\']]))\n');
+			sectionHeader (i18n ("Pearson\'s Chi Square Test for Crosstabs"), ', ' + i18n ("Method") + '=chisquares[[i]][["method"]]');
+			echo ('	rk.results (list (' + i18nc ("a statistic indicator", "Statistic") + '=chisquares[[i]][[\'statistic\']], \'df\'=chisquares[[i]][[\'parameter\']], \'p\'=chisquares[[i]][[\'p.value\']]))\n');
 		}
 
 		if (getValue ("barplot") == "TRUE") {
 			echo ('\n');
-			echo ('	rk.header ("Barplot for Crosstabs", list ("Dependent"=names (x)[1], "Independent"=names (yvars)[i]' + getValue ('barplot_embed.code.preprocess') + '), level=2)\n');
+			sectionHeader (i18n ("Barplot for Crosstabs"), getValue ('barplot_embed.code.preprocess'));
 			echo ('	rk.graph.on ()\n');
 			echo ('	try ({\n');
 			if (any_table_additions) {

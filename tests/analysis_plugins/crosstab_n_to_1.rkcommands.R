@@ -6,6 +6,7 @@ results <- list()
 chisquares <- list ()
 
 # calculate crosstabs
+
 for (i in 1:length (yvars)) {
 	count <- table(x[[1]], yvars[[i]])
 	chisquares[[i]] <- chisq.test (count, simulate.p.value = FALSE)
@@ -14,13 +15,13 @@ for (i in 1:length (yvars)) {
 ## Print result
 rk.header ("Crosstabs (n to 1)", level=1)
 for (i in 1:length (results)) {
-	rk.header ("Crosstabs (n to 1)", parameters=list ("Dependent", names (x)[1], "Independent", names (yvars)[i]), level=2)
+	rk.header ("Crosstabs (n to 1)", parameters=list ("Dependent"=names (x)[1], "Independent"=names (yvars)[i]), level=2)
 	rk.results (results[[i]], titles=c(names (x)[1], names (yvars)[i]))
 
-	rk.header ("Pearson's Chi Square Test for Crosstabs", list ("Dependent", names (x)[1], "Independent", names (yvars)[i], "Method", chisquares[[i]][["method"]]), level=2)
-	rk.results (list ('Statistic'=chisquares[[i]][['statistic']], 'df'=chisquares[[i]][['parameter']], 'p'=chisquares[[i]][['p.value']]))
+	rk.header ("Pearson's Chi Square Test for Crosstabs", parameters=list ("Dependent"=names (x)[1], "Independent"=names (yvars)[i], "Method"=chisquares[[i]][["method"]]), level=2)
+	rk.results (list ("Statistic"=chisquares[[i]][['statistic']], 'df'=chisquares[[i]][['parameter']], 'p'=chisquares[[i]][['p.value']]))
 
-	rk.header ("Barplot for Crosstabs", list ("Dependent"=names (x)[1], "Independent"=names (yvars)[i], "colors"="default", "Type"="juxtaposed", "Legend"="FALSE"), level=2)
+	rk.header ("Barplot for Crosstabs", parameters=list ("Dependent"=names (x)[1], "Independent"=names (yvars)[i], "colors"="default", "Type"="juxtaposed", "Legend"="FALSE"), level=2)
 	rk.graph.on ()
 	try ({
 		counts <- results[[i]]
@@ -32,11 +33,12 @@ for (i in 1:length (results)) {
 local({
 ## Prepare
 # convenience function to bind together several two dimensional tables into a single three dimensional table
+
 bind.tables <- function (...) {
 	tables <- list (...)
 	output <- unlist (tables)
 	dim (output) <- c (dim (tables[[1]]), length (tables))
-	dimnames (output) <- c (dimnames (tables[[1]]), list (statistic=names(tables)))
+	dimnames (output) <- c (dimnames (tables[[1]]), list ("statistic"=names(tables)))
 	output
 }
 ## Compute
@@ -46,6 +48,7 @@ results <- list()
 chisquares <- list ()
 
 # calculate crosstabs
+
 for (i in 1:length (yvars)) {
 	count <- table(x[[1]], yvars[[i]])
 	chisquares[[i]] <- chisq.test (count, simulate.p.value = FALSE)
@@ -58,13 +61,13 @@ for (i in 1:length (yvars)) {
 ## Print result
 rk.header ("Crosstabs (n to 1)", level=1)
 for (i in 1:length (results)) {
-	rk.header ("Crosstabs (n to 1)", parameters=list ("Dependent", names (x)[1], "Independent", names (yvars)[i]), level=2)
+	rk.header ("Crosstabs (n to 1)", parameters=list ("Dependent"=names (x)[1], "Independent"=names (yvars)[i]), level=2)
 	rk.print (ftable (results[[i]], col.vars=2))
 
-	rk.header ("Pearson's Chi Square Test for Crosstabs", list ("Dependent", names (x)[1], "Independent", names (yvars)[i], "Method", chisquares[[i]][["method"]]), level=2)
-	rk.results (list ('Statistic'=chisquares[[i]][['statistic']], 'df'=chisquares[[i]][['parameter']], 'p'=chisquares[[i]][['p.value']]))
+	rk.header ("Pearson's Chi Square Test for Crosstabs", parameters=list ("Dependent"=names (x)[1], "Independent"=names (yvars)[i], "Method"=chisquares[[i]][["method"]]), level=2)
+	rk.results (list ("Statistic"=chisquares[[i]][['statistic']], 'df'=chisquares[[i]][['parameter']], 'p'=chisquares[[i]][['p.value']]))
 
-	rk.header ("Barplot for Crosstabs", list ("Dependent"=names (x)[1], "Independent"=names (yvars)[i], "colors"="rainbow", "Type"="juxtaposed", "Legend"="FALSE"), level=2)
+	rk.header ("Barplot for Crosstabs", parameters=list ("Dependent"=names (x)[1], "Independent"=names (yvars)[i], "colors"="rainbow", "Type"="juxtaposed", "Legend"="FALSE"), level=2)
 	rk.graph.on ()
 	try ({
 		counts <- results[[i]][, , "count"]
