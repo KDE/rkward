@@ -120,7 +120,7 @@ function calculate () {
 
 function printout () {
 	// TODO: Printing of method and use is a poor solution, esp. when translated. We should support getting the <radio>'s option labels, and print those, instead.
-	new Header (i18n ("Correlation Matrix")).add (i18n ("Method"), getString ("method.label")).add (i18n ("Exclusion"), getString ("use.label")).print ();
+	new Header (i18n ("Correlation Matrix")).addFromUI ("method").addFromUI ("use").print ();
 	echo ('rk.results (data.frame (result, check.names=FALSE), titles=c (' + i18n ("Coefficient") + ', names (data)))\n');
 	if (do_p) {
 		if (polyCorr) {

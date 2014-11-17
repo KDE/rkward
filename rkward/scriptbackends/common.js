@@ -118,6 +118,7 @@ Header = function (title, level) {
 	}
 	this.addFromUI = function (elementid) {
 		this.parameters = this.parameters.concat (_RK_backend.getUiLabelPair (elementid));
+		return this;
 	}
 	this.print = function (indentation) {
 		makeHeaderCode (this.title, this.parameters, this.level, indentation);
