@@ -1,10 +1,7 @@
-# KDE Config File  
+# KDE Config File
 [Desktop Entry]
 Name=RKWard
 Comment=GUI for the R-project
-Comment[pl]=Graficzny interfejs dla projektu R
-Comment[fr]=Interface graphique pour R
-Comment[uk]=Графічний інтерфейс мови програмування R
 Icon=rkward
 Exec=rkward -caption "%c" %i
 Terminal=false
