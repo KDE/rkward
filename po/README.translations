@@ -3,18 +3,21 @@
 So you want to work on one of the translations? Great!
 
 In general, however, you should NOT use the .po files in this directory as a basis for your translations,
-and neither should you commit your updates, here. Please use https://translations.launchpad.net/rkward/trunk
-for your translations.
+and neither should you commit your updates, here. Translations are managed in KDE. See http://l10n.kde.org/
+for documentation and links.
 
 THIS IS NOT THE PRIMARY PLACE where translations are maintained. In order to minimize the risk of your work
-conflicting with that of other translators, please get the most recent .po from launchpad, and upload, there. 
-If you do not want to work on launchpad for some reason or another, contact us on the mailing list, and we
-can upload translations for you. 
+conflicting with that of other translators, please get in touch with the KDE translation team for your
+language. See http://l10n.kde.org/teams-list.php for a list of teams and their mailing lists. This also has
+links where to find the most recent, and authoritative version of each .po file.
 
-If all you want is a quick way to pull translations from launchpad, use ../scripts/import_lp_translations.sh (only
-in our SVN repository, not in source releases).
+If you have any questions or concerns about the process, please contact us on the rkward-devel mailing list.
+
+If all you want is a quick way to pull translations from KDE l10n, use ../scripts/SCRIPT_TO_BE_WRITTEN (only
+in our git repository, not in source releases).
 
 === Developers ===
 
-- Synchronize translations from Launchpad to SVN using ../scripts/import_lp_translations.sh .
-- Update message template file using Messages.sh
+- Synchronize translations from KDE l10n to git using ../scripts/SCRIPT_TO_BE_WRITTEN .
+- For dealing with plugin messages, read the i18n-chapter in "Introduction to writing plugins for RKWard".
+
