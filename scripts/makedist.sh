@@ -17,18 +17,19 @@ $BASEDIR/scripts/roxygenize.sh
 
 cp -a AUTHORS CMakeLists.txt COPYING ChangeLog TODO INSTALL NOTES README configure VERSION.cmake $DISTDIR
 mkdir $DISTDIR/doc
-mkdir $DISTDIR/po
+mkdir $DISTDIR/i18n
 mkdir $DISTDIR/rkward
 mkdir $DISTDIR/tests
 
 rsync -a --exclude '*~' --exclude '*.svn*' $EXCLUDES $BASEDIR/doc/* $DISTDIR/doc
-rsync -a --exclude '*~' --exclude '*.svn*' $EXCLUDES $BASEDIR/po/* $DISTDIR/po
+rsync -a --exclude '*~' --exclude '*.svn*' $EXCLUDES $BASEDIR/i18n/* $DISTDIR/i18n
 rsync -a --exclude '*~' --exclude '*.svn*' --exclude 'templates' $EXCLUDES $BASEDIR/rkward/* $DISTDIR/rkward
 rsync -a --exclude '*~' --exclude '*.svn*' $EXCLUDES $BASEDIR/tests/* $DISTDIR/tests
 
 # make messages
-cd $DISTDIR/po
-./Messages.sh
+#cd $DISTDIR/po
+#./Messages.sh
+# TODO: Import translations
 
 cd $BASEDIR/disttemp
 tar -czf rkward-$VERSION.tar.gz $DISTDIRREL
