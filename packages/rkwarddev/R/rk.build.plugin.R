@@ -71,7 +71,8 @@ rk.build.plugin <- function(plugin, check=FALSE, install=FALSE, R.libs=NULL){
   } else {}
 
   setwd(build.path)
-  r.cmd.build.call <- paste0(R.bin, " CMD build --no-build-vignettes ", plugin.path, " || exit 1")
+  r.cmd.opt.novignettes <- ifelse(isTRUE(R.version$major < 3), "--no-vignettes ", "--no-build-vignettes ")
+  r.cmd.build.call <- paste0(R.bin, " CMD build ", r.cmd.opt.novignettes, plugin.path, " || exit 1")
   system(r.cmd.build.call, intern=TRUE)
   message(paste0("build: package built as ", package.path))
 

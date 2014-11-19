@@ -221,7 +221,7 @@ rk.XML.pluginmap <- function(name, about=NULL, components, hierarchy="test",
               })
 
             hier.XML <- rk.XML.menu(
-              label=unlist(main.menu[this.hier[[1]]]),
+              label=unlist(main.menu[[this.hier[[1]]]]),
               new.hierarchy,
               id.name=id.names)
           } else {
@@ -237,7 +237,7 @@ rk.XML.pluginmap <- function(name, about=NULL, components, hierarchy="test",
 
           if(this.hier %in% names(main.menu)){
             hier.XML <- rk.XML.menu(
-              label=main.menu[this.hier],
+              label=main.menu[[this.hier]],
               entry.XML,
               id.name=this.hier)
           } else {
