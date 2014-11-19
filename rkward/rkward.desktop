@@ -1,7 +1,17 @@
 # KDE Config File
 [Desktop Entry]
 Name=RKWard
+Name[es]=RKWard
+Name[nl]=RKWard
+Name[pt]=RKWard
+Name[uk]=RKWard
+Name[x-test]=xxRKWardxx
 Comment=GUI for the R-project
+Comment[es]=Interfaz gráfica para el proyecto R
+Comment[nl]=GUI voor het R-project
+Comment[pt]=Interface gráfica para o projecto R
+Comment[uk]=Графічний інтерфейс проекту R
+Comment[x-test]=xxGUI for the R-projectxx
 Icon=rkward
 Exec=rkward -caption "%c" %i
 Terminal=false
