@@ -9,7 +9,7 @@
 	</summary>
 
 	<section title="What is shown" id="introduction">
-	Literally hundreds or even thousands of objects are present in a typical R session. This can be overwhelming at first, therefore the workspace browser offers to show only a certain subset of objects. The options here are "Show Hidden Objects", "All vs. Non-Functions vs. Functions", and "Show All Environments" (available at the top of the browser window, or chosing "Show Objects" from the context menu).
+	Literally hundreds or even thousands of objects are present in a typical R session. This can be overwhelming at first, therefore the workspace browser offers to show only a certain subset of objects. The options here are "Show Hidden Objects", "All vs. Non-Functions vs. Functions", and "Show All Environments" (available at the top of the browser window, or choosing "Show Objects" from the context menu).
 
 	The first should be obvious. It controls whether objects whose name start with a dot ('.') are shown or not. Those are often used for internal objects, which are not meant for direct use, so it's generally safe to hide them from view.
 

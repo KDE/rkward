@@ -205,11 +205,11 @@ tab2.create <- rk.XML.col(crt.opts, dep.opts)
 #       help="If you already created XML content for the plugin, select the main dialog object here."),
 #     rk.XML.frame(
 #       js.prep <- rk.XML.varslot("preprocess()", source=children.varselector,
-#         help="A JavaScript object to be used as the the preprocess() function."),
+#         help="A JavaScript object to be used as the preprocess() function."),
 #       js.calc <- rk.XML.varslot("calculate()", source=children.varselector,
-#         help="A JavaScript object to be used as the the calculate() function."),
+#         help="A JavaScript object to be used as the calculate() function."),
 #       js.prnt <- rk.XML.varslot("printout()", source=children.varselector,
-#         help="A JavaScript object to be used as the the printout() function."),
+#         help="A JavaScript object to be used as the printout() function."),
 #       rk.XML.stretch())
 #   ))
 # tab3.children <- rk.XML.col(rk.XML.row(children.text), rk.XML.row(children.var))

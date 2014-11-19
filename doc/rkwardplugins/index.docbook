@@ -2022,7 +2022,7 @@ user (selection from a list of values shown next to this element) --&gt;
 					a good translation, even if that means skipping some strings (or even skipping some message catalogs as a whole). Other users may be able to fill in any gaps in technical
 					terms.</para></listitem>
 			<listitem><para>At the time of this writing, &rkward;'s project hosting is about to change, and this also affect the translation workflow. Do read comments accompanying 
-					the .pot-files, on how translations should be handled. If in doubt, it is never wrong to send your work the the rkward-devel mailing list, or to ask for up-to-date instructions,
+					the .pot-files, on how translations should be handled. If in doubt, it is never wrong to send your work the rkward-devel mailing list, or to ask for up-to-date instructions,
 					there.</para></listitem>
 		</itemizedlist>
 	</sect1>
