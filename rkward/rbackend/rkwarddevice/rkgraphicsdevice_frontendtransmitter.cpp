@@ -57,7 +57,7 @@ void RKGraphicsDeviceFrontendTransmitter::setupServer () {
 	RK_ASSERT (!local_server);
 	local_server = new QLocalServer ();
 	RK_ASSERT (local_server->listen ("rkd" + KRandom::randomString (8)));
-	connect (local_server, SIGNAL (newConnection ()), this, SLOT (newConnection()));
+	connect (local_server, SIGNAL (newConnection()), this, SLOT (newConnection()));
 	server_name = local_server->fullServerName ();
 }
 
@@ -81,7 +81,7 @@ void RKGraphicsDeviceFrontendTransmitter::newConnection () {
 
 	connection = con;
 	streamer.setIODevice (con);
-	connect (connection, SIGNAL (readyRead ()), this, SLOT (newData ()));
+	connect (connection, SIGNAL (readyRead()), this, SLOT (newData()));
 	newData ();	// might already be available
 }
 

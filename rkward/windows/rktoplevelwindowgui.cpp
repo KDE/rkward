@@ -99,7 +99,7 @@ RKTopLevelWindowGUI::RKTopLevelWindowGUI (KXmlGuiWindow *for_window) : QObject (
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowOutput));
 
 	// settings
-	KStandardAction::keyBindings (this, SLOT (configureShortcuts ()), actionCollection ());
+	KStandardAction::keyBindings (this, SLOT (configureShortcuts()), actionCollection ());
 	KStandardAction::configureToolbars (this, SLOT (configureToolbars()), actionCollection ());
 }
 

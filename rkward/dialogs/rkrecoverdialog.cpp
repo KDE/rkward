@@ -47,7 +47,7 @@ RKRecoverDialog::RKRecoverDialog (const QStringList &recovery_files) {
 	setButtonToolTip (KDialog::User1, i18n ("Deletes the recovery file(s)"));
 	setButtonWhatsThis (KDialog::User1, buttonToolTip (KDialog::User1));
 	
-	connect (this, SIGNAL (user1Clicked()), this, SLOT (deleteButtonClicked ()));
+	connect (this, SIGNAL (user1Clicked()), this, SLOT (deleteButtonClicked()));
 	QLabel *label = new QLabel (this);
 	QString text = QString ("<p><b>%1</b></p>").arg (caption);
 	text.append (i18n ("<p>It looks like RKWard has crashed, recently. We are sorry about that! However, not everything is lost, and with a bit of luck, your data has been saved in time.</p>"));

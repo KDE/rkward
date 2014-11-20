@@ -54,7 +54,7 @@ RKGraphicsDevice::RKGraphicsDevice (double width, double height, const QString &
 	view->setScaledContents (true);    // this is just for preview during scaling. The area will be re-sized and re-drawn from R.
 	view->setFocusPolicy (Qt::StrongFocus);   // for receiving key events for R's getGraphicsEvent()
 	connect (view, SIGNAL (destroyed(QObject*)), this, SLOT (viewKilled()));
-	connect (&updatetimer, SIGNAL (timeout ()), this, SLOT (updateNow ()));
+	connect (&updatetimer, SIGNAL (timeout()), this, SLOT (updateNow()));
 	updatetimer.setSingleShot (true);
 	clear ();
 	if (antialias) painter.setRenderHints (QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::SmoothPixmapTransform);
@@ -321,7 +321,7 @@ void RKGraphicsDevice::confirmNewPage () {
 	dialog->setButtons (KDialog::Ok | KDialog::Cancel);
 	dialog->setMainWidget (new QLabel (msg, dialog));
 //	dialog->setWindowModality (Qt::WindowModal);        // not good: Grays out the plot window
-	connect (dialog, SIGNAL (finished (int)), this, SLOT (newPageDialogDone (int)));
+	connect (dialog, SIGNAL (finished(int)), this, SLOT (newPageDialogDone(int)));
 	dialog->show ();
 }
 

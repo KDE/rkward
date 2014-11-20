@@ -57,11 +57,11 @@ RKSaveObjectChooser::RKSaveObjectChooser (QWidget *parent, const QString &initia
 
 	name_edit = new QLineEdit (this);
 	name_edit->setText (initial);
-	connect (name_edit, SIGNAL (textChanged (const QString &)), this, SLOT (updateState()));
+	connect (name_edit, SIGNAL (textChanged(QString)), this, SLOT (updateState()));
 	layout->addWidget (name_edit);
 
 	overwrite_confirm = new QCheckBox (this);
-	connect (overwrite_confirm, SIGNAL (stateChanged (int)), this, SLOT (updateState()));
+	connect (overwrite_confirm, SIGNAL (stateChanged(int)), this, SLOT (updateState()));
 	layout->addWidget (overwrite_confirm);
 
 	// initialize
@@ -110,7 +110,7 @@ void RKSaveObjectChooser::selectRootObject () {
 	list_view->getSettings ()->setSetting (RKObjectListViewSettings::ShowObjectsAllEnvironments, false);
 	list_view->initialize ();
 	list_view->setObjectCurrent (root_object);
-	connect (list_view, SIGNAL (doubleClicked (const QModelIndex&)), dialog, SLOT (accept()));
+	connect (list_view, SIGNAL (doubleClicked(QModelIndex)), dialog, SLOT (accept()));
 
 	dialog->exec ();
 

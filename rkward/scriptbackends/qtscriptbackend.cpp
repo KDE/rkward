@@ -56,9 +56,9 @@ bool QtScriptBackend::initialize (RKComponentPropertyCode *code_property, bool a
 	QString common_js (files_path.absoluteFilePath ("common.js"));
 
 	script_thread = new QtScriptBackendThread (common_js, filename, this, catalog);
-	connect (script_thread, SIGNAL (error(const QString&)), this, SLOT (threadError(const QString&)));
-	connect (script_thread, SIGNAL (commandDone(const QString&)), this, SLOT (commandDone(const QString&)));
-	connect (script_thread, SIGNAL (needData(const QString&, const int)), this, SLOT (needData(const QString&, const int)));
+	connect (script_thread, SIGNAL (error(QString)), this, SLOT (threadError(QString)));
+	connect (script_thread, SIGNAL (commandDone(QString)), this, SLOT (commandDone(QString)));
+	connect (script_thread, SIGNAL (needData(QString,int)), this, SLOT (needData(QString,int)));
 	current_type = ScriptBackend::Ignore;
 	script_thread->start ();
 

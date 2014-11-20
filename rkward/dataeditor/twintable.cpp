@@ -76,8 +76,8 @@ TwinTable::TwinTable (QWidget *parent) : RKEditor (parent), RObjectListener (ROb
 	meta_header_anchor_section = -1;
 
 	// catch header context menu requests
-	connect (dataview, SIGNAL (contextMenuRequest(int,int,const QPoint&)), this, SLOT (contextMenu(int,int,const QPoint&)));
-	connect (metaview, SIGNAL (contextMenuRequest(int,int,const QPoint&)), this, SLOT (contextMenu(int,int,const QPoint&)));
+	connect (dataview, SIGNAL (contextMenuRequest(int,int,QPoint)), this, SLOT (contextMenu(int,int,QPoint)));
+	connect (metaview, SIGNAL (contextMenuRequest(int,int,QPoint)), this, SLOT (contextMenu(int,int,QPoint)));
 	context_menu_table = 0;
 	context_menu_row = context_menu_column = -2;
 
@@ -172,7 +172,7 @@ void TwinTable::initTable (RKVarEditModel* model, RObject* object) {
 	addNotificationType (RObjectListener::MetaChanged);
 	listenForObject (object);
 	objectMetaChanged (object);
-	connect (model, SIGNAL (hasDuplicates(const QStringList&)), this, SLOT (containsDuplicates(const QStringList&)));
+	connect (model, SIGNAL (hasDuplicates(QStringList)), this, SLOT (containsDuplicates(QStringList)));
 }
 
 void TwinTable::containsDuplicates (const QStringList& dupes) {

@@ -34,7 +34,7 @@ RKPluginBrowser::RKPluginBrowser (const QDomElement &element, RKComponent *paren
 
 	// create and add property
 	addChild ("selection", selection = new RKComponentPropertyBase (this, true));
-	connect (selection, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (textChanged (RKComponentPropertyBase *)));
+	connect (selection, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (textChanged(RKComponentPropertyBase*)));
 
 	setRequired (xml->getBoolAttribute (element, "required", true, DL_INFO));
 	connect (requirednessProperty (), SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (requirednessChanged(RKComponentPropertyBase*)));
@@ -57,7 +57,7 @@ RKPluginBrowser::RKPluginBrowser (const QDomElement &element, RKComponent *paren
 		filter.append ("\n*|All files");
 		selector->setFilter (filter);
 	}
-	connect (selector, SIGNAL (locationChanged ()), SLOT (textChanged ()));
+	connect (selector, SIGNAL (locationChanged()), SLOT (textChanged()));
 
 	vbox->addWidget (selector);
 

@@ -911,7 +911,7 @@ void RKConsole::initializeActions (KActionCollection *ac) {
 	copy_commands_action = ac->addAction ("rkconsole_copy_commands", this, SLOT (copyCommands()));
 	copy_commands_action->setText (i18n ("Copy commands, only"));
 
-	RKStandardActions::pasteSpecial (this, this, SLOT (submitBatch(const QString&)));
+	RKStandardActions::pasteSpecial (this, this, SLOT (submitBatch(QString)));
 
 	ac->addAction (KStandardAction::Clear, "rkconsole_clear", this, SLOT (clear()));
 	paste_action = ac->addAction (KStandardAction::Paste, "rkconsole_paste", this, SLOT (paste()));
@@ -922,9 +922,9 @@ void RKConsole::initializeActions (KActionCollection *ac) {
 	addProxyAction ("view_inc_font_sizes");
 	addProxyAction ("view_dec_font_sizes");
 
-	KAction *action = ac->addAction ("loadhistory", this, SLOT (userLoadHistory ()));
+	KAction *action = ac->addAction ("loadhistory", this, SLOT (userLoadHistory()));
 	action->setText (i18n ("Import command history..."));
-	action = ac->addAction ("savehistory", this, SLOT (userSaveHistory ()));
+	action = ac->addAction ("savehistory", this, SLOT (userSaveHistory()));
 	action->setText (i18n ("Export command history..."));
 }
 

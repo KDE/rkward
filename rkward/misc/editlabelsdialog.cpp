@@ -44,9 +44,9 @@ RKVarLevelsTable::RKVarLevelsTable (QWidget *parent, const RObject::ValueLabels&
 	verticalHeader ()->setFixedWidth (40);
 	setMinimumWidth (80);
 
-	addAction (KStandardAction::cut (this, SLOT (cut ()), this));
-	addAction (KStandardAction::copy (this, SLOT (copy ()), this));
-	addAction (KStandardAction::paste (this, SLOT (paste ()), this));
+	addAction (KStandardAction::cut (this, SLOT (cut()), this));
+	addAction (KStandardAction::copy (this, SLOT (copy()), this));
+	addAction (KStandardAction::paste (this, SLOT (paste()), this));
 	setContextMenuPolicy (Qt::ActionsContextMenu);
 
 	setModel (lmodel = new RKVarLevelsTableModel (labels, this));

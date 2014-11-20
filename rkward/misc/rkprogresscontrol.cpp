@@ -152,7 +152,7 @@ void RKProgressControl::done () {
 	}
 
 	if ((!modal) && autodelete) {
-		if (dialog) disconnect (dialog, SIGNAL (destroyed ()), this, SLOT (dialogDestroyed ()));		// we're already dead
+		if (dialog) disconnect (dialog, SIGNAL (destroyed()), this, SLOT (dialogDestroyed()));		// we're already dead
 		deleteLater ();
 	}
 }
@@ -161,7 +161,7 @@ void RKProgressControl::createDialog () {
 	RK_TRACE (MISC);
 
 	dialog = new RKProgressControlDialog (text, caption, mode, modal);
-	connect (dialog, SIGNAL (destroyed ()), this, SLOT (dialogDestroyed ()));
+	connect (dialog, SIGNAL (destroyed()), this, SLOT (dialogDestroyed()));
 	if (is_done) done ();
 	for (int i = 0; i < output_log.count (); ++i) {
 		dialog->addOutput (&(output_log[i]));

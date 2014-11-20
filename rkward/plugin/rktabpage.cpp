@@ -44,8 +44,8 @@ RKTabPage::RKTabPage (const QDomElement &element, RKComponent *parent_component,
 	page->setSizePolicy (QSizePolicy (QSizePolicy::Expanding, QSizePolicy::Expanding));
 
 	inserted = true;
-	connect (visibility_property, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (visibleEnabledChanged (RKComponentPropertyBase *)));
-	connect (enabledness_property, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (visibleEnabledChanged (RKComponentPropertyBase *)));
+	connect (visibility_property, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (visibleEnabledChanged(RKComponentPropertyBase*)));
+	connect (enabledness_property, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (visibleEnabledChanged(RKComponentPropertyBase*)));
 }
 
 RKTabPage::~RKTabPage () {

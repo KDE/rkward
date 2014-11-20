@@ -66,7 +66,7 @@ RObjectViewer::RObjectViewer (QWidget *parent, RObject *object, ViewerPage initi
 
 	tabs->setCurrentIndex (initial_page);
 	currentTabChanged (initial_page);
-	connect (tabs, SIGNAL (currentChanged(int)), this, SLOT (currentTabChanged (int)));
+	connect (tabs, SIGNAL (currentChanged(int)), this, SLOT (currentTabChanged(int)));
 
 	initDescription (false);
 }
@@ -170,11 +170,11 @@ RObjectViewerWidget::RObjectViewerWidget (QWidget* parent, RObject* object) : QW
 	status_layout->addStretch ();
 
 	update_button = new QPushButton (i18n ("Update"), this);
-	connect (update_button, SIGNAL (clicked ()), this, SLOT (update ()));
+	connect (update_button, SIGNAL (clicked()), this, SLOT (update()));
 	status_layout->addWidget (update_button);
 
 	cancel_button = new QPushButton (i18n ("Cancel"), this);
-	connect (cancel_button, SIGNAL (clicked ()), this, SLOT (cancel ()));
+	connect (cancel_button, SIGNAL (clicked()), this, SLOT (cancel()));
 	status_layout->addWidget (cancel_button);
 
 	area = new QTextEdit (this);

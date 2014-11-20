@@ -91,8 +91,8 @@ RKHTMLWindow::RKHTMLWindow (QWidget *parent, WindowMode mode) : RKMDIWindow (par
 	pLayout->addWidget (renderingpart->widget ());
 
 	// We have to connect this in order to allow browsing.
-	connect (renderingpart->browserExtension (), SIGNAL (openUrlRequestDelayed (const KUrl&, const KParts::OpenUrlArguments&, const KParts::BrowserArguments&)), this, SLOT (slotOpenUrl (const KUrl&, const KParts::OpenUrlArguments&, const KParts::BrowserArguments&)));
-	connect (renderingpart, SIGNAL (completed ()), this, SLOT (loadDone ()));
+	connect (renderingpart->browserExtension (), SIGNAL (openUrlRequestDelayed(KUrl,KParts::OpenUrlArguments,KParts::BrowserArguments)), this, SLOT (slotOpenUrl(KUrl,KParts::OpenUrlArguments,KParts::BrowserArguments)));
+	connect (renderingpart, SIGNAL (completed()), this, SLOT (loadDone()));
 	connect (renderingpart->browserExtension (), SIGNAL (openUrlNotify()), this, SLOT (internalNavigation()));	// to catch internal navigation on a page
 
 	current_history_position = -1;
@@ -141,7 +141,7 @@ void RKHTMLWindow::initActions () {
 	RK_TRACE (APP);
 
 	// common actions
-	actionCollection ()->addAction (KStandardAction::Copy, "copy", renderingpart->browserExtension (), SLOT (copy ()));
+	actionCollection ()->addAction (KStandardAction::Copy, "copy", renderingpart->browserExtension (), SLOT (copy()));
 
 	print = actionCollection ()->addAction (KStandardAction::Print, "print_html", this, SLOT (slotPrint()));
 
@@ -189,7 +189,7 @@ void RKHTMLWindow::doGotoAnchor (const QString &anchor_name) {
 	RK_TRACE (APP);
 
 	goto_anchor_name = anchor_name;
-	QTimer::singleShot (0, this, SLOT (doGotoAnchorNow ()));
+	QTimer::singleShot (0, this, SLOT (doGotoAnchorNow()));
 }
 
 void RKHTMLWindow::doGotoAnchorNow () {
@@ -324,7 +324,7 @@ bool RKHTMLWindow::openURL (const KUrl &url) {
 		QString host = url.host ();
 		if ((host == "127.0.0.1") || (host == "localhost") || host == QHostInfo::localHostName ()) {
 			KIO::TransferJob *job = KIO::get (url, KIO::Reload);
-			connect (job, SIGNAL (mimetype(KIO::Job*, const QString&)), this, SLOT (mimeTypeDetermined(KIO::Job*, const QString&)));
+			connect (job, SIGNAL (mimetype(KIO::Job*,QString)), this, SLOT (mimeTypeDetermined(KIO::Job*,QString)));
 			return true;
 		}
 	}
@@ -834,8 +834,8 @@ RKOutputWindowManager::RKOutputWindowManager () : QObject () {
 	RK_TRACE (APP);
 
 	file_watcher = new KDirWatch (this);
-	connect (file_watcher, SIGNAL (dirty(const QString&)), this, SLOT (fileChanged(const QString&)));
-	connect (file_watcher, SIGNAL (created(const QString&)), this, SLOT (fileChanged(const QString&)));
+	connect (file_watcher, SIGNAL (dirty(QString)), this, SLOT (fileChanged(QString)));
+	connect (file_watcher, SIGNAL (created(QString)), this, SLOT (fileChanged(QString)));
 }
 
 RKOutputWindowManager::~RKOutputWindowManager () {

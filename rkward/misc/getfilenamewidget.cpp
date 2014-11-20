@@ -34,7 +34,7 @@ GetFileNameWidget::GetFileNameWidget (QWidget *parent, FileType mode, bool only_
 	if (!label.isEmpty ()) vbox->addWidget (new QLabel (label, this));
 
 	edit = new KUrlRequester (this);
-	connect (edit, SIGNAL (textChanged (const QString &)), this, SLOT (locationEditChanged (const QString &)));
+	connect (edit, SIGNAL (textChanged(QString)), this, SLOT (locationEditChanged(QString)));
 	vbox->addWidget (edit);
 
 	edit->setUrl (initial);

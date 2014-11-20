@@ -133,13 +133,13 @@ RKWardMainWindow::RKWardMainWindow () : KParts::MainWindow ((QWidget *)0, (Qt::W
 	new RKWorkplace (this);
 	RKWorkplace::mainWorkplace ()->initActions (actionCollection (), "left_window", "right_window");
 	setCentralWidget (RKWorkplace::mainWorkplace ());
-	connect (RKWorkplace::mainWorkplace ()->view (), SIGNAL (captionChanged (const QString &)), this, SLOT (setCaption (const QString &)));
-	connect (RKWorkplace::mainWorkplace (), SIGNAL (workspaceUrlChanged(const KUrl&)), this, SLOT (addWorkspaceUrl(const KUrl&)));
+	connect (RKWorkplace::mainWorkplace ()->view (), SIGNAL (captionChanged(QString)), this, SLOT (setCaption(QString)));
+	connect (RKWorkplace::mainWorkplace (), SIGNAL (workspaceUrlChanged(KUrl)), this, SLOT (addWorkspaceUrl(KUrl)));
 
 	part_manager = new KParts::PartManager (this);
 	// When the manager says the active part changes,
 	// the builder updates (recreates) the GUI
-	connect (partManager (), SIGNAL (activePartChanged (KParts::Part *)), this, SLOT (partChanged (KParts::Part *)));
+	connect (partManager (), SIGNAL (activePartChanged(KParts::Part*)), this, SLOT (partChanged(KParts::Part*)));
 
 	readOptions();
 	RKGlobals::mtracker = new RKModificationTracker (this);
@@ -160,7 +160,7 @@ RKWardMainWindow::RKWardMainWindow () : KParts::MainWindow ((QWidget *)0, (Qt::W
 	RKComponentMap::initialize ();
 
 	// stuff which should wait until the event loop is running
-	QTimer::singleShot (0, this, SLOT (doPostInit ()));
+	QTimer::singleShot (0, this, SLOT (doPostInit()));
 }
 
 RKWardMainWindow::~RKWardMainWindow() {
@@ -348,8 +348,8 @@ void RKWardMainWindow::configureCarbonCopy () {
 	dialog->setMainWidget (settings);
 	dialog->setButtons (KDialog::Ok | KDialog::Apply | KDialog::Cancel);
 	dialog->setAttribute (Qt::WA_DeleteOnClose);
-	connect (dialog, SIGNAL (okClicked()), settings, SLOT (applyChanges ())); 
-	connect (dialog, SIGNAL (applyClicked()), settings, SLOT (applyChanges ())); 
+	connect (dialog, SIGNAL (okClicked()), settings, SLOT (applyChanges())); 
+	connect (dialog, SIGNAL (applyClicked()), settings, SLOT (applyChanges())); 
 	dialog->show ();
 }
 
@@ -402,7 +402,7 @@ void RKWardMainWindow::initActions() {
 	KAction *action;
 
 	// TODO: is there a way to insert actions between standard actions without having to give all standard actions custom ids?
-	new_data_frame = actionCollection ()->addAction ("new_data_frame", this, SLOT (slotNewDataFrame ()));
+	new_data_frame = actionCollection ()->addAction ("new_data_frame", this, SLOT (slotNewDataFrame()));
 	new_data_frame->setText (i18n ("Dataset"));
 	new_data_frame->setIcon (RKStandardIcons::getIcon (RKStandardIcons::WindowDataFrameEditor));
 	new_data_frame->setStatusTip (i18n ("Creates new empty dataset and opens it for editing"));
@@ -414,7 +414,7 @@ void RKWardMainWindow::initActions() {
 	fileOpen = actionCollection ()->addAction (KStandardAction::Open, "file_openy", this, SLOT(slotOpenCommandEditor()));
 	fileOpen->setText (i18n ("Open R Script File..."));
 
-	fileOpenRecent = static_cast<KRecentFilesAction*> (actionCollection ()->addAction (KStandardAction::OpenRecent, "file_open_recenty", this, SLOT(slotOpenCommandEditor (const KUrl&))));
+	fileOpenRecent = static_cast<KRecentFilesAction*> (actionCollection ()->addAction (KStandardAction::OpenRecent, "file_open_recenty", this, SLOT(slotOpenCommandEditor(KUrl))));
 	fileOpenRecent->setText (i18n ("Open Recent R Script File"));
 
 #ifdef Q_WS_WIN
@@ -431,7 +431,7 @@ void RKWardMainWindow::initActions() {
 	fileOpenWorkspace->setShortcut (Qt::ControlModifier + Qt::ShiftModifier + Qt::Key_O);
 	fileOpenWorkspace->setStatusTip (i18n ("Opens an existing document"));
 
-	fileOpenRecentWorkspace = static_cast<KRecentFilesAction*> (actionCollection ()->addAction (KStandardAction::OpenRecent, "file_open_recentx", this, SLOT(slotFileOpenRecentWorkspace(const KUrl&))));
+	fileOpenRecentWorkspace = static_cast<KRecentFilesAction*> (actionCollection ()->addAction (KStandardAction::OpenRecent, "file_open_recentx", this, SLOT(slotFileOpenRecentWorkspace(KUrl))));
 	fileOpenRecentWorkspace->setText (i18n ("Open Recent Workspace"));
 	fileOpenRecentWorkspace->setStatusTip (i18n ("Opens a recently used file"));
 
@@ -453,7 +453,7 @@ void RKWardMainWindow::initActions() {
 	interrupt_all_commands->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionInterrupt));
 	interrupt_all_commands->setEnabled (false);		// enabled from within setRStatus()
 
-	action = actionCollection ()->addAction ("carbon_copy", this, SLOT (configureCarbonCopy ()));
+	action = actionCollection ()->addAction ("carbon_copy", this, SLOT (configureCarbonCopy()));
 	action->setText (i18n ("CC commands to output..."));
 
 	// These two currently do the same thing

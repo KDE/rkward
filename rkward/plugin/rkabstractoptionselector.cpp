@@ -27,9 +27,9 @@ RKAbstractOptionSelector::RKAbstractOptionSelector (RKComponent *parent_componen
 
 	// create and register properties
 	addChild ("string", string = new RKComponentPropertyBase (this, false));
-	connect (string, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (propertyChanged (RKComponentPropertyBase *)));
+	connect (string, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (propertyChanged(RKComponentPropertyBase*)));
 	addChild ("number", number = new RKComponentPropertyInt (this, true, -1));
-	connect (number, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (propertyChanged (RKComponentPropertyBase *)));
+	connect (number, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (propertyChanged(RKComponentPropertyBase*)));
 	number->setInternal (true);
 }
 

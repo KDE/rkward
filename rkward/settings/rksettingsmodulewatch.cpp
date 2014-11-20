@@ -151,7 +151,7 @@ RKSettingsModuleWatch::RKSettingsModuleWatch (RKSettings *gui, QWidget *parent) 
 	vbox->addWidget (new QLabel (i18n ("Maximum number of paragraphs/lines to display in the Command Log"), this));
 	max_log_lines_spinner = new KIntSpinBox (0, 10000, 10, max_log_lines, this);
 	max_log_lines_spinner->setSpecialValueText (i18n ("Unlimited"));
-	connect (max_log_lines_spinner, SIGNAL (valueChanged (int)), this, SLOT (changedSetting (int)));
+	connect (max_log_lines_spinner, SIGNAL (valueChanged(int)), this, SLOT (changedSetting(int)));
 	vbox->addWidget (max_log_lines_spinner);
 
 	vbox->addStretch ();
@@ -188,22 +188,22 @@ RKSettingsModuleWatch::FilterBoxes *RKSettingsModuleWatch::addFilterSettings (QW
 	
 	filter_boxes->input = new QCheckBox (parent);
 	filter_boxes->input->setChecked (state & ShowInput);
-	connect (filter_boxes->input, SIGNAL (stateChanged (int)), this, SLOT (changedSetting (int)));
+	connect (filter_boxes->input, SIGNAL (stateChanged(int)), this, SLOT (changedSetting(int)));
 	layout->addWidget (filter_boxes->input, row, 1);
 	
 	filter_boxes->output = new QCheckBox (parent);
 	filter_boxes->output->setChecked (state & ShowOutput);
-	connect (filter_boxes->output, SIGNAL (stateChanged (int)), this, SLOT (changedSetting (int)));
+	connect (filter_boxes->output, SIGNAL (stateChanged(int)), this, SLOT (changedSetting(int)));
 	layout->addWidget (filter_boxes->output, row, 2);
 	
 	filter_boxes->error = new QCheckBox (parent);
 	filter_boxes->error->setChecked (state & ShowError);
-	connect (filter_boxes->error, SIGNAL (stateChanged (int)), this, SLOT (changedSetting (int)));
+	connect (filter_boxes->error, SIGNAL (stateChanged(int)), this, SLOT (changedSetting(int)));
 	layout->addWidget (filter_boxes->error, row, 3);
 	
 	filter_boxes->raise = new QCheckBox (parent);
 	filter_boxes->raise->setChecked (state & RaiseWindow);
-	connect (filter_boxes->raise, SIGNAL (stateChanged (int)), this, SLOT (changedSetting (int)));
+	connect (filter_boxes->raise, SIGNAL (stateChanged(int)), this, SLOT (changedSetting(int)));
 	layout->addWidget (filter_boxes->raise, row, 4);
 	
 	return filter_boxes;

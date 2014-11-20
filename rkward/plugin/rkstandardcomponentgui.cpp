@@ -50,7 +50,7 @@ RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component, 
 
 	RKStandardComponentGUI::component = component;
 	RKStandardComponentGUI::code_property = code_property;
-	connect (code_property, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (codeChanged (RKComponentPropertyBase *)));
+	connect (code_property, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (codeChanged(RKComponentPropertyBase*)));
 	connect (RKWardMainWindow::getMain(), SIGNAL (aboutToQuitRKWard()), this, SLOT (cancel()));
 
 	RKStandardComponentGUI::enslaved = enslaved;
@@ -58,7 +58,7 @@ RKStandardComponentGUI::RKStandardComponentGUI (RKStandardComponent *component, 
 	// code update timer
 	code_update_timer = new QTimer (this);
 	code_update_timer->setSingleShot (true);
-	connect (code_update_timer, SIGNAL (timeout ()), this, SLOT (updateCodeNow ()));
+	connect (code_update_timer, SIGNAL (timeout()), this, SLOT (updateCodeNow()));
 
 	if (!enslaved) {
 		KActionCollection *action_collection = new KActionCollection (this);
@@ -95,12 +95,12 @@ void RKStandardComponentGUI::createDialog (bool switchable) {
 	vbox->setContentsMargins (0, 0, 0, 0);
 	vbox->setSpacing (RKGlobals::spacingHint ());
 	ok_button = new QPushButton (i18n ("Submit"), upper_widget);
-	connect (ok_button, SIGNAL (clicked ()), this, SLOT (ok ()));
+	connect (ok_button, SIGNAL (clicked()), this, SLOT (ok()));
 	vbox->addWidget (ok_button);
 	if (enslaved) ok_button->hide ();
 
 	cancel_button = new QPushButton (i18n ("Close"), upper_widget);
-	connect (cancel_button, SIGNAL (clicked ()), this, SLOT (cancel ()));
+	connect (cancel_button, SIGNAL (clicked()), this, SLOT (cancel()));
 	vbox->addWidget (cancel_button);
 	auto_close_box = new QCheckBox (i18n ("Auto close"), upper_widget);
 	auto_close_box->setChecked (true);
@@ -110,19 +110,19 @@ void RKStandardComponentGUI::createDialog (bool switchable) {
 	
 	help_button = new QPushButton (i18n ("Help"), upper_widget);
 	help_button->setEnabled (component->haveHelp ());
-	connect (help_button, SIGNAL (clicked ()), this, SLOT (help ()));
+	connect (help_button, SIGNAL (clicked()), this, SLOT (help()));
 	vbox->addWidget (help_button);
 	
 	if (switchable && (!enslaved)) {
 		switch_button = new QPushButton (i18n ("Use Wizard"), upper_widget);
-		connect (switch_button, SIGNAL (clicked ()), this, SLOT (switchInterface ()));
+		connect (switch_button, SIGNAL (clicked()), this, SLOT (switchInterface()));
 		vbox->addWidget (switch_button);
 	}
 	vbox->addStretch (2);
 	
 	toggle_code_button = new QPushButton (i18n ("Code"), upper_widget);
 	toggle_code_button->setCheckable (true);
-	connect (toggle_code_button, SIGNAL (clicked ()), this, SLOT (toggleCode ()));
+	connect (toggle_code_button, SIGNAL (clicked()), this, SLOT (toggleCode()));
 	vbox->addWidget (toggle_code_button);
 	if (enslaved) toggle_code_button->hide ();
 	
@@ -151,7 +151,7 @@ void RKStandardComponentGUI::showEvent (QShowEvent *e) {
 	setMinimumSize (min.expandedTo (QSize (50, 50)));
 
 	if (toggle_code_button) {	// this is a dialog, not  wizard
-		QTimer::singleShot (0, this, SLOT (toggleCode ()));
+		QTimer::singleShot (0, this, SLOT (toggleCode()));
 	}
 }
 
@@ -319,10 +319,10 @@ void RKStandardComponentWizard::createWizard (bool switchable) {
 	main_grid->addWidget (prev_button, 2, 2, Qt::AlignRight);
 	next_button = new QPushButton (QString::null, this);
 	main_grid->addWidget (next_button, 2, 3, Qt::AlignRight);
-	connect (next_button, SIGNAL (clicked ()), this, SLOT (next ()));
-	connect (prev_button, SIGNAL (clicked ()), this, SLOT (prev ()));
-	connect (cancel_button, SIGNAL (clicked ()), this, SLOT (cancel ()));
-	connect (help_button, SIGNAL (clicked ()), this, SLOT (help ()));
+	connect (next_button, SIGNAL (clicked()), this, SLOT (next()));
+	connect (prev_button, SIGNAL (clicked()), this, SLOT (prev()));
+	connect (cancel_button, SIGNAL (clicked()), this, SLOT (cancel()));
+	connect (help_button, SIGNAL (clicked()), this, SLOT (help()));
 
 	// dummy:
 	auto_close_box = new QCheckBox(this);

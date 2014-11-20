@@ -183,8 +183,8 @@ RKCaughtX11Window::RKCaughtX11Window (RKGraphicsDevice* rkward_device, int devic
 	xembed_container->setFixedSize (rk_native_device->viewPort ()->size ());
 	resize (xembed_container->size ());
 	rk_native_device->viewPort ()->setParent (xembed_container);
-	connect (rkward_device, SIGNAL (captionChanged(const QString&)), this, SLOT (setCaption(const QString &)));
-	connect (rkward_device, SIGNAL (goingInteractive(bool,const QString&)), this, SLOT (deviceInteractive(bool,const QString&)));
+	connect (rkward_device, SIGNAL (captionChanged(QString)), this, SLOT (setCaption(QString)));
+	connect (rkward_device, SIGNAL (goingInteractive(bool,QString)), this, SLOT (deviceInteractive(bool,QString)));
 	stop_interaction->setVisible (true);
 	stop_interaction->setEnabled (false);
 	setCaption (rkward_device->viewPort ()->windowTitle ());
@@ -239,13 +239,13 @@ void RKCaughtX11Window::doEmbed () {
 		capture->setFocusPolicy (Qt::ClickFocus);
 		capture->setAutoDestruct (true);
 		connect (capture, SIGNAL (clientDestroyed()), this, SLOT (deleteLater()), Qt::QueuedConnection);
-		connect (capture, SIGNAL (clientTitleChanged(const QString&)), this, SLOT (setCaption(const QString&)), Qt::QueuedConnection);
+		connect (capture, SIGNAL (clientTitleChanged(QString)), this, SLOT (setCaption(QString)), Qt::QueuedConnection);
 
 		setCaption (capture->getClientTitle ());
 #elif defined Q_WS_X11
 		capture = new QX11EmbedContainer (xembed_container);
 		capture->embedClient (embedded);
-		connect (capture, SIGNAL (clientClosed ()), this, SLOT (deleteLater ()));
+		connect (capture, SIGNAL (clientClosed()), this, SLOT (deleteLater()));
 
 		RKWardApplication::getApp ()->registerNameWatcher (embedded, this);
 #endif
@@ -475,7 +475,7 @@ void RKCaughtX11Window::copyDeviceToRObject () {
 
 	new QLabel (i18n ("Specify the R object name, you want to save the graph to"), page);
 	RKSaveObjectChooser *chooser = new RKSaveObjectChooser (page, "my.plot");
-	connect (chooser, SIGNAL (changed (bool)), dialog, SLOT (enableButtonOk (bool)));
+	connect (chooser, SIGNAL (changed(bool)), dialog, SLOT (enableButtonOk(bool)));
 	if (!chooser->isOk ()) dialog->enableButtonOk (false);
 
 	dialog->exec ();
@@ -702,7 +702,7 @@ RKCaughtX11WindowPart::RKCaughtX11WindowPart (RKCaughtX11Window *window) : KPart
 	action->setText (i18n ("Duplicate"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionWindowDuplicate));
 
-	action = window->stop_interaction = actionCollection ()->addAction ("stop_interaction", window, SLOT (stopInteraction ()));
+	action = window->stop_interaction = actionCollection ()->addAction ("stop_interaction", window, SLOT (stopInteraction()));
 	action->setText (i18n ("Stop interaction"));
 	action->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionInterrupt));
 	action->setVisible (false);

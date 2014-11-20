@@ -78,7 +78,7 @@ RKSettingsModuleGraphics::RKSettingsModuleGraphics (RKSettings *gui, QWidget *pa
 	                                  "<p>The 'Platform default device' corresponds to one of <i>X11()</i>, <i>windows()</i>, or <i>quartz()</i>, depending on the platform.</p>"
 	                                  "<p>You can also specify the name of a function such as <i>cairoDevice</i>.</p>"), group);
 	connect (default_device_group, SIGNAL (buttonClicked(int)), this, SLOT (boxChanged()));
-	connect (default_device_other_edit, SIGNAL (textChanged(const QString&)), this, SLOT (boxChanged()));
+	connect (default_device_other_edit, SIGNAL (textChanged(QString)), this, SLOT (boxChanged()));
 	h_layout1->addWidget (group);
 
 	group = new QGroupBox (i18n ("Integration of R standard devices"), this);
@@ -119,8 +119,8 @@ RKSettingsModuleGraphics::RKSettingsModuleGraphics (RKSettings *gui, QWidget *pa
 	group_layout->addWidget (new QLabel (i18n ("Default height (inches)"), group));
 	group_layout->addWidget (graphics_height_box = new RKSpinBox (group));
 	graphics_height_box->setRealMode (1, 100.0, graphics_height, 1, 3);
-	connect (graphics_width_box, SIGNAL (valueChanged (int)), this, SLOT (boxChanged ()));
-	connect (graphics_height_box, SIGNAL (valueChanged (int)), this, SLOT (boxChanged ()));
+	connect (graphics_width_box, SIGNAL (valueChanged(int)), this, SLOT (boxChanged()));
+	connect (graphics_height_box, SIGNAL (valueChanged(int)), this, SLOT (boxChanged()));
 	main_vbox->addWidget (group);
 
 	kde_printing_box = new QCheckBox (i18n ("Use KDE printer dialog for printing devices (if available)"), this);
@@ -132,7 +132,7 @@ RKSettingsModuleGraphics::RKSettingsModuleGraphics (RKSettings *gui, QWidget *pa
 	graphics_hist_box->setCheckable (true);
 	graphics_hist_box->setChecked (graphics_hist_enable);
 	group_layout = new QVBoxLayout (graphics_hist_box);
-	connect (graphics_hist_box, SIGNAL (toggled (bool)), this, SLOT (boxChanged ()));
+	connect (graphics_hist_box, SIGNAL (toggled(bool)), this, SLOT (boxChanged()));
 	h_layout = new QHBoxLayout ();
 	group_layout->addLayout (h_layout);
 	h_layout->addWidget (new QLabel (i18n ("Maximum number of recorded plots:"), graphics_hist_box));
@@ -141,8 +141,8 @@ RKSettingsModuleGraphics::RKSettingsModuleGraphics (RKSettings *gui, QWidget *pa
 	group_layout->addLayout (h_layout);
 	h_layout->addWidget (new QLabel (i18n ("Maximum size of a single recorded plot (in KB):"), graphics_hist_box));
 	h_layout->addWidget (graphics_hist_max_plotsize_box = new KIntSpinBox (4, 20000, 4, graphics_hist_max_plotsize, graphics_hist_box));
-	connect (graphics_hist_max_length_box, SIGNAL (valueChanged (int)), this, SLOT (boxChanged ()));
-	connect (graphics_hist_max_plotsize_box, SIGNAL (valueChanged (int)), this, SLOT (boxChanged ()));
+	connect (graphics_hist_max_length_box, SIGNAL (valueChanged(int)), this, SLOT (boxChanged()));
+	connect (graphics_hist_max_plotsize_box, SIGNAL (valueChanged(int)), this, SLOT (boxChanged()));
 
 	main_vbox->addWidget (graphics_hist_box);
 

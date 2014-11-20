@@ -52,7 +52,7 @@ void CellEditor::setValueLabels (const RObject::ValueLabels& labels) {
 	}
 	connect (value_list, SIGNAL (triggered(QAction*)), SLOT (selectedFromList(QAction*)));
 
-	QTimer::singleShot (200, this, SLOT (showValueLabels ()));
+	QTimer::singleShot (200, this, SLOT (showValueLabels()));
 }
 
 void CellEditor::selectedFromList (QAction* action) {

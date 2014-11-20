@@ -111,7 +111,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 		RKComponentPropertyStringList *column_property = new RKComponentPropertyStringList (this, false);
 		column_property->setInternal (external);	// Yes, looks strange, indeed. External properties should simply not be serialized / restored...
 		addChild (id, column_property);
-		connect (column_property, SIGNAL (valueChanged(RKComponentPropertyBase *)), this, SLOT (columnPropertyChanged(RKComponentPropertyBase *)));
+		connect (column_property, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (columnPropertyChanged(RKComponentPropertyBase*)));
 
 		if (!label.isEmpty ()) {
 			col_inf.display_index = visible_column_labels.size ();
@@ -158,7 +158,7 @@ RKOptionSet::RKOptionSet (const QDomElement &element, RKComponent *parent_compon
 					}
 				}
 				columns_to_update.insertMulti (gov_prop, it.key ());
-				connect (gov_prop, SIGNAL (valueChanged(RKComponentPropertyBase *)), this, SLOT (governingPropertyChanged(RKComponentPropertyBase *)));
+				connect (gov_prop, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (governingPropertyChanged(RKComponentPropertyBase*)));
 			} else {
 				RK_DEBUG (PLUGIN, DL_ERROR, "did not find governing property %s for column %s of optionset", qPrintable (ci.governor), qPrintable (ci.column_name));
 			}

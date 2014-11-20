@@ -50,7 +50,7 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 
 	select = new QPushButton (QString::null, this);
 	setSelectButton (false);
-	connect (select, SIGNAL (clicked ()), this, SLOT (selectPressed ()));
+	connect (select, SIGNAL (clicked()), this, SLOT (selectPressed()));
 	g_layout->addWidget (select, 1, 0);
 	g_layout->addItem (new QSpacerItem (5, 0), 0, 1);
 
@@ -80,7 +80,7 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 	// find out about options
 	if ((multi = xml->getBoolAttribute (element, "multi", false, DL_INFO))) {
 		available->setAllowedLength (xml->getIntAttribute (element, "min_vars", 1, DL_INFO), xml->getIntAttribute (element, "min_vars_if_any", 1, DL_INFO), xml->getIntAttribute (element, "max_vars", 0, DL_INFO));
-		connect (list, SIGNAL (itemSelectionChanged ()), this, SLOT (listSelectionChanged ()));
+		connect (list, SIGNAL (itemSelectionChanged()), this, SLOT (listSelectionChanged()));
 	} else {
 		available->setAllowedLength (1, 1, 1);
 
@@ -107,7 +107,7 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 	}
 	available->setStripDuplicates (!xml->getBoolAttribute (element, "allow_duplicates", false, DL_INFO));
 
-	connect (available, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (availablePropertyChanged (RKComponentPropertyBase *)));
+	connect (available, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (availablePropertyChanged(RKComponentPropertyBase*)));
 	availablePropertyChanged (available);		// initialize
 }
 

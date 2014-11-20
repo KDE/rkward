@@ -72,13 +72,13 @@ RKSettingsModuleObjectBrowser::RKSettingsModuleObjectBrowser (RKSettings *gui, Q
 
 	for (int i = 0; i < RKObjectListViewSettings::SettingsCount; ++i) {
 		checkboxes[i]->setChecked (settings[i]);
-		connect (checkboxes[i], SIGNAL (stateChanged (int)), this, SLOT (boxChanged (int)));
+		connect (checkboxes[i], SIGNAL (stateChanged(int)), this, SLOT (boxChanged(int)));
 	}
 
 	blacklist_choser = new MultiStringSelector (i18n ("Never fetch the structure of these packages:"), this);
 	blacklist_choser->setValues (getstructure_blacklist);
-	connect (blacklist_choser, SIGNAL (listChanged ()), this, SLOT (listChanged ()));
-	connect (blacklist_choser, SIGNAL (getNewStrings (QStringList*)), this, SLOT (addBlackList (QStringList*)));
+	connect (blacklist_choser, SIGNAL (listChanged()), this, SLOT (listChanged()));
+	connect (blacklist_choser, SIGNAL (getNewStrings(QStringList*)), this, SLOT (addBlackList(QStringList*)));
 	layout->addWidget (blacklist_choser);
 }
 

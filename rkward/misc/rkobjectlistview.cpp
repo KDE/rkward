@@ -40,7 +40,7 @@ RKObjectListView::RKObjectListView (QWidget *parent) : QTreeView (parent) {
 	menu = new QMenu (this);
 	menu->addMenu (settings->showObjectsMenu ());
 	menu->addMenu (settings->showFieldsMenu ());
-	menu->addAction (i18n ("Configure Defaults"), this, SLOT (popupConfigure ()));
+	menu->addAction (i18n ("Configure Defaults"), this, SLOT (popupConfigure()));
 }
 
 RKObjectListView::~RKObjectListView () {
@@ -137,9 +137,9 @@ void RKObjectListView::initialize () {
 	setMinimumHeight (rowHeight (genv) * 5);
 	settingsChanged ();
 
-	connect (RObjectList::getObjectList (), SIGNAL (updateComplete ()), this, SLOT (updateComplete ()));
-	connect (RObjectList::getObjectList (), SIGNAL (updateStarted ()), this, SLOT (updateStarted ()));
-	connect (selectionModel (), SIGNAL (selectionChanged(const QItemSelection&, const QItemSelection&)), this, SLOT (selectionChanged(const QItemSelection&, const QItemSelection&)));
+	connect (RObjectList::getObjectList (), SIGNAL (updateComplete()), this, SLOT (updateComplete()));
+	connect (RObjectList::getObjectList (), SIGNAL (updateStarted()), this, SLOT (updateStarted()));
+	connect (selectionModel (), SIGNAL (selectionChanged(QItemSelection,QItemSelection)), this, SLOT (selectionChanged(QItemSelection,QItemSelection)));
 	connect (settings, SIGNAL (settingsChanged()), this, SLOT (settingsChanged()));
 
 	updateComplete ();
@@ -173,7 +173,7 @@ RKObjectListViewSettings::RKObjectListViewSettings (QObject* parent) : QSortFilt
 	update_timer->setSingleShot (true);
 	connect (update_timer, SIGNAL(timeout()), this, SLOT(updateSelfNow()));
 
-	connect (RKSettings::tracker (), SIGNAL (settingsChanged (RKSettings::SettingsPage)), this, SLOT (globalSettingsChanged (RKSettings::SettingsPage)));
+	connect (RKSettings::tracker (), SIGNAL (settingsChanged(RKSettings::SettingsPage)), this, SLOT (globalSettingsChanged(RKSettings::SettingsPage)));
 
 	action_group = new QActionGroup (this);
 	action_group->setExclusive (false);

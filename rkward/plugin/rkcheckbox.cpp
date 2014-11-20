@@ -32,7 +32,7 @@ RKCheckBox::RKCheckBox (const QDomElement &element, RKComponent *parent_componen
 
 	// create and add property
 	addChild ("state", state = new RKComponentPropertyBool (this, true, xml->getBoolAttribute (element, "checked", false, DL_INFO), xml->getStringAttribute (element, "value", "1", DL_INFO), xml->getStringAttribute (element, "value_unchecked", QString::null, DL_INFO)));
-	connect (state, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (changedState (RKComponentPropertyBase *)));
+	connect (state, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (changedState(RKComponentPropertyBase*)));
 
 	// create checkbox
 	QVBoxLayout *vbox = new QVBoxLayout (this);
@@ -40,7 +40,7 @@ RKCheckBox::RKCheckBox (const QDomElement &element, RKComponent *parent_componen
 	checkbox = new QCheckBox (xml->i18nStringAttribute (element, "label", QString (), DL_WARNING), this);
 	vbox->addWidget (checkbox);
 	checkbox->setChecked (xml->getBoolAttribute (element, "checked", false, DL_INFO));
-	connect (checkbox, SIGNAL (stateChanged (int)), this, SLOT (changedState (int)));
+	connect (checkbox, SIGNAL (stateChanged(int)), this, SLOT (changedState(int)));
 
 	// initialize
 	updating = false;

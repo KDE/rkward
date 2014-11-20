@@ -280,15 +280,15 @@ void RKComponent::createDefaultProperties () {
 	addChild ("enabled", enabledness_property = new RKComponentPropertyBool (this, false));
 	enabledness_property->setBoolValue (true);
 	enabledness_property->setInternal (true);
-	connect (enabledness_property, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (propertyValueChanged (RKComponentPropertyBase *)));
+	connect (enabledness_property, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (propertyValueChanged(RKComponentPropertyBase*)));
 	addChild ("visible", visibility_property = new RKComponentPropertyBool (this, false));
 	visibility_property->setBoolValue (true);
 	visibility_property->setInternal (true);
-	connect (visibility_property, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (propertyValueChanged (RKComponentPropertyBase *)));
+	connect (visibility_property, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (propertyValueChanged(RKComponentPropertyBase*)));
 	addChild ("required", requiredness_property = new RKComponentPropertyBool (this, false));
 	requiredness_property->setBoolValue (true);
 	requiredness_property->setInternal (true);
-	connect (requiredness_property, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (propertyValueChanged (RKComponentPropertyBase *)));
+	connect (requiredness_property, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (propertyValueChanged(RKComponentPropertyBase*)));
 }
 
 RKComponent::~RKComponent () {

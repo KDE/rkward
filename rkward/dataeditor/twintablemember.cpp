@@ -36,11 +36,11 @@ TwinTableMember::TwinTableMember (QWidget *parent) : RKTableView (parent){
 	setSelectionMode (QAbstractItemView::ContiguousSelection);
 
 	verticalHeader ()->setContextMenuPolicy (Qt::CustomContextMenu);
-	connect (verticalHeader (), SIGNAL (customContextMenuRequested(const QPoint&)), this, SLOT (handleContextMenuRequest(const QPoint&)));
+	connect (verticalHeader (), SIGNAL (customContextMenuRequested(QPoint)), this, SLOT (handleContextMenuRequest(QPoint)));
 	horizontalHeader ()->setContextMenuPolicy (Qt::CustomContextMenu);
-	connect (horizontalHeader (), SIGNAL (customContextMenuRequested(const QPoint&)), this, SLOT (handleContextMenuRequest(const QPoint&)));
+	connect (horizontalHeader (), SIGNAL (customContextMenuRequested(QPoint)), this, SLOT (handleContextMenuRequest(QPoint)));
 	setContextMenuPolicy (Qt::CustomContextMenu);
-	connect (this, SIGNAL (customContextMenuRequested(const QPoint&)), this, SLOT (handleContextMenuRequest(const QPoint&)));
+	connect (this, SIGNAL (customContextMenuRequested(QPoint)), this, SLOT (handleContextMenuRequest(QPoint)));
 
 	updating_twin = false;
 	connect (this, SIGNAL (blankSelectionRequest()), this, SLOT (blankSelected()));
@@ -57,7 +57,7 @@ void TwinTableMember::setRKModel (RKVarEditModelBase* model) {
 	setModel (model);
 
 	// now we should also have a selectionModel() (but not before)
-	connect (selectionModel (), SIGNAL (selectionChanged(const QItemSelection&,const QItemSelection&)), this, SLOT (tableSelectionChanged(const QItemSelection&,const QItemSelection&)));
+	connect (selectionModel (), SIGNAL (selectionChanged(QItemSelection,QItemSelection)), this, SLOT (tableSelectionChanged(QItemSelection,QItemSelection)));
 }
 
 void TwinTableMember::setTwin (TwinTableMember * new_twin) {

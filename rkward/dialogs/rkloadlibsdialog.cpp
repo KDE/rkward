@@ -65,7 +65,7 @@ RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool 
 
 	LoadUnloadWidget *luwidget = new LoadUnloadWidget (this);
 	addPage (luwidget, i18n ("Local packages"));
-	connect (this, SIGNAL (installedPackagesChanged ()), luwidget, SLOT (updateInstalledPackages ()));
+	connect (this, SIGNAL (installedPackagesChanged()), luwidget, SLOT (updateInstalledPackages()));
 
 	install_packages_widget = new InstallPackagesWidget (this);
 	install_packages_pageitem = addPage (install_packages_widget, i18n ("Install / Update / Remove"));
@@ -100,7 +100,7 @@ void RKLoadLibsDialog::showInstallPackagesModal (QWidget *parent, RCommandChain 
 
 	RKLoadLibsDialog *dialog = new RKLoadLibsDialog (parent, chain, true);
 	dialog->auto_install_package = package_name;
-	QTimer::singleShot (0, dialog, SLOT (automatedInstall ()));		// to get past the dialog->exec, below
+	QTimer::singleShot (0, dialog, SLOT (automatedInstall()));		// to get past the dialog->exec, below
 	dialog->setCurrentPage (dialog->install_packages_pageitem);
 	dialog->exec ();
 	RK_TRACE (DIALOGS);
@@ -340,8 +340,8 @@ void RKLoadLibsDialog::runInstallationCommand (const QString& command, bool as_r
 
 	RKProgressControl *installation_progress = new RKProgressControl (this, message, title, RKProgressControl::CancellableProgress);
 	connect (this, SIGNAL (installationComplete()), installation_progress, SLOT (done()));
-	connect (this, SIGNAL (installationOutput(const QString&)), installation_progress, SLOT (newOutput(const QString&)));
-	connect (this, SIGNAL (installationError(const QString&)), installation_progress, SLOT (newError(const QString&)));
+	connect (this, SIGNAL (installationOutput(QString)), installation_progress, SLOT (newOutput(QString)));
+	connect (this, SIGNAL (installationError(QString)), installation_progress, SLOT (newError(QString)));
 
 	installation_process->start (call, params, QIODevice::ReadWrite | QIODevice::Unbuffered);
 
@@ -414,9 +414,9 @@ LoadUnloadWidget::LoadUnloadWidget (RKLoadLibsDialog *dialog) : QWidget (0) {
 	instvbox->addWidget (installed_view);
 
 	load_button = new QPushButton (RKStandardIcons::getIcon (RKStandardIcons::ActionAddRight), i18n ("Load"), this);
-	connect (load_button, SIGNAL (clicked ()), this, SLOT (loadButtonClicked ()));
+	connect (load_button, SIGNAL (clicked()), this, SLOT (loadButtonClicked()));
 	detach_button = new QPushButton (RKStandardIcons::getIcon (RKStandardIcons::ActionRemoveLeft), i18n ("Unload"), this);
-	connect (detach_button, SIGNAL (clicked ()), this, SLOT (detachButtonClicked ()));
+	connect (detach_button, SIGNAL (clicked()), this, SLOT (detachButtonClicked()));
 	buttonvbox->addStretch (1);
 	buttonvbox->addWidget (load_button);
 	buttonvbox->addWidget (detach_button);
@@ -432,10 +432,10 @@ LoadUnloadWidget::LoadUnloadWidget (RKLoadLibsDialog *dialog) : QWidget (0) {
 	connect (loaded_view, SIGNAL (itemSelectionChanged()), this, SLOT (updateButtons()));
 	connect (installed_view, SIGNAL (itemSelectionChanged()), this, SLOT (updateButtons()));
 
-	connect (dialog, SIGNAL (okClicked ()), this, SLOT (ok ()));
-	connect (dialog, SIGNAL (applyClicked ()), this, SLOT (apply ()));
-	connect (dialog, SIGNAL (cancelClicked ()), this, SLOT (cancel ()));
-	connect (this, SIGNAL (destroyed ()), dialog, SLOT (childDeleted ()));
+	connect (dialog, SIGNAL (okClicked()), this, SLOT (ok()));
+	connect (dialog, SIGNAL (applyClicked()), this, SLOT (apply()));
+	connect (dialog, SIGNAL (cancelClicked()), this, SLOT (cancel()));
+	connect (this, SIGNAL (destroyed()), dialog, SLOT (childDeleted()));
 
 	updateInstalledPackages ();
 	updateButtons ();
@@ -575,7 +575,7 @@ void LoadUnloadWidget::doLoadUnload () {
 	RK_TRACE (DIALOGS);
 
 	RKProgressControl *control = new RKProgressControl (this, i18n ("There has been an error while trying to load / unload packages. See transcript below for details"), i18n ("Error while handling packages"), RKProgressControl::DetailedError);
-	connect (this, SIGNAL (loadUnloadDone ()), control, SLOT (done ()));
+	connect (this, SIGNAL (loadUnloadDone()), control, SLOT (done()));
 
 	// load packages previously not loaded
 	for (int i = 0; i < loaded_view->topLevelItemCount (); ++i) {
@@ -653,14 +653,14 @@ InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog) : QWidge
 	label = new QLabel (i18n ("Show only packages matching:"), this);
 	filter_edit = new QLineEdit ("*", this);
 	RKCommonFunctions::setTips (i18n ("<p>You can limit the packages displayed in the list to with names or titles matching a filter string.</p><p><b>Note:</b> To search for partial strings, add '*' to the start and / or end of the filter, e.g. '*stat*'.</p>"), label, filter_edit);
-	connect (filter_edit, SIGNAL (textChanged(const QString&)), this, SLOT (filterStringChanged(const QString&)));
+	connect (filter_edit, SIGNAL (textChanged(QString)), this, SLOT (filterStringChanged(QString)));
 	filterStringChanged (filter_edit->text ());
 
 	mark_all_updates_button = new QPushButton (i18n ("Select all updates"), this);
 	connect (mark_all_updates_button, SIGNAL (clicked()), this, SLOT (markAllUpdates()));
 
 	install_params = new PackageInstallParamsWidget (this);
-	connect (parent, SIGNAL (libraryLocationsChanged (const QStringList &)), install_params, SLOT (liblocsChanged (const QStringList &)));
+	connect (parent, SIGNAL (libraryLocationsChanged(QStringList)), install_params, SLOT (liblocsChanged(QStringList)));
 
 	buttonvbox->addWidget (label);
 	buttonvbox->addWidget (filter_edit);
@@ -670,10 +670,10 @@ InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog) : QWidge
 	buttonvbox->addWidget (install_params);
 	buttonvbox->addStretch (1);
 
-	connect (dialog, SIGNAL (okClicked ()), this, SLOT (ok ()));
-	connect (dialog, SIGNAL (applyClicked ()), this, SLOT (apply ()));
-	connect (dialog, SIGNAL (cancelClicked ()), this, SLOT (cancel ()));
-	connect (this, SIGNAL (destroyed ()), dialog, SLOT (childDeleted ()));
+	connect (dialog, SIGNAL (okClicked()), this, SLOT (ok()));
+	connect (dialog, SIGNAL (applyClicked()), this, SLOT (apply()));
+	connect (dialog, SIGNAL (cancelClicked()), this, SLOT (cancel()));
+	connect (this, SIGNAL (destroyed()), dialog, SLOT (childDeleted()));
 }
 
 InstallPackagesWidget::~InstallPackagesWidget () {

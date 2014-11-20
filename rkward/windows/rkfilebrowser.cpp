@@ -123,11 +123,11 @@ RKFileBrowserWidget::RKFileBrowserWidget (QWidget *parent) : KVBox (parent) {
 	connect (dir, SIGNAL (contextMenuAboutToShow(KFileItem,QMenu*)), this, SLOT (contextMenuHook(KFileItem,QMenu*)));
 #endif
 
-	connect (dir, SIGNAL (urlEntered (const KUrl &)), this, SLOT (urlChangedInView (const KUrl &)));
-	connect (urlbox, SIGNAL (returnPressed (const QString &)), this, SLOT (urlChangedInCombo (const QString &)));
-	connect (urlbox, SIGNAL (urlActivated (const KUrl&)), this, SLOT (urlChangedInCombo (const KUrl&)));
+	connect (dir, SIGNAL (urlEntered(KUrl)), this, SLOT (urlChangedInView(KUrl)));
+	connect (urlbox, SIGNAL (returnPressed(QString)), this, SLOT (urlChangedInCombo(QString)));
+	connect (urlbox, SIGNAL (urlActivated(KUrl)), this, SLOT (urlChangedInCombo(KUrl)));
 
-	connect (dir, SIGNAL (fileSelected (const KFileItem&)), this, SLOT (fileActivated (const KFileItem&)));
+	connect (dir, SIGNAL (fileSelected(KFileItem)), this, SLOT (fileActivated(KFileItem)));
 
 	setURL (QDir::currentPath ());
 }

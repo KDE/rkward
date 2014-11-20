@@ -156,11 +156,11 @@ RKSettingsModuleOutput::RKSettingsModuleOutput (RKSettings *gui, QWidget *parent
 	QVBoxLayout* group_layout = new QVBoxLayout (group);
 	group_layout->addWidget (auto_show_box = new QCheckBox (i18n ("show window on new output"), group));
 	auto_show_box->setChecked (auto_show);
-	connect (auto_show_box, SIGNAL (stateChanged (int)), this, SLOT (boxChanged()));
+	connect (auto_show_box, SIGNAL (stateChanged(int)), this, SLOT (boxChanged()));
 	group_layout->addWidget (auto_raise_box = new QCheckBox (i18n ("raise window on new output"), group));
 	auto_raise_box->setChecked (auto_raise);
 	auto_raise_box->setEnabled (auto_show);
-	connect (auto_raise_box, SIGNAL (stateChanged (int)), this, SLOT (boxChanged()));
+	connect (auto_raise_box, SIGNAL (stateChanged(int)), this, SLOT (boxChanged()));
 
 	main_vbox->addWidget (group);
 
@@ -176,12 +176,12 @@ RKSettingsModuleOutput::RKSettingsModuleOutput (RKSettings *gui, QWidget *parent
 	graphics_type_box->addItem (i18n ("JPG"), QString ("\"JPG\""));
 	graphics_type_box->setCurrentIndex (graphics_type_box->findData (graphics_type));
 	graphics_type_box->setEditable (false);
-	connect (graphics_type_box, SIGNAL (currentIndexChanged (int)), this, SLOT (boxChanged()));
+	connect (graphics_type_box, SIGNAL (currentIndexChanged(int)), this, SLOT (boxChanged()));
 	h_layout->addSpacing (2*RKGlobals::spacingHint ());
 	h_layout->addWidget (new QLabel (i18n ("JPG quality"), group));
 	h_layout->addWidget (graphics_jpg_quality_box = new KIntSpinBox (1, 100, 1, graphics_jpg_quality, group));
 	graphics_jpg_quality_box->setEnabled (graphics_type == "\"JPG\"");
-	connect (graphics_jpg_quality_box, SIGNAL (valueChanged (int)), this, SLOT (boxChanged()));
+	connect (graphics_jpg_quality_box, SIGNAL (valueChanged(int)), this, SLOT (boxChanged()));
 	h_layout->addStretch ();
 
 	h_layout = new QHBoxLayout ();
@@ -192,8 +192,8 @@ RKSettingsModuleOutput::RKSettingsModuleOutput (RKSettings *gui, QWidget *parent
 	h_layout->addWidget (new QLabel (i18n ("Height:"), group));
 	h_layout->addWidget (graphics_height_box = new KIntSpinBox (1, INT_MAX, 1, graphics_height, group));
 	h_layout->addStretch ();
-	connect (graphics_width_box, SIGNAL (valueChanged (int)), this, SLOT (boxChanged()));
-	connect (graphics_height_box, SIGNAL (valueChanged (int)), this, SLOT (boxChanged()));
+	connect (graphics_width_box, SIGNAL (valueChanged(int)), this, SLOT (boxChanged()));
+	connect (graphics_height_box, SIGNAL (valueChanged(int)), this, SLOT (boxChanged()));
 
 	main_vbox->addWidget (group);
 

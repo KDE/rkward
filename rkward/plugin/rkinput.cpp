@@ -39,10 +39,10 @@ RKInput::RKInput (const QDomElement &element, RKComponent *parent_component, QWi
 
 	// create and add property
 	addChild ("text", text = new RKComponentPropertyBase (this, false));
-	connect (text, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (textChanged (RKComponentPropertyBase *)));
+	connect (text, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (textChanged(RKComponentPropertyBase*)));
 
 	setRequired (xml->getBoolAttribute (element, "required", false, DL_INFO));
-	connect (requirednessProperty (), SIGNAL (valueChanged (RKComponentPropertyBase*)), this, SLOT (requirednessChanged (RKComponentPropertyBase*)));
+	connect (requirednessProperty (), SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (requirednessChanged(RKComponentPropertyBase*)));
 
 	// do all the layouting
 	QVBoxLayout *vbox = new QVBoxLayout (this);
@@ -62,11 +62,11 @@ RKInput::RKInput (const QDomElement &element, RKComponent *parent_component, QWi
 		textedit->setMinimumSize (250, lheight * 4 + margin);
 
 		vbox->addWidget (textedit);
-		connect (textedit, SIGNAL (textChanged ()), SLOT (textChanged ()));
+		connect (textedit, SIGNAL (textChanged()), SLOT (textChanged()));
 	} else {
 		lineedit = new QLineEdit (this);
 		vbox->addWidget (lineedit);
-		connect (lineedit, SIGNAL (textChanged (const QString&)), SLOT (textChanged (const QString&)));
+		connect (lineedit, SIGNAL (textChanged(QString)), SLOT (textChanged(QString)));
 	}
 
 	vbox->addStretch (1);		// to keep the label attached

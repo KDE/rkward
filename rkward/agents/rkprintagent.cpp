@@ -85,7 +85,7 @@ void RKPrintAgent::printPostscript (const QString &file, bool delete_file) {
 	ts.start ();
 	printaction->trigger ();
 	if (ts.elapsed () < 5000) {
-		QTimer::singleShot (1800000, agent, SLOT (deleteLater ()));
+		QTimer::singleShot (1800000, agent, SLOT (deleteLater()));
 	} else {
 		agent->deleteLater ();
 	}

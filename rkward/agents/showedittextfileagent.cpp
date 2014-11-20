@@ -57,7 +57,7 @@ ShowEditTextFileAgent::ShowEditTextFileAgent (RBackendRequest *request, const QS
 
 	dialog->setButtonText (KDialog::Ok, i18n ("Done"));
 
-	connect (dialog, SIGNAL (finished ()), this, SLOT (deleteLater ()));
+	connect (dialog, SIGNAL (finished()), this, SLOT (deleteLater()));
 
 	// do it
 	dialog->show ();

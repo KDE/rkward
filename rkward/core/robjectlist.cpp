@@ -46,7 +46,7 @@ RObjectList::RObjectList () : RContainerObject (0, QString::null) {
 
 	update_timer = new QTimer (this);
 	update_timer->setSingleShot (true);
-	connect (update_timer, SIGNAL (timeout ()), this, SLOT (timeout ()));
+	connect (update_timer, SIGNAL (timeout()), this, SLOT (timeout()));
 	
 	//update_timer->start (AUTO_UPDATE_INTERVAL, true);
 	

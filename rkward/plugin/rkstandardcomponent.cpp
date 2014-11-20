@@ -113,9 +113,9 @@ RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget
 		back->setPreviewTemplate (xml->getStringAttribute (element, "preview", QString::null, DL_INFO));
 		backend = back;
 	}
-	connect (backend, SIGNAL (idle ()), this, SLOT (backendIdle ()));
-	connect (backend, SIGNAL (requestValue (const QString&, const int)), this, SLOT (getValue (const QString&, const int)));
-	connect (backend, SIGNAL (haveError ()), this, SLOT (kill ()));
+	connect (backend, SIGNAL (idle()), this, SLOT (backendIdle()));
+	connect (backend, SIGNAL (requestValue(QString,int)), this, SLOT (getValue(QString,int)));
+	connect (backend, SIGNAL (haveError()), this, SLOT (kill()));
 	if (!backend->initialize (code, parent_component == 0)) return;
 
 	// check for existence of help file
@@ -192,7 +192,7 @@ RKComponentScriptingProxy* RKStandardComponent::scriptingProxy () {
 
 	if (!scripting) {
 		scripting = new RKComponentScriptingProxy (this);
-		connect (scripting, SIGNAL (haveError ()), this, SLOT (kill ()));
+		connect (scripting, SIGNAL (haveError()), this, SLOT (kill()));
 	}
 	return scripting;
 }
@@ -353,7 +353,7 @@ void RKStandardComponent::buildAndInitialize (const QDomElement &doc_element, co
 	if (gui && (!enslaved)) {
 		// somehow, when switching the interface, and we show before the old GUI has been fully deleted (it is deleted via deleteLater (), then there may be strange graphical glitches until the GUI is first redrawn completely.
 		// Likely a difficult bug in Qt. Delaying the show until the next event loop solves the problem.
-		QTimer::singleShot (0, gui, SLOT (show ()));
+		QTimer::singleShot (0, gui, SLOT (show()));
 	}
 	changed ();
 	standardInitializationComplete ();
@@ -383,7 +383,7 @@ void RKStandardComponent::close () {
 	RK_TRACE (PLUGIN);
 
 	if (gui && (!parentComponent ())) {
-		QTimer::singleShot (0, gui, SLOT (close ()));
+		QTimer::singleShot (0, gui, SLOT (close()));
 	} else {
 		RK_ASSERT (false);
 	}
@@ -398,7 +398,7 @@ void RKStandardComponent::changed () {
 	// don't trigger update twice
 	if (!update_pending) {
 		update_pending = true;
-		QTimer::singleShot (0, this, SLOT (handleChange ()));
+		QTimer::singleShot (0, this, SLOT (handleChange()));
 	}
 }
 
@@ -663,7 +663,7 @@ void RKComponentBuilder::buildElement (const QDomElement &element, XMLHelper &xm
 					swidget->setCaption (dummy);
 // TODO we should use a specialized pushbutton, that changes color if the corresponding component is dissatisfied!
 					QPushButton *button = new QPushButton (dummy, parent_widget);
-					component ()->connect (button, SIGNAL (clicked ()), widget, SLOT (showGUI ()));
+					component ()->connect (button, SIGNAL (clicked()), widget, SLOT (showGUI()));
 				} else {
 					widget = handle->invoke (component (), parent_widget);
 				}
@@ -727,7 +727,7 @@ void RKComponentBuilder::parseLogic (const QDomElement &element, XMLHelper &xml,
 		RKComponentPropertyBase *prop = new RKComponentPropertyBase (component (), xml.getBoolAttribute (*it, "required", false, DL_INFO));
 		component ()->addChild (id, prop);
 		prop->setInternal (true);
-		component ()->connect (prop, SIGNAL (valueChanged (RKComponentPropertyBase *)), component (), SLOT (outsideValueChanged (RKComponentPropertyBase *)));
+		component ()->connect (prop, SIGNAL (valueChanged(RKComponentPropertyBase*)), component (), SLOT (outsideValueChanged(RKComponentPropertyBase*)));
 
 		QString dummy = xml.getStringAttribute (*it, "default", QString::null, DL_INFO);
 		if (!dummy.isNull ()) {

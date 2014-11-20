@@ -41,24 +41,24 @@ RKPluginSaveObject::RKPluginSaveObject (const QDomElement &element, RKComponent 
 
 	// create and add properties
 	addChild ("selection", selection = new RKComponentPropertyBase (this, required));
-	connect (selection, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (externalChange ()));
+	connect (selection, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (externalChange()));
 	selection->setInternal (true);	// the two separate properties "parent" and "objectname" are used for (re-)storing.
 	addChild ("parent", parent = new RKComponentPropertyRObjects (this, false));
-	connect (parent, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (externalChange ()));
+	connect (parent, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (externalChange()));
 	addChild ("objectname", objectname = new RKComponentPropertyBase (this, false));
-	connect (objectname, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (externalChange ()));
+	connect (objectname, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (externalChange()));
 	addChild ("active", active = new RKComponentPropertyBool (this, false, false, "1", "0"));
-	connect (active, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (externalChange ()));
+	connect (active, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (externalChange()));
 	if (!checkable) active->setInternal (true);
 
 	// create GUI
 	groupbox = new QGroupBox (label, this);
 	groupbox->setCheckable (checkable);
 	if (checkable) groupbox->setChecked (checked);
-	connect (groupbox, SIGNAL (toggled(bool)), this, SLOT (internalChange ()));
+	connect (groupbox, SIGNAL (toggled(bool)), this, SLOT (internalChange()));
 
 	selector = new RKSaveObjectChooser (groupbox, initial);
-	connect (selector, SIGNAL (changed (bool)), SLOT (internalChange ()));
+	connect (selector, SIGNAL (changed(bool)), SLOT (internalChange()));
 
 	QVBoxLayout *vbox = new QVBoxLayout (this);
 	vbox->setContentsMargins (0, 0, 0, 0);

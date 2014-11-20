@@ -61,7 +61,7 @@ EditFormatDialog::EditFormatDialog (QWidget *parent) : KDialog (parent) {
 	group_layout->addWidget (button);
 	precision_field = new QSpinBox (precision_box);
 	precision_field->setRange (0, 10);
-	connect (precision_field, SIGNAL (valueChanged (int)), this, SLOT (precisionFieldChanged (int)));
+	connect (precision_field, SIGNAL (valueChanged(int)), this, SLOT (precisionFieldChanged(int)));
 	group_layout->addWidget (precision_field);
 	precision_group->button ((int) RKVariable::FormattingOptions::PrecisionDefault)->setChecked (true);
 

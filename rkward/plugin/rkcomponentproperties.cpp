@@ -132,7 +132,7 @@ void RKComponentPropertyBase::connectToGovernor (RKComponentPropertyBase *govern
 	RK_TRACE (PLUGIN);
 
 	RK_ASSERT (governor);
-	connect (governor, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (governorValueChanged (RKComponentPropertyBase *)));
+	connect (governor, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (governorValueChanged(RKComponentPropertyBase*)));
 	governor_modifier = modifier;
 	// no need to reconcile any requirements, as the RKComponentPropertyBase does not have any requirements
 
@@ -1196,7 +1196,7 @@ RKComponentPropertyConvert::RKComponentPropertyConvert (RKComponent *parent) : R
 	require_true = false;
 	c_parent = parent;
 	// get notified of own changes
-	connect (this, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (selfChanged (RKComponentPropertyBase *)));
+	connect (this, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (selfChanged(RKComponentPropertyBase*)));
 }
 
 RKComponentPropertyConvert::~RKComponentPropertyConvert () {
@@ -1220,7 +1220,7 @@ void RKComponentPropertyConvert::setSources (const QStringList &source_ids) {
 		if (prop && prop->isProperty ()) {
 			s.property = static_cast<RKComponentPropertyBase *>(prop);
 			sources.append (s);
-			connect (s.property, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (sourcePropertyChanged (RKComponentPropertyBase *)));
+			connect (s.property, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (sourcePropertyChanged(RKComponentPropertyBase*)));
 		} else {
 			RK_DEBUG (PLUGIN, DL_WARNING, "Not found or not a property: %s", (*it).toLatin1 ().data ());
 		}

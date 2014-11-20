@@ -289,7 +289,7 @@ void RKCommandLogPart::initActions () {
 
 	run_selection = RKStandardActions::runCurrent (log, log, SLOT(runSelection()));
 
-	connect (log->getView (), SIGNAL (popupMenuRequest (const QPoint &)), this, SLOT (doPopupMenu (const QPoint &)));
+	connect (log->getView (), SIGNAL (popupMenuRequest(QPoint)), this, SLOT (doPopupMenu(QPoint)));
 }
 
 void RKCommandLogPart::doPopupMenu (const QPoint &pos) {

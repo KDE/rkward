@@ -115,10 +115,10 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 	layout->setContentsMargins (0, 0, 0, 0);
 	layout->addWidget(m_view);
 
-	connect (m_doc, SIGNAL (documentUrlChanged (KTextEditor::Document*)), this, SLOT (updateCaption (KTextEditor::Document*)));
-	connect (m_doc, SIGNAL (modifiedChanged (KTextEditor::Document*)), this, SLOT (updateCaption(KTextEditor::Document*)));                // of course most of the time this causes a redundant call to updateCaption. Not if a modification is undone, however.
-	connect (m_doc, SIGNAL (modifiedChanged (KTextEditor::Document*)), this, SLOT (autoSaveHandlerModifiedChanged()));
-	connect (m_doc, SIGNAL (textChanged (KTextEditor::Document*)), this, SLOT (autoSaveHandlerTextChanged()));
+	connect (m_doc, SIGNAL (documentUrlChanged(KTextEditor::Document*)), this, SLOT (updateCaption(KTextEditor::Document*)));
+	connect (m_doc, SIGNAL (modifiedChanged(KTextEditor::Document*)), this, SLOT (updateCaption(KTextEditor::Document*)));                // of course most of the time this causes a redundant call to updateCaption. Not if a modification is undone, however.
+	connect (m_doc, SIGNAL (modifiedChanged(KTextEditor::Document*)), this, SLOT (autoSaveHandlerModifiedChanged()));
+	connect (m_doc, SIGNAL (textChanged(KTextEditor::Document*)), this, SLOT (autoSaveHandlerTextChanged()));
 	connect (m_view, SIGNAL (selectionChanged(KTextEditor::View*)), this, SLOT (selectionChanged(KTextEditor::View*)));
 	// somehow the katepart loses the context menu each time it loses focus
 	connect (m_view, SIGNAL (focusIn(KTextEditor::View*)), this, SLOT (focusIn(KTextEditor::View*)));
@@ -135,8 +135,8 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 				completion_model = new RKCodeCompletionModel (this);
 				completion_timer = new QTimer (this);
 				completion_timer->setSingleShot (true);
-				connect (completion_timer, SIGNAL (timeout ()), this, SLOT (tryCompletion()));
-				connect (m_doc, SIGNAL (textChanged (KTextEditor::Document*)), this, SLOT (tryCompletionProxy (KTextEditor::Document*)));
+				connect (completion_timer, SIGNAL (timeout()), this, SLOT (tryCompletion()));
+				connect (m_doc, SIGNAL (textChanged(KTextEditor::Document*)), this, SLOT (tryCompletionProxy(KTextEditor::Document*)));
 			} else {
 				RK_ASSERT (false);
 			}
@@ -156,7 +156,7 @@ RKCommandEditorWindow::RKCommandEditorWindow (QWidget *parent, bool use_r_highli
 	connect (autosave_timer, SIGNAL (timeout()), this, SLOT (doAutoSave()));
 
 	updateCaption ();	// initialize
-	QTimer::singleShot (0, this, SLOT (setPopupMenu ()));
+	QTimer::singleShot (0, this, SLOT (setPopupMenu()));
 }
 
 RKCommandEditorWindow::~RKCommandEditorWindow () {
@@ -209,7 +209,7 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 	RK_TRACE (COMMANDEDITOR);
 
 	RKStandardActions::copyLinesToOutput (this, this, SLOT (copyLinesToOutput()));
-	RKStandardActions::pasteSpecial (this, this, SLOT (paste(const QString&)));
+	RKStandardActions::pasteSpecial (this, this, SLOT (paste(QString)));
 
 	action_run_all = RKStandardActions::runAll (this, this, SLOT (runAll()));
 	action_run_current = RKStandardActions::runCurrent (this, this, SLOT (runCurrent()), true);
@@ -231,7 +231,7 @@ void RKCommandEditorWindow::initializeActions (KActionCollection* ac) {
 	ac->addAction ("unmark_block", actionmenu_unmark_block);
 	connect (actionmenu_unmark_block->menu(), SIGNAL (aboutToShow()), this, SLOT (clearUnusedBlocks()));
 
-	action_setwd_to_script = ac->addAction ("setwd_to_script", this, SLOT (setWDToScript ()));
+	action_setwd_to_script = ac->addAction ("setwd_to_script", this, SLOT (setWDToScript()));
 	action_setwd_to_script->setText (i18n ("CD to script directory"));
 #if KDE_IS_VERSION(4,3,0)
 	action_setwd_to_script->setHelpText (i18n ("Change the working directory to the directory of this script"));
@@ -921,7 +921,7 @@ void RKFunctionArgHinter::tryArgHint () {
 	if (!RKSettingsModuleCommandEditor::argHintingEnabled ()) return;
 
 	// do this in the next event cycle to make sure any inserted characters have truly been inserted
-	QTimer::singleShot (0, this, SLOT (tryArgHintNow ()));
+	QTimer::singleShot (0, this, SLOT (tryArgHintNow()));
 }
 
 void RKFunctionArgHinter::tryArgHintNow () {

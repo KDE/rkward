@@ -47,7 +47,7 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 	// create and add property
 	addChild ("state", state = new RKComponentPropertyBool (this, true, preview_active, "active", "inactive"));
 	state->setInternal (true);	// restoring this does not make sense.
-	connect (state, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (changedState (RKComponentPropertyBase *)));
+	connect (state, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (changedState(RKComponentPropertyBase*)));
 
 	// create checkbox
 	QVBoxLayout *vbox = new QVBoxLayout (this);
@@ -55,7 +55,7 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 	toggle_preview_box = new QCheckBox (xml->i18nStringAttribute (element, "label", i18n ("Preview"), DL_INFO), this);
 	vbox->addWidget (toggle_preview_box);
 	toggle_preview_box->setChecked (preview_active);
-	connect (toggle_preview_box, SIGNAL (stateChanged (int)), this, SLOT (changedState (int)));
+	connect (toggle_preview_box, SIGNAL (stateChanged(int)), this, SLOT (changedState(int)));
 
 	// status lable
 	status_label = new QLabel (QString::null, this);
@@ -66,7 +66,7 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 	RKComponentBase *cp = parentComponent ()->lookupComponent ("code", &dummy);
 	if (cp && dummy.isNull () && (cp->type () == PropertyCode)) {
 		code_property = static_cast<RKComponentPropertyCode *> (cp);
-		connect (code_property, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (changedCode (RKComponentPropertyBase *)));
+		connect (code_property, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (changedCode(RKComponentPropertyBase*)));
 	} else {
 		RK_DEBUG (PLUGIN, DL_WARNING, "Could not find code property in preview box (remainder: %s)", dummy.toLatin1().data ());
 		code_property = 0;
@@ -75,7 +75,7 @@ RKPreviewBox::RKPreviewBox (const QDomElement &element, RKComponent *parent_comp
 	// initialize
 	update_timer = new QTimer (this);
 	update_timer->setSingleShot (true);
-	connect (update_timer, SIGNAL (timeout ()), this, SLOT (tryPreviewNow ()));
+	connect (update_timer, SIGNAL (timeout()), this, SLOT (tryPreviewNow()));
 	updating = false;
 	changedState (0);
 }

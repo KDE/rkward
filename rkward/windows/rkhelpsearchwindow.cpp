@@ -83,7 +83,7 @@ RKHelpSearchWindow::RKHelpSearchWindow (QWidget *parent, bool tool_window, const
 	field = new QComboBox (this);
 	field->setEditable (true);
 	field->setSizePolicy (QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
-	connect (field->lineEdit () , SIGNAL (returnPressed ()), this, SLOT (slotFindButtonClicked ()));
+	connect (field->lineEdit () , SIGNAL (returnPressed()), this, SLOT (slotFindButtonClicked()));
 	main_settings_layout->addWidget (field);
 
 	QHBoxLayout* fields_packages_layout = new QHBoxLayout ();
@@ -118,7 +118,7 @@ RKHelpSearchWindow::RKHelpSearchWindow (QWidget *parent, bool tool_window, const
 
 	findButton = new QPushButton (i18n ("Find"), this);
 	findButton->setSizePolicy (QSizePolicy::Fixed, QSizePolicy::Fixed);
-	connect (findButton, SIGNAL (clicked ()), this, SLOT (slotFindButtonClicked ()));
+	connect (findButton, SIGNAL (clicked()), this, SLOT (slotFindButtonClicked()));
 	selection_layout->addWidget (findButton);
 
 	results = new RKHelpSearchResultsModel (this);
@@ -128,7 +128,7 @@ RKHelpSearchWindow::RKHelpSearchWindow (QWidget *parent, bool tool_window, const
 	results_view->setRootIsDecorated (false);
 	results_view->setModel (proxy_model);
 	results_view->setSortingEnabled (true);
-	connect (results_view, SIGNAL (doubleClicked(const QModelIndex&)), this, SLOT (resultDoubleClicked(const QModelIndex&)));
+	connect (results_view, SIGNAL (doubleClicked(QModelIndex)), this, SLOT (resultDoubleClicked(QModelIndex)));
 	main_layout->addWidget (results_view);
 
 	setCaption (i18n ("Help search"));

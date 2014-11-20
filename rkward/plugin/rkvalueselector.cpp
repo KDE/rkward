@@ -59,7 +59,7 @@ RKValueSelector::RKValueSelector (const QDomElement &element, RKComponent *paren
 	list_view->setRootIsDecorated (false);
 	model = new QStringListModel (this);
 	list_view->setModel (model);
-	connect (list_view->selectionModel (), SIGNAL (selectionChanged(QItemSelection,QItemSelection)), this, SLOT (listSelectionChanged ()));
+	connect (list_view->selectionModel (), SIGNAL (selectionChanged(QItemSelection,QItemSelection)), this, SLOT (listSelectionChanged()));
 
 	vbox->addWidget (list_view);
 

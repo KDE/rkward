@@ -45,7 +45,7 @@ RKVarSelector::RKVarSelector (const QDomElement &element, RKComponent *parent_co
 
 	list_view = new RKObjectListView (this);
 	list_view->setSelectionMode (QAbstractItemView::ExtendedSelection);
-	connect (list_view, SIGNAL (selectionChanged ()), this, SLOT (objectSelectionChanged ()));
+	connect (list_view, SIGNAL (selectionChanged()), this, SLOT (objectSelectionChanged()));
 
 	vbox->addWidget (list_view);
 	list_view->getSettings ()->setSetting (RKObjectListViewSettings::ShowObjectsAllEnvironments, false);

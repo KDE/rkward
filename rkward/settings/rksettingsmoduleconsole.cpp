@@ -49,26 +49,26 @@ RKSettingsModuleConsole::RKSettingsModuleConsole (RKSettings *gui, QWidget *pare
 
 	save_history_box = new QCheckBox (i18n ("Load/Save command history"), this);
 	save_history_box->setChecked (save_history);
-	connect (save_history_box, SIGNAL (stateChanged (int)), this, SLOT (changedSetting (int)));
+	connect (save_history_box, SIGNAL (stateChanged(int)), this, SLOT (changedSetting(int)));
 	vbox->addWidget (save_history_box);
 
 	vbox->addWidget (new QLabel (i18n ("Maximum length of command history"), this));
 	max_history_length_spinner = new KIntSpinBox (0, 10000, 10, max_history_length, this);
 	max_history_length_spinner->setSpecialValueText (i18n ("Unlimited"));
-	connect (max_history_length_spinner, SIGNAL (valueChanged (int)), this, SLOT (changedSetting (int)));
+	connect (max_history_length_spinner, SIGNAL (valueChanged(int)), this, SLOT (changedSetting(int)));
 	vbox->addWidget (max_history_length_spinner);
 
 	vbox->addWidget (new QLabel (i18n ("Maximum number of paragraphs/lines to display in the console"), this));
 	max_console_lines_spinner = new KIntSpinBox (0, 10000, 10, max_console_lines, this);
 	max_console_lines_spinner->setSpecialValueText (i18n ("Unlimited"));
-	connect (max_console_lines_spinner, SIGNAL (valueChanged (int)), this, SLOT (changedSetting (int)));
+	connect (max_console_lines_spinner, SIGNAL (valueChanged(int)), this, SLOT (changedSetting(int)));
 	vbox->addWidget (max_console_lines_spinner);
 
 	vbox->addSpacing (2*RKGlobals::spacingHint ());
 
 	pipe_user_commands_through_console_box = new QCheckBox (i18n ("Run commands from script editor through console"), this);
 	pipe_user_commands_through_console_box->setChecked (pipe_user_commands_through_console);
-	connect (pipe_user_commands_through_console_box, SIGNAL (stateChanged (int)), this, SLOT (changedSetting (int)));
+	connect (pipe_user_commands_through_console_box, SIGNAL (stateChanged(int)), this, SLOT (changedSetting(int)));
 	vbox->addWidget (pipe_user_commands_through_console_box);
 
 	vbox->addWidget (new QLabel (i18n ("Also add those commands to console history"), this));
@@ -77,14 +77,14 @@ RKSettingsModuleConsole::RKSettingsModuleConsole (RKSettings *gui, QWidget *pare
 	add_piped_commands_to_history_box->insertItem ((int) AddSingleLine, i18n ("Add only if single line"));
 	add_piped_commands_to_history_box->insertItem ((int) AlwaysAdd, i18n ("Add all commands"));
 	add_piped_commands_to_history_box->setCurrentIndex ((int) add_piped_commands_to_history);
-	connect (add_piped_commands_to_history_box, SIGNAL (currentIndexChanged (int)), this, SLOT (changedSetting (int)));
+	connect (add_piped_commands_to_history_box, SIGNAL (currentIndexChanged(int)), this, SLOT (changedSetting(int)));
 	add_piped_commands_to_history_box->setEnabled (pipe_user_commands_through_console_box->isChecked ());
 	vbox->addWidget (add_piped_commands_to_history_box);
 
 	vbox->addSpacing (2*RKGlobals::spacingHint ());
 
 	reverse_context_mode_box = new QCheckBox (i18n ("Command history is context sensitive by default"), this);
-	connect (reverse_context_mode_box, SIGNAL (stateChanged (int)), this, SLOT (changedSetting (int)));
+	connect (reverse_context_mode_box, SIGNAL (stateChanged(int)), this, SLOT (changedSetting(int)));
 	reverse_context_mode_box->setChecked (context_sensitive_history_by_default);
 	vbox->addWidget (reverse_context_mode_box);
 

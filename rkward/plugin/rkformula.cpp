@@ -41,11 +41,11 @@ RKFormula::RKFormula (const QDomElement &element, RKComponent *parent_component,
 
 	// create and register properties
 	fixed_factors = new RKComponentPropertyRObjects (this, true);
-	connect (fixed_factors, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (factorsChanged (RKComponentPropertyBase *)));
+	connect (fixed_factors, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (factorsChanged(RKComponentPropertyBase*)));
 	addChild ("fixed_factors", fixed_factors);
 	fixed_factors->setInternal (true);
 	dependent = new RKComponentPropertyRObjects (this, true);
-	connect (dependent, SIGNAL (valueChanged (RKComponentPropertyBase *)), this, SLOT (factorsChanged (RKComponentPropertyBase *)));
+	connect (dependent, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (factorsChanged(RKComponentPropertyBase*)));
 	addChild ("dependent", dependent);
 	dependent->setInternal (true);
 	model = new RKComponentPropertyBase (this, true);
@@ -76,7 +76,7 @@ RKFormula::RKFormula (const QDomElement &element, RKComponent *parent_component,
 	type_selector->addButton (button, (int) MainEffects);
 	vbox->addWidget (button = new QRadioButton (i18n ("Custom Model:"), this));
 	type_selector->addButton (button, (int) Custom);
-	connect (type_selector, SIGNAL (buttonClicked (int)), this, SLOT (typeChange (int)));
+	connect (type_selector, SIGNAL (buttonClicked(int)), this, SLOT (typeChange(int)));
 
 	custom_model_widget = new QWidget (this);
 	QHBoxLayout *model_hbox = new QHBoxLayout (custom_model_widget);
@@ -92,11 +92,11 @@ RKFormula::RKFormula (const QDomElement &element, RKComponent *parent_component,
 	model_hbox->addLayout (model_vbox);
 	add_button = new QPushButton (QString::null, custom_model_widget);
 	add_button->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionAddRight));
-	connect (add_button, SIGNAL (clicked ()), this, SLOT (addButtonClicked ()));
+	connect (add_button, SIGNAL (clicked()), this, SLOT (addButtonClicked()));
 	model_vbox->addWidget (add_button);
 	remove_button = new QPushButton (QString::null, custom_model_widget);
 	remove_button->setIcon (RKStandardIcons::getIcon (RKStandardIcons::ActionRemoveLeft));
-	connect (remove_button, SIGNAL (clicked ()), this, SLOT (removeButtonClicked ()));
+	connect (remove_button, SIGNAL (clicked()), this, SLOT (removeButtonClicked()));
 	model_vbox->addWidget (remove_button);
 	level_box = new QSpinBox (custom_model_widget);
 	level_box->setRange (0, 0);

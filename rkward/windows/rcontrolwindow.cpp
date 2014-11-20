@@ -49,17 +49,17 @@ RControlWindow::RControlWindow (QWidget *parent, bool tool_window, const char *n
 	main_vbox->addLayout (button_hbox);
 
 	QPushButton *configure_r_button = new QPushButton (i18n ("Configure R backend"), this);
-	connect (configure_r_button, SIGNAL (clicked ()), this, SLOT (configureButtonClicked ()));
+	connect (configure_r_button, SIGNAL (clicked()), this, SLOT (configureButtonClicked()));
 	button_hbox->addWidget (configure_r_button);
 	button_hbox->addStretch ();
 
 	pause_button = new QPushButton (i18n ("Pause execution"), this);
-	connect (pause_button, SIGNAL (clicked ()), this, SLOT (pauseButtonClicked ()));
+	connect (pause_button, SIGNAL (clicked()), this, SLOT (pauseButtonClicked()));
 	button_hbox->addWidget (pause_button);
 	button_hbox->addStretch ();
 
 	cancel_button = new QPushButton (i18n ("Cancel selected commands"), this);
-	connect (cancel_button, SIGNAL (clicked ()), this, SLOT (cancelButtonClicked ()));
+	connect (cancel_button, SIGNAL (clicked()), this, SLOT (cancelButtonClicked()));
 	button_hbox->addWidget (cancel_button);
 
 	commands_view = new QTreeView (this);

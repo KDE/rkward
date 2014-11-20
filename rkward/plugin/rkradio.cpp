@@ -48,7 +48,7 @@ RKRadio::RKRadio (const QDomElement &element, RKComponent *parent_component, QWi
 	addOptionsAndInit (element);
 
 	vbox->addWidget (group_box);
-	connect (group, SIGNAL (buttonClicked (int)), this, SLOT (itemSelected (int)));
+	connect (group, SIGNAL (buttonClicked(int)), this, SLOT (itemSelected(int)));
 }
 
 RKRadio::~RKRadio(){

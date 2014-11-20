@@ -76,7 +76,7 @@ RKSettings::RKSettings (QWidget *parent) : KPageDialog (parent) {
 
 	initModules ();
 
-	connect (this, SIGNAL (currentPageChanged(KPageWidgetItem*, KPageWidgetItem*)), this, SLOT (pageChange(KPageWidgetItem*, KPageWidgetItem*)));
+	connect (this, SIGNAL (currentPageChanged(KPageWidgetItem*,KPageWidgetItem*)), this, SLOT (pageChange(KPageWidgetItem*,KPageWidgetItem*)));
 	pageChange (currentPage (), currentPage ());	// init
 }
 

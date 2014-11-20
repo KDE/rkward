@@ -110,21 +110,21 @@ RKMultiStringSelectorV2::RKMultiStringSelectorV2 (const QString& label, QWidget*
 	main_box->addWidget (tree_view);
 
 	add_button = new QPushButton (i18n ("Add"), this);
-	connect (add_button, SIGNAL (clicked ()), this, SLOT (buttonClicked()));
+	connect (add_button, SIGNAL (clicked()), this, SLOT (buttonClicked()));
 	button_box->addWidget (add_button);
 
 	remove_button = new QPushButton (i18n ("Remove"), this);
-	connect (remove_button, SIGNAL (clicked ()), this, SLOT (buttonClicked()));
+	connect (remove_button, SIGNAL (clicked()), this, SLOT (buttonClicked()));
 	button_box->addWidget (remove_button);
 
 	button_box->addSpacing (10);
 
 	up_button = new QPushButton (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveUp), i18n ("Up"), this);
-	connect (up_button, SIGNAL (clicked ()), this, SLOT (buttonClicked()));
+	connect (up_button, SIGNAL (clicked()), this, SLOT (buttonClicked()));
 	button_box->addWidget (up_button);
 
 	down_button = new QPushButton (RKStandardIcons::getIcon (RKStandardIcons::ActionMoveDown), i18n ("Down"), this);
-	connect (down_button, SIGNAL (clicked ()), this, SLOT (buttonClicked()));
+	connect (down_button, SIGNAL (clicked()), this, SLOT (buttonClicked()));
 	button_box->addWidget (down_button);
 }
 
@@ -147,8 +147,8 @@ void RKMultiStringSelectorV2::setModel (QAbstractItemModel* model, int main_colu
 	connect (tree_view->selectionModel (), SIGNAL (currentChanged(QModelIndex,QModelIndex)), this, SLOT (updateButtons()));
 	connect (model, SIGNAL (dataChanged(QModelIndex,QModelIndex)), this, SLOT (anyModelDataChange()));
 	connect (model, SIGNAL (layoutChanged()), this, SLOT (anyModelDataChange()));
-	connect (model, SIGNAL (rowsInserted(const QModelIndex&,int,int)), this, SLOT (anyModelDataChange()));
-	connect (model, SIGNAL (rowsRemoved(const QModelIndex&,int,int)), this, SLOT (anyModelDataChange()));
+	connect (model, SIGNAL (rowsInserted(QModelIndex,int,int)), this, SLOT (anyModelDataChange()));
+	connect (model, SIGNAL (rowsRemoved(QModelIndex,int,int)), this, SLOT (anyModelDataChange()));
 	connect (model, SIGNAL (modelReset()), this, SLOT (anyModelDataChange()));
 
 	if (main_column >= 0) tree_view->resizeColumnToContents (main_column);

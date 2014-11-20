@@ -80,7 +80,7 @@ RKSettingsModulePlugins::RKSettingsModulePlugins (RKSettings *gui, QWidget *pare
 	button_group->addButton (button, PreferWizard);
 	if ((button = button_group->button (interface_pref))) button->setChecked (true);
 
-	connect (button_group, SIGNAL (buttonClicked (int)), this, SLOT (settingChanged ()));
+	connect (button_group, SIGNAL (buttonClicked(int)), this, SLOT (settingChanged()));
 	main_vbox->addWidget (button_box);
 
 
@@ -92,14 +92,14 @@ RKSettingsModulePlugins::RKSettingsModulePlugins (RKSettings *gui, QWidget *pare
 
 	show_code_box = new QCheckBox (i18n ("Code shown by default"), code_frame);
 	show_code_box->setChecked (show_code);
-	connect (show_code_box, SIGNAL (stateChanged (int)), this, SLOT (settingChanged ()));
+	connect (show_code_box, SIGNAL (stateChanged(int)), this, SLOT (settingChanged()));
 	group_layout->addWidget (show_code_box);
 
 	KHBox *code_size_hbox = new KHBox (code_frame);
 	new QLabel (i18n ("Default height of code display (pixels)"), code_size_hbox);
 	code_size_box = new RKSpinBox (code_size_hbox);
 	code_size_box->setIntMode (20, 5000, code_size);
-	connect (code_size_box, SIGNAL (valueChanged (int)), this, SLOT (settingChanged ()));
+	connect (code_size_box, SIGNAL (valueChanged(int)), this, SLOT (settingChanged()));
 	group_layout->addWidget (code_size_hbox);
 
 	main_vbox->addWidget (code_frame);
@@ -114,7 +114,7 @@ RKSettingsModulePlugins::RKSettingsModulePlugins (RKSettings *gui, QWidget *pare
 	map_choser->setModel (map_model, 1);
 	connect (map_choser, SIGNAL (insertNewStrings(int)), map_model, SLOT (insertNewStrings(int)));
 	connect (map_choser, SIGNAL (swapRows(int,int)), map_model, SLOT (swapRows(int,int)));
-	connect (map_choser, SIGNAL (listChanged ()), this, SLOT (settingChanged ()));
+	connect (map_choser, SIGNAL (listChanged()), this, SLOT (settingChanged()));
 	main_vbox->addWidget (map_choser);
 }
 

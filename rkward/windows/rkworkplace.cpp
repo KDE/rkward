@@ -211,7 +211,7 @@ void RKWorkplace::addWindow (RKMDIWindow *window, bool attached) {
 	RK_TRACE (APP);
 
 	windows.append (window);
-	connect (window, SIGNAL (destroyed (QObject *)), this, SLOT (removeWindow (QObject *)));
+	connect (window, SIGNAL (destroyed(QObject*)), this, SLOT (removeWindow(QObject*)));
 	connect (window, SIGNAL (windowActivated(RKMDIWindow*)), history, SLOT (windowActivated(RKMDIWindow*)));
 	if (window->isToolWindow () && !window->tool_window_bar) return;
 	if (attached) attachWindow (window);
