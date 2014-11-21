@@ -145,7 +145,7 @@ public:
 /** Load a description of windows from the R backend (created by saveWorkplace ()), and (try to) restore all windows accordingly
 Has no effect, if RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsModuleGeneral::SaveWorkplaceWithWorkspace
 @param chain command chain to place the command in */
-	void restoreWorkplace (RCommandChain *chain=0);
+	void restoreWorkplace (RCommandChain *chain=0, bool merge=false);
 /** Like the other restoreWorkplace (), but takes the description as a parameter rather than reading from the R workspace. To be used, when RKSettingsModuleGeneral::workplaceSaveMode () == RKSettingsModuleGeneral::SaveWorkplaceWithSeesion
 @param description workplace description */
 	void restoreWorkplace (const QStringList &description);

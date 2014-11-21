@@ -1,3 +1,6 @@
+- Allow to open (any number of) R script files and rkward://-urls from the command line
+- Add command line option --reuse for reusing an existing instance of RKWard
+- Be slightly(!) smarter about when to ask for saving workspace on workspace load (e.g. not directly after workspace has been saved)
 - Change default in Workspace browser to showing only .GlobalEnv, initially
 - Support automatically generating a printable header parameter from most plugin elements
 - New Object based convience method for printing headers from plugins

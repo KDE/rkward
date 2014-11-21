@@ -99,11 +99,12 @@ void RKSaveAgent::rCommandDone (RCommand *command) {
 
 void RKSaveAgent::done () {
 	RK_TRACE (APP);
+	RKWardMainWindow::getMain ()->setWorkspaceMightBeModified (false);
 	if (save_chain) {
 		RKGlobals::rInterface ()->closeChain (save_chain);
 	}
 	if (when_done == Load) {
-		RKWardMainWindow::getMain ()->fileOpenNoSave (load_url);
+		RKWardMainWindow::getMain ()->askOpenWorkspace (load_url);
 	}
 	deleteLater ();
 }

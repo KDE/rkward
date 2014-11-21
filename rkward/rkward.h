@@ -2,7 +2,7 @@
                           rkward.h  -  description
                              -------------------
     begin                : Tue Oct 29 20:06:08 CET 2002
-    copyright            : (C) 2002-2013 by Thomas Friedrichsmeier 
+    copyright            : (C) 2002-2014 by Thomas Friedrichsmeier 
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -37,21 +37,13 @@ The main class of rkward. This is where all strings are tied togther, controlls 
 class RKWardMainWindow : public KParts::MainWindow {
 	Q_OBJECT
 public:
-/** construtor
-@param options Options from command line. RKWardMainWindow will take ownership of this pointer, and delete it, once not longer needed. */
+/** construtor */
 	RKWardMainWindow ();
 /** destructor */
 	~RKWardMainWindow ();
 
 /** initialize the backend */
 	void startR ();
-
-/** open a workspace. Do not ask whether to save the old one. The old workspace is deleted! */
-	void fileOpenNoSave (const KUrl &url);
-/** open a workspace. If the current workspace is not empty, ask wether to save first. */
-	void fileOpenAskSave (const KUrl &url);
-/** opens the given url, assuming it is an HTML-help page. */
-	void openHTML (const KUrl &url);
 
 	KParts::PartManager *partManager () { return part_manager; };
 
@@ -60,8 +52,14 @@ public:
 /** (try to) close all windows, and ask whether it is ok to quit */
 	bool doQueryQuit ();
 	void lockGUIRebuild (bool lock);
+/** Set whether not to ask for saving, although the workspace @em might be modified */
+	void setNoAskSave (bool no_ask) { no_ask_save = no_ask; };
+/** Set whether workspace is known to be unmodified, or could be modified.
+    TODO: Some less guessing would be nice... */
+	void setWorkspaceMightBeModified (bool modified) { workspace_modified = modified; };
+/** Merge files to be loaded, instead of closing windows / clearing workspace */
+	void setMergeLoads (bool merge) { merge_loads = merge; };
 protected:
-	void openWorkspace (const KUrl &url);
 	/** save Options/Settings. Includes general Options like all bar positions and status as well as the geometry and the recent file list */
 	void saveOptions();
 /** read general Options again and initialize all variables like the recent file list */
@@ -78,12 +76,14 @@ protected:
 signals:
 	void aboutToQuitRKWard ();
 public slots:
+	/** open a workspace. If the current workspace is not empty, ask wether to save first.
+    @see setNoAskSave ()
+    @see setWorkspaceMightBeModified () */
+	void askOpenWorkspace (const KUrl &url);
 	/** creates a new (empty) data.frame */
 	void slotNewDataFrame ();
 	/** open a file and load it into the document*/
 	void slotFileOpenWorkspace();
-	/** opens a file from the recent files menu */
-	void slotFileOpenRecentWorkspace(const KUrl& url);
 	/** save a document */
 	void slotFileSaveWorkspace();
 	/** save a document by a new filename*/
@@ -135,6 +135,9 @@ public slots:
 private slots:
 	void partChanged (KParts::Part *new_part);
 private:
+/** Opens a new workspace, without asking or closing anything. */
+	void openWorkspace (const KUrl &url);
+
 	QLabel* statusbar_r_status;
 	KSqueezedTextLabel* statusbar_cwd;
 	QLabel* statusbar_ready;
@@ -191,6 +194,9 @@ private:
 
 	RKTopLevelWindowGUI *toplevel_actions;
 	bool gui_rebuild_locked;
+	bool no_ask_save;
+	bool workspace_modified;
+	bool merge_loads;
 };
 
 #endif // RKWARD_H

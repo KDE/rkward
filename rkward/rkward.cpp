@@ -16,19 +16,11 @@
  ***************************************************************************/
 
 // include files for QT
-#include <qprinter.h>
-#include <qpainter.h>
-#include <qcheckbox.h>
-#include <qpushbutton.h>
-#include <qlineedit.h>
 #include <qtimer.h>
-#include <QDBusConnection>
 #include <QDesktopWidget>
-#include <QLabel>
 #include <QCloseEvent>
 
 // include files for KDE
-#include <kiconloader.h>
 #include <kmessagebox.h>
 #include <kencodingfiledialog.h>
 #include <kmenubar.h>
@@ -64,6 +56,7 @@
 #include "misc/rkstandardicons.h"
 #include "misc/rkcommonfunctions.h"
 #include "misc/rkxmlguisyncer.h"
+#include "misc/rkdbusapi.h"
 #include "rkglobals.h"
 #include "dialogs/startupdialog.h"
 #include "dialogs/rkloadlibsdialog.h"
@@ -120,6 +113,9 @@ RKWardMainWindow::RKWardMainWindow () : KParts::MainWindow ((QWidget *)0, (Qt::W
 	RK_ASSERT (rkward_mainwin == 0);
 
 	gui_rebuild_locked = true;
+	no_ask_save = true;
+	workspace_modified = false;
+	merge_loads = false;
 	rkward_mainwin = this;
 	RKGlobals::rinter = 0;
 	RKSettings::settings_tracker = new RKSettingsTracker (this);
@@ -201,7 +197,7 @@ void RKWardMainWindow::doPostInit () {
 		KMessageBox::error (this, i18n ("<p>RKWard either could not find its resource files at all, or only an old version of those files. The most likely cause is that the last installation failed to place the files in the correct place. This can lead to all sorts of problems, from single missing features to complete failure to function.</p><p><b>You should quit RKWard, now, and fix your installation</b>. For help with that, see <a href=\"http://p.sf.net/rkward/compiling\">http://p.sf.net/rkward/compiling</a>.</p>"), i18n ("Broken installation"), KMessageBox::Notify | KMessageBox::AllowLink);
 	}
 
-	KUrl open_url = RKGlobals::startup_options.take ("initial_url").toUrl ();
+	QVariantList open_urls = RKGlobals::startup_options.take ("initial_urls").toList ();
 	QString evaluate_code = RKGlobals::startup_options.take ("evaluate").toString ();
 
 	initPlugins ();
@@ -222,41 +218,57 @@ void RKWardMainWindow::doPostInit () {
 #endif
 
 	KUrl recover_url = RKRecoverDialog::checkRecoverCrashedWorkspace ();
-	if (!recover_url.isEmpty ()) open_url = recover_url;
-	if (!open_url.isEmpty () && (open_url.isRelative ())) {
-		// make sure local urls are absolute, as we may be changing wd before loading
-		open_url = KUrl::fromLocalFile (QDir::current ().absoluteFilePath (open_url.toLocalFile ()));
+	if (!recover_url.isEmpty ()) {
+		open_urls.clear ();
+		open_urls.append (recover_url);		// Well, not a perfect solution. But we certainly don't want to overwrite the just recovered workspace.
 	}
+
+	setMergeLoads (true);
+	for (int i = 0; i < open_urls.size (); ++i) {
+		// make sure local urls are absolute, as we may be changing wd before loading
+		KUrl url = open_urls[i].toUrl ();
+		if (url.isRelative ()) {
+			open_urls[i] = KUrl::fromLocalFile (QDir::current ().absoluteFilePath (url.toLocalFile ()));
+		}
+	}
+	setMergeLoads (false);
 
 	QString cd_to = RKSettingsModuleGeneral::initialWorkingDirectory ();
 	if (!cd_to.isEmpty ()) {
 		RKGlobals::rInterface ()->issueCommand ("setwd (" + RObject::rQuote (cd_to) + ")\n", RCommand::App);
 	}
 
-	if (!open_url.isEmpty()) {
-		openWorkspace (open_url);
+	if (!open_urls.isEmpty()) {
+		// this is also done when there are no urls specified on the command line. But in that case _after_ loading any workspace, so
+		// the help window will be on top
+		if (RKSettingsModuleGeneral::showHelpOnStartup ()) toplevel_actions->showRKWardHelp ();
+
+		for (int i = 0; i < open_urls.size (); ++i) {
+			RKWorkplace::mainWorkplace ()->openAnyUrl (open_urls[i].toUrl ());
+		}
 	} else {
 		StartupDialog::StartupDialogResult result = StartupDialog::getStartupAction (this, fileOpenRecentWorkspace);
 		if (!result.open_url.isEmpty ()) {
 			openWorkspace (result.open_url);
 		} else {
 			if (result.result == StartupDialog::ChoseFile) {
-				fileOpenNoSave (KUrl());
+				askOpenWorkspace (KUrl());
 			} else if (result.result == StartupDialog::EmptyTable) {
 				RKWorkplace::mainWorkplace ()->editNewDataFrame (i18n ("my.data"));
 			}
 		}
-	}
 
-	if (RKSettingsModuleGeneral::workplaceSaveMode () == RKSettingsModuleGeneral::SaveWorkplaceWithSession) {
-		RKWorkplace::mainWorkplace ()->restoreWorkplace (RKSettingsModuleGeneral::getSavedWorkplace (KGlobal::config ().data ()).split ('\n'));
+		if (RKSettingsModuleGeneral::workplaceSaveMode () == RKSettingsModuleGeneral::SaveWorkplaceWithSession) {
+			RKWorkplace::mainWorkplace ()->restoreWorkplace (RKSettingsModuleGeneral::getSavedWorkplace (KGlobal::config ().data ()).split ('\n'));
+		}
+		if (RKSettingsModuleGeneral::showHelpOnStartup ()) toplevel_actions->showRKWardHelp ();
 	}
-
-	if (RKSettingsModuleGeneral::showHelpOnStartup ()) {
-		toplevel_actions->showRKWardHelp ();
-	}
+	setNoAskSave (false);
 
 	if (!evaluate_code.isEmpty ()) RKConsole::pipeUserCommand (evaluate_code);
+	RKDBusAPI *dbus = new RKDBusAPI (this);
+	connect (this, SIGNAL(aboutToQuitRKWard()), dbus, SLOT(deleteLater()));	// RKWard sometimes needs to wait for R to quit. We don't want it sticking
+	// around on the bus in this case.
 
 	setCaption (QString ());	// our version of setCaption takes care of creating a correct caption, so we do not need to provide it here
 }
@@ -431,7 +443,7 @@ void RKWardMainWindow::initActions() {
 	fileOpenWorkspace->setShortcut (Qt::ControlModifier + Qt::ShiftModifier + Qt::Key_O);
 	fileOpenWorkspace->setStatusTip (i18n ("Opens an existing document"));
 
-	fileOpenRecentWorkspace = static_cast<KRecentFilesAction*> (actionCollection ()->addAction (KStandardAction::OpenRecent, "file_open_recentx", this, SLOT(slotFileOpenRecentWorkspace(KUrl))));
+	fileOpenRecentWorkspace = static_cast<KRecentFilesAction*> (actionCollection ()->addAction (KStandardAction::OpenRecent, "file_open_recentx", this, SLOT(askOpenWorkspace(KUrl))));
 	fileOpenRecentWorkspace->setText (i18n ("Open Recent Workspace"));
 	fileOpenRecentWorkspace->setStatusTip (i18n ("Opens a recently used file"));
 
@@ -634,7 +646,7 @@ void RKWardMainWindow::openWorkspace (const KUrl &url) {
 	RK_TRACE (APP);
 	if (url.isEmpty ()) return;
 
-	new RKLoadAgent (url, false);
+	new RKLoadAgent (url, merge_loads);
 }
 
 void RKWardMainWindow::saveOptions () {
@@ -733,8 +745,18 @@ void RKWardMainWindow::slotNewDataFrame () {
 	if (ok) RKWorkplace::mainWorkplace ()->editNewDataFrame (name);
 }
 
-void RKWardMainWindow::fileOpenNoSave (const KUrl &url) {
+void RKWardMainWindow::askOpenWorkspace (const KUrl &url) {
 	RK_TRACE (APP);
+
+	if (!no_ask_save && !RObjectList::getGlobalEnv ()->isEmpty () && workspace_modified) {
+		int res;
+		res = KMessageBox::questionYesNoCancel (this, i18n ("Do you want to save the current workspace?"), i18n ("Save Workspace?"));
+		if (res == KMessageBox::Yes) {
+			new RKSaveAgent (RKWorkplace::mainWorkplace ()->workspaceURL (), false, RKSaveAgent::Load, url);
+		} else if (res != KMessageBox::No) { // Cancel
+			return;
+		}
+	}
 
 	slotCloseAllEditors ();
 
@@ -755,32 +777,9 @@ void RKWardMainWindow::fileOpenNoSave (const KUrl &url) {
 	slotSetStatusReady ();
 }
 
-void RKWardMainWindow::fileOpenAskSave (const KUrl &url) {
-	RK_TRACE (APP);
-	if (RObjectList::getObjectList ()->isEmpty ()) {
-		fileOpenNoSave (url);
-		return;
-	}
-	
-	int res;
-	res = KMessageBox::questionYesNoCancel (this, i18n ("Do you want to save the current workspace?"), i18n ("Save Workspace?"));
-	if (res == KMessageBox::No) {
-		fileOpenNoSave (url);
-	} else if (res == KMessageBox::Yes) {
-		new RKSaveAgent (RKWorkplace::mainWorkplace ()->workspaceURL (), false, RKSaveAgent::Load, url);
-	}
-	// else: cancel. Don't do anything
-}
-
 void RKWardMainWindow::slotFileOpenWorkspace () {
 	RK_TRACE (APP);
-	fileOpenAskSave (KUrl ());
-}
-
-void RKWardMainWindow::slotFileOpenRecentWorkspace(const KUrl& url)
-{
-	RK_TRACE (APP);
-	fileOpenAskSave (url);
+	askOpenWorkspace (KUrl ());
 }
 
 void RKWardMainWindow::slotFileLoadLibs () {
@@ -911,12 +910,6 @@ void RKWardMainWindow::slotOpenCommandEditor () {
 		slotOpenCommandEditor (*it, res.encoding);
 	}
 };
-
-void RKWardMainWindow::openHTML (const KUrl &url) {
-	RK_TRACE (APP);
-
-	RKWorkplace::mainWorkplace ()->openHelpWindow (url);
-}
 
 void RKWardMainWindow::setCaption (const QString &) {
 	RK_TRACE (APP);

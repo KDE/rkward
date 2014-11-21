@@ -1,8 +1,8 @@
 /***************************************************************************
-                          rkloadagent  -  description
+                          rkdbusapi  -  description
                              -------------------
-    begin                : Sun Sep 5 2004
-    copyright            : (C) 2004 by Thomas Friedrichsmeier
+    begin                : Thu Nov 20 2014
+    copyright            : (C) 2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -14,31 +14,22 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-#ifndef RKLOADAGENT_H
-#define RKLOADAGENT_H
 
-#include <qobject.h>
-#include "../rbackend/rcommandreceiver.h"
+#ifndef RKDBUSAPI_H
+#define RKDBUSAPI_H
 
-#include <qstring.h>
-#include <kurl.h>
+#define RKDBUS_SERVICENAME "org.kde.rkward.api"
 
-/** The RKLoadAgent is really a rather simple agent. All it needs to do is display an error message, if loading fails. No further action is required. Like all
-agents, the RKLoadAgent self-destructs when done.
-@author Thomas Friedrichsmeier
-*/
-class RKLoadAgent : public QObject, public RCommandReceiver {
+#include <QObject>
+
+class RKDBusAPI : public QObject {
 	Q_OBJECT
 public:
-	explicit RKLoadAgent (const KUrl &url, bool merge=false);
-
-	~RKLoadAgent ();
-protected:
-	void rCommandDone (RCommand *command);
-private:
-/// needed if file to be loaded is remote
-	QString tmpfile;
-	bool _merge;
+/** Creates an object (should be a singleton) to relay incoming DBus calls, and registers it on the session bus. */
+	RKDBusAPI (QObject *parent);
+	~RKDBusAPI () {};
+public slots:
+	Q_SCRIPTABLE void openAnyUrl (const QStringList &urls);
 };
 
 #endif

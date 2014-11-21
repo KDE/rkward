@@ -28,15 +28,16 @@
 <refsynopsisdiv>
 <cmdsynopsis>
 <command>rkward</command>
-<arg choice="opt"><replaceable>workspace_file</replaceable></arg>
 <group choice="opt"><option>--evaluate</option> <replaceable> Rcode</replaceable></group>
 <group choice="opt"><option>--debug-level</option> <replaceable> level</replaceable></group>
 <group choice="opt"><option>--debug-flags</option> <replaceable> flags</replaceable></group>
 <arg><option>--debugger</option> <replaceable>debugger_command</replaceable><arg choice="opt">debugger_args<arg choice="opt"><option>--</option></arg></arg></arg>
 <group choice="opt"><option>--backend-debugger</option> <replaceable> debugger_command</replaceable></group>
 <group choice="opt"><option>--r-executable</option> <replaceable> path_to_executable</replaceable></group>
+<group choice="opt"><option>--reuse</option></group>
 <arg choice="opt">KDE Generic Options</arg>
 <arg choice="opt">Qt Generic Options</arg>
+<arg choice="opt"><replaceable>files_to_open</replaceable></arg>
 </cmdsynopsis>
 </refsynopsisdiv>
 
@@ -75,6 +76,14 @@ Under Windows, the debugger command will <emphasis>not</emphasis> be connected t
 <varlistentry>
 <term><option>--r-executable</option> <replaceable>command</replaceable></term>
 <listitem><para>In the case of several R installations, specify the installation to use, e.g. /usr/bin/R. Note that the rkward R library must have been installed to this installation of R, or startup will fail.</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><option>--reuse</option></term>
+<listitem><para>If an instance of RKWard is already running, bring that to the front, and open <replaceable>files_to_open</replaceable>. Note that all other command line options will be ignored in case an instance is reused.</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><replaceable>files_to_open</replaceable></term>
+<listitem><para>You can specify any number of file names or urls for RKWard to open. Usually this will be either workspace files, workplace files, R script files, or rkward://-urls (e.g. for starting with a plugin dialog). Specifying more than one workspace file will lead to the workspaces being merge together, and is not recommended.</para></listitem>
 </varlistentry>
 </variablelist>
 

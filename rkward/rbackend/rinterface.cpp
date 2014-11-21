@@ -2,7 +2,7 @@
                           rinterface.cpp  -  description
                              -------------------
     begin                : Fri Nov 1 2002
-    copyright            : (C) 2002-2013 by Thomas Friedrichsmeier
+    copyright            : (C) 2002-2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -265,6 +265,7 @@ void RInterface::doNextCommand (RCommand *command) {
 	flushOutput (true);
 	RCommandProxy *proxy = 0;
 	if (command) {
+		RKWardMainWindow::getMain ()->setWorkspaceMightBeModified (true);
 		proxy = command->makeProxy ();
 
 		RK_DEBUG (RBACKEND, DL_DEBUG, "running command: %s", command->command ().toLatin1().data ());

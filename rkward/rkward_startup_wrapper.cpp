@@ -28,6 +28,8 @@
 #include <QSettings>
 #include <QUrl>
 #include <QFile>
+#include <QtDBus>
+#include "misc/rkdbusapi.h"
 
 #ifndef RKWARD_FRONTEND_LOCATION
 #	define RKWARD_FRONTEND_LOCATION ""
@@ -101,6 +103,8 @@ int main (int argc, char *argv[]) {
 	// Parse arguments that need handling in the wrapper
 	bool usage = false;
 	QStringList debugger_args;
+	QStringList file_args;
+	bool reuse = false;
 	QString r_exe_arg;
 	int debug_level = 2;
 
@@ -122,6 +126,34 @@ int main (int argc, char *argv[]) {
 		} else if (args[i] == "--debug-level") {
 			if ((i+1) < args.size ()) {
 				debug_level = args[i+1].toInt ();
+			}
+		} else if (args[i] == "--reuse") {
+			reuse = true;
+		} else if (args[i].startsWith ("--")) {
+			// all RKWard and KDE options (other than --reuse) are of the for --option <value>. So skip over the <value>
+			i++;
+		} else {
+			QUrl url (args[i]);
+			if (url.isRelative ()) {
+				file_args.append (QDir::current ().absoluteFilePath (url.toLocalFile ()));
+			} else {
+				file_args.append (args[i]);
+			}
+		}
+	}
+
+	if (reuse) {
+		if (!QDBusConnection::sessionBus ().isConnected ()) {
+			if (debug_level > 2) qDebug ("Could not connect to session dbus");
+		} else {
+			QDBusInterface iface (RKDBUS_SERVICENAME, "/", "", QDBusConnection::sessionBus ());
+			if (iface.isValid ()) {
+				QDBusReply<void> reply = iface.call ("openAnyUrl", file_args);
+				if (!reply.isValid ()) {
+					if (debug_level > 2) qDebug ("Error while placing dbus call: %s", qPrintable (reply.error ().message ()));
+					return 1;
+				}
+				return 0;
 			}
 		}
 	}

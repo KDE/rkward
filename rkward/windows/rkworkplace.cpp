@@ -249,7 +249,9 @@ void RKWorkplace::placeInToolWindowBar (RKMDIWindow *window, int position) {
 bool RKWorkplace::openAnyUrl (const KUrl &url, const QString &known_mimetype, bool force_external) {
 	RK_TRACE (APP);
 
-#warning TODO support rkward:\/\/-protocol, here, too
+	if (url.protocol () == "rkward") {
+		if (RKHTMLWindow::handleRKWardURL (url)) return true;
+	}
 	KMimeType::Ptr mimetype;
 	if (!known_mimetype.isEmpty ()) mimetype = KMimeType::mimeType (known_mimetype);
 	else mimetype = KMimeType::findByUrl (url);
@@ -262,7 +264,7 @@ bool RKWorkplace::openAnyUrl (const KUrl &url, const QString &known_mimetype, bo
 			return true;	// TODO
 		}
 		if (url.fileName ().toLower ().endsWith (".rdata")) {
-			RKWardMainWindow::getMain ()->fileOpenAskSave (url);
+			RKWardMainWindow::getMain ()->askOpenWorkspace (url);
 			return true;	// TODO
 		}
 		if (mimetype->name ().startsWith ("text")) {
@@ -618,11 +620,13 @@ void RKWorkplace::saveWorkplace (RCommandChain *chain) {
 	RKGlobals::rInterface ()->issueCommand ("rk.save.workplace(description=" + RObject::rQuote (makeWorkplaceDescription().join ("\n")) + ")", RCommand::App, i18n ("Save Workplace layout"), 0, 0, chain);
 }
 
-void RKWorkplace::restoreWorkplace (RCommandChain *chain) {
+void RKWorkplace::restoreWorkplace (RCommandChain *chain, bool merge) {
 	RK_TRACE (APP);
 	if (RKSettingsModuleGeneral::workplaceSaveMode () != RKSettingsModuleGeneral::SaveWorkplaceWithWorkspace) return;
 
-	RKGlobals::rInterface ()->issueCommand ("rk.restore.workplace()", RCommand::App, i18n ("Restore Workplace layout"), 0, 0, chain);
+	QString no_close_windows;
+	if (merge) no_close_windows = "close.windows = FALSE";
+	RKGlobals::rInterface ()->issueCommand ("rk.restore.workplace(" + no_close_windows + ')', RCommand::App, i18n ("Restore Workplace layout"), 0, 0, chain);
 }
 
 KUrl checkAdjustRestoredUrl (const QString &_url, const QString old_base) {

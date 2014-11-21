@@ -126,7 +126,8 @@ int main(int argc, char *argv[]) {
 	options.add ("debugger <command and arguments>", ki18n ("Debugger for the frontend. Specify last, or add '--' after all debugger arguments"), "");
 	options.add ("backend-debugger <command>", ki18n ("Debugger for the backend. (Enclose any debugger arguments in single quotes ('') together with the command. Make sure to re-direct stdout!)"), "");
 	options.add ("r-executable <command>", ki18n ("Use specified R installation, instead of the one configured at compile time (note: rkward R library must be installed to that installation of R)"), "");
-	options.add ("+[File]", ki18n ("R workspace file to open"), 0);
+	options.add ("reuse", ki18n ("Reuse a running RKWard instance (if available). If a running instance is reused, only the file arguments will be interpreted, all other options will be ignored."), 0);
+	options.add ("+[Files]", ki18n ("File or files to open, typically a workspace, or an R script file. When loading several things, you should specify the workspace, first."), 0);
 
 	KAboutData aboutData("rkward", QByteArray (), ki18n ("RKWard"), RKWARD_VERSION, ki18n ("Frontend to the R statistics language"), KAboutData::License_GPL, ki18n ("(c) 2002, 2004 - 2014"), KLocalizedString (), "http://rkward.sf.net", "rkward-devel@lists.sourceforge.net");
 	aboutData.addAuthor (ki18n ("Thomas Friedrichsmeier"), ki18n ("Project leader / main developer"));
@@ -168,7 +169,11 @@ int main(int argc, char *argv[]) {
 	}
 
 	if (args->count ()) {
-		RKGlobals::startup_options["initial_url"] = QUrl (KCmdLineArgs::makeURL (decodeArgument (args->arg (0)).toUtf8 ()));
+		QVariantList urls_to_open;
+		for (int i = 0; i < args->count (); ++i) {
+			urls_to_open.append (QUrl (KCmdLineArgs::makeURL (decodeArgument (args->arg (i)).toUtf8 ())));
+		}
+		RKGlobals::startup_options["initial_urls"] = urls_to_open;
 	}
 	RKGlobals::startup_options["evaluate"] = decodeArgument (args->getOption ("evaluate"));
 	RKGlobals::startup_options["backend-debugger"] = decodeArgument (args->getOption ("backend-debugger"));

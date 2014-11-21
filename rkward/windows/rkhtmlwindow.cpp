@@ -243,7 +243,30 @@ void RKHTMLWindow::slotBack () {
 	openLocationFromHistory (url_history[current_history_position]);
 }
 
-bool RKHTMLWindow::handleRKWardURL (const KUrl &url) {
+void RKHTMLWindow::openRKHPage (const KUrl& url) {
+	RK_TRACE (APP);
+
+	RK_ASSERT (url.protocol () == "rkward");
+	changeURL (url);
+	bool ok = false;
+	if (url.host () == "component") {
+		ok = renderRKHelp (url);
+	} else if (url.host () == "page") {
+		ok = renderRKHelp (url);
+	} else if (url.host ().toUpper () == "RHELPBASE") {	// NOTE: QUrl () may lowercase the host part, internally
+		KUrl fixed_url = KUrl (RKSettingsModuleR::helpBaseUrl ());
+		fixed_url.setPath (url.path ());
+		if (url.hasQuery ()) fixed_url.setQuery (url.query ());
+		if (url.hasFragment ()) fixed_url.setFragment (url.fragment ());
+		ok = openURL (fixed_url);
+	}
+	if (!ok) {
+		fileDoesNotExistMessage ();
+	}
+}
+
+// static
+bool RKHTMLWindow::handleRKWardURL (const KUrl &url, RKHTMLWindow *window) {
 	RK_TRACE (APP);
 
 	if (url.protocol () == "rkward") {
@@ -260,23 +283,8 @@ bool RKHTMLWindow::handleRKWardURL (const KUrl &url) {
 				return true;
 			}
 
-			changeURL (url);
-			bool ok = false;
-			if (url.host () == "component") {
-				ok = renderRKHelp (url);
-			} else if (url.host () == "page") {
-				ok = renderRKHelp (url);
-			} else if (url.host ().toUpper () == "RHELPBASE") {	// NOTE: QUrl () may lowercase the host part, internally
-				KUrl fixed_url = KUrl (RKSettingsModuleR::helpBaseUrl ());
-				fixed_url.setPath (url.path ());
-				if (url.hasQuery ()) fixed_url.setQuery (url.query ());
-				if (url.hasFragment ()) fixed_url.setFragment (url.fragment ());
-				ok = openURL (fixed_url);
-			}
-
-			if (!ok) {
-				fileDoesNotExistMessage ();
-			}
+			if (window) window->openRKHPage (url);
+			else RKWorkplace::mainWorkplace ()->openHelpWindow (url);	// will recurse with window set, via openURL()
 			return true;
 		}
 	}
@@ -286,7 +294,7 @@ bool RKHTMLWindow::handleRKWardURL (const KUrl &url) {
 bool RKHTMLWindow::openURL (const KUrl &url) {
 	RK_TRACE (APP);
 
-	if (handleRKWardURL (url)) return true;
+	if (handleRKWardURL (url, this)) return true;
 
 	if (window_mode == HTMLOutputWindow) {
 		if (url != current_url) {

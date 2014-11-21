@@ -24,6 +24,7 @@ SET(misc_STAT_SRCS
    editlabelsdialog.cpp
    editformatdialog.cpp
    rkmessagecatalog.cpp
+   rkdbusapi.cpp
    )
 
 QT4_AUTOMOC(${misc_STAT_SRCS})

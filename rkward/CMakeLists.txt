@@ -63,7 +63,7 @@ IF(Q_WS_MAC)
 		@ONLY)
 ENDIF(Q_WS_MAC)
 
-TARGET_LINK_LIBRARIES(rkward.frontend ${KDE4_KDECORE_LIBS} windows ${RKWARD_ADDLIBS} agents dialogs plugin settings dataeditor core scriptbackends rbackend misc ${KDE4_KTEXTEDITOR_LIBS} ${KDE4_KHTML_LIBS} ${KDE4_KFILE_LIBS} ${KDE4_KDEUI_LIBS} ${QT_QTSCRIPT_LIBRARY} ${QT_QTNETWORK_LIBRARY})
+TARGET_LINK_LIBRARIES(rkward.frontend ${KDE4_KDECORE_LIBS} windows ${RKWARD_ADDLIBS} agents dialogs plugin settings dataeditor core scriptbackends rbackend misc ${KDE4_KTEXTEDITOR_LIBS} ${KDE4_KHTML_LIBS} ${KDE4_KFILE_LIBS} ${KDE4_KDEUI_LIBS} ${QT_QTDBUS_LIBRARY} ${QT_QTSCRIPT_LIBRARY} ${QT_QTNETWORK_LIBRARY})
 
 # wrapper executable
 GET_DIRECTORY_PROPERTY(R_EXECUTABLE DIRECTORY rbackend DEFINITION R_EXECUTABLE)
@@ -80,7 +80,7 @@ add_definitions ("-DR_EXECUTABLE=\\\"${R_EXECUTABLE}\\\"")
 add_definitions ("-DINSTALL_PATH=\\\"${CMAKE_INSTALL_PREFIX}\\\"")
 add_definitions ("-DR_LIBS=\\\"${R_LIBDIR}\\\"")
 add_definitions ("-DRKWARD_FRONTEND_LOCATION=\\\"${RKWARD_FRONTEND_LOCATION}\\\"")
-TARGET_LINK_LIBRARIES(rkward ${QT_QTGUI_LIBRARY} ${QT_QTCORE_LIBRARY})
+TARGET_LINK_LIBRARIES(rkward ${QT_QTGUI_LIBRARY} ${QT_QTCORE_LIBRARY} ${QT_QTDBUS_LIBRARY})
 
 ADD_DEPENDENCIES(rkward.frontend rkward)
 
