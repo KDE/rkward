@@ -146,7 +146,7 @@ void RKSettingsModuleObjectBrowser::loadSettings (KConfig *config) {
 
 	KConfigGroup cg = config->group ("Object Browser");
 	settings[RKObjectListViewSettings::ShowObjectsHidden] = cg.readEntry ("show hidden vars", false);
-	settings[RKObjectListViewSettings::ShowObjectsAllEnvironments] = cg.readEntry ("show all environments", true);
+	settings[RKObjectListViewSettings::ShowObjectsAllEnvironments] = cg.readEntry ("show all environments", false);
 	settings[RKObjectListViewSettings::ShowObjectsContainer] = cg.readEntry ("show container objects", true);
 	settings[RKObjectListViewSettings::ShowObjectsFunction] = cg.readEntry ("show function objects", true);
 	settings[RKObjectListViewSettings::ShowObjectsVariable] = cg.readEntry ("show variable objects", true);

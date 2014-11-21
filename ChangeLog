@@ -1,3 +1,4 @@
+- Change default in Workspace browser to showing only .GlobalEnv, initially
 - Support automatically generating a printable header parameter from most plugin elements
 - New Object based convience method for printing headers from plugins
 - Implement polyPath()-drawing in RK() device
