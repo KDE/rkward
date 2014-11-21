@@ -698,7 +698,7 @@ bool RKWardMainWindow::doQueryQuit () {
 
 //	if (!RObjectList::getGlobalEnv ()->isEmpty ()) {
 	int res;
-	res = KMessageBox::questionYesNoCancel (this, i18n ("Quitting RKWard: Do you want to save the workspace?"), i18n ("Save Workspace?"), KStandardGuiItem::save (), KStandardGuiItem::discard (), KGuiItem (i18n ("Don't quit")));
+	res = KMessageBox::questionYesNoCancel (this, i18n ("Quitting RKWard: Do you want to save the workspace?"), i18n ("Save Workspace?"), KStandardGuiItem::save (), KStandardGuiItem::discard (), KGuiItem (i18n ("Do Not Quit")));
 	if (res == KMessageBox::Yes) {
 		new RKSaveAgent (RKWorkplace::mainWorkplace ()->workspaceURL (), false, RKSaveAgent::DoNothing);
 	} else if (res == KMessageBox::Cancel) {

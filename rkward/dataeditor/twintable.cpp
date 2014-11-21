@@ -188,7 +188,7 @@ void TwinTable::objectMetaChanged (RObject* changed) {
 
 	RK_ASSERT (changed == main_object);
 	QString caption = main_object->getShortName ();
-	if (!rw) caption += i18n (" [read-only]");
+	if (!rw) caption = i18n ("%1 [read-only]", caption);
 	setCaption (caption);
 }
 

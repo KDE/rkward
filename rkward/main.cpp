@@ -129,24 +129,24 @@ int main(int argc, char *argv[]) {
 	options.add ("+[File]", ki18n ("R workspace file to open"), 0);
 
 	KAboutData aboutData("rkward", QByteArray (), ki18n ("RKWard"), RKWARD_VERSION, ki18n ("Frontend to the R statistics language"), KAboutData::License_GPL, ki18n ("(c) 2002, 2004 - 2014"), KLocalizedString (), "http://rkward.sf.net", "rkward-devel@lists.sourceforge.net");
-	aboutData.addAuthor (ki18n ("%1").subs ("Thomas Friedrichsmeier"), ki18n ("Project leader / main developer"));
-	aboutData.addAuthor (ki18n ("%1").subs ("Pierre Ecochard"), ki18n ("C++ developer between 2004 and 2007"));
-	aboutData.addAuthor (ki18n ("%1").subs ("Prasenjit Kapat"), ki18n ("Many plugins, suggestions, plot history feature"));
-	aboutData.addAuthor (ki18n ("%1").subs ("Meik Michalke"), ki18n ("Many plugins, suggestions, rkwarddev package"));
-	aboutData.addAuthor (ki18n ("%1").subs ("Stefan Roediger"), ki18n ("Many plugins, suggestions, marketing, translations"));
+	aboutData.addAuthor (ki18n ("Thomas Friedrichsmeier"), ki18n ("Project leader / main developer"));
+	aboutData.addAuthor (ki18n ("Pierre Ecochard"), ki18n ("C++ developer between 2004 and 2007"));
+	aboutData.addAuthor (ki18n ("Prasenjit Kapat"), ki18n ("Many plugins, suggestions, plot history feature"));
+	aboutData.addAuthor (ki18n ("Meik Michalke"), ki18n ("Many plugins, suggestions, rkwarddev package"));
+	aboutData.addAuthor (ki18n ("Stefan Roediger"), ki18n ("Many plugins, suggestions, marketing, translations"));
 	aboutData.addCredit (ki18n ("Contributors in alphabetical order"));
-	aboutData.addCredit (ki18n ("%1").subs ("Philippe Grosjean"), ki18n ("Several helpful comments and discussions"));
-	aboutData.addCredit (ki18n ("%1").subs ("Adrien d'Hardemare"), ki18n ("Plugins and patches"));
-	aboutData.addCredit (ki18n ("%1").subs ("Yves Jacolin"), ki18n ("New website"));
-	aboutData.addCredit (ki18n ("%1").subs ("Germán Márquez Mejía"), ki18n ("HP filter plugin, spanish translation"), 0);
-	aboutData.addCredit (ki18n ("%1").subs ("Marco Martin"), ki18n ("A cool icon"));
-	aboutData.addCredit (ki18n ("%1").subs ("Daniele Medri"), ki18n ("RKWard logo, many suggestions, help on wording"));
-	aboutData.addCredit (ki18n ("%1").subs ("David Sibai"), ki18n ("Several valuable comments, hints and patches"));
-	aboutData.addCredit (ki18n ("%1").subs ("Ilias Soumpasis"), ki18n ("Translation, Suggestions, plugins"));
-	aboutData.addCredit (ki18n ("%1").subs ("Ralf Tautenhahn"), ki18n ("Many comments, useful suggestions, and bug reports"));
-	aboutData.addCredit (ki18n ("%1").subs ("Jannis Vajen"), ki18n ("German Translation, bug reports"));
-	aboutData.addCredit (ki18n ("%1").subs ("Roland Vollgraf"), ki18n ("Some patches"));
-	aboutData.addCredit (ki18n ("%1").subs ("Roy Qu"), ki18n ("patches and helpful comments"));
+	aboutData.addCredit (ki18n ("Philippe Grosjean"), ki18n ("Several helpful comments and discussions"));
+	aboutData.addCredit (ki18n ("Adrien d'Hardemare"), ki18n ("Plugins and patches"));
+	aboutData.addCredit (ki18n ("Yves Jacolin"), ki18n ("New website"));
+	aboutData.addCredit (ki18n ("Germán Márquez Mejía"), ki18n ("HP filter plugin, spanish translation"), 0);
+	aboutData.addCredit (ki18n ("Marco Martin"), ki18n ("A cool icon"));
+	aboutData.addCredit (ki18n ("Daniele Medri"), ki18n ("RKWard logo, many suggestions, help on wording"));
+	aboutData.addCredit (ki18n ("David Sibai"), ki18n ("Several valuable comments, hints and patches"));
+	aboutData.addCredit (ki18n ("Ilias Soumpasis"), ki18n ("Translation, Suggestions, plugins"));
+	aboutData.addCredit (ki18n ("Ralf Tautenhahn"), ki18n ("Many comments, useful suggestions, and bug reports"));
+	aboutData.addCredit (ki18n ("Jannis Vajen"), ki18n ("German Translation, bug reports"));
+	aboutData.addCredit (ki18n ("Roland Vollgraf"), ki18n ("Some patches"));
+	aboutData.addCredit (ki18n ("Roy Qu"), ki18n ("patches and helpful comments"));
 	aboutData.addCredit (ki18n ("Many more people on rkward-devel@lists.sourceforge.net"), ki18n ("Sorry, if we forgot to list you. Please contact us to get added"));
 
 	// before initializing the commandline args, remove the ".bin" from "rkward.bin".

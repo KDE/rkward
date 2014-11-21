@@ -32,7 +32,7 @@
 RKImportDialogFormatSelector::RKImportDialogFormatSelector () : KHBox () {
 	RK_TRACE (DIALOGS);
 
-	new QLabel (i18n ("File format: "), this);
+	new QLabel (i18n ("File format:"), this);
 	combo = new QComboBox (this);
 }
 

@@ -717,7 +717,7 @@ void InstallPackagesWidget::trySelectPackage (const QString &package_name) {
 
 	QModelIndex index = packages_status->markPackageForInstallation (package_name);
 	if (!index.isValid ()) {
-		KMessageBox::sorry (0, i18n ("The package requested by the backend (\"%1\") was not found in the package repositories. Maybe the package name was mis-spelled. Or maybe you need to add additional repositories via the \"Configure Repositories\"-button.", package_name), i18n ("Package not available"));
+		KMessageBox::sorry (0, i18n ("The package requested by the backend (\"%1\") was not found in the package repositories. Maybe the package name was mis-spelled. Or maybe you need to add additional repositories via the \"Configure Repositories\" button.", package_name), i18n ("Package not available"));
 	} else {
 		packages_view->scrollTo (model->mapFromSource (index));
 	}

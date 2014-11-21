@@ -63,7 +63,7 @@ void RKPasteSpecialAction::doSpecialPaste () {
 RKPasteSpecialDialog::RKPasteSpecialDialog (QWidget* parent) : KDialog (parent) {
 	RK_TRACE (MISC);
 
-	setCaption (i18n ("Paste special..."));
+	setCaption (i18n ("Paste Special..."));
 	setButtons (KDialog::Ok | KDialog::Cancel);
 
 	KVBox* page = new KVBox (this);
@@ -76,7 +76,7 @@ RKPasteSpecialDialog::RKPasteSpecialDialog (QWidget* parent) : KDialog (parent) 
 	QRadioButton* rbutton;
 
 	// Mode box
-	box = new QGroupBox (i18n ("Paste mode"), row);
+	box = new QGroupBox (i18n ("Paste Mode"), row);
 	group_layout = new QVBoxLayout (box);
 	dimensionality_group = new QButtonGroup (box);
 	rbutton = new QRadioButton (i18n ("Single string"), box);
@@ -94,7 +94,7 @@ RKPasteSpecialDialog::RKPasteSpecialDialog (QWidget* parent) : KDialog (parent) 
 	const QMimeData* clipdata = QApplication::clipboard ()->mimeData ();
 
 	// Separator box
-	box = new QGroupBox (i18n ("Field separator"), row);
+	box = new QGroupBox (i18n ("Field Separator"), row);
 	group_layout = new QVBoxLayout (box);
 	separator_group = new QButtonGroup (box);
 	rbutton = new QRadioButton (i18n ("Tab"), box);

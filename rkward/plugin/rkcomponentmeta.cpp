@@ -74,8 +74,8 @@ QString RKComponentAboutData::toHtml () const {
 	if (!shortinfo.isEmpty ()) ret.append (":</p>\n<p>" + shortinfo);
 	ret.append ("</p>\n");
 	if (!url.isEmpty ()) ret.append ("URL: <a href=\"" + url + "\">" + url + "</a></p>\n<p>");
-	if (!copyright.isEmpty ()) ret.append (i18n ("Copyright (c)") + ": " + copyright + "</p>\n<p>");
-	if (!license.isEmpty ()) ret.append (i18n ("License") + ": " + license + "</p>\n<p>");
+	if (!copyright.isEmpty ()) ret.append (i18n ("Copyright (c): %1", copyright) + "</p>\n<p>");
+	if (!license.isEmpty ()) ret.append (i18n ("License: %1", license) + "</p>\n<p>");
 
 	if (!authors.isEmpty ()) {
 		ret.append ("<b>" + i18n ("Authors:") + "</b></p>\n<p><ul>");

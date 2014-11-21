@@ -216,7 +216,7 @@ RKProgressControlDialog::RKProgressControlDialog (const QString &text, const QSt
 	QLabel *label = new QLabel (text, vbox);
 	label->setWordWrap (true);
 
-	error_indicator = new QLabel (i18n ("<b>There have been errors and / or warnings! See below for a transcript</b>"), vbox);
+	error_indicator = new QLabel (i18n ("<b>There have been errors and / or warnings. See below for a transcript</b>"), vbox);
 	QPalette palette = error_indicator->palette ();
 	palette.setColor (error_indicator->foregroundRole (), QColor (255, 0, 0));
 	error_indicator->setPalette (palette);

@@ -36,7 +36,7 @@
 
 RKLoadAgent::RKLoadAgent (const KUrl &url, bool merge) {
 	RK_TRACE (APP);
-	RKWardMainWindow::getMain ()->slotSetStatusBarText (i18n ("Loading Workspace ..."));
+	RKWardMainWindow::getMain ()->slotSetStatusBarText (i18n ("Loading Workspace..."));
 
 	QString filename;
 	if (!url.isLocalFile ()) {

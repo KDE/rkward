@@ -85,7 +85,7 @@ void RObjectViewer::objectRemoved (RObject *object) {
 		print_widget->objectKilled ();
 		structure_widget->objectKilled ();
 
-		QString reason = i18n ("<b>Object was deleted!</b>");
+		QString reason = i18n ("<b>Object was deleted</b>");
 		summary_widget->invalidate (reason);
 		print_widget->invalidate (reason);
 		structure_widget->invalidate (reason);

@@ -860,9 +860,9 @@ QVariant RKOptionSetDisplayModel::headerData (int section, Qt::Orientation orien
 			if (!set->isValid ()) {
 				QStringList probs;
 				if (set->n_invalid_rows > set->n_unfinished_rows) probs.append (i18n ("One or more rows contain invalid settings."));
-				if ((set->rowCount () > 0) && (set->rowCount () < set->min_rows_if_any)) probs.append (i18n ("At least %1 rows have to be defined (if any)").arg (set->min_rows_if_any));
-				if (set->rowCount () < set->min_rows) probs.append (i18n ("At least %1 rows have to be defined").arg (set->min_rows));
-				if (set->rowCount () > set->max_rows) probs.append (i18n ("At most %1 rows may be defined").arg (set->max_rows));
+				if ((set->rowCount () > 0) && (set->rowCount () < set->min_rows_if_any)) probs.append (i18n ("At least %1 rows have to be defined (if any)", set->min_rows_if_any));
+				if (set->rowCount () < set->min_rows) probs.append (i18n ("At least %1 rows have to be defined", set->min_rows));
+				if (set->rowCount () > set->max_rows) probs.append (i18n ("At most %1 rows may be defined", set->max_rows));
 				return (QString ("<p>%1</p><ul><li>%2</li></ul>").arg (i18n ("This element is not valid for the following reason(s):")).arg (probs.join ("</li>\n<li>")));
 			}
 		}
