@@ -43,12 +43,6 @@ RKDBusAPI::RKDBusAPI (QObject* parent): QObject (parent) {
 void RKDBusAPI::openAnyUrl(const QStringList& urls) {
 	RK_TRACE (APP);
 
-	RKWardMainWindow::getMain ()->setMergeLoads (true);
-	for (int i = 0; i < urls.size (); ++i) {
-		RKWorkplace::mainWorkplace ()->openAnyUrl (urls[i]);
-	}
-	RKWardMainWindow::getMain ()->setMergeLoads (false);
-
 	// ok, raising the app window is totally hard to do, reliably. This solution copied from kate.
 	QWidget *main = RKWardMainWindow::getMain ();
 	main->show();
@@ -59,6 +53,13 @@ void RKDBusAPI::openAnyUrl(const QStringList& urls) {
 	KWindowSystem::raiseWindow (main->winId ());
 	KWindowSystem::demandAttention (main->winId ());
 #endif
+	// end
+
+	RKWardMainWindow::getMain ()->setMergeLoads (true);
+	for (int i = 0; i < urls.size (); ++i) {
+		RKWorkplace::mainWorkplace ()->openAnyUrl (urls[i]);
+	}
+	RKWardMainWindow::getMain ()->setMergeLoads (false);
 }
 
 #include "rkdbusapi.moc"
