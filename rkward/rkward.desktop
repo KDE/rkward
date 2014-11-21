@@ -2,18 +2,22 @@
 [Desktop Entry]
 Name=RKWard
 Name[cs]=RKWard
+Name[de]=RKWard
 Name[es]=RKWard
 Name[nl]=RKWard
 Name[pt]=RKWard
 Name[pt_BR]=RKWard
+Name[sk]=RKWard
 Name[uk]=RKWard
 Name[x-test]=xxRKWardxx
 Comment=GUI for the R-project
 Comment[cs]=Grafické prostředí pro projekt v R
+Comment[de]=Benutzeroberfläche für R-Projekt
 Comment[es]=Interfaz gráfica para el proyecto R
 Comment[nl]=GUI voor het R-project
 Comment[pt]=Interface gráfica para o projecto R
 Comment[pt_BR]=Interface gráfica para o R-project
+Comment[sk]=GUI pre R-project
 Comment[uk]=Графічний інтерфейс проекту R
 Comment[x-test]=xxGUI for the R-projectxx
 Icon=rkward
