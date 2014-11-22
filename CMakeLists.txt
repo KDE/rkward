@@ -25,4 +25,4 @@ ADD_SUBDIRECTORY(i18n)
 ADD_SUBDIRECTORY(doc)
 ADD_SUBDIRECTORY(tests)
 
-# TODO: figure out how to make source distributions (with REAMDE files, etc.)
+# TODO: figure out how to make source distributions (with README files, etc.)

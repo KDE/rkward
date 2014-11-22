@@ -27,7 +27,7 @@ class RKMessageCatalog;
 
 The script itself is run in a separate thread to ensure good performance even for complex scripts. This is especially important for spinboxes, where the value is changes many times in quick succession. Note that this is also the reason not to use Kross, which appears to be not thread safe.
 
-TODO: The code is currently based on the old PHPBackend. Once that is truely obsolete, there should be room for redesigning several aspects. */
+TODO: The code is currently based on the old PHPBackend. Once that is truly obsolete, there should be room for redesigning several aspects. */
 class QtScriptBackend : public ScriptBackend {
 	Q_OBJECT
 public:

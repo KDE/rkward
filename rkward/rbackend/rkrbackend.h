@@ -213,7 +213,7 @@ private:
 	QStringList toplevel_env_names;
 /** A copy of the names of the toplevel symbols in the .GlobalEnv. */
 	QStringList global_env_toplevel_names;
-/** check wether the object list / global environment / individual symbols have changed, and updates them, if needed */
+/** check whether the object list / global environment / individual symbols have changed, and updates them, if needed */
 	void checkObjectUpdatesNeeded (bool check_list);
 
 	/** The previously executed command. Only non-zero until a new command has been requested. */

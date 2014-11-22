@@ -32,7 +32,7 @@ class KSqueezedTextLabel;
 class QAction;
 
 /**
-The main class of rkward. This is where all strings are tied togther, controlls the initialization, and there are some of the most important slots for user actions. All real work is done elsewhere.
+The main class of rkward. This is where all strings are tied together, controls the initialization, and there are some of the most important slots for user actions. All real work is done elsewhere.
 */
 class RKWardMainWindow : public KParts::MainWindow {
 	Q_OBJECT
@@ -76,7 +76,7 @@ protected:
 signals:
 	void aboutToQuitRKWard ();
 public slots:
-	/** open a workspace. If the current workspace is not empty, ask wether to save first.
+	/** open a workspace. If the current workspace is not empty, ask whether to save first.
     @see setNoAskSave ()
     @see setWorkspaceMightBeModified () */
 	void askOpenWorkspace (const KUrl &url);

@@ -362,7 +362,7 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, int a
 
 		RData::RDataStorage children (childcount, 0);
 		for (int i = 0; i < childcount; ++i) {
-			children[i] = new RData ();		// NOTE: RData-ctor pre-initalizes these to empty. Thus, we're safe even if there is an error while fetching one of the children.
+			children[i] = new RData ();		// NOTE: RData-ctor pre-initializes these to empty. Thus, we're safe even if there is an error while fetching one of the children.
 		}
 
 		if (do_env) {

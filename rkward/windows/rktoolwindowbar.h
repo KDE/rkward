@@ -34,7 +34,7 @@ class RKMDIWindow;
 
 /** This class represents one of the bar which tool windows can dock into (top, left, bottom, right). It contains heavy copying from Kate's katemdi SideBar class. I wish this was available as a library, but it isn't, yet.
 
-Some more would need to be copied for full functionality (session saving / restoring), but for now, I focussed on the bare essentials */
+Some more would need to be copied for full functionality (session saving / restoring), but for now, I focused on the bare essentials */
 class RKToolWindowBar : public KMultiTabBar {
 	Q_OBJECT
 public:

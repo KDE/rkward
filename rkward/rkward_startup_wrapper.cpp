@@ -223,14 +223,14 @@ int main (int argc, char *argv[]) {
 	}
 
 #ifdef Q_WS_WIN
-	// Explicit initialization of KDE, in case Windows 7 asks for admin priviledges
+	// Explicit initialization of KDE, in case Windows 7 asks for admin privileges
 	if (kdeinit4_exe.isNull ()) {
 		kdeinit4_exe = findExeAtPath ("kdeinit4", QFileInfo (rkward_frontend_exe).absolutePath ());
 	}
 	if (!kdeinit4_exe.isNull ()) QProcess::execute (kdeinit4_exe, QStringList ());
 #else
 // Apparently on some systems an embedded R gets outsmarted somehow, and LC_NUMERIC is set to some dangerous value for the whole app (via SCIM)
-// To prevent this, set it here, explicitely. R does not work with wrong settings of LC_NUMERIC.
+// To prevent this, set it here, explicitly. R does not work with wrong settings of LC_NUMERIC.
 
 // First, however, need to unset LC_ALL, if set. Instead we set LANG, so the default will be the same, where not overridden
 	QString lcall = qgetenv ("LC_ALL");

@@ -64,7 +64,7 @@ class RObjectList;
 This class represents the list of namespace environments which are loaded, but do not belong to a package on the search path.
 
 (TODO: Actually, we should relax the assumption that objects can only be at one place in the hierarchy, and turn this into a list of
-all namespace environemnts!)
+all namespace environments!)
 
 It exists only once, as a direct child of the RObjectList.
 

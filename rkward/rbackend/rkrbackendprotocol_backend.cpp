@@ -92,7 +92,7 @@
 			} else if (args[i].startsWith ("--rkd-server-name")) {
 				rkd_server_name = args[i].section ('=', 1);
 			} else {
-				printf ("unkown argument %s", qPrintable (args[i]));
+				printf ("unknown argument %s", qPrintable (args[i]));
 			}
 		}
 		if (servername.isEmpty ()) {

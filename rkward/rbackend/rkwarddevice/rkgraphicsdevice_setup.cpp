@@ -84,7 +84,7 @@ void RKStartGraphicsDevice (double width, double height, double pointsize, const
 			desc = 0;
 		} else {
 			desc->devnum = 0;	// graphics engine will send an Activate-event, before we were even
-								// able to see our own devnum and call RKD_Create. Therefore, intialize
+								// able to see our own devnum and call RKD_Create. Therefore, initialize
 								// devnum to 0, so as not to confuse the frontend
 			pGEDevDesc gdd = GEcreateDevDesc (dev);
 			gdd->displayList = R_NilValue;

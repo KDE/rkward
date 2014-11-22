@@ -115,7 +115,7 @@ void RKOrphanNamespacesObject::updateFromR (RCommandChain* chain) {
 
 void RKOrphanNamespacesObject::updateFromR (RCommandChain* chain, const QStringList& current_symbols) {
 	RK_TRACE (OBJECTS);
-	Q_UNUSED (chain);	// becuase the namespace objects themselves are not updated, only added as incomplete objects
+	Q_UNUSED (chain);	// because the namespace objects themselves are not updated, only added as incomplete objects
 
 	// which former children are missing?
 	for (int i = childmap.size () - 1; i >= 0; --i) {

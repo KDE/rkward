@@ -75,7 +75,7 @@ Allows editing of value labels / factor levels for an RKVariable. Use EditLabels
 class EditLabelsDialog : public KDialog {
 protected:
 friend class EditLabelsDialogProxy;
-/** constuctor., the variable to work on.
+/** constructor., the variable to work on.
 @param parent a QWidget parent */
 	EditLabelsDialog (QWidget *parent, const RObject::ValueLabels& labels, const QString& varname);
 

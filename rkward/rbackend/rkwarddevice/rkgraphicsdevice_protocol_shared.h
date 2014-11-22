@@ -44,7 +44,7 @@
  * 
  */
 
-/** This enum simply repeats R's line end definitions. It is used to ensure compatiblity, without the need to include
+/** This enum simply repeats R's line end definitions. It is used to ensure compatibility, without the need to include
  * any R headers in the frontend. */
 enum RKLineEndStyles {
 	RoundLineCap = 1,
@@ -52,7 +52,7 @@ enum RKLineEndStyles {
 	SquareLineCap = 3
 };
 
-/** This enum simply repeats R's line join definitions. It is used to ensure compatiblity, without the need to include
+/** This enum simply repeats R's line join definitions. It is used to ensure compatibility, without the need to include
  * any R headers in the frontend. */
 enum RKLineJoinStyles {
 	RoundJoin = 1,

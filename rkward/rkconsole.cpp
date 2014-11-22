@@ -653,7 +653,7 @@ void RKConsole::newOutput (RCommand *, ROutput *output) {
 
 	if (RKSettingsModuleConsole::maxConsoleLines ()) {
 		uint c = (uint) doc->lines();
-// We remove the superflous lines in chunks of 20 while handling output for better performance. Later, in showPrompt(), we trim down to the correct size.
+// We remove the superfluous lines in chunks of 20 while handling output for better performance. Later, in showPrompt(), we trim down to the correct size.
 		if (c > (RKSettingsModuleConsole::maxConsoleLines () + 20)) {
 // KDE4: does the setUpdatesEnabled (false) still affect performance?
 			view->setUpdatesEnabled (false);		// major performance boost while removing lines!

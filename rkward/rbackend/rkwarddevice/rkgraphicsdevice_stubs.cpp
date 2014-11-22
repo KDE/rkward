@@ -391,7 +391,7 @@ static void RKD_Raster (unsigned int *raster, int w, int h, double x, double y, 
 	RKGraphicsDataStreamWriteGuard wguard;
 	WRITE_HEADER (RKDRaster, dev);
 
-	int *_raster = reinterpret_cast<int*> (raster);	// shut up warning in WRITE_COLOR_BYTES. It's just four separete bytes, anyway
+	int *_raster = reinterpret_cast<int*> (raster);	// shut up warning in WRITE_COLOR_BYTES. It's just four separate bytes, anyway
 	quint32 _w = qMin (w, 1 << 15);	// skip stuff exceeding reasonable limits to keep protocol simple
 	RKD_OUT_STREAM << _w;
 	quint32 _h = qMin (h, 1 << 15);

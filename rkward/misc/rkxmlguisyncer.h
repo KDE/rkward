@@ -36,7 +36,7 @@ public:
 	/** You can use this function to receive a signal, when an KXMLGUIClient's ui.rc file has been reloaded (after the reload, before the factory is told to rebuild).
 	@param watched_client The client to monitor. This needs to be registered using watchXMLGUIClientUIrc, first.
 	@param receiver QObject to receive notification
-	@param method slot to recieve notification. This needs to have the signature
+	@param method slot to receive notification. This needs to have the signature
 	\code
 		void someSlotName (KXMLGUIClient *changed_client);
 	\endcode
