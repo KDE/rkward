@@ -1,19 +1,22 @@
-function printout () {
-	var lambda = "";
+var lambda = "";
+var uplab = "";
+var upcol = "";
+var uplty = "";
+
+function calculate () {
 	if (getValue("custom") == 0) {
 		lambda = getValue ("lambda");
 	} else {
 		lambda = getValue ("clambda");
 	}
 
-	echo ('rk.header ("Hodrick-Prescott Filter", parameters=list("Lambda", ' +  lambda + '))\n');
 	echo ('x <- ' + getValue("x") + '\n');
 	echo ('lambda <- ' +  lambda + "\n");
 	echo ('\n');
-	echo ('if (any (is.na (x))) stop ("Missing values cannot be handled")\n');
+	echo ('if (any (is.na (x))) stop (' + i18n ("Missing values cannot be handled in Hodrick-Prescott Filter") + ')\n');
 	echo ('\n');
 	echo ('i <- diag(length(x))\n');
-	echo ('trend <- solve(i + lambda * crossprod(diff(i, lag=1, d=2)), x) # The HP Filter itself. Thanks to Grant V. Farnsworth\n');
+	echo ('trend <- solve(i + lambda * crossprod(diff(i, lag=1, d=2)), x) '); comment ("The HP Filter itself. Thanks to Grant V. Farnsworth");
 	echo ('cycle <- x - trend\n');
 	echo ('if (is.ts(x)) {\n');
 	echo ('	trend <- ts(trend,start(x),frequency=frequency(x))\n');
@@ -26,7 +29,6 @@ function printout () {
 		echo ('.GlobalEnv$' + getValue("cycle_name") + ' <- cycle\n');
 	}
 
-	var upcol = "";
 	if (getValue("series_col.color") != "" & getValue("trend_col.color") != "") {
 		upcol = ", col=c(\"" + getValue("series_col.color") + "\", \"" + getValue("trend_col.color") + "\")";
 	} else if (getValue("series_col.color") != "") {
@@ -37,7 +39,6 @@ function printout () {
 		upcol = "";
 	}
 
-	var uplty = "";
 	if (getValue("series_lty") != "" & getValue("trend_lty") != "") {
 		uplty = ", lty=c(" + quote (getValue("series_lty")) + ", " + quote (getValue("trend_lty")) + ")";
 	} else if (getValue("series_lty") != "") {
@@ -48,7 +49,6 @@ function printout () {
 		uplty = "";
 	}
 
-	var uplab = "";
 	if (getValue("uplab.text") == "") {
 		uplab = quote (getValue("x") + ", Trend");
 	} else if (getValue("uplabisquote") == 1) {
@@ -56,6 +56,10 @@ function printout () {
 	} else {
 		uplab = getValue("uplab");
 	}
+}
+
+function printout () {
+	new Header (i18n ("Hodrick-Prescott Filter")).add (i18n ("Lambda"), lambda).print ();
 
 	echo ('rk.graph.on ()\n');
 	echo ('try({\n');

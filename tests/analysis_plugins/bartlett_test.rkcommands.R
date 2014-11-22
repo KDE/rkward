@@ -7,8 +7,8 @@ names <- rk.get.description (warpbreaks[["breaks"]], test50z, test50y, test50x, 
 rk.header (result$method)
 
 rk.results (list (
-	'Variables'=names,
-	'Bartlett s K-squared'=result$statistic,
+	"Variables"=names,
+	"Bartlett's K-squared"=result$statistic,
 	'df'=result$parameter,
-	'p-value'=result$p.value))
+	"p-value"=result$p.value))
 })

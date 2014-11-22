@@ -7,8 +7,8 @@ names <- rk.get.description (women[["weight"]], women[["height"]], test50z, test
 rk.header (result$method)
 
 rk.results (list (
-	'Variables'=names,
-	'Fligner-Killeen:med X^2 test statistic'=result$statistic,
+	"Variables"=names,
+	"Fligner-Killeen:med X^2 test statistic"=result$statistic,
 	'df'=result$parameter,
-	'p-value'=result$p.value))
+	"p-value"=result$p.value))
 })

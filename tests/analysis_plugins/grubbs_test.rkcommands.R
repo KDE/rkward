@@ -3,7 +3,7 @@ local({
 require(outliers)
 ## Compute
 vars <- rk.list (warpbreaks[["breaks"]], test10z)
-results <- data.frame ('Variable Name'=I(names (vars)), check.names=FALSE)
+results <- data.frame ("Variable Name"=I(names (vars)), check.names=FALSE)
 for (i in 1:length (vars)) {
 	var <- vars[[i]]
 
@@ -12,20 +12,21 @@ for (i in 1:length (vars)) {
 
 	var <- na.omit (var) 	# omit NAs for all further calculations
 
-	results[i, 'Error'] <- tryCatch ({
+	results[i, "Error"] <- tryCatch ({
 		# This is the core of the calculation
 		t <- grubbs.test (var, type = 10, opposite = FALSE, two.sided = TRUE)
 		results[i, 'G'] <- t$statistic["G"]
 		results[i, 'U'] <- t$statistic["U"]
-		results[i, 'p-value'] <- t$p.value
-		results[i, 'Alternative Hypothesis']<- rk.describe.alternative (t)
+		results[i, "p-value"] <- t$p.value
+		results[i, "Alternative Hypothesis"]<- rk.describe.alternative (t)
 		NA				# no error
 	}, error=function (e) e$message)	# catch any errors
 }
-if (all (is.na (results$'Error'))) results$'Error' <- NULL
+if (all (is.na (results$"Error"))) results$"Error" <- NULL
 ## Print result
-rk.header ("Grubbs tests for one or two outliers in data sample",
-	parameters=list ("Type", "10", "Opposite", "FALSE", "two-sided", "TRUE"))
+rk.header ("Grubbs tests for one or two outliers in data sample", parameters=list("Variant of test"="10 (test for one outlier)",
+	"Opposite"="no",
+	"two-sided"="yes"))
 rk.results (results)
 })
 local({
@@ -33,7 +34,7 @@ local({
 require(outliers)
 ## Compute
 vars <- rk.list (warpbreaks[["breaks"]], test10z)
-results <- data.frame ('Variable Name'=I(names (vars)), check.names=FALSE)
+results <- data.frame ("Variable Name"=I(names (vars)), check.names=FALSE)
 for (i in 1:length (vars)) {
 	var <- vars[[i]]
 
@@ -42,24 +43,25 @@ for (i in 1:length (vars)) {
 
 	var <- na.omit (var) 	# omit NAs for all further calculations
 
-	results[i, 'Error'] <- tryCatch ({
+	results[i, "Error"] <- tryCatch ({
 		# This is the core of the calculation
 		t <- grubbs.test (var, type = 11, opposite = TRUE, two.sided = FALSE)
 		results[i, 'G'] <- t$statistic["G"]
 		results[i, 'U'] <- t$statistic["U"]
-		results[i, 'p-value'] <- t$p.value
-		results[i, 'Alternative Hypothesis']<- rk.describe.alternative (t)
-		results[i, 'Mean'] <- mean (var)
-		results[i, 'Standard Deviation'] <- sd (var)
-		results[i, 'Median'] <- median (var)
-		results[i, 'Minimum'] <- min (var)
-		results[i, 'Maximum'] <- max (var)
+		results[i, "p-value"] <- t$p.value
+		results[i, "Alternative Hypothesis"]<- rk.describe.alternative (t)
+		results[i, "Mean"] <- mean (var)
+		results[i, "Standard Deviation"] <- sd (var)
+		results[i, "Median"] <- median (var)
+		results[i, "Minimum"] <- min (var)
+		results[i, "Maximum"] <- max (var)
 		NA				# no error
 	}, error=function (e) e$message)	# catch any errors
 }
-if (all (is.na (results$'Error'))) results$'Error' <- NULL
+if (all (is.na (results$"Error"))) results$"Error" <- NULL
 ## Print result
-rk.header ("Grubbs tests for one or two outliers in data sample",
-	parameters=list ("Type", "11", "Opposite", "TRUE", "two-sided", "FALSE"))
+rk.header ("Grubbs tests for one or two outliers in data sample", parameters=list("Variant of test"="11 (test for two outliers on opposite tails)",
+	"Opposite"="yes",
+	"two-sided"="no"))
 rk.results (results)
 })

@@ -12,7 +12,7 @@ function calculate () {
 }
 
 function printout () {
-	new Header (i18n ("Crosstabs (n to n)")).add (i18n ("Variables"), noquote (datadescription)).print ();
+	new Header (i18n ("Crosstabs (n to n)")).add (i18n ("Variables"), noquote ('datadescription')).print ();
 	echo ('\n');
 	echo ('rk.print (result)\n');
 }

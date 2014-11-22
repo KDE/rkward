@@ -3,9 +3,8 @@
 <ul><li>Comparing: test50x</li>
 <li>H1: true location is not equal to 0</li>
 <li>Continuity correction in normal approximation for p-value: FALSE</li>
-<li>Compute exact p-value: TRUE</li>
-<li>Paired test: FALSE</li>
-<li>mu: 0.00</li>
+<li>Compute exact p-value: Always</li>
+<li>Location (shift) to test against (mu): 0.00</li>
 </ul>
 DATE<br />
 <table border="1">
@@ -15,12 +14,13 @@ DATE<br />
 </table>
 <h1>Wilcoxon signed rank test with continuity correction</h1>
 <h2>Parameters</h2>
-<ul><li>Comparing: test50x against test50y</li>
+<ul><li>Comparing: test50x</li>
+<li>against: test50y</li>
 <li>H1: true location shift is less than 0</li>
 <li>Continuity correction in normal approximation for p-value: TRUE</li>
-<li>Compute exact p-value: automatic</li>
-<li>Paired test: TRUE</li>
-<li>mu: 0.00</li>
+<li>Compute exact p-value: Automatic</li>
+<li>Paired test: yes</li>
+<li>Location (shift) to test against (mu): 0.00</li>
 </ul>
 DATE<br />
 <table border="1">
@@ -33,9 +33,8 @@ DATE<br />
 <ul><li>Comparing: test50x</li>
 <li>H1: true mu is not equal to 0</li>
 <li>Continuity correction in normal approximation for p-value: FALSE</li>
-<li>Compute exact p-value: TRUE</li>
-<li>Paired test: FALSE</li>
-<li>mu: 0.00</li>
+<li>Compute exact p-value: Always</li>
+<li>Location (shift) to test against (mu): 0.00</li>
 </ul>
 DATE<br />
 <table border="1">
@@ -45,12 +44,13 @@ DATE<br />
 </table>
 <h1>Asymptotic Wilcoxon signed rank test</h1>
 <h2>Parameters</h2>
-<ul><li>Comparing: test50x against test50y</li>
+<ul><li>Comparing: test50x</li>
+<li>against: test50y</li>
 <li>H1: true mu is less than 0</li>
 <li>Continuity correction in normal approximation for p-value: TRUE</li>
-<li>Compute exact p-value: automatic</li>
-<li>Paired test: TRUE</li>
-<li>mu: 0.00</li>
+<li>Compute exact p-value: Automatic</li>
+<li>Paired test: yes</li>
+<li>Location (shift) to test against (mu): 0.00</li>
 </ul>
 DATE<br />
 <table border="1">

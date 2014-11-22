@@ -1,8 +1,8 @@
 <h1>Dixon test for outlier</h1>
 <h2>Parameters</h2>
-<ul><li>Type: 0</li>
-<li>Opposite: FALSE</li>
-<li>two-sided: TRUE</li>
+<ul><li>Variant of test: 0 (Automatic)</li>
+<li>Opposite: no</li>
+<li>two-sided: yes</li>
 </ul>
 DATE<br />
 <table border="1">
@@ -12,9 +12,9 @@ DATE<br />
 </table>
 <h1>Dixon test for outlier</h1>
 <h2>Parameters</h2>
-<ul><li>Type: 0</li>
-<li>Opposite: TRUE</li>
-<li>two-sided: FALSE</li>
+<ul><li>Variant of test: 0 (Automatic)</li>
+<li>Opposite: yes</li>
+<li>two-sided: no</li>
 </ul>
 DATE<br />
 <table border="1">

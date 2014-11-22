@@ -1,9 +1,10 @@
 <h1>Ansari-Bradley test</h1>
 <h2>Parameters</h2>
-<ul><li>Comparing: test50x against test10y</li>
+<ul><li>compare: test50x</li>
+<li>against: test10y</li>
 <li>H1: true ratio of scales is not equal to 1</li>
-<li>Compute exact p-value: yes</li>
-<li>Confidence Level: 0.95</li>
+<li>compute exact p-value: Always</li>
+<li>confidence level: 0.95</li>
 </ul>
 DATE<br />
 <table border="1">
@@ -14,9 +15,10 @@ DATE<br />
 </table>
 <h1>Ansari-Bradley test</h1>
 <h2>Parameters</h2>
-<ul><li>Comparing: test50x against test50y</li>
+<ul><li>compare: test50x</li>
+<li>against: test50y</li>
 <li>H1: true ratio of scales is less than 1</li>
-<li>Compute exact p-value: automatic</li>
+<li>compute exact p-value: Automatic</li>
 </ul>
 DATE<br />
 <table border="1">

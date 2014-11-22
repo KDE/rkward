@@ -6,11 +6,11 @@ function printout () {
 	echo ('names <- rk.get.description (' + getValue ("x") + ', ' + getValue ("y") + ')\n');
 	echo ('\n');
 	echo ('rk.header (result$method,\n');
-	echo ('	parameters=list ("Alternative Hypothesis", rk.describe.alternative (result)))\n');
+	echo ('	parameters=list (' + i18n ("Alternative Hypothesis") + '=rk.describe.alternative (result)))\n');
 	echo ('\n');
 	echo ('rk.results (list (\n');
-	echo ('	\'Variables\'=names,\n');
+	echo ('	' + i18n ("Variables") + '=names,\n');
 	echo ('	\'Z\'=result$statistic,\n');
-	echo ('	\'p-value\'=result$p.value))\n');
+	echo ('	' + i18n ("p-value") + '=result$p.value))\n');
 }
 

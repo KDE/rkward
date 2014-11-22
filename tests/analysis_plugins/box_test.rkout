@@ -1,7 +1,7 @@
-<h1>Box-Pierce Test</h1>
+<h1>Box-Pierce and Ljung-Box Tests</h1>
 <h2>Parameters</h2>
 <ul><li>lag: 1</li>
-<li>type: Box-Pierce</li>
+<li>test to be performed: Box-Pierce</li>
 </ul>
 DATE<br />
 <table border="1">

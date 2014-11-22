@@ -116,8 +116,9 @@ Header = function (title, level) {
 		this.parameters.push (caption, value);
 		return this;
 	}
-	this.addFromUI = function (elementid) {
+	this.addFromUI = function (elementid, value_override) {
 		this.parameters = this.parameters.concat (_RK_backend.getUiLabelPair (elementid));
+		if (typeof (value_override) != 'undefined') this.parameters[this.parameters.length - 1] = value_override;
 		return this;
 	}
 	this.print = function (indentation) {

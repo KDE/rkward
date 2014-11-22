@@ -19,8 +19,8 @@ for (i in 1:length (data)) {
 	}
 }
 ## Print result
-rk.header ("Correlation Matrix", parameters=list("Method"="pearson",
-	"Exclusion"="pairwise.complete.obs"))
+rk.header ("Correlation Matrix", parameters=list("Method"="Pearson's product-moment correlation",
+	"Exclude missing values"="pairwise"))
 rk.results (data.frame (result, check.names=FALSE), titles=c ("Coefficient", names (data)))
 rk.header ("p-values and sample size", level=4)
 rk.results (data.frame (result.p, check.names=FALSE), titles=c ("n \\ p", names (data)))
@@ -47,8 +47,8 @@ for (i in 1:length (data)) {
 	}
 }
 ## Print result
-rk.header ("Correlation Matrix", parameters=list("Method"="polychoric",
-	"Exclusion"="pairwise"))
+rk.header ("Correlation Matrix", parameters=list("Method"="Polychoric correlation",
+	"Exclude missing values"="pairwise"))
 rk.results (data.frame (result, check.names=FALSE), titles=c ("Coefficient", names (data)))
 })
 local({
@@ -61,7 +61,7 @@ data <- as.data.frame (data.list, check.names=FALSE)
 # calculate correlation matrix
 result <- cor (data, use="pairwise.complete.obs", method="pearson")
 ## Print result
-rk.header ("Correlation Matrix", parameters=list("Method"="pearson",
-	"Exclusion"="pairwise.complete.obs"))
+rk.header ("Correlation Matrix", parameters=list("Method"="Pearson's product-moment correlation",
+	"Exclude missing values"="pairwise"))
 rk.results (data.frame (result, check.names=FALSE), titles=c ("Coefficient", names (data)))
 })

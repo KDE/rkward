@@ -1,6 +1,6 @@
 <h1>Find potential outlier</h1>
 <h2>Parameters</h2>
-<ul><li>Opposite: FALSE</li>
+<ul><li>Opposite: no</li>
 </ul>
 DATE<br />
 <table border="1">
@@ -10,7 +10,7 @@ DATE<br />
 </table>
 <h1>Find potential outlier</h1>
 <h2>Parameters</h2>
-<ul><li>Opposite: TRUE</li>
+<ul><li>Opposite: yes</li>
 </ul>
 DATE<br />
 <table border="1">

@@ -4,3 +4,5 @@ build/
 # Generated from cmake
 rkward/resource.ver
 rkward/version.h
+# Log files from testing
+tests/make_plugintests.txt

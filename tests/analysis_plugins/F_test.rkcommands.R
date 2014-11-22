@@ -5,16 +5,17 @@ result <- var.test (test50z, test50y, alternative = "two.sided", ratio = 1.00)
 ## Print result
 names <- rk.get.description (test50z, test50y)
 
-rk.header (result$method,
-	parameters=list ("Confidence Level", "0.95", "Alternative Hypothesis", rk.describe.alternative(result)))
+rk.header (result$method, parameters=list("Confidence level"="0.95",
+	"Hypothesized ratio"="1.00",
+	"Alternative Hypothesis"=rk.describe.alternative(result)))
 
 rk.results (list (
-	'Variables'=names,
+	"Variables"=names,
 	'F'=result$statistic["F"],
-	'Numerator DF'=result$parameter["num df"],
-	'Denominator DF'=result$parameter["denom df"],
-	'p-value'=result$p.value,
-	'Lower CI'=result$conf.int[1],
-	'Upper CI'=result$conf.int[2],
-	'ratio of variances'=result$estimate))
+	"Numerator DF"=result$parameter["num df"],
+	"Denominator DF"=result$parameter["denom df"],
+	"p-value"=result$p.value,
+	"Lower CI"=result$conf.int[1],
+	"Upper CI"=result$conf.int[2],
+	"ratio of variances"=result$estimate))
 })

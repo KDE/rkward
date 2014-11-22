@@ -6,7 +6,7 @@
 DATE<br />
 <table border="1">
 <tr><td>Variable Name</td><td>Length</td><td>NAs</td><td>KPSS Trend</td><td>Truncation lag parameter</td><td>p-value</td></tr>
-<tr><td>test50x</td><td>50</td><td>0</td><td>0.10241</td><td>5</td><td>0.1</td></tr>
-<tr><td>test50y</td><td>50</td><td>0</td><td>0.1378</td><td>5</td><td>0.065181</td></tr>
-<tr><td>test50z</td><td>50</td><td>0</td><td>0.099722</td><td>5</td><td>0.1</td></tr>
+<tr><td>test50x</td><td>50</td><td>0</td><td>0.13546</td><td>5</td><td>0.069511</td></tr>
+<tr><td>test50y</td><td>50</td><td>0</td><td>0.13748</td><td>5</td><td>0.065773</td></tr>
+<tr><td>test50z</td><td>50</td><td>0</td><td>0.11899</td><td>5</td><td>0.1</td></tr>
 </table>

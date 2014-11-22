@@ -1,10 +1,9 @@
 local({
-## Print result
-rk.header ("Hodrick-Prescott Filter", parameters=list("Lambda", 1600))
+## Compute
 x <- co2
 lambda <- 1600
 
-if (any (is.na (x))) stop ("Missing values cannot be handled")
+if (any (is.na (x))) stop ("Missing values cannot be handled in Hodrick-Prescott Filter")
 
 i <- diag(length(x))
 trend <- solve(i + lambda * crossprod(diff(i, lag=1, d=2)), x) # The HP Filter itself. Thanks to Grant V. Farnsworth
@@ -15,6 +14,8 @@ if (is.ts(x)) {
 }
 .GlobalEnv$hptrend <- trend
 .GlobalEnv$hpcycle <- cycle
+## Print result
+rk.header ("Hodrick-Prescott Filter", parameters=list("Lambda"="1600"))
 rk.graph.on ()
 try({
 	par(mfrow=c(2,1),mar=c(2,4,2,2)+0.1)

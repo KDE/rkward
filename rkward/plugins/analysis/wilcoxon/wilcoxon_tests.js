@@ -71,7 +71,8 @@ function printout(){
 	var confintChecked = getValue("confint.checked");
 	var correct = getValue("correct");
 	var mu = getValue("mu");
-	var header = new Header (noquote ('wcox.result$method')).add (i18n ("Comparing"), noquote ('names[1]'));
+	var header = new Header (noquote ('wcox.result$method'));
+	header.add (i18n ("Comparing"), noquote ('names[1]'));
 	if (y) header.add (i18nc ("compare against", "against"), noquote ('names[2]'));
 	header.add ("H1", noquote ('rk.describe.alternative (wcox.result)'));
 	header.add (i18n ("Continuity correction in normal approximation for p-value"), correct ? "TRUE" : "FALSE");

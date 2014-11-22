@@ -26,7 +26,7 @@
 							<option value="22" label="22"/>
 						</dropdown>
 						<checkbox id="opposite" label="Opposite" value_unchecked="FALSE" value="TRUE" checked="false" />
-						<checkbox id="two_sided" label="two-sided (default)" value_unchecked="FALSE" value="TRUE" checked="true" />
+						<checkbox id="two_sided" label="two-sided" value_unchecked="FALSE" value="TRUE" checked="true" />
 					</frame>
 					<frame label="additional settings">
 						<checkbox id="descriptives" label="Show additional descriptives" value_unchecked="0" value="1" checked="false" />

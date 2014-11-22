@@ -1,8 +1,8 @@
 <h1>Grubbs tests for one or two outliers in data sample</h1>
 <h2>Parameters</h2>
-<ul><li>Type: 10</li>
-<li>Opposite: FALSE</li>
-<li>two-sided: TRUE</li>
+<ul><li>Variant of test: 10 (test for one outlier)</li>
+<li>Opposite: no</li>
+<li>two-sided: yes</li>
 </ul>
 DATE<br />
 <table border="1">
@@ -12,9 +12,9 @@ DATE<br />
 </table>
 <h1>Grubbs tests for one or two outliers in data sample</h1>
 <h2>Parameters</h2>
-<ul><li>Type: 11</li>
-<li>Opposite: TRUE</li>
-<li>two-sided: FALSE</li>
+<ul><li>Variant of test: 11 (test for two outliers on opposite tails)</li>
+<li>Opposite: yes</li>
+<li>two-sided: no</li>
 </ul>
 DATE<br />
 <table border="1">

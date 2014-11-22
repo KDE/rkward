@@ -22,27 +22,26 @@ function calculate () {
 }
 
 function printout () {
-	echo ('rk.header (result$method,\n');
-	echo ('	parameters=list (\n');
-	echo ('		"Comparing", paste (names[1], "against", names[2]),\n');
-	echo ('		"Alternative Hypothesis", rk.describe.alternative(result),\n');
-	echo ('		"Compute exact p-value", "' + getValue ("exact") + '"');
-	if (getValue ("confint")== "TRUE") {
-		echo (',\n');
-		echo ('		 "Confidence Level", "' + getValue ("conflevel") + '" ');
+	var header = new Header (noquote ('result$method'));
+	header.addFromUI ("x", noquote ('names[1]'));
+	header.addFromUI ("y", noquote ('names[2]'));
+	header.add (i18n ("Alternative Hypothesis"), noquote ('rk.describe.alternative(result)'));
+	header.addFromUI ("exact");
+	if (getBoolean ("confint.state")) {
+		header.addFromUI ("conflevel");
 	}
-	echo ('))\n');
+	header.print ();
 	echo ('\n');
 	echo ('rk.results (list (\n');
-	echo ('	\'Variable Names\'=names,\n');
-	echo ('	\'statistic\'=result$statistic,\n');
-	echo ('	\'null.value\'=result$null.value,\n');
+	echo ('	' + i18n ("Variable Names") + '=names,\n');
+	echo ('	' + i18n ("statistic") + '=result$statistic,\n');
+	echo ('	' + i18n ("null.value") + '=result$null.value,\n');
 	echo ('	p=result$p.value');
-	if (getValue ("confint")== "TRUE") {
+	if (getBoolean ("confint.state")) {
 		echo (',\n');
-		echo ('	\'confidence interval percent\'=(100 * attr(result$conf.int, "conf.level")),\n');
-		echo ('	\'confidence interval of difference\'=result$conf.int,\n');
-		echo ('	\'estimate of the ratio of scales\'=result$estimate');
+		echo ('	' + i18n ("confidence interval percent") + '=(100 * attr(result$conf.int, "conf.level")),\n');
+		echo ('	' + i18n ("confidence interval of difference") + '=result$conf.int,\n');
+		echo ('	' + i18n ("estimate of the ratio of scales") + '=result$estimate');
 	}
 	echo ('))\n');
 }

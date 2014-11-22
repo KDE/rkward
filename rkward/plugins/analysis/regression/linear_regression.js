@@ -24,6 +24,6 @@ function calculate () {
 }
 
 function printout () {
-	echo ('rk.header ("Linear Regression")\n');
+	echo ('rk.header (' + i18n ("Linear Regression") + ')\n');
 	echo ('rk.print(results)\n');
 }

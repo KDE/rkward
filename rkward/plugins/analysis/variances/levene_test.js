@@ -9,7 +9,7 @@ function calculate () {
 function printout () {
 	echo ('names <- rk.get.description (' + getValue ("y") + ', ' + getValue ("group") + ')\n');
 	echo ('\n');
-	echo ('rk.header ("Levene\'s Test", list ("response variable", names[1], "groups", names[2]))\n');
+	new Header (i18n ("Levene's Test")).addFromUI ("y", noquote ('names[1]')).addFromUI ("group", noquote ('names[2]')).print ();
 	echo ('\n');
 	echo ('rk.print (result)\n');
 }

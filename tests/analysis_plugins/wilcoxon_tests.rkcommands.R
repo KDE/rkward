@@ -9,14 +9,11 @@ local({
 	)
 
 ## Print result
-rk.header (wcox.result$method,
-	parameters=list ("Comparing", paste (names, collapse=" against "),
-	"H1", rk.describe.alternative (wcox.result),
-	"Continuity correction in normal approximation for p-value", "FALSE",
-	"Compute exact p-value", "TRUE",
-	"Paired test", "FALSE",
-	"mu", "0.00"))
-
+rk.header (wcox.result$method, parameters=list("Comparing"=names[1],
+	"H1"=rk.describe.alternative (wcox.result),
+	"Continuity correction in normal approximation for p-value"="FALSE",
+	"Compute exact p-value"="Always",
+	"Location (shift) to test against (mu)"="0.00"))
 rk.results (list (
 	"Variable Names"=names,
 	"Statistic"=wcox.result$statistic,
@@ -40,14 +37,13 @@ local({
 	)
 
 ## Print result
-rk.header (wcox.result$method,
-	parameters=list ("Comparing", paste (names, collapse=" against "),
-	"H1", rk.describe.alternative (wcox.result),
-	"Continuity correction in normal approximation for p-value", "TRUE",
-	"Compute exact p-value", "automatic",
-	"Paired test", "TRUE",
-	"mu", "0.00"))
-
+rk.header (wcox.result$method, parameters=list("Comparing"=names[1],
+	"against"=names[2],
+	"H1"=rk.describe.alternative (wcox.result),
+	"Continuity correction in normal approximation for p-value"="TRUE",
+	"Compute exact p-value"="Automatic",
+	"Paired test"="yes",
+	"Location (shift) to test against (mu)"="0.00"))
 rk.results (list (
 	"Variable Names"=names,
 	"Statistic"=wcox.result$statistic,
@@ -67,14 +63,11 @@ local({
 	)
 
 ## Print result
-rk.header (wcox.result$method,
-	parameters=list ("Comparing", paste (names, collapse=" against "),
-	"H1", rk.describe.alternative (wcox.result),
-	"Continuity correction in normal approximation for p-value", "FALSE",
-	"Compute exact p-value", "TRUE",
-	"Paired test", "FALSE",
-	"mu", "0.00"))
-
+rk.header (wcox.result$method, parameters=list("Comparing"=names[1],
+	"H1"=rk.describe.alternative (wcox.result),
+	"Continuity correction in normal approximation for p-value"="FALSE",
+	"Compute exact p-value"="Always",
+	"Location (shift) to test against (mu)"="0.00"))
 rk.results (list (
 	"Variable Names"=names,
 	"Statistic"=wcox.result$statistic,
@@ -99,14 +92,13 @@ local({
 	)
 
 ## Print result
-rk.header (wcox.result$method,
-	parameters=list ("Comparing", paste (names, collapse=" against "),
-	"H1", rk.describe.alternative (wcox.result),
-	"Continuity correction in normal approximation for p-value", "TRUE",
-	"Compute exact p-value", "automatic",
-	"Paired test", "TRUE",
-	"mu", "0.00"))
-
+rk.header (wcox.result$method, parameters=list("Comparing"=names[1],
+	"against"=names[2],
+	"H1"=rk.describe.alternative (wcox.result),
+	"Continuity correction in normal approximation for p-value"="TRUE",
+	"Compute exact p-value"="Automatic",
+	"Paired test"="yes",
+	"Location (shift) to test against (mu)"="0.00"))
 rk.results (list (
 	"Variable Names"=names,
 	"Statistic"=wcox.result$statistic,

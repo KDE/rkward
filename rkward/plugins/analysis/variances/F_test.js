@@ -9,17 +9,19 @@ function calculate () {
 function printout () {
 	echo ('names <- rk.get.description (' + getValue ("x") + ', ' + getValue ("y") + ')\n');
 	echo ('\n');
-	echo ('rk.header (result$method,\n');
-	echo ('	parameters=list ("Confidence Level", "' + getValue ("conflevel") + '", "Alternative Hypothesis", rk.describe.alternative(result)))\n');
+	new Header (noquote ('result$method'))
+	    .addFromUI ("conflevel")
+	    .addFromUI ("ratio")
+	    .add (i18n ("Alternative Hypothesis"), noquote ('rk.describe.alternative(result)')).print ();
 	echo ('\n');
 	echo ('rk.results (list (\n');
-	echo ('	\'Variables\'=names,\n');
+	echo ('	' + i18n ("Variables") + '=names,\n');
 	echo ('	\'F\'=result$statistic["F"],\n');
-	echo ('	\'Numerator DF\'=result$parameter["num df"],\n');
-	echo ('	\'Denominator DF\'=result$parameter["denom df"],\n');
-	echo ('	\'p-value\'=result$p.value,\n');
-	echo ('	\'Lower CI\'=result$conf.int[1],\n');
-	echo ('	\'Upper CI\'=result$conf.int[2],\n');
-	echo ('	\'ratio of variances\'=result$estimate))\n');
+	echo ('	' + i18n ("Numerator DF") + '=result$parameter["num df"],\n');
+	echo ('	' + i18n ("Denominator DF") + '=result$parameter["denom df"],\n');
+	echo ('	' + i18n ("p-value") + '=result$p.value,\n');
+	echo ('	' + i18n ("Lower CI") + '=result$conf.int[1],\n');
+	echo ('	' + i18n ("Upper CI") + '=result$conf.int[2],\n');
+	echo ('	' + i18n ("ratio of variances") + '=result$estimate))\n');
 }
 

@@ -1,6 +1,6 @@
 <h1>Phillips-Perron Test for Unit Roots</h1>
 <h2>Parameters</h2>
-<ul><li>Truncation lag parameter short ('TRUE') or long ('FALSE'): FALSE</li>
+<ul><li>version of truncation lag parameter: long</li>
 </ul>
 DATE<br />
 <table border="1">
