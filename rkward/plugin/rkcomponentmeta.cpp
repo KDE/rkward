@@ -35,22 +35,22 @@ RKComponentAboutData::RKComponentAboutData (const QDomElement& e, XMLHelper &xml
 	RK_TRACE (PLUGIN);
 	if (e.isNull ()) return;
 
-	name = xml.getStringAttribute (e, "name", QString (), DL_INFO);
+	name = xml.i18nStringAttribute (e, "name", QString (), DL_INFO);
 	version = xml.getStringAttribute (e, "version", QString (), DL_INFO);
 	releasedate = xml.getStringAttribute (e, "releasedate", QString (), DL_INFO);
-	shortinfo = xml.getStringAttribute (e, "shortinfo", QString (), DL_INFO);
+	shortinfo = xml.i18nStringAttribute (e, "shortinfo", QString (), DL_INFO);
 	copyright = xml.getStringAttribute (e, "copyright", QString (), DL_INFO);
 	license = xml.getStringAttribute (e, "license", QString (), DL_INFO);
 	url = xml.getStringAttribute (e, "url", QString (), DL_INFO);
-	category = xml.getStringAttribute (e, "category", i18n ("Unspecified"), DL_INFO);
+	category = xml.i18nStringAttribute (e, "category", i18n ("Unspecified"), DL_INFO);
 
 	XMLChildList aes = xml.getChildElements (e, "author", DL_INFO);
 	for (int i = 0; i < aes.size (); ++i) {
 		QDomElement ae = aes[i];
 		RKComponentAuthor author;
-		author.name = xml.getStringAttribute (ae, "name", QString (), DL_INFO);
+		author.name = xml.i18nStringAttribute (ae, "name", QString (), DL_INFO);
 		if (author.name.isEmpty ()) {
-			author.name = xml.getStringAttribute (ae, "given", QString (), DL_WARNING) + " " + xml.getStringAttribute (ae, "family", QString (), DL_WARNING);
+			author.name = xml.i18nStringAttribute (ae, "given", QString (), DL_WARNING) + " " + xml.i18nStringAttribute (ae, "family", QString (), DL_WARNING);
 			
 		}
 		if (author.name.isEmpty ()) xml.displayError (&ae, "No author name specified", DL_WARNING);

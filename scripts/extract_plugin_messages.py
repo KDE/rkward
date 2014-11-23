@@ -10,6 +10,12 @@ from xml.dom import minidom
 import HTMLParser
 import copy
 
+attributes_to_extract_for_tag={
+  '*':      { "attributes" : ['label', 'title', 'shorttitle'], "context": ''},
+  'about':  { "attributes" : ['name', 'shortinfo', 'category'], "context": ''},
+  'author': { "attributes" : ['name', 'given', 'family'], "context": 'Author name'}
+}
+
 def usage ():
   print ("Usage: " + sys.argv[0] + " [--default_po=PO_ID] [--outdir=DIR] files")
   exit (1)
@@ -51,10 +57,10 @@ def parseFile (filename):
 # Where available, include the labels of parent elements. Particularly helpful for radio-options
 def getElementShort (element, dot_attribute=""):
   ret = "<" + element.tagName
-  for attr in ["label", "title"]:
-    if (attr == dot_attribute):
-      ret += " " + attr + "=\"...\""
-    else:
+  if (dot_attribute != ""):
+    ret += " " + dot_attribute + "=\"...\""
+  else:
+    for attr in ["label", "title"]:
       if (element.hasAttribute (attr)):
         ret += " " + attr + "=" + quote (element.getAttribute (attr))
   return ret + ">"
@@ -124,14 +130,21 @@ def getI18nComment (node, attribute=""):
 # Main workhorse: Look at given node and recurse into children
 def handleNode (node):
   if (node.nodeType == node.ELEMENT_NODE):
-    for attr in ["label", "title", "shorttitle"]:
+    attributes = attributes_to_extract_for_tag['*']['attributes']
+    context = attributes_to_extract_for_tag['*']['context']
+    if (node.tagName in attributes_to_extract_for_tag):
+      attributes = attributes + attributes_to_extract_for_tag[node.tagName]['attributes']
+      context = attributes_to_extract_for_tag[node.tagName]['context']
+    for attr in attributes:
       if (node.hasAttribute (attr)):
         attrv = node.getAttribute (attr)
         if (attrv == ""):
           continue
         outfile.write (getI18nComment (node, attr))
         if (node.hasAttribute ("i18n_context")):
-          outfile.write ("i18nc (" + quote (node.getAttribute ("i18n_context")) + ", " + quote (attrv) + ");\n")
+          context = node.getAttribute ("i18n_context")
+        if (context != ''):
+          outfile.write ("i18nc (" + quote (context) + ", " + quote (attrv) + ");\n")
         else:
           outfile.write ("i18n (" + quote (attrv) + ");\n")
     if (node.hasAttribute ("file")):
@@ -413,7 +426,7 @@ for potcpp in initialized_pot_files:
   # NOTE: using --no-location, as that just adds meaningless references to the temporary .pot.cpp-file.
   res = subprocess.call (["xgettext", "--from-code=UTF-8", "-C", "-kde", "-ci18n", "-ki18n:1", "-ki18nc:1c,2", "-ki18np:1,2", "-ki18ncp:1c,2,3",
                     "-ktr2i18n:1", "-kI18N_NOOP:1", "-kI18N_NOOP2:1c,2", "-kaliasLocale", "-kki18n:1", "-kki18nc:1c,2", "-kki18np:1,2",
-                    "-kki18ncp:1c,2,3", "--no-location", "--msgid-bugs-address=" + BUGADDR, "-o", "finalpotfile", potcppfile])
+                    "-kki18ncp:1c,2,3", "--no-location", "--msgid-bugs-address=" + BUGADDR, "-o", finalpotfile, potcppfile])
   if (res):
     sys.stderr.write ("calling xgettext failed with exit code " + res)
   os.remove (potcppfile)
