@@ -175,6 +175,7 @@ void RKAbstractOptionSelector::ItemPropertyChanged (RKComponentPropertyBase *pro
 			}
 			if (settable_opt >= 0) itemSelected (settable_opt);
 			else RK_DEBUG (PLUGIN, DL_ERROR, "No option left enabled. Disable the entire component '%s', instead!", qPrintable (getIdInParent ()));
+			// TODO: Error message below can also trigger, if items first get disabled, then others enabled. Delay it, instead.
 		}
 	}
 

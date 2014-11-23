@@ -51,7 +51,6 @@
 
 		<convert id="userow" mode="equals" sources="rowname.string" standard="rowcol" />
 		<convert id="customizerow" mode="equals" sources="rowname.string" standard="custoRow" />
-		<convert id="customizerow2" mode="and" sources="isrow.state;customizerow" standard="custoRow" />
 		<connect client="nomrow.enabled" governor="userow" />
 		<connect client="rownames.enabled" governor="customizerow" />
 
@@ -64,40 +63,42 @@
 		<tabbook>
 			<tab id="tab_general" label="General" >
 				<browser id="file" type="file" label="File name"/>
-				<row>
-					<saveobject id="name" initial="my.csv.data" label="Object to save to"/>
-					<checkbox id="doedit" value="1" value_unchecked="0" label="Edit Object" checked="true" />
-				</row>
-				<row>
-					<column>
-						<radio id="quick" label="Quick mode" >
-							<option value="table" label="None" checked="true"/>
-							<option value="csv" label="CSV" />
-							<option value="csv2" label="CSV2" />
-							<option value="delim" label="TAB" />
-							<option value="delim2" label="TAB2" />
-						</radio>
-					</column>
-					<column>
-						<checkbox id="header" value="TRUE" value_unchecked="FALSE" checked="false" label="Column names in first row"/>
-						<radio id="dec" label="Decimal point character" >
-							<option id="decPeriod" value="'.'" label="'.' (Period)" />
-							<option id="decComma" value="','" label="',' (Comma)" />
-							<option id="decOther" value="other" label="Other (specify below)" />
-						</radio>
-						<input id="custom_dec" label="Specify decimal point character" required="true"/>
-					</column>
-					<column>
-						<radio id="sep" label="Field separator character" >
-							<option id="sepTab" value="'\t'" label="Tab" />
-							<option id="sepSemiC" value="';'" label="';' (Semicolon)" />
-							<option id="sepComma" value="','" label="',' (Comma)" />
-							<option id="sepSpace" value="' '" label="Space" />
-							<option id="sepOther" value="other" label="Other (specify below)" />
-						</radio>
-						<input id="custom_sep" label="Specify field separator character" required="true"/>
-					</column>
-				</row>
+				<dropdown id="quick" label="Data format" >
+					<option value="csv" label="Comma separated values (CSV)" checked="true" />
+					<option value="csv2" label="Semicolo separated values, comma as decimal separator (CSV2)" />
+					<option value="delim" label="Tab separated values (TAB)" />
+					<option value="delim2" label="Tab separated values, comma as decimal separator (TAB2)" />
+					<option value="table" label="Custom"/>
+				</dropdown>
+				<frame>
+					<row>
+						<column>
+							<checkbox id="header" value="TRUE" value_unchecked="FALSE" checked="false" label="Column names in first row"/>
+							<radio id="dec" label="Decimal point character" >
+								<option id="decPeriod" value="'.'" label="'.' (Period)" />
+								<option id="decComma" value="','" label="',' (Comma)" />
+								<option id="decOther" value="other" label="Other (specify below)" />
+							</radio>
+							<input id="custom_dec" label="Specify decimal point character" required="true"/>
+						</column>
+						<column>
+							<radio id="sep" label="Field separator character" >
+								<option id="sepTab" value="'\t'" label="Tab" />
+								<option id="sepSemiC" value="';'" label="';' (Semicolon)" />
+								<option id="sepComma" value="','" label="',' (Comma)" />
+								<option id="sepSpace" value="' '" label="Space" />
+								<option id="sepOther" value="other" label="Other (specify below)" />
+							</radio>
+							<input id="custom_sep" label="Specify field separator character" required="true"/>
+						</column>
+					</row>
+				</frame>
+				<frame>
+					<row>
+						<saveobject id="name" initial="my.csv.data" label="Object to save to"/>
+						<checkbox id="doedit" value="1" value_unchecked="0" label="Edit Object" checked="true" />
+					</row>
+				</frame>
 			</tab>
 			<tab id="tab_rows" label="Rows and Columns" >
 				<row>

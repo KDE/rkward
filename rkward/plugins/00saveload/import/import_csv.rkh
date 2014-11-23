@@ -11,13 +11,14 @@ Choose the CSV file to import. An R object containing the data will be created. 
 	<settings>
 		<caption id="tab_general"/>
 		<setting id="file">The filename of the file to import</setting>
-		<setting id="name">The name of an R object to store the imported data in. If you choose an existing symbol name, you will be prompted, whether to overwrite this object.</setting>
-		<setting id="doedit">Whether the object should be opened for editing after it was imported</setting>
+		<setting id="quick">Select from one of the predefined (most common formats), or select "custom", to specify field separator and decimal separtor, below.</setting>
 		<setting id="header">Whether the first row of the file contains should be interpreted as column names</setting>
 		<setting id="dec">Decimal character used in the imported file</setting>
 		<setting id="custom_dec">If you selected "other" above, specify the character, here.</setting>
 		<setting id="sep">The separator character used in the imported file</setting>
 		<setting id="custom_sep">If you selected "other" above, specify the character, here.</setting>
+		<setting id="name">The name of an R object to store the imported data in. If you choose an existing symbol name, you will be prompted, whether to overwrite this object.</setting>
+		<setting id="doedit">Whether the object should be opened for editing after it was imported</setting>
 
 		<caption id="tab_rows"/>
 		<setting id="rowname">How to determine row names? Either the rows can be numbered 1...n. Or you can specify a single column containing the row names (typically the first). Or you can provide a character vector of names.</setting>
