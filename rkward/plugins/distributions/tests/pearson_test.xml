@@ -18,7 +18,7 @@
 				</row>
 			</tab>
 			<tab label="Options">
-				<radio id="adjust" label="p-value from chi^2-distribution from:">
+				<radio id="adjust" label="p-value from chi^2-distribution from">
 					<option value="adjust = TRUE" label="n.classes-3 degrees of freedom" />
 					<option value="adjust = FALSE" label="n.classes-1 degrees of freedom" />
 				</radio>
