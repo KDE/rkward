@@ -7,12 +7,17 @@
 
 <refentry lang="&language;">
 <refentryinfo>
+<title>KDE User's Manual</title>
+<author>
 <firstname>Thomas</firstname>
 <surname>Friedrichsmeier</surname>
+<contrib>RKWard man page.</contrib>
 <affiliation>
 <address><email>rkward-devel@lists.sourceforge.net</email></address>
 </affiliation>
+</author>
 <date>2014-11-16</date>
+<productname>K Desktop Environment</productname>
 </refentryinfo>
 
 <refmeta>
@@ -66,7 +71,7 @@
 <varlistentry>
 <term><option>--debugger</option> <replaceable>command</replaceable> [<replaceable>arguments</replaceable> [<replaceable>--</replaceable>]]</term>
 <listitem><para>Run &rkward; through the specified debugger command. All arguments following this will be passed to the debugger command. To end debugger arguments (and add arguments to pass to &rkward;), use "--". <emphasis>NOTE:</emphasis> Only the frontend process will be debugged, using this option.</para>
-<para>Note that there are a number of pitfalls that may complicate setting up the debugger session as desired. Consider starting &rkward; with option \-\-debug-lebel 3, which will print the effective command line used to start the frontend (but not all relevant environment variables). As one hint, you will generally need to pass a separator arugment with the debugger arguments, e.g. <command>rkward --debugger gdb --args</command>.
+<para>Note that there are a number of pitfalls that may complicate setting up the debugger session as desired. Consider starting &rkward; with option \-\-debug-lebel 3, which will print the effective command line used to start the frontend (but not all relevant environment variables). As one hint, you will generally need to pass a separator argument with the debugger arguments, e.g. <command>rkward --debugger gdb --args</command>.
 Under Windows, the debugger command will <emphasis>not</emphasis> be connected to stdin. For interactive debugging, consider using a graphical debugger.</para></listitem>
 </varlistentry>
 <varlistentry>
