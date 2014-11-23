@@ -34,6 +34,10 @@
 #' @param default Character string, only for external columns: The value to assume for this column, if no value is known for an entry. Rarely useful.
 #' @param id.name Character string, a unique ID for this plugin element.
 #'    If \code{"auto"}, an ID will be generated automatically from the \code{connect} object.
+#' @param i18n Either a character string or a named list with the optional element \code{context},
+#'    to give some \code{i18n_context}
+#'    information for this node. If set to \code{FALSE}, the attribute \code{label} will be renamed into 
+#'    \code{noi18n_label}.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
@@ -43,7 +47,7 @@
 #' @examples
 #' myInput <- rk.XML.input(label="Given name(s)", size="small")
 #' myOptCol <- rk.XML.optioncolumn(myInput, modifier="text")
-rk.XML.optioncolumn <- function(connect, modifier=NULL, label=TRUE, external=FALSE, default=NULL, id.name="auto"){
+rk.XML.optioncolumn <- function(connect, modifier=NULL, label=TRUE, external=FALSE, default=NULL, id.name="auto", i18n=NULL){
 
   connect.id <- check.ID(connect)
   if(is.XiMpLe.node(connect) && !is.null(modifier)){
@@ -81,6 +85,9 @@ rk.XML.optioncolumn <- function(connect, modifier=NULL, label=TRUE, external=FAL
   if(!is.null(default)){
     attr.list[["default"]] <- default
   } else {}
+
+  # check for additional i18n info; if FALSE, "label" will be renamed to "noi18n_label"
+  attr.list <- check.i18n(i18n=i18n, attrs=attr.list)
 
   node <- XMLNode("optioncolumn",
     attrs=attr.list)

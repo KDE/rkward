@@ -29,6 +29,9 @@
 #'      \item{\code{"RK"}}{\code{href} is assumend to be the ID of another RKWard plugin, i.e.,
 #'        the link generated will look like \code{rkward://component/<href>}.}
 #'    }
+#' @param i18n Either a character string or a named list with the optional element \code{context},
+#'    to give some \code{i18n_context}
+#'    information for this node.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
@@ -38,7 +41,7 @@
 #' package.link <- rk.rkh.link("Spice")
 #' cat(pasteXML(package.link))
 
-rk.rkh.link <- function(href, text=NULL, type="R"){
+rk.rkh.link <- function(href, text=NULL, type="R", i18n=NULL){
   if(identical(type, "url")){
     text <- ifelse(is.null(text), href, text)
     link <- href
@@ -54,7 +57,12 @@ rk.rkh.link <- function(href, text=NULL, type="R"){
     text <- character()
   } else {}
 
-  node <- XMLNode(name="link", text, attrs=list(href=link))
+  attr.list <- list(href=link)
+  
+  # check for additional i18n info
+  attr.list <- check.i18n(i18n=i18n, attrs=attr.list)
+
+  node <- XMLNode(name="link", text, attrs=attr.list)
 
   return(node)
 }

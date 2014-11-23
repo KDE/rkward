@@ -51,6 +51,10 @@
 #' @param component Character string, name of the component this node belongs to. Only needed if you
 #'    want to use the scan features for automatic help file generation; needs \code{help} to be set
 #'    accordingly, too!
+#' @param i18n Either a character string or a named list with the optional element \code{context},
+#'    to give some \code{i18n_context}
+#'    information for this node. If set to \code{FALSE}, the attribute \code{label} will be renamed into 
+#'    \code{noi18n_label}.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
@@ -65,7 +69,7 @@
 #' }
 
 rk.XML.varslot <- function(label, source, property=NULL, required=FALSE, multi=FALSE, duplicates=FALSE, min=1, any=1, max=0,
-  dim=0, min.len=0, max.len=NULL, classes=NULL, types=NULL, id.name="auto", help=NULL, component=rk.get.comp()){
+  dim=0, min.len=0, max.len=NULL, classes=NULL, types=NULL, id.name="auto", help=NULL, component=rk.get.comp(), i18n=NULL){
   if(identical(id.name, "auto")){
     var.slot.attr <- list(id=auto.ids(label, prefix=ID.prefix("varslot", length=4)))
   } else if(!is.null(id.name)){
@@ -129,6 +133,9 @@ rk.XML.varslot <- function(label, source, property=NULL, required=FALSE, multi=F
   if(!is.null(max.len)){
     var.slot.attr[["max_length"]] <- max.len
   } else {}
+
+  # check for additional i18n info; if FALSE, "label" will be renamed to "noi18n_label"
+  var.slot.attr <- check.i18n(i18n=i18n, attrs=var.slot.attr)
 
   v.slot <- XMLNode("varslot", attrs=var.slot.attr)
 

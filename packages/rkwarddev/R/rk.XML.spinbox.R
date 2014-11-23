@@ -33,6 +33,10 @@
 #' @param component Character string, name of the component this node belongs to. Only needed if you
 #'    want to use the scan features for automatic help file generation; needs \code{help} to be set
 #'    accordingly, too!
+#' @param i18n Either a character string or a named list with the optional element \code{context},
+#'    to give some \code{i18n_context}
+#'    information for this node. If set to \code{FALSE}, the attribute \code{label} will be renamed into 
+#'    \code{noi18n_label}.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
@@ -42,7 +46,7 @@
 
 
 rk.XML.spinbox <- function(label, min=NULL, max=NULL, initial=0, real=TRUE, precision=2, max.precision=8, id.name="auto",
-  help=NULL, component=rk.get.comp()){
+  help=NULL, component=rk.get.comp(), i18n=NULL){
   attr.list <- list(label=label)
 
   if(identical(id.name, "auto")){
@@ -74,6 +78,9 @@ rk.XML.spinbox <- function(label, min=NULL, max=NULL, initial=0, real=TRUE, prec
     check.type(max.precision, "numeric", "max.precision")
     attr.list[["max.precision"]] <- as.numeric(max.precision)
   } else {}
+
+  # check for additional i18n info; if FALSE, "label" will be renamed to "noi18n_label"
+  attr.list <- check.i18n(i18n=i18n, attrs=attr.list)
 
   node <- XMLNode("spinbox", attrs=attr.list)
 

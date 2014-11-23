@@ -1,4 +1,4 @@
-# Copyright 2010-2014 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2014 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package rkwarddev.
 #
@@ -16,30 +16,18 @@
 # along with rkwarddev.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#' Create XML "technical" node for RKWard help pages
+#' Create i18n comment for RKWard plugin code
+#'
+#' This function is similar to rk.comment, but preceds the \code{text} with the
+#' keyword \code{"i18n:"} to give context to translators.
 #'
 #' @param text Character string, the text to be displayed.
-#' @param i18n Either a character string or a named list with the optional element \code{context},
-#'    to give some \code{i18n_context}
-#'    information for this node.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
-#' @seealso
-#'    \code{\link[rkwarddev:rk.rkh.doc]{rk.rkh.doc}}
-#'    and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
-#' plugin.technical <- rk.rkh.technical("<b>TODO</b>: Implement sandworm detector.")
-#' cat(pasteXML(plugin.technical))
+#' test.comment <- rk.i18n.comment("Added this text.")
+#' cat(pasteXML(test.comment))
 
-rk.rkh.technical <- function(text=NULL, i18n=NULL){
-  if(is.null(text)){
-    text <- ""
-  } else {}
-
-  # check for additional i18n info
-  attr.list <- check.i18n(i18n=i18n, attrs=list())
-
-  node <- XMLNode("technical", text, attrs=attr.list)
-
-  return(node)
+rk.i18n.comment <- function(text, prefix="i18n:"){
+  return(XMLNode(name="!--", paste(prefix, text)))
 }

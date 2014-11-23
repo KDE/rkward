@@ -1,13 +1,15 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
-\section{Changes in rkwarddev version 0.06-6 (2014-11-09)}{
+\section{Changes in rkwarddev version 0.06-6 (2014-11-23)}{
   \subsection{fixed}{
     \itemize{
       \item \code{rk.XML.optionset()} does now allow to re-use objects defined in the same
         function call (i.e., refer to optioncolumns in the logic section)
       \item removed arguments \code{"help"} and \code{"component"} from \code{rk.XML.optionscolumn()} again,
         as these are already being documented via the objects they connect to.
+      \item \code{rk.build.plugin()} was still only using the "--no-vignettes" option from R < 3
+      \item \code{rk.XML.pluginmap()} malformed label argument names if they referred to standrad maneu entries
     }
   }
   \subsection{added}{
@@ -18,6 +20,14 @@
       \item \code{rk.XML.pluginmap()} now adds a \code{"po_id"} attribute to pluginmaps, necessary for i18n
       \item new attribute \code{"i18n"} added to several XML functions; it takes a list with the named arguments
         \code{"comment"} or \code{"context"} to either produce an i18n comment node or an \code{"i18n_context"} attribute
+      \item new function \code{rk.i18n.comment()} to give context for translators
+    }
+  }
+  \subsection{changed}{
+    \itemize{
+      \item function \code{i18n()} was changed to be used in JavaScript generation only; this breaks code
+        using the function introduced with 0.06-4, but that was to be shortlived from the start...
+        the i18n features of 0.06-4 will be completely replaced with some proper methods now
     }
   }
 }

@@ -35,6 +35,10 @@
 #' @param chk Logical, should be set \code{TRUE} in the one option which is checked by default.
 #' @param id.name Character string, a unique ID for this plugin element.
 #'    If \code{"auto"} and a label was provided, an ID will be generated automatically from the label.
+#' @param i18n Either a character string or a named list with the optional element \code{context},
+#'    to give some \code{i18n_context}
+#'    information for this node. If set to \code{FALSE}, the attribute \code{label} will be renamed into 
+#'    \code{noi18n_label}.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
@@ -47,7 +51,7 @@
 #' )
 #' cat(pasteXML(test.radio))
 
-rk.XML.option <- function(label, val=NULL, chk=FALSE, id.name=NULL){
+rk.XML.option <- function(label, val=NULL, chk=FALSE, id.name=NULL, i18n=NULL){
   attr.list <- list(label=label, value=val)
   if(isTRUE(chk)){
     attr.list[["checked"]] <- "true"
@@ -58,6 +62,9 @@ rk.XML.option <- function(label, val=NULL, chk=FALSE, id.name=NULL){
   } else {
     attr.list[["id"]] <- id.name
   }
+
+  # check for additional i18n info; if FALSE, "label" will be renamed to "noi18n_label"
+  attr.list <- check.i18n(i18n=i18n, attrs=attr.list)
 
   option <- XMLNode("option", attrs=attr.list)
 

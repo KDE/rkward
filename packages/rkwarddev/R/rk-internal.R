@@ -1278,7 +1278,7 @@ get.optionIDs <- function(){
 
 ## function rk.check.options()
 # - options: a list, containig either named vectors in the form of
-#       label=c(val=NULL, chk=FALSE)
+#       label=c(val=NULL, chk=FALSE, i18n=NULL)
 #     or an "option" node of class XiMpLe.node
 # - parent: the parent node type, e.g. "radio"
 rk.check.options <- function(options, parent){
@@ -1294,12 +1294,18 @@ rk.check.options <- function(options, parent){
         } else {
           checked <- FALSE
         }
+        if("i18n" %in% names(options[[this.num]])){
+          i18n <- isTRUE(as.logical(options[[this.num]][["i18n"]]))
+        } else {
+          i18n <- NULL
+        }
         return(
           rk.XML.option(
             label=names(options)[[this.num]],
             val=options[[this.num]][["val"]],
             chk=checked,
-            id.name=NULL
+            id.name=NULL,
+            i18n=i18n
           )
         )
       }
@@ -1350,8 +1356,9 @@ rk.register.options <- function(options, parent.node){
 ## function check.i18n()
 # checks for additional i18n info in XiMpLe nodes. returns either an appended or altered list of
 # attributes, or a XiMpLe node with an i18n comment
-# i18n: either a list with possible named elements "context" or "comment", or FALSE;
-#   if the latter, "label" will be renamed to "noi18n_label", "title" to "noi18n_title"
+# i18n: either a list with possible named elements "context" or "comment",
+#   or a charcter string (for wich it is assumed to describe a context),
+#   or FALSE; if the latter, "label" will be renamed to "noi18n_label", "title" to "noi18n_title"
 # attrs: a list of previously defined attributes
 # comment: if TRUE, returns a comment node, else a list of attributes
 check.i18n <- function(i18n=NULL, attrs=list(), comment=FALSE){
@@ -1369,21 +1376,21 @@ check.i18n <- function(i18n=NULL, attrs=list(), comment=FALSE){
       } else {}
       if(isTRUE(comment)){
         if("comment" %in% names(i18n)){
-          result <- XMLNode("!--", paste0("i18n: ", i18n[["comment"]]))
+          result <- rk.i18n.comment(i18n[["comment"]])
         } else {}
       } else {
         if("context" %in% names(i18n)){
           result[["i18n_context"]] <- i18n[["context"]]
         } else{}
       }
+    } else if(is.character(i18n) & length(i18n) == 1){
+      result[["i18n_context"]] <- i18n[[1]]
     } else if(is.logical(i18n) & !isTRUE(i18n)){
       if("label" %in% names(result)){
-        result[["noi18n_label"]] <- result[["label"]]
-        result[["label"]] <- NULL
+        names(result)[names(result) == "label"] <- "noi18n_label"
       } else {}
       if("title" %in% names(result)){
-        result[["noi18n_title"]] <- result[["title"]]
-        result[["title"]] <- NULL
+        names(result)[names(result) == "title"] <- "noi18n_title"
       } else {}
     } else {}
   }

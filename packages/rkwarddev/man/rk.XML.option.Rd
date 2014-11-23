@@ -3,7 +3,8 @@
 \alias{rk.XML.option}
 \title{Create XML node "option" for RKWard plugins}
 \usage{
-rk.XML.option(label, val = NULL, chk = FALSE, id.name = NULL)
+rk.XML.option(label, val = NULL, chk = FALSE, id.name = NULL,
+  i18n = NULL)
 }
 \arguments{
 \item{label}{Character string, a text label for this plugin element.}
@@ -16,6 +17,12 @@ rk.XML.option(label, val = NULL, chk = FALSE, id.name = NULL)
 \item{id.name}{Character string, a unique ID for this plugin element.
 If \code{"auto"} and a label was provided,
       an ID will be generated automatically from the label.}
+
+\item{i18n}{Either a character string or a named list with the optional element \code{context},
+to give some \code{i18n_context}
+information for this node. If set to \code{FALSE},
+      the attribute \code{label} will be renamed into
+\code{noi18n_label}.}
 }
 \value{
 An object of class \code{XiMpLe.node}.

@@ -3,7 +3,7 @@
 \alias{rk.XML.wizard}
 \title{Create XML wizard section for RKWard plugins}
 \usage{
-rk.XML.wizard(..., label = NULL, recommended = FALSE)
+rk.XML.wizard(..., label = NULL, recommended = FALSE, i18n = NULL)
 }
 \arguments{
 \item{...}{Objects of class \code{XiMpLe.node}}
@@ -13,6 +13,12 @@ rk.XML.wizard(..., label = NULL, recommended = FALSE)
 \item{recommended}{Logical,
       whether the wizard should be the recommended interface (unless the user has configured
 RKWard to default to a specific interface).}
+
+\item{i18n}{Either a character string or a named list with the optional element \code{context},
+to give some \code{i18n_context}
+information for this node. If set to \code{FALSE},
+      the attribute \code{label} will be renamed into
+\code{noi18n_label}.}
 }
 \value{
 An object of class \code{XiMpLe.node}.

@@ -3,7 +3,8 @@
 \alias{rk.XML.tabbook}
 \title{Create XML node "tabbook" for RKWard plugins}
 \usage{
-rk.XML.tabbook(label = NULL, tabs = list(), id.name = "auto")
+rk.XML.tabbook(label = NULL, tabs = list(), id.name = "auto",
+  i18n = NULL)
 }
 \arguments{
 \item{label}{Character string, a text label for this plugin element.}
@@ -14,6 +15,12 @@ You must provide one named element for each tab. Use \code{NULL} for tabs withou
 \item{id.name}{Character vector, unique IDs for the tabbook (first entry) and all tabs.
 If \code{"auto"}, IDs will be generated automatically from the labels.
 If \code{NULL}, no IDs will be given.}
+
+\item{i18n}{Either a character string or a named list with the optional element \code{context},
+to give some \code{i18n_context}
+information for this node. If set to \code{FALSE},
+      the attribute \code{label} will be renamed into
+\code{noi18n_label}.}
 }
 \value{
 An object of class \code{XiMpLe.node}.

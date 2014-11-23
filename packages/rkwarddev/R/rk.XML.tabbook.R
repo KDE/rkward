@@ -24,6 +24,10 @@
 #' @param id.name Character vector, unique IDs for the tabbook (first entry) and all tabs.
 #'    If \code{"auto"}, IDs will be generated automatically from the labels.
 #'    If \code{NULL}, no IDs will be given.
+#' @param i18n Either a character string or a named list with the optional element \code{context},
+#'    to give some \code{i18n_context}
+#'    information for this node. If set to \code{FALSE}, the attribute \code{label} will be renamed into 
+#'    \code{noi18n_label}.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
@@ -40,7 +44,7 @@
 #'   tabs=list("First Tab"=test.checkboxes, "Second Tab"=test.dropdown))
 #' cat(pasteXML(test.tabbook))
 
-rk.XML.tabbook <- function(label=NULL, tabs=list(), id.name="auto"){
+rk.XML.tabbook <- function(label=NULL, tabs=list(), id.name="auto", i18n=NULL){
   tab.labels <- names(tabs)
   num.tabs <- length(tabs)
 
@@ -89,6 +93,9 @@ rk.XML.tabbook <- function(label=NULL, tabs=list(), id.name="auto"){
   if(!is.null(label)){
     tbk.attr.list[["label"]] <- label
   } else {}
+
+  # check for additional i18n info; if FALSE, "label" will be renamed to "noi18n_label"
+  tbk.attr.list <- check.i18n(i18n=i18n, attrs=tbk.attr.list)
 
   tabbook <- XMLNode("tabbook",
       attrs=tbk.attr.list,

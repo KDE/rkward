@@ -28,6 +28,7 @@
 #' @include 00_class_04_rk.JS.opt.R
 #' @include 00_class_05_rk.JS.oset.R
 #' @include echo.R
+#' @include i18n.R
 #' @exportMethod show
 #' @rdname show-methods
 setGeneric("show")
@@ -59,5 +60,10 @@ setMethod("show", signature(object="rk.JS.var"), function(object){
 
 #' @rdname show-methods
 setMethod("show", signature(object="rk.JS.echo"), function(object){
+  cat(rk.paste.JS(object))
+})
+
+#' @rdname show-methods
+setMethod("show", signature(object="rk.JS.i18n"), function(object){
   cat(rk.paste.JS(object))
 })

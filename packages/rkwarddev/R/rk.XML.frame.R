@@ -26,6 +26,10 @@
 #'    If \code{"auto"} and a label was provided, an ID will be generated automatically from the label
 #'    if presen, otherwise from the objects in the frame.
 #'    If \code{NULL}, no ID will be given.
+#' @param i18n Either a character string or a named list with the optional element \code{context},
+#'    to give some \code{i18n_context}
+#'    information for this node. If set to \code{FALSE}, the attribute \code{label} will be renamed into 
+#'    \code{noi18n_label}.
 #' @return An object of class \code{XiMpLe.node}.
 #' @seealso
 #'    \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
@@ -36,7 +40,7 @@
 #'   "Second Option"=c(val="val2", chk=TRUE)))
 #' cat(pasteXML(rk.XML.frame(test.dropdown, label="Some options")))
 
-rk.XML.frame <- function(..., label=NULL, checkable=FALSE, chk=TRUE, id.name="auto"){
+rk.XML.frame <- function(..., label=NULL, checkable=FALSE, chk=TRUE, id.name="auto", i18n=NULL){
   nodes <- list(...)
 
   if(!is.null(label)){
@@ -62,6 +66,9 @@ rk.XML.frame <- function(..., label=NULL, checkable=FALSE, chk=TRUE, id.name="au
   } else if(!is.null(id.name)){
     attr.list[["id"]] <- id.name
   } else {}
+
+  # check for additional i18n info; if FALSE, "label" will be renamed to "noi18n_label"
+  attr.list <- check.i18n(i18n=i18n, attrs=attr.list)
 
   frame <- XMLNode("frame",
       attrs=attr.list,

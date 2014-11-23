@@ -16,43 +16,81 @@
 # along with rkwarddev.  If not, see <http://www.gnu.org/licenses/>.
 
 
-#' Translate parts of a plugin
+#' Mark JavaScript strings as translatable
 #' 
-#' Takes a list of entries named after abbreviated languages, and returns
-#' either the one matching the language set with \code{\link[rkwarddev:rk.set.language]{rk.set.language}},
-#' or the first entry if no language was set at all or the set language cannot be found in
-#' \code{...}.
+#' Similar to \code{\link[rkwarddev:echo]{echo}}, this function should help you to write
+#' your JavaScript portions in R. Depending on the provided values for its arguments,
+#' will return one of \code{i18n()}, \code{i18nc()}, \code{i18np()}, or \code{i18ncp()}.
 #' 
-#' If used in an \code{rkwarddev} script, this can be used to toggle the generation of plugins
-#' in a certain language.
-#' 
-#' @param ... Comma separated, named elements, see description.
-#' @param lang Character string, the language to return.
+#' @param msgid Character string, the message to be translated (if applicable, its singular form).
+#' @param ... Either character string wich will be pasted unquoted to be used in conjunctions with
+#'    placeholders in msgid, or XiMpLe.node objects of which the JavaScript variable name will be
+#'    used.
+#' @param context Character string, optional context information for this string.
+#' @param plural Character string for plural form of \code{msgid}, must at least include one
+#'    placeholder, and the first one has to represent an integer value in the dialog.
+#' @param newline Character string, can be set to e.g. \code{"\n"} to force a newline after the call.
 #' @export
 #' @examples
-#' rk.set.language("en", c("en_EN", "en_US"))
-#' (var.select <- rk.XML.varselector(label=i18n(en="Select data", de="Wähle Daten")))
-#' 
-#' # now try the same with the alternate language
-#' rk.set.language("de", "de_DE")
-#' (var.select <- rk.XML.varselector(label=i18n(en="Select data", de="Wähle Daten")))
+#' i18n("Select data")
+#' i18n("Comparing a single pair", "n_pairs", plural="Comparing %1 distinct pairs")
 
-i18n <- function(..., lang=rk.get.language()){
-  obj <- list(...)
-  # check if any language is set at all
-  if(is.null(lang)){
-    # if not, simply return the first entry as the default
-    warning("i18n() was called, but no language is set, using default values!")
-    return(obj[[1]])
-  } else {
-    # there is a language set, but is there also a translation
-    # given for that language?
-    if(lang %in% names(obj)){
-      return(obj[[lang]])
-    } else {
-      # if not, again fall back to the first entry as default
-      warning(paste("i18n() was called, but no translation into", dQuote(lang), "was found, using default values!"))
-      return(obj[[1]])
-    }
-  }
+i18n <- function(msgid, ..., context=NULL, plural=NULL, newline=""){
+  placeholders <- list(...)
+  pluralQuoted <- placeholderString <- NULL
+  JSfunction <- "i18n"
+
+  if(!is.null(context)){
+    JSfunction <- paste0(JSfunction, "c")
+    context <- paste0(qp(context), ", ")
+  } else {}
+  if(!is.null(plural)){
+    JSfunction <- paste0(JSfunction, "p")
+    pluralQuoted <- paste0(", ", qp(plural))
+  } else {}
+ 
+  if(length(placeholders) > 0){
+    # do some sanitiy checks here -- is there a placeholder in the strings for each dots value?
+    # grep valid placeholders out of the messages
+    msgSplit <- unique(unlist(strsplit(paste(msgid, plural), "[[:space:]]+")))
+    msgPlHd <- msgSplit[grep("%[[:digit:]]", msgSplit)]
+    # which placeholders are needed?
+    plHdNeeded <- paste0("%", 1:length(placeholders))
+    missingPlHd <- plHdNeeded[!plHdNeeded %in% msgPlHd]
+    missingVals <- msgPlHd[!msgPlHd %in% plHdNeeded]
+    if(length(missingPlHd) > 0){
+      stop(simpleError(paste0("i18n: some placeholders in this string are missing: ", paste0(missingPlHd, collapse=", "), "!")))
+    } else {}
+    if(length(missingVals) > 0){
+      stop(simpleError(paste0("i18n: some placeholders in this string do not have a corresponding value: ", paste0(missingVals, collapse=", "), "!")))
+    } else {}
+    placeholderString <- paste0(", ", paste0(sapply(placeholders, function(ph){id(ph, js=TRUE)}), collapse=", "))
+  } else {}
+  
+  result <- new("rk.JS.i18n",
+    value=paste0(
+      JSfunction, "(",
+      context,
+      qp(msgid),
+      pluralQuoted,
+      placeholderString,
+      ")",
+      newline
+    )
+  )
+
+  return(result)
 }
+
+## internal class rk.JS.i18n
+# this is a quick fix to be able to include i18n() calls inside echo()
+setClass("rk.JS.i18n",
+  representation=representation(
+    value="character",
+    end="character"
+  ),
+  prototype(
+    value=character(),
+    end=";"
+  )
+)

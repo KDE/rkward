@@ -3,8 +3,9 @@
 \alias{rk.XML.dropdown}
 \title{Create XML node "dropdown" for RKWard plugins}
 \usage{
-rk.XML.dropdown(label, options = list(label = c(val = "", chk = FALSE)),
-  id.name = "auto", help = NULL, component = rk.get.comp())
+rk.XML.dropdown(label, options = list(label = c(val = "", chk = FALSE, i18n =
+  NULL)), id.name = "auto", help = NULL, component = rk.get.comp(),
+  i18n = NULL)
 }
 \arguments{
 \item{label}{Character string, a text label for this plugin element.}
@@ -12,8 +13,9 @@ rk.XML.dropdown(label, options = list(label = c(val = "", chk = FALSE)),
 \item{options}{A named list with options to choose from. The names of the list elements will become
 labels of the options, \code{val} defines the value to submit if the option is checked,
       and
-\code{chk=TRUE} should be set in the one option which is checked by default. Objects generated with
-\code{\link[rkwarddev:rk.XML.option]{rk.XML.option}} are accepted as well.}
+\code{chk=TRUE} should be set in the one option which is checked by default. You might also provide an \code{i18n}
+for this particular option (see \code{i18n}). Objects generated with \code{\link[rkwarddev:rk.XML.option]{rk.XML.option}}
+are accepted as well.}
 
 \item{id.name}{Character string, a unique ID for this plugin element.
 If \code{"auto"} and a label was provided,
@@ -29,6 +31,12 @@ Also needs \code{component} to be set accordingly!}
       name of the component this node belongs to. Only needed if you
 want to use the scan features for automatic help file generation; needs \code{help} to be set
 accordingly, too!}
+
+\item{i18n}{Either a character string or a named list with the optional element \code{context},
+to give some \code{i18n_context}
+information for this node. If set to \code{FALSE},
+      the attribute \code{label} will be renamed into
+\code{noi18n_label}.}
 }
 \value{
 An object of class \code{XiMpLe.node}.

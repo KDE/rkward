@@ -3,13 +3,19 @@
 \alias{rk.XML.varselector}
 \title{Create node "varselector" for RKWard plugins}
 \usage{
-rk.XML.varselector(label = NULL, id.name = "auto")
+rk.XML.varselector(label = NULL, id.name = "auto", i18n = NULL)
 }
 \arguments{
 \item{label}{Character string, a text label for the variable selection slot.
 Must be set if \code{id.name="auto"}.}
 
 \item{id.name}{Character vector, unique ID for this element.}
+
+\item{i18n}{Either a character string or a named list with the optional element \code{context},
+to give some \code{i18n_context}
+information for this node. If set to \code{FALSE},
+      the attribute \code{label} will be renamed into
+\code{noi18n_label}.}
 }
 \value{
 An object of class \code{XiMpLe.node}.

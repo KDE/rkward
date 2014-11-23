@@ -5,7 +5,7 @@
 \usage{
 rk.XML.browser(label, type = "file", initial = NULL, urls = FALSE,
   filter = NULL, required = TRUE, id.name = "auto", help = NULL,
-  component = rk.get.comp())
+  component = rk.get.comp(), i18n = NULL)
 }
 \arguments{
 \item{label}{Character string, a text label for this plugin element.}
@@ -38,6 +38,12 @@ Also needs \code{component} to be set accordingly!}
       name of the component this node belongs to. Only needed if you
 want to use the scan features for automatic help file generation; needs \code{help} to be set
 accordingly, too!}
+
+\item{i18n}{Either a character string or a named list with the optional element \code{context},
+to give some \code{i18n_context}
+information for this node. If set to \code{FALSE},
+      the attribute \code{label} will be renamed into
+\code{noi18n_label}.}
 }
 \value{
 An object of class \code{XiMpLe.node}.

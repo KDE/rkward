@@ -27,6 +27,10 @@
 #' @param label Character string, a text label for this plugin element.
 #' @param recommended Logical, whether the wizard should be the recommended interface (unless the user has configured
 #'    RKWard to default to a specific interface).
+#' @param i18n Either a character string or a named list with the optional element \code{context},
+#'    to give some \code{i18n_context}
+#'    information for this node. If set to \code{FALSE}, the attribute \code{label} will be renamed into 
+#'    \code{noi18n_label}.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
@@ -42,7 +46,7 @@
 #' test.wizard <- rk.XML.wizard(rk.XML.page(list(test.text, test.copy)))
 #' cat(pasteXML(test.wizard))
 
-rk.XML.wizard <- function(..., label=NULL, recommended=FALSE){
+rk.XML.wizard <- function(..., label=NULL, recommended=FALSE, i18n=NULL){
   nodes <- list(...)
 
   # check the node names and allow only valid ones
@@ -58,6 +62,9 @@ rk.XML.wizard <- function(..., label=NULL, recommended=FALSE){
     attr.list[["recommended"]] <- "true"
   } else {}
   
+  # check for additional i18n info; if FALSE, "label" will be renamed to "noi18n_label"
+  attr.list <- check.i18n(i18n=i18n, attrs=attr.list)
+
   node <- XMLNode("wizard",
       attrs=attr.list,
       .children=child.list(nodes, empty=FALSE)

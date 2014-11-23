@@ -23,6 +23,10 @@
 #' @param id.name Character string, a unique ID for this plugin element.
 #'    If \code{"auto"}, an ID will be generated automatically from \code{text}.
 #'    If \code{NULL}, no ID will be given.
+#' @param i18n Either a character string or a named list with the optional element \code{context},
+#'    to give some \code{i18n_context}
+#'    information for this node. If set to \code{FALSE}, the attribute \code{label} will be renamed into 
+#'    \code{noi18n_label}.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
@@ -31,7 +35,7 @@
 #' test.text <- rk.XML.text("Added this text.")
 #' cat(pasteXML(test.text))
 
-rk.XML.text <- function(text, type="normal", id.name="auto"){
+rk.XML.text <- function(text, type="normal", id.name="auto", i18n=NULL){
   if(identical(id.name, "auto")){
     # try autogenerating some id
     attr.list <- list(id=auto.ids(text, prefix=ID.prefix("text")))
@@ -45,6 +49,9 @@ rk.XML.text <- function(text, type="normal", id.name="auto"){
     attr.list[["type"]] <- type
   } else {}
 
+  # check for additional i18n info; if FALSE, "label" will be renamed to "noi18n_label"
+  attr.list <- check.i18n(i18n=i18n, attrs=attr.list)
+
   # preserve markup in the text
   if(grepl("<(.*)>", text)){
     textAsTree <- parseXMLTree(text, object=TRUE)
@@ -56,7 +63,6 @@ rk.XML.text <- function(text, type="normal", id.name="auto"){
         text,
         attrs=attr.list)
   }
-
 
   return(node)
 }

@@ -83,6 +83,10 @@ id <- function(..., quote=FALSE, collapse="", js=TRUE){
       } else if(inherits(this.part, "rk.JS.echo")){
         node.id <- slot(this.part, "value")
         return(node.id)
+      } else if(inherits(this.part, "rk.JS.i18n")){
+        # strip all semicolons from i18n calls
+        node.id <- slot(this.part, "value")
+        return(node.id)
       } else {
         if(isTRUE(quote)){
           text.part <- deparse(this.part)

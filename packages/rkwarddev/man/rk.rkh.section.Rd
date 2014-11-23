@@ -3,7 +3,8 @@
 \alias{rk.rkh.section}
 \title{Create XML "section" node for RKWard help pages}
 \usage{
-rk.rkh.section(title, text = NULL, short = NULL, id.name = "auto")
+rk.rkh.section(title, text = NULL, short = NULL, id.name = "auto",
+  i18n = NULL)
 }
 \arguments{
 \item{title}{Character string, title to be displayed.}
@@ -14,6 +15,12 @@ rk.rkh.section(title, text = NULL, short = NULL, id.name = "auto")
 
 \item{id.name}{Character string, a unique ID for this element.
 If \code{"auto"}, an ID will be generated automatically from the \code{title} value.}
+
+\item{i18n}{Either a character string or a named list with the optional element \code{context},
+to give some \code{i18n_context}
+information for this node. If set to \code{FALSE},
+      the attribute \code{title} will be renamed into
+\code{noi18n_title}.}
 }
 \value{
 An object of class \code{XiMpLe.node}.

@@ -19,6 +19,9 @@
 #' Create XML "title" node for RKWard help pages
 #'
 #' @param text Character string, the text to be displayed.
+#' @param i18n Either a character string or a named list with the optional element \code{context},
+#'    to give some \code{i18n_context}
+#'    information for this node.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
@@ -28,12 +31,15 @@
 #' plugin.title <- rk.rkh.title("Spice")
 #' cat(pasteXML(plugin.title))
 
-rk.rkh.title <- function(text=NULL){
+rk.rkh.title <- function(text=NULL, i18n=NULL){
   if(is.null(text)){
     text <- ""
   } else {}
 
-  node <- XMLNode("title", text)
+  # check for additional i18n info
+  attr.list <- check.i18n(i18n=i18n, attrs=list())
+
+  node <- XMLNode("title", text, attrs=attr.list)
 
   return(node)
 }

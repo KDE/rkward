@@ -3,7 +3,7 @@
 \alias{rk.rkh.link}
 \title{Create XML "link" node for RKWard help pages}
 \usage{
-rk.rkh.link(href, text = NULL, type = "R")
+rk.rkh.link(href, text = NULL, type = "R", i18n = NULL)
 }
 \arguments{
 \item{href}{Character string, either the URL to link to, name of an R package or ID of
@@ -19,6 +19,10 @@ another plugin (see \code{type}).}
   \item{\code{"RK"}}{\code{href} is assumend to be the ID of another RKWard plugin, i.e.,
     the link generated will look like \code{rkward://component/<href>}.}
 }}
+
+\item{i18n}{Either a character string or a named list with the optional element \code{context},
+to give some \code{i18n_context}
+information for this node.}
 }
 \value{
 An object of class \code{XiMpLe.node}.

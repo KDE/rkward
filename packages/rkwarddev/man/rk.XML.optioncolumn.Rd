@@ -4,7 +4,7 @@
 \title{Create XML node "optioncolumn" for RKWard plugins}
 \usage{
 rk.XML.optioncolumn(connect, modifier = NULL, label = TRUE,
-  external = FALSE, default = NULL, id.name = "auto")
+  external = FALSE, default = NULL, id.name = "auto", i18n = NULL)
 }
 \arguments{
 \item{connect}{Either a character string (the \code{id} of the property to connect this optioncolumn to),
@@ -31,6 +31,12 @@ If set to \code{TRUE} and you provide a XiMpLe node object to \code{connect},
 
 \item{id.name}{Character string, a unique ID for this plugin element.
 If \code{"auto"}, an ID will be generated automatically from the \code{connect} object.}
+
+\item{i18n}{Either a character string or a named list with the optional element \code{context},
+to give some \code{i18n_context}
+information for this node. If set to \code{FALSE},
+      the attribute \code{label} will be renamed into
+\code{noi18n_label}.}
 }
 \value{
 An object of class \code{XiMpLe.node}.

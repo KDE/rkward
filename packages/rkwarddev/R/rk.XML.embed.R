@@ -23,6 +23,10 @@
 #' @param label A character string, text label for the button (only used if \code{button=TRUE}).
 #' @param id.name Character string, a unique ID for this plugin element.
 #'    If \code{"auto"}, an ID will be generated automatically from the label and component strings.
+#' @param i18n Either a character string or a named list with the optional element \code{context},
+#'    to give some \code{i18n_context}
+#'    information for this node. If set to \code{FALSE}, the attribute \code{label} will be renamed into 
+#'    \code{noi18n_label}.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
@@ -30,7 +34,7 @@
 #' test.embed <- rk.XML.embed("someComponent")
 #' cat(pasteXML(test.embed))
 
-rk.XML.embed <- function(component, button=FALSE, label="Options", id.name="auto"){
+rk.XML.embed <- function(component, button=FALSE, label="Options", id.name="auto", i18n=NULL){
   attr.list <- list(component=component)
 
   if(isTRUE(button)){
@@ -46,6 +50,9 @@ rk.XML.embed <- function(component, button=FALSE, label="Options", id.name="auto
   } else {
     attr.list[["id"]] <- id.name
   }
+
+  # check for additional i18n info; if FALSE, "label" will be renamed to "noi18n_label"
+  attr.list <- check.i18n(i18n=i18n, attrs=attr.list)
 
   node <- XMLNode("embed", attrs=attr.list)
 

@@ -25,9 +25,9 @@
 #'    or an object of class \code{XiMpLe.node} (whose \code{id} will be extracted and used).
 #' @param value Character string, new value for the attribute.
 #' @param label Character string, label associated with the attribute.
-#' @param i18n A named list with the optional element \code{context}, to give some \code{i18n_context}
-#'    information for this node. If set to \code{FALSE}, the attribute \code{label} will be renamed into 
-#'    \code{noi18n_label}.
+#' @param i18n Either a character string or a named list with the optional element \code{context},
+#'    to give some \code{i18n_context} information for this node. If set to \code{FALSE},
+#'    the attribute \code{label} will be renamed into \code{noi18n_label}.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso

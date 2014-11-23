@@ -48,6 +48,8 @@
 #' @include 00_class_04_rk.JS.opt.R
 #' @include 00_class_05_rk.JS.oset.R
 #' @include 00_class_02_rk.JS.var.R
+#' @include echo.R
+#' @include i18n.R
 #' @seealso
 #'    \code{\link[rkwarddev:rk.JS.array]{rk.JS.array}},
 #'    \code{\link[rkwarddev:rk.JS.options]{rk.JS.options}},
@@ -82,6 +84,8 @@ rk.paste.JS <- function(..., level=2, indent.by="\t", funct=NULL, array=NULL,
         modifiers=modifiers, default=default, join=join, getter=getter)
     } else if(inherits(this.object, "rk.JS.echo")){
       result <- slot(this.object, "value")
+    } else if(inherits(this.object, "rk.JS.i18n")){
+      result <- paste0(slot(this.object, "value"), slot(this.object, "end"))
     } else if(is.XiMpLe.node(this.object)){
       if(identical(XMLName(this.object), "!--")){
         result <- paste0(indent(level, by=indent.by),

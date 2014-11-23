@@ -4,7 +4,7 @@
 \title{Create XML node "frame" for RKWard plugins}
 \usage{
 rk.XML.frame(..., label = NULL, checkable = FALSE, chk = TRUE,
-  id.name = "auto")
+  id.name = "auto", i18n = NULL)
 }
 \arguments{
 \item{...}{Objects of class \code{XiMpLe.node}.}
@@ -21,6 +21,12 @@ If \code{"auto"} and a label was provided,
       an ID will be generated automatically from the label
 if presen, otherwise from the objects in the frame.
 If \code{NULL}, no ID will be given.}
+
+\item{i18n}{Either a character string or a named list with the optional element \code{context},
+to give some \code{i18n_context}
+information for this node. If set to \code{FALSE},
+      the attribute \code{label} will be renamed into
+\code{noi18n_label}.}
 }
 \value{
 An object of class \code{XiMpLe.node}.

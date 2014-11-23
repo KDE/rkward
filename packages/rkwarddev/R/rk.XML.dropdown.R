@@ -21,8 +21,9 @@
 #' @param label Character string, a text label for this plugin element.
 #' @param options A named list with options to choose from. The names of the list elements will become
 #'    labels of the options, \code{val} defines the value to submit if the option is checked, and
-#'    \code{chk=TRUE} should be set in the one option which is checked by default. Objects generated with
-#'    \code{\link[rkwarddev:rk.XML.option]{rk.XML.option}} are accepted as well.
+#'    \code{chk=TRUE} should be set in the one option which is checked by default. You might also provide an \code{i18n}
+#'    for this particular option (see \code{i18n}). Objects generated with \code{\link[rkwarddev:rk.XML.option]{rk.XML.option}}
+#'    are accepted as well.
 #' @param id.name Character string, a unique ID for this plugin element.
 #'    If \code{"auto"} and a label was provided, an ID will be generated automatically from the label.
 #' @param help Character string or list of character values and XiMpLe nodes, will be used as the \code{text} value for a setting node in the .rkh file.
@@ -31,6 +32,10 @@
 #' @param component Character string, name of the component this node belongs to. Only needed if you
 #'    want to use the scan features for automatic help file generation; needs \code{help} to be set
 #'    accordingly, too!
+#' @param i18n Either a character string or a named list with the optional element \code{context},
+#'    to give some \code{i18n_context}
+#'    information for this node. If set to \code{FALSE}, the attribute \code{label} will be renamed into 
+#'    \code{noi18n_label}.
 #' @return An object of class \code{XiMpLe.node}.
 #' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @export
@@ -40,19 +45,23 @@
 #'   "Second Option"=c(val="val2", chk=TRUE)))
 #' cat(pasteXML(test.dropdown))
 
-rk.XML.dropdown <- function(label, options=list(label=c(val="", chk=FALSE)), id.name="auto", help=NULL, component=rk.get.comp()){
+rk.XML.dropdown <- function(label, options=list(label=c(val="", chk=FALSE, i18n=NULL)), id.name="auto",
+  help=NULL, component=rk.get.comp(), i18n=NULL){
   if(identical(id.name, "auto")){
     id <- auto.ids(label, prefix=ID.prefix("dropdown"))
   } else {
     id <- id.name
   }
-  drp.attr.list <- list(id=id, label=label)
+  attr.list <- list(id=id, label=label)
 
   # convert list elements into a list of XiMpLe nodes (if they aren't already)
   dd.options <- rk.check.options(options, parent="dropdown")
 
+  # check for additional i18n info; if FALSE, "label" will be renamed to "noi18n_label"
+  attr.list <- check.i18n(i18n=i18n, attrs=attr.list)
+
   dropdown <- XMLNode("dropdown",
-      attrs=drp.attr.list,
+      attrs=attr.list,
       .children=child.list(dd.options, empty=FALSE)
     )
 

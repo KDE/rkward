@@ -21,6 +21,10 @@
 #' @param label Character string, a text label for the variable selection slot.
 #'    Must be set if \code{id.name="auto"}.
 #' @param id.name Character vector, unique ID for this element.
+#' @param i18n Either a character string or a named list with the optional element \code{context},
+#'    to give some \code{i18n_context}
+#'    information for this node. If set to \code{FALSE}, the attribute \code{label} will be renamed into 
+#'    \code{noi18n_label}.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
@@ -31,7 +35,7 @@
 #' test.varselector <- rk.XML.varselector("Select some vars")
 #' cat(pasteXML(test.varselector))
 
-rk.XML.varselector <- function(label=NULL, id.name="auto"){
+rk.XML.varselector <- function(label=NULL, id.name="auto", i18n=NULL){
   if(identical(id.name, "auto")){
     ## if this ID generation get's changed, change it in rk.XML.vars(), too!
     attr.list <- list(id=auto.ids(label, prefix=ID.prefix("varselector", length=3)))
@@ -46,6 +50,9 @@ rk.XML.varselector <- function(label=NULL, id.name="auto"){
       stop(simpleError("If id.name=\"auto\", then 'label' must have a value!"))
     } else {}
   }
+
+  # check for additional i18n info; if FALSE, "label" will be renamed to "noi18n_label"
+  attr.list <- check.i18n(i18n=i18n, attrs=attr.list)
 
   node <- XMLNode("varselector", attrs=attr.list)
 

@@ -4,7 +4,7 @@
 \title{Create XML "component" node for RKWard plugins}
 \usage{
 rk.XML.component(label, file, id.name = "auto", type = "standard",
-  dependencies = NULL)
+  dependencies = NULL, i18n = NULL)
 }
 \arguments{
 \item{label}{Character string, a label for the component.}
@@ -20,6 +20,12 @@ just implemented for completeness.}
 
 \item{dependencies}{An object of class \code{XiMpLe.node} to define \code{<dependencies>} for this component.
 See \code{\link[XiMpLe:rk.XML.dependencies]{rk.XML.dependencies}} for details. Skipped if \code{NULL}.}
+
+\item{i18n}{Either a character string or a named list with the optional element \code{context},
+to give some \code{i18n_context}
+information for this node. If set to \code{FALSE},
+      the attribute \code{label} will be renamed into
+\code{noi18n_label}.}
 }
 \value{
 An object of class \code{XiMpLe.node}.

@@ -3,10 +3,14 @@
 \alias{rk.rkh.title}
 \title{Create XML "title" node for RKWard help pages}
 \usage{
-rk.rkh.title(text = NULL)
+rk.rkh.title(text = NULL, i18n = NULL)
 }
 \arguments{
 \item{text}{Character string, the text to be displayed.}
+
+\item{i18n}{Either a character string or a named list with the optional element \code{context},
+to give some \code{i18n_context}
+information for this node.}
 }
 \value{
 An object of class \code{XiMpLe.node}.
