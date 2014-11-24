@@ -64,7 +64,7 @@ rk.XML.cbox <- function(label, value="true", un.value=NULL, chk=FALSE, id.name="
   # check for additional i18n info; if FALSE, "label" will be renamed to "noi18n_label"
   attr.list <- check.i18n(i18n=i18n, attrs=attr.list)
 
-  checkbox <- XMLNode("checkbox", attrs=attr.list)
+  checkbox <- check.i18n(i18n=i18n, node=XMLNode("checkbox", attrs=attr.list), comment=TRUE)
 
   # check for .rkh content
   rk.set.rkh.prompter(component=component, id=id, help=help)
@@ -74,6 +74,6 @@ rk.XML.cbox <- function(label, value="true", un.value=NULL, chk=FALSE, id.name="
 
 ## wrapper for name scheme consistency
 #' @export
-rk.XML.checkbox <- function(label, value="true", un.value=NULL, chk=FALSE, id.name="auto", help=NULL, component=rk.get.comp()){
-  rk.XML.cbox(label=label, value=value, un.value=un.value, chk=chk, id.name=id.name, help=help, component=component)
+rk.XML.checkbox <- function(label, value="true", un.value=NULL, chk=FALSE, id.name="auto", help=NULL, component=rk.get.comp(), i18n=NULL){
+  rk.XML.cbox(label=label, value=value, un.value=un.value, chk=chk, id.name=id.name, help=help, component=component, i18n=i18n)
 }

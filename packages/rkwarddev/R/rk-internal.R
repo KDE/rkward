@@ -738,28 +738,28 @@ all.valid.children <- list(
   # 'as' is not a node, but an attribute of <copy>
   as=c("browser", "checkbox", "column", "copy",
     "dropdown", "formula", "frame", "input", "page", "radio", "row", "saveobject",
-    "spinbox", "stretch", "tabbook", "text", "valueselector", "valueslot", "varselector", "varslot"),
-  component=c("dependencies"),
-  components=c("component"),
+    "spinbox", "stretch", "tabbook", "text", "valueselector", "valueslot", "varselector", "varslot", "!--"),
+  component=c("dependencies", "!--"),
+  components=c("component", "!--"),
   context=c("menu", "!--"),
   dialog=c("browser", "checkbox", "column", "copy",
     "dropdown", "embed", "formula", "frame", "include", "input", "insert", "matrix",
     "optionset", "preview", "radio", "row", "saveobject", "spinbox", "stretch", "tabbook",
     "text", "valueselector", "valueslot", "varselector", "varslot", "!--"),
-  dropdown=c("option"),
+  dropdown=c("option", "!--"),
   hierarchy=c("menu", "!--"),
   logic=c("connect", "convert", "dependency_check", "external", "include", "insert",
-    "script", "set", "switch"),
+    "script", "set", "switch", "!--"),
   menu=c("entry", "menu", "!--"),
-  optionset=c("content", "logic", "optioncolumn"),
+  optionset=c("content", "logic", "optioncolumn", "!--"),
   page=c("browser", "checkbox", "column", "copy",
     "dropdown", "formula", "frame", "input", "matrix", "optionset", "page", "radio",
     "row", "saveobject", "spinbox", "stretch", "tabbook", "text", "valueselector",
     "valueslot", "varselector", "varslot", "!--"),
-  radio=c("option"),
-  select=c("option"),
+  radio=c("option", "!--"),
+  select=c("option", "!--"),
   settings=c("setting", "caption", "!--"),
-  valueselector=c("option"),
+  valueselector=c("option", "!--"),
   wizard=c("browser", "checkbox", "column", "copy",
     "dropdown", "embed", "formula", "frame", "include", "input", "insert", "matrix",
     "optionset", "page", "preview", "radio", "row", "saveobject", "spinbox", "stretch",
@@ -777,17 +777,25 @@ all.valid.children <- list(
 valid.child <- function(parent, children, warn=FALSE, section=parent, node.names=NULL){
   if(is.null(node.names)){
     # check the node names and allow only valid ones
-    node.names <- sapply(child.list(children), function(this.child){
+    node.names <- unlist(sapply(child.list(children), function(this.child){
         # if this is a plot options object, by default extract the XML slot
         # and discard the rest
         this.child <- stripXML(this.child)
 
         if(is.XiMpLe.node(this.child)){
-          return(XMLName(this.child))
+          this.child.name <- XMLName(this.child)
+          if(identical(this.child.name, "")){
+            # special case: empty node name; this is used to combine
+            # comments with the node they belong to, so rather check
+            # the children of this special node
+            return(unlist(sapply(XMLChildren(this.child), XMLName)))
+          } else {
+            return(this.child.name)
+          }
         } else {
           stop(simpleError(paste0("Invalid object for ", section, " section, must be of class XiMpLe.node, but got class ", class(this.child), "!")))
         }
-      })
+      }))
   } else {}
 
   invalid.sets <- !node.names %in% all.valid.children[[parent]]
@@ -1360,10 +1368,11 @@ rk.register.options <- function(options, parent.node){
 #   or a charcter string (for wich it is assumed to describe a context),
 #   or FALSE; if the latter, "label" will be renamed to "noi18n_label", "title" to "noi18n_title"
 # attrs: a list of previously defined attributes
-# comment: if TRUE, returns a comment node, else a list of attributes
-check.i18n <- function(i18n=NULL, attrs=list(), comment=FALSE){
+# comment: if TRUE, returns a pseudo node (with name "") containing a comment node and the original node,
+#   else a list of attributes
+check.i18n <- function(i18n=NULL, attrs=list(), node=NULL, comment=FALSE){
   if(isTRUE(comment)){
-    result <- NULL
+    result <- node
   } else {
     result <- attrs
   }
@@ -1371,21 +1380,24 @@ check.i18n <- function(i18n=NULL, attrs=list(), comment=FALSE){
     return(result)
   } else {
     if(is.list(i18n)){
-      if(!names(i18n) %in% c("comment", "context")){
+      if(!all(names(i18n) %in% c("comment", "context"))){
         stop(simpleError("i18n: only elements named \"comment\" or \"context\" are supported!"))
       } else {}
       if(isTRUE(comment)){
         if("comment" %in% names(i18n)){
-          result <- rk.i18n.comment(i18n[["comment"]])
+          if(!is.XiMpLe.node(node)){
+            stop(simpleError("i18n: to add a \"comment\" to a node, an XML node must be present!"))
+          } else {}
+          result <- XMLNode("", rk.i18n.comment(i18n[["comment"]]), node)
         } else {}
       } else {
         if("context" %in% names(i18n)){
           result[["i18n_context"]] <- i18n[["context"]]
         } else{}
       }
-    } else if(is.character(i18n) & length(i18n) == 1){
+    } else if(is.character(i18n) & length(i18n) == 1 & !isTRUE(comment)){
       result[["i18n_context"]] <- i18n[[1]]
-    } else if(is.logical(i18n) & !isTRUE(i18n)){
+    } else if(is.logical(i18n) & !isTRUE(i18n) & !isTRUE(comment)){
       if("label" %in% names(result)){
         names(result)[names(result) == "label"] <- "noi18n_label"
       } else {}
