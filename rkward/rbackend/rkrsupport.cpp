@@ -69,7 +69,11 @@ SEXP RKRSupport::callSimpleFun2 (SEXP fun, SEXP arg1, SEXP arg2, SEXP env) {
 
 bool RKRSupport::callSimpleBool (SEXP fun, SEXP arg, SEXP env) {
 	SEXP res = callSimpleFun (fun, arg, env);
-	RK_ASSERT (TYPEOF (res) == LGLSXP);
+	if ((Rf_length (res) < 1) || (TYPEOF (res) != LGLSXP)) {
+		RK_ASSERT (TYPEOF (res) == LGLSXP);
+		RK_ASSERT (Rf_length (res) >= 1);
+		return false;
+	}
 	return ((bool) LOGICAL (res)[0]);
 }
 
