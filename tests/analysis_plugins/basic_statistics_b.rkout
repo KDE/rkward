@@ -1,6 +1,6 @@
 <h1>Univariate statistics</h1>
 <h2>Parameters</h2>
-<ul><li>Remove Missing values: TRUE</li>
+<ul><li>Omit missing values: yes</li>
 </ul>
 DATE<br />
 <table border="1">

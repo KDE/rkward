@@ -1,3 +1,4 @@
+- Fix several issues of excessive printing of digits in plugins' output
 - Restructure layout of CSV-import dialog
 - Allow to open (any number of) R script files and rkward://-urls from the command line
 - Add command line option --reuse for reusing an existing instance of RKWard
@@ -19,14 +20,11 @@
     - Don't forget to write documentation
       - Also general documentation for JS-functions is missing!
     - What should be the policy regarding installing translations (80% criterion)
-    - Important pitfalls: String comparison with checkbox / radio labels! (Probably wrong in some plugins)
     - i18n'ed plugins vs. automated tests
       - Sure, we can run automated tests under C locale. But it would be nice to have an additional check that translations don't cause
         any obvious problems.
         - At least we could check for errors
         - Perhaps a special diff of the generated R commands, where all quoted strings and comments are stripped?
-   - i18n calls
-     - <about> data!
 
 --- Version 0.6.2 - Oct-20-2014
 - In data editor, indicate NAs, explicitly

@@ -102,8 +102,8 @@ function calculate () {
 			}
 			if (do_p) {
 				echo ('			result[j, i] <- result[i, j] <- t$rho\n');
-				echo ('			result.p[j, i] <- paste("Chisq=", t$chisq, ",<br />df=", t$df, ",<br />p=", pchisq(t$chisq, t$df, lower.tail=FALSE), sep="")\n');
-				echo ('			result.p[i, j] <- paste("se=", sqrt(diag(t$var)), ",<br />n=", t$n, sep="")\n');
+				echo ('			result.p[j, i] <- paste("Chisq=", format(t$chisq), ",<br />df=", t$df, ",<br />p=", format(pchisq(t$chisq, t$df, lower.tail=FALSE)), sep="")\n');
+				echo ('			result.p[i, j] <- paste("se=", format(sqrt(diag(t$var))), ",<br />n=", t$n, sep="")\n');
 			} else {
 				echo ('			result[i, j] <- result[j, i] <- t\n');
 			}
