@@ -1991,7 +1991,7 @@ user (selection from a list of values shown next to this element) --&gt;
 		</para>
 		<itemizedlist>
 			<listitem><para>Mark up all strings, providing context and comments as needed</para></listitem>
-			<listitem><para>Run <command>python scripts/extract_plugin_messages.py /path/to/my.pluginmap</command>. scripts/extract_plugin_messages.py is not currently part of the source
+			<listitem><para>Run <command>python scripts/update_plugin_messages.py --extract-only /path/to/my.pluginmap</command>. scripts/update_plugin_messages.py is not currently part of the source
 					releases, but can be found in a source repository checkout.</para></listitem>
 			<listitem><para>Distribute the resulting <command>rkward__<replaceable>POID</replaceable>.pot</command> file to your translators. For external plugins, it is recommended to place it
 					in a subfolder "po" in inst/rkward.</para></listitem>
@@ -1999,13 +1999,15 @@ user (selection from a list of values shown next to this element) --&gt;
 					you should try this step for yourself. Browse the extracted strings looking out for problems / ambiguities.</para></listitem>
 			<listitem><para>Translator saves the translation as <command>rkward__<replaceable>POID</replaceable>.<replaceable>xx</replaceable>.po</command> (where
 					<replaceable>xx</replaceable> is the language code), and sends it back to you.</para></listitem>
-			<listitem><para>You run <command>rkward__<replaceable>POID</replaceable>.<replaceable>xx</replaceable>.po</command> and copy the resulting <command>messages.mo</command> to
-					<command><replaceable>DIR_OF_PLUGINMAP</replaceable>/po/<replaceable>xx</replaceable>/LC_MESSAGES/rkward__<replaceable>POID</replaceable>.mo</command> (where
+			<listitem><para>Copy <command>rkward__<replaceable>POID</replaceable>.<replaceable>xx</replaceable>.po</command> to your sources, next to
+					<command>rkward__<replaceable>POID</replaceable>.pot</command>. Run <command>python scripts/update_plugin_messages.py /path/to/my.pluginmap</command> (Note: without
+					<replacable>--extract-only</replace>, this time). This will merge the translation with any interim string changes, compile the translation, and install it into
+					<replaceable>DIR_OF_PLUGINMAP</replaceable>/po/<replaceable>xx</replaceable>/LC_MESSAGES/rkward__<replaceable>POID</replaceable>.mo</command> (where
 					<replaceable>xx</replaceable> is the language code, again).</para></listitem>
 			<listitem><para>You should also include the non-compiled translation (i.e. <command>rkward__<replaceable>POID</replaceable>.<replaceable>xx</replaceable>.po</command>) in
 					your distribution, in the "po" subdirectory.</para></listitem>
 			<listitem><para>For any update of your plugin, run <command>python scripts/extract_plugin_messages.py /path/to/my.pluginmap</command> to update the .pot file, but also the
-					existing .po-files.</para></listitem>
+					existing .po-files, and the compiled message catalogs.</para></listitem>
 		</itemizedlist>
 	</sect1>
 	<sect1 id="i18n_translators"><title>Writing plugin translations</title>

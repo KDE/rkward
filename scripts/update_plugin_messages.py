@@ -1,15 +1,52 @@
 #! /usr/bin/python
+# ***************************************************************************
+#                          update_plugin_messages  -  description
+#                             -------------------
+#    begin                : Oct 2014
+#    copyright            : (C) 2014 by Thomas Friedrichsmeier
+#    email                : tfry@users.sourceforge.net
+# ***************************************************************************
+#
+# ***************************************************************************
+# *                                                                         *
+# *   This program is free software; you can redistribute it and/or modify  *
+# *   it under the terms of the GNU General Public License as published by  *
+# *   the Free Software Foundation; either version 2 of the License, or     *
+# *   (at your option) any later version.                                   *
+# *                                                                         *
+# ***************************************************************************
+#
+# Extracts messages form RKWard plugin files (.pluginmap, .xml, .rkh, .js).
+# Unless --extract-only is specified on the command line, also merges existing
+# translations with the message template, compiles them, and installs them.
+#
+# Included files are walked, automatically. Thus the typical usage is to specify
+# the topmost .pluginmap file as the only file argument.
 
-BUGADDR = "http://p.sf.net/rkward/bugs"
-
+import os
 import codecs
 import sys
-import os
 import subprocess
 from xml.dom import minidom
 import HTMLParser
 import copy
 
+# You might want to adjust the following values (can also be overridden from environment variable):
+BUGADDR = "http://p.sf.net/rkward/bugs"     # Technically, this is for bugs _in the translation_
+BUGADDR = os.getenv ('BUGADDR', BUGADDR)
+XGETTEXT_CALL =  "xgettext --from-code=UTF-8 -C -kde -ci18n -ki18n:1 -ki18nc:1c,2 -ki18np:1,2 -ki18ncp:1c,2,3"
+XGETTEXT_CALL += " -ktr2i18n:1 -kI18N_NOOP:1 -kI18N_NOOP2:1c,2 -kaliasLocale -kki18n:1 -kki18nc:1c,2 -kki18np:1,2"
+XGETTEXT_CALL += " -kki18ncp:1c,2,3 --msgid-bugs-address=" + BUGADDR
+XGETTEXT_CALL = os.getenv ('XGETTEXT', XGETTEXT_CALL)
+MSGMERGE = os.getenv ('MSGMERGE', "msgmerge")
+MSGFMT = os.getenv ('MSGFMT', "msgfmt --check")
+# end
+
+# list of tag-names the content of which to extract in full (including, possibly, HTML-tags, within)
+text_containers = ['section', 'text', 'related', 'title', 'summary', 'usage', 'technical', 'setting']
+# Elements that refer to a different (labelled) element by id
+referring_elements = ['setting', 'caption']
+# Map of elements to attributes to extract, and default context info
 attributes_to_extract_for_tag={
   '*':      { "attributes" : ['label', 'title', 'shorttitle'], "context": ''},
   'about':  { "attributes" : ['name', 'shortinfo', 'category'], "context": ''},
@@ -20,24 +57,23 @@ def usage ():
   print ("Usage: " + sys.argv[0] + " [--default_po=PO_ID] [--outdir=DIR] files")
   exit (1)
 
-# list of tag-names the content of which to extract in full (including, possibly, HTML-tags, within)
-text_containers = ['section', 'text', 'related', 'title', 'summary', 'usage', 'technical', 'setting']
-# Elements that refer to a different (labelled) element by id
-referring_elements = ['setting', 'caption']
-
 # initialize globals, and parse args
 infile = {"infile": "", "file_prefix": "", "caption": "", "id_labels" : {}}
 default_po = ""
 outfile = ""
 outdir = ""
 initialized_pot_files = []
+po_file_install_locations = {}
 current_po_id = ""
+do_merge_install = True
 toplevel_sources = []
 for arg in (list (sys.argv[1:])):
   if (arg.startswith ("--default_po=")):
     default_po = arg.split ("=", 1)[1]
   elif (arg.startswith ("--outdir=")):
     outdir = arg.split ("=", 1)[1]
+  elif (arg == ("--extract-only")):
+    do_merge_install = False
   elif (arg.startswith ("--")):
     usage ()
   else:
@@ -388,16 +424,19 @@ def handleSubFile (filename, fetch_ids = False):
     handleNode (xmldoc.documentElement)
     infile = oldinfile
 
-def initialize_pot_file (po_id):
+def initialize_pot_file (po_id, po_loc):
   global outfile
   global current_po_id
   current_po_id = po_id
   if (outfile != ""):
     outfile.close ()
   if (current_po_id in initialized_pot_files):
+    if (po_file_install_locations[current_po_id] != po_loc):
+      sys.stderr.write ("WARNING: Conflicting path specs for po id " + po_id)
     mode = 'a'
   else:
     initialized_pot_files.append (current_po_id)
+    po_file_install_locations[current_po_id] = po_loc
     mode = 'w'
   outfile = codecs.open (os.path.join (outdir, po_id + '.pot.cpp'), mode, 'utf-8')
 
@@ -407,38 +446,47 @@ def initialize_pot_file (po_id):
 i = 0
 while i < len (toplevel_sources):
   xmldoc = parseFile (toplevel_sources[i])
+  po_loc = os.path.join (os.path.dirname (toplevel_sources[i]), "po")
   po_id = xmldoc.documentElement.getAttribute ("po_id")
   if (po_id == ""):
     po_id = default_po
+  elif (xmldoc.documentElement.hasAttribute ("po_path")):
+    po_loc = os.path.join (os.path.dirname (toplevel_sources[i]), xmldoc.documentElement.getAttribute ("po_path"))
   if (po_id == ""):
     sys.stderr.write ("WARNING: No po_id attribute on file " + toplevel_sources[i] + " and no default specified. Skipping.\n")
     continue
-  initialize_pot_file (po_id)
+  initialize_pot_file (po_id, po_loc)
   handleSubFile (toplevel_sources[i])  # Some duplication of parsing, instead of duplication of code
   i += 1
 
 #######
-# Run xgettext on all generated .pot.cpp files
-for potcpp in initialized_pot_files:
-  potcppfile = os.path.join (outdir, potcpp + ".pot.cpp")
-  templatename = "rkward__" + potcpp
+# Run xgettext on all generated .pot.cpp files, and - unless --extract-only - merge, compile, install
+for po_id in initialized_pot_files:
+  potcppfile = os.path.join (outdir, po_id + ".pot.cpp")
+  templatename = "rkward__" + po_id
   finalpotfile = os.path.join (outdir, templatename + ".pot")
   # NOTE: using --no-location, as that just adds meaningless references to the temporary .pot.cpp-file.
-  res = subprocess.call (["xgettext", "--from-code=UTF-8", "-C", "-kde", "-ci18n", "-ki18n:1", "-ki18nc:1c,2", "-ki18np:1,2", "-ki18ncp:1c,2,3",
-                    "-ktr2i18n:1", "-kI18N_NOOP:1", "-kI18N_NOOP2:1c,2", "-kaliasLocale", "-kki18n:1", "-kki18nc:1c,2", "-kki18np:1,2",
-                    "-kki18ncp:1c,2,3", "--no-location", "--msgid-bugs-address=" + BUGADDR, "-o", finalpotfile, potcppfile])
+  res = subprocess.call (XGETTEXT_CALL.split () + ["--no-location", "-o", finalpotfile, potcppfile])
   if (res):
-    sys.stderr.write ("calling xgettext failed with exit code " + res)
+    sys.stderr.write ("calling xgettext failed with exit code " + str (res))
   os.remove (potcppfile)
+  if (not do_merge_install):
+    continue
   # merge existing translations
   transfiles = os.listdir (os.path.join (outdir))
   for trans in transfiles:
     abstrans = os.path.join (outdir, trans)
     # is it really a translation file?
     if (trans.startswith (templatename + ".") and trans.endswith (".po") and ((len (templatename) + 6) >= len (trans) <= (len (templatename) + 7))):
-      res = subprocess.call (["msgmerge", "-o", abstrans + ".new", abstrans, finalpotfile])
+      lang = trans.split ('.')[-2]
+      res = subprocess.call (MSGMERGE.split () + ["-o", abstrans + ".new", abstrans, finalpotfile])
       if (res):
         sys.stderr.write ("Failed to merge messages for " + abstrans)
       else:
         os.remove (abstrans)
         os.rename (abstrans + ".new", abstrans)
+      outdir = os.path.join (po_file_install_locations[po_id], lang, "MESSAGES")
+      os.makedirs (outdir, 0755)
+      res = subprocess.call (MSGFMT.split () + [abstrans, "-o", os.path.join (outdir, templatename + ".mo")])
+      if (res):
+        sys.stderr.write ("calling msgfmt on " + abstrans + " failed with exit code " + str (res))
