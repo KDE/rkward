@@ -1,6 +1,8 @@
 # These often present in developer's system
 .kdev4/
 build/
+# Locally extracted / installed plugin messages
+rkward/plugins/po/
 # Generated from cmake
 rkward/resource.ver
 rkward/version.h

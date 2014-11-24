@@ -438,7 +438,12 @@ def initialize_pot_file (po_id, po_loc):
     initialized_pot_files.append (current_po_id)
     po_file_install_locations[current_po_id] = po_loc
     mode = 'w'
-  outfile = codecs.open (os.path.join (outdir, po_id + '.pot.cpp'), mode, 'utf-8')
+  p_outdir = outdir
+  if (p_outdir == ""):
+    p_outdir = po_file_install_locations[po_id]
+  if (not os.path.exists (p_outdir)):
+    os.makedirs (p_outdir, 0755)
+  outfile = codecs.open (os.path.join (p_outdir, po_id + '.pot.cpp'), mode, 'utf-8')
 
 #######
 # Loop over toplevel_sources (specified on command line, or those that want to be split into separate po) and extract messages
@@ -462,9 +467,12 @@ while i < len (toplevel_sources):
 #######
 # Run xgettext on all generated .pot.cpp files, and - unless --extract-only - merge, compile, install
 for po_id in initialized_pot_files:
-  potcppfile = os.path.join (outdir, po_id + ".pot.cpp")
+  p_outdir = outdir
+  if (p_outdir == ""):
+    p_outdir = po_file_install_locations[po_id]
+  potcppfile = os.path.join (p_outdir, po_id + ".pot.cpp")
   templatename = "rkward__" + po_id
-  finalpotfile = os.path.join (outdir, templatename + ".pot")
+  finalpotfile = os.path.join (p_outdir, templatename + ".pot")
   # NOTE: using --no-location, as that just adds meaningless references to the temporary .pot.cpp-file.
   res = subprocess.call (XGETTEXT_CALL.split () + ["--no-location", "-o", finalpotfile, potcppfile])
   if (res):
@@ -473,9 +481,9 @@ for po_id in initialized_pot_files:
   if (not do_merge_install):
     continue
   # merge existing translations
-  transfiles = os.listdir (os.path.join (outdir))
+  transfiles = os.listdir (os.path.join (p_outdir))
   for trans in transfiles:
-    abstrans = os.path.join (outdir, trans)
+    abstrans = os.path.join (p_outdir, trans)
     # is it really a translation file?
     if (trans.startswith (templatename + ".") and trans.endswith (".po") and ((len (templatename) + 6) >= len (trans) <= (len (templatename) + 7))):
       lang = trans.split ('.')[-2]
@@ -485,8 +493,9 @@ for po_id in initialized_pot_files:
       else:
         os.remove (abstrans)
         os.rename (abstrans + ".new", abstrans)
-      outdir = os.path.join (po_file_install_locations[po_id], lang, "MESSAGES")
-      os.makedirs (outdir, 0755)
-      res = subprocess.call (MSGFMT.split () + [abstrans, "-o", os.path.join (outdir, templatename + ".mo")])
+      m_outdir = os.path.join (po_file_install_locations[po_id], lang, "MESSAGES")
+      if (not os.path.exists (m_outdir)):
+        os.makedirs (m_outdir, 0755)
+      res = subprocess.call (MSGFMT.split () + [abstrans, "-o", os.path.join (m_outdir, templatename + ".mo")])
       if (res):
         sys.stderr.write ("calling msgfmt on " + abstrans + " failed with exit code " + str (res))
