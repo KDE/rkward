@@ -2001,8 +2001,8 @@ user (selection from a list of values shown next to this element) --&gt;
 					<replaceable>xx</replaceable> is the language code), and sends it back to you.</para></listitem>
 			<listitem><para>Copy <command>rkward__<replaceable>POID</replaceable>.<replaceable>xx</replaceable>.po</command> to your sources, next to
 					<command>rkward__<replaceable>POID</replaceable>.pot</command>. Run <command>python scripts/update_plugin_messages.py /path/to/my.pluginmap</command> (Note: without
-					<replacable>--extract-only</replace>, this time). This will merge the translation with any interim string changes, compile the translation, and install it into
-					<replaceable>DIR_OF_PLUGINMAP</replaceable>/po/<replaceable>xx</replaceable>/LC_MESSAGES/rkward__<replaceable>POID</replaceable>.mo</command> (where
+					<replaceable>--extract-only</replaceable>, this time). This will merge the translation with any interim string changes, compile the translation, and install it into
+					<command><replaceable>DIR_OF_PLUGINMAP</replaceable>/po/<replaceable>xx</replaceable>/LC_MESSAGES/rkward__<replaceable>POID</replaceable>.mo</command> (where
 					<replaceable>xx</replaceable> is the language code, again).</para></listitem>
 			<listitem><para>You should also include the non-compiled translation (i.e. <command>rkward__<replaceable>POID</replaceable>.<replaceable>xx</replaceable>.po</command>) in
 					your distribution, in the "po" subdirectory.</para></listitem>
