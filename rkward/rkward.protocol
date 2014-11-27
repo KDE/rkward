@@ -1,0 +1,17 @@
+[Protocol]
+exec=rkward --reuse "%u"
+protocol=rkward
+Description=A protocol for RKWard's run again links
+input=none  
+output=none
+copyToFile=false
+copyFromFile=false
+listing=false
+reading=false
+writing=false
+makedir=false
+deleting=false
+moving=false
+helper=true
+icon=RKWard
+URIMode=RawURI

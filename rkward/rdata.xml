@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+  <mime-type type="application/rdata">
+    <comment>R data/workspace file</comment>
+    <acronym>RData</acronym>
+    <expanded-acronym>R data/workspace file</expanded-acronym>
+    <generic-icon name="package-x-generic"/>
+    <sub-class-of type="application/x-gzip"/>
+    <glob pattern="*.rdata"/>
+    <glob pattern="*.rda"/>
+    <alias type="application/x-rdata"/>
+  </mime-type>
+</mime-info>

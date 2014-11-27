@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+  <mime-type type="text/r">
+    <comment>R source file</comment>
+    <acronym>R</acronym>
+    <expanded-acronym>R programming language</expanded-acronym>
+    <generic-icon name="text-x-generic"/>
+    <sub-class-of type="text/plain"/>
+    <glob pattern="*.r"/>
+    <alias type="text/x-r"/>
+  </mime-type>
+</mime-info>
