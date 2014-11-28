@@ -2,6 +2,7 @@
 
 <document base_prefix="" namespace="rkward" id="embedded">
 	<include file="pluginmap_meta.inc"/>
+	<require file="menu.pluginmap"/>
 
 	<components>
 		<!-- These are meant to be embedded, and are not shown in the menu -->

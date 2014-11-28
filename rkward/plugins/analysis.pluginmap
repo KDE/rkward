@@ -2,6 +2,7 @@
 
 <document base_prefix="" namespace="rkward" id="analysis" po_id="analysis">
 	<include file="pluginmap_meta.inc"/>
+	<require file="menu.pluginmap"/>
 
 	<components>
 		<component type="standard" id="basic_statistics" file="uni1.2/description.xml" label="Basic Statistics" />
@@ -48,39 +49,41 @@
 	</components>
 
 	<hierarchy>
-		<menu id="analysis" label="Analysis" index="4">
-			<entry component="basic_statistics" index="1"/>
-			<menu id="correlation" label="Correlation" index="1">
+		<menu id="analysis" label="Analysis">
+			<group id="descriptives" group="top"/>
+			<entry component="basic_statistics" group="descriptives"/>
+			<entry component="descriptive" group="descriptives"/>
+
+			<menu id="correlation" label="Correlation">
 				<entry component="corr_matrix" />
 				<entry component="cor_graph" />
 			</menu>
-			<menu id="crosstabs" label="Crosstabs" index="2">			
+			<menu id="crosstabs" label="Crosstabs">
 				<entry component="crosstab" />
 				<entry component="crosstab_multi" />
 			</menu>
-			<entry component="descriptive" index="3"/>
-			<menu id="means" label="Means" index="4">
-				<menu id="ttests" label="t-Tests" index="0">
+			<menu id="means" label="Means">
+				<menu id="ttests" label="t-Tests">
 					<entry component="t_test" />
 				</menu>
 			</menu>
-			<menu id="moments" label="Moments" i18n_context="Statistics" index="6">
+			<menu id="moments" label="Moments" i18n_context="Statistics">
 				<entry component="anscombe_test"/>
 				<entry component="bonett_test"/>
 				<entry component="agostino_test"/>
 				<entry component="moment"/>
 				<entry component="skewness_kurtosis"/>
 			</menu>
-			<menu id="outliers" label="Outlier Tests" index="7">
+			<menu id="outliers" label="Outlier Tests">
 				<entry component="chisq_out_test"/>
 				<entry component="dixon_test"/>
 				<entry component="grubbs_test"/>
 				<entry component="outlier"/>
 			</menu>
-			<menu id="regression" label="Regression" index="8">
+			<menu id="regression" label="Regression">
 				<entry component="linear_regression"/>
 			</menu>
-			<menu id="variances" label="Variances / Scale" index="10">
+			<menu id="variances" label="Variances / Scale">
 				<menu id="variances_parametric" label="Parametric tests">
 					<entry component="bartlett_test"/>
 					<entry component="F_test"/>
@@ -93,13 +96,13 @@
 					<entry component="mood_test"/>
 				</menu>
 			</menu>
-			<menu id="time_series" label="Time Series" index="10">
+			<menu id="time_series" label="Time Series">
 				<entry component="Box_test"/>
 				<entry component="hp_filter"/>
 				<entry component="kpss_test"/>
 				<entry component="PP_test"/>
 			</menu>
-			<menu id="wilcoxon_test" label="Wilcoxon Tests" index="11">
+			<menu id="wilcoxon_test" label="Wilcoxon Tests">
 				<entry component="wilcoxon_tests" />
 			</menu>
 		</menu>

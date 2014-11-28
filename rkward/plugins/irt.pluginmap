@@ -2,6 +2,7 @@
 
 <document base_prefix="" namespace="rkward" id="irt">
 	<include file="pluginmap_meta.inc"/>
+	<require file="menu.pluginmap"/>
 
 	<components>
 		<component type="standard" id="par_est_rasch" file="analysis/irt/dichotomous/par_est_rasch.xml" label="Rasch model fit" />
@@ -35,21 +36,15 @@
 	</components>
 
 	<hierarchy>
-		<menu id="file" label="File">
-			<menu id="import" label="Import" index="4">
-			</menu>
-			<menu id="export" label="Export" index="5">
-			</menu>
-		</menu>
-		<menu id="analysis" label="Analysis" index="4">
-			<menu id="menu_irt" label="Item Response Theory" index="4">
-      				<menu id="menu_dichot" label="Dichotomous data" index="1">
+		<menu id="analysis" label="Analysis">
+			<menu id="menu_irt" label="Item Response Theory">
+      				<menu id="menu_dichot" label="Dichotomous data">
         				<entry component="par_est_rasch" />
         				<entry component="par_est_2pl" />
         				<entry component="par_est_3pl" />
         				<entry component="par_est_lltm" />
       				</menu>
-      				<menu id="menu_poly" label="Polytomous data" index="2">
+      				<menu id="menu_poly" label="Polytomous data">
         				<entry component="par_est_grm" />
         				<entry component="par_est_rsm" />
         				<entry component="par_est_pcm" />
@@ -57,7 +52,7 @@
         				<entry component="par_est_lrsm" />
         				<entry component="par_est_lpcm" />
       				</menu>
-      				<menu id="menu_tests" label="Tests" index="3">
+      				<menu id="menu_tests" label="Tests">
         				<entry component="ltm_gof_rasch" />
         				<entry component="ltm_unidimensional" />
         				<entry component="ltm_item_fit" />
@@ -68,14 +63,14 @@
       				<entry component="ltm_cronbach_alpha" />
     			</menu>
 		</menu>
-		<menu id="plots" label="Plots" index="5">
-    			<menu id="menu_plot_irt" label="Item Response Theory" index="8">
-      				<menu id="menu_plot_dichot" label="Dichotomous data" index="1">
+		<menu id="plots" label="Plots">
+    			<menu id="menu_plot_irt" label="Item Response Theory">
+      				<menu id="menu_plot_dichot" label="Dichotomous data">
         				<entry component="plot_rasch" />
         				<entry component="plot_ltm" />
         				<entry component="plot_tpm" />
       				</menu>
-      				<menu id="menu_plot_poly" label="Polytomous data" index="2">
+      				<menu id="menu_plot_poly" label="Polytomous data">
         				<entry component="plot_grm" />
         				<entry component="plot_rsm" />
         				<entry component="plot_pcm" />

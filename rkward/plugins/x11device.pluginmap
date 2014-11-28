@@ -8,10 +8,10 @@
 	</components>
 
 	<context id="x11">
-		<menu id="device" label="Device" index="1">
+		<menu id="device" label="Device">
 			<entry component="export_x11_device" />
 		</menu>
-		<menu id="edit" label="Edit" index="3">
+		<menu id="edit" label="Edit">
 			<entry component="x11grid" />
 		</menu>
 	</context>

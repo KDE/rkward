@@ -2,6 +2,7 @@
 
 <document base_prefix="" namespace="rkward">
 	<include file="pluginmap_meta.inc"/>
+	<require file="menu.pluginmap"/>
 
 	<components>
 		<component type="standard" id="simple_anova" file="simple_anova/description.xml" label="Simple Anova" />
@@ -23,30 +24,33 @@
 
 	<hierarchy>
 		<menu id="file" label="File">
-			<menu id="import" label="Import" index="4">
+			<menu id="import" label="Import">
 				<menu id="import_format" label="Import format">
 					<entry component="import_xls"/>
 				</menu>
 			</menu>
-			<menu id="export" label="Export" index="5">
+			<menu id="export" label="Export">
 			</menu>
 		</menu>
-		<menu id="data" label="Data" index="3">
-			<entry component="generate_random"/>
-			<entry component="sort_data"/>
-			<entry component="sort_data2"/>
+		<menu id="data" label="Data">
+			<group id="testing" group="bottom" separated="true"/>
+			<entry component="generate_random" group="testing"/>
+			<entry component="sort_data" group="testing"/>
+			<entry component="sort_data2" group="testing"/>
 		</menu>
-		<menu id="analysis" label="Analysis" index="4">
-			<entry component="simple_anova" index="9"/>
-			<entry component="qtscript_test1" index="1"/>
-			<entry component="optionset_test" index="1"/>
-			<entry component="matrix_test1" index="1"/>
-			<entry component="valueselect_test1" index="1"/>
+		<menu id="analysis" label="Analysis">
+			<group id="testing" group="bottom" separated="true"/>
+			<entry component="simple_anova" group="testing"/>
+			<entry component="qtscript_test1" group="testing"/>
+			<entry component="optionset_test" group="testing"/>
+			<entry component="matrix_test1" group="testing"/>
+			<entry component="valueselect_test1" group="testing"/>
 		</menu>
-		<menu id="plots" label="Plots" index="5">
-			<entry component="sieve_plot" />
+		<menu id="plots" label="Plots">
+			<group id="testing" group="bottom" separated="true"/>
+			<entry component="sieve_plot" group="testing"/>
 		</menu>
-		<menu id="distributions" label="Distributions" index="7">
+		<menu id="distributions" label="Distributions">
 		</menu>
 	</hierarchy>
 

@@ -60,80 +60,154 @@ RKComponentGUIXML::~RKComponentGUIXML () {
 void RKComponentGUIXML::clearGUIDescription () {
 	RK_TRACE (PLUGIN);
 
-	gui_xml.setContent (QString ("<!DOCTYPE kpartgui>\n<kpartgui name=\"rkwardcomponents\" version=\"0.3.4\">\n<MenuBar>\n\n</MenuBar>\n</kpartgui>"));
+	gui_xml.setContent (QString ("<!DOCTYPE kpartgui>\n<kpartgui name=\"rkwardcomponents\" version=\"063\">\n<MenuBar>\n\n</MenuBar>\n</kpartgui>"));
+	toplevel_menu.subentries.clear ();
 }
 
-int RKComponentGUIXML::createMenus (QDomElement& parent, XMLHelper &xml, const QDomElement& hierarchy_description, const QString& cnamespace) {
-	RK_TRACE (PLUGIN);
-
-	XMLChildList list = xml.getChildElements (hierarchy_description, "menu", DL_INFO);
-	int counter = 0;
-	for (XMLChildList::const_iterator it=list.begin (); it != list.end (); ++it) {
-		counter += addSubMenu (parent, xml, (*it), cnamespace);
-	}
-	return counter;
-}
-
-QDomElement RKComponentGUIXML::findOrCreateElement (QDomElement& parent, XMLHelper &xml, const QString& tagname, const QString& name, const QString& label, int index) {
-	RK_TRACE (PLUGIN);
-
-	XMLChildList list = xml.getChildElements (parent, QString::null, DL_INFO);		// we need to look at all children, so we get the order right
-	QDomElement insert_after_element;
-	for (XMLChildList::const_iterator it=list.begin (); it != list.end (); ++it) {
-		if ((tagname == (*it).tagName ()) && (name == xml.getStringAttribute ((*it), "name", "", DL_ERROR))) {
-			return (*it);
-		} else {
-			if (index >= 0) {
-				if (index > xml.getIntAttribute ((*it), "index", -1, DL_INFO)) {
-					insert_after_element = *it;
-				}
+void RKComponentGUIXML::menuItemsToXml (const QList<RKComponentGUIXML::MenuEntry> &entries, QDomElement &xml) {
+	// ok, we could really do simply text-pasting, instead of using QDom in this function, but I'm afraid of not getting all character escapes right.
+	for (int i = 0; i < entries.size (); ++i) {
+		const RKComponentGUIXML::MenuEntry &entry = entries[i];
+		if (entry.type == RKComponentGUIXML::MenuEntry::Group) {
+			if (entry.label == "-") xml.appendChild (gui_xml.createElement ("Separator"));
+			menuItemsToXml (entry.subentries, xml);
+			if (entry.label == "-") xml.appendChild (gui_xml.createElement ("Separator"));
+		} else if (entry.type == RKComponentGUIXML::MenuEntry::Menu) {
+			if (entry.subentries.isEmpty ()) {
+				continue;	// just skip over empty menus
 			}
+			QDomElement submenu = gui_xml.createElement ("Menu");
+			submenu.setAttribute ("name", entry.id);
+			QDomElement text = gui_xml.createElement ("text");
+			text.appendChild (gui_xml.createTextNode (entry.label));
+			submenu.appendChild (text);
+			menuItemsToXml (entry.subentries, submenu);
+			xml.appendChild (submenu);
+		} else {
+			QDomElement action = gui_xml.createElement ("Action");
+			action.setAttribute ("name", entry.id);
+			xml.appendChild (action);
 		}
 	}
-
-	// element not found. Create a new one instead
-	QDomElement ret = gui_xml.createElement (tagname);
-	ret.setAttribute ("name", name);
-	ret.setAttribute ("index", index);
-	if (!label.isEmpty ()) {
-		QDomElement text = gui_xml.createElement ("text");
-		text.appendChild (gui_xml.createTextNode (label));
-		ret.appendChild (text);
-	}
-	parent.insertAfter (ret, insert_after_element);	// if index_after_element.isNull, this add the new element as the last child of parent!
-
-	return ret;
 }
 
-int RKComponentGUIXML::addSubMenu (QDomElement& parent, XMLHelper &xml, const QDomElement& description, const QString& cnamespace) {
+int RKComponentGUIXML::createMenus (XMLHelper &xml, const QDomElement& hierarchy_description, const QString& cnamespace) {
 	RK_TRACE (PLUGIN);
 
-	int counter = 0;
+	return (addEntries (&toplevel_menu, xml, hierarchy_description, cnamespace));
+}
 
-	// 1: check whether menu already exists, and create new menu otherwise
-	QDomElement menu_element = findOrCreateElement (parent, xml, "Menu", xml.getStringAttribute (description, "id", "none", DL_ERROR), xml.i18nStringAttribute (description, "label", i18n ("(no label)"), DL_WARNING), xml.getIntAttribute (description, "index", -1, DL_INFO));
+void RKComponentGUIXML::finalize () {
+	RK_TRACE (PLUGIN);
 
-	// 2: recurse into submenus (of element to add!)
-	XMLChildList list = xml.getChildElements (description, "menu", DL_INFO);
-	for (XMLChildList::const_iterator it=list.begin (); it != list.end (); ++it) {
-		counter += addSubMenu (menu_element, xml, (*it), cnamespace);
-	}
+	QDomElement xmlgui_menubar_element = gui_xml.documentElement ().firstChildElement ("MenuBar");
+	menuItemsToXml (toplevel_menu.subentries, xmlgui_menubar_element);
+}
 
-	// 3: add entries
-	list = xml.getChildElements (description, "entry", DL_INFO);
-	for (XMLChildList::const_iterator it=list.begin (); it != list.end (); ++it) {
-		QString id = cnamespace + xml.getStringAttribute ((*it), "component", "#invalid#", DL_ERROR);
+void insertEntry (RKComponentGUIXML::MenuEntry *parent, const RKComponentGUIXML::MenuEntry &entry) {
+	RK_ASSERT (parent && (parent->type == RKComponentGUIXML::MenuEntry::Menu));
 
-		RKComponentHandle* handle = RKComponentMap::getComponentHandle (id);
-		if ((!handle) || (!handle->isPlugin ())) {
-			RK_DEBUG (PLUGIN, DL_ERROR, "No such component found while creating menu-entries or component is not a standalone plugin: \"%s\". No entry created.", id.toLatin1 ().data ());
-		} else {
-			findOrCreateElement (menu_element, xml, "Action", id, QString::null, xml.getIntAttribute ((*it), "index", -1, DL_INFO));
-			addedEntry (id, handle);
-			counter++;
+	// try to find group
+	QList<RKComponentGUIXML::MenuEntry> *list = &(parent->subentries);
+	for (int i = 0; i < list->size (); ++i) {
+		RKComponentGUIXML::MenuEntry &g = (*list)[i];
+		if (g.id == entry.group) {
+			if (entry.type == RKComponentGUIXML::MenuEntry::Group) {
+				list->insert (++i, entry);
+			} else {
+				QList<RKComponentGUIXML::MenuEntry> *group_list = &(g.subentries);
+				for (int j = 0; j < group_list->size (); ++j) {
+					if (QString::localeAwareCompare (group_list->at (j).label, entry.label) > 0) {
+						group_list->insert (j, entry);
+						return;
+					}
+				}
+				group_list->append (entry);
+			}
+			return;
 		}
 	}
-	return counter;
+
+	// group not found: Declare it, implicitly, and try again.
+	RKComponentGUIXML::MenuEntry new_group;
+	new_group.type = RKComponentGUIXML::MenuEntry::Group;
+	new_group.id = entry.group;
+	if (entry.group == QLatin1String ("top")) {
+		list->insert (0, new_group);
+	} else if (entry.group == QLatin1String ("bottom")) {
+		list->append (new_group);
+	} else {
+		if (list->isEmpty () || list->last ().group != QLatin1String ("bottom")) {
+			list->append (new_group);
+		} else {
+			list->insert (list->size () - 1, new_group);
+		}
+	}
+	insertEntry (parent, entry);
+}
+
+RKComponentGUIXML::MenuEntry *findMenu (RKComponentGUIXML::MenuEntry *parent, const QString id) {
+	RK_ASSERT (parent && parent->type == RKComponentGUIXML::MenuEntry::Menu);
+	QList<RKComponentGUIXML::MenuEntry> *list = &(parent->subentries);
+	for (int i = 0; i < list->size (); ++i) {
+		QList<RKComponentGUIXML::MenuEntry> *group_list = &((*list)[i].subentries);
+		for (int j = 0; j < group_list->size (); ++j) {
+			RKComponentGUIXML::MenuEntry *g = &((*group_list)[j]);
+			if (g->id == id) return g;
+		}
+	}
+	return 0;
+}
+
+int RKComponentGUIXML::addEntries (RKComponentGUIXML::MenuEntry *menu, XMLHelper &xml, const QDomElement description, const QString& cnamespace) {
+	RK_TRACE (PLUGIN);
+
+	int leaves = 0;
+	XMLChildList list = xml.getChildElements (description, QString (), DL_INFO);
+	for (int i = 0; i < list.size (); ++i) {
+		const QString add_to = xml.getStringAttribute (list[i], "group", QString (), DL_INFO);
+		if (list[i].tagName () == "menu") {
+			QString sub_id = xml.getStringAttribute (list[i], "id", "none", DL_ERROR);
+			MenuEntry *found = findMenu (menu, sub_id);
+			if (found) {
+				leaves += addEntries (found, xml, list[i], cnamespace);
+			} else {
+				MenuEntry sub;
+				sub.id = sub_id;
+				sub.label = xml.i18nStringAttribute (list[i], "label", i18n ("(no label)"), DL_WARNING);
+				sub.group = add_to;
+				sub.type = MenuEntry::Menu;
+				leaves += addEntries (&sub, xml, list[i], cnamespace);
+				insertEntry (menu, sub);
+			}
+		} else if (list[i].tagName () == "entry") {
+			QString id = cnamespace + xml.getStringAttribute (list[i], "component", "#invalid#", DL_ERROR);
+
+			RKComponentHandle* handle = RKComponentMap::getComponentHandle (id);
+			if ((!handle) || (!handle->isPlugin ())) {
+				RK_DEBUG (PLUGIN, DL_ERROR, "No such component found while creating menu-entries or component is not a standalone plugin: \"%s\". No entry created.", id.toLatin1 ().data ());
+			} else {
+				MenuEntry plug;
+				plug.id = id;
+				plug.label = handle->getLabel ();
+				plug.group = add_to;
+				plug.type = MenuEntry::Entry;
+				insertEntry (menu, plug);
+				addedEntry (id, handle);
+				++leaves;
+			}
+		} else if (list[i].tagName () == "group") {
+			MenuEntry group;
+			group.id = xml.getStringAttribute (list[i], "id", "none", DL_ERROR);
+			group.group = add_to;
+			if (xml.getBoolAttribute (list[i], "separated", false, DL_INFO)) group.label = "-";
+			group.type = MenuEntry::Group;
+			insertEntry (menu, group);
+		} else {
+			RK_ASSERT (false);
+		}
+	}
+	return leaves;
 }
 
 /////////////////////////// END RKComponentXMLGUIClient /////////////////////////////////
@@ -334,6 +408,17 @@ RKPluginMapParseResult RKComponentMap::addPluginMap (const QString& plugin_map_f
 	return getMap()->addPluginMapLocal (plugin_map_file);
 }
 
+void RKComponentMap::finalizeAll () {
+	RK_TRACE (PLUGIN);
+
+	finalize ();
+	setXMLGUIBuildDocument (gui_xml);
+	actionCollection ()->readSettings ();
+	foreach (RKContextMap *ctx, getMap()->contexts) {
+		ctx->finalize ();
+	}
+}
+
 RKPluginMapParseResult RKComponentMap::addPluginMapLocal (const QString& plugin_map_file) {
 	RK_TRACE (PLUGIN);
 
@@ -490,8 +575,7 @@ RKPluginMapParseResult RKComponentMap::addPluginMapLocal (const QString& plugin_
 	}
 
 	// step 3: create / insert into menus
-	QDomElement xmlgui_menubar_element = xml.getChildElement (gui_xml.documentElement (), "MenuBar", DL_ERROR);
-	ret.valid_plugins += createMenus (xmlgui_menubar_element, xml, xml.getChildElement (document_element, "hierarchy", DL_INFO), cnamespace);
+	ret.valid_plugins += createMenus (xml, xml.getChildElement (document_element, "hierarchy", DL_INFO), cnamespace);
 
 	// step 4: create and register contexts
 	list = xml.getChildElements (document_element, "context", DL_INFO);
@@ -503,11 +587,9 @@ RKPluginMapParseResult RKComponentMap::addPluginMapLocal (const QString& plugin_
 			context = new RKContextMap (id);
 			contexts.insert (id, context);
 		}
-		ret.valid_plugins += context->create (*it, xml, cnamespace);
+		ret.valid_plugins += context->createMenus (xml, *it, cnamespace);
 	}
 
-	setXMLGUIBuildDocument (gui_xml);		// TODO: Should be called only once, not for each pluginmap!
-	actionCollection ()->readSettings ();
 	return ret;
 }
 

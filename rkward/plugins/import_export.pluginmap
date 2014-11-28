@@ -2,6 +2,7 @@
 
 <document base_prefix="00saveload/" namespace="rkward" id="import_export">
 	<include file="pluginmap_meta.inc"/>
+	<require file="../menu.pluginmap"/>
 
 	<components>
 		<component type="standard" id="load_r_object" file="import/load_data.xml" label="Load R data file" />
@@ -29,7 +30,7 @@
 
 	<hierarchy>
 		<menu id="file" label="File">
-			<menu id="import" label="Import" index="4">
+			<menu id="import" label="Import">
 				<menu id="import_format" label="Import format">
 					<entry component="import_spss"/>
 					<entry component="import_stata"/>
@@ -38,14 +39,14 @@
 				<entry component="load_r_object" />
 				<entry component="load_source" />
 			</menu>
-			<menu id="export" label="Export" index="5">
+			<menu id="export" label="Export">
 				<entry component="save_r" />
 				<entry component="save_variables" />
 				<entry component="save_table" />
 				<entry component="save_skeleton" />
 			</menu>
 		</menu>
-		<menu id="workspace" label="Workspace" index="5">
+		<menu id="workspace" label="Workspace">
 			<entry component="setworkdir" />
 		</menu>
 	</hierarchy>

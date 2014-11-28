@@ -118,6 +118,23 @@ This class represents the common functionality between RKComponentMap and RKCont
 @author Thomas Friedrichsmeier
 */
 class RKComponentGUIXML {
+public:
+	struct MenuEntry {
+		QString label;
+		QString id;
+		QString group;
+		enum {
+			Entry,
+			Menu,
+			Group
+		} type;
+		QList<MenuEntry> subentries;
+	} toplevel_menu;
+/** build XMLGUI menus
+@param hierarchy_description the QDomElement containing the description for the new menu hierarchy
+@returns number of plugins/menu-entries added successfully */
+	int createMenus (XMLHelper &xml, const QDomElement& hierarchy_description, const QString& cnamespace);
+	void finalize ();
 protected:
 	RKComponentGUIXML ();
 	virtual ~RKComponentGUIXML ();
@@ -125,31 +142,14 @@ protected:
 /** reset the xml file */
 	void clearGUIDescription ();
 
-/** build XMLGUI menus
-@param parent the parent menu (or tag) (in the KXMLGUI)
-@param hierarchy_description the QDomElement containing the description for the new menu hierarchy
-@returns number of plugins/menu-entries added successfully */
-	int createMenus (QDomElement& parent, XMLHelper &xml, const QDomElement& hierarchy_description, const QString& cnamespace);
-
-/** recurse into a lower menu-level 
-@param parent the parent menu (in the KXMLGUI)
-@param description the QDomElement containing the description for the new submenu
-@returns number of plugins/menu-entries added successfully */
-	int addSubMenu (QDomElement& parent, XMLHelper &xml, const QDomElement& description, const QString& cnamespace);
-
-/** helper function: Find a specified element, and return it. If the element could not be found, it is created instead. The first three parameters are used as search parameters (all have to match). The additional two parameters only take effect, if a new element is created.
-@param parent the QDomElement whose children to search through
-@param tagname the tagname to look for
-@param name value of the "name"-attribute to look for
-@param label the label to assign to the new element (if no existing match could be found)
-@param index the index position where to insert the new element in the list of children (if no existing match could be found). -1 means insert at the end of the list. */
-	QDomElement findOrCreateElement (QDomElement& parent, XMLHelper &xml, const QString& tagname, const QString& name, const QString& label, int index);
-
 /** an entry was added to the menu(s) somewhere. Reimplement, if you want to e.g. create a KAction for this */
 	virtual void addedEntry (const QString & /* id */, RKComponentHandle * /* handle */) {};
 
 /** The generated XML GUI description in KDEs ui.rc format */
 	QDomDocument gui_xml;
+private:
+	int addEntries (RKComponentGUIXML::MenuEntry *menu, XMLHelper &xml, const QDomElement description, const QString& cnamespace);
+	void menuItemsToXml (const QList<RKComponentGUIXML::MenuEntry> &entries, QDomElement &xml);
 };
 
 
@@ -184,6 +184,7 @@ public:
 /** adds all Plugins / components in a .pluginmap-file. Also takes care of creating the menu-items, etc.
 @returns status info of number of plugins (i.e. stand-alone components/menu-entries) added successfully / failed */
 	static RKPluginMapParseResult addPluginMap (const QString& plugin_map_file);
+	void finalizeAll ();
 
 /** clears out (and deletes) all components / plugins */
 	static void clearAll ();

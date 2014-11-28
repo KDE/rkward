@@ -2,6 +2,7 @@
 
 <document base_prefix="plots/" namespace="rkward" id="plots">
 	<include file="pluginmap_meta.inc"/>
+	<require file="../menu.pluginmap"/>
 
 	<components>
 		<component type="standard" id="barplot" file="barplot.xml" label="Barplot" />
@@ -20,7 +21,7 @@
 	</components>
 
 	<hierarchy>
-		<menu id="plots" label="Plots" index="5">
+		<menu id="plots" label="Plots">
 			<entry component="barplot" />
 			<entry component="box_plot" />
 			<entry component="density_plot" />

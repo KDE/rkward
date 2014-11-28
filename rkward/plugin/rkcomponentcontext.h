@@ -38,8 +38,6 @@ public:
 	RKContextMap (const QString &id);
 /** destructor */
 	~RKContextMap ();
-/** A menu entries to the context map from a .pluginmap file */
-	int create (const QDomElement &context_element, XMLHelper &xml, const QString &component_namespace);
 /** Create a context handler for this context. */
 	RKContextHandler *makeContextHandler (QObject *parent, bool create_actions=true);
 	QStringList components () { return component_ids; };

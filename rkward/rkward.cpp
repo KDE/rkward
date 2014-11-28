@@ -307,6 +307,7 @@ void RKWardMainWindow::initPlugins (const QStringList &automatically_added) {
 		}
 	}
 
+	RKComponentMap::getMap ()->finalizeAll ();
 	factory ()->addClient (RKComponentMap::getMap ());
 
 	if (!automatically_added.isEmpty ()) {

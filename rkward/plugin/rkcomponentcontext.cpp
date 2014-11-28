@@ -35,13 +35,6 @@ RKContextMap::~RKContextMap () {
 	RK_TRACE (PLUGIN);
 }
 
-int RKContextMap::create (const QDomElement &context_element, XMLHelper &xml, const QString &component_namespace) {
-	RK_TRACE (PLUGIN);
-
-	QDomElement element = xml.getChildElement (gui_xml.documentElement (), "MenuBar", DL_ERROR);
-	return (createMenus (element, xml, context_element, component_namespace));
-}
-
 RKContextHandler *RKContextMap::makeContextHandler (QObject *parent, bool create_actions) {
 	RK_TRACE (PLUGIN);
 

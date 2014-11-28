@@ -1,3 +1,5 @@
+- More robust control over placement of plugins within a menu
+  - TODO: document, discuss
 - Fix several issues of excessive printing of digits in plugins' output
 - Restructure layout of CSV-import dialog
 - Allow to open (any number of) R script files and rkward://-urls from the command line

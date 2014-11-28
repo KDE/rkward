@@ -1,0 +1,23 @@
+<!DOCTYPE rkpluginmap>
+<!-- The point of this pluginmap is to pre-define the layout (and labels) of some menus -->
+<document base_prefix="" namespace="rkward" id="rkward_menu_hierarchy">
+	<include file="pluginmap_meta.inc"/>
+	<hierarchy>
+		<!-- Define a group before and after each top-level menu to allow inserting top-level menus at defined positions -->
+		<group id="before_data"/>
+		<!-- Define a group for each menu to suppress alphabetical sorting of the top-level menus -->
+		<menu id="data" label="Data" group="data"/>
+		<group id="after_data"/>
+		<group id="before_analysis"/>
+		<menu id="analysis" label="Analysis" group="analysis"/>
+		<group id="after_analysis"/>
+		<group id="before_plots"/>
+		<menu id="plots" label="Plots" group="plots"/>
+		<group id="after_plots"/>
+		<group id="before_distributions"/>
+		<menu id="distributions" label="Distributions" group="distributions"/>
+		<group id="after_distributions"/>
+		<menu id="empty" label="empty"/>
+	</hierarchy>
+</document>
+ 
