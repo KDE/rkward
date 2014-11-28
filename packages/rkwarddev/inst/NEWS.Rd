@@ -1,7 +1,7 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
-\section{Changes in rkwarddev version 0.06-6 (2014-11-23)}{
+\section{Changes in rkwarddev version 0.06-6 (2014-11-28)}{
   \subsection{fixed}{
     \itemize{
       \item \code{rk.XML.optionset()} does now allow to re-use objects defined in the same
@@ -10,6 +10,7 @@
         as these are already being documented via the objects they connect to.
       \item \code{rk.build.plugin()} was still only using the "--no-vignettes" option from R < 3
       \item \code{rk.XML.pluginmap()} malformed label argument names if they referred to standrad maneu entries
+      \item \code{rk.plugin.skeleton()} still allowed invalid IDs, fixed the regexp
     }
   }
   \subsection{added}{
@@ -28,6 +29,15 @@
       \item function \code{i18n()} was changed to be used in JavaScript generation only; this breaks code
         using the function introduced with 0.06-4, but that was to be shortlived from the start...
         the i18n features of 0.06-4 will be completely replaced with some proper methods now
+      \item comment nodes (<!-- foo -->) are now globally allowed as child nodes in XML; important for
+        i18n comments
+    }
+  }
+  \subsection{removed}{
+    \itemize{
+      \item the functions \code{rk.set.language()} rk.\code{get.language()} were no longer useful and therefore removed
+      \item also removed the option \code{"lang"} from \code{rk.rkh.doc()}, \code{rk.XML.plugin()}, \code{rk.XML.pluginmap()}
+        and \code{rk.plugin.skeleton()}
     }
   }
 }

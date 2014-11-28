@@ -48,14 +48,13 @@
 #' @param namespace Character string, the namespace attribute of the \code{<document>} node, defaults to the plugin name (which you probably shouldn't touch...)
 #' @param priority Character string, the priority attribute of the \code{<document>} node. Must be either "hidden", "low", "medium", or "high",
 #'    defaults to "medium".
-#' @param lang Character string, the language of the document. See \code{\link[rkwarddev:i18n]{i18n}} for details.
 #' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 
 rk.XML.pluginmap <- function(name, about=NULL, components, hierarchy="test",
   require=NULL, x11.context=NULL, import.context=NULL, clean.name=TRUE, hints=FALSE, gen.info=TRUE,
-  dependencies=NULL, namespace=name, priority="medium", id.name="auto", lang=rk.get.language()){
+  dependencies=NULL, namespace=name, priority="medium", id.name="auto"){
   name.orig <- name
   if(isTRUE(clean.name)){
     # to besure, remove all non-character symbols from name
@@ -310,10 +309,6 @@ rk.XML.pluginmap <- function(name, about=NULL, components, hierarchy="test",
   } else {}
 
   all.attrs <- list(base_prefix="", namespace=namespace, id=doc.ID.name, po_id=doc.ID.name, priority=priority)
-  # check for possible i18n
-  if(!is.null(lang)){
-    all.attrs[["lang"]] <- all.attrs[["xml:lang"]] <- lang
-  } else {}
   top.doc <- XMLNode("document", attrs=all.attrs, .children=all.children)
 
   pluginmap <- XMLTree(

@@ -18,7 +18,7 @@
 # collate voodoo
 #' @include rk.comment.R
 
-# set up an internal environment, e.g. for language settings
+# set up an internal environment, e.g. for prompter settings
 .rkdev.env <- new.env()
 
 # internal functions for the rk.* functions

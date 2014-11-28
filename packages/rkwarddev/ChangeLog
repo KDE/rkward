@@ -1,6 +1,6 @@
 ChangeLog for package rkwarddev
 
-changes in version 0.06-6 (2014-11-24)
+changes in version 0.06-6 (2014-11-28)
 fixed:
   - rk.XML.optionset() does now allow to re-use objects defined in the same
     function call (i.e., refer to optioncolumns in the logic section)
@@ -8,6 +8,7 @@ fixed:
     as these are already being documented via the objects they connect to.
   - rk.build.plugin() was still only using the "--no-vignettes" option from R < 3
   - rk.XML.pluginmap() malformed label argument names if they referred to standrad maneu entries
+  - rk.plugin.skeleton() still allowed invalid IDs, fixed the regexp
 added:
   - all "help" values can now be a list of character strings or XiMpLe nodes,
     to have more control over the markup
@@ -22,6 +23,10 @@ changed:
     the i18n features of 0.06-4 will be completely replaced with some proper methods now
   - comment nodes (<!-- foo -->) are now globally allowed as child nodes in XML; important for
     i18n comments
+removed:
+  - the functions rk.set.language() rk.get.language() were no longer useful and therefore removed
+  - also removed the option "lang" from rk.rkh.doc(), rk.XML.plugin(), rk.XML.pluginmap()
+    and rk.plugin.skeleton()
 
 changes in version 0.06-5 (2014-10-19)
 fixed:
