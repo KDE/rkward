@@ -76,6 +76,7 @@ protected:
 signals:
 	void aboutToQuitRKWard ();
 public slots:
+	void setWorkspaceUnmodified () { setWorkspaceMightBeModified (false); };
 	/** open a workspace. If the current workspace is not empty, ask whether to save first.
     @see setNoAskSave ()
     @see setWorkspaceMightBeModified () */

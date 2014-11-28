@@ -265,6 +265,11 @@ void RKWardMainWindow::doPostInit () {
 	}
 	setNoAskSave (false);
 
+	// up to this point, no "real" save-worthy stuff can be pending in the backend. So mark this point as "clean".
+	RCommand *command = new RCommand (QString (), RCommand::EmptyCommand | RCommand::Sync | RCommand::App);
+	connect (command->notifier (), SIGNAL (commandFinished(RCommand*)), this, SLOT (setWorkspaceUnmodified()));
+	RKGlobals::rInterface ()->issueCommand (command);
+
 	if (!evaluate_code.isEmpty ()) RKConsole::pipeUserCommand (evaluate_code);
 	RKDBusAPI *dbus = new RKDBusAPI (this);
 	connect (this, SIGNAL(aboutToQuitRKWard()), dbus, SLOT(deleteLater()));	// RKWard sometimes needs to wait for R to quit. We don't want it sticking
@@ -749,7 +754,7 @@ void RKWardMainWindow::slotNewDataFrame () {
 void RKWardMainWindow::askOpenWorkspace (const KUrl &url) {
 	RK_TRACE (APP);
 
-	if (!no_ask_save && !RObjectList::getGlobalEnv ()->isEmpty () && workspace_modified) {
+	if (!no_ask_save && ((!RObjectList::getGlobalEnv ()->isEmpty () && workspace_modified) || !RKGlobals::rInterface ()->backendIsIdle ())) {
 		int res;
 		res = KMessageBox::questionYesNoCancel (this, i18n ("Do you want to save the current workspace?"), i18n ("Save Workspace?"));
 		if (res == KMessageBox::Yes) {
