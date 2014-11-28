@@ -62,6 +62,7 @@ void RKComponentGUIXML::clearGUIDescription () {
 
 	gui_xml.setContent (QString ("<!DOCTYPE kpartgui>\n<kpartgui name=\"rkwardcomponents\" version=\"063\">\n<MenuBar>\n\n</MenuBar>\n</kpartgui>"));
 	toplevel_menu.subentries.clear ();
+	toplevel_menu.type = MenuEntry::Menu;
 }
 
 void RKComponentGUIXML::menuItemsToXml (const QList<RKComponentGUIXML::MenuEntry> &entries, QDomElement &xml) {
