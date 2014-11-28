@@ -263,7 +263,7 @@ bool RKWorkplace::openAnyUrl (const KUrl &url, const QString &known_mimetype, bo
 			openHelpWindow (url, true);
 			return true;	// TODO
 		}
-		if (url.fileName ().toLower ().endsWith (".rdata")) {
+		if (url.fileName ().toLower ().endsWith (".rdata") || url.fileName ().toLower ().endsWith (".rda")) {
 			RKWardMainWindow::getMain ()->askOpenWorkspace (url);
 			return true;	// TODO
 		}
