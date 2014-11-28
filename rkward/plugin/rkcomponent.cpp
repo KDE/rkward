@@ -213,7 +213,6 @@ QVariant RKComponentBase::fetchValue (const QString &id, const int hint) {
 			if (ret.isEmpty ()) {
 				ret << "-" << "-";
 			}
-			RK_DEBUG (PLUGIN, DL_WARNING, "Labels for %s: %s", qPrintable (id), qPrintable (ret.join (":")));
 			return QVariant (ret);
 		}
 		QVariant val = prop->value (mod);

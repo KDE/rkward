@@ -223,7 +223,7 @@ void RKComponentMap::initialize () {
 	component_map = new RKComponentMap ();
 }
 
-RKComponentMap::RKComponentMap () : RKComponentGUIXML (), KXMLGUIClient () {
+RKComponentMap::RKComponentMap () : QObject (), RKComponentGUIXML (), KXMLGUIClient () {
 	RK_TRACE (PLUGIN);
 
 	setComponentData (KGlobal::mainComponent ());
@@ -558,12 +558,27 @@ RKPluginMapParseResult RKComponentMap::addPluginMapLocal (const QString& plugin_
 	return ret;
 }
 
+void RKComponentMap::activateComponent () {
+	RK_TRACE (PLUGIN);
+
+	if (!sender ()) {
+		RK_ASSERT (sender ());
+		return;
+	}
+	RKComponentHandle *handle = getComponentHandleLocal (sender ()->objectName ());
+	if (!handle) {
+		RK_ASSERT (handle);
+		return;
+	}
+	handle->invoke (0, 0);
+}
+
 void RKComponentMap::addedEntry (const QString &id, RKComponentHandle *handle) {
 	RK_TRACE (PLUGIN);
 
 	if (handle->isPlugin ()) {
 		handle->setAccessible (true);
-		KAction *action = actionCollection ()->addAction (id, handle, SLOT (activated()));
+		KAction *action = actionCollection ()->addAction (id, this, SLOT (activateComponent()));
 		action->setText (handle->getLabel ());
 		action->setShortcutConfigurable (true);
 	}
@@ -574,7 +589,7 @@ void RKComponentMap::addedEntry (const QString &id, RKComponentHandle *handle) {
 
 #include "rkstandardcomponent.h"
 
-RKComponentHandle::RKComponentHandle (RKPluginMapFile *pluginmap, const QString &rel_filename, const QString &label, RKComponentType type) : QObject (RKWardMainWindow::getMain ()) {
+RKComponentHandle::RKComponentHandle (RKPluginMapFile *pluginmap, const QString &rel_filename, const QString &label, RKComponentType type) {
 	RK_TRACE (PLUGIN);
 
 	RKComponentHandle::type = type;
@@ -601,12 +616,6 @@ RKStandardComponent *RKComponentHandle::invoke (RKComponent *parent_component, Q
 	RK_ASSERT (isPlugin ());
 
 	return (new RKStandardComponent (parent_component, parent_widget, getFilename (), this));
-}
-
-void RKComponentHandle::activated () {
-	RK_TRACE (PLUGIN);
-
-	invoke (0, 0);
 }
 
 QString RKComponentHandle::getAttributeValue (const QString &attribute_id) {

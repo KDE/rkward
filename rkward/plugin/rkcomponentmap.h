@@ -63,8 +63,7 @@ class KActionCollection;
 
 @author Thomas Friedrichsmeier
 */
-class RKComponentHandle : public QObject {
-	Q_OBJECT
+class RKComponentHandle {
 public:
 	RKComponentHandle (RKPluginMapFile *pluginmap, const QString &rel_filename, const QString &label, RKComponentType type);
 	virtual ~RKComponentHandle ();
@@ -89,9 +88,6 @@ public:
 /** Returns whether this component is accessible from the menu, somewhere (else it might be in a context) */
 	bool isAccessible () const { return is_accessible; };
 	const RKMessageCatalog *messageCatalog () const { return plugin_map->messageCatalog (); };
-public slots:
-/** Slot called, when the menu-item for this component is selected. Responsible for creating the GUI. */
-	void activated ();
 protected:
 /** The plugin map where this component was declared */
 	RKPluginMapFile *plugin_map;
@@ -175,10 +171,10 @@ The RKComponentMap provides convenience functions for adding or removing a .plug
 
 @author Thomas Friedrichsmeier
 */
-class RKComponentMap : public RKComponentGUIXML, public KXMLGUIClient {
+class RKComponentMap : public QObject, public RKComponentGUIXML, public KXMLGUIClient {
+	Q_OBJECT
 public:
 	RKComponentMap ();
-
 	~RKComponentMap ();
 
 /** adds all Plugins / components in a .pluginmap-file. Also takes care of creating the menu-items, etc.
@@ -209,6 +205,9 @@ public:
 /** @returns a list of all currently registered component ids */
 	QStringList allComponentIds () { return components.keys(); };
 	bool isPluginMapLoaded (const QString& abs_filename) { return pluginmapfiles.contains (abs_filename); };
+public slots:
+/** Slot called, when a menu-item for a component is selected. Responsible for creating the GUI. */
+	void activateComponent ();
 private:
 /** typedef for easy reference to iterator */
 	typedef QMap<QString, RKComponentHandle*> ComponentMap;
