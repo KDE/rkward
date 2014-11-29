@@ -71,14 +71,17 @@
 					<option value="table" label="Custom"/>
 				</dropdown>
 				<frame>
+          <row>
+            <checkbox id="header" value="TRUE" value_unchecked="FALSE" checked="false" label="Column names in first row"/>
+          </row>
 					<row>
 						<column>
-							<checkbox id="header" value="TRUE" value_unchecked="FALSE" checked="false" label="Column names in first row"/>
 							<radio id="dec" label="Decimal point character" >
 								<option id="decPeriod" value="'.'" label="'.' (Period)" />
 								<option id="decComma" value="','" label="',' (Comma)" />
 								<option id="decOther" value="other" label="Other (specify below)" />
 							</radio>
+              <stretch />
 							<input id="custom_dec" label="Specify decimal point character" required="true"/>
 						</column>
 						<column>
@@ -89,7 +92,8 @@
 								<option id="sepSpace" value="' '" label="Space" />
 								<option id="sepOther" value="other" label="Other (specify below)" />
 							</radio>
-							<input id="custom_sep" label="Specify field separator character" required="true"/>
+              <stretch />
+              <input id="custom_sep" label="Specify field separator character" required="true"/>
 						</column>
 					</row>
 				</frame>
