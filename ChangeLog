@@ -1,3 +1,4 @@
+- Allow opening RKWard's plugin files (with correct highlighting), and other text files
 - More robust control over placement of plugins within a menu
   - TODO: document, discuss
 - Fix several issues of excessive printing of digits in plugins' output

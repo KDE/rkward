@@ -2,7 +2,7 @@
                           rkcommandeditorwindow  -  description
                              -------------------
     begin                : Mon Aug 30 2004
-    copyright            : (C) 2004-2013 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -302,7 +302,8 @@ class RKCommandHighlighter {
 public:
 	enum HighlightingMode {
 		RInteractiveSession,
-		RScript
+		RScript,
+		Automatic
 	};
 	static void copyLinesToOutput (KTextEditor::View *view, HighlightingMode mode);
 	static void setHighlighting (KTextEditor::Document *doc, HighlightingMode mode);

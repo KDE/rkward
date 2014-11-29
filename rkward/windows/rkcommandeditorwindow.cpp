@@ -380,7 +380,7 @@ bool RKCommandEditorWindow::openURL (const KUrl url, const QString& encoding, bo
 				/* HACK: What the...?! Somehow, at least on longer R scripts, stored Mode="Normal" in combination with R Highlighting
 				 * causes code folding to fail (KDE 4.8.4, https://sourceforge.net/tracker/?func=detail&atid=459007&aid=3564769&group_id=50231).
 				 * Forcing Mode == Highlighting appears to help. */
-				conf.writeEntry ("Mode", conf.readEntry ("Highlighting", "Normal"));
+				if (use_r_highlighting) conf.writeEntry ("Mode", conf.readEntry ("Highlighting", "Normal"));
 				iface->readSessionConfig (conf);
 			}
 			iface = qobject_cast<KTextEditor::SessionConfigInterface*> (m_view);
@@ -389,8 +389,9 @@ bool RKCommandEditorWindow::openURL (const KUrl url, const QString& encoding, bo
 				iface->readSessionConfig (conf);
 			}
 		}
-
 		if (use_r_highlighting) RKCommandHighlighter::setHighlighting (m_doc, RKCommandHighlighter::RScript);
+		else RKCommandHighlighter::setHighlighting (m_doc, RKCommandHighlighter::Automatic);
+
 		setReadOnly (read_only);
 
 		updateCaption ();
@@ -1255,8 +1256,19 @@ QString RKCommandHighlighter::commandToHTML (const QString r_command, Highlighti
 void RKCommandHighlighter::setHighlighting (KTextEditor::Document *doc, HighlightingMode mode) {
 	RK_TRACE (COMMANDEDITOR);
 
-	QString mode_string = "R Script";
-	if (mode == RInteractiveSession) mode_string = "R interactive session";
+	QString mode_string;
+	if (mode == RScript) mode_string = "R Script";
+	else if (mode == RInteractiveSession) mode_string = "R interactive session";
+	else {
+		QString fn = doc->url ().fileName ().toLower ();
+		if (fn.endsWith (".pluginmap") || fn.endsWith (".rkh") || fn.endsWith (".xml") || fn.endsWith (".inc")) {
+			mode_string = "XML";
+		} else if (fn.endsWith (".js")) {
+			mode_string = "JavaScript";
+		} else {
+			return;
+		}
+	}
 	if (!(doc->setHighlightingMode (mode_string) && doc->setMode (mode_string))) RK_DEBUG (COMMANDEDITOR, DL_ERROR, "R syntax highlighting definition ('%s')not found!", qPrintable (mode_string));
 }
 

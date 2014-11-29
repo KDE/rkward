@@ -267,9 +267,10 @@ bool RKWorkplace::openAnyUrl (const KUrl &url, const QString &known_mimetype, bo
 			RKWardMainWindow::getMain ()->askOpenWorkspace (url);
 			return true;	// TODO
 		}
-		if (mimetype->name ().startsWith ("text")) {
+		if (mimetype->is ("text/plain")) {
 			return (openScriptEditor (url, QString (), RKSettingsModuleCommandEditor::matchesScriptFileFilter (url.fileName())));
 		}
+		RK_DEBUG (APP, DL_INFO, "Don't know how to handle mimetype %s.", qPrintable (mimetype->name ()));
 	}
 
 	if (KMessageBox::questionYesNo (this, i18n ("The url you are trying to open ('%1') is not a local file or the filetype is not supported by RKWard. Do you want to open the url in the default application?", url.prettyUrl ()), i18n ("Open in default application?")) != KMessageBox::Yes) {
