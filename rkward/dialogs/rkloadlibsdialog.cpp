@@ -2,7 +2,7 @@
                           rkloadlibsdialog  -  description
                              -------------------
     begin                : Mon Sep 6 2004
-    copyright            : (C) 2004, 2006, 2007, 2008, 2009, 2010, 2011 by Thomas Friedrichsmeier
+    copyright            : (C) 2004 - 2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -619,7 +619,6 @@ void LoadUnloadWidget::cancel () {
 	deleteLater ();
 }
 
-
 /////////////////////// InstallPackagesWidget //////////////////////////
 
 InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog) : QWidget (0) {
@@ -651,10 +650,13 @@ InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog) : QWidge
 	hbox->addLayout (buttonvbox);
 	buttonvbox->setContentsMargins (0, 0, 0, 0);
 	label = new QLabel (i18n ("Show only packages matching:"), this);
-	filter_edit = new QLineEdit ("*", this);
-	RKCommonFunctions::setTips (i18n ("<p>You can limit the packages displayed in the list to with names or titles matching a filter string.</p><p><b>Note:</b> To search for partial strings, add '*' to the start and / or end of the filter, e.g. '*stat*'.</p>"), label, filter_edit);
-	connect (filter_edit, SIGNAL (textChanged(QString)), this, SLOT (filterStringChanged(QString)));
-	filterStringChanged (filter_edit->text ());
+	filter_edit = new QLineEdit (QString (), this);
+	RKCommonFunctions::setTips (i18n ("<p>You can limit the packages displayed in the list to with names or titles matching a filter string.</p><p><b>Note:</b> To limit the search to matches at the start of the string, start the filter with '^', e.g. ('^rk.'). To limit searches to the end of the string, append '$' at the end of the filter.</p>"), label, filter_edit);
+	connect (filter_edit, SIGNAL (textChanged(QString)), this, SLOT (filterChanged()));
+	rkward_packages_only = new QCheckBox (i18n ("Show only packages providing RKWard dialogs"), this);
+	RKCommonFunctions::setTips (i18n ("<p>Some but not all R packages come with plugins for RKWard. That means they provide a graphical user-interface in addition to R functions. Check this box to show only such packages.</p><p></p>"), rkward_packages_only);
+	connect (rkward_packages_only, SIGNAL(stateChanged(int)), this, SLOT (filterChanged()));
+	filterChanged ();
 
 	mark_all_updates_button = new QPushButton (i18n ("Select all updates"), this);
 	connect (mark_all_updates_button, SIGNAL (clicked()), this, SLOT (markAllUpdates()));
@@ -664,6 +666,7 @@ InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog) : QWidge
 
 	buttonvbox->addWidget (label);
 	buttonvbox->addWidget (filter_edit);
+	buttonvbox->addWidget (rkward_packages_only);
 	buttonvbox->addStretch (1);
 	buttonvbox->addWidget (mark_all_updates_button);
 	buttonvbox->addStretch (1);
@@ -704,12 +707,17 @@ void InstallPackagesWidget::initialize () {
 	}
 }
 
-void InstallPackagesWidget::filterStringChanged (const QString& new_filter) {
+void InstallPackagesWidget::filterChanged () {
 	RK_TRACE (DIALOGS);
 
-	QString f = new_filter;
+	QString f = filter_edit->text ();
 	if (f.isEmpty ()) f = "*";
+	else {
+		if (!f.startsWith ('^')) f.prepend ('*');
+		if (!f.endsWith ('$')) f.append ('*');
+	}
 	model->setFilterWildcard (f);
+	model->setRKWardOnly (rkward_packages_only->isChecked ());
 }
 
 void InstallPackagesWidget::trySelectPackage (const QString &package_name) {
@@ -983,14 +991,19 @@ QVariant RKRPackageInstallationStatus::data (const QModelIndex &index, int role)
 		}
 		if (role == Qt::BackgroundColorRole) return QVariant (QColor (200, 200, 200));
 	} else if (!index.parent ().parent ().isValid ()) {		// model has exactly two levels
-		int col = index.column ();
-		int prow = index.parent ().row ();
+		const int col = index.column ();
+		const int prow = index.parent ().row ();
 		int arow, irow;		// row numbers in the lists of available_packages / installed_packages
+		arow = irow = 0;	// Suppress bogus GCC warning (doesn't seem to understand that irow is not needed for NewPackages, and arow is not needed for InstalledPackages)
 		if (prow == UpdateablePackages) {
 			arow = updateable_packages_in_available.value (index.row ());
 			irow = updateable_packages_in_installed.value (index.row ());
-		} else if (prow == NewPackages) arow = new_packages_in_available.value (index.row ());
-		else irow = index.row ();
+		} else if (prow == NewPackages) {
+			arow = new_packages_in_available.value (index.row ());
+		} else {
+			RK_ASSERT (prow == InstalledPackages);
+			irow = index.row ();
+		}
 
 		if (col == InstallationStatus) {
 			PackageStatusChange stat;
@@ -1037,7 +1050,10 @@ QVariant RKRPackageInstallationStatus::data (const QModelIndex &index, int role)
 			if (role == Qt::DisplayRole) {
 				if (prow == InstalledPackages) return installed_libpaths.value (irow);
 				else if (prow == NewPackages) return available_repos.value (arow);
-				else return QVariant (installed_libpaths.value (irow) + " -> " + available_repos.value (arow));
+				else {
+					RK_ASSERT (prow == UpdateablePackages);
+					return QVariant (installed_libpaths.value (irow) + " -> " + available_repos.value (arow));
+				}
 			}
 		}
 	}
@@ -1140,6 +1156,7 @@ bool RKRPackageInstallationStatus::packagesToRemove (QStringList *packages, QStr
 
 RKRPackageInstallationStatusSortFilterModel::RKRPackageInstallationStatusSortFilterModel (QObject* parent) : QSortFilterProxyModel (parent) {
 	RK_TRACE (DIALOGS);
+	rkward_only = false;
 }
 
 RKRPackageInstallationStatusSortFilterModel::~RKRPackageInstallationStatusSortFilterModel () {
@@ -1159,12 +1176,25 @@ bool RKRPackageInstallationStatusSortFilterModel::lessThan (const QModelIndex &l
 bool RKRPackageInstallationStatusSortFilterModel::filterAcceptsRow (int source_row, const QModelIndex &source_parent) const {
 	if (!source_parent.isValid ()) return true;		// Never filter the top level item
 
+	if (rkward_only) {
+		bool enhance_rk = source_parent.child (source_row, RKRPackageInstallationStatus::EnhancesRKWard).data (Qt::UserRole).toBool ();
+		if (!enhance_rk) return false;
+	}
 // filter on Name and Title
 	QString name = source_parent.child (source_row, RKRPackageInstallationStatus::PackageName).data ().toString ();
 	if (filterRegExp ().exactMatch (name)) return true;
 	QString title = source_parent.child (source_row, RKRPackageInstallationStatus::PackageTitle).data ().toString ();
 	return (filterRegExp ().exactMatch (title));
 }
+
+void RKRPackageInstallationStatusSortFilterModel::setRKWardOnly (bool only) {
+	RK_TRACE (DIALOGS);
+
+	bool old_only = rkward_only;
+	rkward_only = only;
+	if (rkward_only != old_only) invalidate ();
+}
+
 
 #include "rkloadlibsdialog.moc"
 

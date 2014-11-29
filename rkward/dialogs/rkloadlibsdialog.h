@@ -2,7 +2,7 @@
                           rkloadlibsdialog  -  description
                              -------------------
     begin                : Mon Sep 6 2004
-    copyright            : (C) 2004, 2006, 2007, 2009, 2011, 2012 by Thomas Friedrichsmeier
+    copyright            : (C) 2004 - 2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -220,9 +220,11 @@ class RKRPackageInstallationStatusSortFilterModel : public QSortFilterProxyModel
 public:
 	RKRPackageInstallationStatusSortFilterModel (QObject* parent = 0);
 	~RKRPackageInstallationStatusSortFilterModel ();
+	void setRKWardOnly (bool only);
 protected:
 	bool lessThan (const QModelIndex &left, const QModelIndex &right) const;
 	bool filterAcceptsRow (int source_row, const QModelIndex &source_parent) const;
+	bool rkward_only;
 };
 
 /**
@@ -243,17 +245,18 @@ public slots:
 	void ok ();
 	void apply ();
 	void cancel ();
-	void filterStringChanged (const QString &new_filter);
+	void filterChanged ();
 	void activated ();
 	void markAllUpdates ();
 private:
 	void doInstall (bool refresh);
 	QTreeView *packages_view;
 	RKRPackageInstallationStatus *packages_status;
-	QSortFilterProxyModel *model;
+	RKRPackageInstallationStatusSortFilterModel *model;
 
 	QPushButton *mark_all_updates_button;
 	QLineEdit *filter_edit;
+	QCheckBox *rkward_packages_only;
 	PackageInstallParamsWidget *install_params;
 	
 	RKLoadLibsDialog *parent;
