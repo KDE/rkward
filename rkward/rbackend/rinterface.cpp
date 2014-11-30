@@ -166,12 +166,9 @@ void RInterface::closeSubcommandChain (RCommand* parent_command) {
 		doNextCommand (0);
 	}
 	if (parent_command && (parent_command == dummy_command_on_stack)) {
-		handleCommandOut (dummy_command_on_stack);
 		all_current_commands.removeAll (dummy_command_on_stack);
 		RCommandStack::pop (dummy_command_on_stack);
-		// TODO: I don't quite understand why the line below crashes (in RData::discardData()).
-		// However it's a tolerably slow mem-leak, by all means.
-//		delete dummy_command_on_stack;
+		handleCommandOut (dummy_command_on_stack);
 		dummy_command_on_stack = 0;
 	}
 }
