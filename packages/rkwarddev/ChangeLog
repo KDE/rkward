@@ -1,6 +1,6 @@
 ChangeLog for package rkwarddev
 
-changes in version 0.06-6 (2014-11-28)
+changes in version 0.06-6 (2014-11-30)
 fixed:
   - rk.XML.optionset() does now allow to re-use objects defined in the same
     function call (i.e., refer to optioncolumns in the logic section)
@@ -9,6 +9,8 @@ fixed:
   - rk.build.plugin() was still only using the "--no-vignettes" option from R < 3
   - rk.XML.pluginmap() malformed label argument names if they referred to standrad maneu entries
   - rk.plugin.skeleton() still allowed invalid IDs, fixed the regexp
+  - rk.XML.snippets() now also accepts <include> as child node
+  - rk.XML.tabbook() returns <insert> nodes as-is, not nested in <tab></tab>
 added:
   - all "help" values can now be a list of character strings or XiMpLe nodes,
     to have more control over the markup

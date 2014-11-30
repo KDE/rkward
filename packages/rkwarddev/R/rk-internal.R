@@ -759,6 +759,7 @@ all.valid.children <- list(
   radio=c("option", "!--"),
   select=c("option", "!--"),
   settings=c("setting", "caption", "!--"),
+  snippets=c("include", "snippet", "!--"),
   valueselector=c("option", "!--"),
   wizard=c("browser", "checkbox", "column", "copy",
     "dropdown", "embed", "formula", "frame", "include", "input", "insert", "matrix",

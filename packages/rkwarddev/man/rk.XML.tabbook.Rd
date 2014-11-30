@@ -28,6 +28,10 @@ An object of class \code{XiMpLe.node}.
 \description{
 Create XML node "tabbook" for RKWard plugins
 }
+\note{
+If a node in \code{tabs} is \code{<insert>}, it is returned as-is,
+      without being nested in \code{<tab>}.
+}
 \examples{
 test.checkboxes <- rk.XML.row(rk.XML.col(
   rk.XML.cbox(label="foo", val="foo1", chk=TRUE),

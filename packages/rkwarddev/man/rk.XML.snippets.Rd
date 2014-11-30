@@ -6,14 +6,15 @@
 rk.XML.snippets(...)
 }
 \arguments{
-\item{...}{Objects of class \code{XiMpLe.node}. They must all have the name "snippet".}
+\item{...}{Objects of class \code{XiMpLe.node}. Accepts only \code{<snippet>} and \code{<include>}.}
 }
 \value{
 An object of class \code{XiMpLe.node}.
 }
 \description{
 This function will create a snippets node for the document section,
-      with optional child nodes "snippet".
+      with optional child nodes
+\code{<snippet>} and \code{<include>}.
 }
 \examples{
 # define a formula section with varselector and varslots
@@ -26,6 +27,7 @@ cat(pasteXML(test.snippets))
 \seealso{
 \code{\link[rkwarddev:rk.XML.plugin]{rk.XML.plugin}}
    \code{\link[rkwarddev:rk.XML.snippet]{rk.XML.snippet}},
+   \code{\link[rkwarddev:rk.XML.include]{rk.XML.include}},
    and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 }
 

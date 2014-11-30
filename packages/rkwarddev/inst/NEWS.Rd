@@ -1,7 +1,7 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
-\section{Changes in rkwarddev version 0.06-6 (2014-11-28)}{
+\section{Changes in rkwarddev version 0.06-6 (2014-11-30)}{
   \subsection{fixed}{
     \itemize{
       \item \code{rk.XML.optionset()} does now allow to re-use objects defined in the same
@@ -11,6 +11,8 @@
       \item \code{rk.build.plugin()} was still only using the "--no-vignettes" option from R < 3
       \item \code{rk.XML.pluginmap()} malformed label argument names if they referred to standrad maneu entries
       \item \code{rk.plugin.skeleton()} still allowed invalid IDs, fixed the regexp
+      \item \code{rk.XML.snippets()} now also accepts <include> as child node
+      \item \code{rk.XML.tabbook()} returns <insert> nodes as-is, not nested in <tab></tab>
     }
   }
   \subsection{added}{

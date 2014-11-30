@@ -28,6 +28,7 @@
 #'    to give some \code{i18n_context}
 #'    information for this node. If set to \code{FALSE}, the attribute \code{label} will be renamed into 
 #'    \code{noi18n_label}.
+#' @note If a node in \code{tabs} is \code{<insert>}, it is returned as-is, without being nested in \code{<tab>}.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
@@ -57,22 +58,26 @@ rk.XML.tabbook <- function(label=NULL, tabs=list(), id.name="auto", i18n=NULL){
     tab.ids <- auto.ids(tab.labels, prefix=ID.prefix("tab", length=3))
   } else {}
   tabs <- sapply(1:num.tabs, function(this.num){
-      this.tab <- tab.labels[[this.num]]
-      attr.list <- list(label=this.tab)
-      if(identical(id.name, "auto")){
-        attr.list[["id"]] <- tab.ids[[this.num]]
-      } else if(!is.null(id.name)){
-        attr.list[["id"]] <- id.name[[this.num + 1]]
-      } else {}
-      if(!is.null(tabs[[this.num]])){
-        child <- tabs[[this.num]]
+      if(is.XiMpLe.node(tabs[[this.num]]) && XMLName(tabs[[this.num]]) %in% c("insert", "tab")){
+        return(tabs[[this.num]])
       } else {
-        child <- list()
-      }
-      return(XMLNode("tab",
+        this.tab <- tab.labels[[this.num]]
+        attr.list <- list(label=this.tab)
+        if(identical(id.name, "auto")){
+          attr.list[["id"]] <- tab.ids[[this.num]]
+        } else if(!is.null(id.name)){
+          attr.list[["id"]] <- id.name[[this.num + 1]]
+        } else {}
+        if(!is.null(tabs[[this.num]])){
+          child <- tabs[[this.num]]
+        } else {
+          child <- list()
+        }
+        return(XMLNode("tab",
           attrs=attr.list,
           .children=child.list(child, empty=FALSE))
         )
+      }
     })
 
 

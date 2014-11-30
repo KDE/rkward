@@ -18,14 +18,16 @@
 
 #' Create XML "snippets" node for RKWard plugins
 #'
-#' This function will create a snippets node for the document section, with optional child nodes "snippet".
+#' This function will create a snippets node for the document section, with optional child nodes
+#' \code{<snippet>} and \code{<include>}.
 #'
-#' @param ... Objects of class \code{XiMpLe.node}. They must all have the name "snippet".
+#' @param ... Objects of class \code{XiMpLe.node}. Accepts only \code{<snippet>} and \code{<include>}.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @seealso
 #'    \code{\link[rkwarddev:rk.XML.plugin]{rk.XML.plugin}}
 #'    \code{\link[rkwarddev:rk.XML.snippet]{rk.XML.snippet}},
+#'    \code{\link[rkwarddev:rk.XML.include]{rk.XML.include}},
 #'    and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' # define a formula section with varselector and varslots
@@ -39,13 +41,7 @@ rk.XML.snippets <- function(...){
   nodes <- list(...)
 
   # check the node names and allow only valid ones
-  sapply(child.list(nodes), function(this.node){
-      stopifnot(is.XiMpLe.node(this.node))
-      node.name <- slot(this.node, "name")
-      if(!node.name %in% c("snippet", "!--")){
-        stop(simpleError(paste0("Invalid XML nodes for snippets section: ", node.name)))
-      } else {}
-    })
+  valid.child("snippets", children=nodes)
 
   node <- XMLNode("snippets", .children=child.list(nodes, empty=FALSE))
 
