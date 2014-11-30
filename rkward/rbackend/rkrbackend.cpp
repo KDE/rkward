@@ -1386,7 +1386,7 @@ void RKRBackend::run (const QString &locale_dir) {
 
 void RKRBackend::commandFinished (bool check_object_updates_needed) {
 	RK_TRACE (RBACKEND);
-	RK_DEBUG (RBACKEND, DL_DEBUG, "done running command");
+	RK_DEBUG (RBACKEND, DL_WARNING, "done running command %s", qPrintable (current_command->command));
 
 	{
 		QMutexLocker lock (&all_current_commands_mutex);

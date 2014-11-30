@@ -1,3 +1,4 @@
+- Fixed: Freezes when using RKWard-functionality (such as the RK()-device) from tcl/tk (e.g. Rcmdr)
 - Allow opening RKWard's plugin files (with correct highlighting), and other text files
 - More robust control over placement of plugins within a menu
   - TODO: document, discuss

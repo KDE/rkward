@@ -126,6 +126,7 @@ private:
 	int num_active_output_record_requests;
 	ROutput::ROutputType previous_output_type;
 	QString recorded_output;
+	RCommand *dummy_command_on_stack;
 friend class RKRBackendProtocolFrontend;
 	bool backend_dead;
 	static double na_real;

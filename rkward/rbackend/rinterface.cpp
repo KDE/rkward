@@ -101,6 +101,7 @@ RInterface::RInterface () {
 	num_active_output_record_requests = 0;
 	previous_output_type = ROutput::NoOutput;
 	flush_timer_id = 0;
+	dummy_command_on_stack = 0;
 
 	// create a fake init command
 	RCommand *fake = new RCommand (i18n ("R Startup"), RCommand::App | RCommand::Sync | RCommand::ObjectListUpdate, i18n ("R Startup"), this, STARTUP_PHASE2_COMPLETE);
@@ -163,6 +164,15 @@ void RInterface::closeSubcommandChain (RCommand* parent_command) {
 	if (current_commands_with_subcommands.contains (parent_command)) {
 		current_commands_with_subcommands.removeAll (parent_command);
 		doNextCommand (0);
+	}
+	if (parent_command && (parent_command == dummy_command_on_stack)) {
+		handleCommandOut (dummy_command_on_stack);
+		all_current_commands.removeAll (dummy_command_on_stack);
+		RCommandStack::pop (dummy_command_on_stack);
+		// TODO: I don't quite understand why the line below crashes (in RData::discardData()).
+		// However it's a tolerably slow mem-leak, by all means.
+//		delete dummy_command_on_stack;
+		dummy_command_on_stack = 0;
 	}
 }
 
@@ -676,7 +686,9 @@ void RInterface::processHistoricalSubstackRequest (const QStringList &calllist) 
 	if (!current_command) {
 		// This can happen for Tcl events. Create a dummy command on the stack to keep things looping.
 		current_command = new RCommand (QString (), RCommand::App | RCommand::EmptyCommand | RCommand::Sync);
-		issueCommand (current_command);
+		RCommandStack::issueCommand (current_command, 0);
+		all_current_commands.append (current_command);
+		dummy_command_on_stack = current_command;	// so we can get rid of it again, after it's sub-commands have finished
 	}
 	in_chain = openSubcommandChain (current_command);
 
