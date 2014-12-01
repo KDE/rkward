@@ -2,7 +2,7 @@
                           rksettingsmoduleplugins  -  description
                              -------------------
     begin                : Wed Jul 28 2004
-    copyright            : (C) 2004-2013 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -98,10 +98,7 @@ private:
 	static bool show_code;
 	static int code_size;
 
-/* TODO: These are currently unused (leftovers of GHNS-based plugin installation), but might still be of interest */
-	static void installPluginPack (const QString &archive_file);
-	static void uninstallPluginPack (const QString &archive_file);
-	static QString baseNameOfPluginPack (const QString &archive_file);
+/* TODO: This one is currently unused (leftover of GHNS-based plugin installation), but might still be of interest */
 	static QStringList findPluginMapsRecursive (const QString &basedir);
 	static void fixPluginMapLists ();
 };
