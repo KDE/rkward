@@ -656,7 +656,7 @@ all.valid.modifiers <- list(
   input=c("text"),
   formula=c("model", "table", "labels", "fixed_factors", "dependent"),
   matrix=c("rows", "columns", "tsv", "cbind"), # TODO: missing a solution for 1,2,3,... here
-  # option=c(),
+  option=c("enabled"),
   optionset=c("row_count", "current_row", "optioncolumn_ids"),
   preview=c("state", "state.not", "state.numeric"),
   radio=c("string", "number"),
@@ -711,7 +711,8 @@ modif.validity <- function(source, modifier, ignore.empty=TRUE, warn.only=TRUE, 
   if(any(invalid.modif)){
     if(isTRUE(warn.only)){
       warning(paste0("Some modifier you provided is invalid for '",tag.name,"' and was ignored: ",
-        paste(modifier[invalid.modif], collapse=", ")), call.=FALSE)
+        paste(modifier[invalid.modif], collapse=", "), "\n",
+        "For a list of valid modifiers see rkwarddev:::all.valid.modifiers"), call.=FALSE)
       if(isTRUE(bool)){
         return(!invalid.modif)
       } else {

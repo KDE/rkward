@@ -22,6 +22,9 @@ placeholder, and the first one has to represent an integer value in the dialog.}
 \item{newline}{Character string,
       can be set to e.g. \code{"\n"} to force a newline after the call.}
 }
+\value{
+An object of class \code{rk.JS.i18n}.
+}
 \description{
 Similar to \code{\link[rkwarddev:echo]{echo}}, this function should help you to write
 your JavaScript portions in R. Depending on the provided values for its arguments,

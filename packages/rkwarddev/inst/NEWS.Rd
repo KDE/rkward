@@ -1,7 +1,7 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
-\section{Changes in rkwarddev version 0.06-6 (2014-11-30)}{
+\section{Changes in rkwarddev version 0.06-6 (2014-12-01)}{
   \subsection{fixed}{
     \itemize{
       \item \code{rk.XML.optionset()} does now allow to re-use objects defined in the same
@@ -24,6 +24,8 @@
       \item new attribute \code{"i18n"} added to several XML functions; it takes a list with the named arguments
         \code{"comment"} or \code{"context"} to either produce an i18n comment node or an \code{"i18n_context"} attribute
       \item new function \code{rk.i18n.comment()} to give context for translators
+      \item new function \code{rk.JS.header()} to easily generate JavaScript header code fit for i18n
+      \item new function \code{R.comment()} to generate JavaScript "\code{comment()}" calls
     }
   }
   \subsection{changed}{

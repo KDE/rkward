@@ -20,12 +20,14 @@ added:
     "comment" or "context" to either produce an i18n comment node or an "i18n_context" attribute
   - new function rk.i18n.comment() to give context for translators
   - new function rk.JS.header() to easily generate JavaScript header code fit for i18n
+  - new function R.comment() to generate JavaScript "comment()" calls
 changed:
   - function i18n() was changed to be used in JavaScript generation only; this breaks code
     using the function introduced with 0.06-4, but that was to be shortlived from the start...
     the i18n features of 0.06-4 will be completely replaced with some proper methods now
   - comment nodes (<!-- foo -->) are now globally allowed as child nodes in XML; important for
     i18n comments
+  - modifier checks now point to rkwarddev:::all.valid.modifiers directly in case of errors
 removed:
   - the functions rk.set.language() rk.get.language() were no longer useful and therefore removed
   - also removed the option "lang" from rk.rkh.doc(), rk.XML.plugin(), rk.XML.pluginmap()
