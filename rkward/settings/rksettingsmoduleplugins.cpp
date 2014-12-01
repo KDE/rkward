@@ -186,8 +186,8 @@ void RKSettingsModulePlugins::loadSettings (KConfig *config) {
 		QStringList plugin_maps = cg.readEntry ("Plugin Maps", QStringList ());
 		QStringList kplugin_maps = cg.readEntry ("All known plugin maps", QStringList ());
 		for (int i = 0; i < kplugin_maps.size (); ++i) {
-			PluginMapStoredInfo inf (kplugin_maps[i]);
-			inf.active = plugin_maps.contains (kplugin_maps[i]);
+			PluginMapStoredInfo inf (RKSettingsModuleGeneral::checkAdjustLoadedPath (kplugin_maps[i]));
+			inf.active = plugin_maps.contains (kplugin_maps[i]);	// comparing unadjusted path on purpose!
 			// state info will be properly initialized in fixPluginMapLists()
 			known_plugin_maps.append (inf);
 		}
@@ -195,8 +195,8 @@ void RKSettingsModulePlugins::loadSettings (KConfig *config) {
 		KConfigGroup pmg = cg.group ("Known Plugin maps");
 		QStringList kplugin_maps = cg.readEntry ("All known plugin maps", QStringList ());
 		for (int i = 0; i < kplugin_maps.size (); ++i) {
-			KConfigGroup ppmg = pmg.group (kplugin_maps[i]);
-			PluginMapStoredInfo inf (kplugin_maps[i]);
+			KConfigGroup ppmg = pmg.group (kplugin_maps[i]);	// unadjusted path on purpose!
+			PluginMapStoredInfo inf (RKSettingsModuleGeneral::checkAdjustLoadedPath (kplugin_maps[i]));
 			inf.active = ppmg.readEntry ("Active", false);
 			// Pluginmaps which are broken with one version of RKWard may be alright with other versions. So reset flags, if version has changed.
 			inf.broken_in_this_version = ppmg.readEntry ("Broken", false) && !RKSettingsModuleGeneral::rkwardVersionChanged ();

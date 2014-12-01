@@ -2,7 +2,7 @@
                           rksettingsmodulegeneral  -  description
                              -------------------
     begin                : Fri Jul 30 2004
-    copyright            : (C) 2004-2013 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -78,6 +78,10 @@ public:
 	static RKMDIFocusPolicy mdiFocusPolicy () { return mdi_focus_policy; }
 	static QString workspaceFilenameFilter () { return ("*.RData *.RDA"); };
 	static QString initialWorkingDirectory ();
+/** if the installation-path of KDE seems to have moved since the last startup, *and* the given path is relative to the
+ *  KDE data path, adjust the given path (probably loaded from config), accordingly. @See RKCommonFunctions::getRKWardDataDir()
+ *  TODO: similar, but not quite identical functionality in rkworkplace.cpp checkAdjustRestoredUrl(). Might be mergeable. */
+	static QString checkAdjustLoadedPath (const QString &localpath);
 
 	enum RKWardConfigVersion {
 		RKWardConfig_Pre0_5_7,
@@ -121,6 +125,8 @@ private:
 	static InitialDirectory initial_dir;
 	static QString initial_dir_specification;
 	static bool rkward_version_changed;
+	static QString previous_rkward_data_dir;
+	static bool installation_moved;
 };
 
 #endif

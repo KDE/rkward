@@ -2,7 +2,7 @@
                           rksettingsmodulegeneral  -  description
                              -------------------
     begin                : Fri Jul 30 2004
-    copyright            : (C) 2004-2013 by Thomas Friedrichsmeier
+    copyright            : (C) 2004-2014 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -52,6 +52,8 @@ bool RKSettingsModuleGeneral::config_exists;
 RKSettingsModuleGeneral::InitialDirectory RKSettingsModuleGeneral::initial_dir;
 QString RKSettingsModuleGeneral::initial_dir_specification;
 bool RKSettingsModuleGeneral::rkward_version_changed;
+bool RKSettingsModuleGeneral::installation_moved = false;
+QString RKSettingsModuleGeneral::previous_rkward_data_dir;
 
 RKSettingsModuleGeneral::RKSettingsModuleGeneral (RKSettings *gui, QWidget *parent) : RKSettingsModule (gui, parent) {
 	RK_TRACE (SETTINGS);
@@ -214,6 +216,7 @@ void RKSettingsModuleGeneral::saveSettings (KConfig *config) {
 	cg.writeEntry ("show help on startup", show_help_on_startup);
 	cg.writeEntry ("initial dir mode", (int) initial_dir);
 	cg.writeEntry ("initial dir spec", (initial_dir == LastUsedDirectory) ? QDir::currentPath() : initial_dir_specification);
+	cg.writeEntry ("last known data dir", RKCommonFunctions::getRKWardDataDir ());
 
 	cg = config->group ("Workplace");
 	cg.writeEntry ("save mode", (int) workplace_save_mode);
@@ -237,7 +240,7 @@ void RKSettingsModuleGeneral::loadSettings (KConfig *config) {
 
 	KConfigGroup cg;
 	cg = config->group ("Logfiles");
-	files_path = new_files_path = cg.readEntry ("logfile dir", QDir ().homePath () + "/.rkward/");
+	files_path = new_files_path = checkAdjustLoadedPath (cg.readEntry ("logfile dir", QDir ().homePath () + "/.rkward/"));
 
 	cg = config->group ("General");
 	startup_action = (StartupDialog::Result) cg.readEntry ("startup action", (int) StartupDialog::NoSavedSetting);
@@ -249,7 +252,9 @@ void RKSettingsModuleGeneral::loadSettings (KConfig *config) {
 		(int) RKWardDirectory
 #endif
 	);
-	initial_dir_specification = cg.readEntry ("initial dir spec", QString ());
+	initial_dir_specification = checkAdjustLoadedPath (cg.readEntry ("initial dir spec", QString ()));
+	previous_rkward_data_dir = cg.readEntry ("last known data dir", RKCommonFunctions::getRKWardDataDir ());
+	installation_moved = (previous_rkward_data_dir != RKCommonFunctions::getRKWardDataDir ()) && !previous_rkward_data_dir.isEmpty ();
 
 	cg = config->group ("Workplace");
 	workplace_save_mode = (WorkplaceSaveMode) cg.readEntry ("save mode", (int) SaveWorkplaceWithWorkspace);
@@ -278,6 +283,16 @@ void RKSettingsModuleGeneral::setSavedWorkplace (const QString &description, KCo
 
 	KConfigGroup cg = config->group ("Workplace");
 	cg.writeEntry ("last saved layout", description);
+}
+
+QString RKSettingsModuleGeneral::checkAdjustLoadedPath (const QString& localpath) {
+	RK_TRACE (SETTINGS);
+
+	if (!installation_moved) return localpath;
+	bool is_parent;	// old data path is parent of given path
+	QString adjusted = KUrl::relativePath (previous_rkward_data_dir, localpath, &is_parent);
+	if (is_parent) return adjusted;
+	return localpath;
 }
 
 #include "rksettingsmodulegeneral.moc"

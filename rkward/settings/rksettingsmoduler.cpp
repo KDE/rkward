@@ -269,7 +269,9 @@ QStringList RKSettingsModuleR::makeRRunTimeOptionCommands () {
 	list.append (QString ("setInternet2 (") + (options_internet2 ? "TRUE)\n" : "FALSE)\n"));
 #endif
 
-#warning TODO make the following options configurable
+#ifdef __GNUC__
+#	warning TODO make the following options configurable
+#endif
 	list.append ("options (help_type=\"html\")\n");		// for R 2.10.0 and above
 	list.append ("try ({options (htmlhelp=TRUE); options (chmhelp=FALSE)})\n");	// COMPAT: for R 2.9.x and below
 	list.append ("options (browser=rk.show.html)\n");
