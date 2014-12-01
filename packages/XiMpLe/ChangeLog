@@ -1,6 +1,10 @@
 ChangeLog for package XiMpLe
 
-changes in version 0.03-22 (2014-03-05)
+changes in version 0.03-22 (2014-12-02)
+changed:
+  - allowing empty attributes (attr=""), these were skipped, but only if there was more than one attribute
+
+changes in version 0.03-21 (2013-12-21)
 added:
   - new attribute "as.list" added to XMLScan(), if TRUE forces the return
     value to be a list of length 1 (default is still to directly return the

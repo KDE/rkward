@@ -211,15 +211,13 @@ pasteXMLAttr <- function(attr=NULL, tag=NULL, level=1, rename=NULL, shine=2, ind
     for (this.attr in names(attr)){
       # skip empty elements
       if(is.null(attr[[this.attr]])){next}
-      if(nchar(attr[[this.attr]]) > 0){
-        if(!is.null(rename)){
-          # look up attribute name to paste
-          attr.name <- lookupAttrName(tag, this.attr, rename=rename)
-        } else {
-          attr.name <- this.attr
-        }
-        full.attr <- trim(paste0(full.attr, new.attr, new.indent, attr.name, "=\"", attr[[this.attr]], "\""))
-      } else {}
+      if(!is.null(rename)){
+        # look up attribute name to paste
+        attr.name <- lookupAttrName(tag, this.attr, rename=rename)
+      } else {
+        attr.name <- this.attr
+      }
+      full.attr <- trim(paste0(full.attr, new.attr, new.indent, attr.name, "=\"", attr[[this.attr]], "\""))
     }
   } else {
     if(!is.null(rename)){
