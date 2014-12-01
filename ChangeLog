@@ -30,6 +30,16 @@
         - At least we could check for errors
         - Perhaps a special diff of the generated R commands, where all quoted strings and comments are stripped?
 
+---
+
+Stuff to cherry-pick, in case we want a 0.6.2a-release:
+polypath: 49d7e9a3cf27c5eb0a45e03aa043957b87c4479c
+
+rcmdr: fb19efa6580a198a156b488bed78f641a1d22cba
+and:   619a6764a25fd84e6388a1e0b21953db88325fcc
+
+debug-messages: b0bb24be1239bf52e1299cfb737d2b8b1a5fdc13
+
 --- Version 0.6.2 - Oct-20-2014
 - In data editor, indicate NAs, explicitly
 - Import Stata plugin gains option to convert character encoding.
