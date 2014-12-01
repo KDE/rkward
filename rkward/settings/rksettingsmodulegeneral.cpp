@@ -239,10 +239,9 @@ void RKSettingsModuleGeneral::loadSettings (KConfig *config) {
 	config_exists = config->hasGroup ("General");	// one of the very oldest groups in the config
 
 	KConfigGroup cg;
-	cg = config->group ("Logfiles");
-	files_path = new_files_path = checkAdjustLoadedPath (cg.readEntry ("logfile dir", QDir ().homePath () + "/.rkward/"));
-
 	cg = config->group ("General");
+	previous_rkward_data_dir = cg.readEntry ("last known data dir", RKCommonFunctions::getRKWardDataDir ());
+	installation_moved = (previous_rkward_data_dir != RKCommonFunctions::getRKWardDataDir ()) && !previous_rkward_data_dir.isEmpty ();
 	startup_action = (StartupDialog::Result) cg.readEntry ("startup action", (int) StartupDialog::NoSavedSetting);
 	show_help_on_startup = cg.readEntry ("show help on startup", true);
 	initial_dir = (InitialDirectory) cg.readEntry ("initial dir mode",
@@ -253,8 +252,9 @@ void RKSettingsModuleGeneral::loadSettings (KConfig *config) {
 #endif
 	);
 	initial_dir_specification = checkAdjustLoadedPath (cg.readEntry ("initial dir spec", QString ()));
-	previous_rkward_data_dir = cg.readEntry ("last known data dir", RKCommonFunctions::getRKWardDataDir ());
-	installation_moved = (previous_rkward_data_dir != RKCommonFunctions::getRKWardDataDir ()) && !previous_rkward_data_dir.isEmpty ();
+
+	cg = config->group ("Logfiles");
+	files_path = new_files_path = checkAdjustLoadedPath (cg.readEntry ("logfile dir", QDir ().homePath () + "/.rkward/"));
 
 	cg = config->group ("Workplace");
 	workplace_save_mode = (WorkplaceSaveMode) cg.readEntry ("save mode", (int) SaveWorkplaceWithWorkspace);
@@ -291,7 +291,10 @@ QString RKSettingsModuleGeneral::checkAdjustLoadedPath (const QString& localpath
 	if (!installation_moved) return localpath;
 	bool is_parent;	// old data path is parent of given path
 	QString adjusted = KUrl::relativePath (previous_rkward_data_dir, localpath, &is_parent);
-	if (is_parent) return adjusted;
+	if (is_parent) {
+		QDir new_data_dir (RKCommonFunctions::getRKWardDataDir ());
+		return QDir::cleanPath (new_data_dir.absoluteFilePath (adjusted));
+	}
 	return localpath;
 }
 
