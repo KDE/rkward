@@ -1,4 +1,4 @@
-# Copyright 2010-2014 Meik Michalke <meik.michalke@hhu.de>
+# Copyright 2014 Meik Michalke <meik.michalke@hhu.de>
 #
 # This file is part of the R package rkwarddev.
 #
@@ -30,6 +30,7 @@
 #' @param plural Character string for plural form of \code{msgid}, must at least include one
 #'    placeholder, and the first one has to represent an integer value in the dialog.
 #' @param newline Character string, can be set to e.g. \code{"\n"} to force a newline after the call.
+#' @return An object of class \code{rk.JS.i18n}.
 #' @export
 #' @examples
 #' i18n("Select data")

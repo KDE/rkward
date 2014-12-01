@@ -1,6 +1,6 @@
 ChangeLog for package rkwarddev
 
-changes in version 0.06-6 (2014-11-30)
+changes in version 0.06-6 (2014-12-01)
 fixed:
   - rk.XML.optionset() does now allow to re-use objects defined in the same
     function call (i.e., refer to optioncolumns in the logic section)
@@ -19,6 +19,7 @@ added:
   - new attribute "i18n" added to several XML functions; it takes a list with the named arguments
     "comment" or "context" to either produce an i18n comment node or an "i18n_context" attribute
   - new function rk.i18n.comment() to give context for translators
+  - new function rk.JS.header() to easily generate JavaScript header code fit for i18n
 changed:
   - function i18n() was changed to be used in JavaScript generation only; this breaks code
     using the function introduced with 0.06-4, but that was to be shortlived from the start...

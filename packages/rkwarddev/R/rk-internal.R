@@ -1409,3 +1409,19 @@ check.i18n <- function(i18n=NULL, attrs=list(), node=NULL, comment=FALSE){
   }
   return(result)
 } ## end function check.i18n()
+
+
+## function force.i18n
+# ensures that obj is encapsulated in i18n() in the output
+force.i18n <- function(obj){
+  stopifnot(length(obj) == 1)
+  if(inherits(obj, "rk.JS.i18n")){
+    result <- slot(obj, "value")
+  } else if(is.character(obj)){
+    result <- paste0("i18n(\"", obj, "\")")
+  } else {
+    stop(simpleError(paste0("force.i18n: don't know how to deal with an object of class ", class(obj), "!")))
+  }
+  return(result)
+} ## end function force.i18n
+
