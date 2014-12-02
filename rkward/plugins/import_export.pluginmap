@@ -14,6 +14,7 @@
 		<component type="standard" id="save_skeleton" file="save/skeleton/description.xml" label="Create package skeleton" />
 		<component type="standard" id="save_variables" file="save/write.xml" label="Export vector or matrix data" />
 		<component type="standard" id="save_table" file="save/write_table.xml" label="Export tabular data" />
+		<component type="standard" id="save_csv" file="save/write_csv.xml" label="Export Table / CSV files" />
 
 		<component type="standard" id="import_spss" file="import/import_spss.xml" label="Import SPSS">
 			<attribute id="format" value="*.sav *.por" label="SPSS data files"/>
@@ -42,7 +43,8 @@
 			<menu id="export" label="Export">
 				<entry component="save_r" />
 				<entry component="save_variables" />
-				<entry component="save_table" />
+        <entry component="save_table" />
+        <entry component="save_csv" />
 				<entry component="save_skeleton" />
 			</menu>
 		</menu>

@@ -1,0 +1,94 @@
+<!DOCTYPE rkhelp >
+<document>
+	<!-- this code was generated using the rkwarddev package.
+			perhaps don't make changes here, but in the rkwarddev script instead! -->
+	<title>
+		Export Table / CSV files
+	</title>
+	<summary>
+		Export data to CSV or similar file formats.
+	</summary>
+	<usage>
+		Select a tabular data object (like a data frame or matrix) and chose a file to save to. All other options allow you to define the file format, handling of column and row names as well as special character handling.
+	</usage>
+	<!-- <section id="sct_EDITORDE" title="EDIT OR DELETE ME">
+				EDIT OR DELETE ME
+			</section> -->
+	<settings>
+		<caption id="tab_DtndFlFr" />
+		<caption id="frm_vrsltdxlDS" />
+		<setting id="x">
+			Select a data object to export. Valid data types are array, data.frame, matrix, character, numeric, and integer.
+		</setting>
+		<caption id="frm_Saveto" />
+		<setting id="file">
+			The file to save to. Existing files will be overwritten, unless the append option is checked.
+		</setting>
+		<setting id="append">
+			Should existing files be overwritten or the data appended? If this is greyed out, the selected preset sets this for you.
+		</setting>
+		<setting id="quick">
+			Select one of the default file formats here. They will set some of the options (like field separator and decimal point) with resonable defaults. Use the custom format if you need more control.
+		</setting>
+		<caption id="frm_rDPPCCCOFT" />
+		<setting id="dec">
+			Specify the desirend decimal point character. If this is greyed out, the selected preset sets this for you.
+		</setting>
+		<setting id="custom_dec">
+			Use this value as the custom decimal point character.
+		</setting>
+		<setting id="sep">
+			Specify the desirend field separator character. If this is greyed out, the selected preset sets this for you.
+		</setting>
+		<setting id="custom_sep">
+			Use this value as the custom field separator character.
+		</setting>
+		<caption id="tab_RwsndClm" />
+		<caption id="frm_Rwspcfct" />
+		<setting id="rowname">
+			Decide how to deal with row names.
+		</setting>
+		<setting id="custRowNames">
+			Select a character vector to use for custom row names.
+		</setting>
+		<caption id="frm_Clmnspcf" />
+		<setting id="colname">
+			Decide how to deal with column names. If this is greyed out, the selected preset sets this for you.
+		</setting>
+		<setting id="custColNames">
+			Select a character vector to use for custom column names.
+		</setting>
+		<caption id="tab_EncdngCO" />
+		<caption id="frm_Encoding" />
+		<setting id="encoding">
+			If the default character encoding doesn't work for you, you can set a specific one here.
+		</setting>
+		<setting id="user_encoding">
+			Use this field to set a custom encoding, in case the dropdown menu doesn't list the one you need.
+		</setting>
+		<caption id="frm_rQHEEDDQHE" />
+		<setting id="quote">
+			Check this to have all string values quoted.
+		</setting>
+		<setting id="qmethod">
+			Controls how existing quotes in values are handled -- they can either be escaped or double qouted. If this is greyed out, the selected preset sets this for you.
+		</setting>
+		<setting id="na">
+			Set the character to indicate missing data.
+		</setting>
+		<setting id="eol">
+			Set the character used to indicate a line break (EOL). This varies between operating systems, changing this option might help in case you run into problems when exchanging files with other people.
+		</setting>
+	</settings>
+	<related>
+		<ul>
+			<li>
+				<link href="rkward://rhelp/write.table">
+					R manual page for write.table(), which is called by this plugin.
+				</link>
+			</li>
+		</ul>
+	</related>
+	<technical>
+	</technical>
+</document>

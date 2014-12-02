@@ -1,0 +1,178 @@
+<!DOCTYPE rkplugin >
+<document>
+	<!-- this code was generated using the rkwarddev package.
+			perhaps don't make changes here, but in the rkwarddev script instead! -->
+  <code file="write_csv.js" />
+  <help file="write_csv.rkh" />
+	<logic>
+		<external id="filename" />
+		<connect governor="filename.state" client="file.selection" />
+		<convert id="customEnc" sources="encoding.string" mode="equals" standard="other" />
+		<connect governor="customEnc" client="user_encoding.enabled" />
+		<convert id="quickNone" sources="quick.string" mode="equals" standard="table" />
+		<convert id="quickCSV" sources="quick.string" mode="equals" standard="csv" />
+		<convert id="quickCSV2" sources="quick.string" mode="equals" standard="csv2" />
+		<convert id="quickTAB" sources="quick.string" mode="equals" standard="delim" />
+		<convert id="quickTAB2" sources="quick.string" mode="equals" standard="delim2" />
+		<convert id="quickCC2TT2" sources="quick.string" mode="notequals" standard="table" />
+		<convert id="quickNCT" sources="quickNone;quickCSV;quickTAB" mode="or" />
+		<connect governor="quickNCT" client="dec.decPeriod.enabled" />
+		<convert id="quickNC2T2" sources="quickNone;quickCSV2;quickTAB2" mode="or" />
+		<connect governor="quickNC2T2" client="dec.decComma.enabled" />
+		<connect governor="quickNone" client="dec.decOther.enabled" />
+		<convert id="customdec" sources="dec.string" mode="equals" standard="other" />
+		<connect governor="customdec" client="custom_dec.enabled" />
+		<convert id="customsep" sources="sep.string" mode="equals" standard="other" />
+		<connect governor="customsep" client="custom_sep.enabled" />
+		<convert id="quickNTT2" sources="quickNone;quickTAB;quickTAB2" mode="or" />
+		<connect governor="quickNTT2" client="sep.sepTab.enabled" />
+		<convert id="quickNC2" sources="quickNone;quickCSV2" mode="or" />
+		<connect governor="quickNC2" client="sep.sepSemiC.enabled" />
+		<convert id="quickNC" sources="quickNone;quickCSV" mode="or" />
+		<connect governor="quickNC" client="sep.sepComma.enabled" />
+		<connect governor="quickNone" client="sep.sepSpace.enabled" />
+		<connect governor="quickNone" client="sep.sepOther.enabled" />
+		<convert id="quickCC2" sources="quickCSV;quickCSV2" mode="or" />
+		<connect governor="quickCC2.not" client="append.enabled" />
+		<connect governor="quickCC2.not" client="frm_Clmnspcf.enabled" />
+		<connect governor="quickCC2.not" client="qmethod.qmethodEsc.enabled" />
+		<convert id="customizerow" sources="rowname.string" mode="equals" standard="custoRow" />
+		<connect governor="customizerow" client="custRowNames.enabled" />
+		<convert id="customizecol" sources="colname.string" mode="equals" standard="custoCol" />
+		<connect governor="customizecol" client="custColNames.enabled" />
+	</logic>
+	<dialog label="Export Table / CSV files">
+		<tabbook>
+			<tab label="Data and File Format" id="tab_DtndFlFr">
+				<row id="row_cSSSSDSDSS">
+					<column id="clm_vrslctrdSS">
+						<varselector id="vrs_Slctvrbl" label="Select a variable or table" />
+					</column>
+					<column id="clm_frmDSDSSSA">
+						<frame id="frm_vrsltdxlDS">
+							<varslot id="x" label="Data" source="vrs_Slctvrbl" classes="array data.frame matrix character numeric integer" required="true" />
+						</frame>
+						<frame label="Save to" id="frm_Saveto">
+							<browser label="" type="savefile" id="file" />
+							<checkbox id="append" label="Append to file (if it exists)" value="true" />
+						</frame>
+					</column>
+				</row>
+				<row id="row_cFCCSVSCSV">
+					<column id="clm_dFCCSVSCSV">
+						<dropdown id="quick" label="File format">
+							<option label="Comma separated values (CSV)" value="csv" checked="true" />
+							<option label="Semicolon separated values, comma as decimal separator (CSV2)" value="csv2" />
+							<option label="Tab separated values (TAB)" value="delim" />
+							<option label="Tab separated values, comma as decimal separator (TAB2)" value="delim2" />
+							<option label="Custom" value="table" />
+						</dropdown>
+						<frame id="frm_rDPPCCCOFT">
+							<row id="row_cDPPCCCOFT">
+								<column id="col_decimal">
+									<radio id="dec" label="Decimal point character">
+										<option label="'.' (Period)" value="." checked="true" id="decPeriod" />
+										<option label="',' (Comma)" value="," id="decComma" />
+										<option label="Custom (specify below)" value="other" id="decOther" />
+									</radio>
+									<stretch />
+									<input label="" id="custom_dec" required="true" />
+								</column>
+								<column id="col_field">
+									<radio id="sep" label="Field separator character">
+										<option label="Tab" value="\t" id="sepTab" />
+										<option label="';' (Semicolon)" value=";" id="sepSemiC" />
+										<option label="',' (Comma)" value="," id="sepComma" />
+										<option label="Space" value=" " checked="true" id="sepSpace" />
+										<option label="Custom (specify below)" value="other" id="sepOther" />
+									</radio>
+									<stretch />
+									<input label="" id="custom_sep" required="true" />
+								</column>
+							</row>
+						</frame>
+					</column>
+				</row>
+			</tab>
+			<tab label="Rows and Columns" id="tab_RwsndClm">
+				<row id="row_cSSRRRUTRU">
+					<column id="select_rowcol_names">
+						<varselector id="vrs_Slctrwrc" label="Select row or column names" />
+					</column>
+					<column id="clm_fRRRUTRUE1">
+						<frame label="Row  specifications" id="frm_Rwspcfct">
+							<radio id="rowname" label="Row names">
+								<option label="Use current row names" value="TRUE" id="temp1" />
+								<option label="No names" value="FALSE" id="temp2" />
+								<option label="Custom (specify below)" value="custoRow" />
+							</radio>
+							<varslot id="custRowNames" label="Row names (character vector)" source="vrs_Slctrwrc" classes="character" required="true" />
+							<stretch />
+						</frame>
+						<frame label="Column specifications" id="frm_Clmnspcf">
+							<radio id="colname" label="Column names">
+								<option label="Use current column names" value="TRUE" />
+								<option label="No names" value="FALSE" />
+								<option label="Custom (specify below)" value="custoCol" />
+							</radio>
+							<varslot id="custColNames" label="Column names (character vector)" source="vrs_Slctrwrc" classes="character" required="true" />
+							<stretch />
+						</frame>
+					</column>
+				</row>
+			</tab>
+			<tab label="Encoding and Character Options" id="tab_EncdngCO">
+				<row id="row_cEEFUTF8UT">
+					<column id="clm_fEEFUTF8UT">
+						<frame label="Encoding" id="frm_Encoding">
+							<dropdown id="encoding" label="File encoding">
+								<option label="(default)" value="" checked="true" />
+								<option label="UTF-8" value="UTF-8" />
+								<option label="Latin 1" value="latin1" />
+								<option label="ISO8859-1 Latin-1 Western European" value="ISO8859-1" />
+								<option label="ISO8859-2 Latin-2 Central European" value="ISO8859-2" />
+								<option label="ISO8859-3 Latin-3 South European" value="ISO8859-3" />
+								<option label="ISO8859-4 Latin-4 North European" value="ISO8859-4" />
+								<option label="ISO8859-5 Latin/Cyrillic" value="ISO8859-5" />
+								<option label="ISO8859-6 Latin/Arabic" value="ISO8859-6" />
+								<option label="ISO8859-7 Latin/Greek" value="ISO8859-7" />
+								<option label="MS-GREEK" value="MS-GREEK" />
+								<option label="ISO8859-8 Latin/Hebrew" value="ISO8859-8" />
+								<option label="ISO8859-9 Latin-5 Turkish" value="ISO8859-9" />
+								<option label="ISO8859-10 Latin-6 Nordic" value="ISO8859-10" />
+								<option label="ISO8859-11 Latin/Thai" value="ISO8859-11" />
+								<option label="ISO8859-13 Latin-7 Baltic Rim" value="ISO8859-13" />
+								<option label="ISO8859-14 Latin-8 Celtic" value="ISO8859-14" />
+								<option label="ISO8859-15 Latin-9 Western European (EUR)" value="ISO8859-15" />
+								<option label="ISO8859-16 Latin-10 South-Eastern European" value="ISO8859-16" />
+								<option label="Other (specify below)" value="other" />
+							</dropdown>
+							<input label="Custom encoding" id="user_encoding" required="true" />
+						</frame>
+						<stretch />
+						<frame id="frm_rQHEEDDQHE">
+							<row id="row_cQHEEDDQHE">
+								<column id="clm_chckQHEEDD">
+									<checkbox id="quote" label="Quote all strings" value="true" checked="true" />
+									<radio id="qmethod" label="Handling double quote characters">
+										<option label="Escape" value="escape" checked="true" id="qmethodEsc" />
+										<option label="Double" value="double" id="qmethodDbl" />
+									</radio>
+								</column>
+								<column id="clm_iCNANLFGNU">
+									<input label="Character for missing values" id="na" initial="NA" size="small" />
+									<dropdown id="eol" label="Newline character">
+										<option label="\n (LF: GNU/Linux, BSD, OS X)" value="\n" checked="true" />
+										<option label="\r\n (CR+LF: Windows, DOS)" value="\r\n" />
+										<option label="\r (CR: Mac OS &lt;= 9)" value="\r" />
+										<option label="\n\r (LF+CR: RISC OS)" value="\n\r" />
+									</dropdown>
+								</column>
+							</row>
+						</frame>
+					</column>
+				</row>
+			</tab>
+		</tabbook>
+	</dialog>
+</document>
