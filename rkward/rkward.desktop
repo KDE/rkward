@@ -28,4 +28,7 @@ Terminal=false
 Type=Application
 X-DocPath=rkward/index.html
 Categories=Science;Math;NumericalAnalysis;
+# Startup notification broken, as startup id is not passed to rkward.frontend.
+# It may be possible to fix this in Qt 5.4. See https://git.reviewboard.kde.org/r/121230/
+StartupNotify=false
 # vi: encoding=utf-8
