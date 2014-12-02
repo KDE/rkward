@@ -8,3 +8,5 @@ $EXTRACTRC `find rkward -name \*.rc -a \! -name rkward_windows_icon.rc -o -name 
 # extensions besides .cc, .cpp, and .h, just add them in the find call.
 $XGETTEXT `find rkward -name \*.cpp -o -name \*.h -name \*.c` -o $podir/rkward.pot
 
+# extract messages from analysis plugins: >> rkward__analysis.pot
+python scripts/update_plugin_messages.py --extract-only --outdir=$podir rkward/plugins/analysis.pluginmap
