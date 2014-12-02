@@ -23,7 +23,8 @@ URL: \tab http://reaktanz.de/?c=hacking&s=XiMpLe\cr
 This package provides a simple XML tree parser/generator. It includes functions to read XML files into R objects,
 get information out of and into nodes, and write R objects back to XML code.
 It's not as powerful as the XML package and doesn't aim to be, but for simple XML handling
-it could be useful.  It was originally programmed for the R GUI and IDE RKWard, to make plugin
+it could be useful.  It was originally programmed for the R GUI and IDE RKWard,
+      to make plugin
 development easier. You can install RKWard from http://rkward.sf.net.
 }
 \author{

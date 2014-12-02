@@ -13,7 +13,8 @@ is.XiMpLe.node(x)
 \item{name}{Character string, the tag name.}
 
 \item{...}{Optional children for the tag. Must be either objects of class XiMpLe.node or character strings,
-which are treated as simple text values. If this is empty, the tag will be treated as an empty tag. To
+which are treated as simple text values. If this is empty,
+      the tag will be treated as an empty tag. To
 force a closing tag, supply an empty string, i.e. \code{""}.}
 
 \item{attrs}{An optional named list of attributes.}
@@ -22,7 +23,8 @@ force a closing tag, supply an empty string, i.e. \code{""}.}
 
 \item{namespaceDefinitions}{Currently ignored.}
 
-\item{.children}{Alternative way of specifying children, if you have them already as a list.}
+\item{.children}{Alternative way of specifying children,
+      if you have them already as a list.}
 
 \item{x}{An arbitrary \code{R} object.}
 }
@@ -33,7 +35,8 @@ An object of class \code{\link[XiMpLe:XiMpLe.node-class]{XiMpLe.node}}.
 Can be used to create XML nodes.
 }
 \details{
-To generate a CDATA node, set \code{name="![CDATA["}, to create a comment, set \code{name="!--"}.
+To generate a CDATA node, set \code{name="![CDATA["}, to create a comment,
+      set \code{name="!--"}.
 }
 \examples{
 sample.XML.node <- XMLNode("a",

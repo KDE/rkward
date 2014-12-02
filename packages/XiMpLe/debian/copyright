@@ -1,9 +1,9 @@
-The R library XiMpLe was originally  written and is maintained by Meik Michalke <meik.michalke@hhu.de>.
+The R library XiMpLe was originally written and is maintained by Meik Michalke <meik.michalke@hhu.de>.
 
-This Debian package was put together m.eik michalke <meik.michalke@hhu.de>.
+This Debian package was put together by m.eik michalke <meik.michalke@hhu.de>.
 
 The package was renamed from its upstream name 'XiMpLe' to
-'r-other-reaktanz-ximple' in harmony with the R packaging policy to indicate
+'r-other-rkward-ximple' in harmony with the R packaging policy to indicate
 that the package is external to the CRAN or BioC repositories.
 
 XiMpLe Copyright (C) 2014 Meik Michalke, released under the
