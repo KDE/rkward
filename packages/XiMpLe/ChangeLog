@@ -1,8 +1,12 @@
 ChangeLog for package XiMpLe
 
 changes in version 0.03-22 (2014-12-02)
+fixed:
+  - added curly brackets to the function bodies of all setGeneric() calls to
+    satisfy roxygen2
 changed:
-  - allowing empty attributes (attr=""), these were skipped, but only if there was more than one attribute
+  - allowing empty attributes (attr=""), these were skipped, but only if
+    there was more than one attribute
 
 changes in version 0.03-21 (2013-12-21)
 added:

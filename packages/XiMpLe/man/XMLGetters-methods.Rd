@@ -139,6 +139,18 @@ XMLScanDeep(obj, find = NULL, search = "attributes")
 }
 \arguments{
 \item{obj}{An object of class \code{XiMpLe.node} or \code{XiMpLe.doc}}
+
+\item{value}{The new value to set.}
+
+\item{name}{Character, name of nodes to scan for.}
+
+\item{as.list}{Logical, if \code{TRUE} allways returns a list (or NULL), otherwise if exactly one result is found,
+it will be returned as as single \code{XiMpLe.node}.}
+
+\item{find}{Character, name of element to scan for.}
+
+\item{search}{Character, name of the slot to scan, one of \code{"attributes"},
+\code{"name"}, \code{"children"}, or \code{"value"} for nodes.}
 }
 \description{
 Used to get/set certain slots from objects of class \code{\link[XiMpLe:XiMpLe.doc-class]{XiMpLe.doc}}

@@ -1,7 +1,21 @@
 \name{NEWS}
 \title{News for Package 'XiMpLe'}
 \encoding{UTF-8}
-\section{Changes in XiMpLe version 0.03-22 (2014-03-05)}{
+\section{Changes in XiMpLe version 0.03-22 (2014-12-02)}{
+  \subsection{fixed}{
+    \itemize{
+      \item added curly brackets to the function bodies of all \code{setGeneric()} calls to
+        satisfy roxygen2
+    }
+  }
+  \subsection{changed}{
+    \itemize{
+      \item allowing empty attributes (attr=\code{""}), these were skipped, but only if
+        there was more than one attribute
+    }
+  }
+}
+\section{Changes in XiMpLe version 0.03-21 (2013-12-21)}{
   \subsection{added}{
     \itemize{
       \item new attribute \code{"as.list"} added to \code{XMLScan()}, if TRUE forces the return

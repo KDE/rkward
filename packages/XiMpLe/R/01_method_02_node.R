@@ -177,6 +177,7 @@ setMethod("node",
   }
 )
 
+#' @param value The value to set.
 #' @export
 #' @rdname node
 setGeneric("node<-", function(obj, node=list(), what=NULL, cond.attr=NULL, cond.value=NULL, element=NULL, value){standardGeneric("node<-")})

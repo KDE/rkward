@@ -20,6 +20,8 @@ pasteXML(obj, ...)
 \arguments{
 \item{obj}{An object of class \code{XiMpLe.node} or \code{XiMpLe.doc}.}
 
+\item{...}{Additional options for the generic method, see options for a specific method, respectively.}
+
 \item{level}{Indentation level.}
 
 \item{shine}{Integer, controlling if the output should be formatted for better readability. Possible values:

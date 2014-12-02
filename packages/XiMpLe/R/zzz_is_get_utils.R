@@ -73,7 +73,7 @@ is.XiMpLe.doc <- function(x){
 #' @keywords methods
 #' @docType methods
 #' @rdname XMLGetters-methods
-#' @exportMethod XMLName
+#' @export
 #' @examples
 #' xmlTestNode <- XMLNode("foo", XMLNode("testchild"))
 #' XMLName(xmlTestNode) # returns "foo"
@@ -84,7 +84,7 @@ is.XiMpLe.doc <- function(x){
 #' XMLScan(xmlTestNode, "testchild")
 #' # remove nodes of that name
 #' XMLScan(xmlTestNode, "testchild") <- NULL
-setGeneric("XMLName", function(obj) standardGeneric("XMLName"))
+setGeneric("XMLName", function(obj){standardGeneric("XMLName")})
 
 #' @rdname XMLGetters-methods
 #' @aliases
@@ -100,8 +100,9 @@ setMethod("XMLName",
 )
 
 #' @rdname XMLGetters-methods
-#' @exportMethod XMLName<-
-setGeneric("XMLName<-", function(obj, value) standardGeneric("XMLName<-"))
+#' @docType methods
+#' @export
+setGeneric("XMLName<-", function(obj, value){standardGeneric("XMLName<-")})
 
 #' @rdname XMLGetters-methods
 #' @aliases
@@ -118,8 +119,9 @@ setMethod("XMLName<-",
 )
 
 #' @rdname XMLGetters-methods
-#' @exportMethod XMLAttrs
-setGeneric("XMLAttrs", function(obj) standardGeneric("XMLAttrs"))
+#' @docType methods
+#' @export
+setGeneric("XMLAttrs", function(obj){standardGeneric("XMLAttrs")})
 
 #' @rdname XMLGetters-methods
 #' @aliases
@@ -135,8 +137,9 @@ setMethod("XMLAttrs",
 )
 
 #' @rdname XMLGetters-methods
-#' @exportMethod XMLAttrs<-
-setGeneric("XMLAttrs<-", function(obj, value) standardGeneric("XMLAttrs<-"))
+#' @docType methods
+#' @export
+setGeneric("XMLAttrs<-", function(obj, value){standardGeneric("XMLAttrs<-")})
 
 #' @rdname XMLGetters-methods
 #' @aliases
@@ -153,8 +156,9 @@ setMethod("XMLAttrs<-",
 )
 
 #' @rdname XMLGetters-methods
-#' @exportMethod XMLChildren
-setGeneric("XMLChildren", function(obj) standardGeneric("XMLChildren"))
+#' @docType methods
+#' @export
+setGeneric("XMLChildren", function(obj){standardGeneric("XMLChildren")})
 
 #' @rdname XMLGetters-methods
 #' @aliases
@@ -182,9 +186,11 @@ setMethod("XMLChildren",
   }
 )
 
+#' @param value The new value to set.
 #' @rdname XMLGetters-methods
-#' @exportMethod XMLChildren<-
-setGeneric("XMLChildren<-", function(obj, value) standardGeneric("XMLChildren<-"))
+#' @docType methods
+#' @export
+setGeneric("XMLChildren<-", function(obj, value){standardGeneric("XMLChildren<-")})
 
 #' @rdname XMLGetters-methods
 #' @aliases
@@ -216,8 +222,9 @@ setMethod("XMLChildren<-",
 
 
 #' @rdname XMLGetters-methods
-#' @exportMethod XMLValue
-setGeneric("XMLValue", function(obj) standardGeneric("XMLValue"))
+#' @docType methods
+#' @export
+setGeneric("XMLValue", function(obj){standardGeneric("XMLValue")})
 
 #' @rdname XMLGetters-methods
 #' @aliases
@@ -233,8 +240,9 @@ setMethod("XMLValue",
 )
 
 #' @rdname XMLGetters-methods
-#' @exportMethod XMLValue<-
-setGeneric("XMLValue<-", function(obj, value) standardGeneric("XMLValue<-"))
+#' @docType methods
+#' @export
+setGeneric("XMLValue<-", function(obj, value){standardGeneric("XMLValue<-")})
 
 #' @rdname XMLGetters-methods
 #' @aliases
@@ -251,8 +259,9 @@ setMethod("XMLValue<-",
 )
 
 #' @rdname XMLGetters-methods
-#' @exportMethod XMLFile
-setGeneric("XMLFile", function(obj) standardGeneric("XMLFile"))
+#' @docType methods
+#' @export
+setGeneric("XMLFile", function(obj){standardGeneric("XMLFile")})
 
 #' @rdname XMLGetters-methods
 #' @aliases
@@ -268,8 +277,9 @@ setMethod("XMLFile",
 )
 
 #' @rdname XMLGetters-methods
-#' @exportMethod XMLFile<-
-setGeneric("XMLFile<-", function(obj, value) standardGeneric("XMLFile<-"))
+#' @docType methods
+#' @export
+setGeneric("XMLFile<-", function(obj, value){standardGeneric("XMLFile<-")})
 
 #' @rdname XMLGetters-methods
 #' @aliases
@@ -286,8 +296,9 @@ setMethod("XMLFile<-",
 )
 
 #' @rdname XMLGetters-methods
-#' @exportMethod XMLDecl
-setGeneric("XMLDecl", function(obj) standardGeneric("XMLDecl"))
+#' @docType methods
+#' @export
+setGeneric("XMLDecl", function(obj){standardGeneric("XMLDecl")})
 
 #' @rdname XMLGetters-methods
 #' @aliases
@@ -303,8 +314,9 @@ setMethod("XMLDecl",
 )
 
 #' @rdname XMLGetters-methods
-#' @exportMethod XMLDecl<-
-setGeneric("XMLDecl<-", function(obj, value) standardGeneric("XMLDecl<-"))
+#' @docType methods
+#' @export
+setGeneric("XMLDecl<-", function(obj, value){standardGeneric("XMLDecl<-")})
 
 #' @rdname XMLGetters-methods
 #' @aliases
@@ -321,8 +333,9 @@ setMethod("XMLDecl<-",
 )
 
 #' @rdname XMLGetters-methods
-#' @exportMethod XMLDTD
-setGeneric("XMLDTD", function(obj) standardGeneric("XMLDTD"))
+#' @docType methods
+#' @export
+setGeneric("XMLDTD", function(obj){standardGeneric("XMLDTD")})
 
 #' @rdname XMLGetters-methods
 #' @aliases
@@ -338,8 +351,9 @@ setMethod("XMLDTD",
 )
 
 #' @rdname XMLGetters-methods
-#' @exportMethod XMLDTD<-
-setGeneric("XMLDTD<-", function(obj, value) standardGeneric("XMLDTD<-"))
+#' @docType methods
+#' @export
+setGeneric("XMLDTD<-", function(obj, value){standardGeneric("XMLDTD<-")})
 
 #' @rdname XMLGetters-methods
 #' @aliases
@@ -356,9 +370,13 @@ setMethod("XMLDTD<-",
 )
 
 ## scan a tree for appearances of nodes
+#' @param name Character, name of nodes to scan for.
+#' @param as.list Logical, if \code{TRUE} allways returns a list (or NULL), otherwise if exactly one result is found,
+#'    it will be returned as as single \code{XiMpLe.node}.
 #' @rdname XMLGetters-methods
-#' @exportMethod XMLScan
-setGeneric("XMLScan", function(obj, name, as.list=FALSE) standardGeneric("XMLScan"))
+#' @docType methods
+#' @export
+setGeneric("XMLScan", function(obj, name, as.list=FALSE){standardGeneric("XMLScan")})
 
 # internal helper function
 find.nodes <- function(nodes, nName){
@@ -418,7 +436,7 @@ setMethod("XMLScan",
 
 #' @rdname XMLGetters-methods
 #' @exportMethod XMLScan<-
-setGeneric("XMLScan<-", function(obj, name, value) standardGeneric("XMLScan<-"))
+setGeneric("XMLScan<-", function(obj, name, value){standardGeneric("XMLScan<-")})
 
 # internal helper function
 replace.nodes <- function(nodes, nName, replacement){
@@ -484,9 +502,13 @@ setMethod("XMLScan<-",
   }
 )
 
+#' @param find Character, name of element to scan for.
+#' @param search Character, name of the slot to scan, one of \code{"attributes"},
+#'    \code{"name"}, \code{"children"}, or \code{"value"} for nodes.
 #' @rdname XMLGetters-methods
-#' @exportMethod XMLScanDeep
-setGeneric("XMLScanDeep", function(obj, find=NULL, search="attributes") standardGeneric("XMLScanDeep"))
+#' @docType methods
+#' @export
+setGeneric("XMLScanDeep", function(obj, find=NULL, search="attributes"){standardGeneric("XMLScanDeep")})
 
 # internal helper function
 recursiveScan <- function(robj, rfind, rsearch, recResult=list(), result, envID="all"){

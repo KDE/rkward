@@ -46,6 +46,8 @@ against the value between a pair of tags.}
 
 \item{element}{A character string naming one list element of the node slot. If \code{NULL}, all
 elements will be returned.}
+
+\item{value}{The value to set.}
 }
 \description{
 This method can be used to get parts of a parsed XML tree object, or to fill it with new values.

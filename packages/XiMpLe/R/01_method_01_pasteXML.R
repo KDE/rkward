@@ -25,6 +25,7 @@
 #'    They should no longer be used.
 #'
 #' @param obj An object of class \code{XiMpLe.node} or \code{XiMpLe.doc}.
+#' @param ... Additional options for the generic method, see options for a specific method, respectively.
 #' @aliases
 #'    pasteXML,-methods
 #'    pasteXML,XiMpLe.doc-method
@@ -38,7 +39,7 @@
 #' @include 00_class_02_XiMpLe.doc.R
 #' @docType methods
 #' @export
-setGeneric("pasteXML", function(obj, ...) standardGeneric("pasteXML"))
+setGeneric("pasteXML", function(obj, ...){standardGeneric("pasteXML")})
 
 #' @param level Indentation level.
 #' @param shine Integer, controlling if the output should be formatted for better readability. Possible values:
@@ -100,6 +101,7 @@ setMethod("pasteXML",
     return(pasted.node)
   }
 )
+
 #' @rdname pasteXML-methods
 setMethod("pasteXML",
   signature=signature(obj="XiMpLe.doc"),
@@ -150,6 +152,7 @@ setMethod("pasteXML",
 pasteXMLNode <- function(node, level=1, shine=1, indent.by="\t", tidy=TRUE){
   pasteXML(node, level=level, shine=shine, indent.by=indent.by, tidy=tidy)
 }
+
 #' @export
 pasteXMLTree <- function(obj, shine=1, indent.by="\t", tidy=TRUE){
   pasteXML(obj, shine=shine, indent.by=indent.by, tidy=tidy)

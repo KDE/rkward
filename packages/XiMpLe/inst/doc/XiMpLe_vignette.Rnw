@@ -1,0 +1,261 @@
+\documentclass[a4paper,10pt]{scrartcl}
+\usepackage[utf8x]{inputenc}
+\usepackage{apacite}
+
+\newcommand{\X}[0]{\texttt{XiMpLe}}
+
+%opening
+\title{The XiMpLe Package}
+%\VignetteIndexEntry{Managing R Packages with roxyPackage}
+\author{m.eik michalke}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This package provides basic tools for parsing and generating XML into and from R. It is not as feature-rich as alternative packages, but it's small and keeps dependencies to a minimum.
+\end{abstract}
+
+\section{Previously on \X{}}
+
+Before I even begin, I would like to stress that \X{} can \textit{not} replace the \texttt{XML} package, and it is not supposed to. It has only a hand full of functions, therefore it can only do so much. Probably the most noteworthy missing feature in this package is any real DTD support. If you need that, you can stop reading here. Another problem is speed -- \X{} is written in pure R, and it's painfully slow with large XML trees. You won't notice this if you're only dealing with portions of some kilobytes, but if you need to parse really huge documents, it can take ages to finish.
+
+Historically, this package was written for exactly one purpose: I wanted to be able to read and write the XML documents of \texttt{RKWard}\footnote{\url{http://rkward.sourceforge.net}}, because I was about to write an R package for scripting plugins for this R GUI. I actually had started another project shortly before, using the \texttt{XML} package as a dependency, but soon got complaints from Windows users. As it turned out, that package was not available for Windows, because somehow it couldn't be built automatically. When I realised that I only needed a small subset of its features anyway, I figured it might be easiest to quickly implement those features myself.
+
+Instead of hiding them in the internals of what eventually became the \texttt{rkwarddev}\footnote{\url{http://rkward.sourceforge.net/R/pckg/rkwarddev}} package, I then started working on this package first. And well, ``quickly'' was rather optimistic... but since I'm happily using \X{} in other packages as well (like \texttt{roxyPackage}\footnote{\url{http://reaktanz.de/?c=hacking\&s=roxyPackage}}), I'm satisfied it was worth it.
+
+So now you know. If you need a full-featured package to parse or generate XML in R, try the \texttt{XML} package. Otherwise, keep on reading.
+
+\section{And now the continuation}
+
+Basically, \X{} can do these things for you:
+
+\begin{itemize}
+  \item parse XML from files into an R object, using the \texttt{parseXML()} function
+  \item generate XML R objects, using the functions \texttt{XMLNode()} and \texttt{XMLTree()}
+  \item extract nodes from XML R objects, or change their content, using the \texttt{node()} function
+  \item write back XML files from R objects, using the \texttt{pasteXML()} function
+\end{itemize}
+
+That about covers it. XML nodes can of course be nested to construct complex trees, but that's all. Let's look at some examples.
+
+\section{Naming conventions}
+Let's quickly explain what we'll be talking about here. If you're parsing an XML document, it will contain an \textbf{XML tree}. This tree is made up of \textbf{XML nodes}. A node is indicated by arrow brackets, \textit{must} have a \textbf{name}, \textit{can} have \textbf{attributes}, and is either \textbf{empty} or not. Nodes can be nested, where nodes inside a node are its \textbf{child nodes}.
+
+\begin{Schunk}
+	\begin{Sinput}
+<!-- following is an empty node named "useless" -->
+<useless />
+
+<!-- the next node is non-empty and has an attribute foo with value bar -->
+<other foo="bar">
+  this text is the child of the "other" node.
+</other>
+	\end{Sinput}
+\end{Schunk}
+
+\section{Generate XML trees}
+
+Now let's see how these nodes can be generated using the \X{} package. Single nodes are the domain of the \texttt{XMLNode()} function, and to get an empty node you just give it the name of that node:
+
+\begin{Schunk}
+	\begin{Sinput}
+> XMLNode("useless")
+	\end{Sinput}
+	\begin{Soutput}
+<useless />
+	\end{Soutput}
+\end{Schunk}
+
+As you see, you will be shown XML code on the console. But what this function returns is actually an R object of class \texttt{XiMpLe.node}, so what you see is an \textit{interpretation} of that object, made by the \texttt{show()} method for objects of this type (see section \ref{Writing XML files} on page \pageref{Writing XML files} on how to export XML to files).
+
+The second node in the example above has an attribute. Attributes can be specified with the \texttt{attrs} argument, which expects a named list:
+
+\begin{Schunk}
+	\begin{Sinput}
+> XMLNode("other", attrs=list(foo="bar"))
+	\end{Sinput}
+	\begin{Soutput}
+<other foo="bar" />
+	\end{Soutput}
+\end{Schunk}
+
+So, by default, as long as our node doesn't have any children, it's assumed to be an empty node. To force it into a non-empty node (i.\,e., opening and closing tag) even without content, we'd have to provide an empty character string as its child. Child nodes can be provided in two ways -- either one by one via the ``$\dots$'' argument, or as one list via the \texttt{.children} argument:
+
+\begin{Schunk}
+	\begin{Sinput}
+> XMLNode("other", "", attrs=list(foo="bar"))
+	\end{Sinput}
+	\begin{Soutput}
+<other foo="bar">
+</other>
+	\end{Soutput}
+	\begin{Sinput}
+> XMLNode("other", attrs=list(foo="bar"), .children=list(""))
+	\end{Sinput}
+	\begin{Soutput}
+<other foo="bar">
+</other>
+	\end{Soutput}
+\end{Schunk}
+
+Of course this is also the place to provide our node with the text value:
+
+\begin{Schunk}
+	\begin{Sinput}
+> XMLNode("other", "this text is the child of the \"other\" node.",
++ attrs=list(foo="bar"))
+	\end{Sinput}
+	\begin{Soutput}
+<other foo="bar">
+  this text is the child of the "other" node.
+</other>
+	\end{Soutput}
+\end{Schunk}
+
+But how about the comments? Well, \X{} does detect some special node names, one being ``!-\,-'' to indicate a comment:
+
+\begin{Schunk}
+	\begin{Sinput}
+> XMLNode("!--", "following is an empty node named \"useless\"")
+	\end{Sinput}
+	\begin{Soutput}
+<!-- following is an empty node named "useless" -->
+	\end{Soutput}
+\end{Schunk}
+
+OK, that's single nodes. In most cases, you want to have nested nodes which combine into an XML tree. As a practical example, this is how you could generate an XHTML document:
+
+\begin{Schunk}
+	\begin{Sinput}
+> sample.XML.a <- XMLNode("a", "klick here!",
++ attrs=list(href="http://example.com", target="_blank"))
+> sample.XML.body <- XMLNode("body", sample.XML.a)
+> sample.XML.html <- XMLNode("html", XMLNode("head", ""),
++ sample.XML.body)
+> sample.XML.tree <- XMLTree(sample.XML.html,
++ xml=list(version="1.0", encoding="UTF-8"),
++ dtd=list(doctype="html", decl="PUBLIC",
++ id="-//W3C//DTD XHTML 1.0 Transitional//EN",
++ refer="http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"))
+> sample.XML.tree
+	\end{Sinput}
+	\begin{Soutput}
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+  </head>
+  <body>
+    <a href="http://example.com" target="_blank">
+      klick here!
+    </a>
+  </body>
+</html>
+	\end{Soutput}
+\end{Schunk}
+
+It should be noted, however, that \X{} doesn't perform even the slightest checks on what you provide as \texttt{DOCTYPE} or \texttt{xml} attributes.
+
+\section{Writing XML files}
+\label{Writing XML files}
+
+We've learned earlier that \texttt{XiMpLe} objects do not contain the actual XML code. If you would like to write the XML code to a file, you should use \texttt{pasteXML()}, which will translate the R objects into a character string:
+
+\begin{Schunk}
+	\begin{Sinput}
+> useless.node <- XMLNode("useless")
+> pasteXML(useless.node)
+	\end{Sinput}
+	\begin{Soutput}
+[1] "<useless />\n"
+	\end{Soutput}
+\end{Schunk}
+
+Now let's write the XHTML code we created in the previous section to a file called \texttt{example.html}:
+
+\begin{Schunk}
+	\begin{Sinput}
+> cat(pasteXML(sample.XML.tree), file="example.html")
+	\end{Sinput}
+\end{Schunk}
+
+And that's it. The method \texttt{pasteXML()} has some arguments to configure the output, like \texttt{shine}, which sets the level of code formatting. If you set \texttt{shine=0}, no formatting is done, not even newlines.
+
+\section{Reading XML files}
+
+We've also just created an example file we can read back in, to see how XML parsing looks like with \X{}:
+
+\begin{Schunk}
+	\begin{Sinput}
+> sample.XML.parsed <- parseXMLTree("example.html")
+	\end{Sinput}
+\end{Schunk}
+
+\texttt{parseXMLTree()} can also digest XML directly if it comes in single character strings or vectors. You only need to tell it that you're not providing a file name this time, using the \texttt{object} argument:
+
+\begin{Schunk}
+	\begin{Sinput}
+> my.XML.stuff <- c("<start>here it begins","</start>")
+> parseXMLTree(my.XML.stuff, object=TRUE)
+\end{Sinput}
+	\begin{Soutput}
+<start>
+  here it begins
+</start>
+	\end{Soutput}
+\end{Schunk}
+
+\section{Mining nodes}
+
+Reading and writing XML files is neat, but what if you need to aquire only certain parts of, say, a parsed XML file? For example, what if we only needed the URL of the \texttt{href} attribute in our XHTML example?
+
+That's a job for \texttt{node()}. This method can be used to extract parts from XML trees, once they are \X{} objects. The branch you'd like to get can be defined by a list of node names, and \texttt{node()} will follow down this hierarchy and then return what nodes are to be found below that. You can also specify that you don't want the whole node(s), but only the attributes:
+
+\begin{Schunk}
+	\begin{Sinput}
+> node(sample.XML.tree, node=list("html","body","a"), what="attributes")
+	\end{Sinput}
+	\begin{Soutput}
+$href
+[1] "http://example.com"
+
+$target
+[1] "_blank"
+	\end{Soutput}
+	\begin{Sinput}
+> node(sample.XML.tree, node=list("html","body","a"), what="value")
+	\end{Sinput}
+	\begin{Soutput}
+[1] "klick here!"
+	\end{Soutput}
+\end{Schunk}
+
+This way it's easy to get the value of all attributes or the link text. You can also change values with \texttt{node()}. Let's change the URL and remove the \texttt{target} attribute completely:
+
+\begin{Schunk}
+	\begin{Sinput}
+> node(sample.XML.tree, node=list("html","body","a"),
++ what="attributes", element="href") <- "http://example.com/foobar"
+> node(sample.XML.tree, node=list("html","body","a"),
++ what="attributes", element="target") <- NULL
+> sample.XML.tree
+	\end{Sinput}
+	\begin{Soutput}
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+  </head>
+  <body>
+    <a href="http://example.com/foobar">
+      klick here!
+    </a>
+  </body>
+</html>
+	\end{Soutput}
+\end{Schunk}
+
+\end{document}
