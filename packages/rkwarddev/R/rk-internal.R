@@ -642,35 +642,6 @@ check.ID <- function(node, search.environment=FALSE, env.get="XML"){
 } ## end function check.ID()
 
 
-## list with valid modifiers
-all.valid.modifiers <- list(
-  all=c("", "visible", "visible.not", "visible.numeric", "enabled", "enabled.not", "enabled.numeric",
-  "required", "true", "false", "not", "numeric", "preprocess", "calculate", "printout", "preview"),
-  browser=c("selection"),
-  checkbox=c("state", "state.not", "state.numeric"),
-  dropdown=c("string", "number"),
-# removed embed, can be all sorts of stuff, see e.g. generic plot options
-#  embed=c("code"),
-# for the same reason external is not listed here
-  frame=c("checked", "checked.not", "checked.numeric"),
-  input=c("text"),
-  formula=c("model", "table", "labels", "fixed_factors", "dependent"),
-  matrix=c("rows", "columns", "tsv", "cbind"), # TODO: missing a solution for 1,2,3,... here
-  option=c("enabled"),
-  optionset=c("row_count", "current_row", "optioncolumn_ids"),
-  preview=c("state", "state.not", "state.numeric"),
-  radio=c("string", "number"),
-  saveobject=c("selection", "parent", "objectname", "active"),
-  select=c("string", "number"),
-  spinbox=c("int", "real"),
-  text=c("text"),
-  valueselector=c("available", "selected", "root"),
-  valueslot=c("available", "selected", "source", "shortname", "label"),
-  varselector=c("selected", "root"),
-  varslot=c("available", "selected", "source", "shortname", "label")
-) ## end list with valid modifiers
-
-
 ## function modif.validity()
 # checks if a modifier is valid for an XML node, if source is XiMpLe.node
 # if bool=FALSE, returns the modifier or ""
@@ -730,43 +701,6 @@ modif.validity <- function(source, modifier, ignore.empty=TRUE, warn.only=TRUE, 
     }
   }
 } ## end function modif.validity()
-
-
-## list with valid child nodes
-# important for certain parent nodes, as long as
-# XiMpLe doesn't interpret doctypes
-all.valid.children <- list(
-  # 'as' is not a node, but an attribute of <copy>
-  as=c("browser", "checkbox", "column", "copy",
-    "dropdown", "formula", "frame", "input", "page", "radio", "row", "saveobject",
-    "spinbox", "stretch", "tabbook", "text", "valueselector", "valueslot", "varselector", "varslot", "!--"),
-  component=c("dependencies", "!--"),
-  components=c("component", "!--"),
-  context=c("menu", "!--"),
-  dialog=c("browser", "checkbox", "column", "copy",
-    "dropdown", "embed", "formula", "frame", "include", "input", "insert", "matrix",
-    "optionset", "preview", "radio", "row", "saveobject", "spinbox", "stretch", "tabbook",
-    "text", "valueselector", "valueslot", "varselector", "varslot", "!--"),
-  dropdown=c("option", "!--"),
-  hierarchy=c("menu", "!--"),
-  logic=c("connect", "convert", "dependency_check", "external", "include", "insert",
-    "script", "set", "switch", "!--"),
-  menu=c("entry", "menu", "!--"),
-  optionset=c("content", "logic", "optioncolumn", "!--"),
-  page=c("browser", "checkbox", "column", "copy",
-    "dropdown", "formula", "frame", "input", "matrix", "optionset", "page", "radio",
-    "row", "saveobject", "spinbox", "stretch", "tabbook", "text", "valueselector",
-    "valueslot", "varselector", "varslot", "!--"),
-  radio=c("option", "!--"),
-  select=c("option", "!--"),
-  settings=c("setting", "caption", "!--"),
-  snippets=c("include", "snippet", "!--"),
-  valueselector=c("option", "!--"),
-  wizard=c("browser", "checkbox", "column", "copy",
-    "dropdown", "embed", "formula", "frame", "include", "input", "insert", "matrix",
-    "optionset", "page", "preview", "radio", "row", "saveobject", "spinbox", "stretch",
-    "tabbook", "text", "valueselector", "valueslot", "varselector", "varslot", "!--")
-) ## end list with valid child nodes
 
 
 ## function valid.child()

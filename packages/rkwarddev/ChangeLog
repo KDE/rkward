@@ -1,6 +1,6 @@
 ChangeLog for package rkwarddev
 
-changes in version 0.06-6 (2014-12-01)
+changes in version 0.06-6 (2014-12-02)
 fixed:
   - rk.XML.optionset() does now allow to re-use objects defined in the same
     function call (i.e., refer to optioncolumns in the logic section)
@@ -28,6 +28,8 @@ changed:
   - comment nodes (<!-- foo -->) are now globally allowed as child nodes in XML; important for
     i18n comments
   - modifier checks now point to rkwarddev:::all.valid.modifiers directly in case of errors
+  - internally, moved the definitions of valid child nodes and modifiers to separate files, so they're
+    more obvious to find and check
 removed:
   - the functions rk.set.language() rk.get.language() were no longer useful and therefore removed
   - also removed the option "lang" from rk.rkh.doc(), rk.XML.plugin(), rk.XML.pluginmap()
