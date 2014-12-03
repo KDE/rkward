@@ -1,6 +1,6 @@
 ChangeLog for package rkwarddev
 
-changes in version 0.06-6 (2014-12-02)
+changes in version 0.06-6 (2014-12-03)
 fixed:
   - rk.XML.optionset() does now allow to re-use objects defined in the same
     function call (i.e., refer to optioncolumns in the logic section)
@@ -11,6 +11,7 @@ fixed:
   - rk.plugin.skeleton() still allowed invalid IDs, fixed the regexp
   - rk.XML.snippets() now also accepts <include> as child node
   - rk.XML.tabbook() returns <insert> nodes as-is, not nested in <tab></tab>
+  - rk.JS.scan() now sets "state" as default modifier for checkboxes if guess.getter is TRUE
 added:
   - all "help" values can now be a list of character strings or XiMpLe nodes,
     to have more control over the markup
@@ -28,8 +29,8 @@ changed:
   - comment nodes (<!-- foo -->) are now globally allowed as child nodes in XML; important for
     i18n comments
   - modifier checks now point to rkwarddev:::all.valid.modifiers directly in case of errors
-  - internally, moved the definitions of valid child nodes and modifiers to separate files, so they're
-    more obvious to find and check
+  - internally, moved the definitions of valid child nodes and modifiers as well as default getter
+    functions and modifiers to separate files, so they're more obvious to find and check
 removed:
   - the functions rk.set.language() rk.get.language() were no longer useful and therefore removed
   - also removed the option "lang" from rk.rkh.doc(), rk.XML.plugin(), rk.XML.pluginmap()

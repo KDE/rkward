@@ -1,0 +1,63 @@
+## default getters for JavaScript variables
+# try to set useful default getter functions to query the values from XML nodes
+# will only be used if "guess.getter" is true
+JS.getters.default <- list(
+  "browser"="getString",
+  "checkbox"="getBoolean",
+  "dropdown"="getString",
+  "frame"="getBoolean",
+  "input"="getString",
+  "matrix"="getList",
+  "optioncolumn"="getList",
+  "radio"="getString",
+  "saveobject"="getString",
+  "select"="getString",
+  "spinbox"="getString",
+  "valueslot"="getString", 
+  "varslot"="getString"
+)
+
+# we can also guess some fitting getter functions by the modifier set
+JS.getters.modif.default <- list(
+#  "active",
+#  "available",
+#  "calculate",
+  "checked"="getBoolean",
+  "checked.not"="getBoolean",
+  "checked.numeric"="getBoolean",
+  "dependent"="getString",
+  "enabled"="getBoolean",
+  "enabled.not"="getBoolean",
+  "enabled.numeric"="getBoolean",
+#  "false",
+  "fixed_factors"="getString",
+#  "int",
+  "label"="getString",
+  "labels"="getString",
+  "model"="getString",
+#  "not",
+#  "number",
+#  "numeric",
+  "objectname"="getString",
+  "parent"="getString",
+  "preprocess"="getString",
+  "preview"="getBoolean",
+  "printout"="getString",
+#  "real",
+  "required"="getBoolean",
+#  "root",
+#  "selected",
+#  "selection",
+  "shortname"="getString",
+  "source"="getString",
+  "state"="getBoolean",
+  "state.not"="getBoolean",
+  "state.numeric"="getBoolean",
+  "string"="getString",
+#  "table",
+  "text"="getString",
+#  "true",
+  "visible"="getBoolean",
+  "visible.not"="getBoolean",
+  "visible.numeric"="getBoolean"
+)

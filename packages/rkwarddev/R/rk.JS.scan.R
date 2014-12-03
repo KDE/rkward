@@ -34,6 +34,39 @@
 
 rk.JS.scan <- function(pXML, js=TRUE, add.abbrev=FALSE, guess.getter=FALSE, indent.by="\t"){
 
+  # these are tags to scan normally, no special treatment
+  JS.relevant.tags.default <- c("browser", "dropdown", "input", "matrix", "optioncolumn",
+    "radio", "saveobject", "select", "spinbox", "valueslot", "varslot")
+  # these tags should get a default modifier if guess.getter=TRUE
+  if(isTRUE(guess.getter)){
+    JS.relevant.tags.state <- c("checkbox")
+  } else {
+    JS.relevant.tags.state <- c()
+    JS.relevant.tags.default <- c(JS.relevant.tags.default, "checkbox")
+  }
+  # special tags: must be checkable and get "checked" property
+  JS.relevant.tags.checked <- c("frame")
+
+
+  # getting the relevant IDs out of optionsets is a little tricky
+  # this function will probe for sets and return single tags
+  single.tags <- check.optionset.tags(XML.obj=pXML, drop=c("comments","cdata", "declarations", "doctype"))
+
+  # now go through the various cases of XML nodes, appending the results
+  result <- check.JS.lines(relevant.tags=JS.relevant.tags.default, single.tags=single.tags,
+    add.abbrev=add.abbrev, js=js, indent.by=indent.by, guess.getter=guess.getter)
+  result <- check.JS.lines(relevant.tags=JS.relevant.tags.state, single.tags=single.tags,
+    add.abbrev=add.abbrev, js=js, indent.by=indent.by, guess.getter=guess.getter,
+    modifiers="state", append.modifier=FALSE, result=result)
+  result <- check.JS.lines(relevant.tags=JS.relevant.tags.checked, single.tags=single.tags,
+    add.abbrev=add.abbrev, js=js, indent.by=indent.by, guess.getter=guess.getter,
+    modifiers="checked", only.checkable=TRUE, result=result)
+  
+  return(result)
+}
+
+rk.JS.scan.old <- function(pXML, js=TRUE, add.abbrev=FALSE, guess.getter=FALSE, indent.by="\t"){
+
   JS.relevant.tags <- c("browser", "checkbox", "dropdown", "input", "matrix", "optioncolumn",
     "radio", "saveobject", "select", "spinbox", "valueslot", "varslot")
   

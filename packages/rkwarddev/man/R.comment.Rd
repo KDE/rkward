@@ -3,10 +3,10 @@
 \alias{R.comment}
 \title{Create R comment with JavaScript in RKWard plugin code}
 \usage{
-R.comment(message, indent.by = "\\\\t", level = 2, newline = "")
+R.comment(..., indent.by = "\\\\t", level = 2, newline = "")
 }
 \arguments{
-\item{message}{}
+\item{...}{Character strings to form a comment.}
 
 \item{indent.by}{A character string defining the indentation string to use. Note that
 backslashes need to be escaped (e.g. \code{"\\t"} to produce \code{"\t"}).}

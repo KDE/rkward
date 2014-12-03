@@ -277,75 +277,13 @@ camelCode <- function(words){
 } ## end function camelCode()
 
 
-## default getters for JavaScript variables
-# try to set useful default getter functions to query the values from XML nodes
-# will only be used if "guess.getter" is true
-JS.getters.default <- list(
-  "browser"="getString",
-  "checkbox"="getBoolean",
-  "dropdown"="getString",
-  "frame"="getBoolean",
-  "input"="getString",
-  "matrix"="getList",
-  "optioncolumn"="getList",
-  "radio"="getString",
-  "saveobject"="getString",
-  "select"="getString",
-  "spinbox"="getString",
-  "valueslot"="getString", 
-  "varslot"="getString"
-)
-# we can also guess some fitting getter functions by the modifier set
-JS.getters.modif.default <- list(
-#  "active",
-#  "available",
-#  "calculate",
-  "checked"="getBoolean",
-  "checked.not"="getBoolean",
-  "checked.numeric"="getBoolean",
-  "dependent"="getString",
-  "enabled"="getBoolean",
-  "enabled.not"="getBoolean",
-  "enabled.numeric"="getBoolean",
-#  "false",
-  "fixed_factors"="getString",
-#  "int",
-  "label"="getString",
-  "labels"="getString",
-  "model"="getString",
-#  "not",
-#  "number",
-#  "numeric",
-  "objectname"="getString",
-  "parent"="getString",
-  "preprocess"="getString",
-  "preview"="getBoolean",
-  "printout"="getString",
-#  "real",
-  "required"="getBoolean",
-#  "root",
-#  "selected",
-#  "selection",
-  "shortname"="getString",
-  "source"="getString",
-  "state"="getBoolean",
-  "state.not"="getBoolean",
-  "state.numeric"="getBoolean",
-  "string"="getString",
-#  "table",
-  "text"="getString",
-#  "true",
-  "visible"="getBoolean",
-  "visible.not"="getBoolean",
-  "visible.numeric"="getBoolean"
-)
-
 ## function get.JS.vars()
+# see 60_JS.getters.default.R for definition of JS.getters.default and JS.getters.modif.default 
 #   <tag id="my.id" ...>
 # in XML will become
 #   var my.id = getValue("my.id");
 get.JS.vars <- function(JS.var, XML.var=NULL, tag.name=NULL, JS.prefix="", names.only=FALSE, modifiers=NULL, default=FALSE, join="",
-  getter="getValue", guess.getter=FALSE, check.modifiers=TRUE, search.environment=FALSE){
+  getter="getValue", guess.getter=FALSE, check.modifiers=TRUE, search.environment=FALSE, append.modifier=TRUE){
   # check for XiMpLe nodes
   JS.var <- check.ID(JS.var)
   have.XiMpLe.var <- FALSE
@@ -382,6 +320,7 @@ get.JS.vars <- function(JS.var, XML.var=NULL, tag.name=NULL, JS.prefix="", names
 
     # check for getter guessing
     if(isTRUE(guess.getter)){
+      # see 60_JS.getters.default.R for definition of JS.getters.default
       if(tag.name %in% names(JS.getters.default)){
         # special case: is a <checkbox> has a value other than
         # "true" or "false", it's probably supposed to be fetched
@@ -395,6 +334,7 @@ get.JS.vars <- function(JS.var, XML.var=NULL, tag.name=NULL, JS.prefix="", names
           ## TODO: currently this only works for one modifier of if all
           ## modifiers are fine with the same getter; maybe "getter"
           ## should become a vector like "modifiers"
+          # see 60_JS.getters.default.R for definition of JS.getters.modif.default
           if(!is.null(modifiers) && any(modifiers %in% names(JS.getters.modif.default))){
             # find all matching modifiers
             getter.modifs <- modifiers[modifiers %in% names(JS.getters.modif.default)]
@@ -447,6 +387,7 @@ get.JS.vars <- function(JS.var, XML.var=NULL, tag.name=NULL, JS.prefix="", names
       prefix=JS.prefix,
       modifiers=as.list(modifiers),
       default=default,
+      append.modifier=append.modifier,
       join=join,
       getter=getter)
   }
@@ -1003,8 +944,11 @@ paste.JS.options <- function(object, level=2, indent.by="\t", array=NULL, funct=
 
 
 ## function paste.JS.var()
-paste.JS.var <- function(object, level=2, indent.by="\t", JS.prefix=NULL, modifiers=NULL, default=NULL, join=NULL,
-  getter=NULL, names.only=FALSE, check.modifiers=FALSE){
+# append.modifier: if a modifier is given, should that become part of the variable name? this is mostly
+#   important for "checkbox", which has "state" as default modifier, but using the checkbox object will not
+#   notice this. works only for the first modifier given.
+paste.JS.var <- function(object, level=2, indent.by="\t", JS.prefix=NULL, modifiers=NULL, default=NULL, append.modifier=NULL,
+  join=NULL, getter=NULL, names.only=FALSE, check.modifiers=FALSE){
   # paste several objects
   results <- unlist(sapply(slot(object, "vars"), function(this.obj){
       paste.JS.var(this.obj,
@@ -1013,6 +957,7 @@ paste.JS.var <- function(object, level=2, indent.by="\t", JS.prefix=NULL, modifi
           JS.prefix=JS.prefix,
           modifiers=modifiers,
           default=default,
+          append.modifier=append.modifier,
           join=join,
           getter=getter,
           names.only=names.only)}))
@@ -1037,6 +982,9 @@ paste.JS.var <- function(object, level=2, indent.by="\t", JS.prefix=NULL, modifi
   } else {}
   if(is.null(default)){
     default     <- slot(object, "default")
+  } else {}
+  if(is.null(append.modifier)){
+    append.modifier  <- slot(object, "append.modifier")
   } else {}
   if(is.null(join)){
     join        <- slot(object, "join")
@@ -1065,11 +1013,17 @@ paste.JS.var <- function(object, level=2, indent.by="\t", JS.prefix=NULL, modifi
         # check modifiers
         modifiers <- modifiers[modif.validity(source="all", modifier=modifiers, ignore.empty=TRUE, warn.only=TRUE, bool=TRUE)]
       } else {}
-      modif.results <- sapply(modifiers, function(this.modif){
-          if(isTRUE(names.only)){
-            return(camelCode(c(JS.prefix, JS.var, this.modif)))
+      modif.results <- sapply(1:length(modifiers), function(this.modif.num){
+          this.modif <- modifiers[[this.modif.num]]
+          if(isTRUE(append.modifier) || this.modif.num > 1){
+            this.name <- camelCode(c(JS.prefix, JS.var, this.modif))
           } else {
-            return(paste0(main.indent, "var ", camelCode(c(JS.prefix, JS.var, this.modif)),
+            this.name <- camelCode(c(JS.prefix, JS.var))
+          }
+          if(isTRUE(names.only)){
+            return(this.name)
+          } else {
+            return(paste0(main.indent, "var ", this.name,
               " = ", getter, "(\"", XML.var, ".", this.modif, "\")", join.code, ";"))
           }
         })
@@ -1360,3 +1314,36 @@ force.i18n <- function(obj){
   return(result)
 } ## end function force.i18n
 
+
+## function check.JS.lines()
+# called by rk.JS.scan()
+check.JS.lines <- function(relevant.tags, single.tags, add.abbrev, js, indent.by, guess.getter,
+  tag.names=TRUE, modifiers=NULL, only.checkable=FALSE, append.modifier=TRUE, result=NULL){
+
+  JS.id <- get.IDs(single.tags=single.tags, relevant.tags=relevant.tags, add.abbrev=add.abbrev,
+    tag.names=tag.names, only.checkable=only.checkable)
+
+  if("id" %in% colnames(JS.id)){
+    if(isTRUE(js)){
+      # now
+      #   <tag id="my.id" ...>
+      # will become
+      #   var my.id = getValue("my.id");
+      result <- paste(result, paste(unlist(sapply(1:nrow(JS.id), function(this.id){
+            return(rk.paste.JS(get.JS.vars(
+              JS.var=JS.id[this.id,"abbrev"],
+              XML.var=JS.id[this.id,"id"],
+              tag.name=JS.id[this.id,"tag"],
+              modifiers=modifiers,
+              append.modifier=append.modifier,
+              guess.getter=guess.getter),
+              level=2, indent.by=indent.by))
+          }, USE.NAMES=FALSE)), collapse="\n"),
+        sep="\n", collapse="\n")
+    } else {
+      result <- c(result, JS.id[,"id"])
+      names(result) <- NULL
+    }
+  } else {}
+  return(result)
+} ## end function check.JS.lines()
