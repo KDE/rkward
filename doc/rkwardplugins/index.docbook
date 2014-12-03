@@ -189,14 +189,14 @@ This is a guide to writing plugins for &rkward;.
 	</para>
 	<programlisting>
 	&lt;hierarchy&gt;
-		&lt;menu id="analysis" label="Analysis" index="4"&gt;
+		&lt;menu id="analysis" label="Analysis"&gt;
 	</programlisting>
 	<para>
-		Right below the <command>&lt;hierarchy&gt;</command> tag, you start describing, in which <command>&lt;menu&gt;</command> your plugins should go. With the above line, you basically say, that your plugin should be in the <menuchoice><guimenu>Analysis</guimenu></menuchoice> menu (not necessarily directly there, but in a submenu). The <menuchoice><guimenu>Analysis</guimenu></menuchoice> menu is standard in &rkward;, so it does not actually have to be created from scratch. However, if it did not exist yet, using the <parameter>label</parameter> attribute you'd give it its name. The <parameter>index</parameter> attribute says, that the menu (if newly created) should be placed at the fourth position in the menubar.
+		Right below the <command>&lt;hierarchy&gt;</command> tag, you start describing, in which <command>&lt;menu&gt;</command> your plugins should go. With the above line, you basically say, that your plugin should be in the <menuchoice><guimenu>Analysis</guimenu></menuchoice> menu (not necessarily directly there, but in a submenu). The <menuchoice><guimenu>Analysis</guimenu></menuchoice> menu is standard in &rkward;, so it does not actually have to be created from scratch. However, if it did not exist yet, using the <parameter>label</parameter> attribute you'd give it its name.
 		Finally, the <parameter>id</parameter> once again identifies this <command>&lt;menu&gt;</command>. This is needed, so several &pluginmap; files can place their plugins in the same menus. They do this by looking for a <command>&lt;menu&gt;</command> with the given <parameter>id</parameter>. If the ID does not yet exist, a new menu will be created. Otherwise the entries will be added to the existing menu.
 	</para>
 	<programlisting>
-			&lt;menu id="means" label="Means" index="1"&gt;
+			&lt;menu id="means" label="Means"&gt;
 	</programlisting>
 	<para>
 		Basically the same thing here: Now we define a submenu to the <menuchoice><guimenu>Analysis</guimenu></menuchoice> menu. It is to be called <menuchoice><guimenuitem>Means</guimenuitem></menuchoice>.
@@ -205,7 +205,7 @@ This is a guide to writing plugins for &rkward;.
 				&lt;menu id="ttests" label="t-Tests"&gt;
 	</programlisting>
 	<para>
-		And a final level in the menu hierarchy: A submenu of the submenu <menuchoice><guimenuitem>Means</guimenuitem></menuchoice>. Note, that if you omit the <parameter>index</parameter> parameter, the new entry will be placed below any already existing ones.
+		And a final level in the menu hierarchy: A submenu of the submenu <menuchoice><guimenuitem>Means</guimenuitem></menuchoice>.
 	</para>
 	<programlisting>
 					&lt;entry component="t_test_two_vars" /&gt;
@@ -226,16 +226,16 @@ This is a guide to writing plugins for &rkward;.
 	<programlisting>
 				[...]
 			&lt;/menu&gt;
-			&lt;entry component="corr_matrix" index="4"/&gt;
-			&lt;entry component="descriptive" index="3"/&gt;
-			&lt;entry component="simple_anova" index="5"/&gt;
+			&lt;entry component="corr_matrix"/&gt;
+			&lt;entry component="descriptive"/&gt;
+			&lt;entry component="simple_anova"/&gt;
 		&lt;/menu&gt;
 	</programlisting>
 	<para>
-		These are the final entries visible in the screenshots below. Note, that you don't need to define the entries in the order they should have in the menu. Use the <parameter>index</parameter> attribute instead.
+		These are the final entries visible in the screenshots below.
 	</para>
 	<programlisting>
-		&lt;menu id="plots" label="Plots" index="5"&gt;
+		&lt;menu id="plots" label="Plots"&gt;
 			[...]
 		&lt;/menu&gt;
 	</programlisting>
@@ -243,7 +243,7 @@ This is a guide to writing plugins for &rkward;.
 		Of course you can also place your plugins in menus other than <menuchoice><guimenu>Analysis</guimenu></menuchoice>.
 	</para>
 	<programlisting>
-		&lt;menu id="file" label="File" index="0"&gt;
+		&lt;menu id="file" label="File"&gt;
 			[...]
 		&lt;/menu&gt;
 	</programlisting>
@@ -271,6 +271,42 @@ This is a guide to writing plugins for &rkward;.
 	<para>
 		Confused? The easiest way to get started is probably taking some of the existing &pluginmap; files shipped with the distribution, and modifying them to your needs. Also, if you need help, don't hesitate to write to the development mailing list.
 	</para>
+	<sect1 id="pluginmap_grouping"><title>Controlling the order of menu entries</title>
+		<para>By default, all items (entries / submenus) inside a menu will be sorted alphabetically, automatically. In <emphasis>some</emphasis> cases you may want more control. In this case you can group elements as follows:</para>
+		<itemizedlist>
+			<listitem>
+				<para>You can define groups inside any menu like this. All elements belonging to the same group will be grouped together:</para>
+				<programlisting>
+		&lt;group id="somegroup"/&gt;
+				</programlisting>
+			</listitem><listitem>
+			<para>If you want the group to be visually separated from other entries, use:</para>
+				<programlisting>
+		&lt;group id="somegroup" separated="true"/&gt;
+				</programlisting>
+			</listitem><listitem>
+				<para>Entries, menus, and groups can be appended to a specified group, using:</para>
+				<programlisting>
+		&lt;entry component="..." group="somegroup"/&gt;
+				</programlisting>
+			</listitem><listitem>
+				<para>In fact, it is also possible to define groups (without separator lines) implicitly:</para>
+				<programlisting>
+		&lt;entry component="first" group="a"/&gt;
+		&lt;entry component="third"/&gt;
+		&lt;entry component="second" group="a"/&gt;
+				</programlisting>
+			</listitem><listitem>
+				<para>Group names are specific to each menu. Group "a" in menu "Data" does not conflict with group "a" in menu "Analysis", for example.</para>
+			</listitem><listitem>
+				<para>The most common use case is defining groups at the top, or at the bottom of a menu. For this, there are pre-defined groups "top" and "bottom" in each menu.</para>
+			</listitem><listitem>
+				<para>Entries within each group are sorted, alphabetically. Groups appear in the order of declaration (unless appended to another group, of course).</para>
+			</listitem><listitem>
+				<para>Menus and entries without group specification logically form a group (""), too.</para>
+			</listitem>
+		</itemizedlist>
+	</sect1>
 </chapter>
 
 <chapter id="mainxml">
