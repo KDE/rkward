@@ -96,7 +96,7 @@ function calculate () {
 function printout () {
 	header = new Header (i18n ("Univariate statistics")).addFromUI ("narm");
 	if (getBoolean("trim.state")) {
-		header.add (i18n ("Proprotion of trimmed values for trimmed mean"), getString ("pourcent"));
+		header.add (i18n ("Proportion of trimmed values for trimmed mean"), getString ("pourcent"));
 	}
 	if (getBoolean("mad.state")) {
 		header.add (i18n ("Constant for the MAD estimation"), getString ("constMad"));

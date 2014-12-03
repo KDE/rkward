@@ -10,7 +10,7 @@ id(..., quote = FALSE, collapse = "", js = TRUE)
 and/or objects of classes \code{rk.JS.arr}, \code{rk.JS.opt} or \code{rk.JS.var},
       simply separated by comma.}
 
-\item{quote}{Logical, it the character strings sould be deparsed,
+\item{quote}{Logical, it the character strings should be deparsed,
       so they come out "as-is" when
 written to files, e.g. by \code{cat}.}
 

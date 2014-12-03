@@ -34,7 +34,7 @@ for (i in 1:length (vars)) {
 .GlobalEnv$my.data <- results
 ## Print result
 rk.header ("Univariate statistics", parameters=list("Omit missing values"="yes",
-	"Proprotion of trimmed values for trimmed mean"="0.05",
+	"Proportion of trimmed values for trimmed mean"="0.05",
 	"Constant for the MAD estimation"="1.4628",
 	"Winsorized values for Huber estimator"="1.50",
 	"Tolerance in Huber estimator"="0.07",

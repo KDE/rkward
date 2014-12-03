@@ -26,7 +26,7 @@
 #' 
 #' @param ... One or several character strings and/or \code{XiMpLe.node} objects with plugin nodes,
 #'   and/or objects of classes \code{rk.JS.arr}, \code{rk.JS.opt} or \code{rk.JS.var}, simply separated by comma.
-#' @param quote Logical, it the character strings sould be deparsed, so they come out "as-is" when
+#' @param quote Logical, it the character strings should be deparsed, so they come out "as-is" when
 #'    written to files, e.g. by \code{cat}.
 #' @param collapse Character string, defining if and how the individual elements should be glued together.
 #' @param js Logical, if \code{TRUE} returns JavaScript varaible names for \code{XiMpLe.node} objects.

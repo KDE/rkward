@@ -1,11 +1,11 @@
 <!DOCTYPE rkhelp>
 <document>
 	<summary>
-		This test performs the Levene's test for homeogeneity of variance across groups.
+		This test performs the Levene's test for homogeneity of variance across groups.
 	</summary>
 
 	<usage>
-		Select the response variable and the factor defining groups to test for homeogeneity of variance across groups.
+		Select the response variable and the factor defining groups to test for homogeneity of variance across groups.
 	</usage>
 
 	<settings>
