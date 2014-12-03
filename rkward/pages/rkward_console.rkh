@@ -20,7 +20,7 @@ To interrupt a running command, press Ctrl+C, or chose "Interrupt running comman
 	</section>
 
 	<section id="running_selection" title="Re-running selected commands">
-To re-run (a sequence of) selected commands, select them using the mouse. Then chose "Run selection" from the context menu (default shortcut is F8). Leading "> " and "+ " on the selected lines will be removed automatically.
+To re-run (a sequence of) selected commands, select them using the mouse. Then chose "Run selection" from the context menu (default shortcut is Ctrl+Return). Leading "> " and "+ " on the selected lines will be removed automatically.
 	</section>
 
 	<section id="copy" title="Copying commands / output">

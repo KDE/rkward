@@ -11,9 +11,9 @@
 
 	<ul>
 		<li>Syntax highlighting</li>
-		<li>Pressing the Tab key will not complete local file paths (at the moment), but the names of R symbols and functions</li>
 		<li>While typing function calls, a list of arguments to that function is shown in a box (argument hinting)</li>
 		<li>While the cursor is on an R symbol or function, pressing F2 will search the R help for that symbol. Also available from the Help menu, or the right mouse button menu</li>
+		<li>You can easily create a transcript of the commands you run in the console using Run->CC commands to output...</li>
 	</ul>
 
 	See <link href="rkward://page/rkward_console"/> for more details.
@@ -21,12 +21,12 @@
 	<section title="Script Editors" id="script_editor">
 	Often it is more convenient to write scripts in a separate file, instead of typing them directly in the console. To open a new script editor (with syntax highlighting, and many more features), chose File->New->Script File, or open an already existing Script file using File->Open R Script File.
 
-	You will note that the editor opens in a new window in the main workplace (the area of the window, that you are most likely reading this text, in). You can open any number of Script editor windows at the same time.
+	You will note that the editor opens in a new window in the main workplace (the area of the window, that you are most likely reading this text, in). You can open any number of script editor windows at the same time.
 
 	To run the code in a script editor window, either copy and paste it to the console, or chose one of the actions in the Run menu. such as Run All or Run Selection. Note: The contents of the menus may change according to the type of active window. Hence, if you look at the Run menu while reading this, there will be no entries.
 	</section>
 	<section title="Workspace View" id="workspace_browser">
-	RKWard comes with a "workspace view" or "object browser". By default this is available by clicking on "Workspace" on the left side of the application window. This allows you to examine and manipulate all objects in the R workspace. In case you are not familiar with this aspect of R (usually not directly visible): All the symbols you create are children of the so-called ".GlobalEnv" environment (see <link href="rkward://rhelp/.GlobalEnv"/>). Symbols defined in loaded libraries are located in their own environments.
+	RKWard comes with a "workspace view" or "object browser". By default this is available by clicking on "Workspace" on the left side of the application window. This allows you to examine and manipulate all objects in the R workspace. By default, only the ".GlobalEnv" environment	is shown (where you'll typically do your work; see <link href="rkward://rhelp/.GlobalEnv"/>). But, checking "Show All Environments", you can easily explore data and functions in loaded R libraries (and even in package namespaces).
 
 	The object browser provides function to select with types of object are shown (on the top). Hovering the mouse over an item will show some additional information on the symbol. Right-clicking on an item will show available actions. See <link href="rkward://page/rkward_workspace_browser"/> for details.
 	</section>
@@ -34,17 +34,17 @@
 	By default R help pages are shown as HTML, inside RKWard. You can invoke the help in the usual way by running e.g. "?print" or "help (print)" or "help.start ()" in the console. Additionally, there is a tool window to search your installed R help pages. This is accessible using a button located at the bottom of the window (next to the console button). To view a help page found using this tool, double click on it.
 	</section>
 	<section title="Managing installed and loaded Libraries" id="library_management">
-	RKWard provides an advanced dialog to have installation, updating, and loading of packages. This is available from Workspace->Configure Packages.
+	RKWard provides an advanced dialog to have installation, updating, and loading of packages. This is available from Settings->Manage R Packages.
 	</section>
 	<section title="Window management" id="window_management">
 	All windows shown in the main view area can be detached to a separate top level window using Windows->Detach. Similarly, detached windows can be attached to the main workplace using Window->Attach.
 
-	Windows can be closed using Windows->Close (Ctrl+W by default).
+	Windows can be closed using Windows->Close (Ctrl+W by default). Ctrl+Tab and Ctrl+Shift+Tab cycle through all active document / tool windows in your session.
 
 	Tool windows (e.g. the R Console) can be detached and re-attached using the arrow-icon in their window border.
 	</section>
 	<section title="Editing data" id="editing_data">
-	RKWard provides a buit-in editor for data.frames. In fact, you can edit many data.frames at the same time, and even while running lengthy calculations. Still the data is stored as a regular data.frame in R. To explore the data editor, either chose File->New->Dataset, or right click a data.frame in the Workspace browser, and chose Edit from the menu.
+	RKWard provides a built-in editor for data.frames. In fact, you can edit many data.frames at the same time, and even while running lengthy calculations. Still the data is stored as a regular data.frame in R. To explore the data editor, either chose File->New->Dataset, or right click a data.frame in the Workspace browser, and chose Edit from the menu.
 
 	Support for adding other types of data, esp. single vectors is planned, but not currently supported.
 	</section>
@@ -52,10 +52,10 @@
 	R has a few immensely powerful graphics systems (although not interactive) provided by various packages such as <b>graphics</b> and <b>lattice</b>. RKWard wraps around the standard platform-dependent screen device to provide a uniform experience. In additional to the standard functionality of these packages, RKWard provides a screen device history mechanism to store and browse your plots. See <link href="rkward://page/rkward_plot_history"/> for details.
 	</section>
 	<section title="Utility functions" id="utility_functions">
-	RKWard provides various utility functions which are described here: <link href="rkward://page/rkward_public_functions"/>
+	RKWard provides various utility functions which are listed in the index of the <link href="rkward://rhelp/rkward-package">rkward package overview</link>.
 	</section>
 	<section title="Everything else" id="more">
-	You will notice that RKWard provides a lot of further menu options. These provide access to functionality in R. In fact, they do so by generating R syntax from settings made in a graphical dialog. For instance, select Analysis->Descriptive Statistics. You will notice a small window at the bottom (can be toggled on or off using the "Code" button) that contains the R code needed to generate these statistics. This way, even if you prefer to script your code by hand, you can use dialogs to gain snippets of code for functions you are less familiar with in R.
+	You will notice that RKWard provides a lot of further menu options. These provide access to functionality in R. In fact, they do so by generating R syntax from settings made in a graphical dialog. For instance, select Analysis->Descriptive Statistics. You will notice a small window at the bottom (can be toggled on or off using the "Code" button) that contains the R code needed to generate these statistics. This way, even if you prefer to script your code by hand, you can use dialogs to gain usage examples or snippets of code for functions you are less familiar with in R.
 
 	Also, all commands that are executed get shown in the Command Log, available as a tool window next to the R Console.
 	</section>
@@ -67,7 +67,5 @@
 	<li><link href="rkward://page/rkward_for_new_users"/> For an introduction to some more basic concepts</li>
 	<li><link href="rkward://page/rkward_shortcuts"/></li>
 </ul>
-
-TODO: Each of the above sections should eventually get a dedicated page of its own with more detailed information
 	</related>
 </document>

@@ -22,15 +22,11 @@
 	For more general information on RKWard, who writes it, how to help, further questions, etc. refer to <link href="http://rkward.sourceforge.net/">the project homepage</link>.
 	</section>
 
-	<section title="For Developers" id="rkward_devs">
-	For more information on RKWard, mainly of interest to developers see <link href="rkward://page/rkward_for_rkward_devs">page for developers</link>.
-	</section>
-
 	<section title="Trouble Shooting" id="Trouble Shooting">
 	If you encounter problems please feel free to search in <link href="rkward://page/rkward_trouble_shooting">Trouble Shooting</link> first.
 	</section>
 
 	<section title="Missing something?" id="missing_something">
-	Are you missing a particular GUI dialog in the current menu? Check out the <link href="help:rkwardplugins">Introduction to Writing Plugins for RKWard</link> to learn how easy it is to enhance RKWard with your custom dialogs. And if you like, how to share your work with the community of RKWard users.
+	Are you missing a particular GUI dialog in the current menu? Check out the <link href="help:rkwardplugins">Introduction to Writing Plugins for RKWard</link> to learn how easy it is to enhance RKWard with your custom dialogs. And if you like, how to share your work with the community of RKWard users. See the <link href="rkward://rhelp/rkward-package">rkward package overview</link> for RKWard specific function for development and scripting.
 	</section>
 </document>
