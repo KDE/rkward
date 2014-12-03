@@ -10,9 +10,9 @@ function preprocess(){
 
 function calculate(){
 	// read in variables from dialog
+
 	var x = getString("x");
 	var file = getString("file");
-	var append = getBoolean("append");
 	var quick = getString("quick");
 	var dec = getString("dec");
 	var customDec = getString("custom_dec");
@@ -24,10 +24,11 @@ function calculate(){
 	var custColNames = getString("custColNames");
 	var encoding = getString("encoding");
 	var userEncoding = getString("user_encoding");
-	var quote = getBoolean("quote");
 	var qmethod = getString("qmethod");
 	var na = getString("na");
 	var eol = getString("eol");
+	var append = getBoolean("append.state");
+	var quote = getBoolean("quote.state");
 
 	// the R code to be evaluated
 	if(quick == "csv" || quick == "csv2") {
