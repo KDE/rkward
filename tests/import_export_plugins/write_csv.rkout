@@ -1,0 +1,38 @@
+<h1>Export Table / CSV files</h1>
+<h2>Parameters</h2>
+<ul><li>File: data</li>
+<li>Data: women</li>
+</ul>
+DATE<br />
+
+<p class='character'>"","height","weight"</p>
+
+<p class='character'>"1",58,115</p>
+
+<p class='character'>"2",59,117</p>
+
+<p class='character'>"3",60,120</p>
+
+<p class='character'>"4",61,123</p>
+
+<p class='character'>"5",62,126</p>
+
+<p class='character'>"6",63,129</p>
+
+<p class='character'>"7",64,132</p>
+
+<p class='character'>"8",65,135</p>
+
+<p class='character'>"9",66,139</p>
+
+<p class='character'>"10",67,142</p>
+
+<p class='character'>"11",68,146</p>
+
+<p class='character'>"12",69,150</p>
+
+<p class='character'>"13",70,154</p>
+
+<p class='character'>"14",71,159</p>
+
+<p class='character'>"15",72,164</p>
