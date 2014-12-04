@@ -1140,6 +1140,7 @@ SEXP parseCommand (const QString &command_qstring, RKRBackend::RKWardRError *err
 	SET_STRING_ELT(wrap.cv, 0, Rf_mkChar(command));
 
 	// Yes, if there is an error in the parse, R does jump back to toplevel!
+	// trying to parse list(""=1) is an example in R 3.1.1
 	R_ToplevelExec (safeParseVector, &wrap);
 	SEXP pr = wrap.pr;
 	UNPROTECT(1);
