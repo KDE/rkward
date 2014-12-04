@@ -1,7 +1,7 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
-\section{Changes in rkwarddev version 0.06-6 (2014-12-01)}{
+\section{Changes in rkwarddev version 0.06-6 (2014-12-04)}{
   \subsection{fixed}{
     \itemize{
       \item \code{rk.XML.optionset()} does now allow to re-use objects defined in the same
@@ -13,6 +13,7 @@
       \item \code{rk.plugin.skeleton()} still allowed invalid IDs, fixed the regexp
       \item \code{rk.XML.snippets()} now also accepts <include> as child node
       \item \code{rk.XML.tabbook()} returns <insert> nodes as-is, not nested in <tab></tab>
+      \item \code{rk.JS.scan()} now sets \code{"state"} as default modifier for checkboxes if guess.getter is TRUE
     }
   }
   \subsection{added}{
@@ -25,6 +26,8 @@
         \code{"comment"} or \code{"context"} to either produce an i18n comment node or an \code{"i18n_context"} attribute
       \item new function \code{rk.i18n.comment()} to give context for translators
       \item new function \code{rk.JS.header()} to easily generate JavaScript header code fit for i18n
+      \item \code{rk.JS.doc()}, \code{rk.plugin.skeleton()} and \code{rk.plugin.component()} now use \code{rk.JS.header()} instead of
+        \code{rk.header()}, and also accept its \code{"header.add"} attribute
       \item new function \code{R.comment()} to generate JavaScript "\code{comment()}" calls
     }
   }
@@ -35,6 +38,9 @@
         the i18n features of 0.06-4 will be completely replaced with some proper methods now
       \item comment nodes (<!-- foo -->) are now globally allowed as child nodes in XML; important for
         i18n comments
+      \item modifier checks now point to rkwarddev:::all.valid.modifiers directly in case of errors
+      \item internally, moved the definitions of valid child nodes and modifiers as well as default getter
+        functions and modifiers to separate files, so they're more obvious to find and check
     }
   }
   \subsection{removed}{

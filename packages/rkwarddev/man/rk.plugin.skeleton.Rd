@@ -56,9 +56,9 @@ If not set,
 \item{js}{A named list of options to be forwarded to \code{\link[rkwarddev:rk.JS.doc]{rk.JS.doc}},
       to generate the JavaScript file.
 Not all options are supported because some don't make sense in this context. Valid options are:
-\code{"require"}, \code{"results.header"}, \code{"variables"}, \code{"globals"},
-      \code{"preprocess"}, \code{"calculate"}, \code{"printout"},
-\code{"doPrintout"} and \code{"load.silencer"}.
+\code{"require"}, \code{"results.header"}, \code{"header.add"}, \code{"variables"},
+      \code{"globals"}, \code{"preprocess"},
+\code{"calculate"}, \code{"printout"}, \code{"doPrintout"} and \code{"load.silencer"}.
 If not set,
       their default values are used. See \code{\link[rkwarddev:rk.JS.doc]{rk.JS.doc}} for details.}
 

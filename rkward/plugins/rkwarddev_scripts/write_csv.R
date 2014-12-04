@@ -394,9 +394,8 @@ etc.JS <- rk.paste.JS(
   echo("\n\t)\n\n")
 )
 
-etc.JS.printout <- rk.paste.JS(
-  rk.JS.header("Export Table / CSV files", add=c("File", etc.browser), addFromUI=etc.var.data)
-)
+# etc.JS.printout <- rk.paste.JS(
+# )
 
 
 ############
@@ -426,14 +425,15 @@ plugin.dir <- rk.plugin.skeleton(
     #snippets=
   ),
   js=list(
-    results.header=FALSE,
+    results.header="Export Table / CSV files",
+    header.add=list(add=c("File", etc.browser), addFromUI=etc.var.data),
     #load.silencer=,
     #require=,
     #variables=,
     #globals=,
     #preprocess=,
-    calculate=etc.JS,
-    printout=etc.JS.printout#,
+    calculate=etc.JS#,
+#    printout=etc.JS.printout#,
     #doPrintout=
   ),
   rkh=list(

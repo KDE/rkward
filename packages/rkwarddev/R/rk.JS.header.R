@@ -19,7 +19,7 @@
 #'
 #' @param title Either a character string or object of class \code{rk.JS.i18n}. Will become the header title,
 #'    nested in an i18n() call.
-#' @param ... An optional number of additional info to add to the header. each entry must be named \code{add}
+#' @param ... An optional number of additional info to add to the header. Each entry must be named \code{add}
 #'    or \code{addFromUI} -- note that you can use multiple entries with the same name here. Entries named
 #'    \code{add} must be vectors of legth 2, the first being the caption (character), the second its value (either
 #'    character or a XiMpLe node from the dialog). Entries named \code{addFromUI} must have exactly one value
@@ -27,15 +27,19 @@
 #' @param level Integer, if not \code{NULL} will be added as the header level.
 #' @param guess.getter Locigal, if \code{TRUE} try to get a good default getter function for JavaScript
 #'    variable values.
+#' @param .add Same as \code{...}, but provided as a single list. If used, values will be appended to \code{...}.
 #' @return A character string.
 #' @export
 #' @examples
 #' my.cbox <- rk.XML.cbox("This is a test")
 #' rk.JS.header("Test results", addFromUI=my.cbox)
 
-rk.JS.header <- function(title, ..., level=NULL, guess.getter=FALSE){
+rk.JS.header <- function(title, ..., level=NULL, guess.getter=FALSE, .add=list()){
   addToHeaderChar <- addLevel <- NULL
   addToHeader <- list(...)
+  if(is.list(.add) & length(.add) > 0){
+    addToHeader <- append(addToHeader, .add)
+  } else {}
   headerNames <- names(addToHeader)
   
   if(!all(headerNames %in% c("add", "addFromUI"))){

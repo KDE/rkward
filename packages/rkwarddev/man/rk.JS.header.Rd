@@ -3,13 +3,14 @@
 \alias{rk.JS.header}
 \title{Generate JavaScript header object}
 \usage{
-rk.JS.header(title, ..., level = NULL, guess.getter = FALSE)
+rk.JS.header(title, ..., level = NULL, guess.getter = FALSE,
+  .add = list())
 }
 \arguments{
 \item{title}{Either a character string or object of class \code{rk.JS.i18n}. Will become the header title,
 nested in an i18n() call.}
 
-\item{...}{An optional number of additional info to add to the header. each entry must be named \code{add}
+\item{...}{An optional number of additional info to add to the header. Each entry must be named \code{add}
 or \code{addFromUI} -- note that you can use multiple entries with the same name here. Entries named
 \code{add} must be vectors of legth 2, the first being the caption (character),
       the second its value (either
@@ -21,6 +22,9 @@ specifying the GUI element to query (either character or a XiMpLe node from the 
 \item{guess.getter}{Locigal,
       if \code{TRUE} try to get a good default getter function for JavaScript
 variable values.}
+
+\item{.add}{Same as \code{...}, but provided as a single list. If used,
+      values will be appended to \code{...}.}
 }
 \value{
 A character string.
