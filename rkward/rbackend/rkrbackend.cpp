@@ -1114,34 +1114,48 @@ void RKRBackend::enterEventLoop () {
 	// NOTE: Do NOT run Rf_endEmbeddedR(). It does more that we want. We rely on RCleanup, instead.
 }
 
+struct SafeParseWrap {
+	SEXP cv;
+	SEXP pr;
+	ParseStatus status;
+};
+
+void safeParseVector (void *data) {
+	SafeParseWrap *wrap = static_cast<SafeParseWrap*> (data);
+	wrap->pr = 0;
+	// TODO: Maybe we can use R_ParseGeneral instead. Then we could find the exact character, where parsing fails. Nope: not exported API
+	wrap->pr = R_ParseVector (wrap->cv, -1, &(wrap->status), R_NilValue);
+}
+
 SEXP parseCommand (const QString &command_qstring, RKRBackend::RKWardRError *error) {
 	RK_TRACE (RBACKEND);
 
-	ParseStatus status = PARSE_NULL;
-	SEXP cv, pr;
+	SafeParseWrap wrap;
+	wrap.status = PARSE_NULL;
 
 	QByteArray localc = RKRBackend::this_pointer->current_locale_codec->fromUnicode (command_qstring);		// needed so the string below does not go out of scope
 	const char *command = localc.data ();
 
-	PROTECT(cv=Rf_allocVector(STRSXP, 1));
-	SET_STRING_ELT(cv, 0, Rf_mkChar(command));
+	PROTECT(wrap.cv=Rf_allocVector(STRSXP, 1));
+	SET_STRING_ELT(wrap.cv, 0, Rf_mkChar(command));
 
-	// TODO: Maybe we can use R_ParseGeneral instead. Then we could find the exact character, where parsing fails. Nope: not exported API
-	pr=R_ParseVector(cv, -1, &status, R_NilValue);
+	// Yes, if there is an error in the parse, R does jump back to toplevel!
+	R_ToplevelExec (safeParseVector, &wrap);
+	SEXP pr = wrap.pr;
 	UNPROTECT(1);
 
 	if ((!pr) || (TYPEOF (pr) == NILSXP)) {
 		// got a null SEXP. This means parse was *not* ok, even if R_ParseVector told us otherwise
-		if (status == PARSE_OK) {
-			status = PARSE_ERROR;
+		if (wrap.status == PARSE_OK) {
+			wrap.status = PARSE_ERROR;
 			printf ("weird parse error\n");
 		}
 	}
 
-	if (status != PARSE_OK) {
-		if ((status == PARSE_INCOMPLETE) || (status == PARSE_EOF)) {
+	if (wrap.status != PARSE_OK) {
+		if ((wrap.status == PARSE_INCOMPLETE) || (wrap.status == PARSE_EOF)) {
 			*error = RKRBackend::Incomplete;
-		} else if (status == PARSE_ERROR) {
+		} else if (wrap.status == PARSE_ERROR) {
 			//extern SEXP parseError (SEXP call, int linenum);
 			//parseError (R_NilValue, 0);
 			*error = RKRBackend::SyntaxError;
