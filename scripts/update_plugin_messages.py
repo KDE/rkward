@@ -124,6 +124,11 @@ def getFileContext (element, attribute=""):
     tag_stack = [tag_stack[0], "[...]"] + tag_stack[-2:]
   return (ret + ' '.join (tag_stack) + refer_to)
 
+def writeouti18n (call):
+  if (call.find ("%") >= 0):
+    outfile.write ("/* xgettext:no-c-format */ ")
+  outfile.write (call + "\n")
+
 def quote (text):
   text = HTMLParser.HTMLParser ().unescape (text)	# unescape character entities, Qt does so while parsing the xml
   return "\"" + text.replace ("\\", "\\\\").replace ("\"", "\\\"") + "\""
@@ -180,9 +185,9 @@ def handleNode (node):
         if (node.hasAttribute ("i18n_context")):
           context = node.getAttribute ("i18n_context")
         if (context != ''):
-          outfile.write ("i18nc (" + quote (context) + ", " + quote (attrv) + ");\n")
+          writeouti18n ("i18nc (" + quote (context) + ", " + quote (attrv) + ");")
         else:
-          outfile.write ("i18n (" + quote (attrv) + ");\n")
+          writeouti18n ("i18n (" + quote (attrv) + ");")
     if (node.hasAttribute ("file")):
       filename = node.getAttribute ("file")
       if (filename.endswith (".js")):
@@ -199,7 +204,7 @@ def handleNode (node):
       for chunk in textchunks:
         if (chunk != ""):
           outfile.write (getI18nComment (node))
-          outfile.write ("i18n (" + quote (normalize (chunk)) + ");\n")
+          writeouti18n ("i18n (" + quote (normalize (chunk)) + ");")
     elif (getText (node) != ""):
       sys.stderr.write ("WARNING: Found text content where none expected: " + getFileContext (node) + "\n")
   if (not ((node.nodeType == node.ELEMENT_NODE) and (node.tagName in text_containers))):
@@ -396,7 +401,7 @@ def handleJSChunk (buf, filename, offset, caption):
       call = "i18nc" # for xgettext
       parameters = parameters.replace ('(', '("R code comment", ', 1)
     text += call + normalizeQuotes (parameters) + ";\n"
-    outfile.write (text)
+    writeouti18n (text)
 
 # When we encounter a "file"-attribute, we generally dive right into parsing that file, i.e. we do depth first
 # Advantage is that strings in all files belonging to one plugin will be in direct succession in the .pot file
