@@ -1,0 +1,21 @@
+<h1>Two-sample t test power calculation</h1>
+<h2>Parameters</h2>
+<ul><li>Target measure: Power</li>
+<li>alternative: two.sided</li>
+</ul>
+DATE<br />
+<table border="1">
+<tr><td></td><td>Parameters</td></tr>
+<tr><td>n</td><td>30</td></tr>
+<tr><td>d</td><td>0.3</td></tr>
+<tr><td>sig.level</td><td>0.05</td></tr>
+<tr><td>power</td><td>0.20785</td></tr>
+</table>
+
+<p class='character'><strong>Note:</strong>  n is number in *each* group</p>
+
+<p class='character'>Interpretation of effect size <strong>d</strong> (according to Cohen):</p>
+<table border="1">
+<tr><td>small</td><td>medium</td><td>large</td></tr>
+<tr><td>0.2</td><td>0.5</td><td>0.8</td></tr>
+</table>
