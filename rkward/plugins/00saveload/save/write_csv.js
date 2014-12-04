@@ -102,7 +102,7 @@ function printout(){
 	// printout the results
 
 
-	new Header(i18n("Export Table / CSV files")).addFromUI("file").addFromUI("x").print();
+	new Header(i18n("Export Table / CSV files")).add(i18n("File"), getValue("file")).addFromUI("x").print();
 
 
 }
