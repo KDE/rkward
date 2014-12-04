@@ -395,7 +395,7 @@ etc.JS <- rk.paste.JS(
 )
 
 etc.JS.printout <- rk.paste.JS(
-  rk.JS.header("Export Table / CSV files", addFromUI=etc.browser, addFromUI=etc.var.data)
+  rk.JS.header("Export Table / CSV files", add=c("File", etc.browser), addFromUI=etc.var.data)
 )
 
 
