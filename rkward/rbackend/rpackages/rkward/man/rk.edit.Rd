@@ -8,7 +8,7 @@
 \usage{
 rk.edit(x)
 
-rk.edit.files(file = file, title = file, name = NULL, prompt = TRUE)
+rk.edit.files(name = NULL, file = "", title = NULL, prompt = TRUE)
 
 rk.show.files(file = file, header = file, title = NULL,
   delete.file = FALSE, prompt = TRUE, delete = delete.file)
@@ -45,11 +45,12 @@ is edit asynchronously.
 }
 \details{
 \code{rk.edit.files}, \code{rk.show.files}, and \code{rk.show.html} are
-equivalent to \link{file.edit}, \link{file.show}, and \link{browseURL},
+equivalent to \link{edit}, \link{file.show}, and \link{browseURL},
 respectively, but use RKWard as text/html editor/viewer. Generally it is
-recommended to use \link{file.edit}, \link{file.show}, and \link{browseURL},
-instead. These will call the respective RKWard functions by default, when
-run inside an RKWard session.
+recommended to use \link{edit}, \link{file.edit}, \link{file.show},
+and \link{browseURL}, instead. These will call the respective RKWard functions
+by default, when run inside an RKWard session. (via \code{getOption("editor")},
+and \code{getOption("browser")}.
 }
 \examples{
 ## Not run

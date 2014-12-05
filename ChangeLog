@@ -1,3 +1,4 @@
+- Fixed: Error when using fix() or trace(...edit=TRUE) with default settings on some systems
 - When the RKWard installation has moved on disk, try to adjust stored .pluginmaps paths, accordingly
   - TODO: Actually test this on Windows
 - Fixed: Freezes when using RKWard-functionality (such as the RK()-device) from tcl/tk (e.g. Rcmdr)

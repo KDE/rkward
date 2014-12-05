@@ -6,11 +6,12 @@
 #' is edit asynchronously.
 #' 
 #' \code{rk.edit.files}, \code{rk.show.files}, and \code{rk.show.html} are
-#' equivalent to \link{file.edit}, \link{file.show}, and \link{browseURL},
+#' equivalent to \link{edit}, \link{file.show}, and \link{browseURL},
 #' respectively, but use RKWard as text/html editor/viewer. Generally it is
-#' recommended to use \link{file.edit}, \link{file.show}, and \link{browseURL},
-#' instead. These will call the respective RKWard functions by default, when
-#' run inside an RKWard session.
+#' recommended to use \link{edit}, \link{file.edit}, \link{file.show},
+#' and \link{browseURL}, instead. These will call the respective RKWard functions
+#' by default, when run inside an RKWard session. (via \code{getOption("editor")},
+#' and \code{getOption("browser")}.
 #' 
 #' @aliases rk.edit rk.edit.files rk.show.files rk.show.html
 #' @param x an object to edit.
@@ -45,18 +46,18 @@
 
 #' @export
 #' @rdname rk.edit
-"rk.edit.files" <- function (file = file, title = file, name = NULL, prompt = TRUE)
-{
-	if (!is.character (file)) {
-		nfile = tempfile()
-		env = environment (file)
-		dput (file, file=nfile, control=c ("useSource", "keepNA", "keepInteger", "showAttributes"))
-		.Call("rk.edit.files", nfile, title, name, prompt, PACKAGE="(embedding)")
-		x <- dget (nfile)
-		environment (x) <- env
-		return (x)
+"rk.edit.files" <- function (name=NULL, file="", title=NULL, prompt = TRUE) {
+	if (!is.null(name)) {
+		if (is.null (title)) title = deparse (substitute (name))
+		if (file == "") file = tempfile()
+		env = environment(name)
+		dput (name, file = file, control = c("useSource", "keepNA", "keepInteger", "showAttributes"))
+		.Call ("rk.edit.files", file, title, "", prompt, PACKAGE = "(embedding)")
+		x <- dget(file)
+		environment(x) <- env
+		return(x)
 	}
-	invisible (.Call ("rk.edit.files",  as.character (file),  as.character (title),  as.character (name), isTRUE (prompt), PACKAGE="(embedding)"))
+	invisible (.Call ("rk.edit.files", as.character (file), as.character (title), as.character (name), isTRUE (prompt), PACKAGE="(embedding)"))
 }
 
 #' @export
