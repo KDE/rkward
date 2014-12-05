@@ -86,9 +86,13 @@ if (len (toplevel_sources) < 1):
 # escaping all entities before parsing, then passing all through HTMLParser.unescape () before writing the output.
 def parseFile (filename):
   f = codecs.open (filename, 'r', 'utf-8')
-  content = f.read ()
+  content = f.read ().replace ("&", "&amp;")
   f.close ()
-  return minidom.parseString (content.replace ("&", "&amp;"))
+  try:
+    return minidom.parseString (content)
+  except:
+    sys.stderr.write ("ERROR: Failed to parse file " + filename + "\n")
+    raise
 
 # Where available, include the labels of parent elements. Particularly helpful for radio-options
 def getElementShort (element, dot_attribute=""):
@@ -110,7 +114,7 @@ def getFileContext (element, attribute=""):
   refer_to = ""
   if ((element.tagName in referring_elements) and (element.hasAttribute ("id"))):
     if (not (element.getAttribute ("id") in infile["id_labels"])):
-      sys.stderr.write ("WARNING in " + infile["infile"] + ": Reference to unknown element id '" + element.getAttribute ("id") + "'")
+      sys.stderr.write ("WARNING in " + infile["infile"] + ": Reference to unknown (or unnamed) element id '" + element.getAttribute ("id") + "'\n")
     else:
       refer_to = " (refers to element labelled " + quote (infile["id_labels"][element.getAttribute ("id")]) + ")"
   tag_stack = [getElementShort (element, attribute)]
@@ -196,7 +200,7 @@ def handleNode (node):
         handleJSChunk (jsfile.read (), filename, 0, getFileCaption (None, infile["caption"]))
         jsfile.close ()
       else:
-        handleSubFile (filename, node.tagName == "component")
+        handleSubFile (filename, node.tagName == "component", node.tagName == "include")
     if (node.tagName == "script"):
       handleJSChunk (getText (node), infile["infile"], -1, infile["caption"])
     elif (node.tagName in text_containers):
@@ -207,6 +211,7 @@ def handleNode (node):
           writeouti18n ("i18n (" + quote (normalize (chunk)) + ");")
     elif (getText (node) != ""):
       sys.stderr.write ("WARNING: Found text content where none expected: " + getFileContext (node) + "\n")
+      sys.stderr.write (quote (getText (node)))
   if (not ((node.nodeType == node.ELEMENT_NODE) and (node.tagName in text_containers))):
     # Don't go looking into the contents of text containers any further (may contain HTML markup)
     for child in node.childNodes:
@@ -406,13 +411,16 @@ def handleJSChunk (buf, filename, offset, caption):
 # When we encounter a "file"-attribute, we generally dive right into parsing that file, i.e. we do depth first
 # Advantage is that strings in all files belonging to one plugin will be in direct succession in the .pot file
 # The exception is if the referenced file declares an own (different) po_id. In this case it will be handled, later.
-def handleSubFile (filename, fetch_ids = False):
+def handleSubFile (filename, fetch_ids = False, is_include=False):
   global toplevel_sources
   global infile
   cdir = os.path.dirname (infile["infile"])
-  filename = os.path.join (cdir, infile["file_prefix"], filename)
+  if (is_include):
+    filename = os.path.join (cdir, filename)
+  else:
+    filename = os.path.join (cdir, infile["file_prefix"], filename)
   if (not os.path.isfile (filename)):
-    sys.stderr.write (getFileContext (node)  + " WARNING: File " + filename + " does not exist\n")
+    sys.stderr.write (" WARNING: File " + filename + " (referenced from " + infile["infile"] + ") does not exist\n")
     return
   xmldoc = parseFile (filename)
   if (xmldoc.documentElement.hasAttribute ("po_id") and (xmldoc.documentElement.getAttribute ("po_id") != current_po_id)):
@@ -424,8 +432,11 @@ def handleSubFile (filename, fetch_ids = False):
     infile["infile"] = filename
     infile["file_prefix"] = xmldoc.documentElement.getAttribute ("base_prefix")
     infile["caption"] = getFileCaption (xmldoc.documentElement, oldinfile["caption"])
-    if (fetch_ids):
-      infile["id_labels"] = getElementLabelsRecursive (xmldoc.documentElement)
+    if (fetch_ids or is_include):
+      if (is_include):
+        infile["id_labels"].update (getElementLabelsRecursive (xmldoc.documentElement).items ())
+      else:
+        infile["id_labels"] = getElementLabelsRecursive (xmldoc.documentElement)
     handleNode (xmldoc.documentElement)
     infile = oldinfile
 
