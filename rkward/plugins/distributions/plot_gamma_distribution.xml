@@ -16,7 +16,7 @@
 		<snippet id="dist_options">
 			<frame label="Parameters">
 				<spinbox default_precision="2" type="real" id="shape" initial="1" min="0.01" label="Shape" />
-				<spinbox default_precision="2" type="real" id="rate" initial="1" min="0.01" label="Rate (lambda)" label="Rate or 1/Scale" />
+				<spinbox default_precision="2" type="real" id="rate" initial="1" min="0.01" label="Rate (lambda) or 1/Scale" />
 			</frame>
 		</snippet>
 		<include file="plot_dist_common_snippets.xml"/>

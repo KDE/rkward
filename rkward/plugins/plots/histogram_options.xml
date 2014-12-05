@@ -31,7 +31,7 @@
 		<connect client="density.enabled" governor="ishistlty_notblank"/>
 
 		<convert id="isdensityGT0ishistlty_notblank" mode="and" sources="isdensityGT0;ishistlty_notblank" />
-		<connect client="angle.enabled" governor="isdensityGT0ishistlty_notblank"/>-->
+		<connect client="angle.enabled" governor="isdensityGT0ishistlty_notblank"/>
 
 		<connect client="frame_histborderoptions.enabled" governor="ishistlty_notblank"/>
 		<connect client="histbordercol.color.enabled" governor="doborder.state" />
