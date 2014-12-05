@@ -509,7 +509,7 @@ for po_id in initialized_pot_files:
       else:
         os.remove (abstrans)
         os.rename (abstrans + ".new", abstrans)
-      m_outdir = os.path.join (po_file_install_locations[po_id], lang, "MESSAGES")
+      m_outdir = os.path.join (po_file_install_locations[po_id], lang, "LC_MESSAGES")
       if (not os.path.exists (m_outdir)):
         os.makedirs (m_outdir, 0755)
       res = subprocess.call (MSGFMT.split () + [abstrans, "-o", os.path.join (m_outdir, templatename + ".mo")])
