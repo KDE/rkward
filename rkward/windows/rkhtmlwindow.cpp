@@ -688,16 +688,23 @@ bool RKHTMLWindow::renderRKHelp (const KUrl &url) {
 QString RKHTMLWindow::renderHelpFragment (QDomElement &fragment, const XMLHelper *xml) {
 	RK_TRACE (APP);
 
-	// prepare all internal links
-	QDomNodeList link_nodes = fragment.elementsByTagName ("link");
-	for (int i=link_nodes.count (); i >= 0; --i) {
-		QDomElement element = link_nodes.item (i).toElement ();
-		if (element.isNull ()) continue;
-
-		prepareHelpLink (&element);
-	}
-
 	QString ret = xml->i18nElementText (fragment, true, DL_WARNING);
+
+	// Can't resolve links based on the already parsed dom-tree, because they can be inside string to be translated.
+	// I.e. resolving links before doing i18n will cause i18n-lookup to fail
+	QDomDocument doc;
+	if (doc.setContent (ret)) {
+		QDomNodeList link_nodes = doc.elementsByTagName ("link");
+		for (int i=link_nodes.count (); i >= 0; --i) {
+			QDomElement element = link_nodes.item (i).toElement ();
+			if (element.isNull ()) continue;
+
+			prepareHelpLink (&element);
+		}
+		ret = doc.toString ();
+	} else {
+		RK_DEBUG (APP, DL_ERROR, "Translated help fragment failed to parse: %s", qPrintable (ret));
+	}
 
 	RK_DEBUG (APP, DL_DEBUG, "%s", ret.toLatin1 ().data ());
 	return ret;
