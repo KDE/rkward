@@ -13,7 +13,7 @@ For complete crosstabulation of three or more variables against each other (into
 	<settings>
 		<caption id="variables_tab"/>
 		<setting id="x">Select any vector that can be interpreted as a factor. This variable will be present in all tables.</setting>
-		<setting id="y">Select one or more vector that can be interpreted as a factor. Each of these will be cross-tabulated against the "dependent" variable.</setting>
+		<setting id="y">Select one or more vectors that can be interpreted as a factor. Each of these will be cross-tabulated against the "dependent" variable.</setting>
 		<setting id="chisq">Should a chisquare test be performed (for each pair)?</setting>
 		<setting id="barplot">Should a barplot be produced (for each pair)?</setting>
 		<setting id="preview">Allows to preview the barplot(s). Only the first of the barplots is shown in the preview, even if more than one table is produced.</setting>

@@ -19,7 +19,7 @@
 		<setting id="confint">Check this if you want the confidence interval to be computed/printed.</setting>
 		<setting id="conflevel">Confidence level of the printed confidence interval.</setting>
 		<setting id="mu">The location / location shift to form the null hypothesis.</setting>
-		<setting id="exact">Should an exact p-value be computed? By default ("Automatic") an asymptomatic p-value is calculated if and only if you have less than 50 cases per group without binding than an exact test should be performed.</setting>
+		<setting id="exact">Should an exact p-value be computed? By default ("Automatic") an asymptomatic p-value is calculated if and only if you have less than 50 cases per group without binding when an exact test should be performed.</setting>
 		<setting id="ties">Check this option to compute an exact p-value even in the presence of ties.</setting>
 		<setting id="correct">If checked a continuity correction in the normal approximation for the p-value is applied.</setting>
 	</settings>
