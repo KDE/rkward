@@ -20,6 +20,8 @@
 #include <QVBoxLayout>
 #include <qlabel.h>
 
+#include <klocale.h>
+
 #include "../misc/xmlhelper.h"
 #include "../rkglobals.h"
 #include "../misc/rkobjectlistview.h"
@@ -40,7 +42,7 @@ RKVarSelector::RKVarSelector (const QDomElement &element, RKComponent *parent_co
 	QVBoxLayout *vbox = new QVBoxLayout (this);
 	vbox->setContentsMargins (0, 0, 0, 0);
 	
-	QLabel *label = new QLabel (element.attribute ("label", "Select Variable(s)"), this);
+	QLabel *label = new QLabel (element.attribute ("label", i18n ("Select Variable(s)")), this);
 	vbox->addWidget (label);
 
 	list_view = new RKObjectListView (this);
