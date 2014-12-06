@@ -688,23 +688,30 @@ bool RKHTMLWindow::renderRKHelp (const KUrl &url) {
 QString RKHTMLWindow::renderHelpFragment (QDomElement &fragment, const XMLHelper *xml) {
 	RK_TRACE (APP);
 
-	QString ret = xml->i18nElementText (fragment, true, DL_WARNING);
+	QString text = xml->i18nElementText (fragment, true, DL_WARNING);
 
 	// Can't resolve links based on the already parsed dom-tree, because they can be inside string to be translated.
 	// I.e. resolving links before doing i18n will cause i18n-lookup to fail
-	QDomDocument doc;
-	if (doc.setContent (ret)) {
-		QDomNodeList link_nodes = doc.elementsByTagName ("link");
-		for (int i=link_nodes.count (); i >= 0; --i) {
-			QDomElement element = link_nodes.item (i).toElement ();
-			if (element.isNull ()) continue;
-
-			prepareHelpLink (&element);
+	int pos = 0;
+	int npos;
+	QString ret;
+	while ((npos = text.indexOf ("<link", pos)) >= 0) {
+		ret += text.mid (pos, npos - pos);
+		int end = text.indexOf (">", npos) + 1;
+		if (text[end-2] != QChar ('/')) {
+			end = text.indexOf ("</link>", end) + 7;
 		}
-		ret = doc.toString ();
-	} else {
-		RK_DEBUG (APP, DL_ERROR, "Translated help fragment failed to parse: %s", qPrintable (ret));
+
+		QDomDocument doc;	// TODO: simplify prepareHelpLink() to work on a QString, rather than QDomElement
+		doc.setContent (text.mid (npos, end - npos));
+		QDomElement element = doc.firstChildElement ("link");
+		RK_ASSERT (!element.isNull ());		// may happen on malformed page, though
+		prepareHelpLink (&element);
+		ret += doc.toString ();
+
+		pos = end + 1;
 	}
+	ret += text.mid (pos);
 
 	RK_DEBUG (APP, DL_DEBUG, "%s", ret.toLatin1 ().data ());
 	return ret;
