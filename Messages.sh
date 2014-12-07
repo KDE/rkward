@@ -6,7 +6,7 @@ $EXTRACTRC `find rkward -name \*.rc -a \! -name rkward_windows_icon.rc -o -name 
 #
 # call xgettext on all source files. If your sources have other filename
 # extensions besides .cc, .cpp, and .h, just add them in the find call.
-$XGETTEXT `find rkward -name \*.cpp -o -name \*.h -name \*.c` -o $podir/rkward.pot
+$XGETTEXT `find rkward -name \*.cpp -o -name \*.h -name \*.c` rc.cpp -o $podir/rkward.pot
 
 # extract messages from analysis plugins: >> rkward__analysis.pot
 python scripts/update_plugin_messages.py --extract-only --outdir=$podir rkward/plugins/analysis.pluginmap
