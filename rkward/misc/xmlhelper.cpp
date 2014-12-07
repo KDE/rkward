@@ -248,7 +248,7 @@ QString XMLHelper::i18nStringAttribute (const QDomElement& element, const QStrin
 		return def;
 	}
 	const QString context_element ("i18n_context");
-	if (element.hasAttribute (context_element)) return (catalog->translate (context_element, element.attribute (name)));
+	if (element.hasAttribute (context_element)) return (catalog->translate (element.attribute (context_element), element.attribute (name)));
 	return (catalog->translate (element.attribute (name)));
 }
 

@@ -42,7 +42,7 @@ RKRadio::RKRadio (const QDomElement &element, RKComponent *parent_component, QWi
 
 	// create ButtonGroup
 	group = new QButtonGroup (this);
-	group_box = new QGroupBox (xml->getStringAttribute (element, "label", i18n ("Select one:"), DL_INFO), this);
+	group_box = new QGroupBox (xml->i18nStringAttribute (element, "label", i18n ("Select one:"), DL_INFO), this);
 	new QVBoxLayout (group_box);
 
 	addOptionsAndInit (element);
