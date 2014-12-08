@@ -30,6 +30,7 @@ import subprocess
 from xml.dom import minidom
 import HTMLParser
 import copy
+import re
 
 # You might want to adjust the following values (can also be overridden from environment variable):
 BUGADDR = "http://p.sf.net/rkward/bugs"     # Technically, this is for bugs _in the translation_
@@ -52,6 +53,8 @@ attributes_to_extract_for_tag={
   'about':  { "attributes" : ['name', 'shortinfo', 'category'], "context": ''},
   'author': { "attributes" : ['name', 'given', 'family'], "context": 'Author name'}
 }
+# HACK for preserving line number information in the DOM tree. This string should be unique enough to not clash with the files' contents!
+LINE_DUMMY_ATTR = '_DUMMY_LINE'
 
 def usage ():
   print ("Usage: " + sys.argv[0] + " [--default_po=PO_ID] [--outdir=DIR] files")
@@ -84,10 +87,20 @@ if (len (toplevel_sources) < 1):
 # For crying out loud! So we are not strictly using XML, because we allow the use of (X)HTML entities, esp. inside <text>-elements,
 # without formally declaring these entities. Python seems to make a point of making it real hard to deal with this. So what we do is
 # escaping all entities before parsing, then passing all through HTMLParser.unescape () before writing the output.
+#
+# The second thing we do is hacking line number information into the parsed XML tree
 def parseFile (filename):
   f = codecs.open (filename, 'r', 'utf-8')
-  content = f.read ().replace ("&", "&amp;")
+  content = f.read ().replace ("&", "&amp;").split ("\n")
   f.close ()
+
+  l = 0
+  enriched = list ()
+  for line in content:
+    l += 1
+    enriched.append (re.sub (r'<(\w+)', r'<\1 ' + LINE_DUMMY_ATTR + '="' + str (l) + '"', line))
+  content = "\n".join (enriched)
+
   try:
     return minidom.parseString (content)
   except:
@@ -107,7 +120,7 @@ def getElementShort (element, dot_attribute=""):
 
 # Try to extract helpful file context information
 def getFileContext (element, attribute=""):
-  ret = "i18n: file: " + infile["infile"] + "\n"
+  ret = "i18n: file: " + infile["infile"] + ":" + str (getLineOf (element, 0)) + "\n"
   ret += "i18n: ectx: "
   if (infile["caption"] != ""):
     ret += "(" + infile["caption"] + ") "
@@ -137,6 +150,14 @@ def quote (text):
   text = HTMLParser.HTMLParser ().unescape (text)	# unescape character entities, Qt does so while parsing the xml
   return "\"" + text.replace ("\\", "\\\\").replace ("\"", "\\\"") + "\""
 
+def stripLineDummy (text):
+  return re.sub (r' ' + LINE_DUMMY_ATTR + '="\d+"', '', text)
+
+def getLineOf (element, default=-1):
+  if element.hasAttribute (LINE_DUMMY_ATTR):
+    return element.getAttribute (LINE_DUMMY_ATTR)
+  return default
+
 # Normalizes larger text fragments. TODO: Do we want to protect <pre>-blocks?
 def normalize (text):
   lines = text.split ("\n")
@@ -150,7 +171,7 @@ def getFullText (element):
   rc = []
   for cn in element.childNodes:
     if cn.nodeType != cn.COMMENT_NODE:
-      rc.append(cn.toxml ("utf-8"))
+      rc.append(stripLineDummy (cn.toxml ("utf-8")))
   return ''.join (rc).strip ().replace ("&amp;", "&")
 
 # get the content of all text nodes inside this node (does not include xml tags)
@@ -158,7 +179,7 @@ def getText (node):
   rc = []
   for cn in node.childNodes:
     if cn.nodeType in [cn.TEXT_NODE, cn.CDATA_SECTION_NODE]:
-      rc.append(cn.data)
+      rc.append(stripLineDummy (cn.data))
   return ''.join (rc).strip ()
 
 # Look for an i18n comment in the given node, and add automatically extracted file context information
@@ -168,7 +189,7 @@ def getI18nComment (node, attribute=""):
     if cn.nodeType == cn.COMMENT_NODE:
       comment = normalize (cn.data.strip ())
       if (comment.lower ().startswith ("i18n:") or comment.lower ().startswith ("translators:")):
-        ret += "i18n: " + comment + "\n"
+        ret += "i18n: " + stripLineDummy (comment) + "\n"
   ret += getFileContext (node, attribute) + " */\n"
   return (ret)
 
@@ -202,7 +223,7 @@ def handleNode (node):
       else:
         handleSubFile (filename, node.tagName == "component", node.tagName == "include")
     if (node.tagName == "script"):
-      handleJSChunk (getText (node), infile["infile"], -1, infile["caption"])
+      handleJSChunk (getText (node), infile["infile"], getLineOf (node), infile["caption"])
     elif (node.tagName in text_containers):
       textchunks = getFullText (node).split ("\n\n")
       for chunk in textchunks:
