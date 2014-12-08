@@ -697,56 +697,63 @@ QString RKHTMLWindow::renderHelpFragment (QDomElement &fragment, const XMLHelper
 	QString ret;
 	while ((npos = text.indexOf ("<link", pos)) >= 0) {
 		ret += text.mid (pos, npos - pos);
+
+		QString href;
+		int href_start = text.indexOf (" href=\"", npos + 5);
+		if (href_start >= 0) {
+			href_start += 7;
+			int href_end = text.indexOf ("\"", href_start);
+			href = text.mid (href_start, href_end - href_start);
+		}
+		QString linktext;
 		int end = text.indexOf (">", npos) + 1;
 		if (text[end-2] != QChar ('/')) {
-			end = text.indexOf ("</link>", end) + 7;
+			int nend = text.indexOf ("</link>", end);
+			linktext = text.mid (end, nend - end);
+			end = nend + 7;
 		}
 
-		QDomDocument doc;	// TODO: simplify prepareHelpLink() to work on a QString, rather than QDomElement
-		doc.setContent (text.mid (npos, end - npos));
-		QDomElement element = doc.firstChildElement ("link");
-		RK_ASSERT (!element.isNull ());		// may happen on malformed page, though
-		prepareHelpLink (&element);
-		ret += doc.toString ();
-
-		pos = end + 1;
+		ret += prepareHelpLink (href, linktext);
+		pos = end;
 	}
 	ret += text.mid (pos);
 
-	RK_DEBUG (APP, DL_DEBUG, "%s", ret.toLatin1 ().data ());
+	RK_DEBUG (APP, DL_DEBUG, "%s", qPrintable (ret));
 	return ret;
 }
 
-void RKHTMLWindow::prepareHelpLink (QDomElement *link_element) {
+QString RKHTMLWindow::prepareHelpLink (const QString &href, const QString &text) {
 	RK_TRACE (APP);
 
-	link_element->setTagName ("a");
-	if (link_element->text ().isEmpty ()) {
-		QString text;
-		KUrl url = link_element->attribute ("href");
+	QString ret = "<a href=\"" + href + "\">";
+	if (!text.isEmpty ()) {
+		ret += text;
+	} else {
+		QString ltext;
+		KUrl url (href);
 		if (url.protocol () == "rkward") {
 			if (url.host () == "component") {
 				RKComponentHandle *chandle = componentPathToHandle (url.path ());
-				if (chandle) text = chandle->getLabel ();
+				if (chandle) ltext = chandle->getLabel ();
 			} else if (url.host () == "rhelp") {
-				text = i18n ("R Reference on '%1'", url.path ().mid (1));
+				ltext = i18n ("R Reference on '%1'", url.path ().mid (1));
 			} else if (url.host () == "page") {
 				QString help_base_dir = RKCommonFunctions::getRKWardDataDir () + "pages/";
 		
 				XMLHelper xml (help_base_dir + url.path () + ".rkh", RKMessageCatalog::getCatalog ("rkward__pages", RKCommonFunctions::getRKWardDataDir () + "po/"));
 				QDomElement doc_element = xml.openXMLFile (DL_WARNING);
 				QDomElement title_element = xml.getChildElement (doc_element, "title", DL_WARNING);
-				text = xml.i18nElementText (title_element, false, DL_WARNING);
+				ltext = xml.i18nElementText (title_element, false, DL_WARNING);
 			}
 
-			if (text.isEmpty ()) {
-				text = i18n ("BROKEN REFERENCE");
+			if (ltext.isEmpty ()) {
+				ltext = i18n ("BROKEN REFERENCE");
 				RK_DEBUG (APP, DL_WARNING, "Broken reference to %s", url.path ().toLatin1 ().data ());
 			}
-
-			link_element->appendChild (link_element->ownerDocument ().createTextNode (text));
 		}
+		ret.append (ltext);
 	}
+	return (ret + "</a>");
 }
 
 QString RKHTMLWindow::componentPathToId (QString path) {

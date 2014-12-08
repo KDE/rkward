@@ -138,7 +138,7 @@ private:
 	// for dealing with rkward://[page|component]-pages
 	bool renderRKHelp (const KUrl &url);
 	QString renderHelpFragment (QDomElement &fragment, const XMLHelper *xml);
-	void prepareHelpLink (QDomElement *link_element);
+	QString prepareHelpLink (const QString &href, const QString &text);
 	QString componentPathToId (QString path);
 	RKComponentHandle *componentPathToHandle (QString path);
 	QString startSection (const QString &name, const QString &title, const QString &shorttitle, QStringList *anchors, QStringList *anchor_names);
