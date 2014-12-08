@@ -247,8 +247,8 @@ QString XMLHelper::i18nStringAttribute (const QDomElement& element, const QStrin
 		displayError (&element, i18n ("'%1'-attribute not given. Assuming '%2'", name, def), debug_level);
 		return def;
 	}
-	const QString context_element ("i18n_context");
-	if (element.hasAttribute (context_element)) return (catalog->translate (element.attribute (context_element), element.attribute (name)));
+	const QString context = element.attribute ("i18n_context", QString ());
+	if (!context.isNull ()) return (catalog->translate (context, element.attribute (name)));
 	return (catalog->translate (element.attribute (name)));
 }
 
@@ -331,11 +331,7 @@ QString XMLHelper::i18nElementText (const QDomElement &element, bool with_paragr
 		return QString ();
 	}
 
-	const QString context_attr ("i18n_context");
-	QString context;
-	if (element.hasAttribute (context_attr)) {
-		context = element.attribute (context_attr);
-	}
+	QString context = element.attribute ("i18n_context", QString ());
 
 	// if (!with_paragraphs), text should better not contain double newlines. We treat all the same, though, just as the message extraction script does.
 	QStringList paras = ret.split ("\n\n");
