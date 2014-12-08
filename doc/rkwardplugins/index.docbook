@@ -4056,8 +4056,8 @@ Child elements:
 	<listitem><para>A label for the menu.</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>index</term>
-	<listitem><para>Useful, when menu definitions are read from several &pluginmap; files, to have control over the order in which (sub-)menus are placed inside a hierarchy level. Note that the index is not absolute (since more than one &pluginmap; file may be read, more than one element at this hierarchy level may have the same id), but you can safely assume that an element with index="4" will be placed somewhere below an element which index="3" and above one with index="5" (optional, default is "-1", for add at end).</para></listitem>
+	<term>group</term>
+	<listitem><para>Allows to control ordering of menu entries. See <link linkend="pluginmap_grouping">menu item ordering</link>. Optional.</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
@@ -4070,8 +4070,26 @@ Child elements:
 	<listitem><para>The ID of the component that should be invoked, when this menu entry is activated.</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term>index</term>
-	<listitem><para>See &lt;menu index="..."&gt; above.</para></listitem>
+	<term>group</term>
+	<listitem><para>Allows to control ordering of menu entries. See <link linkend="pluginmap_grouping">menu item ordering</link>. Optional.</para></listitem>
+	</varlistentry>
+	</variablelist></para></listitem>
+</varlistentry>
+<varlistentry>
+<term>&lt;group&gt;</term>
+<listitem><para>Declares a group of items in the menu. See <link linkend="pluginmap_grouping">menu item ordering</link>. Attributes:
+	<variablelist>
+	<varlistentry>
+	<term>id</term>
+	<listitem><para>The name of this group.</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>separated</term>
+	<listitem><para>Optional. If set to "true" the item in this group will be visually separated from surrounding items.</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term>group</term>
+	<listitem><para>The name of the group to append this group to (optional).</para></listitem>
 	</varlistentry>
 	</variablelist></para></listitem>
 </varlistentry>
