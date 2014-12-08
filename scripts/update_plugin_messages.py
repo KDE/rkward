@@ -91,15 +91,13 @@ if (len (toplevel_sources) < 1):
 # The second thing we do is hacking line number information into the parsed XML tree
 def parseFile (filename):
   f = codecs.open (filename, 'r', 'utf-8')
-  content = f.read ().replace ("&", "&amp;").split ("\n")
-  f.close ()
-
   l = 0
   enriched = list ()
-  for line in content:
+  for line in f:
     l += 1
     enriched.append (re.sub (r'<(\w+)', r'<\1 ' + LINE_DUMMY_ATTR + '="' + str (l) + '"', line))
-  content = "\n".join (enriched)
+  content = "".join (enriched).replace ("&", "&amp;")
+  f.close ()
 
   try:
     return minidom.parseString (content)
