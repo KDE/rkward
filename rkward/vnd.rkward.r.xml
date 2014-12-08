@@ -2,6 +2,9 @@
 <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
   <mime-type type="text/r">
     <comment>R source file</comment>
+    <comment xml:lang="nl">R-bronbestand</comment>
+    <comment xml:lang="pt">Ficheiro de código em R</comment>
+    <comment xml:lang="uk">файл коду R</comment>
     <acronym>R</acronym>
     <expanded-acronym>R programming language</expanded-acronym>
     <generic-icon name="text-x-generic"/>
@@ -11,6 +14,9 @@
   </mime-type>
   <mime-type type="application/rdata">
     <comment>R data/workspace file</comment>
+    <comment xml:lang="nl">R-gegevens/werkruimtebestand</comment>
+    <comment xml:lang="pt">Ficheiro de dados/área de trabalho do R</comment>
+    <comment xml:lang="uk">файл даних/робочого простору R</comment>
     <acronym>RData</acronym>
     <expanded-acronym>R data/workspace file</expanded-acronym>
     <generic-icon name="package-x-generic"/>
