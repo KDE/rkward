@@ -4,6 +4,11 @@
 	<summary>
 	RKWard is far from complete and certainly there are many issues that need to be fixed. However, some of the things you notice are not due to the nature of RKWard but R or something else. This section will try to cover some common issues. See also <link href="http://p.sf.net/rkward/faq">the online FAQ</link>.
 	</summary>
+	<section title="The &quot;Analysis&quot; menu is missing, or shows up as &quot;(no label)&quot;" shorttitle="Missing menu items" id="missing_menu_items">
+		This problem will often occur, when moving an RKWard installation to a different path, esp. on Windows and Mac. You may have to visit
+		Settings->Configure RKWard->Plugins and re-add the relevant ".pluginmap"-files. Starting with version 0.6.3, RKWard should detect
+		a changed installation path, and adjust paths, automatically.
+	</section>
 	<section title="People tend to ask me what RKWard means. What should I answer?" shorttitle="What does &quot;RKWard&quot; mean?" id="the_name_problems">
 		Yes, it's a very odd name. ;) However, R comes obviously from the <link href="http://www.r-project.org/">R-language</link> which is the statistical basis of RKWard. K is derived from <link href="http://kde.org/">KDE</link> which delivered the basic GUI technologies for RKWard. And <link href="http://en.wikipedia.org/wiki/Ward">Ward</link>? That's another story.
 	</section>
