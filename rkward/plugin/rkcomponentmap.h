@@ -163,11 +163,14 @@ public:
 	int valid_plugins;
 };
 
-/** This class (only a single instance should ever be needed) keeps a list of named components, which can be made accessible via the menu-structure
+/** This class keeps a list of named components, which can be made accessible via the menu-structure
 or included in other plugins. What this class does is rather simple: It basically maps a two piece name (namespace, component name) to a short description of the component (RKComponentHandle). The most important part of that description is the filename where a more elaborate definition of
 the component can be retrieved.
 
 The RKComponentMap provides convenience functions for adding or removing a .pluginmap-file to/from the list of components, and looking up RKComponentHandle for a given component name.
+
+Usually there is exactly one instance of this class, accessible with RKComonentMap::getMain(), and some other static functions. However, temporary instances can be created for parsing
+individual .pluginmap files in order to list / display the plugins contained in these.
 
 @author Thomas Friedrichsmeier
 */
@@ -179,11 +182,11 @@ public:
 
 /** adds all Plugins / components in a .pluginmap-file. Also takes care of creating the menu-items, etc.
 @returns status info of number of plugins (i.e. stand-alone components/menu-entries) added successfully / failed */
-	static RKPluginMapParseResult addPluginMap (const QString& plugin_map_file);
+	RKPluginMapParseResult addPluginMap (const QString& plugin_map_file);
 	void finalizeAll ();
 
 /** clears out (and deletes) all components / plugins */
-	static void clearAll ();
+	void clearAll ();
 
 /** returns the component identified by id, 0 if not found */
 	static RKComponentHandle* getComponentHandle (const QString &id);
@@ -217,9 +220,6 @@ private:
 	RKComponentHandle* getComponentHandleLocal (const QString &id);
 	QString getComponentIdLocal (RKComponentHandle* component);
 	RKContextMap *getContextLocal (const QString &id);
-	RKPluginMapParseResult addPluginMapLocal (const QString& plugin_map_file);
-
-	void clearLocal ();
 
 	typedef QMap<QString, RKContextMap*> RKComponentContextMap;
 	RKComponentContextMap contexts;

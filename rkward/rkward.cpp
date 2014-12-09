@@ -289,7 +289,7 @@ void RKWardMainWindow::initPlugins (const QStringList &automatically_added) {
 	}
 
 	factory ()->removeClient (RKComponentMap::getMap ());
-	RKComponentMap::clearAll ();
+	RKComponentMap::getMap ()->clearAll ();
 
 	QStringList completely_broken_maps;
 	QStringList completely_broken_maps_details;
@@ -297,7 +297,7 @@ void RKWardMainWindow::initPlugins (const QStringList &automatically_added) {
 	QStringList somewhat_broken_maps_details;
 	for (int i = 0; i < all_maps.size (); ++i) {
 		const QString &map = all_maps[i];
-		RKPluginMapParseResult result = RKComponentMap::addPluginMap (map);
+		RKPluginMapParseResult result = RKComponentMap::getMap ()->addPluginMap (map);
 		if (!result.valid_plugins) {
 			RKSettingsModulePlugins::markPluginMapAsBroken (map);
 			completely_broken_maps.append (map);

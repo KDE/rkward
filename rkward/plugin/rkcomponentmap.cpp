@@ -234,10 +234,10 @@ RKComponentMap::RKComponentMap () : QObject (), RKComponentGUIXML (), KXMLGUICli
 RKComponentMap::~RKComponentMap () {
 	RK_TRACE (PLUGIN);
 
-	clearLocal ();
+	clearAll ();
 }
 
-void RKComponentMap::clearLocal () {
+void RKComponentMap::clearAll () {
 	RK_TRACE (PLUGIN);
 
 	actionCollection ()->clear ();
@@ -258,12 +258,6 @@ void RKComponentMap::clearLocal () {
 	clearGUIDescription ();
 
 	setXMLGUIBuildDocument (gui_xml);
-}
-
-void RKComponentMap::clearAll () {
-	RK_TRACE (PLUGIN);
-
-	getMap ()->clearLocal ();
 }
 
 RKContextMap *RKComponentMap::getContext (const QString &id) {
@@ -403,12 +397,6 @@ void RKPluginMapParseResult::addAndPrintError (int level, const QString message)
 	RK_DEBUG (PLUGIN, level, qPrintable (message));
 }
 
-RKPluginMapParseResult RKComponentMap::addPluginMap (const QString& plugin_map_file) {
-	RK_TRACE (PLUGIN);
-
-	return getMap()->addPluginMapLocal (plugin_map_file);
-}
-
 void RKComponentMap::finalizeAll () {
 	RK_TRACE (PLUGIN);
 
@@ -420,7 +408,7 @@ void RKComponentMap::finalizeAll () {
 	}
 }
 
-RKPluginMapParseResult RKComponentMap::addPluginMapLocal (const QString& plugin_map_file) {
+RKPluginMapParseResult RKComponentMap::addPluginMap (const QString& plugin_map_file) {
 	RK_TRACE (PLUGIN);
 
 	RKPluginMapParseResult ret;
@@ -490,7 +478,7 @@ RKPluginMapParseResult RKComponentMap::addPluginMapLocal (const QString& plugin_
 		}
 	}
 	for (QStringList::const_iterator it = includelist.constBegin (); it != includelist.constEnd (); ++it) {
-		ret.add (addPluginMapLocal (*it));
+		ret.add (addPluginMap (*it));
 	}
 
 	// step 2: create (list of) components
