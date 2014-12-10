@@ -18,6 +18,7 @@
 #include "rkcomponentmeta.h"
 
 #include "../misc/xmlhelper.h"
+#include "../misc/rkmessagecatalog.h"
 #include "../rbackend/rksessionvars.h"
 
 #include <klocale.h>
@@ -59,6 +60,13 @@ RKComponentAboutData::RKComponentAboutData (const QDomElement& e, XMLHelper &xml
 		author.url = xml.getStringAttribute (ae, "url", QString (), DL_INFO);
 		authors.append (author);
 	}
+
+	const QString translator_names_id ("Your names");
+	const QString translator_emails_id ("Your emails");
+	translator_names = xml.messageCatalog ()->translate ("NAME OF TRANSLATORS", translator_names_id);
+	translator_emails = xml.messageCatalog ()->translate ("EMAIL OF TRANSLATORS", translator_emails_id);
+	if (translator_names == translator_names_id) translator_names.clear ();
+	if (translator_emails == translator_emails_id) translator_emails.clear ();
 }
 
 RKComponentAboutData::~RKComponentAboutData () {
@@ -75,10 +83,10 @@ QString RKComponentAboutData::toHtml () const {
 	ret.append ("</p>\n");
 	if (!url.isEmpty ()) ret.append ("URL: <a href=\"" + url + "\">" + url + "</a></p>\n<p>");
 	if (!copyright.isEmpty ()) ret.append (i18n ("Copyright (c): %1", copyright) + "</p>\n<p>");
-	if (!license.isEmpty ()) ret.append (i18n ("License: %1", license) + "</p>\n<p>");
+	if (!license.isEmpty ()) ret.append (i18n ("License: %1", license) + "</p>");
 
 	if (!authors.isEmpty ()) {
-		ret.append ("<b>" + i18n ("Authors:") + "</b></p>\n<p><ul>");
+		ret.append ("\n<p><b>" + i18n ("Authors:") + "</b></p>\n<p><ul>");
 		for (int i = 0; i < authors.size (); ++i) {
 			RKComponentAuthor a = authors[i];
 			ret.append ("<li>" + a.name);
@@ -86,9 +94,22 @@ QString RKComponentAboutData::toHtml () const {
 			if (!a.url.isEmpty ()) ret.append (" (" + a.url + ")");
 			if (!a.roles.isEmpty ()) ret.append ("<br/><i>" + i18nc ("Author roles (contributor, etc.)", "Roles") + "</i>: " + a.roles);
 		}
-		ret.append ("</ul>");
+		ret.append ("</ul></p>");
 	}
-	ret.append ("</p>");
+
+	if (!translator_names.isNull ()) {
+		QStringList tns = translator_names.split (QLatin1Char(','), QString::KeepEmptyParts);
+		QStringList tes = translator_emails.split (QLatin1Char(','), QString::KeepEmptyParts);
+		ret.append ("\n<p><b>" + i18n ("Translators:") + "</b></p>\n<p><ul>");
+		for (int i = 0; i < tns.size (); ++i) {
+			QString tn = tns.value (i);
+			QString te = tes.value (i);
+			if (tn.isEmpty () && te.isEmpty ()) continue;
+			ret.append ("<li>" + tn + " <" + te + "></li>\n");
+		}
+		ret.append ("</ul></p>");
+	}
+
 	return ret;
 }
 

@@ -65,6 +65,8 @@ public:
 	QString url;
 	QString category;
 	QList<RKComponentAuthor> authors;
+	QString translator_names;
+	QString translator_emails;
 };
 
 #endif

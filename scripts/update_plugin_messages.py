@@ -479,6 +479,9 @@ def initialize_pot_file (po_id, po_loc):
   if (not os.path.exists (p_outdir)):
     os.makedirs (p_outdir, 0755)
   outfile = codecs.open (os.path.join (p_outdir, po_id + '.pot.cpp'), mode, 'utf-8')
+  if (mode == 'w'):	# just created
+    outfile.write ('i18nc("NAME OF TRANSLATORS","Your names");\n');
+    outfile.write ('i18nc("EMAIL OF TRANSLATORS","Your emails");\n');
 
 #######
 # Loop over toplevel_sources (specified on command line, or those that want to be split into separate po) and extract messages
