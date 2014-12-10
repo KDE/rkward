@@ -559,10 +559,13 @@ void RKSettingsModuleRPackages::loadSettings (KConfig *config) {
 	KConfigGroup cg = config->group ("R Settings");
 
 	cran_mirror_url = cg.readEntry ("CRAN mirror url", "@CRAN@");
-	const QString rkward_repo ("http://rkward.sf.net/R/");
+	const QString rkward_repo ("http://files.kde.org/rkward/R/");
 	package_repositories = cg.readEntry ("Repositories", QStringList (rkward_repo));
 	if (RKSettingsModuleGeneral::storedConfigVersion () <= RKSettingsModuleGeneral::RKWardConfig_Pre0_5_7) {
 		package_repositories.removeAll ("@CRAN@");	// COMPAT: Cran mirror was part of this list before 0.5.3
+		package_repositories.append (rkward_repo);
+	} else if (RKSettingsModuleGeneral::storedConfigVersion () < RKSettingsModuleGeneral::RKWardConfig_0_6_3) {
+		package_repositories.removeAll ("http://rkward.sf.net/R");
 		package_repositories.append (rkward_repo);
 	}
 
