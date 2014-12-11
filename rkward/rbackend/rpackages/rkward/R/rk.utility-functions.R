@@ -158,3 +158,22 @@
 		invisible (FALSE)
 	}
 }
+
+#' Switch language / translation to use in the frontend.
+#'
+#' This feature is mostly intended for the purpose of automated testing, which needs a
+#' defined language to work. It might also be useful for translators, or e.g. to look up
+#' some terms untranslated in special cases where you are more familiar with the English terms than
+#' your native language terms. Note that this will only strings that are translated after the call., only those which get
+#' translated after the call. Most new dialogs you open, and importantly new plugin dialogs should
+#' show strings in the new lanuage, however.
+#' 
+#' To change the language in the backend, use \code{Sys.setenv(LANGUAGE=...)} or \code{Sys.setlocale()}.
+#'
+#' @param LANG language code to use. "C" for no translation, i.e. generally English
+#'
+#' @export
+#' @rdname rk.switch.frontend.language
+"rk.switch.frontend.language" <- function (LANG="C") {
+   .rk.do.plain.call ("switchLanguage", as.character (LANG))
+}

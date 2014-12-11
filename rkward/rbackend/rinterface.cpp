@@ -43,6 +43,7 @@
 #include "../windows/rkhtmlwindow.h"
 #include "../plugin/rkcomponentmap.h"
 #include "../misc/rkcommonfunctions.h"
+#include "../misc/rkmessagecatalog.h"
 #include "rksessionvars.h"
 
 #include "../windows/rkwindowcatcher.h"
@@ -667,6 +668,8 @@ QStringList RInterface::processPlainGenericRequest (const QStringList &calllist)
 		RKPrintAgent::printPostscript (calllist.value (1), true);
 	} else if (call == "endBrowserContext") {
 		RKDebugHandler::instance ()->endDebug ();
+	} else if (call == "switchLanguage") {
+		RKMessageCatalog::switchLanguage (calllist.value (1));
 	} else {
 		return (QStringList ("Error: unrecognized request '" + call + "'."));
 	}

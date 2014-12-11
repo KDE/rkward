@@ -19,6 +19,8 @@
 
 #include <libintl.h>
 #include <QFile>
+#include <kglobal.h>
+#include <klocale.h>
 
 #include "../debug.h"
 
@@ -103,4 +105,22 @@ RKMessageCatalog* RKMessageCatalog::nullCatalog () {
 	// ok, not thread-safe, here, but the worst that can happen is creating more than one dummy catalog.
 	if (!null_catalog) null_catalog = getCatalog  ("rkward_dummy", QString ());
 	return null_catalog;
+}
+
+#ifdef Q_WS_WIN
+	extern "C" int __declspec(dllimport) _nl_msg_cat_cntr;
+#endif
+
+// static
+void RKMessageCatalog::switchLanguage (const QString &new_language_code) {
+	RK_TRACE (MISC);
+
+	qputenv ("LANGUAGE", new_language_code.toAscii ().data ());
+	KLocale *l = new KLocale ("rkward", new_language_code);
+	KGlobal::setLocale (l);
+	// magic to make gettext discard cache
+#ifndef _MSC_VER
+	extern int _nl_msg_cat_cntr;
+#endif
+	++_nl_msg_cat_cntr;
 }

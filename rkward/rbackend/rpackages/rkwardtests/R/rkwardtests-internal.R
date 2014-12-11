@@ -237,6 +237,7 @@ rktest.initializeEnvironment <- function () {
 	if (.Platform$OS.type == "unix"){
 		invisible (Sys.setlocale (category="LC_MESSAGES", locale="C"))
 	}
+	rk.switch.frontend.language ("C")
 	options (useFancyQuotes=FALSE)
 
 	# This version of rk.set.output.html.file does not notify the frontend of the change. Without this, you'll get lots of output windows.

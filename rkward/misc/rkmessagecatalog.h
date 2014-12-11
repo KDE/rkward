@@ -39,6 +39,8 @@ public:
 	static RKMessageCatalog *getCatalog (const QString &name, const QString &pathhint);
 /** Returns a dummy null-catalog */
 	static RKMessageCatalog *nullCatalog ();
+/** Switch language to use for any coming translations */
+	static void switchLanguage (const QString &new_language_code);
 private:
 	RKMessageCatalog (const QString &name, const QString &path);
 	~RKMessageCatalog ();
