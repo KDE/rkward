@@ -7,6 +7,9 @@ rk.i18n.comment(text, prefix = "i18n:")
 }
 \arguments{
 \item{text}{Character string, the text to be displayed.}
+
+\item{prefix}{Character string, the text to be prefixed to indicate this is
+an i18n comment.}
 }
 \value{
 An object of class \code{XiMpLe.node}.

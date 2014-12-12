@@ -1187,6 +1187,11 @@ rk.check.options <- function(options, parent){
         valid.child(parent, children=options[[this.num]])
         return(options[[this.num]])
       } else {
+        if("val" %in% names(options[[this.num]])){
+          value <- options[[this.num]][["val"]]
+        } else {
+          value <- NULL
+        }
         if("chk" %in% names(options[[this.num]])){
           checked <- isTRUE(as.logical(options[[this.num]][["chk"]]))
         } else {
@@ -1200,7 +1205,7 @@ rk.check.options <- function(options, parent){
         return(
           rk.XML.option(
             label=names(options)[[this.num]],
-            val=options[[this.num]][["val"]],
+            val=value,
             chk=checked,
             id.name=NULL,
             i18n=i18n

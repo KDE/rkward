@@ -37,27 +37,13 @@
 #'      \item{category}{A category for this plugin (optional)}
 #'      \item{long.desc}{A long description (optional, defaults to \code{desc})}
 #'    }
-#' @param dependencies A named list with these elements:
-#'    \describe{
-#'      \item{rkward.min}{Minimum RKWard version needed for this plugin (optional)}
-#'      \item{rkward.max}{Maximum RKWard version needed for this plugin (optional)}
-#'      \item{R.min}{Minimum R version needed for this plugin (optional)}
-#'      \item{R.max}{Maximum R version needed for this plugin (optional)}
-#'    }
-#' @param package A list of named character vectors, each with these elements:
-#'    \describe{
-#'      \item{name}{Name of a package this plugin depends on (optional)}
-#'      \item{min}{Minimum version of the package (optional)}
-#'      \item{max}{Maximum version of the package (optional)}
-#'      \item{repository}{Repository to download the package (optional)}
-#'    }
-#' @param pluginmap A named list with these elements:
-#'    \describe{
-#'      \item{name}{Identifier of a pluginmap this plugin depends on (optional)}
-#'      \item{url}{URL to get the pluginmap (optional)}
-#'    }
+#' @param dependencies Deprecated, use \code{\link[rkwarddev:rk.XML.dependencies]{rk.XML.dependencies}} instead.
+#' @param package Deprecated, use \code{\link[rkwarddev:rk.XML.dependencies]{rk.XML.dependencies}} instead.
+#' @param pluginmap Deprecated, use \code{\link[rkwarddev:rk.XML.dependencies]{rk.XML.dependencies}} instead.
 #' @export
-#' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
+#' @seealso
+#'    \code{\link[rkwarddev:rk.XML.dependencies]{rk.XML.dependencies}},
+#'    \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @examples
 #' about.node <- rk.XML.about(
 #'   name="Square the circle",
@@ -73,18 +59,7 @@
 #'     date=Sys.Date(),
 #'     url="http://eternalwondermaths.example.org/23/stc.html",
 #'     license="GPL",
-#'     category="Geometry"),
-#'   dependencies=list(
-#'     rkward.min="0.5.3",
-#'     rkward.max="",
-#'     R.min="2.10",
-#'     R.max=""),
-#'   package=list(
-#'     c(name="heisenberg", min="0.11-2", max="",
-#'       repository="http://rforge.r-project.org"),
-#'     c(name="DreamsOfPi", min="0.2", max="", repository="")),
-#'   pluginmap=list(
-#'     c(name="heisenberg.pluginmap", url="http://eternalwondermaths.example.org/hsb"))
+#'     category="Geometry")
 #' )
 #' 
 #' cat(pasteXML(about.node, shine=2))

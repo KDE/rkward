@@ -22,6 +22,8 @@
 #' keyword \code{"i18n:"} to give context to translators.
 #'
 #' @param text Character string, the text to be displayed.
+#' @param prefix Character string, the text to be prefixed to indicate this is
+#'    an i18n comment.
 #' @return An object of class \code{XiMpLe.node}.
 #' @export
 #' @examples

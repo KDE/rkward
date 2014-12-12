@@ -19,7 +19,7 @@ If \code{"auto"}, an ID will be generated automatically from the label.}
 just implemented for completeness.}
 
 \item{dependencies}{An object of class \code{XiMpLe.node} to define \code{<dependencies>} for this component.
-See \code{\link[XiMpLe:rk.XML.dependencies]{rk.XML.dependencies}} for details. Skipped if \code{NULL}.}
+See \code{\link[rkwarddev:rk.XML.dependencies]{rk.XML.dependencies}} for details. Skipped if \code{NULL}.}
 
 \item{i18n}{Either a character string or a named list with the optional element \code{context},
 to give some \code{i18n_context}

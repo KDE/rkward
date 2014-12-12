@@ -24,7 +24,7 @@
 #' @export
 #' @seealso
 #'    \code{\link[rkwarddev:rk.XML.connect]{rk.XML.connect}},
-#'    \code{\link[rkwarddev:rk.XML.covert]{rk.XML.convert}},
+#'    \code{\link[rkwarddev:rk.XML.convert]{rk.XML.convert}},
 #'    \code{\link[rkwarddev:rk.XML.logic]{rk.XML.logic}},
 #'    \code{\link[rkwarddev:rk.XML.set]{rk.XML.set}},
 #'    \code{\link[rkwarddev:rk.XML.switch]{rk.XML.switch}},

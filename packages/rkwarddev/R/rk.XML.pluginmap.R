@@ -48,6 +48,8 @@
 #' @param namespace Character string, the namespace attribute of the \code{<document>} node, defaults to the plugin name (which you probably shouldn't touch...)
 #' @param priority Character string, the priority attribute of the \code{<document>} node. Must be either "hidden", "low", "medium", or "high",
 #'    defaults to "medium".
+#' @param id.name Character string, a unique ID for this plugin element.
+#'    If \code{"auto"} and a label was provided, an ID will be generated automatically from the label.
 #' @seealso \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 #' @return An object of class \code{XiMpLe.node}.
 #' @export

@@ -27,7 +27,7 @@
 #' @param type Character string, type of component. As of now, only "standard" is supported. The option is
 #'    just implemented for completeness.
 #' @param dependencies An object of class \code{XiMpLe.node} to define \code{<dependencies>} for this component.
-#'    See \code{\link[XiMpLe:rk.XML.dependencies]{rk.XML.dependencies}} for details. Skipped if \code{NULL}.
+#'    See \code{\link[rkwarddev:rk.XML.dependencies]{rk.XML.dependencies}} for details. Skipped if \code{NULL}.
 #' @param i18n Either a character string or a named list with the optional element \code{context},
 #'    to give some \code{i18n_context}
 #'    information for this node. If set to \code{FALSE}, the attribute \code{label} will be renamed into 

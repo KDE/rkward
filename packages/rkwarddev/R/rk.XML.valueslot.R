@@ -70,11 +70,11 @@ rk.XML.valueslot <- function(label, source, property=NULL, required=FALSE, multi
 
   if(is.XiMpLe.node(source)){
     source.name <- slot(source, "name")
-    if(identical(source.name, "varselector")){
+    if(identical(source.name, "valueselector")){
       value.slot.attr[["source"]] <- check.ID(source)
     } else {
       if(is.null(property)){
-        stop(simpleError(paste0("'source' must either be a <varselector> node or come with an appropripate 'property' value!")))
+        stop(simpleError(paste0("'source' must either be a <valueselector> node or come with an appropripate 'property' value!")))
       } else if(modif.validity(source, modifier=property)){
         value.slot.attr[["source_property"]] <- paste(check.ID(source), property, sep=".")
       } else {}

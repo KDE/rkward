@@ -68,8 +68,6 @@ rk.XML.values <- function(label, slot.text, required=FALSE, multi=FALSE, min=1, 
     value.slot.id <- id.name[[3]]
   } else {}
 
-  value.sel.attr[["label"]] <- label
-
   v.selector <- rk.XML.valueselector(
     label=label,
     id.name=value.sel.attr[["id"]])

@@ -63,6 +63,10 @@ See \code{\link[rkwarddev:rk.XML.dependencies]{rk.XML.dependencies}} for details
 \item{priority}{Character string,
       the priority attribute of the \code{<document>} node. Must be either "hidden", "low", "medium", or "high",
 defaults to "medium".}
+
+\item{id.name}{Character string, a unique ID for this plugin element.
+If \code{"auto"} and a label was provided,
+      an ID will be generated automatically from the label.}
 }
 \value{
 An object of class \code{XiMpLe.node}.
