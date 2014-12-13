@@ -16,10 +16,20 @@
 # along with rkwarddev.  If not, see <http://www.gnu.org/licenses/>.
 
 
+#' S4 Class rk.JS.ite
+#' 
+#' This simple class is used for JavaScript generation and produced by
+#' \code{\link{ite}}. You shouldn't need to temper with this
+#' type of class manually.
+#' 
+#' @slot ifJS Character string, the "if" clause.
+#' @slot thenJS Character string, the "then" body.
+#' @slot thenifJS A list with exactly one optional object of class rk.JS.ite.
+#' @slot elseJS Character string, the "else" body.
+#' @slot elifJS A list with exactly one optional object of class rk.JS.ite.
+#' @keywords Classes
+#' @rdname rk.JS.ite-class
 #' @export
-
-# this simple class is for JavaScript generation,
-# produced by ite()
 
 setClass("rk.JS.ite",
   representation=representation(

@@ -16,11 +16,22 @@
 # along with rkwarddev.  If not, see <http://www.gnu.org/licenses/>.
 
 
-# this simple class is for JavaScript generation,
-# produced by rk.JS.optionset()
-
+#' S4 Class rk.JS.oset
+#' 
+#' This simple class is used for JavaScript generation and produced by
+#' \code{\link{rk.JS.optionset}}. You shouldn't need to temper with this
+#' type of class manually.
+#' 
+#' @slot vars An object of class \code{rk.JS.var}.
+#' @slot loopvar Character string, name of the index variable used in the for loop.
+#' @slot columns A list of <optioncolumn> nodes.
+#' @slot body A list of JavaScript code, the body of the for loop.
+#' @slot collapse Character string, how all optioncolumns should be concatenated on the R code level.
+#' @keywords Classes
+#' @rdname rk.JS.oset-class
 #' @include 00_class_02_rk.JS.var.R
 #' @export
+
 setClass("rk.JS.oset",
   representation=representation(
     vars="rk.JS.var",

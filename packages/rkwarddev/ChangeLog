@@ -17,6 +17,9 @@ fixed:
     guess.getter is TRUE
   - rk.XML.connect() handled modifiers too strict if "client" was a string, and too
     liberal when "governor" was
+  - join() referenced a wrong object name if "var" was of class rk.JS.arr
+  - rk.XML.about() had a malformed error message
+  - rk.plugin.component() called XMLAttrs() with too many arguments
 added:
   - all "help" values can now be a list of character strings or XiMpLe nodes,
     to have more control over the markup
@@ -35,6 +38,7 @@ added:
     attribute
   - new function R.comment() to generate JavaScript "comment()" calls
   - first unit tests using the testthat package
+  - added documentation to the used S4 classes
 changed:
   - function i18n() was changed to be used in JavaScript generation only;
     this breaks code using the function introduced with 0.06-4, but that was to

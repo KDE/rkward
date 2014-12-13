@@ -1,7 +1,7 @@
 Package: rkwarddev
 Type: Package
 Title: A collection of tools for RKWard plugin development
-Author: m.eik michalke <meik.michalke@hhu.de>
+Author: m.eik michalke
 Maintainer: m.eik michalke <meik.michalke@hhu.de>
 Depends:
     R (>= 2.9.0),methods,XiMpLe (>= 0.03-21),rkward (>= 0.5.7)
@@ -14,7 +14,7 @@ License: GPL (>= 3)
 Encoding: UTF-8
 LazyLoad: yes
 URL: http://rkward.sourceforge.net
-Authors@R: c(person(given="Meik", family="Michalke",
+Authors@R: c(person(given="m.eik", family="michalke",
     email="meik.michalke@hhu.de", role=c("aut", "cre")))
 Version: 0.06-6
 Date: 2014-12-13

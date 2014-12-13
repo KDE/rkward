@@ -15,13 +15,21 @@
 # You should have received a copy of the GNU General Public License
 # along with rkwarddev.  If not, see <http://www.gnu.org/licenses/>.
 
-
-# this simple class is for XML and JavaScript generation,
-# produced by rk.plotOptions()
-
 # it seems "@include" only works for classes, not for functions (rk.XML.embed()) :-/
 # so for the time being, this file is renamed to be parsed at the end
 
+#' S4 Class rk.plot.opts
+#' 
+#' This simple class is used for JavaScript generation and is produced by
+#' \code{\link{rk.plotOptions}}. You shouldn't need to temper with this
+#' type of class manually.
+#' 
+#' @slot XML An object of class XiMpLe.node.
+#' @slot preprocess An object of class rk.JS.var.
+#' @slot printout An object of class rk.JS.var.
+#' @slot calculate An object of class rk.JS.var.
+#' @keywords Classes
+#' @rdname rk.plot.opts-class
 #' @include rk.XML.embed.R
 #' @include 00_class_02_rk.JS.var.R
 #' @include rk.JS.vars.R

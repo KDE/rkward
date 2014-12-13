@@ -19,6 +19,6 @@
 #' @name rkwarddev-package
 #' @docType package
 #' @title The rkwarddev Package
-#' @author Meik Michalke
+#' @author m.eik michalke
 #' @keywords package
 NULL

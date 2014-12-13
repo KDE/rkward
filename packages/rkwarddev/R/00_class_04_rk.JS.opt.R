@@ -16,10 +16,21 @@
 # along with rkwarddev.  If not, see <http://www.gnu.org/licenses/>.
 
 
+#' S4 Class rk.JS.opt
+#' 
+#' This simple class is used for JavaScript generation and produced by
+#' \code{\link{rk.JS.options}}. You shouldn't need to temper with this
+#' type of class manually.
+#' 
+#' @slot var.name Character string, the name of the variable.
+#' @slot opt.name Character string, the name of the option.
+#' @slot collapse Character string, used to collapse several options into one string.
+#' @slot ifs A list with objects of class rk.JS.ite.
+#' @slot array Logical, whether to use an array for options.
+#' @slot funct Character string, name of the R function to be called to combine the options.
+#' @keywords Classes
+#' @rdname rk.JS.opt-class
 #' @export
-
-# this simple class is for JavaScript generation,
-# produced by rk.JS.options()
 
 setClass("rk.JS.opt",
   representation=representation(

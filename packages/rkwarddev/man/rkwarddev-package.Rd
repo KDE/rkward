@@ -23,7 +23,7 @@ URL: \tab http://rkward.sourceforge.net\cr
 Provides functions to create plugin skeletons and XML structures for RKWard.
 }
 \author{
-Meik Michalke
+m.eik michalke
 }
 \keyword{package}
 

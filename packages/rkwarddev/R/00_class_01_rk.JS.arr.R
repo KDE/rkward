@@ -15,11 +15,22 @@
 # You should have received a copy of the GNU General Public License
 # along with rkwarddev.  If not, see <http://www.gnu.org/licenses/>.
 
-
+#' S4 Class rk.JS.arr
+#' 
+#' This simple class is used for JavaScript generation and produced by
+#' \code{\link[rkwarddev:rk.JS.array]{rk.JS.array}}. You shouldn't
+#' need to temper with this type of class manually.
+#' 
+#' @slot arr.name Character string, name of the array variable.
+#' @slot opt.name Character string, name of the option variable.
+#' @slot IDs Character vector of IDs.
+#' @slot variables Character vector of variables.
+#' @slot funct Character string, name of an R function call.
+#' @slot quote Logical, should values be quoted?
+#' @slot option Character string, name of the option to set.
+#' @keywords Classes
+#' @rdname rk.JS.arr-class
 #' @export
-
-# this simple class is for JavaScript generation,
-# produced by rk.JS.array()
 
 setClass("rk.JS.arr",
   representation=representation(

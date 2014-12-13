@@ -94,7 +94,7 @@ rk.plugin.component <- function(about, xml=list(), js=list(), rkh=list(),
     # check if this is *really* a about section, otherwise quit and go dancing
     valid.parent(parent="about", node=about, warn=FALSE, see="rk.XML.about")
     # fetch the plugin name
-    name <- XMLAttrs(about, "attributes")[["name"]]
+    name <- XMLAttrs(about)[["name"]]
     about.node <- about
   } else if(is.character(about) & length(about) == 1) {
     name <- about

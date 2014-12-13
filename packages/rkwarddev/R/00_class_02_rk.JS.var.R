@@ -16,10 +16,24 @@
 # along with rkwarddev.  If not, see <http://www.gnu.org/licenses/>.
 
 
+#' S4 Class rk.JS.var
+#' 
+#' This simple class is used for JavaScript generation and produced by
+#' \code{\link{rk.JS.vars}}. You shouldn't need to temper with this
+#' type of class manually.
+#' 
+#' @slot JS.var Character string, name of the JavaScript variable.
+#' @slot XML.var Character string, name of the XML variable.
+#' @slot prefix Character string, an optional prefix for variable names.
+#' @slot modifiers A list of modifiers to apply to the XML node property.
+#' @slot default Logical, whether the default value (no special modifier) of the node should also be defined.
+#' @slot append.modifier Logical, if a modifier is given, should that become part of the variable name?
+#' @slot join Character string, if set is used to collapse multiple values into one string.
+#' @slot vars A list of objects of class rk.JS.var.
+#' @slot getter Character string, the JavaScript function which should be used to fetch the values from the plugin.
+#' @keywords Classes
+#' @rdname rk.JS.var-class
 #' @export
-
-# this simple class is for JavaScript generation,
-# produced by rk.JS.vars()
 
 setClass("rk.JS.var",
   representation=representation(

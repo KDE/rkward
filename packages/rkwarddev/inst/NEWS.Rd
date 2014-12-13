@@ -1,53 +1,72 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
-\section{Changes in rkwarddev version 0.06-6 (2014-12-04)}{
+\section{Changes in rkwarddev version 0.06-6 (2014-12-13)}{
   \subsection{fixed}{
     \itemize{
       \item \code{rk.XML.optionset()} does now allow to re-use objects defined in the same
         function call (i.e., refer to optioncolumns in the logic section)
-      \item removed arguments \code{"help"} and \code{"component"} from \code{rk.XML.optionscolumn()} again,
-        as these are already being documented via the objects they connect to.
-      \item \code{rk.build.plugin()} was still only using the "--no-vignettes" option from R < 3
-      \item \code{rk.XML.pluginmap()} malformed label argument names if they referred to standrad maneu entries
+      \item removed arguments \code{"help"} and \code{"component"} from \code{rk.XML.optionscolumn()}
+        again, as these are already being documented via the objects they connect to.
+      \item \code{rk.build.plugin()} was still only using the "--no-vignettes" option from R
+        < 3
+      \item \code{rk.XML.pluginmap()} malformed label argument names if they referred to
+        standrad maneu entries
       \item \code{rk.plugin.skeleton()} still allowed invalid IDs, fixed the regexp
       \item \code{rk.XML.snippets()} now also accepts <include> as child node
       \item \code{rk.XML.tabbook()} returns <insert> nodes as-is, not nested in <tab></tab>
-      \item \code{rk.JS.scan()} now sets \code{"state"} as default modifier for checkboxes if guess.getter is TRUE
+      \item \code{rk.JS.scan()} now sets \code{"state"} as default modifier for checkboxes if
+        guess.getter is TRUE
+      \item \code{rk.XML.connect()} handled modifiers too strict if \code{"client"} was a string, and too
+        liberal when \code{"governor"} was
+      \item \code{join()} referenced a wrong object name if \code{"var"} was of class rk.JS.arr
+      \item \code{rk.XML.about()} had a malformed error message
+      \item \code{rk.plugin.component()} called \code{XMLAttrs()} with too many arguments
     }
   }
   \subsection{added}{
     \itemize{
       \item all \code{"help"} values can now be a list of character strings or XiMpLe nodes,
         to have more control over the markup
-      \item added \code{"property"} and \code{"duplicates"} arguments to \code{rk.XML.valueslot()} and \code{rk.XML.varslot()}.
-      \item \code{rk.XML.pluginmap()} now adds a \code{"po_id"} attribute to pluginmaps, necessary for i18n
-      \item new attribute \code{"i18n"} added to several XML functions; it takes a list with the named arguments
-        \code{"comment"} or \code{"context"} to either produce an i18n comment node or an \code{"i18n_context"} attribute
+      \item added \code{"property"} and \code{"duplicates"} arguments to \code{rk.XML.valueslot()} and
+        \code{rk.XML.varslot()}.
+      \item \code{rk.XML.pluginmap()} now adds a \code{"po_id"} attribute to pluginmaps, necessary
+        for i18n
+      \item new attribute \code{"i18n"} added to several XML functions; it takes a list with
+        the named arguments \code{"comment"} or \code{"context"} to either produce an i18n
+        comment node or an \code{"i18n_context"} attribute
       \item new function \code{rk.i18n.comment()} to give context for translators
-      \item new function \code{rk.JS.header()} to easily generate JavaScript header code fit for i18n
-      \item \code{rk.JS.doc()}, \code{rk.plugin.skeleton()} and \code{rk.plugin.component()} now use \code{rk.JS.header()} instead of
-        \code{rk.header()}, and also accept its \code{"header.add"} attribute
+      \item new function \code{rk.JS.header()} to easily generate JavaScript header code fit
+        for i18n
+      \item \code{rk.JS.doc()}, \code{rk.plugin.skeleton()} and \code{rk.plugin.component()} now use
+        \code{rk.JS.header()} instead of \code{rk.header()}, and also accept its \code{"header.add"}
+        attribute
       \item new function \code{R.comment()} to generate JavaScript "\code{comment()}" calls
+      \item first unit tests using the testthat package
+      \item added documentation to the used S4 classes
     }
   }
   \subsection{changed}{
     \itemize{
-      \item function \code{i18n()} was changed to be used in JavaScript generation only; this breaks code
-        using the function introduced with 0.06-4, but that was to be shortlived from the start...
-        the i18n features of 0.06-4 will be completely replaced with some proper methods now
-      \item comment nodes (<!-- foo -->) are now globally allowed as child nodes in XML; important for
-        i18n comments
-      \item modifier checks now point to rkwarddev:::all.valid.modifiers directly in case of errors
-      \item internally, moved the definitions of valid child nodes and modifiers as well as default getter
-        functions and modifiers to separate files, so they're more obvious to find and check
+      \item function \code{i18n()} was changed to be used in JavaScript generation only;
+        this breaks code using the function introduced with 0.06-4, but that was to
+        be shortlived from the start... the i18n features of 0.06-4 will be
+        completely replaced with some proper methods now
+      \item comment nodes (<!-- foo -->) are now globally allowed as child nodes in
+        XML; important for i18n comments
+      \item modifier checks now point to rkwarddev:::all.valid.modifiers directly in
+        case of errors
+      \item internally, moved the definitions of valid child nodes and modifiers as
+        well as default getter functions and modifiers to separate files, so
+        they're more obvious to find and check
     }
   }
   \subsection{removed}{
     \itemize{
-      \item the functions \code{rk.set.language()} rk.\code{get.language()} were no longer useful and therefore removed
-      \item also removed the option \code{"lang"} from \code{rk.rkh.doc()}, \code{rk.XML.plugin()}, \code{rk.XML.pluginmap()}
-        and \code{rk.plugin.skeleton()}
+      \item the functions \code{rk.set.language()} rk.\code{get.language()} were no longer useful
+        and therefore removed
+      \item also removed the option \code{"lang"} from \code{rk.rkh.doc()}, \code{rk.XML.plugin()},
+        \code{rk.XML.pluginmap()} and \code{rk.plugin.skeleton()}
     }
   }
 }

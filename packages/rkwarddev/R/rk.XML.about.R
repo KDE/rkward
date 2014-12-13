@@ -107,7 +107,7 @@ rk.XML.about <- function(name, author, about=list(desc="SHORT_DESCRIPTION", vers
       author.role   <- format(this.author, include="role", braces=list(role=""), collapse=list(role=", "))
       # at least maintainers need an email address
       if("cre" %in% unlist(this.author) & is.null(author.email)){
-        stop(simpleError("the maintainer ", author.given, " ", author.family, " needs an email address!"))
+        stop(simpleError(paste0("the maintainer ", author.given, " ", author.family, " needs an email address!")))
       } else {}
      
       result <- XMLNode("author",

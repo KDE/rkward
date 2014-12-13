@@ -40,7 +40,7 @@
 join <- function(var, by="\", \""){
 
   if(inherits(var, "rk.JS.arr")){
-    arr.name  <- slot(object, "opt.name")
+    arr.name  <- slot(var, "opt.name")
   } else {
     arr.name <- id(var)
   }

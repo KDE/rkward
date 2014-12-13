@@ -17,6 +17,7 @@
 
 # collate voodoo
 #' @include rk.comment.R
+#' @import XiMpLe rkward
 
 # set up an internal environment, e.g. for prompter settings
 .rkdev.env <- new.env()
