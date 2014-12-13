@@ -70,7 +70,9 @@ rk.XML.connect <- function(governor, client, get="state", set="enabled", not=FAL
         governor.id <- paste(governor.id, get, sep=".")
       } else {}
     } else {}
-  } else {}
+  } else {
+    modif.validity("all", modifier=get)
+  }
   if(isTRUE(not)){
     governor.id <- paste(governor.id, "not", sep=".")
   } else {}
@@ -78,9 +80,12 @@ rk.XML.connect <- function(governor, client, get="state", set="enabled", not=FAL
   attr.list <- list(governor=as.character(governor.id))
 
   # validate set modifier
-  if(modif.validity(client, modifier=set, warn.only=FALSE)){
-    attr.list[["client"]] <- paste(client.id, set, sep=".")
-  } else {}
+  if(is.XiMpLe.node(client)){
+    modif.validity(client, modifier=set, warn.only=FALSE)
+  } else {
+    modif.validity("all", modifier=set, warn.only=FALSE)
+  }
+  attr.list[["client"]] <- paste(client.id, set, sep=".")
 
   if(isTRUE(reconcile)){
       attr.list[["reconcile"]] <- "true"

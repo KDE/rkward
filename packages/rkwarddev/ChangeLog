@@ -1,43 +1,57 @@
 ChangeLog for package rkwarddev
 
-changes in version 0.06-6 (2014-12-12)
+changes in version 0.06-6 (2014-12-13)
 fixed:
   - rk.XML.optionset() does now allow to re-use objects defined in the same
     function call (i.e., refer to optioncolumns in the logic section)
-  - removed arguments "help" and "component" from rk.XML.optionscolumn() again,
-    as these are already being documented via the objects they connect to.
-  - rk.build.plugin() was still only using the "--no-vignettes" option from R < 3
-  - rk.XML.pluginmap() malformed label argument names if they referred to standrad maneu entries
+  - removed arguments "help" and "component" from rk.XML.optionscolumn()
+    again, as these are already being documented via the objects they connect to.
+  - rk.build.plugin() was still only using the "--no-vignettes" option from R
+    < 3
+  - rk.XML.pluginmap() malformed label argument names if they referred to
+    standrad maneu entries
   - rk.plugin.skeleton() still allowed invalid IDs, fixed the regexp
   - rk.XML.snippets() now also accepts <include> as child node
   - rk.XML.tabbook() returns <insert> nodes as-is, not nested in <tab></tab>
-  - rk.JS.scan() now sets "state" as default modifier for checkboxes if guess.getter is TRUE
+  - rk.JS.scan() now sets "state" as default modifier for checkboxes if
+    guess.getter is TRUE
+  - rk.XML.connect() handled modifiers too strict if "client" was a string, and too
+    liberal when "governor" was
 added:
   - all "help" values can now be a list of character strings or XiMpLe nodes,
     to have more control over the markup
-  - added "property" and "duplicates" arguments to rk.XML.valueslot() and rk.XML.varslot().
-  - rk.XML.pluginmap() now adds a "po_id" attribute to pluginmaps, necessary for i18n
-  - new attribute "i18n" added to several XML functions; it takes a list with the named arguments
-    "comment" or "context" to either produce an i18n comment node or an "i18n_context" attribute
+  - added "property" and "duplicates" arguments to rk.XML.valueslot() and
+    rk.XML.varslot().
+  - rk.XML.pluginmap() now adds a "po_id" attribute to pluginmaps, necessary
+    for i18n
+  - new attribute "i18n" added to several XML functions; it takes a list with
+    the named arguments "comment" or "context" to either produce an i18n
+    comment node or an "i18n_context" attribute
   - new function rk.i18n.comment() to give context for translators
-  - new function rk.JS.header() to easily generate JavaScript header code fit for i18n
-  - rk.JS.doc(), rk.plugin.skeleton() and rk.plugin.component() now use rk.JS.header() instead of
-    rk.header(), and also accept its "header.add" attribute
+  - new function rk.JS.header() to easily generate JavaScript header code fit
+    for i18n
+  - rk.JS.doc(), rk.plugin.skeleton() and rk.plugin.component() now use
+    rk.JS.header() instead of rk.header(), and also accept its "header.add"
+    attribute
   - new function R.comment() to generate JavaScript "comment()" calls
   - first unit tests using the testthat package
 changed:
-  - function i18n() was changed to be used in JavaScript generation only; this breaks code
-    using the function introduced with 0.06-4, but that was to be shortlived from the start...
-    the i18n features of 0.06-4 will be completely replaced with some proper methods now
-  - comment nodes (<!-- foo -->) are now globally allowed as child nodes in XML; important for
-    i18n comments
-  - modifier checks now point to rkwarddev:::all.valid.modifiers directly in case of errors
-  - internally, moved the definitions of valid child nodes and modifiers as well as default getter
-    functions and modifiers to separate files, so they're more obvious to find and check
+  - function i18n() was changed to be used in JavaScript generation only;
+    this breaks code using the function introduced with 0.06-4, but that was to
+    be shortlived from the start... the i18n features of 0.06-4 will be
+    completely replaced with some proper methods now
+  - comment nodes (<!-- foo -->) are now globally allowed as child nodes in
+    XML; important for i18n comments
+  - modifier checks now point to rkwarddev:::all.valid.modifiers directly in
+    case of errors
+  - internally, moved the definitions of valid child nodes and modifiers as
+    well as default getter functions and modifiers to separate files, so
+    they're more obvious to find and check
 removed:
-  - the functions rk.set.language() rk.get.language() were no longer useful and therefore removed
-  - also removed the option "lang" from rk.rkh.doc(), rk.XML.plugin(), rk.XML.pluginmap()
-    and rk.plugin.skeleton()
+  - the functions rk.set.language() rk.get.language() were no longer useful
+    and therefore removed
+  - also removed the option "lang" from rk.rkh.doc(), rk.XML.plugin(),
+    rk.XML.pluginmap() and rk.plugin.skeleton()
 
 changes in version 0.06-5 (2014-10-19)
 fixed:

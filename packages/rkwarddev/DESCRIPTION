@@ -5,6 +5,8 @@ Author: m.eik michalke <meik.michalke@hhu.de>
 Maintainer: m.eik michalke <meik.michalke@hhu.de>
 Depends:
     R (>= 2.9.0),methods,XiMpLe (>= 0.03-21),rkward (>= 0.5.7)
+Suggests:
+    testthat
 Enhances: rkward
 Description: Provides functions to create plugin skeletons and XML structures
     for RKWard.
@@ -15,7 +17,7 @@ URL: http://rkward.sourceforge.net
 Authors@R: c(person(given="Meik", family="Michalke",
     email="meik.michalke@hhu.de", role=c("aut", "cre")))
 Version: 0.06-6
-Date: 2014-12-12
+Date: 2014-12-13
 Collate:
     '00_class_01_rk.JS.arr.R'
     '00_class_02_rk.JS.var.R'

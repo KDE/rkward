@@ -33,27 +33,14 @@ See \code{\link[utils:person]{person}} for more details on this,
   \item{long.desc}{A long description (optional, defaults to \code{desc})}
 }}
 
-\item{dependencies}{A named list with these elements:
-\describe{
-  \item{rkward.min}{Minimum RKWard version needed for this plugin (optional)}
-  \item{rkward.max}{Maximum RKWard version needed for this plugin (optional)}
-  \item{R.min}{Minimum R version needed for this plugin (optional)}
-  \item{R.max}{Maximum R version needed for this plugin (optional)}
-}}
+\item{dependencies}{Deprecated,
+      use \code{\link[rkwarddev:rk.XML.dependencies]{rk.XML.dependencies}} instead.}
 
-\item{package}{A list of named character vectors, each with these elements:
-\describe{
-  \item{name}{Name of a package this plugin depends on (optional)}
-  \item{min}{Minimum version of the package (optional)}
-  \item{max}{Maximum version of the package (optional)}
-  \item{repository}{Repository to download the package (optional)}
-}}
+\item{package}{Deprecated,
+      use \code{\link[rkwarddev:rk.XML.dependencies]{rk.XML.dependencies}} instead.}
 
-\item{pluginmap}{A named list with these elements:
-\describe{
-  \item{name}{Identifier of a pluginmap this plugin depends on (optional)}
-  \item{url}{URL to get the pluginmap (optional)}
-}}
+\item{pluginmap}{Deprecated,
+      use \code{\link[rkwarddev:rk.XML.dependencies]{rk.XML.dependencies}} instead.}
 }
 \description{
 Create XML node "about" for RKWard pluginmaps
@@ -73,23 +60,13 @@ about.node <- rk.XML.about(
     date=Sys.Date(),
     url="http://eternalwondermaths.example.org/23/stc.html",
     license="GPL",
-    category="Geometry"),
-  dependencies=list(
-    rkward.min="0.5.3",
-    rkward.max="",
-    R.min="2.10",
-    R.max=""),
-  package=list(
-    c(name="heisenberg", min="0.11-2", max="",
-      repository="http://rforge.r-project.org"),
-    c(name="DreamsOfPi", min="0.2", max="", repository="")),
-  pluginmap=list(
-    c(name="heisenberg.pluginmap", url="http://eternalwondermaths.example.org/hsb"))
+    category="Geometry")
 )
 
 cat(pasteXML(about.node, shine=2))
 }
 \seealso{
-\href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
+\code{\link[rkwarddev:rk.XML.dependencies]{rk.XML.dependencies}},
+   \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 }
 
