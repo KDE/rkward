@@ -64,14 +64,73 @@ XMLTestNodes <- function(file=NULL, compress="xz", compression_level=-9){
         set="string",
         not=TRUE,
         reconcile=TRUE
+      ),
+      context=rk.XML.context(
+        rk.XML.menu("Analysis", 
+          rk.XML.entry(
+            rk.XML.component(
+              label="a context label",
+              file="plugins/MyOtherGUIdialog.xml"
+            )
+          )
+        )
+      ),
+      convert=rk.XML.convert(
+        sources=list(text=rk.XML.input("a convert label")),
+        mode=c(equals="myValue"),
+        required=TRUE
+      ),
+      copy=rk.XML.copy(
+        id="aCopyID",
+        as="page"
+      ),
+      dependencies=rk.XML.dependencies(
+        dependencies=list(
+          rkward.min="0.6.3",
+          rkward.max="0.6.5",
+          R.min="3.1",
+          R.max="3.2"),
+        package=list(
+          c(name="heisenberg", min="0.11-2", max="0.14-1",
+            repository="http://hsb.example.org"),
+          c(name="DreamsOfPi", min="0.2", max="3.1", repository="http://dop.example.org")),
+        pluginmap=list(
+          c(name="heisenberg.pluginmap", url="http://eternalwondermaths.example.org/hsb"))
+      ),
+      dependency_check=rk.XML.dependency_check(
+        id.name="dependency",
+        dependencies=list(
+          rkward.min="0.6.3",
+          rkward.max="0.6.5",
+          R.min="3.1",
+          R.max="3.2"),
+        package=list(
+          c(name="heisenberg", min="0.11-2", max="0.14-1",
+            repository="http://hsb.example.org"),
+          c(name="DreamsOfPi", min="0.2", max="3.1", repository="http://dop.example.org")),
+        pluginmap=list(
+          c(name="heisenberg.pluginmap", url="http://eternalwondermaths.example.org/hsb"))
+      ),
+      dialog=rk.XML.dialog(
+        rk.XML.col(
+          rk.XML.cbox(label="a dialog column label")
+        ),
+        label="a dialog label",
+        recommended=TRUE,
+        i18n=list(context="context info here")
+      ),
+      dropdown=rk.XML.dropdown(
+        label="myDropdownMenu",
+        options=list(
+          "First Option"=c(val="val1"),
+          rk.XML.option(
+            "Second Option", val="val2", id.name="auto",
+            i18n=list(context="context info1 here")
+          ),
+          "Third Option"=c(val="val3", chk=TRUE)
+        ),
+        i18n=list(context="context info2 here")
       )#,
-#     context=rk.XML.context(),
-#     convert=rk.XML.convert(),
-#     copy=rk.XML.copy(),
-#     dependencies=rk.XML.dependencies(),
-#     dependency_check=rk.XML.dependency_check(),
-#     dialog=rk.XML.dialog(),
-#     dropdown=rk.XML.dropdown(),
 #     embed=rk.XML.embed(),
 #     entry=rk.XML.entry(),
 #     external=rk.XML.external(),

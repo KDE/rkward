@@ -1,5 +1,5 @@
 # the tests are realized using the "testthat" package
-# and can be found in ../inst/tests
+# and can be found in ./testthat
 
 require(testthat)
-test_package("rkwarddev")
+test_check("rkwarddev")

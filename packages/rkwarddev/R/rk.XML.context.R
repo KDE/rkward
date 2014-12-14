@@ -33,7 +33,7 @@
 #' @examples
 #' test.component <- rk.XML.component("My GUI dialog", "plugins/MyGUIdialog.xml")
 #' test.entry <- rk.XML.entry(test.component)
-#' test.menu <- rk.XML.menu("Analysis", nodes=test.entry, id.name="analysis")
+#' test.menu <- rk.XML.menu("Analysis", test.entry, id.name="analysis")
 #' test.context <- rk.XML.context(test.menu)
 #' cat(pasteXML(test.context))
 

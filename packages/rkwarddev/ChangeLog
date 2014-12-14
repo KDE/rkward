@@ -1,6 +1,6 @@
 ChangeLog for package rkwarddev
 
-changes in version 0.06-6 (2014-12-13)
+changes in version 0.06-6 (2014-12-14)
 fixed:
   - rk.XML.optionset() does now allow to re-use objects defined in the same
     function call (i.e., refer to optioncolumns in the logic section)
@@ -15,8 +15,8 @@ fixed:
   - rk.XML.tabbook() returns <insert> nodes as-is, not nested in <tab></tab>
   - rk.JS.scan() now sets "state" as default modifier for checkboxes if
     guess.getter is TRUE
-  - rk.XML.connect() handled modifiers too strict if "client" was a string, and too
-    liberal when "governor" was
+  - rk.XML.connect() handled modifiers too strict if "client" was a string,
+    and too liberal when "governor" was
   - join() referenced a wrong object name if "var" was of class rk.JS.arr
   - rk.XML.about() had a malformed error message
   - rk.plugin.component() called XMLAttrs() with too many arguments

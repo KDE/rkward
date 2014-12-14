@@ -1,7 +1,7 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
-\section{Changes in rkwarddev version 0.06-6 (2014-12-13)}{
+\section{Changes in rkwarddev version 0.06-6 (2014-12-14)}{
   \subsection{fixed}{
     \itemize{
       \item \code{rk.XML.optionset()} does now allow to re-use objects defined in the same
@@ -17,8 +17,8 @@
       \item \code{rk.XML.tabbook()} returns <insert> nodes as-is, not nested in <tab></tab>
       \item \code{rk.JS.scan()} now sets \code{"state"} as default modifier for checkboxes if
         guess.getter is TRUE
-      \item \code{rk.XML.connect()} handled modifiers too strict if \code{"client"} was a string, and too
-        liberal when \code{"governor"} was
+      \item \code{rk.XML.connect()} handled modifiers too strict if \code{"client"} was a string,
+        and too liberal when \code{"governor"} was
       \item \code{join()} referenced a wrong object name if \code{"var"} was of class rk.JS.arr
       \item \code{rk.XML.about()} had a malformed error message
       \item \code{rk.plugin.component()} called \code{XMLAttrs()} with too many arguments
