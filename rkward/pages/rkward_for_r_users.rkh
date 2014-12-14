@@ -19,11 +19,11 @@
 	See <link href="rkward://page/rkward_console"/> for more details.
 	</section>
 	<section title="Script Editors" id="script_editor">
-	Often it is more convenient to write scripts in a separate file, instead of typing them directly in the console. To open a new script editor (with syntax highlighting, and many more features), chose File->New->Script File, or open an already existing Script file using File->Open R Script File.
+	Often it is more convenient to write scripts in a separate file, instead of typing them directly in the console. To open a new script editor (with syntax highlighting, and many more features), choose File->New->Script File, or open an already existing Script file using File->Open R Script File.
 
 	You will note that the editor opens in a new window in the main workplace (the area of the window, that you are most likely reading this text, in). You can open any number of script editor windows at the same time.
 
-	To run the code in a script editor window, either copy and paste it to the console, or chose one of the actions in the Run menu. such as Run All or Run Selection. Note: The contents of the menus may change according to the type of active window. Hence, if you look at the Run menu while reading this, there will be no entries.
+	To run the code in a script editor window, either copy and paste it to the console, or choose one of the actions in the Run menu. such as Run All or Run Selection. Note: The contents of the menus may change according to the type of active window. Hence, if you look at the Run menu while reading this, there will be no entries.
 	</section>
 	<section title="Workspace View" id="workspace_browser">
 	RKWard comes with a "workspace view" or "object browser". By default this is available by clicking on "Workspace" on the left side of the application window. This allows you to examine and manipulate all objects in the R workspace. By default, only the ".GlobalEnv" environment	is shown (where you'll typically do your work; see <link href="rkward://rhelp/.GlobalEnv"/>). But, checking "Show All Environments", you can easily explore data and functions in loaded R libraries (and even in package namespaces).
@@ -44,7 +44,7 @@
 	Tool windows (e.g. the R Console) can be detached and re-attached using the arrow-icon in their window border.
 	</section>
 	<section title="Editing data" id="editing_data">
-	RKWard provides a built-in editor for data.frames. In fact, you can edit many data.frames at the same time, and even while running lengthy calculations. Still the data is stored as a regular data.frame in R. To explore the data editor, either chose File->New->Dataset, or right click a data.frame in the Workspace browser, and chose Edit from the menu.
+	RKWard provides a built-in editor for data.frames. In fact, you can edit many data.frames at the same time, and even while running lengthy calculations. Still the data is stored as a regular data.frame in R. To explore the data editor, either choose File->New->Dataset, or right click a data.frame in the Workspace browser, and choose Edit from the menu.
 
 	Support for adding other types of data, esp. single vectors is planned, but not currently supported.
 	</section>
