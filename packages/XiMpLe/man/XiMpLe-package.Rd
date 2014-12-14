@@ -10,8 +10,8 @@ A simple XML tree parser and generator.
 \tabular{ll}{
 Package: \tab XiMpLe\cr
 Type: \tab Package\cr
-Version: \tab 0.03-22\cr
-Date: \tab 2014-12-02\cr
+Version: \tab 0.03-23\cr
+Date: \tab 2014-12-14\cr
 Depends: \tab R (>= 2.9.0),methods\cr
 Enhances: \tab rkward\cr
 Encoding: \tab UTF-8\cr

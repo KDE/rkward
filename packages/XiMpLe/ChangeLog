@@ -1,5 +1,9 @@
 ChangeLog for package XiMpLe
 
+changes in version 0.03-23 (2014-12-14)
+changed:
+  - relocated the unit tests to tests/testthat
+
 changes in version 0.03-22 (2014-12-02)
 fixed:
   - added curly brackets to the function bodies of all setGeneric() calls to

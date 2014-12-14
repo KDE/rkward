@@ -1,6 +1,13 @@
 \name{NEWS}
 \title{News for Package 'XiMpLe'}
 \encoding{UTF-8}
+\section{Changes in XiMpLe version 0.03-23 (2014-12-14)}{
+  \subsection{changed}{
+    \itemize{
+      \item relocated the unit tests to tests/testthat
+    }
+  }
+}
 \section{Changes in XiMpLe version 0.03-22 (2014-12-02)}{
   \subsection{fixed}{
     \itemize{

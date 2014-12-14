@@ -17,8 +17,7 @@ which are treated as simple text values.}
       no checking is done.}
 
 \item{dtd}{A named list,
-      doctype definition of the XML tree. Valid elements are \code{doctype} (root element),
-      \code{decl}
+      doctype definition of the XML tree. Valid elements are \code{doctype} (root element), \code{decl}
 ("PUBLIC" or "SYSTEM"), \code{id} (the identifier) and \code{refer} (URI to .dtd).
    Currently just pasted, no checking is done.}
 

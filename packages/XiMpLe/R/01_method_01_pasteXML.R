@@ -34,12 +34,15 @@
 #' @seealso \code{\link[XiMpLe:XiMpLe.node-class]{XiMpLe.node}}, 
 #'    \code{\link[XiMpLe:XiMpLe.doc-class]{XiMpLe.doc}}
 #' @keywords methods
+#' @import methods
 #' @rdname pasteXML-methods
 #' @include 00_class_01_XiMpLe.node.R
 #' @include 00_class_02_XiMpLe.doc.R
 #' @docType methods
 #' @export
-setGeneric("pasteXML", function(obj, ...){standardGeneric("pasteXML")})
+setGeneric("pasteXML", function(obj, ...){
+  standardGeneric("pasteXML")
+})
 
 #' @param level Indentation level.
 #' @param shine Integer, controlling if the output should be formatted for better readability. Possible values:

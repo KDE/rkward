@@ -33,8 +33,7 @@ node(obj, node = list(), what = NULL, cond.attr = NULL,
 the child of its previous element. duplicate matches will be returned as a list.}
 
 \item{what}{A character string,
-      must be a valid slot name of class \code{\link[XiMpLe:XiMpLe.node-class]{XiMpLe.node}},
-      like
+      must be a valid slot name of class \code{\link[XiMpLe:XiMpLe.node-class]{XiMpLe.node}}, like
 \code{"attributes"} or \code{"value"}. If not \code{NULL},
       only that part of a node will be returned.
 There's also two special properties for this option: \code{what="@path"} will not return the
