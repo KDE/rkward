@@ -23,12 +23,12 @@
 
 	You will note that the editor opens in a new window in the main workplace (the area of the window, that you are most likely reading this text, in). You can open any number of script editor windows at the same time.
 
-	To run the code in a script editor window, either copy and paste it to the console, or choose one of the actions in the Run menu. such as Run All or Run Selection. Note: The contents of the menus may change according to the type of active window. Hence, if you look at the Run menu while reading this, there will be no entries.
+	To run the code in a script editor window, either copy and paste it to the console, or choose one of the actions in the Run menu, such as Run All or Run Selection. Note: The contents of the menus may change according to the type of active window. Hence, if you look at the Run menu while reading this, there will be no entries.
 	</section>
 	<section title="Workspace View" id="workspace_browser">
 	RKWard comes with a "workspace view" or "object browser". By default this is available by clicking on "Workspace" on the left side of the application window. This allows you to examine and manipulate all objects in the R workspace. By default, only the ".GlobalEnv" environment	is shown (where you'll typically do your work; see <link href="rkward://rhelp/.GlobalEnv"/>). But, checking "Show All Environments", you can easily explore data and functions in loaded R libraries (and even in package namespaces).
 
-	The object browser provides function to select with types of object are shown (on the top). Hovering the mouse over an item will show some additional information on the symbol. Right-clicking on an item will show available actions. See <link href="rkward://page/rkward_workspace_browser"/> for details.
+	The object browser provides function to select which types of object are shown (on the top). Hovering the mouse over an item will show some additional information on the symbol. Right-clicking on an item will show available actions. See <link href="rkward://page/rkward_workspace_browser"/> for details.
 	</section>
 	<section title="R Help" id="rhelp">
 	By default R help pages are shown as HTML, inside RKWard. You can invoke the help in the usual way by running e.g. "?print" or "help (print)" or "help.start ()" in the console. Additionally, there is a tool window to search your installed R help pages. This is accessible using a button located at the bottom of the window (next to the console button). To view a help page found using this tool, double click on it.
@@ -37,7 +37,7 @@
 	RKWard provides an advanced dialog to have installation, updating, and loading of packages. This is available from Settings->Manage R Packages.
 	</section>
 	<section title="Window management" id="window_management">
-	All windows shown in the main view area can be detached to a separate top level window using Windows->Detach. Similarly, detached windows can be attached to the main workplace using Window->Attach.
+	All windows shown in the main view area can be detached to a separate top level window using Windows->Detach. Similarly, detached windows can be attached to the main workplace using Window->Attach to main window.
 
 	Windows can be closed using Windows->Close (Ctrl+W by default). Ctrl+Tab and Ctrl+Shift+Tab cycle through all active document / tool windows in your session.
 
