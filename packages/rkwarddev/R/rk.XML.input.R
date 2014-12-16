@@ -55,9 +55,13 @@ rk.XML.input <- function(label, initial=NULL, size="medium", required=FALSE, id.
   if(!is.null(initial)){
     attr.list[["initial"]] <- initial
   } else {}
-  if(identical(size, "small") | identical(size, "large")){
-    attr.list[["size"]] <- size
-  } else {}
+  if(size %in% c("small", "medium", "large")){
+    if(!identical(size, "medium")){
+        attr.list[["size"]] <- size
+    } else {}
+  } else {
+    stop(simpleError("rk.XML.input: \"size\" must be one of \"small\", \"medium\" or \"large\"!"))
+  }
   if(isTRUE(required)){
     attr.list[["required"]] <- "true"
   } else {}

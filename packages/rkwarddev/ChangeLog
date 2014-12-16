@@ -51,6 +51,7 @@ changed:
   - internally, moved the definitions of valid child nodes and modifiers as
     well as default getter functions and modifiers to separate files, so
     they're more obvious to find and check
+  - rk.XML.input() now checks wheter "size" is exactly one of "small", "medium" or "large"
 removed:
   - the functions rk.set.language() rk.get.language() were no longer useful
     and therefore removed
