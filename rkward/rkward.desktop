@@ -1,6 +1,7 @@
 # KDE Config File
 [Desktop Entry]
 Name=RKWard
+Name[ca]=RKWard
 Name[cs]=RKWard
 Name[de]=RKWard
 Name[es]=RKWard
@@ -12,6 +13,7 @@ Name[sk]=RKWard
 Name[uk]=RKWard
 Name[x-test]=xxRKWardxx
 Comment=GUI for the R-project
+Comment[ca]=IGU pel projecte R
 Comment[cs]=Grafické prostředí pro projekt v R
 Comment[de]=Benutzeroberfläche für R-Projekt
 Comment[es]=Interfaz gráfica para el proyecto R
