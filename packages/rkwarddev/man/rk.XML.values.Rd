@@ -3,9 +3,10 @@
 \alias{rk.XML.values}
 \title{Create a value selector for RKWard plugins}
 \usage{
-rk.XML.values(label, slot.text, required = FALSE, multi = FALSE, min = 1,
-  any = 1, max = 0, horiz = TRUE, add.nodes = NULL,
-  frame.label = NULL, id.name = "auto", help = NULL,
+rk.XML.values(label, slot.text, options = list(label = c(val = NULL, chk =
+  FALSE, i18n = NULL)), required = FALSE, multi = FALSE,
+  duplicates = FALSE, min = 1, any = 1, max = 0, horiz = TRUE,
+  add.nodes = NULL, frame.label = NULL, id.name = "auto", help = NULL,
   component = rk.get.comp())
 }
 \arguments{
@@ -13,9 +14,19 @@ rk.XML.values(label, slot.text, required = FALSE, multi = FALSE, min = 1,
 
 \item{slot.text}{Character string, a text label for the value selection slot.}
 
+\item{options}{A named list with string values to choose from. The names of the list elements will become
+labels of the options, \code{val} defines the value to submit if the value is selected,
+      and
+\code{chk=TRUE} should be set in the one option which is checked by default. You might also provide an \code{i18n}
+for this particular option (see \code{i18n}). Objects generated with \code{\link[rkwarddev:rk.XML.option]{rk.XML.option}}
+are accepted as well.}
+
 \item{required}{Logical, whether the selection of values is mandatory or not.}
 
 \item{multi}{Logical, whether the valueslot holds only one or several objects.}
+
+\item{duplicates}{Logical,
+      if \code{multi=TRUE} defines whether the same entry may be added multiple times. Sets \code{multi=TRUE}.}
 
 \item{min}{If \code{multi=TRUE} defines how many objects must be selected.}
 

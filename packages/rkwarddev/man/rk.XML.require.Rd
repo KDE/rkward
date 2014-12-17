@@ -3,7 +3,7 @@
 \alias{rk.XML.require}
 \title{Create XML "require" node for RKWard plugins}
 \usage{
-rk.XML.require(file = NULL, map = NULL, localized = FALSE)
+rk.XML.require(file = NULL, map = NULL)
 }
 \arguments{
 \item{file}{Character string,
@@ -13,11 +13,6 @@ preferred over \code{map} if that file is in the same package.}
 \item{map}{Character string,
       should be \code{"namespace::id"} of another .pluginmap to be included.
 Can be used to address plugin maps which are not part of the same plugin package.}
-
-\item{localized}{Logical,
-      only useful for plugins with static internationalisation. Adds the \code{localized}
-attribute if set to \code{TRUE}; \code{file} must then point to the default pluginmap in a subdirectory
-containing all localised pluginmaps.}
 }
 \value{
 An object of class \code{XiMpLe.node}.

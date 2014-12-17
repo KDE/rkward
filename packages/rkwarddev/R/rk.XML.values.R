@@ -25,8 +25,14 @@
 #'
 #' @param label Character string, a text label for the value browser.
 #' @param slot.text Character string, a text label for the value selection slot.
+#' @param options A named list with string values to choose from. The names of the list elements will become
+#'    labels of the options, \code{val} defines the value to submit if the value is selected, and
+#'    \code{chk=TRUE} should be set in the one option which is checked by default. You might also provide an \code{i18n}
+#'    for this particular option (see \code{i18n}). Objects generated with \code{\link[rkwarddev:rk.XML.option]{rk.XML.option}}
+#'    are accepted as well.
 #' @param required Logical, whether the selection of values is mandatory or not.
 #' @param multi Logical, whether the valueslot holds only one or several objects.
+#' @param duplicates Logical, if \code{multi=TRUE} defines whether the same entry may be added multiple times. Sets \code{multi=TRUE}.
 #' @param min If \code{multi=TRUE} defines how many objects must be selected.
 #' @param any If \code{multi=TRUE} defines how many objects must be selected at least if any
 #'    are selected at all.
@@ -56,53 +62,62 @@
 #' test.values <- rk.XML.values("Select some values", "Vars go here")
 #' cat(pasteXML(test.values))
 
-rk.XML.values <- function(label, slot.text, required=FALSE, multi=FALSE, min=1, any=1, max=0,
-  horiz=TRUE, add.nodes=NULL, frame.label=NULL, id.name="auto", help=NULL, component=rk.get.comp()){
+rk.XML.values <- function(label, slot.text, options=list(label=c(val=NULL, chk=FALSE, i18n=NULL)),
+    required=FALSE, multi=FALSE, duplicates=FALSE, min=1, any=1, max=0,
+    horiz=TRUE, add.nodes=NULL, frame.label=NULL, id.name="auto", help=NULL, component=rk.get.comp()){
 
-  if(identical(id.name, "auto")){
-    ## if this ID generation get's changed, change it in rk.XML.valueslot(), too!
-    value.sel.attr <- list(id=auto.ids(label, prefix=ID.prefix("valueselector", length=3)))
-    value.slot.id <- auto.ids(slot.text, prefix=ID.prefix("valueslot", length=4))
-  } else if(!is.null(id.name)){
-    value.sel.attr <- list(id=id.name[[2]])
-    value.slot.id <- id.name[[3]]
-  } else {}
+    if(identical(id.name, "auto")){
+        ## if this ID generation get's changed, change it in rk.XML.valueslot(), too!
+        value.sel.attr <- list(id=auto.ids(label, prefix=ID.prefix("valueselector", length=3)))
+        value.slot.id <- auto.ids(slot.text, prefix=ID.prefix("valueslot", length=4))
+    } else if(!is.null(id.name)){
+        value.sel.attr <- list(id=id.name[[2]])
+        value.slot.id <- id.name[[3]]
+    } else {}
 
-  v.selector <- rk.XML.valueselector(
-    label=label,
-    id.name=value.sel.attr[["id"]])
+    v.selector <- rk.XML.valueselector(
+        label=label,
+        options=options,
+        id.name=value.sel.attr[["id"]])
 
-  v.slot <- rk.XML.valueslot(
-    label=slot.text,
-    source=v.selector,
-    required=required,
-    multi=multi,
-    min=min,
-    any=any,
-    max=max,
-    id.name=value.slot.id,
-    help=help,
-    component=component)
+    v.slot <- rk.XML.valueslot(
+        label=slot.text,
+        source=v.selector,
+        required=required,
+        multi=multi,
+        duplicates=duplicates,
+        min=min,
+        any=any,
+        max=max,
+        id.name=value.slot.id,
+        help=help,
+        component=component)
 
-  slot.content <- list(v.slot)
+    slot.content <- list(v.slot)
 
-  # do we need to add extra nodes to the valueslot?
-  if(!is.null(add.nodes)){
-    for (this.node in add.nodes) {
-      slot.content[[length(slot.content)+1]] <- this.node
+    # do we need to add extra nodes to the valueslot?
+    if(!is.null(add.nodes)){
+        for (this.node in child.list(add.nodes)) {
+            slot.content[[length(slot.content)+1]] <- this.node
+        }
+    } else {}
+
+    if(isTRUE(horiz)){
+        values.frame <- rk.XML.frame(
+            rk.XML.row(list(rk.XML.col(v.selector), rk.XML.col(slot.content))),
+            label=frame.label,
+            id.name=id.name[[1]]
+        )
+    } else {
+        values.frame <- rk.XML.frame(
+            v.selector,
+            label=frame.label,
+            id.name=id.name[[1]]
+        )
+        for (this.node in slot.content) {
+            XMLChildren(values.frame) <- append(XMLChildren(values.frame), this.node)
+        }
     }
-  } else {}
 
-  if(isTRUE(horiz)){
-    aligned.chld <- rk.XML.row(list(rk.XML.col(v.selector), rk.XML.col(slot.content)))
-  } else {
-    aligned.chld <- list(v.selector, unlist(slot.content))
-  }
-
-  values.frame <- rk.XML.frame(
-    children=child.list(aligned.chld),
-    label=frame.label,
-    id.name=id.name[[1]])
-
-  return(values.frame)
+    return(values.frame)
 }

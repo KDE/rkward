@@ -17,7 +17,7 @@ a \code{<valueselector>} node, you must also specify a valid property for the no
 
 \item{property}{Character string,
       valid property for a XiMpLe node defined by \code{source}. In the XML code, it
-will cause the use of \code{source_property} instead of \code{source}. Only used if \code{source} ist not a
+will cause the use of \code{source_property} instead of \code{source}. Only used if \code{source} is not a
 \code{<valueselector>} node.}
 
 \item{required}{Logical, whether the selection of values is mandatory or not.}

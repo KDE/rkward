@@ -23,7 +23,7 @@
 #'    from), or an object of class \code{XiMpLe.node} (whose \code{id} will be extracted and used). If it is not
 #'    a \code{<valueselector>} node, you must also specify a valid property for the node.
 #' @param property Character string, valid property for a XiMpLe node defined by \code{source}. In the XML code, it
-#'    will cause the use of \code{source_property} instead of \code{source}. Only used if \code{source} ist not a
+#'    will cause the use of \code{source_property} instead of \code{source}. Only used if \code{source} is not a
 #'    \code{<valueselector>} node. 
 #' @param required Logical, whether the selection of values is mandatory or not.
 #' @param multi Logical, whether the valueslot holds only one or several objects.

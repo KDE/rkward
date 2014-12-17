@@ -250,7 +250,8 @@ test_that("rk.XML.embed", {
     thisNode <- rk.XML.embed(
             component="componentID",
             button=TRUE,
-            label="an embed label"
+            label="an embed label",
+            i18n=list(context="context info here")
         )
     load("XML_test_standards.RData")
     expect_that(
@@ -301,7 +302,8 @@ test_that("rk.XML.frame", {
         ),
         label="a frame label",
         checkable=TRUE,
-        chk=FALSE
+        chk=FALSE,
+        i18n=list(context="context info here")
     )
     load("XML_test_standards.RData")
     expect_that(
@@ -352,6 +354,7 @@ test_that("rk.XML.input", {
         initial="init",
         size="small",
         required=TRUE,
+        i18n=list(context="context info here")
     )
     load("XML_test_standards.RData")
     expect_that(
@@ -402,7 +405,8 @@ test_that("rk.XML.matrix", {
         fixed_width=TRUE,
         fixed_height=TRUE,
         horiz_headers=c("hone", "htwo", "hthree"),
-        vert_headers=c("vone", "vtwo", "vthree")
+        vert_headers=c("vone", "vtwo", "vthree"),
+        i18n=list(context="context info here")
     )
     load("XML_test_standards.RData")
     expect_that(
@@ -419,7 +423,8 @@ test_that("rk.XML.menu", {
                 file="plugins/MyOtherGUIdialog.xml"
             )
         ),
-        index=3
+        index=3,
+        i18n=list(context="context info here")
     )
     load("XML_test_standards.RData")
     expect_that(
@@ -433,7 +438,8 @@ test_that("rk.XML.optioncolumn", {
         modifier="text",
         label=TRUE,
         external=TRUE,
-        default="rarely useful"
+        default="rarely useful",
+        i18n=list(context="context info here")
     )
     load("XML_test_standards.RData")
     expect_that(
@@ -455,7 +461,8 @@ test_that("rk.XML.option", {
     thisNode <- rk.XML.option(  
         label="an option label",
         val="value",
-        chk=TRUE
+        chk=TRUE,
+        i18n=list(context="context info here")
     )
     load("XML_test_standards.RData")
     expect_that(
@@ -498,6 +505,521 @@ test_that("rk.XML.page", {
     load("XML_test_standards.RData")
     expect_that(
         thisNode, equals(XML_test_standards[["page"]])
+    )
+})
+
+test_that("rk.XML.pluginmap", {
+    thisNode <- rk.XML.pluginmap(
+        name="pluginName",
+        about=rk.XML.about(
+            name="Square the circle",
+            author=c(
+                person(given="E.A.", family="Dölle",
+                    email="doelle@eternalwondermaths.example.org", role="aut"),
+                person(given="A.", family="Assistant",
+                    email="alterego@eternalwondermaths.example.org", role=c("cre","ctb"))
+                ),
+            about=list(
+                desc="Squares the circle using Heisenberg compensation.",
+                version="0.1-3",
+                date=as.Date("2014-12-12"),
+                url="http://eternalwondermaths.example.org/23/stc.html",
+                license="GPL",
+                category="Geometry")
+        ),
+        components=rk.XML.components(
+            rk.XML.component(
+                label="a components label",
+                file="plugins/MyOtherGUIdialog.xml"
+            )
+        ),
+        hierarchy=rk.XML.hierarchy(
+            rk.XML.menu("Analysis", 
+                rk.XML.entry(
+                    rk.XML.component(
+                        label="a hierarchy label",
+                        file="plugins/MyOtherGUIdialog.xml"
+                    )
+                )
+            )
+        ),
+        require=rk.XML.require(
+            file="your.pluginmap"
+        ),
+        x11.context=rk.XML.context(
+            rk.XML.menu("Analysis", 
+                rk.XML.entry(
+                    rk.XML.component(
+                        label="a context label",
+                        file="plugins/MyOtherGUIdialog.xml"
+                    )
+                )
+            )
+        ),
+        import.context=NULL,
+        clean.name=TRUE,
+        hints=FALSE,
+        gen.info=TRUE,
+        dependencies=rk.XML.dependencies(
+            dependencies=list(
+                rkward.min="0.6.3",
+                rkward.max="0.6.5",
+                R.min="3.1",
+                R.max="3.2"),
+            package=list(
+                c(name="heisenberg", min="0.11-2", max="0.14-1",
+                    repository="http://hsb.example.org"),
+                c(name="DreamsOfPi", min="0.2", max="3.1", repository="http://dop.example.org")),
+            pluginmap=list(
+                c(name="heisenberg.pluginmap", url="http://eternalwondermaths.example.org/hsb"))
+        ),
+        priority="medium"
+    )
+    load("XML_test_standards.RData")
+    expect_that(
+        thisNode, equals(XML_test_standards[["pluginmap"]])
+    )
+})
+
+test_that("rk.XML.plugin", {
+    thisNode <- rk.XML.plugin(
+        name="testPlugin",
+        dialog=rk.XML.dialog(
+            rk.XML.col(
+                rk.XML.cbox(label="a dialog column label")
+            ),
+            label="a dialog label",
+            recommended=TRUE,
+            i18n=list(context="context info here")
+        ),
+        wizard=rk.XML.wizard(
+            rk.XML.text("a wizard text"),
+            label="a wizard label",
+            recommended=TRUE,
+            i18n=list(context="context info here")
+        ),
+        logic=rk.XML.logic(
+            rk.XML.connect(
+                governor="myGovernor",
+                client="myCLient"
+            )
+        ),
+        snippets=rk.XML.snippets(
+            rk.XML.snippet(
+                rk.XML.vars(
+                    "Variables",
+                    "Fixed",
+                    formula.dependent="Dependent"
+                )
+            ),
+            rk.XML.include(
+                "../include_file.xml"
+            )
+        ),
+        help=TRUE,
+        include="../include_another_file.xml",
+        label="a plugin label",
+        clean.name=TRUE,
+        about=rk.XML.about(
+            name="Square the circle",
+            author=c(
+                person(given="E.A.", family="Dölle",
+                    email="doelle@eternalwondermaths.example.org", role="aut"),
+                person(given="A.", family="Assistant",
+                    email="alterego@eternalwondermaths.example.org", role=c("cre","ctb"))
+                ),
+            about=list(
+                desc="Squares the circle using Heisenberg compensation.",
+                version="0.1-3",
+                date=as.Date("2014-12-12"),
+                url="http://eternalwondermaths.example.org/23/stc.html",
+                license="GPL",
+                category="Geometry")
+        ),
+        dependencies=rk.XML.dependencies(
+            dependencies=list(
+                rkward.min="0.6.3",
+                rkward.max="0.6.5",
+                R.min="3.1",
+                R.max="3.2"),
+            package=list(
+                c(name="heisenberg", min="0.11-2", max="0.14-1",
+                    repository="http://hsb.example.org"),
+                c(name="DreamsOfPi", min="0.2", max="3.1", repository="http://dop.example.org")),
+            pluginmap=list(
+                c(name="heisenberg.pluginmap", url="http://eternalwondermaths.example.org/hsb"))
+        ),
+        gen.info=TRUE,
+        i18n=list(context="context info here")
+    )
+    load("XML_test_standards.RData")
+    expect_that(
+        thisNode, equals(XML_test_standards[["plugin"]])
+    )
+})
+
+
+test_that("rk.XML.preview", {
+    thisNode <- rk.XML.preview(
+        label="a perview label",
+        i18n=list(context="context info here")
+    )
+    load("XML_test_standards.RData")
+    expect_that(
+        thisNode, equals(XML_test_standards[["preview"]])
+    )
+})
+
+test_that("rk.XML.radio", {
+    thisNode <- rk.XML.radio(
+        label="a radio label",
+        options=list(
+            value1=c(val="value1", chk=FALSE, i18n=list(context="value1 context info here")),
+            value2=rk.XML.option(  
+                label="an option label",
+                val="value",
+                chk=TRUE,
+                i18n=list(context="context info here")
+            )
+        ),
+        i18n=list(context="context info here")
+    )
+    load("XML_test_standards.RData")
+    expect_that(
+        thisNode, equals(XML_test_standards[["radio"]])
+    )
+})
+
+test_that("rk.XML.require", {
+    thisNode <- rk.XML.require(
+        file="your.pluginmap"
+    )
+    load("XML_test_standards.RData")
+    expect_that(
+        thisNode, equals(XML_test_standards[["require"]])
+    )
+})
+
+test_that("rk.XML.row", {
+    thisNode <- rk.XML.row(
+        rk.XML.preview(
+            label="a perview label",
+            i18n=list(context="context info here")
+        )
+    )
+    load("XML_test_standards.RData")
+    expect_that(
+        thisNode, equals(XML_test_standards[["row"]])
+    )
+})
+
+test_that("rk.XML.saveobj", {
+    thisNode <- rk.XML.saveobj(
+        label="a saveobj label",
+        chk=TRUE,
+        checkable=TRUE,
+        initial="my.RData",
+        required=TRUE,
+        i18n=list(context="context info here")
+    )
+    load("XML_test_standards.RData")
+    expect_that(
+        thisNode, equals(XML_test_standards[["saveobj"]])
+    )
+})
+
+test_that("rk.XML.select", {
+    thisNode <- rk.XML.select(
+        label="a select label",
+        options=list(
+            value1=rk.XML.option(  
+                label="an option label",
+                val="value",
+                chk=TRUE,
+                i18n=list(context="context info here")
+            ),
+            value2=c(val="value2", chk=FALSE, i18n=list(context="value1 context info here"))
+        ),
+        i18n=list(context="context info here")
+    )
+    load("XML_test_standards.RData")
+    expect_that(
+        thisNode, equals(XML_test_standards[["select"]])
+    )
+})
+
+test_that("rk.XML.set", {
+    thisNode <- rk.XML.set(
+        id=rk.XML.input(
+            label="an input label",
+            initial="init",
+            size="small",
+            required=TRUE,
+            i18n=list(context="context info here")
+        ),
+        set="required",
+        to=TRUE
+    )
+    load("XML_test_standards.RData")
+    expect_that(
+        thisNode, equals(XML_test_standards[["set"]])
+    )
+})
+
+test_that("rk.XML.snippet", {
+    thisNode <- rk.XML.snippet(
+        rk.XML.vars(
+            "Variables",
+            "Fixed",
+            formula.dependent="Dependent"
+        )
+    )
+    load("XML_test_standards.RData")
+    expect_that(
+        thisNode, equals(XML_test_standards[["snippet"]])
+    )
+})
+
+test_that("rk.XML.snippets", {
+    thisNode <- rk.XML.snippets(
+        rk.XML.snippet(
+            rk.XML.vars(
+                "Variables",
+                "Fixed",
+                formula.dependent="Dependent"
+            )
+        ),
+        rk.XML.include(
+            "../include_file.xml"
+        )
+    )
+    load("XML_test_standards.RData")
+    expect_that(
+        thisNode, equals(XML_test_standards[["snippets"]])
+    )
+})
+
+test_that("rk.XML.spinbox", {
+    thisNode <- rk.XML.spinbox(
+        label="a spinbox label",
+        min=0,
+        max=23,
+        initial=17,
+        real=TRUE,
+        precision=1,
+        max.precision=5,
+        i18n=list(context="context info here")
+    )
+    load("XML_test_standards.RData")
+    expect_that(
+        thisNode, equals(XML_test_standards[["spinbox"]])
+    )
+})
+
+test_that("rk.XML.stretch", {
+    thisNode <- rk.XML.stretch(
+        before=rk.XML.text("a stretch text"),
+        after=rk.XML.text("more text")
+    )
+    load("XML_test_standards.RData")
+    expect_that(
+        thisNode, equals(XML_test_standards[["stretch"]])
+    )
+})
+
+test_that("rk.XML.switch", {
+    thisNode <- rk.XML.switch(
+        rk.XML.cbox("foo"),
+        cases=list(
+            true=list(fixed_value="foo"),
+            false=list(fixed_value="bar")
+        )
+    )
+    load("XML_test_standards.RData")
+    expect_that(
+        thisNode, equals(XML_test_standards[["switch"]])
+    )
+})
+
+test_that("rk.XML.tabbook", {
+    thisNode <- rk.XML.tabbook("My Tabbook",
+        tabs=list(
+            "First Tab"=rk.XML.col(
+                rk.XML.cbox(label="foo", val="foo1", chk=TRUE)
+            ),
+            "Second Tab"=rk.XML.col(
+                rk.XML.cbox(label="bar", val="bar2")
+            )
+        ),
+        i18n=list(context="context info here")
+    )
+    load("XML_test_standards.RData")
+    expect_that(
+        thisNode, equals(XML_test_standards[["tabbook"]])
+    )
+})
+
+test_that("rk.XML.text", {
+    thisNode <- rk.XML.text(
+        "wow, cool text!",
+        type="warning",
+        i18n=list(context="context info here")
+    )
+    load("XML_test_standards.RData")
+    expect_that(
+        thisNode, equals(XML_test_standards[["text"]])
+    )
+})
+
+test_that("rk.XML.valueselector", {
+    thisNode <- rk.XML.valueselector(
+        label="a valueselector label",
+        options=list(
+            value1=rk.XML.option(  
+                label="an option label",
+                val="value",
+                chk=TRUE,
+                i18n=list(context="context info here")
+            ),
+            value2=c(val="value2", chk=FALSE, i18n=list(context="value1 context info here"))
+        ),
+        i18n=list(context="context info here")
+    )
+    load("XML_test_standards.RData")
+    expect_that(
+        thisNode, equals(XML_test_standards[["valueselector"]])
+    )
+})
+
+test_that("rk.XML.valueslot", {
+    thisNode <- rk.XML.valueslot(
+        label="a valueslot label",
+        source=rk.XML.valueselector(
+            label="a valueselector label",
+            options=list(
+                value1=rk.XML.option(  
+                    label="an option label",
+                    val="value",
+                    chk=TRUE,
+                    i18n=list(context="context info here")
+                ),
+                value2=c(val="value2", chk=FALSE, i18n=list(context="value1 context info here"))
+            ),
+            i18n=list(context="context info here")
+        ),
+        required=TRUE,
+        duplicates=TRUE,
+        min=2,
+        any=3,
+        max=10,
+        i18n=list(context="context info here")
+    )
+    load("XML_test_standards.RData")
+    expect_that(
+        thisNode, equals(XML_test_standards[["valueslot"]])
+    )
+})
+
+test_that("rk.XML.values", {
+    thisNode <- rk.XML.values(
+        label="a values label",
+        slot.text="some slot text",
+        options=list(
+            value1=rk.XML.option(  
+                label="an option label",
+                val="value",
+                chk=TRUE,
+                i18n=list(context="context info here")
+            ),
+            value2=c(val="value2", chk=FALSE, i18n=list(context="value1 context info here"))
+        ),
+        required=TRUE,
+        duplicates=TRUE,
+        min=2,
+        any=3,
+        max=10,
+        horiz=FALSE,
+        add.nodes=rk.XML.text("more text"),
+        frame.label="this is a frame"
+    )
+    load("XML_test_standards.RData")
+    expect_that(
+        thisNode, equals(XML_test_standards[["values"]])
+    )
+})
+
+test_that("rk.XML.varselector", {
+    thisNode <- rk.XML.varselector(
+        label="a varselector label",
+        i18n=list(context="context info here")
+    )
+    load("XML_test_standards.RData")
+    expect_that(
+        thisNode, equals(XML_test_standards[["varselector"]])
+    )
+})
+
+test_that("rk.XML.varslot", {
+    thisNode <- rk.XML.varslot(
+        label="a varslot label",
+        source=rk.XML.varselector(
+            label="a varselector label",
+            i18n=list(context="context info here")
+        ),
+        required=TRUE,
+        duplicates=TRUE,
+        min=3,
+        any=5,
+        max=20,
+        dim=1,
+        min.len=2,
+        max.len=6,
+        classes=c("matrix"),
+        types=c("number"),
+        i18n=list(context="context info here")
+    )
+    load("XML_test_standards.RData")
+    expect_that(
+        thisNode, equals(XML_test_standards[["varslot"]])
+    )
+})
+
+test_that("rk.XML.vars", {
+    thisNode <- rk.XML.vars(
+        label="a vars label",
+        slot.text="some more text",
+        required=TRUE,
+        duplicates=TRUE,
+        min=3,
+        any=5,
+        max=20,
+        dim=1,
+        min.len=2,
+        max.len=6,
+        classes=c("matrix"),
+        types=c("number"),
+        horiz=TRUE,
+        add.nodes=list(rk.XML.text("more text")),
+        frame.label="this is a frame",
+        formula.dependent="formulate some",
+        dep.options=list(min=3)
+    )
+    load("XML_test_standards.RData")
+    expect_that(
+        thisNode, equals(XML_test_standards[["vars"]])
+    )
+})
+
+test_that("rk.XML.wizard", {
+    thisNode <- rk.XML.wizard(
+        rk.XML.text("a wizard text"),
+        label="a wizard label",
+        recommended=TRUE,
+        i18n=list(context="context info here")
+    )
+    load("XML_test_standards.RData")
+    expect_that(
+        thisNode, equals(XML_test_standards[["wizard"]])
     )
 })
 

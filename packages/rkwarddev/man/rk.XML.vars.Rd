@@ -3,11 +3,12 @@
 \alias{rk.XML.vars}
 \title{Create a variable selector for RKWard plugins}
 \usage{
-rk.XML.vars(label, slot.text, required = FALSE, multi = FALSE, min = 1,
-  any = 1, max = 0, dim = 0, min.len = 0, max.len = NULL,
-  classes = NULL, types = NULL, horiz = TRUE, add.nodes = NULL,
-  frame.label = NULL, formula.dependent = NULL, dep.options = list(),
-  id.name = "auto", help = NULL, component = rk.get.comp())
+rk.XML.vars(label, slot.text, required = FALSE, multi = FALSE,
+  duplicates = FALSE, min = 1, any = 1, max = 0, dim = 0,
+  min.len = 0, max.len = NULL, classes = NULL, types = NULL,
+  horiz = TRUE, add.nodes = NULL, frame.label = NULL,
+  formula.dependent = NULL, dep.options = list(), id.name = "auto",
+  help = NULL, component = rk.get.comp())
 }
 \arguments{
 \item{label}{Character string, a text label for the variable browser.}
@@ -17,6 +18,9 @@ rk.XML.vars(label, slot.text, required = FALSE, multi = FALSE, min = 1,
 \item{required}{Logical, whether the selection of variables is mandatory or not.}
 
 \item{multi}{Logical, whether the varslot holds only one or several objects.}
+
+\item{duplicates}{Logical,
+      if \code{multi=TRUE} defines whether the same entry may be added multiple times. Sets \code{multi=TRUE}.}
 
 \item{min}{If \code{multi=TRUE} defines how many objects must be selected.}
 

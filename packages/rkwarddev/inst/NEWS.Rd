@@ -1,7 +1,7 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
-\section{Changes in rkwarddev version 0.06-6 (2014-12-14)}{
+\section{Changes in rkwarddev version 0.06-6 (2014-12-17)}{
   \subsection{fixed}{
     \itemize{
       \item \code{rk.XML.optionset()} does now allow to re-use objects defined in the same
@@ -44,6 +44,8 @@
       \item new function \code{R.comment()} to generate JavaScript "\code{comment()}" calls
       \item first unit tests using the testthat package
       \item added documentation to the used S4 classes
+      \item enhanced \code{rk.XML.values()} to also accept \code{"options"} and \code{"duplicates"}, and
+        \code{rk.XML.vars()} to also accept \code{"duplicates"}
     }
   }
   \subsection{changed}{
@@ -59,6 +61,8 @@
       \item internally, moved the definitions of valid child nodes and modifiers as
         well as default getter functions and modifiers to separate files, so
         they're more obvious to find and check
+      \item \code{rk.XML.input()} now checks wheter \code{"size"} is exactly one of \code{"small"},
+        \code{"medium"} or \code{"large"}
     }
   }
   \subsection{removed}{

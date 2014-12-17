@@ -1,6 +1,6 @@
 ChangeLog for package rkwarddev
 
-changes in version 0.06-6 (2014-12-14)
+changes in version 0.06-6 (2014-12-17)
 fixed:
   - rk.XML.optionset() does now allow to re-use objects defined in the same
     function call (i.e., refer to optioncolumns in the logic section)
@@ -20,6 +20,8 @@ fixed:
   - join() referenced a wrong object name if "var" was of class rk.JS.arr
   - rk.XML.about() had a malformed error message
   - rk.plugin.component() called XMLAttrs() with too many arguments
+  - rk.XML.values() and rk.XML.vars() do now handle all combinations of "horiz"
+    and "add.nodes" properly
 added:
   - all "help" values can now be a list of character strings or XiMpLe nodes,
     to have more control over the markup
@@ -39,6 +41,8 @@ added:
   - new function R.comment() to generate JavaScript "comment()" calls
   - first unit tests using the testthat package
   - added documentation to the used S4 classes
+  - enhanced rk.XML.values() to also accept "options" and "duplicates", and
+    rk.XML.vars() to also accept "duplicates"
 changed:
   - function i18n() was changed to be used in JavaScript generation only;
     this breaks code using the function introduced with 0.06-4, but that was to
@@ -51,7 +55,8 @@ changed:
   - internally, moved the definitions of valid child nodes and modifiers as
     well as default getter functions and modifiers to separate files, so
     they're more obvious to find and check
-  - rk.XML.input() now checks wheter "size" is exactly one of "small", "medium" or "large"
+  - rk.XML.input() now checks wheter "size" is exactly one of "small",
+    "medium" or "large"
 removed:
   - the functions rk.set.language() rk.get.language() were no longer useful
     and therefore removed
