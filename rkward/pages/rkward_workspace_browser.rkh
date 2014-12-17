@@ -3,7 +3,7 @@
 	<title>Workspace Browser</title>
 
 	<summary>
-	The workspace browser allows to view and manipulate R objects. This includes both your own objects (data, functions), and so-called "package environments". As a rough analogy, this is similar to a regular file-system browser, expect you browser R objects in your workspace, instead of files on your computer.
+	The workspace browser allows to view and manipulate R objects. This includes both your own objects (data, functions), and so-called "package environments". As a rough analogy, this is similar to a regular file-system browser, except you browse R objects in your workspace, instead of files on your computer.
 
 	The workspace browser can be invoked using Windows->Activate->Show / Hide Workspace Browser (default shortcut is Alt+1), or by clicking on the "Workspace" icon, which is located on the top of the left window border, by default.
 	</summary>
