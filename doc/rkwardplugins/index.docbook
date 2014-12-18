@@ -57,7 +57,7 @@ as Authors, publish date, the abstract, and Keywords -->
      and in the FDL itself on how to use it. -->
 <legalnotice>&FDLNotice;</legalnotice>
 
-<date>2014-11-06</date>
+<date>2014-12-18</date>
 <releaseinfo>0.6.300</releaseinfo>
 
 <abstract>
@@ -80,7 +80,7 @@ This is a guide to writing plugins for &rkward;.
 
 	<note>
 		<para>
-			Documentation as of &rkward; release 0.6.2.
+			Documentation as of &rkward; release 0.6.3.
 		</para>
 	</note>
 	<para>
