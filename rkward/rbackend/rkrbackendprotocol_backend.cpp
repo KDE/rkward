@@ -85,7 +85,9 @@
 			} else if (args[i].startsWith ("--server-name")) {
 				servername = args[i].section ('=', 1);
 			} else if (args[i].startsWith ("--data-dir")) {
-#warning What about paths with spaces?!
+#ifdef __GNUC__
+#	warning What about paths with spaces?!
+#endif
 				data_dir = args[i].section ('=', 1);
 			} else if (args[i].startsWith ("--locale-dir")) {
 				locale_dir = args[i].section ('=', 1);

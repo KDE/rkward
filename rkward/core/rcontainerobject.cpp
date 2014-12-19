@@ -293,7 +293,9 @@ RObject *RContainerObject::createPendingChild (const QString &name, int position
 	RK_TRACE (OBJECTS);
 	RK_ASSERT (isType (GlobalEnv) || isInGlobalEnv ());
 
-#warning TODO validize name
+#ifdef __GNUC__
+#	warning TODO validize name
+#endif
 	RObject *ret;
 	if (container) {
 		ret = new RContainerObject (this, name);

@@ -39,7 +39,9 @@ Atom wm_name_property;
 
 #include "debug.h"
 
-#warning TODO: We could really use the detection logic from windows for x11, too. It seems much easier.
+#ifdef __GNUC__
+#	warning TODO: We could really use the detection logic from windows for x11, too. It seems much easier.
+#endif
 #ifdef Q_WS_WIN
 #include <stdio.h>
 namespace RKWardApplicationPrivate {

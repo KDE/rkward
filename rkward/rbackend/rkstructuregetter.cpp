@@ -226,7 +226,9 @@ void RKStructureGetter::getStructureWorker (SEXP val, const QString &name, int a
 
 	// basic classification
 	for (int i = classes.size () - 1; i >= 0; --i) {
-#warning: Using is.data.frame() may be more reliable (would need to be called only on List-objects, thus no major performance hit)
+#ifdef __GNUC__
+#	warning: Using is.data.frame() may be more reliable (would need to be called only on List-objects, thus no major performance hit)
+#endif
 		if (classes[i] == "data.frame") type |= RObject::DataFrame;
 	}
 

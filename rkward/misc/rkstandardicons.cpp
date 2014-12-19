@@ -76,8 +76,6 @@ void RKStandardIcons::initIcons () {
 	icons[ActionDetachWindow] = KIcon ("view-fullscreen");
 	icons[ActionAttachWindow] = KIcon ("view-restore");
 
-#warning TODO add further action icons here
-
 	// objects
 	icons[ObjectList] = QIcon (rkward_icon_base + "list.png");
 	icons[ObjectFunction] = QIcon (rkward_icon_base + "function.png");

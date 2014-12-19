@@ -227,7 +227,9 @@ void RObject::updateFromR (RCommandChain *chain) {
 
 	RCommand *command;
 	if (parentObject () == RObjectList::getGlobalEnv ()) {
-#warning TODO: find a generic solution
+#ifdef __GNUC__
+#	warning TODO: find a generic solution
+#endif
 // We handle objects directly in .GlobalEnv differently. That's to avoid forcing promises, when addressing the object directly. In the long run, .rk.get.structure should be reworked to simply not need the value-argument in any case.
 		 command = new RCommand (".rk.get.structure.global (" + rQuote (getShortName ()) + ')', RCommand::App | RCommand::Sync | RCommand::GetStructuredData, QString::null, this, ROBJECT_UDPATE_STRUCTURE_COMMAND);
 	} else {
@@ -465,7 +467,9 @@ bool RObject::updateDimensions (RData *new_data) {
 				return (true);
 			}
 		} else {
-#warning TODO: ugly hack. Should be moved to RKVariable, somehow.
+#ifdef __GNUC__
+#	warning TODO: ugly hack. Should be moved to RKVariable, somehow.
+#endif
 			if (type & Variable) static_cast<RKVariable*> (this)->extendToLength (new_dimensions[0]);
 
 			dimensions = new_dimensions;

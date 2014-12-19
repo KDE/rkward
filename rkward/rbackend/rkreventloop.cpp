@@ -42,7 +42,8 @@ static void processX11EventsWorker (void *) {
 	/* This seems to be needed to make Rcmdr react to events. Has this always been the case? It was commented out for a long time, without anybody noticing. */
 	R_PolledEvents ();
 #else
-#warning TODO: correct?
+	// TODO: correct?
+	// NOTE: We essentially process events while waiting. Perhaps we should simply use the equivalent of "try(sleep(0.01))", instead.
 	R_ProcessEvents();
 #endif
 

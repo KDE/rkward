@@ -125,7 +125,9 @@ void RKEditorDataFrame::rCommandDone (RCommand *command) {
 void RKEditorDataFrame::restoreObject (RObject *object) {
 	RK_TRACE (EDITOR);
 
-#warning TODO: this interface should be moved to the model for good.
+#ifdef __GNUC__
+#	warning TODO: this interface should be moved to the model for good.
+#endif
 	datamodel->restoreObject (object, 0);
 }
 
