@@ -462,6 +462,94 @@ XMLTestNodes <- function(file=NULL, compress="xz", compression_level=-9){
         i18n=list(context="context info here")
     )
 
+## missing tests:
+#     echo <- echo(
+#    )
+#     i18n <- i18n(
+#    )
+#     id <- id(
+#    )
+#     ite <- ite(
+#    )
+#     join <- join(
+#    )
+#     qp <- qp(
+#    )
+#     tf <- tf(
+#    )
+#    R.comment <- R.comment(
+#    )
+#     rk.build.plugin <- rk.build.plugin(
+#    )
+#     rk.comment <- rk.comment(
+#    )
+#     rk.get.comp <- rk.get.comp(
+#    )
+#     rk.get.rkh.prompter <- rk.get.rkh.prompter(
+#    )
+#     rk.i18n.comment <- rk.i18n.comment(
+#    )
+#     rk.JS.array <- rk.JS.array(
+#    )
+#     rk.JS.doc <- rk.JS.doc(
+#    )
+#     rk.JS.header <- rk.JS.header(
+#    )
+#     rk.JS.optionset <- rk.JS.optionset(
+#    )
+#     rk.JS.options <- rk.JS.options(
+#    )
+#     rk.JS.saveobj <- rk.JS.saveobj(
+#    )
+#     rk.JS.scan <- rk.JS.scan(
+#    )
+#     rk.JS.vars <- rk.JS.vars(
+#    )
+#     rk.paste.JS.graph <- rk.paste.JS.graph(
+#    )
+#     rk.paste.JS <- rk.paste.JS(
+#    )
+#     rk.plotOptions <- rk.plotOptions(
+#    )
+#     rk.plugin.component <- rk.plugin.component(
+#    )
+#     rk.plugin.skeleton <- rk.plugin.skeleton(
+#    )
+#     rk.rkh.caption <- rk.rkh.caption(
+#    )
+#     rk.rkh.doc <- rk.rkh.doc(
+#    )
+#     rk.rkh.link <- rk.rkh.link(
+#    )
+#     rk.rkh.related <- rk.rkh.related(
+#    )
+#     rk.rkh.scan <- rk.rkh.scan(
+#    )
+#     rk.rkh.section <- rk.rkh.section(
+#    )
+#     rk.rkh.setting <- rk.rkh.setting(
+#    )
+#     rk.rkh.settings <- rk.rkh.settings(
+#    )
+#     rk.rkh.summary <- rk.rkh.summary(
+#    )
+#     rk.rkh.technical <- rk.rkh.technical(
+#    )
+#     rk.rkh.title <- rk.rkh.title(
+#    )
+#     rk.rkh.usage <- rk.rkh.usage(
+#    )
+#     rk.set.comp <- rk.set.comp(
+#    )
+#     rk.set.rkh.prompter <- rk.set.rkh.prompter(
+#    )
+#     rk.testsuite.doc <- rk.testsuite.doc(
+#    )
+#     rk.uniqueIDs <- rk.uniqueIDs(
+#    )
+#     rkwarddev.required <- rkwarddev.required(
+#    )
+    
     XML_test_standards <- list(
         about=about,
         attribute=attribute,

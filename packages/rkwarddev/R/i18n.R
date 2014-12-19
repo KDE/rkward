@@ -23,7 +23,7 @@
 #' will return one of \code{i18n()}, \code{i18nc()}, \code{i18np()}, or \code{i18ncp()}.
 #' 
 #' @param msgid Character string, the message to be translated (if applicable, its singular form).
-#' @param ... Either character string wich will be pasted unquoted to be used in conjunctions with
+#' @param ... Either character string which will be pasted unquoted to be used in conjunctions with
 #'    placeholders in msgid, or XiMpLe.node objects of which the JavaScript variable name will be
 #'    used.
 #' @param context Character string, optional context information for this string.
