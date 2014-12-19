@@ -35,8 +35,9 @@
 #include "../rkglobals.h"
 #include "../rkward.h"
 #include "../settings/rksettingsmoduleplugins.h"
+#include "../rbackend/rksessionvars.h"
 
-QString RKPluginMapFile::makeFileName (const QString &filename) {
+QString RKPluginMapFile::makeFileName (const QString &filename) const {
 	return QDir::cleanPath (QDir (basedir).filePath (filename));
 }
 
@@ -46,6 +47,15 @@ QString RKPluginMapFile::parseId (const QDomElement& e, XMLHelper &xml) {
 	return (xml.getStringAttribute (e, "namespace", "rkward", DL_WARNING) + "::" + xml.getStringAttribute (e, "id", QString (), DL_INFO));
 }
 
+RKComponentAboutData RKPluginMapFile::getAboutData () {
+	RK_TRACE (PLUGIN);
+
+	if (about) return *about;
+	XMLHelper xml (filename);
+	QDomElement element = xml.openXMLFile (DL_ERROR);
+	about = new RKComponentAboutData (xml.getChildElement (element, "about", DL_INFO), xml);	// might be empty, but not null
+	return *about;
+}
 
 RKComponentGUIXML::RKComponentGUIXML () {
 	RK_TRACE (PLUGIN);
@@ -248,8 +258,8 @@ void RKComponentMap::clearAll () {
 	}
 	components.clear ();
 
-	for (PluginMapFileMap::const_iterator it = pluginmapfiles.constBegin (); it != pluginmapfiles.constEnd (); ++it) {
-		delete (it.value ());
+	for (int i = 0; i < pluginmapfiles.size (); ++i) {
+		delete (pluginmapfiles[i]);
 	}
 	pluginmapfiles.clear ();
 	component_attributes.clear ();
@@ -290,8 +300,29 @@ RKComponentHandle* RKComponentMap::getComponentHandle (const QString &id) {
 RKComponentHandle* RKComponentMap::getComponentHandleLocal (const QString &id) {
 	RK_TRACE (PLUGIN);
 
-	if (components.contains (id)) return (components[id]);
-	return 0;
+	QList<RKComponentHandle*> candidates = components.values (id);
+	if (candidates.isEmpty ()) return 0;
+	if (candidates.length () == 1) return candidates.first ();
+
+	RK_DEBUG (PLUGIN, DL_INFO, "Looking for latest version of component %s, among %d candidates", qPrintable (id), candidates.size ());
+	RKComponentHandle* candidate = candidates.first ();
+	QString sufa;
+	quint32 vera = RKSessionVars::parseVersionString (candidate->getAboutData ().version, &sufa);
+	for (int i = 1; i < candidates.size (); ++i) {
+		QString sufb;
+		quint32 verb = RKSessionVars::parseVersionString (candidates[i]->getAboutData ().version, &sufb);
+		if ((verb > vera) || ((verb == vera) && (sufb > sufa))) {
+			candidate = candidates[i];
+			vera = verb;
+			sufa = sufb;
+		}
+	}
+	// purge inferior components to avoid future version lookups
+	RK_DEBUG (PLUGIN, DL_INFO, "Latest version is '%s'. Forgetting about the others.", qPrintable (candidate->getFilename ()));
+	components.remove (id);
+	components.insert (id, candidate);
+
+	return candidate;
 }
 
 //static
@@ -304,14 +335,18 @@ QString RKComponentMap::getComponentId (RKComponentHandle* by_component) {
 QString RKComponentMap::getComponentIdLocal (RKComponentHandle* component) {
 	RK_TRACE (PLUGIN);
 
-	for (ComponentMap::iterator it = components.begin (); it != components.end (); ++it) {
-		if (it.value () == component) {
-			return it.key ();
-		}
-	}
+	QString component_found = components.key (component, QString ());
+	RK_ASSERT (!component_found.isNull ());
+	return (component_found);
+}
 
-	RK_ASSERT (false);
-	return (QString ());
+bool RKComponentMap::isPluginMapLoaded (const QString& abs_filename) const {
+	RK_TRACE (PLUGIN);
+
+	for (int i = 0; i < pluginmapfiles.size (); ++i) {
+		if (pluginmapfiles[i]->filename == abs_filename) return true;
+	}
+	return false;
 }
 
 //static
@@ -414,7 +449,7 @@ RKPluginMapParseResult RKComponentMap::addPluginMap (const QString& plugin_map_f
 	RKPluginMapParseResult ret;
 
 	QString plugin_map_file_abs = QFileInfo (plugin_map_file).absoluteFilePath ();
-	if (pluginmapfiles.contains (plugin_map_file_abs)) {
+	if (isPluginMapLoaded (plugin_map_file_abs)) {
 		RK_DEBUG (PLUGIN, DL_INFO, "Plugin map file '%s' already loaded", plugin_map_file.toLatin1().data ());
 		return ret;
 	}
@@ -432,9 +467,9 @@ RKPluginMapParseResult RKComponentMap::addPluginMap (const QString& plugin_map_f
 	QString prefix = QFileInfo (plugin_map_file_abs).absolutePath() + '/' + xml.getStringAttribute (document_element, "base_prefix", QString::null, DL_INFO);
 	QString cnamespace = xml.getStringAttribute (document_element, "namespace", "rkward", DL_INFO) + "::";
 
-	RKPluginMapFile *pluginmap_file_desc = new RKPluginMapFile (prefix, xml.messageCatalog ());
+	RKPluginMapFile* pluginmap_file_desc = new RKPluginMapFile (QFileInfo (plugin_map_file).absoluteFilePath (), prefix, xml.messageCatalog ());
 	pluginmap_file_desc->id = RKPluginMapFile::parseId (document_element, xml);
-	pluginmapfiles.insert (QFileInfo (plugin_map_file).absoluteFilePath (), pluginmap_file_desc);
+	pluginmapfiles.append (pluginmap_file_desc);
 
 	// step 0: check dependencies, parse about, and initialize
 	QDomElement dependencies = xml.getChildElement (document_element, "dependencies", DL_INFO);
@@ -461,9 +496,9 @@ RKPluginMapParseResult RKComponentMap::addPluginMap (const QString& plugin_map_f
 			QString map_id = xml.getStringAttribute (*it, "map", QString (), DL_ERROR);
 			// Try to locate the map among the already loaded files, first
 			QString file;
-			for (PluginMapFileMap::const_iterator pmit = pluginmapfiles.constBegin (); pmit != pluginmapfiles.constEnd (); ++pmit) {
-				if (pmit.value ()->id == map_id) {
-					file = pmit.key ();
+			for (int i = 0; i < pluginmapfiles.size (); ++i) {
+				if (pluginmapfiles[i]->id == map_id) {
+					file = pluginmapfiles[i]->filename;
 					break;
 				}
 			}
@@ -506,9 +541,13 @@ RKPluginMapParseResult RKComponentMap::addPluginMap (const QString& plugin_map_f
 		int type = xml.getMultiChoiceAttribute ((*it), "type", "standard", 0, DL_WARNING);
 		QString label = xml.i18nStringAttribute ((*it), "label", i18n ("(no label)"), DL_WARNING);
 
+		if (local_components.contains (id)) {
+			ret.addAndPrintError (DL_WARNING, i18n ("Duplicate declaration of component id \"%1\" within pluginmap file \"%2\".", id, plugin_map_file_abs));
+		}
 		if (components.contains (id)) {
-			ret.addAndPrintError (DL_WARNING, i18n ("RKComponentMap already contains a component with id \"%1\". Ignoring second entry.", id));
-		} else if (!QFileInfo (pluginmap_file_desc->makeFileName (filename)).isReadable ()) {
+			RK_DEBUG (PLUGIN, DL_INFO, "RKComponentMap already contains a component with id \"%1\". Highest version will be picked at runtime.", qPrintable (id));
+		}
+		if (!QFileInfo (pluginmap_file_desc->makeFileName (filename)).isReadable ()) {
 			ret.addAndPrintError (DL_ERROR, i18n ("Specified file '%1' for component id \"%2\" does not exist or is not readable. Ignoring.", filename, id));
 		} else {
 			// create and initialize component handle
@@ -647,10 +686,29 @@ QList <RKComponentDependency> RKComponentHandle::getDependencies () {
 	return (ret + (*it));
 }
 
-QString RKComponentHandle::getPluginmapFilename () {
+QString RKComponentHandle::getPluginmapFilename () const {
 	RK_TRACE (PLUGIN);
 
-	return RKComponentMap::getMap ()->pluginmapfiles.key (plugin_map);
+	if (!plugin_map) {
+		RK_ASSERT (plugin_map);
+		return QString ();
+	}
+	return plugin_map->getFileName ();
+}
+
+RKComponentAboutData RKComponentHandle::getAboutData () {
+	RK_TRACE (PLUGIN);
+
+	// NOTE: In order to determine the message catalog to use, we have to open the pluginmap file...
+	XMLHelper pluginmap_xml (getPluginmapFilename ());
+	QDomElement pluginmap_doc = pluginmap_xml.openXMLFile (DL_ERROR);
+
+	XMLHelper component_xml (getFilename (), pluginmap_xml.messageCatalog ());
+	QDomElement component_doc = component_xml.openXMLFile (DL_ERROR);
+	QDomElement about = component_xml.getChildElement (component_doc, "about", DL_INFO);
+	if (!about.isNull ()) return RKComponentAboutData (about, component_xml);
+
+	return (plugin_map->getAboutData ());
 }
 
 ///########################### END RKComponentHandle ###############################

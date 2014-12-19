@@ -27,20 +27,25 @@ class XMLHelper;
 /** very simple helper class to keep track of .pluginmap files */
 class RKPluginMapFile {
 public:
-	RKPluginMapFile (const QString &basedir, const RKMessageCatalog *_catalog) { RKPluginMapFile::basedir = basedir; catalog = _catalog; };
-	~RKPluginMapFile () {};
+	RKPluginMapFile (const QString &filename, const QString &basedir, const RKMessageCatalog *_catalog) { RKPluginMapFile::filename = filename; RKPluginMapFile::basedir = basedir; catalog = _catalog; about = 0; };
+	~RKPluginMapFile () { delete about; };
 
-	QString getBaseDir () { return basedir; };
-	QString makeFileName (const QString &filename);
-	QList<RKComponentDependency> getDependencies () { return dependencies; };
+	QString getBaseDir () const { return basedir; };
+	QString getFileName () const { return filename; };
+	QString makeFileName (const QString &filename) const;
+	QList<RKComponentDependency> getDependencies () const { return dependencies; };
 	static QString parseId (const QDomElement &e, XMLHelper &xml);
 	const RKMessageCatalog *messageCatalog () const { return catalog; };
+	// Get the about data for this pluginmap.
+	RKComponentAboutData getAboutData ();
 private:
 friend class RKComponentMap;
 	QString basedir;
+	QString filename;
 	QString id;
 	QList<RKComponentDependency> dependencies;
 	const RKMessageCatalog *catalog;
+	RKComponentAboutData *about;
 };
 
 /** enum of different types of RKComponent */
@@ -72,7 +77,7 @@ public:
 	QString getLabel () { return label; };
 	RKComponentType getType () { return type; };
 	bool isPlugin ();
-	QString getPluginmapFilename ();
+	QString getPluginmapFilename () const;
 
 	RKStandardComponent *invoke (RKComponent *parent_component, QWidget *parent_widget);
 
@@ -88,6 +93,9 @@ public:
 /** Returns whether this component is accessible from the menu, somewhere (else it might be in a context) */
 	bool isAccessible () const { return is_accessible; };
 	const RKMessageCatalog *messageCatalog () const { return plugin_map->messageCatalog (); };
+/** Returns the about data for this component (likely that of the containing pluginmap). Note that in contrast to RKPluginMapFile::getAboutData (), the parsed
+ *  about data is not cached, as access to this data should be infrequent. */
+	RKComponentAboutData getAboutData ();
 protected:
 /** The plugin map where this component was declared */
 	RKPluginMapFile *plugin_map;
@@ -99,7 +107,7 @@ private:
 	bool is_accessible;
 };
 
-#include <qmap.h>
+#include <QMultiMap>
 #include <QDomDocument>
 
 #include <kxmlguiclient.h>
@@ -207,13 +215,13 @@ public:
 	static bool invokeComponent (const QString &component_id, const QStringList &serialized_settings, ComponentInvocationMode submit_mode = ManualSubmit, QString *message=0, RCommandChain *in_chain = 0);
 /** @returns a list of all currently registered component ids */
 	QStringList allComponentIds () { return components.keys(); };
-	bool isPluginMapLoaded (const QString& abs_filename) { return pluginmapfiles.contains (abs_filename); };
+	bool isPluginMapLoaded (const QString& abs_filename) const;
 public slots:
 /** Slot called, when a menu-item for a component is selected. Responsible for creating the GUI. */
 	void activateComponent ();
 private:
 /** typedef for easy reference to iterator */
-	typedef QMap<QString, RKComponentHandle*> ComponentMap;
+	typedef QMultiMap<QString, RKComponentHandle*> ComponentMap;
 /** the actual map of components */
 	ComponentMap components;
 
@@ -224,8 +232,7 @@ private:
 	typedef QMap<QString, RKContextMap*> RKComponentContextMap;
 	RKComponentContextMap contexts;
 
-	typedef QMap<QString, RKPluginMapFile*> PluginMapFileMap;
-	PluginMapFileMap pluginmapfiles;
+	QList<RKPluginMapFile*> pluginmapfiles;
 
 	static RKComponentMap *component_map;
 friend class RKComponentHandle;

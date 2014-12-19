@@ -1,3 +1,4 @@
+- Allow to override plugins from a different pluginmap (the plugin with the highest specified version is used)
 - Fixed: Error when using fix() or trace(...edit=TRUE) with default settings on some systems
 - When the RKWard installation has moved on disk, try to adjust stored .pluginmaps paths, accordingly
   - TODO: Actually test this on Windows

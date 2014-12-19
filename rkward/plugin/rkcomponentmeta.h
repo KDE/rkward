@@ -52,6 +52,7 @@ struct RKComponentAuthor {
 
 class RKComponentAboutData {
 public:
+	RKComponentAboutData () { valid = false; };
 	RKComponentAboutData (const QDomElement &e, XMLHelper &xml);
 	~RKComponentAboutData ();
 	QString toHtml () const;
@@ -67,6 +68,7 @@ public:
 	QList<RKComponentAuthor> authors;
 	QString translator_names;
 	QString translator_emails;
+	bool valid;
 };
 
 #endif

@@ -36,6 +36,7 @@ RKComponentAboutData::RKComponentAboutData (const QDomElement& e, XMLHelper &xml
 	RK_TRACE (PLUGIN);
 	if (e.isNull ()) return;
 
+	valid = true;
 	name = xml.i18nStringAttribute (e, "name", QString (), DL_INFO);
 	version = xml.getStringAttribute (e, "version", QString (), DL_INFO);
 	releasedate = xml.getStringAttribute (e, "releasedate", QString (), DL_INFO);

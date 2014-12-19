@@ -645,18 +645,13 @@ bool RKHTMLWindow::renderRKHelp (const KUrl &url) {
 	}
 
 	// "about" section
+	RKComponentAboutData about;
 	if (for_component) {
-		element = component_xml.getChildElement (component_doc_element, "about", DL_INFO);
-		if (element.isNull ()) {
-			XMLHelper pluginmap_helper (chandle->getPluginmapFilename (), chandle->messageCatalog ());
-			element = pluginmap_helper.openXMLFile (DL_ERROR);
-			element = pluginmap_helper.getChildElement (element, "about", DL_INFO);
-		}
+		about = chandle->getAboutData ();
 	} else {
-		element = help_xml.getChildElement (help_doc_element, "about", DL_INFO);
+		about = RKComponentAboutData (help_xml.getChildElement (help_doc_element, "about", DL_INFO), help_xml);
 	}
-	if (!element.isNull ()) {
-		RKComponentAboutData about (element, for_component ? component_xml : help_xml);
+	if (about.valid) {
 		writeHTML (startSection ("about", i18n ("About"), QString (), &anchors, &anchornames));
 		writeHTML (about.toHtml ());
 	}
