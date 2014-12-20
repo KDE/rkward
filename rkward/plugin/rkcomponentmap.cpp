@@ -71,34 +71,69 @@ void RKComponentGUIXML::clearGUIDescription () {
 	RK_TRACE (PLUGIN);
 
 	gui_xml.setContent (QString ("<!DOCTYPE kpartgui>\n<kpartgui name=\"rkwardcomponents\" version=\"063\">\n<MenuBar>\n\n</MenuBar>\n</kpartgui>"));
-	toplevel_menu.subentries.clear ();
-	toplevel_menu.type = MenuEntry::Menu;
+	toplevel_menu.clear ();
 }
 
-void RKComponentGUIXML::menuItemsToXml (const QList<RKComponentGUIXML::MenuEntry> &entries, QDomElement &xml) {
-	// ok, we could really do simply text-pasting, instead of using QDom in this function, but I'm afraid of not getting all character escapes right.
-	for (int i = 0; i < entries.size (); ++i) {
-		const RKComponentGUIXML::MenuEntry &entry = entries[i];
-		if (entry.type == RKComponentGUIXML::MenuEntry::Group) {
-			if (entry.label == "-") xml.appendChild (gui_xml.createElement ("Separator"));
-			menuItemsToXml (entry.subentries, xml);
-			if (entry.label == "-") xml.appendChild (gui_xml.createElement ("Separator"));
-		} else if (entry.type == RKComponentGUIXML::MenuEntry::Menu) {
-			if (entry.subentries.isEmpty ()) {
-				continue;	// just skip over empty menus
+bool compareMenuEntries (const RKComponentGUIXML::Entry *a, const RKComponentGUIXML::Entry *b) {
+	return (QString::localeAwareCompare (a->label, b->label) < 0);
+}
+
+void RKComponentGUIXML::resolveComponentLabelsAndSortMenu (Menu *menu) {
+	RK_TRACE (PLUGIN);
+
+	for (int i = 0; i < menu->groups.size (); ++i) {
+		Group *group = menu->groups[i];
+		for (int j = 0; j < group->entries.size (); ++j) {
+			Entry *entry = group->entries[j];
+			if (!entry->is_menu) {
+				RKComponentHandle* handle = RKComponentMap::getComponentHandle (entry->id);
+				if ((!handle) || (!handle->isPlugin ())) {
+					RK_DEBUG (PLUGIN, DL_ERROR, "No such component found while creating menu-entries or component is not a standalone plugin: \"%s\". No entry created.", qPrintable (entry->id));
+					delete (group->entries.takeAt (j));
+					--j;
+					continue;
+				} else {
+					// The reason that handling of label is delayed to this point is that if a plugin is overridden, we want to use the label specified for the effective plugin (which might have changed WRT the overridden plugin, too).
+					entry->label = handle->getLabel ();
+					addedEntry (entry->id, handle);
+				}
+			} else {
+				resolveComponentLabelsAndSortMenu (static_cast<Menu*> (entry));
 			}
-			QDomElement submenu = gui_xml.createElement ("Menu");
-			submenu.setAttribute ("name", entry.id);
-			QDomElement text = gui_xml.createElement ("text");
-			text.appendChild (gui_xml.createTextNode (entry.label));
-			submenu.appendChild (text);
-			menuItemsToXml (entry.subentries, submenu);
-			xml.appendChild (submenu);
-		} else {
-			QDomElement action = gui_xml.createElement ("Action");
-			action.setAttribute ("name", entry.id);
-			xml.appendChild (action);
 		}
+		qSort (group->entries.begin (), group->entries.end (), compareMenuEntries);
+	}
+}
+
+void RKComponentGUIXML::menuItemsToXml (const RKComponentGUIXML::Menu *menu, QDomElement &xml) {
+	RK_TRACE (PLUGIN);
+
+	// ok, we could really do simply text-pasting, instead of using QDom in this function, but I'm afraid of not getting all character escapes right.
+	for (int i = 0; i < menu->groups.size (); ++i) {
+		const RKComponentGUIXML::Group *group = menu->groups[i];
+		if (group->separated) xml.appendChild (gui_xml.createElement ("Separator"));
+		for (int j = 0; j < group->entries.size (); ++j) {
+			const RKComponentGUIXML::Entry *entry = group->entries[j];
+			if (entry->is_menu) {
+				const RKComponentGUIXML::Menu *submenu = static_cast<const RKComponentGUIXML::Menu*> (entry);
+				if (submenu->groups.isEmpty ()) {
+					continue;	// just skip over empty menus
+				}
+
+				QDomElement elem = gui_xml.createElement ("Menu");
+				elem.setAttribute ("name", submenu->id);
+				QDomElement text = gui_xml.createElement ("text");
+				text.appendChild (gui_xml.createTextNode (submenu->label));
+				elem.appendChild (text);
+				menuItemsToXml (submenu, elem);
+				xml.appendChild (elem);
+			} else {
+				QDomElement action = gui_xml.createElement ("Action");
+				action.setAttribute ("name", entry->id);
+				xml.appendChild (action);
+			}
+		}
+		if (group->separated) xml.appendChild (gui_xml.createElement ("Separator"));
 	}
 }
 
@@ -112,65 +147,106 @@ void RKComponentGUIXML::finalize () {
 	RK_TRACE (PLUGIN);
 
 	QDomElement xmlgui_menubar_element = gui_xml.documentElement ().firstChildElement ("MenuBar");
-	menuItemsToXml (toplevel_menu.subentries, xmlgui_menubar_element);
+	resolveComponentLabelsAndSortMenu (&toplevel_menu);
+	menuItemsToXml (&toplevel_menu, xmlgui_menubar_element);
 }
 
-void insertEntry (RKComponentGUIXML::MenuEntry *parent, const RKComponentGUIXML::MenuEntry &entry) {
-	RK_ASSERT (parent && (parent->type == RKComponentGUIXML::MenuEntry::Menu));
+RKComponentGUIXML::Group::~Group () {
+	for (int i = 0; i < entries.size (); ++i) {
+		delete (entries[i]);
+	}
+}
 
+void RKComponentGUIXML::Menu::clear () {
+	for (int i = 0; i < groups.size (); ++i) {
+		delete (groups[i]);
+	}
+	groups.clear ();
+}
+
+int findOrCreateGroup (RKComponentGUIXML::Menu *parent, const QString group) {
 	// try to find group
-	QList<RKComponentGUIXML::MenuEntry> *list = &(parent->subentries);
-	for (int i = 0; i < list->size (); ++i) {
-		RKComponentGUIXML::MenuEntry &g = (*list)[i];
-		if (g.id == entry.group) {
-			if (entry.type == RKComponentGUIXML::MenuEntry::Group) {
-				list->insert (++i, entry);
-			} else {
-				QList<RKComponentGUIXML::MenuEntry> *group_list = &(g.subentries);
-				for (int j = 0; j < group_list->size (); ++j) {
-					if (QString::localeAwareCompare (group_list->at (j).label, entry.label) > 0) {
-						group_list->insert (j, entry);
-						return;
-					}
-				}
-				group_list->append (entry);
+	QList<RKComponentGUIXML::Group*> &list = parent->groups;
+	for (int i = 0; i < list.size (); ++i) {
+		if (list[i]->id == group) {
+			return i;
+		}
+	}
+
+	RK_TRACE (PLUGIN);
+
+	RKComponentGUIXML::Group *new_group = new RKComponentGUIXML::Group ();
+	new_group->id = group;
+	if (group == QLatin1String ("top")) {
+		list.insert (0, new_group);
+		return 0;
+	} else if (group == QLatin1String ("bottom")) {
+		list.append (new_group);
+		return (list.size () - 1);
+	} else {
+		if (list.isEmpty () || list.last ()->id != QLatin1String ("bottom")) {	// no "bottom" is defined, yet
+			list.append (new_group);
+			return (list.size () - 1);
+		} else {	// a bottom group already exists, add new group _above_ that
+			list.insert (list.size () - 1, new_group);
+			return (list.size () - 2);
+		}
+	}
+}
+
+void insertGroup (RKComponentGUIXML::Menu *parent, RKComponentGUIXML::Group *group, const QString after_group) {
+	RK_TRACE (PLUGIN);
+	RK_ASSERT (parent);
+
+	// does the group already exist?
+	QList<RKComponentGUIXML::Group*> &groups = parent->groups;
+	for (int i = 0; i < groups.size (); ++i) {
+		if (groups[i]->id == group->id) {
+			if (group->separated) {
+				// if group was defined, implicitly, before, it will be lacking a separator
+				groups[i]->separated = true;
 			}
+			delete group;    // TODO: well, we could have avoided creating it, in the first place
 			return;
 		}
 	}
 
-	// group not found: Declare it, implicitly, and try again.
-	RKComponentGUIXML::MenuEntry new_group;
-	new_group.type = RKComponentGUIXML::MenuEntry::Group;
-	new_group.id = entry.group;
-	if (entry.group == QLatin1String ("top")) {
-		list->insert (0, new_group);
-	} else if (entry.group == QLatin1String ("bottom")) {
-		list->append (new_group);
-	} else {
-		if (list->isEmpty () || list->last ().group != QLatin1String ("bottom")) {
-			list->append (new_group);
-		} else {
-			list->insert (list->size () - 1, new_group);
-		}
+	int pos = findOrCreateGroup (parent, after_group);
+	if (after_group != group->id) {
+		groups.insert (++pos, group);
+	} else if (group->separated) {
+		groups[pos]->separated = true;
+		delete group;    // TODO: See above
 	}
-	insertEntry (parent, entry);
 }
 
-RKComponentGUIXML::MenuEntry *findMenu (RKComponentGUIXML::MenuEntry *parent, const QString id) {
-	RK_ASSERT (parent && parent->type == RKComponentGUIXML::MenuEntry::Menu);
-	QList<RKComponentGUIXML::MenuEntry> *list = &(parent->subentries);
-	for (int i = 0; i < list->size (); ++i) {
-		QList<RKComponentGUIXML::MenuEntry> *group_list = &((*list)[i].subentries);
-		for (int j = 0; j < group_list->size (); ++j) {
-			RKComponentGUIXML::MenuEntry *g = &((*group_list)[j]);
-			if (g->id == id) return g;
+void insertEntry (RKComponentGUIXML::Menu *parent, RKComponentGUIXML::Entry *entry, const QString in_group) {
+	RK_TRACE (PLUGIN);
+	RK_ASSERT (parent);
+
+	int pos = findOrCreateGroup (parent, in_group);
+	parent->groups[pos]->entries.append (entry);
+	if (!entry->is_menu) {
+		parent->components.insert (entry->id);
+	}
+}
+
+RKComponentGUIXML::Menu *findMenu (RKComponentGUIXML::Menu *parent, const QString id) {
+	RK_TRACE (PLUGIN);
+
+	RK_ASSERT (parent);
+	QList<RKComponentGUIXML::Group*> list = parent->groups;
+	for (int i = 0; i < list.size (); ++i) {
+		QList<RKComponentGUIXML::Entry*> group_list = list[i]->entries;
+		for (int j = 0; j < group_list.size (); ++j) {
+			RKComponentGUIXML::Entry *e = group_list[j];
+			if (e->is_menu && (e->id == id)) return static_cast<RKComponentGUIXML::Menu*> (e);
 		}
 	}
 	return 0;
 }
 
-int RKComponentGUIXML::addEntries (RKComponentGUIXML::MenuEntry *menu, XMLHelper &xml, const QDomElement description, const QString& cnamespace) {
+int RKComponentGUIXML::addEntries (RKComponentGUIXML::Menu *menu, XMLHelper &xml, const QDomElement description, const QString& cnamespace) {
 	RK_TRACE (PLUGIN);
 
 	int leaves = 0;
@@ -179,41 +255,33 @@ int RKComponentGUIXML::addEntries (RKComponentGUIXML::MenuEntry *menu, XMLHelper
 		const QString add_to = xml.getStringAttribute (list[i], "group", QString (), DL_INFO);
 		if (list[i].tagName () == "menu") {
 			QString sub_id = xml.getStringAttribute (list[i], "id", "none", DL_ERROR);
-			MenuEntry *found = findMenu (menu, sub_id);
+
+			Menu *found = findMenu (menu, sub_id);
 			if (found) {
 				leaves += addEntries (found, xml, list[i], cnamespace);
 			} else {
-				MenuEntry sub;
-				sub.id = sub_id;
-				sub.label = xml.i18nStringAttribute (list[i], "label", i18n ("(no label)"), DL_WARNING);
-				sub.group = add_to;
-				sub.type = MenuEntry::Menu;
-				leaves += addEntries (&sub, xml, list[i], cnamespace);
-				insertEntry (menu, sub);
+				Menu *sub = new Menu ();
+				sub->id = sub_id;
+				sub->label = xml.i18nStringAttribute (list[i], "label", i18n ("(no label)"), DL_WARNING);
+				leaves += addEntries (sub, xml, list[i], cnamespace);
+				insertEntry (menu, sub, add_to);
 			}
 		} else if (list[i].tagName () == "entry") {
 			QString id = cnamespace + xml.getStringAttribute (list[i], "component", "#invalid#", DL_ERROR);
-
-			RKComponentHandle* handle = RKComponentMap::getComponentHandle (id);
-			if ((!handle) || (!handle->isPlugin ())) {
-				RK_DEBUG (PLUGIN, DL_ERROR, "No such component found while creating menu-entries or component is not a standalone plugin: \"%s\". No entry created.", id.toLatin1 ().data ());
-			} else {
-				MenuEntry plug;
-				plug.id = id;
-				plug.label = handle->getLabel ();
-				plug.group = add_to;
-				plug.type = MenuEntry::Entry;
-				insertEntry (menu, plug);
-				addedEntry (id, handle);
-				++leaves;
+			if (menu->components.contains (id)) {
+				RK_DEBUG (PLUGIN, DL_INFO, "Component %s is registered more than once in menu %s. Keeping one entry, only", qPrintable (id), qPrintable (menu->id));
+				continue;
 			}
+
+			Entry *plug = new Entry ();
+			plug->id = id;
+			insertEntry (menu, plug, add_to);
+			++leaves;
 		} else if (list[i].tagName () == "group") {
-			MenuEntry group;
-			group.id = xml.getStringAttribute (list[i], "id", "none", DL_ERROR);
-			group.group = add_to;
-			if (xml.getBoolAttribute (list[i], "separated", false, DL_INFO)) group.label = "-";
-			group.type = MenuEntry::Group;
-			insertEntry (menu, group);
+			Group *group = new Group ();
+			group->id = xml.getStringAttribute (list[i], "id", "none", DL_ERROR);
+			group->separated = xml.getBoolAttribute (list[i], "separated", false, DL_INFO);
+			insertGroup (menu, group, add_to);
 		} else {
 			RK_ASSERT (false);
 		}
@@ -321,6 +389,9 @@ RKComponentHandle* RKComponentMap::getComponentHandleLocal (const QString &id) {
 	RK_DEBUG (PLUGIN, DL_INFO, "Latest version is '%s'. Forgetting about the others.", qPrintable (candidate->getFilename ()));
 	components.remove (id);
 	components.insert (id, candidate);
+	for (int i = 0; i < candidates.size (); ++i) {
+		if (candidates[i] != candidate) delete candidates[i];
+	}
 
 	return candidate;
 }
@@ -630,13 +701,6 @@ RKComponentHandle::RKComponentHandle (RKPluginMapFile *pluginmap, const QString 
 
 RKComponentHandle::~RKComponentHandle () {
 	RK_TRACE (PLUGIN);
-}
-
-bool RKComponentHandle::isPlugin () {
-	if (type != Standard) {
-		return false;
-	}
-	return true;
 }
 
 RKStandardComponent *RKComponentHandle::invoke (RKComponent *parent_component, QWidget *parent_widget) {

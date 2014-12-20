@@ -19,6 +19,7 @@
 #define RKCOMPONENTMAP_H
 
 #include <qstring.h>
+#include <QSet>
 
 #include "rkcomponentmeta.h"
 
@@ -73,10 +74,10 @@ public:
 	RKComponentHandle (RKPluginMapFile *pluginmap, const QString &rel_filename, const QString &label, RKComponentType type);
 	virtual ~RKComponentHandle ();
 
-	QString getFilename () { return plugin_map->makeFileName (filename); };
-	QString getLabel () { return label; };
-	RKComponentType getType () { return type; };
-	bool isPlugin ();
+	QString getFilename () const { return plugin_map->makeFileName (filename); };
+	QString getLabel () const { return label; };
+	RKComponentType getType () const { return type; };
+	bool isPlugin () const { return (type == Standard); };
 	QString getPluginmapFilename () const;
 
 	RKStandardComponent *invoke (RKComponent *parent_component, QWidget *parent_widget);
@@ -123,16 +124,27 @@ This class represents the common functionality between RKComponentMap and RKCont
 */
 class RKComponentGUIXML {
 public:
-	struct MenuEntry {
+	class Entry {
+	public:
+		Entry () { is_menu = false; }
 		QString label;
 		QString id;
-		QString group;
-		enum {
-			Entry,
-			Menu,
-			Group
-		} type;
-		QList<MenuEntry> subentries;
+		bool is_menu;
+	};
+	class Group {
+	public:
+		~Group ();
+		QString id;
+		bool separated;
+		QList<Entry*> entries;
+	};
+	class Menu : public Entry {
+	public:
+		Menu () { is_menu = true; }
+		~Menu () { clear (); }
+		void clear ();
+		QList<Group*> groups;
+		QSet<QString> components;
 	} toplevel_menu;
 /** build XMLGUI menus
 @param hierarchy_description the QDomElement containing the description for the new menu hierarchy
@@ -152,8 +164,9 @@ protected:
 /** The generated XML GUI description in KDEs ui.rc format */
 	QDomDocument gui_xml;
 private:
-	int addEntries (RKComponentGUIXML::MenuEntry *menu, XMLHelper &xml, const QDomElement description, const QString& cnamespace);
-	void menuItemsToXml (const QList<RKComponentGUIXML::MenuEntry> &entries, QDomElement &xml);
+	int addEntries (RKComponentGUIXML::Menu *menu, XMLHelper &xml, const QDomElement description, const QString& cnamespace);
+	void menuItemsToXml (const RKComponentGUIXML::Menu *menu, QDomElement &xml);
+	void resolveComponentLabelsAndSortMenu (Menu *menu);
 };
 
 
