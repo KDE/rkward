@@ -164,12 +164,12 @@ void RKComponentGUIXML::Menu::clear () {
 	groups.clear ();
 }
 
-int findOrCreateGroup (RKComponentGUIXML::Menu *parent, const QString group) {
+RKComponentGUIXML::Group *findOrCreateGroup (RKComponentGUIXML::Menu *parent, const QString group) {
 	// try to find group
 	QList<RKComponentGUIXML::Group*> &list = parent->groups;
 	for (int i = 0; i < list.size (); ++i) {
 		if (list[i]->id == group) {
-			return i;
+			return list[i];
 		}
 	}
 
@@ -179,44 +179,42 @@ int findOrCreateGroup (RKComponentGUIXML::Menu *parent, const QString group) {
 	new_group->id = group;
 	if (group == QLatin1String ("top")) {
 		list.insert (0, new_group);
-		return 0;
 	} else if (group == QLatin1String ("bottom")) {
 		list.append (new_group);
-		return (list.size () - 1);
 	} else {
 		if (list.isEmpty () || list.last ()->id != QLatin1String ("bottom")) {	// no "bottom" is defined, yet
 			list.append (new_group);
-			return (list.size () - 1);
 		} else {	// a bottom group already exists, add new group _above_ that
 			list.insert (list.size () - 1, new_group);
-			return (list.size () - 2);
 		}
 	}
+	return new_group;
 }
 
-void insertGroup (RKComponentGUIXML::Menu *parent, RKComponentGUIXML::Group *group, const QString after_group) {
+void insertGroup (RKComponentGUIXML::Menu *parent, const QString &group_id, bool separated, const QString after_group) {
 	RK_TRACE (PLUGIN);
 	RK_ASSERT (parent);
 
 	// does the group already exist?
 	QList<RKComponentGUIXML::Group*> &groups = parent->groups;
 	for (int i = 0; i < groups.size (); ++i) {
-		if (groups[i]->id == group->id) {
-			if (group->separated) {
+		if (groups[i]->id == group_id) {
+			if (separated) {
 				// if group was defined, implicitly, before, it will be lacking a separator
 				groups[i]->separated = true;
 			}
-			delete group;    // TODO: well, we could have avoided creating it, in the first place
 			return;
 		}
 	}
 
-	int pos = findOrCreateGroup (parent, after_group);
-	if (after_group != group->id) {
-		groups.insert (++pos, group);
-	} else if (group->separated) {
-		groups[pos]->separated = true;
-		delete group;    // TODO: See above
+	RKComponentGUIXML::Group* found = findOrCreateGroup (parent, after_group);
+	if (after_group != group_id) {         // after_group == group_id may happen for implicitly created group "", for example
+		RKComponentGUIXML::Group* group = new RKComponentGUIXML::Group ();
+		group->id = group_id;
+		group->separated = separated;
+		groups.insert (parent->groups.indexOf (found) + 1, group);
+	} else if (separated) {
+		found->separated = true;
 	}
 }
 
@@ -224,8 +222,8 @@ void insertEntry (RKComponentGUIXML::Menu *parent, RKComponentGUIXML::Entry *ent
 	RK_TRACE (PLUGIN);
 	RK_ASSERT (parent);
 
-	int pos = findOrCreateGroup (parent, in_group);
-	parent->groups[pos]->entries.append (entry);
+	RKComponentGUIXML::Group *group = findOrCreateGroup (parent, in_group);
+	group->entries.append (entry);
 	if (!entry->is_menu) {
 		parent->components.insert (entry->id);
 	}
@@ -278,10 +276,7 @@ int RKComponentGUIXML::addEntries (RKComponentGUIXML::Menu *menu, XMLHelper &xml
 			insertEntry (menu, plug, add_to);
 			++leaves;
 		} else if (list[i].tagName () == "group") {
-			Group *group = new Group ();
-			group->id = xml.getStringAttribute (list[i], "id", "none", DL_ERROR);
-			group->separated = xml.getBoolAttribute (list[i], "separated", false, DL_INFO);
-			insertGroup (menu, group, add_to);
+			insertGroup (menu, xml.getStringAttribute (list[i], "id", "none", DL_ERROR), xml.getBoolAttribute (list[i], "separated", false, DL_INFO), add_to);
 		} else {
 			RK_ASSERT (false);
 		}
