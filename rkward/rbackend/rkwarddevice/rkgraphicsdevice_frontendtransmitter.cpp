@@ -105,7 +105,7 @@ static QPen readSimplePen (QDataStream &instream) {
 	instream >> lwd >> lty;
 	if (!col.isValid () || (lty == -1L)) return QPen (Qt::NoPen);
 
-	lwd = qMax (1.0, lwd);	// minimum 1 px as in X11 device
+	lwd = qMax (qreal(1.0), lwd);	// minimum 1 px as in X11 device
 	QPen ret;
 	if (lty != 0) {	// solid
 		QVector<qreal> dashes;
