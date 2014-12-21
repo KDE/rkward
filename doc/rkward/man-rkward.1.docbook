@@ -49,7 +49,7 @@
 <refsect1>
 <title>Description</title>
 <para>&rkward; is the a &kde;-based GUI and IDE for the &R; scripting language for statistical computing.</para> 
-<para>For more information, please refer to <ulink url="http://rkward.sf.net/">the &rkward; website</ulink>, and the documentation provided inside &rkward;.</para>
+<para>For more information, please refer to <ulink url="http://rkward.kde.org/">the &rkward; website</ulink>, and the documentation provided inside &rkward;.</para>
 </refsect1>
 
 <refsect1>
@@ -112,7 +112,7 @@ rkward --debugger 'gdb --args'
 
 <refsect1>
 <title>Authors</title>
-<para>&rkward; was written by Thomas Friedrichsmeier and the &rkward; team. See <ulink url="http://rkward.sf.net/">the &rkward; website</ulink>.</para>
+<para>&rkward; was written by Thomas Friedrichsmeier and the &rkward; team. See <ulink url="http://rkward.kde.org/">the &rkward; website</ulink>.</para>
 </refsect1>
 
 </refentry>

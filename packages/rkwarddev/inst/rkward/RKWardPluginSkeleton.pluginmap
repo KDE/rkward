@@ -16,7 +16,7 @@
 		longinfo="GUI interface to create RKWard plugin skeletons"
 		version="0.06-5"
 		releasedate="2014-10-19"
-		url="http://rkward.sf.net"
+		url="http://rkward.kde.org"
 		license="GPL (&gt;= 3)"
 	>
 		<author 

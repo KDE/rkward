@@ -5,7 +5,7 @@ Maintainer: m.eik michalke <meik.michalke@hhu.de>
 Build-Depends-Indep: debhelper (>> 7.0.0), r-base-dev (>= 3.0.0), cdbs, r-cran-ximple (>= 0.03-21) | r-other-reaktanz-ximple (>=
  0.03-21) | r-other-rkward-ximple (>= 0.03-21), rkward (>= 0.5.7)
 Standards-Version: 3.9.3.1
-Homepage: http://rkward.sourceforge.net
+Homepage: http://rkward.kde.org
 
 Package: r-other-rkward-rkwarddev
 Architecture: all
@@ -13,5 +13,5 @@ Section: math
 Depends: r-base (>= 3.0.0), r-cran-ximple (>= 0.03-21) | r-other-reaktanz-ximple (>= 0.03-21) | r-other-rkward-ximple (>= 0.03-21),
  rkward (>= 0.5.7)
 Description: GNU R package: Provides functions to create plugin skeletons and XML structures for RKWard.
-Homepage: http://rkward.sourceforge.net
+Homepage: http://rkward.kde.org
 Suggests:

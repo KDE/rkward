@@ -162,7 +162,7 @@ QList <RKComponentDependency> RKComponentDependency::parseDependencies (const QD
 			dep.source_info = xml.getStringAttribute (e, "repository", QString (), DL_INFO);
 		} else if (dep_e.tagName () == "pluginmap") {
 			dep.type = RKComponentDependency::RKWardPluginmap;
-			dep.source_info = xml.getStringAttribute (e, "url", QString ("http://rkward.sf.net"), DL_WARNING);
+			dep.source_info = xml.getStringAttribute (e, "url", QString ("http://rkward.kde.org"), DL_WARNING);
 		} else {
 			RK_DEBUG (PLUGIN, DL_ERROR, "Tag <%s> is not allowed, here.", qPrintable (dep_e.tagName ()));
 			continue;

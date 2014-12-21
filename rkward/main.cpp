@@ -23,7 +23,7 @@
 **
 **	\section	website	Website
 **
-**	<A HREF="http://rkward.sourceforge.net">RKWard's project page</A>
+**	<A HREF="http://rkward.kde.org">RKWard's project page</A>
 **
 **	\section	description Description
 **
@@ -129,7 +129,7 @@ int main(int argc, char *argv[]) {
 	options.add ("reuse", ki18n ("Reuse a running RKWard instance (if available). If a running instance is reused, only the file arguments will be interpreted, all other options will be ignored."), 0);
 	options.add ("+[Files]", ki18n ("File or files to open, typically a workspace, or an R script file. When loading several things, you should specify the workspace, first."), 0);
 
-	KAboutData aboutData("rkward", QByteArray (), ki18n ("RKWard"), RKWARD_VERSION, ki18n ("Frontend to the R statistics language"), KAboutData::License_GPL, ki18n ("(c) 2002, 2004 - 2014"), KLocalizedString (), "http://rkward.sf.net", "rkward-devel@lists.sourceforge.net");
+	KAboutData aboutData("rkward", QByteArray (), ki18n ("RKWard"), RKWARD_VERSION, ki18n ("Frontend to the R statistics language"), KAboutData::License_GPL, ki18n ("(c) 2002, 2004 - 2014"), KLocalizedString (), "http://rkward.kde.org", "rkward-devel@lists.sourceforge.net");
 	aboutData.addAuthor (ki18n ("Thomas Friedrichsmeier"), ki18n ("Project leader / main developer"));
 	aboutData.addAuthor (ki18n ("Pierre Ecochard"), ki18n ("C++ developer between 2004 and 2007"));
 	aboutData.addAuthor (ki18n ("Prasenjit Kapat"), ki18n ("Many plugins, suggestions, plot history feature"));

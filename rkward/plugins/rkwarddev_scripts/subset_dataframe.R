@@ -35,7 +35,7 @@ about.info <- rk.XML.about(
 		person(given="Thomas", family="Friedrichsmeier",
 			email="tfry@users.sf.net", role=c("aut"))),
 	about=list(desc="RKWard GUI to define subsets of data objects",
-		version="0.02-1", url="http://rkward.sf.net")
+		version="0.02-1", url="http://rkward.kde.org")
 )
 
 ############

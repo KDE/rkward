@@ -67,7 +67,7 @@ local({
 		License="GPL (>= 2)",
 		Encoding="UTF-8",
 		LazyLoad="yes",
-		URL="http://rkward.sourceforge.net",
+		URL="http://rkward.kde.org",
 		stringsAsFactors=FALSE)
 
 	## here we go
@@ -78,5 +78,5 @@ local({
 		R.libs=install.path,
 		repo.root=local.repository,
 		cleanup=TRUE,
-		URL="http://rkward.sourceforge.net")
+		URL="http://rkward.kde.org")
 })

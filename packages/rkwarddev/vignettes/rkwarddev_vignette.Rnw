@@ -34,7 +34,7 @@ will definitely save you quite some amount of typing.
 It is important to understand that while  \texttt{rkwarddev} can help you to make designing new plugins
 much easier, you still need to know how the generated XML and JavaScript files work and interact. That is, if
 you didn't yet read the \textit{Introduction to Writing Plugins for
-RKWard},\footnote{\url{http://rkward.sourceforge.net/documents/devel/plugins/index.html}} please do so before
+RKWard},\footnote{\url{http://api.kde.org/doc/rkwardplugins}} please do so before
 you start working with this package. Once you're sure you understand how plugins in \texttt{RKWard} actually
 work, just come back here.
 
@@ -54,7 +54,7 @@ roughly be classified into their specific ''area`` of plugin development:
 
 In short, you should find a \texttt{rk.XML.*()} equivalent to every XML tag explained in the
 \textit{Introduction to Writing Plugins for
-RKWard},\footnote{\url{http://rkward.sourceforge.net/documents/devel/plugins/index.html}}
+RKWard},\footnote{\url{http://api.kde.org/doc/rkwardplugins}}
 e.\,g. \texttt{rk.XML.dropdown()} to generate a \texttt{<dropdown>} menu node. There are a few functions for
 JavaScript generation which fall out of this scheme. That is because firstly they should be intuitively to use
 just like their JavaScript equivalent (like \texttt{echo()}), and secondly they are likely to be used very often
@@ -99,7 +99,7 @@ how you use them will also be explained later on:
 
 
 \section{Writing a plugin}
-The previously mentioned \textit{Introduction to Writing Plugins for RKWard}\footnote{\url{http://rkward.sourceforge.net/documents/devel/plugins/index.html}}
+The previously mentioned \textit{Introduction to Writing Plugins for RKWard}\footnote{\url{http://api.kde.org/doc/rkwardplugins}}
 has a chapter on \texttt{rkwarddev} as well, which also includes a full example plugin already. This section will not so much repeat what you can learn there,
 but rather explain the basic steps to create a plugin ''the \texttt{rkwarddev} way`` in general. While doing that, we'll explore some of the alternative options
 you have when using different functions.

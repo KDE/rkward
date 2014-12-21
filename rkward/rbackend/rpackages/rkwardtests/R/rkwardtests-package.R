@@ -9,7 +9,7 @@
 #' Encoding: \tab UTF-8\cr
 #' License: \tab GPL (>= 2)\cr
 #' LazyLoad: \tab yes\cr
-#' URL: \tab http://rkward.sourceforge.net\cr
+#' URL: \tab http://rkward.kde.org\cr
 #' }
 #'
 #' A set of functions, classes and methods to test plugins that were written for RKWard.

@@ -763,7 +763,7 @@ In any section you may want to insert links to further information. You do this 
 
 &lt;link href="URL"&gt;link name&lt;/link&gt;
 
-Where URL could be an external link such as http://rkward.sourceforge.net .
+Where URL could be an external link such as http://rkward.kde.org .
 Several special URLs are supported in the help pages:
 
 &lt;link href="rkward://page/path/page_id"/&gt;
@@ -2136,7 +2136,7 @@ user (selection from a list of values shown next to this element) --&gt;
 <sect1 id="why_external_plugins">
 <title>Why external plugins?</title>
 	<para>
-		The number of packages to extend the functionality of &r; is immense already, and climbing. On one hand, we want to encourage you to write plugins for even the most specialised tasks you need solved. On the other hand, the average user should not get lost in huge menu trees full of unknown statistical terms. Therefore it seemed reasonable to keep the plugin handling in &rkward; quite modular as well. The &rkward; team maintains its own public package repository at <ulink url="http://rkward.sf.net/R">http://rkward.sf.net/R</ulink>, designated to host your external plugins.
+		The number of packages to extend the functionality of &r; is immense already, and climbing. On one hand, we want to encourage you to write plugins for even the most specialised tasks you need solved. On the other hand, the average user should not get lost in huge menu trees full of unknown statistical terms. Therefore it seemed reasonable to keep the plugin handling in &rkward; quite modular as well. The &rkward; team maintains its own public package repository at <ulink url="http://files.kde.org/rkward/R">http://files.kde.org/rkward/R</ulink>, designated to host your external plugins.
 	</para>
 	<para>
 		As a rule of thumb, plugins that seem to serve a widely used purpose (e.g. t-Tests) should become part of the core package, while those who serve a rather limited group of people with special interests should be provided as an optional package. For you as a plugin author it’s best practice to just start with an external plugin.
@@ -2256,13 +2256,13 @@ standards for each defined suite.
 	<title>Plugin development with the <application>rkwarddev</application> package</title>
 	<sect1 id="rkdev_overview"><title>Overview</title>
 		<para>Writing external plugins involves writing files in three languages (XML, JavaScript and R) and the creation of a standardized hierarchy of directories. To make this a lot easier for willing plugin developers, we're providing the <application>rkwarddev</application> package. It provides a number of simple &r; functions to create the XML code for all dialog elements like tabbooks, checkboxes, dropdownlists or filebrowsers, as well as functions to create JavaScript code and &rkward; help files to start with. The function <function>rk.plugin.skeleton()</function> creates the expected directory tree and all necessary files where they are supposed to be.</para>
-		<para>This package is not installed by default, but has to be installed manually from <ulink url="http://rkward.sourceforge.net/R/">&rkward;'s own repository</ulink>. You can either do that by using the GUI interface (<menuchoice><guimenu>Settings</guimenu><guimenuitem>Configure packages</guimenuitem></menuchoice>), or from any running &r; session:</para>
+		<para>This package is not installed by default, but has to be installed manually from <ulink url="http://files.kde.org/rkward/R/">&rkward;'s own repository</ulink>. You can either do that by using the GUI interface (<menuchoice><guimenu>Settings</guimenu><guimenuitem>Configure packages</guimenuitem></menuchoice>), or from any running &r; session:</para>
 		<programlisting>
-		install.packages("rkwarddev", repos="http://rkward.sf.net/R")
+		install.packages("rkwarddev", repos="http://files.kde.org/rkward/R")
 		library(rkwarddev)
 		</programlisting>
 		<para><application>rkwarddev</application> depends on another small package called <quote>XiMpLe</quote>, which is a very simple XML parser and generator and also present in the same repository.</para>
-		<para>The full <ulink url="http://rkward.sourceforge.net/R/pckg/rkwarddev/rkwarddev.pdf">documentation in PDF format</ulink> can also be found there. A more detailed introduction to working with the package can be found in the <ulink url="http://rkward.sourceforge.net/R/pckg/rkwarddev/rkwarddev_vignette.pdf">rkwarddev vignette</ulink>.</para>
+		<para>The full <ulink url="http://http://files.kde.org/rkward/R/pckg/rkwarddev/rkwarddev.pdf">documentation in PDF format</ulink> can also be found there. A more detailed introduction to working with the package can be found in the <ulink url="http://files.kde.org/rkward/R/pckg/rkwarddev/rkwarddev_vignette.pdf">rkwarddev vignette</ulink>.</para>
 	</sect1>
 
 	<sect1 id="rkdev_example"><title>Practical example</title>

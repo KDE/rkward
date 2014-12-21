@@ -13,7 +13,7 @@ Description: This package contains functions which are useful in combination
 License: GPL (>= 2)
 Encoding: UTF-8
 LazyLoad: yes
-URL: http://rkward.sourceforge.net
+URL: http://rkward.kde.org
 Authors@R: c(person(given="Thomas", family="Friedrichsmeier",
     email="thomas.friedrichsmeier@ruhr-uni-bochum.de", role=c("aut")),
     person(given="RKWard-devel", family="mailing list",

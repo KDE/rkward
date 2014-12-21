@@ -25,7 +25,7 @@ get information out of and into nodes, and write R objects back to XML code.
 It's not as powerful as the XML package and doesn't aim to be, but for simple XML handling
 it could be useful.  It was originally programmed for the R GUI and IDE RKWard,
       to make plugin
-development easier. You can install RKWard from http://rkward.sf.net.
+development easier. You can install RKWard from http://rkward.kde.org.
 }
 \author{
 Meik Michalke

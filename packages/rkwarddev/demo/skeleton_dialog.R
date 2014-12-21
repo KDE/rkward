@@ -16,7 +16,7 @@ about.info <- rk.XML.about(
   about=list(desc="GUI interface to create RKWard plugin skeletons",
     # the version number should be in line with rkwarddev
     # to reflect when the script code was changed
-    version="0.06-5", url="http://rkward.sf.net")
+    version="0.06-5", url="http://rkward.kde.org")
   )
 dependencies.info <- rk.XML.dependencies(dependencies=list(rkward.min="0.6.0"))
 

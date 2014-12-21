@@ -34,7 +34,7 @@ pckg.dscrptn <- data.frame(
             get information out of and into nodes, and write R objects back to XML code.
             It's not as powerful as the XML package and doesn't aim to be, but for simple XML handling
             it could be useful. It was originally programmed for the R GUI and IDE RKWard, to make plugin development easier.
-            You can install RKWard from http://rkward.sf.net.",
+            You can install RKWard from http://rkward.kde.org.",
     License="GPL (>= 3)",
     Encoding="UTF-8",
     LazyLoad="yes",

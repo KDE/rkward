@@ -14,7 +14,7 @@ Description: This package provides a simple XML tree parser/generator. It
     as the XML package and doesn't aim to be, but for simple XML handling it
     could be useful.  It was originally programmed for the R GUI and IDE
     RKWard, to make plugin development easier. You can install RKWard from
-    http://rkward.sf.net.
+    http://rkward.kde.org.
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyLoad: yes

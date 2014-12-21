@@ -13,7 +13,7 @@ Description: Provides functions to create plugin skeletons and XML
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyLoad: yes
-URL: http://rkward.sourceforge.net
+URL: http://rkward.kde.org
 Authors@R: c(person(given="m.eik", family="michalke",
     email="meik.michalke@hhu.de", role=c("aut", "cre")))
 Version: 0.06-6

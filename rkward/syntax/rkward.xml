@@ -7,7 +7,7 @@
 	
 	Kate   : http://kate.kde.org/
 	R      : http://www.r-project.org/
-	RKWard : http://rkward.sourceforge.net/
+	RKWard : http://rkward.kde.org/
 	-->
 <language version="2.07" kateversion="2.5" name="R interactive session" section="Scripts" extensions="" mimetype="" author="P. Ecochard" license="GPL">
 <highlighting>

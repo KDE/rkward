@@ -11,7 +11,7 @@ Description: A set of functions, classes and methods to test plugins that were
 License: GPL (>= 2)
 Encoding: UTF-8
 LazyLoad: yes
-URL: http://rkward.sourceforge.net
+URL: http://rkward.kde.org
 Authors@R: c(person(given="Thomas", family="Friedrichsmeier",
     email="thomas.friedrichsmeier@ruhr-uni-bochum.de", role=c("aut", "cre")),
     person(given="Meik", family="Michalke", email="meik.michalke@hhu.de",

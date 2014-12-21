@@ -3,12 +3,12 @@ bibentry("Manual",
     author="Thomas Friedrichsmeier",
     year="2014",
     note="(Version 0.6.3)",
-    url="http://rkward.sourceforge.net",
+    url="http://rkward.kde.org",
 
     textVersion =
     paste("Friedrichsmeier, T. (2014). ",
         "rkward: Provides functions related to the RKWard GUI (Version 0.6.3). ",
-        "Available from http://rkward.sourceforge.net",
+        "Available from http://rkward.kde.org",
         sep=""),
 
     mheader = "To cite rkward in publications use:")

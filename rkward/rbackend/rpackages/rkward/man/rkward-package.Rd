@@ -16,7 +16,7 @@ Depends: \tab R (>= 2.9.0),methods\cr
 Encoding: \tab UTF-8\cr
 License: \tab GPL (>= 2)\cr
 LazyLoad: \tab yes\cr
-URL: \tab http://rkward.sourceforge.net\cr
+URL: \tab http://rkward.kde.org\cr
 }
 
 This package contains functions which are useful in combination with the RKWard GUI. Many of these

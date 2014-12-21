@@ -110,7 +110,7 @@ Please at least include KDE, the KDE package it is in, the name
 Most documentation is available from inside RKWard itself by selecting Help->Help on RKWard from the Menu, NOT in this document!
 </para>
 <para>
-A useful guide to getting started with &kapp; is <ulink url="http://rkward.sourceforge.net/wiki/index.php?title=Getting_Started_Using_RKWard">Getting Started Section in the &kapp; wiki</ulink>.
+A useful guide to getting started with &kapp; is <ulink url="http://rkward.kde.org/User_Documentation">User Documentation Section in the &kapp; wiki</ulink>.
 </para>
 <para>
 Please go there for an introduction to &kapp;, and contact us, if you can help with creating user documentation.
@@ -122,7 +122,7 @@ Please go there for an introduction to &kapp;, and contact us, if you can help w
 <title>Developer's Guide to &kapp;</title>
 
 <para>
-&kapp; can be extended without the need to recompile using plugins. Extensive documentation on this should be included with &kapp; in docbook format, and is available in HTML format <ulink url="http://rkward.sourceforge.net/documents/devel/plugins/index.html">here</ulink>. (TODO: figure out, how to include this in the docs).
+&kapp; can be extended without the need to recompile using plugins. Extensive documentation on this should be included with &kapp; in docbook format, and is available in HTML format <ulink url="http://api.kde.org/doc/rkwardplugins">here</ulink>. (TODO: figure out, how to include this in the docs).
 </para>
 
 <!-- Use refentries to describe APIs.  Refentries are fairly complicated and you
