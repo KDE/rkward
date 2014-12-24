@@ -6,6 +6,7 @@
     <comment xml:lang="cs">Zdrojový soubor R</comment>
     <comment xml:lang="es">Archivo fuente de R</comment>
     <comment xml:lang="nl">R-bronbestand</comment>
+    <comment xml:lang="pl">Plik źródłowy R</comment>
     <comment xml:lang="pt">Ficheiro de código em R</comment>
     <comment xml:lang="pt_BR">Arquivo de código do R</comment>
     <comment xml:lang="sk">Zdrojový súbor R</comment>
@@ -23,6 +24,7 @@
     <comment xml:lang="cs">Soubor pracovní plochy/dat R</comment>
     <comment xml:lang="es">Archivo de datos o de espacio de trabajo de R</comment>
     <comment xml:lang="nl">R-gegevens/werkruimtebestand</comment>
+    <comment xml:lang="pl">Plik danych/przestrzeni roboczej R</comment>
     <comment xml:lang="pt">Ficheiro de dados/área de trabalho do R</comment>
     <comment xml:lang="pt_BR">Arquivo de dados/espaço de trabalho do R</comment>
     <comment xml:lang="sk">Súbor údajov/pracovnej plochy R</comment>
