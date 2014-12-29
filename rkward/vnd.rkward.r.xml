@@ -11,6 +11,7 @@
     <comment xml:lang="pt_BR">Arquivo de código do R</comment>
     <comment xml:lang="sk">Zdrojový súbor R</comment>
     <comment xml:lang="uk">файл коду R</comment>
+    <comment xml:lang="zh_CN">R 资源文件</comment>
     <acronym>R</acronym>
     <expanded-acronym>R programming language</expanded-acronym>
     <generic-icon name="text-x-generic"/>
@@ -29,6 +30,7 @@
     <comment xml:lang="pt_BR">Arquivo de dados/espaço de trabalho do R</comment>
     <comment xml:lang="sk">Súbor údajov/pracovnej plochy R</comment>
     <comment xml:lang="uk">файл даних/робочого простору R</comment>
+    <comment xml:lang="zh_CN">R 数据/工作空间文件</comment>
     <acronym>RData</acronym>
     <expanded-acronym>R data/workspace file</expanded-acronym>
     <generic-icon name="package-x-generic"/>
