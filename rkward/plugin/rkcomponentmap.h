@@ -37,7 +37,7 @@ public:
 	QList<RKComponentDependency> getDependencies () const { return dependencies; };
 	static QString parseId (const QDomElement &e, XMLHelper &xml);
 	const RKMessageCatalog *messageCatalog () const { return catalog; };
-	// Get the about data for this pluginmap.
+	/** Get the about data for this pluginmap. */
 	RKComponentAboutData getAboutData ();
 private:
 friend class RKComponentMap;

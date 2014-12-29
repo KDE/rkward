@@ -352,10 +352,7 @@ void RKSettingsModulePlugins::fixPluginMapLists () {
 		}
 
 		if (inf.id.isEmpty ()) {
-			XMLHelper xml (inf.filename);
-			QDomElement de = xml.openXMLFile (DL_WARNING);
-			inf.id = RKPluginMapFile::parseId (de, xml);
-			inf.priority = xml.getMultiChoiceAttribute (de, "priority", "hidden;low;medium;high", (int) PriorityMedium, DL_WARNING);
+			parsePluginMapBasics (inf.filename, &inf.id, &inf.priority);
 		}
 	}
 
@@ -370,6 +367,17 @@ void RKSettingsModulePlugins::fixPluginMapLists () {
 	if (!any_active_pluginmap && (default_pluginmap_index >= 0)) {
 		known_plugin_maps[default_pluginmap_index].active = true;
 	}
+}
+
+void RKSettingsModulePlugins::parsePluginMapBasics (const QString &filename, QString *id, int *priority) {
+	RK_TRACE (SETTINGS);
+	RK_ASSERT (id);
+	RK_ASSERT (priority);
+
+	XMLHelper xml (filename);
+	QDomElement de = xml.openXMLFile (DL_WARNING);
+	*id = RKPluginMapFile::parseId (de, xml);
+	*priority = xml.getMultiChoiceAttribute (de, "priority", "hidden;low;medium;high", (int) PriorityMedium, DL_WARNING);
 }
 
 QStringList RKSettingsModulePlugins::findPluginMapsRecursive (const QString &basedir) {
@@ -393,7 +401,7 @@ QStringList RKSettingsModulePlugins::findPluginMapsRecursive (const QString &bas
 	return ret;
 }
 
-RKSettingsModulePluginsModel::RKSettingsModulePluginsModel (RKSettingsModulePlugins* parent) : QAbstractTableModel (parent) {
+RKSettingsModulePluginsModel::RKSettingsModulePluginsModel (QObject* parent) : QAbstractTableModel (parent) {
 	RK_TRACE (SETTINGS);
 }
 
@@ -417,9 +425,10 @@ int RKSettingsModulePluginsModel::rowCount (const QModelIndex& parent) const {
 }
 
 #define COLUMN_CHECKED 0
-#define COLUMN_FILENAME 1
-#define COLUMN_STATUS 2
-#define COLUMN_COUNT 3
+#define COLUMN_TITLE 1
+#define COLUMN_ID 2
+#define COLUMN_STATUS 3
+#define COLUMN_COUNT 4
 
 int RKSettingsModulePluginsModel::columnCount (const QModelIndex& parent) const {
 	// RK_TRACE (SETTINGS);
@@ -444,6 +453,7 @@ QVariant RKSettingsModulePluginsModel::data (const QModelIndex& index, int role)
 		if (!meta.dependencies.isEmpty ()) {
 			desc.append ("<b>" + i18n ("Dependencies") + "</b>");
 			desc.append (RKComponentDependency::depsToHtml (meta.dependencies));
+			desc.append ("<p>" + inf.filename + "</p>");
 		}
 		return desc;
 	}
@@ -452,8 +462,15 @@ QVariant RKSettingsModulePluginsModel::data (const QModelIndex& index, int role)
 		if (role == Qt::CheckStateRole) {
 			return (inf.active ? Qt::Checked : Qt::Unchecked);
 		}
-	} else if (col == COLUMN_FILENAME) {
-		if (role == Qt::DisplayRole) return inf.filename;
+	} else if (col == COLUMN_ID) {
+		if (role == Qt::DisplayRole) {
+			return inf.id;
+		}
+	} else if (col == COLUMN_TITLE) {
+		if (role == Qt::DisplayRole) {
+			const PluginMapMetaInfo &meta = const_cast<RKSettingsModulePluginsModel*> (this)->getPluginMapMetaInfo (inf.filename);
+			return meta.about->name;
+		}
 	} else if (col == COLUMN_STATUS) {
 		if (role == Qt::DisplayRole) {
 			if (inf.broken_in_this_version) return i18n ("Broken");
@@ -481,7 +498,8 @@ QVariant RKSettingsModulePluginsModel::headerData (int section, Qt::Orientation 
 	// RK_TRACE (SETTINGS);
 	if ((role == Qt::DisplayRole) && (orientation == Qt::Horizontal)) {
 		if (section == COLUMN_CHECKED) return i18n ("Active");
-		if (section == COLUMN_FILENAME) return i18n ("Filename");
+		if (section == COLUMN_ID) return i18n ("ID");
+		if (section == COLUMN_TITLE) return i18n ("Title");
 		if (section == COLUMN_STATUS) return i18n ("Status");
 		RK_ASSERT (false);
 	}
@@ -523,6 +541,7 @@ void RKSettingsModulePluginsModel::insertNewStrings (int above_row) {
 	for (int i = files.size () - 1; i >= 0; --i) {
 		RKSettingsModulePlugins::PluginMapStoredInfo inf (files[i]);
 		inf.active = true;
+		RKSettingsModulePlugins::parsePluginMapBasics (files[i], &(inf.id), &(inf.priority));
 		plugin_maps.insert (above_row, inf);
 	}
 	endInsertRows ();

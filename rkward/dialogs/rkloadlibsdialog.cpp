@@ -72,9 +72,11 @@ RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool 
 
 	setButtonText (KDialog::User1, i18n ("Configure Repositories"));
 
+	addPage (new RKPluginMapSelectionWidget (this), i18n ("Manage Plugins"));
+
 	connect (this, SIGNAL (currentPageChanged(KPageWidgetItem*,KPageWidgetItem*)), this, SLOT (slotPageChanged()));
 	QTimer::singleShot (0, this, SLOT (slotPageChanged()));
-	num_child_widgets = 3;
+	num_child_widgets = 4;
 	accepted = false;
 
 	RKGlobals::rInterface ()->issueCommand (".libPaths ()", RCommand::App | RCommand::GetStringVector, QString (), this, GET_CURRENT_LIBLOCS_COMMAND, chain);
@@ -1193,6 +1195,45 @@ void RKRPackageInstallationStatusSortFilterModel::setRKWardOnly (bool only) {
 	bool old_only = rkward_only;
 	rkward_only = only;
 	if (rkward_only != old_only) invalidate ();
+}
+
+/////////////////////////
+#include "../misc/multistringselector.h"
+RKPluginMapSelectionWidget::RKPluginMapSelectionWidget (RKLoadLibsDialog* dialog) : QWidget (dialog) {
+	RK_TRACE (DIALOGS);
+	model = 0;
+
+	QVBoxLayout *vbox = new QVBoxLayout (this);
+	vbox->setContentsMargins (0, 0, 0, 0);
+	vbox->addWidget (new QLabel (i18n ("Installed plugin groups (.pluginmap files)"), this));
+	selector = new RKMultiStringSelectorV2 (QString (), this);
+	vbox->addWidget (selector);
+}
+
+RKPluginMapSelectionWidget::~RKPluginMapSelectionWidget () {
+	RK_TRACE (DIALOGS);
+}
+
+void RKPluginMapSelectionWidget::activated () {
+	RK_TRACE (DIALOGS);
+
+	if (!model) {
+		model = new RKSettingsModulePluginsModel (this);
+		model->init (RKSettingsModulePlugins::knownPluginmaps ());
+		selector->setModel (model, 1);
+	}
+}
+
+void RKPluginMapSelectionWidget::apply () {
+
+}
+
+void RKPluginMapSelectionWidget::cancel () {
+
+}
+
+void RKPluginMapSelectionWidget::ok () {
+
 }
 
 

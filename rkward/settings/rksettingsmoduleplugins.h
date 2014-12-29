@@ -80,6 +80,8 @@ public:
 		QDateTime last_modified;
 	};
 	typedef QList<PluginMapStoredInfo> PluginMapList;
+	static PluginMapList knownPluginmaps () { return known_plugin_maps; };
+	static void parsePluginMapBasics (const QString &filename, QString *id, int *priority);
 public slots:
 	void settingChanged ();
 private:
@@ -106,7 +108,7 @@ private:
 class RKSettingsModulePluginsModel : public QAbstractTableModel {
 	Q_OBJECT
 public:
-	RKSettingsModulePluginsModel (RKSettingsModulePlugins* parent);
+	RKSettingsModulePluginsModel (QObject* parent);
 	virtual ~RKSettingsModulePluginsModel ();
 /** (re-)initialize the model */
 	void init (const RKSettingsModulePlugins::PluginMapList &known_plugin_maps);

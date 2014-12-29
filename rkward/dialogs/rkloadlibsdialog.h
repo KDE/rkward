@@ -283,4 +283,22 @@ private:
 	QCheckBox *suggested_packages;
 };
 
+
+#include "../settings/rksettingsmoduleplugins.h"
+
+class RKPluginMapSelectionWidget : public QWidget {
+Q_OBJECT
+public:
+	RKPluginMapSelectionWidget (RKLoadLibsDialog *dialog);
+	virtual ~RKPluginMapSelectionWidget ();
+public slots:
+	void ok ();
+	void apply ();
+	void cancel ();
+	void activated ();
+private:
+	RKMultiStringSelectorV2* selector;
+	RKSettingsModulePluginsModel* model;
+};
+
 #endif
