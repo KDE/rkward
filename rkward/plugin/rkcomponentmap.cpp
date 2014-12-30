@@ -166,10 +166,14 @@ void RKComponentGUIXML::Menu::clear () {
 
 RKComponentGUIXML::Group *findOrCreateGroup (RKComponentGUIXML::Menu *parent, const QString group) {
 	// try to find group
+	int bottom_index = -1;
 	QList<RKComponentGUIXML::Group*> &list = parent->groups;
 	for (int i = 0; i < list.size (); ++i) {
 		if (list[i]->id == group) {
 			return list[i];
+		}
+		if (list[i]->id == QLatin1String ("bottom")) {
+			bottom_index = i;
 		}
 	}
 
@@ -182,10 +186,10 @@ RKComponentGUIXML::Group *findOrCreateGroup (RKComponentGUIXML::Menu *parent, co
 	} else if (group == QLatin1String ("bottom")) {
 		list.append (new_group);
 	} else {
-		if (list.isEmpty () || list.last ()->id != QLatin1String ("bottom")) {	// no "bottom" is defined, yet
+		if (bottom_index < 0) {	// no "bottom" is defined, yet
 			list.append (new_group);
 		} else {	// a bottom group already exists, add new group _above_ that
-			list.insert (list.size () - 1, new_group);
+			list.insert (bottom_index, new_group);
 		}
 	}
 	return new_group;
