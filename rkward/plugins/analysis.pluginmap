@@ -2,6 +2,16 @@
 
 <document base_prefix="" namespace="rkward" id="analysis" po_id="analysis">
 	<include file="pluginmap_meta.inc"/>
+	<about
+		name="Analysis plugins"
+		shortinfo="Part of the official RKWard distribution"
+		version="0.6.3"
+		license="GPL"
+		url="http://rkward.kde.org">
+		<insert snippet="author_rkward_team"/>
+	</about>
+	<insert snippet="rkward_version_guard"/>
+
 	<require file="menu.pluginmap"/>
 
 	<components>

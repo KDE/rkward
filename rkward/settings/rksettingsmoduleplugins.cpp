@@ -207,6 +207,15 @@ void RKSettingsModulePlugins::loadSettings (KConfig *config) {
 			known_plugin_maps.append (inf);
 		}
 	}
+	if (RKSettingsModuleGeneral::rkwardVersionChanged ()) {
+		// if it is the first start this version, scan the installation for new pluginmaps
+		QDir def_plugindir (RKCommonFunctions::getRKWardDataDir ());
+		QStringList def_pluginmaps = def_plugindir.entryList (QStringList ("*.pluginmap"));
+		for (int i = 0; i < def_pluginmaps.size (); ++i) {
+			def_pluginmaps[i] = def_plugindir.absoluteFilePath (def_pluginmaps[i]);
+		}
+		registerPluginMaps (def_pluginmaps, false, false, true);
+	}
 	fixPluginMapLists ();	// removes any maps which don't exist any more
 
 	interface_pref = static_cast<PluginPrefs> (cg.readEntry ("Interface Preferences", static_cast<int> (PreferRecommended)));
@@ -292,7 +301,7 @@ QStringList RKSettingsModulePlugins::pluginMaps () {
 }
 
 // static
-void RKSettingsModulePlugins::registerPluginMaps (const QStringList &maps, bool force_add, bool force_reload) {
+void RKSettingsModulePlugins::registerPluginMaps (const QStringList &maps, bool force_add, bool force_reload, bool suppress_reload) {
 	RK_TRACE (SETTINGS);
 
 	QStringList added;
@@ -321,6 +330,7 @@ void RKSettingsModulePlugins::registerPluginMaps (const QStringList &maps, bool 
 		}
 	}
 
+	if (suppress_reload) return;
 	if (force_reload || (!added.isEmpty ())) {
 		RKWardMainWindow::getMain ()->initPlugins (added);
 	}
@@ -328,10 +338,6 @@ void RKSettingsModulePlugins::registerPluginMaps (const QStringList &maps, bool 
 
 void RKSettingsModulePlugins::fixPluginMapLists () {
 	RK_TRACE (SETTINGS);
-
-	QFileInfo default_pluginmap (RKCommonFunctions::getRKWardDataDir () + "/all.pluginmap");
-	int default_pluginmap_index = -1;
-	bool any_active_pluginmap = false;
 
 	for (int i = 0; i < known_plugin_maps.size (); ++i) {
 		PluginMapStoredInfo &inf = known_plugin_maps[i];
@@ -341,8 +347,6 @@ void RKSettingsModulePlugins::fixPluginMapLists () {
 			--i;
 			continue;
 		}
-		if (inf.active) any_active_pluginmap = true;
-		if ((default_pluginmap_index < 0) && (info == default_pluginmap)) default_pluginmap_index = i;
 
 		if (info.lastModified () != inf.last_modified) {
 			inf.broken_in_this_version = false;
@@ -354,18 +358,6 @@ void RKSettingsModulePlugins::fixPluginMapLists () {
 		if (inf.id.isEmpty ()) {
 			parsePluginMapBasics (inf.filename, &inf.id, &inf.priority);
 		}
-	}
-
-	// make sure the default plugin map is in the list (unless it is non-readable)
-	if ((default_pluginmap_index < 0) && (default_pluginmap.isReadable ())) {
-		PluginMapStoredInfo inf (default_pluginmap.absoluteFilePath ());
-		known_plugin_maps.prepend (inf);
-		default_pluginmap_index = 0;
-	}
-
-	// if no other pluginmap is active, activate the default map
-	if (!any_active_pluginmap && (default_pluginmap_index >= 0)) {
-		known_plugin_maps[default_pluginmap_index].active = true;
 	}
 }
 
@@ -453,8 +445,8 @@ QVariant RKSettingsModulePluginsModel::data (const QModelIndex& index, int role)
 		if (!meta.dependencies.isEmpty ()) {
 			desc.append ("<b>" + i18n ("Dependencies") + "</b>");
 			desc.append (RKComponentDependency::depsToHtml (meta.dependencies));
-			desc.append ("<p>" + inf.filename + "</p>");
 		}
+		desc.append ("<p>" + inf.filename + "</p>");
 		return desc;
 	}
 

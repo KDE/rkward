@@ -58,8 +58,9 @@ public:
 	 * @param maps Plugin maps (filenames) to add
 	 * @param force_add If true, maps are added, even if they are not "new", and had previously been disabled by the user
 	 * @param force_reload If true, plugin maps are always reloaded, even if no maps were added
+	 * @param suppress_reload If true (and force_reload is false), do not reload plugin maps, even if maps were added
 	 */
-	static void registerPluginMaps (const QStringList &maps, bool force_add, bool force_reload);
+	static void registerPluginMaps (const QStringList &maps, bool force_add, bool force_reload, bool suppress_reload=true);
 	/** Looks for the given id among known plugin maps */
 	static QString findPluginMapById (const QString &id);
 	/** marks given map as broken (in this version), and deactivates it. @Returns false is the map was already known to be broken, true otherwise. */
