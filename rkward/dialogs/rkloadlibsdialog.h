@@ -63,6 +63,7 @@ public:
 @param chain RCommandChain to run the necessary commands in
 @param package_name name of the required package */
 	static void showInstallPackagesModal (QWidget *parent, RCommandChain *chain, const QString &package_name);
+	static void showPluginmapConfig (QWidget *parent=0, RCommandChain *chain=0);
 	QStringList currentLibraryLocations ()  const { return library_locations; };
 signals:
 	void downloadComplete ();
@@ -87,12 +88,14 @@ private:
 	void addLibraryLocation (const QString &new_loc);
 	void tryDestruct ();
 	void runInstallationCommand (const QString& command, bool as_root, const QString& message, const QString& title);
+	KPageWidgetItem* addChild (QWidget *child_page, const QString &caption);
 friend class LoadUnloadWidget;
 friend class InstallPackagesWidget;
 	RCommandChain *chain;
 
 	InstallPackagesWidget *install_packages_widget;	// needed for automated installation
 	KPageWidgetItem *install_packages_pageitem;
+	KPageWidgetItem *configure_pluginmaps_pageitem;
 
 	QStringList library_locations;
 
@@ -297,9 +300,11 @@ public slots:
 	void apply ();
 	void cancel ();
 	void activated ();
+	void changed () { changes_pending = true; };
 private:
 	RKMultiStringSelectorV2* selector;
 	RKSettingsModulePluginsModel* model;
+	bool changes_pending;
 };
 
 #endif

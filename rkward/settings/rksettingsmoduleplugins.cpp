@@ -22,9 +22,6 @@
 #include <kmessagebox.h>
 #include <khbox.h>
 #include <kdeversion.h>
-#include <ktar.h>
-#include <kzip.h>
-#include <kio/deletejob.h>
 
 #include <qlayout.h>
 #include <qlabel.h>
@@ -42,6 +39,7 @@
 #include "../misc/rkspinbox.h"
 #include "../misc/xmlhelper.h"
 #include "../plugin/rkcomponentmap.h"
+#include "../dialogs/rkloadlibsdialog.h"
 #include "rksettingsmodulegeneral.h"
 
 #include "../debug.h"
@@ -107,15 +105,11 @@ RKSettingsModulePlugins::RKSettingsModulePlugins (RKSettings *gui, QWidget *pare
 
 	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
 
+	QPushButton *pluginmap_config_button = new QPushButton (i18n ("Configure Active Plugins"), this);
+	connect (pluginmap_config_button, SIGNAL (clicked()), this, SLOT (configurePluginmaps()));
+	main_vbox->addWidget (pluginmap_config_button);
 
-	map_choser = new RKMultiStringSelectorV2 (i18n ("Select .pluginmap file(s)"), this);
-	map_model = new RKSettingsModulePluginsModel (this);
-	map_model->init (known_plugin_maps);
-	map_choser->setModel (map_model, 1);
-	connect (map_choser, SIGNAL (insertNewStrings(int)), map_model, SLOT (insertNewStrings(int)));
-	connect (map_choser, SIGNAL (swapRows(int,int)), map_model, SLOT (swapRows(int,int)));
-	connect (map_choser, SIGNAL (listChanged()), this, SLOT (settingChanged()));
-	main_vbox->addWidget (map_choser);
+	main_vbox->addStretch ();
 }
 
 RKSettingsModulePlugins::~RKSettingsModulePlugins() {
@@ -135,16 +129,24 @@ QString RKSettingsModulePlugins::caption () {
 void RKSettingsModulePlugins::applyChanges () {
 	RK_TRACE (SETTINGS);
 
-	known_plugin_maps = map_model->pluginMaps ();
 	interface_pref = static_cast<PluginPrefs> (button_group->checkedId ());
 	show_code = show_code_box->isChecked ();
 	code_size = code_size_box->intValue ();
+}
 
+RKSettingsModulePlugins::PluginMapList RKSettingsModulePlugins::setPluginMaps (const RKSettingsModulePlugins::PluginMapList new_list) {
+	RK_TRACE (SETTINGS);
+
+	known_plugin_maps = new_list;
 	fixPluginMapLists ();
 	RKWardMainWindow::getMain ()->initPlugins();
-	map_choser->setModel (0);	// we don't want any extra change notification for this
-	map_model->init (known_plugin_maps);
-	map_choser->setModel (map_model, 1);
+	return known_plugin_maps;
+}
+
+void RKSettingsModulePlugins::configurePluginmaps () {
+	RK_TRACE (SETTINGS);
+
+	RKLoadLibsDialog::showPluginmapConfig (this, commandChain ());
 }
 
 void RKSettingsModulePlugins::save (KConfig *config) {

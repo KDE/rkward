@@ -87,9 +87,8 @@ public:
 	static void parsePluginMapBasics (const QString &filename, QString *id, int *priority);
 public slots:
 	void settingChanged ();
+	void configurePluginmaps ();
 private:
-	RKMultiStringSelectorV2 *map_choser;
-	RKSettingsModulePluginsModel *map_model;
 	QButtonGroup *button_group;
 	QCheckBox *show_code_box;
 	RKSpinBox *code_size_box;
@@ -104,6 +103,9 @@ private:
 /* TODO: This one is currently unused (leftover of GHNS-based plugin installation), but might still be of interest */
 	static QStringList findPluginMapsRecursive (const QString &basedir);
 	static void fixPluginMapLists ();
+friend class RKPluginMapSelectionWidget;
+/** Sets the new list of plugins. Potentially removes unreadable ones, and returns the effective list. */
+	static PluginMapList setPluginMaps (const PluginMapList new_list);
 };
 
 class RKSettingsModulePluginsModel : public QAbstractTableModel {
