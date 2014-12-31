@@ -318,7 +318,7 @@ void RKComponentMap::clearAll () {
 	RK_TRACE (PLUGIN);
 
 	actionCollection ()->clear ();
-	for (ComponentMap::iterator it = components.begin (); it != components.end (); ++it) {
+	for (ComponentMap::const_iterator it = components.constBegin (); it != components.constEnd (); ++it) {
 		delete (it.value ());
 /* TODO: this is not technically correct, as there may be several actions for this id, and we're only deleting one. But practically this should not really be relevant. */
 		delete (actionCollection ()->action (it.key ()));
@@ -331,6 +331,10 @@ void RKComponentMap::clearAll () {
 	pluginmapfiles.clear ();
 	component_attributes.clear ();
 	component_dependencies.clear ();
+	for (RKComponentContextMap::const_iterator it = contexts.constBegin (); it != contexts.constEnd (); ++it) {
+		delete (it.value ());
+	}
+	contexts.clear ();
 
 	clearGUIDescription ();
 
