@@ -69,6 +69,8 @@ public:
 	static bool markPluginMapAsQuirky (const QString &map);
 	/** Clears the broken or quirky flags. E.g. after the map was loaded, successfully */
 	static void markPluginMapAsWorking (const QString &map);
+
+	enum PluginMapPriority { PriorityHidden = 0, PriorityLow, PriorityMedium, PriorityHigh };
 	/** Helper struct used by RKSettingsModulePlugins to keep track of plugin map files. */
 	struct PluginMapStoredInfo {
 		PluginMapStoredInfo (const QString &_filename) : filename (_filename), active (false), broken_in_this_version (false), quirky_in_this_version (false) {};
@@ -86,8 +88,6 @@ public:
 public slots:
 	void settingChanged ();
 private:
-	enum PluginMapPriority { PriorityHidden = 0, PriorityLow, PriorityMedium, PriorityHigh };
-
 	RKMultiStringSelectorV2 *map_choser;
 	RKSettingsModulePluginsModel *map_model;
 	QButtonGroup *button_group;

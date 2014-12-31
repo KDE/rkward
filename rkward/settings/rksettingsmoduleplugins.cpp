@@ -441,6 +441,8 @@ QVariant RKSettingsModulePluginsModel::data (const QModelIndex& index, int role)
 		if (inf.broken_in_this_version) return Qt::red;
 		if (inf.quirky_in_this_version) return Qt::yellow;
 		return (QVariant ());
+	} else if (role == Qt::ForegroundRole) {
+		if (inf.priority < RKSettingsModulePlugins::PriorityLow) return Qt::gray;
 	} else if (role == Qt::ToolTipRole) {
 		const PluginMapMetaInfo &meta = const_cast<RKSettingsModulePluginsModel*> (this)->getPluginMapMetaInfo (inf.filename);
 		QString desc = meta.about->toHtml ();
@@ -454,6 +456,7 @@ QVariant RKSettingsModulePluginsModel::data (const QModelIndex& index, int role)
 
 	if (col == COLUMN_CHECKED) {
 		if (role == Qt::CheckStateRole) {
+			if (inf.priority < RKSettingsModulePlugins::PriorityLow) return QVariant ();
 			return (inf.active ? Qt::Checked : Qt::Unchecked);
 		}
 	} else if (col == COLUMN_ID) {
@@ -484,7 +487,9 @@ QVariant RKSettingsModulePluginsModel::data (const QModelIndex& index, int role)
 Qt::ItemFlags RKSettingsModulePluginsModel::flags (const QModelIndex& index) const {
 	// RK_TRACE (SETTINGS);
 	Qt::ItemFlags flags = QAbstractItemModel::flags (index);
-	if (index.isValid () && (index.column () == COLUMN_CHECKED)) flags |= Qt::ItemIsUserCheckable | Qt::ItemIsEditable;
+	if (index.isValid () && (index.column () == COLUMN_CHECKED)) {
+		if (plugin_maps[index.row ()].priority > RKSettingsModulePlugins::PriorityHidden) flags |= Qt::ItemIsUserCheckable | Qt::ItemIsEditable;
+	}
 	return flags;
 }
 
