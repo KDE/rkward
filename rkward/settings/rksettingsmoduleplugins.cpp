@@ -339,10 +339,12 @@ void RKSettingsModulePlugins::registerPluginMaps (const QStringList &maps, bool 
 void RKSettingsModulePlugins::fixPluginMapLists () {
 	RK_TRACE (SETTINGS);
 
+	// Users who installed versions before 0.6.3, manually, are likely to have all.pluginmap left over. Let's handle this, on the fly.
+	const QString obosolete_map = RKCommonFunctions::getRKWardDataDir () + "all.pluginmap";
 	for (int i = 0; i < known_plugin_maps.size (); ++i) {
 		PluginMapStoredInfo &inf = known_plugin_maps[i];
 		QFileInfo info (inf.filename);
-		if (!info.isReadable ()) {
+		if ((!info.isReadable ()) || (inf.filename == obosolete_map)) {
 			known_plugin_maps.removeAt (i);
 			--i;
 			continue;
