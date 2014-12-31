@@ -61,7 +61,7 @@ RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool 
 	setFaceType (KPageDialog::Tabbed);
 	setModal (modal);
 	setCaption (i18n ("Configure Packages"));
-	setButtons (KDialog::Ok | KDialog::Apply | KDialog::Cancel | KDialog::User1);
+	setButtons (KDialog::Ok | KDialog::Apply | KDialog::Cancel);
 
 	LoadUnloadWidget *luwidget = new LoadUnloadWidget (this);
 	addPage (luwidget, i18n ("Local packages"));
@@ -69,8 +69,6 @@ RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool 
 
 	install_packages_widget = new InstallPackagesWidget (this);
 	install_packages_pageitem = addPage (install_packages_widget, i18n ("Install / Update / Remove"));
-
-	setButtonText (KDialog::User1, i18n ("Configure Repositories"));
 
 	addPage (new RKPluginMapSelectionWidget (this), i18n ("Manage Plugins"));
 
@@ -145,9 +143,6 @@ void RKLoadLibsDialog::slotButtonClicked (int button) {
 		break;
 	case KDialog::Apply:
 		emit (applyClicked ());
-		break;
-	case KDialog::User1:
-		RKSettings::configureSettings (RKSettings::PageRPackages, this, chain);
 		break;
 	}
 }
@@ -627,13 +622,13 @@ InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog) : QWidge
 	RK_TRACE (DIALOGS);
 	InstallPackagesWidget::parent = dialog;
 	
-	QVBoxLayout *mvbox = new QVBoxLayout (this);
-	mvbox->setContentsMargins (0, 0, 0, 0);
-	QLabel *label = new QLabel (i18n ("Many packages are available on CRAN (Comprehensive R Archive Network), and other repositories<br>(click \"Configure Repositories\" to add more sources)."), this);
-	mvbox->addWidget (label);
-	QHBoxLayout *hbox = new QHBoxLayout ();
-	mvbox->addLayout (hbox);
+	QHBoxLayout *hbox = new QHBoxLayout (this);
 	hbox->setContentsMargins (0, 0, 0, 0);
+
+	QVBoxLayout *vbox = new QVBoxLayout ();
+	vbox->setContentsMargins (0, 0, 0, 0);
+	hbox->addLayout (vbox);
+	hbox->setStretchFactor (vbox, 2);
 
 	packages_status = new RKRPackageInstallationStatus (this);
 	packages_view = new QTreeView (this);
@@ -645,13 +640,18 @@ InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog) : QWidge
 	packages_view->setModel (model);
 	packages_view->setEnabled (false);
 	packages_view->setMinimumHeight (packages_view->sizeHintForRow (0) * 15);	// force a decent height
-	hbox->addWidget (packages_view);
-	hbox->setStretchFactor (packages_view, 2);
+	packages_view->setMinimumWidth (packages_view->fontMetrics ().width ("This is to force a sensible min width for the packages view (empty on construction)"));
+	vbox->addWidget (packages_view);
+
+	QPushButton *configure_repos_button = new QPushButton (i18n ("Configure Repositories"), this);
+	RKCommonFunctions::setTips (i18n ("Many packages are available on CRAN (Comprehensive R Archive Network), and other repositories.<br>Click this to add more sources."), configure_repos_button);
+	connect (configure_repos_button, SIGNAL (clicked()), this, SLOT(configureRepositories()));
+	vbox->addWidget (configure_repos_button);
 
 	QVBoxLayout *buttonvbox = new QVBoxLayout ();
 	hbox->addLayout (buttonvbox);
 	buttonvbox->setContentsMargins (0, 0, 0, 0);
-	label = new QLabel (i18n ("Show only packages matching:"), this);
+	QLabel *label = new QLabel (i18n ("Show only packages matching:"), this);
 	filter_edit = new QLineEdit (QString (), this);
 	RKCommonFunctions::setTips (i18n ("<p>You can limit the packages displayed in the list to with names or titles matching a filter string.</p><p><b>Note:</b> To limit the search to matches at the start of the string, start the filter with '^', e.g. ('^rk.'). To limit searches to the end of the string, append '$' at the end of the filter.</p>"), label, filter_edit);
 	connect (filter_edit, SIGNAL (textChanged(QString)), this, SLOT (filterChanged()));
@@ -783,6 +783,11 @@ void InstallPackagesWidget::ok () {
 void InstallPackagesWidget::cancel () {
 	RK_TRACE (DIALOGS);
 	deleteLater ();
+}
+
+void InstallPackagesWidget::configureRepositories () {
+	RK_TRACE (DIALOGS);
+	RKSettings::configureSettings (RKSettings::PageRPackages, this, parent->chain);
 }
 
 /////////////////////// PackageInstallParamsWidget //////////////////////////

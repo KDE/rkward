@@ -248,6 +248,7 @@ public slots:
 	void filterChanged ();
 	void activated ();
 	void markAllUpdates ();
+	void configureRepositories ();
 private:
 	void doInstall (bool refresh);
 	QTreeView *packages_view;
