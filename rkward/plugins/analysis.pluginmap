@@ -3,8 +3,8 @@
 <document base_prefix="" namespace="rkward" id="analysis" po_id="analysis">
 	<include file="pluginmap_meta.inc"/>
 	<about
-		name="Analysis plugins"
-		shortinfo="Part of the official RKWard distribution"
+		name="Analysis"
+		shortinfo="Assorted plugins for univariate and multivariate data analysis. Part of the official RKWard distribution"
 		version="0.6.3"
 		license="GPL"
 		url="http://rkward.kde.org">

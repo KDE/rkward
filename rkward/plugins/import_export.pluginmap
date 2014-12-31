@@ -2,6 +2,16 @@
 
 <document base_prefix="00saveload/" namespace="rkward" id="import_export">
 	<include file="pluginmap_meta.inc"/>
+	<about
+		name="Data Import and Export"
+		shortinfo="Plugins for reading and writing data in various formats. Part of the official RKWard distribution"
+		version="0.6.3"
+		license="GPL"
+		url="http://rkward.kde.org">
+		<insert snippet="author_rkward_team"/>
+	</about>
+	<insert snippet="rkward_version_guard"/>
+
 	<require file="../menu.pluginmap"/>
 
 	<components>

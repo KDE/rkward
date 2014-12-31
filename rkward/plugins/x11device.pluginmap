@@ -2,6 +2,17 @@
 
 <document base_prefix="x11device/" namespace="rkward" id="x11device">
 	<include file="pluginmap_meta.inc"/>
+	<about
+		name="Graphics Device add-ons"
+		shortinfo="Plugins for use in graphics device (e.g. X11()) windows. Part of the official RKWard distribution"
+		version="0.6.3"
+		license="GPL"
+		url="http://rkward.kde.org">
+		<insert snippet="author_rkward_team"/>
+	</about>
+	<insert snippet="rkward_version_guard"/>
+
+	<require file="../menu.pluginmap"/>
 
 	<components>
 		<component type="standard" id="export_x11_device" file="export.xml" label="Export..." />

@@ -2,6 +2,16 @@
 <!-- The point of this pluginmap is to pre-define the layout (and labels) of some menus -->
 <document base_prefix="" namespace="rkward" id="rkward_menu_hierarchy" priority="hidden">
 	<include file="pluginmap_meta.inc"/>
+	<about
+		name="Menu structure definition"
+		shortinfo="Not for direct use: Defines the names and order of top level menus. Part of the official RKWard distribution"
+		version="0.6.3"
+		license="GPL"
+		url="http://rkward.kde.org">
+		<insert snippet="author_rkward_team"/>
+	</about>
+	<insert snippet="rkward_version_guard"/>
+
 	<hierarchy>
 		<!-- Define a group before and after each top-level menu to allow inserting top-level menus at defined positions -->
 		<group id="before_data"/>
