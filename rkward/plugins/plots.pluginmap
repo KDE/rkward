@@ -2,6 +2,16 @@
 
 <document base_prefix="plots/" namespace="rkward" id="plots">
 	<include file="pluginmap_meta.inc"/>
+	<about
+		name="Plots"
+		shortinfo="Plugins for procuding various plots. Part of the official RKWard distribution"
+		version="0.6.3"
+		license="GPL"
+		url="http://rkward.kde.org">
+		<insert snippet="author_rkward_team"/>
+	</about>
+	<insert snippet="rkward_version_guard"/>
+
 	<require file="../menu.pluginmap"/>
 
 	<components>

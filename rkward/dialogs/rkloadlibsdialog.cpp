@@ -61,20 +61,20 @@ RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool 
 	setFaceType (KPageDialog::Tabbed);
 	setModal (modal);
 	setCaption (i18n ("Configure Packages"));
-	setButtons (KDialog::Ok | KDialog::Apply | KDialog::Cancel | KDialog::User1);
+	setButtons (KDialog::Ok | KDialog::Apply | KDialog::Cancel);
 
 	LoadUnloadWidget *luwidget = new LoadUnloadWidget (this);
-	addPage (luwidget, i18n ("Local packages"));
+	addChild (luwidget, i18n ("Local packages"));
 	connect (this, SIGNAL (installedPackagesChanged()), luwidget, SLOT (updateInstalledPackages()));
 
 	install_packages_widget = new InstallPackagesWidget (this);
-	install_packages_pageitem = addPage (install_packages_widget, i18n ("Install / Update / Remove"));
+	install_packages_pageitem = addChild (install_packages_widget, i18n ("Install / Update / Remove"));
 
-	setButtonText (KDialog::User1, i18n ("Configure Repositories"));
+	configure_pluginmaps_pageitem = addChild (new RKPluginMapSelectionWidget (this), i18n ("Manage Plugins"));
 
 	connect (this, SIGNAL (currentPageChanged(KPageWidgetItem*,KPageWidgetItem*)), this, SLOT (slotPageChanged()));
 	QTimer::singleShot (0, this, SLOT (slotPageChanged()));
-	num_child_widgets = 3;
+	num_child_widgets = 4;
 	accepted = false;
 
 	RKGlobals::rInterface ()->issueCommand (".libPaths ()", RCommand::App | RCommand::GetStringVector, QString (), this, GET_CURRENT_LIBLOCS_COMMAND, chain);
@@ -85,6 +85,16 @@ RKLoadLibsDialog::~RKLoadLibsDialog () {
 
 	if (accepted) KPageDialog::accept ();
 	else KPageDialog::reject ();
+}
+
+KPageWidgetItem* RKLoadLibsDialog::addChild (QWidget *child_page, const QString &caption) {
+	RK_TRACE (DIALOGS);
+
+	connect (this, SIGNAL (okClicked()), child_page, SLOT (ok()));
+	connect (this, SIGNAL (applyClicked()), child_page, SLOT (apply()));
+	connect (this, SIGNAL (cancelClicked()), child_page, SLOT (cancel()));
+	connect (child_page, SIGNAL (destroyed()), this, SLOT (childDeleted()));
+	return addPage (child_page, caption);
 }
 
 void RKLoadLibsDialog::slotPageChanged () {
@@ -104,6 +114,15 @@ void RKLoadLibsDialog::showInstallPackagesModal (QWidget *parent, RCommandChain 
 	dialog->setCurrentPage (dialog->install_packages_pageitem);
 	dialog->exec ();
 	RK_TRACE (DIALOGS);
+}
+
+// static
+void RKLoadLibsDialog::showPluginmapConfig (QWidget* parent, RCommandChain* chain) {
+	RK_TRACE (DIALOGS);
+
+	RKLoadLibsDialog *dialog = new RKLoadLibsDialog (parent, chain, false);
+	dialog->setCurrentPage (dialog->configure_pluginmaps_pageitem);
+	dialog->show ();
 }
 
 void RKLoadLibsDialog::automatedInstall () {
@@ -143,9 +162,6 @@ void RKLoadLibsDialog::slotButtonClicked (int button) {
 		break;
 	case KDialog::Apply:
 		emit (applyClicked ());
-		break;
-	case KDialog::User1:
-		RKSettings::configureSettings (RKSettings::PageRPackages, this, chain);
 		break;
 	}
 }
@@ -432,11 +448,6 @@ LoadUnloadWidget::LoadUnloadWidget (RKLoadLibsDialog *dialog) : QWidget (0) {
 	connect (loaded_view, SIGNAL (itemSelectionChanged()), this, SLOT (updateButtons()));
 	connect (installed_view, SIGNAL (itemSelectionChanged()), this, SLOT (updateButtons()));
 
-	connect (dialog, SIGNAL (okClicked()), this, SLOT (ok()));
-	connect (dialog, SIGNAL (applyClicked()), this, SLOT (apply()));
-	connect (dialog, SIGNAL (cancelClicked()), this, SLOT (cancel()));
-	connect (this, SIGNAL (destroyed()), dialog, SLOT (childDeleted()));
-
 	updateInstalledPackages ();
 	updateButtons ();
 }
@@ -625,13 +636,13 @@ InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog) : QWidge
 	RK_TRACE (DIALOGS);
 	InstallPackagesWidget::parent = dialog;
 	
-	QVBoxLayout *mvbox = new QVBoxLayout (this);
-	mvbox->setContentsMargins (0, 0, 0, 0);
-	QLabel *label = new QLabel (i18n ("Many packages are available on CRAN (Comprehensive R Archive Network), and other repositories<br>(click \"Configure Repositories\" to add more sources)."), this);
-	mvbox->addWidget (label);
-	QHBoxLayout *hbox = new QHBoxLayout ();
-	mvbox->addLayout (hbox);
+	QHBoxLayout *hbox = new QHBoxLayout (this);
 	hbox->setContentsMargins (0, 0, 0, 0);
+
+	QVBoxLayout *vbox = new QVBoxLayout ();
+	vbox->setContentsMargins (0, 0, 0, 0);
+	hbox->addLayout (vbox);
+	hbox->setStretchFactor (vbox, 2);
 
 	packages_status = new RKRPackageInstallationStatus (this);
 	packages_view = new QTreeView (this);
@@ -643,13 +654,18 @@ InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog) : QWidge
 	packages_view->setModel (model);
 	packages_view->setEnabled (false);
 	packages_view->setMinimumHeight (packages_view->sizeHintForRow (0) * 15);	// force a decent height
-	hbox->addWidget (packages_view);
-	hbox->setStretchFactor (packages_view, 2);
+	packages_view->setMinimumWidth (packages_view->fontMetrics ().width ("This is to force a sensible min width for the packages view (empty on construction)"));
+	vbox->addWidget (packages_view);
+
+	QPushButton *configure_repos_button = new QPushButton (i18n ("Configure Repositories"), this);
+	RKCommonFunctions::setTips (i18n ("Many packages are available on CRAN (Comprehensive R Archive Network), and other repositories.<br>Click this to add more sources."), configure_repos_button);
+	connect (configure_repos_button, SIGNAL (clicked()), this, SLOT(configureRepositories()));
+	vbox->addWidget (configure_repos_button);
 
 	QVBoxLayout *buttonvbox = new QVBoxLayout ();
 	hbox->addLayout (buttonvbox);
 	buttonvbox->setContentsMargins (0, 0, 0, 0);
-	label = new QLabel (i18n ("Show only packages matching:"), this);
+	QLabel *label = new QLabel (i18n ("Show only packages matching:"), this);
 	filter_edit = new QLineEdit (QString (), this);
 	RKCommonFunctions::setTips (i18n ("<p>You can limit the packages displayed in the list to with names or titles matching a filter string.</p><p><b>Note:</b> To limit the search to matches at the start of the string, start the filter with '^', e.g. ('^rk.'). To limit searches to the end of the string, append '$' at the end of the filter.</p>"), label, filter_edit);
 	connect (filter_edit, SIGNAL (textChanged(QString)), this, SLOT (filterChanged()));
@@ -672,11 +688,6 @@ InstallPackagesWidget::InstallPackagesWidget (RKLoadLibsDialog *dialog) : QWidge
 	buttonvbox->addStretch (1);
 	buttonvbox->addWidget (install_params);
 	buttonvbox->addStretch (1);
-
-	connect (dialog, SIGNAL (okClicked()), this, SLOT (ok()));
-	connect (dialog, SIGNAL (applyClicked()), this, SLOT (apply()));
-	connect (dialog, SIGNAL (cancelClicked()), this, SLOT (cancel()));
-	connect (this, SIGNAL (destroyed()), dialog, SLOT (childDeleted()));
 }
 
 InstallPackagesWidget::~InstallPackagesWidget () {
@@ -781,6 +792,11 @@ void InstallPackagesWidget::ok () {
 void InstallPackagesWidget::cancel () {
 	RK_TRACE (DIALOGS);
 	deleteLater ();
+}
+
+void InstallPackagesWidget::configureRepositories () {
+	RK_TRACE (DIALOGS);
+	RKSettings::configureSettings (RKSettings::PageRPackages, this, parent->chain);
 }
 
 /////////////////////// PackageInstallParamsWidget //////////////////////////
@@ -1195,6 +1211,61 @@ void RKRPackageInstallationStatusSortFilterModel::setRKWardOnly (bool only) {
 	if (rkward_only != old_only) invalidate ();
 }
 
+/////////////////////////
+#include "../misc/multistringselector.h"
+RKPluginMapSelectionWidget::RKPluginMapSelectionWidget (RKLoadLibsDialog* dialog) : QWidget (dialog) {
+	RK_TRACE (DIALOGS);
+	model = 0;
+	changes_pending = false;
+
+	QVBoxLayout *vbox = new QVBoxLayout (this);
+	vbox->setContentsMargins (0, 0, 0, 0);
+	vbox->addWidget (new QLabel (i18n ("Installed plugin groups (.pluginmap files)"), this));
+	selector = new RKMultiStringSelectorV2 (QString (), this);
+	vbox->addWidget (selector);
+}
+
+RKPluginMapSelectionWidget::~RKPluginMapSelectionWidget () {
+	RK_TRACE (DIALOGS);
+}
+
+void RKPluginMapSelectionWidget::activated () {
+	RK_TRACE (DIALOGS);
+
+	if (!model) {
+		model = new RKSettingsModulePluginsModel (this);
+		model->init (RKSettingsModulePlugins::knownPluginmaps ());
+		selector->setModel (model, 1);
+		connect (selector, SIGNAL (insertNewStrings(int)), model, SLOT (insertNewStrings(int)));
+		connect (selector, SIGNAL (swapRows(int,int)), model, SLOT (swapRows(int,int)));
+		connect (selector, SIGNAL (listChanged()), this, SLOT (changed()));
+	}
+}
+
+void RKPluginMapSelectionWidget::apply () {
+	RK_TRACE (DIALOGS);
+
+	if (!changes_pending) return;
+	RK_ASSERT (model);
+	RKSettingsModulePlugins::PluginMapList new_list = RKSettingsModulePlugins::setPluginMaps (model->pluginMaps ());
+	selector->setModel (0); // we don't want any extra change notification for this
+	model->init (new_list);
+	selector->setModel (model, 1);
+	changes_pending = false;
+}
+
+void RKPluginMapSelectionWidget::cancel () {
+	RK_TRACE (DIALOGS);
+	deleteLater ();
+}
+
+void RKPluginMapSelectionWidget::ok () {
+	RK_TRACE (DIALOGS);
+
+	if (!changes_pending) return;
+	RK_ASSERT (model);
+	RKSettingsModulePlugins::setPluginMaps (model->pluginMaps ());
+	deleteLater ();
+}
 
 #include "rkloadlibsdialog.moc"
-

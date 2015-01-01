@@ -22,9 +22,6 @@
 #include <kmessagebox.h>
 #include <khbox.h>
 #include <kdeversion.h>
-#include <ktar.h>
-#include <kzip.h>
-#include <kio/deletejob.h>
 
 #include <qlayout.h>
 #include <qlabel.h>
@@ -42,6 +39,7 @@
 #include "../misc/rkspinbox.h"
 #include "../misc/xmlhelper.h"
 #include "../plugin/rkcomponentmap.h"
+#include "../dialogs/rkloadlibsdialog.h"
 #include "rksettingsmodulegeneral.h"
 
 #include "../debug.h"
@@ -107,15 +105,11 @@ RKSettingsModulePlugins::RKSettingsModulePlugins (RKSettings *gui, QWidget *pare
 
 	main_vbox->addSpacing (2*RKGlobals::spacingHint ());
 
+	QPushButton *pluginmap_config_button = new QPushButton (i18n ("Configure Active Plugins"), this);
+	connect (pluginmap_config_button, SIGNAL (clicked()), this, SLOT (configurePluginmaps()));
+	main_vbox->addWidget (pluginmap_config_button);
 
-	map_choser = new RKMultiStringSelectorV2 (i18n ("Select .pluginmap file(s)"), this);
-	map_model = new RKSettingsModulePluginsModel (this);
-	map_model->init (known_plugin_maps);
-	map_choser->setModel (map_model, 1);
-	connect (map_choser, SIGNAL (insertNewStrings(int)), map_model, SLOT (insertNewStrings(int)));
-	connect (map_choser, SIGNAL (swapRows(int,int)), map_model, SLOT (swapRows(int,int)));
-	connect (map_choser, SIGNAL (listChanged()), this, SLOT (settingChanged()));
-	main_vbox->addWidget (map_choser);
+	main_vbox->addStretch ();
 }
 
 RKSettingsModulePlugins::~RKSettingsModulePlugins() {
@@ -135,16 +129,24 @@ QString RKSettingsModulePlugins::caption () {
 void RKSettingsModulePlugins::applyChanges () {
 	RK_TRACE (SETTINGS);
 
-	known_plugin_maps = map_model->pluginMaps ();
 	interface_pref = static_cast<PluginPrefs> (button_group->checkedId ());
 	show_code = show_code_box->isChecked ();
 	code_size = code_size_box->intValue ();
+}
 
+RKSettingsModulePlugins::PluginMapList RKSettingsModulePlugins::setPluginMaps (const RKSettingsModulePlugins::PluginMapList new_list) {
+	RK_TRACE (SETTINGS);
+
+	known_plugin_maps = new_list;
 	fixPluginMapLists ();
 	RKWardMainWindow::getMain ()->initPlugins();
-	map_choser->setModel (0);	// we don't want any extra change notification for this
-	map_model->init (known_plugin_maps);
-	map_choser->setModel (map_model, 1);
+	return known_plugin_maps;
+}
+
+void RKSettingsModulePlugins::configurePluginmaps () {
+	RK_TRACE (SETTINGS);
+
+	RKLoadLibsDialog::showPluginmapConfig (this, commandChain ());
 }
 
 void RKSettingsModulePlugins::save (KConfig *config) {
@@ -206,6 +208,15 @@ void RKSettingsModulePlugins::loadSettings (KConfig *config) {
 			inf.priority = ppmg.readEntry ("priority", (int) PriorityMedium);
 			known_plugin_maps.append (inf);
 		}
+	}
+	if (RKSettingsModuleGeneral::rkwardVersionChanged ()) {
+		// if it is the first start this version, scan the installation for new pluginmaps
+		QDir def_plugindir (RKCommonFunctions::getRKWardDataDir ());
+		QStringList def_pluginmaps = def_plugindir.entryList (QStringList ("*.pluginmap"));
+		for (int i = 0; i < def_pluginmaps.size (); ++i) {
+			def_pluginmaps[i] = def_plugindir.absoluteFilePath (def_pluginmaps[i]);
+		}
+		registerPluginMaps (def_pluginmaps, false, false, true);
 	}
 	fixPluginMapLists ();	// removes any maps which don't exist any more
 
@@ -292,7 +303,7 @@ QStringList RKSettingsModulePlugins::pluginMaps () {
 }
 
 // static
-void RKSettingsModulePlugins::registerPluginMaps (const QStringList &maps, bool force_add, bool force_reload) {
+void RKSettingsModulePlugins::registerPluginMaps (const QStringList &maps, bool force_add, bool force_reload, bool suppress_reload) {
 	RK_TRACE (SETTINGS);
 
 	QStringList added;
@@ -321,6 +332,7 @@ void RKSettingsModulePlugins::registerPluginMaps (const QStringList &maps, bool 
 		}
 	}
 
+	if (suppress_reload) return;
 	if (force_reload || (!added.isEmpty ())) {
 		RKWardMainWindow::getMain ()->initPlugins (added);
 	}
@@ -329,20 +341,16 @@ void RKSettingsModulePlugins::registerPluginMaps (const QStringList &maps, bool 
 void RKSettingsModulePlugins::fixPluginMapLists () {
 	RK_TRACE (SETTINGS);
 
-	QFileInfo default_pluginmap (RKCommonFunctions::getRKWardDataDir () + "/all.pluginmap");
-	int default_pluginmap_index = -1;
-	bool any_active_pluginmap = false;
-
+	// Users who installed versions before 0.6.3, manually, are likely to have all.pluginmap left over. Let's handle this, on the fly.
+	const QString obosolete_map = RKCommonFunctions::getRKWardDataDir () + "all.pluginmap";
 	for (int i = 0; i < known_plugin_maps.size (); ++i) {
 		PluginMapStoredInfo &inf = known_plugin_maps[i];
 		QFileInfo info (inf.filename);
-		if (!info.isReadable ()) {
+		if ((!info.isReadable ()) || (inf.filename == obosolete_map)) {
 			known_plugin_maps.removeAt (i);
 			--i;
 			continue;
 		}
-		if (inf.active) any_active_pluginmap = true;
-		if ((default_pluginmap_index < 0) && (info == default_pluginmap)) default_pluginmap_index = i;
 
 		if (info.lastModified () != inf.last_modified) {
 			inf.broken_in_this_version = false;
@@ -352,24 +360,20 @@ void RKSettingsModulePlugins::fixPluginMapLists () {
 		}
 
 		if (inf.id.isEmpty ()) {
-			XMLHelper xml (inf.filename);
-			QDomElement de = xml.openXMLFile (DL_WARNING);
-			inf.id = RKPluginMapFile::parseId (de, xml);
-			inf.priority = xml.getMultiChoiceAttribute (de, "priority", "hidden;low;medium;high", (int) PriorityMedium, DL_WARNING);
+			parsePluginMapBasics (inf.filename, &inf.id, &inf.priority);
 		}
 	}
+}
 
-	// make sure the default plugin map is in the list (unless it is non-readable)
-	if ((default_pluginmap_index < 0) && (default_pluginmap.isReadable ())) {
-		PluginMapStoredInfo inf (default_pluginmap.absoluteFilePath ());
-		known_plugin_maps.prepend (inf);
-		default_pluginmap_index = 0;
-	}
+void RKSettingsModulePlugins::parsePluginMapBasics (const QString &filename, QString *id, int *priority) {
+	RK_TRACE (SETTINGS);
+	RK_ASSERT (id);
+	RK_ASSERT (priority);
 
-	// if no other pluginmap is active, activate the default map
-	if (!any_active_pluginmap && (default_pluginmap_index >= 0)) {
-		known_plugin_maps[default_pluginmap_index].active = true;
-	}
+	XMLHelper xml (filename);
+	QDomElement de = xml.openXMLFile (DL_WARNING);
+	*id = RKPluginMapFile::parseId (de, xml);
+	*priority = xml.getMultiChoiceAttribute (de, "priority", "hidden;low;medium;high", (int) PriorityMedium, DL_WARNING);
 }
 
 QStringList RKSettingsModulePlugins::findPluginMapsRecursive (const QString &basedir) {
@@ -393,7 +397,7 @@ QStringList RKSettingsModulePlugins::findPluginMapsRecursive (const QString &bas
 	return ret;
 }
 
-RKSettingsModulePluginsModel::RKSettingsModulePluginsModel (RKSettingsModulePlugins* parent) : QAbstractTableModel (parent) {
+RKSettingsModulePluginsModel::RKSettingsModulePluginsModel (QObject* parent) : QAbstractTableModel (parent) {
 	RK_TRACE (SETTINGS);
 }
 
@@ -417,9 +421,10 @@ int RKSettingsModulePluginsModel::rowCount (const QModelIndex& parent) const {
 }
 
 #define COLUMN_CHECKED 0
-#define COLUMN_FILENAME 1
-#define COLUMN_STATUS 2
-#define COLUMN_COUNT 3
+#define COLUMN_TITLE 1
+#define COLUMN_ID 2
+#define COLUMN_STATUS 3
+#define COLUMN_COUNT 4
 
 int RKSettingsModulePluginsModel::columnCount (const QModelIndex& parent) const {
 	// RK_TRACE (SETTINGS);
@@ -438,6 +443,8 @@ QVariant RKSettingsModulePluginsModel::data (const QModelIndex& index, int role)
 		if (inf.broken_in_this_version) return Qt::red;
 		if (inf.quirky_in_this_version) return Qt::yellow;
 		return (QVariant ());
+	} else if (role == Qt::ForegroundRole) {
+		if (inf.priority < RKSettingsModulePlugins::PriorityLow) return Qt::gray;
 	} else if (role == Qt::ToolTipRole) {
 		const PluginMapMetaInfo &meta = const_cast<RKSettingsModulePluginsModel*> (this)->getPluginMapMetaInfo (inf.filename);
 		QString desc = meta.about->toHtml ();
@@ -445,15 +452,24 @@ QVariant RKSettingsModulePluginsModel::data (const QModelIndex& index, int role)
 			desc.append ("<b>" + i18n ("Dependencies") + "</b>");
 			desc.append (RKComponentDependency::depsToHtml (meta.dependencies));
 		}
+		desc.append ("<p>" + inf.filename + "</p>");
 		return desc;
 	}
 
 	if (col == COLUMN_CHECKED) {
 		if (role == Qt::CheckStateRole) {
+			if (inf.priority < RKSettingsModulePlugins::PriorityLow) return QVariant ();
 			return (inf.active ? Qt::Checked : Qt::Unchecked);
 		}
-	} else if (col == COLUMN_FILENAME) {
-		if (role == Qt::DisplayRole) return inf.filename;
+	} else if (col == COLUMN_ID) {
+		if (role == Qt::DisplayRole) {
+			return inf.id;
+		}
+	} else if (col == COLUMN_TITLE) {
+		if (role == Qt::DisplayRole) {
+			const PluginMapMetaInfo &meta = const_cast<RKSettingsModulePluginsModel*> (this)->getPluginMapMetaInfo (inf.filename);
+			return meta.about->name;
+		}
 	} else if (col == COLUMN_STATUS) {
 		if (role == Qt::DisplayRole) {
 			if (inf.broken_in_this_version) return i18n ("Broken");
@@ -473,7 +489,9 @@ QVariant RKSettingsModulePluginsModel::data (const QModelIndex& index, int role)
 Qt::ItemFlags RKSettingsModulePluginsModel::flags (const QModelIndex& index) const {
 	// RK_TRACE (SETTINGS);
 	Qt::ItemFlags flags = QAbstractItemModel::flags (index);
-	if (index.isValid () && (index.column () == COLUMN_CHECKED)) flags |= Qt::ItemIsUserCheckable | Qt::ItemIsEditable;
+	if (index.isValid () && (index.column () == COLUMN_CHECKED)) {
+		if (plugin_maps[index.row ()].priority > RKSettingsModulePlugins::PriorityHidden) flags |= Qt::ItemIsUserCheckable | Qt::ItemIsEditable;
+	}
 	return flags;
 }
 
@@ -481,7 +499,8 @@ QVariant RKSettingsModulePluginsModel::headerData (int section, Qt::Orientation 
 	// RK_TRACE (SETTINGS);
 	if ((role == Qt::DisplayRole) && (orientation == Qt::Horizontal)) {
 		if (section == COLUMN_CHECKED) return i18n ("Active");
-		if (section == COLUMN_FILENAME) return i18n ("Filename");
+		if (section == COLUMN_ID) return i18n ("ID");
+		if (section == COLUMN_TITLE) return i18n ("Title");
 		if (section == COLUMN_STATUS) return i18n ("Status");
 		RK_ASSERT (false);
 	}
@@ -523,6 +542,7 @@ void RKSettingsModulePluginsModel::insertNewStrings (int above_row) {
 	for (int i = files.size () - 1; i >= 0; --i) {
 		RKSettingsModulePlugins::PluginMapStoredInfo inf (files[i]);
 		inf.active = true;
+		RKSettingsModulePlugins::parsePluginMapBasics (files[i], &(inf.id), &(inf.priority));
 		plugin_maps.insert (above_row, inf);
 	}
 	endInsertRows ();

@@ -58,8 +58,9 @@ public:
 	 * @param maps Plugin maps (filenames) to add
 	 * @param force_add If true, maps are added, even if they are not "new", and had previously been disabled by the user
 	 * @param force_reload If true, plugin maps are always reloaded, even if no maps were added
+	 * @param suppress_reload If true (and force_reload is false), do not reload plugin maps, even if maps were added
 	 */
-	static void registerPluginMaps (const QStringList &maps, bool force_add, bool force_reload);
+	static void registerPluginMaps (const QStringList &maps, bool force_add, bool force_reload, bool suppress_reload=true);
 	/** Looks for the given id among known plugin maps */
 	static QString findPluginMapById (const QString &id);
 	/** marks given map as broken (in this version), and deactivates it. @Returns false is the map was already known to be broken, true otherwise. */
@@ -68,6 +69,8 @@ public:
 	static bool markPluginMapAsQuirky (const QString &map);
 	/** Clears the broken or quirky flags. E.g. after the map was loaded, successfully */
 	static void markPluginMapAsWorking (const QString &map);
+
+	enum PluginMapPriority { PriorityHidden = 0, PriorityLow, PriorityMedium, PriorityHigh };
 	/** Helper struct used by RKSettingsModulePlugins to keep track of plugin map files. */
 	struct PluginMapStoredInfo {
 		PluginMapStoredInfo (const QString &_filename) : filename (_filename), active (false), broken_in_this_version (false), quirky_in_this_version (false) {};
@@ -80,13 +83,12 @@ public:
 		QDateTime last_modified;
 	};
 	typedef QList<PluginMapStoredInfo> PluginMapList;
+	static PluginMapList knownPluginmaps () { return known_plugin_maps; };
+	static void parsePluginMapBasics (const QString &filename, QString *id, int *priority);
 public slots:
 	void settingChanged ();
+	void configurePluginmaps ();
 private:
-	enum PluginMapPriority { PriorityHidden = 0, PriorityLow, PriorityMedium, PriorityHigh };
-
-	RKMultiStringSelectorV2 *map_choser;
-	RKSettingsModulePluginsModel *map_model;
 	QButtonGroup *button_group;
 	QCheckBox *show_code_box;
 	RKSpinBox *code_size_box;
@@ -101,12 +103,15 @@ private:
 /* TODO: This one is currently unused (leftover of GHNS-based plugin installation), but might still be of interest */
 	static QStringList findPluginMapsRecursive (const QString &basedir);
 	static void fixPluginMapLists ();
+friend class RKPluginMapSelectionWidget;
+/** Sets the new list of plugins. Potentially removes unreadable ones, and returns the effective list. */
+	static PluginMapList setPluginMaps (const PluginMapList new_list);
 };
 
 class RKSettingsModulePluginsModel : public QAbstractTableModel {
 	Q_OBJECT
 public:
-	RKSettingsModulePluginsModel (RKSettingsModulePlugins* parent);
+	RKSettingsModulePluginsModel (QObject* parent);
 	virtual ~RKSettingsModulePluginsModel ();
 /** (re-)initialize the model */
 	void init (const RKSettingsModulePlugins::PluginMapList &known_plugin_maps);

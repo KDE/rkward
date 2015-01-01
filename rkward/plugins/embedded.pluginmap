@@ -1,8 +1,16 @@
 <!DOCTYPE rkpluginmap>
 
-<document base_prefix="" namespace="rkward" id="embedded">
+<document base_prefix="" namespace="rkward" id="embedded" priority="hidden">
 	<include file="pluginmap_meta.inc"/>
-	<require file="menu.pluginmap"/>
+	<about
+		name="Embedded plugins"
+		shortinfo="Not for direct use: Utility plugins that can be included by other plugins. Part of the official RKWard distribution"
+		version="0.6.3"
+		license="GPL"
+		url="http://rkward.kde.org">
+		<insert snippet="author_rkward_team"/>
+	</about>
+	<insert snippet="rkward_version_guard"/>
 
 	<components>
 		<!-- These are meant to be embedded, and are not shown in the menu -->

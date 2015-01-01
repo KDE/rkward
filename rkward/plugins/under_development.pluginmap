@@ -1,9 +1,18 @@
 <!DOCTYPE rkpluginmap>
 
-<document base_prefix="" namespace="rkward">
+<document base_prefix="" namespace="rkward" priority="low" id="under_development">
 	<include file="pluginmap_meta.inc"/>
-	<require file="menu.pluginmap"/>
+	<about
+		name="Plugins under development"
+		shortinfo="Plugins that are under development, experimental, or meant for testing, only. Part of the official RKWard distribution"
+		version="0.6.3"
+		license="GPL"
+		url="http://rkward.kde.org">
+		<insert snippet="author_rkward_team"/>
+	</about>
+	<insert snippet="rkward_version_guard"/>
 
+	<require file="menu.pluginmap"/>
 	<components>
 		<component type="standard" id="simple_anova" file="simple_anova/description.xml" label="Simple Anova" />
 		<component type="standard" id="sieve_plot" file="plots/sieve_plot.xml" label="Extended Sieve Plot" />
@@ -34,8 +43,6 @@
 		</menu>
 		<menu id="data" label="Data">
 			<group id="testing" group="bottom" separated="true"/>
-			<entry component="generate_random" group="testing"/>
-			<entry component="sort_data" group="testing"/>
 			<entry component="sort_data2" group="testing"/>
 		</menu>
 		<menu id="analysis" label="Analysis">
