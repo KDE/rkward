@@ -78,7 +78,7 @@ bool compareMenuEntries (const RKComponentGUIXML::Entry *a, const RKComponentGUI
 	return (QString::localeAwareCompare (a->label, b->label) < 0);
 }
 
-void RKComponentGUIXML::resolveComponentLabelsAndSortMenu (Menu *menu) {
+void RKComponentGUIXML::resolveComponentLabelsAndSortMenu (Menu *menu, const QString &menu_path) {
 	RK_TRACE (PLUGIN);
 
 	for (int i = 0; i < menu->groups.size (); ++i) {
@@ -96,9 +96,10 @@ void RKComponentGUIXML::resolveComponentLabelsAndSortMenu (Menu *menu) {
 					// The reason that handling of label is delayed to this point is that if a plugin is overridden, we want to use the label specified for the effective plugin (which might have changed WRT the overridden plugin, too).
 					entry->label = handle->getLabel ();
 					addedEntry (entry->id, handle);
+					component_menus.insert (handle, menu_path);
 				}
 			} else {
-				resolveComponentLabelsAndSortMenu (static_cast<Menu*> (entry));
+				resolveComponentLabelsAndSortMenu (static_cast<Menu*> (entry), menu_path.isEmpty () ? entry->label : menu_path + "\t" + entry->label);
 			}
 		}
 		qSort (group->entries.begin (), group->entries.end (), compareMenuEntries);
@@ -149,6 +150,7 @@ void RKComponentGUIXML::finalize () {
 	QDomElement xmlgui_menubar_element = gui_xml.documentElement ().firstChildElement ("MenuBar");
 	resolveComponentLabelsAndSortMenu (&toplevel_menu);
 	menuItemsToXml (&toplevel_menu, xmlgui_menubar_element);
+	toplevel_menu.clear ();	// no longer needed
 }
 
 RKComponentGUIXML::Group::~Group () {
@@ -685,6 +687,33 @@ void RKComponentMap::addedEntry (const QString &id, RKComponentHandle *handle) {
 		action->setShortcutConfigurable (true);
 	}
 }
+
+QStringList RKComponentMap::listPlugins () {
+	RK_TRACE (PLUGIN);
+
+	QStringList ret;
+#if QT_VERSION >= 0x040500
+	ret.reserve (components.size () * 4);
+#endif
+	for (ComponentMap::const_iterator it = components.constBegin (); it != components.constEnd (); ++it) {
+		ret.append (it.key ());
+		ret.append ("global"); // context
+		ret.append (component_menus.value (it.value ()));
+		ret.append (it.value ()->getLabel ());
+	}
+	for (RKComponentContextMap::const_iterator ctx = contexts.constBegin (); ctx != contexts.constEnd (); ++ctx) {
+		QStringList ids = ctx.value ()->components ();
+		for (int i = 0; i < ids.size (); ++i) {
+			ret.append (ids[i]);
+			ret.append (ctx.key ());
+			RKComponentHandle *handle = getComponentHandle (ids[i]);
+			ret.append (ctx.value ()->component_menus.value (handle));
+			ret.append (handle->getLabel ());
+		}
+	}
+	return ret;
+}
+
 
 ///########################### END RKComponentMap ###############################
 ///########################### BEGIN RKComponentHandle ############################

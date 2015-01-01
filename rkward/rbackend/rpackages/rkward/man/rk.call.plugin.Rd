@@ -29,8 +29,9 @@ an error.}
 \value{
 \code{rk.call.plugin} returns \code{TRUE} invisibly.
 
-\code{rk.list.plugins} returns a character vector of plugin names. If none
-  found, \code{NULL} is returned.
+\code{rk.list.plugins} returns a data.frame listing plugin ids, context, menu path
+  (tab-separated), and label of the plugin. If a plugin is available in more
+  than one context, it will be listed several times.
 }
 \description{
 \code{rk.call.plugin} provides a high level wrapper to call any plugin
@@ -54,8 +55,8 @@ tests, cross-references, and scripted tutorials.
 run in the global context. Any local variables of the calling context are
 not available to the plugin.
 
-\code{rk.list.plugins} returns the list of the names of all currently
-registered plugins.
+\code{rk.list.plugins} returns the a list of all currently
+registered plugins (in loaded pluginmaps).
 }
 \examples{
 ## list all current plugins

@@ -579,7 +579,7 @@ QStringList RInterface::processPlainGenericRequest (const QStringList &calllist)
 		if (res != KMessageBox::Continue) return (QStringList ("FALSE"));
 	} else if (call == "listPlugins") {
 		RK_ASSERT (calllist.count () == 1);
-		return RKComponentMap::getMap ()->allComponentIds ();
+		return RKComponentMap::getMap ()->listPlugins ();
 	} else if (call == "loadPluginMaps") {
 		bool force = (calllist.value (1) == "force");
 		bool reload = (calllist.value (2) == "reload");

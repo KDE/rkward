@@ -20,8 +20,8 @@
 #' run in the global context. Any local variables of the calling context are
 #' not available to the plugin.
 #' 
-#' \code{rk.list.plugins} returns the list of the names of all currently
-#' registered plugins.
+#' \code{rk.list.plugins} returns the a list of all currently
+#' registered plugins (in loaded pluginmaps).
 #' 
 #' @aliases rk.call.plugin rk.list.plugins
 #' @param plugin character string, giving the name of the plugin to call. See
@@ -40,8 +40,9 @@
 #'   an error.
 #' @return \code{rk.call.plugin} returns \code{TRUE} invisibly.
 #' 
-#' \code{rk.list.plugins} returns a character vector of plugin names. If none
-#'   found, \code{NULL} is returned.
+#' \code{rk.list.plugins} returns a data.frame listing plugin ids, context, menu path
+#'   (tab-separated), and label of the plugin. If a plugin is available in more
+#'   than one context, it will be listed several times.
 #' @author Thomas Friedrichsmeier \email{rkward-devel@@lists.sourceforge.net}
 #' @seealso \code{\link{rk.results}}, \url{rkward://page/rkward_output}
 #' @keywords utilities
@@ -63,11 +64,10 @@
 #'   submit.mode="submit")
 #' })
 #'
-# list all available plugins in RKWard; this is a companion function for rk.call.plugin:
-# the output provides possible strings for "plugin" argument in rk.call.plugin
 #' @export
 rk.list.plugins <- function () {
-	.rk.do.plain.call ("listPlugins")
+	plugs <- .rk.do.plain.call("listPlugins")
+	as.data.frame (matrix (plugs, ncol=4, byrow=TRUE, dimnames=list (1:(length (plugs) / 4), c ("ID", "Context", "Menupath", "Label"))), stringsAsFactors=FALSE)
 }
 
 #' @export

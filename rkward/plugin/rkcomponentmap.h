@@ -163,10 +163,12 @@ protected:
 
 /** The generated XML GUI description in KDEs ui.rc format */
 	QDomDocument gui_xml;
+friend class RKComponentMap;
+	QMap<RKComponentHandle*, QString> component_menus;
 private:
 	int addEntries (RKComponentGUIXML::Menu *menu, XMLHelper &xml, const QDomElement description, const QString& cnamespace);
 	void menuItemsToXml (const RKComponentGUIXML::Menu *menu, QDomElement &xml);
-	void resolveComponentLabelsAndSortMenu (Menu *menu);
+	void resolveComponentLabelsAndSortMenu (Menu *menu, const QString &menu_path=QString ());
 };
 
 
@@ -226,8 +228,8 @@ public:
 /** invokes the specified component as toplevel
 @param message If a non-null pointer to QString is given, error messages are written into this string *instead* of being displayed */
 	static bool invokeComponent (const QString &component_id, const QStringList &serialized_settings, ComponentInvocationMode submit_mode = ManualSubmit, QString *message=0, RCommandChain *in_chain = 0);
-/** @returns a list of all currently registered component ids */
-	QStringList allComponentIds () { return components.keys(); };
+/** @returns for rk.list.plugins(): Return a list of all currently registered component ids, their context, menu, and label (i.e. current four strings per component) */
+	QStringList listPlugins ();
 	bool isPluginMapLoaded (const QString& abs_filename) const;
 public slots:
 /** Slot called, when a menu-item for a component is selected. Responsible for creating the GUI. */
