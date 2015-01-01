@@ -64,13 +64,13 @@ RKLoadLibsDialog::RKLoadLibsDialog (QWidget *parent, RCommandChain *chain, bool 
 	setButtons (KDialog::Ok | KDialog::Apply | KDialog::Cancel);
 
 	LoadUnloadWidget *luwidget = new LoadUnloadWidget (this);
-	addChild (luwidget, i18n ("Local packages"));
+	addChild (luwidget, i18n ("Load / Unload R packages"));
 	connect (this, SIGNAL (installedPackagesChanged()), luwidget, SLOT (updateInstalledPackages()));
 
 	install_packages_widget = new InstallPackagesWidget (this);
-	install_packages_pageitem = addChild (install_packages_widget, i18n ("Install / Update / Remove"));
+	install_packages_pageitem = addChild (install_packages_widget, i18n ("Install / Update / Remove R packages"));
 
-	configure_pluginmaps_pageitem = addChild (new RKPluginMapSelectionWidget (this), i18n ("Manage Plugins"));
+	configure_pluginmaps_pageitem = addChild (new RKPluginMapSelectionWidget (this), i18n ("Manage RKWard Plugins"));
 
 	connect (this, SIGNAL (currentPageChanged(KPageWidgetItem*,KPageWidgetItem*)), this, SLOT (slotPageChanged()));
 	QTimer::singleShot (0, this, SLOT (slotPageChanged()));
