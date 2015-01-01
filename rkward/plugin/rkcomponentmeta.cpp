@@ -34,7 +34,10 @@ QLatin1String any_max_version_tag ("max_version");
 
 RKComponentAboutData::RKComponentAboutData (const QDomElement& e, XMLHelper &xml) {
 	RK_TRACE (PLUGIN);
-	if (e.isNull ()) return;
+	if (e.isNull ()) {
+		valid = false;
+		return;
+	}
 
 	valid = true;
 	name = xml.i18nStringAttribute (e, "name", QString (), DL_INFO);
