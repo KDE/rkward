@@ -7,6 +7,7 @@ Description[pl]=Protokół dla uruchamiania odnośników w RKWard
 Description[pt]=Um protocolo para as ligações 'executar de novo' do RKWard
 Description[pt_BR]=Protocolo para as ligações 'executar novamente' do RKWard
 Description[sk]=Protokol pre bez proti odkazom RKWard
+Description[sv]=Ett protokoll för körning av RKWard mot länkar
 Description[uk]=Протокол для запуску RKWard для обробки посилань
 Description[x-test]=xxA protocol for RKWard's run again linksxx
 input=none
