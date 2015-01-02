@@ -22,7 +22,7 @@
 #'
 #' @param require A character vector with names of R packages that the dialog depends on.
 #' @param variables Either a character string to be included to read in all needed variables from the dialog (see \code{\link{rk.JS.scan}}),
-#'    or an object of class \code{rk.JS.var} which will be coerced into character. These variables will be defined in
+#'    or a (list of) objects of class \code{rk.JS.var} which will be coerced into character. These variables will be defined in
 #'    the \code{calculate()} and/or \code{doPrintout()} functions.
 #' @param globals Like \code{variables}, but these variables will be defined globally. If \code{variables} is set as well,
 #'    the function tries to remove duplicate definitions.
@@ -61,19 +61,36 @@
 rk.JS.doc <- function(require=c(), variables=NULL, globals=NULL, results.header=NULL, header.add=list(),
   preprocess=NULL, calculate=NULL, printout=NULL, doPrintout=NULL, load.silencer=NULL, gen.info=TRUE, indent.by="\t",
   guess.getter=FALSE){
+  # variable to determine whether to add setGlobalVars() to preprocess() later
+  addSetGlobalVars <- FALSE
 
   # some data transformation
-  if(inherits(variables, "rk.JS.var")){
-    variables <- rk.paste.JS(variables)
+  if(all(sapply(variables, function(x){inherits(x, "rk.JS.var")}))){
+    variables <- rk.paste.JS(
+      paste0(unlist(sapply(variables, function(x){rk.paste.JS(x, var=FALSE)})))
+    )
   } else {}
-  if(inherits(globals, "rk.JS.var")){
-    globals <- rk.paste.JS(globals, level=1)
+  if(inherits(variables, "rk.JS.var")){
+  } else {}
+  if(all(sapply(globals, function(x){inherits(x, "rk.JS.var")}))){
+    globalNames <- paste0("var ", unlist(sapply(globals, function(x){paste.JS.var(x, names.only=TRUE)})), ";", collapse="\n")
+    globalFunction <- paste0(
+      "function setGlobalVars(){\n",
+        paste0(
+          unlist(sapply(globals, function(x){rk.paste.JS(x, var=FALSE, level=2)})),
+          collapse="\n"
+        ),
+      "\n}",
+      collapse="\n"
+    )
+    globals <- paste0(globalNames, "\n\n", globalFunction)
+    addSetGlobalVars <- TRUE
   } else {}
 
   js.gen.info <- ifelse(isTRUE(gen.info), rk.paste.JS(generator.info, level=1), "")
 
   if(!is.null(globals)){
-    js.globals <- paste(
+    js.globals <- paste0(
       "// define variables globally\n",
       paste0(globals, collapse=""))
     if(!is.null(variables)){
@@ -107,6 +124,7 @@ rk.JS.doc <- function(require=c(), variables=NULL, globals=NULL, results.header=
       return(req.result)
     }))
   js.preprocess <- paste0("function preprocess(){\n",
+    ifelse(isTRUE(addSetGlobalVars), paste0(indent(2, by=indent.by), "setGlobalVars();\n"), ""),
     indent(2, by=indent.by), "// add requirements etc. here\n",
     paste(js.require, collapse=""),
     "\n",

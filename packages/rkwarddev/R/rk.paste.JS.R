@@ -40,6 +40,8 @@
 #' @param getter For \code{rk.JS.var} objects only: A character string, naming the JavaScript function which should be used to get the
 #'    values in the actual plugin. Depending on the XML element, \code{"getString"}, \code{"getBool"} or \code{"getList"} can be
 #'    useful alternatives. For backwards compatibility, the default is set to \code{"getValue"}.
+#' @param var For \code{rk.JS.var} objects only: Logical, if \code{FALSE} the variable(s) are assumed to already be defined (globally?)
+#'    and the JS keyword "var" will be omitted.
 #' @param empty.e For \code{rk.JS.ite} objects only: Logical, if \code{TRUE} will force to add empty \code{else \{\}} brackets when
 #'    there is no \code{else} statement defined, which is considered to enhance code readability by some.
 #' @return A character string.
@@ -60,7 +62,7 @@
 #' @export
 
 rk.paste.JS <- function(..., level=2, indent.by="\t", funct=NULL, array=NULL,
-  var.prefix=NULL, modifiers=NULL, default=NULL, join=NULL, getter=NULL, empty.e=FALSE){
+  var.prefix=NULL, modifiers=NULL, default=NULL, join=NULL, getter=NULL, var=TRUE, empty.e=FALSE){
   stopifnot(level > 0)
   all.objects <- list(...)
 
@@ -81,7 +83,7 @@ rk.paste.JS <- function(..., level=2, indent.by="\t", funct=NULL, array=NULL,
       result <- paste.JS.optionsset(this.object, level=level, indent.by=indent.by)
     } else if(inherits(this.object, "rk.JS.var")){
       result <- paste.JS.var(this.object, level=level, indent.by=indent.by, JS.prefix=var.prefix,
-        modifiers=modifiers, default=default, join=join, getter=getter)
+        modifiers=modifiers, default=default, join=join, getter=getter, var=var)
     } else if(inherits(this.object, "rk.JS.echo")){
       result <- slot(this.object, "value")
     } else if(inherits(this.object, "rk.JS.i18n")){

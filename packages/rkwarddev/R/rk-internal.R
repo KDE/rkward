@@ -948,8 +948,9 @@ paste.JS.options <- function(object, level=2, indent.by="\t", array=NULL, funct=
 # append.modifier: if a modifier is given, should that become part of the variable name? this is mostly
 #   important for "checkbox", which has "state" as default modifier, but using the checkbox object will not
 #   notice this. works only for the first modifier given.
+# var: if FALSE, the variable is assumed to be already defined (globally?) and "var " will be omitted
 paste.JS.var <- function(object, level=2, indent.by="\t", JS.prefix=NULL, modifiers=NULL, default=NULL, append.modifier=NULL,
-  join=NULL, getter=NULL, names.only=FALSE, check.modifiers=FALSE){
+  join=NULL, getter=NULL, names.only=FALSE, check.modifiers=FALSE, var=TRUE){
   # paste several objects
   results <- unlist(sapply(slot(object, "vars"), function(this.obj){
       paste.JS.var(this.obj,
@@ -961,7 +962,9 @@ paste.JS.var <- function(object, level=2, indent.by="\t", JS.prefix=NULL, modifi
           append.modifier=append.modifier,
           join=join,
           getter=getter,
-          names.only=names.only)}))
+          names.only=names.only,
+          check.modifiers=check.modifiers,
+          var=var)}))
   if(!isTRUE(names.only) & !is.null(results)){
     results <- paste(results, collapse="\n")
   }
@@ -1006,7 +1009,7 @@ paste.JS.var <- function(object, level=2, indent.by="\t", JS.prefix=NULL, modifi
       if(isTRUE(names.only)){
         results <- c(results, camelCode(c(JS.prefix, JS.var)))
       } else {
-        results <- paste0(main.indent, "var ", camelCode(c(JS.prefix, JS.var)), " = ", getter, "(\"", XML.var, "\")", join.code, ";")
+        results <- paste0(main.indent, ifelse(isTRUE(var), "var ", ""), camelCode(c(JS.prefix, JS.var)), " = ", getter, "(\"", XML.var, "\")", join.code, ";")
       }
     } else {}
     if(length(modifiers) > 0){
@@ -1024,7 +1027,7 @@ paste.JS.var <- function(object, level=2, indent.by="\t", JS.prefix=NULL, modifi
           if(isTRUE(names.only)){
             return(this.name)
           } else {
-            return(paste0(main.indent, "var ", this.name,
+            return(paste0(main.indent, ifelse(isTRUE(var), "var ", ""), this.name,
               " = ", getter, "(\"", XML.var, ".", this.modif, "\")", join.code, ";"))
           }
         })

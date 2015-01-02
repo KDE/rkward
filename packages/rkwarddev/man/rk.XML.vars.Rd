@@ -108,7 +108,7 @@ cat(pasteXML(test.vars))
 }
 \seealso{
 \code{\link[rkwarddev:rk.XML.varslot]{rk.XML.varslot}},
-   \code{\link[rkwarddev:rk.XML.varselector]{rk.XML.varselector}},
-   and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
+       \code{\link[rkwarddev:rk.XML.varselector]{rk.XML.varselector}},
+       and the \href{help:rkwardplugins}{Introduction to Writing Plugins for RKWard}
 }
 

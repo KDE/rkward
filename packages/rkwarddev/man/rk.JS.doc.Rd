@@ -13,7 +13,7 @@ rk.JS.doc(require = c(), variables = NULL, globals = NULL,
 \item{require}{A character vector with names of R packages that the dialog depends on.}
 
 \item{variables}{Either a character string to be included to read in all needed variables from the dialog (see \code{\link{rk.JS.scan}}),
-or an object of class \code{rk.JS.var} which will be coerced into character. These variables will be defined in
+or a (list of) objects of class \code{rk.JS.var} which will be coerced into character. These variables will be defined in
 the \code{calculate()} and/or \code{doPrintout()} functions.}
 
 \item{globals}{Like \code{variables},

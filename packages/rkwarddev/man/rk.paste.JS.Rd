@@ -5,7 +5,7 @@
 \usage{
 rk.paste.JS(..., level = 2, indent.by = "\\t", funct = NULL,
   array = NULL, var.prefix = NULL, modifiers = NULL, default = NULL,
-  join = NULL, getter = NULL, empty.e = FALSE)
+  join = NULL, getter = NULL, var = TRUE, empty.e = FALSE)
 }
 \arguments{
 \item{...}{Objects of class \code{rk.JS.ite}, \code{rk.JS.arr}, \code{rk.JS.opt},
@@ -47,6 +47,10 @@ values in the actual plugin. Depending on the XML element, \code{"getString"},
       \code{"getBool"} or \code{"getList"} can be
 useful alternatives. For backwards compatibility,
       the default is set to \code{"getValue"}.}
+
+\item{var}{For \code{rk.JS.var} objects only: Logical,
+      if \code{FALSE} the variable(s) are assumed to already be defined (globally?)
+and the JS keyword "var" will be omitted.}
 
 \item{empty.e}{For \code{rk.JS.ite} objects only: Logical,
       if \code{TRUE} will force to add empty \code{else \{\}} brackets when

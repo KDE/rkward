@@ -9,7 +9,7 @@ i18n(msgid, ..., context = NULL, plural = NULL, newline = "")
 \item{msgid}{Character string, the message to be translated (if applicable,
       its singular form).}
 
-\item{...}{Either character string wich will be pasted unquoted to be used in conjunctions with
+\item{...}{Either character string which will be pasted unquoted to be used in conjunctions with
 placeholders in msgid,
       or XiMpLe.node objects of which the JavaScript variable name will be
 used.}
