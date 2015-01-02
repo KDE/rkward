@@ -692,7 +692,7 @@ QStringList RKComponentMap::listPlugins () {
 	RK_TRACE (PLUGIN);
 
 	QStringList ret;
-#if QT_VERSION >= 0x040500
+#if QT_VERSION >= 0x040700
 	ret.reserve (components.size () * 4);
 #endif
 	for (ComponentMap::const_iterator it = components.constBegin (); it != components.constEnd (); ++it) {
