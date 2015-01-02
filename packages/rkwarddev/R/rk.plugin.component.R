@@ -175,7 +175,7 @@ rk.plugin.component <- function(about, xml=list(), js=list(), rkh=list(),
       } else {}
     }
     if(!"results.header" %in% got.JS.options) {
-      js[["results.header"]] <- paste0("\"", name.orig, " results\"")
+      js[["results.header"]] <- paste0(name.orig, " results")
     } else {}
     js <- js.try.scan(XML.plugin=XML.plugin, scan=scan, js=js, guess.getter=guess.getter)
     JS.code <- rk.JS.doc(
