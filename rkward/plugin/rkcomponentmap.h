@@ -2,7 +2,7 @@
                           rkcomponentmap.h  -  description
                              -------------------
     begin                : Thu May 12 2005
-    copyright            : (C) 2005-2014 by Thomas Friedrichsmeier
+    copyright            : (C) 2005-2015 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -115,10 +115,11 @@ private:
 
 class QDomElement;
 class XMLHelper;
+class RKContextHandler;
 
 /** This class keeps a QDomDocument that is a represenation of the GUI using KDEs XML-GUI format (a ui.rc). Use createMenus () to have it parse the menu descriptions from a .pluginmap file. It will adjust the XML description accordingly. When done, you can use to generated gui_xml to set it as the xmlGUIBuildDocument of a KXMLGUIClient. 
 
-This class represents the common functionality between RKComponentMap and RKContextMap.
+One instance of this class is generally around, persistently: The RKComonentMap (with context "global"). Further instances are around one for each context.
 
 @author Thomas Friedrichsmeier
 */
@@ -151,8 +152,12 @@ public:
 @returns number of plugins/menu-entries added successfully */
 	int createMenus (XMLHelper &xml, const QDomElement& hierarchy_description, const QString& cnamespace);
 	void finalize ();
+
+/** Create a context handler for this context. */
+	RKContextHandler *makeContextHandler (QObject *parent, bool create_actions=true);
+	QStringList components () { return component_menus.keys (); };
 protected:
-	RKComponentGUIXML ();
+	RKComponentGUIXML (const QString &context_id);
 	virtual ~RKComponentGUIXML ();
 
 /** reset the xml file */
@@ -164,15 +169,26 @@ protected:
 /** The generated XML GUI description in KDEs ui.rc format */
 	QDomDocument gui_xml;
 friend class RKComponentMap;
-	QMap<RKComponentHandle*, QString> component_menus;
+	QMap<QString, QString> component_menus;
+
+/** Add a component override, e.g. hiding component "t_test" in context "global". Overrides are persistent per session. */
+	static void addOverride (const QString &id, const QString &context, bool visible);
+/** Clear component overrides (see addOverride()). */
+	static void clearOverrides ();
 private:
 	int addEntries (RKComponentGUIXML::Menu *menu, XMLHelper &xml, const QDomElement description, const QString& cnamespace);
 	void menuItemsToXml (const RKComponentGUIXML::Menu *menu, QDomElement &xml);
 	void resolveComponentLabelsAndSortMenu (Menu *menu, const QString &menu_path=QString ());
+	struct ComponentOverride {
+		QString context;
+		bool hidden;
+	};
+	static QMultiMap<QString, ComponentOverride> overrides;
+	QString context;
+
+	void appendPluginToList (const QString &id, QStringList *list);
 };
 
-
-class RKContextMap;
 
 class RKPluginMapParseResult {
 public:
@@ -218,7 +234,7 @@ public:
 	static RKComponentMap *getMap () { return component_map; };
 	static void initialize ();
 /** returns the context identified by id */
-	static RKContextMap *getContext (const QString &id);
+	static RKComponentGUIXML *getContext (const QString &id);
 
 	enum ComponentInvocationMode {
 		ManualSubmit,
@@ -230,6 +246,7 @@ public:
 	static bool invokeComponent (const QString &component_id, const QStringList &serialized_settings, ComponentInvocationMode submit_mode = ManualSubmit, QString *message=0, RCommandChain *in_chain = 0);
 /** @returns for rk.list.plugins(): Return a list of all currently registered component ids, their context, menu, and label (i.e. current four strings per component) */
 	QStringList listPlugins ();
+	void setPluginStatus (const QStringList &ids, const QStringList &contexts, const QStringList& visible);
 	bool isPluginMapLoaded (const QString& abs_filename) const;
 public slots:
 /** Slot called, when a menu-item for a component is selected. Responsible for creating the GUI. */
@@ -242,16 +259,15 @@ private:
 
 	RKComponentHandle* getComponentHandleLocal (const QString &id);
 	QString getComponentIdLocal (RKComponentHandle* component);
-	RKContextMap *getContextLocal (const QString &id);
 
-	typedef QMap<QString, RKContextMap*> RKComponentContextMap;
+	typedef QMap<QString, RKComponentGUIXML*> RKComponentContextMap;
 	RKComponentContextMap contexts;
 
 	QList<RKPluginMapFile*> pluginmapfiles;
 
 	static RKComponentMap *component_map;
 friend class RKComponentHandle;
-	// most components have neither attributes specific dependencies (other than dependencies shared by all plugins in a pluginmap).
+	// most components have neither attributes nor specific dependencies (other than dependencies shared by all plugins in a pluginmap).
 	// therefore, it saves a few bytes to store attributes and specific dependencies in a central map, rather than keeping structures
 	// per plugin
 	struct AttributeValueMap {

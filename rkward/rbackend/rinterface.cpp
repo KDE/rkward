@@ -580,6 +580,14 @@ QStringList RInterface::processPlainGenericRequest (const QStringList &calllist)
 	} else if (call == "listPlugins") {
 		RK_ASSERT (calllist.count () == 1);
 		return RKComponentMap::getMap ()->listPlugins ();
+	} else if (call == "setPluginStatus") {
+		QStringList params = calllist.mid (1);
+		RK_ASSERT ((params.size () % 3) == 0);
+		const int rows = params.size () / 3;
+		QStringList ids = params.mid (0, rows);
+		QStringList contexts = params.mid (rows, rows);
+		QStringList visible = params.mid (rows*2, rows);
+		RKComponentMap::getMap ()->setPluginStatus (ids, contexts, visible);
 	} else if (call == "loadPluginMaps") {
 		bool force = (calllist.value (1) == "force");
 		bool reload = (calllist.value (2) == "reload");

@@ -1,9 +1,9 @@
-#' Call or list built-in RKWard plugin(s)
+#' Call built-in RKWard plugin(s)
 #' 
 #' \code{rk.call.plugin} provides a high level wrapper to call any plugin
 #' available in RKWard. The exact string to be used as \code{plugin}, and the
 #' list of arguments available for a particular plugin, are generally not
-#' transparent to the user.\code{rk.list.plugins} can be used to obtain a list
+#' transparent to the user. \code{rk.list.plugins} can be used to obtain a list
 #' of current plugins. For plugin arguments, it is recommended to run the
 #' plugin, and inspect the "Run again" link that is generated on the output.
 #' 
@@ -20,10 +20,6 @@
 #' run in the global context. Any local variables of the calling context are
 #' not available to the plugin.
 #' 
-#' \code{rk.list.plugins} returns the a list of all currently
-#' registered plugins (in loaded pluginmaps).
-#' 
-#' @aliases rk.call.plugin rk.list.plugins
 #' @param plugin character string, giving the name of the plugin to call. See
 #'   Details.
 #' @param \dots arguments passed to the \code{plugin}
@@ -40,17 +36,10 @@
 #'   an error.
 #' @return \code{rk.call.plugin} returns \code{TRUE} invisibly.
 #' 
-#' \code{rk.list.plugins} returns a data.frame listing plugin ids, context, menu path
-#'   (tab-separated), and label of the plugin. If a plugin is available in more
-#'   than one context, it will be listed several times.
 #' @author Thomas Friedrichsmeier \email{rkward-devel@@lists.sourceforge.net}
 #' @seealso \code{\link{rk.results}}, \url{rkward://page/rkward_output}
 #' @keywords utilities
-#' @rdname rk.call.plugin
 #' @examples
-#' 
-#' ## list all current plugins
-#' rk.list.plugins ()
 #' 
 #' ## "t_test_two_vars" plugin:
 #' ## see the output: Windows->Show Output
@@ -64,12 +53,6 @@
 #'   submit.mode="submit")
 #' })
 #'
-#' @export
-rk.list.plugins <- function () {
-	plugs <- .rk.do.plain.call("listPlugins")
-	as.data.frame (matrix (plugs, ncol=4, byrow=TRUE, dimnames=list (1:(length (plugs) / 4), c ("ID", "Context", "Menupath", "Label"))), stringsAsFactors=FALSE)
-}
-
 #' @export
 #' @rdname rk.call.plugin
 "rk.call.plugin" <- function (plugin, ..., submit.mode = c ("manual", "auto", "submit")) {
@@ -136,4 +119,57 @@ rk.list.plugins <- function () {
 #' @rdname rk.load.pluginmaps
 "rk.load.pluginmaps" <- function (pluginmap.files=NULL, force.add = TRUE, force.reload = TRUE) {
 	.rk.do.plain.call ("loadPluginMaps", c (ifelse (isTRUE (force.add), "force", "noforce"), ifelse (isTRUE (force.reload), "reload", "noreload"), as.character (pluginmap.files)), synchronous=FALSE)
+}
+
+#' List of modify loaded plugins
+#'
+#' \code{rk.list.plugins} returns the a list of all currently
+#' registered plugins (in loaded pluginmaps).
+#' \code{rk.set.plugin.status} allows to control the status of the given plugin(s). Currently,
+#'    only visibility can be controlled.
+#'
+#' @param id vector of ids (character) of the plugins to modify
+#' @param context in which the plugin should be shown / hidden. This can either be "",
+#'    meaning the plugin will be affected in all contexts it occurs in, or a character vector
+#'    of the same length as id.
+#' @param visible logical, controlling whether the plugin should be shown (\code{TRUE}) or
+#'    hidden (\code{FALSE}).
+#'
+#' @return \code{rk.list.plugins} returns a data.frame listing plugin ids, context, menu path
+#'   (tab-separated), and label of the plugin. If a plugin is available in more
+#'   than one context, it will be listed several times. The exact layout (number and order of columns)
+#'   of this data.frame might be subject to change. However, the \bold{names} of the columns in the
+#'   returned data.frame are expected to remain stable. \code {rk.set.plugin.status} returns \code{NULL}, invisibly
+#'
+#' @author Thomas Friedrichsmeier \email{rkward-devel@@lists.sourceforge.net}
+#' @keywords utilities
+#'
+#' @seealso \code{\link{rk.call.plugin}} for invoking a plugin, programatically
+#'
+#' @examples
+#' ## list all current plugins
+#' rk.list.plugins ()
+#'
+#' ## NOT RUN
+#' ## hide t.test plugin
+#' rk.set.plugin.status ("t_test", visible=FALSE)
+#' ## END NOT RUN
+#'
+#' @export
+#' @rdname rk.list.plugins
+#' @aliases rk.list.plugins rk.set.plugin.status
+"rk.list.plugins" <- function () {
+	plugs <- .rk.do.plain.call("listPlugins")
+	columns = c ("ID", "Context", "Menupath", "Label")
+	as.data.frame (matrix (plugs, ncol=length (columns), byrow=TRUE, dimnames=list (1:(length (plugs)/length (columns)), columns)), stringsAsFactors=FALSE)
+}
+
+#' @export
+#' @rdname rk.list.plugins
+"rk.set.plugin.status" <- function (id, context="", visible=TRUE) {
+	id <- as.character (id)
+	context <- rep (as.character (context), length.out=length (id))
+	visible <- rep (as.character (as.numeric (visible)), length.out=length (id))
+	.rk.do.plain.call ("setPluginStatus", c (id, context, visible))
+	invisible (NULL)
 }

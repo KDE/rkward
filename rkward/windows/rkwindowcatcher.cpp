@@ -708,7 +708,7 @@ RKCaughtX11WindowPart::RKCaughtX11WindowPart (RKCaughtX11Window *window) : KPart
 	action->setVisible (false);
 
 	// initialize context for plugins
-	RKContextMap *context = RKComponentMap::getContext ("x11");
+	RKComponentGUIXML *context = RKComponentMap::getContext ("x11");
 	if (!context) return;
 	RKContextHandler *context_handler = context->makeContextHandler (this);
 	insertChildClient (context_handler);

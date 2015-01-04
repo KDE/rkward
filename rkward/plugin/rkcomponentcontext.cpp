@@ -2,7 +2,7 @@
                           rkcomponentcontext  -  description
                              -------------------
     begin                : Mon Jan 22 2007
-    copyright            : (C) 2007, 2014 by Thomas Friedrichsmeier
+    copyright            : (C) 2007, 2014, 2015 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -25,39 +25,21 @@
 
 #include "../debug.h"
 
-RKContextMap::RKContextMap (const QString &id) : RKComponentGUIXML () {
+RKContextHandler *RKComponentGUIXML::makeContextHandler (QObject *parent, bool create_actions) {
 	RK_TRACE (PLUGIN);
 
-	RKContextMap::id = id;
-}
-
-RKContextMap::~RKContextMap () {
-	RK_TRACE (PLUGIN);
-}
-
-RKContextHandler *RKContextMap::makeContextHandler (QObject *parent, bool create_actions) {
-	RK_TRACE (PLUGIN);
-
-	RKContextHandler *handler = new RKContextHandler (parent, gui_xml, id);
+	RKContextHandler *handler = new RKContextHandler (parent, gui_xml, context);
 	if (create_actions) {
-		for (QStringList::const_iterator it = component_ids.constBegin (); it != component_ids.constEnd (); ++it) {
-			RKComponentHandle *handle = RKComponentMap::getComponentHandle (*it);
+		const QStringList ids = components ();
+		for (int i = 0; i < ids.size (); ++i) {
+			RKComponentHandle *handle = RKComponentMap::getComponentHandle (ids[i]);
 			if (handle->isPlugin ()) {
-				handler->addAction (*it, handle);
+				handler->addAction (ids[i], handle);
 			}
 		}
 	}
 	return handler;
 }
-
-void RKContextMap::addedEntry (const QString &id, RKComponentHandle *) {
-	RK_TRACE (PLUGIN);
-
-	component_ids.append (id);
-}
-
-/////////////////// END RKContextMap /////////////////////
-//////////////// BEGIN RKContextHandler //////////////////
 
 RKContextHandler::RKContextHandler (QObject *parent, const QDomDocument &gui_xml, const QString &id) : QObject (parent), RKComponentBase (), KXMLGUIClient () {
 	RK_TRACE (PLUGIN);
