@@ -33,9 +33,7 @@ RKContextHandler *RKComponentGUIXML::makeContextHandler (QObject *parent, bool c
 		const QStringList ids = components ();
 		for (int i = 0; i < ids.size (); ++i) {
 			RKComponentHandle *handle = RKComponentMap::getComponentHandle (ids[i]);
-			if (handle->isPlugin ()) {
-				handler->addAction (ids[i], handle);
-			}
+			handler->addAction (ids[i], handle);
 		}
 	}
 	return handler;

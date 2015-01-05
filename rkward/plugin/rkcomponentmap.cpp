@@ -89,7 +89,7 @@ void RKComponentGUIXML::resolveComponentLabelsAndSortMenu (Menu *menu, const QSt
 			Entry *entry = group->entries[j];
 			if (!entry->is_menu) {
 				RKComponentHandle* handle = RKComponentMap::getComponentHandle (entry->id);
-				if ((!handle) || (!handle->isPlugin ())) {
+				if (!handle) {
 					RK_DEBUG (PLUGIN, DL_ERROR, "No such component found while creating menu-entries or component is not a standalone plugin: \"%s\". No entry created.", qPrintable (entry->id));
 					delete (group->entries.takeAt (j));
 					--j;
@@ -650,7 +650,7 @@ RKPluginMapParseResult RKComponentMap::addPluginMap (const QString& plugin_map_f
 		}
 
 		QString filename = xml.getStringAttribute((*it), "file", QString (), DL_WARNING);
-		int type = xml.getMultiChoiceAttribute ((*it), "type", "standard", 0, DL_WARNING);
+		xml.getMultiChoiceAttribute ((*it), "type", "standard", 0, DL_WARNING);	// unused, but documented for future extension; TODO: remove?
 		QString label = xml.i18nStringAttribute ((*it), "label", i18n ("(no label)"), DL_WARNING);
 
 		if (local_components.contains (id)) {
@@ -663,7 +663,7 @@ RKPluginMapParseResult RKComponentMap::addPluginMap (const QString& plugin_map_f
 			ret.addAndPrintError (DL_ERROR, i18n ("Specified file '%1' for component id \"%2\" does not exist or is not readable. Ignoring.", filename, id));
 		} else {
 			// create and initialize component handle
-			RKComponentHandle *handle = new RKComponentHandle (pluginmap_file_desc, filename, label, (RKComponentType) type);
+			RKComponentHandle *handle = new RKComponentHandle (pluginmap_file_desc, filename, label);
 			XMLChildList attributes_list = xml.getChildElements (*it, "attribute", DL_DEBUG);
 			for (XMLChildList::const_iterator ait=attributes_list.begin (); ait != attributes_list.end (); ++ait) {
 				handle->addAttribute (xml.getStringAttribute (*ait, "id", "noid", DL_WARNING), xml.getStringAttribute (*ait, "value", QString (), DL_ERROR), xml.i18nStringAttribute (*ait, "label", QString (), DL_ERROR));
@@ -716,12 +716,10 @@ void RKComponentMap::activateComponent () {
 void RKComponentMap::addedEntry (const QString &id, RKComponentHandle *handle) {
 	RK_TRACE (PLUGIN);
 
-	if (handle->isPlugin ()) {
-		handle->setAccessible (true);
-		KAction *action = actionCollection ()->addAction (id, this, SLOT (activateComponent()));
-		action->setText (handle->getLabel ());
-		action->setShortcutConfigurable (true);
-	}
+	handle->setAccessible (true);
+	KAction *action = actionCollection ()->addAction (id, this, SLOT (activateComponent()));
+	action->setText (handle->getLabel ());
+	action->setShortcutConfigurable (true);
 }
 
 void RKComponentGUIXML::appendPluginToList (const QString& id, QStringList* list) {
@@ -778,10 +776,9 @@ void RKComponentMap::setPluginStatus (const QStringList& ids, const QStringList&
 
 #include "rkstandardcomponent.h"
 
-RKComponentHandle::RKComponentHandle (RKPluginMapFile *pluginmap, const QString &rel_filename, const QString &label, RKComponentType type) {
+RKComponentHandle::RKComponentHandle (RKPluginMapFile *pluginmap, const QString &rel_filename, const QString &label) {
 	RK_TRACE (PLUGIN);
 
-	RKComponentHandle::type = type;
 	RKComponentHandle::filename = rel_filename;
 	RKComponentHandle::label = label;
 	RKComponentHandle::plugin_map = pluginmap;
@@ -795,7 +792,6 @@ RKComponentHandle::~RKComponentHandle () {
 
 RKStandardComponent *RKComponentHandle::invoke (RKComponent *parent_component, QWidget *parent_widget) {
 	RK_TRACE (PLUGIN);
-	RK_ASSERT (isPlugin ());
 
 	return (new RKStandardComponent (parent_component, parent_widget, getFilename (), this));
 }

@@ -71,13 +71,11 @@ class KActionCollection;
 */
 class RKComponentHandle {
 public:
-	RKComponentHandle (RKPluginMapFile *pluginmap, const QString &rel_filename, const QString &label, RKComponentType type);
+	RKComponentHandle (RKPluginMapFile *pluginmap, const QString &rel_filename, const QString &label);
 	virtual ~RKComponentHandle ();
 
 	QString getFilename () const { return plugin_map->makeFileName (filename); };
 	QString getLabel () const { return label; };
-	RKComponentType getType () const { return type; };
-	bool isPlugin () const { return (type == Standard); };
 	QString getPluginmapFilename () const;
 
 	RKStandardComponent *invoke (RKComponent *parent_component, QWidget *parent_widget);
