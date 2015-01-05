@@ -1,6 +1,5 @@
 - Fix a hang-on-exit issue
 - Add R function rk.set.plugin.status() to allow further customization of loaded plugins (hiding of individual menu entries)
-  - TODO: With the improved interface to plugins from R, make sure plugins can actually be modified at runtime without crashing (close and re-open them)
 - Pluginmap-management was reworked, partially, and moved to Settings->Manage R packages and plugins
 - Provide more detailed information on loaded plugins in rk.list.plugins()
 - Allow to override plugins from a different pluginmap (the plugin with the highest specified version is used)

@@ -793,7 +793,7 @@ RKComponentHandle::~RKComponentHandle () {
 RKStandardComponent *RKComponentHandle::invoke (RKComponent *parent_component, QWidget *parent_widget) {
 	RK_TRACE (PLUGIN);
 
-	return (new RKStandardComponent (parent_component, parent_widget, getFilename (), this));
+	return (new RKStandardComponent (parent_component, parent_widget, getFilename (), RKComponentMap::getComponentId (this)));
 }
 
 QString RKComponentHandle::getAttributeValue (const QString &attribute_id) {

@@ -41,7 +41,7 @@ public:
 @param parent_component Parent component (or 0, if this is going to be a top-level component)
 @param parent_widget Parent widget (typically 0, if this is going to be a top-level component)
 @param filename Filename of the XML-file to construct this component from */
-	RKStandardComponent (RKComponent *parent_component, QWidget *parent_widget, const QString &filename, RKComponentHandle *handle);
+	RKStandardComponent (RKComponent *parent_component, QWidget *parent_widget, const QString &filename, const QString &id);
 /** destructor */
 	~RKStandardComponent ();
 /** reimplemented to update code on changes*/
@@ -65,10 +65,10 @@ public:
 /** set the GUI caption (if this is a top-level gui) */
 	void setCaption (const QString &caption);
 /** return the filename of the xml file */
-	QString getFilename () { return filename; };
+	QString getFilename () const { return filename; };
 	XMLHelper *getXmlHelper ();
-	RKComponentHandle *getHandle () { return handle; };
-	bool haveHelp () { return have_help; };
+	QString getId () const { return id; };
+	bool haveHelp () const { return have_help; };
 /** Submits the current code (by simulating a click on the ok button).
 @param in_chain The command chain to insert the command in (0 for regular command stack).
 @return false, if the plugin-code could not be submitted (e.g. plugin was not satisfied) */
@@ -109,7 +109,7 @@ private:
 	ScriptBackend *backend;
 	RKComponentScriptingProxy* scripting;
 	RKStandardComponentGUI *gui;
-	RKComponentHandle *handle;
+	QString id;
 	RKStandardComponentStack *wizard;
 	bool update_pending;
 	RCommandChain *command_chain;
