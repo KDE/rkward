@@ -279,6 +279,21 @@ int RKComponentGUIXML::addEntries (RKComponentGUIXML::Menu *menu, XMLHelper &xml
 				continue;
 			}
 
+			// check if there is an override hiding this plugin (TODO: what if there is more than one override?)
+			bool hidden = false;
+			OverrideMap::const_iterator ov = overrides.constFind (id);
+			while (ov != overrides.constEnd () && ov.key () == id) {
+				const ComponentOverride &over = ov.value ();
+				if (over.context.isEmpty () || over.context == context) {
+					if (over.hidden) {
+						hidden = true;
+						break;
+					}
+				}
+				++ov;
+			}
+			if (hidden) continue;
+
 			Entry *plug = new Entry ();
 			plug->id = id;
 			insertEntry (menu, plug, add_to);
@@ -295,6 +310,17 @@ int RKComponentGUIXML::addEntries (RKComponentGUIXML::Menu *menu, XMLHelper &xml
 // static
 QMultiMap<QString, RKComponentGUIXML::ComponentOverride> RKComponentGUIXML::overrides;
 void RKComponentGUIXML::addOverride (const QString& id, const QString& context, bool visible) {
+
+	OverrideMap::iterator ov = overrides.find (id);
+	while (ov != overrides.end () && ov.key () == id) {
+		const ComponentOverride &over = ov.value ();
+		if (over.context == context) {
+			overrides.erase (ov);
+			break;
+		}
+		++ov;
+	}
+
 	ComponentOverride over;
 	over.context = context;
 	over.hidden = !visible;
@@ -742,6 +768,8 @@ void RKComponentMap::setPluginStatus (const QStringList& ids, const QStringList&
 	for (int i = 0; i < ids.size (); ++i) {
 		addOverride (ids[i], _contexts[i], (_visible[i] == "1"));
 	}
+
+	RKWardMainWindow::getMain ()->initPlugins ();
 }
 
 

@@ -133,13 +133,21 @@
 #'    meaning the plugin will be affected in all contexts it occurs in, or a character vector
 #'    of the same length as id.
 #' @param visible logical, controlling whether the plugin should be shown (\code{TRUE}) or
-#'    hidden (\code{FALSE}).
+#'    hidden (\code{FALSE}). Hidden plugins are essentially removed from the menu. They may still
+#'    be accessible embedded into other plugins.
 #'
 #' @return \code{rk.list.plugins} returns a data.frame listing plugin ids, context, menu path
 #'   (tab-separated), and label of the plugin. If a plugin is available in more
 #'   than one context, it will be listed several times. The exact layout (number and order of columns)
 #'   of this data.frame might be subject to change. However, the \bold{names} of the columns in the
-#'   returned data.frame are expected to remain stable. \code {rk.set.plugin.status} returns \code{NULL}, invisibly
+#'   returned data.frame are expected to remain stable.
+#'   \code{rk.set.plugin.status} returns \code{NULL}, invisibly
+#'
+#' \bold{Note}: Each call to \code{rk.set.plugin.status} will result in a complete rebuild of the
+#'              menu (in the current implementation). While this should be hardly noticeable in interactive
+#'              use, it could be an issue when changing the status of many plugins, programatically.
+#'              In this case, make sure to do all changes in \bold{one} call to \code{rk.set.plugin.status},
+#'              rather than many separate calls.
 #'
 #' @author Thomas Friedrichsmeier \email{rkward-devel@@lists.sourceforge.net}
 #' @keywords utilities
@@ -152,7 +160,7 @@
 #'
 #' ## NOT RUN
 #' ## hide t.test plugin
-#' rk.set.plugin.status ("t_test", visible=FALSE)
+#' rk.set.plugin.status ("rkward::t_test", visible=FALSE)
 #' ## END NOT RUN
 #'
 #' @export

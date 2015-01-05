@@ -176,6 +176,7 @@ private:
 	friend class RKSettingsModule;
 	friend class RKSettingsModulePlugins;
 	friend class RKSettings;
+	friend class RKComponentMap;
 
 	/** Finds plugins and inserts them into the menu-structure */
 	void initPlugins (const QStringList &automatically_added = QStringList ());

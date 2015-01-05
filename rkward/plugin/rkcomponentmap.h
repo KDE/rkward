@@ -183,7 +183,8 @@ private:
 		QString context;
 		bool hidden;
 	};
-	static QMultiMap<QString, ComponentOverride> overrides;
+	typedef QMultiMap<QString, ComponentOverride> OverrideMap;
+	static OverrideMap overrides;
 	QString context;
 
 	void appendPluginToList (const QString &id, QStringList *list);
