@@ -12,8 +12,7 @@ Be sure to save your workspace before using this plugin, as your variables will 
 
 	<settings>
 		<setting id="file">The filename of the file to load</setting>
-		<setting id="other_env">Should the data be loaded into another (specified environment) instead of the global environment?</setting>
-		<setting id="envir">Only applicable, if the above option is checked. Name of the environment to load the data to. If this does not yet exist, it will be created. If it already exists, it will be overwritten completely, i.e. deleting all objects inside it!</setting>
+		<setting id="envir">Check this option (and specify an environment), in order to load the data into an environment other than .GlobalEnv. If the specified environment does not yet exist, it will be created. If it already exists, it will be overwritten completely, i.e. deleting all objects inside it!</setting>
 	</settings>
 	<related>
 		<ul>
