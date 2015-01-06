@@ -17,7 +17,7 @@ function calculate () {
 }
 
 function printout () {
-	makeHeaderCode ("Load data", new Array("File",  getValue ("file"), "Import to environment",  envir));
+	new Header (i18n ("Load data")).addFromUI ("file").add (i18n ("Import to environment"), envir).print ();
 }
 
 

@@ -547,6 +547,48 @@ get.by.role <- function(persons, role="aut"){
 } ## end function get.by.role()
 
 
+## function get.authors()
+get.authors <- function(description, maintainer=TRUE, contributor=FALSE, copyright=FALSE){
+  if("Authors@R" %in% names(description)){
+    gotPersons <- TRUE
+    authorsFromDescription <- description[["Authors@R"]]
+  } else if("Author@R" %in% names(description)){
+    gotPersons <- TRUE
+    authorsFromDescription <- description[["Author@R"]]
+  } else {
+    gotPersons <- FALSE
+  }
+  
+  if(isTRUE(gotPersons)){
+    got.aut <- paste(format(get.by.role(eval(parse(text=authorsFromDescription))), include=c("given", "family")), collapse=", ")
+    got.cre <- ifelse(isTRUE(maintainer),
+      paste(format(get.by.role(eval(parse(text=authorsFromDescription)), role="cre"), include=c("given", "family", "email")), collapse=", "),
+      "")
+    got.ctb <- ifelse(isTRUE(contributor),
+      paste(format(get.by.role(eval(parse(text=authorsFromDescription)), role="ctb"), include=c("given", "family")), collapse=", "),
+      "")
+    got.cph <- ifelse(isTRUE(copyright),
+      paste(format(get.by.role(eval(parse(text=authorsFromDescription)), role="cph"), include=c("given", "family")), collapse=", "),
+      "")
+  } else {
+    got.aut <- description[["Author"]]
+    got.cre <- ifelse(isTRUE(maintainer),
+      description[["Maintainer"]],
+      "")
+    # contributors should already be named in got.aut
+    got.ctb <- ""
+    got.cph <- ""
+  }
+  got.cre.clean <- gsub("<([^@]*)@([^>]*)>", "\\\\email{\\1@@\\2}", gsub("\n[[:space:]]*", "\n#' ", got.cre))
+  # append contributors
+  if(isTRUE(contributor) && got.ctb != ""){
+    got.aut <- paste0(got.aut, ", with contributions from ", got.ctb)
+  } else {}
+  gotAuthors <- list(aut=got.aut, cre=got.cre, cre.clean=got.cre.clean, ctb=got.ctb, cph=got.cph)
+  return(gotAuthors)
+} ## end function get.authors()
+
+
 ## function check.ID()
 # - node: a XiMpLe.node to search for an ID
 # - search.environment: if TRUE, the internal environment is searched for the ID

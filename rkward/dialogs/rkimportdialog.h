@@ -25,7 +25,7 @@
 #include <khbox.h>
 
 class QComboBox;
-class RKContextMap;
+class RKComponentGUIXML;
 class RKImportDialogFormatSelector;
 
 /** This dialog is designed to allow the user to select a file, and file format. After that a suitable plugin
@@ -53,7 +53,7 @@ private:
 	QStringList format_labels;
 	QStringList filters;
 	QStringList component_ids;
-	RKContextMap *context;
+	RKComponentGUIXML *context;
 };
 
 /** Internal helper class to RKImportDialog. Needed solely to work around a design flaw in the KFileDialog API */

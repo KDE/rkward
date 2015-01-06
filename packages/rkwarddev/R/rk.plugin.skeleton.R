@@ -364,11 +364,12 @@ rk.plugin.skeleton <- function(about, path=tempdir(),
   ## create DESCRIPTION file
   if("desc" %in% create){
     if(isTRUE(checkCreateFiles(description.file, ow=overwrite, action="desc"))){
-      authors <- XML2person(about.node, eval=TRUE)
-      all.authors <- format(get.by.role(authors, role="aut"),
-        include=c("given", "family", "email"), braces=list(email=c("<", ">")))
-      all.maintainers <- format(get.by.role(authors, role="cre"),
-        include=c("given", "family", "email"), braces=list(email=c("<", ">")))
+      # R replaces the @ with a dot, so we need to rename it as a workaround
+      authors.person <- data.frame(AuthorsR=paste0("c(", XML2person(about.node), ")"), stringsAsFactors=FALSE)
+      colnames(authors.person)[1] <- "Authors@R"
+      authors <- get.authors(authors.person, maintainer=TRUE, contributor=TRUE)
+      all.authors <- authors[["aut"]]
+      all.maintainers <- authors[["cre"]]
 
 ## TODO: check and add the commented values here:
       desc <- data.frame(

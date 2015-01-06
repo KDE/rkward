@@ -1,7 +1,7 @@
 <h1>Import SPSS data</h1>
 <h2>Parameters</h2>
-<ul><li>File: import_export_plugins_testfile.sav</li>
-<li>Import as: my.spss.data</li>
+<ul><li>File name: import_export_plugins_testfile.sav</li>
+<li>Object to save to: my.spss.data</li>
 </ul>
 DATE<br />
 

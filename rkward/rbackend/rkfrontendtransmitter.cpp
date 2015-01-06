@@ -125,6 +125,7 @@ void RKFrontendTransmitter::run () {
 
 	connection->close ();
 	backend->waitForFinished ();
+	delete backend;	// otherwise it will be deleted via the constructor from the main thread, which can cause hangs.
 }
 
 void RKFrontendTransmitter::connectAndEnterLoop () {

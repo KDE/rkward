@@ -27,7 +27,7 @@ function calculate () {
 	makeEncodingCall ('data');
 	if (getValue ("convert_var_labels")) {
 		echo ('\n');
-		echo ('# set variable labels for use in RKWard\n');
+		comment ('set variable labels for use in RKWard');
 		echo ('labels <- attr (data, "variable.labels");\n');
 		echo ('if (!is.null (labels)) {\n');
 		echo ('	for (i in 1:length (labels)) {\n');
@@ -39,13 +39,13 @@ function calculate () {
 		echo ('}\n');
 	}
 	echo ('\n');
-	echo ('.GlobalEnv$' + object + ' <- data		# assign to globalenv()\n');
+	echo ('.GlobalEnv$' + object + ' <- data		'); comment ('assign to globalenv()');
 	if (getValue ("doedit") && data_frame) {
 		echo ('rk.edit (.GlobalEnv$' + object + ')\n');
 	}
 }
 
 function printout () {
-	makeHeaderCode ("Import SPSS data", new Array("File",  getValue ("file"), "Import as", getValue ("saveto")));
+	new Header (i18n ("Import SPSS data")).addFromUI ("file").addFromUI ("saveto").print ();
 }
 

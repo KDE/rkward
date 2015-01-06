@@ -64,11 +64,11 @@
 #include "../debug.h"
 
 
-RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget *parent_widget, const QString &filename, RKComponentHandle *handle) : RKComponent (parent_component, parent_widget) {
+RKStandardComponent::RKStandardComponent (RKComponent *parent_component, QWidget *parent_widget, const QString &filename, const QString &id) : RKComponent (parent_component, parent_widget) {
 	RK_TRACE (PLUGIN);
 
 	RKStandardComponent::filename = filename;
-	RKStandardComponent::handle = handle;
+	RKStandardComponent::id = id;
 	command_chain = 0;
 	backend = 0;
 	scripting = 0;
@@ -225,7 +225,10 @@ void RKStandardComponent::setCaption (const QString &caption) {
 XMLHelper* RKStandardComponent::getXmlHelper () {
 	RK_TRACE (PLUGIN);
 
-	if (!xml) xml = new XMLHelper (filename, getHandle ()->messageCatalog ());
+	if (!xml) {
+		RKComponentHandle *handle = RKComponentMap::getComponentHandle (id);
+		xml = new XMLHelper (filename, handle ? handle->messageCatalog () : 0);
+	}
 	return xml;
 }
 

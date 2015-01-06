@@ -2,6 +2,6 @@ local({
 ## Compute
 package.skeleton(name="anRpackage", list=c('skel.func1','skel.func2'), path=".", force= TRUE)
 ## Print result
-rk.header("Create package skeleton", parameters=list("Name", "anRpackage",
-	"Directory", "."))
+rk.header ("Create package skeleton", parameters=list("Package name"="anRpackage",
+	"Directory"="."))
 })

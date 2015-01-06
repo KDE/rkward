@@ -20,17 +20,20 @@ function calculate () {
 	echo ('data <- read.xls ("' + getValue ("file") + '", sheet="' + sheet + '"' + options + ', ');
 	echo (' nrows=' + getValue ("nrows") + ', skip=' + getValue ("skip") + ', na.string="'+ getValue ("na") +'"' + getValue("strings_as_factors") + 
 	      ', check.names = ' + getValue("checkname") + ', strip.white = ' + getValue("stripwhite") + ')\n');
-	echo ('.GlobalEnv$' + object + ' <- data		# assign to globalenv()\n');
+	echo ('.GlobalEnv$' + object + ' <- data		'); comment ('assign to globalenv()');
 	if (getValue ("doedit") ) {
 		echo ('rk.edit (.GlobalEnv$' + object + ')\n');
 	}
 }
 
 function printout () {
-	makeHeaderCode ("Import Microsoft EXCEL sheet", new Array("File", getValue ("file"), "Imported to", getValue ("saveto"), 
-								  "Imported Sheet", getValue ("sheetname"), "First row as header", getValue ("header"), 
-								  "Max number of rows to skip (-1 for no limit)", getValue ("skip"),
-								  "Number of lines to read (-1 for no limit)", getValue ("nrows"),
-								  "Character for missing values", getValue ("na")));
+	new Header (i18n ("Import Microsoft EXCEL sheet"))
+		.addFromUI ("file")
+		.addFromUI ("saveto")
+		.addFromUI ("sheetname")
+		.addFromUI ("header")
+		.addFromUI ("skip")
+		.addFromUI ("nrows")
+		.addFromUI ("na").print ();
 }
 

@@ -17,6 +17,6 @@ if (!is.null (labels)) {
 
 .GlobalEnv$my.spss.data <- data		# assign to globalenv()
 ## Print result
-rk.header("Import SPSS data", parameters=list("File", "import_export_plugins_testfile.sav",
-	"Import as", "my.spss.data"))
+rk.header ("Import SPSS data", parameters=list("File name"="import_export_plugins_testfile.sav",
+	"Object to save to"="my.spss.data"))
 })

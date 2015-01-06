@@ -2,7 +2,7 @@
                           rkcomponentmap.cpp  -  description
                              -------------------
     begin                : Thu May 12 2005
-    copyright            : (C) 2005-2014 by Thomas Friedrichsmeier
+    copyright            : (C) 2005-2015 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -57,9 +57,10 @@ RKComponentAboutData RKPluginMapFile::getAboutData () {
 	return *about;
 }
 
-RKComponentGUIXML::RKComponentGUIXML () {
+RKComponentGUIXML::RKComponentGUIXML (const QString &context_id) {
 	RK_TRACE (PLUGIN);
 
+	context = context_id;
 	clearGUIDescription ();
 }
 
@@ -72,6 +73,7 @@ void RKComponentGUIXML::clearGUIDescription () {
 
 	gui_xml.setContent (QString ("<!DOCTYPE kpartgui>\n<kpartgui name=\"rkwardcomponents\" version=\"063\">\n<MenuBar>\n\n</MenuBar>\n</kpartgui>"));
 	toplevel_menu.clear ();
+	component_menus.clear ();
 }
 
 bool compareMenuEntries (const RKComponentGUIXML::Entry *a, const RKComponentGUIXML::Entry *b) {
@@ -87,7 +89,7 @@ void RKComponentGUIXML::resolveComponentLabelsAndSortMenu (Menu *menu, const QSt
 			Entry *entry = group->entries[j];
 			if (!entry->is_menu) {
 				RKComponentHandle* handle = RKComponentMap::getComponentHandle (entry->id);
-				if ((!handle) || (!handle->isPlugin ())) {
+				if (!handle) {
 					RK_DEBUG (PLUGIN, DL_ERROR, "No such component found while creating menu-entries or component is not a standalone plugin: \"%s\". No entry created.", qPrintable (entry->id));
 					delete (group->entries.takeAt (j));
 					--j;
@@ -96,7 +98,7 @@ void RKComponentGUIXML::resolveComponentLabelsAndSortMenu (Menu *menu, const QSt
 					// The reason that handling of label is delayed to this point is that if a plugin is overridden, we want to use the label specified for the effective plugin (which might have changed WRT the overridden plugin, too).
 					entry->label = handle->getLabel ();
 					addedEntry (entry->id, handle);
-					component_menus.insert (handle, menu_path);
+					component_menus.insert (entry->id, menu_path);
 				}
 			} else {
 				resolveComponentLabelsAndSortMenu (static_cast<Menu*> (entry), menu_path.isEmpty () ? entry->label : menu_path + "\t" + entry->label);
@@ -277,6 +279,21 @@ int RKComponentGUIXML::addEntries (RKComponentGUIXML::Menu *menu, XMLHelper &xml
 				continue;
 			}
 
+			// check if there is an override hiding this plugin (TODO: what if there is more than one override?)
+			bool hidden = false;
+			OverrideMap::const_iterator ov = overrides.constFind (id);
+			while (ov != overrides.constEnd () && ov.key () == id) {
+				const ComponentOverride &over = ov.value ();
+				if (over.context.isEmpty () || over.context == context) {
+					if (over.hidden) {
+						hidden = true;
+						break;
+					}
+				}
+				++ov;
+			}
+			if (hidden) continue;
+
 			Entry *plug = new Entry ();
 			plug->id = id;
 			insertEntry (menu, plug, add_to);
@@ -288,6 +305,30 @@ int RKComponentGUIXML::addEntries (RKComponentGUIXML::Menu *menu, XMLHelper &xml
 		}
 	}
 	return leaves;
+}
+
+// static
+QMultiMap<QString, RKComponentGUIXML::ComponentOverride> RKComponentGUIXML::overrides;
+void RKComponentGUIXML::addOverride (const QString& id, const QString& context, bool visible) {
+
+	OverrideMap::iterator ov = overrides.find (id);
+	while (ov != overrides.end () && ov.key () == id) {
+		const ComponentOverride &over = ov.value ();
+		if (over.context == context) {
+			overrides.erase (ov);
+			break;
+		}
+		++ov;
+	}
+
+	ComponentOverride over;
+	over.context = context;
+	over.hidden = !visible;
+	overrides.insert (id, over);
+}
+
+void RKComponentGUIXML::clearOverrides () {
+	overrides.clear ();
 }
 
 /////////////////////////// END RKComponentXMLGUIClient /////////////////////////////////
@@ -303,11 +344,12 @@ void RKComponentMap::initialize () {
 	component_map = new RKComponentMap ();
 }
 
-RKComponentMap::RKComponentMap () : QObject (), RKComponentGUIXML (), KXMLGUIClient () {
+RKComponentMap::RKComponentMap () : QObject (), RKComponentGUIXML ("global"), KXMLGUIClient () {
 	RK_TRACE (PLUGIN);
 
 	setComponentData (KGlobal::mainComponent ());
 	actionCollection ()->setConfigGroup ("Plugin Shortcuts");
+	contexts.insert ("global", this);
 }
 
 RKComponentMap::~RKComponentMap () {
@@ -334,30 +376,24 @@ void RKComponentMap::clearAll () {
 	component_attributes.clear ();
 	component_dependencies.clear ();
 	for (RKComponentContextMap::const_iterator it = contexts.constBegin (); it != contexts.constEnd (); ++it) {
-		delete (it.value ());
+		if (it.value () != this) delete (it.value ());
 	}
 	contexts.clear ();
+	contexts.insert ("global", this);
 
 	clearGUIDescription ();
 
 	setXMLGUIBuildDocument (gui_xml);
 }
 
-RKContextMap *RKComponentMap::getContext (const QString &id) {
+RKComponentGUIXML *RKComponentMap::getContext (const QString &id) {
 	RK_TRACE (PLUGIN);
 
-	RKContextMap *context = getMap ()->getContextLocal (id);
+	RKComponentGUIXML *context = getMap ()->contexts.value (id);
 	if (context) return context;
 
 	RK_DEBUG (PLUGIN, DL_WARNING, "no such context %s", id.toLatin1 ().data ());
 	return (0);
-}
-
-RKContextMap *RKComponentMap::getContextLocal (const QString &id) {
-	RK_TRACE (PLUGIN);
-
-	if (contexts.contains (id)) return (contexts[id]);
-	return 0;
 }
 
 RKComponentHandle* RKComponentMap::getComponentHandle (const QString &id) {
@@ -514,7 +550,7 @@ void RKComponentMap::finalizeAll () {
 	finalize ();
 	setXMLGUIBuildDocument (gui_xml);
 	actionCollection ()->readSettings ();
-	foreach (RKContextMap *ctx, getMap()->contexts) {
+	foreach (RKComponentGUIXML *ctx, getMap()->contexts) {
 		ctx->finalize ();
 	}
 }
@@ -614,7 +650,7 @@ RKPluginMapParseResult RKComponentMap::addPluginMap (const QString& plugin_map_f
 		}
 
 		QString filename = xml.getStringAttribute((*it), "file", QString (), DL_WARNING);
-		int type = xml.getMultiChoiceAttribute ((*it), "type", "standard", 0, DL_WARNING);
+		xml.getMultiChoiceAttribute ((*it), "type", "standard", 0, DL_WARNING);	// unused, but documented for future extension; TODO: remove?
 		QString label = xml.i18nStringAttribute ((*it), "label", i18n ("(no label)"), DL_WARNING);
 
 		if (local_components.contains (id)) {
@@ -627,7 +663,7 @@ RKPluginMapParseResult RKComponentMap::addPluginMap (const QString& plugin_map_f
 			ret.addAndPrintError (DL_ERROR, i18n ("Specified file '%1' for component id \"%2\" does not exist or is not readable. Ignoring.", filename, id));
 		} else {
 			// create and initialize component handle
-			RKComponentHandle *handle = new RKComponentHandle (pluginmap_file_desc, filename, label, (RKComponentType) type);
+			RKComponentHandle *handle = new RKComponentHandle (pluginmap_file_desc, filename, label);
 			XMLChildList attributes_list = xml.getChildElements (*it, "attribute", DL_DEBUG);
 			for (XMLChildList::const_iterator ait=attributes_list.begin (); ait != attributes_list.end (); ++ait) {
 				handle->addAttribute (xml.getStringAttribute (*ait, "id", "noid", DL_WARNING), xml.getStringAttribute (*ait, "value", QString (), DL_ERROR), xml.i18nStringAttribute (*ait, "label", QString (), DL_ERROR));
@@ -651,9 +687,9 @@ RKPluginMapParseResult RKComponentMap::addPluginMap (const QString& plugin_map_f
 	for (XMLChildList::const_iterator it=list.constBegin (); it != list.constEnd (); ++it) {
 		QString id = xml.getStringAttribute (*it, "id", QString::null, DL_ERROR);
 
-		RKContextMap *context = getContextLocal (id);
+		RKComponentGUIXML *context = contexts.value (id);
 		if (!context) {
-			context = new RKContextMap (id);
+			context = new RKComponentGUIXML (id);
 			contexts.insert (id, context);
 		}
 		ret.valid_plugins += context->createMenus (xml, *it, cnamespace);
@@ -680,11 +716,21 @@ void RKComponentMap::activateComponent () {
 void RKComponentMap::addedEntry (const QString &id, RKComponentHandle *handle) {
 	RK_TRACE (PLUGIN);
 
-	if (handle->isPlugin ()) {
-		handle->setAccessible (true);
-		KAction *action = actionCollection ()->addAction (id, this, SLOT (activateComponent()));
-		action->setText (handle->getLabel ());
-		action->setShortcutConfigurable (true);
+	handle->setAccessible (true);
+	KAction *action = actionCollection ()->addAction (id, this, SLOT (activateComponent()));
+	action->setText (handle->getLabel ());
+	action->setShortcutConfigurable (true);
+}
+
+void RKComponentGUIXML::appendPluginToList (const QString& id, QStringList* list) {
+	list->append (id);
+	list->append (context);
+	list->append (component_menus.value (id));
+	RKComponentHandle *handle = RKComponentMap::getComponentHandle (id);
+	if (handle) list->append (handle->getLabel ());
+	else {
+		RK_ASSERT (handle);
+		list->append (QString ());
 	}
 }
 
@@ -696,22 +742,32 @@ QStringList RKComponentMap::listPlugins () {
 	ret.reserve (components.size () * 4);
 #endif
 	for (ComponentMap::const_iterator it = components.constBegin (); it != components.constEnd (); ++it) {
-		ret.append (it.key ());
-		ret.append ("global"); // context
-		ret.append (component_menus.value (it.value ()));
-		ret.append (it.value ()->getLabel ());
+		// RKComponentMap (in contrast to other contexts) will also contain plugins not added to the menu,
+		// and is listed separately, for this reason
+		getMap ()->appendPluginToList (it.key (), &ret);
 	}
 	for (RKComponentContextMap::const_iterator ctx = contexts.constBegin (); ctx != contexts.constEnd (); ++ctx) {
+		RKComponentGUIXML *context = ctx.value ();
+		if (context == getMap ()) continue;
+
 		QStringList ids = ctx.value ()->components ();
 		for (int i = 0; i < ids.size (); ++i) {
-			ret.append (ids[i]);
-			ret.append (ctx.key ());
-			RKComponentHandle *handle = getComponentHandle (ids[i]);
-			ret.append (ctx.value ()->component_menus.value (handle));
-			ret.append (handle->getLabel ());
+			context->appendPluginToList (ids[i], &ret);
 		}
 	}
 	return ret;
+}
+
+void RKComponentMap::setPluginStatus (const QStringList& ids, const QStringList& _contexts, const QStringList& _visible) {
+	RK_TRACE (PLUGIN);
+	RK_ASSERT (ids.size () == _contexts.size ());
+	RK_ASSERT (_contexts.size () == _visible.size ());
+
+	for (int i = 0; i < ids.size (); ++i) {
+		addOverride (ids[i], _contexts[i], (_visible[i] == "1"));
+	}
+
+	RKWardMainWindow::getMain ()->initPlugins ();
 }
 
 
@@ -720,10 +776,9 @@ QStringList RKComponentMap::listPlugins () {
 
 #include "rkstandardcomponent.h"
 
-RKComponentHandle::RKComponentHandle (RKPluginMapFile *pluginmap, const QString &rel_filename, const QString &label, RKComponentType type) {
+RKComponentHandle::RKComponentHandle (RKPluginMapFile *pluginmap, const QString &rel_filename, const QString &label) {
 	RK_TRACE (PLUGIN);
 
-	RKComponentHandle::type = type;
 	RKComponentHandle::filename = rel_filename;
 	RKComponentHandle::label = label;
 	RKComponentHandle::plugin_map = pluginmap;
@@ -737,9 +792,8 @@ RKComponentHandle::~RKComponentHandle () {
 
 RKStandardComponent *RKComponentHandle::invoke (RKComponent *parent_component, QWidget *parent_widget) {
 	RK_TRACE (PLUGIN);
-	RK_ASSERT (isPlugin ());
 
-	return (new RKStandardComponent (parent_component, parent_widget, getFilename (), this));
+	return (new RKStandardComponent (parent_component, parent_widget, getFilename (), RKComponentMap::getComponentId (this)));
 }
 
 QString RKComponentHandle::getAttributeValue (const QString &attribute_id) {

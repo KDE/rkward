@@ -1,7 +1,7 @@
 function makeEncodingPreprocessCode () {
 	if (!getValue ("do_locale_conversion")) return;
 	echo ('\n');
-	echo ('# helper function to convert all strings to the current encoding\n');
+	comment ('helper function to convert all strings to the current encoding');
 	echo ('iconv.recursive <- function (x, from) {\n');
 	echo ('	attribs <- attributes (x);\n');
 	echo ('	if (is.character (x)) {\n');
@@ -9,7 +9,7 @@ function makeEncodingPreprocessCode () {
 	echo ('	} else if (is.list (x)) {\n');
 	echo ('		x <- lapply (x, function (sub) iconv.recursive (sub, from))\n');
 	echo ('	}\n');
-	echo ('	# convert factor levels and all other attributes\n');
+	comment ('convert factor levels and all other attributes', '\t');
 	echo ('	attributes (x) <- lapply (attribs, function (sub) iconv.recursive (sub, from))\n');
 	echo ('	x\n');
 	echo ('}\n');
@@ -23,6 +23,6 @@ function makeEncodingCall (varname) {
 		from_locale = getValue ("user_encoding");
 	}
 	echo ('\n');
-	echo ('# convert all strings to the current encoding\n');
+	comment ('convert all strings to the current encoding');
 	echo (varname + ' <- iconv.recursive (' + varname + ', from="' + from_locale + '")\n');
 }

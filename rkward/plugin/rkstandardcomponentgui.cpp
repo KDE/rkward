@@ -171,11 +171,11 @@ void RKStandardComponentGUI::ok () {
 	// re-run link
 	// This should be run in a separate command, in case the above command bails out with an error. Even in that case, the re-run link should be printed.
 	command.clear ();
-	RKComponentHandle *handle = component->getHandle ();
-	if (handle->isAccessible ()) {
+	RKComponentHandle *handle = RKComponentMap::getComponentHandle (component->getId ());
+	if (handle && handle->isAccessible ()) {
 		RKComponent::PropertyValueMap map;
 		component->serializeState (&map);
-		command.append (".rk.rerun.plugin.link(plugin=\"" + RKComponentMap::getComponentId (handle) + "\", settings=\"" + RKCommonFunctions::escape (RKComponent::valueMapToString (map)) + "\", label=\"" + i18n ("Run again") + "\")\n");
+		command.append (".rk.rerun.plugin.link(plugin=\"" + component->getId () + "\", settings=\"" + RKCommonFunctions::escape (RKComponent::valueMapToString (map)) + "\", label=\"" + i18n ("Run again") + "\")\n");
 		// NOTE: the serialized state is quote-escape *again* for passing to R.
 	}
 	// separator line
@@ -225,9 +225,7 @@ void RKStandardComponentGUI::copyCode () {
 void RKStandardComponentGUI::help () {
 	RK_TRACE (PLUGIN);
 
-	QString id = RKComponentMap::getComponentId (component->getHandle ());
-
-	QString path = id.split ("::").join ("/");
+	QString path = component->getId ().split ("::").join ("/");
 	RKWorkplace::mainWorkplace ()->openHelpWindow (KUrl ("rkward://component/" + path));
 }
 
