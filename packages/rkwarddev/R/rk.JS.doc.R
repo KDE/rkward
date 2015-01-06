@@ -65,14 +65,12 @@ rk.JS.doc <- function(require=c(), variables=NULL, globals=NULL, results.header=
   addSetGlobalVars <- FALSE
 
   # some data transformation
-  if(all(sapply(variables, function(x){inherits(x, "rk.JS.var")}))){
+  if(!is.null(variables) & all(sapply(variables, function(x){inherits(x, "rk.JS.var")}))){
     variables <- rk.paste.JS(
       paste0(unlist(sapply(variables, function(x){rk.paste.JS(x, var=FALSE)})))
     )
   } else {}
-  if(inherits(variables, "rk.JS.var")){
-  } else {}
-  if(all(sapply(globals, function(x){inherits(x, "rk.JS.var")}))){
+  if(!is.null(globals) & all(sapply(globals, function(x){inherits(x, "rk.JS.var")}))){
     globalNames <- paste0("var ", unlist(sapply(globals, function(x){paste.JS.var(x, names.only=TRUE)})), ";", collapse="\n")
     globalFunction <- paste0(
       "function setGlobalVars(){\n",
