@@ -5,6 +5,6 @@ function calculate () {
 }
 
 function printout () {
-	makeHeaderCode ("Create package skeleton", new Array("Name", getValue ("name"), "Directory", getValue ("path")));
+	new Header (i18n ("Create package skeleton")).addFromUI ("name").addFromUI ("path").print ();
 }
 

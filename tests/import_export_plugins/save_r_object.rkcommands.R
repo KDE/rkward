@@ -7,8 +7,8 @@ save(testx,
 	compression_level=6)
 
 ## Print result
-rk.header("Save R objects", parameters=list("File", "x.RData",
-	"Variables", "testx"))
+rk.header ("Save R objects", parameters=list("File name"="x.RData",
+	"Object"="testx"))
 })
 local({
 ## Compute
@@ -18,6 +18,6 @@ save(testy,
 	compression_level=-9)
 
 ## Print result
-rk.header("Save R objects", parameters=list("File", "y.RData",
-	"Variables", "testy"))
+rk.header ("Save R objects", parameters=list("File name"="y.RData",
+	"Object"="testy"))
 })

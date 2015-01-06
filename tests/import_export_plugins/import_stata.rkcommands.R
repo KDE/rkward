@@ -33,6 +33,6 @@ if (!is.null (labels)) {
 
 .GlobalEnv$my.stata.data <- data		# assign to globalenv()
 ## Print result
-rk.header("Import Stata File", parameters=list("File", "import_export_plugins_testfile.dta",
-	"Imported to", "my.stata.data"))
+rk.header ("Import Stata File", parameters=list("File name"="import_export_plugins_testfile.dta",
+	"Object to save to"="my.stata.data"))
 })

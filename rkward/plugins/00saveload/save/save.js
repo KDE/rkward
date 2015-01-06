@@ -1,9 +1,5 @@
-// globals
-var data;
-var file;
-
 function calculate(){
-	file = getValue("file");
+	var file = getValue("file");
 	// read in variables from dialog
 	var ascii = getValue("ascii");
 	var compress = getValue("compress");
@@ -11,7 +7,7 @@ function calculate(){
 	var xzextreme = getValue("xzextreme");
 
 	// the R code to be evaluated
-	data = getValue("data").split("\n").join(", ");
+	var data = getValue("data").split("\n").join(", ");
 	echo("save(" + data);
 	if(file) {
 		echo(",\n\tfile=\"" + file + "\"");
@@ -30,7 +26,6 @@ function calculate(){
 }
 
 function printout(){
-	// printout the results
-	makeHeaderCode ("Save R objects", new Array("File", file, "Variables", data));
+	new Header (i18n ("Save R objects")).addFromUI ("file").addFromUI ("data").print ();
 }
 

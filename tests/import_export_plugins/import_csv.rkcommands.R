@@ -5,6 +5,6 @@ imported <- read.csv (file="women.csv", row.names=1,  na.strings = "NA", nrows =
 # copy from the local environment to globalenv()
 .GlobalEnv$women <- imported
 ## Print result
-rk.header("Import text / csv data", parameters=list("File", "women.csv",
-	"Import as", "women"))
+rk.header ("Import text / csv data", parameters=list("File name"="women.csv",
+	"Object to save to"="women"))
 })

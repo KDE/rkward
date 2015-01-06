@@ -1,3 +1,2 @@
-Warning message:
-In read.spss("import_export_plugins_testfile.sav", to.data.frame = TRUE,  :
+Warning in read.spss("import_export_plugins_testfile.sav", to.data.frame = TRUE,  :
   import_export_plugins_testfile.sav: position 1: Variable name character 4 is lowercase letter ß

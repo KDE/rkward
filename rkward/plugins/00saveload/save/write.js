@@ -8,6 +8,6 @@ function calculate () {
 }
 
 function printout () {
-	makeHeaderCode ("Write Variables", new Array("File", getValue ("file"), "Data",  getValue ("data")));
+	new Header (i18n ("Write Variables")).addFromUI ("file").addFromUI ("data").print ();
 }
 

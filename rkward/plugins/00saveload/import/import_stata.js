@@ -37,7 +37,7 @@ function calculate () {
 	echo ('data <- read.dta ("' + getValue ("file") + '"' + options + ')\n');
 	makeEncodingCall ('data');
 	echo ('\n');
-	echo ('# set variable labels for use in RKWard\n');
+	comment ('set variable labels for use in RKWard');
 	echo ('labels <- attr (data, "var.labels")\n');
 	echo ('if (!is.null (labels)) {\n');
 	echo ('        for (i in 1:length (labels)) {\n');
@@ -48,13 +48,13 @@ function calculate () {
 	echo ('        }\n');
 	echo ('}\n');
 	echo ('\n');
-	echo ('.GlobalEnv$' + object + ' <- data		# assign to globalenv()\n');
+	echo ('.GlobalEnv$' + object + ' <- data		'); comment ('assign to globalenv()');
 	if (getValue ("doedit") ) {
 		echo ('rk.edit (.GlobalEnv$' + object + ')\n');
 	}
 }
 
 function printout () {
-	makeHeaderCode ("Import Stata File", new Array("File", getValue ("file"), "Imported to", getValue ("saveto")));
+	new Header (i18n ("Import Stata File")).addFromUI ("file").addFromUI ("saveto").print ();
 }
 

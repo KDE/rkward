@@ -1,7 +1,7 @@
 <h1>Import Stata File</h1>
 <h2>Parameters</h2>
-<ul><li>File: import_export_plugins_testfile.dta</li>
-<li>Imported to: my.stata.data</li>
+<ul><li>File name: import_export_plugins_testfile.dta</li>
+<li>Object to save to: my.stata.data</li>
 </ul>
 DATE<br />
 

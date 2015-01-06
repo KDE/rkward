@@ -19,7 +19,7 @@ function calculate () {
 }
 
 function printout () {
-	makeHeaderCode ("Source R file", new Array("File", getValue ("file")));
+	new Header (i18n ("Source R file")).addFromUI ("file").print ();
 }
 
 

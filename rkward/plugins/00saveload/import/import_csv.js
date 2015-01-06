@@ -29,7 +29,7 @@ function calculate () {
 	//doing what is left
 	echo (' na.strings = "' + getValue("na") + '", nrows = ' + getValue("nrows") + ', skip = ' + getValue("skip") + ', check.names = ' + getValue("checkname") + ', strip.white = ' + getValue("stripwhite") + ', blank.lines.skip = ' + getValue("blanklinesskip") + getValue("allow_escapes") + getValue("flush") + getValue("strings_as_factors") + ')\n');
 	echo ('\n');
-	echo ('# copy from the local environment to globalenv()\n');
+	comment ('copy from the local environment to globalenv()');
 	echo ('.GlobalEnv$' + getValue("name") + ' <- imported\n');
 	if (getValue ("doedit")) {
 		echo ('\n');
@@ -38,6 +38,6 @@ function calculate () {
 }
 
 function printout () {
-	makeHeaderCode ("Import text / csv data", new Array("File" ,  getValue ("file"), "Import as", getValue ("name")));
+	new Header (i18n ("Import text / csv data")).addFromUI ("file").addFromUI ("name").print ();
 }
 
