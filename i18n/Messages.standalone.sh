@@ -9,9 +9,9 @@ cd ${BASEDIR}/..
 /bin/sh Messages.sh
 rm rc.cpp
 
-echo "Extracting messages from plugins"
-cd ${BASEDIR}
+#echo "Extracting messages from plugins"
+#cd ${BASEDIR}
 # For testing purposes, extract analysis.pluginmap, only
-python ../scripts/update_plugin_messages.py --extract-only --outdir=../i18n/ plugins/analysis.pluginmap
+#python ../scripts/update_plugin_messages.py --extract-only --outdir=../i18n/ plugins/analysis.pluginmap
 #python ../scripts/extract_plugin_messages.py --outdir=../po/plugins/ --default_po=testing plugins/under_development.pluginmap
-echo "Done"
+#echo "Done"

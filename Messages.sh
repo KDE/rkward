@@ -12,3 +12,5 @@ $XGETTEXT `find rkward -name \*.cpp -o -name \*.h -name \*.c` rc.cpp -o $podir/r
 python scripts/update_plugin_messages.py --extract-only --default_po=pages --outdir=$podir rkward/pages/*.rkh
 # extract messages from analysis plugins: >> rkward__analysis.pot
 python scripts/update_plugin_messages.py --extract-only --outdir=$podir rkward/plugins/analysis.pluginmap
+# extract messages from import_export plugins: >> rkward__import_export.pot
+python scripts/update_plugin_messages.py --extract-only --outdir=$podir rkward/plugins/import_export.pluginmap

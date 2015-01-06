@@ -1,6 +1,6 @@
 <!DOCTYPE rkpluginmap>
 
-<document base_prefix="00saveload/" namespace="rkward" id="import_export">
+<document base_prefix="00saveload/" namespace="rkward" id="import_export" po_id="import_export">
 	<include file="pluginmap_meta.inc"/>
 	<about
 		name="Data Import and Export"
