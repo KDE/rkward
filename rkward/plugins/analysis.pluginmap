@@ -13,6 +13,7 @@
 	<insert snippet="rkward_version_guard"/>
 
 	<require file="menu.pluginmap"/>
+	<require file="embedded.pluginmap"/>
 
 	<components>
 		<component type="standard" id="basic_statistics" file="uni1.2/description.xml" label="Basic Statistics" />

@@ -13,6 +13,7 @@
 	<insert snippet="rkward_version_guard"/>
 
 	<require file="menu.pluginmap"/>
+	<require file="embedded.pluginmap"/>
 
 	<components>
 		<component type="standard" id="par_est_rasch" file="analysis/irt/dichotomous/par_est_rasch.xml" label="Rasch model fit" />

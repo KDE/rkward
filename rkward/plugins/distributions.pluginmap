@@ -13,6 +13,7 @@
 	<insert snippet="rkward_version_guard"/>
 
 	<require file="../menu.pluginmap"/>
+	<require file="../embedded.pluginmap"/>
 
 	<components>
 		<!-- tests -->

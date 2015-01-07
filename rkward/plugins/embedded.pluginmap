@@ -1,6 +1,6 @@
 <!DOCTYPE rkpluginmap>
 
-<document base_prefix="" namespace="rkward" id="embedded" priority="hidden">
+<document base_prefix="" namespace="rkward" id="embedded" priority="hidden" po_id="embedded">
 	<include file="pluginmap_meta.inc"/>
 	<about
 		name="Embedded plugins"

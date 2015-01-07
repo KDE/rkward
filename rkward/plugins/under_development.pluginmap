@@ -13,6 +13,8 @@
 	<insert snippet="rkward_version_guard"/>
 
 	<require file="menu.pluginmap"/>
+	<require file="embedded.pluginmap"/>
+
 	<components>
 		<component type="standard" id="simple_anova" file="simple_anova/description.xml" label="Simple Anova" />
 		<component type="standard" id="sieve_plot" file="plots/sieve_plot.xml" label="Extended Sieve Plot" />

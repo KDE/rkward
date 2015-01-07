@@ -1,6 +1,6 @@
 <!DOCTYPE rkpluginmap>
 
-<document base_prefix="" namespace="rkward" id="data">
+<document base_prefix="" namespace="rkward" id="data" po_id="data">
 	<include file="pluginmap_meta.inc"/>
 	<about
 		name="Data transformation and conversion"
@@ -13,6 +13,7 @@
 	<insert snippet="rkward_version_guard"/>
 
 	<require file="menu.pluginmap"/>
+	<require file="embedded.pluginmap"/>
 
 	<components>
 		<component type="standard" id="generate_random" file="data/generate_random.xml" label="Generate random data" />

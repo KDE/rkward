@@ -1,6 +1,6 @@
 <!DOCTYPE rkpluginmap>
 <!-- The point of this pluginmap is to pre-define the layout (and labels) of some menus -->
-<document base_prefix="" namespace="rkward" id="rkward_menu_hierarchy" priority="hidden">
+<document base_prefix="" namespace="rkward" id="rkward_menu_hierarchy" priority="hidden" po_id="embedded">
 	<include file="pluginmap_meta.inc"/>
 	<about
 		name="Menu structure definition"
