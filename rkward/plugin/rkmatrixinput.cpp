@@ -2,7 +2,7 @@
                           rkmatrixinput  -  description
                              -------------------
     begin                : Tue Oct 09 2012
-    copyright            : (C) 2012 by Thomas Friedrichsmeier
+    copyright            : (C) 2012, 2015 by Thomas Friedrichsmeier
     email                : tfry@users.sourceforge.net
  ***************************************************************************/
 
@@ -83,17 +83,21 @@ RKMatrixInput::RKMatrixInput (const QDomElement& element, RKComponent* parent_co
 	model = new RKMatrixInputModel (this);
 	QString headers = xml->getStringAttribute (element, "horiz_headers", QString (), DL_INFO);
 	if (!headers.isEmpty ()) model->horiz_header = headers.split (';');
+	else if (!headers.isNull ()) display->horizontalHeader ()->hide ();	// attribute explicitly set to ""
 	headers = xml->getStringAttribute (element, "vert_headers", QString (), DL_INFO);
 	if (!headers.isEmpty ()) model->vert_header = headers.split (';');
+	else if (!headers.isNull ()) display->verticalHeader ()->hide ();
 	updateAll ();
 	display->setModel (model);
 	display->setAlternatingRowColors (true);
 	if (xml->getBoolAttribute (element, "fixed_width", false, DL_INFO)) {
 		int max_col = column_count->intValue () - 1;
+		display->setVerticalScrollBarPolicy (Qt::ScrollBarAlwaysOff);
 		display->setFixedWidth (display->verticalHeader ()->width () + display->columnViewportPosition (max_col) + display->columnWidth (max_col) + display->verticalHeader ()->fontMetrics ().width ("0"));
 	}
 	if (xml->getBoolAttribute (element, "fixed_height", false, DL_INFO)) {
 		int max_row = row_count->intValue () - 1;
+		display->setHorizontalScrollBarPolicy (Qt::ScrollBarAlwaysOff);
 		display->setFixedHeight (display->horizontalHeader ()->height () + display->rowViewportPosition (max_row) + display->rowHeight (max_row));
 	}
 
