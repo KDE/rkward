@@ -153,7 +153,7 @@ def stripLineDummy (text):
 
 def getLineOf (element, default=-1):
   if element.hasAttribute (LINE_DUMMY_ATTR):
-    return element.getAttribute (LINE_DUMMY_ATTR)
+    return int (element.getAttribute (LINE_DUMMY_ATTR))
   return default
 
 # Normalizes larger text fragments. TODO: Do we want to protect <pre>-blocks?
