@@ -5,7 +5,7 @@
 	<logic>
 		<external id="outvar" default="x"/>
 		<external id="titlevar" default="title"/>
-		<external id="fun_label" default="&quot;Frequency&quot;"/>
+		<external id="fun_label"/>
 		<external id="parameters"/>
 
 		<set id="varsource.visible" to="false"/>
@@ -23,22 +23,22 @@
 				var stat = gui.getValue ("stat.string");
 				var label;
 				if (stat == "freq") {
-					label = "Frequency";
+					label = i18n ("Frequency");
 				} else {
 					var obj = makeRObject (gui.getValue ("outcome.available"));
 					if (stat == "sum") {
-						label = "Sum of " + obj.objectname;
+						label = i18n ("Sum of %1", obj.objectname);
 					} else if (stat == "custom") {
-						label = gui.getValue ("custom_stat.text") + " of " + obj.objectname;
+						label = i18nc ("(function name) of (object name)", "%1 of %2", gui.getValue ("custom_stat.text"), obj.objectname);
 					}
 				}
-				gui.setValue ("fun_label", quote (label));
+				gui.setValue ("fun_label", label);
 				updateDescription ();
 			}
 
 			gui.addChangeCommand ("groups.available", "updateDescription ()");
 			updateDescription = function () {
-				gui.setValue ("parameters", '"Tabulation groups"=paste (names (groups), collapse=" by "), "Tabulation statistic"=' + gui.getValue ("fun_label"));
+				gui.setValue ("parameters", i18n ("Tabulation groups") + '=paste (names (groups), collapse=' + i18nc ("Tabulate X by Y [by Z [...]]", " by ") + '), ' + i18n ("Tabulation statistic") + '=' + gui.getValue ("fun_label"));
 			}
 			updateFunLabel ();
 		]]></script>

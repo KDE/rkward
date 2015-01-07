@@ -25,7 +25,7 @@
 					gui.setValue ("notice.text", "");
 				} else {
 					// Not very elegant, but does the trick
-					gui.setValue ("notice.text", "Sorting this type of object is not supported in this plugin");
+					gui.setValue ("notice.text", i18n ("Sorting this type of object is not supported in this plugin"));
 				}
 			}
 			]]></script>

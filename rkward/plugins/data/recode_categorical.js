@@ -13,7 +13,7 @@ function calculate () {
 	// initialize output vector to defaults
 	echo ('input <- ' + input + '\n');
 	if (is_factor) {
-		echo ('# Use as.character() as intermediate data format, to support adding and dropping levels\n');
+		comment ('Use as.character() as intermediate data format, to support adding and dropping levels');
 		echo ('recoded <- as.character (');
 	} else {
 		echo ('recoded <- as.' + datamode + ' (');
@@ -66,7 +66,7 @@ function calculate () {
 
 	// Produce warnings (or should it be errors?)
 	if (dupes.length > 0) {
-		echo ('\nwarning ("Some input values were specified more than once: ", ' + quote (dupes.join (', ')) + ')\n');
+		echo ('\nwarning (' + i18n ("Some input values were specified more than once: ") + ', ' + quote (dupes.join (', ')) + ')\n');
 	}
 
 	// Set data type and assign to output variable in GlobalEnv
@@ -77,5 +77,9 @@ function calculate () {
 
 function printout () {
 // TODO: Number of differences always shows as 0, if storing to same object...
-	makeHeaderCode ('Recode categorical data', new Array ('Input variable', input, 'Output variable', output, 'Number of differences after recoding', noquote ('sum (' + input + ' != ' + output + ', na.rm=TRUE) + sum (is.na (' + input + ') != is.na (' + output + '))')));
+	new Header (i18n ("Recode categorical data"))
+		.add (i18n ("Input variable"), input)
+		.add (i18n ("Output variable"), output)
+		.add (i18n ("Number of differences after recoding"), noquote ('sum (' + input + ' != ' + output + ', na.rm=TRUE) + sum (is.na (' + input + ') != is.na (' + output + '))'))
+		.print ();
 }
