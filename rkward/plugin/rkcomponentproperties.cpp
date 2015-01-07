@@ -173,8 +173,7 @@ void RKComponentPropertyAbstractList::setAllowedLength ( int min_num_items, int 
 	RKComponentPropertyAbstractList::min_num_items = min_num_items;
 	RKComponentPropertyAbstractList::min_num_items_if_any = min_num_items_if_any;
 	RKComponentPropertyAbstractList::max_num_items = max_num_items;
-
-	// TODO: re-validize?
+	is_valid = checkListLength ();
 }
 
 bool RKComponentPropertyAbstractList::checkListLength () {

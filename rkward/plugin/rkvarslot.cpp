@@ -101,11 +101,11 @@ RKVarSlot::RKVarSlot (const QDomElement &element, RKComponent *parent_component,
 	if (mode == Varslot) {
 		// initialize filters
 		static_cast<RKComponentPropertyRObjects*> (available)->setClassFilter (xml->getStringAttribute (element, "classes", QString (), DL_INFO).split (" ", QString::SkipEmptyParts));
-		setRequired (xml->getBoolAttribute (element, "required", false, DL_INFO));
 		static_cast<RKComponentPropertyRObjects*> (available)->setTypeFilter (xml->getStringAttribute (element, "types", QString::null, DL_INFO).split (" ", QString::SkipEmptyParts));
 		static_cast<RKComponentPropertyRObjects*> (available)->setDimensionFilter (xml->getIntAttribute (element, "num_dimensions", 0, DL_INFO), xml->getIntAttribute (element, "min_length", 0, DL_INFO), xml->getIntAttribute (element, "max_length", INT_MAX, DL_INFO));
 	}
 	available->setStripDuplicates (!xml->getBoolAttribute (element, "allow_duplicates", false, DL_INFO));
+	setRequired (xml->getBoolAttribute (element, "required", false, DL_INFO));
 
 	connect (available, SIGNAL (valueChanged(RKComponentPropertyBase*)), this, SLOT (availablePropertyChanged(RKComponentPropertyBase*)));
 	availablePropertyChanged (available);		// initialize

@@ -1,3 +1,4 @@
+- Fixed: <valueslot>s were quirky with respect to showing as invalid
 - Fix a hang-on-exit issue
 - Add R function rk.set.plugin.status() to allow further customization of loaded plugins (hiding of individual menu entries)
 - Pluginmap-management was reworked, partially, and moved to Settings->Manage R packages and plugins

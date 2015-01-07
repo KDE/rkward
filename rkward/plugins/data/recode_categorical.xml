@@ -80,7 +80,7 @@
 										</radio>
 										<row>
 											<embed id="levels" component="rkward::level_select"/>
-											<valueslot multi="true" min_vars="1" id="values" label="" source="levels.selector"/>
+											<valueslot multi="true" required="true" min_vars="1" id="values" label="" source="levels.selector"/>
 										</row>
 									</column>
 									<column>
