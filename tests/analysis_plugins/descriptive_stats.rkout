@@ -1,9 +1,14 @@
 <h1>Descriptive statistics</h1>
 <h2>Parameters</h2>
-<ul><li>Trim of mean: 0</li>
-<li>Median Absolute Deviation: constant: 1.4628 average</li>
+<ul><li>Trim of mean: 0.00</li>
 </ul>
 DATE<br />
+<h3>Median Absolute Deviation</h3>
+<h4>Parameters</h4>
+<ul><li>Constant: 1.4628</li>
+<li>Treatment of even sample sizes: use average</li>
+</ul>
+<br />
 <table border="1">
 <tr><td>Object</td><td>mean</td><td>median</td><td>min</td><td>max</td><td>standard deviation</td><td>sum</td><td>product</td><td>Median Absolute Deviation</td><td>length of sample</td><td>number of NAs</td></tr>
 <tr><td>height</td><td>65</td><td>65</td><td>58</td><td>72</td><td>4.4721</td><td>975</td><td>1.511e+27</td><td>5.8512</td><td>15</td><td>0</td></tr>
