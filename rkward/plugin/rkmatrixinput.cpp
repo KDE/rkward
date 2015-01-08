@@ -34,6 +34,8 @@
 RKMatrixInput::RKMatrixInput (const QDomElement& element, RKComponent* parent_component, QWidget* parent_widget) : RKComponent (parent_component, parent_widget) {
 	RK_TRACE (PLUGIN);
 
+	is_valid = true;
+
 	// get xml-helper
 	XMLHelper *xml = parent_component->xmlHelper ();
 
@@ -59,6 +61,9 @@ RKMatrixInput::RKMatrixInput (const QDomElement& element, RKComponent* parent_co
 		max = FLT_MAX;
 	}
 
+	min_rows = xml->getIntAttribute (element, "min_rows", 0, DL_INFO);
+	min_columns = xml->getIntAttribute (element, "min_columns", 0, DL_INFO);
+
 	// Note: string type matrix allows missings, implicitly (treating them as empty strings)
 	allow_missings = xml->getBoolAttribute (element, "allow_missings", false, DL_INFO);
 	if (mode == String) allow_missings = true;
@@ -67,8 +72,8 @@ RKMatrixInput::RKMatrixInput (const QDomElement& element, RKComponent* parent_co
 	trailing_rows = allow_user_resize_rows ? 1 : 0;
 	trailing_columns = allow_user_resize_columns ? 1 : 0;
 
-	row_count = new RKComponentPropertyInt (this, false, xml->getIntAttribute (element, "rows", 2, DL_INFO));
-	column_count = new RKComponentPropertyInt (this, false, xml->getIntAttribute (element, "columns", 2, DL_INFO));
+	row_count = new RKComponentPropertyInt (this, false, xml->getIntAttribute (element, "rows", qMax (2, min_rows), DL_INFO));
+	column_count = new RKComponentPropertyInt (this, false, xml->getIntAttribute (element, "columns", qMax (2, min_columns), DL_INFO));
 	tsv_data = new RKComponentPropertyBase (this, false);
 	row_count->setInternal (true);
 	addChild ("rows", row_count);
@@ -91,9 +96,7 @@ RKMatrixInput::RKMatrixInput (const QDomElement& element, RKComponent* parent_co
 	display->setModel (model);
 	display->setAlternatingRowColors (true);
 	if (xml->getBoolAttribute (element, "fixed_width", false, DL_INFO)) {
-		int max_col = column_count->intValue () - 1;
-		display->setVerticalScrollBarPolicy (Qt::ScrollBarAlwaysOff);
-		display->setFixedWidth (display->verticalHeader ()->width () + display->columnViewportPosition (max_col) + display->columnWidth (max_col) + display->verticalHeader ()->fontMetrics ().width ("0"));
+		display->horizontalHeader ()->setStretchLastSection (true);
 	}
 	if (xml->getBoolAttribute (element, "fixed_height", false, DL_INFO)) {
 		int max_row = row_count->intValue () - 1;
@@ -199,7 +202,7 @@ void RKMatrixInput::updateColumn (int column) {
 
 	// check for trailing empty rows:
 	int last_row = col.storage.size ();
-	while ((--last_row >= 0) && col.storage[last_row].isEmpty ()) {	// strip empty trailing strings
+	while ((--last_row >= min_rows) && col.storage[last_row].isEmpty ()) {	// strip empty trailing strings
 		col.storage.pop_back ();
 	}
 
@@ -244,9 +247,10 @@ void RKMatrixInput::updateAll () {
 		for (int i = columns.size () - 1; i >= 0; --i) {
 			max_row = qMax (max_row, columns[i].storage.size () - 1);
 		}
-		if (max_row != row_count->intValue () - 1) {
-			row_count->setIntValue (max_row + 1);
-		}
+	}
+	max_row = qMax (min_rows - 1, max_row);
+	if (max_row != row_count->intValue () - 1) {
+		row_count->setIntValue (max_row + 1);
 	}
 
 	int max_col = column_count->intValue () - 1;
@@ -256,9 +260,10 @@ void RKMatrixInput::updateAll () {
 				break;
 			}
 		}
-		if (max_col != column_count->intValue () - 1) {
-			column_count->setIntValue (max_col + 1);
-		}
+	}
+	max_col = qMax (min_columns - 1, max_col);
+	if (max_col != column_count->intValue () - 1) {
+		column_count->setIntValue (max_col + 1);
 	}
 
 	QStringList tsv;
