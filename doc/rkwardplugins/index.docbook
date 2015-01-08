@@ -3068,12 +3068,20 @@ made checkable, thus acting like a simple checkbox at the same time.
 	<listitem><para>Number of columns in the matrix. Has no effect for allow_user_resize_columns="true". <note><para>This can also be controlled by setting the "columns" property".</para></note> (optional, defaults to 2).</para></listitem>
 	</varlistentry>
 	<varlistentry>
-	<term><parameter>fixed_width</parameter></term>
-	<listitem><para>Force the GUI element to stay at its initial width. Do not use in combination with matrices, where the number of columns may change in any way. Useful, esp. when creating a vector input element (rows="1"). With this option set to true, no vertical scroll bar will be shown, even in the matrix exceeds the available height (as this would affect the width). (optional, defaults to false).</para></listitem>
+	<term><parameter>min_rows</parameter></term>
+	<listitem><para>Minimum number of rows in the matrix. The matrix will refuse shrink below this size. (optional, defaults to 0; see also: <parameter>allow_missings</parameter>.).</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term><parameter>min_columns</parameter></term>
+	<listitem><para>Minimum number of columns in the matrix. The matrix will refuse shrink below this size. (optional, defaults to 0; see also: <parameter>allow_missings</parameter>.).</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term><parameter>fixed_height</parameter></term>
 	<listitem><para>Force the GUI element to stay at its initial height. Do not use in combination with matrices, where the number of rows may change in any way. Useful, esp. when creating a vector input element (columns="1"). With this option set to true, no horizontal scroll bar will be shown, even in the matrix exceeds the available width (as this would affect the height). (optional, defaults to false).</para></listitem>
+	</varlistentry>
+	<varlistentry>
+	<term><parameter>fixed_width</parameter></term>
+	<listitem><para>Slightly misnamed: Assume the column count will not change. The last (or typically only) column will be stretched to take up the available width. Do not use in combination with matrices, where the number of columns may change in any way. Useful, esp. when creating a vector input element (rows="1"). (optional, defaults to false).</para></listitem>
 	</varlistentry>
 	<varlistentry>
 	<term><parameter>horiz_headers</parameter></term>

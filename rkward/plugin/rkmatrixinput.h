@@ -67,6 +67,7 @@ private:
 	bool allow_user_resize_columns;
 	int trailing_rows;
 	int trailing_columns;
+	int min_rows, min_columns;
 
 	bool isValueValid (const QString &value) const;
 	void updateAll ();
