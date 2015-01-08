@@ -2,7 +2,7 @@
 var p;
 
 function calculate () {
-	p = "c (" + getString ("p").replace (/[, ]+/g, ", ") + ")";
+	p = "c (" + getList ("p.0").join (", ") + ")";
 
 	echo ('result <- (qbeta (p = ' + p + ', shape1 = ' + getValue ("shape1") + ', shape2 = ' + getValue ("shape2") + ', ncp = ' + getValue ("ncp") + ', ' + getValue ("tail") + ', ' + getValue("logp") + '))\n');
 }
