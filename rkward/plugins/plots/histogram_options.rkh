@@ -4,7 +4,7 @@
 		This plugin provides various options for <b>hist</b> or <b>plot.histogram</b>.
 	</summary>
 	<usage>
-		This plugin is mostly used as an embeded plugin. All the GUI elements here set various parameters to either hist or plot.histogram functions. For parameter specific help see the respective R references. Few parameter combinations might not produce any sensible plot, so read the R references to make a judicious choice of parameters.
+		This plugin is mostly used as an embedded plugin. All the GUI elements here set various parameters to either hist or plot.histogram functions. For parameter specific help see the respective R references. Few parameter combinations might not produce any sensible plot, so read the R references to make a judicious choice of parameters.
 	</usage>
 	<settings>
 		<setting id="addtoplot">Check this box if the histogram is to be added to the current plot. This is the <i>add</i> parameter.</setting>
@@ -25,7 +25,7 @@
 		<setting id="angle">This is the <i>angle</i> parameter.</setting>
 		<caption id="frame_histfilloptions"/>
 		<setting id="usefillcol">Check this box to use a fill color for the histogram bars.</setting>
-		<setting id="histfillcol">This is the <i>col</i> parameter. The embeding plugin might set a default color. If it is empty, then <i>col</i> is not used in the code, otherwise the chosen color is used to fill the bars.</setting>
+		<setting id="histfillcol">This is the <i>col</i> parameter. The embedding plugin might set a default color. If it is empty, then <i>col</i> is not used in the code, otherwise the chosen color is used to fill the bars.</setting>
 	</settings>
 	<related>
 		<ul>

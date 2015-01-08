@@ -75,7 +75,7 @@ etc.drop.format <- rk.XML.dropdown("File format",
     "Custom"=c(val="table")
   ),
   id.name="quick",
-  help="Select one of the default file formats here. They will set some of the options (like field separator and decimal point) with resonable defaults. Use the custom format if you need more control."
+  help="Select one of the default file formats here. They will set some of the options (like field separator and decimal point) with reasonable defaults. Use the custom format if you need more control."
 )
 
 etc.frame.characters <- rk.XML.frame(
@@ -88,7 +88,7 @@ etc.frame.characters <- rk.XML.frame(
           etc.radio.decimal.opt.other <- rk.XML.option("Custom (specify below)", val="other", id.name="decOther")
         ),
         id.name="dec",
-        help="Specify the desirend decimal point character. If this is greyed out, the selected preset sets this for you."
+        help="Specify the desired decimal point character. If this is greyed out, the selected preset sets this for you."
       ),
       rk.XML.stretch(),
       etc.input.decimal <- rk.XML.input("", required=TRUE, id="custom_dec",
@@ -105,7 +105,7 @@ etc.frame.characters <- rk.XML.frame(
           etc.radio.field.opt.other <- rk.XML.option("Custom (specify below)", val="other", id.name="sepOther")
         ),
         id.name="sep",
-        help="Specify the desirend field separator character. If this is greyed out, the selected preset sets this for you."
+        help="Specify the desired field separator character. If this is greyed out, the selected preset sets this for you."
       ),
       rk.XML.stretch(),
       etc.input.field <- rk.XML.input("", required=TRUE, id="custom_sep",
@@ -126,7 +126,7 @@ etc.frame.specialChars <- rk.XML.frame(
           etc.radio.quote.opt.double <- rk.XML.option("Double", val="double", id.name="qmethodDbl")
         ),
         id.name="qmethod",
-        help="Controls how existing quotes in values are handled -- they can either be escaped or double qouted. If this is greyed out, the selected preset sets this for you."
+        help="Controls how existing quotes in values are handled -- they can either be escaped or double quoted. If this is greyed out, the selected preset sets this for you."
       )
     ),
     rk.XML.col(

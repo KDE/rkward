@@ -4,7 +4,7 @@
 		Various graphical parameters for <b>plot.stepfun</b>. For detailed description of the individual parameters see the R reference on 'plot.stepfun'.
 	</summary>
 	<usage>
-		This is supposed to be used as an embeded plugin. All the elements are arguments to the plot.stepfun function. This plugin is useful in constructing <b>ecdf</b> plots.
+		This is supposed to be used as an embedded plugin. All the elements are arguments to the plot.stepfun function. This plugin is useful in constructing <b>ecdf</b> plots.
 	</usage>
 	<settings>
 		<setting id="addtoplot">This is the <i>add</i> argument. This option might be disabled by the embedding plugin.</setting>

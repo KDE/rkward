@@ -28,17 +28,17 @@
 			Should existing files be overwritten or the data appended? If this is greyed out, the selected preset sets this for you.
 		</setting>
 		<setting id="quick">
-			Select one of the default file formats here. They will set some of the options (like field separator and decimal point) with resonable defaults. Use the custom format if you need more control.
+			Select one of the default file formats here. They will set some of the options (like field separator and decimal point) with reasonable defaults. Use the custom format if you need more control.
 		</setting>
 		<caption id="frm_rDPPCCCOFT" />
 		<setting id="dec">
-			Specify the desirend decimal point character. If this is greyed out, the selected preset sets this for you.
+			Specify the desired decimal point character. If this is greyed out, the selected preset sets this for you.
 		</setting>
 		<setting id="custom_dec">
 			Use this value as the custom decimal point character.
 		</setting>
 		<setting id="sep">
-			Specify the desirend field separator character. If this is greyed out, the selected preset sets this for you.
+			Specify the desired field separator character. If this is greyed out, the selected preset sets this for you.
 		</setting>
 		<setting id="custom_sep">
 			Use this value as the custom field separator character.
@@ -71,7 +71,7 @@
 			Check this to have all string values quoted.
 		</setting>
 		<setting id="qmethod">
-			Controls how existing quotes in values are handled -- they can either be escaped or double qouted. If this is greyed out, the selected preset sets this for you.
+			Controls how existing quotes in values are handled -- they can either be escaped or double quoted. If this is greyed out, the selected preset sets this for you.
 		</setting>
 		<setting id="na">
 			Set the character to indicate missing data.

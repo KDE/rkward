@@ -162,7 +162,7 @@
 						</dropdown>
 					</row>
 				</frame>
-				<frame id="title_properties" label="Title embeded in file">
+				<frame id="title_properties" label="Title embedded in file">
 					<row>
 						<column>
 							<checkbox id="autotitle" value="1" value_unchecked="0" checked="true" label="Default Title"/>

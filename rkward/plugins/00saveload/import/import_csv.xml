@@ -65,7 +65,7 @@
 				<browser id="file" type="file" label="File name"/>
 				<dropdown id="quick" label="Data format" >
 					<option value="csv" label="Comma separated values (CSV)" checked="true" />
-					<option value="csv2" label="Semicolo separated values, comma as decimal separator (CSV2)" />
+					<option value="csv2" label="Semicolon separated values, comma as decimal separator (CSV2)" />
 					<option value="delim" label="Tab separated values (TAB)" />
 					<option value="delim2" label="Tab separated values, comma as decimal separator (TAB2)" />
 					<option value="table" label="Custom"/>

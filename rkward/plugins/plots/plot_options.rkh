@@ -1,7 +1,7 @@
 <!DOCTYPE rkhelp>
 <document>
 	<summary>
-		Generic plot options plugin. More often than not, this plugin is embeded into other plugins. As a result, not all the features explained here are available in a specific embeded situation. When a particular feature is available, it is explained as below.
+		Generic plot options plugin. More often than not, this plugin is embedded into other plugins. As a result, not all the features explained here are available in a specific embedded situation. When a particular feature is available, it is explained as below.
 	</summary>
 
 	<usage>
@@ -68,7 +68,7 @@
 			<li><i>allow_ylim</i>: Setting this to "true" ("false") enables (disables) the display of 'Min Y value' and 'Max Y value' input boxes.</li>
 			<li><i>allow_type</i>: Setting this to "true" ("false") enables (disables) the display of the 'Points / Lines' tab.</li>
 			<li><i>allow_aspect</i>: Setting this to "true" ("false") enables (disables) the display of the 'Aspect ratio' tab.</li>
-			<li><i>allow_grid</i>: Setting this to "true" ("false") enables (disables) the display of the 'Grid' tab. If "true", the actual code for grid options can be extracted from code.calculate (see below) which in turn extracts it from grid_options.code.printout. Specifically, if the plot options plugin is embeded using an id="plot_options" then the following call:<br>
+			<li><i>allow_grid</i>: Setting this to "true" ("false") enables (disables) the display of the 'Grid' tab. If "true", the actual code for grid options can be extracted from code.calculate (see below) which in turn extracts it from grid_options.code.printout. Specifically, if the plot options plugin is embedded using an id="plot_options" then the following call:<br>
 				printIndented ("\t", getRK_val ("plot_options.code.calculate"));</br><br>
 			after the plotting function should do the job.</br></li>
 		</ul>

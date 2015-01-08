@@ -1,7 +1,7 @@
 <!DOCTYPE rkhelp>
 <document>
 	<summary>
-		Generic tabulation plugin (single outcome vector). This plugin is designed to be embeded into other plugins.
+		Generic tabulation plugin (single outcome vector). This plugin is designed to be embedded into other plugins.
 	</summary>
 
 	<usage>
