@@ -16,4 +16,6 @@ python scripts/update_plugin_messages.py --extract-only --outdir=$podir rkward/p
 python scripts/update_plugin_messages.py --extract-only --outdir=$podir rkward/plugins/import_export.pluginmap
 # extract messages from data plugins: >> rkward__data.pot
 python scripts/update_plugin_messages.py --extract-only --outdir=$podir rkward/plugins/data.pluginmap
+# extract messages from data plugins: >> rkward__plots.pot
+python scripts/update_plugin_messages.py --extract-only --outdir=$podir rkward/plugins/plots.pluginmap
 # messages of embedded plugins are extracted implicitly, as part of the above extraction calls: >> rkward__embedded.pot

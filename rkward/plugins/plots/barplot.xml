@@ -60,7 +60,7 @@
 					<input id="names_custom" label="Labels (separated by ';')" initial="First label;Second label"/>
 				</tab>
 				<tab label="Options" id="tab_options">
-					<embed id="barplot_embed" component="rkward::barplot_embed"/>
+					<embed id="barplot_embed" component="rkward::barplot_embed" label="Barplot Options"/>
 					<stretch/>
 				</tab>
 			</tabbook>

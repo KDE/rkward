@@ -125,7 +125,7 @@ def getFileContext (element, attribute=""):
   refer_to = ""
   if ((element.tagName in referring_elements) and (element.hasAttribute ("id"))):
     if (not (element.getAttribute ("id") in infile["id_labels"])):
-      sys.stderr.write ("WARNING in " + infile["infile"] + ": Reference to unknown (or unnamed) element id '" + element.getAttribute ("id") + "'\n")
+      sys.stderr.write ("WARNING in " + infile["infile"] + ", line " + str (getLineOf (element)) + ": Reference to unknown (or unnamed) element id '" + element.getAttribute ("id") + "'\n")
     else:
       refer_to = " (refers to element labelled " + quote (infile["id_labels"][element.getAttribute ("id")]) + ")"
   tag_stack = [getElementShort (element, attribute)]
