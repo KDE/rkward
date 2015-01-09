@@ -9,7 +9,7 @@
 		Export data to CSV or similar file formats.
 	</summary>
 	<usage>
-		Select a tabular data object (like a data frame or matrix) and chose a file to save to. All other options allow you to define the file format, handling of column and row names as well as special character handling.
+		Select a tabular data object (like a data frame or matrix) and choose a file to save to. All other options allow you to define the file format, handling of column and row names as well as special character handling.
 	</usage>
 	<!-- <section id="sct_EDITORDE" title="EDIT OR DELETE ME">
 				EDIT OR DELETE ME

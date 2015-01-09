@@ -133,7 +133,7 @@
 							<option value="3" label="Always vertical " />
 						</dropdown>
 						<row>
-							<input id="cexaxis" label="Tick label scale (relative to cex))" />
+							<input id="cexaxis" label="Tick label scale (relative to cex)" />
 						</row>
 						<stretch/>
 					</frame>

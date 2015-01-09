@@ -8,7 +8,7 @@ Import STATA data files.
 	</summary>
 
 	<usage>
-Choose the STATA data file to import. Usually those files have the ending '*.dta. An R object containing the STATA data will be created. STATA files other than data files (i. e.:*.log, *.smcl, *.do, *.ado) are not supported. 
+Choose the STATA data file to import. Usually those files have the ending '*.dta'. An R object containing the STATA data will be created. STATA files other than data files (i. e.:*.log, *.smcl, *.do, *.ado) are not supported. 
 	</usage>
 
 	<settings>
