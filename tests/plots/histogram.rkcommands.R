@@ -1,6 +1,13 @@
 local({
 ## Print result
-rk.header ("Histogram", list ("Variable", rk.get.description (swiss[["Education"]]) , "Density bandwidth", "nrd", "Density adjust", 4.00, "Density resolution", 512.00, "Density Remove missing values", na.rm=TRUE  , "Break points", "Equally spaced vector of length 6", "Right closed", "TRUE", "Include in lowest cell", "TRUE", "Scale", "Density"))
+rk.header ("Histogram", list ("Variable"=rk.get.description (swiss[["Education"]]), "Break points"="Equally spaced vector of length 6",
+	"Right closed"="yes",
+	"Include in lowest cell"="yes",
+	"Scale"="Density"))
+rk.header ("Density curve", parameters=list("Bandwidth"="nrd",
+	"Adjust Bandwidth"="4.00",
+	"resolution"="512.00",
+	"Remove Missing Values"="yes"))
 
 rk.graph.on ()
 try ({

@@ -1,7 +1,7 @@
 local({
 ## Compute
-Xvars <- list(women[["weight"]],swiss[["Education"]])
-Yvars <- list(women[["height"]],swiss[["Catholic"]])
+Xvars <- rk.list(women[["weight"]],swiss[["Education"]])
+Yvars <- rk.list(women[["height"]],swiss[["Catholic"]])
 
 if (length(Xvars) != length(Yvars)) {
 	stop("Unequal number of X and Y variables given")
@@ -15,9 +15,8 @@ col <- rep (c ('black', 'red'), length.out=length (Xvars));
 cex <- rep (1, length.out=length (Xvars));
 pch <- rep (1, length.out=length (Xvars));
 ## Print result
-rk.header ("Scatterplot", parameters = list (
-	"X variables"=paste (rk.get.description (women[["weight"]],swiss[["Education"]]), collapse=", "),
-	"Y variables"=paste (rk.get.description (women[["height"]],swiss[["Catholic"]]), collapse=", ")))
+rk.header ("Scatterplot", parameters=list("X variables"=paste (names (Xvars), collapse=", "),
+	"Y variables"=paste (names (Yvars), collapse=", ")))
 
 rk.graph.on()
 

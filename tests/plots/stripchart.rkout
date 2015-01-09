@@ -2,8 +2,8 @@
 <h2>Parameters</h2>
 <ul><li>Variable: breaks</li>
 <li>Group: tension</li>
-<li>Method: stack</li>
-<li>Offset: 0.5</li>
+<li>Treatment of identical values: Stack</li>
+<li>Offset: 0.50</li>
 <li>Orientation: Horizontal</li>
 </ul>
 DATE<br />

@@ -1,9 +1,6 @@
-var x;
-var y;
-
 function calculate () {
-	x = str_replace ("\n", ",", trim (getValue ("x"))) ;
-	y = str_replace ("\n", ",", trim (getValue ("y"))) ;
+	var x = getList ("x").join (",");
+	var y = getList ("y").join (",");
 
 	var type = "";
 	if (getValue ("manual_type.numeric")) {
@@ -16,16 +13,16 @@ function calculate () {
 	var cex = getValue ("cex");
 
 // input
-	echo ('Xvars <- list(' + x + ')\n');
-	echo ('Yvars <- list(' + y + ')\n');
+	echo ('Xvars <- rk.list(' + x + ')\n');
+	echo ('Yvars <- rk.list(' + y + ')\n');
 	echo ('\n');
 
 // verification (is this needed?) ?>
 	echo ('if (length(Xvars) != length(Yvars)) {\n');
-	echo ('	stop("Unequal number of X and Y variables given")\n');
+	echo ('	stop(' + i18n ("Unequal number of X and Y variables given") + ')\n');
 	echo ('}\n');
 
-	echo ('# find range of X/Y values needed\n');
+	comment ('find range of X/Y values needed');
 	echo ('Xrange <- range (c (Xvars), na.rm=TRUE)\n');
 	echo ('Yrange <- range (c (Yvars), na.rm=TRUE)\n');
 	echo ('\n');
@@ -46,9 +43,9 @@ function preview () {
 
 function doPrintout (full) {
 	if (full) {
-		echo ('rk.header ("Scatterplot", parameters = list (\n');
-		echo ('	"X variables"=paste (rk.get.description (' + x + '), collapse=", "),\n');
-		echo ('	"Y variables"=paste (rk.get.description (' + y + '), collapse=", ")))\n');
+		new Header (i18n ("Scatterplot"))
+			.add (i18n ("X variables"), noquote ('paste (names (Xvars), collapse=", ")'))
+			.add (i18n ("Y variables"), noquote ('paste (names (Yvars), collapse=", ")')).print ();
 		echo ('\n');
 		echo ('rk.graph.on()\n');
 		echo ('\n');

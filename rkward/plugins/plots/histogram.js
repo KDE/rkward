@@ -16,19 +16,10 @@ function doPrintout (full) {
 	var x = getValue ("x");
 
 	if (full) {
-		echo ('rk.header ("Histogram", list ("Variable", rk.get.description (' + x + ') ');
+		echo ('rk.header (' + i18n ("Histogram") + ', list (' + i18n ("Variable") + '=rk.get.description (' + x + ')' + getValue ("histogram_opt.code.preprocess") + '))\n');
 		if ((densityscaled) && getValue ("density")) {
-			echo (', "Density bandwidth", "');
-			echo (bw);
-			echo ('", "Density adjust", ');
-			echo (adjust);
-			echo (', "Density resolution", ');
-			echo (n);
-			echo (', "Density Remove missing values", ');
-			echo (narm);
-			echo (' ');
+			new Header (i18n ("Density curve", 3)).addFromUI ("bw").addFromUI ("adjust").addFromUI ("n").addFromUI ("narm").print ();
 		}
-		echo (' ' + getValue ("histogram_opt.code.preprocess") + '))\n');
 		echo ('\n');
 		echo ('rk.graph.on ()\n');
 	}

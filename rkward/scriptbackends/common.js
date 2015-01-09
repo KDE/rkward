@@ -124,6 +124,15 @@ Header = function (title, level) {
 	this.print = function (indentation) {
 		makeHeaderCode (this.title, this.parameters, this.level, indentation);
 	}
+	this.extractParameters = function (indentation) {
+		if (typeof (indentation) == 'undefined') indentation = "";
+		var ret = "";
+		for (var p = 0; p < this.parameters.length; p += 2) {
+			if (p) ret += ",\n" + indentation + "\t";
+			ret += quote (this.parameters[p]) + "=" + quote (this.parameters[p+1]);
+		}
+		return ret;
+	}
 }
 
 getValue = function (id) {

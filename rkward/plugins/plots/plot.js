@@ -14,8 +14,7 @@ function doPrintout (full) {
 	}
 
 	if (full) {
-
-		echo ('rk.header ("Generic Plot")\n');
+		new Header (i18n ("Generic Plot")).print ();
 		echo ('rk.graph.on ()\n');
 	}
 

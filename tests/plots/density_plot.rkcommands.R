@@ -2,7 +2,13 @@ local({
 ## Prepare
 require(hdrcde)
 ## Print result
-rk.header ("Highest density regions", list ("Variable", rk.get.description (women[["height"]]), "Band Width", "nrd0", "Adjust", 1.00, "Remove Missing Values", na.rm=TRUE, "Length", length (women[["height"]]), "Resolution", 512.00, "Smoothing Kernel", "gaussian"))
+rk.header ("Highest density regions", parameters=list("Variable"=rk.get.description (women[["height"]]),
+	"Length"=length (women[["height"]]),
+	"Adjust Bandwidth"="1.00",
+	"Remove Missing Values"="yes",
+	"Resolution"="512.00",
+	"Smoothing Kernel"="gaussian (default)",
+	"Bandwidth"="nrd0"))
 
 rk.graph.on ()
 try ({

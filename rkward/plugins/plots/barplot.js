@@ -11,7 +11,7 @@ function doPrintout (full) {
 	var names_mode = getValue ("names_mode");
 
 	var tabulate = getValue ("tabulate.checked");
-	var main_header = '"Variable"=rk.get.description (' + varname + ')';
+	var main_header = i18n ("Variable") + '=rk.get.description (' + varname + ')';
 	if (tabulate) main_header = getValue ('tabulate_options.parameters');
 
 	var limit = getValue ("limit.checked");
@@ -26,7 +26,7 @@ function doPrintout (full) {
 		echo (getValue ('tabulate_options.code.calculate'));
 	} else {
 		echo ('x <- ' + varname + "\n");
-		echo ('# barplot is a bit picky about attributes, so we need to convert to vector explicitely\n');
+		comment ('barplot is a bit picky about attributes, so we need to convert to vector explicitely');
 		echo ('if(!is.matrix(x)) x <- as.vector(x)\n');
 		echo ('if(!is.matrix(x) && is.data.frame(x)) x <- data.matrix(x)\n');
 	}
@@ -42,7 +42,7 @@ function doPrintout (full) {
 	}
 
 	if (full) {
-		echo ('rk.header ("Barplot", parameters=list (' + main_header + limit_header + barplot_header + '))\n');
+		echo ('rk.header (' + i18n ("Barplot") + ', parameters=list (' + main_header + limit_header + barplot_header + '))\n');
 		echo ('\n');
 		echo ('rk.graph.on ()\n');
 	}

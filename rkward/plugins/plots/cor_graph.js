@@ -37,7 +37,7 @@ function doPrintout (full) {
 	echo ('\n');
 
 	if (full) {
-		echo ('rk.header ("Correlation Matrix Plot", parameters=list ("Method", "' + getValue ("method") + '", "Exclusion", "' + getValue ("use") + '", "Precision", "' + getValue ("digits") + ' digits", "Scale text", "' + getValue ("scale") + '"))\n');
+		new Header (i18n ("Correlation Matrix Plot")).addFromUI ("method").addFromUI ("use").addFromUI ("digits").addFromUI ("scale").print ();
 		echo ('\n');
 		echo ('rk.graph.on ()\n');
 	}
@@ -48,7 +48,7 @@ function doPrintout (full) {
 	if (full) {
 		echo ('rk.graph.off ()\n');
 		echo ('\n');
-		echo ('rk.print("Legend:\\t\'***\': p &lt; 0.001 -- \'**\': p &lt; 0.01 -- \'*\': p &lt; 0.05 -- \'.\'\': p &lt; 0.1")\n');
+		echo ('rk.print(' + i18n ("Legend:") + '\\t\'***\': p &lt; 0.001 -- \'**\': p &lt; 0.01 -- \'*\': p &lt; 0.05 -- \'.\'\': p &lt; 0.1")\n');
 	}
 }
 

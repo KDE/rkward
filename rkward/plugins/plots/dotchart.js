@@ -11,7 +11,7 @@ function doPrintout (full) {
 	var names_mode = getValue ("names_mode");
 
 	var tabulate = getValue ("tabulate.checked");
-	var main_header = '"Variable"=rk.get.description (' + vars + ')';
+	var main_header = i18n ("Variable") + '=rk.get.description (' + vars + ')';
 	if (tabulate) main_header = getValue ('tabulate_options.parameters');
 
 	var limit = getValue ("limit.checked");
@@ -22,11 +22,11 @@ function doPrintout (full) {
 
 	if (tabulate) {
 		echo (getValue ('tabulate_options.code.calculate'));
-		echo ('n <- names (x); x <- as.numeric (x); names (x) <- n		# dotchart() is somewhat picky about data type\n');
+		echo ('n <- names (x); x <- as.numeric (x); names (x) <- n		'); comment ('dotchart() is somewhat picky about data type');
 	} else {
 		echo ('x <- ' + getValue ("x") + '\n');
 		echo ('if (!is.numeric (x)) {\n');
-		echo ('	warning ("Data is not numeric, but proceeding as requested.\\nDid you forget to check the tabulate option?")\n');
+		echo ('	warning (' + i18n ("Data is not numeric, but proceeding as requested.\\nDid you forget to check the tabulate option?") + ')\n');
 		echo ('}\n');
 	}
 
@@ -36,7 +36,7 @@ function doPrintout (full) {
 	echo ('\n');
 
 	if (full) {
-		echo ('rk.header ("Dot chart", parameters=list (' + main_header + limit_header + '))\n');
+		echo ('rk.header (' + i18n ("Dot chart") + ', parameters=list (' + main_header + limit_header + '))\n');
 		echo ('\n');
 		echo ('rk.graph.on ()\n');
 	}

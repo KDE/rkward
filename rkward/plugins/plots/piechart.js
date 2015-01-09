@@ -10,7 +10,7 @@ function doPrintout (full) {
 	var vars = getValue ("x");
 
 	var tabulate = getValue ("tabulate.checked");
-	var main_header = '"Variable"=rk.get.description (' + vars + ')';
+	var main_header = i18n ("Variable") + '=rk.get.description (' + vars + ')';
 	if (tabulate) main_header = getValue ('tabulate_options.parameters');
 
 	var limit = getValue ("limit.checked");
@@ -24,11 +24,11 @@ function doPrintout (full) {
 	var density_inc = getValue ("density_inc");
 	var col = getValue ("colors");
 	var clockwise = getValue ("clockwise");
-	var clockwise_header = "";
+	var clockwise_header = ", " + i18n ("Orientation") + '=';
 	if (clockwise) {
-		clockwise_header = ', "Orientation"="Clockwise"';
+		clockwise_header += i18n ("Clockwise");
 	} else {
-		clockwise_header = ', "Orientation"="Counter clockwise"';
+		clockwise_header += i18n ("Counter clockwise");
 	}
 	var names_mode = getValue ("names_mode");
 
@@ -49,7 +49,7 @@ function doPrintout (full) {
 	} else {
 		echo ('x <- ' + getValue ("x") + '\n');
 		echo ('if (!is.numeric (x)) {\n');
-		echo ('	warning ("Data is not numeric, but proceeding as requested.\\nDid you forget to check the tabulate option?")\n');
+		echo ('	warning (' + i18n ("Data is not numeric, but proceeding as requested.\\nDid you forget to check the tabulate option?") + ')\n');
 		echo ('}\n');
 	}
 
@@ -59,7 +59,7 @@ function doPrintout (full) {
 	echo ('\n');
 
 	if (full) {
-		echo ('rk.header ("Pie chart", parameters=list (' + main_header + limit_header + clockwise_header + '))\n');
+		echo ('rk.header (' + i18n ("Pie chart") + ', parameters=list (' + main_header + limit_header + clockwise_header + '))\n');
 		echo ('\n');
 		echo ('rk.graph.on ()\n');
 	}

@@ -1,8 +1,8 @@
 <h1>Stem-and-Leaf Plot</h1>
 <h2>Parameters</h2>
 <ul><li>Variable: Fertility</li>
-<li>Plot Length: 1.50</li>
-<li>Plot Width: 80.00</li>
+<li>Plot length (scale): 1.50</li>
+<li>Plot width: 80.00</li>
 <li>Tolerance: 0.01</li>
 </ul>
 DATE<br />

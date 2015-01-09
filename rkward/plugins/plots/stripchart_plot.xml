@@ -36,7 +36,7 @@
 							<option value="stack" label="Stack"/>
 						</radio>
 						<spinbox label="Jitter" id="jitter" initial="0.1" />
-						<spinbox label="offset" id="offset" initial="0.33333333333" />
+						<spinbox label="Offset" id="offset" initial="0.33333333333" />
 						<stretch/>
 					</column>
 					<column>

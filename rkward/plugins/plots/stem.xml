@@ -15,9 +15,9 @@
 				</row>
 			</tab>
 			<tab id="tab_options" label="Options">
-				<spinbox type="real" id="scale" label="scale" initial="1"/>
-				<spinbox type="real" id="width" label="width" initial="80"/>
-				<spinbox type="real" id="atom" label="atom" initial="0.00000001"/>
+				<spinbox type="real" id="scale" label="Plot length (scale)" initial="1"/>
+				<spinbox type="real" id="width" label="Plot width" initial="80"/>
+				<spinbox type="real" id="atom" label="Tolerance" initial="0.00000001"/>
 			</tab>
 		</tabbook>
 	</dialog>

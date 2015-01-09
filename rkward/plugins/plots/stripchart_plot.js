@@ -8,22 +8,25 @@ function preview () {
 
 function doPrintout (full) {
 	var opts = "";
-	var params = "";
 	var x = getValue ("x");
 	var g = getValue ("g");
 	var method = '"' + getValue ("method") + '"';
 	if (method == "\"jitter\"") {
 		opts += ", jitter = " + getValue ("jitter");
-		params += ", \"Jitter\" = " + getValue ("jitter");
 	} else if (method == "\"stack\"") {
 		opts += ", offset = " + getValue ("offset");
-		params += ", \"Offset\" = " + getValue ("offset");
 	}
-	var orientation = getValue ("orientation");
-	if (orientation == "Vertical") opts += ", vertical = TRUE";
+	if (getValue ("orientation") == "Vertical") opts += ", vertical = TRUE";
 
 	if (full) {
-		echo ('rk.header ("Stripchart", list ("Variable"=rk.get.description (' + x + '), "Group"=rk.get.description (' + g + '), "Method"=' + method + params + ', "Orientation"="' + orientation + '"))\n');
+		header = new Header (i18n ("Stripchart"))
+			.add (i18n ("Variable"), noquote ('rk.get.description (' + x + ')'))
+			.add (i18n ("Group"), noquote ('rk.get.description (' + g + ')'))
+			.addFromUI ("method");
+		if (method == "\"jitter\"") header.addFromUI ("jitter");
+		else if (method == "\"stack\"") header.addFromUI ("offset");
+		header.addFromUI ("orientation");
+		header.print ();
 		echo ('\n');
 		echo ('rk.graph.on ()\n');
 	}

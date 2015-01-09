@@ -21,7 +21,10 @@ function doPrintout (full) {
 	var x = getValue ("x");
 
 	if (full) {
-		echo ('rk.header ("Empirical Cumulative Distribution Function", list ("Variable", rk.get.description (' + x + '), "Minimum", yrange[1], "Maximum", yrange[2]))\n');
+		new Header (i18n ("Empirical Cumulative Distribution Function"))
+			.add (i18n ("Variable"), noquote ('rk.get.description (' + x + ')'))
+			.add (i18n ("Minimum"), noquote ("yrange[1]"))
+			.add (i18n ("Maximum"), noquote ("yrange[2]")).print ();
 		echo ('\n');
 		echo ('rk.graph.on ()\n');
 	}

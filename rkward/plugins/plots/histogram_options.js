@@ -6,47 +6,35 @@ var headeroptions;
 function makeCodes () {
 	histcalcoptions = ", breaks=";
 	histplotoptions = "";
-	headeroptions = "";
 	var varname = getValue ("varname");
 
 	var histbreaks = getValue ("histbreaksFunction");
-	headeroptions += ', "Break points", "';
+	var header = new Header ();
+	var bp = i18n ("Break points");
 	if (histbreaks == "cells") {
 		histcalcoptions += getValue ("histbreaks_ncells");
-		headeroptions += 'Approximately ' + getValue ("histbreaks_ncells") + ' cells"';
+		header.add (bp, i18n ("Approximately %1 cells", getValue ("histbreaks_ncells")));
 	} else if (histbreaks == "int") {
 		histcalcoptions += "seq (floor (min (" + varname + ", na.rm=TRUE))-0.5, ceiling (max (" + varname + ", na.rm=TRUE))+0.5)";
-		headeroptions += 'Integers"';
+		header.add (bp, i18n ("Integers"));
 	} else if (histbreaks == "vec") {
 		histcalcoptions += "(function(x) {y = extendrange(x,f=0.1); seq(from=y[1], to=y[2], length=" + getValue ("histbreaks_veclength") + ")})(" + varname + ")";
-		headeroptions += 'Equally spaced vector of length ' + getValue ("histbreaks_veclength") + '"';
+		header.add (bp, i18n ("Equally spaced vector of length %1", getValue ("histbreaks_veclength")));
 	} else {
 		histcalcoptions += "\"" + histbreaks + "\"";
-		headeroptions += histbreaks + '"';
+		header.add (bp, histbreaks);
 	}
 
-	var right = getValue ("rightclosed");
-	if (!right) {
-		headeroptions += ', "Right closed", "FALSE"';
-		histcalcoptions += ", right=FALSE";
-	} else {
-		headeroptions += ', "Right closed", "TRUE"';
-	}
+	if (!getBoolean ("rightclosed")) histcalcoptions += ", right=FALSE";
+	header.addFromUI ("rightclosed");
+	if (!getBoolean ("include_lowest")) histcalcoptions += ", include.lowest=FALSE";
+	header.addFromUI ("include_lowest");
 
-	var inclowest = getValue ("include_lowest");
-	if (!inclowest) {
-		headeroptions += ', "Include in lowest cell", "FALSE"';
-		histcalcoptions += ", include.lowest=FALSE";
-	} else {
-		headeroptions += ', "Include in lowest cell", "TRUE"';
-	}
-
-	var freq = getValue ("freq");
-	if (!freq) {
+	if (!getBoolean ("freq")) {
 		histplotoptions += ", freq=FALSE";
-		headeroptions += ', "Scale", "Density"';
+		header.add (i18n ("Scale"), i18n ("Density"));
 	} else {
-		headeroptions += ', "Scale", "Frequency"';
+		header.add (i18n ("Scale"), i18n ("Frequency"));
 	}
 
 	var addbars = getValue ("addtoplot");
@@ -74,6 +62,7 @@ function makeCodes () {
 	if (getValue ("usefillcol")) histfillcol = getValue ("histfillcol.code.printout");
 
 	histplotoptions += histbordercol + histfillcol;
+	headeroptions = ", " + header.extractParameters ();
 }
 
 function preprocess () {

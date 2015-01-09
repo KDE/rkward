@@ -49,7 +49,7 @@ function printout () {
 	echo (plot_pre);
 
 	if (options['labels']) {
-		echo ('# adjust the range so that the labels will fit\n');
+		comment ('adjust the range so that the labels will fit');
 		echo ('yrange <- range (' + options['xvar'] + ', na.rm=TRUE) * 1.2\n');
 		echo ('if (yrange[1] > 0) yrange[1] <- 0\n');
 		echo ('if (yrange[2] < 0) yrange[2] <- 0\n');

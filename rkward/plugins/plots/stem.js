@@ -4,8 +4,11 @@ function printout () {
 	var width = getValue ("width");
 	var atom = getValue ("atom");
 
-	echo ('rk.header ("Stem-and-Leaf Plot",\n');
-	echo ('	parameters=list ("Variable", paste (rk.get.description (' + x + ')), "Plot Length", "' + scale + '","Plot Width", "' + width + '", "Tolerance", "' + atom + '"))\n');
+	new Header (i18n ("Stem-and-Leaf Plot"))
+		.add (i18n ("Variable"), noquote ('paste (rk.get.description (' + x + '))'))
+		.addFromUI ("scale")
+		.addFromUI ("width")
+		.addFromUI ("atom").print ();
 	echo ('\n');
 	echo ('rk.print.literal(capture.output(stem(' + x + ', scale = ' + scale + ', width = ' + width + ', atom = ' + atom + ')))\n');
 }

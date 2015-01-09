@@ -36,17 +36,19 @@ function doPrintout (full) {
 	density_call += ", adjust=" + adjust + ", kern=\"" + kern + "\", n=" + resolution + ", " + narm + ")";
 
 	var title = "";
-	if (dodensity_plot) title = "Density Plot";
-	else title = "Highest density regions";
+	if (dodensity_plot) title = i18n ("Density Plot");
+	else title = i18n ("Highest density regions");
 
 	if (full) {
-		echo ('rk.header ("' + title + '", list ("Variable", rk.get.description (' + x + ')');
-		if (bw != "") {
-			echo (', "Band Width", "');
-			echo (bw);
-			echo ('"');
-		}
-		echo (', "Adjust", ' + adjust + ', "Remove Missing Values", ' + narm + ', "Length", length (' + x + '), "Resolution", ' + resolution + ', "Smoothing Kernel", "' + kern + '"))\n');
+		header = new Header (title);
+		header.add (i18n ("Variable"), noquote ('rk.get.description (' + x + ')'));
+		header.add (i18n ("Length"), noquote ('length (' + x + ')'));
+		header.addFromUI ("adjust");
+		header.addFromUI ("narm");
+		header.addFromUI ("n");
+		header.addFromUI ("kern");
+		if (bw != "") header.addFromUI ("bw");
+		header.print ();
 		echo ('\n');
 		echo ('rk.graph.on ()\n');
 	}

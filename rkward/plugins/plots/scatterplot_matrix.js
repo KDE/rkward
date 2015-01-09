@@ -13,12 +13,12 @@ function preview () {
 }
 
 function doPrintout (full) {
-	var vars = trim (getValue ("x")).replace (/\n/g, ",");
+	var vars = getList ("x").join (",");
 
 	echo ('data <- data.frame (' + vars + ')\n');
 	echo ('\n');
 	if (full) {
-		echo ('rk.header ("Scatterplot Matrix", parameters=list ("Diagonal Panels", "' + getValue("diag") + '", "Plot points", "' + getValue ("plot_points") + '", "Smooth", "' + getValue ("smooth") + '", "Ellipses", "' + getValue ("ellipse") + ' at 0.5 and 0.9 levels."))\n');
+		new Header (i18n ("Scatterplot Matrix")).addFromUI ("diag").addFromUI ("plot_points").addFromUI ("smooth").addFromUI ("ellipse").print ();
 		echo ('\n');
 		echo ('rk.graph.on ()\n');
 	}
