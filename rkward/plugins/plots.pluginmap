@@ -4,7 +4,7 @@
 	<include file="pluginmap_meta.inc"/>
 	<about
 		name="Plots"
-		shortinfo="Plugins for procuding various plots. Part of the official RKWard distribution"
+		shortinfo="Plugins for producing various plots. Part of the official RKWard distribution"
 		version="0.6.3"
 		license="GPL"
 		url="http://rkward.kde.org">

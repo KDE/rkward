@@ -26,7 +26,7 @@ function doPrintout (full) {
 		echo (getValue ('tabulate_options.code.calculate'));
 	} else {
 		echo ('x <- ' + varname + "\n");
-		comment ('barplot is a bit picky about attributes, so we need to convert to vector explicitely');
+		comment ('barplot is a bit picky about attributes, so we need to convert to vector explicitly');
 		echo ('if(!is.matrix(x)) x <- as.vector(x)\n');
 		echo ('if(!is.matrix(x) && is.data.frame(x)) x <- data.matrix(x)\n');
 	}
