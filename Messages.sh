@@ -16,8 +16,10 @@ python scripts/update_plugin_messages.py --extract-only --outdir=$podir rkward/p
 python scripts/update_plugin_messages.py --extract-only --outdir=$podir rkward/plugins/import_export.pluginmap
 # extract messages from data plugins: >> rkward__data.pot
 python scripts/update_plugin_messages.py --extract-only --outdir=$podir rkward/plugins/data.pluginmap
-# extract messages from data plugins: >> rkward__plots.pot
+# extract messages from plot plugins: >> rkward__plots.pot
 python scripts/update_plugin_messages.py --extract-only --outdir=$podir rkward/plugins/plots.pluginmap
-# extract messages from data plugins: >> rkward__item_response_theory.pot
+# extract messages from graphics device plugins: >> rkward__graphics_device.pot
+python scripts/update_plugin_messages.py --extract-only --outdir=$podir rkward/plugins/x11device.pluginmap
+# extract messages from IRT plugins: >> rkward__item_response_theory.pot
 python scripts/update_plugin_messages.py --extract-only --outdir=$podir rkward/plugins/irt.pluginmap
 # messages of embedded plugins are extracted implicitly, as part of the above extraction calls: >> rkward__embedded.pot
