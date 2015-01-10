@@ -31,16 +31,16 @@ function printout () {
 	var save = getValue("save_name.active");
 	var save_name = getValue("save_name");
 
-	echo ('rk.header ("LLTM  parameter estimation")\n');
-	echo ('rk.print ("Call:")\n');
+	echo ('rk.header (' + i18n ("LLTM  parameter estimation") + ')\n');
+	echo ('rk.print (' + i18n ("Call:") + ')\n');
 	echo ('rk.print.literal (deparse(estimates.lltm$call, width.cutoff=500))\n');
-	echo ('rk.header ("Coefficients:", level=4)\n');
+	echo ('rk.header (' + i18n ("Coefficients:") + ', level=4)\n');
 	echo ('rk.print(t(rbind(Eta=estimates.lltm$etapar,StdErr=estimates.lltm$se.eta)))\n');
-	echo ('rk.print (paste("Conditional log-likelihood:",round(estimates.lltm$loglik, digits=1),\n');
-	echo ('"<br />Number of iterations:",estimates.lltm$iter,"<br />Number of parameters:",estimates.lltm$npar))\n');
+	echo ('rk.print (paste(' + i18n ("Conditional log-likelihood:") + ',round(estimates.lltm$loglik, digits=1),\n');
+	echo (i18n ("<br />Number of iterations:") + ',estimates.lltm$iter,' + i18n ("<br />Number of parameters:") + ',estimates.lltm$npar))\n');
 	// check if results are to be saved:
 	if (save && save_name) {
-		echo ('# keep results in current workspace\n');
+		comment ('keep results in current workspace');
 		echo ('.GlobalEnv$' + save_name + ' <- estimates.lltm\n');
 	}
 }

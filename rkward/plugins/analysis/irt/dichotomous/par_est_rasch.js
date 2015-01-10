@@ -46,15 +46,15 @@ function printout () {
 	var save_name = getValue("save_name");
 	var irtparam  = getValue("irtparam");
 
-	echo ('rk.header ("Rasch parameter estimation")\n');
-	echo ('rk.print ("Call:")\n');
+	echo ('rk.header (' + i18n ("Rasch parameter estimation") + ')\n');
+	echo ('rk.print (' + i18n ("Call:") + ')\n');
 	echo ('rk.print.literal (deparse(estimates.rasch$call, width.cutoff=500))\n');
-	echo ('rk.header ("Coefficients:", level=4)\n');
+	echo ('rk.header (' + i18n ("Coefficients:") + ', level=4)\n');
 	echo ('rk.print (coef(estimates.rasch))\n');
-	echo ('rk.print (paste("Log-likelihood value at convergence:",round(estimates.rasch$log.Lik, digits=1)))\n');
+	echo ('rk.print (paste(' + i18n ("Log-likelihood value at convergence:") + ',round(estimates.rasch$log.Lik, digits=1)))\n');
 	// check if results are to be saved:
 	if (save && save_name) {
-		echo ('# keep results in current workspace\n');
+		comment ('keep results in current workspace');
 		echo ('.GlobalEnv$' + save_name + ' <- estimates.rasch\n');
 	}
 }

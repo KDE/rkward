@@ -50,15 +50,15 @@ function printout () {
 	var save         = getValue("save_name.active");
 	var save_name    = getValue("save_name");
 
-	echo ('rk.header ("GRM parameter estimation")\n');
-	echo ('rk.print ("Call:")\n');
+	echo ('rk.header (' + i18n ("GRM parameter estimation") + ')\n');
+	echo ('rk.print (' + i18n ("Call:") + ')\n');
 	echo ('rk.print.literal (deparse(estimates.grm$call, width.cutoff=500))\n');
-	echo ('rk.header ("Coefficients:", level=4)\n');
+	echo ('rk.header (' + i18n ("Coefficients:") + ', level=4)\n');
 	echo ('rk.print (coef(estimates.grm))\n');
-	echo ('rk.print (paste("Log-likelihood value at convergence:",round(estimates.grm$log.Lik, digits=1)))\n');
+	echo ('rk.print (paste(' + i18n ("Log-likelihood value at convergence:") + ',round(estimates.grm$log.Lik, digits=1)))\n');
 	// check if results are to be saved:
 	if (save && save_name) {
-		echo ('# keep results in current workspace\n');
+		comment ('keep results in current workspace');
 		echo ('.GlobalEnv$' + save_name + ' <- estimates.grm\n');
 	}
 }

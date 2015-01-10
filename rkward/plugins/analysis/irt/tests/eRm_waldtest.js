@@ -19,9 +19,9 @@ function calculate () {
 }
 
 function printout () {
-	echo ('rk.header ("Wald test (' + getValue("x") + ')")\n');
-	echo ('rk.print ("Call:")\n');
+	echo ('rk.header (' + i18n ("Wald test (%1)", getValue ("x")) + ')\n');
+	echo ('rk.print (' + i18n ("Call:") + ')\n');
 	echo ('rk.print.literal (deparse(waldtest.res$call, width.cutoff=500))\n');
-	echo ('rk.header ("Wald test on item level (z-values):", level=4)\n');
+	echo ('rk.header (' + i18n ("Wald test on item level (z-values):") + ', level=4)\n');
 	echo ('rk.print(waldtest.res$coef.table)\n');
 }

@@ -65,18 +65,17 @@ function printout () {
 	if (inp_items)
 		inp_items   = inp_items.replace(/\n/g,', ').replace(/(\w*)\[\["|"\]\]/g, '');
 
-	echo ('rk.header ("Cronbach\'s alpha")\n');
-	echo ('rk.print("for the \'' + getValue("x") + '\' data-set');
+	header = new Header (i18n ("Cronbach\'s alpha")).add (i18n ("Dataset"), getValue ("x"));
 	if (chk_select && inp_items)
-		echo (" (subset: "+inp_items+")");
-	echo ('")\n');
-	echo ('rk.print(paste("Items:",cronalpha.res$p,"<br />Sample units:",cronalpha.res$n,"<br /><strong>alpha:",round(cronalpha.res$alpha, digits=2),"</strong>');
+		header.add (i18n ("Subset"), inp_items);
+	header.print ();
+	echo ('rk.print(paste(' + i18n ("Items:") + ',cronalpha.res$p,' + i18n ("<br />Sample units:") + ',cronalpha.res$n,"<br /><strong>alpha:",round(cronalpha.res$alpha, digits=2),"</strong>');
 	if (chk_standard) echo(" (standardized)");
 	echo ('"))\n');
-	echo ('rk.print("Effects on alpha if items are removed:")\n');
+	echo ('rk.print(' + i18n ("Effects on alpha if items are removed:") + ')\n');
 	echo ('rk.print(descript.res$alpha)\n');
 	if (chk_bsci) {
-		echo ('rk.print("' + (spin_ci * 100)+"%" + ' Confidence interval:")\n');
+		echo ('rk.print(' + i18n ("%1% Confidence interval:", spin_ci * 100) + ')\n');
 		echo ('rk.print(cronalpha.res$ci)\n');
 	}
 }

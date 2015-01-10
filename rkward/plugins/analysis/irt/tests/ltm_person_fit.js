@@ -31,9 +31,9 @@ function calculate () {
 }
 
 function printout () {
-	echo ('rk.header ("Person-fit statistics (' + getValue("x") + ')")\n');
-	echo ('rk.print ("Call:")\n');
+	echo ('rk.header (' + i18n ("Person-fit statistics (%1)", getValue("x")) + ')\n');
+	echo ('rk.print (' + i18n ("Call:") + ')\n');
 	echo ('rk.print.literal (deparse(personfit.res$call, width.cutoff=500))\n');
-	echo ('rk.header ("Response patterns, person-fit statistics (L0, Lz) and probabilities for each response pattern (Pr):", level=4)\n');
+	echo ('rk.header (' + i18n ("Response patterns, person-fit statistics (L0, Lz) and probabilities for each response pattern (Pr):") + ', level=4)\n');
 	echo ('rk.print(cbind(format(personfit.res$resp.patterns, nsmall=0), round(personfit.res$Tobs, digits=3), "Pr (&lt;Lz)"=round(c(personfit.res$p.values), digits=3)))\n');
 }

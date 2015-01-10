@@ -14,7 +14,7 @@ function calculate () {
 }
 
 function printout () {
-	echo ('rk.header ("Goodness of Fit for Rasch Models (' + getValue("x") + ')")\n');
+	echo ('rk.header (' + i18n ("Goodness of Fit for Rasch Models (%1)", getValue ("x")) + ')\n');
 	echo ('rk.print ("Call:")\n');
 	echo ('rk.print.literal (deparse(GoFRasch.res$call, width.cutoff=500))\n');
 	echo ('rk.header ("Parametric Bootstrap test:", level=4)\n');

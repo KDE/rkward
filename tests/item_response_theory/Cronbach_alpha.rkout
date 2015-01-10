@@ -1,7 +1,9 @@
 <h1>Cronbach's alpha</h1>
-DATE<br>
-
-<p class='character'>for the 'LSAT' data-set (subset: Item 1, Item 2, Item 3, Item 4, Item 5)</p>
+<h2>Parameters</h2>
+<ul><li>Dataset: LSAT</li>
+<li>Subset: Item 1, Item 2, Item 3, Item 4, Item 5</li>
+</ul>
+DATE<br />
 
 <p class='character'>Items: 5 <br />Sample units: 1000 <br /><strong>alpha: 0.29 </strong></p>
 
@@ -49,7 +51,7 @@ DATE<br>
  
 <tr><td class=firstcolumn></td>
 <td class=cellinside>0.22</td>
-<td class=cellinside>0.36</td></tr>
+<td class=cellinside>0.37</td></tr>
  
 	</tbody>
 </table>
