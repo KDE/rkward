@@ -2,7 +2,7 @@ local({
 ## Prepare
 require(eRm)
 ## Print result
-rk.header("Rating scale model plot")
+rk.header ("Rating scale model plot")
 
 rk.graph.on()
 try({

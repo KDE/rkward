@@ -82,7 +82,7 @@ function doPrintout (full) {
 		options_plotgof[options_plotgof.length] = "tlab=\""+annotation+"\"" ;
 
 	if (full) {
-		echo ('rk.header("Andersen\'s LR test")\n');
+		new Header (i18n ("Andersen's LR test")).print ();
 		echo ('\n');
 		echo ('rk.graph.on()\n');
 	}

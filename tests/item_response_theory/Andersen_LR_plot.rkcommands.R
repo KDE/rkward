@@ -2,7 +2,7 @@ local({
 ## Prepare
 require(eRm)
 ## Print result
-rk.header("Andersen's LR test")
+rk.header ("Andersen's LR test")
 
 rk.graph.on()
 try({

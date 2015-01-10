@@ -74,7 +74,7 @@ function doPrintout (full) {
 		options[options.length] = "annot=FALSE" ;
 
 	if (full) {
-		echo ('rk.header("Two parameter logistic model plot")\n');
+		new Header (i18n ("Two parameter logistic model plot")).print ();
 		echo ('\n');
 		echo ('rk.graph.on()\n');
 	}
@@ -85,19 +85,19 @@ function doPrintout (full) {
 	// first we'll check wheter standard error curves should be plotted,
 	// because it takes two steps to draw them:
 	if (plot_type == "SEC") {
-	echo ('# two steps are needed to plot standard error curves\n');
-		echo ('	# first some values are generated...\n');
+		comment ('two steps are needed to plot standard error curves', '\t');
+		comment ('first some values are generated...', '\t');
 		echo ('	res <- plot(' + getValue("x"));
 		if (options.length > 0) echo(", "+options.join(", "));
 		echo (')\n');
 		echo ('\n');
-		echo ('	# ... and then they\'re used to plot the curves:\n');
+		comment ('... and then they\'re used to plot the curves:', '\t');
 		echo ('	plot(res[,"z"], 1/sqrt(res[,"info"]), lwd=2');
 		// we give some defaults, but they can be changed via the embedded plot options:
 		if (!plot_ops_type) echo(", type=\"l\"");
-		if (!plot_ops_xlab) echo(", xlab=\"Ability\"");
-		if (!plot_ops_ylab) echo(", ylab=\"Standard Error\"");
-		if (!plot_ops_main) echo(", main=\"Stadard Error of Measurement\"");
+		if (!plot_ops_xlab) echo(", xlab=" + i18nc ("Item response theory", "Ability"));
+		if (!plot_ops_ylab) echo(", ylab=" + i18n ("Standard Error"));
+		if (!plot_ops_main) echo(", main="+ i18n ("Standard Error of Measurement"));
 		if (plot_options) echo(plot_options);
 		echo (')\n');
 	}

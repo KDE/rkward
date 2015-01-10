@@ -2,7 +2,7 @@ local({
 ## Prepare
 require(ltm)
 ## Print result
-rk.header("Birnbaum three parameter model plot")
+rk.header ("Birnbaum three parameter model plot")
 
 rk.graph.on()
 try({

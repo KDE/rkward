@@ -2,7 +2,7 @@ local({
 ## Prepare
 require(eRm)
 ## Print result
-rk.header("Partial credit model plot")
+rk.header ("Partial credit model plot")
 
 rk.graph.on()
 try({

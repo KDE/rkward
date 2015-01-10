@@ -2,7 +2,7 @@ local({
 ## Prepare
 require(ltm)
 ## Print result
-rk.header("Two parameter logistic model plot")
+rk.header ("Two parameter logistic model plot")
 
 rk.graph.on()
 try({

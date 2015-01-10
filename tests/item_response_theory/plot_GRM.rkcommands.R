@@ -2,7 +2,7 @@ local({
 ## Prepare
 require(ltm)
 ## Print result
-rk.header("Graded response model plot")
+rk.header ("Graded response model plot")
 
 rk.graph.on()
 try({

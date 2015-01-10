@@ -20,7 +20,7 @@
       </setting>
 
       <caption id="tab_options"/>
-      <setting id="frame_constraints">
+      <setting id="constraint">
 	Choose if discrimination parameters should be computed for each item individually. Alternatively, you can estimate one discrimination parameter that is equal for all items, or fix it at 1 for all items.
       </setting>
       <setting id="startval">

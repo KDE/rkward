@@ -2,7 +2,7 @@ local({
 ## Prepare
 require(ltm)
 ## Print result
-rk.header("Rasch model plot")
+rk.header ("Rasch model plot")
 
 rk.graph.on()
 try({

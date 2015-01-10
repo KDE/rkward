@@ -1,6 +1,6 @@
 <!DOCTYPE rkpluginmap>
 
-<document base_prefix="" namespace="rkward" id="irt">
+<document base_prefix="" namespace="rkward" id="irt" po_id="item_response_theory">
 	<include file="pluginmap_meta.inc"/>
 	<about
 		name="Item Response Theory"

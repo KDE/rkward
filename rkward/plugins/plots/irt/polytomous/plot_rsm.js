@@ -65,7 +65,7 @@ function doPrintout (full) {
 		options[options.length] = "legpos=FALSE" ;
 
 	if (full) {
-		echo ('rk.header("Rating scale model plot")\n');
+		new Header (i18n ("Rating scale model plot")).print ();
 		echo ('\n');
 		echo ('rk.graph.on()\n');
 	}
