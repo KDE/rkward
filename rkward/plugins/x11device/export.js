@@ -1,7 +1,7 @@
 function preprocess () {
 	if (getValue ("format") == "svg") {
 		echo ('if (!capabilities ("cairo")) {\n');
-		echo ('	# The "cairo" library, providing SVG-support, is not compiled in by default on some systems.\n');
+		comment ('The "cairo" library, providing SVG-support, is not compiled in by default on some systems.', '	');
 		echo ('	require (cairoDevice)\n');
 		echo ('	svg <- Cairo_svg\n');
 		echo ('}\n');

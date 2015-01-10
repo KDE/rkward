@@ -1,6 +1,6 @@
 <!DOCTYPE rkpluginmap>
 
-<document base_prefix="x11device/" namespace="rkward" id="x11device">
+<document base_prefix="x11device/" namespace="rkward" id="x11device" po_id="graphics_device">
 	<include file="pluginmap_meta.inc"/>
 	<about
 		name="Graphics Device add-ons"
