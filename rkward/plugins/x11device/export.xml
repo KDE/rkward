@@ -172,7 +172,7 @@
 						</column>
 					</row>
 				</frame>
-				<frame id="frame_gsoptions" label="Ghostscript  specific options">
+				<frame id="frame_gsoptions" label="Ghostscript specific options">
 					<row>
 						<dropdown id="gsformat" label="GS Output device" >
 							<option value="pdfwrite" label="PDF" />

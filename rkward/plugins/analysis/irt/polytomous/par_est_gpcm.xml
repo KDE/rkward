@@ -34,7 +34,7 @@
         <row id="options_row">
           <varselector id="vars2" />
           <column id="opt_var_col">
-            <radio label="Should parameters be fixed (constrainted)?" id="constraint">
+            <radio label="Should parameters be fixed (constrained)?" id="constraint">
               <option label="Each item has its one discrimination parameter" value="gpcm" checked="true" />
               <option label="Equal discrimination parameter across items" value="1PL" />
               <option label="Discrimination parameter fixed at 1 across items" value="rasch" />

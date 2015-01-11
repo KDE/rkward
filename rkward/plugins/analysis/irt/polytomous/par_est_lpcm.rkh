@@ -19,7 +19,7 @@
         If repeated measurement applies, specify how many are represented in the data matrix (defaults to 1). This will divide the columns in the matrix into equally sized subsets of data.
       </setting>
       <setting id="groups">
-        If you want to compute group contrasts, a vector determing the group membership of each subject must be given. By default no group contrasts are imposed.
+        If you want to compute group contrasts, a vector determining the group membership of each subject must be given. By default no group contrasts are imposed.
       </setting>
 
       <caption id="tab_options"/>
