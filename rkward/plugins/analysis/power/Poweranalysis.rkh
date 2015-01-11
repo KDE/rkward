@@ -1,0 +1,93 @@
+<!DOCTYPE rkhelp >
+<document>
+	<!-- this code was generated using the rkwarddev package.
+			perhaps don't make changes here, but in the rkwarddev script instead! -->
+	<title>
+		Power analysis
+	</title>
+	<summary>
+		Perform power anaylsis for a variety of statistcal methods.
+	</summary>
+	<usage>
+		Given three of the parameters 'power of test', 
+		  'sample size', 'effect size', and 'significance level', this plugin will 
+		  estimate the fourth, i.e. for example the test power of a t.test at a given 
+		  sample size, effect size, and level of significance. On the left hand, specify the 
+		  statistical method, on the right hand side, enter the values of the given 
+		  parameters. In the control in the middle, select which of the parameters to estimate.
+		
+
+		  Note that in some cases it will not be possible to estimate a (finite) parameter at the given
+		  specifications. In general, this means that you have to increase sample size(s) or effect size,
+		  or decrease effect power or parameter count.
+	</usage>
+	<!-- <section id="sct_EDITORDE" title="EDIT OR DELETE ME">
+				EDIT OR DELETE ME
+			</section> -->
+	<settings>
+		<caption id="frm_SttstclM" />
+		<setting id="drp_pwr_stat">
+			Specify the statistical method to perform power estimation for
+		</setting>
+		<setting id="spn_Nmbrfgrp">
+			Number of groups. For ANOVA, only.
+		</setting>
+		<setting id="drp_pwr_type">
+			Only enabled where applicable. Specify the nature of samples used in the test. For samples of different sizes, only one sample size can be estimated.
+		</setting>
+		<setting id="drp_pwr_hypothesis">
+			Specify the hypothesis to use. Note that for the one-sided hypothesis "first is greater",
+			           a positive effect size is expected. For "second is greater", a negative effect size is expected.
+		</setting>
+		<setting id="rad_effct_eta">
+			Only shown where applicable. Allows you to select, whether to specify the effect size as Cohen's f, or as Eta squared.
+		</setting>
+		<caption id="frm_Targtmsr" />
+		<setting id="rad_pwr_param">
+			Parameter to estimate, given the others.
+		</setting>
+		<caption id="frm_Knwnmsrs" />
+		<caption id="frm_spnbPP0801" />
+		<setting id="spn_Power">
+			Targetted power of test (1 minus Type II error probability)
+		</setting>
+		<caption id="frm_sD301D3011" />
+		<setting id="pwr_spin_df">
+			Only shown for chi-square statistics: Targetted degrees of freedom. As a reminder, this is (rows &minus; 1)&times;(columns &minus; 1) for a test of independence,
+			                               and (cells &minus; 1) for a test of goodness of fit.
+		</setting>
+		<setting id="pwr_spin_dfu">
+			Only shown for general linear model: Targetted numerator degrees of freedom. As a reminder, this is the number of parameters to estimate, or number of groups/samples minus 1.
+		</setting>
+		<setting id="pwr_spin_dfv">
+			Only shown for general linear model: Available denominator degrees of freedom / degrees of freedom of the error term.
+			                               As a reminder, this is the total number of observations minus numerator degrees of freedom minus 1, or total number of observations minus number of groups/samples.
+		</setting>
+		<caption id="frm_sS0301F130" />
+		<setting id="pwr_spin_sample0">
+			Sample size. Note that depending on the selected method, this can mean observations per sample, per group, or in total. Make sure to read the note shown below the control.
+		</setting>
+		<caption id="frm_sEE0311MCM" />
+		<setting id="spn_Effectsz">
+			Minimum detectable effect size. Note that effect size specifications differ between the available methods. Be sure to read the note shown below the control.
+			
+
+			   As a reminder, for mapping between cohen's f and Eta&sup2; use f&sup2; = Eta&sup2; / (1 &minus; Eta&sup2;)
+		</setting>
+		<caption id="frm_spnSS00501" />
+		<setting id="spn_Sgnfcncl">
+			Targetted level of significance
+		</setting>
+	</settings>
+	<related>
+		<ul>
+			<li>
+				<link href="rkward://rhelp/pwr">
+					Description of the R package "pwr", used to perform the power calculations.
+				</link>
+			</li>
+		</ul>
+	</related>
+	<technical>
+	</technical>
+</document>

@@ -1,0 +1,248 @@
+<!DOCTYPE rkplugin >
+<document>
+	<!-- this code was generated using the rkwarddev package.
+			perhaps don't make changes here, but in the rkwarddev script instead! -->
+	<code file="Poweranalysis.js" />
+	<help file="Poweranalysis.rkh" />
+	<logic>
+		<convert id="pwr_lgc_power" sources="rad_pwr_param.string" mode="equals" standard="Power" />
+		<convert id="pwr_lgc_sample" sources="rad_pwr_param.string" mode="equals" standard="Sample size" />
+		<convert id="pwr_lgc_effect" sources="rad_pwr_param.string" mode="equals" standard="Effect size" />
+		<convert id="pwr_lgc_signif" sources="rad_pwr_param.string" mode="equals" standard="Significance level" />
+		<convert id="pwr_lgc_df_u" sources="rad_pwr_param.string" mode="equals" standard="Parameter count" />
+		<connect governor="pwr_lgc_power.not" client="frm_spnbPP0801.enabled" />
+		<connect governor="pwr_lgc_effect.not" client="frm_sEE0311MCM.enabled" />
+		<connect governor="pwr_lgc_signif.not" client="frm_spnSS00501.enabled" />
+		<convert id="pwr_lgc_ttest" sources="drp_pwr_stat.string" mode="equals" standard="pwr.t.test" />
+		<convert id="pwr_lgc_rtest" sources="drp_pwr_stat.string" mode="equals" standard="pwr.r.test" />
+		<convert id="pwr_lgc_anova" sources="drp_pwr_stat.string" mode="equals" standard="pwr.anova.test" />
+		<convert id="pwr_lgc_f2test" sources="drp_pwr_stat.string" mode="equals" standard="pwr.f2.test" />
+		<convert id="pwr_lgc_chisq" sources="drp_pwr_stat.string" mode="equals" standard="pwr.chisq.test" />
+		<convert id="pwr_lgc_proptest" sources="drp_pwr_stat.string" mode="equals" standard="pwr.p.test" />
+		<convert id="pwr_lgc_norm" sources="drp_pwr_stat.string" mode="equals" standard="pwr.norm.test" />
+		<convert id="pwr_lgc_sample_2p_same" sources="drp_pwr_proptype.string" mode="equals" standard="two.sample.same" />
+		<convert id="pwr_lgc_sample_2p_diff" sources="drp_pwr_proptype.string" mode="equals" standard="two.sample.diff" />
+		<convert id="pwr_lgc_sample_t_same" sources="drp_pwr_type.string" mode="equals" standard="two.sample" />
+		<convert id="pwr_lgc_sample_t_diff" sources="drp_pwr_type.string" mode="equals" standard="two.sample.diff" />
+		<convert id="pwr_lgc_sample_t_pairs" sources="drp_pwr_type.string" mode="equals" standard="paired" />
+		<convert id="pwr_lgc_sample_t_onesample" sources="drp_pwr_type.string" mode="equals" standard="one.sample" />
+		<convert id="pwr_lgc_2p" sources="pwr_lgc_sample_2p_same;pwr_lgc_proptest" mode="and" />
+		<convert id="pwr_lgc_2p2n" sources="pwr_lgc_sample_2p_diff;pwr_lgc_proptest" mode="and" />
+		<convert id="pwr_lgc_tsame" sources="pwr_lgc_sample_t_same;pwr_lgc_ttest" mode="and" />
+		<convert id="pwr_lgc_tdiff" sources="pwr_lgc_sample_t_diff;pwr_lgc_ttest" mode="and" />
+		<convert id="pwr_lgc_tpaired" sources="pwr_lgc_sample_t_pairs;pwr_lgc_ttest" mode="and" />
+		<convert id="pwr_lgc_tunpaired" sources="pwr_lgc_sample_t_onesample;pwr_lgc_ttest" mode="and" />
+		<connect governor="pwr_lgc_proptest.not" client="drp_pwr_type.visible" />
+		<connect governor="pwr_lgc_ttest" client="drp_pwr_type.enabled" />
+		<connect governor="pwr_lgc_proptest" client="drp_pwr_proptype.visible" />
+		<connect governor="pwr_lgc_proptest" client="drp_pwr_proptype.enabled" />
+		<connect governor="pwr_lgc_f2test" client="rad_pwr_param.opt_Prmtrcnt.enabled" />
+		<connect governor="pwr_lgc_f2test.not" client="frm_sS0301F130.visible" />
+		<convert id="pwr_lgc_show_df" sources="pwr_lgc_f2test;pwr_lgc_chisq" mode="or" />
+		<connect governor="pwr_lgc_show_df" client="frm_sD301D3011.visible" />
+		<connect governor="pwr_lgc_chisq" client="pwr_spin_df.visible" />
+		<connect governor="pwr_lgc_f2test" client="pwr_spin_dfu.visible" />
+		<connect governor="pwr_lgc_f2test" client="pwr_txt_dfu.visible" />
+		<connect governor="pwr_lgc_f2test" client="pwr_spin_dfv.visible" />
+		<connect governor="pwr_lgc_f2test" client="pwr_txt_dfv.visible" />
+		<convert id="pwr_lgc_efct_d" sources="pwr_lgc_ttest;pwr_lgc_norm" mode="or" />
+		<connect governor="pwr_lgc_efct_d" client="pwr_txt_efct_d.visible" />
+		<connect governor="pwr_lgc_rtest" client="pwr_txt_efct_r.visible" />
+		<convert id="pwr_lgc_efct_f" sources="rad_effct_eta.string" mode="equals" standard="f" />
+		<convert id="pwr_lgc_efct_show_f" sources="pwr_lgc_anova;pwr_lgc_efct_f" mode="and" />
+		<convert id="pwr_lgc_efct_show_e2" sources="pwr_lgc_anova;pwr_lgc_efct_f.not" mode="and" />
+		<connect governor="pwr_lgc_efct_show_f" client="pwr_txt_efct_f.visible" />
+		<connect governor="pwr_lgc_efct_show_e2" client="pwr_txt_efct_e2.visible" />
+		<connect governor="pwr_lgc_f2test" client="pwr_txt_efct_f2.visible" />
+		<connect governor="pwr_lgc_chisq" client="pwr_txt_efct_w.visible" />
+		<connect governor="pwr_lgc_proptest" client="pwr_txt_efct_h.visible" />
+		<connect governor="pwr_lgc_anova" client="rad_effct_eta.visible" />
+		<connect governor="pwr_lgc_effect.not" client="rad_effct_eta.enabled" />
+		<connect governor="pwr_lgc_anova" client="spn_Nmbrfgrp.enabled" />
+		<convert id="pwr_lgc_smpl_ps" sources="pwr_lgc_tsame;pwr_lgc_tunpaired;pwr_lgc_2p" mode="or" />
+		<convert id="pwr_lgc_smpl_nondefault" sources="pwr_lgc_ttest;pwr_lgc_2p;pwr_lgc_2p2n;pwr_lgc_tdiff;pwr_lgc_anova;pwr_lgc_chisq" mode="or" />
+		<connect governor="pwr_lgc_smpl_ps" client="pwr_txt_smpl_ps.visible" />
+		<connect governor="pwr_lgc_anova" client="pwr_txt_smpl_pg.visible" />
+		<connect governor="pwr_lgc_chisq" client="pwr_txt_smpl_tt.visible" />
+		<connect governor="pwr_lgc_tpaired" client="pwr_txt_smpl_pairs.visible" />
+		<connect governor="pwr_lgc_smpl_nondefault.not" client="pwr_txt_smpl.visible" />
+		<convert id="pwr_lgc_smpl_diff" sources="pwr_lgc_tdiff;pwr_lgc_2p2n" mode="or" />
+		<connect governor="pwr_lgc_smpl_diff" client="pwr_spin_sample1.visible" />
+		<connect governor="pwr_lgc_smpl_diff" client="pwr_spin_sample2.visible" />
+		<connect governor="pwr_lgc_smpl_diff.not" client="pwr_spin_sample0.visible" />
+		<convert id="pwr_lgc_smpl_switch" sources="pwr_lgc_sample;pwr_lgc_smpl_diff" mode="and" />
+		<convert id="pwr_lgc_enable_sample_frame" sources="pwr_lgc_sample.not;pwr_lgc_smpl_switch" mode="or" />
+		<connect governor="pwr_lgc_enable_sample_frame" client="frm_sS0301F130.enabled" />
+		<connect governor="pwr_lgc_sample.not" client="pwr_spin_sample2.enabled" />
+		<connect governor="pwr_lgc_df_u.not" client="pwr_spin_dfu.enabled" />
+		<connect governor="pwr_lgc_sample.not" client="pwr_spin_dfv.enabled" />
+		<connect governor="pwr_lgc_df_u.not" client="pwr_txt_dfu.enabled" />
+		<connect governor="pwr_lgc_sample.not" client="pwr_txt_dfv.enabled" />
+		<convert id="pwr_lgc_noalternative" sources="pwr_lgc_anova.not;pwr_lgc_f2test.not;pwr_lgc_chisq.not" mode="and" />
+		<connect governor="pwr_lgc_noalternative" client="drp_pwr_hypothesis.enabled" />
+		<convert id="pwr_lgc_alt_less" sources="drp_pwr_hypothesis.string" mode="equals" standard="less" />
+		<convert id="pwr_lgc_alt_greater" sources="drp_pwr_hypothesis.string" mode="equals" standard="greater" />
+		<convert id="pwr_lgc_pos_effect" sources="spn_Effectsz.real" mode="range" min="0" />
+		<convert id="pwr_lgc_neg_effect" sources="spn_Effectsz.real" mode="range" max="0" />
+		<convert id="pwr_lgc_alt_warn_neg" sources="pwr_lgc_alt_less;pwr_lgc_noalternative;pwr_lgc_pos_effect" mode="and" />
+		<convert id="pwr_lgc_alt_warn_pos" sources="pwr_lgc_alt_greater;pwr_lgc_noalternative;pwr_lgc_neg_effect" mode="and" />
+		<connect governor="pwr_lgc_alt_warn_neg" client="pwr_txt_hypothesis_neg.visible" />
+		<connect governor="pwr_lgc_alt_warn_pos" client="pwr_txt_hypothesis_pos.visible" />
+	</logic>
+	<dialog label="Power analysis">
+		<row id="row_cSMSMSTCAN">
+			<column id="clm_fSMSMSTCAN">
+				<frame label="Statistical Method" id="frm_SttstclM">
+					<dropdown id="drp_pwr_stat" label="Select a method">
+						<option label="t-Tests of means" value="pwr.t.test" checked="true" />
+						<option label="Correlation test" value="pwr.r.test" />
+						<option label="ANOVA (balanced one-way)" value="pwr.anova.test" />
+						<option label="General linear model" value="pwr.f2.test" />
+						<option label="Chi-squared test" value="pwr.chisq.test" />
+						<option label="Proportion tests" value="pwr.p.test" />
+						<option label="Mean of a normal distribution (known variance)" value="pwr.norm.test" />
+					</dropdown>
+					<spinbox label="Number of groups" id="spn_Nmbrfgrp" initial="2" min="1" type="integer" />
+					<dropdown id="drp_pwr_type" label="Samples">
+						<option label="Two samples (equal sizes)" value="two.sample" checked="true" />
+						<option label="Two samples (different sizes)" value="two.sample.diff" />
+						<option label="Single sample (test against constant)" value="one.sample" />
+						<option label="Paired samples" value="paired" />
+					</dropdown>
+					<dropdown id="drp_pwr_proptype" label="Samples">
+						<option label="Two samples (equal sizes)" value="two.sample.same" checked="true" />
+						<option label="Two samples (different sizes)" value="two.sample.diff" />
+						<option label="One sample" value="one.sample" />
+					</dropdown>
+					<dropdown id="drp_pwr_hypothesis" label="Using test hypothesis">
+						<option label="Two-sided" value="two.sided" checked="true" />
+						<option label="First is greater" value="greater" />
+						<option label="Second is greater" value="less" />
+					</dropdown>
+					<text id="pwr_txt_hypothesis_neg" type="warning">
+						Hypothesis probably expects a negative effect size!
+					</text>
+					<text id="pwr_txt_hypothesis_pos" type="warning">
+						Hypothesis probably expects a positive effect size!
+					</text>
+					<radio id="rad_effct_eta" label="Provided effect size">
+						<option label="Cohen's f" value="f" checked="true" />
+						<option label="Eta squared" value="e2" />
+					</radio>
+				</frame>
+				<stretch />
+			</column>
+			<column id="clm_fTTPPPSSEE">
+				<frame label="Target measure" id="frm_Targtmsr">
+					<radio id="rad_pwr_param" label="Parameter to determine">
+						<option label="Power of test" value="Power" checked="true" />
+						<option label="Sample size" value="Sample size" />
+						<option label="Effect size" value="Effect size" />
+						<option label="Significance level" value="Significance level" />
+						<option label="Parameter count" value="Parameter count" id="opt_Prmtrcnt" />
+					</radio>
+					<stretch />
+				</frame>
+			</column>
+			<column id="clm_fKKPP0801P">
+				<frame label="Known measures" id="frm_Knwnmsrs">
+					<frame id="frm_spnbPP0801">
+						<spinbox label="Power" id="spn_Power" initial="0.8" min="0" max="1" />
+					</frame>
+					<frame id="frm_sD301D3011">
+						<spinbox label="Degrees of freedom" id="pwr_spin_df" initial="30" min="1" type="integer" />
+						<spinbox label="Degrees of freedom for numerator" id="pwr_spin_dfu" initial="30" min="1" type="integer" />
+						<text id="pwr_txt_dfu">
+							df 							<sub>
+								num
+							</sub>
+							: k &minus; 1
+						</text>
+						<spinbox label="Degrees of freedom for denominator" id="pwr_spin_dfv" initial="30" min="1" type="integer" />
+						<text id="pwr_txt_dfv">
+							df 							<sub>
+								den
+							</sub>
+							: N &minus; k
+						</text>
+					</frame>
+					<frame id="frm_sS0301F130">
+						<spinbox label="Sample size" id="pwr_spin_sample0" initial="30" min="1" type="integer" />
+						<spinbox label="First sample size" id="pwr_spin_sample1" initial="30" min="1" type="integer" />
+						<spinbox label="Second sample size" id="pwr_spin_sample2" initial="30" min="1" type="integer" />
+						<text id="pwr_txt_smpl">
+							Number of observations
+						</text>
+						<text id="pwr_txt_smpl_ps">
+							Number of observations 							<b>
+								per sample
+							</b>
+						</text>
+						<text id="pwr_txt_smpl_pg">
+							Number of observations 							<b>
+								per group
+							</b>
+						</text>
+						<text id="pwr_txt_smpl_tt">
+							Number of observations 							<b>
+								in total
+							</b>
+						</text>
+						<text id="pwr_txt_smpl_pairs">
+							Number of 							<b>
+								pairs
+							</b>
+						</text>
+					</frame>
+					<frame id="frm_sEE0311MCM">
+						<spinbox label="Effect size" id="spn_Effectsz" initial="0.3" min="-1" max="1" />
+						<text id="pwr_txt_efct_d">
+							Measure for selected method is 							<b>
+								Cohen's d
+							</b>
+						</text>
+						<text id="pwr_txt_efct_r">
+							Measure for selected method is 							<b>
+								Pearson's r
+							</b>
+						</text>
+						<text id="pwr_txt_efct_f">
+							Measure for selected method is 							<b>
+								Cohen's f
+							</b>
+						</text>
+						<text id="pwr_txt_efct_e2">
+							Measure for selected method is 							<b>
+								Eta 								<sup>
+									2
+								</sup>
+							</b>
+						</text>
+						<text id="pwr_txt_efct_f2">
+							Measure for selected method is 							<b>
+								Cohen's f 								<sup>
+									2
+								</sup>
+							</b>
+						</text>
+						<text id="pwr_txt_efct_w">
+							Measure for selected method is 							<b>
+								Cohen's w
+							</b>
+						</text>
+						<text id="pwr_txt_efct_h">
+							Measure for selected method is 							<b>
+								Cohen's h
+							</b>
+						</text>
+					</frame>
+					<frame id="frm_spnSS00501">
+						<spinbox label="Significance level" id="spn_Sgnfcncl" initial="0.05" min="0" max="1" />
+					</frame>
+					<stretch />
+					<saveobject label="Save results to workspace" checkable="true" initial="pwr.result" id="svb_Svrsltst" />
+				</frame>
+			</column>
+		</row>
+	</dialog>
+</document>

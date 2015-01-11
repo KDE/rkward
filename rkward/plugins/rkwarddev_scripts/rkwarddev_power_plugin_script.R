@@ -18,9 +18,9 @@ about.info <- rk.XML.about(
   author=c(
     person(given="Meik", family="Michalke",
       email="meik.michalke@hhu.de", role=c("aut","cre")),
-    person(given="Thomas", family="Friedrichsmeier", role=c("ctb"))),
+    person(given="Thomas", family="Friedrichsmeier", email="thomas.friedrichsmeier@ruhr-uni-bochum.de", role=c("ctb"))),
   about=list(desc="RKWard GUI to perform power analysis and sample size estimation.",
-    version="0.01-3", url="http://rkward.sf.net")
+    version="0.01-3", url="http://rkward.kde.org")
   )
 dependencies.info <- rk.XML.dependencies(
   dependencies=list(rkward.min=ifelse(isTRUE(guess.getter), "0.6.0", "0.5.6"),
@@ -546,7 +546,8 @@ pwr.plugin.dir <<- rk.plugin.skeleton(
   ),
   pluginmap=list(name="Power analysis", hierarchy=list("analysis")),
   dependencies=dependencies.info,
-  create=c("pmap", "xml", "js", "desc", "rkh"),
+#  create=c("pmap", "xml", "js", "desc", "rkh"),	# standalone
+  create=c("xml", "js", "rkh"),
   overwrite=overwrite,
   tests=FALSE,
 # edit=TRUE,

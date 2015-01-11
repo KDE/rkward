@@ -57,6 +57,9 @@
 
 		<!-- regression -->
 		<component type="standard" id="linear_regression" file="analysis/regression/linear_regression.xml" label="Linear Regression" />
+
+		<!-- Power analysis -->
+		<component type="standard" id="power_analysis" file="analysis/power/Poweranalysis.xml" label="Power Analysis" i18n_context="Power of tests" />
 	</components>
 
 	<hierarchy>
@@ -65,6 +68,7 @@
 			<entry component="basic_statistics" group="descriptives"/>
 			<entry component="descriptive" group="descriptives"/>
 
+			<entry component="power_analysis"/>
 			<menu id="correlation" label="Correlation">
 				<entry component="corr_matrix" />
 				<entry component="cor_graph" />
