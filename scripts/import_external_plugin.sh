@@ -22,6 +22,9 @@ BASEDIR=`pwd`
 cd ${BASEDIR}
 WORKDIR=${BASEDIR}/import_tmp
 
+# Make sure to work on an up-to-date (pushable, without fast-forwards) clone
+git pull --rebase
+
 # clone and filter external repo
 git clone ${EXTERNAL_REPO} import_tmp
 cd ${WORKDIR}
