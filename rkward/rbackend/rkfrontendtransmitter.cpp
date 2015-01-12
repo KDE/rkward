@@ -122,10 +122,6 @@ void RKFrontendTransmitter::run () {
 		RK_ASSERT (false);
 		return;
 	}
-
-	connection->close ();
-	backend->waitForFinished ();
-	delete backend;	// otherwise it will be deleted via the constructor from the main thread, which can cause hangs.
 }
 
 void RKFrontendTransmitter::connectAndEnterLoop () {
@@ -193,6 +189,7 @@ void RKFrontendTransmitter::writeRequest (RBackendRequest *request) {
 void RKFrontendTransmitter::handleTransmissionError (const QString &message) {
 	RK_TRACE (RBACKEND);
 
+	connection->close ();
 	RBackendRequest* req = new RBackendRequest (false, RBackendRequest::BackendExit);
 	req->params["message"] = message;
 	RKRBackendEvent* event = new RKRBackendEvent (req);
