@@ -10,3 +10,6 @@ rkward/version.h
 tests/make_plugintests.txt
 # Message templates should not be in the repo
 *.pot
+# General purpose temp directory for scripts
+scripts/tmp/
+
