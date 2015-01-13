@@ -6,7 +6,7 @@
 		Power analysis
 	</title>
 	<summary>
-		Perform power anaylsis for a variety of statistcal methods.
+		Perform power analysis for a variety of statistical methods.
 	</summary>
 	<usage>
 		Given three of the parameters 'power of test', 
@@ -49,15 +49,15 @@
 		<caption id="frm_Knwnmsrs" />
 		<caption id="frm_spnbPP0801" />
 		<setting id="spn_Power">
-			Targetted power of test (1 minus Type II error probability)
+			Targeted power of test (1 minus Type II error probability)
 		</setting>
 		<caption id="frm_sD301D3011" />
 		<setting id="pwr_spin_df">
-			Only shown for chi-square statistics: Targetted degrees of freedom. As a reminder, this is (rows &minus; 1)&times;(columns &minus; 1) for a test of independence,
+			Only shown for chi-square statistics: Targeted degrees of freedom. As a reminder, this is (rows &minus; 1)&times;(columns &minus; 1) for a test of independence,
 			                               and (cells &minus; 1) for a test of goodness of fit.
 		</setting>
 		<setting id="pwr_spin_dfu">
-			Only shown for general linear model: Targetted numerator degrees of freedom. As a reminder, this is the number of parameters to estimate, or number of groups/samples minus 1.
+			Only shown for general linear model: Targeted numerator degrees of freedom. As a reminder, this is the number of parameters to estimate, or number of groups/samples minus 1.
 		</setting>
 		<setting id="pwr_spin_dfv">
 			Only shown for general linear model: Available denominator degrees of freedom / degrees of freedom of the error term.
@@ -76,7 +76,7 @@
 		</setting>
 		<caption id="frm_spnSS00501" />
 		<setting id="spn_Sgnfcncl">
-			Targetted level of significance
+			Targeted level of significance
 		</setting>
 	</settings>
 	<related>

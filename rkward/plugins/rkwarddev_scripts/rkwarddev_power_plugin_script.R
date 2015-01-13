@@ -82,12 +82,12 @@ pwr.proptype.drop <- rk.XML.dropdown("Samples",
   ), help=FALSE, # In the help file, same as t.test dropdown
   id.name="drp_pwr_proptype")
 
-pwr.input.power <- rk.XML.spinbox(label="Power", min=0, max=1, initial=0.8, help="Targetted power of test (1 minus Type II error probability)")
+pwr.input.power <- rk.XML.spinbox(label="Power", min=0, max=1, initial=0.8, help="Targeted power of test (1 minus Type II error probability)")
 pwr.input.df <- rk.XML.spinbox(label="Degrees of freedom", id.name="pwr_spin_df", min=1, real=FALSE, initial=30,
-                               help="Only shown for chi-square statistics: Targetted degrees of freedom. As a reminder, this is (rows &minus; 1)&times;(columns &minus; 1) for a test of independence,
+                               help="Only shown for chi-square statistics: Targeted degrees of freedom. As a reminder, this is (rows &minus; 1)&times;(columns &minus; 1) for a test of independence,
                                and (cells &minus; 1) for a test of goodness of fit.")
 pwr.input.dfu <- rk.XML.spinbox(label="Degrees of freedom for numerator", id.name="pwr_spin_dfu", min=1, real=FALSE, initial=30,
-                               help="Only shown for general linear model: Targetted numerator degrees of freedom. As a reminder, this is the number of parameters to estimate, or number of groups/samples minus 1.")
+                               help="Only shown for general linear model: Targeted numerator degrees of freedom. As a reminder, this is the number of parameters to estimate, or number of groups/samples minus 1.")
 pwr.input.dfv <- rk.XML.spinbox(label="Degrees of freedom for denominator", id.name="pwr_spin_dfv", min=1, real=FALSE, initial=30,
                                help="Only shown for general linear model: Available denominator degrees of freedom / degrees of freedom of the error term.
                                As a reminder, this is the total number of observations minus numerator degrees of freedom minus 1, or total number of observations minus number of groups/samples.")
@@ -118,7 +118,7 @@ pwr.txt.effect.e2 <- rk.XML.text("Measure for selected method is <b>Eta<sup>2</s
 pwr.txt.effect.f2 <- rk.XML.text("Measure for selected method is <b>Cohen's f<sup>2</sup></b>", id.name="pwr_txt_efct_f2")
 pwr.txt.effect.w <- rk.XML.text("Measure for selected method is <b>Cohen's w</b>", id.name="pwr_txt_efct_w")
 pwr.txt.effect.h <- rk.XML.text("Measure for selected method is <b>Cohen's h</b>", id.name="pwr_txt_efct_h")
-pwr.input.signif <- rk.XML.spinbox(label="Significance level", min=0, max=1, initial=0.05, help="Targetted level of significance")
+pwr.input.signif <- rk.XML.spinbox(label="Significance level", min=0, max=1, initial=0.05, help="Targeted level of significance")
 
 
 save.results.pwr <- rk.XML.saveobj("Save results to workspace", initial="pwr.result",
@@ -466,7 +466,7 @@ pwr.js.print <- rk.paste.JS(
   echo(
     "\t# Catch errors due to unsuitable data\n",
     "\tif(class(pwr.result) == \"try-error\"){\n",
-    "\t\trk.print(\"Power anaylsis not possible with the data you provided\")\n",
+    "\t\trk.print(\"Power analysis not possible with the data you provided\")\n",
     "\t\treturn()\n\t}\n\n",
     "\t# Prepare printout\n",
     "\tnote <- pwr.result[[\"note\"]]\n",
@@ -508,7 +508,7 @@ pwr.js.print <- rk.paste.JS(
 ############
 ## help file
 
-pwr.rkh.summary <- rk.rkh.summary("Perform power anaylsis for a variety of statistcal methods.")
+pwr.rkh.summary <- rk.rkh.summary("Perform power analysis for a variety of statistcal methods.")
 
 pwr.rkh.usage <- rk.rkh.usage("Given three of the parameters 'power of test', 
   'sample size', 'effect size', and 'significance level', this plugin will 
