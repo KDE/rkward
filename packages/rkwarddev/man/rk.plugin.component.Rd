@@ -6,8 +6,8 @@
 rk.plugin.component(about, xml = list(), js = list(), rkh = list(),
   provides = c("logic", "dialog"), scan = c("var", "saveobj", "settings"),
   guess.getter = FALSE, hierarchy = "test", include = NULL,
-  create = c("xml", "js", "rkh"), hints = TRUE, gen.info = TRUE,
-  indent.by = "\\t")
+  create = c("xml", "js", "rkh"), dependencies = NULL, hints = TRUE,
+  gen.info = TRUE, indent.by = "\\t")
 }
 \arguments{
 \item{about}{Either a character string with the name of this plugin component,
@@ -84,6 +84,10 @@ anything else will place it in a "test" menu. If \code{hierarchy} is a list,
   \item{\code{"js"}}{Create the plugin \code{.js} JavaScript file skeleton.}
   \item{\code{"rkh"}}{Create the plugin \code{.rkh} help file skeleton.}
 }}
+
+\item{dependencies}{An object of class \code{XiMpLe.node} to be pasted as the \code{<dependencies>} section,
+See \code{\link[rkwarddev:rk.XML.dependencies]{rk.XML.dependencies}} for details. Skipped if \code{NULL}.
+This is only useful for information that differs from the \code{<dependencies>} section of the \code{.pluginmap} file.}
 
 \item{hints}{Logical,
       if \code{TRUE} and you leave optional entries empty (like \code{rkh=list()}), dummy sections will be added.}

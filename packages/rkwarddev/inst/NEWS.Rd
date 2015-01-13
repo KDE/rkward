@@ -1,7 +1,7 @@
 \name{NEWS}
 \title{News for Package 'rkwarddev'}
 \encoding{UTF-8}
-\section{Changes in rkwarddev version 0.06-6 (2014-12-17)}{
+\section{Changes in rkwarddev version 0.07-1 (2015-01-13)}{
   \subsection{fixed}{
     \itemize{
       \item \code{rk.XML.optionset()} does now allow to re-use objects defined in the same
@@ -22,6 +22,8 @@
       \item \code{join()} referenced a wrong object name if \code{"var"} was of class rk.JS.arr
       \item \code{rk.XML.about()} had a malformed error message
       \item \code{rk.plugin.component()} called \code{XMLAttrs()} with too many arguments
+      \item \code{rk.XML.values()} and \code{rk.XML.vars()} do now handle all combinations of
+        \code{"horiz"} and \code{"add.nodes"} properly
     }
   }
   \subsection{added}{
@@ -46,6 +48,8 @@
       \item added documentation to the used S4 classes
       \item enhanced \code{rk.XML.values()} to also accept \code{"options"} and \code{"duplicates"}, and
         \code{rk.XML.vars()} to also accept \code{"duplicates"}
+      \item new argument \code{"var"} in \code{rk.paste.JS()} to define whether the JS keyword
+        \code{"var"} should be used or omitted for rk.JS.var objects
     }
   }
   \subsection{changed}{
@@ -63,6 +67,16 @@
         they're more obvious to find and check
       \item \code{rk.XML.input()} now checks wheter \code{"size"} is exactly one of \code{"small"},
         \code{"medium"} or \code{"large"}
+      \item \code{rk.JS.doc()} now uses a more robust method to set global variables, namely
+        by defining an additional function \code{setGlobalVars()} and calling that
+        inside \code{preprocess()}
+      \item due to changes needed for i18n and \code{rk.JS.header()} to work, check your
+        \code{"result.header"} values, there might be quote issues. for the most part,
+        remove quotes you added for rkwarddev >= 0.05-0
+      \item updated the generation of author and maintainer fileds in DESCRIPTIONs
+        made by \code{rk.plugin.skeleton()}, borrowing \code{get.authors()} from roxyPackage
+      \item \code{rk.plugin.component()} will now also move <dependencies> from <about>
+        to a top level child node of plugin XML code, with a warning
     }
   }
   \subsection{removed}{

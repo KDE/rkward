@@ -47,6 +47,9 @@
 #'        the \code{<settings>} section of the help file. This option will be overruled if you provide that section manually
 #'        by the \code{rkh} option (see below).}
 #'    }
+#' @param dependencies An object of class \code{XiMpLe.node} to be pasted as the \code{<dependencies>} section,
+#'    See \code{\link[rkwarddev:rk.XML.dependencies]{rk.XML.dependencies}} for details. Skipped if \code{NULL}.
+#'    This is only useful for information that differs from the \code{<dependencies>} section of the \code{.pluginmap} file.
 #' @param hints Logical, if \code{TRUE} and you leave optional entries empty (like \code{rkh=list()}), dummy sections will be added.
 #' @param guess.getter Logical, if \code{TRUE} try to get a good default getter function for JavaScript
 #'    variable values (if \code{scan} is active). This will use some functions which were added with RKWard 0.6.1, and therefore
@@ -88,19 +91,22 @@
 
 rk.plugin.component <- function(about, xml=list(), js=list(), rkh=list(),
   provides=c("logic", "dialog"), scan=c("var", "saveobj", "settings"), guess.getter=FALSE,
-  hierarchy="test", include=NULL, create=c("xml", "js", "rkh"), hints=TRUE, gen.info=TRUE, indent.by="\t"){
+  hierarchy="test", include=NULL, create=c("xml", "js", "rkh"), dependencies=NULL,
+  hints=TRUE, gen.info=TRUE, indent.by="\t"){
 
   if(is.XiMpLe.node(about)){
-    # check if this is *really* a about section, otherwise quit and go dancing
-    valid.parent(parent="about", node=about, warn=FALSE, see="rk.XML.about")
+    # check about and dependencies
+    # result is a named list with "about" and "dependencies"
+    about.dep.list <- dependenciesCompatWrapper(dependencies=dependencies, about=about, hints=hints)
+    dependencies.node <- about.dep.list[["dependencies"]]
+    about.node <- about.dep.list[["about"]]
     # fetch the plugin name
-    name <- XMLAttrs(about)[["name"]]
-    about.node <- about
+    name <- XMLAttrs(about.node)[["name"]]
   } else if(is.character(about) & length(about) == 1) {
     name <- about
     about.node <- NULL
-    # also stop creation of DESCRIPTION file
-    create <- create[!create %in% "desc"]
+    dependencies.node <- dependenciesCompatWrapper(dependencies=dependencies,
+      about=NULL, hints=hints)[["dependencies"]]
   } else {
     stop(simpleError("'about' must be a character string or XiMpLe.node, see ?rk.XML.about()!"))
   }
@@ -141,6 +147,7 @@ rk.plugin.component <- function(about, xml=list(), js=list(), rkh=list(),
       provides=provides,
       include=include,
       about=about.node,
+      dependencies=dependencies.node,
       gen.info=gen.info)
     # make sure there's no duplicate IDs
     stopifnot(rk.uniqueIDs(XML.plugin, bool=TRUE))
