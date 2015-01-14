@@ -33,11 +33,11 @@ SVNROOT = "svn://anonsvn.kde.org/home/kde/trunk/l10n-kde4/"
 RKWARDSVNPATH = "messages/playground-edu/"
 SCRIPTDIR = os.path.dirname (os.path.realpath (sys.argv[0]))
 TMPDIR = os.path.join (SCRIPTDIR, "tmp")
-EXPORTDIR = os.path.join (SCRIPTDIR, "tmp", "export")
+EXPORTDIR = os.path.join (SCRIPTDIR, "..", "i18n", "po")
 if not os.path.exists (TMPDIR):
     os.makedirs (TMPDIR)
 if not os.path.exists (EXPORTDIR):
-    os.makedirs (os.path.join (EXPORTDIR, "plugins"))
+    os.makedirs (os.path.join (EXPORTDIR))
 
 if (len (sys.argv) > 1):
     LANGUAGES = sys.argv[1:]
@@ -72,10 +72,9 @@ for lang in LANGUAGES:
     subprocess.call (["svn", "up"] + pofiles)
     os.chdir (TMPDIR)
     for pofile in pofiles:
-        if (pofile == "rkward.po"):
-            outfile = os.path.join (EXPORTDIR, "rkward." + lang + ".po")
-        else:
-            outfile = os.path.join (EXPORTDIR, "plugins", re.sub ("po$", lang + ".po", pofile))
+        outfile = os.path.join (EXPORTDIR, re.sub ("po$", lang + ".po", pofile))
+
+        # copy to destination, and strip unneeded comments
         print ("writing " + outfile)
         pf = codecs.open (os.path.join (langdir, pofile), 'r', 'utf-8')
         of = codecs.open (outfile, 'w', 'utf-8')

@@ -3,14 +3,11 @@ MACRO(RKHandlePO _PO_FILES)
 		GET_FILENAME_COMPONENT(_fullPoName ${_poFile} NAME)
 		STRING(REPLACE "." ";" _nameParts ${_fullPoName})
 		LIST(LENGTH _nameParts _namePartsCount)
-		IF(_namePartsCount GREATER 2)
-			LIST(GET _nameParts 0 _poid)
-			LIST(REMOVE_AT _nameParts 0)
+		LIST(GET _nameParts 0 _poid)
+		LIST(GET _nameParts 1 _lang) # Remainder of _nameParts should be "po"
+		IF(NOT _poid STREQUAL "rkward")
 			SET(ACCEPT_INCOMPLETE_PO "-DACCEPT_INCOMPLETE_PO=1")
-		ELSE(_namePartsCount GREATER 2)
-			SET(_poid "rkward")
-		ENDIF(_namePartsCount GREATER 2)
-		LIST(GET _nameParts 0 _lang) # Remainder of _nameParts should be "po"
+		ENDIF(NOT _poid STREQUAL "rkward")
 
 		SET(_gmoFile ${CMAKE_CURRENT_BINARY_DIR}/${_poid}.${_lang}.gmo)
 
@@ -41,11 +38,21 @@ IF(NOT GETTEXT_MSGFMT_EXECUTABLE)
                  NOTE: msgfmt not found. Translations will *not* be installed
 ------")
 ELSE(NOT GETTEXT_MSGFMT_EXECUTABLE)
-	FILE(GLOB PO_FILES *.po)
-	RKHandlePO("${PO_FILES}")
-	FILE(GLOB_RECURSE PLUGIN_PO_FILES ${CMAKE_CURRENT_SOURCE_DIR}/plugins/*.po)
-	RKHandlePO("${PLUGIN_PO_FILES}")
+	IF(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/po/")
+		FILE(GLOB PO_FILES po/*.po)
+		RKHandlePO("${PO_FILES}")
 
-	ADD_CUSTOM_TARGET(translations ALL DEPENDS ${active_translations})
+		ADD_CUSTOM_TARGET(translations ALL DEPENDS ${active_translations})
+	ELSE(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/po/")
+	MESSAGE(WARNING
+"------
+                 Translations are not available.
+
+${CMAKE_CURRENT_SOURCE_DIR}/po/ was not found. This probably means that you are building from the development repository, and have not fetched translations. This is ok, if you want to run RKWard in English, only. Otherwise, to fetch translations, either
+   scripts/import_translations.py XX
+where (XX is your language code, such as \"de\"; optionally specify several codes separated by spaces). In some cases (esp., if you want to build all existing translations), it is much faster to use:
+   git clone git://anongit.kde.org/scratch/tfry/rkward-po-export
+------")
+	ENDIF(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/po/")
 ENDIF(NOT GETTEXT_MSGFMT_EXECUTABLE)
 

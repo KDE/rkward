@@ -8,8 +8,9 @@ rkward/resource.ver
 rkward/version.h
 # Log files from testing
 tests/make_plugintests.txt
-# Message templates should not be in the repo
+# Message templates and imported translations should not be in the repo
 *.pot
+i18n/po/
 # General purpose temp directory for scripts
 scripts/tmp/
 
