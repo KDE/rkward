@@ -145,7 +145,7 @@ function calculate(){
 	}
 	if(radPwrParam != "Significance level") {
 		if(spnSgnfcncl != 0.05) {
-			echo("\n\t\t\tsig.level=" + spnSgnfcncl + ",");
+			echo(",\n\t\t\tsig.level=" + spnSgnfcncl);
 		}
 	} else {
 		echo(",\n\t\t\tsig.level=NULL");

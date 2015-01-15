@@ -444,7 +444,7 @@ pwr.js.calc <- rk.paste.JS(
     )
   ),
   ite(id(pwr.parameter.rad, " != \"Significance level\""),
-    ite(id(pwr.input.signif, " != 0.05"), echo("\n\t\t\tsig.level=", pwr.input.signif, ",")),
+    ite(id(pwr.input.signif, " != 0.05"), echo(",\n\t\t\tsig.level=", pwr.input.signif)),
     echo(",\n\t\t\tsig.level=NULL")
   ),
   ite(id(pwr.parameter.rad, " != \"Power\""),
