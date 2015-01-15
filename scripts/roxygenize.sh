@@ -3,13 +3,18 @@
 cd `dirname $0`/..
 BASEDIR=`pwd`
 
+PACKAGES="'${BASEDIR}/rkward/rbackend/rpackages/rkward/'"
+         # currently excluded due to missing support for slots in roxygen2:
+         # '${BASEDIR}/rkward/rbackend/rpackages/rkwardtests/'
+if [ "$1" = "--all" ]; then
+PACKAGES="${PACKAGES}, \
+          '${BASEDIR}/packages/XiMpLe/',
+          '${BASEDIR}/packages/rkwarddev/'"
+fi
+
 echo "
 	library (roxygen2)
-	packages <- c ( '${BASEDIR}/rkward/rbackend/rpackages/rkward/',
-					# '${BASEDIR}/rkward/rbackend/rpackages/rkwardtests/', # currently excluded due to missing support for slots in roxygen2
-					'${BASEDIR}/packages/XiMpLe/',
-					'${BASEDIR}/packages/rkwarddev/'
-					)
+	packages <- c ($PACKAGES)
 	for (package in packages) {
 		dummy <- roxygen2:::source_package (package) # See https://github.com/klutometis/roxygen/issues/167
 		roxygenize (package)

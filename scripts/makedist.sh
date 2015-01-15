@@ -5,6 +5,11 @@ BASEDIR=`pwd`
 OLDVERSION=`${BASEDIR}/scripts/getversion.sh`
 VERSION=`${BASEDIR}/scripts/getversion.sh ${1}`
 
+if [ ! -d "$BASEDIR/i18n/po" ]; then
+  echo "Translations are missing!"
+  exit 1
+fi
+
 mkdir $BASEDIR/disttemp
 DISTDIRREL=rkward-$VERSION
 DISTDIR=$BASEDIR/disttemp/$DISTDIRREL
