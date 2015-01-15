@@ -145,10 +145,16 @@ suite <- new ("RKTestSuite", id="analysis_plugins",
 		}),
 		new ("RKTest", id="linear_regression", call=function () {
 			rk.call.plugin ("rkward::linear_regression", intercept.state="1", x.available="warpbreaks[[\"tension\"]]\nwarpbreaks[[\"wool\"]]", y.available="warpbreaks[[\"breaks\"]]", submit.mode="submit")
-		})#,
-#     new ("RKTest", id="power_analysis", call=function () {
-#       rk.call.plugin ("rkward::power_analysis", drp_pwr_hypothesis.string="two.sided", drp_pwr_stat.string="pwr.t.test", drp_pwr_type.string="two.sample", pwr_spin_sample0.real="30.00", rad_pwr_param.string="Power", spn_Effectsz.real="0.30", spn_Sgnfcncl.real="0.05", svb_Svrsltst.active="0", svb_Svrsltst.objectname="pwr.result", svb_Svrsltst.parent=".GlobalEnv", submit.mode="submit")
-#     })
+		}),
+		new ("RKTest", id="power_analysis", call=function () {
+			rk.call.plugin ("rkward::power_analysis", drp_pwr_hypothesis.string="two.sided", drp_pwr_stat.string="pwr.t.test", drp_pwr_type.string="two.sample", pwr_spin_sample0.real="30.00", rad_pwr_param.string="Power", spn_Effectsz.real="0.30", spn_Sgnfcncl.real="0.05", svb_Svrsltst.active="0", svb_Svrsltst.objectname="pwr.result", svb_Svrsltst.parent=".GlobalEnv", submit.mode="submit")
+			rk.call.plugin ("rkward::power_analysis", drp_pwr_hypothesis.string="two.sided", drp_pwr_stat.string="pwr.t.test", drp_pwr_type.string="two.sample.diff", pwr_spin_sample1.real="27.00", pwr_spin_sample2.real="33.00", rad_pwr_param.string="Power", spn_Effectsz.real="0.30", spn_Sgnfcncl.real="0.05", svb_Svrsltst.active="0", svb_Svrsltst.objectname="pwr.result", svb_Svrsltst.parent=".GlobalEnv", submit.mode="submit")
+			rk.call.plugin ("rkward::power_analysis", drp_pwr_hypothesis.string="two.sided", drp_pwr_stat.string="pwr.r.test", rad_pwr_param.string="Sample size", spn_Effectsz.real="0.30", spn_Power.real="0.81", spn_Sgnfcncl.real="0.05", svb_Svrsltst.active="0", svb_Svrsltst.objectname="pwr.result", svb_Svrsltst.parent=".GlobalEnv", submit.mode="submit")
+			rk.call.plugin ("rkward::power_analysis", drp_pwr_stat.string="pwr.chisq.test", pwr_spin_df.real="32.00", pwr_spin_sample0.real="30.00", rad_pwr_param.string="Significance level", spn_Effectsz.real="0.30", spn_Power.real="0.81", svb_Svrsltst.active="0", svb_Svrsltst.objectname="pwr.result", svb_Svrsltst.parent=".GlobalEnv", submit.mode="submit")
+			rk.call.plugin ("rkward::power_analysis", drp_pwr_hypothesis.string="greater", drp_pwr_proptype.string="two.sample.same", drp_pwr_stat.string="pwr.p.test", pwr_spin_sample0.real="30.00", rad_pwr_param.string="Significance level", spn_Effectsz.real="0.30", spn_Power.real="0.81", svb_Svrsltst.active="0", svb_Svrsltst.objectname="pwr.result", svb_Svrsltst.parent=".GlobalEnv", submit.mode="submit")
+			rk.call.plugin ("rkward::power_analysis", drp_pwr_hypothesis.string="two.sided", drp_pwr_stat.string="pwr.norm.test", pwr_spin_sample0.real="30.00", rad_pwr_param.string="Significance level", spn_Effectsz.real="0.30", spn_Power.real="0.80", svb_Svrsltst.active="0", svb_Svrsltst.objectname="pwr.result", svb_Svrsltst.parent=".GlobalEnv", submit.mode="submit")
+			rk.call.plugin ("rkward::power_analysis", drp_pwr_stat.string="pwr.f2.test", pwr_spin_dfv.real="30.00", pwr_spin_sample0.real="30.00", rad_pwr_param.string="Parameter count", spn_Effectsz.real="0.30", spn_Power.real="0.80", spn_Sgnfcncl.real="0.10", svb_Svrsltst.active="0", svb_Svrsltst.objectname="pwr.result", svb_Svrsltst.parent=".GlobalEnv", submit.mode="submit")
+		})
 	), postCalls = list (	# like initCalls: run after all tests to clean up.
 		function () {
 			suppressWarnings (rm (list=c ("women", "warpbreaks", "rock", "co2", "test50x", "test50y", "test50z", "test10x", "test10y", "test10z", "test_table", "hptrend", "hpcycle"), envir=globalenv()))

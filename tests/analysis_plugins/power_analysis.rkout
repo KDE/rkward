@@ -19,3 +19,122 @@ DATE<br />
 <tr><td>small</td><td>medium</td><td>large</td></tr>
 <tr><td>0.2</td><td>0.5</td><td>0.8</td></tr>
 </table>
+<h1>t test power calculation</h1>
+<h2>Parameters</h2>
+<ul><li>Target measure: Power</li>
+<li>alternative: two.sided</li>
+</ul>
+DATE<br />
+<table border="1">
+<tr><td></td><td>Parameters</td></tr>
+<tr><td>n1</td><td>27</td></tr>
+<tr><td>n2</td><td>33</td></tr>
+<tr><td>d</td><td>0.3</td></tr>
+<tr><td>sig.level</td><td>0.05</td></tr>
+<tr><td>power</td><td>0.20624</td></tr>
+</table>
+
+<p class='character'>Interpretation of effect size <strong>d</strong> (according to Cohen):</p>
+<table border="1">
+<tr><td>small</td><td>medium</td><td>large</td></tr>
+<tr><td>0.2</td><td>0.5</td><td>0.8</td></tr>
+</table>
+<h1>approximate correlation power calculation (arctangh transformation)</h1>
+<h2>Parameters</h2>
+<ul><li>Target measure: Sample size</li>
+<li>alternative: two.sided</li>
+</ul>
+DATE<br />
+<table border="1">
+<tr><td></td><td>Parameters</td></tr>
+<tr><td>n</td><td>86.875</td></tr>
+<tr><td>r</td><td>0.3</td></tr>
+<tr><td>sig.level</td><td>0.05</td></tr>
+<tr><td>power</td><td>0.81</td></tr>
+</table>
+
+<p class='character'>Interpretation of effect size <strong>r</strong> (according to Cohen):</p>
+<table border="1">
+<tr><td>small</td><td>medium</td><td>large</td></tr>
+<tr><td>0.1</td><td>0.3</td><td>0.5</td></tr>
+</table>
+<h1>Chi squared power calculation</h1>
+<h2>Parameters</h2>
+<ul><li>Target measure: Significance level</li>
+</ul>
+DATE<br />
+<table border="1">
+<tr><td></td><td>Parameters</td></tr>
+<tr><td>w</td><td>0.3</td></tr>
+<tr><td>N</td><td>30</td></tr>
+<tr><td>df</td><td>32</td></tr>
+<tr><td>sig.level</td><td>0.71662</td></tr>
+<tr><td>power</td><td>0.81</td></tr>
+</table>
+
+<p class='character'><strong>Note:</strong>  N is the number of observations</p>
+
+<p class='character'>Interpretation of effect size <strong>w</strong> (according to Cohen):</p>
+<table border="1">
+<tr><td>small</td><td>medium</td><td>large</td></tr>
+<tr><td>0.1</td><td>0.3</td><td>0.5</td></tr>
+</table>
+<h1>Difference of proportion power calculation for binomial distribution (arcsine transformation)</h1>
+<h2>Parameters</h2>
+<ul><li>Target measure: Significance level</li>
+<li>alternative: greater</li>
+</ul>
+DATE<br />
+<table border="1">
+<tr><td></td><td>Parameters</td></tr>
+<tr><td>h</td><td>0.3</td></tr>
+<tr><td>n</td><td>30</td></tr>
+<tr><td>sig.level</td><td>0.38821</td></tr>
+<tr><td>power</td><td>0.81</td></tr>
+</table>
+
+<p class='character'><strong>Note:</strong>  same sample sizes</p>
+
+<p class='character'>Interpretation of effect size <strong>h</strong> (according to Cohen):</p>
+<table border="1">
+<tr><td>small</td><td>medium</td><td>large</td></tr>
+<tr><td>0.2</td><td>0.5</td><td>0.8</td></tr>
+</table>
+<h1>Mean power calculation for normal distribution with known variance</h1>
+<h2>Parameters</h2>
+<ul><li>Target measure: Significance level</li>
+<li>alternative: two.sided</li>
+</ul>
+DATE<br />
+<table border="1">
+<tr><td></td><td>Parameters</td></tr>
+<tr><td>d</td><td>0.3</td></tr>
+<tr><td>n</td><td>30</td></tr>
+<tr><td>sig.level</td><td>0.40906</td></tr>
+<tr><td>power</td><td>0.8</td></tr>
+</table>
+
+<p class='character'>Interpretation of effect size <strong>d</strong> (according to Cohen):</p>
+<table border="1">
+<tr><td>small</td><td>medium</td><td>large</td></tr>
+<tr><td>0.2</td><td>0.5</td><td>0.8</td></tr>
+</table>
+<h1>Multiple regression power calculation</h1>
+<h2>Parameters</h2>
+<ul><li>Target measure: Parameter count</li>
+</ul>
+DATE<br />
+<table border="1">
+<tr><td></td><td>Parameters</td></tr>
+<tr><td>u</td><td>3.4454</td></tr>
+<tr><td>v</td><td>30</td></tr>
+<tr><td>f2</td><td>0.3</td></tr>
+<tr><td>sig.level</td><td>0.1</td></tr>
+<tr><td>power</td><td>0.8</td></tr>
+</table>
+
+<p class='character'>Interpretation of effect size <strong>f<sup>2</sup></strong> (according to Cohen):</p>
+<table border="1">
+<tr><td>small</td><td>medium</td><td>large</td></tr>
+<tr><td>0.02</td><td>0.15</td><td>0.35</td></tr>
+</table>
