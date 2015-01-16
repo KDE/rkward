@@ -26,10 +26,10 @@ mkdir $DISTDIR/i18n
 mkdir $DISTDIR/rkward
 mkdir $DISTDIR/tests
 
-rsync -a --exclude '*~' --exclude '*.svn*' $EXCLUDES $BASEDIR/doc/* $DISTDIR/doc
-rsync -a --exclude '*~' --exclude '*.svn*' $EXCLUDES $BASEDIR/i18n/* $DISTDIR/i18n
-rsync -a --exclude '*~' --exclude '*.svn*' --exclude 'templates' $EXCLUDES $BASEDIR/rkward/* $DISTDIR/rkward
-rsync -a --exclude '*~' --exclude '*.svn*' $EXCLUDES $BASEDIR/tests/* $DISTDIR/tests
+rsync -a --exclude '*~' --exclude '*.git*' $EXCLUDES $BASEDIR/doc/* $DISTDIR/doc
+rsync -a --exclude '*~' --exclude '*.git*' $EXCLUDES $BASEDIR/i18n/* $DISTDIR/i18n
+rsync -a --exclude '*~' --exclude '*.git*' --exclude 'templates' $EXCLUDES $BASEDIR/rkward/* $DISTDIR/rkward
+rsync -a --exclude '*~' --exclude '*.git*' $EXCLUDES $BASEDIR/tests/* $DISTDIR/tests
 
 # make messages
 #cd $DISTDIR/po
