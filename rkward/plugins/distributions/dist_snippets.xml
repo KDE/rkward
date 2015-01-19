@@ -1,38 +1,44 @@
-<!-- Snippets for the XYZ quantiles and probabilities plugins -->
+<!-- Snippets for the distribution calculator plugins -->
 <document>
-	<snippet id="probabilities_layout">
-		<row>
-			<column>
-				<input required="true" initial="0.95" id="q" label="Vector of quantiles"/>
-				<insert snippet="dist_options"/>
-			</column>
-			<column>
-				<radio id="tail" label="Choose type of probability" >
-					<option value="lower.tail=TRUE" label="lower tail" />
-					<option value="lower.tail=FALSE" label="upper tail" />
-				</radio>
-				<radio id="logp" label="return probabilities p as:" >
-					<option value="log.p = FALSE" label="not log(p)" />
-					<option value="log.p = TRUE" label="log(p)" />
-				</radio>
-				<stretch/>
-			</column>
-		</row>
+	<snippet id="dialog_logic">
+		<convert id="do_d" mode="equals" sources="mode.string" standard="d"/>
+		<convert id="do_q" mode="equals" sources="mode.string" standard="q"/>
+
+		<connect client="lower.enabled" governor="do_d.not"/>
+		<connect client="logp.enabled" governor="do_d.not"/>
+		<connect client="q.visible" governor="do_q.not"/>
+		<connect client="p.visible" governor="do_q"/>
 	</snippet>
-	<snippet id="quantiles_layout">
-		<row>
-			<column>
-				<matrix id="p" columns="1" min_rows="1" fixed_width="true" allow_user_resize_columns="false" mode="real" label="Vector of probabilities" horiz_headers=""/>
-				<radio id="tail" label="Type of probability" >
-					<option value="lower.tail=TRUE" label="lower tail" />
-					<option value="lower.tail=FALSE" label="upper tail" />
-				</radio>
-				<checkbox id="logp" label="probabilities p are given as log(p)" value="log.p = TRUE" value_unchecked="log.p = FALSE"/>
-			</column>
-			<column>
-				<insert snippet="dist_options"/>
-				<stretch/>
-			</column>
-		</row>
+	<snippet id="dialog_layout">
+		<dropdown id="mode" label="Mode">
+			<option value="p" label="Calculate probabilities for given quantiles"/>
+			<option value="d" label="Calculate densities at given quantiles"/>
+			<option value="q" label="Calculate quantiles for given probabilities"/>
+		</dropdown>
+			<row>
+				<frame>
+					<column>
+						<matrix columns="1" allow_user_resize_columns="false" min_rows="1" required="true" mode="real" fixed_width="true" min="0" id="q" label="Vector of quantiles"/>
+						<matrix columns="1" allow_user_resize_columns="false" min_rows="1" required="true" mode="real" fixed_width="true" id="p" label="Vector of probabilities"/>
+						<checkbox id="logp" label="log probabilities" />
+						<checkbox id="lower" label="Lower tail" checked="true" />
+						<stretch/>
+					</column>
+				</frame>
+				<frame>
+					<column>
+						<insert snippet="dist_options"/>
+						<stretch/>
+					</column>
+				</frame>
+			</row>
+			<insert snippet="ui_note"/>
+	</snippet>
+	<snippet id="dialog_settings">
+		<setting id="mode">Specify the quantitiy to be calculated (probabilites, densities, or quantiles), and the quantity given (probabilities or quantiles)</setting>
+		<setting id="q">When calculating densities or probabilites, specify one or more quantiles.</setting>
+		<setting id="p">When calculating quantiles, specify one or more probabilities (optionally logarithmic; see below).</setting>
+		<setting id="logp">When calculating probabilities, return these as log (p). When specifying probabilites, these are supplied as log (p).</setting>
+		<setting id="lower">If checked (the default) probabilities are given are P[X ≤ x]. Otherwise (upper tail) probabilities are  P[X &gt; x]</setting>
 	</snippet>
 </document>
