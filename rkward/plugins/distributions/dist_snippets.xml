@@ -34,11 +34,4 @@
 			</row>
 			<insert snippet="ui_note"/>
 	</snippet>
-	<snippet id="dialog_settings">
-		<setting id="mode">Specify the quantitiy to be calculated (probabilites, densities, or quantiles), and the quantity given (probabilities or quantiles)</setting>
-		<setting id="q">When calculating densities or probabilites, specify one or more quantiles.</setting>
-		<setting id="p">When calculating quantiles, specify one or more probabilities (optionally logarithmic; see below).</setting>
-		<setting id="logp">When calculating probabilities, return these as log (p). When specifying probabilites, these are supplied as log (p).</setting>
-		<setting id="lower">If checked (the default) probabilities are given are P[X ≤ x]. Otherwise (upper tail) probabilities are  P[X &gt; x]</setting>
-	</snippet>
 </document>

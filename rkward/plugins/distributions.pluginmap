@@ -31,8 +31,7 @@
 		<component type="standard" id="beta_probabilities" file="beta_probabilities.xml" label="Beta probabilities" />
 		<component type="standard" id="plot_beta_distribution" file="plot_beta_distribution.xml" label="Plot Beta distribution" />
 
-		<component type="standard" id="binomial_quantiles" file="binomial_quantiles.xml" label="Binomial quantiles" />
-		<component type="standard" id="binomial_tail_probabilities" file="binomial_tail_probabilities.xml" label="Binomial tail probabilities" />
+		<component type="standard" id="binomial_calculator" file="binomial.xml" label="Binomial probabilities, quantiles, densities" />
 		<component type="standard" id="plot_binomial_distribution" file="plot_binomial_distribution.xml" label="Plot binomial distribution" />
 
 		<component type="standard" id="cauchy_quantiles" file="cauchy_quantiles.xml" label="Cauchy quantiles" />
@@ -224,8 +223,7 @@
 
 			<menu id="univariate_discrete_distributions" label="Univariate discrete distributions">
 				<menu id="binomial_distribution" label="Binomial">
-					<entry component="binomial_quantiles" label="Binomial quantiles"/>
-					<entry component="binomial_tail_probabilities" label="Binomial tail probabilities"/>
+					<entry component="binomial_calculator" label="Binomial probabilities, quantiles, densities"/>
 					<entry component="plot_binomial_clt" label="Binomial CLT"/>
 					<entry component="plot_binomial_distribution" label="Plot binomial distribution"/>
 				</menu>
