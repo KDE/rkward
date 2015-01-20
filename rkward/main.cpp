@@ -129,7 +129,7 @@ int main(int argc, char *argv[]) {
 	options.add ("reuse", ki18n ("Reuse a running RKWard instance (if available). If a running instance is reused, only the file arguments will be interpreted, all other options will be ignored."), 0);
 	options.add ("+[Files]", ki18n ("File or files to open, typically a workspace, or an R script file. When loading several things, you should specify the workspace, first."), 0);
 
-	KAboutData aboutData("rkward", QByteArray (), ki18n ("RKWard"), RKWARD_VERSION, ki18n ("Frontend to the R statistics language"), KAboutData::License_GPL, ki18n ("(c) 2002, 2004 - 2014"), KLocalizedString (), "http://rkward.kde.org", "rkward-devel@lists.sourceforge.net");
+	KAboutData aboutData("rkward", QByteArray (), ki18n ("RKWard"), RKWARD_VERSION, ki18n ("Frontend to the R statistics language"), KAboutData::License_GPL, ki18n ("(c) 2002, 2004 - 2014"), KLocalizedString (), "http://rkward.kde.org", "rkward-devel@kde.org");
 	aboutData.addAuthor (ki18n ("Thomas Friedrichsmeier"), ki18n ("Project leader / main developer"));
 	aboutData.addAuthor (ki18n ("Pierre Ecochard"), ki18n ("C++ developer between 2004 and 2007"));
 	aboutData.addAuthor (ki18n ("Prasenjit Kapat"), ki18n ("Many plugins, suggestions, plot history feature"));
@@ -148,7 +148,7 @@ int main(int argc, char *argv[]) {
 	aboutData.addCredit (ki18n ("Jannis Vajen"), ki18n ("German Translation, bug reports"));
 	aboutData.addCredit (ki18n ("Roland Vollgraf"), ki18n ("Some patches"));
 	aboutData.addCredit (ki18n ("Roy Qu"), ki18n ("patches and helpful comments"));
-	aboutData.addCredit (ki18n ("Many more people on rkward-devel@lists.sourceforge.net"), ki18n ("Sorry, if we forgot to list you. Please contact us to get added"));
+	aboutData.addCredit (ki18n ("Many more people on rkward-devel@kde.org"), ki18n ("Sorry, if we forgot to list you. Please contact us to get added"));
 
 	// before initializing the commandline args, remove the ".bin" from "rkward.bin".
 	// This is so it prints "Usage rkward..." instead of "Usage rkward.bin...", etc.

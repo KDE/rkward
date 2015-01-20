@@ -113,7 +113,7 @@ rk.results (list (
 })
 }
 \author{
-Thomas Friedrichsmeier \email{rkward-devel@lists.sourceforge.net}
+Thomas Friedrichsmeier \email{rkward-devel@kde.org}
 }
 \seealso{
 \code{\link{HTML}}, \code{\link{rk.get.output.html.file}},

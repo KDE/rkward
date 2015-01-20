@@ -22,7 +22,7 @@ from the menu. Internally, this will call \code{rk.sessionInfo()}.
 rk.sessionInfo()
 }
 \author{
-Thomas Friedrichsmeier \email{rkward-devel@lists.sourceforge.net}
+Thomas Friedrichsmeier \email{rkward-devel@kde.org}
 }
 \seealso{
 \code{\link{sessionInfo}}

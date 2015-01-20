@@ -3,7 +3,7 @@
 		<snippet id="author_rkward_team">
 			<author
 				name="RKWard Team"
-				email="rkward-devel@lists.sf.net"
+				email="rkward-devel@kde.org"
 				url="http://rkward.kde.org" />
 		</snippet>
 		<snippet id="rkward_version_guard">

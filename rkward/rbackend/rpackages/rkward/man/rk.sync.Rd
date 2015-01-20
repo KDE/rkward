@@ -34,7 +34,7 @@ environments (see examples).
 rk.sync (rkward::rk.record.plot)
 }
 \author{
-Thomas Friedrichsmeier \email{rkward-devel@lists.sourceforge.net}
+Thomas Friedrichsmeier \email{rkward-devel@kde.org}
 }
 \seealso{
 \url{rkward://page/rkward_workspace_browser}

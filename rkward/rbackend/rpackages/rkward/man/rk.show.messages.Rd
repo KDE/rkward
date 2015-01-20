@@ -81,7 +81,7 @@ rk.select.list (LETTERS, preselect = c("A", "E", "I", "O", "U"),
   multiple = TRUE, title = "vowels")
 }
 \author{
-Thomas Friedrichsmeier \email{rkward-devel@lists.sourceforge.net}
+Thomas Friedrichsmeier \email{rkward-devel@kde.org}
 }
 \seealso{
 \code{\link{system}}, \code{\link{select.list}}

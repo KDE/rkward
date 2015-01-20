@@ -58,7 +58,7 @@ x <- data.frame (a=c(1:3), b=c(2:4))
 rk.edit(x)
 }
 \author{
-Thomas Friedrichsmeier \email{rkward-devel@lists.sourceforge.net}
+Thomas Friedrichsmeier \email{rkward-devel@kde.org}
 }
 \seealso{
 \code{\link{edit}}, \code{\link{file.edit}},

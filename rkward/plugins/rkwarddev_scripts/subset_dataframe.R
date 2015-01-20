@@ -29,7 +29,7 @@ about.info <- rk.XML.about(
 	name="rk.subset",
 	author=c(
 		person(given="RKWard", family="Team",
-			email="rkward-devel@lists.sf.net", role=c("cre")),
+			email="rkward-devel@kde.org", role=c("cre")),
 		person(given="Meik", family="Michalke",
 			email="meik.michalke@hhu.de", role=c("aut")),
 		person(given="Thomas", family="Friedrichsmeier",

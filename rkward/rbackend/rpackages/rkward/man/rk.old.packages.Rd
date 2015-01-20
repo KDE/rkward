@@ -24,7 +24,7 @@ that the current version is higher up in the path, and not report package X as o
 rk.old.packages()
 }
 \author{
-Thomas Friedrichsmeier \email{rkward-devel@lists.sourceforge.net}
+Thomas Friedrichsmeier \email{rkward-devel@kde.org}
 }
 \keyword{attribute}
 \keyword{misc}

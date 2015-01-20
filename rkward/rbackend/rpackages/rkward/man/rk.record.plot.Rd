@@ -77,7 +77,7 @@ rk.duplicate.device(devId = dev.cur())
   
   \code{rk.duplicate.device} returns the value of a \code{dev.copy} call.
 }
-\author{Prasenjit Kapat \email{rkward-devel@lists.sourceforge.net}}
+\author{Prasenjit Kapat \email{rkward-devel@kde.org}}
 
 \section{Warning}{
   TODO TODO

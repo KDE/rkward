@@ -26,7 +26,7 @@ the specification of a topic is mandatory.
 rk.demo("graphics")
 }
 \author{
-Thomas Friedrichsmeier \email{rkward-devel@lists.sourceforge.net}
+Thomas Friedrichsmeier \email{rkward-devel@kde.org}
 }
 \seealso{
 \code{\link{rk.edit.files}}, \code{\link{rk.show.files}},

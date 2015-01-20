@@ -85,7 +85,7 @@ rk.list.names (x, x$a, x$b)               # "x" "x$a" "x$b"
 names (rk.list (x$a, x$b))                # "x$a (First column)" "x$b"
 }
 \author{
-Thomas Friedrichsmeier \email{rkward-devel@lists.sourceforge.net}
+Thomas Friedrichsmeier \email{rkward-devel@kde.org}
 }
 \keyword{utilities}
 

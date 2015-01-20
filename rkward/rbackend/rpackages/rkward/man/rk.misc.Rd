@@ -52,7 +52,7 @@ rk.rename.in.container(ir, "Species", "Taxonomic.Group")
 str (ir)
 }
 \author{
-Thomas Friedrichsmeier \email{rkward-devel@lists.sourceforge.net}
+Thomas Friedrichsmeier \email{rkward-devel@kde.org}
 }
 \keyword{attribute}
 \keyword{misc}

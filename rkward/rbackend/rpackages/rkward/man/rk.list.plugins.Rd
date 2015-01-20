@@ -49,7 +49,7 @@ rk.set.plugin.status ("rkward::t_test", visible=FALSE)
 ## END NOT RUN
 }
 \author{
-Thomas Friedrichsmeier \email{rkward-devel@lists.sourceforge.net}
+Thomas Friedrichsmeier \email{rkward-devel@kde.org}
 }
 \seealso{
 \code{\link{rk.call.plugin}} for invoking a plugin, programatically

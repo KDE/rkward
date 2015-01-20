@@ -46,7 +46,7 @@ rk.restore.workplace ()
 ## End not run
 }
 \author{
-Thomas Friedrichsmeier \email{rkward-devel@lists.sourceforge.net}
+Thomas Friedrichsmeier \email{rkward-devel@kde.org}
 }
 \seealso{
 \url{rkward://page/rkward_for_r_users}, \link{rk.get.workspace.url}

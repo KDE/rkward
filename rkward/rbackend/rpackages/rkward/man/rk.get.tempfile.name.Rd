@@ -79,7 +79,7 @@ rk.flush.output()
 rk.set.output.html.file(outfile)
 }
 \author{
-Thomas Friedrichsmeier \email{rkward-devel@lists.sourceforge.net}
+Thomas Friedrichsmeier \email{rkward-devel@kde.org}
 }
 \seealso{
 \url{rkward://page/rkward_output}, \link{tempfile}, \link{file},
